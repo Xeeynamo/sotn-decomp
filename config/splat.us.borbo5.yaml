@@ -71,10 +71,7 @@ segments:
       - [0x4328, .data, e_life_up]
       - [0x437C, .data, gen/e_layout]
       - [0x4434, data] # g_SpriteSheet
-      - [0x2BF78, cmp, D_801ABF78]
-      - [0x2C258, cmp, D_801AC258]
-      - [0x2C360, pal, D_us_801AC360]
-      - [0x2C740, .data, tile_data]
+      - [0x2BF78, .data, stage_data]
       - [0x30B50, data]
       - [0x32B70, .rodata, doors]
       - [0x32C4C, .rodata, unk_354F0]

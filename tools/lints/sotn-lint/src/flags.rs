@@ -1,7 +1,7 @@
 use lazy_static::lazy_static;
 
-use crate::line_transformer::LineTransformer;
 use crate::bit_flag_line_transformer::BitFlagLineTransformer;
+use crate::line_transformer::LineTransformer;
 
 pub struct FlagsTransformer {
     transformer: BitFlagLineTransformer<u32>,
@@ -27,7 +27,7 @@ lazy_static! {
         (1 << 19, "FLAG_UNK_80000"),
         (1 << 20, "FLAG_UNK_100000"),
         (1 << 21, "FLAG_UNK_00200000"),
-        (1 << 22, "FLAG_UNK_400000"),
+        (1 << 22, "FLAG_SUPPRESS_STUN"),
         (1 << 23, "FLAG_HAS_PRIMS"),
         (1 << 24, "FLAG_NOT_AN_ENEMY"),
         (1 << 25, "FLAG_UNK_02000000"),
@@ -43,16 +43,14 @@ lazy_static! {
 impl FlagsTransformer {
     pub fn new() -> Self {
         Self {
-            transformer: BitFlagLineTransformer::<u32>::new(
-                "flags", "0", &FLAGS.iter().collect()),
+            transformer: BitFlagLineTransformer::<u32>::new("flags", "0", &FLAGS.iter().collect()),
         }
     }
 }
 
 impl LineTransformer for FlagsTransformer {
     fn transform_line(&self, line: &str) -> String {
-        if line.contains("g_BgLayers") ||
-            line.contains("g_Tilemap") {
+        if line.contains("g_BgLayers") || line.contains("g_Tilemap") {
             return line.to_string();
         }
         self.transformer.transform_line(line)
@@ -77,7 +75,8 @@ mod tests {
     #[test]
     fn test_flags_decimal() {
         let input_line = "self->flags = 8781824;";
-        let expected_line = "self->flags = FLAG_HAS_PRIMS | FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;";
+        let expected_line =
+            "self->flags = FLAG_HAS_PRIMS | FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;";
         let result = FT.transform_line(input_line);
         assert_eq!(result, expected_line)
     }
@@ -226,6 +225,5 @@ mod tests {
         let expected_line = "if (self->flags & FLAG_DEAD && test) {";
         let result = FT.transform_line(input_line);
         assert_eq!(result, expected_line);
-
     }
 }

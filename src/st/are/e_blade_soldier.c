@@ -164,7 +164,7 @@ static void SpawnDustParticles(void) {
         } else {
             newEntity->posX.i.hi += 4;
         }
-        newEntity->drawFlags |= FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+        newEntity->drawFlags |= ENTITY_SCALEY | ENTITY_SCALEX;
         newEntity->scaleX = newEntity->scaleY = 0x80;
         newEntity->zPriority = g_CurrentEntity->zPriority + 2;
         newEntity->params = 0x10;
@@ -265,7 +265,7 @@ void EntityBladeSoldier(Entity* self) {
             }
 
             if (!self->poseTimer && self->pose == 0xF) {
-                PlaySfxPositional(SFX_MULTI_NOISE_SWEEP_DOWN);
+                PlaySfxPositional(SFX_BLADE_SOLDIER_CHARGE_STAB);
             }
 
             // NOTE: result appears unused?
@@ -391,7 +391,7 @@ void EntityBladeSoldierDeathParts(Entity* self) {
         FLAG_DESTROY_IF_OUT_OF_CAMERA | FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
         FLAG_UNK_00200000 | FLAG_UNK_2000;
     self->animCurFrame = self->params + 0x23;
-    self->drawFlags = FLAG_DRAW_ROTATE;
+    self->drawFlags = ENTITY_ROTATE;
     if (self->facingLeft) {
         self->velocityX = -self->velocityX;
     }

@@ -619,7 +619,7 @@ void OVL_EXPORT(ServantInit)(InitializeMode mode) {
         } else {
             entity->posX.val =
                 PLAYER.posX.val + (PLAYER.facingLeft ? FIX(24) : FIX(-24));
-            entity->posY.val = PLAYER.posY.val + FIX(-32);
+            entity->posY.val = PLAYER.posY.val - FIX(32);
         }
     }
 
@@ -1383,13 +1383,13 @@ void func_us_801765A0(Entity* self) {
 
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA;
         self->palette = PAL_FLAG(PAL_UNK_143);
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->animSet = 0xE;
         self->unk5A = 0x79;
         self->anim = D_us_80171CD8;
         self->pose = 0;
         self->poseTimer = 0;
-        self->drawFlags |= FLAG_DRAW_SCALEY;
+        self->drawFlags |= ENTITY_SCALEY;
         self->scaleY = 0xC0;
 
         self->velocityX = self->facingLeft ? -0xC000 : 0xC000;

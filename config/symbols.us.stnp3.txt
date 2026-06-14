@@ -1,3 +1,0 @@
-g_WaterSounds = 0x8018122C;
-g_WaterXTbl = 0x80181230;
-NP3_PrizeDrops = 0x80181618;

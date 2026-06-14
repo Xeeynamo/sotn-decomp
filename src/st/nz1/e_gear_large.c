@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz1.h"
 
+extern EInit g_EInitEnvironment;
+
 void EntityGearSidewaysLarge(Entity* self) {
     Entity* player;
     s16 angle;
@@ -16,7 +18,7 @@ void EntityGearSidewaysLarge(Entity* self) {
         self->hitboxWidth = 8;
         self->hitboxHeight = 3;
         self->animCurFrame = 3;
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         self->ext.gearPuzzle.cooldownTimer = 0x80;
         // fallthrough
 
@@ -56,10 +58,10 @@ void EntityGearSidewaysLarge(Entity* self) {
                 if (!(g_Player.vram_flag & TOUCHING_R_WALL)) {
 
                     player->posX.val += offsetX;
-                    D_80097488.x.val += offsetX;
+                    g_unkGraphicsStruct.shoveX.val += offsetX;
                 }
                 player->posY.val += offsetY + FIX(3);
-                D_80097488.y.val += offsetY + FIX(3);
+                g_unkGraphicsStruct.shoveY.val += offsetY + FIX(3);
                 self->ext.gearPuzzle.offsetX = angle;
             }
             self->ext.gearPuzzle.collision = collision;

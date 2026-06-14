@@ -24,7 +24,7 @@ enum OVL_EXPORT(Palette) {
     PAL_OWL_KNIGHT_SWORD = 0x2CB,
 };
 
-enum OVL_EXPORT(Entities) {
+enum EntityIDs {
     E_NONE,
     E_BREAKABLE,            // OVL_EXPORT(EntityBreakable)
     E_EXPLOSION,            // EntityExplosion
@@ -65,7 +65,7 @@ enum OVL_EXPORT(Entities) {
     E_UNK_25,               // func_us_801B68EC
     E_UNK_26,               // func_us_801B65A4
     E_BIG_RED_FIREBALL,     // EntityBigRedFireball
-    E_ID_28,                // func_us_801B6E34
+    E_PRISONER,             // EntityPrisoner
     E_OWL_KNIGHT,           // EntityOwlKnight
     E_OWL,                  // EntityOwl
     E_OWL_KNIGHT_SWORD,     // EntityOwlKnightSword
@@ -76,7 +76,7 @@ enum OVL_EXPORT(Entities) {
     E_UNK_30,               // func_us_801B72E8
     E_SPIKES_DAMAGE,        // EntitySpikesDamage
     E_ID_32,                // func_us_801B7580
-    E_UNK_33,               // func_us_801B7980
+    E_SEALED_DOOR,          // func_us_801B7980
     E_VALHALLA_KNIGHT,      // EntityValhallaKnight
     E_VALHALLA_KNIGHT_UNK1, // func_us_801C8954
     E_VALHALLA_KNIGHT_UNK2, // func_us_801C8AAC
@@ -109,7 +109,7 @@ extern EInit g_EInitDamageNum;
 extern EInit g_EInitSkelerang;
 extern EInit g_EInitSkelerangBoomerang;
 extern EInit g_EInitEnvironment;
-extern EInit D_us_801808B0;
+extern EInit g_EInitPrisoner;
 extern EInit g_EInitBloodyZombie;
 extern EInit D_us_801808EC;
 extern EInit g_EInitHammer;

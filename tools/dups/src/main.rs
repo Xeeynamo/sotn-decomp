@@ -246,6 +246,13 @@ fn do_dups_report(output_file: Option<String>, threshold: f64) {
             path_matcher: "/mar/".to_string(),
         },
         SrcAsmPair {
+            asm_dir: String::from("../../asm/us/boss/bo0/matchings/"),
+            src_dir: String::from("../../src/boss/bo0/"),
+            overlay_name: String::from("BO0"),
+            include_asm: get_all_include_asm("../../src/boss/bo0/"),
+            path_matcher: "/bo0/".to_string(),
+        },
+        SrcAsmPair {
             asm_dir: String::from("../../asm/us/boss/bo4/matchings/"),
             src_dir: String::from("../../src/boss/bo4/"),
             overlay_name: String::from("BO4"),
@@ -258,6 +265,13 @@ fn do_dups_report(output_file: Option<String>, threshold: f64) {
             overlay_name: String::from("BO6"),
             include_asm: get_all_include_asm("../../src/boss/bo6/"),
             path_matcher: "/bo6/".to_string(),
+        },
+        SrcAsmPair {
+            asm_dir: String::from("../../asm/us/boss/rbo0/matchings/"),
+            src_dir: String::from("../../src/boss/rbo0"),
+            overlay_name: String::from("RBO0"),
+            include_asm: get_all_include_asm("../../src/boss/rbo0"),
+            path_matcher: "/rbo0/".to_string(),
         },
         SrcAsmPair {
             asm_dir: String::from("../../asm/us/boss/rbo3/matchings/"),
@@ -447,6 +461,27 @@ fn do_dups_report(output_file: Option<String>, threshold: f64) {
             overlay_name: String::from("RARE"),
             include_asm: get_all_include_asm("../../src/st/rare/"),
             path_matcher: "st/rare".to_string(),
+        },
+        SrcAsmPair {
+            asm_dir: String::from("../../asm/us/st/rcat/matchings/"),
+            src_dir: String::from("../../src/st/rcat/"),
+            overlay_name: String::from("RCAT"),
+            include_asm: get_all_include_asm("../../src/st/rcat/"),
+            path_matcher: "st/rcat".to_string(),
+        },
+        SrcAsmPair {
+            asm_dir: String::from("../../asm/us/st/rno3/matchings/"),
+            src_dir: String::from("../../src/st/rno3/"),
+            overlay_name: String::from("RNO3"),
+            include_asm: get_all_include_asm("../../src/st/rno3/"),
+            path_matcher: "st/rno3".to_string(),
+        },
+        SrcAsmPair {
+            asm_dir: String::from("../../asm/us/st/rnz0/matchings/"),
+            src_dir: String::from("../../src/st/rnz0/"),
+            overlay_name: String::from("RNZ0"),
+            include_asm: get_all_include_asm("../../src/st/rnz0/"),
+            path_matcher: "st/rnz0".to_string(),
         },
         SrcAsmPair {
             asm_dir: String::from("../../asm/us/st/rtop/matchings/"),

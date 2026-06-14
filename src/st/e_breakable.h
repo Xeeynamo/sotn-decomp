@@ -35,7 +35,7 @@ void EntityBreakable(Entity* entity) {
     } else {
         InitializeEntity(OVL_EXPORT(EInitBreakable));
         entity->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 20;
-        entity->drawMode = g_eBreakableDrawModes[breakableType];
+        entity->blendMode = blend_modes[breakableType];
         entity->hitboxHeight = g_eBreakableHitboxes[breakableType];
         entity->animSet = g_eBreakableanimSets[breakableType];
     }

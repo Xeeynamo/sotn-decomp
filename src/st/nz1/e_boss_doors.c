@@ -2,6 +2,8 @@
 #include "nz1.h"
 
 extern EInit g_EInitInteractable;
+extern EInit g_EInitEnvironment;
+
 s32 D_us_80181134 = 0;
 s32 D_us_80181138 = 0;
 

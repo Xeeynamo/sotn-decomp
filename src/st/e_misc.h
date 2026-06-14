@@ -1,10 +1,15 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+extern EInit g_EInitUnkId13;
+extern EInit g_EInitParticle;
+
+extern void EntityExplosionVariants(Entity* entity);
+extern void EntityGreyPuff(Entity* entity);
+
 // arg0 is a pointer to X and Y offsets from the current entity.
 // iterates through those locations, running CheckCollision on
 // each location, returning a set of bit flags indicating which
 // offset X,Y locations resulted in a collision (with EFFECT_SOLID)
-
 u8 CheckColliderOffsets(s16* arg0, u8 facing) {
     u8 ret = 0;
     Collider collider;
@@ -28,8 +33,6 @@ u8 CheckColliderOffsets(s16* arg0, u8 facing) {
 
     return ret;
 }
-
-extern u16 g_EInitUnkId13[];
 
 // EntityParticleTrail as a possible name here?
 // params: The E_EXPLOSION params to use for the trail
@@ -62,16 +65,8 @@ void EntityUnkId13(Entity* self) {
 }
 
 static s16 explosionVariantSizes[] = {
-    /* FE8 */ 0x0010,
-    /* FEA */ 0x0020,
-    /* FEC */ 0x0030,
-    /* FEE */ 0x0040,
-    /* FF0 */ 0x0050,
-    /* FF2 */ 0x0060,
-    /* FF4 */ 0x0070,
-    /* FF6 */ 0x0000,
-};
-extern void EntityExplosionVariants(Entity* entity);
+    0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70, 0x00};
+
 void EntityExplosionVariantsSpawner(
     Entity* self, u8 count, u8 params, s16 x, s16 y, u8 index, s16 xGap) {
     Entity* newEntity;
@@ -90,13 +85,11 @@ void EntityExplosionVariantsSpawner(
             newEntity->ext.destructAnim.index = i + index;
             newEntity->scaleX = explosionVariantSizes[i + index];
             newEntity->scaleY = newEntity->scaleX;
-            newEntity->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+            newEntity->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
             newEntity->zPriority = self->zPriority + 1;
         }
     }
 }
-
-extern void EntityGreyPuff(Entity* entity);
 
 void EntityGreyPuffSpawner(
     Entity* self, u8 count, u8 params, s16 x, s16 y, u8 index, s16 xGap) {
@@ -123,54 +116,26 @@ void EntityGreyPuffSpawner(
 // but explosion variant entity comes before grey puff entity.
 
 static s16 greyPuff_rot[] = {
-    /* FF8 */ 0x0030,
-    /* FFA */ 0x0050,
-    /* FFC */ 0x0080,
-    /* FFE */ 0x00B0,
-    /* 1000 */ 0x00D0,
-    /* 1002 */ 0x0100,
-    /* 1004 */ 0x0100,
-    /* 1006 */ 0x0000,
+    0x030, 0x050, 0x080, 0x0B0, 0x0D0, 0x100, 0x100, 0x000,
 };
 
 static s32 greyPuff_yVel[] = {
-    /* 1008 */ FIX(2.0 / 128),
-    /* 100C */ FIX(18.0 / 128),
-    /* 1010 */ FIX(30.0 / 128),
-    /* 1014 */ FIX(48.0 / 128),
-    /* 1018 */ FIX(60.0 / 128),
-    /* 101C */ FIX(96.0 / 128),
+    FIX(2.0 / 128),  FIX(18.0 / 128), FIX(30.0 / 128),
+    FIX(48.0 / 128), FIX(60.0 / 128), FIX(96.0 / 128),
 };
 
 static s32 explode_yVel[] = {
-    /* 1020 */ FIX(4.0 / 128),
-    /* 1024 */ FIX(20.0 / 128),
-    /* 1028 */ FIX(36.0 / 128),
-    /* 102C */ FIX(56.0 / 128),
-    /* 1030 */ FIX(112.0 / 128),
-    /* 1034 */ FIX(144.0 / 128),
+    FIX(4.0 / 128),  FIX(20.0 / 128),  FIX(36.0 / 128),
+    FIX(56.0 / 128), FIX(112.0 / 128), FIX(144.0 / 128),
 };
 
-static u8 explode_startFrame[] = {
-    /* 1038 */ 1,
-    /* 1039 */ 9,
-    /* 103A */ 21,
-    /* 103B */ 43,
-};
+static u8 explode_startFrame[] = {1, 9, 21, 43};
 
-static u16 explode_lifetime[] = {
-    /* 103C */ 0x0010,
-    /* 103E */ 0x0018,
-    /* 1040 */ 0x002A,
-    /* 1042 */ 0x002F,
-};
-
-// ID is 0x14.
+static u16 explode_lifetime[] = {16, 24, 42, 47};
 
 // Creates 4 different explosion animations for when objects or enemies are
 // destroyed or killed. The animations are more intense as self->params
 // increases (from 0 to 3).
-
 void EntityExplosionVariants(Entity* self) {
     if (!self->step) {
         self->velocityY = explode_yVel[self->ext.destructAnim.index];
@@ -179,12 +144,12 @@ void EntityExplosionVariants(Entity* self) {
         self->palette = PAL_FLAG(PAL_UNK_195);
         self->animSet = ANIMSET_DRA(2);
         self->animCurFrame = explode_startFrame[self->params];
-        self->drawMode = DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP;
         self->step++;
     } else {
         self->posY.val -= self->velocityY;
         ++self->poseTimer;
-        if (!(self->poseTimer % 2)) {
+        if ((self->poseTimer % 2) == 0) {
             self->animCurFrame++;
         }
 
@@ -203,8 +168,8 @@ void EntityGreyPuff(Entity* self) {
         self->palette = PAL_FLAG(PAL_UNK_195);
         self->animSet = ANIMSET_DRA(5);
         self->animCurFrame = 1;
-        self->drawMode = DRAW_TPAGE;
-        self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+        self->blendMode = BLEND_TRANSP;
+        self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
         self->scaleX = greyPuff_rot[self->params];
         self->scaleY = self->scaleX;
         self->velocityY = greyPuff_yVel[self->params];
@@ -212,7 +177,7 @@ void EntityGreyPuff(Entity* self) {
     } else {
         self->posY.val -= self->velocityY;
         self->poseTimer++;
-        if (!(self->poseTimer % 2)) {
+        if ((self->poseTimer % 2) == 0) {
             self->animCurFrame++;
         }
         if (self->poseTimer > 36) {
@@ -221,19 +186,15 @@ void EntityGreyPuff(Entity* self) {
     }
 }
 
+static s16 g_olroxDroolCollOffsets[] = {0x0000, 0x0000, 0x00FF, 0x0000};
+
 // Purpose is not 100% clear. Creates a falling blue droplet that sizzles after
 // hitting the ground. In existing overlays, this entity is not used. But looks
 // like Olrox's drool, so using that until we find any other uses.
-
-static u32 g_olroxDroolCollOffsets[] = {
-    /* 1044 */ 0x00000000,
-    /* 1048 */ 0x000000FF,
-};
-
-extern u16 g_EInitParticle[];
 void EntityOlroxDrool(Entity* self) {
-    s16 primIndex;
     Primitive* prim;
+    s32 primIndex;
+    s32 i;
 
     switch (self->step) {
     case 0:
@@ -242,12 +203,13 @@ void EntityOlroxDrool(Entity* self) {
         if (primIndex == -1) {
             return;
         }
-        prim = &g_PrimBuf[primIndex];
         self->primIndex = primIndex;
-        self->hitboxState = 0;
-        self->ext.prim = prim;
         self->flags |= FLAG_HAS_PRIMS;
-        while (prim != NULL) {
+        self->hitboxState = 0;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.prim = prim;
+
+        for (i = 0; prim != NULL; i++, prim = prim->next) {
             prim->x0 = prim->x1 = self->posX.i.hi;
             prim->y0 = prim->y1 = self->posY.i.hi;
             prim->r0 = 64;
@@ -257,23 +219,22 @@ void EntityOlroxDrool(Entity* self) {
             prim->b0 = 255;
             prim->b1 = 16;
             prim->priority = self->zPriority + 1;
-            prim->drawMode |= (DRAW_TPAGE2 + DRAW_TPAGE + DRAW_COLORS +
-                               DRAW_UNK02 + DRAW_TRANSP);
-            prim = prim->next;
+            prim->drawMode |= DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
+                              DRAW_UNK02 | DRAW_TRANSP;
         }
         break;
 
     case 1:
         prim = self->ext.prim;
-        if (CheckColliderOffsets((s16*)g_olroxDroolCollOffsets, 0)) {
+        if (CheckColliderOffsets(g_olroxDroolCollOffsets, 0)) {
             prim->y1 += 2;
-            if (self->step_s == 0) {
+            if (!self->step_s) {
                 // When hitting the ground, a sizzling effect is made
                 EntityExplosionVariantsSpawner(self, 1, 2, 0, 0, 3, 0);
                 self->step_s = 1;
             }
         } else {
-            self->velocityY += FIX(0.015625);
+            self->velocityY += FIX(1.0 / 64);
             self->posY.val += self->velocityY;
             if ((prim->y0 - prim->y1) > 8) {
                 prim->y1 = prim->y0 - 8;
@@ -507,10 +468,10 @@ void EntityIntenseExplosion(Entity* self) {
         self->palette = PAL_FLAG(PAL_UNK_170);
         self->animSet = ANIMSET_DRA(5);
         self->animCurFrame = 1;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         if (self->params & 0xF0) {
             self->palette = PAL_FLAG(PAL_UNK_195);
-            self->drawMode = DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP;
         }
 
         if (self->params & 0xFF00) {
@@ -530,17 +491,15 @@ void EntityIntenseExplosion(Entity* self) {
     }
 }
 
-static u8 g_UnkEntityAnimData[] = {
-    2, 1, 2, 2, 2, 3, 2, 4, 2, 5, 4, 6, -1,
-};
+static u8 g_UnkEntityAnim[] = {2, 1, 2, 2, 2, 3, 2, 4, 2, 5, 4, 6, -1, 0};
 
 void InitializeUnkEntity(Entity* self) {
     if (!self->step) {
         InitializeEntity(g_EInitParticle);
         self->zPriority += 16;
         self->opacity = 0xF0;
-        self->scaleX = 0x01A0;
-        self->scaleY = 0x01A0;
+        self->scaleX = 0x1A0;
+        self->scaleY = 0x1A0;
         self->animSet = ANIMSET_DRA(8);
         self->animCurFrame = 1;
 
@@ -553,7 +512,7 @@ void InitializeUnkEntity(Entity* self) {
         self->step++;
     } else {
         MoveEntity();
-        if (!AnimateEntity(g_UnkEntityAnimData, self)) {
+        if (!AnimateEntity(g_UnkEntityAnim, self)) {
             DestroyEntity(self);
         }
     }
@@ -579,8 +538,8 @@ void func_801966B0(u16* sensors) {
     case 2:
         g_CurrentEntity->opacity += 2;
         if (g_CurrentEntity->opacity == 0xC0) {
-            g_CurrentEntity->drawFlags = FLAG_DRAW_DEFAULT;
-            g_CurrentEntity->drawMode = DRAW_DEFAULT;
+            g_CurrentEntity->drawFlags = ENTITY_DEFAULT;
+            g_CurrentEntity->blendMode = BLEND_NO;
             g_CurrentEntity->hitEffect = g_CurrentEntity->palette;
             g_CurrentEntity->step_s++;
             D_80199DE8 = 64;
@@ -603,6 +562,7 @@ void func_801966B0(u16* sensors) {
 #endif
 
 extern PfnEntityUpdate OVL_EXPORT(EntityUpdates)[];
+
 void MakeEntityFromId(u16 entityId, Entity* src, Entity* dst) {
     DestroyEntity(dst);
     dst->entityId = entityId;
@@ -648,12 +608,11 @@ void MakeExplosions(void) {
     }
 }
 
+extern u8 g_bigRedFireballAnim[];
+
 // Not used in any current overlays. Seems to resemble Gaibon's big fireball,
 // but is not actually called in NZ0. Will need to check future overlays for
 // any actual uses.
-
-extern u8 g_bigRedFireballAnim[];
-
 void EntityBigRedFireball(Entity* self) {
     s32 speedTemp;
 
@@ -661,8 +620,8 @@ void EntityBigRedFireball(Entity* self) {
         InitializeEntity(g_EInitParticle);
         self->animSet = ANIMSET_DRA(2);
         self->palette = PAL_FLAG(PAL_UNK_1B6);
-        self->drawFlags |= (FLAG_DRAW_ROTATE + FLAG_DRAW_OPACITY);
-        self->drawMode |= (DRAW_TPAGE + DRAW_TPAGE2);
+        self->drawFlags |= (ENTITY_ROTATE + ENTITY_OPACITY);
+        self->blendMode |= (BLEND_TRANSP + BLEND_ADD);
         self->opacity = 0x70;
         self->zPriority = 192;
 
@@ -731,7 +690,7 @@ static s16 g_QuadIndices1[] = {
 Primitive* UnkRecursivePrimFunc1(
     SVECTOR* p0, SVECTOR* p1, SVECTOR* p2, SVECTOR* p3, Primitive* srcPrim,
     s32 iterations, Primitive* dstPrim, u8* dataPtr) {
-    long p, flag;
+    long flag, p;
     s32 i;
     Primitive* tempPrim;
     s16* indices;
@@ -746,14 +705,13 @@ Primitive* UnkRecursivePrimFunc1(
     dataPtr += sizeof(Primitive);
     points = (SVECTOR*)dataPtr;
     dataPtr += sizeof(SVECTOR) * 9;
+    uv_values = (uvPair*)dataPtr;
+    dataPtr += sizeof(uvPair) * 10;
 
     points[0] = *p0;
     points[2] = *p1;
     points[6] = *p2;
     points[8] = *p3;
-
-    uv_values = (uvPair*)dataPtr;
-    dataPtr += sizeof(uvPair) * 10;
 
     points[1].vx = (points[0].vx + points[2].vx + 1) >> 1;
     points[1].vy = (points[0].vy + points[2].vy + 1) >> 1;
@@ -834,8 +792,9 @@ static s16 g_QuadIndices2[] = {
     1, 2, 4, 5, //top right quad
     3, 4, 6, 7, //bottom left quad
     4, 5, 7, 8, //bottom right quad
-#if !defined(STAGE_IS_NZ0) && !defined(STAGE_IS_NO1) &&                        \
-    !defined(STAGE_IS_CHI) && STAGE != STAGE_ST0 && !defined(STAGE_IS_LIB) && !defined(STAGE_IS_CAT)
+#if (!defined(STAGE_IS_NZ0) && !defined(STAGE_IS_NO1) &&                        \
+    !defined(STAGE_IS_CHI) && STAGE != STAGE_ST0 && !defined(STAGE_IS_LIB) && !defined(STAGE_IS_CAT) && \
+    !defined(BOSS_IS_BO0)) || (defined(BOSS_IS_BO0) && !defined(VERSION_PSP))
     0, 0,
 #endif
 #if defined(VERSION_BETA)
@@ -966,9 +925,8 @@ Primitive* UnkRecursivePrimFunc2(
 void ClutLerp(RECT* rect, u16 palIdxA, u16 palIdxB, s32 steps, u16 offset) {
     u16 buf[COLORS_PER_PAL];
     RECT bufRect;
-    s32 factor;
-    u32 t;
-    u32 r, g, b;
+    s32 t;
+    u32 r, g, b, a;
     s32 i, j;
     u16 *palA, *palB;
 
@@ -980,18 +938,16 @@ void ClutLerp(RECT* rect, u16 palIdxA, u16 palIdxB, s32 steps, u16 offset) {
     palB = &g_Clut[0][palIdxB * COLORS_PER_PAL];
 
     for (i = 0; i < steps; i++) {
-        factor = i * 4096 / steps;
+        t = i * FLT(1) / steps;
         for (j = 0; j < COLORS_PER_PAL; j++) {
-            r = (palA[j] & 0x1F) * (4096 - factor) + (palB[j] & 0x1F) * factor;
-            g = ((palA[j] >> 5) & 0x1F) * (4096 - factor) +
-                ((palB[j] >> 5) & 0x1F) * factor;
-            b = ((palA[j] >> 10) & 0x1F) * (4096 - factor) +
-                ((palB[j] >> 10) & 0x1F) * factor;
+            r = GET_RED(palA[j]) * (FLT(1) - t) + GET_RED(palB[j]) * t;
+            g = GET_GREEN(palA[j]) * (FLT(1) - t) + GET_GREEN(palB[j]) * t;
+            b = GET_BLUE(palA[j]) * (FLT(1) - t) + GET_BLUE(palB[j]) * t;
 
-            t = palA[j] & 0x8000;
-            t |= palB[j] & 0x8000;
+            a = palA[j] & ALPHA_MASK;
+            a |= palB[j] & ALPHA_MASK;
 
-            buf[j] = t | (r >> 12) | ((g >> 12) << 5) | ((b >> 12) << 10);
+            buf[j] = a | (r >> 12) | ((g >> 12) << 5) | ((b >> 12) << 10);
         }
 
         bufRect.y = rect->y + i;
@@ -1001,8 +957,7 @@ void ClutLerp(RECT* rect, u16 palIdxA, u16 palIdxB, s32 steps, u16 offset) {
 }
 
 void PlaySfxPositional(s16 sfxId) {
-    s32 posX;
-    s32 posY;
+    s32 posX, posY;
     s16 sfxPan;
     s16 sfxVol;
 

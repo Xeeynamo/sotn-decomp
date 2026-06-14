@@ -646,7 +646,7 @@ void EntityBladeMasterDeathExplosion(Entity* self) {
         self->pose = 0;
         self->poseTimer = 0;
         self->animSet = 2;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->velocityY = FIX(-3.0);
         return;
     }

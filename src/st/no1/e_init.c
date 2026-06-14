@@ -22,10 +22,10 @@ void OVL_EXPORT(EntityLockCamera)(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
-void NO1Unused_801B7D24(Entity* self);
+void func_us_801B7D24(Entity* self);
 void func_us_801B6490(Entity* self);
 void func_us_801B7188(Entity* self);
-void NO1Unused_801B7D2C(Entity* self);
+void func_us_801B7D2C(Entity* self);
 void EntityMouse(Entity* self);
 void EntityChair(Entity* self);
 void func_us_801B81E8(Entity* self);
@@ -73,7 +73,7 @@ void EntityBoneArcherArrow(Entity* self);
 void EntityBoneMusket(Entity* self);
 void func_us_801CF298(Entity* self);
 void EntitySwordLord(Entity* self);
-void func_us_801D04B8(Entity* self);
+void EntitySwordLordAttack(Entity* self);
 void EntityArmorLord(Entity* self);
 void func_us_801D348C(Entity* self);
 void EntityArmorLordFireWave(Entity* self);
@@ -94,7 +94,9 @@ void EntityMedusaHeadBlue(Entity* self);
 void EntityMedusaHeadYellow(Entity* self);
 void OVL_EXPORT(EntityBreakableDebris)(Entity* self);
 void EntityMistDoor(Entity* self);
+#ifndef VERSION_PSP
 void func_us_801C10F4(Entity* self);
+#endif
 
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x00 */ OVL_EXPORT(EntityBreakable),
@@ -118,10 +120,10 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x12 */ EntityUnkId13,
     /* 0x13 */ EntityExplosionVariants,
     /* 0x14 */ EntityGreyPuff,
-    /* 0x15 */ NO1Unused_801B7D24,
+    /* 0x15 */ func_us_801B7D24,
     /* 0x16 */ func_us_801B6490,
     /* 0x17 */ func_us_801B7188,
-    /* 0x18 */ NO1Unused_801B7D2C,
+    /* 0x18 */ func_us_801B7D2C,
     /* 0x19 */ EntityMouse,
     /* 0x1A */ EntityChair,
     /* 0x1B */ func_us_801B81E8,
@@ -169,7 +171,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x45 */ EntityBoneMusket,
     /* 0x46 */ func_us_801CF298,
     /* 0x47 */ EntitySwordLord,
-    /* 0x48 */ func_us_801D04B8,
+    /* 0x48 */ EntitySwordLordAttack,
     /* 0x49 */ EntityArmorLord,
     /* 0x4A */ func_us_801D348C,
     /* 0x4B */ EntityArmorLordFireWave,
@@ -190,7 +192,10 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x5A */ EntityMedusaHeadYellow,
     /* 0x5B */ OVL_EXPORT(EntityBreakableDebris),
     /* 0x5C */ EntityMistDoor,
-    /* 0x5D */ func_us_801C10F4};
+#ifndef VERSION_PSP
+    /* 0x5D */ func_us_801C10F4,
+#endif
+};
 
 EInit OVL_EXPORT(
     EInitBreakable) = {ANIMSET_DRA(0x03), 0x00, 0x00, 0x000, 0x000};
@@ -198,9 +203,9 @@ EInit g_EInitObtainable = {ANIMSET_DRA(0x03), 0x00, 0x00, 0x000, 0x001};
 EInit g_EInitParticle = {ANIMSET_DRA(0x03), 0x00, 0x00, 0x000, 0x002};
 EInit g_EInitSpawner = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x004};
 EInit g_EInitInteractable = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x005};
-EInit D_us_80180974 = {ANIMSET_OVL(0x05), 0x00, 0x24, 0x000, 0x003};
-EInit D_us_80180980 = {ANIMSET_DRA(0x02), 0x00, 0x48, 0x000, 0x05B};
-EInit D_us_8018098C = {ANIMSET_DRA(0x03), 0x00, 0x48, 0x000, 0x05C};
+EInit D_us_80180974 = {ANIMSET_OVL(0x05), 0x00, 0x24, 0x000, 0x003}; // unused
+EInit D_us_80180980 = {ANIMSET_DRA(0x02), 0x00, 0x48, 0x000, 0x05B}; // unused
+EInit D_us_8018098C = {ANIMSET_DRA(0x03), 0x00, 0x48, 0x000, 0x05C}; // unused
 EInit g_EInitUnkId13 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x002};
 EInit g_EInitLockCamera = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x001};
 EInit g_EInitCommon = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x003};
@@ -213,7 +218,7 @@ EInit D_us_801809F8 = {ANIMSET_OVL(0x01), 0x40, 0x00, 0x000, 0x005};
 EInit D_us_80180A04 = {ANIMSET_OVL(0x01), 0x4A, 0x00, 0x000, 0x005};
 EInit D_us_80180A10 = {ANIMSET_OVL(0x01), 0x5C, 0x00, 0x000, 0x005};
 EInit D_us_80180A1C = {ANIMSET_OVL(0x04), 0x01, 0x4A, 0x207, 0x005};
-EInit D_us_80180A28 = {ANIMSET_OVL(0x01), 0x4A, 0x00, 0x000, 0x002};
+EInit D_us_80180A28 = {ANIMSET_OVL(0x01), 0x4A, 0x00, 0x000, 0x002}; // unused
 EInit D_us_80180A34 = {ANIMSET_OVL(0x01), 0x67, 0x00, 0x000, 0x003};
 EInit D_us_80180A40 = {ANIMSET_OVL(0x01), 0x66, 0x00, 0x000, 0x005};
 EInit D_us_80180A4C = {ANIMSET_OVL(0x08), 0x00, 0x48, 0x20A, 0x003};
@@ -225,7 +230,7 @@ EInit D_us_80180A88 = {ANIMSET_OVL(0x06), 0x00, 0x4E, 0x213, 0x03E};
 EInit g_EInitBoneMusket = {ANIMSET_OVL(0x09), 0x00, 0x4C, 0x216, 0x066};
 EInit D_us_80180AA0 = {ANIMSET_OVL(0x09), 0x00, 0x4C, 0x216, 0x067};
 EInit g_EInitSwordLord = {ANIMSET_OVL(0x0A), 0x01, 0x50, 0x21A, 0x009};
-EInit D_us_80180AB8 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x00A};
+EInit g_EInitSwordLordAttack = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x00A};
 EInit g_EInitBoneArcher = {ANIMSET_OVL(0x07), 0x01, 0x4B, 0x215, 0x06C};
 EInit g_EInitBoneArcherArrow = {ANIMSET_OVL(0x07), 0x00, 0x4B, 0x215, 0x06D};
 EInit g_EInitArmorLord = {ANIMSET_OVL(0x0B), 0x01, 0x52, 0x21C, 0x022};

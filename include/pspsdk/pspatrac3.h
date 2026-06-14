@@ -82,9 +82,9 @@ int sceAtracSetDataAndGetID(void *buf, SceSize bufsize);
  * Decode a frame of data. 
  *
  * @param atracID - the atrac ID
- * @param outSamples - pointer to a buffer that receives the decoded data of the current frame
- * @param outN - pointer to a integer that receives the number of audio samples of the decoded frame
- * @param outEnd - pointer to a integer that receives a boolean value indicating if the decoded frame is the last one
+ * @param outAddr - pointer to a buffer that receives the decoded data of the current frame
+ * @param outSamples - pointer to a integer that receives the number of audio samples of the decoded frame
+ * @param outFinishFlag - pointer to a integer that receives a boolean value indicating if the decoded frame is the last one
  * @param outRemainFrame - pointer to a integer that receives either -1 if all at3 data is already on memory, 
  *  or the remaining (not decoded yet) frames at memory if not all at3 data is on memory
  *
@@ -92,7 +92,7 @@ int sceAtracSetDataAndGetID(void *buf, SceSize bufsize);
  * @return < 0 on error, otherwise 0
  *
 */
-int sceAtracDecodeData(int atracID, u16 *outSamples, int *outN, int *outEnd, int *outRemainFrame);
+int sceAtracDecodeData(SceInt32 atracID, SceShort16 *outAddr, SceUInt32 *outSamples, SceUInt32 *outFinishFlag, SceInt32 *outRemainFrame);
 
 /**
  * Gets the remaining (not decoded) number of frames

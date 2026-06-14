@@ -131,8 +131,8 @@ void EntityConfessionalGhost(Entity* self) {
             self->palette = PAL_CONFESSIONAL_GHOST;
         }
         self->opacity = 0;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
-        self->drawFlags |= FLAG_DRAW_OPACITY;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
+        self->drawFlags |= ENTITY_OPACITY;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -157,7 +157,7 @@ void EntityConfessionalGhost(Entity* self) {
 #ifdef VERSION_PSP
         self->ext.confessionalGhost.activateChime = false;
         if (self->params & CONFESSIONAL_GHOST_PARISHIONER) {
-            func_psp_0892A620(0, 1);
+            func_psp_0892A620(0, true);
         }
         break;
     // psx starts the chime in INIT, but pspeu starts it in READY
@@ -433,7 +433,7 @@ void EntityConfessionalBlades(Entity* self) {
         break;
     case CONFESSIONAL_BLADES_PRIEST_INIT:
         params = self->params;
-        self->posX.val += FIX(-2.5);
+        self->posX.val -= FIX(2.5);
         if (self->posX.i.hi < xyx_vals[params][2]) {
             self->posX.i.hi = xyx_vals[params][2];
             self->ext.confessionalGhost.timer = 96;
@@ -466,7 +466,7 @@ void EntityConfessionalBlades(Entity* self) {
             return;
         }
         params = self->params;
-        self->posX.val += FIX(-3.5);
+        self->posX.val -= FIX(3.5);
         if (self->posX.i.hi < xyx_vals[params][0]) {
             DestroyEntity(self);
         }
@@ -480,7 +480,7 @@ void EntityConfessionalBladeDebris(Entity* self) {
     if (!self->step) {
         InitializeEntity(g_EInitConfessionalBlades);
         self->animCurFrame = 42;
-        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->drawFlags |= ENTITY_ROTATE;
         self->zPriority = 158;
         if (self->params) {
             self->velocityX = (Random() << 8) + FIX(0.25);

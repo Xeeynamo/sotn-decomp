@@ -10,6 +10,7 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 	"io"
 	"path/filepath"
+	"strings"
 )
 
 const entryCount = 53 // the number seems to be fixed
@@ -31,7 +32,13 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 }
 
 func (h *handler) Build(e assets.BuildArgs) error {
-	return buildEntityLayouts(assetPath(e.AssetDir, e.Name), e.SrcDir, e.OvlName)
+	// If the layout is version specific, get the version name from e.Name
+	// Note: sotn.GetVersion() is not used in case VERSION=""
+	subDir := ""
+	if e.Name != "entity_layouts" {
+		subDir = strings.TrimSuffix(e.Name, "/entity_layouts")
+	}
+	return buildEntityLayouts(assetPath(e.AssetDir, e.Name), e.SrcDir, subDir, e.OvlName)
 }
 
 func assetPath(dir, name string) string {

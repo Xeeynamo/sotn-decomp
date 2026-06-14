@@ -2772,11 +2772,11 @@ void func_us_801B420C(Primitive* prim, Entity* arg1) {
         break;
     case INVENTORY_ACCESSORY:
         g_Status.equipment[ACCESSORY_1_SLOT] = itemId;
-        g_api.func_800F53A4();
+        g_api.MakeAll();
         func_us_801B40F0(stats + 1);
         func_us_801B4080(equipment);
         g_Status.equipment[ACCESSORY_2_SLOT] = itemId;
-        g_api.func_800F53A4();
+        g_api.MakeAll();
         i = 3;
         ptr = stats + 1;
         maxDigits = *ptr - g_Status.attackHands[0];
@@ -2806,10 +2806,10 @@ void func_us_801B420C(Primitive* prim, Entity* arg1) {
     case INVENTORY_RELIC:
         break;
     }
-    g_api.func_800F53A4();
+    g_api.MakeAll();
     func_us_801B40F0(stats + 1);
     func_us_801B4080(equipment);
-    g_api.func_800F53A4();
+    g_api.MakeAll();
     ptr = stats;
     for (i = 0; i < 3; i++) {
 #ifdef VERSION_PSP
@@ -3834,7 +3834,7 @@ void func_us_801B6124(Primitive* prim, Entity* arg1) {
         itemId = enemyTactics->itemId;
         itemMask = g_CastleFlags[(itemId >> 3) + ENEMY_TACTICS_180];
 #ifdef VERSION_PSP
-        if (D_psp_08C630D0) {
+        if (g_UnlockAllTactics) {
             itemMask |= (1 << (itemId & 7));
         }
 #endif
@@ -4016,7 +4016,7 @@ void func_us_801B6324(Entity* self) {
             for (i = 0; i < LEN(D_us_8018173C); i++) {
                 itemID = D_us_8018173C[i].itemId;
 #ifdef VERSION_PSP
-                if (D_psp_08C630D0) {
+                if (g_UnlockAllTactics) {
                     g_Settings.D_8003CB00 |= (1 << itemID);
                 }
 #endif
@@ -5506,7 +5506,7 @@ void func_us_801B8A00(Entity* self) {
 #ifdef VERSION_PSP
         switch (self->step_s) {
         case 0:
-            func_psp_0892A620(1, 1);
+            func_psp_0892A620(1, true);
             g_api.PlaySfx(SET_STOP_MUSIC);
             self->ext.et_801B6F30.unk86 = 1;
             self->step_s++;

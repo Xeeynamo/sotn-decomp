@@ -1898,7 +1898,7 @@ void OVL_EXPORT(Update)(void) {
     case Upd_Eng_257:
         func_801ADF94(0x81, 0);
         D_800978C4 = 0;
-        temp_s1 = TryLoadSaveData();
+        temp_s1 = TryLoadFromMemcard();
         if (temp_s1 != 0) {
             D_800978C4 = 1;
         }

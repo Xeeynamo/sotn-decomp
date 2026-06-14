@@ -56,7 +56,7 @@ enum SfxModes {
 #define SET_PAUSE_SFX_SCRIPTS 0xE
 #define SET_UNPAUSE_SFX_SCRIPTS 0xF
 #define SET_UNK_10 0x10
-#define SET_UNK_11 0x11
+#define SET_XA_PLAYBACK 0x11
 #define SET_UNK_12 0x12
 #define SET_UNK_13 0x13
 #define SET_UNK_80 0x80
@@ -79,7 +79,7 @@ enum SfxModes {
 #define CD_SOUND_COMMAND_8 8
 #define CD_SOUND_COMMAND_10 10
 #define CD_SOUND_COMMAND_12 12
-#define CD_SOUND_COMMAND_14 14
+#define CD_SOUND_START_XA_PLAYBACK 14
 #define CD_SOUND_COMMAND_16 16
 
 // XA music tracks
@@ -578,7 +578,7 @@ enum Sfx {
     /* 0x6CA */ SFX_FLEA_ARMOR_EXPLODE,
     /* 0x6CB */ SFX_RED_SKEL_COLLAPSE,
     /* 0x6CC */ SFX_RED_SKEL_REBUILD,
-    /* 0x6CD */ SFX_MULTI_NOISE_SWEEP_DOWN, // ARE only
+    /* 0x6CD */ SFX_BLADE_SOLDIER_CHARGE_STAB,
     /* 0x6CE */ SFX_CORNER_GUARD_DEATH,
     /* 0x6CF */ SFX_TOMBSTONE_MOVE,
     /* 0x6D0 */ SFX_FLEA_RIDER_EXPLODE,
@@ -633,7 +633,7 @@ enum Sfx {
     /* 0x6FD */ SFX_UNUSED_6FD,
     /* 0x6FE */ SFX_UNUSED_6FE,
     /* 0x6FF */ SFX_VO_RIC_DEATH,
-    /* 0x700 */ SFX_VO_RIC_HYDRO_STORM, // 0x700
+    /* 0x700 */ SFX_VO_RIC_HYDRO_STORM,
     /* 0x701 */ SFX_VO_RIC_PAIN_A,
     /* 0x702 */ SFX_VO_RIC_PAIN_B,
     /* 0x703 */ SFX_VO_RIC_PAIN_C,

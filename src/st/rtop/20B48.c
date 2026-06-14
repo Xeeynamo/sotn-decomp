@@ -111,7 +111,7 @@ void EntitySecretStairs(Entity* self) {
     case 2:
         self->rotate += 16;
         if (!self->rotate) {
-            self->drawFlags = FLAG_DRAW_DEFAULT;
+            self->drawFlags = ENTITY_DEFAULT;
             self->step++;
         }
         break;
@@ -402,7 +402,7 @@ void EntityTriangleElevator(Entity* self) {
                 ((offsetY < 0) &&
                  ((g_Player.vram_flag ^ TOUCHING_CEILING) & 2))) {
                 player->posY.i.hi += offsetY;
-                D_80097488.y.i.hi += offsetY;
+                g_unkGraphicsStruct.shoveY.i.hi += offsetY;
             }
         }
 
@@ -428,7 +428,7 @@ void EntityTriangleElevator(Entity* self) {
             self->posY.i.hi += offsetY;
             if (collision & 4) {
                 player->posY.i.hi += offsetY;
-                D_80097488.y.i.hi += offsetY;
+                g_unkGraphicsStruct.shoveY.i.hi += offsetY;
             }
             self->ext.topElevator.unk80--;
         }
@@ -626,7 +626,7 @@ void func_us_801A1940(Entity* self) {
                 ((offsetY < 0) &&
                  ((g_Player.vram_flag ^ TOUCHING_CEILING) & 2))) {
                 player->posY.i.hi += offsetY;
-                D_80097488.y.i.hi += offsetY;
+                g_unkGraphicsStruct.shoveY.i.hi += offsetY;
             }
         }
 
@@ -652,7 +652,7 @@ void func_us_801A1940(Entity* self) {
             self->posY.i.hi += offsetY;
             if (collision & 4) {
                 player->posY.i.hi += offsetY;
-                D_80097488.y.i.hi += offsetY;
+                g_unkGraphicsStruct.shoveY.i.hi += offsetY;
             }
             self->ext.topElevator.unk80--;
         }
@@ -734,7 +734,7 @@ void func_us_801A21F8(Entity* self) {
     case 3:
         self->animSet = PAL_FLAG(1);
         self->animCurFrame = 0xB;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->palette = 0;
         self->zPriority = 0x70;
         self->step++;

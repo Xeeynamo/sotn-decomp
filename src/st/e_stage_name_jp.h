@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+extern EInit g_EInitInteractable;
+
 #ifndef STAGE_FLAG
 #define STAGE_FLAG NULL_STAGE_FLAG
 #endif
@@ -52,12 +54,10 @@ enum StageNameSubSteps {
     STAGE_NAME_HOLD_TEXT,
 };
 
-extern EInit g_EInitInteractable;
-
 // While all stages have EntityStageNamePopup, only stages that display the
 // banner use these functions
 #ifdef STAGE_NAME_LOAD_GFX
-extern u32 D_91CE570; // dra bss
+extern s32 D_psp_091CE570; // dra bss
 
 static u_long* gfxBank[] = {
     (u_long*)GFX_BANK_COMPRESSED,
@@ -91,7 +91,7 @@ void EntityStageNamePopup(Entity* self) {
     s16 boxRightX;
 
 #ifdef STAGE_NAME_LOAD_GFX
-    if (D_91CE570) {
+    if (D_psp_091CE570) {
         LoadStageNameGraphics();
     }
 #endif

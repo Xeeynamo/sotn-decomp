@@ -32,7 +32,7 @@ bool RicCheckInput(s32 checks) {
             velYChange = FIX(28.0 / 128);
         }
     }
-    if (*D_80097448 > 0x28) {
+    if (g_unkGraphicsStruct.D_80097448 > 0x28) {
         velYChange /= 4;
     }
     PLAYER.velocityY += velYChange;

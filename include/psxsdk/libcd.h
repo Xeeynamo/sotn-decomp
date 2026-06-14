@@ -41,54 +41,47 @@ typedef struct {
 
 /*
  * CD-ROM Primitive Commands
+ * Used with CdControl, CdControlB, CdControlF
+ * B: blocking
+ * N: non-blocking
  */
-#define CdlSync 0x00
-#define CdlNop 0x01
-#define CdlSetloc 0x02
-#define CdlPlay 0x03
-#define CdlForward 0x04
-#define CdlBackward 0x05
-#define CdlReadN 0x06
-#define CdlStandby 0x07
-#define CdlStop 0x08
-#define CdlPause 0x09
-#define CdlReset 0x0A
-#define CdlMute 0x0B
-#define CdlDemute 0x0C
-#define CdlSetfilter 0x0D
-#define CdlSetmode 0x0E
-#define CdlGetparam 0x0F
-#define CdlGetlocL 0x10
-#define CdlGetlocP 0x11
-#define CdlGetTN 0x13
-#define CdlGetTD 0x14
-#define CdlSeekL 0x15
-#define CdlSeekP 0x16
-#define CdlReadS 0x1B
+#define CdlSync 0x00      // ?
+#define CdlNop 0x01       // B, NOP (No Operation)
+#define CdlSetloc 0x02    // B, Set the seek target position
+#define CdlPlay 0x03      // B, Commence CD-DA play
+#define CdlForward 0x04   // B, Forward
+#define CdlBackward 0x05  // B, Rewind
+#define CdlReadN 0x06     // B, Start data read (with retry)
+#define CdlStandby 0x07   // N, Stand by with disk rotating
+#define CdlStop 0x08      // N, Disk stopped
+#define CdlPause 0x09     // N, Pause at current position
+#define CdlReset 0x0A     // ?,
+#define CdlMute 0x0B      // B, CD-DA mute
+#define CdlDemute 0x0C    // B, Cancel CD-DA mute
+#define CdlSetfilter 0x0D // B, Choose ADPCM play sector
+#define CdlSetmode 0x0E   // B, See CD-ROM Mode section below
+#define CdlGetparam 0x0F  // B, Gets current CD subsystem mode
+#define CdlGetlocL 0x10   // B, Get logical location (data sector)
+#define CdlGetlocP 0x11   // B, Get physical location (audio sector)
+#define CdlGetTN 0x13     // ?,
+#define CdlGetTD 0x14     // ?,
+#define CdlSeekL 0x15     // N, Logical seek (data sector seek)
+#define CdlSeekP 0x16     // N, Physical seek (audio sector seek)
+#define CdlReadS 0x1B     // B, Commence data read (no retry)
 
 /*
  * CD-ROM Mode (used int CdlSetmode)
  */
-// Normal Streaming
-#define CdlModeStream 0x100
-// SUB HEADER information includes
-#define CdlModeStream2 0x120
-// normal speed	1: double speed
-#define CdlModeSpeed 0x80
-// 0: ADPCM off		1: ADPCM on
-#define CdlModeRT 0x40
-// 2048 byte		1: 2340byte
-#define CdlModeSize1 0x20
-// 0: -			1: 2328byte
-#define CdlModeSize0 0x10
-// 0: Channel off	1: Channel on
-#define CdlModeSF 0x08
-// 0: Report off	1: Report on
-#define CdlModeRept 0x04
-// AutoPause off	1: AutoPause on
-#define CdlModeAP 0x02
-// 0: CD-DA off		1: CD-DA on
-#define CdlModeDA 0x01
+#define CdlModeStream 0x100  // Normal Streaming
+#define CdlModeStream2 0x120 // SUB HEADER information includes
+#define CdlModeSpeed 0x80    // normal speed    1: double speed
+#define CdlModeRT 0x40       // 0: ADPCM off    1: ADPCM on
+#define CdlModeSize1 0x20    // 2048 byte       1: 2340byte
+#define CdlModeSize0 0x10    // 0: -            1: 2328byte
+#define CdlModeSF 0x08       // 0: Channel off   1: Channel on
+#define CdlModeRept 0x04     // 0: Report off   1: Report on
+#define CdlModeAP 0x02       // AutoPause off   1: AutoPause on
+#define CdlModeDA 0x01       // 0: CD-DA off    1: CD-DA on
 
 #define CdlModeSpeedNormal 0
 #define CdlModeSpeedDouble 1

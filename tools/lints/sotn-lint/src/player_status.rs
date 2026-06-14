@@ -17,11 +17,11 @@ lazy_static! {
         (1 << 5, "PLAYER_STATUS_CROUCH"),
         (1 << 6, "PLAYER_STATUS_UNK40"),
         (1 << 7, "PLAYER_STATUS_STONE"),
-        (1 << 8, "PLAYER_STATUS_UNK100"),
+        (1 << 8, "PLAYER_STATUS_INVINCIBLE"),
         (1 << 9, "PLAYER_STATUS_UNK200"),
         (1 << 10, "PLAYER_STATUS_UNK400"),
-        (1 << 11, "PLAYER_STATUS_UNK800"),
-        (1 << 12, "PLAYER_STATUS_UNK1000"),
+        (1 << 11, "PLAYER_STATUS_SUBWPN"),
+        (1 << 12, "PLAYER_STATUS_SPELLCAST"),
         (1 << 13, "PLAYER_STATUS_UNK2000"),
         (1 << 14, "PLAYER_STATUS_POISON"),
         (1 << 15, "PLAYER_STATUS_CURSE"),
@@ -127,7 +127,7 @@ mod tests {
     #[test]
     fn test_player_status_clear_many() {
         let input_line = "g_Player.status &= 0xFFFF6FFF;";
-        let expected_line = "g_Player.status &= ~(PLAYER_STATUS_CURSE | PLAYER_STATUS_UNK1000);";
+        let expected_line = "g_Player.status &= ~(PLAYER_STATUS_CURSE | PLAYER_STATUS_SPELLCAST);";
         let result = DMT.transform_line(input_line);
         assert_eq!(result, expected_line)
     }
@@ -135,7 +135,7 @@ mod tests {
     #[test]
     fn test_player_status_inverted_many() {
         let input_line = "g_Player.status &= ~0x300;";
-        let expected_line = "g_Player.status &= ~(PLAYER_STATUS_UNK200 | PLAYER_STATUS_UNK100);";
+        let expected_line = "g_Player.status &= ~(PLAYER_STATUS_UNK200 | PLAYER_STATUS_INVINCIBLE);";
         let result = DMT.transform_line(input_line);
         assert_eq!(result, expected_line)
     }

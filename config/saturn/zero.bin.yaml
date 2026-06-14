@@ -20,6 +20,16 @@ segments:
       - start: 0x58
         type: c
         file: zero
+        end: 0xA5C3
+
+      - start: 0xA5C4
+        type: data
+        file: zero
+        end: 0xADE4
+
+      - start: 0xADE5
+        type: c
+        file: zero
         end: 0xae07
   
       # ratan2
@@ -65,64 +75,68 @@ segments:
       - start: 0xD9EC
         type: c
         file: zero
-        end: 0x17233
+        end: 0x14647
+
+      - start: 0x14648
+        type: c
+        file: lib/snd
+        end: 0x14FF3
+
+      - start: 0x14FF4
+        type: c
+        file: zero_2
+        end: 0x17213
 
       # DGFS
-      - start: 0x17234
+      - start: 0x17214
         type: c
         file: lib/gfs
-        end: 0x1D867
+        end: 0x1D76B
 
-      # SEGA_SPR.A
-      - start: 0x1D868
+      # SPR_1C
+      - start: 0x1D76C
         type: c
-        file: lib/spr
+        file: lib/spr/spr_1c
+        end: 0x1E0E3
+      # SPR_2C
+      - start: 0x1E0E4
+        type: c
+        file: lib/spr/spr_2c
+        end: 0x1F087
+      # SPR_SLV
+      - start: 0x1F088
+        type: c
+        file: lib/spr/spr_slv
+        end: 0x1F0CF
+      # SPR_2A.SRC
+      - start: 0x1F0D0
+        type: data
+        file: lib/spr/spr_slv
         end: 0x1F313
 
-      # after SEGA_SPR.A
+      # DMA_CPUM
       - start: 0x1F314
-        type: data
-        file: lib/spr
+        type: c
+        file: lib/dma/dma_cpum
         end: 0x1F473
-
-      # DMA
+      # DMA_SCU1
       - start: 0x1F474
         type: c
-        file: lib/dma
-        end: 0x1F69B
-
-      # splitter bug here
-      - start: 0x1F69C
-        type: data
-        file: lib/dma
-        end: 0x1F8CF
-
-      # continue DMA
-      - start: 0x1F8D0
+        file: lib/dma/dma_scu1
+        end: 0x1F813
+      # DMA_SCU0
+      - start: 0x1F814
         type: c
-        file: lib/dma
-        end: 0x1FB7F
-
-      # splitter bug
-      - start: 0x1FB80
-        type: data
-        file: lib/dma
-        end: 0x1FD5F
-
-      # continue DMA
-      - start: 0x1FD60
+        file: lib/dma/dma_scu0
+        end: 0x1FCDB
+      # DMA_CPU0
+      - start: 0x1FCDC
         type: c
-        file: lib/dma
-        end: 0x1FFD7
+        file: lib/dma/dma_cpu0
+        end: 0x20007
 
-      # after DMA
-      - start: 0x1FFD8
-        type: data
-        file: lib/dma
-        end: 0x203C3
-    
       # SEGA_SCL.A
-      - start: 0x203C4
+      - start: 0x20008
         type: c
         file: lib/scl
         end: 0x26B1B
@@ -144,110 +158,54 @@ segments:
         file: lib/csh
         end: 0x27B17
 
-      # after SEGA_CSH.A
-      - start: 0x27B18
-        type: data
-        file: lib/csh
-        end: 0x28B8B
-
-
       # SEGA_PER.A
-      - start: 0x28B8C
+      - start: 0x27B18
         type: c
         file: lib/per
-        end: 0x28F87
+        end: 0x29373
 
       # after PER
-      - start: 0x28F88
+      - start: 0x29374
         type: data
         file: lib/per
-        end: 0x295DF
-
+        end: 0x29423
 
       # CDC
-      - start: 0x295E0
+      - start: 0x29424
         type: c
         file: lib/cdc
-        end: 0x2B41D
+        end: 0x2B4CF
 
-      # after CDC
-      - start: 0x2B41E
-        type: data
-        file: lib/cdc
-        end: 0x2B5B7
-
-
-      # SEGA_MTH.A
-      # _MTH_MoveMatrix (hasm)
-      - start: 0x2B5B8
+      # MTH_FIXD.SRC
+      - start: 0x2B4D0
         type: data
         file: lib/mth
-        end: 0x2B611
-      # _MTH_RotateMatrixX (hasm)
-      - start: 0x2B612
+        end: 0x2B573
+      # MTH_MTRX.SRC
+      - start: 0x2B574
         type: data
         file: lib/mth
-        end: 0x2B6D7
-      # ??? (gap)
-      - start: 0x2B6D8
-        type: data
-        file: lib/mth
-        end: 0x2B7BB        
-      # _MTH_RotateMatrixZ (hasm)
-      - start: 0x2B7BC
-        type: data
-        file: lib/mth
-        end: 0x2B88B
-      # gap
-      - start: 0x2B88C
-        type: data
-        file: lib/mth
-        end: 0x2B8A1
-      # _MTH_MulMatrix (hasm)
-      - start: 0x2B8A2
-        type: data
-        file: lib/mth
-        end: 0x2B9DB
-      # gap
-      - start: 0x2B9DC
-        type: data
-        file: lib/mth
-        end: 0x2B9DB
-      # _MTH_CoordTrans (hasm)
-      - start: 0x2B9DC
-        type: data
-        file: lib/mth
-        end: 0x2BA27
-      # _MTH_NormalTrans (hasm)
-      - start: 0x2BA28
-        type: data
-        file: lib/mth
-        end: 0x2BA6B     
-      # gap  
+        end: 0x2BA6B
+      # MTH_PS2D.SRC
       - start: 0x2BA6C
         type: data
         file: lib/mth
-        end: 0x2BADB
-      # _MTH_ComputeBright
-      - start: 0x2BADC
-        type: data
-        file: lib/mth
         end: 0x2BB03
-      # SINTBL etc
+      # MTH_TRI.SRC
       - start: 0x2BB04
         type: data
         file: lib/mth
-        end: 0x2C1A7     
-      # _MTH_Hypot (C) 
-      - start: 0x2C1A8
+        end: 0x2C103
+      # MTH_CURV.C
+      - start: 0x2C104
         type: c
         file: lib/mth
         end: 0x2C307
 
-      # after SEGA_MTH.A
+      # INT_MAIN
       - start: 0x2C308
-        type: data
-        file: lib/mth
+        type: c
+        file: lib/int
         end: 0x2C363
 
       # _bup_version
@@ -281,6 +239,18 @@ segments:
 
       # post-SYS
       - start: 0x2CB74
+        type: data
+        file: lib/sys
+        end: 0x369FB
+
+      # 68k sound driver
+      - start: 0x369FC
+        type: data
+        file: lib/sys
+        end: 0x3D1EF
+
+      # post-SYS
+      - start: 0x3D1F0
         type: data
         file: lib/sys
         end: 0x4C560

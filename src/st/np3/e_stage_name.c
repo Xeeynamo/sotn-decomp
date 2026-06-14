@@ -7,6 +7,6 @@
 #include "../e_stage_name_us.h"
 #endif
 
-#ifdef VERSION_PSP
+#if defined(VERSION_PSP) || defined(VERSION_HD)
 #include "../e_stage_name_jp.h"
 #endif

@@ -1,5 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+static AnimationFrame D_us_80180F8C[] = {
+    {8, 8}, {8, 9}, {8, 10}, {8, 11}, {-1, 0}};
+
 // check if "sit" has been triggered
 static s32 func_us_801BEDD8(Entity* self) {
     s16 offsetX;
@@ -82,11 +85,11 @@ void EntityChair(Entity* self) {
 #endif
 }
 
-static AnimationFrame D_us_80180F8C[] = {
-    {8, 8}, {8, 9}, {8, 10}, {8, 11}, {-1, 0}};
-
 void func_us_801B81E8(Entity* self) {
-    if (self->ext.chair.unkEntity->step != 4) {
+    Entity* tempEntity;
+
+    tempEntity = self->ext.chair.unkEntity;
+    if (tempEntity->step != 4) {
         DestroyEntity(self);
         return;
     }
@@ -97,16 +100,16 @@ void func_us_801B81E8(Entity* self) {
         self->velocityY = FIX(-3.0 / 8.0);
         self->velocityX = FIX(0.25);
         if (self->facingLeft) {
-            self->velocityX = -self->velocityX;
+            self->velocityX = -FIX(0.25);
         }
         self->unk5A = 0x20;
         self->palette = PAL_FLAG(PAL_UNK_19F);
-        self->anim = D_us_80180F8C;
         self->pose = 0;
         self->poseTimer = 0;
-        self->facingLeft = false;
+        self->anim = D_us_80180F8C;
         self->posY.i.hi -= 16;
         self->posX.val += self->velocityX << 5;
+        self->facingLeft = false;
         break;
 
     case 1:

@@ -3,14 +3,15 @@
 #include "inc_asm.h"
 #include "sattypes.h"
 #include "lib/scl.h"
+#include "lib/sys.h"
 
 #define _SPR2_
-#include "lib/spr.h"
+#include "lib/spr/spr.h"
 
 // func_06004080
 void entrypoint(void) {
     func_06030df0();
-    Scl_s_reg.tvmode = Scl_s_reg.tvmode & 0x7eff;
+    Scl_s_reg.tvmode &= 0x7EFF;
     SclProcess = 1;
     func_060044D0();
     DAT_0605cea2 = 0;
@@ -20,7 +21,173 @@ void entrypoint(void) {
     } while (true);
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60040D8, func_060040D8);
+void func_0600456c();
+void SetVblank();
+void ReturnToGame();
+void func_06004f50();
+void func_06005310();
+void func_0600652C();
+void func_06007d54();
+void func_06007e14();
+void func_06008264();
+void func_06008298();
+void func_06008a70();
+void func_06008d04();
+void func_06009838();
+void func_0600d8bc();
+void MoviePRGClear();
+void func_06010400();
+void PlaySfx();
+void func_06012fb4();
+void SPR_WaitDrawEnd();
+void SCL_Vdp2Init();
+void SCL_DisplayFrame();
+void func_06032e68();
+extern s32 DAT_06057f34;
+extern u16 DAT_0605cea0;
+extern u16 DAT_0605cea2;
+extern s32 DAT_0605d7f0;
+extern s32 DAT_0605d7f8;
+void (*func_06064580)();
+void (*func_060645e0)();
+void (*func_06064614)();
+void (*func_0606463c)();
+void (*func_06064644)();
+void (*func_06064674)();
+void (*func_06064688)();
+void (*func_0606468c)();
+s32 (*func_06064690)();
+
+void func_060040d8(void) {
+    g_Timer++;
+    func_06007d54();
+    switch (DAT_0605cea2) {
+    case 0:
+        func_0600456c();
+        DAT_0605d7f8 = 0;
+        func_06004f50(0x20);
+        DAT_0605cea0++;
+        break;
+    case 6:
+        if (DAT_0605cea0 == 0) {
+            func_06005328();
+            DAT_0605cea0++;
+            Scl_s_reg.tvmode |= 0x8000;
+            SclProcess = 1;
+        }
+        func_060645e0();
+        break;
+    case 2:
+        if (DAT_0605cea0 == 0) {
+            func_06005328();
+            DAT_0605cea0++;
+        }
+        func_06064688();
+        func_06008a70();
+        break;
+    case 3:
+        func_0606468c();
+        break;
+    case 7:
+        func_06064614();
+        func_06008a70();
+        break;
+    case 4:
+        if (DAT_0605cea0 == 0) {
+            func_06005328();
+            DAT_0605cea0++;
+        }
+        func_06064674();
+        break;
+    case 8:
+        if (DAT_0605cea0 == 0) {
+            func_06005328();
+            DAT_0605cea0++;
+        }
+        func_06064580();
+        break;
+    case 0x11:
+        if (*((u32*)&DAT_0605cea0) == 0x11) {
+            if (func_06005328() == 0) {
+                DAT_0605cea0++;
+            }
+        } else {
+            func_06009838();
+            func_0606463c();
+            func_06008a70();
+        }
+        break;
+    case 5:
+        if (DAT_0605cea0 == 0) {
+            func_06008d04(0, 2);
+            func_06005328();
+            DAT_0605cea0++;
+        }
+        func_06064644();
+        func_06008a70();
+        break;
+    case 0x20:
+        func_06007e14();
+        Scl_s_reg.dispenbl &= 0xFFC0;
+        SclProcess = 1;
+        Scl_s_reg.tvmode &= 0x7EFF;
+        SclProcess = 1;
+        InitializePads();
+        SPR_WaitDrawEnd();
+        ClearFrameBuffer(0x8000);
+        SCL_DisplayFrame();
+        ClearFrameBuffer(0x8000);
+        SetVblank(1);
+        DAT_06057f34 = 0;
+        MoviePRGClear();
+        func_06005328();
+        DAT_06057f34 = func_06064690();
+        if ((DAT_06057f34 == 2) && (DAT_0605d7f8 == 0)) {
+            SYS_EXECDMP();
+        }
+        Scl_s_reg.tvmode &= 0x7EFF;
+        SclProcess = 1;
+        SCL_DisplayFrame();
+        SCL_Vdp2Init();
+        func_06011ce4();
+        ReturnToGame();
+        func_06004f50(0x31);
+        func_06007d54();
+        break;
+    case 0x31:
+        DAT_0605d7f0 = 1;
+        func_0600d8bc();
+        break;
+    }
+    if (func_0600fb4c() != 0) {
+        if (DAT_0605cea2 == 6) {
+            SYS_EXECDMP();
+        } else {
+            PlaySfx(0xF000000B);
+            while (func_06013320() == 0) {
+                func_06010400();
+                SCL_DisplayFrame();
+            }
+            func_06012fb4();
+            func_0600652C();
+            func_0601333c();
+            if (DAT_0605cea2 == 2) {
+                SYS_EXECDMP();
+            }
+        }
+        func_06008d04(0, 4);
+        func_06004f50(0x30);
+    }
+    func_06010400();
+    func_06007e14();
+    func_06005310();
+    SPR_WaitDrawEnd();
+    func_06008264();
+    SCL_DisplayFrame();
+    func_06008298();
+    func_06032e68();
+}
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60044D0, func_060044D0);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600456C, func_0600456C);
 
@@ -34,45 +201,37 @@ INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f6004A46, func_06004A46);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004B20, func_06004B20);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004C14, func_06004C14);
 
-s16 d_0605C676;
-s32 d_060505E8[];
+s32 g_PadsRepeatTimer[];
 
-void _func_06004C44(void) {
-    u8* puVar2;
-    int i;
-    d_0605C676 = 0;
-    puVar2 = d_060505E8;
+// func_06004C44
+void ResetPadsRepeat(void) {
+    u8* ptr;
+    s32 i;
+
+    g_pads[0].repeat = 0;
+    ptr = g_PadsRepeatTimer;
     for (i = 0; i < 0x10; i++) {
-        *puVar2++ = 0x10;
+        *ptr++ = 0x10;
     }
 }
 
 // _REPEAT_PAD
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004C70, func_06004C70);
 
-extern s16 d_0605C670[];
-void _func_06004CDC(void) {
-    s16* puVar1;
-    s16* puVar2;
-    s16* puVar3;
-
-    puVar1 = &d_0605C670[0];
-    puVar2 = &d_0605C670[1];
-    puVar3 = &d_0605C670[2];
-    d_0605C670[3] = 0;
-    *puVar3 = 0;
-    *puVar1 = 0;
-    *puVar2 = 0;
+// func_06004CDC
+void InitializePads(void) {
+    g_pads[0].previous = g_pads[0].pressed = g_pads[0].tapped =
+        g_pads[0].repeat = 0;
 }
 
-// _SET_VBLANK
+// SET_VBLANK
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004D00, func_06004D00);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004D84, func_06004D84);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004DE8, func_06004DE8);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004E50, func_06004E50);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004E94, func_06004E94);
 
-// _RETURN_TO_GAME
+// RETURN_TO_GAME
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004EF0, func_06004EF0);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004F50, func_06004F50);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6005208, func_06005208);
@@ -283,11 +442,10 @@ void FUN_06007eb8(s16 param_1) {
         param_1, d_0605AEA0[0], d_0605AEA0[1], d_0605AEA0[2], d_0605AEA0[3]);
 }
 
-void func_06024088();
 void func_06008134();
 
 void FUN_06007f04(void) {
-    func_06024088();
+    SCL_Vdp2Init();
     SCL_SetDisplayMode(0, 1, 0);
     SPR_2FrameChgIntr(-1);
     SclPriBuffDirty.SclColOffset = 1;
@@ -611,7 +769,7 @@ void func_0600C0FC(void) { DAT_060645D0->unk0->unk8 = 0xc; }
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600C114, func_0600C114);
 
 void func_0600C18C(void) {
-    DAT_0605AEA8 = 0x10;
+    d_0605AEA8 = 0x10;
     return;
 }
 
@@ -636,7 +794,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600C818, func_0600C818);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600C880, func_0600C880);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600C99C, func_0600C99C);
 
-// _ClearFrameBuffer
+// ClearFrameBuffer
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600CAB8, func_0600CAB8);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600CB04, func_0600CB04);
 INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f600CB26, func_0600CB26);
@@ -666,8 +824,8 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600D6C0, func_0600D6C0);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600D6EC, func_0600D6EC);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600D8BC, func_0600D8BC);
 
-// _MOVIE_PRG_CLEAR
-void func_0600DA90(void) { memset(0x06066000, 0, 0x9A000); }
+// original name: MOVIE_PRG_CLEAR
+void MoviePRGClear(void) { memset(0x06066000, 0, 0x9A000); }
 
 void func_0600DAB4(void) { func_0600DACC(); }
 
@@ -687,18 +845,14 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600DE38, func_0600DE38);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600DFC0, func_0600DFC0);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600E01C, func_0600E01C);
 
-void func_0600E050(struct Unk0600E050* param_1, short param_2, short param_3)
-
-{
+void func_0600E050(struct Unk0600E050* param_1, short param_2, short param_3) {
     param_1->unkc = param_2 + param_1->unkc;
     param_1->unke = param_3 + param_1->unke;
 }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600E070, func_0600E070);
 
-void func_0600E0A4(struct Unk0600E050* param_1, short param_2, short param_3)
-
-{
+void func_0600E0A4(struct Unk0600E050* param_1, short param_2, short param_3) {
     param_1->unk4 = param_2 + param_1->unk4;
     param_1->unk8 = param_3 + param_1->unk8;
 }
@@ -721,10 +875,158 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600E51C, func_0600E51C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600E5A4, func_0600E5A4);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600E61C, func_0600E61C);
 
-s32 func_06030184(s32);
-s32 func_0600EE64(s32 param_1) { return func_06030184(param_1 << 4) >> 4; }
+const short ratan_tbl[] = {
+    0x000, 0x000, 0x001, 0x001, 0x002, 0x003, 0x003, 0x004, 0x005, 0x005, 0x006,
+    0x007, 0x007, 0x008, 0x008, 0x009, 0x00A, 0x00A, 0x00B, 0x00C, 0x00C, 0x00D,
+    0x00E, 0x00E, 0x00F, 0x00F, 0x010, 0x011, 0x011, 0x012, 0x013, 0x013, 0x014,
+    0x015, 0x015, 0x016, 0x016, 0x017, 0x018, 0x018, 0x019, 0x01A, 0x01A, 0x01B,
+    0x01B, 0x01C, 0x01D, 0x01D, 0x01E, 0x01F, 0x01F, 0x020, 0x021, 0x021, 0x022,
+    0x022, 0x023, 0x024, 0x024, 0x025, 0x026, 0x026, 0x027, 0x028, 0x028, 0x029,
+    0x029, 0x02A, 0x02B, 0x02B, 0x02C, 0x02D, 0x02D, 0x02E, 0x02F, 0x02F, 0x030,
+    0x030, 0x031, 0x032, 0x032, 0x033, 0x034, 0x034, 0x035, 0x035, 0x036, 0x037,
+    0x037, 0x038, 0x039, 0x039, 0x03A, 0x03B, 0x03B, 0x03C, 0x03C, 0x03D, 0x03E,
+    0x03E, 0x03F, 0x040, 0x040, 0x041, 0x041, 0x042, 0x043, 0x043, 0x044, 0x045,
+    0x045, 0x046, 0x047, 0x047, 0x048, 0x048, 0x049, 0x04A, 0x04A, 0x04B, 0x04C,
+    0x04C, 0x04D, 0x04D, 0x04E, 0x04F, 0x04F, 0x050, 0x051, 0x051, 0x052, 0x052,
+    0x053, 0x054, 0x054, 0x055, 0x056, 0x056, 0x057, 0x057, 0x058, 0x059, 0x059,
+    0x05A, 0x05B, 0x05B, 0x05C, 0x05C, 0x05D, 0x05E, 0x05E, 0x05F, 0x060, 0x060,
+    0x061, 0x061, 0x062, 0x063, 0x063, 0x064, 0x065, 0x065, 0x066, 0x066, 0x067,
+    0x068, 0x068, 0x069, 0x06A, 0x06A, 0x06B, 0x06B, 0x06C, 0x06D, 0x06D, 0x06E,
+    0x06E, 0x06F, 0x070, 0x070, 0x071, 0x072, 0x072, 0x073, 0x073, 0x074, 0x075,
+    0x075, 0x076, 0x076, 0x077, 0x078, 0x078, 0x079, 0x07A, 0x07A, 0x07B, 0x07B,
+    0x07C, 0x07D, 0x07D, 0x07E, 0x07E, 0x07F, 0x080, 0x080, 0x081, 0x082, 0x082,
+    0x083, 0x083, 0x084, 0x085, 0x085, 0x086, 0x086, 0x087, 0x088, 0x088, 0x089,
+    0x089, 0x08A, 0x08B, 0x08B, 0x08C, 0x08C, 0x08D, 0x08E, 0x08E, 0x08F, 0x090,
+    0x090, 0x091, 0x091, 0x092, 0x093, 0x093, 0x094, 0x094, 0x095, 0x096, 0x096,
+    0x097, 0x097, 0x098, 0x099, 0x099, 0x09A, 0x09A, 0x09B, 0x09C, 0x09C, 0x09D,
+    0x09D, 0x09E, 0x09F, 0x09F, 0x0A0, 0x0A0, 0x0A1, 0x0A2, 0x0A2, 0x0A3, 0x0A3,
+    0x0A4, 0x0A5, 0x0A5, 0x0A6, 0x0A6, 0x0A7, 0x0A8, 0x0A8, 0x0A9, 0x0A9, 0x0AA,
+    0x0AB, 0x0AB, 0x0AC, 0x0AC, 0x0AD, 0x0AE, 0x0AE, 0x0AF, 0x0AF, 0x0B0, 0x0B0,
+    0x0B1, 0x0B2, 0x0B2, 0x0B3, 0x0B3, 0x0B4, 0x0B5, 0x0B5, 0x0B6, 0x0B6, 0x0B7,
+    0x0B8, 0x0B8, 0x0B9, 0x0B9, 0x0BA, 0x0BA, 0x0BB, 0x0BC, 0x0BC, 0x0BD, 0x0BD,
+    0x0BE, 0x0BF, 0x0BF, 0x0C0, 0x0C0, 0x0C1, 0x0C1, 0x0C2, 0x0C3, 0x0C3, 0x0C4,
+    0x0C4, 0x0C5, 0x0C6, 0x0C6, 0x0C7, 0x0C7, 0x0C8, 0x0C8, 0x0C9, 0x0CA, 0x0CA,
+    0x0CB, 0x0CB, 0x0CC, 0x0CC, 0x0CD, 0x0CE, 0x0CE, 0x0CF, 0x0CF, 0x0D0, 0x0D0,
+    0x0D1, 0x0D2, 0x0D2, 0x0D3, 0x0D3, 0x0D4, 0x0D4, 0x0D5, 0x0D6, 0x0D6, 0x0D7,
+    0x0D7, 0x0D8, 0x0D8, 0x0D9, 0x0DA, 0x0DA, 0x0DB, 0x0DB, 0x0DC, 0x0DC, 0x0DD,
+    0x0DE, 0x0DE, 0x0DF, 0x0DF, 0x0E0, 0x0E0, 0x0E1, 0x0E2, 0x0E2, 0x0E3, 0x0E3,
+    0x0E4, 0x0E4, 0x0E5, 0x0E5, 0x0E6, 0x0E7, 0x0E7, 0x0E8, 0x0E8, 0x0E9, 0x0E9,
+    0x0EA, 0x0EA, 0x0EB, 0x0EC, 0x0EC, 0x0ED, 0x0ED, 0x0EE, 0x0EE, 0x0EF, 0x0EF,
+    0x0F0, 0x0F1, 0x0F1, 0x0F2, 0x0F2, 0x0F3, 0x0F3, 0x0F4, 0x0F4, 0x0F5, 0x0F6,
+    0x0F6, 0x0F7, 0x0F7, 0x0F8, 0x0F8, 0x0F9, 0x0F9, 0x0FA, 0x0FB, 0x0FB, 0x0FC,
+    0x0FC, 0x0FD, 0x0FD, 0x0FE, 0x0FE, 0x0FF, 0x0FF, 0x100, 0x101, 0x101, 0x102,
+    0x102, 0x103, 0x103, 0x104, 0x104, 0x105, 0x105, 0x106, 0x106, 0x107, 0x108,
+    0x108, 0x109, 0x109, 0x10A, 0x10A, 0x10B, 0x10B, 0x10C, 0x10C, 0x10D, 0x10D,
+    0x10E, 0x10E, 0x10F, 0x110, 0x110, 0x111, 0x111, 0x112, 0x112, 0x113, 0x113,
+    0x114, 0x114, 0x115, 0x115, 0x116, 0x116, 0x117, 0x117, 0x118, 0x119, 0x119,
+    0x11A, 0x11A, 0x11B, 0x11B, 0x11C, 0x11C, 0x11D, 0x11D, 0x11E, 0x11E, 0x11F,
+    0x11F, 0x120, 0x120, 0x121, 0x121, 0x122, 0x122, 0x123, 0x123, 0x124, 0x125,
+    0x125, 0x126, 0x126, 0x127, 0x127, 0x128, 0x128, 0x129, 0x129, 0x12A, 0x12A,
+    0x12B, 0x12B, 0x12C, 0x12C, 0x12D, 0x12D, 0x12E, 0x12E, 0x12F, 0x12F, 0x130,
+    0x130, 0x131, 0x131, 0x132, 0x132, 0x133, 0x133, 0x134, 0x134, 0x135, 0x135,
+    0x136, 0x136, 0x137, 0x137, 0x138, 0x138, 0x139, 0x139, 0x13A, 0x13A, 0x13B,
+    0x13B, 0x13C, 0x13C, 0x13D, 0x13D, 0x13E, 0x13E, 0x13F, 0x13F, 0x140, 0x140,
+    0x141, 0x141, 0x142, 0x142, 0x143, 0x143, 0x144, 0x144, 0x145, 0x145, 0x146,
+    0x146, 0x147, 0x147, 0x148, 0x148, 0x149, 0x149, 0x14A, 0x14A, 0x14B, 0x14B,
+    0x14C, 0x14C, 0x14D, 0x14D, 0x14E, 0x14E, 0x14E, 0x14F, 0x14F, 0x150, 0x150,
+    0x151, 0x151, 0x152, 0x152, 0x153, 0x153, 0x154, 0x154, 0x155, 0x155, 0x156,
+    0x156, 0x157, 0x157, 0x158, 0x158, 0x159, 0x159, 0x159, 0x15A, 0x15A, 0x15B,
+    0x15B, 0x15C, 0x15C, 0x15D, 0x15D, 0x15E, 0x15E, 0x15F, 0x15F, 0x160, 0x160,
+    0x161, 0x161, 0x161, 0x162, 0x162, 0x163, 0x163, 0x164, 0x164, 0x165, 0x165,
+    0x166, 0x166, 0x167, 0x167, 0x168, 0x168, 0x168, 0x169, 0x169, 0x16A, 0x16A,
+    0x16B, 0x16B, 0x16C, 0x16C, 0x16D, 0x16D, 0x16D, 0x16E, 0x16E, 0x16F, 0x16F,
+    0x170, 0x170, 0x171, 0x171, 0x172, 0x172, 0x172, 0x173, 0x173, 0x174, 0x174,
+    0x175, 0x175, 0x176, 0x176, 0x177, 0x177, 0x177, 0x178, 0x178, 0x179, 0x179,
+    0x17A, 0x17A, 0x17B, 0x17B, 0x17B, 0x17C, 0x17C, 0x17D, 0x17D, 0x17E, 0x17E,
+    0x17F, 0x17F, 0x17F, 0x180, 0x180, 0x181, 0x181, 0x182, 0x182, 0x182, 0x183,
+    0x183, 0x184, 0x184, 0x185, 0x185, 0x186, 0x186, 0x186, 0x187, 0x187, 0x188,
+    0x188, 0x189, 0x189, 0x189, 0x18A, 0x18A, 0x18B, 0x18B, 0x18C, 0x18C, 0x18C,
+    0x18D, 0x18D, 0x18E, 0x18E, 0x18F, 0x18F, 0x18F, 0x190, 0x190, 0x191, 0x191,
+    0x192, 0x192, 0x192, 0x193, 0x193, 0x194, 0x194, 0x195, 0x195, 0x195, 0x196,
+    0x196, 0x197, 0x197, 0x197, 0x198, 0x198, 0x199, 0x199, 0x19A, 0x19A, 0x19A,
+    0x19B, 0x19B, 0x19C, 0x19C, 0x19C, 0x19D, 0x19D, 0x19E, 0x19E, 0x19E, 0x19F,
+    0x19F, 0x1A0, 0x1A0, 0x1A1, 0x1A1, 0x1A1, 0x1A2, 0x1A2, 0x1A3, 0x1A3, 0x1A3,
+    0x1A4, 0x1A4, 0x1A5, 0x1A5, 0x1A5, 0x1A6, 0x1A6, 0x1A7, 0x1A7, 0x1A7, 0x1A8,
+    0x1A8, 0x1A9, 0x1A9, 0x1A9, 0x1AA, 0x1AA, 0x1AB, 0x1AB, 0x1AB, 0x1AC, 0x1AC,
+    0x1AD, 0x1AD, 0x1AD, 0x1AE, 0x1AE, 0x1AF, 0x1AF, 0x1AF, 0x1B0, 0x1B0, 0x1B1,
+    0x1B1, 0x1B1, 0x1B2, 0x1B2, 0x1B3, 0x1B3, 0x1B3, 0x1B4, 0x1B4, 0x1B5, 0x1B5,
+    0x1B5, 0x1B6, 0x1B6, 0x1B7, 0x1B7, 0x1B7, 0x1B8, 0x1B8, 0x1B8, 0x1B9, 0x1B9,
+    0x1BA, 0x1BA, 0x1BA, 0x1BB, 0x1BB, 0x1BC, 0x1BC, 0x1BC, 0x1BD, 0x1BD, 0x1BD,
+    0x1BE, 0x1BE, 0x1BF, 0x1BF, 0x1BF, 0x1C0, 0x1C0, 0x1C0, 0x1C1, 0x1C1, 0x1C2,
+    0x1C2, 0x1C2, 0x1C3, 0x1C3, 0x1C4, 0x1C4, 0x1C4, 0x1C5, 0x1C5, 0x1C5, 0x1C6,
+    0x1C6, 0x1C7, 0x1C7, 0x1C7, 0x1C8, 0x1C8, 0x1C8, 0x1C9, 0x1C9, 0x1CA, 0x1CA,
+    0x1CA, 0x1CB, 0x1CB, 0x1CB, 0x1CC, 0x1CC, 0x1CC, 0x1CD, 0x1CD, 0x1CE, 0x1CE,
+    0x1CE, 0x1CF, 0x1CF, 0x1CF, 0x1D0, 0x1D0, 0x1D0, 0x1D1, 0x1D1, 0x1D2, 0x1D2,
+    0x1D2, 0x1D3, 0x1D3, 0x1D3, 0x1D4, 0x1D4, 0x1D4, 0x1D5, 0x1D5, 0x1D6, 0x1D6,
+    0x1D6, 0x1D7, 0x1D7, 0x1D7, 0x1D8, 0x1D8, 0x1D8, 0x1D9, 0x1D9, 0x1D9, 0x1DA,
+    0x1DA, 0x1DB, 0x1DB, 0x1DB, 0x1DC, 0x1DC, 0x1DC, 0x1DD, 0x1DD, 0x1DD, 0x1DE,
+    0x1DE, 0x1DE, 0x1DF, 0x1DF, 0x1DF, 0x1E0, 0x1E0, 0x1E1, 0x1E1, 0x1E1, 0x1E2,
+    0x1E2, 0x1E2, 0x1E3, 0x1E3, 0x1E3, 0x1E4, 0x1E4, 0x1E4, 0x1E5, 0x1E5, 0x1E5,
+    0x1E6, 0x1E6, 0x1E6, 0x1E7, 0x1E7, 0x1E7, 0x1E8, 0x1E8, 0x1E8, 0x1E9, 0x1E9,
+    0x1E9, 0x1EA, 0x1EA, 0x1EA, 0x1EB, 0x1EB, 0x1EB, 0x1EC, 0x1EC, 0x1ED, 0x1ED,
+    0x1ED, 0x1EE, 0x1EE, 0x1EE, 0x1EF, 0x1EF, 0x1EF, 0x1F0, 0x1F0, 0x1F0, 0x1F1,
+    0x1F1, 0x1F1, 0x1F2, 0x1F2, 0x1F2, 0x1F3, 0x1F3, 0x1F3, 0x1F4, 0x1F4, 0x1F4,
+    0x1F4, 0x1F5, 0x1F5, 0x1F5, 0x1F6, 0x1F6, 0x1F6, 0x1F7, 0x1F7, 0x1F7, 0x1F8,
+    0x1F8, 0x1F8, 0x1F9, 0x1F9, 0x1F9, 0x1FA, 0x1FA, 0x1FA, 0x1FB, 0x1FB, 0x1FB,
+    0x1FC, 0x1FC, 0x1FC, 0x1FD, 0x1FD, 0x1FD, 0x1FE, 0x1FE, 0x1FE, 0x1FF, 0x1FF,
+    0x1FF, 0x200, 0x200, 0x200, 0x200, 0x201, 0x201, 0x201, 0x202, 0x202, 0x202,
+    0x203, 0x203, 0x203, 0x204, 0x204, 0x204,
+};
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600EE88, func_0600EE88);
+s32 func_0600EE64(s32 param_1) { return MTH_Sqrt(param_1 << 4) >> 4; }
+
+long ratan2(long dx, long dy) {
+    long ret;
+
+    while (dx <= -0x200000 || dx >= 0x200000 || dy <= -0x200000 ||
+           dy >= 0x200000) {
+        dy = dy >> 1;
+        dx = dx >> 1;
+    }
+
+    if (dy == 0) {
+        if (dx == 0) {
+            return 0;
+        }
+        if (dx > 0) {
+            return 0x400;
+        } else {
+            return 0xC00;
+        }
+    }
+
+    if (dx >= 0) {
+        if (dy > 0) {
+            if (dy >= dx) {
+                ret = 0x000 + ratan_tbl[(dx << 10) / dy];
+            } else {
+                ret = 0x400 - ratan_tbl[(dy << 10) / dx];
+            }
+        } else {
+            if (-dy >= dx) {
+                ret = 0x800 - ratan_tbl[(dx << 10) / -dy];
+            } else {
+                ret = 0x400 + ratan_tbl[(-dy << 10) / dx];
+            }
+        }
+    } else {
+        if (dy < 0) {
+            if (-dy >= -dx) {
+                ret = 0x800 + ratan_tbl[(-dx << 10) / -dy];
+            } else {
+                ret = 0xC00 - ratan_tbl[(-dy << 10) / -dx];
+            }
+        } else {
+            if (dy >= -dx) {
+                ret = 0x1000 - ratan_tbl[(-dx << 10) / dy];
+            } else {
+                ret = 0xC00 + ratan_tbl[(dy << 10) / -dx];
+            }
+        }
+    }
+    return ret;
+}
+
 INCLUDE_ASM("asm/saturn/zero/data", d600EFBC, d_0600EFBC);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600F914, func_0600F914);
 
@@ -820,13 +1122,43 @@ void func_06011264(void) {
 
 INCLUDE_ASM("asm/saturn/zero/data", d6011278, d_06011278);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011A6C, func_06011A6C);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011AA0, func_06011AA0);
+
+extern s32 DAT_06064230;
+extern s16 DAT_060643c4;
+extern u8 DAT_060644c4;
+
+s32 PlaySfxVolPan(s32 sfxId, s32 sfxVol, s16 sfxPan) {
+    s32 ret = 0;
+
+    if (sfxId < 0x600 || sfxId > 0x916) {
+        return -3;
+    }
+    if (sfxPan < -8 || sfxPan > 8) {
+        sfxPan = 0x40;
+        ret = -1;
+    } else {
+        if (sfxPan == 0) {
+            sfxPan = sfxPan * 8 + 0x40;
+        } else if (sfxPan > 0) {
+            sfxPan = sfxPan * 8 + 0x3F;
+        } else {
+            sfxPan = sfxPan * 8 + 0x40;
+        }
+    }
+    DAT_06064230 = sfxVol;
+    DAT_060643c4 = sfxPan;
+    DAT_060644c4 = 1;
+    PlaySfx(sfxId);
+    DAT_060644c4 = 0;
+    return ret;
+}
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011B28, func_06011B28);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011C28, func_06011C28);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011CE4, func_06011CE4);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011EE0, func_06011EE0);
 
-void func_06011F40(s32 param) { func_06018D88(); }
+void func_06011F40(s32 param) { SND_StopPcm2(); }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011F58, func_06011F58);
 
@@ -1071,110 +1403,3 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6017FF4, func_06017FF4);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6018034, func_06018034);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60180E0, func_060180E0);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6018260, func_06018260);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60186C8, func_060186C8);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6018848, func_06018848);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6018910, func_06018910);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601896C, func_0601896C);
-
-// _SND_StartSeq_DR
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60189F0, func_060189F0);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6018A78, func_06018A78);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6018AD4, func_06018AD4);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6018B30, func_06018B30);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6018B8C, func_06018B8C);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6018C00, func_06018C00);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6018C74, func_06018C74);
-
-// _SND_StopPcm2
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6018D88, func_06018D88);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6018DE4, func_06018DE4);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6018EB8, func_06018EB8);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6018EE0, func_06018EE0);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6018F04, func_06018F04);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6018F20, func_06018F20);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6018FA8, func_06018FA8);
-
-void func_06018FC4(void) { func_06033024(); }
-
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6018FDC, func_06018FDC);
-
-// not sure if this is actually Entity*
-void func_06019058(Entity* param_1) {
-    if (param_1->step == 0) {
-        param_1->step += 1;
-    }
-}
-
-const u16 pad_14ff2 = 0;
-
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6019074, func_06019074);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60190D8, func_060190D8);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6019560, func_06019560);
-
-void func_060195F0(void) {
-    DAT_060476a4 = 0;
-    DAT_060476a0 = 0;
-}
-
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601960C, func_0601960C);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601972C, func_0601972C);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60198F4, func_060198F4);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601992C, func_0601992C);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60199F8, func_060199F8);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6019A7C, func_06019A7C);
-
-// _INIT_NOW_LOADING
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6019FA0, func_06019FA0);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6019FE4, func_06019FE4);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601A020, func_0601A020);
-
-// _SET_STAGE_OVERLAYADDR
-void SetStageOverlayAddress() {
-    *DAT_0601ac28 = *DAT_0601ac2c; // 0x60dc000
-    *DAT_0601ac34 = *DAT_0601ac30; // 0x60dc004
-    *DAT_0601ac3c = *DAT_0601ac38; // 0x60dc008
-    *DAT_0601ac44 = *DAT_0601ac40; // 0x60dc00c
-}
-
-// _SET_SCL_OVERLAYADDR
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601AC48, func_0601AC48);
-
-// _SET_PLAYER_OVERLAYADDR
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601AD14, func_0601AD14);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601AE2C, func_0601AE2C);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601AE5C, func_0601AE5C);
-
-s32 func_0601AE9C(void) { return 0xff; }
-
-s32 func_0601AEA8(void) { return 0xff; }
-
-void func_0601AEB4(void) { DAT_060645D0 = DAT_060cf040; }
-
-s32 d_0605D7E4;
-void (*func_060cf000)(void);
-
-// call familiar update function
-void func_0601AECC() {
-    if (d_0605D7E4) {
-        (*func_060cf000)();
-    }
-}
-
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601AEF4, func_0601AEF4);
-
-void func_0601AF2C(void) { DAT_06064674 = DAT_060a5000; }
-
-void func_0601AF44(void) { DAT_06064580 = DAT_060a5000; }
-
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601AF5C, func_0601AF5C);
-
-void func_0601B184(void) { DAT_060645e0 = DAT_060a5000; }
-
-void func_0601B19C(void) { DAT_06064644 = DAT_060dc000; }
-
-void func_0601B1B4(void) { DAT_06064690 = DAT_06066000; }
-
-// _SET_GAME_OVERLAYADDR
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601B1CC, func_0601B1CC);
-
-// I think everything beyond this point is sega libraries

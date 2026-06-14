@@ -1,0 +1,229 @@
+package discs
+
+import (
+	"bufio"
+	"fmt"
+	"io"
+	"os"
+	"path"
+	"path/filepath"
+	"strconv"
+	"strings"
+
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-disk/iso9660"
+)
+
+var (
+	usLicense = "          Licensed  by          Sony Computer Entertainment Amer  ica "
+)
+
+type makeFileMeta struct {
+	Name   string
+	time   iso9660.Timestamp
+	xaMode iso9660.XaMode
+}
+
+func isPathFile(str string) bool {
+	return len(str) > 2 &&
+		str[len(str)-2] == 0x3B &&
+		str[len(str)-1] == 0x31
+}
+
+func removePathVersion(str string) string {
+	return str[:len(str)-2]
+}
+
+func ReadFileList(fileListPath string) ([]makeFileMeta, error) {
+	atoi := func(s string) (byte, error) {
+		v, err := strconv.Atoi(s)
+		return byte(v), err
+	}
+	xaModeStr := func(str string) iso9660.XaMode {
+		switch str {
+		case "_":
+			return iso9660.XaModeNone
+		case "N":
+			return iso9660.XaModeDefault
+		case "X":
+			return iso9660.XaModeXa
+		case "A":
+			return iso9660.XaModeAudioTrack
+		case "S":
+			return iso9660.XaModeStreaming
+		case "D":
+			return iso9660.XaModeDirRecord
+		default:
+			panic(fmt.Sprintf("unrecognized XaMode '%s'", str))
+		}
+	}
+
+	content, err := os.ReadFile(fileListPath)
+	if err != nil {
+		return nil, err
+	}
+
+	metaList := make([]makeFileMeta, 0)
+	for _, v := range strings.Split(string(content), "\n") {
+		v := strings.TrimSpace(v)
+		if len(v) == 0 { // ignore empty lines
+			continue
+		}
+
+		tokens := strings.Split(v, ",")
+		meta := makeFileMeta{Name: tokens[0]}
+		if len(tokens) > 1 {
+			meta.xaMode = xaModeStr(tokens[1])
+		}
+		if len(tokens) > 2 {
+			time := tokens[2]
+			if len(time) != len("19970901-134500-36") {
+				return nil, fmt.Errorf("wrong date time format '%s'", time)
+			}
+
+			var err error
+			if meta.time.Year, err = atoi(time[2:4]); err != nil {
+				return nil, err
+			} else if meta.time.Month, err = atoi(time[4:6]); err != nil {
+				return nil, err
+			} else if meta.time.Day, err = atoi(time[6:8]); err != nil {
+				return nil, err
+			} else if meta.time.Hour, err = atoi(time[9:11]); err != nil {
+				return nil, err
+			} else if meta.time.Minute, err = atoi(time[11:13]); err != nil {
+				return nil, err
+			} else if meta.time.Second, err = atoi(time[13:15]); err != nil {
+				return nil, err
+			} else if meta.time.Offset, err = atoi(time[16:18]); err != nil {
+				return nil, err
+			}
+		}
+
+		metaList = append(metaList, meta)
+	}
+
+	return metaList, nil
+}
+
+func MakeDiskDryRun(inputPath string, fileListPath string) (*iso9660.WritableImage, error) {
+	tmpFile, err := os.CreateTemp("", "sotn-disk-layout-*.bin")
+	if err != nil {
+		return nil, err
+	}
+	tmpFile.Close()
+	tmpPath := tmpFile.Name()
+	defer os.Remove(tmpPath)
+
+	return makeDiskImage(tmpFile, inputPath, fileListPath)
+}
+
+func MakeDisk(cuePath string, inputPath string, fileListPath string) error {
+	imgPath := strings.Replace(cuePath, ".cue", ".bin", 1)
+	f, err := os.Create(imgPath)
+	if err != nil {
+		return err
+	}
+
+	img, err := makeDiskImage(f, inputPath, fileListPath)
+	if err != nil {
+		_ = f.Close()
+		_ = os.Remove(imgPath)
+		return fmt.Errorf("make disk: %w", err)
+	}
+	if err := writeCue(cuePath, filepath.Base(imgPath), img.Mode()); err != nil {
+		_ = f.Close()
+		_ = os.Remove(imgPath)
+		return fmt.Errorf("make disk: %w", err)
+	}
+	return f.Close()
+}
+
+func validateFileList(metas []makeFileMeta, basePath string) error {
+	for _, meta := range metas {
+		if isPathFile(meta.Name) {
+			fullPath := path.Join(basePath, removePathVersion((meta.Name)))
+			if _, err := os.Stat(fullPath); err != nil {
+				return err
+			}
+		}
+	}
+
+	return nil
+}
+
+func makeDiskImage(f io.WriterAt, inputPath string, fileListPath string) (*iso9660.WritableImage, error) {
+	metas, err := ReadFileList(fileListPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := validateFileList(metas, inputPath); err != nil {
+		return nil, err
+	}
+
+	img, err := iso9660.CreateImage(f, iso9660.TrackMode2_2352)
+	if err != nil {
+		return nil, err
+	}
+
+	img.Pvd.SystemIdentifier = iso9660.ToAString("PLAYSTATION", 32)
+	img.Pvd.VolumeIdentifier = iso9660.ToDString("SLUS_00067", 32)
+	img.Pvd.PublisherIdentifier = iso9660.ToAString("KONAMI", 128)
+	img.Pvd.DataPreparerIdentifier = iso9660.ToAString("KONAMI", 128)
+	img.Pvd.ApplicationIdentifier = iso9660.ToAString("PLAYSTATION", 128)
+
+	// define root timestamp, if present
+	if len(metas) > 0 {
+		rootts := metas[0].time
+		img.Pvd.VolumeCreationDateTime.Year = fmt.Sprintf("19%02d", rootts.Year)
+		img.Pvd.VolumeCreationDateTime.Month = fmt.Sprintf("%02d", rootts.Month)
+		img.Pvd.VolumeCreationDateTime.Day = fmt.Sprintf("%02d", rootts.Day)
+		img.Pvd.VolumeCreationDateTime.Hour = fmt.Sprintf("%02d", rootts.Hour)
+		img.Pvd.VolumeCreationDateTime.Minute = fmt.Sprintf("%02d", rootts.Minute)
+		img.Pvd.VolumeCreationDateTime.Second = fmt.Sprintf("%02d", rootts.Second)
+		img.Pvd.VolumeCreationDateTime.Hundredth = "00"
+		img.Pvd.VolumeCreationDateTime.Offset = rootts.Offset
+		img.Pvd.DirectoryRecord.RecordingDateTime = rootts
+		metas = metas[1:]
+	}
+
+	for _, meta := range metas {
+		if err := img.AddFile(meta.Name, inputPath, meta.time, meta.xaMode); err != nil {
+			return nil, err
+		}
+	}
+
+	if err := img.WriteData(4, iso9660.SubModeData, []byte(usLicense)); err != nil {
+		return nil, err
+	}
+	if err := img.WriteData(5, iso9660.SubModeData, playstationLogo); err != nil {
+		return nil, err
+	}
+
+	if err := img.FlushChanges(); err != nil {
+		return nil, err
+	}
+	return img, nil
+}
+
+func writeCue(cuePath string, imgPath string, mode iso9660.TrackMode) error {
+	f, err := os.Create(cuePath)
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+
+	w := bufio.NewWriter(f)
+	defer w.Flush()
+
+	w.WriteString(fmt.Sprintf("FILE \"%s\" BINARY\r\n", imgPath))
+	switch mode {
+	case iso9660.TrackMode1_2048:
+		w.WriteString("  TRACK 01 MODE1/2048\r\n")
+	case iso9660.TrackMode2_2352:
+		w.WriteString("  TRACK 01 MODE2/2352\r\n")
+	}
+	w.WriteString("    FLAGS DCP\r\n")
+	w.WriteString("    INDEX 01 00:00:00\r\n")
+
+	return nil
+}

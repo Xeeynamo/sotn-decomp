@@ -8,16 +8,20 @@ import (
 	"os/exec"
 	"regexp"
 	"strings"
+	"sync"
 )
 
 func removeComments(line string) string {
 	for {
 		start := strings.Index(line, "/*")
-		end := strings.Index(line, "*/")
-		if start == -1 || end == -1 || end < start {
+		if start == -1 {
 			break
 		}
-		line = line[:start] + line[end+2:]
+		end := strings.Index(line[start+2:], "*/")
+		if end == -1 {
+			break
+		}
+		line = line[:start] + line[start+end+4:]
 	}
 	trailingCommentIndex := strings.Index(line, "//")
 	if trailingCommentIndex != -1 {
@@ -38,8 +42,8 @@ func ParseCEnum(r io.Reader, name string, min int) (map[int]string, error) {
 	nLine := 0
 	for scanner.Scan() {
 		nLine++
-		line := removeComments(scanner.Text())
-		if startRegex.MatchString(line) {
+		line := scanner.Text()
+		if strings.Contains(line, "enum") && startRegex.MatchString(removeComments(line)) {
 			for scanner.Scan() {
 				nLine++
 				line := removeComments(scanner.Text())
@@ -81,29 +85,55 @@ func ParseCEnum(r io.Reader, name string, min int) (map[int]string, error) {
 	return enumMap, nil
 }
 
+// Cache keyed by: version:file:enum
+var enumCache = make(map[string]map[int]string)
+var lock = sync.RWMutex{}
+
 // Read an enum from a header file after prepreprocessing
 func FetchEnumWithMin(srcDir, ovlName, enumName string, min int) (map[int]string, error) {
-    header := fmt.Sprintf("%s/%s.h", srcDir, ovlName)
-    cpp, err := exec.LookPath("cpp")
-    cmd := exec.Command(cpp,
-                        fmt.Sprintf("-DVERSION=%s"),
-                        "-lang-c",
-                        "-Iinclude",
-                        "-Iinclude/psxsdk",
-                        "-fno-builtin",
-                        "-undef",
-                        "-P",
-                        header)
-    o, err := cmd.Output()
+	version := GetVersion()
+	header := fmt.Sprintf("%s/%s.h", srcDir, ovlName)
+	cacheKey := fmt.Sprintf("%s:%s:%s", version, header, enumName)
+
+	lock.RLock()
+	parsed, ok := enumCache[cacheKey]
+	lock.RUnlock()
+	if ok {
+		return parsed, nil
+	}
+
+	cpp, err := exec.LookPath("cpp")
+	if err != nil {
+		return nil, fmt.Errorf("failed to find `cpp': %w", err)
+	}
+
+	cmd := exec.Command(cpp,
+		fmt.Sprintf("-DVERSION=%s", GetVersion()),
+		"-lang-c",
+		"-Iinclude",
+		"-Iinclude/psxsdk",
+		"-fno-builtin",
+		"-undef",
+		"-P",
+		header)
+	o, err := cmd.Output()
 
 	if err != nil {
 		return nil, fmt.Errorf("failed preprocess header: %s %s: %w", cmd.Path, cmd.Args, err)
 	}
-    r := strings.NewReader(string(o))
-	return ParseCEnum(r, enumName, min)
+
+	r := strings.NewReader(string(o))
+	parsed, err = ParseCEnum(r, enumName, min)
+
+	if err == nil {
+		lock.Lock()
+		enumCache[cacheKey] = parsed
+		lock.Unlock()
+	}
+
+	return parsed, err
 }
 
-
 func FetchEnum(srcDir, ovlName, enumName string) (map[int]string, error) {
-    return FetchEnumWithMin(srcDir, ovlName, enumName, 0)
+	return FetchEnumWithMin(srcDir, ovlName, enumName, 0)
 }

@@ -312,13 +312,13 @@ static void EntityWeaponAttack(Entity* self) {
         self->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
         self->zPriority = PLAYER.zPriority - 2;
         if (subType == 1) {
-            self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP | BLEND_ADD;
         }
         if (subType == 2) {
-            self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP | BLEND_ADD;
         }
         if (subType == 3) {
-            self->drawMode = DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP;
         }
         if (subType != 0) {
             _r = D_169000_8017AD58[subType * 0x10 - 2];
@@ -374,13 +374,13 @@ s32 func_ptr_80170004(Entity* self) {
         self->palette += subType * 2;
         self->zPriority = PLAYER.zPriority - 2;
         if (subType == 1) {
-            self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP | BLEND_ADD;
         }
         if (subType == 2) {
-            self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP | BLEND_ADD;
         }
         if (subType == 3) {
-            self->drawMode = DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP;
         }
         if (subType != 0) {
             _r = D_169000_8017AD58[subType * 0x10 - 2];
@@ -461,11 +461,11 @@ static void func_ptr_80170008(Entity* self) {
         prim->b0 = prim->b2 = 0;
         prim->tpage = 0x19;
         prim->priority = PLAYER.zPriority + 4;
-        prim->drawMode = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY | FLAG_DRAW_ROTATE;
-        prim->drawMode |= FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40;
-        prim->drawMode |= FLAG_DRAW_UNK100;
+        prim->drawMode = DRAW_TRANSP | DRAW_UNK02 | DRAW_COLORS;
+        prim->drawMode |= DRAW_TPAGE | DRAW_TPAGE2 | DRAW_UNK_40;
+        prim->drawMode |= DRAW_UNK_100;
         if (color == 3) {
-            prim->drawMode &= ~(FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40);
+            prim->drawMode &= ~(ENTITY_MASK_G | ENTITY_MASK_B);
         }
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS | FLAG_UNK_20000;
         if (temp_s6 == 0) {

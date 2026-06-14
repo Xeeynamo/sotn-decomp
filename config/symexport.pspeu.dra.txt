@@ -8,5 +8,5 @@ EXTERN(func_psp_090FFAB8);
 EXTERN(IsMemcardBlockUsed);
 EXTERN(MemcardReadFile);
 EXTERN(MemcardEraseFile);
-EXTERN(func_psp_09141860);
+EXTERN(GetAT3FileName);
 EXTERN(func_psp_09141878);

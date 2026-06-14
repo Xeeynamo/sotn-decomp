@@ -3,7 +3,6 @@
 
 extern s32 D_us_801D36E8[];
 extern s32 D_us_801D3768[];
-extern s32 D_us_801D4344;
 
 static void func_us_801C096C(void) {
     Entity* entity;
@@ -29,9 +28,9 @@ static void func_us_801C096C(void) {
     DOPPLEGANGER.palette = PAL_FLAG(0x200);
     DOPPLEGANGER.scaleX = 0x100;
     DOPPLEGANGER.scaleY = 0x100;
-    DOPPLEGANGER.drawMode = DRAW_DEFAULT;
+    DOPPLEGANGER.blendMode = BLEND_NO;
     DOPPLEGANGER.flags =
-        FLAG_UNK_10000000 | FLAG_POS_CAMERA_LOCKED | FLAG_UNK_400000;
+        FLAG_UNK_10000000 | FLAG_POS_CAMERA_LOCKED | FLAG_SUPPRESS_STUN;
 
     // BUG: this loop seems to be clearing parts of the floor
     //      ceiling colliders, but not all of them
@@ -41,7 +40,7 @@ static void func_us_801C096C(void) {
         *colliders = 0;
     }
 
-    D_us_801D4344 = 1;
+    g_Dop.unk04 = 1;
     g_Dop.vram_flag = TOUCHING_GROUND;
     func_8010E570(0);
     entity = &g_Entities[E_ID_41];
@@ -114,7 +113,7 @@ void EntityDoppleganger40(void) {
     step = 0;
     step_s = 0;
     var_s5 = 0;
-    DOPPLEGANGER.drawFlags = FLAG_DRAW_DEFAULT;
+    DOPPLEGANGER.drawFlags = ENTITY_DEFAULT;
 
     if (!(g_Dop.status & PLAYER_STATUS_DEAD)) {
         if ((DOPPLEGANGER.step != Dop_Kill) &&

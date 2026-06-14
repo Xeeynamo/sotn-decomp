@@ -144,7 +144,11 @@ func (file File) WriteFromData(b []byte) error {
 		} else {
 			b = []byte{}
 		}
-		if err := writeSector(file.handler, loc, file.mode, chunk); err != nil {
+		subMode := SubModeData
+		if len(b) == 0 {
+			subMode = SubModeData | SubModeEOR | SubModeEOF
+		}
+		if err := writeSector(file.handler, loc, file.mode, subMode, chunk); err != nil {
 			return err
 		}
 	}

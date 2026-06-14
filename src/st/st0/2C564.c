@@ -375,7 +375,7 @@ static s32 func_801ABBBC(s32 step, Entity* dracula) {
         dracula->opacity += 10;
         if (dracula->opacity >= 0x80) {
             dracula->opacity = 0x80;
-            dracula->drawFlags = FLAG_DRAW_DEFAULT;
+            dracula->drawFlags = ENTITY_DEFAULT;
             step++;
         }
         break;
@@ -407,7 +407,7 @@ static s32 func_801AC458(s16 arg0) {
     case 0:
         e = g_CurrentEntity;
         ret = 1;
-        e[1].drawFlags = FLAG_DRAW_SCALEY;
+        e[1].drawFlags = ENTITY_SCALEY;
         e[1].scaleY = 0x600;
         e[1].pose = 0;
         e[1].poseTimer = 0;
@@ -429,7 +429,7 @@ static s32 func_801AC458(s16 arg0) {
     case 2:
         e = &g_CurrentEntity[1];
         e->animCurFrame = 0;
-        e->drawFlags = FLAG_DRAW_DEFAULT;
+        e->drawFlags = ENTITY_DEFAULT;
         e->step = 1;
         ret = 0xFF;
         break;
@@ -738,7 +738,7 @@ void EntityDracula(Entity* self) {
             self->ext.dracula.unk94 = 0x40;
             self->ext.dracula.unk98 = 0;
             self->opacity = 0x80;
-            self->drawFlags |= FLAG_DRAW_OPACITY;
+            self->drawFlags |= ENTITY_OPACITY;
             prim = self->ext.dracula.prim;
             prim->type = PRIM_G4;
             prim->x0 = prim->x2 = self->posX.i.hi;
@@ -1018,7 +1018,7 @@ void EntityDraculaMeteorball(Entity* entity) {
     switch (entity->step) {
     case 0:
         InitializeEntity(g_EInitDraculaMeteorball);
-        entity->drawFlags |= FLAG_DRAW_ROTATE;
+        entity->drawFlags |= ENTITY_ROTATE;
         entity->hitboxState = 0;
         break;
     case 1:
@@ -1092,7 +1092,7 @@ void EntityDraculaGlass(Entity* entity) {
         InitializeEntity(g_EInitDraculaFireball);
         entity->animCurFrame = 0x59;
         entity->hitboxState = 0;
-        entity->drawFlags = FLAG_DRAW_ROTATE;
+        entity->drawFlags = ENTITY_ROTATE;
         entity->velocityX = FIX(-1);
         entity->velocityY = 0;
         if (entity->params) {
@@ -1114,7 +1114,7 @@ void EntityDraculaGlass(Entity* entity) {
         }
         break;
     case 2:
-        entity->drawFlags = FLAG_DRAW_DEFAULT;
+        entity->drawFlags = ENTITY_DEFAULT;
         if (!AnimateEntity(D_80180A40, entity)) {
             for (i = 0; i < 8; i++) {
                 glassShardEntity =

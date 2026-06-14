@@ -162,6 +162,74 @@ files:
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/no3.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/no4.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/np3.bin
+    asset_path: assets/st/np3
+    src_path: src/st/np3
+    splat_config_path: config/splat.hd.stnp3.yaml
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x2C, sprite_banks, sprite_banks]
+          - [0x8C, paldef, palette_def]
+          - [0x1D0, layers, layers]
+          - [0x558, gfx_banks, graphics_banks]
+          - [0x728, layout, hd/entity_layouts]
+          - [0x8D0, skip]
+          - [0x3A80, rooms, rooms]
+          - [0x3B6C, skip]
+          - [0x49CC, cmpgfx, stage_title_np3_jp, 128, 128, 4]
+          - [0x4D10, cmpgfx, stage_placeholder_np3, 128, 128, 4]
+          - [0x52B4, cmpgfx, e_skyswirl_g0, 128, 128, 4, 0x14900] # unused
+          - [0x6420, cmpgfx, e_skyswirl_g1, 128, 128, 4, 0x14900] # unused
+          - [0x7728, cmpgfx, e_merman_g0, 128, 128, 4, 0x15A80]
+          - [0x83C8, cmpgfx, e_merman_g1, 128, 128, 4, 0x15A80]
+          - [0x9004, cmpgfx, e_merman_g2, 128, 128, 4, 0x15A80]
+          - [0xA014, cmpgfx, e_merman_g3, 128, 128, 4, 0x15A80]
+          - [0xA918, cmpgfx, e_slinger_g, 128, 128, 4, 0x16140]
+          - [0xB4F4, cmpgfx, e_ghost_bat_g, 128, 128, 4, 0x161A0]
+          - [0xBFB8, cmpgfx, e_zombie_g, 128, 128, 4, 0x16200]
+          - [0xC688, cmpgfx, e_bloody_zombie_g, 128, 128, 4, 0x16260]
+          - [0xD340, cmpgfx, e_owlknight_g0, 128, 128, 4, 0x162C0]
+          - [0xE3C4, cmpgfx, e_owlknight_g1, 128, 128, 4, 0x162C0]
+          - [0xF23C, cmpgfx, e_owlknight_g2, 128, 128, 4, 0x162C0]
+          - [0xFF54, cmpgfx, e_explosion_g, 128, 128, 4, 0x163A0]
+          - [0x10ED0, cmpgfx, e_slogra_g0, 128, 128, 4, 0x16660]
+          - [0x119C4, cmpgfx, e_slogra_g1, 128, 128, 4, 0x16660]
+          - [0x123AC, cmpgfx, e_slogra_g2, 128, 128, 4, 0x16660]
+          - [0x12C70, cmpgfx, e_gaibon_g0, 128, 128, 4, 0x166C0]
+          - [0x139E0, cmpgfx, e_gaibon_g1, 128, 128, 4, 0x166C0]
+          - [0x141A0, cmpgfx, e_gurkha_g, 128, 128, 4, 0x167C0]
+          - [0x14900, palette, e_skyswirl_p, 16]
+          - [0x15A80, palette, e_merman_p, 16]
+          - [0x15B40, palette, D_80195B54, 16] # unused
+          - [0x15B60, palette, D_80195B74, 16]
+          - [0x15BA0, palette, D_80195BB4, 16]
+          - [0x15BE0, palette, D_80195BF4, 16]
+          - [0x15C20, palette, D_80195C34, 16]
+          - [0x15C60, palette, D_80195C74, 16]
+          - [0x15CA0, palette, D_80195CB4, 16]
+          - [0x15CE0, palette, D_80195CF4, 16]
+          - [0x15D20, palette, D_80195D34, 16]
+          - [0x15D60, palette, D_80195D74, 16]
+          - [0x15DA0, palette, D_80195DB4, 16]
+          - [0x15DE0, palette, D_80195DF4, 16]
+          - [0x15E20, palette, D_80195E34, 16]
+          - [0x15E60, palette, D_80195E74, 16]
+          - [0x15EA0, palette, D_80195EB4, 16]
+          - [0x15EE0, palette, D_80195EF4, 16]
+          - [0x16140, palette, e_slinger_p, 16]
+          - [0x161A0, palette, e_ghost_bat_p, 16]
+          - [0x16200, palette, e_zombie_p, 16]
+          - [0x16260, palette, e_bloody_zombie_p, 16]
+          - [0x162C0, palette, e_owlknight_p, 16]
+          - [0x163A0, palette, e_explosion_p, 16]
+          - [0x165A0, palette, D_801965B4, 16] # unused
+          - [0x16660, palette, e_slogra_p, 16] # overlaps with e_gaibon_p
+          - [0x166c0, palette, e_gaibon_p, 16]
+          - [0x167c0, palette, e_gurkha_p, 16]
+          - [0x168E0, skip] # tile data
+          - [0x21CE0, skip] # tile definitions
+          - [0x2A110, skip] # sprites
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/nz0.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/nz1.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/sel.bin
@@ -181,7 +249,7 @@ files:
       - start: 0
         vram: 0x80180000
         assets:
-          - [0x40, sprite_banks, sprite_banks]
+          - [0x40, sprite_banks, hd/sprite_banks]
           - [0xA0, paldef, palette_def]
           - [0xB8, layers, layers]
           - [0x1B8, gfx_banks, graphics_banks]
@@ -192,7 +260,6 @@ files:
           - [0x1424, cmpgfx, stage_title_wrp_jp, 128, 128, 4]
           - [0x1768, cmpgfx, stage_placeholder_wrp, 128, 128, 4]
           - [0x1D0C, palette, D_80181D08, 16]
-          - [0x1D2C, palette, D_80181D28, 16] # unused
           - [0x1D6C, skip] # tile data
           - [0x296C, skip] # tile definitions
           - [0x6D8C, skip] # sprites

@@ -1,0 +1,7 @@
+sprites_no0_8 = 0x092676F0;
+sprites_no0_12 = 0x0926C340;
+ctulhu_shockwave_uvs = 0x0926EA70;
+NO0_spriteBanks = 0x0926EC58;
+NO0_rooms_layers = 0x0926F010;
+NO0_cluts = 0x0926F1D8;
+NO0_gfxBanks = 0x0926F398;

@@ -7,8 +7,8 @@ ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
      .zPriority = 0x01FA,
      .unk5A = 0x0000,
      .palette = 0,
-     .drawFlags = FLAG_DRAW_DEFAULT,
-     .drawMode = DRAW_TPAGE,
+     .drawFlags = ENTITY_DEFAULT,
+     .blendMode = BLEND_TRANSP,
      .flags = 0,
      .animFrames = D_80180634},
 };

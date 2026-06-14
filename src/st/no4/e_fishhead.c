@@ -355,7 +355,7 @@ void EntityFishheadParticles(Entity* self) {
     }
 }
 
-extern s16* D_us_801BCDD8[];
+extern s16* sprites_no4_4[];
 
 // Fire breath
 void EntityFishheadFireBreath(Entity* self) {
@@ -415,7 +415,7 @@ void EntityFishheadFireBreath(Entity* self) {
             return;
         }
         prim = self->ext.fishhead.prim;
-        ptr = D_us_801BCDD8[self->animCurFrame];
+        ptr = sprites_no4_4[self->animCurFrame];
         ptr += 8;
         prim->u0 = prim->u2 = *ptr++ + 0x80;
         if (!prim->u0) {

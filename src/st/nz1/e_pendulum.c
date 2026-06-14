@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz1.h"
 
+extern EInit g_EInitEnvironment;
+
 typedef struct {
     s16 x, y, r;
 } PosRot;
@@ -60,7 +62,7 @@ void EntityPendulumBoneChain(Entity* self) {
     case 0:
         InitializeEntity(g_EInitEnvironment);
         self->animCurFrame = 0xA;
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         // fallthrough
 
     case 1:
@@ -97,7 +99,7 @@ void EntityPendulumWeight(Entity* self) {
         self->hitboxWidth = self->hitboxHeight = 0xC;
         self->hitboxState = 1;
         self->animCurFrame = 0xB;
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         // fallthrough
 
     case 1:
@@ -117,7 +119,7 @@ void EntityPendulumWeight(Entity* self) {
             posY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
             offset = posY - self->ext.pendulum.offsetY;
             entity->posY.i.hi += offset + 1;
-            D_80097488.y.i.hi += offset + 1;
+            g_unkGraphicsStruct.shoveY.i.hi += offset + 1;
         }
 
         collision = GetPlayerCollisionWith(self, 0xC, 0xC, 4);
@@ -125,7 +127,7 @@ void EntityPendulumWeight(Entity* self) {
             posX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
             offset = posX - self->ext.pendulum.offsetX;
             entity->posX.i.hi += offset;
-            D_80097488.x.i.hi += offset;
+            g_unkGraphicsStruct.shoveX.i.hi += offset;
         }
         break;
     }

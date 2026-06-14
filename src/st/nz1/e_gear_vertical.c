@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz1.h"
 
+extern EInit g_EInitEnvironment;
+
 static AnimationFrame D_us_80180FC0[] = {
     {0x0408, 0x0508},
     {0x0608, 0x0000},
@@ -16,7 +18,7 @@ void EntityGearVertical(Entity* self) {
     case 0:
         InitializeEntity(g_EInitEnvironment);
         self->zPriority = 0x6C;
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         self->rotate = 0x400;
         // fallthrough
 
@@ -54,7 +56,7 @@ void EntityGearVertical(Entity* self) {
                        self->ext.gearPuzzle.cooldownTimer;
                 offsetY = posY - self->ext.gearPuzzle.offsetY;
                 player->posY.i.hi += offsetY;
-                D_80097488.y.val += offsetY;
+                g_unkGraphicsStruct.shoveY.val += offsetY;
             }
 #ifdef VERSION_PSP
             collision = GetPlayerCollisionWith(

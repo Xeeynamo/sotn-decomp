@@ -31,7 +31,7 @@ enum Palettes {
     PAL_PUFF_OPAQUE_3 = 0x2E4
 };
 
-enum OVL_EXPORT(Entities) {
+enum EntityIDs {
     E_NONE,
     E_BREAKABLE,                // OVL_EXPORT(EntityBreakable)
     E_EXPLOSION,                // EntityExplosion
@@ -96,7 +96,7 @@ enum OVL_EXPORT(Entities) {
     E_CLOAKED_KNIGHT_SWORD,     // EntityCloakedKnightSword
     E_CLOAKED_KNIGHT_AURA,      // EntityCloakedKnightAura
     E_SWORD_LORD,               // EntitySwordLord
-    E_SWORD_LORD_ATTACK_HITBOX, // EntitySwordLordAttackHitbox
+    E_SWORD_LORD_ATTACK,        // EntitySwordLordAttack
     E_VANDAL_SWORD,             // EntityVandalSword
     E_VANDAL_SWORD_DEATH,       // EntityVandalSwordDeath
     E_VANDAL_SWORD_HITBOX,      // EntityVandalSwordHitbox
@@ -198,7 +198,5 @@ extern s32 E_ID(WALL_GEAR);
 extern s32 E_ID(WATER_DROP);
 extern s32 E_ID(WATER_FOREGROUND);
 #endif
-
-extern EInit g_EInitEnvironment;
 
 #endif // NZ1_H

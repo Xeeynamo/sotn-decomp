@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz1.h"
 
+extern EInit g_EInitEnvironment;
+
 static Point16 D_us_80180FC8[] = {
     {0x00F8, 0x0170},
     {0x027C, 0x02C8},
@@ -19,7 +21,7 @@ void EntityGearSidewaysSmall(Entity* self) {
         InitializeEntity(g_EInitEnvironment);
         self->zPriority = 0x6C;
         self->animCurFrame = 0xC;
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         self->velocityY = FIX(0.5);
         // fallthrough
 
@@ -30,7 +32,7 @@ void EntityGearSidewaysSmall(Entity* self) {
             offsetY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
             params = offsetY - self->ext.gearPuzzle.offsetY;
             player->posY.i.hi += params;
-            D_80097488.y.i.hi += params;
+            g_unkGraphicsStruct.shoveY.i.hi += params;
         }
 
         self->rotate += 64;
@@ -65,8 +67,8 @@ void EntityGearSidewaysSmall(Entity* self) {
                 player = &PLAYER;
                 player->posX.val += offsetX;
                 player->posY.val += FIX(1) + offsetY;
-                D_80097488.x.val += offsetX;
-                D_80097488.y.val += offsetY;
+                g_unkGraphicsStruct.shoveX.val += offsetX;
+                g_unkGraphicsStruct.shoveY.val += offsetY;
             }
         }
         break;

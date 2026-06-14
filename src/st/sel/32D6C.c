@@ -208,7 +208,7 @@ s32 func_801B3164(void) {
             MakeMemcardPath(saveFile, slot);
             ret = MemcardReadFile(port, 0, saveFile, g_Pix, 0);
             if (ret != 0) {
-                if (g_MemCardRetryCount-- == 0) {
+                if (!g_MemCardRetryCount--) {
                     g_MemCardRStep = 0;
                 }
             } else {
@@ -221,7 +221,7 @@ s32 func_801B3164(void) {
         ret = MemcardClose(port);
         if (ret != 0) {
             if (ret == -3) {
-                if (g_MemCardRetryCount-- == 0) {
+                if (!g_MemCardRetryCount--) {
                     g_MemCardRStep = 0;
                 } else {
                     g_MemCardRStep--;
@@ -254,7 +254,7 @@ void func_801B367C(s32 arg0) {
     g_MemCardRStepSub = arg0;
 }
 
-s32 TryLoadSaveData(void) {
+s32 TryLoadFromMemcard(void) {
     char saveFile[0x20];
     s32 port;
     s32 slot;
@@ -278,7 +278,7 @@ s32 TryLoadSaveData(void) {
         MakeMemcardPath(saveFile, blockId);
         ret = MemcardReadFile(port, 0, saveFile, g_Pix[0], 1);
         if (ret != 0) {
-            if (g_MemCardRetryCount-- == 0) {
+            if (!g_MemCardRetryCount--) {
                 return -1;
             }
         } else {
@@ -290,12 +290,12 @@ s32 TryLoadSaveData(void) {
         ret = MemcardClose(port);
         if (ret != 0) {
             if (ret == -3) {
-                if (g_MemCardRetryCount-- == 0) {
+                if (!g_MemCardRetryCount--) {
                     return -1;
                 }
                 g_MemCardRStep--;
             } else {
-                ret = LoadSaveData(g_Pix[0]);
+                ret = ApplySaveData(g_Pix[0]);
                 if (ret < 0) {
                     return -2;
                 } else {
@@ -354,7 +354,7 @@ s32 func_801B3A94(s32 arg0) {
     char saveFile[0x20];
     s32 ret;
     SaveData* save;
-    u32 var_s3;
+    bool create;
 
     FntPrint("\nrstep:%d,%d,%d\n", g_MemCardRStep,
              D_801BB000 + (D_801BAFFC * 15), D_801BB008 + (D_801BB004 * 15));
@@ -370,7 +370,7 @@ s32 func_801B3A94(s32 arg0) {
         MakeMemcardPath(saveFile, D_801BB000);
         ret = MemcardReadFile(D_801BAFFC, 0, saveFile, g_Pix, 1);
         if (ret != 0) {
-            if (g_MemCardRetryCount-- == 0) {
+            if (!g_MemCardRetryCount--) {
                 return -1;
             }
         } else {
@@ -382,7 +382,7 @@ s32 func_801B3A94(s32 arg0) {
         ret = MemcardClose(D_801BAFFC);
         if (ret != 0) {
             if (ret == -3) {
-                if (g_MemCardRetryCount-- == 0) {
+                if (!g_MemCardRetryCount--) {
                     return -1;
                 }
                 g_MemCardRStep--;
@@ -396,7 +396,7 @@ s32 func_801B3A94(s32 arg0) {
                         strcpy(save->status.saveName, (const char*)arg0);
                     }
                 }
-                LoadSaveData(g_Pix);
+                ApplySaveData(g_Pix);
                 StoreSaveData(g_Pix, D_801BB008, save->info.cardIcon);
                 g_MemCardRetryCount = 10;
                 g_MemCardRStep++;
@@ -406,14 +406,14 @@ s32 func_801B3A94(s32 arg0) {
 
     case 3:
         if (g_SaveSummary[D_801BB004].icon[D_801BB00C] >= 0) {
-            var_s3 = 0;
+            create = false;
         } else {
-            var_s3 = 1;
+            create = true;
         }
         MakeMemcardPath(saveFile, D_801BB008);
-        ret = MemcardWriteFile(D_801BB004, 0, saveFile, g_Pix, 1, var_s3);
+        ret = MemcardWriteFile(D_801BB004, 0, saveFile, g_Pix, 1, create);
         if (ret != 0) {
-            if (g_MemCardRetryCount-- == 0) {
+            if (!g_MemCardRetryCount--) {
                 return -3;
             }
         } else {
@@ -425,7 +425,7 @@ s32 func_801B3A94(s32 arg0) {
         ret = MemcardClose(D_801BB004);
         if (ret != 0) {
             if (ret == -3) {
-                if (g_MemCardRetryCount-- == 0) {
+                if (!g_MemCardRetryCount--) {
                     return -3;
                 }
                 g_MemCardRStep--;
@@ -465,7 +465,7 @@ s32 func_801B3E2C(void) {
         MakeMemcardPath(saveFile, blockId);
         ret = MemcardEraseFile(port, 0, saveFile);
         if (ret != 0) {
-            if (g_MemCardRetryCount-- == 0) {
+            if (!g_MemCardRetryCount--) {
                 return -1;
             }
         } else {
@@ -495,7 +495,7 @@ s32 MemCardInitAndFormat(void) {
 
     case 1:
         if (MemcardFormat(nPort, 0) != 1) {
-            if (g_MemCardRetryCount-- == 0) {
+            if (!g_MemCardRetryCount--) {
                 return -1;
             }
         } else {

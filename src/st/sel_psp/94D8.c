@@ -169,18 +169,20 @@ void HandleTitleScreen(void) {
                 prim->u1 = 0x80;
                 prim->v1 = 0x10;
                 prim->tpage = 0x1F;
-            } else if (g_UserLanguage != 1) {
-                prim->u0 = 0;
-                prim->v0 = 0x10;
-                prim->u1 = 0x80;
-                prim->v1 = 0x14;
-                prim->tpage = 0x1F;
             } else {
-                prim->u0 = 0x85;
-                prim->v0 = 0xC0;
-                prim->u1 = 0x24;
-                prim->v1 = 0x10;
-                prim->tpage = 0x18;
+                if (g_UserLanguage != LANG_EN) {
+                    prim->u0 = 0;
+                    prim->v0 = 0x10;
+                    prim->u1 = 0x80;
+                    prim->v1 = 0x14;
+                    prim->tpage = 0x1F;
+                } else {
+                    prim->u0 = 0x85;
+                    prim->v0 = 0xC0;
+                    prim->u1 = 0x24;
+                    prim->v1 = 0x10;
+                    prim->tpage = 0x18;
+                }
             }
             prim->clut = 0x20;
             prim->priority = 0;
@@ -250,7 +252,7 @@ void HandleTitleScreen(void) {
                     prim->drawMode = DRAW_DEFAULT;
                 }
             }
-            if ((i != 15) && (i != 16)) {
+            if (i != 15 && i != 16) {
                 continue;
             }
             if (i == 15) {
@@ -258,7 +260,7 @@ void HandleTitleScreen(void) {
             }
             switch (prim->p1) {
             case 0:
-                if (i == 0xF) {
+                if (i == 15) {
                     if (!(rand() & 0x7F)) {
                         prim->p2 = 6;
                         prim->tpage = 0x19;
@@ -333,7 +335,7 @@ void HandleTitleScreen(void) {
                 }
                 break;
             }
-            if (i == 0x10) {
+            if (i == 16) {
                 if (prim->tpage == 0x18) {
                     prim->u1 = 0x78;
                 } else {

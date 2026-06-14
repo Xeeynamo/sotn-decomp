@@ -5,7 +5,6 @@ import sys
 from typing import Optional
 from pathlib import Path
 
-
 sys.path.append(f"{os.getcwd()}/tools/splat_ext")
 from splat.util import options
 from splat.segtypes.segment import Segment

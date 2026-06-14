@@ -22,6 +22,7 @@ typedef enum {
     EXPLOSION_SMALL_MULTIPLE,
     EXPLOSION_BIG,
     EXPLOSION_UNK_4,
+    EXPLOSION_UNK_17 = 0x11,
     EXPLOSION_UNK_19 = 0x13
 } ExplosionTypes;
 
@@ -33,7 +34,7 @@ typedef u16 EInit[5];
 // common stage initialization data
 extern EInit g_EInitSpawner;
 
-typedef struct {
+typedef struct AnimateEntityFrame {
     u8 duration;
     u8 pose;
 } AnimateEntityFrame;
@@ -95,22 +96,12 @@ typedef struct {
     u16 zOffset;
 } giantBroBodyPartsInit;
 
-// Used in e_bone_archer.h
-typedef struct {
-    u8* animation;
-    u8 frameA;
-    u8 frameB;
-    s16 xOffset;
-    s16 yOffset;
-    s16 pad;
-} unk_801D0598; /* size=0xC */
-
 // Used by no2/372E8, rbo3/rbo3, e_explosion_puff_opaque
 typedef struct {
     u16 animSet;
     u16 unk5A;
     u16 palette;
-    u16 drawMode;
+    u16 blendMode;
     u8* animData;
 } EntityConfig;
 
@@ -167,33 +158,6 @@ typedef struct {
     u32 velocityY;
     s16 rotate;
 } unkStr_80182100;
-
-/*******/
-/* NZ0 */
-/*******/
-// Used in nz0/e_subweapon_container
-typedef struct SubWpnContDebris {
-    s16 velX;
-    s16 velY;
-    u16 params;
-    u16 facingLeft;
-} SubWpnContDebris;
-
-/*******/
-/* ST0 */
-/*******/
-// Used in st0/3D8F0
-typedef struct {
-    Point16 unk0;
-    s16 unk4;
-    s16 unk6;
-    s16 unk8;
-    s16 unkA;
-    s16 unkC;
-    s16 unkE;
-    s32 unk10;
-    s16 unk14;
-} unkstr_801C06B0;
 
 /***************/
 /* Scratchpads */

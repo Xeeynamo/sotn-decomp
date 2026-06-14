@@ -1133,7 +1133,7 @@ void EntityGuardText(Entity* self) {
         self->ext.guardText.unk98 = FIX(0x78);
 
         if (params_gtc->mode == 2) {
-            self->ext.guardText.str_x += FIX(-6);
+            self->ext.guardText.str_x -= FIX(6);
             self->ext.guardText.unk98 = FIX(0x78);
         }
         if (params_gtc->mode == 3) {
@@ -1232,7 +1232,7 @@ void EntityGuardText(Entity* self) {
         }
         break;
     case 7:
-        self->velocityX += FIX(-1);
+        self->velocityX -= FIX(1);
         self->ext.guardText.str_x += (u32)self->velocityX;
         self->ext.guardText.timer++;
         hider_ID = self->ext.guardText.timer & 0xF;
@@ -1352,7 +1352,7 @@ void EntitySmallRisingHeart(Entity* self) {
 
     case 1:
         if (self->ext.smallRisingHeart.timer < 32) {
-            self->drawFlags = FLAG_BLINK;
+            self->drawFlags = ENTITY_BLINK;
         }
         self->posY.val += self->velocityY;
         swayX = rcos(self->ext.smallRisingHeart.swayAngle) * 8;
@@ -2153,8 +2153,8 @@ void EntitySmokePuff(Entity* self) {
         self->zPriority = PLAYER.zPriority + 2;
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000 | FLAG_UNK_10000;
         self->palette = PAL_FLAG(PAL_UNK_195);
-        self->drawMode = DRAW_TPAGE;
-        self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+        self->blendMode = BLEND_TRANSP;
+        self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
 
         posX = D_800AD54C[paramsLo];
         if (paramsHi == 0) {
@@ -2285,13 +2285,13 @@ void EntityUnkId24(Entity* self) {
         if (upperparams == 0) {
             self->posX.i.hi += (rand() & 63) - 32;
             self->posY.i.hi += (rand() & 63) - 48;
-            self->drawMode = DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP;
             self->palette = PAL_FLAG(PAL_UNK_195);
         }
         // Silly, this should just be an "else"
         if (upperparams) {
             self->posY.i.hi += rand() % 24 - 12;
-            self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+            self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
             self->scaleX = self->scaleY = 0x80;
             self->palette = PAL_FLAG(PAL_UNK_170);
         }
@@ -2447,7 +2447,7 @@ void EntityPlayerBlinkWhite(Entity* self) {
             sp7c = D_8013AEBC[2];
             sp7a = D_8013AEBC[3];
             self->facingLeft = 0;
-            self->drawFlags = FLAG_DRAW_DEFAULT;
+            self->drawFlags = ENTITY_DEFAULT;
             goto block_748;
         }
     } else {
@@ -2596,7 +2596,7 @@ block_748:
                 }
                 break;
             case 0x7004:
-                if (D_80097448[1] == 0 ||
+                if (g_unkGraphicsStruct.D_8009744C == 0 ||
                     IsRelicActive(RELIC_HOLY_SYMBOL) != 0) {
                     self->step += 1;
                 }
@@ -2920,8 +2920,7 @@ block_748:
             prim->v0 = prim->v1 = var_s6 + var_s5 * var_s1 / 8;
             prim->v2 = prim->v3 = var_s6 + var_s5 * (var_s1 + 1) / 8;
         }
-        if (self->drawFlags &
-            (FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY | FLAG_DRAW_ROTATE)) {
+        if (self->drawFlags & (ENTITY_SCALEX | ENTITY_SCALEY | ENTITY_ROTATE)) {
             func_800EB758(self->posX.i.hi, self->posY.i.hi, self,
                           self->drawFlags, prim, self->facingLeft);
         }
@@ -3045,7 +3044,7 @@ void EntityPlayerOutline(Entity* self) {
     xOffset = animFramePtr[0] + spritesheetPtr[2];
     yOffset = animFramePtr[1] + spritesheetPtr[3];
     self->rotate = PLAYER.rotate;
-    self->drawFlags |= (FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY);
+    self->drawFlags |= (ENTITY_SCALEX | ENTITY_SCALEY);
     primData = D_800AD9B8[upperparams];
     switch (self->step) {
     case 0: // Initialization
@@ -3349,10 +3348,9 @@ void EntityWingSmashTrail(Entity* entity) {
         entity->animCurFrame = PLAYER.animCurFrame | ANIM_FRAME_LOAD;
         entity->zPriority = PLAYER.zPriority - 2;
         entity->drawFlags =
-            PLAYER.drawFlags |
-            (FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX);
+            PLAYER.drawFlags | (ENTITY_OPACITY | ENTITY_SCALEY | ENTITY_SCALEX);
         entity->opacity = 0x80;
-        entity->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        entity->blendMode = BLEND_TRANSP | BLEND_ADD;
         entity->rotate = PLAYER.rotate;
         entity->facingLeft = PLAYER.facingLeft;
         entity->palette = PAL_FLAG(PAL_ALUCARD_BLUE_OUTLINE_MASK);

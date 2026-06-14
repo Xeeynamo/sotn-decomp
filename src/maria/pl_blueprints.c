@@ -620,9 +620,8 @@ void MarEntitySmokePuff(Entity* self) {
         self->anim = anim_smoke_puff;
         self->zPriority = PLAYER.zPriority + 2;
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000 | FLAG_UNK_10000;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
-        self->drawFlags =
-            FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY | FLAG_DRAW_OPACITY;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
+        self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY | ENTITY_OPACITY;
         self->opacity = 0x60;
         posX = pos_x_80154C50[paramsLo];
         if (paramsHi == 0) {
@@ -971,9 +970,10 @@ void MarEntityHitByCutBlood(Entity* self) {
                     tilePrim->b0 -= 1;
                     tilePrim->posY.val += tilePrim->velocityY.val;
                     tilePrim->posX.val += tilePrim->velocityX.val;
-                    if (*D_80097448 == 0 ||
+                    if (g_unkGraphicsStruct.D_80097448 == 0 ||
                         !(tilePrim->posY.i.hi >
-                          (PLAYER.posY.i.hi - *D_80097448 + 0x19))) {
+                          (PLAYER.posY.i.hi - g_unkGraphicsStruct.D_80097448 +
+                           0x19))) {
                         tilePrim->drawMode |= DRAW_HIDE;
                     }
                 } else {
@@ -1010,7 +1010,7 @@ void func_maria_80161C2C(Entity* self) {
         if (paramsHi == 1) {
             self->scaleX = 0xC0;
             self->scaleY = 0xC0;
-            self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+            self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
             self->animSet = ANIMSET_DRA(2);
             self->anim = anim_80154E04;
         }
@@ -1019,7 +1019,7 @@ void func_maria_80161C2C(Entity* self) {
                 self->anim = anim_80154DC8;
                 self->scaleX = 0x120;
                 self->scaleY = 0x120;
-                self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+                self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
                 self->animSet = ANIMSET_DRA(2);
             } else {
                 self->animSet = ANIMSET_DRA(5);
@@ -1050,13 +1050,13 @@ void func_maria_80161C2C(Entity* self) {
         self->posY.val += self->velocityY;
         self->posX.val += self->velocityX;
         if ((self->pose == 8) && (self->anim != anim_smoke_puff)) {
-            self->drawMode = DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP;
             if (!(paramsLo & 1) && self->poseTimer == 1) {
                 MarCreateEntFactoryFromEntity(self, FACTORY(BP_EMBERS, 4), 0);
             }
         }
         if (self->pose == 16 && self->anim == anim_smoke_puff) {
-            self->drawMode = DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP;
         }
         if (self->poseTimer < 0) {
             DestroyEntity(self);
@@ -1345,7 +1345,7 @@ void EntityMariaOwl(Entity* self) {
         self->velocityY = FIX(1);
         self->posY.val -= self->velocityY;
         self->ext.mariaOwl.unk7E++;
-        self->velocityX += FIX(-0.5) + FIX(-0.5);
+        self->velocityX -= FIX(1);
         self->posX.val += self->facingLeft ? -self->velocityX : self->velocityX;
         if (self->velocityX <= 0) {
             self->facingLeft = self->facingLeft ? 0 : 1;
@@ -2420,12 +2420,12 @@ static void func_80165DD8(
 
 static void func_80166024() {
     PLAYER.palette = PAL_FLAG(PAL_FILL_BLACK);
-    PLAYER.drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
+    PLAYER.blendMode = BLEND_TRANSP | BLEND_QUARTER;
 }
 
 static void func_80166044() {
     PLAYER.palette = PAL_FLAG(PAL_RICHTER);
-    PLAYER.drawMode = DRAW_DEFAULT;
+    PLAYER.blendMode = BLEND_NO;
 }
 
 // Entity ID 66. Made by blueprint 77 (the very last one).
@@ -2669,11 +2669,11 @@ void MarEntityTeleport(Entity* self) {
 
 void SetOpacity(Entity* entity, s32 opacity) {
     if (opacity >= 128) {
-        entity->drawMode = entity->drawFlags = FLAG_DRAW_DEFAULT;
+        entity->blendMode = entity->drawFlags = ENTITY_DEFAULT;
         entity->opacity = 128;
     } else {
-        entity->drawMode = DRAW_TPAGE | DRAW_TPAGE2;
-        entity->drawFlags = FLAG_DRAW_OPACITY;
+        entity->blendMode = BLEND_TRANSP | BLEND_ADD;
+        entity->drawFlags = ENTITY_OPACITY;
         entity->opacity = opacity;
     }
 }

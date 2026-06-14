@@ -90,6 +90,9 @@ def add_srcs(srcs, output_dir, args):
 snd_srcs = [
     'src/saturn/alucard.c',
     'src/saturn/zero.c',
+    'src/saturn/lib/snd.c',
+    'src/saturn/zero_2.c',
+    'src/saturn/game_0.c',
     'src/saturn/game.c',
     'src/saturn/richter.c',
     'src/saturn/stage_02.c',
@@ -101,12 +104,18 @@ lib_srcs = [
     'src/saturn/lib/bup.c',
     'src/saturn/lib/cdc.c',
     'src/saturn/lib/csh.c',
-    'src/saturn/lib/dma.c',
+    'src/saturn/lib/dma/dma_cpum.c',
+    'src/saturn/lib/dma/dma_scu1.c',
+    'src/saturn/lib/dma/dma_scu0.c',
+    'src/saturn/lib/dma/dma_cpu0.c',
     'src/saturn/lib/gfs.c',
     'src/saturn/lib/mth.c',
+    'src/saturn/lib/int.c',
     'src/saturn/lib/per.c',
     'src/saturn/lib/scl.c',
-    'src/saturn/lib/spr.c',
+    'src/saturn/lib/spr/spr_1c.c',
+    'src/saturn/lib/spr/spr_2c.c',
+    'src/saturn/lib/spr/spr_slv.c',
     'src/saturn/lib/sys.c',
 ]
 
@@ -147,7 +156,6 @@ def link_objs(srcs, output_dir):
                 'syms_file': syms_file})
 
 objs = [
-    'build/saturn/game.o',
     'build/saturn/alucard.o',
     'build/saturn/richter.o',
     'build/saturn/stage_02.o',
@@ -168,22 +176,34 @@ def link_multi(multi_objs, output_dir):
             elf_name, 
             'link_multi', 
             inputs=[main_obj],
+            implicit=[x for x in sub_objs if x],
             variables={
                 'ld_file': ld_file,
                 'syms_file': syms_file,
                 'objs': sub_objs})
 
 multi_objs = {
+    'build/saturn/game.o' : [
+        'build/saturn/game_0.o',
+    ],
     'build/saturn/zero.o' : [
+        'build/saturn/lib/snd.o',
+        'build/saturn/zero_2.o',
         'build/saturn/lib/bup.o',
         'build/saturn/lib/cdc.o',
         'build/saturn/lib/csh.o',
-        'build/saturn/lib/dma.o',
+        'build/saturn/lib/dma/dma_cpum.o',
+        'build/saturn/lib/dma/dma_scu1.o',
+        'build/saturn/lib/dma/dma_scu0.o',
+        'build/saturn/lib/dma/dma_cpu0.o',
         'build/saturn/lib/gfs.o',
         'build/saturn/lib/mth.o',
+        'build/saturn/lib/int.o',
         'build/saturn/lib/per.o',
         'build/saturn/lib/scl.o',
-        'build/saturn/lib/spr.o',
+        'build/saturn/lib/spr/spr_1c.o',
+        'build/saturn/lib/spr/spr_2c.o',
+        'build/saturn/lib/spr/spr_slv.o',
         'build/saturn/lib/sys.o',
     ]
 }

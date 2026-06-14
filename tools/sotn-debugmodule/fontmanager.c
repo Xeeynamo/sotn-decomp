@@ -16,14 +16,13 @@ typedef struct {
     u32 unk28;
 } FntStream;
 
-const s16 DefaultFontX = 8;
-const s16 DefaultFontY = 48;
+static const s16 DefaultFontX = 8;
+static const s16 DefaultFontY = 48;
 
-int g_FontStreamId;
-int g_PrevFontStreamId;
-s16 g_FontCoordX;
-s16 g_FontCoordY;
-FntStream Font[];
+static int g_FontStreamId;
+static s16 g_FontCoordX;
+static s16 g_FontCoordY;
+extern FntStream Font[];
 
 void InitFont() {
     g_FontStreamId = 0;

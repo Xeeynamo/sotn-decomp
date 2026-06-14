@@ -57,7 +57,7 @@ void EntityFleaArmor(Entity* self) {
     case 0:
         InitializeEntity(g_EInitFleaArmor);
         CreateEntityFromEntity(E_FLEA_ARMOR_ATTACK_HITBOX, self, self + 1);
-        self->drawMode |= DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode |= BLEND_TRANSP | BLEND_ADD;
         break;
 
     case 1:
@@ -214,7 +214,7 @@ void EntityFleaArmor(Entity* self) {
         }
 
         if (entity != NULL) {
-            entity->drawFlags |= FLAG_DRAW_ROTATE;
+            entity->drawFlags |= ENTITY_ROTATE;
         }
 
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -225,7 +225,7 @@ void EntityFleaArmor(Entity* self) {
         }
         self->velocityX = 0;
         self->flags = FLAG_POS_CAMERA_LOCKED;
-        self->drawFlags = FLAG_DRAW_DEFAULT;
+        self->drawFlags = ENTITY_DEFAULT;
         LOHU(self->ext.fleaArmor.counter) = 16;
         self->hitPoints = S16_MAX;
         self->step = 0;

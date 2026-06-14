@@ -271,13 +271,13 @@ void EntityWhiteDragon(Entity* self) {
             self->step = INIT;
             self->step_s++;
             self->flags |=
-                FLAG_POS_CAMERA_LOCKED | FLAG_UNK_400000 | FLAG_UNK_10;
+                FLAG_POS_CAMERA_LOCKED | FLAG_SUPPRESS_STUN | FLAG_UNK_10;
             self->facingLeft = self->params & 1;
             enemyDef = &g_api.enemyDefs[WHITE_DRAGON_ID];
 
             entity = self;
             for (i = SEGMENT_COUNT - 1; i >= 0; i--) {
-                entity->unk60 = entity + 1;
+                entity->nextPart = entity + 1;
                 entity++;
                 DestroyEntity(entity);
 
@@ -297,7 +297,7 @@ void EntityWhiteDragon(Entity* self) {
                 entity->attackElement = ELEMENT_UNK_1;
                 entity->attack = 1;
                 if (!i) {
-                    entity->drawFlags = FLAG_DRAW_ROTATE;
+                    entity->drawFlags = ENTITY_ROTATE;
                     entity->animSet = ANIMSET_OVL(1);
                     entity->animCurFrame = 1;
                     entity->unk5A = 0x57;
@@ -313,8 +313,9 @@ void EntityWhiteDragon(Entity* self) {
                     entity->hitPoints = enemyDef->hitPoints;
                     entity->hitboxState = enemyDef->hitboxState;
                     entity->entityRoomIndex = self->entityRoomIndex;
-                    entity->flags |= FLAG_POS_CAMERA_LOCKED | FLAG_UNK_400000;
-                    entity->unk60 = self;
+                    entity->flags |=
+                        FLAG_POS_CAMERA_LOCKED | FLAG_SUPPRESS_STUN;
+                    entity->nextPart = self;
                 } else {
                     entity->hitPoints = 0x7FFF;
                     entity->hitboxWidth = 4;
@@ -755,7 +756,7 @@ void EntityWhiteDragon(Entity* self) {
             entity = self;
             for (i = SEGMENT_COUNT - 1; i >= 0; i--) {
                 entity++;
-                entity->drawFlags = FLAG_DRAW_DEFAULT;
+                entity->drawFlags = ENTITY_DEFAULT;
                 if (i & 1) {
                     entity->entityId = E_EXPLOSION;
                     entity->pfnUpdate = EntityExplosion;
@@ -848,7 +849,7 @@ void EntityWhiteDragonFlameBreath(Entity* self) {
         InitializeEntity(g_EInitWhiteDragonFlameBreath);
         self->zPriority += 1;
         self->hitboxState = 0;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         entity = self->ext.whiteDragon.entity;
         SetEntityVelocityFromAngle(entity->ext.whiteDragon.angle, 0x60);
         LOWU(self->ext.whiteDragon.unk80) = 0x28;
@@ -863,7 +864,7 @@ void EntityWhiteDragonFlameBreath(Entity* self) {
             self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 0xC;
             self->hitboxState = 1;
             self->ext.whiteDragon.unk84 = 0;
-            self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+            self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
         }
 
         func_us_801B6578(self);

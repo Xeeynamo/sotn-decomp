@@ -3,9 +3,11 @@
 #include "xpt.h"
 #include "scl.h"
 #include "def.h"
-#include "spr.h"
+#include "spr/spr.h"
 
 // SEGA_SCL.A
+
+#define REGADDR 0x25F80000
 
 extern Uint32 SclCurSclNum;
 extern SclRotreg* SclRotregBuff;
@@ -47,6 +49,113 @@ extern Uint32 SclAddrLsTbl[];
 extern Uint32 SclAddrCsTbl[];
 extern Uint16 SclLengthLsTbl;
 extern Uint16 SclLengthCsTbl;
+
+void SCL_Vdp2Init(void) {
+    SCL_VblInit();
+
+    SclRotateXy[0] = FIXED(0);
+    SclRotateXy[1] = FIXED(0);
+    SclRotateZ[0] = FIXED(0);
+    SclRotateZ[1] = FIXED(0);
+    SclRotateMoveZ[0] = FIXED(0);
+    SclRotateMoveZ[1] = FIXED(0);
+    SclK_TableFlag[0] = 0;
+    SclK_TableFlag[1] = 0;
+    SclRotXySw[0] = 0;
+    SclRotXySw[1] = 0;
+
+    SclRbgKtbAddr[0] = 0;
+    SclRbgKtbAddr[1] = 0;
+
+    SclRbgKtbOffset[0] = 0;
+    SclRbgKtbOffset[1] = 0;
+
+    SclRotateTableAddress = 0;
+
+    SCL_PriorityInit();
+    SCL_ParametersInit();
+}
+
+void SCL_ParametersInit(void) {
+    Uint16 i;
+
+    regaddr = (Uint16*)REGADDR;
+
+    Scl_s_reg.tvmode = 0x8000;
+    Scl_s_reg.extenbl = 0;
+    Scl_s_reg.vramsize = 0;
+    Scl_s_reg.vramchg = 0;
+    Scl_s_reg.ramcontrl = 0x2000;
+    for (i = 0; i < 8; i++)
+        Scl_s_reg.vramcyc[i] = 0xffff;
+    Scl_s_reg.dispenbl = 0;
+    Scl_s_reg.mosaic = 0;
+    Scl_s_reg.specialcode_sel = 0;
+    Scl_s_reg.specialcode = 0;
+
+    Scl_d_reg.charcontrl0 = 0;
+    Scl_d_reg.charcontrl1 = 0;
+    Scl_d_reg.bmpalnum0 = 0;
+    Scl_d_reg.bmpalnum1 = 0;
+    Scl_d_reg.patnamecontrl[0] = 0x0000;
+    Scl_d_reg.patnamecontrl[1] = 0;
+    Scl_d_reg.patnamecontrl[2] = 0;
+    Scl_d_reg.patnamecontrl[3] = 0;
+    Scl_d_reg.patnamecontrl[4] = 0;
+    Scl_d_reg.platesize = 0x0000;
+    Scl_d_reg.mapoffset0 = 0;
+    Scl_d_reg.mapoffset1 = 0;
+    for (i = 0; i < 8; i++)
+        Scl_d_reg.normap[i] = 0;
+    for (i = 0; i < 16; i++)
+        Scl_d_reg.rotmap[i] = 0;
+
+    Scl_n_reg.n0_move_x = 0;
+    Scl_n_reg.n0_move_y = 0;
+    Scl_n_reg.n0_delta_x = FIXED(1);
+    Scl_n_reg.n0_delta_y = FIXED(1);
+    Scl_n_reg.n1_move_x = 0;
+    Scl_n_reg.n1_move_y = 0;
+    Scl_n_reg.n1_delta_x = FIXED(1);
+    Scl_n_reg.n1_delta_y = FIXED(1);
+    Scl_n_reg.n2_move_x = 0;
+    Scl_n_reg.n2_move_y = 0;
+    Scl_n_reg.n3_move_x = 0;
+    Scl_n_reg.n3_move_y = 0;
+    Scl_n_reg.zoomenbl = 0;
+    Scl_n_reg.linecontrl = 0;
+    Scl_n_reg.celladdr = 0;
+    Scl_n_reg.lineaddr[0] = 0;
+    Scl_n_reg.lineaddr[1] = 0;
+    Scl_n_reg.linecolmode = 0;
+    Scl_n_reg.backcolmode = 0;
+
+    Scl_r_reg.paramode = 0;
+    Scl_r_reg.paramcontrl = 0;
+    Scl_r_reg.k_contrl = 0;
+    Scl_r_reg.k_offset = 0;
+    Scl_r_reg.mapover[0] = 0;
+    Scl_r_reg.mapover[1] = 0;
+    Scl_r_reg.paramaddr = 0;
+
+    Scl_w_reg.win0_start[0] = 0;
+    Scl_w_reg.win0_start[1] = 0;
+    Scl_w_reg.win0_end[0] = 0;
+    Scl_w_reg.win0_end[1] = 0;
+    Scl_w_reg.win1_start[0] = 0;
+    Scl_w_reg.win1_start[1] = 0;
+    Scl_w_reg.win1_end[0] = 0;
+    Scl_w_reg.win1_end[1] = 0;
+    Scl_w_reg.wincontrl[0] = 0;
+    Scl_w_reg.wincontrl[1] = 0;
+    Scl_w_reg.wincontrl[2] = 0;
+    Scl_w_reg.wincontrl[3] = 0;
+    Scl_w_reg.linewin0_addr = 0;
+    Scl_w_reg.linewin1_addr = 0;
+
+    if (SclProcess == 0)
+        SclProcess = 1;
+}
 
 // func_06024444
 void SCL_Open(Uint32 sclnum) {
@@ -1929,13 +2038,13 @@ void SCL_Rotate(Fixed32 xy, Fixed32 z, Fixed32 disp) {
     }
 
 #if 0
-	if(SclRotateZ[TbNum])	SCL_RotateZ(SclRotateZ[TbNum]);
+    if(SclRotateZ[TbNum])   SCL_RotateZ(SclRotateZ[TbNum]);
 
-	if( SclRotateXy[TbNum] || SclRotateMoveZ[TbNum] ) {
-		if(SclRotXySw[TbNum]==0 || SclRbgKtbOffset[TbNum])
-			SCL_RotateX(SclRotateXy[TbNum]);
-		else	SCL_RotateY(SclRotateXy[TbNum]);
-	}
+    if( SclRotateXy[TbNum] || SclRotateMoveZ[TbNum] ) {
+      if(SclRotXySw[TbNum]==0 || SclRbgKtbOffset[TbNum])
+        SCL_RotateX(SclRotateXy[TbNum]);
+      else  SCL_RotateY(SclRotateXy[TbNum]);
+    }
 #endif
 }
 
@@ -2095,5 +2204,3 @@ Uint32 SCL_GetColRamOffset(Uint32 Object) {
         break;
     }
 }
-
-const u16 pad_602B9B2 = 0;

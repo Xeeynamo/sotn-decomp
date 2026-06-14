@@ -57,7 +57,7 @@ void EntitySubwpnKnife(Entity* self) {
         prim->b0 = 0;
         SetSpeedX(FIX(8));
         PlaySfx(SFX_WEAPON_SWISH_C);
-        g_Player.timers[ALU_T_10] = 4;
+        g_Player.timers[ALU_T_USE_SUBWPN] = 4;
         self->step++;
         break;
     case DAGGER_FLYING:
@@ -90,7 +90,8 @@ void EntitySubwpnKnife(Entity* self) {
                 self->velocityY = FIX(-2.5);
                 self->hitboxState = 0;
                 self->posX.i.hi += xCol;
-                CreateEntFactoryFromEntity(self, FACTORY(BP_10, 0), 0);
+                CreateEntFactoryFromEntity(
+                    self, FACTORY(BP_REBOUND_STONE_HIT, 0), 0);
                 self->posX.i.hi -= xCol;
                 PlaySfx(SFX_UI_SUBWEAPON_TINK);
                 self->step++;
@@ -290,7 +291,7 @@ void EntitySubwpnThrownAxe(Entity* self) {
         self->hitboxWidth = 12;
         self->hitboxHeight = 12;
         PlaySfx(SFX_WEAPON_SWISH_C);
-        g_Player.timers[ALU_T_10] = 4;
+        g_Player.timers[ALU_T_USE_SUBWPN] = 4;
         self->ext.subwpnAxe.unk98 = 0x7F;
         self->step++;
         break;
@@ -518,7 +519,7 @@ void EntitySubwpnHolyWater(Entity* self) {
         self->velocityY = FIX(-3.125);
         func_8011A290(self);
         self->hitboxWidth = self->hitboxHeight = 4;
-        g_Player.timers[ALU_T_10] = 4;
+        g_Player.timers[ALU_T_USE_SUBWPN] = 4;
         self->step++;
         break;
     case HOLYWATER_FLYING:
@@ -552,8 +553,9 @@ void EntitySubwpnHolyWater(Entity* self) {
     case HOLYWATER_BREAK:
         if (!(self->ext.holywater.timer & 3)) {
             // Factory 28 has child 23, EntitySubwpnHolyWaterFlame
-            CreateEntFactoryFromEntity(self, FACTORY(BP_28, D_8013841C),
-                                       self->ext.holywater.unkB2 << 9);
+            CreateEntFactoryFromEntity(
+                self, FACTORY(BP_HOLYWATER_GREEN_FIRE, D_8013841C),
+                self->ext.holywater.unkB2 << 9);
             D_8013841C++;
         }
         if (--self->ext.holywater.timer == 0) {
@@ -1246,7 +1248,7 @@ void EntityBatFireball(Entity* self) {
         // Initial fireball size is 0x40 by 0x40
         self->posX.val += self->velocityX * 2;
         self->posY.i.hi -= 4;
-        self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+        self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
         self->scaleX = self->scaleY = 0x40;
         func_8011A328(self, 9);
         self->hitboxWidth = 4;
@@ -1289,7 +1291,7 @@ void EntityHellfireBigFireball(Entity* entity) {
         } else {
             entity->posY.i.hi -= 4;
         }
-        entity->drawFlags |= FLAG_DRAW_ROTATE;
+        entity->drawFlags |= ENTITY_ROTATE;
         entity->rotate = 0;
         entity->animSet = ANIMSET_DRA(9);
         entity->anim = D_800B07C8;
@@ -2312,12 +2314,12 @@ void func_80129864(Entity* self) {
         self->animSet = 9;
         self->anim = D_800B0798;
         self->palette = PAL_FLAG(PAL_UNK_19F);
-        self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_QUARTER;
         self->zPriority = 0x1C3;
         self->flags =
             FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
             FLAG_HAS_PRIMS | FLAG_UNK_100000 | FLAG_UNK_20000 | FLAG_UNK_10000;
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         if (self->params & 0x7F00) {
             func_8011A328(self, 3);
         } else {

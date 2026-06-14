@@ -1,42 +1,31 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz0.h"
-#include "sfx.h"
 
-static u8 D_80181474[] = {
-    0x04, 0x01, 0x04, 0x02, 0x04, 0x03, 0x04, 0x04, 0x04, 0x05,
-    0x05, 0x06, 0x04, 0x07, 0x04, 0x08, 0x04, 0x09, 0x04, 0x0A,
-    0x04, 0x0B, 0x05, 0x0C, 0x00, 0x00, 0x00, 0x00};
-static u8 D_80181490[] = {0x07, 0x0D, 0x07, 0x0E, 0x07, 0x0F, 0x07, 0x10,
-                          0x07, 0x11, 0x07, 0x12, 0x10, 0x13, 0xFF, 0x00};
-static u8 D_801814A0[] = {
-    0x01, 0x13, 0x03, 0x14, 0x03, 0x15, 0x03, 0x16, 0x03, 0x17,
-    0x06, 0x20, 0x10, 0x1F, 0x20, 0x20, 0x03, 0x17, 0x03, 0x16,
-    0x03, 0x15, 0x03, 0x14, 0x08, 0x13, 0xFF, 0x00};
-static u8 D_801814BC[] = {
-    0x10, 0x13, 0x10, 0x21, 0x06, 0x12, 0x08, 0x13, 0xFF, 0x00};
-static u8 D_801814C8[] = {
-    0x03, 0x13, 0x05, 0x14, 0x05, 0x15, 0x05, 0x16, 0x18, 0x19,
-    0x03, 0x18, 0x03, 0x1C, 0x03, 0x1D, 0x58, 0x1E, 0x06, 0x1D,
-    0x05, 0x16, 0x05, 0x15, 0x05, 0x14, 0x05, 0x13, 0xFF, 0x00};
-static u8 D_801814E8[] = {0x11, 0x13, 0x08, 0x22, 0x17, 0x23, 0x17,
-                          0x24, 0x17, 0x25, 0x11, 0x13, 0xFF, 0x00};
-static u8 D_801814F8[] = {
-    0x20, 0x13, 0x19, 0x22, 0x30, 0x13, 0x19, 0x25, 0x6F, 0x13, 0x06, 0x12,
-    0x08, 0x26, 0x08, 0x27, 0x08, 0x28, 0x08, 0x29, 0x20, 0x2A, 0xFF, 0x00};
-static u8 D_80181510[] = {
-    0x01, 0x2A, 0x09, 0x2B, 0x09, 0x2C, 0x10, 0x2D, 0x30, 0x2C, 0xFF, 0x00};
-static u8 D_8018151C[] = {0x20, 0x2C, 0x07, 0x2E, 0x07, 0x2F, 0x30, 0x30, 0x0B,
-                          0x31, 0x0E, 0x30, 0x0B, 0x31, 0x40, 0x30, 0xFF, 0x00};
-static u8 D_80181530[] = {0x06, 0x2F, 0x06, 0x2E, 0x06, 0x2C, 0xFF, 0x00};
-static u8 D_80181538[] = {
-    0x02, 0x32, 0x04, 0x33, 0x04, 0x34, 0x05, 0x35, 0x04, 0x36,
-    0x04, 0x37, 0x04, 0x38, 0x04, 0x39, 0x04, 0x3A, 0x05, 0x3B,
-    0x04, 0x3C, 0x04, 0x3D, 0x02, 0x32, 0x00, 0x00};
+static u8 anim0[] = {4, 1, 4, 2, 4, 3, 4,  4, 4,  5, 5,  6, 4,
+                     7, 4, 8, 4, 9, 4, 10, 4, 11, 5, 12, 0, 0};
+static u8 anim1[] = {7, 13, 7, 14, 7, 15, 7, 16, 7, 17, 7, 18, 16, 19, -1, 0};
+static u8 anim2[] = {1,  19, 3, 20, 3, 21, 3, 22, 3, 23, 6, 32, 16, 31,
+                     32, 32, 3, 23, 3, 22, 3, 21, 3, 20, 8, 19, -1, 0};
+static u8 anim3[] = {16, 19, 16, 33, 6, 18, 8, 19, -1, 0};
+static u8 anim4[] = {3,  19, 5,  20, 5,  21, 5,  22, 24, 25, 3,  24, 3,  28, 3,
+                     29, 88, 30, 6,  29, 5,  22, 5,  21, 5,  20, 5,  19, -1, 0};
+static u8 anim5[] = {17, 19, 8, 34, 23, 35, 23, 36, 23, 37, 17, 19, -1, 0};
+static u8 anim6[] = {32, 19, 25, 34, 48, 19, 25, 37, 111, 19, 6,  18,
+                     8,  38, 8,  39, 8,  40, 8,  41, 32,  42, -1, 0};
+static u8 anim7[] = {1, 42, 9, 43, 9, 44, 16, 45, 48, 44, -1, 0};
+static u8 anim8[] = {32, 44, 7,  46, 7,  47, 48, 48, 11,
+                     49, 14, 48, 11, 49, 64, 48, -1, 0};
+static u8 anim9[] = {6, 47, 6, 46, 6, 44, -1, 0};
+static u8 anim10[] = {2, 50, 4, 51, 4, 52, 5, 53, 4, 54, 4, 55, 4, 56,
+                      4, 57, 4, 58, 5, 59, 4, 60, 4, 61, 2, 50, 0, 0};
 
 extern u32 g_SkipCutscene;
 extern u32 g_CutsceneFlags;
 
 void func_801B8E0C(Entity* self) {
+    Tilemap* tilemap = &g_Tilemap;
+    Entity* player = &PLAYER;
+
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitSpawner);
@@ -44,20 +33,20 @@ void func_801B8E0C(Entity* self) {
         g_unkGraphicsStruct.pauseEnemies = 1;
         g_Player.padSim = PAD_LEFT;
         if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
-            g_Player.padSim = PAD_R2;
+            g_Player.padSim = PAD_WOLF;
         }
         g_Player.demo_timer = 1;
         break;
 
     case 1:
-        if (PLAYER.posX.i.hi < 176) {
+        if (player->posX.i.hi < 0xB0) {
             g_Player.padSim = 0;
             self->step++;
         } else {
             g_Player.padSim = 0;
             if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
                 if (g_Timer & 1) {
-                    g_Player.padSim = PAD_R2;
+                    g_Player.padSim = PAD_WOLF;
                 }
             } else {
                 g_Player.padSim = PAD_LEFT;
@@ -83,11 +72,12 @@ void func_801B8E0C(Entity* self) {
 // Maria appearing in the cutscene. Walks in from the door on the left, talks
 // to Alucard, and departs to the right.
 void EntityMariaNZ0(Entity* self) {
+    Tilemap* tilemap = &g_Tilemap;
     Entity* redDoor;
     Primitive* prim;
     s32 i;
 
-    if (g_SkipCutscene && (self->step < 12)) {
+    if (g_SkipCutscene && self->step < 12) {
         if (!(g_CutsceneFlags & 1)) {
             g_CutsceneFlags |= 1;
         }
@@ -99,7 +89,7 @@ void EntityMariaNZ0(Entity* self) {
         self->animSet = ANIMSET_OVL(0xF);
         self->animCurFrame = 1;
         self->unk5A = 0x48;
-        self->palette = 0x237;
+        self->palette = PAL_UNK_237;
         self->posX.i.hi = -0x10;
         break;
     case 1:
@@ -108,12 +98,12 @@ void EntityMariaNZ0(Entity* self) {
             // slot 192.
             redDoor = &g_Entities[192];
             g_api.PlaySfxVolPan(SFX_DOOR_OPEN, 0x60, -6);
-            for (prim = &g_PrimBuf[redDoor->primIndex], i = 0; prim != NULL;
-                 prim = prim->next, i++) {
-                if ((i == 1) && !(self->params & FLAG_DEAD)) {
+            prim = &g_PrimBuf[redDoor->primIndex];
+            for (i = 0; prim != NULL; i++, prim = prim->next) {
+                if (i == 1 && !(self->params & FLAG_DEAD)) {
                     prim->drawMode &= ~DRAW_HIDE;
                 }
-                if ((i == 2) && (self->params & FLAG_DEAD)) {
+                if (i == 2 && (self->params & FLAG_DEAD)) {
                     prim->drawMode &= ~DRAW_HIDE;
                 }
                 if (i == 0) {
@@ -135,92 +125,92 @@ void EntityMariaNZ0(Entity* self) {
         }
         break;
     case 3:
-        AnimateEntity(D_80181474, self);
+        redDoor = &g_Entities[192];
+        AnimateEntity(anim0, self);
         MoveEntity();
-        if (self->posX.i.hi >= 25) {
-            redDoor = &g_Entities[192];
-            redDoor->step = 5;
+        if (self->posX.i.hi > 0x18) {
             g_CutsceneFlags |= 2;
+            redDoor->step = 5;
             self->step++;
         }
         break;
     case 4:
-        AnimateEntity(D_80181474, self);
+        AnimateEntity(anim0, self);
         MoveEntity();
-        if (self->posX.i.hi > 80) {
+        if (self->posX.i.hi > 0x50) {
             g_CutsceneFlags |= 1;
             SetStep(5);
             self->velocityX = 0;
         }
         break;
     case 5:
-        AnimateEntity(D_80181490, self);
+        AnimateEntity(anim1, self);
         if (g_CutsceneFlags & 8) {
             SetStep(6);
-            AnimateEntity(D_801814A0, self);
+            AnimateEntity(anim2, self);
         }
         break;
     case 6:
-        AnimateEntity(D_801814A0, self);
+        AnimateEntity(anim2, self);
         if (g_CutsceneFlags & 0x10) {
             SetStep(7);
         }
         break;
     case 7:
-        AnimateEntity(D_801814BC, self);
+        AnimateEntity(anim3, self);
         if (g_CutsceneFlags & 0x20) {
             SetStep(8);
         }
         break;
     case 8:
-        AnimateEntity(D_801814C8, self);
+        AnimateEntity(anim4, self);
         if (g_CutsceneFlags & 0x40) {
             SetStep(9);
         }
         break;
     case 9:
-        AnimateEntity(D_801814E8, self);
+        AnimateEntity(anim5, self);
         if (g_CutsceneFlags & 0x80) {
             SetStep(10);
         }
         break;
     case 10:
-        AnimateEntity(D_801814F8, self);
+        AnimateEntity(anim6, self);
         if (g_CutsceneFlags & 0x100) {
             SetStep(11);
         }
         break;
     case 11:
-        AnimateEntity(D_80181510, self);
+        AnimateEntity(anim7, self);
         if (g_CutsceneFlags & 0x200) {
             SetStep(12);
         }
         break;
     case 12:
-        AnimateEntity(D_8018151C, self);
+        AnimateEntity(anim8, self);
         if (g_CutsceneFlags & 0x400) {
             SetStep(13);
         }
         break;
     case 13:
-        AnimateEntity(D_80181530, self);
+        AnimateEntity(anim9, self);
         if (g_CutsceneFlags & 0x800) {
             SetStep(14);
             self->velocityX = FIX(0.75);
         }
         break;
     case 14:
-        AnimateEntity(D_80181538, self);
+        AnimateEntity(anim10, self);
         MoveEntity();
-        if (self->posX.i.hi > 224) {
+        if (self->posX.i.hi > 0xE0) {
             g_CutsceneFlags |= 0x1000;
             self->step++;
         }
         break;
     case 15:
-        AnimateEntity(D_80181538, self);
+        AnimateEntity(anim10, self);
         MoveEntity();
-        if (self->posX.i.hi > 272) {
+        if (self->posX.i.hi > 0x110) {
             DestroyEntity(self);
         }
         break;

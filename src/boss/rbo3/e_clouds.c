@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rbo3.h"
+#include <scratchpad.h>
 
 static MedusaCloudsUVal cloudUVals[] = {
     {0x0000, 0x0000, 0x0000, 0x0000}, {0x8181, 0x81BE, 0x9E81, 0x9EBE},

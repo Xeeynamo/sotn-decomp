@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stage.h>
 
+extern EInit g_EInitObtainable;
+
 // the signature is purposely wrong for this file
 // this is how the original source code worked
 void MoveEntity(Entity*);
@@ -8,8 +10,6 @@ void MoveEntity(Entity*);
 #if defined(VERSION_HD)
 static u32 padding = 0;
 #endif
-
-extern EInit g_EInitObtainable;
 
 u16 g_ESoulStealOrbAngles[] = {
     0x820, 0x840, 0x860, 0x880, 0x8C0, 0x900, 0x940, 0xA00,
@@ -78,9 +78,9 @@ void EntitySoulStealOrb(Entity* self) {
             self->ext.soulStealOrb.unk80 = 0x400;
             self->ext.soulStealOrb.unk7E = 0;
             self->hitboxState = 0;
-            return;
+        } else {
+            DestroyEntity(self);
         }
-        DestroyEntity(self);
         break;
 
     case 1:
@@ -116,11 +116,8 @@ void EntitySoulStealOrb(Entity* self) {
         prim->tpage = 0x18;
         prim->clut = PAL_UNK_194;
         angle = self->animCurFrame;
-#ifdef VERSION_PSP
-        angle = (angle - 1) * 8;
-#else
-        angle = (angle * 8) - 8;
-#endif
+        angle = (angle - 1) << 3;
+
         spr = &g_ESoulStealOrbSprt[angle];
         prim->x0 = prim->x2 = self->posX.i.hi + *spr++;
         prim->y0 = prim->y1 = self->posY.i.hi + *spr++;

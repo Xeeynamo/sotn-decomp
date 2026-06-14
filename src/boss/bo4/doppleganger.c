@@ -28,9 +28,9 @@ static void func_us_801C1A38(void) {
     DOPPLEGANGER.palette = PAL_FLAG(0x200);
     DOPPLEGANGER.scaleX = 0x100;
     DOPPLEGANGER.scaleY = 0x100;
-    DOPPLEGANGER.drawMode = DRAW_DEFAULT;
+    DOPPLEGANGER.blendMode = BLEND_NO;
     DOPPLEGANGER.flags =
-        FLAG_UNK_10000000 | FLAG_POS_CAMERA_LOCKED | FLAG_UNK_400000;
+        FLAG_UNK_10000000 | FLAG_POS_CAMERA_LOCKED | FLAG_SUPPRESS_STUN;
 
     // BUG: this loop seems to be clearing parts of the floor
     //      ceiling colliders, but not all of them
@@ -111,7 +111,7 @@ void EntityDoppleganger10(void) {
     step = 0;
     step_s = 0;
     var_s5 = 0;
-    DOPPLEGANGER.drawFlags = FLAG_DRAW_DEFAULT;
+    DOPPLEGANGER.drawFlags = ENTITY_DEFAULT;
 
     if (!(g_Dop.status & PLAYER_STATUS_DEAD)) {
         if ((DOPPLEGANGER.step != Dop_Kill) &&
@@ -538,7 +538,7 @@ static void DopplegangerThinking(void) {
         D_us_801D3D24 = THINK_STEP_15;
     }
 
-    if ((g_Player.timers[ALU_T_12]) &&
+    if ((g_Player.timers[ALU_T_USE_SPELL]) &&
         (D_us_801D3D24 != THINK_STEP_GAME_OVER) &&
         !(g_Dop.status & PLAYER_STATUS_MIST_FORM)) {
         g_Dop.padSim = PAD_R2;
@@ -559,7 +559,7 @@ static void DopplegangerThinking(void) {
     switch (D_us_801D3D24) {
     case THINK_STEP_0:
         if (!(g_Dop.status & PLAYER_STATUS_UNK10000)) {
-            if (g_Player.timers[ALU_T_10]) {
+            if (g_Player.timers[ALU_T_USE_SUBWPN]) {
                 if (rand() & 1) {
                     if (facingLeft) {
                         g_Dop.padSim = PAD_LEFT;
@@ -644,7 +644,7 @@ static void DopplegangerThinking(void) {
                     D_us_801D3D28 = 32;
                     break;
                 }
-            } else if (g_Player.timers[ALU_T_10]) {
+            } else if (g_Player.timers[ALU_T_USE_SUBWPN]) {
                 if (rand() & 1) {
                     if (facingLeft) {
                         g_Dop.padSim = PAD_LEFT;

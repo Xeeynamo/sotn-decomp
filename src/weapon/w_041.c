@@ -284,7 +284,7 @@ void EntityWeaponAttack(Entity* self) {
             self->anim = D_123000_8017A4DC;
             self->poseTimer = 0;
             self->pose = 0;
-            self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP | BLEND_ADD;
             g_api.PlaySfxVolPan(SFX_GLASS_BREAK_A, 0x50, 0);
             g_api.CreateEntFactoryFromEntity(self, WFACTORY(56, 0), 0);
             self->step++;
@@ -321,7 +321,7 @@ s32 func_ptr_80170004(Entity* self) {
 
         self->zPriority = self->ext.weapon.parent->zPriority - 2;
         self->anim = D_123000_8017A4A4;
-        self->drawFlags |= FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+        self->drawFlags |= ENTITY_SCALEY | ENTITY_SCALEX;
         self->scaleX = self->scaleY = 0;
         self->step++;
         break;

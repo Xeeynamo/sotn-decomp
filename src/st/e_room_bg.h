@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+extern EInit g_EInitCommon;
+
 extern ObjInit2 OVL_EXPORT(BackgroundBlockInit)[];
-extern u16 g_EInitCommon[];
 
 void OVL_EXPORT(EntityBackgroundBlock)(Entity* self) {
     ObjInit2* objInit = &OVL_EXPORT(BackgroundBlockInit)[self->params];
@@ -19,13 +20,13 @@ void OVL_EXPORT(EntityBackgroundBlock)(Entity* self) {
 #endif
         self->palette = objInit->palette;
         self->drawFlags = objInit->drawFlags;
-        self->drawMode = objInit->drawMode;
+        self->blendMode = objInit->blendMode;
         if (objInit->flags) {
             self->flags = objInit->flags;
         }
 #ifdef BG_BLOCK_NEEDS_SCALE
         if (self->params == 1) {
-            self->scaleX = self->scaleY = 0x0200;
+            self->scaleX = self->scaleY = 0x200;
         }
 #endif
     }

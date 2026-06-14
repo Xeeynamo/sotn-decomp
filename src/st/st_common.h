@@ -155,8 +155,11 @@ void MoveEntity(void) {
 }
 
 void FallEntity(void) {
-    if (g_CurrentEntity->velocityY < FALL_TERMINAL_VELOCITY) {
-        g_CurrentEntity->velocityY += FALL_GRAVITY;
+#define TERMINAL_VELOCITY FIX(6)
+#define GRAVITY FIX(0.25f)
+
+    if (g_CurrentEntity->velocityY < TERMINAL_VELOCITY) {
+        g_CurrentEntity->velocityY += GRAVITY;
     }
 }
 
@@ -372,15 +375,16 @@ u8 Ratan2Shifted(s16 x, s16 y) {
 }
 
 u8 GetAngleBetweenEntitiesShifted(Entity* a, Entity* b) {
-    s16 diffX = b->posX.i.hi - a->posX.i.hi;
-    s16 diffY = b->posY.i.hi - a->posY.i.hi;
-    return Ratan2Shifted(diffX, diffY);
+    s16 dx = b->posX.i.hi - a->posX.i.hi;
+    s16 dy = b->posY.i.hi - a->posY.i.hi;
+    return Ratan2Shifted(dx, dy);
 }
 
-u8 GetAnglePointToEntityShifted(s32 x, s32 y) {
-    s32 diffX = x - (u16)g_CurrentEntity->posX.i.hi;
-    s32 diffY = y - (u16)g_CurrentEntity->posY.i.hi;
-    return Ratan2Shifted(diffX, diffY);
+// original name: search_point
+u8 GetAnglePointToEntityShifted(s16 x, s16 y) {
+    s16 dx = x - g_CurrentEntity->posX.i.hi;
+    s16 dy = y - g_CurrentEntity->posY.i.hi;
+    return Ratan2Shifted(dx, dy);
 }
 
 u8 AdjustValueWithinThreshold(u8 threshold, u8 currentValue, u8 targetValue) {
@@ -414,15 +418,15 @@ void UnkEntityFunc0(u16 slope, s16 speed) {
 u16 Ratan2(s16 x, s16 y) { return ratan2(y, x); }
 
 u16 GetAngleBetweenEntities(Entity* a, Entity* b) {
-    s32 diffX = b->posX.i.hi - a->posX.i.hi;
-    s32 diffY = b->posY.i.hi - a->posY.i.hi;
-    return ratan2(diffY, diffX);
+    s32 dx = b->posX.i.hi - a->posX.i.hi;
+    s32 dy = b->posY.i.hi - a->posY.i.hi;
+    return ratan2(dy, dx);
 }
 
 u16 GetAnglePointToEntity(s32 x, s32 y) {
-    s16 diffX = x - (u16)g_CurrentEntity->posX.i.hi;
-    s16 diffY = y - (u16)g_CurrentEntity->posY.i.hi;
-    return ratan2(diffY, diffX);
+    s16 dx = x - (u16)g_CurrentEntity->posX.i.hi;
+    s16 dy = y - (u16)g_CurrentEntity->posY.i.hi;
+    return ratan2(dy, dx);
 }
 
 u16 GetNormalizedAngle(u16 arg0, u16 arg1, u16 arg2) {
@@ -483,7 +487,7 @@ void EntityExplosionSpawn(u16 params, u16 arg1) {
     g_CurrentEntity->pfnUpdate = (PfnEntityUpdate)EntityExplosion;
     g_CurrentEntity->params = params;
     g_CurrentEntity->animCurFrame = 0;
-    g_CurrentEntity->drawFlags = FLAG_DRAW_DEFAULT;
+    g_CurrentEntity->drawFlags = ENTITY_DEFAULT;
     g_CurrentEntity->step = 0;
     g_CurrentEntity->step_s = 0;
 }
@@ -593,10 +597,9 @@ void CheckFieldCollision(s16* hitSensors, s16 sensorCount) {
 // and from which direction.
 // w and h holds the collider size of the entity
 // while flags stores which sides are solid
-s32 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
-    Entity* pl = &PLAYER;
-    s16 x;
-    s16 y;
+u8 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
+    Entity* player = &PLAYER;
+    s16 x, y;
     u16 checks;
 
 #if STAGE != STAGE_ST0
@@ -609,8 +612,8 @@ s32 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
         return 0;
     }
 
-    x = pl->posX.i.hi - x;
-    y = pl->posY.i.hi - y;
+    x = player->posX.i.hi - x;
+    y = player->posY.i.hi - y;
 #else
     if (self->posX.i.hi & 0x100) {
         return 0;
@@ -619,8 +622,8 @@ s32 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
         return 0;
     }
 
-    x = pl->posX.i.hi - self->posX.i.hi;
-    y = pl->posY.i.hi - self->posY.i.hi;
+    x = player->posX.i.hi - self->posX.i.hi;
+    y = player->posY.i.hi - self->posY.i.hi;
 #endif
 
     if (self->facingLeft) {
@@ -659,12 +662,12 @@ s32 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
 
         if (x && x != w) {
             // check collision from top
-            if (flags & 4 && checks ^ 2 && pl->velocityY >= 0 && y < 8) {
-                pl->posY.i.hi -= y;
+            if (flags & 4 && checks ^ 2 && player->velocityY >= 0 && y < 8) {
+                player->posY.i.hi -= y;
 #if STAGE == STAGE_ST0
                 g_Player.vram_flag |= VRAM_FLAG_UNK40 | TOUCHING_GROUND;
 #else
-                D_80097488.y.i.hi -= y;
+                g_unkGraphicsStruct.shoveY.i.hi -= y;
                 g_Player.vram_flag |= VRAM_FLAG_UNK40 | TOUCHING_GROUND;
                 if (plStatus &
                     (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_MIST_FORM)) {
@@ -677,14 +680,14 @@ s32 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
 
             // check collision from bottom
             if (flags & 2 && checks & 2 &&
-                (pl->velocityY <= 0 || flags & 0x10)) {
+                (player->velocityY <= 0 || flags & 0x10)) {
                 y = (s16)h - y;
                 if (y < 0x10) {
-                    pl->posY.i.hi += y;
+                    player->posY.i.hi += y;
 #if STAGE == STAGE_ST0
                     g_Player.vram_flag |= VRAM_FLAG_UNK40 | TOUCHING_CEILING;
 #else
-                    D_80097488.y.i.hi += y;
+                    g_unkGraphicsStruct.shoveY.i.hi += y;
                     g_Player.vram_flag |= VRAM_FLAG_UNK40 | TOUCHING_CEILING;
                     if (plStatus &
                         (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_MIST_FORM)) {
@@ -703,9 +706,9 @@ s32 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
                 if (flags & 8 && x > 2) {
                     x = 2;
                 }
-                pl->posX.i.hi += x;
+                player->posX.i.hi += x;
 #if STAGE != STAGE_ST0
-                D_80097488.x.i.hi += x;
+                g_unkGraphicsStruct.shoveX.i.hi += x;
                 g_Player.vram_flag |= VRAM_FLAG_UNK40 | TOUCHING_L_WALL;
 #endif
                 return 1;
@@ -713,10 +716,10 @@ s32 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
                 if (flags & 8 && x > 2) {
                     x = 2;
                 }
-                pl->posX.i.hi -= x;
+                player->posX.i.hi -= x;
 #if STAGE != STAGE_ST0
 
-                D_80097488.x.i.hi -= x;
+                g_unkGraphicsStruct.shoveX.i.hi -= x;
                 g_Player.vram_flag |= VRAM_FLAG_UNK40 | TOUCHING_R_WALL;
 #endif
                 return 1;

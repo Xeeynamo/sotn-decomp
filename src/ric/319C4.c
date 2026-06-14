@@ -1773,7 +1773,7 @@ void RicEntitySubwpnStopwatch(Entity* self) {
     if (self->step < 5) {
         if (self->ext.ricStopWatch.crashIndex < 2) {
             psp_s1 = PLAYER.posX.val + (PLAYER.facingLeft ? FIX(8) : FIX(-8));
-            psp_s2 = PLAYER.posY.val + FIX(-16);
+            psp_s2 = PLAYER.posY.val - FIX(16);
         } else if (D_801758D4[self->ext.ricStopWatch.crashIndex - 2] != NULL) {
             if (
 #if defined(VERSION_PSP)
@@ -1784,7 +1784,7 @@ void RicEntitySubwpnStopwatch(Entity* self) {
             ) {
                 psp_s1 = self->ext.ricStopWatch.unk98->posX.val +
                          (PLAYER.facingLeft ? FIX(16) : FIX(-16));
-                psp_s2 = self->ext.ricStopWatch.unk98->posY.val + FIX(-16);
+                psp_s2 = self->ext.ricStopWatch.unk98->posY.val - FIX(16);
             } else {
                 psp_s1 = self->posX.val;
                 psp_s2 = self->posY.val;
@@ -2150,7 +2150,7 @@ void RicEntitySubwpnBible(Entity* self) {
     case 2:
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
-        self->velocityY += FIX(-2);
+        self->velocityY -= FIX(2);
         break;
     }
     if (self->ext.et_BibleSubwpn.unk86) {

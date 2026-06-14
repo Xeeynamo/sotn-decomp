@@ -17,16 +17,15 @@ char* BlitChar(char* str, u16* xOffset, u8* pix, u16 stride) {
     const int FontStride = FontWidth / 2;
 
     u16 ch;
-    s32 var_s3;
+    s32 chSize;
     s32 i, j;
     s32 letterWidth;
     u8* chPix;
     u8* ptr;
-    u8* dst;
 
     // converts the ASCII character into Shift-JIS
     ch = *str++;
-    var_s3 = 0;
+    chSize = 0;
     if (ch >= 'a' && ch <= 'z') {
         ch += 0x8220;
     } else if (ch >= 'A' && ch <= 'Z') {
@@ -34,11 +33,11 @@ char* BlitChar(char* str, u16* xOffset, u8* pix, u16 stride) {
     } else {
         if (ch == ' ') {
             ch = DOUBLE_SPACE;
-            var_s3 = 2;
+            chSize = 2;
         } else {
             ch = *str++ | (ch << 8);
             if (ch == DOUBLE_SPACE) {
-                var_s3 = 2;
+                chSize = 2;
             }
         }
     }
@@ -55,8 +54,7 @@ char* BlitChar(char* str, u16* xOffset, u8* pix, u16 stride) {
         }
 
         for (i = 0; i < FontHeight; i++) {
-            dst = &chPix[i * FontStride];
-            if (*dst) {
+            if (chPix[i * FontStride]) {
                 break;
             }
         }
@@ -66,8 +64,7 @@ char* BlitChar(char* str, u16* xOffset, u8* pix, u16 stride) {
 
         // Trim character width from the left-hand side
         for (i = 0; i < FontHeight; i++) {
-            ptr = chPix;
-            ptr += i * FontStride;
+            ptr = &chPix[i * FontStride];
             for (j = 0; j < 5; j++) {
                 ptr[0] = ptr[1];
                 ptr++;
@@ -103,17 +100,15 @@ char* BlitChar(char* str, u16* xOffset, u8* pix, u16 stride) {
 
     // Copy content to destination
     for (i = 0; i < FontHeight; i++) {
-        ptr = pix;
-        ptr += *xOffset + i * stride;
+        ptr = &pix[*xOffset + i * stride];
         *ptr++ = *chPix++;
         *ptr++ = *chPix++;
         *ptr++ = *chPix++;
         *ptr++ = *chPix++;
         *ptr++ = *chPix++;
-        dst = ptr;
-        *dst = *chPix++;
+        *ptr++ = *chPix++;
     }
 
-    *xOffset += letterWidth + var_s3;
+    *xOffset += letterWidth + chSize;
     return str;
 }

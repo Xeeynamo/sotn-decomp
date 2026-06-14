@@ -31,7 +31,7 @@ void RicStepStand(void) {
     if (PLAYER.step < 64) {
         if (D_8015459C != 0) {
             D_8015459C--;
-        } else if (D_80097448[0] > 48) {
+        } else if (g_unkGraphicsStruct.D_80097448 > 48) {
             xMod = 4;
             if (PLAYER.facingLeft) {
                 xMod = -xMod;
@@ -344,7 +344,7 @@ void RicStepCrouch(void) {
     case 0x0:
         if (D_8015459C != 0) {
             D_8015459C--;
-        } else if (*D_80097448 > 0x18 && !g_Player.unk48) {
+        } else if (g_unkGraphicsStruct.D_80097448 > 0x18 && !g_Player.unk48) {
             xShift = 9;
             if (PLAYER.facingLeft) {
                 xShift = -xShift;
@@ -442,7 +442,7 @@ static void RicResetPose(void) {
     PLAYER.pose = PLAYER.poseTimer = 0;
     g_Player.unk44 = 0;
     g_Player.unk46 = 0;
-    PLAYER.drawFlags &= ~FLAG_DRAW_ROTATE;
+    PLAYER.drawFlags &= ~ENTITY_ROTATE;
 }
 
 static void func_80159C04(void) {
@@ -950,7 +950,7 @@ void RicStepDead(
             RicCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_HIT_BY_ICE, 1), 0);
             death_kind = DEATH_BY_ICE;
-            PLAYER.drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+            PLAYER.blendMode = BLEND_TRANSP | BLEND_ADD;
         } else {
             func_8015FA5C(1);
             // RIC blueprint 33 has child 31, EntityPlayerBlinkWhite
@@ -1177,11 +1177,11 @@ void RicStepDeadPrologue(void) {
         break;
     case 1:
         D_801545AA += 64;
-        PLAYER.drawFlags = FLAG_DRAW_SCALEY;
+        PLAYER.drawFlags = ENTITY_SCALEY;
         PLAYER.scaleY = (rsin(D_801545AA) >> 0xA) + 256;
         if (D_801545AC) {
             if (--D_801545AC == 0) {
-                PLAYER.drawFlags = FLAG_DRAW_DEFAULT;
+                PLAYER.drawFlags = ENTITY_DEFAULT;
                 PLAYER.scaleY = 0x100;
                 RicCreateEntFactoryFromEntity(
                     g_CurrentEntity, BP_MARIA_POWERS_APPLIED, 0);

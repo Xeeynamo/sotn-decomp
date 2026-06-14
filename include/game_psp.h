@@ -1,9 +1,5 @@
 #include <common.h>
 
-// This is just a guess, but it is required to have the correct struct size for
-// PspUtilitySavedataParam
-#define _PSP_FW_VERSION 200
-
 // On PSP side this is compared against g_UserLanguage / 0x08B42058
 // which is the system language of the console. Used to determine the
 // language of various strings to display in-game
@@ -22,10 +18,10 @@ extern u32 D_psp_08B42050; // psp cross button
 extern u32 D_psp_08B42054; // psp triangle button
 extern s32 g_UserLanguage; // Defined in global address space
 extern char* D_psp_08B42060;
-extern s32 D_psp_08B42064;
-extern s32 D_psp_08C62AA4;
-extern bool D_psp_08C630C8;
-extern s32 D_psp_08C630D0;
+extern s32 g_VoiceLanguage;
+extern bool D_psp_08C62AA4;
+extern bool g_InfiniteHearts;
+extern bool g_UnlockAllTactics;
 extern s32 D_psp_08C630D4;
 extern s32 D_psp_08C630D8;
 extern s32 D_psp_08C630DC;

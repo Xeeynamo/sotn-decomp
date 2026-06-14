@@ -1,12 +1,48 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "lib.h"
+#include <scratchpad.h>
 
-extern SVECTOR* D_us_80180C88[];
-extern SVECTOR* D_us_80180D28[];
-extern s32 D_us_80180D48[];
-extern MATRIX D_us_80180D88;
-extern s16 D_us_80180DA8[];
-extern s16 D_us_80180DB0[];
+static SVECTOR D_us_80180C48 = {0xFFF4, 0xFFA0, 0xFFE0};
+static SVECTOR D_us_80180C50 = {0x000C, 0xFFA0, 0xFFE0};
+static SVECTOR D_us_80180C58 = {0xFFF4, 0x0000, 0xFFE0};
+static SVECTOR D_us_80180C60 = {0x000C, 0x0000, 0xFFE0};
+static SVECTOR D_us_80180C68 = {0x000C, 0xFFA0, 0x0020};
+static SVECTOR D_us_80180C70 = {0xFFF4, 0xFFA0, 0x0020};
+static SVECTOR D_us_80180C78 = {0x000C, 0x0000, 0x0020};
+static SVECTOR D_us_80180C80 = {0xFFF4, 0x0000, 0x0020};
+
+static SVECTOR* D_us_80180C88[] = {
+    &D_us_80180C48, &D_us_80180C50, &D_us_80180C58, &D_us_80180C60,
+    &D_us_80180C68, &D_us_80180C70, &D_us_80180C78, &D_us_80180C80,
+};
+
+static VECTOR D_us_80180CA8 = {FLT(1.0), FLT(0.0), FLT(1.0)};
+static VECTOR D_us_80180CB8 = {FLT(-1.0), FLT(0.0), FLT(1.0)};
+static VECTOR D_us_80180CC8 = {FLT(1.0), FLT(0.0), FLT(1.0)};
+static VECTOR D_us_80180CD8 = {FLT(-1.0), FLT(0.0), FLT(1.0)};
+static VECTOR D_us_80180CE8 = {FLT(-1.0), FLT(0.0), FLT(-1.0)};
+static VECTOR D_us_80180CF8 = {FLT(1.0), FLT(0.0), FLT(-1.0)};
+static VECTOR D_us_80180D08 = {FLT(-1.0), FLT(0.0), FLT(-1.0)};
+static VECTOR D_us_80180D18 = {FLT(1.0), FLT(0.0), FLT(-1.0)};
+
+static VECTOR* D_us_80180D28[] = {
+    &D_us_80180CA8, &D_us_80180CB8, &D_us_80180CC8, &D_us_80180CD8,
+    &D_us_80180CE8, &D_us_80180CF8, &D_us_80180D08, &D_us_80180D18,
+};
+
+static s32 D_us_80180D48[] = {
+    0, 1, 2, 3, 4, 5, 6, 7, 1, 4, 3, 6, 5, 0, 7, 2,
+};
+
+static MATRIX D_us_80180D88 = {{{FLT(1.0), FLT(0.0), FLT(0.5)},
+                                {FLT(1.0), FLT(0.0), FLT(0.5)},
+                                {FLT(1.0), FLT(0.0), FLT(0.5)}}};
+
+static s16 D_us_80180DA8[] = {0x0000, 0xFE00, 0x0240, 0x0400};
+
+static s16 D_us_80180DB0[] = {0x00, 0x3C, 0x40, 0x58};
+
+STATIC_PAD_DATA(8);
 
 void func_us_801AE8E8(Entity* self) {
     s32 primIndex;
@@ -21,7 +57,7 @@ void func_us_801AE8E8(Entity* self) {
     Primitive* prim;
     Primitive* prim2;
     SVECTOR** temp_a0_2;
-    SVECTOR** temp_a0_3;
+    VECTOR** temp_a0_3;
     s16 temp_v1_2;
     s32 i;
     s16 posX;
@@ -133,7 +169,7 @@ void func_us_801AE8E8(Entity* self) {
                 dx = player->posX.i.hi + 10 - posX;
                 if (dx >= 0) {
                     player->posX.i.hi -= dx;
-                    D_80097488.x.i.hi -= dx;
+                    g_unkGraphicsStruct.shoveX.i.hi -= dx;
                     g_Player.vram_flag |= VRAM_FLAG_UNK40 | TOUCHING_R_WALL;
                     if (!g_CastleFlags[LIB_BOOKSHELF_SECRET]) {
                         if (--self->ext.et_801AE8E8.unk82) {
@@ -154,7 +190,7 @@ void func_us_801AE8E8(Entity* self) {
                 dx = player->posX.i.hi - 10 - posX;
                 if (dx <= 0) {
                     player->posX.i.hi -= dx;
-                    D_80097488.x.i.hi -= dx;
+                    g_unkGraphicsStruct.shoveX.i.hi -= dx;
                     g_Player.vram_flag |= VRAM_FLAG_UNK40 | TOUCHING_L_WALL;
                     if (!g_CastleFlags[LIB_BOOKSHELF_SECRET]) {
                         if (--self->ext.et_801AE8E8.unk82) {
@@ -223,7 +259,7 @@ void func_us_801AE8E8(Entity* self) {
         temp_a0_3++;
     }
     if (!self->params) {
-#if VERSION_PSP
+#ifdef VERSION_PSP
         iterations = 1;
 #else
         iterations = 2;
@@ -233,21 +269,21 @@ void func_us_801AE8E8(Entity* self) {
     }
     prim = self->ext.et_801AE8E8.unk7C;
     for (i = 0; i < 4; i++) {
-        LOW(prim->x0) = *(SPAD(D_us_80180D48[i * 4 + 0]) + 0);
-        LOW(prim->x1) = *(SPAD(D_us_80180D48[i * 4 + 1]) + 0);
-        LOW(prim->x2) = *(SPAD(D_us_80180D48[i * 4 + 2]) + 0);
-        LOW(prim->x3) = *(SPAD(D_us_80180D48[i * 4 + 3]) + 0);
-        LOW(prim->r0) = *(SPAD(D_us_80180D48[i * 4 + 0]) + 8);
-        LOW(prim->r1) = *(SPAD(D_us_80180D48[i * 4 + 1]) + 8);
-        LOW(prim->r2) = *(SPAD(D_us_80180D48[i * 4 + 2]) + 8);
-        LOW(prim->r3) = *(SPAD(D_us_80180D48[i * 4 + 3]) + 8);
+        LOW(prim->x0) = SPAD(0)[D_us_80180D48[i * 4 + 0]];
+        LOW(prim->x1) = SPAD(0)[D_us_80180D48[i * 4 + 1]];
+        LOW(prim->x2) = SPAD(0)[D_us_80180D48[i * 4 + 2]];
+        LOW(prim->x3) = SPAD(0)[D_us_80180D48[i * 4 + 3]];
+        LOW(prim->r0) = SPAD(8)[D_us_80180D48[i * 4 + 0]];
+        LOW(prim->r1) = SPAD(8)[D_us_80180D48[i * 4 + 1]];
+        LOW(prim->r2) = SPAD(8)[D_us_80180D48[i * 4 + 2]];
+        LOW(prim->r3) = SPAD(8)[D_us_80180D48[i * 4 + 3]];
         clipper = NormalClip(LOW(prim->x0), LOW(prim->x1), LOW(prim->x2));
         prim->drawMode &= ~DRAW_HIDE;
         if (clipper <= 0) {
             prim->drawMode |= DRAW_HIDE;
         } else {
-            prim2 =
-                UnkRecursivePrimFunc2(prim, iterations, prim2, (u8*)SPAD(16));
+            prim2 = (Primitive*)UnkRecursivePrimFunc2(
+                prim, iterations, prim2, (u8*)SPAD(16));
             prim->drawMode |= DRAW_HIDE;
         }
         prim = prim->next;

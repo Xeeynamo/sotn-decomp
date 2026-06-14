@@ -49,8 +49,8 @@ s32 WarpBackgroundBrightness;
         /* 0x05000000 */ PLAYER_STATUS_UNK4000000 | PLAYER_STATUS_AXEARMOR |     \
         /* 0x00C00000 */ PLAYER_STATUS_UNK800000 | PLAYER_STATUS_UNK400000 |     \
         /* 0x000F0000 */ PLAYER_STATUS_UNK80000 | PLAYER_STATUS_DEAD | PLAYER_STATUS_UNK20000 | PLAYER_STATUS_UNK10000 | \
-        /* 0x00003000 */ PLAYER_STATUS_UNK2000 | PLAYER_STATUS_UNK1000 |         \
-        /* 0x00000E00 */ PLAYER_STATUS_UNK800 | PLAYER_STATUS_UNK400 | PLAYER_STATUS_UNK200 | \
+        /* 0x00003000 */ PLAYER_STATUS_UNK2000 | PLAYER_STATUS_SPELLCAST |         \
+        /* 0x00000E00 */ PLAYER_STATUS_SUBWPN | PLAYER_STATUS_UNK400 | PLAYER_STATUS_UNK200 | \
         /* 0x000000F0 */ PLAYER_STATUS_STONE | PLAYER_STATUS_UNK40 | PLAYER_STATUS_CROUCH |  PLAYER_STATUS_UNK10 | \
         /* 0x00000007 */ PLAYER_STATUS_TRANSFORM                                 \
     )
@@ -299,7 +299,7 @@ void EntityRWarpRoom(Entity* self) {
             g_api.func_8010DFF0(0, 1);
 
             PLAYER_posY_i_hi += 1;
-            D_80097488.y.i.hi += 1;
+            g_unkGraphicsStruct.shoveY.i.hi += 1;
 
             if (g_pads[0].pressed & PAD_UP &&
                 ImplicitGetDistanceToPlayerX() < 8 &&
@@ -375,7 +375,7 @@ void EntityWarpSmallRocks(Entity* entity) {
     switch (entity->step) {
     case 0:
         InitializeEntity(g_EInitReverseSmallRocks);
-        entity->drawFlags = FLAG_DRAW_ROTATE;
+        entity->drawFlags = ENTITY_ROTATE;
         entity->rotate = Random() * 0x10;
         entity->animCurFrame = (Random() % 5) + 1;
         if (D_80180648) {
@@ -397,7 +397,7 @@ void EntityWarpSmallRocks(Entity* entity) {
             MoveEntity();
             entity->velocityY += FIX(0.25);
             if (entity->velocityY > FIX(-1.0f)) {
-                entity->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+                entity->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
                 entity->scaleX = entity->scaleY = 0x100;
                 entity->step++;
             }

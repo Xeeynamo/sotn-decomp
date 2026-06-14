@@ -9,6 +9,9 @@
 //
 #include <stage.h>
 
+extern EInit g_EInitObtainable;
+extern EInit g_EInitParticle;
+
 #if defined(VERSION_PSP)
 #include "blit_char_psp.h"
 #endif
@@ -89,8 +92,6 @@ static u32 c_GoldPrizes[] = {1, 25, 50, 100, 250, 400, 700, 1000, 2000, 5000};
 static u32 c_GoldPrizes[] = {1, 5, 10, 20, 40, 70, 100, 200, 400, 1000};
 #endif
 
-// 1D18
-
 u8* g_SubweaponAnimPrizeDrop[] = {
     D_80180C94, D_80180C98, D_80180CC4, D_80180CD4, D_80180CD8,
     D_80180CDC, D_80180CE0, D_80180CE4, D_80180CE8, D_80180CEC,
@@ -119,7 +120,7 @@ static u8 D_psp_092463C8[] = {
 static u8 D_psp_092463E0[] = {
     0x05, 0xB9, 0x05, 0xBA, 0x05, 0xBB, 0x05, 0xBC, 0x05,
     0xBD, 0x05, 0xBE, 0x05, 0xBF, 0x05, 0xC0, 0x00};
-static u8* g_MariaSubweaponAnimPrizeDrop[] = {
+u8* g_MariaSubweaponAnimPrizeDrop[] = {
     D_80180C94,     D_80180C98,     D_80180CC4,     D_80180CD4, D_80180CD8,
     D_80180CDC,     D_80180CE0,     D_80180CE4,     D_80180CE8, D_80180CEC,
     D_80180CF0,     D_80180CF4,     D_80180D08,     D_80180D18, D_psp_09246398,
@@ -141,9 +142,6 @@ static s16 D_80180EB8[] = {-6, 4, 0, -8};
 // Note that this array is in data. MAD/ST0 have it in rodata.
 s8 c_HeartPrizes[] = {1, 5};
 #endif
-
-// from another file
-extern u16 g_EInitObtainable[];
 
 static void PrizeDropFall(void) {
     if (g_CurrentEntity->velocityY >= 0) {
@@ -225,27 +223,29 @@ static s32 g_ExplosionYVelocities[] = {
     FIX(-1.0), FIX(-1.5), FIX(-1.5), FIX(-1.5), FIX(-3.0)};
 
 static u8 anim_small[] = {
-    0x02, 0x01, 0x02, 0x02, 0x02, 0x03, 0x02, 0x04, 0x02, 0x05,
-    0x02, 0x06, 0x02, 0x07, 0x02, 0x08, 0x00, 0x00, 0x00, 0x00,
+    2, 1, 2, 2, 2, 3, 2, 4, 2, 5, 2, 6, 2, 7, 2, 8, 0, 0,
 };
+
 u8 g_bigRedFireballAnim[] = {
-    0x01, 0x09, 0x02, 0x0A, 0x02, 0x0B, 0x02, 0x0C, 0x02, 0x0D,
-    0x02, 0x0E, 0x02, 0x0F, 0x02, 0x10, 0x02, 0x11, 0x02, 0x12,
-    0x03, 0x13, 0x04, 0x14, 0x00, 0x00, 0x00, 0x00,
+    1,  9, 2,  10, 2,  11, 2,  12, 2,  13, 2,  14, 2,
+    15, 2, 16, 2,  17, 2,  18, 3,  19, 4,  20, 0,  0,
 };
+
 static u8 anim_small_multiple[] = {
     0x02, 0x15, 0x02, 0x16, 0x02, 0x17, 0x02, 0x18, 0x02, 0x19, 0x02, 0x1A,
     0x02, 0x1B, 0x02, 0x1C, 0x02, 0x1D, 0x02, 0x1E, 0x02, 0x1F, 0x02, 0x20,
     0x02, 0x21, 0x02, 0x22, 0x02, 0x23, 0x02, 0x24, 0x02, 0x25, 0x02, 0x26,
-    0x02, 0x27, 0x02, 0x28, 0x02, 0x29, 0x02, 0x2A, 0x00, 0x00, 0x00, 0x00,
+    0x02, 0x27, 0x02, 0x28, 0x02, 0x29, 0x02, 0x2A, 0x00, 0x00,
 };
+
 u8 g_explosionBigAnim[] = {
-    0x02, 0x2B, 0x02, 0x2C, 0x02, 0x2D, 0x02, 0x2E, 0x02, 0x2F, 0x02,
-    0x30, 0x02, 0x31, 0x02, 0x32, 0x02, 0x33, 0x02, 0x34, 0x02, 0x35,
-    0x02, 0x36, 0x02, 0x37, 0x02, 0x38, 0x02, 0x39, 0x02, 0x3A, 0x02,
-    0x3B, 0x02, 0x3C, 0x02, 0x3D, 0x02, 0x3E, 0x02, 0x3F, 0x02, 0x40,
-    0x02, 0x41, 0x02, 0x42, 0x00, 0x00, 0x00, 0x00,
+    0x02, 0x2B, 0x02, 0x2C, 0x02, 0x2D, 0x02, 0x2E, 0x02, 0x2F,
+    0x02, 0x30, 0x02, 0x31, 0x02, 0x32, 0x02, 0x33, 0x02, 0x34,
+    0x02, 0x35, 0x02, 0x36, 0x02, 0x37, 0x02, 0x38, 0x02, 0x39,
+    0x02, 0x3A, 0x02, 0x3B, 0x02, 0x3C, 0x02, 0x3D, 0x02, 0x3E,
+    0x02, 0x3F, 0x02, 0x40, 0x02, 0x41, 0x02, 0x42, 0x00, 0x00,
 };
+
 // This doesn't seem to be used in any of the currently decompiled code.
 static u8 D_80180F6C[] = {0x01, 0x43, 0x00, 0x00};
 
@@ -267,13 +267,14 @@ void CollectGold(u16 goldSize) {
         g_unkGraphicsStruct.BottomCornerTextTimer = 0;
     }
 
-    BottomCornerText(g_goldCollectTexts[goldSize], 1);
+    BottomCornerText(g_goldCollectTexts[goldSize], true);
     DestroyEntity(g_CurrentEntity);
 #endif
 }
 
 #if defined VERSION_BETA || STAGE == STAGE_ST0
 void func_801937BC(void) {}
+
 void UnusedDestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
 #endif
 
@@ -364,13 +365,13 @@ void EntityPrizeDrop(Entity* self) {
     self->palette = 0;
 #endif
     if (self->unk6D[0] >= 0x18 && !(g_GameTimer & 2) && self->params != 1) {
-        self->palette = 0x815F;
+        self->palette = PAL_FLAG(PAL_FILL_WHITE);
     }
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitObtainable);
         self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 0x14;
-        self->drawMode = DRAW_DEFAULT;
+        self->blendMode = BLEND_NO;
 #if STAGE == STAGE_ST0
         if (itemId > 22) {
 #else
@@ -573,15 +574,13 @@ void EntityPrizeDrop(Entity* self) {
                 prim->u1 = prim->u3 = 0x20;
                 prim->v0 = prim->v1 = 0;
                 prim->v2 = prim->v3 = 0x20;
-                prim->r0 = prim->r1 = prim->r2 = prim->r3 = 128;
-                prim->g0 = prim->g1 = prim->g2 = prim->g3 = 128;
-                prim->b0 = prim->b1 = prim->b2 = prim->b3 = 128;
+                PRED(prim) = 0x80;
+                PGRN(prim) = 0x80;
+                PBLU(prim) = 0x80;
 #else
                 prim->u0 = prim->u2 = prim->v0 = prim->v1 = 0;
                 prim->u1 = prim->u3 = prim->v2 = prim->v3 = 0x20;
-                prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 =
-                    prim->g1 = prim->g2 = prim->g3 = prim->b0 = prim->b1 =
-                        prim->b2 = prim->b3 = 128;
+                PCOL(prim) = 0x80;
 #endif
                 prim->drawMode = DRAW_HIDE;
                 prim->priority = self->zPriority + 1;
@@ -623,9 +622,9 @@ void EntityPrizeDrop(Entity* self) {
                 self->animCurFrame = 0;
             } else {
                 index = 32 - self->ext.equipItemDrop.sparkleTimer;
-                prim->r0 = prim->r1 = prim->r2 = prim->r3 -= 8;
-                prim->g0 = prim->g1 = prim->g2 = prim->g3 -= 8;
-                prim->b0 = prim->b1 = prim->b2 = prim->b3 -= 8;
+                PRED(prim) -= 8;
+                PGRN(prim) -= 8;
+                PBLU(prim) -= 8;
             }
             prim->x0 = prim->x2 = self->posX.i.hi - index;
             prim->x1 = prim->x3 = self->posX.i.hi + index;
@@ -644,8 +643,6 @@ void EntityPrizeDrop(Entity* self) {
     }
 }
 
-extern EInit g_EInitParticle;
-
 // params: (& 0xFF) The explosion type
 //         (& 0xF0) These explosion types use a different (hardcoded) palette
 //                  and drawMode
@@ -656,10 +653,10 @@ void EntityExplosion(Entity* entity) {
         entity->pose = 0;
         entity->poseTimer = 0;
         entity->animSet = ANIMSET_DRA(2);
-        entity->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        entity->blendMode = BLEND_TRANSP | BLEND_ADD;
         if (entity->params & 0xF0) {
             entity->palette = PAL_FLAG(PAL_UNK_195);
-            entity->drawMode = DRAW_TPAGE;
+            entity->blendMode = BLEND_TRANSP;
         }
 
         if (entity->params & 0xFF00) {
@@ -679,7 +676,7 @@ void EntityExplosion(Entity* entity) {
 // Weird difference here. These functions are not related.
 // But MAD has one and not the other.
 #if !(defined VERSION_BETA || STAGE == STAGE_ST0)
-static void BlinkItem(Entity* self, u16 renderFlags) {
+static void BlinkItem(Entity* self, u16 timer) {
     Primitive* prim;
     s32 temp;
     prim = &g_PrimBuf[self->primIndex];
@@ -690,10 +687,10 @@ static void BlinkItem(Entity* self, u16 renderFlags) {
     prim->y0 = prim->y1 = self->posY.i.hi - 7;
     prim->y2 = prim->y3 = prim->y0 + 14;
 
-    if (renderFlags & RENDERFLAGS_NOSHADOW) {
-        PCOL(prim) = 255;
+    if (timer & 2) {
+        PCOL(prim) = 0xFF;
     } else {
-        PCOL(prim) = 128;
+        PCOL(prim) = 0x80;
     }
 }
 #else
@@ -860,7 +857,7 @@ void EntityEquipItemDrop(Entity* self) {
     case 3:
         PrizeDropFall2(1);
         if (!(self->params & 0x8000)) {
-            if (!(--self->ext.equipItemDrop.aliveTimer)) {
+            if (!--self->ext.equipItemDrop.aliveTimer) {
                 self->ext.equipItemDrop.aliveTimer = 80;
                 self->step++;
             }
@@ -898,7 +895,7 @@ void EntityEquipItemDrop(Entity* self) {
             name = g_api.accessoryDefs[itemId].name;
             g_api.AddToInventory(itemId, EQUIP_ARMOR);
         }
-        BottomCornerText(name, 1);
+        BottomCornerText(name, true);
         DestroyEntity(self);
         break;
     }
@@ -918,13 +915,9 @@ void EntityEquipItemDrop(Entity* self) {
         if (self->ext.equipItemDrop.timer) {
             self->ext.equipItemDrop.timer--;
             if (self->ext.equipItemDrop.timer & 2) {
-                prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 =
-                    prim->g1 = prim->g2 = prim->g3 = prim->b0 = prim->b1 =
-                        prim->b2 = prim->b3 = 0xFF;
+                PCOL(prim) = 0xFF;
             } else {
-                prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 =
-                    prim->g1 = prim->g2 = prim->g3 = prim->b0 = prim->b1 =
-                        prim->b2 = prim->b3 = 0x80;
+                PCOL(prim) = 0x80;
             }
         }
 #endif
@@ -959,7 +952,6 @@ s16 g_RelicOrbSparkleY[] = {-2, 2, 4, -3, 0, 2, -4, 3};
 
 extern u16 msgBoxTpage[0x600];
 
-void BlinkItem(Entity* entity, u16 blinkFlag);
 // params: (& 0x7FFF) Relic ID
 void EntityRelicOrb(Entity* self) {
 #if STAGE == STAGE_ST0
@@ -1132,9 +1124,9 @@ void EntityRelicOrb(Entity* self) {
 
         prim = &g_PrimBuf[self->primIndex];
 #if STAGE == STAGE_ST0
-        for (i = 0; prim != NULL; prim = prim->next, i++) {
+        for (i = 0; prim != NULL; i++) {
 #else
-        for (i = 0; i < 3; prim = prim->next, i++) {
+        for (i = 0; i < 3; i++) {
 #endif
             if (i == 0) {
                 prim->type = PRIM_SPRT;
@@ -1158,18 +1150,19 @@ void EntityRelicOrb(Entity* self) {
 #endif
                 prim->x0 = prim->x1 = prim->x2 = prim->x3 = 0x80;
                 prim->y0 = prim->y1 = prim->y2 = prim->y3 = 0xA7;
-                prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0;
-                prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0;
-                prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0;
+                PRED(prim) = 0;
+                PGRN(prim) = 0;
+                PBLU(prim) = 0;
 
                 if (i == 1) {
-                    prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0x80;
+                    PBLU(prim) = 0x80;
                 } else {
-                    prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0x80;
+                    PGRN(prim) = 0x80;
                 }
                 prim->priority = 0x1FD;
                 prim->drawMode = DRAW_TPAGE | DRAW_TRANSP;
             }
+            prim = prim->next;
         }
 
         self->step++;
@@ -1178,10 +1171,10 @@ void EntityRelicOrb(Entity* self) {
     case 6:
         // This case creates the texture "Obtained RELIC_NAME" and stores it
         // in the VRAM
-#if defined(VERSION_PSP) && STAGE != STAGE_ST0
         msgLen = 0;
         var_s2 = 0;
         isObtainedTextStored = false;
+#if defined(VERSION_PSP) && STAGE != STAGE_ST0
         msg = g_api.relicDefs[relicId].name;
         switch (g_UserLanguage) {
         case LANG_EN:
@@ -1209,11 +1202,7 @@ void EntityRelicOrb(Entity* self) {
         }
         msgLen = strlen(sp34);
         BlitChar(&sp34[0], 0, 12, 0x100);
-        self->ext.relicOrb.unk7E = msgLen;
-        self->ext.relicOrb.unk7C = 0;
 #elif !defined(VERSION_US) || STAGE == STAGE_ST0
-        msgLen = 0;
-        isObtainedTextStored = false;
         vramX = 0;
         msg = g_api.relicDefs[relicId].name;
         while (true) {
@@ -1239,11 +1228,7 @@ void EntityRelicOrb(Entity* self) {
                 }
             }
         }
-        self->ext.relicOrb.unk7E = msgLen;
-        self->ext.relicOrb.unk7C = 0;
 #else
-    msgLen = 0;
-    isObtainedTextStored = false;
     msg = g_RelicOrbTexts[0];
     chPix = g_Pix[0];
     var_v0_5 = (u8*)chPix;
@@ -1265,9 +1250,9 @@ void EntityRelicOrb(Entity* self) {
     }
 
     LoadTPage(chPix, 0, 0, 0, 0x100, 0x180, 0x10);
-    self->ext.relicOrb.unk7C = 0;
-    self->ext.relicOrb.unk7E = msgLen;
 #endif
+        self->ext.relicOrb.unk7E = msgLen;
+        self->ext.relicOrb.unk7C = 0;
         self->step++;
         break;
     case 7:
@@ -1275,9 +1260,9 @@ void EntityRelicOrb(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         prim = prim->next;
 #if STAGE == STAGE_ST0
-        for (i = 0; prim != NULL; prim = prim->next, i++) {
+        for (i = 0; prim != NULL; i++) {
 #else
-        for (i = 0; i < 2; prim = prim->next, i++) {
+        for (i = 0; i < 2; i++) {
 #endif
             if (i == 0) {
                 prim->x2 -= 3;
@@ -1290,6 +1275,7 @@ void EntityRelicOrb(Entity* self) {
                 prim->y0 = prim->y1 -= 2;
                 prim->y2 = prim->y3 += 4;
             }
+            prim = prim->next;
         }
 
         if (++self->ext.relicOrb.unk7C == 8) {
@@ -1303,9 +1289,9 @@ void EntityRelicOrb(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         prim = prim->next;
 #if STAGE == STAGE_ST0
-        for (i = 0; prim != NULL; prim = prim->next, i++) {
+        for (i = 0; prim != NULL; i++) {
 #else
-        for (i = 0; i < 3; prim = prim->next, i++) {
+        for (i = 0; i < 3; i++) {
 #endif
             if (i == 0) {
                 prim->x1 = 0x80 - (orbUnk7C + 1) * 0xC;
@@ -1324,6 +1310,7 @@ void EntityRelicOrb(Entity* self) {
                 prim->y2 = prim->y3 = g_RelicOrbTextBg2EY[orbUnk7C] + 0xA7;
                 prim->g0 = prim->g1 -= 0x10;
             }
+            prim = prim->next;
         }
 
         if (++self->ext.relicOrb.unk7C == 8) {
@@ -1367,14 +1354,10 @@ void EntityRelicOrb(Entity* self) {
         prim->y0 = prim->y1 = self->posY.i.hi - 7;
         prim->y2 = prim->y3 = prim->y0 + 14;
 
-        if (g_Timer & RENDERFLAGS_NOSHADOW) {
-            prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =
-                prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 =
-                    prim->b3 = 255;
+        if (g_Timer & 2) {
+            PCOL(prim) = 0xFF;
         } else {
-            prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =
-                prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 =
-                    prim->b3 = 128;
+            PCOL(prim) = 0x80;
         }
 #else
     BlinkItem(self, g_Timer);
@@ -1407,9 +1390,9 @@ void EntityRelicOrb(Entity* self) {
                     prim->y0 = prim->y1 = iconSlot - 6;
                     prim->y2 = prim->y3 = iconSlot + 6;
 
-                    prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0x80;
-                    prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0x80;
-                    prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0x80;
+                    PRED(prim) = 0x80;
+                    PGRN(prim) = 0x80;
+                    PBLU(prim) = 0x80;
                     prim->p1 = 0;
                     prim->priority = 0x7F;
                     prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
@@ -1431,7 +1414,7 @@ void EntityRelicOrb(Entity* self) {
         prim = prim->next;
     }
 
-    for (; prim != NULL; prim = prim->next) {
+    while (prim != NULL) {
         if (prim->drawMode != DRAW_HIDE) {
             if (prim->p1 & 3) {
                 prim->y0 = prim->y1--;
@@ -1441,14 +1424,15 @@ void EntityRelicOrb(Entity* self) {
                 prim->x0 = prim->x2++;
                 prim->x1 = prim->x3--;
             }
-            prim->r0 = prim->r1 = prim->r2 = prim->r3 -= 6;
-            prim->g0 = prim->g1 = prim->g2 = prim->g3 -= 6;
-            prim->b0 = prim->b1 = prim->b2 = prim->b3 -= 6;
+            PRED(prim) -= 6;
+            PGRN(prim) -= 6;
+            PBLU(prim) -= 6;
             prim->p1++;
             if (prim->p1 > 0x10) {
                 prim->drawMode = DRAW_HIDE;
             }
         }
+        prim = prim->next;
 #endif
     }
 }
@@ -1563,12 +1547,12 @@ void EntityMessageBox(Entity* self) {
     case 1:
         rect.x = 0;
         rect.y = 0x180;
-        rect.w = 64;
+        rect.w = 0x40;
         rect.h = self->ext.messageBox.height;
         ClearImage(&rect, 0, 0, 0);
 
         prim = &g_PrimBuf[self->primIndex];
-        for (i = 0; prim != NULL; prim = prim->next, i++) {
+        for (i = 0; prim != NULL; i++) {
             if (i == 0) {
                 prim->type = PRIM_SPRT;
                 prim->tpage = 0x10;
@@ -1587,21 +1571,22 @@ void EntityMessageBox(Entity* self) {
                     self->posX.i.hi - self->ext.messageBox.width / 2 - 4;
                 prim->x1 = prim->x3 =
                     self->posX.i.hi + self->ext.messageBox.width / 2 + 4;
-                prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0;
-                prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0;
-                prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0;
+                PRED(prim) = 0;
+                PGRN(prim) = 0;
+                PBLU(prim) = 0;
                 if (i == 1) {
                     prim->y0 = prim->y1 = prim->y2 = prim->y3 =
                         self->posY.i.hi - self->ext.messageBox.height / 2 - 4;
-                    prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0x80;
+                    PBLU(prim) = 0x80;
                 } else {
                     prim->y0 = prim->y1 = prim->y2 = prim->y3 =
                         self->posY.i.hi + self->ext.messageBox.height / 2 + 4;
-                    prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0x80;
+                    PGRN(prim) = 0x80;
                 }
                 prim->priority = 0x1FC;
                 prim->drawMode = DRAW_TPAGE | DRAW_TRANSP;
             }
+            prim = prim->next;
         }
         self->step++;
         break;
@@ -1675,7 +1660,7 @@ void EntityMessageBox(Entity* self) {
         self->ext.messageBox.duration++;
         prim = &g_PrimBuf[self->primIndex];
         prim = prim->next;
-        for (i = 0; prim != NULL; prim = prim->next, i++) {
+        for (i = 0; prim != NULL; i++) {
             if (i == 0) {
                 prim->y2 = prim->y3 =
                     prim->y0 + (self->ext.messageBox.height + 8) *
@@ -1687,6 +1672,7 @@ void EntityMessageBox(Entity* self) {
                                    self->ext.messageBox.duration / 8;
                 prim->g2 = prim->g3 -= 0x10;
             }
+            prim = prim->next;
         }
         if (self->ext.messageBox.duration == 8) {
             self->ext.messageBox.duration = 0;

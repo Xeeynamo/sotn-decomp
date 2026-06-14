@@ -58,7 +58,7 @@ void DopplegangerStepHighJump(void) {
                 DOPPLEGANGER.rotate = 0x800;
                 DOPPLEGANGER.rotPivotX = 0;
                 DOPPLEGANGER.rotPivotY = 2;
-                DOPPLEGANGER.drawFlags |= FLAG_DRAW_ROTATE;
+                DOPPLEGANGER.drawFlags |= ENTITY_ROTATE;
                 DOPPLEGANGER.facingLeft = (DOPPLEGANGER.facingLeft + 1) & 1;
                 SetDopplegangerAnim(0x2B);
             } else {
@@ -84,7 +84,7 @@ void DopplegangerStepHighJump(void) {
         break;
 
     case 2:
-        DOPPLEGANGER.drawFlags |= FLAG_DRAW_ROTATE;
+        DOPPLEGANGER.drawFlags |= ENTITY_ROTATE;
         DOPPLEGANGER.rotPivotX = 0;
         DOPPLEGANGER.rotPivotY = 2;
         if (g_Dop.unk4A > 56) {
@@ -92,9 +92,8 @@ void DopplegangerStepHighJump(void) {
             DOPPLEGANGER.rotate = 0;
             DOPPLEGANGER.step_s = 4;
             DOPPLEGANGER.drawFlags &=
-                FLAG_BLINK | FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20 |
-                FLAG_DRAW_UNK10 | FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY |
-                FLAG_DRAW_SCALEX;
+                ENTITY_BLINK | ENTITY_MASK_B | ENTITY_MASK_G | ENTITY_MASK_R |
+                ENTITY_OPACITY | ENTITY_SCALEY | ENTITY_SCALEX;
             DOPPLEGANGER.facingLeft = (DOPPLEGANGER.facingLeft + 1) & 1;
         }
         break;
@@ -130,12 +129,11 @@ s32 func_80113E68(void) {
 
 void func_us_801C68CC(void) {
     DOPPLEGANGER.animSet = ANIMSET_OVL(1);
-    DOPPLEGANGER.drawFlags &=
-        FLAG_BLINK | FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK10 |
-        FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+    DOPPLEGANGER.drawFlags &= ENTITY_BLINK | ENTITY_MASK_B | ENTITY_MASK_G |
+                              ENTITY_MASK_R | ENTITY_SCALEY | ENTITY_SCALEX;
     DOPPLEGANGER.poseTimer = 0;
     DOPPLEGANGER.pose = 0;
-    DOPPLEGANGER.drawMode = DRAW_DEFAULT;
+    DOPPLEGANGER.blendMode = BLEND_NO;
     g_Dop.unk44 = 0;
     g_Dop.unk46 = 0;
     DOPPLEGANGER.rotate = 0;
@@ -348,7 +346,7 @@ void DopplegangerStepKill(DamageParam* damage, s16 dopStep, s16 arg2) {
                 g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x5A), 0);
             CreateEntFactoryFromEntity(g_CurrentEntity, BP_HIT_BY_ICE, 0);
             D_us_801D3310 = 3;
-            DOPPLEGANGER.drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+            DOPPLEGANGER.blendMode = BLEND_TRANSP | BLEND_ADD;
         } else {
             func_80118C28(1);
             CreateEntFactoryFromEntity(
@@ -522,7 +520,7 @@ void ControlBatForm(void) {
     directionsPressed =
         g_Dop.padPressed & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT);
     pressingCross = g_Dop.padPressed & PAD_CROSS;
-    DOPPLEGANGER.drawFlags = FLAG_DRAW_ROTATE;
+    DOPPLEGANGER.drawFlags = ENTITY_ROTATE;
     DOPPLEGANGER.rotPivotY = 0;
 
     if (CheckWingSmashInput() && (DOPPLEGANGER.step_s)) {
@@ -830,7 +828,7 @@ void DopplegangerStepUnmorphBat(void) {
     s32 count;
     u8 _pad[40]; // must be between 33 & 40
 
-    DOPPLEGANGER.drawFlags = FLAG_DRAW_ROTATE;
+    DOPPLEGANGER.drawFlags = ENTITY_ROTATE;
     DecelerateX(FIX(1.0 / 8.0));
     if (g_Dop.vram_flag & (TOUCHING_CEILING | TOUCHING_GROUND)) {
         DOPPLEGANGER.velocityY = 0;
@@ -861,7 +859,7 @@ void DopplegangerStepUnmorphBat(void) {
 
         if (count == 8) {
             DOPPLEGANGER.animSet = ANIMSET_OVL(1);
-            DOPPLEGANGER.drawFlags = FLAG_DRAW_DEFAULT;
+            DOPPLEGANGER.drawFlags = ENTITY_DEFAULT;
             DOPPLEGANGER.rotate = 0;
             g_Dop.unk66 = 1;
             DOPPLEGANGER.step_s = 1;
@@ -1196,12 +1194,11 @@ void DopplegangerStepStone(s32 arg0) {
         if (DOPPLEGANGER.poseTimer < 0) {
             DOPPLEGANGER.step_s = 2;
             DOPPLEGANGER.drawFlags &=
-                FLAG_BLINK | FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20 |
-                FLAG_DRAW_UNK10 | FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY |
-                FLAG_DRAW_SCALEX;
+                ENTITY_BLINK | ENTITY_MASK_B | ENTITY_MASK_G | ENTITY_MASK_R |
+                ENTITY_OPACITY | ENTITY_SCALEY | ENTITY_SCALEX;
         } else {
             DOPPLEGANGER.rotPivotX = 0;
-            DOPPLEGANGER.drawFlags |= FLAG_DRAW_ROTATE;
+            DOPPLEGANGER.drawFlags |= ENTITY_ROTATE;
             DOPPLEGANGER.rotate = D_us_801813D8[DOPPLEGANGER.poseTimer] >> 0x4;
             if (DOPPLEGANGER.rotate == 0) {
                 DOPPLEGANGER.rotPivotY = 24;
@@ -1809,8 +1806,8 @@ void EntitySmokePuff(Entity* self) {
         self->zPriority = DOPPLEGANGER.zPriority + 2;
         self->flags = FLAG_UNK_20000000 | FLAG_POS_CAMERA_LOCKED;
         self->palette = PAL_FLAG(PAL_UNK_195);
-        self->drawMode = DRAW_TPAGE;
-        self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+        self->blendMode = BLEND_TRANSP;
+        self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
 
         posX = D_us_80181804[paramsLo];
         if (paramsHi == 0) {
@@ -1940,14 +1937,14 @@ void DopEntityHitByDark(Entity* self) {
         self->palette = PAL_FLAG(PAL_UNK_19F);
 
         if (D_us_801D3374 & 1) {
-            self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP | BLEND_QUARTER;
         } else {
-            self->drawMode = DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP;
         }
         D_us_801D3374++;
         self->opacity = 0xFF;
-        self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY |
-                          FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20;
+        self->drawFlags =
+            ENTITY_SCALEX | ENTITY_SCALEY | ENTITY_MASK_R | ENTITY_MASK_G;
         self->scaleX = self->scaleY = 0x40;
         self->anim = D_us_801818B4;
 
@@ -2488,8 +2485,7 @@ void EntityDopplegangerOutline(Entity* self) {
     xOffset = animFramePtr[0] + spritesheetPtr[2];
     yOffset = animFramePtr[1] + spritesheetPtr[3];
     self->rotate = DOPPLEGANGER.rotate;
-    self->drawFlags =
-        DOPPLEGANGER.drawFlags | (FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY);
+    self->drawFlags = DOPPLEGANGER.drawFlags | (ENTITY_SCALEX | ENTITY_SCALEY);
     primData = D_us_80181C00[upperparams];
     switch (self->step) {
     case 0: // Initialization
@@ -2793,11 +2789,10 @@ void EntityWingSmashTrail(Entity* self) {
         self->animCurFrame = DOPPLEGANGER.animCurFrame | ANIM_FRAME_LOAD;
         self->unk5A = 8;
         self->zPriority = DOPPLEGANGER.zPriority - 2;
-        self->drawFlags =
-            DOPPLEGANGER.drawFlags |
-            (FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX);
+        self->drawFlags = DOPPLEGANGER.drawFlags |
+                          (ENTITY_OPACITY | ENTITY_SCALEY | ENTITY_SCALEX);
         self->opacity = 0x80;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->rotate = DOPPLEGANGER.rotate;
         self->facingLeft = DOPPLEGANGER.facingLeft;
         self->palette = PAL_FLAG(0x202);
@@ -2901,7 +2896,7 @@ void func_us_801CC788(Entity* self) {
                     twelveShift = -twelveShift;
                 }
                 tilePrim->velocityX.val =
-                    (((rand() & PSP_RANDMASK) * 4) + FIX(-1));
+                    ((rand() & PSP_RANDMASK) * 4) - FIX(1);
                 tilePrim->velocityY.val = -(rand() & 0x3FFF);
                 tilePrim->posX.val +=
                     ((tilePrim->velocityX.val * 35) + (twelveShift << 16));
@@ -3052,7 +3047,7 @@ void func_8011EDA8(Entity* self) {
         if (paramsHi == 1) {
             self->scaleX = 0xC0;
             self->scaleY = 0xC0;
-            self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+            self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
             self->animSet = ANIMSET_DRA(2);
             self->anim = D_us_80181E04;
         }
@@ -3062,7 +3057,7 @@ void func_8011EDA8(Entity* self) {
                 self->anim = D_us_80181DC8;
                 self->scaleX = 0x120;
                 self->scaleY = 0x120;
-                self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+                self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
                 self->animSet = ANIMSET_DRA(2);
             } else {
                 self->animSet = ANIMSET_DRA(5);
@@ -3097,14 +3092,14 @@ void func_8011EDA8(Entity* self) {
         self->posY.val += self->velocityY;
         self->posX.val += self->velocityX;
         if ((self->pose == 8) && (self->anim != D_800AD57C)) {
-            self->drawMode = DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP;
             if (!(paramsLo & 1) && (self->poseTimer == 1)) {
                 CreateEntFactoryFromEntity(self, FACTORY(4, 4), 0);
             }
         }
 
         if ((self->pose == 16) && (self->anim == D_800AD57C)) {
-            self->drawMode = DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP;
         }
 
         if (self->poseTimer < 0) {
@@ -3979,7 +3974,6 @@ block_147:
 }
 
 extern RECT D_us_8018206C;
-extern u16 D_us_801D43AA;
 extern s32 D_us_801D43C0;
 extern s32 D_us_801D43C4;
 extern u8 D_us_80182074[][8];
@@ -4132,7 +4126,7 @@ void EntityDopplegangerDissolves(Entity* self) {
         }
         break;
     case 4:
-        if (DOPPLEGANGER.step == Dop_Kill || D_us_801D43AA <= 0) {
+        if (DOPPLEGANGER.step == Dop_Kill || g_Dop.unk6A <= 0) {
             g_stone_flag = 1;
             if (g_Timer % 2 == 0) {
                 goto after_loop;
@@ -4160,7 +4154,7 @@ void EntityDopplegangerDissolves(Entity* self) {
 
         LoadImage(&D_us_8018206C, data);
         if (--self->ext.dissolve.unk7C <= 0) {
-            if ((DOPPLEGANGER.step == Dop_Kill) || D_us_801D43AA == 0) {
+            if ((DOPPLEGANGER.step == Dop_Kill) || g_Dop.unk6A == 0) {
                 if (self->ext.dissolve.unk7C < -0x1F) {
                     g_stone_flag = 2;
                     DestroyEntity(self);
@@ -4183,7 +4177,7 @@ void EntityDopplegangerDissolves(Entity* self) {
                     prim->b0 = ((rand() & 3) + 0xF8);
                     prim->r1 = 0x20 - ((i / 6) * 2);
                 }
-            } else if (DOPPLEGANGER.step == Dop_Kill || D_us_801D43AA <= 0) {
+            } else if (DOPPLEGANGER.step == Dop_Kill || g_Dop.unk6A <= 0) {
                 xBase = D_us_801D43C0 - (prim->x0 + prim->x1) / 2;
                 yBase = D_us_801D43C4 - ((prim->y0 + prim->y2) / 2);
                 tangent = ratan2(-yBase, xBase);
@@ -4229,7 +4223,7 @@ void EntityDopplegangerDissolves(Entity* self) {
         break;
     }
 
-    if (DOPPLEGANGER.step == Dop_Kill || D_us_801D43AA <= 0) {
+    if (DOPPLEGANGER.step == Dop_Kill || g_Dop.unk6A <= 0) {
         g_stone_flag = 1;
     }
     func_us_801C4954(1, 1);
@@ -4304,7 +4298,7 @@ void EntitySubwpnReboundStone(Entity* self) {
         break;
     case 1:
         if (self->flags & FLAG_DEAD) {
-            CreateEntFactoryFromEntity(self, BP_10, 0);
+            CreateEntFactoryFromEntity(self, BP_REBOUND_STONE_HIT, 0);
             g_api.PlaySfx(SFX_UI_SUBWEAPON_TINK);
             self->step = 2;
             break;
@@ -4572,7 +4566,7 @@ void DopplegangerUnarmedAttack(Entity* self) {
             self->attack /= 2;
         }
         self->zPriority = DOPPLEGANGER.zPriority - 2;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->flags = FLAG_UNK_10000000 | FLAG_POS_CAMERA_LOCKED;
         self->step = Dop_Stand;
     }
@@ -4644,7 +4638,7 @@ void EntitySubwpnKnife(Entity* self) {
         prim->b0 = 0;
         SetSpeedX(FIX(8));
         g_api.PlaySfx(SFX_WEAPON_SWISH_C);
-        g_Dop.timers[ALU_T_10] = 4;
+        g_Dop.timers[ALU_T_USE_SUBWPN] = 4;
         break;
     case DAGGER_FLYING:
         self->ext.timer.t++;
@@ -4671,7 +4665,8 @@ void EntitySubwpnKnife(Entity* self) {
                 self->velocityY = FIX(-2.5);
                 self->hitboxState = 0;
                 self->posX.i.hi += xCol;
-                CreateEntFactoryFromEntity(self, FACTORY(BP_10, 0), 0);
+                CreateEntFactoryFromEntity(
+                    self, FACTORY(BP_REBOUND_STONE_HIT, 0), 0);
                 self->posX.i.hi -= xCol;
                 if (collider.effects & (EFFECT_SOLID | EFFECT_UNK_0002)) {
                     g_api.PlaySfx(SFX_UI_SUBWEAPON_TINK);

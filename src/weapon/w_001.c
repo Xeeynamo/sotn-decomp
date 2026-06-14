@@ -168,7 +168,7 @@ void EntityWeaponAttack(Entity* self) {
         newX = PLAYER.posX.i.hi + xOffset;
         newY = PLAYER.posY.i.hi + yOffset;
 
-        if (PLAYER.drawFlags & FLAG_DRAW_SCALEY) {
+        if (PLAYER.drawFlags & ENTITY_SCALEY) {
             newY -= 3;
         }
 
@@ -329,13 +329,13 @@ s32 func_ptr_80170004(Entity* self) {
 #ifdef VERSION_PSP
     xOffset = PLAYER.posX.i.hi + xOffset;
     yOffset = PLAYER.posY.i.hi + yOffset;
-    if (PLAYER.drawFlags & FLAG_DRAW_SCALEY) {
+    if (PLAYER.drawFlags & ENTITY_SCALEY) {
         yOffset -= 3;
     }
 #else
     posX = xOffset + PLAYER.posX.i.hi;
     posY = yOffset + PLAYER.posY.i.hi;
-    if (PLAYER.drawFlags & FLAG_DRAW_SCALEY) {
+    if (PLAYER.drawFlags & ENTITY_SCALEY) {
         posY -= 3;
     }
 #endif
@@ -405,13 +405,13 @@ static void func_ptr_80170008(Entity* self) {
         self->facingLeft = (PLAYER.facingLeft + 1) & 1;
         SetSpeedX(FIX(-4.5));
         self->palette = PAL_FLAG(PAL_UNK_1B0);
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->posX.val += self->velocityX * 6;
         self->posY.i.hi -= 0xD;
-        if (PLAYER.drawFlags & FLAG_DRAW_SCALEY) {
+        if (PLAYER.drawFlags & ENTITY_SCALEY) {
             self->posY.i.hi -= 0x3;
         }
-        self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+        self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
         self->scaleY = 0x60;
         self->scaleX = 0x60;
         self->ext.factory.unkAE = self->ext.factory.parent->ext.factory.unkAE;

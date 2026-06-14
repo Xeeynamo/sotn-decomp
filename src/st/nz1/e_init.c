@@ -64,7 +64,7 @@ void EntityCloakedKnightCloak(Entity* self);
 void EntityCloakedKnightSword(Entity* self);
 void EntityCloakedKnightAura(Entity* self);
 void EntitySwordLord(Entity* self);
-void EntitySwordLordAttackHitbox(Entity* self);
+void EntitySwordLordAttack(Entity* self);
 void EntityVandalSword(Entity* self);
 void EntityVandalSwordDeath(Entity* self);
 void EntityVandalSwordHitbox(Entity* self);
@@ -154,7 +154,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityCloakedKnightSword,
     EntityCloakedKnightAura,
     EntitySwordLord,
-    EntitySwordLordAttackHitbox,
+    EntitySwordLordAttack,
     EntityVandalSword,
     EntityVandalSwordDeath,
     EntityVandalSwordHitbox,
@@ -193,24 +193,24 @@ EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 0x001};
 EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 0x003};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 0x003};
 EInit g_EInitEnvironment = {ANIMSET_OVL(1), 0, 0, PAL_NONE, 0x005};
-EInit D_us_80180BA0 = {ANIMSET_OVL(3), 1, 76, PAL_UNK_200, 0x105};
-EInit D_us_80180BAC = {ANIMSET_OVL(3), 1, 76, PAL_UNK_200, 0x005};
+EInit g_EInitSkullLord = {ANIMSET_OVL(3), 1, 76, PAL_UNK_200, 0x105};
+EInit g_EInitSkullLordEffects = {ANIMSET_OVL(3), 1, 76, PAL_UNK_200, 0x005};
 EInit g_EInitHarpy = {ANIMSET_OVL(4), 0, 76, PAL_UNK_206, 0x0EF};
-EInit D_us_80180BC4 = {ANIMSET_OVL(4), 18, 76, PAL_UNK_206, 0x0F1};
+EInit g_EInitHarpyDagger = {ANIMSET_OVL(4), 18, 76, PAL_UNK_206, 0x0F1};
 EInit g_EInitHarpyFlame = {ANIMSET_OVL(4), 19, 76, PAL_UNK_206, 0x0F2};
-EInit D_us_80180BDC = {ANIMSET_OVL(4), 0, 76, PAL_UNK_206, 0x0F0};
-EInit D_us_80180BE8 = {ANIMSET_OVL(4), 24, 76, PAL_UNK_206, 0x002};
+EInit g_EInitHarpyKick = {ANIMSET_OVL(4), 0, 76, PAL_UNK_206, 0x0F0};
+EInit g_EInitHarpyFeather = {ANIMSET_OVL(4), 24, 76, PAL_UNK_206, 0x002};
 EInit g_EInitCloakedKnight = {ANIMSET_OVL(5), 1, 72, PAL_UNK_20A, 0x10F};
 EInit g_EInitCloakedKnightAura = {ANIMSET_OVL(5), 1, 72, PAL_UNK_20A, 0x002};
 EInit g_EInitCloakedKnightSword = {ANIMSET_OVL(5), 1, 72, PAL_UNK_20A, 0x110};
-EInit D_us_80180C18 = {ANIMSET_OVL(6), 1, 80, PAL_UNK_20F, 0x009};
-EInit D_us_80180C24 = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 0x00A};
-EInit D_us_80180C30 = {ANIMSET_OVL(6), 40, 80, PAL_UNK_20F, 0x0E4};
-EInit D_us_80180C3C = {ANIMSET_OVL(6), 40, 80, PAL_UNK_20F, 0x002};
+EInit g_EInitSwordLord = {ANIMSET_OVL(6), 1, 80, PAL_UNK_20F, 0x009};
+EInit g_EInitSwordLordAttack = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 0x00A};
+EInit g_EInitVandalSword = {ANIMSET_OVL(6), 40, 80, PAL_UNK_20F, 0x0E4};
+EInit g_EInitVandSwordDeath = {ANIMSET_OVL(6), 40, 80, PAL_UNK_20F, 0x002};
 EInit g_EInitPhantomSkull = {ANIMSET_OVL(7), 18, 74, PAL_UNK_220, 0x043};
 EInit g_EInitPhantomSkullTrail = {ANIMSET_OVL(7), 18, 74, PAL_UNK_220, 0x002};
-EInit D_us_80180C60 = {ANIMSET_OVL(7), 1, 74, PAL_UNK_220, 0x044};
-EInit D_us_80180C6C = {ANIMSET_OVL(7), 17, 74, PAL_UNK_220, 0x045};
+EInit g_EInitFlailGuard = {ANIMSET_OVL(7), 1, 74, PAL_UNK_220, 0x044};
+EInit g_EInitFlailGuardFlail = {ANIMSET_OVL(7), 17, 74, PAL_UNK_220, 0x045};
 EInit g_EInitFleaArmor = {ANIMSET_OVL(8), 1, 72, PAL_UNK_223, 0x029};
 EInit g_EInitFleaArmorAttackHitbox = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 0x02A};
 EInit g_EInitFleaMan = {ANIMSET_OVL(8), 0, 72, PAL_UNK_223, 0x028};

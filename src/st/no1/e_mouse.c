@@ -1,12 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
 
-static AnimationFrame D_us_80180F48[] = {
-    {134, 53}, {6, 54},  {54, 55}, {6, 54}, {38, 53},
-    {6, 54},   {38, 55}, {6, 54},  {-1, 0}};
-static AnimationFrame D_us_80180F6C[] = {{6, 56}, {6, 57}, {6, 58}, {0, 0}};
-static AnimationFrame D_us_80180F7C[] = {{54, 54}, {-1, 0}};
-static s32 D_us_80180F84[] = {FIX(-1.5), FIX(1.5)};
+static AnimationFrame anim0[] = {
+    {134, 53}, {6, 54},  {54, 55}, {6, 54},  {38, 53},
+    {6, 54},   {38, 55}, {6, 54},  POSE_END,
+};
+static AnimationFrame anim1[] = {{6, 56}, {6, 57}, {6, 58}, POSE_LOOP(0)};
+static AnimationFrame anim2[] = {{54, 54}, POSE_END};
+static s32 velocity[] = {FIX(-1.5), FIX(1.5)};
 
 // The mouse across from the Doppleganger 10 exit
 void EntityMouse(Entity* self) {
@@ -23,15 +24,15 @@ void EntityMouse(Entity* self) {
         self->facingLeft = true;
         self->pose = 0;
         self->poseTimer = 0;
-        self->anim = D_us_80180F48;
+        self->anim = anim0;
         break;
 
     case 1:
         if (self->poseTimer < 0) {
             self->poseTimer = 0;
             self->pose = 0;
-            self->anim = D_us_80180F6C;
-            self->velocityX = D_us_80180F84[self->facingLeft];
+            self->anim = anim1;
+            self->velocityX = velocity[self->facingLeft];
             // n.b.! this is one higher than INT16_MAX making
             //       it actually INT16_MIN. the first decrement
             //       below rolls the value back to positive before
@@ -43,12 +44,12 @@ void EntityMouse(Entity* self) {
 
     case 2:
         if (--self->ext.et_801B7D34.timer == 0) {
-            if (!self->facingLeft) {
-                if (offsetX < 0x1e0 && offsetX > 0x1a0) {
+            if (self->facingLeft == false) {
+                if (offsetX < 0x1E0 && offsetX > 0x1A0) {
                     self->step = 3;
                     self->pose = 0;
                     self->poseTimer = 0;
-                    self->anim = D_us_80180F7C;
+                    self->anim = anim2;
                     self->ext.et_801B7D34.unk7E = 3;
                     self->velocityY = FIX(-2.75);
                     break;
@@ -58,14 +59,14 @@ void EntityMouse(Entity* self) {
             self->step = 1;
             self->pose = 3;
             self->poseTimer = 0;
-            self->anim = D_us_80180F48;
+            self->anim = anim0;
 
         } else {
             self->posX.val += self->velocityX;
             if ((self->facingLeft == false && offsetX < 0x198) ||
                 (self->facingLeft == true && offsetX > 0x208)) {
                 self->facingLeft ^= true;
-                self->velocityX = D_us_80180F84[self->facingLeft];
+                self->velocityX = velocity[self->facingLeft];
                 if (!(rand() & 3)) {
                     self->ext.et_801B7D34.timer = (rand() & 0xF) + 0x18;
                 } else {
@@ -91,7 +92,7 @@ void EntityMouse(Entity* self) {
                     self->step = 1;
                     self->pose = 3;
                     self->poseTimer = 0;
-                    self->anim = D_us_80180F48;
+                    self->anim = anim0;
                 }
             }
         }

@@ -163,7 +163,7 @@ void EntityThornweed(Entity* self) {
             entity->flags |= FLAG_DEAD;
             self->hitboxState = 0;
             self->opacity = DeathExplosionDelay;
-            self->drawFlags |= FLAG_DRAW_OPACITY;
+            self->drawFlags |= ENTITY_OPACITY;
             self->step_s++;
         }
         if (!--self->opacity) {
@@ -294,7 +294,7 @@ void EntityCorpseweed(Entity* self) {
         self->animCurFrame = AnimFrameInit;
         self->hitboxOffX = 2;
         self->hitboxOffY = 9;
-        self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+        self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
         self->scaleX = self->scaleY = 0;
         self->hitboxState = 0;
         self->ext.corpseweed.bobbingAngle = 8;
@@ -325,7 +325,7 @@ void EntityCorpseweed(Entity* self) {
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
         prim->priority = self->zPriority - 1;
-        prim->drawMode = FLAG_DRAW_SCALEY;
+        prim->drawMode = ENTITY_SCALEY;
 
         // Stalk primitive
         prim = prim->next;
@@ -349,7 +349,7 @@ void EntityCorpseweed(Entity* self) {
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
         prim->priority = self->zPriority - 2;
-        prim->drawMode = FLAG_DRAW_SCALEY;
+        prim->drawMode = ENTITY_SCALEY;
         prim = prim->next;
         // Fallthrough
     case GROW_LEAVES:
@@ -493,7 +493,7 @@ void EntityCorpseweed(Entity* self) {
         if (self->scaleX < 0x100) {
             self->scaleX = self->scaleY += 8;
         } else {
-            self->drawFlags = FLAG_DRAW_DEFAULT;
+            self->drawFlags = ENTITY_DEFAULT;
             SetStep(IDLE);
         }
         break;
@@ -563,7 +563,7 @@ void EntityCorpseweed(Entity* self) {
             self->ext.corpseweed.leavesDoneGrowing = false;
             self->ext.corpseweed.stalkDoneGrowing = false;
             self->hitboxState = 0;
-            self->drawFlags = FLAG_DRAW_ROTATE;
+            self->drawFlags = ENTITY_ROTATE;
             // Need a no-op self access here for PSP match
             self->step_s;
             self->step_s++;

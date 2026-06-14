@@ -87,7 +87,7 @@ void EntityWingedGuardParts(Entity* self) {
         self->flags |= FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
         self->animCurFrame = self->params + 5;
         if (!self->params) {
-            self->drawFlags |= FLAG_DRAW_ROTATE;
+            self->drawFlags |= ENTITY_ROTATE;
         }
         if (self->facingLeft) {
             self->velocityX += velocity_intervals[self->params][0];

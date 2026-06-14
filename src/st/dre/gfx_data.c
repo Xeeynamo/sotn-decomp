@@ -2,60 +2,60 @@
 #include "dre.h"
 
 u8 gfx_stage_name_jp_sm[] = {
-#include GEN_VERSION(gfx_stage_name_jp_sm.h)
+#include "gen/gfx_stage_name_jp_sm.h"
 };
 
 u8 gfx_stage_name_jp_lg[] = {
-#include GEN_VERSION(gfx_stage_name_jp_lg.h)
+#include "gen/gfx_stage_name_jp_lg.h"
 };
 
 u8 gfx_succubus_1[] = {
-#include GEN_VERSION(gfx_succubus_1.h)
+#include "gen/gfx_succubus_1.h"
 };
 
 u8 gfx_succubus_2[] = {
-#include GEN_VERSION(gfx_succubus_2.h)
+#include "gen/gfx_succubus_2.h"
 };
 
 u8 gfx_succubus_3[] = {
-#include GEN_VERSION(gfx_succubus_3.h)
+#include "gen/gfx_succubus_3.h"
 };
 
 u8 gfx_succubus_4[] = {
-#include GEN_VERSION(gfx_succubus_4.h)
+#include "gen/gfx_succubus_4.h"
 };
 
 u8 gfx_succubus_5[] = {
-#include GEN_VERSION(gfx_succubus_5.h)
+#include "gen/gfx_succubus_5.h"
 };
 
 u8 gfx_succubus_6[] = {
-#include GEN_VERSION(gfx_succubus_6.h)
+#include "gen/gfx_succubus_6.h"
 };
 
 u8 gfx_succubus_7[] = {
-#include GEN_VERSION(gfx_succubus_7.h)
+#include "gen/gfx_succubus_7.h"
 };
 
 u8 gfx_succubus_lisa[] = {
-#include GEN_VERSION(gfx_succubus_lisa.h)
+#include "gen/gfx_succubus_lisa.h"
 };
 
 u8 gfx_portrait_alucard[] = {
-#include GEN_VERSION(gfx_portrait_alucard.h)
+#include "gen/gfx_portrait_alucard.h"
 };
 
 u8 gfx_portrait_lisa[] = {
-#include GEN_VERSION(gfx_portrait_lisa.h)
+#include "gen/gfx_portrait_lisa.h"
 };
 
 u8 gfx_portrait_succubus[] = {
-#include GEN_VERSION(gfx_portrait_succubus.h)
+#include "gen/gfx_portrait_succubus.h"
 };
 
 #ifdef VERSION_US
 u8 gfx_stage_name_en[] = {
-#include GEN_VERSION(gfx_stage_name_en.h)
+#include "gen/gfx_stage_name_en.h"
 };
 #endif
 

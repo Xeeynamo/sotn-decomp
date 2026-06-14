@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sfx.h"
 
-extern s32 D_us_80181ACC;
+extern EInit g_EInitSkeleton;
+extern EInit g_EInitSkeletonPieces;
+extern EInit g_EInitSkeletonBone;
 
 typedef enum {
     SKELETON_INIT,
@@ -19,6 +21,9 @@ typedef enum {
     SKELETON_IN_AIR,
     SKELETON_LAND
 } SkeletonJumpSubSteps;
+
+// BSS used in LIB only
+extern s32 D_us_80181ACC;
 
 #ifndef STAGE_IS_NZ0
 static u8 unused[] = {0x06, 0x01, 0x04, 0x01, 0x04, 0x02, 0x06,
@@ -249,7 +254,7 @@ void EntitySkeletonPieces(Entity* self) { // From skeleton death explosion
 
     InitializeEntity(g_EInitSkeletonPieces);
     self->animCurFrame = self->params + 15;
-    self->drawFlags = FLAG_DRAW_ROTATE;
+    self->drawFlags = ENTITY_ROTATE;
 
     if (self->facingLeft) {
         self->velocityX = -self->velocityX;
@@ -288,7 +293,7 @@ void EntitySkeletonThrownBone(Entity* self) { // Bone Projectile from Skeleton
 
         self->velocityX = velocityX;
         self->velocityY = FIX(-4.5);
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
     }
 }
 
@@ -301,8 +306,7 @@ void UnusedSkeletonEntity(Entity* self) {
         self->scaleY = 0x200;
         self->opacity = 0;
         self->hitboxState = 0;
-        self->drawFlags |=
-            FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+        self->drawFlags |= ENTITY_OPACITY | ENTITY_SCALEX | ENTITY_SCALEY;
         return;
     }
 

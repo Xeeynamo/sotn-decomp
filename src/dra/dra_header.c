@@ -46,7 +46,7 @@ void AddToInventory(u32 itemId, EquipKind itemCategory);
 void InitStatsAndGear(bool isDeathTakingItems);
 s32 PlaySfxVolPan(s32 sfxId, s32 sfxVol, s32 sfxPan);
 s32 SetVolumeCommand22_23(s32 vol, s32 distance);
-void func_800F53A4(void);
+void make_all(void);
 u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
 void GetPlayerSensor(Collider* col);
 void RevealSecretPassageAtPlayerPositionOnMap(s32 arg0);
@@ -124,7 +124,7 @@ GameApi g_ApiInit = {
     InitStatsAndGear,
     PlaySfxVolPan,
     SetVolumeCommand22_23,
-    func_800F53A4,
+    make_all,
     CheckEquipmentItemCount,
     GetPlayerSensor,
     RevealSecretPassageAtPlayerPositionOnMap,

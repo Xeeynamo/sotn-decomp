@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "st0.h"
+#include <scratchpad.h>
+#include <sfx.h>
 #include "../clock_tower.h"
-#include "sfx.h"
 
 static s16 D_80182084[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0xC181, 0xC1BE, 0xDE81, 0xDEBE, 0xE181,
@@ -168,15 +169,15 @@ void EntityClouds(Entity* self) {
 
             sp4C = FIX(15) - var_s2 * 0x1A0;
             var_s3[0] = sp4C >> 12;
-            var_s3[4] = (sp4C + FIX(-1.625)) >> 12;
+            var_s3[4] = (sp4C - FIX(1.625)) >> 12;
 
             sp4C = FIX(15) - var_s2 * 0x1C0;
             var_s3[1] = sp4C >> 12;
-            var_s3[5] = (sp4C + FIX(-1.75)) >> 12;
+            var_s3[5] = (sp4C - FIX(1.75)) >> 12;
 
             sp4C = FIX(15) - var_s2 * 0x160;
             var_s3[2] = sp4C >> 12;
-            var_s3[6] = (sp4C + FIX(-1.375)) >> 12;
+            var_s3[6] = (sp4C - FIX(1.375)) >> 12;
 
             sp44 = posX;
             j = 0;
@@ -495,13 +496,12 @@ static SVECTOR D_8018244C = {-128, 108, 0};
 static SVECTOR D_80182454 = {127, 108, 0};
 #endif
 static s16 D_8018245C[] = {
-    0x0080, 0x00B8, 0x0078, 0x00B0, 0x0088, 0x00B0, 0x0070, 0x00A8,
-    0x0080, 0x00A8, 0x0090, 0x00A8, 0x0068, 0x00A0, 0x0078, 0x00A0,
-    0x0088, 0x00A0, 0x0098, 0x00A0, 0x0060, 0x0098, 0x0070, 0x0098,
-    0x0080, 0x0098, 0x0090, 0x0098, 0x00A0, 0x0098, 0x0068, 0x0090,
-    0x0078, 0x0090, 0x0088, 0x0090, 0x0098, 0x0090, 0x0058, 0x0090,
-    0x00A8, 0x0090, 0x0070, 0x0078, 0x0080, 0x0078, 0x0090, 0x0078,
-    0x0078, 0x0070, 0x0088, 0x0070, 0x0080, 0x0068, 0xFFFF, 0xFFFF};
+    0x80, 0xB8, 0x78, 0xB0, 0x88, 0xB0, 0x70, 0xA8, 0x80, 0xA8, 0x90, 0xA8,
+    0x68, 0xA0, 0x78, 0xA0, 0x88, 0xA0, 0x98, 0xA0, 0x60, 0x98, 0x70, 0x98,
+    0x80, 0x98, 0x90, 0x98, 0xA0, 0x98, 0x68, 0x90, 0x78, 0x90, 0x88, 0x90,
+    0x98, 0x90, 0x58, 0x90, 0xA8, 0x90, 0x70, 0x78, 0x80, 0x78, 0x90, 0x78,
+    0x78, 0x70, 0x88, 0x70, 0x80, 0x68, -1,   -1};
+
 void EntityCutscenePhotograph(Entity* self) {
     RECT clipRect;
     DRAWENV drawEnv;
@@ -1072,15 +1072,15 @@ void EntityCutscenePhotographFire(Entity* entity) {
         entity->unk5A = 0x57;
         entity->palette = PAL_FLAG(0x285);
         entity->flags &= ~FLAG_POS_CAMERA_LOCKED;
-        entity->drawFlags = FLAG_DRAW_OPACITY;
+        entity->drawFlags = ENTITY_OPACITY;
         entity->opacity = 0x40;
         if (entity->params) {
             entity->opacity = 0x10;
             entity->zPriority = 0x1FB;
-            entity->drawMode = DRAW_UNK_40 | DRAW_TPAGE;
+            entity->blendMode = BLEND_TRANSP | BLEND_SUB;
         } else {
             entity->zPriority = 0x1FE;
-            entity->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+            entity->blendMode = BLEND_TRANSP | BLEND_ADD;
         }
     case 1:
         entity->posY.val -= FIX(1.0);

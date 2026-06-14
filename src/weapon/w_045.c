@@ -289,7 +289,7 @@ static s32 func_ptr_80170010(Entity* self) {
         g_CurrentEntity->palette = 0x110;
         g_CurrentEntity->unk5A = 0x64;
     }
-    PLAYER.drawFlags = FLAG_DRAW_ROTATE;
+    PLAYER.drawFlags = ENTITY_ROTATE;
     switch (PLAYER.step_s) {
     case 0:
         if (PLAYER.entityRoomIndex == PLAYER.facingLeft) {
@@ -324,7 +324,7 @@ static s32 func_ptr_80170010(Entity* self) {
         }
         return;
     case 2:
-        PLAYER.drawFlags = FLAG_DRAW_OPACITY | FLAG_DRAW_ROTATE;
+        PLAYER.drawFlags = ENTITY_OPACITY | ENTITY_ROTATE;
         PLAYER.opacity = (rsin(D_13F000_8017B3BC) >> 7) - 0x40;
         if (!(g_Player.vram_flag & TOUCHING_GROUND)) {
             PLAYER.step = Player_AxearmorJump;
@@ -334,7 +334,7 @@ static s32 func_ptr_80170010(Entity* self) {
             PLAYER.pose = 0;
             PLAYER.poseTimer = 0;
             PLAYER.rotate = 0;
-            PLAYER.drawFlags = FLAG_DRAW_DEFAULT;
+            PLAYER.drawFlags = ENTITY_DEFAULT;
             return;
         }
         DecelerateX(FIX(16.0 / 128));
@@ -353,7 +353,7 @@ static s32 func_ptr_80170010(Entity* self) {
             PLAYER.pose = 0;
             PLAYER.poseTimer = 0;
             PLAYER.rotate = 0;
-            PLAYER.drawFlags = FLAG_DRAW_DEFAULT;
+            PLAYER.drawFlags = ENTITY_DEFAULT;
         }
         break;
     }

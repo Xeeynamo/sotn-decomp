@@ -189,8 +189,8 @@ void EntityUnkId17(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(EInitUnk17);
-        self->drawFlags |= FLAG_DRAW_OPACITY | FLAG_DRAW_ROTATE |
-                           FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+        self->drawFlags |=
+            ENTITY_OPACITY | ENTITY_ROTATE | ENTITY_SCALEY | ENTITY_SCALEX;
         if ((self->params & 0xF) > 1) {
             self->opacity = 0x20;
         } else {
@@ -337,7 +337,7 @@ void EntityUnkId1C(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(EInitUnk17);
-        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->drawFlags |= ENTITY_ROTATE;
         self->rotate = -0x400;
         if (self->params & 1) {
             self->animCurFrame = 0x64;
@@ -601,7 +601,7 @@ static u16 D_us_8018062C[] = {
     0x0000, 0x0600, 0x0E00, 0x0100, 0x0800, 0x0A00, 0x0200, 0x0400, 0x0C00, 0,
 };
 static s16 D_us_80180640[] = {
-    4, 8, 13, -0x18, -0x14, -12, 21, -12, 2, 0,
+    4, 8, 13, -24, -20, -12, 21, -12, 2, 0,
 };
 static s16 D_us_80180654[] = {
     20, 8, 12, 13, 16, 6, 12, 16, 8, 4,

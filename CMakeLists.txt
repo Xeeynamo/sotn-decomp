@@ -355,8 +355,15 @@ set(SOURCE_FILES_STAGE_NZ0
     src/st/nz0/e_lock_camera.c
     src/st/nz0/e_breakable.c
     src/st/nz0/d_prize_drops.c
-    src/st/nz0/311C0.c
-    src/st/nz0/337B4.c
+    src/st/nz0/e_red_eye_bust.c
+    src/st/nz0/e_purple_brick.c
+    src/st/nz0/e_left_secret_room_wall.c
+    src/st/nz0/e_puzzle.c
+    src/st/nz0/e_cannon.c
+    src/st/nz0/e_elevator2.c
+    src/st/nz0/e_nz0_room2.c
+    src/st/nz0/e_life_max_tank.c
+    src/st/nz0/e_blue_flame_table.c
     src/st/nz0/e_explosion_puff_opaque.c
     src/st/nz0/bossfight.c
     src/st/nz0/slogra.c
@@ -429,6 +436,10 @@ set (SOURCE_FILES_STAGE_ST0
 set(SOURCE_FILES_STAGE_WRP
     src/pc/stages/stage_wrp.c
     src/st/wrp/header.c
+    src/st/wrp/sprite_banks.c
+    src/st/wrp/cluts.c
+    src/st/wrp/layers.c
+    src/st/wrp/graphics_banks.c
     src/st/wrp/gen/e_laydef.c
     src/st/wrp/e_init.c
     src/st/wrp/background_block_init.c
@@ -439,7 +450,7 @@ set(SOURCE_FILES_STAGE_WRP
     src/st/wrp/gen/rooms.c
     src/st/wrp/gen/e_layout.c
     src/st/wrp/stage_data.c
-    src/st/wrp/gen/sprites.c
+    src/st/wrp/gen/us/sprites.c
     src/st/wrp/warp.c
     src/st/wrp/st_update.c
     src/st/wrp/collision.c
@@ -488,7 +499,7 @@ SET(SOURCE_FILES_BOSS_BO4
     src/boss/bo4/spritesheets.c
     src/boss/bo4/st_common.c
     src/boss/bo4/st_update.c
-    src/boss/bo4/tile_data.c
+    src/boss/bo4/stage_data.c
     src/boss/bo4/unk_365FC.c
     src/boss/bo4/unk_45354.c
     src/boss/bo4/unk_46E7C.c

@@ -1,0 +1,118 @@
+options:
+  platform: psx
+  basename: borbo0
+  base_path: ..
+  build_path: build/us
+  target_path: disks/us/BOSS/RBO0/RBO0.BIN
+  asm_path: asm/us/boss/rbo0
+  asset_path: assets/boss/rbo0
+  src_path: src/boss/rbo0
+  ld_script_path: build/us/borbo0.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.us.txt
+    - config/symbols.us.borbo0.txt
+  undefined_funcs_auto_path: build/us/config/undefined_funcs_auto.us.borbo0.txt
+  undefined_syms_auto_path: build/us/config/undefined_syms_auto.us.borbo0.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: us_$VRAM
+  disassemble_all: true
+  section_order:
+    - .data
+    - .rodata
+    - .text
+    - .bss
+    - .sbss
+  ld_bss_is_noload: false
+  disasm_unknown: true
+  global_vram_start: 0x80010000
+  ld_generate_symbol_per_data_segment: true
+sha1: 9a683be60acfb020f5fa61711464c6b447bc1a83
+segments:
+  - name: borbo0
+    type: code
+    start: 0x0
+    vram: 0x80180000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, .data, header]
+      - [0x2C, data, sprite_banks]
+      - [0x8C, .data, palette_def]
+      - [0xBC, data, layers]
+      - [0xE4, data, graphics_banks]
+      - [0x1D0, data, layout]
+      - [0x378, .data, e_init]
+      - [0x428, data] #, e_init]
+      - [0x560, data, background_block_init]
+      - [0x598, data, e_red_door_tiles]
+      - [0x5B8, .data, e_lock_camera]
+      - [0x638, .data, e_breakable]
+      - [0x698, .data, e_boss_torch]
+      - [0x6AC, .data, e_boss]
+      - [0x6B8, data, e_boss]
+      - [0x958, .data, e_fake_ralph]
+      - [0xB58, .data, e_fake_grant]
+      - [0xC60, .data, e_fake_sypha]
+      - [0xD5C, data, unk_19B94]
+      - [0xE10, .data, st_update]
+      - [0xE5C, .data, st_collision]
+      - [0x121C, .data, e_red_door]
+      - [0x1234, .data, st_common]
+      - [0x1434, .data, e_collect]
+      - [0x1788, .data, e_misc]
+      - [0x1840, .data, e_particles]
+      - [0x18C0, .data, e_room_fg]
+      - [0x194C, .data, gen/rooms]
+      - [0x1968, .data, e_life_up]
+      - [0x19BC, .data, e_coffin]
+      - [0x1BA8, data]
+      - [0xB02C, data] #, palette, D_8018B02C]
+      - [0xB2EC, data] #, palette, D_8018B2EC]
+      - [0xB30C, data] #, palette, D_8018B30C]
+      - [0xB92C, data, tiledef]
+      - [0xFD3C, data, gen/sprites]
+      - [0x13598, .rodata, e_boss_torch]
+      - [0x135A4, .rodata, e_boss_doors]
+      - [0x135B0, .rodata, e_boss]
+      - [0x135D0, .rodata, e_fake_ralph]
+      - [0x13624, .rodata, e_fake_grant]
+      - [0x13668, .rodata, e_fake_sypha]
+      - [0x1368C, .rodata, unk_19B94]
+      - [0x136B8, .rodata, e_red_door]
+      - [0x136D0, .rodata, e_collect]
+      - [0x137A4, .rodata, e_stage_name]
+      - [0x137D8, .rodata, prim_helpers]
+      - [0x137E0, .rodata, e_life_up]
+      - [0x137FC, .rodata, e_coffin]
+      - [0x13808, c, e_room_bg]
+      - [0x138D0, c, e_lock_camera]
+      - [0x13A8C, c, e_breakable]
+      - [0x13BC0, c, e_boss_torch]
+      - [0x13D5C, c, e_boss_doors]
+      - [0x14338, c, e_boss]
+      - [0x146F4, c, e_fake_ralph]
+      - [0x16838, c, e_fake_grant]
+      - [0x17804, c, e_fake_sypha]
+      - [0x19B94, c, unk_19B94]
+      - [0x1A064, c, st_update]
+      - [0x1A498, c, st_collision]
+      - [0x1BC54, c, create_entity]
+      - [0x1C7CC, c, e_red_door]
+      - [0x1D47C, c, st_common]
+      - [0x1E92C, c, e_collect]
+      - [0x21290, c, e_misc]
+      - [0x2362C, c, e_stage_name]
+      - [0x24480, c, e_particles]
+      - [0x24CC4, c, e_room_fg]
+      - [0x24DB0, c, popup]
+      - [0x250E0, c, prim_helpers]
+      - [0x25910, c, e_life_up]
+      - [0x261C4, c, e_coffin]
+      - [0x26824, .bss, create_entity]
+      - [0x26834, bss]
+      - [0x2749C, .bss, st_update]
+  - [0x274DC]

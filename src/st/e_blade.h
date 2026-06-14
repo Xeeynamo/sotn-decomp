@@ -300,7 +300,7 @@ static unkStr_801CDD80 D_80183A4C[] = {
 
 void EntityBlade(Entity* self) {
     Collider collider;
-    Entity* ent_s4;
+    Entity* part;
     s32 var_s3;
     giantBroBodyPartsInit* parts;
     s16* ptr;
@@ -311,9 +311,9 @@ void EntityBlade(Entity* self) {
     }
     if ((self->flags & FLAG_DEAD) && (self->step < 0x18)) {
         ent_s0 = self + 13;
-        ent_s4 = self + 10;
+        part = self + 10;
 
-        if (ent_s0->ext.GH_Props.unk88 || ent_s4->ext.GH_Props.unk88) {
+        if (ent_s0->ext.GH_Props.unk88 || part->ext.GH_Props.unk88) {
             PlaySfxPositional(SFX_BLADE_ENEMY_DEATH);
             func_801CE1E8(24);
         }
@@ -336,19 +336,19 @@ void EntityBlade(Entity* self) {
         }
         break;
     case 2:
-        for (parts = D_801833F4, ent_s4 = self; parts->eArrayOffset; parts++) {
+        for (parts = D_801833F4, part = self; parts->eArrayOffset; parts++) {
             ent_s0 = self + parts->eArrayOffset;
             CreateEntityFromCurrentEntity(E_GURKHA_BODY_PARTS, ent_s0);
             ent_s0->ext.GH_Props.length = parts->length;
             ent_s0->ext.GH_Props.parent = self + parts->eArrayParentOffset;
             ent_s0->params = parts->params + 0x200;
             ent_s0->zPriority = self->zPriority + parts->zOffset;
-            ent_s0->unk5C = self;
-            ent_s0->unk60 = ent_s4;
-            ent_s4 = ent_s0;
+            ent_s0->parent = self;
+            ent_s0->nextPart = part;
+            part = ent_s0;
         }
-        self->unk60 = ent_s4;
-        self->unk5C = NULL;
+        self->nextPart = part;
+        self->parent = NULL;
 
         ent_s0 = self + 15;
         CreateEntityFromCurrentEntity(E_BLADE_WEAPON, ent_s0);
@@ -684,12 +684,12 @@ void EntityBlade(Entity* self) {
                 ent_s0->ext.GH_Props.unk8C = 1;
                 ent_s0->ext.GH_Props.rotate = 0x400;
                 ent_s0->rotate = 0x400;
-                self->ext.GH_Props.unk80 = 0x20;
+                self->ext.GH_Props.timer = 0x20;
                 self->step_s++;
             }
             break;
         case 3:
-            if (!--self->ext.GH_Props.unk80) {
+            if (!--self->ext.GH_Props.timer) {
                 self->step_s++;
             }
             break;
@@ -699,7 +699,7 @@ void EntityBlade(Entity* self) {
                 ent_s0->step = 0x18;
                 ent_s0->step_s = 0;
             }
-            self->ext.GH_Props.unk80 = 0x40;
+            self->ext.GH_Props.timer = 0x40;
             self->step_s++;
             /* fallthrough */
         case 5:
@@ -710,7 +710,7 @@ void EntityBlade(Entity* self) {
                     PlaySfxPositional(SFX_EXPLODE_D);
                 }
             }
-            if (!--self->ext.GH_Props.unk80) {
+            if (!--self->ext.GH_Props.timer) {
                 DestroyEntity(self);
             }
             return;
@@ -740,12 +740,12 @@ void EntityBladeWeapon(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitBladeWeapon);
-        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->drawFlags |= ENTITY_ROTATE;
         self->hitboxWidth = 6;
         self->hitboxHeight = 6;
         primIndex = g_api.AllocPrimitives(PRIM_G4, 6);
         if (primIndex == -1) {
-#ifdef VERSION_PSP
+#if defined(VERSION_PSP) || defined(VERSION_HD)
             DestroyEntity(self);
 #else
             self->ext.GH_Props.prim = NULL;
@@ -801,7 +801,7 @@ void EntityBladeWeapon(Entity* self) {
     self->hitboxOffY = (rcos(angle) * 13) >> 12;
 
     prim = self->ext.GH_Props.prim;
-#if !defined(VERSION_PSP)
+#if !(defined(VERSION_PSP) || defined(VERSION_HD))
     if (prim != NULL) {
 #else
     if (1) {

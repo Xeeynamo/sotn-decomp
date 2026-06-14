@@ -5,16 +5,16 @@ typedef struct {
     void** values;
 } EntityDef;
 
-#define ENTITY_DEF(first, last) {((last) - (first)) / 4 + 1, first}
+#define ENTITY_DEF(first, last) {((last) - (first)) / 4 + 1, (void**)(first)}
 #define ENTITY_NONE {0, NULL}
 
-EntityDef g_DraEntities[] = {
+static EntityDef g_DraEntities[] = {
     ENTITY_DEF(0x800AD0C4, 0x800AD1D0),
 };
-EntityDef g_RicEntities[] = {
+static EntityDef g_RicEntities[] = {
     ENTITY_DEF(0x8015495C, 0x80154A68),
 };
-EntityDef g_StageEntities[] = {
+static EntityDef g_StageEntities[] = {
     ENTITY_DEF(0x80180920, 0x80180A1C), // STAGE_NO0
     ENTITY_DEF(0x801807C0, 0x80180934), // STAGE_NO1
     ENTITY_DEF(0x801806C8, 0x801807A4), // STAGE_LIB
@@ -97,30 +97,29 @@ EntityDef g_StageEntities[] = {
     ENTITY_NONE,                        // STAGE_TE2
 };
 
-void EntitySpawner(void* ptrs);
-Entity* AllocEntity(Entity* start, Entity* end);
+static Entity* AllocEntity(Entity* start, Entity* end);
 void DestroyEntity(Entity* item);
 
-const int EntityPreview = 4;
-int g_SpawnOption;
-int g_Mode;
-u8 g_SpawnEntityId;
-u16 g_SpawnEntityParams;
-u16 g_EntityStart;
-u16 g_EntityEnd;
-s16 g_SpawnX;
-s16 g_SpawnY;
-bool g_IsSpawnPreviewEnabled;
-bool g_IsSpawnPlaceMode;
-Entity* g_SpawnPlaceEntity;
+static const int EntityPreview = 4;
+static int g_SpawnOption;
+static int g_Mode;
+static u8 g_SpawnEntityId;
+static u16 g_SpawnEntityParams;
+static u16 g_EntityStart;
+static u16 g_EntityEnd;
+static s16 g_SpawnX;
+static s16 g_SpawnY;
+static bool g_IsSpawnPreviewEnabled;
+static bool g_IsSpawnPlaceMode;
+static Entity* g_SpawnPlaceEntity;
 
-const char* g_ModeNames[] = {
+static const char* g_ModeNames[] = {
     "DRA",
     "STAGE",
     "RIC",
 };
 
-int GetEntityAllocationCount() {
+static int GetEntityAllocationCount() {
     s32 allocated = 0;
     s32 i;
 
@@ -133,7 +132,7 @@ int GetEntityAllocationCount() {
     return allocated;
 }
 
-EntityDef* GetEntityDef(int mode) {
+static EntityDef* GetEntityDef(int mode) {
     switch (mode) {
     case 0:
         return g_DraEntities;
@@ -149,7 +148,7 @@ EntityDef* GetEntityDef(int mode) {
     }
 }
 
-void* GetEntityUpdateFunc(int mode, u16 id) {
+static void* GetEntityUpdateFunc(int mode, u16 id) {
     EntityDef* entityDefs;
 
     entityDefs = GetEntityDef(mode);
@@ -160,7 +159,7 @@ void* GetEntityUpdateFunc(int mode, u16 id) {
     return entityDefs->values[id];
 }
 
-void SetEntityPreview(int mode, u16 id, u16 params) {
+static void SetEntityPreview(int mode, u16 id, u16 params) {
     Entity* e = &g_Entities[EntityPreview];
     void* pfnUpdate = GetEntityUpdateFunc(mode, id);
     DestroyEntity(e);
@@ -179,15 +178,15 @@ void SetEntityPreview(int mode, u16 id, u16 params) {
     }
 }
 
-void DelEntityPreview() { DestroyEntity(&g_Entities[EntityPreview]); }
+static void DelEntityPreview() { DestroyEntity(&g_Entities[EntityPreview]); }
 
-Entity* SpawnEntity(int mode, u16 id, u16 params) {
+static Entity* SpawnEntity(int mode, u16 id, u16 params) {
     Entity* e;
     void* pfnUpdate;
 
     e = AllocEntity(g_Entities + g_EntityStart, g_Entities + g_EntityEnd);
     if (e == NULL) {
-        return;
+        return NULL;
     }
 
     pfnUpdate = GetEntityUpdateFunc(mode, id);
@@ -206,7 +205,7 @@ Entity* SpawnEntity(int mode, u16 id, u16 params) {
     return e;
 }
 
-void UpdateEntityPlacement(int mode) {
+static void UpdateEntityPlacement(int mode) {
     if (g_SpawnPlaceEntity == NULL) {
         // it should never be NULL. Exit before this crashes.
         g_IsSpawnPlaceMode = false;
@@ -260,7 +259,6 @@ void UpdateEntitySpawn(void) {
     const int NOptions = 5;
     const int NItems = NOptions;
 
-    int i;
     EntityDef* entityDefs;
     u16 prevId, prevParams;
 
@@ -391,7 +389,7 @@ void UpdateEntitySpawn(void) {
     }
 }
 
-Entity* AllocEntity(Entity* start, Entity* end) {
+static Entity* AllocEntity(Entity* start, Entity* end) {
     Entity* current = start;
     while (current < end) {
         if (current->entityId == 0) {

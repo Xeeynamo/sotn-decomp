@@ -21,9 +21,9 @@ typedef enum EntityIDs {
     E_MESSAGE_BOX,
     E_DUMMY_0F,
     E_DUMMY_10,
-    E_UNK_11,
-    E_UNK_12,
-    E_UNK_13,
+    E_ID_11,
+    E_ID_12,
+    E_ID_13,
     E_EXPLOSION_VARIANTS,
     E_GREY_PUFF,
     E_WARP,
@@ -36,6 +36,3 @@ extern EInit g_EInitParticle;
 extern EInit g_EInitInteractable;
 extern EInit g_EInitCommon;
 extern EInit g_EInitSmallRocks;
-
-void EntityExplosionVariants(Entity* entity);
-void EntityGreyPuff(Entity* entity);

@@ -1,0 +1,101 @@
+options:
+  platform: psp
+  basename: strno3
+  base_path: ..
+  build_path: build/pspeu
+  target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rno3.bin
+  asm_path: asm/pspeu/st/rno3_psp
+  asset_path: assets/st/rno3
+  src_path: src/st
+  ld_script_path: build/pspeu/strno3.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.pspeu.txt
+    - config/symbols.pspeu.strno3.txt
+  undefined_funcs_auto_path: build/pspeu/config/undefined_funcs_auto.pspeu.strno3.txt
+  undefined_syms_auto_path: build/pspeu/config/undefined_syms_auto.pspeu.strno3.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: pspeu_$VRAM
+  disassemble_all: true
+  section_order:
+    - .text
+    - .data
+    - .rodata
+    - .bss
+  ld_bss_is_noload: true
+  disasm_unknown: true
+  global_vram_start: 0x08000000
+  ld_generate_symbol_per_data_segment: true
+  asm_inc_header: |
+    .set noat      /* allow manual use of $at */
+    .set noreorder /* don't insert nops after branches */
+sha1: 74a6463ef9d6d0d72cd9083123e78216d73bd411
+segments:
+  - [0x0, bin, mwo_header]
+  - name: strno3
+    type: code
+    start: 0x80
+    vram: 0x09237700
+    bss_start_address: 0x09286400
+    bss_size: 0x300
+    align: 128
+    subalign: 8
+    subsegments:
+      - [0x80, c, rno3_psp/create_entity]
+      - [0x1028, c, rno3_psp/e_blue_venus_weed]
+      - [0x2388, c, rno3_psp/unk_2388]
+      - [0x3B78, c, rno3_psp/e_stage_name]
+      - [0x49F8, c, rno3_psp/func_us_801c8b8c]
+      - [0x4FF0, c, rno3_psp/e_red_door]
+      - [0x62F8, c, rno3_psp/st_update]
+      - [0x6830, c, rno3_psp/unk_6830]
+      - [0x74C8, c, rno3_psp/e_fire_warg]
+      - [0xBA90, c, rno3_psp/unk_BA90]
+      - [0xC4A8, c, rno3_psp/e_particles]
+      - [0xD020, c, rno3_psp/unk_D020]
+      - [0xD0F8, c, rno3_psp/e_collect]
+      - [0x11270, c, rno3_psp/unk_11270]
+      - [0x11C28, c, rno3_psp/collision]
+      - [0x13E00, c, rno3_psp/unk_13E00]
+      - [0x16D88, c, rno3_psp/popup]
+      - [0x17380, c, rno3_psp/e_room_fg]
+      - [0x17498, c, rno3_psp/unk_17498]
+      - [0x18860, c, rno3_psp/st_common]
+      - [0x19FB8, c, rno3_psp/prim_helpers]
+      - [0x1A748, c, rno3_psp/unk_1A748]
+      - [0x1C7D8, c, rno3_psp/e_jewel_sword_puzzle]
+      - [0x1D498, c, rno3_psp/e_stairway]
+      - [0x1DD38, c, rno3_psp/e_background_bushes_trees]
+      - [0x1E640, c, rno3_psp/st_init]
+      - [0x1E9A8, c, rno3_psp/e_breakable]
+      - [0x1EB50, c, rno3_psp/e_castle_door]
+      - [0x1F1C0, c, rno3_psp/e_shutting_window]
+      - [0x1F5C0, c, rno3_psp/func_us_801b1674]
+      - [0x1F888, c, rno3_psp/e_room_bg]
+      - [0x1F980, c, rno3_psp/e_lock_camera]
+      - [0x1FBE0, c, rno3_psp/unk_1FBE0]
+      - [0x204C0, c, rno3_psp/entrance_weights]
+      - [0x20AC8, c, rno3_psp/func_us_801b2578]
+      - [0x20D10, c, rno3_psp/e_heartroom]
+      - [0x212E8, c, rno3_psp/e_sky_entities]
+      - [0x214E0, c, rno3_psp/func_us_801b3c88]
+      - [0x21780, data]
+      - [0x2CAC8, .data, rno3/e_init]
+      - [0x2CE00, data]
+      - [0x4E6E0, .data, rno3/header]
+      - [0x4E710, data]
+      - [0x4EB80, .rodata, rno3_psp/e_blue_venus_weed]
+      - [0x4EBA8, .rodata, rno3_psp/unk_2388]
+      - [0x4EC18, .rodata, rno3_psp/func_us_801c8b8c]
+      - [0x4EC30, .rodata, rno3_psp/e_red_door]
+      - [0x4EC48, .rodata, rno3_psp/unk_6830]
+      - [0x4EC68, .rodata, rno3_psp/e_fire_warg]
+      - [0x4ECA0, .rodata, rno3_psp/e_collect]
+      - [0x4ED00, .rodata, rno3_psp/unk_17498]
+      - [0x4ED28, .rodata, rno3_psp/unk_1A748]
+      - [0x4ED50, .rodata, rno3_psp/e_castle_door]
+      - [0x4ED80, bss]
+  - [0x4F080]

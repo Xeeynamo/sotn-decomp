@@ -175,7 +175,7 @@ void EntityCavernDoor(Entity* self) {
         if (collision & 4) {
             entity = &PLAYER;
             entity->posY.i.hi++;
-            D_80097488.y.i.hi++;
+            g_unkGraphicsStruct.shoveY.i.hi++;
         }
 
         if (!(self->ext.cavernDoor.jiggler & 0xF)) {
@@ -206,7 +206,7 @@ void EntityCavernDoor(Entity* self) {
                     entity->posY.i.hi = 0xBC;
                     entity->posX.i.hi += (Random() & 0xF) - 8;
                     entity->params = 0x10;
-                    entity->drawFlags |= FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+                    entity->drawFlags |= ENTITY_SCALEY | ENTITY_SCALEX;
                     entity->scaleX = entity->scaleY = 0xC0;
                 }
             }

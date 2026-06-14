@@ -295,14 +295,14 @@ void RicEntityHitByDark(Entity* entity) {
         entity->zPriority = PLAYER.zPriority + 2;
         entity->palette = PAL_FLAG(PAL_UNK_19F);
         if (D_80174FFC & 1) {
-            entity->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
+            entity->blendMode = BLEND_TRANSP | BLEND_QUARTER;
         } else {
-            entity->drawMode = DRAW_TPAGE;
+            entity->blendMode = BLEND_TRANSP;
         }
         D_80174FFC++;
         entity->opacity = 0xFF;
-        entity->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY |
-                            FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20;
+        entity->drawFlags =
+            ENTITY_SCALEX | ENTITY_SCALEY | ENTITY_MASK_R | ENTITY_MASK_G;
         entity->scaleX = entity->scaleY = 0x40;
         entity->anim = anim_smoke_dark;
         entity->posY.i.hi += (rand() % 35) - 15;
@@ -858,9 +858,8 @@ void RicEntitySmokePuff(Entity* self) {
         self->anim = anim_smoke_puff;
         self->zPriority = PLAYER.zPriority + 2;
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000 | FLAG_UNK_10000;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
-        self->drawFlags =
-            FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY | FLAG_DRAW_OPACITY;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
+        self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY | ENTITY_OPACITY;
         self->opacity = 0x60;
         posX = pos_x_80154C50[paramsLo];
         if (paramsHi == 0) {
@@ -1209,9 +1208,10 @@ void RicEntityHitByCutBlood(Entity* self) {
                     tilePrim->b0 -= 1;
                     tilePrim->posY.val += tilePrim->velocityY.val;
                     tilePrim->posX.val += tilePrim->velocityX.val;
-                    if (*D_80097448 == 0 ||
+                    if (g_unkGraphicsStruct.D_80097448 == 0 ||
                         !(tilePrim->posY.i.hi >
-                          (PLAYER.posY.i.hi - *D_80097448 + 0x19))) {
+                          (PLAYER.posY.i.hi - g_unkGraphicsStruct.D_80097448 +
+                           0x19))) {
                         tilePrim->drawMode |= DRAW_HIDE;
                     }
                 } else {
@@ -1248,7 +1248,7 @@ void func_80161C2C(Entity* self) {
         if (paramsHi == 1) {
             self->scaleX = 0xC0;
             self->scaleY = 0xC0;
-            self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+            self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
             self->animSet = ANIMSET_DRA(2);
             self->anim = anim_80154E04;
         }
@@ -1257,7 +1257,7 @@ void func_80161C2C(Entity* self) {
                 self->anim = anim_80154DC8;
                 self->scaleX = 0x120;
                 self->scaleY = 0x120;
-                self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+                self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
                 self->animSet = ANIMSET_DRA(2);
             } else {
                 self->animSet = ANIMSET_DRA(5);
@@ -1288,13 +1288,13 @@ void func_80161C2C(Entity* self) {
         self->posY.val += self->velocityY;
         self->posX.val += self->velocityX;
         if ((self->pose == 8) && (self->anim != anim_smoke_puff)) {
-            self->drawMode = DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP;
             if (!(paramsLo & 1) && self->poseTimer == 1) {
                 RicCreateEntFactoryFromEntity(self, FACTORY(BP_EMBERS, 4), 0);
             }
         }
         if (self->pose == 16 && self->anim == anim_smoke_puff) {
-            self->drawMode = DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP;
         }
         if (self->poseTimer < 0) {
             DestroyEntity(self);
@@ -1582,7 +1582,7 @@ void RicEntityMariaPowers(Entity* self) {
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         if (--self->ext.et_80162870.unk82 == 0) {
-            self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+            self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
             self->scaleX = self->scaleY = 0x100;
             self->ext.et_80162870.unk82 = 0x10;
             self->step++;
@@ -2754,12 +2754,12 @@ static void func_80165DD8(
 
 static void func_80166024() {
     PLAYER.palette = PAL_FLAG(PAL_FILL_BLACK);
-    PLAYER.drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
+    PLAYER.blendMode = BLEND_TRANSP | BLEND_QUARTER;
 }
 
 static void func_80166044() {
     PLAYER.palette = PAL_FLAG(PAL_RICHTER);
-    PLAYER.drawMode = DRAW_DEFAULT;
+    PLAYER.blendMode = BLEND_NO;
 }
 
 // Entity ID 66. Made by blueprint 77 (the very last one).

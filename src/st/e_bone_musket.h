@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+extern EInit g_EInitBoneMusket;
+extern EInit D_us_80180AA0;
+
 static s16 D_us_80182998[] = {0, 16, 0, 4, 8, -4, -16, 0};
 static s16 D_us_801829A8[] = {0, 16, 12, 0};
 static u8 D_us_801829B0[] = {2, 8, 2, 9, 2, 10, 12, 11, 20, 12, 1,  2,
@@ -18,9 +21,6 @@ static s16 D_us_80182A4C[] = {0, 20, 40};
 static s32 D_us_80182A54[] = {1, 1, -2};
 static u8 D_us_80182A60[][2] = {{3, 1}, {7, 0}, {5, 1}};
 static s16 D_us_80182A68[] = {0, 1, 8, 15, -3, -8, 6, 23, -1, -3, 7, 18};
-
-extern EInit g_EInitBoneMusket;
-extern EInit D_us_80180AA0;
 
 void EntityBoneMusket(Entity* self) {
     Entity* tempEntity;

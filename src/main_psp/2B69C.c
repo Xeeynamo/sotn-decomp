@@ -1,360 +1,255 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-//! PSPO=4,p
 #include <game_psp.h>
 
-// https://pspdev.github.io/pspsdk/
-#define PSP_LEGACY_TYPES_DEFINED // avoid processing psptypes.h
-#include <pspthreadman.h>
-#include <pspiofilemgr.h>
-#include <pspatrac3.h>
-#include <pspkerror.h>
-
-extern char D_psp_08962E80[];
-extern char D_psp_08962E88[];
-extern char D_psp_08962E90[];
-extern char D_psp_08962E98[];
-extern char D_psp_08962EBC[];
-extern char D_psp_08962F50[];
-extern char D_psp_08962FCC[];
-extern char D_psp_08962EDC[];
-extern u32 D_psp_08DADCB4;
+typedef void (*LoadFunc)(void);
 
 typedef struct {
-    SceUID fd;
-    char assignName[10];
-} StrFile;
-
-typedef struct {
-    s32 atracID;       // ATRAC playback ID
-    StrFile strFile;   // File structure
-    SceUID playFlag;   // Event flag indicating status Used for cueing, playing,
-                       // and ending
-    s32 outputChannel; // Channel when outputting to libwave
-    s32 iEndSample;
-    s32 iVol;
-    s32 unk24;
-    s32 unk28;
-} SceAtracArg;
-
-typedef struct {
-    char* filename;     // "ATRAC3plus" file
-    u8* pucFirstBuf;    // FirstBuffer starting address
-    s32 iFirstBufSize;  // FirstBuffer size
-    u8* pucSecondBuf;   // SecondBuffer starting address
-    s32 iSecondBufSize; // SecondBuffer size
-    s32 iOutputChannel; // Output channel
-    SceUID playFlag;    // Event flag for setting playback mode
-} SceBGMArg;
+    s32 type;
+    char* ovlName;
+    void* dst;
+    LoadFunc load;
+} unkStruct;
 
 // clang-format off
-// Values for setting playback mode and EVENTFLAG
-#define BGM_INIT_END              (0x00000001U) // Status when playback initialization ended
-#define BGM_PLAY_START            (0x00000002U) // State when playback start instruction was received
-#define BGM_RESET_POSITION        (0x00000004U) // Status when playback position changes
-#define BGM_PLAY_FINISH           (0x00000008U) // Status when playback termination is specified
-#define BGM_UNK_10                (0x00000010U)
+static unkStruct D_psp_089622C8[] = {
+    {1, "dra", NULL, (LoadFunc)0x00000000},
+    {2, "sel", NULL, (LoadFunc)0x09237868},
+    {2, "st0", NULL, (LoadFunc)0x09246B10},
+    {2, "are", NULL, (LoadFunc)0x092379E8},
+    {2, "cat", NULL, (LoadFunc)0x0925E600},
+    {2, "cen", NULL, (LoadFunc)0x09260988},
+    {2, "chi", NULL, (LoadFunc)0x0924BCA8},
+    {2, "dai", NULL, (LoadFunc)0x09251430},
+    {2, "dre", NULL, (LoadFunc)0x09244A50},
+    {2, "lib", NULL, (LoadFunc)0x09254120},
+    {2, "no0", NULL, (LoadFunc)0x0925D048},
+    {2, "no1", NULL, (LoadFunc)0x09255C38},
+    {2, "no2", NULL, (LoadFunc)0x09256C90},
+    {2, "no3", NULL, (LoadFunc)0x09238360},
+    {2, "no4", NULL, (LoadFunc)0x09237FB0},
+    {2, "np3", NULL, (LoadFunc)0x09237A90},
+    {2, "nz0", NULL, (LoadFunc)0x09237AB0},
+    {2, "nz1", NULL, (LoadFunc)0x09253460},
+    {2, "top", NULL, (LoadFunc)0x09248480},
+    {2, "wrp", NULL, (LoadFunc)0x092447C0},
+    {2, "rare", NULL, (LoadFunc)0x09237840},
+    {2, "rcat", NULL, (LoadFunc)0x0924C6D8},
+    {2, "rcen", NULL, (LoadFunc)0x09244F30},
+    {2, "rchi", NULL, (LoadFunc)0x0924A488},
+    {2, "rdai", NULL, (LoadFunc)0x0924F318},
+    {2, "rlib", NULL, (LoadFunc)0x09249828},
+    {2, "rno0", NULL, (LoadFunc)0x0925D410},
+    {2, "rno1", NULL, (LoadFunc)0x092497F8},
+    {2, "rno2", NULL, (LoadFunc)0x09253588},
+    {2, "rno3", NULL, (LoadFunc)0x09255FB0},
+    {2, "rno4", NULL, (LoadFunc)0x09251F90},
+    {2, "rnz0", NULL, (LoadFunc)0x09256B38},
+    {2, "rnz1", NULL, (LoadFunc)0x09252CD8},
+    {2, "rtop", NULL, (LoadFunc)0x09247898},
+    {2, "rwrp", NULL, (LoadFunc)0x09244D08},
+    {2, "mar", NULL, (LoadFunc)0x092465C8},
+    {2, "bo0", NULL, (LoadFunc)0x09251368},
+    {2, "bo1", NULL, (LoadFunc)0x09245870},
+    {2, "bo2", NULL, (LoadFunc)0x09245D30},
+    {2, "bo3", NULL, (LoadFunc)0x09246198},
+    {2, "bo4", NULL, (LoadFunc)0x092478E8},
+    {2, "bo5", NULL, (LoadFunc)0x092473A0},
+    {2, "bo6", NULL, (LoadFunc)0x09244758},
+    {2, "bo7", NULL, (LoadFunc)0x09245D08},
+    {2, "rbo0", NULL, (LoadFunc)0x09237858},
+    {2, "rbo1", NULL, (LoadFunc)0x09248780},
+    {2, "rbo2", NULL, (LoadFunc)0x09245DF0},
+    {2, "rbo3", NULL, (LoadFunc)0x09245800},
+    {2, "rbo4", NULL, (LoadFunc)0x09245F70},
+    {2, "rbo5", NULL, (LoadFunc)0x0925F690},
+    {2, "rbo6", NULL, (LoadFunc)0x09244A00},
+    {2, "rbo7", NULL, (LoadFunc)0x09245D40},
+    {2, "rbo8", NULL, (LoadFunc)0x09245C58},
+    {3, "ric", NULL, (LoadFunc)0x092C8D48},
+    {3, "arc_f", NULL, (LoadFunc)0x092A6280},
+    {3, "maria", NULL, (LoadFunc)0x092C0280},
+    {4, "tt_000", NULL, (LoadFunc)0x092EC220},
+    {4, "tt_001", NULL, (LoadFunc)0x092EA620},
+    {4, "tt_002", NULL, (LoadFunc)0x092EF290},
+    {4, "tt_003", NULL, (LoadFunc)0x092EF908},
+    {4, "tt_004", NULL, (LoadFunc)0x092EF780},
+    {4, "tt_005", NULL, (LoadFunc)0x092EF290},
+    {4, "tt_006", NULL, (LoadFunc)0x092EF908},
+    {5, "w0_000", NULL, (LoadFunc)0x092F3498},
+    {5, "w0_001", NULL, (LoadFunc)0x092F48A0},
+    {5, "w0_002", NULL, (LoadFunc)0x092F3490},
+    {5, "w0_003", NULL, (LoadFunc)0x092F3498},
+    {5, "w0_004", NULL, (LoadFunc)0x092F34A8},
+    {5, "w0_005", NULL, (LoadFunc)0x092F3500},
+    {5, "w0_006", NULL, (LoadFunc)0x092F40F8},
+    {5, "w0_007", NULL, (LoadFunc)0x092F4020},
+    {5, "w0_008", NULL, (LoadFunc)0x092F4B80},
+    {5, "w0_009", NULL, (LoadFunc)0x092F4D98},
+    {5, "w0_010", NULL, (LoadFunc)0x092F59D0},
+    {5, "w0_011", NULL, (LoadFunc)0x092F5740},
+    {5, "w0_012", NULL, (LoadFunc)0x092F4650},
+    {5, "w0_013", NULL, (LoadFunc)0x092F4AB0},
+    {5, "w0_014", NULL, (LoadFunc)0x092F4418},
+    {5, "w0_015", NULL, (LoadFunc)0x092F4D88},
+    {5, "w0_016", NULL, (LoadFunc)0x092F4E68},
+    {5, "w0_017", NULL, (LoadFunc)0x092F3C30},
+    {5, "w0_018", NULL, (LoadFunc)0x092F3900},
+    {5, "w0_019", NULL, (LoadFunc)0x092F3818},
+    {5, "w0_020", NULL, (LoadFunc)0x092F4E18},
+    {5, "w0_021", NULL, (LoadFunc)0x092F4D08},
+    {5, "w0_022", NULL, (LoadFunc)0x092F3740},
+    {5, "w0_023", NULL, (LoadFunc)0x092F5798},
+    {5, "w0_024", NULL, (LoadFunc)0x092F59F8},
+    {5, "w0_025", NULL, (LoadFunc)0x092F5880},
+    {5, "w0_026", NULL, (LoadFunc)0x092F5A70},
+    {5, "w0_027", NULL, (LoadFunc)0x092F5140},
+    {5, "w0_028", NULL, (LoadFunc)0x092F5A10},
+    {5, "w0_029", NULL, (LoadFunc)0x092F5300},
+    {5, "w0_030", NULL, (LoadFunc)0x092F6378},
+    {5, "w0_031", NULL, (LoadFunc)0x092F3508},
+    {5, "w0_032", NULL, (LoadFunc)0x092F35B8},
+    {5, "w0_033", NULL, (LoadFunc)0x092F34E8},
+    {5, "w0_034", NULL, (LoadFunc)0x092F3C28},
+    {5, "w0_035", NULL, (LoadFunc)0x092F3498},
+    {5, "w0_036", NULL, (LoadFunc)0x092F3498},
+    {5, "w0_037", NULL, (LoadFunc)0x092F4670},
+    {5, "w0_038", NULL, (LoadFunc)0x092F39F0},
+    {5, "w0_039", NULL, (LoadFunc)0x092F3CC0},
+    {5, "w0_040", NULL, (LoadFunc)0x092F3ED0},
+    {5, "w0_041", NULL, (LoadFunc)0x092F3E18},
+    {5, "w0_042", NULL, (LoadFunc)0x092F4010},
+    {5, "w0_043", NULL, (LoadFunc)0x092F3F10},
+    {5, "w0_044", NULL, (LoadFunc)0x092F3EE8},
+    {5, "w0_045", NULL, (LoadFunc)0x092F4058},
+    {5, "w0_046", NULL, (LoadFunc)0x092F4738},
+    {5, "w0_047", NULL, (LoadFunc)0x092F4500},
+    {5, "w0_048", NULL, (LoadFunc)0x092F47C8},
+    {5, "w0_049", NULL, (LoadFunc)0x092F4E58},
+    {5, "w0_050", NULL, (LoadFunc)0x092F5358},
+    {5, "w0_051", NULL, (LoadFunc)0x092F47C0},
+    {5, "w0_052", NULL, (LoadFunc)0x092F58C0},
+    {5, "w0_053", NULL, (LoadFunc)0x092F4BC8},
+    {5, "w0_054", NULL, (LoadFunc)0x092F39E8},
+    {5, "w0_055", NULL, (LoadFunc)0x092F3AE0},
+    {5, "w0_056", NULL, (LoadFunc)0x092F4368},
+    {5, "w0_057", NULL, (LoadFunc)0x092F3498},
+    {5, "w0_058", NULL, (LoadFunc)0x092F43C0},
+    {6, "w1_000", NULL, (LoadFunc)0x092F7298},
+    {6, "w1_001", NULL, (LoadFunc)0x092F86A0},
+    {6, "w1_002", NULL, (LoadFunc)0x092F7290},
+    {6, "w1_003", NULL, (LoadFunc)0x092F7298},
+    {6, "w1_004", NULL, (LoadFunc)0x092F72A8},
+    {6, "w1_005", NULL, (LoadFunc)0x092F7300},
+    {6, "w1_006", NULL, (LoadFunc)0x092F7EF8},
+    {6, "w1_007", NULL, (LoadFunc)0x092F7E20},
+    {6, "w1_008", NULL, (LoadFunc)0x092F8980},
+    {6, "w1_009", NULL, (LoadFunc)0x092F8B98},
+    {6, "w1_010", NULL, (LoadFunc)0x092F97D0},
+    {6, "w1_011", NULL, (LoadFunc)0x092F9540},
+    {6, "w1_012", NULL, (LoadFunc)0x092F8450},
+    {6, "w1_013", NULL, (LoadFunc)0x092F88B0},
+    {6, "w1_014", NULL, (LoadFunc)0x092F8218},
+    {6, "w1_015", NULL, (LoadFunc)0x092F8B88},
+    {6, "w1_016", NULL, (LoadFunc)0x092F8C68},
+    {6, "w1_017", NULL, (LoadFunc)0x092F7A30},
+    {6, "w1_018", NULL, (LoadFunc)0x092F7700},
+    {6, "w1_019", NULL, (LoadFunc)0x092F7618},
+    {6, "w1_020", NULL, (LoadFunc)0x092F8C10},
+    {6, "w1_021", NULL, (LoadFunc)0x092F8B08},
+    {6, "w1_022", NULL, (LoadFunc)0x092F7540},
+    {6, "w1_023", NULL, (LoadFunc)0x092F9598},
+    {6, "w1_024", NULL, (LoadFunc)0x092F97F8},
+    {6, "w1_025", NULL, (LoadFunc)0x092F9680},
+    {6, "w1_026", NULL, (LoadFunc)0x092F9870},
+    {6, "w1_027", NULL, (LoadFunc)0x092F8F40},
+    {6, "w1_028", NULL, (LoadFunc)0x092F9810},
+    {6, "w1_029", NULL, (LoadFunc)0x092F9100},
+    {6, "w1_030", NULL, (LoadFunc)0x092FA178},
+    {6, "w1_031", NULL, (LoadFunc)0x092F7308},
+    {6, "w1_032", NULL, (LoadFunc)0x092F73B8},
+    {6, "w1_033", NULL, (LoadFunc)0x092F72E8},
+    {6, "w1_034", NULL, (LoadFunc)0x092F7A28},
+    {6, "w1_035", NULL, (LoadFunc)0x092F7298},
+    {6, "w1_036", NULL, (LoadFunc)0x092F7298},
+    {6, "w1_037", NULL, (LoadFunc)0x092F8470},
+    {6, "w1_038", NULL, (LoadFunc)0x092F77F0},
+    {6, "w1_039", NULL, (LoadFunc)0x092F7AC0},
+    {6, "w1_040", NULL, (LoadFunc)0x092F7CD0},
+    {6, "w1_041", NULL, (LoadFunc)0x092F7C18},
+    {6, "w1_042", NULL, (LoadFunc)0x092F7E10},
+    {6, "w1_043", NULL, (LoadFunc)0x092F7D10},
+    {6, "w1_044", NULL, (LoadFunc)0x092F7CE8},
+    {6, "w1_045", NULL, (LoadFunc)0x092F7E58},
+    {6, "w1_046", NULL, (LoadFunc)0x092F8538},
+    {6, "w1_047", NULL, (LoadFunc)0x092F8300},
+    {6, "w1_048", NULL, (LoadFunc)0x092F85C8},
+    {6, "w1_049", NULL, (LoadFunc)0x092F8C58},
+    {6, "w1_050", NULL, (LoadFunc)0x092F9158},
+    {6, "w1_051", NULL, (LoadFunc)0x092F85C0},
+    {6, "w1_052", NULL, (LoadFunc)0x092F96C0},
+    {6, "w1_053", NULL, (LoadFunc)0x092F89C8},
+    {6, "w1_054", NULL, (LoadFunc)0x092F77E8},
+    {6, "w1_055", NULL, (LoadFunc)0x092F78E0},
+    {6, "w1_056", NULL, (LoadFunc)0x092F8168},
+    {6, "w1_057", NULL, (LoadFunc)0x092F7298},
+    {6, "w1_058", NULL, (LoadFunc)0x092F81C0},
+};
 // clang-format on
 
-void setPlayMode(SceUID playFlag, u32 uiPlayMode);
-void waitPlayMode(SceUID playFlag, u32 uiPlayMode);
+extern s32* D_psp_089AD810[];
+extern u8 D_psp_08CADC40[];
+extern s32* g_pStObjLayoutHorizontal;
+extern s32* g_pStObjLayoutVertical;
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/2B69C", func_psp_08929FA8);
+void func_psp_089375C0(s32*, u32);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/2B69C", func_psp_0892A018);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/2B69C", func_psp_0892A0C4);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/2B69C", func_psp_0892A0F0);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/2B69C", func_psp_0892A1EC);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/2B69C", func_psp_0892A21C);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/2B69C", func_psp_0892A28C);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/2B69C", func_psp_0892A2D8);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/2B69C", func_psp_0892A3D4);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/2B69C", func_psp_0892A414);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/2B69C", func_psp_0892A620);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/2B69C", func_psp_0892A70C);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/2B69C", func_psp_0892A76C);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/2B69C", func_psp_0892A7E0);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/2B69C", func_psp_0892A8C0);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/2B69C", func_psp_0892A8FC);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/2B69C", func_psp_0892A97C);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/2B69C", func_psp_0892A998);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/2B69C", func_psp_0892A9D4);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/2B69C", func_psp_0892A9E0);
-
-s32 strFileOpen(StrFile* file, const char* filename, s32 flags) {
-    if (memcmp(filename, D_psp_08962E80, 6) == 0) {
-        strcpy(file->assignName, D_psp_08962E80);
-        file->fd = sceIoOpen(filename, flags, 0);
-    } else if (memcmp(filename, D_psp_08962E88, 4) == 0) {
-        strcpy(file->assignName, D_psp_08962E88);
-        file->fd = sceIoOpen(filename, flags, 0);
-    } else if (memcmp(filename, D_psp_08962E90, 6) == 0) {
-        strcpy(file->assignName, D_psp_08962E90);
-        file->fd = DvdUmdRetryOpenCB(filename, flags, 0);
-    } else {
-        printf(D_psp_08962E98);
-        return -1;
-    }
-    if (file->fd < 0) {
-        printf(D_psp_08962EBC, file->fd);
-        return -1;
-    }
-    return 0;
-}
-
-s32 strFileClose(StrFile* file) {
-    SceInt64 result;
-    s32 ret;
-
-    if (file->fd >= 0) {
-        ret = sceIoClose(file->fd);
-        if (ret == SCE_KERNEL_ERROR_ASYNC_BUSY) {
-            sceIoWaitAsync(file->fd, &result);
-            ret = sceIoClose(file->fd);
-        }
-    } else {
-        return -1;
-    }
-    return ret;
-}
-
-s32 strFileRead(StrFile* file, void* buff, SceSize size) {
-    s32 readsize;
-
-    if (strcmp(file->assignName, D_psp_08962E90) == 0) {
-        readsize = DvdUmdRetryRead(file->fd, buff, size);
-    } else {
-        readsize = sceIoRead(file->fd, buff, size);
-    }
-    return readsize;
-}
-
-SceOff strFileLseek(StrFile* file, SceOff offset, s32 whence) {
-    return sceIoLseek(file->fd, offset, whence);
-}
-
-s32 play_bgm(u32 args, void* argp) {
-    s32 status;
-    SceBGMArg* pBGMArg;
-    SceAtracArg atracArg;
-
-    pBGMArg = (SceBGMArg*)argp;
-
-    sceKernelClearEventFlag(pBGMArg->playFlag, 0);
-    setPlayMode(pBGMArg->playFlag, BGM_UNK_10);
-    status = init_atrac3plus(pBGMArg, &atracArg);
-    if (status < 0) {
-        printf(D_psp_08962EDC, status);
-        setPlayMode(pBGMArg->playFlag, BGM_PLAY_FINISH);
-        goto TERM;
-    }
-    setPlayMode(pBGMArg->playFlag, BGM_INIT_END);
-    waitPlayMode(pBGMArg->playFlag, BGM_PLAY_START | BGM_PLAY_FINISH);
-    play_atrac3plus(&atracArg);
-
-TERM:
-    setPlayMode(pBGMArg->playFlag, BGM_PLAY_FINISH);
-    sceKernelExitThread(0);
-    return 0;
-}
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/2B69C", init_atrac3plus);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/2B69C", play_atrac3plus);
-
-void createPlayModeFlag(const char* name) {
-    sceKernelCreateEventFlag(name, PSP_EVENT_WAITMULTIPLE, 0x00000000, NULL);
-}
-
-void setPlayMode(SceUID playFlag, u32 uiPlayMode) {
-    s32 status;
-
-    status = sceKernelSetEventFlag(playFlag, uiPlayMode);
-    if (status < 0) {
-        printf("status = 0x%x(in sceKernelSetEventFlag)\n", status);
-    }
-}
-
-s32 checkPlayMode(SceUID playFlag, u32 uiPlayMode) {
-    s32 status;
-    s32 ret = 0;
-
-    if ((status = sceKernelPollEventFlag(playFlag, uiPlayMode, 1, NULL)) ==
-        SCE_KERNEL_ERROR_OK) {
-        ret = 1;
-    } else {
-        if (status < 0 && status != SCE_KERNEL_ERROR_EVF_COND) {
-            printf("status = 0x%x(in sceKernelPollEventFlag)\n", status);
-        }
-    }
-    return ret;
-}
-
-void waitPlayMode(SceUID playFlag, u32 uiPlayMode) {
-    sceKernelWaitEventFlag(playFlag, uiPlayMode, PSP_EVENT_WAITOR, NULL, NULL);
-}
-
-void clearPlayMode(SceUID playFlag, u32 uiPlayMode) {
-    s32 status;
-
-    status = sceKernelClearEventFlag(playFlag, ~uiPlayMode);
-    if (status < 0) {
-        printf("status = 0x%x(in sceKernelClearEventFlag)\n", status);
-    }
-}
-
-void release_arg(SceAtracArg* pPlayArg) {
-    s32 status;
-
-    if (pPlayArg->atracID >= 0) {
-        status = sceAtracReleaseAtracID(pPlayArg->atracID);
-        if (status < 0) {
-            printf("status = 0x%x(in sceAtracReleaseAtracID)\n", status);
-        }
-    }
-    if (pPlayArg->strFile.fd >= 0) {
-        status = strFileClose(&pPlayArg->strFile);
-        if (status < 0) {
-            printf("status = 0x%x(in strFileClose)\n", status);
-        }
-    }
-}
-
-void at3plus_addData(s32 atracId, StrFile* pstrFile, s32* arg2) {
-    u8* pucWritePointer;
-    u32 uiWritableByte, uiReadPosition;
-    s32 status, iAddByte;
-
-    if (*arg2 == 0) {
-        status = sceAtracGetStreamDataInfo(
-            atracId, &pucWritePointer, &uiWritableByte, &uiReadPosition);
-        if (status < 0) {
-            printf("sceAtracGetStreamDataInfo = 0x%x\n", status);
-            goto READ_FAIL;
-        }
-        if (uiWritableByte > 0x2000) {
-            uiWritableByte = 0x2000;
-        }
-        status = strFileLseek(pstrFile, (SceOff)uiReadPosition, PSP_SEEK_SET);
-        if (status < 0) {
-            printf("strFileLseek Error = 0x%x\n", status);
-            goto READ_FAIL;
-        }
-        D_psp_08DADCB4 = uiWritableByte;
-        if (strcmp(pstrFile->assignName, D_psp_08962E90) == 0) {
-            sceIoReadAsync(pstrFile->fd, pucWritePointer, uiWritableByte);
-            *arg2 = 1;
-        } else {
-            iAddByte = sceIoRead(pstrFile->fd, pucWritePointer, uiWritableByte);
-        }
-        if (iAddByte <= 0) {
-            printf("strFileReadNoRetry Error = 0x%x\n",
-                   iAddByte); // TODO: inlined function ?
-            goto READ_FAIL;
-        }
-    }
-    if (*arg2 == 1 && sceIoPollAsync(pstrFile->fd, (SceInt64*)&iAddByte) == 0) {
-        iAddByte = D_psp_08DADCB4;
-        *arg2 = -1;
-    }
-    if (*arg2 < 0) {
-        status = sceAtracAddStreamData(atracId, iAddByte);
-        *arg2 = 0;
-        if (status < 0) {
-            printf("sceAtracAddStreamData = 0x%x\n", status);
-        }
-    }
-READ_FAIL:
-    return;
-}
-
-void reset_position(SceAtracArg* pPlayArg) {
-    PspBufferInfo bufferInfo;
-    s32 status;
-    s32 firstBufRead = 0, secondBufRead = 0;
-
-    status =
-        sceAtracGetBufferInfoForResetting(pPlayArg->atracID, 0, &bufferInfo);
-    if (status < 0) {
-        printf("status = 0x%x(in sceAtracGetBufferInfoForResetting)\n", status);
-        goto ERROR_OCCURED;
-    }
-    if (bufferInfo.uiMinWriteByteFirstBuf > 0) {
-        status = strFileLseek(
-            &pPlayArg->strFile, (SceOff)bufferInfo.uiReadPositionFirstBuf,
-            PSP_SEEK_SET);
-        if (status < 0) {
-            printf(D_psp_08962FCC, status);
-            goto ERROR_OCCURED;
-        }
-        firstBufRead =
-            strFileRead(&pPlayArg->strFile, bufferInfo.pucWritePositionFirstBuf,
-                        bufferInfo.uiWritableByteFirstBuf);
-        if (firstBufRead < 0) {
-            status = firstBufRead;
-            printf(D_psp_08962F50, status);
-            goto ERROR_OCCURED;
-        }
-    }
-    if (bufferInfo.uiMinWriteByteSecondBuf > 0) {
-        status = strFileLseek(
-            &pPlayArg->strFile, (SceOff)bufferInfo.uiReadPositionSecondBuf,
-            PSP_SEEK_SET);
-        if (status < 0) {
-            printf(D_psp_08962FCC, status);
-            goto ERROR_OCCURED;
-        }
-        secondBufRead = strFileRead(
-            &pPlayArg->strFile, bufferInfo.pucWritePositionSecondBuf,
-            bufferInfo.uiWritableByteSecondBuf);
-        if (secondBufRead < 0) {
-            printf(D_psp_08962F50, secondBufRead);
-            goto ERROR_OCCURED;
-        }
-    }
-    status = sceAtracResetPlayPosition(
-        pPlayArg->atracID, 0, firstBufRead, secondBufRead);
-    if (status < 0) {
-        printf("status = 0x%x (in sceAtracResetPlayPosition)\n", status);
-    }
-    status = sceAtracSetLoopNum(pPlayArg->atracID, -1);
-    if (status < 0) {
-        printf("status = 0x%x(in sceAtracSetLoopNum)\n", status);
-    }
-ERROR_OCCURED:
-    return;
-}
-
-void fadeoutOperation(
-    s16* pusValue, s32 iFadeoutBorderSample, s32 iMuteBorderSample) {
-    float fadeoutratio = 1.0f / iFadeoutBorderSample;
-    float fadeout;
+void func_psp_08929FA8(s32* arg0, s32 count) {
     s32 i;
 
-    for (i = 0; i < iFadeoutBorderSample; i++) {
-        fadeout = ((iFadeoutBorderSample - 1) - i) * fadeoutratio;
-        pusValue[2 * i] = pusValue[2 * i] * fadeout;
-        pusValue[2 * i + 1] = pusValue[2 * i + 1] * fadeout;
-    }
-    for (; i < iMuteBorderSample; i++) {
-        pusValue[2 * i] = 0;
-        pusValue[2 * i + 1] = 0;
+    for (i = 0; i < count; i++) {
+        *arg0 = (s32)&D_psp_08CADC40[*arg0 & 0x000FFFFF];
+        arg0++;
     }
 }
+
+void func_psp_0892A018(void) {
+    s32 i;
+
+    for (i = 0; i <= 52; i++) {
+        g_pStObjLayoutHorizontal[i] =
+            (s32)&D_psp_08CADC40[g_pStObjLayoutHorizontal[i] & 0x000FFFFF];
+        g_pStObjLayoutVertical[i] =
+            (s32)&D_psp_08CADC40[g_pStObjLayoutVertical[i] & 0x000FFFFF];
+    }
+}
+
+void* GetOverlayDst(s32 arg0) { return D_psp_089AD810[arg0]; }
+
+void LoadOverlay(s32 ovlIndex, void* data, s32 size) {
+    char ovlPath[0x100];
+    unkStruct* ptr;
+
+    ptr = &D_psp_089622C8[ovlIndex];
+    sprintf(
+        ovlPath, "disc0:/PSP_GAME/USRDIR/res/ps/PSPBIN/%s.bin", ptr->ovlName);
+    if (ptr->dst == NULL) {
+        ptr->dst = GetOverlayDst(ptr->type);
+    }
+    if (data != NULL) {
+        memcpy(ptr->dst, data, size);
+        func_psp_089375C0(ptr->dst, size);
+    } else {
+        while (true) {
+            bool done = func_psp_08937740(ovlPath, ptr->dst);
+            if (done) {
+                break;
+            }
+            sceKernelDelayThreadCB(166);
+        }
+    }
+    if (ptr->load != NULL) {
+        ptr->load();
+    }
+}
+
+void func_psp_0892A1EC(s32 ovlIndex) { LoadOverlay(ovlIndex, NULL, 0); }

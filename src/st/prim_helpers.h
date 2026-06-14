@@ -241,8 +241,7 @@ void UnkPolyFunc0(Primitive* prim) {
 #if !defined(VERSION_BETA)
 s32 PrimDecreaseBrightness(Primitive2* prim, u8 amount) {
     s32 isEnd;
-    s32 i;
-    s32 j;
+    s32 i, j;
     struct SubPrim* subprim;
     u8* pColor;
     s32 col;
@@ -269,8 +268,7 @@ s32 PrimDecreaseBrightness(Primitive2* prim, u8 amount) {
 #else
 s32 PrimDecreaseBrightness(Primitive* prim, u8 amount) {
     u8 isEnd;
-    s32 i;
-    s32 j;
+    s32 i, j;
     u8* pColor;
 
     isEnd = 0;

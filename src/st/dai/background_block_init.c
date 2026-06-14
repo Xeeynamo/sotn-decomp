@@ -10,6 +10,6 @@ ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {{
     .unk5A = 0,
     .palette = 0,
     .drawFlags = DRAW_DEFAULT,
-    .drawMode = DRAW_TPAGE,
+    .blendMode = BLEND_TRANSP,
     .animFrames = (u8*)anim_frames,
 }};

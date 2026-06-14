@@ -757,7 +757,7 @@ void EntityVenusWeedFlower(Entity* self) {
         self->hitboxWidth = HitboxWidth;
         self->hitboxHeight = HitboxHeight;
         self->animCurFrame = AnimFrameInit;
-        self->drawFlags |= FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+        self->drawFlags |= ENTITY_SCALEX | ENTITY_SCALEY;
         self->scaleX = self->scaleY = 0;
         self->hitboxState = 0;
         break;
@@ -765,7 +765,7 @@ void EntityVenusWeedFlower(Entity* self) {
     case GROW:
         self->scaleX = self->scaleY += GrowSpeed;
         if (self->scaleX >= GrowLimit) {
-            self->drawFlags = FLAG_DRAW_DEFAULT;
+            self->drawFlags = ENTITY_DEFAULT;
             self->hitboxState = 3;
 
             PlaySfxPositional(SFX_MAGIC_WEAPON_APPEAR_A);
@@ -1184,7 +1184,7 @@ void EntityVenusWeedDart(Entity* self) {
     case INIT:
         InitializeEntity(g_EInitVenusWeedDart);
         self->animCurFrame = AnimFrameIndexInit;
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         rot = self->rotate;
         self->hitboxOffX = (rcos(rot) * 6) >> 0xC;
         self->hitboxOffY = (rsin(rot) * 6) >> 0xC;

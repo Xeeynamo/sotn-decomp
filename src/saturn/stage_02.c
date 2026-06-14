@@ -79,7 +79,7 @@ void EntityTableWithGlobe(Entity* self) {
     case 1:
         AnimateEntity(self, D_80180EF8, D_80180EF0);
         if (self->hitFlags != 0) {
-            func_801C29B0(0x61D);
+            PlaySfxPositional(0x61D); // sotn-lint-ignore
             self->hitboxState = 0;
             CreateEntityFromEntity(E_HEART_DROP, self, &self[1]);
             self[1].params = D_80180F10[self->params];
@@ -277,7 +277,7 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E9220, func_060E9220);
 
 void func_060E9270(Entity* self) {
     func_06079BB4(self);
-    func_0600B004(self->unk0, DAT_060f237c[self->unk52]);
+    func_0600B004(self->unk0, DAT_060f237c[self->animCurFrame]);
 }
 
 // dupe of func_060e97c4
@@ -313,7 +313,7 @@ void func_060e97c4(u16** param_1) {
 
 void func_060E97F0(Entity* self) {
     func_06079BB4(self);
-    func_0600B004(self->unk0, DAT_060f2878[self->unk52]);
+    func_0600B004(self->unk0, DAT_060f2878[self->animCurFrame]);
 }
 
 // EntityBoneScimitar
@@ -378,7 +378,7 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EC1F0, func_060EC1F0);
 
 void func_060EC240(Entity* self) {
     func_06079BB4(self);
-    func_0600B004(self->unk0, DAT_060f4e6c[self->unk52]);
+    func_0600B004(self->unk0, DAT_060f4e6c[self->animCurFrame]);
 }
 
 // EntitySpittleBone

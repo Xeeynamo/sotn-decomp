@@ -452,12 +452,13 @@ s32 CalcAttack(u32 equipId, u32 otherEquipId) {
     return totalAttack;
 }
 
-void func_800F4F48(void) {
+void make_att(void) {
     s32 i;
 
     for (i = 0; i < 2; i++) {
-        g_Status.attackHands[i] =
-            CalcAttack(g_Status.equipment[i], g_Status.equipment[1 - i]);
+        u32 equipId = g_Status.equipment[i];
+        u32 otherEquipId = g_Status.equipment[1 - i];
+        g_Status.attackHands[i] = CalcAttack(equipId, otherEquipId);
     }
 }
 
@@ -479,7 +480,7 @@ void CalcDefense(void) {
         totalDefense += g_EquipDefs[thisHandItem].defense;
         // If this hand is shield rod and other hand is a shield, defense bonus
         // of 2.
-        if ((thisHandItem == ITEM_SHIELD_ROD) &&
+        if (thisHandItem == ITEM_SHIELD_ROD &&
             g_EquipDefs[g_Status.equipment[1 - i]].itemCategory ==
                 ITEM_SHIELD) {
             totalDefense += 2;
@@ -530,7 +531,7 @@ void CalcDefense(void) {
         g_Status.elementsResist |= ELEMENT_DARK;
     }
 
-    totalDefense += (SquareRoot0(g_Status.statsTotal[STAT_CON]) - 2);
+    totalDefense += SquareRoot0(g_Status.statsTotal[STAT_CON]) - 2;
 
     if (CheckEquipmentItemCount(ITEM_WALK_ARMOR, EQUIP_ARMOR) != 0) {
         totalDefense += g_RoomCount / 60;
@@ -548,9 +549,9 @@ void CalcDefense(void) {
     g_Status.defenseEquip = totalDefense;
 }
 
-void func_800F53A4(void) {
+void make_all(void) {
     func_800F4994();
-    func_800F4F48();
+    make_att();
     CalcDefense();
 }
 
@@ -1400,7 +1401,7 @@ void MenuDrawStats(s32 menuDialogue) {
     s32 phi_a0_5;
 
     ctx = &g_Menus[menuDialogue];
-    func_800F53A4();
+    make_all();
     if (menuDialogue == MENU_DG_BG) {
         MenuDrawAlucardPortrait(ctx);
         if (IsAlucart()) {
@@ -2865,15 +2866,18 @@ void CheckWeaponCombo(void) {
     s32 i;
 
     u32 handFlag = 0x80000000; // right hand
-    u32 combo = g_EquipDefs[g_Status.equipment[LEFT_HAND_SLOT]].comboSub &
-                g_EquipDefs[g_Status.equipment[RIGHT_HAND_SLOT]].comboMain;
+
+    s32 leftHand = g_Status.equipment[LEFT_HAND_SLOT];
+    s32 rightHand = g_Status.equipment[RIGHT_HAND_SLOT];
+
+    u32 combo =
+        g_EquipDefs[leftHand].comboSub & g_EquipDefs[rightHand].comboMain;
 
     if (combo != 0) {
         handFlag = 0;
     }
 
-    combo |= g_EquipDefs[g_Status.equipment[LEFT_HAND_SLOT]].comboMain &
-             g_EquipDefs[g_Status.equipment[RIGHT_HAND_SLOT]].comboSub;
+    combo |= g_EquipDefs[leftHand].comboMain & g_EquipDefs[rightHand].comboSub;
 
     if (combo != 0) {
         for (i = 0xAA; i < 0xD9; i++) {
@@ -2972,17 +2976,17 @@ void InitWeapon(s32 itemSlot) {
     }
 }
 
-void func_800FAB1C(void) {
-    const int START = 4;
+// original name: servant_work_clear
+void ServantWorkClear(void) {
     s32 i;
     Entity* entity;
 
-    entity = &g_Entities[START];
-    for (i = START; i < 64; i++) {
-        if (entity->entityId >= 0xD0 && entity->entityId < 0xE0) {
+    entity = &g_Entities[4];
+    for (i = 4; i < STAGE_ENTITY_START; i++, entity++) {
+        u16 entityID = entity->entityId;
+        if (entityID >= 0xD0 && entityID < 0xE0) {
             DestroyEntity(entity);
         }
-        entity++;
     }
 }
 
@@ -3274,7 +3278,7 @@ s32 func_800FB23C(s32* nav, u8* order, u8* count, u32* selected) {
             g_Status.equipment[1 - D_801375D0] = 0;
         }
     }
-    func_800F53A4();
+    make_all();
     var_s6 =
         (g_Player.status & (PLAYER_STATUS_TRANSFORM | PLAYER_STATUS_UNK10) |
          PLAYER.step == Player_UnmorphWolf | PLAYER.step == Player_BossGrab |
@@ -3292,7 +3296,7 @@ s32 func_800FB23C(s32* nav, u8* order, u8* count, u32* selected) {
     if (D_801375CC == EQUIP_HAND) {
         g_Status.equipment[1 - D_801375D0] = yetAnotherId;
     }
-    func_800F53A4();
+    make_all();
     if (g_pads[0].tapped & PAD_MENU_SORT) {
         if (!g_IsSelectingEquipment) {
             if (!func_800FB1EC(itemId)) {
@@ -3649,7 +3653,7 @@ block_4:
         break;
     case MENU_STEP_EXIT_10:
         if (g_Servant == FAM_ACTIVE_NONE || g_Servant != g_ServantPrevious) {
-            func_800FAB1C();
+            ServantWorkClear();
         }
         if (g_Servant == FAM_ACTIVE_NONE || g_Servant == g_ServantLoaded) {
             if (g_Servant != FAM_ACTIVE_NONE) {
@@ -3703,10 +3707,10 @@ block_4:
         if (D_psp_091CDD48 != 0) {
             PlaySfx(SET_UNK_0B);
         } else {
-            PlaySfx(SET_UNK_11);
+            PlaySfx(SET_XA_PLAYBACK);
         }
         CheckWeaponCombo();
-        func_800F53A4();
+        make_all();
         D_800973EC = 0;
         func_800FAC30();
         func_800F86E4();

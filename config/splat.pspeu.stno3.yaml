@@ -43,7 +43,7 @@ segments:
     align: 128
     subalign: 8
     subsegments:
-      - [0x80, c, no3_psp/st_init_no3]
+      - [0x80, c, no3/st_init_psp]
       - [0xD90, c, no3/e_castle_door]
       - [0x13C8, c, no3/e_heartroom]
       - [0x19A0, c, no3/entrance_weights]
@@ -63,7 +63,7 @@ segments:
       - [0xB230, c, no3/e_breakable]
       - [0xB3B0, c, no3/e_room_bg]
       - [0xB4A8, c, no3/e_unkId16]
-      - [0xB580, c, no3_psp/cutscene]
+      - [0xB580, c, no3/cutscene]
       - [0xE178, c, no3/e_lock_camera]
       - [0xE3D8, c, no3/create_entity]
       - [0xF380, c, no3/e_bat]
@@ -92,9 +92,9 @@ segments:
       - [0x33870, data] #, no3/graphics_banks]
       - [0x33A58, .data, no3/e_init]
       - [0x33D40, .data, no3/e_red_door_tiles]
-      - [0x33D60, .data, no3_psp/st_init_no3]
+      - [0x33D60, .data, no3/st_init_psp]
       - [0x33EA8, data] #, no3/gen/rooms]
-      - [0x33FB0, .data, no3_psp/cutscene_data]
+      - [0x33FB0, .data, no3/cutscene_data]
       - [0x347E0, data] #, no3/stage_data]
       - [0x481D0, data] #, no3/tilemaps]
       - [0x5E400, .data, no3/header]
@@ -114,7 +114,7 @@ segments:
       - [0x5F020, .data, no3/e_shutting_window]
       - [0x5F070, .data, no3/e_breakable]
       - [0x5F0C0, .data, no3/background_block_init]
-      - [0x5F2F0, .data, no3_psp/cutscene]
+      - [0x5F2F0, .data, no3/cutscene]
       - [0x5F6B8, .data, no3/e_lock_camera]
       - [0x5F730, .data, no3/e_bat]
       - [0x5F770, .data, no3/e_red_door]
@@ -133,7 +133,7 @@ segments:
       - [0x61600, .rodata, no3/e_castle_door]
       - [0x61618, .rodata, no3/e_outdoor_ents] # EntityPushAlucard
       - [0x61630, .rodata, no3/e_death]
-      - [0x616B8, .rodata, no3_psp/cutscene]
+      - [0x616B8, .rodata, no3/cutscene]
       - [0x61770, .rodata, no3/e_fire_warg]
       - [0x617C0, .rodata, no3/e_merman2]
       - [0x61810, .rodata, no3/e_warg]
@@ -141,12 +141,12 @@ segments:
       - [0x618A8, .rodata, no3/popup]
       - [0x61900, bss] #, no3/gen/sprites] # sprites_no3_7_51 is zero, bss on psp
       #- [0x61908, .bss, no3/layers] # layer_empty
-      - [0x61918, .bss, no3_psp/st_init_no3]
+      - [0x61918, .bss, no3/st_init_psp]
       - [0x61BB0, .bss, no3/e_background_bushes_trees]
       - [0x61BC0, .bss, no3/e_trapdoor]
       - [0x61BC8, .bss, no3/e_shutting_window]
       - [0x61BD8, .bss, no3/e_breakable]
-      - [0x61BE0, .bss, no3_psp/cutscene]
+      - [0x61BE0, .bss, no3/cutscene]
       - [0x621F0, .bss, no3/e_lock_camera]
       - [0x621F8, .bss, no3/create_entity]
       - [0x62218, .bss, no3/e_collect] # BlitChar

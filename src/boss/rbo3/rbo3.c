@@ -709,7 +709,7 @@ void func_us_80192998(Entity* self) {
         params = self->params & 0xF;
         obj = &D_us_8018071C[params];
         self->palette = obj->palette + 0x2E0;
-        self->drawMode = obj->drawMode;
+        self->blendMode = obj->blendMode;
         self->animSet = obj->animSet;
         self->unk5A = obj->unk5A;
         self->ext.e_80192998.anim = obj->animData;
@@ -721,14 +721,14 @@ void func_us_80192998(Entity* self) {
 
         if (self->params & 0xF0) {
             self->palette = PAL_FLAG(PAL_UNK_19F);
-            self->drawMode = DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP;
             self->facingLeft = 1;
         }
         break;
 
     case 1:
         if (self->step_s == 0) {
-            self->drawFlags = FLAG_DRAW_OPACITY;
+            self->drawFlags = ENTITY_OPACITY;
             self->opacity = 0xC0;
             self->facingLeft = Random() & 1;
             self->velocityX = (Random() << 8) - FIX(1.0 / 2.0);

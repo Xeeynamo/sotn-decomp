@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
 
-static u8 unused[] = {6, 5, 6, 6, 6, 7, 6, 8, 6, 1, 0, 0};
-static u8 D_us_801831E0[] = {
-    2, 1, 2, 2, 2, 3, 2, 4, 2, 5, 2, 6, 2, 7, 2, 8, 0, 0};
+static u8 anim0[] = {6, 5, 6, 6, 6, 7, 6, 8, 6, 1, 0, 0}; // unused
+static u8 anim1[] = {
+    2, 1, 2, 2, 2, 3, 2, 4, 2, 5, 2, 6, 2, 7, 2, 8, 0, 0,
+};
+
 static s16 D_us_801831F4[] = {0, 3, 4, 3, 0, -3, -4, -3};
 static s16 D_us_80183204[] = {-16, -12, 0, 12, 16, 12, 0, -12};
-static u8 D_us_80183214[] = {2,  9, 2,  10, 2,  11, 2,  12, 2,  13, 2,  14, 2,
-                             15, 2, 16, 2,  17, 2,  18, 2,  19, 2,  20, -1, 0};
 
 void func_us_801D4558(Entity* self) {
     Entity* tempEntity;
@@ -24,21 +24,21 @@ void func_us_801D4558(Entity* self) {
     }
     tempEntity = &PLAYER;
     if ((tempEntity->posX.i.hi - self->posX.i.hi) > 0) {
-        self->facingLeft = 1;
+        self->facingLeft = true;
     } else {
-        self->facingLeft = 0;
+        self->facingLeft = false;
     }
     switch (self->step) {
     case 0:
         InitializeEntity(D_us_80180B18);
         self->ext.et_801D4558.unk80 = self->hitboxState;
         self->hitboxState = 0;
-        self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+        self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
 
         self->scaleX = 0;
         self->scaleY = 0;
         self->ext.et_801D4558.unk7D = 0;
-        self->drawMode = DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP;
         break;
 
     case 1:
@@ -51,24 +51,24 @@ void func_us_801D4558(Entity* self) {
         break;
 
     case 2:
-        AnimateEntity(D_us_801831E0, self);
+        AnimateEntity(anim1, self);
         self->ext.et_801D4558.unk7C++;
         self->scaleX += 8;
         self->scaleY += 8;
         if (self->ext.et_801D4558.unk7C == 0x20) {
             self->hitboxState = 2;
-            self->drawFlags = FLAG_DRAW_DEFAULT;
+            self->drawFlags = ENTITY_DEFAULT;
         }
         if (self->ext.et_801D4558.unk7C == 0x28) {
             self->hitboxState = self->ext.et_801D4558.unk80;
             SetStep(3);
             self->ext.et_801D4558.unk82 = 0;
-            self->drawFlags = FLAG_DRAW_DEFAULT;
+            self->drawFlags = ENTITY_DEFAULT;
         }
         break;
 
     case 3:
-        AnimateEntity(D_us_801831E0, self);
+        AnimateEntity(anim1, self);
         SetEntityVelocityFromAngle(
             self->ext.et_801D4558.unkAC, self->ext.et_801D4558.unkB0);
         self->velocityX >>= 8;
@@ -93,7 +93,7 @@ void func_us_801D4558(Entity* self) {
         break;
 
     case 4:
-        AnimateEntity(D_us_801831E0, self);
+        AnimateEntity(anim1, self);
         if (self->step_s) {
             MoveEntity();
             if (!--self->ext.et_801D4558.unk7C) {
@@ -123,16 +123,21 @@ void func_us_801D4558(Entity* self) {
     }
 }
 
+static u8 anim2[] = {
+    2,  9, 2,  10, 2,  11, 2,  12, 2,  13, 2,  14, 2,
+    15, 2, 16, 2,  17, 2,  18, 2,  19, 2,  20, -1, 0,
+};
+
 void func_us_801D4950(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_us_80180B18);
-        self->drawMode = DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP;
         self->hitboxState = 0;
         break;
 
     case 1:
-        if (AnimateEntity(D_us_80183214, self) == 0) {
+        if (AnimateEntity(anim2, self) == 0) {
             DestroyEntity(self);
         }
         self->posY.i.hi--;

@@ -53,6 +53,16 @@ u8 D_8018D2CC[] = {
 #include "gen/D_8018D2CC.h"
 };
 
+// unreferenced
+u8 D_8018D9BC[] = {
+#include "gen/D_8018D9BC.h"
+};
+
+// unreferenced
+u8 D_8018E860[] = {
+#include "gen/D_8018E860.h"
+};
+
 u8 e_valhalla_knight_1[] = {
 #include "gen/e_valhalla_knight_1.h"
 };
@@ -79,6 +89,11 @@ u8 e_breakable[] = {
 
 u8 stage_title_no2[] = {
 #include "gen/stage_title_no2.h"
+};
+
+// unreferenced
+u16 D_80194428[] = {
+#include "gen/D_80194428.h"
 };
 
 u16 e_skelerang_pal[] = {

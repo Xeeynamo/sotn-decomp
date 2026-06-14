@@ -8,7 +8,7 @@
 //  PSX HD | TBD   | TBD     | 0xB78 | 0x10 |
 //
 
-#include <common.h>
+#include <stage.h>
 
 static u16* g_LayoutObjHorizontal;
 static u16* g_LayoutObjVertical;
@@ -16,8 +16,6 @@ static u8 g_LayoutObjPosHorizontal;
 STATIC_PAD_BSS(3);
 static u8 g_LayoutObjPosVertical;
 STATIC_PAD_BSS(3);
-
-#include <stage.h>
 
 #define LAYOUT_OBJ_START 0xfffe
 #define LAYOUT_OBJ_END 0xffff
@@ -169,6 +167,12 @@ static void FindFirstEntityToTheLeft(s16 posX) {
     }
 }
 
+#ifdef VERSION_PSP
+#define DECREMENT_AND_CHECK(x) (x)--
+#else
+#define DECREMENT_AND_CHECK(x) --(x) != (u8) - 1
+#endif
+
 /*
  * Creates entities between the previous horizontal position and
  * the passed in x position toward the right.
@@ -177,8 +181,8 @@ static void FindFirstEntityToTheLeft(s16 posX) {
  *   - posX - the new right extent
  */
 static void CreateEntitiesToTheRight(s16 posX) {
+    const s32 expected = false;
     u16* layoutObjHorizontal;
-    s32 expected;
     u8 flag;
 
     // if previously scrolling left, scan right to the
@@ -197,10 +201,9 @@ static void CreateEntitiesToTheRight(s16 posX) {
         }
 
         flag = (layoutObjHorizontal[LAYOUT_OBJ_SLOT] >> 8);
-#ifdef VERSION_PSP
-        if (flag--) {
-            if (!(g_unkGraphicsStruct.D_80097428[flag >> 5] &
-                  (1 << (flag & 0x1F)))) {
+        if (DECREMENT_AND_CHECK(flag)) {
+            if ((g_unkGraphicsStruct.D_80097428[flag >> 5] &
+                 (1 << (flag & 0x1F))) == expected) {
                 CreateEntityWhenInVerticalRange(
                     (LayoutEntity*)g_LayoutObjHorizontal);
             }
@@ -208,14 +211,7 @@ static void CreateEntitiesToTheRight(s16 posX) {
             CreateEntityWhenInVerticalRange(
                 (LayoutEntity*)g_LayoutObjHorizontal);
         }
-#else
-        expected = 0;
-        if (--flag == 0xFF || (g_unkGraphicsStruct.D_80097428[flag >> 5] &
-                               (1 << (flag & 0x1F))) == expected) {
-            CreateEntityWhenInVerticalRange(
-                (LayoutEntity*)g_LayoutObjHorizontal);
-        }
-#endif
+
         g_LayoutObjHorizontal += sizeof(LayoutEntity) / sizeof(u16);
     }
 }
@@ -228,8 +224,8 @@ static void CreateEntitiesToTheRight(s16 posX) {
  *   - posX - the new left extent
  */
 static void CreateEntitiesToTheLeft(s16 posX) {
+    const s32 expected = false;
     u16* layoutObjHorizontal;
-    s32 expected;
     u8 flag;
 
     if (posX < 0) {
@@ -256,10 +252,9 @@ static void CreateEntitiesToTheLeft(s16 posX) {
         }
 
         flag = (layoutObjHorizontal[LAYOUT_OBJ_SLOT] >> 8);
-#ifdef VERSION_PSP
-        if (flag--) {
-            if (!(g_unkGraphicsStruct.D_80097428[flag >> 5] &
-                  (1 << (flag & 0x1F)))) {
+        if (DECREMENT_AND_CHECK(flag)) {
+            if ((g_unkGraphicsStruct.D_80097428[flag >> 5] &
+                 (1 << (flag & 0x1F))) == expected) {
                 CreateEntityWhenInVerticalRange(
                     (LayoutEntity*)g_LayoutObjHorizontal);
             }
@@ -267,14 +262,7 @@ static void CreateEntitiesToTheLeft(s16 posX) {
             CreateEntityWhenInVerticalRange(
                 (LayoutEntity*)g_LayoutObjHorizontal);
         }
-#else
-        expected = 0;
-        if (--flag == 0xFF || (g_unkGraphicsStruct.D_80097428[flag >> 5] &
-                               (1 << (flag & 0x1F))) == expected) {
-            CreateEntityWhenInVerticalRange(
-                (LayoutEntity*)g_LayoutObjHorizontal);
-        }
-#endif
+
         g_LayoutObjHorizontal -= sizeof(LayoutEntity) / sizeof(u16);
     }
 }
@@ -330,8 +318,8 @@ static void FindFirstEntityBelow(s16 posY) {
  *   - posY - the new top extent
  */
 static void CreateEntitiesAbove(s16 posY) {
+    const s32 expected = false;
     u16* layout;
-    s32 expected;
     u8 flag;
 
     if (g_LayoutObjPosVertical) {
@@ -348,10 +336,9 @@ static void CreateEntitiesAbove(s16 posY) {
         }
 
         flag = layout[LAYOUT_OBJ_ID] >> 8;
-#ifdef VERSION_PSP
-        if (flag--) {
-            if (!(g_unkGraphicsStruct.D_80097428[flag >> 5] &
-                  (1 << (flag & 0x1F)))) {
+        if (DECREMENT_AND_CHECK(flag)) {
+            if ((g_unkGraphicsStruct.D_80097428[flag >> 5] &
+                 (1 << (flag & 0x1F))) == expected) {
                 CreateEntityWhenInHorizontalRange(
                     (LayoutEntity*)g_LayoutObjVertical);
             }
@@ -359,14 +346,7 @@ static void CreateEntitiesAbove(s16 posY) {
             CreateEntityWhenInHorizontalRange(
                 (LayoutEntity*)g_LayoutObjVertical);
         }
-#else
-        expected = 0;
-        if (--flag == 0xFF || (g_unkGraphicsStruct.D_80097428[flag >> 5] &
-                               (1 << (flag & 0x1F))) == expected) {
-            CreateEntityWhenInHorizontalRange(
-                (LayoutEntity*)g_LayoutObjVertical);
-        }
-#endif
+
         g_LayoutObjVertical += sizeof(LayoutEntity) / sizeof(u16);
     }
 }
@@ -379,8 +359,8 @@ static void CreateEntitiesAbove(s16 posY) {
  *   - posY - the new top extent
  */
 static void CreateEntitiesBelow(s16 posY) {
+    const s32 expected = false;
     u16* layout;
-    s32 expected;
     u8 flag;
 
     if (posY < 0) {
@@ -399,10 +379,9 @@ static void CreateEntitiesBelow(s16 posY) {
             break;
         }
         flag = layout[LAYOUT_OBJ_ID] >> 8;
-#ifdef VERSION_PSP
-        if (flag--) {
-            if (!(g_unkGraphicsStruct.D_80097428[flag >> 5] &
-                  (1 << (flag & 0x1F)))) {
+        if (DECREMENT_AND_CHECK(flag)) {
+            if ((g_unkGraphicsStruct.D_80097428[flag >> 5] &
+                 (1 << (flag & 0x1F))) == expected) {
                 CreateEntityWhenInHorizontalRange(
                     (LayoutEntity*)g_LayoutObjVertical);
             }
@@ -410,14 +389,7 @@ static void CreateEntitiesBelow(s16 posY) {
             CreateEntityWhenInHorizontalRange(
                 (LayoutEntity*)g_LayoutObjVertical);
         }
-#else
-        expected = 0;
-        if (--flag == 0xFF || (g_unkGraphicsStruct.D_80097428[flag >> 5] &
-                               (1 << (flag & 0x1F))) == expected) {
-            CreateEntityWhenInHorizontalRange(
-                (LayoutEntity*)g_LayoutObjVertical);
-        }
-#endif
+
         g_LayoutObjVertical -= sizeof(LayoutEntity) / sizeof(u16);
     }
 }
@@ -437,6 +409,12 @@ void InitRoomEntities(s32 objLayoutId) {
 
     g_LayoutObjHorizontal = (u16*)OBJ_LAYOUT_HORIZONTAL[objLayoutId];
     g_LayoutObjVertical = (u16*)OBJ_LAYOUT_VERTICAL[objLayoutId];
+
+#ifdef PSP_RNZ0_WTF
+    if (objLayoutId == 8 && g_LayoutObjHorizontal[15] == 0x78) {
+        g_LayoutObjHorizontal[15] += 16;
+    }
+#endif
 
     if (*g_LayoutObjHorizontal != LAYOUT_OBJ_START) {
         g_LayoutObjHorizontal++;

@@ -81,12 +81,11 @@ u16 g_BatClut[] = {
 static Entity* FindValidTarget(Entity* self) {
     static s32 s_TargetMatch[0x80];
 
-    const int EntitySearchCount = 128;
+    const s32 EntitySearchCount = 128;
     s32 foundIndex;
     s32 i;
     u32 found;
     Entity* entity;
-    s32 distance;
 
     found = 0;
     entity = &g_Entities[STAGE_ENTITY_START];
@@ -222,7 +221,6 @@ void CreateBlueTrailEntity(Entity* parent) {
 void CreateAdditionalBats(s32 amount, s32 entityId) {
     s32 i;
     Entity* entity;
-    u16 facing;
 
     amount = MIN(amount, 3);
     for (i = 0; i < amount; i++) {
@@ -806,13 +804,13 @@ void UpdateBatAttackMode(Entity* self) {
         }
         self->facingLeft = PLAYER.facingLeft ? false : true;
         if (!self->ext.bat.hasShotFireball &&
-            (g_Player.status & PLAYER_STATUS_UNK800)) {
+            (g_Player.status & PLAYER_STATUS_SUBWPN)) {
             // This causes the bat familiar to shoot a fireball when the
             // player does so in bat form.
             g_api.CreateEntFactoryFromEntity(self, FACTORY(81, 1), 0);
             self->ext.bat.hasShotFireball = true;
         } else if (self->ext.bat.hasShotFireball &&
-                   !(g_Player.status & PLAYER_STATUS_UNK800)) {
+                   !(g_Player.status & PLAYER_STATUS_SUBWPN)) {
             self->ext.bat.hasShotFireball = false;
         }
 

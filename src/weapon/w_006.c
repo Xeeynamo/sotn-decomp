@@ -46,7 +46,7 @@ static void EntityWeaponAttack(Entity* self) {
         self->palette += anim->palette;
         self->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
         self->zPriority = PLAYER.zPriority - 2;
-        self->drawMode = DRAW_TPAGE | DRAW_TPAGE2;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         SetWeaponProperties(self, 0);
         self->step++;
     }
@@ -167,7 +167,7 @@ static void func_ptr_80170004(Entity* self) {
         self->hitboxHeight = hitboxSize;
         if (self->hitFlags != 0) {
             self->palette = PAL_FLAG(PAL_FILL_WHITE);
-            self->drawMode = DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP;
             self->ext.weapon_006.lifetime = 8;
             self->step = 4;
         }

@@ -25,6 +25,7 @@ typedef unsigned long long u64;
 #define STAGE_INVERTEDCASTLE_FLAG 0x20
 #define STAGE_ST0 0x1F
 #define TOTAL_ENTITY_COUNT 256
+#define STAGE_ENTITY_START 64
 #define FACTORY(id, param) ((id) + (param << 16))
 
 #define SFX_HEART_PICKUP 0x67A
@@ -117,6 +118,38 @@ typedef enum {
     Player_MariaSpellFourHolyBeasts,
 } PlayerSteps;
 
+// Flags for entity->flags
+typedef enum {
+    FLAG_UNK_10 = 0x10,
+    FLAG_UNK_20 = 0x20,
+    FLAG_UNK_40 = 0x40,
+    FLAG_UNK_80 = 0x80,
+    FLAG_DEAD = 0x100, // entity must execute its death routine
+    FLAG_UNK_200 = 0x200,
+    FLAG_UNK_400 = 0x400,
+    FLAG_UNK_800 = 0x800,
+    FLAG_UNK_1000 = 0x1000,
+    FLAG_UNK_2000 = 0x2000,
+    FLAG_UNK_4000 = 0x4000,
+    FLAG_UNK_8000 = 0x8000,
+    FLAG_UNK_10000 = 0x10000,
+    FLAG_UNK_20000 = 0x20000,         // func_8011A9D8 will destroy if not set
+    FLAG_POS_PLAYER_LOCKED = 0x40000, // entity follows player position
+    FLAG_UNK_80000 = 0x80000,
+    FLAG_UNK_100000 = 0x100000,
+    FLAG_UNK_00200000 = 0x00200000,
+    FLAG_SUPPRESS_STUN = 0x400000, // disable invincibility frames
+    FLAG_HAS_PRIMS = 0x800000,     // call FreePrimitives on DestroyEntity
+    FLAG_NOT_AN_ENEMY = 0x01000000,
+    FLAG_UNK_02000000 = 0x02000000,
+    FLAG_KEEP_ALIVE_OFFCAMERA = 0x04000000, // don't destroy entity off-screen
+    FLAG_POS_CAMERA_LOCKED = 0x08000000,    // entity follows camera position
+    FLAG_UNK_10000000 = 0x10000000,         // CHI func_801A169C: "Is Airborne"?
+    FLAG_UNK_20000000 = 0x20000000,
+    FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA = 0x40000000,
+    FLAG_DESTROY_IF_OUT_OF_CAMERA = 0x80000000,
+} EntityFlag;
+
 typedef struct {
     u8 disableFlag;
     u8 resetFlag;
@@ -185,7 +218,7 @@ typedef struct Entity {
     /* 0x34 */ u32 flags;
     /* 0x38 */ u16 enemyId;
     /* 0x3A */ u16 hitboxState; // hitbox state
-    /* 0x3C */ char pad_3C[2];
+    /* 0x3C */ s16 hitPoints;
     /* 0x3E */ s16 attack;
     /* 0x40 */ s16 attackElement;
     /* 0x42 */ s16 pad_42;
@@ -196,19 +229,21 @@ typedef struct Entity {
     /* 0x4c */ u16 pose;
     /* 0x4e */ s16 poseTimer;
     /* 0x50 */ char pad_50[0x2];
-    /* 0x52 */ s16 unk52;
+    /* 0x52 */ s16 animCurFrame;
     /* 0x54 */ char pad_54[0xC];
     /* 0x60 */ s16 primIndex;
-    /* 0x62 */ char pad_62[0x12];
+    /* 0x62 */ char pad_62[0x2];
+    /* 0x64 */ u16 unk68;
+    /* 0x66 */ char pad_66[0xE];
     /* 0x74 */ u16 entityId;
-    /* 0x76 */ char pad_76[0x1];
-    /* 0x80 */ Ext ext;
-    /* 0x88 */ char pad_88[0x2];
-    /* 0x8A */ struct UnkStruct_060e8350* unk8A;
+    /* 0x76 */ char pad_76[0x2];
+    /* 0x78 */ Ext ext;
+    /* 0xB0 */ char pad_B0[0x4];
+    /* 0xB4 */ struct UnkStruct_060e8350* unkB4;
 } Entity; // size = 0xB8
 
 typedef struct Unk0600B344 {
-    /* 0x00 */ s16 unk0;
+    /* 0x00 */ u16 unk0;
     /* 0x02 */ char pad_02[0x6];
     /* 0x08 */ s16 unk8;
     /* 0x0A */ char pad_0A[0x4];
@@ -229,21 +264,22 @@ typedef struct {
 } EntityEntry;
 
 typedef struct {
-    /* 0x00 */ s32 unk0;
-    /* 0x04 */ s32 unk4;
-    /* 0x08 */ s32 unk8;
-} Unkstruct_800FD5BC;
+    s32 level;
+    s32 exp;
+    s32 unk8; // Possibly the number of times loaded
+} FamiliarStats;
 
 // offsets are not the same as psx
 typedef struct {
-    u8 relics[30];
-    char pad4[0xc];
+    u8 relics[32];
+    char pad[2];
+    u8 spells[8];
     u8 equipHandCount[176];
-    u8 equipBodyCount[26];
-    char pad5[0x42];
+    u8 equipBodyCount[92];
     u8 equipHandOrder[176];
-    u8 equipBodyOrder[26];
-    char pad2[0x4E];
+    u8 equipBodyOrder[92];
+    u8 saveName[8];
+    u32 spellsLearnt;
     s32 hp;
     s32 hpMax;
     s32 hearts;
@@ -251,16 +287,32 @@ typedef struct {
     s32 mp;
     s32 mpMax;
     s32 statsBase[4];
-    char pad[15];
+    s32 statsEquip[4];
     s32 statsTotal[4];
-    char pad3[0x14];
+    s32 level;
+    u32 exp;
+    s32 gold;
+    s32 killCount;
+    u32 D_80097BF8;
     u32 subWeapon;
-    u32 equipment[7];
+    u32 equipment[8];
+    u32 attackHands[2];
+    s32 defenseEquip;
+    u16 elementsWeakTo;
+    u16 elementsResist;
+    u16 elementsImmune;
+    u16 elementsAbsorb;
+    s32 timerHours;
+    s32 timerMinutes;
+    s32 timerSeconds;
+    s32 timerFrames;
+    u32 D_80097C40;
+    FamiliarStats statsFamiliars[7];
 } PlayerStatus;
 
 typedef struct {
     /* 0x00 */ s16 attack;
-    /* 0x02 */ s16 unk2;
+    /* 0x02 */ s16 heartCost;
     /* 0x04 */ u16 attackElement;
     /* 0x06 */ u8 unk6;
     /* 0x07 */ u8 sp17;
@@ -292,10 +344,8 @@ typedef struct {
     /* 0x19 */ u8 isConsumable;
     /* 0x1A */ u8 enemyInvincibilityFrames;
     /* 0x1B */ u8 unk1B;
-    /* 0x1C */ u16 unk1C;
-    /* 0x1E */ u16 unk1E;
-    /* 0x20 */ u16 unk20;
-    /* 0x22 */ u16 unk22;
+    /* 0x1C */ u32 comboSub;
+    /* 0x20 */ u32 comboMain;
     /* 0x24 */ u16 mpUsage;
     /* 0x26 */ u16 stunFrames;
     /* 0x28 */ u16 hitType;
@@ -309,10 +359,13 @@ typedef struct {
 typedef struct {
     /* 0x00 */ const char* name;
     /* 0x04 */ const char* description;
-    /* 0x08 */ u32 unk08;
-    /* 0x0C */ u32 unk0C;
-    /* 0x10 */ u32 unk10;
-    /* 0x14 */ u32 unk14;
+    /* 0x08 */ s16 attBonus;
+    /* 0x0A */ s16 defBonus;
+    /* 0x0C */ u8 statsBonus[4];
+    /* 0x10 */ u16 weakToElements;
+    /* 0x12 */ u16 resistElements;
+    /* 0x14 */ u16 immuneElements;
+    /* 0x16 */ u16 absorbElements;
     /* 0x18 */ u16 icon;
     /* 0x1A */ u16 palette;
     /* 0x1C */ u16 equipType;
@@ -338,7 +391,7 @@ typedef struct {
     /* 0x06 */ u16 attack;
     /* 0x08 */ u16 attackElement;
     /* 0x0A */ s16 defense;
-    /* 0x0C */ u16 unkC;
+    /* 0x0C */ u16 hitboxState;
     /* 0x0E */ u16 weaknesses;
     /* 0x10 */ u16 strengths;
     /* 0x12 */ u16 immunes;
@@ -351,16 +404,8 @@ typedef struct {
     /* 0x20 */ u16 uncommonItemDropRate;
     /* 0x22 */ u8 hitboxWidth;
     /* 0x23 */ u8 hitboxHeight;
-    /* 0x24 */ s32 unk24;
+    /* 0x24 */ s32 flags;
 } EnemyDef; /* size=0x28 */
-
-// layout is different
-typedef struct Unkstruct_800A7734 {
-    /* 0x00 */ u16 unk00;
-    /* 0x02 */ char pad_02[0x1A];
-    /* 0x1C */ u16 equipType;
-    /* 0x1E */ char pad_1E[0x2];
-} Unkstruct_800A7734; // size = 0x20
 
 // Flags for g_Player.vram_flag
 // 0x01: touching the ground
@@ -419,6 +464,150 @@ typedef struct {
     /* 0x46A */ u16 unk7E;
 } PlayerState;
 
+typedef struct {
+    s32 : 32;
+    s32 D_800973FC;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    u32 D_80097428[8];
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s16 unk90;
+    s16 unk92;
+    s16 unk94;
+} unkGraphicsStruct;
+
+typedef struct {
+    const char* name;
+    s32 : 32;
+    u16 : 16;
+    u16 : 16;
+    s32 unk0C;
+} RelicDesc;
+
+typedef struct {
+    s32 buttonConfig[8];
+    u16 buttonMask[8];
+    s32 timeAttackRecords[32];
+    s32 cloakColors[6];
+    s32 windowColors[3];
+    s32 equipOrderTypes[11];
+    s32 isCloakLiningReversed;
+    s32 isSoundMono;
+    s32 D_8003CB00;
+    s32 D_8003CB04;
+} GameSettings;
+
+typedef struct {
+    u16 flags;
+    u16 unk2;
+    u16 unk4;
+    s16 zPriority;
+} FgLayer;
+
+typedef struct {
+    /* 0x00 */ s32 cursorMain;
+    /* 0x04 */ s32 cursorRelic;
+    /* 0x08 */ s32 cursorEquip;
+    /* 0x0C */ s32 cursorHandEquipType;
+    /* 0x10 */ s32 cursorEquipType[4];
+    /* 0x20 */ s32 scrollEquipType[5];
+    /* 0x34 */ s32 cursorSpells;
+    /* 0x38 */ s32 cursorSettings;
+    /* 0x3C */ s32 cursorCloak;
+    /* 0x40 */ s32 cursorButtons;
+    /* 0x44 */ s32 cursorWindowColors;
+    /* 0x48 */ s32 cursorTimeAttack;
+} MenuNavigation; /* size=0x4C */
+
+typedef struct {
+    u32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    u32 : 32;
+    s32 : 32;
+    u32 : 32;
+    u32 : 32;
+    u32 : 32;
+    u32 unk24;
+    s32 : 32;
+    s32 : 32;
+} PlayerHud;
+
+typedef struct {
+    s16 : 16;
+    s16 : 16;
+    s16 : 16;
+    s16 : 16;
+    s16 : 16;
+    s16 : 16;
+    s16 x0;
+    s16 y0;
+    s16 x1;
+    s16 y1;
+    s16 x2;
+    s16 y2;
+    s16 x3;
+    s16 y3;
+    s16 : 16;
+    s16 : 16;
+    s32 : 32;
+} Primitive;
+
+typedef struct {
+    /* 0x0 */ u16 pressed;
+    /* 0x2 */ u16 previous;
+    /* 0x4 */ u16 tapped;
+    /* 0x6 */ u16 repeat;
+} Pad; // size = 0x8
+
+typedef struct {
+    SotnFixed32 scrollX;
+    SotnFixed32 scrollY;
+} Tilemap;
+
+typedef struct {
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 g_ScrollDeltaX;
+    s32 : 32;
+    s32 g_ScrollDeltaY;
+} UNK_0605c680;
+
+typedef struct {
+    /* 0x0 */ u16 posX;
+    /* 0x2 */ u16 posY;
+    /* 0x4 */ u16 entityId;
+    /* 0x6 */ u8 entityRoomIndex;
+    /* 0x8 */ u16 params;
+} LayoutEntity; // size = 0xA
+
 typedef enum {
     PLAYER_CHARACTER,
     E_AFTERIMAGE_1,
@@ -471,25 +660,52 @@ typedef enum {
     NUM_SPELLS,
 } SpellIds;
 
-s32 SquareRoot0(s32);
+typedef enum {
+    EFFECT_NONE = 0,
+    EFFECT_SOLID = 1 << 0,
+    EFFECT_UNK_0002 = 1 << 1,
+    EFFECT_QUICKSAND = 1 << 2,
+    EFFECT_WATER = 1 << 3,
+    EFFECT_MIST_ONLY = 1 << 4,
+    EFFECT_UNK_0020 = 1 << 5,
+    // Used when you jump from below to a platform. You can drop below.
+    EFFECT_SOLID_FROM_ABOVE = 1 << 6,
+    // Doesn't collide when falling on it but you cannot go back up.
+    EFFECT_SOLID_FROM_BELOW = 1 << 7,
+    EFFECT_UNK_0100 = 1 << 8,
+    EFFECT_UNK_0200 = 1 << 9,
+    EFFECT_UNK_0400 = 1 << 10,
+    EFFECT_UNK_0800 = 1 << 11,
+    EFFECT_UNK_1000 = 1 << 12,
+    EFFECT_UNK_2000 = 1 << 13,
+    EFFECT_UNK_4000 = 1 << 14,
+    EFFECT_UNK_8000 = 1 << 15,
+
+    // Aggregate helpers below:
+    EFFECT_NOTHROUGH = EFFECT_SOLID | EFFECT_QUICKSAND,
+    EFFECT_NOTHROUGH_PLUS = EFFECT_SOLID | EFFECT_UNK_0002 | EFFECT_QUICKSAND,
+    // Should be renamed once we know what 8000 and 4000 are
+    EFFECT_UNK_C000 = EFFECT_UNK_8000 | EFFECT_UNK_4000
+} ColliderEffectFlags;
+
+u32 SquareRoot0(s32);
 s32 func_800F4D38(s32, s32);
 void func_800F4994(void);
 void DestroyEntity(Entity* entity);
 extern int rand(void);
-u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
-void PlaySfx(s16 sfxId);
+void PlaySfx(s32 sfxId);
 
 // Not 100% sure about address, gcc seems to added the offset within
 // the struct to the base address
 extern Equipment g_EquipDefs[];
 
+extern GameSettings g_Settings;
 extern GameApi g_api;
 extern Entity g_Entities[TOTAL_ENTITY_COUNT]; // 0x060997F8
 extern EntityEntry** PfnEntityUpdates[];
 extern u16 g_StageId; // u32 in psx
 extern SpellDef g_SpellDefs[];
 extern Accessory g_AccessoryDefs[];
-extern Unkstruct_800A7734 D_800A7734[];
 extern s32 D_80137960;
 extern s32 D_80137964;
 extern s32 D_80137968;
@@ -500,6 +716,21 @@ extern PlayerState g_Player;
 extern Entity* g_CurrentEntity;
 extern PlayerStatus g_Status;
 extern SubweaponDef g_SubwpnDefs[];
+extern unkGraphicsStruct g_unkGraphicsStruct;
+extern u32 g_GameTimer;
+extern FgLayer D_8003C708;
+extern s32 D_801375C8;
+extern s32 D_8006BB00;
+extern s32 g_Servant;
+extern RelicDesc g_RelicDefs[];
+extern s32 currentMusicId;
+extern u8 g_CastleFlags[];
+extern s32 g_PlayableCharacter;
+extern MenuNavigation g_MenuNavigation;
+extern PlayerHud g_PlayerHud;
+extern Pad g_pads[];
+extern Tilemap g_Tilemap;
+extern UNK_0605c680 DAT_0605c680;
 
 #define NUM_HORIZONTAL_SENSORS 4
 #define NUM_VERTICAL_SENSORS 7
@@ -509,7 +740,5 @@ typedef struct {
     /* 0x0 */ s32 x;
     /* 0x2 */ s32 y;
 } Point16; // size = 0x4
-
-#define FIX(x) (x << 16)
 
 #endif

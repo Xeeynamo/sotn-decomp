@@ -268,7 +268,7 @@ void PlayerStepStand(void) {
     if ((PLAYER.step < 0x40) && (!g_Player.unk48)) {
         if (D_800ACF74 != 0) {
             D_800ACF74--;
-        } else if (D_80097448[0] > 0x30) {
+        } else if (g_unkGraphicsStruct.D_80097448 > 0x30) {
             x_offset = 4;
             if (PLAYER.facingLeft) {
                 x_offset = -x_offset;
@@ -805,7 +805,7 @@ void PlayerStepCrouch(void) {
     case 0x0:
         if (D_800ACF74 != 0) {
             D_800ACF74--;
-        } else if (D_80097448[0] > 0x18) {
+        } else if (g_unkGraphicsStruct.D_80097448 > 0x18) {
             if (!g_Player.unk48) {
                 x_offset = 12;
                 if (PLAYER.facingLeft) {
@@ -1057,7 +1057,7 @@ void PlayerStepHighJump(void) {
             func_801139CC(3);
             if (g_Player.unk4A > 4) {
                 PLAYER.step_s = 2;
-                PLAYER.drawFlags |= FLAG_DRAW_ROTATE;
+                PLAYER.drawFlags |= ENTITY_ROTATE;
                 PLAYER.rotate = 0x800;
                 PLAYER.rotPivotX = 0;
                 PLAYER.rotPivotY = 2;
@@ -1087,15 +1087,14 @@ void PlayerStepHighJump(void) {
         break;
 
     case 2:
-        PLAYER.drawFlags |= FLAG_DRAW_ROTATE;
+        PLAYER.drawFlags |= ENTITY_ROTATE;
         PLAYER.rotPivotX = 0;
         PLAYER.rotPivotY = 2;
         if (g_Player.unk4A > 0x38) {
             SetPlayerAnim(0x2D);
             PLAYER.drawFlags &=
-                (FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40 |
-                 FLAG_BLINK | FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY |
-                 FLAG_DRAW_SCALEX);
+                (ENTITY_MASK_R | ENTITY_MASK_G | ENTITY_MASK_B | ENTITY_BLINK |
+                 ENTITY_OPACITY | ENTITY_SCALEY | ENTITY_SCALEX);
             PLAYER.rotate = 0;
             PLAYER.facingLeft += 1;
             PLAYER.facingLeft &= 1;
@@ -1164,11 +1163,11 @@ void func_80113EE0(void) {
     PLAYER.pose = PLAYER.poseTimer = 0;
     PLAYER.animSet = ANIMSET_DRA(1);
     PLAYER.entityId = 0;
-    PLAYER.drawMode = DRAW_DEFAULT;
+    PLAYER.blendMode = BLEND_NO;
     g_Player.unk44 = 0;
     g_Player.unk46 = 0;
-    PLAYER.drawFlags &= (FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40 |
-                         FLAG_BLINK | FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX);
+    PLAYER.drawFlags &= (ENTITY_MASK_R | ENTITY_MASK_G | ENTITY_MASK_B |
+                         ENTITY_BLINK | ENTITY_SCALEY | ENTITY_SCALEX);
     PLAYER.rotate = 0;
     PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter;
     if (g_Entities[E_WEAPON].entityId == E_MIST) {
@@ -1289,7 +1288,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
             case 1:
                 break;
             }
-            PLAYER.velocityY = i + FIX(-4);
+            PLAYER.velocityY = i - FIX(4);
             func_8010E3B8(FIX(-5.0 / 3));
             PLAYER.step_s = 1;
             if (func_80113E68() == 0) {
@@ -1307,7 +1306,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
             case 1:
             case 5:
             default:
-                PLAYER.velocityY = i + FIX(-4);
+                PLAYER.velocityY = i - FIX(4);
                 func_8010E3B8(FIX(-5.0 / 3));
                 PLAYER.step_s = 1;
                 if (func_80113E68() == 0) {
@@ -1547,7 +1546,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
         PLAYER.velocityY = 0;
         g_Player.timers[8] = 48;
         PlaySfx(SFX_STOMP_HARD_B);
-        PLAYER.drawFlags |= FLAG_DRAW_ROTATE;
+        PLAYER.drawFlags |= ENTITY_ROTATE;
         PLAYER.rotate = 0x400;
         PLAYER.rotPivotX = 0x10;
         PLAYER.rotPivotY = 4;
@@ -1595,9 +1594,9 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
         PLAYER.poseTimer = PLAYER.pose = 0;
         break;
     case 14:
-        PLAYER.drawFlags |= FLAG_DRAW_ROTATE;
+        PLAYER.drawFlags |= ENTITY_ROTATE;
         if (g_Player.timers[8] <= 0) {
-            PLAYER.drawFlags &= ~FLAG_DRAW_ROTATE;
+            PLAYER.drawFlags &= ~ENTITY_ROTATE;
             PLAYER.rotate = 0x800;
             PLAYER.velocityX = -(PLAYER.velocityX / 2);
             PLAYER.velocityY = 0;
@@ -1696,7 +1695,7 @@ void PlayerStepStoned(s32 arg0) {
         break;
     case 2:
         yShift = FIX(44.0 / 256);
-        if (D_80097448[0] > 0x28) {
+        if (g_unkGraphicsStruct.D_80097448 > 0x28) {
             yShift = yShift / 4;
         }
 
@@ -1766,12 +1765,11 @@ void PlayerStepStoned(s32 arg0) {
         if (PLAYER.poseTimer < 0) {
             PLAYER.step_s = 2;
             PLAYER.drawFlags &=
-                (FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40 |
-                 FLAG_BLINK | FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY |
-                 FLAG_DRAW_SCALEX);
+                (ENTITY_MASK_R | ENTITY_MASK_G | ENTITY_MASK_B | ENTITY_BLINK |
+                 ENTITY_OPACITY | ENTITY_SCALEY | ENTITY_SCALEX);
         } else {
             PLAYER.rotPivotX = 0;
-            PLAYER.drawFlags |= FLAG_DRAW_ROTATE;
+            PLAYER.drawFlags |= ENTITY_ROTATE;
             PLAYER.rotate = D_800ACF94[PLAYER.poseTimer] >> 4;
             if (PLAYER.rotate) {
                 PLAYER.rotPivotY = 0x14;
@@ -1856,7 +1854,7 @@ void PlayerStepKill(DamageParam* damage, s16 arg_PlayerStep, s16 arg2) {
             // Blueprint 46 has child 33, EntityHitByIce
             CreateEntFactoryFromEntity(g_CurrentEntity, BP_HIT_BY_ICE, 0);
             D_80137FEC = 3;
-            PLAYER.drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+            PLAYER.blendMode = BLEND_TRANSP | BLEND_ADD;
         } else {
             func_80118C28(1);
             // Blueprint 44 has child 11, EntityPlayerBlinkWhite
@@ -1981,7 +1979,7 @@ void PlayerStepKill(DamageParam* damage, s16 arg_PlayerStep, s16 arg2) {
 }
 
 void PlayerStepUnk17(void) {
-    PLAYER.drawFlags = FLAG_DRAW_ROTATE;
+    PLAYER.drawFlags = ENTITY_ROTATE;
     PLAYER.velocityX = PLAYER.velocityY = 0;
     PLAYER.poseTimer = 4;
 
@@ -2107,7 +2105,7 @@ void PlayerStepKillWater(void) {
     bool var_s2;
 
     var_s2 = false;
-    PLAYER.drawFlags = FLAG_DRAW_ROTATE;
+    PLAYER.drawFlags = ENTITY_ROTATE;
     plDraw = g_PlayerDraw;
     if (g_unkGraphicsStruct.unk20 == 0xFFF && PLAYER.step_s) {
         SetPlayerStep(Player_Unk17);
@@ -2123,7 +2121,7 @@ void PlayerStepKillWater(void) {
         func_80113EE0();
         PLAYER.velocityY = FIX(-1.625);
         PLAYER.ext.player.anim = 0xC1;
-        PLAYER.drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        PLAYER.blendMode = BLEND_TRANSP | BLEND_ADD;
         PLAYER.rotate = 0x200;
         func_80118C28(1);
         CreateEntFactoryFromEntity(
@@ -2338,7 +2336,7 @@ bool BatFormFinished(void) {
     if (PLAYER.step_s == 0) {
         return false;
     }
-    if (D_80097448[1] || g_Player.padTapped & PAD_R1 ||
+    if (g_unkGraphicsStruct.D_8009744C || g_Player.padTapped & PAD_R1 ||
         HandleTransformationMP(FORM_BAT, REDUCE) < 0) {
         SetPlayerStep(Player_UnmorphBat);
         SetPlayerAnim(0xCA);
@@ -2502,7 +2500,7 @@ void ControlBatForm(void) {
     directionsPressed =
         g_Player.padPressed & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT);
     pressingCross = g_Player.padPressed & PAD_CROSS;
-    PLAYER.drawFlags = FLAG_DRAW_ROTATE;
+    PLAYER.drawFlags = ENTITY_ROTATE;
     PLAYER.rotPivotY = 0;
 
 #if defined(VERSION_HD)
@@ -2862,7 +2860,7 @@ void PlayerStepUnmorphBat(void) {
     s32 i;
     s32 else_cycles;
 
-    PLAYER.drawFlags = FLAG_DRAW_ROTATE;
+    PLAYER.drawFlags = ENTITY_ROTATE;
     DecelerateX(FIX(0.125));
     if (g_Player.vram_flag & (TOUCHING_CEILING | TOUCHING_GROUND)) {
         PLAYER.velocityY = 0;
@@ -3014,12 +3012,12 @@ bool MistFormFinished(void) {
         return 0;
     }
 #ifndef VERSION_PSP
-    if (D_80097448[1] != 0 || g_Player.padTapped & BTN_MIST ||
+    if (g_unkGraphicsStruct.D_8009744C != 0 || g_Player.padTapped & BTN_MIST ||
 #else
     if (g_SecondaryMistTimer != 0) {
         g_SecondaryMistTimer--;
     }
-    if (D_80097448[1] != 0 ||
+    if (g_unkGraphicsStruct.D_8009744C != 0 ||
         g_SecondaryMistTimer == 0 &&
             ((g_Player.padPressed & BTN_MIST) != BTN_MIST) ||
 #endif

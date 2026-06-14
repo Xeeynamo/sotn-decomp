@@ -127,19 +127,17 @@ impl<U: EnumValue> BitFlagLineTransformer<U> where <U as FromStr>::Err: Debug {
             if field_value.is_zero() {
                 rvalue = self.default_value.to_string();
             } else {
-                // n.b.! there may be values missing from the enums which would
-                //       result in an incorrect value being produced.
-                rvalue = self.enum_values.iter()
-                    .map(|(mask, name)|
-                        if !((*mask & field_value).is_zero()) {
-                            Some(name)
-                        } else {
-                            None
-                        })
-                    .filter(|e| e.is_some())
-                    .map(|e| *e.unwrap())
-                    .collect::<Vec<&str>>()
-                    .join(" | ");
+                // Greedy consuming approach: match flags from largest to smallest,
+                // consuming matched bits to avoid double-counting overlapping flags.
+                let mut remaining = field_value;
+                let mut parts: Vec<&str> = Vec::new();
+                for (mask, name) in &self.enum_values {
+                    if !mask.is_zero() && (*mask & remaining) == *mask {
+                        parts.push(name);
+                        remaining = remaining & !(*mask);
+                    }
+                }
+                rvalue = parts.join(" | ");
 
                 if field_value.count_ones() > 1 &&
                     (operator == "^" || operator == "&" || operator == "|" ||

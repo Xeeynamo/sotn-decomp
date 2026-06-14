@@ -332,7 +332,7 @@ void func_psp_09237CB8(void) {
     RECT rect;
     s32 height = 0x80;
 
-    func_psp_089264CC(0x8000, D_psp_0925F850, 1);
+    func_psp_089264CC(0x8000, D_psp_0925F850, true);
     rect.x = D_psp_0924F800 << 6;
     rect.y = 0;
     rect.w = 0x40;

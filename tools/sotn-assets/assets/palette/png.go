@@ -4,7 +4,9 @@ import (
 	"bytes"
 	"encoding/binary"
 	"fmt"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
+
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util/png"
+
 	"image/color"
 	"io"
 )
@@ -18,7 +20,10 @@ func (_ *palettePng) Export(w io.Writer, colors []color.RGBA) error {
 	for i := 0; i < len(colors); i++ {
 		data[i] = byte(i)
 	}
-	return util.PngEncode(w, data, width, height, colors)
+	if err := png.Encode(w, data, width, height, colors); err != nil {
+		return fmt.Errorf("png encode: %w", err)
+	}
+	return nil
 }
 
 func (_ *palettePng) Import(r io.Reader) ([]color.RGBA, error) {

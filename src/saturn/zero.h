@@ -46,8 +46,9 @@ extern struct Unk060645D0_1* DAT_060645D0;
 s32* DAT_060485e0;
 struct Unk0605d6c0* DAT_0605d6c0[];
 u16 DAT_060086d4;
+extern u32 g_Timer; // 0x0605CD7C
 s32 PTR_FUN_060086cc(s32, s32, s32);
-void func_0600871C(s32, s32, s32);
+void func_0600871C(s32, UNK_0605c680*, s32);
 
 struct Unk0605CD90 {
     s32 dst0;
@@ -64,7 +65,6 @@ struct Unk0605CD90 {
 };
 
 void func_060089F0(struct Unk0605CD90* param_1);
-s32 DAT_0605c680;
 s32 DAT_060086e4;
 s32 func_0600F96C(s32, s32, s32);
 // func_060086E8
@@ -112,8 +112,6 @@ extern s32* DAT_06064690;
 extern s32* DAT_06066000;
 
 void func_06006FA8(void);
-int func_06018D88(void);
-void func_06033024();
 
 extern u8 DAT_060644c1;
 extern u8 DAT_060644dc;

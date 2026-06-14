@@ -11,7 +11,6 @@ options:
   compiler: GCC
   symbol_addrs_path:
     - config/symbols.us.txt
-    - config/symbols.us.stnp3.txt
   undefined_funcs_auto_path: build/us/config/undefined_funcs_auto.us.stnp3.txt
   undefined_syms_auto_path: build/us/config/undefined_syms_auto.us.stnp3.txt
   find_file_boundaries: yes
@@ -41,7 +40,7 @@ segments:
       - [0x8C, .data, header] # palette definitions
       - [0x1D0, .data, header] # layers
       - [0x558, .data, header] # graphics banks
-      - [0x728, .data, gen/e_laydef] # layout entries header
+      - [0x728, .data, gen/us/e_laydef] # layout entries header
       - [0x8D0, .data, e_init]
       - [0xBD4, .data, background_block_init]
       - [0xD78, .data, e_red_door_tiles]
@@ -53,11 +52,11 @@ segments:
       - [0x1104, .data, e_trapdoor]
       - [0x1114, .data, e_jewel_sword_puzzle]
       - [0x11CC, .data, e_sky_entities]
-      - [0x122C, data]
+      - [0x122C, .data, d_water_data]
       - [0x1260, .data, e_explosion_puff_opaque]
       - [0x12CC, .data, slogra]
       - [0x14B4, .data, gaibon]
-      - [0x1618, data, d_prize_drops]
+      - [0x1618, .data, d_prize_drops]
       - [0x162C, .data, st_update]
       - [0x1678, .data, collision]
       - [0x1A38, .data, e_red_door]
@@ -74,13 +73,11 @@ segments:
       - [0x258C, .data, e_zombie]
       - [0x25D4, .data, e_bloody_zombie]
       - [0x26CC, .data, e_owl_knight]
-      - [0x2978, data]
-      - [0x2A20, data]
-      - [0x2B00, data]
+      - [0x2978, .data, hammer]
       - [0x2EF4, .data, gurkha]
       - [0x33E4, .data, blade]
       - [0x3A7C, .data, gen/rooms]
-      - [0x3B68, .data, gen/e_layout] # layout entries data
+      - [0x3B68, .data, gen/us/e_layout] # layout entries data
       - [0x49E0, .data, stage_data]
       - [0x2A124, .data, gen/sprites]
       - [0x31EA0, .rodata, e_castle_door]
@@ -101,8 +98,8 @@ segments:
       - [0x320B4, .rodata, e_bloody_zombie] # EntityBloodyZombie data
       - [0x320DC, .rodata, e_owl_knight]
       - [0x321EC, .rodata, giantbro_helpers] # Strings
-      - [0x3224C, .rodata, 4E69C] # EntityHammer
-      - [0x322CC, .rodata, 4E69C] # EntityGurkhaBodyParts
+      - [0x3224C, .rodata, hammer] # EntityHammer
+      - [0x322CC, .rodata, hammer] # EntityGurkhaBodyParts
       - [0x322F8, .rodata, gurkha] # EntityGurkha
       - [0x32380, .rodata, gurkha] # EntityGurkhaWeapon
       - [0x323E4, .rodata, blade] # EntityBlade
@@ -148,12 +145,12 @@ segments:
       - [0x4B018, c, e_owl_knight]
       - [0x4D658, c, giantbro_helpers]
       - [0x4E04C, c]
-      - [0x4E69C, c]
+      - [0x4E4CC, c, hammer]
       - [0x4F778, c, gurkha]
       - [0x50A00, c, blade]
       - [0x51F38, c, prim_helpers]
       - [0x52768, .bss, create_entity]
       - [0x5277D, .bss, bss]
       - [0x53378, .bss, giantbro_helpers]
-      - [0x533F4, .bss, e_collect]
+      - [0x533F4, .bss, st_update]
   - [0x53434]

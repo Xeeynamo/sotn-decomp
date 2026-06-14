@@ -1039,7 +1039,7 @@ void func_800F2404(s32 arg0) {
 
     if (arg0 == 0) {
         g_unkGraphicsStruct.BottomCornerTextTimer = 0;
-        g_unkGraphicsStruct.D_800973F8 = 0;
+        g_unkGraphicsStruct.primIndex = 0;
         g_unkGraphicsStruct.D_800973FC = 0;
     }
     g_CutsceneHasControl = 0;
@@ -1062,9 +1062,9 @@ void func_800F2404(s32 arg0) {
 
     g_unkGraphicsStruct.unk20 = 0;
     g_unkGraphicsStruct.unk24 = 0;
-    D_80097448[0] = 0;
-    D_80097448[1] = 0;
-    D_80097450 = 0;
+    g_unkGraphicsStruct.D_80097448 = 0;
+    g_unkGraphicsStruct.D_8009744C = 0;
+    g_unkGraphicsStruct.D_80097450 = 0;
     SetGPUBuffRGBZero();
 }
 
@@ -1183,8 +1183,6 @@ bool func_800F27F4(s32 arg0) {
 // of binary to mismatch. Removing it from the header seems
 // to make it match everywhere
 void func_800F2860(void) {
-    s32 var_v0;
-
     switch (D_801375C8) {
     case 0:
         break;
@@ -1195,7 +1193,6 @@ void func_800F2860(void) {
     case 2:
         if (func_80131F68() == false) {
             D_801375C8++;
-            break;
         }
         break;
     case 3:
@@ -1205,24 +1202,21 @@ void func_800F2860(void) {
     case 4:
         if (func_80131F68() != false) {
             D_801375C8++;
-            break;
         }
         break;
     case 5:
         if (func_80131F68() == false) {
             D_801375C8++;
-            break;
         }
         break;
     case 6:
         PlaySfx(currentMusicId);
         D_801375C8 = 0;
-        return;
+        break;
     case 7:
-        if (func_80131F68() != 0) {
-            return;
+        if (func_80131F68() == false) {
+            D_801375C8--;
         }
-        D_801375C8--;
         break;
     case 8:
         PlaySfx(SET_UNK_80);
@@ -1243,7 +1237,7 @@ void RunMainEngine(void) {
     u32 tempY;
 
 #if defined(VERSION_PSP)
-    if (D_psp_08C630C8) {
+    if (g_InfiniteHearts) {
         g_Status.hearts = 99;
     }
 #endif
@@ -1395,12 +1389,12 @@ void RunMainEngine(void) {
 #endif
         func_800F24F4();
 #if defined(VERSION_PSP)
-        g_unkGraphicsStruct.D_800973F8 = (s16)AllocPrimitives(PRIM_GT4, 16);
+        g_unkGraphicsStruct.primIndex = (s16)AllocPrimitives(PRIM_GT4, 16);
 #else
-        g_unkGraphicsStruct.D_800973F8 = AllocPrimitives(PRIM_GT4, 16);
+        g_unkGraphicsStruct.primIndex = AllocPrimitives(PRIM_GT4, 16);
 #endif
-        if (g_unkGraphicsStruct.D_800973F8 != 0) {
-            prim = &g_PrimBuf[g_unkGraphicsStruct.D_800973F8];
+        if (g_unkGraphicsStruct.primIndex != 0) {
+            prim = &g_PrimBuf[g_unkGraphicsStruct.primIndex];
             while (prim != NULL) {
                 prim->tpage = 0x1A;
                 prim->clut = 0x120;
@@ -1430,8 +1424,8 @@ void RunMainEngine(void) {
         g_Player.unk7C = PLAYER.posX.i.hi;
         D_801375A0 = PLAYER.posY.i.hi;
         g_Player.unk7E = PLAYER.posY.i.hi;
-        D_80097488.x.val = 0;
-        D_80097488.y.val = 0;
+        g_unkGraphicsStruct.shoveX.val = 0;
+        g_unkGraphicsStruct.shoveY.val = 0;
         if (g_StageId == STAGE_ST0 || g_PlayableCharacter != PLAYER_ALUCARD) {
             g_PlOvl.D_8013C000();
             g_PlOvl.D_8013C008();
@@ -1454,7 +1448,7 @@ void RunMainEngine(void) {
         if (g_DemoMode == Demo_End) {
             g_DemoMode = Demo_None;
             D_80097C98 = 0x08000000;
-            LoadSaveData(SAVE_DATA_PTR);
+            ApplySaveData(SAVE_DATA_PTR);
             D_8003C730 = 2;
             g_GameStep = Play_PrepareNextStage;
             return;
@@ -1527,8 +1521,8 @@ void RunMainEngine(void) {
         D_801375B8 = D_801375B0 - g_Tilemap.scrollY.i.hi;
         D_801375A4 = D_8013759C - PLAYER.posX.val;
         D_801375A8 = D_801375A0 - PLAYER.posY.val;
-        D_801375A4 -= D_80097488.x.val;
-        D_801375A8 -= D_80097488.y.val;
+        D_801375A4 -= g_unkGraphicsStruct.shoveX.val;
+        D_801375A8 -= g_unkGraphicsStruct.shoveY.val;
         func_800F0940();
 
         for (i = 0, ent = g_Entities; i < TOTAL_ENTITY_COUNT; i++, ent++) {
@@ -1638,7 +1632,7 @@ void RunMainEngine(void) {
             if ((g_StageId == STAGE_ST0) ||
                 (g_PlayableCharacter != PLAYER_ALUCARD)) {
 #if !defined(VERSION_PSP)
-                if (!func_8010183C(0)) {
+                if (!StatusPause(0)) {
                     return;
                 }
 #endif
@@ -1680,7 +1674,7 @@ void RunMainEngine(void) {
         DrawHudSubweapon2();
 #else
         DrawHudSubweapon();
-        if ((g_pads[0].tapped & PAD_START) && func_8010183C(1)) {
+        if ((g_pads[0].tapped & PAD_START) && StatusPause(1)) {
             D_800974A4 = 0;
             g_GameEngineStep = Engine_Normal;
             PlaySfx(SET_UNPAUSE_SFX_SCRIPTS);

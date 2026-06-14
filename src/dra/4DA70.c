@@ -2,6 +2,7 @@
 //! PSPO=4,p
 #include "dra.h"
 #include "dra_bss.h"
+#include <scratchpad.h>
 
 static void DestroyPrimitive(Primitive* prim) {
     s32 i;

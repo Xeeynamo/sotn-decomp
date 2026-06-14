@@ -15,7 +15,7 @@ void EntityCavernDoorLever(Entity* self) {
     case 0:
         InitializeEntity(g_EInitStInteractable);
         self->animCurFrame = 18;
-        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->drawFlags |= ENTITY_ROTATE;
         self->rotate = -0x200;
         platform = self + 1;
         CreateEntityFromEntity(E_ID(CAVERN_DOOR_PLATFORM), self, platform);
@@ -72,8 +72,8 @@ void EntityCavernDoorPlatform(Entity* self) {
             player->posY.i.hi += 1;
 // Need to identify this var, and see why it's in NP3 but not NO3
 #if !defined(STAGE_IS_NO3)
-            D_80097488.x.i.hi += xDiff;
-            D_80097488.y.i.hi += 1;
+            g_unkGraphicsStruct.shoveX.i.hi += xDiff;
+            g_unkGraphicsStruct.shoveY.i.hi += 1;
 #endif
         }
         self->ext.cavernDoor.xCoord.val = self->posX.val;
@@ -191,7 +191,7 @@ void EntityCavernDoor(Entity* self) {
         entity->posX.i.hi += -8 + (Random() & 15);
         entity->zPriority = self->zPriority + 2;
         entity->params = 0x10;
-        entity->drawFlags |= (FLAG_DRAW_SCALEX + FLAG_DRAW_SCALEY);
+        entity->drawFlags |= (ENTITY_SCALEX + ENTITY_SCALEY);
         entity->scaleX = entity->scaleY = 192;
         break;
     }

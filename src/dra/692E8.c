@@ -143,7 +143,7 @@ void func_80109328(void) {
         g_Player.timers[ALU_T_DARKMETAMORPH] = 0;
         func_801092E8(0);
     }
-    PLAYER.drawMode = DRAW_DEFAULT;
+    PLAYER.blendMode = BLEND_NO;
 }
 
 void func_801093C4(void) {
@@ -412,7 +412,7 @@ static void CheckStageCollision(s32 isTransformed) {
         x = PLAYER.posX.i.hi + g_SensorsFloor[i].x;
         y = PLAYER.posY.i.hi + g_SensorsFloor[i].y;
         CheckCollision(x, y, &g_Player.colFloor[i], 0);
-        if (g_Player.timers[7] &&
+        if (g_Player.timers[ALU_T_7] &&
             g_Player.colFloor[i].effects & EFFECT_SOLID_FROM_ABOVE) {
             CheckCollision(x, y + 12, &sp10, 0);
             if (!(sp10.effects & EFFECT_SOLID)) {
@@ -530,9 +530,8 @@ void func_8010A234(s32 arg0) {
         PLAYER.animSet = 1;
         PLAYER.unk5A = 0;
         PLAYER.rotate = 0;
-        PLAYER.drawFlags &=
-            (FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40 | FLAG_BLINK |
-             FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX);
+        PLAYER.drawFlags &= (ENTITY_MASK_R | ENTITY_MASK_G | ENTITY_MASK_B |
+                             ENTITY_BLINK | ENTITY_SCALEY | ENTITY_SCALEX);
         func_8010FAF4();
         PLAYER.rotPivotY = 0;
         PLAYER.rotPivotX = 0;
@@ -651,7 +650,7 @@ void EntityAlucard() {
     playerStep = 0;
     playerStepS = 0;
     var_s8 = 0;
-    PLAYER.drawFlags = FLAG_DRAW_DEFAULT;
+    PLAYER.drawFlags = ENTITY_DEFAULT;
     g_Player.unk18 = 0;
     g_Player.unk70 = 0;
 
@@ -693,31 +692,32 @@ void EntityAlucard() {
     }
     i = CheckAndDoLevelUp();
     if (i != 0) {
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_25, i - 1), 0);
+        CreateEntFactoryFromEntity(
+            g_CurrentEntity, FACTORY(BP_LEVEL_UP_TEXT, i - 1), 0);
     }
     for (i = 0; i < 16; i++) {
         if (g_Player.timers[i]) {
             switch (i) {
-            case 0:
-            case 1:
-            case 5:
-            case 6:
-            case 7:
-            case 8:
-            case 9:
-            case 10:
-            case 12:
-            case 13:
-            case 14:
+            case ALU_T_POISON:
+            case ALU_T_CURSE:
+            case ALU_T_5:
+            case ALU_T_6:
+            case ALU_T_7:
+            case ALU_T_8:
+            case ALU_T_9:
+            case ALU_T_USE_SUBWPN:
+            case ALU_T_USE_SPELL:
+            case ALU_T_INVINCIBLE:
+            case ALU_T_INVINCIBLE_CONSUMABLES:
                 break;
-            case 2:
+            case ALU_T_HITEFFECT:
                 PLAYER.palette = g_Player.damagePalette;
                 break;
-            case 3:
+            case ALU_T_3:
                 PLAYER.palette = g_Player.high_jump_timer;
-                g_Player.timers[15] = 12;
+                g_Player.timers[ALU_T_15] = 12;
                 break;
-            case 4: {
+            case ALU_T_4: {
                 angle = ((g_GameTimer & 0xF) * 256);
                 draw = g_PlayerDraw;
                 draw->r0 = draw->g0 = draw->b0 =
@@ -734,10 +734,10 @@ void EntityAlucard() {
                 draw->enableColorBlend = 1;
                 break;
             }
-            case 15:
+            case ALU_T_15:
                 func_8010DFF0(0, 0);
                 break;
-            case 11:
+            case ALU_T_DARKMETAMORPH:
                 if (D_800ACDF8 == 0) {
                     func_801092E8(1);
                 }
@@ -745,60 +745,60 @@ void EntityAlucard() {
             }
             if (--g_Player.timers[i] == 0) {
                 switch (i) {
-                case 5:
-                case 7:
-                case 8:
-                case 9:
-                case 10:
-                case 12:
-                case 14:
+                case ALU_T_5:
+                case ALU_T_7:
+                case ALU_T_8:
+                case ALU_T_9:
+                case ALU_T_USE_SUBWPN:
+                case ALU_T_USE_SPELL:
+                case ALU_T_INVINCIBLE_CONSUMABLES:
                     break;
-                case 0:
+                case ALU_T_POISON:
                     if (!(g_Player.status &
                           (PLAYER_STATUS_STONE | PLAYER_STATUS_CURSE))) {
-                        g_Player.timers[4] = 0xC;
-                        g_Player.timers[15] = 0xC;
-                        func_8010E168(1, 0xC);
+                        g_Player.timers[ALU_T_4] = 12;
+                        g_Player.timers[ALU_T_15] = 12;
+                        func_8010E168(1, 12);
                     }
                     continue;
-                case 1:
+                case ALU_T_CURSE:
                     if (!(g_Player.status &
                           (PLAYER_STATUS_STONE | PLAYER_STATUS_CURSE))) {
-                        g_Player.timers[4] = 0xC;
-                        g_Player.timers[15] = 0xC;
-                        func_8010E168(1, 0xC);
+                        g_Player.timers[ALU_T_4] = 12;
+                        g_Player.timers[ALU_T_15] = 12;
+                        func_8010E168(1, 12);
                     }
                     continue;
-                case 2:
+                case ALU_T_HITEFFECT:
                     PLAYER.palette = PAL_FLAG(PAL_ALUCARD);
                     continue;
-                case 3:
+                case ALU_T_3:
                     PLAYER.palette = PAL_FLAG(PAL_ALUCARD);
                     if (!(g_Player.status &
                           (PLAYER_STATUS_STONE | PLAYER_STATUS_POISON |
                            PLAYER_STATUS_CURSE))) {
-                        g_Player.timers[4] = 0xC;
-                        g_Player.timers[15] = 0xC;
-                        func_8010E168(1, 0xC);
+                        g_Player.timers[ALU_T_4] = 12;
+                        g_Player.timers[ALU_T_15] = 12;
+                        func_8010E168(1, 12);
                     }
                     continue;
-                case 4:
+                case ALU_T_4:
                     draw->enableColorBlend = 0;
                     continue;
-                case 6:
-                    if ((PLAYER.step == 3) &&
+                case ALU_T_6:
+                    if ((PLAYER.step == Player_Fall) &&
                         (PLAYER.ext.player.anim != 0x1C)) {
                         SetPlayerAnim(0x1C);
-                        g_Player.unk44 &= 0xFFEF;
+                        g_Player.unk44 &= (~0x10);
                     }
                     continue;
-                case 13:
+                case ALU_T_INVINCIBLE:
                     func_8010E168(1, 0x10);
                     continue;
-                case 15:
+                case ALU_T_15:
                     EnableAfterImage();
                     continue;
-                case 11:
+                case ALU_T_DARKMETAMORPH:
                     func_801092E8(0);
                     continue;
                 }
@@ -874,14 +874,15 @@ void EntityAlucard() {
 #endif
         return;
     }
-    if ((D_80097448[1] != 0) && (IsRelicActive(RELIC_HOLY_SYMBOL) == 0) &&
-        !(PLAYER.hitParams & 0x1F)) {
+    if ((g_unkGraphicsStruct.D_8009744C != 0) &&
+        (IsRelicActive(RELIC_HOLY_SYMBOL) == 0) && !(PLAYER.hitParams & 0x1F)) {
         PLAYER.hitParams = 6;
     }
 
 // US uses a different ordering than HD/PSP
 #if !defined(VERSION_US)
-    if (g_Player.timers[13] | g_Player.timers[14]) {
+    if (g_Player.timers[ALU_T_INVINCIBLE] |
+        g_Player.timers[ALU_T_INVINCIBLE_CONSUMABLES]) {
         goto specialmove;
     }
 #endif
@@ -895,7 +896,8 @@ void EntityAlucard() {
         goto block_159;
     }
 #if defined(VERSION_US)
-    if (g_Player.timers[13] | g_Player.timers[14]) {
+    if (g_Player.timers[ALU_T_INVINCIBLE] |
+        g_Player.timers[ALU_T_INVINCIBLE_CONSUMABLES]) {
         goto specialmove;
     }
 #endif
@@ -904,7 +906,7 @@ void EntityAlucard() {
         playerStepS = PLAYER.step_s;
         i = HandleDamage(&damage, PLAYER.hitParams, PLAYER.hitPoints, 0);
 #if defined(VERSION_PSP)
-        if (D_psp_08C630C4) {
+        if (g_InvincibleFlag) {
             PLAYER.hitPoints = 0;
             i = 0;
         }
@@ -927,8 +929,8 @@ void EntityAlucard() {
         case 1:
             g_Player.unk18 = damage.effects;
             g_Player.high_jump_timer = 0x8166;
-            func_8010E168(1, 0xC);
-            g_Player.timers[3] = 6;
+            func_8010E168(1, 12);
+            g_Player.timers[ALU_T_3] = 6;
             PlaySfx(SFX_VO_ALU_PAIN_A);
             CreateHPNumMove(1, 0);
             break;
@@ -938,8 +940,8 @@ void EntityAlucard() {
             CreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x58), 0);
             g_Player.high_jump_timer = 0x8166;
-            func_8010E168(1, 0xC);
-            g_Player.timers[3] = 6;
+            func_8010E168(1, 12);
+            g_Player.timers[ALU_T_3] = 6;
             break;
         case 3:
             g_Player.unk18 = damage.effects;
@@ -1017,7 +1019,7 @@ specialmove:
         }
 #endif
 
-        if (D_80097448[1] == 0) {
+        if (g_unkGraphicsStruct.D_8009744C == 0) {
             if (CHECK_SHOULDER(BTN_MIST) &&
                 (HandleTransformationMP(FORM_MIST, CHECK_ONLY) == 0) &&
                 (PLAYER.step == Player_Stand || PLAYER.step == Player_Walk ||
@@ -1055,7 +1057,8 @@ specialmove:
         }
         if (CHECK_SHOULDER(BTN_WOLF) &&
             (HandleTransformationMP(FORM_WOLF, CHECK_ONLY) == 0) &&
-            ((D_80097448[1] == 0) || IsRelicActive(RELIC_HOLY_SYMBOL)) &&
+            ((g_unkGraphicsStruct.D_8009744C == 0) ||
+             IsRelicActive(RELIC_HOLY_SYMBOL)) &&
             (PLAYER.step == Player_Stand || PLAYER.step == Player_Walk ||
              PLAYER.step == Player_Crouch || PLAYER.step == Player_Fall ||
              PLAYER.step == Player_Jump || PLAYER.step == Player_AlucardStuck ||
@@ -1337,24 +1340,24 @@ block_159:
         func_8010E168(1, 4);
         break;
     }
-    if (g_Player.timers[9]) {
+    if (g_Player.timers[ALU_T_9]) {
         newStatus |= PLAYER_STATUS_UNK400;
     }
-    if (g_Player.timers[10]) {
-        newStatus |= PLAYER_STATUS_UNK800;
+    if (g_Player.timers[ALU_T_USE_SUBWPN]) {
+        newStatus |= PLAYER_STATUS_SUBWPN;
     }
-    if (g_Player.timers[12]) {
-        newStatus |= PLAYER_STATUS_UNK1000;
+    if (g_Player.timers[ALU_T_USE_SPELL]) {
+        newStatus |= PLAYER_STATUS_SPELLCAST;
     }
-    if (g_Player.timers[0]) {
+    if (g_Player.timers[ALU_T_POISON]) {
         newStatus |= PLAYER_STATUS_UNK20000000 | NO_AFTERIMAGE |
                      PLAYER_STATUS_UNK100000 | PLAYER_STATUS_POISON;
     }
-    if (g_Player.timers[1]) {
+    if (g_Player.timers[ALU_T_CURSE]) {
         newStatus |= PLAYER_STATUS_UNK20000000 | NO_AFTERIMAGE |
                      PLAYER_STATUS_UNK100000 | PLAYER_STATUS_CURSE;
     }
-    if (*D_80097448 != 0) {
+    if (g_unkGraphicsStruct.D_80097448 != 0) {
         newStatus |= NO_AFTERIMAGE | PLAYER_STATUS_UNK20000;
     }
     if (g_Player.timers[ALU_T_DARKMETAMORPH]) {
@@ -1371,15 +1374,16 @@ block_159:
     if (newStatus & PLAYER_STATUS_UNK20000000) {
         g_Status.D_80097BF8 |= 1;
     }
-    if (g_Player.timers[13] | g_Player.timers[14]) {
-        g_Player.status |= PLAYER_STATUS_UNK100;
+    if (g_Player.timers[ALU_T_INVINCIBLE] |
+        g_Player.timers[ALU_T_INVINCIBLE_CONSUMABLES]) {
+        g_Player.status |= PLAYER_STATUS_INVINCIBLE;
     }
     if ((g_Player.unk08 & PLAYER_STATUS_UNK10000) &&
         !(g_Player.status & (PLAYER_STATUS_UNK10000 | PLAYER_STATUS_DEAD))) {
-        func_8010E168(1, 0xC);
+        func_8010E168(1, 12);
         if (!(g_Player.status & (PLAYER_STATUS_POISON | PLAYER_STATUS_CURSE))) {
-            g_Player.timers[4] = 0xC;
-            g_Player.timers[15] = 4;
+            g_Player.timers[ALU_T_4] = 12;
+            g_Player.timers[ALU_T_15] = 4;
             PLAYER.palette = PAL_FLAG(PAL_ALUCARD);
         }
     }
@@ -1403,15 +1407,15 @@ block_159:
             !(g_Player.status & (PLAYER_STATUS_TRANSFORM | PLAYER_STATUS_UNK10 |
                                  PLAYER_STATUS_UNK10000 | PLAYER_STATUS_DEAD |
                                  PLAYER_STATUS_AXEARMOR)) &&
-            !(PLAYER.drawFlags & (FLAG_DRAW_SCALEY | FLAG_DRAW_ROTATE))) {
-            PLAYER.drawFlags |= FLAG_DRAW_SCALEY;
+            !(PLAYER.drawFlags & (ENTITY_SCALEY | ENTITY_ROTATE))) {
+            PLAYER.drawFlags |= ENTITY_SCALEY;
             PLAYER.scaleY = 0x110;
             PLAYER.rotPivotY = 0x18;
         }
         InitPlayerAfterImage();
-        if ((*D_80097448 >= 0x29 ||
+        if ((g_unkGraphicsStruct.D_80097448 >= 0x29 ||
              ((g_Player.status & PLAYER_STATUS_WOLF_FORM) &&
-              *D_80097448 > 0xC)) &&
+              g_unkGraphicsStruct.D_80097448 > 0xC)) &&
             (!g_CurrentEntity->nFramesInvincibility)) {
             PLAYER.velocityY = PLAYER.velocityY * 3 / 4;
             PLAYER.velocityX = PLAYER.velocityX * 3 / 4;
@@ -1459,9 +1463,9 @@ block_159:
         }
     post_oddblock:
         g_Player.unk04 = vramFlag;
-        if (((*D_80097448 >= 0x29) ||
+        if (((g_unkGraphicsStruct.D_80097448 >= 0x29) ||
              ((g_Player.status & PLAYER_STATUS_WOLF_FORM) &&
-              (*D_80097448 > 0xC))) &&
+              (g_unkGraphicsStruct.D_80097448 > 0xC))) &&
             (!g_CurrentEntity->nFramesInvincibility)) {
             PLAYER.velocityY = PLAYER.velocityY * 4 / 3;
             PLAYER.velocityX = PLAYER.velocityX * 4 / 3;

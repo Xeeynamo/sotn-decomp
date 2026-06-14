@@ -546,7 +546,7 @@ void RicMain(void) {
                     damage.effects = PLAYER.hitParams & ~0x1F;
                     damage.damageKind = PLAYER.hitParams & 0x1F;
 #ifdef VERSION_PSP
-                    if (D_psp_08C630C4) {
+                    if (g_InvincibleFlag) {
                         PLAYER.hitPoints = 0;
                     }
 #endif
@@ -715,12 +715,12 @@ void RicMain(void) {
         newStatus |= PLAYER_STATUS_UNK400;
     }
     if (g_Player.timers[PL_T_10]) {
-        newStatus |= PLAYER_STATUS_UNK800;
+        newStatus |= PLAYER_STATUS_SUBWPN;
     }
     if (g_Player.timers[PL_T_12]) {
-        newStatus |= PLAYER_STATUS_UNK1000;
+        newStatus |= PLAYER_STATUS_SPELLCAST;
     }
-    if (*D_80097448 != 0) {
+    if (g_unkGraphicsStruct.D_80097448 != 0) {
         newStatus |= PLAYER_STATUS_UNK20000;
     }
     newStatus |= PLAYER_STATUS_UNK10000000;
@@ -743,7 +743,7 @@ void RicMain(void) {
     }
     if (g_Player.timers[PL_T_INVINCIBLE_SCENE] |
         g_Player.timers[PL_T_INVINCIBLE]) {
-        g_Player.status |= PLAYER_STATUS_UNK100;
+        g_Player.status |= PLAYER_STATUS_INVINCIBLE;
     }
     g_api.UpdateAnim(D_80155964, (AnimationFrame**)D_8015538C);
     PLAYER.hitboxState = 1;
@@ -770,7 +770,8 @@ void RicMain(void) {
         return;
     }
     InitRicAfterImage();
-    if ((*D_80097448 > 0x28) && !g_CurrentEntity->nFramesInvincibility) {
+    if ((g_unkGraphicsStruct.D_80097448 > 0x28) &&
+        !g_CurrentEntity->nFramesInvincibility) {
         PLAYER.velocityY = PLAYER.velocityY * 3 / 4;
         PLAYER.velocityX = PLAYER.velocityX * 3 / 4;
     }
@@ -801,7 +802,8 @@ void RicMain(void) {
         CheckStageCollision(1);
     }
     g_Player.unk04 = vramFlag;
-    if (*D_80097448 > 0x28 && !g_CurrentEntity->nFramesInvincibility) {
+    if (g_unkGraphicsStruct.D_80097448 > 0x28 &&
+        !g_CurrentEntity->nFramesInvincibility) {
         PLAYER.velocityY = (PLAYER.velocityY * 4) / 3;
         PLAYER.velocityX = (PLAYER.velocityX * 4) / 3;
     }

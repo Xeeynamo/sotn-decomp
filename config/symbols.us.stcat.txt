@@ -1,5 +1,1 @@
 CAT_cluts = 0x80180740;
-g_EInitInteractable = 0x8018114C;
-echo_flag = 0x801814F8;
-DestroyEntity = 0x801BEABC;
-InitializeEntity = 0x801BF7CC;

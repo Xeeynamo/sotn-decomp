@@ -139,7 +139,7 @@ void OVL_EXPORT(DrawPlayerAfterImage)(void) {
             prim->y0;
         g_Entities[STAGE_ENTITY_START + (i / 2) + E_AFTERIMAGE_1].animCurFrame =
             prim->x1;
-        g_Entities[STAGE_ENTITY_START + (i / 2) + E_AFTERIMAGE_1].drawMode =
+        g_Entities[STAGE_ENTITY_START + (i / 2) + E_AFTERIMAGE_1].blendMode =
             prim->y1;
         g_Entities[STAGE_ENTITY_START + (i / 2) + E_AFTERIMAGE_1].facingLeft =
             prim->x2;

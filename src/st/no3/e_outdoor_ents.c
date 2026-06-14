@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no3.h"
+#include <scratchpad.h>
 
 // pushes alucard to the right
 void EntityPushAlucard(Entity* self) {
@@ -911,15 +912,14 @@ void EntityFlyingOwlAndLeaves(Entity* self) {
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 56;
         if (self->params) {
-            self->drawFlags =
-                FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY | FLAG_DRAW_OPACITY;
+            self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY | ENTITY_OPACITY;
             self->scaleX = 0x180;
             self->scaleY = 0x180;
             self->opacity = 0x60;
             self->posY.i.hi = -16;
             self->zPriority = 0xC1;
         } else {
-            self->drawFlags = FLAG_DRAW_OPACITY;
+            self->drawFlags = ENTITY_OPACITY;
             self->opacity = 0x20;
             self->zPriority = 0xBF;
         }

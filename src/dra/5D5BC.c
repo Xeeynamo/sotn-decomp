@@ -205,6 +205,7 @@ void GetSpellDef(SpellDef* spell, s32 id) {
     }
 }
 
+// original name: etc_hosei
 s16 GetStatusAilmentTimer(StatusAilments statusAilment, s16 timer) {
     s16 ret;
     s32 petrify_adjustment;
@@ -227,7 +228,7 @@ s16 GetStatusAilmentTimer(StatusAilments statusAilment, s16 timer) {
     case STATUS_AILMENT_PETRIFIED:
         ret = timer;
         petrify_adjustment =
-            (((rand() % 12) + g_Status.statsTotal[STAT_CON]) - 9) / 10;
+            ((g_Status.statsTotal[STAT_CON] + rand() % 12) - 9) / 10;
         if (petrify_adjustment < 0) {
             petrify_adjustment = 0;
         }
@@ -277,8 +278,9 @@ void LearnSpell(s32 spellId) {
     }
 }
 
-bool func_800FDD44(s32 itemType) {
-    s32 equippedItem = g_Status.equipment[itemType];
+// original name: reduce_weapon
+bool ReduceWeapon(s32 hand) {
+    s32 equippedItem = g_Status.equipment[hand];
     bool isConsumable = g_EquipDefs[equippedItem].isConsumable;
 
     if (CheckEquipmentItemCount(ITEM_DUPLICATOR, EQUIP_ACCESSORY)) {
@@ -286,8 +288,8 @@ bool func_800FDD44(s32 itemType) {
     }
     if (isConsumable) {
         if (!g_Status.equipHandCount[equippedItem]) {
-            g_Status.equipment[itemType] = ITEM_EMPTY_HAND;
-            func_800F53A4();
+            g_Status.equipment[hand] = ITEM_EMPTY_HAND;
+            make_all();
             return true;
         }
         g_Status.equipHandCount[equippedItem]--;
@@ -301,6 +303,7 @@ void func_800FDE00(void) {
     D_80137968 = 0;
 }
 
+// original name: check_experience
 u32 CheckAndDoLevelUp(void) {
     s32 i;
     s32 statsGained;
@@ -324,8 +327,8 @@ u32 CheckAndDoLevelUp(void) {
     if (g_ExpNext[g_Status.level + 1] <= g_Status.exp) {
         g_Status.level++;
         g_Status.mpMax += 4 + (rand() & 1);
-        g_Status.hp += g_LevelHPIncrease[(s32)g_Status.level / 10];
-        g_Status.hpMax += g_LevelHPIncrease[(s32)g_Status.level / 10];
+        g_Status.hp += g_LevelHPIncrease[g_Status.level / 10];
+        g_Status.hpMax += g_LevelHPIncrease[g_Status.level / 10];
         g_Status.heartsMax += 2;
         // Run again, in case we have enough EXP to level up twice
         CheckAndDoLevelUp();
@@ -418,7 +421,7 @@ s32 func_800FE044(s32 amount, s32 type) {
     if (amount != 0 && g_Status.level != 99) {
         playerXPBoost = amount;
         // from here on, "type" is really the enemy's level
-        if ((s32)g_Status.level > type) {
+        if (g_Status.level > type) {
             levelDiff = g_Status.level - type;
             for (i = 0; i < levelDiff; i++) {
                 playerXPBoost = playerXPBoost * 2 / 3;
@@ -427,7 +430,7 @@ s32 func_800FE044(s32 amount, s32 type) {
                 playerXPBoost = 1;
             }
         }
-        if ((s32)g_Status.level < type) {
+        if (g_Status.level < type) {
             levelDiff = type - g_Status.level;
             if (levelDiff > 5) {
                 levelDiff = 5;
@@ -585,11 +588,12 @@ void AddHearts(s32 value) {
 }
 
 // Note: Arg3 is unused, but is given in the call from func_80113D7C
+// original name: get_damage_sub
 s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
     s32 ret = 0;
     s32 itemCount;
 
-    func_800F53A4();
+    make_all();
     damage->effects = arg1 & ~0x1F;
     damage->damageKind = arg1 & 0x1F;
     // Damage doubled, weakness
@@ -647,7 +651,7 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
     // Very strange to have ballroom mask check. This item is not known to
     // have special behavior. Also, not possible to equip two. This may be
     // a new discovery of a property of the item. Worth further analysis.
-    ;
+
     if (itemCount = CheckEquipmentItemCount(ITEM_BALLROOM_MASK, EQUIP_HEAD)) {
         if (damage->effects &
             (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000 |
@@ -696,7 +700,7 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
         if (damage->damageTaken > 0) {
             if (damage->damageKind == DAMAGEKIND_1 ||
                 damage->damageKind == DAMAGEKIND_0) {
-                if ((damage->damageTaken * 2) >= g_Status.hpMax) {
+                if (damage->damageTaken * 2 >= g_Status.hpMax) {
                     damage->damageKind = DAMAGEKIND_4;
                 } else if (amount * 50 >= g_Status.hpMax) {
                     damage->damageKind = DAMAGEKIND_3;
@@ -794,9 +798,8 @@ s32 HandleTransformationMP(TransformationForm form, CallMode mode) {
                 }
             }
             return 0;
-        } else {
-            return -1;
         }
+        return -1;
     } else if (form == FORM_MIST) {
         if (!IsRelicActive(RELIC_FORM_OF_MIST)) {
             return -1;
@@ -809,24 +812,21 @@ s32 HandleTransformationMP(TransformationForm form, CallMode mode) {
                     }
                 }
                 return 0;
-            } else {
-                return -1;
             }
+            return -1;
         } else {
             if (g_Status.mp - 10 > 0) {
                 if (mode != CHECK_ONLY) {
-                    if ((g_GameTimer % 8) == 0) {
+                    if (g_GameTimer % 8 == 0) {
                         g_Status.mp -= 10;
                     }
                 }
                 return 0;
-            } else {
-                return -1;
             }
+            return -1;
         }
-        return 0;
     } else if (form == FORM_WOLF) {
-        if (IsRelicActive(RELIC_SOUL_OF_WOLF) == false) {
+        if (!IsRelicActive(RELIC_SOUL_OF_WOLF)) {
             return -1;
         }
         if (g_Status.mp - 1 > 0) {
@@ -976,6 +976,7 @@ exit:
 
 s32 func_800FF460(u32 arg0) {
     s32 res;
+
     if (arg0 == 0) {
         return 0;
     }
@@ -992,7 +993,7 @@ s32 func_800FF494(EnemyDef* arg0) {
         CheckEquipmentItemCount(ITEM_RING_OF_ARCANA, EQUIP_ACCESSORY);
     s32 rnd = rand() & 0xFF;
 
-    rnd -= ((rand() & 0x1F) + g_Status.statsTotal[3]) / 20;
+    rnd -= (g_Status.statsTotal[3] + (rand() & 0x1F)) / 20;
 
     if (ringOfArcanaCount != 0) {
         rnd -= arg0->rareItemDropRate * ringOfArcanaCount;
@@ -1007,10 +1008,10 @@ s32 func_800FF494(EnemyDef* arg0) {
     if (ringOfArcanaCount != 0) {
         rnd -= arg0->uncommonItemDropRate * ringOfArcanaCount;
     }
-    rnd -= ((rand() & 0x1F) + g_Status.statsTotal[3]) / 20;
+    rnd -= (g_Status.statsTotal[3] + (rand() & 0x1F)) / 20;
 
     if (rnd < arg0->uncommonItemDropRate) {
-        return 0x20;
+        return 0x20; // drop the enemy's uncommon item
     }
     rnd = rand() % 28;
     if (!arg0->rareItemDropRate) {

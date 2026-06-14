@@ -3,6 +3,7 @@ package assets
 import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/splat"
 )
 
@@ -15,6 +16,7 @@ type ExtractArgs struct {
 	Name        string
 	Args        []string
 	OvlName     string
+	Version     sotn.Version
 	SplatConfig *splat.Config
 	RamBase     psx.Addr
 	Boundaries  psx.Offsets

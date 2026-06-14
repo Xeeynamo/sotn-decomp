@@ -490,14 +490,14 @@ void HandlePlay(void) {
     case Play_PrepareNextStage:
 #ifdef VERSION_PSP
         func_psp_0891B0DC(0, 0x100);
-        func_psp_0891B6FC();
+        ClearClut8bpp();
 #endif
         PlaySfx(SET_UNK_12);
         PlaySfx(SET_UNK_0B);
         MuteSound();
 #ifdef VERSION_PSP
-        func_psp_0892A620(0, 1);
-        func_psp_0892A620(1, 1);
+        func_psp_0892A620(0, true);
+        func_psp_0892A620(1, true);
 #endif
         if (D_80097C98 & 0x80000000) {
             func_800E4970();
@@ -532,8 +532,8 @@ void HandlePlay(void) {
         }
         if (D_80097C98 & 0x08000000) {
 #ifdef VERSION_PSP
-            func_psp_0892A620(0, 1);
-            func_psp_0892A620(1, 1);
+            func_psp_0892A620(0, true);
+            func_psp_0892A620(1, true);
 #endif
             func_800E4970();
             return;
@@ -795,7 +795,7 @@ void HandleGameOver(void) {
         break;
     case Gameover_Init:
     case Gameover_Init_Alt:
-        PlaySfx(SET_UNK_11);
+        PlaySfx(SET_XA_PLAYBACK);
         if (g_StageId != STAGE_ST0) {
             g_GpuBuffers[1].draw.isbg = 0;
             g_GpuBuffers[0].draw.isbg = 0;
@@ -808,18 +808,18 @@ void HandleGameOver(void) {
         HideAllBackgroundLayers();
         func_800EAD7C();
 #ifdef VERSION_PSP
-        func_psp_0891B6FC();
+        ClearClut8bpp();
         func_psp_0892F83C();
 #endif
         g_GameStep++;
         break;
     case Gameover_AllocResources:
         if (g_StageId != STAGE_ST0) {
-#ifndef VERSION_PSP
-            MoveImage(&g_CurrentBuffer->next->disp.disp, 0x300, 0);
-#else
+#ifdef VERSION_PSP
             func_psp_0891B0DC(0x40, 0);
             func_psp_0891AE04();
+#else
+            MoveImage(&g_CurrentBuffer->next->disp.disp, 0x300, 0);
 #endif
             SetGPUBuffRGBZero();
             g_GpuBuffers[1].draw.isbg = 1;
@@ -1147,7 +1147,7 @@ void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, bool isDone) {
     // These two lines load up the SOTN logo in the lower right.
     // First line loads palettized image, second loads the palette
     LoadImage(&sp48, (u_long*)&D_psp_09156F48);
-    func_psp_089264CC(0x81D0, &D_psp_0915AF48, 1);
+    func_psp_089264CC(0x81D0, &D_psp_0915AF48, true);
     D_psp_0915E4E8[3] =
         (u_long*)GetLang(NULL, loading_fr, loading_sp, loading_ge, loading_it);
     if (D_psp_0915E4E8[3] != NULL) {
@@ -1566,7 +1566,7 @@ void HandleNowLoading(void) {
         break;
     case Play_PrepareNextStage:
 #ifdef VERSION_PSP
-        if (!func_psp_08932B74(g_GameStep, 5)) {
+        if (!func_psp_08932B74()) {
             break;
         }
 #endif

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dra.h"
 #include "dra_bss.h"
+#include <scratchpad.h>
 
 static s32 D_800B0924[] = {14, 6, 4, 4, 6, 14};
 
@@ -273,7 +274,7 @@ void func_8012DBBC(void) {
         }
     }
     vel_boost = FIX(20.0 / 128);
-    if (D_80097448[0] > 12) {
+    if (g_unkGraphicsStruct.D_80097448 > 12) {
         vel_boost /= 4;
     }
     PLAYER.velocityY += vel_boost;
@@ -290,7 +291,7 @@ void func_8012DF04(void) {
         return;
     }
     velocityBoost = FIX(20.0 / 128);
-    if (D_80097448[0] > 12) {
+    if (g_unkGraphicsStruct.D_80097448 > 12) {
         velocityBoost /= 4;
     }
     PLAYER.velocityY += velocityBoost;
@@ -435,7 +436,7 @@ void func_8012E040(void) {
         break;
     }
     vel_boost = FIX(20.0 / 128);
-    if (D_80097448[0] > 12) {
+    if (g_unkGraphicsStruct.D_80097448 > 12) {
         // Interesting, wrong registers if you do /= here.
         vel_boost = vel_boost / 4;
     }
@@ -681,12 +682,13 @@ void func_8012ED30(void) {
         return;
     }
     if (!IsRelicActive(RELIC_SKILL_OF_WOLF) ||
-        !(g_Player.padPressed & PAD_TRIANGLE) || (D_80097448[1] == 0)) {
+        !(g_Player.padPressed & PAD_TRIANGLE) ||
+        (g_unkGraphicsStruct.D_8009744C == 0)) {
         func_8012CED4();
         return;
     }
     SetSpeedX(FIX(0.5));
-    if (D_80097448[1] > 12) {
+    if (g_unkGraphicsStruct.D_8009744C > 12) {
         PLAYER.velocityY = FIX(-0.5);
     } else {
         PLAYER.velocityY = 0;
@@ -727,7 +729,7 @@ void PlayerStepMorphWolf(void) {
     s32 var_s0;
 
     PLAYER.palette = PAL_ALUCARD_WOLF;
-    PLAYER.drawMode = DRAW_DEFAULT;
+    PLAYER.blendMode = BLEND_NO;
 #if defined(VERSION_US)
     PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter - 2;
 #endif
@@ -959,13 +961,13 @@ static void func_8012F178(Primitive* prim, s32 count, bool finishUp) {
     s->prim->y0 = s->prim->y1 = s->y;
     s->prim->y2 = s->prim->y3 = s->y + 0x3F;
 
-    s->i = abs(PLAYER.velocityX) + FIX(-3) >> 8;
+    s->i = abs(PLAYER.velocityX) - FIX(3) >> 8;
     if (s->i > 0x7F) {
         s->i = 0x7F;
     }
     s->colors[1] = (u8)s->i + 0x80;
 
-    s->i = abs(PLAYER.velocityX) + FIX(-3) >> 8;
+    s->i = abs(PLAYER.velocityX) - FIX(3) >> 8;
     if (s->i > 0x7F) {
         s->i = 0x7F;
     }
@@ -1047,8 +1049,7 @@ void func_8012F894(Entity* self) {
     animControl = 0;
     if (abs(PLAYER.velocityX) > FIX(3)) {
         PLAYER.drawFlags = self->drawFlags |= DRAW_HIDE;
-        PLAYER.drawMode = self->drawMode =
-            DRAW_UNK_40 | DRAW_TPAGE | DRAW_TPAGE2;
+        PLAYER.blendMode = self->blendMode = BLEND_TRANSP | BLEND_QUARTER;
 
         var_s1 = (abs(PLAYER.velocityX) - FIX(3)) >> 11;
         if (var_s1 > 0x80) {
@@ -1058,7 +1059,7 @@ void func_8012F894(Entity* self) {
     } else {
         self->drawFlags &= ~DRAW_HIDE;
         PLAYER.drawFlags = self->drawFlags;
-        PLAYER.drawMode = self->drawMode = DRAW_DEFAULT;
+        PLAYER.blendMode = self->blendMode = BLEND_NO;
     }
     switch (PLAYER.step_s) {
     case 1:
@@ -1323,7 +1324,7 @@ void func_80130264(Entity* self) {
 #endif
         self->flags =
             FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         self->rotPivotX = 0;
         self->rotPivotY = 9;
         LOH(self->hitboxOffX) = -4;
@@ -1435,7 +1436,7 @@ void func_80130618(Entity* self) {
 #endif
         self->flags =
             FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         self->rotPivotX = 1;
         self->rotPivotY = 8;
         self->step++;
@@ -1517,11 +1518,11 @@ void func_80130618(Entity* self) {
         break;
     }
     self->palette = PLAYER.palette;
-    self->drawMode = DRAW_DEFAULT;
-    self->drawFlags &= ~FLAG_DRAW_OPACITY;
+    self->blendMode = BLEND_NO;
+    self->drawFlags &= ~ENTITY_OPACITY;
     if (abs(PLAYER.velocityX) > FIX(3)) {
-        self->drawFlags |= FLAG_DRAW_OPACITY;
-        self->drawMode = FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40;
+        self->drawFlags |= ENTITY_OPACITY;
+        self->blendMode = BLEND_TRANSP | BLEND_QUARTER;
         temp_s1 = (abs(PLAYER.velocityX) - FIX(3)) >> 12;
         if (temp_s1 > 0xA0) {
             temp_s1 = 0xA0;
@@ -1677,7 +1678,7 @@ void func_801309B4(Entity* self) {
     if (self->poseTimer < 0) {
         if (D_80138448 != 0) {
             D_80138448 -= 1;
-        } else if (*D_80097448 > 0x18) {
+        } else if (g_unkGraphicsStruct.D_80097448 > 0x18) {
             var_s2 = 4;
             if (PLAYER.facingLeft) {
                 var_s2 = -var_s2;
@@ -1846,11 +1847,11 @@ void func_80130E94(Entity* self) {
     self->posX.val = var_s4 + rcos(var_s3) * var_s7 * 0x10;
     self->posY.val = sp3c - rsin(var_s3) * var_s7 * 0x10;
     self->palette = PLAYER.palette;
-    self->drawMode = DRAW_DEFAULT;
-    self->drawFlags &= ~FLAG_DRAW_OPACITY;
+    self->blendMode = BLEND_NO;
+    self->drawFlags &= ~ENTITY_OPACITY;
     if (abs(PLAYER.velocityX) > FIX(3)) {
-        self->drawFlags |= FLAG_DRAW_OPACITY;
-        self->drawMode = FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40;
+        self->drawFlags |= ENTITY_OPACITY;
+        self->blendMode = BLEND_TRANSP | BLEND_QUARTER;
         temp_s2 = (abs(PLAYER.velocityX) - FIX(3)) >> 12;
         if (temp_s2 > 0x80) {
             temp_s2 = 0x80;
@@ -1872,7 +1873,7 @@ void func_8013136C(Entity* self) {
         self->palette = PLAYER.palette;
         self->flags =
             FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         self->rotPivotX = -8;
         self->step++;
     }

@@ -550,7 +550,7 @@ void EntityHellfireBeast(Entity* self) {
         if (self->params < 4) {
             self->zPriority++;
         } else {
-            self->drawFlags |= FLAG_DRAW_ROTATE;
+            self->drawFlags |= ENTITY_ROTATE;
         }
         SetStep(DEATH_PARTS_EXPLODE);
         break;
@@ -861,7 +861,7 @@ void EntityHellfireBeastFlamePillarAnimation(Entity* self) {
         self->animSet = 2;
         self->animCurFrame = 1;
         self->zPriority = 0x100;
-        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->drawFlags |= ENTITY_ROTATE;
         self->flags &= ~FLAG_POS_CAMERA_LOCKED;
         if (self->params) {
             self->rotate = ROT(180);

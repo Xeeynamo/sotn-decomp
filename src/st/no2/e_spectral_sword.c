@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no2.h"
+#include <scratchpad.h>
 
 static s8 D_us_8018336C[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x04, 0x01, 0x1D, 0x01, 0x00, 0x0D, 0x05,
@@ -47,9 +48,9 @@ void EntitySpectralSword(Entity* self) {
         InitializeEntity(g_EInitSpectralSword);
         self->animCurFrame = 1;
 #ifdef VERSION_PSP
-        self->drawMode |= DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode |= BLEND_TRANSP | BLEND_ADD;
 #else
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
 #endif
         self->hitboxOffX = 0;
         self->hitboxOffY = 4;
@@ -249,7 +250,7 @@ void EntitySpectralSword(Entity* self) {
             for (i = 0; i < 15; i++, ent++) {
                 ent->flags |= FLAG_DEAD;
             }
-            self->drawFlags |= FLAG_DRAW_ROTATE;
+            self->drawFlags |= ENTITY_ROTATE;
             self->rotate = 0;
             PlaySfxPositional(SFX_STUTTER_EXPLODE_A);
             self->step_s++;
@@ -399,9 +400,8 @@ void func_us_801CEB08(Entity* self) {
         InitializeEntity(D_us_8018097C);
         self->animCurFrame = 1;
         self->palette += 2;
-        self->drawFlags |=
-            FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->drawFlags |= ENTITY_OPACITY | ENTITY_SCALEY | ENTITY_SCALEX;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->scaleX = self->scaleY = 0x100;
         self->opacity = 0x80;
     }
@@ -431,7 +431,7 @@ void EntityPoltergeist(Entity* self) {
     case 0:
         InitializeEntity(g_EInitPoltergeist);
         self->animCurFrame = self->params + 1;
-        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->drawFlags |= ENTITY_ROTATE;
         hitboxPtr = D_us_8018336C;
         hitboxPtr += self->animCurFrame * 4;
         self->hitboxOffX = *hitboxPtr++;
@@ -544,9 +544,9 @@ void EntityPoltergeist(Entity* self) {
         break;
     }
     if (self->rotate) {
-        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->drawFlags |= ENTITY_ROTATE;
     } else {
-        self->drawFlags = FLAG_DRAW_DEFAULT;
+        self->drawFlags = ENTITY_DEFAULT;
     }
     angle = self->rotate + D_us_801833D0[self->params];
     hitboxPtr = D_us_801833B0[self->params];

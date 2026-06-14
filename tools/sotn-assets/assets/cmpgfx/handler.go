@@ -11,6 +11,7 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util/png"
 )
 
 type handler struct{}
@@ -57,10 +58,13 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 		palette = util.MakeGreyPalette(bpp)
 	}
 	cmp := e.Data[e.Start:e.End]
-	dec := sotn.Inflate(cmp)
-	bitmap, err := util.MakeBitmap(dec, bpp)
-	if err != nil {
-		return fmt.Errorf("error generating image: %v", err)
+	if (len(cmp)%8) == 0 && e.Version.GetPlatform() == sotn.PlatformPSP {
+		// HACK: PSP adds 4-bytes zero padding at the end of the file that must
+		// be removed to match 1:1 with PS1
+		footer := cmp[len(cmp)-8:]
+		if footer[4] == 0 && footer[5] == 0 && footer[6] == 0 && footer[7] == 0 {
+			cmp = cmp[:len(cmp)-4]
+		}
 	}
 	if err := util.WriteFile(assetPathAsRAW(e.AssetDir, e.Name), cmp); err != nil {
 		return fmt.Errorf("error writing file: %v", err)
@@ -70,7 +74,10 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 		return fmt.Errorf("error creating file: %v", err)
 	}
 	defer fout.Close()
-	return util.PngEncode(fout, bitmap, width, height, palette)
+	if err := png.Encode(fout, sotn.Inflate(cmp), width, height, palette); err != nil {
+		return fmt.Errorf("png encode: %w", err)
+	}
+	return nil
 }
 
 func (h *handler) Build(e assets.BuildArgs) error {

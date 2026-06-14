@@ -96,7 +96,7 @@ void EntityWeaponAttack(Entity* self) {
         }
 
         self->zPriority = PLAYER.zPriority - 2;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         SetWeaponProperties(self, 0);
 
         if (animIndex) {

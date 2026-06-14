@@ -113,7 +113,7 @@ func init() {
 
 func objdiffgen(c *assetConfig, isProgressReport bool) error {
 	if c.Version != "" {
-		_ = os.Setenv("VERSION", c.Version)
+		_ = os.Setenv("VERSION", string(c.Version))
 	}
 	buildDir := fmt.Sprintf("build/%s", c.Version)
 	targetDir := filepath.Join("expected", buildDir)

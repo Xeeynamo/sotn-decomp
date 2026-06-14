@@ -2,23 +2,23 @@
 #include "../../src/dra/dra.h"
 #include "sfx.h"
 
-void Play(int param) { g_api.PlaySfx(param); }
-void StopAllSounds(int param) { g_api.PlaySfx(SET_STOP_MUSIC); }
-void ChangeSoundMode(int param) {
+static void Play(int param) { g_api.PlaySfx(param); }
+static void StopAllSounds(int param) { g_api.PlaySfx(SET_STOP_MUSIC); }
+static void ChangeSoundMode(int param) {
     g_api.PlaySfx(param ? SET_SOUNDMODE_STEREO : SET_SOUNDMODE_MONO);
 }
-void LoadStageSounds(int param) {
+static void LoadStageSounds(int param) {
     g_CdStep = CdStep_LoadInit;
     g_LoadFile = CdFile_StageSfx;
     g_LoadOvlIdx = param;
 }
-void LoadServant(int param) {
+static void LoadServant(int param) {
     g_CdStep = CdStep_LoadInit;
     g_LoadFile = CdFile_ServantChr;
     g_LoadOvlIdx = param;
 }
 
-DbgMenuItem g_SoundItems[] = {
+static DbgMenuItem g_SoundItems[] = {
     {0, 0x001, 0x0FF, Play, DbgMenu_ActionOnInput},
     {0, 0x300, 0x5FF, Play, DbgMenu_ActionOnInput},
     {0, 0x600, 0xFFF, Play, DbgMenu_ActionOnInput},
@@ -29,7 +29,7 @@ DbgMenuItem g_SoundItems[] = {
     {0, 0, 6, LoadServant, DbgMenu_ActionOnInput},
     MENU_END,
 };
-DbgMenuCtrl g_SoundCtrl = {
+static DbgMenuCtrl g_SoundCtrl = {
     g_SoundItems,
     212,
     0x40,

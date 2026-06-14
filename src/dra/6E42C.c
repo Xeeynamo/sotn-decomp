@@ -300,7 +300,7 @@ static s32 func_8010EB5C(void) {
     }
     CreateEntFactoryFromEntity(
         g_CurrentEntity, subWpn.blueprintNum, subWpnId << 9);
-    g_Player.timers[ALU_T_10] = 4;
+    g_Player.timers[ALU_T_USE_SUBWPN] = 4;
     if (PLAYER.step_s >= 64) {
         return 0;
     }
@@ -506,7 +506,7 @@ block_45:
                 if (PLAYER.step == Player_Stand || PLAYER.step == Player_Walk ||
                     PLAYER.step == Player_Crouch) {
                     func_8010E42C(0);
-                    func_800FDD44(hand);
+                    ReduceWeapon(hand);
                     return true;
                 }
                 return false;
@@ -550,9 +550,9 @@ block_45:
         return false;
     }
 
-    func_800FDD44(hand);
+    ReduceWeapon(hand);
     if (var_s7) {
-        func_800FDD44((hand + 1) & 1);
+        ReduceWeapon((hand + 1) & 1);
     }
     HasEnoughMp(g_EquipDefs[equipped_id].mpUsage, 1);
     // 95 is Estoc
@@ -875,7 +875,7 @@ void PerformSoulSteal(void) {
     SetPlayerAnim(0xDA);
     PlaySfx(SFX_VO_ALU_SOUL_STEAL);
     func_80118C28(0xC);
-    g_Player.timers[ALU_T_12] = 4;
+    g_Player.timers[ALU_T_USE_SPELL] = 4;
 }
 
 void PerformSummonSpirit(void) {
@@ -886,7 +886,7 @@ void PerformSummonSpirit(void) {
         g_CurrentEntity, FACTORY(BP_SUMMON_SPIRIT, 0), 0);
     SetPlayerAnim(0xF0);
     PlaySfx(SFX_VO_ALU_ATTACK_D);
-    g_Player.timers[ALU_T_12] = 4;
+    g_Player.timers[ALU_T_USE_SPELL] = 4;
 }
 
 void PerformTetraSpirit(void) {
@@ -897,7 +897,7 @@ void PerformTetraSpirit(void) {
         g_CurrentEntity, FACTORY(BP_SUMMON_SPIRIT, 1), 0);
     SetPlayerAnim(0xF1);
     PlaySfx(SFX_VO_ALU_ATTACK_D);
-    g_Player.timers[ALU_T_12] = 4;
+    g_Player.timers[ALU_T_USE_SPELL] = 4;
 }
 
 void PerformSwordBrothers(void) {
@@ -907,7 +907,7 @@ void PerformSwordBrothers(void) {
     SetPlayerAnim(0xF1);
     CreateEntFactoryFromEntity(
         g_CurrentEntity, FACTORY(BP_RIPPLE_OUTLINE, 23), 0);
-    g_Player.timers[ALU_T_12] = 4;
+    g_Player.timers[ALU_T_USE_SPELL] = 4;
 }
 
 void func_8010FD88(void) {

@@ -225,7 +225,7 @@ void EntityWeaponAttack(Entity* self) {
         self->palette += anim->palette;
         self->flags = FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         self->zPriority = PLAYER.zPriority - 2;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         SetWeaponProperties(self, 0);
         self->step++;
     }
@@ -278,7 +278,7 @@ static void func_ptr_80170004(Entity* self) {
                 self->velocityY = FIX(2.75);
                 SetSpeedX(FIX(3.75));
             }
-            self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+            self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
             self->scaleX = self->scaleY = 0x10;
             self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
             self->hitboxWidth = self->hitboxHeight = 9;

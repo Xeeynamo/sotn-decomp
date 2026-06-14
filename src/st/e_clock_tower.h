@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <psxsdk/libgte.h>
 #include "clock_tower.h"
+#include <scratchpad.h>
 
+extern EInit g_EInitInteractable;
 extern EInit g_EInitSpawner;
 
 extern s16 D_us_80181BFC[];
@@ -159,15 +161,15 @@ void EntityClouds(Entity* self) {
 
             sp4C = FIX(15) - var_s2 * 0x1DB;
             var_s3[0] = sp4C >> 12;
-            var_s3[4] = (sp4C + FIX(-106400.0 / 65536.0)) >> 12;
+            var_s3[4] = (sp4C - FIX(106400.0 / 0x10000)) >> 12;
 
             sp4C = FIX(15) - var_s2 * 0x200;
             var_s3[1] = sp4C >> 12;
-            var_s3[5] = (sp4C + FIX(-1.75)) >> 12;
+            var_s3[5] = (sp4C - FIX(1.75)) >> 12;
 
             sp4C = FIX(15) - var_s2 * 0x192;
             var_s3[2] = sp4C >> 12;
-            var_s3[6] = (sp4C + FIX(-1.37403)) >> 12;
+            var_s3[6] = (sp4C - FIX(1.37403)) >> 12;
 
             sp44 = posX;
             j = 0;
@@ -249,7 +251,6 @@ extern ClockTowerData2 s_TowerTextureData[];
 extern u8 s_ClockRoofScript[];
 extern u8 s_ClockTowerScript[];
 extern SVECTOR* s_ClockVertexSets[];
-extern u16 g_EInitInteractable;
 
 void EntityClockTower3D(Entity* self) {
     SVECTOR rotVector;
@@ -263,7 +264,7 @@ void EntityClockTower3D(Entity* self) {
     ClockTowerData2* var_s3;
 
     if (self->step == 0) {
-        InitializeEntity(&g_EInitInteractable);
+        InitializeEntity(g_EInitInteractable);
 #ifdef STAGE_IS_TOP
         self->posX.i.hi = 0x700 - g_Tilemap.scrollX.i.hi;
         self->posY.i.hi = 0x3C0 - g_Tilemap.scrollY.i.hi;

@@ -2,21 +2,21 @@
 #include "../../src/dra/dra.h"
 #include "sfx.h"
 
-u32* const g_DraDebugHitboxViewMode = 0x801362B0;
-u32* const g_DraDebugHitboxViewEnabled = 0x800BD1C0;
+static u32* const g_DraDebugHitboxViewMode = (u32*)0x801362B0;
+static u32* const g_DraDebugHitboxViewEnabled = (u32*)0x800BD1C0;
 
-int g_DbgLoadState;
-int HookLoadStage();
-int HookLoadAlucard();
-int HookLoadRichter();
+static int g_DbgLoadState;
+static int HookLoadStage();
+static int HookLoadAlucard();
+static int HookLoadRichter();
 
-void ChangeStage(int param) {
+static void ChangeStage(int param) {
     g_DbgLoadState = 0;
     g_LoadOvlIdx = param;
     g_StageId = param;
     SetHook(HookLoadStage);
 }
-void ChangePlayer(int param) {
+static void ChangePlayer(int param) {
     g_DbgLoadState = 0;
     switch (param) {
     case 0:
@@ -27,13 +27,13 @@ void ChangePlayer(int param) {
         break;
     }
 }
-void SetNoClip(int param) { g_DebugPlayer = param; }
-void SetFrameByFrame(bool isEnabled) { g_FrameByFrame = isEnabled; }
-void SetShowHitboxes(int param) {
+static void SetNoClip(int param) { g_DebugPlayer = param; }
+static void SetFrameByFrame(bool isEnabled) { g_FrameByFrame = isEnabled; }
+static void SetShowHitboxes(int param) {
     *g_DraDebugHitboxViewMode = param;
     *g_DraDebugHitboxViewEnabled = param;
 }
-void SetShowDebugMessages(bool isVisible) {
+static void SetShowDebugMessages(bool isVisible) {
     g_ShowDebugMessages = isVisible;
     if (isVisible) {
         g_ShowCollisionLayer = false;
@@ -41,7 +41,7 @@ void SetShowDebugMessages(bool isVisible) {
         g_ShowHBlankInfo = false;
     }
 }
-void SetShowCollisionLayer(bool isVisible) {
+static void SetShowCollisionLayer(bool isVisible) {
     g_ShowCollisionLayer = isVisible;
     if (isVisible) {
         g_ShowDebugMessages = false;
@@ -49,7 +49,7 @@ void SetShowCollisionLayer(bool isVisible) {
         g_ShowHBlankInfo = false;
     }
 }
-void SetShowDrawCalls(int param) {
+static void SetShowDrawCalls(int param) {
     g_ShowDrawCalls = param;
     if (param != 0) {
         g_ShowCollisionLayer = false;
@@ -57,7 +57,7 @@ void SetShowDrawCalls(int param) {
         g_ShowHBlankInfo = false;
     }
 }
-void SetShowHBlankInfo(bool isVisible) {
+static void SetShowHBlankInfo(bool isVisible) {
     g_ShowHBlankInfo = isVisible;
     if (isVisible) {
         g_ShowCollisionLayer = false;
@@ -66,7 +66,7 @@ void SetShowHBlankInfo(bool isVisible) {
     }
 }
 
-DbgMenuItem g_DebugFlagsItems[] = {
+static DbgMenuItem g_DebugFlagsItems[] = {
     /**/ {0, 0, 0x4F, ChangeStage, DbgMenu_ActionOnInput},
     /**/ {0, 0, 1, ChangePlayer, DbgMenu_ActionOnInput},
     /**/ {0, false, true, SetNoClip, DbgMenu_ActionOnChange},
@@ -78,14 +78,14 @@ DbgMenuItem g_DebugFlagsItems[] = {
     /**/ {0, 0, 2, SetShowHBlankInfo, DbgMenu_ActionOnChange},
     /**/ MENU_END,
 };
-DbgMenuCtrl g_DebugFlagsCtrl = {
+static DbgMenuCtrl g_DebugFlagsCtrl = {
     g_DebugFlagsItems,
     236,
     0x40,
     false,
 };
 
-const char* const c_DrawCalls[] = {
+static const char* const c_DrawCalls[] = {
     "off",
     "current",
     "max",
@@ -114,7 +114,7 @@ void UpdateDebugFlagsPlayer(void) {
     DbgMenuNavigate(&g_DebugFlagsCtrl);
 }
 
-int HookLoadStage() {
+static int HookLoadStage() {
     if (g_GameState != Game_Play) {
         return false;
     }
@@ -135,7 +135,7 @@ int HookLoadStage() {
     return true;
 }
 
-int HookLoadRichter() {
+static int HookLoadRichter() {
     if (g_IsUsingCd) {
         return false;
     }
@@ -164,7 +164,7 @@ int HookLoadRichter() {
     return true;
 }
 
-int HookLoadAlucard() {
+static int HookLoadAlucard() {
     if (g_IsUsingCd) {
         return false;
     }

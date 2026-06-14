@@ -30,8 +30,6 @@
 #define PSP_RANDMASK 0xFFFFFFFF
 #endif
 
-#define SPAD(x) ((s32*)SP(x * sizeof(s32)))
-
 typedef long Event;
 
 typedef struct Vertex {
@@ -91,6 +89,14 @@ typedef enum {
     DRAW_UNK_1000 = 0x1000, // unknown
     DRAW_ABSPOS = 0x2000,   // use absolute coordinates with DRAW_MENU
 } DrawMode;
+
+typedef enum {
+    BLEND_NO = 0x00,      // full opaque
+    BLEND_TRANSP = 0x10,  // 50% opaque, sets setSemiTrans flag to 1
+    BLEND_ADD = 0x20,     // additive blending - implies BLEND_TRANSP
+    BLEND_SUB = 0x40,     // subtractive blending - implies BLEND_TRANSP
+    BLEND_QUARTER = 0x60, // 25% opaque - implies BLEND_TRANSP
+} BlendModes;
 
 #include "entity.h"
 
@@ -268,7 +274,6 @@ typedef enum {
 #define MAX_PRIM_ALLOC_COUNT 0x400
 #define MAX_BG_LAYER_COUNT 16
 
-#define RENDERFLAGS_NOSHADOW 2
 #define PLAYER_ALUCARD 0
 #define PLAYER_RICHTER 1
 #define PLAYER_MARIA 2
@@ -276,8 +281,6 @@ typedef enum {
 #define HEART_VESSEL_INCREASE 5
 #define HEART_VESSEL_RICHTER 30
 #define LIFE_VESSEL_INCREASE 5
-#define FALL_GRAVITY 0x4000
-#define FALL_TERMINAL_VELOCITY 0x60000
 
 #define WEAPON_0_START 0xE0
 #define WEAPON_0_END (WEAPON_1_START - 1)
@@ -372,19 +375,16 @@ typedef enum {
 
 // Flags for entity->drawFlags
 typedef enum {
-    FLAG_DRAW_DEFAULT = 0x00,
-    FLAG_DRAW_SCALEX = 0x01,
-    FLAG_DRAW_SCALEY = 0x02,
-    FLAG_DRAW_ROTATE = 0x04,
-    FLAG_DRAW_OPACITY = 0x08,
-    FLAG_DRAW_UNK10 = 0x10,
-    FLAG_DRAW_UNK20 = 0x20,
-    FLAG_DRAW_UNK40 = 0x40,
-    // renderEntities uses this to disable rendering on even/odd g_Timer
-    FLAG_BLINK = 0x80,
-    FLAG_DRAW_UNK100 = 0x100,
-    FLAG_DRAW_UNK400 = 0x400
-} DrawFlag;
+    ENTITY_DEFAULT = 0x00, // use plain rendering, fastest drawing method
+    ENTITY_SCALEX = 0x01,  // use entity->scaleX
+    ENTITY_SCALEY = 0x02,  // use entity->scaleY
+    ENTITY_ROTATE = 0x04,  // use entity->rotate
+    ENTITY_OPACITY = 0x08, // use entity->opacity, enable texture shading
+    ENTITY_MASK_R = 0x10,  // set red to 128, must set ENTITY_OPACITY
+    ENTITY_MASK_G = 0x20,  // set green to 128, must set ENTITY_OPACITY
+    ENTITY_MASK_B = 0x40,  // set blue to 128, must set ENTITY_OPACITY
+    ENTITY_BLINK = 0x80,   // disable rendering on even/odd g_Timer
+} EntityDrawFlags;
 
 // Flags for entity->flags
 typedef enum {
@@ -392,8 +392,7 @@ typedef enum {
     FLAG_UNK_20 = 0x20,
     FLAG_UNK_40 = 0x40,
     FLAG_UNK_80 = 0x80,
-    // Signals that the entity should run its death routine
-    FLAG_DEAD = 0x100,
+    FLAG_DEAD = 0x100, // entity must execute its death routine
     FLAG_UNK_200 = 0x200,
     FLAG_UNK_400 = 0x400,
     FLAG_UNK_800 = 0x800,
@@ -402,20 +401,18 @@ typedef enum {
     FLAG_UNK_4000 = 0x4000,
     FLAG_UNK_8000 = 0x8000,
     FLAG_UNK_10000 = 0x10000,
-    FLAG_UNK_20000 = 0x20000, // func_8011A9D8 will destroy if not set
-    FLAG_POS_PLAYER_LOCKED = 0x40000,
+    FLAG_UNK_20000 = 0x20000,         // func_8011A9D8 will destroy if not set
+    FLAG_POS_PLAYER_LOCKED = 0x40000, // entity follows player position
     FLAG_UNK_80000 = 0x80000,
     FLAG_UNK_100000 = 0x100000,
     FLAG_UNK_00200000 = 0x00200000,
-    FLAG_UNK_400000 = 0x400000,
-    // When an entity used AllocPrimitives and their primIndex set.
-    // At their destruction they need to free the prims with FreePrimitives.
-    FLAG_HAS_PRIMS = 0x800000,
+    FLAG_SUPPRESS_STUN = 0x400000, // disable invincibility frames
+    FLAG_HAS_PRIMS = 0x800000,     // call FreePrimitives on DestroyEntity
     FLAG_NOT_AN_ENEMY = 0x01000000,
     FLAG_UNK_02000000 = 0x02000000,
-    FLAG_KEEP_ALIVE_OFFCAMERA = 0x04000000,
-    FLAG_POS_CAMERA_LOCKED = 0x08000000,
-    FLAG_UNK_10000000 = 0x10000000, // CHI func_801A169C: "Is Airborne"?
+    FLAG_KEEP_ALIVE_OFFCAMERA = 0x04000000, // don't destroy entity off-screen
+    FLAG_POS_CAMERA_LOCKED = 0x08000000,    // entity follows camera position
+    FLAG_UNK_10000000 = 0x10000000,         // CHI func_801A169C: "Is Airborne"?
     FLAG_UNK_20000000 = 0x20000000,
     FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA = 0x40000000,
     FLAG_DESTROY_IF_OUT_OF_CAMERA = 0x80000000,
@@ -434,11 +431,11 @@ typedef enum {
     PLAYER_STATUS_CROUCH = 0x20,
     PLAYER_STATUS_UNK40 = 0x40,
     PLAYER_STATUS_STONE = 0x80,
-    PLAYER_STATUS_UNK100 = 0x100,
+    PLAYER_STATUS_INVINCIBLE = 0x100,
     PLAYER_STATUS_UNK200 = 0x200,
     PLAYER_STATUS_UNK400 = 0x400,
-    PLAYER_STATUS_UNK800 = 0x800, // possibly thrown subweapon?
-    PLAYER_STATUS_UNK1000 = 0x1000,
+    PLAYER_STATUS_SUBWPN = 0x800, // possibly thrown subweapon?
+    PLAYER_STATUS_SPELLCAST = 0x1000,
     PLAYER_STATUS_UNK2000 = 0x2000,
     PLAYER_STATUS_POISON = 0x4000,
     PLAYER_STATUS_CURSE = 0x8000,
@@ -899,11 +896,11 @@ typedef struct Entity {
     /* 0x12 */ s16 hitboxOffY;
     /* 0x14 */ u16 facingLeft;
     /* 0x16 */ u16 palette;
-    /* 0x18 */ u8 drawMode;
-    /* 0x19 */ u8 drawFlags;
-    /* 0x1A */ s16 scaleX; // 0x100 = 1.0
-    /* 0x1C */ s16 scaleY; // 0x100 = 1.0
-    /* 0x1E */ s16 rotate; // 0x1000 = 360 degrees
+    /* 0x18 */ u8 blendMode; // refer to enum BlendModes
+    /* 0x19 */ u8 drawFlags; // refer to enum EntityDrawFlags
+    /* 0x1A */ s16 scaleX;   // 0x100: 1.0, enabled with ENTITY_SCALE_X
+    /* 0x1C */ s16 scaleY;   // 0x100: 1.0, enabled with ENTITY_SCALE_Y
+    /* 0x1E */ s16 rotate;   // 0x1000: 360 degrees, enabled with ENTITY_ROTATE
     /* 0x20 */ s16 rotPivotX;
     /* 0x22 */ s16 rotPivotY;
     /* 0x24 */ u16 zPriority;
@@ -914,8 +911,8 @@ typedef struct Entity {
     /* 0x30 */ u16 params;
     /* 0x32 */ u16 entityRoomIndex;
     /* 0x34 */ s32 flags;
-    /* 0x38 */ s16 unk38;
-    /* 0x3A */ u16 enemyId;
+    /* 0x38 */ s16 : 16;
+    /* 0x3A */ u16 enemyId; // also used as a Alucard weapon entity slot index
     /* 0x3C */ u16 hitboxState;
     /* 0x3E */ s16 hitPoints;
     /* 0x40 */ s16 attack;
@@ -933,12 +930,12 @@ typedef struct Entity {
     /* 0x56 */ s16 animCurFrame;
     /* 0x58 */ s16 stunFrames;
     /* 0x5A */ u16 unk5A;
-    /* 0x5C */ struct Entity* unk5C;
-    /* 0x60 */ struct Entity* unk60;
+    /* 0x5C */ struct Entity* parent;   // for multi-part entities only
+    /* 0x60 */ struct Entity* nextPart; // next linked-list entity part
     /* 0x64 */ s32 primIndex;
     /* 0x68 */ u16 unk68; // Appears to be set for entities with parallax
     /* 0x6A */ u16 hitEffect;
-    /* 0x6C */ u8 opacity;
+    /* 0x6C */ u8 opacity; // enabled with ENTITY_OPACITY
     /* 0x6D */ u8 unk6D[11];
     /* 0x78 */ s32 unk78;
     /* 0x7C */ Ext ext;
@@ -951,7 +948,7 @@ typedef struct {
     /* 0x04 */ u16 unk5A; // not 5A in this struct, but goes to 5A in entity
     /* 0x06 */ u16 palette;
     /* 0x08 */ u16 drawFlags;
-    /* 0x0A */ u16 drawMode;
+    /* 0x0A */ u16 blendMode;
     /* 0x0C */ u32 flags;
     /* 0x10 */ u8* animFrames;
 } ObjInit; // size = 0x14
@@ -963,7 +960,7 @@ typedef struct { // only difference from above is this one uses a facingLeft
     /* 0x05 */ u8 unk5A;
     /* 0x06 */ u16 palette;
     /* 0x08 */ u16 drawFlags;
-    /* 0x0A */ u16 drawMode;
+    /* 0x0A */ u16 blendMode;
     /* 0x0C */ u32 flags;
     /* 0x10 */ u8* animFrames;
 } ObjInit2; // size = 0x14
@@ -1200,7 +1197,7 @@ typedef struct {
     /* 80097BB8 */ s32 statsBase[4];
     /* 80097BC8 */ s32 statsEquip[4];
     /* 80097BD8 */ s32 statsTotal[4];
-    /* 80097BE8 */ u32 level;
+    /* 80097BE8 */ s32 level;
     /* 80097BEC */ u32 exp;
     /* 80097BF0 */ s32 gold;
     /* 80097BF4 */ s32 killCount;
@@ -1701,7 +1698,7 @@ typedef struct {
     /* 8003C854 */ void (*InitStatsAndGear)(bool debugMode);
     /* 8003C858 */ s32 (*PlaySfxVolPan)(s32 sfxId, s32 sfxVol, s32 sfxPan);
     /* 8003C85C */ s32 (*SetVolumeCommand22_23)(s32 vol, s32 distance);
-    /* 8003C860 */ void (*func_800F53A4)(void);
+    /* 8003C860 */ void (*MakeAll)(void);
     /* 8003C864 */ u32 (*CheckEquipmentItemCount)(u32 itemId, u32 equipType);
     /* 8003C868 */ void (*GetPlayerSensor)(Collider* col);
     /* 8003C86C */ void (*RevealSecretPassageAtPlayerPositionOnMap)(s32 arg0);
@@ -1808,7 +1805,7 @@ extern void (*g_api_AddToInventory)(u32 id, EquipKind kind);
 extern RelicDesc* g_api_relicDefs;
 extern s32 (*g_api_PlaySfxVolPan)(s32 sfxId, s32 sfxVol, s32 sfxPan);
 extern s32 (*g_api_SetVolumeCommand22_23)(s32 vol, s32 distance);
-extern void (*g_api_func_800F53A4)(void);
+extern void (*g_api_MakeAll)(void);
 extern u32 (*g_api_CheckEquipmentItemCount)(u32 itemId, u32 equipType);
 extern void (*g_api_GetPlayerSensor)(Collider* col);
 extern void (*g_api_RevealSecretPassageAtPlayerPositionOnMap)(s32 arg0);
@@ -1911,9 +1908,9 @@ enum AluTimers {
     ALU_T_7,
     ALU_T_8,
     ALU_T_9,
-    ALU_T_10,
+    ALU_T_USE_SUBWPN,
     ALU_T_DARKMETAMORPH,
-    ALU_T_12,
+    ALU_T_USE_SPELL,
     ALU_T_INVINCIBLE,
     ALU_T_INVINCIBLE_CONSUMABLES,
     ALU_T_15,
@@ -2033,7 +2030,7 @@ typedef struct {
 
 // Used in game.h
 typedef struct {
-    /* 0x800973F8 */ s32 D_800973F8;
+    /* 0x800973F8 */ s32 primIndex;
     /* 0x800973FC */ s32 D_800973FC;
     /* 0x80097400 */ bool pauseEnemies; // True for Stopwatch and cutscenes
     /* 0x80097404 */ s32 unk4;
@@ -2049,6 +2046,24 @@ typedef struct {
     // size must be 8 for the loop in RunMainEngine, while
     // PreventEntityFromRespawning suggests it has a size of 32
     /* 0x80097428 */ s32 D_80097428[8];
+    /* 0x80097448 */ s32 D_80097448;
+    /* 0x8009744C */ s32 D_8009744C;
+    /* 0x80097450 */ s32 D_80097450;
+    /* 0x80097454 */ s32 : 32;
+    /* 0x80097458 */ s32 : 32;
+    /* 0x8009745C */ s32 : 32;
+    /* 0x80097460 */ s32 : 32;
+    /* 0x80097464 */ s32 : 32;
+    /* 0x80097468 */ s32 : 32;
+    /* 0x8009746C */ s32 : 32;
+    /* 0x80097470 */ s32 : 32;
+    /* 0x80097474 */ s32 : 32;
+    /* 0x80097478 */ s32 : 32;
+    /* 0x8009747C */ s32 : 32;
+    /* 0x80097480 */ s32 : 32;
+    /* 0x80097484 */ s32 : 32;
+    /* 0x80097488 */ f32 shoveX;
+    /* 0x8009748C */ f32 shoveY;
 } unkGraphicsStruct;
 
 typedef struct {
@@ -2198,7 +2213,6 @@ typedef enum {
 // 0x80-0xFF: stage entities, only player can interact with
 extern Entity g_Entities[TOTAL_ENTITY_COUNT];
 
-extern s32 g_entityDestroyed[18];
 extern Event g_EvHwCardEnd;
 extern Event g_EvHwCardErr;
 extern Event g_EvHwCardTmo;
@@ -2211,9 +2225,6 @@ extern u32 g_randomNext;
 extern s32 D_80096ED8[];
 extern s32 D_800973EC; // flag to check if the menu is shown
 extern unkGraphicsStruct g_unkGraphicsStruct;
-extern s32 D_80097448[]; // underwater physics. 7448 and 744C. Could be struct.
-extern s32 D_80097450;
-extern Pos D_80097488;
 extern Pad g_pads[PAD_COUNT];
 extern Stages g_StageId;
 extern s32 D_800974A4; // map open
@@ -2235,9 +2246,9 @@ extern GpuUsage g_GpuUsage;
 extern PlayerStatus g_Status;
 extern u32 D_80097C98;
 extern s32 subWeapon; // g_SubweaponId
-extern u32 D_80097C40[];
+extern s32 D_80097C40[];
 extern PlayerDraw g_PlayerDraw[0x10];
-extern s32 D_psp_08C630C4;
+extern bool g_InvincibleFlag;
 extern s32 D_800987B4;
 extern StHEADER* D_800987C8;
 extern s32 g_DebugPlayer;
@@ -2316,9 +2327,9 @@ typedef enum {
     PAL_UNK_198 = 0x198,
     PAL_UNK_199 = 0x199,
     PAL_UNK_19C = 0x19C,
-    PAL_UNK_19D = 0x19D,
+    PAL_UNK_19D = 0x19D, // Light grey to black gradient
     PAL_UNK_19E = 0x19E,
-    PAL_UNK_19F = 0x19F,
+    PAL_UNK_19F = 0x19F, // Black to white gradient
     // eDamageDisplay
     PAL_UNK_1B0 = 0x1B0,
     PAL_UNK_1B1 = 0x1B1,
@@ -2334,6 +2345,7 @@ typedef enum {
     PAL_UNK_1AB = 0x1AB,
     PAL_UNK_1AE = 0x1AE,
     PAL_UNK_1AF = 0x1AF,
+    PAL_UNK_1CF = 0x1CF,
     PAL_UNK_1F3 = 0x1F3,
     // 0x200-0x2FF is not included here
 };

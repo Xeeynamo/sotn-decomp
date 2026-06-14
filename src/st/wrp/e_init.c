@@ -1,7 +1,22 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "wrp.h"
 
+void EntityBreakable(Entity*);
+void EntityExplosion(Entity*);
+void EntityPrizeDrop(Entity*);
+void EntityDamageDisplay(Entity*);
 void OVL_EXPORT(EntityRedDoor)(Entity*);
+void EntityIntenseExplosion(Entity*);
+void EntitySoulStealOrb(Entity*);
+void EntityRoomForeground(Entity*);
+void EntityStageNamePopup(Entity*);
+void EntityEquipItemDrop(Entity*);
+void EntityRelicOrb(Entity*);
+void EntityHeartDrop(Entity*);
+void EntityEnemyBlood(Entity*);
+void EntityMessageBox(Entity*);
+void EntityDummy(Entity*);
+void EntityDummy(Entity*);
 void OVL_EXPORT(EntityBackgroundBlock)(Entity*);
 void OVL_EXPORT(EntityLockCamera)(Entity*);
 void EntityUnkId13(Entity*);
@@ -9,7 +24,7 @@ void EntityExplosionVariants(Entity*);
 void EntityGreyPuff(Entity*);
 void EntityWarpRoom(Entity*);
 void EntityWarpSmallRocks(Entity*);
-void EntityPrizeDrop(Entity*);
+
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityBreakable,
     EntityExplosion,

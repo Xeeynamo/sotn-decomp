@@ -14,3 +14,7 @@ extract_overlay_log.json
 # Matches in tools only
 /sotn-disk/sotn-disk
 /sotn-assets/sotn-assets
+
+
+GCCSH/
+.dosemu*

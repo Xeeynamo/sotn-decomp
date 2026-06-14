@@ -1,6 +1,8 @@
 #include "sattypes.h"
 #include "inc_asm.h"
 
+const char gfs_version[] = "GFS_SBL Version 2.14 1997-04-11";
+
 // SEGADGFS.A (debug version of lib)
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601B2B4, func_0601B2B4); // GFS_Init
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601B3A0, func_0601B3A0);
@@ -521,4 +523,3 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6021770, func_06021770); // _GFSB_RtnPk
 
 // _gfsb_getActSiz
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60217C0, func_060217C0);
-INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f602185A, func_0602185A);

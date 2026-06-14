@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "lib.h"
+#include <scratchpad.h>
 
 static SVECTOR D_us_80182F44 = {4, 0, 16};
 static SVECTOR D_us_80182F4C = {0, 0, 16};
@@ -779,8 +780,7 @@ void func_us_801D35B8(Entity* self) {
             self->animCurFrame = ptr->unkC;
             self->rotate = rotate + ptr->unk4;
             self->zPriority = tempEntity->ext.spellbookMagicTome.unk88;
-            self->drawFlags =
-                FLAG_DRAW_ROTATE | FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+            self->drawFlags = ENTITY_ROTATE | ENTITY_SCALEY | ENTITY_SCALEX;
             self->scaleX = self->scaleY = 0;
             self->step_s++;
             /* fallthrough */

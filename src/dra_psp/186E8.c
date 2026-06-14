@@ -7,8 +7,6 @@
 
 extern void* g_ApiInit[sizeof(GameApi) / sizeof(void*)];
 
-extern s32 D_psp_091CE1E8;
-
 extern u8 D_psp_09192EB0;
 extern u8 D_psp_091A4CE8;
 extern u8 D_psp_09197640;
@@ -489,7 +487,7 @@ void SetMenuDisplayBuffer(void) {
 
 void VSyncHandler(void) {
     if (D_psp_091CE1E8 != 0) {
-        func_psp_0891AEC8();
+        EndFrame();
         D_psp_091CE1E8 = 0;
     }
     func_psp_090FA740();
@@ -1459,7 +1457,7 @@ void MainGame(void) {
     g_Settings.D_8003CB04 = 0;
     g_CurrentBuffer = &g_GpuBuffers[0];
 #if defined(VERSION_US)
-    SetCdPos(0xB9B6);
+    SetCdPos(OFF_SD_XA_STR1);
 #elif defined(VERSION_HD)
     do {
 
@@ -1565,7 +1563,7 @@ loop_5:
         D_psp_091CE2A0 = GsGetVcount();
         GsClearVcount();
         func_psp_090F5520();
-        func_psp_089262C4();
+        InitVCount();
         LoadPendingGfx();
         ReadPads();
 

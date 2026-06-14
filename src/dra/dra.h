@@ -196,14 +196,14 @@ enum AluBlueprints {
     BP_0,
     BP_1,
     BP_GRAVITY_BOOT_BEAM,
-    BP_3,
+    BP_KNIFE,
     BP_4,
     BP_5,
-    BP_6,
-    BP_7,
-    BP_8,
-    BP_9,
-    BP_10,
+    BP_CRASH_CROSS,
+    BP_CRASH_CROSS_CROSSES_ONLY,
+    BP_CRASH_CROSS_BLUE_PARTICLES,
+    BP_AXE,
+    BP_REBOUND_STONE_HIT,
     BP_11,
     BP_12,
     BP_13,
@@ -217,11 +217,11 @@ enum AluBlueprints {
     BP_21,
     BP_22,
     BP_23,
-    BP_24,
-    BP_25,
-    BP_26,
-    BP_27,
-    BP_28,
+    BP_REBOUND_STONE,
+    BP_LEVEL_UP_TEXT,
+    BP_VIBHUTI,
+    BP_HOLYWATER, // Alucard's holy water subweapon is different from Ricther's
+    BP_HOLYWATER_GREEN_FIRE,
     BP_29,
     BP_30,
     BP_31,
@@ -498,7 +498,7 @@ typedef struct SeqData {
 } SeqData;
 
 typedef struct Cmd14 {
-    u8 unk0[8];
+    u8 cdLoc[8];
     s32 unk8;
     s16 unkc;
     u8 unke;
@@ -776,10 +776,9 @@ void RevealSecretPassageOnMap(s32, s32, s32);
 void func_800F2120(void);
 void func_800F223C(void);
 void func_800F4994(void);
-void func_800F4F48(void);
 void CalcDefense(void);
 bool IsAlucart(void);
-void func_800F53A4(void);
+void make_all(void);
 bool ScissorSprite(SPRT* arg0, MenuContext* arg1);
 void MenuDrawImg(MenuContext* ctx, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v,
                  s32 idx, s32 unk2, bool disableTexShade, s32 unk4);
@@ -813,7 +812,6 @@ void GetEquipProperties(s32 handId, Equipment* res, s32 equipId);
 s32 HandleDamage(DamageParam*, s32, s32 amount, s32);
 s32 HandleTransformationMP(TransformationForm, CallMode);
 void ClearStatBuff(s32 arg0);
-bool func_8010183C(s32 arg0);
 s32 func_801025F4(void);
 void func_80102CD8(s32);
 Entity* GetFreeEntity(s16 start, s16 end);
@@ -850,6 +848,7 @@ void func_80118894(Entity*);
 Entity* func_80118970(void);
 void func_80118C28(s32 arg0);
 void GetServantStats(Entity* entity, s32 spellId, s32 arg2, FamiliarStats* out);
+bool func_8010FDF8(s32 branchFlags);
 
 #ifndef CREATE_FACTORY_FAKE_ARGS
 Entity* CreateEntFactoryFromEntity(Entity* entity, u32, s32);

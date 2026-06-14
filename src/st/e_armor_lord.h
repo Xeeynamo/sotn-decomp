@@ -1,4 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+extern EInit g_EInitInteractable;
+extern EInit g_EInitArmorLord;
+extern EInit D_us_80180AE8;
+extern EInit D_us_80180AF4;
+
 #ifdef STAGE_IS_NO1
 static s32 D_us_80182D4C = 0;
 #endif
@@ -8,24 +13,25 @@ static s16 D_us_80182D68[] = {0, 40, 8, 0};
 static s16 D_us_80182D70[] = {32, 24, 48, 40};
 
 // animations
-static u8 D_us_80182D78[] = {16, 1, 24, 2, 16, 1, 24, 3, 0, 0};
-static u8 D_us_80182D84[] = {32, 1, 8, 4,  70, 5,  6, 6,  6, 7,  6,  8,
-                             2,  9, 2, 10, 2,  11, 1, 12, 1, 13, -1, 0};
-static u8 D_us_80182D9C[] = {1, 12, 1, 13, 0, 0};
-static u8 D_us_80182DA4[] = {8, 14, 8, 15, 16, 1, -1, 0};
-static u8 D_us_80182DAC[] = {40, 1,  8, 4,  2,  17, 72, 16, 1, 17, 1, 18,
-                             1,  19, 1, 20, 33, 21, 6,  22, 6, 15, 0, 0};
-static u8 D_us_80182DC4[] = {32, 1, 6,  15, 6,  23, 6,  24, 40, 25, 1, 26, 1,
-                             27, 1, 28, 1,  29, 64, 16, 6,  17, 32, 4, 0,  0};
-static u8 D_us_80182DE0[] = {8, 1, 6, 4, 97, 30, 4, 4, -1, 0};
-static u8 D_us_80182DEC[] = {24, 34, 24, 35, -1, 0};
+static u8 anim0[] = {16, 1, 24, 2, 16, 1, 24, 3, 0, 0};
+static u8 anim1[] = {32, 1, 8, 4,  70, 5,  6, 6,  6, 7,  6,  8,
+                     2,  9, 2, 10, 2,  11, 1, 12, 1, 13, -1, 0};
+static u8 anim2[] = {1, 12, 1, 13, 0, 0};
+static u8 anim3[] = {8, 14, 8, 15, 16, 1, -1, 0};
+static u8 anim4[] = {40, 1,  8, 4,  2,  17, 72, 16, 1, 17, 1, 18,
+                     1,  19, 1, 20, 33, 21, 6,  22, 6, 15, 0, 0};
+static u8 anim5[] = {32, 1, 6,  15, 6,  23, 6,  24, 40, 25, 1, 26, 1,
+                     27, 1, 28, 1,  29, 64, 16, 6,  17, 32, 4, 0,  0};
+static u8 anim6[] = {8, 1, 6, 4, 97, 30, 4, 4, -1, 0};
+static u8 anim7[] = {24, 34, 24, 35, -1, 0};
 
-static MATRIX armorLordColorMatrix = {
-    {{0, 0, 0x1000}, {0, 0, 0x800}, {0, 0, 0x1000}}};
+static MATRIX armorLordColorMatrix = {{{FLT(0.0), FLT(0.0), FLT(1.0)},
+                                       {FLT(0.0), FLT(0.0), FLT(0.5)},
+                                       {FLT(0.0), FLT(0.0), FLT(1.0)}}};
 
-static SVECTOR armorLordColNormVec1 = {0, 0, 0x1000};
-static SVECTOR armorLordColNormVec2 = {0, 0x800, 0x800};
-static SVECTOR armorLordRotVec = {0, 0, 0};
+static SVECTOR armorLordColNormVec1 = {FLT(0.0), FLT(0.0), FLT(1.0)};
+static SVECTOR armorLordColNormVec2 = {FLT(0.0), FLT(0.5), FLT(0.5)};
+static SVECTOR armorLordRotVec = {FLT(0.0), FLT(0.0), FLT(0.0)};
 
 // BUG! These data types seem backwards but PSP does actually appear
 // to load them as s16 and u16 respectively.
@@ -41,11 +47,6 @@ static u16 hitboxOffXYs[][2] = {
     {54, 6},   {39, -13}, {21, -35}, {-18, -34}, {-38, 5}, {-36, 30},
     {-29, 19}, {-14, 21}, {-20, 29}, {-7, 27},   {-36, 7}, {-11, -6},
     {21, -3},  {47, 3},   {-22, -4}};
-
-extern EInit g_EInitInteractable;
-extern EInit g_EInitArmorLord;
-extern EInit D_us_80180AE8;
-extern EInit D_us_80180AF4;
 
 // Armor Lord fire wave helper
 static void func_us_801D1184(Primitive* prim) {
@@ -488,7 +489,7 @@ static s32 func_us_801D1DAC(void) {
         g_CurrentEntity->ext.armorLord.unk8A = 0;
         g_CurrentEntity->ext.armorLord.unk88 = 0;
         g_CurrentEntity->ext.armorLord.unk8C = 0;
-        g_CurrentEntity->drawFlags |= FLAG_DRAW_OPACITY;
+        g_CurrentEntity->drawFlags |= ENTITY_OPACITY;
         g_CurrentEntity->opacity = 0x80;
         g_CurrentEntity->step_s++;
         break;
@@ -841,7 +842,7 @@ void EntityArmorLord(Entity* self) {
             self->ext.armorLord.unk80 = D_us_80182D70[Random() & 3];
             self->step_s++;
         }
-        if (!AnimateEntity(D_us_80182D78, self)) {
+        if (!AnimateEntity(anim0, self)) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
         UnkCollisionFunc2(D_us_80182D68);
@@ -875,7 +876,7 @@ void EntityArmorLord(Entity* self) {
     case 4:
         switch (self->step_s) {
         case 0:
-            if (!AnimateEntity(D_us_80182D84, self)) {
+            if (!AnimateEntity(anim1, self)) {
                 self->pose = 0;
                 self->poseTimer = 0;
                 self->step_s++;
@@ -884,7 +885,7 @@ void EntityArmorLord(Entity* self) {
             break;
 
         case 1:
-            AnimateEntity(D_us_80182D9C, self);
+            AnimateEntity(anim2, self);
             if (!--self->ext.armorLord.unk80) {
                 self->pose = 0;
                 self->poseTimer = 0;
@@ -896,7 +897,7 @@ void EntityArmorLord(Entity* self) {
             break;
 
         case 2:
-            if (!AnimateEntity(D_us_80182DA4, self)) {
+            if (!AnimateEntity(anim3, self)) {
                 SetStep(3);
             }
             break;
@@ -923,7 +924,7 @@ void EntityArmorLord(Entity* self) {
         }
         UnkCollisionFunc2(D_us_80182D68);
         self->velocityX -= self->velocityX / 8;
-        if (!AnimateEntity(D_us_80182DAC, self)) {
+        if (!AnimateEntity(anim4, self)) {
             SetStep(3);
         }
         break;
@@ -942,13 +943,13 @@ void EntityArmorLord(Entity* self) {
             }
             self->step_s++;
         }
-        if (!AnimateEntity(D_us_80182DC4, self)) {
+        if (!AnimateEntity(anim5, self)) {
             SetStep(3);
         }
         break;
 
     case 7:
-        if (!AnimateEntity(D_us_80182DE0, self)) {
+        if (!AnimateEntity(anim6, self)) {
             self->hitboxState = 3;
             self->step_s = 3;
         }
@@ -961,7 +962,7 @@ void EntityArmorLord(Entity* self) {
         break;
 
     case 8:
-        if (!AnimateEntity(D_us_80182DEC, self)) {
+        if (!AnimateEntity(anim7, self)) {
             SetStep(9);
         }
         if (g_Timer % 8 == 0) {
@@ -1029,8 +1030,8 @@ void func_us_801D348C(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_us_80180AE8);
-        self->drawMode |= DRAW_TPAGE2 | DRAW_TPAGE;
-        self->drawFlags |= FLAG_DRAW_OPACITY;
+        self->blendMode |= BLEND_TRANSP | BLEND_ADD;
+        self->drawFlags |= ENTITY_OPACITY;
         self->animCurFrame = 0;
         break;
     case 1:
@@ -1038,8 +1039,7 @@ void func_us_801D348C(Entity* self) {
             self->step = 2;
             self->animCurFrame = 0x20;
             self->opacity = 0x60;
-            self->drawFlags =
-                FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+            self->drawFlags = ENTITY_OPACITY | ENTITY_SCALEY | ENTITY_SCALEX;
             self->scaleX = 0x1C8;
             self->scaleY = 0x1C8;
         }
@@ -1047,8 +1047,7 @@ void func_us_801D348C(Entity* self) {
             self->step = 3;
             self->animCurFrame = 0x21;
             self->opacity = 0x60;
-            self->drawFlags =
-                FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+            self->drawFlags = ENTITY_OPACITY | ENTITY_SCALEY | ENTITY_SCALEX;
             self->scaleX = 0x1B8;
             self->scaleY = 0x1B8;
         }

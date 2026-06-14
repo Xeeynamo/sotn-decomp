@@ -1,5 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+extern EInit g_EInitAxeKnight;
+extern EInit g_EInitAxeKnightAxe;
+
 // Code in this file is very similar to entity_axe_knight.h
 // but has some additional attacks and code not present in the lower
 // level green axe knight
@@ -103,10 +106,9 @@ static void AxeKnightUnkFunc1(AxePrim* prim) {
     }
 }
 
-extern EInit g_EInitAxeKnight;
+extern s16* SPRITE_BANK[];
 
 // Called by EntityAxeKnightBlue
-extern s16* SPRITE_BANK[];
 static s32 func_us_801CA51C(Entity* axeKnight) {
     Entity* entity;
     Primitive* prim;
@@ -188,7 +190,8 @@ static s32 func_us_801CA51C(Entity* axeKnight) {
         break;
     case 1:
         flag = 0;
-        for (prim = axeKnight->ext.axeknight.prim; prim != NULL;) {
+        prim = axeKnight->ext.axeknight.prim;
+        while (prim != NULL) {
             if (prim->p3 & 8) {
                 AxeKnightUnkFunc1((AxePrim*)prim);
                 flag = 1;
@@ -344,16 +347,16 @@ void EntityAxeKnightBlue(Entity* self) {
     u8 animStatusArcThrow;
 
     if (self->hitPoints < 8 && self->ext.axeknight.unk7D) {
-        self->animCurFrame += 0x17;
+        self->animCurFrame += 23;
         self->ext.axeknight.unk7D = 0;
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
             for (i = 0; i < 2; i++) {
                 CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                 if (self->facingLeft) {
-                    newEntity->posX.i.hi += 0xC;
+                    newEntity->posX.i.hi += 12;
                 } else {
-                    newEntity->posX.i.hi -= 0xC;
+                    newEntity->posX.i.hi -= 12;
                 }
                 newEntity->posY.i.hi += (i * 8) - 8;
                 newEntity->params = 2;
@@ -428,14 +431,16 @@ void EntityAxeKnightBlue(Entity* self) {
 
         if (self->pose == 1 || self->pose == 4) {
             if (self->facingLeft) {
-                self->velocityX += 0x600;
+                self->velocityX += FIX(3.0 / 128);
             } else {
-                self->velocityX -= 0x600;
+                self->velocityX -= FIX(3.0 / 128);
             }
-        } else if (self->facingLeft) {
-            self->velocityX -= 0x600;
         } else {
-            self->velocityX += 0x600;
+            if (self->facingLeft) {
+                self->velocityX -= FIX(3.0 / 128);
+            } else {
+                self->velocityX += FIX(3.0 / 128);
+            }
         }
 
         if (UnkCollisionFunc2(sensors_move) & 0x60) {
@@ -477,14 +482,16 @@ void EntityAxeKnightBlue(Entity* self) {
 
         if (self->pose == 1 || self->pose == 4) {
             if (self->facingLeft) {
-                self->velocityX -= 0x400;
+                self->velocityX -= FIX(1.0 / 64);
             } else {
-                self->velocityX += 0x400;
+                self->velocityX += FIX(1.0 / 64);
             }
-        } else if (self->facingLeft) {
-            self->velocityX += 0x400;
         } else {
-            self->velocityX -= 0x400;
+            if (self->facingLeft) {
+                self->velocityX += FIX(1.0 / 64);
+            } else {
+                self->velocityX -= FIX(1.0 / 64);
+            }
         }
 
         if (UnkCollisionFunc2(sensors_move) & 0x60) {
@@ -673,7 +680,7 @@ void EntityAxeKnightBlue(Entity* self) {
     case AXE_KNIGHT_DYING:
         if (self->ext.axeknight.unk80) {
             temp = --self->ext.axeknight.unk80;
-            if (!(temp & 7)) {
+            if ((temp & 7) == 0) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
@@ -708,9 +715,9 @@ void EntityAxeKnightBlue(Entity* self) {
 
 static void EntityAxeKnightRotateAxe(void) {
     if (g_CurrentEntity->params) {
-        g_CurrentEntity->rotate += 0x80;
+        g_CurrentEntity->rotate += ROT(11.25);
     } else {
-        g_CurrentEntity->rotate -= 0x80;
+        g_CurrentEntity->rotate -= ROT(11.25);
     }
 
     g_CurrentEntity->rotate &= 0xFFF;
@@ -719,7 +726,6 @@ static void EntityAxeKnightRotateAxe(void) {
 static s32 init_velocity_x[] = {FIX(2), FIX(2), FIX(1)};
 static s32 init_velocity_y[] = {FIX(0), FIX(0), FIX(-4)};
 
-extern EInit g_EInitAxeKnightAxe;
 void EntityAxeKnightThrowingAxe(Entity* self) {
     s32 velocityX;
 
@@ -732,7 +738,7 @@ void EntityAxeKnightThrowingAxe(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitAxeKnightAxe);
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         self->velocityY = init_velocity_y[self->params];
         velocityX = init_velocity_x[self->params];
 

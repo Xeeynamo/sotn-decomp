@@ -58,11 +58,11 @@ void EntityWeaponAttack(Entity* self) {
         self->hitboxWidth = 4;
         self->hitboxHeight = 4;
         if (((self->params >> 8) & 0x7F) == 1) {
-            self->drawFlags |= FLAG_DRAW_ROTATE;
+            self->drawFlags |= ENTITY_ROTATE;
         }
         if (((self->params >> 8) & 0x7F) == 3) {
             self->palette = PAL_FLAG(PAL_CC_FIRE_EFFECT);
-            self->drawFlags |= FLAG_DRAW_ROTATE;
+            self->drawFlags |= ENTITY_ROTATE;
         }
         if (!((self->params >> 8) & 0x7F)) {
             g_api.PlaySfx(SFX_WEAPON_SWISH_A);
@@ -94,7 +94,7 @@ void EntityWeaponAttack(Entity* self) {
         if (self->hitFlags != 0) {
             self->ext.weapon.lifetime = 24;
             self->hitboxState = 0;
-            self->drawFlags |= FLAG_BLINK;
+            self->drawFlags |= ENTITY_BLINK;
             self->step++;
         }
         break;
@@ -118,8 +118,8 @@ s32 func_ptr_80170004(Entity* self) {
         self->palette = self->ext.weapon.parent->palette;
         self->unk5A = self->ext.weapon.parent->unk5A;
         self->ext.timer.t = 10;
-        self->drawMode = DRAW_TPAGE;
-        self->drawFlags = FLAG_DRAW_OPACITY;
+        self->blendMode = BLEND_TRANSP;
+        self->drawFlags = ENTITY_OPACITY;
         self->opacity = 0x80;
         self->step++;
     }
@@ -158,8 +158,7 @@ static void func_ptr_80170008(Entity* self) {
         D_6D000_8017BFC8++;
 
         if (!(rand() & 1)) {
-            self->drawMode =
-                FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK10;
+            self->blendMode = ENTITY_MASK_B | ENTITY_MASK_G | ENTITY_MASK_R;
         }
         self->step++;
     }
@@ -412,7 +411,7 @@ s32 func_ptr_80170010(Entity* self) {
         self->anim = D_6D000_8017A770;
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
         self->zPriority = PLAYER.zPriority - 2;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         if (params >= 0x10) {
             rotation = D_6D000_8017A78C[params];
             self->scaleY = rotation;
@@ -486,7 +485,7 @@ static s32 func_ptr_80170014(Entity* self) {
         self->anim = D_6D000_8017A770;
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
         self->zPriority = PLAYER.zPriority - 2;
-        self->drawMode = DRAW_TPAGE | 0x20;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         angle = ratan2(-self->ext.weapon.parent->velocityY,
                        self->ext.weapon.parent->velocityX);
         angle += (0x500 + (rand() % 0x600));

@@ -318,7 +318,7 @@ void EntityKarasuman(Entity* self) {
             if (!--self->ext.karasuman.timer) {
                 PlaySfxPositional(SFX_TELEPORT_BANG_A);
                 self->ext.karasuman.flag1 = 1;
-                self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+                self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
                 self->scaleX = self->scaleY = 256;
                 self->velocityY = FIX(-6.0);
                 self->velocityX = 0;
@@ -342,7 +342,7 @@ void EntityKarasuman(Entity* self) {
         case 5:
             self->scaleX = self->scaleY += 8;
             if (self->scaleX > 256) {
-                self->drawFlags = FLAG_DRAW_DEFAULT;
+                self->drawFlags = ENTITY_DEFAULT;
                 SetStep(7);
             }
             break;
@@ -517,8 +517,8 @@ void EntityKarasuman(Entity* self) {
 
             if (!--self->ext.karasuman.timer) {
                 self->palette = PAL_FLAG(0x2E4);
-                self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
-                self->drawFlags |= FLAG_DRAW_OPACITY;
+                self->blendMode = BLEND_TRANSP | BLEND_ADD;
+                self->drawFlags |= ENTITY_OPACITY;
                 self->opacity = 0x80;
                 self->ext.karasuman.timer = 64;
                 self->step_s++;
@@ -593,7 +593,7 @@ void EntityKarasumanFeatherAttack(Entity* self) {
     case 0:
         InitializeEntity(g_EInitKarasumanFeatherAttack);
         self->animCurFrame = 59;
-        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->drawFlags |= ENTITY_ROTATE;
         if (Random() & 1) {
             self->facingLeft = true;
         }
@@ -640,9 +640,9 @@ void EntityKarasumanOrbAttack(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitKarasumanOrbAttack);
-        self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+        self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
         self->scaleX = self->scaleY = 0;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         // fallthrough
 
     case 1:
@@ -749,10 +749,10 @@ void EntityKarasumanRavenAttack(Entity* self) {
         break;
 
     case 8:
-        self->palette = PAL_FLAG(0x15F);
-        self->drawFlags = FLAG_DRAW_OPACITY;
+        self->palette = PAL_FLAG(PAL_FILL_WHITE);
+        self->drawFlags = ENTITY_OPACITY;
         self->opacity = 0;
-        self->drawMode = DRAW_UNK_40 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_SUB;
         entity = self->ext.karasuman.parent;
         angle = Random() * 16;
         self->posX.i.hi += FLT_TO_I(128 * rcos(angle));
@@ -820,7 +820,7 @@ void EntityKarasumanFeather(Entity* self) {
     case 0:
         InitializeEntity(g_EInitKarasumanFeather);
         self->animCurFrame = 63;
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         self->facingLeft = Random() & 1;
         scale = (Random() & 0x1F) + 0x10;
         angle = (Random() * 6) + FLT(9.0 / 16.0);
@@ -862,8 +862,8 @@ void EntityKarasumanRavenAbsorb(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitKarasumanRavenAttack);
-        self->drawMode = DRAW_TPAGE;
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->blendMode = BLEND_TRANSP;
+        self->drawFlags = ENTITY_ROTATE;
         self->hitboxState = 0;
 
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA | FLAG_UNK_2000;

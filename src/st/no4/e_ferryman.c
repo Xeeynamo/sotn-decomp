@@ -73,14 +73,14 @@ void MoveBoat(u16 playerInBoat, Entity* entity) {
         if (posX > 0) {
             if (!(g_Player.vram_flag & TOUCHING_R_WALL)) {
                 tempEntity->posX.i.hi += posX;
-                D_80097488.x.i.hi += posX;
+                g_unkGraphicsStruct.shoveX.i.hi += posX;
             }
         } else if (!(g_Player.vram_flag & TOUCHING_L_WALL)) {
             tempEntity->posX.i.hi += posX;
-            D_80097488.x.i.hi += posX;
+            g_unkGraphicsStruct.shoveX.i.hi += posX;
         }
         tempEntity->posY.i.hi += posY;
-        D_80097488.y.i.hi += posY;
+        g_unkGraphicsStruct.shoveY.i.hi += posY;
     }
 }
 
@@ -131,7 +131,7 @@ void EntityFerrymanController(Entity* self) {
             self->posY.i.hi += offset;
             if (playerInBoat) {
                 tempEntity->posY.i.hi += offset;
-                D_80097488.y.i.hi += offset;
+                g_unkGraphicsStruct.shoveY.i.hi += offset;
             }
         }
     }
@@ -158,7 +158,7 @@ void EntityFerrymanController(Entity* self) {
         self->animCurFrame = 0x21;
         self->zPriority = 0x9A;
         self->flags |= FLAG_POS_CAMERA_LOCKED;
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         CreateEntityFromCurrentEntity(E_ID(FERRYMAN), ferrymanEntity);
         ferrymanEntity->facingLeft = self->facingLeft;
         break;
@@ -594,7 +594,7 @@ void EntityFerryman(Entity* self) {
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 0x1C;
         self->flags |= FLAG_POS_CAMERA_LOCKED;
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         self->zPriority = 0x9A;
     }
 
@@ -926,14 +926,14 @@ void MoveBoatElevator(
         if (posXTemp > 0) {
             if (!(g_Player.vram_flag & TOUCHING_R_WALL)) {
                 player->posX.i.hi += posXTemp;
-                D_80097488.x.i.hi += posXTemp;
+                g_unkGraphicsStruct.shoveX.i.hi += posXTemp;
             }
         } else if (!(g_Player.vram_flag & TOUCHING_L_WALL)) {
             player->posX.i.hi += posXTemp;
-            D_80097488.x.i.hi += posXTemp;
+            g_unkGraphicsStruct.shoveX.i.hi += posXTemp;
         }
         player->posY.i.hi += posYTemp;
-        D_80097488.y.i.hi += posYTemp;
+        g_unkGraphicsStruct.shoveY.i.hi += posYTemp;
     }
     entity->posX.i.hi = posX;
     entity->posY.i.hi = posY;
@@ -990,7 +990,7 @@ void EntityBoatElevatorController(Entity* self) {
             InitializeEntity(g_EInitInteractable);
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
-            self->drawFlags = FLAG_DRAW_ROTATE;
+            self->drawFlags = ENTITY_ROTATE;
             prim = &g_PrimBuf[primIndex];
             sp38 = 0;
             ptr = *D_us_8018176C;

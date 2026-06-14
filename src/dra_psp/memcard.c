@@ -17,9 +17,7 @@ s32 MemcardParse(s32 nPort, s32 nCard) {
     s32 blocksFree = 0;
 
     if (nPort == 0) {
-        // Presumably func_psp_08919278 is something like
-        // getNumFreeBlocks, but I don't know the SDK function set.
-        blocksFree = func_psp_08919278();
+        blocksFree = GetFreeSaveDataSlotCount();
     }
     g_MemcardInfo[nPort].nBlockUsed = BLOCK_PER_CARD - blocksFree;
     g_MemcardInfo[nPort].nFreeBlock = blocksFree;
@@ -32,16 +30,11 @@ s32 GetMemcardFreeBlockCount(s32 nPort) {
 
 bool MemcardDetectSave(s32 nPort, u8* expectedSaveName, s32 block) {
     bool isCastlevaniaSave;
-    bool found;
 
     isCastlevaniaSave = false;
     if (nPort == 0) {
-        if (func_psp_08919188(expectedSaveName) >= 0) {
-            found = true;
-        } else {
-            found = false;
-        }
-        isCastlevaniaSave = found;
+        isCastlevaniaSave =
+            FindSaveDataSlot(expectedSaveName) >= 0 ? true : false;
     }
     g_MemcardInfo[nPort].blocks[block] = isCastlevaniaSave;
     return isCastlevaniaSave;
@@ -65,7 +58,7 @@ s32 MemcardReadFile(s32 nPort, s32 nCard, char* name, void* data, s32 nblock) {
     if (nblock == 0) {
         len = 0x238;
     }
-    if (func_psp_089194E4(data, name, len) > 0) {
+    if (TryLoadSaveData(data, name, len) > 0) {
         ret = 0;
     } else {
         ret = -1;
@@ -74,7 +67,7 @@ s32 MemcardReadFile(s32 nPort, s32 nCard, char* name, void* data, s32 nblock) {
 }
 
 s32 MemcardWriteFile(s32 nPort, s32 nCard, const char* name, void* data,
-                     s32 flags, s32 unused, s32 create) {
+                     s32 flags, bool create, bool clearQuickSave) {
     s32 ret;
 
     if (nPort != 0) {
@@ -83,7 +76,7 @@ s32 MemcardWriteFile(s32 nPort, s32 nCard, const char* name, void* data,
     if (nCard != 0) {
         return -2;
     }
-    if (func_psp_089193D4(data, name, flags << 0xD, create) > 0) {
+    if (WriteSaveDataSlot(data, name, flags << 0xD, clearQuickSave) > 0) {
         ret = 0;
     } else {
         ret = -1;
@@ -91,14 +84,15 @@ s32 MemcardWriteFile(s32 nPort, s32 nCard, const char* name, void* data,
     return ret;
 }
 
-s32 MemcardEraseFile(s32 nPort, s32 nCard, const char* name, s32 arg3) {
+s32 MemcardEraseFile(
+    s32 nPort, s32 nCard, const char* name, bool clearQuickSave) {
     if (nPort != 0) {
         return -1;
     }
     if (nCard != 0) {
         return -1;
     }
-    return func_psp_089192EC(name, arg3);
+    return ClearSaveDataSlot(name, clearQuickSave);
 }
 
 s32 MemcardClose(s32 nPort) { return 1; }
@@ -368,7 +362,7 @@ extern s32 D_psp_091FC400;
 extern s32 D_psp_091FC408;
 extern s32 D_psp_091FC410;
 
-s32 LoadSaveData(SaveData* save) {
+s32 ApplySaveData(SaveData* save) {
     s32 i;
     u32 prevCompletionFlags1;
     u32 prevCompletionFlags2;

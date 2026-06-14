@@ -1,11 +1,96 @@
 package deps
 
 import (
+	"bytes"
 	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
+	"sync"
+
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
 )
+
+func GitClean(path string, verbose bool) error {
+	cmd := exec.Command("git", "clean", "-fdx", path)
+	if verbose {
+		cmd.Stdout = os.Stdout
+		cmd.Stderr = os.Stderr
+	}
+	return cmd.Run()
+}
+
+func GitSubmoduleInitAndUpdate(dir string, verbose bool) error {
+	entries, err := os.ReadDir(dir)
+	if err == nil && len(entries) > 0 {
+		return nil
+	}
+	gitPath, err := exec.LookPath("git")
+	if err != nil {
+		return fmt.Errorf("git not found: %w", err)
+	}
+	cmd := exec.Command(gitPath, "submodule", "update", "--init", dir)
+	if verbose {
+		cmd.Stdout = os.Stdout
+		cmd.Stderr = os.Stderr
+	}
+	return cmd.Run()
+}
+
+func ClangFormat(files ...string) error {
+	binPath := "bin/clang-format"
+	if err := downloadTarGzFromGithubIfNotExists("xeeynamo/sotn-decomp", "cc1-psx-26", filepath.Base(binPath), binPath); err != nil {
+		return err
+	}
+	if len(files) == 0 {
+		return nil
+	}
+
+	// splitting files in equal chunks per CPU has the risk where certain
+	// chunks might finish much faster than others. Multiplying the workers
+	// by 4 times the CPU will ensure higher degree of parallelism at the
+	// cost of a higher memory usage
+	numWorkers := runtime.NumCPU() * 4
+	if numWorkers > len(files) {
+		numWorkers = len(files)
+	}
+
+	chunkSize := (len(files) + numWorkers - 1) / numWorkers
+	var wg sync.WaitGroup
+	errCh := make(chan error, numWorkers)
+
+	for i := 0; i < numWorkers; i++ {
+		start := i * chunkSize
+		end := start + chunkSize
+		if end > len(files) {
+			end = len(files)
+		}
+		if start >= end {
+			break
+		}
+
+		wg.Add(1)
+		go func(chunk []string) {
+			defer wg.Done()
+			err := (&exec.Cmd{
+				Path: binPath,
+				Args: append([]string{binPath, "-i"}, chunk...),
+			}).Run()
+			if err != nil {
+				errCh <- err
+			}
+		}(files[start:end])
+	}
+
+	wg.Wait()
+	close(errCh)
+
+	for err := range errCh {
+		return err
+	}
+	return nil
+}
 
 func ObjdiffCLI(args ...string) error {
 	binPath := "bin/objdiff-cli-linux-x86_64"
@@ -34,6 +119,30 @@ func ObjdiffGUI(args ...string) error {
 	return cmd.Start()
 }
 
+func RunApp(app string, args ...string) error {
+	return (&exec.Cmd{
+		Path:   app,
+		Args:   append([]string{app}, args...),
+		Stdout: os.Stdout,
+		Stderr: os.Stderr,
+	}).Run()
+}
+
+func GenSaturnNinja() error {
+	binPath, err := venvPython()
+	if err != nil {
+		return err
+	}
+	return (&exec.Cmd{
+		Path:   binPath,
+		Args:   []string{binPath, "tools/builds/saturn.py"},
+		Stdin:  os.Stdin,
+		Stdout: os.Stdout,
+		Stderr: os.Stderr,
+	}).Run()
+}
+
+
 func GenNinja(args ...string) error {
 	binPath, err := venvPython()
 	if err != nil {
@@ -45,6 +154,21 @@ func GenNinja(args ...string) error {
 		Stdin:  os.Stdin,
 		Stdout: os.Stdout,
 		Stderr: os.Stderr,
+	}).Run()
+}
+
+func Black(args ...string) error {
+	binPath, err := venvPython()
+	if err != nil {
+		return err
+	}
+	blackPath, err := pipPackagePath("black")
+	if err != nil {
+		return err
+	}
+	return (&exec.Cmd{
+		Path: binPath,
+		Args: append([]string{binPath, blackPath}, args...),
 	}).Run()
 }
 
@@ -70,4 +194,119 @@ func GenAndRunNinja(args ...string) error {
 		return fmt.Errorf("ninja build failed: %w", err)
 	}
 	return nil
+}
+
+func CargoRun(manifest string, args ...string) error {
+	binPath, err := exec.LookPath("cargo")
+	if err != nil {
+		return err
+	}
+	if _, err := os.Stat(manifest); os.IsNotExist(err) {
+		return fmt.Errorf("%s not found", manifest)
+	}
+
+	cmd := exec.Command(binPath,
+		append([]string{
+			"run",
+			"--release",
+			"--manifest-path", manifest,
+		}, args...)...,
+	)
+
+	var stderr bytes.Buffer
+	cmd.Stderr = &stderr
+
+	if err := cmd.Run(); err != nil {
+		return fmt.Errorf("cargo run failed: %w\nstderr:\n%s",
+			err,
+			stderr.String(),
+		)
+	}
+
+	return nil
+}
+
+func CargoBuild(manifest, outputBin string, args ...string) error {
+	binPath, err := exec.LookPath("cargo")
+	if err != nil {
+		return err
+	}
+	if _, err := os.Stat(manifest); os.IsNotExist(err) {
+		return fmt.Errorf("%s not found", manifest)
+	}
+	cmd := exec.Command(binPath,
+		append([]string{
+			"build",
+			"--release",
+			"--manifest-path", manifest,
+		}, args...)...,
+	)
+
+	var stderr bytes.Buffer
+	cmd.Stderr = &stderr
+	if err := cmd.Run(); err != nil {
+		return fmt.Errorf("cargo run failed: %w\nstderr:\n%s",
+			err,
+			stderr.String(),
+		)
+	}
+
+	if outputBin != "" && filepath.Dir(outputBin) == "bin" {
+		// Find the built binary in the target directory
+		manifestDir := filepath.Dir(manifest)
+		builtBin := filepath.Join(manifestDir, "target", "release", filepath.Base(outputBin))
+		data, err := os.ReadFile(builtBin)
+		if err != nil {
+			return fmt.Errorf("read built binary %s: %w", builtBin, err)
+		}
+		return os.WriteFile(outputBin, data, 0755)
+	}
+	return nil
+}
+
+func Cargo(args ...string) error {
+	binPath, err := exec.LookPath("cargo")
+	if err != nil {
+		return err
+	}
+	cmd := exec.Command(binPath, args...)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	if err := cmd.Run(); err != nil {
+		return fmt.Errorf("cargo %v: %w", args, err)
+	}
+	return nil
+}
+
+func SotnLint(args ...string) error {
+	return CargoRun("tools/lints/sotn-lint/Cargo.toml", args...)
+}
+
+func SymbolsSort(version sotn.Version) error {
+	binPath, err := venvPython()
+	if err != nil {
+		return err
+	}
+	if _, err := pipPackagePath("pyyaml"); err != nil {
+		return err
+	}
+	cmd := &exec.Cmd{
+		Path: binPath,
+		Args: []string{binPath, "./tools/symbols.py", "sort"},
+		Env:  append(os.Environ(), "VERSION="+string(version)),
+	}
+	return cmd.Run()
+}
+
+func SymbolsClean(version sotn.Version, configPath string) error {
+	binPath, err := venvPython()
+	if err != nil {
+		return err
+	}
+	cmd := &exec.Cmd{
+		Path: binPath,
+		Args: []string{binPath, "./tools/symbols.py", "clean", configPath},
+		Env:  append(os.Environ(), "VERSION="+string(version)),
+	}
+	return cmd.Run()
 }

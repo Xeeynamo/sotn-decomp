@@ -3,8 +3,8 @@
 
 static u8 anim_phase_in[] = {3, 1, 3, 2, 3, 3, 3, 4, 3, 5, 3, 6, -1, 0};
 static u8 anim_burning[] = {3, 7, 3, 8, 0, 0};
-static s16 min_max_positions[] = {
-    0x1A0, 0x480, 0x120, 0x1E0}; // xMin, xMax, yMin, yMax
+// xMin, xMax, yMin, yMax
+static s16 min_max_positions[] = {0x1A0, 0x480, 0x120, 0x1E0};
 
 void EntityGhostEnemy(Entity* self) {
     Entity* newEntity;
@@ -28,17 +28,19 @@ void EntityGhostEnemy(Entity* self) {
         self->hitboxOffX = 1;
         self->hitboxOffY = -1;
         self->hitboxState = 0;
-        // fallthrough
+        /* fallthrough */
     case 1:
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         self->step++;
         break;
+
     case 2:
         if (!AnimateEntity(anim_phase_in, self)) {
             self->hitboxState = 7;
             SetStep(3);
         }
         break;
+
     case 3:
         if (!AnimateEntity(anim_burning, self)) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
@@ -50,8 +52,8 @@ void EntityGhostEnemy(Entity* self) {
         angle = GetAngleBetweenEntities(self, newEntity);
         angle = GetNormalizedAngle(16, self->ext.ghostEnemy.angle, angle);
         speed = self->ext.ghostEnemy.speed;
-        self->velocityX = (speed * rcos(angle)) >> 12;
-        self->velocityY = (speed * rsin(angle)) >> 12;
+        self->velocityX = FLT_TO_I(speed * rcos(angle));
+        self->velocityY = FLT_TO_I(speed * rsin(angle));
         self->ext.ghostEnemy.angle = angle;
 
         speed += FIX(0.015625);
@@ -104,7 +106,7 @@ void EntityGhostEnemySpawner(Entity* self) {
                 entity->posX.i.hi -= xPos;
             }
 
-            yPos = ((Random() & 127) - 64);
+            yPos = (Random() & 127) - 64;
             entity->posY.i.hi += yPos;
         }
     }

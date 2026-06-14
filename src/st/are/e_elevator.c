@@ -163,7 +163,7 @@ void EntityElevator(Entity* self) {
                 g_api.func_8010DFF0(0, 1);
                 player = &PLAYER;
                 player->posY.i.hi--;
-                D_80097488.y.i.hi--;
+                g_unkGraphicsStruct.shoveY.i.hi--;
             }
         }
         break;
@@ -185,7 +185,7 @@ void EntityElevator(Entity* self) {
                 g_api.func_8010DFF0(0, 1);
                 player = &PLAYER;
                 player->posY.i.hi++;
-                D_80097488.y.i.hi++;
+                g_unkGraphicsStruct.shoveY.i.hi++;
             }
         }
         break;
@@ -250,7 +250,7 @@ void EntityElevatorGates(Entity* self) {
         }
 
         if (self->params & 0x100) {
-            self->drawFlags |= FLAG_DRAW_ROTATE;
+            self->drawFlags |= ENTITY_ROTATE;
             self->rotate = ROT(180);
         }
 

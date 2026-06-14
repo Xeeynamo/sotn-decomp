@@ -34,7 +34,13 @@ type layouts struct {
 }
 
 func fetchEntityIDsFromHeaderFile(overlay string) (map[int]string, error) {
-	return sotn.FetchEnumWithMin("src/st/" + overlay, overlay, "EntityIDs", 0x100)
+	var path = "src/st"
+	if strings.HasPrefix(overlay, "bo") || strings.HasPrefix(overlay, "rbo") ||
+		overlay == "mar" {
+		path = "src/boss"
+	}
+	path += "/" + overlay
+	return sotn.FetchEnumWithMin(path, overlay, "EntityIDs", 0x100)
 }
 
 func readEntityLayoutEntry(file io.ReadSeeker, ovlName string) (layoutEntry, error) {
@@ -168,7 +174,7 @@ func readEntityLayout(r io.ReadSeeker, ovlName string, off, baseAddr psx.Addr, c
 	}
 }
 
-func buildEntityLayouts(fileName, outputDir, ovlName string) error {
+func buildEntityLayouts(fileName, outputDir, subDir string, ovlName string) error {
 	writeLayoutEntries := func(sb *strings.Builder, banks [][]layoutEntry, align4 bool) error {
 		nWritten := 0
 		for i, entries := range banks {
@@ -250,6 +256,12 @@ func buildEntityLayouts(fileName, outputDir, ovlName string) error {
 		offsetCur += len(el.Entities[i]) * 5
 	}
 
+	ovlHeaderLoc := fmt.Sprintf("../%s.h", ovlName)
+	if subDir != "" {
+		// Look back further if in version specific subdirectory
+		ovlHeaderLoc = "../" + ovlHeaderLoc
+	}
+
 	sbHeader := strings.Builder{}
 	sbHeader.WriteString("#include <stage.h>\n\n")
 	sbHeader.WriteString("#include \"common.h\"\n\n")
@@ -268,7 +280,7 @@ func buildEntityLayouts(fileName, outputDir, ovlName string) error {
 	sbHeader.WriteString(fmt.Sprintf("};\n"))
 
 	sbData := strings.Builder{}
-	sbData.WriteString(fmt.Sprintf("#include \"../%s.h\"\n\n", ovlName))
+	sbData.WriteString(fmt.Sprintf("#include \"%s\"\n\n", ovlHeaderLoc))
 	sbData.WriteString("// clang-format off\n")
 	sbData.WriteString(fmt.Sprintf("u16 %s_x[] = {\n", symbolName))
 	if err := writeLayoutEntries(&sbData, makeSortedBanks(el.Entities, true), false); err != nil {
@@ -281,8 +293,8 @@ func buildEntityLayouts(fileName, outputDir, ovlName string) error {
 	}
 	sbData.WriteString(fmt.Sprintf("};\n"))
 
-	if err := util.WriteFile(filepath.Join(outputDir, "gen/e_layout.c"), []byte(sbData.String())); err != nil {
+	if err := util.WriteFile(filepath.Join(outputDir, "gen", subDir, "e_layout.c"), []byte(sbData.String())); err != nil {
 		return err
 	}
-	return util.WriteFile(filepath.Join(outputDir, "gen/e_laydef.c"), []byte(sbHeader.String()))
+	return util.WriteFile(filepath.Join(outputDir, "gen", subDir, "e_laydef.c"), []byte(sbHeader.String()))
 }

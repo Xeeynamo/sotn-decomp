@@ -38,7 +38,7 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
     if (!self->step) {
         InitializeEntity(OVL_EXPORT(EInitBreakable));
         self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 20;
-        self->drawMode = draw_modes[breakableType];
+        self->blendMode = blend_modes[breakableType];
         self->hitboxHeight = hitbox_heights[breakableType];
         self->animSet = anim_sets[breakableType];
         self->unk5A = unk_5A[breakableType];

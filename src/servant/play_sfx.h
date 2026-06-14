@@ -48,7 +48,7 @@ void ProcessSfxState(Entity* entity) {
             return;
         }
         if (g_api.CdSoundCommandQueueEmpty()) {
-            g_api.PlaySfx(SET_UNK_11);
+            g_api.PlaySfx(SET_XA_PLAYBACK);
             entity->step++;
         }
         break;

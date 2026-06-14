@@ -287,7 +287,7 @@ void func_8011E4BC(Entity* self) {
                     twelveShift = -twelveShift;
                 }
                 tilePrim->velocityX.val =
-                    (((rand() & PSP_RANDMASK) * 4) + FIX(-1));
+                    ((rand() & PSP_RANDMASK) * 4) - FIX(1);
                 tilePrim->velocityY.val = -(rand() & 0x3FFF);
                 tilePrim->posX.val +=
                     ((tilePrim->velocityX.val * 35) + (twelveShift << 16));
@@ -466,9 +466,11 @@ void func_8011E4BC(Entity* self) {
                     tilePrim->b0 -= 1;
                     tilePrim->posY.val += tilePrim->velocityY.val;
                     tilePrim->posX.val += tilePrim->velocityX.val;
-                    if ((D_80097448[0] == 0) ||
+                    if ((g_unkGraphicsStruct.D_80097448 == 0) ||
                         tilePrim->posY.i.hi <=
-                            ((PLAYER.posY.i.hi - D_80097448[0]) + 25)) {
+                            ((PLAYER.posY.i.hi -
+                              g_unkGraphicsStruct.D_80097448) +
+                             25)) {
                         tilePrim->drawMode |= DRAW_HIDE;
                     }
                 } else {
@@ -495,7 +497,7 @@ void func_8011EDA8(Entity* self) {
         if (paramsHi == 1) {
             self->scaleX = 0xC0;
             self->scaleY = 0xC0;
-            self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+            self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
             self->animSet = ANIMSET_DRA(2);
             self->anim = D_800ADC10;
         }
@@ -505,7 +507,7 @@ void func_8011EDA8(Entity* self) {
                 self->anim = D_800ADBD4;
                 self->scaleX = 0x120;
                 self->scaleY = 0x120;
-                self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+                self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
                 self->animSet = ANIMSET_DRA(2);
             } else {
                 self->animSet = ANIMSET_DRA(5);
@@ -540,14 +542,14 @@ void func_8011EDA8(Entity* self) {
         self->posY.val += self->velocityY;
         self->posX.val += self->velocityX;
         if ((self->pose == 8) && (self->anim != D_800AD57C)) {
-            self->drawMode = DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP;
             if (!(paramsLo & 1) && (self->poseTimer == 1)) {
                 CreateEntFactoryFromEntity(self, FACTORY(BP_4, 4), 0);
             }
         }
 
         if ((self->pose == 16) && (self->anim == D_800AD57C)) {
-            self->drawMode = DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP;
         }
 
         if (self->poseTimer < 0) {
@@ -568,14 +570,14 @@ void func_8011F074(Entity* self) {
         self->palette = PAL_FLAG(PAL_UNK_19F);
 
         if (D_8013808C & 1) {
-            self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP | BLEND_QUARTER;
         } else {
-            self->drawMode = DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP;
         }
         D_8013808C++;
         self->opacity = 0xFF;
-        self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY |
-                          FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20;
+        self->drawFlags =
+            ENTITY_SCALEX | ENTITY_SCALEY | ENTITY_MASK_R | ENTITY_MASK_G;
         self->scaleX = self->scaleY = 0x40;
         self->anim = D_800ADC44;
 
@@ -2152,7 +2154,7 @@ void UnknownEntId49(Entity* self) {
             FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         self->step++;
     }
-    self->drawFlags = PLAYER.drawFlags & FLAG_DRAW_OPACITY;
+    self->drawFlags = PLAYER.drawFlags & ENTITY_OPACITY;
     self->opacity = PLAYER.opacity;
 
     if (abs(PLAYER.rotate) == 0x200) {
@@ -2317,7 +2319,7 @@ void func_80123F78(Entity* self) {
         self->animCurFrame = PLAYER.animCurFrame;
         self->unk5A = 0xD;
         self->drawFlags = PLAYER.drawFlags;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->palette = PAL_FLAG(PAL_FILL_WHITE);
         self->zPriority = PLAYER.zPriority - 2;
         self->facingLeft = PLAYER.facingLeft;
@@ -2507,8 +2509,8 @@ void EntityTeleport(Entity* self) {
     case 6:
         PLAYER.palette = PAL_FLAG(PAL_PLAYER_HIDDEN);
 #ifdef VERSION_PSP
-        func_psp_0892A620(0, 1);
-        func_psp_0892A620(1, 1);
+        func_psp_0892A620(0, true);
+        func_psp_0892A620(1, true);
 #endif
         var_s5 = true;
         if (--self->ext.teleport.timer == 0) {

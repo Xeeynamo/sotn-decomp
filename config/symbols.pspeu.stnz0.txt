@@ -1,0 +1,10 @@
+sprites_nz0_3 = 0x0925BBE8;
+NZ0_spriteBanks = 0x09264B58;
+NZ0_rooms_layers = 0x09264DD8;
+NZ0_cluts = 0x09264F98;
+NZ0_gfxBanks = 0x092653D0;
+NZ0_rooms = 0x092657B0;
+NZ0_BackgroundBlockInit = 0x092888F0;
+NZ0_cutscene_text_offset = 0x0928B610;
+NZ0_cutscene_data = 0x0928B618;
+D_801CB738 = 0x0928B838;

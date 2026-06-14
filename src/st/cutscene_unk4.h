@@ -3,6 +3,10 @@
 #define CUTSCENE_UNK4_TPAGE 0x10
 #endif
 
+#ifndef CUTSCENE_UNK4_V_OFFSET
+#define CUTSCENE_UNK4_V_OFFSET 128
+#endif
+
 #ifdef VERSION_HD
 #define CUTSCENE_UNK4_V 16
 #else
@@ -28,7 +32,7 @@ static
 #ifndef VERSION_HD
     prim->x0 = g_Dialogue.startX + 4;
 #endif
-    prim->v0 = g_Dialogue.nextCharY * CUTSCENE_UNK4_V + 0x80;
+    prim->v0 = g_Dialogue.nextCharY * CUTSCENE_UNK4_V + CUTSCENE_UNK4_V_OFFSET;
     prim->u1 = 0xC0;
     prim->v1 = CUTSCENE_UNK4_V;
     prim->priority = 0x1FF;

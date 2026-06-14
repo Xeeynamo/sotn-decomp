@@ -253,7 +253,7 @@ void EntityWereskeleton(Entity* self) {
                 tempEntity->velocityY = D_us_80182950[i].y;
                 tempEntity->step = 13;
                 if (tempEntity->animCurFrame == 0x28) {
-                    tempEntity->drawFlags |= FLAG_DRAW_ROTATE;
+                    tempEntity->drawFlags |= ENTITY_ROTATE;
                     tempEntity->velocityY -= FIX(2);
                 }
             }

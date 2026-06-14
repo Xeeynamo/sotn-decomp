@@ -3,7 +3,7 @@
 
 #if !defined(STAGE_IS_CAT) && !defined(STAGE_IS_NZ1) &&                        \
     !defined(STAGE_IS_ARE) && !defined(STAGE_IS_RARE)
-static u16 unused[] = {
+static u16 unused[] UNUSED = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0001, 0x0000, 0x0001, 0x0000,
     0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0101};
 #endif
@@ -25,18 +25,17 @@ u16 UNK_Invincibility0[] = {
 #endif
 };
 
+u16 g_ItemIconSlots[ICON_SLOT_NUM];
+
 s32 Random(void) {
     g_randomNext = (g_randomNext * 0x01010101) + 1;
     return (g_randomNext >> 0x18) & 0xFF;
 }
 
-u16 g_ItemIconSlots[ICON_SLOT_NUM];
-
 void Update(void) {
-    s16 x;
+    s16 x, y;
     Entity* e;
     s32 flags;
-    s16 y;
     s16 iFramePalette;
 
     for (x = 0; x < LEN(g_ItemIconSlots); x++) {
@@ -76,11 +75,8 @@ void Update(void) {
 
             if (flags & FLAG_UNK_02000000) {
                 x = e->posY.i.hi + g_Tilemap.scrollY.i.hi;
-#if defined(VERSION_PSP)
-                y = (s16)g_Tilemap.vSize * 256 + 128;
-#else
-                y = (u16)g_Tilemap.vSize * 256 + 128;
-#endif
+                y = ((s16)g_Tilemap.vSize << 8) + 128;
+
                 if (x > y) {
                     DestroyEntity(e);
                     continue;
@@ -97,26 +93,29 @@ void Update(void) {
                 }
             }
 
-            if (!(flags & FLAG_UNK_20000000) || (flags & FLAG_UNK_10000000) ||
-                (e->posX.i.hi >= -64 && e->posX.i.hi <= 320 &&
-                 e->posY.i.hi >= -64 && e->posY.i.hi <= 288)) {
-                if (!e->stunFrames ||
-                    (e->stunFrames--, flags & FLAG_UNK_100000)) {
-                    if (!g_unkGraphicsStruct.D_800973FC ||
-                        flags & (FLAG_UNK_2000 | FLAG_DEAD) ||
-                        (flags & FLAG_UNK_200 && !(g_GameTimer & 3))) {
-                    process_entity:
-                        g_CurrentEntity = e;
-                        e->pfnUpdate(e);
-                        e->hitParams = 0;
-                        e->hitFlags = 0;
-                        continue;
-                    }
+            if ((flags & FLAG_UNK_20000000) && !(flags & FLAG_UNK_10000000)) {
+                if (e->posX.i.hi < -64 || e->posX.i.hi > 320 ||
+                    e->posY.i.hi < -64 || e->posY.i.hi > 288) {
+                    continue;
                 }
             }
-        } else {
-            goto process_entity;
+            if (e->stunFrames) {
+                e->stunFrames--;
+                if (!(flags & FLAG_UNK_100000)) {
+                    continue;
+                }
+            }
+            if (g_unkGraphicsStruct.D_800973FC) {
+                if (!(flags & (FLAG_UNK_2000 | FLAG_DEAD)) &&
+                    !(flags & FLAG_UNK_200 && !(g_GameTimer & 3))) {
+                    continue;
+                }
+            }
         }
+        g_CurrentEntity = e;
+        e->pfnUpdate(e);
+        e->hitParams = 0;
+        e->hitFlags = 0;
     }
 }
 

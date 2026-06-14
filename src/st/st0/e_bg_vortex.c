@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "st0.h"
-
-extern SVECTOR D_801C1BC8[];
-extern u8 D_801C23C8[16];
+#include <scratchpad.h>
 
 void EntityBackgroundVortex(Entity* self) {
+    static SVECTOR D_801C1BC8[0x100];
+    static u8 D_801C23C8[0x100];
 #ifdef VERSION_PC
     u8 sp[SP_LEN];
 #endif
@@ -149,7 +149,7 @@ void EntityBackgroundVortex(Entity* self) {
     case 3:
         switch (self->step_s) {
         case 0:
-            self->posY.val += FIX(-0.75);
+            self->posY.val -= FIX(0.75);
             if (self->posY.i.hi < 0xA0) {
                 self->posY.i.hi = 0xA0;
                 self->step_s++;

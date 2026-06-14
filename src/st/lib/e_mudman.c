@@ -45,7 +45,7 @@ void EntityMudman(Entity* self) {
         self->ext.mudman.unk84 = 0;
         self->ext.mudman.unk81 = 0;
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-        self->unk60 = NULL;
+        self->nextPart = NULL;
         break;
 
     case 1:

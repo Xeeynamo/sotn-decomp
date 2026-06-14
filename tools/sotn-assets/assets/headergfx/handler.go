@@ -3,11 +3,12 @@ package headergfx
 import (
 	"bytes"
 	"fmt"
+
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
-	"image"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util/png"
+
 	"image/color"
-	"image/png"
 	"os"
 	"path/filepath"
 	"strings"
@@ -24,7 +25,7 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 		return fmt.Errorf("the image data is too short")
 	}
 	header := e.Data[e.Start : e.Start+4]
-	dec := e.Data[e.Start+4 : e.End]
+	bitmap := e.Data[e.Start+4 : e.End]
 	const bpp = 4
 	width := int(header[0])
 	height := int(header[1])
@@ -42,10 +43,6 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 	} else {
 		palette = util.MakeGreyPalette(bpp)
 	}
-	bitmap, err := util.MakeBitmap(dec, bpp)
-	if err != nil {
-		return fmt.Errorf("error generating image: %v", err)
-	}
 	if err := os.MkdirAll(e.AssetDir, 0755); err != nil {
 		return fmt.Errorf("error creating directory: %v", err)
 	}
@@ -54,7 +51,10 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 		return fmt.Errorf("error creating file: %v", err)
 	}
 	defer fout.Close()
-	return util.PngEncode(fout, bitmap, width, height, palette)
+	if err := png.Encode(fout, bitmap, width, height, palette); err != nil {
+		return fmt.Errorf("png encode: %w", err)
+	}
+	return nil
 }
 
 func (h *handler) Build(e assets.BuildArgs) error {
@@ -64,23 +64,20 @@ func (h *handler) Build(e assets.BuildArgs) error {
 		return fmt.Errorf("failed to read file: %w", err)
 	}
 
-	img, err := png.Decode(bytes.NewReader(pngData))
+	bitmap, meta, err := png.Decode(bytes.NewReader(pngData))
 	if err != nil {
-		return fmt.Errorf("failed to decode PNG %s: %w", inFileName, err)
+		return fmt.Errorf("png decode: %w", err)
 	}
-	palettedImg, ok := img.(*image.Paletted)
-	if !ok {
+	if meta.NumPaletteColors == 0 {
 		return fmt.Errorf("image %s is not paletted", inFileName)
 	}
-	width, height := palettedImg.Rect.Max.X, palettedImg.Rect.Max.Y
-	if width >= 256 || height >= 256 {
-		return fmt.Errorf("image size %dx%d exceeds the limit of 255x255", width, height)
+	if meta.Width >= 256 || meta.Height >= 256 {
+		return fmt.Errorf("image size %dx%d exceeds 255x255 limit", meta.Width, meta.Height)
 	}
-	data := util.Make4bppFromBitmap(palettedImg.Pix)
 	sb := strings.Builder{}
 	sb.WriteString("// clang-format off\n")
-	util.WriteBytesAsHex(&sb, []byte{byte(width), byte(height), 0, 0})
-	util.WriteBytesAsHex(&sb, data)
+	util.WriteBytesAsHex(&sb, []byte{byte(meta.Width), byte(meta.Height), 0, 0})
+	util.WriteBytesAsHex(&sb, bitmap)
 	return util.WriteFile(sourcePath(e.SrcDir, e.Name), []byte(sb.String()))
 }
 

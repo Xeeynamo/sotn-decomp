@@ -817,8 +817,8 @@ void RicEntityVibhutiCrashCloud(Entity* entity) {
         entity->animSet = ANIMSET_DRA(14);
         entity->palette = PAL_FLAG(PAL_UNK_19E);
         entity->anim = D_80155EA8;
-        entity->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
-        entity->drawFlags = FLAG_DRAW_OPACITY;
+        entity->blendMode = BLEND_TRANSP | BLEND_ADD;
+        entity->drawFlags = ENTITY_OPACITY;
         entity->opacity = 0x60;
         entity->hitboxWidth = 8;
         entity->hitboxHeight = 8;
@@ -890,7 +890,7 @@ void RicEntityCrashVibhuti(Entity* self) {
                 prim = prim->next;
             }
             prim->posX.val = PLAYER.posX.val;
-            prim->posY.val = PLAYER.posY.val + FIX(-24);
+            prim->posY.val = PLAYER.posY.val - FIX(24);
             angle = rand() % 0x200 + 0x300;
             magnitude = (rand() % 24) + 0x20;
             prim->velocityX.val = (rcos(angle) * magnitude);
