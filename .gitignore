@@ -10,6 +10,7 @@
 
 # production
 /build
+/dist
 
 # misc
 .DS_Store
@@ -21,3 +22,21 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# SOTN specific stuff
+/asm/
+/bin/
+/disks/
+/build/
+/expected/
+/mods/
+/assets/
+/include/
+/tools/
+/*ninja*
+*.c
+*.h
+/.idea/
+/__pycache__/
+.assets_build_done_*
+/objdiff.json
