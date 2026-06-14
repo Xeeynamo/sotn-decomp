@@ -240,6 +240,9 @@ func main() {
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			version := cmd.Context().Value("version").(string)
+			if version == "saturn" {
+				return handleSaturnReport()
+			}
 			return handleObjdiffReport(version)
 		},
 	})

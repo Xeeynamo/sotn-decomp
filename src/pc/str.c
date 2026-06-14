@@ -198,7 +198,6 @@ const char* AnsiToSotnMenuString(const char* str) {
         ERRORF("buffer full for '%s' (%d/%d)", str, end, LEN(str_buffer));
         return dummy_string;
     }
-    DEBUGF("%s", str);
 
     char* start = str_buffer + str_buffer_index;
     char* dst = start;

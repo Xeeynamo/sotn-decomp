@@ -5,6 +5,13 @@ import ninja_syntax
 import os
 import shutil
 
+sotn_progress_report = "SOTN_PROGRESS_REPORT" in os.environ
+build_base_path = "build/saturn"
+extra_cpp_defs = ""
+if sotn_progress_report:
+    build_base_path = os.path.join("expected", "report", build_base_path)
+    extra_cpp_defs = " -DSKIP_ASM=1"
+
 # write out current pwd to open it as a disk
 with open('./tools/builds/.dosemurc', 'w') as f:
     f.write(f'$_hdimage = \'+0 {os.getcwd()} +1\'\n')
@@ -66,7 +73,7 @@ def add_srcs(srcs, output_dir, args):
         cpp_name = os.path.join(obj_dir, f"{filename_without_extension}.cpp")
         asm_name = os.path.join(obj_dir, f"{filename_without_extension}.s")
 
-        flags = '-lang-c -v -I./src/saturn -I./src/saturn/lib -undef -D__GNUC__=2 -D__GNUC_MINOR__=7 -D__sh__ -D__sh__ -D__sh2__'
+        flags = '-lang-c -v -I./src/saturn -I./src/saturn/lib -undef -D__GNUC__=2 -D__GNUC_MINOR__=7 -D__sh__ -D__sh__ -D__sh2__' + extra_cpp_defs
 
         ninja.build(
             cpp_name,
@@ -120,9 +127,9 @@ lib_srcs = [
 ]
 
 # O0 srcs
-add_srcs(lib_srcs, "build/saturn", "O0")
+add_srcs(lib_srcs, build_base_path, "O0")
 
-add_srcs(snd_srcs, "build/saturn", "O2")
+add_srcs(snd_srcs, build_base_path, "O2")
 
 def elf_srcs(srcs, output_dir):
     for src in srcs:
@@ -136,8 +143,12 @@ def elf_srcs(srcs, output_dir):
             'coff2elf', 
             inputs=[input_name])
 
-elf_srcs(snd_srcs, "build/saturn")
-elf_srcs(lib_srcs, "build/saturn")
+elf_srcs(snd_srcs, build_base_path)
+elf_srcs(lib_srcs, build_base_path)
+
+if sotn_progress_report: # skip link step
+    ninja.close()
+    raise SystemExit(0)
 
 def link_objs(srcs, output_dir):
     for src in srcs:

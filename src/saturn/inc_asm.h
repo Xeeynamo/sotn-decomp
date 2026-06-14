@@ -5,27 +5,22 @@
 #define STRINGIFY_(x) #x
 #define STRINGIFY(x) STRINGIFY_(x)
 
-#ifndef PERMUTER
+#if defined(SKIP_ASM) || defined(PERMUTER)
+#define INCLUDE_ASM(FOLDER, NAME, LABEL)
+#define INCLUDE_ASM_NO_ALIGN(FOLDER, NAME, LABEL)
+#endif
 
 #ifndef INCLUDE_ASM
-
 #define INCLUDE_ASM(FOLDER, NAME, LABEL)                                       \
     __asm__(".text\n"                                                          \
             "\t.align\t2\n"                                                    \
             "\t.global\t _" #LABEL "\n"                                        \
             ".include \"" FOLDER "/" #NAME ".s\"\n");
-#endif
-
-// omit .global
-__asm__(".include \"src/saturn/macro.inc\"\n");
-
-#else
-#define INCLUDE_ASM(FOLDER, NAME)
-#endif
-
 #define INCLUDE_ASM_NO_ALIGN(FOLDER, NAME, LABEL)                              \
     __asm__(".text\n"                                                          \
             "\t.global\t _" #LABEL "\n"                                        \
             ".include \"" FOLDER "/" #NAME ".s\"\n");
-
+__asm__(".include \"src/saturn/macro.inc\"\n");
 #endif
+
+#endif // INCLUDE_ASM_H
