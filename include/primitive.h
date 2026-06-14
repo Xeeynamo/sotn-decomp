@@ -350,4 +350,3 @@ STATIC_ASSERT(sizeof(Primitive) == sizeof(AxePrim), "unaligned");
 STATIC_ASSERT(sizeof(Primitive) == sizeof(EntranceCascadePrim), "unaligned");
 STATIC_ASSERT(sizeof(Primitive) == sizeof(FrozenShadePrim), "unaligned");
 STATIC_ASSERT(sizeof(Primitive) == sizeof(NumericPrim), "unaligned");
-STATIC_ASSERT(sizeof(Primitive) == sizeof(NumericPrim), "unaligned");
