@@ -13,6 +13,7 @@ import multiprocessing
 from pathlib import Path
 from subprocess import run
 from types import SimpleNamespace
+
 # Todo: Convert non-mutating SimpleNamespace to namedtuple
 from collections import Counter, namedtuple
 from mako.template import Template
@@ -44,6 +45,7 @@ Additional notes:
 - If a segment has only one function, it is named as that function in snake case.  If the function name starts with Entity, it replaces it with 'e'.
     For example: A segment with the only function being EntityShuttingWindow would be named as e_shutting_window
 """
+
 
 # Todo: This is currently written for a new config, it needs to be modified to load a config if it exists or create a new one.
 class SotnOverlayConfig:
@@ -210,7 +212,9 @@ class SotnOverlayConfig:
                 size=self.mwo_header.bss_size,
             )
             self.data_section = SimpleNamespace(
-                address=sotn_utils.align(self.text_section.address + self.text_section.size, 0x80),
+                address=sotn_utils.align(
+                    self.text_section.address + self.text_section.size, 0x80
+                ),
                 offset=sotn_utils.align(0x40 + self.text_section.size, 0x80),
                 size=self.mwo_header.data_size,
                 bytes=self.bin_bytes[
@@ -294,7 +298,9 @@ class SotnOverlayConfig:
         )
         target_path = next(self.disk_path.rglob(bin_name), None)
         if not target_path:
-            sotn_utils.get_logger().error(f"Could not find {bin_name} in {self.disk_path}")
+            sotn_utils.get_logger().error(
+                f"Could not find {bin_name} in {self.disk_path}"
+            )
             raise SystemExit
         return target_path
 
@@ -695,15 +701,15 @@ def build_reference_asm(
             ld_path = build_path.joinpath(f"{prefix}{ref_name}").with_suffix(".ld")
             elf_path = build_path.joinpath(f"{prefix}{ref_name}").with_suffix(".elf")
             ref_ovls.append(
-                SimpleNamespace(prefix=prefix, name=ref_name, ld_path=ld_path, elf_path=elf_path)
+                SimpleNamespace(
+                    prefix=prefix, name=ref_name, ld_path=ld_path, elf_path=elf_path
+                )
             )
 
     if ref_ovls:
         found_elfs = tuple(build_path.glob("*.elf"))
         missing_elfs = tuple(
-            ovl.elf_path
-            for ovl in ref_ovls
-            if ovl.elf_path not in found_elfs
+            ovl.elf_path for ovl in ref_ovls if ovl.elf_path not in found_elfs
         )
         if missing_elfs:
             spinner.message = (
@@ -712,21 +718,19 @@ def build_reference_asm(
             build(missing_elfs, plan=True, version=version)
 
         spinner.message = "extracting dynamic symbols"
-        for ovl_basename, elf_file in ((f"{ovl.prefix}{ovl.name}", ovl.elf_path) for ovl in ref_ovls):
+        for ovl_basename, elf_file in (
+            (f"{ovl.prefix}{ovl.name}", ovl.elf_path) for ovl in ref_ovls
+        ):
             config_path = f"config/splat.{version}.{elf_file.stem}.yaml"
             dyn_syms_path = build_path / "config" / f"dyn_syms.{elf_file.stem}.txt"
-            dyn_syms_config_path =  build_path / "config" / f"splat.{version}.{ovl_basename}.yaml.dyn_syms"
+            dyn_syms_config_path = (
+                build_path / "config" / f"splat.{version}.{ovl_basename}.yaml.dyn_syms"
+            )
             extract_dynamic_symbols(config_path, dyn_syms_path)
 
             dyn_syms_config_path.write_bytes(
                 yaml.dump(
-                    {
-                "options": {
-                    "symbol_addrs_path": [
-                        f"{dyn_syms_path}"
-                        ]
-                }
-            },
+                    {"options": {"symbol_addrs_path": [f"{dyn_syms_path}"]}},
                     Dumper=yaml.IndentDumper,
                     encoding="utf-8",
                     sort_keys=False,
@@ -735,7 +739,9 @@ def build_reference_asm(
 
         [ovl.ld_path.unlink(missing_ok=True) for ovl in ref_ovls]
         spinner.message = f"disassembling {len(ref_ovls)} reference overlays"
-        build(tuple(ovl.ld_path for ovl in ref_ovls), dynamic_syms=True, version=version)
+        build(
+            tuple(ovl.ld_path for ovl in ref_ovls), dynamic_syms=True, version=version
+        )
 
     return ref_ovls
 
