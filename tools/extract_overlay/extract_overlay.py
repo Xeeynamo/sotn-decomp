@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from __future__ import annotations
 import os
 import sys
 import shutil
@@ -7,15 +8,19 @@ import argparse
 import hashlib
 import time
 import re
+import struct
 import multiprocessing
 from pathlib import Path
 from subprocess import run
 from types import SimpleNamespace
-from collections import Counter
+# Todo: Convert non-mutating SimpleNamespace to namedtuple
+from collections import Counter, namedtuple
 from mako.template import Template
+from typing import Any, Dict, List, Optional
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 import sotn_utils
+import sotn_utils.yaml_ext as yaml
 from symbols import sort, extract_dynamic_symbols, Symbol
 
 """
@@ -39,6 +44,463 @@ Additional notes:
 - If a segment has only one function, it is named as that function in snake case.  If the function name starts with Entity, it replaces it with 'e'.
     For example: A segment with the only function being EntityShuttingWindow would be named as e_shutting_window
 """
+
+# Todo: This is currently written for a new config, it needs to be modified to load a config if it exists or create a new one.
+class SotnOverlayConfig:
+    """
+    A class for representing a SOTN overlay configuration.
+
+    This class provides properties and methods to manage overlay configurations, including
+    paths, options, and metadata for different platforms (currently only PSX and PSP).
+    """
+
+    # Base definitions for properties that use a pseudo-caching structure
+    _mwo_header: Optional[sotn_utils.MwOverlayHeader] = None
+    _bin_bytes: bytes = b""
+    _options_dict: Dict[Any] = {}
+    _segments: List[Any] = []
+    _subsegments: List[Any] = []
+
+    def __init__(self, name: str, version: str) -> None:
+        # common definitions
+        # string options
+        self.name: str = name
+        self.version: str = version
+        self.platform: str = "psp" if "psp" in version else "psx"
+        self.basename: str = f"{self.ovl_prefix}{self.name}"
+        self.compiler: str = "GCC"
+        self.asm_jtbl_label_macro: str = "jlabel"
+        self.symbol_name_format: str = f"{version}_$VRAM"
+        self.nonmatchings_path: str = "nonmatchings"
+
+        # ovl paths
+        self.base_path: str = ".."
+        self.build_path: Path = Path(f"build/{version}")
+        self.target_path: Path = self._find_target_path()
+        self.asm_path: Path = Path(f"asm/{version}")
+        self.src_path: Path = Path("src")
+        self.segment_prefix = f"{self.name}_psp/" if self.platform == "psp" else ""
+        self.asset_path: Path = Path(f"assets").joinpath(self.path_prefix, self.name)
+        self.ld_script_path: Path = self.build_path.joinpath(f"{self.basename}.ld")
+
+        # splat paths
+        self.config_path: Path = Path(f"config/splat.{version}.{self.basename}.yaml")
+        self.extensions_path: Path = Path("tools/splat_ext")
+
+        # symbols paths
+        _symbols_base_path: Path = Path("config")
+        self.symexport_path: Path = (
+            Path(f"config/symexport.{self.version}.{self.basename}.txt")
+            if self.platform == "psp"
+            else ""
+        )
+        self.global_symbol_addrs_path: Path = _symbols_base_path.joinpath(
+            f"symbols.{version}.txt"
+        )
+        self.ovl_symbol_addrs_path: Path = _symbols_base_path.joinpath(
+            f"symbols.{self.version}.{self.basename}.txt"
+        )
+        self.undefined_funcs_auto_path: Path = self.build_path.joinpath(
+            _symbols_base_path,
+            f"undefined_funcs_auto.{self.version}.{self.basename}.txt",
+        )
+        self.undefined_syms_auto_path: Path = self.build_path.joinpath(
+            _symbols_base_path,
+            f"undefined_syms_auto.{self.version}.{self.basename}.txt",
+        )
+        self.symbol_addrs_path: tuple[Path] = (
+            self.global_symbol_addrs_path,
+            self.ovl_symbol_addrs_path,
+        )
+
+        # Boolean options
+        self.find_file_boundaries: bool = True
+        self.use_legacy_include_asm: bool = False
+        self.migrate_rodata_to_functions: bool = True
+        self.disassemble_all: bool = True
+        self.disasm_unknown: bool = True
+        self.ld_generate_symbol_per_data_segment: bool = True
+
+        # Sections
+        self.text_section: SimpleNamespace = SimpleNamespace(
+            address=None, offset=None, size=None
+        )
+        self.data_section: SimpleNamespace = SimpleNamespace(
+            address=None, offset=None, size=None
+        )
+        self.rodata_section: SimpleNamespace = SimpleNamespace(
+            address=None, offset=None, size=None
+        )
+        self.bss_section: SimpleNamespace = SimpleNamespace(
+            address=None, offset=None, size=None
+        )
+        self.sbss_section: SimpleNamespace = SimpleNamespace(
+            address=None, offset=None, size=None
+        )
+
+        # Metadata
+        self.sha1 = hashlib.sha1(self.bin_bytes).hexdigest()
+
+        # Platform specific definitions
+        if self.platform == "psx":
+            self.asm_path = self.asm_path.joinpath(self.path_prefix, self.name)
+            self.src_path = self.src_path.joinpath(self.path_prefix, self.name)
+            self.src_path_full = self.src_path
+            self.first_src_file = self.src_path_full / f"first_{self.name}.c"
+            self.start: int = 0x0
+
+            self.global_vram_start: int = 0x80010000
+            self.ld_bss_is_noload: bool = False
+            match self.name:
+                case "dra":
+                    self.vram = 0x800A0000
+                case "ric":
+                    self.vram = 0x8013C000
+                case _:
+                    match self.ovl_type:
+                        case "stage" | "boss":
+                            self.vram = 0x80180000
+                        case "servant":
+                            self.vram = 0x80170000
+                        case _:
+                            self.vram = self.global_vram_start
+
+            self.align: int = 4
+            self.subalign: int = 4
+            self.section_order: tuple[str] = (
+                ".data",
+                ".rodata",
+                ".text",
+                ".bss",
+                ".sbss",
+            )
+            self.asm_inc_header: None
+            self.text_section.offset = sotn_utils.get_text_offset(self.bin_bytes)
+            self.bss_section.offset = sotn_utils.get_bss_offset(self.bin_bytes)
+            self.bss_section.address = self.bss_section.offset + self.vram - self.start
+            _jtbl_address = sotn_utils.get_rodata_address(
+                self.bin_bytes[self.text_section.offset : self.bss_section.offset]
+            )
+            self.rodata_section.offset = (
+                _jtbl_address - self.vram if _jtbl_address else None
+            )
+        elif self.platform == "psp":
+            self.asm_path = self.asm_path.joinpath(self.path_prefix, f"{self.name}_psp")
+            self.src_path = self.src_path.joinpath(self.path_prefix)
+            self.src_path_full = self.src_path.joinpath(f"{self.name}_psp")
+            self.first_src_file = self.src_path_full / f"first_{self.name}.c"
+            self.start: int = 0x80
+            self.vram: int = self.mwo_header.address + 0x80
+            self.align: int = 128
+            self.subalign: int = 8
+            self.ld_bss_is_noload: bool = True
+            self.global_vram_start: int = 0x08000000
+            self.section_order: tuple[str] = (".text", ".data", ".rodata", ".bss")
+            self.asm_inc_header: Optional[str] = (
+                ".set noat      /* allow manual use of $at */\n.set noreorder /* don't insert nops after branches */\n"
+            )
+            self.text_section = SimpleNamespace(
+                address=sotn_utils.align(self.mwo_header.address + 0x40, 0x80),
+                offset=sotn_utils.align(self.mwo_header.address + 0x40, 0x80),
+                size=self.mwo_header.text_size,
+            )
+            self.bss_section = SimpleNamespace(
+                address=self.mwo_header.static_init_start,
+                offset=self.mwo_header.static_init_start - self.mwo_header.address,
+                size=self.mwo_header.bss_size,
+            )
+            self.data_section = SimpleNamespace(
+                address=sotn_utils.align(self.text_section.address + self.text_section.size, 0x80),
+                offset=sotn_utils.align(0x40 + self.text_section.size, 0x80),
+                size=self.mwo_header.data_size,
+                bytes=self.bin_bytes[
+                    self.data_section.offset : self.bss_section.offset
+                ],
+            )
+            self.rodata_section: SimpleNamespace = SimpleNamespace(
+                address=None, offset=None, size=None
+            )
+            if self.ovl_type != "weapon":
+                # Unpack the bytes normally, but iterate through the unpacked data in reverse order
+                words = tuple(
+                    word[0]
+                    for word in struct.iter_unpack("<I", self.data_section.bytes)
+                )
+
+                self.rodata_section.offset = yaml.Hex(
+                    next(
+                        (
+                            sotn_utils.align(self.bss_section.offset - (i * 4), 0x80)
+                            for i, word in enumerate(words[::-1])
+                            if word
+                            and not self.text_section.address
+                            <= word
+                            < self.data_section.address
+                        ),
+                        self.data_section.offset + 0x80,
+                    ),
+                )
+
+                self.rodata_section.address = (
+                    self.bss_section.address - self.rodata_section.offset
+                )
+
+    @property
+    def ovl_type(self):
+        return self._ovl_type.label
+
+    @property
+    def ovl_prefix(self):
+        return self._ovl_type.ovl_prefix
+
+    @property
+    def path_prefix(self):
+        return self._ovl_type.path_prefix
+
+    @property
+    def _ovl_type(self):
+        game = "main dra ric weapon maria "
+        stage = "are cat cen chi dai dre lib mad no0 no1 no2 no3 no4 np3 nz0 nz1 sel st0 top wrp "
+        r_stage = "rare rcat rcen rchi rdai rlib rno0 rno1 rno2 rno3 rno4 rnz0 rnz1 rtop rwrp "
+        boss = "bo0 bo1 bo2 bo3 bo4 bo5 bo6 bo7 mar rbo0 rbo1 rbo2 rbo3 rbo4 rbo5 rbo6 rbo7 rbo8 "
+        servant = "tt_000 tt_001 tt_002 tt_003 tt_004 tt_005 tt_006 "
+
+        if f"{self.name} " in game:
+            return namedtuple("GameOvl", ["label", "ovl_prefix", "path_prefix"])(
+                "game", "", ""
+            )
+        elif f"{self.name} " in stage + r_stage:
+            return namedtuple("StageOvl", ["label", "ovl_prefix", "path_prefix"])(
+                "stage", "st", "st"
+            )
+        elif f"{self.name} " in boss:
+            return namedtuple("BossOvl", ["label", "ovl_prefix", "path_prefix"])(
+                "boss", "bo", "boss"
+            )
+        elif f"{self.name} " in servant:
+            return namedtuple("ServantOvl", ["label", "ovl_prefix", "path_prefix"])(
+                "servant", "", "servant"
+            )
+        elif "w0_" in self.name or "w1_" in self.name:
+            return namedtuple("WeaponOvl", ["label", "ovl_prefix", "path_prefix"])(
+                "weapon", "", "weapon"
+            )
+        else:
+            raise ValueError(f"Unknown overlay type for '{self.name}'")
+
+    def _find_target_path(self) -> Path:
+        bin_name = (
+            f"{self.name.upper()}.BIN" if self.version == "us" else f"{self.name}.bin"
+        )
+        target_path = next(self.disk_path.rglob(bin_name), None)
+        if not target_path:
+            sotn_utils.get_logger().error(f"Could not find {bin_name} in {self.disk_path}")
+            raise SystemExit
+        return target_path
+
+    @property
+    def disk_path(self) -> Path:
+        if self.version == "pspeu" or self.version == "hd":
+            return Path(
+                f"disks/pspeu/PSP_GAME/USRDIR/res/ps/{"hdbin" if self.version == "hd" else "PSPBIN"}"
+            )
+        else:
+            return Path(f"disks/{self.version}")
+
+    @property
+    def config(self) -> Dict[Any]:
+        return {
+            "options": self.options,
+            "sha1": self.sha1,
+            "segments": self.segments,
+        }
+
+    @property
+    def options(self) -> Dict[Any]:
+        if not self._options_dict:
+            options_dict = {
+                "platform": self.platform,
+                "basename": self.basename,
+                "base_path": self.base_path,
+                "build_path": self.build_path,
+                "target_path": self.target_path,
+                "asm_path": self.asm_path,
+                "asset_path": self.asset_path,
+                "src_path": self.src_path,
+                "ld_script_path": self.ld_script_path,
+                "compiler": self.compiler,
+                "symbol_addrs_path": self.symbol_addrs_path,
+                "undefined_funcs_auto_path": self.undefined_funcs_auto_path,
+                "undefined_syms_auto_path": self.undefined_syms_auto_path,
+                "find_file_boundaries": self.find_file_boundaries,
+                "use_legacy_include_asm": self.use_legacy_include_asm,
+                "migrate_rodata_to_functions": self.migrate_rodata_to_functions,
+                "asm_jtbl_label_macro": self.asm_jtbl_label_macro,
+                "symbol_name_format": self.symbol_name_format,
+                "disassemble_all": self.disassemble_all,
+                "section_order": self.section_order,
+                "ld_bss_is_noload": self.ld_bss_is_noload,
+                "disasm_unknown": self.disasm_unknown,
+                "global_vram_start": yaml.Hex(self.global_vram_start),
+                "ld_generate_symbol_per_data_segment": self.ld_generate_symbol_per_data_segment,
+            }
+            if self.platform == "psp":
+                options_dict["asm_inc_header"] = self.asm_inc_header
+            self._options_dict = options_dict
+        return self._options_dict
+
+    @options.setter
+    def options(self, value: Dict[Any]):
+        self._options_dict = value
+
+    @property
+    def segments(self) -> List[Any]:
+        if not self._segments:
+            self._segments = [
+                x
+                for x in [
+                    (
+                        yaml.FlowSegment([0x0, "bin", "mwo_header"])
+                        if self.platform == "psp"
+                        else None
+                    ),
+                    {
+                        k: v
+                        for k, v in {
+                            "name": self.basename,
+                            "type": "code",
+                            "start": yaml.Hex(self.start),
+                            "vram": yaml.Hex(self.vram),
+                            "bss_start_address": (
+                                yaml.Hex(self.bss_section.address)
+                                if self.platform == "psp"
+                                else None
+                            ),
+                            "bss_size": (
+                                self.mwo_header.bss_size
+                                if self.platform == "psp"
+                                else None
+                            ),
+                            "align": self.align,
+                            "subalign": self.subalign,
+                            "subsegments": self.subsegments,
+                        }.items()
+                        if v is not None
+                    },
+                    yaml.FlowSegment(
+                        [
+                            (
+                                self.bss_section.offset + self.bss_section.size
+                                if self.platform == "psp"
+                                else len(self.bin_bytes)
+                            )
+                        ]
+                    ),
+                ]
+                if x is not None
+            ]
+        return self._segments
+
+    # TODO: adjust this so that subsegment types are handled separately and items are cast to FlowSegment when they're added/changed
+    @property
+    def subsegments(self) -> List[Any]:
+        if not self._subsegments and self.platform == "psx":
+            self._subsegments = [
+                x
+                for x in [
+                    yaml.FlowSegment([0x0, "data"]),
+                    (
+                        yaml.FlowSegment(
+                            [
+                                self.rodata_section.offset,
+                                ".rodata",
+                                self.first_src_file.stem,
+                            ]
+                        )
+                        if self.rodata_section.offset
+                        and self.migrate_rodata_to_functions
+                        else None
+                    ),
+                    (
+                        yaml.FlowSegment([self.rodata_section.offset, "rodata"])
+                        if self.rodata_section.offset
+                        and not self.migrate_rodata_to_functions
+                        else None
+                    ),
+                    (
+                        yaml.FlowSegment(
+                            [self.text_section.offset, "c", self.first_src_file.stem]
+                        )
+                        if self.text_section.offset
+                        else None
+                    ),
+                    (
+                        yaml.FlowSegment([self.bss_section.offset, "bss"])
+                        if self.bss_section.offset
+                        else None
+                    ),
+                ]
+                if x is not None
+            ]
+        elif not self._subsegments and self.platform == "psp":
+            self._subsegments = [
+                x
+                for x in [
+                    yaml.FlowSegment(
+                        [0x80, "c", f"{self.segment_prefix}{self.first_src_file.stem}"]
+                    ),
+                    yaml.FlowSegment([self.data_section.offset, "data"]),
+                    (
+                        yaml.FlowSegment(
+                            [
+                                self.rodata_section.offset,
+                                ".rodata",
+                                f"{self.segment_prefix}{self.first_src_file.stem}",
+                            ]
+                        )
+                        if self.rodata_section.offset
+                        else None
+                    ),
+                    yaml.FlowSegment([self.bss_section.offset, "bss"]),
+                ]
+                if x is not None
+            ]
+        return self._subsegments
+
+    @subsegments.setter
+    def subsegments(self, value):
+        self._segments = None
+        self._subsegments = value
+
+    @property
+    def bin_bytes(self) -> bytes:
+        if not self._bin_bytes:
+            self._bin_bytes = self.target_path.read_bytes()
+        return self._bin_bytes
+
+    @property
+    def mwo_header(self) -> sotn_utils.MwOverlayHeader:
+        """
+        Parse and return the MetroWerks overlay header that contains all the
+        necessary metadata to successfully parse a psp binary file.
+        """
+        if (
+            not self._mwo_header
+            and self.platform == "psp"
+            and len(self.bin_bytes) >= 64
+        ):
+            self._mwo_header = sotn_utils.MwOverlayHeader(self.bin_bytes[:64])
+        return self._mwo_header
+
+    def write_config(self) -> None:
+        self.config_path.write_bytes(
+            yaml.dump(
+                self.config,
+                Dumper=yaml.IndentDumper,
+                encoding="utf-8",
+                sort_keys=False,
+            )
+        )
 
 
 def build(targets=[], plan=True, dynamic_syms=False, build=True, version="us"):
@@ -230,18 +692,18 @@ def build_reference_asm(
         if ovl_name not in file.name and (match := ref_pattern.match(file.name)):
             prefix = match.group("prefix") or ""
             ref_name = match.group("ref_ovl")
-            ld_path = build_path.joinpath(prefix + ref_name).with_suffix(".ld")
+            ld_path = build_path.joinpath(f"{prefix}{ref_name}").with_suffix(".ld")
+            elf_path = build_path.joinpath(f"{prefix}{ref_name}").with_suffix(".elf")
             ref_ovls.append(
-                SimpleNamespace(prefix=prefix, name=ref_name, ld_path=ld_path)
+                SimpleNamespace(prefix=prefix, name=ref_name, ld_path=ld_path, elf_path=elf_path)
             )
 
     if ref_ovls:
-        ref_lds = tuple(ovl.ld_path for ovl in ref_ovls)
         found_elfs = tuple(build_path.glob("*.elf"))
         missing_elfs = tuple(
-            ld.with_suffix(".elf")
-            for ld in ref_lds
-            if ld.with_suffix(".elf") not in found_elfs
+            ovl.elf_path
+            for ovl in ref_ovls
+            if ovl.elf_path not in found_elfs
         )
         if missing_elfs:
             spinner.message = (
@@ -250,14 +712,30 @@ def build_reference_asm(
             build(missing_elfs, plan=True, version=version)
 
         spinner.message = "extracting dynamic symbols"
-        for elf_file in (ld.with_suffix(".elf") for ld in ref_lds):
+        for ovl_basename, elf_file in ((f"{ovl.prefix}{ovl.name}", ovl.elf_path) for ovl in ref_ovls):
             config_path = f"config/splat.{version}.{elf_file.stem}.yaml"
-            dyn_syms_path = f"build/{version}/config/dyn_syms.{elf_file.stem}.txt"
+            dyn_syms_path = build_path / "config" / f"dyn_syms.{elf_file.stem}.txt"
+            dyn_syms_config_path =  build_path / "config" / f"splat.{version}.{ovl_basename}.yaml.dyn_syms"
             extract_dynamic_symbols(config_path, dyn_syms_path)
 
-        [ld.unlink(missing_ok=True) for ld in ref_lds]
+            dyn_syms_config_path.write_bytes(
+                yaml.dump(
+                    {
+                "options": {
+                    "symbol_addrs_path": [
+                        f"{dyn_syms_path}"
+                        ]
+                }
+            },
+                    Dumper=yaml.IndentDumper,
+                    encoding="utf-8",
+                    sort_keys=False,
+                )
+            )
+
+        [ovl.ld_path.unlink(missing_ok=True) for ovl in ref_ovls]
         spinner.message = f"disassembling {len(ref_ovls)} reference overlays"
-        build(ref_lds, dynamic_syms=True, version=version)
+        build(tuple(ovl.ld_path for ovl in ref_ovls), dynamic_syms=True, version=version)
 
     return ref_ovls
 
@@ -595,7 +1073,6 @@ def parse_ovl_header(data_file_text, ovl_name, platform, header_symbol=None):
         return {}, None
 
 
-# TODO: Validate logic and move to sotn-decomp
 def parse_init_room_entities(ovl_name, platform, init_room_entities_path, vram_start):
     init_room_entities_map = {
         f"{ovl_name.upper()}_pStObjLayoutHorizontal": 14 if platform == "psp" else 9,
@@ -1156,7 +1633,6 @@ def validate_binary(
     ld_script_path.unlink(missing_ok=True)
     build(
         [
-            f"{build_path}/config/splat.{version}.{basename}.yaml.dyn_syms",
             f"{ld_script_path}",
             f"{ld_script_path.with_suffix('.elf')}",
             f"{build_path}/{target_path.name}",
@@ -1253,7 +1729,7 @@ def remove_overlay(overlay, versions):
                 f"Removing {version} overlay {overlay.upper()} artifacts and configuration"
             )
             spinner.message = f"removing {version} overlay {overlay.upper()} artifacts and configuration"
-            ovl_config = sotn_utils.SotnOverlayConfig(overlay, version)
+            ovl_config = SotnOverlayConfig(overlay, version)
             clean_artifacts(ovl_config, True, spinner)
 
 
@@ -1266,7 +1742,7 @@ def extract(args, version):
     with sotn_utils.Spinner(
         message=f"generating config for {version} overlay {args.overlay.upper()}"
     ) as spinner:
-        ovl_config = sotn_utils.SotnOverlayConfig(args.overlay, version)
+        ovl_config = SotnOverlayConfig(args.overlay, version)
         if ovl_config.config_path.exists() and not args.clean:
             logger.error(
                 f"Configuration {ovl_config.name} already exists.  Use the --clean option to remove all existing overlay artifacts and re-extract the overlay."
@@ -1334,9 +1810,6 @@ def extract(args, version):
             )
             sotn_utils.shell(f"git clean -fdx {ovl_config.asm_path}")
             sotn_utils.splat_split(ovl_config.config_path)
-        ovl_include_path = (
-            ovl_config.src_path_full.parent / ovl_config.name / f"{ovl_config.name}.h"
-        )
         ovl_include_path = (
             ovl_config.src_path_full.parent / ovl_config.name / f"{ovl_config.name}.h"
         )
@@ -1562,8 +2035,6 @@ def extract(args, version):
     # make clean removes new files in the config/ directory, so these need to be staged
     precious_files = [
         f"{ovl_config.config_path}",
-        f"config/undefined_syms.{version}.txt",
-        f"config/check.{version}.sha",
     ]
     if isinstance(ovl_config.symbol_addrs_path, (list, tuple)):
         precious_files.extend(f"{x}" for x in ovl_config.symbol_addrs_path)
