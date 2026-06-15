@@ -226,7 +226,7 @@ void DemoOpenFile(s32 arg0) {
         fileName[15] = '0' + (g_DemoKeyIdx / 10 % 10);
         fileName[16] = '0' + (g_DemoKeyIdx % 10);
     }
-    fd = open(fileName, O_RDONLY);
+    fd = open(fileName, FREAD);
     if (fd < 0) {
         return;
     }
@@ -240,7 +240,7 @@ void DemoSaveFile(void) {
 
     __builtin_memcpy(
         buf, "sim:c:\\bin\\demo_key.bin", sizeof("sim:c:\\bin\\demo_key.bin"));
-    fd = open(buf, O_CREAT);
+    fd = open(buf, FCREAT);
     if (fd < 0) {
         return;
     }

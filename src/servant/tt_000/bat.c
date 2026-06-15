@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "bat.h"
 #include <sfx.h>
-#include <psxsdk/libc.h>
+#include <libc.h>
 #include "../servant_private.h"
 
 #define ENTITY_ID_SEEK_MODE ENTITY_ID_SERVANT

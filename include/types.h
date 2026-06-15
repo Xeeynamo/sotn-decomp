@@ -58,9 +58,13 @@ typedef signed char byte;
 typedef unsigned short ushort;
 typedef unsigned int uint;
 
+#ifdef VERSION_PC
+#include <stdbool.h>
+#else
 #ifndef __cplusplus
 enum { false, true };
 typedef signed int bool;
+#endif
 #endif
 
 #ifndef NULL

@@ -138,18 +138,9 @@ ImgSrc* g_imgUnk8013C270 = &g_imgUnk8013C200_impl;
 PlayerOvl g_PlOvl = {0};
 u8** g_PlOvlAluBatSpritesheet[1] = {0};
 
-// sound stubs
-
-void SpuGetAllKeysStatus(s8* status) { NOT_IMPLEMENTED; }
-
 void func_801073C0(void) { NOT_IMPLEMENTED; }
 
 void UpdateCd(void) { NOT_IMPLEMENTED; }
-
-int CdInit(void) {
-    NOT_IMPLEMENTED;
-    return 0;
-}
 
 void func_801083BC(void) { NOT_IMPLEMENTED; }
 

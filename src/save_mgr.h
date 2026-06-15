@@ -185,7 +185,7 @@ s32 MemcardReadFile(
         nBytes = nBlock * CARD_BLOCK_SIZE;
     }
 
-    fd = open(savePath, O_RDONLY | O_NOWAIT);
+    fd = open(savePath, FREAD | FASYNC);
     if (fd == -1) {
         return -1;
     }
@@ -207,8 +207,8 @@ s32 MemcardWriteFile(s32 nPort, s32 nCard, const char* name, void* data,
     // known PSX bug: when creating a a file with open(), any read or write
     // will immediately fail. The workaround is to close the file and open
     // it again.
-    if (create == true) {
-        fd = open(savePath, (flags << 0x10) | O_CREAT);
+    if (create == 1) {
+        fd = open(savePath, (flags << 0x10) | FCREAT);
         if (fd == -1) {
             return -2;
         } else {
@@ -217,7 +217,7 @@ s32 MemcardWriteFile(s32 nPort, s32 nCard, const char* name, void* data,
     }
 
     len = flags << 0xD;
-    fd = open(savePath, O_WRONLY | O_NOWAIT);
+    fd = open(savePath, FWRITE | FASYNC);
 
     if (fd == -1) {
         return -1;
