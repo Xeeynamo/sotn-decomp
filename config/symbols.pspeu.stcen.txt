@@ -90,6 +90,7 @@ CEN_cluts = 0x09287610;
 CEN_gfxBanks = 0x09287688;
 CEN_EntityUpdates = 0x09287708;
 CEN_EInitBreakable = 0x09287778;
+g_EInitLockCamera = 0x092877D8;
 g_EInitCommon = 0x092877E8;
 g_EInitDamageNum = 0x092877F8;
 CEN_rooms = 0x09287828;
