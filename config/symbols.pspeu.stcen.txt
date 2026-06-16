@@ -6,7 +6,6 @@ EntityMaria = 0x09252FC0;
 CEN_Unused09253230 = 0x09253230;
 CreateEntityFromCurrentEntity = 0x09254108;
 CreateEntityFromEntity = 0x09254190;
-EntityStageNamePopup = 0x09254218;
 Random = 0x092563A0;
 Update = 0x092563E0;
 UpdateStageEntities = 0x092567C0;
