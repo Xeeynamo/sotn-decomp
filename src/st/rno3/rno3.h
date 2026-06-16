@@ -13,7 +13,7 @@ enum Palettes {
 
 enum Entities {
     E_NONE,
-    E_BREAKABLE,                 // OVL_EXPORT(EntityBreakable)
+    E_BREAKABLE,                 // EntityBreakable
     E_EXPLOSION,                 // EntityExplosion
     E_PRIZE_DROP,                // EntityPrizeDrop
     E_DAMAGE_DISPLAY,            // EntityDamageDisplay
