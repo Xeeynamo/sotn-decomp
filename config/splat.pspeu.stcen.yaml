@@ -45,7 +45,7 @@ segments:
     subalign: 8
     subsegments:
       - [0x80, c, cen_psp/unk_80]
-      - [0x1BBF0, c, cen_psp/create_entity]
+      - [0x1BBF0, c, cen/create_entity]
       - [0x1CB98, c, cen_psp/e_stage_name]
       - [0x1DA18, c, cen_psp/e_red_door]
       - [0x1ED20, c, cen_psp/st_update]
@@ -79,5 +79,7 @@ segments:
       - [0x5CB30, .rodata, cen_psp/e_red_door]
       - [0x5CB48, .rodata, cen_psp/e_collect]
       - [0x5CBA8, .rodata, cen_psp/e_cutscene_dialogue]
-      - [0x5CC80, bss]
+      - [0x5CC80, bss, 5CC80]
+      - [0x5EB70, .bss, cen/create_entity]
+      - [0x5EB90, bss, 5EB90]
   - [0x5F300]
