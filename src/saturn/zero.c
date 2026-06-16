@@ -1348,15 +1348,15 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6016E84, func_06016E84);
 
 // func_06016EE4
 void code2name(u32 code, u8* name) {
-    if (0x20000000 + code <= 0x0000FFFF) {
+    if (code >= 0xE0000000 && code < 0xE0010000) {
         name[0] = 'S';
         name[1] = 'D';
     }
-    if (0x10000000 + code <= 0x0000FFFF) {
+    if (code >= 0xF0000000 && code < 0xF0010000) {
         name[0] = 'S';
         name[1] = 'D';
     }
-    if (0x02000000 + code <= 0x0000FFFF) {
+    if (code >= 0xFE000000 && code < 0xFE010000) {
         name[0] = 'W';
         name[1] = 'V';
     }

@@ -98,4 +98,6 @@ typedef enum {
     NUM_BODY_ITEMS = 92,
 } BodyItems;
 
+void DestroyEntity(Entity* entity);
+
 #endif
