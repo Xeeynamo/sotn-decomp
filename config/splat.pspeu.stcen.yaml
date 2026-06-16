@@ -64,7 +64,7 @@ segments:
       - [0x2A680, c, cen_psp/e_cutscene_actors]
       - [0x2A738, c, cen_psp/unk_2A738]
       - [0x2C2E8, c, cen_psp/e_cutscene_dialogue]
-      - [0x2F038, c, cen_psp/e_room_bg]
+      - [0x2F038, c, cen/e_room_bg]
       - [0x2F148, c, cen/e_lock_camera]
       - [0x2F400, data]
       - [0x4E540, .data, cen/e_red_door]
