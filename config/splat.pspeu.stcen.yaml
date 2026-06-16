@@ -71,7 +71,7 @@ segments:
       - [0x2F400, data]
       - [0x4EBA0, .data, cen/collision]
       - [0x4EF78, data]
-      - [0x50088, data, cen/e_init]
+      - [0x50088, .data, cen/e_init]
       - [0x501A8, data]
       - [0x516A0, .data, cen/e_breakable]
       - [0x51728, data]
