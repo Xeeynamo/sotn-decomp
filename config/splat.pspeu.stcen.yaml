@@ -1,0 +1,94 @@
+options:
+  platform: psp
+  basename: stcen
+  base_path: ..
+  build_path: build/pspeu
+  target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/cen.bin
+  asm_path: asm/pspeu/st/cen_psp
+  asset_path: assets/st/cen
+  src_path: src/st
+  ld_script_path: build/pspeu/stcen.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.pspeu.txt
+    - config/symbols.pspeu.stcen.txt
+  undefined_funcs_auto_path: build/pspeu/config/undefined_funcs_auto.pspeu.stcen.txt
+  undefined_syms_auto_path: build/pspeu/config/undefined_syms_auto.pspeu.stcen.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: pspeu_$VRAM
+  disassemble_all: true
+  section_order:
+    - .text
+    - .data
+    - .rodata
+    - .bss
+  ld_bss_is_noload: true
+  disasm_unknown: true
+  global_vram_start: 0x08000000
+  ld_generate_symbol_per_data_segment: true
+  asm_inc_header: |
+    .set noat      /* allow manual use of $at */
+    .set noreorder /* don't insert nops after branches */
+sha1: 5e2584e90e876ac2c35c6e5a18e5760015b13fcb
+segments:
+  - [0x0, bin, mwo_header]
+  - name: stcen
+    type: code
+    start: 0x80
+    vram: 0x09237700
+    bss_start_address: 0x09294300
+    bss_size: 0x2680
+    align: 128
+    subalign: 8
+    subsegments:
+      - [0x80, c, cen_psp/unk_80]
+      - [0x1BBF0, c, cen/create_entity]
+      - [0x1CB98, c, cen/e_stage_name]
+      - [0x1DA18, c, cen/e_red_door]
+      - [0x1ED20, c, cen/st_update]
+      - [0x1F258, c, cen/e_particles]
+      - [0x207E8, c, cen/e_collect]
+      - [0x24A38, c, cen/e_misc]
+      - [0x25140, c, cen/collision]
+      - [0x27318, c, cen/popup]
+      - [0x27910, c, cen/e_room_fg]
+      - [0x27A28, c, cen/st_common]
+      - [0x28A58, c, cen/prim_helpers]
+      - [0x29198, c, cen_psp/st_init]
+      - [0x29558, c, cen/e_breakable]
+      - [0x29898, c, cen_psp/unk_29898]
+      - [0x2A680, c, cen_psp/e_cutscene_actors]
+      - [0x2A738, c, cen_psp/unk_2A738]
+      - [0x2C2E8, c, cen_psp/e_cutscene_dialogue]
+      - [0x2F038, c, cen/e_room_bg]
+      - [0x2F148, c, cen/e_lock_camera]
+      - [0x2F400, data]
+      - [0x4E540, .data, cen/e_red_door]
+      - [0x4E558, .data, cen/st_update]
+      - [0x4E588, .data, cen/e_particles]
+      - [0x4E608, .data, cen/e_collect]
+      - [0x4EB50, .data, cen/e_misc]
+      - [0x4EBA0, .data, cen/collision]
+      - [0x4EF78, .data, cen/e_room_fg]
+      - [0x4F018, data]
+      - [0x50088, .data, cen/e_init]
+      - [0x501A8, data]
+      - [0x516A0, .data, cen/e_breakable]
+      - [0x51728, data]
+      - [0x5C2E0, .data, cen/header]
+      - [0x5C320, data]
+      - [0x5C758, .data, cen/e_lock_camera]
+      - [0x5C800, .rodata, cen_psp/unk_80]
+      - [0x5CB30, .rodata, cen/e_red_door]
+      - [0x5CB48, .rodata, cen/e_collect]
+      - [0x5CBA8, .rodata, cen_psp/e_cutscene_dialogue]
+      - [0x5CC80, bss, 5CC80]
+      - [0x5EB70, .bss, cen/create_entity]
+      - [0x5EB90, .bss, cen/st_update]
+      - [0x5EBD0, .bss, cen/e_collect]
+      - [0x5EBF0, bss, 5EBF0]
+      - [0x5F2C0, .bss, cen/e_lock_camera]
+  - [0x5F300]
