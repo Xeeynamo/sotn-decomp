@@ -9,7 +9,7 @@
 
 #define OVL_EXPORT(x) CEN_##x
 
-enum OVL_EXPORT(Palette) {
+enum Palettes {
     PAL_NONE = 0,
     PAL_BREAKABLE_DEBRIS = 0x159,
 };

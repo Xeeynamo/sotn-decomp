@@ -5,24 +5,6 @@
 #include "../e_stage_name_us.h"
 #endif
 
-#ifdef VERSION_PSP
-static u8 stage_name_en[] = {
-#include "gen/stage_name_en.h"
-};
-static u8 stage_name_it[] = {
-#include "gen/stage_name_it.h"
-};
-static u8 stage_name_sp[] = {
-#include "gen/stage_name_sp.h"
-};
-static u8 stage_name_ge[] = {
-#include "gen/stage_name_ge.h"
-};
-static u8 stage_name_fr[] = {
-#include "gen/stage_name_fr.h"
-};
-#endif
-
 #if defined(VERSION_PSP) || defined(VERSION_HD)
 #include "../e_stage_name_jp.h"
 #endif
