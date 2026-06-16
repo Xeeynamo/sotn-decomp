@@ -273,8 +273,7 @@ INCLUDE_ASM("st/cen_psp/nonmatchings/cen_psp/unk_80", func_pspeu_09251068);
 
 INCLUDE_ASM("st/cen_psp/nonmatchings/cen_psp/unk_80", func_pspeu_09251160);
 
-void func_pspeu_09251270(void) {
-}
+void func_pspeu_09251270(void) {}
 
 INCLUDE_ASM("st/cen_psp/nonmatchings/cen_psp/unk_80", func_pspeu_09251278);
 
