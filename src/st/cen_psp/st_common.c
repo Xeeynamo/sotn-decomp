@@ -1,0 +1,36 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+#include "../cen/cen.h"
+
+INCLUDE_ASM("st/cen_psp/nonmatchings/cen_psp/st_common", DestroyEntity);
+
+INCLUDE_ASM("st/cen_psp/nonmatchings/cen_psp/st_common", PreventEntityFromRespawning);
+
+INCLUDE_ASM("st/cen_psp/nonmatchings/cen_psp/st_common", AnimateEntity);
+
+INCLUDE_ASM("st/cen_psp/nonmatchings/cen_psp/st_common", GetDistanceToPlayerX);
+
+INCLUDE_ASM("st/cen_psp/nonmatchings/cen_psp/st_common", GetSideToPlayer);
+
+INCLUDE_ASM("st/cen_psp/nonmatchings/cen_psp/st_common", MoveEntity);
+
+INCLUDE_ASM("st/cen_psp/nonmatchings/cen_psp/st_common", FallEntity);
+
+INCLUDE_ASM("st/cen_psp/nonmatchings/cen_psp/st_common", AllocEntity);
+
+INCLUDE_ASM("st/cen_psp/nonmatchings/cen_psp/st_common", UnkEntityFunc0);
+
+INCLUDE_ASM("st/cen_psp/nonmatchings/cen_psp/st_common", GetAngleBetweenEntities);
+
+INCLUDE_ASM("st/cen_psp/nonmatchings/cen_psp/st_common", GetNormalizedAngle);
+
+INCLUDE_ASM("st/cen_psp/nonmatchings/cen_psp/st_common", SetStep);
+
+INCLUDE_ASM("st/cen_psp/nonmatchings/cen_psp/st_common", InitializeEntity);
+
+INCLUDE_ASM("st/cen_psp/nonmatchings/cen_psp/st_common", EntityDummy);
+
+INCLUDE_ASM("st/cen_psp/nonmatchings/cen_psp/st_common", CheckFieldCollision);
+
+INCLUDE_ASM("st/cen_psp/nonmatchings/cen_psp/st_common", GetPlayerCollisionWith);
+
+INCLUDE_ASM("st/cen_psp/nonmatchings/cen_psp/st_common", ReplaceBreakableWithItemDrop);
