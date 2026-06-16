@@ -118,7 +118,8 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
         }
 #ifdef NO_HITBOX_STATE
         ReplaceBreakableWithItemDrop(self);
-        DestroyEntity(self + 1);
+        entity = self + 1;
+        DestroyEntity(entity);
 #else
         entity = self + 1;
         DestroyEntity(entity);
