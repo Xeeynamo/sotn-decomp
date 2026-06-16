@@ -14,10 +14,13 @@ INCLUDE_ASM("asm/saturn/t_bat/data", d60CF000, d_060CF000);
 
 extern u32 s_LastTargetedEntityIndex;        // 0x060D1E00
 extern BatAbilityValues g_BatAbilityStats[]; // 0x060D1D34
+extern s32 s_IsServantDestroyed;             // 0x060D1DFC
 extern FamiliarStats s_BatStats;             // 0x060D2830
 
+extern s32 g_CutsceneHasControl;
+extern s32 g_PlaySfxStep;
+
 Entity* FindValidTarget(Entity* self) {
-#define ABS(x, y) (((x) - (y)) < 0 ? (y) - (x) : (x) - (y))
     s16 s_TargetMatch[0x80];
 
     const s32 EntitySearchCount = 128;
@@ -55,8 +58,8 @@ Entity* FindValidTarget(Entity* self) {
             !g_BatAbilityStats[s_BatStats.level / 10].makeBadAttacks) {
             continue;
         }
-        if (ABS(self->posX.i.hi, entity->posX.i.hi) < 64 &&
-            ABS(self->posY.i.hi, entity->posY.i.hi) < 64) {
+        if (ABS(self->posX.i.hi - entity->posX.i.hi) < 64 &&
+            ABS(self->posY.i.hi - entity->posY.i.hi) < 64) {
             continue;
         }
         if (!self->facingLeft && self->posX.i.hi < entity->posX.i.hi) {
@@ -120,37 +123,43 @@ INCLUDE_ASM("asm/saturn/t_bat/f_nonmat", f60CFB00, func_060CFB00);
 INCLUDE_ASM("asm/saturn/t_bat/f_nonmat", f60CFC48, func_060CFC48);
 INCLUDE_ASM("asm/saturn/t_bat/f_nonmat", f60D0490, func_060D0490);
 
-void f60D0938() {}
-void f60D0944() {}
-void f60D0950() {}
-void f60D095C() {}
+void unused_339C() {}
+
+void unused_33A4() {}
+
+void unused_33AC() {}
+
+void unused_33B4() {}
+
 INCLUDE_ASM("asm/saturn/t_bat/f_nonmat", f60D0968, func_060D0968);
-void f60D0A4C() {}
-void f60D0A58() {}
+
+void unused_33C4() {}
+
+void unused_33CC() {}
+
+// UpdateBatBlueTrailEntities
 INCLUDE_ASM("asm/saturn/t_bat/f_nonmat", f60D0A64, func_060D0A64);
-void f60D1010() {}
-void f60D101C() {}
-void f60D1028() {}
-void f60D1034() {}
 
-extern s32 s_IsServantDestroyed; // 0x060D1DFCh
+void unused_3C0C() {}
 
-void DestroyEntity(Entity*); // func_0600FFB8h
+void unused_3C14() {}
 
-// PSX: func_80173C2C
+void unused_3C1C() {}
+
+void unused_3C24() {}
+
 // SAT: func_060D1040
 void DestroyServantEntity(Entity* entity) {
     if (entity->params == 0xF) {
         s_IsServantDestroyed = 1;
     }
-    func_0600FFB8(entity); // DestroyEntity
+    DestroyEntity(entity);
 }
 
 INCLUDE_ASM("asm/saturn/t_bat/f_nonmat", f60D1070, func_060D1070);
 
-// PSX: TT_000:func_80173E78
-// SAT: T_BAT:f_021B8 / func_060D11B8
-s32 func_80173E78(s32 arg0, s32 arg1) {
+// SAT: func_060D11B8
+s32 AccumulateTowardZero(s32 arg0, s32 arg1) {
     if (arg0 < 0) {
         arg0 += arg1;
         if (arg0 > 0) {
@@ -168,31 +177,92 @@ s32 func_80173E78(s32 arg0, s32 arg1) {
 
 INCLUDE_ASM("asm/saturn/t_bat/f_nonmat", f60D11DC, func_060D11DC);
 
-// PSX: func_80173F30
 // SAT: func_060D1224
-s32 func_80173F30(Entity* entity, s16 x, s16 y) {
-    s16 diffx = x - entity->posX.i.hi;
-    // not the same implementation as ratan2
-    return func_0600EE88(-(s16)(y - entity->posY.i.hi), diffx) &
-           0xFFF; // was entity->posY.i.hi
+s16 CalculateAngleToEntity(Entity* entity, s16 targetX, s16 targetY) {
+    s16 angle;
+    s16 deltaY;
+    s16 deltaX;
+
+    deltaX = targetX - entity->posX.i.hi;
+    deltaY = targetY - entity->posY.i.hi;
+    angle = ratan2(-deltaY, deltaX) & 0xFFF;
+    return angle;
 }
 
 INCLUDE_ASM("asm/saturn/t_bat/f_nonmat", f60D125C, func_060D125C);
 
-s32 func_0600F914(s32, s32);
-
 // SAT: func_060D12AC
-// PSX: func_80173FE8
-s32 func_80173FE8(Entity* entity, s32 x, s32 y) {
-    s32 diffX = x - entity->posX.i.hi;
-    s32 diffY = y - entity->posY.i.hi;
+s32 CalculateDistance(Entity* entity, s32 targetX, s32 targetY) {
+    s32 dx = targetX - entity->posX.i.hi;
+    s32 dy = targetY - entity->posY.i.hi;
 
-    // not shifted by 12
-    return func_0600F914((diffX * diffX + diffY * diffY),
-                         diffX); // SquareRoot12
+    return SquareRoot0(dx * dx + dy * dy);
 }
 
-INCLUDE_ASM("asm/saturn/t_bat/f_nonmat", f60D12DC, func_060D12DC);
+void ProcessSfxState(Entity* entity) {
+    switch (entity->step) {
+    case 0:
+        entity->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000;
+        if (g_CutsceneHasControl) {
+            g_PlaySfxStep = 99;
+            DestroyEntity(entity);
+            return;
+        }
+        if (CdSoundCommandQueueEmpty()) {
+            PlaySfx(0xF0000010);
+            func_06010400();
+            entity->step++;
+        }
+        break;
+    case 1:
+        if (func_80133950()) {
+            entity->step++;
+        }
+        break;
+    case 2:
+        PlaySfx(entity->params);
+        entity->step++;
+        break;
+    case 3:
+        if (func_80131F68()) {
+            entity->step++;
+        }
+        break;
+    case 4:
+        if (!func_80131F68()) {
+            entity->step++;
+        }
+        break;
+    case 5:
+        if (D_8003C708.flags & (FLAG_UNK_40 | FLAG_UNK_20)) {
+            g_PlaySfxStep = 99;
+            DestroyEntity(entity);
+            return;
+        }
+        if (CdSoundCommandQueueEmpty()) {
+            PlaySfx(0xF0000011);
+            entity->step++;
+        }
+        break;
+    case 6:
+        if (func_80133950()) {
+            g_PlaySfxStep = 99;
+            DestroyEntity(entity);
+            return;
+        }
+        break;
+    case 7:
+        PlaySfx(0xF0000080);
+        entity->step = 4;
+        break;
+    case 8:
+        g_PlaySfxStep = 99;
+        DestroyEntity(entity);
+        return;
+    }
+    g_PlaySfxStep = entity->step;
+}
+
 INCLUDE_ASM("asm/saturn/t_bat/f_nonmat", f60D141C, func_060D141C);
 INCLUDE_ASM("asm/saturn/t_bat/f_nonmat", f60D1640, func_060D1640);
 INCLUDE_ASM("asm/saturn/t_bat/f_nonmat", f60D16D0, func_060D16D0);

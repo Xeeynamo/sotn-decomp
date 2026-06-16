@@ -691,7 +691,6 @@ typedef enum {
 u32 SquareRoot0(s32);
 s32 func_800F4D38(s32, s32);
 void func_800F4994(void);
-void DestroyEntity(Entity* entity);
 extern int rand(void);
 void PlaySfx(s32 sfxId);
 
