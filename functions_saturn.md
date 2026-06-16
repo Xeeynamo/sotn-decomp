@@ -538,7 +538,6 @@
 | alucard/f_nonmat/f60BA4CC.s  | func_060BA4CC   |      169 |         13 |       |     |
 | stage_02/f_nonmat/f60E22FC.s | func_060E22FC   |      169 |         18 |       |     |
 | alucard/f_nonmat/f60A580C.s  | func_060A580C   |      169 |         23 |       |     |
-| t_bat/f_nonmat/f60D12DC.s    | func_060D12DC   |      170 |         30 |       |     |
 | zero/f_nonmat/f600A350.s     | func_0600A350   |      171 |          7 |       |     |
 | zero/f_nonmat/f600A650.s     | func_0600A650   |      171 |         16 |       |     |
 | richter/f_nonmat/f60B89CE.s  | func_060B89CE   |      172 |          2 |       |     |
