@@ -56,7 +56,7 @@ segments:
       - [0x27318, c, cen/popup]
       - [0x27910, c, cen/e_room_fg]
       - [0x27A28, c, cen_psp/st_common]
-      - [0x28A58, c, cen_psp/prim_helpers]
+      - [0x28A58, c, cen/prim_helpers]
       - [0x29198, c, cen_psp/st_init]
       - [0x29260, c, cen_psp/unk_29260]
       - [0x29558, c, cen/e_breakable]
