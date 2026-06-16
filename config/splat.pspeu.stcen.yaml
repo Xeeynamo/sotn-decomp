@@ -53,7 +53,7 @@ segments:
       - [0x207E8, c, cen/e_collect]
       - [0x24A38, c, cen_psp/unk_24A38]
       - [0x25140, c, cen/collision]
-      - [0x27318, c, cen_psp/popup]
+      - [0x27318, c, cen/popup]
       - [0x27910, c, cen/e_room_fg]
       - [0x27A28, c, cen_psp/st_common]
       - [0x28A58, c, cen_psp/prim_helpers]

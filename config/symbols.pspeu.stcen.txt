@@ -17,7 +17,6 @@ EntityExplosionVariants = 0x0925C200;
 EntityGreyPuff = 0x0925C378;
 EntityIntenseExplosion = 0x0925C4F8;
 PlaySfxPositional = 0x0925C668;
-BottomCornerText = 0x0925E998;
 DestroyEntity = 0x0925F0A8;
 PreventEntityFromRespawning = 0x0925F140;
 AnimateEntity = 0x0925F1C8;
