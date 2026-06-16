@@ -19,6 +19,16 @@ var saturnSplitterYAMLs = []string{
 }
 
 func buildSaturn() error {
+	if err := buildSaturnObjects(); err != nil {
+		return err
+	}
+	return checkVersions(os.Stderr, []string{"saturn"})
+}
+
+// buildSaturnObjects extracts asm and builds the Saturn tree without running the
+// SHA check, so callers (such as the progress report) can use the per-file
+// objects even when the final PRGs do not byte-match yet.
+func buildSaturnObjects() error {
 	if err := extractSaturn(); err != nil {
 		return fmt.Errorf("extract: %w", err)
 	}
@@ -28,7 +38,7 @@ func buildSaturn() error {
 	if err := deps.Ninja(); err != nil {
 		return fmt.Errorf("ninja: %w", err)
 	}
-	return checkVersions(os.Stderr, []string{"saturn"})
+	return nil
 }
 
 var saturnExtractSentinels = []string{

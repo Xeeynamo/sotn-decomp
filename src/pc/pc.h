@@ -14,7 +14,9 @@
 #define VERSION "us"
 
 #include <stdio.h>
-#include <log.h>
+#include <types.h>
+#include <psyz/log.h>
+#include <psyz/types.h>
 
 #define DISP_WIDTH 256
 #define DISP_HEIGHT 256
