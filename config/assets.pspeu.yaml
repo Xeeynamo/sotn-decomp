@@ -349,6 +349,14 @@ files:
           - [0x2C050, cmpgfx, stage_name_fr, 128, 64, 4]
           - [0x2C208, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/cen.bin
+    asset_path: assets/st/cen
+    src_path: src/st/cen
+    splat_config_path: config/splat.pspeu.stcen.yaml
+    segments:
+      - start: 0x80
+        vram: 0x09237700
+        assets:
+          - [0x80, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/chi.bin
     asset_path: assets/st/chi
     src_path: src/st/chi
