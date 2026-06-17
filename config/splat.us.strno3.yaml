@@ -46,7 +46,7 @@ segments:
       - [0xBFC, data]
       - [0xC1C, .data, e_lock_camera]
       - [0xC9C, .data, e_breakable]
-      - [0xCFC, data]
+      - [0xCFC, data, e_castle_door]
       - [0xDF8, data]
       - [0x1550, .data, st_common]
       - [0x1750, data]
