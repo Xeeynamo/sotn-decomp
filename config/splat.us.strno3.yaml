@@ -48,6 +48,8 @@ segments:
       - [0xC9C, .data, e_breakable]
       - [0xCFC, .data, e_castle_door]
       - [0xDF8, data]
+      - [0x1550, .data, st_common]
+      - [0x1750, data]
       - [0x2FF68, .rodata, e_castle_door]
       - [0x2FF80, .rodata, e_jewel_sword_puzzle]
       - [0x2FF88, .rodata, e_stairway]
