@@ -359,9 +359,9 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA5C0, func_060AA5C0);
 // func_8015E484
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AAB80, func_060AAB80);
 
-extern Point16 g_RicSensorsCeiling[NUM_HORIZONTAL_SENSORS];
-extern Point16 g_RicSensorsFloor[NUM_HORIZONTAL_SENSORS];
-extern Point16 g_RicSensorsWall[NUM_VERTICAL_SENSORS * 2];
+extern Point32 g_RicSensorsCeiling[NUM_HORIZONTAL_SENSORS];
+extern Point32 g_RicSensorsFloor[NUM_HORIZONTAL_SENSORS];
+extern Point32 g_RicSensorsWall[NUM_VERTICAL_SENSORS * 2];
 
 void RicGetPlayerSensor(Collider* col) {
     col->unk14 = g_RicSensorsWall[0].x;
