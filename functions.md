@@ -621,8 +621,8 @@
 | main     | sceVfpuVector4TruncatePrecision24     |       19 |          1 |        |       |     |
 | maria    | func_pspeu_092B3810                   |       19 |          1 |        |       |     |
 | ric      | func_pspeu_092B1238                   |       19 |          1 |        |       |     |
-| cen      | SetCutsceneEnd                        |       19 |          1 |        |       |     |
 | cen      | func_pspeu_09261DB8                   |       19 |          1 |        |       |     |
+| cen      | SetCutsceneEnd                        |       19 |          1 |        |       |     |
 | cen      | func_pspeu_092430E0                   |       19 |          1 |        |       |     |
 | dai      | func_pspeu_092541E8                   |       19 |          1 |        |       |     |
 | dre      | func_pspeu_092458A8                   |       19 |          1 |        |       |     |
@@ -1522,7 +1522,7 @@
 |          | func_092E7680                         |       34 |          2 |        |       |     |
 | are      | func_pspeu_09261440                   |       34 |          2 |        |       |     |
 | cat      | func_pspeu_092522D0                   |       34 |          2 |        |       |     |
-| cen      | GetDistanceToPlayerX                  |       34 |          2 |        |       |     |
+| cen      | func_pspeu_0925F338                   |       34 |          2 |        |       |     |
 | chi      | func_psp_09247548                     |       34 |          2 |        |       |     |
 | dai      | func_pspeu_0924D398                   |       34 |          2 |        |       |     |
 | dre      | func_pspeu_09243848                   |       34 |          2 |        |       |     |
@@ -2468,7 +2468,7 @@
 | main     | func_psp_0891539C                     |       54 |          4 |        |       |     |
 | main     | func_psp_08937228                     |       54 |          5 |        |       |     |
 | ric      | func_pspeu_092BA540                   |       54 |          5 |        |       |     |
-| cen      | CutsceneCameraPan                     |       54 |          5 |        |       |     |
+| cen      | func_pspeu_09261D00                   |       54 |          5 |        |       |     |
 | main     | func_psp_0892FAA8                     |       54 |          6 |        |       |     |
 | main     | __ratio                               |       54 |          6 |        |       |     |
 | main     | func_psp_0892DADC                     |       54 |          6 |        |       |     |
@@ -5294,7 +5294,7 @@
 | no0      | func_pspeu_0924F828                   |      313 |         42 |        |       |     |
 | ric      | func_pspeu_092BB860                   |      314 |         24 |        |       |     |
 | rcat     | func_pspeu_09247730                   |      314 |         43 |        |       |     |
-| cen      | EntityRoomDarkness                    |      315 |         24 |        |       |     |
+| cen      | func_pspeu_09263478                   |      315 |         24 |        |       |     |
 | lib      | func_psp_09256018                     |      315 |         26 |        |       |     |
 |          | func_092E97B8                         |      315 |         34 |        |       |     |
 | no2      | func_pspeu_09254098                   |      315 |         48 |        |       |     |
@@ -6306,7 +6306,7 @@
 | no2      | func_pspeu_0924F990                   |     1457 |        237 | Yes    |       |     |
 | np3      | EntityBlade                           |     1457 |        237 | Yes    |       |     |
 | bo0      | func_pspeu_09256A10                   |     1463 |        135 | Yes    |       |     |
-| cen      | EntityPlatform                        |     1476 |        197 |        |       |     |
+| cen      | func_pspeu_09261EC0                   |     1476 |        197 |        |       |     |
 | dra      | func_psp_09114A38                     |     1516 |        244 |        |       |     |
 | dra      | func_psp_090FD268                     |     1538 |        105 |        |       |     |
 | rnz0     | func_pspeu_0923EDC8                   |     1545 |        178 | Yes    |       |     |
