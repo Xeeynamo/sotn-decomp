@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+extern EInit g_EInitParticle;
 
 static SVECTOR window_vec1 = {0, -120, 0};
 static SVECTOR window_vec2 = {25, -120, 0};
@@ -24,6 +25,7 @@ void EntityShuttingWindow(Entity* self) {
     VECTOR vec;
     MATRIX mtx;
     s32 i;
+
 
     switch (self->step) {
     case 0:
