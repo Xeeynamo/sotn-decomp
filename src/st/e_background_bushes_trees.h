@@ -130,7 +130,8 @@ void EntityBackgroundBushes(Entity* self) {
                 var_s1 += (i - 2) * 4;
                 prim->x0 = prim->x2 = xPos - var_s1[2] / 2;
                 prim->x1 = prim->x3 = xPos + var_s1[2] / 2;
-                prim->y0 = prim->y1 = (yPos PLUSMINUS yOffset) PLUSMINUS var_s1[3];
+                prim->y0 = prim->y1 =
+                    (yPos PLUSMINUS yOffset)PLUSMINUS var_s1[3];
                 prim->y2 = prim->y3 = (yPos PLUSMINUS yOffset);
                 prim->clut = 0x17;
                 if (i > 2) {
