@@ -1,5 +1,18 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+
 #define UVWH(u, v, w, h) u, v, w, h
+
+#if defined(INVERTED_STAGE)
+extern EInit g_EInitInteractable;
+#define E_INIT g_EInitInteractable
+#define PLUSMINUS +
+#define GEOMOFFY 0x68
+#else
+extern EInit g_EInitStInteractable;
+#define E_INIT g_EInitStInteractable
+#define PLUSMINUS -
+#define GEOMOFFY 0x98
+#endif
 
 static u8 bush_uvwh[] = {
     UVWH(0x10, 0xC8, 0x20, 0x1F), UVWH(0x30, 0xC8, 0x20, 0x1F),
@@ -45,7 +58,7 @@ void EntityBackgroundBushes(Entity* self) {
     MATRIX m;
 
     if (!self->step) {
-        InitializeEntity(g_EInitStInteractable);
+        InitializeEntity(E_INIT);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x48);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -96,7 +109,7 @@ void EntityBackgroundBushes(Entity* self) {
             prim->v2 = prim->v3 = prim->v0 + var_s1[3];
             prim->x0 = prim->x2 = xPos - var_s1[2] / 2;
             prim->x1 = prim->x3 = xPos + var_s1[2] / 2;
-            prim->y0 = prim->y1 = yPos - var_s1[3];
+            prim->y0 = prim->y1 = yPos PLUSMINUS var_s1[3];
             prim->y2 = prim->y3 = yPos;
             prim->clut = var_s5[2];
             prim->priority = var_s5[1];
@@ -117,8 +130,9 @@ void EntityBackgroundBushes(Entity* self) {
                 var_s1 += (i - 2) * 4;
                 prim->x0 = prim->x2 = xPos - var_s1[2] / 2;
                 prim->x1 = prim->x3 = xPos + var_s1[2] / 2;
-                prim->y0 = prim->y1 = (yPos - yOffset) - var_s1[3];
-                prim->y2 = prim->y3 = (yPos - yOffset);
+                prim->y0 = prim->y1 =
+                    (yPos PLUSMINUS yOffset)PLUSMINUS var_s1[3];
+                prim->y2 = prim->y3 = (yPos PLUSMINUS yOffset);
                 prim->clut = 0x17;
                 if (i > 2) {
                     prim->clut = 0x49;
@@ -154,7 +168,7 @@ void EntityBackgroundTrees(Entity* self) {
     s32 posY;
 
     if (!self->step) {
-        InitializeEntity(g_EInitStInteractable);
+        InitializeEntity(E_INIT);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 32);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -180,7 +194,7 @@ void EntityBackgroundTrees(Entity* self) {
 
     SetGeomScreen(0x400);
     if (self->params & 0x100) {
-        SetGeomOffset(0x80, 0x98);
+        SetGeomOffset(0x80, GEOMOFFY);
     } else {
         SetGeomOffset(0x80, 0x80);
     }
@@ -203,7 +217,7 @@ void EntityBackgroundTrees(Entity* self) {
     while (posX < 320) {
         prim->x0 = prim->x2 = posX;
         prim->x1 = prim->x3 = posX + 64;
-        prim->y0 = prim->y1 = posY - 56;
+        prim->y0 = prim->y1 = posY PLUSMINUS 56;
         prim->y2 = prim->y3 = posY;
         prim->drawMode = DRAW_UNK02;
         prim = prim->next;
