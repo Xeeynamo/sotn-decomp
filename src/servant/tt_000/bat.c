@@ -55,7 +55,7 @@ AnimationFrame* g_BatAnimationFrames[] = {
 };
 
 // sprite data
-Sprite g_BatSpriteData[] = {
+BatSpriteData g_BatSpriteData[] = {
     {-4, -4, 8, 8, 0x144, 0x78, 8, 0, 16, 8},
     {-4, -4, 8, 8, 0x144, 0x78, 120, 8, 128, 16},
     {-4, -4, 8, 8, 0x144, 0x78, 228, 135, 236, 143},
