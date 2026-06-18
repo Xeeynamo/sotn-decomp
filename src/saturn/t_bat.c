@@ -351,11 +351,13 @@ u32 ServantUpdateAnim(Entity* self, s8* frameProps, AnimationFrame** frames) {
         ret = -1;
     } else if (self->poseTimer == 0) {
         self->poseTimer = self->anim[self->pose].duration;
+        ret = 0;
     } else if (--self->poseTimer == 0) {
         self->pose++;
         if (self->anim[self->pose].duration == 0) {
             self->pose = self->anim[self->pose].pose;
             self->poseTimer = self->anim[self->pose].duration;
+            ret = 0;
         } else if (self->anim[self->pose].duration == 0xFFFF) {
             self->pose--;
             self->poseTimer = -1;
@@ -370,7 +372,7 @@ u32 ServantUpdateAnim(Entity* self, s8* frameProps, AnimationFrame** frames) {
         }
     }
     if (frameProps != NULL) {
-        frameProps += (self->anim[self->pose].pose >> 9) * 4;
+        frameProps += ((self->anim[self->pose].pose >> 9) & 0x7F) * 4;
         self->hitboxOffX = *frameProps++;
         self->hitboxOffY = *frameProps++;
         self->hitboxWidth = *frameProps++;
