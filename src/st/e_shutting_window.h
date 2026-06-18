@@ -1,6 +1,14 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 extern EInit g_EInitParticle;
 
+#if defined(INVERTED_STAGE)
+#define LEFT_OFFX -26
+#define RIGHT_OFFX 23
+#else
+#define LEFT_OFFX 25
+#define RIGHT_OFFX -24
+#endif
+
 static SVECTOR window_vec1 = {0, -120, 0};
 static SVECTOR window_vec2 = {25, -120, 0};
 static SVECTOR window_vec3 = {0, 0, 0};
@@ -25,7 +33,9 @@ void EntityShuttingWindow(Entity* self) {
     VECTOR vec;
     MATRIX mtx;
     s32 i;
-
+#if defined(INVERTED_STAGE)
+    SVECTOR invert_vec = {0};
+#endif
 
     switch (self->step) {
     case 0:
@@ -64,7 +74,11 @@ void EntityShuttingWindow(Entity* self) {
         self->ext.shuttingWindow.unk80 += self->ext.shuttingWindow.unk82;
         self->ext.shuttingWindow.unk82 -= 4;
         if (self->ext.shuttingWindow.unk80 < 0) {
+#if defined(INVERTED_STAGE)
+            g_api.PlaySfx(SFX_SHUTTING_WINDOW);
+#else
             PlaySfxPositional(SFX_SHUTTING_WINDOW);
+#endif
             self->ext.shuttingWindow.unk80 = 0;
             self->ext.shuttingWindow.timer = 32;
             self->step++;
@@ -79,7 +93,7 @@ void EntityShuttingWindow(Entity* self) {
     }
     SetGeomScreen(0x400);
     SetGeomOffset(self->posX.i.hi, self->posY.i.hi);
-
+    // Iterates over the 2 windows
     for (prim = self->ext.shuttingWindow.prim, svec4 = windowVectors, i = 0;
          i < 2; svec4++, prim = prim->next, i++) {
         svec.vx = 0;
@@ -88,12 +102,19 @@ void EntityShuttingWindow(Entity* self) {
         } else {
             svec.vy = -self->ext.shuttingWindow.unk80;
         }
+#if defined(INVERTED_STAGE)
+        svec.vz = 0x800;
+        RotMatrix(&invert_vec, &mtx);
+        RotMatrixZ(svec.vz, &mtx);
+        RotMatrixY(svec.vy, &mtx);
+#else
         svec.vz = 0;
         RotMatrix(&svec, &mtx);
+#endif
         if (i) {
-            vec.vx = 0x19;
+            vec.vx = LEFT_OFFX;
         } else {
-            vec.vx = -0x18;
+            vec.vx = RIGHT_OFFX;
         }
         vec.vy = 0;
         vec.vz = 0x400;

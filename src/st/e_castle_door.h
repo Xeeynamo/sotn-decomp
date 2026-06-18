@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-#if defined(STAGE_IS_RNO3)
+#if defined(INVERTED_STAGE)
 #define TILE_START 0x1BA
 #define TILE_STEP -0x20
 #else
@@ -57,7 +57,7 @@ static SVECTOR* doorColorNormalVectors[] = {
 static u8 castleDoorUCoords[] = {
     0x3A, 0x46, 0x01, 0x35, 0x35, 0x01, 0x00, 0x00};
 
-#if !defined(STAGE_IS_RNO3)
+#if !defined(INVERTED_STAGE)
 static u16 castleDoorTilesOpen[] = {
     0x06D1, 0x06D2, 0x06D3, 0x06D4, 0x06D5, 0x06D6, 0x06D3, 0x06D4,
 };
@@ -91,14 +91,14 @@ void EntityCastleDoor(Entity* self) {
     s32 i;
 
     SVECTOR sVec2 = {0};
-#if defined(STAGE_IS_NO3) || defined(STAGE_IS_RNO3)
+#if defined(STAGE_IS_NP3)
+    if (!self->step) {
+#else
     switch (self->step) {
     case 0:
-#else
-    if (!self->step) {
 #endif
         InitializeEntity(g_EInitInteractable);
-#if defined(STAGE_IS_RNO3)
+#if defined(INVERTED_STAGE)
         self->posX.i.hi = 0x1A8 - g_Tilemap.scrollX.i.hi;
         self->posY.i.hi = 0x5F - g_Tilemap.scrollY.i.hi;
 #endif
@@ -123,13 +123,13 @@ void EntityCastleDoor(Entity* self) {
             prim->v2 = prim->v3 = 0x81;
             prim = prim->next;
         }
-#if !(defined(STAGE_IS_NO3) || defined(STAGE_IS_RNO3))
+#if defined(STAGE_IS_NP3)
         self->ext.castleDoor.rotate = 0;
         for (tilePos = TILE_START, i = 0; i < 8; tilePos += TILE_STEP, i++) {
             g_Tilemap.fg[tilePos] = castleDoorTilesShut[i];
         }
 #else
-#if defined(STAGE_IS_RNO3)
+#if defined(INVERTED_STAGE)
         if (1) {
 #else
         if (g_CastleFlags[PROLOGUE_COMPLETE]) {
@@ -146,7 +146,7 @@ void EntityCastleDoor(Entity* self) {
         self->ext.castleDoor.rotate = -0x380;
         self->ext.castleDoor.timer = 32;
         self->step = 4;
-#if !defined(STAGE_IS_RNO3)
+#if !defined(INVERTED_STAGE)
         g_CastleFlags[PROLOGUE_COMPLETE] = 1;
 #endif
         break;
@@ -194,7 +194,7 @@ void EntityCastleDoor(Entity* self) {
     SetGeomOffset(selfX, selfY);
     sVec1.vx = 0;
     sVec1.vy = self->ext.castleDoor.rotate;
-#if !defined(STAGE_IS_RNO3)
+#if !defined(INVERTED_STAGE)
     sVec1.vz = 0;
     RotMatrix(&sVec2, &mtx1);
 #else
