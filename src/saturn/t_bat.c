@@ -343,8 +343,45 @@ void DestroyServantEntity(Entity* entity) {
     DestroyEntity(entity);
 }
 
-// ServantUpdateAnim
-INCLUDE_ASM("asm/saturn/t_bat/f_nonmat", f60D1070, func_060D1070);
+// func_060D1070
+u32 ServantUpdateAnim(Entity* self, s8* frameProps, AnimationFrame** frames) {
+    s32 ret = 0;
+
+    if (self->poseTimer == -1) {
+        ret = -1;
+    } else if (self->poseTimer == 0) {
+        self->poseTimer = self->anim[self->pose].duration;
+    } else if (--self->poseTimer == 0) {
+        self->pose++;
+        if (self->anim[self->pose].duration == 0) {
+            self->pose = self->anim[self->pose].pose;
+            self->poseTimer = self->anim[self->pose].duration;
+        } else if (self->anim[self->pose].duration == 0xFFFF) {
+            self->pose--;
+            self->poseTimer = -1;
+            ret = -1;
+        } else if (self->anim[self->pose].duration == 0xFFFE) {
+            self->anim = frames[self->anim[self->pose].pose];
+            self->pose = 0;
+            self->poseTimer = self->anim[self->pose].duration;
+            ret = -2;
+        } else {
+            self->poseTimer = self->anim[self->pose].duration;
+        }
+    }
+    if (frameProps != NULL) {
+        frameProps += (self->anim[self->pose].pose >> 9) * 4;
+        self->hitboxOffX = *frameProps++;
+        self->hitboxOffY = *frameProps++;
+        self->hitboxWidth = *frameProps++;
+        self->hitboxHeight = *frameProps++;
+    }
+    self->animCurFrame = self->anim[self->pose].pose & 0x1FF;
+    if (self->unk0 != NULL) {
+        func_060C1618();
+    }
+    return ret;
+}
 
 // SAT: func_060D11B8
 s32 AccumulateTowardZero(s32 arg0, s32 arg1) {

@@ -51,7 +51,7 @@ typedef union {
 #define POSE_JUMP(anim) {-2, anim}
 typedef struct {
     u16 duration;
-    u16 unk2;
+    u16 pose;
 } AnimationFrame;
 
 typedef struct Collider {
