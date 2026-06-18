@@ -21,3 +21,6 @@
 [submodule "tools/mipsmatch"]
 	path = tools/mipsmatch
 	url = https://github.com/ttkb-oss/mipsmatch
+[submodule "tools/sotn_utils"]
+	path = tools/sotn_utils
+	url = https://github.com/ProjectOblivion/sotn_utils.git

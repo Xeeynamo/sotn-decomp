@@ -205,9 +205,11 @@ typedef struct EntranceCascadePrim {
     /* 0x1E */ s16 y2;
     /* 0x20 */ f32 velocityY;
     /* 0x24 */ u8 step;
-    /* 0x25 */ u8 : 8;
-    /* 0x26 */ s16 : 16;
-    /* 0x28 */ s32 : 24;
+    /* 0x25 */ u8 unk25;
+    /* 0x26 */ u16 priority;
+    /* 0x28 */ u8 r3;
+    /* 0x29 */ u8 g3;
+    /* 0x2A */ u8 b3;
     /* 0x2B */ u8 p3; // TODO not verified
     /* 0x2C */ f32 velocityX;
     /* 0x30 */ s16 : 16;
@@ -308,8 +310,8 @@ struct SubPrim {
 
 typedef struct Primitive2 {
     struct Primitive2* next;
-#if defined(VERSION_PSP)
-    u32 dummy;
+#if defined(VERSION_PC) || defined(VERSION_PSP)
+    u_long dummy;
 #endif
     struct SubPrim prim[4];
 } Primitive2;
@@ -340,3 +342,11 @@ typedef struct {
     /* 0x22 */ s16 v2;
     /* 0x24 */ u8 pad[8];
 } PrimWeapon017; /* size = 0x2C */
+
+STATIC_ASSERT(sizeof(Primitive) == sizeof(Primitive2), "unaligned");
+STATIC_ASSERT(sizeof(Primitive) == sizeof(FakePrim), "unaligned");
+STATIC_ASSERT(sizeof(Primitive) == sizeof(PrimLineG2), "unaligned");
+STATIC_ASSERT(sizeof(Primitive) == sizeof(AxePrim), "unaligned");
+STATIC_ASSERT(sizeof(Primitive) == sizeof(EntranceCascadePrim), "unaligned");
+STATIC_ASSERT(sizeof(Primitive) == sizeof(FrozenShadePrim), "unaligned");
+STATIC_ASSERT(sizeof(Primitive) == sizeof(NumericPrim), "unaligned");

@@ -188,11 +188,40 @@ typedef struct {
     /* 0xB2 */ s16 unkB2;
 } ET_Subweapon;
 
-typedef union { // offset=0x7C
+typedef struct {
+    /* 0x78 */ s32 : 32;
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ struct Entity* parent;
+} ET_BatFamBlueTrail;
+
+typedef struct {
+    /* 0x78 */ s32 : 32;
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s32 : 32;
+    /* 0xA0 */ s32 : 32;
+    /* 0xA4 */ s32 : 32;
+    /* 0xA8 */ s16 cameraX;
+    /* 0xAA */ s16 cameraY;
+    /* 0xAC */ s16 lastPlayerPosX;
+    /* 0xAE */ s16 lastPlayerPosY;
+} ET_Bat;
+
+typedef union { // offset=0x78
     u8 base[0x38];
     ET_AfterImage afterImage; // g_Entities[1], not entityID 1
     ET_ExplosionPuffOpaque opaquePuff;
     ET_Subweapon subweapon;
+    ET_BatFamBlueTrail batFamBlueTrail;
+    ET_Bat bat;
 } Ext;
 
 typedef struct Entity {
@@ -232,7 +261,7 @@ typedef struct Entity {
     /* 0x52 */ s16 animCurFrame;
     /* 0x54 */ char pad_54[0xC];
     /* 0x60 */ s16 primIndex;
-    /* 0x62 */ char pad_62[0x2];
+    /* 0x62 */ u16 zPriority;
     /* 0x64 */ u16 unk68;
     /* 0x66 */ char pad_66[0xE];
     /* 0x74 */ u16 entityId;
@@ -437,7 +466,10 @@ typedef enum {
 } PlayerVramFlag;
 
 typedef struct {
-    char pad0[0x3B0];
+    char pad0[0x320];
+    u16 unk320;
+    u16 unk322;
+    char pad324[0x8C];
     /* 0x3B0 */ u32 padPressed;
     char pad3B4[0x14];
     /* 0x3C8 */ s16 timers[16]; // the array is bigger than PSX
@@ -587,6 +619,12 @@ typedef struct {
 typedef struct {
     SotnFixed32 scrollX;
     SotnFixed32 scrollY;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 left;
+    s32 top;
 } Tilemap;
 
 typedef struct {
@@ -607,6 +645,21 @@ typedef struct {
     /* 0x6 */ u8 entityRoomIndex;
     /* 0x8 */ u16 params;
 } LayoutEntity; // size = 0xA
+
+typedef struct ServantEvent {
+    /* 0x00 */ struct ServantEvent* next; // next event in the queue
+    /* 0x04 */ u32 timer;     // internal timer from 'delay' to the activation 0
+    /* 0x08 */ s32 servantId; // the familiar ID that can trigger the event
+    /* 0x0C */ s32 roomX;     // only activate in the specified room coords...
+    /* 0x10 */ s32 roomY;     // ... where on X negative is the inverted castle
+    /* 0x14 */ s32 cameraX;   // only activate on the camera coordinate...
+    /* 0x18 */ s32 cameraY;   // ...within the room
+    /* 0x1C */ s32 condition; // condition for the event
+    /* 0x20 */ u32 delay;     // after how many frames the event is triggered
+    /* 0x24 */ s32 entityId;  // ID of the entity to spawn
+    /* 0x28 */ s32 params;    // parameters of the entity to spawn
+    /* 0x2C */ u32 unk2C;
+} ServantEvent;
 
 typedef enum {
     PLAYER_CHARACTER,
@@ -691,7 +744,6 @@ typedef enum {
 u32 SquareRoot0(s32);
 s32 func_800F4D38(s32, s32);
 void func_800F4994(void);
-void DestroyEntity(Entity* entity);
 extern int rand(void);
 void PlaySfx(s32 sfxId);
 
@@ -735,10 +787,14 @@ extern UNK_0605c680 DAT_0605c680;
 #define NUM_HORIZONTAL_SENSORS 4
 #define NUM_VERTICAL_SENSORS 7
 
-// changed to s32
+typedef struct {
+    /* 0x0 */ s16 x;
+    /* 0x2 */ s16 y;
+} Point16; // size = 0x4
+
 typedef struct {
     /* 0x0 */ s32 x;
-    /* 0x2 */ s32 y;
-} Point16; // size = 0x4
+    /* 0x4 */ s32 y;
+} Point32; // size = 0x8
 
 #endif
