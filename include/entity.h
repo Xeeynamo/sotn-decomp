@@ -2071,7 +2071,7 @@ typedef struct {
 // Exists in both CEN and NO0 (lowers you into CEN)
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
-    /* 0x80 */ u8 unk80;
+    /* 0x80 */ u8 playerCollision;
 } ET_CEN_Elevator;
 
 // Small elevator used in TOP/RTOP
@@ -4038,6 +4038,10 @@ typedef struct {
     /* 0x8C */ s32 deathPrimCount;
 } ET_FrozenHalf;
 
+typedef struct {
+    /* 0x7C */ u16 unk7C;
+} ET_PlatformUnk;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -4383,6 +4387,7 @@ typedef union { // offset=0x7C
     ET_FakeSypha sypha;
     ET_DeathFlames deathFlames;
     ET_FrozenHalf frozenHalf;
+    ET_PlatformUnk platformUnk;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

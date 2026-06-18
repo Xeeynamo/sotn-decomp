@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rno3.h"
 
-INCLUDE_ASM("st/rno3/nonmatchings/e_castle_door", EntityCastleDoor);
+extern EInit g_EInitInteractable;
+#include "../e_castle_door.h"

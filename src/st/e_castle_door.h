@@ -1,4 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+
+#if defined(INVERTED_STAGE)
+#define TILE_START 0x1BA
+#define TILE_STEP -0x20
+#else
+#define TILE_START 0x445
+#define TILE_STEP 0x20
+#endif
+
 static SVECTOR doorvec1 = {-8, -128, -48};
 static SVECTOR doorvec2 = {8, -128, -48};
 static SVECTOR doorvec3 = {-8, 0, -48};
@@ -47,12 +56,22 @@ static SVECTOR* doorColorNormalVectors[] = {
 
 static u8 castleDoorUCoords[] = {
     0x3A, 0x46, 0x01, 0x35, 0x35, 0x01, 0x00, 0x00};
+
+#if !defined(INVERTED_STAGE)
 static u16 castleDoorTilesOpen[] = {
     0x06D1, 0x06D2, 0x06D3, 0x06D4, 0x06D5, 0x06D6, 0x06D3, 0x06D4,
 };
 static u16 castleDoorTilesShut[] = {
     0x010F, 0x112, 0x114, 0x116, 0x118, 0x11A, 0x114, 0x116,
 };
+#else
+static u16 castleDoorTilesOpen[] = {
+    0x6d4, 0x6d3, 0x6d6, 0x6d5, 0x6d3, 0x6d2, 0x6d4, 0x6d1,
+};
+static u16 castleDoorTilesShut[] = {
+    0x116, 0x114, 0x11a, 0x118, 0x116, 0x114, 0x112, 0x10f,
+};
+#endif
 
 // main door to the castle that closes during intro
 void EntityCastleDoor(Entity* self) {
@@ -72,13 +91,17 @@ void EntityCastleDoor(Entity* self) {
     s32 i;
 
     SVECTOR sVec2 = {0};
-#if defined(STAGE_IS_NO3)
+#if defined(STAGE_IS_NP3)
+    if (!self->step) {
+#else
     switch (self->step) {
     case 0:
-#else
-    if (!self->step) {
 #endif
         InitializeEntity(g_EInitInteractable);
+#if defined(INVERTED_STAGE)
+        self->posX.i.hi = 0x1A8 - g_Tilemap.scrollX.i.hi;
+        self->posY.i.hi = 0x5F - g_Tilemap.scrollY.i.hi;
+#endif
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 3);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -100,29 +123,32 @@ void EntityCastleDoor(Entity* self) {
             prim->v2 = prim->v3 = 0x81;
             prim = prim->next;
         }
-#if !defined(STAGE_IS_NO3)
+#if defined(STAGE_IS_NP3)
         self->ext.castleDoor.rotate = 0;
-        tilePos = 0x445;
-        for (i = 0; i < 8; i++) {
+        for (tilePos = TILE_START, i = 0; i < 8; tilePos += TILE_STEP, i++) {
             g_Tilemap.fg[tilePos] = castleDoorTilesShut[i];
-            tilePos += 0x20;
         }
 #else
-
+#if defined(INVERTED_STAGE)
+        if (1) {
+#else
         if (g_CastleFlags[PROLOGUE_COMPLETE]) {
+#endif
             self->ext.castleDoor.rotate = 0;
             self->step = 5;
         }
         break;
     case 1:
-        tilePos = 0x445;
-        for (i = 0; i < 8; tilePos += 0x20, i++) {
+
+        for (tilePos = TILE_START, i = 0; i < 8; tilePos += TILE_STEP, i++) {
             g_Tilemap.fg[tilePos] = castleDoorTilesOpen[i];
         }
         self->ext.castleDoor.rotate = -0x380;
         self->ext.castleDoor.timer = 32;
         self->step = 4;
+#if !defined(INVERTED_STAGE)
         g_CastleFlags[PROLOGUE_COMPLETE] = 1;
+#endif
         break;
 
     case 2:
@@ -146,8 +172,8 @@ void EntityCastleDoor(Entity* self) {
             self->ext.castleDoor.rotate = 0;
             self->step += 2;
             g_api.PlaySfx(SFX_START_SLAM_B);
-            tilePos = 0x445;
-            for (i = 0; i < 8; tilePos += 0x20, i++) {
+            tilePos = TILE_START;
+            for (i = 0; i < 8; tilePos += TILE_STEP, i++) {
                 g_Tilemap.fg[tilePos] = castleDoorTilesShut[i];
             }
         }
@@ -155,8 +181,8 @@ void EntityCastleDoor(Entity* self) {
 
     case 5:
         self->step++;
-        tilePos = 0x445;
-        for (i = 0; i < 8; tilePos += 0x20, i++) {
+        tilePos = TILE_START;
+        for (i = 0; i < 8; tilePos += TILE_STEP, i++) {
             g_Tilemap.fg[tilePos] = castleDoorTilesShut[i];
         }
         break;
@@ -168,8 +194,14 @@ void EntityCastleDoor(Entity* self) {
     SetGeomOffset(selfX, selfY);
     sVec1.vx = 0;
     sVec1.vy = self->ext.castleDoor.rotate;
+#if !defined(INVERTED_STAGE)
     sVec1.vz = 0;
     RotMatrix(&sVec2, &mtx1);
+#else
+    sVec1.vz = 0x800;
+    RotMatrix(&sVec2, &mtx1);
+    RotMatrixZ(sVec1.vz, &mtx1);
+#endif
     RotMatrixY(sVec1.vy, &mtx1);
     vec1.vx = 0;
     vec1.vy = 0;

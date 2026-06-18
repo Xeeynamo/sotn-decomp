@@ -1,18 +1,26 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "no0.h"
+#include "cen.h"
+#include "game.h"
+#include "sfx.h"
 
+extern EInit g_EInitElevator;
 #ifdef VERSION_PSP
-extern s32 E_ID(ID_29);
+extern s32 E_ID(ELEVATOR_STATIONARY);
 #endif
 
-u8 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags);
+static u8 D_80180768[] = {
+    0x08, 0x03, 0x04, 0x04, 0x04, 0x05, 0x04, 0x06, 0x04, 0x07, 0x04,
+    0x08, 0x04, 0x09, 0x02, 0x0A, 0x01, 0x0B, 0x10, 0x0A, 0xFF, 0x00,
+};
 
-static u8 anim0[] = {8, 3, 4, 4, 4,  5, 4,  6,  4,  7,  4,
-                     8, 4, 9, 2, 10, 1, 11, 16, 10, -1, 0};
-static u8 anim1[] = {4, 10, 4, 9, 4, 8, 4,  7, 4, 6,  4,
-                     5, 4,  4, 4, 3, 2, 12, 4, 3, -1, 0};
+static u8 D_80180780[] = {
+    0x04, 0x0A, 0x04, 0x09, 0x04, 0x08, 0x04, 0x07, 0x04, 0x06, 0x04,
+    0x05, 0x04, 0x04, 0x04, 0x03, 0x02, 0x0C, 0x04, 0x03, 0xFF, 0x00,
+};
 
-static s16 func_us_801C1F98(Primitive* prim, s16 dx) {
+// This is unused and stripped on PSP
+// The equivalent function here is used on NO0 side but not in the CEN elevator
+static s16 UnusedPrimFunction(Primitive* prim, s16 dx) {
     prim->drawMode = DRAW_UNK02;
     prim->v0 = prim->v1 = 0x50;
     prim->v2 = prim->v3 = 0x60;
@@ -34,59 +42,42 @@ static s16 func_us_801C1F98(Primitive* prim, s16 dx) {
     return dx;
 }
 
-static s16 func_us_801C2044(Primitive* prim, s16 dy) {
+static s16 func_801904B8(Primitive* prim, s16 dy) {
     prim->drawMode = DRAW_UNK02;
     prim->u0 = prim->u2 = 0x50;
     prim->u1 = prim->u3 = 0x60;
     prim->x0 = prim->x2 = g_CurrentEntity->posX.i.hi - 8;
     prim->x1 = prim->x3 = g_CurrentEntity->posX.i.hi + 8;
-    prim->v2 = prim->v3 = 0x26;
+    prim->v2 = prim->v3 = 38;
     prim->y2 = prim->y3 = dy;
-    dy -= 0x20;
-
-    if (dy < 0x44) {
-        dy = 0x44 - dy;
-        prim->v0 = prim->v1 = dy + 6;
-        prim->y0 = prim->y1 = 0x44;
-
-        prim = prim->next;
-        prim->drawMode = DRAW_UNK02;
-        prim->v0 = prim->v1 = 0x50;
-        prim->v2 = prim->v3 = 0x60;
-        prim->y0 = prim->y1 = 0x2C;
-        prim->y2 = prim->y3 = 0x3C;
-        prim->u0 = prim->u2 = 0x22 - dy;
-        prim->u1 = prim->u3 = 0x22;
-        prim->x0 = prim->x2 = g_CurrentEntity->posX.i.hi;
-        prim->x1 = prim->x3 = g_CurrentEntity->posX.i.hi + dy;
-    } else {
-        prim->v0 = prim->v1 = 6;
-        prim->y0 = prim->y1 = dy;
-    }
+    dy -= 32;
+    prim->v0 = prim->v1 = 6;
+    prim->y0 = prim->y1 = dy;
     return dy;
 }
 
-void func_us_801C2184(Entity* self) {
-    Entity* player = &PLAYER;
-    Entity* parent;
+// Elevator when not moving (ID 1A)
+void EntityElevatorStationary(Entity* self) {
     Primitive* prim;
+    Entity* player = &PLAYER;
+    Entity* entity;
     s32 primIndex;
-    s16 dx, dy;
-    u8 var_s6;
+    u8 playerIsTouching;
+    s16 posX, posY;
 
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitElevator);
         self->animCurFrame = 3;
-        self->zPriority = player->zPriority + 0xC;
+        self->zPriority = player->zPriority + 2;
 
-        parent = (self - 1);
-        CreateEntityFromCurrentEntity(E_ID(ID_29), parent);
-        parent->params = 1;
+        entity = self - 1;
+        CreateEntityFromCurrentEntity(E_ID(ELEVATOR_STATIONARY), entity);
+        entity->params = 1;
 
-        parent = (self - 2);
-        CreateEntityFromCurrentEntity(E_ID(ID_29), parent);
-        parent->params = 2;
+        entity = self - 2;
+        CreateEntityFromCurrentEntity(E_ID(ELEVATOR_STATIONARY), entity);
+        entity->params = 2;
 
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 12);
         if (primIndex != -1) {
@@ -102,8 +93,8 @@ void func_us_801C2184(Entity* self) {
             prim->v2 = prim->v3 = 0x38;
             prim->priority = 0x6B;
             prim->drawMode = DRAW_HIDE;
-
             prim = prim->next;
+
             while (prim != NULL) {
                 prim->tpage = 0x12;
                 prim->clut = 0x223;
@@ -116,20 +107,22 @@ void func_us_801C2184(Entity* self) {
             return;
         }
 
-        if (player->posY.i.hi > 0xC0) {
+        posY = player->posY.i.hi + g_Tilemap.scrollY.i.hi;
+        if (posY < 80) {
             self->posY.i.hi = player->posY.i.hi;
             player->posX.i.hi = self->posX.i.hi;
             self->animCurFrame = 10;
             g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 1;
-            SetStep(2);
+            SetStep(3);
         }
+
         break;
 
     case 1:
-        var_s6 = (self - 1)->ext.cenElevator.playerCollision;
-        if (var_s6) {
-            dx = self->posX.i.hi - player->posX.i.hi;
-            if (g_pads[0].pressed & PAD_DOWN && abs(dx) < 8) {
+        playerIsTouching = (self - 1)->ext.cenElevator.playerCollision;
+        if (playerIsTouching) {
+            posX = self->posX.i.hi - player->posX.i.hi;
+            if (g_pads[0].pressed & PAD_UP && abs(posX) < 8) {
 #ifdef VERSION_PSP
                 if (F(player->velocityX).i.hi != 0) {
                     break;
@@ -137,70 +130,82 @@ void func_us_801C2184(Entity* self) {
 #endif
                 g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 1;
                 g_Player.demo_timer = 2;
-                g_Player.padSim = PAD_DOWN;
-#ifndef VERSION_PSP
-                player->velocityX = 0;
-                player->velocityY = 0;
+                g_Player.padSim = PAD_NONE;
+#ifdef VERSION_US
+                PLAYER.velocityX = 0;
+                PLAYER.velocityY = 0;
 #endif
-                self->step = 3;
+                self->step = 2;
             }
         }
         break;
 
     case 3:
         g_Player.demo_timer = 2;
-        g_Player.padSim = 0;
+        g_Player.padSim = PAD_NONE;
         switch (self->step_s) {
         case 0:
-            if (!AnimateEntity(anim0, self)) {
-                self->pose = 0;
-                self->poseTimer = 0;
-                self->step_s += 1;
-            }
-            if (!self->poseTimer && self->pose == 4) {
-                g_api.PlaySfx(SFX_LEVER_METAL_BANG);
-            }
-            break;
-
-        case 1:
             self->posY.val += FIX(0.5);
             player->posY.i.hi++;
-            if ((g_Timer & 0xF) == 0) {
+            posY = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
+            if (!(g_Timer & 15)) {
                 PlaySfxPositional(SFX_METAL_CLANG_A);
             }
-            break;
-        }
-        break;
-
-    case 2:
-        g_Player.demo_timer = 2;
-        g_Player.padSim = 0;
-        switch (self->step_s) {
-        case 0:
-            self->posY.val -= FIX(0.5);
-            dy = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
-            if (dy == 0x94) {
+            if (posY == 0x74) {
                 self->step_s++;
-            }
-            if ((g_Timer & 0xF) == 0) {
-                PlaySfxPositional(SFX_METAL_CLANG_A);
             }
             break;
 
         case 1:
-            if (!AnimateEntity(anim1, self)) {
+            if (!AnimateEntity(D_80180780, self)) {
                 self->pose = 0;
                 self->poseTimer = 0;
                 g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 0;
                 self->step_s = 0;
                 self->step = 1;
             }
+
+            if (!self->poseTimer && self->pose == 4) {
+                g_api.PlaySfx(SFX_LEVER_METAL_BANG);
+            }
+        }
+        break;
+
+    case 2:
+        g_Player.demo_timer = 2;
+        g_Player.padSim = PAD_NONE;
+
+        switch (self->step_s) {
+        case 0:
+            if (!AnimateEntity(D_80180768, self)) {
+                self->pose = 0;
+                self->poseTimer = 0;
+                self->step_s++;
+            }
             if (!self->poseTimer && self->pose == 4) {
                 g_api.PlaySfx(SFX_LEVER_METAL_BANG);
             }
             break;
+
+        case 1:
+            self->posY.val -= FIX(0.5);
+            // nb. this goes unused?
+            posY = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
+            if (!(g_Timer & 15)) {
+                PlaySfxPositional(SFX_METAL_CLANG_A);
+            }
+            break;
+
+        case 2:
+            if (!AnimateEntity(D_80180780, self)) {
+                self->pose = 0;
+                self->poseTimer = 0;
+                g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 0;
+                self->step_s = 0;
+                self->step = 1;
+            }
+            break;
         }
-        break;
     }
 
     prim = self->ext.cenElevator.prim;
@@ -209,27 +214,15 @@ void func_us_801C2184(Entity* self) {
     prim->y2 = prim->y3 = self->posY.i.hi - 0x1F;
     prim->y0 = prim->y1 = prim->y2 - 0x10;
     prim->drawMode = DRAW_UNK02;
-
     prim = prim->next;
-    dy = self->posY.i.hi - 0x28;
 
+    posY = self->posY.i.hi - 40;
     while (prim != NULL) {
-        dy = func_us_801C2044(prim, dy);
+        posY = func_801904B8(prim, posY);
         prim = prim->next;
-
-        if (dy <= 0x20)
+        if (posY <= 0) {
             break;
-    }
-
-    prim = prim->next;
-    dx = self->posX.i.hi + dy;
-
-    while (prim != NULL) {
-        dx = func_us_801C1F98(prim, dx);
-        prim = prim->next;
-
-        if (!dx)
-            break;
+        }
     }
 
     while (prim != NULL) {
@@ -237,46 +230,47 @@ void func_us_801C2184(Entity* self) {
         prim = prim->next;
     }
 
-    if (abs(self->posY.i.hi) > 0x180) {
+    if (abs(self->posY.i.hi) > 384) {
         DestroyEntity(self);
     }
 }
 
-void func_us_801C26B8(Entity* self) {
-    Entity* entity = &self[self->params];
-    u8 collision;
+void EntityUnkId1B(Entity* self) {
+    Entity* entity = self + self->params;
+    u8 isTouchingPlayer;
 
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitElevator);
-        if (self->params & 0x10) {
+        if (self->params & 16) {
             self->animCurFrame = self->params & 15;
             self->zPriority = 0x6A;
             self->step = 2;
-        } else {
-            self->animCurFrame = 0;
+            return;
         }
+        self->animCurFrame = 0;
         break;
 
     case 1:
         self->posX.i.hi = entity->posX.i.hi;
         if (self->params == 1) {
             self->posY.i.hi = entity->posY.i.hi + 35;
-            collision = GetPlayerCollisionWith(self, 12, 8, 4);
+            isTouchingPlayer = GetPlayerCollisionWith(self, 12, 8, 4);
         } else {
             self->posY.i.hi = entity->posY.i.hi - 24;
-            collision = GetPlayerCollisionWith(self, 12, 8, 6);
+            isTouchingPlayer = GetPlayerCollisionWith(self, 12, 8, 6);
         }
-        self->ext.cenElevator.playerCollision = collision;
+        self->ext.cenElevator.playerCollision = isTouchingPlayer;
         break;
     }
 }
 
-void func_us_801C27A4(Entity* self) {
+// Elevator when moving, fixes player into position (ID 1C)
+void EntityMovingElevator(Entity* self) {
+    Entity* player = &PLAYER;
     Primitive* prim;
     s32 primIndex;
-    s16 yOffset;
-    Entity* player = &PLAYER;
+    s16 posY;
 
     switch (self->step) {
     case 0:
@@ -308,13 +302,13 @@ void func_us_801C27A4(Entity* self) {
         if (player->posY.i.hi > 192) {
             self->posY.i.hi = player->posY.i.hi;
             player->posX.i.hi = self->posX.i.hi;
-            self->animCurFrame = 10;
+            self->animCurFrame = 0xA;
             g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 1;
             SetStep(2);
         } else {
             self->posY.i.hi = player->posY.i.hi;
             player->posX.i.hi = self->posX.i.hi;
-            self->animCurFrame = 10;
+            self->animCurFrame = 0xA;
             g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 1;
             SetStep(3);
         }
@@ -322,7 +316,7 @@ void func_us_801C27A4(Entity* self) {
 
     case 3:
         g_Player.demo_timer = 2;
-        g_Player.padSim = 0;
+        g_Player.padSim = PAD_NONE;
         self->posY.val += FIX(0.5);
         player->posY.i.hi = self->posY.i.hi + 4;
         g_Player.vram_flag = VRAM_FLAG_UNK40 | TOUCHING_GROUND;
@@ -330,33 +324,37 @@ void func_us_801C27A4(Entity* self) {
 
     case 2:
         g_Player.demo_timer = 2;
-        g_Player.padSim = 0;
+        g_Player.padSim = PAD_NONE;
         self->posY.val -= FIX(0.5);
         player->posY.i.hi = self->posY.i.hi + 4;
         g_Player.vram_flag = VRAM_FLAG_UNK40 | TOUCHING_GROUND;
         break;
     }
-
-    yOffset = self->posY.i.hi - 0x28;
     prim = self->ext.cenElevator.prim;
+    prim->x0 = prim->x2 = self->posX.i.hi - 8;
+    prim->x1 = prim->x3 = self->posX.i.hi + 8;
+    prim->y2 = prim->y3 = self->posY.i.hi - 0x1F;
+    prim->y0 = prim->y1 = prim->y2 - 0x10;
+    prim->drawMode = DRAW_UNK02;
+    prim = prim->next;
+
+    posY = self->posY.i.hi - 40;
+
     while (prim != NULL) {
-        prim->drawMode = DRAW_DEFAULT;
-        prim->x0 = prim->x2 = self->posX.i.hi - 8;
-        prim->x1 = prim->x3 = self->posX.i.hi + 8;
-        prim->y2 = prim->y3 = yOffset;
-        yOffset -= 0x20;
-        prim->y0 = prim->y1 = yOffset;
+        posY = func_801904B8(prim, posY);
+        prim = prim->next;
+        if (posY <= 0) {
+            break;
+        }
         prim = prim->next;
     }
 
-    // Code mistake? Don't think this code can ever run
-    // but it's present in the PSP
     while (prim != NULL) {
         prim->drawMode = DRAW_HIDE;
         prim = prim->next;
     }
 
-    if (abs(self->posY.i.hi) > 0x180) {
+    if (abs(self->posY.i.hi) > 384) {
         DestroyEntity(self);
     }
 }

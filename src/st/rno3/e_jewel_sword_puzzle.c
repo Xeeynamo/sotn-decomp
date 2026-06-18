@@ -8,5 +8,3 @@ INCLUDE_ASM("st/rno3/nonmatchings/e_jewel_sword_puzzle", EntityMermanRockRightSi
 INCLUDE_ASM("st/rno3/nonmatchings/e_jewel_sword_puzzle", EntityJewelSwordDoor);
 
 INCLUDE_ASM("st/rno3/nonmatchings/e_jewel_sword_puzzle", EntityFallingRock2);
-
-INCLUDE_RODATA("st/rno3/nonmatchings/e_jewel_sword_puzzle", D_us_801AFF80);

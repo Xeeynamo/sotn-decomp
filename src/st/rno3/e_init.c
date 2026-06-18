@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rno3.h"
 
-void OVL_EXPORT(EntityBreakable)(Entity* self);
+void EntityBreakable(Entity* self);
 void EntityExplosion(Entity* self);
 void EntityPrizeDrop(Entity* self);
 void EntityDamageDisplay(Entity* self);
@@ -81,7 +81,7 @@ void EntityWaterDrop(Entity* self);
 void func_us_801C8B8C(Entity* self);
 
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
-    OVL_EXPORT(EntityBreakable),
+    EntityBreakable,
     EntityExplosion,
     EntityPrizeDrop,
     EntityDamageDisplay,

@@ -47,7 +47,6 @@ typedef enum EntityIDs {
     /* 0x80 */ E_BREAKABLE_DEBRIS = 0x80,
 } EntityIDs;
 
-void CreateEntityFromCurrentEntity(u16 entityId, Entity* entity);
 u16 GetNormalizedAngle(u16 arg0, u16 arg1, u16 arg2);
 void EntityExplosionVariants(Entity* entity);
 void EntityGreyPuff(Entity* entity);
@@ -59,7 +58,6 @@ extern EInit g_EInitSpawner;
 extern EInit g_EInitInteractable;
 extern EInit g_EInitCommon;
 extern EInit g_EInitParticle;
-extern EInit g_EInitElevator;
 extern EInit g_EInitLockCamera;
 
 extern u16* D_80180574[];
