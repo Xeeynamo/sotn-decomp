@@ -17,32 +17,4 @@ static u8 blend_modes[8] = {
 // Stripped on PSP
 static u8 unused[] = {0, 0, 0, 0, 0, 0, 0, 0};
 
-void EntityBreakable(Entity* entity) {
-    u16 breakableType = entity->params >> 12;
-    if (entity->step) {
-        AnimateEntity(g_eBreakableAnimations[breakableType], entity);
-
-        if (entity->hitParams) { // If the candle is destroyed
-            Entity* entityDropItem;
-            entity->drawFlags = ENTITY_DEFAULT;
-            entity->rotate = 0;
-            g_api.PlaySfx(SFX_CANDLE_HIT);
-            entityDropItem = AllocEntity(&g_Entities[224], &g_Entities[256]);
-            if (entityDropItem != NULL) {
-                CreateEntityFromCurrentEntity(E_EXPLOSION, entityDropItem);
-                entityDropItem->params =
-                    g_eBreakableExplosionTypes[breakableType];
-            }
-            ReplaceBreakableWithItemDrop(entity);
-        }
-    } else {
-        InitializeEntity(OVL_EXPORT(EInitBreakable));
-        entity->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 20;
-        entity->blendMode = blend_modes[breakableType];
-        entity->hitboxHeight = g_eBreakableHitboxes[breakableType];
-
-        entity->animSet = g_eBreakableanimSets[breakableType];
-        entity->drawFlags = ENTITY_ROTATE;
-        entity->rotate = 0x800;
-    }
-}
+#include "../e_breakable.h"
