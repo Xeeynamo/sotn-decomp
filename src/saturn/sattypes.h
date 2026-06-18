@@ -28,6 +28,7 @@ typedef unsigned long long u64;
 #define STAGE_ENTITY_START 64
 #define FACTORY(id, param) ((id) + (param << 16))
 
+#define SFX_BAT_SCREECH 0x64E
 #define SFX_HEART_PICKUP 0x67A
 
 #define PLAYER g_Entities[PLAYER_CHARACTER]
@@ -198,17 +199,20 @@ typedef struct {
 
 typedef struct {
     /* 0x78 */ s32 : 32;
-    /* 0x7C */ s32 : 32;
+    /* 0x7C */ s16 : 16;
+    /* 0x7E */ s16 batIndex;
     /* 0x80 */ s32 : 32;
     /* 0x84 */ s32 : 32;
-    /* 0x88 */ s32 : 32;
+    /* 0x88 */ s16 frameCounter;
+    /* 0x8A */ s16 doUpdateCloseAnimation;
     /* 0x8C */ s32 : 32;
     /* 0x90 */ s32 : 32;
     /* 0x94 */ s32 : 32;
     /* 0x98 */ s32 : 32;
-    /* 0x9C */ s32 : 32;
+    /* 0x9C */ struct Entity* follow;
     /* 0xA0 */ s32 : 32;
-    /* 0xA4 */ s32 : 32;
+    /* 0xA4 */ s16 hasShotFireball;
+    /* 0xA6 */ s16 : 16;
     /* 0xA8 */ s16 cameraX;
     /* 0xAA */ s16 cameraY;
     /* 0xAC */ s16 lastPlayerPosX;
@@ -741,6 +745,45 @@ typedef enum {
     EFFECT_UNK_C000 = EFFECT_UNK_8000 | EFFECT_UNK_4000
 } ColliderEffectFlags;
 
+// document g_Player.status
+typedef enum {
+    PLAYER_STATUS_BAT_FORM = 0x1,
+    PLAYER_STATUS_MIST_FORM = 0x2,
+    PLAYER_STATUS_WOLF_FORM = 0x4,
+    PLAYER_STATUS_TRANSFORM =
+        (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_MIST_FORM |
+         PLAYER_STATUS_WOLF_FORM),
+    PLAYER_STATUS_UNK8 = 0x8,
+    PLAYER_STATUS_UNK10 = 0x10,
+    PLAYER_STATUS_CROUCH = 0x20,
+    PLAYER_STATUS_UNK40 = 0x40,
+    PLAYER_STATUS_STONE = 0x80,
+    PLAYER_STATUS_INVINCIBLE = 0x100,
+    PLAYER_STATUS_UNK200 = 0x200,
+    PLAYER_STATUS_UNK400 = 0x400,
+    PLAYER_STATUS_SUBWPN = 0x800, // possibly thrown subweapon?
+    PLAYER_STATUS_SPELLCAST = 0x1000,
+    PLAYER_STATUS_UNK2000 = 0x2000,
+    PLAYER_STATUS_POISON = 0x4000,
+    PLAYER_STATUS_CURSE = 0x8000,
+    PLAYER_STATUS_UNK10000 = 0x10000, // possibly freezing?
+    PLAYER_STATUS_UNK20000 = 0x20000,
+    PLAYER_STATUS_DEAD = 0x40000, // possibly just "dead"
+    PLAYER_STATUS_UNK80000 = 0x80000,
+    PLAYER_STATUS_UNK100000 = 0x100000,
+    PLAYER_STATUS_UNK200000 = 0x200000,
+    PLAYER_STATUS_UNK400000 = 0x400000,
+    PLAYER_STATUS_UNK800000 = 0x800000,
+    PLAYER_STATUS_AXEARMOR = 0x1000000,
+    PLAYER_STATUS_ABSORB_BLOOD = 0x2000000,
+    PLAYER_STATUS_UNK4000000 = 0x4000000,
+    NO_AFTERIMAGE = 0x8000000,
+    PLAYER_STATUS_UNK10000000 = 0x10000000,
+    PLAYER_STATUS_UNK20000000 = 0x20000000,
+    PLAYER_STATUS_UNK40000000 = 0x40000000,
+    PLAYER_STATUS_UNK80000000 = 0x80000000, // exclusive to Maria
+} PlayerStateStatus;
+
 u32 SquareRoot0(s32);
 s32 func_800F4D38(s32, s32);
 void func_800F4994(void);
@@ -783,6 +826,7 @@ extern PlayerHud g_PlayerHud;
 extern Pad g_pads[];
 extern Tilemap g_Tilemap;
 extern UNK_0605c680 DAT_0605c680;
+extern Primitive g_PrimBuf[];
 
 #define NUM_HORIZONTAL_SENSORS 4
 #define NUM_VERTICAL_SENSORS 7

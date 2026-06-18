@@ -290,7 +290,7 @@ static void UpdatePrimWhenAlucardIsBat(Entity* entity) {
     }
     y = entity->posY.i.hi - 16;
 
-    x += (rsin(entity->ext.bat.frameCounter << 7) * 8) >> 12;
+    x += (rsin(entity->ext.bat.frameCounter * 0x80) * 8) >> 12;
     y -= entity->ext.bat.frameCounter / 2;
 
     prim = &g_PrimBuf[entity->primIndex];
