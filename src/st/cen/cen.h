@@ -58,7 +58,6 @@ extern EInit g_EInitSpawner;
 extern EInit g_EInitInteractable;
 extern EInit g_EInitCommon;
 extern EInit g_EInitParticle;
-extern EInit g_EInitElevator;
 extern EInit g_EInitLockCamera;
 
 extern u16* D_80180574[];

@@ -126,7 +126,7 @@ void func_us_801C2184(Entity* self) {
         break;
 
     case 1:
-        var_s6 = (self - 1)->ext.cenElevator.unk80;
+        var_s6 = (self - 1)->ext.cenElevator.playerCollision;
         if (var_s6) {
             dx = self->posX.i.hi - player->posX.i.hi;
             if (g_pads[0].pressed & PAD_DOWN && abs(dx) < 8) {
@@ -267,7 +267,7 @@ void func_us_801C26B8(Entity* self) {
             self->posY.i.hi = entity->posY.i.hi - 24;
             collision = GetPlayerCollisionWith(self, 12, 8, 6);
         }
-        self->ext.cenElevator.unk80 = collision;
+        self->ext.cenElevator.playerCollision = collision;
         break;
     }
 }
