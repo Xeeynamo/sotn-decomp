@@ -18,18 +18,42 @@ static u8 D_80180780[] = {
     0x05, 0x04, 0x04, 0x04, 0x03, 0x02, 0x0C, 0x04, 0x03, 0xFF, 0x00,
 };
 
-static s16 func_801904B8(Primitive* prim, s16 posY) {
+// This is unused and stripped on PSP
+// The equivalent function here is used on NO0 side but not in the CEN elevator
+static s16 UnusedPrimFunction(Primitive* prim, s16 dx) {
+    prim->drawMode = DRAW_UNK02;
+    prim->v0 = prim->v1 = 0x50;
+    prim->v2 = prim->v3 = 0x60;
+    prim->y0 = prim->y1 = 0x2C;
+    prim->y2 = prim->y3 = 0x3C;
+    prim->u0 = prim->u2 = 2;
+    prim->x0 = prim->x2 = dx;
+    dx += 0x20;
+
+    if (dx > 0xB0) {
+        dx = dx - 0xB0;
+        prim->u1 = prim->u3 = 0x22 - dx;
+        prim->x1 = prim->x3 = 0xB0;
+        dx = 0;
+    } else {
+        prim->u1 = prim->u3 = 0x22;
+        prim->x1 = prim->x3 = dx;
+    }
+    return dx;
+}
+
+static s16 func_801904B8(Primitive* prim, s16 dy) {
     prim->drawMode = DRAW_UNK02;
     prim->u0 = prim->u2 = 0x50;
     prim->u1 = prim->u3 = 0x60;
     prim->x0 = prim->x2 = g_CurrentEntity->posX.i.hi - 8;
     prim->x1 = prim->x3 = g_CurrentEntity->posX.i.hi + 8;
     prim->v2 = prim->v3 = 38;
-    prim->y2 = prim->y3 = posY;
-    posY -= 32;
+    prim->y2 = prim->y3 = dy;
+    dy -= 32;
     prim->v0 = prim->v1 = 6;
-    prim->y0 = prim->y1 = posY;
-    return posY;
+    prim->y0 = prim->y1 = dy;
+    return dy;
 }
 
 // Elevator when not moving (ID 1A)
