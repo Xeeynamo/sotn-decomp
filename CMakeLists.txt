@@ -326,6 +326,7 @@ set(SOURCE_FILES_STAGE_CEN
     src/st/cen/cutscene.c
     src/st/cen/e_chamber.c
     src/st/cen/10374.c
+    src/st/cen/e_elevator.c
     src/st/cen/st_update.c
     src/st/cen/collision.c
     src/st/cen/create_entity.c
