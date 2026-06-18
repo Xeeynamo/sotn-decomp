@@ -143,9 +143,9 @@
 |          | func_092E9160                         |        9 |          1 |        |       |     |
 |          | func_092E76F0                         |        9 |          1 |        |       |     |
 |          | func_092E7C10                         |        9 |          1 |        |       |     |
+| cen      | EntityUnused                          |        9 |          1 |        |       |     |
 | cen      | CEN_Unused09247108                    |        9 |          1 |        |       |     |
 | cen      | CEN_Unused0924A138                    |        9 |          1 |        |       |     |
-| cen      | CEN_Unused09253230                    |        9 |          1 |        |       |     |
 | cen      | func_pspeu_0923DB48                   |        9 |          1 |        |       |     |
 | cen      | func_pspeu_09253260                   |        9 |          1 |        |       |     |
 | no0      | func_pspeu_0923BD98                   |        9 |          1 |        |       |     |
@@ -1012,8 +1012,8 @@
 | cat      | func_pspeu_09252420                   |       25 |          1 |        |       |     |
 | cat      | func_pspeu_09252AB0                   |       25 |          1 |        |       |     |
 | cat      | func_pspeu_09252E68                   |       25 |          1 |        |       |     |
-| cen      | SetStep                               |       25 |          1 |        |       |     |
 | cen      | func_pspeu_0925F430                   |       25 |          1 |        |       |     |
+| cen      | func_pspeu_0925F748                   |       25 |          1 |        |       |     |
 | cen      | func_pspeu_0923DBA0                   |       25 |          1 |        |       |     |
 | chi      | func_psp_09247698                     |       25 |          1 |        |       |     |
 | chi      | func_psp_09247F48                     |       25 |          1 |        |       |     |
@@ -1802,7 +1802,7 @@
 | cat      | func_pspeu_09238598                   |       39 |          2 |        |       |     |
 | cat      | func_pspeu_09238620                   |       39 |          2 |        |       |     |
 | cat      | func_pspeu_09252BC0                   |       39 |          2 |        |       |     |
-| cen      | CreateEntityFromCurrentEntity         |       39 |          2 |        |       |     |
+| cen      | func_pspeu_09254108                   |       39 |          2 |        |       |     |
 | cen      | func_pspeu_09254190                   |       39 |          2 |        |       |     |
 | chi      | CreateEntityFromCurrentEntity         |       39 |          2 |        |       |     |
 | chi      | CreateEntityFromEntity                |       39 |          2 |        |       |     |
@@ -3691,7 +3691,7 @@
 | rbo0     | func_pspeu_0924B7C0                   |       97 |         12 |        |       |     |
 | are      | func_pspeu_09253F90                   |       97 |         12 |        |       |     |
 | cat      | func_pspeu_09249FF0                   |       97 |         12 |        |       |     |
-| cen      | PlaySfxPositional                     |       97 |         12 |        |       |     |
+| cen      | func_pspeu_0925C668                   |       97 |         12 |        |       |     |
 | chi      | func_psp_09244878                     |       97 |         12 |        |       |     |
 | dai      | func_pspeu_092430D8                   |       97 |         12 |        |       |     |
 | dre      | func_pspeu_09240B78                   |       97 |         12 |        |       |     |
@@ -3783,7 +3783,7 @@
 | rbo0     | func_pspeu_0924E320                   |      101 |          7 |        |       |     |
 | are      | func_pspeu_092612D0                   |      101 |          7 |        |       |     |
 | cat      | func_pspeu_09252160                   |      101 |          7 |        |       |     |
-| cen      | AnimateEntity                         |      101 |          7 |        |       |     |
+| cen      | func_pspeu_0925F1C8                   |      101 |          7 |        |       |     |
 | chi      | func_psp_092473D8                     |      101 |          7 |        |       |     |
 | dai      | func_pspeu_0924D228                   |      101 |          7 |        |       |     |
 | dre      | func_pspeu_092436D8                   |      101 |          7 |        |       |     |
@@ -4077,7 +4077,7 @@
 | no4      | func_pspeu_0925DA38                   |      113 |         10 |        |       |     |
 |          | func_092EBA40                         |      113 |         11 |        |       |     |
 | rno3     | func_us_801C4334                      |      113 |         11 |        |       |     |
-| cen      | EntityUnkId1B                         |      113 |         12 |        |       |     |
+| cen      | func_pspeu_09261768                   |      113 |         12 |        |       |     |
 | bo0      | func_pspeu_09237820                   |      113 |         13 |        |       |     |
 | bo0      | func_pspeu_092379B8                   |      113 |         13 |        |       |     |
 | bo0      | func_pspeu_0924E218                   |      113 |         13 |        |       |     |
@@ -5158,7 +5158,7 @@
 | lib      | func_psp_09261338                     |      274 |         43 |        |       |     |
 | no0      | func_pspeu_0923AE60                   |      275 |         18 | Yes    |       |     |
 | st0      | func_pspeu_09242A98                   |      275 |         24 |        |       |     |
-| cen      | EntityMovingElevator                  |      275 |         28 |        |       |     |
+| cen      | func_pspeu_09261900                   |      275 |         28 |        |       |     |
 | no2      | func_pspeu_092529B0                   |      275 |         37 |        |       |     |
 | np3      | EntityGurkhaWeapon                    |      275 |         37 |        |       |     |
 | dra      | func_psp_090F1078                     |      275 |         39 | Yes    |       |     |
@@ -5178,7 +5178,7 @@
 | are      | func_pspeu_092381A0                   |      281 |         30 |        |       |     |
 | rare     | func_pspeu_09238008                   |      281 |         30 |        |       |     |
 | np3      | EntityBackgroundLightning             |      281 |         31 |        |       |     |
-| cen      | unk_80.rodata                         |      282 |          0 | Yes    |       |     |
+| cen      | e_maria.rodata                        |      282 |          0 | Yes    |       |     |
 | cat      | func_pspeu_09251C28                   |      282 |         34 |        |       |     |
 |          | func_092E76F0                         |      282 |         36 |        |       |     |
 | dai      | func_pspeu_09239E50                   |      282 |         43 | Yes    |       |     |
@@ -5336,7 +5336,7 @@
 | bo0      | GetPlayerCollisionWith                |      332 |         41 |        |       |     |
 | are      | func_pspeu_092626E0                   |      332 |         41 |        |       |     |
 | cat      | func_pspeu_092533B8                   |      332 |         41 |        |       |     |
-| cen      | GetPlayerCollisionWith                |      332 |         41 |        |       |     |
+| cen      | func_pspeu_0925FB08                   |      332 |         41 |        |       |     |
 | dai      | func_pspeu_0924E568                   |      332 |         41 |        |       |     |
 | lib      | func_psp_0924FF90                     |      332 |         41 |        |       |     |
 | no0      | func_pspeu_09257110                   |      332 |         41 |        |       |     |
@@ -5735,7 +5735,7 @@
 | cen      | func_pspeu_09247FA0                   |      487 |         42 |        |       |     |
 | maria    | func_pspeu_092B6618                   |      489 |         37 | Yes    |       |     |
 | rcat     | func_pspeu_0924B978                   |      489 |         53 |        |       |     |
-| cen      | EntityElevatorStationary              |      489 |         62 |        |       |     |
+| cen      | func_pspeu_09261030                   |      489 |         62 |        |       |     |
 | ric      | func_pspeu_092BDD88                   |      490 |         41 |        |       |     |
 | rcat     | func_pspeu_09243078                   |      493 |         13 |        |       |     |
 | dra      | func_psp_090F06D8                     |      493 |         37 |        |       |     |
