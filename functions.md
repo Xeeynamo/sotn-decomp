@@ -3059,8 +3059,8 @@
 | rare     | func_pspeu_0924AEC8                   |       71 |          7 |        |       |     |
 | rcat     | func_pspeu_0923F0B8                   |       71 |          7 |        |       |     |
 | rcat     | func_pspeu_0924A1F8                   |       71 |          7 |        |       |     |
-| rno3     | CollectGold                           |       71 |          7 |        |       |     |
 | rno3     | ReplaceBreakableWithItemDrop          |       71 |          7 |        |       |     |
+| rno3     | CollectGold                           |       71 |          7 |        |       |     |
 | rnz0     | func_pspeu_09246250                   |       71 |          7 |        |       |     |
 | rnz0     | func_pspeu_09253E88                   |       71 |          7 |        |       |     |
 | st0      | func_pspeu_09250580                   |       71 |          7 |        |       |     |
@@ -3140,8 +3140,8 @@
 | nz1      | func_pspeu_09250268                   |       73 |          7 |        |       |     |
 | rare     | func_pspeu_0924A9D0                   |       73 |          7 |        |       |     |
 | rcat     | func_pspeu_09249AE0                   |       73 |          7 |        |       |     |
-| rno3     | UpdateWeightChains                    |       73 |          7 |        |       |     |
 | rno3     | GetNormalizedAngle                    |       73 |          7 |        |       |     |
+| rno3     | UpdateWeightChains                    |       73 |          7 |        |       |     |
 | rnz0     | func_pspeu_092534B8                   |       73 |          7 |        |       |     |
 | wrp      | func_psp_09243A70                     |       73 |          7 |        |       |     |
 | lib      | func_psp_0926ADD8                     |       73 |          8 |        |       |     |
@@ -4136,9 +4136,9 @@
 | rcat     | func_pspeu_09237820                   |      113 |         13 |        |       |     |
 | rcat     | func_pspeu_092379B8                   |      113 |         13 |        |       |     |
 | rcat     | func_pspeu_0924A068                   |      113 |         13 |        |       |     |
+| rno3     | CheckFieldCollision                   |      113 |         13 |        |       |     |
 | rno3     | CreateEntityWhenInHorizontalRange     |      113 |         13 |        |       |     |
 | rno3     | CreateEntityWhenInVerticalRange       |      113 |         13 |        |       |     |
-| rno3     | CheckFieldCollision                   |      113 |         13 |        |       |     |
 | rnz0     | func_pspeu_09239ED0                   |      113 |         13 |        |       |     |
 | rnz0     | func_pspeu_0923A068                   |      113 |         13 |        |       |     |
 | rnz0     | func_pspeu_09253820                   |      113 |         13 |        |       |     |
