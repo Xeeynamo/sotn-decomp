@@ -20,7 +20,7 @@ void EntityBreakable(Entity* entity) {
             Entity* entityDropItem;
 #if defined(STAGE_IS_RNO3)
             entity->drawFlags = ENTITY_DEFAULT;
-            entity->rotate = 0;
+            entity->rotate = ROT(0);
 #endif
 
 #if defined(STAGE_IS_NO0)
@@ -45,7 +45,7 @@ void EntityBreakable(Entity* entity) {
         entity->animSet = g_eBreakableanimSets[breakableType];
 #if defined(STAGE_IS_RNO3)
         entity->drawFlags = ENTITY_ROTATE;
-        entity->rotate = 0x800;
+        entity->rotate = ROT(180);
 #endif
     }
 }
