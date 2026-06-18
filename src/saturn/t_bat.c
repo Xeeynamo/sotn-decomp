@@ -222,11 +222,12 @@ void UpdateBatAttackMode(Entity* self) {
             self->ext.bat.doUpdateCloseAnimation = true;
         }
         self->facingLeft = PLAYER.facingLeft ? false : true;
-        if (!self->ext.bat.hasShotFireball && (g_Player.status & PLAYER_STATUS_SUBWPN)) {
+        if (!self->ext.bat.hasShotFireball &&
+            (g_Player.status & PLAYER_STATUS_SUBWPN)) {
             CreateEntFactoryFromEntity(self, FACTORY(81, 1), 0);
             self->ext.bat.hasShotFireball = true;
-        } else if (
-            self->ext.bat.hasShotFireball && !(g_Player.status & PLAYER_STATUS_SUBWPN)) {
+        } else if (self->ext.bat.hasShotFireball &&
+                   !(g_Player.status & PLAYER_STATUS_SUBWPN)) {
             self->ext.bat.hasShotFireball = false;
         }
         DAT_060d2750 = self->ext.bat.follow->posX.i.hi - self->posX.i.hi;
