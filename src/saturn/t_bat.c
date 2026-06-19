@@ -10,21 +10,36 @@ typedef struct {
     s32 makeBadAttacks;
 } BatAbilityValues;
 
+extern AnimationFrame g_DefaultBatAnimationFrame[];       // 0x060D1B84
+extern AnimationFrame g_BatCloseToTargetAnimationFrame[]; // 0x060D1C28
+extern AnimationFrame g_BatHighVelocityAnimationFrame[];  // 0x060D1CC8
+extern AnimationFrame* g_BatAnimationFrames[];            // 0x060D1CD0
+extern s16 g_BatSpriteData[4][10];                        // 0x060D1CE4
+extern BatAbilityValues g_BatAbilityStats[];              // 0x060D1D34
+extern s32 s_IsServantDestroyed;                          // 0x060D1DFC
+extern u32 s_LastTargetedEntityIndex;                     // 0x060D1E00
+extern ServantEvent g_Events[];                           // 0x060D1E04
+extern s32 g_PlaySfxStep;                                 // 0x060D2734
+extern s16 g_EntityRanges[];                              // 0x060D2738
+extern ServantEvent* g_EventQueue;                        // 0x060D2740
+extern u32 g_CurrentServant;                              // 0x060D2744
+extern s32 g_CurrentRoomX;                                // 0x060D2748
+extern s32 g_CurrentRoomY;                                // 0x060D274C
+extern s16 DAT_060d2750;                                  // 0x060D2750
+extern s16 DAT_060d2752;                                  // 0x060D2752
+extern FamiliarStats s_BatStats;                          // 0x060D2830
+extern Point16 s_BatPathingPoints[4][0x10];               // 0x060D2840
+extern s32 g_CutsceneHasControl;
+
 INCLUDE_ASM("asm/saturn/t_bat/data", d60CF000, d_060CF000);
 
-extern BatAbilityValues g_BatAbilityStats[]; // 0x060D1D34
-extern s32 s_IsServantDestroyed;             // 0x060D1DFC
-extern u32 s_LastTargetedEntityIndex;        // 0x060D1E00
-extern ServantEvent g_Events[];              // 0x060D1E04
-extern s32 g_PlaySfxStep;                    // 0x060D2734
-extern s16 g_EntityRanges[];                 // 0x060D2738
-extern ServantEvent* g_EventQueue;           // 0x060D2740
-extern u32 g_CurrentServant;                 // 0x060D2744
-extern s32 g_CurrentRoomX;                   // 0x060D2748
-extern s32 g_CurrentRoomY;                   // 0x060D274C
-extern FamiliarStats s_BatStats;             // 0x060D2830
-extern Point16 s_BatPathingPoints[4][0x10];  // 0x060D2840
-extern s32 g_CutsceneHasControl;
+static inline void SetEntityAnimation(Entity* entity, AnimationFrame* anim) {
+    if (entity->anim != anim) {
+        entity->anim = anim;
+        entity->pose = 0;
+        entity->poseTimer = 0;
+    }
+}
 
 Entity* FindValidTarget(Entity* self) {
     s16 s_TargetMatch[0x80];
@@ -121,13 +136,160 @@ s32 CheckEntityValid(Entity* entity) {
     return 1;
 }
 
+static inline void unused_1560(Entity* self) {}
+
+void CreateAdditionalBats(s32 amount, s32 entityId);
 INCLUDE_ASM("asm/saturn/t_bat/f_nonmat", f60CF2E8, func_060CF2E8);
+
+void UpdatePrimitives(Entity* entity, s32 frameIndex);
 INCLUDE_ASM("asm/saturn/t_bat/f_nonmat", f60CF410, func_060CF410);
-INCLUDE_ASM("asm/saturn/t_bat/f_nonmat", f60CF5F4, func_060CF5F4);
+
+// SAT: func_060CF5F4
+void UpdatePrimWhenAlucardIsBat(Entity* entity) {
+    Primitive* prim;
+    s32 frame;
+    s32 x, y;
+
+    frame = 2;
+    if (entity->facingLeft) {
+        x = entity->posX.i.hi + 2;
+    } else {
+        x = entity->posX.i.hi - 16;
+    }
+    y = entity->posY.i.hi - 16;
+
+    x += (rsin(entity->ext.bat.frameCounter * 0x80) * 8) >> 12;
+    y -= entity->ext.bat.frameCounter / 2;
+
+    prim = &g_PrimBuf[entity->primIndex];
+    prim->x0 = x - g_BatSpriteData[frame][0];
+    prim->y0 = y - g_BatSpriteData[frame][1];
+}
+
+void SwitchModeInitialize(Entity* self);
 INCLUDE_ASM("asm/saturn/t_bat/f_nonmat", f60CF6B4, func_060CF6B4);
+
+// ServantInit
 INCLUDE_ASM("asm/saturn/t_bat/f_nonmat", f60CFB00, func_060CFB00);
+
+// UpdateServantDefault
 INCLUDE_ASM("asm/saturn/t_bat/f_nonmat", f60CFC48, func_060CFC48);
-INCLUDE_ASM("asm/saturn/t_bat/f_nonmat", f60D0490, func_060D0490);
+
+// SAT: func_060D0490
+void UpdateBatAttackMode(Entity* self) {
+    s32 i;
+    s32 distance;
+    s16 targetX, targetY;
+
+    GetServantStats(self, 0, 0, &s_BatStats);
+    if (s_IsServantDestroyed) {
+        self->zPriority = PLAYER.zPriority - 2;
+    }
+    switch (self->step) {
+    case 0:
+        SwitchModeInitialize(self);
+        if (self->ext.bat.batIndex == 0) {
+            CreateAdditionalBats(
+                g_BatAbilityStats[s_BatStats.level / 10].additionalBatCount,
+                0xD2);
+        }
+        break;
+
+    case 1:
+        self->ext.bat.lastPlayerPosX = PLAYER.posX.i.hi;
+        self->ext.bat.lastPlayerPosY = PLAYER.posY.i.hi;
+        self->ext.bat.cameraX = g_Tilemap.scrollX.i.hi;
+        self->ext.bat.cameraY = g_Tilemap.scrollY.i.hi;
+        targetX = s_BatPathingPoints[self->ext.bat.batIndex][0].x -
+                  self->ext.bat.cameraX;
+        targetY = s_BatPathingPoints[self->ext.bat.batIndex][0].y -
+                  self->ext.bat.cameraY;
+        self->velocityX = (targetX - self->posX.i.hi) << 0xC;
+        self->velocityY = (targetY - self->posY.i.hi) << 0xC;
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        if (self->velocityX == 0 && self->velocityY == 0) {
+            if (self->ext.bat.doUpdateCloseAnimation) {
+                SetEntityAnimation(self, g_BatCloseToTargetAnimationFrame);
+                self->ext.bat.doUpdateCloseAnimation = false;
+            }
+        } else {
+            if (self->velocityY > FIX(1.0)) {
+                SetEntityAnimation(self, g_BatHighVelocityAnimationFrame);
+            } else {
+                SetEntityAnimation(self, g_DefaultBatAnimationFrame);
+            }
+            self->ext.bat.doUpdateCloseAnimation = true;
+        }
+        self->facingLeft = PLAYER.facingLeft ? false : true;
+        if (!self->ext.bat.hasShotFireball &&
+            (g_Player.status & PLAYER_STATUS_SUBWPN)) {
+            CreateEntFactoryFromEntity(self, FACTORY(81, 1), 0);
+            self->ext.bat.hasShotFireball = true;
+        } else if (self->ext.bat.hasShotFireball &&
+                   !(g_Player.status & PLAYER_STATUS_SUBWPN)) {
+            self->ext.bat.hasShotFireball = false;
+        }
+        DAT_060d2750 = self->ext.bat.follow->posX.i.hi - self->posX.i.hi;
+        DAT_060d2752 = self->ext.bat.follow->posY.i.hi - self->posY.i.hi;
+        distance = DAT_060d2750 * DAT_060d2750 + DAT_060d2752 * DAT_060d2752;
+        if (IsMovementAllowed(0) || distance > 0x18 * 0x18) {
+            for (i = 0; i < 15; i++) {
+                s_BatPathingPoints[self->ext.bat.batIndex][i].x =
+                    s_BatPathingPoints[self->ext.bat.batIndex][i + 1].x;
+                s_BatPathingPoints[self->ext.bat.batIndex][i].y =
+                    s_BatPathingPoints[self->ext.bat.batIndex][i + 1].y;
+            }
+            s_BatPathingPoints[self->ext.bat.batIndex][i].x =
+                self->ext.bat.follow->posX.i.hi + self->ext.bat.cameraX;
+            s_BatPathingPoints[self->ext.bat.batIndex][i].y =
+                self->ext.bat.follow->posY.i.hi + self->ext.bat.cameraY;
+        }
+        if (!(g_Player.status & PLAYER_STATUS_BAT_FORM)) {
+            self->ext.bat.frameCounter = 0;
+            self->step++;
+        }
+        break;
+
+    case 2:
+        self->ext.bat.frameCounter++;
+        if (self->ext.bat.frameCounter == 1) {
+            if (!self->ext.bat.batIndex) {
+                PlaySfx(SFX_BAT_SCREECH);
+            }
+            UpdatePrimitives(self, 2);
+        } else if (self->ext.bat.frameCounter > 30) {
+            UpdatePrimitives(self, 0);
+            if (!self->ext.bat.batIndex) {
+                self->entityId = 0xD1;
+                self->step = 0;
+                break;
+            }
+            self->step++;
+            s_BatPathingPoints[self->ext.bat.batIndex][0].x =
+                PLAYER.facingLeft ? -0x80 : 0x180;
+            s_BatPathingPoints[self->ext.bat.batIndex][0].y = rand() & 0xFF;
+            SetEntityAnimation(self, g_DefaultBatAnimationFrame);
+        }
+        break;
+
+    case 3:
+        targetX = s_BatPathingPoints[self->ext.bat.batIndex][0].x;
+        targetY = s_BatPathingPoints[self->ext.bat.batIndex][0].y;
+        self->velocityX = (targetX - self->posX.i.hi) * 0x400;
+        self->velocityY = (targetY - self->posY.i.hi) * 0x400;
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        if (self->posX.i.hi < -0x20 || self->posX.i.hi > 0x120) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+    ProcessEvent(self, false);
+    unused_1560(self);
+    UpdateAnim(NULL, g_BatAnimationFrames);
+}
 
 void unused_339C() {}
 
@@ -181,7 +343,47 @@ void DestroyServantEntity(Entity* entity) {
     DestroyEntity(entity);
 }
 
-INCLUDE_ASM("asm/saturn/t_bat/f_nonmat", f60D1070, func_060D1070);
+// func_060D1070
+u32 ServantUpdateAnim(Entity* self, s8* frameProps, AnimationFrame** frames) {
+    s32 ret = 0;
+
+    if (self->poseTimer == -1) {
+        ret = -1;
+    } else if (self->poseTimer == 0) {
+        self->poseTimer = self->anim[self->pose].duration;
+        ret = 0;
+    } else if (--self->poseTimer == 0) {
+        self->pose++;
+        if (self->anim[self->pose].duration == 0) {
+            self->pose = self->anim[self->pose].pose;
+            self->poseTimer = self->anim[self->pose].duration;
+            ret = 0;
+        } else if (self->anim[self->pose].duration == 0xFFFF) {
+            self->pose--;
+            self->poseTimer = -1;
+            ret = -1;
+        } else if (self->anim[self->pose].duration == 0xFFFE) {
+            self->anim = frames[self->anim[self->pose].pose];
+            self->pose = 0;
+            self->poseTimer = self->anim[self->pose].duration;
+            ret = -2;
+        } else {
+            self->poseTimer = self->anim[self->pose].duration;
+        }
+    }
+    if (frameProps != NULL) {
+        frameProps += ((self->anim[self->pose].pose >> 9) & 0x7F) * 4;
+        self->hitboxOffX = *frameProps++;
+        self->hitboxOffY = *frameProps++;
+        self->hitboxWidth = *frameProps++;
+        self->hitboxHeight = *frameProps++;
+    }
+    self->animCurFrame = self->anim[self->pose].pose & 0x1FF;
+    if (self->unk0 != NULL) {
+        func_060C1618();
+    }
+    return ret;
+}
 
 // SAT: func_060D11B8
 s32 AccumulateTowardZero(s32 arg0, s32 arg1) {

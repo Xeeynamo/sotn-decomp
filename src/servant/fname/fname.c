@@ -34,7 +34,7 @@ extern AnimationFrame g_BatCloseToTargetAnimationFrame[];
 extern AnimationFrame* g_BatAnimationFrames[];
 extern s32 s_DistanceToFollowTarget;
 
-extern Sprite g_BatSpriteData[];
+extern BatSpriteData g_BatSpriteData[];
 
 #include "../../destroy_entity.h"
 #include "../../decelerate.h"
