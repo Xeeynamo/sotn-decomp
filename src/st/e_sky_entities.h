@@ -1,5 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+extern EInit g_EInitStInteractable;
+
+#if defined(INVERTED_STAGE)
+#define FLIP(x) (0x100 - x)
+#else
+#define FLIP(x) (x)
+#endif
+
 static u8 thunder_anim[] = {4, 23, 3, 24, 2, 25, 2, 26, 255, 0, 0, 0};
 
 void EntityLightningThunder(Entity* self) {
@@ -29,8 +37,8 @@ void EntityLightningCloud(Entity* self) {
         self->flags &= ~FLAG_POS_CAMERA_LOCKED;
         // There are 3 shapes of cloud, this picks which one.
         self->animCurFrame = self->params + 0x22;
-        self->posX.i.hi = cloudPos[self->params][0];
-        self->posY.i.hi = cloudPos[self->params][1];
+        self->posX.i.hi = FLIP(cloudPos[self->params][0]);
+        self->posY.i.hi = FLIP(cloudPos[self->params][1]);
         self->ext.backgroundLightning.timer = 5;
     }
 
