@@ -1,5 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../rno3/rno3.h"
+#include "../pfn_entity_update.h"
+
+extern LayoutEntity* D_8D2E22C;
+extern LayoutEntity* D_8D2E300;
+
+extern Overlay OVL_EXPORT(Overlay);
 
 s32 E_ID(BACKGROUND_BLOCK);
 s32 E_ID(LOCK_CAMERA);
@@ -129,4 +135,11 @@ void InitEntityIds(void) {
     E_ID(UNK_4E) = E_UNK_4E;
 }
 
-INCLUDE_ASM("st/rno3_psp/nonmatchings/rno3_psp/st_init", RNO3_Load);
+void OVL_EXPORT(Load)(void) {
+    InitEntityIds();
+    PfnEntityUpdates = OVL_EXPORT(EntityUpdates);
+    g_pStObjLayoutHorizontal = &D_8D2E22C;
+    g_pStObjLayoutVertical = &D_8D2E300;
+    func_892A018();
+    memcpy(&g_api.o, &OVL_EXPORT(Overlay), sizeof(Overlay));
+}
