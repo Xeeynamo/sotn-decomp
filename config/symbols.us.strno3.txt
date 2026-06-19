@@ -29,6 +29,7 @@ g_goldCollectTexts = 0x801818C4;
 RNO3_rooms = 0x80182B20;
 EntityBackgroundBushes = 0x801B0F50;
 EntityBackgroundTrees = 0x801B13AC;
+EntityBackgroundLightning = 0x801B1674;
 EntityLightningThunder = 0x801B18E0;
 EntityLightningCloud = 0x801B1990;
 DoorCascadePhysics = 0x801B1A64;

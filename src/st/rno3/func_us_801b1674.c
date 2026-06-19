@@ -16,7 +16,6 @@ extern EInit g_EInitInteractable;
 #define G_VAL 8
 #endif
 
-
 #if defined(STAGE_IS_NO3)
 static u8 D_80180EA0[] = {
     0x09, 0x04, 0x27, 0x28, 0x2A, 0x2C, 0x2F, 0x32, 0x36, 0x3F, 0x4A, 0x56,
@@ -61,7 +60,7 @@ static u8 lightningThunderXY[][2] = {
     {0x88, 0x6C}, {0xC8, 0x30}, {0x30, 0x44}, {0x88, 0x6C}};
 
 
-void func_us_801B1674(Entity* self) {
+void EntityBackgroundLightning(Entity* self) {
     Entity* otherEnt;
     s32 animFrame;
     s32 randOf3;

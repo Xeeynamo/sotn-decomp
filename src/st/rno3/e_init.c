@@ -26,7 +26,7 @@ void EntityCastleDoor(Entity* self);
 void EntityShuttingWindow(Entity* self);
 void EntityBackgroundBushes(Entity* self);
 void EntityBackgroundTrees(Entity* self);
-void func_us_801B1674(Entity* self);
+void EntityBackgroundLightning(Entity* self);
 void EntityLightningThunder(Entity* self);
 void EntityLightningCloud(Entity* self);
 void EntityFireWarg(Entity* self);
@@ -106,7 +106,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityShuttingWindow,
     EntityBackgroundBushes,
     EntityBackgroundTrees,
-    func_us_801B1674,
+    EntityBackgroundLightning,
     EntityLightningThunder,
     EntityLightningCloud,
     EntityFireWarg,
