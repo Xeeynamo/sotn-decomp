@@ -55,7 +55,7 @@ AnimationFrame* g_BatAnimationFrames[] = {
 };
 
 // sprite data
-Sprite g_BatSpriteData[] = {
+BatSpriteData g_BatSpriteData[] = {
     {-4, -4, 8, 8, 0x144, 0x78, 8, 0, 16, 8},
     {-4, -4, 8, 8, 0x144, 0x78, 120, 8, 128, 16},
     {-4, -4, 8, 8, 0x144, 0x78, 228, 135, 236, 143},
@@ -290,7 +290,7 @@ static void UpdatePrimWhenAlucardIsBat(Entity* entity) {
     }
     y = entity->posY.i.hi - 16;
 
-    x += (rsin(entity->ext.bat.frameCounter << 7) * 8) >> 12;
+    x += (rsin(entity->ext.bat.frameCounter * 0x80) * 8) >> 12;
     y -= entity->ext.bat.frameCounter / 2;
 
     prim = &g_PrimBuf[entity->primIndex];
