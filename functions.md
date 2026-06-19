@@ -2931,7 +2931,7 @@
 | no3      | func_pspeu_09242A30                   |       68 |          5 |        |       |     |
 | no4      | func_pspeu_0923B288                   |       68 |          5 |        |       |     |
 | np3      | NP3_EntityBackgroundBlock             |       68 |          5 |        |       |     |
-| rno3     | RNO3_EntityBackgroundBlock            |       68 |          5 |        |       |     |
+| rno3     | func_pspeu_09256F08                   |       68 |          5 |        |       |     |
 | dra      | func_psp_09102800                     |       68 |          6 | Yes    |       |     |
 | maria    | func_pspeu_092B6528                   |       68 |          6 |        |       |     |
 | ric      | func_pspeu_092BF628                   |       68 |          6 |        |       |     |
@@ -4153,7 +4153,7 @@
 | dra      | func_psp_09113C00                     |      113 |         32 |        |       |     |
 | cen      | func_pspeu_09250D30                   |      114 |          8 |        |       |     |
 | dra      | func_psp_09140E50                     |      114 |         10 |        |       |     |
-| rno3     | RNO3_EntityBreakable                  |      114 |         11 |        |       |     |
+| rno3     | func_pspeu_09256028                   |      114 |         11 |        |       |     |
 | dra      | func_psp_09127C30                     |      114 |         12 |        |       |     |
 | dra      | func_psp_09124988                     |      114 |         16 |        |       |     |
 | maria    | func_pspeu_092B1790                   |      114 |         20 |        |       |     |
@@ -4553,7 +4553,7 @@
 | np3      | NP3_EntityLockCamera                  |      165 |         18 |        |       |     |
 | rare     | func_pspeu_09238A10                   |      165 |         18 |        |       |     |
 | rcat     | func_pspeu_0924D930                   |      165 |         18 |        |       |     |
-| rno3     | RNO3_EntityLockCamera                 |      165 |         18 |        |       |     |
+| rno3     | func_pspeu_09257000                   |      165 |         18 |        |       |     |
 | rnz0     | func_pspeu_09257648                   |      165 |         18 |        |       |     |
 | wrp      | func_psp_09244AC8                     |      165 |         18 |        |       |     |
 | main     | malloc_extend_top                     |      165 |         20 |        |       |     |
@@ -4965,7 +4965,7 @@
 | np3      | EntityWaterDrop                       |      233 |         25 |        |       |     |
 | nz0      | func_pspeu_092380B0                   |      233 |         25 |        |       |     |
 | nz1      | func_pspeu_0924CC20                   |      233 |         25 |        |       |     |
-| rno3     | EntityBackgroundTrees                 |      233 |         25 |        |       |     |
+| rno3     | func_pspeu_09255960                   |      233 |         25 |        |       |     |
 |          | func_092ECD88                         |      234 |         25 |        |       |     |
 |          | func_092E7B10                         |      234 |         35 |        |       |     |
 | rno3     | func_us_801C48D8                      |      235 |         26 |        |       |     |
@@ -5167,7 +5167,7 @@
 | no4      | func_pspeu_0923FF60                   |      277 |         31 |        |       |     |
 | no4      | func_pspeu_092423C8                   |      277 |         33 |        |       |     |
 | main     | func_psp_0891FDC8                     |      278 |         24 |        |       |     |
-| rno3     | EntityShuttingWindow                  |      278 |         36 |        |       |     |
+| rno3     | func_pspeu_09256840                   |      278 |         36 |        |       |     |
 | dra      | func_psp_091357E0                     |      279 |         17 |        |       |     |
 | maria    | func_pspeu_092BDBC0                   |      279 |         17 |        |       |     |
 | ric      | func_pspeu_092C73B0                   |      279 |         17 |        |       |     |
@@ -5528,7 +5528,7 @@
 | main     | _realloc_r                            |      385 |         51 |        |       |     |
 | no3      | func_pspeu_0923A6D0                   |      387 |         34 |        |       |     |
 | np3      | EntityBackgroundBushes                |      387 |         34 |        |       |     |
-| rno3     | EntityBackgroundBushes                |      387 |         34 |        |       |     |
+| rno3     | func_pspeu_092553B8                   |      387 |         34 |        |       |     |
 |          | func_092EB4C0                         |      388 |         38 | Yes    |       |     |
 | dai      | func_pspeu_09253518                   |      388 |         58 | Yes    |       |     |
 | no3      | func_pspeu_0924CA70                   |      390 |         40 |        |       |     |
@@ -5691,7 +5691,7 @@
 | no0      | func_pspeu_0925E528                   |      459 |         49 |        |       |     |
 | ric      | func_pspeu_092C8DA0                   |      461 |         29 |        |       |     |
 | cat      | func_pspeu_0925B7B8                   |      461 |         40 |        |       |     |
-| rno3     | EntityCastleDoor                      |      462 |         47 | Yes    |       |     |
+| rno3     | func_pspeu_092561D0                   |      462 |         47 | Yes    |       |     |
 |          | func_092E8460                         |      463 |         29 |        |       |     |
 | main     | __ieee754_rem_pio2                    |      463 |         71 |        |       |     |
 | dra      | func_psp_0913BAE0                     |      464 |         52 | Yes    |       |     |
