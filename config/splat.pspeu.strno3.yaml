@@ -110,6 +110,7 @@ segments:
       - [0x4ED80, bss]
       - [0x4EE00, .bss, rno3/e_background_bushes_trees]
       - [0x4EE10, bss, placeholder_name_unk_bss]
+      - [0x4EE28, .bss, rno3_psp/st_init]
       - [0x4F018, .bss, rno3/e_breakable]
       - [0x4F020, .bss, rno3/e_shutting_window]
       - [0x4F030, .bss, rno3/e_lock_camera]
