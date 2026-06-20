@@ -97,7 +97,7 @@ segments:
       - [0x4E8C0, .data, rno3/e_background_lightning]
       - [0x4E8D8, .data, rno3/e_room_bg]
       - [0x4EAB0, .data, rno3/e_lock_camera]
-      - [0x4EB28, data]
+      - [0x4EB28, .data, rno3_psp/unk_1FBE0]
       - [0x4EB38, .data, rno3/e_sky_entities]
       - [0x4EB58, data]
       - [0x4EB80, .rodata, rno3_psp/e_blue_venus_weed]

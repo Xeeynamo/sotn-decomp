@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "rno3.h"
+#include "../rno3/rno3.h"
 
 #ifdef VERSION_PSP
 extern s32 E_ID(CAVERN_DOOR_PLATFORM);
 #endif
 
+extern Primitive* FindFirstUnkPrim(Primitive* poly);
 extern EInit D_us_80180A34;
 
 #include "../door_cascade_physics.h"
@@ -85,4 +86,142 @@ void EntityCavernDoorPlatform(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rno3/nonmatchings/unk_31A64", func_us_801B1E38);
+static s16 cavernDoorTiles[] = {0x6D0, 0x04FA, 0x04FA, 0x0551, 0, 0,
+                                0x26C, 0x273, 0x27A, 0x26D, 0x274, 0x27B};
+
+// door blocking way to the Underground Caverns
+void func_us_801B1E38(Entity* self) {
+    s32 primIndex;
+    s16* tileLayoutPtr;
+    Entity* entity;
+    Primitive* prim;
+    s32 i;
+    s32 tilePos;
+    s32 tileSteps;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_80180A34);
+        self->animCurFrame = 10;
+        self->zPriority = 0x9F;
+
+        tileLayoutPtr = &cavernDoorTiles[0];
+#if !defined(INVERTED_STAGE)
+        if (g_CastleFlags[NO4_TO_NP3_SHORTCUT]) {
+            self->step = 128;
+            self->animCurFrame = 0;
+            tileLayoutPtr += 3;
+        } else {
+            primIndex = g_api.AllocPrimitives(PRIM_TILE, 64);
+            if (primIndex == -1) {
+                DestroyEntity(self);
+                return;
+            }
+            self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIndex;
+            prim = &g_PrimBuf[primIndex];
+            self->ext.cavernDoor.prim = prim;
+            while (prim != NULL) {
+                prim->u0 = prim->v0 = 1;
+                prim->r0 = 64;
+                prim->b0 = 128;
+                prim->g0 = 96;
+                prim->priority = self->zPriority + 0x18;
+                prim->drawMode = DRAW_HIDE;
+                prim->p3 = 0;
+                prim = prim->next;
+            }
+        }
+#endif
+        tilePos = 0x89;
+        tileLayoutPtr += 3;
+        for (i = 0; i < 3; i++) {
+            g_Tilemap.fg[tilePos] = *tileLayoutPtr++;
+            tilePos -= 0x10;
+        }
+#if defined(INVERTED_STAGE)
+        self->step = 0x80;
+        self->animCurFrame = 0;
+        /* This is a hack. primIndex is not used in the inverted stage version.
+        But s6 (the register used for it in other versions) still gets
+        pushed to the stack in inverted version, despite being unused. This
+        may have been used to silence the unused variable warning. There is
+        no evidence of where this line exists in the function, so I just
+        threw it down here where we already have a defined(INVERTED_STAGE). */
+        (void)primIndex; 
+#endif
+        break;
+
+    case 1:
+        if (g_CastleFlags[NO4_TO_NP3_SHORTCUT]) {
+#if !defined(STAGE_IS_NP3)
+            g_api.PlaySfx(0x609);
+#endif
+            self->step++;
+        }
+        break;
+
+    case 2:
+        self->posY.val += FIX(0.375);
+        self->ext.cavernDoor.jiggler++;
+        // While the door opens, it jiggles left and right by repeatedly
+        // incrementing and decrementing its x position.
+        if (self->ext.cavernDoor.jiggler & 1) {
+            self->posX.i.hi++;
+        } else {
+            self->posX.i.hi--;
+        }
+
+        tileSteps = (self->posY.i.hi - 136);
+        tileSteps /= 16;
+        if (tileSteps > 3) {
+            tileSteps = 3;
+            self->step = 3;
+        }
+#if defined(STAGE_IS_NP3)
+        if (!(self->ext.cavernDoor.jiggler & 15)) {
+            g_api.PlaySfx(SFX_STONE_MOVE_C);
+        }
+#endif
+        tilePos = 0x76;
+        tileLayoutPtr = &cavernDoorTiles[0];
+        tileLayoutPtr += 3;
+        for (i = 0; i < tileSteps; tilePos += 0x10, i++) {
+            g_Tilemap.fg[tilePos] = *tileLayoutPtr++;
+        }
+
+        if (g_Timer & 1) {
+            break;
+        }
+        prim = self->ext.cavernDoor.prim;
+        prim = FindFirstUnkPrim(prim);
+        if (prim != NULL) {
+            prim->p3 = 1;
+        }
+
+        if (g_Timer & 15) {
+            break;
+        }
+        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (entity == NULL) {
+            break;
+        }
+        CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
+        entity->posY.i.hi = 156;
+        entity->posX.i.hi += -8 + (Random() & 15);
+        entity->zPriority = self->zPriority + 2;
+        entity->params = 0x10;
+        entity->drawFlags |= (ENTITY_SCALEX + ENTITY_SCALEY);
+        entity->scaleX = entity->scaleY = 192;
+        break;
+    }
+
+    if (self->flags & FLAG_HAS_PRIMS) {
+        for (prim = self->ext.cavernDoor.prim; prim != NULL;
+             prim = prim->next) {
+            if (prim->p3) {
+                DoorCascadePhysics((EntranceCascadePrim*)prim);
+            }
+        }
+    }
+}
