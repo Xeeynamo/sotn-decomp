@@ -147,10 +147,10 @@ void EntityCavernDoor(Entity* self) {
 #if defined(INVERTED_STAGE)
         tilePos = 0x89;
         tileLayoutPtr += 3;
-        #define NEXTTILE (tilePos -= 0x10)
+#define NEXTTILE (tilePos -= 0x10)
 #else
         tilePos = 0x76;
-        #define NEXTTILE (tilePos += 0x10)
+#define NEXTTILE (tilePos += 0x10)
 #endif
         for (i = 0; i < 3; i++) {
             g_Tilemap.fg[tilePos] = *tileLayoutPtr++;
