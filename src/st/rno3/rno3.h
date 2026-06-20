@@ -39,7 +39,7 @@ enum Entities {
     /* 0x17 */ E_SHUTTING_WINDOW,           // EntityShuttingWindow
     /* 0x18 */ E_BACKGROUND_BUSHES,         // EntityBackgroundBushes
     /* 0x19 */ E_BACKGROUND_TREES,          // EntityBackgroundTrees
-    /* 0x1A */ E_UNK_1A,                    // func_us_801B1674
+    /* 0x1A */ E_UNK_1A,                    // EntityBackgroundLightning
     /* 0x1B */ E_LIGHTNING_THUNDER,         // EntityLightningThunder
     /* 0x1C */ E_LIGHTNING_CLOUD,           // EntityLightningCloud
     /* 0x1D */ E_FIRE_WARG,                 // EntityFireWarg

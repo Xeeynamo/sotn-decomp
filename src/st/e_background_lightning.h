@@ -5,6 +5,16 @@ extern s32 E_ID(LIGHTNING_THUNDER);
 extern s32 E_ID(LIGHTNING_CLOUD);
 #endif
 
+extern EInit g_EInitInteractable;
+
+#if defined(INVERTED_STAGE)
+#define R_VAL 0x28
+#define G_VAL 0
+#else
+#define R_VAL 0x10
+#define G_VAL 8
+#endif
+
 #if defined(STAGE_IS_NO3)
 static u8 D_80180EA0[] = {
     0x09, 0x04, 0x27, 0x28, 0x2A, 0x2C, 0x2F, 0x32, 0x36, 0x3F, 0x4A, 0x56,
@@ -25,6 +35,7 @@ static u8 D_80180EA0[] = {
     0x12, 0x12, 0x12, 0x12, 0x12, 0x49, 0x55, 0x61, 0x6D, 0x79, 0x85, 0x11};
 #endif
 
+#if !defined(INVERTED_STAGE)
 static u8 lightningClutIndices[] = {
 #if defined(STAGE_IS_NO3)
     0x09, 0x04, 0x07, 0x00, 0x0C, 0x05, 0x08, 0x01, 0x0E, 0x05, 0x08, 0x02,
@@ -35,6 +46,7 @@ static u8 lightningClutIndices[] = {
     0x15, 0x17, 0x18, 0x17, 0x5C, 0x13, 0x14, 0x13, 0x5E, 0x15, 0x16, 0x15,
     0x17, 0x86, 0x87, 0x86, 0x49, 0x88, 0x89, 0x88, 0x14, 0x8A, 0x8B, 0x8A,
     0xFF, 0x00, 0x00, 0x00};
+#endif
 
 static u16 lightningAnim[] = {
     0x0104, 0x0002, 0x0102, 0x0002, 0x0102, 0x0002, 0x00FF, 0x0000};
@@ -80,7 +92,9 @@ void EntityBackgroundLightning(Entity* self) {
             self->params = 0;
         }
 #else
+#if !defined(INVERTED_STAGE)
         g_CastleFlags[CASTLE_TURNED_ON] |= 1;
+#endif
         if (self->params & FLAG_DEAD) {
             self->step = 4;
             break;
@@ -116,6 +130,7 @@ void EntityBackgroundLightning(Entity* self) {
                 self->ext.backgroundLightning.timer = (Random() & 0x7F) + 0x40;
                 self->step_s++;
             }
+#if !defined(INVERTED_STAGE)
             clutIndices = &lightningClutIndices[0];
 #if defined(STAGE_IS_NO3)
             if (!self->params) {
@@ -143,13 +158,14 @@ void EntityBackgroundLightning(Entity* self) {
                 g_GpuBuffers[1].draw.g0 = 8;
                 g_GpuBuffers[1].draw.b0 = 0x38;
             }
+#endif
             break;
         case 2:
-            g_GpuBuffers[0].draw.r0 = 0x10;
-            g_GpuBuffers[0].draw.g0 = 8;
+            g_GpuBuffers[0].draw.r0 = R_VAL;
+            g_GpuBuffers[0].draw.g0 = G_VAL;
             g_GpuBuffers[0].draw.b0 = 0x38;
-            g_GpuBuffers[1].draw.r0 = 0x10;
-            g_GpuBuffers[1].draw.g0 = 8;
+            g_GpuBuffers[1].draw.r0 = R_VAL;
+            g_GpuBuffers[1].draw.g0 = G_VAL;
             g_GpuBuffers[1].draw.b0 = 0x38;
             if (--self->ext.backgroundLightning.timer) {
                 break;
@@ -193,11 +209,11 @@ void EntityBackgroundLightning(Entity* self) {
 #endif
     // careful, this is the outer switch!
     case 4:
-        g_GpuBuffers[0].draw.r0 = 16;
-        g_GpuBuffers[0].draw.g0 = 8;
+        g_GpuBuffers[0].draw.r0 = R_VAL;
+        g_GpuBuffers[0].draw.g0 = G_VAL;
         g_GpuBuffers[0].draw.b0 = 56;
-        g_GpuBuffers[1].draw.r0 = 16;
-        g_GpuBuffers[1].draw.g0 = 8;
+        g_GpuBuffers[1].draw.r0 = R_VAL;
+        g_GpuBuffers[1].draw.g0 = G_VAL;
         g_GpuBuffers[1].draw.b0 = 56;
     }
 #if defined(STAGE_IS_NO3)

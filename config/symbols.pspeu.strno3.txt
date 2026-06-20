@@ -127,7 +127,6 @@ EntityStairwayPiece = 0x09254B18;
 EntityFallingRock = 0x09255190;
 InitEntityIds = 0x09255CC0;
 RNO3_Load = 0x09255FB0;
-func_us_801B1674 = 0x09256C40;
 DoorCascadePhysics = 0x09257260;
 EntityCavernDoorLever = 0x09257480;
 EntityCavernDoorPlatform = 0x09257660;
