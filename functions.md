@@ -4753,7 +4753,7 @@
 | rno3     | InitEntityIds                         |      193 |          1 |        |       |     |
 | cat      | func_pspeu_092604A0                   |      193 |         16 |        |       |     |
 | no4      | func_pspeu_09249FA0                   |      193 |         24 |        |       |     |
-| rno3     | func_us_801B1674                      |      193 |         27 |        |       |     |
+| rno3     | func_pspeu_09256C40                   |      193 |         27 |        |       |     |
 | cat      | func_pspeu_09261748                   |      193 |         34 |        |       |     |
 | main     | func_psp_0892AC94                     |      193 |         37 |        |       |     |
 | dra      | 7879C.rodata                          |      194 |          0 | Yes    |       |     |
