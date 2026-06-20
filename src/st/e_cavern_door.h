@@ -116,6 +116,7 @@ void EntityCavernDoor(Entity* self) {
         self->zPriority = 0x9F;
 
         tileLayoutPtr = &cavernDoorTiles[0];
+#if !defined(INVERTED_STAGE)
         if (g_CastleFlags[NO4_TO_NP3_SHORTCUT]) {
             self->step = 128;
             self->animCurFrame = 0;
@@ -141,11 +142,31 @@ void EntityCavernDoor(Entity* self) {
                 prim = prim->next;
             }
         }
+#endif
 
-        for (tilePos = 0x76, i = 0; i < 3; i++) {
+#if defined(INVERTED_STAGE)
+        tilePos = 0x89;
+        tileLayoutPtr += 3;
+        #define NEXTTILE (tilePos -= 0x10)
+#else
+        tilePos = 0x76;
+        #define NEXTTILE (tilePos += 0x10)
+#endif
+        for (i = 0; i < 3; i++) {
             g_Tilemap.fg[tilePos] = *tileLayoutPtr++;
-            tilePos += 0x10;
+            NEXTTILE;
         }
+#if defined(INVERTED_STAGE)
+        self->step = 0x80;
+        self->animCurFrame = 0;
+        /* This is a hack. primIndex is not used in the inverted stage version.
+        But s6 (the register used for it in other versions) still gets
+        pushed to the stack in inverted version, despite being unused. This
+        may have been used to silence the unused variable warning. There is
+        no evidence of where this line exists in the function, so I just
+        threw it down here where we already have a defined(INVERTED_STAGE). */
+        (void)primIndex;
+#endif
         break;
 
     case 1:
