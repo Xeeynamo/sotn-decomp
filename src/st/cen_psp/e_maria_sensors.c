@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "maria.h"
+#include "../cen/cen.h"
 
 Point16 g_MarSensorsCeiling[NUM_HORIZONTAL_SENSORS] = {
     {0, -16},

@@ -270,9 +270,6 @@ static AnimationFrame anim_cat[] = {
 void EntityMariaCatAttack(Entity* self) {
     Collider col;
     s32 newY;
-    s32 var_s0;
-    s32 var_s1;
-    s32 var_s2;
 
     switch (self->step) {
     case 0:
@@ -528,7 +525,6 @@ void EntityMariaCatCrashAttack(Entity* self) {
         }
         if (self->posX.i.hi < -16 || self->posX.i.hi > 272) {
             self->step = 2;
-            return;
         }
         break;
     case 2:
@@ -1339,7 +1335,7 @@ void EntityMariaCardinalCrashFireball(Entity* self) {
 
     acceleration = 64;
     initialAcceleration = 115;
-    parent = *(Entity**)&g_Player.unk20;
+    parent = (Entity*)g_Player.unk20;
     switch (self->step) {
     case 0: {
         if (g_Player.unk5C == 0 || parent == NULL) {
@@ -1727,7 +1723,7 @@ void EntityMariaTurtleCrashVortex(Entity* self) {
     Entity* entity;
     s32 x;
 
-    entity = *(Entity**)&g_Player.unk20;
+    entity = (Entity*)g_Player.unk20;
     switch (self->step) {
     case 0:
         self->flags = FLAG_UNK_100000 | FLAG_KEEP_ALIVE_OFFCAMERA |
