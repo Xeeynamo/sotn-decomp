@@ -93,13 +93,13 @@ void EntityCavernDoorPlatform(Entity* self) {
 }
 
 static s16 cavernDoorTiles[] = {0x6D0, 0x04FA, 0x04FA, 0x0551, 0, 0,
-#if defined(VERSION_US)
+#if defined(VERSION_US) && defined(INVERTED_STAGE)
                                 0x26C, 0x273, 0x27A, 0x26D, 0x274, 0x27B
 #endif
                             };
 
 // door blocking way to the Underground Caverns
-void func_us_801B1E38(Entity* self) {
+void EntityCavernDoor(Entity* self) {
     s32 primIndex;
     s16* tileLayoutPtr;
     Entity* entity;

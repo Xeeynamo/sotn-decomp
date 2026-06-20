@@ -72,7 +72,7 @@ enum Entities {
     /* 0x38 */ E_VENUS_WEED_SPIKE,          // EntityVenusWeedSpike
     /* 0x39 */ E_CAVERN_DOOR_LEVER,         // EntityCavernDoorLever
     /* 0x3A */ E_CAVERN_DOOR_PLATFORM,      // EntityCavernDoorPlatform
-    /* 0x3B */ E_UNK_3B,                    // func_us_801B1E38
+    /* 0x3B */ E_UNK_3B,                    // EntityCavernDoor
     /* 0x3C */ E_WEIGHTS_SWITCH,            // EntityWeightsSwitch
     /* 0x3D */ E_PATH_BLOCK_SMALL_WEIGHT,   // EntityPathBlockSmallWeight
     /* 0x3E */ E_UNK_3E,                    // func_us_801B2578
