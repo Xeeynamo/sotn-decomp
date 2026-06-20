@@ -12,7 +12,6 @@ extern s32 E_ID(CAVERN_DOOR_PLATFORM);
 extern EInit CAVERN_DOOR_EINIT;
 extern Primitive* FindFirstUnkPrim(Primitive* poly);
 
-
 #include "door_cascade_physics.h"
 
 // lever and platform to open caverns door
@@ -91,11 +90,14 @@ void EntityCavernDoorPlatform(Entity* self) {
     }
 }
 
-static s16 cavernDoorTiles[] = {0x6D0, 0x04FA, 0x04FA, 0x0551, 0, 0,
+static s16 cavernDoorTiles[] = {
+    0x6D0, 0x04FA, 0x04FA, 0x0551,
+    0,     0,
 #if defined(VERSION_US) && defined(INVERTED_STAGE)
-                                0x26C, 0x273, 0x27A, 0x26D, 0x274, 0x27B
+    0x26C, 0x273,  0x27A,  0x26D,
+    0x274, 0x27B
 #endif
-                            };
+};
 
 // door blocking way to the Underground Caverns
 void EntityCavernDoor(Entity* self) {
@@ -150,6 +152,8 @@ void EntityCavernDoor(Entity* self) {
         if (g_CastleFlags[NO4_TO_NP3_SHORTCUT]) {
 #if defined(STAGE_IS_NO3)
             g_api.PlaySfx(SFX_SWITCH_CLICK);
+#elif defined(INVERTED_STAGE)
+            g_api.PlaySfx(SFX_STONE_MOVE_C);
 #endif
             self->step++;
         }
@@ -172,7 +176,7 @@ void EntityCavernDoor(Entity* self) {
             tileSteps = 3;
             self->step = 3;
         }
-#if !defined(STAGE_IS_NO3)
+#if defined(STAGE_IS_NP3)
         if (!(self->ext.cavernDoor.jiggler & 15)) {
             g_api.PlaySfx(SFX_STONE_MOVE_C);
         }
