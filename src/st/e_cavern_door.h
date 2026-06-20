@@ -3,6 +3,16 @@
 extern s32 E_ID(CAVERN_DOOR_PLATFORM);
 #endif
 
+#if defined(INVERTED_STAGE)
+#define CAVERN_DOOR_EINIT D_us_80180A34
+#else
+#define CAVERN_DOOR_EINIT g_EInitStInteractable
+#endif
+
+extern EInit CAVERN_DOOR_EINIT;
+extern Primitive* FindFirstUnkPrim(Primitive* poly);
+
+
 #include "door_cascade_physics.h"
 
 // lever and platform to open caverns door
@@ -13,7 +23,7 @@ void EntityCavernDoorLever(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitStInteractable);
+        InitializeEntity(CAVERN_DOOR_EINIT);
         self->animCurFrame = 18;
         self->drawFlags |= ENTITY_ROTATE;
         self->rotate = -0x200;
@@ -56,7 +66,7 @@ void EntityCavernDoorPlatform(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitStInteractable);
+        InitializeEntity(CAVERN_DOOR_EINIT);
         self->animCurFrame = 17;
         self->ext.cavernDoor.xCoord.val = self->posX.val;
         self->ext.cavernDoor.xCoord.val = self->posX.val; // ? WTF
@@ -95,7 +105,7 @@ void EntityCavernDoor(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitStInteractable);
+        InitializeEntity(CAVERN_DOOR_EINIT);
         self->animCurFrame = 10;
         self->zPriority = 0x9F;
 

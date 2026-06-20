@@ -1,12 +1,18 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "../rno3/rno3.h"
+#include "rno3.h"
 
 #ifdef VERSION_PSP
 extern s32 E_ID(CAVERN_DOOR_PLATFORM);
 #endif
 
+#if defined(INVERTED_STAGE)
+#define CAVERN_DOOR_EINIT D_us_80180A34
+#else
+#define CAVERN_DOOR_EINIT g_EInitStInteractable
+#endif
+
+extern EInit CAVERN_DOOR_EINIT;
 extern Primitive* FindFirstUnkPrim(Primitive* poly);
-extern EInit D_us_80180A34;
 
 #include "../door_cascade_physics.h"
 
@@ -18,7 +24,7 @@ void EntityCavernDoorLever(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180A34);
+        InitializeEntity(CAVERN_DOOR_EINIT);
         self->animCurFrame = 18;
         self->drawFlags |= ENTITY_ROTATE;
         self->rotate = -0x200;
@@ -61,7 +67,7 @@ void EntityCavernDoorPlatform(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180A34);
+        InitializeEntity(CAVERN_DOOR_EINIT);
         self->animCurFrame = 17;
         self->ext.cavernDoor.xCoord.val = self->posX.val;
         self->ext.cavernDoor.xCoord.val = self->posX.val; // ? WTF
@@ -104,7 +110,7 @@ void func_us_801B1E38(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180A34);
+        InitializeEntity(CAVERN_DOOR_EINIT);
         self->animCurFrame = 10;
         self->zPriority = 0x9F;
 
