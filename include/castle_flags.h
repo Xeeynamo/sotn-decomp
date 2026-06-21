@@ -56,7 +56,7 @@ typedef enum {
     /* 0x3A */ JEWEL_SWORD_ROOM_OPEN = 58, // Set after flag offset 0x33 == 15
     /* 0x3B */ JEWEL_ROOM_STEPS = 59,      // See 0x33 note, sides are flipped
     /* 0x3C */ INV_DEATH_STAIRWAY_BROKEN = 60, // Broken in inverted castle
-    /* 0x3D */ JEWEL_ROOM_OPEN = 61,       // Set after flag offset 0x3B == 15
+    /* 0x3D */ JEWEL_ROOM_OPEN = 61, // Set after flag offset 0x3B == 15
     /* 0x40 */ CAT_LEFT_SECRET_WALL_OPEN = 64,
     /* 0x41 */ CAT_RIGHT_SECRET_WALL_OPEN = 65,
     /* 0x42 */ CAT_SPIKE_ROOM_LIT = 66, // The switch after the spike room

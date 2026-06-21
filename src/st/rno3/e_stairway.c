@@ -6,12 +6,18 @@ extern s32 E_ID(FALLING_ROCK);
 #endif
 
 #if defined(INVERTED_STAGE)
+#define CASTLE_FLAG INV_DEATH_STAIRWAY_BROKEN
 #define XPOS 104
 #define YPOS 56
+#define TILE1 0x126
+#define TILE2 0xC6
 #define ROCK_EINIT D_us_80180A34
 #else
+#define CASTLE_FLAG DEATH_STAIRWAY_BROKEN
 #define XPOS 1432
 #define YPOS 200
+#define TILE1 0x4D9
+#define TILE2 0x539
 #define ROCK_EINIT g_EInitStInteractable
 #endif
 
@@ -42,19 +48,19 @@ void EntityStairwayPiece(Entity* self) {
         InitializeEntity(g_EInitInteractable);
         self->hitboxWidth = 8;
         self->hitboxHeight = 8;
-        self->posX.i.hi = 104 - g_Tilemap.scrollX.i.hi;
-        self->posY.i.hi = 56 - g_Tilemap.scrollY.i.hi;
+        self->posX.i.hi = XPOS - g_Tilemap.scrollX.i.hi;
+        self->posY.i.hi = YPOS - g_Tilemap.scrollY.i.hi;
         self->hitPoints = 16;
-        if (g_CastleFlags[INV_DEATH_STAIRWAY_BROKEN]) {
+        if (g_CastleFlags[CASTLE_FLAG]) {
             self->hitboxState = 0;
-            g_Tilemap.fg[0x126] = 0x3EE;
-            g_Tilemap.fg[0xC6] = 0x3D2;
+            g_Tilemap.fg[TILE1] = 0x3EE;
+            g_Tilemap.fg[TILE2] = 0x3D2;
             self->step = 32;
             break;
         }
         self->hitboxState = 2;
-        g_Tilemap.fg[0x126] = 0x408;
-        g_Tilemap.fg[0xC6] = 0x40D;
+        g_Tilemap.fg[TILE1] = 0x408;
+        g_Tilemap.fg[TILE2] = 0x40D;
         break;
 
     case 1:
@@ -69,14 +75,19 @@ void EntityStairwayPiece(Entity* self) {
 
     case 2:
         g_api.PlaySfx(SFX_WALL_DEBRIS_B);
-        g_Tilemap.fg[0x126] = 0x3EE;
-        g_Tilemap.fg[0xC6] = 0x3D2;
-        g_CastleFlags[INV_DEATH_STAIRWAY_BROKEN] = true;
+        g_Tilemap.fg[TILE1] = 0x3EE;
+        g_Tilemap.fg[TILE2] = 0x3D2;
+        g_CastleFlags[CASTLE_FLAG] = true;
 
         newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
         if (newEntity != NULL) {
+#if defined(INVERTED_STAGE)
             CreateEntityFromEntity(E_HEART_DROP, self, newEntity);
             newEntity->params = self->params;
+#else
+            CreateEntityFromEntity(E_EQUIP_ITEM_DROP, self, newEntity);
+            newEntity->params = ITEM_TURKEY;
+#endif
         }
 
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -116,8 +127,12 @@ void EntityStairwayPiece(Entity* self) {
         prim->v2 = prim->v3 = top + 15;
         prim->next->x1 = self->posX.i.hi;
         prim->next->y0 = self->posY.i.hi;
+#if defined(INVERTED_STAGE)
         LOW(prim->next->u0) = 0x10000;
-        LOW(prim->next->r1) = 0xFFFF0000;
+#else
+        LOW(prim->next->u0) = -0x10000;
+#endif
+        LOW(prim->next->r1) = -0x10000;
         LOH(prim->next->r2) = 16;
         LOH(prim->next->b2) = 16;
         prim->priority = self->zPriority;
@@ -209,4 +224,3 @@ void EntityFallingRock(Entity* self) {
         break;
     }
 }
-
