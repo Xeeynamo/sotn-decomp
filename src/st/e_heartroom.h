@@ -1,4 +1,14 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+
+#if defined(INVERTED_STAGE)
+#define HEARTROOM_EINIT D_us_80180A34
+#else
+#define HEARTROOM_EINIT g_EInitStInteractable
+#endif
+
+extern EInit HEARTROOM_EINIT;
+extern Primitive* FindFirstUnkPrim(Primitive* poly);
+
 void EntityHeartRoomSwitch(Entity* self) {
     s32 collision = GetPlayerCollisionWith(self, 8, 4, 4);
     s32 worldPos;
@@ -6,7 +16,7 @@ void EntityHeartRoomSwitch(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitStInteractable);
+        InitializeEntity(HEARTROOM_EINIT);
         self->animCurFrame = 9;
         self->zPriority = 0x5E;
         if (g_CastleFlags[WRP_TO_NP3_SHORTCUT]) {
@@ -47,7 +57,7 @@ void EntityHeartRoomGoldDoor(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitStInteractable);
+        InitializeEntity(HEARTROOM_EINIT);
         self->animCurFrame = 37;
         self->zPriority = 0x5E;
 
@@ -100,7 +110,7 @@ void EntityHeartRoomGoldDoor(Entity* self) {
         } else {
             self->posX.i.hi--;
         }
-#if !defined(STAGE_IS_NO3)
+#if defined(STAGE_IS_NP3)
         if ((self->ext.heartRoomGoldDoor.timer & 0xF) == 0) {
             g_api.PlaySfx(SFX_STONE_MOVE_A);
         }
