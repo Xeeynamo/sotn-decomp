@@ -5,7 +5,6 @@ extern s32 E_ID(FALLING_ROCK_2);
 #endif
 
 extern EInit g_EInitInteractable;
-extern EInit D_us_80180A34;
 
 #if defined(INVERTED_STAGE)
 #define CF_STEPS JEWEL_ROOM_STEPS
@@ -16,6 +15,7 @@ extern EInit D_us_80180A34;
 #define LEFT_TILESTART 0x40E
 #define RIGHT_TILESTART 0x402
 #define JEWELROOM_TILESTART 0x1DF
+#define ROCK_EINIT D_us_80180A34
 #else
 #define CF_STEPS JEWEL_SWORD_ROOM_STEPS
 #define CF_OPEN JEWEL_SWORD_ROOM_OPEN
@@ -25,7 +25,10 @@ extern EInit D_us_80180A34;
 #define LEFT_TILESTART 0x1F1
 #define RIGHT_TILESTART 0x1FD
 #define JEWELROOM_TILESTART 0x420
+#define ROCK_EINIT g_EInitStInteractable
 #endif
+
+extern EInit ROCK_EINIT;
 
 // why devs why
 #ifdef STAGE_IS_NO3
@@ -299,22 +302,23 @@ void EntityJewelSwordDoor(Entity* self) {
 
     case 2:
         for (tileLayoutPtr = &rockTiles3[27], i = 0; i < 3; i++) {
-            tileLayoutPos = JEWELROOM_TILESTART + i;
-            for (j = 0; j < 5; tileLayoutPos += 0x30, j++, tileLayoutPtr++) {
+            tileLayoutPos = JEWELROOM_TILESTART PLUSMINUS i;
+            for (j = 0; j < 5; j++, tileLayoutPtr++) {
                 g_Tilemap.fg[tileLayoutPos] = *tileLayoutPtr;
+                tileLayoutPos PME 0x30;
             }
         }
 
         for (tileLayoutPtr = &rockTiles4[11], i = 0; i < 3; i++) {
-            tileLayoutPos = JEWELROOM_TILESTART + i;
+            tileLayoutPos = JEWELROOM_TILESTART PLUSMINUS i;
             for (j = 0; j < 5; j++, tileLayoutPtr++) {
                 g_BgLayers[0].layout[tileLayoutPos] = *tileLayoutPtr;
-                tileLayoutPos += 0x30;
+                tileLayoutPos PME 0x30;
             }
         }
 
-        g_CastleFlags[JEWEL_SWORD_ROOM_OPEN] |= 1;
-        g_api.RevealSecretPassageAtPlayerPositionOnMap(JEWEL_SWORD_ROOM_OPEN);
+        g_CastleFlags[CF_OPEN] |= 1;
+        g_api.RevealSecretPassageAtPlayerPositionOnMap(CF_OPEN);
         self->step++;
         break;
     }
@@ -330,7 +334,7 @@ void EntityFallingRock2(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitStInteractable);
+        InitializeEntity(ROCK_EINIT);
         self->animCurFrame = animFrame + 31;
         self->drawFlags |= ENTITY_ROTATE;
         self->zPriority = 0x9F;
@@ -362,7 +366,11 @@ void EntityFallingRock2(Entity* self) {
             // Seems to be a bounce effect. Reverse velocity, and lose 1/8 of
             // it.
             self->velocityY = -self->velocityY;
+            #if defined(INVERTED_STAGE)
+            self->velocityY -= self->velocityY / 4;
+            #else
             self->velocityY -= self->velocityY / 8;
+            #endif
         }
         break;
     }
