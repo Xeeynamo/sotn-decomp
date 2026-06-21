@@ -97,7 +97,8 @@ void EntityMermanRockLeftSide(Entity* self) {
         tilePos = LEFT_TILESTART;
         for (i = 0; i < 3; i++, tileLayoutPtr++) {
             g_BgLayers[0].layout[tilePos] = *tileLayoutPtr;
-            *(&g_BgLayers[0].layout[tilePos] PLUSMINUS 1) = *(tileLayoutPtr + 3);
+            *(&g_BgLayers[0].layout[tilePos] PLUSMINUS 1) =
+                *(tileLayoutPtr + 3);
             tilePos PME 0x30;
         }
 
@@ -145,16 +146,16 @@ void EntityMermanRockLeftSide(Entity* self) {
                     CreateEntityFromEntity(
                         E_ID(FALLING_ROCK_2), self, newEntity);
                     newEntity->params = *params++;
-                    #if defined(INVERTED_STAGE)
+#if defined(INVERTED_STAGE)
                     newEntity->velocityX = (Random() << 8) + 0x10000;
                     newEntity->velocityY = -Random() * 0x100;
                     newEntity->posY.i.hi -= -16 + (i * 16);
                     newEntity->facingLeft = 1;
-                    #else
+#else
                     newEntity->velocityX = (-Random() << 8) - 0x8000;
                     newEntity->velocityY = -Random() * 0x100;
                     newEntity->posY.i.hi += -16 + (i * 16);
-                    #endif
+#endif
                 }
             }
             self->ext.mermanRock.unk84++;
@@ -201,7 +202,8 @@ void EntityMermanRockRightSide(Entity* self) {
         tilePos = RIGHT_TILESTART;
         for (i = 0; i < 3; i++, tileLayoutPtr++) {
             g_BgLayers[0].layout[tilePos] = *tileLayoutPtr;
-            *(&g_BgLayers[0].layout[tilePos] PLUSMINUS 1) = *(tileLayoutPtr + 3);
+            *(&g_BgLayers[0].layout[tilePos] PLUSMINUS 1) =
+                *(tileLayoutPtr + 3);
             tilePos PME 0x30;
         }
 
@@ -247,17 +249,17 @@ void EntityMermanRockRightSide(Entity* self) {
                     CreateEntityFromEntity(
                         E_ID(FALLING_ROCK_2), self, newEntity);
                     newEntity->params = *params++;
-                    #if defined(INVERTED_STAGE)
+#if defined(INVERTED_STAGE)
                     newEntity->velocityX = (-Random() << 8) - 0x10000;
                     newEntity->velocityY = -Random() * 0x100;
                     newEntity->posY.i.hi -= -16 + (i * 16);
                     newEntity->facingLeft = 0;
-                    #else
+#else
                     newEntity->velocityX = (Random() << 8) + 0x8000;
                     newEntity->velocityY = -Random() * 0x100;
                     newEntity->posY.i.hi += -16 + (i * 16);
                     newEntity->facingLeft = 1;
-                    #endif
+#endif
                 }
             }
             self->ext.mermanRock.unk84++;
@@ -293,8 +295,7 @@ void EntityJewelSwordDoor(Entity* self) {
         break;
 
     case 1:
-        if ((g_CastleFlags[CF_STEPS] & 4) &&
-            (g_CastleFlags[CF_STEPS] & 8)) {
+        if ((g_CastleFlags[CF_STEPS] & 4) && (g_CastleFlags[CF_STEPS] & 8)) {
             PlaySfxPositional(SFX_WALL_DEBRIS_B);
             self->step++;
         }
@@ -366,11 +367,11 @@ void EntityFallingRock2(Entity* self) {
             // Seems to be a bounce effect. Reverse velocity, and lose 1/8 of
             // it.
             self->velocityY = -self->velocityY;
-            #if defined(INVERTED_STAGE)
+#if defined(INVERTED_STAGE)
             self->velocityY -= self->velocityY / 4;
-            #else
+#else
             self->velocityY -= self->velocityY / 8;
-            #endif
+#endif
         }
         break;
     }

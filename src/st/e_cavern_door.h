@@ -90,9 +90,7 @@ void EntityCavernDoorPlatform(Entity* self) {
     }
 }
 
-static s16 cavernDoorTiles[] = {
-    0x6D0, 0x04FA, 0x04FA, 0x0551, 0, 0
-};
+static s16 cavernDoorTiles[] = {0x6D0, 0x04FA, 0x04FA, 0x0551, 0, 0};
 
 // door blocking way to the Underground Caverns
 void EntityCavernDoor(Entity* self) {
