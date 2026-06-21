@@ -8,7 +8,12 @@ extern s32 E_ID(FALLING_ROCK_2);
 extern EInit g_EInitInteractable;
 extern EInit D_us_80180A34;
 
-#define TILESTART 0x40E
+#if defined(INVERTED_STAGE)
+#define LEFT_TILESTART 0x40E
+#else
+#define LEFT_TILESTART 0x1F1
+#endif
+
 
 // why devs why
 #ifdef STAGE_IS_NO3
@@ -73,7 +78,7 @@ void EntityMermanRockLeftSide(Entity* self) {
         self->hitboxHeight = 24;
 
         tileLayoutPtr = &leftRockInitTiles[6];
-        tilePos = TILESTART;
+        tilePos = LEFT_TILESTART;
         for (i = 0; i < 3; i++, tileLayoutPtr++) {
             g_BgLayers[0].layout[tilePos] = *tileLayoutPtr;
             *(&g_BgLayers[0].layout[tilePos] - 1) = *(tileLayoutPtr + 3);
@@ -81,7 +86,7 @@ void EntityMermanRockLeftSide(Entity* self) {
         }
 
         if (g_CastleFlags[JEWEL_ROOM_STEPS] & rockBroken) {
-            tilePos = TILESTART;
+            tilePos = LEFT_TILESTART;
             tileLayoutPtr = &leftRockTiles[12];
             for (i = 0; i < 3; i++, tileLayoutPtr++) {
                 g_Tilemap.fg[tilePos] = *tileLayoutPtr;
@@ -98,7 +103,7 @@ void EntityMermanRockLeftSide(Entity* self) {
             // +6 at the end is explicitly in the asm
             tileLayoutPtr =
                 &(leftRockTiles[self->ext.mermanRock.unk84 * 6]) + 6;
-            tilePos = TILESTART;
+            tilePos = LEFT_TILESTART;
             for (i = 0; i < 3; i++, tileLayoutPtr++) {
                 g_Tilemap.fg[tilePos] = *tileLayoutPtr;
                 *(&g_Tilemap.fg[tilePos] - 1) = *(tileLayoutPtr + 3);
