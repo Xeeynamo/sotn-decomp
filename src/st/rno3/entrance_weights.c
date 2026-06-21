@@ -1,7 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rno3.h"
 
-extern EInit D_us_80180A40;
+#if defined(INVERTED_STAGE)
+#define WEIGHTS_INIT D_us_80180A40
+#else
+#define WEIGHTS_INIT g_EInitStInteractable
+#endif
+
+extern EInit WEIGHTS_INIT;
 
 typedef enum { WEIGHT_SMALL, WEIGHT_TALL } WeightSelect;
 
@@ -42,7 +48,7 @@ void EntityWeightsSwitch(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180A40);
+        InitializeEntity(WEIGHTS_INIT);
         self->animCurFrame = 9;
         self->zPriority = 0x5E;
         if (g_CastleFlags[NO0_TO_NP3_SHORTCUT]) {
@@ -79,7 +85,7 @@ void EntityPathBlockSmallWeight(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180A40);
+        InitializeEntity(WEIGHTS_INIT);
         self->animCurFrame = 8;
         self->zPriority = 0x5E;
         // All the prims below here are for the chain.
@@ -153,7 +159,7 @@ void EntityPathBlockSmallWeight(Entity* self) {
 }
 
 // taller weight blocking path near cube of zoe
-void func_us_801B2578(Entity* self) {
+void EntityPathBlockTallWeight(Entity* self) {
     Primitive* prim;
     s32 primIndex;
     s32 steps_covered;
@@ -163,7 +169,7 @@ void func_us_801B2578(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180A40);
+        InitializeEntity(WEIGHTS_INIT);
         self->animCurFrame = 7;
         self->zPriority = 0x5E;
         #if defined(INVERTED_STAGE)

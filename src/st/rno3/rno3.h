@@ -75,7 +75,7 @@ enum Entities {
     /* 0x3B */ E_CAVERN_DOOR,               // EntityCavernDoor
     /* 0x3C */ E_WEIGHTS_SWITCH,            // EntityWeightsSwitch
     /* 0x3D */ E_PATH_BLOCK_SMALL_WEIGHT,   // EntityPathBlockSmallWeight
-    /* 0x3E */ E_UNK_3E,                    // func_us_801B2578
+    /* 0x3E */ E_UNK_3E,                    // EntityPathBlockTallWeight
     /* 0x3F */ E_HEART_ROOM_SWITCH,         // EntityHeartRoomSwitch
     /* 0x40 */ E_HEART_ROOM_GOLD_DOOR,      // EntityHeartRoomGoldDoor
     /* 0x41 */ E_MERMAN_ROCK_LEFT_SIDE,     // EntityMermanRockLeftSide

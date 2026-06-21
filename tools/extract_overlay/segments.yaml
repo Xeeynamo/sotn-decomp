@@ -865,7 +865,7 @@ entrance_weights:
   - EntityWeightsSwitch
   - EntityPathBlockSmallWeight
   - EntityPathBlockTallWeight
-  - func_us_801B2578 # rno3
+  - EntityPathBlockTallWeight # rno3
 giantbro_helpers:
   functions:
   - func_801CD658

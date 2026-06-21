@@ -62,7 +62,7 @@ void EntityCavernDoorPlatform(Entity* self);
 void EntityCavernDoor(Entity* self);
 void EntityWeightsSwitch(Entity* self);
 void EntityPathBlockSmallWeight(Entity* self);
-void func_us_801B2578(Entity* self);
+void EntityPathBlockTallWeight(Entity* self);
 void EntityHeartRoomSwitch(Entity* self);
 void EntityHeartRoomGoldDoor(Entity* self);
 void EntityMermanRockLeftSide(Entity* self);
@@ -142,7 +142,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityCavernDoor,
     EntityWeightsSwitch,
     EntityPathBlockSmallWeight,
-    func_us_801B2578,
+    EntityPathBlockTallWeight,
     EntityHeartRoomSwitch,
     EntityHeartRoomGoldDoor,
     EntityMermanRockLeftSide,
