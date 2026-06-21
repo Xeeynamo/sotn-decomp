@@ -59,7 +59,7 @@ void EntityVenusWeedDart(Entity* self);
 void EntityVenusWeedSpike(Entity* self);
 void EntityCavernDoorLever(Entity* self);
 void EntityCavernDoorPlatform(Entity* self);
-void func_us_801B1E38(Entity* self);
+void EntityCavernDoor(Entity* self);
 void EntityWeightsSwitch(Entity* self);
 void EntityPathBlockSmallWeight(Entity* self);
 void func_us_801B2578(Entity* self);
@@ -139,7 +139,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityVenusWeedSpike,
     EntityCavernDoorLever,
     EntityCavernDoorPlatform,
-    func_us_801B1E38,
+    EntityCavernDoor,
     EntityWeightsSwitch,
     EntityPathBlockSmallWeight,
     func_us_801B2578,

@@ -3,6 +3,15 @@
 extern s32 E_ID(CAVERN_DOOR_PLATFORM);
 #endif
 
+#if defined(INVERTED_STAGE)
+#define CAVERN_DOOR_EINIT D_us_80180A34
+#else
+#define CAVERN_DOOR_EINIT g_EInitStInteractable
+#endif
+
+extern EInit CAVERN_DOOR_EINIT;
+extern Primitive* FindFirstUnkPrim(Primitive* poly);
+
 #include "door_cascade_physics.h"
 
 // lever and platform to open caverns door
@@ -13,7 +22,7 @@ void EntityCavernDoorLever(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitStInteractable);
+        InitializeEntity(CAVERN_DOOR_EINIT);
         self->animCurFrame = 18;
         self->drawFlags |= ENTITY_ROTATE;
         self->rotate = -0x200;
@@ -56,7 +65,7 @@ void EntityCavernDoorPlatform(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitStInteractable);
+        InitializeEntity(CAVERN_DOOR_EINIT);
         self->animCurFrame = 17;
         self->ext.cavernDoor.xCoord.val = self->posX.val;
         self->ext.cavernDoor.xCoord.val = self->posX.val; // ? WTF
@@ -81,7 +90,14 @@ void EntityCavernDoorPlatform(Entity* self) {
     }
 }
 
-static s16 cavernDoorTiles[] = {0x6D0, 0x04FA, 0x04FA, 0x0551, 0, 0};
+static s16 cavernDoorTiles[] = {
+    0x6D0, 0x04FA, 0x04FA, 0x0551,
+    0,     0,
+#if defined(VERSION_US) && defined(INVERTED_STAGE)
+    0x26C, 0x273,  0x27A,  0x26D,
+    0x274, 0x27B
+#endif
+};
 
 // door blocking way to the Underground Caverns
 void EntityCavernDoor(Entity* self) {
@@ -95,11 +111,12 @@ void EntityCavernDoor(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitStInteractable);
+        InitializeEntity(CAVERN_DOOR_EINIT);
         self->animCurFrame = 10;
         self->zPriority = 0x9F;
 
         tileLayoutPtr = &cavernDoorTiles[0];
+#if !defined(INVERTED_STAGE)
         if (g_CastleFlags[NO4_TO_NP3_SHORTCUT]) {
             self->step = 128;
             self->animCurFrame = 0;
@@ -125,17 +142,39 @@ void EntityCavernDoor(Entity* self) {
                 prim = prim->next;
             }
         }
+#endif
 
-        for (tilePos = 0x76, i = 0; i < 3; i++) {
+#if defined(INVERTED_STAGE)
+        tilePos = 0x89;
+        tileLayoutPtr += 3;
+#define NEXTTILE (tilePos -= 0x10)
+#else
+        tilePos = 0x76;
+#define NEXTTILE (tilePos += 0x10)
+#endif
+        for (i = 0; i < 3; i++) {
             g_Tilemap.fg[tilePos] = *tileLayoutPtr++;
-            tilePos += 0x10;
+            NEXTTILE;
         }
+#if defined(INVERTED_STAGE)
+        self->step = 0x80;
+        self->animCurFrame = 0;
+        /* This is a hack. primIndex is not used in the inverted stage version.
+        But s6 (the register used for it in other versions) still gets
+        pushed to the stack in inverted version, despite being unused. This
+        may have been used to silence the unused variable warning. There is
+        no evidence of where this line exists in the function, so I just
+        threw it down here where we already have a defined(INVERTED_STAGE). */
+        (void)primIndex;
+#endif
         break;
 
     case 1:
         if (g_CastleFlags[NO4_TO_NP3_SHORTCUT]) {
 #if defined(STAGE_IS_NO3)
             g_api.PlaySfx(SFX_SWITCH_CLICK);
+#elif defined(INVERTED_STAGE)
+            g_api.PlaySfx(SFX_STONE_MOVE_C);
 #endif
             self->step++;
         }
@@ -158,7 +197,7 @@ void EntityCavernDoor(Entity* self) {
             tileSteps = 3;
             self->step = 3;
         }
-#if !defined(STAGE_IS_NO3)
+#if defined(STAGE_IS_NP3)
         if (!(self->ext.cavernDoor.jiggler & 15)) {
             g_api.PlaySfx(SFX_STONE_MOVE_C);
         }
