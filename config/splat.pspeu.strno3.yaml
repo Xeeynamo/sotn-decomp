@@ -77,7 +77,7 @@ segments:
       - [0x1F888, c, rno3/e_room_bg]
       - [0x1F980, c, rno3/e_lock_camera]
       - [0x1FBE0, c, rno3/e_cavern_door]
-      - [0x204C0, c, rno3_psp/entrance_weights]
+      - [0x204C0, c, rno3/entrance_weights]
       - [0x20D10, c, rno3_psp/e_heartroom]
       - [0x212E8, c, rno3/e_sky_entities]
       - [0x214E0, c, rno3_psp/func_us_801b3c88]
