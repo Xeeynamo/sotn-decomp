@@ -8,8 +8,12 @@ extern EInit g_EInitInteractable;
 extern EInit D_us_80180A34;
 
 #if defined(INVERTED_STAGE)
+#define CASTLE_FLAG JEWEL_ROOM_STEPS
+#define PLUSMINUS -
 #define LEFT_TILESTART 0x40E
 #else
+#define CASTLE_FLAG JEWEL_SWORD_ROOM_STEPS
+#define PLUSMINUS +
 #define LEFT_TILESTART 0x1F1
 #endif
 
@@ -80,17 +84,17 @@ void EntityMermanRockLeftSide(Entity* self) {
         tilePos = LEFT_TILESTART;
         for (i = 0; i < 3; i++, tileLayoutPtr++) {
             g_BgLayers[0].layout[tilePos] = *tileLayoutPtr;
-            *(&g_BgLayers[0].layout[tilePos] + 1) = *(tileLayoutPtr + 3);
-            tilePos += 0x30;
+            *(&g_BgLayers[0].layout[tilePos] PLUSMINUS 1) = *(tileLayoutPtr + 3);
+            tilePos += PLUSMINUS 0x30;
         }
 
-        if (g_CastleFlags[JEWEL_SWORD_ROOM_STEPS] & rockBroken) {
+        if (g_CastleFlags[CASTLE_FLAG] & rockBroken) {
             tilePos = LEFT_TILESTART;
             tileLayoutPtr = &leftRockTiles[12];
             for (i = 0; i < 3; i++, tileLayoutPtr++) {
                 g_Tilemap.fg[tilePos] = *tileLayoutPtr;
-                *(&g_Tilemap.fg[tilePos] + 1) = *(tileLayoutPtr + 3);
-                tilePos += 0x30;
+                *(&g_Tilemap.fg[tilePos] PLUSMINUS 1) = *(tileLayoutPtr + 3);
+                tilePos += PLUSMINUS 0x30;
             }
             self->hitboxState = 1;
             self->step = 2;

@@ -9,8 +9,12 @@ extern EInit g_EInitInteractable;
 extern EInit D_us_80180A34;
 
 #if defined(INVERTED_STAGE)
+#define CASTLE_FLAG JEWEL_ROOM_STEPS
+#define PLUSMINUS -
 #define LEFT_TILESTART 0x40E
 #else
+#define CASTLE_FLAG JEWEL_SWORD_ROOM_STEPS
+#define PLUSMINUS +
 #define LEFT_TILESTART 0x1F1
 #endif
 
@@ -60,6 +64,7 @@ static TILE_PTR_TYPE rockTiles4[] = {
 static u16 rockYOffsets[] = {12, 6, 7, 0};
 
 static u8 newRockParams[] = {1, 2, 1, 2, 1};
+
 // left side of the breakable rock, drops pot roast
 void EntityMermanRockLeftSide(Entity* self) {
     const int rockBroken = (1 << 0);
@@ -81,17 +86,17 @@ void EntityMermanRockLeftSide(Entity* self) {
         tilePos = LEFT_TILESTART;
         for (i = 0; i < 3; i++, tileLayoutPtr++) {
             g_BgLayers[0].layout[tilePos] = *tileLayoutPtr;
-            *(&g_BgLayers[0].layout[tilePos] - 1) = *(tileLayoutPtr + 3);
-            tilePos -= 0x30;
+            *(&g_BgLayers[0].layout[tilePos] PLUSMINUS 1) = *(tileLayoutPtr + 3);
+            tilePos += PLUSMINUS 0x30;
         }
 
-        if (g_CastleFlags[JEWEL_ROOM_STEPS] & rockBroken) {
+        if (g_CastleFlags[CASTLE_FLAG] & rockBroken) {
             tilePos = LEFT_TILESTART;
             tileLayoutPtr = &leftRockTiles[12];
             for (i = 0; i < 3; i++, tileLayoutPtr++) {
                 g_Tilemap.fg[tilePos] = *tileLayoutPtr;
-                *(&g_Tilemap.fg[tilePos] - 1) = *(tileLayoutPtr + 3);
-                tilePos -= 0x30;
+                *(&g_Tilemap.fg[tilePos] PLUSMINUS 1) = *(tileLayoutPtr + 3);
+                tilePos += PLUSMINUS 0x30;
             }
             self->hitboxState = 1;
             self->step = 2;
