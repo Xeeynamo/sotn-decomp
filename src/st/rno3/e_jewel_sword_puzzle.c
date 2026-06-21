@@ -2,7 +2,7 @@
 #include "rno3.h"
 
 #ifdef VERSION_PSP
-extern s32 E_ID(FALLING_ROCK2);
+extern s32 E_ID(FALLING_ROCK_2);
 #endif
 
 extern EInit g_EInitInteractable;
@@ -122,7 +122,7 @@ void EntityMermanRockLeftSide(Entity* self) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(
-                        E_ID(FALLING_ROCK2), self, newEntity);
+                        E_ID(FALLING_ROCK_2), self, newEntity);
                     newEntity->params = *params++;
                     newEntity->velocityX = (Random() << 8) + 0x10000;
                     newEntity->velocityY = -Random() * 0x100;
@@ -217,7 +217,7 @@ void EntityMermanRockRightSide(Entity* self) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(
-                        E_ID(FALLING_ROCK2), self, newEntity);
+                        E_ID(FALLING_ROCK_2), self, newEntity);
                     newEntity->params = *params++;
                     newEntity->velocityX = (-Random() << 8) - 0x10000;
                     newEntity->velocityY = -Random() * 0x100;

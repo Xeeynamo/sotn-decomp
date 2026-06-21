@@ -81,7 +81,7 @@ enum Entities {
     /* 0x41 */ E_MERMAN_ROCK_LEFT_SIDE,     // EntityMermanRockLeftSide
     /* 0x42 */ E_MERMAN_ROCK_RIGHT_SIDE,    // EntityMermanRockRightSide
     /* 0x43 */ E_JEWEL_SWORD_DOOR,          // EntityJewelSwordDoor
-    /* 0x44 */ E_FALLING_ROCK2,             // EntityFallingRock2
+    /* 0x44 */ E_FALLING_ROCK_2,            // EntityFallingRock2
     /* 0x45 */ E_STAIRWAY_PIECE,            // EntityStairwayPiece
     /* 0x46 */ E_FALLING_ROCK,              // EntityFallingRock
     /* 0x47 */ E_UNK_47,                    // func_us_801B3C88

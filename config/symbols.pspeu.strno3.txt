@@ -170,4 +170,4 @@ g_LayoutObjPosHorizontal = 0x09286408;
 g_LayoutObjVertical = 0x09286410;
 g_LayoutObjHorizontal = 0x09286418;
 D_psp_E_FALLING_ROCK = 0x092864E8;
-D_psp_E_FALLING_ROCK2 = 0x092864F8;
+D_psp_E_FALLING_ROCK_2 = 0x092864F8;
