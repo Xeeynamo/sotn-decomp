@@ -10,10 +10,12 @@ extern EInit D_us_80180A34;
 #if defined(INVERTED_STAGE)
 #define CASTLE_FLAG JEWEL_ROOM_STEPS
 #define PLUSMINUS -
+#define PME -=
 #define LEFT_TILESTART 0x40E
 #else
 #define CASTLE_FLAG JEWEL_SWORD_ROOM_STEPS
 #define PLUSMINUS +
+#define PME +=
 #define LEFT_TILESTART 0x1F1
 #endif
 
@@ -85,7 +87,7 @@ void EntityMermanRockLeftSide(Entity* self) {
         for (i = 0; i < 3; i++, tileLayoutPtr++) {
             g_BgLayers[0].layout[tilePos] = *tileLayoutPtr;
             *(&g_BgLayers[0].layout[tilePos] PLUSMINUS 1) = *(tileLayoutPtr + 3);
-            tilePos += PLUSMINUS 0x30;
+            tilePos PME 0x30;
         }
 
         if (g_CastleFlags[CASTLE_FLAG] & rockBroken) {
@@ -94,7 +96,7 @@ void EntityMermanRockLeftSide(Entity* self) {
             for (i = 0; i < 3; i++, tileLayoutPtr++) {
                 g_Tilemap.fg[tilePos] = *tileLayoutPtr;
                 *(&g_Tilemap.fg[tilePos] PLUSMINUS 1) = *(tileLayoutPtr + 3);
-                tilePos += PLUSMINUS 0x30;
+                tilePos PME 0x30;
             }
             self->hitboxState = 1;
             self->step = 2;
@@ -109,8 +111,8 @@ void EntityMermanRockLeftSide(Entity* self) {
             tilePos = LEFT_TILESTART;
             for (i = 0; i < 3; i++, tileLayoutPtr++) {
                 g_Tilemap.fg[tilePos] = *tileLayoutPtr;
-                *(&g_Tilemap.fg[tilePos] + 1) = *(tileLayoutPtr + 3);
-                tilePos += 0x30;
+                *(&g_Tilemap.fg[tilePos] PLUSMINUS 1) = *(tileLayoutPtr + 3);
+                tilePos PME 0x30;
             }
 
             g_api.PlaySfx(SFX_WALL_DEBRIS_B);
@@ -120,7 +122,7 @@ void EntityMermanRockLeftSide(Entity* self) {
                 CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                 newEntity->params = 0x13;
                 newEntity->zPriority = 0xA9;
-                newEntity->posX.i.hi += self->ext.mermanRock.unk84 * 16;
+                newEntity->posX.i.hi PME self->ext.mermanRock.unk84 * 16;
                 newEntity->posY.i.hi += 16;
             }
 
@@ -132,9 +134,16 @@ void EntityMermanRockLeftSide(Entity* self) {
                     CreateEntityFromEntity(
                         E_ID(FALLING_ROCK_2), self, newEntity);
                     newEntity->params = *params++;
+                    #if defined(INVERTED_STAGE)
+                    newEntity->velocityX = (Random() << 8) + 0x10000;
+                    newEntity->velocityY = -Random() * 0x100;
+                    newEntity->posY.i.hi -= -16 + (i * 16);
+                    newEntity->facingLeft = 1;
+                    #else
                     newEntity->velocityX = (-Random() << 8) - 0x8000;
                     newEntity->velocityY = -Random() * 0x100;
                     newEntity->posY.i.hi += -16 + (i * 16);
+                    #endif
                 }
             }
             self->ext.mermanRock.unk84++;
