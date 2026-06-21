@@ -5029,7 +5029,7 @@
 | np3      | EntityPathBlockSmallWeight            |      247 |         26 |        |       |     |
 | dra      | func_psp_090FCEE0                     |      247 |         31 |        |       |     |
 | main     | func_psp_08933F7C                     |      248 |         17 |        |       |     |
-| rno3     | func_us_801B1E38                      |      248 |         31 |        |       |     |
+| rno3     | EntityCavernDoor                      |      248 |         31 |        |       |     |
 | no4      | func_pspeu_092391D8                   |      248 |         34 |        |       |     |
 | nz1      | func_pspeu_0925A958                   |      248 |         36 |        |       |     |
 | are      | func_pspeu_09243E48                   |      249 |         10 |        |       |     |
