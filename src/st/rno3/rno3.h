@@ -74,7 +74,7 @@ enum Entities {
     /* 0x3A */ E_CAVERN_DOOR_PLATFORM,      // EntityCavernDoorPlatform
     /* 0x3B */ E_CAVERN_DOOR,               // EntityCavernDoor
     /* 0x3C */ E_WEIGHTS_SWITCH,            // EntityWeightsSwitch
-    /* 0x3D */ E_WEIGHT_SMALL,                // EntityPathBlockSmallWeight
+    /* 0x3D */ E_WEIGHT_SMALL,              // EntityPathBlockSmallWeight
     /* 0x3E */ E_WEIGHT_TALL,               // EntityPathBlockTallWeight
     /* 0x3F */ E_HEART_ROOM_SWITCH,         // EntityHeartRoomSwitch
     /* 0x40 */ E_HEART_ROOM_GOLD_DOOR,      // EntityHeartRoomGoldDoor
