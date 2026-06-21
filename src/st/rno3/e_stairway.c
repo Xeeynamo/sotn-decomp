@@ -5,7 +5,17 @@
 extern s32 E_ID(FALLING_ROCK);
 #endif
 
-extern EInit D_us_80180A34;
+#if defined(INVERTED_STAGE)
+#define XPOS 104
+#define YPOS 56
+#define ROCK_EINIT D_us_80180A34
+#else
+#define XPOS 1432
+#define YPOS 200
+#define ROCK_EINIT g_EInitStInteractable
+#endif
+
+extern EInit ROCK_EINIT;
 extern EInit g_EInitInteractable;
 
 // Stairway piece you can break before Death encounter
@@ -165,7 +175,7 @@ void EntityFallingRock(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180A34);
+        InitializeEntity(ROCK_EINIT);
         self->animCurFrame = animFrame + 31;
         self->drawFlags |= ENTITY_ROTATE | ENTITY_SCALEY | ENTITY_SCALEX;
         self->scaleX = self->scaleY = 0x60;
