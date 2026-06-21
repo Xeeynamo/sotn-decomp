@@ -82,6 +82,7 @@ segments:
       - [0x212E8, c, rno3/e_sky_entities]
       - [0x214E0, c, rno3_psp/func_us_801b3c88]
       - [0x21780, data]
+      - [0x23138, .data, rno3_psp/e_jewel_sword_puzzle]
       - [0x23248, .data, rno3/e_background_bushes_trees]
       - [0x232F8, data]
       - [0x2CAC8, .data, rno3/e_init]
