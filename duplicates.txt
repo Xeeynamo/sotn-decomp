@@ -4323,7 +4323,7 @@
 | 1.00 | true     | func_us_801B68B4                    | asm/us/st/are/matchings/e_cavern_door/func_us_801B68B4.s 
 | 1.00 | true     | func_801B94F0                       | asm/us/st/no3/matchings/e_cavern_door/func_801B94F0.s 
 | 1.00 | true     | func_801B3D24                       | asm/us/st/np3/matchings/e_cavern_door/func_801B3D24.s 
-| 1.00 | false    | DoorCascadePhysics                  | asm/us/st/rno3/nonmatchings/unk_31A64/DoorCascadePhysics.s 
+| 1.00 | true     | DoorCascadePhysics                  | asm/us/st/rno3/matchings/e_cavern_door/DoorCascadePhysics.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801CF590                    | asm/us/st/are/matchings/e_flea_man/func_us_801CF590.s 
 | 1.00 | true     | func_us_801D01C8                    | asm/us/st/lib/matchings/e_flea_man/func_us_801D01C8.s 
@@ -4731,7 +4731,7 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801B9650                       | asm/us/st/no3/matchings/e_cavern_door/func_801B9650.s 
 | 1.00 | true     | func_801B3E84                       | asm/us/st/np3/matchings/e_cavern_door/func_801B3E84.s 
-| 1.00 | false    | EntityCavernDoorLever               | asm/us/st/rno3/nonmatchings/unk_31A64/EntityCavernDoorLever.s 
+| 1.00 | true     | EntityCavernDoorLever               | asm/us/st/rno3/matchings/e_cavern_door/EntityCavernDoorLever.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801CC5A4                       | asm/us/st/no3/matchings/e_fire_warg/func_801CC5A4.s 
 | 1.00 | true     | func_801CF438                       | asm/us/st/no3/matchings/e_warg/func_801CF438.s 
@@ -5935,7 +5935,7 @@
 | 1.00 | true     | func_us_801C5868                    | asm/us/st/no4/matchings/first_c_file/func_us_801C5868.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801B4004                       | asm/us/st/np3/matchings/e_cavern_door/func_801B4004.s 
-| 1.00 | false    | EntityCavernDoorPlatform            | asm/us/st/rno3/nonmatchings/unk_31A64/EntityCavernDoorPlatform.s 
+| 1.00 | true     | EntityCavernDoorPlatform            | asm/us/st/rno3/matchings/e_cavern_door/EntityCavernDoorPlatform.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801B4680                       | asm/us/st/np3/matchings/entrance_weights/func_801B4680.s 
 | 0.94 | false    | EntityPathBlockSmallWeight          | asm/us/st/rno3/nonmatchings/entrance_weights/EntityPathBlockSmallWeight.s 
