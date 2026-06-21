@@ -171,7 +171,10 @@ void EntityPathBlockTallWeight(Entity* self) {
         InitializeEntity(WEIGHTS_INIT);
         self->animCurFrame = 7;
         self->zPriority = 0x5E;
-
+#if defined(INVERTED_STAGE)
+        self->step = 3;
+        return;
+#endif
         // All the prims below here are for the chain.
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 8);
         if (primIndex == -1) {
@@ -215,6 +218,11 @@ void EntityPathBlockTallWeight(Entity* self) {
             self->step++;
         }
         break;
+// Chains do not exist in inverted stage. Skip out.
+#if defined(INVERTED_STAGE)
+    default:
+        return;
+#endif
     }
 
     UpdateWeightChains(WEIGHT_TALL);
