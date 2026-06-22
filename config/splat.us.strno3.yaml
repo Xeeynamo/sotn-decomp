@@ -107,5 +107,6 @@ segments:
       - [0x44D18, c, e_blue_venus_weed]
       - [0x46940, c, unk_46940]
       - [0x49044, c, prim_helpers]
-      - [0x49874, bss]
+      - [0x49874, .bss, create_entity]
+      - [0x49884, bss]
   - [0x4A52C]
