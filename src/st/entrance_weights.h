@@ -1,4 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+
+#if defined(INVERTED_STAGE)
+#define WEIGHTS_INIT D_us_80180A40
+#else
+#define WEIGHTS_INIT g_EInitStInteractable
+#endif
+
+extern EInit WEIGHTS_INIT;
+
 typedef enum { WEIGHT_SMALL, WEIGHT_TALL } WeightSelect;
 
 // To the right of Cube of Zoe is the weight system.
@@ -38,7 +47,7 @@ void EntityWeightsSwitch(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitStInteractable);
+        InitializeEntity(WEIGHTS_INIT);
         self->animCurFrame = 9;
         self->zPriority = 0x5E;
         if (g_CastleFlags[NO0_TO_NP3_SHORTCUT]) {
@@ -75,7 +84,7 @@ void EntityPathBlockSmallWeight(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitStInteractable);
+        InitializeEntity(WEIGHTS_INIT);
         self->animCurFrame = 8;
         self->zPriority = 0x5E;
         // All the prims below here are for the chain.
@@ -120,7 +129,7 @@ void EntityPathBlockSmallWeight(Entity* self) {
         self->posY.val += FIX(0.5);
         worldPos = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
         if (worldPos >= 175) {
-#if !defined(STAGE_IS_NO3)
+#if defined(STAGE_IS_NP3)
             PlaySfxPositional(SFX_START_SLAM_B);
 #endif
             self->posY.i.hi = 175 - g_Tilemap.scrollY.i.hi;
@@ -159,10 +168,13 @@ void EntityPathBlockTallWeight(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitStInteractable);
+        InitializeEntity(WEIGHTS_INIT);
         self->animCurFrame = 7;
         self->zPriority = 0x5E;
-
+#if defined(INVERTED_STAGE)
+        self->step = 3;
+        return;
+#endif
         // All the prims below here are for the chain.
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 8);
         if (primIndex == -1) {
@@ -206,6 +218,11 @@ void EntityPathBlockTallWeight(Entity* self) {
             self->step++;
         }
         break;
+// Chains do not exist in inverted stage. Skip out.
+#if defined(INVERTED_STAGE)
+    default:
+        return;
+#endif
     }
 
     UpdateWeightChains(WEIGHT_TALL);

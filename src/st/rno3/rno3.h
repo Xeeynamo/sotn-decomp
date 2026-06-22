@@ -74,14 +74,14 @@ enum Entities {
     /* 0x3A */ E_CAVERN_DOOR_PLATFORM,      // EntityCavernDoorPlatform
     /* 0x3B */ E_CAVERN_DOOR,               // EntityCavernDoor
     /* 0x3C */ E_WEIGHTS_SWITCH,            // EntityWeightsSwitch
-    /* 0x3D */ E_PATH_BLOCK_SMALL_WEIGHT,   // EntityPathBlockSmallWeight
-    /* 0x3E */ E_UNK_3E,                    // func_us_801B2578
+    /* 0x3D */ E_WEIGHT_SMALL,              // EntityPathBlockSmallWeight
+    /* 0x3E */ E_WEIGHT_TALL,               // EntityPathBlockTallWeight
     /* 0x3F */ E_HEART_ROOM_SWITCH,         // EntityHeartRoomSwitch
     /* 0x40 */ E_HEART_ROOM_GOLD_DOOR,      // EntityHeartRoomGoldDoor
     /* 0x41 */ E_MERMAN_ROCK_LEFT_SIDE,     // EntityMermanRockLeftSide
     /* 0x42 */ E_MERMAN_ROCK_RIGHT_SIDE,    // EntityMermanRockRightSide
     /* 0x43 */ E_JEWEL_SWORD_DOOR,          // EntityJewelSwordDoor
-    /* 0x44 */ E_FALLING_ROCK2,             // EntityFallingRock2
+    /* 0x44 */ E_FALLING_ROCK_2,            // EntityFallingRock2
     /* 0x45 */ E_STAIRWAY_PIECE,            // EntityStairwayPiece
     /* 0x46 */ E_FALLING_ROCK,              // EntityFallingRock
     /* 0x47 */ E_UNK_47,                    // func_us_801B3C88
