@@ -2,7 +2,8 @@
 #include <game.h>
 
 #if !defined(STAGE_IS_CAT) && !defined(STAGE_IS_NZ1) &&                        \
-    !defined(STAGE_IS_ARE) && !defined(STAGE_IS_RARE)
+    !defined(STAGE_IS_ARE) && !defined(STAGE_IS_RARE) &&                       \
+    !defined(STAGE_IS_RNO3)
 static u16 unused[] UNUSED = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0001, 0x0000, 0x0001, 0x0000,
     0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0101};
