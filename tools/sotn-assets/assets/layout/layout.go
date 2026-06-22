@@ -175,29 +175,6 @@ func readEntityLayout(r io.ReadSeeker, ovlName string, off, baseAddr psx.Addr, c
 }
 
 func buildEntityLayouts(fileName, outputDir, subDir string, ovlName string) error {
-	writeLayoutEntries := func(sb *strings.Builder, banks [][]layoutEntry, align4 bool) error {
-		nWritten := 0
-		for i, entries := range banks {
-			// do a sanity check on the entries as we do not want to build something that will cause the game to crash
-			if entries[0].X != -2 || entries[0].Y != -2 {
-				return fmt.Errorf("layout entity bank %d needs to have a X:-2 and Y:-2 entry at the beginning", i)
-			}
-			lastEntry := entries[len(entries)-1]
-			if lastEntry.X != -1 || lastEntry.Y != -1 {
-				return fmt.Errorf("layout entity bank %d needs to have a X:-1 and Y:-1 entry at the end", i)
-			}
-			sb.WriteString(fmt.Sprintf("//%d\n", nWritten)) //label each block with offsets
-			for _, e := range entries {
-				sb.WriteString(fmt.Sprintf("    0x%04X, 0x%04X, %s | 0x%04X, 0x%04X, 0x%04X,\n",
-					uint16(e.X), uint16(e.Y), e.ID, int(e.Flags)<<8, int(e.Slot)|(int(e.SpawnID)<<8), e.Params))
-			}
-			nWritten += len(entries)
-		}
-		if align4 && nWritten%2 != 0 {
-			sb.WriteString("    0, // padding\n")
-		}
-		return nil
-	}
 	makeSortedBanks := func(banks [][]layoutEntry, sortByX bool) [][]layoutEntry {
 		var toSort []layoutEntry
 		var less func(i, j int) bool
@@ -234,6 +211,30 @@ func buildEntityLayouts(fileName, outputDir, subDir string, ovlName string) erro
 		}
 		return sorting
 	}
+	writeLayoutEntries := func(sb *strings.Builder, el layouts, sortByX bool) error {
+		banks := makeSortedBanks(el.Entities, sortByX)
+		nWritten := 0
+		for i, entries := range banks {
+			// do a sanity check on the entries as we do not want to build something that will cause the game to crash
+			if entries[0].X != -2 || entries[0].Y != -2 {
+				return fmt.Errorf("layout entity bank %d needs to have a X:-2 and Y:-2 entry at the beginning", i)
+			}
+			lastEntry := entries[len(entries)-1]
+			if lastEntry.X != -1 || lastEntry.Y != -1 {
+				return fmt.Errorf("layout entity bank %d needs to have a X:-1 and Y:-1 entry at the end", i)
+			}
+			sb.WriteString(fmt.Sprintf("//%d\n", nWritten)) //label each block with offsets
+			for _, e := range entries {
+				sb.WriteString(fmt.Sprintf("    0x%04X, 0x%04X, %s | 0x%04X, 0x%04X, 0x%04X,\n",
+					uint16(e.X), uint16(e.Y), e.ID, int(e.Flags)<<8, int(e.Slot)|(int(e.SpawnID)<<8), e.Params))
+			}
+			nWritten += len(entries)
+		}
+		if !sortByX && nWritten%2 != 0 {
+			sb.WriteString("    0, // padding\n")
+		}
+		return nil
+	}
 
 	data, err := os.ReadFile(fileName)
 	if err != nil {
@@ -262,39 +263,51 @@ func buildEntityLayouts(fileName, outputDir, subDir string, ovlName string) erro
 		ovlHeaderLoc = "../" + ovlHeaderLoc
 	}
 
-	sbHeader := strings.Builder{}
-	sbHeader.WriteString("#include <stage.h>\n\n")
-	sbHeader.WriteString("#include \"common.h\"\n\n")
-	sbHeader.WriteString("// clang-format off\n")
-	sbHeader.WriteString(fmt.Sprintf("extern LayoutEntity %s_x[];\n", symbolName))
-	sbHeader.WriteString(fmt.Sprintf("LayoutEntity* %s_pStObjLayoutHorizontal[] = {\n", strings.ToUpper(ovlName)))
-	for _, i := range el.Indices {
-		sbHeader.WriteString(fmt.Sprintf("    &%s_x[%d],\n", symbolName, offsets[i]/5))
+	laydefFile := strings.Builder{}
+	laydefFile.WriteString("#include <stage.h>\n\n")
+	laydefFile.WriteString("#include \"common.h\"\n\n")
+	laydefFile.WriteString("// clang-format off\n")
+	laydefFile.WriteString("// Offsets: ")
+	for i := 0; i < len(offsets); i++ {
+		laydefFile.WriteString(strconv.Itoa(offsets[i] / 5))
+		laydefFile.WriteString(", ")
 	}
-	sbHeader.WriteString(fmt.Sprintf("};\n"))
-	sbHeader.WriteString(fmt.Sprintf("extern LayoutEntity %s_y[];\n", symbolName))
-	sbHeader.WriteString(fmt.Sprintf("LayoutEntity* %s_pStObjLayoutVertical[] = {\n", strings.ToUpper(ovlName)))
-	for _, i := range el.Indices {
-		sbHeader.WriteString(fmt.Sprintf("    &%s_y[%d],\n", symbolName, offsets[i]/5))
+	laydefFile.WriteString("\n")
+	laydefFile.WriteString("// Indices: ")
+	for i := 0; i < len(el.Indices); i++ {
+		laydefFile.WriteString(strconv.Itoa(el.Indices[i]))
+		laydefFile.WriteString(", ")
 	}
-	sbHeader.WriteString(fmt.Sprintf("};\n"))
+	laydefFile.WriteString("\n")
+	laydefFile.WriteString(fmt.Sprintf("extern LayoutEntity %s_x[];\n", symbolName))
+	laydefFile.WriteString(fmt.Sprintf("LayoutEntity* %s_pStObjLayoutHorizontal[] = {\n", strings.ToUpper(ovlName)))
+	for _, i := range el.Indices {
+		laydefFile.WriteString(fmt.Sprintf("    &%s_x[%d],\n", symbolName, offsets[i]/5))
+	}
+	laydefFile.WriteString(fmt.Sprintf("};\n"))
+	laydefFile.WriteString(fmt.Sprintf("extern LayoutEntity %s_y[];\n", symbolName))
+	laydefFile.WriteString(fmt.Sprintf("LayoutEntity* %s_pStObjLayoutVertical[] = {\n", strings.ToUpper(ovlName)))
+	for _, i := range el.Indices {
+		laydefFile.WriteString(fmt.Sprintf("    &%s_y[%d],\n", symbolName, offsets[i]/5))
+	}
+	laydefFile.WriteString(fmt.Sprintf("};\n"))
 
-	sbData := strings.Builder{}
-	sbData.WriteString(fmt.Sprintf("#include \"%s\"\n\n", ovlHeaderLoc))
-	sbData.WriteString("// clang-format off\n")
-	sbData.WriteString(fmt.Sprintf("u16 %s_x[] = {\n", symbolName))
-	if err := writeLayoutEntries(&sbData, makeSortedBanks(el.Entities, true), false); err != nil {
+	layoutFile := strings.Builder{}
+	layoutFile.WriteString(fmt.Sprintf("#include \"%s\"\n\n", ovlHeaderLoc))
+	layoutFile.WriteString("// clang-format off\n")
+	layoutFile.WriteString(fmt.Sprintf("u16 %s_x[] = {\n", symbolName))
+	if err := writeLayoutEntries(&layoutFile, el, true); err != nil {
 		return fmt.Errorf("unable to build X entity layout: %w", err)
 	}
-	sbData.WriteString(fmt.Sprintf("};\n"))
-	sbData.WriteString(fmt.Sprintf("u16 %s_y[] = {\n", symbolName))
-	if err := writeLayoutEntries(&sbData, makeSortedBanks(el.Entities, false), true); err != nil {
+	layoutFile.WriteString(fmt.Sprintf("};\n"))
+	layoutFile.WriteString(fmt.Sprintf("u16 %s_y[] = {\n", symbolName))
+	if err := writeLayoutEntries(&layoutFile, el, false); err != nil {
 		return fmt.Errorf("unable to build Y entity layout: %w", err)
 	}
-	sbData.WriteString(fmt.Sprintf("};\n"))
+	layoutFile.WriteString(fmt.Sprintf("};\n"))
 
-	if err := util.WriteFile(filepath.Join(outputDir, "gen", subDir, "e_layout.c"), []byte(sbData.String())); err != nil {
+	if err := util.WriteFile(filepath.Join(outputDir, "gen", subDir, "e_layout.c"), []byte(layoutFile.String())); err != nil {
 		return err
 	}
-	return util.WriteFile(filepath.Join(outputDir, "gen", subDir, "e_laydef.c"), []byte(sbHeader.String()))
+	return util.WriteFile(filepath.Join(outputDir, "gen", subDir, "e_laydef.c"), []byte(laydefFile.String()))
 }
