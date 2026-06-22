@@ -26,6 +26,7 @@ g_EInitBlueVenusWeed2 = 0x80180A10;
 g_EInitDodoBird = 0x80180A4C;
 UNK_Invincibility0 = 0x8018114C;
 g_goldCollectTexts = 0x801818C4;
+g_bigRedFireballAnim = 0x801819A8;
 RNO3_rooms = 0x80182B20;
 sprites_rno3_6 = 0x801AE750;
 EntityLightningThunder = 0x801B18E0;
