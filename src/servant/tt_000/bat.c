@@ -634,7 +634,7 @@ void OVL_EXPORT(UpdateServantDefault)(Entity* self) {
         dx1 = targetX - self->posX.i.hi;
         dy1 = targetY - self->posY.i.hi;
         distance1 = SquareRoot12((dx1 * dx1 + dy1 * dy1) << 12) >> 12;
-        if (distance1 < 0x18) {
+        if (distance1 < 24) {
             if (self->ext.bat.doUpdateCloseAnimation) {
                 self->ext.bat.doUpdateCloseAnimation = false;
                 SetEntityAnimation(self, g_BatCloseToTargetAnimationFrame);
