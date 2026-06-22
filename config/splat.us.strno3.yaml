@@ -44,7 +44,7 @@ segments:
       - [0x8C, .data, palette_def]
       - [0xEC, .data, layers]
       - [0x4CC, .data, graphics_banks] # GfxBanks
-      - [0x5EC, data]
+      - [0x5EC, .data, gen/e_laydef] # layout entries header
       - [0x794, .data, e_init]
       - [0xA58, .data, e_room_bg]
       - [0xBFC, data]
@@ -63,6 +63,8 @@ segments:
       - [0x1750, data]
       - [0x1AA4, .data, e_misc]
       - [0x1B5C, data]
+      - [0x2C24, .data, gen/e_layout] # layout entries data
+      - [0x39BC, data]
       - [0x42A4, .data, stage_data]
       - [0x10E88, .data, tilemaps]
       - [0x270B8, .data, gen/sprites]
