@@ -40,7 +40,8 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, .data, header]
-      - [0x2C, data]
+      - [0x2C, .data, sprite_banks]
+      - [0x8C, data]
       - [0x794, .data, e_init]
       - [0xA58, .data, e_room_bg]
       - [0xBFC, data]
@@ -57,6 +58,7 @@ segments:
       - [0x10C0, data]
       - [0x1550, .data, st_common]
       - [0x1750, data]
+      - [0x270B8, .data, gen/sprites]
       - [0x2FF60, .rodata, e_castle_door]
       - [0x2FF80, .rodata, e_shutting_window]
       - [0x2FF88, .rodata, e_stairway]
