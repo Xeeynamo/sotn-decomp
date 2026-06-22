@@ -223,7 +223,14 @@ func buildEntityLayouts(fileName, outputDir, subDir string, ovlName string) erro
 			if lastEntry.X != -1 || lastEntry.Y != -1 {
 				return fmt.Errorf("layout entity bank %d needs to have a X:-1 and Y:-1 entry at the end", i)
 			}
-			sb.WriteString(fmt.Sprintf("//%d\n", nWritten)) //label each block with offsets
+			roomNum := 0
+			for indices_num, member := range el.Indices {
+				if member == i {
+					roomNum = indices_num - 1
+					break
+				}
+			}
+			sb.WriteString(fmt.Sprintf("// Offset %d, Room 0x%02X\n", nWritten, roomNum)) //label each block with offsets
 			for _, e := range entries {
 				sb.WriteString(fmt.Sprintf("    0x%04X, 0x%04X, %s | 0x%04X, 0x%04X, 0x%04X,\n",
 					uint16(e.X), uint16(e.Y), e.ID, int(e.Flags)<<8, int(e.Slot)|(int(e.SpawnID)<<8), e.Params))
@@ -267,18 +274,6 @@ func buildEntityLayouts(fileName, outputDir, subDir string, ovlName string) erro
 	laydefFile.WriteString("#include <stage.h>\n\n")
 	laydefFile.WriteString("#include \"common.h\"\n\n")
 	laydefFile.WriteString("// clang-format off\n")
-	laydefFile.WriteString("// Offsets: ")
-	for i := 0; i < len(offsets); i++ {
-		laydefFile.WriteString(strconv.Itoa(offsets[i] / 5))
-		laydefFile.WriteString(", ")
-	}
-	laydefFile.WriteString("\n")
-	laydefFile.WriteString("// Indices: ")
-	for i := 0; i < len(el.Indices); i++ {
-		laydefFile.WriteString(strconv.Itoa(el.Indices[i]))
-		laydefFile.WriteString(", ")
-	}
-	laydefFile.WriteString("\n")
 	laydefFile.WriteString(fmt.Sprintf("extern LayoutEntity %s_x[];\n", symbolName))
 	laydefFile.WriteString(fmt.Sprintf("LayoutEntity* %s_pStObjLayoutHorizontal[] = {\n", strings.ToUpper(ovlName)))
 	for _, i := range el.Indices {
