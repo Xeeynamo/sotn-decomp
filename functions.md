@@ -4400,7 +4400,7 @@
 | dai      | func_pspeu_0923CEA0                   |      147 |         18 |        |       |     |
 | no3      | func_pspeu_0923B650                   |      147 |         19 |        |       |     |
 | np3      | EntityFallingRock                     |      147 |         19 |        |       |     |
-| rno3     | EntityFallingRock                     |      147 |         19 |        |       |     |
+| rno3     | func_pspeu_09255190                   |      147 |         19 |        |       |     |
 | rnz0     | func_pspeu_0923CEE0                   |      148 |         12 |        |       |     |
 | rnz0     | func_pspeu_0924DBD0                   |      148 |         17 |        |       |     |
 | ric      | func_pspeu_092AE150                   |      148 |         25 |        |       |     |
@@ -5207,7 +5207,7 @@
 |          | func_092E76C8                         |      288 |         26 |        |       |     |
 | no3      | func_pspeu_0923BCE0                   |      288 |         30 |        |       |     |
 | np3      | EntityMermanRockRightSide             |      288 |         30 |        |       |     |
-| rno3     | EntityMermanRockRightSide             |      288 |         30 |        |       |     |
+| rno3     | func_pspeu_092542C8                   |      288 |         30 |        |       |     |
 | lib      | func_psp_09238EC8                     |      290 |         42 |        |       |     |
 | bo0      | func_pspeu_09265368                   |      291 |         20 |        |       |     |
 | nz1      | func_pspeu_0925B930                   |      291 |         26 |        |       |     |
@@ -5656,7 +5656,7 @@
 | cat      | func_pspeu_09241400                   |      433 |         29 |        |       |     |
 | no3      | func_pspeu_0923AFD8                   |      434 |         43 |        |       |     |
 | np3      | EntityStairwayPiece                   |      434 |         43 |        |       |     |
-| rno3     | EntityStairwayPiece                   |      434 |         43 |        |       |     |
+| rno3     | func_pspeu_09254B18                   |      434 |         43 |        |       |     |
 | dra      | func_psp_09138778                     |      434 |         82 |        |       |     |
 | bo0      | func_pspeu_09253CB8                   |      435 |         29 |        |       |     |
 | rare     | func_pspeu_09238C70                   |      435 |         39 |        |       |     |
