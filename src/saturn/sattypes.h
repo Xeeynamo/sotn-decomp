@@ -30,6 +30,7 @@ typedef unsigned long long u64;
 
 #define SFX_BAT_SCREECH 0x64E
 #define SFX_HEART_PICKUP 0x67A
+#define SFX_UI_ALERT_TINK 0x6AD
 
 #define PLAYER g_Entities[PLAYER_CHARACTER]
 
@@ -201,8 +202,10 @@ typedef struct {
     /* 0x78 */ s32 : 32;
     /* 0x7C */ s16 : 16;
     /* 0x7E */ s16 batIndex;
-    /* 0x80 */ s32 : 32;
-    /* 0x84 */ s32 : 32;
+    /* 0x80 */ s16 randomMovementAngle;
+    /* 0x82 */ s16 targetAngle;
+    /* 0x84 */ s16 randomMovementScaler;
+    /* 0x86 */ s16 angleStep;
     /* 0x88 */ s16 frameCounter;
     /* 0x8A */ s16 doUpdateCloseAnimation;
     /* 0x8C */ s32 : 32;
@@ -210,7 +213,7 @@ typedef struct {
     /* 0x94 */ s32 : 32;
     /* 0x98 */ s32 : 32;
     /* 0x9C */ struct Entity* follow;
-    /* 0xA0 */ s32 : 32;
+    /* 0xA0 */ struct Entity* attackTarget;
     /* 0xA4 */ s16 hasShotFireball;
     /* 0xA6 */ s16 : 16;
     /* 0xA8 */ s16 cameraX;
@@ -237,7 +240,8 @@ typedef struct Entity {
     /* 0x14 */ u16 hitboxOffX;
     /* 0x16 */ s16 hitboxOffY;
     /* 0x18 */ u16 facingLeft;
-    /* 0x1A */ char pad_1A[0x4];
+    /* 0x1A */ u16 palette;
+    /* 0x1C */ char pad_1C[0x2];
     /* 0x1E */ s16 rotate;
     /* 0x20 */ s16 unk1A;
     /* 0x22 */ s16 unk1C;
@@ -261,9 +265,11 @@ typedef struct Entity {
     /* 0x48 */ AnimationFrame* anim;
     /* 0x4c */ u16 pose;
     /* 0x4e */ s16 poseTimer;
-    /* 0x50 */ char pad_50[0x2];
+    /* 0x50 */ s16 animSet;
     /* 0x52 */ s16 animCurFrame;
-    /* 0x54 */ char pad_54[0xC];
+    /* 0x54 */ char pad_54[0x2];
+    /* 0x56 */ s16 unk56;
+    /* 0x58 */ char pad_58[0x8];
     /* 0x60 */ s16 primIndex;
     /* 0x62 */ u16 zPriority;
     /* 0x64 */ u16 unk68;

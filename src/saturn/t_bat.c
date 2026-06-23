@@ -11,6 +11,7 @@ typedef struct {
 } BatAbilityValues;
 
 extern AnimationFrame g_DefaultBatAnimationFrame[];       // 0x060D1B84
+extern AnimationFrame g_BatFarFromTargetAnimationFrame[]; // 0x060D1BF0
 extern AnimationFrame g_BatCloseToTargetAnimationFrame[]; // 0x060D1C28
 extern AnimationFrame g_BatHighVelocityAnimationFrame[];  // 0x060D1CC8
 extern AnimationFrame* g_BatAnimationFrames[];            // 0x060D1CD0
@@ -138,6 +139,28 @@ s32 CheckEntityValid(Entity* entity) {
 
 static inline void unused_1560(Entity* self) {}
 
+static inline void CreateBlueTrailEntity(Entity* parent) {
+    Entity* entity;
+    s32 i;
+
+    for (i = 0; i < 3; i++) {
+        entity = &g_Entities[5 + i];
+        if (!entity->entityId) {
+            break;
+        }
+    }
+    if (!entity->entityId) {
+        DestroyEntity(entity);
+        entity->entityId = 0xDA;
+        entity->zPriority = parent->zPriority - 1;
+        entity->facingLeft = parent->facingLeft;
+        entity->flags = FLAG_KEEP_ALIVE_OFFCAMERA;
+        entity->posX = parent->posX;
+        entity->posY = parent->posY;
+        entity->ext.batFamBlueTrail.parent = parent;
+    }
+}
+
 void CreateAdditionalBats(s32 amount, s32 entityId);
 INCLUDE_ASM("asm/saturn/t_bat/f_nonmat", f60CF2E8, func_060CF2E8);
 
@@ -169,11 +192,279 @@ void UpdatePrimWhenAlucardIsBat(Entity* entity) {
 void SwitchModeInitialize(Entity* self);
 INCLUDE_ASM("asm/saturn/t_bat/f_nonmat", f60CF6B4, func_060CF6B4);
 
-// ServantInit
-INCLUDE_ASM("asm/saturn/t_bat/f_nonmat", f60CFB00, func_060CFB00);
+// SAT: func_060CFB00
+void ServantInit(s32 mode) {
+    Entity* e;
 
-// UpdateServantDefault
-INCLUDE_ASM("asm/saturn/t_bat/f_nonmat", f60CFC48, func_060CFC48);
+    if ((mode == 1) || (mode == 3)) {
+        ProcessEvent(NULL, true);
+        if (mode == 3) {
+            return;
+        }
+    }
+
+    e = &g_Entities[4];
+
+    DestroyEntity(e);
+
+    e->unk56 = 0x6C;
+    e->palette = 0x140;
+    e->animSet = 0x8014;
+    e->zPriority = PLAYER.zPriority - 2;
+    e->facingLeft = (PLAYER.facingLeft + 1) & 1;
+    e->posX.val = PLAYER.posX.val;
+    e->posY.val = PLAYER.posY.val;
+    e->params = 0;
+
+    if (mode == 1) {
+        e->entityId = 0xD1;
+        e->posX.val = FIX(128);
+        e->posY.val = FIX(-32);
+    } else {
+        e->entityId = 0xD1;
+        if (D_8003C708.flags & FLAG_UNK_20) {
+            e->posX.val = ServantUnk0() ? FIX(192) : FIX(64);
+            e->posY.val = FIX(160);
+        } else {
+            e->posX.val =
+                PLAYER.posX.val + (PLAYER.facingLeft ? FIX(18) : FIX(-18));
+            e->posY.val = PLAYER.posY.val - FIX(34);
+        }
+    }
+    e->flags =
+        FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000;
+    e->ext.bat.cameraX = g_Tilemap.scrollX.i.hi;
+    e->ext.bat.cameraY = g_Tilemap.scrollY.i.hi;
+    s_IsServantDestroyed = 0;
+}
+
+// SAT: func_060CFC48
+void UpdateServantDefault(Entity* self) {
+    s16 targetX;
+    s16 targetY;
+    s32 dx0;
+    s32 dy0;
+    s32 angle;
+    s32 dAngle;
+    s32 distance0;
+    s16 xOffset;
+    s32 s_TargetPositionX;
+    s32 s_TargetPositionY;
+    s32 dx1;
+    s32 dy1;
+    s32 distance1;
+
+    GetServantStats(self, 0, 0, &s_BatStats);
+    if (s_IsServantDestroyed) {
+        self->zPriority = PLAYER.zPriority - 2;
+    }
+    if (D_8003C708.flags & FLAG_UNK_20) {
+        switch (ServantUnk0()) {
+        case 0:
+            dx0 = 0x40;
+            break;
+
+        case 1:
+            dx0 = 0xC0;
+            break;
+
+        case 2:
+            dx0 = (self->posX.i.hi > 0x80) ? 0xC0 : 0x40;
+            break;
+        }
+        dy0 = 0xA0;
+    } else {
+        xOffset = -0x12;
+        if (PLAYER.facingLeft) {
+            xOffset = -xOffset;
+        }
+        dx0 = PLAYER.posX.i.hi + xOffset;
+        dy0 = PLAYER.posY.i.hi - 0x22;
+    }
+    angle = self->ext.bat.randomMovementAngle;
+    self->ext.bat.randomMovementAngle += 0x10;
+    distance0 = self->ext.bat.randomMovementScaler;
+    targetX = dx0 + ((rcos(angle) >> 4) * distance0 >> 8);
+    targetY = dy0 - ((rsin(angle / 2) >> 4) * distance0 >> 8);
+    switch (self->step) {
+    case 0:
+        SwitchModeInitialize(self);
+        break;
+
+    case 1:
+        if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
+            self->ext.bat.frameCounter = 0;
+            self->step = 5;
+            break;
+        }
+        if (D_8003C708.flags & FLAG_UNK_20) {
+            if (PLAYER.posX.i.hi >= self->posX.i.hi) {
+                self->facingLeft = true;
+            } else {
+                self->facingLeft = false;
+            }
+        } else {
+            if (PLAYER.facingLeft == self->facingLeft) {
+                if (ABS(targetX - self->posX.i.hi) <= 0) {
+                    self->facingLeft = PLAYER.facingLeft ? false : true;
+                } else if (self->facingLeft && targetX < self->posX.i.hi) {
+                    self->facingLeft = PLAYER.facingLeft ? false : true;
+                } else if (!self->facingLeft && targetX > self->posX.i.hi) {
+                    self->facingLeft = PLAYER.facingLeft ? false : true;
+                }
+            } else if (self->facingLeft && (self->posX.i.hi - targetX) > 0x1F) {
+                self->facingLeft = PLAYER.facingLeft;
+            } else if (
+                !self->facingLeft && (targetX - self->posX.i.hi) > 0x1F) {
+                self->facingLeft = PLAYER.facingLeft;
+            }
+        }
+        angle = CalculateAngleToEntity(self, targetX, targetY);
+        dAngle = StepAngleTowards(
+            angle, self->ext.bat.targetAngle, self->ext.bat.angleStep);
+        self->ext.bat.targetAngle = dAngle;
+        dx0 = targetX - self->posX.i.hi;
+        dy0 = targetY - self->posY.i.hi;
+        distance0 = dx0 * dx0 + dy0 * dy0;
+        if (distance0 < 800) {
+            self->velocityY = -(rsin(dAngle) << 3);
+            self->velocityX = rcos(dAngle) << 3;
+            self->ext.bat.angleStep = 0x20;
+        } else if (distance0 < 3000) {
+            self->velocityY = -(rsin(dAngle) << 4);
+            self->velocityX = rcos(dAngle) << 4;
+            self->ext.bat.angleStep = 0x40;
+        } else if (distance0 < 9000) {
+            self->velocityY = -(rsin(dAngle) << 5);
+            self->velocityX = rcos(dAngle) << 5;
+            self->ext.bat.angleStep = 0x60;
+        } else if (distance0 < 256 * 256) {
+            self->velocityY = -(rsin(dAngle) << 6);
+            self->velocityX = rcos(dAngle) << 6;
+            self->ext.bat.angleStep = 0x80;
+        } else {
+            self->velocityX = (targetX - self->posX.i.hi) << 0xE;
+            self->velocityY = (targetY - self->posY.i.hi) << 0xE;
+            self->ext.bat.angleStep = 0x80;
+        }
+
+        self->velocityX = self->velocityX * 5 >> 2;
+        if (self->velocityY > FIX(1.0)) {
+            SetEntityAnimation(self, g_BatHighVelocityAnimationFrame);
+        } else if (distance0 < 60 * 60) {
+            SetEntityAnimation(self, g_DefaultBatAnimationFrame);
+        } else if (distance0 > 100 * 100) {
+            SetEntityAnimation(self, g_BatFarFromTargetAnimationFrame);
+        }
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        if (g_CutsceneHasControl) {
+            break;
+        }
+        dx1 = targetX - self->posX.i.hi;
+        dy1 = targetY - self->posY.i.hi;
+        distance1 = dx1 * dx1 + dy1 * dy1;
+        if (distance1 < 24 * 24) {
+            if (self->ext.bat.doUpdateCloseAnimation) {
+                self->ext.bat.doUpdateCloseAnimation = false;
+                SetEntityAnimation(self, g_BatCloseToTargetAnimationFrame);
+            }
+            self->ext.bat.frameCounter++;
+            if (self->ext.bat.frameCounter >
+                g_BatAbilityStats[s_BatStats.level / 10].delayFrames) {
+                self->ext.bat.frameCounter = 0;
+                self->ext.bat.attackTarget = FindValidTarget(self);
+                if (self->ext.bat.attackTarget != NULL) {
+                    self->step++;
+                }
+            }
+        } else {
+            self->ext.bat.doUpdateCloseAnimation = true;
+        }
+        break;
+
+    case 2:
+        self->ext.bat.frameCounter++;
+        if (self->ext.bat.frameCounter == 1) {
+            PlaySfx(SFX_UI_ALERT_TINK);
+            UpdatePrimitives(self, 1);
+        } else if (self->ext.bat.frameCounter > 30) {
+            self->ext.bat.frameCounter = 0;
+            UpdatePrimitives(self, 0);
+            self->hitboxWidth = 5;
+            self->hitboxHeight = 5;
+            GetServantStats(self, 0xf, 1, &s_BatStats);
+            self->ext.bat.targetAngle = 0xC00;
+            SetEntityAnimation(self, g_BatHighVelocityAnimationFrame);
+            CreateBlueTrailEntity(self);
+            self->step++;
+        }
+        break;
+
+    case 3:
+        s_TargetPositionX = self->ext.bat.attackTarget->posX.i.hi;
+        s_TargetPositionY = self->ext.bat.attackTarget->posY.i.hi;
+        angle =
+            CalculateAngleToEntity(self, s_TargetPositionX, s_TargetPositionY);
+        dAngle = StepAngleTowards(
+            angle, self->ext.bat.targetAngle,
+            g_BatAbilityStats[s_BatStats.level / 10].angleStep);
+        self->ext.bat.targetAngle = dAngle;
+        self->velocityX = rcos(dAngle) << 2 << 4;
+        self->velocityY = -(rsin(dAngle) << 2 << 4);
+        if (self->velocityX > 0) {
+            self->facingLeft = true;
+        }
+        if (self->velocityX < 0) {
+            self->facingLeft = false;
+        }
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        dx1 = s_TargetPositionX - self->posX.i.hi;
+        dy1 = s_TargetPositionY - self->posY.i.hi;
+        distance1 = dx1 * dx1 + dy1 * dy1;
+        if ((CheckEntityValid(self->ext.bat.attackTarget) == 0) ||
+            (distance1 < 0x40)) {
+            self->ext.bat.frameCounter = 0;
+            self->step++;
+            SetEntityAnimation(self, g_BatCloseToTargetAnimationFrame);
+        }
+        break;
+
+    case 4:
+        angle = CalculateAngleToEntity(self, targetX, targetY);
+        dAngle = StepAngleTowards(angle, self->ext.bat.targetAngle, 0x10);
+        self->ext.bat.targetAngle = dAngle;
+        self->velocityX = rcos(dAngle) << 2 << 4;
+        self->velocityY = -(rsin(dAngle) << 2 << 4);
+        self->facingLeft = (self->velocityX >= 0) ? true : false;
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        self->ext.bat.frameCounter++;
+        if (self->ext.bat.frameCounter > 30) {
+            self->hitboxWidth = 0;
+            self->hitboxHeight = 0;
+            self->step = 1;
+        }
+        break;
+
+    case 5:
+        self->ext.bat.frameCounter++;
+        if (self->ext.bat.frameCounter == 1) {
+            PlaySfx(SFX_BAT_SCREECH);
+            UpdatePrimitives(self, 3);
+        } else if (self->ext.bat.frameCounter > 30) {
+            UpdatePrimitives(self, 0);
+            self->entityId = 0xD2;
+            self->step = 0;
+        }
+        UpdatePrimWhenAlucardIsBat(self);
+        break;
+    }
+    ProcessEvent(self, false);
+    unused_1560(self);
+    UpdateAnim(NULL, g_BatAnimationFrames);
+}
 
 // SAT: func_060D0490
 void UpdateBatAttackMode(Entity* self) {
@@ -343,7 +634,7 @@ void DestroyServantEntity(Entity* entity) {
     DestroyEntity(entity);
 }
 
-// func_060D1070
+// SAT: func_060D1070
 u32 ServantUpdateAnim(Entity* self, s8* frameProps, AnimationFrame** frames) {
     s32 ret = 0;
 
