@@ -246,7 +246,8 @@ void SwitchModeInitialize(Entity* self) {
                 return;
             }
             UpdatePrimitives(self, 0);
-            self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_UNK_20000;
+            self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                          FLAG_HAS_PRIMS | FLAG_UNK_20000;
             SetEntityAnimation(self, g_DefaultBatAnimationFrame);
             self->ext.bat.randomMovementAngle = rand() & 0xFFF;
             self->ext.bat.targetAngle = 0;
@@ -262,7 +263,8 @@ void SwitchModeInitialize(Entity* self) {
                 return;
             }
             UpdatePrimitives(self, 0);
-            self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_02000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
+            self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                          FLAG_UNK_02000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
             SetEntityAnimation(self, g_DefaultBatAnimationFrame);
             if (self->ext.bat.batIndex == 0) {
                 self->ext.bat.follow = &PLAYER;
@@ -305,13 +307,15 @@ void SwitchModeInitialize(Entity* self) {
         self->ext.bat.doUpdateCloseAnimation = false;
         switch (self->entityId) {
         case 0xD1:
-            self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_UNK_20000;
+            self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                          FLAG_HAS_PRIMS | FLAG_UNK_20000;
             SetEntityAnimation(self, g_DefaultBatAnimationFrame);
             self->ext.bat.frameCounter = rand() & 0xFFF;
             self->step++;
             break;
         case 0xD2:
-            self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_02000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
+            self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                          FLAG_UNK_02000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
             SetEntityAnimation(self, g_DefaultBatAnimationFrame);
             if (self->ext.bat.batIndex == 0) {
                 self->ext.bat.follow = &PLAYER;
