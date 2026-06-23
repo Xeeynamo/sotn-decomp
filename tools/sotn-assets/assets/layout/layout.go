@@ -33,6 +33,18 @@ type layouts struct {
 	Indices  []int           `json:"indices"`
 }
 
+// Utility function that finds the index of the given value in the given list.
+// Returns -1 (invalid index) if value is not in list.
+func indexOf(searchList []int, searchVal int) int {
+
+	for i, value := range searchList {
+		if value == searchVal {
+			return i
+		}
+	}
+	return -1
+}
+
 func fetchEntityIDsFromHeaderFile(overlay string) (map[int]string, error) {
 	var path = "src/st"
 	if strings.HasPrefix(overlay, "bo") || strings.HasPrefix(overlay, "rbo") ||
@@ -223,14 +235,12 @@ func buildEntityLayouts(fileName, outputDir, subDir string, ovlName string) erro
 			if lastEntry.X != -1 || lastEntry.Y != -1 {
 				return fmt.Errorf("layout entity bank %d needs to have a X:-1 and Y:-1 entry at the end", i)
 			}
-			roomNum := 0
-			for indices_num, member := range el.Indices {
-				if member == i {
-					roomNum = indices_num - 1
-					break
-				}
+			roomNum := indexOf(el.Indices, i) - 1
+			if roomNum < 0 {
+				sb.WriteString(fmt.Sprintf("// Offset %d, No Room Found\n", nWritten))
+			} else {
+				sb.WriteString(fmt.Sprintf("// Offset %d, Room 0x%02X\n", nWritten, roomNum)) //label each block with offsets
 			}
-			sb.WriteString(fmt.Sprintf("// Offset %d, Room 0x%02X\n", nWritten, roomNum)) //label each block with offsets
 			for _, e := range entries {
 				sb.WriteString(fmt.Sprintf("    0x%04X, 0x%04X, %s | 0x%04X, 0x%04X, 0x%04X,\n",
 					uint16(e.X), uint16(e.Y), e.ID, int(e.Flags)<<8, int(e.Slot)|(int(e.SpawnID)<<8), e.Params))
