@@ -200,7 +200,7 @@ typedef struct {
 
 typedef struct {
     /* 0x78 */ s32 : 32;
-    /* 0x7C */ s16 : 16;
+    /* 0x7C */ s16 previouslyInitialized;
     /* 0x7E */ s16 batIndex;
     /* 0x80 */ s16 randomMovementAngle;
     /* 0x82 */ s16 targetAngle;
@@ -277,7 +277,7 @@ typedef struct Entity {
     /* 0x74 */ u16 entityId;
     /* 0x76 */ char pad_76[0x2];
     /* 0x78 */ Ext ext;
-    /* 0xB0 */ char pad_B0[0x4];
+    /* 0xB0 */ struct SpriteParts* pad_B0;
     /* 0xB4 */ struct UnkStruct_060e8350* unkB4;
 } Entity; // size = 0xB8
 
@@ -670,6 +670,13 @@ typedef struct ServantEvent {
     /* 0x28 */ s32 params;    // parameters of the entity to spawn
     /* 0x2C */ u32 unk2C;
 } ServantEvent;
+
+typedef struct {
+    s32 unk0;
+    u8 pad[4];
+    u16 unk8;
+    u16 unk10;
+} Unk060ED26C;
 
 typedef enum {
     PLAYER_CHARACTER,
