@@ -1,3 +1,5 @@
+_func_0600B344 = 0x0600B344;
+_AllocPrimitives = 0x0600DB38;
 _ratan2 = 0x0600EE88;
 _rsin = 0x0600F7BC;
 _rcos = 0x0600F81C;
@@ -25,9 +27,12 @@ _GetServantStats = 0x060BAA20;
 _CreateEntFactoryFromEntity = 0x060BAF44;
 _func_060C1618 = 0x060C1618;
 _UpdateAnim = 0x060C175C;
+
 _CreateAdditionalBats = 0x060CF2E8;
 _UpdatePrimitives = 0x060CF410;
-_SwitchModeInitialize = 0x060CF6B4;
+_g_ServantSpriteParts = 0x060D19FC;
+_DAT_060d1a88 = 0x060D1A88;
+_DAT_060d1b70 = 0x060D1B70;
 _g_DefaultBatAnimationFrame = 0x060D1B84;
 _g_BatFarFromTargetAnimationFrame = 0x060D1BF0;
 _g_BatCloseToTargetAnimationFrame = 0x060D1C28;

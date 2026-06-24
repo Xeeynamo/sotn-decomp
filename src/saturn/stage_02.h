@@ -14,13 +14,6 @@ typedef struct UnkStruct_060e8350 {
 } UnkStruct_060e8350; // size = 0x24
 
 typedef struct {
-    s32 unk0;
-    u8 pad[4];
-    u16 unk8;
-    u16 unk10;
-} Unk060ED26C;
-
-typedef struct {
     u8 pad[0x1c];
     u32 unk28;
 } Unk2;

@@ -10,6 +10,9 @@ typedef struct {
     s32 makeBadAttacks;
 } BatAbilityValues;
 
+extern struct SpriteParts* g_ServantSpriteParts[];        // 0x060D19FC
+extern s32 DAT_060d1a88;                                  // 0x060D1A88
+extern Unk060ED26C DAT_060d1b70;                          // 0x060D1B70
 extern AnimationFrame g_DefaultBatAnimationFrame[];       // 0x060D1B84
 extern AnimationFrame g_BatFarFromTargetAnimationFrame[]; // 0x060D1BF0
 extern AnimationFrame g_BatCloseToTargetAnimationFrame[]; // 0x060D1C28
@@ -161,8 +164,39 @@ static inline void CreateBlueTrailEntity(Entity* parent) {
     }
 }
 
-void CreateAdditionalBats(s32 amount, s32 entityId);
-INCLUDE_ASM("asm/saturn/t_bat/f_nonmat", f60CF2E8, func_060CF2E8);
+// SAT: func_060CF2E8
+void CreateAdditionalBats(s32 amount, s32 entityId) {
+    s32 i;
+    Entity* entity;
+
+    amount = (amount > 3) ? 3 : amount;
+
+    for (i = 0; i < amount; i++) {
+        entity = &g_Entities[5 + i];
+        if (entity->entityId == entityId) {
+            entity->step = 0;
+        } else {
+            DestroyEntity(entity);
+            entity->unk0 = func_0600B344(
+                DAT_060d1b70.unk8, DAT_060d1b70.unk10, &DAT_060d1a88, 1);
+            if (entity->unk0 == NULL) {
+                DestroyEntity(entity);
+                return;
+            }
+            entity->pad_B0 = g_ServantSpriteParts;
+            entity->unk0->zPriority = PLAYER.zPriority - 2;
+            entity->entityId = entityId;
+            entity->unk56 = 0x6C;
+            entity->palette = 0x140;
+            entity->animSet = 0x8014;
+            entity->zPriority = PLAYER.zPriority - 2;
+            entity->facingLeft = (PLAYER.facingLeft + 1) & 1;
+            entity->params = i + 1;
+        }
+        entity->ext.bat.cameraX = g_Tilemap.scrollX.i.hi;
+        entity->ext.bat.cameraY = g_Tilemap.scrollY.i.hi;
+    }
+}
 
 void UpdatePrimitives(Entity* entity, s32 frameIndex);
 INCLUDE_ASM("asm/saturn/t_bat/f_nonmat", f60CF410, func_060CF410);
@@ -189,8 +223,128 @@ void UpdatePrimWhenAlucardIsBat(Entity* entity) {
     prim->y0 = y - g_BatSpriteData[frame][1];
 }
 
-void SwitchModeInitialize(Entity* self);
-INCLUDE_ASM("asm/saturn/t_bat/f_nonmat", f60CF6B4, func_060CF6B4);
+// SAT: func_060CF6B4
+void SwitchModeInitialize(Entity* self) {
+    s32 i;
+
+    if (!self->ext.bat.previouslyInitialized) {
+        self->ext.bat.batIndex = self->params;
+        self->ext.bat.doUpdateCloseAnimation = false;
+        switch (self->entityId) {
+        case 0xD1:
+            self->unk0 = func_0600B344(
+                DAT_060d1b70.unk8, DAT_060d1b70.unk10, &DAT_060d1a88, 1);
+            if (self->unk0 == NULL) {
+                DestroyEntity(self);
+                return;
+            }
+            self->pad_B0 = g_ServantSpriteParts;
+            self->unk0->zPriority = PLAYER.zPriority - 2;
+            self->primIndex = AllocPrimitives(0, 1);
+            if (self->primIndex == -1) {
+                DestroyEntity(self);
+                return;
+            }
+            UpdatePrimitives(self, 0);
+            self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                          FLAG_HAS_PRIMS | FLAG_UNK_20000;
+            SetEntityAnimation(self, g_DefaultBatAnimationFrame);
+            self->ext.bat.randomMovementAngle = rand() & 0xFFF;
+            self->ext.bat.targetAngle = 0;
+            self->ext.bat.randomMovementScaler = 12;
+            self->ext.bat.frameCounter = rand() & 0xFFF;
+            self->ext.bat.angleStep = 0x20;
+            self->step++;
+            break;
+        case 0xD2:
+            self->primIndex = AllocPrimitives(0, 1);
+            if (self->primIndex == -1) {
+                DestroyEntity(self);
+                return;
+            }
+            UpdatePrimitives(self, 0);
+            self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                          FLAG_UNK_02000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
+            SetEntityAnimation(self, g_DefaultBatAnimationFrame);
+            if (self->ext.bat.batIndex == 0) {
+                self->ext.bat.follow = &PLAYER;
+            } else {
+                self->ext.bat.follow = &g_Entities[self->ext.bat.batIndex + 3];
+            }
+            self->ext.bat.cameraX = g_Tilemap.scrollX.i.hi;
+            self->ext.bat.cameraY = g_Tilemap.scrollY.i.hi;
+            if (!self->ext.bat.batIndex) {
+                for (i = 0; i < 16; i++) {
+                    s_BatPathingPoints[self->ext.bat.batIndex][i].x =
+                        self->ext.bat.follow->posX.i.hi + self->ext.bat.cameraX;
+                    s_BatPathingPoints[self->ext.bat.batIndex][i].y =
+                        self->ext.bat.follow->posY.i.hi + self->ext.bat.cameraY;
+                }
+            } else {
+                for (i = 0; i < 16; i++) {
+                    if (PLAYER.facingLeft) {
+                        s_BatPathingPoints[self->ext.bat.batIndex][i].x =
+                            PLAYER.posX.i.hi +
+                            (self->ext.bat.batIndex + 1) * 0x10 +
+                            self->ext.bat.cameraX;
+                    } else {
+                        s_BatPathingPoints[self->ext.bat.batIndex][i].x =
+                            PLAYER.posX.i.hi -
+                            (self->ext.bat.batIndex + 1) * 0x10 +
+                            self->ext.bat.cameraX;
+                    }
+                    s_BatPathingPoints[self->ext.bat.batIndex][i].y =
+                        PLAYER.posY.i.hi + self->ext.bat.cameraY;
+                }
+                self->posX.i.hi = PLAYER.facingLeft ? 0x180 : -0x80;
+                self->posY.i.hi = rand() & 0xFF;
+            }
+            self->ext.bat.hasShotFireball = false;
+            self->step++;
+            break;
+        }
+    } else {
+        self->ext.bat.doUpdateCloseAnimation = false;
+        switch (self->entityId) {
+        case 0xD1:
+            self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                          FLAG_HAS_PRIMS | FLAG_UNK_20000;
+            SetEntityAnimation(self, g_DefaultBatAnimationFrame);
+            self->ext.bat.frameCounter = rand() & 0xFFF;
+            self->step++;
+            break;
+        case 0xD2:
+            self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                          FLAG_UNK_02000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
+            SetEntityAnimation(self, g_DefaultBatAnimationFrame);
+            if (self->ext.bat.batIndex == 0) {
+                self->ext.bat.follow = &PLAYER;
+            } else {
+                self->ext.bat.follow = &g_Entities[self->ext.bat.batIndex + 3];
+            }
+            self->ext.bat.cameraX = g_Tilemap.scrollX.i.hi;
+            self->ext.bat.cameraY = g_Tilemap.scrollY.i.hi;
+            for (i = 0; i < 16; i++) {
+                if (PLAYER.facingLeft) {
+                    s_BatPathingPoints[self->ext.bat.batIndex][i].x =
+                        PLAYER.posX.i.hi + (self->ext.bat.batIndex + 1) * 0x10 +
+                        self->ext.bat.cameraX;
+                } else {
+                    s_BatPathingPoints[self->ext.bat.batIndex][i].x =
+                        PLAYER.posX.i.hi - (self->ext.bat.batIndex + 1) * 0x10 +
+                        self->ext.bat.cameraX;
+                }
+                s_BatPathingPoints[self->ext.bat.batIndex][i].y =
+                    PLAYER.posY.i.hi + self->ext.bat.cameraY;
+            }
+            self->ext.bat.hasShotFireball = false;
+            self->step++;
+            break;
+        }
+    }
+    self->ext.bat.previouslyInitialized = self->entityId;
+    GetServantStats(self, 0, 0, &s_BatStats);
+}
 
 // SAT: func_060CFB00
 void ServantInit(s32 mode) {
