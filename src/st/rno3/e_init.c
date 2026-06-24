@@ -71,7 +71,7 @@ void EntityJewelSwordDoor(Entity* self);
 void EntityFallingRock2(Entity* self);
 void EntityStairwayPiece(Entity* self);
 void EntityFallingRock(Entity* self);
-void func_us_801B3C88(Entity* self);
+void EntityTransparentWater(Entity* self);
 void EntityAlucardWaterEffect(Entity* self);
 void EntitySplashWater(Entity* self);
 void EntitySurfacingWater(Entity* self);
@@ -151,7 +151,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityFallingRock2,
     EntityStairwayPiece,
     EntityFallingRock,
-    func_us_801B3C88,
+    EntityTransparentWater,
     EntityAlucardWaterEffect,
     EntitySplashWater,
     EntitySurfacingWater,
