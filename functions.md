@@ -4663,7 +4663,7 @@
 | dra      | func_psp_09116E40                     |      183 |         17 |        |       |     |
 | chi      | func_psp_0923D008                     |      183 |         20 |        |       |     |
 | main     | __ieee754_atan2f                      |      183 |         48 |        |       |     |
-| rno3     | func_us_801B3C88                      |      184 |         18 |        |       |     |
+| rno3     | EntityTransparentWater                |      184 |         18 |        |       |     |
 | bo0      | func_pspeu_09241A68                   |      184 |         20 |        |       |     |
 | rbo0     | func_pspeu_09247A50                   |      184 |         20 |        |       |     |
 | are      | func_pspeu_0924FD58                   |      184 |         20 |        |       |     |
