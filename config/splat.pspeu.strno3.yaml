@@ -44,7 +44,7 @@ segments:
     align: 128
     subalign: 8
     subsegments:
-      - [0x80, c, rno3_psp/create_entity]
+      - [0x80, c, rno3/create_entity]
       - [0x1028, c, rno3_psp/e_blue_venus_weed]
       - [0x2388, c, rno3_psp/unk_2388]
       - [0x3B78, c, rno3_psp/e_stage_name]
@@ -112,7 +112,8 @@ segments:
       - [0x4ED00, .rodata, rno3_psp/unk_17498]
       - [0x4ED28, .rodata, rno3_psp/unk_1A748]
       - [0x4ED50, .rodata, rno3/e_castle_door]
-      - [0x4ED80, bss]
+      - [0x4ED80, .bss, rno3/create_entity]
+      - [0x4EDA0, bss, bss_4EDA0]
       - [0x4EE00, .bss, rno3/e_background_bushes_trees]
       - [0x4EE10, bss, placeholder_name_unk_bss]
       - [0x4EE28, .bss, rno3_psp/st_init]
