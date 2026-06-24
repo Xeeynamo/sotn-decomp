@@ -84,7 +84,7 @@ typedef enum EntityIDs {
     /* 0x44 */ E_FALLING_ROCK_2,            // EntityFallingRock2
     /* 0x45 */ E_STAIRWAY_PIECE,            // EntityStairwayPiece
     /* 0x46 */ E_FALLING_ROCK,              // EntityFallingRock
-    /* 0x47 */ E_UNK_47,                    // func_us_801B3C88
+    /* 0x47 */ E_TRANSP_WATER,              // EntityTransparentWater
     /* 0x48 */ E_ALUCARD_WATER_EFFECT,      // EntityAlucardWaterEffect
     /* 0x49 */ E_SPLASH_WATER,              // EntitySplashWater
     /* 0x4A */ E_SURFACING_WATER,           // EntitySurfacingWater
