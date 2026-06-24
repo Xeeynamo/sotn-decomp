@@ -235,7 +235,7 @@ func buildEntityLayouts(fileName, outputDir, subDir string, ovlName string) erro
 			if lastEntry.X != -1 || lastEntry.Y != -1 {
 				return fmt.Errorf("layout entity bank %d needs to have a X:-1 and Y:-1 entry at the end", i)
 			}
-			roomNum := indexOf(el.Indices, i) - 1
+			roomNum := indexOf(el.Indices, i)
 			if roomNum < 0 {
 				sb.WriteString(fmt.Sprintf("// Offset %d, No Room Found\n", nWritten))
 			} else {
