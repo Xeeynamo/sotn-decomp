@@ -56,7 +56,7 @@ segments:
       - [0xBA90, c, rno3_psp/unk_BA90]
       - [0xC4A8, c, rno3_psp/e_particles]
       - [0xD0F8, c, rno3/e_collect]
-      - [0x11270, c, rno3_psp/unk_11270]
+      - [0x11270, c, rno3/e_misc]
       - [0x11C28, c, rno3/collision]
       - [0x13E00, c, rno3_psp/unk_13E00]
       - [0x16D88, c, rno3_psp/popup]
