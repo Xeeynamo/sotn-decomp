@@ -43,12 +43,12 @@ typedef enum EntityIDs {
     /* 0x1B */ E_LIGHTNING_THUNDER,         // EntityLightningThunder
     /* 0x1C */ E_LIGHTNING_CLOUD,           // EntityLightningCloud
     /* 0x1D */ E_FIRE_WARG,                 // EntityFireWarg
-    /* 0x1E */ E_FIRE_WARG_WAVE_ATTACK,     // EntityFireWargWaveAttack
-    /* 0x1F */ E_UNK_ID2F,                  // EntityUnkId2F
-    /* 0x20 */ E_UNK_ID30,                  // EntityUnkId30
-    /* 0x21 */ E_UNK_ID31,                  // EntityUnkId31
-    /* 0x22 */ E_EXPLOSION3,                // EntityExplosion3
-    /* 0x23 */ E_FIRE_WARG_DEATH_BEAMS,     // EntityFireWargDeathBeams
+    /* 0x1E */ E_FIRE_WARG_ATTACK,     // EntityFireWargWaveAttack
+    /* 0x1F */ E_ID_2F,                  // EntityUnkId2F
+    /* 0x20 */ E_ID_30,                  // EntityUnkId30
+    /* 0x21 */ E_ID_31,                  // EntityUnkId31
+    /* 0x22 */ E_EXPLOSION_3,                // EntityExplosion3
+    /* 0x23 */ E_FIRE_WARG_DEATH,     // EntityFireWargDeathBeams
     /* 0x24 */ E_UNK_24,                    // func_us_801C1E70
     /* 0x25 */ E_UNK_25,                    // func_us_801C2380
     /* 0x26 */ E_UNK_26,                    // func_us_801C247C
@@ -61,8 +61,8 @@ typedef enum EntityIDs {
     /* 0x2D */ E_UNK_2D,                    // func_us_801C406C
     /* 0x2E */ E_UNK_2E,                    // func_us_801C4178
     /* 0x2F */ E_UNK_2F,                    // func_us_801C4334
-    /* 0x30 */ E_UNK_30,                    // func_us_801C4468
-    /* 0x31 */ E_UNK_31,                    // func_us_801C48D8
+    /* 0x30 */ E_UNK_30,                     // func_us_801C4468
+    /* 0x31 */ E_UNK_31,                     // func_us_801C48D8
     /* 0x32 */ E_UNK_32,                    // func_us_801C4B44
     /* 0x33 */ E_UNK_33,                    // func_us_801C4C50
     /* 0x34 */ E_VENUS_WEED,                // EntityVenusWeed
