@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 // Note: Two functions in this file have weird temp variables for PSX.
 // Look for the "VERSION_PSP" defines in this file to see. The PSP version
 // of both functions is simple and reasonable, but PSX has odd temps.
