@@ -8,4 +8,3 @@ INCLUDE_ASM("st/rno3/nonmatchings/e_jack_o_bones", EntityJackOBones);
 INCLUDE_ASM("st/rno3/nonmatchings/e_jack_o_bones", func_us_801C2380);
 
 INCLUDE_ASM("st/rno3/nonmatchings/e_jack_o_bones", func_us_801C247C);
-
