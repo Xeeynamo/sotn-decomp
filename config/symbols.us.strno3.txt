@@ -52,6 +52,7 @@ EntityFireWargWaveAttack = 0x801C1320;
 EntityUnkId2F = 0x801C16F4;
 EntityFireWargDeathBeams = 0x801C191C;
 EntityJackOBones = 0x801C1E70;
+EntityNovaSkeleton = 0x801C2A10;
 EntityBladeSoldierDeathParts = 0x801C2EF8;
 SetupPrimsForEntitySpriteParts = 0x801C4D18;
 EntityVenusWeed = 0x801C4F9C;

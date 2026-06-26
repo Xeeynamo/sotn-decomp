@@ -5,7 +5,7 @@ INCLUDE_ASM("st/rno3_psp/nonmatchings/rno3_psp/unk_17498", func_pspeu_0924EB18);
 
 INCLUDE_ASM("st/rno3_psp/nonmatchings/rno3_psp/unk_17498", func_pspeu_0924EBC8);
 
-INCLUDE_ASM("st/rno3_psp/nonmatchings/rno3_psp/unk_17498", func_us_801C2A10);
+INCLUDE_ASM("st/rno3_psp/nonmatchings/rno3_psp/unk_17498", EntityNovaSkeleton);
 
 INCLUDE_ASM("st/rno3_psp/nonmatchings/rno3_psp/unk_17498", EntityBladeSoldierDeathParts);
 
