@@ -34,4 +34,7 @@ INCLUDE_ASM("st/rno3/nonmatchings/e_nova_skeleton", func_us_801C48D8);
 INCLUDE_ASM("st/rno3/nonmatchings/e_nova_skeleton", func_us_801C4B44);
 
 INCLUDE_ASM("st/rno3/nonmatchings/e_nova_skeleton", func_us_801C4C50);
+<<<<<<< HEAD
 >>>>>>> 0df064057 (split US on nova skeleton)
+=======
+>>>>>>> f04056fbe (finish splits for now)
