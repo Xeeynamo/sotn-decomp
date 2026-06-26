@@ -3,7 +3,7 @@
 
 INCLUDE_ASM("st/rno3/nonmatchings/unk_41DCC", func_us_801C1DCC);
 
-INCLUDE_ASM("st/rno3/nonmatchings/unk_41DCC", func_us_801C1E70);
+INCLUDE_ASM("st/rno3/nonmatchings/unk_41DCC", EntityJackOBones);
 
 INCLUDE_ASM("st/rno3/nonmatchings/unk_41DCC", func_us_801C2380);
 
