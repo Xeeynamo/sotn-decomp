@@ -49,7 +49,7 @@ typedef enum EntityIDs {
     /* 0x21 */ E_ID_31,                     // EntityUnkId31
     /* 0x22 */ E_EXPLOSION_3,               // EntityExplosion3
     /* 0x23 */ E_FIRE_WARG_DEATH,           // EntityFireWargDeathBeams
-    /* 0x24 */ E_UNK_24,                    // EntityJackOBones
+    /* 0x24 */ E_JACK_O_BONES,              // EntityJackOBones
     /* 0x25 */ E_UNK_25,                    // func_us_801C2380
     /* 0x26 */ E_UNK_26,                    // func_us_801C247C
     /* 0x27 */ E_UNK_27,                    // func_us_801C2A10
