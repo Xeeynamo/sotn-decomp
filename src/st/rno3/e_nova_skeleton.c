@@ -14,4 +14,3 @@ INCLUDE_ASM("st/rno3/nonmatchings/e_nova_skeleton", EntityBladeSoldierDeathParts
 INCLUDE_ASM("st/rno3/nonmatchings/e_nova_skeleton", func_us_801C2FF0);
 
 INCLUDE_ASM("st/rno3/nonmatchings/e_nova_skeleton", func_us_801C34A0);
-
