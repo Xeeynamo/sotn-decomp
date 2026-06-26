@@ -15,7 +15,7 @@ INCLUDE_ASM("st/rno3/nonmatchings/unk_41DCC", func_us_801C27E0);
 
 INCLUDE_RODATA("st/rno3/nonmatchings/unk_41DCC", D_us_801B013C);
 
-INCLUDE_ASM("st/rno3/nonmatchings/unk_41DCC", func_us_801C2A10);
+INCLUDE_ASM("st/rno3/nonmatchings/unk_41DCC", EntityNovaSkeleton);
 
 INCLUDE_ASM("st/rno3/nonmatchings/unk_41DCC", EntityBladeSoldierDeathParts);
 
