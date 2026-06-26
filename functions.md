@@ -571,7 +571,7 @@
 | nz0      | e_life_up.rodata                      |       18 |          0 | Yes    |       |     |
 | nz0      | e_skeleton.rodata                     |       18 |          0 | Yes    |       |     |
 | nz1      | e_life_up.rodata                      |       18 |          0 | Yes    |       |     |
-| rno3     | unk_6830.rodata                       |       18 |          0 | Yes    |       |     |
+| rno3     | e_jack_o_bones.rodata                 |       18 |          0 | Yes    |       |     |
 | rnz0     | e_ctulhu.rodata                       |       18 |          0 | Yes    |       |     |
 | sel      | A578.rodata                           |       18 |          0 | Yes    |       |     |
 | main     | sceGuCheckList                        |       18 |          1 |        |       |     |
@@ -687,7 +687,7 @@
 | nz0      | e_bloody_zombie.rodata                |       20 |          0 | Yes    |       |     |
 | nz1      | e_cloaked_knight.rodata               |       20 |          0 | Yes    |       |     |
 | rno3     | e_blue_venus_weed.rodata              |       20 |          0 | Yes    |       |     |
-| rno3     | unk_17498.rodata                      |       20 |          0 | Yes    |       |     |
+| rno3     | e_nova_skeleton.rodata                |       20 |          0 | Yes    |       |     |
 | rno3     | unk_1A748.rodata                      |       20 |          0 | Yes    |       |     |
 | main     | func_psp_089106B8                     |       20 |          1 |        |       |     |
 | main     | func_psp_089109E4                     |       20 |          1 |        |       |     |
@@ -5695,7 +5695,7 @@
 |          | func_092E8460                         |      463 |         29 |        |       |     |
 | main     | __ieee754_rem_pio2                    |      463 |         71 |        |       |     |
 | dra      | func_psp_0913BAE0                     |      464 |         52 | Yes    |       |     |
-| rno3     | func_us_801C2A10                      |      466 |         69 | Yes    |       |     |
+| rno3     | EntityNovaSkeleton                    |      466 |         69 | Yes    |       |     |
 | dra      | func_psp_09110FC8                     |      466 |         93 |        |       |     |
 | dai      | func_pspeu_092497D8                   |      467 |         49 |        |       |     |
 | no0      | func_pspeu_0925F0C0                   |      468 |         38 |        |       |     |
@@ -5748,7 +5748,7 @@
 | dra      | func_psp_0911FCA0                     |      495 |         59 |        |       |     |
 | ric      | func_pspeu_092B6DD8                   |      496 |         50 |        |       |     |
 | rcat     | func_pspeu_092484A0                   |      496 |         70 | Yes    |       |     |
-| rno3     | func_us_801C1E70                      |      497 |         74 | Yes    |       |     |
+| rno3     | EntityJackOBones                      |      497 |         74 | Yes    |       |     |
 | no2      | func_pspeu_0924BF68                   |      498 |         62 |        |       |     |
 | dra      | func_psp_09117C00                     |      499 |        105 |        |       |     |
 | maria    | func_pspeu_092A8AE8                   |      500 |         44 |        |       |     |
