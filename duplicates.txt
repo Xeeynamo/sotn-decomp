@@ -3730,7 +3730,7 @@
 | 0.90 | true     | func_801C6494                       | asm/us/st/nz0/matchings/e_skeleton/func_801C6494.s 
 | 0.90 | true     | func_us_801C26BC                    | asm/us/st/rcat/matchings/e_skeleton/func_us_801C26BC.s 
 | 0.97 | true     | func_us_801AE0A8                    | asm/us/st/rtop/matchings/e_yorick/func_us_801AE0A8.s 
-| 1.00 | false    | EntityBladeSoldierDeathParts        | asm/us/st/rno3/nonmatchings/unk_41DCC/EntityBladeSoldierDeathParts.s 
+| 1.00 | false    | EntityBladeSoldierDeathParts        | asm/us/st/rno3/nonmatchings/e_nova_skeleton/EntityBladeSoldierDeathParts.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_8018B1DC                    | asm/us/boss/mar/matchings/cutscene/func_us_8018B1DC.s 
 | 1.00 | true     | func_8018E124                       | asm/us/st/cen/matchings/cutscene/func_8018E124.s 
@@ -6008,8 +6008,8 @@
 | 1.00 | true     | func_us_801B09C8                    | asm/us/st/rcat/matchings/e_cavern_background/func_us_801B09C8.s 
 | 0.98 | true     | func_us_801B0EA4                    | asm/us/st/rcat/matchings/e_cavern_background/func_us_801B0EA4.s 
 -------------------------------------------------------------------------------
-| 1.00 | false    | func_us_801C406C                    | asm/us/st/rno3/nonmatchings/unk_41DCC/func_us_801C406C.s 
-| 1.00 | false    | func_us_801C4B44                    | asm/us/st/rno3/nonmatchings/unk_41DCC/func_us_801C4B44.s 
+| 1.00 | false    | func_us_801C406C                    | asm/us/st/rno3/nonmatchings/unk_435F8/func_us_801C406C.s 
+| 1.00 | false    | func_us_801C4B44                    | asm/us/st/rno3/nonmatchings/unk_435F8/func_us_801C4B44.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801A1108                    | asm/us/st/rtop/matchings/20B48/func_us_801A1108.s 
 | 0.96 | true     | func_us_801AA354                    | asm/us/st/top/matchings/296F4/func_us_801AA354.s 
