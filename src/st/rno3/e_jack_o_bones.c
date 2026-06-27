@@ -38,34 +38,13 @@ typedef enum {
     JACKO_DEAD
 } JackOBonesSteps;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-INCLUDE_ASM("st/rno3/nonmatchings/e_jack_o_bones", func_us_801C247C);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> 583c2b199 (pull out jackobones)
-=======
->>>>>>> f04056fbe (finish splits for now)
-=======
-=======
-typedef enum{
-=======
 typedef enum {
->>>>>>> c35977fe8 (Format)
     JACKO_JUMP_WINDUP,
     JACKO_JUMP_MIDAIR,
     JACKO_JUMP_LANDING
 } JumpSubsteps;
 
-<<<<<<< HEAD
->>>>>>> 42fbc12a8 (Namings)
-static void func_pspeu_0923DEB0(void) {
-=======
 static void TryThrow(void) {
->>>>>>> 56efff804 (final cleanup)
     s32 temp_s1;
     u16 temp_s0;
 
@@ -362,4 +341,3 @@ void EntityJackOBonesJack(Entity* self) {
         self->step = 0;
     }
 }
->>>>>>> 092e0b5c6 (migrating to US)
