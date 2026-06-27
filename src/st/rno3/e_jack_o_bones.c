@@ -14,12 +14,13 @@ static u16 death_parts_rotspeeds[] = {0x100, 0x80, 0x48, 0x20, 0x40, 0x10, 0x18,
 static u8 death_parts_lifetimes[] = {48, 32, 20, 12, 24, 16, 20, 0};
 static s32 death_parts_xVels[] = {FIX(0.75), FIX(1.75), FIX(1.5), FIX(1), FIX(2), FIX(1.75), FIX(0.75)};
 static s32 death_parts_yVels[] = {FIX(-5), FIX(-3), FIX(-2), FIX(-3), FIX(-4), FIX(-0.875), FIX(-4)};
-static s16 D_pspeu_092590D8[] = {-4, 0, 4, -4, -4, 4, 0, 0,};
-static s16 D_pspeu_092590E8[] = {-16, -8, -4, -4, 9, 9, 0, 0};
-static u8 D_pspeu_092590F8[][4] = {{96, 8, 8, 64}, {128, 64, 32, 48}};
-static s16 D_pspeu_09259100[] = {0, 20, 0, 4, 8, -4, -16, 0};
-static u16 D_pspeu_09259110[] = {0, 20, 12, 0};
-static s16 D_pspeu_09259118[] = {-12, 16, 0, -16, 0, -16};
+static s16 death_parts_xPos[] = {-4, 0, 4, -4, -4, 4, 0, 0,};
+static s16 death_parts_yPos[] = {-16, -8, -4, -4, 9, 9, 0, 0};
+// Select throw speed table with self->params & 1.
+static u8 throw_timers[][4] = {{96, 8, 8, 64}, {128, 64, 32, 48}};
+static s16 sensors1[] = {0, 20, 0, 4, 8, -4, -16, 0};
+static u16 sensors2[] = {0, 20, 12, 0};
+static s16 sensors3[] = {-12, 16, 0, -16, 0, -16};
 
 typedef enum {
     JACKO_INIT,
@@ -54,8 +55,8 @@ static void func_pspeu_0923DEB0(void) {
     s32 temp_s1;
     u16 temp_s0;
 
-    temp_s1 = UnkCollisionFunc2(D_pspeu_09259110);
-    temp_s0 = UnkCollisionFunc(D_pspeu_09259118, 3);
+    temp_s1 = UnkCollisionFunc2(sensors2);
+    temp_s0 = UnkCollisionFunc(sensors3, 3);
     if ((temp_s1 == 0x80) || (temp_s0 & 2)) {
         SetStep(JACKO_JUMP);
         return;
@@ -91,7 +92,7 @@ void EntityJackOBones(Entity* self) {
         self->ext.jackoBones.throwTimerIndex = 0;
         break;
     case JACKO_1:
-        if (UnkCollisionFunc3(D_pspeu_09259100) == 0) {
+        if (UnkCollisionFunc3(sensors1) == 0) {
             break;
         }
         self->step++;
@@ -138,7 +139,7 @@ void EntityJackOBones(Entity* self) {
             SetStep(JACKO_WALK_BACK);
             var_s2 = ++self->ext.jackoBones.throwTimerIndex & 3;
             self->ext.jackoBones.throwTimer =
-                D_pspeu_092590F8[self->params & 1][var_s2];
+                throw_timers[self->params & 1][var_s2];
             break;
         }
         if ((var_s2 & 0x80) && (self->animCurFrame == 0xB)) {
@@ -182,10 +183,10 @@ void EntityJackOBones(Entity* self) {
             }
             break;
         case JACKO_JUMP_MIDAIR:
-            if (UnkCollisionFunc3(D_pspeu_09259100)) {
+            if (UnkCollisionFunc3(sensors1)) {
                 self->step_s++;
             }
-            CheckFieldCollision(D_pspeu_09259118, 2);
+            CheckFieldCollision(sensors3, 2);
             break;
         case JACKO_JUMP_LANDING:
             if (AnimateEntity(anim_jump_landing, self) == 0) {
@@ -206,11 +207,11 @@ void EntityJackOBones(Entity* self) {
             other->params |= (self->params << 8);
             other->ext.jackoBones.deathPartLife = death_parts_lifetimes[i];
             if (self->facingLeft) {
-                other->posX.i.hi -= D_pspeu_092590D8[i];
+                other->posX.i.hi -= death_parts_xPos[i];
             } else {
-                other->posX.i.hi += D_pspeu_092590D8[i];
+                other->posX.i.hi += death_parts_xPos[i];
             }
-            other->posY.i.hi += D_pspeu_092590E8[i];
+            other->posY.i.hi += death_parts_yPos[i];
             other->velocityX = death_parts_xVels[i];
             other->velocityY = death_parts_yVels[i];
         }
