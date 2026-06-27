@@ -5,13 +5,13 @@ extern EInit D_us_80180980;
 extern EInit D_us_8018098C;
 extern EInit g_EInitJackOBones;
 
-static u8 D_pspeu_09259028[] = {6, 1, 4, 2, 4, 3, 6, 4, 5, 5, 5, 6, 0};
-static u8 D_pspeu_09259038[] = {6, 1, 5, 6, 5, 5, 6, 4, 4, 3, 4, 2, 0};
-static u8 D_pspeu_09259048[] = {5, 1, 5, 2, 5, 7, 6, 8, 5, 9, 5, 10, 5, 11, 31, 12, 4, 4, 4, 5, 4, 6, 255, 0};
-static u8 D_pspeu_09259060[] = {1, 1, 4, 13, 4, 14, 1, 1, 255, 0};
-static u8 D_pspeu_09259070[] = {1, 1, 4, 13, 6, 14, 4, 13, 1, 1, 255, 0};
-static u16 D_pspeu_09259080[] = {0x100, 0x80, 0x48, 0x20, 0x40, 0x10, 0x18, 0};
-static u8 D_pspeu_09259090[] = {48, 32, 20, 12, 24, 16, 20, 0}; // good to 25b0
+static u8 anim_walk_fwd[] = {6, 1, 4, 2, 4, 3, 6, 4, 5, 5, 5, 6, 0};
+static u8 anim_walk_back[] = {6, 1, 5, 6, 5, 5, 6, 4, 4, 3, 4, 2, 0};
+static u8 anim_throw[] = {5, 1, 5, 2, 5, 7, 6, 8, 5, 9, 5, 10, 5, 11, 31, 12, 4, 4, 4, 5, 4, 6, 255, 0};
+static u8 anim_jump_windup[] = {1, 1, 4, 13, 4, 14, 1, 1, 255, 0};
+static u8 anim_jump_landing[] = {1, 1, 4, 13, 6, 14, 4, 13, 1, 1, 255, 0};
+static u16 death_parts_rotspeeds[] = {0x100, 0x80, 0x48, 0x20, 0x40, 0x10, 0x18, 0};
+static u8 death_parts_lifetimes[] = {48, 32, 20, 12, 24, 16, 20, 0};
 static s32 D_pspeu_09259098[] = {0xc000, 0x1c000, 0x18000, 0x10000, 0x20000, 0x1c000, 0xc000};
 static s32 D_pspeu_092590B8[] = {-0x50000, -0x30000, -0x20000, -0x30000, -0x40000, -0xe000, -0x40000};
 static s16 D_pspeu_092590D8[] = {-4, 0, 4, -4, -4, 4, 0, 0,};
@@ -24,13 +24,14 @@ static s16 D_pspeu_09259118[] = {-12, 16, 0, -16, 0, -16};
 typedef enum {
     JACKO_INIT,
     JACKO_1,
-    JACKO_2,
-    JACKO_3,
-    JACKO_4,
-    JACKO_5,
+    JACKO_WALK_FWD,
+    JACKO_WALK_BACK,
+    JACKO_THROW,
+    JACKO_JUMP,
     JACKO_DEAD
 } JackOBonesSteps;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 INCLUDE_ASM("st/rno3/nonmatchings/e_jack_o_bones", func_us_801C247C);
 <<<<<<< HEAD
@@ -41,6 +42,14 @@ INCLUDE_ASM("st/rno3/nonmatchings/e_jack_o_bones", func_us_801C247C);
 =======
 >>>>>>> f04056fbe (finish splits for now)
 =======
+=======
+typedef enum{
+    JACKO_JUMP_WINDUP,
+    JACKO_JUMP_MIDAIR,
+    JACKO_JUMP_LANDING
+} JumpSubsteps;
+
+>>>>>>> 42fbc12a8 (Namings)
 static void func_pspeu_0923DEB0(void) {
     s32 temp_s1;
     u16 temp_s0;
@@ -48,14 +57,14 @@ static void func_pspeu_0923DEB0(void) {
     temp_s1 = UnkCollisionFunc2(D_pspeu_09259110);
     temp_s0 = UnkCollisionFunc(D_pspeu_09259118, 3);
     if ((temp_s1 == 0x80) || (temp_s0 & 2)) {
-        SetStep(JACKO_5);
+        SetStep(JACKO_JUMP);
         return;
     }
-    if (!g_CurrentEntity->ext.ILLEGAL.u8[0]) {
-        SetStep(JACKO_4);
+    if (!g_CurrentEntity->ext.jackoBones.throwTimer) {
+        SetStep(JACKO_THROW);
         return;
     }
-    g_CurrentEntity->ext.ILLEGAL.u8[0]--;
+    g_CurrentEntity->ext.jackoBones.throwTimer--;
 }
 
 void EntityJackOBones(Entity* self) {
@@ -74,9 +83,12 @@ void EntityJackOBones(Entity* self) {
             self->palette++;
         }
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-        self->ext.ILLEGAL.u8[0] = 0x50;
-        self->ext.ILLEGAL.u8[4] = 0;
-        self->ext.ILLEGAL.u8[8] = 0;
+        // Cooldown for throwing jacks
+        self->ext.jackoBones.throwTimer = 0x50;
+        // When walking forward, this tells us if facing left. When walking
+        // back, this is the inverse of whether we are facing left.
+        self->ext.jackoBones.movingLeft = 0;
+        self->ext.jackoBones.throwTimerIndex = 0;
         break;
     case JACKO_1:
         if (UnkCollisionFunc3(D_pspeu_09259100) == 0) {
@@ -84,38 +96,38 @@ void EntityJackOBones(Entity* self) {
         }
         self->step++;
         break;
-    case JACKO_2:
-        if (AnimateEntity(D_pspeu_09259028, self) == 0) {
+    case JACKO_WALK_FWD:
+        if (AnimateEntity(anim_walk_fwd, self) == 0) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
-        self->ext.ILLEGAL.u8[4] = self->facingLeft;
-        if (self->ext.ILLEGAL.u8[4]) {
+        self->ext.jackoBones.movingLeft = self->facingLeft;
+        if (self->ext.jackoBones.movingLeft) {
             self->velocityX = FIX(0.5);
         } else {
             self->velocityX = FIX(-0.5);
         }
         if (GetDistanceToPlayerX() < 76) {
-            self->step = JACKO_3;
+            self->step = JACKO_WALK_BACK;
         }
         func_pspeu_0923DEB0();
         break;
-    case JACKO_3:
-        if (AnimateEntity(D_pspeu_09259038, self) == 0) {
+    case JACKO_WALK_BACK:
+        if (AnimateEntity(anim_walk_back, self) == 0) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
-        self->ext.ILLEGAL.u8[4] = self->facingLeft ^ 1;
-        if (self->ext.ILLEGAL.u8[4]) {
+        self->ext.jackoBones.movingLeft = self->facingLeft ^ 1;
+        if (self->ext.jackoBones.movingLeft) {
             self->velocityX = FIX(0.5);
         } else {
             self->velocityX = FIX(-0.5);
         }
         if (GetDistanceToPlayerX() > 92) {
-            self->step = JACKO_2;
+            self->step = JACKO_WALK_FWD;
         }
         func_pspeu_0923DEB0();
         break;
-    case JACKO_4:
-        var_s2 = AnimateEntity(D_pspeu_09259048, self);
+    case JACKO_THROW:
+        var_s2 = AnimateEntity(anim_throw, self);
         // We set a value here but it is never used.
         if (self->params) {
             i = 11;
@@ -123,9 +135,9 @@ void EntityJackOBones(Entity* self) {
             i = 10;
         }
         if (!var_s2) {
-            SetStep(JACKO_3);
-            var_s2 = ++self->ext.ILLEGAL.u8[8] & 3;
-            self->ext.ILLEGAL.u8[0] =
+            SetStep(JACKO_WALK_BACK);
+            var_s2 = ++self->ext.jackoBones.throwTimerIndex & 3;
+            self->ext.jackoBones.throwTimer =
                 D_pspeu_092590F8[self->params & 1][var_s2];
             break;
         }
@@ -133,7 +145,7 @@ void EntityJackOBones(Entity* self) {
             other = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (other != NULL) {
                 PlaySfxPositional(SFX_BONE_THROW);
-                CreateEntityFromCurrentEntity(E_UNK_26, other);
+                CreateEntityFromCurrentEntity(E_JACKO_JACK, other);
                 if (self->params) {
                     xShift = -0x10;
                 } else {
@@ -150,11 +162,11 @@ void EntityJackOBones(Entity* self) {
             }
         }
         break;
-    case JACKO_5:
+    case JACKO_JUMP:        
         switch (self->step_s) {
-        case 0:
-            if (!(AnimateEntity(D_pspeu_09259060, self) & 1)) {
-                var_s2 = self->ext.ILLEGAL.u8[4];
+        case JACKO_JUMP_WINDUP:
+            if (!(AnimateEntity(anim_jump_windup, self) & 1)) {
+                var_s2 = self->ext.jackoBones.movingLeft;
                 if (!(Random() & 3)) {
                     var_s2 ^= 1;
                 }
@@ -169,15 +181,15 @@ void EntityJackOBones(Entity* self) {
                 self->step_s++;
             }
             break;
-        case 1:
+        case JACKO_JUMP_MIDAIR:
             if (UnkCollisionFunc3(D_pspeu_09259100)) {
                 self->step_s++;
             }
             CheckFieldCollision(D_pspeu_09259118, 2);
             break;
-        case 2:
-            if (AnimateEntity(D_pspeu_09259070, self) == 0) {
-                SetStep(JACKO_3);
+        case JACKO_JUMP_LANDING:
+            if (AnimateEntity(anim_jump_landing, self) == 0) {
+                SetStep(JACKO_WALK_BACK);
             }
         }
         break;
@@ -188,11 +200,11 @@ void EntityJackOBones(Entity* self) {
             if (other == NULL) {
                 break;
             }
-            CreateEntityFromCurrentEntity(E_UNK_25, other);
+            CreateEntityFromCurrentEntity(E_JACKO_DEATH_PARTS, other);
             other->facingLeft = self->facingLeft;
             other->params = i;
             other->params |= (self->params << 8);
-            other->ext.ILLEGAL.u8[0xC] = D_pspeu_09259090[i];
+            other->ext.jackoBones.deathPartLife = death_parts_lifetimes[i];
             if (self->facingLeft) {
                 other->posX.i.hi -= D_pspeu_092590D8[i];
             } else {
@@ -207,10 +219,10 @@ void EntityJackOBones(Entity* self) {
     }
 }
 
-void func_us_801C2380(Entity* self) {
+void EntityJackOBonesDeathParts(Entity* self) {
     if (self->step) {
-        if (--self->ext.ILLEGAL.u8[0xC]) {
-            self->rotate += D_pspeu_09259080[self->params];
+        if (--self->ext.jackoBones.deathPartLife) {
+            self->rotate += death_parts_rotspeeds[self->params];
             FallEntity();
             MoveEntity();
             return;
@@ -232,7 +244,7 @@ void func_us_801C2380(Entity* self) {
     }
 }
 
-void func_us_801C247C(Entity* self) {
+void EntityJackOBonesJack(Entity* self) {
     Collider sp10;
     s32 temp;
     s32 yVar;
@@ -267,7 +279,7 @@ void func_us_801C247C(Entity* self) {
     g_api.CheckCollision(xVar, yVar, &sp10, 0);
     if (sp10.effects & EFFECT_SOLID) {
         PlaySfxPositional(SFX_SKULL_KNOCK_A);
-        self->ext.ILLEGAL.s16[8] += 1;
+        self->ext.jackoBones.bouncesDone += 1;
         temp = sp10.unk18;
         #if defined(VERSION_PSP)
         xVar = self->posX.i.hi;
@@ -286,7 +298,7 @@ void func_us_801C247C(Entity* self) {
             self->velocityY = -((self->velocityY < 0) ? -self->velocityY : self->velocityY);
             #endif
             if (self->params) {
-                self->velocityY = FIX(-7) / self->ext.ILLEGAL.s16[8];
+                self->velocityY = FIX(-7) / self->ext.jackoBones.bouncesDone;
             } else {
                 self->velocityY -= self->velocityY / 16;
             }
@@ -320,7 +332,7 @@ void func_us_801C247C(Entity* self) {
         }
         if (self->params)
         #endif
-        if (self->ext.ILLEGAL.s16[8] > 8) {
+        if (self->ext.jackoBones.bouncesDone > 8) {
             self->flags |= FLAG_DEAD;
         }
     }

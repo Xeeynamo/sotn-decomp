@@ -4042,6 +4042,19 @@ typedef struct {
     /* 0x7C */ u16 unk7C;
 } ET_PlatformUnk;
 
+typedef struct {
+    /* 0x7C */ u8 throwTimer;
+    /* 0x7D */ s16 : 16;
+    /* 0x80 */ u8 movingLeft;
+    /* 0x81 */ s16 : 16;
+    /* 0x84 */ u8 throwTimerIndex;
+    /* 0x85 */ s16 : 16;
+    /* 0x88 */ u8 deathPartLife;
+    /* 0x89 */ s16 : 16;
+    /* 0x8C */ s16 bouncesDone;
+
+} ET_JackOBones;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -4388,6 +4401,7 @@ typedef union { // offset=0x7C
     ET_DeathFlames deathFlames;
     ET_FrozenHalf frozenHalf;
     ET_PlatformUnk platformUnk;
+    ET_JackOBones jackoBones;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
