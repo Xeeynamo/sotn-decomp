@@ -60,8 +60,12 @@ typedef enum {
     JACKO_JUMP_LANDING
 } JumpSubsteps;
 
+<<<<<<< HEAD
 >>>>>>> 42fbc12a8 (Namings)
 static void func_pspeu_0923DEB0(void) {
+=======
+static void TryThrow(void) {
+>>>>>>> 56efff804 (final cleanup)
     s32 temp_s1;
     u16 temp_s0;
 
@@ -120,7 +124,7 @@ void EntityJackOBones(Entity* self) {
         if (GetDistanceToPlayerX() < 76) {
             self->step = JACKO_WALK_BACK;
         }
-        func_pspeu_0923DEB0();
+        TryThrow();
         break;
     case JACKO_WALK_BACK:
         if (AnimateEntity(anim_walk_back, self) == 0) {
@@ -135,7 +139,7 @@ void EntityJackOBones(Entity* self) {
         if (GetDistanceToPlayerX() > 92) {
             self->step = JACKO_WALK_FWD;
         }
-        func_pspeu_0923DEB0();
+        TryThrow();
         break;
     case JACKO_THROW:
         var_s2 = AnimateEntity(anim_throw, self);
@@ -145,6 +149,7 @@ void EntityJackOBones(Entity* self) {
         } else {
             i = 10;
         }
+        // Animation done. walk backward and set the timer for next throw.
         if (!var_s2) {
             SetStep(JACKO_WALK_BACK);
             var_s2 = ++self->ext.jackoBones.throwTimerIndex & 3;
@@ -158,7 +163,7 @@ void EntityJackOBones(Entity* self) {
                 PlaySfxPositional(SFX_BONE_THROW);
                 CreateEntityFromCurrentEntity(E_JACKO_JACK, other);
                 if (self->params) {
-                    xShift = -0x10;
+                    xShift = -16;
                 } else {
                     xShift = 8;
                 }
@@ -167,7 +172,7 @@ void EntityJackOBones(Entity* self) {
                 } else {
                     other->posX.i.hi += xShift;
                 }
-                other->posY.i.hi -= 0x10;
+                other->posY.i.hi -= 16;
                 other->params = self->params;
                 other->facingLeft = self->facingLeft;
             }
@@ -238,14 +243,14 @@ void EntityJackOBonesDeathParts(Entity* self) {
             MoveEntity();
             return;
         }
-        self->entityId = 2;
+        self->entityId = E_EXPLOSION;
         self->pfnUpdate = EntityExplosion;
         self->params = 0;
         self->step = 0;
         return;
     }
     InitializeEntity(D_us_80180980);
-    self->animCurFrame = (self->params & 0xFF) + 0xF;
+    self->animCurFrame = (self->params & 0xFF) + 15;
     if (self->params & 0x100) {
         self->palette += 1;
     }
@@ -269,11 +274,11 @@ void EntityJackOBonesJack(Entity* self) {
         self->animCurFrame = 0x15;
         self->drawFlags |= ENTITY_ROTATE;
         if (self->params) {
-            yVar = 0x40000;
-            xVar = 0x10000;
+            yVar = FIX(4);
+            xVar = FIX(1);
         } else {
-            yVar = -0x10000;
-            xVar = 0x28000;
+            yVar = FIX(-1);
+            xVar = FIX(2.5);
         }
         if (self->facingLeft) {
             self->velocityX = xVar;
@@ -351,7 +356,7 @@ void EntityJackOBonesJack(Entity* self) {
 
     if (self->flags & FLAG_DEAD) {
         self->drawFlags = ENTITY_DEFAULT;
-        self->entityId = 2;
+        self->entityId = E_EXPLOSION;
         self->pfnUpdate = EntityExplosion;
         self->params = 0;
         self->step = 0;
