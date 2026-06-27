@@ -3,20 +3,22 @@
 
 extern u16 D_us_80180980;
 extern u16 D_us_8018098C;
-extern u16 D_pspeu_09259080[];
 
-extern s32 D_pspeu_09259028;
-extern s32 D_pspeu_09259038;
-extern s32 D_pspeu_09259048;
-extern s32 D_pspeu_09259060;
-extern s32 D_pspeu_09259070;
+extern u8 D_pspeu_09259028[];
+extern u8 D_pspeu_09259038[];
+extern u8 D_pspeu_09259048[];
+extern u8 D_pspeu_09259060[];
+extern u8 D_pspeu_09259070[];
+extern u16 D_pspeu_09259080[];
 extern u8 D_pspeu_09259090[];
 extern s32 D_pspeu_09259098[];
 extern s32 D_pspeu_092590B8[];
 extern s16 D_pspeu_092590D8[];
 extern s16 D_pspeu_092590E8[];
 extern u8 D_pspeu_092590F8[][4];
-extern s32 D_pspeu_09259100;
+extern s16 D_pspeu_09259100[];
+extern u16 D_pspeu_09259110[];
+extern u16 D_pspeu_09259118[];
 extern u16 g_EInitJackOBones;
 
 typedef enum {
@@ -29,8 +31,7 @@ typedef enum {
     JACKO_DEAD
 } JackOBonesSteps;
 
-extern u16 D_pspeu_09259110[];
-extern u16 D_pspeu_09259118[];
+
 
 void func_pspeu_0923DEB0(void) {
     s32 temp_s1;
@@ -76,7 +77,7 @@ void EntityJackOBones(Entity* self) {
         self->step++;
         break;
     case JACKO_2:
-        if (AnimateEntity(&D_pspeu_09259028, self) == 0) {
+        if (AnimateEntity(D_pspeu_09259028, self) == 0) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
         self->ext.ILLEGAL.u8[4] = self->facingLeft;
@@ -91,7 +92,7 @@ void EntityJackOBones(Entity* self) {
         func_pspeu_0923DEB0();
         break;
     case JACKO_3:
-        if (AnimateEntity(&D_pspeu_09259038, self) == 0) {
+        if (AnimateEntity(D_pspeu_09259038, self) == 0) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
         self->ext.ILLEGAL.u8[4] = self->facingLeft ^ 1;
@@ -106,7 +107,7 @@ void EntityJackOBones(Entity* self) {
         func_pspeu_0923DEB0();
         break;
     case JACKO_4:
-        var_s2 = AnimateEntity(&D_pspeu_09259048, self);
+        var_s2 = AnimateEntity(D_pspeu_09259048, self);
         // We set a value here but it is never used.
         if (self->params) {
             i = 11;
@@ -144,7 +145,7 @@ void EntityJackOBones(Entity* self) {
     case JACKO_5:
         switch (self->step_s) {
         case 0:
-            if (!(AnimateEntity(&D_pspeu_09259060, self) & 1)) {
+            if (!(AnimateEntity(D_pspeu_09259060, self) & 1)) {
                 var_s2 = self->ext.ILLEGAL.u8[4];
                 if (!(Random() & 3)) {
                     var_s2 ^= 1;
@@ -161,13 +162,13 @@ void EntityJackOBones(Entity* self) {
             }
             break;
         case 1:
-            if (UnkCollisionFunc3(&D_pspeu_09259100)) {
+            if (UnkCollisionFunc3(D_pspeu_09259100)) {
                 self->step_s++;
             }
             CheckFieldCollision(D_pspeu_09259118, 2);
             break;
         case 2:
-            if (AnimateEntity(&D_pspeu_09259070, self) == 0) {
+            if (AnimateEntity(D_pspeu_09259070, self) == 0) {
                 SetStep(JACKO_3);
             }
         }
