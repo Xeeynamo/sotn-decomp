@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rno3.h"
 
-extern u16 D_us_80180980;
-extern u16 D_us_8018098C;
-extern u16 g_EInitJackOBones;
+extern EInit D_us_80180980;
+extern EInit D_us_8018098C;
+extern EInit g_EInitJackOBones;
 
 static u8 D_pspeu_09259028[] = {6, 1, 4, 2, 4, 3, 6, 4, 5, 5, 5, 6, 0};
 static u8 D_pspeu_09259038[] = {6, 1, 5, 6, 5, 5, 6, 4, 4, 3, 4, 2, 0};
@@ -45,8 +45,8 @@ static void func_pspeu_0923DEB0(void) {
     s32 temp_s1;
     u16 temp_s0;
 
-    temp_s1 = UnkCollisionFunc2(&D_pspeu_09259110);
-    temp_s0 = UnkCollisionFunc(&D_pspeu_09259118, 3);
+    temp_s1 = UnkCollisionFunc2(D_pspeu_09259110);
+    temp_s0 = UnkCollisionFunc(D_pspeu_09259118, 3);
     if ((temp_s1 == 0x80) || (temp_s0 & 2)) {
         SetStep(JACKO_5);
         return;
@@ -69,7 +69,7 @@ void EntityJackOBones(Entity* self) {
     }
     switch (self->step) {
     case JACKO_INIT:
-        InitializeEntity(&g_EInitJackOBones);
+        InitializeEntity(g_EInitJackOBones);
         if (self->params) {
             self->palette++;
         }
@@ -79,7 +79,7 @@ void EntityJackOBones(Entity* self) {
         self->ext.ILLEGAL.u8[8] = 0;
         break;
     case JACKO_1:
-        if (UnkCollisionFunc3(&D_pspeu_09259100) == 0) {
+        if (UnkCollisionFunc3(D_pspeu_09259100) == 0) {
             break;
         }
         self->step++;
@@ -221,7 +221,7 @@ void func_us_801C2380(Entity* self) {
         self->step = 0;
         return;
     }
-    InitializeEntity(&D_us_80180980);
+    InitializeEntity(D_us_80180980);
     self->animCurFrame = (self->params & 0xFF) + 0xF;
     if (self->params & 0x100) {
         self->palette += 1;
@@ -239,7 +239,7 @@ void func_us_801C247C(Entity* self) {
     s32 xVar;
 
     if (!self->step) {
-        InitializeEntity(&D_us_8018098C);
+        InitializeEntity(D_us_8018098C);
         if (self->params) {
             self->palette += 1;
         }
