@@ -70,7 +70,8 @@ segments:
       - [0x1B5C, .data, e_particles]
       - [0x1BDC, .data, e_room_fg]
       - [0x1C68, .data, e_fire_warg]
-      - [0x2548, data]
+      - [0x2548, .data, e_jack_o_bones]
+      - [0x2634, data]
       - [0x2C24, .data, gen/e_layout] # layout entries data
       - [0x39BC, data]
       - [0x42A4, .data, stage_data]
