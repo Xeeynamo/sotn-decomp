@@ -12,8 +12,8 @@ static u8 anim_jump_windup[] = {1, 1, 4, 13, 4, 14, 1, 1, 255, 0};
 static u8 anim_jump_landing[] = {1, 1, 4, 13, 6, 14, 4, 13, 1, 1, 255, 0};
 static u16 death_parts_rotspeeds[] = {0x100, 0x80, 0x48, 0x20, 0x40, 0x10, 0x18, 0};
 static u8 death_parts_lifetimes[] = {48, 32, 20, 12, 24, 16, 20, 0};
-static s32 D_pspeu_09259098[] = {0xc000, 0x1c000, 0x18000, 0x10000, 0x20000, 0x1c000, 0xc000};
-static s32 D_pspeu_092590B8[] = {-0x50000, -0x30000, -0x20000, -0x30000, -0x40000, -0xe000, -0x40000};
+static s32 death_parts_xVels[] = {FIX(0.75), FIX(1.75), FIX(1.5), FIX(1), FIX(2), FIX(1.75), FIX(0.75)};
+static s32 death_parts_yVels[] = {FIX(-5), FIX(-3), FIX(-2), FIX(-3), FIX(-4), FIX(-0.875), FIX(-4)};
 static s16 D_pspeu_092590D8[] = {-4, 0, 4, -4, -4, 4, 0, 0,};
 static s16 D_pspeu_092590E8[] = {-16, -8, -4, -4, 9, 9, 0, 0};
 static u8 D_pspeu_092590F8[][4] = {{96, 8, 8, 64}, {128, 64, 32, 48}};
@@ -211,8 +211,8 @@ void EntityJackOBones(Entity* self) {
                 other->posX.i.hi += D_pspeu_092590D8[i];
             }
             other->posY.i.hi += D_pspeu_092590E8[i];
-            other->velocityX = D_pspeu_09259098[i];
-            other->velocityY = D_pspeu_092590B8[i];
+            other->velocityX = death_parts_xVels[i];
+            other->velocityY = death_parts_yVels[i];
         }
         DestroyEntity(self);
         break;
