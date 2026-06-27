@@ -1,6 +1,16 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../rno3/rno3.h"
 
+typedef enum{
+    JACKO_INIT,
+    JACKO_1,
+    JACKO_2,
+    JACKO_3,
+    JACKO_4,
+    JACKO_5,
+    JACKO_DEAD
+} JackOBonesSteps;
+
 extern u16 D_pspeu_09259110[];
 extern u16 D_pspeu_09259118[];
 
@@ -11,11 +21,11 @@ void func_pspeu_0923DEB0(void) {
     temp_s1 = UnkCollisionFunc2(&D_pspeu_09259110);
     temp_s0 = UnkCollisionFunc(&D_pspeu_09259118, 3);
     if ((temp_s1 == 0x80) || (temp_s0 & 2)) {
-        SetStep(5);
+        SetStep(JACKO_5);
         return;
     }
     if (!g_CurrentEntity->ext.ILLEGAL.u8[0]) {
-        SetStep(4);
+        SetStep(JACKO_4);
         return;
     }
     g_CurrentEntity->ext.ILLEGAL.u8[0] -= 1;
@@ -35,16 +45,6 @@ extern s16 D_pspeu_092590E8[];
 extern u8 D_pspeu_092590F8[][4];
 extern s32 D_pspeu_09259100;
 extern u16 g_EInitJackOBones;
-
-typedef enum{
-    JACKO_INIT,
-    JACKO_1,
-    JACKO_2,
-    JACKO_3,
-    JACKO_4,
-    JACKO_5,
-    JACKO_DEAD
-} JackOBonesSteps;
 
 void EntityJackOBones(Entity* self) {
     s32 xShift;
@@ -195,6 +195,32 @@ void EntityJackOBones(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rno3_psp/nonmatchings/rno3_psp/e_jack_o_bones", func_us_801C2380);
+extern u16 D_us_80180980;
+extern u16 D_pspeu_09259080[];
+
+void func_us_801C2380(Entity* self) {
+    if (self->step) {
+        if (--self->ext.ILLEGAL.u8[0xC]) {
+            self->rotate += D_pspeu_09259080[self->params];
+            FallEntity();
+            MoveEntity();
+            return;
+        }
+        self->entityId = 2;
+        self->pfnUpdate = EntityExplosion;
+        self->params = 0;
+        self->step = 0;
+        return;
+    }
+    InitializeEntity(&D_us_80180980);
+    self->animCurFrame = (self->params & 0xFF) + 0xF;
+    if (self->params & 0x100) {
+        self->palette += 1;
+    }
+    self->drawFlags = 4;
+    if (self->facingLeft) {
+        self->velocityX = -self->velocityX;
+    }
+}
 
 INCLUDE_ASM("st/rno3_psp/nonmatchings/rno3_psp/e_jack_o_bones", func_us_801C247C);
