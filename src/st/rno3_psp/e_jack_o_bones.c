@@ -223,4 +223,81 @@ void func_us_801C2380(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rno3_psp/nonmatchings/rno3_psp/e_jack_o_bones", func_us_801C247C);
+extern u16 D_us_8018098C;
+
+void func_us_801C247C(Entity* self) {
+    Collider sp10;
+    s32 temp;
+    s32 yVar;
+    s32 xVar;
+
+    if (!self->step) {
+        InitializeEntity(&D_us_8018098C);
+        if (self->params) {
+            self->palette += 1;
+        }
+        self->animCurFrame = 0x15;
+        self->drawFlags |= 4;
+        if (self->params) {
+            yVar = 0x40000;
+            xVar = 0x10000;
+        } else {
+            yVar = -0x10000;
+            xVar = 0x28000;
+        }
+        if (self->facingLeft) {
+            self->velocityX = xVar;
+        } else {
+            self->velocityX = -xVar;
+        }
+        self->velocityY = yVar;
+    }
+    MoveEntity();
+    self->velocityY += 0x3000;
+    self->rotate -= 0x40;
+    xVar = self->posX.i.hi;
+    yVar = self->posY.i.hi + 5;
+    g_api.CheckCollision(xVar, yVar, &sp10, 0);
+    if (sp10.effects & 1) {
+        PlaySfxPositional(0x6A5);
+        self->ext.ILLEGAL.s16[8] += 1;
+        temp = sp10.unk18;
+        xVar = self->posX.i.hi;
+        yVar = self->posY.i.hi -3;
+        g_api.CheckCollision(xVar, yVar, &sp10, 0);
+        if (sp10.effects & 1) {
+            self->velocityX = -self->velocityX;
+        } else {
+            self->posY.i.hi += temp;
+            self->velocityY = -self->velocityY;
+            
+            if (self->params) {
+                self->velocityY = FIX(-7) / self->ext.ILLEGAL.s16[8];
+            } else {
+                self->velocityY -= self->velocityY / 16;
+            }
+        }
+        xVar = self->posX.i.hi + self->velocityX;
+        yVar = self->posY.i.hi;
+    }
+    if(self->params){
+        xVar = self->posX.i.hi;
+        yVar = self->posY.i.hi - 5;
+        g_api.CheckCollision(xVar, yVar, &sp10, 0);
+        if (sp10.effects & 1) {
+            self->posY.i.hi += sp10.unk20;
+            self->velocityY = abs(self->velocityY);
+        }
+        if (self->ext.ILLEGAL.s16[8] > 8) {
+            self->flags |= 0x100;
+        }
+    }
+    
+    if (self->flags & 0x100) {
+        self->drawFlags = 0;
+        self->entityId = 2;
+        self->pfnUpdate = EntityExplosion;
+        self->params = 0;
+        self->step = 0;
+    }
+}
