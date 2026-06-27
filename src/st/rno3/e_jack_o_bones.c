@@ -188,7 +188,7 @@ void EntityJackOBones(Entity* self) {
             }
         }
         break;
-    case 6:
+    case JACKO_DEAD:
         PlaySfxPositional(SFX_SKELETON_DEATH_B);
         for (i = 0; i < 6; i++) {
             other = AllocEntity(&g_Entities[224], &g_Entities[256]);
