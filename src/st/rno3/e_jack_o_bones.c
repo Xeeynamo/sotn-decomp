@@ -238,8 +238,6 @@ void func_us_801C247C(Entity* self) {
     s32 yVar;
     s32 xVar;
 
-    s32 stupid18;
-
     if (!self->step) {
         InitializeEntity(&D_us_8018098C);
         if (self->params) {
@@ -270,8 +268,8 @@ void func_us_801C247C(Entity* self) {
     if (sp10.effects & EFFECT_SOLID) {
         PlaySfxPositional(SFX_SKULL_KNOCK_A);
         self->ext.ILLEGAL.u16[8]++;
-        stupid18 = sp10.unk18;
-        self->posY.i.hi += stupid18;
+        temp = sp10.unk18;
+        self->posY.i.hi += temp;
         self->velocityY = -((self->velocityY < 0) ? -self->velocityY : self->velocityY);
         if (self->params) {
             self->velocityY = FIX(-7) / self->ext.ILLEGAL.s16[8];

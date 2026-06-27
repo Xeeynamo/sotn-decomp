@@ -11,15 +11,15 @@ static u8 D_pspeu_09259048[] = {5, 1, 5, 2, 5, 7, 6, 8, 5, 9, 5, 10, 5, 11, 31, 
 static u8 D_pspeu_09259060[] = {1, 1, 4, 13, 4, 14, 1, 1, 255, 0};
 static u8 D_pspeu_09259070[] = {1, 1, 4, 13, 6, 14, 4, 13, 1, 1, 255, 0};
 static u16 D_pspeu_09259080[] = {0x100, 0x80, 0x48, 0x20, 0x40, 0x10, 0x18, 0};
-static u8 D_pspeu_09259090[] = {48, 32, 20, 12, 24, 16, 20, 0};
-static s32 D_pspeu_09259098[] = {0xc000, 0x1c000, 0x18000, 0x10000, 0x20000, 0x1c000, 0xc000, 0};
-static s32 D_pspeu_092590B8[] = {-0x50000, -0x30000, -0x20000, -0x30000, -0x40000, -0xe000, -0x40000, 0};
+static u8 D_pspeu_09259090[] = {48, 32, 20, 12, 24, 16, 20, 0}; // good to 25b0
+static s32 D_pspeu_09259098[] = {0xc000, 0x1c000, 0x18000, 0x10000, 0x20000, 0x1c000, 0xc000};
+static s32 D_pspeu_092590B8[] = {-0x50000, -0x30000, -0x20000, -0x30000, -0x40000, -0xe000, -0x40000};
 static s16 D_pspeu_092590D8[] = {-4, 0, 4, -4, -4, 4, 0, 0,};
 static s16 D_pspeu_092590E8[] = {-16, -8, -4, -4, 9, 9, 0, 0};
 static u8 D_pspeu_092590F8[][4] = {{96, 8, 8, 64}, {128, 64, 32, 48}};
 static s16 D_pspeu_09259100[] = {0, 20, 0, 4, 8, -4, -16, 0};
 static u16 D_pspeu_09259110[] = {0, 20, 12, 0};
-static s16 D_pspeu_09259118[] = {-12, 16, 0, -16, 0, -16, 0, 0};
+static s16 D_pspeu_09259118[] = {-12, 16, 0, -16, 0, -16};
 
 typedef enum {
     JACKO_INIT,
@@ -45,7 +45,7 @@ static void func_pspeu_0923DEB0(void) {
         SetStep(JACKO_4);
         return;
     }
-    g_CurrentEntity->ext.ILLEGAL.u8[0] -= 1;
+    g_CurrentEntity->ext.ILLEGAL.u8[0]--;
 }
 
 void EntityJackOBones(Entity* self) {
