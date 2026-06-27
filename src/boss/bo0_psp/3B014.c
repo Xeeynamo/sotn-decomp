@@ -1,0 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+#include "bo0.h"
+
+INCLUDE_ASM("boss/bo0_psp/nonmatchings/bo0_psp/3B014", func_pspeu_09251560);
+
+INCLUDE_ASM("boss/bo0_psp/nonmatchings/bo0_psp/3B014", func_psp_0923D390);

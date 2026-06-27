@@ -30,6 +30,7 @@ BO0_BackgroundBlockInit = 0x80180748;
 BO0_RedDoorTiles = 0x8018075C;
 BO0_PrizeDrops = 0x80181444;
 BO0_rooms = 0x80182614;
+sprites_bo0_8 = 0x801A1D74;
 BO0_EntityBackgroundBlock = 0x801A99FC; // source=match
 BO0_EntityLockCamera = 0x801A9AC4; // source=match
 EntityBreakable = 0x801A9C80; // source=match
@@ -38,9 +39,6 @@ func_us_801B3F30 = 0x801A9F58; // source=match
 func_us_801B4148 = 0x801AA170; // source=match
 func_us_801B41A4 = 0x801AA1CC; // source=match
 func_us_801B4210 = 0x801AA238; // source=match
-DrawFacade = 0x801AA3B0; // source=match
-DrawSides = 0x801AA5C0; // source=match
-DrawRoof = 0x801AA804; // source=match
 Entity3DHouseSpawner = 0x801AA988; // source=match
 Entity3DBackgroundHouse = 0x801AAA78; // source=match
 func_us_801B4DA4 = 0x801AADCC; // source=match
@@ -98,8 +96,6 @@ EntityStageNamePopup = 0x801C5874; // source=match
 EntitySkelerang = 0x801C64F8; // source=match
 EntitySkelerangBoomerang = 0x801C6C80; // source=match
 EntitySkelerangUnknown = 0x801C6EF4; // source=match
-func_us_801D6254 = 0x801C6F50; // source=match
-func_us_801D6474 = 0x801C7170; // source=match
 EntityMarionette = 0x801C73F4; // source=match
 EntityBloodSplatter = 0x801C82E0; // source=match
 EntityBloodyZombie = 0x801C899C; // source=match
