@@ -267,45 +267,63 @@ void func_us_801C247C(Entity* self) {
     g_api.CheckCollision(xVar, yVar, &sp10, 0);
     if (sp10.effects & EFFECT_SOLID) {
         PlaySfxPositional(SFX_SKULL_KNOCK_A);
-        self->ext.ILLEGAL.u16[8]++;
+        self->ext.ILLEGAL.s16[8] += 1;
         temp = sp10.unk18;
-        self->posY.i.hi += temp;
-        self->velocityY = -((self->velocityY < 0) ? -self->velocityY : self->velocityY);
-        if (self->params) {
-            self->velocityY = FIX(-7) / self->ext.ILLEGAL.s16[8];
+        #if defined(VERSION_PSP)
+        xVar = self->posX.i.hi;
+        yVar = self->posY.i.hi - 3;
+        g_api.CheckCollision(xVar, yVar, &sp10, 0);
+        if (sp10.effects & EFFECT_SOLID) {
+            self->velocityX = -self->velocityX;
         } else {
-            self->velocityY -= self->velocityY / 16;
+        #else
+        if(1){
+        #endif
+            self->posY.i.hi += temp;
+            #if defined(VERSION_PSP)
+            self->velocityY = -self->velocityY;
+            #else
+            self->velocityY = -((self->velocityY < 0) ? -self->velocityY : self->velocityY);
+            #endif
+            if (self->params) {
+                self->velocityY = FIX(-7) / self->ext.ILLEGAL.s16[8];
+            } else {
+                self->velocityY -= self->velocityY / 16;
+            }
         }
         xVar = self->posX.i.hi + self->velocityX;
         yVar = self->posY.i.hi;
     }
-
-    xVar = self->posX.i.hi;
-    yVar = self->posY.i.hi - 5;
-    g_api.CheckCollision(xVar, yVar, &sp10, 0);
-    if (sp10.effects & EFFECT_SOLID) {
-        self->posY.i.hi += sp10.unk20;
-        self->velocityY = abs(self->velocityY);
-    }
-    xVar = self->posX.i.hi;
-    yVar = self->posY.i.hi;
-    if(self->velocityX > 0){
-        xVar += 5;
-    } else {
-        xVar -= 5;
-    }
-    g_api.CheckCollision(xVar, yVar, &sp10, 0);
-    if (sp10.effects & EFFECT_SOLID) {
-        self->velocityX = -self->velocityX;
-    }
-
-
+    #if defined(VERSION_PSP)
     if (self->params) {
+    #else
+    if(1) {
+    #endif
+        xVar = self->posX.i.hi;
+        yVar = self->posY.i.hi - 5;
+        g_api.CheckCollision(xVar, yVar, &sp10, 0);
+        if (sp10.effects & EFFECT_SOLID) {
+            self->posY.i.hi += sp10.unk20;
+            self->velocityY = abs(self->velocityY);
+        }
+        #if !defined(VERSION_PSP)
+        xVar = self->posX.i.hi;
+        yVar = self->posY.i.hi;
+        if(self->velocityX > 0){
+            xVar += 5;
+        } else {
+            xVar -= 5;
+        }
+        g_api.CheckCollision(xVar, yVar, &sp10, 0);
+        if (sp10.effects & EFFECT_SOLID) {
+            self->velocityX = -self->velocityX;
+        }
+        if (self->params)
+        #endif
         if (self->ext.ILLEGAL.s16[8] > 8) {
             self->flags |= FLAG_DEAD;
         }
     }
-    
 
     if (self->flags & FLAG_DEAD) {
         self->drawFlags = ENTITY_DEFAULT;
