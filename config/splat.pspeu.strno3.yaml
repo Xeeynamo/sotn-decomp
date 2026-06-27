@@ -82,7 +82,7 @@ segments:
       - [0x21780, data]
       - [0x21960, .data, rno3/e_red_door]
       - [0x21978, .data, rno3/st_update]
-      - [0x219A8, data]
+      - [0x219A8, .data, rno3_psp/e_jack_o_bones]
       - [0x21AA8, .data, rno3/e_fire_warg]
       - [0x22340, .data, rno3/e_particles]
       - [0x223C0, .data, rno3/e_collect]

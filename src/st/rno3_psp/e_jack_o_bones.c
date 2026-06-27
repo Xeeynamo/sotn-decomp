@@ -3,23 +3,23 @@
 
 extern u16 D_us_80180980;
 extern u16 D_us_8018098C;
-
-extern u8 D_pspeu_09259028[];
-extern u8 D_pspeu_09259038[];
-extern u8 D_pspeu_09259048[];
-extern u8 D_pspeu_09259060[];
-extern u8 D_pspeu_09259070[];
-extern u16 D_pspeu_09259080[];
-extern u8 D_pspeu_09259090[];
-extern s32 D_pspeu_09259098[];
-extern s32 D_pspeu_092590B8[];
-extern s16 D_pspeu_092590D8[];
-extern s16 D_pspeu_092590E8[];
-extern u8 D_pspeu_092590F8[][4];
-extern s16 D_pspeu_09259100[];
-extern u16 D_pspeu_09259110[];
-extern u16 D_pspeu_09259118[];
 extern u16 g_EInitJackOBones;
+
+static u8 D_pspeu_09259028[] = {6, 1, 4, 2, 4, 3, 6, 4, 5, 5, 5, 6, 0};
+static u8 D_pspeu_09259038[] = {6, 1, 5, 6, 5, 5, 6, 4, 4, 3, 4, 2, 0};
+static u8 D_pspeu_09259048[] = {5, 1, 5, 2, 5, 7, 6, 8, 5, 9, 5, 10, 5, 11, 31, 12, 4, 4, 4, 5, 4, 6, 255, 0};
+static u8 D_pspeu_09259060[] = {1, 1, 4, 13, 4, 14, 1, 1, 255, 0};
+static u8 D_pspeu_09259070[] = {1, 1, 4, 13, 6, 14, 4, 13, 1, 1, 255, 0};
+static u16 D_pspeu_09259080[] = {0x100, 0x80, 0x48, 0x20, 0x40, 0x10, 0x18, 0};
+static u8 D_pspeu_09259090[] = {48, 32, 20, 12, 24, 16, 20, 0};
+static s32 D_pspeu_09259098[] = {0xc000, 0x1c000, 0x18000, 0x10000, 0x20000, 0x1c000, 0xc000, 0};
+static s32 D_pspeu_092590B8[] = {-0x50000, -0x30000, -0x20000, -0x30000, -0x40000, -0xe000, -0x40000, 0};
+static s16 D_pspeu_092590D8[] = {-4, 0, 4, -4, -4, 4, 0, 0,};
+static s16 D_pspeu_092590E8[] = {-16, -8, -4, -4, 9, 9, 0, 0};
+static u8 D_pspeu_092590F8[][4] = {{96, 8, 8, 64}, {128, 64, 32, 48}};
+static s16 D_pspeu_09259100[] = {0, 20, 0, 4, 8, -4, -16, 0};
+static u16 D_pspeu_09259110[] = {0, 20, 12, 0};
+static s16 D_pspeu_09259118[] = {-12, 16, 0, -16, 0, -16, 0, 0};
 
 typedef enum {
     JACKO_INIT,
@@ -31,9 +31,7 @@ typedef enum {
     JACKO_DEAD
 } JackOBonesSteps;
 
-
-
-void func_pspeu_0923DEB0(void) {
+static void func_pspeu_0923DEB0(void) {
     s32 temp_s1;
     u16 temp_s0;
 
