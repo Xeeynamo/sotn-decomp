@@ -7,14 +7,20 @@ extern EInit g_EInitJackOBones;
 
 static u8 anim_walk_fwd[] = {6, 1, 4, 2, 4, 3, 6, 4, 5, 5, 5, 6, 0};
 static u8 anim_walk_back[] = {6, 1, 5, 6, 5, 5, 6, 4, 4, 3, 4, 2, 0};
-static u8 anim_throw[] = {5, 1, 5, 2, 5, 7, 6, 8, 5, 9, 5, 10, 5, 11, 31, 12, 4, 4, 4, 5, 4, 6, 255, 0};
+static u8 anim_throw[] = {5, 1,  5,  2,  5, 7, 6, 8, 5, 9, 5,   10,
+                          5, 11, 31, 12, 4, 4, 4, 5, 4, 6, 255, 0};
 static u8 anim_jump_windup[] = {1, 1, 4, 13, 4, 14, 1, 1, 255, 0};
 static u8 anim_jump_landing[] = {1, 1, 4, 13, 6, 14, 4, 13, 1, 1, 255, 0};
-static u16 death_parts_rotspeeds[] = {0x100, 0x80, 0x48, 0x20, 0x40, 0x10, 0x18, 0};
+static u16 death_parts_rotspeeds[] = {
+    0x100, 0x80, 0x48, 0x20, 0x40, 0x10, 0x18, 0};
 static u8 death_parts_lifetimes[] = {48, 32, 20, 12, 24, 16, 20, 0};
-static s32 death_parts_xVels[] = {FIX(0.75), FIX(1.75), FIX(1.5), FIX(1), FIX(2), FIX(1.75), FIX(0.75)};
-static s32 death_parts_yVels[] = {FIX(-5), FIX(-3), FIX(-2), FIX(-3), FIX(-4), FIX(-0.875), FIX(-4)};
-static s16 death_parts_xPos[] = {-4, 0, 4, -4, -4, 4, 0, 0,};
+static s32 death_parts_xVels[] = {
+    FIX(0.75), FIX(1.75), FIX(1.5), FIX(1), FIX(2), FIX(1.75), FIX(0.75)};
+static s32 death_parts_yVels[] = {
+    FIX(-5), FIX(-3), FIX(-2), FIX(-3), FIX(-4), FIX(-0.875), FIX(-4)};
+static s16 death_parts_xPos[] = {
+    -4, 0, 4, -4, -4, 4, 0, 0,
+};
 static s16 death_parts_yPos[] = {-16, -8, -4, -4, 9, 9, 0, 0};
 // Select throw speed table with self->params & 1.
 static u8 throw_timers[][4] = {{96, 8, 8, 64}, {128, 64, 32, 48}};
@@ -34,6 +40,7 @@ typedef enum {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 INCLUDE_ASM("st/rno3/nonmatchings/e_jack_o_bones", func_us_801C247C);
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -45,6 +52,9 @@ INCLUDE_ASM("st/rno3/nonmatchings/e_jack_o_bones", func_us_801C247C);
 =======
 =======
 typedef enum{
+=======
+typedef enum {
+>>>>>>> c35977fe8 (Format)
     JACKO_JUMP_WINDUP,
     JACKO_JUMP_MIDAIR,
     JACKO_JUMP_LANDING
@@ -163,7 +173,7 @@ void EntityJackOBones(Entity* self) {
             }
         }
         break;
-    case JACKO_JUMP:        
+    case JACKO_JUMP:
         switch (self->step_s) {
         case JACKO_JUMP_WINDUP:
             if (!(AnimateEntity(anim_jump_windup, self) & 1)) {
@@ -282,22 +292,23 @@ void EntityJackOBonesJack(Entity* self) {
         PlaySfxPositional(SFX_SKULL_KNOCK_A);
         self->ext.jackoBones.bouncesDone += 1;
         temp = sp10.unk18;
-        #if defined(VERSION_PSP)
+#if defined(VERSION_PSP)
         xVar = self->posX.i.hi;
         yVar = self->posY.i.hi - 3;
         g_api.CheckCollision(xVar, yVar, &sp10, 0);
         if (sp10.effects & EFFECT_SOLID) {
             self->velocityX = -self->velocityX;
         } else {
-        #else
-        if(1){
-        #endif
+#else
+        if (1) {
+#endif
             self->posY.i.hi += temp;
-            #if defined(VERSION_PSP)
+#if defined(VERSION_PSP)
             self->velocityY = -self->velocityY;
-            #else
-            self->velocityY = -((self->velocityY < 0) ? -self->velocityY : self->velocityY);
-            #endif
+#else
+            self->velocityY =
+                -((self->velocityY < 0) ? -self->velocityY : self->velocityY);
+#endif
             if (self->params) {
                 self->velocityY = FIX(-7) / self->ext.jackoBones.bouncesDone;
             } else {
@@ -307,11 +318,11 @@ void EntityJackOBonesJack(Entity* self) {
         xVar = self->posX.i.hi + self->velocityX;
         yVar = self->posY.i.hi;
     }
-    #if defined(VERSION_PSP)
+#if defined(VERSION_PSP)
     if (self->params) {
-    #else
-    if(1) {
-    #endif
+#else
+    if (1) {
+#endif
         xVar = self->posX.i.hi;
         yVar = self->posY.i.hi - 5;
         g_api.CheckCollision(xVar, yVar, &sp10, 0);
@@ -319,10 +330,10 @@ void EntityJackOBonesJack(Entity* self) {
             self->posY.i.hi += sp10.unk20;
             self->velocityY = abs(self->velocityY);
         }
-        #if !defined(VERSION_PSP)
+#if !defined(VERSION_PSP)
         xVar = self->posX.i.hi;
         yVar = self->posY.i.hi;
-        if(self->velocityX > 0){
+        if (self->velocityX > 0) {
             xVar += 5;
         } else {
             xVar -= 5;
@@ -332,10 +343,10 @@ void EntityJackOBonesJack(Entity* self) {
             self->velocityX = -self->velocityX;
         }
         if (self->params)
-        #endif
-        if (self->ext.jackoBones.bouncesDone > 8) {
-            self->flags |= FLAG_DEAD;
-        }
+#endif
+            if (self->ext.jackoBones.bouncesDone > 8) {
+                self->flags |= FLAG_DEAD;
+            }
     }
 
     if (self->flags & FLAG_DEAD) {
