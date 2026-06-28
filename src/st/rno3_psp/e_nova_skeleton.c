@@ -268,7 +268,7 @@ void EntityBladeSoldierDeathParts(Entity* self) {
 }
 
 extern u8 D_pspeu_0925A6A0[];
-extern u16 D_us_801809A4;
+extern EInit D_us_801809A4;
 
 void func_us_801C2FF0(Entity* self) {
     s32 var_s7;
@@ -282,7 +282,7 @@ void func_us_801C2FF0(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_us_801809A4);
+        InitializeEntity(D_us_801809A4);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 3);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -411,4 +411,47 @@ void func_us_801C2FF0(Entity* self) {
     prim = prim->next;
 }
 
-INCLUDE_ASM("st/rno3_psp/nonmatchings/rno3_psp/e_nova_skeleton", func_us_801C34A0);
+void func_us_801C34A0(Entity* self) {
+    s32 temp_s0;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_801809A4);
+        self->hitboxState = 0;
+        self->animCurFrame = 0x24;
+        self->drawFlags |= 3;
+        self->scaleX = self->scaleY = 0x10;
+        if (self->facingLeft) {
+            self->velocityX = 0x80000;
+        } else {
+            self->velocityX = -0x80000;
+        }
+        /* fallthrough */
+    case 1:
+        MoveEntity();
+        self->ext.ILLEGAL.u32[6] += abs(self->velocityX);
+        self->scaleX = self->scaleY += 0x40;
+        if (self->scaleX < 0x100) {
+            return;
+        }
+        self->step++;
+        return;
+    case 2:
+        MoveEntity();
+        self->ext.ILLEGAL.u32[6] += abs(self->velocityX);
+        temp_s0 = (self->ext.ILLEGAL.s16[0xA] + 0x20) << 0x10;
+        temp_s0 -= self->ext.ILLEGAL.u32[6];
+        if (temp_s0 < 0) {
+            DestroyEntity(self);
+            return;
+        }
+        // okay now let's just play with this number. we're not going to use
+        // it but math is fun, I guess? Everyone likes some nice bit shifts.
+        temp_s0 >>= 0x10;
+        temp_s0 <<= 3;
+        if(temp_s0 > 0x100){
+            temp_s0 = 0x100;
+        }
+        break;
+    }
+}
