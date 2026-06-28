@@ -240,7 +240,32 @@ void EntityNovaSkeleton(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rno3_psp/nonmatchings/rno3_psp/e_nova_skeleton", EntityBladeSoldierDeathParts);
+extern u16 death_parts_rotspeeds[];
+extern u16 g_EInitNovaSkeleton;
+
+void EntityBladeSoldierDeathParts(Entity* self) {
+    if (self->step) {
+        if (--self->ext.ILLEGAL.u8[7]) {
+            self->rotate += death_parts_rotspeeds[self->params];
+            FallEntity();
+            MoveEntity();
+            return;
+        }
+        self->entityId = 2;
+        self->pfnUpdate = EntityExplosion;
+        self->params = 0;
+        self->step = 0;
+        return;
+    }
+    InitializeEntity(&g_EInitNovaSkeleton);
+    self->hitboxState = 0;
+    self->flags |= 0xC0202000;
+    self->animCurFrame = self->params + 0x1D;
+    self->drawFlags = 4;
+    if (self->facingLeft) {
+        self->velocityX = -self->velocityX;
+    }
+}
 
 INCLUDE_ASM("st/rno3_psp/nonmatchings/rno3_psp/e_nova_skeleton", func_us_801C2FF0);
 
