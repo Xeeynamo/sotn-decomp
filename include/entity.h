@@ -4059,6 +4059,7 @@ typedef struct {
     /* 0x80 */ u8 movingLeft;
     /* 0x81 */ u8 cooldown;
     /* 0x82 */ u8 laserTimerIndex;
+    /* 0x83 */ u8 deathPartLife;
     /* 0x84 */ s32: 32;
     /* 0x88 */ u8 ringState;
     /* 0x8A */ s16: 16;

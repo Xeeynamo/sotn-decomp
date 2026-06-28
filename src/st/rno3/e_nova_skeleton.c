@@ -51,7 +51,7 @@ typedef enum {
     NOVA_WALK_BACK,
     NOVA_5,
     NOVA_CHARGE,
-    NOVA_LASER,
+    NOVA_SHOOT,
     NOVA_DEAD
 } JackOBonesSteps;
 
@@ -222,17 +222,17 @@ void EntityNovaSkeleton(Entity* self) {
     case NOVA_CHARGE: 
         if (AnimateEntity(&anim_laser_charge, self) == 0) {
             self->ext.nova.ringState = 0;
-            SetStep(NOVA_LASER);
+            SetStep(NOVA_SHOOT);
         }
         if ((!self->poseTimer) && (self->pose == 2)) {
             PlaySfxPositional(SFX_ELECTRICITY);
         }
         break;
-    case NOVA_LASER:                     
+    case NOVA_SHOOT:                     
         switch (self->step_s) {
         case 0:                 
             other = self + 1;
-            CreateEntityFromEntity(E_UNK_28, self, other);
+            CreateEntityFromEntity(E_NOVA_LASER, self, other);
             if (self->facingLeft) {
                 other->posX.i.hi += 0xA;
             } else {
@@ -265,7 +265,7 @@ void EntityNovaSkeleton(Entity* self) {
             CreateEntityFromCurrentEntity(E_BLADE_SOLDIER_DEATH_PARTS, other);
             other->facingLeft = self->facingLeft;
             other->params = i;
-            other->ext.ILLEGAL.u8[7] = death_parts_lifetimes[i];
+            other->ext.nova.deathPartLife = death_parts_lifetimes[i];
             if (self->facingLeft) {
                 other->posX.i.hi -= death_parts_xPos[i];
             } else {
@@ -283,7 +283,7 @@ void EntityNovaSkeleton(Entity* self) {
 
 void EntityBladeSoldierDeathParts(Entity* self) {
     if (self->step) {
-        if (--self->ext.ILLEGAL.u8[7]) {
+        if (--self->ext.nova.deathPartLife) {
             self->rotate += death_parts_rotspeeds[self->params];
             FallEntity();
             MoveEntity();
@@ -307,7 +307,7 @@ void EntityBladeSoldierDeathParts(Entity* self) {
     }
 }
 
-void func_us_801C2FF0(Entity* self) {
+void EntityNovaLaser(Entity* self) {
     s32 var_s7;
     s32 primIndex;
     s32 var_s5;
@@ -360,7 +360,7 @@ void func_us_801C2FF0(Entity* self) {
         if (!(self->ext.ILLEGAL.s16[5] & 3)) {
             other = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (other != NULL) {
-                CreateEntityFromEntity(E_UNK_29, self, other);
+                CreateEntityFromEntity(E_NOVA_PULSE, self, other);
                 other->zPriority = self->zPriority - 1;
                 other->ext.ILLEGAL.s16[0xA] = self->ext.ILLEGAL.s16[0xA];
                 other->facingLeft = self->facingLeft;
@@ -449,7 +449,7 @@ void func_us_801C2FF0(Entity* self) {
     prim = prim->next;
 }
 
-void func_us_801C34A0(Entity* self) {
+void EntityNovaLaserPulse(Entity* self) {
     s32 temp_s0;
 
     switch (self->step) {
