@@ -4,24 +4,35 @@
 extern EInit g_EInitNovaSkeleton;
 extern EInit D_us_801809A4;
 
-extern s32 D_pspeu_0925A540;
+// sensors
+extern s16 D_pspeu_0925A540[];
 extern s16 D_pspeu_0925A550[];
+// animations
 extern s32 D_pspeu_0925A558;
 extern s32 D_pspeu_0925A568;
 extern s32 D_pspeu_0925A578;
 extern s32 D_pspeu_0925A588;
 extern s32 D_pspeu_0925A5D0;
+// death_parts_rotspeeds
 extern u16 D_pspeu_0925A600[];
+//deathPartLife
 extern u8 D_pspeu_0925A610[];
+//death part xvel
 extern s32 D_pspeu_0925A618[];
+// death part yvel
 extern s32 D_pspeu_0925A638[];
+//death_parts_xPos
 extern s16 D_pspeu_0925A658[];
+//death_parts_yPos
 extern s16 D_pspeu_0925A668[];
+// laser cooldown
 extern u8 D_pspeu_0925A678[];
+// vectors
 extern SVECTOR D_pspeu_0925A680;
 extern SVECTOR D_pspeu_0925A688;
 extern SVECTOR D_pspeu_0925A690;
 extern SVECTOR D_pspeu_0925A698;
+// uv data
 extern u8 D_pspeu_0925A6A0[];
 
 void func_pspeu_0924EB18(void) {
@@ -140,7 +151,7 @@ void EntityNovaSkeleton(Entity* self) {
         prim->drawMode = DRAW_HIDE;
         break;
     case 1: /* switch 1 */
-        if (UnkCollisionFunc3(&D_pspeu_0925A540) == 0) {
+        if (UnkCollisionFunc3(D_pspeu_0925A540) == 0) {
             break;
         }
         SetStep(2U);
