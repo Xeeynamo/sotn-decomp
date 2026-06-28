@@ -686,8 +686,8 @@
 | nz0      | e_axe_knight.rodata                   |       20 |          0 | Yes    |       |     |
 | nz0      | e_bloody_zombie.rodata                |       20 |          0 | Yes    |       |     |
 | nz1      | e_cloaked_knight.rodata               |       20 |          0 | Yes    |       |     |
-| rno3     | e_blue_venus_weed.rodata              |       20 |          0 | Yes    |       |     |
 | rno3     | e_nova_skeleton.rodata                |       20 |          0 | Yes    |       |     |
+| rno3     | e_blue_venus_weed.rodata              |       20 |          0 | Yes    |       |     |
 | rno3     | unk_1A748.rodata                      |       20 |          0 | Yes    |       |     |
 | main     | func_psp_089106B8                     |       20 |          1 |        |       |     |
 | main     | func_psp_089109E4                     |       20 |          1 |        |       |     |
@@ -2686,7 +2686,7 @@
 | dra      | 71830.rodata                          |       62 |          0 | Yes    |       |     |
 | bo0      | func_pspeu_0926A6F8                   |       62 |          4 |        |       |     |
 | no2      | func_pspeu_0925C018                   |       62 |          4 |        |       |     |
-| bo0      | PrizeDropFall                         |       62 |          5 |        |       |     |
+| bo0      | func_pspeu_09241670                   |       62 |          5 |        |       |     |
 | bo0      | BO0_EntityBackgroundBlock             |       62 |          5 |        |       |     |
 | rbo0     | func_pspeu_09247658                   |       62 |          5 |        |       |     |
 | rbo0     | func_pspeu_0923A0E8                   |       62 |          5 |        |       |     |
@@ -3495,7 +3495,7 @@
 | main     | LoadTPage                             |       90 |          8 |        |       |     |
 | are      | func_pspeu_09260F18                   |       90 |          9 |        |       |     |
 | dai      | func_pspeu_0924FD18                   |       90 |          9 |        |       |     |
-| rno3     | EntityBladeSoldierDeathParts          |       90 |          9 |        |       |     |
+| rno3     | EntityNovaSkeletonDeathParts          |       90 |          9 |        |       |     |
 | dai      | func_pspeu_09256DA0                   |       90 |         10 |        |       |     |
 | main     | _getmodreent                          |       90 |         13 |        |       |     |
 | ric      | func_pspeu_092AF898                   |       90 |         17 |        |       |     |
@@ -3953,7 +3953,7 @@
 | are      | func_pspeu_09239778                   |      106 |         11 |        |       |     |
 | dra      | func_psp_09136620                     |      106 |         12 |        |       |     |
 | nz1      | func_pspeu_0923AE48                   |      106 |         15 |        |       |     |
-| bo0      | PrizeDropFall2                        |      106 |         16 |        |       |     |
+| bo0      | func_pspeu_09241748                   |      106 |         16 |        |       |     |
 | rbo0     | func_pspeu_09247730                   |      106 |         16 |        |       |     |
 | are      | func_pspeu_0924FA38                   |      106 |         16 |        |       |     |
 | cat      | func_pspeu_09244EB8                   |      106 |         16 |        |       |     |
@@ -4225,7 +4225,7 @@
 | rbo0     | func_pspeu_0924A8D0                   |      125 |         11 |        |       |     |
 | no0      | func_pspeu_0924B838                   |      125 |         11 |        |       |     |
 | no3      | func_pspeu_09261B38                   |      125 |         15 |        |       |     |
-| rno3     | func_us_801C34A0                      |      125 |         18 |        |       |     |
+| rno3     | EntityNovaLaserPulse                  |      125 |         18 |        |       |     |
 | dra      | func_psp_09137748                     |      125 |         22 |        |       |     |
 | maria    | pl_blueprints.rodata                  |      126 |          0 | Yes    |       |     |
 |          | func_092E8088                         |      126 |          5 |        |       |     |
@@ -5581,7 +5581,7 @@
 | chi      | func_psp_0924E4D8                     |      406 |         48 |        |       |     |
 | chi      | func_psp_0923C4E8                     |      406 |         64 |        |       |     |
 | dra      | func_psp_0911F5D8                     |      409 |         42 |        |       |     |
-| bo0      | BlitChar2                             |      409 |         53 |        |       |     |
+| bo0      | func_pspeu_092410B8                   |      409 |         53 |        |       |     |
 | rbo0     | func_pspeu_092470A0                   |      409 |         53 |        |       |     |
 | are      | func_pspeu_0924F3A8                   |      409 |         53 |        |       |     |
 | cat      | func_pspeu_09244828                   |      409 |         53 |        |       |     |
@@ -5706,7 +5706,7 @@
 | no0      | func_pspeu_0925B6A0                   |      471 |         72 |        |       |     |
 |          | func_092ED010                         |      472 |         34 | Yes    |       |     |
 | dra      | func_psp_090E74E8                     |      473 |         40 |        |       |     |
-| rno3     | func_us_801C2FF0                      |      473 |         49 |        |       |     |
+| rno3     | EntityNovaLaser                       |      473 |         49 |        |       |     |
 |          | func_092EA3A8                         |      473 |         50 | Yes    |       |     |
 | lib      | func_psp_0926CF18                     |      473 |         53 |        |       |     |
 | nz1      | func_pspeu_09258F78                   |      473 |         59 |        |       |     |
