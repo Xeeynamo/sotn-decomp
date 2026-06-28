@@ -40,11 +40,23 @@ static u8 primData[] = {96, 127, 128, 128,
     32, 95, 64, 128, 
     0, 31, 32, 64};
 
+typedef enum {
+    NOVA_INIT,
+    NOVA_1,
+    NOVA_2,
+    NOVA_3,
+    NOVA_4,
+    NOVA_5,
+    NOVA_6,
+    NOVA_7,
+    NOVA_DEAD
+} JackOBonesSteps;
+
 static void NovaHelper1(void) {
     // return value not used, but function has side effects
     s32 unused = UnkCollisionFunc2(&sensors2);
     // if cooldown has expired...
-    if (!g_CurrentEntity->ext.ILLEGAL.u8[5]) {
+    if (!g_CurrentEntity->ext.nova.cooldown) {
         if (GetDistanceToPlayerX() >= 0x80) {
             return;
         }
@@ -52,11 +64,9 @@ static void NovaHelper1(void) {
             SetStep(6);
         }
     } else {
-        g_CurrentEntity->ext.ILLEGAL.u8[5]--;
+        g_CurrentEntity->ext.nova.cooldown--;
     }
 }
-
-
 
 static void NovaHelper2(void) {
     s32 p;
@@ -72,7 +82,7 @@ static void NovaHelper2(void) {
     switch (g_CurrentEntity->ext.ILLEGAL.u8[0xC]) {
     case 0:
         g_CurrentEntity->ext.ILLEGAL.s16[8] = 0;
-        prim = g_CurrentEntity->ext.prim;
+        prim = g_CurrentEntity->ext.nova.prim;
         prim->r0 = prim->g0 = prim->b0 = 0xC0;
         LOW(prim->r1) = LOW(prim->r0);
         LOW(prim->r2) = LOW(prim->r0);
@@ -116,7 +126,7 @@ static void NovaHelper2(void) {
     ScaleMatrix(&sp30, &sp50);
     SetRotMatrix(&sp30);
     SetTransMatrix(&sp30);
-    prim = g_CurrentEntity->ext.prim;
+    prim = g_CurrentEntity->ext.nova.prim;
     RotTransPers4(&vec_negneg, &vec_posneg, &vec_negpos,
                   &vec_pospos, (long*)&prim->x0, (long*)&prim->x1,
                   (long*)&prim->x2, (long*)&prim->x3, (long*)&p, (long*)&flag);
@@ -130,12 +140,12 @@ void EntityNovaSkeleton(Entity* self) {
     s32 i;
 
     if (self->flags & FLAG_DEAD) {
-        SetStep(8U);
+        SetStep(NOVA_DEAD);
     }
-    switch (self->step) { /* switch 1 */
-    case 0:               /* switch 1 */
+    switch (self->step) { 
+    case NOVA_INIT:               
         InitializeEntity(g_EInitNovaSkeleton);
-        self->ext.ILLEGAL.u8[5] = 0x50;
+        self->ext.nova.cooldown = 0x50;
         // what. why does psp need to allocate an extra prim.
         #if defined(VERSION_PSP)
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
@@ -149,7 +159,7 @@ void EntityNovaSkeleton(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
-        self->ext.prim = prim;
+        self->ext.nova.prim = prim;
         UnkPolyFunc2(prim);
         prim->tpage = 0x12;
         prim->clut = 0x216;
@@ -160,20 +170,20 @@ void EntityNovaSkeleton(Entity* self) {
         prim->priority = self->zPriority + 1;
         prim->drawMode = DRAW_HIDE;
         break;
-    case 1: /* switch 1 */
+    case NOVA_1: 
         if (UnkCollisionFunc3(sensors1) == 0) {
             break;
         }
-        SetStep(2U);
+        SetStep(NOVA_2);
         break;
-    case 2: /* switch 1 */
+    case NOVA_2: 
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         AnimateEntity(&anim3, self);
         if (GetDistanceToPlayerX() < 0x70) {
-            SetStep(4U);
+            SetStep(NOVA_4);
         }
         break;
-    case 3: /* switch 1 */
+    case NOVA_3: 
         if (AnimateEntity(&anim1, self) == 0) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
@@ -188,7 +198,7 @@ void EntityNovaSkeleton(Entity* self) {
         }
         NovaHelper1();
         break;
-    case 4: /* switch 1 */
+    case NOVA_4: 
         if (AnimateEntity(&anim2, self) == 0) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
@@ -203,7 +213,10 @@ void EntityNovaSkeleton(Entity* self) {
         }
         NovaHelper1();
         break;
-    case 6: /* switch 1 */
+    // Could be related to the unsed animations. Not accessible.
+    case NOVA_5:
+        break;
+    case NOVA_6: 
         if (AnimateEntity(&anim4, self) == 0) {
             self->ext.ILLEGAL.u8[0xC] = 0;
             SetStep(7U);
@@ -212,9 +225,9 @@ void EntityNovaSkeleton(Entity* self) {
             PlaySfxPositional(SFX_ELECTRICITY);
         }
         break;
-    case 7:                     /* switch 1 */
-        switch (self->step_s) { /* switch 2; irregular */
-        case 0:                 /* switch 2 */
+    case NOVA_7:                     
+        switch (self->step_s) {
+        case 0:                 
             other = self + 1;
             CreateEntityFromEntity(E_UNK_28, self, other);
             if (self->facingLeft) {
@@ -227,20 +240,20 @@ void EntityNovaSkeleton(Entity* self) {
             self->step_s += 1;
             break;
         case 1:
-            prim = self->ext.prim;
+            prim = self->ext.nova.prim;
             PrimDecreaseBrightness(prim, 5);
             break;
         }
         NovaHelper2();
         if (!AnimateEntity(&anim5, self)) {
-            prim = self->ext.prim;
+            prim = self->ext.nova.prim;
             prim->drawMode = DRAW_HIDE;
             var_s4 = ++self->ext.ILLEGAL.u8[6] & 7;
-            self->ext.ILLEGAL.u8[5] = laser_cooldowns[var_s4];
+            self->ext.nova.cooldown = laser_cooldowns[var_s4];
             SetStep(4U);
         }
         break;
-    case 8: /* switch 1 */
+    case NOVA_DEAD: 
         for (i = 0; i < 6; i++) {
             other = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (other == NULL) {
@@ -312,7 +325,7 @@ void func_us_801C2FF0(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
-        self->ext.prim = prim;
+        self->ext.nova.prim = prim;
         var_s1 = &primData[0];
         for (var_s2 = 0; var_s2 < 3; prim = prim->next, var_s2++) {
             prim->tpage = 0x12;
@@ -387,7 +400,7 @@ void func_us_801C2FF0(Entity* self) {
     }
     var_s7 = self->posX.i.hi;
     var_s5 = self->posY.i.hi;
-    prim = self->ext.prim;
+    prim = self->ext.nova.prim;
     for (var_s2 = 0; var_s2 < 3; prim = prim->next, var_s2++) {
         prim->y0 = prim->y1 = var_s5 - self->ext.ILLEGAL.s16[0xB];
         prim->y2 = prim->y3 = var_s5 + self->ext.ILLEGAL.s16[0xB];
@@ -397,7 +410,7 @@ void func_us_801C2FF0(Entity* self) {
             prim->clut = 0x217;
         }
     }
-    prim = self->ext.prim;
+    prim = self->ext.nova.prim;
     var_s3 = var_s7;
     if (self->facingLeft) {
         var_s3 -= 0x10;

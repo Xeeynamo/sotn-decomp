@@ -4052,8 +4052,14 @@ typedef struct {
     /* 0x88 */ u8 deathPartLife;
     /* 0x89 */ s16 : 16;
     /* 0x8C */ s16 bouncesDone;
-
 } ET_JackOBones;
+
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ u8 : 8;
+    /* 0x81 */ u8 cooldown;
+
+} ET_NovaSkeleton;
 
 typedef union { // offset=0x7C
     struct Primitive* prim;
@@ -4402,6 +4408,7 @@ typedef union { // offset=0x7C
     ET_FrozenHalf frozenHalf;
     ET_PlatformUnk platformUnk;
     ET_JackOBones jackoBones;
+    ET_NovaSkeleton nova;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
