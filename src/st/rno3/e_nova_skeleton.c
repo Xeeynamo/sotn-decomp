@@ -12,23 +12,34 @@ static u8 anim_walk_fwd[] = {6, 1, 4, 2, 4, 3, 6, 4, 5, 5, 5, 6, 0};
 static u8 anim_walk_back[] = {6, 1, 5, 6, 5, 5, 6, 4, 4, 3, 4, 2, 0};
 // A short squatting animation. Perhaps a jump windup?
 static u8 anim_unused1[] = {1, 1, 4, 27, 4, 28, 1, 1, 255, 0};
-// Slightly slower squat, note that the frames are all the same, just an extra 4,27.
+// Slightly slower squat, note that the frames are all the same, just an extra
+// 4,27.
 static u8 anim_unused2[] = {1, 1, 4, 27, 4, 28, 4, 27, 1, 1, 255, 0};
 static u8 anim_idle[] = {4, 1, 5, 27, 15, 28, 6, 27, 6, 1, 0};
-static u8 anim_laser_charge[] = {16, 1, 3, 2, 3, 7, 3, 8, 2, 9, 2, 10, 2, 11, 2, 10, 2, 11, 2, 12, 2, 11, 2, 12, 2, 13, 2, 12, 2, 13, 2, 14, 2, 13, 2, 14, 2, 13, 2, 14, 2, 15, 2, 16, 2, 15, 2, 16, 2, 15, 2, 16, 4, 20, 4, 19, 4, 18, 4, 17, 4, 18, 4, 19, 255, 0};
-// Not the laser itself - just nova skeleton standing there, holding arms up menacingly
-static u8 anim_laser_blast[] = {2, 20, 96, 21, 1, 23, 1, 22, 1, 23, 1, 22, 1, 23, 2, 22, 2, 23, 2, 22, 2, 23, 3, 22, 3, 23, 3, 22, 4, 23, 5, 22, 26, 23, 3, 24, 3, 25, 3, 26, 4, 4, 4, 5, 4, 6, 255, 0};
+static u8 anim_laser_charge[] = {
+    16, 1,  3,  2,  3,  7,  3,  8,  2,  9,  2,  10, 2,  11,  2,  10, 2,
+    11, 2,  12, 2,  11, 2,  12, 2,  13, 2,  12, 2,  13, 2,   14, 2,  13,
+    2,  14, 2,  13, 2,  14, 2,  15, 2,  16, 2,  15, 2,  16,  2,  15, 2,
+    16, 4,  20, 4,  19, 4,  18, 4,  17, 4,  18, 4,  19, 255, 0};
+// Not the laser itself - just nova skeleton standing there, holding arms up
+// menacingly
+static u8 anim_laser_blast[] = {
+    2,  20, 96, 21, 1, 23, 1, 22, 1, 23, 1, 22, 1, 23, 2,   22,
+    2,  23, 2,  22, 2, 23, 3, 22, 3, 23, 3, 22, 4, 23, 5,   22,
+    26, 23, 3,  24, 3, 25, 3, 26, 4, 4,  4, 5,  4, 6,  255, 0};
 // death_parts_rotspeeds
 static u16 death_parts_rotspeeds[] = {256, 128, 72, 32, 64, 16, 32, -32};
-//deathPartLife
+// deathPartLife
 static u8 death_parts_lifetimes[] = {48, 32, 20, 12, 24, 16, 64, 48};
-//death part xvel
-static s32 death_parts_xVels[] = {FIX(0.75), FIX(1.75), FIX(1.5), FIX(1.0), FIX(2.0), FIX(1.75), FIX(-0.5), FIX(0.5)};
+// death part xvel
+static s32 death_parts_xVels[] = {FIX(0.75), FIX(1.75), FIX(1.5),  FIX(1.0),
+                                  FIX(2.0),  FIX(1.75), FIX(-0.5), FIX(0.5)};
 // death part yvel
-static s32 death_parts_yVels[] = {FIX(-5.0), FIX(-3.0), FIX(-2.0), FIX(-3.0), FIX(-4.0), FIX(-0.875), FIX(-6.0), FIX(-4.5)};
-//death_parts_xPos
+static s32 death_parts_yVels[] = {FIX(-5.0), FIX(-3.0),   FIX(-2.0), FIX(-3.0),
+                                  FIX(-4.0), FIX(-0.875), FIX(-6.0), FIX(-4.5)};
+// death_parts_xPos
 static s16 death_parts_xPos[] = {-4, 0, 4, -4, -4, 4, -6, 6};
-//death_parts_yPos
+// death_parts_yPos
 static s16 death_parts_yPos[] = {-16, -8, -4, -4, 9, 9, 2, -2};
 // laser cooldown
 static u8 laser_cooldowns[] = {128, 8, 8, 64, 240, 192, 160, 128};
@@ -39,9 +50,7 @@ static SVECTOR vec_posneg = {32, -32, 0, 0};
 static SVECTOR vec_negpos = {-32, 32, 0, 0};
 static SVECTOR vec_pospos = {32, 32, 0, 0};
 // uv data
-static u8 primData[] = {96, 127, 128, 128, 
-    32, 95, 64, 128, 
-    0, 31, 32, 64};
+static u8 primData[] = {96, 127, 128, 128, 32, 95, 64, 128, 0, 31, 32, 64};
 
 typedef enum {
     NOVA_INIT,
@@ -53,9 +62,9 @@ typedef enum {
     NOVA_CHARGE,
     NOVA_SHOOT,
     NOVA_DEAD
-} JackOBonesSteps;
+} NovaSkeletonSteps;
 
-static void NovaHelper1(void) {
+static void TryShoot(void) {
     // return value not used, but function has side effects
     s32 unused = UnkCollisionFunc2(&sensors2);
     // if cooldown has expired...
@@ -130,9 +139,9 @@ static void DrawLaserRing(void) {
     SetRotMatrix(&sp30);
     SetTransMatrix(&sp30);
     prim = g_CurrentEntity->ext.nova.prim;
-    RotTransPers4(&vec_negneg, &vec_posneg, &vec_negpos,
-                  &vec_pospos, (long*)&prim->x0, (long*)&prim->x1,
-                  (long*)&prim->x2, (long*)&prim->x3, (long*)&p, (long*)&flag);
+    RotTransPers4(&vec_negneg, &vec_posneg, &vec_negpos, &vec_pospos,
+                  (long*)&prim->x0, (long*)&prim->x1, (long*)&prim->x2,
+                  (long*)&prim->x3, (long*)&p, (long*)&flag);
 }
 
 void EntityNovaSkeleton(Entity* self) {
@@ -145,16 +154,16 @@ void EntityNovaSkeleton(Entity* self) {
     if (self->flags & FLAG_DEAD) {
         SetStep(NOVA_DEAD);
     }
-    switch (self->step) { 
-    case NOVA_INIT:               
+    switch (self->step) {
+    case NOVA_INIT:
         InitializeEntity(g_EInitNovaSkeleton);
         self->ext.nova.cooldown = 0x50;
-        // what. why does psp need to allocate an extra prim.
-        #if defined(VERSION_PSP)
+// what. why does psp need to allocate an extra prim.
+#if defined(VERSION_PSP)
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
-        #else
+#else
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
-        #endif
+#endif
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -173,20 +182,20 @@ void EntityNovaSkeleton(Entity* self) {
         prim->priority = self->zPriority + 1;
         prim->drawMode = DRAW_HIDE;
         break;
-    case NOVA_1: 
+    case NOVA_1:
         if (UnkCollisionFunc3(sensors1) == 0) {
             break;
         }
         SetStep(NOVA_IDLE);
         break;
-    case NOVA_IDLE: 
+    case NOVA_IDLE:
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         AnimateEntity(&anim_idle, self);
         if (GetDistanceToPlayerX() < 0x70) {
             SetStep(NOVA_WALK_BACK);
         }
         break;
-    case NOVA_WALK_FWD: 
+    case NOVA_WALK_FWD:
         if (AnimateEntity(&anim_walk_fwd, self) == 0) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
@@ -199,9 +208,9 @@ void EntityNovaSkeleton(Entity* self) {
         if (GetDistanceToPlayerX() < 0x4C) {
             self->step = 4;
         }
-        NovaHelper1();
+        TryShoot();
         break;
-    case NOVA_WALK_BACK: 
+    case NOVA_WALK_BACK:
         if (AnimateEntity(&anim_walk_back, self) == 0) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
@@ -214,12 +223,12 @@ void EntityNovaSkeleton(Entity* self) {
         if (GetDistanceToPlayerX() > 0x5C) {
             self->step = 3;
         }
-        NovaHelper1();
+        TryShoot();
         break;
     // Could be related to the unsed animations. Not accessible.
     case NOVA_5:
         break;
-    case NOVA_CHARGE: 
+    case NOVA_CHARGE:
         if (AnimateEntity(&anim_laser_charge, self) == 0) {
             self->ext.nova.ringState = 0;
             SetStep(NOVA_SHOOT);
@@ -228,9 +237,9 @@ void EntityNovaSkeleton(Entity* self) {
             PlaySfxPositional(SFX_ELECTRICITY);
         }
         break;
-    case NOVA_SHOOT:                     
+    case NOVA_SHOOT:
         switch (self->step_s) {
-        case 0:                 
+        case 0:
             other = self + 1;
             CreateEntityFromEntity(E_NOVA_LASER, self, other);
             if (self->facingLeft) {
@@ -240,7 +249,7 @@ void EntityNovaSkeleton(Entity* self) {
             }
             other->posY.i.hi -= 4;
             other->facingLeft = self->facingLeft;
-            self->step_s += 1;
+            self->step_s++;
             break;
         case 1:
             prim = self->ext.nova.prim;
@@ -256,13 +265,13 @@ void EntityNovaSkeleton(Entity* self) {
             SetStep(NOVA_WALK_BACK);
         }
         break;
-    case NOVA_DEAD: 
+    case NOVA_DEAD:
         for (i = 0; i < 6; i++) {
             other = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (other == NULL) {
                 break;
             }
-            CreateEntityFromCurrentEntity(E_BLADE_SOLDIER_DEATH_PARTS, other);
+            CreateEntityFromCurrentEntity(E_NOVA_DEATH_PARTS, other);
             other->facingLeft = self->facingLeft;
             other->params = i;
             other->ext.nova.deathPartLife = death_parts_lifetimes[i];
@@ -281,7 +290,7 @@ void EntityNovaSkeleton(Entity* self) {
     }
 }
 
-void EntityBladeSoldierDeathParts(Entity* self) {
+void EntityNovaSkeletonDeathParts(Entity* self) {
     if (self->step) {
         if (--self->ext.nova.deathPartLife) {
             self->rotate += death_parts_rotspeeds[self->params];
@@ -289,7 +298,7 @@ void EntityBladeSoldierDeathParts(Entity* self) {
             MoveEntity();
             return;
         }
-        self->entityId = 2;
+        self->entityId = E_EXPLOSION;
         self->pfnUpdate = EntityExplosion;
         self->params = 0;
         self->step = 0;
@@ -307,18 +316,20 @@ void EntityBladeSoldierDeathParts(Entity* self) {
     }
 }
 
+typedef enum { LASER_INIT, LASER_1, LASER_2, LASER_3, LASER_4 } NovaLaserSteps;
+
 void EntityNovaLaser(Entity* self) {
-    s32 var_s7;
+    s32 centerX;
     s32 primIndex;
-    s32 var_s5;
+    s32 centerY;
     Entity* other;
-    s32 var_s3;
+    s32 primX;
     s32 var_s2;
     u8* var_s1;
     Primitive* prim;
 
     switch (self->step) {
-    case 0:
+    case LASER_INIT:
         InitializeEntity(D_us_801809A4);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 3);
         if (primIndex == -1) {
@@ -345,68 +356,68 @@ void EntityNovaLaser(Entity* self) {
             prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
                              DRAW_UNK02 | DRAW_TRANSP;
         }
-        self->ext.ILLEGAL.s16[5] = 0x60;
-        self->ext.ILLEGAL.s16[0xA] = 0;
-    case 1:
-        self->ext.ILLEGAL.s16[0xB] = 0x10;
-        if (self->ext.ILLEGAL.s16[0xA] < 0x80) {
-            self->ext.ILLEGAL.s16[0xA] += 0x10;
+        self->ext.nova.laserTimer = 0x60;
+        self->ext.nova.laserLength = 0;
+    case LASER_1:
+        self->ext.nova.laserFadeTimer = 0x10;
+        if (self->ext.nova.laserLength < 0x80) {
+            self->ext.nova.laserLength += 0x10;
         } else {
-            self->ext.ILLEGAL.s16[0xA] = 0x80;
+            self->ext.nova.laserLength = 0x80;
             self->hitboxState = 1;
-            self->step += 1;
+            self->step++;
         }
-    case 2:
-        if (!(self->ext.ILLEGAL.s16[5] & 3)) {
+    case LASER_2:
+        if (!(self->ext.nova.laserTimer & 3)) {
             other = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (other != NULL) {
                 CreateEntityFromEntity(E_NOVA_PULSE, self, other);
                 other->zPriority = self->zPriority - 1;
-                other->ext.ILLEGAL.s16[0xA] = self->ext.ILLEGAL.s16[0xA];
+                other->ext.nova.laserLength = self->ext.nova.laserLength;
                 other->facingLeft = self->facingLeft;
             }
         }
-        if (!(self->ext.ILLEGAL.s16[5] & 0xF)) {
+        if (!(self->ext.nova.laserTimer & 0xF)) {
             PlaySfxPositional(SFX_BAT_ECHO_A);
         }
-        if (self->ext.ILLEGAL.s16[5] < 0x10) {
+        if (self->ext.nova.laserTimer < 0x10) {
             PlaySfxPositional(SFX_BAT_ECHO_D);
-            self->step += 1;
+            self->step++;
         }
-    case 3:
+    case LASER_3:
         if (Random() & 1) {
-            if (self->ext.ILLEGAL.s16[0xA] < 0x88) {
-                self->ext.ILLEGAL.s16[0xA]++;
-            } else if (self->ext.ILLEGAL.s16[0xA] > 0x78) {
-                self->ext.ILLEGAL.s16[0xA]--;
+            if (self->ext.nova.laserLength < 0x88) {
+                self->ext.nova.laserLength++;
+            } else if (self->ext.nova.laserLength > 0x78) {
+                self->ext.nova.laserLength--;
             }
         }
-        self->hitboxWidth = self->ext.ILLEGAL.s16[0xA] / 2 + 0x10;
-        self->hitboxOffX = -self->ext.ILLEGAL.s16[0xA] / 2 - 0x10;
+        self->hitboxWidth = self->ext.nova.laserLength / 2 + 0x10;
+        self->hitboxOffX = -self->ext.nova.laserLength / 2 - 0x10;
         self->hitboxHeight = 8;
         other = self - 1;
-        if (other->entityId != 0x27) {
-            self->ext.ILLEGAL.s16[5] = 1;
+        if (other->entityId != E_NOVA_SKELETON) {
+            self->ext.nova.laserTimer = 1;
         }
-        if (!--self->ext.ILLEGAL.s16[5]) {
+        if (!--self->ext.nova.laserTimer) {
             self->hitboxState = 0;
-            self->step += 1;
+            self->step++;
         }
         break;
-    case 4:
-        self->ext.ILLEGAL.s16[0xB]--;
-        if (!self->ext.ILLEGAL.s16[0xB]) {
+    case LASER_4:
+        self->ext.nova.laserFadeTimer--;
+        if (!self->ext.nova.laserFadeTimer) {
             DestroyEntity(self);
             return;
         }
         break;
     }
-    var_s7 = self->posX.i.hi;
-    var_s5 = self->posY.i.hi;
+    centerX = self->posX.i.hi;
+    centerY = self->posY.i.hi;
     prim = self->ext.nova.prim;
     for (var_s2 = 0; var_s2 < 3; prim = prim->next, var_s2++) {
-        prim->y0 = prim->y1 = var_s5 - self->ext.ILLEGAL.s16[0xB];
-        prim->y2 = prim->y3 = var_s5 + self->ext.ILLEGAL.s16[0xB];
+        prim->y0 = prim->y1 = centerY - self->ext.nova.laserFadeTimer;
+        prim->y2 = prim->y3 = centerY + self->ext.nova.laserFadeTimer;
         if (g_Timer & 1) {
             prim->clut = 0x216;
         } else {
@@ -414,38 +425,38 @@ void EntityNovaLaser(Entity* self) {
         }
     }
     prim = self->ext.nova.prim;
-    var_s3 = var_s7;
+    primX = centerX;
     if (self->facingLeft) {
-        var_s3 -= 0x10;
+        primX -= 0x10;
     } else {
-        var_s3 += 0x10;
+        primX += 0x10;
     }
 
-    prim->x1 = prim->x3 = var_s3;
+    prim->x1 = prim->x3 = primX;
     if (self->facingLeft) {
-        var_s3 += 0x20;
+        primX += 0x20;
     } else {
-        var_s3 -= 0x20;
+        primX -= 0x20;
     }
 
-    prim->x0 = prim->x2 = var_s3;
+    prim->x0 = prim->x2 = primX;
     prim = prim->next;
-    prim->x1 = prim->x3 = var_s3;
+    prim->x1 = prim->x3 = primX;
     if (self->facingLeft) {
-        var_s3 += self->ext.ILLEGAL.s16[0xA];
+        primX += self->ext.nova.laserLength;
     } else {
-        var_s3 -= self->ext.ILLEGAL.s16[0xA];
+        primX -= self->ext.nova.laserLength;
     }
 
-    prim->x0 = prim->x2 = var_s3;
+    prim->x0 = prim->x2 = primX;
     prim = prim->next;
-    prim->x1 = prim->x3 = var_s3;
+    prim->x1 = prim->x3 = primX;
     if (self->facingLeft) {
-        var_s3 += 0x20;
+        primX += 0x20;
     } else {
-        var_s3 -= 0x20;
+        primX -= 0x20;
     }
-    prim->x0 = prim->x2 = var_s3;
+    prim->x0 = prim->x2 = primX;
     prim = prim->next;
 }
 
@@ -467,7 +478,7 @@ void EntityNovaLaserPulse(Entity* self) {
         /* fallthrough */
     case 1:
         MoveEntity();
-        self->ext.ILLEGAL.u32[6] += abs(self->velocityX);
+        self->ext.nova.laserPulseDist += abs(self->velocityX);
         self->scaleX = self->scaleY += 0x40;
         if (self->scaleX < 0x100) {
             return;
@@ -476,9 +487,9 @@ void EntityNovaLaserPulse(Entity* self) {
         return;
     case 2:
         MoveEntity();
-        self->ext.ILLEGAL.u32[6] += abs(self->velocityX);
-        temp_s0 = (self->ext.ILLEGAL.s16[0xA] + 0x20) << 0x10;
-        temp_s0 -= self->ext.ILLEGAL.u32[6];
+        self->ext.nova.laserPulseDist += abs(self->velocityX);
+        temp_s0 = (self->ext.nova.laserLength + 0x20) << 0x10;
+        temp_s0 -= self->ext.nova.laserPulseDist;
         if (temp_s0 < 0) {
             DestroyEntity(self);
             return;

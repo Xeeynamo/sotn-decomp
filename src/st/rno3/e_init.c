@@ -42,7 +42,7 @@ void EntityJackOBonesJack(Entity* self);
 void EntityNovaSkeleton(Entity* self);
 void EntityNovaLaser(Entity* self);
 void EntityNovaLaserPulse(Entity* self);
-void EntityBladeSoldierDeathParts(Entity* self);
+void EntityNovaSkeletonDeathParts(Entity* self);
 void func_us_801C35F8(Entity* self);
 void func_us_801C3DE0(Entity* self);
 void func_us_801C406C(Entity* self);
@@ -122,7 +122,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityNovaSkeleton,
     EntityNovaLaser,
     EntityNovaLaserPulse,
-    EntityBladeSoldierDeathParts,
+    EntityNovaSkeletonDeathParts,
     func_us_801C35F8,
     func_us_801C3DE0,
     func_us_801C406C,
