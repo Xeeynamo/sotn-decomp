@@ -86,7 +86,159 @@ void func_pspeu_0924EBC8(void) {
                       (long*)&prim->x3, (long*)&p, (long*)&flag);
 }
 
-INCLUDE_ASM("st/rno3_psp/nonmatchings/rno3_psp/e_nova_skeleton", EntityNovaSkeleton);
+
+extern s32 D_pspeu_0925A540;
+extern s32 D_pspeu_0925A558;
+extern s32 D_pspeu_0925A568;
+extern s32 D_pspeu_0925A578;
+extern s32 D_pspeu_0925A588;
+extern s32 D_pspeu_0925A5D0;
+extern u8 D_pspeu_0925A610[];
+extern s32 D_pspeu_0925A618[];
+extern s32 D_pspeu_0925A638[];
+extern s16 D_pspeu_0925A658[];
+extern s16 D_pspeu_0925A668[];
+extern u8 D_pspeu_0925A678[];
+extern u16 g_EInitNovaSkeleton;
+extern Entity g_Entities_224;
+
+void EntityNovaSkeleton(Entity* self) {
+    s32 var_s4;
+    Entity* other;
+    Primitive* prim;
+    s32 primIndex;
+    s32 i;
+
+    if (self->flags & 0x100) {
+        SetStep(8U);
+    }
+    switch (self->step) {                              /* switch 1 */
+    case 0:                                         /* switch 1 */
+        InitializeEntity(&g_EInitNovaSkeleton);
+        self->ext.ILLEGAL.u8[5] = 0x50;
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags |= 0x800000;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.prim = prim;
+        UnkPolyFunc2(prim);
+        prim->tpage = 0x12;
+        prim->clut = 0x216;
+        prim->u0 = prim->u2 = 0xC0;
+        prim->u1 = prim->u3 = 0xFF;
+        prim->v0 = prim->v1 = 0;
+        prim->v2 = prim->v3 = 0x40;
+        prim->priority = self->zPriority + 1;
+        prim->drawMode = 8;
+        break;
+    case 1:                                         /* switch 1 */
+        if (UnkCollisionFunc3(&D_pspeu_0925A540) == 0) {
+            break;
+        }
+        SetStep(2U);
+        break;
+    case 2:                                         /* switch 1 */
+        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        AnimateEntity(&D_pspeu_0925A578, self);
+        if (GetDistanceToPlayerX() < 0x70) {
+            SetStep(4U);
+        }
+        break;
+    case 3:                                         /* switch 1 */
+        if (AnimateEntity(&D_pspeu_0925A558, self) == 0) {
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        }
+        self->ext.ILLEGAL.u8[4] = self->facingLeft;
+        if (self->ext.ILLEGAL.u8[4]) {
+            self->velocityX = 0x8000;
+        } else {
+            self->velocityX = -0x8000;
+        }
+        if (GetDistanceToPlayerX() < 0x4C) {
+            self->step = 4;
+        }
+        func_pspeu_0924EB18();
+        break;
+    case 4:                                         /* switch 1 */
+        if (AnimateEntity(&D_pspeu_0925A568, self) == 0) {
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        }
+        self->ext.ILLEGAL.u8[4] = self->facingLeft ^ 1;
+        if (self->ext.ILLEGAL.u8[4]) {
+            self->velocityX = 0x8000;
+        } else {
+            self->velocityX = -0x8000;
+        }
+        if (GetDistanceToPlayerX() > 0x5C) {
+            self->step = 3;
+        }
+        func_pspeu_0924EB18();
+        break;
+    case 6:                                         /* switch 1 */
+        if (AnimateEntity(&D_pspeu_0925A588, self) == 0) {
+            self->ext.ILLEGAL.u8[0xC] = 0;
+            SetStep(7U);
+        }
+        if ((!self->poseTimer) && (self->pose == 2)) {
+            PlaySfxPositional(0x614);
+        }
+        break;
+    case 7:                                         /* switch 1 */
+        switch (self->step_s) {                        /* switch 2; irregular */
+        case 0:                                     /* switch 2 */
+            other = self + 1;
+            CreateEntityFromEntity(0x28U, self, other);
+            if (self->facingLeft) {
+                other->posX.i.hi += 0xA;
+            } else {
+                other->posX.i.hi -= 0xA;
+            }
+            other->posY.i.hi -= 4;
+            other->facingLeft = self->facingLeft;
+            self->step_s += 1;
+            break;
+        case 1:
+            prim = self->ext.prim;
+            PrimDecreaseBrightness(prim, 5);
+            break;
+        }
+        func_pspeu_0924EBC8();
+        if (!AnimateEntity(&D_pspeu_0925A5D0, self)) {
+            prim = self->ext.prim;
+            prim->drawMode = 8;
+            var_s4 = ++self->ext.ILLEGAL.u8[6] & 7;
+            self->ext.ILLEGAL.u8[5] = D_pspeu_0925A678[var_s4];
+            SetStep(4U);
+        }
+        break;
+    case 8:                                         /* switch 1 */
+        for(i = 0; i < 6; i++){
+            other = AllocEntity(&g_Entities_224, (Entity* ) &D_80097C98);
+            if (other == NULL) {
+                break;
+            }
+            CreateEntityFromCurrentEntity(0x2A, other);
+            other->facingLeft = self->facingLeft;
+            other->params = i;
+            other->ext.ILLEGAL.u8[7] = D_pspeu_0925A610[i];
+            if (self->facingLeft) {
+                other->posX.i.hi -= D_pspeu_0925A658[i];
+            } else {
+                other->posX.i.hi += D_pspeu_0925A658[i];
+            }
+            other->posY.i.hi += D_pspeu_0925A668[i];
+            other->velocityX = D_pspeu_0925A618[i];
+            other->velocityY = D_pspeu_0925A638[i];
+        }
+        PlaySfxPositional(0x62A);
+        DestroyEntity(self);
+        break;
+    }
+}
 
 INCLUDE_ASM("st/rno3_psp/nonmatchings/rno3_psp/e_nova_skeleton", EntityBladeSoldierDeathParts);
 
