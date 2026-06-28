@@ -4056,8 +4056,14 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
-    /* 0x80 */ u8 : 8;
+    /* 0x80 */ u8 movingLeft;
     /* 0x81 */ u8 cooldown;
+    /* 0x82 */ u8 laserTimerIndex;
+    /* 0x84 */ s32: 32;
+    /* 0x88 */ u8 ringState;
+    /* 0x8A */ s16: 16;
+    /* 0x8C */ s16 ringSize;
+    /* 0x8E */ s16 ringRot;
 
 } ET_NovaSkeleton;
 

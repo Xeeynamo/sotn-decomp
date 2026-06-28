@@ -8,13 +8,16 @@ extern EInit D_us_801809A4;
 static s16 sensors1[] = {0, 20, 0, 4, 8, -4, -16, 0};
 static s16 sensors2[] = {0, 20, 12, 0};
 // animations
-static u8 anim1[] = {6, 1, 4, 2, 4, 3, 6, 4, 5, 5, 5, 6, 0};
-static u8 anim2[] = {6, 1, 5, 6, 5, 5, 6, 4, 4, 3, 4, 2, 0};
+static u8 anim_walk_fwd[] = {6, 1, 4, 2, 4, 3, 6, 4, 5, 5, 5, 6, 0};
+static u8 anim_walk_back[] = {6, 1, 5, 6, 5, 5, 6, 4, 4, 3, 4, 2, 0};
+// A short squatting animation. Perhaps a jump windup?
 static u8 anim_unused1[] = {1, 1, 4, 27, 4, 28, 1, 1, 255, 0};
+// Slightly slower squat, note that the frames are all the same, just an extra 4,27.
 static u8 anim_unused2[] = {1, 1, 4, 27, 4, 28, 4, 27, 1, 1, 255, 0};
-static u8 anim3[] = {4, 1, 5, 27, 15, 28, 6, 27, 6, 1, 0};
-static u8 anim4[] = {16, 1, 3, 2, 3, 7, 3, 8, 2, 9, 2, 10, 2, 11, 2, 10, 2, 11, 2, 12, 2, 11, 2, 12, 2, 13, 2, 12, 2, 13, 2, 14, 2, 13, 2, 14, 2, 13, 2, 14, 2, 15, 2, 16, 2, 15, 2, 16, 2, 15, 2, 16, 4, 20, 4, 19, 4, 18, 4, 17, 4, 18, 4, 19, 255, 0};
-static u8 anim5[] = {2, 20, 96, 21, 1, 23, 1, 22, 1, 23, 1, 22, 1, 23, 2, 22, 2, 23, 2, 22, 2, 23, 3, 22, 3, 23, 3, 22, 4, 23, 5, 22, 26, 23, 3, 24, 3, 25, 3, 26, 4, 4, 4, 5, 4, 6, 255, 0};
+static u8 anim_idle[] = {4, 1, 5, 27, 15, 28, 6, 27, 6, 1, 0};
+static u8 anim_laser_charge[] = {16, 1, 3, 2, 3, 7, 3, 8, 2, 9, 2, 10, 2, 11, 2, 10, 2, 11, 2, 12, 2, 11, 2, 12, 2, 13, 2, 12, 2, 13, 2, 14, 2, 13, 2, 14, 2, 13, 2, 14, 2, 15, 2, 16, 2, 15, 2, 16, 2, 15, 2, 16, 4, 20, 4, 19, 4, 18, 4, 17, 4, 18, 4, 19, 255, 0};
+// Not the laser itself - just nova skeleton standing there, holding arms up menacingly
+static u8 anim_laser_blast[] = {2, 20, 96, 21, 1, 23, 1, 22, 1, 23, 1, 22, 1, 23, 2, 22, 2, 23, 2, 22, 2, 23, 3, 22, 3, 23, 3, 22, 4, 23, 5, 22, 26, 23, 3, 24, 3, 25, 3, 26, 4, 4, 4, 5, 4, 6, 255, 0};
 // death_parts_rotspeeds
 static u16 death_parts_rotspeeds[] = {256, 128, 72, 32, 64, 16, 32, -32};
 //deathPartLife
@@ -43,12 +46,12 @@ static u8 primData[] = {96, 127, 128, 128,
 typedef enum {
     NOVA_INIT,
     NOVA_1,
-    NOVA_2,
-    NOVA_3,
-    NOVA_4,
+    NOVA_IDLE,
+    NOVA_WALK_FWD,
+    NOVA_WALK_BACK,
     NOVA_5,
-    NOVA_6,
-    NOVA_7,
+    NOVA_CHARGE,
+    NOVA_LASER,
     NOVA_DEAD
 } JackOBonesSteps;
 
@@ -61,14 +64,14 @@ static void NovaHelper1(void) {
             return;
         }
         if ((g_CurrentEntity->facingLeft) ^ (GetSideToPlayer() & 1)) {
-            SetStep(6);
+            SetStep(NOVA_CHARGE);
         }
     } else {
         g_CurrentEntity->ext.nova.cooldown--;
     }
 }
 
-static void NovaHelper2(void) {
+static void DrawLaserRing(void) {
     s32 p;
     s32 flag;
     SVECTOR sp60;
@@ -78,10 +81,10 @@ static void NovaHelper2(void) {
     s32 yVar;
     s32 xVar;
     Primitive* prim;
-
-    switch (g_CurrentEntity->ext.ILLEGAL.u8[0xC]) {
+    // Ring state: 0 = init, 1 = ongoing/growing
+    switch (g_CurrentEntity->ext.nova.ringState) {
     case 0:
-        g_CurrentEntity->ext.ILLEGAL.s16[8] = 0;
+        g_CurrentEntity->ext.nova.ringSize = 0;
         prim = g_CurrentEntity->ext.nova.prim;
         prim->r0 = prim->g0 = prim->b0 = 0xC0;
         LOW(prim->r1) = LOW(prim->r0);
@@ -89,11 +92,11 @@ static void NovaHelper2(void) {
         LOW(prim->r3) = LOW(prim->r0);
         prim->drawMode =
             DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
-        g_CurrentEntity->ext.ILLEGAL.u8[0xC] = 1;
+        g_CurrentEntity->ext.nova.ringState = 1;
         break;
     case 1:
-        g_CurrentEntity->ext.ILLEGAL.s16[9] += 0x100;
-        g_CurrentEntity->ext.ILLEGAL.s16[8] += 0x200;
+        g_CurrentEntity->ext.nova.ringRot += 0x100;
+        g_CurrentEntity->ext.nova.ringSize += 0x200;
         break;
     }
     SetGeomScreen(0x200);
@@ -112,7 +115,7 @@ static void NovaHelper2(void) {
     } else {
         sp60.vy = 0x2E0;
     }
-    sp60.vz = g_CurrentEntity->ext.ILLEGAL.s16[9];
+    sp60.vz = g_CurrentEntity->ext.nova.ringRot;
     RotMatrix(&sp28, &sp30);
     RotMatrixZ(sp60.vz, &sp30);
     RotMatrixY(sp60.vy, &sp30);
@@ -120,8 +123,8 @@ static void NovaHelper2(void) {
     sp50.vy = 0;
     sp50.vz = 0x200;
     TransMatrix(&sp30, &sp50);
-    sp50.vx = g_CurrentEntity->ext.ILLEGAL.s16[8];
-    sp50.vy = g_CurrentEntity->ext.ILLEGAL.s16[8];
+    sp50.vx = g_CurrentEntity->ext.nova.ringSize;
+    sp50.vy = g_CurrentEntity->ext.nova.ringSize;
     sp50.vz = 0x1000;
     ScaleMatrix(&sp30, &sp50);
     SetRotMatrix(&sp30);
@@ -174,21 +177,21 @@ void EntityNovaSkeleton(Entity* self) {
         if (UnkCollisionFunc3(sensors1) == 0) {
             break;
         }
-        SetStep(NOVA_2);
+        SetStep(NOVA_IDLE);
         break;
-    case NOVA_2: 
+    case NOVA_IDLE: 
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-        AnimateEntity(&anim3, self);
+        AnimateEntity(&anim_idle, self);
         if (GetDistanceToPlayerX() < 0x70) {
-            SetStep(NOVA_4);
+            SetStep(NOVA_WALK_BACK);
         }
         break;
-    case NOVA_3: 
-        if (AnimateEntity(&anim1, self) == 0) {
+    case NOVA_WALK_FWD: 
+        if (AnimateEntity(&anim_walk_fwd, self) == 0) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
-        self->ext.ILLEGAL.u8[4] = self->facingLeft;
-        if (self->ext.ILLEGAL.u8[4]) {
+        self->ext.nova.movingLeft = self->facingLeft;
+        if (self->ext.nova.movingLeft) {
             self->velocityX = FIX(0.5);
         } else {
             self->velocityX = FIX(-0.5);
@@ -198,12 +201,12 @@ void EntityNovaSkeleton(Entity* self) {
         }
         NovaHelper1();
         break;
-    case NOVA_4: 
-        if (AnimateEntity(&anim2, self) == 0) {
+    case NOVA_WALK_BACK: 
+        if (AnimateEntity(&anim_walk_back, self) == 0) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
-        self->ext.ILLEGAL.u8[4] = self->facingLeft ^ 1;
-        if (self->ext.ILLEGAL.u8[4]) {
+        self->ext.nova.movingLeft = self->facingLeft ^ 1;
+        if (self->ext.nova.movingLeft) {
             self->velocityX = FIX(0.5);
         } else {
             self->velocityX = FIX(-0.5);
@@ -216,16 +219,16 @@ void EntityNovaSkeleton(Entity* self) {
     // Could be related to the unsed animations. Not accessible.
     case NOVA_5:
         break;
-    case NOVA_6: 
-        if (AnimateEntity(&anim4, self) == 0) {
-            self->ext.ILLEGAL.u8[0xC] = 0;
-            SetStep(7U);
+    case NOVA_CHARGE: 
+        if (AnimateEntity(&anim_laser_charge, self) == 0) {
+            self->ext.nova.ringState = 0;
+            SetStep(NOVA_LASER);
         }
         if ((!self->poseTimer) && (self->pose == 2)) {
             PlaySfxPositional(SFX_ELECTRICITY);
         }
         break;
-    case NOVA_7:                     
+    case NOVA_LASER:                     
         switch (self->step_s) {
         case 0:                 
             other = self + 1;
@@ -244,13 +247,13 @@ void EntityNovaSkeleton(Entity* self) {
             PrimDecreaseBrightness(prim, 5);
             break;
         }
-        NovaHelper2();
-        if (!AnimateEntity(&anim5, self)) {
+        DrawLaserRing();
+        if (!AnimateEntity(&anim_laser_blast, self)) {
             prim = self->ext.nova.prim;
             prim->drawMode = DRAW_HIDE;
-            var_s4 = ++self->ext.ILLEGAL.u8[6] & 7;
+            var_s4 = ++self->ext.nova.laserTimerIndex & 7;
             self->ext.nova.cooldown = laser_cooldowns[var_s4];
-            SetStep(4U);
+            SetStep(NOVA_WALK_BACK);
         }
         break;
     case NOVA_DEAD: 
