@@ -1,7 +1,28 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../rno3/rno3.h"
 
+extern EInit g_EInitNovaSkeleton;
+extern EInit D_us_801809A4;
+
+extern s32 D_pspeu_0925A540;
 extern s16 D_pspeu_0925A550[];
+extern s32 D_pspeu_0925A558;
+extern s32 D_pspeu_0925A568;
+extern s32 D_pspeu_0925A578;
+extern s32 D_pspeu_0925A588;
+extern s32 D_pspeu_0925A5D0;
+extern u16 D_pspeu_0925A600[];
+extern u8 D_pspeu_0925A610[];
+extern s32 D_pspeu_0925A618[];
+extern s32 D_pspeu_0925A638[];
+extern s16 D_pspeu_0925A658[];
+extern s16 D_pspeu_0925A668[];
+extern u8 D_pspeu_0925A678[];
+extern SVECTOR D_pspeu_0925A680;
+extern SVECTOR D_pspeu_0925A688;
+extern SVECTOR D_pspeu_0925A690;
+extern SVECTOR D_pspeu_0925A698;
+extern u8 D_pspeu_0925A6A0[];
 
 void func_pspeu_0924EB18(void) {
     // return value not used, but function has side effects
@@ -19,10 +40,7 @@ void func_pspeu_0924EB18(void) {
     }
 }
 
-extern SVECTOR D_pspeu_0925A680;
-extern SVECTOR D_pspeu_0925A688;
-extern SVECTOR D_pspeu_0925A690;
-extern SVECTOR D_pspeu_0925A698;
+
 
 void func_pspeu_0924EBC8(void) {
     s32 p;
@@ -88,21 +106,6 @@ void func_pspeu_0924EBC8(void) {
                   (long*)&prim->x2, (long*)&prim->x3, (long*)&p, (long*)&flag);
 }
 
-extern s32 D_pspeu_0925A540;
-extern s32 D_pspeu_0925A558;
-extern s32 D_pspeu_0925A568;
-extern s32 D_pspeu_0925A578;
-extern s32 D_pspeu_0925A588;
-extern s32 D_pspeu_0925A5D0;
-extern u8 D_pspeu_0925A610[];
-extern s32 D_pspeu_0925A618[];
-extern s32 D_pspeu_0925A638[];
-extern s16 D_pspeu_0925A658[];
-extern s16 D_pspeu_0925A668[];
-extern u8 D_pspeu_0925A678[];
-extern u16 g_EInitNovaSkeleton;
-extern Entity g_Entities_224;
-
 void EntityNovaSkeleton(Entity* self) {
     s32 var_s4;
     Entity* other;
@@ -115,7 +118,7 @@ void EntityNovaSkeleton(Entity* self) {
     }
     switch (self->step) { /* switch 1 */
     case 0:               /* switch 1 */
-        InitializeEntity(&g_EInitNovaSkeleton);
+        InitializeEntity(g_EInitNovaSkeleton);
         self->ext.ILLEGAL.u8[5] = 0x50;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
         if (primIndex == -1) {
@@ -218,7 +221,7 @@ void EntityNovaSkeleton(Entity* self) {
         break;
     case 8: /* switch 1 */
         for (i = 0; i < 6; i++) {
-            other = AllocEntity(&g_Entities_224, (Entity*)&D_80097C98);
+            other = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (other == NULL) {
                 break;
             }
@@ -241,9 +244,6 @@ void EntityNovaSkeleton(Entity* self) {
     }
 }
 
-extern u16 D_pspeu_0925A600[];
-extern u16 g_EInitNovaSkeleton;
-
 void EntityBladeSoldierDeathParts(Entity* self) {
     if (self->step) {
         if (--self->ext.ILLEGAL.u8[7]) {
@@ -258,7 +258,7 @@ void EntityBladeSoldierDeathParts(Entity* self) {
         self->step = 0;
         return;
     }
-    InitializeEntity(&g_EInitNovaSkeleton);
+    InitializeEntity(g_EInitNovaSkeleton);
     self->hitboxState = 0;
     self->flags |=
         FLAG_DESTROY_IF_OUT_OF_CAMERA | FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
@@ -269,9 +269,6 @@ void EntityBladeSoldierDeathParts(Entity* self) {
         self->velocityX = -self->velocityX;
     }
 }
-
-extern u8 D_pspeu_0925A6A0[];
-extern EInit D_us_801809A4;
 
 void func_us_801C2FF0(Entity* self) {
     s32 var_s7;
