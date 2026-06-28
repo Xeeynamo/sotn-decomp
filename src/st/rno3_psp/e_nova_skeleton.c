@@ -8,10 +8,10 @@ void func_pspeu_0924EB18(void) {
     s32 unused = UnkCollisionFunc2(&D_pspeu_0925A550);
     // if cooldown has expired...
     if (!g_CurrentEntity->ext.ILLEGAL.u8[5]) {
-        if (GetDistanceToPlayerX() >= 0x80){
+        if (GetDistanceToPlayerX() >= 0x80) {
             return;
         }
-        if((g_CurrentEntity->facingLeft) ^ (GetSideToPlayer() & 1)) {
+        if ((g_CurrentEntity->facingLeft) ^ (GetSideToPlayer() & 1)) {
             SetStep(6);
         }
     } else {
@@ -38,12 +38,13 @@ void func_pspeu_0924EBC8(void) {
     switch (g_CurrentEntity->ext.ILLEGAL.u8[0xC]) {
     case 0:
         g_CurrentEntity->ext.ILLEGAL.s16[8] = 0;
-        prim = g_CurrentEntity->ext.prim;        
+        prim = g_CurrentEntity->ext.prim;
         prim->r0 = prim->g0 = prim->b0 = 0xC0;
         LOW(prim->r1) = LOW(prim->r0);
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
-        prim->drawMode = 0x37;
+        prim->drawMode =
+            DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
         g_CurrentEntity->ext.ILLEGAL.u8[0xC] = 1;
         break;
     case 1:
@@ -82,10 +83,10 @@ void func_pspeu_0924EBC8(void) {
     SetRotMatrix(&sp30);
     SetTransMatrix(&sp30);
     prim = g_CurrentEntity->ext.prim;
-    RotTransPers4(&D_pspeu_0925A680, &D_pspeu_0925A688, &D_pspeu_0925A690, &D_pspeu_0925A698, (long*)&prim->x0, (long*)&prim->x1, (long*)&prim->x2,
-                      (long*)&prim->x3, (long*)&p, (long*)&flag);
+    RotTransPers4(&D_pspeu_0925A680, &D_pspeu_0925A688, &D_pspeu_0925A690,
+                  &D_pspeu_0925A698, (long*)&prim->x0, (long*)&prim->x1,
+                  (long*)&prim->x2, (long*)&prim->x3, (long*)&p, (long*)&flag);
 }
-
 
 extern s32 D_pspeu_0925A540;
 extern s32 D_pspeu_0925A558;
@@ -109,11 +110,11 @@ void EntityNovaSkeleton(Entity* self) {
     s32 primIndex;
     s32 i;
 
-    if (self->flags & 0x100) {
+    if (self->flags & FLAG_DEAD) {
         SetStep(8U);
     }
-    switch (self->step) {                              /* switch 1 */
-    case 0:                                         /* switch 1 */
+    switch (self->step) { /* switch 1 */
+    case 0:               /* switch 1 */
         InitializeEntity(&g_EInitNovaSkeleton);
         self->ext.ILLEGAL.u8[5] = 0x50;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
@@ -121,7 +122,7 @@ void EntityNovaSkeleton(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags |= 0x800000;
+        self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
         self->ext.prim = prim;
@@ -133,65 +134,65 @@ void EntityNovaSkeleton(Entity* self) {
         prim->v0 = prim->v1 = 0;
         prim->v2 = prim->v3 = 0x40;
         prim->priority = self->zPriority + 1;
-        prim->drawMode = 8;
+        prim->drawMode = DRAW_HIDE;
         break;
-    case 1:                                         /* switch 1 */
+    case 1: /* switch 1 */
         if (UnkCollisionFunc3(&D_pspeu_0925A540) == 0) {
             break;
         }
         SetStep(2U);
         break;
-    case 2:                                         /* switch 1 */
+    case 2: /* switch 1 */
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         AnimateEntity(&D_pspeu_0925A578, self);
         if (GetDistanceToPlayerX() < 0x70) {
             SetStep(4U);
         }
         break;
-    case 3:                                         /* switch 1 */
+    case 3: /* switch 1 */
         if (AnimateEntity(&D_pspeu_0925A558, self) == 0) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
         self->ext.ILLEGAL.u8[4] = self->facingLeft;
         if (self->ext.ILLEGAL.u8[4]) {
-            self->velocityX = 0x8000;
+            self->velocityX = FIX(0.5);
         } else {
-            self->velocityX = -0x8000;
+            self->velocityX = FIX(-0.5);
         }
         if (GetDistanceToPlayerX() < 0x4C) {
             self->step = 4;
         }
         func_pspeu_0924EB18();
         break;
-    case 4:                                         /* switch 1 */
+    case 4: /* switch 1 */
         if (AnimateEntity(&D_pspeu_0925A568, self) == 0) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
         self->ext.ILLEGAL.u8[4] = self->facingLeft ^ 1;
         if (self->ext.ILLEGAL.u8[4]) {
-            self->velocityX = 0x8000;
+            self->velocityX = FIX(0.5);
         } else {
-            self->velocityX = -0x8000;
+            self->velocityX = FIX(-0.5);
         }
         if (GetDistanceToPlayerX() > 0x5C) {
             self->step = 3;
         }
         func_pspeu_0924EB18();
         break;
-    case 6:                                         /* switch 1 */
+    case 6: /* switch 1 */
         if (AnimateEntity(&D_pspeu_0925A588, self) == 0) {
             self->ext.ILLEGAL.u8[0xC] = 0;
             SetStep(7U);
         }
         if ((!self->poseTimer) && (self->pose == 2)) {
-            PlaySfxPositional(0x614);
+            PlaySfxPositional(SFX_ELECTRICITY);
         }
         break;
-    case 7:                                         /* switch 1 */
-        switch (self->step_s) {                        /* switch 2; irregular */
-        case 0:                                     /* switch 2 */
+    case 7:                     /* switch 1 */
+        switch (self->step_s) { /* switch 2; irregular */
+        case 0:                 /* switch 2 */
             other = self + 1;
-            CreateEntityFromEntity(0x28U, self, other);
+            CreateEntityFromEntity(E_UNK_28, self, other);
             if (self->facingLeft) {
                 other->posX.i.hi += 0xA;
             } else {
@@ -209,19 +210,19 @@ void EntityNovaSkeleton(Entity* self) {
         func_pspeu_0924EBC8();
         if (!AnimateEntity(&D_pspeu_0925A5D0, self)) {
             prim = self->ext.prim;
-            prim->drawMode = 8;
+            prim->drawMode = DRAW_HIDE;
             var_s4 = ++self->ext.ILLEGAL.u8[6] & 7;
             self->ext.ILLEGAL.u8[5] = D_pspeu_0925A678[var_s4];
             SetStep(4U);
         }
         break;
-    case 8:                                         /* switch 1 */
-        for(i = 0; i < 6; i++){
-            other = AllocEntity(&g_Entities_224, (Entity* ) &D_80097C98);
+    case 8: /* switch 1 */
+        for (i = 0; i < 6; i++) {
+            other = AllocEntity(&g_Entities_224, (Entity*)&D_80097C98);
             if (other == NULL) {
                 break;
             }
-            CreateEntityFromCurrentEntity(0x2A, other);
+            CreateEntityFromCurrentEntity(E_BLADE_SOLDIER_DEATH_PARTS, other);
             other->facingLeft = self->facingLeft;
             other->params = i;
             other->ext.ILLEGAL.u8[7] = D_pspeu_0925A610[i];
@@ -234,7 +235,7 @@ void EntityNovaSkeleton(Entity* self) {
             other->velocityX = D_pspeu_0925A618[i];
             other->velocityY = D_pspeu_0925A638[i];
         }
-        PlaySfxPositional(0x62A);
+        PlaySfxPositional(SFX_SKELETON_DEATH_B);
         DestroyEntity(self);
         break;
     }
@@ -259,9 +260,11 @@ void EntityBladeSoldierDeathParts(Entity* self) {
     }
     InitializeEntity(&g_EInitNovaSkeleton);
     self->hitboxState = 0;
-    self->flags |= 0xC0202000;
+    self->flags |=
+        FLAG_DESTROY_IF_OUT_OF_CAMERA | FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
+        FLAG_UNK_00200000 | FLAG_UNK_2000;
     self->animCurFrame = self->params + 0x1D;
-    self->drawFlags = 4;
+    self->drawFlags = ENTITY_ROTATE;
     if (self->facingLeft) {
         self->velocityX = -self->velocityX;
     }
@@ -288,14 +291,14 @@ void func_us_801C2FF0(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags |= 0x800000;
+        self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
         self->ext.prim = prim;
         var_s1 = &D_pspeu_0925A6A0[0];
-        for(var_s2 = 0; var_s2 < 3; prim = prim->next, var_s2++){
+        for (var_s2 = 0; var_s2 < 3; prim = prim->next, var_s2++) {
             prim->tpage = 0x12;
-            prim->clut = 0x216;            
+            prim->clut = 0x216;
             prim->u0 = prim->u2 = *var_s1++ + 0x80;
             prim->u1 = prim->u3 = *var_s1++ + 0x80;
             prim->v0 = prim->v1 = 0x40;
@@ -305,7 +308,8 @@ void func_us_801C2FF0(Entity* self) {
             prim->r1 = prim->g1 = prim->b1 = *var_s1++;
             LOW(prim->r3) = LOW(prim->r1);
             prim->priority = self->zPriority + 2;
-            prim->drawMode = 0x37;
+            prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
+                             DRAW_UNK02 | DRAW_TRANSP;
         }
         self->ext.ILLEGAL.s16[5] = 0x60;
         self->ext.ILLEGAL.s16[0xA] = 0;
@@ -322,17 +326,17 @@ void func_us_801C2FF0(Entity* self) {
         if (!(self->ext.ILLEGAL.s16[5] & 3)) {
             other = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (other != NULL) {
-                CreateEntityFromEntity(0x29U, self, other);
+                CreateEntityFromEntity(E_UNK_29, self, other);
                 other->zPriority = self->zPriority - 1;
                 other->ext.ILLEGAL.s16[0xA] = self->ext.ILLEGAL.s16[0xA];
                 other->facingLeft = self->facingLeft;
             }
         }
         if (!(self->ext.ILLEGAL.s16[5] & 0xF)) {
-            PlaySfxPositional(0x61E);
+            PlaySfxPositional(SFX_BAT_ECHO_A);
         }
         if (self->ext.ILLEGAL.s16[5] < 0x10) {
-            PlaySfxPositional(0x621);
+            PlaySfxPositional(SFX_BAT_ECHO_D);
             self->step += 1;
         }
     case 3:
@@ -366,7 +370,7 @@ void func_us_801C2FF0(Entity* self) {
     var_s7 = self->posX.i.hi;
     var_s5 = self->posY.i.hi;
     prim = self->ext.prim;
-    for(var_s2 = 0; var_s2 < 3; prim = prim->next, var_s2++){
+    for (var_s2 = 0; var_s2 < 3; prim = prim->next, var_s2++) {
         prim->y0 = prim->y1 = var_s5 - self->ext.ILLEGAL.s16[0xB];
         prim->y2 = prim->y3 = var_s5 + self->ext.ILLEGAL.s16[0xB];
         if (g_Timer & 1) {
@@ -382,14 +386,14 @@ void func_us_801C2FF0(Entity* self) {
     } else {
         var_s3 += 0x10;
     }
-    
+
     prim->x1 = prim->x3 = var_s3;
     if (self->facingLeft) {
         var_s3 += 0x20;
     } else {
         var_s3 -= 0x20;
     }
-    
+
     prim->x0 = prim->x2 = var_s3;
     prim = prim->next;
     prim->x1 = prim->x3 = var_s3;
@@ -398,7 +402,7 @@ void func_us_801C2FF0(Entity* self) {
     } else {
         var_s3 -= self->ext.ILLEGAL.s16[0xA];
     }
-    
+
     prim->x0 = prim->x2 = var_s3;
     prim = prim->next;
     prim->x1 = prim->x3 = var_s3;
@@ -419,12 +423,12 @@ void func_us_801C34A0(Entity* self) {
         InitializeEntity(D_us_801809A4);
         self->hitboxState = 0;
         self->animCurFrame = 0x24;
-        self->drawFlags |= 3;
+        self->drawFlags |= ENTITY_SCALEY | ENTITY_SCALEX;
         self->scaleX = self->scaleY = 0x10;
         if (self->facingLeft) {
-            self->velocityX = 0x80000;
+            self->velocityX = FIX(8.0);
         } else {
-            self->velocityX = -0x80000;
+            self->velocityX = FIX(-8.0);
         }
         /* fallthrough */
     case 1:
@@ -449,7 +453,7 @@ void func_us_801C34A0(Entity* self) {
         // it but math is fun, I guess? Everyone likes some nice bit shifts.
         temp_s0 >>= 0x10;
         temp_s0 <<= 3;
-        if(temp_s0 > 0x100){
+        if (temp_s0 > 0x100) {
             temp_s0 = 0x100;
         }
         break;
