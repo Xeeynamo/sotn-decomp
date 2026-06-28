@@ -5,35 +5,37 @@ extern EInit g_EInitNovaSkeleton;
 extern EInit D_us_801809A4;
 
 // sensors
-extern s16 D_pspeu_0925A540[];
-extern s16 D_pspeu_0925A550[];
+extern s16 D_pspeu_0925A540[] = {0, 20, 0, 4, 8, -4, -16, 0};
+extern s16 D_pspeu_0925A550[] = {0, 20, 12, 0};
 // animations
-extern s32 D_pspeu_0925A558;
-extern s32 D_pspeu_0925A568;
-extern s32 D_pspeu_0925A578;
-extern s32 D_pspeu_0925A588;
-extern s32 D_pspeu_0925A5D0;
+extern u8 D_pspeu_0925A558[] = {6, 1, 4, 2, 4, 3, 6, 4, 5, 5, 5, 6, 0};
+extern u8 D_pspeu_0925A568[] = {6, 1, 5, 6, 5, 5, 6, 4, 4, 3, 4, 2, 0};
+extern u8 D_pspeu_0925A578[] = {4, 1, 5, 27, 15, 28, 6, 27, 6, 1, 0};
+extern u8 D_pspeu_0925A588[] = {16, 1, 3, 2, 3, 7, 3, 8, 2, 9, 2, 10, 2, 11, 2, 10, 2, 11, 2, 12, 2, 11, 2, 12, 2, 13, 2, 12, 2, 13, 2, 14, 2, 13, 2, 14, 2, 13, 2, 14, 2, 15, 2, 16, 2, 15, 2, 16, 2, 15, 2, 16, 4, 20, 4, 19, 4, 18, 4, 17, 4, 18, 4, 19, 255, 0};
+extern u8 D_pspeu_0925A5D0[] = {2, 20, 96, 21, 1, 23, 1, 22, 1, 23, 1, 22, 1, 23, 2, 22, 2, 23, 2, 22, 2, 23, 3, 22, 3, 23, 3, 22, 4, 23, 5, 22, 26, 23, 3, 24, 3, 25, 3, 26, 4, 4, 4, 5, 4, 6, 255, 0};
 // death_parts_rotspeeds
-extern u16 D_pspeu_0925A600[];
+extern u16 D_pspeu_0925A600[] = {256, 128, 72, 32, 64, 16, 32, -32};
 //deathPartLife
-extern u8 D_pspeu_0925A610[];
+extern u8 D_pspeu_0925A610[] = {48, 32, 20, 12, 24, 16, 64, 48};
 //death part xvel
-extern s32 D_pspeu_0925A618[];
+extern s32 D_pspeu_0925A618[] = {FIX(0.75), FIX(1.75), FIX(1.5), FIX(1.0), FIX(2.0), FIX(1.75), FIX(-0.5), FIX(0.5)};
 // death part yvel
-extern s32 D_pspeu_0925A638[];
+extern s32 D_pspeu_0925A638[] = {FIX(-5.0), FIX(-3.0), FIX(-2.0), FIX(-3.0), FIX(-4.0), FIX(-0.875), FIX(-6.0), FIX(-4.5)};
 //death_parts_xPos
-extern s16 D_pspeu_0925A658[];
+extern s16 D_pspeu_0925A658[] = {-4, 0, 4, -4, -4, 4, -6, 6};
 //death_parts_yPos
-extern s16 D_pspeu_0925A668[];
+extern s16 D_pspeu_0925A668[] = {-16, -8, -4, -4, 9, 9, 2, -2};
 // laser cooldown
-extern u8 D_pspeu_0925A678[];
+extern u8 D_pspeu_0925A678[] = {128, 8, 8, 64, 240, 192, 160, 128};
 // vectors
-extern SVECTOR D_pspeu_0925A680;
-extern SVECTOR D_pspeu_0925A688;
-extern SVECTOR D_pspeu_0925A690;
-extern SVECTOR D_pspeu_0925A698;
+extern SVECTOR D_pspeu_0925A680 = {-32, -32, 0, 0};
+extern SVECTOR D_pspeu_0925A688 = {32, -32, 0, 0};
+extern SVECTOR D_pspeu_0925A690 = {-32, 32, 0, 0};
+extern SVECTOR D_pspeu_0925A698 = {32, 32, 0, 0};
 // uv data
-extern u8 D_pspeu_0925A6A0[];
+extern u8 D_pspeu_0925A6A0[] = {96, 127, 128, 128, 
+    32, 95, 64, 128, 
+    0, 31, 32, 64};
 
 void func_pspeu_0924EB18(void) {
     // return value not used, but function has side effects
