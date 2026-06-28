@@ -5,44 +5,44 @@ extern EInit g_EInitNovaSkeleton;
 extern EInit D_us_801809A4;
 
 // sensors
-static s16 D_pspeu_0925A540[] = {0, 20, 0, 4, 8, -4, -16, 0};
-static s16 D_pspeu_0925A550[] = {0, 20, 12, 0};
+static s16 sensors1[] = {0, 20, 0, 4, 8, -4, -16, 0};
+static s16 sensors2[] = {0, 20, 12, 0};
 // animations
-static u8 D_pspeu_0925A558[] = {6, 1, 4, 2, 4, 3, 6, 4, 5, 5, 5, 6, 0};
-static u8 D_pspeu_0925A568[] = {6, 1, 5, 6, 5, 5, 6, 4, 4, 3, 4, 2, 0};
+static u8 anim1[] = {6, 1, 4, 2, 4, 3, 6, 4, 5, 5, 5, 6, 0};
+static u8 anim2[] = {6, 1, 5, 6, 5, 5, 6, 4, 4, 3, 4, 2, 0};
 static u8 anim_unused1[] = {1, 1, 4, 27, 4, 28, 1, 1, 255, 0};
 static u8 anim_unused2[] = {1, 1, 4, 27, 4, 28, 4, 27, 1, 1, 255, 0};
-static u8 D_pspeu_0925A578[] = {4, 1, 5, 27, 15, 28, 6, 27, 6, 1, 0};
-static u8 D_pspeu_0925A588[] = {16, 1, 3, 2, 3, 7, 3, 8, 2, 9, 2, 10, 2, 11, 2, 10, 2, 11, 2, 12, 2, 11, 2, 12, 2, 13, 2, 12, 2, 13, 2, 14, 2, 13, 2, 14, 2, 13, 2, 14, 2, 15, 2, 16, 2, 15, 2, 16, 2, 15, 2, 16, 4, 20, 4, 19, 4, 18, 4, 17, 4, 18, 4, 19, 255, 0};
-static u8 D_pspeu_0925A5D0[] = {2, 20, 96, 21, 1, 23, 1, 22, 1, 23, 1, 22, 1, 23, 2, 22, 2, 23, 2, 22, 2, 23, 3, 22, 3, 23, 3, 22, 4, 23, 5, 22, 26, 23, 3, 24, 3, 25, 3, 26, 4, 4, 4, 5, 4, 6, 255, 0};
+static u8 anim3[] = {4, 1, 5, 27, 15, 28, 6, 27, 6, 1, 0};
+static u8 anim4[] = {16, 1, 3, 2, 3, 7, 3, 8, 2, 9, 2, 10, 2, 11, 2, 10, 2, 11, 2, 12, 2, 11, 2, 12, 2, 13, 2, 12, 2, 13, 2, 14, 2, 13, 2, 14, 2, 13, 2, 14, 2, 15, 2, 16, 2, 15, 2, 16, 2, 15, 2, 16, 4, 20, 4, 19, 4, 18, 4, 17, 4, 18, 4, 19, 255, 0};
+static u8 anim5[] = {2, 20, 96, 21, 1, 23, 1, 22, 1, 23, 1, 22, 1, 23, 2, 22, 2, 23, 2, 22, 2, 23, 3, 22, 3, 23, 3, 22, 4, 23, 5, 22, 26, 23, 3, 24, 3, 25, 3, 26, 4, 4, 4, 5, 4, 6, 255, 0};
 // death_parts_rotspeeds
-static u16 D_pspeu_0925A600[] = {256, 128, 72, 32, 64, 16, 32, -32};
+static u16 death_parts_rotspeeds[] = {256, 128, 72, 32, 64, 16, 32, -32};
 //deathPartLife
-static u8 D_pspeu_0925A610[] = {48, 32, 20, 12, 24, 16, 64, 48};
+static u8 death_parts_lifetimes[] = {48, 32, 20, 12, 24, 16, 64, 48};
 //death part xvel
-static s32 D_pspeu_0925A618[] = {FIX(0.75), FIX(1.75), FIX(1.5), FIX(1.0), FIX(2.0), FIX(1.75), FIX(-0.5), FIX(0.5)};
+static s32 death_parts_xVels[] = {FIX(0.75), FIX(1.75), FIX(1.5), FIX(1.0), FIX(2.0), FIX(1.75), FIX(-0.5), FIX(0.5)};
 // death part yvel
-static s32 D_pspeu_0925A638[] = {FIX(-5.0), FIX(-3.0), FIX(-2.0), FIX(-3.0), FIX(-4.0), FIX(-0.875), FIX(-6.0), FIX(-4.5)};
+static s32 death_parts_yVels[] = {FIX(-5.0), FIX(-3.0), FIX(-2.0), FIX(-3.0), FIX(-4.0), FIX(-0.875), FIX(-6.0), FIX(-4.5)};
 //death_parts_xPos
-static s16 D_pspeu_0925A658[] = {-4, 0, 4, -4, -4, 4, -6, 6};
+static s16 death_parts_xPos[] = {-4, 0, 4, -4, -4, 4, -6, 6};
 //death_parts_yPos
-static s16 D_pspeu_0925A668[] = {-16, -8, -4, -4, 9, 9, 2, -2};
+static s16 death_parts_yPos[] = {-16, -8, -4, -4, 9, 9, 2, -2};
 // laser cooldown
-static u8 D_pspeu_0925A678[] = {128, 8, 8, 64, 240, 192, 160, 128};
+static u8 laser_cooldowns[] = {128, 8, 8, 64, 240, 192, 160, 128};
 static s8 unused[] = {-12, -1, 16, 0, 0, 0, -16, -1, 0, 0, -16, -1};
 // vectors
-static SVECTOR D_pspeu_0925A680 = {-32, -32, 0, 0};
-static SVECTOR D_pspeu_0925A688 = {32, -32, 0, 0};
-static SVECTOR D_pspeu_0925A690 = {-32, 32, 0, 0};
-static SVECTOR D_pspeu_0925A698 = {32, 32, 0, 0};
+static SVECTOR vec_negneg = {-32, -32, 0, 0};
+static SVECTOR vec_posneg = {32, -32, 0, 0};
+static SVECTOR vec_negpos = {-32, 32, 0, 0};
+static SVECTOR vec_pospos = {32, 32, 0, 0};
 // uv data
-static u8 D_pspeu_0925A6A0[] = {96, 127, 128, 128, 
+static u8 primData[] = {96, 127, 128, 128, 
     32, 95, 64, 128, 
     0, 31, 32, 64};
 
-static void func_pspeu_0924EB18(void) {
+static void NovaHelper1(void) {
     // return value not used, but function has side effects
-    s32 unused = UnkCollisionFunc2(&D_pspeu_0925A550);
+    s32 unused = UnkCollisionFunc2(&sensors2);
     // if cooldown has expired...
     if (!g_CurrentEntity->ext.ILLEGAL.u8[5]) {
         if (GetDistanceToPlayerX() >= 0x80) {
@@ -58,7 +58,7 @@ static void func_pspeu_0924EB18(void) {
 
 
 
-static void func_pspeu_0924EBC8(void) {
+static void NovaHelper2(void) {
     s32 p;
     s32 flag;
     SVECTOR sp60;
@@ -117,8 +117,8 @@ static void func_pspeu_0924EBC8(void) {
     SetRotMatrix(&sp30);
     SetTransMatrix(&sp30);
     prim = g_CurrentEntity->ext.prim;
-    RotTransPers4(&D_pspeu_0925A680, &D_pspeu_0925A688, &D_pspeu_0925A690,
-                  &D_pspeu_0925A698, (long*)&prim->x0, (long*)&prim->x1,
+    RotTransPers4(&vec_negneg, &vec_posneg, &vec_negpos,
+                  &vec_pospos, (long*)&prim->x0, (long*)&prim->x1,
                   (long*)&prim->x2, (long*)&prim->x3, (long*)&p, (long*)&flag);
 }
 
@@ -161,20 +161,20 @@ void EntityNovaSkeleton(Entity* self) {
         prim->drawMode = DRAW_HIDE;
         break;
     case 1: /* switch 1 */
-        if (UnkCollisionFunc3(D_pspeu_0925A540) == 0) {
+        if (UnkCollisionFunc3(sensors1) == 0) {
             break;
         }
         SetStep(2U);
         break;
     case 2: /* switch 1 */
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-        AnimateEntity(&D_pspeu_0925A578, self);
+        AnimateEntity(&anim3, self);
         if (GetDistanceToPlayerX() < 0x70) {
             SetStep(4U);
         }
         break;
     case 3: /* switch 1 */
-        if (AnimateEntity(&D_pspeu_0925A558, self) == 0) {
+        if (AnimateEntity(&anim1, self) == 0) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
         self->ext.ILLEGAL.u8[4] = self->facingLeft;
@@ -186,10 +186,10 @@ void EntityNovaSkeleton(Entity* self) {
         if (GetDistanceToPlayerX() < 0x4C) {
             self->step = 4;
         }
-        func_pspeu_0924EB18();
+        NovaHelper1();
         break;
     case 4: /* switch 1 */
-        if (AnimateEntity(&D_pspeu_0925A568, self) == 0) {
+        if (AnimateEntity(&anim2, self) == 0) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
         self->ext.ILLEGAL.u8[4] = self->facingLeft ^ 1;
@@ -201,10 +201,10 @@ void EntityNovaSkeleton(Entity* self) {
         if (GetDistanceToPlayerX() > 0x5C) {
             self->step = 3;
         }
-        func_pspeu_0924EB18();
+        NovaHelper1();
         break;
     case 6: /* switch 1 */
-        if (AnimateEntity(&D_pspeu_0925A588, self) == 0) {
+        if (AnimateEntity(&anim4, self) == 0) {
             self->ext.ILLEGAL.u8[0xC] = 0;
             SetStep(7U);
         }
@@ -231,12 +231,12 @@ void EntityNovaSkeleton(Entity* self) {
             PrimDecreaseBrightness(prim, 5);
             break;
         }
-        func_pspeu_0924EBC8();
-        if (!AnimateEntity(&D_pspeu_0925A5D0, self)) {
+        NovaHelper2();
+        if (!AnimateEntity(&anim5, self)) {
             prim = self->ext.prim;
             prim->drawMode = DRAW_HIDE;
             var_s4 = ++self->ext.ILLEGAL.u8[6] & 7;
-            self->ext.ILLEGAL.u8[5] = D_pspeu_0925A678[var_s4];
+            self->ext.ILLEGAL.u8[5] = laser_cooldowns[var_s4];
             SetStep(4U);
         }
         break;
@@ -249,15 +249,15 @@ void EntityNovaSkeleton(Entity* self) {
             CreateEntityFromCurrentEntity(E_BLADE_SOLDIER_DEATH_PARTS, other);
             other->facingLeft = self->facingLeft;
             other->params = i;
-            other->ext.ILLEGAL.u8[7] = D_pspeu_0925A610[i];
+            other->ext.ILLEGAL.u8[7] = death_parts_lifetimes[i];
             if (self->facingLeft) {
-                other->posX.i.hi -= D_pspeu_0925A658[i];
+                other->posX.i.hi -= death_parts_xPos[i];
             } else {
-                other->posX.i.hi += D_pspeu_0925A658[i];
+                other->posX.i.hi += death_parts_xPos[i];
             }
-            other->posY.i.hi += D_pspeu_0925A668[i];
-            other->velocityX = D_pspeu_0925A618[i];
-            other->velocityY = D_pspeu_0925A638[i];
+            other->posY.i.hi += death_parts_yPos[i];
+            other->velocityX = death_parts_xVels[i];
+            other->velocityY = death_parts_yVels[i];
         }
         PlaySfxPositional(SFX_SKELETON_DEATH_B);
         DestroyEntity(self);
@@ -268,7 +268,7 @@ void EntityNovaSkeleton(Entity* self) {
 void EntityBladeSoldierDeathParts(Entity* self) {
     if (self->step) {
         if (--self->ext.ILLEGAL.u8[7]) {
-            self->rotate += D_pspeu_0925A600[self->params];
+            self->rotate += death_parts_rotspeeds[self->params];
             FallEntity();
             MoveEntity();
             return;
@@ -313,7 +313,7 @@ void func_us_801C2FF0(Entity* self) {
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
         self->ext.prim = prim;
-        var_s1 = &D_pspeu_0925A6A0[0];
+        var_s1 = &primData[0];
         for (var_s2 = 0; var_s2 < 3; prim = prim->next, var_s2++) {
             prim->tpage = 0x12;
             prim->clut = 0x216;
