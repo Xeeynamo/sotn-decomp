@@ -3594,7 +3594,7 @@
 | chi      | func_psp_0924EAC0                     |       93 |          8 |        |       |     |
 | main     | func_psp_08919A58                     |       93 |         10 |        |       |     |
 | main     | func_psp_089307D4                     |       93 |         10 |        |       |     |
-| rno3     | func_us_801C2380                      |       93 |         10 |        |       |     |
+| rno3     | EntityJackOBonesDeathParts            |       93 |         10 |        |       |     |
 | ric      | func_pspeu_092C1868                   |       93 |         13 |        |       |     |
 | nz0      | func_pspeu_0923C300                   |       93 |         13 |        |       |     |
 | sel      | func_psp_09243DA0                     |       93 |         14 |        |       |     |
@@ -5057,7 +5057,7 @@
 | cen      | CutsceneRun                           |      253 |         18 |        |       |     |
 | dai      | func_pspeu_09254220                   |      253 |         18 |        |       |     |
 | no3      | func_pspeu_0923D998                   |      253 |         24 | Yes    |       |     |
-| rno3     | func_us_801C247C                      |      254 |         25 |        |       |     |
+| rno3     | EntityJackOBonesJack                  |      254 |         25 |        |       |     |
 | bo0      | EntitySkelerangBoomerang              |      254 |         30 |        |       |     |
 | maria    | func_pspeu_092A95A8                   |      254 |         30 | Yes    |       |     |
 | cen      | func_pspeu_09245600                   |      254 |         30 | Yes    |       |     |
