@@ -136,7 +136,12 @@ void EntityNovaSkeleton(Entity* self) {
     case 0:               /* switch 1 */
         InitializeEntity(g_EInitNovaSkeleton);
         self->ext.ILLEGAL.u8[5] = 0x50;
+        // what. why does psp need to allocate an extra prim.
+        #if defined(VERSION_PSP)
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        #else
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        #endif
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
