@@ -206,7 +206,7 @@ void EntityNovaSkeleton(Entity* self) {
             self->velocityX = FIX(-0.5);
         }
         if (GetDistanceToPlayerX() < 0x4C) {
-            self->step = 4;
+            self->step = NOVA_WALK_BACK;
         }
         TryShoot();
         break;
@@ -221,7 +221,7 @@ void EntityNovaSkeleton(Entity* self) {
             self->velocityX = FIX(-0.5);
         }
         if (GetDistanceToPlayerX() > 0x5C) {
-            self->step = 3;
+            self->step = NOVA_WALK_FWD;
         }
         TryShoot();
         break;
