@@ -240,13 +240,13 @@ void EntityNovaSkeleton(Entity* self) {
     }
 }
 
-extern u16 death_parts_rotspeeds[];
+extern u16 D_pspeu_0925A600[];
 extern u16 g_EInitNovaSkeleton;
 
 void EntityBladeSoldierDeathParts(Entity* self) {
     if (self->step) {
         if (--self->ext.ILLEGAL.u8[7]) {
-            self->rotate += death_parts_rotspeeds[self->params];
+            self->rotate += D_pspeu_0925A600[self->params];
             FallEntity();
             MoveEntity();
             return;
@@ -267,6 +267,148 @@ void EntityBladeSoldierDeathParts(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rno3_psp/nonmatchings/rno3_psp/e_nova_skeleton", func_us_801C2FF0);
+extern u8 D_pspeu_0925A6A0[];
+extern u16 D_us_801809A4;
+
+void func_us_801C2FF0(Entity* self) {
+    s32 var_s7;
+    s32 primIndex;
+    s32 var_s5;
+    Entity* other;
+    s32 var_s3;
+    s32 var_s2;
+    u8* var_s1;
+    Primitive* prim;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(&D_us_801809A4);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 3);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags |= 0x800000;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.prim = prim;
+        var_s1 = &D_pspeu_0925A6A0[0];
+        for(var_s2 = 0; var_s2 < 3; prim = prim->next, var_s2++){
+            prim->tpage = 0x12;
+            prim->clut = 0x216;            
+            prim->u0 = prim->u2 = *var_s1++ + 0x80;
+            prim->u1 = prim->u3 = *var_s1++ + 0x80;
+            prim->v0 = prim->v1 = 0x40;
+            prim->v2 = prim->v3 = 0x5F;
+            prim->r0 = prim->g0 = prim->b0 = *var_s1++;
+            LOW(prim->r2) = LOW(prim->r0);
+            prim->r1 = prim->g1 = prim->b1 = *var_s1++;
+            LOW(prim->r3) = LOW(prim->r1);
+            prim->priority = self->zPriority + 2;
+            prim->drawMode = 0x37;
+        }
+        self->ext.ILLEGAL.s16[5] = 0x60;
+        self->ext.ILLEGAL.s16[0xA] = 0;
+    case 1:
+        self->ext.ILLEGAL.s16[0xB] = 0x10;
+        if (self->ext.ILLEGAL.s16[0xA] < 0x80) {
+            self->ext.ILLEGAL.s16[0xA] += 0x10;
+        } else {
+            self->ext.ILLEGAL.s16[0xA] = 0x80;
+            self->hitboxState = 1;
+            self->step += 1;
+        }
+    case 2:
+        if (!(self->ext.ILLEGAL.s16[5] & 3)) {
+            other = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (other != NULL) {
+                CreateEntityFromEntity(0x29U, self, other);
+                other->zPriority = self->zPriority - 1;
+                other->ext.ILLEGAL.s16[0xA] = self->ext.ILLEGAL.s16[0xA];
+                other->facingLeft = self->facingLeft;
+            }
+        }
+        if (!(self->ext.ILLEGAL.s16[5] & 0xF)) {
+            PlaySfxPositional(0x61E);
+        }
+        if (self->ext.ILLEGAL.s16[5] < 0x10) {
+            PlaySfxPositional(0x621);
+            self->step += 1;
+        }
+    case 3:
+        if (Random() & 1) {
+            if (self->ext.ILLEGAL.s16[0xA] < 0x88) {
+                self->ext.ILLEGAL.s16[0xA]++;
+            } else if (self->ext.ILLEGAL.s16[0xA] > 0x78) {
+                self->ext.ILLEGAL.s16[0xA]--;
+            }
+        }
+        self->hitboxWidth = self->ext.ILLEGAL.s16[0xA] / 2 + 0x10;
+        self->hitboxOffX = -self->ext.ILLEGAL.s16[0xA] / 2 - 0x10;
+        self->hitboxHeight = 8;
+        other = self - 1;
+        if (other->entityId != 0x27) {
+            self->ext.ILLEGAL.s16[5] = 1;
+        }
+        if (!--self->ext.ILLEGAL.s16[5]) {
+            self->hitboxState = 0;
+            self->step += 1;
+        }
+        break;
+    case 4:
+        self->ext.ILLEGAL.s16[0xB]--;
+        if (!self->ext.ILLEGAL.s16[0xB]) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+    var_s7 = self->posX.i.hi;
+    var_s5 = self->posY.i.hi;
+    prim = self->ext.prim;
+    for(var_s2 = 0; var_s2 < 3; prim = prim->next, var_s2++){
+        prim->y0 = prim->y1 = var_s5 - self->ext.ILLEGAL.s16[0xB];
+        prim->y2 = prim->y3 = var_s5 + self->ext.ILLEGAL.s16[0xB];
+        if (g_Timer & 1) {
+            prim->clut = 0x216;
+        } else {
+            prim->clut = 0x217;
+        }
+    }
+    prim = self->ext.prim;
+    var_s3 = var_s7;
+    if (self->facingLeft) {
+        var_s3 -= 0x10;
+    } else {
+        var_s3 += 0x10;
+    }
+    
+    prim->x1 = prim->x3 = var_s3;
+    if (self->facingLeft) {
+        var_s3 += 0x20;
+    } else {
+        var_s3 -= 0x20;
+    }
+    
+    prim->x0 = prim->x2 = var_s3;
+    prim = prim->next;
+    prim->x1 = prim->x3 = var_s3;
+    if (self->facingLeft) {
+        var_s3 += self->ext.ILLEGAL.s16[0xA];
+    } else {
+        var_s3 -= self->ext.ILLEGAL.s16[0xA];
+    }
+    
+    prim->x0 = prim->x2 = var_s3;
+    prim = prim->next;
+    prim->x1 = prim->x3 = var_s3;
+    if (self->facingLeft) {
+        var_s3 += 0x20;
+    } else {
+        var_s3 -= 0x20;
+    }
+    prim->x0 = prim->x2 = var_s3;
+    prim = prim->next;
+}
 
 INCLUDE_ASM("st/rno3_psp/nonmatchings/rno3_psp/e_nova_skeleton", func_us_801C34A0);
