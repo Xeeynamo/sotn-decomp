@@ -50,8 +50,8 @@ typedef enum EntityIDs {
     /* 0x22 */ E_EXPLOSION_3,               // EntityExplosion3
     /* 0x23 */ E_FIRE_WARG_DEATH,           // EntityFireWargDeathBeams
     /* 0x24 */ E_JACK_O_BONES,              // EntityJackOBones
-    /* 0x25 */ E_UNK_25,                    // func_us_801C2380
-    /* 0x26 */ E_UNK_26,                    // func_us_801C247C
+    /* 0x25 */ E_JACKO_DEATH_PARTS,         // EntityJackOBonesDeathParts
+    /* 0x26 */ E_JACKO_JACK,                // EntityJackOBonesJack
     /* 0x27 */ E_NOVA_SKELETON,             // EntityNovaSkeleton
     /* 0x28 */ E_UNK_28,                    // func_us_801C2FF0
     /* 0x29 */ E_UNK_29,                    // func_us_801C34A0

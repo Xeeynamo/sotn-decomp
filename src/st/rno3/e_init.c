@@ -37,8 +37,8 @@ void EntityUnkId31(Entity* self);
 void EntityExplosion3(Entity* self);
 void EntityFireWargDeathBeams(Entity* self);
 void EntityJackOBones(Entity* self);
-void func_us_801C2380(Entity* self);
-void func_us_801C247C(Entity* self);
+void EntityJackOBonesDeathParts(Entity* self);
+void EntityJackOBonesJack(Entity* self);
 void EntityNovaSkeleton(Entity* self);
 void func_us_801C2FF0(Entity* self);
 void func_us_801C34A0(Entity* self);
@@ -117,8 +117,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityExplosion3,
     EntityFireWargDeathBeams,
     EntityJackOBones,
-    func_us_801C2380,
-    func_us_801C247C,
+    EntityJackOBonesDeathParts,
+    EntityJackOBonesJack,
     EntityNovaSkeleton,
     func_us_801C2FF0,
     func_us_801C34A0,
