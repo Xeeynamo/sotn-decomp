@@ -7,6 +7,7 @@ extern EInit g_EInitOruburos;
 extern EInit g_EInitOruburosRider;
 extern EInit g_EInitDragonRider1;
 extern EInit g_EInitDragonRider2;
+extern EInit D_us_801809F8;
 
 
 extern u8 D_pspeu_0925A6B0[] = {32, 4, 6, 5, 6, 6, 14, 7, 6, 6, 6, 5, 0};
@@ -26,6 +27,7 @@ extern s8 D_pspeu_0925A720;
 extern s32 D_pspeu_0925A730;
 extern s32 D_pspeu_0925A740;
 extern s32 D_pspeu_0925A748;
+extern adhoc_vels_rot D_pspeu_0925A758[];
 extern s16 D_pspeu_0925A788[];
 
 // forward declare, exists later in this file
@@ -637,6 +639,27 @@ void func_us_801C48D8(Entity* self) {
     self->hitboxState = 0;
 }
 
-INCLUDE_ASM("st/rno3_psp/nonmatchings/rno3_psp/unk_1A748", func_us_801C4B44);
+void func_us_801C4B44(Entity* self) {
+    adhoc_vels_rot* temp_s0;
+
+    if (!self->step) {
+        InitializeEntity(D_us_801809F8);
+        self->drawFlags = 4;
+        self->hitboxState = 0;
+        self->animCurFrame = self->params + 8;
+        self->zPriority += self->params;
+        temp_s0 = &D_pspeu_0925A758[self->params];
+        if (self->facingLeft) {
+            self->velocityX += temp_s0->velX;
+        } else {
+            self->velocityX += -temp_s0->velX;
+        }
+        self->velocityY += temp_s0->velY;
+    }
+    MoveEntity();
+    self->velocityY += 0x1800;
+    temp_s0 = &D_pspeu_0925A758[self->params];
+    self->rotate += temp_s0->rotate;
+}
 
 INCLUDE_ASM("st/rno3_psp/nonmatchings/rno3_psp/unk_1A748", func_us_801C4C50);
