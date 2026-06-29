@@ -29,6 +29,7 @@ extern s32 D_pspeu_0925A740;
 extern s32 D_pspeu_0925A748;
 extern adhoc_vels_rot D_pspeu_0925A758[];
 extern s16 D_pspeu_0925A788[];
+extern s16 D_pspeu_0925A7A0;
 
 // forward declare, exists later in this file
 void func_us_801C4334(Entity* self);
@@ -662,4 +663,31 @@ void func_us_801C4B44(Entity* self) {
     self->rotate += temp_s0->rotate;
 }
 
-INCLUDE_ASM("st/rno3_psp/nonmatchings/rno3_psp/unk_1A748", func_us_801C4C50);
+void func_us_801C4C50(Entity* self) {
+    s32 animIdx;
+    s16* xywh_ptr;
+    Entity* other;
+
+
+    if (!self->step) {
+        InitializeEntity(g_EInitDragonRider1);
+        self->animCurFrame = 0;
+    }
+    other = self - 25;
+    self->posX.i.hi = other->posX.i.hi;
+    self->posY.i.hi = other->posY.i.hi;
+    self->facingLeft = other->facingLeft;
+    xywh_ptr = &D_pspeu_0925A7A0;
+    animIdx = other->animCurFrame - 1;
+    if (animIdx < 0) {
+        animIdx = 0;
+    }
+    xywh_ptr += animIdx * 4; 
+    self->hitboxOffX = *xywh_ptr++;
+    self->hitboxOffY = *xywh_ptr++;
+    self->hitboxWidth = *xywh_ptr++;
+    self->hitboxHeight = *xywh_ptr++;
+    if (other->entityId != 0x30) {
+        DestroyEntity(self);
+    }
+}
