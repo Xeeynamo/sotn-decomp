@@ -9,20 +9,20 @@ extern EInit g_EInitDragonRider1;
 extern EInit g_EInitDragonRider2;
 extern EInit D_us_801809F8;
 
-
-extern u8 D_pspeu_0925A6B0[] = {32, 4, 6, 5, 6, 6, 14, 7, 6, 6, 6, 5, 0};
-extern u8 D_pspeu_0925A6C0[] = {8, 16, 8, 15, 255, 0};
-extern s16 D_pspeu_0925A6C8[] = {0, 12, 0, 4, 8, -4, -16, 0};
-typedef struct{
+static u8 D_pspeu_0925A6B0[] = {32, 4, 6, 5, 6, 6, 14, 7, 6, 6, 6, 5, 0};
+static u8 D_pspeu_0925A6C0[] = {8, 16, 8, 15, 255, 0};
+static s16 D_pspeu_0925A6C8[] = {0, 12, 0, 4, 8, -4, -16, 0};
+typedef struct {
     u32 velX;
     u32 velY;
     s16 rotate;
 } adhoc_vels_rot;
-extern adhoc_vels_rot D_pspeu_0925A6D8[] = {{FIX(0.0625), FIX(0.0), -8}, 
-                                           {FIX(0.25), FIX(-1.5), 40}, 
-                                           {FIX(0.5), FIX(-0.5), 16}, 
-                                           {FIX(0.125), FIX(-0.375), 8}};
-extern s16 D_pspeu_0925A708[] = {-7, 2, 13, 10, 4, 0, 7, 13, -5, 0, 7, 13};
+static adhoc_vels_rot D_pspeu_0925A6D8[] = {
+    {FIX(0.0625), FIX(0.0), -8},
+    {FIX(0.25), FIX(-1.5), 40},
+    {FIX(0.5), FIX(-0.5), 16},
+    {FIX(0.125), FIX(-0.375), 8}};
+static s16 D_pspeu_0925A708[] = {-7, 2, 13, 10, 4, 0, 7, 13, -5, 0, 7, 13};
 extern s8 D_pspeu_0925A720;
 extern s32 D_pspeu_0925A730;
 extern s32 D_pspeu_0925A740;
@@ -45,7 +45,7 @@ void func_us_801C35F8(Entity* self) {
     s32 yVar;
     s32 i;
 
-    if (self->flags & 0x100) {
+    if (self->flags & FLAG_DEAD) {
         SetStep(8U);
     }
 
@@ -53,16 +53,16 @@ void func_us_801C35F8(Entity* self) {
     case 0:
         InitializeEntity(g_EInitOrobourous);
         self->animCurFrame = 0xE;
-        self->drawFlags |= 4;
+        self->drawFlags |= ENTITY_ROTATE;
         other = self + 1;
-        for(i = 0; i < 0x18; i++, other++){
-            CreateEntityFromEntity(0x2C, self, other);
+        for (i = 0; i < 0x18; i++, other++) {
+            CreateEntityFromEntity(E_UNK_2C, self, other);
             other->params = (i + 1);
             other->nextPart = other - 1;
         }
         self->parent = NULL;
         self->nextPart = self + 24;
-        CreateEntityFromEntity(0x2E, self, other);
+        CreateEntityFromEntity(E_UNK_2E, self, other);
         self->ext.ILLEGAL.u8[9] = 2;
         break;
     case 1:
@@ -82,7 +82,8 @@ void func_us_801C35F8(Entity* self) {
         } else {
             self->animCurFrame = 0xE;
         }
-        if (((self->ext.ILLEGAL.u8[8]) != self->facingLeft) && (AnimateEntity(D_pspeu_0925A6C0, self) == 0)) {
+        if (((self->ext.ILLEGAL.u8[8]) != self->facingLeft) &&
+            (AnimateEntity(D_pspeu_0925A6C0, self) == 0)) {
             self->animCurFrame = 0xE;
             self->facingLeft = self->ext.ILLEGAL.u8[8];
         }
@@ -92,10 +93,10 @@ void func_us_801C35F8(Entity* self) {
         xVar = self->posX.i.hi;
         yVar = self->posY.i.hi + 12;
         g_api.CheckCollision(xVar, yVar, &sp3C, 0);
-        if (sp3C.effects & 1) {
-            PlaySfxPositional(0x63D);
+        if (sp3C.effects & EFFECT_SOLID) {
+            PlaySfxPositional(SFX_START_SLAM_B);
             self->posY.i.hi += sp3C.unk18;
-            self->velocityY = -0x30000;
+            self->velocityY = FIX(-3.0);
             self->ext.ILLEGAL.u32[3] = 0;
             var_s7 = self->ext.ILLEGAL.u8[8];
             if (var_s7 == (GetSideToPlayer() & 1)) {
@@ -120,10 +121,10 @@ void func_us_801C35F8(Entity* self) {
                 self->rotate = 0x200;
             }
             if (self->ext.ILLEGAL.u8[8]) {
-                self->velocityX = 0x18000;
+                self->velocityX = FIX(1.5);
                 EntityGreyPuffSpawner(self, 5, 3, 4, 12, 0, -4);
             } else {
-                self->velocityX = -0x18000;
+                self->velocityX = FIX(-1.5);
                 EntityGreyPuffSpawner(self, 5, 3, -4, 12, 0, 4);
             }
         }
@@ -134,10 +135,10 @@ void func_us_801C35F8(Entity* self) {
         break;
     case 4:
         other = self + 1;
-        for(i = 0; i < 0x18; i++, other++){
+        for (i = 0; i < 0x18; i++, other++) {
             other->ext.ILLEGAL.u8[0xA] = 1;
         }
-        self->drawFlags = 0;
+        self->drawFlags = ENTITY_DEFAULT;
         self->ext.ILLEGAL.u8[9] = 0;
         self->hitboxState = 0;
         self->ext.ILLEGAL.s16[0xC] = 0x800;
@@ -148,7 +149,7 @@ void func_us_801C35F8(Entity* self) {
             other->entityId = 0x43;
             other->step = 1;
             other->pfnUpdate = func_us_801C4334;
-            other->ext.prim = (Primitive* ) self;
+            other->ext.prim = (Primitive*)self;
         } else {
             self->ext.ILLEGAL.s16[0xC] = -1U;
         }
@@ -187,7 +188,8 @@ void func_us_801C35F8(Entity* self) {
             self->ext.ILLEGAL.s16[0xF] = other->posY.i.hi + yVar;
             self->step_s += 1;
         }
-        if (self->ext.ILLEGAL.u8[8] != self->facingLeft && (AnimateEntity(D_pspeu_0925A6C0, self) == 0)) {
+        if (self->ext.ILLEGAL.u8[8] != self->facingLeft &&
+            (AnimateEntity(D_pspeu_0925A6C0, self) == 0)) {
             self->animCurFrame = 0xE;
             self->facingLeft = self->ext.ILLEGAL.u8[8];
             self->pose = 0;
@@ -206,7 +208,8 @@ void func_us_801C35F8(Entity* self) {
         self->velocityX = rcos(var_s4) * 0x24;
         self->velocityY = rsin(var_s4) * 0x24;
         self->ext.ILLEGAL.s16[0xB] = var_s4;
-        if ((!--self->ext.ILLEGAL.s16[0xA]) || ((abs(xVar) < 8) && (abs(yVar) < 8))) {
+        if ((!--self->ext.ILLEGAL.s16[0xA]) ||
+            ((abs(xVar) < 8) && (abs(yVar) < 8))) {
             self->step_s = 0;
         }
         if (self->ext.ILLEGAL.s16[0xC] > 0) {
@@ -215,7 +218,7 @@ void func_us_801C35F8(Entity* self) {
         }
         if (self->posY.i.hi < -0x200) {
             other = self + 1;
-            for(i = 0; i < 24; i++, other++){
+            for (i = 0; i < 24; i++, other++) {
                 DestroyEntity(other);
             }
             PreventEntityFromRespawning(self);
@@ -224,21 +227,21 @@ void func_us_801C35F8(Entity* self) {
         }
         break;
     case 8:
-        PlaySfxPositional(0x629);
+        PlaySfxPositional(SFX_SKELETON_DEATH_A);
         other = self + 1;
-        for(i = 0; i < 25; i++, other++) {
-            other->flags |= 0x100;
+        for (i = 0; i < 25; i++, other++) {
+            other->flags |= FLAG_DEAD;
         }
         other = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (other != NULL) {
-            CreateEntityFromEntity(2, self, other);
+            CreateEntityFromEntity(E_EXPLOSION, self, other);
             other->params = 3;
         }
-        for(i = 0;i < 4; i++){
+        for (i = 0; i < 4; i++) {
             if (i != 1) {
                 other = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (other != NULL) {
-                    CreateEntityFromEntity(0x2D, self, other);
+                    CreateEntityFromEntity(E_UNK_2D, self, other);
                     other->facingLeft = self->facingLeft;
                     other->velocityX = self->velocityX;
                     other->velocityY = -0x18000;
@@ -269,9 +272,10 @@ void func_us_801C3DE0(Entity* self) {
     Entity* other;
     s32 miscTemp;
 
-    if ((self->flags & 0x100) && ((self->step) < 8)) {
+    if ((self->flags & FLAG_DEAD) && ((self->step) < 8)) {
         self->hitboxState = 0;
-        self->flags |= 0xC0000000;
+        self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
+                       FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
         SetStep(8U);
     }
     switch (self->step) {
@@ -279,12 +283,12 @@ void func_us_801C3DE0(Entity* self) {
         InitializeEntity(g_EInitOruburos);
         self->hitboxOffY = 1;
         self->pose = self->params % 6;
-        self->drawFlags |= 8;
+        self->drawFlags |= ENTITY_OPACITY;
         miscTemp = self->params;
         self->opacity = (0x80 - miscTemp);
         miscTemp -= 10;
         if (miscTemp > 0) {
-            self->drawFlags = 3;
+            self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
             self->scaleX = self->scaleY = 0x100 - (miscTemp * 6);
         }
         if ((self->params) == 4) {
@@ -300,7 +304,7 @@ void func_us_801C3DE0(Entity* self) {
         xVar = other->posX.i.hi - self->posX.i.hi;
         yVar = other->posY.i.hi - self->posY.i.hi;
         miscTemp = (xVar * xVar) + (yVar * yVar);
-        miscTemp =  SquareRoot0(miscTemp);
+        miscTemp = SquareRoot0(miscTemp);
         speed = miscTemp * 3;
         angle = ratan2(yVar, xVar);
         miscTemp = speed * rcos(angle);
@@ -336,7 +340,7 @@ void func_us_801C406C(Entity* self) {
 
     if (!self->step) {
         InitializeEntity(D_us_801809C8);
-        self->drawFlags = 4;
+        self->drawFlags = ENTITY_ROTATE;
         self->hitboxState = 0;
         self->animCurFrame = self->params + 8;
         self->zPriority += self->params;
@@ -349,7 +353,7 @@ void func_us_801C406C(Entity* self) {
         self->velocityY += temp_s0->velY;
     }
     MoveEntity();
-    self->velocityY += 0x1800;
+    self->velocityY += FIX(0.09375);
     temp_s0 = &D_pspeu_0925A6D8[self->params];
     self->rotate += temp_s0->rotate;
 }
@@ -357,16 +361,16 @@ void func_us_801C406C(Entity* self) {
 void func_us_801C4178(Entity* self) {
     Entity* other;
 
-    if (self->flags & 0x100) {
-        PlaySfxPositional(0x655);
+    if (self->flags & FLAG_DEAD) {
+        PlaySfxPositional(SFX_EXPLODE_B);
         other = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (other != NULL) {
-            CreateEntityFromEntity(2, self, other);
+            CreateEntityFromEntity(E_EXPLOSION, self, other);
             other->params = 1;
         }
         other = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (other != NULL) {
-            CreateEntityFromEntity(0x2D, self, other);
+            CreateEntityFromEntity(E_UNK_2D, self, other);
             other->facingLeft = self->facingLeft;
             other->params = 1;
         }
@@ -381,7 +385,7 @@ void func_us_801C4178(Entity* self) {
         self->animCurFrame = 0xD;
         self->hitboxOffX = 5;
         self->hitboxOffY = -2;
-        self->drawFlags = 4;
+        self->drawFlags = ENTITY_ROTATE;
         break;
     case 1:
         other = self - 25;
@@ -421,14 +425,14 @@ void func_us_801C4334(Entity* self) {
     case 1:
         self->hitboxState = 2;
         self->attack = 0x30;
-        self->attackElement = 0x1000;
+        self->attackElement = ELEMENT_HOLY;
         self->hitboxWidth = 8;
         self->hitboxHeight = 8;
         self->nFramesInvincibility = 0x10;
         self->stunFrames = 4;
         self->hitEffect = 1;
         self->ext.ILLEGAL.u16[0x1B] = 0;
-        self->flags = 0x0C000000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA;
         g_api.func_80118894(self);
         self->step += 1;
         break;
@@ -458,26 +462,26 @@ void func_us_801C4468(Entity* self) {
     s32 yVar;
     s16* temp_s2;
 
-    if (self->flags & 0x100) {
+    if (self->flags & FLAG_DEAD) {
         SetStep(4U);
     }
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitDragonRider1);
         self->animCurFrame = 1;
-        self->drawFlags |= 4;
+        self->drawFlags |= ENTITY_ROTATE;
         self->ext.ILLEGAL.u8[9] = 2;
         break;
     case 1:
         if (UnkCollisionFunc3(&D_pspeu_0925A748) & 1) {
             other = self + 1;
-            for(i = 0; i < 24; i++, other++){
-                CreateEntityFromEntity(0x31U, self, other);
+            for (i = 0; i < 24; i++, other++) {
+                CreateEntityFromEntity(E_UNK_31, self, other);
                 other->posY.i.hi += 8;
                 other->params = (i + 1);
                 other->nextPart = other - 1;
             }
-            CreateEntityFromEntity(0x33U, self, other);
+            CreateEntityFromEntity(E_UNK_33, self, other);
             other->nextPart = other - 1;
             other->parent = self;
             self->parent = NULL;
@@ -489,7 +493,8 @@ void func_us_801C4468(Entity* self) {
         MoveEntity();
         self->velocityY += self->ext.ILLEGAL.u32[3];
         self->ext.ILLEGAL.u32[3] += 0x100;
-        if (self->ext.ILLEGAL.u8[8] != self->facingLeft && (AnimateEntity(&D_pspeu_0925A740, self) == 0)) {
+        if (self->ext.ILLEGAL.u8[8] != self->facingLeft &&
+            (AnimateEntity(&D_pspeu_0925A740, self) == 0)) {
             self->animCurFrame = 1;
             self->facingLeft = self->ext.ILLEGAL.u8[8];
         }
@@ -499,10 +504,10 @@ void func_us_801C4468(Entity* self) {
         xVar = self->posX.i.hi;
         yVar = self->posY.i.hi + 12;
         g_api.CheckCollision(xVar, yVar, &sp2C, 0);
-        if (sp2C.effects & 1) {
-            PlaySfxPositional(0x659);
+        if (sp2C.effects & EFFECT_SOLID) {
+            PlaySfxPositional(SFX_EXPLODE_F);
             self->posY.i.hi += sp2C.unk18;
-            self->velocityY = -0x2C000;
+            self->velocityY = FIX(-2.75);
             self->ext.ILLEGAL.u32[3] = 0;
             temp_s6 = self->ext.ILLEGAL.u8[8];
             if (temp_s6 == (GetSideToPlayer() & 1)) {
@@ -512,7 +517,7 @@ void func_us_801C4468(Entity* self) {
             }
             xVar = g_Tilemap.scrollX.i.hi + self->posX.i.hi;
             if (self->ext.ILLEGAL.u8[8]) {
-                if ((u32) ((g_Tilemap.hSize << 8) - 0x80) < xVar) {
+                if ((u32)((g_Tilemap.hSize << 8) - 0x80) < xVar) {
                     self->ext.ILLEGAL.u8[9] = 0;
                 }
             } else if (xVar < 0x80) {
@@ -527,29 +532,29 @@ void func_us_801C4468(Entity* self) {
                 self->rotate = 0x200;
             }
             if (self->ext.ILLEGAL.u8[8]) {
-                self->velocityX = 0x18000;
+                self->velocityX = FIX(1.5);
                 EntityGreyPuffSpawner(self, 5, 3, 4, 12, 0, -4);
             } else {
-                self->velocityX = -0x18000;
+                self->velocityX = FIX(-1.5);
                 EntityGreyPuffSpawner(self, 5, 3, -4, 12, 0, 4);
             }
         }
         break;
     case 4:
-        PlaySfxPositional(0x629);
+        PlaySfxPositional(SFX_SKELETON_DEATH_A);
         other = self + 1;
-        for(i = 0; i < 24; i++, other++){
-            other->flags |= 0x100;
+        for (i = 0; i < 24; i++, other++) {
+            other->flags |= FLAG_DEAD;
         }
         other = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (other != NULL) {
-            CreateEntityFromEntity(2U, self, other);
+            CreateEntityFromEntity(E_EXPLOSION, self, other);
             other->params = 3;
         }
-        for(i = 0; i < 4; i++){
+        for (i = 0; i < 4; i++) {
             other = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (other != NULL) {
-                CreateEntityFromEntity(0x2DU, self, other);
+                CreateEntityFromEntity(E_UNK_2D, self, other);
                 other->facingLeft = self->facingLeft;
                 other->velocityX = self->velocityX;
                 other->velocityY = -0x18000;
@@ -578,21 +583,22 @@ void func_us_801C48D8(Entity* self) {
     s32 xVar;
     s32 yVar;
 
-    if ((self->flags & 0x100) && (self->step < 8)) {
+    if ((self->flags & FLAG_DEAD) && (self->step < 8)) {
         self->hitboxState = 0;
-        self->flags |= 0xC0000000;
+        self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
+                       FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
         SetStep(8U);
     }
-    switch (self->step) {                              /* irregular */
+    switch (self->step) { /* irregular */
     case 0:
         InitializeEntity(g_EInitDragonRider2);
         self->pose = self->params % 6;
-        self->drawFlags |= 8;
+        self->drawFlags |= ENTITY_OPACITY;
         temp_s0 = self->params;
         self->opacity = 0x80 - temp_s0;
         temp_s0 -= 10;
         if (temp_s0 > 0) {
-            self->drawFlags = 3;
+            self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
             self->scaleX = self->scaleY = 0x100 - (temp_s0 * 6);
         }
         self->ext.ILLEGAL.s16[2] = self->params * 5;
@@ -611,18 +617,18 @@ void func_us_801C48D8(Entity* self) {
         xVar = self->posX.i.hi;
         yVar = self->posY.i.hi + 6;
         g_api.CheckCollision(xVar, yVar, &sp2C, 0);
-        if (sp2C.effects & 1) {
+        if (sp2C.effects & EFFECT_SOLID) {
             self->posY.i.hi += sp2C.unk18;
-            self->velocityY = -0x2C000;
+            self->velocityY = FIX(-2.75);
             self->ext.ILLEGAL.u32[3] = 0;
             other = self - 1;
             if (other->ext.ILLEGAL.u8[8] != self->ext.ILLEGAL.u8[8]) {
                 self->ext.ILLEGAL.u8[8] = other->ext.ILLEGAL.u8[8];
             }
             if (self->ext.ILLEGAL.u8[8]) {
-                self->velocityX = 0x18000;
+                self->velocityX = FIX(1.5);
             } else {
-                self->velocityX = -0x18000;
+                self->velocityX = FIX(-1.5);
             }
         }
         break;
@@ -645,7 +651,7 @@ void func_us_801C4B44(Entity* self) {
 
     if (!self->step) {
         InitializeEntity(D_us_801809F8);
-        self->drawFlags = 4;
+        self->drawFlags = ENTITY_ROTATE;
         self->hitboxState = 0;
         self->animCurFrame = self->params + 8;
         self->zPriority += self->params;
@@ -658,7 +664,7 @@ void func_us_801C4B44(Entity* self) {
         self->velocityY += temp_s0->velY;
     }
     MoveEntity();
-    self->velocityY += 0x1800;
+    self->velocityY += FIX(0.09375);
     temp_s0 = &D_pspeu_0925A758[self->params];
     self->rotate += temp_s0->rotate;
 }
@@ -667,7 +673,6 @@ void func_us_801C4C50(Entity* self) {
     s32 animIdx;
     s16* xywh_ptr;
     Entity* other;
-
 
     if (!self->step) {
         InitializeEntity(g_EInitDragonRider1);
@@ -682,7 +687,7 @@ void func_us_801C4C50(Entity* self) {
     if (animIdx < 0) {
         animIdx = 0;
     }
-    xywh_ptr += animIdx * 4; 
+    xywh_ptr += animIdx * 4;
     self->hitboxOffX = *xywh_ptr++;
     self->hitboxOffY = *xywh_ptr++;
     self->hitboxWidth = *xywh_ptr++;
