@@ -4,6 +4,8 @@
 extern EInit D_us_801809C8;
 extern EInit g_EInitOrobourous;
 extern EInit g_EInitOruburos;
+extern EInit g_EInitOruburosRider;
+
 
 extern u8 D_pspeu_0925A6B0[] = {32, 4, 6, 5, 6, 6, 14, 7, 6, 6, 6, 5, 0};
 extern u8 D_pspeu_0925A6C0[] = {8, 16, 8, 15, 255, 0};
@@ -341,7 +343,64 @@ void func_us_801C406C(Entity* self) {
     self->rotate += temp_s0->rotate;
 }
 
-INCLUDE_ASM("st/rno3_psp/nonmatchings/rno3_psp/unk_1A748", func_us_801C4178);
+void func_us_801C4178(Entity* self) {
+    Entity* other;
+
+    if (self->flags & 0x100) {
+        PlaySfxPositional(0x655);
+        other = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (other != NULL) {
+            CreateEntityFromEntity(2, self, other);
+            other->params = 1;
+        }
+        other = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (other != NULL) {
+            CreateEntityFromEntity(0x2D, self, other);
+            other->facingLeft = self->facingLeft;
+            other->params = 1;
+        }
+        other = self - 25;
+        other->ext.ILLEGAL.u8[0xA] = 1;
+        DestroyEntity(self);
+        return;
+    }
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitOruburosRider);
+        self->animCurFrame = 0xD;
+        self->hitboxOffX = 5;
+        self->hitboxOffY = -2;
+        self->drawFlags = 4;
+        break;
+    case 1:
+        other = self - 25;
+        self->facingLeft = other->facingLeft;
+        // Note! This is a useless if statement, with useless shifts!
+        // There was probably some kind of OFFSET defined but set
+        // to zero at final release.
+        if (self->facingLeft) {
+            self->posX.i.hi = other->posX.i.hi - 0;
+        } else {
+            self->posX.i.hi = other->posX.i.hi + 0;
+        }
+        self->posY.i.hi = other->posY.i.hi - 0xA;
+        if (other->animCurFrame == 0xE) {
+            self->zPriority = other->zPriority + 1;
+        } else {
+            self->zPriority = other->zPriority - 1;
+        }
+        if (other->velocityY > 0) {
+            self->animCurFrame = 0xD;
+            if (self->rotate > -0x240) {
+                self->rotate -= 0x18;
+            }
+        } else {
+            self->animCurFrame = 0;
+            self->rotate = 0;
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("st/rno3_psp/nonmatchings/rno3_psp/unk_1A748", func_us_801C4334);
 
