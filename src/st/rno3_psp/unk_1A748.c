@@ -23,13 +23,6 @@ static adhoc_vels_rot D_pspeu_0925A6D8[] = {
     {FIX(0.5), FIX(-0.5), 16},
     {FIX(0.125), FIX(-0.375), 8}};
 static s16 D_pspeu_0925A708[] = {-7, 2, 13, 10, 4, 0, 7, 13, -5, 0, 7, 13};
-extern s8 D_pspeu_0925A720;
-extern s32 D_pspeu_0925A730;
-extern s32 D_pspeu_0925A740;
-extern s32 D_pspeu_0925A748;
-extern adhoc_vels_rot D_pspeu_0925A758[];
-extern s16 D_pspeu_0925A788[];
-extern s16 D_pspeu_0925A7A0;
 
 // forward declare, exists later in this file
 void func_us_801C4334(Entity* self);
@@ -263,6 +256,18 @@ void func_us_801C35F8(Entity* self) {
     self->hitboxWidth = *var_s5++;
     self->hitboxHeight = *var_s5++;
 }
+// Note: This data has to come after the "rest_time" string above for psp to match
+extern u8 D_pspeu_0925A730[] = {32, 4, 6, 5, 6, 6, 14, 7, 6, 6, 6, 5, 0};
+extern u8 D_pspeu_0925A740[] = {8, 3, 8, 2, 255, 0};
+extern s16 D_pspeu_0925A748[] = {0, 12, 0, 4, 8, -4, -16, 0};
+extern adhoc_vels_rot D_pspeu_0925A758[] = {
+    {FIX(0.0625), FIX(0.0), -8}, 
+    {FIX(0.25), FIX(-1.5), 40}, 
+    {FIX(0.5), FIX(-0.5), 16}, 
+    {FIX(0.125), FIX(-0.375), 8}
+};
+extern s16 D_pspeu_0925A788[] = {-7, 2, 13, 10, 4, 0, 7, 13, -5, 0, 7, 13};
+extern s16 D_pspeu_0925A7A0[] = {4, -12, 5, 10, 0, -18, 6, 5, 0, -18, 6, 5};
 
 void func_us_801C3DE0(Entity* self) {
     s32 speed;
@@ -682,7 +687,7 @@ void func_us_801C4C50(Entity* self) {
     self->posX.i.hi = other->posX.i.hi;
     self->posY.i.hi = other->posY.i.hi;
     self->facingLeft = other->facingLeft;
-    xywh_ptr = &D_pspeu_0925A7A0;
+    xywh_ptr = &D_pspeu_0925A7A0[0];
     animIdx = other->animCurFrame - 1;
     if (animIdx < 0) {
         animIdx = 0;
