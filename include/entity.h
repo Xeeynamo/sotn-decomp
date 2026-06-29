@@ -4071,6 +4071,10 @@ typedef struct {
     /* 0x94 */ u32 laserPulseDist;
 } ET_NovaSkeleton;
 
+typedef struct{
+
+} ET_Orobourous;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;

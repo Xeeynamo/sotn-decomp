@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "../rno3/rno3.h"
+#include "rno3.h"
 
 extern EInit D_us_801809C8;
 extern EInit g_EInitOrobourous;
@@ -93,7 +93,7 @@ void func_us_801C35F8(Entity* self) {
             self->ext.ILLEGAL.u32[3] = 0;
             var_s7 = self->ext.ILLEGAL.u8[8];
             if (var_s7 == (GetSideToPlayer() & 1)) {
-                self->ext.ILLEGAL.u8[9] -= 1;
+                self->ext.ILLEGAL.u8[9] --;
             } else {
                 self->ext.ILLEGAL.u8[9] = 2;
             }
@@ -312,8 +312,7 @@ void func_us_801C3DE0(Entity* self) {
         miscTemp = SquareRoot0(miscTemp);
         speed = miscTemp * 3;
         angle = ratan2(yVar, xVar);
-        miscTemp = speed * rcos(angle);
-        self->velocityX = miscTemp;
+        miscTemp = (self->velocityX = speed * rcos(angle));
         self->velocityY = speed * rsin(angle);
         if (miscTemp > 0) {
             self->facingLeft = 1;
@@ -516,7 +515,7 @@ void func_us_801C4468(Entity* self) {
             self->ext.ILLEGAL.u32[3] = 0;
             temp_s6 = self->ext.ILLEGAL.u8[8];
             if (temp_s6 == (GetSideToPlayer() & 1)) {
-                self->ext.ILLEGAL.u8[9] -= 1;
+                self->ext.ILLEGAL.u8[9]--;
             } else {
                 self->ext.ILLEGAL.u8[9] = 2;
             }
