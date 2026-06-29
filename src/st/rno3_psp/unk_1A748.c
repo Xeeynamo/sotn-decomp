@@ -5,6 +5,7 @@ extern EInit D_us_801809C8;
 extern EInit g_EInitOrobourous;
 extern EInit g_EInitOruburos;
 extern EInit g_EInitOruburosRider;
+extern EInit g_EInitDragonRider1;
 
 
 extern u8 D_pspeu_0925A6B0[] = {32, 4, 6, 5, 6, 6, 14, 7, 6, 6, 6, 5, 0};
@@ -21,6 +22,12 @@ extern adhoc_vels_rot D_pspeu_0925A6D8[] = {{FIX(0.0625), FIX(0.0), -8},
                                            {FIX(0.125), FIX(-0.375), 8}};
 extern s16 D_pspeu_0925A708[] = {-7, 2, 13, 10, 4, 0, 7, 13, -5, 0, 7, 13};
 extern s8 D_pspeu_0925A720;
+
+extern s32 D_pspeu_0925A740;
+extern s32 D_pspeu_0925A748;
+extern s16 D_pspeu_0925A788[];
+
+// forward declare, exists later in this file
 void func_us_801C4334(Entity* self);
 
 void func_us_801C35F8(Entity* self) {
@@ -402,9 +409,163 @@ void func_us_801C4178(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rno3_psp/nonmatchings/rno3_psp/unk_1A748", func_us_801C4334);
+void func_us_801C4334(Entity* self) {
+    Entity* other;
 
-INCLUDE_ASM("st/rno3_psp/nonmatchings/rno3_psp/unk_1A748", func_us_801C4468);
+    switch (self->step) {
+    case 0:
+    case 1:
+        self->hitboxState = 2;
+        self->attack = 0x30;
+        self->attackElement = 0x1000;
+        self->hitboxWidth = 8;
+        self->hitboxHeight = 8;
+        self->nFramesInvincibility = 0x10;
+        self->stunFrames = 4;
+        self->hitEffect = 1;
+        self->ext.ILLEGAL.u16[0x1B] = 0;
+        self->flags = 0x0C000000;
+        g_api.func_80118894(self);
+        self->step += 1;
+        break;
+    case 2:
+        other = (Entity*)self->ext.prim;
+        other += self->ext.ILLEGAL.u8[9];
+        self->ext.ILLEGAL.u8[9] += 2;
+        if (self->ext.ILLEGAL.u8[9] > 0x18) {
+            self->ext.ILLEGAL.u8[9] = 0;
+        }
+        self->posX.i.hi = other->posX.i.hi;
+        self->posY.i.hi = other->posY.i.hi;
+        if ((other->entityId != 0x2B) && (other->entityId != 0x2C)) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
+
+void func_us_801C4468(Entity* self) {
+    Collider sp2C;
+    Entity* other;
+    s32 temp_s6;
+    s32 i;
+    s32 var_s4;
+    s32 xVar;
+    s32 yVar;
+    s16* temp_s2;
+
+    if (self->flags & 0x100) {
+        SetStep(4U);
+    }
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitDragonRider1);
+        self->animCurFrame = 1;
+        self->drawFlags |= 4;
+        self->ext.ILLEGAL.u8[9] = 2;
+        break;
+    case 1:
+        if (UnkCollisionFunc3(&D_pspeu_0925A748) & 1) {
+            other = self + 1;
+            for(i = 0; i < 24; i++, other++){
+                CreateEntityFromEntity(0x31U, self, other);
+                other->posY.i.hi += 8;
+                other->params = (i + 1);
+                other->nextPart = other - 1;
+            }
+            CreateEntityFromEntity(0x33U, self, other);
+            other->nextPart = other - 1;
+            other->parent = self;
+            self->parent = NULL;
+            self->nextPart = other;
+            SetStep(3U);
+        }
+        break;
+    case 3:
+        MoveEntity();
+        self->velocityY += self->ext.ILLEGAL.u32[3];
+        self->ext.ILLEGAL.u32[3] += 0x100;
+        if (self->ext.ILLEGAL.u8[8] != self->facingLeft && (AnimateEntity(&D_pspeu_0925A740, self) == 0)) {
+            self->animCurFrame = 1;
+            self->facingLeft = self->ext.ILLEGAL.u8[8];
+        }
+        if (self->rotate) {
+            self->rotate -= 0x10;
+        }
+        xVar = self->posX.i.hi;
+        yVar = self->posY.i.hi + 12;
+        g_api.CheckCollision(xVar, yVar, &sp2C, 0);
+        if (sp2C.effects & 1) {
+            PlaySfxPositional(0x659);
+            self->posY.i.hi += sp2C.unk18;
+            self->velocityY = -0x2C000;
+            self->ext.ILLEGAL.u32[3] = 0;
+            temp_s6 = self->ext.ILLEGAL.u8[8];
+            if (temp_s6 == (GetSideToPlayer() & 1)) {
+                self->ext.ILLEGAL.u8[9] -= 1;
+            } else {
+                self->ext.ILLEGAL.u8[9] = 2;
+            }
+            xVar = g_Tilemap.scrollX.i.hi + self->posX.i.hi;
+            if (self->ext.ILLEGAL.u8[8]) {
+                if ((u32) ((g_Tilemap.hSize << 8) - 0x80) < xVar) {
+                    self->ext.ILLEGAL.u8[9] = 0;
+                }
+            } else if (xVar < 0x80) {
+                self->ext.ILLEGAL.u8[9] = 0;
+            }
+            if (!self->ext.ILLEGAL.u8[9]) {
+                self->ext.ILLEGAL.u8[9] = 2;
+                self->ext.ILLEGAL.u8[8] ^= 1;
+                self->poseTimer = 0;
+                self->pose = 0;
+            } else {
+                self->rotate = 0x200;
+            }
+            if (self->ext.ILLEGAL.u8[8]) {
+                self->velocityX = 0x18000;
+                EntityGreyPuffSpawner(self, 5, 3, 4, 12, 0, -4);
+            } else {
+                self->velocityX = -0x18000;
+                EntityGreyPuffSpawner(self, 5, 3, -4, 12, 0, 4);
+            }
+        }
+        break;
+    case 4:
+        PlaySfxPositional(0x629);
+        other = self + 1;
+        for(i = 0; i < 24; i++, other++){
+            other->flags |= 0x100;
+        }
+        other = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (other != NULL) {
+            CreateEntityFromEntity(2U, self, other);
+            other->params = 3;
+        }
+        for(i = 0; i < 4; i++){
+            other = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (other != NULL) {
+                CreateEntityFromEntity(0x2DU, self, other);
+                other->facingLeft = self->facingLeft;
+                other->velocityX = self->velocityX;
+                other->velocityY = -0x18000;
+                other->params = i;
+            }
+        }
+        DestroyEntity(self);
+        return;
+    }
+    temp_s2 = &D_pspeu_0925A788[0];
+    var_s4 = self->animCurFrame - 1;
+    if (var_s4 < 0) {
+        var_s4 = 0;
+    }
+    temp_s2 += var_s4 * 4;
+    self->hitboxOffX = *temp_s2++;
+    self->hitboxOffY = *temp_s2++;
+    self->hitboxWidth = *temp_s2++;
+    self->hitboxHeight = *temp_s2++;
+}
 
 INCLUDE_ASM("st/rno3_psp/nonmatchings/rno3_psp/unk_1A748", func_us_801C48D8);
 
