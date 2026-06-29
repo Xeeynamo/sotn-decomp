@@ -6,6 +6,7 @@ extern EInit g_EInitOrobourous;
 extern EInit g_EInitOruburos;
 extern EInit g_EInitOruburosRider;
 extern EInit g_EInitDragonRider1;
+extern EInit g_EInitDragonRider2;
 
 
 extern u8 D_pspeu_0925A6B0[] = {32, 4, 6, 5, 6, 6, 14, 7, 6, 6, 6, 5, 0};
@@ -22,7 +23,7 @@ extern adhoc_vels_rot D_pspeu_0925A6D8[] = {{FIX(0.0625), FIX(0.0), -8},
                                            {FIX(0.125), FIX(-0.375), 8}};
 extern s16 D_pspeu_0925A708[] = {-7, 2, 13, 10, 4, 0, 7, 13, -5, 0, 7, 13};
 extern s8 D_pspeu_0925A720;
-
+extern s32 D_pspeu_0925A730;
 extern s32 D_pspeu_0925A740;
 extern s32 D_pspeu_0925A748;
 extern s16 D_pspeu_0925A788[];
@@ -567,7 +568,74 @@ void func_us_801C4468(Entity* self) {
     self->hitboxHeight = *temp_s2++;
 }
 
-INCLUDE_ASM("st/rno3_psp/nonmatchings/rno3_psp/unk_1A748", func_us_801C48D8);
+void func_us_801C48D8(Entity* self) {
+    Collider sp2C;
+    Entity* other;
+    s32 temp_s0;
+    s32 xVar;
+    s32 yVar;
+
+    if ((self->flags & 0x100) && (self->step < 8)) {
+        self->hitboxState = 0;
+        self->flags |= 0xC0000000;
+        SetStep(8U);
+    }
+    switch (self->step) {                              /* irregular */
+    case 0:
+        InitializeEntity(g_EInitDragonRider2);
+        self->pose = self->params % 6;
+        self->drawFlags |= 8;
+        temp_s0 = self->params;
+        self->opacity = 0x80 - temp_s0;
+        temp_s0 -= 10;
+        if (temp_s0 > 0) {
+            self->drawFlags = 3;
+            self->scaleX = self->scaleY = 0x100 - (temp_s0 * 6);
+        }
+        self->ext.ILLEGAL.s16[2] = self->params * 5;
+        /* fallthrough */
+    case 1:
+        if (self->ext.ILLEGAL.s16[2]) {
+            self->ext.ILLEGAL.s16[2]--;
+        } else {
+            self->step = 2;
+        }
+        break;
+    case 2:
+        MoveEntity();
+        self->velocityY += self->ext.ILLEGAL.u32[3];
+        self->ext.ILLEGAL.u32[3] += 0x100;
+        xVar = self->posX.i.hi;
+        yVar = self->posY.i.hi + 6;
+        g_api.CheckCollision(xVar, yVar, &sp2C, 0);
+        if (sp2C.effects & 1) {
+            self->posY.i.hi += sp2C.unk18;
+            self->velocityY = -0x2C000;
+            self->ext.ILLEGAL.u32[3] = 0;
+            other = self - 1;
+            if (other->ext.ILLEGAL.u8[8] != self->ext.ILLEGAL.u8[8]) {
+                self->ext.ILLEGAL.u8[8] = other->ext.ILLEGAL.u8[8];
+            }
+            if (self->ext.ILLEGAL.u8[8]) {
+                self->velocityX = 0x18000;
+            } else {
+                self->velocityX = -0x18000;
+            }
+        }
+        break;
+    case 8:
+        MoveEntity();
+        self->velocityY += 0x1400;
+        return;
+    }
+    AnimateEntity(&D_pspeu_0925A730, self);
+    temp_s0 = self->params & 3;
+    if ((g_Timer & 3) == temp_s0) {
+        self->hitboxState = 3;
+        return;
+    }
+    self->hitboxState = 0;
+}
 
 INCLUDE_ASM("st/rno3_psp/nonmatchings/rno3_psp/unk_1A748", func_us_801C4B44);
 
