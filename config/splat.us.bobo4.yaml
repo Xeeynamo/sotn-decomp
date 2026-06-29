@@ -41,10 +41,10 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, .data, header]
-      #- [0x34, data, header] # sprite_banks
-      #- [0x94, data, header] # pallet_def
-      #- [0xF0, data, header] # layers
-      #  [0x118, data, header] # graphics banks
+      - [0x34, data, sprite_banks]
+      - [0x94, data, palette_def]
+      - [0xF0, .data, layers]
+      - [0x118, .data, graphics_banks]
       - [0x188, .data, gen/e_laydef]
       - [0x330, .data, e_init]
       - [0x464, .data, background_block_init]
