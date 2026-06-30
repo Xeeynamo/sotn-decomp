@@ -28,6 +28,18 @@ static s16 D_pspeu_0925A708[] = {-7, 2, 13, 10, 4, 0, 7, 13, -5, 0, 7, 13};
 // forward declare, exists later in this file
 void func_us_801C4334(Entity* self);
 
+typedef enum{
+    OROB_INIT,
+    OROB_WAIT,
+    OROB_2,
+    OROB_3,
+    OROB_4,
+    OROB_5,
+    OROB_6,
+    OROB_7, // unused
+    OROB_DEAD
+} OrobourousSteps;
+
 void EntityOrobourous(Entity* self) {
     Collider sp3C;
     Entity* other;
@@ -40,17 +52,17 @@ void EntityOrobourous(Entity* self) {
     s32 i;
 
     if (self->flags & FLAG_DEAD) {
-        SetStep(8U);
+        SetStep(OROB_DEAD);
     }
 
     switch (self->step) {
-    case 0:
+    case OROB_INIT:
         InitializeEntity(g_EInitOrobourous);
-        self->animCurFrame = 0xE;
+        self->animCurFrame = 14;
         self->drawFlags |= ENTITY_ROTATE;
         other = self + 1;
-        for (i = 0; i < 0x18; i++, other++) {
-            CreateEntityFromEntity(E_UNK_2C, self, other);
+        for (i = 0; i < 24; i++, other++) {
+            CreateEntityFromEntity(E_OROB_SEGMENT, self, other);
             other->params = (i + 1);
             other->nextPart = other - 1;
         }
@@ -59,15 +71,15 @@ void EntityOrobourous(Entity* self) {
         CreateEntityFromEntity(E_UNK_2E, self, other);
         self->ext.ILLEGAL.u8[9] = 2;
         break;
-    case 1:
+    case OROB_WAIT:
         if (UnkCollisionFunc3(sensors1) & 1) {
-            SetStep(2U);
+            SetStep(OROB_2);
         }
         break;
-    case 2:
-        SetStep(3U);
+    case OROB_2:
+        SetStep(OROB_3);
         break;
-    case 3:
+    case OROB_3:
         MoveEntity();
         self->velocityY += self->ext.ILLEGAL.u32[3];
         self->ext.ILLEGAL.u32[3] += 0x100;
@@ -123,11 +135,11 @@ void EntityOrobourous(Entity* self) {
             }
         }
         if (self->ext.ILLEGAL.u8[0xA]) {
-            self->animCurFrame = 0xE;
-            SetStep(4U);
+            self->animCurFrame = 14;
+            SetStep(OROB_4);
         }
         break;
-    case 4:
+    case OROB_4:
         other = self + 1;
         for (i = 0; i < 0x18; i++, other++) {
             other->ext.ILLEGAL.u8[0xA] = 1;
@@ -140,26 +152,28 @@ void EntityOrobourous(Entity* self) {
         other = AllocEntity(&g_Entities[32], &g_Entities[47]);
         if (other != NULL) {
             DestroyEntity(other);
+            // Normally we would put in an E_WHATEVER for this, but
+            // in RNO3 0x43 is the jewel sword door which makes no sense
             other->entityId = 0x43;
             other->step = 1;
             other->pfnUpdate = func_us_801C4334;
             other->ext.prim = (Primitive*)self;
         } else {
-            self->ext.ILLEGAL.s16[0xC] = -1U;
+            self->ext.ILLEGAL.s16[0xC] = -1;
         }
-        SetStep(5U);
+        SetStep(OROB_5);
         /* fallthrough */
-    case 5:
+    case OROB_5:
         if (!--self->ext.ILLEGAL.s16[2]) {
             self->ext.ILLEGAL.s16[2] = 4;
             other = self + self->ext.ILLEGAL.u8[9];
             other->palette += 2;
             if (self->ext.ILLEGAL.u8[9]++ > 0x18) {
-                SetStep(6U);
+                SetStep(OROB_6);
             }
         }
         /* fallthrough */
-    case 6:
+    case OROB_6:
         FntPrint("rest_time:%x\n", self->ext.ILLEGAL.s16[0xC]);
         if (!self->step_s) {
             self->ext.ILLEGAL.s16[0xA] = 0x40;
@@ -220,7 +234,7 @@ void EntityOrobourous(Entity* self) {
             return;
         }
         break;
-    case 8:
+    case OROB_DEAD:
         PlaySfxPositional(SFX_SKELETON_DEATH_A);
         other = self + 1;
         for (i = 0; i < 25; i++, other++) {
@@ -271,7 +285,7 @@ static adhoc_vels_rot D_pspeu_0925A758[] = {
 static s16 D_pspeu_0925A788[] = {-7, 2, 13, 10, 4, 0, 7, 13, -5, 0, 7, 13};
 static s16 D_pspeu_0925A7A0[] = {4, -12, 5, 10, 0, -18, 6, 5, 0, -18, 6, 5};
 
-void func_us_801C3DE0(Entity* self) {
+void EntityOrobSegment(Entity* self) {
     s32 speed;
     s16 angle;
     s32 xVar;
@@ -283,10 +297,10 @@ void func_us_801C3DE0(Entity* self) {
         self->hitboxState = 0;
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
                        FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
-        SetStep(8U);
+        SetStep(OROB_DEAD);
     }
     switch (self->step) {
-    case 0:
+    case OROB_INIT:
         InitializeEntity(g_EInitOruburos);
         self->hitboxOffY = 1;
         self->pose = self->params % 6;
@@ -298,14 +312,16 @@ void func_us_801C3DE0(Entity* self) {
             self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
             self->scaleX = self->scaleY = 0x100 - (miscTemp * 6);
         }
+        // The 4th segment is the arms
         if ((self->params) == 4) {
             self->animCurFrame = 0x11;
         }
-        if ((self->params) == 0xC) {
+        // The 12th segment is the legs
+        if ((self->params) == 12) {
             self->animCurFrame = 0x12;
         }
         break;
-    case 1:
+    case OROB_WAIT:
         MoveEntity();
         other = self - 1;
         xVar = other->posX.i.hi - self->posX.i.hi;
@@ -322,9 +338,9 @@ void func_us_801C3DE0(Entity* self) {
             self->facingLeft = 0;
         }
         break;
-    case 8:
+    case OROB_DEAD:
         MoveEntity();
-        self->velocityY += 0x1400;
+        self->velocityY += FIX(10.0/128);
         return;
     }
     if (((self->params) != 4) && ((self->params) != 12)) {
