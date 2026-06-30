@@ -9,9 +9,10 @@ extern EInit g_EInitDragonRider1;
 extern EInit g_EInitDragonRider2;
 extern EInit D_us_801809F8;
 
-static u8 D_pspeu_0925A6B0[] = {32, 4, 6, 5, 6, 6, 14, 7, 6, 6, 6, 5, 0};
-static u8 D_pspeu_0925A6C0[] = {8, 16, 8, 15, 255, 0};
-static s16 D_pspeu_0925A6C8[] = {0, 12, 0, 4, 8, -4, -16, 0};
+static u8 anim_bone_twisting[] = {32, 4, 6, 5, 6, 6, 14, 7, 6, 6, 6, 5, 0};
+// 8 frames each of the head facing left vs right. happens when bouncing
+static u8 anim_head_flipdirs[] = {8, 16, 8, 15, 255, 0};
+static s16 sensors1[] = {0, 12, 0, 4, 8, -4, -16, 0};
 typedef struct {
     u32 velX;
     u32 velY;
@@ -27,7 +28,7 @@ static s16 D_pspeu_0925A708[] = {-7, 2, 13, 10, 4, 0, 7, 13, -5, 0, 7, 13};
 // forward declare, exists later in this file
 void func_us_801C4334(Entity* self);
 
-void func_us_801C35F8(Entity* self) {
+void EntityOrobourous(Entity* self) {
     Collider sp3C;
     Entity* other;
     s32 var_s7;
@@ -59,7 +60,7 @@ void func_us_801C35F8(Entity* self) {
         self->ext.ILLEGAL.u8[9] = 2;
         break;
     case 1:
-        if (UnkCollisionFunc3(&D_pspeu_0925A6C8) & 1) {
+        if (UnkCollisionFunc3(sensors1) & 1) {
             SetStep(2U);
         }
         break;
@@ -76,7 +77,7 @@ void func_us_801C35F8(Entity* self) {
             self->animCurFrame = 0xE;
         }
         if (((self->ext.ILLEGAL.u8[8]) != self->facingLeft) &&
-            (AnimateEntity(D_pspeu_0925A6C0, self) == 0)) {
+            (AnimateEntity(anim_head_flipdirs, self) == 0)) {
             self->animCurFrame = 0xE;
             self->facingLeft = self->ext.ILLEGAL.u8[8];
         }
@@ -182,7 +183,7 @@ void func_us_801C35F8(Entity* self) {
             self->step_s += 1;
         }
         if (self->ext.ILLEGAL.u8[8] != self->facingLeft &&
-            (AnimateEntity(D_pspeu_0925A6C0, self) == 0)) {
+            (AnimateEntity(anim_head_flipdirs, self) == 0)) {
             self->animCurFrame = 0xE;
             self->facingLeft = self->ext.ILLEGAL.u8[8];
             self->pose = 0;
@@ -258,9 +259,10 @@ void func_us_801C35F8(Entity* self) {
 }
 // Note: This data has to come after the "rest_time" string above for psp to
 // match
-static u8 D_pspeu_0925A730[] = {32, 4, 6, 5, 6, 6, 14, 7, 6, 6, 6, 5, 0};
-static u8 D_pspeu_0925A740[] = {8, 3, 8, 2, 255, 0};
-static s16 D_pspeu_0925A748[] = {0, 12, 0, 4, 8, -4, -16, 0};
+// This is precisely identical to the other bone twisting animation
+static u8 anim_bone_twisting2[] = {32, 4, 6, 5, 6, 6, 14, 7, 6, 6, 6, 5, 0};
+static u8 anim_head_flip_withrider[] = {8, 3, 8, 2, 255, 0};
+static s16 sensors2[] = {0, 12, 0, 4, 8, -4, -16, 0};
 static adhoc_vels_rot D_pspeu_0925A758[] = {
     {FIX(0.0625), FIX(0.0), -8},
     {FIX(0.25), FIX(-1.5), 40},
@@ -325,8 +327,8 @@ void func_us_801C3DE0(Entity* self) {
         self->velocityY += 0x1400;
         return;
     }
-    if (((self->params) != 4) && ((self->params) != 0xC)) {
-        AnimateEntity(D_pspeu_0925A6B0, self);
+    if (((self->params) != 4) && ((self->params) != 12)) {
+        AnimateEntity(anim_bone_twisting, self);
     }
     miscTemp = (self->params & 3);
     if ((g_Timer & 3) == miscTemp) {
@@ -456,7 +458,7 @@ void func_us_801C4334(Entity* self) {
     }
 }
 
-void func_us_801C4468(Entity* self) {
+void EntityDragonRider(Entity* self) {
     Collider sp2C;
     Entity* other;
     s32 temp_s6;
@@ -477,7 +479,7 @@ void func_us_801C4468(Entity* self) {
         self->ext.ILLEGAL.u8[9] = 2;
         break;
     case 1:
-        if (UnkCollisionFunc3(&D_pspeu_0925A748) & 1) {
+        if (UnkCollisionFunc3(sensors2) & 1) {
             other = self + 1;
             for (i = 0; i < 24; i++, other++) {
                 CreateEntityFromEntity(E_UNK_31, self, other);
@@ -498,7 +500,7 @@ void func_us_801C4468(Entity* self) {
         self->velocityY += self->ext.ILLEGAL.u32[3];
         self->ext.ILLEGAL.u32[3] += 0x100;
         if (self->ext.ILLEGAL.u8[8] != self->facingLeft &&
-            (AnimateEntity(&D_pspeu_0925A740, self) == 0)) {
+            (AnimateEntity(anim_head_flip_withrider, self) == 0)) {
             self->animCurFrame = 1;
             self->facingLeft = self->ext.ILLEGAL.u8[8];
         }
@@ -641,7 +643,7 @@ void func_us_801C48D8(Entity* self) {
         self->velocityY += 0x1400;
         return;
     }
-    AnimateEntity(&D_pspeu_0925A730, self);
+    AnimateEntity(&anim_bone_twisting2, self);
     temp_s0 = self->params & 3;
     if ((g_Timer & 3) == temp_s0) {
         self->hitboxState = 3;
