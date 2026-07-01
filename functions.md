@@ -3141,7 +3141,7 @@
 | rare     | func_pspeu_0924A9D0                   |       73 |          7 |        |       |     |
 | rcat     | func_pspeu_09249AE0                   |       73 |          7 |        |       |     |
 | rno3     | func_pspeu_09257B40                   |       73 |          7 |        |       |     |
-| rno3     | GetNormalizedAngle                    |       73 |          7 |        |       |     |
+| rno3     | LimitAngleChange                      |       73 |          7 |        |       |     |
 | rnz0     | func_pspeu_092534B8                   |       73 |          7 |        |       |     |
 | wrp      | func_psp_09243A70                     |       73 |          7 |        |       |     |
 | lib      | func_psp_0926ADD8                     |       73 |          8 |        |       |     |
