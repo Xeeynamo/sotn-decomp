@@ -64,6 +64,7 @@ segments:
       - [0x18860, c, rno3/st_common]
       - [0x19FB8, c, rno3/prim_helpers]
       - [0x1A748, c, rno3/e_orobourous]
+      - [0x1BBD8, c, rno3/e_dragon_rider]
       - [0x1C7D8, c, rno3/e_jewel_sword_puzzle]
       - [0x1D498, c, rno3/e_stairway]
       - [0x1DD38, c, rno3/e_background_bushes_trees]

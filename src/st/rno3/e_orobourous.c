@@ -1,13 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rno3.h"
 
+// NOTE: Compare this to e_dragon_rider. Lots of similarities.
+
 extern EInit D_us_801809C8;
 extern EInit g_EInitOrobourous;
 extern EInit g_EInitOruburos;
 extern EInit g_EInitOruburosRider;
-extern EInit g_EInitDragonRider1;
-extern EInit g_EInitDragonRider2;
-extern EInit D_us_801809F8;
 
 static u8 anim_bone_twisting[] = {32, 4, 6, 5, 6, 6, 14, 7, 6, 6, 6, 5, 0};
 // 8 frames each of the head facing left vs right. happens when bouncing
@@ -18,22 +17,22 @@ typedef struct {
     u32 velY;
     s16 rotate;
 } adhoc_vels_rot;
-static adhoc_vels_rot D_pspeu_0925A6D8[] = {
+static adhoc_vels_rot headPartsParams[] = {
     {FIX(0.0625), FIX(0.0), -8},
     {FIX(0.25), FIX(-1.5), 40},
     {FIX(0.5), FIX(-0.5), 16},
     {FIX(0.125), FIX(-0.375), 8}};
-static s16 D_pspeu_0925A708[] = {-7, 2, 13, 10, 4, 0, 7, 13, -5, 0, 7, 13};
+static s16 headHitboxXYWH[] = {-7, 2, 13, 10, 4, 0, 7, 13, -5, 0, 7, 13};
 
 // forward declare, exists later in this file
-void func_us_801C4334(Entity* self);
+void EntityOrobHolyAttacker(Entity* self);
 
 typedef enum{
     OROB_INIT,
     OROB_WAIT,
     OROB_2,
-    OROB_3,
-    OROB_TURNYELLOW,
+    OROB_BOUNCING,
+    OROB_SET_FREE,
     OROB_INIT_FLY,
     OROB_FLYAROUND,
     OROB_7, // unused
@@ -71,7 +70,7 @@ void EntityOrobourous(Entity* self) {
         self->parent = NULL;
         self->nextPart = self + 24;
         CreateEntityFromEntity(E_OROB_RIDER, self, other);
-        self->ext.ILLEGAL.u8[9] = 2;
+        self->ext.orob.unk9 = 2;
         break;
     case OROB_WAIT:
         if (UnkCollisionFunc3(sensors1) & 1) {
@@ -79,21 +78,21 @@ void EntityOrobourous(Entity* self) {
         }
         break;
     case OROB_2:
-        SetStep(OROB_3);
+        SetStep(OROB_BOUNCING);
         break;
-    case OROB_3:
+    case OROB_BOUNCING:
         MoveEntity();
         self->velocityY += self->ext.orob.gravity;
         self->ext.orob.gravity += 0x100;
         if (self->velocityY < 0) {
             self->animCurFrame = 1;
         } else {
-            self->animCurFrame = 0xE;
+            self->animCurFrame = 14;
         }
-        if (((self->ext.ILLEGAL.u8[8]) != self->facingLeft) &&
+        if (((self->ext.orob.movingLeft) != self->facingLeft) &&
             (AnimateEntity(anim_head_flipdirs, self) == 0)) {
-            self->animCurFrame = 0xE;
-            self->facingLeft = self->ext.ILLEGAL.u8[8];
+            self->animCurFrame = 14;
+            self->facingLeft = self->ext.orob.movingLeft;
         }
         if (self->rotate) {
             self->rotate -= 0x10;
@@ -106,29 +105,29 @@ void EntityOrobourous(Entity* self) {
             self->posY.i.hi += sp3C.unk18;
             self->velocityY = FIX(-3.0);
             self->ext.orob.gravity = 0;
-            var_s7 = self->ext.ILLEGAL.u8[8];
+            var_s7 = self->ext.orob.movingLeft;
             if (var_s7 == (GetSideToPlayer() & 1)) {
-                self->ext.ILLEGAL.u8[9] --;
+                self->ext.orob.unk9 --;
             } else {
-                self->ext.ILLEGAL.u8[9] = 2;
+                self->ext.orob.unk9 = 2;
             }
             xVar = g_Tilemap.scrollX.i.hi + self->posX.i.hi;
-            if (self->ext.ILLEGAL.u8[8]) {
+            if (self->ext.orob.movingLeft) {
                 if (((g_Tilemap.hSize << 8) - 0x80) < xVar) {
-                    self->ext.ILLEGAL.u8[9] = 0;
+                    self->ext.orob.unk9 = 0;
                 }
             } else if (xVar < 0x80) {
-                self->ext.ILLEGAL.u8[9] = 0;
+                self->ext.orob.unk9 = 0;
             }
-            if (!self->ext.ILLEGAL.u8[9]) {
-                self->ext.ILLEGAL.u8[9] = 2;
-                self->ext.ILLEGAL.u8[8] ^= 1;
+            if (!self->ext.orob.unk9) {
+                self->ext.orob.unk9 = 2;
+                self->ext.orob.movingLeft ^= 1;
                 self->poseTimer = 0;
                 self->pose = 0;
             } else {
                 self->rotate = 0x200;
             }
-            if (self->ext.ILLEGAL.u8[8]) {
+            if (self->ext.orob.movingLeft) {
                 self->velocityX = FIX(1.5);
                 EntityGreyPuffSpawner(self, 5, 3, 4, 12, 0, -4);
             } else {
@@ -138,20 +137,20 @@ void EntityOrobourous(Entity* self) {
         }
         if (self->ext.orob.riderDead) {
             self->animCurFrame = 14;
-            SetStep(OROB_TURNYELLOW);
+            SetStep(OROB_SET_FREE);
         }
         break;
-    case OROB_TURNYELLOW:
+    case OROB_SET_FREE:
         other = self + 1;
         // Iterate through all the body segments
         for (i = 0; i < 24; i++, other++) {
             other->ext.orob.riderDead = true;
         }
         self->drawFlags = ENTITY_DEFAULT;
-        self->ext.ILLEGAL.u8[9] = 0;
+        self->ext.orob.unk9 = 0;
         self->hitboxState = 0;
         self->ext.orob.rest_time = 0x800;
-        self->ext.ILLEGAL.s16[2] = 0x10;
+        self->ext.orob.stepTimer = 0x10;
         other = AllocEntity(&g_Entities[32], &g_Entities[47]);
         if (other != NULL) {
             DestroyEntity(other);
@@ -159,7 +158,7 @@ void EntityOrobourous(Entity* self) {
             // in RNO3 0x43 is the jewel sword door which makes no sense
             other->entityId = 0x43;
             other->step = 1;
-            other->pfnUpdate = func_us_801C4334;
+            other->pfnUpdate = EntityOrobHolyAttacker;
             other->ext.orob.parent = self;
         } else {
             self->ext.orob.rest_time = -1;
@@ -167,19 +166,21 @@ void EntityOrobourous(Entity* self) {
         SetStep(OROB_INIT_FLY);
         /* fallthrough */
     case OROB_INIT_FLY:
-        if (!--self->ext.ILLEGAL.s16[2]) {
-            self->ext.ILLEGAL.s16[2] = 4;
-            other = self + self->ext.ILLEGAL.u8[9];
+        if (!--self->ext.orob.stepTimer) {
+            self->ext.orob.stepTimer = 4;
+            other = self + self->ext.orob.unk9;
             other->palette += 2;
-            if (self->ext.ILLEGAL.u8[9]++ > 24) {
+            if (self->ext.orob.unk9++ > 24) {
                 SetStep(OROB_FLYAROUND);
             }
         }
         /* fallthrough */
     case OROB_FLYAROUND:
         FntPrint("rest_time:%x\n", self->ext.orob.rest_time);
+        // This routine sets a target for the flying orob to navigate toward
+        // Gets re-called periodically.
         if (!self->step_s) {
-            self->ext.ILLEGAL.s16[0xA] = 0x40;
+            self->ext.orob.targetTimer = 0x40;
             var_s4 = Random() * 8;
             xVar = (rcos(var_s4) * 0x60) >> 0xC;
             yVar = (rsin(var_s4) * -0x60) >> 0xC;
@@ -187,39 +188,42 @@ void EntityOrobourous(Entity* self) {
                 xVar = 0;
                 yVar = 0;
                 self->ext.orob.rest_time--;
-                self->ext.ILLEGAL.s16[0xA] = 0x100;
+                self->ext.orob.targetTimer = 0x100;
             }
             if (self->ext.orob.rest_time < 0) {
                 xVar = 0x200;
                 yVar = -0x300;
-                self->ext.ILLEGAL.s16[0xA] = 0x400;
+                self->ext.orob.targetTimer = 0x400;
             }
             other = &PLAYER;
-            self->ext.ILLEGAL.s16[0xE] = other->posX.i.hi + xVar;
-            self->ext.ILLEGAL.s16[0xF] = other->posY.i.hi + yVar;
+            self->ext.orob.targetX = other->posX.i.hi + xVar;
+            self->ext.orob.targetY = other->posY.i.hi + yVar;
             self->step_s += 1;
         }
-        if (self->ext.ILLEGAL.u8[8] != self->facingLeft &&
+
+        if (self->ext.orob.movingLeft != self->facingLeft &&
             (AnimateEntity(anim_head_flipdirs, self) == 0)) {
-            self->animCurFrame = 0xE;
-            self->facingLeft = self->ext.ILLEGAL.u8[8];
+            self->animCurFrame = 14;
+            self->facingLeft = self->ext.orob.movingLeft;
             self->pose = 0;
             self->poseTimer = 0;
         }
         MoveEntity();
         if (self->velocityX > 0) {
-            self->ext.ILLEGAL.u8[8] = 1;
+            self->ext.orob.movingLeft = 1;
         } else {
-            self->ext.ILLEGAL.u8[8] = 0;
+            self->ext.orob.movingLeft = 0;
         }
-        xVar = self->ext.ILLEGAL.s16[0xE] - self->posX.i.hi;
-        yVar = self->ext.ILLEGAL.s16[0xF] - self->posY.i.hi;
+        xVar = self->ext.orob.targetX - self->posX.i.hi;
+        yVar = self->ext.orob.targetY - self->posY.i.hi;
         var_s4 = ratan2(yVar, xVar);
-        var_s4 = LimitAngleChange(0x20, self->ext.ILLEGAL.s16[0xB], var_s4);
-        self->velocityX = rcos(var_s4) * 0x24;
-        self->velocityY = rsin(var_s4) * 0x24;
-        self->ext.ILLEGAL.s16[0xB] = var_s4;
-        if ((!--self->ext.ILLEGAL.s16[0xA]) ||
+        var_s4 = LimitAngleChange(0x20, self->ext.orob.vel_angle, var_s4);
+        self->velocityX = rcos(var_s4) * 36;
+        self->velocityY = rsin(var_s4) * 36;
+        self->ext.orob.vel_angle = var_s4;
+        // If the targetTimer has run out, or we have reached the target
+        // (to a tolerance of 8 on each axis), reset to get a new target
+        if ((!--self->ext.orob.targetTimer) ||
             ((abs(xVar) < 8) && (abs(yVar) < 8))) {
             self->step_s = 0;
         }
@@ -265,8 +269,8 @@ void EntityOrobourous(Entity* self) {
         DestroyEntity(self);
         return;
     }
-    var_s5 = &D_pspeu_0925A708[0];
-    var_s6 = self->animCurFrame - 0xE;
+    var_s5 = &headHitboxXYWH[0];
+    var_s6 = self->animCurFrame - 14;
     if (var_s6 < 0) {
         var_s6 = 0;
     }
@@ -276,19 +280,6 @@ void EntityOrobourous(Entity* self) {
     self->hitboxWidth = *var_s5++;
     self->hitboxHeight = *var_s5++;
 }
-// Note: This data has to come after the "rest_time" string above for psp to
-// match
-// This is precisely identical to the other bone twisting animation
-static u8 anim_bone_twisting2[] = {32, 4, 6, 5, 6, 6, 14, 7, 6, 6, 6, 5, 0};
-static u8 anim_head_flip_withrider[] = {8, 3, 8, 2, 255, 0};
-static s16 sensors2[] = {0, 12, 0, 4, 8, -4, -16, 0};
-static adhoc_vels_rot D_pspeu_0925A758[] = {
-    {FIX(0.0625), FIX(0.0), -8},
-    {FIX(0.25), FIX(-1.5), 40},
-    {FIX(0.5), FIX(-0.5), 16},
-    {FIX(0.125), FIX(-0.375), 8}};
-static s16 D_pspeu_0925A788[] = {-7, 2, 13, 10, 4, 0, 7, 13, -5, 0, 7, 13};
-static s16 D_pspeu_0925A7A0[] = {4, -12, 5, 10, 0, -18, 6, 5, 0, -18, 6, 5};
 
 void EntityOrobSegment(Entity* self) {
     s32 speed;
@@ -372,7 +363,7 @@ void EntityOrobHeadParts(Entity* self) {
         // We create 4 of this entity, with params 0 to 3.
         self->animCurFrame = self->params + 8;
         self->zPriority += self->params;
-        temp_s0 = &D_pspeu_0925A6D8[self->params];
+        temp_s0 = &headPartsParams[self->params];
         if (self->facingLeft) {
             self->velocityX += temp_s0->velX;
         } else {
@@ -382,7 +373,7 @@ void EntityOrobHeadParts(Entity* self) {
     }
     MoveEntity();
     self->velocityY += FIX(0.09375);
-    temp_s0 = &D_pspeu_0925A6D8[self->params];
+    temp_s0 = &headPartsParams[self->params];
     self->rotate += temp_s0->rotate;
 }
 
@@ -414,7 +405,7 @@ void EntityOrobRider(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitOruburosRider);
-        self->animCurFrame = 0xD;
+        self->animCurFrame = 13;
         self->hitboxOffX = 5;
         self->hitboxOffY = -2;
         self->drawFlags = ENTITY_ROTATE;
@@ -437,7 +428,7 @@ void EntityOrobRider(Entity* self) {
             self->zPriority = other->zPriority - 1;
         }
         if (other->velocityY > 0) {
-            self->animCurFrame = 0xD;
+            self->animCurFrame = 13;
             if (self->rotate > -0x240) {
                 self->rotate -= 0x18;
             }
@@ -449,7 +440,13 @@ void EntityOrobRider(Entity* self) {
     }
 }
 
-void func_us_801C4334(Entity* self) {
+// Once the Orobourous has been freed (the rider killed), it converts over and
+// can damage enemies (effectively, it has turned good). This entity, in case
+// 2, constantly positions itself at different locations. It places itself at
+// different offsets along the length of the snake, effectively meaning that
+// the snake has a "killer orb" racing along itself. It moves quite fast.
+// It can be seen if you turn on hitboxes in the SOTN Debug Module.
+void EntityOrobHolyAttacker(Entity* self) {
     Entity* parent;
 
     switch (self->step) {
@@ -470,12 +467,11 @@ void func_us_801C4334(Entity* self) {
         break;
     case 2:
         parent = self->ext.orob.parent;
-        // Weird, we change which entity we are targeting as parent
-        parent += self->ext.ILLEGAL.u8[9];
+        parent += self->ext.orob.unk9;
         
-        self->ext.ILLEGAL.u8[9] += 2;
-        if (self->ext.ILLEGAL.u8[9] > 24) {
-            self->ext.ILLEGAL.u8[9] = 0;
+        self->ext.orob.unk9 += 2;
+        if (self->ext.orob.unk9 > 24) {
+            self->ext.orob.unk9 = 0;
         }
         self->posX.i.hi = parent->posX.i.hi;
         self->posY.i.hi = parent->posY.i.hi;
@@ -484,250 +480,5 @@ void func_us_801C4334(Entity* self) {
             DestroyEntity(self);
         }
         break;
-    }
-}
-
-void EntityDragonRider(Entity* self) {
-    Collider sp2C;
-    Entity* other;
-    s32 temp_s6;
-    s32 i;
-    s32 var_s4;
-    s32 xVar;
-    s32 yVar;
-    s16* temp_s2;
-
-    if (self->flags & FLAG_DEAD) {
-        SetStep(4U);
-    }
-    switch (self->step) {
-    case 0:
-        InitializeEntity(g_EInitDragonRider1);
-        self->animCurFrame = 1;
-        self->drawFlags |= ENTITY_ROTATE;
-        self->ext.ILLEGAL.u8[9] = 2;
-        break;
-    case 1:
-        if (UnkCollisionFunc3(sensors2) & 1) {
-            other = self + 1;
-            for (i = 0; i < 24; i++, other++) {
-                CreateEntityFromEntity(E_UNK_31, self, other);
-                other->posY.i.hi += 8;
-                other->params = (i + 1);
-                other->nextPart = other - 1;
-            }
-            CreateEntityFromEntity(E_UNK_33, self, other);
-            other->nextPart = other - 1;
-            other->parent = self;
-            self->parent = NULL;
-            self->nextPart = other;
-            SetStep(3U);
-        }
-        break;
-    case 3:
-        MoveEntity();
-        self->velocityY += self->ext.orob.gravity;
-        self->ext.orob.gravity += 0x100;
-        if (self->ext.ILLEGAL.u8[8] != self->facingLeft &&
-            (AnimateEntity(anim_head_flip_withrider, self) == 0)) {
-            self->animCurFrame = 1;
-            self->facingLeft = self->ext.ILLEGAL.u8[8];
-        }
-        if (self->rotate) {
-            self->rotate -= 0x10;
-        }
-        xVar = self->posX.i.hi;
-        yVar = self->posY.i.hi + 12;
-        g_api.CheckCollision(xVar, yVar, &sp2C, 0);
-        if (sp2C.effects & EFFECT_SOLID) {
-            PlaySfxPositional(SFX_EXPLODE_F);
-            self->posY.i.hi += sp2C.unk18;
-            self->velocityY = FIX(-2.75);
-            self->ext.orob.gravity = 0;
-            temp_s6 = self->ext.ILLEGAL.u8[8];
-            if (temp_s6 == (GetSideToPlayer() & 1)) {
-                self->ext.ILLEGAL.u8[9]--;
-            } else {
-                self->ext.ILLEGAL.u8[9] = 2;
-            }
-            xVar = g_Tilemap.scrollX.i.hi + self->posX.i.hi;
-            if (self->ext.ILLEGAL.u8[8]) {
-                if ((u32)((g_Tilemap.hSize << 8) - 0x80) < xVar) {
-                    self->ext.ILLEGAL.u8[9] = 0;
-                }
-            } else if (xVar < 0x80) {
-                self->ext.ILLEGAL.u8[9] = 0;
-            }
-            if (!self->ext.ILLEGAL.u8[9]) {
-                self->ext.ILLEGAL.u8[9] = 2;
-                self->ext.ILLEGAL.u8[8] ^= 1;
-                self->poseTimer = 0;
-                self->pose = 0;
-            } else {
-                self->rotate = 0x200;
-            }
-            if (self->ext.ILLEGAL.u8[8]) {
-                self->velocityX = FIX(1.5);
-                EntityGreyPuffSpawner(self, 5, 3, 4, 12, 0, -4);
-            } else {
-                self->velocityX = FIX(-1.5);
-                EntityGreyPuffSpawner(self, 5, 3, -4, 12, 0, 4);
-            }
-        }
-        break;
-    case 4:
-        PlaySfxPositional(SFX_SKELETON_DEATH_A);
-        other = self + 1;
-        for (i = 0; i < 24; i++, other++) {
-            other->flags |= FLAG_DEAD;
-        }
-        other = AllocEntity(&g_Entities[224], &g_Entities[256]);
-        if (other != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, other);
-            other->params = 3;
-        }
-        for (i = 0; i < 4; i++) {
-            other = AllocEntity(&g_Entities[224], &g_Entities[256]);
-            if (other != NULL) {
-                CreateEntityFromEntity(E_OROB_HEAD_PARTS, self, other);
-                other->facingLeft = self->facingLeft;
-                other->velocityX = self->velocityX;
-                other->velocityY = -0x18000;
-                other->params = i;
-            }
-        }
-        DestroyEntity(self);
-        return;
-    }
-    temp_s2 = &D_pspeu_0925A788[0];
-    var_s4 = self->animCurFrame - 1;
-    if (var_s4 < 0) {
-        var_s4 = 0;
-    }
-    temp_s2 += var_s4 * 4;
-    self->hitboxOffX = *temp_s2++;
-    self->hitboxOffY = *temp_s2++;
-    self->hitboxWidth = *temp_s2++;
-    self->hitboxHeight = *temp_s2++;
-}
-
-void func_us_801C48D8(Entity* self) {
-    Collider sp2C;
-    Entity* other;
-    s32 temp_s0;
-    s32 xVar;
-    s32 yVar;
-
-    if ((self->flags & FLAG_DEAD) && (self->step < 8)) {
-        self->hitboxState = 0;
-        self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
-                       FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
-        SetStep(8U);
-    }
-    switch (self->step) { /* irregular */
-    case 0:
-        InitializeEntity(g_EInitDragonRider2);
-        self->pose = self->params % 6;
-        self->drawFlags |= ENTITY_OPACITY;
-        temp_s0 = self->params;
-        self->opacity = 0x80 - temp_s0;
-        temp_s0 -= 10;
-        if (temp_s0 > 0) {
-            self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
-            self->scaleX = self->scaleY = 0x100 - (temp_s0 * 6);
-        }
-        self->ext.ILLEGAL.s16[2] = self->params * 5;
-        /* fallthrough */
-    case 1:
-        if (self->ext.ILLEGAL.s16[2]) {
-            self->ext.ILLEGAL.s16[2]--;
-        } else {
-            self->step = 2;
-        }
-        break;
-    case 2:
-        MoveEntity();
-        self->velocityY += self->ext.orob.gravity;
-        self->ext.orob.gravity += 0x100;
-        xVar = self->posX.i.hi;
-        yVar = self->posY.i.hi + 6;
-        g_api.CheckCollision(xVar, yVar, &sp2C, 0);
-        if (sp2C.effects & EFFECT_SOLID) {
-            self->posY.i.hi += sp2C.unk18;
-            self->velocityY = FIX(-2.75);
-            self->ext.orob.gravity = 0;
-            other = self - 1;
-            if (other->ext.ILLEGAL.u8[8] != self->ext.ILLEGAL.u8[8]) {
-                self->ext.ILLEGAL.u8[8] = other->ext.ILLEGAL.u8[8];
-            }
-            if (self->ext.ILLEGAL.u8[8]) {
-                self->velocityX = FIX(1.5);
-            } else {
-                self->velocityX = FIX(-1.5);
-            }
-        }
-        break;
-    case 8:
-        MoveEntity();
-        self->velocityY += 0x1400;
-        return;
-    }
-    AnimateEntity(&anim_bone_twisting2, self);
-    temp_s0 = self->params & 3;
-    if ((g_Timer & 3) == temp_s0) {
-        self->hitboxState = 3;
-        return;
-    }
-    self->hitboxState = 0;
-}
-
-void func_us_801C4B44(Entity* self) {
-    adhoc_vels_rot* temp_s0;
-
-    if (!self->step) {
-        InitializeEntity(D_us_801809F8);
-        self->drawFlags = ENTITY_ROTATE;
-        self->hitboxState = 0;
-        self->animCurFrame = self->params + 8;
-        self->zPriority += self->params;
-        temp_s0 = &D_pspeu_0925A758[self->params];
-        if (self->facingLeft) {
-            self->velocityX += temp_s0->velX;
-        } else {
-            self->velocityX += -temp_s0->velX;
-        }
-        self->velocityY += temp_s0->velY;
-    }
-    MoveEntity();
-    self->velocityY += FIX(0.09375);
-    temp_s0 = &D_pspeu_0925A758[self->params];
-    self->rotate += temp_s0->rotate;
-}
-
-void func_us_801C4C50(Entity* self) {
-    s32 animIdx;
-    s16* xywh_ptr;
-    Entity* other;
-
-    if (!self->step) {
-        InitializeEntity(g_EInitDragonRider1);
-        self->animCurFrame = 0;
-    }
-    other = self - 25;
-    self->posX.i.hi = other->posX.i.hi;
-    self->posY.i.hi = other->posY.i.hi;
-    self->facingLeft = other->facingLeft;
-    xywh_ptr = &D_pspeu_0925A7A0[0];
-    animIdx = other->animCurFrame - 1;
-    if (animIdx < 0) {
-        animIdx = 0;
-    }
-    xywh_ptr += animIdx * 4;
-    self->hitboxOffX = *xywh_ptr++;
-    self->hitboxOffY = *xywh_ptr++;
-    self->hitboxWidth = *xywh_ptr++;
-    self->hitboxHeight = *xywh_ptr++;
-    if (other->entityId != E_DRAGON_RIDER) {
-        DestroyEntity(self);
     }
 }

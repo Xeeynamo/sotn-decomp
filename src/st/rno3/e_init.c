@@ -47,10 +47,10 @@ void EntityOrobourous(Entity* self);
 void EntityOrobSegment(Entity* self);
 void EntityOrobHeadParts(Entity* self);
 void EntityOrobRider(Entity* self);
-void func_us_801C4334(Entity* self);
+void EntityOrobHolyAttacker(Entity* self);
 void EntityDragonRider(Entity* self);
-void func_us_801C48D8(Entity* self);
-void func_us_801C4B44(Entity* self);
+void EntityDragonSegment(Entity* self);
+void EntityDragonHeadParts(Entity* self);
 void func_us_801C4C50(Entity* self);
 void EntityVenusWeed(Entity* self);
 void func_us_801C5850(Entity* self);
@@ -127,10 +127,10 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityOrobSegment,
     EntityOrobHeadParts,
     EntityOrobRider,
-    func_us_801C4334,
+    EntityOrobHolyAttacker,
     EntityDragonRider,
-    func_us_801C48D8,
-    func_us_801C4B44,
+    EntityDragonSegment,
+    EntityDragonHeadParts,
     func_us_801C4C50,
     EntityVenusWeed,
     func_us_801C5850,

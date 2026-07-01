@@ -73,6 +73,7 @@ segments:
       - [0x2548, .data, e_jack_o_bones]
       - [0x2634, .data, e_nova_skeleton]
       - [0x27BC, .data, e_orobourous]
+      - [0x282C, .data, e_dragon_rider]
       - [0x28B4, data]
       - [0x2C24, .data, gen/e_layout] # layout entries data
       - [0x39BC, data]
@@ -121,6 +122,7 @@ segments:
       - [0x41DCC, c, e_jack_o_bones]
       - [0x42740, c, e_nova_skeleton]
       - [0x435F8, c, e_orobourous]
+      - [0x44468, c, e_dragon_rider]
       - [0x44D18, c, e_blue_venus_weed]
       - [0x46940, c, unk_46940]
       - [0x49044, c, prim_helpers]
