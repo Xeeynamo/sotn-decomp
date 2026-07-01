@@ -1028,7 +1028,7 @@ void EntityFrozenShadeIcicle(Entity* self) {
     case 3:
         self->ext.frozenShadeIcicle.unk7C += 0x20;
         i = LimitAngleChange(0x40, self->ext.frozenShadeIcicle.unk7E,
-                               self->ext.frozenShadeIcicle.angle);
+                             self->ext.frozenShadeIcicle.angle);
         self->ext.frozenShadeIcicle.unk7E = i;
         if (self->ext.frozenShadeIcicle.angle == i) {
             self->step++;

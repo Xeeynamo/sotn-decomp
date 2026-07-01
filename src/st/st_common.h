@@ -438,7 +438,7 @@ u16 GetAnglePointToEntity(s32 x, s32 y) {
 u16 LimitAngleChange(u16 delta, u16 base, u16 target) {
     u16 diff = (s16)(target - base);
     u16 ret;
-    
+
     // Angles are 0 to 0xFFF, or -0x800 to +0x7FF
     // Equivalent to 0-360 versus -180 to 180.
     // This converts the absolute diff into signed.
@@ -465,7 +465,6 @@ u16 LimitAngleChange(u16 delta, u16 base, u16 target) {
     // If we're not over the delta, then we can directly adopt the target angle.
     return target;
 }
-
 
 void SetStep(u8 step) {
     g_CurrentEntity->step = step;
