@@ -1431,8 +1431,8 @@ u16 GetAnglePointToEntity(Entity* entity, s16 x, s16 y) {
     return ratan2(dy, dx);
 }
 
-u16 LimitAngleChange(u16 arg0, u16 arg1, u16 arg2) {
-    u16 temp_a2 = (s16)(arg2 - arg1);
+u16 LimitAngleChange(u16 delta, u16 base, u16 target) {
+    u16 temp_a2 = (s16)(target - base);
     u16 ret;
 
     if (temp_a2 & 0x800) {
@@ -1441,15 +1441,15 @@ u16 LimitAngleChange(u16 arg0, u16 arg1, u16 arg2) {
         ret = temp_a2;
     }
 
-    if (ret > arg0) {
+    if (ret > delta) {
         if (temp_a2 & 0x800) {
-            ret = arg1 - arg0;
+            ret = base - delta;
         } else {
-            ret = arg1 + arg0;
+            ret = base + delta;
         }
         return ret;
     }
-    return arg2;
+    return target;
 }
 
 // SAT: func_0607B184
