@@ -40,6 +40,8 @@ typedef enum{
     OROB_DEAD
 } OrobourousSteps;
 
+// This seems to be the entity for just the head.
+// It creates 24 segments, and then the rider.
 void EntityOrobourous(Entity* self) {
     Collider sp3C;
     Entity* other;
@@ -68,7 +70,7 @@ void EntityOrobourous(Entity* self) {
         }
         self->parent = NULL;
         self->nextPart = self + 24;
-        CreateEntityFromEntity(E_UNK_2E, self, other);
+        CreateEntityFromEntity(E_OROB_RIDER, self, other);
         self->ext.ILLEGAL.u8[9] = 2;
         break;
     case OROB_WAIT:
@@ -134,20 +136,21 @@ void EntityOrobourous(Entity* self) {
                 EntityGreyPuffSpawner(self, 5, 3, -4, 12, 0, 4);
             }
         }
-        if (self->ext.ILLEGAL.u8[0xA]) {
+        if (self->ext.orob.riderDead) {
             self->animCurFrame = 14;
             SetStep(OROB_4);
         }
         break;
     case OROB_4:
         other = self + 1;
-        for (i = 0; i < 0x18; i++, other++) {
-            other->ext.ILLEGAL.u8[0xA] = 1;
+        // Iterate through all the body segments
+        for (i = 0; i < 24; i++, other++) {
+            other->ext.orob.riderDead = true;
         }
         self->drawFlags = ENTITY_DEFAULT;
         self->ext.ILLEGAL.u8[9] = 0;
         self->hitboxState = 0;
-        self->ext.ILLEGAL.s16[0xC] = 0x800;
+        self->ext.orob.rest_time = 0x800;
         self->ext.ILLEGAL.s16[2] = 0x10;
         other = AllocEntity(&g_Entities[32], &g_Entities[47]);
         if (other != NULL) {
@@ -157,9 +160,9 @@ void EntityOrobourous(Entity* self) {
             other->entityId = 0x43;
             other->step = 1;
             other->pfnUpdate = func_us_801C4334;
-            other->ext.prim = (Primitive*)self;
+            other->ext.orob.parent = self;
         } else {
-            self->ext.ILLEGAL.s16[0xC] = -1;
+            self->ext.orob.rest_time = -1;
         }
         SetStep(OROB_5);
         /* fallthrough */
@@ -168,25 +171,25 @@ void EntityOrobourous(Entity* self) {
             self->ext.ILLEGAL.s16[2] = 4;
             other = self + self->ext.ILLEGAL.u8[9];
             other->palette += 2;
-            if (self->ext.ILLEGAL.u8[9]++ > 0x18) {
+            if (self->ext.ILLEGAL.u8[9]++ > 24) {
                 SetStep(OROB_6);
             }
         }
         /* fallthrough */
     case OROB_6:
-        FntPrint("rest_time:%x\n", self->ext.ILLEGAL.s16[0xC]);
+        FntPrint("rest_time:%x\n", self->ext.orob.rest_time);
         if (!self->step_s) {
             self->ext.ILLEGAL.s16[0xA] = 0x40;
             var_s4 = Random() * 8;
             xVar = (rcos(var_s4) * 0x60) >> 0xC;
             yVar = (rsin(var_s4) * -0x60) >> 0xC;
-            if (!self->ext.ILLEGAL.s16[0xC]) {
+            if (!self->ext.orob.rest_time) {
                 xVar = 0;
                 yVar = 0;
-                self->ext.ILLEGAL.s16[0xC]--;
+                self->ext.orob.rest_time--;
                 self->ext.ILLEGAL.s16[0xA] = 0x100;
             }
-            if (self->ext.ILLEGAL.s16[0xC] < 0) {
+            if (self->ext.orob.rest_time < 0) {
                 xVar = 0x200;
                 yVar = -0x300;
                 self->ext.ILLEGAL.s16[0xA] = 0x400;
@@ -220,8 +223,8 @@ void EntityOrobourous(Entity* self) {
             ((abs(xVar) < 8) && (abs(yVar) < 8))) {
             self->step_s = 0;
         }
-        if (self->ext.ILLEGAL.s16[0xC] > 0) {
-            self->ext.ILLEGAL.s16[0xC]--;
+        if (self->ext.orob.rest_time > 0) {
+            self->ext.orob.rest_time--;
             break;
         }
         if (self->posY.i.hi < -0x200) {
@@ -246,10 +249,12 @@ void EntityOrobourous(Entity* self) {
             other->params = 3;
         }
         for (i = 0; i < 4; i++) {
+            // i = 1 would make params 1 so anim frame 9, which is
+            // the rider dude. Skip making him, he already fell off.
             if (i != 1) {
                 other = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (other != NULL) {
-                    CreateEntityFromEntity(E_UNK_2D, self, other);
+                    CreateEntityFromEntity(E_OROB_HEAD_PARTS, self, other);
                     other->facingLeft = self->facingLeft;
                     other->velocityX = self->velocityX;
                     other->velocityY = -0x18000;
@@ -314,11 +319,11 @@ void EntityOrobSegment(Entity* self) {
         }
         // The 4th segment is the arms
         if ((self->params) == 4) {
-            self->animCurFrame = 0x11;
+            self->animCurFrame = 17;
         }
         // The 12th segment is the legs
         if ((self->params) == 12) {
-            self->animCurFrame = 0x12;
+            self->animCurFrame = 18;
         }
         break;
     case OROB_WAIT:
@@ -352,18 +357,19 @@ void EntityOrobSegment(Entity* self) {
     } else {
         self->hitboxState = 0;
     }
-    if (self->ext.ILLEGAL.u8[0xA]) {
+    if (self->ext.orob.riderDead) {
         self->hitboxState = 0;
     }
 }
 
-void func_us_801C406C(Entity* self) {
+void EntityOrobHeadParts(Entity* self) {
     adhoc_vels_rot* temp_s0;
 
     if (!self->step) {
         InitializeEntity(D_us_801809C8);
         self->drawFlags = ENTITY_ROTATE;
         self->hitboxState = 0;
+        // We create 4 of this entity, with params 0 to 3.
         self->animCurFrame = self->params + 8;
         self->zPriority += self->params;
         temp_s0 = &D_pspeu_0925A6D8[self->params];
@@ -380,7 +386,7 @@ void func_us_801C406C(Entity* self) {
     self->rotate += temp_s0->rotate;
 }
 
-void func_us_801C4178(Entity* self) {
+void EntityOrobRider(Entity* self) {
     Entity* other;
 
     if (self->flags & FLAG_DEAD) {
@@ -390,14 +396,18 @@ void func_us_801C4178(Entity* self) {
             CreateEntityFromEntity(E_EXPLOSION, self, other);
             other->params = 1;
         }
+        // This creates the entity for the rider dude falling off.
+        // params of 1 is what triggers this.
         other = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (other != NULL) {
-            CreateEntityFromEntity(E_UNK_2D, self, other);
+            CreateEntityFromEntity(E_OROB_HEAD_PARTS, self, other);
             other->facingLeft = self->facingLeft;
             other->params = 1;
         }
+        // The head is made, then 24 segments, then the rider.
+        // so self - 25 is going back to the head.
         other = self - 25;
-        other->ext.ILLEGAL.u8[0xA] = 1;
+        other->ext.orob.riderDead = true;
         DestroyEntity(self);
         return;
     }
@@ -440,17 +450,17 @@ void func_us_801C4178(Entity* self) {
 }
 
 void func_us_801C4334(Entity* self) {
-    Entity* other;
+    Entity* parent;
 
     switch (self->step) {
     case 0:
     case 1:
         self->hitboxState = 2;
-        self->attack = 0x30;
+        self->attack = 48;
         self->attackElement = ELEMENT_HOLY;
         self->hitboxWidth = 8;
         self->hitboxHeight = 8;
-        self->nFramesInvincibility = 0x10;
+        self->nFramesInvincibility = 16;
         self->stunFrames = 4;
         self->hitEffect = 1;
         self->ext.ILLEGAL.u16[0x1B] = 0;
@@ -459,15 +469,18 @@ void func_us_801C4334(Entity* self) {
         self->step += 1;
         break;
     case 2:
-        other = (Entity*)self->ext.prim;
-        other += self->ext.ILLEGAL.u8[9];
+        parent = self->ext.orob.parent;
+        // Weird, we change which entity we are targeting as parent
+        parent += self->ext.ILLEGAL.u8[9];
+        
         self->ext.ILLEGAL.u8[9] += 2;
-        if (self->ext.ILLEGAL.u8[9] > 0x18) {
+        if (self->ext.ILLEGAL.u8[9] > 24) {
             self->ext.ILLEGAL.u8[9] = 0;
         }
-        self->posX.i.hi = other->posX.i.hi;
-        self->posY.i.hi = other->posY.i.hi;
-        if ((other->entityId != 0x2B) && (other->entityId != 0x2C)) {
+        self->posX.i.hi = parent->posX.i.hi;
+        self->posY.i.hi = parent->posY.i.hi;
+        if ((parent->entityId != E_OROBOUROUS) && 
+        (parent->entityId != E_OROB_SEGMENT)) {
             DestroyEntity(self);
         }
         break;
@@ -576,7 +589,7 @@ void EntityDragonRider(Entity* self) {
         for (i = 0; i < 4; i++) {
             other = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (other != NULL) {
-                CreateEntityFromEntity(E_UNK_2D, self, other);
+                CreateEntityFromEntity(E_OROB_HEAD_PARTS, self, other);
                 other->facingLeft = self->facingLeft;
                 other->velocityX = self->velocityX;
                 other->velocityY = -0x18000;
@@ -714,7 +727,7 @@ void func_us_801C4C50(Entity* self) {
     self->hitboxOffY = *xywh_ptr++;
     self->hitboxWidth = *xywh_ptr++;
     self->hitboxHeight = *xywh_ptr++;
-    if (other->entityId != 0x30) {
+    if (other->entityId != E_DRAGON_RIDER) {
         DestroyEntity(self);
     }
 }

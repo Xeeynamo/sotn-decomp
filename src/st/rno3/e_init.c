@@ -45,8 +45,8 @@ void EntityNovaLaserPulse(Entity* self);
 void EntityNovaSkeletonDeathParts(Entity* self);
 void EntityOrobourous(Entity* self);
 void EntityOrobSegment(Entity* self);
-void func_us_801C406C(Entity* self);
-void func_us_801C4178(Entity* self);
+void EntityOrobHeadParts(Entity* self);
+void EntityOrobRider(Entity* self);
 void func_us_801C4334(Entity* self);
 void EntityDragonRider(Entity* self);
 void func_us_801C48D8(Entity* self);
@@ -125,8 +125,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityNovaSkeletonDeathParts,
     EntityOrobourous,
     EntityOrobSegment,
-    func_us_801C406C,
-    func_us_801C4178,
+    EntityOrobHeadParts,
+    EntityOrobRider,
     func_us_801C4334,
     EntityDragonRider,
     func_us_801C48D8,

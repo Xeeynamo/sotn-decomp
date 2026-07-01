@@ -4072,7 +4072,14 @@ typedef struct {
 } ET_NovaSkeleton;
 
 typedef struct{
-
+    /* 0x7C */ struct Entity* parent;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s16 : 16;
+    /* 0x86 */ u8 riderDead;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s16 rest_time;
 } ET_Orobourous;
 
 typedef union { // offset=0x7C
@@ -4423,6 +4430,7 @@ typedef union { // offset=0x7C
     ET_PlatformUnk platformUnk;
     ET_JackOBones jackoBones;
     ET_NovaSkeleton nova;
+    ET_Orobourous orob;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

@@ -57,9 +57,9 @@ typedef enum EntityIDs {
     /* 0x29 */ E_NOVA_PULSE,             // EntityNovaLaserPulse
     /* 0x2A */ E_NOVA_DEATH_PARTS,       // EntityNovaSkeletonDeathParts
     /* 0x2B */ E_OROBOUROUS,             // EntityOrobourous
-    /* 0x2C */ E_OROB_SEGMENT,                 // EntityOrobSegment
-    /* 0x2D */ E_UNK_2D,                 // func_us_801C406C
-    /* 0x2E */ E_UNK_2E,                 // func_us_801C4178
+    /* 0x2C */ E_OROB_SEGMENT,           // EntityOrobSegment
+    /* 0x2D */ E_OROB_HEAD_PARTS,        // EntityOrobHeadParts
+    /* 0x2E */ E_OROB_RIDER,                 // EntityOrobRider
     /* 0x2F */ E_UNK_2F,                 // func_us_801C4334
     /* 0x30 */ E_DRAGON_RIDER,           // EntityDragonRider
     /* 0x31 */ E_UNK_31,                 // func_us_801C48D8
