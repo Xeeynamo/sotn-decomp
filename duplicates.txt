@@ -2653,7 +2653,7 @@
 | 1.00 | true     | func_us_801B06FC                    | asm/us/st/nz1/matchings/st_common/func_us_801B06FC.s 
 | 1.00 | true     | func_us_801AAB38                    | asm/us/st/rare/matchings/st_common/func_us_801AAB38.s 
 | 1.00 | true     | func_us_801B7F48                    | asm/us/st/rcat/matchings/st_common/func_us_801B7F48.s 
-| 1.00 | true     | GetNormalizedAngle                  | asm/us/st/rno3/matchings/st_common/GetNormalizedAngle.s 
+| 1.00 | true     | LimitAngleChange                    | asm/us/st/rno3/matchings/st_common/LimitAngleChange.s 
 | 1.00 | true     | func_us_801B0BFC                    | asm/us/st/rnz0/matchings/st_common/func_us_801B0BFC.s 
 | 1.00 | true     | func_us_801A64EC                    | asm/us/st/rtop/matchings/st_common/func_us_801A64EC.s 
 | 1.00 | true     | func_8018E160                       | asm/us/st/rwrp/matchings/wrp/st_common/func_8018E160.s 
@@ -3981,17 +3981,17 @@
 | 1.00 | true     | func_801BECCC                       | asm/us/st/no3/matchings/cutscene/func_801BECCC.s 
 | 1.00 | true     | func_us_801ABF20                    | asm/us/st/top/matchings/cutscene/func_us_801ABF20.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_800F6A48                       | asm/us/dra/matchings/menu/func_800F6A48.s 
-| 0.90 | true     | def_cbread                          | asm/us/main/matchings/psxsdk/libcd/event/def_cbread.s 
-| 0.90 | true     | def_cbready                         | asm/us/main/matchings/psxsdk/libcd/event/def_cbready.s 
-| 0.90 | true     | def_cbsync                          | asm/us/main/matchings/psxsdk/libcd/event/def_cbsync.s 
-| 0.90 | true     | SpuSetNoiseVoice                    | asm/us/main/matchings/psxsdk/libspu/s_snv/SpuSetNoiseVoice.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | CdReadCallback                      | asm/us/main/matchings/psxsdk/libcd/cdread/CdReadCallback.s 
 | 1.00 | true     | CdReadyCallback                     | asm/us/main/matchings/psxsdk/libcd/sys/CdReadyCallback.s 
 | 1.00 | true     | CdSetDebug                          | asm/us/main/matchings/psxsdk/libcd/sys/CdSetDebug.s 
 | 1.00 | true     | CdSyncCallback                      | asm/us/main/matchings/psxsdk/libcd/sys/CdSyncCallback.s 
 | 1.00 | true     | SetVideoMode                        | asm/us/main/matchings/psxsdk/libetc/vmode/SetVideoMode.s 
+-------------------------------------------------------------------------------
+| 0.90 | true     | def_cbread                          | asm/us/main/matchings/psxsdk/libcd/event/def_cbread.s 
+| 0.90 | true     | def_cbready                         | asm/us/main/matchings/psxsdk/libcd/event/def_cbready.s 
+| 0.90 | true     | def_cbsync                          | asm/us/main/matchings/psxsdk/libcd/event/def_cbsync.s 
+| 1.00 | true     | GsGetVcount                         | asm/us/main/matchings/psxsdk/libgs/gs_008/GsGetVcount.s 
+| 1.00 | true     | GsClearVcount                       | asm/us/main/matchings/psxsdk/libgs/gs_009/GsClearVcount.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_80173C64                       | asm/us/servant/tt_000/matchings/bat/func_80173C64.s 
 | 1.00 | true     | func_us_8017293C                    | asm/us/servant/tt_001/matchings/ghost/func_us_8017293C.s 
@@ -4306,11 +4306,6 @@
 | 0.91 | true     | VSync_memclr                        | asm/us/main/matchings/psxsdk/libetc/intr_vb/VSync_memclr.s 
 | 1.00 | true     | func_8001510C                       | asm/us/main/matchings/psxsdk/libgpu/sys/func_8001510C.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
-| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
-| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
-| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | func_801713C8                       | asm/us/servant/tt_000/matchings/bat/func_801713C8.s 
 | 1.00 | true     | func_us_801714F4                    | asm/us/servant/tt_001/matchings/ghost/func_us_801714F4.s 
 | 1.00 | true     | func_us_80172D50                    | asm/us/servant/tt_003/matchings/demon/func_us_80172D50.s 
@@ -4601,6 +4596,10 @@
 | 0.93 | true     | _SsContRpn1                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn1.s 
 | 0.93 | true     | _SsContRpn2                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn2.s 
 | 1.00 | true     | _SsSetProgramChange                 | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsSetProgramChange.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
+| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
+| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
 -------------------------------------------------------------------------------
 | 0.92 | true     | SsVabFakeHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabFakeHead.s 
 | 1.00 | true     | SsVabOpenHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabOpenHead.s 
@@ -5083,6 +5082,9 @@
 | 1.00 | true     | func_800F548C                       | asm/us/dra/matchings/menu/func_800F548C.s 
 | 0.94 | true     | func_801B1EF4                       | asm/us/st/sel/matchings/318CC/func_801B1EF4.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | func_800F6A48                       | asm/us/dra/matchings/menu/func_800F6A48.s 
+| 0.90 | true     | SpuSetNoiseVoice                    | asm/us/main/matchings/psxsdk/libspu/s_snv/SpuSetNoiseVoice.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | func_800F99B8                       | asm/us/dra/matchings/menu/func_800F99B8.s 
 | 0.95 | true     | func_801B2108                       | asm/us/st/sel/matchings/318CC/func_801B2108.s 
 -------------------------------------------------------------------------------
@@ -5185,11 +5187,11 @@
 | 1.00 | true     | get_ce                              | asm/us/main/matchings/psxsdk/libgpu/sys/get_ce.s 
 | 1.00 | true     | get_cs                              | asm/us/main/matchings/psxsdk/libgpu/sys/get_cs.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | GsGetVcount                         | asm/us/main/matchings/psxsdk/libgs/gs_008/GsGetVcount.s 
-| 1.00 | true     | GsClearVcount                       | asm/us/main/matchings/psxsdk/libgs/gs_009/GsClearVcount.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | _SsContModulation                   | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContModulation.s 
 | 1.00 | true     | _SsContPortaTime                    | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContPortaTime.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | SsSeqPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSeqPlay.s 
+| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | SsUtSetReverbDelay                  | asm/us/main/matchings/psxsdk/libsnd/ut_rdel/SsUtSetReverbDelay.s 
 | 1.00 | true     | SsUtSetReverbFeedback               | asm/us/main/matchings/psxsdk/libsnd/ut_rfb/SsUtSetReverbFeedback.s 
