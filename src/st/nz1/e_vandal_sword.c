@@ -243,8 +243,7 @@ void EntityVandalSword(Entity* self) {
             posX = prim->x0 - self->posX.i.hi;
             posY = prim->y0 - self->posY.i.hi;
             angle = ratan2(posY, posX);
-            angle =
-                GetNormalizedAngle(0x18, self->ext.vandalSword.angle, angle);
+            angle = LimitAngleChange(0x18, self->ext.vandalSword.angle, angle);
             self->velocityX = FLT_TO_I(rcos(angle) * FLT(0x18));
             self->velocityY = FLT_TO_I(rsin(angle) * FLT(0x18));
             self->ext.vandalSword.angle = angle;

@@ -112,7 +112,7 @@ static void func_us_801D95EC(Entity* self) {
         self->ext.frozenShade.unk88 = (s16)ratan2(posY, posX);
     }
     self->ext.frozenShade.unk86++;
-    angle = self->ext.frozenShade.unk7E = GetNormalizedAngle(
+    angle = self->ext.frozenShade.unk7E = LimitAngleChange(
         0x40, self->ext.frozenShade.unk7E, self->ext.frozenShade.unk88);
     self->posX.val += (rcos(angle) * 128) / 16;
     self->posY.val += (rsin(angle) * 128) / 16;
@@ -1027,8 +1027,8 @@ void EntityFrozenShadeIcicle(Entity* self) {
         break;
     case 3:
         self->ext.frozenShadeIcicle.unk7C += 0x20;
-        i = GetNormalizedAngle(0x40, self->ext.frozenShadeIcicle.unk7E,
-                               self->ext.frozenShadeIcicle.angle);
+        i = LimitAngleChange(0x40, self->ext.frozenShadeIcicle.unk7E,
+                             self->ext.frozenShadeIcicle.angle);
         self->ext.frozenShadeIcicle.unk7E = i;
         if (self->ext.frozenShadeIcicle.angle == i) {
             self->step++;

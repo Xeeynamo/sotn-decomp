@@ -300,7 +300,7 @@ void EntitySpellbook(Entity* self) {
         tempEntity = &PLAYER;
         angle = GetAngleBetweenEntities(self, tempEntity);
         angle =
-            GetNormalizedAngle(0x10, self->ext.spellbookMagicTome.unk8C, angle);
+            LimitAngleChange(0x10, self->ext.spellbookMagicTome.unk8C, angle);
         mag = self->ext.spellbookMagicTome.unk90;
         self->velocityX = (mag * rcos(angle)) >> 0xC;
         self->velocityY = (mag * rsin(angle)) >> 0xC;

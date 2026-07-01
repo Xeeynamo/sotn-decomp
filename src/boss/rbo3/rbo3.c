@@ -583,7 +583,7 @@ void func_us_801923DC(Entity* self) {
         player = &PLAYER;
         angle = GetAngleBetweenEntities(self, player);
         tempY = 96 - self->ext.factory.unk80;
-        angle = GetNormalizedAngle(tempY, self->ext.factory.unk82, angle);
+        angle = LimitAngleChange(tempY, self->ext.factory.unk82, angle);
         self->velocityX = rcos(angle) * 160;
         self->velocityY = rsin(angle) * 160;
         self->ext.factory.unk82 = angle;

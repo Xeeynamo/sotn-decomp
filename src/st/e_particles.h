@@ -107,7 +107,7 @@ void EntitySoulStealOrb(Entity* self) {
         }
         // soulStealOrb.angle changed to u16
         angle = GetAngleBetweenEntities(self, &PLAYER);
-        self->ext.soulStealOrb.angle = angle = GetNormalizedAngle(
+        self->ext.soulStealOrb.angle = angle = LimitAngleChange(
             self->ext.soulStealOrb.unk7E, self->ext.soulStealOrb.angle, angle);
         UnkEntityFunc0(angle, self->ext.soulStealOrb.unk80);
         MoveEntity(self);
