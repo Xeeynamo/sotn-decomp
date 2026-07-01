@@ -215,7 +215,7 @@ void EntityOrobourous(Entity* self) {
         xVar = self->ext.ILLEGAL.s16[0xE] - self->posX.i.hi;
         yVar = self->ext.ILLEGAL.s16[0xF] - self->posY.i.hi;
         var_s4 = ratan2(yVar, xVar);
-        var_s4 = GetNormalizedAngle(0x20, self->ext.ILLEGAL.s16[0xB], var_s4);
+        var_s4 = LimitAngleChange(0x20, self->ext.ILLEGAL.s16[0xB], var_s4);
         self->velocityX = rcos(var_s4) * 0x24;
         self->velocityY = rsin(var_s4) * 0x24;
         self->ext.ILLEGAL.s16[0xB] = var_s4;
