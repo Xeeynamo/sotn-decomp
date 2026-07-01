@@ -57,7 +57,7 @@ void EntityBitterfly(Entity* self) {
             yVar = (other->posY.i.hi - 0x40) - self->posY.i.hi;
             angle = ratan2(yVar, xVar);
             self->ext.bitterfly.angle =
-                GetNormalizedAngle(8, self->ext.bitterfly.angle, angle);
+                LimitAngleChange(8, self->ext.bitterfly.angle, angle);
             self->velocityX = (rcos(self->ext.bitterfly.angle) << 0xF) >> 0xC;
             self->velocityY = (rsin(self->ext.bitterfly.angle) << 0xF) >> 0xC;
             if (self->velocityX > 0) {

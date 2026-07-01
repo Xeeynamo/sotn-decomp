@@ -1431,7 +1431,7 @@ u16 GetAnglePointToEntity(Entity* entity, s16 x, s16 y) {
     return ratan2(dy, dx);
 }
 
-u16 GetNormalizedAngle(u16 arg0, u16 arg1, u16 arg2) {
+u16 LimitAngleChange(u16 arg0, u16 arg1, u16 arg2) {
     u16 temp_a2 = (s16)(arg2 - arg1);
     u16 ret;
 

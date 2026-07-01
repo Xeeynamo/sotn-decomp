@@ -429,31 +429,43 @@ u16 GetAnglePointToEntity(s32 x, s32 y) {
     return ratan2(dy, dx);
 }
 
-u16 GetNormalizedAngle(u16 arg0, u16 arg1, u16 arg2) {
-    u16 temp_a2 = (s16)(arg2 - arg1);
+// Restricts an angle to be within a certain delta of an initial angle
+// Often used for entities which need to go through a smooth rotation.
+// The current angle will be the base, and the target will be found by
+// some function (perhaps pointing toward the player). The limited delta
+// forces the angle to only rotate by a certain amount per frame.
+// Enables smooth rotation from one angle to another.
+u16 LimitAngleChange(u16 delta, u16 base, u16 target) {
+    u16 diff = (s16)(target - base);
     u16 ret;
-
-    if (temp_a2 & 0x800) {
+    
+    // Angles are 0 to 0xFFF, or -0x800 to +0x7FF
+    // Equivalent to 0-360 versus -180 to 180.
+    // This converts the absolute diff into signed.
+    if (diff & 0x800) {
 #if STAGE == STAGE_ST0
-        ret = temp_a2 & 0x7FF;
+        ret = diff & 0x7FF;
 #else
-        ret = (0x800 - temp_a2) & 0x7FF;
+        ret = (0x800 - diff) & 0x7FF;
 #endif
     } else {
-        ret = temp_a2;
+        ret = diff;
     }
-
-    if (ret > arg0) {
-        if (temp_a2 & 0x800) {
-            ret = arg1 - arg0;
+    // If we exceed the delta, then return a value which differs in the right
+    // direction by precisely that delta.
+    if (ret > delta) {
+        if (diff & 0x800) {
+            ret = base - delta;
         } else {
-            ret = arg1 + arg0;
+            ret = base + delta;
         }
 
         return ret;
     }
-    return arg2;
+    // If we're not over the delta, then we can directly adopt the target angle.
+    return target;
 }
+
 
 void SetStep(u8 step) {
     g_CurrentEntity->step = step;

@@ -948,7 +948,7 @@ st_common:
   - Ratan2
   - GetAngleBetweenEntities
   - GetAnglePointToEntity
-  - GetNormalizedAngle
+  - LimitAngleChange
   - SetStep
   - SetSubStep
   - EntityExplosionSpawn

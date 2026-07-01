@@ -109,7 +109,7 @@ void EntityDiplocephalusFireball(Entity* self) {
     case 2:
         player = &PLAYER;
         angle = GetAngleBetweenEntities(self, player);
-        angle = GetNormalizedAngle(16, self->ext.diploFireball.angle, angle);
+        angle = LimitAngleChange(16, self->ext.diploFireball.angle, angle);
         speed = self->ext.diploFireball.speed;
         speed += FLT(0.75);
         if (speed > FLT(48)) {

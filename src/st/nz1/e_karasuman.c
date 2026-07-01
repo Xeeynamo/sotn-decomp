@@ -672,7 +672,7 @@ void EntityKarasumanOrbAttack(Entity* self) {
     case 4:
         entity = &PLAYER;
         angle = GetAngleBetweenEntities(self, entity);
-        angle = GetNormalizedAngle(24, self->ext.karasuman.angle, angle);
+        angle = LimitAngleChange(24, self->ext.karasuman.angle, angle);
         self->velocityX = 64 * rcos(angle);
         self->velocityY = 64 * rsin(angle);
         self->ext.karasuman.angle = angle;
@@ -775,7 +775,7 @@ void EntityKarasumanRavenAttack(Entity* self) {
             return;
         }
         angle = GetAngleBetweenEntities(self, entity);
-        angle = GetNormalizedAngle(64, self->ext.karasuman.angle, angle);
+        angle = LimitAngleChange(64, self->ext.karasuman.angle, angle);
         self->velocityX = 64 * rcos(angle);
         self->velocityY = 64 * rsin(angle);
         self->ext.karasuman.angle = angle;

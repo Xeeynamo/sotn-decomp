@@ -50,7 +50,7 @@ void EntityGhostEnemy(Entity* self) {
         // Seek towards player
         newEntity = &PLAYER;
         angle = GetAngleBetweenEntities(self, newEntity);
-        angle = GetNormalizedAngle(16, self->ext.ghostEnemy.angle, angle);
+        angle = LimitAngleChange(16, self->ext.ghostEnemy.angle, angle);
         speed = self->ext.ghostEnemy.speed;
         self->velocityX = FLT_TO_I(speed * rcos(angle));
         self->velocityY = FLT_TO_I(speed * rsin(angle));
