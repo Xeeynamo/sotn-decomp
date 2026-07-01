@@ -33,9 +33,9 @@ typedef enum{
     OROB_WAIT,
     OROB_2,
     OROB_3,
-    OROB_4,
-    OROB_5,
-    OROB_6,
+    OROB_TURNYELLOW,
+    OROB_INIT_FLY,
+    OROB_FLYAROUND,
     OROB_7, // unused
     OROB_DEAD
 } OrobourousSteps;
@@ -83,8 +83,8 @@ void EntityOrobourous(Entity* self) {
         break;
     case OROB_3:
         MoveEntity();
-        self->velocityY += self->ext.ILLEGAL.u32[3];
-        self->ext.ILLEGAL.u32[3] += 0x100;
+        self->velocityY += self->ext.orob.gravity;
+        self->ext.orob.gravity += 0x100;
         if (self->velocityY < 0) {
             self->animCurFrame = 1;
         } else {
@@ -105,7 +105,7 @@ void EntityOrobourous(Entity* self) {
             PlaySfxPositional(SFX_START_SLAM_B);
             self->posY.i.hi += sp3C.unk18;
             self->velocityY = FIX(-3.0);
-            self->ext.ILLEGAL.u32[3] = 0;
+            self->ext.orob.gravity = 0;
             var_s7 = self->ext.ILLEGAL.u8[8];
             if (var_s7 == (GetSideToPlayer() & 1)) {
                 self->ext.ILLEGAL.u8[9] --;
@@ -138,10 +138,10 @@ void EntityOrobourous(Entity* self) {
         }
         if (self->ext.orob.riderDead) {
             self->animCurFrame = 14;
-            SetStep(OROB_4);
+            SetStep(OROB_TURNYELLOW);
         }
         break;
-    case OROB_4:
+    case OROB_TURNYELLOW:
         other = self + 1;
         // Iterate through all the body segments
         for (i = 0; i < 24; i++, other++) {
@@ -164,19 +164,19 @@ void EntityOrobourous(Entity* self) {
         } else {
             self->ext.orob.rest_time = -1;
         }
-        SetStep(OROB_5);
+        SetStep(OROB_INIT_FLY);
         /* fallthrough */
-    case OROB_5:
+    case OROB_INIT_FLY:
         if (!--self->ext.ILLEGAL.s16[2]) {
             self->ext.ILLEGAL.s16[2] = 4;
             other = self + self->ext.ILLEGAL.u8[9];
             other->palette += 2;
             if (self->ext.ILLEGAL.u8[9]++ > 24) {
-                SetStep(OROB_6);
+                SetStep(OROB_FLYAROUND);
             }
         }
         /* fallthrough */
-    case OROB_6:
+    case OROB_FLYAROUND:
         FntPrint("rest_time:%x\n", self->ext.orob.rest_time);
         if (!self->step_s) {
             self->ext.ILLEGAL.s16[0xA] = 0x40;
@@ -463,7 +463,7 @@ void func_us_801C4334(Entity* self) {
         self->nFramesInvincibility = 16;
         self->stunFrames = 4;
         self->hitEffect = 1;
-        self->ext.ILLEGAL.u16[0x1B] = 0;
+        self->ext.orob.unused_zero = 0;
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA;
         g_api.func_80118894(self);
         self->step += 1;
@@ -526,8 +526,8 @@ void EntityDragonRider(Entity* self) {
         break;
     case 3:
         MoveEntity();
-        self->velocityY += self->ext.ILLEGAL.u32[3];
-        self->ext.ILLEGAL.u32[3] += 0x100;
+        self->velocityY += self->ext.orob.gravity;
+        self->ext.orob.gravity += 0x100;
         if (self->ext.ILLEGAL.u8[8] != self->facingLeft &&
             (AnimateEntity(anim_head_flip_withrider, self) == 0)) {
             self->animCurFrame = 1;
@@ -543,7 +543,7 @@ void EntityDragonRider(Entity* self) {
             PlaySfxPositional(SFX_EXPLODE_F);
             self->posY.i.hi += sp2C.unk18;
             self->velocityY = FIX(-2.75);
-            self->ext.ILLEGAL.u32[3] = 0;
+            self->ext.orob.gravity = 0;
             temp_s6 = self->ext.ILLEGAL.u8[8];
             if (temp_s6 == (GetSideToPlayer() & 1)) {
                 self->ext.ILLEGAL.u8[9]--;
@@ -647,15 +647,15 @@ void func_us_801C48D8(Entity* self) {
         break;
     case 2:
         MoveEntity();
-        self->velocityY += self->ext.ILLEGAL.u32[3];
-        self->ext.ILLEGAL.u32[3] += 0x100;
+        self->velocityY += self->ext.orob.gravity;
+        self->ext.orob.gravity += 0x100;
         xVar = self->posX.i.hi;
         yVar = self->posY.i.hi + 6;
         g_api.CheckCollision(xVar, yVar, &sp2C, 0);
         if (sp2C.effects & EFFECT_SOLID) {
             self->posY.i.hi += sp2C.unk18;
             self->velocityY = FIX(-2.75);
-            self->ext.ILLEGAL.u32[3] = 0;
+            self->ext.orob.gravity = 0;
             other = self - 1;
             if (other->ext.ILLEGAL.u8[8] != self->ext.ILLEGAL.u8[8]) {
                 self->ext.ILLEGAL.u8[8] = other->ext.ILLEGAL.u8[8];

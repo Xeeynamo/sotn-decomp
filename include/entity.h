@@ -4076,10 +4076,18 @@ typedef struct{
     /* 0x80 */ s32 : 32;
     /* 0x84 */ s16 : 16;
     /* 0x86 */ u8 riderDead;
-    /* 0x88 */ s32 : 32;
+    /* 0x88 */ u32 gravity;
     /* 0x8C */ s32 : 32;
     /* 0x90 */ s32 : 32;
     /* 0x94 */ s16 rest_time;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s32 : 32;
+    /* 0xA0 */ s32 : 32;
+    /* 0xA4 */ s32 : 32;
+    /* 0xA8 */ s32 : 32;
+    /* 0xAC */ s32 : 32;
+    /* 0xB0 */ s16 : 16;
+    /* 0xB2 */ s16 unused_zero;
 } ET_Orobourous;
 
 typedef union { // offset=0x7C
