@@ -31,6 +31,7 @@ DRA_ANIM_ARRAY = "D_800A3B70"
 # holds the individual animsets
 DRA_ANIMSET_FILE = "src/dra/d_2F324.c"
 
+
 def load_init_from_ovl(ovl_name, init_name):
     with open("src/st/" + ovl_name + "/e_init.c") as f:
         initlines = f.readlines()
@@ -49,6 +50,7 @@ def load_init_from_ovl(ovl_name, init_name):
             break
     animset, animcurframe, unk5A, palette, enemyId = found_vals
     return animset, palette, unk5A
+
 
 def show_animset(ovl_name, anim_num, arg_palette, view_w, view_h, unk5A, dump_filename):
 
@@ -117,7 +119,8 @@ parser.add_argument(
 )
 
 parser.add_argument(
-    "mode", help="Select a mode: INIT to choose an EInit from the overlay, or CUST to give custom args"
+    "mode",
+    help="Select a mode: INIT to choose an EInit from the overlay, or CUST to give custom args",
 )
 
 args = parser.parse_args()

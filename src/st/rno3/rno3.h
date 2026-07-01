@@ -64,7 +64,7 @@ typedef enum EntityIDs {
     /* 0x30 */ E_DRAGON_RIDER,           // EntityDragonRider
     /* 0x31 */ E_DRAGON_SEGMENT,         // EntityDragonSegment
     /* 0x32 */ E_DRAGON_HEAD_PARTS,      // EntityDragonHeadParts
-    /* 0x33 */ E_UNK_33,                 // func_us_801C4C50
+    /* 0x33 */ E_DRAGON_RIDER_HITBOX,    // EntityDragonRiderHitbox
     /* 0x34 */ E_VENUS_WEED,             // EntityVenusWeed
     /* 0x35 */ E_UNK_35,                 // func_us_801C5850
     /* 0x36 */ E_UNK_36,                 // func_us_801C5F40

@@ -4071,7 +4071,7 @@ typedef struct {
     /* 0x94 */ u32 laserPulseDist;
 } ET_NovaSkeleton;
 
-typedef struct{
+typedef struct {
     /* 0x7C */ struct Entity* parent;
     /* 0x80 */ s16 stepTimer;
     /* 0x82 */ s16 : 16;

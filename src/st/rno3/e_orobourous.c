@@ -27,7 +27,7 @@ static s16 headHitboxXYWH[] = {-7, 2, 13, 10, 4, 0, 7, 13, -5, 0, 7, 13};
 // forward declare, exists later in this file
 void EntityOrobHolyAttacker(Entity* self);
 
-typedef enum{
+typedef enum {
     OROB_INIT,
     OROB_WAIT,
     OROB_2,
@@ -107,7 +107,7 @@ void EntityOrobourous(Entity* self) {
             self->ext.orob.gravity = 0;
             var_s7 = self->ext.orob.movingLeft;
             if (var_s7 == (GetSideToPlayer() & 1)) {
-                self->ext.orob.unk9 --;
+                self->ext.orob.unk9--;
             } else {
                 self->ext.orob.unk9 = 2;
             }
@@ -336,7 +336,7 @@ void EntityOrobSegment(Entity* self) {
         break;
     case OROB_DEAD:
         MoveEntity();
-        self->velocityY += FIX(10.0/128);
+        self->velocityY += FIX(10.0 / 128);
         return;
     }
     if (((self->params) != 4) && ((self->params) != 12)) {
@@ -468,15 +468,15 @@ void EntityOrobHolyAttacker(Entity* self) {
     case 2:
         parent = self->ext.orob.parent;
         parent += self->ext.orob.unk9;
-        
+
         self->ext.orob.unk9 += 2;
         if (self->ext.orob.unk9 > 24) {
             self->ext.orob.unk9 = 0;
         }
         self->posX.i.hi = parent->posX.i.hi;
         self->posY.i.hi = parent->posY.i.hi;
-        if ((parent->entityId != E_OROBOUROUS) && 
-        (parent->entityId != E_OROB_SEGMENT)) {
+        if ((parent->entityId != E_OROBOUROUS) &&
+            (parent->entityId != E_OROB_SEGMENT)) {
             DestroyEntity(self);
         }
         break;

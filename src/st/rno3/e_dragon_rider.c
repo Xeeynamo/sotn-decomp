@@ -13,7 +13,7 @@ typedef struct {
     s16 rotate;
 } adhoc_vels_rot;
 
-typedef enum{
+typedef enum {
     DRAGON_INIT,
     DRAGON_WAIT,
     DRAGON_2, // unused
@@ -21,19 +21,16 @@ typedef enum{
     DRAGON_DEAD
 } DragonRiderSteps;
 
-// Note: This data has to come after the "rest_time" string above for psp to
-// match
-// This is precisely identical to the other bone twisting animation
 static u8 anim_bone_twisting2[] = {32, 4, 6, 5, 6, 6, 14, 7, 6, 6, 6, 5, 0};
 static u8 anim_head_flip_withrider[] = {8, 3, 8, 2, 255, 0};
 static s16 sensors2[] = {0, 12, 0, 4, 8, -4, -16, 0};
-static adhoc_vels_rot D_pspeu_0925A758[] = {
+static adhoc_vels_rot headPartsParams[] = {
     {FIX(0.0625), FIX(0.0), -8},
     {FIX(0.25), FIX(-1.5), 40},
     {FIX(0.5), FIX(-0.5), 16},
     {FIX(0.125), FIX(-0.375), 8}};
-static s16 D_pspeu_0925A788[] = {-7, 2, 13, 10, 4, 0, 7, 13, -5, 0, 7, 13};
-static s16 D_pspeu_0925A7A0[] = {4, -12, 5, 10, 0, -18, 6, 5, 0, -18, 6, 5};
+static s16 headHitboxXYWH[] = {-7, 2, 13, 10, 4, 0, 7, 13, -5, 0, 7, 13};
+static s16 riderHitboxXYWH[] = {4, -12, 5, 10, 0, -18, 6, 5, 0, -18, 6, 5};
 
 void EntityDragonRider(Entity* self) {
     Collider sp2C;
@@ -64,7 +61,7 @@ void EntityDragonRider(Entity* self) {
                 other->params = (i + 1);
                 other->nextPart = other - 1;
             }
-            CreateEntityFromEntity(E_UNK_33, self, other);
+            CreateEntityFromEntity(E_DRAGON_RIDER_HITBOX, self, other);
             other->nextPart = other - 1;
             other->parent = self;
             self->parent = NULL;
@@ -149,7 +146,7 @@ void EntityDragonRider(Entity* self) {
         DestroyEntity(self);
         return;
     }
-    temp_s2 = &D_pspeu_0925A788[0];
+    temp_s2 = &headHitboxXYWH[0];
     var_s4 = self->animCurFrame - 1;
     if (var_s4 < 0) {
         var_s4 = 0;
@@ -161,7 +158,7 @@ void EntityDragonRider(Entity* self) {
     self->hitboxHeight = *temp_s2++;
 }
 
-typedef enum{
+typedef enum {
     DRAGSEG_INIT,
     DRAGSEG_DELAY,
     DRAGSEG_FOLLOW,
@@ -241,14 +238,13 @@ void EntityDragonSegment(Entity* self) {
 // Unused!
 void EntityDragonHeadParts(Entity* self) {
     adhoc_vels_rot* temp_s0;
-
     if (!self->step) {
         InitializeEntity(D_us_801809F8);
         self->drawFlags = ENTITY_ROTATE;
         self->hitboxState = 0;
         self->animCurFrame = self->params + 8;
         self->zPriority += self->params;
-        temp_s0 = &D_pspeu_0925A758[self->params];
+        temp_s0 = &headPartsParams[self->params];
         if (self->facingLeft) {
             self->velocityX += temp_s0->velX;
         } else {
@@ -258,11 +254,16 @@ void EntityDragonHeadParts(Entity* self) {
     }
     MoveEntity();
     self->velocityY += FIX(0.09375);
-    temp_s0 = &D_pspeu_0925A758[self->params];
+    temp_s0 = &headPartsParams[self->params];
     self->rotate += temp_s0->rotate;
 }
 
-void func_us_801C4C50(Entity* self) {
+// On the orobourous the rider is his own guy that can be killed.
+// On the Dragon Rider the rider is just an extra hitbox that lets
+// you do damage to the dragon just the same.
+// For clarity: This entity is for the RIDER, even though the whole
+// enemy is also known as the Dragon Rider.
+void EntityDragonRiderHitbox(Entity* self) {
     s32 animIdx;
     s16* xywh_ptr;
     Entity* other;
@@ -275,7 +276,7 @@ void func_us_801C4C50(Entity* self) {
     self->posX.i.hi = other->posX.i.hi;
     self->posY.i.hi = other->posY.i.hi;
     self->facingLeft = other->facingLeft;
-    xywh_ptr = &D_pspeu_0925A7A0[0];
+    xywh_ptr = &riderHitboxXYWH[0];
     animIdx = other->animCurFrame - 1;
     if (animIdx < 0) {
         animIdx = 0;

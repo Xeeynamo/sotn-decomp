@@ -51,7 +51,7 @@ void EntityOrobHolyAttacker(Entity* self);
 void EntityDragonRider(Entity* self);
 void EntityDragonSegment(Entity* self);
 void EntityDragonHeadParts(Entity* self);
-void func_us_801C4C50(Entity* self);
+void EntityDragonRiderHitbox(Entity* self);
 void EntityVenusWeed(Entity* self);
 void func_us_801C5850(Entity* self);
 void func_us_801C5F40(Entity* self);
@@ -131,7 +131,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityDragonRider,
     EntityDragonSegment,
     EntityDragonHeadParts,
-    func_us_801C4C50,
+    EntityDragonRiderHitbox,
     EntityVenusWeed,
     func_us_801C5850,
     func_us_801C5F40,
