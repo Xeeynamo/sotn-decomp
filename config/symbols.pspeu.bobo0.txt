@@ -10,8 +10,6 @@ EntitySkelerangBoomerang = 0x0923A620; // source=match
 EntitySkelerangUnknown = 0x0923A9D8; // source=match
 EntityLifeUpSpawn = 0x0923AA48;
 EntityStageNamePopup = 0x0923B6C8;
-func_us_801D6254 = 0x0923C548;
-func_us_801D6474 = 0x0923C860;
 EntityMarionette = 0x0923CB80;
 BO0_EntityRedDoor = 0x0923E2F8;
 Random = 0x0923F518;
@@ -19,12 +17,6 @@ Update = 0x0923F558;
 UpdateStageEntities = 0x0923F938;
 EntitySoulStealOrb = 0x09240468;
 EntityEnemyBlood = 0x092409C8;
-func_psp_09240078 = 0x09240FE0;
-func_psp_09240110 = 0x09241078;
-func_psp_09240150 = 0x092410B8;
-func_psp_09240708 = 0x09241670;
-func_psp_092407E0 = 0x09241748;
-func_psp_09240960 = 0x092418C8;
 EntityPrizeDrop = 0x09241E40;
 EntityExplosion = 0x09242C58;
 EntityEquipItemDrop = 0x09242F58;
@@ -52,7 +44,6 @@ AnimateEntity = 0x0924D1B8;
 GetDistanceToPlayerX = 0x0924D328;
 GetSideToPlayer = 0x0924D3F0;
 MoveEntity = 0x0924D478;
-FallEntity = 0x0924D4C8;
 UnkCollisionFunc3 = 0x0924D500;
 UnkCollisionFunc2 = 0x0924D7B8;
 AllocEntity = 0x0924DA98;
@@ -74,13 +65,10 @@ InitEntityIds = 0x09251098; // source=match
 BO0_Load = 0x09251368;
 EntityBreakable = 0x092513E0;
 func_psp_0923D390 = 0x09251648;
-DrawFacade = 0x092528E0; // source=match
-DrawSides = 0x09252CA8; // source=match
-DrawRoof = 0x092530E8; // source=match
 Entity3DHouseSpawner = 0x09253380; // source=match
 Entity3DBackgroundHouse = 0x09253480; // source=match
-func_us_801BEDD8 = 0x09253888;
 EntityChair = 0x09253978;
+func_us_801B4DA4 = 0x09253CB8;
 func_us_801B3D8C = 0x09254330; // source=match
 func_us_801B3F30 = 0x09254568; // source=match
 func_us_801B4148 = 0x09254868; // source=match
@@ -89,6 +77,7 @@ func_us_801B4210 = 0x09254958; // source=match
 BO0_EntityBackgroundBlock = 0x09254B48;
 EntityOlroxAfterImage = 0x0925D268;
 func_psp_09239568 = 0x0925E0C8;
+func_us_801B163C = 0x0925E1B0;
 EntityPrisoner = 0x09268E80;
 BO0_EntityLockCamera = 0x09269500;
 func_us_801B72E8 = 0x09269E10; // source=match
@@ -96,6 +85,7 @@ EntitySpikesDust = 0x0926A1B0;
 EntitySpikesParts = 0x0926A288; // source=match
 EntitySpikes = 0x0926A7D8;
 EntitySpikesDamage = 0x0926AA60;
+sprites_bo0_8 = 0x0926E0A0;
 BO0_spriteBanks = 0x092759B0;
 BO0_rooms_layers = 0x09275A20;
 BO0_cluts = 0x09275A90;
@@ -115,7 +105,9 @@ g_EInitSkelerang = 0x09275EB0;
 g_EInitSkelerangBoomerang = 0x09275EC0;
 g_EInitEnvironment = 0x09275ED0;
 g_EInitPrisoner = 0x09275EE0;
+g_EInitMarionette = 0x09275EF0;
 g_EInitOwlKnight = 0x09275F00;
+g_EInitSlinger = 0x09275F06;
 g_EInitOwlKnightSword = 0x09275F10;
 g_EInitOwl = 0x09275F20;
 g_EInitBloodyZombie = 0x09275F30;
@@ -123,8 +115,10 @@ g_EInitOlroxAfterImage = 0x09275F40;
 BO0_rooms = 0x09275FE0;
 BO0_Overlay = 0x0928F1C8;
 BO0_BackgroundBlockInit = 0x0928F488;
+D_psp_E_UNK_49 = 0x092903A8;
 D_psp_E_SPIKES_DAMAGE = 0x092903B0;
 D_psp_E_PRISONER = 0x092904A8;
 D_psp_E_SPIKES_DUST = 0x092904D8;
 D_psp_E_SPIKES_PARTS = 0x092904E0;
+D_psp_E_3D_BACKGROUND_HOUSE = 0x09290500;
 BO0_PrizeDrops = 0x09290578;

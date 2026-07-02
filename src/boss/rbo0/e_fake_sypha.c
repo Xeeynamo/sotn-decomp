@@ -783,7 +783,7 @@ void EntityHolyLightning(Entity* self) {
         AnimateEntity(D_us_80180D10, self);
         player = &PLAYER;
         angle = GetAngleBetweenEntities(self, player);
-        angle = GetNormalizedAngle(0x10, self->ext.sypha.angle, angle);
+        angle = LimitAngleChange(0x10, self->ext.sypha.angle, angle);
         self->velocityX = rcos(angle) << 6;
         self->velocityY = rsin(angle) << 6;
         self->ext.sypha.angle = angle;

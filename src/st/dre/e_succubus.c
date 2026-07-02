@@ -1319,7 +1319,7 @@ void EntityPinkBallProjectile(Entity* self) {
         MoveEntity();
         entity = &PLAYER;
         temp_s0 = GetAngleBetweenEntities(self, entity);
-        temp_s0 = GetNormalizedAngle(0x10, self->ext.succubus.unkA2, temp_s0);
+        temp_s0 = LimitAngleChange(0x10, self->ext.succubus.unkA2, temp_s0);
         self->velocityX = rcos(temp_s0) * 0x38;
         self->velocityY = rsin(temp_s0) * 0x38;
         self->ext.succubus.unkA2 = temp_s0;

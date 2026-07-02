@@ -1,0 +1,2 @@
+BO4_spriteBanks = 0x80180034;
+BO4_cluts = 0x801800E0;

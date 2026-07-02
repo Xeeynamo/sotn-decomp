@@ -1,7 +1,15 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+#ifdef BOSS_IS_BO0
+// n.b.! this seems like an incorrect symbol, likely an object that wasn't
+//       recompiled after symbols shifted
+extern AnimationFrame OVL_EXPORT(PrizeDrops)[];
+#define ANIMATION OVL_EXPORT(PrizeDrops)
+#else
 static AnimationFrame D_us_80180F8C[] = {
     {8, 8}, {8, 9}, {8, 10}, {8, 11}, {-1, 0}};
+#define ANIMATION D_us_80180F8C
+#endif
 
 // check if "sit" has been triggered
 static s32 func_us_801BEDD8(Entity* self) {
@@ -27,7 +35,27 @@ static s32 func_us_801BEDD8(Entity* self) {
 }
 
 void EntityChair(Entity* self) {
+    Entity* entity;
     s16 offsetX;
+
+#ifdef BOSS_IS_BO0
+    FntPrint("isu\n"); // TL: chair
+    if (self->step) {
+        if (self->params == 1) {
+            entity = self - 1;
+            if (entity->flags & FLAG_DEAD) {
+                DestroyEntity(self);
+                return;
+            }
+        } else {
+            entity = self + 5;
+            if (entity->flags & FLAG_DEAD) {
+                DestroyEntity(self);
+                return;
+            }
+        }
+    }
+#endif
 
     switch (self->step) {
     case 0:
@@ -106,7 +134,7 @@ void func_us_801B81E8(Entity* self) {
         self->palette = PAL_FLAG(PAL_UNK_19F);
         self->pose = 0;
         self->poseTimer = 0;
-        self->anim = D_us_80180F8C;
+        self->anim = ANIMATION;
         self->posY.i.hi -= 16;
         self->posX.val += self->velocityX << 5;
         self->facingLeft = false;

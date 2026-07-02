@@ -994,7 +994,7 @@ typedef struct {
     /* 0x18 */ u32 tile;
     /* 0x1C */ u32 sp;
     /* 0x20 */ u32 env;
-} GpuUsage;
+} GpuUsage; // size=0x24
 
 typedef enum {
     GFX_BANK_NONE,

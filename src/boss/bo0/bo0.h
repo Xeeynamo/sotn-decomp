@@ -37,7 +37,7 @@ enum OVL_EXPORT(Entities) {
     E_UNK_1C,              // func_us_801B41A4
     E_UNK_1D,              // func_us_801B4210
     E_3D_BACKGROUND_HOUSE, // Entity3DBackgroundHouse
-    E_3d_HOUSE_SPAWNER,    // Entity3DHouseSpawner
+    E_3D_HOUSE_SPAWNER,    // Entity3DHouseSpawner
     E_UNK_20,              // func_us_801B4DA4/func_pspeu_09253CB8
     E_SPIKES,              // EntitySpikes
     E_SPIKES_PARTS,        // EntitySpikesParts
@@ -97,10 +97,13 @@ enum OVL_EXPORT(Palette) {
 };
 
 extern EInit g_EInitInteractable;
+extern EInit g_EInitCommon;
 
 #ifdef VERSION_PSP
 extern s32 E_ID(SPIKES_PARTS);
 extern s32 E_ID(SPIKES_DUST);
 extern s32 E_ID(SPIKES_DAMAGE);
 extern s32 E_ID(PRISONER);
+extern s32 E_ID(3D_BACKGROUND_HOUSE);
+extern s32 E_ID(UNK_49);
 #endif

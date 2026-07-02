@@ -157,7 +157,7 @@ void EntitySpectralSword(Entity* self) {
         dx = prim->x0 - self->posX.i.hi;
         dy = prim->y0 - self->posY.i.hi;
         angle = ratan2(dy, dx);
-        angle = GetNormalizedAngle(0x20, self->ext.spectralSword.angle, angle);
+        angle = LimitAngleChange(0x20, self->ext.spectralSword.angle, angle);
         self->velocityX = rcos(angle) * 0x10;
         self->velocityY = rsin(angle) * 0x10;
         self->ext.spectralSword.angle = angle;

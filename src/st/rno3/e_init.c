@@ -36,22 +36,22 @@ void EntityUnkId30(Entity* self);
 void EntityUnkId31(Entity* self);
 void EntityExplosion3(Entity* self);
 void EntityFireWargDeathBeams(Entity* self);
-void func_us_801C1E70(Entity* self);
-void func_us_801C2380(Entity* self);
-void func_us_801C247C(Entity* self);
-void func_us_801C2A10(Entity* self);
-void func_us_801C2FF0(Entity* self);
-void func_us_801C34A0(Entity* self);
-void EntityBladeSoldierDeathParts(Entity* self);
-void func_us_801C35F8(Entity* self);
-void func_us_801C3DE0(Entity* self);
-void func_us_801C406C(Entity* self);
-void func_us_801C4178(Entity* self);
-void func_us_801C4334(Entity* self);
-void func_us_801C4468(Entity* self);
-void func_us_801C48D8(Entity* self);
-void func_us_801C4B44(Entity* self);
-void func_us_801C4C50(Entity* self);
+void EntityJackOBones(Entity* self);
+void EntityJackOBonesDeathParts(Entity* self);
+void EntityJackOBonesJack(Entity* self);
+void EntityNovaSkeleton(Entity* self);
+void EntityNovaLaser(Entity* self);
+void EntityNovaLaserPulse(Entity* self);
+void EntityNovaSkeletonDeathParts(Entity* self);
+void EntityOrobourous(Entity* self);
+void EntityOrobSegment(Entity* self);
+void EntityOrobHeadParts(Entity* self);
+void EntityOrobRider(Entity* self);
+void EntityOrobHolyAttacker(Entity* self);
+void EntityDragonRider(Entity* self);
+void EntityDragonSegment(Entity* self);
+void EntityDragonHeadParts(Entity* self);
+void EntityDragonRiderHitbox(Entity* self);
 void EntityVenusWeed(Entity* self);
 void func_us_801C5850(Entity* self);
 void func_us_801C5F40(Entity* self);
@@ -71,7 +71,7 @@ void EntityJewelSwordDoor(Entity* self);
 void EntityFallingRock2(Entity* self);
 void EntityStairwayPiece(Entity* self);
 void EntityFallingRock(Entity* self);
-void func_us_801B3C88(Entity* self);
+void EntityTransparentWater(Entity* self);
 void EntityAlucardWaterEffect(Entity* self);
 void EntitySplashWater(Entity* self);
 void EntitySurfacingWater(Entity* self);
@@ -116,22 +116,22 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityUnkId31,
     EntityExplosion3,
     EntityFireWargDeathBeams,
-    func_us_801C1E70,
-    func_us_801C2380,
-    func_us_801C247C,
-    func_us_801C2A10,
-    func_us_801C2FF0,
-    func_us_801C34A0,
-    EntityBladeSoldierDeathParts,
-    func_us_801C35F8,
-    func_us_801C3DE0,
-    func_us_801C406C,
-    func_us_801C4178,
-    func_us_801C4334,
-    func_us_801C4468,
-    func_us_801C48D8,
-    func_us_801C4B44,
-    func_us_801C4C50,
+    EntityJackOBones,
+    EntityJackOBonesDeathParts,
+    EntityJackOBonesJack,
+    EntityNovaSkeleton,
+    EntityNovaLaser,
+    EntityNovaLaserPulse,
+    EntityNovaSkeletonDeathParts,
+    EntityOrobourous,
+    EntityOrobSegment,
+    EntityOrobHeadParts,
+    EntityOrobRider,
+    EntityOrobHolyAttacker,
+    EntityDragonRider,
+    EntityDragonSegment,
+    EntityDragonHeadParts,
+    EntityDragonRiderHitbox,
     EntityVenusWeed,
     func_us_801C5850,
     func_us_801C5F40,
@@ -151,7 +151,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityFallingRock2,
     EntityStairwayPiece,
     EntityFallingRock,
-    func_us_801B3C88,
+    EntityTransparentWater,
     EntityAlucardWaterEffect,
     EntitySplashWater,
     EntitySurfacingWater,
@@ -174,9 +174,9 @@ EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
 EInit g_EInitUnused80180938 = {ANIMSET_OVL(1), 0, 0, 0, 0x005};
 EInit g_EInitStInteractable = {ANIMSET_OVL(2), 0, 0, 0, 0x005};
-EInit g_EInitFireWarg = {ANIMSET_OVL(3), 1, 75, 512, 0x094};
-EInit g_EInitWargRider = {ANIMSET_OVL(3), 1, 75, 512, 0x097};
-EInit D_us_80180968 = {ANIMSET_DRA(0), 0, 75, 512, 0x096};
+EInit g_EInitFireWarg1 = {ANIMSET_OVL(3), 1, 75, 512, 0x094};
+EInit g_EInitFireWarg2 = {ANIMSET_OVL(3), 1, 75, 512, 0x097};
+EInit g_EInitFireWarg3 = {ANIMSET_DRA(0), 0, 75, 512, 0x096};
 EInit g_EInitJackOBones = {ANIMSET_OVL(4), 1, 74, 524, 0x074};
 EInit D_us_80180980 = {ANIMSET_OVL(4), 0, 74, 524, 0x002};
 EInit D_us_8018098C = {ANIMSET_OVL(4), 21, 74, 524, 0x075};

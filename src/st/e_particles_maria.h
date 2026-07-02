@@ -69,7 +69,7 @@ void func_psp_0923AD68(Entity* self) {
             self->ext.soulStealOrb.unk80 += 0x10;
         }
         angle = GetAngleBetweenEntities(self, pl);
-        self->ext.soulStealOrb.angle = angle = GetNormalizedAngle(
+        self->ext.soulStealOrb.angle = angle = LimitAngleChange(
             self->ext.soulStealOrb.unk7E, self->ext.soulStealOrb.angle, angle);
         UnkEntityFunc0(angle, self->ext.soulStealOrb.unk80);
         MoveEntity(self);
@@ -143,7 +143,7 @@ void func_psp_0923B2F0(Entity* self) {
             self->ext.soulStealOrb.unk80 += 0x10;
         }
         angle = GetAngleBetweenEntities(self, pl);
-        self->ext.soulStealOrb.angle = angle = GetNormalizedAngle(
+        self->ext.soulStealOrb.angle = angle = LimitAngleChange(
             self->ext.soulStealOrb.unk7E, self->ext.soulStealOrb.angle, angle);
         UnkEntityFunc0(angle, self->ext.soulStealOrb.unk80);
         MoveEntity(self);
