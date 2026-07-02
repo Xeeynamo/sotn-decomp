@@ -46,7 +46,6 @@ segments:
     subsegments:
       - [0x80, c, rno3/create_entity]
       - [0x1028, c, rno3_psp/e_blue_venus_weed]
-      - [0x2388, c, rno3_psp/unk_2388]
       - [0x3B78, c, rno3/e_stage_name]
       - [0x49F8, c, rno3_psp/func_us_801c8b8c]
       - [0x4FF0, c, rno3/e_red_door]
@@ -113,7 +112,6 @@ segments:
       - [0x4EB38, .data, rno3/e_sky_entities]
       - [0x4EB58, .data, rno3/e_transparent_water]
       - [0x4EB80, .rodata, rno3_psp/e_blue_venus_weed]
-      - [0x4EBA8, .rodata, rno3_psp/unk_2388]
       - [0x4EC18, .rodata, rno3_psp/func_us_801c8b8c]
       - [0x4EC30, .rodata, rno3/e_red_door]
       - [0x4EC48, .rodata, rno3/e_jack_o_bones]
