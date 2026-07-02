@@ -5,13 +5,99 @@
 
 // __game_start
 INCLUDE_ASM("asm/saturn/game/data", d6066000, d_06066000);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6066040, func_06066040);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f60661BC, func_060661BC);
 
 extern LayoutEntity* g_LayoutObjHorizontal;
 extern LayoutEntity* g_LayoutObjVertical;
 extern u8 g_LayoutObjPosHorizontal;
 extern u8 g_LayoutObjPosVertical;
+
+static inline void CreateEntityFromLayout(
+    Entity* entity, LayoutEntity* initDesc) {
+    s32 entityId;
+
+    DestroyEntity(entity);
+
+    entity->entityId = initDesc->entityId & 0x3FF;
+    entityId = entity->entityId - 1;
+    entity->pfnUpdate = (*PfnEntityUpdates)[entityId]->func;
+    entity->posX.i.hi = initDesc->posX - g_Tilemap.scrollX.i.hi;
+    entity->posY.i.hi = initDesc->posY - g_Tilemap.scrollY.i.hi;
+    entity->params = initDesc->params;
+    entity->entityRoomIndex = initDesc->entityRoomIndex >> 8;
+    entity->unk68 = (initDesc->entityId >> 0xA) & 0x7;
+}
+
+void CreateEntityWhenInVerticalRange(LayoutEntity* obj) {
+    s16 yClose;
+    s16 yFar;
+    Entity* entity;
+    s16 posY;
+
+    posY = g_Tilemap.scrollY.i.hi;
+    yClose = posY - 0x40;
+    yFar = posY + 0x130;
+    if (yClose < 0) {
+        yClose = 0;
+    }
+
+    if ((s16)obj->posY < yClose || yFar < (s16)obj->posY) {
+        return;
+    }
+
+    posY = 0xE000U;
+    switch (obj->entityId & (u32)posY) {
+    case 0x0:
+        entity =
+            &g_Entities[STAGE_ENTITY_START + (obj->entityRoomIndex & 0xFF)];
+        if (!entity->entityId) {
+            CreateEntityFromLayout(entity, obj);
+        }
+        break;
+    case 0x8000:
+        break;
+    case 0xA000:
+        entity =
+            &g_Entities[STAGE_ENTITY_START + (obj->entityRoomIndex & 0xFF)];
+        CreateEntityFromLayout(entity, obj);
+        break;
+    }
+}
+
+void CreateEntityWhenInHorizontalRange(LayoutEntity* obj) {
+    s16 xClose;
+    s16 xFar;
+    Entity* entity;
+    s16 posX;
+
+    posX = g_Tilemap.scrollX.i.hi;
+    xClose = posX - 0x50;
+    xFar = posX + 0x190;
+    if (xClose < 0) {
+        xClose = 0;
+    }
+
+    if ((s16)obj->posX < xClose || xFar < (s16)obj->posX) {
+        return;
+    }
+
+    posX = 0xE000U;
+    switch (obj->entityId & (u32)posX) {
+    case 0x0:
+        entity =
+            &g_Entities[STAGE_ENTITY_START + (obj->entityRoomIndex & 0xFF)];
+        if (!entity->entityId) {
+            CreateEntityFromLayout(entity, obj);
+        }
+        break;
+    case 0x8000:
+        break;
+    case 0xA000:
+        entity =
+            &g_Entities[STAGE_ENTITY_START + (obj->entityRoomIndex & 0xFF)];
+        CreateEntityFromLayout(entity, obj);
+        break;
+    }
+}
 
 static inline void FindFirstEntityToTheRight(u16 posX) {
     while (true) {
@@ -46,7 +132,7 @@ void CreateEntitiesToTheRight(s16 posX) {
             posX < g_LayoutObjHorizontal->posX) {
             break;
         }
-        roomIndex = g_LayoutObjHorizontal->entityRoomIndex;
+        roomIndex = g_LayoutObjHorizontal->entityRoomIndex >> 8;
         if (roomIndex != 0) {
             s32 temp;
             roomIndex--;
@@ -76,7 +162,7 @@ void CreateEntitiesToTheLeft(s16 posX) {
             posX > g_LayoutObjHorizontal->posX) {
             break;
         }
-        roomIndex = g_LayoutObjHorizontal->entityRoomIndex;
+        roomIndex = *((u8*)&g_LayoutObjHorizontal->entityRoomIndex);
         if (roomIndex != 0) {
             roomIndex--;
             if ((g_unkGraphicsStruct.D_80097428[roomIndex >> 5] &
@@ -123,7 +209,7 @@ void CreateEntitiesAbove(s16 posY) {
             posY < g_LayoutObjVertical->posY) {
             break;
         }
-        roomIndex = g_LayoutObjVertical->entityRoomIndex;
+        roomIndex = g_LayoutObjVertical->entityRoomIndex >> 8;
         if (roomIndex != 0) {
             roomIndex--;
             if ((g_unkGraphicsStruct.D_80097428[roomIndex >> 5] &
@@ -152,7 +238,7 @@ void CreateEntitiesBelow(s16 posY) {
             posY > g_LayoutObjVertical->posY) {
             break;
         }
-        roomIndex = g_LayoutObjVertical->entityRoomIndex;
+        roomIndex = g_LayoutObjVertical->entityRoomIndex >> 8;
         if (roomIndex != 0) {
             roomIndex--;
             if ((g_unkGraphicsStruct.D_80097428[roomIndex >> 5] &
@@ -193,10 +279,6 @@ void UpdateRoomPosition(void) {
         }
     }
 }
-
-#define FLAG_UNK_20000 0x20000
-#define STAGE_ENTITY_START 64
-#define TOTAL_ENTITY_COUNT 256
 
 void (*func_06064684)();
 
@@ -684,7 +766,22 @@ void func_0606F14C(void) {
     }
 }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F1C8, func_0606F1C8);
+void TekiInit(Entity*, u16);
+
+void func_0606F1C8(Entity* entity) {
+    u8 pad[4];
+
+    switch (entity->step) {
+    case 0:
+        TekiInit(entity, 3);
+        entity->palette = (entity->entityId == 1) ? 0x83FF : 0x83E0;
+        entity->step++;
+        break;
+
+    case 1: // could be any number, required for match
+        break;
+    }
+}
 
 s32 TimeAttackController(s32 eventId, s32 action) {
     switch (action) {
@@ -1149,7 +1246,6 @@ s32 func_800FE044(s32 amount, s32 type) {
 }
 
 // SAT: func_0606FC60
-// sh2 compiler is more literal?
 inline bool IsRelicActive(s32 relicId) {
     if (g_Status.relics[relicId] & 2) {
         return 1;

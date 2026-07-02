@@ -742,24 +742,14 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BA788, func_060BA788);
 
 // ===== all these functions below seems to be exclusive to Saturn
 
-s32 func_06032EA8(s32, s32, s32);
-void func_06033024(s32, s32, s32);
 void func_060BB330();
 
 s32 DAT_060c4118;
 s32 DAT_060c411c;
 
 void func_060BACA4(void) {
-    s32 arg0;
-    s32 arg2;
-    s32 arg1;
-    void (*ptr)(s32, s32, s32);
-    func_06032EA8(&DAT_060c4118, 0, 4);
-    arg0 = 0x002B2000;
-    arg1 = &DAT_060c411c;
-    ptr = func_06033024;
-    arg2 = 0x00009600;
-    ptr(arg0, arg1, arg2);
+    memset(&DAT_060c4118, 0, 4);
+    memcpy(0x002B2000, &DAT_060c411c, 0x9600);
 
     func_060BB330();
 }
