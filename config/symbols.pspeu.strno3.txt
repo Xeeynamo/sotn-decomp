@@ -32,6 +32,7 @@ InitializeEntity = 0x09250BA8;
 EntityOrobHolyAttacker = 0x092530B8;
 EntityDragonSegment = 0x09253868;
 EntityDragonHeadParts = 0x09253BD0;
+sprites_rno3_6 = 0x09262288;
 RNO3_spriteBanks = 0x09263B60;
 RNO3_rooms_layers = 0x09263EB0;
 RNO3_cluts = 0x09263FF0;
