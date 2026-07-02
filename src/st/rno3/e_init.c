@@ -53,8 +53,8 @@ void EntityDragonSegment(Entity* self);
 void EntityDragonHeadParts(Entity* self);
 void EntityDragonRiderHitbox(Entity* self);
 void EntityVenusWeed(Entity* self);
-void func_us_801C5850(Entity* self);
-void func_us_801C5F40(Entity* self);
+void EntityVenusWeedFlower(Entity* self);
+void EntityVenusWeedTendril(Entity* self);
 void EntityVenusWeedDart(Entity* self);
 void EntityVenusWeedSpike(Entity* self);
 void EntityCavernDoorLever(Entity* self);
@@ -133,8 +133,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityDragonHeadParts,
     EntityDragonRiderHitbox,
     EntityVenusWeed,
-    func_us_801C5850,
-    func_us_801C5F40,
+    EntityVenusWeedFlower,
+    EntityVenusWeedTendril,
     EntityVenusWeedDart,
     EntityVenusWeedSpike,
     EntityCavernDoorLever,
@@ -189,9 +189,9 @@ EInit g_EInitOruburosRider = {ANIMSET_OVL(6), 4, 81, 561, 0x08F};
 EInit g_EInitDragonRider1 = {ANIMSET_OVL(6), 1, 80, 561, 0x090};
 EInit g_EInitDragonRider2 = {ANIMSET_OVL(6), 4, 80, 561, 0x091};
 EInit D_us_801809F8 = {ANIMSET_OVL(6), 4, 80, 561, 0x002};
-EInit g_EInitBlueVenusWeed1 = {ANIMSET_OVL(7), 0, 80, 576, 0x188};
-EInit g_EInitBlueVenusWeed2 = {ANIMSET_OVL(7), 0, 80, 576, 0x189};
-EInit D_us_80180A1C = {ANIMSET_OVL(7), 0, 80, 576, 0x18A};
+EInit g_EInitVenusWeedRoot = {ANIMSET_OVL(7), 0, 80, 576, 0x188};
+EInit g_EInitVenusWeedFlower = {ANIMSET_OVL(7), 0, 80, 576, 0x189};
+EInit g_EInitVenusWeedTendril = {ANIMSET_OVL(7), 0, 80, 576, 0x18A};
 EInit D_us_80180A28 = {ANIMSET_OVL(7), 55, 80, 576, 0x18B};
 EInit D_us_80180A34 = {ANIMSET_OVL(1), 0, 0, 0, 0x005};
 EInit D_us_80180A40 = {ANIMSET_OVL(2), 0, 0, 0, 0x005};

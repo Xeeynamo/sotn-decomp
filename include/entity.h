@@ -1958,6 +1958,7 @@ typedef struct {
     /* 0x8E */ char pad_8E[0x3];
     /* 0x91 */ u8 clutOffset;
     /* 0x92 */ u8 nextAttackIsDarts;
+    /* 0x93 */ u8 unk93;
     /* 0x94 */ char pad_94[0x10];
     /* 0xA4 */ struct Entity* entity;
 } ET_VenusWeedFlower;
@@ -1968,6 +1969,7 @@ typedef struct { // TODO: Not sure about this yet
     /* 0x8E */ char pad_8E[0x2];
     /* 0x90 */ u8 spikeStartTimeOffsetIndex;
     /* 0x91 */ char pad_91[0x2];
+    /* 0x93 */ u8 unk93;
     /* 0x94 */ s16 targetX;
     /* 0x96 */ char pad_96[0xE];
     /* 0xA4 */ struct Entity* entity;

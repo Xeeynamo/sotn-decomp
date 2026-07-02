@@ -5,9 +5,9 @@ INCLUDE_ASM("st/rno3/nonmatchings/e_blue_venus_weed", SetupPrimsForEntitySpriteP
 
 INCLUDE_ASM("st/rno3/nonmatchings/e_blue_venus_weed", EntityVenusWeed);
 
-INCLUDE_ASM("st/rno3/nonmatchings/e_blue_venus_weed", func_us_801C5850);
+INCLUDE_ASM("st/rno3/nonmatchings/e_blue_venus_weed", EntityVenusWeedFlower);
 
-INCLUDE_ASM("st/rno3/nonmatchings/e_blue_venus_weed", func_us_801C5F40);
+INCLUDE_ASM("st/rno3/nonmatchings/e_blue_venus_weed", EntityVenusWeedTendril);
 
 INCLUDE_ASM("st/rno3/nonmatchings/e_blue_venus_weed", EntityVenusWeedDart);
 
