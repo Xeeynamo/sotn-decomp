@@ -8,6 +8,7 @@ g_EInitDragonRider2 = 0x801809EC;
 g_EInitVenusWeedRoot = 0x80180A04;
 g_EInitVenusWeedFlower = 0x80180A10;
 g_EInitVenusWeedTendril = 0x80180A1C;
+g_EInitVenusWeedDart = 0x80180A28;
 g_EInitDodoBird = 0x80180A4C;
 RNO3_rooms = 0x80182B20;
 sprites_rno3_6 = 0x801AE750;

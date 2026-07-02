@@ -49,6 +49,6 @@ D_us_801809F8 = 0x09264400;
 g_EInitVenusWeedRoot = 0x09264410;
 g_EInitVenusWeedFlower = 0x09264420;
 g_EInitVenusWeedTendril = 0x09264430;
-D_us_80180A28 = 0x09264440;
+g_EInitVenusWeedDart = 0x09264440;
 g_EInitDodoBird = 0x09264470;
 RNO3_rooms = 0x09264480;
