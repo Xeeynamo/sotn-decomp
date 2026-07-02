@@ -1256,4 +1256,86 @@ void EntityVenusWeedDart(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rno3_psp/nonmatchings/rno3_psp/e_blue_venus_weed", EntityVenusWeedSpike);
+void EntityVenusWeedSpike(Entity* self) {
+    const int SpikeParts = 5;
+
+    typedef enum Step {
+        INIT = 0,
+        EXTEND = 1,
+    };
+
+    Primitive* prim;
+    Primitive* primItr;
+    Primitive* primNext;
+    s32 primIdx;
+    Entity* entity;
+    s16 clut;
+
+    switch (self->step) {
+    case INIT:
+        InitializeEntity(g_EInitVenusWeedFlower);
+
+        self->flags |= FLAG_UNK_2000 | FLAG_UNK_00200000;
+        self->hitboxState = 0;
+        self->palette = PAL_FLAG(0x25A);
+
+        primIdx = g_api.AllocPrimitives(PRIM_GT4, SpikeParts);
+        if (primIdx == -1) {
+            DestroyEntity(self);
+            break;
+        } else {
+            self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIdx;
+            prim = &g_PrimBuf[primIdx];
+            self->ext.venusWeedSpike.firstPart = prim;
+
+            entity = self->ext.venusWeedSpike.flower;
+            entity--; // Root
+            prim = self->ext.venusWeedSpike.firstPart;
+
+            // Draw sprite parts
+            prim = SetupPrimsForEntitySpriteParts(entity, prim);
+            // Above returns the following prim
+
+            // Copy prims to a later index (while maintaining linked list order)
+            for (primItr = entity->ext.venusWeedSpike.firstPart;
+                 primItr != NULL; primItr = primItr->next, prim = primNext) {
+                primNext = prim->next;
+
+                *prim = *primItr;
+                prim->next = primNext;
+                prim->priority = primItr->priority + 1;
+            }
+        }
+
+        // Update to match flower
+        entity = entity + 1; // Flower
+        self->animCurFrame = entity->animCurFrame;
+        self->zPriority = entity->zPriority + 1;
+        // Fallthrough
+    case EXTEND:
+        clut = self->palette & 0xFFF;
+        FntPrint("color %x\n", self->palette);
+        prim = self->ext.venusWeedSpike.firstPart;
+        while (prim != NULL) {
+            prim->clut = clut;
+            prim->drawMode = DRAW_UNK02;
+
+            prim = prim->next;
+        }
+
+        // Update to match flower
+        entity = self->ext.venusWeedSpike.flower;
+        self->animCurFrame = entity->animCurFrame;
+        self->palette++;
+        clut = self->palette & 0xFFF;
+        if (clut > 0x268) {
+            DestroyEntity(self);
+        } else {
+            if (entity->entityId != 0x35) {
+                DestroyEntity(self);
+            }
+        }
+        break;
+    }
+}
