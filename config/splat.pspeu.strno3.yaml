@@ -80,7 +80,7 @@ segments:
       - [0x212E8, c, rno3/e_sky_entities]
       - [0x214E0, c, rno3/e_transparent_water]
       - [0x21780, .data, rno3_psp/e_blue_venus_weed]
-      - [0x21900, data]
+      - [0x21920, data]
       - [0x21960, .data, rno3/e_red_door]
       - [0x21978, .data, rno3/st_update]
       - [0x219A8, .data, rno3/e_jack_o_bones]

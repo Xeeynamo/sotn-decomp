@@ -190,10 +190,9 @@ typedef enum VenusWeedTendrilStep {
 };
 
 typedef enum VenusWeedTendrilAttack_Substep {
-    VENUS_WEED_TENDRIL_ATTACK_INIT = 0,
-    VENUS_WEED_TENDRIL_ATTACK_DELAY = 1,
-    VENUS_WEED_TENDRIL_ATTACK_CHARGE = 2,
-    VENUS_WEED_TENDRIL_ATTACK_LAUNCH = 3,
+    VENUS_WEED_TENDRIL_ATTACK_INIT,
+    VENUS_WEED_TENDRIL_ATTACK_CHARGE,
+    VENUS_WEED_TENDRIL_ATTACK_LAUNCH,
 };
 
 // clang-format off
@@ -246,19 +245,18 @@ static u8 AnimFrames_FlowerAttackDartsLaunch[] = {
     0x05, 0x0E, 0x10, 0x0C, 0xFF, 0x00, 0x00, 0x00
 };
 
+static u8 D_pspeu_09258EA0[] = {
+    1, 38, 4, 39, 4, 40, 4, 41, 5, 42, 5, 43, 5, 44, 5, 45, 5, 42, 5, 43, 5, 44, 5, 45, 255, 0
+};
+
 // D_80181888
 static u8 AnimFrames_TendrilAttackCharge[] = {
-    0x01, 0x26, 0x04, 0x27, 0x04, 0x28, 0x04, 0x29, 0x02, 0x2A, 0x02, 0x2B, 0x02, 0x2C, 0x02, 0x2D,
-    0x02, 0x2E, 0x02, 0x2F, 0x02, 0x30, 0x02, 0x31, 0x02, 0x32, 0x02, 0x33, 0x02, 0x34, 0x02, 0x35,
-    0x02, 0x36, 0x03, 0x33, 0x03, 0x34, 0x03, 0x35, 0x03, 0x36, 0x04, 0x33, 0x04, 0x34, 0x04, 0x35,
-    0x04, 0x36, 0x05, 0x33, 0x05, 0x34, 0x05, 0x35, 0x05, 0x36, 0x04, 0x33, 0x04, 0x34, 0x04, 0x35,
-    0xFF, 0x00, 0x00, 0x00
+    1, 38, 4, 39, 4, 40, 4, 41, 2, 42, 2, 43, 2, 44, 2, 45, 2, 46, 2, 47, 2, 48, 2, 49, 2, 50, 2, 51, 2, 52, 2, 53, 2, 54, 3, 51, 3, 52, 3, 53, 3, 54, 4, 51, 4, 52, 4, 53, 4, 54, 5, 51, 5, 52, 5, 53, 5, 54, 4, 51, 4, 52, 4, 53, 255, 0
 };
 
 // D_801818CC
 static u8 AnimFrames_TendrilAttackLaunch[] = {
-    0x03, 0x36, 0x03, 0x33, 0x02, 0x34, 0x01, 0x35, 0x04, 0x30, 0x04, 0x2F, 0x04, 0x2E, 0x05, 0x2D,
-    0x05, 0x2C, 0x05, 0x2B, 0x05, 0x2A, 0x04, 0x29, 0x04, 0x28, 0x04, 0x27, 0x01, 0x26, 0xFF, 0x00
+    3, 54, 3, 51, 2, 52, 1, 53, 4, 48, 4, 47, 4, 46, 5, 45, 5, 44, 5, 43, 5, 42, 4, 41, 4, 40, 4, 39, 1, 38, 255, 0
 };
 
 // D_801818EC
@@ -821,7 +819,7 @@ void EntityVenusWeedFlower(Entity* self) {
             self->step_s++;
             // fallthrough
         case SPIKES_CHARGE:
-            AnimateEntity(AnimFrames_FlowerAttackSpikesCharge, self);
+            AnimateEntity(AnimFrames_FlowerPulse, self);
             if (self->ext.venusWeedFlower.unk93 == 8) {
                 entity = self - 1;
                 entity->step = 5;
@@ -1069,7 +1067,7 @@ void EntityVenusWeedTendril(Entity* self) {
         }
         break;
     case 5:
-        if (AnimateEntity(AnimFrames_TendrilAttackCharge, self) == 0) {
+        if (AnimateEntity(D_pspeu_09258EA0, self) == 0) {
             SetStep(3);
             self->step_s = 1;
             self->pose = 8;
