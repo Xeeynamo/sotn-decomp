@@ -4071,6 +4071,30 @@ typedef struct {
     /* 0x94 */ u32 laserPulseDist;
 } ET_NovaSkeleton;
 
+typedef struct {
+    /* 0x7C */ struct Entity* parent;
+    /* 0x80 */ s16 stepTimer;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ u8 movingLeft;
+    /* 0x85 */ u8 unk9;
+    /* 0x86 */ u8 riderDead;
+    /* 0x88 */ u32 gravity;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s16 targetTimer;
+    /* 0x92 */ s16 vel_angle;
+    /* 0x94 */ s16 rest_time;
+    /* 0x96 */ s16 : 16;
+    /* 0x98 */ s16 targetX;
+    /* 0x9A */ s16 targetY;
+    /* 0x9C */ s32 : 32;
+    /* 0xA0 */ s32 : 32;
+    /* 0xA4 */ s32 : 32;
+    /* 0xA8 */ s32 : 32;
+    /* 0xAC */ s32 : 32;
+    /* 0xB0 */ s16 : 16;
+    /* 0xB2 */ s16 unused_zero;
+} ET_Orobourous;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -4419,6 +4443,7 @@ typedef union { // offset=0x7C
     ET_PlatformUnk platformUnk;
     ET_JackOBones jackoBones;
     ET_NovaSkeleton nova;
+    ET_Orobourous orob;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

@@ -56,15 +56,15 @@ typedef enum EntityIDs {
     /* 0x28 */ E_NOVA_LASER,             // EntityNovaLaser
     /* 0x29 */ E_NOVA_PULSE,             // EntityNovaLaserPulse
     /* 0x2A */ E_NOVA_DEATH_PARTS,       // EntityNovaSkeletonDeathParts
-    /* 0x2B */ E_UNK_2B,                 // func_us_801C35F8
-    /* 0x2C */ E_UNK_2C,                 // func_us_801C3DE0
-    /* 0x2D */ E_UNK_2D,                 // func_us_801C406C
-    /* 0x2E */ E_UNK_2E,                 // func_us_801C4178
-    /* 0x2F */ E_UNK_2F,                 // func_us_801C4334
-    /* 0x30 */ E_UNK_30,                 // func_us_801C4468
-    /* 0x31 */ E_UNK_31,                 // func_us_801C48D8
-    /* 0x32 */ E_UNK_32,                 // func_us_801C4B44
-    /* 0x33 */ E_UNK_33,                 // func_us_801C4C50
+    /* 0x2B */ E_OROBOUROUS,             // EntityOrobourous
+    /* 0x2C */ E_OROB_SEGMENT,           // EntityOrobSegment
+    /* 0x2D */ E_OROB_HEAD_PARTS,        // EntityOrobHeadParts
+    /* 0x2E */ E_OROB_RIDER,             // EntityOrobRider
+    /* 0x2F */ E_OROB_HOLYATTACK,        // EntityOrobHolyAttacker
+    /* 0x30 */ E_DRAGON_RIDER,           // EntityDragonRider
+    /* 0x31 */ E_DRAGON_SEGMENT,         // EntityDragonSegment
+    /* 0x32 */ E_DRAGON_HEAD_PARTS,      // EntityDragonHeadParts
+    /* 0x33 */ E_DRAGON_RIDER_HITBOX,    // EntityDragonRiderHitbox
     /* 0x34 */ E_VENUS_WEED,             // EntityVenusWeed
     /* 0x35 */ E_UNK_35,                 // func_us_801C5850
     /* 0x36 */ E_UNK_36,                 // func_us_801C5F40

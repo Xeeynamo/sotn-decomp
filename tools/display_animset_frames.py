@@ -32,6 +32,26 @@ DRA_ANIM_ARRAY = "D_800A3B70"
 DRA_ANIMSET_FILE = "src/dra/d_2F324.c"
 
 
+def load_init_from_ovl(ovl_name, init_name):
+    with open("src/st/" + ovl_name + "/e_init.c") as f:
+        initlines = f.readlines()
+    for line in initlines:
+        if init_name in line:
+            line = line.replace("PAL_NULL", "0")
+            initSet = re.findall(r"(?<={)[^}]*", line)[0].split(",")
+
+            if "ANIMSET_OVL" in initSet[0]:
+                arg = re.findall(r"(?<=\()[^\)]*", initSet[0])[0]
+                initSet[0] = hex(0x8000 | int(arg, 0))
+            if "ANIMSET_DRA" in initSet[0]:
+                arg = re.findall(r"(?<=\()[^\)]*", initSet[0])[0]
+                initSet[0] = arg
+            found_vals = [int(x, 0) for x in initSet]
+            break
+    animset, animcurframe, unk5A, palette, enemyId = found_vals
+    return animset, palette, unk5A
+
+
 def show_animset(ovl_name, anim_num, arg_palette, view_w, view_h, unk5A, dump_filename):
 
     # Now we have an array that tells us the name of all the frames.
@@ -89,12 +109,6 @@ parser = argparse.ArgumentParser(description="Renders in-game animations from AN
 parser.add_argument("dump_filename")
 
 parser.add_argument("overlay", help="Overlay name. dra, no3, cen, etc")
-parser.add_argument(
-    "animset_num", type=lambda x: int(x, 0), help="Animset number; 2 for ANIMSET_DRA(2)"
-)
-parser.add_argument(
-    "e_palette", type=lambda x: int(x, 0), help="Entity's Palette param"
-)
 
 parser.add_argument(
     "view_width", type=lambda x: int(x, 0), help="Width of your view window"
@@ -105,20 +119,33 @@ parser.add_argument(
 )
 
 parser.add_argument(
-    "--unk5A",
-    type=lambda x: int(x, 0),
-    default=0,
-    help="Entity's unk5A value (optional)",
+    "mode",
+    help="Select a mode: INIT to choose an EInit from the overlay, or CUST to give custom args",
 )
 
 args = parser.parse_args()
 
+if args.mode == "CUST":
+    animset_num = int(input("Animset number; 2 for ANIMSET_DRA(2)\n"), 0)
+    e_palette = int(input("Entity's Palette param\n"), 0)
+    unk5A = input("Entity's unk5A value (optional, leave blank if you want)\n")
+    if unk5A == "":
+        unk5A = 0
+    else:
+        unk5A = int(unk5A, 0)
+elif args.mode == "INIT":
+    initName = input("Give name of the EInit from the overlay's e_init.c file:\n")
+    animset_num, e_palette, unk5A = load_init_from_ovl(args.overlay, initName)
+else:
+    print('Mode is not one of "CUST" or "INIT", exiting')
+    exit()
+
 show_animset(
     args.overlay,
-    args.animset_num,
-    args.e_palette,
+    animset_num,
+    e_palette,
     args.view_width,
     args.view_height,
-    args.unk5A,
+    unk5A,
     args.dump_filename,
 )
