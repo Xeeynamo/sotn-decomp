@@ -135,7 +135,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
     u32 ptr;
     switch (self->step) {
     case 0:
-        if (SetCutsceneScript(D_8018B304)) {
+        if (SetCutsceneScript(OVL_EXPORT(cutscene_endings))) {
             self->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
             self->primIndex = g_Dialogue.primIndex[2];
             D_801BC3E8 = 0;

@@ -2,8 +2,7 @@
 #include "sel.h"
 #include <cutscene.h>
 
-u8 D_8018B304[] = {
-// u8 OVL_EXPORT(cutscene_endings)[] = {
+u8 OVL_EXPORT(cutscene_endings)[] = {
 #include "gen/cutscene_endings.h"
 };
 
