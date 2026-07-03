@@ -24,3 +24,6 @@
 [submodule "tools/sotn_utils"]
 	path = tools/sotn_utils
 	url = https://github.com/ProjectOblivion/sotn_utils.git
+[submodule "tools/psyz"]
+	path = tools/psyz
+	url = https://github.com/Xeeynamo/psyz
