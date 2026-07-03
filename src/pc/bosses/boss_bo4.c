@@ -18,6 +18,9 @@ extern LayoutEntity** g_pStObjLayoutVertical;
 AluFrame* D_us_801B0A78[1] = {0};
 DopWeaponAnimation D_us_80184278[1] = {0};
 SpriteParts* D_us_801B159C[1] = {0};
+SpriteParts* D_us_801B1664[1] = {0};
+SpriteParts* D_us_801B2068[1] = {0};
+SpriteParts* D_us_801B252C[1] = {0};
 
 void InitBossBO4(Overlay* o) {
     LoadReset();
