@@ -192,6 +192,8 @@ typedef enum VenusWeedTendrilStep {
     VENUS_WEED_TENDRIL_DROP_TO_GROUND,
     VENUS_WEED_TENDRIL_MOVE_TO_RANDOM_POSITION,
     VENUS_WEED_TENDRIL_ATTACK,
+    VENUS_WEED_TENDRIL_UNUSED4,
+    VENUS_WEED_TENDRIL_STEP5,
     VENUS_WEED_TENDRIL_DEATH = 8,
 };
 
@@ -1075,7 +1077,15 @@ void EntityVenusWeedTendril(Entity* self) {
     case VENUS_WEED_TENDRIL_MOVE_TO_RANDOM_POSITION:
         // Calculate target x positions
         if (!self->step_s) {
+#if defined(BLUE)
             x = self->params * 0x20 - (TENDRIL_COUNT - 1) * 0x10;
+#else
+            x = self->params * 2 - (TENDRIL_COUNT - 1);
+            x = x * x;
+            if (self->params < (TENDRIL_COUNT / 2)) {
+                x = -x;
+            }
+#endif
             if (x > 0) {
                 x += InitDistMinX;
             } else {
@@ -1088,44 +1098,63 @@ void EntityVenusWeedTendril(Entity* self) {
 
         AnimateEntity(AnimFrames_TendrilBounce, self);
         UnkCollisionFunc2(WalkSensors_Tendril); // "Walk", respecting walls/etc
+#if defined(BLUE)
         entity = &PLAYER;
         x = entity->posX.i.hi - self->posX.i.hi;
         if (abs(x) > 24){
+#else
+{
+#endif
             // Set velocity according to remaining distance
             entity = self - 1 - self->params; // Flower
             x = entity->posX.i.hi + self->ext.venusWeedTendril.targetX;
             x -= self->posX.i.hi; // Remaining distance
         }
         if (abs(x) < 2) {
-            SetStep(5);
+            SetStep(VENUS_WEED_TENDRIL_STEP5);
         } else if (x > 0) {
             self->velocityX = (abs(x) << 0xC);
         } else {
             self->velocityX = (-(abs(x) << 0xC));
         }
+#if defined(BLUE)
         if(self->ext.venusWeedTendril.unk93){
             self->ext.venusWeedTendril.unk93 = 0;
             entity = self - 1 - self->params;
             entity->ext.venusWeedTendril.unk93++;
-            SetStep(3);
+            SetStep(VENUS_WEED_TENDRIL_ATTACK);
         }
         break;
-    case 5:
+    case VENUS_WEED_TENDRIL_STEP5:
         if (AnimateEntity(D_pspeu_09258EA0, self) == 0) {
-            SetStep(3);
+            SetStep(VENUS_WEED_TENDRIL_ATTACK);
             self->step_s = 1;
             self->pose = 8;
         }
+#endif
         break;
     case VENUS_WEED_TENDRIL_ATTACK:
         switch (self->step_s) {
         case VENUS_WEED_TENDRIL_ATTACK_INIT:
             AnimateEntity(AnimFrames_TendrilBounce, self);
             if (self->ext.venusWeedTendril.spikeStartTimeOffsetIndex) {
+#if !defined(BLUE)
+                self->ext.venusWeedTendril.timer = TendrilSpikeStartTimeOffset
+                    [self->ext.venusWeedTendril.spikeStartTimeOffsetIndex - 1];
+#endif
                 self->ext.venusWeedTendril.spikeStartTimeOffsetIndex = 0;
-                SetSubStep(1);
+                SetSubStep(1); // go to next one, but varies
             }
             break;
+#if !defined(BLUE)
+        case VENUS_WEED_TENDRIL_ATTACK_DELAY:
+            if (self->ext.venusWeedTendril.timer) {
+                self->ext.venusWeedTendril.timer--;
+                break;
+            }
+            self->step_s++;
+            // Fallthrough
+#endif
         case VENUS_WEED_TENDRIL_ATTACK_CHARGE:
             if (AnimateEntity(AnimFrames_TendrilAttackCharge, self) == 0) {
                 SetSubStep(VENUS_WEED_TENDRIL_ATTACK_LAUNCH);
@@ -1358,7 +1387,9 @@ void EntityVenusWeedSpike(Entity* self) {
         // Fallthrough
     case EXTEND:
         clut = self->palette & 0xFFF;
+#if defined(BLUE)
         FntPrint("color %x\n", self->palette);
+#endif
         prim = self->ext.venusWeedSpike.firstPart;
         while (prim != NULL) {
             prim->clut = clut;
