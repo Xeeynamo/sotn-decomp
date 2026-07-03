@@ -653,7 +653,6 @@ s32 func_801B79D4(Entity* entity) {
             }
         }
         break;
-
     case 1:
         if (!LOHU(g_Dialogue.nextCharY)) {
             break;
@@ -668,7 +667,6 @@ s32 func_801B79D4(Entity* entity) {
             entity->step = 7;
             g_Dialogue.unk12 = 0x400;
             return 0;
-
         case 1:
             g_Dialogue.startY = g_Dialogue.nextCharX + *g_Dialogue.scriptCur++;
             g_Dialogue.nextLineX++;
@@ -677,7 +675,6 @@ s32 func_801B79D4(Entity* entity) {
             }
             g_Dialogue.nextCharY = 0;
             return 0;
-
         case 2:
             g_Dialogue.startY = g_Dialogue.nextCharX + *g_Dialogue.scriptCur++;
             g_Dialogue.nextLineX++;
@@ -704,7 +701,6 @@ s32 func_801B79D4(Entity* entity) {
             g_Dialogue.portraitAnimTimer += 6;
             g_Dialogue.nextCharY = 0;
             return 0;
-
         case 3:
             g_Dialogue.startY = g_Dialogue.nextCharX + *g_Dialogue.scriptCur++;
             g_Dialogue.nextLineX++;
@@ -730,7 +726,6 @@ s32 func_801B79D4(Entity* entity) {
             g_Dialogue.portraitAnimTimer += 12;
             g_Dialogue.nextCharY = 0;
             return 0;
-
         default:
             if (nextChar & 0x80) {
                 nextChar <<= 8;
@@ -760,10 +755,8 @@ s32 func_801B79D4(Entity* entity) {
             break;
         }
         break;
-
     case 2:
         break;
-
     case 7:
         if (!--g_Dialogue.unk12) {
             return 1;
