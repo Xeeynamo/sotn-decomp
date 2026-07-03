@@ -1218,9 +1218,7 @@ files:
       - start: 0
         vram: 0x80180000
         assets:
-          # nb. sprite banks look weird, some non sprite looking data?
           #- [0x34, sprite_banks, sprite_banks]
-          # multiple cluts here are not importing correctly, see issue #2401
           #- [0x94, paldef, palette_def]
           - [0xF0, layers, layers]
           - [0x118, gfx_banks, graphics_banks]

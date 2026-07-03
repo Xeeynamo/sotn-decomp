@@ -1,7 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rno3.h"
+#define BLUE
 #define SPIKE_SPRITES sprites_rno3_6
 #define TENDRIL_COUNT 8
+#define DEATH_CLUT 0x246
+#define PLANT_CLUT 0x250
+#define GROWTH_SPEED 2
 
 
 extern EInit g_EInitVenusWeedFlower;
@@ -193,6 +197,9 @@ typedef enum VenusWeedTendrilStep {
 
 typedef enum VenusWeedTendrilAttack_Substep {
     VENUS_WEED_TENDRIL_ATTACK_INIT,
+    #if !defined(BLUE)
+    VENUS_WEED_TENDRIL_ATTACK_DELAY,
+    #endif
     VENUS_WEED_TENDRIL_ATTACK_CHARGE,
     VENUS_WEED_TENDRIL_ATTACK_LAUNCH,
 };
@@ -237,7 +244,8 @@ static u8 AnimFrames_FlowerAttackDartsLaunch[] = {
     0x14, 0x1C, 0x03, 0x1D, 0x02, 0x1E, 0x02, 0x1F, 0x02, 0x20, 0x02, 0x21, 0x2A, 0x1F, 0x05, 0x0F,
     0x05, 0x0E, 0x10, 0x0C, 0xFF, 0x00, 0x00, 0x00
 };
-# if defined(INVERTED_STAGE)
+
+# if defined(BLUE)
 static u8 D_pspeu_09258EA0[] = {
     1, 38, 4, 39, 4, 40, 4, 41, 5, 42, 5, 43, 5, 44, 5, 45, 5, 42, 5, 43, 5, 44, 5, 45, 255, 0
 };
@@ -280,6 +288,11 @@ static s16 TendrilSpikeStartTimeOffset[] = {
     0x0000, 0x0010, 0x0024, 0x001C, 0x001C, 0x0024, 0x0010, 0x0000
 };
 
+// Note: This is the last file in CHI. This could be a split issue.
+#if defined(STAGE_IS_CHI)
+static s32 unused = 0;
+#endif
+
 // clang-format on
 void EntityVenusWeed(Entity* self) {
     // Sprites
@@ -292,7 +305,11 @@ void EntityVenusWeed(Entity* self) {
     const int SpriteStemW = 0x18;
     const int SpriteStemH = 0x22;
     // Behaviour
+#if defined(BLUE)
     const int ActivateDistanceX = 0xA0;
+#else
+    const int ActivateDistanceX = 0x70;
+#endif
     const int LeavesWidthMax = 0x38;
     const int LeavesHeightMax = 0x22;
     const int StemWidthMax = 0xC;
@@ -300,7 +317,7 @@ void EntityVenusWeed(Entity* self) {
     const int FlowerOffsetY = 0x1B;
     const int WiggleLeavesSpeed = 0x180;
     const int AttackDuration = 0x30;
-    const int DeathFinalClut = 0x246;
+    const int DeathFinalClut = DEATH_CLUT;
 
     typedef enum Grow_Substep {
         GROW_LEAVES = 0,
@@ -336,7 +353,9 @@ void EntityVenusWeed(Entity* self) {
         InitializeEntity(g_EInitVenusWeedRoot);
         self->hitboxOffX = 1;
         self->hitboxOffY = -7;
+        #if defined(BLUE)
         self->zPriority -= 8;
+        #endif
         // 3 Prims: 2x Leaves (left/right) + Stem
         primIdx = g_api.AllocPrimitives(PRIM_GT4, 3);
         if (primIdx == -1) {
@@ -351,7 +370,7 @@ void EntityVenusWeed(Entity* self) {
         // Leaves
         for (i = 0; i < 2; i++) {
             prim->tpage = 0x14;
-            prim->clut = 0x250;
+            prim->clut = PLANT_CLUT;
             prim->u0 = prim->u2 = SpriteLeavesX;
             prim->u1 = prim->u3 = SpriteLeavesX + SpriteLeavesW;
             prim->v0 = prim->v1 = SpriteLeavesY;
@@ -365,7 +384,7 @@ void EntityVenusWeed(Entity* self) {
         // Stem
         self->ext.venusWeed.stemPrim = prim;
         prim->tpage = 0x14;
-        prim->clut = 0x250;
+        prim->clut = PLANT_CLUT;
         prim->u0 = prim->u2 = SpriteStemX;
         prim->u1 = prim->u3 = SpriteStemX + SpriteStemW;
         prim->v0 = prim->v1 = SpriteStemY;
@@ -411,14 +430,14 @@ void EntityVenusWeed(Entity* self) {
         switch (self->step_s) {
         case GROW_LEAVES:
             // Update leaves width
-            self->ext.venusWeed.leavesWidth+=2;
+            self->ext.venusWeed.leavesWidth += GROWTH_SPEED;
             if (self->ext.venusWeed.leavesWidth > LeavesWidthMax) {
                 self->ext.venusWeed.leavesWidth = LeavesWidthMax;
                 checkCount += 1;
             }
 
             // Update leaves height
-            self->ext.venusWeed.leavesHeight+= 2;
+            self->ext.venusWeed.leavesHeight += GROWTH_SPEED;
             if (self->ext.venusWeed.leavesHeight > LeavesHeightMax) {
                 self->ext.venusWeed.leavesHeight = LeavesHeightMax;
                 checkCount += 1;
@@ -448,14 +467,14 @@ void EntityVenusWeed(Entity* self) {
 
         case GROW_STEM:
             // Update stem width
-            self->ext.venusWeed.stemWidth+=2;
+            self->ext.venusWeed.stemWidth += GROWTH_SPEED;
             if (self->ext.venusWeed.stemWidth > StemWidthMax) {
                 self->ext.venusWeed.stemWidth = StemWidthMax;
                 checkCount += 1;
             }
 
             // Update stem height
-            self->ext.venusWeed.stemHeight+=2;
+            self->ext.venusWeed.stemHeight += GROWTH_SPEED;
             if (self->ext.venusWeed.stemHeight > StemHeightMax) {
                 self->ext.venusWeed.stemHeight = StemHeightMax;
                 checkCount += 1;
@@ -481,7 +500,7 @@ void EntityVenusWeed(Entity* self) {
             entity = self + 1; // Flower
 
             // Spawn flower
-            CreateEntityFromCurrentEntity(0x35, entity);
+            CreateEntityFromCurrentEntity(E_VENUS_WEED_FLOWER, entity);
             entity->posX.i.hi = self->posX.i.hi;
             entity->posY.i.hi = self->posY.i.hi - FlowerOffsetY;
 
@@ -495,7 +514,7 @@ void EntityVenusWeed(Entity* self) {
         case GROW_TENDRILS:
             entity = self + 2; // Tendrils start
             for (i = 0; i < TENDRIL_COUNT; i++, entity++) {
-                CreateEntityFromCurrentEntity(0x36, entity);
+                CreateEntityFromCurrentEntity(E_VENUS_WEED_TENDRIL, entity);
                 entity->params = i;
                 entity->zPriority = self->zPriority + 1;
             }
