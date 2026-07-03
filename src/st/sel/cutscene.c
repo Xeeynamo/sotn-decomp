@@ -613,7 +613,7 @@ s32 func_801B79D4(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        if (func_801B76F0(D_8018BC54)) {
+        if (func_801B76F0(OVL_EXPORT(credits))) {
             entity->flags |= FLAG_HAS_PRIMS;
             entity->primIndex = (s32)g_Dialogue.prim[1];
             entity->step++;
@@ -663,11 +663,11 @@ s32 func_801B79D4(Entity* entity) {
         bitDepth = 0;
 
         switch (nextChar) {
-        case 0:
+        case CSOP_END_CREDITS:
             entity->step = 7;
             g_Dialogue.unk12 = 0x400;
             return 0;
-        case 1:
+        case CSOP_SUBTEXT:
             g_Dialogue.startY = g_Dialogue.nextCharX + *g_Dialogue.scriptCur++;
             g_Dialogue.nextLineX++;
             if (g_Dialogue.nextLineX > 0xF) {
@@ -675,7 +675,7 @@ s32 func_801B79D4(Entity* entity) {
             }
             g_Dialogue.nextCharY = 0;
             return 0;
-        case 2:
+        case CSOP_ENTRY:
             g_Dialogue.startY = g_Dialogue.nextCharX + *g_Dialogue.scriptCur++;
             g_Dialogue.nextLineX++;
             if (g_Dialogue.nextLineX > 0xF) {
@@ -701,7 +701,7 @@ s32 func_801B79D4(Entity* entity) {
             g_Dialogue.portraitAnimTimer += 6;
             g_Dialogue.nextCharY = 0;
             return 0;
-        case 3:
+        case CSOP_SECTION:
             g_Dialogue.startY = g_Dialogue.nextCharX + *g_Dialogue.scriptCur++;
             g_Dialogue.nextLineX++;
             if (g_Dialogue.nextLineX > 0xF) {
