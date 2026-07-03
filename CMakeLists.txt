@@ -183,6 +183,7 @@ set(SOURCE_FILES_STAGE_SEL
     src/st/sel/3410C.c
     src/st/sel/34B30.c
     src/st/sel/cutscene.c
+    src/st/sel/cutscene_data.c
 )
 
 set(SOURCE_FILES_STAGE_CEN
@@ -283,6 +284,8 @@ set (SOURCE_FILES_STAGE_ST0
     src/st/st0/gen/e_layout.c
     src/st/st0/stage_data.c
     src/st/st0/gen/sprites.c
+    src/st/st0/background_block_init.c
+    src/st/st0/e_room_bg.c
     src/st/st0/e_lock_camera.c
     src/st/st0/2805C.c
     src/st/st0/cutscene.c

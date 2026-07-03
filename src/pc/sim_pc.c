@@ -411,6 +411,11 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
             break;
         case 5:
             switch (g_PlayableCharacter) {
+            case PLAYER_ALUCARD:
+                if (g_StageId == STAGE_ST0) {
+                    InitPlayerRic();
+                }
+                break;
             case PLAYER_RICHTER:
                 InitPlayerRic();
                 break;

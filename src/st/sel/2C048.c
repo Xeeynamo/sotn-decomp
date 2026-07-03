@@ -478,6 +478,10 @@ bool MainMenuFadeIn(void) {
     prim->drawMode = DRAW_HIDE;
     prim = prim->next;
     prim->drawMode = DRAW_HIDE;
+#ifdef VERSION_PC
+    // BUG! return value 1 is never returned
+    return true;
+#endif
 }
 
 s32 func_801ACEC0(void) {
