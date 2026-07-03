@@ -1099,9 +1099,9 @@ void EntityVenusWeedTendril(Entity* self) {
         if (abs(x) < 2) {
             self->step_s--;
         } else if (x > 0) {
-            self->velocityX = (abs(x) << 0xC) / 4; // * 1024
+            self->velocityX = (abs(x) << 0xC) / 4;
         } else {
-            self->velocityX = (-(abs(x) << 0xC)) / 4; // * 1024
+            self->velocityX = (-(abs(x) << 0xC)) / 4;
         }
         break;
 

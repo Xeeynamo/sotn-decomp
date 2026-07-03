@@ -1099,9 +1099,9 @@ void EntityVenusWeedTendril(Entity* self) {
         if (abs(x) < 2) {
             SetStep(5);
         } else if (x > 0) {
-            self->velocityX = (abs(x) << 0xC); // * 1024
+            self->velocityX = (abs(x) << 0xC);
         } else {
-            self->velocityX = (-(abs(x) << 0xC)); // * 1024
+            self->velocityX = (-(abs(x) << 0xC));
         }
         if(self->ext.venusWeedTendril.unk93){
             self->ext.venusWeedTendril.unk93 = 0;
@@ -1375,7 +1375,7 @@ void EntityVenusWeedSpike(Entity* self) {
         if (clut > 0x268) {
             DestroyEntity(self);
         } else {
-            if (entity->entityId != 0x35) {
+            if (entity->entityId != E_VENUS_WEED_FLOWER) {
                 DestroyEntity(self);
             }
         }
