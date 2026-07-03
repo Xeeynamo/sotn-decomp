@@ -1,11 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rno3.h"
+#define SPIKE_SPRITES sprites_rno3_6
 
 extern EInit g_EInitVenusWeedFlower;
 extern EInit g_EInitVenusWeedTendril;
 extern EInit g_EInitVenusWeedDart;
+extern EInit g_EInitVenusWeedRoot;
 
-extern signed short* sprites_rno3_6[];
+extern signed short* SPIKE_SPRITES[];
 
 static Primitive* SetupPrimsForEntitySpriteParts(
     Entity* entity, Primitive* prim) {
@@ -25,7 +27,7 @@ static Primitive* SetupPrimsForEntitySpriteParts(
     u8 spriteV1;
     s32 xFlip;
 
-    spriteData = sprites_rno3_6[entity->animCurFrame];
+    spriteData = SPIKE_SPRITES[entity->animCurFrame];
     spritePartCount = *spriteData;
     spriteData++;
 
@@ -169,7 +171,6 @@ static Primitive* SetupPrimsForEntitySpriteParts(
     return prim;
 }
 
-extern EInit g_EInitVenusWeedRoot;
 #define TENDRIL_COUNT 8
 
 typedef enum VenusWeedStep {

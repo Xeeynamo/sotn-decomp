@@ -1,45 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-/*
- * File: en_venus_weed.c
- * Overlay: CHI
- * Description: ENTITY - Venus Weed
- */
-
 #include "chi.h"
+#define SPIKE_SPRITES sprites_chi_7
 
-#define TENDRIL_COUNT 10
+extern EInit g_EInitVenusWeedFlower;
+extern EInit g_EInitVenusWeedTendril;
+extern EInit g_EInitVenusWeedDart;
 
-typedef enum VenusWeedStep {
-    VENUS_WEED_INIT = 0,
-    VENUS_WEED_DROP_TO_GROUND = 1,
-    VENUS_WEED_THORNWEED_DISGUISE = 2,
-    VENUS_WEED_GROW = 3,
-    VENUS_WEED_IDLE = 4,
-    VENUS_WEED_ATTACK = 5,
-    VENUS_WEED_DEATH = 8,
-};
+extern signed short* SPIKE_SPRITES[];
 
-typedef enum VenusWeedTendrilStep {
-    VENUS_WEED_TENDRIL_INIT = 0,
-    VENUS_WEED_TENDRIL_DROP_TO_GROUND = 1,
-    VENUS_WEED_TENDRIL_MOVE_TO_RANDOM_POSITION = 2,
-    VENUS_WEED_TENDRIL_ATTACK = 3,
-    VENUS_WEED_TENDRIL_DEATH = 8,
-};
-
-typedef enum VenusWeedTendrilAttack_Substep {
-    VENUS_WEED_TENDRIL_ATTACK_INIT = 0,
-    VENUS_WEED_TENDRIL_ATTACK_DELAY = 1,
-    VENUS_WEED_TENDRIL_ATTACK_CHARGE = 2,
-    VENUS_WEED_TENDRIL_ATTACK_LAUNCH = 3,
-};
-
-extern signed short* sprites_chi_7[];
-
-// func_801AB548
-// https://decomp.me/scratch/yZqKn
-// PSP:func_psp_0923A7F0:Match
-// PSP:https://decomp.me/scratch/tPXxN
 static Primitive* SetupPrimsForEntitySpriteParts(
     Entity* entity, Primitive* prim) {
     s16 y;
@@ -201,6 +169,34 @@ static Primitive* SetupPrimsForEntitySpriteParts(
     }
     return prim;
 }
+
+#define TENDRIL_COUNT 10
+
+typedef enum VenusWeedStep {
+    VENUS_WEED_INIT = 0,
+    VENUS_WEED_DROP_TO_GROUND = 1,
+    VENUS_WEED_THORNWEED_DISGUISE = 2,
+    VENUS_WEED_GROW = 3,
+    VENUS_WEED_IDLE = 4,
+    VENUS_WEED_ATTACK = 5,
+    VENUS_WEED_DEATH = 8,
+};
+
+typedef enum VenusWeedTendrilStep {
+    VENUS_WEED_TENDRIL_INIT = 0,
+    VENUS_WEED_TENDRIL_DROP_TO_GROUND = 1,
+    VENUS_WEED_TENDRIL_MOVE_TO_RANDOM_POSITION = 2,
+    VENUS_WEED_TENDRIL_ATTACK = 3,
+    VENUS_WEED_TENDRIL_DEATH = 8,
+};
+
+typedef enum VenusWeedTendrilAttack_Substep {
+    VENUS_WEED_TENDRIL_ATTACK_INIT = 0,
+    VENUS_WEED_TENDRIL_ATTACK_DELAY = 1,
+    VENUS_WEED_TENDRIL_ATTACK_CHARGE = 2,
+    VENUS_WEED_TENDRIL_ATTACK_LAUNCH = 3,
+};
+
 
 // clang-format off
 // D_801817F4
