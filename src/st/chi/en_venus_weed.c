@@ -665,11 +665,6 @@ void EntityVenusWeed(Entity* self) {
     }
 }
 
-// E_VENUS_WEED_FLOWER
-// func_801AC074
-// https://decomp.me/scratch/0O3ex
-// PSP:func_psp_0923BB48:Match
-// PSP:https://decomp.me/scratch/yUOcn
 void EntityVenusWeedFlower(Entity* self) {
     const int HitboxOffsetX = 6;
     const int HitboxOffsetY = -16;
@@ -688,30 +683,33 @@ void EntityVenusWeedFlower(Entity* self) {
     const int DartsCount = 5;
 
     typedef enum Step {
-        INIT = 0,
-        GROW = 1,
-        REVEAL = 2,
-        IDLE = 3,
-        SPIKES = 4,
-        DARTS = 5,
+        INIT,
+        GROW,
+        REVEAL,
+        IDLE,
+        SPIKES,
+        DARTS,
         DEATH = 8,
     };
 
     typedef enum Spikes_Substep {
-        SPIKES_INIT = 0,
-        SPIKES_CHARGE = 1,
-        SPIKES_SPAWN = 2,
-        SPIKES_LAUNCH = 3,
-        SPIKES_ANIM_RESET = 4,
-        SPIKES_RESET_TO_IDLE = 5,
+        SPIKES_INIT,
+#if defined(BLUE)
+        SPIKES_1,
+#endif
+        SPIKES_CHARGE,
+        SPIKES_SPAWN,
+        SPIKES_LAUNCH,
+        SPIKES_ANIM_RESET,
+        SPIKES_RESET_TO_IDLE,
     };
 
     typedef enum Darts_Substep {
-        DARTS_INIT = 0,
-        DARTS_DELAY = 1,
-        DARTS_CHARGE = 2,
-        DARTS_LAUNCH = 3,
-        DARTS_RESET_TO_IDLE = 4,
+        DARTS_INIT,
+        DARTS_DELAY,
+        DARTS_CHARGE,
+        DARTS_LAUNCH,
+        DARTS_RESET_TO_IDLE,
     };
 
     Entity* entity;
@@ -721,6 +719,11 @@ void EntityVenusWeedFlower(Entity* self) {
     s32 rotDelta;
     s32 spikeStartTimeOffsetIndex;
     s32 y;
+
+#if defined(BLUE)
+    FntPrint("arla_step %x\n", self->step);
+    FntPrint("arla_color %x\n", self->palette);
+#endif
 
     // Hurt check
     if (self->hitFlags & 3) {
@@ -787,41 +790,66 @@ void EntityVenusWeedFlower(Entity* self) {
         if (!--self->ext.venusWeedFlower.triggerAttack) {
             // Face player
             self->facingLeft = GetSideToPlayer() & 1;
-
-            if (self->ext.venusWeedFlower.nextAttackIsDarts) {
+            // Blue chooses by distance, non-blue alternates
+#if defined(BLUE)
+            SetStep(DARTS);
+            if(GetDistanceToPlayerX() < 64){
+                SetStep(SPIKES);
+            }
+#else
+        if (self->ext.venusWeedFlower.nextAttackIsDarts) {
                 SetStep(DARTS);
             } else {
                 SetStep(SPIKES);
             }
-            self->ext.venusWeedFlower.nextAttackIsDarts ^=
-                1; // Toggle between darts and tendril spikes attacks
-            return;
+            // Toggle between darts and tendril spikes attacks
+            self->ext.venusWeedFlower.nextAttackIsDarts ^=1;
+#endif
         }
         break;
 
     case SPIKES:
         switch (self->step_s) {
         case SPIKES_INIT:
+
+        #if defined(BLUE)
+            self->ext.venusWeedFlower.unk93 = 0;
+        #else
             // Set root entity to attack
             entity = self - 1; // Root
             entity->step = VENUS_WEED_ATTACK;
             entity->step_s = 0;
+        #endif
 
             // Set tendrils to attack
             entity = self + 1; // Tendrils start
             for (i = 0; i < TENDRIL_COUNT; i++, entity++) {
+#if defined(BLUE)
+                entity->ext.venusWeedFlower.unk93 = 1;
+#else
                 entity->step = VENUS_WEED_TENDRIL_ATTACK;
                 entity->step_s = VENUS_WEED_TENDRIL_ATTACK_INIT;
+#endif
             }
 
             self->step_s++;
             // fallthrough
+#if defined(BLUE)
+        case SPIKES_1:
+            AnimateEntity(AnimFrames_FlowerPulse, self);
+            if (self->ext.venusWeedFlower.unk93 == 8) {
+                entity = self - 1;
+                entity->step = 5;
+                entity->step_s = 0;
+                SetSubStep(SPIKES_CHARGE);
+            }
+            break;
+#endif
         case SPIKES_CHARGE:
-            if (AnimateEntity(AnimFrames_FlowerAttackSpikesCharge, self) == 0) {
+            if(!AnimateEntity(AnimFrames_FlowerAttackSpikesCharge, self)){
                 SetSubStep(SPIKES_SPAWN);
             }
             break;
-
         case SPIKES_SPAWN:
             PlaySfxPositional(SFX_GLASS_SHARDS);
 
@@ -837,16 +865,22 @@ void EntityVenusWeedFlower(Entity* self) {
         case SPIKES_LAUNCH:
             if (AnimateEntity(AnimFrames_FlowerAttackSpikesLaunch, self) == 0) {
                 entity = self + 1; // Tendrils start
+#if !defined(BLUE)
                 if (g_Timer & 1) {
                     spikeStartTimeOffsetIndex = 0;
                 } else {
                     spikeStartTimeOffsetIndex = 4;
                 }
+#endif
                 for (i = 0; i < TENDRIL_COUNT; i++, entity++) {
+                    #if defined(BLUE)
+                    entity->ext.venusWeedTendril.spikeStartTimeOffsetIndex = 1;
+                    #else
                     entity->ext.venusWeedTendril.spikeStartTimeOffsetIndex =
                         spikeStartTimeOffsetIndex + 1;
                     spikeStartTimeOffsetIndex++;
                     spikeStartTimeOffsetIndex &= 0x7;
+                    #endif
                 }
                 SetSubStep(SPIKES_ANIM_RESET);
             }
@@ -866,8 +900,8 @@ void EntityVenusWeedFlower(Entity* self) {
             SetStep(IDLE);
             break;
         }
-
-        // Cycle clut
+#if !defined(BLUE)
+        // Cycle clut; this block is in different places on the two versions
         if (self->ext.venusWeedFlower.clutOffset) {
             entity = self - 1; // Root
             entity->ext.venusWeed.triggerAttack = true;
@@ -880,6 +914,7 @@ void EntityVenusWeedFlower(Entity* self) {
                 return;
             }
         }
+#endif
         break;
 
     case DARTS:
@@ -894,7 +929,6 @@ void EntityVenusWeedFlower(Entity* self) {
         case DARTS_DELAY:
             if (AnimateEntity(AnimFrames_FlowerAttackDartsCharge, self) == 0) {
                 SetSubStep(DARTS_CHARGE);
-                return;
             }
             break;
 
@@ -962,16 +996,13 @@ void EntityVenusWeedFlower(Entity* self) {
                     }
                     rot += rotDelta;
                 }
-                return;
             }
             break;
 
         case DARTS_RESET_TO_IDLE:
             entity = self - 1; // Root
             entity->step = VENUS_WEED_IDLE;
-
             SetStep(IDLE);
-            return;
         }
         break;
 
@@ -996,17 +1027,24 @@ void EntityVenusWeedFlower(Entity* self) {
         entity->flags |= FLAG_DEAD;
 
         DestroyEntity(self);
-        break;
+        return;
     }
+#if defined(BLUE)
+    // Cycle clut; this block is in different places on the two versions
+    if (self->ext.venusWeedFlower.clutOffset) {
+        entity = self - 1; // Root
+        entity->ext.venusWeed.triggerAttack = true;
+        if (!(self->palette & PAL_UNK_FLAG)) {
+            self->palette += self->ext.venusWeedFlower.clutOffset >> 4;
+            self->ext.venusWeedFlower.clutOffset &= 0xF;
+            if (self->palette > 0x24f) {
+                self->palette = 0x24f;
+            }
+        }
+    }
+#endif
 }
 
-// E_VENUS_WEED_TENDRIL
-// params: Index in group
-//         Used to slightly influence position
-// func_801AC730
-// https://decomp.me/scratch/dVIWY
-// PSP:func_psp_0923C4E8:No match
-// PSP:https://decomp.me/scratch/tbskC
 void EntityVenusWeedTendril(Entity* self) {
     const int InitDistMinX = 0x18;
     const int InitDistRandRangeX = 0xF; // Must be a "full flags" value
@@ -1136,13 +1174,6 @@ void EntityVenusWeedTendril(Entity* self) {
     self->hitboxHeight = *hitboxData++;
 }
 
-// E_VENUS_WEED_DART
-// params: Index in group
-//         Slightly influences acceleration
-// func_801ACB6C
-// https://decomp.me/scratch/AyVyt
-// PSP:func_psp_0923CAC8:Match
-// PSP:https://decomp.me/scratch/qBeC0
 void EntityVenusWeedDart(Entity* self) {
     const int AnimFrameIndexInit = 0x37;
     const int StartSpeed = 0x8000;
@@ -1266,12 +1297,6 @@ void EntityVenusWeedDart(Entity* self) {
     }
 }
 
-// E_VENUS_WEED_SPIKE
-// params: Index in group
-// func_801ACEF4
-// https://decomp.me/scratch/uQtVP
-// PSP:func_psp_0923D008:No match
-// PSP:https://decomp.me/scratch/zjZnY
 void EntityVenusWeedSpike(Entity* self) {
     const int SpikeParts = 5;
 
