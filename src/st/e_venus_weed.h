@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 extern EInit g_EInitVenusWeedFlower;
 extern EInit g_EInitVenusWeedTendril;
 extern EInit g_EInitVenusWeedDart;
@@ -189,9 +190,9 @@ typedef enum VenusWeedTendrilStep {
 
 typedef enum VenusWeedTendrilAttack_Substep {
     VENUS_WEED_TENDRIL_ATTACK_INIT,
-    #if !defined(BLUE)
+#if !defined(BLUE)
     VENUS_WEED_TENDRIL_ATTACK_DELAY,
-    #endif
+#endif
     VENUS_WEED_TENDRIL_ATTACK_CHARGE,
     VENUS_WEED_TENDRIL_ATTACK_LAUNCH,
 };
@@ -345,9 +346,9 @@ void EntityVenusWeed(Entity* self) {
         InitializeEntity(g_EInitVenusWeedRoot);
         self->hitboxOffX = 1;
         self->hitboxOffY = -7;
-        #if defined(BLUE)
+#if defined(BLUE)
         self->zPriority -= 8;
-        #endif
+#endif
         // 3 Prims: 2x Leaves (left/right) + Stem
         primIdx = g_api.AllocPrimitives(PRIM_GT4, 3);
         if (primIdx == -1) {
@@ -786,17 +787,17 @@ void EntityVenusWeedFlower(Entity* self) {
             // Blue chooses by distance, non-blue alternates
 #if defined(BLUE)
             SetStep(DARTS);
-            if(GetDistanceToPlayerX() < 64){
+            if (GetDistanceToPlayerX() < 64) {
                 SetStep(SPIKES);
             }
 #else
-        if (self->ext.venusWeedFlower.nextAttackIsDarts) {
+            if (self->ext.venusWeedFlower.nextAttackIsDarts) {
                 SetStep(DARTS);
             } else {
                 SetStep(SPIKES);
             }
             // Toggle between darts and tendril spikes attacks
-            self->ext.venusWeedFlower.nextAttackIsDarts ^=1;
+            self->ext.venusWeedFlower.nextAttackIsDarts ^= 1;
 #endif
         }
         break;
@@ -805,14 +806,14 @@ void EntityVenusWeedFlower(Entity* self) {
         switch (self->step_s) {
         case SPIKES_INIT:
 
-        #if defined(BLUE)
+#if defined(BLUE)
             self->ext.venusWeedFlower.unk93 = 0;
-        #else
+#else
             // Set root entity to attack
             entity = self - 1; // Root
             entity->step = VENUS_WEED_ATTACK;
             entity->step_s = 0;
-        #endif
+#endif
 
             // Set tendrils to attack
             entity = self + 1; // Tendrils start
@@ -839,7 +840,7 @@ void EntityVenusWeedFlower(Entity* self) {
             break;
 #endif
         case SPIKES_CHARGE:
-            if(!AnimateEntity(AnimFrames_FlowerAttackSpikesCharge, self)){
+            if (!AnimateEntity(AnimFrames_FlowerAttackSpikesCharge, self)) {
                 SetSubStep(SPIKES_SPAWN);
             }
             break;
@@ -866,14 +867,14 @@ void EntityVenusWeedFlower(Entity* self) {
                 }
 #endif
                 for (i = 0; i < TENDRIL_COUNT; i++, entity++) {
-                    #if defined(BLUE)
+#if defined(BLUE)
                     entity->ext.venusWeedTendril.spikeStartTimeOffsetIndex = 1;
-                    #else
+#else
                     entity->ext.venusWeedTendril.spikeStartTimeOffsetIndex =
                         spikeStartTimeOffsetIndex + 1;
                     spikeStartTimeOffsetIndex++;
                     spikeStartTimeOffsetIndex &= 0x7;
-                    #endif
+#endif
                 }
                 SetSubStep(SPIKES_ANIM_RESET);
             }
@@ -1043,7 +1044,7 @@ void EntityVenusWeedTendril(Entity* self) {
 #if defined(BLUE)
     const int InitDistRandRangeX = 0x1F; // Must be a "full flags" value
 #else
-        const int InitDistRandRangeX = 0xF; // Must be a "full flags" value
+    const int InitDistRandRangeX = 0xF; // Must be a "full flags" value
 #endif
     const int SpikeSfxpose = 0xA;
 
@@ -1096,7 +1097,7 @@ void EntityVenusWeedTendril(Entity* self) {
 #if defined(BLUE)
         entity = &PLAYER;
         x = entity->posX.i.hi - self->posX.i.hi;
-        if (abs(x) > 24){
+        if (abs(x) > 24) {
             // Set velocity according to remaining distance
             entity = self - 1 - self->params; // Flower
             x = entity->posX.i.hi + self->ext.venusWeedTendril.targetX;
@@ -1109,7 +1110,7 @@ void EntityVenusWeedTendril(Entity* self) {
         } else {
             self->velocityX = (-(abs(x) << 0xC));
         }
-        if(self->ext.venusWeedTendril.unk93){
+        if (self->ext.venusWeedTendril.unk93) {
             self->ext.venusWeedTendril.unk93 = 0;
             entity = self - 1 - self->params;
             entity->ext.venusWeedTendril.unk93++;
@@ -1183,11 +1184,11 @@ void EntityVenusWeedTendril(Entity* self) {
     case VENUS_WEED_TENDRIL_DEATH:
         if (!self->step_s) {
             self->ext.venusWeedTendril.timer = self->params * 8 +
-            #if defined(BLUE)
-            1;
-            #else
-            8;
-            #endif
+#if defined(BLUE)
+                                               1;
+#else
+                                               8;
+#endif
             self->step_s++;
         }
         if (!--self->ext.venusWeedTendril.timer) {
