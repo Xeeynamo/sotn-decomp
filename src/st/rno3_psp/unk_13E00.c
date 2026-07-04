@@ -272,10 +272,17 @@ void EntityAlucardWaterEffect(Entity* self) {
                     } else {
                         var_s1 = (var_s1 * var_s3) / 0x50;
                     }
+#if defined(VERSION_PSP)
                     if ((var_s1 < 0 &&
                          !(g_Player.vram_flag & TOUCHING_L_WALL)) ||
                         (var_s1 > 0 &&
                          !(g_Player.vram_flag & TOUCHING_R_WALL))) {
+#else
+                    if ((var_s1 < 0 &&
+                         !(g_Player.vram_flag & TOUCHING_R_WALL)) ||
+                        (var_s1 > 0 &&
+                         !(g_Player.vram_flag & TOUCHING_L_WALL))) {
+#endif
                         i = player->posX.i.hi;
                         player->posX.val -= var_s1 << 4;
                         g_unkGraphicsStruct.shoveX.i.hi += (player->posX.i.hi - i);
