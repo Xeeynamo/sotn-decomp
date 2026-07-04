@@ -62,4 +62,4 @@ extern EInit g_EInitDraculaFireball;
 extern EInit g_EInitDraculaFinalForm;
 extern EInit g_EInitDraculaMegaFireball;
 extern EInit g_EInitSecretStairs;
-extern EInit g_EInitObtainable;
+extern EInit OVL_EXPORT(EInitObtainable);

@@ -4,8 +4,7 @@
 
 #define STAGE_IS_CEN
 
-#include "common.h"
-#include "stage.h"
+#include <stage.h>
 
 #define OVL_EXPORT(x) CEN_##x
 
@@ -47,13 +46,12 @@ typedef enum EntityIDs {
     /* 0x80 */ E_BREAKABLE_DEBRIS = 0x80,
 } EntityIDs;
 
-u16 LimitAngleChange(u16 delta, u16 base, u16 target);
 void EntityExplosionVariants(Entity* entity);
 void EntityGreyPuff(Entity* entity);
 
 /*** Initializers ***/
 extern EInit OVL_EXPORT(EInitBreakable);
-extern EInit g_EInitObtainable;
+extern EInit OVL_EXPORT(EInitObtainable);
 extern EInit g_EInitSpawner;
 extern EInit g_EInitInteractable;
 extern EInit g_EInitCommon;

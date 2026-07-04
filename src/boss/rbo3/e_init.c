@@ -75,7 +75,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
 EInit OVL_EXPORT(EInitBreakable) = {
     ANIMSET_DRA(3), 0x0000, 0x0000, PAL_NULL, 0x0000,
 };
-EInit g_EInitObtainable = {ANIMSET_DRA(3), 0x0000, 0x0000, PAL_NULL, 0x0001};
+EInit OVL_EXPORT(
+    EInitObtainable) = {ANIMSET_DRA(3), 0x0000, 0x0000, PAL_NULL, 0x0001};
 EInit g_EInitParticle = {ANIMSET_DRA(3), 0x0000, 0x0000, PAL_NULL, 0x0002};
 EInit D_us_80180438 = {ANIMSET_DRA(0), 0x0000, 0x0000, PAL_NULL, 0x0004};
 EInit g_EInitInteractable = {

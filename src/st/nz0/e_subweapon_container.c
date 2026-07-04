@@ -274,7 +274,7 @@ void func_801C7884(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitObtainable);
+        InitializeEntity(OVL_EXPORT(EInitObtainable));
         self->hitboxState = 0;
         /* fallthrough */
     case 1:
