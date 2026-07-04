@@ -16,7 +16,7 @@ typedef enum {
     CSOP_SCRIPT_UNKNOWN_11,
     CSOP_SET_END,
     CSOP_SCRIPT_UNKNOWN_13,
-    CSOP_SCRIPT_UNKNOWN_14,
+    CSOP_SCRIPT_SWITCH,
     CSOP_SCRIPT_UNKNOWN_15,
     CSOP_WAIT_FOR_FLAG,
     CSOP_SET_FLAG,
@@ -48,6 +48,7 @@ enum ActorNameIndices {
 
 #define script_half(x) (((x) & 0xFF0) >> 4), ((x) & 0xFF)
 #define script_word(x) (x & 0xFF000) >> 12, (x & 0xFF00) >> 8, script_half(x)
+#define SCRIPT_CASE(x) script_word(x)
 
 #define END_CUTSCENE() CSOP_END_CUTSCENE
 #define LINE_BREAK() CSOP_LINE_BREAK
@@ -62,8 +63,7 @@ enum ActorNameIndices {
 #define WAIT_FOR_SOUND() CSOP_WAIT_FOR_SOUND
 #define SCRIPT_UNKNOWN_11() CSOP_SCRIPT_UNKNOWN_11
 #define SET_END(x) CSOP_SET_END, script_word(x)
-#define SCRIPT_UNKNOWN_14(x, y, z)                                             \
-    CSOP_SCRIPT_UNKNOWN_14, script_word(x), script_word(y), script_word(z)
+#define SCRIPT_SWITCH(x) CSOP_SCRIPT_SWITCH, script_word(x)
 #define SCRIPT_UNKNOWN_15(x) CSOP_SCRIPT_UNKNOWN_15, script_word(x)
 #define WAIT_FOR_FLAG(x) CSOP_WAIT_FOR_FLAG, x
 #define SET_FLAG(x) CSOP_SET_FLAG, x

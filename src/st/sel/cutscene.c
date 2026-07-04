@@ -135,7 +135,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
     u32 ptr;
     switch (self->step) {
     case 0:
-        if (SetCutsceneScript(D_8018B304)) {
+        if (SetCutsceneScript(OVL_EXPORT(cutscene_endings))) {
             self->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
             self->primIndex = g_Dialogue.primIndex[2];
             D_801BC3E8 = 0;
@@ -154,11 +154,10 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
             }
             nextChar = *g_Dialogue.scriptCur++;
             switch (nextChar) {
-            case 0:
+            case CSOP_END_CUTSCENE:
                 self->step = 7;
                 return;
-
-            case 1:
+            case CSOP_LINE_BREAK:
                 if (g_SkipCutscene) {
                     continue;
                 }
@@ -186,19 +185,16 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                     self->step++;
                 }
                 return;
-
-            case 2:
+            case CSOP_SET_SPEED:
                 g_Dialogue.unk17 = *g_Dialogue.scriptCur++;
                 continue;
-
-            case 3:
+            case CSOP_SET_WAIT:
                 g_Dialogue.nextCharTimer = *g_Dialogue.scriptCur++;
                 if (g_SkipCutscene) {
                     continue;
                 }
                 return;
-
-            case 4:
+            case CSOP_HIDE_DIALOG:
                 if (g_SkipCutscene) {
                     continue;
                 }
@@ -208,8 +204,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                     prim = prim->next;
                 }
                 return;
-
-            case 5:
+            case CSOP_SET_PORTRAIT:
                 if (g_SkipCutscene) {
                     g_Dialogue.scriptCur += 2;
                     continue;
@@ -244,8 +239,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 g_Dialogue.portraitAnimTimer = 6;
                 self->step = 3;
                 return;
-
-            case 6:
+            case CSOP_NEXT_DIALOG:
                 if (g_SkipCutscene) {
                     continue;
                 }
@@ -259,8 +253,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 g_Dialogue.portraitAnimTimer = 6;
                 self->step = 4;
                 return;
-
-            case 7:
+            case CSOP_SET_POS:
                 if (g_SkipCutscene) {
                     g_Dialogue.scriptCur += 2;
                     continue;
@@ -279,16 +272,14 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 self->step = 5;
                 self->step_s = 0;
                 return;
-
-            case 8:
+            case CSOP_CLOSE_DIALOG:
                 if (g_SkipCutscene) {
                     continue;
                 }
                 g_Dialogue.portraitAnimTimer = 24;
                 self->step = 6;
                 return;
-
-            case 9:
+            case CSOP_PLAY_SOUND:
                 if (g_SkipCutscene) {
                     g_Dialogue.scriptCur += 2;
                     continue;
@@ -298,22 +289,19 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 nextChar |= *g_Dialogue.scriptCur++;
                 g_api.PlaySfx(nextChar);
                 continue;
-
-            case 10:
+            case CSOP_WAIT_FOR_SOUND:
                 if (g_SkipCutscene || g_api.func_80131F68() != false) {
                     continue;
                 }
                 g_Dialogue.scriptCur--;
                 return;
-
-            case 11:
+            case CSOP_SCRIPT_UNKNOWN_11:
                 if (g_SkipCutscene || g_api.func_80131F68() != true) {
                     continue;
                 }
                 g_Dialogue.scriptCur--;
                 return;
-
-            case 12:
+            case CSOP_SET_END:
                 ptr = *g_Dialogue.scriptCur++;
                 ptr <<= 4;
                 ptr |= *g_Dialogue.scriptCur++;
@@ -323,11 +311,9 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 ptr |= *g_Dialogue.scriptCur++;
                 SetCutsceneEnd((u8*)ptr);
                 continue;
-
-            case 13:
+            case CSOP_SCRIPT_UNKNOWN_13:
                 continue;
-
-            case 14:
+            case CSOP_SCRIPT_SWITCH:
                 ptr = *g_Dialogue.scriptCur++;
                 ptr <<= 4;
                 ptr |= *g_Dialogue.scriptCur++;
@@ -345,8 +331,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 ptr |= *g_Dialogue.scriptCur;
                 g_Dialogue.scriptCur = (u8*)(ptr + 0x100000);
                 continue;
-
-            case 15:
+            case CSOP_SCRIPT_UNKNOWN_15:
                 ptr = *g_Dialogue.scriptCur++;
                 ptr <<= 4;
                 ptr |= *g_Dialogue.scriptCur++;
@@ -356,8 +341,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 ptr |= *g_Dialogue.scriptCur;
                 g_Dialogue.scriptCur = (u8*)(ptr + 0x100000);
                 continue;
-
-            case 16:
+            case CSOP_WAIT_FOR_FLAG:
                 if (!((D_801BC3E8 >> *g_Dialogue.scriptCur) & 1)) {
                     g_Dialogue.scriptCur--;
                     return;
@@ -365,16 +349,13 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 D_801BC3E8 &= ~(1 << *g_Dialogue.scriptCur);
                 g_Dialogue.scriptCur++;
                 continue;
-
-            case 17:
+            case CSOP_SET_FLAG:
                 D_801BC3E8 |= 1 << *g_Dialogue.scriptCur++;
                 continue;
-
-            case 18:
+            case CSOP_SCRIPT_UNKNOWN_18:
                 g_Dialogue.unk3C = 0;
                 continue;
-
-            case 19:
+            case CSOP_LOAD_PORTRAIT:
                 if (g_SkipCutscene) {
                     g_Dialogue.scriptCur += 5;
                     continue;
@@ -391,35 +372,29 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 LoadTPage((u_long*)ptr, 1, 0, D_80180834[nextChar2], 0x100,
                           0x30, 0x48);
                 continue;
-
-            case 20:
+            case CSOP_SCRIPT_UNKNOWN_20:
                 nextChar = *g_Dialogue.scriptCur++;
                 nextChar <<= 4;
                 nextChar |= *g_Dialogue.scriptCur++;
                 g_api.PlaySfx(nextChar);
                 continue;
-
-            case 21:
+            case CSOP_SCRIPT_UNKNOWN_21:
                 D_801BC3E8 = 0;
                 g_SkipCutscene = 0;
                 D_801D6B00 = 0;
                 continue;
-
-            case 22:
+            case CSOP_SCRIPT_UNKNOWN_22:
                 D_801BC3E8 &= ~(1 << *g_Dialogue.scriptCur++);
                 continue;
-
-            case 23:
+            case CSOP_SCRIPT_UNKNOWN_23:
                 return;
-
-            case 24:
+            case CSOP_WAIT_FOR_FLAG_RESET:
                 if (!((D_801BC3E8 >> *g_Dialogue.scriptCur) & 1)) {
                     g_Dialogue.scriptCur--;
                     return;
                 }
                 g_Dialogue.scriptCur++;
                 continue;
-
             default:
                 if (g_SkipCutscene) {
                     g_Dialogue.scriptCur++;
@@ -678,7 +653,6 @@ s32 func_801B79D4(Entity* entity) {
             }
         }
         break;
-
     case 1:
         if (!LOHU(g_Dialogue.nextCharY)) {
             break;
@@ -693,7 +667,6 @@ s32 func_801B79D4(Entity* entity) {
             entity->step = 7;
             g_Dialogue.unk12 = 0x400;
             return 0;
-
         case 1:
             g_Dialogue.startY = g_Dialogue.nextCharX + *g_Dialogue.scriptCur++;
             g_Dialogue.nextLineX++;
@@ -702,7 +675,6 @@ s32 func_801B79D4(Entity* entity) {
             }
             g_Dialogue.nextCharY = 0;
             return 0;
-
         case 2:
             g_Dialogue.startY = g_Dialogue.nextCharX + *g_Dialogue.scriptCur++;
             g_Dialogue.nextLineX++;
@@ -729,7 +701,6 @@ s32 func_801B79D4(Entity* entity) {
             g_Dialogue.portraitAnimTimer += 6;
             g_Dialogue.nextCharY = 0;
             return 0;
-
         case 3:
             g_Dialogue.startY = g_Dialogue.nextCharX + *g_Dialogue.scriptCur++;
             g_Dialogue.nextLineX++;
@@ -755,7 +726,6 @@ s32 func_801B79D4(Entity* entity) {
             g_Dialogue.portraitAnimTimer += 12;
             g_Dialogue.nextCharY = 0;
             return 0;
-
         default:
             if (nextChar & 0x80) {
                 nextChar <<= 8;
@@ -785,10 +755,8 @@ s32 func_801B79D4(Entity* entity) {
             break;
         }
         break;
-
     case 2:
         break;
-
     case 7:
         if (!--g_Dialogue.unk12) {
             return 1;

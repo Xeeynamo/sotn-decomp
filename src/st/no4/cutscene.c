@@ -438,7 +438,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                     continue;
                 case CSOP_SCRIPT_UNKNOWN_13:
                     continue;
-                case CSOP_SCRIPT_UNKNOWN_14:
+                case CSOP_SCRIPT_SWITCH:
                     continue;
                 case CSOP_SCRIPT_UNKNOWN_15:
                     continue;

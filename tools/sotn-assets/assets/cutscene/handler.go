@@ -10,6 +10,7 @@ import (
 	"strings"
 
 	"github.com/goccy/go-yaml"
+	"github.com/goccy/go-yaml/ast"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
@@ -48,8 +49,22 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 	return util.WriteFile(assetPath(e.AssetDir, e.Name), []byte(yaml))
 }
 
+type scriptRow []string
+
+// skip conversion of hex values into decimals
+func (r *scriptRow) UnmarshalYAML(node ast.Node) error {
+	seq, ok := node.(*ast.SequenceNode)
+	if !ok {
+		return fmt.Errorf("expected sequence, got %T", node)
+	}
+	for _, n := range seq.Values {
+		*r = append(*r, n.GetToken().Value)
+	}
+	return nil
+}
+
 type scriptSrc struct {
-	Script [][]string `yaml:"script"`
+	Script []scriptRow `yaml:"script"`
 }
 
 func (h *handler) Build(e assets.BuildArgs) error {
@@ -107,6 +122,17 @@ func (h *handler) Build(e assets.BuildArgs) error {
 			return fmt.Errorf("script %q does not have a command", args[0])
 		}
 		sb.WriteString(args[0])
+		if op == "SCRIPT_SWITCH" {
+			sb.WriteString("(")
+			sb.WriteString(args[1])
+			sb.WriteString("),\n")
+			for _, arg := range args[2:] {
+				sb.WriteString("    SCRIPT_CASE(")
+				sb.WriteString(arg)
+				sb.WriteString("),\n")
+			}
+			continue
+		}
 		sb.WriteString("(")
 		if len(cmd.params) != len(args)-1 {
 			return fmt.Errorf("command %q at line %d expects %d arguments but got %d",
@@ -156,7 +182,7 @@ var commandDefinitions = []cmdDef{
 	{name: "SCRIPT_UNKNOWN_11", params: []int{}},
 	{name: "SET_END", params: []int{4}},
 	{name: "SCRIPT_UNKNOWN_13", params: []int{}},
-	{name: "SCRIPT_UNKNOWN_14", params: []int{4, 4, 4}},
+	{name: "SCRIPT_SWITCH", params: []int{4, 4, 4}},
 	{name: "SCRIPT_UNKNOWN_15", params: []int{4}},
 	{name: "WAIT_FOR_FLAG", params: []int{1}},
 	{name: "SET_FLAG", params: []int{1}},
@@ -214,6 +240,23 @@ func parseScript(r io.ReadSeeker, baseAddr, addr psx.Addr, length int) ([][]stri
 		if op < len(commandDefinitions) {
 			flushText()
 			command := []string{commandDefinitions[op].name}
+			if op == 14 {
+				// special case for opcode 14, where the parameter list is dynamic
+				command = append(command, "0x"+strconv.FormatInt(int64(read4(r)), 16)) // condition offset
+				// poke next 4 bytes and verify if it is a pointer
+				for {
+					b := make([]byte, 4)
+					_, _ = r.Read(b)
+					_, _ = r.Seek(-4, io.SeekCurrent)
+					if b[0]&0x0F != (b[1]>>4) || b[1]&0x0F != (b[2]>>4) || b[2]&0x0F != (b[3]>>4) {
+						// pointer invalid, we reached out the end of the op14 statement
+						break
+					}
+					command = append(command, "0x"+strconv.FormatInt(int64(read4(r)), 16))
+				}
+				script = append(script, command)
+				continue
+			}
 			for _, param := range commandDefinitions[op].params {
 				switch param {
 				case 1:
