@@ -90,7 +90,7 @@ segments:
       - [0x22908, data]
       - [0x22968, .data, rno3/collision]
       - [0x22D40, .data, rno3_psp/unk_13E00]
-      - [0x22D80, data]
+      - [0x22DA0, data]
       - [0x22E20, .data, rno3/e_room_fg]
       - [0x22EC0, .data, rno3/e_nova_skeleton]
       - [0x23030, .data, rno3/e_orobourous]
