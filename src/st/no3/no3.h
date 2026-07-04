@@ -122,23 +122,23 @@ typedef enum EntityIDs {
 
 extern Primitive* FindFirstUnkPrim(Primitive* poly);
 
-extern u16 g_EInitObtainable[];
-extern u16 g_EInitParticle[];
-extern u16 g_EInitSpawner[];
-extern u16 g_EInitInteractable[];
-extern u16 g_EInitLockCamera[];
-extern u16 g_EInitCommon[];
-extern u16 g_EInitStInteractable[];
-extern u16 g_EInitFireWarg1[];
-extern u16 g_EInitFireWarg2[];
-extern u16 g_EInitFireWarg3[];
-extern u16 g_EInitWaterObject[];
-extern u16 g_EInitWaterSplash[];
-extern u16 g_EInitMerman[];
-extern u16 g_EInitMermanFireball[];
-extern u16 g_EInitBat[];
-extern u16 g_EInitWarg[];
-extern u16 g_EInitZombie[];
+extern EInit OVL_EXPORT(EInitObtainable);
+extern EInit g_EInitParticle;
+extern EInit g_EInitSpawner;
+extern EInit g_EInitInteractable;
+extern EInit g_EInitLockCamera;
+extern EInit g_EInitCommon;
+extern EInit g_EInitStInteractable;
+extern EInit g_EInitFireWarg1;
+extern EInit g_EInitFireWarg2;
+extern EInit g_EInitFireWarg3;
+extern EInit g_EInitWaterObject;
+extern EInit g_EInitWaterSplash;
+extern EInit g_EInitMerman;
+extern EInit g_EInitMermanFireball;
+extern EInit g_EInitBat;
+extern EInit g_EInitWarg;
+extern EInit g_EInitZombie;
 
 extern s16 g_WaterXTbl[];
 

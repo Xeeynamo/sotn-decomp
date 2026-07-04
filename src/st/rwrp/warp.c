@@ -364,7 +364,7 @@ void EntityRWarpRoom(Entity* self) {
     }
 }
 
-extern u16 g_EInitReverseSmallRocks[];
+extern EInit g_EInitReverseSmallRocks;
 
 void EntityWarpSmallRocks(Entity* entity) {
     s32 x;

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-extern u16 g_EInitInteractable[];
+extern EInit g_EInitInteractable;
 
 SVECTOR v0 = {-8, -8, 0};
 SVECTOR v1 = {8, -8, 0};

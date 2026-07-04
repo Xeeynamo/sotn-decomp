@@ -23,8 +23,8 @@ typedef enum {
     BONE_SCIMITAR_WALK_LEFT
 } BoneScimitarSpecialSubSteps;
 
-extern u16 g_EInitBoneScimitar[];
-extern u16 g_EInitScimitarParts[];
+extern EInit g_EInitBoneScimitar;
+extern EInit g_EInitScimitarParts;
 
 // Flag for special bone scimitar to appear or not
 static bool spawn_special = false;

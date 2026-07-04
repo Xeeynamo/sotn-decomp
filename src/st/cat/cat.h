@@ -134,7 +134,7 @@ extern EInit g_EInitEnvironment;
 extern EInit g_EInitGremlin;
 extern EInit g_EInitGremlinFire;
 extern EInit g_EInitLockCamera;
-extern EInit g_EInitObtainable;
+extern EInit OVL_EXPORT(EInitObtainable);
 extern EInit g_EInitWereskeleton;
 extern EInit D_us_80180A88;
 

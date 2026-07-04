@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stage.h>
 
-extern u16 g_EInitSpawner[];
+extern EInit g_EInitSpawner;
 extern u8 D_us_80180690[];
 extern u8 D_us_801806A4[];
 extern u8 D_us_801806B8[];
