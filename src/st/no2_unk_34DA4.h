@@ -159,8 +159,8 @@ void func_us_801B4DA4(Entity* self) {
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
         prim->priority = 0x142;
-        prim->drawMode =
-            DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+        prim->drawMode = DRAW_DITHERING | DRAW_TPAGE2 | DRAW_TPAGE |
+                         DRAW_COLORS | DRAW_TRANSP;
         break;
     }
 }

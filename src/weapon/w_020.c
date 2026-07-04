@@ -380,7 +380,7 @@ static void EntityWeaponAttack(Entity* self) {
     prim->y2 = prim->y3 = 0xF0;
 
     prim->drawMode =
-        DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+        DRAW_DITHERING | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
     prim = prim->next;
     prim->clut = sp60;
     prim = prim->next;

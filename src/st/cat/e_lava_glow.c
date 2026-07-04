@@ -44,7 +44,7 @@ void EntityLavaGlow(Entity* self) {
                 prim->g2 = 0x50;
                 LOW(prim->r3) = LOW(prim->r2);
                 prim->priority = 0xD0;
-                prim->drawMode = DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE |
+                prim->drawMode = DRAW_DITHERING | DRAW_TPAGE2 | DRAW_TPAGE |
                                  DRAW_COLORS | DRAW_TRANSP;
                 prim = prim->next;
             }

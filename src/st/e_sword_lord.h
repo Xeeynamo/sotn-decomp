@@ -67,7 +67,7 @@ static u8 func_us_801CF57C(u8 step, Primitive* prim) {
             prim->u1 = prim->u3 = 0x7F;
             prim->v0 = prim->v1 = 0xC0;
             prim->v2 = prim->v3 = 0xFF;
-            prim->drawMode |= DRAW_UNK_400;
+            prim->drawMode |= DRAW_DITHERING;
             prim->next->b3 = 0x40;
             step++;
         }

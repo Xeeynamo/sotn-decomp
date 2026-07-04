@@ -261,7 +261,7 @@ void RenderPrimitives(void) {
             if (prim->y0 < -512 || prim->y0 > 512) {
                 continue;
             }
-            if (prim->drawMode & DRAW_UNK_400) {
+            if (prim->drawMode & DRAW_DITHERING) {
                 dtd = true;
                 if (!unkBool) {
                     SetDrawMode(r->dr, 0, 0, 0, rect);

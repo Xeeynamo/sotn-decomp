@@ -1028,8 +1028,8 @@ void func_us_801C2850(Entity* self) {
         prim->x1 = prim->x3 = 0x120 - scrollX;
         prim->y0 = prim->y1 = var_s4;
         prim->y2 = prim->y3 = var_s3;
-        prim->drawMode = DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
-                         DRAW_UNK02 | DRAW_TRANSP;
+        prim->drawMode = DRAW_DITHERING | DRAW_TPAGE2 | DRAW_TPAGE |
+                         DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
         prim = prim->next;
 
         // Prim 2
@@ -1040,8 +1040,8 @@ void func_us_801C2850(Entity* self) {
         prim->x1 = prim->x3 = 0x80 - scrollX;
         prim->y0 = prim->y1 = var_s4;
         prim->y2 = prim->y3 = var_s3;
-        prim->drawMode = DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
-                         DRAW_UNK02 | DRAW_TRANSP;
+        prim->drawMode = DRAW_DITHERING | DRAW_TPAGE2 | DRAW_TPAGE |
+                         DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
         prim = prim->next;
 
         // Prim 3
@@ -1052,8 +1052,8 @@ void func_us_801C2850(Entity* self) {
         prim->x1 = prim->x3 = 0x180 - scrollX;
         prim->y0 = prim->y1 = var_s4;
         prim->y2 = prim->y3 = var_s3;
-        prim->drawMode = DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
-                         DRAW_UNK02 | DRAW_TRANSP;
+        prim->drawMode = DRAW_DITHERING | DRAW_TPAGE2 | DRAW_TPAGE |
+                         DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
         prim = prim->next;
     }
 

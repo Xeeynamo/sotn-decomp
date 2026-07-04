@@ -152,7 +152,7 @@ static void SpawnDeathParts(void) {
                 prim->v1 = 0;
 
                 prim->priority = g_CurrentEntity->zPriority + 1;
-                prim->drawMode = DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE |
+                prim->drawMode = DRAW_DITHERING | DRAW_TPAGE2 | DRAW_TPAGE |
                                  DRAW_UNK02 | DRAW_TRANSP;
                 prim = prim->next;
                 i++;
@@ -446,7 +446,7 @@ void EntityHellfireBeast(Entity* self) {
             LOW(prim->r2) = LOW(prim->r0);
             LOW(prim->r3) = LOW(prim->r0);
             prim->drawMode = DRAW_TRANSP | DRAW_UNK02 | DRAW_COLORS |
-                             DRAW_TPAGE | DRAW_TPAGE2 | DRAW_UNK_400;
+                             DRAW_TPAGE | DRAW_TPAGE2 | DRAW_DITHERING;
             self->ext.hellfireBeast.timer = 0x20;
             self->step_s++;
             break;

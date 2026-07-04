@@ -1910,7 +1910,7 @@ void func_us_80176BF8(Entity* self) {
             prim->g2 = prim->g3 = (i * 14) + 8;
             prim->b2 = prim->b3 = (i * 8) + 8;
             prim->drawMode =
-                DRAW_UNK_400 | DRAW_UNK_100 | DRAW_UNK_40 | DRAW_TPAGE2 |
+                DRAW_DITHERING | DRAW_UNK_100 | DRAW_UNK_40 | DRAW_TPAGE2 |
                 DRAW_TPAGE | DRAW_HIDE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
             prim = prim->next;
         }

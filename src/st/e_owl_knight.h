@@ -448,7 +448,7 @@ u8 OwlKnightDeathAnim(void) {
                 PGRN(prim) = 0x80;
                 PBLU(prim) = 0x80;
                 prim->priority = g_CurrentEntity->zPriority;
-                prim->drawMode = DRAW_UNK_400 | DRAW_COLORS | DRAW_UNK02;
+                prim->drawMode = DRAW_DITHERING | DRAW_COLORS | DRAW_UNK02;
                 prim->p2 = 0;
                 prim = prim->next;
             }

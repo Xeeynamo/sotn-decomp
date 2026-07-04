@@ -194,7 +194,7 @@ void RicEntityCrashReboundStoneExplosion(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 0x10; i++) {
             prim->priority = 0xC2;
-            prim->drawMode = DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE |
+            prim->drawMode = DRAW_DITHERING | DRAW_TPAGE2 | DRAW_TPAGE |
                              DRAW_COLORS | DRAW_TRANSP;
             prim->x0 = prim->x1 = 0x80;
             prim->y0 = prim->y1 = 0;
@@ -364,7 +364,7 @@ void RicEntityCrashBibleBeam(Entity* self) {
             prim->x2 = prim->x3 = bible_pages_pos[var_s3].x;
             prim->y2 = prim->y3 = bible_pages_pos[var_s3].y;
             prim->priority = 0xC2;
-            prim->drawMode = DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE |
+            prim->drawMode = DRAW_DITHERING | DRAW_TPAGE2 | DRAW_TPAGE |
                              DRAW_COLORS | DRAW_TRANSP;
             prim = prim->next;
         }
@@ -823,8 +823,9 @@ void RicEntityCrashStopwatchDoneSparkle(Entity* self) {
 
         prim = prim->next;
         prim->priority = 0xC2;
-        prim->drawMode = DRAW_UNK_400 | DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
-                         DRAW_HIDE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
+        prim->drawMode =
+            DRAW_DITHERING | DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+            DRAW_HIDE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
         prim->tpage = 0x1A;
         prim->clut = PAL_UNK_19F;
         prim->u0 = prim->u2 = 0xB;
@@ -837,8 +838,9 @@ void RicEntityCrashStopwatchDoneSparkle(Entity* self) {
 
         prim = prim->next;
         prim->priority = 0xC2;
-        prim->drawMode = DRAW_UNK_400 | DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
-                         DRAW_HIDE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
+        prim->drawMode =
+            DRAW_DITHERING | DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+            DRAW_HIDE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
         prim->tpage = 0x1A;
         prim->clut = PAL_UNK_19F;
         prim->u0 = prim->u2 = 0xB;
@@ -1526,7 +1528,7 @@ void RicEntitySubwpnStopwatchCircle(Entity* self) {
             prim->tpage = 0x1A;
             prim->clut = PAL_FILL_WHITE;
             prim->priority = self->zPriority = 0xC2;
-            prim->drawMode = DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE |
+            prim->drawMode = DRAW_DITHERING | DRAW_TPAGE2 | DRAW_TPAGE |
                              DRAW_COLORS | DRAW_TRANSP;
             psp_s4 = i * 0x100;
             prim->u0 = ((rsin(psp_s4) << 5) >> 0xC) + 0x20;

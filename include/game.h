@@ -84,7 +84,7 @@ typedef enum {
     DRAW_MENU = 0x80,       // render only if D_800973EC is set
     DRAW_UNK_100 = 0x100,   // unknown
     DRAW_UNK_200 = 0x200,   // unknown
-    DRAW_UNK_400 = 0x400,   // unknown
+    DRAW_DITHERING = 0x400, // enable PS1 dithering via DTD flag
     DRAW_UNK_800 = 0x800,   // unknown
     DRAW_UNK_1000 = 0x1000, // unknown
     DRAW_ABSPOS = 0x2000,   // use absolute coordinates with DRAW_MENU

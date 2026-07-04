@@ -378,7 +378,7 @@ void func_us_801AFA80(Entity* self) {
         ptr = D_us_80180E68[self->params];
         for (i = 0; i < 4; i++) {
             for (j = 0; j < 4; j++) {
-                prim->drawMode = DRAW_UNK_400 | DRAW_COLORS;
+                prim->drawMode = DRAW_DITHERING | DRAW_COLORS;
                 prim->x0 = prim->x2 = posX + (j * 0x78) - 0xF0;
                 if (prim->x0 > 0x100) {
                     prim->drawMode = DRAW_HIDE;

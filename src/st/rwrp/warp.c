@@ -123,7 +123,7 @@ void EntityRWarpRoom(Entity* self) {
             prim->tpage = 0x1A;
             prim->clut = PAL_FILL_WHITE;
             prim->priority = 0x40;
-            prim->drawMode = DRAW_UNK02 | DRAW_COLORS | DRAW_UNK_400;
+            prim->drawMode = DRAW_UNK02 | DRAW_COLORS | DRAW_DITHERING;
             prim = prim->next;
         }
 

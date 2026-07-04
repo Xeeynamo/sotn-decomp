@@ -1887,15 +1887,15 @@ void UpdateSubEntityUseLifeApple(Entity* self) {
 
         prim->r1 = prim->r3 = prim->g1 = prim->g3 = prim->b1 = prim->b3 = 0xFF;
         prim->priority = 0x1C0;
-        prim->drawMode =
-            DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+        prim->drawMode = DRAW_DITHERING | DRAW_TPAGE2 | DRAW_TPAGE |
+                         DRAW_COLORS | DRAW_TRANSP;
 
         prim = prim->next;
 
         prim->r1 = prim->r3 = prim->g1 = prim->g3 = prim->b1 = prim->b3 = 0xFF;
         prim->priority = 0x1C0;
-        prim->drawMode =
-            DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+        prim->drawMode = DRAW_DITHERING | DRAW_TPAGE2 | DRAW_TPAGE |
+                         DRAW_COLORS | DRAW_TRANSP;
 
         for (i = 0; i < 8; i++) {
             prim = prim->next;
@@ -1906,7 +1906,7 @@ void UpdateSubEntityUseLifeApple(Entity* self) {
             prim->y2 = (rsin(i << 8) * 3) << 5 >> 0xC;
             prim->y3 = (rsin((i + 1) << 8) * 3) << 5 >> 0xC;
             prim->priority = 0x1C0;
-            prim->drawMode = DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE |
+            prim->drawMode = DRAW_DITHERING | DRAW_TPAGE2 | DRAW_TPAGE |
                              DRAW_COLORS | DRAW_TRANSP;
         }
         self->ext.faerieLifeApple.primX = 0x10;

@@ -1810,9 +1810,9 @@ void func_us_801B245C(Primitive* arg0, u16 arg1, u16 arg2, u16 arg3, u16 arg4,
 
         if (arg6) {
             arg0->drawMode =
-                DRAW_UNK_400 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+                DRAW_DITHERING | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
         } else {
-            arg0->drawMode = DRAW_UNK_400 | DRAW_COLORS;
+            arg0->drawMode = DRAW_DITHERING | DRAW_COLORS;
         }
         arg0 = arg0->next;
     }
@@ -3292,7 +3292,7 @@ void func_us_801B5068(Entity* self) {
                 prim->y2 = prim->y3 = prim->y0 + 0x16;
                 if (i) {
                     prim->drawMode =
-                        DRAW_UNK_400 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+                        DRAW_DITHERING | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
                     func_us_801B1200(otherPrim, prim);
                 } else {
                     prim->drawMode = DRAW_DEFAULT;
@@ -3311,7 +3311,7 @@ void func_us_801B5068(Entity* self) {
                 prim->y2 = prim->y3 = offset + 0xD4;
                 if (i) {
                     prim->drawMode =
-                        DRAW_UNK_400 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+                        DRAW_DITHERING | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
                     func_us_801B1200(otherPrim, prim);
                 } else {
                     prim->drawMode = DRAW_DEFAULT;
@@ -3331,7 +3331,7 @@ void func_us_801B5068(Entity* self) {
             prim->y2 = prim->y3 = offset + 0xD4;
             if (i) {
                 prim->drawMode =
-                    DRAW_UNK_400 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+                    DRAW_DITHERING | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
                 func_us_801B1200(otherPrim, prim);
             } else {
                 prim->drawMode = DRAW_DEFAULT;
@@ -3394,7 +3394,7 @@ void func_us_801B5068(Entity* self) {
             prim->y2 = prim->y3 = offset + 0xD4;
             if (i) {
                 prim->drawMode =
-                    DRAW_UNK_400 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+                    DRAW_DITHERING | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
                 func_us_801B1200(otherPrim, prim);
             } else {
                 prim->drawMode = DRAW_DEFAULT;

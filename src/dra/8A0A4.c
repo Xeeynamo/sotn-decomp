@@ -28,7 +28,7 @@ void EntityStopWatchExpandingCircle(Entity* self) {
             prim->tpage = 0x1A;
             prim->clut = PAL_FILL_WHITE;
             prim->priority = self->zPriority = 0xC2;
-            prim->drawMode = DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE |
+            prim->drawMode = DRAW_DITHERING | DRAW_TPAGE2 | DRAW_TPAGE |
                              DRAW_COLORS | DRAW_TRANSP;
             angle = i << 8;
             prim->u0 = ((rsin(angle) << 5) >> 0xC) + 0x20;

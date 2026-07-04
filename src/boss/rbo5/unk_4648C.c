@@ -2733,7 +2733,7 @@ void EntityGravityBootBeam(Entity* self) {
             prim->b3 = 0x40;
 
             prim->priority = DOPPLEGANGER.zPriority - 2;
-            prim->drawMode = DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE |
+            prim->drawMode = DRAW_DITHERING | DRAW_TPAGE2 | DRAW_TPAGE |
                              DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
         }
         self->step++;
@@ -3490,7 +3490,7 @@ Primitive* func_80121F58(bool arg0, s32 arg1, Primitive* arg2, s16 facingLeft) {
         }
         arg2->clut = 0x20F;
         arg2->priority = DOPPLEGANGER.zPriority + 2;
-        arg2->drawMode = DRAW_UNK_400 | DRAW_UNK_100 | DRAW_TPAGE2 |
+        arg2->drawMode = DRAW_DITHERING | DRAW_UNK_100 | DRAW_TPAGE2 |
                          DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
         arg2 = arg2->next;
     } else {
@@ -3529,7 +3529,7 @@ Primitive* func_80121F58(bool arg0, s32 arg1, Primitive* arg2, s16 facingLeft) {
             arg2->clut = 0x20F;
             arg2->priority = DOPPLEGANGER.zPriority + 4;
             arg2->drawMode =
-                DRAW_UNK_400 | DRAW_UNK_100 | DRAW_TPAGE2 | DRAW_TPAGE |
+                DRAW_DITHERING | DRAW_UNK_100 | DRAW_TPAGE2 | DRAW_TPAGE |
                 DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
             arg2 = arg2->next;
         }

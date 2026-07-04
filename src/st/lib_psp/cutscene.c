@@ -705,10 +705,10 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 g_Dialogue.primIndex[0] = -1;
                 prim = g_Dialogue.prim[LEN(g_Dialogue.prim) - 1];
                 prim = prim->next;
-                prim->drawMode = DRAW_UNK_400 | DRAW_TPAGE | DRAW_TRANSP;
+                prim->drawMode = DRAW_DITHERING | DRAW_TPAGE | DRAW_TRANSP;
                 prim = prim->next;
                 prim->drawMode =
-                    DRAW_UNK_400 | DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
+                    DRAW_DITHERING | DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
                 self->step_s++;
             }
             break;

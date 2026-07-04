@@ -572,7 +572,7 @@ void EntityCutscenePhotograph(Entity* self) {
             LOW(prim->r2) = LOW(prim->r0);
             LOW(prim->r3) = LOW(prim->r0);
             prim->priority = 0x1F8;
-            prim->drawMode = DRAW_UNK_400 | DRAW_COLORS;
+            prim->drawMode = DRAW_DITHERING | DRAW_COLORS;
         }
 
         prim = self->ext.prim;
@@ -622,7 +622,7 @@ void EntityCutscenePhotograph(Entity* self) {
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
         prim->priority = 0x1F8;
-        prim->drawMode = DRAW_UNK_400 | DRAW_COLORS;
+        prim->drawMode = DRAW_DITHERING | DRAW_COLORS;
         prim = prim->next;
         self->step++;
         // Fallthrough!
