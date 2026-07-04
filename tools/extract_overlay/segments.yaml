@@ -100,9 +100,9 @@ e_blue_venus_weed:
   - SetupPrimsForEntitySpriteParts
   - EntityVenusWeed
   - EntityVenusWeedFlower
-  - func_us_801C5850 # rno3
+  - EntityVenusWeedFlower # rno3
   - EntityVenusWeedTendril
-  - func_us_801C5F40 # rno3
+  - EntityVenusWeedTendril # rno3
   - EntityVenusWeedDart
   - func_us_801D7940 # rno4
   - EntityVenusWeedSpike
