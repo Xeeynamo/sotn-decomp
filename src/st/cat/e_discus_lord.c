@@ -192,7 +192,7 @@ void EntityDiscusLord(Entity* self) {
                 prim->v0 = prim->v1 = 0xC0;
                 prim->v2 = prim->v3 = 0xFF;
                 prim->priority = self->zPriority - 1;
-                prim->drawMode = DRAW_UNK_400 | DRAW_COLORS | DRAW_UNK02;
+                prim->drawMode = DRAW_DITHERING | DRAW_COLORS | DRAW_UNK02;
                 prim->next->x1 = self->posX.i.hi;
                 prim->next->y0 = self->posY.i.hi;
                 LOH(prim->next->r2) = 0;

@@ -76,7 +76,7 @@ void EntitySpikeRoomLightSwitch(Entity* self) {
                     PGREY(prim, 2) = 0;
                     LOW(prim->r3) = LOW(prim->r2);
                     prim->priority = 0xD1;
-                    prim->drawMode = DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE |
+                    prim->drawMode = DRAW_DITHERING | DRAW_TPAGE2 | DRAW_TPAGE |
                                      DRAW_UNK02 | DRAW_TRANSP;
                 }
             } else {

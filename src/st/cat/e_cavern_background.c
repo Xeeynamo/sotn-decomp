@@ -54,7 +54,7 @@ void EntityCavernBackgroundLossoth(Entity* self) {
                 prim->u2 = prim->u0;
                 prim->u3 = prim->u1;
                 prim->priority = 0x1F;
-                prim->drawMode = DRAW_UNK_400 | DRAW_COLORS | DRAW_UNK02;
+                prim->drawMode = DRAW_DITHERING | DRAW_COLORS | DRAW_UNK02;
                 // nb. this goes unused
                 prevPrim = prim;
                 prim = prim->next;
@@ -214,7 +214,7 @@ void EntityCavernBackgroundDiscusLord(Entity* self) {
                 prim->u2 = prim->u0;
                 prim->u3 = prim->u1;
                 prim->priority = 0x1F;
-                prim->drawMode = DRAW_UNK_400 | DRAW_COLORS | DRAW_UNK02;
+                prim->drawMode = DRAW_DITHERING | DRAW_COLORS | DRAW_UNK02;
                 // nb. this goes unused
                 prevPrim = prim;
                 prim = prim->next;

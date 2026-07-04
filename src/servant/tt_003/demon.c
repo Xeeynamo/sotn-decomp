@@ -180,8 +180,8 @@ void func_us_80172EF8(Entity* self) {
         prim->tpage = 0x1A;
         prim->clut = 0x143;
         prim->priority = self->zPriority + 1;
-        prim->drawMode =
-            DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+        prim->drawMode = DRAW_DITHERING | DRAW_TPAGE2 | DRAW_TPAGE |
+                         DRAW_COLORS | DRAW_TRANSP;
         prim->u0 = prim->u2 = 0;
         prim->u1 = prim->u3 = 0x3F;
         prim->v0 = prim->v1 = 0xC0;
@@ -260,8 +260,8 @@ void func_us_80173348(Entity* self) {
         prim->tpage = 0x1A;
         prim->clut = 0x145;
         prim->priority = self->zPriority + 1;
-        prim->drawMode =
-            DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+        prim->drawMode = DRAW_DITHERING | DRAW_TPAGE2 | DRAW_TPAGE |
+                         DRAW_COLORS | DRAW_TRANSP;
         prim->u0 = prim->u2 = 0;
         prim->u1 = prim->u3 = 0x3F;
         prim->v0 = prim->v1 = 0xC0;
@@ -350,8 +350,8 @@ void func_us_801737F0(Entity* self) {
         prim->tpage = 0x1A;
         prim->clut = 0x147;
         prim->priority = self->zPriority + 1;
-        prim->drawMode =
-            DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+        prim->drawMode = DRAW_DITHERING | DRAW_TPAGE2 | DRAW_TPAGE |
+                         DRAW_COLORS | DRAW_TRANSP;
         prim->u0 = prim->u2 = 0;
         prim->u1 = prim->u3 = 0x3F;
         prim->v0 = prim->v1 = 0xC0;
@@ -482,8 +482,8 @@ void func_us_80173D14(Entity* self) {
         prim->tpage = 0x1A;
         prim->clut = 0x147;
         prim->priority = self->zPriority + 1;
-        prim->drawMode =
-            DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+        prim->drawMode = DRAW_DITHERING | DRAW_TPAGE2 | DRAW_TPAGE |
+                         DRAW_COLORS | DRAW_TRANSP;
         prim->u0 = prim->u2 = 0;
         prim->u1 = prim->u3 = 0x3F;
         prim->v0 = prim->v1 = 0xC0;

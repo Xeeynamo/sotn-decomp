@@ -153,12 +153,13 @@ static void func_801030B4(bool arg0, Primitive* prim, bool arg2) {
         prim->r0 = prim->r1 = var_v1 - 16;
         prim->r2 = prim->r3 = var_v1 + 16;
         PBLU(prim) = 0;
-        prim->drawMode = DRAW_UNK_400 | DRAW_COLORS;
+        prim->drawMode = DRAW_DITHERING | DRAW_COLORS;
     } else {
         prim->b0 = prim->b1 = 96;
         prim->b2 = prim->b3 = 128;
         PRED(prim) = 0;
-        prim->drawMode = DRAW_UNK_400 | DRAW_COLORS | DRAW_TPAGE | DRAW_TRANSP;
+        prim->drawMode =
+            DRAW_DITHERING | DRAW_COLORS | DRAW_TPAGE | DRAW_TRANSP;
     }
 }
 
@@ -249,7 +250,7 @@ static s32 HandleSaveMenu(s32 arg0) {
     if (arg0 == 0) {
         if (!temp_t0) {
             prim2->drawMode = DRAW_DEFAULT;
-            prim1->drawMode = DRAW_UNK_400 | DRAW_COLORS;
+            prim1->drawMode = DRAW_DITHERING | DRAW_COLORS;
             if (D_80137E4C == 6) {
                 PlaySfx(SFX_START_SLAM_B);
             } else {
@@ -432,7 +433,7 @@ static s32 HandleSaveMenu(s32 arg0) {
 #endif
             SetTexturedPrimRect(prim2, 56, 79, 144, 0, 0, 0);
             prim2->drawMode = DRAW_DEFAULT;
-            prim1->drawMode = DRAW_UNK_400 | DRAW_COLORS;
+            prim1->drawMode = DRAW_DITHERING | DRAW_COLORS;
             prim2 = prim2->next;
             prim1 = prim1->next;
             prim2->drawMode = DRAW_DEFAULT;
@@ -543,7 +544,7 @@ static s32 HandleSaveMenu(s32 arg0) {
 
         SetTexturedPrimRect(prim2, 56, 79, 144, 0, 0, 0);
         prim2->drawMode = DRAW_DEFAULT;
-        prim1->drawMode = DRAW_UNK_400 | DRAW_COLORS;
+        prim1->drawMode = DRAW_DITHERING | DRAW_COLORS;
         prim2 = prim2->next;
         prim1 = prim1->next;
         prim2->drawMode = DRAW_DEFAULT;

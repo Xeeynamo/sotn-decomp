@@ -563,7 +563,7 @@ void EntityUnkId19(Entity* self) {
             prim->tpage = 0x1A;
             prim->clut = PAL_FILL_WHITE;
             prim->priority = 0x40;
-            prim->drawMode = DRAW_UNK_400 | DRAW_COLORS | DRAW_UNK02;
+            prim->drawMode = DRAW_DITHERING | DRAW_COLORS | DRAW_UNK02;
             prim = prim->next;
         }
         D_us_801D26D4 = 0x100;

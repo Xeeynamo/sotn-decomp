@@ -101,7 +101,7 @@ void func_us_801AE8E8(Entity* self) {
                 LOW(prim->r2) = LOW(prim->r0);
                 LOW(prim->r3) = LOW(prim->r0);
                 prim->priority = self->zPriority - self->params;
-                prim->drawMode = DRAW_UNK_400 | DRAW_COLORS | DRAW_UNK02;
+                prim->drawMode = DRAW_DITHERING | DRAW_COLORS | DRAW_UNK02;
                 prim = prim->next;
             }
             for (i = 0; i < 2; i++) {
@@ -116,7 +116,7 @@ void func_us_801AE8E8(Entity* self) {
                 LOW(prim->r2) = LOW(prim->r0);
                 LOW(prim->r3) = LOW(prim->r0);
                 prim->priority = self->zPriority - self->params;
-                prim->drawMode = DRAW_UNK_400 | DRAW_COLORS | DRAW_UNK02;
+                prim->drawMode = DRAW_DITHERING | DRAW_COLORS | DRAW_UNK02;
                 prim = prim->next;
             }
             if (self->params) {
@@ -131,7 +131,7 @@ void func_us_801AE8E8(Entity* self) {
                 prim->y2 = prim->y3 = self->posY.i.hi;
                 prim->priority = self->zPriority - 1;
                 prim->drawMode =
-                    DRAW_UNK_400 | DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
+                    DRAW_DITHERING | DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
             }
             prim = prim->next;
             self->ext.et_801AE8E8.unk98 = prim;

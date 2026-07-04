@@ -3293,7 +3293,7 @@ void EntityGravityBootBeam(Entity* self) {
 
             prim->priority = PLAYER.zPriority - 2;
             prim->drawMode =
-                DRAW_UNK_400 | DRAW_UNK_100 | DRAW_TPAGE2 | DRAW_TPAGE |
+                DRAW_DITHERING | DRAW_UNK_100 | DRAW_TPAGE2 | DRAW_TPAGE |
                 DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
         }
         self->step++;

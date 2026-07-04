@@ -19,7 +19,7 @@ lazy_static! {
         (1 << 7, "DRAW_MENU"),
         (1 << 8, "DRAW_UNK_100"),
         (1 << 9, "DRAW_UNK_200"),
-        (1 << 10, "DRAW_UNK_400"),
+        (1 << 10, "DRAW_DITHERING"),
         (1 << 11, "DRAW_UNK_800"),
         (1 << 12, "DRAW_UNK_1000"),
         (1 << 13, "DRAW_ABSPOS"),
