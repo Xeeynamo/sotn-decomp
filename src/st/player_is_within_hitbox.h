@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-bool PlayerIsWithinHitbox(Entity* self) {
+static bool PlayerIsWithinHitbox(Entity* self) {
     s16 posXAbs;
     s16 posXDiff;
     s16 posYAbs;

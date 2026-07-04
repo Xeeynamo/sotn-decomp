@@ -8,7 +8,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <cJSON/cJSON.h>
 
 #undef HARD_LINK
 
@@ -104,18 +103,6 @@ bool CalcPlayerDamage(DamageParam* damage);
 void LearnSpell(s32 spellId);
 void DebugInputWait(const char* msg);
 
-int g_Frame = 0;
-void MyDrawSyncCallback(int mode) {
-    DEBUGF("state: %d, game step: %d", g_GameState, g_GameStep);
-
-    // force loaded map to always be visible
-    if (g_Tilemap.tileDef) {
-        g_Tilemap.flags |= LAYER_SHOW;
-    }
-
-    g_Frame++;
-}
-
 // called before MainGame
 bool InitPlatform(void);
 void InitStrings(void);
@@ -126,20 +113,17 @@ void InitEnemyDefs(void);
 void InitSubwpnDefs(void);
 bool InitPalEquipIcons(const struct FileOpenRead* r);
 void InitVbVh(void);
-static bool InitSfxData(struct FileAsString* file);
-static bool InitXaData(struct FileAsString* file);
-static bool InitBlueprintData(struct FileAsString* file);
 
 s32 func_800EDB58(u8 primType, s32 count);
 
-FILE* cd_fp = NULL;
 struct InitGameParams g_GameParams;
 bool InitGame(struct InitGameParams* params) {
+    Psyz_SetTitle("Castlevania: Symphony of the Night");
     g_GameParams = *params;
     if (params->diskPath) {
-        cd_fp = fopen(params->diskPath, "rb");
-        if (!cd_fp) {
-            WARNF("couldn't open CD at '%s'", params->diskPath);
+        if (Psyz_CdSetDiskPath(params->diskPath) < 0) {
+            WARNF("failed to parse CD layout at '%s'. Music will be disabled",
+                  params->diskPath);
         }
     }
     if (!InitPlatform()) {
@@ -262,16 +246,6 @@ void InitStrings(void) {
     }
 }
 
-void (*g_VsyncCallback)() = NULL;
-int MyVSyncCallback(void (*f)()) { g_VsyncCallback = f; }
-
-int MyVSync(int mode) {
-    if (g_VsyncCallback) {
-        g_VsyncCallback();
-    }
-    return 0;
-}
-
 int MyClearImage(RECT* rect, u_char r, u_char g, u_char b) {
     u16* vram = g_RawVram;
     vram += rect->x + rect->y * VRAM_W;
@@ -320,129 +294,4 @@ void InitVbVh() {
     ReadToArray("assets/dra/vb_1.bin", D_8017D350, LEN(D_8017D350));
     ReadToArray("assets/dra/vb_2.bin", D_8018B4E0, LEN(D_8018B4E0));
     ReadToArray("assets/dra/vb_3.bin", D_801A9C80, LEN(D_801A9C80));
-}
-
-#define DO_ITEM(field_str, jitem, item, to_set)                                \
-    {                                                                          \
-        cJSON* field = NULL;                                                   \
-        field = cJSON_GetObjectItemCaseSensitive(jitem, field_str);            \
-                                                                               \
-        if (cJSON_IsNumber(field)) {                                           \
-            to_set = field->valueint;                                          \
-        } else if (cJSON_IsBool(field)) {                                      \
-            if (cJSON_IsTrue(field)) {                                         \
-                to_set = 1;                                                    \
-            } else if (cJSON_IsFalse(field)) {                                 \
-                to_set = 0;                                                    \
-            } else {                                                           \
-                ERRORF("undefined behaviour for %s", field_str);               \
-                exit(1);                                                       \
-            }                                                                  \
-        } else {                                                               \
-            ERRORF("Wrong field %s", field_str);                               \
-            exit(1);                                                           \
-        }                                                                      \
-    }
-
-static bool InitSfxData(struct FileAsString* file) {
-    cJSON* json = cJSON_Parse(file->content);
-    if (!json) {
-        ERRORF("failed to parse '%s': %s", file->param, cJSON_GetErrorPtr());
-        return false;
-    }
-    cJSON* array = cJSON_GetObjectItemCaseSensitive(json, "asset_data");
-    if (!cJSON_IsArray(array)) {
-        cJSON_Delete(json);
-        ERRORF("data malformed in '%s'", file->param);
-        return false;
-    }
-
-    int len = cJSON_GetArraySize(array);
-    for (int i = 0; i < len; i++) {
-        Unkstruct_800BF554* item = &g_SfxData[i];
-        cJSON* jitem = cJSON_GetArrayItem(array, i);
-        DO_ITEM("vabid", jitem, item, item->vabid);
-        DO_ITEM("prog", jitem, item, item->prog);
-        DO_ITEM("note", jitem, item, item->note);
-        DO_ITEM("volume", jitem, item, item->volume);
-        DO_ITEM("mode", jitem, item, item->mode);
-        DO_ITEM("tone", jitem, item, item->tone);
-        DO_ITEM("unk6", jitem, item, item->unk6);
-    }
-    cJSON_Delete(json);
-    return true;
-}
-
-static bool InitXaData(struct FileAsString* file) {
-    cJSON* json = cJSON_Parse(file->content);
-    if (!json) {
-        ERRORF("failed to parse '%s': %s", file->param, cJSON_GetErrorPtr());
-        return false;
-    }
-
-    cJSON* array = cJSON_GetObjectItemCaseSensitive(json, "asset_data");
-    if (!cJSON_IsArray(array)) {
-        cJSON_Delete(json);
-        ERRORF("data malformed in '%s'", file->param);
-        return false;
-    }
-
-    int len = cJSON_GetArraySize(array);
-    for (int i = 0; i < len; i++) {
-        struct XaMusicConfig* item = &g_XaMusicConfigs[i];
-        cJSON* jitem = cJSON_GetArrayItem(array, i);
-        DO_ITEM("cd_addr", jitem, item, item->cd_addr);
-        DO_ITEM("unk228", jitem, item, item->unk228);
-        DO_ITEM("filter_file", jitem, item, item->filter_file);
-        DO_ITEM("filter_channel_id", jitem, item, item->filter_channel_id);
-        DO_ITEM("volume", jitem, item, item->volume);
-        DO_ITEM("unk22f", jitem, item, item->unk22f);
-        DO_ITEM("unk230", jitem, item, item->unk230);
-        // ignore pad for now
-    }
-    cJSON_Delete(json);
-    return true;
-}
-
-static bool InitBlueprintData(struct FileAsString* file) {
-    cJSON* json = cJSON_Parse(file->content);
-    if (!json) {
-        ERRORF("failed to parse '%s': %s", file->param, cJSON_GetErrorPtr());
-        return false;
-    }
-
-    cJSON* array = cJSON_GetObjectItemCaseSensitive(json, "asset_data");
-    if (!cJSON_IsArray(array)) {
-        cJSON_Delete(json);
-        ERRORF("data malformed in '%s'", file->param);
-        return false;
-    }
-
-    int len = cJSON_GetArraySize(array);
-
-    FactoryBlueprint* blueprints = (FactoryBlueprint*)file->param;
-
-    for (int i = 0; i < len; i++) {
-        u32 bits = 0;
-        FactoryBlueprint* item = &blueprints[i];
-        cJSON* jitem = cJSON_GetArrayItem(array, i);
-        DO_ITEM("childId", jitem, item, item->childId);
-        DO_ITEM("unk1", jitem, item, item->unk1);
-        DO_ITEM("unk3", jitem, item, item->unk3);
-        DO_ITEM("unk5", jitem, item, item->unk5);
-
-        cJSON* jUnk2 = cJSON_GetObjectItem(jitem, "unk2");
-        DO_ITEM("bottom6", jUnk2, item, item->unk2);
-        DO_ITEM("bit6", jUnk2, item, bits);
-        item->unk2 |= !!bits << 6;
-        DO_ITEM("bit7", jUnk2, item, bits);
-        item->unk2 |= !!bits << 7;
-
-        cJSON* jUnk4 = cJSON_GetObjectItem(jitem, "unk4");
-        DO_ITEM("bottomHalf", jUnk4, item, item->unk4);
-        DO_ITEM("topHalf", jUnk4, item, bits);
-        item->unk4 |= bits << 4;
-    }
-    cJSON_Delete(json);
-    return true;
 }

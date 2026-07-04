@@ -58,9 +58,12 @@ static void printHelp(void) {
     printf("  --disk <path>      file name of the second track\n");
     printf("  --stage <stage>    stage name or ID (e.g., nz0)\n");
     printf("  --player <name>    player name or ID (e.g. ric)\n");
-    printf("  --scale <number>   game resolution integer scale (default 2)\n");
+    printf("  --scale <number>   game internal resolution integer scale "
+           "(default 1)\n");
     printf("  --test <mode>      run automated tests\n");
     printf("         sndlib      test sound library\n");
+    printf("  --record <path>    record controller input to a file\n");
+    printf("  --replay <path>    replay controller input from a file\n");
     printf("  --help             show this help message\n");
 }
 static void printAllowedParams(const char* allowedValues[], int n) {
@@ -81,7 +84,7 @@ static bool parseArgs(
     outParams->testMode = NO_TEST;
     outParams->stage = -1;
     outParams->player = -1;
-    outParams->scale = 2;
+    outParams->scale = 1;
 
     for (int i = 1; i < argc; i++) {
         if (strcmp(argv[i], "--help") == 0) {
@@ -106,7 +109,7 @@ static bool parseArgs(
             }
         } else if (strcmp(argv[i], "--scale") == 0 && i + 1 < argc) {
             outParams->scale = parseIntParam(argv[++i]);
-            if (outParams->scale < 1 || outParams->scale > 16) {
+            if (outParams->scale < 1 || outParams->scale > 8) {
                 printf("invalid resolution scale %s\n", argv[i]);
                 return false;
             }
@@ -125,32 +128,18 @@ static bool parseArgs(
     return true;
 }
 
-static void testSndLib(void) {
-#ifdef WANT_LIBSND_LLE
-    run_tests();
-    exit(0);
-#else
-    printf("this test is only available for LLE builds\n");
-    exit(-1);
-#endif
-}
-
 int Main(int argc, char* argv[]) {
     struct InitGameParams params;
     if (!parseArgs(&params, argc, argv)) {
         printHelp();
         return -1;
     }
-    switch (params.testMode) {
-    case NO_TEST:
-        break;
-    case TEST_SNDLIB:
-        testSndLib();
-        break;
-    }
+    Psyz_VideoSetInternalResolution(params.scale);
     if (!InitGame(&params)) {
         return -1;
     }
     MainGame();
     ResetGame();
 }
+
+int main(int argc, char* argv[]) { return Main(argc, argv); }

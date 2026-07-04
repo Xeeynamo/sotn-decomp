@@ -14,7 +14,9 @@
 #define VERSION "us"
 
 #include <stdio.h>
-#include <log.h>
+#include <types.h>
+#include <psyz/log.h>
+#include <psyz/types.h>
 
 #define DISP_WIDTH 256
 #define DISP_HEIGHT 256
@@ -60,6 +62,10 @@ extern struct InitGameParams g_GameParams;
 bool InitGame(struct InitGameParams* params);
 void MainGame(void);
 void ResetGame(void);
+
+// Controller input record/replay (src/pc/replay.c)
+void InitReplay(const struct InitGameParams* params);
+void ResetReplay(void);
 
 bool FileOpenRead(
     bool (*cb)(const struct FileOpenRead*), const char* filename, void* param);

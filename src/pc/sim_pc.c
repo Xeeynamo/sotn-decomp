@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <dra.h>
 #include "dra_bss.h"
-#include <log.h>
+#include <psyz/log.h>
 #include "pc.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -376,6 +376,7 @@ int readToBuf(const char* filename, char* dest) {
         fclose(file);
         return 1;
     }
+    fclose(file);
     return 0;
 }
 
@@ -410,6 +411,11 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
             break;
         case 5:
             switch (g_PlayableCharacter) {
+            case PLAYER_ALUCARD:
+                if (g_StageId == STAGE_ST0) {
+                    InitPlayerRic();
+                }
+                break;
             case PLAYER_RICHTER:
                 InitPlayerRic();
                 break;
@@ -478,7 +484,26 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
             sim.addr = D_800A036C[actualFileId].addr;
             sim.kind = SIM_VH;
             snprintf(buf, sizeof(buf), "disks/us/%s", sim.path);
-            return readToBuf(buf, sim.addr);
+            if (FileReadToBuf(buf, sim.addr, 0, sim.size) < 0) {
+                return -1;
+            }
+            if (sim.addr == aPbav) {
+                g_SimVabId = 0;
+            } else if (sim.addr == aPbav_0) {
+                g_SimVabId = 1;
+            } else if (sim.addr == aPbav_2) {
+                g_SimVabId = 3;
+            } else if (sim.addr == aPbav_1) {
+                g_SimVabId = 2;
+            }
+            SsVabClose(g_SimVabId);
+            while (SsVabTransCompleted(SS_IMEDIATE) != 1) {
+            }
+            if (SsVabOpenHeadSticky(
+                    sim.addr, g_SimVabId, g_VabAddrs[g_SimVabId]) < 0) {
+                return -1;
+            }
+            return 0;
         } else {
             sim.path = smolbuf;
             snprintf(smolbuf, sizeof(smolbuf), "ST/%s/SD_ZK%s.VH",
@@ -516,7 +541,15 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
             sim.addr = D_800A036C[actualFileId].addr;
             sim.kind = SIM_VB;
             snprintf(buf, sizeof(buf), "disks/us/%s", sim.path);
-            return readToBuf(buf, sim.addr);
+            if (FileReadToBuf(buf, sim.addr, 0, sim.size) < 0) {
+                return -1;
+            }
+            if (SsVabTransBodyPartly(sim.addr, sim.size, g_SimVabId) == -1) {
+                return -1;
+            }
+            while (SsVabTransCompleted(SS_IMEDIATE) != 1) {
+            }
+            return 0;
         } else {
             sim.path = smolbuf;
             snprintf(smolbuf, sizeof(smolbuf), "ST/%s/SD_ZK%s.VB",
