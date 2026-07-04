@@ -285,7 +285,8 @@ void EntityAlucardWaterEffect(Entity* self) {
 #endif
                         i = player->posX.i.hi;
                         player->posX.val -= var_s1 << 4;
-                        g_unkGraphicsStruct.shoveX.i.hi += (player->posX.i.hi - i);
+                        g_unkGraphicsStruct.shoveX.i.hi +=
+                            (player->posX.i.hi - i);
                     }
                 }
             }
@@ -594,7 +595,8 @@ void EntitySurfacingWater(Entity* self) {
     MoveEntity(self);
     i = self->velocityX;
     if (i != 0) {
-        x = g_Tilemap.width - g_WaterXTbl[self->ext.waterEffects.unk88] - g_WaterXTbl[self->ext.waterEffects.unk88 + 1];
+        x = g_Tilemap.width - g_WaterXTbl[self->ext.waterEffects.unk88] -
+            g_WaterXTbl[self->ext.waterEffects.unk88 + 1];
         if (i < 0) {
             x += 6 - tilemap->scrollX.i.hi;
             if (self->posX.i.hi < x) {
