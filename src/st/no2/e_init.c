@@ -135,9 +135,9 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
 };
 
 EInit OVL_EXPORT(
-    EInitBreakable) = {ANIMSET_DRA(0x03), 0x00, 0x00, PAL_NULL, 0x000};
-EInit g_EInitObtainable = {ANIMSET_DRA(0x03), 0x00, 0x00, PAL_NULL, 0x001};
-EInit g_EInitParticle = {ANIMSET_DRA(0x03), 0x00, 0x00, PAL_NULL, 0x002};
+    EInitBreakable) = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NULL, 0x000};
+EInit g_EInitObtainable = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NULL, 0x001};
+EInit g_EInitParticle = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NULL, 0x002};
 EInit g_EInitSpawner = {ANIMSET_DRA(0x00), 0x00, 0x00, PAL_NULL, 0x004};
 EInit g_EInitInteractable = {ANIMSET_DRA(0x00), 0x00, 0x00, PAL_NULL, 0x005};
 EInit g_EInitUnkId13 = {ANIMSET_DRA(0x00), 0x00, 0x00, PAL_NULL, 0x002};
