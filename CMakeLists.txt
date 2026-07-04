@@ -421,15 +421,7 @@ set_source_files_properties(src/weapon/w_046.c PROPERTIES COMPILE_DEFINITIONS WE
 set_source_files_properties(src/weapon/w_051.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_051)
 set_source_files_properties(src/weapon/w_052.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_052)
 
-# organization is:
-# two executables, sdl2 and null, plus a shared library "core"
-# any executable links core (which is pc shared code + sotn psx code)
-# the null backend is present to try and help with developing a backend-agnostic interface
-# and for a basic "does it segfault" check in CI
-
-# core library
-
-set(SOURCE_FILES_CORE
+set(SOURCE_FILES_SOTN
     ${SOURCE_FILES_DRA}
     ${SOURCE_FILES_RIC}
     ${SOURCE_FILES_STAGE_SEL}
@@ -445,20 +437,24 @@ set(SOURCE_FILES_CORE
 )
 if (USE_PLAYER_MARIA)
     add_compile_definitions(USE_PLAYER_MARIA)
-    list(APPEND SOURCE_FILES_CORE
+    list(APPEND SOURCE_FILES_SOTN
             ${SOURCE_FILES_MARIA}
             src/pc/pl_maria.c)
 endif()
 
-add_library(core ${SOURCE_FILES_CORE})
+add_executable(${PROJECT_NAME}
+    ${SOURCE_FILES_PC}
+    ${SOURCE_FILES_SOTN}
+    ${SOURCE_FILES_MOCK_SDK}
+    ${SOURCE_FILES_3RD})
 
-target_include_directories(core PUBLIC
+target_include_directories(${PROJECT_NAME} PRIVATE
     include
     src/dra
     src/pc/3rd
 )
 
-target_compile_definitions(core PUBLIC
+target_compile_definitions(${PROJECT_NAME} PRIVATE
     _USE_MATH_DEFINES # needed for msvc
     VERSION_PC
     PERMUTER
@@ -466,18 +462,12 @@ target_compile_definitions(core PUBLIC
     HARD_LINK
     _internal_version_us
 )
-
-add_executable(${PROJECT_NAME}
-    ${SOURCE_FILES_PC}
-    ${SOURCE_FILES_MOCK_SDK}
-    ${SOURCE_FILES_3RD})
 add_subdirectory(tools/psyz/psyz)
-target_link_libraries(core PUBLIC psyz)
 target_include_directories(psyz PUBLIC tools/psyz/psyz/include)
 target_compile_definitions(psyz PRIVATE __psyz)
 psyz_strip_file_prefix(${PROJECT_NAME})
 if (WIN32)
-    target_link_libraries(${PROJECT_NAME} PRIVATE core)
+    target_link_libraries(${PROJECT_NAME} PRIVATE psyz)
 else()
-    target_link_libraries(${PROJECT_NAME} PRIVATE core m)
+    target_link_libraries(${PROJECT_NAME} PRIVATE psyz m)
 endif()
