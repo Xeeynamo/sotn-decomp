@@ -12,3 +12,7 @@ static s32 D_8018BC4C = 0;
 s8 D_8018BC50 = 0;
 static s8 D_8018BC51 = 0;
 static s16 D_8018BC52 = 0;
+
+u8 OVL_EXPORT(credits)[] = {
+#include "gen/credits.h"
+};

@@ -29,6 +29,13 @@ typedef enum {
     CSOP_WAIT_FOR_FLAG_RESET,
 } CutsceneOpcode;
 
+typedef enum {
+    CSOP_END_CREDITS,
+    CSOP_SUBTEXT,
+    CSOP_ENTRY,
+    CSOP_SECTION,
+} CreditOpcode;
+
 enum ActorNameIndices {
     NAME_IDX_RICHTER,
     NAME_IDX_DRACULA,
@@ -81,6 +88,11 @@ enum ActorNameIndices {
 #define CS_LINE_MAX 4
 #endif
 #define ASCII_SPACE 32
+
+#define END_CREDITS() CSOP_END_CREDITS
+#define CREDITS_SUBTEXT(x) CSOP_SUBTEXT, x
+#define CREDITS_ENTRY(x) CSOP_ENTRY, x
+#define CREDITS_SECTION(x) CSOP_SECTION, x
 
 typedef struct {
     /* 0x00 */ u8* scriptCur;         // ptr to dialogue next character

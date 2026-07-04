@@ -160,6 +160,8 @@ files:
           - [0x22E4, skip]
           - [0xB304, cutscene, cutscene_endings]
           - [0xBC4A, skip]
+          - [0xBC54, credits, credits]
+          - [0xC404, skip]
           - [0xCD54, palette, us/D_8018CD54, 16]
           - [0xCDB4, palette, D_8018CDB4, 256]
           - [0xCFB4, palette, D_8018CFB4, 256]

@@ -11,6 +11,7 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/binary"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/blueprintsdef"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/cmpgfx"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/credits"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/cutscene"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/gfxbanks"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/headergfx"
@@ -59,6 +60,7 @@ var handlers = func() map[string]assets.Handler {
 		binary.Handler,
 		blueprintsdef.Handler,
 		cmpgfx.Handler,
+		credits.Handler,
 		cutscene.Handler,
 		gfxbanks.Handler,
 		headergfx.Handler,
