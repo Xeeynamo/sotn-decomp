@@ -652,7 +652,7 @@ typedef struct {
     /* 0x0 */ u16 posX;
     /* 0x2 */ u16 posY;
     /* 0x4 */ u16 entityId;
-    /* 0x6 */ u8 entityRoomIndex;
+    /* 0x6 */ u16 entityRoomIndex;
     /* 0x8 */ u16 params;
 } LayoutEntity; // size = 0xA
 

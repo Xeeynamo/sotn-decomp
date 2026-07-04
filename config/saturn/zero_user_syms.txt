@@ -120,10 +120,7 @@ ___ashlsi3 = 0x06030F0C;
 ___udivsi3 = 0x06031048;
 _func_06032e68 = 0x06032E68;
 _memset = 0x06032EA8;
-
 _memcpy = 0x06033024;
-_func_06033024 = 0x06033024;
-
 _DAT_06038a44 = 0x06038A44;
 _prg_info = 0x06038AAC;
 _chr_info = 0x06038AEC;
@@ -286,8 +283,10 @@ _Sp2OpenFlag = 0x06064708;
 _SpGourTblMax = 0x0606470C;
 _SpLCoordX = 0x06064714;
 _SpMstDrawPrtyBlk = 0x06064718;
+
 _SpGourTbl = 0x0606471C;
 _DAT_0606471C = 0x0606471C;
+
 _SpLookupTblR = 0x06064720;
 _SpCmdTbl = 0x06064724;
 _SpCharMax = 0x06064728;
