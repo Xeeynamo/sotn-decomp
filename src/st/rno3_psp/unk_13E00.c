@@ -629,7 +629,97 @@ void EntitySurfacingWater(Entity* self) {
     self->ext.waterEffects.unk82 = self->posY.i.hi + tilemap->scrollY.i.hi;
 }
 
-INCLUDE_ASM("st/rno3_psp/nonmatchings/rno3_psp/unk_13E00", EntitySideWaterSplash);
+static s32 g_SideWaterSpeeds[] = {
+    22, -46, -24, -55, 14, -62, -12, -45, 2, -74, -4, -52, 9, -60, -6, -61};
+static s16 g_SideWaterAngles[] = {
+    0x000, 0x100, 0x080, 0x040, 0xF00, 0xF80, 0xFC0, 0x000};
+
+void EntitySideWaterSplash(Entity* self) {
+    Primitive* prim;
+    s32 primIndex;
+    s32 velY;
+    u16 params;
+    s16 angle;
+    s32 velX;
+    s16 y;
+    s16 x;
+    s32* speedPtr;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitCommon);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+        while (prim != NULL) {
+            prim->u0 = prim->u2 = 0xF0;
+            prim->u1 = prim->u3 = 0xFF;
+            prim->v0 = prim->v1 = 0;
+            prim->v2 = prim->v3 = 0xF;
+            prim->clut = PAL_CC_STONE_EFFECT;
+            prim->tpage = 0x1A;
+            PGREY(prim, 0) = PGREY(prim, 1) = 128;
+            PGREY(prim, 2) = PGREY(prim, 3) = 128;
+
+            prim->p1 = 0;
+            prim->priority = self->zPriority + 2;
+            prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
+                             DRAW_UNK02 | DRAW_TRANSP;
+            prim = prim->next;
+        }
+        params = self->params;
+        if (!(params & 0xF)) {
+            g_api.PlaySfx(g_WaterSounds[0]);
+        }
+        angle = g_SideWaterAngles[(params >> 4) & 0xF];
+        // Two speeds. Get the pointer for the first one.
+        speedPtr = &g_SideWaterSpeeds[(params & 0xF) * 2];
+        velX = rcos(angle) * *speedPtr;
+        velY = rsin(angle + 0x800) * *speedPtr++; // Now increment
+        // use the second speed in the speed array now
+        velX += rsin(angle) * *speedPtr;
+        velY += rcos(angle) * *speedPtr;
+        velX += (s16)(params & 0xFF00) * 4;
+        self->velocityX = -velX;
+        self->velocityY = -velY;
+        self->ext.waterEffects.accelY = FIX(22.0 / 128);
+        break;
+
+    case 1:
+        MoveEntity(self);
+        self->velocityY -= self->ext.waterEffects.accelY;
+        break;
+    }
+
+    x = self->posX.i.hi;
+    y = self->posY.i.hi;
+
+    prim = &g_PrimBuf[self->primIndex];
+    while (prim != NULL) {
+        prim->x0 = prim->x2 = x - (prim->p1 / 2) - 4;
+        prim->x1 = prim->x3 = x + (prim->p1 / 2) + 4;
+        prim->y0 = prim->y1 = y - (prim->p1 / 2) - 4;
+        prim->y2 = prim->y3 = y + (prim->p1 / 2) + 4;
+        if (prim->b1 >= 3) {
+            prim->b1 -= 3;
+        } else {
+            DestroyEntity(self);
+            return;
+        }
+        PGREY(prim, 0) = PGREY(prim, 1);
+        if (prim->b3 >= 4) {
+            prim->b3 -= 4;
+        }
+        PGREY(prim, 2) = PGREY(prim, 3);
+        prim->p1++;
+        prim = prim->next;
+    }
+}
 
 INCLUDE_ASM("st/rno3_psp/nonmatchings/rno3_psp/unk_13E00", EntitySmallWaterDrop);
 
