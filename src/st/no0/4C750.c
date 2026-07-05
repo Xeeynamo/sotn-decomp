@@ -53,7 +53,7 @@ void func_us_801CC750(Entity* self) {
 
 void func_us_801CC8F8(Entity* self) {
     if (!self->step) {
-        InitializeEntity(g_EInitCommon);
+        InitializeEntity(OVL_EXPORT(EInitCommon));
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 3;
         self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 0x54;
@@ -76,7 +76,7 @@ void func_us_801CC9B4(Entity* self) {
     u8 angle;
 
     if (!self->step) {
-        InitializeEntity(g_EInitCommon);
+        InitializeEntity(OVL_EXPORT(EInitCommon));
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 5;
         self->zPriority = 1;

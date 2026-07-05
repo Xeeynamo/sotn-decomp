@@ -106,7 +106,7 @@ void OVL_EXPORT(EntityBackgroundBlock)(Entity* self) {
 
     params = self->params;
     if (!self->step) {
-        InitializeEntity(g_EInitCommon);
+        InitializeEntity(OVL_EXPORT(EInitCommon));
         self->animSet = (u16)animset[params];
         self->zPriority = zPriority[params];
         self->unk5A = unk5A[params];

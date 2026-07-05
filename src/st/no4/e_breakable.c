@@ -120,7 +120,7 @@ void func_us_801C123C(Entity* self) {
     u32 pad[10];
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         self->animSet = ANIMSET_OVL(0xB);
         self->unk5A = 0x5B;
         self->palette = 0x228;

@@ -115,16 +115,16 @@ typedef enum EntityIDs {
 
 extern EInit OVL_EXPORT(EInitBreakable);
 extern EInit OVL_EXPORT(EInitObtainable);
-extern EInit g_EInitParticle;
-extern EInit g_EInitSpawner;
-extern EInit g_EInitInteractable;
+extern EInit OVL_EXPORT(EInitParticle);
+extern EInit OVL_EXPORT(EInitSpawner);
+extern EInit OVL_EXPORT(EInitInteractable);
 extern EInit D_us_80180974;
 extern EInit D_us_80180980;
 extern EInit D_us_8018098C;
-extern EInit g_EInitUnkId13;
-extern EInit g_EInitLockCamera;
-extern EInit g_EInitCommon;
-extern EInit g_EInitDamageNum;
+extern EInit OVL_EXPORT(EInitUnkId13);
+extern EInit OVL_EXPORT(EInitLockCamera);
+extern EInit OVL_EXPORT(EInitCommon);
+extern EInit OVL_EXPORT(EInitDamageNum);
 extern EInit D_us_801809C8;
 extern EInit D_us_801809D4;
 extern EInit g_EInitAxeKnight;

@@ -29,9 +29,9 @@ typedef enum {
     /* 0x1E */ UNK_ENTITY_30,
 } EntityIDs;
 
-extern EInit g_EInitInteractable;
-extern EInit g_EInitCommon;
-extern EInit g_EInitParticle;
-extern EInit g_EInitLockCamera;
+extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit OVL_EXPORT(EInitCommon);
+extern EInit OVL_EXPORT(EInitParticle);
+extern EInit OVL_EXPORT(EInitLockCamera);
 
 #endif // RBO3_H

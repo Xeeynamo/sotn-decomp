@@ -121,14 +121,14 @@ extern s32 g_BossFlag; // original names: boss_flag / beri_flag
 
 extern EInit OVL_EXPORT(EInitBreakable);
 extern EInit OVL_EXPORT(EInitObtainable);
-extern EInit g_EInitParticle;
-extern EInit g_EInitSpawner;
-extern EInit g_EInitInteractable;
-extern EInit g_EInitUnkId13;
-extern EInit g_EInitLockCamera;
-extern EInit g_EInitCommon;
+extern EInit OVL_EXPORT(EInitParticle);
+extern EInit OVL_EXPORT(EInitSpawner);
+extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit OVL_EXPORT(EInitUnkId13);
+extern EInit OVL_EXPORT(EInitLockCamera);
+extern EInit OVL_EXPORT(EInitCommon);
 // extern EInit g_EInitDamageNum;
-extern EInit g_EInitEnemy3;
+extern EInit OVL_EXPORT(EInitEnemy3);
 extern EInit g_EInitBloodSkeleton;
 // extern EInit g_EInitBoneScimitar;
 // extern EInit g_EInitScimitarParts;

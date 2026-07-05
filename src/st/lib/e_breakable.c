@@ -162,7 +162,7 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
 void EntityBreakableHelper(Entity* self) {
     Entity* entity;
     if (!self->step) {
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->animSet = ANIMSET_OVL(1);
     }
@@ -187,7 +187,7 @@ void OVL_EXPORT(EntityBreakableDebris)(Entity* self) {
     switch (self->step) {
     case INIT:
         if (self->params & 256) {
-            InitializeEntity(g_EInitInteractable);
+            InitializeEntity(OVL_EXPORT(EInitInteractable));
             self->animSet = BREAKABLE_ANIMSET;
             self->unk5A = 91;
             self->palette = PAL_BREAKABLE;
@@ -195,7 +195,7 @@ void OVL_EXPORT(EntityBreakableDebris)(Entity* self) {
             self->zPriority = 106;
             self->step = DEBRIS_NOP; // No case defined, resulting in nop
         } else {
-            InitializeEntity(g_EInitParticle);
+            InitializeEntity(OVL_EXPORT(EInitParticle));
         }
         break;
     case UPDATE:

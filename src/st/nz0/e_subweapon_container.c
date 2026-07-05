@@ -205,7 +205,7 @@ void func_801C7654(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitParticle);
+        InitializeEntity(OVL_EXPORT(EInitParticle));
         self->animSet = ANIMSET_DRA(2);
         self->palette = PAL_FLAG(PAL_CC_RED_EFFECT_B);
         self->blendMode = BLEND_TRANSP | BLEND_QUARTER;

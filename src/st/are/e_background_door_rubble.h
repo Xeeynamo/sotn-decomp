@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-extern EInit g_EInitInteractable;
+extern EInit OVL_EXPORT(EInitInteractable);
 
 typedef struct {
     // These are possibly coordinates on the spritesheet?
@@ -31,7 +31,7 @@ void EntityBackgroundDoorRubble(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex == -1) {
             DestroyEntity(self);

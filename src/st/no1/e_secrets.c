@@ -213,7 +213,7 @@ void func_us_801BEE00(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitParticle);
+        InitializeEntity(OVL_EXPORT(EInitParticle));
         self->animSet = 8;
         self->animCurFrame = 1;
         self->palette = PAL_FLAG(4);
@@ -281,7 +281,7 @@ void func_us_801BF074(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitParticle);
+        InitializeEntity(OVL_EXPORT(EInitParticle));
         self->animSet = 8;
         self->animCurFrame = 1;
         self->palette = PAL_FLAG(4);

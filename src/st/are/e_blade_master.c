@@ -3,7 +3,7 @@
 
 extern EInit g_EInitBladeMaster;
 extern EInit g_EInitBladeMasterAttackHitbox;
-extern EInit g_EInitParticle;
+extern EInit OVL_EXPORT(EInitParticle);
 // This comes from e_collect
 extern u8 g_explosionBigAnim[];
 
@@ -642,7 +642,7 @@ void EntityBladeMasterDeathParts(Entity* self) {
 
 void EntityBladeMasterDeathExplosion(Entity* self) {
     if (!self->step) {
-        InitializeEntity(g_EInitParticle);
+        InitializeEntity(OVL_EXPORT(EInitParticle));
         self->pose = 0;
         self->poseTimer = 0;
         self->animSet = 2;

@@ -13,7 +13,7 @@ void func_us_80191438(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitCommon);
+        InitializeEntity(OVL_EXPORT(EInitCommon));
         self->animSet = 2;
         self->animCurFrame = 1;
         self->zPriority = 176;
@@ -694,7 +694,7 @@ void func_us_801923DC(Entity* self) {
     }
 }
 
-extern EInit g_EInitParticle;
+extern EInit OVL_EXPORT(EInitParticle);
 extern EntityConfig D_us_8018071C[];
 
 // Entity ID 0x1B
@@ -705,7 +705,7 @@ void func_us_80192998(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitParticle);
+        InitializeEntity(OVL_EXPORT(EInitParticle));
         params = self->params & 0xF;
         obj = &D_us_8018071C[params];
         self->palette = obj->palette + 0x2E0;
@@ -746,7 +746,7 @@ void func_us_80192998(Entity* self) {
     }
 }
 
-extern EInit g_EInitInteractable;
+extern EInit OVL_EXPORT(EInitInteractable);
 extern s32 D_us_80180728;
 extern s32 D_us_8018072C;
 
@@ -757,7 +757,7 @@ void func_us_80192B38(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         // fallthrough
     case 1:
         entity = &PLAYER;

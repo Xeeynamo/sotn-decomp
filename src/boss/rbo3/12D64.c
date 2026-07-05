@@ -126,7 +126,7 @@ void func_us_80192D64(Entity* self) {
     }
 }
 
-extern EInit g_EInitInteractable;
+extern EInit OVL_EXPORT(EInitInteractable);
 
 void func_us_80193050(Entity* self) {
     Primitive* prim;
@@ -137,7 +137,7 @@ void func_us_80193050(Entity* self) {
         return;
     }
 
-    InitializeEntity(g_EInitInteractable);
+    InitializeEntity(OVL_EXPORT(EInitInteractable));
     primIndex = g_api.AllocPrimitives(PRIM_GT4, 5);
 
     if (primIndex == -1) {

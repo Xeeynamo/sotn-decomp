@@ -23,8 +23,8 @@ extern s32 E_ID(BREAKABLE_DEBRIS);
 #endif
 
 extern EInit OVL_EXPORT(EInitBreakable);
-extern EInit g_EInitInteractable;
-extern EInit g_EInitParticle;
+extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit OVL_EXPORT(EInitParticle);
 
 void OVL_EXPORT(EntityBreakable)(Entity* self) {
     Entity* entity;
@@ -160,7 +160,7 @@ void OVL_EXPORT(EntityBreakableDebris)(Entity* self) {
         // Applies to the urn and jug if they have params & 0x1FF
         // Doesn't apply to any others
         if (self->params & 256) {
-            InitializeEntity(g_EInitInteractable);
+            InitializeEntity(OVL_EXPORT(EInitInteractable));
             self->animSet = OVL_BREAKABLE_ANIMSET;
             self->unk5A = 91;
             self->palette = PAL_BREAKABLE;
@@ -169,7 +169,7 @@ void OVL_EXPORT(EntityBreakableDebris)(Entity* self) {
             self->step = DEBRIS_NOP; // No case defined, resulting in nop
             return;
         } else {
-            InitializeEntity(g_EInitParticle);
+            InitializeEntity(OVL_EXPORT(EInitParticle));
             primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
             if (primIndex == -1) {
                 DestroyEntity(self);

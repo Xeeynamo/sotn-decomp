@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "top.h"
 
-extern EInit g_EInitInteractable;
+extern EInit OVL_EXPORT(EInitInteractable);
 extern u32 OVL_EXPORT(CutsceneFlags);
 
 // Alucard walks to the Warp platform
@@ -18,7 +18,7 @@ void func_us_801AD11C(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         g_PauseAllowed = false;
         g_unkGraphicsStruct.pauseEnemies = true;
         g_Player.padSim = PAD_NONE;
@@ -76,7 +76,7 @@ void func_us_801AD11C(Entity* self) {
 void func_us_801AD320(Entity* self) {
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         self->animSet = ANIMSET_OVL(2);
         self->animCurFrame = 0x11;
         self->unk5A = 0xF;
@@ -100,7 +100,7 @@ void func_us_801AD320(Entity* self) {
 extern s8 D_us_80180DF0[];
 extern s8 D_us_80180E04[];
 extern s8 D_us_80180E0C[];
-extern EInit g_EInitInteractable;
+extern EInit OVL_EXPORT(EInitInteractable);
 
 void func_us_801AD400(Entity* self) {
     Entity* player;
@@ -115,7 +115,7 @@ void func_us_801AD400(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         self->animSet = ANIMSET_OVL(4);
         self->animCurFrame = 0;
         self->unk5A = 0x46;

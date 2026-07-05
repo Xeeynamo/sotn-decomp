@@ -385,7 +385,7 @@ void EntitySpearGuardBlock(Entity* self) {
     u16 animCurFrame;
 
     if (!self->step) {
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         self->hitboxState = 1;
     }
     if (!(self->hitFlags & 0x80) && self->hitFlags) {

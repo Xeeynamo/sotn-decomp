@@ -6,7 +6,7 @@ void EntityTilemapShufflerUnused(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         break;
     case 1:
         temp = g_Tilemap.fg[9];

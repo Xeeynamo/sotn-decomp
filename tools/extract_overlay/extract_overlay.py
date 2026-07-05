@@ -1401,13 +1401,13 @@ def parse_e_inits(data_file_text, first_e_init, ovl_name, platform, config_yaml_
     known_e_inits = [
         f"{ovl_name.upper()}_EInitBreakable",
         f"{ovl_name.upper()}_EInitObtainable",
-        "g_EInitParticle",
-        "g_EInitSpawner",
-        "g_EInitInteractable",
-        "g_EInitUnkId13",
-        "g_EInitLockCamera",
-        "g_EInitCommon",
-        "g_EInitDamageNum",
+        f"{ovl_name.upper()}_EInitParticle",
+        f"{ovl_name.upper()}_EInitSpawner",
+        f"{ovl_name.upper()}_EInitInteractable",
+        f"{ovl_name.upper()}_EInitUnkId13",
+        f"{ovl_name.upper()}_EInitLockCamera",
+        f"{ovl_name.upper()}_EInitCommon",
+        f"{ovl_name.upper()}_EInitDamageNum",
     ]
 
     text = data_file_text[data_file_text.find(f"glabel {first_e_init}") :]

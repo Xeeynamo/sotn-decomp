@@ -39,10 +39,10 @@ enum SpikesPointDirections {
 #define START_COUNT 0
 #endif
 
-extern EInit g_EInitParticle;
+extern EInit OVL_EXPORT(EInitParticle);
 extern EInit g_EInitEnvironment;
-extern EInit g_EInitSpawner;
-extern EInit g_EInitInteractable;
+extern EInit OVL_EXPORT(EInitSpawner);
+extern EInit OVL_EXPORT(EInitInteractable);
 
 static AnimateEntityFrame anim_dust[] = {
     {2, 1}, {2, 2}, {2, 3}, {2, 4}, {2, 5}, {4, 6}, POSE_END};
@@ -54,7 +54,7 @@ void EntitySpikesDust(Entity* self) {
     s16 angle;
 
     if (!self->step) {
-        InitializeEntity(g_EInitParticle);
+        InitializeEntity(OVL_EXPORT(EInitParticle));
         self->zPriority = 160;
         self->animSet = 8;
         self->animCurFrame = 1;
@@ -260,7 +260,7 @@ void EntitySpikes(Entity* self) {
     playerPtr = &PLAYER;
     switch (self->step) {
     case SPIKES_INIT:
-        InitializeEntity(g_EInitSpawner);
+        InitializeEntity(OVL_EXPORT(EInitSpawner));
 #ifdef DAMAGE_ENT_ON_SPAWN
         entity = self + 1;
         CreateEntityFromCurrentEntity(E_ID(SPIKES_DAMAGE), entity);
@@ -326,7 +326,7 @@ void EntitySpikes(Entity* self) {
 
 void EntitySpikesDamage(Entity* self) {
     if (!self->step) {
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         self->attackElement = SPIKES_ELEMENT;
         self->attack = 15;
         self->hitboxState = 1;

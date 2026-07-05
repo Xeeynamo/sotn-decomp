@@ -15,7 +15,7 @@ void BoxPuzzleFloorButton(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -75,7 +75,7 @@ void BoxPuzzleSpikes(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         self->hitboxWidth = 12;
         self->hitboxHeight = 12;
         self->attackElement = 1;
@@ -153,7 +153,7 @@ void EntityMovableBox(Entity* self) {
     var_s1 = GetPlayerCollisionWith(self, 0x10, 0x10, 5);
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex == -1) {
             DestroyEntity(self);

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
 
-extern EInit g_EInitCommon;
+extern EInit OVL_EXPORT(EInitCommon);
 
 extern s16 OVL_EXPORT(RedDoorTiles)[2][8];
 
@@ -50,7 +50,7 @@ void OVL_EXPORT(EntityRedDoor)(Entity* self) {
     case 0:
         self->ext.redDoor.isBackgroundDoor = self->params & 0x10;
         self->params &= 0xFFEF;
-        InitializeEntity(g_EInitCommon);
+        InitializeEntity(OVL_EXPORT(EInitCommon));
         self->animSet = 7;
         self->animCurFrame = 1;
         if (self->ext.redDoor.isBackgroundDoor) {

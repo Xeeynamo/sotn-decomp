@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rnz0.h"
 
-extern EInit g_EInitInteractable;
+extern EInit OVL_EXPORT(EInitInteractable);
 
 // A purplish-red brick background that scrolls behind the foreground layer
 void EntityPurpleBrickScrollingBackground(Entity* self) {
@@ -13,7 +13,7 @@ void EntityPurpleBrickScrollingBackground(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         self->posX.i.hi = 0;
         self->posY.i.hi = 0;
         self->unk68 = 0x80;

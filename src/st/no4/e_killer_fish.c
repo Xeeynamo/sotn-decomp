@@ -132,7 +132,7 @@ static u8 anim_death_puff[] = {
 
 void EntityKillerFishDeathPuff(Entity* self) {
     if (!self->step) {
-        InitializeEntity(g_EInitParticle);
+        InitializeEntity(OVL_EXPORT(EInitParticle));
         self->pose = 0;
         self->poseTimer = 0;
         self->animSet = 0xE;

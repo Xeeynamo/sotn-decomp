@@ -5,7 +5,7 @@ void EntityRoomForeground(Entity* entity) {
     ObjInit* obj = &D_801810F4[entity->params];
 
     if (entity->step == 0) {
-        InitializeEntity(g_EInitCommon);
+        InitializeEntity(OVL_EXPORT(EInitCommon));
         entity->animSet = obj->animSet;
         entity->zPriority = obj->zPriority;
         entity->unk5A = obj->unk5A;

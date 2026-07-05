@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-extern EInit g_EInitInteractable;
+extern EInit OVL_EXPORT(EInitInteractable);
 #ifdef INVERTED_STAGE
 extern EInit g_EInitEnvironmentBreakable;
 #else
 extern EInit g_EInitEnvironment;
 #endif
-extern EInit g_EInitParticle;
+extern EInit OVL_EXPORT(EInitParticle);
 extern EInit OVL_EXPORT(EInitBreakable);
 
 #ifdef VERSION_PSP
@@ -215,7 +215,7 @@ void OVL_EXPORT(EntityBreakableDebris)(Entity* self) {
         }
 
         if (self->params & 256) {
-            InitializeEntity(g_EInitInteractable);
+            InitializeEntity(OVL_EXPORT(EInitInteractable));
             self->animSet = ANIMSET_OVL(10);
             self->unk5A = 91;
             self->palette = PAL_BREAKABLE;
@@ -225,7 +225,7 @@ void OVL_EXPORT(EntityBreakableDebris)(Entity* self) {
             return;
         }
 
-        InitializeEntity(g_EInitParticle);
+        InitializeEntity(OVL_EXPORT(EInitParticle));
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
         if (primIndex == -1) {
             DestroyEntity(self);

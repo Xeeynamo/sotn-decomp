@@ -8,7 +8,7 @@ s32 g_stone_flag = 0;
 
 extern s32 D_us_801D43C0;
 extern s32 D_us_801D43C4;
-extern EInit g_EInitInteractable;
+extern EInit OVL_EXPORT(EInitInteractable);
 
 #ifdef VERSION_PSP
 extern s32 D_pspeu_0926BCC8;
@@ -38,7 +38,7 @@ void EntityUnkId18(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
 
         self->animSet = 0;
         self->animCurFrame = 0;
@@ -424,7 +424,7 @@ void EntityUnkId19(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         break;
 
     case 1:
@@ -644,7 +644,7 @@ void EntityUnkId1A(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         break;
 
     case 1:
@@ -832,7 +832,7 @@ void func_us_801B5004(Tilemap* map, s32 arg1) {
 extern s32 D_us_801805B0;
 #endif
 
-extern EInit g_EInitCommon;
+extern EInit OVL_EXPORT(EInitCommon);
 
 void EntityUnkId1E(Entity* self) {
     Entity* entity;
@@ -846,7 +846,7 @@ void EntityUnkId1E(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitCommon);
+        InitializeEntity(OVL_EXPORT(EInitCommon));
         self->animSet = ANIMSET_OVL(15);
         self->animCurFrame = 0x25;
         self->facingLeft = D_us_8018068C[params >> 1];

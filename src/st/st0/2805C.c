@@ -130,7 +130,7 @@ void func_801A8328(Entity* self) {
             break;
         }
 
-        InitializeEntity(g_EInitParticle);
+        InitializeEntity(OVL_EXPORT(EInitParticle));
 
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
         if (primIndex == -1) {
@@ -206,7 +206,7 @@ void func_801A8620(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(g_EInitCommon);
+        InitializeEntity(OVL_EXPORT(EInitCommon));
         entity->animSet = ANIMSET_DRA(2);
         entity->animCurFrame = 1;
         entity->zPriority = 0xB0;

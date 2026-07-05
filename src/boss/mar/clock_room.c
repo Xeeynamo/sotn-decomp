@@ -91,7 +91,7 @@ void EntityClockRoomController(Entity* self) {
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
 
-        InitializeEntity(g_EInitCommon);
+        InitializeEntity(OVL_EXPORT(EInitCommon));
         g_api.PlaySfx(SET_STOP_MUSIC);
         stopMusicFlag = true;
         g_Statues[RIGHT_STATUE] = false; // right statue closed

@@ -28,7 +28,7 @@ void func_801B8E0C(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitSpawner);
+        InitializeEntity(OVL_EXPORT(EInitSpawner));
         g_PauseAllowed = false;
         g_unkGraphicsStruct.pauseEnemies = 1;
         g_Player.padSim = PAD_LEFT;
@@ -85,7 +85,7 @@ void EntityMariaNZ0(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitSpawner);
+        InitializeEntity(OVL_EXPORT(EInitSpawner));
         self->animSet = ANIMSET_OVL(0xF);
         self->animCurFrame = 1;
         self->unk5A = 0x48;

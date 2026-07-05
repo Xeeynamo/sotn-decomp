@@ -2,7 +2,7 @@
 extern EInit g_EInitCtulhu;
 extern EInit g_EInitCtulhuFireball;
 extern EInit g_EInitCtulhuIceShockwave;
-extern EInit g_EInitInteractable;
+extern EInit OVL_EXPORT(EInitInteractable);
 
 typedef enum {
     CTULHU_INIT,
@@ -880,7 +880,7 @@ static u8 anim_death[] = {3, 1, 3, 2, 3, 3,  3, 4,  3, 5,  3, 6,  3,  7,
 void EntityCtulhuDeath(Entity* self) {
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         self->animSet = 14;
         self->unk5A = 121;
         self->palette = PAL_FLAG(PAL_CTULHU_DEATH);

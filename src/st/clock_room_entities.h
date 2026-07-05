@@ -6,7 +6,7 @@ void EntityClockHands(Entity* self) {
     Entity* handShadow = self + 5;
 
     if (!self->step) {
-        InitializeEntity(g_EInitCommon);
+        InitializeEntity(OVL_EXPORT(EInitCommon));
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = params + 25;
         self->zPriority = 0x3F - params;
@@ -44,7 +44,7 @@ void EntityBirdcageDoor(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitCommon);
+        InitializeEntity(OVL_EXPORT(EInitCommon));
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = anim_bird_cage[self->ext.birdcage.state & 1];
         self->ext.birdcage.prevState = self->ext.birdcage.state;
@@ -130,7 +130,7 @@ void EntityStatue(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitCommon);
+        InitializeEntity(OVL_EXPORT(EInitCommon));
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = params + 10;
         self->hitboxWidth = 16;
@@ -235,7 +235,7 @@ void EntityStatueGear(Entity* self) {
     switch (self->step) {
     case 0:
         if (!self->step_s) {
-            InitializeEntity(g_EInitCommon);
+            InitializeEntity(OVL_EXPORT(EInitCommon));
             self->animSet = ANIMSET_OVL(1);
             self->animCurFrame = 17;
             self->zPriority = 0x80;
@@ -318,7 +318,7 @@ void EntityStoneDoor(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitCommon);
+        InitializeEntity(OVL_EXPORT(EInitCommon));
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = params + 27;
         self->zPriority = 0x40;

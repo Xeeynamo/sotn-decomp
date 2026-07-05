@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz1.h"
 
-extern EInit g_EInitInteractable;
+extern EInit OVL_EXPORT(EInitInteractable);
 extern EInit g_EInitEnvironment;
 
 s32 D_us_80181134 = 0;
@@ -14,7 +14,7 @@ void EntityBossDoorTrigger(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         timeAttackResult = g_api.TimeAttackController(
             TIMEATTACK_EVENT_KARASUMAN_DEFEAT, TIMEATTACK_GET_RECORD);
         if (timeAttackResult) {

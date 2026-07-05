@@ -375,7 +375,7 @@ void func_us_801CEA2C(Entity* self) {
     Entity* tempEntity;
 
     if (!self->step) {
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         self->hitboxState = 1;
         self->attack = 1;
         self->attackElement = 1;

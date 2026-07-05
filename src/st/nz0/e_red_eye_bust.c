@@ -6,7 +6,7 @@
 void EntityRedEyeBust(Entity* self) {
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitEnemy3);
+        InitializeEntity(OVL_EXPORT(EInitEnemy3));
         self->animCurFrame = 7;
         self->zPriority = 0x70;
         break;

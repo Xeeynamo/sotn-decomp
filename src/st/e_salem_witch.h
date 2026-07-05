@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-extern EInit g_EInitInteractable;
+extern EInit OVL_EXPORT(EInitInteractable);
 extern EInit g_EInitSalemWitch;
 extern EInit g_EInitSalemWitchCurse;
 extern EInit g_EInitSalemWitchTribolt;
@@ -849,7 +849,7 @@ void EntitySalemWitchTriboltLaunch(Entity* self) {
 
     switch (self->step) {
     case INIT:
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         self->animSet = 5;
         self->palette = PAL_FLAG(0x2EB);
         self->blendMode = BLEND_TRANSP | BLEND_ADD;

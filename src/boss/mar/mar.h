@@ -42,9 +42,9 @@ typedef enum Statues {
     /* 1 */ LEFT_STATUE,
 } Statues;
 
-extern EInit g_EInitCommon;
-extern EInit g_EInitSpawner;
-extern EInit g_EInitParticle;
-extern EInit g_EInitLockCamera;
+extern EInit OVL_EXPORT(EInitCommon);
+extern EInit OVL_EXPORT(EInitSpawner);
+extern EInit OVL_EXPORT(EInitParticle);
+extern EInit OVL_EXPORT(EInitLockCamera);
 
 #endif

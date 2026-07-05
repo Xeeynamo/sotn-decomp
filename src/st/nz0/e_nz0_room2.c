@@ -14,7 +14,7 @@ void EntityFloorButton(Entity* self) {
     collided = GetPlayerCollisionWith(self, 8, 8, 4);
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         self->ext.nz0311c0.unk80 = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex == -1) {
@@ -82,7 +82,7 @@ void EntityFloorSpikes(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         self->hitboxWidth = 12;
         self->hitboxHeight = 12;
         self->attackElement = 1;

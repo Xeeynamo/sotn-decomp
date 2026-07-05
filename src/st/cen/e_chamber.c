@@ -92,7 +92,7 @@ void EntityPlatform(Entity* self) {
 #endif
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex != -1) {
-            InitializeEntity(g_EInitInteractable);
+            InitializeEntity(OVL_EXPORT(EInitInteractable));
             self->animSet = ANIMSET_OVL(2);
             self->animCurFrame = 9;
             self->zPriority = 0x80;
@@ -601,7 +601,7 @@ void EntityRoomDarkness(Entity* self) {
 
         primIndex = g_api.AllocPrimitives(PRIM_G4, 2);
         if (primIndex != -1) {
-            InitializeEntity(g_EInitInteractable);
+            InitializeEntity(OVL_EXPORT(EInitInteractable));
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             self->animSet = 0;

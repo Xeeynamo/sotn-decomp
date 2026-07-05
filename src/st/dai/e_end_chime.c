@@ -7,7 +7,7 @@ enum EndChimeSteps {
     END_CHIME_START_MUSIC,
 };
 
-extern EInit g_EInitInteractable;
+extern EInit OVL_EXPORT(EInitInteractable);
 
 // Used by e_confessional/EntityConfessionalGhost
 bool g_confessionalChimeActive = {0}; // bss on pspeu
@@ -20,7 +20,7 @@ void EntityEndConfessionalChime(Entity* self) {
     }
     switch (self->step) {
     case END_CHIME_INIT:
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         g_api.PlaySfx(SET_STOP_SEQ);
         stopMusicFlag = true;
         self->step = 2;

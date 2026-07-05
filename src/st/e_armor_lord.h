@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-extern EInit g_EInitInteractable;
+extern EInit OVL_EXPORT(EInitInteractable);
 extern EInit g_EInitArmorLord;
 extern EInit D_us_80180AE8;
 extern EInit D_us_80180AF4;
@@ -246,7 +246,7 @@ void EntityArmorLordFireWave(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         self->ext.armorLord.unk80 = 0;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x1A);
         if (primIndex != -1) {

@@ -5,7 +5,7 @@ extern EInit g_EInitMinotaur;
 extern EInit g_EInitMinotaurAttackHitbox;
 extern EInit g_EInitMinotaurFireball;
 extern EInit g_EInitMinotaurSpitLiquid;
-extern EInit g_EInitParticle;
+extern EInit OVL_EXPORT(EInitParticle);
 
 static s16 sensors[] = {0, 40, 16, 0};
 static s16 sensors_ground[] = {0, 40, 0, 4, 16, -4, -32, 0};
@@ -626,7 +626,7 @@ void EntityMinotaurSpitLiquid(Entity* self) {
 void EntityMinotaurDeathPuff(Entity* self) {
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitParticle);
+        InitializeEntity(OVL_EXPORT(EInitParticle));
         self->animSet = 0xE;
         self->palette = PAL_MINOTAUR_DEATH_PUFF;
         self->unk5A = 0x79;

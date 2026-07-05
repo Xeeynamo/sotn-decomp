@@ -96,8 +96,8 @@ enum OVL_EXPORT(Palette) {
     PAL_PUFF_OPAQUE_OFFSET = 0x2E0,
 };
 
-extern EInit g_EInitInteractable;
-extern EInit g_EInitCommon;
+extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit OVL_EXPORT(EInitCommon);
 
 #ifdef VERSION_PSP
 extern s32 E_ID(SPIKES_PARTS);

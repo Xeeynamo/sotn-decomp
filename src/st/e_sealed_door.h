@@ -9,7 +9,7 @@
 #define SEALED_DOOR_CLUT SEALED_DOOR_PALETTE - 1
 #endif
 
-extern EInit g_EInitCommon;
+extern EInit OVL_EXPORT(EInitCommon);
 
 static u8 g_eBlueDoorUV[][8] = {
     {0x03, 0x0D, 0x03, 0x0D, 0x03, 0x03, 0x45, 0x45},
@@ -80,7 +80,7 @@ void EntitySealedDoor(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitCommon);
+        InitializeEntity(OVL_EXPORT(EInitCommon));
         self->animSet = 0;
         self->animCurFrame = 1;
         self->zPriority = PLAYER.zPriority - 0x20;

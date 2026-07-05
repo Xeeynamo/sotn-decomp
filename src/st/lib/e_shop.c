@@ -607,7 +607,7 @@ void EntityLibrarianChair(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitCommon);
+        InitializeEntity(OVL_EXPORT(EInitCommon));
         self->zPriority = 0x80;
         self->animSet = ANIMSET_OVL(11);
         self->animCurFrame = 2;
@@ -1241,7 +1241,7 @@ void func_us_801B15C0(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitCommon);
+        InitializeEntity(OVL_EXPORT(EInitCommon));
         primIndex = g_api.AllocPrimitives(PRIM_G4, 7);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
@@ -2000,7 +2000,7 @@ void func_us_801B2BE4(Entity* self) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_G4, 0xD);
         if (primIndex != -1) {
-            InitializeEntity(g_EInitCommon);
+            InitializeEntity(OVL_EXPORT(EInitCommon));
             i = 0;
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
@@ -2936,7 +2936,7 @@ void func_us_801B4830(Entity* self) {
         primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x53);
 #endif
         if (primIndex != -1) {
-            InitializeEntity(g_EInitCommon);
+            InitializeEntity(OVL_EXPORT(EInitCommon));
             i = 0;
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
@@ -3204,7 +3204,7 @@ void func_us_801B5068(Entity* self) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 7);
         if (primIndex != -1) {
-            InitializeEntity(g_EInitCommon);
+            InitializeEntity(OVL_EXPORT(EInitCommon));
             i = 0;
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
@@ -3444,7 +3444,7 @@ void func_us_801B56E4(Entity* self) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x13A);
         if (primIndex != -1) {
-            InitializeEntity(g_EInitCommon);
+            InitializeEntity(OVL_EXPORT(EInitCommon));
             i = 0;
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
@@ -3708,7 +3708,7 @@ void func_us_801B5F84(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitCommon);
+        InitializeEntity(OVL_EXPORT(EInitCommon));
         if (g_PlayableCharacter) {
             self->step++;
         } else if ((player->posY.i.hi + g_Tilemap.scrollY.i.hi) < 0x100 &&
@@ -3741,7 +3741,7 @@ void func_us_801B5F84(Entity* self) {
 void func_us_801B60C8(Entity* self) {
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitCommon);
+        InitializeEntity(OVL_EXPORT(EInitCommon));
         break;
 
     case 1:
@@ -3902,7 +3902,7 @@ void func_us_801B6324(Entity* self) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x140);
         if (primIndex != -1) {
-            InitializeEntity(g_EInitCommon);
+            InitializeEntity(OVL_EXPORT(EInitCommon));
             i = 0;
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
@@ -4251,7 +4251,7 @@ void func_us_801B6F30(Entity* self) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x140);
         if (primIndex != -1) {
-            InitializeEntity(g_EInitCommon);
+            InitializeEntity(OVL_EXPORT(EInitCommon));
             i = 0;
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
@@ -4829,7 +4829,7 @@ void func_us_801B8234(Entity* self) {
         primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x86);
 #endif
         if (primIndex != -1) {
-            InitializeEntity(g_EInitCommon);
+            InitializeEntity(OVL_EXPORT(EInitCommon));
             i = 0;
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
@@ -5204,7 +5204,7 @@ void func_us_801B8A00(Entity* self) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x140);
         if (primIndex != -1) {
-            InitializeEntity(g_EInitCommon);
+            InitializeEntity(OVL_EXPORT(EInitCommon));
             i = 0;
 #ifdef VERSION_PSP
             self->ext.et_801B6F30.unk86 = 0;

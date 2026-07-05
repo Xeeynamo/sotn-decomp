@@ -133,7 +133,7 @@ void EntityRotateSpittlebone(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         self->flags &= ~(FLAG_UNK_2000 | FLAG_UNK_200);
         break;
 

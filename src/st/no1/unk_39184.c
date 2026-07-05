@@ -90,7 +90,7 @@ void func_us_801B9304(Entity* self) {
 #endif
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
 #ifdef VERSION_PSP
         func_pspeu_0925F440();
 #endif

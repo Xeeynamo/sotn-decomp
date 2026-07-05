@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-extern EInit g_EInitLockCamera;
+extern EInit OVL_EXPORT(EInitLockCamera);
 
 static u8 entityLockCameraHitbox[] = {
     0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x50, 0x20,
@@ -67,7 +67,7 @@ void OVL_EXPORT(EntityLockCamera)(Entity* self) {
             g_Tilemap.height = *tilemapProps;
         }
     } else {
-        InitializeEntity(g_EInitLockCamera);
+        InitializeEntity(OVL_EXPORT(EInitLockCamera));
         var_s0 = self->ext.lockCamera.unk7C = entityLockCameraData[params];
         if (var_s0) {
             self->hitboxWidth = entityLockCameraHitbox[params];
