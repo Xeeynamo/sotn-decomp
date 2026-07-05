@@ -258,8 +258,9 @@ u8 OVL_EXPORT(g_explosionBigAnim)[] = {
 static u8 D_80180F6C[] = {0x01, 0x43, 0x00, 0x00};
 
 static u8* g_ExplosionAnimations[] = {
-    anim_small,         OVL_EXPORT(g_bigRedFireballAnim), anim_small_multiple,
-    OVL_EXPORT(g_explosionBigAnim), D_80180F6C,
+    anim_small,          OVL_EXPORT(g_bigRedFireballAnim),
+    anim_small_multiple, OVL_EXPORT(g_explosionBigAnim),
+    D_80180F6C,
 };
 
 void OVL_EXPORT(CollectGold)(u16 goldSize) {
