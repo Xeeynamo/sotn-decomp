@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 extern EInit OVL_EXPORT(EInitCommon);
+extern EInit OVL_EXPORT(EInitSpawner);
 
 extern u16 g_WaterSounds[];
 extern s16 g_WaterXTbl[];
@@ -356,7 +357,7 @@ void EntityAlucardWaterEffect(Entity* self) {
             }
         }
     } else {
-        InitializeEntity(g_EInitSpawner);
+        InitializeEntity(OVL_EXPORT(EInitSpawner));
     }
     self->ext.aluwater.unk7C = sp28;
     self->ext.aluwater.unk80 = posX;

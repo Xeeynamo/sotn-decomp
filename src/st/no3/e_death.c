@@ -23,7 +23,7 @@ void EntityDeathCutsceneManager(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitSpawner);
+        InitializeEntity(OVL_EXPORT(EInitSpawner));
         tilemap->y = 0xFC;
         g_PauseAllowed = false;
         g_Player.padSim = PAD_RIGHT;

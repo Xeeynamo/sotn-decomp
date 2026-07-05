@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+extern EInit OVL_EXPORT(EInitSpawner);
 
 // Detects if the merman is splashing into water.
 // If so, creates a splash effect, and sets merman underwater to true.
@@ -899,7 +900,7 @@ void EntityMermanSpawner(Entity* self) {
     s16 yVar;
 
     if (!self->step) {
-        InitializeEntity(g_EInitSpawner);
+        InitializeEntity(OVL_EXPORT(EInitSpawner));
         self->flags |= FLAG_UNK_2000;
     }
 

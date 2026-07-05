@@ -26,7 +26,7 @@ enum OVL_EXPORT(CutsceneFlags) {
     DAI_CUTSCENE_CUTSCENE_CONCLUDED = 1 << 3,
 };
 
-extern EInit g_EInitSpawner;
+extern EInit OVL_EXPORT(EInitSpawner);
 extern EInit g_EInitInteractable;
 extern u32 OVL_EXPORT(CutsceneFlags); // defined by e_cutscene_dialogue
 
@@ -75,7 +75,7 @@ void OVL_EXPORT(EntityCutsceneStage)(Entity* self) {
 
     switch (self->step) {
     case CUTSCENE_INIT:
-        InitializeEntity(g_EInitSpawner);
+        InitializeEntity(OVL_EXPORT(EInitSpawner));
         g_PauseAllowed = false;
         // This seems to pause Alucard, rather than enemies
         g_unkGraphicsStruct.pauseEnemies = true;

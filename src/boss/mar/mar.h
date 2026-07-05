@@ -43,7 +43,7 @@ typedef enum Statues {
 } Statues;
 
 extern EInit OVL_EXPORT(EInitCommon);
-extern EInit g_EInitSpawner;
+extern EInit OVL_EXPORT(EInitSpawner);
 extern EInit OVL_EXPORT(EInitParticle);
 extern EInit OVL_EXPORT(EInitLockCamera);
 

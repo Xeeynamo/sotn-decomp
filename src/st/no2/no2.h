@@ -100,7 +100,7 @@ extern Primitive* FindFirstUnkPrim2(Primitive* prim, u8 index);
 extern EInit OVL_EXPORT(EInitBreakable);
 extern EInit OVL_EXPORT(EInitObtainable);
 extern EInit OVL_EXPORT(EInitParticle);
-extern EInit g_EInitSpawner;
+extern EInit OVL_EXPORT(EInitSpawner);
 extern EInit g_EInitInteractable;
 extern EInit OVL_EXPORT(EInitUnkId13);
 extern EInit OVL_EXPORT(EInitLockCamera);

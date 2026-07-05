@@ -2,7 +2,7 @@
 #include "rare.h"
 
 extern u16 UNK_Invincibility0[];
-extern EInit g_EInitSpawner;
+extern EInit OVL_EXPORT(EInitSpawner);
 extern EInit g_EInitWhiteDragonFlameBreath;
 
 static s16 z_priorities[] = {8, 7, 6, 5, 4, 3, 2, 1, 0, 1, 2, 3, 4, 5, 6, 7};
@@ -267,7 +267,7 @@ void EntityWhiteDragon(Entity* self) {
     switch (self->step) {
     case INIT:
         if (!self->step_s) {
-            InitializeEntity(g_EInitSpawner);
+            InitializeEntity(OVL_EXPORT(EInitSpawner));
             self->step = INIT;
             self->step_s++;
             self->flags |=

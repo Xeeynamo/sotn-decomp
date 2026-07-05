@@ -41,7 +41,7 @@ enum SpikesPointDirections {
 
 extern EInit OVL_EXPORT(EInitParticle);
 extern EInit g_EInitEnvironment;
-extern EInit g_EInitSpawner;
+extern EInit OVL_EXPORT(EInitSpawner);
 extern EInit g_EInitInteractable;
 
 static AnimateEntityFrame anim_dust[] = {
@@ -260,7 +260,7 @@ void EntitySpikes(Entity* self) {
     playerPtr = &PLAYER;
     switch (self->step) {
     case SPIKES_INIT:
-        InitializeEntity(g_EInitSpawner);
+        InitializeEntity(OVL_EXPORT(EInitSpawner));
 #ifdef DAMAGE_ENT_ON_SPAWN
         entity = self + 1;
         CreateEntityFromCurrentEntity(E_ID(SPIKES_DAMAGE), entity);

@@ -4,7 +4,7 @@
 #include <scratchpad.h>
 
 extern EInit g_EInitInteractable;
-extern EInit g_EInitSpawner;
+extern EInit OVL_EXPORT(EInitSpawner);
 
 extern s16 D_us_80181BFC[];
 
@@ -47,7 +47,7 @@ void EntityClouds(Entity* self) {
     SVECTOR* vector;
 
     if (!self->step) {
-        InitializeEntity(g_EInitSpawner);
+        InitializeEntity(OVL_EXPORT(EInitSpawner));
         primIndex = g_api.func_800EDB58(PRIM_GT4, 0x70);
         if (primIndex == -1) {
             DestroyEntity(self);

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+extern EInit OVL_EXPORT(EInitSpawner);
 
 static u8 anim1[] = {8, 1, 8, 2, 0};
 static u8 anim2[] = {6, 3, 6, 4, 6, 5,  6,  6, 6,   7,
@@ -94,7 +95,7 @@ void EntityZombieSpawner(Entity* self) {
     Entity* newEntity;
 
     if (!self->step) {
-        InitializeEntity(g_EInitSpawner);
+        InitializeEntity(OVL_EXPORT(EInitSpawner));
         self->flags &= FLAG_UNK_2000;
         self->ext.zombieSpawner.spawnDelay = 1;
     }
