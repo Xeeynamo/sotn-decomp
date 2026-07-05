@@ -1303,6 +1303,24 @@ typedef struct {
 } SaveData; /* size = 0x11CC */
 
 typedef struct {
+    /* 801BC8E0 */ s32 icon[BLOCK_PER_CARD];
+    /* 801BC91C */ u32 slot[BLOCK_PER_CARD];
+    /* 801BC958 */ u32 stage[BLOCK_PER_CARD];
+    /* 801BC994 */ u32 roomX[BLOCK_PER_CARD];
+    /* 801BC9D0 */ u32 roomY[BLOCK_PER_CARD];
+    /* 801BCA0C */ u32 level[BLOCK_PER_CARD];
+    /* 801BCA48 */ u32 gold[BLOCK_PER_CARD];
+    /* 801BCA84 */ u32 nRoomsExplored[BLOCK_PER_CARD];
+    /* 801BCAC0 */ u32 playHours[BLOCK_PER_CARD];
+    /* 801BCAFC */ u32 playSeconds[BLOCK_PER_CARD];
+    /* 801BCB38 */ u32 playMinutes[BLOCK_PER_CARD];
+    /* 801BCB74 */ u32 kind[BLOCK_PER_CARD]; // 0: play, 1: clear, 2: replay
+    /* 801BCBB0 */ u32 character[BLOCK_PER_CARD];
+    /* 801BCBEC */ char name[BLOCK_PER_CARD][10];
+    s32 padding; // not really padding, it's a memory card status
+} SaveSummary;   // size=0x3A8
+
+typedef struct {
     /* 0x00 */ u8* gfxPage;
     /* 0x04 */ u8* gfxIndex;
     /* 0x08 */ u8* clut;
