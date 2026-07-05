@@ -43,7 +43,7 @@ void EntityDodoBird(Entity* self) {
         break;
     case DODO_WAIT:
         if (UnkCollisionFunc3(sensors2) & 1) {
-            self->step += 1;
+            self->step++;
         }
         break;
     case DODO_WALK:
@@ -111,12 +111,12 @@ void EntityDodoBird(Entity* self) {
         switch (self->step_s) {
         case 0:
             self->ext.dodo.timer = 16;
-            self->step_s += 1;
+            self->step_s++;
             PlaySfxPositional(SFX_FLEA_RIDER_EXPLODE);
             self->drawFlags |= ENTITY_ROTATE;
             /* fallthrough */
         case 1:
-            AnimateEntity(&dodo_freakout, self);
+            AnimateEntity(dodo_freakout, self);
             self->rotate -= 0x80;
             // Every 4 frames, spawn 5 more feathers.
             // Timer starts at 16, so this will hit 4 times.
@@ -138,7 +138,7 @@ void EntityDodoBird(Entity* self) {
                 }
             }
             if (!--self->ext.dodo.timer) {
-                self->step_s += 1;
+                self->step_s++;
             }
             break;
         case 2:
