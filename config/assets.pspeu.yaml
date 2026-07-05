@@ -776,6 +776,8 @@ files:
         vram: 0x09237700
         assets:
           - [0x80, skip]
+          - [0x2C4E0, sprite_banks, sprite_banks]
+          - [0x2C540, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rno4.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rnz0.bin
     asset_path: assets/st/rnz0
