@@ -1249,7 +1249,7 @@ void EntityFerrymanGateController(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitCommon);
+        InitializeEntity(OVL_EXPORT(EInitCommon));
         self->animSet = ANIMSET_OVL(1);
         if (g_CastleFlags[FERRYMAN_GATE_OPEN]) {
             LoadFerrymanGateTiles();

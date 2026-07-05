@@ -59,7 +59,7 @@ void EntityChair(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitCommon);
+        InitializeEntity(OVL_EXPORT(EInitCommon));
         break;
 
     case 1:
@@ -123,7 +123,7 @@ void func_us_801B81E8(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitCommon);
+        InitializeEntity(OVL_EXPORT(EInitCommon));
         self->animSet = ANIMSET_OVL(2);
         self->velocityY = FIX(-3.0 / 8.0);
         self->velocityX = FIX(0.25);

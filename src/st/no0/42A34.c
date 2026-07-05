@@ -19,7 +19,7 @@ void func_us_801C2A34(Entity* self) {
     s16 angle;
 
     if (!self->step) {
-        InitializeEntity(g_EInitCommon);
+        InitializeEntity(OVL_EXPORT(EInitCommon));
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 33;
         self->zPriority = 0x50;
@@ -82,7 +82,7 @@ void func_us_801C2CD8(Entity* self) {
     s32 var = GetPlayerCollisionWith(self, 16, 8, 5);
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitCommon);
+        InitializeEntity(OVL_EXPORT(EInitCommon));
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 0x2D;
         self->zPriority = 0x9E;
@@ -136,7 +136,7 @@ void func_us_801C2E7C(Entity* self) {
     no4Open = g_CastleFlags[NO4_OPEN];
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitCommon);
+        InitializeEntity(OVL_EXPORT(EInitCommon));
         self->animCurFrame = 0;
         self->zPriority = 0x9E;
 

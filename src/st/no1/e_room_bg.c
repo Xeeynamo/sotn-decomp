@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
 
-extern EInit g_EInitCommon;
+extern EInit OVL_EXPORT(EInitCommon);
 
 static u8 anim0[] = {64, 1, -1, 0};
 static u8 anim1[] = {64, 59, -1, 0};
@@ -50,7 +50,7 @@ void OVL_EXPORT(EntityBackgroundBlock)(Entity* self) {
     s32 primIndex;
 
     if (!self->step) {
-        InitializeEntity(g_EInitCommon);
+        InitializeEntity(OVL_EXPORT(EInitCommon));
         self->animSet = objInit->animSet;
         self->zPriority = objInit->zPriority;
 #ifdef VERSION_PSP

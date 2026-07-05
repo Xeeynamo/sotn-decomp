@@ -54,7 +54,7 @@ extern EInit OVL_EXPORT(EInitBreakable);
 extern EInit OVL_EXPORT(EInitObtainable);
 extern EInit g_EInitSpawner;
 extern EInit g_EInitInteractable;
-extern EInit g_EInitCommon;
+extern EInit OVL_EXPORT(EInitCommon);
 extern EInit OVL_EXPORT(EInitParticle);
 extern EInit OVL_EXPORT(EInitLockCamera);
 

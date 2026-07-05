@@ -104,7 +104,7 @@ extern EInit g_EInitSpawner;
 extern EInit g_EInitInteractable;
 extern EInit OVL_EXPORT(EInitUnkId13);
 extern EInit OVL_EXPORT(EInitLockCamera);
-extern EInit g_EInitCommon;
+extern EInit OVL_EXPORT(EInitCommon);
 extern EInit OVL_EXPORT(EInitDamageNum);
 extern EInit g_EInitSkelerang;
 extern EInit g_EInitSkelerangBoomerang;

@@ -74,7 +74,7 @@ extern EInit OVL_EXPORT(EInitParticle);
 extern EInit g_EInitInteractable;
 extern EInit OVL_EXPORT(EInitUnkId13);
 extern EInit OVL_EXPORT(EInitLockCamera);
-extern EInit g_EInitCommon;
+extern EInit OVL_EXPORT(EInitCommon);
 extern EInit OVL_EXPORT(EInitDamageNum);
 extern EInit g_EInitSecret;
 extern EInit g_EInitSalemWitch;

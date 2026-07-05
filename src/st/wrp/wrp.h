@@ -34,5 +34,5 @@ extern EInit OVL_EXPORT(EInitLockCamera);
 extern EInit OVL_EXPORT(EInitObtainable);
 extern EInit OVL_EXPORT(EInitParticle);
 extern EInit g_EInitInteractable;
-extern EInit g_EInitCommon;
+extern EInit OVL_EXPORT(EInitCommon);
 extern EInit g_EInitSmallRocks;

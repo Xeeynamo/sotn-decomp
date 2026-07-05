@@ -1519,7 +1519,7 @@ void func_us_801C3A04(Entity* self) {
     s32 scrollY;
 
     if (!self->step) {
-        InitializeEntity(g_EInitCommon);
+        InitializeEntity(OVL_EXPORT(EInitCommon));
         self->animSet = 0;
         primIndex = g_api.AllocPrimitives(PRIM_TILE, 0x40);
         if (primIndex == -1) {
@@ -2055,7 +2055,7 @@ void EntityFloatingIcePlatform(Entity* self) {
     hitboxIndex = self->params;
 
     if (!self->step) {
-        InitializeEntity(g_EInitCommon);
+        InitializeEntity(OVL_EXPORT(EInitCommon));
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = hitboxIndex + 25;
         self->drawFlags = ENTITY_ROTATE;
@@ -2246,7 +2246,7 @@ void func_us_801C4D2C(Entity* self) {
 
 void func_us_801C5020(Entity* self) {
     if (!self->step) {
-        InitializeEntity(g_EInitCommon);
+        InitializeEntity(OVL_EXPORT(EInitCommon));
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 12;
         self->drawFlags = ENTITY_OPACITY | ENTITY_ROTATE;
@@ -2377,7 +2377,7 @@ static s32 D_us_8018160C[] = {
 void func_us_801C542C(Entity* self) {
     u16 params = self->params;
     if (!self->step) {
-        InitializeEntity(g_EInitCommon);
+        InitializeEntity(OVL_EXPORT(EInitCommon));
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = D_us_801815DC[params];
         self->facingLeft = D_us_801815EC[params];
@@ -2533,7 +2533,7 @@ void func_us_801C58A0(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitCommon);
+        InitializeEntity(OVL_EXPORT(EInitCommon));
         if (g_CastleFlags[NO4_SKELETON_APE_AND_BRIDGE]) {
             func_us_801C5868();
             DestroyEntity(self);

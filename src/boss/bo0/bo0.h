@@ -97,7 +97,7 @@ enum OVL_EXPORT(Palette) {
 };
 
 extern EInit g_EInitInteractable;
-extern EInit g_EInitCommon;
+extern EInit OVL_EXPORT(EInitCommon);
 
 #ifdef VERSION_PSP
 extern s32 E_ID(SPIKES_PARTS);

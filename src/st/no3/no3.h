@@ -127,7 +127,7 @@ extern EInit OVL_EXPORT(EInitParticle);
 extern EInit g_EInitSpawner;
 extern EInit g_EInitInteractable;
 extern EInit OVL_EXPORT(EInitLockCamera);
-extern EInit g_EInitCommon;
+extern EInit OVL_EXPORT(EInitCommon);
 extern EInit g_EInitStInteractable;
 extern EInit g_EInitFireWarg1;
 extern EInit g_EInitFireWarg2;

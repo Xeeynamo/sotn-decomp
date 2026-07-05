@@ -142,7 +142,7 @@ void EntityDeathStolenItem(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitCommon);
+        InitializeEntity(OVL_EXPORT(EInitCommon));
         break;
     case 1:
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
@@ -315,7 +315,7 @@ void EntityDeath(Entity* self) {
         if (OVL_EXPORT(CutsceneFlags) & 0x80) {
             primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
             if (primIndex != -1) {
-                InitializeEntity(g_EInitCommon);
+                InitializeEntity(OVL_EXPORT(EInitCommon));
                 self->flags |= FLAG_HAS_PRIMS;
                 self->primIndex = primIndex;
                 self->animSet = ANIMSET_OVL(8);
@@ -581,7 +581,7 @@ void EntityDeathScythe(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitCommon);
+        InitializeEntity(OVL_EXPORT(EInitCommon));
         self->animSet = ANIMSET_OVL(8);
         self->animCurFrame = 0;
         self->palette = 0x2D6;
@@ -626,7 +626,7 @@ void EntityDeathScytheShadow(Entity* self) {
     switch (self->step) {
     case 0:
         animCurFrame = self->animCurFrame;
-        InitializeEntity(g_EInitCommon);
+        InitializeEntity(OVL_EXPORT(EInitCommon));
         self->animSet = ANIMSET_OVL(8);
         self->animCurFrame = animCurFrame;
         self->palette = 0x2D6;

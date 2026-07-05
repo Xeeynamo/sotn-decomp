@@ -13,7 +13,7 @@ void func_us_80191438(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitCommon);
+        InitializeEntity(OVL_EXPORT(EInitCommon));
         self->animSet = 2;
         self->animCurFrame = 1;
         self->zPriority = 176;

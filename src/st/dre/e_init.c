@@ -86,7 +86,7 @@ EInit D_8018047C = {ANIMSET_DRA(0), 0, 0, PAL_NULL, 0x004};
 EInit g_EInitInteractable = {ANIMSET_DRA(0), 0, 0, PAL_NULL, 0x005};
 EInit OVL_EXPORT(EInitUnkId13) = {ANIMSET_DRA(0), 0, 0, PAL_NULL, 0x002};
 EInit OVL_EXPORT(EInitLockCamera) = {ANIMSET_DRA(0), 0, 0, PAL_NULL, 0x001};
-EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, PAL_NULL, 0x003};
+EInit OVL_EXPORT(EInitCommon) = {ANIMSET_DRA(0), 0, 0, PAL_NULL, 0x003};
 EInit OVL_EXPORT(EInitDamageNum) = {ANIMSET_DRA(0), 0, 0, PAL_NULL, 0x003};
 static EInit __unused__ = {ANIMSET_OVL(1), 0, 0, PAL_NULL, 0x003};
 // e_succubus

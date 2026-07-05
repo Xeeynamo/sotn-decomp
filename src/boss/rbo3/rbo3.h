@@ -30,7 +30,7 @@ typedef enum {
 } EntityIDs;
 
 extern EInit g_EInitInteractable;
-extern EInit g_EInitCommon;
+extern EInit OVL_EXPORT(EInitCommon);
 extern EInit OVL_EXPORT(EInitParticle);
 extern EInit OVL_EXPORT(EInitLockCamera);
 

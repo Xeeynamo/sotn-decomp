@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sfx.h"
 
-extern EInit g_EInitCommon;
+extern EInit OVL_EXPORT(EInitCommon);
 
 #ifdef STAGE_IS_NZ1
 extern s32 D_us_80181134;
@@ -52,7 +52,7 @@ void OVL_EXPORT(EntityRedDoor)(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitCommon);
+        InitializeEntity(OVL_EXPORT(EInitCommon));
         self->animSet = 7;
         self->animCurFrame = 1;
         self->zPriority = PLAYER.zPriority - 0x20;

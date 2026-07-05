@@ -56,7 +56,7 @@ extern s32 D_80096ED0_mad;
 // ST/MAD
 extern EInit OVL_EXPORT(EInitLockCamera);
 extern EInit OVL_EXPORT(EInitObtainable);
-extern EInit g_EInitCommon;
+extern EInit OVL_EXPORT(EInitCommon);
 extern u16 D_80180538[];
 extern ObjInit D_8018056C[];
 extern u8 D_801805B4[];

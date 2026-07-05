@@ -832,7 +832,7 @@ void func_us_801B5004(Tilemap* map, s32 arg1) {
 extern s32 D_us_801805B0;
 #endif
 
-extern EInit g_EInitCommon;
+extern EInit OVL_EXPORT(EInitCommon);
 
 void EntityUnkId1E(Entity* self) {
     Entity* entity;
@@ -846,7 +846,7 @@ void EntityUnkId1E(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitCommon);
+        InitializeEntity(OVL_EXPORT(EInitCommon));
         self->animSet = ANIMSET_OVL(15);
         self->animCurFrame = 0x25;
         self->facingLeft = D_us_8018068C[params >> 1];
