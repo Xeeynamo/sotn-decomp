@@ -29,7 +29,7 @@ typedef enum {
     /* 0x1E */ UNK_ENTITY_30,
 } EntityIDs;
 
-extern EInit g_EInitInteractable;
+extern EInit OVL_EXPORT(EInitInteractable);
 extern EInit OVL_EXPORT(EInitCommon);
 extern EInit OVL_EXPORT(EInitParticle);
 extern EInit OVL_EXPORT(EInitLockCamera);

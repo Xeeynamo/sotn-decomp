@@ -43,7 +43,7 @@ void func_us_801CCF6C(Entity* self) {
 
     s32 params = self->params;
     if (self->step == 0) {
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         self->scaleX = D_us_80182AE0[params][0] & 0xFF;
         self->scaleY = D_us_80182AE0[params][1] & 0xFF;
         self->rotate = D_us_80182AE0[params][2] & 0x7F;

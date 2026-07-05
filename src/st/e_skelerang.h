@@ -24,7 +24,7 @@ typedef enum {
     BOOMERANG_DESTROY
 } SkelerangBoomerangSteps;
 
-extern EInit g_EInitInteractable;
+extern EInit OVL_EXPORT(EInitInteractable);
 extern EInit g_EInitSkelerang;
 extern EInit g_EInitSkelerangBoomerang;
 
@@ -372,7 +372,7 @@ void EntitySkelerangBoomerang(Entity* self) {
 void EntitySkelerangUnknown(Entity* self) {
     Entity* parent;
     if (!self->step) {
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
     }
     parent = self - 1;
     if (parent->entityId != E_SKELERANG) {

@@ -31,7 +31,7 @@ void func_us_801BB53C(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         timeAttackRecord = g_api.TimeAttackController(
             TIMEATTACK_EVENT_LESSER_DEMON_DEFEAT, TIMEATTACK_GET_RECORD);
         if (timeAttackRecord) {

@@ -128,7 +128,7 @@ enum EntityIDs {
 
 extern EInit OVL_EXPORT(EInitParticle);
 extern EInit OVL_EXPORT(EInitSpawner);
-extern EInit g_EInitInteractable;
+extern EInit OVL_EXPORT(EInitInteractable);
 extern EInit OVL_EXPORT(EInitDamageNum);
 extern EInit g_EInitEnvironment;
 extern EInit g_EInitGremlin;

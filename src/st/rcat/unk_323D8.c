@@ -2,7 +2,7 @@
 #include "rcat.h"
 #include <scratchpad.h>
 
-extern EInit g_EInitInteractable;
+extern EInit OVL_EXPORT(EInitInteractable);
 
 static s16 D_us_801816FC[] = {
     0, 1, 2, 3, 4, 5, 5, 5, 5, 5, 5, 5, 5, 4, 3, 2, 1,
@@ -45,7 +45,7 @@ void func_us_801BACF4(Entity* self) {
     self->posY.i.hi = tempEntity->posY.i.hi;
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         self->primIndex = g_api.AllocPrimitives(PRIM_G4, 0x31);
         if (self->primIndex == -1) {
             DestroyEntity(self);

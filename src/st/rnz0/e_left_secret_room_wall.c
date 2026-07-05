@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rnz0.h"
 
-extern EInit g_EInitInteractable;
+extern EInit OVL_EXPORT(EInitInteractable);
 #ifdef VERSION_PSP
 extern s32 E_ID(WALL_DEBRIS);
 #endif
@@ -38,7 +38,7 @@ void EntityLeftSecretRoomWall(Entity* self) {
 
     switch (self->step) {
     case LEFT_SECRET_ROOM_WALL_INIT:
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         self->hitboxWidth = 16;
         self->hitboxHeight = 32;
         self->hitboxState = 2;
@@ -119,7 +119,7 @@ void EntityBottomSecretRoomFloor(Entity* self) {
 
     switch (self->step) {
     case BOTTOM_SECRET_ROOM_FLOOR_INIT:
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         self->hitboxWidth = 16;
         self->hitboxHeight = 16;
         self->hitboxState = 2;

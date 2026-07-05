@@ -80,7 +80,7 @@ EInit OVL_EXPORT(
 EInit OVL_EXPORT(
     EInitParticle) = {ANIMSET_DRA(3), 0x0000, 0x0000, PAL_NULL, 0x0002};
 EInit D_us_80180438 = {ANIMSET_DRA(0), 0x0000, 0x0000, PAL_NULL, 0x0004};
-EInit g_EInitInteractable = {
+EInit OVL_EXPORT(EInitInteractable) = {
     ANIMSET_DRA(0), 0x0000, 0x0000, PAL_NULL, 0x0005,
 };
 EInit OVL_EXPORT(EInitUnkId13) = {ANIMSET_DRA(0), 0x0000, 0x0000, PAL_NULL, 0x0002};

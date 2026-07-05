@@ -447,7 +447,7 @@ void func_us_801B8D30(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         self->animSet = 0;
         self->animCurFrame = 0;
 

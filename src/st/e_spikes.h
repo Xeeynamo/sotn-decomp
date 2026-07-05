@@ -42,7 +42,7 @@ enum SpikesPointDirections {
 extern EInit OVL_EXPORT(EInitParticle);
 extern EInit g_EInitEnvironment;
 extern EInit OVL_EXPORT(EInitSpawner);
-extern EInit g_EInitInteractable;
+extern EInit OVL_EXPORT(EInitInteractable);
 
 static AnimateEntityFrame anim_dust[] = {
     {2, 1}, {2, 2}, {2, 3}, {2, 4}, {2, 5}, {4, 6}, POSE_END};
@@ -326,7 +326,7 @@ void EntitySpikes(Entity* self) {
 
 void EntitySpikesDamage(Entity* self) {
     if (!self->step) {
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         self->attackElement = SPIKES_ELEMENT;
         self->attack = 15;
         self->hitboxState = 1;

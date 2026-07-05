@@ -33,7 +33,7 @@ void EntityLeftSecretRoomWall(Entity* self) {
 
     switch (self->step) {
     case LEFT_SECRET_ROOM_WALL_INIT:
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         self->hitboxWidth = 16;
         self->hitboxHeight = 32;
         self->hitboxState = 2;
@@ -114,7 +114,7 @@ void EntityBottomSecretRoomFloor(Entity* self) {
 
     switch (self->step) {
     case BOTTOM_SECRET_ROOM_FLOOR_INIT:
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         self->hitboxWidth = 16;
         self->hitboxHeight = 16;
         self->hitboxState = 2;

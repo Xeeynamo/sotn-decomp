@@ -3,7 +3,7 @@
 #include "clock_tower.h"
 #include <scratchpad.h>
 
-extern EInit g_EInitInteractable;
+extern EInit OVL_EXPORT(EInitInteractable);
 extern EInit OVL_EXPORT(EInitSpawner);
 
 extern s16 D_us_80181BFC[];
@@ -264,7 +264,7 @@ void EntityClockTower3D(Entity* self) {
     ClockTowerData2* var_s3;
 
     if (self->step == 0) {
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
 #ifdef STAGE_IS_TOP
         self->posX.i.hi = 0x700 - g_Tilemap.scrollX.i.hi;
         self->posY.i.hi = 0x3C0 - g_Tilemap.scrollY.i.hi;

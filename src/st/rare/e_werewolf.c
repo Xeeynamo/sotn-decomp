@@ -4,7 +4,7 @@
 extern EInit g_EInitWerewolf;
 extern EInit g_EInitWerewolfAttackHitbox;
 extern EInit g_EInitWerewolfEnergyWave;
-extern EInit g_EInitInteractable;
+extern EInit OVL_EXPORT(EInitInteractable);
 extern s16* sprites_rare_4[];
 
 static s16 sensors[] = {0, 27, 4, 0};
@@ -651,7 +651,7 @@ void EntityWerewolfDeathFlames(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x80);
         if (primIndex == -1) {
             DestroyEntity(self);

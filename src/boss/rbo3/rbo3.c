@@ -746,7 +746,7 @@ void func_us_80192998(Entity* self) {
     }
 }
 
-extern EInit g_EInitInteractable;
+extern EInit OVL_EXPORT(EInitInteractable);
 extern s32 D_us_80180728;
 extern s32 D_us_8018072C;
 
@@ -757,7 +757,7 @@ void func_us_80192B38(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         // fallthrough
     case 1:
         entity = &PLAYER;

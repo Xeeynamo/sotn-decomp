@@ -322,7 +322,7 @@ void func_us_801CC984(Entity* self) {
     switch (self->step) {
     case 0:
         self->posY.i.hi = 0;
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x28);
         if (primIndex == -1) {
             DestroyEntity(self);

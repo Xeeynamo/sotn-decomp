@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-extern EInit g_EInitInteractable;
+extern EInit OVL_EXPORT(EInitInteractable);
 
 void EntityTriggerBeforeCastleWarp(Entity* self) {
     FntPrint("alive \n");
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         g_api.func_800EA5E4(0xC001U);
         g_api.func_800EA5E4(0xC002U);
         g_api.func_800EA5E4(0xC003U);

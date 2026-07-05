@@ -146,7 +146,7 @@ void EntityFerrymanController(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         if (PLAYER.posX.i.hi < self->posX.i.hi) {
             self->facingLeft = true;
         } else {
@@ -590,7 +590,7 @@ void EntityFerryman(Entity* self) {
     Entity* boatEntity = self - 1;
 
     if (!self->step) {
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 0x1C;
         self->flags |= FLAG_POS_CAMERA_LOCKED;
@@ -670,7 +670,7 @@ void EntityBoatElevatorChains(Entity* self) {
     scrollX = g_Tilemap.scrollX.i.hi;
     scrollY = g_Tilemap.scrollY.i.hi;
     if (!self->step) {
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 13);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
@@ -987,7 +987,7 @@ void EntityBoatElevatorController(Entity* self) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 5);
         if (primIndex != -1) {
-            InitializeEntity(g_EInitInteractable);
+            InitializeEntity(OVL_EXPORT(EInitInteractable));
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             self->drawFlags = ENTITY_ROTATE;

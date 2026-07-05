@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-extern EInit g_EInitInteractable;
+extern EInit OVL_EXPORT(EInitInteractable);
 #ifdef INVERTED_STAGE
 extern EInit g_EInitEnvironmentBreakable;
 #else
@@ -215,7 +215,7 @@ void OVL_EXPORT(EntityBreakableDebris)(Entity* self) {
         }
 
         if (self->params & 256) {
-            InitializeEntity(g_EInitInteractable);
+            InitializeEntity(OVL_EXPORT(EInitInteractable));
             self->animSet = ANIMSET_OVL(10);
             self->unk5A = 91;
             self->palette = PAL_BREAKABLE;

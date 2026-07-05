@@ -27,7 +27,7 @@ enum OVL_EXPORT(CutsceneFlags) {
 };
 
 extern EInit OVL_EXPORT(EInitSpawner);
-extern EInit g_EInitInteractable;
+extern EInit OVL_EXPORT(EInitInteractable);
 extern u32 OVL_EXPORT(CutsceneFlags); // defined by e_cutscene_dialogue
 
 static AnimateEntityFrame unused_anims[] = {
@@ -159,7 +159,7 @@ void OVL_EXPORT(EntityCutsceneMaria)(Entity* self) {
 
     switch (self->step) {
     case MARIA_INIT:
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         self->animSet = ANIMSET_OVL(15);
         self->animCurFrame = 10;
         self->unk5A = 72;

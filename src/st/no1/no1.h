@@ -117,7 +117,7 @@ extern EInit OVL_EXPORT(EInitBreakable);
 extern EInit OVL_EXPORT(EInitObtainable);
 extern EInit OVL_EXPORT(EInitParticle);
 extern EInit OVL_EXPORT(EInitSpawner);
-extern EInit g_EInitInteractable;
+extern EInit OVL_EXPORT(EInitInteractable);
 extern EInit D_us_80180974;
 extern EInit D_us_80180980;
 extern EInit D_us_8018098C;

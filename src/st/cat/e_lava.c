@@ -41,7 +41,7 @@ void EntityLava(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         self->ext.lava.prim = NULL;
         self->ext.lava.unk89 = 1;
         self->ext.lava.unk84 = 0;
@@ -302,7 +302,7 @@ void EntityLavaEmbers(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         primIndex = g_api.func_800EDB58(PRIM_TILE_ALT, 0x14);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;

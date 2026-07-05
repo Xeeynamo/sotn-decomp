@@ -35,14 +35,14 @@ static void func_801961DC(s16 arg0) UNUSED {
 }
 
 extern s32 OVL_EXPORT(CutsceneFlags);
-extern EInit g_EInitInteractable;
+extern EInit OVL_EXPORT(EInitInteractable);
 
 void func_us_801A9084(Entity* self) {
     s16 playerGlobalX = PLAYER.posX.i.hi + g_Tilemap.scrollX.i.hi;
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         g_PauseAllowed = false;
         g_unkGraphicsStruct.pauseEnemies = true;
         g_Player.padSim = PAD_LEFT;
@@ -88,7 +88,7 @@ void func_us_801A9208(Entity* self) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_G4, 1);
         if (primIndex != -1) {
-            InitializeEntity(g_EInitInteractable);
+            InitializeEntity(OVL_EXPORT(EInitInteractable));
             prim = &g_PrimBuf[primIndex];
             g_unkGraphicsStruct.pauseEnemies = true;
             g_PauseAllowed = false;
@@ -177,7 +177,7 @@ void func_us_801A95F4(Entity* self) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_G4, 1);
         if (primIndex != -1) {
-            InitializeEntity(g_EInitInteractable);
+            InitializeEntity(OVL_EXPORT(EInitInteractable));
             prim = &g_PrimBuf[primIndex];
             g_unkGraphicsStruct.pauseEnemies = true;
             g_PauseAllowed = false;
@@ -243,7 +243,7 @@ void func_us_801A95F4(Entity* self) {
 void func_us_801A9944(Entity* self) {
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         g_unkGraphicsStruct.pauseEnemies = true;
         self->animSet = 0;
         g_PauseAllowed = false;

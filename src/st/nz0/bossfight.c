@@ -30,7 +30,7 @@ void EntityBossFightManager(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         g_BossFlag = 0;
         entity = self + 1;
         temp_s1 = (s16*)D_80181014;

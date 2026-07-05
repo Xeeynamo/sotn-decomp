@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-extern EInit g_EInitInteractable;
+extern EInit OVL_EXPORT(EInitInteractable);
 
 #ifndef STAGE_FLAG
 #define STAGE_FLAG NULL_STAGE_FLAG
@@ -105,7 +105,7 @@ void EntityStageNamePopup(Entity* self) {
 #ifdef STAGE_NAME_LOAD_GFX
         LoadStageNameGraphics();
 #endif
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         // This is the only time stpopupj.unk8C is ever referenced
         self->ext.stpopupj.unk8C = 0;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, NUM_PRIMS);

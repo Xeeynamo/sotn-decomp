@@ -5,7 +5,7 @@
 extern s32 E_ID(3D_BACKGROUND_HOUSE);
 #endif
 
-extern EInit g_EInitInteractable;
+extern EInit OVL_EXPORT(EInitInteractable);
 
 static SVECTOR v0 = {-0x3C, -0x9B, -0x78};
 static SVECTOR v1 = {0x3C, -0x9B, -0x78};
@@ -280,7 +280,7 @@ void Entity3DBackgroundHouse(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteractable);
+        InitializeEntity(OVL_EXPORT(EInitInteractable));
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 16);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
