@@ -123,7 +123,7 @@ EInit g_EInitInteractable = {ANIMSET_DRA(0), 0, 0, 0x000, 0x005};
 EInit OVL_EXPORT(EInitUnkId13) = {ANIMSET_DRA(0), 0, 0, 0x000, 0x002};
 EInit OVL_EXPORT(EInitLockCamera) = {ANIMSET_DRA(0), 0, 0, 0x000, 0x001};
 EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, 0x000, 0x003};
-EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, 0x000, 0x003};
+EInit OVL_EXPORT(EInitDamageNum) = {ANIMSET_DRA(0), 0, 0, 0x000, 0x003};
 EInit g_EInitEnvironment = {ANIMSET_OVL(2), 0, 0, 0x000, 0x005};
 EInit g_EInitBreakableWallSegment = {ANIMSET_DRA(0), 0, 0, 0x000, 0x005};
 

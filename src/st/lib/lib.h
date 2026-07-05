@@ -106,7 +106,7 @@ extern EInit g_EInitInteractable;
 extern EInit OVL_EXPORT(EInitUnkId13);
 extern EInit OVL_EXPORT(EInitLockCamera);
 extern EInit g_EInitCommon;
-extern EInit g_EInitDamageNum;
+extern EInit OVL_EXPORT(EInitDamageNum);
 extern EInit g_EInitBloodyZombie;
 extern EInit g_EInitFlyingZombie2;
 extern EInit g_EInitFlyingZombie1;

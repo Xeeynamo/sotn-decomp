@@ -1407,7 +1407,7 @@ def parse_e_inits(data_file_text, first_e_init, ovl_name, platform, config_yaml_
         f"{ovl_name.upper()}_EInitUnkId13",
         f"{ovl_name.upper()}_EInitLockCamera",
         "g_EInitCommon",
-        "g_EInitDamageNum",
+        f"{ovl_name.upper()}_EInitDamageNum",
     ]
 
     text = data_file_text[data_file_text.find(f"glabel {first_e_init}") :]

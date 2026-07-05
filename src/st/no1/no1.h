@@ -124,7 +124,7 @@ extern EInit D_us_8018098C;
 extern EInit OVL_EXPORT(EInitUnkId13);
 extern EInit OVL_EXPORT(EInitLockCamera);
 extern EInit g_EInitCommon;
-extern EInit g_EInitDamageNum;
+extern EInit OVL_EXPORT(EInitDamageNum);
 extern EInit D_us_801809C8;
 extern EInit D_us_801809D4;
 extern EInit g_EInitAxeKnight;

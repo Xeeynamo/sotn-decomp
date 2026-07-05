@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-extern EInit g_EInitDamageNum;
+extern EInit OVL_EXPORT(EInitDamageNum);
 extern u16 g_eDamageDisplayClut[];
 
 // params: (0xC000) "GUARD" (exclusive)
@@ -32,7 +32,7 @@ void EntityDamageDisplay(Entity* self) {
         params = self->params;
         nDigits = &self->ext.ndmg.nDigits;
         if (!self->step_s) {
-            InitializeEntity(g_EInitDamageNum);
+            InitializeEntity(OVL_EXPORT(EInitDamageNum));
             self->step = 0;
             if (params == 0xC000) {
                 self->ext.ndmg.nPrims++;

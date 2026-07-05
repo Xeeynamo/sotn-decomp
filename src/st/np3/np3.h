@@ -115,7 +115,7 @@ extern EInit g_EInitInteractable;
 extern EInit OVL_EXPORT(EInitUnkId13);
 extern EInit OVL_EXPORT(EInitLockCamera);
 extern EInit g_EInitCommon;
-extern EInit g_EInitDamageNum;
+extern EInit OVL_EXPORT(EInitDamageNum);
 extern EInit g_EInitStInteractable;
 extern EInit g_EInitWaterObject;
 extern EInit g_EInitWaterSplash;

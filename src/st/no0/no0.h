@@ -124,7 +124,7 @@ extern EInit g_EInitCommon;
 extern EInit g_EInitStoneRose;
 extern EInit D_us_80180B00;
 extern EInit D_us_80180B0C;
-extern EInit g_EInitDamageNum;
+extern EInit OVL_EXPORT(EInitDamageNum);
 extern EInit g_EInitDiplocephalus;
 extern EInit g_EInitDiplocephalusFoot;
 extern EInit D_us_80180B3C;

@@ -58,7 +58,7 @@ extern EInit g_EInitInteractable;
 extern EInit OVL_EXPORT(EInitUnkId13);
 extern EInit OVL_EXPORT(EInitLockCamera);
 extern EInit g_EInitCommon;
-extern EInit g_EInitDamageNum;
+extern EInit OVL_EXPORT(EInitDamageNum);
 extern EInit __unused__;
 extern EInit g_EInitRTOPCommon;
 extern EInit g_EInitTombstone;
