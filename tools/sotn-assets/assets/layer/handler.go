@@ -80,7 +80,11 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 }
 
 func (h *handler) Build(e assets.BuildArgs) error {
-	return buildLayers(e.AssetDir, filepath.Join(e.AssetDir, "layers.json"), e.SrcDir, e.OvlName)
+	outString, err := buildLayers(e.AssetDir, filepath.Join(e.AssetDir, "layers.json"), e.SrcDir, e.OvlName)
+	if err != nil {
+		return err
+	}
+	return util.WriteFile(sourcePath(e.SrcDir, e.Name), []byte(outString))
 }
 
 func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
@@ -135,4 +139,7 @@ func tiledefClutsFileName(ovl string, n int) string {
 
 func tiledefCollisionsFileName(ovl string, n int) string {
 	return fmt.Sprintf("%s_tiledef_%d_cols.bin", ovl, n)
+}
+func sourcePath(dir, name string) string {
+	return filepath.Join(dir, fmt.Sprintf("gen/%s.h", name))
 }
