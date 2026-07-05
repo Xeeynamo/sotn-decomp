@@ -204,13 +204,13 @@ void MarInit(s16 initParam) {
     // ifdef'fed for the same reason in RicInit
     D_pspeu_092E5F20 = 30;
 
-    func_91040A0(g_FontImage);
+    func_psp_091040A0(g_FontImage);
     g_HudImage[3] = (u_long*)GetLang(NULL, hud_fr, hud_sp, hud_ge, hud_it);
     if (g_HudImage[3]) {
-        func_91040A0(g_HudImage);
+        func_psp_091040A0(g_HudImage);
     }
 #endif
-    func_90E4C68();
+    func_psp_090E4C68();
 }
 
 static void CheckStageCollision(bool arg0) {
@@ -571,7 +571,7 @@ void MarMain(void) {
             if (g_Player.unk56) {
                 // this block is exclusive to Maria
                 g_Status.hp += g_Player.unk58;
-                func_9101FC8();
+                func_800FE8F0();
                 func_pspeu_092BEAB0(g_Player.unk58);
                 if (g_Status.hpMax < g_Status.hp) {
                     g_Status.hp = g_Status.hpMax;
@@ -831,8 +831,8 @@ void MarMain(void) {
     // this block is new to maria and it is related to the support for
     // the two subweapons
     if (!(D_pspeu_092E5F28 & PAD_CIRCLE) && (PadReadPSP() & PAD_CIRCLE) &&
-        func_90E4C58() < 0) {
-        func_90E4C18();
+        func_psp_090E4C58() < 0) {
+        func_psp_090E4C18();
         temp = g_Status.subWeapon;
         g_Status.subWeapon = g_Status.D_80097C40;
         g_Status.D_80097C40 = temp;

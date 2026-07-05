@@ -290,7 +290,7 @@ void OVL_EXPORT(Load)(void) {
         (u_long*)GetLang(D_psp_092630D8, D_psp_09264868, D_psp_09263700,
                          D_psp_09264290, D_psp_09263CE0);
     func_psp_0892667C(0x8020, D_psp_0924EA78);
-    func_91040A0(D_psp_0927C6F0);
+    func_psp_091040A0(D_psp_0927C6F0);
     D_psp_0927C708[3] =
         (u_long*)GetLang(D_psp_09266578, D_psp_092738F8, D_psp_0926A9E8,
                          D_psp_09277F88, D_psp_0926F188);
@@ -309,22 +309,22 @@ void OVL_EXPORT(Load)(void) {
     D_psp_0927C798[3] =
         (u_long*)GetLang(D_psp_09267B08, D_psp_09274EC8, D_psp_0926BFB0,
                          D_psp_09279558, D_psp_09270758);
-    func_91040A0(D_psp_0927C708);
-    func_91040A0(D_psp_0927C720);
-    func_91040A0(D_psp_0927C738);
-    func_91040A0(D_psp_0927C750);
-    func_91040A0(D_psp_0927C768);
-    func_91040A0(D_psp_0927C780);
-    func_91040A0(D_psp_0927C798);
+    func_psp_091040A0(D_psp_0927C708);
+    func_psp_091040A0(D_psp_0927C720);
+    func_psp_091040A0(D_psp_0927C738);
+    func_psp_091040A0(D_psp_0927C750);
+    func_psp_091040A0(D_psp_0927C768);
+    func_psp_091040A0(D_psp_0927C780);
+    func_psp_091040A0(D_psp_0927C798);
 }
 
 void func_psp_09237C38(void) {
-    func_91040A0(D_psp_0927C7B0);
+    func_psp_091040A0(D_psp_0927C7B0);
     func_psp_0892667C(0x8196, D_psp_0924F810);
 }
 
 void func_psp_09237C78(void) {
-    func_91040A0(D_psp_0927C7C8);
+    func_psp_091040A0(D_psp_0927C7C8);
     func_psp_0892667C(0x8196, D_psp_0924F810);
 }
 
@@ -356,5 +356,5 @@ void func_psp_09237CB8(void) {
     D_psp_0927C7E0[3] =
         (u_long*)GetLang(D_psp_0925FA50, D_psp_09262618, D_psp_09260550,
                          D_psp_09261AF8, D_psp_09261030);
-    func_91040A0(D_psp_0927C7E0);
+    func_psp_091040A0(D_psp_0927C7E0);
 }

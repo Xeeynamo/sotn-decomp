@@ -2243,7 +2243,6 @@ extern s32 g_DebugPlayer;
 extern s32 D_80098894;
 
 #include <game_psp.h>
-s16 func_90E0E30(PrimitiveType, s32);
 
 // Palettes
 // Each palette is made up of 16 colors and range from 0x000 to 0x2FF.

@@ -191,7 +191,7 @@ static void PlayGruntAttackSoundEffect(s32 max) {
     if (max) {
         sfxIndex = rand() % max;
         if (sfxIndex < 5) {
-            func_9142FC8(D_pspeu_092C5040[sfxIndex]);
+            PlaySfx(D_pspeu_092C5040[sfxIndex]);
         }
     }
 }
@@ -305,7 +305,7 @@ s32 MarDoSubweapon(void) {
     g_Player.unk46 = 3;
     PLAYER.step_s = 0x42;
     g_Player.timers[PL_T_10] = 4;
-    func_9142FC8(SFX_VO_MAR_8EB);
+    PlaySfx(SFX_VO_MAR_8EB);
     return 0;
 }
 

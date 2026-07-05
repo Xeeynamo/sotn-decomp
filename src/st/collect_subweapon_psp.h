@@ -12,7 +12,7 @@ static void CollectSubweapon(u16 subWeaponIdx) {
 
     if (g_PlayableCharacter == PLAYER_MARIA) {
         g_Status.D_80097C40 = maria_subweapons_idx[subWeaponIdx - 14];
-        func_90E4C90();
+        func_psp_090E4C90();
     } else {
         g_Status.subWeapon = aluric_subweapons_idx[subWeaponIdx - 14];
     }

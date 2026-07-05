@@ -240,7 +240,7 @@ void MarStepJump(void) {
         if (facing) {
             MarSetSpeedX(0x48000);
         }
-        func_9142FC8(SFX_VO_MAR_8EA);
+        PlaySfx(SFX_VO_MAR_8EA);
     }
 }
 
@@ -1290,6 +1290,6 @@ void MarStepHighJump(void) {
         return;
     }
     if ((VSync(-1) % 15) == 0) {
-        func_9142FC8(0x68C);
+        PlaySfx(SFX_WING_FLAP_A);
     }
 }

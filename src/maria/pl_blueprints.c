@@ -2692,6 +2692,8 @@ s32 func_pspeu_092BEAB0(s16 setUnk80) {
     return 0;
 }
 
+s16 AllocPrimitives(PrimitiveType, s32);
+
 void func_pspeu_092BEB40(Entity* self) {
     s32 timer;
     u16 value;
@@ -2708,7 +2710,7 @@ void func_pspeu_092BEB40(Entity* self) {
     switch (self->step) {
     case 0:
         value = self->ext.maria092BEB40.value;
-        self->primIndex = func_90E0E30(PRIM_GT4, 20);
+        self->primIndex = AllocPrimitives(PRIM_GT4, 20);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;

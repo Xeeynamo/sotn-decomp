@@ -72,7 +72,7 @@ void func_pspeu_0925F440(void) {
     D_pspeu_09299BB0[3] =
         GetLang(D_pspeu_09297E48, D_pspeu_09299608, D_pspeu_09298448,
                 D_pspeu_09299018, D_pspeu_09298A38);
-    func_91040A0(D_pspeu_09299BB0);
+    func_psp_091040A0(D_pspeu_09299BB0);
 }
 #endif
 

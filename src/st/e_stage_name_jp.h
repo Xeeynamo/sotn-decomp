@@ -72,7 +72,7 @@ static u8* stage_name_gfx[] = {
 
 static void LoadStageNameGraphics(void) {
     gfxBank[3] = (u_long*)stage_name_gfx[g_UserLanguage - 1];
-    func_91040A0(gfxBank);
+    func_psp_091040A0(gfxBank);
 }
 #endif
 

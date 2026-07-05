@@ -219,12 +219,12 @@ void LoadCrashSummonResouces(s32 crashId) {
         LoadPatchedPalette(PAL_CRASH, crash_dragon_pal);
         break;
     }
-    func_91040A0(crash_img);
+    func_psp_091040A0(crash_img);
 }
 
 void MarLoadGraphics(void) {
-    func_91040A0(hud_img);
-    func_91040A0(items_img);
+    func_psp_091040A0(hud_img);
+    func_psp_091040A0(items_img);
 }
 
 extern PlayerOvl MARIA_player;
@@ -233,12 +233,12 @@ void MARIA_Load(void) {
     memcpy(&g_PlOvl, &MARIA_player, sizeof(PlayerOvl));
     memcpy(&g_PlOvlSpritesheet, maria_sprites, sizeof(maria_sprites));
 #endif
-    func_91040A0(wpn_owl_img);
-    func_91040A0(wpn_turtle_img);
-    func_91040A0(wpn_cat_img);
-    func_91040A0(wpn_cardinal_img);
-    func_91040A0(wpn_dragon_img);
-    func_91040A0(wpn_doll_img);
+    func_psp_091040A0(wpn_owl_img);
+    func_psp_091040A0(wpn_turtle_img);
+    func_psp_091040A0(wpn_cat_img);
+    func_psp_091040A0(wpn_cardinal_img);
+    func_psp_091040A0(wpn_dragon_img);
+    func_psp_091040A0(wpn_doll_img);
 
     if (((SpriteParts*)wpn_cat_spr_6)->parts[6].offsetx == -48) {
         ((SpriteParts*)wpn_cat_spr_6)->parts[6].offsetx--;
