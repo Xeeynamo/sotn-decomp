@@ -10,10 +10,7 @@ static void LoadWeaponPalette(s32 clutIndex) {
     s32 i;
 
 #if !defined(W_029)
-    printf("a\n");
     dst = src = g_WeaponCluts[clutIndex];
-    printf("b\n");
-
     dst = D_8006EDCC[g_HandId];
 #else
     dst = D_8006EDCC[g_HandId];
@@ -22,7 +19,6 @@ static void LoadWeaponPalette(s32 clutIndex) {
     if (src == NULL) {
         return;
     }
-    printf("c\n");
 
     for (i = 0; i < LEN(*D_8006EDCC)
 #ifdef VERSION_PC
@@ -30,13 +26,8 @@ static void LoadWeaponPalette(s32 clutIndex) {
 #endif
              ;
          i++) {
-        int a = *src;
-        printf("src ok\n");
-        int b = *dst;
-        printf("dst ok\n");
         *dst++ = *src++;
     }
-    printf("d\n");
 
 #if !defined(W_029)
     dstRect.w = 0x100;
