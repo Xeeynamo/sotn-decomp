@@ -97,7 +97,7 @@ void EntityDodoBird(Entity* self) {
             }
             break;
         case 1:
-            self->velocityY += 0x400;
+            self->velocityY += FIX(1.0/64);
             self->velocityX = rsin(self->ext.dodo.timer) * 0x10;
             self->ext.dodo.timer += 0x20;
             if (self->velocityX > 0) {
@@ -127,11 +127,11 @@ void EntityDodoBird(Entity* self) {
                     if (other != NULL) {
                         CreateEntityFromEntity(E_DODO_BIRD, self, other);
                         other->params = FLAG_FEATHER;
-                        other->velocityX = (Random() & 7) << 0xD;
+                        other->velocityX = (Random() & 7) * FIX(1.0/8);
                         if (i != 0) {
                             other->velocityX = -other->velocityX;
                         }
-                        other->velocityY = -(Random() & 0x3F) * 0x1000;
+                        other->velocityY = -(Random() & 0x3F) * FIX(1.0/16);
                         other->posX.i.hi += ((Random() & 0x1F) - 0x10);
                         other->ext.dodo.timer = Random() * 0x10;
                     }
