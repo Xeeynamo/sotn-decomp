@@ -14,7 +14,6 @@ int PadReadPSP() { return 0; }
 int func_psp_090E4C58() { return 0; }
 void func_psp_090E4C18() {}
 void func_psp_090E4C68() {}
-void func_800FE8F0() {}
 
 void LoadPendingGfx();
 void ResetPendingGfxLoad();
@@ -41,8 +40,6 @@ void func_psp_0892667C(s32 paletteID, u16* paletteData) {
     LoadImage(&rect, (u_long*)paletteData);
 }
 
-void PlaySfx(int sfx) {}
-
 void func_psp_089285A0(s32 angle, MATRIX* out) {
     short c = (short)rcos(angle);
     short s = (short)rsin(angle);
@@ -58,8 +55,4 @@ void func_psp_089285A0(s32 angle, MATRIX* out) {
     out->t[2] = 0;
     out->t[1] = 0;
     out->t[0] = 0;
-}
-
-s16 AllocPrimitives(PrimitiveType kind, s32 count) {
-    return g_api.AllocPrimitives(kind, count);
 }
