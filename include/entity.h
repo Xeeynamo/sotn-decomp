@@ -128,6 +128,9 @@ typedef struct PACKED {
     /* 0x84 */ struct Entity* some_ent;
     /* 0x88 */ s16 childPalette;
     /* 0x8A */ s16 unk8A;
+#ifdef PLATFORM_64BIT
+    s32 _align_parent[1];
+#endif
     /* 0x8C */ struct Entity* parent;
     /* 0x90 */ s16 unk90;
     /* 0x92 */ s16 unk92;
@@ -154,7 +157,7 @@ typedef struct {
     s32 accelerationY;
     byte pad[32];
 #ifdef PLATFORM_64BIT
-    s32 _align_anim[2];
+    s32 _align_anim[3];
 #endif
     u8 anim;
 } ET_WeaponUnk006;
@@ -176,6 +179,9 @@ typedef struct PACKED {
     /* 0xA4 */ s16 unkA4;
     /* 0xA6 */ s16 unkA6;
     /* 0xA8 */ s32 unkA8;
+#ifdef PLATFORM_64BIT
+    s32 _align_anim[1];
+#endif
     /* 0xAC */ u8 anim;
     /* 0xAD */ u8 unkAD;
 } ET_WeaponUnk030;
@@ -194,7 +200,7 @@ typedef struct PACKED {
     /* 0xA4 */ s32 : 32;
     /* 0xA8 */ s32 : 32;
 #ifdef PLATFORM_64BIT
-    s32 _align_anim[2];
+    s32 _align_anim[3];
 #endif
     u8 anim;
 } ET_WeaponUnk046;
@@ -206,7 +212,7 @@ typedef struct {
     s32 unk88;
     byte pad[32];
 #ifdef PLATFORM_64BIT
-    s32 _align_anim[2];
+    s32 _align_anim[3];
 #endif
     u8 anim;
 } ET_WeaponUnk047;
@@ -229,7 +235,7 @@ typedef struct {
     /* 0xA4 */ s32 : 32;
     /* 0xA8 */ s32 : 32;
 #ifdef PLATFORM_64BIT
-    s32 _align_anim[2];
+    s32 _align_anim[3];
 #endif
     u8 anim;
 } ET_KarmaCoin;
@@ -248,7 +254,7 @@ typedef struct {
     /* 0xA4 */ s32 : 32;
     /* 0xA8 */ s32 : 32;
 #ifdef PLATFORM_64BIT
-    s32 _align_anim[2];
+    s32 _align_anim[3];
 #endif
     u8 anim;
 } ET_WeaponUnk012;
@@ -262,7 +268,7 @@ typedef struct {
     /* 0xA4 */ s32 : 32;
     /* 0xA8 */ s32 : 32;
 #ifdef PLATFORM_64BIT
-    s32 _align_anim[2];
+    s32 _align_anim[3];
 #endif
     u8 anim;
 } ET_WeaponUnk014;
@@ -284,7 +290,7 @@ typedef struct {
     s32 unkA4;
     s32 unkA8;
 #ifdef PLATFORM_64BIT
-    s32 : 32;
+    s32 _align_anim[2];
 #endif
     u8 anim;
 } ET_WeaponUnk016;
@@ -312,7 +318,7 @@ typedef struct PACKED {
     s32 unkA4;
     s32 unkA8;
 #ifdef PLATFORM_64BIT
-    s32 _align_anim;
+    s32 _align_anim[2];
 #endif
     u8 anim;
     u8 unkAD;
@@ -336,7 +342,7 @@ typedef struct PACKED {
     s32 unkA4;
     s32 unkA8;
 #ifdef PLATFORM_64BIT
-    s32 _align_anim;
+    s32 _align_anim[2];
 #endif
     u8 anim;
     u8 unkAD;
@@ -350,6 +356,9 @@ typedef struct PACKED {
     s32 unk84;
     s16 xPos;
     s16 unk8A;
+#ifdef PLATFORM_64BIT
+    s32 _align_anim[2];
+#endif
     struct Entity* parent;
     s32 unk90;
     s32 unk94;
@@ -358,9 +367,6 @@ typedef struct PACKED {
     s32 accelerationY;
     s32 unkA4;
     s32 unkA8;
-#ifdef PLATFORM_64BIT
-    s32 _align_anim;
-#endif
     u8 anim;
     u8 unkAD;
 } ET_HeavenSword2;
@@ -387,7 +393,7 @@ typedef struct PACKED {
     /* 0xA0 */ s16 unkA0;
     /* 0xA4 */ byte pad[10];
 #ifdef PLATFORM_64BIT
-    s32 _align_anim;
+    s32 _align_anim[2];
 #endif
     /* 0xAC */ u8 anim;
     /* 0xAD */ u8 padAD;
@@ -403,6 +409,9 @@ typedef struct PACKED {
     /* 0x84 */ s16* palettePtr;
     /* 0x88 */ u16 childPalette;
     /* 0x8A */ s16 unk8A;
+#ifdef PLATFORM_64BIT
+    s32 _align_parent[1];
+#endif
     /* 0x8C */ struct Entity* parent;
     /* 0x90 */ s16 unk90;
     /* 0x92 */ s16 unk92;
@@ -439,6 +448,9 @@ typedef struct {
     /* 0xA4 */ s16 unkA4;
     /* 0xA6 */ u16 : 16;
     /* 0xA8 */ u32 : 32;
+#ifdef PLATFORM_64BIT
+    s32 _align_anim[1];
+#endif
     /* 0xAC */ u8 anim;
     /* 0xAD */ u8 unkAD;
     /* 0xAE */ s16 unkAE;
@@ -466,7 +478,7 @@ typedef struct PACKED {
     /* 0xA4 */ u32 : 32;
     /* 0xA8 */ u32 : 32;
 #ifdef PLATFORM_64BIT
-    s32 _align_anim;
+    s32 _align_anim[2];
 #endif
     /* 0xAC */ u8 anim;
 } ET_ShamanShieldStar;
@@ -491,7 +503,7 @@ typedef struct PACKED {
     /* 0x9C */ u8 unk9C;
     /* 0x9D */ u8 pad[15];
 #ifdef PLATFORM_64BIT
-    s32 _align_anim;
+    s32 _align_anim[2];
 #endif
     /* 0xAC */ u8 anim;
     /* 0xAE */ s16 unkAE;
@@ -926,6 +938,9 @@ typedef struct PACKED {
     char pad[0x24];
     s16 unkA4;
     s16 unkA6;
+#ifdef PLATFORM_64BIT
+    s32 _align_unkA8[1];
+#endif
     void* unkA8;
     u8 anim;
 } ET_Player;
@@ -4494,6 +4509,7 @@ SYNC_FIELD(ET_EntFactory, ET_AguneaCrash, parent);
 SYNC_FIELD(ET_EntFactory, ET_8017091C, parent);
 SYNC_FIELD(ET_EntFactory, ET_Teleport, parent);
 SYNC_FIELD(ET_EntFactory, ET_MariaDoll, parent);
+SYNC_FIELD(ET_EntFactory, ET_Weapon, parent);
 
 SYNC_FIELD(ET_Subweapon, ET_HolyWater, subweaponId);
 SYNC_FIELD(ET_Subweapon, ET_SubwpnAxe, subweaponId);
