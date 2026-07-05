@@ -31,7 +31,6 @@ typedef enum {
 // animSet, animCurFrame, unk5A, palette, enemyID
 typedef u16 EInit[5];
 
-
 typedef struct AnimateEntityFrame {
     u8 duration;
     u8 pose;

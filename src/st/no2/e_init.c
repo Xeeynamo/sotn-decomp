@@ -139,12 +139,18 @@ EInit OVL_EXPORT(
 EInit OVL_EXPORT(
     EInitObtainable) = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NULL, 0x001};
 EInit OVL_EXPORT(EInitParticle) = {ANIMSET_DRA(3), 0x00, 0x00, PAL_NULL, 0x002};
-EInit OVL_EXPORT(EInitSpawner) = {ANIMSET_DRA(0x00), 0x00, 0x00, PAL_NULL, 0x004};
-EInit OVL_EXPORT(EInitInteractable) = {ANIMSET_DRA(0x00), 0x00, 0x00, PAL_NULL, 0x005};
-EInit OVL_EXPORT(EInitUnkId13) = {ANIMSET_DRA(0x00), 0x00, 0x00, PAL_NULL, 0x002};
-EInit OVL_EXPORT(EInitLockCamera) = {ANIMSET_DRA(0x00), 0x00, 0x00, PAL_NULL, 0x001};
-EInit OVL_EXPORT(EInitCommon) = {ANIMSET_DRA(0x00), 0x00, 0x00, PAL_NULL, 0x003};
-EInit OVL_EXPORT(EInitDamageNum) = {ANIMSET_DRA(0x00), 0x00, 0x00, PAL_NULL, 0x003};
+EInit OVL_EXPORT(
+    EInitSpawner) = {ANIMSET_DRA(0x00), 0x00, 0x00, PAL_NULL, 0x004};
+EInit OVL_EXPORT(
+    EInitInteractable) = {ANIMSET_DRA(0x00), 0x00, 0x00, PAL_NULL, 0x005};
+EInit OVL_EXPORT(
+    EInitUnkId13) = {ANIMSET_DRA(0x00), 0x00, 0x00, PAL_NULL, 0x002};
+EInit OVL_EXPORT(
+    EInitLockCamera) = {ANIMSET_DRA(0x00), 0x00, 0x00, PAL_NULL, 0x001};
+EInit OVL_EXPORT(
+    EInitCommon) = {ANIMSET_DRA(0x00), 0x00, 0x00, PAL_NULL, 0x003};
+EInit OVL_EXPORT(
+    EInitDamageNum) = {ANIMSET_DRA(0x00), 0x00, 0x00, PAL_NULL, 0x003};
 EInit g_EInitSkelerang = {ANIMSET_OVL(0x01), 0x01, 0x48, PAL_SKELERANG, 0x00B};
 EInit g_EInitSkelerangBoomerang = {
     ANIMSET_OVL(0x01), 0x2B, 0x48, PAL_SKELERANG, 0x00C};
