@@ -78,7 +78,7 @@ void EntitySurfacingWater(Entity* self);
 void EntitySideWaterSplash(Entity* self);
 void EntitySmallWaterDrop(Entity* self);
 void EntityWaterDrop(Entity* self);
-void func_us_801C8B8C(Entity* self);
+void EntityDodoBird(Entity* self);
 
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityBreakable,
@@ -158,7 +158,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntitySideWaterSplash,
     EntitySmallWaterDrop,
     EntityWaterDrop,
-    func_us_801C8B8C,
+    EntityDodoBird,
 };
 
 // clang-format off

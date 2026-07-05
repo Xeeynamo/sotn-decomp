@@ -4112,6 +4112,13 @@ typedef struct {
     /* 0xB2 */ s16 unused_zero;
 } ET_Orobourous;
 
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ s16 doubleSpeed;
+} ET_Dodo;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -4461,6 +4468,7 @@ typedef union { // offset=0x7C
     ET_JackOBones jackoBones;
     ET_NovaSkeleton nova;
     ET_Orobourous orob;
+    ET_Dodo dodo;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

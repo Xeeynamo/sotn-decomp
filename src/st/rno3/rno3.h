@@ -91,7 +91,7 @@ typedef enum EntityIDs {
     /* 0x4B */ E_SIDE_WATER_SPLASH,      // EntitySideWaterSplash
     /* 0x4C */ E_SMALL_WATER_DROP,       // EntitySmallWaterDrop
     /* 0x4D */ E_WATER_DROP,             // EntityWaterDrop
-    /* 0x4E */ E_UNK_4E,                 // func_us_801C8B8C
+    /* 0x4E */ E_DODO_BIRD,              // EntityDodoBird
 } EntityIDs;
 
 #endif // RNO3_H
