@@ -3,24 +3,24 @@
 
 extern EInit g_EInitDodoBird;
 
-extern s32 D_pspeu_09258FB0;
-extern s32 D_pspeu_09258FB8;
-extern s32 D_pspeu_09258FC8;
-extern s32 D_pspeu_09258FD8;
+extern s16 sensors1[] = {0, 15, 8, 0};
+extern s16 sensors2[] = {0, 15, 0, 4, 8, -4, -16, 0};
+extern u8 anim1[] = {5, 1, 2, 2, 5, 3, 2, 4, 5, 5, 5, 6, 0};
+extern u8 anim2[] = {2, 7, 2, 8, 0};
 
-typedef enum { DODO_INIT, DODO_1, DODO_2, DODO_3, DODO_4, DODO_DEAD } DodoSteps;
+typedef enum { DODO_INIT, DODO_WAIT, DODO_2, DODO_3, DODO_4, DODO_DEAD } DodoSteps;
 
 void func_us_801C8B8C(Entity* self) {
     Entity* other;
-    s32 temp_s3;
-    s32 temp_v0;
+    s32 facingLeft;
+    s32 collRes;
     s32 i;
 
     if (self->flags & FLAG_DEAD && self->step < DODO_DEAD) {
         SetStep(DODO_DEAD);
     }
     switch (self->step) {
-    case 0:
+    case DODO_INIT:
         InitializeEntity(g_EInitDodoBird);
         self->facingLeft = GetSideToPlayer() & 1;
         if (self->params & 0x100) {
@@ -29,18 +29,18 @@ void func_us_801C8B8C(Entity* self) {
             self->step = DODO_4;
         }
         break;
-    case DODO_1:
-        if (UnkCollisionFunc3(&D_pspeu_09258FB8) & 1) {
+    case DODO_WAIT:
+        if (UnkCollisionFunc3(sensors2) & 1) {
             self->step += 1;
         }
         break;
     case DODO_2:
-        AnimateEntity(&D_pspeu_09258FC8, self);
+        AnimateEntity(anim1, self);
         if (!(g_Timer & 7)) {
             PlaySfxPositional(SFX_QUIET_STEPS);
         }
-        temp_v0 = UnkCollisionFunc2(&D_pspeu_09258FB0);
-        if (temp_v0 == 0) {
+        collRes = UnkCollisionFunc2(sensors1);
+        if (collRes == 0) {
             self->velocityY += FIX(0.25);
         } else {
             self->velocityY = 0;
@@ -53,13 +53,13 @@ void func_us_801C8B8C(Entity* self) {
         if (self->ext.ILLEGAL.s16[4]) {
             self->velocityX *= 2;
         }
-        if (temp_v0 == 0x80) {
+        if (collRes == 0x80) {
             self->velocityY = FIX(-4.0);
-            SetStep(DODO_1);
+            SetStep(DODO_WAIT);
         }
         if (GetDistanceToPlayerX() < 0x40) {
-            temp_s3 = self->facingLeft;
-            if (temp_s3 == (GetSideToPlayer() & 1)) {
+            facingLeft = self->facingLeft;
+            if (facingLeft == (GetSideToPlayer() & 1)) {
                 self->ext.ILLEGAL.s16[4] |= 1;
                 SetStep(DODO_3);
                 self->ext.ILLEGAL.s16[2] = 0x20;
@@ -67,7 +67,7 @@ void func_us_801C8B8C(Entity* self) {
         }
         break;
     case DODO_3:
-        AnimateEntity(&D_pspeu_09258FD8, self);
+        AnimateEntity(anim2, self);
         if (!--self->ext.ILLEGAL.s16[2]) {
             self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
             SetStep(DODO_2);
@@ -104,13 +104,13 @@ void func_us_801C8B8C(Entity* self) {
             self->drawFlags |= ENTITY_ROTATE;
             /* fallthrough */
         case 1:
-            AnimateEntity(&D_pspeu_09258FD8, self);
+            AnimateEntity(&anim2, self);
             self->rotate -= 0x80;
             if (!(self->ext.ILLEGAL.s16[2] & 3)) {
                 for (i = 0; i < 5; i++) {
                     other = AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (other != NULL) {
-                        CreateEntityFromEntity(0x4EU, self, other);
+                        CreateEntityFromEntity(E_UNK_4E, self, other);
                         other->params = 0x100;
                         other->velocityX = (Random() & 7) << 0xD;
                         if (i != 0) {
