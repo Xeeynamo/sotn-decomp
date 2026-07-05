@@ -184,7 +184,7 @@ void EntitySecretWallDebris(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitEnemy3);
+        InitializeEntity(OVL_EXPORT(EInitEnemy3));
         self->drawFlags = ENTITY_ROTATE;
 
         if (Random() & 1) {

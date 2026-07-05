@@ -128,7 +128,7 @@ extern EInit OVL_EXPORT(EInitUnkId13);
 extern EInit OVL_EXPORT(EInitLockCamera);
 extern EInit OVL_EXPORT(EInitCommon);
 // extern EInit g_EInitDamageNum;
-extern EInit g_EInitEnemy3;
+extern EInit OVL_EXPORT(EInitEnemy3);
 extern EInit g_EInitBloodSkeleton;
 // extern EInit g_EInitBoneScimitar;
 // extern EInit g_EInitScimitarParts;

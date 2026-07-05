@@ -16,11 +16,6 @@ GameApi g_ApiInit = {0};
 u8 g_DemoRecordingBuffer[DEMO_MAX_LEN];
 extern bool g_IsQuitRequested;
 
-#define OVL_EXPORT(x) PC_
-// hack until all common EInit gets OVL_EXPORTed
-#include "../st/e_init_common.h"
-#undef OVL_EXPORT
-
 PfnEntityUpdate* PfnEntityUpdates;
 LayoutEntity** g_pStObjLayoutHorizontal;
 LayoutEntity** g_pStObjLayoutVertical;
