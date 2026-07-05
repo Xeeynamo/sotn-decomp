@@ -8,19 +8,19 @@
 #include "chi.h"
 
 void OVL_EXPORT(EntityBreakable)(Entity*);
-void EntityExplosion(Entity*);
-void EntityPrizeDrop(Entity*);
+void OVL_EXPORT(EntityExplosion)(Entity*);
+void OVL_EXPORT(EntityPrizeDrop)(Entity*);
 void EntityDamageDisplay(Entity*);
 void OVL_EXPORT(EntityRedDoor)(Entity*);
 void EntityIntenseExplosion(Entity*);
 void EntitySoulStealOrb(Entity*);
 void EntityRoomForeground(Entity*);
 void EntityStageNamePopup(Entity*);
-void EntityEquipItemDrop(Entity*);
-void EntityRelicOrb(Entity*);
-void EntityHeartDrop(Entity*);
+void OVL_EXPORT(EntityEquipItemDrop)(Entity*);
+void OVL_EXPORT(EntityRelicOrb)(Entity*);
+void OVL_EXPORT(EntityHeartDrop)(Entity*);
 void EntityEnemyBlood(Entity*);
-void EntityMessageBox(Entity*);
+void OVL_EXPORT(EntityMessageBox)(Entity*);
 void EntityDummy(Entity*);
 void OVL_EXPORT(EntityBackgroundBlock)(Entity*);
 void OVL_EXPORT(EntityLockCamera)(Entity*);
@@ -55,19 +55,19 @@ void EntityVenusWeedSpike(Entity*);
 // D_8018055C
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     OVL_EXPORT(EntityBreakable),
-    EntityExplosion,
-    EntityPrizeDrop,
+    OVL_EXPORT(EntityExplosion),
+    OVL_EXPORT(EntityPrizeDrop),
     EntityDamageDisplay,
     OVL_EXPORT(EntityRedDoor),
     EntityIntenseExplosion,
     EntitySoulStealOrb,
     EntityRoomForeground,
     EntityStageNamePopup,
-    EntityEquipItemDrop,
-    EntityRelicOrb,
-    EntityHeartDrop,
+    OVL_EXPORT(EntityEquipItemDrop),
+    OVL_EXPORT(EntityRelicOrb),
+    OVL_EXPORT(EntityHeartDrop),
     EntityEnemyBlood,
-    EntityMessageBox,
+    OVL_EXPORT(EntityMessageBox),
     EntityDummy,
     EntityDummy,
     OVL_EXPORT(EntityBackgroundBlock),

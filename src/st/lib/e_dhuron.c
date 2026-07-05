@@ -288,7 +288,7 @@ void func_us_801CC7BC(Entity* self) {
             self->drawFlags = ENTITY_DEFAULT;
             self->step = 0;
             self->entityId = E_EXPLOSION;
-            self->pfnUpdate = EntityExplosion;
+            self->pfnUpdate = OVL_EXPORT(EntityExplosion);
             self->params = 0;
             PlaySfxPositional(SFX_SMALL_FLAME_IGNITE);
         }

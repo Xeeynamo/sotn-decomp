@@ -4,27 +4,32 @@
 void OVL_EXPORT(EntityRedDoor)(Entity*);
 void OVL_EXPORT(EntityBackgroundBlock)(Entity*);
 void OVL_EXPORT(EntityLockCamera)(Entity*);
+void OVL_EXPORT(EntityExplosion)(Entity*);
+void OVL_EXPORT(EntityEquipItemDrop)(Entity*);
+void OVL_EXPORT(EntityRelicOrb)(Entity*);
+void OVL_EXPORT(EntityMessageBox)(Entity*);
+void OVL_EXPORT(EntityHeartDrop)(Entity*);
 void EntityUnkId13(Entity*);
 void EntityExplosionVariants(Entity*);
 void EntityGreyPuff(Entity*);
 void EntityRWarpRoom(Entity*);
 void EntityWarpSmallRocks(Entity*);
-void EntityPrizeDrop(Entity*);
+void OVL_EXPORT(EntityPrizeDrop)(Entity*);
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityBreakable,
-    EntityExplosion,
-    EntityPrizeDrop,
+    OVL_EXPORT(EntityExplosion),
+    OVL_EXPORT(EntityPrizeDrop),
     EntityDamageDisplay,
     OVL_EXPORT(EntityRedDoor),
     EntityIntenseExplosion,
     EntitySoulStealOrb,
     EntityRoomForeground,
     EntityStageNamePopup,
-    EntityEquipItemDrop,
-    EntityRelicOrb,
-    EntityHeartDrop,
+    OVL_EXPORT(EntityEquipItemDrop),
+    OVL_EXPORT(EntityRelicOrb),
+    OVL_EXPORT(EntityHeartDrop),
     EntityEnemyBlood,
-    EntityMessageBox,
+    OVL_EXPORT(EntityMessageBox),
     EntityDummy,
     EntityDummy,
     OVL_EXPORT(EntityBackgroundBlock), // unused

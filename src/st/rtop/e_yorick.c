@@ -300,7 +300,7 @@ void EntitySkeletonPieces(Entity* self) { // From skeleton death explosion
         }
 
         self->entityId = E_EXPLOSION;
-        self->pfnUpdate = (PfnEntityUpdate)EntityExplosion;
+        self->pfnUpdate = (PfnEntityUpdate)OVL_EXPORT(EntityExplosion);
         self->params = 0;
         self->step = 0;
         return;

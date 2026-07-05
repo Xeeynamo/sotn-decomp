@@ -562,7 +562,7 @@ void EntityLossothFireball(Entity* self) {
 
     if (self->hitParams || self->flags & FLAG_DEAD) {
         self->drawFlags = ENTITY_DEFAULT;
-        self->pfnUpdate = EntityExplosion;
+        self->pfnUpdate = OVL_EXPORT(EntityExplosion);
         self->step = 0;
         self->params = 0;
         return;

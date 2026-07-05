@@ -759,13 +759,13 @@ void EntityWhiteDragon(Entity* self) {
                 entity->drawFlags = ENTITY_DEFAULT;
                 if (i & 1) {
                     entity->entityId = E_EXPLOSION;
-                    entity->pfnUpdate = EntityExplosion;
+                    entity->pfnUpdate = OVL_EXPORT(EntityExplosion);
                     entity->params = EXPLOSION_FIREBALL;
                 } else {
                     j = self->params >> 1;
                     if (j) {
                         entity->entityId = E_PRIZE_DROP;
-                        entity->pfnUpdate = EntityPrizeDrop;
+                        entity->pfnUpdate = OVL_EXPORT(EntityPrizeDrop);
                         entity->params = j;
                         entity->zPriority = 0;
                         entity->animCurFrame = 0;

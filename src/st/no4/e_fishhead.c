@@ -275,7 +275,7 @@ void EntityFishheadFireball(Entity* self) {
         AnimateEntity(anim_fireball, self);
         if (self->flags & FLAG_DEAD) {
             self->step = 0;
-            self->pfnUpdate = EntityExplosion;
+            self->pfnUpdate = OVL_EXPORT(EntityExplosion);
             self->params = 0;
         }
     }
@@ -507,7 +507,7 @@ void EntityFishheadDeathParts(Entity* self) {
     case 3:
         if (!--self->ext.fishhead.attackTimer) {
             self->step = 0;
-            self->pfnUpdate = EntityExplosion;
+            self->pfnUpdate = OVL_EXPORT(EntityExplosion);
             self->params = 2;
         }
         break;

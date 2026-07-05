@@ -499,7 +499,7 @@ void EntitySecretWall(Entity* self) {
         self->step_s = 0;
         self->posX.i.hi -= 8;
         self->poseTimer = self->pose = 0;
-        self->pfnUpdate = EntityHeartDrop;
+        self->pfnUpdate = OVL_EXPORT(EntityHeartDrop);
         if (self->params) {
             // Library Card
             self->params = 8;
