@@ -838,7 +838,7 @@
 | 1.00 | true     | func_us_801AED58                    | asm/us/st/nz1/matchings/create_entity/func_us_801AED58.s 
 | 1.00 | true     | func_us_801A91B8                    | asm/us/st/rare/matchings/create_entity/func_us_801A91B8.s 
 | 1.00 | true     | func_us_801B65C8                    | asm/us/st/rcat/matchings/create_entity/func_us_801B65C8.s 
-| 1.00 | true     | CreateEntityFromCurrentEntity       | asm/us/st/rno3/matchings/create_entity/CreateEntityFromCurrentEntity.s 
+| 1.00 | true     | func_us_801B6528                    | asm/us/st/rno3/matchings/create_entity/func_us_801B6528.s 
 | 1.00 | true     | func_us_801AF27C                    | asm/us/st/rnz0/matchings/create_entity/func_us_801AF27C.s 
 | 1.00 | true     | func_us_801A4B6C                    | asm/us/st/rtop/matchings/create_entity/func_us_801A4B6C.s 
 | 1.00 | true     | func_8018C7E0                       | asm/us/st/rwrp/matchings/rwrp/create_entity/func_8018C7E0.s 
@@ -3787,7 +3787,6 @@
 | 0.90 | true     | SsSepClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSepClose.s 
 | 0.90 | true     | SsSeqClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSeqClose.s 
 | 0.90 | true     | SsSeqStop                           | asm/us/main/matchings/psxsdk/libsnd/stop/SsSeqStop.s 
-| 0.90 | true     | func_801BA6A8                       | asm/us/st/sel/matchings/libpress/func_801BA6A8.s 
 | 1.00 | true     | func_801B9924                       | asm/us/st/sel/matchings/stream/func_801B9924.s 
 -------------------------------------------------------------------------------
 | 0.92 | true     | DMACallback                         | asm/us/main/matchings/psxsdk/libetc/intr/DMACallback.s 
@@ -4135,31 +4134,31 @@
 | 1.00 | true     | func_us_801D6300                    | asm/us/st/no4/matchings/water_effects/func_us_801D6300.s 
 | 1.00 | true     | func_801C4DCC                       | asm/us/st/np3/matchings/water_effects/func_801C4DCC.s 
 | 1.00 | true     | func_us_801B8414                    | asm/us/st/nz1/matchings/water_effects/func_us_801B8414.s 
-| 0.99 | true     | EntitySplashWater                   | asm/us/st/rno3/matchings/water_effects/EntitySplashWater.s 
+| 0.99 | true     | func_us_801C74DC                    | asm/us/st/rno3/matchings/water_effects/func_us_801C74DC.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801D1FC0                       | asm/us/st/no3/matchings/water_effects/func_801D1FC0.s 
 | 1.00 | true     | func_us_801D6C0C                    | asm/us/st/no4/matchings/water_effects/func_us_801D6C0C.s 
 | 1.00 | true     | func_801C56D8                       | asm/us/st/np3/matchings/water_effects/func_801C56D8.s 
 | 1.00 | true     | func_us_801B8D20                    | asm/us/st/nz1/matchings/water_effects/func_us_801B8D20.s 
-| 0.97 | true     | EntitySurfacingWater                | asm/us/st/rno3/matchings/water_effects/EntitySurfacingWater.s 
+| 0.97 | true     | func_us_801C7DF0                    | asm/us/st/rno3/matchings/water_effects/func_us_801C7DF0.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801D24AC                       | asm/us/st/no3/matchings/water_effects/func_801D24AC.s 
 | 1.00 | true     | func_us_801D70F8                    | asm/us/st/no4/matchings/water_effects/func_us_801D70F8.s 
 | 1.00 | true     | func_801C5BC4                       | asm/us/st/np3/matchings/water_effects/func_801C5BC4.s 
 | 1.00 | true     | func_us_801B920C                    | asm/us/st/nz1/matchings/water_effects/func_us_801B920C.s 
-| 0.99 | true     | EntitySideWaterSplash               | asm/us/st/rno3/matchings/water_effects/EntitySideWaterSplash.s 
+| 0.99 | true     | func_us_801C82F0                    | asm/us/st/rno3/matchings/water_effects/func_us_801C82F0.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801D2840                       | asm/us/st/no3/matchings/water_effects/func_801D2840.s 
 | 1.00 | true     | func_us_801D748C                    | asm/us/st/no4/matchings/water_effects/func_us_801D748C.s 
 | 1.00 | true     | func_801C5F58                       | asm/us/st/np3/matchings/water_effects/func_801C5F58.s 
 | 1.00 | true     | func_us_801B95A0                    | asm/us/st/nz1/matchings/water_effects/func_us_801B95A0.s 
-| 1.00 | true     | EntitySmallWaterDrop                | asm/us/st/rno3/matchings/water_effects/EntitySmallWaterDrop.s 
+| 1.00 | true     | func_us_801C868C                    | asm/us/st/rno3/matchings/water_effects/func_us_801C868C.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801D2A9C                       | asm/us/st/no3/matchings/water_effects/func_801D2A9C.s 
 | 1.00 | true     | func_us_801D76E8                    | asm/us/st/no4/matchings/water_effects/func_us_801D76E8.s 
 | 1.00 | true     | func_801C61B4                       | asm/us/st/np3/matchings/water_effects/func_801C61B4.s 
 | 1.00 | true     | func_us_801B97FC                    | asm/us/st/nz1/matchings/water_effects/func_us_801B97FC.s 
-| 0.99 | true     | EntityWaterDrop                     | asm/us/st/rno3/matchings/water_effects/EntityWaterDrop.s 
+| 0.99 | true     | func_us_801C88E8                    | asm/us/st/rno3/matchings/water_effects/func_us_801C88E8.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801BBD24                    | asm/us/boss/bo0/matchings/e_chair/func_us_801BBD24.s 
 | 1.00 | true     | func_us_801C3104                    | asm/us/st/dai/matchings/e_chair/func_us_801C3104.s 
@@ -5222,6 +5221,9 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | SpuRead                             | asm/us/main/matchings/psxsdk/libspu/s_r/SpuRead.s 
 | 1.00 | true     | SpuWrite                            | asm/us/main/matchings/psxsdk/libspu/s_w/SpuWrite.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | SpuSetVoiceAttr                     | asm/us/main/matchings/psxsdk/libspu/s_sva/SpuSetVoiceAttr.s 
+| 0.90 | true     | func_801BA6A8                       | asm/us/st/sel/matchings/libpress/func_801BA6A8.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8016B97C                       | asm/us/ric/matchings/2F8E8/func_8016B97C.s 
 | 0.98 | false    | BO6_RicEntitySubwpnReboundStone     | asm/us/boss/bo6/nonmatchings/us_3E79C/BO6_RicEntitySubwpnReboundStone.s 
