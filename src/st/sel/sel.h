@@ -128,25 +128,6 @@ typedef struct {
 } StageName;
 
 typedef struct {
-    u_long* vlcbuf[2];  // 0x00
-    int vlcid;          // 0x08
-    u_short* imgbuf[2]; // 0x0c
-    int imgid;          // 0x20
-    RECT rect[2];       // 0x24
-    int rectid;         // 0x32
-    RECT slice;
-    int isdone;
-} DECENV;
-
-typedef struct {
-    DECENV dec;   // 4c
-    DISPENV disp; // 84
-    DRAWENV draw; // 98
-    RECT rect;
-    s32 unkFC;
-} StreamEnv;
-
-typedef struct {
     u32 cdOffset;
     u16 frameCount;
     u16 isRGB24;

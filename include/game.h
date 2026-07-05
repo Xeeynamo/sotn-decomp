@@ -1321,6 +1321,25 @@ typedef struct {
 } SaveSummary;   // size=0x3A8
 
 typedef struct {
+    u_long* vlcbuf[2];  // 0x00
+    int vlcid;          // 0x08
+    u_short* imgbuf[2]; // 0x0c
+    int imgid;          // 0x20
+    RECT rect[2];       // 0x24
+    int rectid;         // 0x32
+    RECT slice;
+    int isdone;
+} DECENV;
+
+typedef struct {
+    DECENV dec;   // 4c
+    DISPENV disp; // 84
+    DRAWENV draw; // 98
+    RECT rect;
+    s32 unkFC;
+} StreamEnv;
+
+typedef struct {
     /* 0x00 */ u8* gfxPage;
     /* 0x04 */ u8* gfxIndex;
     /* 0x08 */ u8* clut;
