@@ -225,7 +225,12 @@ bool InitGame(struct InitGameParams* params) {
 void ResetPlatform(void);
 void ResetGame(void) { ResetPlatform(); }
 
-extern const char* g_goldCollectTexts[10]; // refeer to e_collect.h
+// these are duplicated in every overlay but we have to do the conversion,
+// so OVL_EXPORT doesn't work well
+const char* g_goldCollectTexts[] = {
+    _S("$1"),   _S("$25"),  _S("$50"),   _S("$100"),  _S("$250"),
+    _S("$400"), _S("$700"), _S("$1000"), _S("$2000"), _S("$5000"),
+};
 void InitSotnMenuTable(void);
 void InitStrings(void) {
     InitSotnMenuTable();
