@@ -50,7 +50,7 @@ static u8 actor_name_len[] = {5, 9, 4, 5};
 static s32 OVL_EXPORT(SkipCutscene);
 static Dialogue OVL_EXPORT(Dialogue);
 static u32 __unused0[26];
-static u32 OVL_EXPORT(CutsceneFlags);
+u32 OVL_EXPORT(CutsceneFlags);
 static s32 OVL_EXPORT(IsCutsceneDone);
 
 #include "../cutscene_unk1.h"
