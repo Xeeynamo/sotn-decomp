@@ -84,7 +84,7 @@ void MoveBoat(u16 playerInBoat, Entity* entity) {
     }
 }
 
-extern u32 g_CutsceneFlags;
+extern u32 OVL_EXPORT(CutsceneFlags);
 static u8 anim_row[] = {
     0x18, 0x1C, 0x10, 0x1D, 0x10, 0x1E, 0x10, 0x1F, 0x10, 0x20, 0x00, 0x00};
 static u8 anim_stationary[] = {0x18, 0x1C, 0x10, 0x1D, 0x10, 0x1E, 0x10, 0x1F,
@@ -172,7 +172,7 @@ void EntityFerrymanController(Entity* self) {
         break;
     case 2:
         // If we already met the ferryman we can skip straight to rowing
-        if (g_CutsceneFlags & 0x80) {
+        if (OVL_EXPORT(CutsceneFlags) & 0x80) {
             self->step += 2;
         } else {
             // Otherwise pause world state and put Alucard into human form
@@ -192,7 +192,7 @@ void EntityFerrymanController(Entity* self) {
     case 3:
         g_Player.demo_timer = 1;
         g_Player.padSim = PAD_NONE;
-        if (g_CutsceneFlags & 0x80) {
+        if (OVL_EXPORT(CutsceneFlags) & 0x80) {
             // Unpause world state once meeting ferryman cutscene is over
             g_PauseAllowed = true;
             g_unkGraphicsStruct.pauseEnemies = false;

@@ -21,7 +21,7 @@ const char D_801ABFD8[] = "DMA=(%d,%d), ADDR=(0x%08x->0x%08x)";
 const char D_801AC000[] = "FIFO";
 const char D_801AC038[] = "%s timeout:\n";
 s32 g_StreamDiscStatus;
-Dialogue g_Dialogue;
+Dialogue OVL_EXPORT(Dialogue);
 char* D_801BC398[16];
 s32 g_MemCardSelectorX;
 s32 g_MemCardSelectorY;

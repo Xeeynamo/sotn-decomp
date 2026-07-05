@@ -34,7 +34,7 @@ static void func_801961DC(s16 arg0) UNUSED {
     }
 }
 
-extern s32 g_CutsceneFlags;
+extern s32 OVL_EXPORT(CutsceneFlags);
 extern EInit g_EInitInteractable;
 
 void func_us_801A9084(Entity* self) {
@@ -55,14 +55,14 @@ void func_us_801A9084(Entity* self) {
             g_Player.padSim = PAD_LEFT;
         } else {
             g_Player.padSim = 0;
-            g_CutsceneFlags = 1;
+            OVL_EXPORT(CutsceneFlags) = 1;
             self->step++;
         }
         g_Player.demo_timer = 1;
         break;
 
     case 2:
-        if (g_CutsceneFlags & 2) {
+        if (OVL_EXPORT(CutsceneFlags) & 2) {
             self->step++;
         }
         g_Player.padSim = PAD_NONE;
@@ -125,7 +125,7 @@ void func_us_801A9208(Entity* self) {
         }
         break;
     case 2:
-        if (g_CutsceneFlags & 0x100) {
+        if (OVL_EXPORT(CutsceneFlags) & 0x100) {
             g_unkGraphicsStruct.unk20 = 0;
             self->step++;
             self->ext.utimer.t = 0;
@@ -206,7 +206,7 @@ void func_us_801A95F4(Entity* self) {
             self->step_s++;
         }
         g_Player.demo_timer = 1;
-        if (g_CutsceneFlags & 0x40) {
+        if (OVL_EXPORT(CutsceneFlags) & 0x40) {
             self->step++;
         }
         break;
@@ -289,7 +289,7 @@ void func_us_801A9944(Entity* self) {
     case 2:
         g_Player.padSim = PAD_NONE;
         g_Player.demo_timer = 1;
-        if (g_CutsceneFlags & 8) {
+        if (OVL_EXPORT(CutsceneFlags) & 8) {
             g_PauseAllowed = true;
             if (g_unkGraphicsStruct.pauseEnemies != false) {
                 g_unkGraphicsStruct.pauseEnemies = false;
