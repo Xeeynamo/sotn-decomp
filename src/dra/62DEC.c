@@ -203,8 +203,8 @@ static s32 HandleSaveMenu(s32 arg0) {
 #define CONFIRM (PAD_START | PAD_SQUARE | PAD_CIRCLE)
 #define EXIT PAD_CROSS
 #elif defined(VERSION_PSP)
-#define CONFIRM (D_psp_08B42050 | PAD_START | PAD_SQUARE)
-#define EXIT D_psp_08B42054
+#define CONFIRM (PAD_START | PAD_SQUARE | g_ConfirmButton)
+#define EXIT g_CancelButton
 #endif
 
 // Somewhat clumsy way to avoid ifdef throughout the code.
@@ -1334,7 +1334,7 @@ void func_80105428(void) {
 #elif defined(VERSION_HD)
     const s32 PAD_MASK = PAD_START | PAD_SQUARE | PAD_CROSS | PAD_CIRCLE;
 #elif defined(VERSION_PSP)
-#define PAD_MASK (PAD_START | PAD_SQUARE | D_psp_08B42050 | D_psp_08B42054)
+#define PAD_MASK (PAD_START | PAD_SQUARE | g_ConfirmButton | g_CancelButton)
 #endif
     s32 temp_s0;
     s32 temp_result;
