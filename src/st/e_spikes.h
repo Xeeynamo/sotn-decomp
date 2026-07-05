@@ -39,7 +39,7 @@ enum SpikesPointDirections {
 #define START_COUNT 0
 #endif
 
-extern EInit g_EInitParticle;
+extern EInit OVL_EXPORT(EInitParticle);
 extern EInit g_EInitEnvironment;
 extern EInit g_EInitSpawner;
 extern EInit g_EInitInteractable;
@@ -54,7 +54,7 @@ void EntitySpikesDust(Entity* self) {
     s16 angle;
 
     if (!self->step) {
-        InitializeEntity(g_EInitParticle);
+        InitializeEntity(OVL_EXPORT(EInitParticle));
         self->zPriority = 160;
         self->animSet = 8;
         self->animCurFrame = 1;

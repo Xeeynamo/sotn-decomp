@@ -109,7 +109,7 @@ typedef enum EntityIDs {
 
 extern EInit OVL_EXPORT(EInitBreakable);
 extern EInit OVL_EXPORT(EInitObtainable);
-extern EInit g_EInitParticle;
+extern EInit OVL_EXPORT(EInitParticle);
 extern EInit g_EInitSpawner;
 extern EInit g_EInitInteractable;
 extern EInit g_EInitUnkId13;

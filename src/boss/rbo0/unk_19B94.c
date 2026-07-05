@@ -11,7 +11,7 @@ typedef struct {
 
 extern Unk80180D98 D_us_80180D98[];
 
-extern EInit g_EInitParticle;
+extern EInit OVL_EXPORT(EInitParticle);
 
 void EntityDeathFlames(Entity* self) {
     Unk80180D98* temp_v1_2;
@@ -20,7 +20,7 @@ void EntityDeathFlames(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitParticle);
+        InitializeEntity(OVL_EXPORT(EInitParticle));
         params = self->params & 0xF;
         temp_v1_2 = &D_us_80180D98[params];
         self->palette = temp_v1_2->palette + 0x2E0;

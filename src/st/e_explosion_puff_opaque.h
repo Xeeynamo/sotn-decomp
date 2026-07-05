@@ -5,7 +5,7 @@
 extern s32 E_ID(EXPLODE_PUFF_OPAQUE);
 #endif
 
-extern EInit g_EInitParticle;
+extern EInit OVL_EXPORT(EInitParticle);
 
 static u8 puff_anim_one[] = {
     3, 1, 3, 2, 3, 3,  3, 4,  3, 5,  3, 6,  3,  7,
@@ -51,7 +51,7 @@ void EntityExplosionPuffOpaque(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitParticle);
+        InitializeEntity(OVL_EXPORT(EInitParticle));
         params = self->params & 0xF;
         obj = &puff_config[params];
         self->palette = obj->palette + PAL_PUFF_OPAQUE_OFFSET;

@@ -130,7 +130,7 @@ void func_801A8328(Entity* self) {
             break;
         }
 
-        InitializeEntity(g_EInitParticle);
+        InitializeEntity(OVL_EXPORT(EInitParticle));
 
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
         if (primIndex == -1) {

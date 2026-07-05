@@ -126,7 +126,7 @@ enum EntityIDs {
     NUM_ENTITIES,
 };
 
-extern EInit g_EInitParticle;
+extern EInit OVL_EXPORT(EInitParticle);
 extern EInit g_EInitSpawner;
 extern EInit g_EInitInteractable;
 extern EInit g_EInitDamageNum;

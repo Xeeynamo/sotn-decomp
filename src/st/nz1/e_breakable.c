@@ -26,7 +26,7 @@ extern s32 E_ID(BREAKABLE_DEBRIS);
 
 extern EInit OVL_EXPORT(EInitBreakable);
 extern EInit g_EInitInteractable;
-extern EInit g_EInitParticle;
+extern EInit OVL_EXPORT(EInitParticle);
 
 static AnimateEntityFrame anim_candelabra_wall_double[] = {
     {4, 1}, {4, 2}, POSE_LOOP(0)};
@@ -256,7 +256,7 @@ void OVL_EXPORT(EntityBreakableDebris)(Entity* self) {
             self->step = DEBRIS_NOP; // No case defined, resulting in nop
             return;
         } else {
-            InitializeEntity(g_EInitParticle);
+            InitializeEntity(OVL_EXPORT(EInitParticle));
             primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
             if (primIndex == -1) {
                 DestroyEntity(self);

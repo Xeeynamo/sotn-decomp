@@ -92,7 +92,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
 // animSet, animCurFrame, unk5A, palette, enemyID
 EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_DRA(3), 0, 0, 0, 0x000};
 EInit OVL_EXPORT(EInitObtainable) = {ANIMSET_DRA(3), 0, 0, 0, 0x001};
-EInit g_EInitParticle = {ANIMSET_DRA(3), 0, 0, 0, 0x002};
+EInit OVL_EXPORT(EInitParticle) = {ANIMSET_DRA(3), 0, 0, 0, 0x002};
 EInit g_EInitSpawner = {ANIMSET_DRA(0), 0, 0, 0, 0x004};
 EInit g_EInitInteractable = {ANIMSET_DRA(0), 0, 0, 0, 0x005};
 EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0, 0, 0, 0x002};

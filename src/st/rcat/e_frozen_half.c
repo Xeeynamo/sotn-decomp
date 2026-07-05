@@ -7,7 +7,7 @@ extern EInit g_EInitFrozenHalfOrbitIcicle;
 extern EInit g_EInitFrozenHalfThrownChunk;
 extern EInit g_EInitFrozenHalfBlizzard;
 extern EInit g_EInitFrozenHalfFallingIce;
-extern EInit g_EInitParticle;
+extern EInit OVL_EXPORT(EInitParticle);
 
 static AnimateEntityFrame anim_hair_flick[] = {
     {0x07, 0x02}, {0x07, 0x03}, {0x07, 0x04}, {0x07, 0x05}, {0x07, 0x06},
@@ -888,7 +888,7 @@ void EntityFrozenHalfFrostMist(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitParticle);
+        InitializeEntity(OVL_EXPORT(EInitParticle));
         if (!self->params) {
             self->animSet = 0xE;
             self->unk5A = 0x5C;

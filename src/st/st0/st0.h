@@ -53,7 +53,7 @@ void EntityExplosionVariants(Entity* entity);
 void EntityGreyPuff(Entity* entity);
 
 extern EInit OVL_EXPORT(EInitBreakable);
-extern EInit g_EInitParticle;
+extern EInit OVL_EXPORT(EInitParticle);
 extern EInit g_EInitCutscene;
 extern EInit g_EInitCommon;
 extern EInit g_EInit3DObject;

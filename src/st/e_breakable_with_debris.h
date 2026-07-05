@@ -24,7 +24,7 @@ extern s32 E_ID(BREAKABLE_DEBRIS);
 
 extern EInit OVL_EXPORT(EInitBreakable);
 extern EInit g_EInitInteractable;
-extern EInit g_EInitParticle;
+extern EInit OVL_EXPORT(EInitParticle);
 
 void OVL_EXPORT(EntityBreakable)(Entity* self) {
     Entity* entity;
@@ -169,7 +169,7 @@ void OVL_EXPORT(EntityBreakableDebris)(Entity* self) {
             self->step = DEBRIS_NOP; // No case defined, resulting in nop
             return;
         } else {
-            InitializeEntity(g_EInitParticle);
+            InitializeEntity(OVL_EXPORT(EInitParticle));
             primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
             if (primIndex == -1) {
                 DestroyEntity(self);

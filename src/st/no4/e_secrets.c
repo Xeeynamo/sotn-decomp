@@ -224,7 +224,7 @@ void EntityBreakableWallDebris(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitParticle);
+        InitializeEntity(OVL_EXPORT(EInitParticle));
         self->drawFlags = ENTITY_ROTATE;
         self->animSet = ANIMSET_OVL(1);
         if (Random() & 1) {

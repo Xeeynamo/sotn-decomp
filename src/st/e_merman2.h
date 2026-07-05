@@ -820,7 +820,7 @@ void EntityMerman2JumpAir(Entity* self) {
 void EntityHighWaterSplash(Entity* self) {
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitParticle);
+        InitializeEntity(OVL_EXPORT(EInitParticle));
         self->animSet = ANIMSET_DRA(2);
         self->velocityY = FIX(-5);
         self->palette = PAL_FLAG(PAL_CC_MAGIC_HUD_EFFECT);

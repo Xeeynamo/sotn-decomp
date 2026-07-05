@@ -5,7 +5,7 @@ extern EInit g_EInitEnvironmentBreakable;
 #else
 extern EInit g_EInitEnvironment;
 #endif
-extern EInit g_EInitParticle;
+extern EInit OVL_EXPORT(EInitParticle);
 extern EInit OVL_EXPORT(EInitBreakable);
 
 #ifdef VERSION_PSP
@@ -225,7 +225,7 @@ void OVL_EXPORT(EntityBreakableDebris)(Entity* self) {
             return;
         }
 
-        InitializeEntity(g_EInitParticle);
+        InitializeEntity(OVL_EXPORT(EInitParticle));
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
         if (primIndex == -1) {
             DestroyEntity(self);

@@ -705,7 +705,7 @@ void func_us_801C21AC(Entity* self) {
 
     params = self->params;
     if (!self->step) {
-        InitializeEntity(g_EInitParticle);
+        InitializeEntity(OVL_EXPORT(EInitParticle));
         self->animSet = 0;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
         if (primIndex == -1) {
@@ -1604,7 +1604,7 @@ void func_us_801C3CC4(Entity* self) {
     Primitive* prim;
 
     if (!self->step) {
-        InitializeEntity(g_EInitParticle);
+        InitializeEntity(OVL_EXPORT(EInitParticle));
         self->animSet = 0;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x20);
         if (primIndex == -1) {

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 extern EInit g_EInitUnkId13;
-extern EInit g_EInitParticle;
+extern EInit OVL_EXPORT(EInitParticle);
 
 extern void EntityExplosionVariants(Entity* entity);
 extern void EntityGreyPuff(Entity* entity);
@@ -198,7 +198,7 @@ void EntityOlroxDrool(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitParticle);
+        InitializeEntity(OVL_EXPORT(EInitParticle));
         primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
         if (primIndex == -1) {
             return;
@@ -464,7 +464,7 @@ u8 UnkCollisionFunc4(u8 arg0) {
 //         (& 0xFF00) if non-zero, uses ((& 0xFF00) >> 8) as the zPriority
 void EntityIntenseExplosion(Entity* self) {
     if (!self->step) {
-        InitializeEntity(g_EInitParticle);
+        InitializeEntity(OVL_EXPORT(EInitParticle));
         self->palette = PAL_FLAG(PAL_UNK_170);
         self->animSet = ANIMSET_DRA(5);
         self->animCurFrame = 1;
@@ -495,7 +495,7 @@ static u8 g_UnkEntityAnim[] = {2, 1, 2, 2, 2, 3, 2, 4, 2, 5, 4, 6, -1, 0};
 
 void InitializeUnkEntity(Entity* self) {
     if (!self->step) {
-        InitializeEntity(g_EInitParticle);
+        InitializeEntity(OVL_EXPORT(EInitParticle));
         self->zPriority += 16;
         self->opacity = 0xF0;
         self->scaleX = 0x1A0;
@@ -617,7 +617,7 @@ void EntityBigRedFireball(Entity* self) {
     s32 speedTemp;
 
     if (!self->step) {
-        InitializeEntity(g_EInitParticle);
+        InitializeEntity(OVL_EXPORT(EInitParticle));
         self->animSet = ANIMSET_DRA(2);
         self->palette = PAL_FLAG(PAL_UNK_1B6);
         self->drawFlags |= (ENTITY_ROTATE + ENTITY_OPACITY);

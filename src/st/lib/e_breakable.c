@@ -195,7 +195,7 @@ void OVL_EXPORT(EntityBreakableDebris)(Entity* self) {
             self->zPriority = 106;
             self->step = DEBRIS_NOP; // No case defined, resulting in nop
         } else {
-            InitializeEntity(g_EInitParticle);
+            InitializeEntity(OVL_EXPORT(EInitParticle));
         }
         break;
     case UPDATE:

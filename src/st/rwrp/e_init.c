@@ -39,7 +39,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
 // *** Group here all the Entity Init ***
 EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_OVL(1), 0x00, 0x00, 0x0000, 0x000};
 EInit OVL_EXPORT(EInitObtainable) = {ANIMSET_DRA(3), 0x00, 0x00, 0x0000, 0x001};
-EInit g_EInitParticle = {ANIMSET_DRA(3), 0x00, 0x00, 0x0000, 0x002};
+EInit OVL_EXPORT(EInitParticle) = {ANIMSET_DRA(3), 0x00, 0x00, 0x0000, 0x002};
 EInit D_80180464 = {ANIMSET_DRA(0), 0x00, 0x00, 0x0000, 0x004};
 EInit g_EInitInteractable = {ANIMSET_DRA(0), 0x00, 0x00, 0x0000, 0x005};
 EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0x00, 0x00, 0x0000, 0x002};

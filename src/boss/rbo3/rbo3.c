@@ -694,7 +694,7 @@ void func_us_801923DC(Entity* self) {
     }
 }
 
-extern EInit g_EInitParticle;
+extern EInit OVL_EXPORT(EInitParticle);
 extern EntityConfig D_us_8018071C[];
 
 // Entity ID 0x1B
@@ -705,7 +705,7 @@ void func_us_80192998(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitParticle);
+        InitializeEntity(OVL_EXPORT(EInitParticle));
         params = self->params & 0xF;
         obj = &D_us_8018071C[params];
         self->palette = obj->palette + 0x2E0;

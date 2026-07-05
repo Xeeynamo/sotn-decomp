@@ -31,7 +31,7 @@ typedef enum {
 
 extern EInit g_EInitInteractable;
 extern EInit g_EInitCommon;
-extern EInit g_EInitParticle;
+extern EInit OVL_EXPORT(EInitParticle);
 extern EInit g_EInitLockCamera;
 
 #endif // RBO3_H

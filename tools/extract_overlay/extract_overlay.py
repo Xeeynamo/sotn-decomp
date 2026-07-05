@@ -1401,7 +1401,7 @@ def parse_e_inits(data_file_text, first_e_init, ovl_name, platform, config_yaml_
     known_e_inits = [
         f"{ovl_name.upper()}_EInitBreakable",
         f"{ovl_name.upper()}_EInitObtainable",
-        "g_EInitParticle",
+        f"{ovl_name.upper()}_EInitParticle",
         "g_EInitSpawner",
         "g_EInitInteractable",
         "g_EInitUnkId13",

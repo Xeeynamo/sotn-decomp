@@ -12,7 +12,7 @@ static u16 tiles[2][4] = {
     {0x051E, 0x001D, 0x001D, 0x001D}, {0x0025, 0x0000, 0x0000, 0x0000}};
 static s32 D_us_80181680 = 0;
 extern EInit g_EInitEnvironment;
-extern EInit g_EInitParticle;
+extern EInit OVL_EXPORT(EInitParticle);
 
 // Appears to be unused in CAT despite appearing in the entity list
 void func_us_801BA164(Entity* self) {
@@ -26,7 +26,7 @@ void func_us_801BA164(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitParticle);
+        InitializeEntity(OVL_EXPORT(EInitParticle));
         self->ext.et_801BA164.unk80 = 0x40;
         primIndex = g_api.func_800EDB58(PRIM_TILE_ALT, 8);
         if (primIndex != -1) {

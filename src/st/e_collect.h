@@ -10,7 +10,7 @@
 #include <stage.h>
 
 extern EInit OVL_EXPORT(EInitObtainable);
-extern EInit g_EInitParticle;
+extern EInit OVL_EXPORT(EInitParticle);
 
 #if defined(VERSION_PSP)
 #include "blit_char_psp.h"
@@ -649,7 +649,7 @@ void EntityPrizeDrop(Entity* self) {
 //         (& 0xFF00) If non-zero, ((& 0xFF00) >> 8) will override zPriority
 void EntityExplosion(Entity* entity) {
     if (!entity->step) {
-        InitializeEntity(g_EInitParticle);
+        InitializeEntity(OVL_EXPORT(EInitParticle));
         entity->pose = 0;
         entity->poseTimer = 0;
         entity->animSet = ANIMSET_DRA(2);
