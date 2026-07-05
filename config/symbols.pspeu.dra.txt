@@ -17,7 +17,6 @@ g_ServantLoaded = 0x091CE560;
 g_EquippedWeaponIds = 0x091CE568;
 D_80097904 = 0x091CE590;
 D_8006BB00 = 0x091CE5A8;
-D_80097420 = 0x091CE620;
 g_PrevScrollY = 0x091CE6A0;
 g_PrevScrollX = 0x091CE6A8;
 g_RoomCount = 0x091CE6B8;
