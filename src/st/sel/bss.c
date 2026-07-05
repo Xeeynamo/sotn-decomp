@@ -38,7 +38,9 @@ u32 D_801BC3E0;
 s32 D_801BC3E4;
 u32 D_801BC3E8;
 u32 D_801BC3EC;
+#ifndef HARD_LINK
 MemcardInfo g_MemcardInfo[2];
+#endif
 SaveSummary g_SaveSummary[PORT_COUNT];
 u32 D_801BD030;
 u32 g_StreamEndFrame;
@@ -54,7 +56,11 @@ u32 D_801D6B00;
 u32 D_801D6B04;
 u32 g_InputCursorPos;
 u32 g_MainMenuCursor;
+#ifndef HARD_LINK
 s32 g_MemcardBlockRead;
+#endif
 u8 g_InputSaveName[12];
+#ifndef HARD_LINK
 s32 g_MemcardStep;
+#endif
 s32 D_801D6B24;

@@ -13,36 +13,6 @@ RECT D_80182584 = {0};
 RECT D_8018258C = {0};
 RECT D_801825A4 = {0};
 u8* D_8018C404[100] = {NULL};
-u32 D_801D6B00 = 0;
-
-const char D_801ABFB8[] = "MDEC_in_sync";
-const char D_801ABFC8[] = "MDEC_out_sync";
-const char D_801ABFD8[] = "DMA=(%d,%d), ADDR=(0x%08x->0x%08x)";
-const char D_801AC000[] = "FIFO";
-const char D_801AC038[] = "%s timeout:\n";
-s32 g_StreamDiscStatus;
-Dialogue OVL_EXPORT(Dialogue);
-char* D_801BC398[16];
-s32 g_MemCardSelectorX;
-s32 g_MemCardSelectorY;
-s32 D_801BC3E0; // on-screen keyboard key position
-s32 D_801BC3E4;
-u32 D_801BC3E8;
-s32 D_801BC3EC; // selected memory card block
-s32 D_801BC650;
-SaveSummary g_SaveSummary[PORT_COUNT];
-u32 D_801BD030;
-u32 g_StreamEndFrame;
-u32 g_StreamIsRGB24[1];
-u32 D_801BD03C;
-u32 D_801BD040;
-s32 g_StreamRewindSwitch[1];
-s32 D_801D104C[0x1680];
-s32 D_801D6B04;
-s32 g_InputCursorPos;
-s32 g_MainMenuCursor;
-char g_InputSaveName[12];
-s32 D_801D6B24;
 
 extern Overlay OVL_EXPORT(Overlay);
 

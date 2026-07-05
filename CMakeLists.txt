@@ -171,6 +171,7 @@ set(SOURCE_FILES_TT_002
 
 set(SOURCE_FILES_STAGE_SEL
     src/pc/stages/stage_sel.c
+    src/st/sel/bss.c
     src/st/sel/banks.c
     src/st/sel/764.c
     src/st/sel/CD54.c
@@ -223,6 +224,7 @@ set(SOURCE_FILES_STAGE_CEN
 set(SOURCE_FILES_STAGE_NZ0
     src/pc/stages/stage_nz0.c
     src/st/nz0/header.c
+    src/st/nz0/bss.c
     src/st/nz0/gen/e_laydef.c
     src/st/nz0/e_init.c
     src/st/nz0/gen/rooms.c
