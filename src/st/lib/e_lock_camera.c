@@ -25,7 +25,7 @@ void OVL_EXPORT(EntityLockCamera)(Entity* self) {
 
     params = self->params;
     if (!self->step) {
-        InitializeEntity(g_EInitLockCamera);
+        InitializeEntity(OVL_EXPORT(EInitLockCamera));
         self->hitboxState = 1;
         facingLeft = self->ext.lockCamera.unk7C = entityLockCameraData[params];
         if (facingLeft) {

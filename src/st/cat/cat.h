@@ -133,7 +133,7 @@ extern EInit g_EInitDamageNum;
 extern EInit g_EInitEnvironment;
 extern EInit g_EInitGremlin;
 extern EInit g_EInitGremlinFire;
-extern EInit g_EInitLockCamera;
+extern EInit OVL_EXPORT(EInitLockCamera);
 extern EInit OVL_EXPORT(EInitObtainable);
 extern EInit g_EInitWereskeleton;
 extern EInit D_us_80180A88;

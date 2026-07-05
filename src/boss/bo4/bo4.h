@@ -26,6 +26,6 @@ extern s32 D_pspeu_0926BCD0;
 #endif
 
 extern EInit OVL_EXPORT(EInitParticle);
-extern EInit g_EInitLockCamera;
+extern EInit OVL_EXPORT(EInitLockCamera);
 
 #endif // BO4_H

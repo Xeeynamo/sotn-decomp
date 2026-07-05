@@ -30,7 +30,7 @@ typedef enum EntityIDs {
     E_SMALL_ROCKS,
 } EntityIDs;
 
-extern EInit g_EInitLockCamera;
+extern EInit OVL_EXPORT(EInitLockCamera);
 extern EInit OVL_EXPORT(EInitObtainable);
 extern EInit OVL_EXPORT(EInitParticle);
 extern EInit g_EInitInteractable;

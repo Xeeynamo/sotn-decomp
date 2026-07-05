@@ -84,7 +84,7 @@ EInit g_EInitInteractable = {
     ANIMSET_DRA(0), 0x0000, 0x0000, PAL_NULL, 0x0005,
 };
 EInit OVL_EXPORT(EInitUnkId13) = {ANIMSET_DRA(0), 0x0000, 0x0000, PAL_NULL, 0x0002};
-EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0x0000, 0x0000, PAL_NULL, 0x0001};
+EInit OVL_EXPORT(EInitLockCamera) = {ANIMSET_DRA(0), 0x0000, 0x0000, PAL_NULL, 0x0001};
 EInit g_EInitCommon = {ANIMSET_DRA(0), 0x0000, 0x0000, PAL_NULL, 0x0003};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0x0000, 0x0000, PAL_NULL, 0x0003};
 EInit g_EInitMedusa = {ANIMSET_OVL(3), 0x0000, 0x0048, 0x220, 0x016E};

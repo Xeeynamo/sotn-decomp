@@ -56,7 +56,7 @@ extern EInit g_EInitSpawner;
 extern EInit g_EInitInteractable;
 extern EInit g_EInitCommon;
 extern EInit OVL_EXPORT(EInitParticle);
-extern EInit g_EInitLockCamera;
+extern EInit OVL_EXPORT(EInitLockCamera);
 
 extern u16* D_80180574[];
 extern u8 D_80180594[];
