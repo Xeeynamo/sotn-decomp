@@ -479,6 +479,8 @@ void SetSubStep(u8 step_s) {
     g_CurrentEntity->poseTimer = 0;
 }
 
+void OVL_EXPORT(EntityExplosion)(Entity*);
+
 void EntityExplosionSpawn(u16 params, u16 arg1) {
 #if STAGE != STAGE_ST0
     if (arg1) {
@@ -495,7 +497,7 @@ void EntityExplosionSpawn(u16 params, u16 arg1) {
     }
 
     g_CurrentEntity->entityId = E_EXPLOSION;
-    g_CurrentEntity->pfnUpdate = (PfnEntityUpdate)EntityExplosion;
+    g_CurrentEntity->pfnUpdate = (PfnEntityUpdate)OVL_EXPORT(EntityExplosion);
     g_CurrentEntity->params = params;
     g_CurrentEntity->animCurFrame = 0;
     g_CurrentEntity->drawFlags = ENTITY_DEFAULT;
@@ -740,6 +742,9 @@ u8 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
     return 0;
 }
 
+void OVL_EXPORT(EntityEquipItemDrop)(Entity*);
+void OVL_EXPORT(EntityPrizeDrop)(Entity*);
+
 void ReplaceBreakableWithItemDrop(Entity* self) {
     u16 params;
 
@@ -756,12 +761,12 @@ void ReplaceBreakableWithItemDrop(Entity* self) {
 
     if (params < 0x80) {
         self->entityId = E_PRIZE_DROP;
-        self->pfnUpdate = (PfnEntityUpdate)EntityPrizeDrop;
+        self->pfnUpdate = (PfnEntityUpdate)OVL_EXPORT(EntityPrizeDrop);
         self->poseTimer = 0;
         self->pose = 0;
     } else {
         self->entityId = E_EQUIP_ITEM_DROP;
-        self->pfnUpdate = (PfnEntityUpdate)EntityEquipItemDrop;
+        self->pfnUpdate = (PfnEntityUpdate)OVL_EXPORT(EntityEquipItemDrop);
         params -= 0x80;
     }
 

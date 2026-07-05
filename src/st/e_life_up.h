@@ -11,6 +11,10 @@ u16 D_80182850[] = {0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17,
                     0x17, 0x19, 0x1A, 0x1B, 0x1C, 0x1D};
 SVECTOR clearRotation = {ROT(0), ROT(0), ROT(0)};
 
+void OVL_EXPORT(EntityEquipItemDrop)(Entity*);
+void OVL_EXPORT(EntityPrizeDrop)(Entity*);
+void OVL_EXPORT(EntityRelicOrb)(Entity*);
+
 void EntityLifeUpSpawn(Entity* self) {
     long p, flag;
     Collider collider;
@@ -237,12 +241,12 @@ void EntityLifeUpSpawn(Entity* self) {
                 params = self->params & 0xFFF;
                 if (params < 0x80) {
                     self->entityId = E_PRIZE_DROP;
-                    self->pfnUpdate = EntityPrizeDrop;
+                    self->pfnUpdate = OVL_EXPORT(EntityPrizeDrop);
                     self->poseTimer = 0;
                     self->pose = 0;
                 } else {
                     self->entityId = E_EQUIP_ITEM_DROP;
-                    self->pfnUpdate = EntityEquipItemDrop;
+                    self->pfnUpdate = OVL_EXPORT(EntityEquipItemDrop);
                     params -= 0x80;
                 }
                 self->params = params;
@@ -251,7 +255,7 @@ void EntityLifeUpSpawn(Entity* self) {
                 self->step = 0;
             } else {
                 self->entityId = E_RELIC_ORB;
-                self->pfnUpdate = EntityRelicOrb;
+                self->pfnUpdate = OVL_EXPORT(EntityRelicOrb);
                 self->poseTimer = 0;
                 self->pose = 0;
                 self->unk6D[0] = 0x10;
@@ -263,12 +267,12 @@ void EntityLifeUpSpawn(Entity* self) {
             params = self->params & 0xFFF;
             if (params < 0x80) {
                 self->entityId = E_PRIZE_DROP;
-                self->pfnUpdate = EntityPrizeDrop;
+                self->pfnUpdate = OVL_EXPORT(EntityPrizeDrop);
                 self->poseTimer = 0;
                 self->pose = 0;
             } else {
                 self->entityId = E_EQUIP_ITEM_DROP;
-                self->pfnUpdate = EntityEquipItemDrop;
+                self->pfnUpdate = OVL_EXPORT(EntityEquipItemDrop);
                 params -= 0x80;
             }
             self->params = params;

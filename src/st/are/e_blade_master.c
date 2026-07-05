@@ -5,7 +5,7 @@ extern EInit g_EInitBladeMaster;
 extern EInit g_EInitBladeMasterAttackHitbox;
 extern EInit g_EInitParticle;
 // This comes from e_collect
-extern u8 g_explosionBigAnim[];
+extern u8 OVL_EXPORT(g_explosionBigAnim)[];
 
 static s16 sensors_ground[] = {0, 24, 0, 4, 8, -4, -16, 0};
 static s16 sensors_wall[] = {0, 24, 12, 0};
@@ -652,7 +652,7 @@ void EntityBladeMasterDeathExplosion(Entity* self) {
     }
 
     self->posY.val += self->velocityY;
-    if (!AnimateEntity(g_explosionBigAnim, self)) {
+    if (!AnimateEntity(OVL_EXPORT(g_explosionBigAnim), self)) {
         DestroyEntity(self);
     }
 }

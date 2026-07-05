@@ -2,7 +2,7 @@
 #include "st0.h"
 
 void func_801A805C(Entity*);
-void EntityExplosion(Entity*);
+void OVL_EXPORT(EntityExplosion)(Entity*);
 void EntityPrizeDrop(Entity*);
 void EntityDamageDisplay(Entity*);
 void OVL_EXPORT(EntityRedDoor)(Entity*);
@@ -50,7 +50,7 @@ void func_801BC5C0(Entity*);
 
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_801A805C,
-    EntityExplosion,
+    OVL_EXPORT(EntityExplosion),
     EntityPrizeDrop,
     EntityDamageDisplay,
     OVL_EXPORT(EntityRedDoor),

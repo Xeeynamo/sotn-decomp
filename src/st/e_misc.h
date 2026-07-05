@@ -34,6 +34,8 @@ u8 CheckColliderOffsets(s16* arg0, u8 facing) {
     return ret;
 }
 
+void OVL_EXPORT(EntityExplosion)(Entity*);
+
 // EntityParticleTrail as a possible name here?
 // params: The E_EXPLOSION params to use for the trail
 void EntityUnkId13(Entity* self) {
@@ -47,7 +49,7 @@ void EntityUnkId13(Entity* self) {
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                 newEntity->entityId = E_EXPLOSION;
-                newEntity->pfnUpdate = EntityExplosion;
+                newEntity->pfnUpdate = OVL_EXPORT(EntityExplosion);
                 newEntity->params = self->params;
             }
             self->ext.ent13.fiveFrameCounter = 0;
@@ -608,7 +610,7 @@ void MakeExplosions(void) {
     }
 }
 
-extern u8 g_bigRedFireballAnim[];
+extern u8 OVL_EXPORT(g_bigRedFireballAnim)[];
 
 // Not used in any current overlays. Seems to resemble Gaibon's big fireball,
 // but is not actually called in NZ0. Will need to check future overlays for
@@ -656,7 +658,7 @@ void EntityBigRedFireball(Entity* self) {
 
     MoveEntity();
 
-    if (!AnimateEntity(g_bigRedFireballAnim, self)) {
+    if (!AnimateEntity(OVL_EXPORT(g_bigRedFireballAnim), self)) {
         DestroyEntity(self);
     }
 }

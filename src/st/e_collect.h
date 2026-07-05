@@ -81,10 +81,14 @@ static u16 aluric_subweapons_id[] = {0, 14, 15, 17, 16, 19, 18, 20, 21, 22};
 
 // Gold appears up here on PSX, down lower on VERSION_PSP
 #if !defined(VERSION_PSP) && (STAGE != STAGE_ST0)
+#ifndef VERSION_PC
 const char* g_goldCollectTexts[] = {
     _S("$1"),   _S("$25"),  _S("$50"),   _S("$100"),  _S("$250"),
     _S("$400"), _S("$700"), _S("$1000"), _S("$2000"), _S("$5000"),
 };
+#else
+extern const char* g_goldCollectTexts[];
+#endif
 static u32 c_GoldPrizes[] = {1, 25, 50, 100, 250, 400, 700, 1000, 2000, 5000};
 #endif
 
@@ -92,7 +96,7 @@ static u32 c_GoldPrizes[] = {1, 25, 50, 100, 250, 400, 700, 1000, 2000, 5000};
 static u32 c_GoldPrizes[] = {1, 5, 10, 20, 40, 70, 100, 200, 400, 1000};
 #endif
 
-u8* g_SubweaponAnimPrizeDrop[] = {
+u8* OVL_EXPORT(g_SubweaponAnimPrizeDrop)[] = {
     D_80180C94, D_80180C98, D_80180CC4, D_80180CD4, D_80180CD8,
     D_80180CDC, D_80180CE0, D_80180CE4, D_80180CE8, D_80180CEC,
     D_80180CF0, D_80180CF4, D_80180D08, D_80180D18,
@@ -129,7 +133,11 @@ u8* g_MariaSubweaponAnimPrizeDrop[] = {
 };
 
 #if STAGE != STAGE_ST0
+#ifndef VERSION_PC
 const char* g_goldCollectTexts[] = {GOLD_COLLECT_TEXT};
+#else
+extern const char* g_goldCollectTexts[];
+#endif
 static u32 c_GoldPrizes[] = {1, 25, 50, 100, 250, 400, 700, 1000, 2000, 5000};
 #else
 static u32 c_GoldPrizes[] = {1, 5, 10, 20, 40, 70, 100, 200, 400, 1000};
@@ -140,7 +148,7 @@ static u32 c_GoldPrizes[] = {1, 5, 10, 20, 40, 70, 100, 200, 400, 1000};
 static s16 D_80180EB8[] = {-6, 4, 0, -8};
 #if !defined(VERSION_BETA) && STAGE != STAGE_ST0
 // Note that this array is in data. MAD/ST0 have it in rodata.
-s8 c_HeartPrizes[] = {1, 5};
+static s8 c_HeartPrizes[] = {1, 5};
 #endif
 
 static void PrizeDropFall(void) {
@@ -226,7 +234,7 @@ static u8 anim_small[] = {
     2, 1, 2, 2, 2, 3, 2, 4, 2, 5, 2, 6, 2, 7, 2, 8, 0, 0,
 };
 
-u8 g_bigRedFireballAnim[] = {
+u8 OVL_EXPORT(g_bigRedFireballAnim)[] = {
     1,  9, 2,  10, 2,  11, 2,  12, 2,  13, 2,  14, 2,
     15, 2, 16, 2,  17, 2,  18, 3,  19, 4,  20, 0,  0,
 };
@@ -238,7 +246,7 @@ static u8 anim_small_multiple[] = {
     0x02, 0x27, 0x02, 0x28, 0x02, 0x29, 0x02, 0x2A, 0x00, 0x00,
 };
 
-u8 g_explosionBigAnim[] = {
+u8 OVL_EXPORT(g_explosionBigAnim)[] = {
     0x02, 0x2B, 0x02, 0x2C, 0x02, 0x2D, 0x02, 0x2E, 0x02, 0x2F,
     0x02, 0x30, 0x02, 0x31, 0x02, 0x32, 0x02, 0x33, 0x02, 0x34,
     0x02, 0x35, 0x02, 0x36, 0x02, 0x37, 0x02, 0x38, 0x02, 0x39,
@@ -250,11 +258,11 @@ u8 g_explosionBigAnim[] = {
 static u8 D_80180F6C[] = {0x01, 0x43, 0x00, 0x00};
 
 static u8* g_ExplosionAnimations[] = {
-    anim_small,         g_bigRedFireballAnim, anim_small_multiple,
-    g_explosionBigAnim, D_80180F6C,
+    anim_small,         OVL_EXPORT(g_bigRedFireballAnim), anim_small_multiple,
+    OVL_EXPORT(g_explosionBigAnim), D_80180F6C,
 };
 
-void CollectGold(u16 goldSize) {
+void OVL_EXPORT(CollectGold)(u16 goldSize) {
     g_api.PlaySfx(SFX_GOLD_PICKUP);
     goldSize -= 2;
     g_Status.gold += c_GoldPrizes[goldSize];
@@ -285,7 +293,7 @@ void UnusedDestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
 #endif
 
 #if STAGE != STAGE_ST0
-void CollectHeartVessel(void) {
+void OVL_EXPORT(CollectHeartVessel)(void) {
 #ifdef VERSION_BETA
     if (0) { // MAD doesn't need to test character, is always alucard
 #else
@@ -332,7 +340,7 @@ static void CollectDummy(u16 id) { DestroyEntity(g_CurrentEntity); }
 // US essentially adds castle flags for unique drops
 // PSP iterates on top of the US version by adding drops for Maria
 // PSP ST0 iterates on top of ST0 with the only change on CollectDummy params
-void EntityPrizeDrop(Entity* self) {
+void OVL_EXPORT(EntityPrizeDrop)(Entity* self) {
     Primitive* prim;
     u16 itemId;
     s16 index;
@@ -346,10 +354,10 @@ void EntityPrizeDrop(Entity* self) {
         if (g_PlayableCharacter == PLAYER_MARIA) {
             AnimateEntity(g_MariaSubweaponAnimPrizeDrop[itemId], self);
         } else {
-            AnimateEntity(g_SubweaponAnimPrizeDrop[itemId], self);
+            AnimateEntity(OVL_EXPORT(g_SubweaponAnimPrizeDrop)[itemId], self);
         }
 #else
-        AnimateEntity(g_SubweaponAnimPrizeDrop[itemId], self);
+        AnimateEntity(OVL_EXPORT(g_SubweaponAnimPrizeDrop)[itemId], self);
 #endif
     }
 #if defined(VERSION_US) && STAGE != STAGE_ST0
@@ -507,10 +515,10 @@ void EntityPrizeDrop(Entity* self) {
         if (itemId < 2) {
             CollectHeart(itemId);
         } else if (itemId < 12) {
-            CollectGold(itemId);
+            OVL_EXPORT(CollectGold)(itemId);
 #if STAGE != STAGE_ST0
         } else if (itemId == 12) {
-            CollectHeartVessel();
+            OVL_EXPORT(CollectHeartVessel)();
 #endif
         } else if (itemId < 14) {
 #if defined VERSION_BETA || (STAGE == STAGE_ST0 && !defined(VERSION_PSP))
@@ -647,7 +655,7 @@ void EntityPrizeDrop(Entity* self) {
 //         (& 0xF0) These explosion types use a different (hardcoded) palette
 //                  and drawMode
 //         (& 0xFF00) If non-zero, ((& 0xFF00) >> 8) will override zPriority
-void EntityExplosion(Entity* entity) {
+void OVL_EXPORT(EntityExplosion)(Entity* entity) {
     if (!entity->step) {
         InitializeEntity(g_EInitParticle);
         entity->pose = 0;
@@ -725,7 +733,7 @@ void Unreferenced_MAD_ST0_func(Entity* self) {
 char* obtainedStr;
 #endif
 
-void EntityEquipItemDrop(Entity* self) {
+void OVL_EXPORT(EntityEquipItemDrop)(Entity* self) {
     Collider collider;
     Primitive* prim;
     s16 i;
@@ -750,10 +758,10 @@ void EntityEquipItemDrop(Entity* self) {
 #if !(defined VERSION_BETA || STAGE == STAGE_ST0)
         if (g_PlayableCharacter != PLAYER_ALUCARD) {
             self->params = 0;
-            self->pfnUpdate = EntityPrizeDrop;
+            self->pfnUpdate = OVL_EXPORT(EntityPrizeDrop);
             self->entityId = 3;
             SetStep(0);
-            EntityPrizeDrop(self);
+            OVL_EXPORT(EntityPrizeDrop)(self);
             return;
         }
 #endif
@@ -932,7 +940,7 @@ void EntityEquipItemDrop(Entity* self) {
 #if defined(VERSION_PSP) && STAGE != STAGE_ST0
 extern char* obtainedStr; // BSS
 #else
-const char* g_RelicOrbTexts[] = {
+static const char* g_RelicOrbTexts[] = {
 #if !defined(VERSION_US) || STAGE == STAGE_ST0
     "を入手した"
 #else
@@ -941,19 +949,19 @@ const char* g_RelicOrbTexts[] = {
 };
 #endif
 
-s16 g_RelicOrbTextBg1EY[] = {16, 12, 8, 4, 0, -4, -8, -12};
-s16 g_RelicOrbTextBg1SY[] = {-32, -26, -20, -13, -7, -1, 5, 12};
-s16 g_RelicOrbTextBg2SY[] = {-16, -12, -8, -4, 0, 4, 8, 12};
-s16 g_RelicOrbTextBg2EY[] = {32, 26, 20, 13, 7, 1, -5, -12};
+static s16 g_RelicOrbTextBg1EY[] = {16, 12, 8, 4, 0, -4, -8, -12};
+static s16 g_RelicOrbTextBg1SY[] = {-32, -26, -20, -13, -7, -1, 5, 12};
+static s16 g_RelicOrbTextBg2SY[] = {-16, -12, -8, -4, 0, 4, 8, 12};
+static s16 g_RelicOrbTextBg2EY[] = {32, 26, 20, 13, 7, 1, -5, -12};
 #if STAGE != STAGE_ST0
-s16 g_RelicOrbSparkleX[] = {-8, 4, -2, 8, 0, 4, -4, 2};
-s16 g_RelicOrbSparkleY[] = {-2, 2, 4, -3, 0, 2, -4, 3};
+static s16 g_RelicOrbSparkleX[] = {-8, 4, -2, 8, 0, 4, -4, 2};
+static s16 g_RelicOrbSparkleY[] = {-2, 2, 4, -3, 0, 2, -4, 3};
 #endif
 
 extern u16 msgBoxTpage[0x600];
 
 // params: (& 0x7FFF) Relic ID
-void EntityRelicOrb(Entity* self) {
+void OVL_EXPORT(EntityRelicOrb)(Entity* self) {
 #if STAGE == STAGE_ST0
     const int PrimCount = 3;
 #else
@@ -1451,7 +1459,7 @@ extern u16 OVL_EXPORT(PrizeDrops)[];
 #endif
 
 // params: Local index of this drop
-void EntityHeartDrop(Entity* self) {
+void OVL_EXPORT(EntityHeartDrop)(Entity* self) {
     u16 index;
     u8 value;
     PfnEntityUpdate update;
@@ -1469,9 +1477,9 @@ void EntityHeartDrop(Entity* self) {
         index -= HEART_DROP_CASTLE_FLAG;
         index = OVL_EXPORT(PrizeDrops)[index];
         if (index < 128) {
-            self->unkB8 = (Entity*)EntityPrizeDrop;
+            self->unkB8 = (Entity*)OVL_EXPORT(EntityPrizeDrop);
         } else {
-            self->unkB8 = (Entity*)EntityEquipItemDrop;
+            self->unkB8 = (Entity*)OVL_EXPORT(EntityEquipItemDrop);
             index -= 128;
         }
         self->params = index + 0x8000;
@@ -1492,7 +1500,7 @@ void EntityHeartDrop(Entity* self) {
 #if !defined(VERSION_BETA)
 // params: message box duration, in frames
 // ext.messageBox.label: box size and text to render
-void EntityMessageBox(Entity* self) {
+void OVL_EXPORT(EntityMessageBox)(Entity* self) {
     const u16 VramX = 0;
     const u16 VramY = 0x180;
     const int FontW = 12;

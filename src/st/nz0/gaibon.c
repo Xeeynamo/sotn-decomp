@@ -643,12 +643,14 @@ static u8 anim_large_fireball2[] = {
     1, 1, 1, 2, 1, 3,  1, 4,  1, 5,  1, 6,  1,  7,
     1, 8, 1, 9, 1, 10, 1, 11, 1, 12, 1, 13, -1, 0};
 
+void OVL_EXPORT(EntityExplosion)(Entity*);
+
 // small red projectile from gaibon
 void EntitySmallGaibonProjectile(Entity* self) {
     if (self->flags & FLAG_DEAD) {
         self->drawFlags = ENTITY_DEFAULT;
         self->step = 0;
-        self->pfnUpdate = EntityExplosion;
+        self->pfnUpdate = OVL_EXPORT(EntityExplosion);
         self->entityId = 2;
         self->params = 0;
         return;
@@ -679,7 +681,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
     if (self->flags & FLAG_DEAD) {
         self->drawFlags = ENTITY_DEFAULT;
         self->step = 0;
-        self->pfnUpdate = EntityExplosion;
+        self->pfnUpdate = OVL_EXPORT(EntityExplosion);
         self->entityId = 2;
         self->params = 1;
         return;
