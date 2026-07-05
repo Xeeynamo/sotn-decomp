@@ -6,7 +6,7 @@ extern s32 E_ID(BG_LIGHTNING);
 extern s32 E_ID(DEATH_STOLEN_ITEM);
 #endif
 
-extern s32 g_CutsceneFlags;
+extern s32 OVL_EXPORT(CutsceneFlags);
 void EntityDeathCutsceneManager(Entity* self) {
     Entity* newEntity;
     Primitive* prim;
@@ -29,7 +29,7 @@ void EntityDeathCutsceneManager(Entity* self) {
         g_Player.padSim = PAD_RIGHT;
         g_Player.demo_timer = 1;
 #if !defined(VERSION_PSP)
-        g_CutsceneFlags |= 0x100;
+        OVL_EXPORT(CutsceneFlags) |= 0x100;
 #endif
         break;
 
@@ -40,7 +40,7 @@ void EntityDeathCutsceneManager(Entity* self) {
                 .ext.alucardController.disableAfterImageFlag = 1;
             g_Player.padSim = PAD_RIGHT;
         } else {
-            g_CutsceneFlags |= 0x80;
+            OVL_EXPORT(CutsceneFlags) |= 0x80;
             g_Player.padSim = 0;
             self->step++;
         }
@@ -48,7 +48,7 @@ void EntityDeathCutsceneManager(Entity* self) {
         break;
 
     case 2:
-        if (g_CutsceneFlags & 0x20) {
+        if (OVL_EXPORT(CutsceneFlags) & 0x20) {
             g_api.InitStatsAndGear(1);
             g_api.PlaySfx(SFX_DEATH_SWISH);
             for (localVar = 0; localVar < 6; localVar++) {
@@ -68,7 +68,8 @@ void EntityDeathCutsceneManager(Entity* self) {
         break;
 
     case 3:
-        if (g_CutsceneFlags & 0x40 && !(--self->ext.roomTransition2.timer)) {
+        if (OVL_EXPORT(CutsceneFlags) & 0x40 &&
+            !(--self->ext.roomTransition2.timer)) {
             localVar = g_api.AllocPrimitives(PRIM_TILE, 1);
             if (localVar != -1) {
                 self->primIndex = localVar;
@@ -311,7 +312,7 @@ void EntityDeath(Entity* self) {
 
     switch (self->step) {
     case 0:
-        if (g_CutsceneFlags & 0x80) {
+        if (OVL_EXPORT(CutsceneFlags) & 0x80) {
             primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
             if (primIndex != -1) {
                 InitializeEntity(g_EInitCommon);
@@ -399,7 +400,7 @@ void EntityDeath(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         self->ext.death.unk7C += 4;
         if (self->ext.death.unk7C == 96) {
-            g_CutsceneFlags |= 1;
+            OVL_EXPORT(CutsceneFlags) |= 1;
         }
 
         if (self->ext.death.unk7C == 128) {
@@ -432,7 +433,7 @@ void EntityDeath(Entity* self) {
 
     case 6:
         AnimateEntity(deathAnim2, self);
-        if (g_CutsceneFlags & 2) {
+        if (OVL_EXPORT(CutsceneFlags) & 2) {
             SetStep(7);
         }
         break;
@@ -447,14 +448,14 @@ void EntityDeath(Entity* self) {
             newEntity->ext.death.unk7C = 1;
         }
 
-        if (g_CutsceneFlags & 4) {
+        if (OVL_EXPORT(CutsceneFlags) & 4) {
             SetStep(9);
         }
         break;
 
     case 8:
         AnimateEntity(deathAnim2, self);
-        if (g_CutsceneFlags & 4) {
+        if (OVL_EXPORT(CutsceneFlags) & 4) {
             SetStep(9);
         }
         break;
@@ -465,14 +466,14 @@ void EntityDeath(Entity* self) {
         }
         newEntity->ext.death.unk7C = 1;
 
-        if (g_CutsceneFlags & 8) {
+        if (OVL_EXPORT(CutsceneFlags) & 8) {
             SetStep(11);
         }
         break;
 
     case 10:
         AnimateEntity(deathAnim2, self);
-        if (g_CutsceneFlags & 8) {
+        if (OVL_EXPORT(CutsceneFlags) & 8) {
             SetStep(11);
         }
         break;
@@ -483,14 +484,14 @@ void EntityDeath(Entity* self) {
         }
         newEntity->ext.death.unk7C = 1;
 
-        if (g_CutsceneFlags & 0x10) {
+        if (OVL_EXPORT(CutsceneFlags) & 0x10) {
             SetStep(13);
         }
         break;
 
     case 12:
         AnimateEntity(deathAnim2, self);
-        if (g_CutsceneFlags & 0x10) {
+        if (OVL_EXPORT(CutsceneFlags) & 0x10) {
             SetStep(13);
         }
         break;
@@ -512,7 +513,7 @@ void EntityDeath(Entity* self) {
     case 15:
         if (AnimateEntity(deathAnim8, self) == 0) {
             SetStep(16);
-            g_CutsceneFlags |= 0x20;
+            OVL_EXPORT(CutsceneFlags) |= 0x20;
         }
         break;
 
@@ -563,7 +564,7 @@ void EntityDeath(Entity* self) {
         self->ext.death.moveTimer++;
 
         if (self->posY.i.hi < -32) {
-            g_CutsceneFlags |= 0x40;
+            OVL_EXPORT(CutsceneFlags) |= 0x40;
             DestroyEntity(self);
             DestroyEntity(self + 1);
         }

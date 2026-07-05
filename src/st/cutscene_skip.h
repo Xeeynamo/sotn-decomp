@@ -1,17 +1,17 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-extern Dialogue g_Dialogue;
-extern s32 g_SkipCutscene;
+extern Dialogue OVL_EXPORT(Dialogue);
+extern s32 OVL_EXPORT(SkipCutscene);
 
 void CutsceneSkip(Entity* self) {
     if (g_pads[0].tapped == PAD_START) {
-        g_SkipCutscene = true;
+        OVL_EXPORT(SkipCutscene) = true;
         g_api.FreePrimitives(self->primIndex);
         self->flags ^= FLAG_HAS_PRIMS;
-        if (g_Dialogue.primIndex[1] != -1) {
-            g_api.FreePrimitives(g_Dialogue.primIndex[1]);
+        if (OVL_EXPORT(Dialogue).primIndex[1] != -1) {
+            g_api.FreePrimitives(OVL_EXPORT(Dialogue).primIndex[1]);
         }
-        if (g_Dialogue.primIndex[0] != -1) {
-            g_api.FreePrimitives(g_Dialogue.primIndex[0]);
+        if (OVL_EXPORT(Dialogue).primIndex[0] != -1) {
+            g_api.FreePrimitives(OVL_EXPORT(Dialogue).primIndex[0]);
         }
         g_api.PlaySfx(SET_STOP_MUSIC);
         self->step = 1;

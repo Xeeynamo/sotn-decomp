@@ -23,7 +23,7 @@ s_ClockTowerScript = 0x80182008;
 s_ClockVertexSets = 0x8018207C;
 TOP_cutscene_data = 0x80182C08;
 sprites_3 = 0x801A6490;
-g_SkipCutscene = 0x801BC460;
-g_Dialogue = 0x801BC464; // size=0x44
-g_CutsceneFlags = 0x801BC510;
-g_IsCutsceneDone = 0x801BC518;
+TOP_SkipCutscene = 0x801BC460;
+TOP_Dialogue = 0x801BC464; // size=0x44
+TOP_CutsceneFlags = 0x801BC510;
+TOP_IsCutsceneDone = 0x801BC518;

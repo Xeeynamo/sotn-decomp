@@ -1,8 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "common.h"
+// #include "sel.h"
+#include <game.h>
+#include <cutscene.h>
 
-u32 g_SkipCutscene;
-u32 g_Dialogue;
+#define OVL_EXPORT(x) SEL_##x
+
+u32 OVL_EXPORT(SkipCutscene);
+u32 OVL_EXPORT(Dialogue);
 u16 D_801BC358;
 u16 D_801BC35A;
 u16 D_801BC35C;
@@ -31,66 +35,32 @@ u32 D_801BC3D4;
 u32 g_MemCardSelectorX;
 u32 g_MemCardSelectorY;
 u32 D_801BC3E0;
-u32 D_801BC3E4;
+s32 D_801BC3E4;
 u32 D_801BC3E8;
 u32 D_801BC3EC;
-u32 g_MemcardInfo[152];
-u32 D_801BC650;
-u32 D_801BC654;
-u8 D_801BC658[624];
-u32 D_801BC8C8[6];
-u32 g_SaveSummary[15];
-u32 g_SaveSummary_slot_0[15];
-u32 g_SaveSummary_place_0[15];
-u32 g_SaveSummary_unk_1_0[15];
-u32 g_SaveSummary_unk_2_0[15];
-u32 g_SaveSummary_level_0[15];
-u32 g_SaveSummary_money_0[15];
-u32 g_SaveSummary_percentage_0[15];
-u32 g_SaveSummary_playHours_0[15];
-u32 g_SaveSummary_playSeconds_0[15];
-u32 g_SaveSummary_playMinutes_0[15];
-u32 g_SaveSummary_kind_0[15];
-u32 D_801BCBB0[15];
-u8 g_SaveSummary_name_0[152];
-u32 g_SaveSummary_0_padding;
-u32 D_801BCC88[233];
-u32 g_SaveSummary_1_padding;
+#ifndef HARD_LINK
+MemcardInfo g_MemcardInfo[2];
+#endif
+SaveSummary g_SaveSummary[PORT_COUNT];
 u32 D_801BD030;
 u32 g_StreamEndFrame;
 u32 g_StreamIsRGB24;
 u32 D_801BD03C;
 u32 D_801BD040;
-u32 g_StreamRewindSwitch;
-u32 g_StreamImageBuffer[20481];
-u32 D_801D104C[5760];
-u32 g_StreamEnv[2];
-u32 D_801D6A54[3];
-u32 D_801D6A60;
-u16 D_801D6A64;
-u16 D_801D6A66;
-u16 D_801D6A68;
-u16 D_801D6A6A[5];
-u32 D_801D6A74;
-u16 D_801D6A78;
-u16 D_801D6A7A;
-u16 D_801D6A7C;
-u16 D_801D6A7E;
-u32 D_801D6A80[5];
-u8 D_801D6A94;
-u8 D_801D6A95;
-u16 D_801D6A96;
-u32 D_801D6A98[23];
-u16 D_801D6AF4;
-u16 D_801D6AF6;
-u16 D_801D6AF8;
-u16 D_801D6AFA;
-u32 D_801D6AFC;
+s32 g_StreamRewindSwitch[1];
+u8 g_StreamImageBuffer[0x14000];
+static s32 D_801D1048;
+s32 D_801D104C[0x1680];
+StreamEnv g_StreamEnv;
 u32 D_801D6B00;
 u32 D_801D6B04;
 u32 g_InputCursorPos;
 u32 g_MainMenuCursor;
-u32 g_MemcardBlockRead;
+#ifndef HARD_LINK
+s32 g_MemcardBlockRead;
+#endif
 u8 g_InputSaveName[12];
-u32 g_MemcardStep;
-u32 D_801D6B24;
+#ifndef HARD_LINK
+s32 g_MemcardStep;
+#endif
+s32 D_801D6B24;

@@ -2,7 +2,7 @@
 #include "st0.h"
 #include <cutscene.h>
 
-// This file uses g_Dialogue with a different struct than cutscene.c
+// This file uses OVL_EXPORT(Dialogue) with a different struct than cutscene.c
 typedef struct {
     /* 0x00 */ u8* scriptCur;
     /* 0x04 */ s16 startX;
@@ -34,18 +34,17 @@ typedef struct {
     /* 0x3C */ u8* scriptEnd;
 } DialoguePrologue;
 
-// n.b. g_Dialogue is defined as the Dialogue struct, but is used in this file
-// as the different type.
-// It appears that either:
+// n.b. OVL_EXPORT(Dialogue) is defined as the Dialogue struct, but is used in
+// this file as the different type. It appears that either:
 // - The devs recognized this as a bad practice and fixed it for pspeu or
 // - The pspeu toolchain (probably optimization level) handled them differently
 // Either way, us shares a single memory address for 3101C.c and cutscene.c
 // while pspeu uses two independent memory addresses.
-static DialoguePrologue g_Dialogue;        // bss
-static UnkPrimStruct D_pspeu_0927B0C8[32]; // bss
-static u16 D_pspeu_0927B0C0;               // bss
-static u16 D_pspeu_0927B0B8;               // bss
-static u16 D_801BEE90[48][48];             // bss
+static DialoguePrologue OVL_EXPORT(Dialogue); // bss
+static UnkPrimStruct D_pspeu_0927B0C8[32];    // bss
+static u16 D_pspeu_0927B0C0;                  // bss
+static u16 D_pspeu_0927B0B8;                  // bss
+static u16 D_801BEE90[48][48];                // bss
 
 #include "prologue_cutscene_script.h"
 
@@ -73,51 +72,57 @@ u8 func_801B101C(u8* script) {
 
     D_pspeu_0927B0C0 = 0;
     D_pspeu_0927B0B8 = 0;
-    g_Dialogue.primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x20);
-    if (g_Dialogue.primIndex != -1) {
-        g_Dialogue.scriptCur = script;
+    OVL_EXPORT(Dialogue).primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x20);
+    if (OVL_EXPORT(Dialogue).primIndex != -1) {
+        OVL_EXPORT(Dialogue).scriptCur = script;
 
-        g_Dialogue.startY = g_Dialogue.nextCharX = 0x200;
+        OVL_EXPORT(Dialogue).startY = OVL_EXPORT(Dialogue).nextCharX = 0x200;
 
         switch (g_UserLanguage) {
         default:
         case LANG_EN:
-            g_Dialogue.startY += func_pspeu_09242F68((u8*)opening_line_en);
-            g_Dialogue.clutIndexes = clut_en_es;
-            g_Dialogue.unk20 = unk20_en_es;
-            g_Dialogue.clutArrLength = 4;
+            OVL_EXPORT(Dialogue).startY +=
+                func_pspeu_09242F68((u8*)opening_line_en);
+            OVL_EXPORT(Dialogue).clutIndexes = clut_en_es;
+            OVL_EXPORT(Dialogue).unk20 = unk20_en_es;
+            OVL_EXPORT(Dialogue).clutArrLength = 4;
             break;
         case LANG_FR:
-            g_Dialogue.startY += func_pspeu_09242F68((u8*)opening_line_fr);
-            g_Dialogue.clutIndexes = clut_fr_de_it;
-            g_Dialogue.unk20 = unk20_fr_de_it;
-            g_Dialogue.clutArrLength = 2;
+            OVL_EXPORT(Dialogue).startY +=
+                func_pspeu_09242F68((u8*)opening_line_fr);
+            OVL_EXPORT(Dialogue).clutIndexes = clut_fr_de_it;
+            OVL_EXPORT(Dialogue).unk20 = unk20_fr_de_it;
+            OVL_EXPORT(Dialogue).clutArrLength = 2;
             break;
         case LANG_SP:
-            g_Dialogue.startY += func_pspeu_09242F68((u8*)opening_line_es);
-            g_Dialogue.clutIndexes = clut_en_es;
-            g_Dialogue.unk20 = unk20_en_es;
-            g_Dialogue.clutArrLength = 4;
+            OVL_EXPORT(Dialogue).startY +=
+                func_pspeu_09242F68((u8*)opening_line_es);
+            OVL_EXPORT(Dialogue).clutIndexes = clut_en_es;
+            OVL_EXPORT(Dialogue).unk20 = unk20_en_es;
+            OVL_EXPORT(Dialogue).clutArrLength = 4;
             break;
         case LANG_GE:
-            g_Dialogue.startY += func_pspeu_09242F68((u8*)opening_line_de);
-            g_Dialogue.clutIndexes = clut_fr_de_it;
-            g_Dialogue.unk20 = unk20_fr_de_it;
-            g_Dialogue.clutArrLength = 2;
+            OVL_EXPORT(Dialogue).startY +=
+                func_pspeu_09242F68((u8*)opening_line_de);
+            OVL_EXPORT(Dialogue).clutIndexes = clut_fr_de_it;
+            OVL_EXPORT(Dialogue).unk20 = unk20_fr_de_it;
+            OVL_EXPORT(Dialogue).clutArrLength = 2;
             break;
         case LANG_IT:
-            g_Dialogue.startY += func_pspeu_09242F68((u8*)opening_line_it);
-            g_Dialogue.clutIndexes = clut_fr_de_it;
-            g_Dialogue.unk20 = unk20_fr_de_it;
-            g_Dialogue.clutArrLength = 2;
+            OVL_EXPORT(Dialogue).startY +=
+                func_pspeu_09242F68((u8*)opening_line_it);
+            OVL_EXPORT(Dialogue).clutIndexes = clut_fr_de_it;
+            OVL_EXPORT(Dialogue).unk20 = unk20_fr_de_it;
+            OVL_EXPORT(Dialogue).clutArrLength = 2;
             break;
         }
-        g_Dialogue.nextLineX = 0;
-        g_Dialogue.nextCharY = 0;
-        g_Dialogue.portraitAnimTimer = 0;
-        g_Dialogue.unk12 = 0;
-        g_Dialogue.clutIndex = 0;
-        prim = g_Dialogue.prim = &g_PrimBuf[g_Dialogue.primIndex];
+        OVL_EXPORT(Dialogue).nextLineX = 0;
+        OVL_EXPORT(Dialogue).nextCharY = 0;
+        OVL_EXPORT(Dialogue).portraitAnimTimer = 0;
+        OVL_EXPORT(Dialogue).unk12 = 0;
+        OVL_EXPORT(Dialogue).clutIndex = 0;
+        prim = OVL_EXPORT(Dialogue).prim =
+            &g_PrimBuf[OVL_EXPORT(Dialogue).primIndex];
         for (i = 0; i < 0x20; i++) {
             shift = i & 1;
             if (shift) {
@@ -143,7 +148,7 @@ u8 func_801B101C(u8* script) {
 
         return true;
     }
-    g_Dialogue.primIndex = 0;
+    OVL_EXPORT(Dialogue).primIndex = 0;
     return false;
 }
 
@@ -201,28 +206,28 @@ void func_801B1298(Entity* self) {
 
     switch (self->step) {
     case 0:
-        g_Dialogue.script = GetLangAt(
+        OVL_EXPORT(Dialogue).script = GetLangAt(
             0, (u8*)prologue_script_en, (u8*)prologue_script_fr,
             (u8*)prologue_script_es, (u8*)prologue_script_de,
             (u8*)prologue_script_it);
-        if (func_801B101C(g_Dialogue.script)) {
+        if (func_801B101C(OVL_EXPORT(Dialogue).script)) {
             func_psp_08925F7C(0x100, 0xF1, 0x10, 1);
             func_psp_08925F7C(0x110, 0xF2, 0x10, 1);
             func_psp_08925F7C(0x100, 0xF0, 0x10, 1);
             self->flags |= FLAG_HAS_PRIMS;
-            self->primIndex = g_Dialogue.primIndex;
+            self->primIndex = OVL_EXPORT(Dialogue).primIndex;
             ++self->step;
             func_801B1198(0);
             glyphIndex = 0;
             while (1) {
-                nextChar = *g_Dialogue.scriptCur++;
+                nextChar = *OVL_EXPORT(Dialogue).scriptCur++;
                 if (nextChar == 1) {
                     // Gets weirdly relocated in the asm.
-                    *g_Dialogue.scriptCur++;
-                    g_Dialogue.startY =
-                        g_Dialogue.nextCharX +
-                        func_pspeu_09242F68(g_Dialogue.scriptCur);
-                    ++g_Dialogue.nextLineX;
+                    *OVL_EXPORT(Dialogue).scriptCur++;
+                    OVL_EXPORT(Dialogue).startY =
+                        OVL_EXPORT(Dialogue).nextCharX +
+                        func_pspeu_09242F68(OVL_EXPORT(Dialogue).scriptCur);
+                    ++OVL_EXPORT(Dialogue).nextLineX;
                     break;
                 }
                 glyph = func_801B11E8(nextChar);
@@ -232,39 +237,43 @@ void func_801B1298(Entity* self) {
                         glyphPtr++[0] = glyph++[0];
                     }
                     glyph = D_801BEE90[glyphIndex];
-                    y = g_Dialogue.nextLineX * 16;
-                    LoadTPage(
-                        (u_long*)glyph, 0, 0, g_Dialogue.startY, y, 12, 16);
-                    g_Dialogue.startY += 3;
-                    nextChar = g_Dialogue.startY - g_Dialogue.nextCharX;
+                    y = OVL_EXPORT(Dialogue).nextLineX * 16;
+                    LoadTPage((u_long*)glyph, 0, 0, OVL_EXPORT(Dialogue).startY,
+                              y, 12, 16);
+                    OVL_EXPORT(Dialogue).startY += 3;
+                    nextChar = OVL_EXPORT(Dialogue).startY -
+                               OVL_EXPORT(Dialogue).nextCharX;
                     if (0x38 <= nextChar && nextChar < 0x40) {
-                        g_Dialogue.startY += 8;
+                        OVL_EXPORT(Dialogue).startY += 8;
                     }
                     glyphIndex++;
                 } else {
-                    g_Dialogue.startY += 2;
-                    nextChar = g_Dialogue.startY - g_Dialogue.nextCharX;
+                    OVL_EXPORT(Dialogue).startY += 2;
+                    nextChar = OVL_EXPORT(Dialogue).startY -
+                               OVL_EXPORT(Dialogue).nextCharX;
                     if (0x38 <= nextChar && nextChar < 0x40) {
-                        g_Dialogue.startY += 8;
+                        OVL_EXPORT(Dialogue).startY += 8;
                     }
                 }
             }
         }
         break;
     case 1:
-        if (!g_Dialogue.nextCharY) {
+        if (!OVL_EXPORT(Dialogue).nextCharY) {
             break;
         }
         nextChar = 0;
         glyphIndex = 0;
         do {
-            nextChar = *g_Dialogue.scriptCur++;
+            nextChar = *OVL_EXPORT(Dialogue).scriptCur++;
             switch (nextChar) {
             case 0:
                 self->step = 7;
-                prim = g_Dialogue.prim;
-                nextLineOne = (g_Dialogue.nextLineX & 0xFFFF & 0xFFFF) * 16;
-                nextLineTwo = (g_Dialogue.nextLineX & 0xFFFF & 0xFFFF) * 16;
+                prim = OVL_EXPORT(Dialogue).prim;
+                nextLineOne =
+                    (OVL_EXPORT(Dialogue).nextLineX & 0xFFFF & 0xFFFF) * 16;
+                nextLineTwo =
+                    (OVL_EXPORT(Dialogue).nextLineX & 0xFFFF & 0xFFFF) * 16;
                 for (i = 0; i < 0x20; i++) {
                     primV0 = prim->v0;
 
@@ -279,95 +288,104 @@ void func_801B1298(Entity* self) {
                 }
                 return;
             case 1:
-                *g_Dialogue.scriptCur++;
-                g_Dialogue.startY = g_Dialogue.nextCharX +
-                                    func_pspeu_09242F68(g_Dialogue.scriptCur);
-                g_Dialogue.nextLineX++;
-                if (g_Dialogue.nextLineX > 15) {
-                    g_Dialogue.nextLineX = 0;
+                *OVL_EXPORT(Dialogue).scriptCur++;
+                OVL_EXPORT(Dialogue).startY =
+                    OVL_EXPORT(Dialogue).nextCharX +
+                    func_pspeu_09242F68(OVL_EXPORT(Dialogue).scriptCur);
+                OVL_EXPORT(Dialogue).nextLineX++;
+                if (OVL_EXPORT(Dialogue).nextLineX > 15) {
+                    OVL_EXPORT(Dialogue).nextLineX = 0;
                 }
-                func_801B1198(g_Dialogue.nextLineX);
-                g_Dialogue.nextCharY = 0;
+                func_801B1198(OVL_EXPORT(Dialogue).nextLineX);
+                OVL_EXPORT(Dialogue).nextCharY = 0;
                 return;
             case 2:
-                *g_Dialogue.scriptCur++;
-                g_Dialogue.startY = g_Dialogue.nextCharX +
-                                    func_pspeu_09242F68(g_Dialogue.scriptCur);
-                g_Dialogue.nextLineX++;
-                if (g_Dialogue.nextLineX > 15) {
-                    g_Dialogue.nextLineX = 0;
+                *OVL_EXPORT(Dialogue).scriptCur++;
+                OVL_EXPORT(Dialogue).startY =
+                    OVL_EXPORT(Dialogue).nextCharX +
+                    func_pspeu_09242F68(OVL_EXPORT(Dialogue).scriptCur);
+                OVL_EXPORT(Dialogue).nextLineX++;
+                if (OVL_EXPORT(Dialogue).nextLineX > 15) {
+                    OVL_EXPORT(Dialogue).nextLineX = 0;
                 }
 
-                prim = g_Dialogue.prim;
-                for (i = 0; i < g_Dialogue.nextLineX; ++i) {
+                prim = OVL_EXPORT(Dialogue).prim;
+                for (i = 0; i < OVL_EXPORT(Dialogue).nextLineX; ++i) {
                     prim = prim->next;
                     prim = prim->next;
                 }
 
                 y0 = prim->y0;
-                for (prim = g_Dialogue.prim; prim != NULL; prim = prim->next) {
+                for (prim = OVL_EXPORT(Dialogue).prim; prim != NULL;
+                     prim = prim->next) {
                     if (y0 <= prim->y0) {
                         prim->y0 += 0x16;
                         prim->p1 += 0x16;
                     }
                 }
-                g_Dialogue.unk12 += g_Dialogue.unk20[D_pspeu_0927B0B8++ % 3];
-                g_Dialogue.portraitAnimTimer += 0x16;
-                g_Dialogue.nextCharY = 0;
+                OVL_EXPORT(Dialogue).unk12 +=
+                    OVL_EXPORT(Dialogue).unk20[D_pspeu_0927B0B8++ % 3];
+                OVL_EXPORT(Dialogue).portraitAnimTimer += 0x16;
+                OVL_EXPORT(Dialogue).nextCharY = 0;
                 return;
             }
         } while (0);
         glyph = func_801B11E8(nextChar);
 
         if (glyph) {
-            y = g_Dialogue.nextLineX * 16;
-            LoadTPage((u_long*)glyph, 0, 0, g_Dialogue.startY, y, 0xC, 0x10);
-            g_Dialogue.startY += 3;
-            nextChar = g_Dialogue.startY - g_Dialogue.nextCharX;
+            y = OVL_EXPORT(Dialogue).nextLineX * 16;
+            LoadTPage((u_long*)glyph, 0, 0, OVL_EXPORT(Dialogue).startY, y, 0xC,
+                      0x10);
+            OVL_EXPORT(Dialogue).startY += 3;
+            nextChar =
+                OVL_EXPORT(Dialogue).startY - OVL_EXPORT(Dialogue).nextCharX;
             if (0x38 <= nextChar && nextChar < 0x40) {
-                g_Dialogue.startY += 8;
+                OVL_EXPORT(Dialogue).startY += 8;
             }
         } else {
-            g_Dialogue.startY += 2;
-            nextChar = g_Dialogue.startY - g_Dialogue.nextCharX;
+            OVL_EXPORT(Dialogue).startY += 2;
+            nextChar =
+                OVL_EXPORT(Dialogue).startY - OVL_EXPORT(Dialogue).nextCharX;
             if (0x38 <= nextChar && nextChar < 0x40) {
-                g_Dialogue.startY += 8;
+                OVL_EXPORT(Dialogue).startY += 8;
             }
         }
         break;
     case 2:
         break;
     case 7:
-        if (g_Dialogue.nextCharY) {
-            g_Dialogue.nextLineX++;
-            if (g_Dialogue.nextLineX > 15) {
-                g_Dialogue.nextLineX = 0;
+        if (OVL_EXPORT(Dialogue).nextCharY) {
+            OVL_EXPORT(Dialogue).nextLineX++;
+            if (OVL_EXPORT(Dialogue).nextLineX > 15) {
+                OVL_EXPORT(Dialogue).nextLineX = 0;
             }
-            g_Dialogue.nextCharY = 0;
+            OVL_EXPORT(Dialogue).nextCharY = 0;
         }
     }
 
-    if (!g_Dialogue.unk12) {
-        func_801B1198(g_Dialogue.nextLineX);
-        g_Dialogue.nextCharY = 1;
-        g_Dialogue.unk12 = g_Dialogue.unk20[D_pspeu_0927B0B8++ % 3];
+    if (!OVL_EXPORT(Dialogue).unk12) {
+        func_801B1198(OVL_EXPORT(Dialogue).nextLineX);
+        OVL_EXPORT(Dialogue).nextCharY = 1;
+        OVL_EXPORT(Dialogue).unk12 =
+            OVL_EXPORT(Dialogue).unk20[D_pspeu_0927B0B8++ % 3];
     }
-    --g_Dialogue.unk12;
-    if (!g_Dialogue.clutIndex) {
-        for (prim = g_Dialogue.prim, i = 0; i < 32; ++i) {
+    --OVL_EXPORT(Dialogue).unk12;
+    if (!OVL_EXPORT(Dialogue).clutIndex) {
+        for (prim = OVL_EXPORT(Dialogue).prim, i = 0; i < 32; ++i) {
             prim->y0--;
             if (prim->y0 == -22) {
-                prim->y0 = g_Dialogue.portraitAnimTimer - prim->p1 + 330;
-                prim->p1 = g_Dialogue.portraitAnimTimer;
+                prim->y0 =
+                    OVL_EXPORT(Dialogue).portraitAnimTimer - prim->p1 + 330;
+                prim->p1 = OVL_EXPORT(Dialogue).portraitAnimTimer;
                 if (self->step == 7) {
                     prim->drawMode = DRAW_HIDE;
                 }
             }
             prim = prim->next;
         }
-        arrLen = g_Dialogue.clutArrLength;
-        g_Dialogue.clutIndex =
-            g_Dialogue.clutIndexes[D_pspeu_0927B0C0++ % arrLen];
+        arrLen = OVL_EXPORT(Dialogue).clutArrLength;
+        OVL_EXPORT(Dialogue).clutIndex =
+            OVL_EXPORT(Dialogue).clutIndexes[D_pspeu_0927B0C0++ % arrLen];
     }
-    --g_Dialogue.clutIndex;
+    --OVL_EXPORT(Dialogue).clutIndex;
 }

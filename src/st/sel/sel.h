@@ -123,46 +123,9 @@ typedef enum {
 } SelGameEngineStep;
 
 typedef struct {
-    /* 801BC8E0 */ s32 icon[BLOCK_PER_CARD];
-    /* 801BC91C */ u32 slot[BLOCK_PER_CARD];
-    /* 801BC958 */ u32 stage[BLOCK_PER_CARD];
-    /* 801BC994 */ u32 roomX[BLOCK_PER_CARD];
-    /* 801BC9D0 */ u32 roomY[BLOCK_PER_CARD];
-    /* 801BCA0C */ u32 level[BLOCK_PER_CARD];
-    /* 801BCA48 */ u32 gold[BLOCK_PER_CARD];
-    /* 801BCA84 */ u32 nRoomsExplored[BLOCK_PER_CARD];
-    /* 801BCAC0 */ u32 playHours[BLOCK_PER_CARD];
-    /* 801BCAFC */ u32 playSeconds[BLOCK_PER_CARD];
-    /* 801BCB38 */ u32 playMinutes[BLOCK_PER_CARD];
-    /* 801BCB74 */ u32 kind[BLOCK_PER_CARD]; // 0: play, 1: clear, 2: replay
-    /* 801BCBB0 */ u32 character[BLOCK_PER_CARD];
-    /* 801BCBEC */ char name[BLOCK_PER_CARD][10];
-    s32 padding; // not really padding, it's a memory card status
-} SaveSummary;   // size=0x3A8
-
-typedef struct {
     const char* line1;
     const char* line2;
 } StageName;
-
-typedef struct {
-    u_long* vlcbuf[2];  // 0x00
-    int vlcid;          // 0x08
-    u_short* imgbuf[2]; // 0x0c
-    int imgid;          // 0x20
-    RECT rect[2];       // 0x24
-    int rectid;         // 0x32
-    RECT slice;
-    int isdone;
-} DECENV;
-
-typedef struct {
-    DECENV dec;   // 4c
-    DISPENV disp; // 84
-    DRAWENV draw; // 98
-    RECT rect;
-    s32 unkFC;
-} StreamEnv;
 
 typedef struct {
     u32 cdOffset;

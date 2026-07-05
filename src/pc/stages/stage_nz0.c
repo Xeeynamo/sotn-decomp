@@ -6,8 +6,6 @@
 #include "stage_loader.h"
 #include "../st/nz0/nz0.h"
 
-s16 D_801CB738[2];
-
 extern AbbreviatedOverlay OVL_EXPORT(Overlay);
 extern PfnEntityUpdate OVL_EXPORT(EntityUpdates)[];
 extern LayoutEntity* OVL_EXPORT(pStObjLayoutHorizontal)[];

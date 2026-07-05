@@ -9,33 +9,34 @@
 static u8 SetCutsceneScript(u8* script) {
     Primitive* prim;
 
-    g_Dialogue.primIndex[2] =
+    OVL_EXPORT(Dialogue).primIndex[2] =
         g_api.AllocPrimitives(PRIM_SPRT, NUM_CUTSCENE_PRIM);
 
-    if (g_Dialogue.primIndex[2] != -1) {
-        g_Dialogue.scriptCur = script;
-        g_Dialogue.unk3C = 0;
-        g_Dialogue.primIndex[1] = -1;
-        g_Dialogue.primIndex[0] = -1;
+    if (OVL_EXPORT(Dialogue).primIndex[2] != -1) {
+        OVL_EXPORT(Dialogue).scriptCur = script;
+        OVL_EXPORT(Dialogue).unk3C = 0;
+        OVL_EXPORT(Dialogue).primIndex[1] = -1;
+        OVL_EXPORT(Dialogue).primIndex[0] = -1;
         CutsceneUnk1();
 
-        prim = g_Dialogue.prim[0] = &g_PrimBuf[g_Dialogue.primIndex[2]];
+        prim = OVL_EXPORT(Dialogue).prim[0] =
+            &g_PrimBuf[OVL_EXPORT(Dialogue).primIndex[2]];
 
         prim->drawMode = DRAW_HIDE;
-        prim = g_Dialogue.prim[1] = prim->next;
+        prim = OVL_EXPORT(Dialogue).prim[1] = prim->next;
 
         prim->drawMode = DRAW_HIDE;
-        prim = g_Dialogue.prim[2] = prim->next;
+        prim = OVL_EXPORT(Dialogue).prim[2] = prim->next;
 
         prim->drawMode = DRAW_HIDE;
-        prim = g_Dialogue.prim[3] = prim->next;
+        prim = OVL_EXPORT(Dialogue).prim[3] = prim->next;
 
         prim->drawMode = DRAW_HIDE;
-        prim = g_Dialogue.prim[4] = prim->next;
+        prim = OVL_EXPORT(Dialogue).prim[4] = prim->next;
 
 #if !defined(VERSION_PSP) && !defined(VERSION_HD)
         prim->drawMode = DRAW_HIDE;
-        prim = g_Dialogue.prim[5] = prim->next;
+        prim = OVL_EXPORT(Dialogue).prim[5] = prim->next;
 #endif
 
         prim->type = PRIM_GT4;
@@ -62,6 +63,6 @@ static u8 SetCutsceneScript(u8* script) {
         return 1;
     }
 
-    g_Dialogue.primIndex[2] = 0;
+    OVL_EXPORT(Dialogue).primIndex[2] = 0;
     return 0;
 }

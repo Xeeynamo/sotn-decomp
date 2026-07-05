@@ -48,7 +48,7 @@ void DrawCutsceneActorName(u16 actorIndex, Entity* self) {
     // Pre-calculate primitives that renders the actor's name
     x = 0x38;
 #endif
-    g_Dialogue.primIndex[1] = primIndex;
+    OVL_EXPORT(Dialogue).primIndex[1] = primIndex;
     prim = &g_PrimBuf[primIndex];
 #ifdef VERSION_HD
     x = 0x38;
@@ -81,7 +81,7 @@ void DrawCutsceneActorName(u16 actorIndex, Entity* self) {
         prim->priority = 0x1FF;
         prim->drawMode = DRAW_HIDE;
         prim->x0 = x;
-        prim->y0 = g_Dialogue.startY + 6;
+        prim->y0 = OVL_EXPORT(Dialogue).startY + 6;
         if (ch & 0xF000) {
             prim = prim->next;
             prim->type = PRIM_SPRT;
@@ -97,7 +97,7 @@ void DrawCutsceneActorName(u16 actorIndex, Entity* self) {
             prim->priority = 0x1FF;
             prim->drawMode = DRAW_HIDE;
             prim->x0 = x;
-            prim->y0 = g_Dialogue.startY - 2;
+            prim->y0 = OVL_EXPORT(Dialogue).startY - 2;
         }
         x += FONT_GAP;
         prim = prim->next;

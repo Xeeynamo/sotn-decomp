@@ -28,7 +28,7 @@ enum OVL_EXPORT(CutsceneFlags) {
 
 extern EInit g_EInitSpawner;
 extern EInit g_EInitInteractable;
-extern u32 g_CutsceneFlags; // defined by e_cutscene_dialogue
+extern u32 OVL_EXPORT(CutsceneFlags); // defined by e_cutscene_dialogue
 
 static AnimateEntityFrame unused_anims[] = {
     1,  1,  -1, 0,  1,  2,  -1, 0,  1,  2,  7,  3,  7,  4,  7,  5,  7,  6,
@@ -115,7 +115,7 @@ void OVL_EXPORT(EntityCutsceneStage)(Entity* self) {
         } else {
             player->posX.i.hi = 368 - g_Tilemap.scrollX.i.hi;
             g_Player.padSim = PAD_NONE;
-            g_CutsceneFlags |= DAI_CUTSCENE_ALUCARD_READY;
+            OVL_EXPORT(CutsceneFlags) |= DAI_CUTSCENE_ALUCARD_READY;
             self->step++;
         }
         g_Player.demo_timer = 1;
@@ -124,7 +124,7 @@ void OVL_EXPORT(EntityCutsceneStage)(Entity* self) {
         // Pans camera left to center actors
         CutsceneCameraPan(176);
         g_Player.demo_timer = 1;
-        if (g_CutsceneFlags & DAI_CUTSCENE_MARIA_DEPARTING) {
+        if (OVL_EXPORT(CutsceneFlags) & DAI_CUTSCENE_MARIA_DEPARTING) {
             self->step++;
             return;
         }
@@ -133,7 +133,7 @@ void OVL_EXPORT(EntityCutsceneStage)(Entity* self) {
         // Pans camera right to recenter on Alucard
         CutsceneCameraPan(128);
         if ((g_unkGraphicsStruct.unkC == 128) &&
-            (g_CutsceneFlags & DAI_CUTSCENE_CUTSCENE_CONCLUDED)) {
+            (OVL_EXPORT(CutsceneFlags) & DAI_CUTSCENE_CUTSCENE_CONCLUDED)) {
             g_PauseAllowed = true;
             if (g_unkGraphicsStruct.pauseEnemies) {
                 g_unkGraphicsStruct.pauseEnemies = false;
@@ -166,7 +166,7 @@ void OVL_EXPORT(EntityCutsceneMaria)(Entity* self) {
         self->palette = PAL_CUTSCENE;
         break;
     case MARIA_WAIT:
-        if (g_CutsceneFlags & DAI_CUTSCENE_DIALOGUE_CONCLUDED) {
+        if (OVL_EXPORT(CutsceneFlags) & DAI_CUTSCENE_DIALOGUE_CONCLUDED) {
             self->step++;
         }
         break;
@@ -220,7 +220,7 @@ void OVL_EXPORT(EntityCutsceneMaria)(Entity* self) {
         if (posScrollX > 448) {
             SetStep(MARIA_JUMP_EXIT);
             self->velocityY = FIX(-4);
-            g_CutsceneFlags |= DAI_CUTSCENE_CUTSCENE_CONCLUDED;
+            OVL_EXPORT(CutsceneFlags) |= DAI_CUTSCENE_CUTSCENE_CONCLUDED;
         }
         break;
     case MARIA_JUMP_EXIT:
