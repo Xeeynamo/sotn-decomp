@@ -78,8 +78,7 @@ segments:
       - [0x2AF0, .data, e_dodo]
       - [0x2B20, .data, gen/rooms]
       - [0x2C24, .data, gen/e_layout] # layout entries data
-      - [0x39BC, data]
-      - [0x42A4, .data, stage_data]
+      - [0x39BC, .data, stage_data]
       - [0x10E88, .data, tilemaps]
       - [0x270B8, .data, gen/sprites]
       - [0x2FF60, .rodata, e_castle_door]

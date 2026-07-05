@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stage.h>
 
+u8 unused_39BC[] = {
+#include "gen/unused_39BC.h"
+};
+
 u8 D_801842A4[] = {
 #include "gen/D_801842A4.h"
 };

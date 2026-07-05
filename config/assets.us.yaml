@@ -1069,6 +1069,7 @@ files:
           - [0x794, skip]
           - [0x2B20, rooms, rooms]
           - [0x2C24, skip]
+          - [0x39BC, cmpgfx, unused_39BC, 128, 128, 4]
           - [0x42A4, cmpgfx, D_801842A4, 128, 128, 4]
           - [0x5430, cmpgfx, D_80185430, 128, 128, 4]
           - [0x6510, cmpgfx, D_80186510, 128, 128, 4]
