@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-extern EInit g_EInitUnkId13;
+extern EInit OVL_EXPORT(EInitUnkId13);
 extern EInit OVL_EXPORT(EInitParticle);
 
 extern void EntityExplosionVariants(Entity* entity);
@@ -39,7 +39,7 @@ u8 CheckColliderOffsets(s16* arg0, u8 facing) {
 void EntityUnkId13(Entity* self) {
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitUnkId13);
+        InitializeEntity(OVL_EXPORT(EInitUnkId13));
         self->ext.ent13.parentId = self->ext.ent13.parent->entityId;
     case 1:
         if (self->ext.ent13.fiveFrameCounter++ > 4) {

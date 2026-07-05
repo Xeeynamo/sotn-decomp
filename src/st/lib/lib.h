@@ -103,7 +103,7 @@ extern EInit OVL_EXPORT(EInitObtainable);
 extern EInit OVL_EXPORT(EInitParticle);
 extern EInit D_us_80180824;
 extern EInit g_EInitInteractable;
-extern EInit g_EInitUnkId13;
+extern EInit OVL_EXPORT(EInitUnkId13);
 extern EInit g_EInitLockCamera;
 extern EInit g_EInitCommon;
 extern EInit g_EInitDamageNum;

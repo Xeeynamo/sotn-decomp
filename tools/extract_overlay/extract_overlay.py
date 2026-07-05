@@ -1404,7 +1404,7 @@ def parse_e_inits(data_file_text, first_e_init, ovl_name, platform, config_yaml_
         f"{ovl_name.upper()}_EInitParticle",
         "g_EInitSpawner",
         "g_EInitInteractable",
-        "g_EInitUnkId13",
+        f"{ovl_name.upper()}_EInitUnkId13",
         "g_EInitLockCamera",
         "g_EInitCommon",
         "g_EInitDamageNum",
