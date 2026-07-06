@@ -5,7 +5,14 @@ INCLUDE_ASM("boss/bo6/nonmatchings/richter", func_us_801B4BD0);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/richter", func_us_801B4EAC);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", BO6_CheckBladeDashInput);
+static void BO6_CheckBladeDashInput() {
+    u16 step = RIC.step;
+
+    if ((step == 1 || step == 2 || RIC.step == 3 || step == 4 || step == 5) &&
+        (g_Ric.unk46 == 0) && (g_Ric.padTapped & 8)) {
+        func_us_801BA9D0();
+    }
+}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/richter", BO6_CheckHighJumpInput);
 
