@@ -135,7 +135,7 @@ func readLayers(r io.ReadSeeker, off, baseAddr psx.Addr) ([]roomLayers, datarang
 	return roomsLayers, datarange.New(slices.Min(layerOffsets), off.Sum(count*8)), nil
 }
 
-func buildLayers(inputDir, fileName, outputDir, ovlName string) error {
+func buildLayers(inputDir, fileName, outputDir, ovlName string) (string, error) {
 	getHash := func(l layerUnpacked) string {
 		return fmt.Sprintf("%s-%s-%d-%d-%d-%d", l.Data, l.Tiledef, l.Left, l.Top, l.Right, l.Bottom)
 	}
@@ -155,12 +155,12 @@ func buildLayers(inputDir, fileName, outputDir, ovlName string) error {
 
 	data, err := os.ReadFile(fileName)
 	if err != nil {
-		return err
+		return "", err
 	}
 
 	var roomsLayers []map[string]*layerUnpacked
 	if err := json.Unmarshal(data, &roomsLayers); err != nil {
-		return err
+		return "", err
 	}
 
 	tilemaps := map[string]struct{}{}
@@ -193,7 +193,7 @@ func buildLayers(inputDir, fileName, outputDir, ovlName string) error {
 		})
 	}
 	if err := eg.Wait(); err != nil {
-		return err
+		return "", err
 	}
 
 	var layers []map[string]interface{} // first layer is always empty
@@ -270,7 +270,7 @@ func buildLayers(inputDir, fileName, outputDir, ovlName string) error {
 		}
 	}
 	sb.WriteString("};\n")
-	return util.WriteFile(filepath.Join(outputDir, "gen/layers.h"), []byte(sb.String()))
+	return sb.String(), nil
 }
 
 func makeSymbolFromFileName(fileName string) string {
