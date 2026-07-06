@@ -93,4 +93,6 @@ typedef enum RicSteps {
 
 extern PlayerState g_Ric;
 
+void BO6_CheckBladeDashInput();
+
 #endif // BO6_H
