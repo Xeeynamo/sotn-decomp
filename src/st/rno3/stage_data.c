@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stage.h>
 
+#if !defined(VERSION_PSP)
+
 u8 unused_39BC[] = {
 #include "gen/unused_39BC.h"
 };
@@ -57,6 +59,8 @@ u8 D_8018E514[] = {
 #include "gen/D_8018E514.h"
 };
 
+#endif
+
 u16 D_8018FF08[] = {
 #include "gen/D_8018FF08.h"
 };
@@ -71,6 +75,9 @@ u16 D_80190308[] = {
 };
 u16 D_801903A8[] = {
 #include "gen/D_801903A8.h"
+};
+u16 pal_unused[] = {
+#include "gen/pal_unused.h"
 };
 u16 D_80190948[] = {
 #include "gen/D_80190948.h"

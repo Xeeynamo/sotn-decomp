@@ -1088,6 +1088,7 @@ files:
           - [0x102C8, palette, D_801902C8, 16]
           - [0x10308, palette, D_80190308, 16]
           - [0x103A8, palette, D_801903A8, 16]
+          - [0x10428, palette, pal_unused, 16]
           - [0x10948, palette, D_80190948, 16]
           - [0x10E68, palette, D_80190E68, 16]
           - [0x10E88, skip]

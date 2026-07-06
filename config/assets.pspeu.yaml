@@ -778,7 +778,17 @@ files:
           - [0x80, skip]
           - [0x2C4E0, sprite_banks, sprite_banks]
           - [0x2C540, layers, psp/layers]
-          - [0x2C910, skip]
+          - [0x2C910, paldef, palette_def]
+          - [0x2C978, skip]
+          - [0x37A50, palette, D_8018FF08, 16]
+          - [0x37B50, palette, D_80190008, 16]
+          - [0x37E10, palette, D_801902C8, 16]
+          - [0x37E50, palette, D_80190308, 16]
+          - [0x37EF0, palette, D_801903A8, 16]
+          - [0x37F70, palette, D_80190948, 16]
+          - [0x38490, palette, D_80190E68, 16]
+          - [0x384B0, skip]
+          
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rno4.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rnz0.bin
     asset_path: assets/st/rnz0
