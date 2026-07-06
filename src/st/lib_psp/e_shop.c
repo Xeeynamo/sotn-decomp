@@ -17,6 +17,14 @@ extern s32 OVL_EXPORT(SkipCutscene);
 extern u32 OVL_EXPORT(CutsceneFlags);
 extern s32 OVL_EXPORT(IsCutsceneDone);
 
+#ifdef VERSION_PSP
+#define BUTTON_CONFIRM g_ConfirmButton
+#define BUTTON_CANCEL g_CancelButton
+#else
+#define BUTTON_CONFIRM PAD_CROSS
+#define BUTTON_CANCEL PAD_TRIANGLE
+#endif
+
 // An inventory item consists of a category, which affects
 // how the other fields are interpretted, an "unlock level",
 // which is related to the number of things which have been
@@ -2218,19 +2226,15 @@ void func_us_801AFE0C(Entity* self) {
         g_Player.padSim = PAD_LEFT;
         g_Player.demo_timer = 1;
         if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
-            g_Player.padSim = PAD_R1;
+            g_Player.padSim = PAD_BAT;
         } else if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
 #ifdef VERSION_PSP
             g_Player.padSim = PAD_NONE;
 #else
-            g_Player.padSim = PAD_L1;
+            g_Player.padSim = PAD_MIST;
 #endif
         } else if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
-#ifdef VERSION_PSP
-            g_Player.padSim = PAD_L1;
-#else
-            g_Player.padSim = PAD_R2;
-#endif
+            g_Player.padSim = PAD_WOLF;
         }
         g_Player.demo_timer = 1;
         SetStep(2);
@@ -2243,21 +2247,21 @@ void func_us_801AFE0C(Entity* self) {
                 if (g_Timer & 1) {
                     if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
 #ifdef VERSION_PSP
-                        g_Player.padSim = PAD_R1 | PAD_SIM_UNK20000;
+                        g_Player.padSim = PAD_BAT | PAD_SIM_UNK20000;
 #else
-                        g_Player.padSim = PAD_R1;
+                        g_Player.padSim = PAD_BAT;
 #endif
                     } else if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
 #ifdef VERSION_PSP
                         g_Player.padSim = PAD_NONE | PAD_SIM_UNK20000;
 #else
-                        g_Player.padSim = PAD_L1;
+                        g_Player.padSim = PAD_MIST;
 #endif
                     } else if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
 #ifdef VERSION_PSP
-                        g_Player.padSim = PAD_L1 | PAD_SIM_UNK20000;
+                        g_Player.padSim = PAD_WOLF | PAD_SIM_UNK20000;
 #else
-                        g_Player.padSim = PAD_R2;
+                        g_Player.padSim = PAD_WOLF;
 #endif
                     }
                 }
@@ -2337,19 +2341,15 @@ void func_us_801AFE0C(Entity* self) {
                     g_Player.padSim = PAD_NONE;
                     if (g_Timer & 1) {
                         if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
-                            g_Player.padSim = PAD_R1;
+                            g_Player.padSim = PAD_BAT;
                         } else if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
 #ifdef VERSION_PSP
                             g_Player.padSim = PAD_NONE;
 #else
-                            g_Player.padSim = PAD_L1;
+                            g_Player.padSim = PAD_MIST;
 #endif
                         } else if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
-#ifdef VERSION_PSP
-                            g_Player.padSim = PAD_L1;
-#else
-                            g_Player.padSim = PAD_R2;
-#endif
+                            g_Player.padSim = PAD_WOLF;
                         }
                     }
                 } else {
@@ -3034,11 +3034,7 @@ void func_us_801B15C0(Entity* self) {
             }
         }
         pad = g_pads[0].tapped;
-#ifdef VERSION_PSP
-        if (pad & D_psp_08B42050) {
-#else
-        if (pad & PAD_CROSS) {
-#endif
+        if (pad & BUTTON_CONFIRM) {
             switch (self->ext.et_801B15C0.unk88[self->ext.et_801B15C0.unk80]) {
             case 0:
                 OVL_EXPORT(CutsceneFlags) |= 0x400;
@@ -3108,11 +3104,7 @@ void func_us_801B15C0(Entity* self) {
                 break;
 #endif
             }
-#ifdef VERSION_PSP
-        } else if (g_pads[0].tapped & D_psp_08B42054) {
-#else
-        } else if (g_pads[0].tapped & PAD_TRIANGLE) {
-#endif
+        } else if (g_pads[0].tapped & BUTTON_CANCEL) {
             SetStep(6);
             g_api.PlaySfx(SFX_UI_CONFIRM);
         }
@@ -3845,11 +3837,7 @@ void func_us_801B2BE4(Entity* self) {
             }
         }
         tempVar = g_pads[0].tapped;
-#ifdef VERSION_PSP
-        if (tempVar & D_psp_08B42050) {
-#else
-        if (tempVar & PAD_CROSS) {
-#endif
+        if (tempVar & BUTTON_CONFIRM) {
             if (g_Status.gold <
                     D_us_801D415C[itemId] * D_us_801D4364[itemId].price ||
                 !D_us_801D415C[itemId]) {
@@ -3905,11 +3893,7 @@ void func_us_801B2BE4(Entity* self) {
                 SetStep(4);
                 g_api.PlaySfx(SFX_UI_CONFIRM);
             }
-#ifdef VERSION_PSP
-        } else if (tempVar & D_psp_08B42054) {
-#else
-        } else if (tempVar & PAD_TRIANGLE) {
-#endif
+        } else if (tempVar & BUTTON_CANCEL) {
             SetStep(7);
         }
         prim = &g_PrimBuf[self->primIndex];
@@ -3988,11 +3972,7 @@ void func_us_801B2BE4(Entity* self) {
             }
         }
         tempVar = g_pads[0].tapped;
-#ifdef VERSION_PSP
-        if (tempVar & D_psp_08B42050) {
-#else
-        if (tempVar & PAD_CROSS) {
-#endif
+        if (tempVar & BUTTON_CONFIRM) {
             if (D_us_801D415C[itemId] == 0) {
                 g_api.PlaySfx(SFX_UI_ERROR);
             } else {
@@ -4008,11 +3988,7 @@ void func_us_801B2BE4(Entity* self) {
                 SetStep(6);
                 g_api.PlaySfx(SFX_UI_CONFIRM);
             }
-#ifdef VERSION_PSP
-        } else if (tempVar & D_psp_08B42054) {
-#else
-        } else if (tempVar & PAD_TRIANGLE) {
-#endif
+        } else if (tempVar & BUTTON_CANCEL) {
             SetStep(7);
         }
         prim = &g_PrimBuf[self->primIndex];
@@ -5884,11 +5860,7 @@ void func_us_801B6324(Entity* self) {
             }
         }
         pads = g_pads[0].tapped;
-#ifdef VERSION_PSP
-        if (pads & D_psp_08B42050) {
-#else
-        if (pads & PAD_CROSS) {
-#endif
+        if (pads & BUTTON_CONFIRM) {
             itemID =
                 (self->ext.et_801B6F30.unk82 + self->ext.et_801B6F30.unk80);
             switch (D_us_8018173C[itemID].category) {
@@ -5915,11 +5887,7 @@ void func_us_801B6324(Entity* self) {
                 g_api.PlaySfx(SFX_UI_CONFIRM);
                 break;
             }
-#ifdef VERSION_PSP
-        } else if (pads & D_psp_08B42054) {
-#else
-        } else if (pads & PAD_TRIANGLE) {
-#endif
+        } else if (pads & BUTTON_CANCEL) {
             SetStep(7);
         }
         prim = &g_PrimBuf[self->primIndex];
@@ -6251,11 +6219,7 @@ void func_us_801B6F30(Entity* self) {
             g_api.PlaySfx(SFX_UI_MOVE);
         }
         pads = g_pads[0].tapped;
-#ifdef VERSION_PSP
-        if (pads & D_psp_08B42050) {
-#else
-        if (pads & PAD_CROSS) {
-#endif
+        if (pads & BUTTON_CONFIRM) {
             enemyIndex =
                 (self->ext.et_801B6F30.unk82 + self->ext.et_801B6F30.unk80) *
                     2 +
@@ -6267,11 +6231,7 @@ void func_us_801B6F30(Entity* self) {
             } else {
                 g_api.PlaySfx(SFX_UI_ERROR);
             }
-#ifdef VERSION_PSP
-        } else if (pads & D_psp_08B42054) {
-#else
-        } else if (pads & PAD_TRIANGLE) {
-#endif
+        } else if (pads & BUTTON_CANCEL) {
             SetStep(7);
         }
         prim = &g_PrimBuf[self->primIndex];
@@ -6860,11 +6820,7 @@ void func_us_801B8234(Entity* self) {
             }
         }
         pads = g_pads[0].tapped;
-#ifdef VERSION_PSP
-        if (pads & D_psp_08B42054) {
-#else
-        if (pads & PAD_TRIANGLE) {
-#endif
+        if (pads & BUTTON_CANCEL) {
             SetStep(7);
         }
         break;
@@ -7231,18 +7187,10 @@ void func_psp_0926AED0(Entity* self) {
         }
 #endif
         pads = g_pads[0].tapped;
-#ifdef VERSION_PSP
-        if (pads & D_psp_08B42050) {
-#else
-        if (pads & PAD_CROSS) {
-#endif
+        if (pads & BUTTON_CONFIRM) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
             SetStep(4);
-#ifdef VERSION_PSP
-        } else if (pads & D_psp_08B42054) {
-#else
-        } else if (pads & PAD_TRIANGLE) {
-#endif
+        } else if (pads & BUTTON_CANCEL) {
             SetStep(6);
         }
         prim = &g_PrimBuf[self->primIndex];
@@ -7632,10 +7580,10 @@ void func_us_801B8A00(Entity* self) {
             }
         }
         pads = g_pads[0].tapped;
-        if (pads & D_psp_08B42050) {
+        if (pads & g_ConfirmButton) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
             SetStep(4);
-        } else if (pads & D_psp_08B42054) {
+        } else if (pads & g_CancelButton) {
             SetStep(6);
         }
         prim = &g_PrimBuf[self->primIndex];

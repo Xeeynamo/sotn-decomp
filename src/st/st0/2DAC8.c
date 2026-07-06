@@ -122,8 +122,6 @@ static s32 D_80181148 = 0;
 static u32 D_8018114C = 0;
 
 #ifdef VERSION_PSP
-#define BUTTON_SYMBOL PAD_CIRCLE
-
 extern s32 E_ID(DRACULA_UNK20);
 extern s32 E_ID(DRACULA_UNK21);
 extern s32 E_ID(DRACULA_UNK23);

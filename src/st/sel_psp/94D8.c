@@ -375,7 +375,7 @@ void HandleTitleScreen(void) {
         g_StageId = D_801804D4[D_800987B4];
         func_801B1F4C(1);
         func_800F9D88(D_801804D8[D_800987B4], 1);
-        if (g_pads[0].tapped & (D_psp_08B42050 | PAD_START)) {
+        if (g_pads[0].tapped & (g_ConfirmButton | PAD_START)) {
             g_api.PlaySfx(SFX_START_SLAM_B);
             g_GameEngineStep++;
         }
@@ -451,7 +451,7 @@ void HandleTitleScreen(void) {
                 g_api.PlaySfx(SFX_UI_MOVE);
             }
         }
-        if (g_pads[0].tapped & (D_psp_08B42050 | PAD_START)) {
+        if (g_pads[0].tapped & (g_ConfirmButton | PAD_START)) {
             g_api.PlaySfx(SFX_START_SLAM_B);
             g_GameEngineStep = 6;
         }

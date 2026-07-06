@@ -14,8 +14,13 @@ typedef enum {
 
 // PSP exclusive data symbols in PS.ELF
 extern s32 D_psp_08B42044;
-extern u32 D_psp_08B42050; // psp cross button
-extern u32 D_psp_08B42054; // psp triangle button
+
+// X/O as cancel / confirm are configurable at PSP system level, see PSP Main
+// function. Typically this is O = confirm for Japanese region and X = confirm
+// for Western region
+extern u32 g_ConfirmButton;
+extern u32 g_CancelButton;
+
 extern s32 g_UserLanguage; // Defined in global address space
 extern char* D_psp_08B42060;
 extern s32 g_VoiceLanguage;
