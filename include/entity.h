@@ -129,24 +129,6 @@ typedef struct PACKED {
     /* 0x8C */ struct Entity* parent;
     u8 pad2[8];
     /* 0x88 */ s8 childPalette;
-    /* 0x8A */ s16 unk8A;
-#ifdef PLATFORM_64BIT
-    s32 _align_parent[1];
-#endif
-    /* 0x90 */ s16 unk90;
-    /* 0x92 */ s16 unk92;
-    /* 0x94 */ s16 unk94;
-    /* 0x96 */ s16 unk96;
-    /* 0x98 */ s16 unk98;
-    /* 0x9A */ s16 unk9A;
-    /* 0x9C */ s32 accelerationX;
-    /* 0xA0 */ s32 accelerationY;
-    /* 0xA4 */ s16 unkA4;
-    /* 0xA6 */ s16 vol;
-    /* 0xA8 */ s32 unkA8;
-    /* 0xAC */ u8 anim;
-    /* 0xAD */ u8 unkAD;
-    /* 0xAE */ s16 equipId;
 } ET_B0_Unk;
 
 typedef struct PACKED {
