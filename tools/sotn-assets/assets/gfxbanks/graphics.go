@@ -81,6 +81,12 @@ func ReadGraphics(r io.ReadSeeker, ramBase, addr psx.Addr, symbol func(addr psx.
 		}
 		addrGfxBanks = append(addrGfxBanks, addrGfxBankEntry)
 	}
+	// On PSP, the last element might just be padding out to the 8-align. Eliminate that if found.
+	lastBank := addrGfxBanks[len(addrGfxBanks) - 1]
+	if (lastBank == psx.RamNull){
+		addrGfxBanks = addrGfxBanks[:len(addrGfxBanks) - 1]
+	}
+
 	headerRange := datarange.FromAddr(addr, len(addrGfxBanks)*4)
 
 	// the order of each GfxBank must be preserved
