@@ -124,10 +124,10 @@ typedef struct PACKED {
     /* 0x7C */ s16 lifetime;
     /* 0x7E */ s16 unk7E;
     /* 0x80 */ struct Entity* unk80; // Y?
-    // /* 0x84 */ struct Entity* some_ent;    
+    // /* 0x84 */ struct Entity* some_ent;
     u8 pad[16];
-    /* 0x8C */ struct Entity* parent; 
-    u8 pad2[8]; 
+    /* 0x8C */ struct Entity* parent;
+    u8 pad2[8];
     /* 0x88 */ s8 childPalette;
     /* 0x8A */ s16 unk8A;
 #ifdef PLATFORM_64BIT

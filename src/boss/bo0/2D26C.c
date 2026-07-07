@@ -36,7 +36,7 @@ void func_us_801B1590(u8 step) {
 
     g_CurrentEntity->step = step;
     g_CurrentEntity->step_s = 0;
-    
+
     temp->childPalette = 0;
     temp = (ET_B0_Unk*)temp->parent;
     temp->childPalette = 0;
