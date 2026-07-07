@@ -102,7 +102,7 @@ segments:
       - [0x2C978, .data, graphics_banks]
       - [0x2CAA8, .data, e_red_door_tiles]
       - [0x2CAC8, .data, e_init]
-      - [0x2CE00, data]
+      - [0x2CE00, .data, gen/rooms]
       - [0x2CF08, .data, e_breakable]
       - [0x2CF58, .data, stage_data]
       - [0x384B0, .data, tilemaps]
