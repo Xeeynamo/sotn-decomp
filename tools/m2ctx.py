@@ -13,6 +13,7 @@ src_dir = root_dir + "src/"
 # Project-specific
 CPP_FLAGS = [
     "-Iinclude",
+    "-Iinclude/psxsdk",
     "-Isrc",
     "-Iver/current/build/include",
     "-D_LANGUAGE_C",

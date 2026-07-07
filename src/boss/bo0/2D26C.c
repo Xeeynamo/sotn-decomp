@@ -31,7 +31,18 @@ INCLUDE_ASM("boss/bo0/nonmatchings/2D26C", func_us_801B0930);
 
 INCLUDE_ASM("boss/bo0/nonmatchings/2D26C", func_us_801B13A8);
 
-INCLUDE_ASM("boss/bo0/nonmatchings/2D26C", func_us_801B1590);
+void func_us_801B1590(int step) {
+    // Load pointer stored at Entity+0x80 (inside Ext+0x04)
+    u8* node = (u8*)g_CurrentEntity->ext.ILLEGAL.u32[1];
+
+    g_CurrentEntity->step = (u16)(step & 0xff);
+    g_CurrentEntity->step_s = 0;
+
+    // Clear a flag, move to a linked data block and clear a similar flag?
+    node[36] = 0;              // 36 = 0x24
+    node = *(u8**)(node + 24); // 24 = 0x18
+    node[36] = 0;              // 36 = 0x24
+}
 
 INCLUDE_ASM("boss/bo0/nonmatchings/2D26C", func_us_801B15BC);
 
