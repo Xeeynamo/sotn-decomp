@@ -31,7 +31,7 @@ INCLUDE_ASM("boss/bo0/nonmatchings/2D26C", func_us_801B0930);
 
 INCLUDE_ASM("boss/bo0/nonmatchings/2D26C", func_us_801B13A8);
 
-void func_us_801B1590(int step) {
+void func_us_801B1590(s32 step) {
     // Load pointer stored at Entity+0x80 (inside Ext+0x04)
     u8* node = (u8*)g_CurrentEntity->ext.ILLEGAL.u32[1];
 
