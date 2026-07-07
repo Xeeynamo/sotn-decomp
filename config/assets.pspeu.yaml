@@ -781,7 +781,7 @@ files:
           - [0x2C910, paldef, palette_def]
           - [0x2C978, gfx_banks, graphics_banks]
           - [0x2CAA8, skip]
-          - [0x2CE00, rooms, rooms]
+          - [0x2CE00, rooms, psp/rooms]
           - [0x2CF08, skip]
           - [0x2CF58, cmpgfx, D_801842A4, 128, 128, 4]
           - [0x2E0E8, cmpgfx, D_80185430, 128, 128, 4]

@@ -76,7 +76,7 @@ segments:
       - [0x28B4, .data, e_blue_venus_weed]
       - [0x2A34, .data, water_effects]
       - [0x2AF0, .data, e_dodo]
-      - [0x2B20, .data, gen/rooms]
+      - [0x2B20, .data, gen/us/rooms]
       - [0x2C24, .data, gen/e_layout] # layout entries data
       - [0x39BC, .data, stage_data]
       - [0x10E88, .data, tilemaps]
