@@ -80,7 +80,7 @@ segments:
       - [0x2C24, .data, gen/e_layout] # layout entries data
       - [0x39BC, .data, stage_data]
       - [0x10E88, .data, tilemaps]
-      - [0x270B8, .data, gen/sprites]
+      - [0x270B8, .data, gen/us/sprites]
       - [0x2FF60, .rodata, e_castle_door]
       - [0x2FF80, .rodata, e_shutting_window]
       - [0x2FF88, .rodata, e_stairway]

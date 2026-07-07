@@ -776,7 +776,7 @@ files:
         vram: 0x09237700
         assets:
           - [0x80, skip]
-          - [0x2C4E0, sprite_banks, sprite_banks]
+          - [0x2C4E0, sprite_banks, psp/sprite_banks]
           - [0x2C540, layers, psp/layers]
           - [0x2C910, paldef, palette_def]
           - [0x2C978, gfx_banks, graphics_banks]
