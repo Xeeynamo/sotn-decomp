@@ -74,4 +74,6 @@ segments:
       - [0x2B1C4, c, popup]
       - [0x2B4F4, c, prim_helpers]
       - [0x2C66C, bss]
+      - [0x2C6CC, .bss, create_entity]
+      - [0x2C6DC, bss]
   - [0x2D3D4]
