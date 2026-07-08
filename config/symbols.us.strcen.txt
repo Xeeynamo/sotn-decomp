@@ -91,3 +91,4 @@ EntityMessageBox = 0x801A7148;
 PlaySfxPositional = 0x801A9948;
 BottomCornerText = 0x801AB1C4;
 RCENSkipCutscene = 0x801AD2DC;
+g_ItemIconSlots = 0x801AD394;

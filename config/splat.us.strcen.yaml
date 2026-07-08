@@ -45,6 +45,7 @@ segments:
       - [0x5AC, data] # BackgroundBlockInit / RedDoorTiles
       - [0x614, .data, e_lock_camera]
       - [0x62C, data]
+      - [0xA8C, .data, st_update]
       - [0xAB8, .data, collision]
       - [0xE78, .data, e_red_door]
       - [0xE90, .data, st_common]
@@ -85,4 +86,5 @@ segments:
       - [0x2C66C, bss]
       - [0x2C6CC, .bss, create_entity]
       - [0x2C6DC, bss]
+      - [0x2D394, .bss, st_update]
   - [0x2D3D4]
