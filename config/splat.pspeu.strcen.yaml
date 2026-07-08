@@ -45,7 +45,7 @@ segments:
     subalign: 8
     subsegments:
       - [0x80, c, rcen/create_entity]
-      - [0x1028, c, rcen_psp/e_stage_name]
+      - [0x1028, c, rcen/e_stage_name]
       - [0x1EA8, c, rcen/e_red_door]
       - [0x31B0, c, rcen_psp/st_update]
       - [0x36E8, c, rcen/e_particles]
