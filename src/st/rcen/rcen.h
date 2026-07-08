@@ -45,7 +45,7 @@ enum Entities {
     E_UNK_1E,             // func_us_8019CDA0
     E_UNK_1F,             // func_us_8019CDF8
     E_UNK_20,             // func_us_8019D330
-    E_CUTSCENE_DIALOGUE,  // OVL_EXPORT(EntityCutsceneDialogue)
+    E_CUTSCENE_DIALOGUE,  // OVL_EXPORT(EntityCutscene)
     E_UNK_22,             // func_us_8019F148
     E_UNK_23,             // func_us_8019F5F0
     E_UNK_24,             // func_us_8019FE9C
