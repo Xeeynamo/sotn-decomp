@@ -127,3 +127,4 @@ UnkPolyFunc2 = 0x801ABC40;
 UnkPolyFunc0 = 0x801ABC94;
 PrimDecreaseBrightness = 0x801ABCC0;
 RCENSkipCutscene = 0x801AD2DC;
+RCEN_RedDoorTiles = 0x801805E4;

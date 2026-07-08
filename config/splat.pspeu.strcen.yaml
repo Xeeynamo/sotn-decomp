@@ -46,7 +46,7 @@ segments:
     subsegments:
       - [0x80, c, rcen/create_entity]
       - [0x1028, c, rcen_psp/e_stage_name]
-      - [0x1EA8, c, rcen_psp/e_red_door]
+      - [0x1EA8, c, rcen/e_red_door]
       - [0x31B0, c, rcen_psp/st_update]
       - [0x36E8, c, rcen/e_particles]
       - [0x4C78, c, rcen_psp/unk_4C78]
@@ -65,7 +65,8 @@ segments:
       - [0x11298, c, rcen_psp/func_us_801abd24]
       - [0x11DA0, c, rcen/e_lock_camera]
       - [0x12520, c, rcen_psp/unk_12520]
-      - [0x17600, data]
+      - [0x17600, .data, rcen/e_red_door]
+      - [0x17618, data] # st_update
       - [0x17648, .data, rcen/e_particles]
       - [0x176C8, data]
       - [0x17C10, .data, rcen/e_misc]
@@ -77,7 +78,7 @@ segments:
       - [0x31508, data]
       - [0x31A10, .data, rcen/e_lock_camera]
       - [0x31A30, data]
-      - [0x31D00, .rodata, rcen_psp/e_red_door]
+      - [0x31D00, .rodata, rcen/e_red_door]
       - [0x31D18, .rodata, rcen_psp/e_collect]
       - [0x31D78, .rodata, rcen_psp/e_cutscene_dialogue]
       - [0x31E30, .rodata, rcen_psp/unk_12520]

@@ -120,3 +120,4 @@ RCEN_Overlay = 0x09268B48;
 g_ItemIconSlots = 0x092695A0;
 RCENDialogue = 0x09269CC8;
 RCENSkipCutscene = 0x09269D08;
+RCEN_RedDoorTiles = 0x09251BF0;
