@@ -43,7 +43,7 @@ void func_us_801B4148_from_bo0(Entity* self);
 void func_us_801C123C_from_no4(Entity* self);
 
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
-    OVL_EXPORT(EntityBreakable),
+    EntityBreakable,
     EntityExplosion,
     EntityPrizeDrop,
     EntityDamageDisplay,
