@@ -22,7 +22,3 @@ INCLUDE_ASM("st/rcen/nonmatchings/unk_1A98C", func_us_8019C7B8);
 INCLUDE_ASM("st/rcen/nonmatchings/unk_1A98C", func_us_8019CDA0);
 
 INCLUDE_ASM("st/rcen/nonmatchings/unk_1A98C", func_us_8019CDF8);
-
-INCLUDE_ASM("st/rcen/nonmatchings/unk_1A98C", func_us_8019D260);
-
-INCLUDE_ASM("st/rcen/nonmatchings/unk_1A98C", func_us_8019D330);
