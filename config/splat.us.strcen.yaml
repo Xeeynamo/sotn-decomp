@@ -80,6 +80,7 @@ segments:
       - [0x2B0D8, c, e_room_fg]
       - [0x2B1C4, c, popup]
       - [0x2B4F4, c, prim_helpers]
+      - [0x2BD24, c, unk_2BD24]
       - [0x2C66C, bss]
       - [0x2C6CC, .bss, create_entity]
       - [0x2C6DC, bss]
