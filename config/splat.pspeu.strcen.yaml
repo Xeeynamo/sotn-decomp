@@ -53,7 +53,7 @@ segments:
       - [0x4D50, c, rcen_psp/e_collect]
       - [0x8EC8, c, rcen/e_misc]
       - [0x95D0, c, rcen/collision]
-      - [0xB7A8, c, rcen_psp/popup]
+      - [0xB7A8, c, rcen/popup]
       - [0xBDA0, c, rcen/e_room_fg]
       - [0xBEB8, c, rcen_psp/st_common]
       - [0xCF80, c, rcen_psp/prim_helpers]

@@ -1,6 +1,5 @@
 CreateEntityFromCurrentEntity = 0x09238598;
 CreateEntityFromEntity = 0x09238620;
-EntityStageNamePopup = 0x092386A8;
 Random = 0x0923A830;
 Update = 0x0923A870;
 UpdateStageEntities = 0x0923AC50;
@@ -24,7 +23,6 @@ EntityHeartDrop = 0x0923FC00;
 EntityMessageBox = 0x0923FDD0;
 PlaySfxPositional = 0x09240AF8;
 BottomCornerText = 0x09242E28;
-EntityRoomForeground = 0x09243420;
 DestroyEntity = 0x09243538;
 PreventEntityFromRespawning = 0x092435D0;
 AnimateEntity = 0x09243658;
