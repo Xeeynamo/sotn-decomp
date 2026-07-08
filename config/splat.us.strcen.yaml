@@ -47,6 +47,8 @@ segments:
       - [0x62C, data]
       - [0xAB8, .data, collision]
       - [0xE78, data]
+      - [0x13E4, .data, e_misc]
+      - [0x149C, data] # e_particles
       - [0x19FB4, .rodata, unk_1A98C]
       - [0x1A08C, .rodata, e_cutscene_dialogue]
       - [0x1A128, .rodata, unk_1F0D8]
@@ -69,7 +71,7 @@ segments:
       - [0x23884, c, st_common]
       - [0x24D34, c, e_collect]
       - [0x276A4, c, e_misc]
-      - [0x29948, c, func_us_801a9948]
+      #- [0x29948, c, func_us_801a9948]
       - [0x29A40, c, e_stage_name]
       - [0x2A894, c, e_particles]
       - [0x2B0D8, c, e_room_fg]
