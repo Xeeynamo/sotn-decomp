@@ -55,7 +55,7 @@ segments:
       - [0x95D0, c, rcen/collision]
       - [0xB7A8, c, rcen/popup]
       - [0xBDA0, c, rcen/e_room_fg]
-      - [0xBEB8, c, rcen_psp/st_common]
+      - [0xBEB8, c, rcen/st_common]
       - [0xCF80, c, rcen/prim_helpers]
       - [0xD6C0, c, rcen_psp/st_init]
       - [0xDA50, c, rcen_psp/e_breakable]

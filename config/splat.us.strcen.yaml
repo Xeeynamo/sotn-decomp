@@ -47,7 +47,8 @@ segments:
       - [0x62C, data]
       - [0xAB8, .data, collision]
       - [0xE78, .data, e_red_door]
-      - [0xE90, data] # st_common
+      - [0xE90, .data, st_common]
+      - [0x1090, data] # e_collect
       - [0x13E4, .data, e_misc]
       - [0x149C, .data, e_particles]
       - [0x151C, .data, e_room_fg]
