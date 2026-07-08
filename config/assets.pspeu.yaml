@@ -761,6 +761,9 @@ files:
           - [0x2CD18, palette, pal_skeleton, 16] # 0x260
           - [0x2CD38, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rcen.bin
+    asset_path: assets/st/rcen
+    src_path: src/st/rcen
+    splat_config_path: config/splat.pspeu.strcen.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rchi.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rdai.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rlib.bin
