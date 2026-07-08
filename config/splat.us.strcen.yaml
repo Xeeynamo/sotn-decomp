@@ -42,8 +42,7 @@ segments:
       - [0x0, .data, header]
       - [0x40, data]
       - [0x458, .data, e_init]
-      - [0x5AC, data] # e_room_bg
-      - [0x5E4, data, red_door_tiles] # RCEN_RedDoorTiles
+      - [0x5AC, data] # BackgroundBlockInit / RedDoorTiles
       - [0x614, .data, e_lock_camera]
       - [0x62C, data]
       - [0xAB8, .data, collision]
