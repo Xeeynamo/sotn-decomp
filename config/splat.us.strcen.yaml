@@ -71,7 +71,6 @@ segments:
       - [0x1D6C8, c, e_cutscene]
       - [0x1F0D8, c, unk_1F0D8]
       - [0x1FD4C, c, e_elevator]
-      - [0x1FE00, c, unk_1FE00]
       - [0x2046C, c, st_update]
       - [0x208A0, c, collision]
       - [0x2205C, c, create_entity]

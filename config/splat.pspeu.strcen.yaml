@@ -58,7 +58,7 @@ segments:
       - [0xCF80, c, rcen/prim_helpers]
       - [0xD6C0, c, rcen/st_init_psp]
       - [0xDA50, c, rcen/e_breakable]
-      - [0xDBD0, c, rcen_psp/unk_1FE00]
+      - [0xDBD0, c, rcen_psp/e_elevator]
       - [0xE520, c, rcen_psp/e_cutscene]
       - [0x11188, c, rcen/e_room_bg]
       - [0x11298, c, rcen_psp/unk_2BD24]
