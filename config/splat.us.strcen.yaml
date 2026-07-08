@@ -43,6 +43,8 @@ segments:
       - [0x40, data]
       - [0x458, .data, e_init]
       - [0x5AC, data]
+      - [0x614, .data, e_lock_camera]
+      - [0x62C, data]
       - [0xAB8, .data, collision]
       - [0xE78, data]
       - [0x19FB4, .rodata, unk_1A98C]
