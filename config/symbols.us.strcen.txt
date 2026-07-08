@@ -14,6 +14,7 @@ RCEN_PrizeDrops = 0x8018068C;
 actor_names = 0x801809F4;
 RCEN_rooms = 0x801815A8;
 RCEN_cutscene_script = 0x801817AC;
+EntityShaft = 0x8019AAFC;
 CutsceneUnk1 = 0x8019D6C8;
 SetCutsceneScript = 0x8019D71C;
 CutsceneUnk4 = 0x8019D93C;

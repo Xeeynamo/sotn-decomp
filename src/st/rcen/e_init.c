@@ -22,7 +22,7 @@ void OVL_EXPORT(EntityLockCamera)(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
-void func_us_8019AAFC(Entity* self);
+void EntityShaft(Entity* self);
 void func_us_801ABD24(Entity* self);
 void func_us_8019B5A4(Entity* self);
 void func_us_8019B6D4(Entity* self);
@@ -64,7 +64,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityUnkId13,
     EntityExplosionVariants,
     EntityGreyPuff,
-    func_us_8019AAFC,
+    EntityShaft,
     func_us_801ABD24,
     func_us_8019B5A4,
     func_us_8019B6D4,
@@ -96,10 +96,13 @@ EInit OVL_EXPORT(EInitUnkId13) = {ANIMSET_DRA(0), 0, 0, 0, 0x002};
 EInit OVL_EXPORT(EInitLockCamera) = {ANIMSET_DRA(0), 0, 0, 0, 0x001};
 EInit OVL_EXPORT(EInitCommon) = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
 EInit OVL_EXPORT(EInitDamageNum) = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
+
+// All Shaft related entities
 EInit g_EInitShaft = {ANIMSET_OVL(3), 0, 72, 512, 0x15F};
 EInit D_us_80180570 = {ANIMSET_OVL(3), 0, 72, 512, 0x005};
 EInit D_us_8018057C = {ANIMSET_OVL(3), 0, 72, 512, 0x160};
 EInit D_us_80180588 = {ANIMSET_DRA(14), 0, 121, 736, 0x161};
 EInit D_us_80180594 = {ANIMSET_DRA(0), 0, 0, 0, 0x162};
+
 EInit D_us_801805A0 = {ANIMSET_OVL(12), 1, 72, 576, 0x005};
 // clang-format on
