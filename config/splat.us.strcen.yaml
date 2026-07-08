@@ -1,0 +1,75 @@
+options:
+  platform: psx
+  basename: strcen
+  base_path: ..
+  build_path: build/us
+  target_path: disks/us/ST/RCEN/RCEN.BIN
+  asm_path: asm/us/st/rcen
+  asset_path: assets/st/rcen
+  src_path: src/st/rcen
+  ld_script_path: build/us/strcen.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.us.txt
+    - config/symbols.us.strcen.txt
+  undefined_funcs_auto_path: build/us/config/undefined_funcs_auto.us.strcen.txt
+  undefined_syms_auto_path: build/us/config/undefined_syms_auto.us.strcen.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: us_$VRAM
+  disassemble_all: true
+  section_order:
+    - .data
+    - .rodata
+    - .text
+    - .bss
+    - .sbss
+  ld_bss_is_noload: false
+  disasm_unknown: true
+  global_vram_start: 0x80010000
+  ld_generate_symbol_per_data_segment: true
+sha1: 9e9316194bdbd6abbce552347b97b03b224b77a0
+segments:
+  - name: strcen
+    type: code
+    start: 0x0
+    vram: 0x80180000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, .data, header]
+      - [0x40, data]
+      - [0x458, .data, e_init]
+      - [0x5AC, data]
+      - [0x19FB4, .rodata, unk_1A98C]
+      - [0x1A08C, .rodata, e_cutscene_dialogue]
+      - [0x1A128, .rodata, unk_1F0D8]
+      - [0x1A184, .rodata, e_red_door]
+      - [0x1A19C, .rodata, e_collect]
+      - [0x1A270, .rodata, e_stage_name]
+      - [0x1A2A4, .rodata, prim_helpers]
+      - [0x1A2AC, c, e_room_bg]
+      - [0x1A38C, c, e_lock_camera]
+      - [0x1A858, c, e_breakable]
+      - [0x1A98C, c, unk_1A98C]
+      - [0x1D6C8, c, e_cutscene_dialogue]
+      - [0x1F0D8, c, unk_1F0D8]
+      - [0x1FD4C, c, e_elevator]
+      - [0x1FE00, c, unk_1FE00]
+      - [0x2046C, c, st_update]
+      - [0x208A0, c, collision]
+      - [0x2205C, c, create_entity]
+      - [0x22BD4, c, e_red_door]
+      - [0x23884, c, st_common]
+      - [0x24D34, c, e_collect]
+      - [0x276A4, c, e_misc]
+      - [0x29948, c, func_us_801a9948]
+      - [0x29A40, c, e_stage_name]
+      - [0x2A894, c, e_particles]
+      - [0x2B0D8, c, e_room_fg]
+      - [0x2B1C4, c, popup]
+      - [0x2B4F4, c, prim_helpers]
+      - [0x2C66C, bss]
+  - [0x2D3D4]
