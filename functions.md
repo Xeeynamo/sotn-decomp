@@ -632,7 +632,7 @@
 | lib      | func_psp_0925AFB0                     |       19 |          1 |        |       |     |
 | no3      | func_pspeu_09243378                   |       19 |          1 |        |       |     |
 | nz0      | func_pspeu_0923E440                   |       19 |          1 |        |       |     |
-| rcen     | SetCutsceneEnd                        |       19 |          1 |        |       |     |
+| rcen     | func_pspeu_09246318                   |       19 |          1 |        |       |     |
 | sel      | func_psp_0923F460                     |       19 |          1 |        |       |     |
 | sel      | func_psp_0923F4D0                     |       19 |          1 |        |       |     |
 | sel      | func_psp_092459D8                     |       19 |          1 |        |       |     |
@@ -1294,7 +1294,7 @@
 | lib      | func_psp_0925AD40                     |       29 |          1 |        |       |     |
 | no3      | func_pspeu_09243108                   |       29 |          1 |        |       |     |
 | nz0      | func_pspeu_0923E1D0                   |       29 |          1 |        |       |     |
-| rcen     | CutsceneUnk1                          |       29 |          1 |        |       |     |
+| rcen     | func_pspeu_092460A8                   |       29 |          1 |        |       |     |
 | sel      | func_psp_09242B40                     |       29 |          1 |        |       |     |
 | sel      | func_psp_09245760                     |       29 |          1 |        |       |     |
 | st0      | func_pspeu_09239060                   |       29 |          1 |        |       |     |
@@ -1710,7 +1710,7 @@
 | dre      | func_pspeu_092454E8                   |       37 |          3 |        |       |     |
 | no4      | func_pspeu_0925E178                   |       37 |          3 |        |       |     |
 | nz0      | func_pspeu_0923E080                   |       37 |          3 |        |       |     |
-| rcen     | CutsceneUnk3                          |       37 |          3 |        |       |     |
+| rcen     | func_pspeu_09245F58                   |       37 |          3 |        |       |     |
 | sel      | func_psp_09245610                     |       37 |          3 |        |       |     |
 | st0      | func_pspeu_09238F10                   |       37 |          3 |        |       |     |
 | dra      | func_psp_090ED958                     |       37 |          4 |        |       |     |
@@ -2453,7 +2453,7 @@
 | no4      | func_pspeu_0925DDC0                   |       51 |         10 |        |       |     |
 | nz0      | func_pspeu_0923DCC8                   |       51 |         10 |        |       |     |
 | nz0      | func_pspeu_0924FCE8                   |       51 |         10 |        |       |     |
-| rcen     | GetLang                               |       51 |         10 |        |       |     |
+| rcen     | func_pspeu_09245BA0                   |       51 |         10 |        |       |     |
 | rnz0     | func_pspeu_0924C670                   |       51 |         10 |        |       |     |
 | sel      | func_psp_09237E38                     |       51 |         10 |        |       |     |
 | sel      | func_psp_0923F3C0                     |       51 |         10 |        |       |     |
@@ -2595,7 +2595,7 @@
 | lib      | func_psp_0925AC70                     |       57 |          2 |        |       |     |
 | no4      | func_pspeu_0925E1F8                   |       57 |          2 |        |       |     |
 | nz0      | func_pspeu_0923E100                   |       57 |          2 |        |       |     |
-| rcen     | CutsceneUnk4                          |       57 |          2 |        |       |     |
+| rcen     | func_pspeu_09245FD8                   |       57 |          2 |        |       |     |
 | sel      | func_psp_09245690                     |       57 |          2 |        |       |     |
 | st0      | func_pspeu_09238F90                   |       57 |          2 |        |       |     |
 | sel      | func_psp_09239228                     |       57 |          3 |        |       |     |
@@ -2831,7 +2831,7 @@
 | lib      | cutscene.rodata                       |       64 |          0 | Yes    |       |     |
 | no3      | cutscene.rodata                       |       64 |          0 | Yes    |       |     |
 | nz0      | cutscene_psp.rodata                   |       64 |          0 | Yes    |       |     |
-| rcen     | e_cutscene.rodata                     |       64 |          0 | Yes    |       |     |
+| rcen     | cutscene.rodata                       |       64 |          0 | Yes    |       |     |
 | main     | sceGuCopyImage                        |       64 |          2 |        |       |     |
 | dra      | func_psp_090F17D8                     |       64 |          5 |        |       |     |
 | are      | func_pspeu_09260620                   |       64 |          6 |        |       |     |
@@ -2986,7 +2986,7 @@
 | dre      | func_pspeu_09245C90                   |       68 |          8 |        |       |     |
 | lib      | func_psp_0925B380                     |       68 |          8 |        |       |     |
 | no3      | func_pspeu_09243748                   |       68 |          8 |        |       |     |
-| rcen     | CutsceneSkip                          |       68 |          8 |        |       |     |
+| rcen     | func_pspeu_09246710                   |       68 |          8 |        |       |     |
 | main     | func_psp_0891AAF8                     |       68 |          9 |        |       |     |
 | dre      | func_pspeu_0924B808                   |       68 |          9 |        |       |     |
 | lib      | func_psp_09254B18                     |       68 |         10 |        |       |     |
@@ -4415,7 +4415,7 @@
 | no3      | func_pspeu_09243168                   |      139 |          5 |        |       |     |
 | no4      | func_pspeu_0925E338                   |      139 |          5 |        |       |     |
 | nz0      | func_pspeu_0923E230                   |      139 |          5 |        |       |     |
-| rcen     | SetCutsceneScript                     |      139 |          5 |        |       |     |
+| rcen     | func_pspeu_09246108                   |      139 |          5 |        |       |     |
 | st0      | func_pspeu_092390C0                   |      139 |          5 |        |       |     |
 | main     | func_psp_0891E420                     |      139 |         12 |        |       |     |
 | ric      | func_pspeu_092C9988                   |      139 |         12 |        |       |     |
@@ -4951,7 +4951,7 @@
 | no3      | func_pspeu_09242CA0                   |      212 |         14 |        |       |     |
 | no4      | func_pspeu_0925DE60                   |      212 |         14 |        |       |     |
 | nz0      | func_pspeu_0923DD68                   |      212 |         14 |        |       |     |
-| rcen     | DrawCutsceneActorName                 |      212 |         14 |        |       |     |
+| rcen     | func_pspeu_09245C40                   |      212 |         14 |        |       |     |
 | sel      | func_psp_092452F8                     |      212 |         14 |        |       |     |
 | st0      | func_pspeu_09238BF8                   |      212 |         14 |        |       |     |
 | bo0      | func_pspeu_0923C548                   |      213 |         15 |        |       |     |
@@ -5143,7 +5143,7 @@
 | no3      | func_pspeu_09237F80                   |      253 |          1 |        |       |     |
 | cen      | CutsceneRun                           |      253 |         18 |        |       |     |
 | dai      | func_pspeu_09254220                   |      253 |         18 |        |       |     |
-| rcen     | CutsceneRun                           |      253 |         18 |        |       |     |
+| rcen     | func_pspeu_09246350                   |      253 |         18 |        |       |     |
 | no3      | func_pspeu_0923D998                   |      253 |         24 | Yes    |       |     |
 | rno3     | func_pspeu_0923E7A0                   |      254 |         25 |        |       |     |
 | bo0      | EntitySkelerangBoomerang              |      254 |         30 |        |       |     |
@@ -6498,7 +6498,7 @@
 | no3      | func_pspeu_09243838                   |     2232 |        204 | Yes    |       |     |
 | dai      | func_pspeu_092545E0                   |     2235 |        203 | Yes    |       |     |
 | nz0      | func_pspeu_0923E810                   |     2235 |        203 | Yes    |       |     |
-| rcen     | RCEN_EntityCutscene                   |     2252 |        207 | Yes    |       |     |
+| rcen     | func_pspeu_09246800                   |     2252 |        207 | Yes    |       |     |
 | dre      | func_pspeu_09245D80                   |     2261 |        214 | Yes    |       |     |
 | bo0      | func_pspeu_09258F58                   |     2364 |        367 | Yes    |       |     |
 | cen      | CEN_EntityCutscene                    |     2388 |        232 | Yes    |       |     |
