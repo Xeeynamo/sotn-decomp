@@ -28,6 +28,11 @@ segments:
       - start: 0x3248
         type: c
         file: maria
+        end: 0xB473
+      # func_060b0474
+      - start: 0xB474
+        type: data
+        file: maria
         end: 0xB8D9
       - start: 0xB8DA
         type: data

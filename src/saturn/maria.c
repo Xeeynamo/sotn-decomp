@@ -115,14 +115,16 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AF444, func_060AF444);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AFAB4, func_060AFAB4);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AFBA4, func_060AFBA4);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B0220, func_060B0220);
+// function, bugs
+INCLUDE_ASM("asm/saturn/maria/data", d60B0474, d_060B0474);
 // function, splitter bugs
-INCLUDE_ASM("asm/saturn/maria/data", d60B08DA, d_060B08DA);
+INCLUDE_ASM_NO_ALIGN("asm/saturn/maria/data", d60B08DA, d_060B08DA);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B099C, func_060B099C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B09B4, func_060B09B4);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B09C0, func_060B09C0);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B09CC, func_060B09CC);
 // function, splitter bugs
-INCLUDE_ASM("asm/saturn/maria/data", d60B1872, d_060B1872);
+INCLUDE_ASM_NO_ALIGN("asm/saturn/maria/data", d60B1872, d_060B1872);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B18C8, func_060B18C8);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B199C, func_060B199C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B1A58, func_060B1A58);
@@ -150,7 +152,7 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B626C, func_060B626C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B668C, func_060B668C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B6C94, func_060B6C94);
 // function, splitter bugs
-INCLUDE_ASM("asm/saturn/maria/data", d60B761E, d_060B761E);
+INCLUDE_ASM_NO_ALIGN("asm/saturn/maria/data", d60B761E, d_060B761E);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B776C, func_060B776C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B7A48, func_060B7A48);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B7E08, func_060B7E08);
@@ -159,7 +161,7 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B805C, func_060B805C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B82AC, func_060B82AC);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B82B8, func_060B82B8);
 // function, splitter bugs
-INCLUDE_ASM("asm/saturn/maria/data", d60B8666, d_060B8666);
+INCLUDE_ASM_NO_ALIGN("asm/saturn/maria/data", d60B8666, d_060B8666);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B868C, func_060B868C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B89F0, func_060B89F0);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B8AC4, func_060B8AC4);
