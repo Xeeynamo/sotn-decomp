@@ -1,0 +1,1 @@
+_DestroyEntity = 0x0600FFB8;
