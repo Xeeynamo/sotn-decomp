@@ -32,6 +32,10 @@ segments:
       - start: 0xB8DA
         type: data
         file: maria
+        end: 0xB99b
+      - start: 0xB99C
+        file: maria
+        type: c
         end: 0xC871
       - start: 0xC872
         type: data

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "inc_asm.h"
 INCLUDE_ASM("asm/saturn/maria/data", d60A5000, d_060A5000);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A5060, func_060A5060);
