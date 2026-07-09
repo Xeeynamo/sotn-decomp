@@ -3731,7 +3731,7 @@
 | 1.00 | true     | func_801BEDAC                       | asm/us/st/no3/matchings/cutscene/func_801BEDAC.s 
 | 1.00 | true     | func_us_801C9950                    | asm/us/st/no4/matchings/cutscene/func_us_801C9950.s 
 | 1.00 | true     | func_801B7C54                       | asm/us/st/nz0/matchings/cutscene/func_801B7C54.s 
-| 1.00 | true     | ScaleCutsceneAvatar                 | asm/us/st/rcen/matchings/e_cutscene/ScaleCutsceneAvatar.s 
+| 1.00 | true     | func_us_8019DF60                    | asm/us/st/rcen/matchings/cutscene/func_us_8019DF60.s 
 | 0.91 | true     | func_801B690C                       | asm/us/st/sel/matchings/cutscene/func_801B690C.s 
 | 1.00 | true     | func_801A910C                       | asm/us/st/st0/matchings/cutscene/func_801A910C.s 
 | 1.00 | true     | func_us_801AC000                    | asm/us/st/top/matchings/cutscene/func_us_801AC000.s 
@@ -3744,7 +3744,7 @@
 | 1.00 | true     | func_us_801B95EC                    | asm/us/st/lib/matchings/cutscene/func_us_801B95EC.s 
 | 1.00 | true     | func_801BE544                       | asm/us/st/no3/matchings/cutscene/func_801BE544.s 
 | 1.00 | true     | func_801B74CC                       | asm/us/st/nz0/matchings/cutscene/func_801B74CC.s 
-| 1.00 | true     | CutsceneUnk1                        | asm/us/st/rcen/matchings/e_cutscene/CutsceneUnk1.s 
+| 1.00 | true     | func_us_8019D6C8                    | asm/us/st/rcen/matchings/cutscene/func_us_8019D6C8.s 
 | 1.00 | true     | func_801B642C                       | asm/us/st/sel/matchings/cutscene/func_801B642C.s 
 | 1.00 | true     | func_801A8984                       | asm/us/st/st0/matchings/cutscene/func_801A8984.s 
 | 1.00 | true     | func_us_801AB768                    | asm/us/st/top/matchings/cutscene/func_us_801AB768.s 
@@ -3757,7 +3757,7 @@
 | 1.00 | true     | func_us_801B9860                    | asm/us/st/lib/matchings/cutscene/func_us_801B9860.s 
 | 0.98 | true     | func_801BE7BC                       | asm/us/st/no3/matchings/cutscene/func_801BE7BC.s 
 | 1.00 | true     | func_801B7740                       | asm/us/st/nz0/matchings/cutscene/func_801B7740.s 
-| 1.00 | true     | CutsceneUnk4                        | asm/us/st/rcen/matchings/e_cutscene/CutsceneUnk4.s 
+| 1.00 | true     | func_us_8019D93C                    | asm/us/st/rcen/matchings/cutscene/func_us_8019D93C.s 
 | 1.00 | true     | func_801B66A4                       | asm/us/st/sel/matchings/cutscene/func_801B66A4.s 
 | 1.00 | true     | func_801A8BF8                       | asm/us/st/st0/matchings/cutscene/func_801A8BF8.s 
 | 1.00 | true     | func_us_801AB9DC                    | asm/us/st/top/matchings/cutscene/func_us_801AB9DC.s 
@@ -3770,7 +3770,7 @@
 | 1.00 | true     | func_us_801B9918                    | asm/us/st/lib/matchings/cutscene/func_us_801B9918.s 
 | 1.00 | true     | func_801BE870                       | asm/us/st/no3/matchings/cutscene/func_801BE870.s 
 | 1.00 | true     | func_801B77F8                       | asm/us/st/nz0/matchings/cutscene/func_801B77F8.s 
-| 1.00 | true     | DrawCutsceneActorName               | asm/us/st/rcen/matchings/e_cutscene/DrawCutsceneActorName.s 
+| 1.00 | true     | func_us_8019D9F4                    | asm/us/st/rcen/matchings/cutscene/func_us_8019D9F4.s 
 | 1.00 | true     | func_801B675C                       | asm/us/st/sel/matchings/cutscene/func_801B675C.s 
 | 1.00 | true     | func_801A8CB0                       | asm/us/st/st0/matchings/cutscene/func_801A8CB0.s 
 | 1.00 | true     | func_us_801ABA94                    | asm/us/st/top/matchings/cutscene/func_us_801ABA94.s 
@@ -3783,7 +3783,7 @@
 | 1.00 | true     | func_us_801B9A9C                    | asm/us/st/lib/matchings/cutscene/func_us_801B9A9C.s 
 | 1.00 | true     | func_801BE9F4                       | asm/us/st/no3/matchings/cutscene/func_801BE9F4.s 
 | 1.00 | true     | func_801B797C                       | asm/us/st/nz0/matchings/cutscene/func_801B797C.s 
-| 1.00 | true     | SetCutsceneEnd                      | asm/us/st/rcen/matchings/e_cutscene/SetCutsceneEnd.s 
+| 1.00 | true     | func_us_8019DB78                    | asm/us/st/rcen/matchings/cutscene/func_us_8019DB78.s 
 | 1.00 | true     | func_801B68E0                       | asm/us/st/sel/matchings/cutscene/func_801B68E0.s 
 | 1.00 | true     | func_801A8E34                       | asm/us/st/st0/matchings/cutscene/func_801A8E34.s 
 | 1.00 | true     | func_us_801ABC18                    | asm/us/st/top/matchings/cutscene/func_us_801ABC18.s 
@@ -3796,7 +3796,7 @@
 | 1.00 | true     | func_us_801B9640                    | asm/us/st/lib/matchings/cutscene/func_us_801B9640.s 
 | 1.00 | true     | func_801BE598                       | asm/us/st/no3/matchings/cutscene/func_801BE598.s 
 | 1.00 | true     | func_801B7520                       | asm/us/st/nz0/matchings/cutscene/func_801B7520.s 
-| 1.00 | true     | SetCutsceneScript                   | asm/us/st/rcen/matchings/e_cutscene/SetCutsceneScript.s 
+| 1.00 | true     | func_us_8019D71C                    | asm/us/st/rcen/matchings/cutscene/func_us_8019D71C.s 
 | 0.93 | true     | func_801B6480                       | asm/us/st/sel/matchings/cutscene/func_801B6480.s 
 | 1.00 | true     | func_801A89D8                       | asm/us/st/st0/matchings/cutscene/func_801A89D8.s 
 | 1.00 | true     | func_us_801AB7BC                    | asm/us/st/top/matchings/cutscene/func_us_801AB7BC.s 
@@ -3841,7 +3841,7 @@
 | 1.00 | true     | func_8019498C                       | asm/us/st/dre/matchings/e_cutscene_dialogue/func_8019498C.s 
 | 1.00 | true     | func_us_801C9708                    | asm/us/st/no4/matchings/cutscene/func_us_801C9708.s 
 | 1.00 | true     | func_801B76E4                       | asm/us/st/nz0/matchings/cutscene/func_801B76E4.s 
-| 1.00 | true     | func_us_8019D8E0                    | asm/us/st/rcen/matchings/e_cutscene/func_us_8019D8E0.s 
+| 1.00 | true     | func_us_8019D8E0                    | asm/us/st/rcen/matchings/cutscene/func_us_8019D8E0.s 
 | 1.00 | true     | func_801B6648                       | asm/us/st/sel/matchings/cutscene/func_801B6648.s 
 | 1.00 | true     | func_801A8B9C                       | asm/us/st/st0/matchings/cutscene/func_801A8B9C.s 
 | 1.00 | true     | func_us_801AB980                    | asm/us/st/top/matchings/cutscene/func_us_801AB980.s 
@@ -3864,8 +3864,8 @@
 | 0.91 | true     | func_us_801B9F58                    | asm/us/st/lib/matchings/cutscene/func_us_801B9F58.s 
 | 0.94 | true     | func_801BEEB0                       | asm/us/st/no3/matchings/cutscene/func_801BEEB0.s 
 | 0.97 | true     | func_801B7D58                       | asm/us/st/nz0/matchings/cutscene/func_801B7D58.s 
+| 0.91 | true     | func_us_8019E064                    | asm/us/st/rcen/matchings/cutscene/func_us_8019E064.s 
 | 0.93 | true     | func_us_801AC104                    | asm/us/st/top/matchings/cutscene/func_us_801AC104.s 
-| 0.91 | false    | RCEN_EntityCutscene                 | asm/us/st/rcen/nonmatchings/e_cutscene/RCEN_EntityCutscene.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801C1DB0                    | asm/us/boss/rbo5/matchings/doppleganger/func_us_801C1DB0.s 
 | 1.00 | true     | func_80102DEC                       | asm/us/dra/matchings/62DEC/func_80102DEC.s 
@@ -3897,15 +3897,6 @@
 | 0.95 | true     | func_801A8328                       | asm/us/st/st0/matchings/2805C/func_801A8328.s 
 | 0.95 | true     | func_us_801A96F4                    | asm/us/st/top/matchings/e_breakable/func_us_801A96F4.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_801073C0                       | asm/us/dra/matchings/cd/func_801073C0.s 
-| 0.90 | true     | func_80131FA4                       | asm/us/dra/matchings/sound/func_80131FA4.s 
-| 0.90 | true     | _addque                             | asm/us/main/matchings/psxsdk/libgpu/sys/_addque.s 
-| 0.90 | true     | SsSepClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSepClose.s 
-| 0.90 | true     | SsSeqClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSeqClose.s 
-| 0.90 | true     | SsSeqStop                           | asm/us/main/matchings/psxsdk/libsnd/stop/SsSeqStop.s 
-| 0.90 | true     | func_801BA6A8                       | asm/us/st/sel/matchings/libpress/func_801BA6A8.s 
-| 1.00 | true     | func_801B9924                       | asm/us/st/sel/matchings/stream/func_801B9924.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801ADF98                    | asm/us/st/lib/matchings/e_lock_camera/func_us_801ADF98.s 
 | 1.00 | true     | func_us_801C1968                    | asm/us/st/no0/matchings/e_room_bg/func_us_801C1968.s 
 | 1.00 | true     | func_801B0A20                       | asm/us/st/nz0/matchings/e_lock_camera/func_801B0A20.s 
@@ -3914,6 +3905,14 @@
 | 1.00 | true     | func_us_8019FEDC                    | asm/us/st/rtop/matchings/e_lock_camera/func_us_8019FEDC.s 
 | 1.00 | true     | func_801A7E2C                       | asm/us/st/st0/matchings/e_lock_camera/func_801A7E2C.s 
 | 1.00 | true     | func_us_801A8D00                    | asm/us/st/top/matchings/e_lock_camera/func_us_801A8D00.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | func_801073C0                       | asm/us/dra/matchings/cd/func_801073C0.s 
+| 0.90 | true     | func_80131FA4                       | asm/us/dra/matchings/sound/func_80131FA4.s 
+| 0.90 | true     | _addque                             | asm/us/main/matchings/psxsdk/libgpu/sys/_addque.s 
+| 0.90 | true     | SsSepClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSepClose.s 
+| 0.90 | true     | SsSeqClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSeqClose.s 
+| 0.90 | true     | SsSeqStop                           | asm/us/main/matchings/psxsdk/libsnd/stop/SsSeqStop.s 
+| 1.00 | true     | func_801B9924                       | asm/us/st/sel/matchings/stream/func_801B9924.s 
 -------------------------------------------------------------------------------
 | 0.92 | true     | DMACallback                         | asm/us/main/matchings/psxsdk/libetc/intr/DMACallback.s 
 | 0.92 | true     | InterruptCallback                   | asm/us/main/matchings/psxsdk/libetc/intr/InterruptCallback.s 
@@ -3941,14 +3940,14 @@
 | 0.93 | true     | func_us_8018B4A0                    | asm/us/boss/mar/matchings/cutscene/func_us_8018B4A0.s 
 | 1.00 | true     | func_8018E3E8                       | asm/us/st/cen/matchings/cutscene/func_8018E3E8.s 
 | 1.00 | true     | func_us_801C4424                    | asm/us/st/dai/matchings/e_cutscene_dialogue/func_us_801C4424.s 
-| 1.00 | true     | CutsceneRun                         | asm/us/st/rcen/matchings/e_cutscene/CutsceneRun.s 
+| 1.00 | true     | func_us_8019DBA4                    | asm/us/st/rcen/matchings/cutscene/func_us_8019DBA4.s 
 | 1.00 | true     | func_us_801ABC44                    | asm/us/st/top/matchings/cutscene/func_us_801ABC44.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CutsceneSkip                        | asm/us/boss/bo6/matchings/cutscene/CutsceneSkip.s 
 | 1.00 | true     | func_80194F14                       | asm/us/st/dre/matchings/e_cutscene_dialogue/func_80194F14.s 
 | 1.00 | true     | func_us_801B9D74                    | asm/us/st/lib/matchings/cutscene/func_us_801B9D74.s 
 | 1.00 | true     | func_801BECCC                       | asm/us/st/no3/matchings/cutscene/func_801BECCC.s 
-| 1.00 | true     | CutsceneSkip                        | asm/us/st/rcen/matchings/e_cutscene/CutsceneSkip.s 
+| 1.00 | true     | func_us_8019DE80                    | asm/us/st/rcen/matchings/cutscene/func_us_8019DE80.s 
 | 1.00 | true     | func_us_801ABF20                    | asm/us/st/top/matchings/cutscene/func_us_801ABF20.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801745E4                       | asm/us/servant/tt_000/matchings/bat/func_801745E4.s 
@@ -4426,6 +4425,11 @@
 | 0.91 | true     | VSync_memclr                        | asm/us/main/matchings/psxsdk/libetc/intr_vb/VSync_memclr.s 
 | 1.00 | true     | func_8001510C                       | asm/us/main/matchings/psxsdk/libgpu/sys/func_8001510C.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
+| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
+| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
+| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | func_801713C8                       | asm/us/servant/tt_000/matchings/bat/func_801713C8.s 
 | 1.00 | true     | func_us_801714F4                    | asm/us/servant/tt_001/matchings/ghost/func_us_801714F4.s 
 | 1.00 | true     | func_us_80172D50                    | asm/us/servant/tt_003/matchings/demon/func_us_80172D50.s 
@@ -4720,10 +4724,6 @@
 | 0.93 | true     | _SsContRpn1                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn1.s 
 | 0.93 | true     | _SsContRpn2                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn2.s 
 | 1.00 | true     | _SsSetProgramChange                 | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsSetProgramChange.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
-| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
-| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
 -------------------------------------------------------------------------------
 | 0.92 | true     | SsVabFakeHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabFakeHead.s 
 | 1.00 | true     | SsVabOpenHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabOpenHead.s 
@@ -5315,9 +5315,6 @@
 | 1.00 | true     | _SsContModulation                   | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContModulation.s 
 | 1.00 | true     | _SsContPortaTime                    | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContPortaTime.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | SsSeqPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSeqPlay.s 
-| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | SsUtSetReverbDelay                  | asm/us/main/matchings/psxsdk/libsnd/ut_rdel/SsUtSetReverbDelay.s 
 | 1.00 | true     | SsUtSetReverbFeedback               | asm/us/main/matchings/psxsdk/libsnd/ut_rfb/SsUtSetReverbFeedback.s 
 -------------------------------------------------------------------------------
@@ -5347,6 +5344,9 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | SpuRead                             | asm/us/main/matchings/psxsdk/libspu/s_r/SpuRead.s 
 | 1.00 | true     | SpuWrite                            | asm/us/main/matchings/psxsdk/libspu/s_w/SpuWrite.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | SpuSetVoiceAttr                     | asm/us/main/matchings/psxsdk/libspu/s_sva/SpuSetVoiceAttr.s 
+| 0.90 | true     | func_801BA6A8                       | asm/us/st/sel/matchings/libpress/func_801BA6A8.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8016B97C                       | asm/us/ric/matchings/2F8E8/func_8016B97C.s 
 | 0.98 | false    | BO6_RicEntitySubwpnReboundStone     | asm/us/boss/bo6/nonmatchings/us_3E79C/BO6_RicEntitySubwpnReboundStone.s 
