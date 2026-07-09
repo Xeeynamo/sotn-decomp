@@ -69,9 +69,10 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9F84, func_060A9F84);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA0A0, func_060AA0A0);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA260, func_060AA260);
 
-void RicSetStep(s16 step) {
+// RicSetStep
+void func_060AA4BC(s16 step) {
     PLAYER.step = step;
-    PLAYER.step_s = 0;
+    PLAYER.step_s = 1;
 }
 
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA4D8, func_060AA4D8);
