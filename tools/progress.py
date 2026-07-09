@@ -438,6 +438,7 @@ if __name__ == "__main__":
     progress["sttop"] = DecompProgressStats("sttop", "st/top")
     progress["stwrp"] = DecompProgressStats("stwrp", "st/wrp")
     progress["strare"] = DecompProgressStats("strare", "st/rare")
+    progress["strcen"] = DecompProgressStats("strcen", "st/rcen")
     progress["strcat"] = DecompProgressStats("strcat", "st/rcat")
     progress["strno3"] = DecompProgressStats("strno3", "st/rno3")
     progress["strnz0"] = DecompProgressStats("strnz0", "st/rnz0")

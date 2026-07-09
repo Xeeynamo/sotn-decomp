@@ -1047,6 +1047,9 @@ files:
             - [0x12E54, palette, pal_skeleton, 16] # 0x260
             - [0x12E74, skip]
   - target: disks/us/ST/RCEN/RCEN.BIN
+    asset_path: assets/st/rcen
+    src_path: src/st/rcen
+    splat_config_path: config/splat.us.strcen.yaml
   - target: disks/us/ST/RCHI/RCHI.BIN
   - target: disks/us/ST/RDAI/RDAI.BIN
   - target: disks/us/ST/RLIB/RLIB.BIN
