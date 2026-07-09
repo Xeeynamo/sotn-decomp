@@ -62,26 +62,27 @@ u8 D_8018E514[] = {
 #include "gen/D_8018E514.h"
 };
 
+// Unused. Stripped on PSP. Ifdef here because on PSP the .h file doesn't exist
 #ifndef VERSION_PSP
-u16 big_pal_unused[] = {
-#include "gen/big_pal_unused.h"
+u16 e_skyswirl_p[] = {
+#include "gen/e_skyswirl_p.h"
 };
 #endif
 
-u16 D_8018FF08[] = {
-#include "gen/D_8018FF08.h"
+u16 pal_fire_warg[] = {
+#include "gen/pal_fire_warg.h"
 };
-u16 D_80190008[] = {
-#include "gen/D_80190008.h"
+u16 pal_2e0[] = {
+#include "gen/pal_2e0.h"
 };
-u16 D_801902C8[] = {
-#include "gen/D_801902C8.h"
+u16 pal_jacko_bones[] = {
+#include "gen/pal_jacko_bones.h"
 };
-u16 D_80190308[] = {
-#include "gen/D_80190308.h"
+u16 pal_nova_skeleton[] = {
+#include "gen/pal_nova_skeleton.h"
 };
-u16 D_801903A8[] = {
-#include "gen/D_801903A8.h"
+u16 pal_dragons[] = {
+#include "gen/pal_dragons.h"
 };
 
 // Stripped on PSP
@@ -90,9 +91,9 @@ u16 pal_unused[] = {
 #include "gen/pal_unused.h"
 };
 #endif
-u16 D_80190948[] = {
-#include "gen/D_80190948.h"
+u16 pal_venus_weed[] = {
+#include "gen/pal_venus_weed.h"
 };
-u16 D_80190E68[] = {
-#include "gen/D_80190E68.h"
+u16 pal_dodo[] = {
+#include "gen/pal_dodo.h"
 };
