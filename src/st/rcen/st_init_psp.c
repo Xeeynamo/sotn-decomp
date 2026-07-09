@@ -3,22 +3,44 @@
 
 #include "../pfn_entity_update.h"
 
+#include <cutscene.h>
+
 extern LayoutEntity* D_8D2DEF0;
 extern LayoutEntity* D_8D2DFC4;
 
 extern Overlay OVL_EXPORT(Overlay);
 
-extern char cutscene_script_1_it[];
-extern char cutscene_script_1_sp[];
-extern char cutscene_script_1_fr[];
-extern char cutscene_script_1_ge[];
-extern char cutscene_script_1_en[];
+static u8 cutscene_script_pre_fight_it[] = {
+#include "gen/cutscene_script_pre_fight_it.h"
+};
+static u8 cutscene_script_pre_fight_sp[] = {
+#include "gen/cutscene_script_pre_fight_sp.h"
+};
+static u8 cutscene_script_pre_fight_fr[] = {
+#include "gen/cutscene_script_pre_fight_fr.h"
+};
+static u8 cutscene_script_pre_fight_ge[] = {
+#include "gen/cutscene_script_pre_fight_ge.h"
+};
+static u8 cutscene_script_pre_fight_en[] = {
+#include "gen/cutscene_script_pre_fight_en.h"
+};
 
-extern char cutscene_script_2_it[];
-extern char cutscene_script_2_sp[];
-extern char cutscene_script_2_fr[];
-extern char cutscene_script_2_ge[];
-extern char cutscene_script_2_en[];
+static u8 cutscene_script_post_fight_it[] = {
+#include "gen/cutscene_script_post_fight_it.h"
+};
+static u8 cutscene_script_post_fight_sp[] = {
+#include "gen/cutscene_script_post_fight_sp.h"
+};
+static u8 cutscene_script_post_fight_fr[] = {
+#include "gen/cutscene_script_post_fight_fr.h"
+};
+static u8 cutscene_script_post_fight_ge[] = {
+#include "gen/cutscene_script_post_fight_ge.h"
+};
+static u8 cutscene_script_post_fight_en[] = {
+#include "gen/cutscene_script_post_fight_en.h"
+};
 
 s32 E_ID(BACKGROUND_BLOCK);
 s32 E_ID(LOCK_CAMERA);
@@ -46,10 +68,10 @@ s32 E_ID(UNK_27);
 s32 E_ID(UNK_28);
 
 u8* OVL_EXPORT(cutscene_script);
-u8* D_pspeu_09269628;
-u8* D_pspeu_09269620;
-u8* D_pspeu_09269618;
-u8* D_pspeu_09269610;
+u8* pre_fight_script_ptr1;
+u8* pre_fight_script_ptr2;
+u8* post_fight_script_ptr1;
+u8* post_fight_script_ptr2;
 
 #include "../get_lang_at.h"
 
@@ -82,25 +104,25 @@ static void InitEntityIds(void) {
 
 void OVL_EXPORT(Load)(void) {
     OVL_EXPORT(cutscene_script) = GetLangAt(
-        4, (u8*)cutscene_script_1_en, (u8*)cutscene_script_1_fr,
-        (u8*)cutscene_script_1_sp, (u8*)cutscene_script_1_ge,
-        (u8*)cutscene_script_1_it);
-    D_pspeu_09269628 = GetLangAt(
-        0, (u8*)cutscene_script_1_en, (u8*)cutscene_script_1_fr,
-        (u8*)cutscene_script_1_sp, (u8*)cutscene_script_1_ge,
-        (u8*)cutscene_script_1_it);
-    D_pspeu_09269620 = GetLangAt(
-        0, (u8*)cutscene_script_1_en, (u8*)cutscene_script_1_fr,
-        (u8*)cutscene_script_1_sp, (u8*)cutscene_script_1_ge,
-        (u8*)cutscene_script_1_it);
-    D_pspeu_09269618 = GetLangAt(
-        0, (u8*)cutscene_script_2_en, (u8*)cutscene_script_2_fr,
-        (u8*)cutscene_script_2_sp, (u8*)cutscene_script_2_ge,
-        (u8*)cutscene_script_2_it);
-    D_pspeu_09269610 = GetLangAt(
-        0, (u8*)cutscene_script_2_en, (u8*)cutscene_script_2_fr,
-        (u8*)cutscene_script_2_sp, (u8*)cutscene_script_2_ge,
-        (u8*)cutscene_script_2_it);
+        4, (u8*)cutscene_script_pre_fight_en, (u8*)cutscene_script_pre_fight_fr,
+        (u8*)cutscene_script_pre_fight_sp, (u8*)cutscene_script_pre_fight_ge,
+        (u8*)cutscene_script_pre_fight_it);
+    pre_fight_script_ptr1 = GetLangAt(
+        0, (u8*)cutscene_script_pre_fight_en, (u8*)cutscene_script_pre_fight_fr,
+        (u8*)cutscene_script_pre_fight_sp, (u8*)cutscene_script_pre_fight_ge,
+        (u8*)cutscene_script_pre_fight_it);
+    pre_fight_script_ptr2 = GetLangAt(
+        0, (u8*)cutscene_script_pre_fight_en, (u8*)cutscene_script_pre_fight_fr,
+        (u8*)cutscene_script_pre_fight_sp, (u8*)cutscene_script_pre_fight_ge,
+        (u8*)cutscene_script_pre_fight_it);
+    post_fight_script_ptr1 = GetLangAt(
+        0, (u8*)cutscene_script_post_fight_en,
+        (u8*)cutscene_script_post_fight_fr, (u8*)cutscene_script_post_fight_sp,
+        (u8*)cutscene_script_post_fight_ge, (u8*)cutscene_script_post_fight_it);
+    post_fight_script_ptr2 = GetLangAt(
+        0, (u8*)cutscene_script_post_fight_en,
+        (u8*)cutscene_script_post_fight_fr, (u8*)cutscene_script_post_fight_sp,
+        (u8*)cutscene_script_post_fight_ge, (u8*)cutscene_script_post_fight_it);
 
     InitEntityIds();
     PfnEntityUpdates = OVL_EXPORT(EntityUpdates);

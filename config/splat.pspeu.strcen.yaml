@@ -75,7 +75,8 @@ segments:
       - [0x18038, .data, rcen/e_room_fg]
       - [0x180D8, data]
       - [0x1A5A0, .data, rcen/e_init]
-      - [0x1A720, data]
+      - [0x1A720, data] # RCEN_rooms
+      - [0x1A750, .data, rcen/st_init_psp]
       - [0x1C420, .data, rcen/e_breakable]
       - [0x1C470, data]
       - [0x314C8, .data, rcen/header]

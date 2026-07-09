@@ -139,10 +139,10 @@ static u8 v_coords[8];
 static bool dialogue_started;
 
 extern u8* OVL_EXPORT(cutscene_script); // Defined by st_init
-extern u8* D_pspeu_09269628;            // Defined by st_init
-extern u8* D_pspeu_09269618;            // Defined by st_init
-extern u8* D_pspeu_09269610;            // Defined by st_init
-extern u8* D_pspeu_09269620;
+extern u8* pre_fight_script_ptr1;       // Defined by st_init
+extern u8* pre_fight_script_ptr2;       // Defined by st_init
+extern u8* post_fight_script_ptr1;      // Defined by st_init
+extern u8* post_fight_script_ptr2;      // Defined by st_init
 
 extern u32 gfx_portrait_alucard;
 extern u32 D_893DD0C;
@@ -245,16 +245,16 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
     case DIALOGUE_INIT:
         if (self->params) {
 #ifdef VERSION_PSP
-            i = SetCutsceneScript(D_pspeu_09269618);
-            D_pspeu_09269918 = (u8*)D_pspeu_09269610;
+            i = SetCutsceneScript(post_fight_script_ptr1);
+            D_pspeu_09269918 = (u8*)post_fight_script_ptr2;
 #else
             i = SetCutsceneScript(OVL_EXPORT(cutscene_script));
 #endif
         } else {
 #ifdef VERSION_PSP
             i = SetCutsceneScript(OVL_EXPORT(cutscene_script));
-            D_pspeu_09269918 = (u8*)D_pspeu_09269628;
-            *D_pspeu_09269620 = g_CastleFlags[SHAFT_FIGHT_CS_UNK2];
+            D_pspeu_09269918 = (u8*)pre_fight_script_ptr1;
+            *pre_fight_script_ptr2 = g_CastleFlags[SHAFT_FIGHT_CS_UNK2];
 #else
             i = SetCutsceneScript(OVL_EXPORT(cutscene_script) + 0x129);
 #endif
