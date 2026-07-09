@@ -764,6 +764,22 @@ files:
     asset_path: assets/st/rcen
     src_path: src/st/rcen
     splat_config_path: config/splat.pspeu.strcen.yaml
+    segments:
+      - start: 0x80
+        vram: 0x09237700
+        assets:
+          - [0x80, skip]
+          - [0x1A750, cutscene, cutscene_script_pre_fight_it]
+          - [0x1AC28, cutscene, cutscene_script_pre_fight_sp]
+          - [0x1B068, cutscene, cutscene_script_pre_fight_fr]
+          - [0x1B580, cutscene, cutscene_script_pre_fight_ge]
+          - [0x1BA98, cutscene, cutscene_script_pre_fight_en]
+          - [0x1BE48, cutscene, cutscene_script_post_fight_it]
+          - [0x1BF80, cutscene, cutscene_script_post_fight_sp]
+          - [0x1C0A0, cutscene, cutscene_script_post_fight_fr]
+          - [0x1C1D8, cutscene, cutscene_script_post_fight_ge]
+          - [0x1C320, cutscene, cutscene_script_post_fight_en]
+          - [0x1C420, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rchi.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rdai.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rlib.bin
