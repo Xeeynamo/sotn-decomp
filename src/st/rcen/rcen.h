@@ -9,6 +9,8 @@
 
 enum Palettes {
     PAL_NONE,
+    PAL_PORTRAIT_ALUCARD = 0x210,
+    PAL_PORTRAIT_SHAFT = 0x218
 };
 
 enum Entities {
