@@ -1,0 +1,102 @@
+options:
+  platform: psp
+  basename: strcen
+  base_path: ..
+  build_path: build/pspeu
+  target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rcen.bin
+  asm_path: asm/pspeu/st/rcen_psp
+  asset_path: assets/st/rcen
+  src_path: src/st
+  ld_script_path: build/pspeu/strcen.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.pspeu.txt
+    - config/symbols.pspeu.strcen.txt
+  undefined_funcs_auto_path: build/pspeu/config/undefined_funcs_auto.pspeu.strcen.txt
+  undefined_syms_auto_path: build/pspeu/config/undefined_syms_auto.pspeu.strcen.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: pspeu_$VRAM
+  disassemble_all: true
+  section_order:
+    - .text
+    - .data
+    - .rodata
+    - .bss
+  ld_bss_is_noload: true
+  disasm_unknown: true
+  global_vram_start: 0x08000000
+  ld_generate_symbol_per_data_segment: true
+  asm_inc_header: |
+    .set noat      /* allow manual use of $at */
+    .set noreorder /* don't insert nops after branches */
+sha1: 58207c81d57b368d923dbacc1dc7dc5cc4f4ae82
+segments:
+  - [0x0, bin, mwo_header]
+  - name: strcen
+    type: code
+    start: 0x80
+    vram: 0x09237700
+    bss_start_address: 0x09269580
+    bss_size: 0x800
+    align: 128
+    subalign: 8
+    subsegments:
+      - [0x80, c, rcen/create_entity]
+      - [0x1028, c, rcen/e_stage_name]
+      - [0x1EA8, c, rcen/e_red_door]
+      - [0x31B0, c, rcen/st_update]
+      - [0x36E8, c, rcen/e_particles]
+      - [0x4C78, c, rcen/e_collect]
+      - [0x8EC8, c, rcen/e_misc]
+      - [0x95D0, c, rcen/collision]
+      - [0xB7A8, c, rcen/popup]
+      - [0xBDA0, c, rcen/e_room_fg]
+      - [0xBEB8, c, rcen/st_common]
+      - [0xCF80, c, rcen/prim_helpers]
+      - [0xD6C0, c, rcen/st_init_psp]
+      - [0xDA50, c, rcen/e_breakable]
+      - [0xDBD0, c, rcen_psp/e_elevator]
+      - [0xE520, c, rcen/cutscene]
+      - [0x11188, c, rcen/e_room_bg]
+      - [0x11298, c, rcen_psp/unk_2BD24]
+      - [0x11DA0, c, rcen/e_lock_camera]
+      - [0x12520, c, rcen_psp/e_shaft]
+      - [0x16060, c, rcen_psp/unk_1F0D8]
+      - [0x17058, c, rcen_psp/unk_1D260]
+      - [0x17600, .data, rcen/e_red_door]
+      - [0x17618, .data, rcen/st_update]
+      - [0x17648, .data, rcen/e_particles]
+      - [0x176C8, .data, rcen/e_collect]
+      - [0x17C10, .data, rcen/e_misc]
+      - [0x17C60, .data, rcen/collision]
+      - [0x18038, .data, rcen/e_room_fg]
+      - [0x180D8, data]
+      - [0x1A5A0, .data, rcen/e_init]
+      - [0x1A720, data] # RCEN_rooms
+      - [0x1A750, .data, rcen/st_init_psp]
+      - [0x1C420, .data, rcen/e_breakable]
+      - [0x1C470, data]
+      - [0x314C8, .data, rcen/header]
+      - [0x31508, data, rcen_psp/e_elevator]
+      - [0x31538, .data, rcen/cutscene]
+      - [0x31900, data] # background_block_init
+      - [0x31A10, .data, rcen/e_lock_camera]
+      - [0x31A30, data]
+      - [0x31D00, .rodata, rcen/e_red_door]
+      - [0x31D18, .rodata, rcen/e_collect]
+      - [0x31D78, .rodata, rcen/cutscene]
+      - [0x31E30, .rodata, rcen_psp/e_shaft]
+      - [0x31E50, .rodata, rcen_psp/unk_1F0D8]
+      - [0x31F00, .bss, rcen/create_entity]
+      - [0x31F20, .bss, rcen/st_update]
+      - [0x31F60, .bss, rcen/e_collect]
+      - [0x31F80, bss, 31F80]
+      - [0x31F90, .bss, rcen/st_init_psp]
+      - [0x32078, .bss, rcen/e_breakable]
+      - [0x32080, bss, 32080] # prize_drops
+      - [0x32088, .bss, rcen/cutscene]
+      - [0x32698, bss, 32698] # e_shaft
+  - [0x32700]
