@@ -1,1 +1,2 @@
 _DestroyEntity = 0x0600FFB8;
+_d_06086390 = 0x06086390;

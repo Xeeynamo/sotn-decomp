@@ -54,7 +54,9 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9958, func_060A9958);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9990, func_060A9990);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9BC4, func_060A9BC4);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9CE8, func_060A9CE8);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9CF8, func_060A9CF8);
+
+void func_060AF4A0(void) { func_060AA4BC(1); }
+
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9D10, func_060A9D10);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9DA4, func_060A9DA4);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9E40, func_060A9E40);
@@ -173,7 +175,7 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B7E08, func_060B7E08);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B7F50, func_060B7F50);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B805C, func_060B805C);
 
-void func_060B82AC()  {}
+void func_060B82AC() {}
 
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B82B8, func_060B82B8);
 // function, splitter bugs
@@ -226,12 +228,35 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE064, func_060BE064);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE258, func_060BE258);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE308, func_060BE308);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE3D4, func_060BE3D4);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE414, func_060BE414);
+
+// same sequence of funcs as in richter
+
+s32 d_06086390;
+void func_060BE414(void) {
+    s32* iVar2;
+    d_06086390 = 0;
+    iVar2 = func_060784A8();
+    iVar2[0x4500] = 0xffffffff;
+}
+
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE440, func_060BE440);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE54C, func_060BE54C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE618, func_060BE618);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE6D4, func_060BE6D4);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE700, func_060BE700);
+
+void func_060BE6D4(void) {
+    int* iVar2;
+    d_06086390 = 4;
+    iVar2 = func_060784A8();
+    iVar2[0x4500] = 0xffffffff;
+}
+
+void func_060BE700(void) {
+    int* iVar2;
+    d_06086390 = 5;
+    iVar2 = func_060784A8();
+    iVar2[0x4500] = 0xffffffff;
+}
+
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE72C, func_060BE72C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE854, func_060BE854);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE994, func_060BE994);
