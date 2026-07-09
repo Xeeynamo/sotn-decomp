@@ -1083,7 +1083,7 @@ files:
           - [0xC860, cmpgfx, D_8018C860, 128, 128, 4]
           - [0xD3EC, cmpgfx, D_8018D3EC, 128, 128, 4]
           - [0xE514, cmpgfx, D_8018E514, 128, 128, 4]
-          - [0xED88, skip]
+          - [0xED88, palette, big_pal_unused, 16]
           - [0xFF08, palette, D_8018FF08, 16]
           - [0x10008, palette, D_80190008, 16]
           - [0x102C8, palette, D_801902C8, 16]
