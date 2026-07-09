@@ -577,7 +577,7 @@ void func_psp_092396D8(s32 gfxId, s16 x, s16 y) {
 
     func_801ACBE4(gfxId, 0);
     prim = &g_PrimBuf[D_801BAF18[gfxId][0]];
-    if (D_psp_08B42050 == 0x2000) {
+    if (g_ConfirmButton == PAD_CIRCLE) {
         SetTexturedPrimRect(prim, x, y, 0x10, 0x10, 0xA0, 0x60);
     } else {
         SetTexturedPrimRect(prim, x, y, 0x10, 0x10, 0xA0, 0x70);
@@ -589,7 +589,7 @@ void func_psp_092397B8(s32 gfxId, s16 x, s16 y) {
 
     func_801ACBE4(gfxId, 0);
     prim = &g_PrimBuf[D_801BAF18[gfxId][0]];
-    if (D_psp_08B42050 == 0x2000) {
+    if (g_ConfirmButton == PAD_CIRCLE) {
         SetTexturedPrimRect(prim, x, y, 0x10, 0x10, 0xA0, 0x70);
     } else {
         SetTexturedPrimRect(prim, x, y, 0x10, 0x10, 0xA0, 0x60);
@@ -820,7 +820,7 @@ void UpdateNameEntry(void) {
         }
     }
 
-    if (g_pads[0].tapped & D_psp_08B42050) { // Input Character
+    if (g_pads[0].tapped & g_ConfirmButton) { // Input Character
         g_api.PlaySfx(SFX_UI_NAME_ENTRY);
         g_InputSaveName[g_InputCursorPos] = g_AsciiSet[D_801BC3E0];
         g_InputCursorPos++;
@@ -829,7 +829,7 @@ void UpdateNameEntry(void) {
         }
     }
 
-    if (g_pads[0].tapped & D_psp_08B42054) { // Backspace
+    if (g_pads[0].tapped & g_CancelButton) { // Backspace
         g_InputCursorPos--;
         if (g_InputCursorPos == -1) {
             g_InputCursorPos = 7;
@@ -1244,7 +1244,7 @@ void OVL_EXPORT(Update)(void) {
     case Upd_Eng_MainMenuIdle:
         func_801AD590();
         func_801AD490();
-        if (g_pads[0].tapped & D_psp_08B42050) {
+        if (g_pads[0].tapped & g_ConfirmButton) {
             switch (g_MainMenuCursor) {
             case 0:
                 g_api.PlaySfx(SFX_UI_CONFIRM);
@@ -1291,7 +1291,7 @@ void OVL_EXPORT(Update)(void) {
             }
         }
         if ((g_pads[0].tapped & PAD_SELECT) ||
-            ((g_pads[0].tapped & D_psp_08B42054) && i == 8 &&
+            ((g_pads[0].tapped & g_CancelButton) && i == 8 &&
              g_InputCursorPos == 0)) {
             g_GameEngineStep = Upd_Eng_FileSelect;
         } else {
@@ -1383,13 +1383,13 @@ void OVL_EXPORT(Update)(void) {
     case 0x1000:
         func_801ADF94(0x84, 0);
         DrawNavigationTips(Tips_YesNo);
-        if (g_pads[0].tapped & D_psp_08B42054) {
+        if (g_pads[0].tapped & g_CancelButton) {
             DrawNavigationTips(Tips_Generic);
             func_801ADF94(1, 0);
             func_801B25D4("　", 4);
             func_801B25D4("　", 5);
             g_GameEngineStep = Upd_Eng_51;
-        } else if (g_pads[0].tapped & D_psp_08B42050) {
+        } else if (g_pads[0].tapped & g_ConfirmButton) {
             LoadQuickSaveData(g_Pix, 0x2000);
             ApplySaveData(g_Pix);
             if (g_Pix[0][0x1FFF] == 0xFF) {
@@ -1408,11 +1408,11 @@ void OVL_EXPORT(Update)(void) {
     case Upd_Eng_64:
         func_801ADF94(0x81, 0);
         DrawNavigationTips(Tips_YesNo);
-        if (g_pads[0].tapped & D_psp_08B42054) {
+        if (g_pads[0].tapped & g_CancelButton) {
             func_801AE9A8();
             func_801AD490();
             g_GameEngineStep = Upd_Eng_MainMenuIdle;
-        } else if (g_pads[0].tapped & D_psp_08B42050) {
+        } else if (g_pads[0].tapped & g_ConfirmButton) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
             g_GameEngineStep = Upd_Eng_0x10;
         }
@@ -1420,19 +1420,19 @@ void OVL_EXPORT(Update)(void) {
     case Upd_Eng_65:
         func_801ADF94(0x83, 0);
         DrawNavigationTips(Tips_YesNo);
-        if (g_pads[0].tapped & D_psp_08B42054) {
+        if (g_pads[0].tapped & g_CancelButton) {
             D_801BAF0C = 0xFF;
             DrawNavigationTips(Tips_Generic);
             func_801B2608(9, 4);
             func_801B2608(0xA, 5);
             g_GameEngineStep = Upd_Eng_51;
-        } else if (g_pads[0].tapped & D_psp_08B42050) {
+        } else if (g_pads[0].tapped & g_ConfirmButton) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
             g_GameEngineStep = Upd_Eng_0x10;
         }
         break;
     case Upd_Eng_51:
-        if (g_pads[0].tapped & D_psp_08B42054) {
+        if (g_pads[0].tapped & g_CancelButton) {
             func_801AE9A8();
             func_801AD490();
             g_GameEngineStep = Upd_Eng_MainMenuIdle;
@@ -1472,7 +1472,7 @@ void OVL_EXPORT(Update)(void) {
                 func_801ADF94(0x81, 0);
                 DrawNavigationTips(Tips_YesNo);
                 g_GameEngineStep = Upd_Eng_65;
-            } else if (g_pads[0].tapped & D_psp_08B42050) {
+            } else if (g_pads[0].tapped & g_ConfirmButton) {
                 port = D_801D6B04 / 15;
                 slot = D_801D6B04 % 15;
                 if (g_SaveSummary[port].icon[slot] >= 0) {
@@ -1530,7 +1530,7 @@ void OVL_EXPORT(Update)(void) {
     case Upd_Eng_0xA0:
         DrawNavigationTips(Tips_Confirm);
         func_801ADF94(0x82, 0);
-        if (g_pads[0].tapped & D_psp_08B42050) {
+        if (g_pads[0].tapped & g_ConfirmButton) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
             func_801AE9A8();
             func_801AD490();
@@ -1538,14 +1538,14 @@ void OVL_EXPORT(Update)(void) {
         }
         break;
     case Upd_Eng_147:
-        if (g_pads[0].tapped & D_psp_08B42054) {
+        if (g_pads[0].tapped & g_CancelButton) {
             func_801AE9A8();
             func_801AD490();
             g_GameEngineStep = Upd_Eng_MainMenuIdle;
         } else {
             UpdateFileSelect(0);
             func_801ADF94(2, 0);
-            if (g_pads[0].tapped & D_psp_08B42050) {
+            if (g_pads[0].tapped & g_ConfirmButton) {
                 port = D_801D6B04 / 15;
                 slot = D_801D6B04 % 15;
                 if (g_SaveSummary[port].icon[slot] >= 0) {
@@ -1569,7 +1569,7 @@ void OVL_EXPORT(Update)(void) {
             }
         }
         if ((g_pads[0].tapped & PAD_SELECT) ||
-            (g_pads[0].tapped & D_psp_08B42054 && i == 8 &&
+            (g_pads[0].tapped & g_CancelButton && i == 8 &&
              g_InputCursorPos == 0)) {
             SelectMainMenuOption(MAIN_MENU_CURSOR_FILE_DELETE);
             g_GameEngineStep = Upd_Eng_146;
@@ -1636,7 +1636,7 @@ void OVL_EXPORT(Update)(void) {
     case Upd_Eng_152:
         DrawNavigationTips(Tips_Confirm);
         func_801ADF94(0x82, 0);
-        if (g_pads[0].tapped & D_psp_08B42050) {
+        if (g_pads[0].tapped & g_ConfirmButton) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
             func_801ACBE4(GFX_UNK_15, 8);
             g_GameEngineStep = Upd_Eng_NameChange;
@@ -1645,7 +1645,7 @@ void OVL_EXPORT(Update)(void) {
     case Upd_Eng_153:
         DrawNavigationTips(Tips_Confirm);
         func_801ADF94(0x82, 0);
-        if (g_pads[0].tapped & D_psp_08B42050) {
+        if (g_pads[0].tapped & g_ConfirmButton) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
             g_GameEngineStep = Upd_Eng_146;
         }
@@ -1691,7 +1691,7 @@ void OVL_EXPORT(Update)(void) {
     case Upd_Eng_0x60:
         DrawNavigationTips(Tips_Confirm);
         func_801ADF94(0x82, 0);
-        if (g_pads[0].tapped & D_psp_08B42050) {
+        if (g_pads[0].tapped & g_ConfirmButton) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
             func_801AE9A8();
             func_801AD490();
@@ -1699,14 +1699,14 @@ void OVL_EXPORT(Update)(void) {
         }
         break;
     case Upd_Eng_83:
-        if (g_pads[0].tapped & D_psp_08B42054) {
+        if (g_pads[0].tapped & g_CancelButton) {
             func_801AE9A8();
             func_801AD490();
             g_GameEngineStep = Upd_Eng_MainMenuIdle;
         } else {
             UpdateFileSelect(0);
             func_801ADF94(2, 0);
-            if (g_pads[0].tapped & D_psp_08B42050) {
+            if (g_pads[0].tapped & g_ConfirmButton) {
                 port = D_801D6B04 / 15;
                 slot = D_801D6B04 % 15;
                 if (g_SaveSummary[port].icon[slot] >= 0) {
@@ -1726,7 +1726,7 @@ void OVL_EXPORT(Update)(void) {
         UpdateFileSelect(0);
         func_801ADF94(2, 1);
         func_801AE6D0();
-        if (g_pads[0].tapped & D_psp_08B42054) {
+        if (g_pads[0].tapped & g_CancelButton) {
             func_801ACBE4(GFX_UNK_18, 8);
             func_801ACBE4(GFX_UNK_19, 8);
             func_801ACBE4(GFX_UNK_20, 8);
@@ -1734,7 +1734,7 @@ void OVL_EXPORT(Update)(void) {
             func_801B2608(0x1D, 5);
             g_GameEngineStep--;
         } else {
-            if (g_pads[0].tapped & D_psp_08B42050) {
+            if (g_pads[0].tapped & g_ConfirmButton) {
                 port = D_801D6B04 / 15;
                 slot = D_801D6B04 % 15;
                 if (D_801BC3EC != D_801D6B04) {
@@ -1792,7 +1792,7 @@ void OVL_EXPORT(Update)(void) {
         DrawNavigationTips(Tips_Confirm);
         func_801ADF94(0x82, 1);
         func_801AE6D0();
-        if (g_pads[0].tapped & D_psp_08B42050) {
+        if (g_pads[0].tapped & g_ConfirmButton) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
             func_801ACBE4(GFX_UNK_15, 8);
             g_GameEngineStep = Upd_Eng_FileCopy;
@@ -1802,7 +1802,7 @@ void OVL_EXPORT(Update)(void) {
         DrawNavigationTips(Tips_Confirm);
         func_801ADF94(0x82, 1);
         func_801AE6D0();
-        if (g_pads[0].tapped & D_psp_08B42050) {
+        if (g_pads[0].tapped & g_ConfirmButton) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
             func_801ACBE4(GFX_UNK_18, 8);
             func_801ACBE4(GFX_UNK_19, 8);
@@ -1814,13 +1814,13 @@ void OVL_EXPORT(Update)(void) {
         DrawNavigationTips(Tips_YesNo);
         func_801ADF94(0x82, 1);
         func_801AE6D0();
-        if (g_pads[0].tapped & D_psp_08B42050) {
+        if (g_pads[0].tapped & g_ConfirmButton) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
             func_801B2608(0x22, 4);
             func_801B2608(0x23, 5);
             g_GameEngineStep = Upd_Eng_85;
         } else {
-            if (g_pads[0].tapped & D_psp_08B42054) {
+            if (g_pads[0].tapped & g_CancelButton) {
                 func_801B1F4C(5);
                 func_801B2608(0x1E, 4);
                 func_801B2608(0x1F, 5);
@@ -1871,7 +1871,7 @@ void OVL_EXPORT(Update)(void) {
     case Upd_Eng_0x80:
         DrawNavigationTips(Tips_Confirm);
         func_801ADF94(0x82, 0);
-        if (g_pads[0].tapped & D_psp_08B42050) {
+        if (g_pads[0].tapped & g_ConfirmButton) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
             func_801AE9A8();
             func_801AD490();
@@ -1879,7 +1879,7 @@ void OVL_EXPORT(Update)(void) {
         }
         break;
     case Upd_Eng_115:
-        if (g_pads[0].tapped & D_psp_08B42054) {
+        if (g_pads[0].tapped & g_CancelButton) {
             func_801AE9A8();
             func_801AD490();
             g_GameEngineStep = Upd_Eng_MainMenuIdle;
@@ -1887,7 +1887,7 @@ void OVL_EXPORT(Update)(void) {
             UpdateFileSelect(0);
             func_801ADF94(2, 0);
             DrawNavigationTips(Tips_Generic);
-            if (g_pads[0].tapped & D_psp_08B42050) {
+            if (g_pads[0].tapped & g_ConfirmButton) {
                 port = D_801D6B04 / 15;
                 slot = D_801D6B04 % 15;
                 if (g_SaveSummary[port].icon[slot] >= 0) {
@@ -1904,11 +1904,11 @@ void OVL_EXPORT(Update)(void) {
     case Upd_Eng_116:
         DrawNavigationTips(Tips_YesNo);
         func_801ADF94(0x82, 0);
-        if (g_pads[0].tapped & D_psp_08B42054) {
+        if (g_pads[0].tapped & g_CancelButton) {
             func_801B2608(0x25, 4);
             func_801B2608(0x26, 5);
             g_GameEngineStep--;
-        } else if (g_pads[0].tapped & D_psp_08B42050) {
+        } else if (g_pads[0].tapped & g_ConfirmButton) {
             port = D_801D6B04 / 15;
             slot = D_801D6B04 % 15;
             func_801ACBE4(GFX_UNK_15, 8);
@@ -1945,7 +1945,7 @@ void OVL_EXPORT(Update)(void) {
     case Upd_Eng_119:
         DrawNavigationTips(Tips_Confirm);
         func_801ADF94(0x82, 0);
-        if (g_pads[0].tapped & D_psp_08B42050) {
+        if (g_pads[0].tapped & g_ConfirmButton) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
             func_801ACBE4(GFX_UNK_15, 8);
             g_GameEngineStep = Upd_Eng_FileDelete;
@@ -1954,7 +1954,7 @@ void OVL_EXPORT(Update)(void) {
     case Upd_Eng_120:
         DrawNavigationTips(Tips_Confirm);
         func_801ADF94(0x82, 0);
-        if (g_pads[0].tapped & D_psp_08B42050) {
+        if (g_pads[0].tapped & g_ConfirmButton) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
             g_GameEngineStep = Upd_Eng_114;
         }

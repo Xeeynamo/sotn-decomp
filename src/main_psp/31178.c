@@ -54,7 +54,7 @@ static s32* D_psp_08DAF2CC;
 static s8 D_psp_08DAF2C8;
 
 extern s32 D_psp_08B42048;
-extern s32 D_psp_08B4204C;
+extern s32 g_ButtonSwap;
 
 void func_psp_08930290(void);
 s32 func_psp_08931488(void);
@@ -377,7 +377,7 @@ static void ShowErrorDialog(s32 errorVal) {
     memset(&msgDialogParam, 0, sizeof(pspUtilityMsgDialogParams));
     msgDialogParam.base.size = sizeof(pspUtilityMsgDialogParams);
     msgDialogParam.base.language = D_psp_08B42048;
-    msgDialogParam.base.buttonSwap = D_psp_08B4204C;
+    msgDialogParam.base.buttonSwap = g_ButtonSwap;
     msgDialogParam.base.graphicsThread = KERNEL_USER_HIGHEST_PRIORITY + 1;
     msgDialogParam.base.accessThread = KERNEL_USER_HIGHEST_PRIORITY + 3;
     msgDialogParam.base.fontThread = KERNEL_USER_HIGHEST_PRIORITY + 2;
@@ -730,7 +730,7 @@ void func_psp_08931228(void) {
     memset(param, 0, sizeof(PspUtilitySavedataParam));
     param->base.size = sizeof(PspUtilitySavedataParam);
     param->base.language = D_psp_08B42048;
-    param->base.buttonSwap = D_psp_08B4204C;
+    param->base.buttonSwap = g_ButtonSwap;
     param->base.graphicsThread = KERNEL_USER_HIGHEST_PRIORITY + 1;
     param->base.accessThread = KERNEL_USER_HIGHEST_PRIORITY + 3;
     param->base.fontThread = KERNEL_USER_HIGHEST_PRIORITY + 2;
@@ -992,7 +992,7 @@ s32 func_psp_08931D64(void) {
         break;
 
     case 12:
-        if (PadReadPSP() & D_psp_08B42050) {
+        if (PadReadPSP() & g_ConfirmButton) {
             D_psp_08E2E5E8++;
         } else if (var_s0 != 0) {
             D_psp_08E2E5F0 = (var_s0 < 0) ? 0 : 1;
@@ -1023,7 +1023,7 @@ s32 func_psp_08931D64(void) {
         break;
 
     case 22:
-        if (PadReadPSP() & D_psp_08B42050) {
+        if (PadReadPSP() & g_ConfirmButton) {
             D_psp_08E2E5E8++;
         } else if (var_s0 != 0) {
             D_psp_08E2E5F0 = (var_s0 < 0) ? 0 : 1;

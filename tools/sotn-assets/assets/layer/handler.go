@@ -59,12 +59,13 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 			roomLayers[i]["bg"] = layerData.bg.unpack(e.OvlName, addrPool)
 		}
 	}
-	if err := util.WriteJsonFile(filepath.Join(e.AssetDir, "layers.json"), roomLayers); err != nil {
+	if err := util.WriteJsonFile(assetPath(e.AssetDir, e.Name), roomLayers); err != nil {
 		return fmt.Errorf("unable to create layers file: %w", err)
 	}
 
+	tilesDir := filepath.Dir(filepath.Join(e.AssetDir, e.Name));
 	for offset, data := range tileMaps {
-		fileName := filepath.Join(e.AssetDir, tilemapFileName(e.OvlName, addrPool[offset]))
+		fileName := filepath.Join(tilesDir, tilemapFileName(e.OvlName, addrPool[offset]))
 		if err := util.WriteFile(fileName, data); err != nil {
 			return fmt.Errorf("unable to create %q: %w", fileName, err)
 		}
@@ -72,7 +73,7 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 
 	for offset, td := range tileDefs {
 		i := addrPool[offset]
-		if err := tiledef.Write(td, e.AssetDir, e.OvlName, strconv.Itoa(i)); err != nil {
+		if err := tiledef.Write(td, tilesDir, e.OvlName, strconv.Itoa(i)); err != nil {
 			return err
 		}
 	}
@@ -80,7 +81,7 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 }
 
 func (h *handler) Build(e assets.BuildArgs) error {
-	outString, err := buildLayers(e.AssetDir, filepath.Join(e.AssetDir, "layers.json"), e.SrcDir, e.OvlName)
+	outString, err := buildLayers(e.AssetDir, assetPath(e.AssetDir, e.Name), e.SrcDir, e.OvlName)
 	if err != nil {
 		return err
 	}
@@ -139,6 +140,9 @@ func tiledefClutsFileName(ovl string, n int) string {
 
 func tiledefCollisionsFileName(ovl string, n int) string {
 	return fmt.Sprintf("%s_tiledef_%d_cols.bin", ovl, n)
+}
+func assetPath(dir, name string) string {
+	return filepath.Join(dir, fmt.Sprintf("%s.json", name))
 }
 func sourcePath(dir, name string) string {
 	return filepath.Join(dir, fmt.Sprintf("gen/%s.h", name))

@@ -1,15 +1,1 @@
-g_EInitDodoBird = 0x80180A4C;
 RNO3_rooms = 0x80182B20;
-Random = 0x801B3EB0;
-CreateEntityFromEntity = 0x801B659C;
-DestroyEntity = 0x801B72C8;
-AnimateEntity = 0x801B73F8;
-GetDistanceToPlayerX = 0x801B75C8;
-GetSideToPlayer = 0x801B7638;
-MoveEntity = 0x801B767C;
-UnkCollisionFunc3 = 0x801B76D8;
-UnkCollisionFunc2 = 0x801B7950;
-AllocEntity = 0x801B7B38;
-SetStep = 0x801B7F08;
-InitializeEntity = 0x801B7FD8;
-PlaySfxPositional = 0x801BD38C;

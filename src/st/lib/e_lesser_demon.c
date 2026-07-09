@@ -5,6 +5,7 @@
 extern s32 D_us_80181ACC;
 
 #ifdef VERSION_PSP
+#define BUTTON_SYMBOL g_ConfirmButton
 extern s32 E_ID(ID_22);
 extern s32 E_ID(ID_21);
 extern s32 E_ID(ID_20);
@@ -1516,29 +1517,7 @@ void EntityLesserDemon(Entity* self) {
         break;
 
     case 32:
-        FntPrint("charal %x\n", self->animCurFrame);
-        if (g_pads[1].pressed & PAD_SQUARE) {
-            if (self->params) {
-                break;
-            }
-            self->animCurFrame++;
-            self->params |= 1;
-        } else {
-            self->params = 0;
-        }
-#ifdef VERSION_PSP
-        if (g_pads[1].pressed & D_psp_08B42050) {
-#else
-        if (g_pads[1].pressed & PAD_CIRCLE) {
-#endif
-            if (!self->step_s) {
-                self->animCurFrame--;
-                self->step_s |= 1;
-            }
-        } else {
-            self->step_s = 0;
-        }
-        break;
+#include "../pad2_anim_debug.h"
     }
     xOffset = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
     yOffset = self->posY.i.hi + g_Tilemap.scrollY.i.hi;

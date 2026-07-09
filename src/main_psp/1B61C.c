@@ -20,9 +20,9 @@ extern s32 D_psp_08B41FE0;
 extern s32 D_psp_08B42000; // kernel thread ID
 extern s32 D_psp_08B42044;
 extern s32 D_psp_08B42048;
-extern int D_psp_08B4204C; // button swap
-extern u32 D_psp_08B42050;
-extern u32 D_psp_08B42054;
+extern int g_ButtonSwap;
+extern u32 g_ConfirmButton;
+extern u32 g_CancelButton;
 extern s32 g_UserLanguage;
 extern char* D_psp_08B4205C;
 extern char* D_psp_08B42060;
@@ -150,13 +150,13 @@ int main(int argc, char* argv[]) {
         break;
     }
     sceUtilityGetSystemParamInt(
-        PSP_SYSTEMPARAM_ID_INT_CTRL_ASSIGN, &D_psp_08B4204C);
-    if (D_psp_08B4204C == PSP_SYSTEMPARAM_CTRL_ASSIGN_CIRCLE_IS_ENTER) {
-        D_psp_08B42050 = PSP_CTRL_CIRCLE;
-        D_psp_08B42054 = PSP_CTRL_CROSS;
-    } else if (D_psp_08B4204C == PSP_SYSTEMPARAM_CTRL_ASSIGN_CROSS_IS_ENTER) {
-        D_psp_08B42050 = PSP_CTRL_CROSS;
-        D_psp_08B42054 = PSP_CTRL_CIRCLE;
+        PSP_SYSTEMPARAM_ID_INT_CTRL_ASSIGN, &g_ButtonSwap);
+    if (g_ButtonSwap == PSP_SYSTEMPARAM_CTRL_ASSIGN_CIRCLE_IS_ENTER) {
+        g_ConfirmButton = PSP_CTRL_CIRCLE;
+        g_CancelButton = PSP_CTRL_CROSS;
+    } else if (g_ButtonSwap == PSP_SYSTEMPARAM_CTRL_ASSIGN_CROSS_IS_ENTER) {
+        g_ConfirmButton = PSP_CTRL_CROSS;
+        g_CancelButton = PSP_CTRL_CIRCLE;
     }
     LoadPSPModules();
     func_psp_089127E8();
