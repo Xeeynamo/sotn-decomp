@@ -53,7 +53,11 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A973C, func_060A973C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9958, func_060A9958);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9990, func_060A9990);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9BC4, func_060A9BC4);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9CE8, func_060A9CE8);
+
+s32 func_060A9CE8(void) {
+    s32 pad[5];
+    return 1;
+}
 
 void func_060AF4A0(void) { func_060AA4BC(1); }
 
@@ -65,6 +69,12 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9F84, func_060A9F84);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA0A0, func_060AA0A0);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA260, func_060AA260);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA4BC, func_060AA4BC);
+
+void RicSetStep(s16 step) {
+    PLAYER.step = step;
+    PLAYER.step_s = 0;
+}
+
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA4D8, func_060AA4D8);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA4FC, func_060AA4FC);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA608, func_060AA608);

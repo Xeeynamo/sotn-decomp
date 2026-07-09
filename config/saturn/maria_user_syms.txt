@@ -1,2 +1,5 @@
 _DestroyEntity = 0x0600FFB8;
 _d_06086390 = 0x06086390;
+_RicSetStep = 0x060AA4BC;
+_g_Player = 0x0605C140;
+_g_Entities = 0x060997F8;
