@@ -196,10 +196,77 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AB294, func_060AB294);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AB6C4, func_060AB6C4);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60ABAA4, func_060ABAA4);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60ABC54, func_060ABC54);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60ABE0C, func_060ABE0C);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60ABE4C, func_060ABE4C);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60ABE94, func_060ABE94);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60ABEF8, func_060ABEF8);
+
+#define E_NONE 0
+// func_060AB980
+static Entity* RicGetFreeEntity(s16 start, s16 end) {
+    Entity* entity = &g_Entities[start];
+    s16 i;
+
+    for (i = start; i < end; i++, entity++) {
+        if (entity->entityId == E_NONE) {
+            return entity;
+        }
+    }
+    return NULL;
+}
+
+// func_060AB9C0
+static Entity* RicGetFreeEntityReverse(s16 start, s16 end) {
+    Entity* entity = &g_Entities[end - 1];
+    s16 i;
+    for (i = end - 1; i >= start; i--, entity--) {
+        if (entity->entityId == E_NONE) {
+            return entity;
+        }
+    }
+    return NULL;
+}
+
+#define LEN(x) ((s32)(sizeof(x) / sizeof(*(x))))
+s32 D_80174F80[11];
+// func_060ABA08
+// extra loop vs. ric version
+void func_8015F9F0(Entity* entity) {
+    s32 i;
+    s32 enemyId;
+    if (entity < &g_Entities[32]) {
+        for (i = 0;; i++) {
+            for (enemyId = 3; enemyId < LEN(D_80174F80) - 4; enemyId++) {
+                if (D_80174F80[enemyId] == i) {
+                    D_80174F80[enemyId] = i + 1;
+                    entity->enemyId = enemyId;
+                    return;
+                }
+            }
+        }
+    } else {
+        for (i = 0;; i++) {
+            for (enemyId = 7; enemyId < LEN(D_80174F80); enemyId++) {
+                if (D_80174F80[enemyId] == i) {
+                    D_80174F80[enemyId] = i + 1;
+                    entity->enemyId = enemyId;
+                    return;
+                }
+            }
+        }
+    }
+}
+
+extern u8 D_80154674[][4];
+extern u8 D_80174FAC;
+extern u8 D_80174FB0;
+extern u8 D_80174FB4;
+extern u8 D_80174FB8;
+
+// func_060ABEF8
+void func_8015FA5C(s32 arg0) {
+    D_80174FAC = D_80154674[arg0][0];
+    D_80174FB0 = D_80154674[arg0][1];
+    D_80174FB4 = D_80154674[arg0][2];
+    D_80174FB8 = D_80154674[arg0][3];
+}
+
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60ABF40, func_060ABF40);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60ABFF0, func_060ABFF0);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AC09C, func_060AC09C);
