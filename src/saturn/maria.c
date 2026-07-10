@@ -364,7 +364,27 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AE8D8, func_060AE8D8);
 
 void func_060AEAB8() {}
 
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AEAC4, func_060AEAC4);
+#define E_WEAPON 0x10
+#define STAGE_ENTITY_START 64
+
+// func_060AEAC4
+bool func_80162E9C(Entity* entity) {
+    Entity* e;
+    s32 i;
+    s16 objId;
+    s16 params;
+
+    objId = entity->entityId;
+    params = entity->params;
+    for (e = &g_Entities[E_WEAPON], i = E_WEAPON; i < STAGE_ENTITY_START; e++,
+        i++) {
+        if (objId == e->entityId && params == e->params && e != entity) {
+            return true;
+        }
+    }
+    return false;
+}
+
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AEB18, func_060AEB18);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AEFB4, func_060AEFB4);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AF17C, func_060AF17C);
