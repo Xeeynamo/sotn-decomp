@@ -1,20 +1,9 @@
 | Filename                     | Function Name   |   Length |   Branches | WIP   | %   |
 |------------------------------|-----------------|----------|------------|-------|-----|
 | alucard/f_nonmat/f60BD6C0.s  | func_060BD6C0   |        9 |          0 |       |     |
-| maria/f_nonmat/f60AEAB8.s    | func_060AEAB8   |        9 |          0 |       |     |
-| maria/f_nonmat/f60B09B4.s    | func_060B09B4   |        9 |          0 |       |     |
-| maria/f_nonmat/f60B09C0.s    | func_060B09C0   |        9 |          0 |       |     |
-| maria/f_nonmat/f60B3678.s    | func_060B3678   |        9 |          0 |       |     |
-| maria/f_nonmat/f60B82AC.s    | func_060B82AC   |        9 |          0 |       |     |
-| maria/f_nonmat/f60A9CE8.s    | func_060A9CE8   |       11 |          0 |       |     |
-| maria/f_nonmat/f60A9CF8.s    | func_060A9CF8   |       15 |          1 |       |     |
-| maria/f_nonmat/f60B099C.s    | func_060B099C   |       15 |          1 |       |     |
 | alucard/f_nonmat/f60A7DD0.s  | func_060A7DD0   |       16 |          0 |       |     |
 | game/f_nonmat/f607C0A0.s     | func_0607C0A0   |       17 |          0 |       |     |
-| maria/f_nonmat/f60AA4BC.s    | func_060AA4BC   |       17 |          0 |       |     |
 | game/f_nonmat/f607872C.s     | func_0607872C   |       17 |          1 |       |     |
-| maria/f_nonmat/f60B46A0.s    | func_060B46A0   |       17 |          1 |       |     |
-| maria/f_nonmat/f60A9130.s    | func_060A9130   |       18 |          1 |       |     |
 | zero/f_nonmat/f6019058.s     | func_06019058   |       18 |          1 |       |     |
 | zero/f_nonmat/f600CB04.s     | func_0600CB04   |       20 |          0 |       |     |
 | alucard/f_nonmat/f60A5574.s  | func_060A5574   |       20 |          1 |       |     |
@@ -34,9 +23,6 @@
 | zero/f_nonmat/f600FB0C.s     | func_0600FB0C   |       23 |          0 |       |     |
 | game/f_nonmat/f6074700.s     | func_06074700   |       23 |          1 |       |     |
 | zero/f_nonmat/f600A240.s     | func_0600A240   |       24 |          2 |       |     |
-| maria/f_nonmat/f60BE414.s    | func_060BE414   |       25 |          1 |       |     |
-| maria/f_nonmat/f60BE6D4.s    | func_060BE6D4   |       25 |          1 |       |     |
-| maria/f_nonmat/f60BE700.s    | func_060BE700   |       25 |          1 |       |     |
 | alucard/f_nonmat/f60A7D3C.s  | func_060A7D3C   |       26 |          1 |       |     |
 | zero/f_nonmat/f600D6C0.s     | func_0600D6C0   |       26 |          1 |       |     |
 | zero/f_nonmat/f6004C14.s     | func_06004C14   |       27 |          0 |       |     |
