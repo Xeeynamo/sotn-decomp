@@ -32,3 +32,5 @@ _memset = 0x06032ea8;
 _DAT_060c411c = 0x060c7d60;
 _memcpy = 0x06033024;
 _func_060BB330 = 0x060bdc7c;
+_RicSetStand = 0x060a9210;
+_RicSetFall = 0x060a939c;

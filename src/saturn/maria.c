@@ -26,7 +26,20 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A7DF4, func_060A7DF4);
 INCLUDE_ASM("asm/saturn/maria/data", d60A7F70, d_060A7F70);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A8248, func_060A8248);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A8308, func_060A8308);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A83C8, func_060A83C8);
+
+// func_060A83C8
+void RicStepHydrostorm(void) {
+    if (PLAYER.poseTimer < 0) {
+        RicSetStand(0);
+        g_Player.unk46 = 0;
+    }
+
+    if ((g_Player.vram_flag & TOUCHING_GROUND) == 0) {
+        RicSetFall();
+        g_Player.unk46 = 0;
+    }
+}
+
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A841C, func_060A841C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A8470, func_060A8470);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A8534, func_060A8534);
@@ -42,9 +55,13 @@ void func_060A9130(void) { func_060AA4BC(0xf0); }
 
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A914C, func_060A914C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9194, func_060A9194);
+
+// _RicSetStand
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9210, func_060A9210);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A926C, func_060A926C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9304, func_060A9304);
+
+// _RicSetFall
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A939C, func_060A939C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9474, func_060A9474);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A955C, func_060A955C);
