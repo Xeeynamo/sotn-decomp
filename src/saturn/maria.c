@@ -179,7 +179,19 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA9EC, func_060AA9EC);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AAA2C, func_060AAA2C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AAA68, func_060AAA68);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AB088, func_060AB088);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AB258, func_060AB258);
+
+extern Point32 g_RicSensorsCeiling[NUM_HORIZONTAL_SENSORS];
+extern Point32 g_RicSensorsFloor[NUM_HORIZONTAL_SENSORS];
+extern Point32 g_RicSensorsWall[NUM_VERTICAL_SENSORS * 2];
+
+// func_060AB258
+void RicGetPlayerSensor(Collider* col) {
+    col->unk14 = g_RicSensorsWall[0].x;
+    col->unk1C = g_RicSensorsWall[0].y;
+    col->unk18 = g_RicSensorsFloor[1].y - FIX(1);
+    col->unk20 = g_RicSensorsCeiling[1].y + FIX(1);
+}
+
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AB294, func_060AB294);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AB6C4, func_060AB6C4);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60ABAA4, func_060ABAA4);
