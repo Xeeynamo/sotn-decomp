@@ -68,8 +68,23 @@ void func_060A9130(void) { func_060AA4BC(0xf0); }
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A914C, func_060A914C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9194, func_060A9194);
 
-// _RicSetStand
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9210, func_060A9210);
+// func_060A9210
+extern AnimationFrame ric_anim_stand[];
+extern AnimationFrame ric_anim_stand_alt[];
+// new alt animation
+void RicSetStand(s32 velocityX) {
+    PLAYER.velocityX = velocityX;
+    PLAYER.velocityY = 0;
+    g_Player.unk44 = 0;
+
+    RicSetStep(PL_S_STAND);
+
+    if (g_Player.vram_flag & IN_AIR_OR_EDGE)
+        RicSetAnimation(ric_anim_stand_alt);
+    else
+        RicSetAnimation(ric_anim_stand);
+}
+
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A926C, func_060A926C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9304, func_060A9304);
 

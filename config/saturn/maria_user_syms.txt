@@ -34,3 +34,5 @@ _memcpy = 0x06033024;
 _func_060BB330 = 0x060bdc7c;
 _RicSetStand = 0x060a9210;
 _RicSetFall = 0x060a939c;
+_ric_anim_stand = 0x060c28e8;
+_ric_anim_stand_alt = 0x060c292c;
