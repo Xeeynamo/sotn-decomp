@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "inc_asm.h"
 #include "sattypes.h"
+#include "richter.h"
 
 INCLUDE_ASM("asm/saturn/maria/data", d60A5000, d_060A5000);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A5060, func_060A5060);
@@ -75,16 +76,104 @@ void func_060AA4BC(s16 step) {
     PLAYER.step_s = 0;
 }
 
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA4D8, func_060AA4D8);
+void RicSetAnimation(AnimationFrame* anim) {
+    g_CurrentEntity->anim = anim;
+    g_CurrentEntity->poseTimer = 0;
+    g_CurrentEntity->pose = 0;
+}
+
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA4FC, func_060AA4FC);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA608, func_060AA608);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA754, func_060AA754);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA784, func_060AA784);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA7B4, func_060AA7B4);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA830, func_060AA830);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA854, func_060AA854);
+
+// func_060AA754
+void RicDecelerateX(s32 speed) {
+    if (g_CurrentEntity->velocityX < 0) {
+        g_CurrentEntity->velocityX += speed;
+        if (g_CurrentEntity->velocityX > 0) {
+            g_CurrentEntity->velocityX = 0;
+        }
+    } else {
+        g_CurrentEntity->velocityX -= speed;
+        if (g_CurrentEntity->velocityX < 0)
+            g_CurrentEntity->velocityX = 0;
+    }
+}
+
+// func_060AA784
+void RicDecelerateY(s32 speed) {
+    if (g_CurrentEntity->velocityY < 0) {
+        g_CurrentEntity->velocityY += speed;
+        if (g_CurrentEntity->velocityY > 0) {
+            g_CurrentEntity->velocityY = 0;
+        }
+    } else {
+        g_CurrentEntity->velocityY -= speed;
+        if (g_CurrentEntity->velocityY < 0) {
+            g_CurrentEntity->velocityY = 0;
+        }
+    }
+}
+
+// func_060AA7B4
+s32 RicCheckFacing(void) {
+    if (g_Player.unk44 & 2) {
+        return 0;
+    }
+
+    if (PLAYER.facingLeft == 1) {
+        if (g_Player.padPressed & PAD_RIGHT) {
+            PLAYER.facingLeft = 0;
+            g_Player.unk4C = 1;
+            return -1;
+        } else if (g_Player.padPressed & PAD_LEFT) {
+            return 1;
+        }
+    } else {
+        if (g_Player.padPressed & PAD_RIGHT) {
+            return 1;
+        }
+        if (g_Player.padPressed & PAD_LEFT) {
+            PLAYER.facingLeft = 1;
+            g_Player.unk4C = 1;
+            return -1;
+        }
+    }
+    return 0;
+}
+
+// func_060AA830
+int func_8015CAAC(s32 speed) {
+    if (PLAYER.entityRoomIndex == 1)
+        speed = -speed;
+    PLAYER.velocityX = speed;
+    return speed;
+}
+
+// func_060AA854
+void RicSetInvincibilityFrames(s32 kind, s16 invincibilityFrames) {
+    if (!kind) {
+        RicCreateEntFactoryFromEntity(
+            g_CurrentEntity, FACTORY(BP_RIC_BLINK, 0x15), 0);
+        if (g_Player.timers[PL_T_INVINCIBLE_SCENE] <= invincibilityFrames) {
+            g_Player.timers[PL_T_INVINCIBLE_SCENE] = invincibilityFrames;
+        }
+    } else if (g_Player.timers[PL_T_INVINCIBLE] <= invincibilityFrames) {
+        g_Player.timers[PL_T_INVINCIBLE] = invincibilityFrames;
+    }
+}
+
+// DisableAfterImage
+
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA8AC, func_060AA8AC);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA948, func_060AA948);
+
+// func_060AA948
+void func_8015CC28(void) {
+    g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag =
+        g_Entities[E_AFTERIMAGE_1].ext.afterImage.resetFlag =
+            g_Entities[E_AFTERIMAGE_1].ext.afterImage.index =
+                g_Entities[E_AFTERIMAGE_1].ext.afterImage.timer = 0;
+}
+
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA974, func_060AA974);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA9EC, func_060AA9EC);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AAA2C, func_060AAA2C);
