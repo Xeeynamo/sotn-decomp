@@ -432,7 +432,19 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BD0D0, func_060BD0D0);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BD150, func_060BD150);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BD244, func_060BD244);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BD474, func_060BD474);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BD5F0, func_060BD5F0);
+
+void func_060BB330();
+
+s32 DAT_060c4118;
+s32 DAT_060c411c;
+
+void func_060BACA4(void) {
+    memset(&DAT_060c4118, 0, 4);
+    memcpy(0x002B2000, &DAT_060c411c, 0x9600);
+
+    func_060BB330();
+}
+
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BD638, func_060BD638);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BD81C, func_060BD81C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BD9E8, func_060BD9E8);
