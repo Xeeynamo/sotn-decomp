@@ -206,7 +206,19 @@ void func_060AA9EC(void) {
     }
 }
 
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AAA2C, func_060AAA2C);
+s32 func_060AAA2C(void) {
+    s32 ret = 0;
+
+    if (g_Player.unk3FC > 300) {
+        ret = 3;
+    } else if (g_Player.unk3FC > 200) {
+        ret = 2;
+    } else if (g_Player.unk3FC > 100) {
+        ret = 1;
+    }
+
+    return ret;
+}
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AAA68, func_060AAA68);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AB088, func_060AB088);
 
