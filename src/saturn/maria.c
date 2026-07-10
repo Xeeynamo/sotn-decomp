@@ -346,7 +346,22 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BDED8, func_060BDED8);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE064, func_060BE064);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE258, func_060BE258);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE308, func_060BE308);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE3D4, func_060BE3D4);
+
+s32 d_06086390;
+s32 d_060476A0;
+s32 d_060476A4;
+s32 d_060cd748;
+s32 d_060cd74c;
+void func_060BB9BC(s32*);
+s32* func_060784A8();
+
+void func_060BBA88(void) {
+    s32* iVar2;
+    iVar2 = func_060784A8();
+    func_060BB9BC(iVar2);
+    d_060476A0 = d_060cd748;
+    d_060476A4 = d_060cd74c;
+}
 
 // same sequence of funcs as in richter
 
