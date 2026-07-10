@@ -191,7 +191,21 @@ void func_8015CC28(void) {
 }
 
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA974, func_060AA974);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA9EC, func_060AA9EC);
+
+s32 func_060aa608(u32, u32);
+s32 d_060c37cc;
+s32 d_060c28a0;
+s32 d_0605c5c0[1];
+s32* d_0605c6e0;
+s32 d_060997f8;
+
+void func_060AA9EC(void) {
+    d_0605c6e0 = &d_060997f8;
+    if (d_0605c5c0[0x28 / 4] == 4) {
+        func_060aa608(&d_060c37cc, &d_060c28a0);
+    }
+}
+
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AAA2C, func_060AAA2C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AAA68, func_060AAA68);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AB088, func_060AB088);
