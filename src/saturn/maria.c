@@ -40,7 +40,19 @@ void RicStepHydrostorm(void) {
     }
 }
 
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A841C, func_060A841C);
+// func_060A841C
+void RicStepGenericSubwpnCrash(void) {
+    if (g_Player.unk4E) {
+        RicSetStand(0);
+        g_Player.unk46 = 0;
+    }
+
+    if (!(g_Player.vram_flag & TOUCHING_GROUND)) {
+        RicSetFall();
+        g_Player.unk46 = 0;
+    }
+}
+
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A8470, func_060A8470);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A8534, func_060A8534);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A8860, func_060A8860);
