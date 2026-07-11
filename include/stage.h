@@ -205,6 +205,12 @@ void UpdateRoomPosition();
 void OVL_EXPORT(Update)(void);
 void OVL_EXPORT(UpdateStageEntities)(void);
 void OVL_EXPORT(HitDetection)(void);
+void OVL_EXPORT(EntityMessageBox)(Entity*);
+void OVL_EXPORT(EntityHeartDrop)(Entity*);
+void OVL_EXPORT(EntityEquipItemDrop)(Entity*);
+void OVL_EXPORT(EntityExplosion)(Entity*);
+void OVL_EXPORT(EntityPrizeDrop)(Entity*);
+void OVL_EXPORT(EntityRelicOrb)(Entity*);
 void OVL_EXPORT(EntityDamageDisplay)(Entity*);
 
 s32 OVL_EXPORT(Random)();

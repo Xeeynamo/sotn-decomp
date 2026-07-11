@@ -81,7 +81,7 @@ static u16 aluric_subweapons_id[] = {0, 14, 15, 17, 16, 19, 18, 20, 21, 22};
 
 // Gold appears up here on PSX, down lower on VERSION_PSP
 #if !defined(VERSION_PSP) && (STAGE != STAGE_ST0)
-const char* g_goldCollectTexts[] = {
+const char* OVL_EXPORT(GoldCollectTexts)[] = {
     _S("$1"),   _S("$25"),  _S("$50"),   _S("$100"),  _S("$250"),
     _S("$400"), _S("$700"), _S("$1000"), _S("$2000"), _S("$5000"),
 };
@@ -92,7 +92,7 @@ static u32 c_GoldPrizes[] = {1, 25, 50, 100, 250, 400, 700, 1000, 2000, 5000};
 static u32 c_GoldPrizes[] = {1, 5, 10, 20, 40, 70, 100, 200, 400, 1000};
 #endif
 
-u8* g_SubweaponAnimPrizeDrop[] = {
+u8* OVL_EXPORT(SubweaponAnimPrizeDrop)[] = {
     D_80180C94, D_80180C98, D_80180CC4, D_80180CD4, D_80180CD8,
     D_80180CDC, D_80180CE0, D_80180CE4, D_80180CE8, D_80180CEC,
     D_80180CF0, D_80180CF4, D_80180D08, D_80180D18,
@@ -129,7 +129,7 @@ u8* g_MariaSubweaponAnimPrizeDrop[] = {
 };
 
 #if STAGE != STAGE_ST0
-const char* g_goldCollectTexts[] = {GOLD_COLLECT_TEXT};
+const char* OVL_EXPORT(GoldCollectTexts)[] = {GOLD_COLLECT_TEXT};
 static u32 c_GoldPrizes[] = {1, 25, 50, 100, 250, 400, 700, 1000, 2000, 5000};
 #else
 static u32 c_GoldPrizes[] = {1, 5, 10, 20, 40, 70, 100, 200, 400, 1000};
@@ -140,7 +140,7 @@ static u32 c_GoldPrizes[] = {1, 5, 10, 20, 40, 70, 100, 200, 400, 1000};
 static s16 D_80180EB8[] = {-6, 4, 0, -8};
 #if !defined(VERSION_BETA) && STAGE != STAGE_ST0
 // Note that this array is in data. MAD/ST0 have it in rodata.
-s8 c_HeartPrizes[] = {1, 5};
+s8 OVL_EXPORT(HeartPrizes)[] = {1, 5};
 #endif
 
 static void PrizeDropFall(void) {
@@ -206,7 +206,7 @@ static void CollectHeart(u16 arg0) {
     s8 heartPrizes[2] = {0x01, 0x05};
     s8 mad_unknown[2] = {0x01, 0x02};
 #else
-#define heartPrizes c_HeartPrizes
+#define heartPrizes OVL_EXPORT(HeartPrizes)
 #endif
 
     g_api.PlaySfx(SFX_HEART_PICKUP);
@@ -226,7 +226,7 @@ static u8 anim_small[] = {
     2, 1, 2, 2, 2, 3, 2, 4, 2, 5, 2, 6, 2, 7, 2, 8, 0, 0,
 };
 
-u8 g_bigRedFireballAnim[] = {
+u8 OVL_EXPORT(BigRedFireballAnim)[] = {
     1,  9, 2,  10, 2,  11, 2,  12, 2,  13, 2,  14, 2,
     15, 2, 16, 2,  17, 2,  18, 3,  19, 4,  20, 0,  0,
 };
@@ -238,7 +238,7 @@ static u8 anim_small_multiple[] = {
     0x02, 0x27, 0x02, 0x28, 0x02, 0x29, 0x02, 0x2A, 0x00, 0x00,
 };
 
-u8 g_explosionBigAnim[] = {
+u8 OVL_EXPORT(ExplosionBigAnim)[] = {
     0x02, 0x2B, 0x02, 0x2C, 0x02, 0x2D, 0x02, 0x2E, 0x02, 0x2F,
     0x02, 0x30, 0x02, 0x31, 0x02, 0x32, 0x02, 0x33, 0x02, 0x34,
     0x02, 0x35, 0x02, 0x36, 0x02, 0x37, 0x02, 0x38, 0x02, 0x39,
@@ -250,8 +250,9 @@ u8 g_explosionBigAnim[] = {
 static u8 D_80180F6C[] = {0x01, 0x43, 0x00, 0x00};
 
 static u8* g_ExplosionAnimations[] = {
-    anim_small,         g_bigRedFireballAnim, anim_small_multiple,
-    g_explosionBigAnim, D_80180F6C,
+    anim_small,          OVL_EXPORT(BigRedFireballAnim),
+    anim_small_multiple, OVL_EXPORT(ExplosionBigAnim),
+    D_80180F6C,
 };
 
 void OVL_EXPORT(CollectGold)(u16 goldSize) {
@@ -267,7 +268,7 @@ void OVL_EXPORT(CollectGold)(u16 goldSize) {
         g_unkGraphicsStruct.BottomCornerTextTimer = 0;
     }
 
-    BottomCornerText(g_goldCollectTexts[goldSize], true);
+    BottomCornerText(OVL_EXPORT(GoldCollectTexts)[goldSize], true);
     DestroyEntity(g_CurrentEntity);
 #endif
 }
@@ -332,7 +333,7 @@ static void CollectDummy(u16 id) { DestroyEntity(g_CurrentEntity); }
 // US essentially adds castle flags for unique drops
 // PSP iterates on top of the US version by adding drops for Maria
 // PSP ST0 iterates on top of ST0 with the only change on CollectDummy params
-void EntityPrizeDrop(Entity* self) {
+void OVL_EXPORT(EntityPrizeDrop)(Entity* self) {
     Primitive* prim;
     u16 itemId;
     s16 index;
@@ -346,10 +347,10 @@ void EntityPrizeDrop(Entity* self) {
         if (g_PlayableCharacter == PLAYER_MARIA) {
             AnimateEntity(g_MariaSubweaponAnimPrizeDrop[itemId], self);
         } else {
-            AnimateEntity(g_SubweaponAnimPrizeDrop[itemId], self);
+            AnimateEntity(OVL_EXPORT(SubweaponAnimPrizeDrop)[itemId], self);
         }
 #else
-        AnimateEntity(g_SubweaponAnimPrizeDrop[itemId], self);
+        AnimateEntity(OVL_EXPORT(SubweaponAnimPrizeDrop)[itemId], self);
 #endif
     }
 #if defined(VERSION_US) && STAGE != STAGE_ST0
@@ -647,7 +648,7 @@ void EntityPrizeDrop(Entity* self) {
 //         (& 0xF0) These explosion types use a different (hardcoded) palette
 //                  and drawMode
 //         (& 0xFF00) If non-zero, ((& 0xFF00) >> 8) will override zPriority
-void EntityExplosion(Entity* entity) {
+void OVL_EXPORT(EntityExplosion)(Entity* entity) {
     if (!entity->step) {
         InitializeEntity(OVL_EXPORT(EInitParticle));
         entity->pose = 0;
@@ -725,7 +726,7 @@ void Unreferenced_MAD_ST0_func(Entity* self) {
 char* obtainedStr;
 #endif
 
-void EntityEquipItemDrop(Entity* self) {
+void OVL_EXPORT(EntityEquipItemDrop)(Entity* self) {
     Collider collider;
     Primitive* prim;
     s16 i;
@@ -750,10 +751,10 @@ void EntityEquipItemDrop(Entity* self) {
 #if !(defined VERSION_BETA || STAGE == STAGE_ST0)
         if (g_PlayableCharacter != PLAYER_ALUCARD) {
             self->params = 0;
-            self->pfnUpdate = EntityPrizeDrop;
+            self->pfnUpdate = OVL_EXPORT(EntityPrizeDrop);
             self->entityId = 3;
             SetStep(0);
-            EntityPrizeDrop(self);
+            OVL_EXPORT(EntityPrizeDrop)(self);
             return;
         }
 #endif
@@ -932,7 +933,7 @@ void EntityEquipItemDrop(Entity* self) {
 #if defined(VERSION_PSP) && STAGE != STAGE_ST0
 extern char* obtainedStr; // BSS
 #else
-const char* g_RelicOrbTexts[] = {
+const char* OVL_EXPORT(RelicOrbTexts)[] = {
 #if !defined(VERSION_US) || STAGE == STAGE_ST0
     "を入手した"
 #else
@@ -941,19 +942,19 @@ const char* g_RelicOrbTexts[] = {
 };
 #endif
 
-s16 g_RelicOrbTextBg1EY[] = {16, 12, 8, 4, 0, -4, -8, -12};
-s16 g_RelicOrbTextBg1SY[] = {-32, -26, -20, -13, -7, -1, 5, 12};
-s16 g_RelicOrbTextBg2SY[] = {-16, -12, -8, -4, 0, 4, 8, 12};
-s16 g_RelicOrbTextBg2EY[] = {32, 26, 20, 13, 7, 1, -5, -12};
+s16 OVL_EXPORT(RelicOrbTextBg1EY)[] = {16, 12, 8, 4, 0, -4, -8, -12};
+s16 OVL_EXPORT(RelicOrbTextBg1SY)[] = {-32, -26, -20, -13, -7, -1, 5, 12};
+s16 OVL_EXPORT(RelicOrbTextBg2SY)[] = {-16, -12, -8, -4, 0, 4, 8, 12};
+s16 OVL_EXPORT(RelicOrbTextBg2EY)[] = {32, 26, 20, 13, 7, 1, -5, -12};
 #if STAGE != STAGE_ST0
-s16 g_RelicOrbSparkleX[] = {-8, 4, -2, 8, 0, 4, -4, 2};
-s16 g_RelicOrbSparkleY[] = {-2, 2, 4, -3, 0, 2, -4, 3};
+s16 OVL_EXPORT(RelicOrbSparkleX)[] = {-8, 4, -2, 8, 0, 4, -4, 2};
+s16 OVL_EXPORT(RelicOrbSparkleY)[] = {-2, 2, 4, -3, 0, 2, -4, 3};
 #endif
 
 extern u16 msgBoxTpage[0x600];
 
 // params: (& 0x7FFF) Relic ID
-void EntityRelicOrb(Entity* self) {
+void OVL_EXPORT(EntityRelicOrb)(Entity* self) {
 #if STAGE == STAGE_ST0
     const int PrimCount = 3;
 #else
@@ -1212,7 +1213,7 @@ void EntityRelicOrb(Entity* self) {
                     break;
                 }
                 isObtainedTextStored = true;
-                msg = g_RelicOrbTexts[0];
+                msg = OVL_EXPORT(RelicOrbTexts)[0];
             } else {
                 ch = (ch << 8) | *msg++;
                 chPixSrc = g_api.func_80106A28(ch, 1);
@@ -1229,7 +1230,7 @@ void EntityRelicOrb(Entity* self) {
             }
         }
 #else
-    msg = g_RelicOrbTexts[0];
+    msg = OVL_EXPORT(RelicOrbTexts)[0];
     chPix = g_Pix[0];
     var_v0_5 = (u8*)chPix;
     for (i = 0; i < 0xC00; i++) {
@@ -1298,16 +1299,20 @@ void EntityRelicOrb(Entity* self) {
                 prim->x0 = 0x80 + (orbUnk7C + 1) * 0xC;
                 prim->x2 = 0x68 + (orbUnk7C * 0x78) / 7;
                 prim->x3 = 0x98 - (orbUnk7C * 0x78) / 7;
-                prim->y0 = prim->y1 = g_RelicOrbTextBg1SY[orbUnk7C] + 0xA7;
-                prim->y2 = prim->y3 = g_RelicOrbTextBg1EY[orbUnk7C] + 0xA7;
+                prim->y0 = prim->y1 =
+                    OVL_EXPORT(RelicOrbTextBg1SY)[orbUnk7C] + 0xA7;
+                prim->y2 = prim->y3 =
+                    OVL_EXPORT(RelicOrbTextBg1EY)[orbUnk7C] + 0xA7;
                 prim->b2 = prim->b3 -= 0x10;
             } else {
                 prim->x0 = 0x68 + (orbUnk7C * 0x78) / 7;
                 prim->x1 = 0x98 - (orbUnk7C * 0x78) / 7;
                 prim->x3 = 0x80 - (orbUnk7C + 1) * 0xC;
                 prim->x2 = 0x80 + (orbUnk7C + 1) * 0xC;
-                prim->y0 = prim->y1 = g_RelicOrbTextBg2SY[orbUnk7C] + 0xA7;
-                prim->y2 = prim->y3 = g_RelicOrbTextBg2EY[orbUnk7C] + 0xA7;
+                prim->y0 = prim->y1 =
+                    OVL_EXPORT(RelicOrbTextBg2SY)[orbUnk7C] + 0xA7;
+                prim->y2 = prim->y3 =
+                    OVL_EXPORT(RelicOrbTextBg2EY)[orbUnk7C] + 0xA7;
                 prim->g0 = prim->g1 -= 0x10;
             }
             prim = prim->next;
@@ -1381,12 +1386,12 @@ void EntityRelicOrb(Entity* self) {
 
                     var_s8 = self->ext.relicOrb.sparkleAnim & 7;
                     iconSlot = self->posX.i.hi;
-                    iconSlot += g_RelicOrbSparkleX[var_s8];
+                    iconSlot += OVL_EXPORT(RelicOrbSparkleX)[var_s8];
                     prim->x0 = prim->x2 = iconSlot - 6;
                     prim->x1 = prim->x3 = iconSlot + 6;
 
                     iconSlot = self->posY.i.hi;
-                    iconSlot += g_RelicOrbSparkleY[var_s8];
+                    iconSlot += OVL_EXPORT(RelicOrbSparkleY)[var_s8];
                     prim->y0 = prim->y1 = iconSlot - 6;
                     prim->y2 = prim->y3 = iconSlot + 6;
 
@@ -1451,7 +1456,7 @@ extern u16 OVL_EXPORT(PrizeDrops)[];
 #endif
 
 // params: Local index of this drop
-void EntityHeartDrop(Entity* self) {
+void OVL_EXPORT(EntityHeartDrop)(Entity* self) {
     u16 index;
     u8 value;
     PfnEntityUpdate update;
@@ -1469,9 +1474,9 @@ void EntityHeartDrop(Entity* self) {
         index -= HEART_DROP_CASTLE_FLAG;
         index = OVL_EXPORT(PrizeDrops)[index];
         if (index < 128) {
-            self->unkB8 = (Entity*)EntityPrizeDrop;
+            self->unkB8 = (Entity*)OVL_EXPORT(EntityPrizeDrop);
         } else {
-            self->unkB8 = (Entity*)EntityEquipItemDrop;
+            self->unkB8 = (Entity*)OVL_EXPORT(EntityEquipItemDrop);
             index -= 128;
         }
         self->params = index + 0x8000;
@@ -1492,7 +1497,7 @@ void EntityHeartDrop(Entity* self) {
 #if !defined(VERSION_BETA)
 // params: message box duration, in frames
 // ext.messageBox.label: box size and text to render
-void EntityMessageBox(Entity* self) {
+void OVL_EXPORT(EntityMessageBox)(Entity* self) {
     const u16 VramX = 0;
     const u16 VramY = 0x180;
     const int FontW = 12;

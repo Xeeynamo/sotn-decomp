@@ -9,7 +9,7 @@ typedef struct SubWpnContDebris {
 } SubWpnContDebris;
 
 extern u8* g_MariaSubweaponAnimPrizeDrop[];
-extern u8* g_SubweaponAnimPrizeDrop[];
+extern u8* OVL_EXPORT(SubweaponAnimPrizeDrop)[];
 
 static SubWpnContDebris D_80182584[] = {
     {0, -87, 3, false}, {-10, -70, 7, true}, {-11, -55, 6, false},
@@ -306,7 +306,7 @@ void func_801C7884(Entity* self) {
         if (g_PlayableCharacter == PLAYER_MARIA) {
             AnimateEntity(g_MariaSubweaponAnimPrizeDrop[params], self);
         } else {
-            AnimateEntity(g_SubweaponAnimPrizeDrop[params], self);
+            AnimateEntity(OVL_EXPORT(SubweaponAnimPrizeDrop)[params], self);
         }
         self->velocityY = rsin(self->rotate) * 2;
         self->rotate += 0x20;
@@ -314,7 +314,7 @@ void func_801C7884(Entity* self) {
         tempEntity = self - 1;
         if (tempEntity->step != 1) {
             self->entityId = E_PRIZE_DROP;
-            self->pfnUpdate = EntityPrizeDrop;
+            self->pfnUpdate = OVL_EXPORT(EntityPrizeDrop);
             self->poseTimer = 0;
             self->pose = 0;
             self->step = 0;

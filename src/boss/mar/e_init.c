@@ -2,19 +2,19 @@
 #include "mar.h"
 
 void EntityBreakable(Entity* self);
-void EntityExplosion(Entity* self);
-void EntityPrizeDrop(Entity* self);
+void OVL_EXPORT(EntityExplosion)(Entity* self);
+void OVL_EXPORT(EntityPrizeDrop)(Entity* self);
 void OVL_EXPORT(EntityDamageDisplay)(Entity* self);
 void OVL_EXPORT(EntityRedDoor)(Entity* self);
 void EntityIntenseExplosion(Entity* self);
 void EntitySoulStealOrb(Entity* self);
 void EntityRoomForeground(Entity* self);
 void EntityStageNamePopup(Entity* self);
-void EntityEquipItemDrop(Entity* self);
-void EntityRelicOrb(Entity* self);
-void EntityHeartDrop(Entity* self);
+void OVL_EXPORT(EntityEquipItemDrop)(Entity* self);
+void OVL_EXPORT(EntityRelicOrb)(Entity* self);
+void OVL_EXPORT(EntityHeartDrop)(Entity* self);
 void EntityEnemyBlood(Entity* self);
-void EntityMessageBox(Entity* self);
+void OVL_EXPORT(EntityMessageBox)(Entity* self);
 void EntityDummy(Entity* self);
 void EntityDummy(Entity* self);
 void OVL_EXPORT(EntityBackgroundBlock)(Entity* self);
@@ -36,19 +36,19 @@ void func_us_8018CA94(Entity* self);
 
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityBreakable,
-    EntityExplosion,
-    EntityPrizeDrop,
+    OVL_EXPORT(EntityExplosion),
+    OVL_EXPORT(EntityPrizeDrop),
     OVL_EXPORT(EntityDamageDisplay),
     OVL_EXPORT(EntityRedDoor),
     EntityIntenseExplosion,
     EntitySoulStealOrb,
     EntityRoomForeground,
     EntityStageNamePopup,
-    EntityEquipItemDrop,
-    EntityRelicOrb,
-    EntityHeartDrop,
+    OVL_EXPORT(EntityEquipItemDrop),
+    OVL_EXPORT(EntityRelicOrb),
+    OVL_EXPORT(EntityHeartDrop),
     EntityEnemyBlood,
-    EntityMessageBox,
+    OVL_EXPORT(EntityMessageBox),
     EntityDummy,
     EntityDummy,
     OVL_EXPORT(EntityBackgroundBlock),

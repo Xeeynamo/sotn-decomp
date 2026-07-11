@@ -966,7 +966,7 @@ void EntityDraculaFireball(Entity* self) {
 
     if (self->flags & FLAG_DEAD) {
         self->step = 0;
-        self->pfnUpdate = EntityExplosion;
+        self->pfnUpdate = OVL_EXPORT(EntityExplosion);
         self->params = 2;
         return;
     }
@@ -1009,7 +1009,7 @@ void EntityDraculaMeteorball(Entity* entity) {
 
     if (g_isDraculaFirstFormDefeated) {
         entity->entityId = E_EXPLOSION;
-        entity->pfnUpdate = EntityExplosion;
+        entity->pfnUpdate = OVL_EXPORT(EntityExplosion);
         entity->step = 0;
         entity->step_s = 0;
         entity->params = 1;

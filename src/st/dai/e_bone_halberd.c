@@ -289,7 +289,7 @@ void EntityBoneHalberdParts(Entity* self) {
             return;
         }
         self->entityId = E_EXPLOSION;
-        self->pfnUpdate = EntityExplosion;
+        self->pfnUpdate = OVL_EXPORT(EntityExplosion);
         self->params = EXPLOSION_SMALL;
         self->step = 0;
         return;
