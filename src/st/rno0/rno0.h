@@ -6,6 +6,8 @@
 #define STAGE_IS_RNO0
 #include <stage.h>
 
+#include <stage.h>
+
 enum Palettes {
     PAL_NONE,
 };
