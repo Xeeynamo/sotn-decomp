@@ -30,7 +30,8 @@ STATIC_PAD_BSS(3);
 #define LAYOUT_OBJ_SLOT 3
 #define LAYOUT_OBJ_PARAMS 4
 
-void OVL_EXPORT(CreateEntityFromLayout)(Entity* entity, LayoutEntity* initDesc) {
+void OVL_EXPORT(CreateEntityFromLayout)(
+    Entity* entity, LayoutEntity* initDesc) {
     Tilemap* tilemap;
 
     tilemap = &g_Tilemap;
@@ -204,12 +205,12 @@ static void CreateEntitiesToTheRight(s16 posX) {
         if (DECREMENT_AND_CHECK(flag)) {
             if ((g_unkGraphicsStruct.D_80097428[flag >> 5] &
                  (1 << (flag & 0x1F))) == expected) {
-                OVL_EXPORT(CreateEntityWhenInVerticalRange)(
-                    (LayoutEntity*)g_LayoutObjHorizontal);
+                OVL_EXPORT(CreateEntityWhenInVerticalRange)
+                ((LayoutEntity*)g_LayoutObjHorizontal);
             }
         } else {
-            OVL_EXPORT(CreateEntityWhenInVerticalRange)(
-                (LayoutEntity*)g_LayoutObjHorizontal);
+            OVL_EXPORT(CreateEntityWhenInVerticalRange)
+            ((LayoutEntity*)g_LayoutObjHorizontal);
         }
 
         g_LayoutObjHorizontal += sizeof(LayoutEntity) / sizeof(u16);
@@ -255,12 +256,12 @@ static void CreateEntitiesToTheLeft(s16 posX) {
         if (DECREMENT_AND_CHECK(flag)) {
             if ((g_unkGraphicsStruct.D_80097428[flag >> 5] &
                  (1 << (flag & 0x1F))) == expected) {
-                OVL_EXPORT(CreateEntityWhenInVerticalRange)(
-                    (LayoutEntity*)g_LayoutObjHorizontal);
+                OVL_EXPORT(CreateEntityWhenInVerticalRange)
+                ((LayoutEntity*)g_LayoutObjHorizontal);
             }
         } else {
-            OVL_EXPORT(CreateEntityWhenInVerticalRange)(
-                (LayoutEntity*)g_LayoutObjHorizontal);
+            OVL_EXPORT(CreateEntityWhenInVerticalRange)
+            ((LayoutEntity*)g_LayoutObjHorizontal);
         }
 
         g_LayoutObjHorizontal -= sizeof(LayoutEntity) / sizeof(u16);
@@ -339,12 +340,12 @@ static void CreateEntitiesAbove(s16 posY) {
         if (DECREMENT_AND_CHECK(flag)) {
             if ((g_unkGraphicsStruct.D_80097428[flag >> 5] &
                  (1 << (flag & 0x1F))) == expected) {
-                OVL_EXPORT(CreateEntityWhenInHorizontalRange)(
-                    (LayoutEntity*)g_LayoutObjVertical);
+                OVL_EXPORT(CreateEntityWhenInHorizontalRange)
+                ((LayoutEntity*)g_LayoutObjVertical);
             }
         } else {
-            OVL_EXPORT(CreateEntityWhenInHorizontalRange)(
-                (LayoutEntity*)g_LayoutObjVertical);
+            OVL_EXPORT(CreateEntityWhenInHorizontalRange)
+            ((LayoutEntity*)g_LayoutObjVertical);
         }
 
         g_LayoutObjVertical += sizeof(LayoutEntity) / sizeof(u16);
@@ -382,12 +383,12 @@ static void CreateEntitiesBelow(s16 posY) {
         if (DECREMENT_AND_CHECK(flag)) {
             if ((g_unkGraphicsStruct.D_80097428[flag >> 5] &
                  (1 << (flag & 0x1F))) == expected) {
-                OVL_EXPORT(CreateEntityWhenInHorizontalRange)(
-                    (LayoutEntity*)g_LayoutObjVertical);
+                OVL_EXPORT(CreateEntityWhenInHorizontalRange)
+                ((LayoutEntity*)g_LayoutObjVertical);
             }
         } else {
-            OVL_EXPORT(CreateEntityWhenInHorizontalRange)(
-                (LayoutEntity*)g_LayoutObjVertical);
+            OVL_EXPORT(CreateEntityWhenInHorizontalRange)
+            ((LayoutEntity*)g_LayoutObjVertical);
         }
 
         g_LayoutObjVertical -= sizeof(LayoutEntity) / sizeof(u16);
