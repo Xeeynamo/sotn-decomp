@@ -26,7 +26,7 @@ u16 OVL_EXPORT(PalInvincibility0)[] = {
 #endif
 };
 
-u16 g_ItemIconSlots[ICON_SLOT_NUM];
+u16 OVL_EXPORT(ItemIconSlots)[ICON_SLOT_NUM];
 
 s32 OVL_EXPORT(Random)(void) {
     g_randomNext = (g_randomNext * 0x01010101) + 1;
@@ -39,9 +39,9 @@ void OVL_EXPORT(Update)(void) {
     s32 flags;
     s16 iFramePalette;
 
-    for (x = 0; x < LEN(g_ItemIconSlots); x++) {
-        if (g_ItemIconSlots[x]) {
-            g_ItemIconSlots[x]--;
+    for (x = 0; x < LEN(OVL_EXPORT(ItemIconSlots)); x++) {
+        if (OVL_EXPORT(ItemIconSlots)[x]) {
+            OVL_EXPORT(ItemIconSlots)[x]--;
         }
     }
 

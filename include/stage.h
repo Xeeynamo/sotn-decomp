@@ -185,7 +185,7 @@ typedef struct {
     u8 var_s5[1];
 } ST0_SCRATCHPAD;
 
-extern u16 g_ItemIconSlots[ICON_SLOT_NUM];
+extern u16 OVL_EXPORT(ItemIconSlots)[ICON_SLOT_NUM];
 
 /*
  * Sets up layout arrays and initializes stage state to
