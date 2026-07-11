@@ -401,7 +401,7 @@ static void CreateEntitiesBelow(s16 posY) {
  * - Parameters:
  *   - objLayoutId - the room to initialize
  */
-void InitRoomEntities(s32 objLayoutId) {
+void OVL_EXPORT(InitRoomEntities)(s32 objLayoutId) {
     Tilemap* tilemap = &g_Tilemap;
     s16 rightEdge;
     s16 temp;

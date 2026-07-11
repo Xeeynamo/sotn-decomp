@@ -14,7 +14,7 @@ AbbreviatedOverlay OVL_EXPORT(Overlay) = {
     .Update = OVL_EXPORT(Update),
     .HitDetection = OVL_EXPORT(HitDetection),
     .UpdateRoomPosition = OVL_EXPORT(UpdateRoomPosition),
-    .InitRoomEntities = InitRoomEntities,
+    .InitRoomEntities = OVL_EXPORT(InitRoomEntities),
     .rooms = OVL_EXPORT(rooms),
     .spriteBanks = OVL_EXPORT(spriteBanks),
     .cluts = OVL_EXPORT(cluts),
@@ -27,7 +27,7 @@ AbbreviatedOverlay OVL_EXPORT(Overlay) = {
 
 void OVL_EXPORT(Update)();
 void OVL_EXPORT(UpdateRoomPosition)();
-void InitRoomEntities(s32 objLayoutId);
+void OVL_EXPORT(InitRoomEntities)(s32 objLayoutId);
 
 extern s16** OVL_EXPORT(spriteBanks)[];
 extern u_long* OVL_EXPORT(cluts)[];
@@ -40,7 +40,7 @@ AbbreviatedOverlay OVL_EXPORT(Overlay) = {
     .Update = OVL_EXPORT(Update),
     .HitDetection = OVL_EXPORT(HitDetection),
     .UpdateRoomPosition = OVL_EXPORT(UpdateRoomPosition),
-    .InitRoomEntities = InitRoomEntities,
+    .InitRoomEntities = OVL_EXPORT(InitRoomEntities),
     .rooms = OVL_EXPORT(rooms),
     .spriteBanks = OVL_EXPORT(spriteBanks),
     .cluts = OVL_EXPORT(cluts),

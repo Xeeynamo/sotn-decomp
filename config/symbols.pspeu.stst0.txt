@@ -1,5 +1,5 @@
 PrologueScroll = 0x09237D10;
-InitRoomEntities = 0x09248C08;
+ST0_InitRoomEntities = 0x09248C08;
 ST0_UpdateRoomPosition = 0x09248E38;
 ST0_Update = 0x0924A370;
 ST0_UpdateStageEntities = 0x0924A750;

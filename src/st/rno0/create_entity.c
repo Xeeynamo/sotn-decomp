@@ -23,7 +23,7 @@ INCLUDE_ASM("st/rno0/nonmatchings/create_entity", CreateEntitiesAbove);
 
 INCLUDE_ASM("st/rno0/nonmatchings/create_entity", CreateEntitiesBelow);
 
-INCLUDE_ASM("st/rno0/nonmatchings/create_entity", InitRoomEntities);
+INCLUDE_ASM("st/rno0/nonmatchings/create_entity", RNO0_InitRoomEntities);
 
 INCLUDE_ASM("st/rno0/nonmatchings/create_entity", RNO0_UpdateRoomPosition);
 

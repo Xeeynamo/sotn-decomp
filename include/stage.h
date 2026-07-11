@@ -194,7 +194,7 @@ extern u16 OVL_EXPORT(ItemIconSlots)[ICON_SLOT_NUM];
  * - Parameters:
  *   - objLayoutId - the room to initialize
  */
-void InitRoomEntities(s32 objLayoutId);
+void OVL_EXPORT(InitRoomEntities)(s32 objLayoutId);
 
 /*
  * An callback for notifying the stage that the

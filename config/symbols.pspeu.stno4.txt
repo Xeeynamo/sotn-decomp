@@ -1,4 +1,4 @@
-InitRoomEntities = 0x09244590;
+NO4_InitRoomEntities = 0x09244590;
 NO4_UpdateRoomPosition = 0x092447C0;
 NO4_Update = 0x09247DB8;
 NO4_UpdateStageEntities = 0x09248198;

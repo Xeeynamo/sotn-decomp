@@ -1,4 +1,4 @@
-InitRoomEntities = 0x09238288;
+CHI_InitRoomEntities = 0x09238288;
 CHI_UpdateRoomPosition = 0x092384B8;
 CHI_CreateEntityFromCurrentEntity = 0x09238598;
 CHI_CreateEntityFromEntity = 0x09238620;
