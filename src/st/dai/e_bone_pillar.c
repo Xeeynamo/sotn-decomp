@@ -240,7 +240,7 @@ void EntityBonePillarSkull(Entity* self) {
                 self->hitboxState = 0;
                 self->drawFlags = ENTITY_DEFAULT;
                 self->step = BONE_PILLAR_INIT;
-                self->pfnUpdate = EntityExplosion;
+                self->pfnUpdate = OVL_EXPORT(EntityExplosion);
                 self->params = EXPLOSION_FIREBALL;
             }
         }
@@ -531,7 +531,7 @@ void EntityBonePillarDeathParts(Entity* self) {
     case BONE_PILLAR_DEATH_EXPLODE:
         if (!--self->ext.bonePillar.timer) {
             self->step = BONE_PILLAR_INIT;
-            self->pfnUpdate = EntityExplosion;
+            self->pfnUpdate = OVL_EXPORT(EntityExplosion);
             self->params = EXPLOSION_SMALL;
         }
     }

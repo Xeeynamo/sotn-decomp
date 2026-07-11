@@ -58,12 +58,12 @@ EntityMermanJumpAir = 0x092493D0;
 EntityMermanExplosion = 0x09249480;
 EntitySoulStealOrb = 0x0924A008; // source=match
 EntityEnemyBlood = 0x0924A568; // source=match
-EntityPrizeDrop = 0x0924B9E0; // source=match
-EntityExplosion = 0x0924C7F8; // source=match
-EntityEquipItemDrop = 0x0924CAF8; // source=match
-EntityRelicOrb = 0x0924D350; // source=match
-EntityHeartDrop = 0x0924E488; // source=match
-EntityMessageBox = 0x0924E658; // source=match
+NP3_EntityPrizeDrop = 0x0924B9E0; // source=match
+NP3_EntityExplosion = 0x0924C7F8; // source=match
+NP3_EntityEquipItemDrop = 0x0924CAF8; // source=match
+NP3_EntityRelicOrb = 0x0924D350; // source=match
+NP3_EntityHeartDrop = 0x0924E488; // source=match
+NP3_EntityMessageBox = 0x0924E658; // source=match
 EntityUnkId13 = 0x0924EF18;
 EntityExplosionVariants = 0x0924F190;
 EntityGreyPuff = 0x0924F308;

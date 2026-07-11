@@ -612,13 +612,13 @@ void func_us_801D91C4(Entity* self) {
 
     if (self->step == 0) {
         self->params = 1;
-        EntityExplosion(fakeEntity);
+        OVL_EXPORT(EntityExplosion)(fakeEntity);
         self->zPriority = PLAYER.zPriority + 0x20;
         angle = rand() & 0x7FF;
         self->velocityX = FLT_TO_FIX(rcos(angle)) * 4;
         self->velocityY = -FLT_TO_FIX(rsin(angle)) * 4;
     } else {
         self->posX.val += self->velocityX;
-        EntityExplosion(fakeEntity);
+        OVL_EXPORT(EntityExplosion)(fakeEntity);
     }
 }

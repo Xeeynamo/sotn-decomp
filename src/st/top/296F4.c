@@ -378,7 +378,7 @@ void EntityBreakableWall(Entity* self) {
             }
 
             self->entityId = 0xC;
-            self->pfnUpdate = EntityHeartDrop;
+            self->pfnUpdate = OVL_EXPORT(EntityHeartDrop);
             self->step = 0;
             self->step_s = 0;
             self->pose = 0;

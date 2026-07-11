@@ -306,7 +306,7 @@ void EntityBoneScimitarParts(Entity* self) {
             return;
         }
         self->entityId = E_EXPLOSION;
-        self->pfnUpdate = EntityExplosion;
+        self->pfnUpdate = OVL_EXPORT(EntityExplosion);
         self->params = 0;
         self->step = 0;
         return;

@@ -674,7 +674,7 @@ void EntityGurkhaWeapon(Entity* self) {
             self->rotate += self->ext.GH_Props.rotVel;
             if (!--self->ext.GH_Props.timer) {
                 self->step = 0;
-                self->pfnUpdate = EntityExplosion;
+                self->pfnUpdate = OVL_EXPORT(EntityExplosion);
                 self->params = 0;
                 self->drawFlags = ENTITY_DEFAULT;
             }

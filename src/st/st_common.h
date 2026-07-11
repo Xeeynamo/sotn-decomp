@@ -495,7 +495,7 @@ void EntityExplosionSpawn(u16 params, u16 arg1) {
     }
 
     g_CurrentEntity->entityId = E_EXPLOSION;
-    g_CurrentEntity->pfnUpdate = (PfnEntityUpdate)EntityExplosion;
+    g_CurrentEntity->pfnUpdate = (PfnEntityUpdate)OVL_EXPORT(EntityExplosion);
     g_CurrentEntity->params = params;
     g_CurrentEntity->animCurFrame = 0;
     g_CurrentEntity->drawFlags = ENTITY_DEFAULT;
@@ -756,12 +756,12 @@ void ReplaceBreakableWithItemDrop(Entity* self) {
 
     if (params < 0x80) {
         self->entityId = E_PRIZE_DROP;
-        self->pfnUpdate = (PfnEntityUpdate)EntityPrizeDrop;
+        self->pfnUpdate = (PfnEntityUpdate)OVL_EXPORT(EntityPrizeDrop);
         self->poseTimer = 0;
         self->pose = 0;
     } else {
         self->entityId = E_EQUIP_ITEM_DROP;
-        self->pfnUpdate = (PfnEntityUpdate)EntityEquipItemDrop;
+        self->pfnUpdate = (PfnEntityUpdate)OVL_EXPORT(EntityEquipItemDrop);
         params -= 0x80;
     }
 
