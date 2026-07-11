@@ -181,7 +181,6 @@ func_us_801C1F98 = 0x0925D670;
 func_us_801C2044 = 0x0925D7D8;
 func_us_801C2184_from_no0 = 0x0925DA60;
 EntityUnkId1B = 0x0925E128;
-RNO0_EntityBackgroundBlock = 0x0925E2B8;
 RNO0_EntityLockCamera = 0x0925E428;
 func_us_801C2A34_from_no0 = 0x0925E688;
 func_us_801C2B24_from_no0 = 0x0925E798;
