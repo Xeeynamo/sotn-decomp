@@ -1,9 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <game.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#include <cJSON/cJSON.h>
 #include "stage_loader.h"
 #include "sfx.h"
 #include "../../st/wrp/wrp.h"
@@ -27,11 +24,13 @@ static u16* clut_anims[] = {empty_clut_load, NULL};
 static void* entity_gfxs[] = {empty_entity_gfx, NULL};
 extern s16** WRP_spriteBanks[];
 extern RoomDef WRP_rooms_layers[];
-void OVL_EXPORT(UpdateStageEntities)(void);
+void WRP_UpdateStageEntities(void);
+void WRP_Update(void);
+void WRP_HitDetection(void);
 
 static Overlay g_StageDesc = {
-    Update,
-    HitDetection,
+    WRP_Update,
+    WRP_HitDetection,
     UpdateRoomPosition,
     MyInitRoomEntities,
     rooms,
@@ -40,7 +39,7 @@ static Overlay g_StageDesc = {
     NULL,
     WRP_rooms_layers,
     entity_gfxs,
-    OVL_EXPORT(UpdateStageEntities),
+    WRP_UpdateStageEntities,
     NULL,
     NULL,
     NULL,

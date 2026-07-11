@@ -332,7 +332,7 @@ void OVL_EXPORT(HitDetection)(void) {
                     if (otherEntity != NULL) {
                         DestroyEntity(otherEntity);
                         otherEntity->entityId = 4;
-                        otherEntity->pfnUpdate = EntityDamageDisplay;
+                        otherEntity->pfnUpdate = OVL_EXPORT(EntityDamageDisplay);
                         otherEntity->posX.i.hi = x;
                         otherEntity->posY.i.hi = y;
                         otherEntity->params = miscVar1;

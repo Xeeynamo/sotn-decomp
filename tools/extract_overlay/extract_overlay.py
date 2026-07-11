@@ -1131,7 +1131,7 @@ def parse_entity_updates(data_file_text, ovl_name, entity_updates_symbol):
         f"{ovl_name.upper()}_EntityBreakable",
         "EntityExplosion",
         "EntityPrizeDrop",
-        "EntityDamageDisplay",
+        f"{ovl_name.upper()}_EntityDamageDisplay",
         f"{ovl_name.upper()}_EntityRedDoor",
         "EntityIntenseExplosion",
         "EntitySoulStealOrb",

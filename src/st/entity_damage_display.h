@@ -5,7 +5,7 @@ extern u16 g_eDamageDisplayClut[];
 // params: (0xC000) "GUARD" (exclusive)
 //         (0x4000) "CRITICAL!!"
 //         (& 0x3FFF) Numeric value
-void EntityDamageDisplay(Entity* self) {
+void OVL_EXPORT(EntityDamageDisplay)(Entity* self) {
     NumericPrim* prim;
     s16 x;
     u8 singleDigit;
