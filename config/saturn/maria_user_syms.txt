@@ -36,3 +36,7 @@ _RicSetStand = 0x060a9210;
 _RicSetFall = 0x060a939c;
 _ric_anim_stand = 0x060c28e8;
 _ric_anim_stand_alt = 0x060c292c;
+_d_0605cd70 = 0x0605cd70;
+_d_06057f68 = 0x06057f68;
+_d_0605c672 = 0x0605c672;
+_d_06085534 = 0x06085534;
