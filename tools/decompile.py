@@ -7,11 +7,30 @@ https://sotn-discord.xee.dev/
 Use `decompile.py --help` for usage and options"""
 
 import argparse
+import importlib.util
 import io
 import os
 import sys
 import tempfile
 import requests
+
+
+def _load_m2c_pycparser() -> None:
+    pycparser_init = os.path.join(
+        os.path.dirname(__file__), "m2c", "m2c_pycparser", "__init__.py"
+    )
+    spec = importlib.util.spec_from_file_location(
+        "m2c_pycparser",
+        pycparser_init,
+        submodule_search_locations=[os.path.dirname(pycparser_init)],
+    )
+    module = importlib.util.module_from_spec(spec)
+    sys.modules["m2c_pycparser"] = module
+    spec.loader.exec_module(module)
+
+
+_load_m2c_pycparser()
+
 import m2ctx
 import m2c.m2c.main as m2c
 from contextlib import redirect_stdout
@@ -249,7 +268,7 @@ def inject_decompiled_function(repo_root: Path, sotn_func: SotnFunction) -> None
         safe_write(sotn_func.src_path, new_lines)
 
         print(
-            f"{sotn_func.name} was successfully decompiled in {src}, but likely will not compile without adjustments."
+            f"{sotn_func.name} was successfully decompiled in {sotn_func.src_path}, but likely will not compile without adjustments."
         )
     elif [line for line in lines if sotn_func.name in line]:
         print(
