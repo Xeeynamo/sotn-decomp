@@ -1,5 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "inc_asm.h"
+#include "sattypes.h"
+#include "richter.h"
+
 INCLUDE_ASM("asm/saturn/maria/data", d60A5000, d_060A5000);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A5060, func_060A5060);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A5154, func_060A5154);
@@ -23,8 +26,33 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A7DF4, func_060A7DF4);
 INCLUDE_ASM("asm/saturn/maria/data", d60A7F70, d_060A7F70);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A8248, func_060A8248);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A8308, func_060A8308);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A83C8, func_060A83C8);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A841C, func_060A841C);
+
+// func_060A83C8
+void RicStepHydrostorm(void) {
+    if (PLAYER.poseTimer < 0) {
+        RicSetStand(0);
+        g_Player.unk46 = 0;
+    }
+
+    if ((g_Player.vram_flag & TOUCHING_GROUND) == 0) {
+        RicSetFall();
+        g_Player.unk46 = 0;
+    }
+}
+
+// func_060A841C
+void RicStepGenericSubwpnCrash(void) {
+    if (g_Player.unk4E) {
+        RicSetStand(0);
+        g_Player.unk46 = 0;
+    }
+
+    if (!(g_Player.vram_flag & TOUCHING_GROUND)) {
+        RicSetFall();
+        g_Player.unk46 = 0;
+    }
+}
+
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A8470, func_060A8470);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A8534, func_060A8534);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A8860, func_060A8860);
@@ -34,23 +62,66 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A8C14, func_060A8C14);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A8E34, func_060A8E34);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A8F2C, func_060A8F2C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9064, func_060A9064);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9130, func_060A9130);
+
+void func_060A9130(void) { func_060AA4BC(0xf0); }
+
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A914C, func_060A914C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9194, func_060A9194);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9210, func_060A9210);
+
+// func_060A9210
+extern AnimationFrame ric_anim_stand[];
+extern AnimationFrame ric_anim_stand_alt[];
+// new alt animation
+void RicSetStand(s32 velocityX) {
+    PLAYER.velocityX = velocityX;
+    PLAYER.velocityY = 0;
+    g_Player.unk44 = 0;
+
+    RicSetStep(PL_S_STAND);
+
+    if (g_Player.vram_flag & IN_AIR_OR_EDGE)
+        RicSetAnimation(ric_anim_stand_alt);
+    else
+        RicSetAnimation(ric_anim_stand);
+}
+
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A926C, func_060A926C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9304, func_060A9304);
+
+// _RicSetFall
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A939C, func_060A939C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9474, func_060A9474);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A955C, func_060A955C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9608, func_060A9608);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A96D4, func_060A96D4);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A973C, func_060A973C);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9958, func_060A9958);
+
+u8 d_060c1980[1];
+
+int func_060A9958(int param_1) {
+    int iVar2;
+
+    iVar2 = (int)(char)d_060c1980[param_1];
+    if (!(iVar2 <= g_Status.mp)) {
+        iVar2 = 0;
+    } else {
+        g_Status.mp -= iVar2;
+    }
+    return iVar2;
+}
+
+const u32 pad_060a998c = 0xAAAAAAAB;
+
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9990, func_060A9990);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9BC4, func_060A9BC4);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9CE8, func_060A9CE8);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9CF8, func_060A9CF8);
+
+s32 func_060A9CE8(void) {
+    s32 pad[5];
+    return 1;
+}
+
+void func_060A9CF8(void) { func_060AA4BC(0x16); }
+
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9D10, func_060A9D10);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9DA4, func_060A9DA4);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9E40, func_060A9E40);
@@ -58,31 +129,230 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9EC4, func_060A9EC4);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9F84, func_060A9F84);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA0A0, func_060AA0A0);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA260, func_060AA260);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA4BC, func_060AA4BC);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA4D8, func_060AA4D8);
+
+// RicSetStep
+void func_060AA4BC(s16 step) {
+    PLAYER.step = step;
+    PLAYER.step_s = 0;
+}
+
+void RicSetAnimation(AnimationFrame* anim) {
+    g_CurrentEntity->anim = anim;
+    g_CurrentEntity->poseTimer = 0;
+    g_CurrentEntity->pose = 0;
+}
+
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA4FC, func_060AA4FC);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA608, func_060AA608);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA754, func_060AA754);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA784, func_060AA784);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA7B4, func_060AA7B4);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA830, func_060AA830);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA854, func_060AA854);
+
+// func_060AA754
+void RicDecelerateX(s32 speed) {
+    if (g_CurrentEntity->velocityX < 0) {
+        g_CurrentEntity->velocityX += speed;
+        if (g_CurrentEntity->velocityX > 0) {
+            g_CurrentEntity->velocityX = 0;
+        }
+    } else {
+        g_CurrentEntity->velocityX -= speed;
+        if (g_CurrentEntity->velocityX < 0)
+            g_CurrentEntity->velocityX = 0;
+    }
+}
+
+// func_060AA784
+void RicDecelerateY(s32 speed) {
+    if (g_CurrentEntity->velocityY < 0) {
+        g_CurrentEntity->velocityY += speed;
+        if (g_CurrentEntity->velocityY > 0) {
+            g_CurrentEntity->velocityY = 0;
+        }
+    } else {
+        g_CurrentEntity->velocityY -= speed;
+        if (g_CurrentEntity->velocityY < 0) {
+            g_CurrentEntity->velocityY = 0;
+        }
+    }
+}
+
+// func_060AA7B4
+s32 RicCheckFacing(void) {
+    if (g_Player.unk44 & 2) {
+        return 0;
+    }
+
+    if (PLAYER.facingLeft == 1) {
+        if (g_Player.padPressed & PAD_RIGHT) {
+            PLAYER.facingLeft = 0;
+            g_Player.unk4C = 1;
+            return -1;
+        } else if (g_Player.padPressed & PAD_LEFT) {
+            return 1;
+        }
+    } else {
+        if (g_Player.padPressed & PAD_RIGHT) {
+            return 1;
+        }
+        if (g_Player.padPressed & PAD_LEFT) {
+            PLAYER.facingLeft = 1;
+            g_Player.unk4C = 1;
+            return -1;
+        }
+    }
+    return 0;
+}
+
+// func_060AA830
+int func_8015CAAC(s32 speed) {
+    if (PLAYER.entityRoomIndex == 1)
+        speed = -speed;
+    PLAYER.velocityX = speed;
+    return speed;
+}
+
+// func_060AA854
+void RicSetInvincibilityFrames(s32 kind, s16 invincibilityFrames) {
+    if (!kind) {
+        RicCreateEntFactoryFromEntity(
+            g_CurrentEntity, FACTORY(BP_RIC_BLINK, 0x15), 0);
+        if (g_Player.timers[PL_T_INVINCIBLE_SCENE] <= invincibilityFrames) {
+            g_Player.timers[PL_T_INVINCIBLE_SCENE] = invincibilityFrames;
+        }
+    } else if (g_Player.timers[PL_T_INVINCIBLE] <= invincibilityFrames) {
+        g_Player.timers[PL_T_INVINCIBLE] = invincibilityFrames;
+    }
+}
+
+// DisableAfterImage
+
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA8AC, func_060AA8AC);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA948, func_060AA948);
+
+// func_060AA948
+void func_8015CC28(void) {
+    g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag =
+        g_Entities[E_AFTERIMAGE_1].ext.afterImage.resetFlag =
+            g_Entities[E_AFTERIMAGE_1].ext.afterImage.index =
+                g_Entities[E_AFTERIMAGE_1].ext.afterImage.timer = 0;
+}
+
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA974, func_060AA974);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA9EC, func_060AA9EC);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AAA2C, func_060AAA2C);
+
+s32 func_060aa608(u32, u32);
+s32 d_060c37cc;
+s32 d_060c28a0;
+s32 d_0605c5c0[1];
+s32* d_0605c6e0;
+s32 d_060997f8;
+
+void func_060AA9EC(void) {
+    d_0605c6e0 = &d_060997f8;
+    if (d_0605c5c0[0x28 / 4] == 4) {
+        func_060aa608(&d_060c37cc, &d_060c28a0);
+    }
+}
+
+s32 func_060AAA2C(void) {
+    s32 ret = 0;
+
+    if (g_Player.unk3FC > 300) {
+        ret = 3;
+    } else if (g_Player.unk3FC > 200) {
+        ret = 2;
+    } else if (g_Player.unk3FC > 100) {
+        ret = 1;
+    }
+
+    return ret;
+}
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AAA68, func_060AAA68);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AB088, func_060AB088);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AB258, func_060AB258);
+
+extern Point32 g_RicSensorsCeiling[NUM_HORIZONTAL_SENSORS];
+extern Point32 g_RicSensorsFloor[NUM_HORIZONTAL_SENSORS];
+extern Point32 g_RicSensorsWall[NUM_VERTICAL_SENSORS * 2];
+
+// func_060AB258
+void RicGetPlayerSensor(Collider* col) {
+    col->unk14 = g_RicSensorsWall[0].x;
+    col->unk1C = g_RicSensorsWall[0].y;
+    col->unk18 = g_RicSensorsFloor[1].y - FIX(1);
+    col->unk20 = g_RicSensorsCeiling[1].y + FIX(1);
+}
+
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AB294, func_060AB294);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AB6C4, func_060AB6C4);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60ABAA4, func_060ABAA4);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60ABC54, func_060ABC54);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60ABE0C, func_060ABE0C);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60ABE4C, func_060ABE4C);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60ABE94, func_060ABE94);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60ABEF8, func_060ABEF8);
+
+#define E_NONE 0
+// func_060AB980
+static Entity* RicGetFreeEntity(s16 start, s16 end) {
+    Entity* entity = &g_Entities[start];
+    s16 i;
+
+    for (i = start; i < end; i++, entity++) {
+        if (entity->entityId == E_NONE) {
+            return entity;
+        }
+    }
+    return NULL;
+}
+
+// func_060AB9C0
+static Entity* RicGetFreeEntityReverse(s16 start, s16 end) {
+    Entity* entity = &g_Entities[end - 1];
+    s16 i;
+    for (i = end - 1; i >= start; i--, entity--) {
+        if (entity->entityId == E_NONE) {
+            return entity;
+        }
+    }
+    return NULL;
+}
+
+#define LEN(x) ((s32)(sizeof(x) / sizeof(*(x))))
+s32 D_80174F80[11];
+// func_060ABA08
+// extra loop vs. ric version
+void func_8015F9F0(Entity* entity) {
+    s32 i;
+    s32 enemyId;
+    if (entity < &g_Entities[32]) {
+        for (i = 0;; i++) {
+            for (enemyId = 3; enemyId < LEN(D_80174F80) - 4; enemyId++) {
+                if (D_80174F80[enemyId] == i) {
+                    D_80174F80[enemyId] = i + 1;
+                    entity->enemyId = enemyId;
+                    return;
+                }
+            }
+        }
+    } else {
+        for (i = 0;; i++) {
+            for (enemyId = 7; enemyId < LEN(D_80174F80); enemyId++) {
+                if (D_80174F80[enemyId] == i) {
+                    D_80174F80[enemyId] = i + 1;
+                    entity->enemyId = enemyId;
+                    return;
+                }
+            }
+        }
+    }
+}
+
+extern u8 D_80154674[][4];
+extern u8 D_80174FAC;
+extern u8 D_80174FB0;
+extern u8 D_80174FB4;
+extern u8 D_80174FB8;
+
+// func_060ABEF8
+void func_8015FA5C(s32 arg0) {
+    D_80174FAC = D_80154674[arg0][0];
+    D_80174FB0 = D_80154674[arg0][1];
+    D_80174FB4 = D_80154674[arg0][2];
+    D_80174FB8 = D_80154674[arg0][3];
+}
+
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60ABF40, func_060ABF40);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60ABFF0, func_060ABFF0);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AC09C, func_060AC09C);
@@ -106,8 +376,30 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AE2C8, func_060AE2C8);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AE3C0, func_060AE3C0);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AE730, func_060AE730);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AE8D8, func_060AE8D8);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AEAB8, func_060AEAB8);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AEAC4, func_060AEAC4);
+
+void func_060AEAB8() {}
+
+#define E_WEAPON 0x10
+#define STAGE_ENTITY_START 64
+
+// func_060AEAC4
+bool func_80162E9C(Entity* entity) {
+    Entity* e;
+    s32 i;
+    s16 objId;
+    s16 params;
+
+    objId = entity->entityId;
+    params = entity->params;
+    for (e = &g_Entities[E_WEAPON], i = E_WEAPON; i < STAGE_ENTITY_START; e++,
+        i++) {
+        if (objId == e->entityId && params == e->params && e != entity) {
+            return true;
+        }
+    }
+    return false;
+}
+
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AEB18, func_060AEB18);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AEFB4, func_060AEFB4);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AF17C, func_060AF17C);
@@ -119,9 +411,17 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B0220, func_060B0220);
 INCLUDE_ASM("asm/saturn/maria/data", d60B0474, d_060B0474);
 // function, splitter bugs
 INCLUDE_ASM_NO_ALIGN("asm/saturn/maria/data", d60B08DA, d_060B08DA);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B099C, func_060B099C);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B09B4, func_060B09B4);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B09C0, func_060B09C0);
+
+void func_060B099C(Entity* self) { DestroyEntity(self); }
+
+void func_060B09B4() {}
+
+const u16 pad_60B09BC = 0;
+
+s32 func_060B09C0() { return 0; }
+
+const u16 pad_60B09C8 = 0;
+
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B09CC, func_060B09CC);
 // function, splitter bugs
 INCLUDE_ASM_NO_ALIGN("asm/saturn/maria/data", d60B1872, d_060B1872);
@@ -136,13 +436,21 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B29D4, func_060B29D4);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B2F8C, func_060B2F8C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B2FC8, func_060B2FC8);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B30BC, func_060B30BC);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B3678, func_060B3678);
+
+void func_060B3678() {}
+
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B3684, func_060B3684);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B382C, func_060B382C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B4470, func_060B4470);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B44E8, func_060B44E8);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B4598, func_060B4598);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B46A0, func_060B46A0);
+
+void func_060B46A0(Entity* self) { DestroyEntity(self); }
+
+// should be able to remove when next function is decompiled
+const u16 pad_060B46B8 = 0xAAAA;
+const u16 pad_060B46BA = 0xAAAB;
+
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B46BC, func_060B46BC);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B4B80, func_060B4B80);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B4CF4, func_060B4CF4);
@@ -158,7 +466,9 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B7A48, func_060B7A48);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B7E08, func_060B7E08);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B7F50, func_060B7F50);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B805C, func_060B805C);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B82AC, func_060B82AC);
+
+void func_060B82AC() {}
+
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B82B8, func_060B82B8);
 // function, splitter bugs
 INCLUDE_ASM_NO_ALIGN("asm/saturn/maria/data", d60B8666, d_060B8666);
@@ -198,7 +508,19 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BD0D0, func_060BD0D0);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BD150, func_060BD150);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BD244, func_060BD244);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BD474, func_060BD474);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BD5F0, func_060BD5F0);
+
+void func_060BB330();
+
+s32 DAT_060c4118;
+s32 DAT_060c411c;
+
+void func_060BACA4(void) {
+    memset(&DAT_060c4118, 0, 4);
+    memcpy(0x002B2000, &DAT_060c411c, 0x9600);
+
+    func_060BB330();
+}
+
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BD638, func_060BD638);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BD81C, func_060BD81C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BD9E8, func_060BD9E8);
@@ -209,13 +531,51 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BDED8, func_060BDED8);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE064, func_060BE064);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE258, func_060BE258);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE308, func_060BE308);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE3D4, func_060BE3D4);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE414, func_060BE414);
+
+s32 d_06086390;
+s32 d_060476A0;
+s32 d_060476A4;
+s32 d_060cd748;
+s32 d_060cd74c;
+void func_060BB9BC(s32*);
+s32* func_060784A8();
+
+void func_060BBA88(void) {
+    s32* iVar2;
+    iVar2 = func_060784A8();
+    func_060BB9BC(iVar2);
+    d_060476A0 = d_060cd748;
+    d_060476A4 = d_060cd74c;
+}
+
+// same sequence of funcs as in richter
+
+s32 d_06086390;
+void func_060BE414(void) {
+    s32* iVar2;
+    d_06086390 = 0;
+    iVar2 = func_060784A8();
+    iVar2[0x4500] = 0xffffffff;
+}
+
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE440, func_060BE440);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE54C, func_060BE54C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE618, func_060BE618);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE6D4, func_060BE6D4);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE700, func_060BE700);
+
+void func_060BE6D4(void) {
+    int* iVar2;
+    d_06086390 = 4;
+    iVar2 = func_060784A8();
+    iVar2[0x4500] = 0xffffffff;
+}
+
+void func_060BE700(void) {
+    int* iVar2;
+    d_06086390 = 5;
+    iVar2 = func_060784A8();
+    iVar2[0x4500] = 0xffffffff;
+}
+
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE72C, func_060BE72C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE854, func_060BE854);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE994, func_060BE994);
