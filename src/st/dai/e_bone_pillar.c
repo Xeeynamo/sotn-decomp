@@ -76,15 +76,15 @@ void EntityBonePillarSkull(Entity* self) {
     s16* ptr;
 
     if ((self->flags & FLAG_DEAD) && (self->step < BONE_PILLAR_DEATH)) {
-        OVL_EXPORT(SetStep)(BONE_PILLAR_DEATH);
+        SetStep(BONE_PILLAR_DEATH);
     }
     if (self->ext.bonePillar.bottomDead) {
         self->ext.bonePillar.bottomDead = false;
-        OVL_EXPORT(SetStep)(BONE_PILLAR_BOUNCE);
+        SetStep(BONE_PILLAR_BOUNCE);
     }
     switch (self->step) {
     case BONE_PILLAR_INIT:
-        OVL_EXPORT(InitializeEntity)(g_EInitBonePillarSkull);
+        InitializeEntity(g_EInitBonePillarSkull);
         self->palette = g_EInitBonePillarSkull[3] + 1;
         self->animCurFrame = 1;
         self->flags |= FLAG_UNK_20000000;
@@ -92,34 +92,32 @@ void EntityBonePillarSkull(Entity* self) {
             self->hitboxOffX = -1;
             self->hitboxOffY = -14;
             self->animCurFrame = 9;
-            OVL_EXPORT(SetStep)(BONE_PILLAR_READY);
+            SetStep(BONE_PILLAR_READY);
             break;
         }
         self->hitboxOffX = -3;
         self->hitboxOffY = 13;
     case BONE_PILLAR_SPAWN_TOP:
-        if (OVL_EXPORT(UnkCollisionFunc3)(sensors_bone_pillar) & 1) {
+        if (UnkCollisionFunc3(sensors_bone_pillar) & 1) {
             if (self->params & 0x100) {
                 entity = self + 1;
-                OVL_EXPORT(CreateEntityFromCurrentEntity)
-                (E_BONE_PILLAR_SPIKE_BALL, entity);
+                CreateEntityFromCurrentEntity(E_BONE_PILLAR_SPIKE_BALL, entity);
                 entity->posX.i.hi = self->posX.i.hi + 8;
                 entity->posY.i.hi = self->posY.i.hi - 8;
                 self->params = 0;
             } else {
                 entity = self + 1;
-                OVL_EXPORT(CreateEntityFromCurrentEntity)
-                (E_BONE_PILLAR_SKULL, entity);
+                CreateEntityFromCurrentEntity(E_BONE_PILLAR_SKULL, entity);
                 entity->params = 1;
                 entity->posX.i.hi = self->posX.i.hi;
                 entity->posY.i.hi = self->posY.i.hi;
             }
-            OVL_EXPORT(SetStep)(BONE_PILLAR_READY);
+            SetStep(BONE_PILLAR_READY);
         }
         break;
     case BONE_PILLAR_READY:
-        if (OVL_EXPORT(GetDistanceToPlayerX)() < 112) {
-            OVL_EXPORT(SetStep)(BONE_PILLAR_ATTACK_LOOP);
+        if (GetDistanceToPlayerX() < 112) {
+            SetStep(BONE_PILLAR_ATTACK_LOOP);
         }
         break;
     case BONE_PILLAR_ATTACK_LOOP:
@@ -135,16 +133,15 @@ void EntityBonePillarSkull(Entity* self) {
         } else {
             self->animCurFrame = 1;
         }
-        if (self->params ==
-            ((OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1)) { // Player on right
+        if (self->params == ((GetSideToPlayer() & 1) ^ 1)) { // Player on right
             if (!--self->ext.bonePillar.timer) {
-                OVL_EXPORT(SetStep)(BONE_PILLAR_ATTACK);
+                SetStep(BONE_PILLAR_ATTACK);
             }
         }
-        if (OVL_EXPORT(GetDistanceToPlayerX)() > 128) {
-            OVL_EXPORT(SetStep)
-            (BONE_PILLAR_ATTACK_LOOP); // resets self->step_s to 0 which
-                                       // increments attack interval index
+        if (GetDistanceToPlayerX() > 128) {
+            SetStep(
+                BONE_PILLAR_ATTACK_LOOP); // resets self->step_s to 0 which
+                                          // increments attack interval index
         }
         break;
     case BONE_PILLAR_ATTACK:
@@ -154,21 +151,19 @@ void EntityBonePillarSkull(Entity* self) {
             self->palette = g_EInitBonePillarSkull[3] + 1;
         }
         if (self->params) {
-            tempVar = OVL_EXPORT(AnimateEntity)(anim_mouth_glow_top, self);
+            tempVar = AnimateEntity(anim_mouth_glow_top, self);
         } else {
-            tempVar = OVL_EXPORT(AnimateEntity)(anim_mouth_glow_bottom, self);
+            tempVar = AnimateEntity(anim_mouth_glow_bottom, self);
         }
         if (!tempVar) { // if attack animation is not playing then the attack is
                         // complete, return to attack loop
             self->palette = g_EInitBonePillarSkull[3] + 1;
-            OVL_EXPORT(SetStep)(BONE_PILLAR_ATTACK_LOOP);
+            SetStep(BONE_PILLAR_ATTACK_LOOP);
         }
         if ((self->pose == 17) && (tempVar & 0x80)) {
-            entity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
+            entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)
-                (E_BONE_PILLAR_FIRE, self, entity);
+                CreateEntityFromEntity(E_BONE_PILLAR_FIRE, self, entity);
                 entity->facingLeft = self->params;
                 if (self->params) {
                     entity->posY.i.hi -= 14;
@@ -186,19 +181,17 @@ void EntityBonePillarSkull(Entity* self) {
             tempVar = 2;
         }
         for (i = 0; i < 2; i++) {
-            entity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)
-                (E_BONE_PILLAR_PARTS, self, entity);
+                CreateEntityFromEntity(E_BONE_PILLAR_PARTS, self, entity);
                 entity->params = i + tempVar;
                 entity->posX.i.hi += *ptr++;
                 entity->posY.i.hi += *ptr++;
             }
         }
-        entity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
+            CreateEntityFromEntity(E_EXPLOSION, self, entity);
             entity->params = EXPLOSION_SMALL_MULTIPLE;
         }
         if (!self->params) {
@@ -225,7 +218,7 @@ void EntityBonePillarSkull(Entity* self) {
             self->step_s++;
         case BONE_PILLAR_SKULL_BOUNCE:
             self->rotate -= ROT(2.8125);
-            OVL_EXPORT(MoveEntity)();
+            MoveEntity();
             self->velocityY += FIX(0.1875);
             for (ptr = angles, i = 0; i < 4; i++, ptr++) {
                 offsetX = self->posX.i.hi;
@@ -247,7 +240,7 @@ void EntityBonePillarSkull(Entity* self) {
                 self->hitboxState = 0;
                 self->drawFlags = ENTITY_DEFAULT;
                 self->step = BONE_PILLAR_INIT;
-                self->pfnUpdate = OVL_EXPORT(EntityExplosion);
+                self->pfnUpdate = EntityExplosion;
                 self->params = EXPLOSION_FIREBALL;
             }
         }
@@ -266,9 +259,9 @@ void EntityBonePillarSpikeBall(Entity* self) {
 
     if (self->flags & FLAG_DEAD) {
         PlaySfxPositional(SFX_QUICK_STUTTER_EXPLODE_B);
-        entity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
+            CreateEntityFromEntity(E_EXPLOSION, self, entity);
             entity->params = EXPLOSION_BIG;
         }
         DestroyEntity(self);
@@ -276,7 +269,7 @@ void EntityBonePillarSpikeBall(Entity* self) {
     }
     switch (self->step) {
     case BONE_PILLAR_BALL_INIT:
-        OVL_EXPORT(InitializeEntity)(g_EInitBonePillarSpikeBall);
+        InitializeEntity(g_EInitBonePillarSpikeBall);
         self->animCurFrame = 22;
         self->hitboxWidth = 13;
         self->hitboxHeight = 13;
@@ -315,7 +308,7 @@ void EntityBonePillarSpikeBall(Entity* self) {
             self->velocityX = FIX(-0.75);
             self->velocityY = FIX(-1.0);
             self->step++;
-            entity = OVL_EXPORT(AllocEntity)(&g_Entities[32], &g_Entities[47]);
+            entity = AllocEntity(&g_Entities[32], &g_Entities[47]);
             // Creates a new entity and links the two entities
             // The new entity is intentionally given a bogus entityId
             // All of this is done in order to give the ball invinvibility while
@@ -344,7 +337,7 @@ void EntityBonePillarSpikeBall(Entity* self) {
         }
         break;
     case BONE_PILLAR_BALL_BOUNCE:
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         self->rotate -= ROT(5.625);
         self->velocityY += FIX(0.25);
         posX = self->posX.i.hi;
@@ -367,7 +360,7 @@ void EntityBonePillarSpikeBall(Entity* self) {
         }
         break;
     case BONE_PILLAR_BALL_LAND:
-        OVL_EXPORT(UnkCollisionFunc2)(sensors_spike_ball);
+        UnkCollisionFunc2(sensors_spike_ball);
         self->rotate -= ROT(11.25);
         self->velocityX = FIX(-1.75);
         break;
@@ -404,7 +397,7 @@ void EntityBonePillarFireBreath(Entity* self) {
 
     switch (self->step) {
     case BONE_PILLAR_FIRE_INIT:
-        OVL_EXPORT(InitializeEntity)(g_EInitBonePillarFireBreath);
+        InitializeEntity(g_EInitBonePillarFireBreath);
         self->animSet = 0;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 16);
         if (primIndex == -1) {
@@ -448,7 +441,7 @@ void EntityBonePillarFireBreath(Entity* self) {
         }
         PlaySfxPositional(SFX_FIREBALL_SHOT_A);
     case BONE_PILLAR_FIRE_BREATH:
-        if (!OVL_EXPORT(AnimateEntity)(anim_fire_breath, self)) {
+        if (!AnimateEntity(anim_fire_breath, self)) {
             self->hitboxState = 0;
             self->step++;
             return;
@@ -466,19 +459,19 @@ void EntityBonePillarFireBreath(Entity* self) {
              prim = prim->next) {
             prim->type = PRIM_TILE;
             if (self->facingLeft) {
-                posX = (OVL_EXPORT(Random)() & 0x1F) + 16;
+                posX = (Random() & 0x1F) + 16;
             } else {
-                posX = -(OVL_EXPORT(Random)() & 0x1F) - 16;
+                posX = -(Random() & 0x1F) - 16;
             }
             prim->x0 = self->posX.i.hi + posX;
             posY = self->posY.i.hi - posX;
-            prim->y0 = posY - (OVL_EXPORT(Random)() & 0x1F) + 8;
+            prim->y0 = posY - (Random() & 0x1F) + 8;
             prim->u0 = 1;
             prim->v0 = 1;
             prim->r0 = 224;
             prim->b0 = 136;
             prim->g0 = 160;
-            prim->p2 = (OVL_EXPORT(Random)() & 7) + 1;
+            prim->p2 = (Random() & 7) + 1;
             prim->priority = self->zPriority + 1;
             prim->drawMode =
                 DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
@@ -508,7 +501,7 @@ void EntityBonePillarDeathParts(Entity* self) {
 
     switch (self->step) {
     case BONE_PILLAR_DEATH_INIT:
-        OVL_EXPORT(InitializeEntity)(g_EInitBonePillarParts);
+        InitializeEntity(g_EInitBonePillarParts);
         self->hitboxState = 0;
         self->animCurFrame = (self->params & 0xF) + 18;
         self->zPriority += self->params & 0xF;
@@ -524,7 +517,7 @@ void EntityBonePillarDeathParts(Entity* self) {
         }
         break;
     case BONE_PILLAR_DEATH_PARTS:
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         self->velocityY += FIX(0.15625);
         posX = self->posX.i.hi;
         posY = self->posY.i.hi + y_offset[self->params];
@@ -538,7 +531,7 @@ void EntityBonePillarDeathParts(Entity* self) {
     case BONE_PILLAR_DEATH_EXPLODE:
         if (!--self->ext.bonePillar.timer) {
             self->step = BONE_PILLAR_INIT;
-            self->pfnUpdate = OVL_EXPORT(EntityExplosion);
+            self->pfnUpdate = EntityExplosion;
             self->params = EXPLOSION_SMALL;
         }
     }

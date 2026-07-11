@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit g_EInitInteractable;
 extern EInit g_EInitArmorLord;
 extern EInit D_us_80180AE8;
 extern EInit D_us_80180AF4;
@@ -191,7 +191,7 @@ static void func_us_801D1388(Primitive* prim) {
             if (otherPrim != NULL) {
                 UnkPolyFunc2(otherPrim);
                 otherPrim->next->g3 = 1;
-                otherPrim->next->r3 = OVL_EXPORT(Random)() & 1;
+                otherPrim->next->r3 = Random() & 1;
                 if (g_CurrentEntity->facingLeft) {
                     otherPrim->x0 = prim->x1 - 0x10;
                 } else {
@@ -226,11 +226,9 @@ static void func_us_801D1388(Primitive* prim) {
         dx = tempEntity->posX.i.hi - prim->x3;
     }
     if ((dx > 0) && !prim->next->v2 && (dx < 0x10)) {
-        tempEntity =
-            OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
+        tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
         if (tempEntity != NULL) {
-            OVL_EXPORT(CreateEntityFromCurrentEntity)
-            (E_ARMOR_LORD_UNK2, tempEntity);
+            CreateEntityFromCurrentEntity(E_ARMOR_LORD_UNK2, tempEntity);
             tempEntity->posX.i.hi = prim->x3;
             tempEntity->posY.i.hi = prim->y0;
             tempEntity->facingLeft = g_CurrentEntity->facingLeft;
@@ -248,7 +246,7 @@ void EntityArmorLordFireWave(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->ext.armorLord.unk80 = 0;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x1A);
         if (primIndex != -1) {
@@ -766,14 +764,14 @@ static s32 func_us_801D1DAC(void) {
                 prim = &g_PrimBuf[primIndex];
                 g_CurrentEntity->ext.armorLord.prim = prim;
                 while (prim != NULL) {
-                    prim->x0 = (posX + (OVL_EXPORT(Random)() & 3)) - 2;
-                    prim->y0 = posY - 0x48 + (OVL_EXPORT(Random)() & 0x3F);
+                    prim->x0 = (posX + (Random() & 3)) - 2;
+                    prim->y0 = posY - 0x48 + (Random() & 0x3F);
                     prim->u0 = 1;
                     prim->v0 = 1;
                     prim->r0 = 0xE0;
                     prim->b0 = 0x88;
                     prim->g0 = 0xA0;
-                    prim->p2 = (OVL_EXPORT(Random)() & 7) + 1;
+                    prim->p2 = (Random() & 7) + 1;
                     prim->priority = g_CurrentEntity->zPriority + 1;
                     prim->drawMode =
                         DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
@@ -809,7 +807,7 @@ void EntityArmorLord(Entity* self) {
 #ifdef STAGE_IS_NO1
         D_us_80182D4C = 1;
 #endif
-        OVL_EXPORT(SetStep)(8);
+        SetStep(8);
     }
     switch (self->step) {
     case 0:
@@ -819,41 +817,41 @@ void EntityArmorLord(Entity* self) {
             return;
         }
 #endif
-        OVL_EXPORT(InitializeEntity)(g_EInitArmorLord);
+        InitializeEntity(g_EInitArmorLord);
         tempEntity = self + 1;
-        OVL_EXPORT(CreateEntityFromEntity)(E_ARMOR_LORD_UNK1, self, tempEntity);
-        self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+        CreateEntityFromEntity(E_ARMOR_LORD_UNK1, self, tempEntity);
+        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         break;
 
     case 1:
-        if (OVL_EXPORT(UnkCollisionFunc3)(D_us_80182D58) & 1) {
-            OVL_EXPORT(SetStep)(2);
+        if (UnkCollisionFunc3(D_us_80182D58) & 1) {
+            SetStep(2);
         }
         break;
 
     case 2:
-        if (OVL_EXPORT(GetDistanceToPlayerX)() < 0xA0) {
-            OVL_EXPORT(SetStep)(3);
+        if (GetDistanceToPlayerX() < 0xA0) {
+            SetStep(3);
         }
         break;
 
     case 3:
         if (!self->step_s) {
-            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->ext.armorLord.unk84 = self->facingLeft;
-            self->ext.armorLord.unk80 = D_us_80182D70[OVL_EXPORT(Random)() & 3];
+            self->ext.armorLord.unk80 = D_us_80182D70[Random() & 3];
             self->step_s++;
         }
-        if (!OVL_EXPORT(AnimateEntity)(anim0, self)) {
-            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+        if (!AnimateEntity(anim0, self)) {
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
-        OVL_EXPORT(UnkCollisionFunc2)(D_us_80182D68);
+        UnkCollisionFunc2(D_us_80182D68);
         if (self->ext.armorLord.unk84) {
             self->velocityX = FIX(0.25);
         } else {
             self->velocityX = FIX(-0.25);
         }
-        xDistance = OVL_EXPORT(GetDistanceToPlayerX)();
+        xDistance = GetDistanceToPlayerX();
         if (xDistance < 0x50) {
             self->ext.armorLord.unk84 = self->facingLeft ^ 1;
         }
@@ -861,13 +859,13 @@ void EntityArmorLord(Entity* self) {
             self->ext.armorLord.unk84 = self->facingLeft;
         }
         if (!--self->ext.armorLord.unk80) {
-            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
-            OVL_EXPORT(SetStep)(D_us_80182D50[OVL_EXPORT(Random)() & 7]);
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+            SetStep(D_us_80182D50[Random() & 7]);
         }
         if (g_Player.status & PLAYER_STATUS_UNK400) {
-            if (!self->ext.armorLord.unk85 && (OVL_EXPORT(Random)() & 1)) {
-                self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
-                OVL_EXPORT(SetStep)(7);
+            if (!self->ext.armorLord.unk85 && (Random() & 1)) {
+                self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+                SetStep(7);
             }
             self->ext.armorLord.unk85 = 1;
         } else {
@@ -878,7 +876,7 @@ void EntityArmorLord(Entity* self) {
     case 4:
         switch (self->step_s) {
         case 0:
-            if (!OVL_EXPORT(AnimateEntity)(anim1, self)) {
+            if (!AnimateEntity(anim1, self)) {
                 self->pose = 0;
                 self->poseTimer = 0;
                 self->step_s++;
@@ -887,7 +885,7 @@ void EntityArmorLord(Entity* self) {
             break;
 
         case 1:
-            OVL_EXPORT(AnimateEntity)(anim2, self);
+            AnimateEntity(anim2, self);
             if (!--self->ext.armorLord.unk80) {
                 self->pose = 0;
                 self->poseTimer = 0;
@@ -899,8 +897,8 @@ void EntityArmorLord(Entity* self) {
             break;
 
         case 2:
-            if (!OVL_EXPORT(AnimateEntity)(anim3, self)) {
-                OVL_EXPORT(SetStep)(3);
+            if (!AnimateEntity(anim3, self)) {
+                SetStep(3);
             }
             break;
         }
@@ -924,10 +922,10 @@ void EntityArmorLord(Entity* self) {
                 self->velocityX = FIX(-4.0);
             }
         }
-        OVL_EXPORT(UnkCollisionFunc2)(D_us_80182D68);
+        UnkCollisionFunc2(D_us_80182D68);
         self->velocityX -= self->velocityX / 8;
-        if (!OVL_EXPORT(AnimateEntity)(anim4, self)) {
-            OVL_EXPORT(SetStep)(3);
+        if (!AnimateEntity(anim4, self)) {
+            SetStep(3);
         }
         break;
 
@@ -935,48 +933,45 @@ void EntityArmorLord(Entity* self) {
         if (self->pose > 5 && !self->step_s) {
             PlaySfxPositional(SFX_FIREBALL_SHOT_A);
             PlaySfxPositional(SFX_ARMOR_LORD_FIRE_ATTACK);
-            tempEntity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)
-                (E_ARMOR_LORD_FIRE_WAVE, self, tempEntity);
+                CreateEntityFromEntity(
+                    E_ARMOR_LORD_FIRE_WAVE, self, tempEntity);
                 tempEntity->facingLeft = self->facingLeft;
                 tempEntity->pfnUpdate = EntityArmorLordFireWave;
                 tempEntity->step = 0;
             }
             self->step_s++;
         }
-        if (!OVL_EXPORT(AnimateEntity)(anim5, self)) {
-            OVL_EXPORT(SetStep)(3);
+        if (!AnimateEntity(anim5, self)) {
+            SetStep(3);
         }
         break;
 
     case 7:
-        if (!OVL_EXPORT(AnimateEntity)(anim6, self)) {
+        if (!AnimateEntity(anim6, self)) {
             self->hitboxState = 3;
             self->step_s = 3;
         }
         if (self->pose > 1) {
             func_us_801D1A9C();
             if ((self->flags & FLAG_HAS_PRIMS) == 0) {
-                OVL_EXPORT(SetStep)(3);
+                SetStep(3);
             }
         }
         break;
 
     case 8:
-        if (!OVL_EXPORT(AnimateEntity)(anim7, self)) {
-            OVL_EXPORT(SetStep)(9);
+        if (!AnimateEntity(anim7, self)) {
+            SetStep(9);
         }
         if (g_Timer % 8 == 0) {
             PlaySfxPositional(SFX_EXPLODE_FAST_B);
-            tempEntity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)
-                (E_INTENSE_EXPLOSION, self, tempEntity);
-                tempEntity->posX.i.hi += (OVL_EXPORT(Random)() & 0x1F) - 0x10;
-                tempEntity->posY.i.hi += (OVL_EXPORT(Random)() & 0x3F) - 0x10;
+                CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, tempEntity);
+                tempEntity->posX.i.hi += (Random() & 0x1F) - 0x10;
+                tempEntity->posY.i.hi += (Random() & 0x3F) - 0x10;
             }
         }
         break;
@@ -1034,7 +1029,7 @@ void func_us_801D348C(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(D_us_80180AE8);
+        InitializeEntity(D_us_80180AE8);
         self->blendMode |= BLEND_TRANSP | BLEND_ADD;
         self->drawFlags |= ENTITY_OPACITY;
         self->animCurFrame = 0;
@@ -1112,7 +1107,7 @@ void func_us_801D3700(Entity* self) {
     if (!self->step) {
         height = self->hitboxHeight;
         offsetY = self->hitboxOffY;
-        OVL_EXPORT(InitializeEntity)(D_us_80180AF4);
+        InitializeEntity(D_us_80180AF4);
         self->hitboxWidth = 8;
         self->hitboxOffX = 8;
         self->hitboxHeight = height;

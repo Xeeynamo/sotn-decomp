@@ -16,6 +16,11 @@ GameApi g_ApiInit = {0};
 u8 g_DemoRecordingBuffer[DEMO_MAX_LEN];
 extern bool g_IsQuitRequested;
 
+#define OVL_EXPORT(x) PC_
+// hack until all common EInit gets OVL_EXPORTed
+#include "../st/e_init_common.h"
+#undef OVL_EXPORT
+
 PfnEntityUpdate* PfnEntityUpdates;
 LayoutEntity** g_pStObjLayoutHorizontal;
 LayoutEntity** g_pStObjLayoutVertical;
@@ -220,6 +225,7 @@ bool InitGame(struct InitGameParams* params) {
 void ResetPlatform(void);
 void ResetGame(void) { ResetPlatform(); }
 
+extern const char* g_goldCollectTexts[10]; // refeer to e_collect.h
 void InitSotnMenuTable(void);
 void InitStrings(void) {
     InitSotnMenuTable();
@@ -234,6 +240,9 @@ void InitStrings(void) {
     }
     for (int i = 0; i < LEN(g_EnemyDefs); i++) {
         g_EnemyDefs[i].name = AnsiToSotnMenuString(g_EnemyDefs[i].name);
+    }
+    for (int i = 0; i < LEN(g_goldCollectTexts); i++) {
+        g_goldCollectTexts[i] = AnsiToSotnMenuString(g_goldCollectTexts[i]);
     }
 }
 

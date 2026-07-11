@@ -8,13 +8,13 @@ BO0_pStObjLayoutVertical = 0x801803F4;
 BO0_EntityUpdates = 0x801804C8;
 BO0_EInitBreakable = 0x801805F4;
 BO0_EInitObtainable = 0x80180600;
-BO0_EInitParticle = 0x8018060C;
-BO0_EInitSpawner = 0x80180618;
-BO0_EInitInteractable = 0x80180624;
-BO0_EInitUnkId13 = 0x80180630;
-BO0_EInitLockCamera = 0x8018063C;
-BO0_EInitCommon = 0x80180648;
-BO0_EInitDamageNum = 0x80180654;
+g_EInitParticle = 0x8018060C;
+g_EInitSpawner = 0x80180618;
+g_EInitInteractable = 0x80180624;
+g_EInitUnkId13 = 0x80180630;
+g_EInitLockCamera = 0x8018063C;
+g_EInitCommon = 0x80180648;
+g_EInitDamageNum = 0x80180654;
 g_EInitSkelerang = 0x80180660;
 g_EInitSkelerangBoomerang = 0x8018066C;
 g_EInitEnvironment = 0x80180678;
@@ -50,39 +50,39 @@ EntityPrisoner = 0x801ACDC8;
 EntityOlroxAfterImage = 0x801AFF78;
 func_us_801B72E8 = 0x801BA880; // source=match
 EntityChair = 0x801BBD84;
-BO0_Random = 0x801BC0DC; // source=match
-BO0_Update = 0x801BC10C; // source=match
-BO0_UpdateStageEntities = 0x801BC408; // source=match
-BO0_HitDetection = 0x801BC510; // source=match
-BO0_EntityDamageDisplay = 0x801BD628; // source=match
-BO0_InitRoomEntities = 0x801BE528; // source=match
-BO0_UpdateRoomPosition = 0x801BE6A0; // source=match
-BO0_CreateEntityFromCurrentEntity = 0x801BE754; // source=match
-BO0_CreateEntityFromEntity = 0x801BE7C8; // source=match
+Random = 0x801BC0DC; // source=match
+Update = 0x801BC10C; // source=match
+UpdateStageEntities = 0x801BC408; // source=match
+HitDetection = 0x801BC510; // source=match
+EntityDamageDisplay = 0x801BD628; // source=match
+InitRoomEntities = 0x801BE528; // source=match
+UpdateRoomPosition = 0x801BE6A0; // source=match
+CreateEntityFromCurrentEntity = 0x801BE754; // source=match
+CreateEntityFromEntity = 0x801BE7C8; // source=match
 BO0_EntityRedDoor = 0x801BE8BC; // source=match
 DestroyEntity = 0x801BF4F4; // source=match
-BO0_AnimateEntity = 0x801BF624; // source=match
-BO0_GetDistanceToPlayerX = 0x801BF7F4; // source=match
-BO0_GetSideToPlayer = 0x801BF864; // source=match
-BO0_MoveEntity = 0x801BF8A8; // source=match
-BO0_UnkCollisionFunc3 = 0x801BF904; // source=match
-BO0_UnkCollisionFunc2 = 0x801BFB7C; // source=match
-BO0_AllocEntity = 0x801BFD64; // source=match
-BO0_SetEntityVelocityFromAngle = 0x801BFE0C; // source=match
-BO0_Ratan2Shifted = 0x801BFE78; // source=match
-BO0_GetAngleBetweenEntitiesShifted = 0x801BFEB0; // source=match
-BO0_AdjustValueWithinThreshold = 0x801BFF40; // source=match
-BO0_SetStep = 0x801C0134; // source=match
-BO0_SetSubStep = 0x801C0154; // source=match
-BO0_InitializeEntity = 0x801C0204; // source=match
-BO0_EntityDummy = 0x801C0300; // source=match
-BO0_GetPlayerCollisionWith = 0x801C05A8; // source=match
-BO0_EntityPrizeDrop = 0x801C0F14; // source=match
-BO0_EntityExplosion = 0x801C1788; // source=match
-BO0_EntityEquipItemDrop = 0x801C1928; // source=match
-BO0_EntityRelicOrb = 0x801C21C0; // source=match
-BO0_EntityHeartDrop = 0x801C2C90; // source=match
-BO0_EntityMessageBox = 0x801C2DAC; // source=match
+AnimateEntity = 0x801BF624; // source=match
+GetDistanceToPlayerX = 0x801BF7F4; // source=match
+GetSideToPlayer = 0x801BF864; // source=match
+MoveEntity = 0x801BF8A8; // source=match
+UnkCollisionFunc3 = 0x801BF904; // source=match
+UnkCollisionFunc2 = 0x801BFB7C; // source=match
+AllocEntity = 0x801BFD64; // source=match
+SetEntityVelocityFromAngle = 0x801BFE0C; // source=match
+Ratan2Shifted = 0x801BFE78; // source=match
+GetAngleBetweenEntitiesShifted = 0x801BFEB0; // source=match
+AdjustValueWithinThreshold = 0x801BFF40; // source=match
+SetStep = 0x801C0134; // source=match
+SetSubStep = 0x801C0154; // source=match
+InitializeEntity = 0x801C0204; // source=match
+EntityDummy = 0x801C0300; // source=match
+GetPlayerCollisionWith = 0x801C05A8; // source=match
+EntityPrizeDrop = 0x801C0F14; // source=match
+EntityExplosion = 0x801C1788; // source=match
+EntityEquipItemDrop = 0x801C1928; // source=match
+EntityRelicOrb = 0x801C21C0; // source=match
+EntityHeartDrop = 0x801C2C90; // source=match
+EntityMessageBox = 0x801C2DAC; // source=match
 EntityUnkId13 = 0x801C33F8; // source=match
 EntityExplosionVariantsSpawner = 0x801C3508; // source=match
 EntityExplosionVariants = 0x801C3720; // source=match

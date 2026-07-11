@@ -1,4 +1,4 @@
 EXTERN(_binary_assets_st_wrp_mwo_header_bin_start);
 EXTERN(WRP_Load);
-EXTERN(WRP_ItemIconSlots);
+EXTERN(g_ItemIconSlots);
 EXTERN(pad);

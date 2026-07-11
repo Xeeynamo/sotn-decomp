@@ -2,7 +2,7 @@
 #include "rcat.h"
 #include <scratchpad.h>
 
-extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit g_EInitInteractable;
 
 static SVECTOR D_us_801821E4 = {0};
 static SVECTOR D_us_801821EC = {.vx = 0, .vy = -96, .vz = 0, .pad = 0};
@@ -37,7 +37,7 @@ void EntityCavernBackgroundIce(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         // fallthrough
     case 1:
         // nb. this is unnecessary, needed for PSP match though
@@ -175,7 +175,7 @@ void EntityCavernBackgroundIceBridge(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         // Position is offset so it doesn't clip into the transparent ice
         self->posY.i.hi = 0x80 - g_Tilemap.scrollY.i.hi;
         // fallthrough

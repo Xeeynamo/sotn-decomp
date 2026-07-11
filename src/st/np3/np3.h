@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#define STAGE_IS_NP3
+#include "stage.h"
+
 #define OVL_EXPORT(x) NP3_##x
-#include <stage.h>
+#define STAGE_IS_NP3
 
 enum Palettes {
     PAL_NONE = 0,
@@ -108,13 +109,13 @@ typedef enum EntityIDs {
 
 extern EInit OVL_EXPORT(EInitBreakable);
 extern EInit OVL_EXPORT(EInitObtainable);
-extern EInit OVL_EXPORT(EInitParticle);
-extern EInit OVL_EXPORT(EInitSpawner);
-extern EInit OVL_EXPORT(EInitInteractable);
-extern EInit OVL_EXPORT(EInitUnkId13);
-extern EInit OVL_EXPORT(EInitLockCamera);
-extern EInit OVL_EXPORT(EInitCommon);
-extern EInit OVL_EXPORT(EInitDamageNum);
+extern EInit g_EInitParticle;
+extern EInit g_EInitSpawner;
+extern EInit g_EInitInteractable;
+extern EInit g_EInitUnkId13;
+extern EInit g_EInitLockCamera;
+extern EInit g_EInitCommon;
+extern EInit g_EInitDamageNum;
 extern EInit g_EInitStInteractable;
 extern EInit g_EInitWaterObject;
 extern EInit g_EInitWaterSplash;

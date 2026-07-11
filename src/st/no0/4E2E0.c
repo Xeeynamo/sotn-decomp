@@ -16,7 +16,7 @@ void func_us_801CE2E0(Entity* self) {
     u16 flags;
 
     if (self->step != 0) {
-        OVL_EXPORT(UnkAnimFunc)(anim_unk, self, 5);
+        UnkAnimFunc(anim_unk, self, 5);
         self->rotate += 0x80;
         player = &PLAYER;
         if (self->ext.et_801CE2E0.unk88 & 0x40) {
@@ -27,7 +27,7 @@ void func_us_801CE2E0(Entity* self) {
 
         self->velocityX = 0;
         self->ext.et_801CE2E0.unk88++;
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         if (self->ext.et_801CE2E0.unk7C & 0x4) {
             offset = (self->posY.i.hi + g_Tilemap.scrollY.i.hi) -
                      self->ext.et_801CE2E0.posY;
@@ -47,7 +47,7 @@ void func_us_801CE2E0(Entity* self) {
             flags |= 0x10;
         }
 
-        collision = OVL_EXPORT(GetPlayerCollisionWith)(self, 24, 8, flags);
+        collision = GetPlayerCollisionWith(self, 24, 8, flags);
         if (self->ext.et_801CE2E0.unk80 & 0xF) {
             if (self->ext.et_801CE2E0.unk80 & 0xF0) {
                 offset = -yOffsets[(self->ext.et_801CE2E0.unk80 & 0xF) - 1];
@@ -82,7 +82,7 @@ void func_us_801CE2E0(Entity* self) {
         }
         self->ext.et_801CE2E0.unk7C = collision;
     } else {
-        OVL_EXPORT(InitializeEntity)(D_us_80180AAC);
+        InitializeEntity(D_us_80180AAC);
         self->animCurFrame = 1;
         self->hitboxWidth = 24;
         self->hitboxHeight = 8;

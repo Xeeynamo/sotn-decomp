@@ -10,7 +10,7 @@ EntityCastleWall2: The castle wall foreground tiles outside the confessional
 room
 */
 
-extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit g_EInitInteractable;
 
 void EntityCastleWall1(Entity* self) {
     Primitive* prim;
@@ -24,7 +24,7 @@ void EntityCastleWall1(Entity* self) {
         return;
     }
 
-    OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+    InitializeEntity(g_EInitInteractable);
     primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
     if (primIndex == -1) {
         DestroyEntity(self);
@@ -70,7 +70,7 @@ void EntityCastleWall2(Entity* self) {
         return;
     }
 
-    OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+    InitializeEntity(g_EInitInteractable);
     rows = self->params & 0xF;
     primIndex = g_api.AllocPrimitives(PRIM_GT4, rows * 3);
     if (primIndex == -1) {
@@ -116,7 +116,7 @@ void EntityStaircase(Entity* self) {
 
     switch (self->step) {
     case 0: // entity init
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         primIndex = g_api.AllocPrimitives(PRIM_G4, 1);
         if (primIndex == -1) {
             DestroyEntity(self);

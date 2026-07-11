@@ -28,7 +28,7 @@ void func_801B8E0C(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitSpawner));
+        InitializeEntity(g_EInitSpawner);
         g_PauseAllowed = false;
         g_unkGraphicsStruct.pauseEnemies = 1;
         g_Player.padSim = PAD_LEFT;
@@ -81,11 +81,11 @@ void EntityMariaNZ0(Entity* self) {
         if (!(OVL_EXPORT(CutsceneFlags) & 1)) {
             OVL_EXPORT(CutsceneFlags) |= 1;
         }
-        OVL_EXPORT(SetStep)(12);
+        SetStep(12);
     }
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitSpawner));
+        InitializeEntity(g_EInitSpawner);
         self->animSet = ANIMSET_OVL(0xF);
         self->animCurFrame = 1;
         self->unk5A = 0x48;
@@ -126,8 +126,8 @@ void EntityMariaNZ0(Entity* self) {
         break;
     case 3:
         redDoor = &g_Entities[192];
-        OVL_EXPORT(AnimateEntity)(anim0, self);
-        OVL_EXPORT(MoveEntity)();
+        AnimateEntity(anim0, self);
+        MoveEntity();
         if (self->posX.i.hi > 0x18) {
             OVL_EXPORT(CutsceneFlags) |= 2;
             redDoor->step = 5;
@@ -135,81 +135,81 @@ void EntityMariaNZ0(Entity* self) {
         }
         break;
     case 4:
-        OVL_EXPORT(AnimateEntity)(anim0, self);
-        OVL_EXPORT(MoveEntity)();
+        AnimateEntity(anim0, self);
+        MoveEntity();
         if (self->posX.i.hi > 0x50) {
             OVL_EXPORT(CutsceneFlags) |= 1;
-            OVL_EXPORT(SetStep)(5);
+            SetStep(5);
             self->velocityX = 0;
         }
         break;
     case 5:
-        OVL_EXPORT(AnimateEntity)(anim1, self);
+        AnimateEntity(anim1, self);
         if (OVL_EXPORT(CutsceneFlags) & 8) {
-            OVL_EXPORT(SetStep)(6);
-            OVL_EXPORT(AnimateEntity)(anim2, self);
+            SetStep(6);
+            AnimateEntity(anim2, self);
         }
         break;
     case 6:
-        OVL_EXPORT(AnimateEntity)(anim2, self);
+        AnimateEntity(anim2, self);
         if (OVL_EXPORT(CutsceneFlags) & 0x10) {
-            OVL_EXPORT(SetStep)(7);
+            SetStep(7);
         }
         break;
     case 7:
-        OVL_EXPORT(AnimateEntity)(anim3, self);
+        AnimateEntity(anim3, self);
         if (OVL_EXPORT(CutsceneFlags) & 0x20) {
-            OVL_EXPORT(SetStep)(8);
+            SetStep(8);
         }
         break;
     case 8:
-        OVL_EXPORT(AnimateEntity)(anim4, self);
+        AnimateEntity(anim4, self);
         if (OVL_EXPORT(CutsceneFlags) & 0x40) {
-            OVL_EXPORT(SetStep)(9);
+            SetStep(9);
         }
         break;
     case 9:
-        OVL_EXPORT(AnimateEntity)(anim5, self);
+        AnimateEntity(anim5, self);
         if (OVL_EXPORT(CutsceneFlags) & 0x80) {
-            OVL_EXPORT(SetStep)(10);
+            SetStep(10);
         }
         break;
     case 10:
-        OVL_EXPORT(AnimateEntity)(anim6, self);
+        AnimateEntity(anim6, self);
         if (OVL_EXPORT(CutsceneFlags) & 0x100) {
-            OVL_EXPORT(SetStep)(11);
+            SetStep(11);
         }
         break;
     case 11:
-        OVL_EXPORT(AnimateEntity)(anim7, self);
+        AnimateEntity(anim7, self);
         if (OVL_EXPORT(CutsceneFlags) & 0x200) {
-            OVL_EXPORT(SetStep)(12);
+            SetStep(12);
         }
         break;
     case 12:
-        OVL_EXPORT(AnimateEntity)(anim8, self);
+        AnimateEntity(anim8, self);
         if (OVL_EXPORT(CutsceneFlags) & 0x400) {
-            OVL_EXPORT(SetStep)(13);
+            SetStep(13);
         }
         break;
     case 13:
-        OVL_EXPORT(AnimateEntity)(anim9, self);
+        AnimateEntity(anim9, self);
         if (OVL_EXPORT(CutsceneFlags) & 0x800) {
-            OVL_EXPORT(SetStep)(14);
+            SetStep(14);
             self->velocityX = FIX(0.75);
         }
         break;
     case 14:
-        OVL_EXPORT(AnimateEntity)(anim10, self);
-        OVL_EXPORT(MoveEntity)();
+        AnimateEntity(anim10, self);
+        MoveEntity();
         if (self->posX.i.hi > 0xE0) {
             OVL_EXPORT(CutsceneFlags) |= 0x1000;
             self->step++;
         }
         break;
     case 15:
-        OVL_EXPORT(AnimateEntity)(anim10, self);
-        OVL_EXPORT(MoveEntity)();
+        AnimateEntity(anim10, self);
+        MoveEntity();
         if (self->posX.i.hi > 0x110) {
             DestroyEntity(self);
         }

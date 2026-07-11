@@ -23,7 +23,7 @@ void EntityBreakableFloorSecret(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitEnvironment);
+        InitializeEntity(g_EInitEnvironment);
         self->animCurFrame = 0xA;
         self->zPriority = 0x69;
 
@@ -60,10 +60,10 @@ void EntityBreakableFloorSecret(Entity* self) {
         self->animCurFrame++;
         g_api.PlaySfx(SFX_WALL_DEBRIS_B);
 
-        newEntity = OVL_EXPORT(AllocEntity)(
-            &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
+        newEntity =
+            AllocEntity(&g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
         if (newEntity != NULL) {
-            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, newEntity);
+            CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
             newEntity->params = EXPLOSION_UNK_19;
         }
 

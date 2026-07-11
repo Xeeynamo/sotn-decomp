@@ -82,7 +82,7 @@ void func_us_801C12B0(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = 0;
         self->ext.et_801C12B0.unk80 = 4;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 16);
@@ -106,7 +106,7 @@ void func_us_801C12B0(Entity* self) {
     }
 
     prim = self->ext.et_801C12B0.prim;
-    OVL_EXPORT(AnimateEntity)(D_us_80181144, self);
+    AnimateEntity(D_us_80181144, self);
     i = (self->params >> 8) & 0xFF;
     ptr = &D_us_80181150[(self->params & 0xFF) * 5];
     scrollX = g_Tilemap.scrollX.i.hi - 0x10;
@@ -209,7 +209,7 @@ void func_us_801C15F8(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = 0;
         self->ext.et_801C12B0.unk80 = 4;
         primIndex = g_api.AllocPrimitives(PRIM_TILE, 16);
@@ -340,7 +340,7 @@ void func_us_801C1844(Entity* self) {
     Primitive* prim;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = 0;
         self->ext.et_801C12B0.unk80 = 4;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x10);
@@ -494,7 +494,7 @@ void func_us_801C1C94(Entity* self) {
     Primitive* prim;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = 0;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 10);
         if (primIndex == -1) {
@@ -591,7 +591,7 @@ void func_us_801C1EE4(Entity* self) {
     s16* ptr;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = 0;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 16);
         if (primIndex == -1) {
@@ -705,7 +705,7 @@ void func_us_801C21AC(Entity* self) {
 
     params = self->params;
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitParticle));
+        InitializeEntity(g_EInitParticle);
         self->animSet = 0;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
         if (primIndex == -1) {
@@ -865,7 +865,7 @@ void func_us_801C2474(Entity* self) {
 #endif
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = 0;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
         if (primIndex == -1) {
@@ -970,7 +970,7 @@ void func_us_801C2850(Entity* self) {
     s32 var_s1;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = 0;
         primIndex = g_api.AllocPrimitives(PRIM_G4, 3);
         if (primIndex == -1) {
@@ -1073,7 +1073,7 @@ void func_us_801C2B78(Entity* self) {
     s32 scrollY;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = 0;
         primIndex = g_api.AllocPrimitives(PRIM_TILE, 128);
         if (primIndex == -1) {
@@ -1164,7 +1164,7 @@ void func_us_801C2E60(Entity* self) {
     Primitive* prim;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = 0;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 32);
         if (primIndex == -1) {
@@ -1259,7 +1259,7 @@ void func_us_801C3160(Entity* self) {
 
     params = self->params;
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = 0;
         if (!params) {
             primIndex = g_api.AllocPrimitives(PRIM_TILE, 0x80);
@@ -1367,7 +1367,7 @@ void func_us_801C34EC(Entity* self) {
     Primitive* prim;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = 0;
         primIndex = g_api.AllocPrimitives(PRIM_TILE, 0x40);
         if (primIndex == -1) {
@@ -1442,7 +1442,7 @@ void func_us_801C37C8(Entity* self) {
     s32 clut;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = 0;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex == -1) {
@@ -1519,7 +1519,7 @@ void func_us_801C3A04(Entity* self) {
     s32 scrollY;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         self->animSet = 0;
         primIndex = g_api.AllocPrimitives(PRIM_TILE, 0x40);
         if (primIndex == -1) {
@@ -1604,7 +1604,7 @@ void func_us_801C3CC4(Entity* self) {
     Primitive* prim;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitParticle));
+        InitializeEntity(g_EInitParticle);
         self->animSet = 0;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x20);
         if (primIndex == -1) {
@@ -1703,7 +1703,7 @@ void func_us_801C3FB0(Entity* self) {
     Primitive* prim;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = 0;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x10);
         if (primIndex == -1) {
@@ -1800,7 +1800,7 @@ void func_us_801C4228(Entity* self) {
     Primitive* prim;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = 0;
         primIndex = g_api.AllocPrimitives(PRIM_G4, 4);
         if (primIndex == -1) {
@@ -1913,7 +1913,7 @@ void EntityWaterBox(Entity* self) {
     u16 collision;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 6;
         if (g_CastleFlags[NO4_WATER_BLOCKED]) {
@@ -1924,7 +1924,7 @@ void EntityWaterBox(Entity* self) {
     }
 
     player = &PLAYER;
-    collision = OVL_EXPORT(GetPlayerCollisionWith)(self, 16, 17, 5);
+    collision = GetPlayerCollisionWith(self, 16, 17, 5);
 
     if (collision & 1 && g_Player.vram_flag & TOUCHING_GROUND) {
         if (self->posX.i.hi > player->posX.i.hi) {
@@ -1971,7 +1971,7 @@ void EntityWaterSpray(Entity* self) {
     s16* var_s1;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = ANIMSET_OVL(1);
         self->palette = 0x44;
         self->drawFlags = ENTITY_MASK_R;
@@ -1979,17 +1979,16 @@ void EntityWaterSpray(Entity* self) {
         if (g_CastleFlags[NO4_WATER_BLOCKED]) {
             self->ext.et_waterAlcove.waterHeight = 0x40;
         } else {
-            newEnt =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            newEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEnt != NULL) {
-                OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(ID_27), newEnt);
+                CreateEntityFromCurrentEntity(E_ID(ID_27), newEnt);
                 newEnt->params = 1;
             }
             self->ext.et_waterAlcove.entity7E = newEnt;
 
-            newEnt = OVL_EXPORT(AllocEntity)(newEnt, &g_Entities[256]);
+            newEnt = AllocEntity(newEnt, &g_Entities[256]);
             if (newEnt != NULL) {
-                OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(ID_26), newEnt);
+                CreateEntityFromCurrentEntity(E_ID(ID_26), newEnt);
                 newEnt->params = 1;
             }
             self->ext.et_waterAlcove.entity82 = newEnt;
@@ -1998,7 +1997,7 @@ void EntityWaterSpray(Entity* self) {
     }
 
     // Animates the small flow of water that needs to be blocked by the crate
-    OVL_EXPORT(AnimateEntity)(D_us_80181588, self);
+    AnimateEntity(D_us_80181588, self);
 
     if (g_CastleFlags[NO4_WATER_BLOCKED]) {
         if (self->ext.et_waterAlcove.waterHeight < 0x40) {
@@ -2056,7 +2055,7 @@ void EntityFloatingIcePlatform(Entity* self) {
     hitboxIndex = self->params;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = hitboxIndex + 25;
         self->drawFlags = ENTITY_ROTATE;
@@ -2069,11 +2068,9 @@ void EntityFloatingIcePlatform(Entity* self) {
     self->posY.i.hi = self->ext.et_801C4980.posY - g_Tilemap.scrollY.i.hi +
                       self->ext.et_801C4980.timer;
 #ifdef VERSION_PSP
-    collision =
-        OVL_EXPORT(GetPlayerCollisionWith)(self, hitboxPtr[0], hitboxPtr[1], 4);
+    collision = GetPlayerCollisionWith(self, hitboxPtr[0], hitboxPtr[1], 4);
 #else
-    collision =
-        OVL_EXPORT(GetPlayerCollisionWith)(self, *hitboxPtr++, *hitboxPtr, 4);
+    collision = GetPlayerCollisionWith(self, *hitboxPtr++, *hitboxPtr, 4);
 #endif
     self->posY.i.hi = prevPosY;
     self->ext.et_801C4980.prevTimer = self->ext.et_801C4980.timer;
@@ -2129,7 +2126,7 @@ void func_us_801C4BD8(Entity* self) {
     s32 volume;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = 0;
     }
 
@@ -2173,7 +2170,7 @@ void func_us_801C4D2C(Entity* self) {
     u16 tile;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = 0;
     }
 
@@ -2220,11 +2217,9 @@ void func_us_801C4D2C(Entity* self) {
         tile = *tilePtr;
 
         if (tile == 0x701 || tile == 0x705) {
-            newEntity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity) {
-                OVL_EXPORT(CreateEntityFromCurrentEntity)
-                (E_ID(ID_54), newEntity);
+                CreateEntityFromCurrentEntity(E_ID(ID_54), newEntity);
                 newEntity->posX.i.hi =
                     ((x & 0xFFF0) + 8) - tilemap->scrollX.i.hi;
                 newEntity->posY.i.hi = 0xB2 - tilemap->scrollY.i.hi;
@@ -2234,11 +2229,9 @@ void func_us_801C4D2C(Entity* self) {
             }
             *tilePtr = 0xAC7;
         } else if (tile == 0x70C) {
-            newEntity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity) {
-                OVL_EXPORT(CreateEntityFromCurrentEntity)
-                (E_ID(ID_54), newEntity);
+                CreateEntityFromCurrentEntity(E_ID(ID_54), newEntity);
                 newEntity->posX.i.hi =
                     ((x & 0xFFF0) + 8) - tilemap->scrollX.i.hi;
                 newEntity->posY.i.hi = 0xB2 - tilemap->scrollY.i.hi;
@@ -2253,7 +2246,7 @@ void func_us_801C4D2C(Entity* self) {
 
 void func_us_801C5020(Entity* self) {
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 12;
         self->drawFlags = ENTITY_OPACITY | ENTITY_ROTATE;
@@ -2300,11 +2293,11 @@ void func_us_801C5134(void) {
     PlaySfxPositional(SFX_WOODEN_BRIDGE_EXPLODE);
 
     for (i = 1; i < 4; i++) {
-        newEntity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity == NULL) {
             break;
         }
-        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(ID_5C), newEntity);
+        CreateEntityFromCurrentEntity(E_ID(ID_5C), newEntity);
         newEntity->posX.i.hi += D_us_801815BC[i];
         newEntity->posY.i.hi += D_us_801815CC[i];
         newEntity->params = i;
@@ -2312,11 +2305,11 @@ void func_us_801C5134(void) {
 
     offsetX = -72;
     for (i = 0; i < 10; i++) {
-        newEntity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity == NULL) {
             break;
         }
-        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_EXPLOSION, newEntity);
+        CreateEntityFromCurrentEntity(E_EXPLOSION, newEntity);
         newEntity->params = 17;
         newEntity->posX.i.hi += ((rand() & 7) * 2) + offsetX - 7;
         newEntity->posY.i.hi += ((rand() & 7) * 4) - 7;
@@ -2330,7 +2323,7 @@ void func_us_801C5268(Entity* self) {
     s16 offsetX;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = ANIMSET_OVL(0);
         self->posX.i.hi = 0x380 - g_Tilemap.scrollX.i.hi;
         if (g_CastleFlags[NO4_SKELETON_APE_AND_BRIDGE] > 1) {
@@ -2384,7 +2377,7 @@ static s32 D_us_8018160C[] = {
 void func_us_801C542C(Entity* self) {
     u16 params = self->params;
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = D_us_801815DC[params];
         self->facingLeft = D_us_801815EC[params];
@@ -2395,7 +2388,7 @@ void func_us_801C542C(Entity* self) {
     if (F(self->velocityY).i.hi < 8) {
         self->velocityY += FIX(0.25);
     }
-    OVL_EXPORT(MoveEntity)();
+    MoveEntity();
     self->rotate += D_us_801815FC[params];
 }
 
@@ -2412,7 +2405,7 @@ void func_us_801C5518(Entity* self) {
     player = &PLAYER;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = 0;
     }
 
@@ -2463,7 +2456,7 @@ void func_us_801C5628(Entity* self) {
     u16 collision;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 40;
         if (!g_CastleFlags[NO4_SKELETON_APE_AND_BRIDGE]) {
@@ -2475,7 +2468,7 @@ void func_us_801C5628(Entity* self) {
 
     player = &PLAYER;
 
-    collision = OVL_EXPORT(GetPlayerCollisionWith)(self, 8, 16, 5);
+    collision = GetPlayerCollisionWith(self, 8, 16, 5);
 
     if (collision & 1 && g_Player.vram_flag & TOUCHING_GROUND) {
         if (g_pads[0].pressed & PAD_LEFT && PLAYER.step == 1) {
@@ -2504,9 +2497,9 @@ void func_us_801C5628(Entity* self) {
 
     if (self->step == 2 && player->posX.i.hi > 0x80) {
         g_api.PlaySfxVolPan(SFX_WALL_DEBRIS_A, 0x7F, 8);
-        player = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+        player = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (player != NULL) {
-            OVL_EXPORT(CreateEntityFromCurrentEntity)(E_MESSAGE_BOX, player);
+            CreateEntityFromCurrentEntity(E_MESSAGE_BOX, player);
             player->posX.i.hi = 0x80;
             player->posY.i.hi = 0xB0;
             player->ext.messageBox.label = D_us_80181644;
@@ -2540,7 +2533,7 @@ void func_us_801C58A0(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         if (g_CastleFlags[NO4_SKELETON_APE_AND_BRIDGE]) {
             func_us_801C5868();
             DestroyEntity(self);
@@ -2549,11 +2542,9 @@ void func_us_801C58A0(Entity* self) {
 
     case 1:
         if (g_CastleFlags[NO4_SKELETON_APE_AND_BRIDGE]) {
-            newEnt =
-                OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
+            newEnt = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (newEnt != NULL) {
-                OVL_EXPORT(CreateEntityFromCurrentEntity)
-                (E_ID(SKELETON_APE), newEnt);
+                CreateEntityFromCurrentEntity(E_ID(SKELETON_APE), newEnt);
                 newEnt->params = 2;
                 newEnt->posY.i.hi -= 0x60;
                 newEnt->posX.i.hi += 0x60;

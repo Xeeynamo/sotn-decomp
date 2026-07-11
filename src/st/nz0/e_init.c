@@ -2,21 +2,21 @@
 #include "nz0.h"
 
 void EntityBreakableNZ0(Entity*);
-void OVL_EXPORT(EntityExplosion)(Entity*);
-void OVL_EXPORT(EntityPrizeDrop)(Entity*);
-void OVL_EXPORT(EntityDamageDisplay)(Entity*);
+void EntityExplosion(Entity*);
+void EntityPrizeDrop(Entity*);
+void EntityDamageDisplay(Entity*);
 void OVL_EXPORT(EntityRedDoor)(Entity*);
 void EntityIntenseExplosion(Entity*);
 void EntitySoulStealOrb(Entity*);
 void EntityRoomForeground(Entity*);
 void EntityStageNamePopup(Entity*);
-void OVL_EXPORT(EntityEquipItemDrop)(Entity*);
-void OVL_EXPORT(EntityRelicOrb)(Entity*);
-void OVL_EXPORT(EntityHeartDrop)(Entity*);
+void EntityEquipItemDrop(Entity*);
+void EntityRelicOrb(Entity*);
+void EntityHeartDrop(Entity*);
 void EntityEnemyBlood(Entity*);
-void OVL_EXPORT(EntityMessageBox)(Entity*);
-void OVL_EXPORT(EntityDummy)(Entity*);
-void OVL_EXPORT(EntityDummy)(Entity*);
+void EntityMessageBox(Entity*);
+void EntityDummy(Entity*);
+void EntityDummy(Entity*);
 void OVL_EXPORT(EntityBackgroundBlock)(Entity*);
 void OVL_EXPORT(EntityLockCamera)(Entity*);
 void EntityUnkId13(Entity*);
@@ -81,21 +81,21 @@ void func_801B8E0C(Entity*);
 
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityBreakableNZ0,
-    OVL_EXPORT(EntityExplosion),
-    OVL_EXPORT(EntityPrizeDrop),
-    OVL_EXPORT(EntityDamageDisplay),
+    EntityExplosion,
+    EntityPrizeDrop,
+    EntityDamageDisplay,
     OVL_EXPORT(EntityRedDoor),
     EntityIntenseExplosion,
     EntitySoulStealOrb,
     EntityRoomForeground,
     EntityStageNamePopup,
-    OVL_EXPORT(EntityEquipItemDrop),
-    OVL_EXPORT(EntityRelicOrb),
-    OVL_EXPORT(EntityHeartDrop),
+    EntityEquipItemDrop,
+    EntityRelicOrb,
+    EntityHeartDrop,
     EntityEnemyBlood,
-    OVL_EXPORT(EntityMessageBox),
-    OVL_EXPORT(EntityDummy),
-    OVL_EXPORT(EntityDummy),
+    EntityMessageBox,
+    EntityDummy,
+    EntityDummy,
     OVL_EXPORT(EntityBackgroundBlock),
     OVL_EXPORT(EntityLockCamera),
     EntityUnkId13,
@@ -161,7 +161,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
 
 EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_DRA(3), 0, 0x00, 0x000, 0};
 #include "../e_init_common.h"
-EInit OVL_EXPORT(EInitEnemy3) = {ANIMSET_OVL(1), 0, 0x00, 0x000, 3};
+EInit g_EInitEnemy3 = {ANIMSET_OVL(1), 0, 0x00, 0x000, 3};
 EInit g_EInitBloodSkeleton = {0x8002, 0x0000, 0x004C, 0x0200, 0x0046};
 EInit g_EInitBoneScimitar = {0x8003, 0x0001, 0x004D, 0x0204, 0x0069};
 EInit g_EInitScimitarParts = {0x8003, 0x0000, 0x004D, 0x0204, 0x0002};

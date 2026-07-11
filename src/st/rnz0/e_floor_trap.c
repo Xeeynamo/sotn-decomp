@@ -31,7 +31,7 @@ void EntityFloorTrap(Entity* self) {
 
     switch (self->step) {
     case FLOORTRAP_INIT:
-        OVL_EXPORT(InitializeEntity)(g_EInitFloorTrap);
+        InitializeEntity(g_EInitFloorTrap);
         if (self->params & PARAMS_IS_WHEEL) {
             self->animCurFrame = 3;
             self->step = IM_A_WHEEL;
@@ -53,9 +53,9 @@ void EntityFloorTrap(Entity* self) {
             self->hitboxState = 1;
 
             // Create the wheel
-            other = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            other = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (other != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)(E_FLOORTRAP, self, other);
+                CreateEntityFromEntity(E_FLOORTRAP, self, other);
                 other->params = PARAMS_IS_WHEEL;
                 other->ext.floorTrap.wheelParent = self;
                 other->zPriority = self->zPriority + 1;
@@ -93,7 +93,7 @@ void EntityFloorTrap(Entity* self) {
                 dX = -dX;
             }
             if ((dX < self->ext.floorTrap.unk88) && (dX > 0)) {
-                OVL_EXPORT(SetStep)(FLOORTRAP_3);
+                SetStep(FLOORTRAP_3);
             }
         }
         break;
@@ -108,7 +108,7 @@ void EntityFloorTrap(Entity* self) {
             self->step_s++;
             /* fallthrough */
         case 1:
-            OVL_EXPORT(MoveEntity)();
+            MoveEntity();
             dX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
             dX = self->ext.floorTrap.unk86 - dX;
             if (!self->params) {
@@ -134,7 +134,7 @@ void EntityFloorTrap(Entity* self) {
             }
             break;
         case 3:
-            OVL_EXPORT(MoveEntity)();
+            MoveEntity();
             dX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
             dX = self->ext.floorTrap.unk84 - dX;
             if (self->params) {
@@ -144,7 +144,7 @@ void EntityFloorTrap(Entity* self) {
                 self->posX.i.hi =
                     self->ext.floorTrap.unk84 - g_Tilemap.scrollX.i.hi;
                 self->velocityX = 0;
-                OVL_EXPORT(SetStep)(FLOORTRAP_2);
+                SetStep(FLOORTRAP_2);
             }
             break;
         }
@@ -156,13 +156,13 @@ void EntityFloorTrap(Entity* self) {
         if (other->velocityX != 0) {
             // Plays the wheel spinning animation - indicates that this entity
             // is the wheel
-            OVL_EXPORT(AnimateEntity)(anim, self);
+            AnimateEntity(anim, self);
         }
         break;
     case FLOORTRAP_DEBUG:
 #include "../pad2_anim_debug.h"
     }
-    collision = OVL_EXPORT(GetPlayerCollisionWith)(self, 7, 6, 4);
+    collision = GetPlayerCollisionWith(self, 7, 6, 4);
     // We're not a wheel, we're the spike. And we hit the player.
     if (!(self->params & PARAMS_IS_WHEEL) && (collision & 4)) {
         // Launch the player proportional to self's speed

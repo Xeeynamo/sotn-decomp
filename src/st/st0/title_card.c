@@ -28,7 +28,7 @@ void EntityStageTitleFadeout(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        OVL_EXPORT(InitializeEntity)(g_EInit3DObject);
+        InitializeEntity(g_EInit3DObject);
         primIndex = g_api.AllocPrimitives(PRIM_G4, 5);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -184,7 +184,7 @@ void EntityStageTitleFadeout(Entity* self) {
                  prim = prim->next) {
                 prim->drawMode = DRAW_HIDE;
             }
-            OVL_EXPORT(PreventEntityFromRespawning)(self);
+            PreventEntityFromRespawning(self);
             DestroyEntity(self);
             break;
         }
@@ -215,7 +215,7 @@ void EntityStageTitleCard(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        OVL_EXPORT(InitializeEntity)(g_EInit3DObject);
+        InitializeEntity(g_EInit3DObject);
 #if defined(VERSION_PSP)
         D_pspeu_09254EA4 =
             GetLang(D_pspeu_09253FF0, D_pspeu_09254BD8, D_pspeu_092545D8,
@@ -405,7 +405,7 @@ void EntityStageTitleCard(Entity* self) {
         PrimDecreaseBrightness(prim, 4);
         prim = prim->next;
         if (PrimDecreaseBrightness(prim, 3) == 0) {
-            OVL_EXPORT(PreventEntityFromRespawning)(self);
+            PreventEntityFromRespawning(self);
             g_PauseAllowed = true;
             DestroyEntity(self);
         }

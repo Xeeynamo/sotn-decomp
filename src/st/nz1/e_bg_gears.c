@@ -4,7 +4,7 @@
 static u8 D_us_80180FB0[] = {
     6, 1, 6, 2, 6, 3, 0, 0,
 };
-extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit g_EInitInteractable;
 
 void EntityBackgroundGears(Entity* self) {
     Primitive* prim;
@@ -17,7 +17,7 @@ void EntityBackgroundGears(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = 0;
         self->posX.i.hi = 0;
         self->posY.i.hi = 0;
@@ -41,7 +41,7 @@ void EntityBackgroundGears(Entity* self) {
         // fallthrough
 
     case 1:
-        OVL_EXPORT(AnimateEntity)(D_us_80180FB0, self);
+        AnimateEntity(D_us_80180FB0, self);
 
         posX = self->posX.i.hi;
         posX &= 0x7F;

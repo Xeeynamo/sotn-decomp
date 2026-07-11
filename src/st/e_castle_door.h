@@ -97,7 +97,7 @@ void EntityCastleDoor(Entity* self) {
     switch (self->step) {
     case 0:
 #endif
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
 #if defined(INVERTED_STAGE)
         self->posX.i.hi = 0x1A8 - g_Tilemap.scrollX.i.hi;
         self->posY.i.hi = 0x5F - g_Tilemap.scrollY.i.hi;

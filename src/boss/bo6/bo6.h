@@ -2,8 +2,9 @@
 #ifndef BO6_H
 #define BO6_H
 
-#define OVL_EXPORT(x) BO6_##x
 #include <stage.h>
+
+#define OVL_EXPORT(x) BO6_##x
 
 typedef enum EntityIDs {
     /* 0x00 */ E_NONE,

@@ -106,7 +106,7 @@ void OVL_EXPORT(EntityBackgroundBlock)(Entity* self) {
 
     params = self->params;
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         self->animSet = (u16)animset[params];
         self->zPriority = zPriority[params];
         self->unk5A = unk5A[params];
@@ -119,5 +119,5 @@ void OVL_EXPORT(EntityBackgroundBlock)(Entity* self) {
         }
         self->facingLeft = facingLeft[params];
     }
-    OVL_EXPORT(AnimateEntity)(animations[params], self);
+    AnimateEntity(animations[params], self);
 }

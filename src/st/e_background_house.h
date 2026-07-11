@@ -5,7 +5,7 @@
 extern s32 E_ID(3D_BACKGROUND_HOUSE);
 #endif
 
-extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit g_EInitInteractable;
 
 static SVECTOR v0 = {-0x3C, -0x9B, -0x78};
 static SVECTOR v1 = {0x3C, -0x9B, -0x78};
@@ -246,13 +246,12 @@ void Entity3DHouseSpawner(Entity* self) {
     if (!self->step) {
         ptr = D_us_80180CF4;
         while (*ptr != -1) {
-            tempEntity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity == NULL) {
                 break;
             }
-            OVL_EXPORT(CreateEntityFromCurrentEntity)
-            (E_ID(3D_BACKGROUND_HOUSE), tempEntity);
+            CreateEntityFromCurrentEntity(
+                E_ID(3D_BACKGROUND_HOUSE), tempEntity);
             tempEntity->posX.i.hi = *ptr - g_Tilemap.scrollX.i.hi;
             ptr++;
             tempEntity->posY.i.hi = *ptr - g_Tilemap.scrollY.i.hi;
@@ -281,7 +280,7 @@ void Entity3DBackgroundHouse(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 16);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;

@@ -14,7 +14,7 @@ enum WingedGuardPartsSteps {
 
 extern EInit g_EInitWingedGuard;
 extern EInit g_EInitWingedGuardParts;
-extern EInit OVL_EXPORT(EInitSpawner);
+extern EInit g_EInitSpawner;
 
 static AnimateEntityFrame anim_move[] = {
     {6, 1}, {4, 2}, {4, 3}, {6, 4}, {4, 3}, {4, 2}, POSE_LOOP(0),
@@ -34,17 +34,15 @@ void EntityWingedGuard(Entity* self) {
 
     if (self->flags & FLAG_DEAD) {
         PlaySfxPositional(SFX_SKELETON_DEATH_C);
-        entity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
+            CreateEntityFromEntity(E_EXPLOSION, self, entity);
             entity->params = EXPLOSION_SMALL_MULTIPLE;
         }
         for (guardPart = 0; guardPart < 8; guardPart++) {
-            entity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)
-                (E_WINGED_GUARD_PARTS, self, entity);
+                CreateEntityFromEntity(E_WINGED_GUARD_PARTS, self, entity);
                 entity->velocityX = self->velocityX;
                 entity->velocityY = self->velocityY;
                 entity->params = guardPart;
@@ -57,9 +55,9 @@ void EntityWingedGuard(Entity* self) {
     }
     switch (self->step) {
     case WINGED_GUARD_INIT:
-        OVL_EXPORT(InitializeEntity)(g_EInitWingedGuard);
+        InitializeEntity(g_EInitWingedGuard);
         self->hitboxOffY = 2;
-        self->facingLeft = ((OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1);
+        self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
         if (self->facingLeft) {
             self->velocityX = FIX(1.0);
         } else {
@@ -67,11 +65,11 @@ void EntityWingedGuard(Entity* self) {
         }
         // fallthrough
     case WINGED_GUARD_PARTS_MOVE:
-        OVL_EXPORT(AnimateEntity)(anim_move, self);
+        AnimateEntity(anim_move, self);
         if (!self->poseTimer && self->pose == 2) {
             PlaySfxPositional(SFX_WING_FLAP_A);
         }
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         self->velocityY = (rsin(self->rotate) << 14) >> 12;
         self->rotate += 16;
         return;
@@ -85,7 +83,7 @@ void EntityWingedGuardParts(Entity* self) {
 
     switch (self->step) {
     case WINGED_GUARD_PARTS_INIT:
-        OVL_EXPORT(InitializeEntity)(g_EInitWingedGuardParts);
+        InitializeEntity(g_EInitWingedGuardParts);
         self->flags |= FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
         self->animCurFrame = self->params + 5;
         if (!self->params) {
@@ -96,7 +94,7 @@ void EntityWingedGuardParts(Entity* self) {
         } else {
             self->velocityX -= velocity_intervals[self->params][0];
         }
-        if (OVL_EXPORT(GetSideToPlayer)() & 1) {
+        if (GetSideToPlayer() & 1) {
             self->velocityX += FIX(0.5);
         } else {
             self->velocityX -= FIX(0.5);
@@ -104,15 +102,13 @@ void EntityWingedGuardParts(Entity* self) {
         self->velocityY += velocity_intervals[self->params][1];
         return;
     case WINGED_GUARD_PARTS_MOVE:
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         self->rotate += 128;
         self->velocityY += FIX(0.1875);
-        if (!(OVL_EXPORT(Random)() & 0x3F)) {
-            explosion =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+        if (!(Random() & 0x3F)) {
+            explosion = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (explosion != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)
-                (E_EXPLOSION, self, explosion);
+                CreateEntityFromEntity(E_EXPLOSION, self, explosion);
                 explosion->params = EXPLOSION_SMALL;
             }
         }
@@ -128,12 +124,12 @@ void EntityWingedGuardSpawner(Entity* self) {
     s16* minMaxPositions;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitSpawner));
+        InitializeEntity(g_EInitSpawner);
         // This is not a mistake, Winged Guard and Ghost use the same spawner
         self->ext.ghostEnemySpawner.timer = 1;
     }
     if (!--self->ext.ghostEnemySpawner.timer) {
-        self->ext.ghostEnemySpawner.timer = (OVL_EXPORT(Random)() & 47) + 192;
+        self->ext.ghostEnemySpawner.timer = (Random() & 47) + 192;
         entity = &PLAYER;
         posX = g_Tilemap.scrollX.i.hi + entity->posX.i.hi;
         posY = g_Tilemap.scrollY.i.hi + entity->posY.i.hi;
@@ -145,18 +141,18 @@ void EntityWingedGuardSpawner(Entity* self) {
             }
         }
 
-        entity = OVL_EXPORT(AllocEntity)(&g_Entities[168], &g_Entities[172]);
+        entity = AllocEntity(&g_Entities[168], &g_Entities[172]);
         if (entity != NULL) {
-            OVL_EXPORT(CreateEntityFromEntity)(E_WINGED_GUARD, self, entity);
+            CreateEntityFromEntity(E_WINGED_GUARD, self, entity);
             entity->zPriority = 176;
             entity->posX.i.hi = posX - g_Tilemap.scrollX.i.hi;
             entity->posY.i.hi = posY - g_Tilemap.scrollY.i.hi;
-            if (OVL_EXPORT(Random)() & 1) {
+            if (Random() & 1) {
                 entity->posX.i.hi = 288;
             } else {
                 entity->posX.i.hi = -32;
             }
-            posY = ((OVL_EXPORT(Random)() & 127) - 64);
+            posY = ((Random() & 127) - 64);
             entity->posY.i.hi += posY;
         }
     }

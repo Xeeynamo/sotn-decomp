@@ -14,14 +14,14 @@ void EntityLightningThunder(Entity* self) {
     s32 sfxPan;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(g_EInitStInteractable);
+        InitializeEntity(g_EInitStInteractable);
         self->zPriority = 0x2A;
         self->flags &= ~FLAG_POS_CAMERA_LOCKED;
-        self->facingLeft = OVL_EXPORT(Random)() & 1;
+        self->facingLeft = Random() & 1;
         sfxPan = (self->posX.i.hi >> 0x4) - 8;
         g_api.PlaySfxVolPan(SFX_THUNDER_B, 0x40, sfxPan);
     }
-    if (OVL_EXPORT(AnimateEntity)(thunder_anim, self) == 0) {
+    if (AnimateEntity(thunder_anim, self) == 0) {
         DestroyEntity(self);
     }
 }
@@ -32,7 +32,7 @@ static s16 cloudPos[][2] = {{0x88, 0x6C}, {0xC8, 0x30}, {0x30, 0x44}};
 // as a background. It's subtle and hard to see, but it's there.
 void EntityLightningCloud(Entity* self) {
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(g_EInitStInteractable);
+        InitializeEntity(g_EInitStInteractable);
         self->zPriority = 0x29;
         self->flags &= ~FLAG_POS_CAMERA_LOCKED;
         // There are 3 shapes of cloud, this picks which one.

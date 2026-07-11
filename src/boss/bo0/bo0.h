@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+#include <stage.h>
+
 #define STAGE_IS_NO2
 #define BOSS_IS_BO0
 #define OVL_EXPORT(x) BO0_##x
-#include <stage.h>
 
 enum OVL_EXPORT(Entities) {
     E_NONE,
@@ -95,8 +96,8 @@ enum OVL_EXPORT(Palette) {
     PAL_PUFF_OPAQUE_OFFSET = 0x2E0,
 };
 
-extern EInit OVL_EXPORT(EInitInteractable);
-extern EInit OVL_EXPORT(EInitCommon);
+extern EInit g_EInitInteractable;
+extern EInit g_EInitCommon;
 
 #ifdef VERSION_PSP
 extern s32 E_ID(SPIKES_PARTS);

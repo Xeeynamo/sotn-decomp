@@ -2,21 +2,21 @@
 #include "dai.h"
 
 void OVL_EXPORT(EntityBreakable)(Entity* self);
-void OVL_EXPORT(EntityExplosion)(Entity* self);
-void OVL_EXPORT(EntityPrizeDrop)(Entity* self);
-void OVL_EXPORT(EntityDamageDisplay)(Entity* self);
+void EntityExplosion(Entity* self);
+void EntityPrizeDrop(Entity* self);
+void EntityDamageDisplay(Entity* self);
 void OVL_EXPORT(EntityRedDoor)(Entity* self);
 void EntityIntenseExplosion(Entity* self);
 void EntitySoulStealOrb(Entity* self);
 void EntityRoomForeground(Entity* self);
 void EntityStageNamePopup(Entity* self);
-void OVL_EXPORT(EntityEquipItemDrop)(Entity* self);
-void OVL_EXPORT(EntityRelicOrb)(Entity* self);
-void OVL_EXPORT(EntityHeartDrop)(Entity* self);
+void EntityEquipItemDrop(Entity* self);
+void EntityRelicOrb(Entity* self);
+void EntityHeartDrop(Entity* self);
 void EntityEnemyBlood(Entity* self);
-void OVL_EXPORT(EntityMessageBox)(Entity* self);
-void OVL_EXPORT(EntityDummy)(Entity* self);
-void OVL_EXPORT(EntityDummy)(Entity* self);
+void EntityMessageBox(Entity* self);
+void EntityDummy(Entity* self);
+void EntityDummy(Entity* self);
 void OVL_EXPORT(EntityBackgroundBlock)(Entity* self);
 void OVL_EXPORT(EntityLockCamera)(Entity* self);
 void EntityUnkId13(Entity* self);
@@ -76,21 +76,21 @@ void EntityMistDoor(Entity* self);
 
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     OVL_EXPORT(EntityBreakable),
-    OVL_EXPORT(EntityExplosion),
-    OVL_EXPORT(EntityPrizeDrop),
-    OVL_EXPORT(EntityDamageDisplay),
+    EntityExplosion,
+    EntityPrizeDrop,
+    EntityDamageDisplay,
     OVL_EXPORT(EntityRedDoor),
     EntityIntenseExplosion,
     EntitySoulStealOrb,
     EntityRoomForeground,
     EntityStageNamePopup,
-    OVL_EXPORT(EntityEquipItemDrop),
-    OVL_EXPORT(EntityRelicOrb),
-    OVL_EXPORT(EntityHeartDrop),
+    EntityEquipItemDrop,
+    EntityRelicOrb,
+    EntityHeartDrop,
     EntityEnemyBlood,
-    OVL_EXPORT(EntityMessageBox),
-    OVL_EXPORT(EntityDummy),
-    OVL_EXPORT(EntityDummy),
+    EntityMessageBox,
+    EntityDummy,
+    EntityDummy,
     OVL_EXPORT(EntityBackgroundBlock),
     OVL_EXPORT(EntityLockCamera),
     EntityUnkId13,
@@ -153,13 +153,13 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
 // animSet, animCurFrame, unk5A, palette, enemyID
 EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_DRA(3), 0, 0, PAL_NULL, 0x000};
 EInit OVL_EXPORT(EInitObtainable) = {ANIMSET_DRA(3), 0, 0, PAL_NULL, 0x001};
-EInit OVL_EXPORT(EInitParticle) = {ANIMSET_DRA(3), 0, 0, PAL_NULL, 0x002};
-EInit OVL_EXPORT(EInitSpawner) = {ANIMSET_DRA(0), 0, 0, PAL_NULL, 0x004};
-EInit OVL_EXPORT(EInitInteractable) = {ANIMSET_DRA(0), 0, 0, PAL_NULL, 0x005};
-EInit OVL_EXPORT(EInitUnkId13) = {ANIMSET_DRA(0), 0, 0, PAL_NULL, 0x002};
-EInit OVL_EXPORT(EInitLockCamera) = {ANIMSET_DRA(0), 0, 0, PAL_NULL, 0x001};
-EInit OVL_EXPORT(EInitCommon) = {ANIMSET_DRA(0), 0, 0, PAL_NULL, 0x003};
-EInit OVL_EXPORT(EInitDamageNum) = {ANIMSET_DRA(0), 0, 0, PAL_NULL, 0x003};
+EInit g_EInitParticle = {ANIMSET_DRA(3), 0, 0, PAL_NULL, 0x002};
+EInit g_EInitSpawner = {ANIMSET_DRA(0), 0, 0, PAL_NULL, 0x004};
+EInit g_EInitInteractable = {ANIMSET_DRA(0), 0, 0, PAL_NULL, 0x005};
+EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0, 0, PAL_NULL, 0x002};
+EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0, 0, PAL_NULL, 0x001};
+EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, PAL_NULL, 0x003};
+EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, PAL_NULL, 0x003};
 EInit g_EInitUnused801809A4 = {ANIMSET_OVL(1), 43, 72, PAL_SKELERANG, 0x003};
 EInit g_EInitEnvironment = {ANIMSET_OVL(1), 0, 0, PAL_NULL, 0x005};
 EInit g_EInitConfessionalGhost = {ANIMSET_OVL(2), 0, 72, PAL_CONFESSIONAL_GHOST, 0x005};

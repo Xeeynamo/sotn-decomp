@@ -2,9 +2,10 @@
 #ifndef RNO0_H
 #define RNO0_H
 
+#include <stage.h>
+
 #define OVL_EXPORT(x) RNO0_##x
 #define STAGE_IS_RNO0
-#include <stage.h>
 
 enum Palettes {
     PAL_NONE,

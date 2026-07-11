@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #define UVWH(u, v, w, h) u, v, w, h
 
-extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit g_EInitInteractable;
 
 #if defined(INVERTED_STAGE)
 #define TILE_WIDTH 0x25
@@ -34,7 +34,7 @@ void EntityTransparentWater(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->ext.transparentWater.unk80 = 4;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 16);
         if (primIndex == -1) {
@@ -85,7 +85,7 @@ void EntityTransparentWater(Entity* self) {
         break;
     }
 
-    OVL_EXPORT(AnimateEntity)(transWaterAnim, self);
+    AnimateEntity(transWaterAnim, self);
 
     prim_xPos = -1 * g_Tilemap.scrollX.i.hi % TILE_WIDTH;
 #if !defined(INVERTED_STAGE)

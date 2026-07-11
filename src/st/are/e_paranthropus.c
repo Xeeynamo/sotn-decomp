@@ -4,7 +4,7 @@
 extern EInit g_EInitParanthropus;
 extern EInit g_EInitParanthropusThrownBone;
 extern EInit g_EInitParanthropusBoneHitbox;
-extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit g_EInitInteractable;
 
 static s16 sensors_ground[] = {0, 27, 0, 4, 16, -4, -32, 0};
 static s16 skull_sensors_ground[] = {0, 8, 0, 4, 16, -4, -32, 0};
@@ -224,10 +224,10 @@ void EntityParanthropus(Entity* self) {
         (self + 1)->hitboxState = 0;
 
         // Spawn the skull entity which remains after death
-        entity = OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
+        entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
         if (entity != NULL) {
             DestroyEntity(entity);
-            OVL_EXPORT(CreateEntityFromEntity)(E_PARANTHROPUS, self, entity);
+            CreateEntityFromEntity(E_PARANTHROPUS, self, entity);
             entity->facingLeft = self->facingLeft;
             entity->posY.i.hi -= 0x18;
             if (self->facingLeft) {
@@ -241,8 +241,8 @@ void EntityParanthropus(Entity* self) {
 
     switch (self->step) {
     case INIT:
-        OVL_EXPORT(InitializeEntity)(g_EInitParanthropus);
-        self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+        InitializeEntity(g_EInitParanthropus);
+        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         if (self->params == 11) {
             self->zPriority++;
             self->animCurFrame = 0x2A;
@@ -257,25 +257,23 @@ void EntityParanthropus(Entity* self) {
             self->scaleX = self->scaleY = 0x100;
 
             entity = self + 1;
-            OVL_EXPORT(CreateEntityFromEntity)
-            (E_PARANTHROPUS_BONE_HITBOX, self, entity);
+            CreateEntityFromEntity(E_PARANTHROPUS_BONE_HITBOX, self, entity);
 
             entity = self + 2;
-            OVL_EXPORT(CreateEntityFromEntity)
-            (E_PARANTHROPUS_SKULL, self, entity);
+            CreateEntityFromEntity(E_PARANTHROPUS_SKULL, self, entity);
         }
         break;
     case FALL_TO_GROUND:
-        OVL_EXPORT(UnkCollisionFunc3)(sensors_ground);
-        self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
-        if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x60) {
+        UnkCollisionFunc3(sensors_ground);
+        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        if (GetDistanceToPlayerX() < 0x60) {
             self->step_s = 0;
             self->ext.paranthropus.nextAttack = BONE_THROW;
             ParanthropusSetStep(WALK);
         }
         break;
     case DIVE_RECOVERY:
-        if (!OVL_EXPORT(AnimateEntity)(anim_belly_ground_recovery, self)) {
+        if (!AnimateEntity(anim_belly_ground_recovery, self)) {
             self->step_s = 0;
             self->ext.paranthropus.nextAttack = BONE_THROW;
             ParanthropusSetStep(WALK);
@@ -283,7 +281,7 @@ void EntityParanthropus(Entity* self) {
         break;
     case WALK:
         if (!self->step_s) {
-            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->step_s++;
         }
 
@@ -311,14 +309,13 @@ void EntityParanthropus(Entity* self) {
             self->ext.paranthropus.unk7E = true;
         }
 
-        if (!OVL_EXPORT(AnimateEntity)(anim_walk, self)) {
-            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+        if (!AnimateEntity(anim_walk, self)) {
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->ext.paranthropus.unk7C++;
         }
 
         // Once player is close enough we can commence attack routine
-        if (self->ext.paranthropus.unk7C > 1 &&
-            OVL_EXPORT(GetDistanceToPlayerX)() < 0x60) {
+        if (self->ext.paranthropus.unk7C > 1 && GetDistanceToPlayerX() < 0x60) {
             self->step_s = 0;
 
             // Attacks rotate depending on the previous one used
@@ -356,19 +353,18 @@ void EntityParanthropus(Entity* self) {
             self->ext.paranthropus.unk7E = true;
         }
 
-        if (!OVL_EXPORT(AnimateEntity)(anim_throw_bone, self)) {
+        if (!AnimateEntity(anim_throw_bone, self)) {
             self->ext.paranthropus.nextAttack = BONE_SWING;
             ParanthropusSetStep(WALK);
         }
 
         if (self->animCurFrame == 0x17) {
             if (!self->ext.paranthropus.unk7C) {
-                entity =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
+                entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
                     PlaySfxPositional(SFX_BONE_THROW);
-                    OVL_EXPORT(CreateEntityFromEntity)
-                    (E_PARANTHROPUS_THROWN_BONE, self, entity);
+                    CreateEntityFromEntity(
+                        E_PARANTHROPUS_THROWN_BONE, self, entity);
                     entity->facingLeft = self->facingLeft;
                     entity->posY.i.hi -= 0x20;
                     if (self->facingLeft) {
@@ -402,14 +398,14 @@ void EntityParanthropus(Entity* self) {
             PlaySfxPositional(SFX_EXPLODE_B);
         }
 
-        if (!OVL_EXPORT(AnimateEntity)(anim_swing_bone, self)) {
+        if (!AnimateEntity(anim_swing_bone, self)) {
             self->ext.paranthropus.nextAttack = BELLY_DIVE;
             ParanthropusSetStep(WALK);
         }
         break;
     case DIVE:
         // When we hit the ground spawn the dust particles all around
-        if (OVL_EXPORT(UnkCollisionFunc3)(sensors_ground) & 1) {
+        if (UnkCollisionFunc3(sensors_ground) & 1) {
             if (self->facingLeft) {
                 EntityExplosionVariantsSpawner(self, 5, 3, 0x20, 0x1B, 0, 4);
                 EntityExplosionVariantsSpawner(self, 4, 3, 0x18, 0x1B, 0, 4);
@@ -431,17 +427,17 @@ void EntityParanthropus(Entity* self) {
             PlaySfxPositional(SFX_EXPLODE_D);
             ParanthropusSetStep(DIVE_RECOVERY);
         } else {
-            OVL_EXPORT(AnimateEntity)(anim_dive, self);
+            AnimateEntity(anim_dive, self);
         }
         break;
     case DEATH:
 #ifdef VERSION_PSP
-        if (OVL_EXPORT(UnkCollisionFunc3)(sensors_ground) & 1) {
+        if (UnkCollisionFunc3(sensors_ground) & 1) {
             PlaySfxPositional(SFX_SKELETON_DEATH_A);
             ParanthropusSetStep(DEATH_EFFECTS);
         }
 #else
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         self->velocityY += FIX(0.25);
         posX = self->posX.i.hi;
         posY = self->posY.i.hi;
@@ -460,7 +456,7 @@ void EntityParanthropus(Entity* self) {
             xOffset = -0x1B;
         }
 
-        if (!OVL_EXPORT(AnimateEntity)(anim_death, self)) {
+        if (!AnimateEntity(anim_death, self)) {
             primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
             if (primIndex != -1) {
                 // Displays a circular black vortex that sucks up the bones
@@ -505,11 +501,9 @@ void EntityParanthropus(Entity* self) {
                 }
 
                 for (i = 0; i < 6; i++) {
-                    entity = OVL_EXPORT(AllocEntity)(
-                        &g_Entities[160], &g_Entities[192]);
+                    entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                     if (entity != NULL) {
-                        OVL_EXPORT(CreateEntityFromEntity)
-                        (E_EXPLOSION, self, entity);
+                        CreateEntityFromEntity(E_EXPLOSION, self, entity);
                         entity->params = EXPLOSION_SMALL_MULTIPLE;
                         entity->posX.i.hi +=
                             xOffset + death_flames_positions[i].x;
@@ -585,7 +579,7 @@ void EntityParanthropus(Entity* self) {
         PBLU(deathVortex) = var_s4;
         break;
     case DEATH_SKULL_REMAINS:
-        if ((!OVL_EXPORT(UnkCollisionFunc3)(skull_sensors_ground)) & 1) {
+        if ((!UnkCollisionFunc3(skull_sensors_ground)) & 1) {
             self->rotate += ROT(1.40625);
         }
         break;
@@ -623,7 +617,7 @@ void EntityParanthropusThrownBone(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitParanthropusThrownBone);
+        InitializeEntity(g_EInitParanthropusThrownBone);
         self->drawFlags |= ENTITY_ROTATE;
         if (self->facingLeft) {
             self->velocityX = FIX(2.0);
@@ -633,7 +627,7 @@ void EntityParanthropusThrownBone(Entity* self) {
         self->velocityY = FIX(-6.0);
         break;
     case 1:
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         self->rotate -= ROT(22.5);
         self->velocityY += FIX(0.25);
         break;
@@ -645,7 +639,7 @@ void EntityParanthropusBoneHitbox(Entity* self) {
     u8 paranthropusAnimCurFrame;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(g_EInitParanthropusBoneHitbox);
+        InitializeEntity(g_EInitParanthropusBoneHitbox);
     }
 
     paranthropus = self - 1;
@@ -676,7 +670,7 @@ void EntityParanthropusSkull(Entity* self) {
     Entity* entity;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->attack = 0;
         self->attackElement = ELEMENT_NONE;
     }
@@ -700,7 +694,7 @@ void EntityParanthropusSkull(Entity* self) {
     i = 0;
 #endif
     if (entity->step < DEATH) {
-        i = OVL_EXPORT(GetPlayerCollisionWith)(self, 8, 10, 4);
+        i = GetPlayerCollisionWith(self, 8, 10, 4);
     }
 
     entity = &PLAYER;

@@ -53,10 +53,10 @@ static s32 func_801D0B78(Entity* ent) {
 
     switch (g_CurrentEntity->step) {
     case 8:
-        if (OVL_EXPORT(GetDistanceToPlayerX)() < 64) {
+        if (GetDistanceToPlayerX() < 64) {
             ret = 10;
         }
-        if (OVL_EXPORT(GetDistanceToPlayerX)() > 80) {
+        if (GetDistanceToPlayerX() > 80) {
             ret = 6;
         }
         if (g_CurrentEntity->ext.et_801D0B78.unk88) {
@@ -65,13 +65,13 @@ static s32 func_801D0B78(Entity* ent) {
         break;
 
     case 10:
-        if (OVL_EXPORT(GetDistanceToPlayerX)() < 88) {
+        if (GetDistanceToPlayerX() < 88) {
             ret = 8;
         }
-        if (OVL_EXPORT(GetDistanceToPlayerX)() < 56) {
+        if (GetDistanceToPlayerX() < 56) {
             ret = 7;
         }
-        if (OVL_EXPORT(GetDistanceToPlayerX)() > 80) {
+        if (GetDistanceToPlayerX() > 80) {
             ret = 6;
         }
         if (g_CurrentEntity->ext.et_801D0B78.unk88) {
@@ -80,7 +80,7 @@ static s32 func_801D0B78(Entity* ent) {
         break;
 
     case 12:
-        if (OVL_EXPORT(GetDistanceToPlayerX)() < 64) {
+        if (GetDistanceToPlayerX() < 64) {
             ret = 10;
         }
         break;
@@ -89,19 +89,19 @@ static s32 func_801D0B78(Entity* ent) {
         if (g_CurrentEntity->ext.et_801D0B78.unk88) {
             ret = 7;
         }
-        if (OVL_EXPORT(GetDistanceToPlayerX)() < 48) {
+        if (GetDistanceToPlayerX() < 48) {
             ret = 10;
         }
-        if (OVL_EXPORT(GetDistanceToPlayerX)() < 80) {
+        if (GetDistanceToPlayerX() < 80) {
             ret = 8;
         }
         break;
 
     default:
-        if (OVL_EXPORT(GetDistanceToPlayerX)() > 80) {
+        if (GetDistanceToPlayerX() > 80) {
             ret = 6;
         }
-        if (OVL_EXPORT(GetDistanceToPlayerX)() < 64) {
+        if (GetDistanceToPlayerX() < 64) {
             ret = 10;
         }
         if (g_CurrentEntity->ext.et_801D0B78.unk88) {
@@ -110,8 +110,7 @@ static s32 func_801D0B78(Entity* ent) {
         break;
     }
 
-    if (g_CurrentEntity->facingLeft !=
-        ((OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1)) {
+    if (g_CurrentEntity->facingLeft != ((GetSideToPlayer() & 1) ^ 1)) {
         ret = 12;
     }
     return ret;
@@ -321,7 +320,7 @@ void EntityBlade(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitBlade);
+        InitializeEntity(g_EInitBlade);
         // we start on frame 3
         self->animCurFrame = 3;
         // eh nah i change my mind, we start on frame 0
@@ -331,16 +330,15 @@ void EntityBlade(Entity* self) {
         self->hitboxHeight = 6;
         /* fallthrough */
     case 1:
-        if (OVL_EXPORT(UnkCollisionFunc3)(D_801833E4) & 1) {
-            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+        if (UnkCollisionFunc3(D_801833E4) & 1) {
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->step++;
         }
         break;
     case 2:
         for (parts = D_801833F4, part = self; parts->eArrayOffset; parts++) {
             ent_s0 = self + parts->eArrayOffset;
-            OVL_EXPORT(CreateEntityFromCurrentEntity)
-            (E_GURKHA_BODY_PARTS, ent_s0);
+            CreateEntityFromCurrentEntity(E_GURKHA_BODY_PARTS, ent_s0);
             ent_s0->ext.GH_Props.length = parts->length;
             ent_s0->ext.GH_Props.parent = self + parts->eArrayParentOffset;
             ent_s0->params = parts->params + 0x200;
@@ -353,14 +351,14 @@ void EntityBlade(Entity* self) {
         self->parent = NULL;
 
         ent_s0 = self + 15;
-        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_BLADE_WEAPON, ent_s0);
+        CreateEntityFromCurrentEntity(E_BLADE_WEAPON, ent_s0);
         ent_s0->ext.GH_Props.length = 12;
         ent_s0->ext.GH_Props.parent = self + 5;
         ent_s0->zPriority = self->zPriority + 3;
         ent_s0->params = 19;
 
         ent_s0 = self + 16;
-        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_BLADE_WEAPON, ent_s0);
+        CreateEntityFromCurrentEntity(E_BLADE_WEAPON, ent_s0);
         ent_s0->ext.GH_Props.length = 12;
         ent_s0->ext.GH_Props.parent = self + 8;
         ent_s0->zPriority = self->zPriority - 4;
@@ -480,7 +478,7 @@ void EntityBlade(Entity* self) {
             self->step_s++;
             /* fallthrough */
         case 3:
-            OVL_EXPORT(MoveEntity)();
+            MoveEntity();
             self->velocityY += FIX(11.0 / 128);
             func_801CDF1C(ptr, D_80183720, 0);
             func_801CDE10(ptr);
@@ -706,7 +704,7 @@ void EntityBlade(Entity* self) {
             /* fallthrough */
         case 5:
             if ((g_Timer & 7) == 0) {
-                if (OVL_EXPORT(Random)() & 1) {
+                if (Random() & 1) {
                     PlaySfxPositional(SFX_FM_EXPLODE_B);
                 } else {
                     PlaySfxPositional(SFX_EXPLODE_D);
@@ -741,7 +739,7 @@ void EntityBladeWeapon(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitBladeWeapon);
+        InitializeEntity(g_EInitBladeWeapon);
         self->drawFlags |= ENTITY_ROTATE;
         self->hitboxWidth = 6;
         self->hitboxHeight = 6;
@@ -794,7 +792,7 @@ void EntityBladeWeapon(Entity* self) {
         } else {
             self->velocityX = FIX(-8.0);
         }
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
     }
 

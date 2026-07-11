@@ -128,7 +128,7 @@ void EntityDeathSkySwirl(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 65);
         if (primIndex == -1) {
             DestroyEntity(self);

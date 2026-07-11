@@ -98,7 +98,7 @@ segments:
       - [0x34438, .rodata, chi/en_stage_name]
       - [0x34450, .rodata, chi_psp/en_breakable_wall]
       - {start: 0x34480, type: .bss, vram: 0x0926BB00, name: chi/ut_create_entity}
-      - {start: 0x34480, type: .bss, vram: 0x0926BB20, name: chi/en_collect} # OVL_EXPORT(ItemIconSlots)
+      - {start: 0x34480, type: .bss, vram: 0x0926BB20, name: chi/en_collect} # g_ItemIconSlots
       - {start: 0x34480, type: bss, vram: 0x0926BB80, name: bss1}
       - {start: 0x34480, type: .bss, vram: 0x0926BB90, name: chi_psp/st_init_chi}
       - {start: 0x34480, type: .bss, vram: 0x0926BC78, name: chi/e_lock_camera}

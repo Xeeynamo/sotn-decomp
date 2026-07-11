@@ -7,7 +7,7 @@ extern EInit g_EInitFrozenHalfOrbitIcicle;
 extern EInit g_EInitFrozenHalfThrownChunk;
 extern EInit g_EInitFrozenHalfBlizzard;
 extern EInit g_EInitFrozenHalfFallingIce;
-extern EInit OVL_EXPORT(EInitParticle);
+extern EInit g_EInitParticle;
 
 static AnimateEntityFrame anim_hair_flick[] = {
     {0x07, 0x02}, {0x07, 0x03}, {0x07, 0x04}, {0x07, 0x05}, {0x07, 0x06},
@@ -110,7 +110,7 @@ void EntityFrozenHalf(Entity* self) {
     FntPrint("step %x\n", self->step);
     FntPrint("step_s %x\n", self->step_s);
     if (self->step & 1 && self->hitFlags & 3) {
-        OVL_EXPORT(SetStep)(HURT);
+        SetStep(HURT);
     }
 
     if (self->flags & FLAG_DEAD && self->step < DEATH) {
@@ -119,22 +119,21 @@ void EntityFrozenHalf(Entity* self) {
             entity = self->ext.frozenHalf.entity;
             DestroyEntity(entity);
         }
-        OVL_EXPORT(SetStep)(DEATH);
+        SetStep(DEATH);
     }
 
     switch (self->step) {
     case INIT:
-        OVL_EXPORT(InitializeEntity)(g_EInitFrozenHalf);
+        InitializeEntity(g_EInitFrozenHalf);
         self->blendMode = BLEND_ADD | BLEND_TRANSP;
         entity = self + 1;
-        OVL_EXPORT(CreateEntityFromEntity)
-        (E_FROZEN_HALF_ORBIT_ICICLE, self, entity);
-        OVL_EXPORT(SetStep)(IDLE);
+        CreateEntityFromEntity(E_FROZEN_HALF_ORBIT_ICICLE, self, entity);
+        SetStep(IDLE);
         break;
     case IDLE:
-        self->facingLeft = OVL_EXPORT(GetSideToPlayer)() & 1;
-        if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x60) {
-            OVL_EXPORT(SetStep)(PLAYER_AGGRO);
+        self->facingLeft = GetSideToPlayer() & 1;
+        if (GetDistanceToPlayerX() < 0x60) {
+            SetStep(PLAYER_AGGRO);
         }
         break;
     case PLAYER_AGGRO:
@@ -144,8 +143,8 @@ void EntityFrozenHalf(Entity* self) {
             self->step_s++;
         }
 
-        OVL_EXPORT(MoveEntity)();
-        self->facingLeft = OVL_EXPORT(GetSideToPlayer)() & 1;
+        MoveEntity();
+        self->facingLeft = GetSideToPlayer() & 1;
         angle = self->ext.frozenHalf.angle += 0x20;
         angle &= 0xFFF;
         self->velocityY = rsin(angle) * 0x10;
@@ -155,7 +154,7 @@ void EntityFrozenHalf(Entity* self) {
             self->velocityY -= FIX(0.125);
         }
 
-        OVL_EXPORT(AnimateEntity)(anim_hair_flick, self);
+        AnimateEntity(anim_hair_flick, self);
         if (angle > 0x600) {
             self->pose = 0;
             self->poseTimer = 0;
@@ -164,16 +163,16 @@ void EntityFrozenHalf(Entity* self) {
 
         if (!(self->ext.frozenHalf.angle & 0x3FF)) {
             entity = &PLAYER;
-            if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x68 &&
+            if (GetDistanceToPlayerX() < 0x68 &&
                 entity->facingLeft != self->facingLeft) {
                 self->ext.frozenHalf.moveAwayFromPlayer = true;
-                OVL_EXPORT(SetStep)(MOVE);
+                SetStep(MOVE);
             }
 
-            if (OVL_EXPORT(GetDistanceToPlayerX)() > 0x50 &&
+            if (GetDistanceToPlayerX() > 0x50 &&
                 entity->facingLeft == self->facingLeft) {
                 self->ext.frozenHalf.moveAwayFromPlayer = false;
-                OVL_EXPORT(SetStep)(MOVE);
+                SetStep(MOVE);
             }
         }
 
@@ -193,8 +192,8 @@ void EntityFrozenHalf(Entity* self) {
             self->step_s++;
             // fallthrough
         case 1:
-            OVL_EXPORT(MoveEntity)();
-            self->facingLeft = OVL_EXPORT(GetSideToPlayer)() & 1;
+            MoveEntity();
+            self->facingLeft = GetSideToPlayer() & 1;
             if (self->ext.frozenHalf.moveAwayFromPlayer) {
                 self->animCurFrame = 0xB;
             } else {
@@ -214,58 +213,56 @@ void EntityFrozenHalf(Entity* self) {
             }
 
             if (!self->ext.frozenHalf.moveAwayFromPlayer) {
-                if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x48) {
-                    OVL_EXPORT(SetSubStep)(2);
+                if (GetDistanceToPlayerX() < 0x48) {
+                    SetSubStep(2);
                 }
             }
 
             if (self->ext.frozenHalf.moveAwayFromPlayer &&
-                OVL_EXPORT(GetDistanceToPlayerX)() > 0x70) {
-                OVL_EXPORT(SetSubStep)(2);
+                GetDistanceToPlayerX() > 0x70) {
+                SetSubStep(2);
             }
 
             if (!--self->ext.frozenHalf.timer) {
-                OVL_EXPORT(SetSubStep)(3);
+                SetSubStep(3);
             }
             break;
         case 2:
-            OVL_EXPORT(MoveEntity)();
+            MoveEntity();
             self->velocityX -= self->velocityX / 8;
 
             if (self->ext.frozenHalf.moveAwayFromPlayer) {
-                animResult = OVL_EXPORT(AnimateEntity)(anim_move_away, self);
+                animResult = AnimateEntity(anim_move_away, self);
             } else {
-                animResult = OVL_EXPORT(AnimateEntity)(anim_move_toward, self);
+                animResult = AnimateEntity(anim_move_toward, self);
             }
 
             if (!animResult) {
                 self->ext.frozenHalf.moveAwayFromPlayer ^= 1;
-                OVL_EXPORT(SetSubStep)(1);
+                SetSubStep(1);
             }
 
             break;
         case 3:
-            OVL_EXPORT(MoveEntity)();
+            MoveEntity();
             self->velocityX -= self->velocityX / 16;
 
             if (self->ext.frozenHalf.moveAwayFromPlayer) {
-                animResult =
-                    OVL_EXPORT(AnimateEntity)(anim_move_away_stop, self);
+                animResult = AnimateEntity(anim_move_away_stop, self);
             } else {
-                animResult =
-                    OVL_EXPORT(AnimateEntity)(anim_move_towards_stop, self);
+                animResult = AnimateEntity(anim_move_towards_stop, self);
             }
 
             if (!animResult) {
                 // Alternate between throwing ice chunk and casting blizzard
                 if (self->ext.frozenHalf.castBlizzard) {
                     if (self->posX.i.hi & 0xFF00) {
-                        OVL_EXPORT(SetStep)(MOVE);
+                        SetStep(MOVE);
                     } else {
-                        OVL_EXPORT(SetStep)(ATTACK_BLIZZARD);
+                        SetStep(ATTACK_BLIZZARD);
                     }
                 } else {
-                    OVL_EXPORT(SetStep)(ATTACK_THROW_CHUNK);
+                    SetStep(ATTACK_THROW_CHUNK);
                 }
                 self->ext.frozenHalf.castBlizzard ^= 1;
             }
@@ -275,12 +272,11 @@ void EntityFrozenHalf(Entity* self) {
     case ATTACK_THROW_CHUNK:
         switch (self->step_s) {
         case 0:
-            entity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
+            entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
                 PlaySfxPositional(SFX_GLASS_SHARDS);
-                OVL_EXPORT(CreateEntityFromEntity)
-                (E_FROZEN_HALF_THROWN_CHUNK, self, entity);
+                CreateEntityFromEntity(
+                    E_FROZEN_HALF_THROWN_CHUNK, self, entity);
                 if (self->facingLeft) {
                     entity->posX.i.hi += 0x10;
                 } else {
@@ -291,7 +287,7 @@ void EntityFrozenHalf(Entity* self) {
                 self->ext.frozenHalf.entity = entity;
             } else {
                 self->ext.frozenHalf.entity = NULL;
-                OVL_EXPORT(SetStep)(PLAYER_AGGRO);
+                SetStep(PLAYER_AGGRO);
                 break;
             }
 
@@ -302,7 +298,7 @@ void EntityFrozenHalf(Entity* self) {
             entity = self->ext.frozenHalf.entity;
             if (entity->flags & FLAG_DEAD) {
                 self->ext.frozenHalf.entity = NULL;
-                OVL_EXPORT(SetStep)(PLAYER_AGGRO);
+                SetStep(PLAYER_AGGRO);
             } else if (!(entity->drawFlags & ENTITY_SCALEX)) {
                 PlaySfxPositional(SFX_FROZEN_HALF_ATTACK);
                 PlaySfxPositional(SFX_GLASS_SHARDS);
@@ -315,7 +311,7 @@ void EntityFrozenHalf(Entity* self) {
         case 2:
             self->animCurFrame = 0xE;
             if (!--self->ext.frozenHalf.timer) {
-                OVL_EXPORT(SetStep)(PLAYER_AGGRO);
+                SetStep(PLAYER_AGGRO);
             }
             break;
         }
@@ -331,7 +327,7 @@ void EntityFrozenHalf(Entity* self) {
             }
             break;
         case 1:
-            if (!OVL_EXPORT(AnimateEntity)(anim_cast_blizzard, self)) {
+            if (!AnimateEntity(anim_cast_blizzard, self)) {
                 PlaySfxPositional(SFX_FROZEN_HALF_MAXIMUM_POWER);
                 PlaySfxPositional(SFX_NOISE_SWEEP_DOWN_A);
                 self->ext.frozenHalf.timer = 0x40;
@@ -340,11 +336,11 @@ void EntityFrozenHalf(Entity* self) {
             break;
         case 2:
             if (g_Timer & 2) {
-                entity = OVL_EXPORT(AllocEntity)(
+                entity = AllocEntity(
                     &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (entity != NULL) {
-                    OVL_EXPORT(CreateEntityFromEntity)
-                    (E_FROZEN_HALF_FROST_MIST, self, entity);
+                    CreateEntityFromEntity(
+                        E_FROZEN_HALF_FROST_MIST, self, entity);
                     entity->posY.i.hi -= 0x20;
                     entity->params = g_Timer & 1;
                     if (!entity->params) {
@@ -362,11 +358,9 @@ void EntityFrozenHalf(Entity* self) {
 
             break;
         case 3:
-            entity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
+            entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)
-                (E_FROZEN_HALF_BLIZZARD, self, entity);
+                CreateEntityFromEntity(E_FROZEN_HALF_BLIZZARD, self, entity);
                 entity->posY.i.hi -= 0x28;
                 entity->facingLeft = self->facingLeft;
                 entity->zPriority = self->zPriority - 1;
@@ -375,7 +369,7 @@ void EntityFrozenHalf(Entity* self) {
                 PlaySfxPositional(SFX_TRANSFORM_3X);
             } else {
                 self->ext.frozenHalf.entity = NULL;
-                OVL_EXPORT(SetSubStep)(5);
+                SetSubStep(5);
                 break;
             }
             // fallthrough
@@ -383,12 +377,12 @@ void EntityFrozenHalf(Entity* self) {
             entity = self->ext.frozenHalf.entity;
             if (entity->entityId != E_FROZEN_HALF_BLIZZARD) {
                 self->ext.frozenHalf.entity = NULL;
-                OVL_EXPORT(SetSubStep)(5);
+                SetSubStep(5);
             }
             break;
         case 5:
-            if (!OVL_EXPORT(AnimateEntity)(anim_end_blizzard, self)) {
-                OVL_EXPORT(SetStep)(PLAYER_AGGRO);
+            if (!AnimateEntity(anim_end_blizzard, self)) {
+                SetStep(PLAYER_AGGRO);
             }
             break;
         }
@@ -396,7 +390,7 @@ void EntityFrozenHalf(Entity* self) {
     case HURT:
         switch (self->step_s) {
         case 0:
-            self->facingLeft = OVL_EXPORT(GetSideToPlayer)() & 1;
+            self->facingLeft = GetSideToPlayer() & 1;
             if (self->facingLeft) {
                 self->velocityX = FIX(1.0);
             } else {
@@ -408,10 +402,10 @@ void EntityFrozenHalf(Entity* self) {
             self->step_s++;
             // fallthrough
         case 1:
-            OVL_EXPORT(MoveEntity)();
+            MoveEntity();
             self->velocityX -= self->velocityX / 0x20;
             if (!--self->ext.frozenHalf.timer) {
-                OVL_EXPORT(SetStep)(PLAYER_AGGRO);
+                SetStep(PLAYER_AGGRO);
             }
             break;
         }
@@ -436,7 +430,7 @@ void EntityFrozenHalf(Entity* self) {
             self->step_s++;
             // fallthrough
         case 1:
-            OVL_EXPORT(MoveEntity)();
+            MoveEntity();
             self->velocityX -= self->velocityX / 0x20;
             if (!--self->ext.frozenHalf.timer) {
                 self->step_s++;
@@ -593,12 +587,12 @@ void EntityFrozenHalfOrbitIcicle(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitFrozenHalfOrbitIcicle);
+        InitializeEntity(g_EInitFrozenHalfOrbitIcicle);
         // fallthrough
     case 1:
         // Standard routine
-        OVL_EXPORT(MoveEntity)();
-        OVL_EXPORT(AnimateEntity)(anim_orbit_icicle, self);
+        MoveEntity();
+        AnimateEntity(anim_orbit_icicle, self);
         self->ext.frozenHalf.angle += 0x40;
         parent = self - 1;
         if (parent->entityId != E_FROZEN_HALF) {
@@ -626,7 +620,7 @@ void EntityFrozenHalfOrbitIcicle(Entity* self) {
             self->step_s++;
             // fallthrough
         case 1:
-            OVL_EXPORT(AnimateEntity)(anim_orbit_icicle_death, self);
+            AnimateEntity(anim_orbit_icicle_death, self);
             self->scaleX = self->scaleY -= 0x10;
             if (!self->scaleX) {
                 DestroyEntity(self);
@@ -644,13 +638,13 @@ void EntityFrozenHalfThrownChunk(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitFrozenHalfThrownChunk);
+        InitializeEntity(g_EInitFrozenHalfThrownChunk);
         self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
         self->scaleX = self->scaleY = 0;
         self->drawFlags |= ENTITY_ROTATE;
         // fallthrough
     case 1:
-        OVL_EXPORT(AnimateEntity)(anim_thrown_chunk, self);
+        AnimateEntity(anim_thrown_chunk, self);
         self->rotate += ROT(360 / 256.0);
         self->scaleY = self->scaleX += 8;
         if (self->scaleX >= 0x100) {
@@ -662,7 +656,7 @@ void EntityFrozenHalfThrownChunk(Entity* self) {
     case 2:
         self->palette = 0x200;
         player = &PLAYER;
-        angle = OVL_EXPORT(GetAngleBetweenEntities)(self, player);
+        angle = GetAngleBetweenEntities(self, player);
         self->velocityX = rcos(angle) * 0x28;
         self->velocityY = rsin(angle) * 0x28;
         if (self->facingLeft) {
@@ -677,8 +671,8 @@ void EntityFrozenHalfThrownChunk(Entity* self) {
         self->step++;
         break;
     case 3:
-        OVL_EXPORT(AnimateEntity)(anim_thrown_chunk, self);
-        OVL_EXPORT(MoveEntity)();
+        AnimateEntity(anim_thrown_chunk, self);
+        MoveEntity();
         self->rotate += ROT(360 / 64.0);
         break;
     }
@@ -704,7 +698,7 @@ void EntityFrozenHalfBlizzard(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitFrozenHalfBlizzard);
+        InitializeEntity(g_EInitFrozenHalfBlizzard);
         self->scaleX = self->scaleY = 0;
         self->animCurFrame = 0;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x41);
@@ -736,12 +730,12 @@ void EntityFrozenHalfBlizzard(Entity* self) {
             }
             break;
         case 1:
-            OVL_EXPORT(MoveEntity)();
+            MoveEntity();
             self->velocityY -= FIX(0.25);
             self->rotate += ROT(360 / 32.0);
             self->scaleX += 0x200;
             if (self->posY.i.hi < -0x60) {
-                OVL_EXPORT(SetStep)(2);
+                SetStep(2);
             }
             break;
         }
@@ -799,11 +793,10 @@ void EntityFrozenHalfBlizzard(Entity* self) {
         }
 
         if (!(self->ext.frozenHalf.timer & 0xF)) {
-            entity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
+            entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                OVL_EXPORT(CreateEntityFromCurrentEntity)
-                (E_FROZEN_HALF_FALLING_ICE, entity);
+                CreateEntityFromCurrentEntity(
+                    E_FROZEN_HALF_FALLING_ICE, entity);
                 entity->posY.i.hi = -0x20;
                 entity->posX.i.hi =
                     falling_icicle_posX[self->ext.frozenHalf.iciclePositionIdx];
@@ -813,13 +806,11 @@ void EntityFrozenHalfBlizzard(Entity* self) {
             self->ext.frozenHalf.iciclePositionIdx &= 7;
         }
 
-        entity = OVL_EXPORT(AllocEntity)(
-            &g_Entities[64], &g_Entities[TOTAL_ENTITY_COUNT]);
+        entity = AllocEntity(&g_Entities[64], &g_Entities[TOTAL_ENTITY_COUNT]);
         if (entity != NULL) {
-            OVL_EXPORT(CreateEntityFromCurrentEntity)
-            (E_FROZEN_HALF_FALLING_ICE, entity);
+            CreateEntityFromCurrentEntity(E_FROZEN_HALF_FALLING_ICE, entity);
             entity->posY.i.hi = -0x10;
-            entity->posX.i.hi = (OVL_EXPORT(Random)() * 2) + posXOffset;
+            entity->posX.i.hi = (Random() * 2) + posXOffset;
             entity->params = 1;
         }
 
@@ -838,7 +829,7 @@ void EntityFrozenHalfBlizzard(Entity* self) {
 void EntityFrozenHalfFallingIce(Entity* self) {
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitFrozenHalfFallingIce);
+        InitializeEntity(g_EInitFrozenHalfFallingIce);
         if (self->params) {
             self->hitboxState = 0;
             self->animCurFrame = 0x16;
@@ -854,8 +845,8 @@ void EntityFrozenHalfFallingIce(Entity* self) {
         self->velocityY = FIX(4.0);
         // fallthrough
     case 1:
-        OVL_EXPORT(MoveEntity)();
-        OVL_EXPORT(AnimateEntity)(anim_falling_ice, self);
+        MoveEntity();
+        AnimateEntity(anim_falling_ice, self);
         self->velocityY += FIX(0.0625);
         self->rotate += ROT(360 / 128.0);
 
@@ -866,7 +857,7 @@ void EntityFrozenHalfFallingIce(Entity* self) {
 
         break;
     case 2:
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         self->velocityY += FIX(0.0625);
 
         if (self->posY.i.hi > 0x100) {
@@ -897,7 +888,7 @@ void EntityFrozenHalfFrostMist(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitParticle));
+        InitializeEntity(g_EInitParticle);
         if (!self->params) {
             self->animSet = 0xE;
             self->unk5A = 0x5C;
@@ -913,14 +904,14 @@ void EntityFrozenHalfFrostMist(Entity* self) {
         self->opacity = 0x80;
         // fallthrough
     case 1:
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         self->velocityY -= self->velocityY / 0x40;
         self->velocityX += self->velocityX / 0x20;
 
         if (!self->params) {
-            animResult = OVL_EXPORT(AnimateEntity)(anim_mist_b, self);
+            animResult = AnimateEntity(anim_mist_b, self);
         } else {
-            animResult = OVL_EXPORT(AnimateEntity)(anim_mist_a, self);
+            animResult = AnimateEntity(anim_mist_a, self);
         }
 
         self->opacity -= 1;

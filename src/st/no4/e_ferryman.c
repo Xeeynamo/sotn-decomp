@@ -12,10 +12,9 @@ extern s32 E_ID(SURFACING_WATER);
 void GenerateBowWave(Entity* self, s16 xOffset) {
     Entity* newEntity;
 
-    newEntity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+    newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
     if (newEntity != NULL) {
-        OVL_EXPORT(CreateEntityFromCurrentEntity)
-        (E_ID(SURFACING_WATER), newEntity);
+        CreateEntityFromCurrentEntity(E_ID(SURFACING_WATER), newEntity);
 
         if (self->ext.et_surfacingWater.unk90 & 2) {
             newEntity->posY.i.hi = 288 - g_Tilemap.scrollY.i.hi;
@@ -46,7 +45,7 @@ void MoveBoat(u16 playerInBoat, Entity* entity) {
     entity->ext.et_surfacingWater.origPosY = entity->posY.i.hi;
 
     if (!entity->ext.et_surfacingWater.unk94) {
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
     } else {
         entity->posX.i.hi = entity->ext.et_surfacingWater.newPosX;
         entity->posY.i.hi = entity->ext.et_surfacingWater.newPosY;
@@ -107,12 +106,12 @@ void EntityFerrymanController(Entity* self) {
 
     /* Check that the player is on the boat */
     tempEntity = &PLAYER;
-    playerInBoat = OVL_EXPORT(GetPlayerCollisionWith)(self, 0x24, 5, 4);
+    playerInBoat = GetPlayerCollisionWith(self, 0x24, 5, 4);
     if (playerInBoat) {
         self->posX.i.hi += 0x28;
-        OVL_EXPORT(GetPlayerCollisionWith)(self, 4, 9, 9);
+        GetPlayerCollisionWith(self, 4, 9, 9);
         self->posX.i.hi -= 0x50;
-        OVL_EXPORT(GetPlayerCollisionWith)(self, 4, 9, 9);
+        GetPlayerCollisionWith(self, 4, 9, 9);
         self->posX.i.hi += 0x28;
         g_Entities[E_AFTERIMAGE_1].ext.alucardController.disableAfterImageFlag =
             true;
@@ -147,7 +146,7 @@ void EntityFerrymanController(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         if (PLAYER.posX.i.hi < self->posX.i.hi) {
             self->facingLeft = true;
         } else {
@@ -160,15 +159,14 @@ void EntityFerrymanController(Entity* self) {
         self->zPriority = 0x9A;
         self->flags |= FLAG_POS_CAMERA_LOCKED;
         self->drawFlags = ENTITY_ROTATE;
-        OVL_EXPORT(CreateEntityFromCurrentEntity)
-        (E_ID(FERRYMAN), ferrymanEntity);
+        CreateEntityFromCurrentEntity(E_ID(FERRYMAN), ferrymanEntity);
         ferrymanEntity->facingLeft = self->facingLeft;
         break;
     case 1:
         if (playerInBoat) {
             self->step++;
             tempEntity = &g_Entities[172];
-            OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(ID_4F), tempEntity);
+            CreateEntityFromCurrentEntity(E_ID(ID_4F), tempEntity);
             tempEntity->params = self->params;
         }
         break;
@@ -203,7 +201,7 @@ void EntityFerrymanController(Entity* self) {
         break;
     case 4:
         // Begin rowing
-        if ((OVL_EXPORT(AnimateEntity)(anim_row, ferrymanEntity) & 0x80) &&
+        if ((AnimateEntity(anim_row, ferrymanEntity) & 0x80) &&
             (ferrymanEntity->pose == 2)) {
             PlaySfxPositional(SFX_OAR_ROW);
         }
@@ -249,8 +247,7 @@ void EntityFerrymanController(Entity* self) {
         MoveBoat(playerInBoat, self);
         break;
     case 5:
-        if ((OVL_EXPORT(AnimateEntity)(anim_stationary, ferrymanEntity) &
-             0x80) &&
+        if ((AnimateEntity(anim_stationary, ferrymanEntity) & 0x80) &&
             ferrymanEntity->pose == 2) {
             g_api.PlaySfx(SFX_OAR_ROW);
         }
@@ -272,7 +269,7 @@ void EntityFerrymanController(Entity* self) {
         MoveBoat(playerInBoat, self);
         break;
     case 6:
-        OVL_EXPORT(AnimateEntity)(anim_stationary, ferrymanEntity);
+        AnimateEntity(anim_stationary, ferrymanEntity);
         if (ferrymanEntity->pose > 1 && ferrymanEntity->pose < 5) {
             if (self->ext.ferrymanBoat.accelerationX > FIX(-1.5)) {
                 self->ext.ferrymanBoat.accelerationX -= FIX(0.09375);
@@ -314,11 +311,10 @@ void EntityFerrymanController(Entity* self) {
                 self->velocityY += FIX(0.25);
             }
             if (offset > 264) {
-                tempEntity =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+                tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    OVL_EXPORT(CreateEntityFromCurrentEntity)
-                    (E_ID(SPLASH_WATER), tempEntity);
+                    CreateEntityFromCurrentEntity(
+                        E_ID(SPLASH_WATER), tempEntity);
                     tempEntity->posY.i.hi = 0x120 - g_Tilemap.scrollY.i.hi;
                     tempEntity->zPriority = 0x9B;
                     if (self->facingLeft) {
@@ -338,11 +334,10 @@ void EntityFerrymanController(Entity* self) {
         case 1:
             if (self->ext.ferrymanBoat.splashTimer) {
                 self->ext.ferrymanBoat.splashTimer--;
-                tempEntity =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+                tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    OVL_EXPORT(CreateEntityFromCurrentEntity)
-                    (E_ID(SPLASH_WATER), tempEntity);
+                    CreateEntityFromCurrentEntity(
+                        E_ID(SPLASH_WATER), tempEntity);
                     tempEntity->posY.i.hi = 0x120 - g_Tilemap.scrollY.i.hi;
                     tempEntity->zPriority = 0x9B;
                     if (self->facingLeft) {
@@ -386,7 +381,7 @@ void EntityFerrymanController(Entity* self) {
         break;
     case 8:
         // Begin rowing again after falling off waterfall
-        if ((OVL_EXPORT(AnimateEntity)(anim_row, ferrymanEntity) & 0x80) &&
+        if ((AnimateEntity(anim_row, ferrymanEntity) & 0x80) &&
             (ferrymanEntity->pose == 2)) {
             g_api.PlaySfx(SFX_OAR_ROW);
         }
@@ -417,8 +412,7 @@ void EntityFerrymanController(Entity* self) {
         MoveBoat(playerInBoat, self);
         break;
     case 9:
-        if ((OVL_EXPORT(AnimateEntity)(anim_stationary, ferrymanEntity) &
-             0x80) &&
+        if ((AnimateEntity(anim_stationary, ferrymanEntity) & 0x80) &&
             (ferrymanEntity->pose == 2)) {
             g_api.PlaySfx(SFX_OAR_ROW);
         }
@@ -469,11 +463,10 @@ void EntityFerrymanController(Entity* self) {
                 self->velocityY += FIX(0.25);
             }
             if (offset > 0xA0) {
-                tempEntity =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+                tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    OVL_EXPORT(CreateEntityFromCurrentEntity)
-                    (E_ID(SPLASH_WATER), tempEntity);
+                    CreateEntityFromCurrentEntity(
+                        E_ID(SPLASH_WATER), tempEntity);
                     tempEntity->posY.i.hi = 176 - g_Tilemap.scrollY.i.hi;
                     tempEntity->zPriority = 155;
                     if (self->facingLeft) {
@@ -490,11 +483,10 @@ void EntityFerrymanController(Entity* self) {
         case 1:
             if (self->ext.ferrymanBoat.splashTimer) {
                 self->ext.ferrymanBoat.splashTimer--;
-                tempEntity =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+                tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    OVL_EXPORT(CreateEntityFromCurrentEntity)
-                    (E_ID(SPLASH_WATER), tempEntity);
+                    CreateEntityFromCurrentEntity(
+                        E_ID(SPLASH_WATER), tempEntity);
                     tempEntity->posY.i.hi = 176 - g_Tilemap.scrollY.i.hi;
                     tempEntity->zPriority = 155;
                     if (self->facingLeft) {
@@ -533,7 +525,7 @@ void EntityFerrymanController(Entity* self) {
         break;
     case 13:
         // Begin rowing animation after being lifted by elevator
-        if ((OVL_EXPORT(AnimateEntity)(anim_row, ferrymanEntity) & 0x80) &&
+        if ((AnimateEntity(anim_row, ferrymanEntity) & 0x80) &&
             (ferrymanEntity->pose == 2)) {
             g_api.PlaySfx(SFX_OAR_ROW);
         }
@@ -565,8 +557,7 @@ void EntityFerrymanController(Entity* self) {
         break;
     case 14:
         // Finshed our journey
-        if ((OVL_EXPORT(AnimateEntity)(anim_stationary, ferrymanEntity) &
-             0x80) &&
+        if ((AnimateEntity(anim_stationary, ferrymanEntity) & 0x80) &&
             (ferrymanEntity->pose == 2)) {
             g_api.PlaySfx(SFX_OAR_ROW);
         }
@@ -599,7 +590,7 @@ void EntityFerryman(Entity* self) {
     Entity* boatEntity = self - 1;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 0x1C;
         self->flags |= FLAG_POS_CAMERA_LOCKED;
@@ -679,7 +670,7 @@ void EntityBoatElevatorChains(Entity* self) {
     scrollX = g_Tilemap.scrollX.i.hi;
     scrollY = g_Tilemap.scrollY.i.hi;
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 13);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
@@ -981,8 +972,7 @@ void EntityBoatElevatorController(Entity* self) {
             self->ext.boatElevator.unk9A -= 1;
             collision = false;
         } else {
-            collision =
-                OVL_EXPORT(GetPlayerCollisionWith)(self, COLLISION_WIDTH, 5, 4);
+            collision = GetPlayerCollisionWith(self, COLLISION_WIDTH, 5, 4);
             // Possible !BUG: duplicate && condition here
             if (!collision && self->ext.boatElevator.collisionDetected &&
                 self->ext.boatElevator.collisionDetected) {
@@ -997,7 +987,7 @@ void EntityBoatElevatorController(Entity* self) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 5);
         if (primIndex != -1) {
-            OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+            InitializeEntity(g_EInitInteractable);
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             self->drawFlags = ENTITY_ROTATE;
@@ -1130,7 +1120,7 @@ void EntityBoatElevatorController(Entity* self) {
         self->zPriority = 0x82;
         self->ext.boatElevator.unk90 = 1;
         self->ext.boatElevator.unk7C = 0;
-        if (!OVL_EXPORT(AnimateEntity)(anim_floor_open, self)) {
+        if (!AnimateEntity(anim_floor_open, self)) {
             self->pose = 0;
             self->poseTimer = 0;
             self->step++;
@@ -1146,7 +1136,7 @@ void EntityBoatElevatorController(Entity* self) {
         break;
     case 5:
         // Dropped the boat, now close the floor back up
-        if (!OVL_EXPORT(AnimateEntity)(anim_floor_close, self)) {
+        if (!AnimateEntity(anim_floor_close, self)) {
             if (self->params) {
                 func_us_801C7204(self, -0x50000);
             } else {
@@ -1190,7 +1180,7 @@ void EntityBoatElevatorController(Entity* self) {
         entity = self + 2;
         entity->ext.boatElevator_child.unk7C = -1;
         if (!--self->ext.boatElevator.unk80) {
-            OVL_EXPORT(SetStep)(1);
+            SetStep(1);
         }
 
         if (self->ext.boatElevator.unk80 > 0xA2) {
@@ -1259,7 +1249,7 @@ void EntityFerrymanGateController(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(1);
         if (g_CastleFlags[FERRYMAN_GATE_OPEN]) {
             LoadFerrymanGateTiles();
@@ -1270,7 +1260,7 @@ void EntityFerrymanGateController(Entity* self) {
         break;
     case 1:
         if (g_CastleFlags[FERRYMAN_GATE_OPEN]) {
-            OVL_EXPORT(GetPlayerCollisionWith)(self, 16, 56, 3);
+            GetPlayerCollisionWith(self, 16, 56, 3);
             LoadFerrymanGateTiles();
             self->step++;
             self->ext.et_surfacingWater.unk80 = 0;
@@ -1289,11 +1279,10 @@ void EntityFerrymanGateController(Entity* self) {
             if (self->ext.et_surfacingWater.unk7C) {
                 self->ext.et_surfacingWater.unk7C--;
             } else {
-                newEntity =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+                newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    OVL_EXPORT(CreateEntityFromCurrentEntity)
-                    (E_ID(SURFACING_WATER), newEntity);
+                    CreateEntityFromCurrentEntity(
+                        E_ID(SURFACING_WATER), newEntity);
                     newEntity->posY.i.hi = 176 - g_Tilemap.scrollY.i.hi;
                     newEntity->posX.i.hi +=
                         (self->ext.et_surfacingWater.unk7E * 8) - 16;
@@ -1310,7 +1299,7 @@ void EntityFerrymanGateController(Entity* self) {
             }
         }
 
-        OVL_EXPORT(GetPlayerCollisionWith)(self, 16, 60, 3);
+        GetPlayerCollisionWith(self, 16, 60, 3);
 
         if (offsetY < 36) {
             DestroyEntity(self);

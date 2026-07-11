@@ -3,9 +3,9 @@
 
 extern EInit g_EInitBladeMaster;
 extern EInit g_EInitBladeMasterAttackHitbox;
-extern EInit OVL_EXPORT(EInitParticle);
+extern EInit g_EInitParticle;
 // This comes from e_collect
-extern u8 OVL_EXPORT(ExplosionBigAnim)[];
+extern u8 g_explosionBigAnim[];
 
 static s16 sensors_ground[] = {0, 24, 0, 4, 8, -4, -16, 0};
 static s16 sensors_wall[] = {0, 24, 12, 0};
@@ -178,7 +178,7 @@ static void CheckPlayerApproaching(void) {
     Entity* player;
     s32 posX;
 
-    g_CurrentEntity->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+    g_CurrentEntity->facingLeft = (GetSideToPlayer() & 1) ^ 1;
     player = &PLAYER;
     posX = g_CurrentEntity->posX.i.hi - player->posX.i.hi;
     if (g_CurrentEntity->facingLeft) {
@@ -204,13 +204,13 @@ static void CheckPlayerApproaching(void) {
 
         // If player is starting to walk towards us, put us into a guard state.
         if (g_CurrentEntity->ext.bladeMaster.playerStepTowards > 2) {
-            OVL_EXPORT(SetStep)(GUARD);
+            SetStep(GUARD);
             g_CurrentEntity->ext.bladeMaster.playerStepTowards = 0;
             return;
         }
 
         if (posX < 0x2C) {
-            OVL_EXPORT(SetStep)(CHARGE_SLASH);
+            SetStep(CHARGE_SLASH);
         }
     }
 }
@@ -230,31 +230,30 @@ void EntityBladeMaster(Entity* self) {
         self->hitboxState = 0;
         entity = self + 1;
         DestroyEntity(entity);
-        OVL_EXPORT(SetStep)(DEATH);
+        SetStep(DEATH);
     }
 
     switch (self->step) {
     case INIT:
-        OVL_EXPORT(InitializeEntity)(g_EInitBladeMaster);
+        InitializeEntity(g_EInitBladeMaster);
         entity = self + 1;
-        OVL_EXPORT(CreateEntityFromCurrentEntity)
-        (E_BLADE_MASTER_ATTACK_HITBOX, entity);
+        CreateEntityFromCurrentEntity(E_BLADE_MASTER_ATTACK_HITBOX, entity);
         break;
     case FALL_TO_GROUND:
-        if (OVL_EXPORT(UnkCollisionFunc3)(sensors_ground) & 1) {
-            OVL_EXPORT(SetStep)(WAKE);
+        if (UnkCollisionFunc3(sensors_ground) & 1) {
+            SetStep(WAKE);
         }
         break;
     case WAKE:
-        self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
-        OVL_EXPORT(AnimateEntity)(anim_idle, self);
-        if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x80) {
-            OVL_EXPORT(SetStep)(WALK_TOWARDS);
+        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        AnimateEntity(anim_idle, self);
+        if (GetDistanceToPlayerX() < 0x80) {
+            SetStep(WALK_TOWARDS);
         }
         break;
     case WALK_TOWARDS:
         if (!self->step_s) {
-            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->ext.bladeMaster.walkCounter = 2;
             self->step_s++;
 
@@ -264,9 +263,9 @@ void EntityBladeMaster(Entity* self) {
                 self->velocityX = FIX(-1.5);
             }
         }
-        animResult = OVL_EXPORT(AnimateEntity)(anim_walk_toward, self);
+        animResult = AnimateEntity(anim_walk_toward, self);
         if (self->pose < 4) {
-            OVL_EXPORT(UnkCollisionFunc2)(sensors_wall);
+            UnkCollisionFunc2(sensors_wall);
         }
 
         if (!animResult) {
@@ -274,14 +273,14 @@ void EntityBladeMaster(Entity* self) {
         }
 
         if (!self->ext.bladeMaster.walkCounter) {
-            OVL_EXPORT(SetStep)(WALK_AWAY);
+            SetStep(WALK_AWAY);
         }
 
         CheckPlayerApproaching();
         break;
     case WALK_AWAY:
         if (!self->step_s) {
-            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->ext.bladeMaster.walkCounter = 1;
             self->step_s++;
 
@@ -291,23 +290,23 @@ void EntityBladeMaster(Entity* self) {
                 self->velocityX = FIX(1.5);
             }
         }
-        if (!OVL_EXPORT(AnimateEntity)(anim_walk_away, self)) {
+        if (!AnimateEntity(anim_walk_away, self)) {
             self->ext.bladeMaster.walkCounter--;
         }
 
         if (self->pose < 4) {
-            OVL_EXPORT(UnkCollisionFunc2)(sensors_wall);
+            UnkCollisionFunc2(sensors_wall);
         }
 
         if (!self->ext.bladeMaster.walkCounter) {
-            OVL_EXPORT(SetStep)(WALK_TOWARDS);
+            SetStep(WALK_TOWARDS);
         }
 
         CheckPlayerApproaching();
         break;
     case CHARGE_SLASH:
-        if (!OVL_EXPORT(AnimateEntity)(anim_charge_slash, self)) {
-            OVL_EXPORT(SetStep)(WALK_AWAY);
+        if (!AnimateEntity(anim_charge_slash, self)) {
+            SetStep(WALK_AWAY);
         }
 
         // On the third frame of anim_charge_slash
@@ -327,22 +326,22 @@ void EntityBladeMaster(Entity* self) {
         } else {
             // If player looks away, we're back to attacking
             self->ext.bladeMaster.playerStepTowards = 0;
-            OVL_EXPORT(SetStep)(DASH);
+            SetStep(DASH);
             break;
         }
 
         // Once player has walked 24 steps towards, flip jump over them
         if (self->ext.bladeMaster.playerStepTowards > 0x18) {
             self->ext.bladeMaster.playerStepTowards = 0;
-            OVL_EXPORT(SetStep)(JUMP_OVER);
+            SetStep(JUMP_OVER);
         }
 
         // Player is attacking
         if (PLAYER.step_s & 0x40) {
             if (PLAYER.step == Player_Crouch) {
-                OVL_EXPORT(SetStep)(SHORT_HOP);
+                SetStep(SHORT_HOP);
             } else {
-                OVL_EXPORT(SetStep)(SLIDE_KICK);
+                SetStep(SLIDE_KICK);
             }
         }
         break;
@@ -360,19 +359,19 @@ void EntityBladeMaster(Entity* self) {
             break;
         case 1:
             if (self->velocityY > FIX(-1.0)) {
-                OVL_EXPORT(AnimateEntity)(anim_flip, self);
+                AnimateEntity(anim_flip, self);
             }
 
-            if (OVL_EXPORT(UnkCollisionFunc3)(sensors_ground) & 1) {
+            if (UnkCollisionFunc3(sensors_ground) & 1) {
                 PlaySfxPositional(SFX_STOMP_HARD_B);
-                OVL_EXPORT(SetStep)(LAND);
+                SetStep(LAND);
             }
             break;
         }
         break;
     case LAND:
-        if (!OVL_EXPORT(AnimateEntity)(anim_land, self)) {
-            OVL_EXPORT(SetStep)(WALK_AWAY);
+        if (!AnimateEntity(anim_land, self)) {
+            SetStep(WALK_AWAY);
         }
         break;
     case SLIDE_KICK:
@@ -388,11 +387,11 @@ void EntityBladeMaster(Entity* self) {
             self->step_s++;
             // fallthrough
         case 1:
-            OVL_EXPORT(AnimateEntity)(anim_slide_kick, self);
-            OVL_EXPORT(UnkCollisionFunc2)(sensors_wall);
+            AnimateEntity(anim_slide_kick, self);
+            UnkCollisionFunc2(sensors_wall);
             self->velocityX -= self->velocityX / 32;
             if (abs(self->velocityX) < 0x6000) {
-                OVL_EXPORT(SetStep)(WALK_AWAY);
+                SetStep(WALK_AWAY);
             }
             break;
         }
@@ -409,10 +408,10 @@ void EntityBladeMaster(Entity* self) {
             self->step_s++;
             break;
         case 1:
-            OVL_EXPORT(AnimateEntity)(anim_short_hop, self);
-            if (OVL_EXPORT(UnkCollisionFunc3)(sensors_ground) & 1) {
+            AnimateEntity(anim_short_hop, self);
+            if (UnkCollisionFunc3(sensors_ground) & 1) {
                 PlaySfxPositional(SFX_STOMP_HARD_C);
-                OVL_EXPORT(SetStep)(LAND);
+                SetStep(LAND);
             }
             break;
         }
@@ -430,12 +429,12 @@ void EntityBladeMaster(Entity* self) {
             self->step_s++;
             // fallthrough
         case 1:
-            OVL_EXPORT(UnkCollisionFunc2)(sensors_wall);
-            OVL_EXPORT(AnimateEntity)(anim_dash, self);
+            UnkCollisionFunc2(sensors_wall);
+            AnimateEntity(anim_dash, self);
             player = &PLAYER;
             // If player turns back to face us while dashing, flip over them
             if (self->facingLeft == player->facingLeft) {
-                OVL_EXPORT(SetStep)(JUMP_OVER);
+                SetStep(JUMP_OVER);
             } else {
                 posX = self->posX.i.hi - player->posX.i.hi;
                 if (self->facingLeft) {
@@ -443,20 +442,20 @@ void EntityBladeMaster(Entity* self) {
                 }
 
                 if (posX < 0) {
-                    OVL_EXPORT(SetStep)(SKID_STOP);
+                    SetStep(SKID_STOP);
                 } else if (posX < 0x30) {
-                    OVL_EXPORT(SetStep)(SHORT_SLASH);
+                    SetStep(SHORT_SLASH);
                 }
             }
             break;
         }
         break;
     case SKID_STOP:
-        if (!OVL_EXPORT(AnimateEntity)(anim_skid_stop, self)) {
-            OVL_EXPORT(SetStep)(WALK_AWAY);
+        if (!AnimateEntity(anim_skid_stop, self)) {
+            SetStep(WALK_AWAY);
         }
 
-        OVL_EXPORT(UnkCollisionFunc2)(sensors_wall);
+        UnkCollisionFunc2(sensors_wall);
         self->velocityX -= self->velocityX / 8;
         break;
     case SHORT_SLASH:
@@ -466,8 +465,8 @@ void EntityBladeMaster(Entity* self) {
             self->step_s++;
         }
 
-        if (!OVL_EXPORT(AnimateEntity)(anim_short_slash, self)) {
-            OVL_EXPORT(SetStep)(WALK_AWAY);
+        if (!AnimateEntity(anim_short_slash, self)) {
+            SetStep(WALK_AWAY);
         }
 
         if (!self->poseTimer && self->pose == 7) {
@@ -479,16 +478,16 @@ void EntityBladeMaster(Entity* self) {
             entity->ext.bladeMaster.slashInProgress = false;
         }
 
-        OVL_EXPORT(UnkCollisionFunc2)(sensors_wall);
+        UnkCollisionFunc2(sensors_wall);
         self->velocityX -= self->velocityX / 16;
         break;
     case DEATH:
         for (i = 0; i < 2; i++) {
-            entity = OVL_EXPORT(AllocEntity)(
-                &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
+            entity =
+                AllocEntity(&g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
             if (entity != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)
-                (E_BLADE_MASTER_DEATH_PARTS, self, entity);
+                CreateEntityFromEntity(
+                    E_BLADE_MASTER_DEATH_PARTS, self, entity);
                 entity->facingLeft = self->facingLeft;
                 entity->params = i;
             }
@@ -515,7 +514,7 @@ void EntityBladeMasterAttackHitbox(Entity* self) {
     Entity* bladeMaster;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(g_EInitBladeMasterAttackHitbox);
+        InitializeEntity(g_EInitBladeMasterAttackHitbox);
     }
 
     bladeMaster = self - 1;
@@ -565,7 +564,7 @@ void EntityBladeMasterDeathParts(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitBladeMaster);
+        InitializeEntity(g_EInitBladeMaster);
         self->hitboxState = 0;
         self->flags |=
             FLAG_DESTROY_IF_OUT_OF_CAMERA | FLAG_UNK_00200000 | FLAG_UNK_2000;
@@ -576,7 +575,7 @@ void EntityBladeMasterDeathParts(Entity* self) {
         }
         self->velocityX = death_parts_velocities[self->params].x;
         self->velocityY = death_parts_velocities[self->params].y;
-        if ((OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1) {
+        if ((GetSideToPlayer() & 1) ^ 1) {
             self->velocityX = -self->velocityX;
         }
         self->step += self->params;
@@ -588,14 +587,13 @@ void EntityBladeMasterDeathParts(Entity* self) {
             self->ext.bladeMaster.deathTimer = 0x18;
             self->step_s++;
         }
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         self->velocityY += FIX(0.1875);
         if (!--self->ext.bladeMaster.deathTimer) {
-            newEntity = OVL_EXPORT(AllocEntity)(
-                &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
+            newEntity =
+                AllocEntity(&g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
             if (newEntity != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)
-                (E_EXPLOSION, self, newEntity);
+                CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                 newEntity->params = EXPLOSION_FIREBALL;
             }
             DestroyEntity(self);
@@ -603,7 +601,7 @@ void EntityBladeMasterDeathParts(Entity* self) {
         break;
     case 2:
         // Body parts fly and fall until they hit the ground
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         self->velocityY += FIX(0.21875);
         posX = self->posX.i.hi;
         posY = self->posY.i.hi + 0x10;
@@ -618,17 +616,17 @@ void EntityBladeMasterDeathParts(Entity* self) {
     case 3:
         // Once body parts have hit the ground spawn the death fireworks
         if (!(self->ext.bladeMaster.deathTimer & 0xF)) {
-            newEntity = OVL_EXPORT(AllocEntity)(
-                &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
+            newEntity =
+                AllocEntity(&g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
             if (newEntity != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)
-                (E_BLADE_MASTER_DEATH_EXPLOSION, self, newEntity);
+                CreateEntityFromEntity(
+                    E_BLADE_MASTER_DEATH_EXPLOSION, self, newEntity);
                 newEntity->zPriority = self->zPriority + 1;
             }
         }
 
         if (!(self->ext.bladeMaster.deathTimer & 7)) {
-            if (OVL_EXPORT(Random)() & 1) {
+            if (Random() & 1) {
                 PlaySfxPositional(SFX_EXPLODE_E);
             } else {
                 PlaySfxPositional(SFX_EXPLODE_F);
@@ -644,7 +642,7 @@ void EntityBladeMasterDeathParts(Entity* self) {
 
 void EntityBladeMasterDeathExplosion(Entity* self) {
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitParticle));
+        InitializeEntity(g_EInitParticle);
         self->pose = 0;
         self->poseTimer = 0;
         self->animSet = 2;
@@ -654,7 +652,7 @@ void EntityBladeMasterDeathExplosion(Entity* self) {
     }
 
     self->posY.val += self->velocityY;
-    if (!OVL_EXPORT(AnimateEntity)(OVL_EXPORT(ExplosionBigAnim), self)) {
+    if (!AnimateEntity(g_explosionBigAnim, self)) {
         DestroyEntity(self);
     }
 }

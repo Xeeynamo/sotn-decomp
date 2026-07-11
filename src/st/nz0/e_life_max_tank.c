@@ -20,7 +20,7 @@ void EntityLifeMaxTank(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitLifeMaxTank);
+        InitializeEntity(g_EInitLifeMaxTank);
         self->zPriority = 0x6A;
         self->hitboxWidth = 8;
         self->hitboxHeight = 12;
@@ -28,23 +28,21 @@ void EntityLifeMaxTank(Entity* self) {
         self->hitboxOffY = -10;
         self->hitboxState = 2;
     case 1:
-        OVL_EXPORT(AnimateEntity)(D_80180F1C, self);
+        AnimateEntity(D_80180F1C, self);
         if (self->hitFlags) {
             PlaySfxPositional(SFX_GLASS_BREAK_A);
             self->hitboxState = 0;
-            OVL_EXPORT(SetStep)(2);
+            SetStep(2);
         }
         break;
     case 2:
-        if (OVL_EXPORT(AnimateEntity)(D_80180F30, self) == 0) {
+        if (AnimateEntity(D_80180F30, self) == 0) {
             newEntity = &self[1];
-            OVL_EXPORT(CreateEntityFromEntity)(E_HEART_DROP, self, newEntity);
+            CreateEntityFromEntity(E_HEART_DROP, self, newEntity);
             newEntity->params = D_80180F4C[self->params];
-            newEntity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)
-                (E_EXPLOSION, self, newEntity);
+                CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                 newEntity->posY.i.hi -= 8;
                 newEntity->params = 2;
             }

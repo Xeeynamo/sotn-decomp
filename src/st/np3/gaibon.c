@@ -125,7 +125,7 @@ void EntityGaibon(Entity* self) {
                 xVar = self->posX.i.hi - 0x80;
                 if (abs(xVar) < 0x60) {
                     self->hitboxState = 0;
-                    OVL_EXPORT(SetStep)(GAIBON_NEAR_DEATH);
+                    SetStep(GAIBON_NEAR_DEATH);
                 }
             }
         }
@@ -133,13 +133,13 @@ void EntityGaibon(Entity* self) {
             other = &SLOGRA;
             if (other->ext.GS_Props.pickupFlag &&
                 self->step < GAIBON_LANDING_AFTER_SHOOTING) {
-                OVL_EXPORT(SetStep)(GAIBON_PICKUP_SLOGRA);
+                SetStep(GAIBON_PICKUP_SLOGRA);
             }
         }
         if (slograGaibonRetreat) {
             self->hitboxState = 0;
             if (self->step != SLOGRA_GAIBON_RETREAT) {
-                OVL_EXPORT(SetStep)(SLOGRA_GAIBON_RETREAT);
+                SetStep(SLOGRA_GAIBON_RETREAT);
             }
         }
     }
@@ -153,28 +153,27 @@ void EntityGaibon(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        OVL_EXPORT(InitializeEntity)(g_EInitGaibonNP3);
-        self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+        InitializeEntity(g_EInitGaibonNP3);
+        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         other = self + 1;
-        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(GAIBON_LEG), other);
+        CreateEntityFromCurrentEntity(E_ID(GAIBON_LEG), other);
         other->zPriority = self->zPriority + 4;
-        OVL_EXPORT(SetStep)(GAIBON_IDLE);
+        SetStep(GAIBON_IDLE);
         break;
 
     case GAIBON_IDLE:
-        OVL_EXPORT(AnimateEntity)(anim1, self);
+        AnimateEntity(anim1, self);
         if (!self->poseTimer && self->pose == 1) {
             PlaySfxPositional(SFX_WING_FLAP_B);
         }
-        if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x60 &&
-            OVL_EXPORT(GetDistanceToPlayerY)() < 0x60) {
-            OVL_EXPORT(SetStep)(GAIBON_FLY_TOWARDS_PLAYER);
+        if (GetDistanceToPlayerX() < 0x60 && GetDistanceToPlayerY() < 0x60) {
+            SetStep(GAIBON_FLY_TOWARDS_PLAYER);
         }
         break;
     case GAIBON_FLY_TOWARDS_PLAYER:
         switch (self->step_s) {
         case GAIBON_FLY_TOWARDS_PLAYER_BEGIN:
-            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^
+            self->facingLeft = (GetSideToPlayer() & 1) ^
                                1; // Results in facing away from player
             other = &PLAYER;
             xVar = other->posX.i.hi;
@@ -201,22 +200,22 @@ void EntityGaibon(Entity* self) {
             speed = self->ext.GS_Props.speed;
             self->velocityX = (speed * rcos(self->ext.GS_Props.angle)) >> 0xC;
             self->velocityY = (speed * rsin(self->ext.GS_Props.angle)) >> 0xC;
-            OVL_EXPORT(MoveEntity)();
-            OVL_EXPORT(AnimateEntity)(anim1, self);
+            MoveEntity();
+            AnimateEntity(anim1, self);
             if (!self->poseTimer && self->pose == 1) {
                 PlaySfxPositional(SFX_WING_FLAP_B);
             }
-            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             if (!(--self->ext.GS_Props.timer)) {
                 self->step_s++;
             }
             break;
         case GAIBON_FLY_TOWARDS_PLAYER_END:
-            OVL_EXPORT(MoveEntity)();
+            MoveEntity();
             self->velocityX -= self->velocityX / 32;
             self->velocityY -= self->velocityY / 32;
-            if (!OVL_EXPORT(AnimateEntity)(anim2, self)) {
-                OVL_EXPORT(SetStep)(GAIBON_FLY_SHOOT_FIREBALLS);
+            if (!AnimateEntity(anim2, self)) {
+                SetStep(GAIBON_FLY_SHOOT_FIREBALLS);
             }
             if (!self->poseTimer && self->pose == 1) {
                 PlaySfxPositional(SFX_WING_FLAP_B);
@@ -227,10 +226,10 @@ void EntityGaibon(Entity* self) {
     case GAIBON_FLY_SHOOT_FIREBALLS:
         switch (self->step_s) {
         case GAIBON_FLY_SHOOT_FIREBALLS_BEGIN:
-            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             other = &PLAYER;
             xVar = other->posX.i.hi;
-            if (OVL_EXPORT(GetSideToPlayer)() & 1) {
+            if (GetSideToPlayer() & 1) {
                 xVar += 0x60;
             } else {
                 xVar -= 0x60;
@@ -258,8 +257,8 @@ void EntityGaibon(Entity* self) {
             speed = self->ext.GS_Props.speed;
             self->velocityX = (speed * rcos(self->ext.GS_Props.angle)) >> 0xC;
             self->velocityY = (speed * rsin(self->ext.GS_Props.angle)) >> 0xC;
-            OVL_EXPORT(MoveEntity)();
-            OVL_EXPORT(AnimateEntity)(anim3, self);
+            MoveEntity();
+            AnimateEntity(anim3, self);
             if (!self->poseTimer && self->pose == 1) {
                 PlaySfxPositional(SFX_WING_FLAP_B);
             }
@@ -269,11 +268,10 @@ void EntityGaibon(Entity* self) {
                 speedLimit = 7;
             }
             if (!(self->ext.GS_Props.timer & speedLimit)) {
-                other =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
+                other = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (other != NULL) {
-                    OVL_EXPORT(CreateEntityFromEntity)
-                    (E_ID(GAIBON_SMALL_FIREBALL), self, other);
+                    CreateEntityFromEntity(
+                        E_ID(GAIBON_SMALL_FIREBALL), self, other);
                     PlaySfxPositional(SFX_EXPLODE_FAST_A);
                     other->posY.i.hi -= 2;
                     if (self->facingLeft) {
@@ -291,18 +289,18 @@ void EntityGaibon(Entity* self) {
             }
             break;
         case GAIBON_FLY_SHOOT_FIREBALLS_END:
-            OVL_EXPORT(MoveEntity)();
+            MoveEntity();
             self->velocityX -= self->velocityX / 32;
             self->velocityY -= self->velocityY / 32;
-            if (OVL_EXPORT(AnimateEntity)(anim2, self) == 0) {
+            if (AnimateEntity(anim2, self) == 0) {
                 xVar = self->posX.i.hi - 0x80;
                 if (abs(xVar) < 0x60) {
-                    OVL_EXPORT(SetStep)(GAIBON_LANDING_AFTER_SHOOTING);
+                    SetStep(GAIBON_LANDING_AFTER_SHOOTING);
                 } else {
-                    OVL_EXPORT(SetStep)(GAIBON_FLY_TOWARDS_PLAYER);
+                    SetStep(GAIBON_FLY_TOWARDS_PLAYER);
                 }
                 if (self->ext.GS_Props.nearDeath) {
-                    OVL_EXPORT(SetStep)(GAIBON_FLY_SHOOT_BIG_FIREBALL);
+                    SetStep(GAIBON_FLY_SHOOT_BIG_FIREBALL);
                 }
             }
             if (!self->poseTimer && self->pose == 1) {
@@ -320,7 +318,7 @@ void EntityGaibon(Entity* self) {
             self->step_s++;
             /* fallthrough */
         case GAIBON_FALLING_WITHOUT_MAP_COLLISION:
-            OVL_EXPORT(MoveEntity)();
+            MoveEntity();
             self->velocityY += FIX(12.0 / 128);
             other = &PLAYER;
             // We enter the version with collision only if
@@ -333,7 +331,7 @@ void EntityGaibon(Entity* self) {
             }
             break;
         case GAIBON_FALLING_WITH_MAP_COLLISION:
-            OVL_EXPORT(MoveEntity)();
+            MoveEntity();
             self->velocityY += FIX(12.0 / 128);
             xVar = self->posX.i.hi;
             yVar = self->posY.i.hi + 28;
@@ -344,8 +342,8 @@ void EntityGaibon(Entity* self) {
             }
             break;
         case GAIBON_FALLING_ON_GROUND:
-            if (OVL_EXPORT(AnimateEntity)(anim5, self) == 0) {
-                OVL_EXPORT(SetStep)(GAIBON_SHOOT_FROM_GROUND);
+            if (AnimateEntity(anim5, self) == 0) {
+                SetStep(GAIBON_SHOOT_FROM_GROUND);
             }
             break;
         }
@@ -353,11 +351,11 @@ void EntityGaibon(Entity* self) {
     case GAIBON_SHOOT_FROM_GROUND:
         switch (self->step_s) {
         case GAIBON_SHOOT_FROM_GROUND_FACE_PLAYER:
-            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->step_s++;
             /* fallthrough */
         case GAIBON_SHOOT_FROM_GROUND_FACE_SETUP:
-            if (OVL_EXPORT(AnimateEntity)(anim6, self) == 0) {
+            if (AnimateEntity(anim6, self) == 0) {
                 self->ext.GS_Props.timer = 64;
                 if (self->ext.GS_Props.nearDeath) {
                     self->ext.GS_Props.timer *= 2;
@@ -367,16 +365,15 @@ void EntityGaibon(Entity* self) {
             break;
         case GAIBON_SHOOT_FROM_GROUND_FACE_SHOOTING:
             if (!(self->ext.GS_Props.timer & 0xF)) {
-                other =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
+                other = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (other != NULL) {
                     if (!self->ext.GS_Props.nearDeath) {
-                        OVL_EXPORT(CreateEntityFromEntity)
-                        (E_ID(GAIBON_SMALL_FIREBALL), self, other);
+                        CreateEntityFromEntity(
+                            E_ID(GAIBON_SMALL_FIREBALL), self, other);
                         PlaySfxPositional(SFX_EXPLODE_FAST_A);
                     } else {
-                        OVL_EXPORT(CreateEntityFromEntity)
-                        (E_ID(GAIBON_BIG_FIREBALL), self, other);
+                        CreateEntityFromEntity(
+                            E_ID(GAIBON_BIG_FIREBALL), self, other);
                         PlaySfxPositional(SFX_EXPLODE_B);
                     }
                     other->posY.i.hi -= 6;
@@ -391,7 +388,7 @@ void EntityGaibon(Entity* self) {
                 }
             }
             if (!--self->ext.GS_Props.timer) {
-                OVL_EXPORT(SetStep)(GAIBON_FLY_TOWARDS_PLAYER);
+                SetStep(GAIBON_FLY_TOWARDS_PLAYER);
             }
             break;
         }
@@ -399,19 +396,18 @@ void EntityGaibon(Entity* self) {
     case GAIBON_FLY_SHOOT_BIG_FIREBALL:
         switch (self->step_s) {
         case GAIBON_FLY_SHOOT_BIG_FIREBALL_SETUP:
-            if (OVL_EXPORT(AnimateEntity)(anim7, self) == 0) {
+            if (AnimateEntity(anim7, self) == 0) {
                 self->step_s++;
             }
             break;
         case GAIBON_FLY_SHOOT_BIG_FIREBALL_SHOOTING:
-            other = OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
+            other = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (other != NULL) {
-                other =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
+                other = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (other != NULL) {
                     PlaySfxPositional(SFX_EXPLODE_B);
-                    OVL_EXPORT(CreateEntityFromEntity)
-                    (E_ID(GAIBON_BIG_FIREBALL), self, other);
+                    CreateEntityFromEntity(
+                        E_ID(GAIBON_BIG_FIREBALL), self, other);
                     other->posY.i.hi -= 2;
                     if (self->facingLeft) {
                         other->posX.i.hi += 12;
@@ -434,15 +430,15 @@ void EntityGaibon(Entity* self) {
             self->step_s++;
             /* fallthrough */
         case GAIBON_FLY_SHOOT_BIG_FIREBALL_END:
-            OVL_EXPORT(MoveEntity)();
+            MoveEntity();
             self->velocityX -= self->velocityX / 16;
             self->velocityY -= self->velocityY / 16;
             if (!--self->ext.GS_Props.timer) {
                 xVar = self->posX.i.hi - 0x80;
                 if (abs(xVar) < 0x60) {
-                    OVL_EXPORT(SetStep)(GAIBON_LANDING_AFTER_SHOOTING);
+                    SetStep(GAIBON_LANDING_AFTER_SHOOTING);
                 } else {
-                    OVL_EXPORT(SetStep)(GAIBON_FLY_TOWARDS_PLAYER);
+                    SetStep(GAIBON_FLY_TOWARDS_PLAYER);
                 }
             }
             break;
@@ -473,7 +469,7 @@ void EntityGaibon(Entity* self) {
             speed = self->ext.GS_Props.speed;
             self->velocityX = (speed * rcos(angle)) >> 0xC;
             self->velocityY = (speed * rsin(angle)) >> 0xC;
-            OVL_EXPORT(MoveEntity)();
+            MoveEntity();
             if (abs(xVar) < 8 && abs(yVar) < 8) {
                 self->ext.GS_Props.grabedAscending = 1;
                 self->velocityX = 0;
@@ -482,15 +478,15 @@ void EntityGaibon(Entity* self) {
             }
             if (!other->ext.GS_Props.pickupFlag) {
                 self->ext.GS_Props.grabedAscending = 0;
-                OVL_EXPORT(SetStep)(GAIBON_FLY_SHOOT_FIREBALLS);
+                SetStep(GAIBON_FLY_SHOOT_FIREBALLS);
             }
             break;
         case GAIBON_PICKUP_SLOGRA_ASCENDING:
-            OVL_EXPORT(AnimateEntity)(anim4, self);
+            AnimateEntity(anim4, self);
             if (!self->poseTimer && self->pose == 1) {
                 PlaySfxPositional(SFX_WING_FLAP_B);
             }
-            OVL_EXPORT(MoveEntity)();
+            MoveEntity();
             self->velocityY -= FIX(5.0 / 128);
             if (self->velocityY < FIX(-2)) {
                 self->velocityY = FIX(-2);
@@ -507,11 +503,11 @@ void EntityGaibon(Entity* self) {
             }
             break;
         case GAIBON_PICKUP_SLOGRA_AIMING:
-            OVL_EXPORT(AnimateEntity)(anim4, self);
+            AnimateEntity(anim4, self);
             if (!self->poseTimer && self->pose == 1) {
                 PlaySfxPositional(SFX_WING_FLAP_B);
             }
-            if (OVL_EXPORT(GetSideToPlayer)() & 1) {
+            if (GetSideToPlayer() & 1) {
                 self->velocityX -= FIX(5.0 / 128);
             } else {
                 self->velocityX += FIX(5.0 / 128);
@@ -522,7 +518,7 @@ void EntityGaibon(Entity* self) {
             if (self->velocityX > FIX(2)) {
                 self->velocityX = FIX(2);
             }
-            OVL_EXPORT(MoveEntity)();
+            MoveEntity();
             other = &SLOGRA;
             other->posX.i.hi = self->posX.i.hi;
             other->posY.i.hi = self->posY.i.hi + 28;
@@ -534,7 +530,7 @@ void EntityGaibon(Entity* self) {
             break;
         case GAIBON_PICKUP_SLOGRA_RELEASE:
             self->ext.GS_Props.grabedAscending = 0;
-            OVL_EXPORT(SetStep)(GAIBON_FLY_TOWARDS_PLAYER);
+            SetStep(GAIBON_FLY_TOWARDS_PLAYER);
         }
         break;
     case GAIBON_NEAR_DEATH:
@@ -547,24 +543,24 @@ void EntityGaibon(Entity* self) {
             self->step_s++;
             /* fallthrough */
         case GAIBON_NEAR_DEATH_FLOOR_HIT_WAIT:
-            if (OVL_EXPORT(UnkCollisionFunc3)(sensors) & 1) {
-                OVL_EXPORT(SetSubStep)(GAIBON_NEAR_DEATH_FLOOR_LANDING);
+            if (UnkCollisionFunc3(sensors) & 1) {
+                SetSubStep(GAIBON_NEAR_DEATH_FLOOR_LANDING);
             }
             break;
         case GAIBON_NEAR_DEATH_FLOOR_LANDING:
-            if (OVL_EXPORT(AnimateEntity)(anim8, self) == 0) {
+            if (AnimateEntity(anim8, self) == 0) {
                 self->ext.GS_Props.flag = 0;
-                OVL_EXPORT(SetSubStep)(GAIBON_NEAR_DEATH_TRANSFORM);
+                SetSubStep(GAIBON_NEAR_DEATH_TRANSFORM);
             }
             break;
         case GAIBON_NEAR_DEATH_TRANSFORM:
-            if (OVL_EXPORT(AnimateEntity)(anim9, self) == 0) {
+            if (AnimateEntity(anim9, self) == 0) {
                 self->ext.GS_Props.flag++;
                 self->palette = g_EInitGaibonNP3[3] + self->ext.GS_Props.flag;
                 if (self->ext.GS_Props.flag == 6) {
                     self->flags &= ~0xF;
                     slograGaibonRetreat = 1;
-                    OVL_EXPORT(SetStep)(SLOGRA_GAIBON_RETREAT);
+                    SetStep(SLOGRA_GAIBON_RETREAT);
                 }
             }
             break;
@@ -596,7 +592,7 @@ void EntityGaibon(Entity* self) {
             speed = self->ext.GS_Props.speed;
             self->velocityX = (speed * rcos(angle)) >> 0xC;
             self->velocityY = (speed * rsin(angle)) >> 0xC;
-            OVL_EXPORT(MoveEntity)();
+            MoveEntity();
             if (abs(xVar) < 8 && abs(yVar) < 8) {
                 self->velocityX = 0;
                 self->velocityY = 0;
@@ -604,8 +600,8 @@ void EntityGaibon(Entity* self) {
             }
             break;
         case 2:
-            OVL_EXPORT(AnimateEntity)(anim4, self);
-            OVL_EXPORT(MoveEntity)();
+            AnimateEntity(anim4, self);
+            MoveEntity();
             self->velocityY -= FIX(5.0 / 128);
             if (self->velocityY < FIX(-2)) {
                 self->velocityY = FIX(-2);
@@ -623,7 +619,7 @@ void EntityGaibon(Entity* self) {
     case GAIBON_DYING:
         switch (self->step_s) {
         case GAIBON_DYING_REACT:
-            if (OVL_EXPORT(AnimateEntity)(anim10, self) == 0) {
+            if (AnimateEntity(anim10, self) == 0) {
                 self->ext.GS_Props.timer = 96;
                 self->animCurFrame = 0x1F;
                 self->flags &= ~0xF;
@@ -633,14 +629,12 @@ void EntityGaibon(Entity* self) {
             break;
         case GAIBON_DYING_TURN_INTO_BONES:
             if (!(self->ext.GS_Props.timer & 7)) {
-                other =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+                other = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (other != NULL) {
-                    OVL_EXPORT(CreateEntityFromEntity)
-                    (E_EXPLOSION, self, other);
+                    CreateEntityFromEntity(E_EXPLOSION, self, other);
                     other->posY.i.hi += 28;
                     // Scatter bones randomly between +- 32
-                    other->posX.i.hi += ((OVL_EXPORT(Random)() & 63) - 32);
+                    other->posX.i.hi += ((Random() & 63) - 32);
                     other->zPriority = self->zPriority + 1;
                     other->params = 2;
                 }
@@ -673,7 +667,7 @@ void EntityGaibonLeg(Entity* self) {
     s32 gaibonFrame;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(g_EInitGaibonNP3);
+        InitializeEntity(g_EInitGaibonNP3);
         self->hitboxState = 0;
     }
 
@@ -710,7 +704,7 @@ void EntitySmallGaibonProjectile(Entity* self) {
     if (self->flags & FLAG_DEAD) {
         self->drawFlags = ENTITY_DEFAULT;
         self->step = 0;
-        self->pfnUpdate = OVL_EXPORT(EntityExplosion);
+        self->pfnUpdate = EntityExplosion;
         self->entityId = 2;
         self->params = 0;
         return;
@@ -718,7 +712,7 @@ void EntitySmallGaibonProjectile(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitGaibonProjectileNP3);
+        InitializeEntity(g_EInitGaibonProjectileNP3);
         self->animSet = ANIMSET_DRA(2);
         self->animCurFrame = 1;
         self->drawFlags = ENTITY_SCALEX | ENTITY_ROTATE;
@@ -729,8 +723,8 @@ void EntitySmallGaibonProjectile(Entity* self) {
         self->palette = PAL_FLAG(PAL_UNK_1B6);
 
     case 1:
-        OVL_EXPORT(MoveEntity)();
-        OVL_EXPORT(AnimateEntity)(anim_small_fireball, self);
+        MoveEntity();
+        AnimateEntity(anim_small_fireball, self);
         break;
     }
 }
@@ -741,7 +735,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
     if (self->flags & FLAG_DEAD) {
         self->drawFlags = ENTITY_DEFAULT;
         self->step = 0;
-        self->pfnUpdate = OVL_EXPORT(EntityExplosion);
+        self->pfnUpdate = EntityExplosion;
         self->entityId = 2;
         self->params = 1;
         return;
@@ -749,7 +743,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitGaibonLargeProjectileNP3);
+        InitializeEntity(g_EInitGaibonLargeProjectileNP3);
         if (!self->params) {
             self->animSet = ANIMSET_DRA(2);
             self->drawFlags = ENTITY_ROTATE;
@@ -772,14 +766,13 @@ void EntityLargeGaibonProjectile(Entity* self) {
         break;
 
     case 1:
-        OVL_EXPORT(MoveEntity)();
-        OVL_EXPORT(AnimateEntity)(anim_large_fireball1, self);
+        MoveEntity();
+        AnimateEntity(anim_large_fireball1, self);
         if (!(g_Timer & 3)) {
-            newEntity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)
-                (E_ID(GAIBON_BIG_FIREBALL), self, newEntity);
+                CreateEntityFromEntity(
+                    E_ID(GAIBON_BIG_FIREBALL), self, newEntity);
                 newEntity->params = 1;
                 newEntity->rotate = self->rotate;
                 newEntity->zPriority = self->zPriority + 1;
@@ -790,7 +783,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
     case 2:
         self->opacity -= 2;
         self->scaleX -= 4;
-        if (OVL_EXPORT(AnimateEntity)(anim_large_fireball2, self) == 0) {
+        if (AnimateEntity(anim_large_fireball2, self) == 0) {
             DestroyEntity(self);
         }
         break;

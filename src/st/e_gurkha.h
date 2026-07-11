@@ -221,23 +221,22 @@ void EntityGurkha(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitGurkha);
+        InitializeEntity(g_EInitGurkha);
         self->animCurFrame = 3;
         self->facingLeft = self->params;
         self->hitboxWidth = 6;
         self->hitboxHeight = 6;
         /* fallthrough */
     case 1:
-        if (OVL_EXPORT(UnkCollisionFunc3)(D_80182EF4) & 1) {
-            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+        if (UnkCollisionFunc3(D_80182EF4) & 1) {
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->step++;
         }
         break;
     case 2:
         for (parts = D_80182F04, part = self; parts->eArrayOffset; parts++) {
             ent_s0 = self + parts->eArrayOffset;
-            OVL_EXPORT(CreateEntityFromCurrentEntity)
-            (E_GURKHA_BODY_PARTS, ent_s0);
+            CreateEntityFromCurrentEntity(E_GURKHA_BODY_PARTS, ent_s0);
             ent_s0->ext.GH_Props.length = parts->length;
             ent_s0->ext.GH_Props.parent = self + parts->eArrayParentOffset;
             ent_s0->params = parts->params + 0x100;
@@ -249,7 +248,7 @@ void EntityGurkha(Entity* self) {
         self->nextPart = part;
         self->parent = NULL;
         ent_s0 = self + 15;
-        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_GURKHA_WEAPON, ent_s0);
+        CreateEntityFromCurrentEntity(E_GURKHA_WEAPON, ent_s0);
         ent_s0->ext.GH_Props.length = 0;
         ent_s0->ext.GH_Props.parent = self + 5;
         ent_s0->zPriority = self->zPriority + 3;
@@ -356,7 +355,7 @@ void EntityGurkha(Entity* self) {
             self->step_s++;
             /* fallthrough */
         case 3:
-            OVL_EXPORT(MoveEntity)();
+            MoveEntity();
             self->velocityY += FIX(11.0 / 128);
             func_801CDF1C(var_s1, D_80183218, 0);
             func_801CDE10(var_s1);
@@ -526,7 +525,7 @@ void EntityGurkha(Entity* self) {
             ent_s0->ext.GH_Props.rotVel -= ent_s0->ext.GH_Props.rotVel / 16;
             polarPlacePartsList(D_80182F9C);
             if (!self->ext.GH_Props.unkB0[0] && !self->ext.GH_Props.unkB4[0]) {
-                OVL_EXPORT(SetStep)(5);
+                SetStep(5);
             }
             break;
         }
@@ -579,10 +578,10 @@ void EntityGurkha(Entity* self) {
             self->step_s++;
             /* fallthrough */
         case 1:
-            OVL_EXPORT(MoveEntity)();
+            MoveEntity();
             self->velocityY += FIX(24.0 / 128);
             if ((g_Timer & 7) == 0) {
-                if (OVL_EXPORT(Random)() & 1) {
+                if (Random() & 1) {
                     PlaySfxPositional(SFX_FM_EXPLODE_B);
                 } else {
                     PlaySfxPositional(SFX_EXPLODE_D);
@@ -607,7 +606,7 @@ void EntityGurkhaWeapon(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitGurkhaWeapon);
+        InitializeEntity(g_EInitGurkhaWeapon);
         self->drawFlags |= ENTITY_ROTATE;
         self->hitboxWidth = 8;
         self->hitboxHeight = 8;
@@ -632,7 +631,7 @@ void EntityGurkhaWeapon(Entity* self) {
         self->step++;
 
     case 3:
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         self->rotate -= 0x100;
         self->ext.GH_Props.rotate = self->rotate;
         self->ext.GH_Props.rotVel = -0xC0;
@@ -659,23 +658,23 @@ void EntityGurkhaWeapon(Entity* self) {
     case 24:
         switch (self->step_s) {
         case 0:
-            rnd = (OVL_EXPORT(Random)() & 0x1F) + 0x10;
-            angle = (OVL_EXPORT(Random)() * 6) + 0x900;
+            rnd = (Random() & 0x1F) + 0x10;
+            angle = (Random() * 6) + 0x900;
             self->velocityX = (rnd * rcos(angle)) / 2;
             self->velocityY = rnd * rsin(angle);
-            self->ext.GH_Props.timer = (OVL_EXPORT(Random)() & 0x1F) + 0x20;
+            self->ext.GH_Props.timer = (Random() & 0x1F) + 0x20;
             self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
             self->hitboxState = 0;
             self->step_s++;
             break;
 
         case 1:
-            OVL_EXPORT(MoveEntity)();
+            MoveEntity();
             self->velocityY += FIX(0.125);
             self->rotate += self->ext.GH_Props.rotVel;
             if (!--self->ext.GH_Props.timer) {
                 self->step = 0;
-                self->pfnUpdate = OVL_EXPORT(EntityExplosion);
+                self->pfnUpdate = EntityExplosion;
                 self->params = 0;
                 self->drawFlags = ENTITY_DEFAULT;
             }
