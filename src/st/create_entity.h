@@ -30,7 +30,7 @@ STATIC_PAD_BSS(3);
 #define LAYOUT_OBJ_SLOT 3
 #define LAYOUT_OBJ_PARAMS 4
 
-void CreateEntityFromLayout(Entity* entity, LayoutEntity* initDesc) {
+void OVL_EXPORT(CreateEntityFromLayout)(Entity* entity, LayoutEntity* initDesc) {
     Tilemap* tilemap;
 
     tilemap = &g_Tilemap;
@@ -69,13 +69,13 @@ void CreateEntityWhenInVerticalRange(LayoutEntity* obj) {
         entity =
             g_Entities + STAGE_ENTITY_START + (obj->entityRoomIndex & 0xFF);
         if (!entity->entityId) {
-            CreateEntityFromLayout(entity, obj);
+            OVL_EXPORT(CreateEntityFromLayout)(entity, obj);
         }
         break;
     case 0xA000:
         entity =
             g_Entities + STAGE_ENTITY_START + (obj->entityRoomIndex & 0xFF);
-        CreateEntityFromLayout(entity, obj);
+        OVL_EXPORT(CreateEntityFromLayout)(entity, obj);
         break;
     case 0x8000:
         break;
@@ -107,13 +107,13 @@ void CreateEntityWhenInHorizontalRange(LayoutEntity* obj) {
         entity =
             g_Entities + STAGE_ENTITY_START + (obj->entityRoomIndex & 0xFF);
         if (!entity->entityId) {
-            CreateEntityFromLayout(entity, obj);
+            OVL_EXPORT(CreateEntityFromLayout)(entity, obj);
         }
         break;
     case 0xA000:
         entity =
             g_Entities + STAGE_ENTITY_START + (obj->entityRoomIndex & 0xFF);
-        CreateEntityFromLayout(entity, obj);
+        OVL_EXPORT(CreateEntityFromLayout)(entity, obj);
         break;
     case 0x8000:
         break;

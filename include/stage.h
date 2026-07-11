@@ -215,7 +215,8 @@ void OVL_EXPORT(EntityDamageDisplay)(Entity*);
 
 s32 OVL_EXPORT(Random)();
 #ifdef VERSION_PC
-void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity);
+void OVL_EXPORT(CreateEntityFromEntity)(
+    u16 entityId, Entity* source, Entity* entity);
 #endif
 void DestroyEntity(Entity*);
 void DestroyEntitiesFromIndex(s16 index);

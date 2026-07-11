@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rno0.h"
 
-INCLUDE_ASM("st/rno0/nonmatchings/create_entity", CreateEntityFromLayout);
+INCLUDE_ASM("st/rno0/nonmatchings/create_entity", RNO0_CreateEntityFromLayout);
 
 INCLUDE_ASM("st/rno0/nonmatchings/create_entity", CreateEntityWhenInVerticalRange);
 

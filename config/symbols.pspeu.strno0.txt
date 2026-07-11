@@ -1,4 +1,4 @@
-CreateEntityFromLayout = 0x09237700;
+RNO0_CreateEntityFromLayout = 0x09237700;
 CreateEntityWhenInVerticalRange = 0x09237820;
 CreateEntityWhenInHorizontalRange = 0x092379B8;
 FindFirstEntityToTheRight = 0x09237B50;
