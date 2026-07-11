@@ -3,8 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "stage_loader.h"
 #include "../../st/wrp/wrp.h"
+#include "stage_loader.h"
 
 extern Overlay OVL_EXPORT(Overlay);
 extern PfnEntityUpdate OVL_EXPORT(EntityUpdates)[];
@@ -15,6 +15,7 @@ extern LayoutEntity** g_pStObjLayoutHorizontal;
 extern LayoutEntity** g_pStObjLayoutVertical;
 void InitStageWRP(Overlay* o) {
     LoadReset();
+    InitOnce();
     memcpy(o, &OVL_EXPORT(Overlay), sizeof(Overlay));
     PfnEntityUpdates = OVL_EXPORT(EntityUpdates);
     g_pStObjLayoutHorizontal = OVL_EXPORT(pStObjLayoutHorizontal);

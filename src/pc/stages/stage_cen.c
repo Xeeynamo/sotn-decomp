@@ -11,8 +11,10 @@ extern LayoutEntity* OVL_EXPORT(pStObjLayoutVertical)[];
 extern PfnEntityUpdate* PfnEntityUpdates;
 extern LayoutEntity** g_pStObjLayoutHorizontal;
 extern LayoutEntity** g_pStObjLayoutVertical;
+
 void InitStageCEN(Overlay* o) {
     LoadReset();
+    InitOnce();
     memcpy(o, &OVL_EXPORT(Overlay), sizeof(Overlay));
     PfnEntityUpdates = OVL_EXPORT(EntityUpdates);
     g_pStObjLayoutHorizontal = OVL_EXPORT(pStObjLayoutHorizontal);
