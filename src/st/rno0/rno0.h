@@ -4,7 +4,6 @@
 
 #define OVL_EXPORT(x) RNO0_##x
 #define STAGE_IS_RNO0
-#include <stage.h>
 
 #include <stage.h>
 
