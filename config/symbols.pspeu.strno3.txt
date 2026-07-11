@@ -1,6 +1,1 @@
-sprites_rno3_6 = 0x09262288;
-RNO3_spriteBanks = 0x09263B60;
-RNO3_rooms_layers = 0x09263EB0;
-RNO3_cluts = 0x09263FF0;
-RNO3_gfxBanks = 0x092640E8;
-RNO3_rooms = 0x09264480;
+

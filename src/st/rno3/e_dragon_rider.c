@@ -5,7 +5,7 @@
 
 extern EInit g_EInitDragonRider1;
 extern EInit g_EInitDragonRider2;
-extern EInit D_us_801809F8;
+extern EInit g_EInitDragonRiderHead;
 
 typedef struct {
     u32 velX;
@@ -239,7 +239,7 @@ void EntityDragonSegment(Entity* self) {
 void EntityDragonHeadParts(Entity* self) {
     adhoc_vels_rot* temp_s0;
     if (!self->step) {
-        InitializeEntity(D_us_801809F8);
+        InitializeEntity(g_EInitDragonRiderHead);
         self->drawFlags = ENTITY_ROTATE;
         self->hitboxState = 0;
         self->animCurFrame = self->params + 8;

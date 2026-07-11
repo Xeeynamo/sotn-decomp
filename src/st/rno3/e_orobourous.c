@@ -3,7 +3,7 @@
 
 // NOTE: Compare this to e_dragon_rider. Lots of similarities.
 
-extern EInit D_us_801809C8;
+extern EInit g_EInitOruburosHead;
 extern EInit g_EInitOrobourous;
 extern EInit g_EInitOruburos;
 extern EInit g_EInitOruburosRider;
@@ -357,7 +357,7 @@ void EntityOrobHeadParts(Entity* self) {
     adhoc_vels_rot* temp_s0;
 
     if (!self->step) {
-        InitializeEntity(D_us_801809C8);
+        InitializeEntity(g_EInitOruburosHead);
         self->drawFlags = ENTITY_ROTATE;
         self->hitboxState = 0;
         // We create 4 of this entity, with params 0 to 3.

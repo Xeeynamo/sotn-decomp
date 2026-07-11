@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rno3.h"
 
-extern EInit D_us_80180980;
-extern EInit D_us_8018098C;
+extern EInit g_EInitJackOBones2;
+extern EInit g_EInitJackOBones3;
 extern EInit g_EInitJackOBones;
 
 static u8 anim_walk_fwd[] = {6, 1, 4, 2, 4, 3, 6, 4, 5, 5, 5, 6, 0};
@@ -228,7 +228,7 @@ void EntityJackOBonesDeathParts(Entity* self) {
         self->step = 0;
         return;
     }
-    InitializeEntity(D_us_80180980);
+    InitializeEntity(g_EInitJackOBones2);
     self->animCurFrame = (self->params & 0xFF) + 15;
     if (self->params & 0x100) {
         self->palette += 1;
@@ -246,7 +246,7 @@ void EntityJackOBonesJack(Entity* self) {
     s32 xVar;
 
     if (!self->step) {
-        InitializeEntity(D_us_8018098C);
+        InitializeEntity(g_EInitJackOBones3);
         if (self->params) {
             self->palette += 1;
         }
