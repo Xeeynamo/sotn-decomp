@@ -1201,7 +1201,7 @@ void EntityRelicOrb(Entity* self) {
             sprintf(&sp34, "%s %s", msg, obtainedStr);
         }
         msgLen = strlen(sp34);
-        BlitChar(&sp34[0], 0, 12, 0x100);
+        OVL_EXPORT(BlitChar)(&sp34[0], 0, 12, 0x100);
 #elif !defined(VERSION_US) || STAGE == STAGE_ST0
         vramX = 0;
         msg = g_api.relicDefs[relicId].name;
@@ -1245,7 +1245,7 @@ void EntityRelicOrb(Entity* self) {
             msg = g_api.relicDefs[relicId].name;
             isObtainedTextStored = true;
         } else {
-            msg = BlitChar(msg, &msgLen, chPix, 0xC0);
+            msg = OVL_EXPORT(BlitChar)(msg, &msgLen, chPix, 0xC0);
         }
     }
 
@@ -1612,7 +1612,7 @@ void EntityMessageBox(Entity* self) {
                 xOffset = 0;
                 chPix = &dstPix[self->ext.messageBox.width * 8];
             } else {
-                str = BlitChar(
+                str = OVL_EXPORT(BlitChar)(
                     str, &xOffset, chPix, self->ext.messageBox.width >> 1);
             }
         }
@@ -1623,7 +1623,7 @@ void EntityMessageBox(Entity* self) {
         x = VramX;
         y = VramY;
         str = self->ext.messageBox.label;
-        BlitChar(str, 0, 0, 0x180);
+        OVL_EXPORT(BlitChar)(str, 0, 0, 0x180);
 #elif defined(VERSION_HD)
         nCh = 0;
         x = VramX;
