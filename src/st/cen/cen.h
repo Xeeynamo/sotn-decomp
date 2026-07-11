@@ -3,10 +3,8 @@
 #define CEN_H
 
 #define STAGE_IS_CEN
-
-#include <stage.h>
-
 #define OVL_EXPORT(x) CEN_##x
+#include <stage.h>
 
 enum Palettes {
     PAL_NONE = 0,

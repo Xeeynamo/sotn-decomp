@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "stage.h"
+#include <stage.h>
 
 #ifndef STAGE_FLAG
 #define STAGE_FLAG NULL_STAGE_FLAG

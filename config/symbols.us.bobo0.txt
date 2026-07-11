@@ -52,7 +52,7 @@ func_us_801B72E8 = 0x801BA880; // source=match
 EntityChair = 0x801BBD84;
 Random = 0x801BC0DC; // source=match
 Update = 0x801BC10C; // source=match
-UpdateStageEntities = 0x801BC408; // source=match
+BO0_UpdateStageEntities = 0x801BC408; // source=match
 HitDetection = 0x801BC510; // source=match
 EntityDamageDisplay = 0x801BD628; // source=match
 InitRoomEntities = 0x801BE528; // source=match

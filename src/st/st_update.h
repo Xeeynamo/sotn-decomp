@@ -120,7 +120,7 @@ void Update(void) {
     }
 }
 
-void UpdateStageEntities(void) {
+void OVL_EXPORT(UpdateStageEntities)(void) {
     Entity* entity;
     s16 iFramePalette;
 

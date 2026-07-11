@@ -20,7 +20,7 @@ AbbreviatedOverlay2 OVL_EXPORT(Overlay) = {
     .objLayoutHorizontal = OBJ_LAYOUT_HORIZONTAL,
     .tileLayers = OVL_EXPORT(rooms_layers),
     .gfxBanks = OVL_EXPORT(gfxBanks),
-    .UpdateStageEntities = UpdateStageEntities,
+    .UpdateStageEntities = OVL_EXPORT(UpdateStageEntities),
     .unk2C = NULL,
     .unk30 = D_us_80182E44,
 };

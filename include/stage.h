@@ -8,6 +8,10 @@
 #include "objects.h"
 #include "sfx.h"
 
+#ifndef OVL_EXPORT
+#define OVL_EXPORT(x) (x)
+#endif
+
 #ifdef VERSION_PSP
 #define E_ID(name) D_psp_E_##name
 #else
@@ -199,7 +203,7 @@ void InitRoomEntities(s32 objLayoutId);
 void UpdateRoomPosition();
 
 void Update(void);
-void UpdateStageEntities();
+void OVL_EXPORT(UpdateStageEntities)(void);
 void HitDetection(void);
 
 s32 Random();

@@ -9,7 +9,6 @@ extern SpriteParts* OVL_EXPORT(spriteBanks)[];
 extern u_long* OVL_EXPORT(cluts)[];
 extern RoomDef OVL_EXPORT(rooms_layers)[];
 extern GfxBank* OVL_EXPORT(gfxBanks)[];
-void UpdateStageEntities(void);
 
 AbbreviatedOverlay OVL_EXPORT(Overlay) = {
     .Update = Update,
@@ -22,7 +21,7 @@ AbbreviatedOverlay OVL_EXPORT(Overlay) = {
     .objLayoutHorizontal = &OBJ_LAYOUT_HORIZONTAL,
     .tileLayers = OVL_EXPORT(rooms_layers),
     .gfxBanks = OVL_EXPORT(gfxBanks),
-    .UpdateStageEntities = UpdateStageEntities,
+    .UpdateStageEntities = OVL_EXPORT(UpdateStageEntities),
 };
 #else
 
@@ -49,7 +48,7 @@ AbbreviatedOverlay OVL_EXPORT(Overlay) = {
     .objLayoutHorizontal = OVL_EXPORT(pStObjLayoutHorizontal),
     .tileLayers = OVL_EXPORT(rooms_layers),
     .gfxBanks = OVL_EXPORT(gfxBanks),
-    .UpdateStageEntities = UpdateStageEntities,
+    .UpdateStageEntities = OVL_EXPORT(UpdateStageEntities),
 };
 
 #include "gen/sprite_banks.h"

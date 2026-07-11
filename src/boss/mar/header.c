@@ -19,7 +19,7 @@ AbbreviatedOverlay OVL_EXPORT(Overlay) = {
     .objLayoutHorizontal = OVL_EXPORT(pStObjLayoutHorizontal),
     .tileLayers = OVL_EXPORT(rooms_layers),
     .gfxBanks = OVL_EXPORT(gfxBanks),
-    .UpdateStageEntities = UpdateStageEntities,
+    .UpdateStageEntities = OVL_EXPORT(UpdateStageEntities),
 };
 
 #include "gen/sprite_banks.h"

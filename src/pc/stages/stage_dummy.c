@@ -27,6 +27,7 @@ static u16* clut_anims[] = {empty_clut_load, NULL};
 static void* entity_gfxs[] = {empty_entity_gfx, NULL};
 extern s16** WRP_spriteBanks[];
 extern RoomDef WRP_rooms_layers[];
+void OVL_EXPORT(UpdateStageEntities)(void);
 
 static Overlay g_StageDesc = {
     Update,
@@ -39,7 +40,7 @@ static Overlay g_StageDesc = {
     NULL,
     WRP_rooms_layers,
     entity_gfxs,
-    UpdateStageEntities,
+    OVL_EXPORT(UpdateStageEntities),
     NULL,
     NULL,
     NULL,

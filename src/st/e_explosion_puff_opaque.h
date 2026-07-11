@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "stage.h"
+#include <stage.h>
 
 #ifdef VERSION_PSP
 extern s32 E_ID(EXPLODE_PUFF_OPAQUE);

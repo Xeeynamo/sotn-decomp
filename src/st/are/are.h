@@ -2,10 +2,9 @@
 #ifndef ARE_H
 #define ARE_H
 
-#include <stage.h>
-
-#define OVL_EXPORT(x) ARE_##x
 #define STAGE_IS_ARE
+#define OVL_EXPORT(x) ARE_##x
+#include <stage.h>
 
 enum Palettes {
     PAL_NONE,

@@ -8,6 +8,7 @@ extern LayoutEntity* OVL_EXPORT(pStObjLayoutHorizontal)[];
 extern RoomDef OVL_EXPORT(rooms_layers)[];
 extern u_long** OVL_EXPORT(gfxBanks)[];
 void OVL_EXPORT(HitDetection)();
+
 void PrologueScroll();
 
 Overlay OVL_EXPORT(Overlay) = {
@@ -21,7 +22,7 @@ Overlay OVL_EXPORT(Overlay) = {
     .objLayoutHorizontal = OVL_EXPORT(pStObjLayoutHorizontal),
     .tileLayers = OVL_EXPORT(rooms_layers),
     .gfxBanks = OVL_EXPORT(gfxBanks),
-    .UpdateStageEntities = UpdateStageEntities,
+    .UpdateStageEntities = OVL_EXPORT(UpdateStageEntities),
     .StageEndCutScene = PrologueScroll,
 };
 

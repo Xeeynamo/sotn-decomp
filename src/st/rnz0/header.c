@@ -23,5 +23,5 @@ Overlay OVL_EXPORT(Overlay) = {
     .objLayoutHorizontal = NULL,
     .tileLayers = OVL_EXPORT(rooms_layers),
     .gfxBanks = OVL_EXPORT(gfxBanks),
-    .UpdateStageEntities = UpdateStageEntities,
+    .UpdateStageEntities = OVL_EXPORT(UpdateStageEntities),
 };

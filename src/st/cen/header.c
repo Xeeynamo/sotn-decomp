@@ -5,7 +5,6 @@ void Update(void);
 void HitDetection(void);
 void UpdateRoomPosition(void);
 void InitRoomEntities(s32 objLayoutId);
-void UpdateStageEntities(void);
 
 extern RoomHeader OVL_EXPORT(rooms)[];
 extern u_long* OVL_EXPORT(cluts)[];
@@ -35,7 +34,7 @@ Overlay OVL_EXPORT(Overlay) = {
     .objLayoutHorizontal = NULL,
     .tileLayers = OVL_EXPORT(rooms_layers),
     .gfxBanks = OVL_EXPORT(gfxBanks),
-    .UpdateStageEntities = UpdateStageEntities,
+    .UpdateStageEntities = OVL_EXPORT(UpdateStageEntities),
 #ifdef VERSION_PSP
     .unk2C = NULL,
     .unk30 = D_pspeu_09293958,

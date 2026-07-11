@@ -2,10 +2,9 @@
 #ifndef RCEN_H
 #define RCEN_H
 
-#include <stage.h>
-
-#define OVL_EXPORT(x) RCEN_##x
 #define STAGE_IS_RCEN
+#define OVL_EXPORT(x) RCEN_##x
+#include <stage.h>
 
 enum Palettes {
     PAL_NONE,
