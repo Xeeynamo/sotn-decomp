@@ -266,7 +266,8 @@ void EntityConfessionalGhost(Entity* self) {
 #endif
         if (!(--self->opacity)) {
             if (!(self->params & CONFESSIONAL_GHOST_PARISHIONER) &&
-                (!self->ext.confessionalGhost.timer) && !(OVL_EXPORT(Random)() & 3)) {
+                (!self->ext.confessionalGhost.timer) &&
+                !(OVL_EXPORT(Random)() & 3)) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
                     CreateEntityFromEntity(E_EQUIP_ITEM_DROP, self, entity);
@@ -488,7 +489,8 @@ void EntityConfessionalBladeDebris(Entity* self) {
             self->velocityX = -((OVL_EXPORT(Random)() << 8) + FIX(0.25));
         }
         self->velocityY = ((OVL_EXPORT(Random)() * -256) - FIX(0.5)) - FIX(0.5);
-        self->ext.confessionalGhost.timer = ((OVL_EXPORT(Random)() & 0x3F) + 16);
+        self->ext.confessionalGhost.timer =
+            ((OVL_EXPORT(Random)() & 0x3F) + 16);
     }
     MoveEntity();
     self->velocityY += FIX(0.125);

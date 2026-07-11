@@ -36,7 +36,8 @@ void EntityKillerFish(Entity* self) {
         break;
     case 1:
         // Idle
-        // nb. Interesting this is using the in-built rand() and not OVL_EXPORT(Random)()
+        // nb. Interesting this is using the in-built rand() and not
+        // OVL_EXPORT(Random)()
         if (!AnimateEntity(anim_iddle, self) && !(rand() & 3)) {
             SetStep(2);
             self->ext.killerFish.swimTimer = 0x100;

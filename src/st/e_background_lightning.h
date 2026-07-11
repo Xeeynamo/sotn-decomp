@@ -125,7 +125,8 @@ void EntityBackgroundLightning(Entity* self) {
             /* fallthrough */
         case 1:
             if (AnimateEntity(lightningAnim, self) == 0) {
-                self->ext.backgroundLightning.timer = (OVL_EXPORT(Random)() & 0x7F) + 0x40;
+                self->ext.backgroundLightning.timer =
+                    (OVL_EXPORT(Random)() & 0x7F) + 0x40;
                 self->step_s++;
             }
 #if !defined(INVERTED_STAGE)

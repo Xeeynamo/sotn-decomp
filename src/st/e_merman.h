@@ -213,7 +213,8 @@ void EntityMerman(Entity* self) {
                 newEntity = AllocEntity(&g_Entities[232], &g_Entities[256]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(E_MERMAN_JUMP_AIR, self, newEntity);
-                    newEntity->posX.i.hi += ((OVL_EXPORT(Random)() & 3) * 4) - 6;
+                    newEntity->posX.i.hi +=
+                        ((OVL_EXPORT(Random)() & 3) * 4) - 6;
                     newEntity->velocityX = jumpAirXVels[self->pose - 1];
                 }
             } else {

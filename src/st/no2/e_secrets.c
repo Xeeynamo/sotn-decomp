@@ -98,7 +98,8 @@ void func_us_801B59C4(Primitive* prim) {
         prim->drawMode = DRAW_UNK02;
         LOW(prim->next->u0) = -(OVL_EXPORT(Random)() & 7) * 0x2800;
         LOW(prim->next->r1) = -0x18000 - ((OVL_EXPORT(Random)() & 7) << 0xD);
-        LOH(prim->next->r2) = LOH(prim->next->b2) = ((OVL_EXPORT(Random)() & 3) * 2) + 8;
+        LOH(prim->next->r2) = LOH(prim->next->b2) =
+            ((OVL_EXPORT(Random)() & 3) * 2) + 8;
         prim->next->u2 = 4;
         break;
 
@@ -113,7 +114,8 @@ void func_us_801B59C4(Primitive* prim) {
         prim->drawMode = DRAW_UNK02;
         LOW(prim->next->u0) = 0xE000 - ((OVL_EXPORT(Random)() & 7) << 0xE);
         LOW(prim->next->r1) = -0x18000 - ((OVL_EXPORT(Random)() & 7) << 0xD);
-        LOH(prim->next->r2) = LOH(prim->next->b2) = ((OVL_EXPORT(Random)() & 3) * 2) + 8;
+        LOH(prim->next->r2) = LOH(prim->next->b2) =
+            ((OVL_EXPORT(Random)() & 3) * 2) + 8;
         if (LOW(prim->next->u0) > 0) {
             prim->next->r3 = 16;
         } else {

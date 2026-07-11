@@ -165,7 +165,8 @@ void func_us_801BFB40(Entity* self) {
             self->step_s++;
             if (self->params) {
                 self->velocityX = -(OVL_EXPORT(Random)() & 7) * FIX(0.125);
-                self->velocityY = FIX(-2.25) - (OVL_EXPORT(Random)() & 3) * FIX(0.25);
+                self->velocityY =
+                    FIX(-2.25) - (OVL_EXPORT(Random)() & 3) * FIX(0.25);
             }
             break;
 

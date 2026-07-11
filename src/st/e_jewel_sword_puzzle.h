@@ -147,12 +147,14 @@ void EntityMermanRockLeftSide(Entity* self) {
                         E_ID(FALLING_ROCK_2), self, newEntity);
                     newEntity->params = *params++;
 #if defined(INVERTED_STAGE)
-                    newEntity->velocityX = (OVL_EXPORT(Random)() << 8) + 0x10000;
+                    newEntity->velocityX =
+                        (OVL_EXPORT(Random)() << 8) + 0x10000;
                     newEntity->velocityY = -OVL_EXPORT(Random)() * 0x100;
                     newEntity->posY.i.hi -= -16 + (i * 16);
                     newEntity->facingLeft = 1;
 #else
-                    newEntity->velocityX = (-OVL_EXPORT(Random)() << 8) - 0x8000;
+                    newEntity->velocityX =
+                        (-OVL_EXPORT(Random)() << 8) - 0x8000;
                     newEntity->velocityY = -OVL_EXPORT(Random)() * 0x100;
                     newEntity->posY.i.hi += -16 + (i * 16);
 #endif
@@ -250,7 +252,8 @@ void EntityMermanRockRightSide(Entity* self) {
                         E_ID(FALLING_ROCK_2), self, newEntity);
                     newEntity->params = *params++;
 #if defined(INVERTED_STAGE)
-                    newEntity->velocityX = (-OVL_EXPORT(Random)() << 8) - 0x10000;
+                    newEntity->velocityX =
+                        (-OVL_EXPORT(Random)() << 8) - 0x10000;
                     newEntity->velocityY = -OVL_EXPORT(Random)() * 0x100;
                     newEntity->posY.i.hi -= -16 + (i * 16);
                     newEntity->facingLeft = 0;

@@ -45,7 +45,8 @@ void EntityBreakableWallDebris(Entity* self) {
         if (self->animCurFrame < 0xB) {
             self->velocityY -= FIX(1);
         }
-        self->ext.breakableDebris.rotSpeed = ((OVL_EXPORT(Random)() & 3) + 1) * 0x20;
+        self->ext.breakableDebris.rotSpeed =
+            ((OVL_EXPORT(Random)() & 3) + 1) * 0x20;
         break;
 
     case CHECK_FLAG:
@@ -282,7 +283,8 @@ void EntityBreakableWall(Entity* self) {
                 if (entity != NULL) {
                     CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
                     entity->posX.i.hi = xPos;
-                    entity->posY.i.hi = yPos + 0x20 - (OVL_EXPORT(Random)() & 3) * 8;
+                    entity->posY.i.hi =
+                        yPos + 0x20 - (OVL_EXPORT(Random)() & 3) * 8;
                     entity->params = 0x10;
                     entity->params |= 0xC000;
                 }

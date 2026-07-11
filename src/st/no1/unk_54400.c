@@ -75,8 +75,10 @@ void func_us_801D4558(Entity* self) {
         self->velocityY >>= 8;
         MoveEntity();
         if (!self->ext.et_801D4558.unk82) {
-            self->ext.et_801D4558.unk84 = D_us_80183204[OVL_EXPORT(Random)() & 7];
-            self->ext.et_801D4558.unk86 = D_us_80183204[OVL_EXPORT(Random)() & 7];
+            self->ext.et_801D4558.unk84 =
+                D_us_80183204[OVL_EXPORT(Random)() & 7];
+            self->ext.et_801D4558.unk86 =
+                D_us_80183204[OVL_EXPORT(Random)() & 7];
             self->ext.et_801D4558.unk82 = (OVL_EXPORT(Random)() & 0x1F) + 0x20;
         } else {
             self->ext.et_801D4558.unk82--;

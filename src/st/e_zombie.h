@@ -124,7 +124,8 @@ void EntityZombieSpawner(Entity* self) {
                     DestroyEntity(newEntity);
                 }
             }
-            self->ext.zombieSpawner.spawnDelay = (OVL_EXPORT(Random)() & 0x3F) + 32;
+            self->ext.zombieSpawner.spawnDelay =
+                (OVL_EXPORT(Random)() & 0x3F) + 32;
         }
     }
 }

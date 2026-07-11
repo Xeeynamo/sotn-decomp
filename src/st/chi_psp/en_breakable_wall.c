@@ -32,7 +32,8 @@ void EntityBreakableWallDebris(Entity* self) {
         if (self->animCurFrame < 0xB) {
             self->velocityY -= FIX(1);
         }
-        self->ext.breakableDebris.rotSpeed = ((OVL_EXPORT(Random)() & 3) + 1) * 0x20;
+        self->ext.breakableDebris.rotSpeed =
+            ((OVL_EXPORT(Random)() & 3) + 1) * 0x20;
         break;
 
     case CHECK_FLAG:

@@ -511,7 +511,8 @@ void func_us_801BC814(Primitive* prim) {
             } else {
                 posX = g_CurrentEntity->posX.i.hi - rnd * 16;
             }
-            posY = g_CurrentEntity->posY.i.hi + ((OVL_EXPORT(Random)() & 3) * 8) - 12;
+            posY = g_CurrentEntity->posY.i.hi +
+                   ((OVL_EXPORT(Random)() & 3) * 8) - 12;
             posX2 = posX - prim->x1;
             posY2 = posY - prim->y1;
             angle = ratan2(-posY2, posX2);
@@ -1076,7 +1077,8 @@ void EntityLesserDemon(Entity* self) {
                     self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
                     self->ext.lesserDemon.unk84 = 0;
                     SetStep(13);
-                    if ((GetDistanceToPlayerX() < 0x40) && (OVL_EXPORT(Random)() & 3)) {
+                    if ((GetDistanceToPlayerX() < 0x40) &&
+                        (OVL_EXPORT(Random)() & 3)) {
                         SetStep(4);
                     }
                 } else {
@@ -1143,7 +1145,8 @@ void EntityLesserDemon(Entity* self) {
     case 9:
         if (!self->step_s) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-            self->ext.lesserDemon.timer = D_us_80181C34[OVL_EXPORT(Random)() & 3];
+            self->ext.lesserDemon.timer =
+                D_us_80181C34[OVL_EXPORT(Random)() & 3];
             self->step_s++;
         }
         AnimateEntity(D_us_80181B4C, self);
@@ -1498,8 +1501,10 @@ void EntityLesserDemon(Entity* self) {
                 if (tempEntity != NULL) {
                     CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
                     tempEntity->params = 1;
-                    tempEntity->posX.i.hi += (OVL_EXPORT(Random)() & 0x1F) - 0x10;
-                    tempEntity->posY.i.hi += (OVL_EXPORT(Random)() & 0x1F) - 0x10;
+                    tempEntity->posX.i.hi +=
+                        (OVL_EXPORT(Random)() & 0x1F) - 0x10;
+                    tempEntity->posY.i.hi +=
+                        (OVL_EXPORT(Random)() & 0x1F) - 0x10;
                 }
             }
             if (!--self->ext.lesserDemon.timer) {

@@ -315,9 +315,12 @@ void EntitySpellbook(Entity* self) {
         self->ext.spellbookMagicTome.unk90 = mag;
         if (!self->ext.spellbookMagicTome.unk80) {
             self->ext.spellbookMagicTome.unk80 = 0x40;
-            self->ext.spellbookMagicTome.unkA4.vx = (OVL_EXPORT(Random)() & 0x1F) - 0x10;
-            self->ext.spellbookMagicTome.unkA4.vy = (OVL_EXPORT(Random)() & 0x1F) - 0x10;
-            self->ext.spellbookMagicTome.unkA4.vz = (OVL_EXPORT(Random)() & 0x1F) - 0x10;
+            self->ext.spellbookMagicTome.unkA4.vx =
+                (OVL_EXPORT(Random)() & 0x1F) - 0x10;
+            self->ext.spellbookMagicTome.unkA4.vy =
+                (OVL_EXPORT(Random)() & 0x1F) - 0x10;
+            self->ext.spellbookMagicTome.unkA4.vz =
+                (OVL_EXPORT(Random)() & 0x1F) - 0x10;
         } else {
             self->ext.spellbookMagicTome.unk80--;
         }
@@ -609,9 +612,12 @@ void EntityMagicTome(Entity* self) {
                     self->velocityY = FIX(-2.0);
                 }
             }
-            self->ext.spellbookMagicTome.unkA4.vx = (OVL_EXPORT(Random)() & 0x1F) - 0x10;
-            self->ext.spellbookMagicTome.unkA4.vy = (OVL_EXPORT(Random)() & 0x1F) - 0x10;
-            self->ext.spellbookMagicTome.unkA4.vz = (OVL_EXPORT(Random)() & 0x1F) - 0x10;
+            self->ext.spellbookMagicTome.unkA4.vx =
+                (OVL_EXPORT(Random)() & 0x1F) - 0x10;
+            self->ext.spellbookMagicTome.unkA4.vy =
+                (OVL_EXPORT(Random)() & 0x1F) - 0x10;
+            self->ext.spellbookMagicTome.unkA4.vz =
+                (OVL_EXPORT(Random)() & 0x1F) - 0x10;
             self->ext.spellbookMagicTome.unk80 = 0x40;
             self->step_s++;
             /* fallthrough */

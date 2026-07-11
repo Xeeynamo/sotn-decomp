@@ -112,7 +112,8 @@ void EntityBreakableWall(Entity* self) {
                     CreateEntityFromEntity(
                         E_ID(SECRET_WALL_DEBRIS), self, tempEntity);
                     tempEntity->posX.i.hi += (OVL_EXPORT(Random)() & 0xF);
-                    tempEntity->posY.i.hi += (OVL_EXPORT(Random)() & 0x3F) - 0x20;
+                    tempEntity->posY.i.hi +=
+                        (OVL_EXPORT(Random)() & 0x3F) - 0x20;
                     tempEntity->params = self->params;
                 }
             }

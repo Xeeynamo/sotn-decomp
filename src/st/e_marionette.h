@@ -246,7 +246,8 @@ void EntityMarionette(Entity* self) {
 
     case 4:
         if (!self->step_s) {
-            self->ext.marionette.unk84 = D_us_80182000[OVL_EXPORT(Random)() & 3];
+            self->ext.marionette.unk84 =
+                D_us_80182000[OVL_EXPORT(Random)() & 3];
             self->step_s++;
         }
         flag = AnimateEntity(anim0, self);
@@ -315,7 +316,8 @@ void EntityMarionette(Entity* self) {
                     }
                     flag = 1;
                 }
-                self->ext.marionette.unk80 = *(&anims[flag] + (OVL_EXPORT(Random)() & 1));
+                self->ext.marionette.unk80 =
+                    *(&anims[flag] + (OVL_EXPORT(Random)() & 1));
                 self->velocityX = 0;
                 self->velocityY = FIX(-1.0);
                 if (self->pose > 0) {

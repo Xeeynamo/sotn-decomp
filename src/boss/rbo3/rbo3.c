@@ -733,7 +733,8 @@ void func_us_80192998(Entity* self) {
             self->facingLeft = OVL_EXPORT(Random)() & 1;
             self->velocityX = (OVL_EXPORT(Random)() << 8) - FIX(1.0 / 2.0);
             self->velocityY = FIX(-0.75);
-            self->ext.e_80192998.accelY = -(OVL_EXPORT(Random)() * 16) - FIX(1.0 / 4.0);
+            self->ext.e_80192998.accelY =
+                -(OVL_EXPORT(Random)() * 16) - FIX(1.0 / 4.0);
             self->step_s++;
         }
         MoveEntity();

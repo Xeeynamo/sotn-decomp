@@ -711,7 +711,8 @@ void EntityLossothNapalmFlare(Entity* self) {
                 prim->x0 = prim->x2 = self->posX.i.hi + 8;
             }
             prim->y0 = prim->y2 = self->posY.i.hi;
-            self->ext.lossothNapalm.unkA0.val += (OVL_EXPORT(Random)() << 8) + 0x80000;
+            self->ext.lossothNapalm.unkA0.val +=
+                (OVL_EXPORT(Random)() << 8) + 0x80000;
         }
 
         if (!(g_Timer & 3)) {

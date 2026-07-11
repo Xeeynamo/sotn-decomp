@@ -167,11 +167,11 @@ void EntityEnemyBlood(Entity* self) {
                 prim->h = 4;
 
                 if (facingLeft) {
-                    UnkEntityFunc0(
-                        0xCC0 + i * 64, (OVL_EXPORT(Random)() & 0xF) * 0x10 + 0x180);
+                    UnkEntityFunc0(0xCC0 + i * 64,
+                                   (OVL_EXPORT(Random)() & 0xF) * 0x10 + 0x180);
                 } else {
-                    UnkEntityFunc0(
-                        0xB40 - i * 64, (OVL_EXPORT(Random)() & 0xF) * 0x10 + 0x180);
+                    UnkEntityFunc0(0xB40 - i * 64,
+                                   (OVL_EXPORT(Random)() & 0xF) * 0x10 + 0x180);
                 }
 
                 prim->velocityX.val = self->velocityX;

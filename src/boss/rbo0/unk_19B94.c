@@ -142,7 +142,8 @@ void EntityDeathFlames(Entity* self) {
             self->facingLeft = OVL_EXPORT(Random)() & 1;
             self->velocityX = (OVL_EXPORT(Random)() << 9) - FIX(0.5);
             self->velocityY = FIX(-0.5);
-            self->ext.deathFlames.unk8C = -(OVL_EXPORT(Random)() * 0x10) - 0x1000;
+            self->ext.deathFlames.unk8C =
+                -(OVL_EXPORT(Random)() * 0x10) - 0x1000;
             self->step_s++;
         }
         MoveEntity();
@@ -159,7 +160,8 @@ void EntityDeathFlames(Entity* self) {
             self->facingLeft = OVL_EXPORT(Random)() & 1;
             self->velocityX = (OVL_EXPORT(Random)() << 9) - FIX(0.5);
             self->velocityY = FIX(-0.5);
-            self->ext.deathFlames.unk8C = -(OVL_EXPORT(Random)() * 0x10) - 0x1000;
+            self->ext.deathFlames.unk8C =
+                -(OVL_EXPORT(Random)() * 0x10) - 0x1000;
             self->step_s++;
         }
         MoveEntity();
@@ -176,7 +178,8 @@ void EntityDeathFlames(Entity* self) {
             self->facingLeft = OVL_EXPORT(Random)() & 1;
             self->velocityX = (OVL_EXPORT(Random)() << 9) - FIX(0.5);
             self->velocityY = FIX(-0.5);
-            self->ext.deathFlames.unk8C = -(OVL_EXPORT(Random)() * 0x10) - 0x1000;
+            self->ext.deathFlames.unk8C =
+                -(OVL_EXPORT(Random)() * 0x10) - 0x1000;
             self->step_s++;
         }
         MoveEntity();

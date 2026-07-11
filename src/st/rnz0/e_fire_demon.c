@@ -437,7 +437,8 @@ void EntityFireDemonFireball(Entity* self) {
                 if (explosion != NULL) {
                     CreateEntityFromEntity(E_EXPLOSION, self, explosion);
                     explosion->posX.i.hi += xVar;
-                    explosion->posY.i.hi += (((OVL_EXPORT(Random)() & 3) * 2) + 6);
+                    explosion->posY.i.hi +=
+                        (((OVL_EXPORT(Random)() & 3) * 2) + 6);
                     explosion->params = 0x5F00;
                 }
             }
@@ -1080,7 +1081,8 @@ void EntityFireDemon(Entity* self) {
                     other->params += 0xD500;
                     other->posX.i.hi =
                         self->posX.i.hi + ((OVL_EXPORT(Random)() & 3) * 8) - 12;
-                    other->posY.i.hi = 0x100 - ((OVL_EXPORT(Random)() & 7) * 0x10);
+                    other->posY.i.hi =
+                        0x100 - ((OVL_EXPORT(Random)() & 7) * 0x10);
                 }
             }
             break;

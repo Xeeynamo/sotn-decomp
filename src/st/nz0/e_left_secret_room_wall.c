@@ -88,7 +88,8 @@ void EntityLeftSecretRoomWall(Entity* self) {
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(E_ID(WALL_DEBRIS), self, newEntity);
                     newEntity->posX.i.hi += (OVL_EXPORT(Random)() & 0xF);
-                    newEntity->posY.i.hi += (OVL_EXPORT(Random)() & 0x3F) - 0x20;
+                    newEntity->posY.i.hi +=
+                        (OVL_EXPORT(Random)() & 0x3F) - 0x20;
                 }
             }
             DestroyEntity(self);

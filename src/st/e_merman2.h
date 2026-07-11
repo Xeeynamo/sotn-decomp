@@ -274,7 +274,8 @@ void EntityMerman2(Entity* self) {
                 newEntity = AllocEntity(&g_Entities[232], &g_Entities[256]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(E_MERMAN2_JUMP_AIR, self, newEntity);
-                    newEntity->posX.i.hi += ((OVL_EXPORT(Random)() & 3) * 4) - 6;
+                    newEntity->posX.i.hi +=
+                        ((OVL_EXPORT(Random)() & 3) * 4) - 6;
                     newEntity->zPriority = self->zPriority + 1;
                 }
             }

@@ -209,9 +209,11 @@ void EntityWereskeleton(Entity* self) {
                 DestroyEntity(tempEntity);
                 CreateEntityFromEntity(E_ID_43, self, tempEntity);
                 if (self->facingLeft) {
-                    tempEntity->velocityX = FIX(1) + (OVL_EXPORT(Random)() & 7) * 0x2800;
+                    tempEntity->velocityX =
+                        FIX(1) + (OVL_EXPORT(Random)() & 7) * 0x2800;
                 } else {
-                    tempEntity->velocityX = FIX(-1) - (OVL_EXPORT(Random)() & 7) * 0x2800;
+                    tempEntity->velocityX =
+                        FIX(-1) - (OVL_EXPORT(Random)() & 7) * 0x2800;
                 }
                 tempEntity->velocityY = FIX(-5.75);
                 tempEntity->posY.i.hi -= 8;

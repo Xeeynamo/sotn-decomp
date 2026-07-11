@@ -412,9 +412,11 @@ void OVL_EXPORT(HitDetection)(void) {
                 while (prim != NULL) {
                     if (prim->drawMode == DRAW_HIDE) {
                         prim->clut = PAL_UNK_199;
-                        prim->x0 = prim->x2 = x - 13 + (OVL_EXPORT(Random)() & 7) - 3;
+                        prim->x0 = prim->x2 =
+                            x - 13 + (OVL_EXPORT(Random)() & 7) - 3;
                         prim->x1 = prim->x3 = prim->x0 + 0x20;
-                        prim->y0 = prim->y1 = y - 10 + (OVL_EXPORT(Random)() & 7) - 3;
+                        prim->y0 = prim->y1 =
+                            y - 10 + (OVL_EXPORT(Random)() & 7) - 3;
                         prim->y2 = prim->y3 = prim->y0 + 0x20;
                         prim->p1 = 0;
                         if (iterEnt->zPriority > entity->zPriority) {
@@ -441,7 +443,8 @@ void OVL_EXPORT(HitDetection)(void) {
                     if (otherEntity != NULL) {
                         DestroyEntity(otherEntity);
                         otherEntity->entityId = 4;
-                        otherEntity->pfnUpdate = OVL_EXPORT(EntityDamageDisplay);
+                        otherEntity->pfnUpdate =
+                            OVL_EXPORT(EntityDamageDisplay);
                         otherEntity->posX.i.hi = x;
                         otherEntity->posY.i.hi = y;
                         otherEntity->params = miscVar1;

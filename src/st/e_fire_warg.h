@@ -481,15 +481,19 @@ void EntityFireWarg(Entity* self) {
                 if (var_s2 < 0) {
                     var_s2 += 0x3000;
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, -16, 38, ((OVL_EXPORT(Random)() & 3) + 1), -4);
+                        self, 1, 1, -16, 38, ((OVL_EXPORT(Random)() & 3) + 1),
+                        -4);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, 10, 38, ((OVL_EXPORT(Random)() & 3) + 1), -4);
+                        self, 1, 1, 10, 38, ((OVL_EXPORT(Random)() & 3) + 1),
+                        -4);
                 } else {
                     var_s2 -= 0x3000;
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, -10, 38, ((OVL_EXPORT(Random)() & 3) + 1), 4);
+                        self, 1, 1, -10, 38, ((OVL_EXPORT(Random)() & 3) + 1),
+                        4);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, 16, 38, ((OVL_EXPORT(Random)() & 3) + 1), 4);
+                        self, 1, 1, 16, 38, ((OVL_EXPORT(Random)() & 3) + 1),
+                        4);
                 }
                 self->velocityX = var_s2;
             }
@@ -616,15 +620,19 @@ void EntityFireWarg(Entity* self) {
                 if (self->facingLeft) {
                     self->velocityX += FIX(0.125);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, -32, 38, ((OVL_EXPORT(Random)() & 3) + 1), -4);
+                        self, 1, 1, -32, 38, ((OVL_EXPORT(Random)() & 3) + 1),
+                        -4);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, 2, 38, ((OVL_EXPORT(Random)() & 3) + 1), -4);
+                        self, 1, 1, 2, 38, ((OVL_EXPORT(Random)() & 3) + 1),
+                        -4);
                 } else {
                     self->velocityX -= FIX(0.125);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, -2, 38, ((OVL_EXPORT(Random)() & 3) + 1), 4);
+                        self, 1, 1, -2, 38, ((OVL_EXPORT(Random)() & 3) + 1),
+                        4);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, 32, 38, ((OVL_EXPORT(Random)() & 3) + 1), 4);
+                        self, 1, 1, 32, 38, ((OVL_EXPORT(Random)() & 3) + 1),
+                        4);
                 }
             }
             if (!AnimateEntity(&D_8018295C, self)) {
@@ -711,13 +719,16 @@ void EntityFireWarg(Entity* self) {
                 if (self->velocityX < 0) {
                     self->velocityX += FIX(0.5);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, 0, 38, ((OVL_EXPORT(Random)() & 3) + 1), -4);
+                        self, 1, 1, 0, 38, ((OVL_EXPORT(Random)() & 3) + 1),
+                        -4);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, 26, 38, ((OVL_EXPORT(Random)() & 3) + 1), -4);
+                        self, 1, 1, 26, 38, ((OVL_EXPORT(Random)() & 3) + 1),
+                        -4);
                 } else {
                     self->velocityX -= FIX(0.5);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, -26, 38, ((OVL_EXPORT(Random)() & 3) + 1), 4);
+                        self, 1, 1, -26, 38, ((OVL_EXPORT(Random)() & 3) + 1),
+                        4);
                     EntityExplosionVariantsSpawner(
                         self, 1, 1, 0, 38, ((OVL_EXPORT(Random)() & 3) + 1), 4);
                 }
@@ -754,13 +765,16 @@ void EntityFireWarg(Entity* self) {
                 if (self->velocityX < 0) {
                     self->velocityX += FIX(0.5);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, 0, 38, ((OVL_EXPORT(Random)() & 3) + 1), -4);
+                        self, 1, 1, 0, 38, ((OVL_EXPORT(Random)() & 3) + 1),
+                        -4);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, 26, 38, ((OVL_EXPORT(Random)() & 3) + 1), -4);
+                        self, 1, 1, 26, 38, ((OVL_EXPORT(Random)() & 3) + 1),
+                        -4);
                 } else {
                     self->velocityX -= FIX(0.5);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, -26, 38, ((OVL_EXPORT(Random)() & 3) + 1), 4);
+                        self, 1, 1, -26, 38, ((OVL_EXPORT(Random)() & 3) + 1),
+                        4);
                     EntityExplosionVariantsSpawner(
                         self, 1, 1, 0, 38, ((OVL_EXPORT(Random)() & 3) + 1), 4);
                 }

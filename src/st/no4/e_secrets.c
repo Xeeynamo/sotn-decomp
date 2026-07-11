@@ -196,7 +196,8 @@ void EntityBreakableWall(Entity* self) {
                         E_ID(BREAKABLE_WALL_DEBRIS), self, newEntity);
                     newEntity->posX.i.hi += (OVL_EXPORT(Random)() & 0xF) - 4;
                     newEntity->posY.i.hi += (i * 4) - 0x1F;
-                    newEntity->velocityX = (OVL_EXPORT(Random)() << 8) + FIX(0.5);
+                    newEntity->velocityX =
+                        (OVL_EXPORT(Random)() << 8) + FIX(0.5);
                     newEntity->params = 0;
                 }
             }

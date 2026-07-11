@@ -503,7 +503,8 @@ static void fireballHelper(Primitive* prim) {
             } else {
                 posX = g_CurrentEntity->posX.i.hi - rnd * 16;
             }
-            posY = g_CurrentEntity->posY.i.hi + ((OVL_EXPORT(Random)() & 3) * 8) - 12;
+            posY = g_CurrentEntity->posY.i.hi +
+                   ((OVL_EXPORT(Random)() & 3) * 8) - 12;
             posX2 = posX - prim->x1;
             posY2 = posY - prim->y1;
             angle = ratan2(-posY2, posX2);
@@ -1494,8 +1495,10 @@ void EntityLesserDemon(Entity* self) {
                 if (tempEntity != NULL) {
                     CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
                     tempEntity->params = 1;
-                    tempEntity->posX.i.hi += (OVL_EXPORT(Random)() & 0x1F) - 0x10;
-                    tempEntity->posY.i.hi += (OVL_EXPORT(Random)() & 0x1F) - 0x10;
+                    tempEntity->posX.i.hi +=
+                        (OVL_EXPORT(Random)() & 0x1F) - 0x10;
+                    tempEntity->posY.i.hi +=
+                        (OVL_EXPORT(Random)() & 0x1F) - 0x10;
                 }
             }
 

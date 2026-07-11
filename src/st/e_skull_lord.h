@@ -42,7 +42,8 @@ void EntitySkullLord(Entity* self) {
         switch (self->step_s) {
         case 0:
             self->velocityY = 0;
-            self->ext.skullLord.timer = ((OVL_EXPORT(Random)() & 7) * 0x10) + 0x10;
+            self->ext.skullLord.timer =
+                ((OVL_EXPORT(Random)() & 7) * 0x10) + 0x10;
             self->ext.skullLord.unk90 = 0;
             self->step_s++;
             // fallthrough

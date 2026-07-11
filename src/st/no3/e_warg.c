@@ -404,15 +404,19 @@ void EntityWarg(Entity* self) {
                 if (self->facingLeft) {
                     self->velocityX += FIX(0.125);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, -0x20, 0x26, (OVL_EXPORT(Random)() & 3) + 1, -4);
+                        self, 1, 1, -0x20, 0x26, (OVL_EXPORT(Random)() & 3) + 1,
+                        -4);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, 2, 0x26, (OVL_EXPORT(Random)() & 3) + 1, -4);
+                        self, 1, 1, 2, 0x26, (OVL_EXPORT(Random)() & 3) + 1,
+                        -4);
                 } else {
                     self->velocityX -= FIX(0.125);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, -2, 0x26, (OVL_EXPORT(Random)() & 3) + 1, 4);
+                        self, 1, 1, -2, 0x26, (OVL_EXPORT(Random)() & 3) + 1,
+                        4);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, 0x20, 0x26, (OVL_EXPORT(Random)() & 3) + 1, 4);
+                        self, 1, 1, 0x20, 0x26, (OVL_EXPORT(Random)() & 3) + 1,
+                        4);
                 }
             }
             if (!AnimateEntity(D_801831FC, self)) {
@@ -433,15 +437,15 @@ void EntityWarg(Entity* self) {
 // These are the same code, but compiler instruction reordering is messing it
 // up. There's almost certainly a single solution, but I can't find it.
 #ifdef VERSION_PSP
-                part->params =
-                    ((g_unkGraphicsStruct.g_zEntityCenter - 8 - (OVL_EXPORT(Random)() & 7))
-                     << 8) +
-                    1;
+                part->params = ((g_unkGraphicsStruct.g_zEntityCenter - 8 -
+                                 (OVL_EXPORT(Random)() & 7))
+                                << 8) +
+                               1;
 #else
-                part->params =
-                    ((g_unkGraphicsStruct.g_zEntityCenter - (OVL_EXPORT(Random)() & 7) - 8)
-                     << 8) +
-                    1;
+                part->params = ((g_unkGraphicsStruct.g_zEntityCenter -
+                                 (OVL_EXPORT(Random)() & 7) - 8)
+                                << 8) +
+                               1;
 #endif
                 part->posX.i.hi =
                     self->ext.warg.deathPosX - gTilemap->scrollX.i.hi;

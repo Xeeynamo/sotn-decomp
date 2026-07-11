@@ -356,7 +356,8 @@ void func_us_801D3468(s32 primCount) {
         PGREY(prim, 1) = prim->r0;
         PGREY(prim, 2) = prim->r0;
         PGREY(prim, 3) = prim->r0;
-        if (g_CurrentEntity->ext.slime.largeSlimeDying && !(OVL_EXPORT(Random)() & 0x3F)) {
+        if (g_CurrentEntity->ext.slime.largeSlimeDying &&
+            !(OVL_EXPORT(Random)() & 0x3F)) {
             ent = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (ent != NULL) {
                 CreateEntityFromCurrentEntity(E_INTENSE_EXPLOSION, ent);

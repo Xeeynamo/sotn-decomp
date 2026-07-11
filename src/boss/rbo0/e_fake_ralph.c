@@ -315,7 +315,8 @@ void EntityFakeRalph(Entity* self) {
                 SetStep(19);
             }
             if (D_us_801806B4 >= 2 && GetDistanceToPlayerX() > 80 &&
-                self->ext.ralph.itemEntityId == 33 && !(OVL_EXPORT(Random)() & 3)) {
+                self->ext.ralph.itemEntityId == 33 &&
+                !(OVL_EXPORT(Random)() & 3)) {
                 SetStep(15);
             }
         }

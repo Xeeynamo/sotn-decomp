@@ -187,7 +187,8 @@ void EntityFlyingZombie2(Entity* self) {
     case 6:
         switch (self->step_s) {
         case 0:
-            self->ext.flyingZombie.unk7C = D_us_80182898[OVL_EXPORT(Random)() & 3];
+            self->ext.flyingZombie.unk7C =
+                D_us_80182898[OVL_EXPORT(Random)() & 3];
             if (self->facingLeft) {
                 self->velocityX = FIX(1.0 / 16);
             } else {

@@ -302,8 +302,10 @@ void EntitySwordLord(Entity* self) {
                 if (tempEntity != NULL) {
                     CreateEntityFromEntity(
                         E_INTENSE_EXPLOSION, self, tempEntity);
-                    tempEntity->posX.i.hi += 0x20 - (OVL_EXPORT(Random)() & 0x2F);
-                    tempEntity->posY.i.hi += 0x20 - (OVL_EXPORT(Random)() & 0x3F);
+                    tempEntity->posX.i.hi +=
+                        0x20 - (OVL_EXPORT(Random)() & 0x2F);
+                    tempEntity->posY.i.hi +=
+                        0x20 - (OVL_EXPORT(Random)() & 0x3F);
                 }
             }
             if (AnimateEntity(anim3, self) == 0) {

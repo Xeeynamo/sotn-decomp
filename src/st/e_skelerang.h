@@ -242,7 +242,8 @@ void EntitySkelerang(Entity* self) {
                 } else {
                     // Sus store to Entity 0xA
                     // This + 1 - 1 is an oddity that is required to align PSP
-                    F(entity->velocityX).i.hi = (OVL_EXPORT(Random)() & 3) + 1 - 1;
+                    F(entity->velocityX).i.hi =
+                        (OVL_EXPORT(Random)() & 3) + 1 - 1;
                 }
                 // Sus store to Entity 0xE
                 F(entity->velocityY).i.hi = -2 - (OVL_EXPORT(Random)() & 3);
