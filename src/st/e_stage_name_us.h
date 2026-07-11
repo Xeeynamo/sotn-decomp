@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "stage.h"
+#include <stage.h>
 
 #ifndef STAGE_FLAG
 #define STAGE_FLAG NULL_STAGE_FLAG
@@ -403,7 +403,7 @@ void EntityStageNamePopup(Entity* self) {
                 LOW(prim->r2) = LOW(prim->r0);
                 LOW(prim->r3) = LOW(prim->r0);
                 prim->p1 = i * 4;
-                prim->p2 = Random() & 3;
+                prim->p2 = OVL_EXPORT(Random)() & 3;
                 prim->p3 = 0;
                 prim->drawMode = drawMode;
                 prim = prim->next;
@@ -417,7 +417,7 @@ void EntityStageNamePopup(Entity* self) {
                 LOW(prim->r2) = LOW(prim->r0);
                 LOW(prim->r3) = LOW(prim->r0);
                 prim->p1 = -((20 - i) * 4);
-                prim->p2 = Random() & 3;
+                prim->p2 = OVL_EXPORT(Random)() & 3;
                 prim->p3 = 0;
                 prim->drawMode =
                     DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
@@ -433,7 +433,7 @@ void EntityStageNamePopup(Entity* self) {
                 LOW(prim->r2) = LOW(prim->r0);
                 LOW(prim->r3) = LOW(prim->r0);
                 prim->p1 = i * 4;
-                prim->p2 = Random() & 3;
+                prim->p2 = OVL_EXPORT(Random)() & 3;
                 prim->p3 = 0;
                 prim->drawMode = drawMode;
                 prim = prim->next;
@@ -447,7 +447,7 @@ void EntityStageNamePopup(Entity* self) {
                 LOW(prim->r2) = LOW(prim->r0);
                 LOW(prim->r3) = LOW(prim->r0);
                 prim->p1 = -((20 - i) * 4);
-                prim->p2 = Random() & 3;
+                prim->p2 = OVL_EXPORT(Random)() & 3;
                 prim->p3 = 0;
                 prim->drawMode =
                     DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;

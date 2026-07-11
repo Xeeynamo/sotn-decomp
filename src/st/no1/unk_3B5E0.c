@@ -585,15 +585,15 @@ static void func_us_801BC598(Primitive* prim) {
         }
         UpdateAnimation(D_us_80181540, prim);
         UnkPrimHelper(prim);
-        if (Random() % 8 == 0) {
+        if (OVL_EXPORT(Random)() % 8 == 0) {
             otherPrim = g_CurrentEntity->ext.et_801BBD90.unk7C;
             otherPrim = FindFirstUnkPrim2(otherPrim, 2);
             if (otherPrim != NULL) {
                 UnkPolyFunc2(otherPrim);
                 otherPrim->x0 = prim->next->x1;
                 otherPrim->y0 = prim->next->y0;
-                otherPrim->g1 = (Random() & 1) + 1;
-                otherPrim->g2 = (Random() & 3) + 1;
+                otherPrim->g1 = (OVL_EXPORT(Random)() & 1) + 1;
+                otherPrim->g2 = (OVL_EXPORT(Random)() & 3) + 1;
                 otherPrim->next->u2 = 4;
                 otherPrim->next->r3 = prim->next->r3;
             }
@@ -837,7 +837,7 @@ void func_us_801BCB34(Entity* self) {
         case 0:
             self->velocityY -= FIX(0.125);
             if (self->ext.et_801BBD90.unk7C != NULL) {
-                if ((Random() % 10) == 0) {
+                if ((OVL_EXPORT(Random)() % 10) == 0) {
                     prim = self->ext.et_801BBD90.unk7C;
                     prim = FindFirstUnkPrim2(prim, 2);
                     if (prim != NULL) {
@@ -934,7 +934,7 @@ void func_us_801BCB34(Entity* self) {
         case 0:
             self->velocityY += FIX(0.25);
             if (self->ext.et_801BBD90.unk7C != NULL) {
-                if (Random() % 10 == 0) {
+                if (OVL_EXPORT(Random)() % 10 == 0) {
                     prim = self->ext.et_801BBD90.unk7C;
                     prim = FindFirstUnkPrim2(prim, 2);
                     if (prim != NULL) {

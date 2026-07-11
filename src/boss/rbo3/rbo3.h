@@ -2,11 +2,9 @@
 #ifndef RBO3_H
 #define RBO3_H
 
-#include <game.h>
-#include <stage.h>
-
 #define STAGE_IS_RBO3
 #define OVL_EXPORT(x) RBO3_##x
+#include <stage.h>
 
 typedef enum {
     /* 0x00 */ E_NONE,

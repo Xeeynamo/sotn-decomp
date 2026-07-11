@@ -2,9 +2,8 @@
 #ifndef MAR_H
 #define MAR_H
 
-#include <stage.h>
-
 #define OVL_EXPORT(x) MAR_##x
+#include <stage.h>
 
 typedef enum {
     /* 0x00 */ E_NONE,

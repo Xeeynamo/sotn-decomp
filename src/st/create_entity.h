@@ -418,7 +418,7 @@ void InitRoomEntities(s32 objLayoutId) {
 
     if (*g_LayoutObjHorizontal != LAYOUT_OBJ_START) {
         g_LayoutObjHorizontal++;
-        temp = Random() & 0xFF;
+        temp = OVL_EXPORT(Random)() & 0xFF;
         for (i = 0; true; i++) {
             temp -= *g_LayoutObjHorizontal++;
             if (temp < 0) {

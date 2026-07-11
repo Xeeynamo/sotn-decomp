@@ -1,9 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include <stage.h>
-
 #define STAGE_IS_NO2
 #define BOSS_IS_BO0
 #define OVL_EXPORT(x) BO0_##x
+#include <stage.h>
 
 enum OVL_EXPORT(Entities) {
     E_NONE,

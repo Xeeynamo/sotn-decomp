@@ -85,7 +85,7 @@ void EntityDeathFlames(Entity* self) {
         break;
     case 4:
         if (!self->step_s) {
-            self->facingLeft = Random() & 1;
+            self->facingLeft = OVL_EXPORT(Random)() & 1;
             self->drawFlags |= ENTITY_SCALEY | ENTITY_SCALEX;
             self->scaleX = self->scaleY = 0x80;
             self->step_s++;
@@ -98,7 +98,7 @@ void EntityDeathFlames(Entity* self) {
         break;
     case 5:
         if (!self->step_s) {
-            self->facingLeft = Random() & 1;
+            self->facingLeft = OVL_EXPORT(Random)() & 1;
             self->drawFlags |= ENTITY_SCALEY | ENTITY_SCALEX;
             self->scaleX = self->scaleY = 0x80;
             self->step_s++;
@@ -111,7 +111,7 @@ void EntityDeathFlames(Entity* self) {
         break;
     case 6:
         if (!self->step_s) {
-            self->facingLeft = Random() & 1;
+            self->facingLeft = OVL_EXPORT(Random)() & 1;
             self->drawFlags |= ENTITY_SCALEY | ENTITY_SCALEX;
             self->scaleX = self->scaleY = 0x80;
             self->step_s++;
@@ -122,8 +122,8 @@ void EntityDeathFlames(Entity* self) {
         break;
     case 7:
         if (!self->step_s) {
-            self->facingLeft = Random() & 1;
-            self->velocityX = (Random() << 7) - FIX(0.25);
+            self->facingLeft = OVL_EXPORT(Random)() & 1;
+            self->velocityX = (OVL_EXPORT(Random)() << 7) - FIX(0.25);
             self->velocityY = FIX(-1.0);
             self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
             self->scaleX = self->scaleY = 0x100;
@@ -139,10 +139,11 @@ void EntityDeathFlames(Entity* self) {
         if (!self->step_s) {
             self->drawFlags = ENTITY_OPACITY;
             self->opacity = 0x80;
-            self->facingLeft = Random() & 1;
-            self->velocityX = (Random() << 9) - FIX(0.5);
+            self->facingLeft = OVL_EXPORT(Random)() & 1;
+            self->velocityX = (OVL_EXPORT(Random)() << 9) - FIX(0.5);
             self->velocityY = FIX(-0.5);
-            self->ext.deathFlames.unk8C = -(Random() * 0x10) - 0x1000;
+            self->ext.deathFlames.unk8C =
+                -(OVL_EXPORT(Random)() * 0x10) - 0x1000;
             self->step_s++;
         }
         MoveEntity();
@@ -156,10 +157,11 @@ void EntityDeathFlames(Entity* self) {
         if (!self->step_s) {
             self->drawFlags = ENTITY_OPACITY;
             self->opacity = 0x80;
-            self->facingLeft = Random() & 1;
-            self->velocityX = (Random() << 9) - FIX(0.5);
+            self->facingLeft = OVL_EXPORT(Random)() & 1;
+            self->velocityX = (OVL_EXPORT(Random)() << 9) - FIX(0.5);
             self->velocityY = FIX(-0.5);
-            self->ext.deathFlames.unk8C = -(Random() * 0x10) - 0x1000;
+            self->ext.deathFlames.unk8C =
+                -(OVL_EXPORT(Random)() * 0x10) - 0x1000;
             self->step_s++;
         }
         MoveEntity();
@@ -173,10 +175,11 @@ void EntityDeathFlames(Entity* self) {
         if (!self->step_s) {
             self->drawFlags = ENTITY_OPACITY;
             self->opacity = 0x80;
-            self->facingLeft = Random() & 1;
-            self->velocityX = (Random() << 9) - FIX(0.5);
+            self->facingLeft = OVL_EXPORT(Random)() & 1;
+            self->velocityX = (OVL_EXPORT(Random)() << 9) - FIX(0.5);
             self->velocityY = FIX(-0.5);
-            self->ext.deathFlames.unk8C = -(Random() * 0x10) - 0x1000;
+            self->ext.deathFlames.unk8C =
+                -(OVL_EXPORT(Random)() * 0x10) - 0x1000;
             self->step_s++;
         }
         MoveEntity();

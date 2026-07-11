@@ -10,8 +10,8 @@ extern u_long** OVL_EXPORT(gfxBanks)[];
 extern u8 richter_sprites[];
 
 AbbreviatedOverlay2 OVL_EXPORT(Overlay) = {
-    .Update = Update,
-    .HitDetection = HitDetection,
+    .Update = OVL_EXPORT(Update),
+    .HitDetection = OVL_EXPORT(HitDetection),
     .UpdateRoomPosition = UpdateRoomPosition,
     .InitRoomEntities = InitRoomEntities,
     .rooms = OVL_EXPORT(rooms),
@@ -20,7 +20,7 @@ AbbreviatedOverlay2 OVL_EXPORT(Overlay) = {
     .objLayoutHorizontal = OVL_EXPORT(pStObjLayoutHorizontal),
     .tileLayers = OVL_EXPORT(rooms_layers),
     .gfxBanks = OVL_EXPORT(gfxBanks),
-    .UpdateStageEntities = UpdateStageEntities,
+    .UpdateStageEntities = OVL_EXPORT(UpdateStageEntities),
     .unk2C = richter_sprites,
     .unk30 = richter_sprites,
 };

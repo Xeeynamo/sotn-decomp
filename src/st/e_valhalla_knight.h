@@ -333,7 +333,7 @@ void func_us_801C8AAC(Entity* self) {
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
-                tempEntity->params = Random() & 1;
+                tempEntity->params = OVL_EXPORT(Random)() & 1;
                 tempEntity->zPriority = self->zPriority + 1;
             }
         }

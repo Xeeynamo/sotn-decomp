@@ -315,9 +315,12 @@ void EntitySpellbook(Entity* self) {
         self->ext.spellbookMagicTome.unk90 = mag;
         if (!self->ext.spellbookMagicTome.unk80) {
             self->ext.spellbookMagicTome.unk80 = 0x40;
-            self->ext.spellbookMagicTome.unkA4.vx = (Random() & 0x1F) - 0x10;
-            self->ext.spellbookMagicTome.unkA4.vy = (Random() & 0x1F) - 0x10;
-            self->ext.spellbookMagicTome.unkA4.vz = (Random() & 0x1F) - 0x10;
+            self->ext.spellbookMagicTome.unkA4.vx =
+                (OVL_EXPORT(Random)() & 0x1F) - 0x10;
+            self->ext.spellbookMagicTome.unkA4.vy =
+                (OVL_EXPORT(Random)() & 0x1F) - 0x10;
+            self->ext.spellbookMagicTome.unkA4.vz =
+                (OVL_EXPORT(Random)() & 0x1F) - 0x10;
         } else {
             self->ext.spellbookMagicTome.unk80--;
         }
@@ -376,15 +379,15 @@ void EntitySpellbook(Entity* self) {
         break;
 
     case 8:
-        if ((Random() & 0xF) == 0) {
+        if ((OVL_EXPORT(Random)() & 0xF) == 0) {
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
                 tempEntity->params = 1;
                 tempEntity->posX.i.hi += self->ext.spellbookMagicTome.unk84 / 2;
                 tempEntity->posY.i.hi += self->ext.spellbookMagicTome.unk86 / 2;
-                tempEntity->posX.i.hi += (Random() & 0x1F) - 0x10;
-                tempEntity->posY.i.hi += (Random() & 0x1F) - 0x10;
+                tempEntity->posX.i.hi += (OVL_EXPORT(Random)() & 0x1F) - 0x10;
+                tempEntity->posY.i.hi += (OVL_EXPORT(Random)() & 0x1F) - 0x10;
                 tempEntity->zPriority = 0xD0;
             }
         }
@@ -416,7 +419,7 @@ void EntitySpellbook(Entity* self) {
                     angle = ratan2(dy, dx);
                     tempEntity->rotate = angle;
                     tempEntity->zPriority = self->ext.spellbookMagicTome.unk88;
-                    dx = (Random() & 0x1F) - 0x10;
+                    dx = (OVL_EXPORT(Random)() & 0x1F) - 0x10;
                     tempEntity->posX.i.hi += (dx * rcos(angle + 0x400)) >> 0xC;
                     tempEntity->posY.i.hi += (dx * rsin(angle + 0x400)) >> 0xC;
                 }
@@ -501,9 +504,9 @@ void func_us_801D2CE0(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_us_80180908);
-        self->animCurFrame = (Random() & 0xF) + 1;
+        self->animCurFrame = (OVL_EXPORT(Random)() & 0xF) + 1;
         rotate = self->rotate;
-        rotate += Random() * 2 - 0x100;
+        rotate += OVL_EXPORT(Random)() * 2 - 0x100;
         self->velocityX = rcos(rotate) << 5;
         self->velocityY = rsin(rotate) << 5;
         break;
@@ -609,9 +612,12 @@ void EntityMagicTome(Entity* self) {
                     self->velocityY = FIX(-2.0);
                 }
             }
-            self->ext.spellbookMagicTome.unkA4.vx = (Random() & 0x1F) - 0x10;
-            self->ext.spellbookMagicTome.unkA4.vy = (Random() & 0x1F) - 0x10;
-            self->ext.spellbookMagicTome.unkA4.vz = (Random() & 0x1F) - 0x10;
+            self->ext.spellbookMagicTome.unkA4.vx =
+                (OVL_EXPORT(Random)() & 0x1F) - 0x10;
+            self->ext.spellbookMagicTome.unkA4.vy =
+                (OVL_EXPORT(Random)() & 0x1F) - 0x10;
+            self->ext.spellbookMagicTome.unkA4.vz =
+                (OVL_EXPORT(Random)() & 0x1F) - 0x10;
             self->ext.spellbookMagicTome.unk80 = 0x40;
             self->step_s++;
             /* fallthrough */
@@ -674,15 +680,15 @@ void EntityMagicTome(Entity* self) {
         break;
 
     case 8:
-        if ((Random() & 0xF) == 0) {
+        if ((OVL_EXPORT(Random)() & 0xF) == 0) {
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
                 tempEntity->params = 1;
                 tempEntity->posX.i.hi += self->ext.spellbookMagicTome.unk84 / 2;
                 tempEntity->posY.i.hi += self->ext.spellbookMagicTome.unk86 / 2;
-                tempEntity->posX.i.hi += (Random() & 0x1F) - 0x10;
-                tempEntity->posY.i.hi += (Random() & 0x1F) - 0x10;
+                tempEntity->posX.i.hi += (OVL_EXPORT(Random)() & 0x1F) - 0x10;
+                tempEntity->posY.i.hi += (OVL_EXPORT(Random)() & 0x1F) - 0x10;
                 tempEntity->zPriority = 0xC0;
             }
         }
@@ -714,7 +720,7 @@ void EntityMagicTome(Entity* self) {
                     angle = ratan2(dy, dx);
                     tempEntity->rotate = angle;
                     tempEntity->zPriority = self->ext.spellbookMagicTome.unk88;
-                    dx = (Random() & 0x1F) - 0x10;
+                    dx = (OVL_EXPORT(Random)() & 0x1F) - 0x10;
                     tempEntity->posX.i.hi += (dx * rcos(angle + 0x400)) >> 0xC;
                     tempEntity->posY.i.hi += (dx * rsin(angle + 0x400)) >> 0xC;
                 }

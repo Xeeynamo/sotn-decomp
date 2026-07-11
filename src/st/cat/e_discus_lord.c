@@ -299,7 +299,7 @@ void EntityDiscusLord(Entity* self) {
         entity = self->ext.discusLord.entity;
         self->ext.discusLord.angle =
             GetAngleBetweenEntitiesShifted(entity, self);
-        sqrt = ((Random() & 3) + 1) << 0x4;
+        sqrt = ((OVL_EXPORT(Random)() & 3) + 1) << 0x4;
         self->ext.discusLord.unkA8 = (sqrt << 0x10) / 0x20;
         self->ext.discusLord.unkAC = self->ext.discusLord.unkA8 / 0x20;
         // fallthrough
@@ -320,7 +320,7 @@ void EntityDiscusLord(Entity* self) {
         sqrt = SquareRoot0(sqrt);
         var_s5 = GetAngleBetweenEntitiesShifted(self, entity);
         SetEntityVelocityFromAngle(var_s5, sqrt / 8);
-        self->ext.discusLord.unk82 = ((Random() & 0xF) * 4) + 0x40;
+        self->ext.discusLord.unk82 = ((OVL_EXPORT(Random)() & 0xF) * 4) + 0x40;
         self->step++;
         // fallthrough
     case 20:
@@ -393,8 +393,8 @@ static void func_us_801CADC4(Primitive* prim) {
         x = -g_CurrentEntity->velocityX / 2;
         LOW(prim->x2) = x;
         LOW(prim->x3) = -(0x40000 - abs(x));
-        LOW(prim->x2) += 0x7000 - ((Random() & 7) << 0xD);
-        LOW(prim->x3) += 0x7000 - ((Random() & 7) << 0xD);
+        LOW(prim->x2) += 0x7000 - ((OVL_EXPORT(Random)() & 7) << 0xD);
+        LOW(prim->x3) += 0x7000 - ((OVL_EXPORT(Random)() & 7) << 0xD);
         prim->g3 = 1;
         prim->r3 = 0x10;
         // fallthrough

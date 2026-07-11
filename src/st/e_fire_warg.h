@@ -118,7 +118,7 @@ static void func_801CC6F8(Entity* self) {
     }
 
     if (distance < 0x70) {
-        if (!(Random() & 3) && !buttNearScreenEdge) {
+        if (!(OVL_EXPORT(Random)() & 3) && !buttNearScreenEdge) {
             SetStep(9);
         } else {
             SetStep(6);
@@ -126,9 +126,9 @@ static void func_801CC6F8(Entity* self) {
             self->ext.fireWarg.unk80 = 0x20;
         }
     } else {
-        if ((Random() & 3) && !buttNearScreenEdge) {
+        if ((OVL_EXPORT(Random)() & 3) && !buttNearScreenEdge) {
             SetStep(9);
-            if (!(Random() & 3)) {
+            if (!(OVL_EXPORT(Random)() & 3)) {
                 self->ext.fireWarg.unk86 = 0;
             }
         } else {
@@ -481,15 +481,19 @@ void EntityFireWarg(Entity* self) {
                 if (var_s2 < 0) {
                     var_s2 += 0x3000;
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, -16, 38, ((Random() & 3) + 1), -4);
+                        self, 1, 1, -16, 38, ((OVL_EXPORT(Random)() & 3) + 1),
+                        -4);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, 10, 38, ((Random() & 3) + 1), -4);
+                        self, 1, 1, 10, 38, ((OVL_EXPORT(Random)() & 3) + 1),
+                        -4);
                 } else {
                     var_s2 -= 0x3000;
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, -10, 38, ((Random() & 3) + 1), 4);
+                        self, 1, 1, -10, 38, ((OVL_EXPORT(Random)() & 3) + 1),
+                        4);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, 16, 38, ((Random() & 3) + 1), 4);
+                        self, 1, 1, 16, 38, ((OVL_EXPORT(Random)() & 3) + 1),
+                        4);
                 }
                 self->velocityX = var_s2;
             }
@@ -616,15 +620,19 @@ void EntityFireWarg(Entity* self) {
                 if (self->facingLeft) {
                     self->velocityX += FIX(0.125);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, -32, 38, ((Random() & 3) + 1), -4);
+                        self, 1, 1, -32, 38, ((OVL_EXPORT(Random)() & 3) + 1),
+                        -4);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, 2, 38, ((Random() & 3) + 1), -4);
+                        self, 1, 1, 2, 38, ((OVL_EXPORT(Random)() & 3) + 1),
+                        -4);
                 } else {
                     self->velocityX -= FIX(0.125);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, -2, 38, ((Random() & 3) + 1), 4);
+                        self, 1, 1, -2, 38, ((OVL_EXPORT(Random)() & 3) + 1),
+                        4);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, 32, 38, ((Random() & 3) + 1), 4);
+                        self, 1, 1, 32, 38, ((OVL_EXPORT(Random)() & 3) + 1),
+                        4);
                 }
             }
             if (!AnimateEntity(&D_8018295C, self)) {
@@ -693,7 +701,7 @@ void EntityFireWarg(Entity* self) {
             part->pose = 0;
             part->ext.fireWargHelper.unk7C = true;
 
-            if (!(Random() & 7)) {
+            if (!(OVL_EXPORT(Random)() & 7)) {
                 AnimateEntity(&D_8018296C, part);
                 AnimateEntity(&D_80182980, self);
                 self->step_s += 1;
@@ -711,15 +719,18 @@ void EntityFireWarg(Entity* self) {
                 if (self->velocityX < 0) {
                     self->velocityX += FIX(0.5);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, 0, 38, ((Random() & 3) + 1), -4);
+                        self, 1, 1, 0, 38, ((OVL_EXPORT(Random)() & 3) + 1),
+                        -4);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, 26, 38, ((Random() & 3) + 1), -4);
+                        self, 1, 1, 26, 38, ((OVL_EXPORT(Random)() & 3) + 1),
+                        -4);
                 } else {
                     self->velocityX -= FIX(0.5);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, -26, 38, ((Random() & 3) + 1), 4);
+                        self, 1, 1, -26, 38, ((OVL_EXPORT(Random)() & 3) + 1),
+                        4);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, 0, 38, ((Random() & 3) + 1), 4);
+                        self, 1, 1, 0, 38, ((OVL_EXPORT(Random)() & 3) + 1), 4);
                 }
             } else {
                 ent_s4->hitboxState = 0;
@@ -754,15 +765,18 @@ void EntityFireWarg(Entity* self) {
                 if (self->velocityX < 0) {
                     self->velocityX += FIX(0.5);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, 0, 38, ((Random() & 3) + 1), -4);
+                        self, 1, 1, 0, 38, ((OVL_EXPORT(Random)() & 3) + 1),
+                        -4);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, 26, 38, ((Random() & 3) + 1), -4);
+                        self, 1, 1, 26, 38, ((OVL_EXPORT(Random)() & 3) + 1),
+                        -4);
                 } else {
                     self->velocityX -= FIX(0.5);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, -26, 38, ((Random() & 3) + 1), 4);
+                        self, 1, 1, -26, 38, ((OVL_EXPORT(Random)() & 3) + 1),
+                        4);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, 0, 38, ((Random() & 3) + 1), 4);
+                        self, 1, 1, 0, 38, ((OVL_EXPORT(Random)() & 3) + 1), 4);
                 }
             } else {
                 ent_s4->hitboxState = 0;
@@ -1127,7 +1141,7 @@ void EntityExplosion3(Entity* entity) {
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity) {
             CreateEntityFromCurrentEntity(E_EXPLOSION, newEntity);
-            point = &D_80183060[(Random() & 7) * 2];
+            point = &D_80183060[(OVL_EXPORT(Random)() & 7) * 2];
             newEntity->posX.i.hi += *point++;
             newEntity->posY.i.hi += *point;
             newEntity->params = 1;
@@ -1500,7 +1514,7 @@ void EntityFireWargDeathBeams(Entity* self) {
                         D_801830A0[self->ext.fireWargDeathBeams.unk7E & 0xF];
                     prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
                                      DRAW_UNK02 | DRAW_TRANSP;
-                    prim->p1 = (Random() & 3) + 0x10;
+                    prim->p1 = (OVL_EXPORT(Random)() & 3) + 0x10;
                     prim->p2 = 0;
                     break;
                 }

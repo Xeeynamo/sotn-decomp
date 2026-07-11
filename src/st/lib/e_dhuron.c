@@ -83,7 +83,7 @@ void EntityDhuron(Entity* self) {
             self->ext.dhuron.unk88 = self->facingLeft;
             tempVar = GetDistanceToPlayerX();
             if (!self->ext.dhuron.unk89 && self->posY.i.hi < 0x100 &&
-                tempVar > 0x50 && (Random() & 7) == 0) {
+                tempVar > 0x50 && (OVL_EXPORT(Random)() & 7) == 0) {
                 SetStep(5);
                 break;
             }
@@ -411,7 +411,7 @@ void func_us_801CC984(Entity* self) {
         }
         angle2 += self->ext.dhuron.unk86;
         if (!condition) {
-            angle2 += 0x180 - ((Random() & 3) << 8);
+            angle2 += 0x180 - ((OVL_EXPORT(Random)() & 3) << 8);
         }
         angle2 &= 0xFFF;
         prim2 = prim->next;

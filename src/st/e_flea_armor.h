@@ -99,7 +99,7 @@ void EntityFleaArmor(Entity* self) {
                 self->ext.fleaArmor.counter2 = 0;
             }
 
-            if (!(Random() & 0x1F)) {
+            if (!(OVL_EXPORT(Random)() & 0x1F)) {
                 self->ext.fleaArmor.counter = 0;
                 self->velocityY = FIX(-2.0);
             } else if (GetDistanceToPlayerX() < 64) {
@@ -137,7 +137,7 @@ void EntityFleaArmor(Entity* self) {
                 self->velocityX = FIX(-2.0);
             }
 
-            if (Random() & 1) {
+            if (OVL_EXPORT(Random)() & 1) {
                 self->velocityY = FIX(-3.5);
                 self->velocityX = self->velocityX / 4;
                 PlaySfxPositional(SFX_STOMP_HARD_E);

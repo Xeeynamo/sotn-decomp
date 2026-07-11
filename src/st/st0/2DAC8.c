@@ -287,18 +287,18 @@ void EntityDraculaFinalForm(Entity* self) {
         if (!--self->ext.dracFinalForm.timer) {
             SetStep(5);
             if ((self->posX.i.hi < 152) && (self->facingLeft == 1)) {
-                if (Random() & 1) {
+                if (OVL_EXPORT(Random)() & 1) {
                     SetStep(7);
                 } else {
                     SetStep(4);
                 }
             } else if ((self->posX.i.hi > 104) && (self->facingLeft == 0)) {
-                if (Random() & 1) {
+                if (OVL_EXPORT(Random)() & 1) {
                     SetStep(7);
                 } else {
                     SetStep(4);
                 }
-            } else if (Random() & 1) {
+            } else if (OVL_EXPORT(Random)() & 1) {
                 SetStep(8);
             } else {
                 SetStep(4);
@@ -351,13 +351,13 @@ void EntityDraculaFinalForm(Entity* self) {
     case 3:
         if (AnimateEntity(anim_80180B60, self) == 0) {
             if ((self->posX.i.hi < 160) && (self->facingLeft == 1)) {
-                if (Random() & 1) {
+                if (OVL_EXPORT(Random)() & 1) {
                     SetStep(4);
                 } else {
                     SetStep(7);
                 }
             } else if ((self->posX.i.hi > 96) && (self->facingLeft == 0)) {
-                if (Random() & 1) {
+                if (OVL_EXPORT(Random)() & 1) {
                     SetStep(4);
                 } else {
                     SetStep(7);
@@ -881,8 +881,8 @@ void EntityDraculaRainAttack(Entity* self) {
         if (self->params) {
             self->hitboxState = 0;
             self->animCurFrame = 0x59;
-            rand = (Random() & 0x1F) + 0x10;
-            angle = (Random() * 6) + 0x900;
+            rand = (OVL_EXPORT(Random)() & 0x1F) + 0x10;
+            angle = (OVL_EXPORT(Random)() * 6) + 0x900;
             self->velocityX = rand * rcos(angle);
             self->velocityY = rand * rsin(angle);
             self->step = 3;

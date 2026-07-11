@@ -125,7 +125,7 @@ void EntityCastleDoorTransition(Entity* self) {
         if (self->ext.castleDoorTransition.playerVelocity != 0) {
             self->ext.castleDoorTransition.playerVelocity -= FIX(5.0 / 32);
             EntityExplosionVariantsSpawner(
-                player, 1, 1, 4, 0x18, (Random() & 3) + 1, -4);
+                player, 1, 1, 4, 0x18, (OVL_EXPORT(Random)() & 3) + 1, -4);
         } else {
             self->step++;
             g_PauseAllowed = true;

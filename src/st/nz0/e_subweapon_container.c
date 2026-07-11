@@ -78,10 +78,10 @@ void EntitySubWeaponContainer(Entity* self) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_LIQUID_BUBBLES, self, newEntity);
-                rnd = (Random() & 0x18) - 12;
+                rnd = (OVL_EXPORT(Random)() & 0x18) - 12;
                 newEntity->posX.i.hi += rnd;
                 newEntity->posY.i.hi -= 30;
-                newEntity->params = Random() & 3;
+                newEntity->params = OVL_EXPORT(Random)() & 3;
                 if (!newEntity->params && abs(rnd) > 8) {
                     newEntity->params = 1;
                 }
@@ -118,8 +118,8 @@ void EntitySubWeaponContainer(Entity* self) {
                 AllocEntity(&g_Entities[UNK_ENTITY_51], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_FALLING_LIQUID, self, newEntity);
-                rndPosX = (Random() & 0x1F) - 16;
-                rndPosY = -(Random() & 0x3F) - 16;
+                rndPosX = (OVL_EXPORT(Random)() & 0x1F) - 16;
+                rndPosY = -(OVL_EXPORT(Random)() & 0x3F) - 16;
                 newEntity->posX.i.hi += rndPosX;
                 newEntity->posY.i.hi += rndPosY;
                 newEntity->rotate = ratan2(rndPosY, rndPosX);
@@ -171,8 +171,8 @@ void EntitySubWpnContGlass(Entity* self) {
         self->palette += self->ext.subwpnContGlass.palette;
         self->drawFlags = ENTITY_ROTATE;
         self->velocityX = self->ext.subwpnContGlass.velX * 0x1000;
-        self->velocityX -= (Random() * 0x100) - FIX(0.5);
-        self->velocityY -= (Random() & 0x1F) * 0x1000;
+        self->velocityX -= (OVL_EXPORT(Random)() * 0x100) - FIX(0.5);
+        self->velocityY -= (OVL_EXPORT(Random)() & 0x1F) * 0x1000;
         break;
 
     case 1:

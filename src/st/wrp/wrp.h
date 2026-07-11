@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include <stage.h>
 
 #define OVL_EXPORT(x) WRP_##x
+#include <stage.h>
 
 typedef enum EntityIDs {
     E_NONE,

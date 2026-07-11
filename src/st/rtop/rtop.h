@@ -3,11 +3,9 @@
 #define RTOP_H
 
 #define STAGE_IS_RTOP
-
-#include <stage.h>
-
-#define OVL_EXPORT(x) RTOP_##x
 #define INVERTED_STAGE
+#define OVL_EXPORT(x) RTOP_##x
+#include <stage.h>
 
 enum OVL_EXPORT(Palette) {
     PAL_NONE = 0,

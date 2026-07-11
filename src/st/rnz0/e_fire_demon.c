@@ -432,12 +432,13 @@ void EntityFireDemonFireball(Entity* self) {
     if (self->ext.fireDemon.unkA0) {
         for (xVar = self->ext.fireDemon.unk9C.xVars[0];
              xVar < self->ext.fireDemon.unk9C.xVars[1]; xVar += 8) {
-            if (!(Random() & 3)) {
+            if (!(OVL_EXPORT(Random)() & 3)) {
                 explosion = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (explosion != NULL) {
                     CreateEntityFromEntity(E_EXPLOSION, self, explosion);
                     explosion->posX.i.hi += xVar;
-                    explosion->posY.i.hi += (((Random() & 3) * 2) + 6);
+                    explosion->posY.i.hi +=
+                        (((OVL_EXPORT(Random)() & 3) * 2) + 6);
                     explosion->params = 0x5F00;
                 }
             }
@@ -460,7 +461,7 @@ void ent20Helper1(Primitive* prim) {
         return;
     case 1:
         prim->drawMode = DRAW_DEFAULT;
-        FD_NEXT->unk10 = 0x7000 - ((Random() & 7) << 0xD);
+        FD_NEXT->unk10 = 0x7000 - ((OVL_EXPORT(Random)() & 7) << 0xD);
         FD_NEXT->unk14 = FIX(-4);
         FD_NEXT->unk28++;
         return;
@@ -507,7 +508,7 @@ void ent20Helper2(Primitive* prim) {
 
     case 1:
         prim->drawMode = DRAW_DEFAULT;
-        LOW(prim->x2) = 0x8000 - (Random() << 8);
+        LOW(prim->x2) = 0x8000 - (OVL_EXPORT(Random)() << 8);
         LOW(prim->x3) = -0x40000;
         prim->g3++;
         break;
@@ -639,13 +640,13 @@ void EntityFireDemonPopoutEffect(Entity* self) {
                 prim->type = PRIM_GT4;
                 prim->tpage = 0xA;
                 prim->clut = 0x9B;
-                prim->u0 = ((Random() & 3) * 0x10);
-                prim->u1 = prim->u0 + (Random() & 7) + 8;
+                prim->u0 = ((OVL_EXPORT(Random)() & 3) * 0x10);
+                prim->u1 = prim->u0 + (OVL_EXPORT(Random)() & 7) + 8;
                 prim->u2 = prim->u0;
                 prim->u3 = prim->u1;
-                prim->v0 = (((Random() & 2) * 0x10) + 0x20);
+                prim->v0 = (((OVL_EXPORT(Random)() & 2) * 0x10) + 0x20);
                 prim->v1 = prim->v0;
-                prim->v2 = prim->v0 + (Random() & 7) + 8;
+                prim->v2 = prim->v0 + (OVL_EXPORT(Random)() & 7) + 8;
                 prim->v3 = prim->v2;
                 FD_NEXT->unk20 = prim->u1 - prim->u0 + 1;
                 FD_NEXT->unk22 = prim->v2 - prim->v0 + 1;
@@ -1079,8 +1080,9 @@ void EntityFireDemon(Entity* self) {
                     other->params = 0x22;
                     other->params += 0xD500;
                     other->posX.i.hi =
-                        self->posX.i.hi + ((Random() & 3) * 8) - 12;
-                    other->posY.i.hi = 0x100 - ((Random() & 7) * 0x10);
+                        self->posX.i.hi + ((OVL_EXPORT(Random)() & 3) * 8) - 12;
+                    other->posY.i.hi =
+                        0x100 - ((OVL_EXPORT(Random)() & 7) * 0x10);
                 }
             }
             break;
@@ -1099,7 +1101,7 @@ void EntityFireDemon(Entity* self) {
                 other->params = 0x20;
                 other->params += 0xD500;
                 other->posX.i.hi =
-                    (self->posX.i.hi + ((Random() & 3) * 8)) - 0xC;
+                    (self->posX.i.hi + ((OVL_EXPORT(Random)() & 3) * 8)) - 0xC;
                 other->posY.i.hi = (prim->v2) - 4;
             }
             break;

@@ -151,7 +151,7 @@ void OVL_EXPORT(EntityBreakableDebris)(Entity* self) {
         self->animCurFrame = self->params + 28;
         facingLeft = GetSideToPlayer() & 1;
 
-        self->ext.breakableDebris.angle = (Random() & 30) + 8;
+        self->ext.breakableDebris.angle = (OVL_EXPORT(Random)() & 30) + 8;
         if (self->facingLeft) {
             self->ext.breakableDebris.angle = -self->ext.breakableDebris.angle;
         }
@@ -166,7 +166,7 @@ void OVL_EXPORT(EntityBreakableDebris)(Entity* self) {
             self->velocityX = FIX(-1);
         }
 
-        self->velocityX += FIX(0.5) - (Random() << 8);
+        self->velocityX += FIX(0.5) - (OVL_EXPORT(Random)() << 8);
         self->velocityY = FIX(-3);
         self->velocityY += (self->params >> 1) * FIX(0.375);
 

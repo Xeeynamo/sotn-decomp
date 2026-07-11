@@ -1,0 +1,96 @@
+options:
+  platform: psp
+  basename: strno0
+  base_path: ..
+  build_path: build/pspeu
+  target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rno0.bin
+  asm_path: asm/pspeu/st/rno0_psp
+  asset_path: assets/st/rno0
+  src_path: src/st
+  ld_script_path: build/pspeu/strno0.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.pspeu.txt
+    - config/symbols.pspeu.strno0.txt
+  undefined_funcs_auto_path: build/pspeu/config/undefined_funcs_auto.pspeu.strno0.txt
+  undefined_syms_auto_path: build/pspeu/config/undefined_syms_auto.pspeu.strno0.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: pspeu_$VRAM
+  disassemble_all: true
+  section_order:
+    - .text
+    - .data
+    - .rodata
+    - .bss
+  ld_bss_is_noload: true
+  disasm_unknown: true
+  global_vram_start: 0x08000000
+  ld_generate_symbol_per_data_segment: true
+  asm_inc_header: |
+    .set noat      /* allow manual use of $at */
+    .set noreorder /* don't insert nops after branches */
+sha1: 8150f6bd501e558af57b003e528eeb2e412337b6
+segments:
+  - [0x0, bin, mwo_header]
+  - name: strno0
+    type: code
+    start: 0x80
+    vram: 0x09237700
+    bss_start_address: 0x09291D80
+    bss_size: 0x400
+    align: 128
+    subalign: 8
+    subsegments:
+      - [0x80, c, rno0_psp/create_entity]
+      - [0x1028, c, rno0_psp/unk_1028]
+      - [0x1290, c, rno0_psp/e_clock_room]
+      - [0x2F40, c, rno0_psp/rno0_unused801c2338]
+      - [0x2F50, c, rno0_psp/e_stage_name]
+      - [0x3DD0, c, rno0_psp/unk_3DD0]
+      - [0x50D8, c, rno0_psp/st_update]
+      - [0x5610, c, rno0_psp/unk_5610]
+      - [0xF060, c, rno0_psp/e_particles]
+      - [0xFBD8, c, rno0_psp/unk_FBD8]
+      - [0xFCB0, c, rno0_psp/e_collect]
+      - [0x13E28, c, rno0_psp/unk_13E28]
+      - [0x14530, c, rno0_psp/collision]
+      - [0x16708, c, rno0_psp/unk_16708]
+      - [0x17C68, c, rno0_psp/e_medusa_head]
+      - [0x18160, c, rno0_psp/popup]
+      - [0x18758, c, rno0_psp/e_room_fg]
+      - [0x18870, c, rno0_psp/unk_18870]
+      - [0x1A2C8, c, rno0_psp/e_subweapon_container]
+      - [0x1AF48, c, rno0_psp/st_common]
+      - [0x1CA48, c, rno0_psp/prim_helpers]
+      - [0x1D298, c, rno0_psp/e_gorgon]
+      - [0x1D368, c, rno0_psp/unk_1D368]
+      - [0x1E510, c, rno0_psp/e_blade]
+      - [0x20358, c, rno0_psp/e_gurkha]
+      - [0x21DC8, c, rno0_psp/e_hammer]
+      - [0x23758, c, rno0_psp/unk_23758]
+      - [0x23D88, c, rno0_psp/e_thornweed_corpseweed]
+      - [0x25A90, c, rno0_psp/st_init]
+      - [0x25E08, c, rno0_psp/e_breakable]
+      - [0x25FF0, c, rno0_psp/unk_25FF0]
+      - [0x26C38, c, rno0_psp/e_room_bg]
+      - [0x26DA8, c, rno0_psp/e_lock_camera]
+      - [0x27008, c, rno0_psp/unk_27008]
+      - [0x27680, data]
+      - [0x2F6B0, .data, rno0/e_init]
+      - [0x2FA30, data]
+      - [0x5A250, .data, rno0/header]
+      - [0x5A280, data]
+      - [0x5A500, .rodata, rno0_psp/e_clock_room]
+      - [0x5A540, .rodata, rno0_psp/unk_3DD0]
+      - [0x5A558, .rodata, rno0_psp/unk_5610]
+      - [0x5A5E0, .rodata, rno0_psp/e_collect]
+      - [0x5A640, .rodata, rno0_psp/unk_16708]
+      - [0x5A658, .rodata, rno0_psp/unk_18870]
+      - [0x5A680, .rodata, rno0_psp/e_blade]
+      - [0x5A698, .rodata, rno0_psp/e_gurkha]
+      - [0x5A6B8, .rodata, rno0_psp/e_thornweed_corpseweed]
+      - [0x5A700, bss]
+  - [0x5AB00]

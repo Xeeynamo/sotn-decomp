@@ -127,13 +127,16 @@ void EntityDodoBird(Entity* self) {
                     if (other != NULL) {
                         CreateEntityFromEntity(E_DODO_BIRD, self, other);
                         other->params = FLAG_FEATHER;
-                        other->velocityX = (Random() & 7) * FIX(1.0 / 8);
+                        other->velocityX =
+                            (OVL_EXPORT(Random)() & 7) * FIX(1.0 / 8);
                         if (i != 0) {
                             other->velocityX = -other->velocityX;
                         }
-                        other->velocityY = -(Random() & 0x3F) * FIX(1.0 / 16);
-                        other->posX.i.hi += ((Random() & 0x1F) - 0x10);
-                        other->ext.dodo.timer = Random() * 0x10;
+                        other->velocityY =
+                            -(OVL_EXPORT(Random)() & 0x3F) * FIX(1.0 / 16);
+                        other->posX.i.hi +=
+                            ((OVL_EXPORT(Random)() & 0x1F) - 0x10);
+                        other->ext.dodo.timer = OVL_EXPORT(Random)() * 0x10;
                     }
                 }
             }

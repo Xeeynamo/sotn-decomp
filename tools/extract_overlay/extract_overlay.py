@@ -851,7 +851,7 @@ def create_header_c(header_items, ovl_name, ovl_type, version, header_path):
         "g_pStObjLayoutHorizontal",
         "OVL_EXPORT(rooms_layers)",
         "OVL_EXPORT(gfxBanks)",
-        "UpdateStageEntities",
+        "OVL_EXPORT(UpdateStageEntities)",
     ]
     template = Template((Path(__file__).parent / "header.c.mako").read_text())
     new_header = template.render(
@@ -1000,8 +1000,8 @@ def get_known_pairs(ovl_name, version):
 
 def parse_ovl_header(data_file_text, ovl_name, platform, header_symbol=None):
     ovl_header = [
-        "Update",
-        "HitDetection",
+        f"{ovl_name.upper()}_Update",
+        f"{ovl_name.upper()}_HitDetection",
         "UpdateRoomPosition",
         "InitRoomEntities",
         f"{ovl_name.upper()}_rooms",
@@ -1014,7 +1014,7 @@ def parse_ovl_header(data_file_text, ovl_name, platform, header_symbol=None):
         ),
         f"{ovl_name.upper()}_rooms_layers",
         f"{ovl_name.upper()}_gfxBanks",
-        "UpdateStageEntities",
+        "OVL_EXPORT(UpdateStageEntities)",
         "unk2C",  # g_SpriteBank1
         "unk30",  # g_SpriteBank2
         "unk34",
@@ -1131,7 +1131,7 @@ def parse_entity_updates(data_file_text, ovl_name, entity_updates_symbol):
         f"{ovl_name.upper()}_EntityBreakable",
         "EntityExplosion",
         "EntityPrizeDrop",
-        "EntityDamageDisplay",
+        f"{ovl_name.upper()}_EntityDamageDisplay",
         f"{ovl_name.upper()}_EntityRedDoor",
         "EntityIntenseExplosion",
         "EntitySoulStealOrb",

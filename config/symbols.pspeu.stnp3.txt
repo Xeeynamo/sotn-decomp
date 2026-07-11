@@ -42,8 +42,8 @@ EntityBloodDrips = 0x09242C40;
 EntityBat = 0x09242ED0;
 EntityStageNamePopup = 0x09243208; // source=match
 NP3_EntityRedDoor = 0x09244170; // source=match
-Update = 0x092453D0; // source=match
-UpdateStageEntities = 0x092457B0; // source=match
+NP3_Update = 0x092453D0; // source=match
+NP3_UpdateStageEntities = 0x092457B0; // source=match
 EntityMerman2 = 0x09245A18;
 EntityMermanFireSpit = 0x09247270;
 EntityMediumWaterSplash = 0x09247508;
@@ -68,8 +68,8 @@ EntityUnkId13 = 0x0924EF18;
 EntityExplosionVariants = 0x0924F190;
 EntityGreyPuff = 0x0924F308;
 EntityIntenseExplosion = 0x0924F618;
-HitDetection = 0x0924F8E0; // source=match
-EntityDamageDisplay = 0x092510B0; // source=match
+NP3_HitDetection = 0x0924F8E0; // source=match
+NP3_EntityDamageDisplay = 0x092510B0; // source=match
 EntityBoneScimitar = 0x09251BB8;
 EntityBoneScimitarParts = 0x09252588;
 EntityAlucardWaterEffect = 0x092528C0; // source=match

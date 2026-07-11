@@ -376,16 +376,16 @@ void EntityWarpSmallRocks(Entity* entity) {
     case 0:
         InitializeEntity(g_EInitReverseSmallRocks);
         entity->drawFlags = ENTITY_ROTATE;
-        entity->rotate = Random() * 0x10;
-        entity->animCurFrame = (Random() % 5) + 1;
+        entity->rotate = OVL_EXPORT(Random)() * 0x10;
+        entity->animCurFrame = (OVL_EXPORT(Random)() % 5) + 1;
         if (D_80180648) {
-            entity->posY.i.hi = (Random() & 0x1F) + 0x90;
+            entity->posY.i.hi = (OVL_EXPORT(Random)() & 0x1F) + 0x90;
             entity->step = 4;
             break;
         }
     case 1:
         if (D_80180648) {
-            entity->ext.warpRoom.unk88 = Random() & 0x3F;
+            entity->ext.warpRoom.unk88 = OVL_EXPORT(Random)() & 0x3F;
             entity->velocityY = FIX(-4);
             entity->step++;
         }

@@ -2,11 +2,10 @@
 #ifndef RARE_H
 #define RARE_H
 
-#include <stage.h>
-
-#define OVL_EXPORT(x) RARE_##x
 #define STAGE_IS_RARE
 #define INVERTED_STAGE
+#define OVL_EXPORT(x) RARE_##x
+#include <stage.h>
 
 enum Palettes {
     PAL_NONE,

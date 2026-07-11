@@ -14,7 +14,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityBreakable,
     EntityExplosion,
     EntityPrizeDrop,
-    EntityDamageDisplay,
+    OVL_EXPORT(EntityDamageDisplay),
     OVL_EXPORT(EntityRedDoor),
     EntityIntenseExplosion,
     EntitySoulStealOrb,

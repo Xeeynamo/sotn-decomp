@@ -48,14 +48,14 @@ void EntityPrisoner(Entity* self) {
     case 1:
         if (GetDistanceToPlayerX() < 0x40) {
             if (self->ext.prisoner.unk80) {
-                rand = Random() & 0xF;
+                rand = OVL_EXPORT(Random)() & 0xF;
             } else {
-                rand = Random() & 1;
+                rand = OVL_EXPORT(Random)() & 1;
             }
             if (!rand) {
                 self->ext.prisoner.unk80 |= 1;
-                self->ext.prisoner.unk84 = (Random() & 3) * 7;
-                if (Random() & 1) {
+                self->ext.prisoner.unk84 = (OVL_EXPORT(Random)() & 3) * 7;
+                if (OVL_EXPORT(Random)() & 1) {
                     self->ext.prisoner.unk84 = -self->ext.prisoner.unk84;
                 }
                 self->posX.i.hi += self->ext.prisoner.unk84;
@@ -101,7 +101,7 @@ void EntityPrisoner(Entity* self) {
         switch (self->step_s) {
         case 0:
             if (!AnimateEntity(D_us_80180E68, self)) {
-                if (Random() & 1) {
+                if (OVL_EXPORT(Random)() & 1) {
                     SetStep(5);
                 } else {
                     SetSubStep(1);

@@ -281,7 +281,7 @@ func buildEntityLayouts(fileName, outputDir, subDir string, ovlName string) erro
 	}
 
 	laydefFile := strings.Builder{}
-	laydefFile.WriteString("#include <stage.h>\n\n")
+	laydefFile.WriteString(fmt.Sprintf("#include \"%s\"\n\n", ovlHeaderLoc))
 	laydefFile.WriteString("#include \"common.h\"\n\n")
 	laydefFile.WriteString("// clang-format off\n")
 	laydefFile.WriteString(fmt.Sprintf("extern LayoutEntity %s_x[];\n", symbolName))

@@ -581,7 +581,7 @@ void EntityGurkha(Entity* self) {
             MoveEntity();
             self->velocityY += FIX(24.0 / 128);
             if ((g_Timer & 7) == 0) {
-                if (Random() & 1) {
+                if (OVL_EXPORT(Random)() & 1) {
                     PlaySfxPositional(SFX_FM_EXPLODE_B);
                 } else {
                     PlaySfxPositional(SFX_EXPLODE_D);
@@ -658,11 +658,11 @@ void EntityGurkhaWeapon(Entity* self) {
     case 24:
         switch (self->step_s) {
         case 0:
-            rnd = (Random() & 0x1F) + 0x10;
-            angle = (Random() * 6) + 0x900;
+            rnd = (OVL_EXPORT(Random)() & 0x1F) + 0x10;
+            angle = (OVL_EXPORT(Random)() * 6) + 0x900;
             self->velocityX = (rnd * rcos(angle)) / 2;
             self->velocityY = rnd * rsin(angle);
-            self->ext.GH_Props.timer = (Random() & 0x1F) + 0x20;
+            self->ext.GH_Props.timer = (OVL_EXPORT(Random)() & 0x1F) + 0x20;
             self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
             self->hitboxState = 0;
             self->step_s++;

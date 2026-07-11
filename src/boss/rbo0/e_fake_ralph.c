@@ -289,7 +289,7 @@ void EntityFakeRalph(Entity* self) {
 
     case 6:
         SetStep(12);
-        if (!(Random() & 7)) {
+        if (!(OVL_EXPORT(Random)() & 7)) {
             SetStep(14);
         }
         if (g_Player.status & PLAYER_STATUS_SUBWPN) {
@@ -301,7 +301,7 @@ void EntityFakeRalph(Entity* self) {
         if (GetDistanceToPlayerX() > 80) {
             SetStep(14);
         }
-        if (!(Random() & 0xF)) {
+        if (!(OVL_EXPORT(Random)() & 0xF)) {
             SetStep(10);
         }
         if (D_us_801806B4 > 0) {
@@ -315,7 +315,8 @@ void EntityFakeRalph(Entity* self) {
                 SetStep(19);
             }
             if (D_us_801806B4 >= 2 && GetDistanceToPlayerX() > 80 &&
-                self->ext.ralph.itemEntityId == 33 && !(Random() & 3)) {
+                self->ext.ralph.itemEntityId == 33 &&
+                !(OVL_EXPORT(Random)() & 3)) {
                 SetStep(15);
             }
         }
@@ -595,7 +596,7 @@ void EntityFakeRalph(Entity* self) {
 
     case 9:
         if (AnimateEntity(D_us_801809C4, self) == 0) {
-            if (Random() & 1) {
+            if (OVL_EXPORT(Random)() & 1) {
                 SetStep(7);
             } else {
                 SetStep(6);
@@ -608,7 +609,7 @@ void EntityFakeRalph(Entity* self) {
             self->step_s++;
         }
         if (AnimateEntity(D_us_80180AE0, self) == 0) {
-            temp_s2_3 = Random() & 3;
+            temp_s2_3 = OVL_EXPORT(Random)() & 3;
             if (temp_s2_3 == 3 && D_us_801806B4 < 2) {
                 temp_s2_3 = 0;
             }
@@ -837,7 +838,7 @@ void EntityBoneCross(Entity* self) {
                 entity->zPriority = self->zPriority + 1;
                 entity->facingLeft = self->facingLeft;
                 entity->posY.i.hi += 8;
-                entity->posX.i.hi += (Random() & 0xF) - 8;
+                entity->posX.i.hi += (OVL_EXPORT(Random)() & 0xF) - 8;
             }
         }
         break;
@@ -939,7 +940,7 @@ void EntityBoneCrossAfterImage(Entity* self) {
     case 0:
         InitializeEntity(D_us_801804E8);
         if (!self->params) {
-            if (Random() & 1) {
+            if (OVL_EXPORT(Random)() & 1) {
                 self->step = 2;
                 return;
             } else {

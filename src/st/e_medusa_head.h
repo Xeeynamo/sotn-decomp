@@ -134,7 +134,7 @@ void EntityMedusaHeadBlue(Entity* self) {
     self->posX.i.hi = medusaHeadInitParams[side].posX;
     self->velocityX = medusaHeadInitParams[side].velocityX;
     self->facingLeft = medusaHeadInitParams[side].facingLeft;
-    self->velocityY = FIX(2.5) - ((Random() & 0xF) * FIX(2.5) >> 3);
+    self->velocityY = FIX(2.5) - ((OVL_EXPORT(Random)() & 0xF) * FIX(2.5) >> 3);
     if (self->velocityY > 0) {
         self->ext.medusaHead.accelY = FIX(-5.0 / 32);
     } else {

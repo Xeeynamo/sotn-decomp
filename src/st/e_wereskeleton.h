@@ -70,8 +70,8 @@ void EntityWereskeleton(Entity* self) {
         AnimateEntity(D_us_801828C0, self);
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         if (GetDistanceToPlayerX() < 0x70) {
-            self->ext.wereskeleton.unk80 = (Random() & 1);
-            self->ext.wereskeleton.unk7F = (Random() & 1) + 1;
+            self->ext.wereskeleton.unk80 = (OVL_EXPORT(Random)() & 1);
+            self->ext.wereskeleton.unk7F = (OVL_EXPORT(Random)() & 1) + 1;
             func_us_801CDDD8(3);
         }
         break;
@@ -103,8 +103,8 @@ void EntityWereskeleton(Entity* self) {
             }
         }
         if (self->ext.wereskeleton.unk7E) {
-            self->ext.wereskeleton.unk80 = (Random() & 1);
-            self->ext.wereskeleton.unk7F = (Random() & 1) + 1;
+            self->ext.wereskeleton.unk80 = (OVL_EXPORT(Random)() & 1);
+            self->ext.wereskeleton.unk7F = (OVL_EXPORT(Random)() & 1) + 1;
             func_us_801CDDD8(4);
         }
         break;
@@ -156,8 +156,8 @@ void EntityWereskeleton(Entity* self) {
     case 6:
         if (!AnimateEntity(D_us_80182888, self)) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-            self->ext.wereskeleton.unk80 = (Random() & 1);
-            self->ext.wereskeleton.unk7F = (Random() & 1) + 1;
+            self->ext.wereskeleton.unk80 = (OVL_EXPORT(Random)() & 1);
+            self->ext.wereskeleton.unk7F = (OVL_EXPORT(Random)() & 1) + 1;
             func_us_801CDDD8(3);
         }
         break;
@@ -209,9 +209,11 @@ void EntityWereskeleton(Entity* self) {
                 DestroyEntity(tempEntity);
                 CreateEntityFromEntity(E_ID_43, self, tempEntity);
                 if (self->facingLeft) {
-                    tempEntity->velocityX = FIX(1) + (Random() & 7) * 0x2800;
+                    tempEntity->velocityX =
+                        FIX(1) + (OVL_EXPORT(Random)() & 7) * 0x2800;
                 } else {
-                    tempEntity->velocityX = FIX(-1) - (Random() & 7) * 0x2800;
+                    tempEntity->velocityX =
+                        FIX(-1) - (OVL_EXPORT(Random)() & 7) * 0x2800;
                 }
                 tempEntity->velocityY = FIX(-5.75);
                 tempEntity->posY.i.hi -= 8;
@@ -224,11 +226,11 @@ void EntityWereskeleton(Entity* self) {
 
     case 10:
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-        if ((GetDistanceToPlayerX() > 0x70) && (Random() & 1)) {
+        if ((GetDistanceToPlayerX() > 0x70) && (OVL_EXPORT(Random)() & 1)) {
             func_us_801CDDD8(5);
         } else {
-            self->ext.wereskeleton.unk7F = (Random() & 1) + 1;
-            self->ext.wereskeleton.unk80 = (Random() & 1);
+            self->ext.wereskeleton.unk7F = (OVL_EXPORT(Random)() & 1) + 1;
+            self->ext.wereskeleton.unk80 = (OVL_EXPORT(Random)() & 1);
             func_us_801CDDD8(3);
         }
         break;
@@ -305,8 +307,8 @@ void EntityWereskeleton(Entity* self) {
             if (tempEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
                 tempEntity->params = 0;
-                tempEntity->posX.i.hi += (Random() & 0x1F) - 0x10;
-                tempEntity->posY.i.hi += (Random() & 0x1F) - 0x10;
+                tempEntity->posX.i.hi += (OVL_EXPORT(Random)() & 0x1F) - 0x10;
+                tempEntity->posY.i.hi += (OVL_EXPORT(Random)() & 0x1F) - 0x10;
             }
             self->ext.wereskeleton.unk7C = 0;
         }

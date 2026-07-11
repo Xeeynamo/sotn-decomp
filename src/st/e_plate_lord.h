@@ -967,8 +967,8 @@ void EntityPlateLord(Entity* self) {
             if (!(self->ext.plateLord.unk80 & 3)) {
                 posX = self->posX.i.hi;
                 posY = self->posY.i.hi;
-                posX += (Random() & 0x1F) - 0x10;
-                posY += (Random() & 0x1F) - 0x10;
+                posX += (OVL_EXPORT(Random)() & 0x1F) - 0x10;
+                posY += (OVL_EXPORT(Random)() & 0x1F) - 0x10;
                 part = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (part != NULL) {
                     CreateEntityFromCurrentEntity(E_EXPLOSION, part);

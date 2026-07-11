@@ -10,8 +10,8 @@ extern GfxBank* OVL_EXPORT(gfxBanks)[];
 extern u8* D_us_80182E44[];
 
 Overlay OVL_EXPORT(Overaly) = {
-    .Update = Update,
-    .HitDetection = HitDetection,
+    .Update = OVL_EXPORT(Update),
+    .HitDetection = OVL_EXPORT(HitDetection),
     .UpdateRoomPosition = UpdateRoomPosition,
     .InitRoomEntities = InitRoomEntities,
     .rooms = OVL_EXPORT(rooms),
@@ -20,7 +20,7 @@ Overlay OVL_EXPORT(Overaly) = {
     .objLayoutHorizontal = NULL,
     .tileLayers = OVL_EXPORT(rooms_layers),
     .gfxBanks = OVL_EXPORT(gfxBanks),
-    .UpdateStageEntities = UpdateStageEntities,
+    .UpdateStageEntities = OVL_EXPORT(UpdateStageEntities),
     .unk2C = NULL,
     .unk30 = NULL,
     .unk34 = NULL,

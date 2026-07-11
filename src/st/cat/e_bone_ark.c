@@ -423,7 +423,7 @@ static void DrawChargeLines(Primitive* prim) {
 
     switch (prim->p1) {
     case 0:
-        var_s2 = (Random() & 0x1F);
+        var_s2 = (OVL_EXPORT(Random)() & 0x1F);
         var_s2 = var_s2 + 0x70 + (g_CurrentEntity->rotate / 16);
         prim->x0 = g_CurrentEntity->posX.i.hi +
                    ((rcos((var_s2) * 0x10) * 0x78) >> 0xC);
@@ -920,22 +920,22 @@ static void RenderDeathParts(Primitive* prim) {
     switch (prim->next->u2) {
     case 0:
         LOW(prim->next->u0) = (prim->next->r3 % 2) * 0x18000 - 0xC000;
-        LOW(prim->next->u0) += ((Random() & 3) << 0xD) - 0x4000;
+        LOW(prim->next->u0) += ((OVL_EXPORT(Random)() & 3) << 0xD) - 0x4000;
         LOW(prim->next->r1) = -0x40000;
         LOW(prim->next->r1) -= (prim->next->r3 >> 1) << 0xD;
-        LOW(prim->next->r1) += ((Random() & 3) << 0xE) - 0x8000;
+        LOW(prim->next->r1) += ((OVL_EXPORT(Random)() & 3) << 0xE) - 0x8000;
         prim->next->u2 = 1;
         break;
     case 1:
         UnkPrimHelper(prim);
         if (prim->next->r3 % 2) {
             LOH(prim->next->tpage) += 0xD0 - ((prim->next->r3 >> 1) * 0x60);
-            prim->next->x3 += ((Random() & 3) * 0x10) + 0x100;
-            prim->next->y3 += ((Random() & 3) * 0x10) + 0x20;
+            prim->next->x3 += ((OVL_EXPORT(Random)() & 3) * 0x10) + 0x100;
+            prim->next->y3 += ((OVL_EXPORT(Random)() & 3) * 0x10) + 0x20;
         } else {
             LOH(prim->next->tpage) -= 0xD0 - ((prim->next->r3 >> 1) * 0x60);
-            prim->next->x3 -= ((Random() & 3) * 0x10) + 0x100;
-            prim->next->y3 -= ((Random() & 3) * 0x10) + 0x20;
+            prim->next->x3 -= ((OVL_EXPORT(Random)() & 3) * 0x10) + 0x100;
+            prim->next->y3 -= ((OVL_EXPORT(Random)() & 3) * 0x10) + 0x20;
         }
 
         LOW(prim->next->r1) += 0x3000 - ((prim->next->r3 >> 1) << 0xC);

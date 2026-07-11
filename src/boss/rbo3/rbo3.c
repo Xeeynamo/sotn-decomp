@@ -232,7 +232,7 @@ void EntityMedusa(Entity* self) {
         break;
     case 5:
         if (self->step_s == 0) {
-            if (Random() & 1) {
+            if (OVL_EXPORT(Random)() & 1) {
                 PlaySfxPositional(SFX_MEDUSA_ATTACK_A);
             } else {
                 PlaySfxPositional(SFX_MEDUSA_ATTACK_B);
@@ -248,7 +248,7 @@ void EntityMedusa(Entity* self) {
         break;
     case 4:
         if (self->step_s == 0) {
-            if (!(Random() & 3)) {
+            if (!(OVL_EXPORT(Random)() & 3)) {
                 PlaySfxPositional(SFX_MEDUSA_STONE);
             }
             self->step_s++;
@@ -303,7 +303,7 @@ void EntityMedusa(Entity* self) {
         break;
     case 6:
         if (self->step_s == 0) {
-            if (Random() & 1) {
+            if (OVL_EXPORT(Random)() & 1) {
                 PlaySfxPositional(SFX_MEDUSA_PAIN_A);
             } else {
                 PlaySfxPositional(SFX_MEDUSA_PAIN_B);
@@ -340,7 +340,7 @@ void EntityMedusa(Entity* self) {
                 CreateEntityFromEntity(UNK_ENTITY_27, self, entity);
                 entity->params = 0;
                 entity->zPriority = self->zPriority + 1;
-                entity->posX.i.hi -= 16 - (Random() & 31);
+                entity->posX.i.hi -= 16 - (OVL_EXPORT(Random)() & 31);
                 entity->posY.i.hi += 24;
             }
             if (!(self->ext.GS_Props.timer & 0xF)) {
@@ -730,10 +730,11 @@ void func_us_80192998(Entity* self) {
         if (self->step_s == 0) {
             self->drawFlags = ENTITY_OPACITY;
             self->opacity = 0xC0;
-            self->facingLeft = Random() & 1;
-            self->velocityX = (Random() << 8) - FIX(1.0 / 2.0);
+            self->facingLeft = OVL_EXPORT(Random)() & 1;
+            self->velocityX = (OVL_EXPORT(Random)() << 8) - FIX(1.0 / 2.0);
             self->velocityY = FIX(-0.75);
-            self->ext.e_80192998.accelY = -(Random() * 16) - FIX(1.0 / 4.0);
+            self->ext.e_80192998.accelY =
+                -(OVL_EXPORT(Random)() * 16) - FIX(1.0 / 4.0);
             self->step_s++;
         }
         MoveEntity();

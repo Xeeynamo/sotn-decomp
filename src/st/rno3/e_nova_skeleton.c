@@ -2,7 +2,7 @@
 #include "rno3.h"
 
 extern EInit g_EInitNovaSkeleton;
-extern EInit D_us_801809A4;
+extern EInit g_EInitNovaSkeleton2;
 
 // sensors
 static s16 sensors1[] = {0, 20, 0, 4, 8, -4, -16, 0};
@@ -330,7 +330,7 @@ void EntityNovaLaser(Entity* self) {
 
     switch (self->step) {
     case LASER_INIT:
-        InitializeEntity(D_us_801809A4);
+        InitializeEntity(g_EInitNovaSkeleton2);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 3);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -385,7 +385,7 @@ void EntityNovaLaser(Entity* self) {
             self->step++;
         }
     case LASER_3:
-        if (Random() & 1) {
+        if (OVL_EXPORT(Random)() & 1) {
             if (self->ext.nova.laserLength < 0x88) {
                 self->ext.nova.laserLength++;
             } else if (self->ext.nova.laserLength > 0x78) {
@@ -465,7 +465,7 @@ void EntityNovaLaserPulse(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_801809A4);
+        InitializeEntity(g_EInitNovaSkeleton2);
         self->hitboxState = 0;
         self->animCurFrame = 0x24;
         self->drawFlags |= ENTITY_SCALEY | ENTITY_SCALEX;

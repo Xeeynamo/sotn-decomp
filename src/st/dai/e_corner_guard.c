@@ -78,10 +78,10 @@ static void CornerGuardDeath(EntranceCascadePrim* prim) {
     UnkPrimHelper(prim);
     switch (prim->next->step) {
     case CORNER_GUARD_DEATH_INIT:
-        prim->next->unk10 = ((Random() & 0x1F) << 12) - FIX(1);
-        prim->next->unk14 = -(Random() & 0x1F) * FLT(1);
+        prim->next->unk10 = ((OVL_EXPORT(Random)() & 0x1F) << 12) - FIX(1);
+        prim->next->unk14 = -(OVL_EXPORT(Random)() & 0x1F) * FLT(1);
         prim->next->step = CORNER_GUARD_DEATH_CONCLUDE;
-        prim->next->velocityX.i.lo = (Random() & 0xF) + 8;
+        prim->next->velocityX.i.lo = (OVL_EXPORT(Random)() & 0xF) + 8;
         // fallthrough
     case CORNER_GUARD_DEATH_CONCLUDE:
         if (prim->next->unk10 > 0) {
@@ -127,7 +127,7 @@ void EntityCornerGuard(Entity* self) {
         // fallthrough
     case CORNER_GUARD_HEAD_INIT:
         if (UnkCollisionFunc3(sensors_head) & 1) {
-            self->ext.cornerGuard.prevPlayerOnLeft = Random() & 1;
+            self->ext.cornerGuard.prevPlayerOnLeft = OVL_EXPORT(Random)() & 1;
             self->ext.cornerGuard.facingLeft =
                 self->ext.cornerGuard.prevPlayerOnLeft;
             SetStep(CORNER_GUARD_MOVE);
@@ -169,7 +169,7 @@ void EntityCornerGuard(Entity* self) {
                 self->velocityX = FIX(-0.75);
             }
             self->ext.cornerGuard.attackInterval =
-                attack_intervals[Random() & 3];
+                attack_intervals[OVL_EXPORT(Random)() & 3];
             self->step_s++;
         }
         AnimateEntity(anim_move_right, self);
@@ -219,7 +219,7 @@ void EntityCornerGuard(Entity* self) {
                 self->velocityX = FIX(0.5);
             }
             self->ext.cornerGuard.attackInterval =
-                attack_intervals[Random() & 3];
+                attack_intervals[OVL_EXPORT(Random)() & 3];
             self->step_s++;
         }
         AnimateEntity(anim_move_left, self);

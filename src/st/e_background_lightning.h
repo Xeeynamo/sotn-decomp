@@ -109,7 +109,7 @@ void EntityBackgroundLightning(Entity* self) {
             if (otherEnt != NULL) {
                 CreateEntityFromCurrentEntity(
                     E_ID(LIGHTNING_THUNDER), otherEnt);
-                randOf3 = Random() & 3;
+                randOf3 = OVL_EXPORT(Random)() & 3;
                 otherEnt->posX.i.hi = lightningThunderXY[randOf3][0];
                 otherEnt->posY.i.hi = lightningThunderXY[randOf3][1];
             }
@@ -125,7 +125,8 @@ void EntityBackgroundLightning(Entity* self) {
             /* fallthrough */
         case 1:
             if (AnimateEntity(lightningAnim, self) == 0) {
-                self->ext.backgroundLightning.timer = (Random() & 0x7F) + 0x40;
+                self->ext.backgroundLightning.timer =
+                    (OVL_EXPORT(Random)() & 0x7F) + 0x40;
                 self->step_s++;
             }
 #if !defined(INVERTED_STAGE)

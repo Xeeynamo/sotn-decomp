@@ -268,8 +268,8 @@ static s32 func_us_801CA51C(Entity* axeKnight) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
                 CreateEntityFromEntity(E_INTENSE_EXPLOSION, axeKnight, entity);
-                entity->posX.i.hi += (Random() & 0x1F) - 0x10;
-                entity->posY.i.hi += (Random() & 0x1F) - 0x10;
+                entity->posX.i.hi += (OVL_EXPORT(Random)() & 0x1F) - 0x10;
+                entity->posY.i.hi += (OVL_EXPORT(Random)() & 0x1F) - 0x10;
             }
         }
 
@@ -290,8 +290,8 @@ static s32 func_us_801CA51C(Entity* axeKnight) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, axeKnight, entity);
-                entity->posX.i.hi += (Random() & 0xF) - 8;
-                entity->posY.i.hi += (Random() & 0x1F);
+                entity->posX.i.hi += (OVL_EXPORT(Random)() & 0xF) - 8;
+                entity->posY.i.hi += (OVL_EXPORT(Random)() & 0x1F);
                 entity->params = 1;
             }
         }
@@ -323,7 +323,7 @@ static void func_us_801CAD20(void) {
         if (g_CurrentEntity->ext.axeknight.unk82 > 0) {
             g_CurrentEntity->ext.axeknight.unk82 -= 3;
         } else {
-            random = Random() & 7;
+            random = OVL_EXPORT(Random)() & 7;
             SetStep(steps[random] & 0xFFFF);
             g_CurrentEntity->ext.axeknight.unk82 = 256;
         }
@@ -370,7 +370,7 @@ void EntityAxeKnightBlue(Entity* self) {
         self->zPriority -= 0x10;
         self->ext.axeknight.unk80 = 65;
         SetStep(AXE_KNIGHT_DYING);
-        if (Random() & 1) {
+        if (OVL_EXPORT(Random)() & 1) {
             self->step_s = 0x10;
             self->ext.axeknight.unk80 = 0;
         } else {

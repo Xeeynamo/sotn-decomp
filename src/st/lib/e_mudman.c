@@ -352,7 +352,7 @@ void EntityMudman(Entity* self) {
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
                 MakeEntityFromId(E_MUDMAN, self, tempEntity);
-                tempEntity->animCurFrame = (Random() & 1) + 0x10;
+                tempEntity->animCurFrame = (OVL_EXPORT(Random)() & 1) + 0x10;
                 tempEntity->step = 11;
                 tempEntity->velocityX = D_us_80182E88[i][0];
                 tempEntity->velocityY = D_us_80182E88[i][1];

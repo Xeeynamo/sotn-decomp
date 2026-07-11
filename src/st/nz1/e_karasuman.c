@@ -446,7 +446,7 @@ void EntityKarasuman(Entity* self) {
                 if (entity != NULL) {
                     CreateEntityFromEntity(
                         E_ID(KARASUMAN_FEATHER), self, entity);
-                    if (Random() & 1) {
+                    if (OVL_EXPORT(Random)() & 1) {
                         entity->zPriority = self->zPriority + 1;
                     } else {
                         entity->zPriority = self->zPriority - 1;
@@ -474,7 +474,7 @@ void EntityKarasuman(Entity* self) {
                 if (entity != NULL) {
                     CreateEntityFromEntity(
                         E_ID(KARASUMAN_FEATHER), self, entity);
-                    if (Random() & 1) {
+                    if (OVL_EXPORT(Random)() & 1) {
                         entity->zPriority = self->zPriority + 1;
                     } else {
                         entity->zPriority = self->zPriority - 1;
@@ -506,7 +506,7 @@ void EntityKarasuman(Entity* self) {
             if (entity != NULL) {
                 CreateEntityFromEntity(
                     E_ID(KARASUMAN_RAVEN_ABSORB), self, entity);
-                entity->facingLeft = Random() & 1;
+                entity->facingLeft = OVL_EXPORT(Random)() & 1;
                 entity->params = 0;
                 entity->zPriority = self->zPriority + 1;
             }
@@ -530,7 +530,7 @@ void EntityKarasuman(Entity* self) {
                 if (entity != NULL) {
                     CreateEntityFromEntity(
                         E_ID(EXPLODE_PUFF_OPAQUE), self, entity);
-                    entity->facingLeft = Random() & 1;
+                    entity->facingLeft = OVL_EXPORT(Random)() & 1;
                     entity->zPriority = self->zPriority + 1;
                     entity->posY.i.hi += 32;
                     entity->params = 3;
@@ -594,11 +594,11 @@ void EntityKarasumanFeatherAttack(Entity* self) {
         InitializeEntity(g_EInitKarasumanFeatherAttack);
         self->animCurFrame = 59;
         self->drawFlags |= ENTITY_ROTATE;
-        if (Random() & 1) {
+        if (OVL_EXPORT(Random)() & 1) {
             self->facingLeft = true;
         }
 
-        angle = (Random() * 4) - FLT(0.125);
+        angle = (OVL_EXPORT(Random)() * 4) - FLT(0.125);
         self->rotate = angle;
         angle = self->rotate;
         if (!self->facingLeft) {
@@ -722,7 +722,7 @@ void EntityKarasumanRavenAttack(Entity* self) {
             return;
         }
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
-        angle = ((Random() & 0x1F) * 0x10) + ROT(22.5);
+        angle = ((OVL_EXPORT(Random)() & 0x1F) * 0x10) + ROT(22.5);
         self->rotate = -angle;
         if (!self->facingLeft) {
             angle = FLT(0.5) - angle;
@@ -754,7 +754,7 @@ void EntityKarasumanRavenAttack(Entity* self) {
         self->opacity = 0;
         self->blendMode = BLEND_TRANSP | BLEND_SUB;
         entity = self->ext.karasuman.parent;
-        angle = Random() * 16;
+        angle = OVL_EXPORT(Random)() * 16;
         self->posX.i.hi += FLT_TO_I(128 * rcos(angle));
         self->posY.i.hi += FLT_TO_I(128 * rsin(angle));
         self->step++;
@@ -821,9 +821,9 @@ void EntityKarasumanFeather(Entity* self) {
         InitializeEntity(g_EInitKarasumanFeather);
         self->animCurFrame = 63;
         self->drawFlags = ENTITY_ROTATE;
-        self->facingLeft = Random() & 1;
-        scale = (Random() & 0x1F) + 0x10;
-        angle = (Random() * 6) + FLT(9.0 / 16.0);
+        self->facingLeft = OVL_EXPORT(Random)() & 1;
+        scale = (OVL_EXPORT(Random)() & 0x1F) + 0x10;
+        angle = (OVL_EXPORT(Random)() * 6) + FLT(9.0 / 16.0);
 
         self->velocityX = scale * rcos(angle);
         self->velocityY = scale * rsin(angle);
@@ -872,7 +872,7 @@ void EntityKarasumanRavenAbsorb(Entity* self) {
             self->step = 4;
             break;
         }
-        angle = ROT(-22.5) - ((Random() & 0x3F) * 16);
+        angle = ROT(-22.5) - ((OVL_EXPORT(Random)() & 0x3F) * 16);
         self->rotate = -angle;
         if (!self->facingLeft) {
             angle = FLT(0.5) - angle;

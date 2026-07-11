@@ -149,7 +149,7 @@ void EntitySlinger(Entity* self) {
             if (!(AnimateEntity(anim_jump1, self) & 1)) {
                 var_s2 = self->ext.skeleton.facingLeft;
 
-                if ((Random() & 3) == 0) {
+                if ((OVL_EXPORT(Random)() & 3) == 0) {
                     var_s2 ^= 1;
                 }
 

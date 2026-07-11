@@ -810,7 +810,7 @@ void EntityFrozenHalfBlizzard(Entity* self) {
         if (entity != NULL) {
             CreateEntityFromCurrentEntity(E_FROZEN_HALF_FALLING_ICE, entity);
             entity->posY.i.hi = -0x10;
-            entity->posX.i.hi = (Random() * 2) + posXOffset;
+            entity->posX.i.hi = (OVL_EXPORT(Random)() * 2) + posXOffset;
             entity->params = 1;
         }
 

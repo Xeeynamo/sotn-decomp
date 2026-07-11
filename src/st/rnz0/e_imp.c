@@ -303,7 +303,7 @@ void EntityImp(Entity* self) {
             }
             g_Player.demo_timer = 1;
             if (g_Timer & 1) {
-                if (Random() & 1) {
+                if (OVL_EXPORT(Random)() & 1) {
                     g_Player.padSim = PAD_SQUARE;
                 } else {
                     g_Player.padSim = PAD_CIRCLE;

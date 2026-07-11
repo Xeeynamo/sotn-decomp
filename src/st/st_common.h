@@ -94,7 +94,7 @@ u8 UnkAnimFunc(u8 frames[], Entity* self, u8 arg2) {
             var_s1 = frames;
             self->pose = 0;
             self->poseTimer = 0;
-            SELF_BB = (arg2 * Random()) >> 8;
+            SELF_BB = (arg2 * OVL_EXPORT(Random)()) >> 8;
             self->poseTimer = *var_s1++ + SELF_BB;
             self->animCurFrame = *var_s1;
             self->pose++;

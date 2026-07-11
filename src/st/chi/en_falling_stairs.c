@@ -19,9 +19,9 @@ static void UpdateDustParticles(Primitive* prim) {
         prim->u0 = prim->v0 = 1;
         prim->drawMode = DRAW_UNK02;
 #ifdef VERSION_PSP
-        LOW(prim->x2) = -(Random() & 0x7F) << 9;
+        LOW(prim->x2) = -(OVL_EXPORT(Random)() & 0x7F) << 9;
 #else
-        LOW(prim->x2) = -((Random() & 0x7F) << 9);
+        LOW(prim->x2) = -((OVL_EXPORT(Random)() & 0x7F) << 9);
 #endif
         LOW(prim->x3) = 0;
         prim->p2 = 1U;
@@ -215,8 +215,8 @@ void EntityFallingStairs(Entity* self) {
                 if (prim != NULL) {
                     prim->p3 = 1;
                     prim->p2 = 0;
-                    prim->x0 = xPos + (Random() & 4) - 2;
-                    prim->y0 = yPos + (Random() & 0x1F);
+                    prim->x0 = xPos + (OVL_EXPORT(Random)() & 4) - 2;
+                    prim->y0 = yPos + (OVL_EXPORT(Random)() & 0x1F);
                 }
             }
         } else {
@@ -245,8 +245,8 @@ void EntityFallingStairs(Entity* self) {
                     if (prim != NULL) {
                         prim->p3 = 1;
                         prim->p2 = 0;
-                        prim->x0 = xPos + (Random() & 7) - 3;
-                        prim->y0 = yPos + (Random() & 0x1F);
+                        prim->x0 = xPos + (OVL_EXPORT(Random)() & 7) - 3;
+                        prim->y0 = yPos + (OVL_EXPORT(Random)() & 0x1F);
                     }
                 }
             }
@@ -275,8 +275,8 @@ void EntityFallingStairs(Entity* self) {
                         if (prim != NULL) {
                             prim->p3 = 1;
                             prim->p2 = 0;
-                            prim->x0 = (xPos + (Random() & 7)) - 3;
-                            prim->y0 = yPos + (Random() & 3);
+                            prim->x0 = (xPos + (OVL_EXPORT(Random)() & 7)) - 3;
+                            prim->y0 = yPos + (OVL_EXPORT(Random)() & 3);
                         }
                     }
                 }
@@ -314,8 +314,8 @@ void EntityFallingStairs(Entity* self) {
                         if (prim != NULL) {
                             prim->p3 = 1;
                             prim->p2 = 0;
-                            prim->x0 = (xPos + (Random() & 7)) - 3;
-                            prim->y0 = yPos + (Random() & 3);
+                            prim->x0 = (xPos + (OVL_EXPORT(Random)() & 7)) - 3;
+                            prim->y0 = yPos + (OVL_EXPORT(Random)() & 3);
                         }
                     }
                 }
@@ -519,8 +519,8 @@ void EntityFallingStep(Entity* self) {
                 if (prim != NULL) {
                     prim->p3 = 1;
                     prim->p2 = 0;
-                    prim->x0 = (posX + (Random() & 7)) - 3;
-                    prim->y0 = posY + (Random() & 0xF);
+                    prim->x0 = (posX + (OVL_EXPORT(Random)() & 7)) - 3;
+                    prim->y0 = posY + (OVL_EXPORT(Random)() & 0xF);
                 }
             }
         }

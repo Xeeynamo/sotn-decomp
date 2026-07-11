@@ -4,10 +4,8 @@
 #define CAT_H
 
 #define STAGE_IS_CAT
-
-#include "stage.h"
-
 #define OVL_EXPORT(x) CAT_##x
+#include <stage.h>
 
 #include "../pfn_entity_update.h"
 

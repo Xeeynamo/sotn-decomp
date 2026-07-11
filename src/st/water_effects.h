@@ -798,12 +798,12 @@ void EntitySmallWaterDrop(Entity* self) {
 
         x = self->posX.i.hi;
         y = self->posY.i.hi;
-        y -= Random() & 3;
+        y -= OVL_EXPORT(Random)() & 3;
 
         if (upperParams > 0) {
-            x += Random() & 3;
+            x += OVL_EXPORT(Random)() & 3;
         } else {
-            x -= Random() & 3;
+            x -= OVL_EXPORT(Random)() & 3;
         }
         self->posX.i.hi = x;
         self->posY.i.hi = y;

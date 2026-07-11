@@ -9,11 +9,10 @@ extern SpriteParts* OVL_EXPORT(spriteBanks)[];
 extern u_long* OVL_EXPORT(cluts)[];
 extern RoomDef OVL_EXPORT(rooms_layers)[];
 extern GfxBank* OVL_EXPORT(gfxBanks)[];
-void UpdateStageEntities(void);
 
 AbbreviatedOverlay OVL_EXPORT(Overlay) = {
-    .Update = Update,
-    .HitDetection = HitDetection,
+    .Update = OVL_EXPORT(Update),
+    .HitDetection = OVL_EXPORT(HitDetection),
     .UpdateRoomPosition = UpdateRoomPosition,
     .InitRoomEntities = InitRoomEntities,
     .rooms = OVL_EXPORT(rooms),
@@ -22,12 +21,11 @@ AbbreviatedOverlay OVL_EXPORT(Overlay) = {
     .objLayoutHorizontal = &OBJ_LAYOUT_HORIZONTAL,
     .tileLayers = OVL_EXPORT(rooms_layers),
     .gfxBanks = OVL_EXPORT(gfxBanks),
-    .UpdateStageEntities = UpdateStageEntities,
+    .UpdateStageEntities = OVL_EXPORT(UpdateStageEntities),
 };
 #else
 
-void Update();
-void HitDetection();
+void OVL_EXPORT(Update)();
 void UpdateRoomPosition();
 void InitRoomEntities(s32 objLayoutId);
 
@@ -39,8 +37,8 @@ extern RoomDef OVL_EXPORT(rooms_layers)[];
 extern RoomHeader OVL_EXPORT(rooms)[];
 
 AbbreviatedOverlay OVL_EXPORT(Overlay) = {
-    .Update = Update,
-    .HitDetection = HitDetection,
+    .Update = OVL_EXPORT(Update),
+    .HitDetection = OVL_EXPORT(HitDetection),
     .UpdateRoomPosition = UpdateRoomPosition,
     .InitRoomEntities = InitRoomEntities,
     .rooms = OVL_EXPORT(rooms),
@@ -49,7 +47,7 @@ AbbreviatedOverlay OVL_EXPORT(Overlay) = {
     .objLayoutHorizontal = OVL_EXPORT(pStObjLayoutHorizontal),
     .tileLayers = OVL_EXPORT(rooms_layers),
     .gfxBanks = OVL_EXPORT(gfxBanks),
-    .UpdateStageEntities = UpdateStageEntities,
+    .UpdateStageEntities = OVL_EXPORT(UpdateStageEntities),
 };
 
 #include "gen/sprite_banks.h"

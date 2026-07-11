@@ -181,7 +181,7 @@ void EntityBoneScimitar(Entity* self) {
             if (!(AnimateEntity(anim_jump, self) & 1)) {
                 tempByte = self->ext.skeleton.facingLeft;
 
-                if ((Random() & 3) == 0) {
+                if ((OVL_EXPORT(Random)() & 3) == 0) {
                     tempByte ^= 1;
                 }
                 if (tempByte) {

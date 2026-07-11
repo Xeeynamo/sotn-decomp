@@ -46,7 +46,7 @@ void EntityBloodSkeleton(Entity* self) {
     switch (self->step) {
     case BLOOD_SKELETON_INIT:
         InitializeEntity(g_EInitBloodSkeleton);
-        self->facingLeft = Random() & 1;
+        self->facingLeft = OVL_EXPORT(Random)() & 1;
         self->animCurFrame = 1;
 #ifdef STAGE_IS_NZ0
         self->flags &=
@@ -66,13 +66,13 @@ void EntityBloodSkeleton(Entity* self) {
     case BLOOD_SKELETON_WALK:
 #if defined(STAGE_IS_CAT) || defined(STAGE_IS_RCAT)
         if (!self->step_s) {
-            self->ext.bloodSkeleton.timer = timers[Random() & 3];
+            self->ext.bloodSkeleton.timer = timers[OVL_EXPORT(Random)() & 3];
             self->step_s++;
         }
 
         if (!--self->ext.bloodSkeleton.timer) {
             self->step_s = 0;
-            self->facingLeft = Random() & 1;
+            self->facingLeft = OVL_EXPORT(Random)() & 1;
         }
 #endif
 
@@ -85,7 +85,7 @@ void EntityBloodSkeleton(Entity* self) {
         }
 
         if (!AnimateEntity(anim_walk, self) && GetDistanceToPlayerY() < 48 &&
-            (Random() & 3) == 0) {
+            (OVL_EXPORT(Random)() & 3) == 0) {
             self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
         }
 

@@ -784,9 +784,49 @@ files:
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rdai.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rlib.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rno0.bin
+    asset_path: assets/st/rno0
+    src_path: src/st/rno0
+    splat_config_path: config/splat.pspeu.strno0.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rno1.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rno2.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rno3.bin
+    asset_path: assets/st/rno3
+    src_path: src/st/rno3
+    splat_config_path: config/splat.pspeu.strno3.yaml
+    segments:
+      - start: 0x80
+        vram: 0x09237700
+        assets:
+          - [0x80, skip]
+          - [0x2C4E0, sprite_banks, psp/sprite_banks]
+          - [0x2C540, layers, psp/layers]
+          - [0x2C910, paldef, palette_def]
+          - [0x2C978, gfx_banks, graphics_banks]
+          - [0x2CAA8, skip]
+          - [0x2CE00, rooms, psp/rooms]
+          - [0x2CF08, skip]
+          - [0x2CF58, cmpgfx, e_fire_warg, 128, 128, 4]
+          - [0x2E0E8, cmpgfx, e_fire_warg2, 128, 128, 4]
+          - [0x2F1C8, cmpgfx, e_fire_warg3, 128, 128, 4]
+          - [0x30370, cmpgfx, e_fire_warg4, 128, 128, 4]
+          - [0x31458, cmpgfx, e_fire_warg_rider, 128, 128, 4]
+          - [0x31FB8, cmpgfx, e_jacko, 128, 128, 4]
+          - [0x329E8, cmpgfx, e_nova_skeleton, 128, 128, 4]
+          - [0x337D0, cmpgfx, e_nova_laser, 128, 128, 4]
+          - [0x34120, cmpgfx, D_8018B460, 128, 128, 4]
+          - [0x34898, cmpgfx, D_8018BBD8, 128, 128, 4]
+          - [0x35520, cmpgfx, D_8018C860, 128, 128, 4]
+          - [0x360B0, cmpgfx, D_8018D3EC, 128, 128, 4]
+          - [0x371D8, cmpgfx, D_8018E514, 128, 128, 4]
+          - [0x37A50, palette, pal_fire_warg, 16]
+          - [0x37B50, palette, pal_2e0, 16]
+          - [0x37E10, palette, pal_jacko_bones, 16]
+          - [0x37E50, palette, pal_nova_skeleton, 16]
+          - [0x37EF0, palette, pal_dragons, 16]
+          - [0x37F70, palette, pal_venus_weed, 16]
+          - [0x38490, palette, pal_dodo, 16]
+          - [0x384B0, skip]
+          
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rno4.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rnz0.bin
     asset_path: assets/st/rnz0

@@ -148,7 +148,7 @@ void EntityBossDoors(Entity* self) {
             CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
             entity->params = 0x10;
             entity->posY.i.hi += 32;
-            entity->posX.i.hi -= (Random() & 7);
+            entity->posX.i.hi -= (OVL_EXPORT(Random)() & 7);
         }
         if (!(g_Timer & 0xF)) {
             g_api.PlaySfx(SFX_STONE_MOVE_B);
@@ -209,7 +209,7 @@ void EntityBossDoors(Entity* self) {
             CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
             entity->params = 0x10;
             entity->posY.i.hi += 32;
-            entity->posX.i.hi -= (Random() & 7);
+            entity->posX.i.hi -= (OVL_EXPORT(Random)() & 7);
         }
         offsetX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
         if (self->params) {

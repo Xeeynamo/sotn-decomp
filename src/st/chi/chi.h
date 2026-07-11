@@ -8,11 +8,9 @@
 #ifndef CHI_H
 #define CHI_H
 
-#include "stage.h"
-
 #define STAGE_IS_CHI
-
 #define OVL_EXPORT(x) CHI_##x
+#include <stage.h>
 
 enum OVL_EXPORT(Palette) {
     PAL_NONE = 0,

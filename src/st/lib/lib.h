@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "stage.h"
-
 #define STAGE_IS_LIB
 #define OVL_EXPORT(x) LIB_##x
+#include <stage.h>
 
 enum Palettes {
     PAL_NONE = 0,

@@ -81,7 +81,8 @@ static void BoneHalberdMove(void) {
         }
     } else {
         g_CurrentEntity->ext.boneHalberd.timer--;
-        if (!g_CurrentEntity->ext.boneHalberd.timer && !(Random() & 3)) {
+        if (!g_CurrentEntity->ext.boneHalberd.timer &&
+            !(OVL_EXPORT(Random)() & 3)) {
             SetStep(BONE_HALBERD_LUNGE);
         }
     }
@@ -181,7 +182,8 @@ void EntityBoneHalberd(Entity* self) {
             }
             if (GetDistanceToPlayerX() < 56) {
                 // random number of stabs between 1 and 4
-                self->ext.boneHalberd.lungeTimer = ((Random() & 3) + 1);
+                self->ext.boneHalberd.lungeTimer =
+                    ((OVL_EXPORT(Random)() & 3) + 1);
                 self->poseTimer = 16;
                 self->pose = 14;
                 SetSubStep(BONE_HALBERD_LUNGE_STAB);
@@ -219,7 +221,7 @@ void EntityBoneHalberd(Entity* self) {
         case BONE_HALBERD_JUMP_INIT:
             if (!(AnimateEntity(anim_jump, self) & 1)) {
                 tempVar = self->ext.boneHalberd.facingLeft;
-                if (!(Random() & 3)) {
+                if (!(OVL_EXPORT(Random)() & 3)) {
                     tempVar ^= 1;
                 }
                 if (tempVar) {
