@@ -254,7 +254,7 @@ static u8* g_ExplosionAnimations[] = {
     g_explosionBigAnim, D_80180F6C,
 };
 
-void CollectGold(u16 goldSize) {
+void OVL_EXPORT(CollectGold)(u16 goldSize) {
     g_api.PlaySfx(SFX_GOLD_PICKUP);
     goldSize -= 2;
     g_Status.gold += c_GoldPrizes[goldSize];
@@ -285,7 +285,7 @@ void UnusedDestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
 #endif
 
 #if STAGE != STAGE_ST0
-void CollectHeartVessel(void) {
+void OVL_EXPORT(CollectHeartVessel)(void) {
 #ifdef VERSION_BETA
     if (0) { // MAD doesn't need to test character, is always alucard
 #else
@@ -507,10 +507,10 @@ void EntityPrizeDrop(Entity* self) {
         if (itemId < 2) {
             CollectHeart(itemId);
         } else if (itemId < 12) {
-            CollectGold(itemId);
+            OVL_EXPORT(CollectGold)(itemId);
 #if STAGE != STAGE_ST0
         } else if (itemId == 12) {
-            CollectHeartVessel();
+            OVL_EXPORT(CollectHeartVessel)();
 #endif
         } else if (itemId < 14) {
 #if defined VERSION_BETA || (STAGE == STAGE_ST0 && !defined(VERSION_PSP))
