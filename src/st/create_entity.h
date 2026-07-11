@@ -481,7 +481,7 @@ void OVL_EXPORT(UpdateRoomPosition)() {
     }
 }
 
-void CreateEntityFromCurrentEntity(u16 entityId, Entity* entity) {
+void OVL_EXPORT(CreateEntityFromCurrentEntity)(u16 entityId, Entity* entity) {
     DestroyEntity(entity);
     entity->entityId = entityId;
     entity->pfnUpdate = PfnEntityUpdates[entityId - 1];

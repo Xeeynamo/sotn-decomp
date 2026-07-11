@@ -42,7 +42,7 @@ void CreateEntitiesToTheRight(s16);
 void CreateEntitiesToTheLeft(s16);
 void CreateEntitiesAbove(s16);
 void CreateEntitiesBelow(s16);
-void CreateEntityFromCurrentEntity(u16, Entity*);
+void OVL_EXPORT(CreateEntityFromCurrentEntity)(u16, Entity*);
 u8 func_80192914(s16 arg0, s16 arg1);
 void CreateEntityFromEntity(u16 entityId, Entity* ent1, Entity* ent2);
 void func_8019344C(void);

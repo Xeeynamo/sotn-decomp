@@ -156,7 +156,8 @@ void EntitySecretStairs(Entity* self) {
             self->ext.secretStairs.unk84 = true;
             otherEntity = self + 1;
             for (i = 0; i < 3; i++, otherEntity++) {
-                CreateEntityFromCurrentEntity(E_ID(SECRET_STAIRS), otherEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(SECRET_STAIRS), otherEntity);
                 otherEntity->params = i + 1;
             }
 

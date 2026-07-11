@@ -236,7 +236,8 @@ void EntityGurkha(Entity* self) {
     case 2:
         for (parts = D_80182F04, part = self; parts->eArrayOffset; parts++) {
             ent_s0 = self + parts->eArrayOffset;
-            CreateEntityFromCurrentEntity(E_GURKHA_BODY_PARTS, ent_s0);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)
+            (E_GURKHA_BODY_PARTS, ent_s0);
             ent_s0->ext.GH_Props.length = parts->length;
             ent_s0->ext.GH_Props.parent = self + parts->eArrayParentOffset;
             ent_s0->params = parts->params + 0x100;
@@ -248,7 +249,7 @@ void EntityGurkha(Entity* self) {
         self->nextPart = part;
         self->parent = NULL;
         ent_s0 = self + 15;
-        CreateEntityFromCurrentEntity(E_GURKHA_WEAPON, ent_s0);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_GURKHA_WEAPON, ent_s0);
         ent_s0->ext.GH_Props.length = 0;
         ent_s0->ext.GH_Props.parent = self + 5;
         ent_s0->zPriority = self->zPriority + 3;

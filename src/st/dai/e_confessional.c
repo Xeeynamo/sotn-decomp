@@ -322,8 +322,8 @@ void EntityConfessionalGhost(Entity* self) {
             if (!--self->ext.confessionalGhost.timer) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
-                    CreateEntityFromCurrentEntity(
-                        E_ID(CONFESSIONAL_BLADES), entity);
+                    OVL_EXPORT(CreateEntityFromCurrentEntity)
+                    (E_ID(CONFESSIONAL_BLADES), entity);
                     entity->params = self->ext.confessionalGhost.numBlades;
                 }
                 self->ext.confessionalGhost.numBlades++;
@@ -351,8 +351,8 @@ void EntityConfessionalGhost(Entity* self) {
             if (!--self->ext.confessionalGhost.timer) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
-                    CreateEntityFromCurrentEntity(
-                        E_ID(CONFESSIONAL_BLADES), entity);
+                    OVL_EXPORT(CreateEntityFromCurrentEntity)
+                    (E_ID(CONFESSIONAL_BLADES), entity);
                     entity->params = 4;
                 }
                 self->ext.confessionalGhost.timer = 128;

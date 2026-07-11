@@ -795,8 +795,8 @@ void EntityFrozenHalfBlizzard(Entity* self) {
         if (!(self->ext.frozenHalf.timer & 0xF)) {
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                CreateEntityFromCurrentEntity(
-                    E_FROZEN_HALF_FALLING_ICE, entity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_FROZEN_HALF_FALLING_ICE, entity);
                 entity->posY.i.hi = -0x20;
                 entity->posX.i.hi =
                     falling_icicle_posX[self->ext.frozenHalf.iciclePositionIdx];
@@ -808,7 +808,8 @@ void EntityFrozenHalfBlizzard(Entity* self) {
 
         entity = AllocEntity(&g_Entities[64], &g_Entities[TOTAL_ENTITY_COUNT]);
         if (entity != NULL) {
-            CreateEntityFromCurrentEntity(E_FROZEN_HALF_FALLING_ICE, entity);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)
+            (E_FROZEN_HALF_FALLING_ICE, entity);
             entity->posY.i.hi = -0x10;
             entity->posX.i.hi = (OVL_EXPORT(Random)() * 2) + posXOffset;
             entity->params = 1;

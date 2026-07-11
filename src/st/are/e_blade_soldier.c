@@ -184,7 +184,8 @@ void EntityBladeSoldier(Entity* self) {
     case INIT:
         InitializeEntity(g_EInitBladeSoldier);
         entity = self + 1;
-        CreateEntityFromCurrentEntity(E_BLADE_SOLDIER_ATTACK_HITBOX, entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)
+        (E_BLADE_SOLDIER_ATTACK_HITBOX, entity);
         break;
     case FALL_TO_GROUND:
         if (UnkCollisionFunc3(sensors_ground)) {
@@ -346,7 +347,8 @@ void EntityBladeSoldier(Entity* self) {
                 break;
             }
 
-            CreateEntityFromCurrentEntity(E_BLADE_SOLDIER_DEATH_PARTS, entity);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)
+            (E_BLADE_SOLDIER_DEATH_PARTS, entity);
             entity->facingLeft = self->facingLeft;
             entity->params = i;
             entity->ext.bladeSoldier.deathPartFallDuration =

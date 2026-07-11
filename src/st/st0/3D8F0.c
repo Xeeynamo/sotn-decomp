@@ -284,7 +284,7 @@ void func_801BD8F0(Entity* self) {
             if (var_s8 > 14) {
                 self->ext.GS_Props.pickupFlag = 0;
                 entity = self + 1;
-                CreateEntityFromCurrentEntity(E_ID_24, entity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID_24, entity);
             }
         }
         if (var_s8 == 15 * 15) {
@@ -293,7 +293,7 @@ void func_801BD8F0(Entity* self) {
         break;
     case 7:
         entity = self + 1;
-        CreateEntityFromCurrentEntity(E_ID_24, entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID_24, entity);
         DestroyEntity(self);
         break;
     }

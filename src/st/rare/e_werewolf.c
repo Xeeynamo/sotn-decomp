@@ -187,7 +187,8 @@ void EntityWerewolf(Entity* self) {
     case INIT:
         InitializeEntity(g_EInitWerewolf);
         entity = self + 1;
-        CreateEntityFromCurrentEntity(E_WEREWOLF_ATTACK_HITBOX, entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)
+        (E_WEREWOLF_ATTACK_HITBOX, entity);
         // fallthrough
     case FALL_TO_GROUND:
         if (UnkCollisionFunc3(sensors_ground) & 1) {

@@ -493,7 +493,8 @@ void EntityVenusWeed(Entity* self) {
             entity = self + 1; // Flower
 
             // Spawn flower
-            CreateEntityFromCurrentEntity(E_VENUS_WEED_FLOWER, entity);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)
+            (E_VENUS_WEED_FLOWER, entity);
             entity->posX.i.hi = self->posX.i.hi;
             entity->posY.i.hi = self->posY.i.hi - FlowerOffsetY;
 
@@ -507,7 +508,8 @@ void EntityVenusWeed(Entity* self) {
         case GROW_TENDRILS:
             entity = self + 2; // Tendrils start
             for (i = 0; i < TENDRIL_COUNT; i++, entity++) {
-                CreateEntityFromCurrentEntity(E_VENUS_WEED_TENDRIL, entity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_VENUS_WEED_TENDRIL, entity);
                 entity->params = i;
                 entity->zPriority = self->zPriority + 1;
             }

@@ -30,11 +30,13 @@ void func_us_801BB200(Entity* self) {
         if (!self->params) {
             newEntity = self + 1;
             for (i = 1; i < 4; i++, newEntity++) {
-                CreateEntityFromCurrentEntity(E_ID(ID_40), newEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(ID_40), newEntity);
                 newEntity->params = i;
             }
             for (i = 0; i < 4; i++, newEntity++) {
-                CreateEntityFromCurrentEntity(E_ID(ID_40), newEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(ID_40), newEntity);
                 newEntity->params = i + 0x100;
             }
         }

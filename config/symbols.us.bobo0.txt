@@ -57,7 +57,7 @@ BO0_HitDetection = 0x801BC510; // source=match
 BO0_EntityDamageDisplay = 0x801BD628; // source=match
 InitRoomEntities = 0x801BE528; // source=match
 BO0_UpdateRoomPosition = 0x801BE6A0; // source=match
-CreateEntityFromCurrentEntity = 0x801BE754; // source=match
+BO0_CreateEntityFromCurrentEntity = 0x801BE754; // source=match
 CreateEntityFromEntity = 0x801BE7C8; // source=match
 BO0_EntityRedDoor = 0x801BE8BC; // source=match
 DestroyEntity = 0x801BF4F4; // source=match

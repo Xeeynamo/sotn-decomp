@@ -228,7 +228,8 @@ static void func_us_801D1388(Primitive* prim) {
     if ((dx > 0) && !prim->next->v2 && (dx < 0x10)) {
         tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
         if (tempEntity != NULL) {
-            CreateEntityFromCurrentEntity(E_ARMOR_LORD_UNK2, tempEntity);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)
+            (E_ARMOR_LORD_UNK2, tempEntity);
             tempEntity->posX.i.hi = prim->x3;
             tempEntity->posY.i.hi = prim->y0;
             tempEntity->facingLeft = g_CurrentEntity->facingLeft;

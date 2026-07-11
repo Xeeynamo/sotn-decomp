@@ -93,11 +93,11 @@ void EntityCoffin(Entity* self) {
             coffinSpawnEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (coffinSpawnEntity != NULL) {
                 if (!self->params) {
-                    CreateEntityFromCurrentEntity(
-                        E_ID(BLOOD_SKELETON), coffinSpawnEntity);
+                    OVL_EXPORT(CreateEntityFromCurrentEntity)
+                    (E_ID(BLOOD_SKELETON), coffinSpawnEntity);
                 } else {
-                    CreateEntityFromCurrentEntity(
-                        E_HEART_DROP, coffinSpawnEntity);
+                    OVL_EXPORT(CreateEntityFromCurrentEntity)
+                    (E_HEART_DROP, coffinSpawnEntity);
                     coffinSpawnEntity->params = self->params;
                 }
             }

@@ -1981,14 +1981,14 @@ void EntityWaterSpray(Entity* self) {
         } else {
             newEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEnt != NULL) {
-                CreateEntityFromCurrentEntity(E_ID(ID_27), newEnt);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(ID_27), newEnt);
                 newEnt->params = 1;
             }
             self->ext.et_waterAlcove.entity7E = newEnt;
 
             newEnt = AllocEntity(newEnt, &g_Entities[256]);
             if (newEnt != NULL) {
-                CreateEntityFromCurrentEntity(E_ID(ID_26), newEnt);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(ID_26), newEnt);
                 newEnt->params = 1;
             }
             self->ext.et_waterAlcove.entity82 = newEnt;
@@ -2219,7 +2219,8 @@ void func_us_801C4D2C(Entity* self) {
         if (tile == 0x701 || tile == 0x705) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity) {
-                CreateEntityFromCurrentEntity(E_ID(ID_54), newEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(ID_54), newEntity);
                 newEntity->posX.i.hi =
                     ((x & 0xFFF0) + 8) - tilemap->scrollX.i.hi;
                 newEntity->posY.i.hi = 0xB2 - tilemap->scrollY.i.hi;
@@ -2231,7 +2232,8 @@ void func_us_801C4D2C(Entity* self) {
         } else if (tile == 0x70C) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity) {
-                CreateEntityFromCurrentEntity(E_ID(ID_54), newEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(ID_54), newEntity);
                 newEntity->posX.i.hi =
                     ((x & 0xFFF0) + 8) - tilemap->scrollX.i.hi;
                 newEntity->posY.i.hi = 0xB2 - tilemap->scrollY.i.hi;
@@ -2297,7 +2299,7 @@ void func_us_801C5134(void) {
         if (newEntity == NULL) {
             break;
         }
-        CreateEntityFromCurrentEntity(E_ID(ID_5C), newEntity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(ID_5C), newEntity);
         newEntity->posX.i.hi += D_us_801815BC[i];
         newEntity->posY.i.hi += D_us_801815CC[i];
         newEntity->params = i;
@@ -2309,7 +2311,7 @@ void func_us_801C5134(void) {
         if (newEntity == NULL) {
             break;
         }
-        CreateEntityFromCurrentEntity(E_EXPLOSION, newEntity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_EXPLOSION, newEntity);
         newEntity->params = 17;
         newEntity->posX.i.hi += ((rand() & 7) * 2) + offsetX - 7;
         newEntity->posY.i.hi += ((rand() & 7) * 4) - 7;
@@ -2499,7 +2501,7 @@ void func_us_801C5628(Entity* self) {
         g_api.PlaySfxVolPan(SFX_WALL_DEBRIS_A, 0x7F, 8);
         player = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (player != NULL) {
-            CreateEntityFromCurrentEntity(E_MESSAGE_BOX, player);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)(E_MESSAGE_BOX, player);
             player->posX.i.hi = 0x80;
             player->posY.i.hi = 0xB0;
             player->ext.messageBox.label = D_us_80181644;
@@ -2544,7 +2546,8 @@ void func_us_801C58A0(Entity* self) {
         if (g_CastleFlags[NO4_SKELETON_APE_AND_BRIDGE]) {
             newEnt = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (newEnt != NULL) {
-                CreateEntityFromCurrentEntity(E_ID(SKELETON_APE), newEnt);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(SKELETON_APE), newEnt);
                 newEnt->params = 2;
                 newEnt->posY.i.hi -= 0x60;
                 newEnt->posX.i.hi += 0x60;

@@ -96,7 +96,8 @@ void EntityKillerFish(Entity* self) {
             if (entity == NULL) {
                 break;
             }
-            CreateEntityFromCurrentEntity(E_ID(KILLER_FISH_DEATH_PUFF), entity);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)
+            (E_ID(KILLER_FISH_DEATH_PUFF), entity);
             if (self->facingLeft) {
                 entity->posX.i.hi += *ptr++;
             } else {

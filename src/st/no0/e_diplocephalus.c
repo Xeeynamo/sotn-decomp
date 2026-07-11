@@ -275,7 +275,8 @@ void EntityDiplocephalus(Entity* self) {
 
         for (i = 0; i < 4; i++) {
             DestroyEntity(++entityRef);
-            CreateEntityFromCurrentEntity(E_DIPLOCEPHALUS_FOOT, entityRef);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)
+            (E_DIPLOCEPHALUS_FOOT, entityRef);
             if (i < 2) {
                 entityRef->zPriority = self->zPriority + 8;
             } else {
@@ -295,7 +296,8 @@ void EntityDiplocephalus(Entity* self) {
 
         for (i = 0; i < 4; i++) {
             entityRef++;
-            CreateEntityFromCurrentEntity(E_DIPLOCEPHALUS_LEG, entityRef);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)
+            (E_DIPLOCEPHALUS_LEG, entityRef);
             if (i < 2) {
                 entityRef->zPriority = self->zPriority + 4;
             } else {
@@ -317,7 +319,8 @@ void EntityDiplocephalus(Entity* self) {
         }
 
         entityRef++;
-        CreateEntityFromCurrentEntity(E_DIPLOCEPHALUS_TAIL, entityRef);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)
+        (E_DIPLOCEPHALUS_TAIL, entityRef);
         entityRef->zPriority = self->zPriority;
         entityRef->facingLeft = self->facingLeft ^ 1;
         entityRef->ext.diploTail.diplo = self;

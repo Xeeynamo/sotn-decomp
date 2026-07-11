@@ -142,7 +142,7 @@ void EntityUnkId18(Entity* self) {
         for (i = 0; i < 2; i++) {
             dop = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (dop != NULL) {
-                CreateEntityFromCurrentEntity(E_ID(ID_1C), dop);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(ID_1C), dop);
                 dop->posX.i.hi = offsetX - 64 + (i * 128);
                 dop->posY.i.hi = offsetY;
                 dop->params = i;

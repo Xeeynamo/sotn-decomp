@@ -139,7 +139,7 @@ void EntitySlogra(Entity* self) {
         InitializeEntity(g_EInitSlograNP3);
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         otherEnt = self + 1;
-        CreateEntityFromCurrentEntity(E_ID(SLOGRA_SPEAR), otherEnt);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(SLOGRA_SPEAR), otherEnt);
 
     case SLOGRA_FLOOR_ALIGN:
         if (UnkCollisionFunc3(sensors1) & 1) {

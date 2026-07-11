@@ -191,7 +191,7 @@ void EntitySalemWitch(Entity* self) {
         InitializeEntity(g_EInitSalemWitch);
         self->hitboxOffY = 0xA;
         entity = self + 1;
-        CreateEntityFromCurrentEntity(E_SALEM_WITCH_GLOW, entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_SALEM_WITCH_GLOW, entity);
         entity->zPriority = self->zPriority - 1;
         SetStep(WAIT_TO_AGGRO);
         break;

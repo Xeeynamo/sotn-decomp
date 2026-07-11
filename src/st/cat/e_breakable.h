@@ -103,7 +103,7 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
     if (self->hitParams) {
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromCurrentEntity(E_EXPLOSION, entity);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)(E_EXPLOSION, entity);
             entity->params = explosion_types[breakableType];
         }
         switch (breakableType) {

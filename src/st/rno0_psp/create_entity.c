@@ -27,6 +27,6 @@ INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/create_entity", InitRoomEntities)
 
 INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/create_entity", RNO0_UpdateRoomPosition);
 
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/create_entity", CreateEntityFromCurrentEntity);
+INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/create_entity", RNO0_CreateEntityFromCurrentEntity);
 
 INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/create_entity", CreateEntityFromEntity);

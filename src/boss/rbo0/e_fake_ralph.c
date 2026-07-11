@@ -205,10 +205,10 @@ void EntityFakeRalph(Entity* self) {
         InitializeEntity(D_us_801804AC);
         self->hitboxState = 0;
         entity = self - 1;
-        CreateEntityFromCurrentEntity(E_COFFIN, entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_COFFIN, entity);
         entity->posY.i.hi = 0xBA - g_Tilemap.scrollY.i.hi;
         entity = self + 1;
-        CreateEntityFromCurrentEntity(E_UNK_27, entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_UNK_27, entity);
         self->ext.ralph.itemEntityId = E_BONE_CROSS;
         SetStep(1);
         // fallthrough

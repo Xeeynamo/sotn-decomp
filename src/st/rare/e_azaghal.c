@@ -414,7 +414,8 @@ static void func_us_801B33F4(void) {
         for (i = 2; i < 8; i++) {
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                CreateEntityFromCurrentEntity(E_AZAGHAL_SWORD_HITBOX, entity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_AZAGHAL_SWORD_HITBOX, entity);
                 entity->posX.i.hi = posX + ((swordHitboxOffsetX * i) / 8);
                 entity->posY.i.hi = posY + ((swordHitboxOffsetY * i) / 8);
             }
@@ -1079,7 +1080,8 @@ void EntityAzaghal(Entity* self) {
                 entity = AllocEntity(
                     &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (entity != NULL) {
-                    CreateEntityFromCurrentEntity(E_EXPLOSION, entity);
+                    OVL_EXPORT(CreateEntityFromCurrentEntity)
+                    (E_EXPLOSION, entity);
                     posX = prim->x0 + prim->x1 + prim->x2 + prim->x3;
                     posX /= 4;
                     posY = prim->y0 + prim->y1 + prim->y2 + prim->y3;

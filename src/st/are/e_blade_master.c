@@ -237,7 +237,8 @@ void EntityBladeMaster(Entity* self) {
     case INIT:
         InitializeEntity(g_EInitBladeMaster);
         entity = self + 1;
-        CreateEntityFromCurrentEntity(E_BLADE_MASTER_ATTACK_HITBOX, entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)
+        (E_BLADE_MASTER_ATTACK_HITBOX, entity);
         break;
     case FALL_TO_GROUND:
         if (UnkCollisionFunc3(sensors_ground) & 1) {

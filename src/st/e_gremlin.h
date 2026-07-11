@@ -67,12 +67,12 @@ void EntityGremlin(Entity* self) {
         self->facingLeft = self->params;
 
         entity = self + 1;
-        CreateEntityFromCurrentEntity(E_GREMLIN_EFFECT, entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_GREMLIN_EFFECT, entity);
         entity->params = 0; // Glow effect
         entity->zPriority = self->zPriority - 2;
 
         entity = self + 2;
-        CreateEntityFromCurrentEntity(E_GREMLIN_EFFECT, entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_GREMLIN_EFFECT, entity);
         entity->params = 1; // Fire (in spoon) effect
         entity->zPriority = self->zPriority - 1;
         // fallthrough

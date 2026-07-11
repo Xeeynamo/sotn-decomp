@@ -364,7 +364,7 @@ void EntityBellSpawner(Entity* self) {
     if (!self->step) {
         InitializeEntity(OVL_EXPORT(EInitInteractable));
         for (bell = self + 1, count = 0; count < 2; count++, bell++) {
-            CreateEntityFromCurrentEntity(E_ID(BELL), bell);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(BELL), bell);
             bell->posX.i.hi = *ptr++ - g_Tilemap.scrollX.i.hi;
             bell->posY.i.hi = *ptr++ - g_Tilemap.scrollY.i.hi;
             bell->params = *ptr++;

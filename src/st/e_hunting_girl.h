@@ -361,7 +361,8 @@ void EntityHuntingGirl(Entity* self) {
         }
         entity = self + 1;
         for (count = 0; count < 3; count++, entity++) {
-            CreateEntityFromCurrentEntity(E_HUNTING_GIRL_ATTACK, entity);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)
+            (E_HUNTING_GIRL_ATTACK, entity);
             entity->params = count + 1;
         }
         self->ext.huntingGirl.cycleTimer = 512;

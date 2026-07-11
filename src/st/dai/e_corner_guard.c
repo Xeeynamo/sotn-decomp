@@ -94,7 +94,8 @@ static void CornerGuardDeath(EntranceCascadePrim* prim) {
         if (!prim->next->velocityX.i.lo) {
             explosion = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (explosion != NULL) {
-                CreateEntityFromCurrentEntity(E_EXPLOSION, explosion);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_EXPLOSION, explosion);
                 explosion->posX.i.hi = prim->next->x1;
                 explosion->posY.i.hi = prim->next->y0;
                 explosion->params = EXPLOSION_SMALL;
@@ -123,7 +124,8 @@ void EntityCornerGuard(Entity* self) {
         InitializeEntity(g_EInitCornerGuard);
         self->animCurFrame = 1;
         entity = self + 1;
-        CreateEntityFromCurrentEntity(E_CORNER_GUARD_ATTACK, entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)
+        (E_CORNER_GUARD_ATTACK, entity);
         // fallthrough
     case CORNER_GUARD_HEAD_INIT:
         if (UnkCollisionFunc3(sensors_head) & 1) {

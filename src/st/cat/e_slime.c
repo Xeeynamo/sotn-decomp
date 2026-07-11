@@ -360,7 +360,8 @@ void func_us_801D3468(s32 primCount) {
             !(OVL_EXPORT(Random)() & 0x3F)) {
             ent = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (ent != NULL) {
-                CreateEntityFromCurrentEntity(E_INTENSE_EXPLOSION, ent);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_INTENSE_EXPLOSION, ent);
                 ent->params = 0x10;
                 ent->posX.i.hi = prim->x3;
                 ent->posY.i.hi = prim->y3;
@@ -384,7 +385,8 @@ void func_us_801D3468(s32 primCount) {
                 !(OVL_EXPORT(Random)() & 0x3F)) {
                 ent = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (ent != NULL) {
-                    CreateEntityFromCurrentEntity(E_INTENSE_EXPLOSION, ent);
+                    OVL_EXPORT(CreateEntityFromCurrentEntity)
+                    (E_INTENSE_EXPLOSION, ent);
                     ent->params = 0x10;
                     ent->posX.i.hi = prim->x3;
                     ent->posY.i.hi = prim->y3;

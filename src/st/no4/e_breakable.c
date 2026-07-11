@@ -68,7 +68,7 @@ void EntityBreakable(Entity* self) {
     if (self->hitParams) {
         tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (tempEntity != NULL) {
-            CreateEntityFromCurrentEntity(E_EXPLOSION, tempEntity);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)(E_EXPLOSION, tempEntity);
             tempEntity->params = params_arr[params];
         }
         switch (params) {
@@ -79,7 +79,8 @@ void EntityBreakable(Entity* self) {
         case 9:
             tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (tempEntity != NULL) {
-                CreateEntityFromCurrentEntity(E_ID(ID_35), tempEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(ID_35), tempEntity);
                 tempEntity->params = 0x100;
             }
             g_api.PlaySfx(SFX_GLASS_BREAK_E);

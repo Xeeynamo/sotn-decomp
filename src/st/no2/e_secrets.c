@@ -141,8 +141,8 @@ void func_us_801B59C4(Primitive* prim) {
             if (LOW(prim->next->r1) > -0x4000) {
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromCurrentEntity(
-                        E_INTENSE_EXPLOSION, tempEntity);
+                    OVL_EXPORT(CreateEntityFromCurrentEntity)
+                    (E_INTENSE_EXPLOSION, tempEntity);
                     tempEntity->posX.i.hi = posX;
                     tempEntity->posY.i.hi = posY;
                     tempEntity->params = 0x10;

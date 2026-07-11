@@ -110,10 +110,10 @@ void EntityFakeGrant(Entity* self) {
         InitializeEntity(D_us_801804B8);
         self->hitboxState = 0;
         entity = self - 1;
-        CreateEntityFromCurrentEntity(E_ID(COFFIN), entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(COFFIN), entity);
         entity->posY.i.hi = 0xBA - g_Tilemap.scrollY.i.hi;
         entity = self + 1;
-        CreateEntityFromCurrentEntity(E_ID(UNK_26), entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(UNK_26), entity);
         SetStep(1);
         // fallthrough
 

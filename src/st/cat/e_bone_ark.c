@@ -942,7 +942,8 @@ static void RenderDeathParts(Primitive* prim) {
         if (LOW(prim->next->r1) > ((prim->next->r3 >> 1) << 0xF) + 0x34000) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(E_EXPLOSION, newEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_EXPLOSION, newEntity);
 
                 if (prim->next->r3 >> 1) {
                     newEntity->params = EXPLOSION_SMALL_MULTIPLE;

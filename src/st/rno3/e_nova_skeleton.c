@@ -271,7 +271,8 @@ void EntityNovaSkeleton(Entity* self) {
             if (other == NULL) {
                 break;
             }
-            CreateEntityFromCurrentEntity(E_NOVA_DEATH_PARTS, other);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)
+            (E_NOVA_DEATH_PARTS, other);
             other->facingLeft = self->facingLeft;
             other->params = i;
             other->ext.nova.deathPartLife = death_parts_lifetimes[i];

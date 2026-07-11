@@ -473,7 +473,7 @@ void EntityDracula(Entity* self) {
         self->ext.dracula.unkA1 = 1;
         self->facingLeft = 1;
         entity = self + 1;
-        CreateEntityFromCurrentEntity(E_ID(DRACULA_UNK1D), entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(DRACULA_UNK1D), entity);
         entity->zPriority = self->zPriority + 1;
 
         primIndex = g_api.func_800EDB58(PRIM_GT4, 128);
@@ -869,11 +869,13 @@ void EntityDracula(Entity* self) {
             }
 
             entity = self + 2;
-            CreateEntityFromCurrentEntity(E_ID(DRACULA_UNK2B), entity);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)
+            (E_ID(DRACULA_UNK2B), entity);
             entity->facingLeft = self->facingLeft;
 
             entity = self + 5;
-            CreateEntityFromCurrentEntity(E_ID(DRACULA_UNK20), entity);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)
+            (E_ID(DRACULA_UNK20), entity);
             entity->facingLeft = self->facingLeft;
             entity->posY.i.hi += 2;
             self->step_s++;

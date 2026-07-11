@@ -159,7 +159,7 @@ void EntityYorick(Entity* self) {
             if (entity == NULL) {
                 break;
             }
-            CreateEntityFromCurrentEntity(E_SKELETON_PARTS, entity);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)(E_SKELETON_PARTS, entity);
             entity->facingLeft = self->facingLeft;
             entity->params = i;
             entity->ext.skeleton.explosionTimer2 = D_us_801814BC[i];

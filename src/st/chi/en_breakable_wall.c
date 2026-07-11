@@ -308,7 +308,7 @@ void EntityBreakableWall(Entity* self) {
         prim->x1 = prim->x3 -= 0x10;
         entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
         if (entity != NULL) {
-            CreateEntityFromCurrentEntity(E_HEART_DROP, entity);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)(E_HEART_DROP, entity);
             entity->posX.i.hi = 0x20 - g_Tilemap.scrollX.i.hi;
             entity->posY.i.hi = 0x188 - g_Tilemap.scrollY.i.hi;
             entity->params = 3;

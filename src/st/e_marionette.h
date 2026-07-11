@@ -163,7 +163,8 @@ static void func_us_801D6474(Primitive* prim) {
         if (!prim->next->x3) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(E_EXPLOSION, newEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_EXPLOSION, newEntity);
                 newEntity->posX.i.hi = prim->next->x1;
                 newEntity->posY.i.hi = prim->next->y0;
                 newEntity->params = 0;

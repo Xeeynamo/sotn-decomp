@@ -47,10 +47,12 @@ void EntityCloakedKnight(Entity* self) {
         prim->priority = 0xC0;
         prim->drawMode = DRAW_HIDE | DRAW_UNK02;
         entity = self + 1;
-        CreateEntityFromCurrentEntity(E_CLOAKED_KNIGHT_CLOAK, entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)
+        (E_CLOAKED_KNIGHT_CLOAK, entity);
         entity->zPriority = self->zPriority - 1;
         entity = self + 2;
-        CreateEntityFromCurrentEntity(E_CLOAKED_KNIGHT_SWORD, entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)
+        (E_CLOAKED_KNIGHT_SWORD, entity);
         entity->zPriority = self->zPriority + 1;
         SetStep(2);
         break;
@@ -374,7 +376,8 @@ void EntityCloakedKnightSword(Entity* self) {
         self->drawFlags = ENTITY_ROTATE;
         if (!self->params) {
             entity = self + 1;
-            CreateEntityFromCurrentEntity(E_CLOAKED_KNIGHT_SWORD, entity);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)
+            (E_CLOAKED_KNIGHT_SWORD, entity);
             entity->params = 1;
         } else {
             self->flags |= FLAG_UNK_2000;

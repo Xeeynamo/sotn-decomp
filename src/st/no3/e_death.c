@@ -116,7 +116,8 @@ void EntityDeathCutsceneManager(Entity* self) {
             g_PauseAllowed = true;
             otherEnt = &g_Entities[192];
             DestroyEntity(otherEnt);
-            CreateEntityFromCurrentEntity(E_ID(BG_LIGHTNING), otherEnt);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)
+            (E_ID(BG_LIGHTNING), otherEnt);
         }
         g_Player.padSim = 0;
         g_Player.demo_timer = 1;
@@ -324,7 +325,8 @@ void EntityDeath(Entity* self) {
                 self->unk5A = 0x44;
                 self->ext.death.unk7C = 0;
                 DestroyEntity(newEntity);
-                CreateEntityFromCurrentEntity(E_ID(DEATH_SCYTHE), newEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(DEATH_SCYTHE), newEntity);
                 prim = &g_PrimBuf[primIndex];
 
                 for (i = 0; prim != NULL; i++) {
@@ -377,8 +379,8 @@ void EntityDeath(Entity* self) {
         if (!(self->rotate & 0x70)) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != 0) {
-                CreateEntityFromCurrentEntity(
-                    E_ID(DEATH_SCYTHE_SHADOW), newEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(DEATH_SCYTHE_SHADOW), newEntity);
                 newEntity->rotate = self->rotate;
                 newEntity->animCurFrame = 0x3A;
             }
@@ -554,8 +556,8 @@ void EntityDeath(Entity* self) {
         if ((self->ext.death.moveTimer & 3) == 0) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(
-                    E_ID(DEATH_SCYTHE_SHADOW), newEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(DEATH_SCYTHE_SHADOW), newEntity);
                 newEntity->animCurFrame = self->animCurFrame;
                 newEntity->params = 1;
             }
@@ -604,8 +606,8 @@ void EntityDeathScythe(Entity* self) {
                 if (otherEntity == NULL) {
                     break;
                 }
-                CreateEntityFromCurrentEntity(
-                    E_ID(DEATH_SCYTHE_SHADOW), otherEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(DEATH_SCYTHE_SHADOW), otherEntity);
                 otherEntity->animCurFrame = self->animCurFrame;
                 otherEntity->params = 1;
                 break;

@@ -140,7 +140,7 @@ void EntityJackOBones(Entity* self) {
             other = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (other != NULL) {
                 PlaySfxPositional(SFX_BONE_THROW);
-                CreateEntityFromCurrentEntity(E_JACKO_JACK, other);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)(E_JACKO_JACK, other);
                 if (self->params) {
                     xShift = -16;
                 } else {
@@ -195,7 +195,8 @@ void EntityJackOBones(Entity* self) {
             if (other == NULL) {
                 break;
             }
-            CreateEntityFromCurrentEntity(E_JACKO_DEATH_PARTS, other);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)
+            (E_JACKO_DEATH_PARTS, other);
             other->facingLeft = self->facingLeft;
             other->params = i;
             other->params |= (self->params << 8);

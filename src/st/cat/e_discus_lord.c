@@ -226,7 +226,8 @@ void EntityDiscusLord(Entity* self) {
                 }
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
-                    CreateEntityFromCurrentEntity(E_INTENSE_EXPLOSION, entity);
+                    OVL_EXPORT(CreateEntityFromCurrentEntity)
+                    (E_INTENSE_EXPLOSION, entity);
                     entity->posX.i.hi = posX;
                     entity->posY.i.hi = posY;
                 }
@@ -337,7 +338,8 @@ void EntityDiscusLord(Entity* self) {
         if (!--self->ext.discusLord.unk82) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromCurrentEntity(E_INTENSE_EXPLOSION, entity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_INTENSE_EXPLOSION, entity);
                 entity->drawFlags |= ENTITY_SCALEY | ENTITY_SCALEX;
                 entity->scaleX = entity->scaleY = self->scaleX;
                 entity->drawFlags |= ENTITY_OPACITY;

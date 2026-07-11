@@ -66,7 +66,8 @@ void func_us_801C82B8(Entity* self) {
         self->ext.spearGuard.unk7C = 64;
         self->palette += 2;
         self->hitboxOffY = 4;
-        CreateEntityFromCurrentEntity(E_ID(SPEAR_GUARD_BLOCK), newEnt);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)
+        (E_ID(SPEAR_GUARD_BLOCK), newEnt);
         self->ext.spearGuard.unk7C = self->params * 8;
         self->animCurFrame = 5;
         break;
@@ -134,7 +135,7 @@ void func_us_801C82B8(Entity* self) {
 
             newEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEnt != NULL) {
-                CreateEntityFromCurrentEntity(E_EXPLOSION, newEnt);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)(E_EXPLOSION, newEnt);
                 newEnt->params = 2;
                 newEnt->zPriority = self->zPriority - 1;
                 newEnt->posX.i.hi += D_us_80181814[i].x;

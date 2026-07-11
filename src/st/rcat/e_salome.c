@@ -185,13 +185,13 @@ void EntitySalome(Entity* self) {
 
         // Spawn the magical shield entity
         entity = self + 1;
-        CreateEntityFromCurrentEntity(E_SALOME_EFFECTS, entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_SALOME_EFFECTS, entity);
         entity->zPriority = self->zPriority + 1;
         entity->params = 0;
 
         // Spawn the lantern flicker entity
         entity = self + 2;
-        CreateEntityFromCurrentEntity(E_SALOME_EFFECTS, entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_SALOME_EFFECTS, entity);
         entity->zPriority = self->zPriority - 1;
         entity->params = 1;
 

@@ -39,7 +39,7 @@ void func_us_801BB53C(Entity* self) {
             return;
         }
         tempEntity = &g_Entities[E_BOSS_WEAPON];
-        CreateEntityFromCurrentEntity(E_ID(ID_1F), tempEntity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(ID_1F), tempEntity);
         tempEntity->posX.i.hi = 0x200 - g_Tilemap.scrollX.i.hi;
         tempEntity->posY.i.hi = 0x2A0 - g_Tilemap.scrollY.i.hi;
 #ifdef VERSION_PSP
@@ -47,7 +47,7 @@ void func_us_801BB53C(Entity* self) {
 #else
         tempEntity--;
 #endif
-        CreateEntityFromCurrentEntity(E_ID(ID_12), tempEntity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(ID_12), tempEntity);
         tempEntity->params = 6;
         tempEntity->posX.i.hi = 0x200 - g_Tilemap.scrollX.i.hi;
         tempEntity->posY.i.hi = 0x270 - g_Tilemap.scrollY.i.hi;

@@ -263,7 +263,8 @@ void EntityBoneScimitar(Entity* self) {
             if (newEntity == NULL) {
                 break;
             }
-            CreateEntityFromCurrentEntity(E_BONE_SCIMITAR_PARTS, newEntity);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)
+            (E_BONE_SCIMITAR_PARTS, newEntity);
             newEntity->facingLeft = self->facingLeft;
             newEntity->params = i;
             newEntity->ext.skeleton.explosionTimer = dead_parts_selector[i];

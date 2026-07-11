@@ -228,7 +228,8 @@ void EntitySuccubus(Entity* self) {
         self->animCurFrame = 82;
         SetStep(SUCCUBUS_CS_1);
         entity = self + 1;
-        CreateEntityFromCurrentEntity(E_ID(SUCCUBUS_WING_OVERLAY), entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)
+        (E_ID(SUCCUBUS_WING_OVERLAY), entity);
 
     case SUCCUBUS_CS_1: // Disguised as Lisa
         if (g_CastleFlags[SUCCUBUS_CS] || (g_DemoMode != Demo_None)) {
@@ -370,7 +371,8 @@ void EntitySuccubus(Entity* self) {
         case SUCCUBUS_DYING_SETUP:
             PlaySfxPositional(SFX_SUCCUBUS_DEFEAT);
             entity = &g_Entities[200];
-            CreateEntityFromCurrentEntity(E_ID(SUCCUBUS_CUTSCENE), entity);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)
+            (E_ID(SUCCUBUS_CUTSCENE), entity);
             entity->params = 1;
             multiple_count = 0;
             D_80180664 |= 2;

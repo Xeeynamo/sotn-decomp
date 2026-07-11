@@ -702,7 +702,8 @@ void EntityFireDemonPopoutEffect(Entity* self) {
             (self->ext.fireDemon.timer < 32)) {
             otherEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (otherEnt != NULL) {
-                CreateEntityFromCurrentEntity(E_FD_FLAMES, otherEnt);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_FD_FLAMES, otherEnt);
                 otherEnt->params = 0x13;
                 otherEnt->zPriority = 0x72;
                 otherEnt->params += 0x7200;
@@ -1076,7 +1077,8 @@ void EntityFireDemon(Entity* self) {
             if (var_s3) {
                 other = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (other != NULL) {
-                    CreateEntityFromCurrentEntity(E_FD_FLAMES, other);
+                    OVL_EXPORT(CreateEntityFromCurrentEntity)
+                    (E_FD_FLAMES, other);
                     other->params = 0x22;
                     other->params += 0xD500;
                     other->posX.i.hi =
@@ -1097,7 +1099,7 @@ void EntityFireDemon(Entity* self) {
             }
             other = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (other != NULL) {
-                CreateEntityFromCurrentEntity(E_FD_FLAMES, other);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)(E_FD_FLAMES, other);
                 other->params = 0x20;
                 other->params += 0xD500;
                 other->posX.i.hi =

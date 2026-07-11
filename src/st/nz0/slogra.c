@@ -161,7 +161,7 @@ void EntitySlogra(Entity* self) {
     case SLOGRA_INIT:
         InitializeEntity(g_EInitSlogra);
         otherEnt = self + 1;
-        CreateEntityFromCurrentEntity(E_ID(SLOGRA_SPEAR), otherEnt);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(SLOGRA_SPEAR), otherEnt);
 
     case SLOGRA_FLOOR_ALIGN:
         if (EntitySlograSpecialCollision(sensors1) & 1) {

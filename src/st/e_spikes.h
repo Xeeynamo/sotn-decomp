@@ -185,7 +185,8 @@ static void SpikesBreak(u32 tileIdx) {
     for (count = START_COUNT; count < 3; count++) {
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromCurrentEntity(E_ID(SPIKES_PARTS), entity);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)
+            (E_ID(SPIKES_PARTS), entity);
             entity->posX.i.hi = tilePosX;
             entity->posY.i.hi = tilePosY;
 #ifdef HAS_ORIENTATIONS
@@ -197,7 +198,7 @@ static void SpikesBreak(u32 tileIdx) {
     }
     entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
     if (entity != NULL) {
-        CreateEntityFromCurrentEntity(E_INTENSE_EXPLOSION, entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_INTENSE_EXPLOSION, entity);
         entity->posX.i.hi = tilePosX;
         entity->posY.i.hi = tilePosY;
         // params & 0xF0 to EntityIntenseExplosion uses the dust cloud palette
@@ -205,7 +206,7 @@ static void SpikesBreak(u32 tileIdx) {
     }
     entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
     if (entity != NULL) {
-        CreateEntityFromCurrentEntity(E_ID(SPIKES_DUST), entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(SPIKES_DUST), entity);
         entity->posX.i.hi = tilePosX;
         entity->posY.i.hi = tilePosY;
     }
@@ -232,7 +233,8 @@ static void SpikesApplyDamage(u32 tileIdx) {
     // Create the damage entity at tile location
     spikesDamage = AllocEntity(&DAMAGE_ENT_START, &DAMAGE_ENT_END);
     if (spikesDamage != NULL) {
-        CreateEntityFromCurrentEntity(E_ID(SPIKES_DAMAGE), spikesDamage);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)
+        (E_ID(SPIKES_DAMAGE), spikesDamage);
         spikesDamage->posX.i.hi = tilePosX;
         spikesDamage->posY.i.hi = tilePosY;
     }
@@ -263,7 +265,7 @@ void EntitySpikes(Entity* self) {
         InitializeEntity(OVL_EXPORT(EInitSpawner));
 #ifdef DAMAGE_ENT_ON_SPAWN
         entity = self + 1;
-        CreateEntityFromCurrentEntity(E_ID(SPIKES_DAMAGE), entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(SPIKES_DAMAGE), entity);
 #endif
 #ifdef HAS_ORIENTATIONS
         break;

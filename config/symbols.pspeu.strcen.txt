@@ -1,4 +1,4 @@
-CreateEntityFromCurrentEntity = 0x09238598;
+RCEN_CreateEntityFromCurrentEntity = 0x09238598;
 CreateEntityFromEntity = 0x09238620;
 RCEN_Random = 0x0923A830;
 PlaySfxPositional = 0x09240AF8;

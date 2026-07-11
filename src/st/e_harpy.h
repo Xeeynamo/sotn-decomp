@@ -48,7 +48,7 @@ void EntityHarpy(Entity* self) {
         self->zPriority = 0x9C;
         self->ext.harpy.timer = 0x80;
         entity = self + 1;
-        CreateEntityFromCurrentEntity(E_HARPY_KICK, entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_HARPY_KICK, entity);
         SetStep(2);
         /* fallthrough */
     case 2:

@@ -269,7 +269,7 @@ void EntitySpellbook(Entity* self) {
             ptr += 4;
         }
         tempEntity = self + 1;
-        CreateEntityFromCurrentEntity(E_ID_3E, tempEntity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID_3E, tempEntity);
         tempEntity->params = 0;
         self->ext.spellbookMagicTome.unk9C.vx = 0x400;
         self->ext.spellbookMagicTome.unk8A = 0x300;
@@ -565,7 +565,7 @@ void EntityMagicTome(Entity* self) {
             ptr += 4;
         }
         tempEntity = self + 1;
-        CreateEntityFromCurrentEntity(E_ID_3E, tempEntity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID_3E, tempEntity);
         tempEntity->params = 2;
         self->ext.spellbookMagicTome.unk9C.vx = 0x400;
         self->ext.spellbookMagicTome.unk8A = 0x300;

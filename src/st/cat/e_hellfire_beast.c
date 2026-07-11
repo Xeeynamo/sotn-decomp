@@ -255,7 +255,8 @@ void EntityHellfireBeast(Entity* self) {
         // Spawn facing the player
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         entity = self + 1;
-        CreateEntityFromCurrentEntity(E_HELLFIRE_BEAST_PUNCH_HITBOX, entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)
+        (E_HELLFIRE_BEAST_PUNCH_HITBOX, entity);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 3);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
@@ -1138,8 +1139,8 @@ void EntityHellfireBeastFlamePillar(Entity* self) {
         for (i = 0; i <= 0; i++) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(
-                    E_HELLFIRE_BEAST_FLAME_PILLAR_ANIM, newEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_HELLFIRE_BEAST_FLAME_PILLAR_ANIM, newEntity);
                 newEntity->posX.i.hi = OVL_EXPORT(Random)() & 0xF;
                 newEntity->posY.i.hi = 0x20;
                 newEntity->params = OVL_EXPORT(Random)() & 1;

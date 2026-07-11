@@ -918,10 +918,12 @@ void EntityMermanSpawner(Entity* self) {
             newEntity = AllocEntity(&g_Entities[160], &g_Entities[170]);
             if (newEntity != 0) {
                 if (OVL_EXPORT(Random)() & 1) {
-                    CreateEntityFromCurrentEntity(E_MERMAN2, newEntity);
+                    OVL_EXPORT(CreateEntityFromCurrentEntity)
+                    (E_MERMAN2, newEntity);
                     newEntity->params = OVL_EXPORT(Random)() & 1;
                 } else {
-                    CreateEntityFromCurrentEntity(E_MERMAN, newEntity);
+                    OVL_EXPORT(CreateEntityFromCurrentEntity)
+                    (E_MERMAN, newEntity);
                 }
                 newEntity->posX.i.hi = xVar - g_Tilemap.scrollX.i.hi;
                 newEntity->posY.i.hi = yVar - g_Tilemap.scrollY.i.hi;

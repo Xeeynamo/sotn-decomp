@@ -150,7 +150,8 @@ void EntitySpearGuard(Entity* self) {
         self->ext.spearGuard.unk7C = 0x40;
         self->palette += self->params & 3;
         self->hitboxOffY = 4;
-        CreateEntityFromCurrentEntity(E_SPEAR_GUARD_BLOCK, tempEntity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)
+        (E_SPEAR_GUARD_BLOCK, tempEntity);
         break;
 
     case 1:
@@ -331,7 +332,8 @@ void EntitySpearGuard(Entity* self) {
                 }
                 PlaySfxPositional(SFX_WEAPON_SCRAPE_ECHO);
                 tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
-                CreateEntityFromCurrentEntity(E_THROWN_SPEAR, tempEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_THROWN_SPEAR, tempEntity);
                 tempEntity->facingLeft = self->facingLeft;
                 tempEntity->ext.thrownSpear.spearGuard = self;
             }
@@ -368,7 +370,8 @@ void EntitySpearGuard(Entity* self) {
                 }
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromCurrentEntity(E_EXPLOSION, tempEntity);
+                    OVL_EXPORT(CreateEntityFromCurrentEntity)
+                    (E_EXPLOSION, tempEntity);
                     tempEntity->params = 2;
                     tempEntity->zPriority = self->zPriority - 1;
                     tempEntity->posX.i.hi += explosionPositions[i].x;

@@ -509,7 +509,7 @@ void EntitySplashWater(Entity* self) {
 
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
-            CreateEntityFromCurrentEntity(E_WATER_DROP, newEntity);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)(E_WATER_DROP, newEntity);
             newEntity->velocityY = self->velocityY;
         }
         break;

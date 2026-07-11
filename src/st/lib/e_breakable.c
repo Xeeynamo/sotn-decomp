@@ -105,7 +105,7 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
     if (self->hitParams) {
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromCurrentEntity(E_EXPLOSION, entity);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)(E_EXPLOSION, entity);
             entity->params = explosion_types[breakableType];
         }
         switch (breakableType) {
@@ -119,7 +119,8 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
         case BUST:
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                CreateEntityFromCurrentEntity(E_BREAKABLE_DEBRIS, entity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_BREAKABLE_DEBRIS, entity);
                 entity->params = 256;
             }
             g_api.PlaySfx(SFX_GLASS_BREAK_E);

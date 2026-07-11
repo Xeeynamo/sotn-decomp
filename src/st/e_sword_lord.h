@@ -416,7 +416,8 @@ void EntitySwordLord(Entity* self) {
             if (collider.effects != EFFECT_NONE) {
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromCurrentEntity(E_EXPLOSION, tempEntity);
+                    OVL_EXPORT(CreateEntityFromCurrentEntity)
+                    (E_EXPLOSION, tempEntity);
                     tempEntity->params = 2;
                     tempEntity->posX.i.hi = posX;
                     tempEntity->posY.i.hi = posY;
@@ -443,7 +444,8 @@ void EntitySwordLord(Entity* self) {
         if (OVL_EXPORT(Random)() & 0xF) {
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
-                CreateEntityFromCurrentEntity(E_EXPLOSION, tempEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_EXPLOSION, tempEntity);
                 tempEntity->params = 2;
                 tempEntity->posX.i.hi = posX;
                 tempEntity->posY.i.hi = posY;

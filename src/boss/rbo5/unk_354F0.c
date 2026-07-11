@@ -51,12 +51,12 @@ void EntityUnkId1B(Entity* self) {
             self->params += leftBlockFlag;
             next = self + 1;
             for (i = 1; i < 4; i++, next++) {
-                CreateEntityFromCurrentEntity(E_ID(ID_1B), next);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(ID_1B), next);
                 next->params = i + leftBlockFlag;
             }
 
             for (i = 0; i < 4; i++, next++) {
-                CreateEntityFromCurrentEntity(E_ID(ID_1B), next);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(ID_1B), next);
                 next->params = i + rightBlockFlag;
             }
         }

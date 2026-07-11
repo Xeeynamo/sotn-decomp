@@ -614,12 +614,14 @@ void func_us_801C0B9C(Entity* self) {
         if (!self->params) {
             nextEntity = self + 1;
             for (i = 1; i < 4; i++, nextEntity++) {
-                CreateEntityFromCurrentEntity(E_ID(ID_57), nextEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(ID_57), nextEntity);
                 nextEntity->params = i;
             }
 
             for (i = 0; i < 4; i++, nextEntity++) {
-                CreateEntityFromCurrentEntity(E_ID(ID_57), nextEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(ID_57), nextEntity);
                 nextEntity->params = i + 0x100;
             }
         }

@@ -81,7 +81,8 @@ void func_801A805C(Entity* self) {
             } else if (params == 9) {
                 entityTwo = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entityTwo != NULL) {
-                    CreateEntityFromCurrentEntity(E_ID_26, entityTwo);
+                    OVL_EXPORT(CreateEntityFromCurrentEntity)
+                    (E_ID_26, entityTwo);
                     entityTwo->params = 0x100;
                 }
                 g_api.PlaySfx(SFX_GLASS_BREAK_E);
@@ -91,7 +92,8 @@ void func_801A805C(Entity* self) {
 
             entityTwo = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entityTwo != NULL) {
-                CreateEntityFromCurrentEntity(E_EXPLOSION, entityTwo);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_EXPLOSION, entityTwo);
                 entityTwo->params = explosion_params[params];
             }
             ReplaceBreakableWithItemDrop(self);
@@ -187,7 +189,8 @@ void func_801A8328(Entity* self) {
             g_api.PlaySfx(SFX_SMALL_FLAME_IGNITE);
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(E_EXPLOSION, newEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_EXPLOSION, newEntity);
                 newEntity->params = 0;
             }
             DestroyEntity(self);

@@ -60,12 +60,12 @@ void EntityValhallaKnight(Entity* self) {
         self->ext.valhallaKnight.unk84 =
             g_Tilemap.scrollX.i.hi + self->posX.i.hi;
         part = self + 1;
-        CreateEntityFromCurrentEntity(E_VALHALLA_KNIGHT_UNK1, part);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_VALHALLA_KNIGHT_UNK1, part);
         part->params = 0;
         self->nextPart = part;
         self->parent = NULL;
         part = self + 2;
-        CreateEntityFromCurrentEntity(E_VALHALLA_KNIGHT_UNK1, part);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_VALHALLA_KNIGHT_UNK1, part);
         part->params = 1;
         /* fallthrough */
     case 1:

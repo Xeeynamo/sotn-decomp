@@ -35,7 +35,8 @@ void EntityBossFightManager(Entity* self) {
         entity = self + 1;
         temp_s1 = (s16*)D_80181014;
         for (i = 0; i < LEN(D_80181014); i++, entity++, temp_s1 += 3) {
-            CreateEntityFromCurrentEntity(E_ID(BOSS_ROOM_BLOCK), entity);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)
+            (E_ID(BOSS_ROOM_BLOCK), entity);
             entity->params = temp_s1[2];
             entity->posX.i.hi = temp_s1[0] - g_Tilemap.scrollX.i.hi;
             entity->posY.i.hi = temp_s1[1] - g_Tilemap.scrollY.i.hi;
@@ -44,11 +45,11 @@ void EntityBossFightManager(Entity* self) {
         // 80 and 88, which allows the SLOGRA and GAIBON macros (self[8]) to
         // work.
         entity = &g_Entities[80];
-        CreateEntityFromCurrentEntity(E_ID(SLOGRA), entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(SLOGRA), entity);
         entity->posX.i.hi = 0x280 - g_Tilemap.scrollX.i.hi;
         entity->posY.i.hi = 0x1A0 - g_Tilemap.scrollY.i.hi;
         entity = &g_Entities[88];
-        CreateEntityFromCurrentEntity(E_ID(GAIBON), entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(GAIBON), entity);
         entity->posX.i.hi = 0x2A0 - g_Tilemap.scrollX.i.hi;
         entity->posY.i.hi = 0x160 - g_Tilemap.scrollY.i.hi;
         // fall through

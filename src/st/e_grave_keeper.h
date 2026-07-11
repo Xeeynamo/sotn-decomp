@@ -150,7 +150,8 @@ void EntityGraveKeeper(Entity* self) {
         InitializeEntity(g_EInitGraveKeeper);
         self->animCurFrame = 0xB;
         entity = self + 1;
-        CreateEntityFromCurrentEntity(E_GRAVE_KEEPER_HITBOX, entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)
+        (E_GRAVE_KEEPER_HITBOX, entity);
 #ifdef STAGE_IS_ARE
         self->zPriority = 0x5C;
 #endif

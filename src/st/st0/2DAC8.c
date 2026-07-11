@@ -245,7 +245,8 @@ void EntityDraculaFinalForm(Entity* self) {
             self->animCurFrame = 0;
             part = self + 1;
             for (i = 1; i < 4; i++, part++) {
-                CreateEntityFromCurrentEntity(E_ID(DRACULA_UNK20), part);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(DRACULA_UNK20), part);
                 part->zPriority = self->zPriority + 2;
                 part->params = i;
                 part->nextPart = part - 1;
@@ -687,7 +688,8 @@ void EntityDraculaFinalForm(Entity* self) {
             break;
         case 5:
             part = self + 1;
-            CreateEntityFromCurrentEntity(E_ID(DRACULA_UNK2C), part);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)
+            (E_ID(DRACULA_UNK2C), part);
             self->step_s++;
             primIndex = g_api.AllocPrimitives(PRIM_G4, 1);
             if (primIndex == -1) {
@@ -1270,7 +1272,8 @@ void func_801AF774(Entity* self) {
         if (self->ext.et_801AF774.unk90 && self->ext.et_801AF774.unk8E < 0x10) {
             self->ext.et_801AF774.unk90 = 0;
             entity = self + 1;
-            CreateEntityFromCurrentEntity(E_ID(DRACULA_UNK23), entity);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)
+            (E_ID(DRACULA_UNK23), entity);
         }
         break;
     case 4:

@@ -971,7 +971,8 @@ void EntityPlateLord(Entity* self) {
                 posY += (OVL_EXPORT(Random)() & 0x1F) - 0x10;
                 part = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (part != NULL) {
-                    CreateEntityFromCurrentEntity(E_EXPLOSION, part);
+                    OVL_EXPORT(CreateEntityFromCurrentEntity)
+                    (E_EXPLOSION, part);
                     part->params = 1;
                     part->zPriority = self->zPriority + 8;
                     part->posX.i.hi = posX;

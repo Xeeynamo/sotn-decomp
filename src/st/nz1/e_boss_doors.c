@@ -22,7 +22,7 @@ void EntityBossDoorTrigger(Entity* self) {
             return;
         }
         entity = &g_Entities[80];
-        CreateEntityFromCurrentEntity(E_ID(KARASUMAN), entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(KARASUMAN), entity);
         entity->posX.i.hi = 128 - g_Tilemap.scrollX.i.hi;
         entity->posY.i.hi = 176 - g_Tilemap.scrollY.i.hi;
         // fallthrough
@@ -40,12 +40,12 @@ void EntityBossDoorTrigger(Entity* self) {
 
     case 2:
         entity = self + 1;
-        CreateEntityFromCurrentEntity(E_ID(BOSS_DOORS), entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(BOSS_DOORS), entity);
         entity->posX.i.hi = -8 - g_Tilemap.scrollX.i.hi;
         entity->posY.i.hi = 128 - g_Tilemap.scrollY.i.hi;
         entity->params = 0;
         entity = self + 2;
-        CreateEntityFromCurrentEntity(E_ID(BOSS_DOORS), entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(BOSS_DOORS), entity);
         entity->posX.i.hi = 264 - g_Tilemap.scrollX.i.hi;
         entity->posY.i.hi = 128 - g_Tilemap.scrollY.i.hi;
         entity->params = 1;

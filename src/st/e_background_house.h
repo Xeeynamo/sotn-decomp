@@ -250,8 +250,8 @@ void Entity3DHouseSpawner(Entity* self) {
             if (tempEntity == NULL) {
                 break;
             }
-            CreateEntityFromCurrentEntity(
-                E_ID(3D_BACKGROUND_HOUSE), tempEntity);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)
+            (E_ID(3D_BACKGROUND_HOUSE), tempEntity);
             tempEntity->posX.i.hi = *ptr - g_Tilemap.scrollX.i.hi;
             ptr++;
             tempEntity->posY.i.hi = *ptr - g_Tilemap.scrollY.i.hi;

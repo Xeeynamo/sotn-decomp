@@ -94,7 +94,7 @@ static void AxeKnightUnkFunc1(AxePrim* prim) {
         if (!prim->next->timer) {
             newEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEnt != NULL) {
-                CreateEntityFromCurrentEntity(E_EXPLOSION, newEnt);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)(E_EXPLOSION, newEnt);
                 newEnt->posX.i.hi = prim->next->x1;
                 newEnt->posY.i.hi = prim->next->y0;
                 newEnt->params = 0;
@@ -520,7 +520,8 @@ void EntityAxeKnightBlue(Entity* self) {
             PlaySfxPositional(SFX_WHIP_TWIRL_SWISH);
             newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(E_AXE_KNIGHT_AXE, newEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_AXE_KNIGHT_AXE, newEntity);
                 newEntity->facingLeft = self->facingLeft;
                 newEntity->posY.i.hi -= 12;
                 if (newEntity->facingLeft) {
@@ -552,7 +553,8 @@ void EntityAxeKnightBlue(Entity* self) {
             PlaySfxPositional(SFX_WHIP_TWIRL_SWISH);
             newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(E_AXE_KNIGHT_AXE, newEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_AXE_KNIGHT_AXE, newEntity);
                 newEntity->facingLeft = self->facingLeft;
                 newEntity->params = 1;
                 newEntity->posY.i.hi += 12;
@@ -664,7 +666,8 @@ void EntityAxeKnightBlue(Entity* self) {
             PlaySfxPositional(SFX_WHIP_TWIRL_SWISH);
             newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(E_AXE_KNIGHT_AXE, newEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_AXE_KNIGHT_AXE, newEntity);
                 newEntity->facingLeft = self->facingLeft;
                 newEntity->params = 2;
                 newEntity->posY.i.hi -= 40;

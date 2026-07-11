@@ -156,7 +156,7 @@ void EntityGaibon(Entity* self) {
         InitializeEntity(g_EInitGaibonNP3);
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         other = self + 1;
-        CreateEntityFromCurrentEntity(E_ID(GAIBON_LEG), other);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(GAIBON_LEG), other);
         other->zPriority = self->zPriority + 4;
         SetStep(GAIBON_IDLE);
         break;

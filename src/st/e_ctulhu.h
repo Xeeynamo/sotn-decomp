@@ -537,7 +537,8 @@ void EntityCtulhu(Entity* self) {
                 newEntity = AllocEntity(&g_Entities[STAGE_ENTITY_START],
                                         &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (newEntity != NULL) {
-                    CreateEntityFromCurrentEntity(E_EXPLOSION, newEntity);
+                    OVL_EXPORT(CreateEntityFromCurrentEntity)
+                    (E_EXPLOSION, newEntity);
                     newEntity->posX.i.hi = prim->x0 + posX;
 #ifdef VERSION_PSP
                     newEntity->posY.i.hi = prim->y2 - 0x30 + posY;
@@ -550,7 +551,8 @@ void EntityCtulhu(Entity* self) {
             newEntity = AllocEntity(&g_Entities[STAGE_ENTITY_START],
                                     &g_Entities[TOTAL_ENTITY_COUNT]);
             if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(E_CTULHU_DEATH, newEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_CTULHU_DEATH, newEntity);
                 newEntity->posX.i.hi = self->posX.i.hi - 0x20 + posX;
                 newEntity->posY.i.hi = self->posY.i.hi + posY + 4;
                 newEntity->facingLeft = colRet;

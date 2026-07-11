@@ -101,13 +101,15 @@ void EntityBonePillarSkull(Entity* self) {
         if (UnkCollisionFunc3(sensors_bone_pillar) & 1) {
             if (self->params & 0x100) {
                 entity = self + 1;
-                CreateEntityFromCurrentEntity(E_BONE_PILLAR_SPIKE_BALL, entity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_BONE_PILLAR_SPIKE_BALL, entity);
                 entity->posX.i.hi = self->posX.i.hi + 8;
                 entity->posY.i.hi = self->posY.i.hi - 8;
                 self->params = 0;
             } else {
                 entity = self + 1;
-                CreateEntityFromCurrentEntity(E_BONE_PILLAR_SKULL, entity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_BONE_PILLAR_SKULL, entity);
                 entity->params = 1;
                 entity->posX.i.hi = self->posX.i.hi;
                 entity->posY.i.hi = self->posY.i.hi;

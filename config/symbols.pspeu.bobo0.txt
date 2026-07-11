@@ -1,6 +1,6 @@
 InitRoomEntities = 0x09238288;
 BO0_UpdateRoomPosition = 0x092384B8;
-CreateEntityFromCurrentEntity = 0x09238598;
+BO0_CreateEntityFromCurrentEntity = 0x09238598;
 CreateEntityFromEntity = 0x09238620;
 EntityBloodSplatter = 0x092386A8;
 EntityBloodyZombie = 0x09238E80;

@@ -175,7 +175,8 @@ void EntityVandalSword(Entity* self) {
         self->hitPoints = 0x20;
 
         entity = self + 1;
-        CreateEntityFromCurrentEntity(E_VANDAL_SWORD_HITBOX, entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)
+        (E_VANDAL_SWORD_HITBOX, entity);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
         if (primIndex == -1) {
             DestroyEntity(self);

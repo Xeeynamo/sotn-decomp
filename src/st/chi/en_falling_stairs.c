@@ -298,7 +298,8 @@ void EntityFallingStairs(Entity* self) {
 
                 // Spawn a dust cloud
                 if (entity != NULL) {
-                    CreateEntityFromCurrentEntity(E_INTENSE_EXPLOSION, entity);
+                    OVL_EXPORT(CreateEntityFromCurrentEntity)
+                    (E_INTENSE_EXPLOSION, entity);
                     entity->params = 0x10;
                     entity->params |= 0xC000;
                     entity->posX.i.hi = xPos;
