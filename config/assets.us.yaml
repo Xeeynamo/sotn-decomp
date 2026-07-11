@@ -1054,6 +1054,9 @@ files:
   - target: disks/us/ST/RDAI/RDAI.BIN
   - target: disks/us/ST/RLIB/RLIB.BIN
   - target: disks/us/ST/RNO0/RNO0.BIN
+    asset_path: assets/st/rno0
+    src_path: src/st/rno0
+    splat_config_path: config/splat.us.strno0.yaml
   - target: disks/us/ST/RNO1/RNO1.BIN
   - target: disks/us/ST/RNO2/RNO2.BIN
   - target: disks/us/ST/RNO3/RNO3.BIN
