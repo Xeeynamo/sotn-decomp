@@ -200,7 +200,7 @@ void InitRoomEntities(s32 objLayoutId);
  * An callback for notifying the stage that the
  * viewport has changed.
  */
-void UpdateRoomPosition();
+void OVL_EXPORT(UpdateRoomPosition)();
 
 void OVL_EXPORT(Update)(void);
 void OVL_EXPORT(UpdateStageEntities)(void);

@@ -1002,7 +1002,7 @@ def parse_ovl_header(data_file_text, ovl_name, platform, header_symbol=None):
     ovl_header = [
         f"{ovl_name.upper()}_Update",
         f"{ovl_name.upper()}_HitDetection",
-        "UpdateRoomPosition",
+        f"{ovl_name.upper()}_UpdateRoomPosition",
         "InitRoomEntities",
         f"{ovl_name.upper()}_rooms",
         f"{ovl_name.upper()}_spriteBanks",

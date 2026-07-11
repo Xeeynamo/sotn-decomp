@@ -14,7 +14,7 @@ extern u8* g_PlOvlDopBatSpritesheet[6];
 AbbreviatedOverlay2 OVL_EXPORT(Overlay) = {
     .Update = OVL_EXPORT(Update),
     .HitDetection = OVL_EXPORT(HitDetection),
-    .UpdateRoomPosition = UpdateRoomPosition,
+    .UpdateRoomPosition = OVL_EXPORT(UpdateRoomPosition),
     .InitRoomEntities = InitRoomEntities,
     .rooms = OVL_EXPORT(rooms),
     .spriteBanks = OVL_EXPORT(spriteBanks),

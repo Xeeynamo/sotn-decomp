@@ -11,7 +11,7 @@ extern u_long** OVL_EXPORT(gfxBanks)[];
 static AbbreviatedOverlay OVL_EXPORT(Overlay) = {
     .Update = OVL_EXPORT(Update),
     .HitDetection = OVL_EXPORT(HitDetection),
-    .UpdateRoomPosition = UpdateRoomPosition,
+    .UpdateRoomPosition = OVL_EXPORT(UpdateRoomPosition),
     .InitRoomEntities = InitRoomEntities,
     .rooms = OVL_EXPORT(rooms),
     .spriteBanks = OVL_EXPORT(spriteBanks),

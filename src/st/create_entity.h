@@ -455,7 +455,7 @@ void InitRoomEntities(s32 objLayoutId) {
  * Creates any new entities that may need to be created
  * based on a change in the scroll delta.
  */
-void UpdateRoomPosition() {
+void OVL_EXPORT(UpdateRoomPosition)() {
     Tilemap* tilemap = &g_Tilemap;
     s16 tmp;
     if (g_ScrollDeltaX != 0) {
