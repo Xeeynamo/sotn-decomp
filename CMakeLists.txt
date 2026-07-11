@@ -45,7 +45,6 @@ set(SOURCE_FILES_PC
     src/pc/pl_ric.c
     src/pc/servant_pc.c
     src/pc/stages/stage_loader.c
-    src/pc/stages/stage_dummy.c
     src/pc/weapon_pc.c
 )
 
