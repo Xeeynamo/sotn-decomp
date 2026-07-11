@@ -201,30 +201,30 @@ void EntityMinotaur(Entity* self) {
     s32 playerVelocityX;
 
     if (self->step & 1 && self->hitFlags & 3) {
-        SetStep(HIT_BY_PLAYER);
+        OVL_EXPORT(SetStep)(HIT_BY_PLAYER);
     }
 
     if (self->flags & FLAG_DEAD && self->step < DEATH) {
-        SetStep(DEATH);
+        OVL_EXPORT(SetStep)(DEATH);
     }
 
     FntPrint("mino_step %x\n", self->step);
     switch (self->step) {
     case INIT:
-        InitializeEntity(g_EInitMinotaur);
+        OVL_EXPORT(InitializeEntity)(g_EInitMinotaur);
         entity = self + 1;
         OVL_EXPORT(CreateEntityFromCurrentEntity)
         (E_MINOTAUR_ATTACK_HITBOX, entity);
         // fallthrough
     case FALL_TO_GROUND:
-        if (UnkCollisionFunc3(sensors_ground) & 1) {
-            SetStep(IDLE_WAIT);
+        if (OVL_EXPORT(UnkCollisionFunc3)(sensors_ground) & 1) {
+            OVL_EXPORT(SetStep)(IDLE_WAIT);
         }
         break;
     case IDLE_WAIT:
-        AnimateEntity(anim_idle, self);
-        if (GetDistanceToPlayerX() < 0x68) {
-            SetStep(PLAYER_AGGRO);
+        OVL_EXPORT(AnimateEntity)(anim_idle, self);
+        if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x68) {
+            OVL_EXPORT(SetStep)(PLAYER_AGGRO);
         }
         break;
     case PLAYER_AGGRO:
@@ -235,14 +235,14 @@ void EntityMinotaur(Entity* self) {
             self->step_s++;
         }
 
-        AnimateEntity(anim_idle, self);
-        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        OVL_EXPORT(AnimateEntity)(anim_idle, self);
+        self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
         if (self->ext.minotaur.moveTimer) {
             self->ext.minotaur.moveTimer--;
         }
 
         if (!self->ext.minotaur.moveTimer) {
-            SetStep(MOVE);
+            OVL_EXPORT(SetStep)(MOVE);
         }
 
         entity = &PLAYER;
@@ -252,28 +252,29 @@ void EntityMinotaur(Entity* self) {
         }
 
         if (self->facingLeft == entity->facingLeft &&
-            GetDistanceToPlayerX() > 0x48 && GetDistanceToPlayerX() < 0x60 &&
+            OVL_EXPORT(GetDistanceToPlayerX)() > 0x48 &&
+            OVL_EXPORT(GetDistanceToPlayerX)() < 0x60 &&
             g_Player.status & PLAYER_STATUS_UNK400 && playerVelocityX > 0) {
-            SetStep(AXE_CHARGE);
+            OVL_EXPORT(SetStep)(AXE_CHARGE);
         }
 
         // Looks to be triggered by player throwing a subweapon at the Minotaur
         if (self->facingLeft == entity->facingLeft &&
             g_Player.status & PLAYER_STATUS_SUBWPN) {
-            SetStep(BLOCK);
+            OVL_EXPORT(SetStep)(BLOCK);
         }
 
         break;
     case MOVE:
         if (!self->step_s) {
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
             self->ext.minotaur.moveAway = false;
             self->ext.minotaur.timer = 0x20;
             self->step_s++;
         }
 
-        if (!AnimateEntity(anim_move, self)) {
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        if (!OVL_EXPORT(AnimateEntity)(anim_move, self)) {
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
         }
 
         if (self->facingLeft ^ self->ext.minotaur.moveAway) {
@@ -282,17 +283,17 @@ void EntityMinotaur(Entity* self) {
             self->velocityX = FIX(-0.5);
         }
 
-        UnkCollisionFunc2(sensors);
-        if (GetDistanceToPlayerX() > 0x70) {
+        OVL_EXPORT(UnkCollisionFunc2)(sensors);
+        if (OVL_EXPORT(GetDistanceToPlayerX)() > 0x70) {
             self->ext.minotaur.moveAway = false;
         }
 
-        if (GetDistanceToPlayerX() < 0x30) {
+        if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x30) {
             self->ext.minotaur.moveAway = true;
         }
 
         if (!--self->ext.minotaur.timer) {
-            SetStep(CHOOSE_ATTACK);
+            OVL_EXPORT(SetStep)(CHOOSE_ATTACK);
         }
         break;
     case CHOOSE_ATTACK:
@@ -309,29 +310,29 @@ void EntityMinotaur(Entity* self) {
             break;
         case 2:
             entity = &PLAYER;
-            if (GetDistanceToPlayerX() < 0x48) {
+            if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x48) {
                 if (self->facingLeft == entity->facingLeft) {
                     if (OVL_EXPORT(Random)() & 3) {
-                        SetStep(SPIT_LIQUID);
+                        OVL_EXPORT(SetStep)(SPIT_LIQUID);
                     } else {
-                        SetStep(AXE_CHARGE);
+                        OVL_EXPORT(SetStep)(AXE_CHARGE);
                     }
                 } else if (OVL_EXPORT(Random)() & 3) {
-                    SetStep(AXE_CHARGE);
+                    OVL_EXPORT(SetStep)(AXE_CHARGE);
                 } else {
-                    SetStep(AXE_SWING);
+                    OVL_EXPORT(SetStep)(AXE_SWING);
                 }
             } else if (OVL_EXPORT(Random)() & 7) {
-                SetStep(AXE_SWING);
+                OVL_EXPORT(SetStep)(AXE_SWING);
             } else {
-                SetStep(AXE_CHARGE);
+                OVL_EXPORT(SetStep)(AXE_CHARGE);
             }
         }
         break;
     case SPIT_LIQUID:
         switch (self->step_s) {
         case 0:
-            if (!AnimateEntity(anim_spit_attack, self)) {
+            if (!OVL_EXPORT(AnimateEntity)(anim_spit_attack, self)) {
                 self->step_s++;
             }
             break;
@@ -342,7 +343,8 @@ void EntityMinotaur(Entity* self) {
             // fallthrough
         case 2:
             if (!(g_Timer & 3)) {
-                entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                entity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
                     OVL_EXPORT(CreateEntityFromEntity)
                     (E_MINOTAUR_SPIT_LIQUID, self, entity);
@@ -359,21 +361,21 @@ void EntityMinotaur(Entity* self) {
             }
 
             if (!--self->ext.minotaur.timer) {
-                SetStep(PLAYER_AGGRO);
+                OVL_EXPORT(SetStep)(PLAYER_AGGRO);
             }
         }
         break;
     case THROW_FIREBALLS:
         // This attack appears to be unused in game as this case is never called
-        if (!AnimateEntity(anim_throw_fireballs, self)) {
-            SetStep(PLAYER_AGGRO);
+        if (!OVL_EXPORT(AnimateEntity)(anim_throw_fireballs, self)) {
+            OVL_EXPORT(SetStep)(PLAYER_AGGRO);
         }
 
         if (!self->poseTimer && self->pose == 8) {
             // nb. there is data present for 10 fireballs but only 8 are
             // released
             for (i = 0; i < 8; i++) {
-                entity = AllocEntity(
+                entity = OVL_EXPORT(AllocEntity)(
                     &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (entity != NULL) {
                     OVL_EXPORT(CreateEntityFromEntity)
@@ -387,21 +389,21 @@ void EntityMinotaur(Entity* self) {
 
         break;
     case BLOCK:
-        if (!AnimateEntity(anim_block, self)) {
-            SetStep(PLAYER_AGGRO);
+        if (!OVL_EXPORT(AnimateEntity)(anim_block, self)) {
+            OVL_EXPORT(SetStep)(PLAYER_AGGRO);
         }
         break;
     case AXE_CHARGE:
         if (!self->step_s) {
             self->velocityX = 0;
             self->velocityY = 0;
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
             self->step_s++;
         }
 
-        UnkCollisionFunc2(sensors);
-        if (!AnimateEntity(anim_axe_charge_attack, self)) {
-            SetStep(PLAYER_AGGRO);
+        OVL_EXPORT(UnkCollisionFunc2)(sensors);
+        if (!OVL_EXPORT(AnimateEntity)(anim_axe_charge_attack, self)) {
+            OVL_EXPORT(SetStep)(PLAYER_AGGRO);
         }
 
         self->velocityX -= self->velocityX / 16;
@@ -417,7 +419,7 @@ void EntityMinotaur(Entity* self) {
     case AXE_SWING:
         switch (self->step_s) {
         case 0:
-            if (!AnimateEntity(anim_axe_swing_windup, self)) {
+            if (!OVL_EXPORT(AnimateEntity)(anim_axe_swing_windup, self)) {
                 self->velocityY = 0;
                 if (self->facingLeft) {
                     self->velocityX = FIX(4.0);
@@ -426,21 +428,21 @@ void EntityMinotaur(Entity* self) {
                 }
                 self->step_s++;
                 PlaySfxPositional(SFX_BOSS_WING_FLAP);
-                SetSubStep(1);
+                OVL_EXPORT(SetSubStep)(1);
             }
             break;
         case 1:
-            UnkCollisionFunc2(sensors);
+            OVL_EXPORT(UnkCollisionFunc2)(sensors);
             self->velocityX -= self->velocityX / 16;
-            if (!AnimateEntity(anim_axe_swing_down, self)) {
-                SetStep(PLAYER_AGGRO);
+            if (!OVL_EXPORT(AnimateEntity)(anim_axe_swing_down, self)) {
+                OVL_EXPORT(SetStep)(PLAYER_AGGRO);
             }
             break;
         }
         break;
     case HIT_BY_PLAYER:
-        if (!AnimateEntity(anim_hit, self)) {
-            SetStep(PLAYER_AGGRO);
+        if (!OVL_EXPORT(AnimateEntity)(anim_hit, self)) {
+            OVL_EXPORT(SetStep)(PLAYER_AGGRO);
         }
         break;
     case UNK_UNUSED:
@@ -457,7 +459,7 @@ void EntityMinotaur(Entity* self) {
             break;
         case 2:
             self->animCurFrame = 1;
-            SetStep(PLAYER_AGGRO);
+            OVL_EXPORT(SetStep)(PLAYER_AGGRO);
             break;
         }
         break;
@@ -470,21 +472,21 @@ void EntityMinotaur(Entity* self) {
             self->step_s++;
             // fallthrough
         case 1:
-            if (UnkCollisionFunc3(sensors_ground) & 1) {
+            if (OVL_EXPORT(UnkCollisionFunc3)(sensors_ground) & 1) {
                 self->ext.minotaur.deathPuffPosX = -0x10;
                 self->ext.minotaur.timer = 0;
                 self->step_s++;
             }
             break;
         case 2:
-            if (!AnimateEntity(anim_death, self)) {
+            if (!OVL_EXPORT(AnimateEntity)(anim_death, self)) {
                 self->step_s = 3;
             }
             self->ext.minotaur.timer &= 1;
             // fallthrough
         case 3:
             if (self->ext.minotaur.timer & 1) {
-                entity = AllocEntity(
+                entity = OVL_EXPORT(AllocEntity)(
                     &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (entity != NULL) {
                     OVL_EXPORT(CreateEntityFromEntity)
@@ -538,7 +540,7 @@ void EntityMinotaurAttackHitbox(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitMinotaurAttackHitbox);
+        OVL_EXPORT(InitializeEntity)(g_EInitMinotaurAttackHitbox);
         self->animCurFrame = 0;
         // fallthrough
     case 1:
@@ -572,7 +574,7 @@ void EntityMinotaurFireball(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitMinotaurFireball);
+        OVL_EXPORT(InitializeEntity)(g_EInitMinotaurFireball);
         // Fireballs fly out in a sort of clock hands arrangement
         speed = fireball_config[self->params][0];
         angle = fireball_config[self->params][1];
@@ -583,7 +585,7 @@ void EntityMinotaurFireball(Entity* self) {
         }
         // fallthrough
     case 1:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         // Fireballs slowly fall over time
         self->velocityY += FIX(0.125);
         break;
@@ -595,7 +597,7 @@ void EntityMinotaurSpitLiquid(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitMinotaurSpitLiquid);
+        OVL_EXPORT(InitializeEntity)(g_EInitMinotaurSpitLiquid);
         self->palette = PAL_FLAG(PAL_MINOTAUR_SPIT);
         if (self->facingLeft) {
             self->rotate = -self->rotate;
@@ -614,11 +616,11 @@ void EntityMinotaurSpitLiquid(Entity* self) {
         self->opacity = 0x80;
         break;
     case 1:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->scaleX += 0x10;
         self->scaleY += 0xE;
         self->opacity -= 1;
-        if (!AnimateEntity(anim_spit, self)) {
+        if (!OVL_EXPORT(AnimateEntity)(anim_spit, self)) {
             DestroyEntity(self);
         }
         break;
@@ -629,7 +631,7 @@ void EntityMinotaurSpitLiquid(Entity* self) {
 void EntityMinotaurDeathPuff(Entity* self) {
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitParticle));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitParticle));
         self->animSet = 0xE;
         self->palette = PAL_MINOTAUR_DEATH_PUFF;
         self->unk5A = 0x79;
@@ -642,7 +644,7 @@ void EntityMinotaurDeathPuff(Entity* self) {
         self->facingLeft = OVL_EXPORT(Random)() & 1;
         // fallthrough
     case 1:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityY -= FIX(0.0625);
         self->opacity -= 2;
         self->scaleX += 8;
@@ -650,7 +652,7 @@ void EntityMinotaurDeathPuff(Entity* self) {
 
         if (!self->opacity) {
             DestroyEntity(self);
-        } else if (!AnimateEntity(anim_death_puff, self)) {
+        } else if (!OVL_EXPORT(AnimateEntity)(anim_death_puff, self)) {
             DestroyEntity(self);
         }
         break;

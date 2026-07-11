@@ -14,7 +14,7 @@ void func_801B6DE4(Entity* self) {
     hitFlags = self->hitFlags;
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         self->ext.elevator.yPos = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
         self->hitboxWidth = 6;
         self->hitboxHeight = 8;
@@ -87,14 +87,14 @@ void EntityElevator(Entity* self) {
     FntPrint("elevator:%x\n", elevator_target);
     if (!(g_Player.status &
           (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_MIST_FORM))) {
-        isPlayerTouching = GetPlayerCollisionWith(self, 16, 5, 4);
+        isPlayerTouching = OVL_EXPORT(GetPlayerCollisionWith)(self, 16, 5, 4);
     } else {
         isPlayerTouching = 0;
     }
 
     switch (self->step) {
     case ELEVATOR_INIT:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         self->hitboxOffX = 0;
         self->hitboxOffY = 68;
         self->hitboxWidth = 16;

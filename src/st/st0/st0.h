@@ -45,7 +45,7 @@ typedef enum EntityIDs {
     E_DRACULA_UNK2E,
 } EntityIDs;
 
-void MoveEntity();
+void OVL_EXPORT(MoveEntity)();
 void OVL_EXPORT(EntityExplosion)(Entity*);
 void EntityExplosionVariants(Entity* entity);
 void EntityGreyPuff(Entity* entity);

@@ -351,14 +351,14 @@ void EntityHammer(Entity* self) {
     }
     switch (self->step) {
     case HAMMER_STEP_0:
-        InitializeEntity(g_EInitHammer);
+        OVL_EXPORT(InitializeEntity)(g_EInitHammer);
         self->animCurFrame = 3;
         self->hitboxWidth = 6;
         self->hitboxHeight = 6;
         /* fallthrough */
     case HAMMER_STEP_1:
-        if (UnkCollisionFunc3(sensors1) & 1) {
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        if (OVL_EXPORT(UnkCollisionFunc3)(sensors1) & 1) {
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
             self->step++;
         }
         break;
@@ -494,7 +494,7 @@ void EntityHammer(Entity* self) {
             self->step_s++;
             /* fallthrough */
         case 3:
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             self->velocityY += FIX(0.375);
             func_801CDF1C(ptr, D_us_801824E8, 0);
             func_801CDE10(ptr);
@@ -648,7 +648,7 @@ void EntityHammer(Entity* self) {
             self->step_s++;
             /* fallthrough */
         case 1:
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             self->velocityY += FIX(0.1875);
             if ((g_Timer & 7) == 0) {
                 if (OVL_EXPORT(Random)() & 1) {
@@ -681,15 +681,15 @@ void EntityGurkhaBodyParts(Entity* self) {
     case 0:
         switch (self->params >> 8) {
         case 0:
-            InitializeEntity(g_EInitHammer);
+            OVL_EXPORT(InitializeEntity)(g_EInitHammer);
             break;
 
         case 1:
-            InitializeEntity(g_EInitGurkha);
+            OVL_EXPORT(InitializeEntity)(g_EInitGurkha);
             break;
 
         case 2:
-            InitializeEntity(g_EInitBlade);
+            OVL_EXPORT(InitializeEntity)(g_EInitBlade);
             break;
         }
         self->params &= 0xFF;
@@ -717,7 +717,7 @@ void EntityGurkhaBodyParts(Entity* self) {
             break;
 
         case 1:
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             self->velocityY += FIX(0.125);
             self->rotate += self->ext.GH_Props.rotVel;
             if (!--self->ext.GH_Props.timer) {
@@ -778,7 +778,7 @@ void EntityHammerWeapon(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitHammerWeapon);
+        OVL_EXPORT(InitializeEntity)(g_EInitHammerWeapon);
         self->drawFlags |= ENTITY_ROTATE;
         self->hitboxWidth = 10;
         self->hitboxHeight = 10;
@@ -803,7 +803,7 @@ void EntityHammerWeapon(Entity* self) {
             break;
 
         case 1:
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             self->velocityY += FIX(0.125);
             func_801CDC80(&self->rotate, 0x800, 0x20);
             break;

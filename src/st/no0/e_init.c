@@ -15,8 +15,8 @@ void OVL_EXPORT(EntityRelicOrb)(Entity*);
 void OVL_EXPORT(EntityHeartDrop)(Entity*);
 void EntityEnemyBlood(Entity*);
 void OVL_EXPORT(EntityMessageBox)(Entity*);
-void EntityDummy(Entity*);
-void EntityDummy(Entity*);
+void OVL_EXPORT(EntityDummy)(Entity*);
+void OVL_EXPORT(EntityDummy)(Entity*);
 void OVL_EXPORT(EntityBackgroundBlock)(Entity*);
 void OVL_EXPORT(EntityLockCamera)(Entity*);
 void EntityUnkId13(Entity*);
@@ -32,7 +32,7 @@ void EntityStatue(Entity*);
 void EntityStatueGear(Entity*);
 void EntityStoneDoor(Entity*);
 void EntityClockRoomUnused(Entity*);
-void EntityDummy(Entity*);
+void OVL_EXPORT(EntityDummy)(Entity*);
 void EntityDiplocephalus(Entity*);
 void EntityDiplocephalusFoot(Entity*);
 void EntityDiplocephalusLeg(Entity*);
@@ -80,7 +80,7 @@ void EntityFleaMan(Entity*);
 void EntitySkeleton(Entity*);
 void EntitySkeletonThrownBone(Entity*);
 void EntitySkeletonPieces(Entity*);
-void EntityDummy(Entity*);
+void OVL_EXPORT(EntityDummy)(Entity*);
 void EntitySealedDoor(Entity*);
 
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
@@ -98,8 +98,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     OVL_EXPORT(EntityHeartDrop),
     EntityEnemyBlood,
     OVL_EXPORT(EntityMessageBox),
-    EntityDummy,
-    EntityDummy,
+    OVL_EXPORT(EntityDummy),
+    OVL_EXPORT(EntityDummy),
     OVL_EXPORT(EntityBackgroundBlock),
     OVL_EXPORT(EntityLockCamera),
     EntityUnkId13,
@@ -115,7 +115,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityStatueGear,
     EntityStoneDoor,
     EntityClockRoomUnused,
-    EntityDummy,
+    OVL_EXPORT(EntityDummy),
     EntityDiplocephalus,
     EntityDiplocephalusFoot,
     EntityDiplocephalusLeg,
@@ -163,7 +163,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntitySkeleton,
     EntitySkeletonThrownBone,
     EntitySkeletonPieces,
-    EntityDummy,
+    OVL_EXPORT(EntityDummy),
     EntitySealedDoor,
 };
 

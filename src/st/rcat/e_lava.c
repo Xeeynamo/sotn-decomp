@@ -51,14 +51,14 @@ void EntityLava(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         self->ext.lava.prim = NULL;
         self->ext.lava.unk89 = 1;
         self->ext.lava.unk84 = 0;
         self->zPriority = 0xA8;
         if (!self->params) {
-            newEntity =
-                AllocEntity(&g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
+            newEntity = OVL_EXPORT(AllocEntity)(
+                &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
             if (newEntity != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)
                 (E_ID(SNOWFLAKES), self, newEntity);
@@ -314,7 +314,7 @@ void EntitySnowflakes(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         primIndex = g_api.func_800EDB58(PRIM_TILE_ALT, 0x14);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;

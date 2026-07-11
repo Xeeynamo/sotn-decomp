@@ -75,14 +75,15 @@ void EntityMerman(Entity* self) {
         self->palette = self->ext.merman.palette;
     }
     if (self->ext.merman.ignoreCol && (self->step < MERMAN_FALLING)) {
-        SetStep(MERMAN_FALLING);
+        OVL_EXPORT(SetStep)(MERMAN_FALLING);
     }
 
     if ((self->flags & FLAG_DEAD) && (self->step < MERMAN_DYING)) {
         PlaySfxPositional(SFX_MERMAN_DEATH);
         self->hitboxState = 0;
         if (self->step == MERMAN_LUNGE) {
-            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            newEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)
                 (E_EXPLOSION, self, newEntity);
@@ -91,12 +92,12 @@ void EntityMerman(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        SetStep(MERMAN_DYING);
+        OVL_EXPORT(SetStep)(MERMAN_DYING);
     }
 
     switch (self->step) {
     case MERMAN_INIT:
-        InitializeEntity(g_EInitMerman);
+        OVL_EXPORT(InitializeEntity)(g_EInitMerman);
         self->ext.merman.palette = 0x2B9;
         self->zPriority = 0xA9;
         self->velocityY = FIX(-1);
@@ -111,15 +112,15 @@ void EntityMerman(Entity* self) {
             self->hitboxHeight = 4;
             self->step_s++;
         }
-        AnimateEntity(anim4, self);
-        MoveEntity();
+        OVL_EXPORT(AnimateEntity)(anim4, self);
+        OVL_EXPORT(MoveEntity)();
 
         posX = self->posX.i.hi;
         posY = self->posY.i.hi;
         posY -= 24;
         g_api.CheckCollision(posX, posY, &collider, 0);
         if (!(collider.effects & EFFECT_WATER)) {
-            SetStep(MERMAN_SWIMMING);
+            OVL_EXPORT(SetStep)(MERMAN_SWIMMING);
         }
         break;
 
@@ -132,10 +133,10 @@ void EntityMerman(Entity* self) {
             self->velocityY = swimVelocities[rnd].y;
             self->step_s++;
         }
-        if (AnimateEntity(anim4, self) == 0) {
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        if (OVL_EXPORT(AnimateEntity)(anim4, self) == 0) {
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
         }
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         posX = self->posX.i.hi;
         posY = self->posY.i.hi;
         posY -= 24;
@@ -154,8 +155,9 @@ void EntityMerman(Entity* self) {
         if (self->ext.merman.timer2++ > 32) {
             self->ext.merman.timer2 = 0;
             self->step_s = 0;
-            if ((GetDistanceToPlayerX() >= 48) && !(OVL_EXPORT(Random)() & 1)) {
-                SetStep(MERMAN_JUMPING);
+            if ((OVL_EXPORT(GetDistanceToPlayerX)() >= 48) &&
+                !(OVL_EXPORT(Random)() & 1)) {
+                OVL_EXPORT(SetStep)(MERMAN_JUMPING);
             }
         }
         break;
@@ -169,7 +171,7 @@ void EntityMerman(Entity* self) {
             break;
 
         case MERMAN_JUMPING_UNDERWATER:
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             posX = self->posX.i.hi;
             posY = self->posY.i.hi;
             posY -= 20;
@@ -178,7 +180,8 @@ void EntityMerman(Entity* self) {
             pos += (self->params & 0x100) >> 8;
             if (posY < pos[3]) {
                 g_api.PlaySfx(SFX_WATER_SPLASH_JUMP);
-                newEntity = AllocEntity(&g_Entities[232], &g_Entities[256]);
+                newEntity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[232], &g_Entities[256]);
                 if (newEntity != NULL) {
                     OVL_EXPORT(CreateEntityFromEntity)
                     (E_MERMAN_WATER_SPLASH, self, newEntity);
@@ -190,9 +193,9 @@ void EntityMerman(Entity* self) {
             break;
 
         case MERMAN_JUMPING_IN_AIR:
-            AnimateEntity(anim3, self);
+            OVL_EXPORT(AnimateEntity)(anim3, self);
             if (!self->ext.merman.isUnderwater) {
-                if (UnkCollisionFunc3(&sensors1) & 1) {
+                if (OVL_EXPORT(UnkCollisionFunc3)(&sensors1) & 1) {
                     self->poseTimer = 0;
                     self->pose = 0;
                     self->step_s++;
@@ -200,7 +203,7 @@ void EntityMerman(Entity* self) {
             } else {
                 self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
                                FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
-                MoveEntity();
+                OVL_EXPORT(MoveEntity)();
                 self->velocityY += FIX(0.25);
             }
 
@@ -211,7 +214,8 @@ void EntityMerman(Entity* self) {
                     self->ext.merman.palette--;
                 }
                 self->palette = self->ext.merman.palette;
-                newEntity = AllocEntity(&g_Entities[232], &g_Entities[256]);
+                newEntity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[232], &g_Entities[256]);
                 if (newEntity != NULL) {
                     OVL_EXPORT(CreateEntityFromEntity)
                     (E_MERMAN_JUMP_AIR, self, newEntity);
@@ -228,17 +232,17 @@ void EntityMerman(Entity* self) {
             break;
 
         case MERMAN_JUMPING_LANDING:
-            if (AnimateEntity(anim5, self) != 0) {
+            if (OVL_EXPORT(AnimateEntity)(anim5, self) != 0) {
                 break;
             }
-            SetStep(MERMAN_WALKING_TOWARDS_PLAYER);
+            OVL_EXPORT(SetStep)(MERMAN_WALKING_TOWARDS_PLAYER);
         }
         break;
 
     case MERMAN_WALKING_TOWARDS_PLAYER:
         switch (self->step_s) {
         case MERMAN_WALKING_TOWARDS_START:
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
             if (self->facingLeft) {
                 self->velocityX = FIX(0.375);
             } else {
@@ -250,8 +254,8 @@ void EntityMerman(Entity* self) {
             break;
 
         case MERMAN_WALKING_TOWARDS_PLAYER_WALKING:
-            AnimateEntity(anim1, self);
-            colRet = UnkCollisionFunc2(&sensors4);
+            OVL_EXPORT(AnimateEntity)(anim1, self);
+            colRet = OVL_EXPORT(UnkCollisionFunc2)(&sensors4);
             if (colRet == 0xFF) {
                 self->facingLeft ^= 1;
             }
@@ -265,9 +269,9 @@ void EntityMerman(Entity* self) {
             }
             if (!--self->ext.merman.timer2) {
                 if (OVL_EXPORT(Random)() & 1) {
-                    SetStep(MERMAN_SPIT_FIRE);
+                    OVL_EXPORT(SetStep)(MERMAN_SPIT_FIRE);
                 } else {
-                    SetStep(MERMAN_LUNGE);
+                    OVL_EXPORT(SetStep)(MERMAN_LUNGE);
                 }
             }
             if (CheckMermanEnteringWater(0x15)) {
@@ -279,17 +283,18 @@ void EntityMerman(Entity* self) {
     case MERMAN_SPIT_FIRE:
         switch (self->step_s) {
         case MERMAN_SPIT_FIRE_FACE_PLAYER:
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
             self->step_s++;
             break;
 
         case MERMAN_SPIT_FIRE_ATTACK:
-            if (AnimateEntity(anim2, self) == 0) {
-                SetStep(MERMAN_WALKING_TOWARDS_PLAYER);
+            if (OVL_EXPORT(AnimateEntity)(anim2, self) == 0) {
+                OVL_EXPORT(SetStep)(MERMAN_WALKING_TOWARDS_PLAYER);
             }
             if (self->pose == 4 && !self->poseTimer) {
                 PlaySfxPositional(SFX_FIREBALL_SHOT_C);
-                newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                newEntity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
                 if (newEntity != NULL) {
                     OVL_EXPORT(CreateEntityFromEntity)
                     (E_MERMAN_SPIT_FIRE, self, newEntity);
@@ -308,7 +313,7 @@ void EntityMerman(Entity* self) {
     case MERMAN_LUNGE:
         switch (self->step_s) {
         case MERMAN_LUNGE_START:
-            if (AnimateEntity(anim5, self) == 0) {
+            if (OVL_EXPORT(AnimateEntity)(anim5, self) == 0) {
                 self->step_s++;
             }
             break;
@@ -350,7 +355,7 @@ void EntityMerman(Entity* self) {
                 self->velocityX = 0;
                 self->velocityY = FIX(2);
                 self->posY.i.hi -= 9;
-                UnkCollisionFunc3(&sensors1);
+                OVL_EXPORT(UnkCollisionFunc3)(&sensors1);
                 self->pose = 2;
                 self->poseTimer = 0;
                 self->hitboxWidth = 5;
@@ -364,10 +369,10 @@ void EntityMerman(Entity* self) {
             break;
 
         case MERMAN_LUNGE_STANDING:
-            UnkCollisionFunc3(&sensors1);
-            if (AnimateEntity(anim5, self) == 0) {
+            OVL_EXPORT(UnkCollisionFunc3)(&sensors1);
+            if (OVL_EXPORT(AnimateEntity)(anim5, self) == 0) {
                 self->velocityY = 0;
-                SetStep(MERMAN_WALKING_TOWARDS_PLAYER);
+                OVL_EXPORT(SetStep)(MERMAN_WALKING_TOWARDS_PLAYER);
             }
             CheckMermanEnteringWater(11);
             if (self->ext.merman.isUnderwater) {
@@ -382,12 +387,12 @@ void EntityMerman(Entity* self) {
                            FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
             self->step_s++;
         }
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityY += FIX(0.25);
         if (!(CheckMermanEnteringWater(21)) &&
             !(self->ext.merman.isUnderwater)) {
             self->ext.merman.ignoreCol = 0;
-            SetStep(MERMAN_WALKING_TOWARDS_PLAYER);
+            OVL_EXPORT(SetStep)(MERMAN_WALKING_TOWARDS_PLAYER);
         }
         break;
 
@@ -399,8 +404,8 @@ void EntityMerman(Entity* self) {
             self->step_s++;
 
         case MERMAN_DYING_KNOCKEDBACK:
-            if (UnkCollisionFunc3(&sensors3) & 1) {
-                if (GetSideToPlayer() & 1) {
+            if (OVL_EXPORT(UnkCollisionFunc3)(&sensors3) & 1) {
+                if (OVL_EXPORT(GetSideToPlayer)() & 1) {
                     self->velocityX = FIX(0.5);
                 } else {
                     self->velocityX = FIX(-0.5);
@@ -410,14 +415,15 @@ void EntityMerman(Entity* self) {
             // fallthrough
 
         case MERMAN_DYING_END:
-            AnimateEntity(anim6, self); // spinning
-            MoveEntity();
+            OVL_EXPORT(AnimateEntity)(anim6, self); // spinning
+            OVL_EXPORT(MoveEntity)();
             self->palette = self->ext.merman.palette;
             if (!(g_Timer % 8)) {
                 self->ext.merman.palette++;
                 if (self->ext.merman.palette == 0x2C0) {
                     PlaySfxPositional(SFX_FM_EXPLODE_B);
-                    newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                    newEntity = OVL_EXPORT(AllocEntity)(
+                        &g_Entities[224], &g_Entities[256]);
                     if (newEntity != NULL) {
                         OVL_EXPORT(CreateEntityFromEntity)
                         (E_MERMAN_DYING, self, newEntity);
@@ -439,7 +445,7 @@ void EntityMermanFireball(Entity* self) {
     Entity* entity;
 
     if (!self->step) {
-        InitializeEntity(g_EInitMermanFireball);
+        OVL_EXPORT(InitializeEntity)(g_EInitMermanFireball);
         self->animCurFrame = 0;
         self->hitboxWidth = 6;
         self->hitboxHeight = 3;
@@ -454,7 +460,7 @@ void EntityMermanFireball(Entity* self) {
         self->scaleX = 0x80;
         self->scaleY = 0x80;
 
-        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        entity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
             OVL_EXPORT(CreateEntityFromEntity)(E_GREY_PUFF, self, entity);
             entity->ext.destructAnim.index = 4;
@@ -464,8 +470,8 @@ void EntityMermanFireball(Entity* self) {
             entity->scaleY = 192;
         }
     } else {
-        AnimateEntity(anim7, self);
-        MoveEntity();
+        OVL_EXPORT(AnimateEntity)(anim7, self);
+        OVL_EXPORT(MoveEntity)();
 
         if (self->scaleX < 0x100) {
             self->scaleX += 8;
@@ -473,7 +479,8 @@ void EntityMermanFireball(Entity* self) {
         }
 
         if (self->flags & FLAG_DEAD) {
-            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            entity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
                 entity->params = 0;
@@ -485,15 +492,15 @@ void EntityMermanFireball(Entity* self) {
 
 void EntityMermanJumpAir(Entity* self) {
     if (!self->step) {
-        InitializeEntity(g_EInitMerman);
+        OVL_EXPORT(InitializeEntity)(g_EInitMerman);
         self->zPriority += 4;
         self->animCurFrame = 0;
         self->hitboxState = 0;
         self->flags |= FLAG_UNK_2000;
     }
-    MoveEntity();
+    OVL_EXPORT(MoveEntity)();
     self->velocityY += FIX(5.0 / 32.0);
-    if (AnimateEntity(anim8, self) == 0) {
+    if (OVL_EXPORT(AnimateEntity)(anim8, self) == 0) {
         DestroyEntity(self);
     }
 }
@@ -506,7 +513,7 @@ static u16 explosionDurations[] = {16, 24, 42, 47};
 // part of explosion when merman dies
 void EntityMermanExplosion(Entity* self) {
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitParticle));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitParticle));
         self->palette = PAL_FLAG(0x2BB);
         self->animSet = ANIMSET_DRA(2);
         self->animCurFrame = explosionFrames[self->params];

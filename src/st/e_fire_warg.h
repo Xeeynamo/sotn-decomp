@@ -76,7 +76,8 @@ static void func_801CC5A4(Entity* entity, u8 count, u8 params, s16 xDist,
     s16 y = entity->posY.i.hi + yDist;
 
     for (i = 0; i < count; ++i) {
-        Entity* newEnt = AllocEntity(&g_Entities[160], &g_Entities[192]);
+        Entity* newEnt =
+            OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
         if (newEnt != NULL) {
             newEnt->entityId = E_EXPLOSION_VARIANTS;
             newEnt->pfnUpdate = EntityExplosionVariants;
@@ -93,14 +94,14 @@ static void func_801CC5A4(Entity* entity, u8 count, u8 params, s16 xDist,
 }
 
 static void func_801CC6F8(Entity* self) {
-    u16 distance = GetDistanceToPlayerX();
+    u16 distance = OVL_EXPORT(GetDistanceToPlayerX)();
     bool buttNearScreenEdge;
 
     self->velocityX = 0;
     self->ext.fireWarg.unk86 = 0x100;
 
     if (self->params) {
-        SetStep(12);
+        OVL_EXPORT(SetStep)(12);
         return;
     }
 
@@ -119,20 +120,20 @@ static void func_801CC6F8(Entity* self) {
 
     if (distance < 0x70) {
         if (!(OVL_EXPORT(Random)() & 3) && !buttNearScreenEdge) {
-            SetStep(9);
+            OVL_EXPORT(SetStep)(9);
         } else {
-            SetStep(6);
+            OVL_EXPORT(SetStep)(6);
             PlaySfxPositional(SFX_WARG_GROWL);
             self->ext.fireWarg.unk80 = 0x20;
         }
     } else {
         if ((OVL_EXPORT(Random)() & 3) && !buttNearScreenEdge) {
-            SetStep(9);
+            OVL_EXPORT(SetStep)(9);
             if (!(OVL_EXPORT(Random)() & 3)) {
                 self->ext.fireWarg.unk86 = 0;
             }
         } else {
-            SetStep(6);
+            OVL_EXPORT(SetStep)(6);
             PlaySfxPositional(SFX_WARG_GROWL);
             self->ext.fireWarg.unk80 = 0x20;
         }
@@ -143,11 +144,11 @@ static void func_801CC6F8(Entity* self) {
 static void func_801CC820(Entity* self) {
     u16 distance;
 
-    if ((self->facingLeft == GetSideToPlayer()) & 1) {
+    if ((self->facingLeft == OVL_EXPORT(GetSideToPlayer)()) & 1) {
         if (self->params) {
-            SetStep(4);
+            OVL_EXPORT(SetStep)(4);
         } else {
-            SetStep(5);
+            OVL_EXPORT(SetStep)(5);
         }
         return;
     }
@@ -155,12 +156,12 @@ static void func_801CC820(Entity* self) {
         func_801CC6F8(self);
         return;
     }
-    distance = GetDistanceToPlayerX();
+    distance = OVL_EXPORT(GetDistanceToPlayerX)();
     if ((distance < 0x48) && (self->step != 4)) {
-        SetStep(4);
+        OVL_EXPORT(SetStep)(4);
         return;
     }
-    SetStep(3);
+    OVL_EXPORT(SetStep)(3);
     if (distance < 0x60) {
         self->ext.fireWarg.unk7C = 1;
     } else {
@@ -172,7 +173,7 @@ static void func_801CC820(Entity* self) {
 
 // duplicate of func_801CF6D8
 static void func_801CC90C(Entity* self) {
-    u16 xDist = GetDistanceToPlayerX();
+    u16 xDist = OVL_EXPORT(GetDistanceToPlayerX)();
 
     if (self->ext.fireWarg.unk86) {
         if (xDist < 0x60) {
@@ -235,7 +236,7 @@ void EntityFireWarg(Entity* self) {
             if (var_s1 != 11) {
                 self->velocityX = 0;
                 self->velocityY = 0;
-                SetStep(11);
+                OVL_EXPORT(SetStep)(11);
             }
         } else {
             part = (self + 1);
@@ -258,8 +259,8 @@ void EntityFireWarg(Entity* self) {
             }
 
             if (var_s1 != 4) {
-                SetStep(4);
-                SetSubStep(1);
+                OVL_EXPORT(SetStep)(4);
+                OVL_EXPORT(SetSubStep)(1);
                 self->velocityY = FIX(-5.0);
                 if (self->facingLeft) {
                     self->velocityX = FIX(-1.5);
@@ -273,7 +274,7 @@ void EntityFireWarg(Entity* self) {
             self->ext.fireWarg.unk86 /= 2;
         }
         if ((var_s1 == 2 || var_s1 == 3) && !self->params) {
-            SetStep(10);
+            OVL_EXPORT(SetStep)(10);
         }
     }
 
@@ -287,7 +288,7 @@ void EntityFireWarg(Entity* self) {
         OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID_30, part);
         part->parent = self;
         if (self->params) {
-            InitializeEntity(g_EInitFireWarg2);
+            OVL_EXPORT(InitializeEntity)(g_EInitFireWarg2);
             self->animCurFrame = 0x32;
             // The self + 2 entity is an E_ID_31, or EntityUnkId31
             ent_s4 = self + 2;
@@ -298,10 +299,10 @@ void EntityFireWarg(Entity* self) {
             part->parent = self;
             part->nextPart = self;
         } else {
-            InitializeEntity(g_EInitFireWarg1);
+            OVL_EXPORT(InitializeEntity)(g_EInitFireWarg1);
         }
         part->nextPart = self;
-        self->facingLeft = (GetSideToPlayer() ^ 1) & 1;
+        self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() ^ 1) & 1;
         if (self->facingLeft) {
             self->posX.i.hi -= 0x20;
         } else {
@@ -311,23 +312,23 @@ void EntityFireWarg(Entity* self) {
         break;
 
     case 1:
-        if (UnkCollisionFunc3(&D_801829DC) & 1) {
-            SetStep(2);
+        if (OVL_EXPORT(UnkCollisionFunc3)(&D_801829DC) & 1) {
+            OVL_EXPORT(SetStep)(2);
         }
         break;
     case 2:
         if (self->params) {
-            AnimateEntity(&D_80182824, self);
+            OVL_EXPORT(AnimateEntity)(&D_80182824, self);
         } else {
-            AnimateEntity(&D_8018281C, self);
+            OVL_EXPORT(AnimateEntity)(&D_8018281C, self);
         }
-        if ((GetDistanceToPlayerX() < 0x80) || (self->hitFlags)) {
-            SetStep(3);
+        if ((OVL_EXPORT(GetDistanceToPlayerX)() < 0x80) || (self->hitFlags)) {
+            OVL_EXPORT(SetStep)(3);
         }
         break;
     case 3:
         func_801CC90C(self);
-        var_s1 = GetDistanceToPlayerX();
+        var_s1 = OVL_EXPORT(GetDistanceToPlayerX)();
         if (self->ext.fireWarg.unk80) {
             --self->ext.fireWarg.unk80;
             self->poseTimer = 0;
@@ -336,9 +337,9 @@ void EntityFireWarg(Entity* self) {
 
         if (!(self->ext.fireWarg.unk7C)) {
             if (self->params) {
-                frameIdx = AnimateEntity(&D_801827EC, self);
+                frameIdx = OVL_EXPORT(AnimateEntity)(&D_801827EC, self);
             } else {
-                frameIdx = AnimateEntity(&D_801827DC, self);
+                frameIdx = OVL_EXPORT(AnimateEntity)(&D_801827DC, self);
             }
             if (!frameIdx || frameIdx & 0x80) {
                 frameIdx = (self->pose - 1);
@@ -355,9 +356,9 @@ void EntityFireWarg(Entity* self) {
             }
         } else {
             if (self->params) {
-                frameIdx = AnimateEntity(&D_8018280C, self);
+                frameIdx = OVL_EXPORT(AnimateEntity)(&D_8018280C, self);
             } else {
-                frameIdx = AnimateEntity(&D_801827FC, self);
+                frameIdx = OVL_EXPORT(AnimateEntity)(&D_801827FC, self);
             }
 
             if (frameIdx != 1) {
@@ -376,20 +377,20 @@ void EntityFireWarg(Entity* self) {
             }
         }
 
-        UnkCollisionFunc2(&D_801829D4);
+        OVL_EXPORT(UnkCollisionFunc2)(&D_801829D4);
         if (self->ext.fireWarg.unk82) {
             --self->ext.fireWarg.unk82;
             break;
         }
 
-        if ((self->facingLeft == GetSideToPlayer()) & 1) {
+        if ((self->facingLeft == OVL_EXPORT(GetSideToPlayer)()) & 1) {
             if (self->params) {
-                SetStep(4);
+                OVL_EXPORT(SetStep)(4);
             } else {
-                SetStep(5);
+                OVL_EXPORT(SetStep)(5);
             }
         } else if (var_s1 < 0x48) {
-            SetStep(4);
+            OVL_EXPORT(SetStep)(4);
         } else {
             if (self->facingLeft) {
                 g_api.CheckCollision(
@@ -412,12 +413,12 @@ void EntityFireWarg(Entity* self) {
         switch (self->step_s) {
         case 0:
             if (self->params) {
-                frameIdx = AnimateEntity(&D_80182850, self);
+                frameIdx = OVL_EXPORT(AnimateEntity)(&D_80182850, self);
             } else {
-                frameIdx = AnimateEntity(&D_80182848, self);
+                frameIdx = OVL_EXPORT(AnimateEntity)(&D_80182848, self);
             }
             if (!frameIdx) {
-                SetSubStep(1);
+                OVL_EXPORT(SetSubStep)(1);
                 self->velocityY = FIX(-5.0);
                 if (self->facingLeft) {
                     self->velocityX = FIX(-3.0);
@@ -428,9 +429,9 @@ void EntityFireWarg(Entity* self) {
             break;
         case 1:
             if (self->params) {
-                AnimateEntity(&D_80182868, self);
+                OVL_EXPORT(AnimateEntity)(&D_80182868, self);
             } else {
-                AnimateEntity(&D_80182858, self);
+                OVL_EXPORT(AnimateEntity)(&D_80182858, self);
             }
             if (self->velocityX) {
                 if (self->velocityX < 0) {
@@ -459,7 +460,7 @@ void EntityFireWarg(Entity* self) {
             }
             var_s2 = self->velocityX;
 
-            if (UnkCollisionFunc3(&D_801829DC) & 1) {
+            if (OVL_EXPORT(UnkCollisionFunc3)(&D_801829DC) & 1) {
                 self->velocityX = var_s2;
 
                 if (!var_s2) {
@@ -472,7 +473,7 @@ void EntityFireWarg(Entity* self) {
                     }
                 }
 
-                SetSubStep(2);
+                OVL_EXPORT(SetSubStep)(2);
             }
             break;
         case 2:
@@ -497,12 +498,12 @@ void EntityFireWarg(Entity* self) {
                 }
                 self->velocityX = var_s2;
             }
-            UnkCollisionFunc2(&D_801829D4);
+            OVL_EXPORT(UnkCollisionFunc2)(&D_801829D4);
 
             if (self->params) {
-                frameIdx = AnimateEntity(&D_80182884, self);
+                frameIdx = OVL_EXPORT(AnimateEntity)(&D_80182884, self);
             } else {
-                frameIdx = AnimateEntity(&D_80182878, self);
+                frameIdx = OVL_EXPORT(AnimateEntity)(&D_80182878, self);
             }
 
             if (!frameIdx) {
@@ -512,7 +513,7 @@ void EntityFireWarg(Entity* self) {
         break;
     case 5:
         func_801CC90C(self);
-        if (!AnimateEntity(&D_80182890, self)) {
+        if (!OVL_EXPORT(AnimateEntity)(&D_80182890, self)) {
             self->facingLeft ^= 1;
             self->animCurFrame = 0xE;
             func_801CC820(self);
@@ -521,14 +522,14 @@ void EntityFireWarg(Entity* self) {
     case 6:
         switch (self->step_s) {
         case 0:
-            AnimateEntity(&D_801828D8, self);
+            OVL_EXPORT(AnimateEntity)(&D_801828D8, self);
             if (!--self->ext.fireWarg.unk80) {
-                SetSubStep(1);
+                OVL_EXPORT(SetSubStep)(1);
             }
             break;
         case 1:
             part = self + 1;
-            frameIdx = AnimateEntity(&D_801828A8, self);
+            frameIdx = OVL_EXPORT(AnimateEntity)(&D_801828A8, self);
 
             if (self->velocityX) {
                 if (self->velocityX < 0) {
@@ -553,7 +554,7 @@ void EntityFireWarg(Entity* self) {
                 part->attack = enemyDefPtr->attack;
             }
 
-            UnkCollisionFunc2(&D_801829D4);
+            OVL_EXPORT(UnkCollisionFunc2)(&D_801829D4);
 
             if (!frameIdx) {
                 func_801CC820(self);
@@ -562,30 +563,31 @@ void EntityFireWarg(Entity* self) {
         break;
     case 7:
         func_801CC90C(self);
-        AnimateEntity(&D_801828D8, self);
+        OVL_EXPORT(AnimateEntity)(&D_801828D8, self);
         break;
     case 8:
-        if (!AnimateEntity(&D_80182900, self)) {
+        if (!OVL_EXPORT(AnimateEntity)(&D_80182900, self)) {
             func_801CC820(self);
         }
         break;
     case 9:
         switch (self->step_s) {
         case 0:
-            if (!AnimateEntity(&D_80182928, self)) {
-                SetSubStep(1);
+            if (!OVL_EXPORT(AnimateEntity)(&D_80182928, self)) {
+                OVL_EXPORT(SetSubStep)(1);
                 self->ext.fireWarg.unk80 = 0;
             }
             break;
         case 1:
-            if (!AnimateEntity(&D_80182944, self)) {
+            if (!OVL_EXPORT(AnimateEntity)(&D_80182944, self)) {
                 func_801CC820(self);
                 break;
             }
 
             if (self->animCurFrame == 0x14) {
                 if (self->ext.fireWarg.unk80 == 0) {
-                    part = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                    part = OVL_EXPORT(AllocEntity)(
+                        &g_Entities[160], &g_Entities[192]);
                     if (part != NULL) {
                         OVL_EXPORT(CreateEntityFromCurrentEntity)
                         (E_FIRE_WARG_ATTACK, part);
@@ -607,7 +609,7 @@ void EntityFireWarg(Entity* self) {
         func_801CC90C(self);
         switch (self->step_s) {
         case 0:
-            SetSubStep(1);
+            OVL_EXPORT(SetSubStep)(1);
             PlaySfxPositional(SFX_WARG_PAIN);
             if (self->facingLeft) {
                 self->velocityX = FIX(-2.0);
@@ -616,7 +618,7 @@ void EntityFireWarg(Entity* self) {
             }
             break;
         case 1:
-            UnkCollisionFunc2(&D_801829D4);
+            OVL_EXPORT(UnkCollisionFunc2)(&D_801829D4);
             if (self->velocityX != 0) {
                 if (self->facingLeft) {
                     self->velocityX += FIX(0.125);
@@ -636,12 +638,12 @@ void EntityFireWarg(Entity* self) {
                         4);
                 }
             }
-            if (!AnimateEntity(&D_8018295C, self)) {
-                SetSubStep(2);
+            if (!OVL_EXPORT(AnimateEntity)(&D_8018295C, self)) {
+                OVL_EXPORT(SetSubStep)(2);
             }
             break;
         case 2:
-            if (!AnimateEntity(&D_80182964, self)) {
+            if (!OVL_EXPORT(AnimateEntity)(&D_80182964, self)) {
                 func_801CC820(self);
             }
             break;
@@ -650,13 +652,14 @@ void EntityFireWarg(Entity* self) {
     case 11:
         switch (self->step_s) {
         case 0:
-            if (UnkCollisionFunc3(&D_801829DC) & 1) {
+            if (OVL_EXPORT(UnkCollisionFunc3)(&D_801829DC) & 1) {
                 self->drawFlags = ENTITY_OPACITY;
                 self->opacity = 0x80;
                 self->ext.fireWarg.unk80 = 0;
-                SetSubStep(1);
+                OVL_EXPORT(SetSubStep)(1);
                 self->ext.fireWarg.unk80++;
-                part = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                part =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
                 if (part != NULL) {
                     OVL_EXPORT(CreateEntityFromCurrentEntity)
                     (E_FIRE_WARG_DEATH, part);
@@ -670,7 +673,7 @@ void EntityFireWarg(Entity* self) {
             }
             break;
         case 1:
-            AnimateEntity(&D_80182900, self);
+            OVL_EXPORT(AnimateEntity)(&D_80182900, self);
             self->ext.fireWarg.unk80 += 1;
             self->opacity -= 2;
             if (self->opacity == 0x40) {
@@ -684,7 +687,7 @@ void EntityFireWarg(Entity* self) {
             }
             break;
         case 2:
-            AnimateEntity(&D_80182900, self);
+            OVL_EXPORT(AnimateEntity)(&D_80182900, self);
             self->opacity -= 2;
             if (!self->opacity) {
                 DestroyEntity(self);
@@ -704,19 +707,19 @@ void EntityFireWarg(Entity* self) {
             part->ext.fireWargHelper.unk7C = true;
 
             if (!(OVL_EXPORT(Random)() & 7)) {
-                AnimateEntity(&D_8018296C, part);
-                AnimateEntity(&D_80182980, self);
+                OVL_EXPORT(AnimateEntity)(&D_8018296C, part);
+                OVL_EXPORT(AnimateEntity)(&D_80182980, self);
                 self->step_s += 1;
             } else {
-                AnimateEntity(&D_80182990, part);
-                AnimateEntity(&D_801829B4, self);
+                OVL_EXPORT(AnimateEntity)(&D_80182990, part);
+                OVL_EXPORT(AnimateEntity)(&D_801829B4, self);
                 self->step_s += 2;
             }
             self->animCurFrame = 0x32;
             break;
         case 1:
-            var_s1 = AnimateEntity(&D_8018296C, part);
-            AnimateEntity(&D_80182980, self);
+            var_s1 = OVL_EXPORT(AnimateEntity)(&D_8018296C, part);
+            OVL_EXPORT(AnimateEntity)(&D_80182980, self);
             if (self->velocityX != 0) {
                 if (self->velocityX < 0) {
                     self->velocityX += FIX(0.5);
@@ -754,15 +757,15 @@ void EntityFireWarg(Entity* self) {
                 ent_s4->attack = (enemyDefPtr->attack * 3) / 2;
             }
 
-            UnkCollisionFunc2(&D_801829D4);
+            OVL_EXPORT(UnkCollisionFunc2)(&D_801829D4);
             if (!var_s1) {
                 func_801CC820(self);
                 part->ext.fireWargHelper.unk7C = false;
             }
             break;
         case 2:
-            var_s1 = AnimateEntity(&D_80182990, part);
-            AnimateEntity(&D_801829B4, self);
+            var_s1 = OVL_EXPORT(AnimateEntity)(&D_80182990, part);
+            OVL_EXPORT(AnimateEntity)(&D_801829B4, self);
             if (self->velocityX != 0) {
                 if (self->velocityX < 0) {
                     self->velocityX += FIX(0.5);
@@ -800,7 +803,7 @@ void EntityFireWarg(Entity* self) {
                 ent_s4->attack = enemyDefPtr->attack;
             }
 
-            UnkCollisionFunc2(&D_801829D4);
+            OVL_EXPORT(UnkCollisionFunc2)(&D_801829D4);
             if (!var_s1) {
                 func_801CC820(self);
                 part->ext.fireWargHelper.unk7C = false;
@@ -857,13 +860,13 @@ void EntityUnkId30(Entity* self) {
     entity = self - 1;
     if (!self->step) {
         if (self->params) {
-            InitializeEntity(g_EInitFireWarg2);
+            OVL_EXPORT(InitializeEntity)(g_EInitFireWarg2);
             self->hitboxState = 0;
         } else {
             if (entity->params) {
-                InitializeEntity(g_EInitFireWarg2);
+                OVL_EXPORT(InitializeEntity)(g_EInitFireWarg2);
             } else {
-                InitializeEntity(g_EInitFireWarg1);
+                OVL_EXPORT(InitializeEntity)(g_EInitFireWarg1);
             }
         }
         self->animCurFrame = 0;
@@ -925,7 +928,7 @@ void EntityUnkId31(Entity* self) {
     s16 i;
 
     if (!self->step) {
-        InitializeEntity(g_EInitFireWarg1);
+        OVL_EXPORT(InitializeEntity)(g_EInitFireWarg1);
         self->zPriority++;
         part = self + 1;
         OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID_30, part);
@@ -957,7 +960,7 @@ void EntityUnkId31(Entity* self) {
         PlaySfxPositional(SFX_FM_THUNDER_EXPLODE);
 
         for (i = 0; i < 3; i++) {
-            part = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            part = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (part != NULL) {
                 OVL_EXPORT(CreateEntityFromCurrentEntity)(E_EXPLOSION_3, part);
                 if (self->facingLeft) {
@@ -973,7 +976,7 @@ void EntityUnkId31(Entity* self) {
 
         hitboxPtr = D_80182FA8;
         for (i = 0; i < 8; i++) {
-            part = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            part = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
 
             if (part == NULL) {
                 break;
@@ -1066,7 +1069,7 @@ void EntityExplosion3(Entity* entity) {
     if (!entity->step) {
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex != -1) {
-            InitializeEntity(g_EInitFireWarg3);
+            OVL_EXPORT(InitializeEntity)(g_EInitFireWarg3);
             entity->flags |= FLAG_UNK_2000;
             entity->hitboxState = 0;
             prim = &g_PrimBuf[primIndex];
@@ -1137,10 +1140,10 @@ void EntityExplosion3(Entity* entity) {
     offset_var = rsin(angle) * newY / 0x1000;
     prim->y1 = posY + offset_var;
     prim->y2 = posY - offset_var;
-    FallEntity();
-    MoveEntity();
+    OVL_EXPORT(FallEntity)();
+    OVL_EXPORT(MoveEntity)();
     if (entity->ext.entityExplosion3.timer & 1) {
-        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        newEntity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (newEntity) {
             OVL_EXPORT(CreateEntityFromCurrentEntity)(E_EXPLOSION, newEntity);
             point = &D_80183060[(OVL_EXPORT(Random)() & 7) * 2];
@@ -1218,7 +1221,7 @@ void EntityFireWargWaveAttack(Entity* self) {
 
     switch (self->step) {
     case 0:
-        newEntity = AllocEntity(self, &g_Entities[192]);
+        newEntity = OVL_EXPORT(AllocEntity)(self, &g_Entities[192]);
 
         if (newEntity == NULL) {
             DestroyEntity(self);
@@ -1228,7 +1231,7 @@ void EntityFireWargWaveAttack(Entity* self) {
         PlaySfxPositional(SFX_FIREBALL_SHOT_A);
         OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID_2F, newEntity);
         newEntity->facingLeft = self->facingLeft;
-        InitializeEntity(g_EInitFireWarg3);
+        OVL_EXPORT(InitializeEntity)(g_EInitFireWarg3);
 
         self->ext.timer.t = 8;
         self->hitboxWidth = 8;
@@ -1363,7 +1366,7 @@ void EntityUnkId2F(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitFireWarg3);
+        OVL_EXPORT(InitializeEntity)(g_EInitFireWarg3);
         self->attack /= 2;
         self->ext.timer.t = 8;
         self->hitboxWidth = 4;
@@ -1449,7 +1452,7 @@ void EntityFireWargDeathBeams(Entity* self) {
         temp_s1_u16 = (u16)temp_s1;
 #endif
 
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
 
         if (primIndex != -1) {

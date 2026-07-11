@@ -20,13 +20,13 @@ void func_psp_0923AD68(Entity* self) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex != -1) {
-            InitializeEntity(OVL_EXPORT(EInitObtainable));
+            OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitObtainable));
             prim = &g_PrimBuf[primIndex];
             prim->drawMode = DRAW_HIDE;
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             self->animSet = ANIMSET_DRA(0);
-            angle = GetAngleBetweenEntities(self, pl);
+            angle = OVL_EXPORT(GetAngleBetweenEntities)(self, pl);
             direction = 0;
             if (self->posY.i.hi > 112) {
                 direction = 1;
@@ -68,13 +68,13 @@ void func_psp_0923AD68(Entity* self) {
         if (self->ext.soulStealOrb.unk80 < 0x800) {
             self->ext.soulStealOrb.unk80 += 0x10;
         }
-        angle = GetAngleBetweenEntities(self, pl);
-        self->ext.soulStealOrb.angle = angle = LimitAngleChange(
+        angle = OVL_EXPORT(GetAngleBetweenEntities)(self, pl);
+        self->ext.soulStealOrb.angle = angle = OVL_EXPORT(LimitAngleChange)(
             self->ext.soulStealOrb.unk7E, self->ext.soulStealOrb.angle, angle);
-        UnkEntityFunc0(angle, self->ext.soulStealOrb.unk80);
-        MoveEntity(self);
+        OVL_EXPORT(UnkEntityFunc0)(angle, self->ext.soulStealOrb.unk80);
+        OVL_EXPORT(MoveEntity)(self);
         prim = &g_PrimBuf[self->primIndex];
-        AnimateEntity(g_ESoulStealOrbAnim, self);
+        OVL_EXPORT(AnimateEntity)(g_ESoulStealOrbAnim, self);
         prim->tpage = 0x18;
         prim->clut = PAL_UNK_194;
         angle = self->animCurFrame;
@@ -110,7 +110,7 @@ void func_psp_0923B2F0(Entity* self) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex != -1) {
-            InitializeEntity(OVL_EXPORT(EInitObtainable));
+            OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitObtainable));
             prim = &g_PrimBuf[primIndex];
             prim->drawMode = DRAW_HIDE;
             self->flags |= FLAG_HAS_PRIMS;
@@ -142,13 +142,13 @@ void func_psp_0923B2F0(Entity* self) {
         if (self->ext.soulStealOrb.unk80 < 0x800) {
             self->ext.soulStealOrb.unk80 += 0x10;
         }
-        angle = GetAngleBetweenEntities(self, pl);
-        self->ext.soulStealOrb.angle = angle = LimitAngleChange(
+        angle = OVL_EXPORT(GetAngleBetweenEntities)(self, pl);
+        self->ext.soulStealOrb.angle = angle = OVL_EXPORT(LimitAngleChange)(
             self->ext.soulStealOrb.unk7E, self->ext.soulStealOrb.angle, angle);
-        UnkEntityFunc0(angle, self->ext.soulStealOrb.unk80);
-        MoveEntity(self);
+        OVL_EXPORT(UnkEntityFunc0)(angle, self->ext.soulStealOrb.unk80);
+        OVL_EXPORT(MoveEntity)(self);
         prim = &g_PrimBuf[self->primIndex];
-        AnimateEntity(g_ESoulStealOrbAnim, self);
+        OVL_EXPORT(AnimateEntity)(g_ESoulStealOrbAnim, self);
         prim->tpage = 0x18;
         prim->clut = PAL_UNK_194;
         angle = self->animCurFrame;

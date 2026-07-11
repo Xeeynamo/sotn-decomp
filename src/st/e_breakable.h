@@ -9,13 +9,14 @@
 extern EInit OVL_EXPORT(EInitBreakable);
 
 void OVL_EXPORT(CreateEntityFromCurrentEntity)(u16 entityId, Entity* entity);
-void ReplaceBreakableWithItemDrop(Entity*);
-Entity* AllocEntity(Entity* start, Entity* end);
+void OVL_EXPORT(ReplaceBreakableWithItemDrop)(Entity*);
+Entity* OVL_EXPORT(AllocEntity)(Entity* start, Entity* end);
 
 void EntityBreakable(Entity* entity) {
     u16 breakableType = entity->params >> 12;
     if (entity->step) {
-        AnimateEntity(g_eBreakableAnimations[breakableType], entity);
+        OVL_EXPORT(AnimateEntity)
+        (g_eBreakableAnimations[breakableType], entity);
         if (entity->hitParams) { // If the candle is destroyed
             Entity* entityDropItem;
 #if defined(STAGE_IS_RNO3)
@@ -29,17 +30,18 @@ void EntityBreakable(Entity* entity) {
 #else
             g_api.PlaySfx(SFX_BREAKABLE_HIT);
 #endif
-            entityDropItem = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            entityDropItem =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (entityDropItem != NULL) {
                 OVL_EXPORT(CreateEntityFromCurrentEntity)
                 (E_EXPLOSION, entityDropItem);
                 entityDropItem->params =
                     g_eBreakableExplosionTypes[breakableType];
             }
-            ReplaceBreakableWithItemDrop(entity);
+            OVL_EXPORT(ReplaceBreakableWithItemDrop)(entity);
         }
     } else {
-        InitializeEntity(OVL_EXPORT(EInitBreakable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitBreakable));
         entity->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 20;
         entity->blendMode = blend_modes[breakableType];
         entity->hitboxHeight = g_eBreakableHitboxes[breakableType];

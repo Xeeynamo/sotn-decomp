@@ -66,14 +66,15 @@ typedef enum {
 
 static void TryShoot(void) {
     // return value not used, but function has side effects
-    s32 unused = UnkCollisionFunc2(&sensors2);
+    s32 unused = OVL_EXPORT(UnkCollisionFunc2)(&sensors2);
     // if cooldown has expired...
     if (!g_CurrentEntity->ext.nova.cooldown) {
-        if (GetDistanceToPlayerX() >= 0x80) {
+        if (OVL_EXPORT(GetDistanceToPlayerX)() >= 0x80) {
             return;
         }
-        if ((g_CurrentEntity->facingLeft) ^ (GetSideToPlayer() & 1)) {
-            SetStep(NOVA_CHARGE);
+        if ((g_CurrentEntity->facingLeft) ^
+            (OVL_EXPORT(GetSideToPlayer)() & 1)) {
+            OVL_EXPORT(SetStep)(NOVA_CHARGE);
         }
     } else {
         g_CurrentEntity->ext.nova.cooldown--;
@@ -152,11 +153,11 @@ void EntityNovaSkeleton(Entity* self) {
     s32 i;
 
     if (self->flags & FLAG_DEAD) {
-        SetStep(NOVA_DEAD);
+        OVL_EXPORT(SetStep)(NOVA_DEAD);
     }
     switch (self->step) {
     case NOVA_INIT:
-        InitializeEntity(g_EInitNovaSkeleton);
+        OVL_EXPORT(InitializeEntity)(g_EInitNovaSkeleton);
         self->ext.nova.cooldown = 0x50;
 // what. why does psp need to allocate an extra prim.
 #if defined(VERSION_PSP)
@@ -183,21 +184,21 @@ void EntityNovaSkeleton(Entity* self) {
         prim->drawMode = DRAW_HIDE;
         break;
     case NOVA_1:
-        if (UnkCollisionFunc3(sensors1) == 0) {
+        if (OVL_EXPORT(UnkCollisionFunc3)(sensors1) == 0) {
             break;
         }
-        SetStep(NOVA_IDLE);
+        OVL_EXPORT(SetStep)(NOVA_IDLE);
         break;
     case NOVA_IDLE:
-        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-        AnimateEntity(&anim_idle, self);
-        if (GetDistanceToPlayerX() < 0x70) {
-            SetStep(NOVA_WALK_BACK);
+        self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+        OVL_EXPORT(AnimateEntity)(&anim_idle, self);
+        if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x70) {
+            OVL_EXPORT(SetStep)(NOVA_WALK_BACK);
         }
         break;
     case NOVA_WALK_FWD:
-        if (AnimateEntity(&anim_walk_fwd, self) == 0) {
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        if (OVL_EXPORT(AnimateEntity)(&anim_walk_fwd, self) == 0) {
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
         }
         self->ext.nova.movingLeft = self->facingLeft;
         if (self->ext.nova.movingLeft) {
@@ -205,14 +206,14 @@ void EntityNovaSkeleton(Entity* self) {
         } else {
             self->velocityX = FIX(-0.5);
         }
-        if (GetDistanceToPlayerX() < 0x4C) {
+        if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x4C) {
             self->step = NOVA_WALK_BACK;
         }
         TryShoot();
         break;
     case NOVA_WALK_BACK:
-        if (AnimateEntity(&anim_walk_back, self) == 0) {
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        if (OVL_EXPORT(AnimateEntity)(&anim_walk_back, self) == 0) {
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
         }
         self->ext.nova.movingLeft = self->facingLeft ^ 1;
         if (self->ext.nova.movingLeft) {
@@ -220,7 +221,7 @@ void EntityNovaSkeleton(Entity* self) {
         } else {
             self->velocityX = FIX(-0.5);
         }
-        if (GetDistanceToPlayerX() > 0x5C) {
+        if (OVL_EXPORT(GetDistanceToPlayerX)() > 0x5C) {
             self->step = NOVA_WALK_FWD;
         }
         TryShoot();
@@ -229,9 +230,9 @@ void EntityNovaSkeleton(Entity* self) {
     case NOVA_5:
         break;
     case NOVA_CHARGE:
-        if (AnimateEntity(&anim_laser_charge, self) == 0) {
+        if (OVL_EXPORT(AnimateEntity)(&anim_laser_charge, self) == 0) {
             self->ext.nova.ringState = 0;
-            SetStep(NOVA_SHOOT);
+            OVL_EXPORT(SetStep)(NOVA_SHOOT);
         }
         if ((!self->poseTimer) && (self->pose == 2)) {
             PlaySfxPositional(SFX_ELECTRICITY);
@@ -257,17 +258,17 @@ void EntityNovaSkeleton(Entity* self) {
             break;
         }
         DrawLaserRing();
-        if (!AnimateEntity(&anim_laser_blast, self)) {
+        if (!OVL_EXPORT(AnimateEntity)(&anim_laser_blast, self)) {
             prim = self->ext.nova.prim;
             prim->drawMode = DRAW_HIDE;
             var_s4 = ++self->ext.nova.laserTimerIndex & 7;
             self->ext.nova.cooldown = laser_cooldowns[var_s4];
-            SetStep(NOVA_WALK_BACK);
+            OVL_EXPORT(SetStep)(NOVA_WALK_BACK);
         }
         break;
     case NOVA_DEAD:
         for (i = 0; i < 6; i++) {
-            other = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            other = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (other == NULL) {
                 break;
             }
@@ -295,8 +296,8 @@ void EntityNovaSkeletonDeathParts(Entity* self) {
     if (self->step) {
         if (--self->ext.nova.deathPartLife) {
             self->rotate += death_parts_rotspeeds[self->params];
-            FallEntity();
-            MoveEntity();
+            OVL_EXPORT(FallEntity)();
+            OVL_EXPORT(MoveEntity)();
             return;
         }
         self->entityId = E_EXPLOSION;
@@ -305,7 +306,7 @@ void EntityNovaSkeletonDeathParts(Entity* self) {
         self->step = 0;
         return;
     }
-    InitializeEntity(g_EInitNovaSkeleton);
+    OVL_EXPORT(InitializeEntity)(g_EInitNovaSkeleton);
     self->hitboxState = 0;
     self->flags |=
         FLAG_DESTROY_IF_OUT_OF_CAMERA | FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
@@ -331,7 +332,7 @@ void EntityNovaLaser(Entity* self) {
 
     switch (self->step) {
     case LASER_INIT:
-        InitializeEntity(g_EInitNovaSkeleton2);
+        OVL_EXPORT(InitializeEntity)(g_EInitNovaSkeleton2);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 3);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -370,7 +371,7 @@ void EntityNovaLaser(Entity* self) {
         }
     case LASER_2:
         if (!(self->ext.nova.laserTimer & 3)) {
-            other = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            other = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (other != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)(E_NOVA_PULSE, self, other);
                 other->zPriority = self->zPriority - 1;
@@ -466,7 +467,7 @@ void EntityNovaLaserPulse(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitNovaSkeleton2);
+        OVL_EXPORT(InitializeEntity)(g_EInitNovaSkeleton2);
         self->hitboxState = 0;
         self->animCurFrame = 0x24;
         self->drawFlags |= ENTITY_SCALEY | ENTITY_SCALEX;
@@ -478,7 +479,7 @@ void EntityNovaLaserPulse(Entity* self) {
         }
         /* fallthrough */
     case 1:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->ext.nova.laserPulseDist += abs(self->velocityX);
         self->scaleX = self->scaleY += 0x40;
         if (self->scaleX < 0x100) {
@@ -487,7 +488,7 @@ void EntityNovaLaserPulse(Entity* self) {
         self->step++;
         return;
     case 2:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->ext.nova.laserPulseDist += abs(self->velocityX);
         temp_s0 = (self->ext.nova.laserLength + 0x20) << 0x10;
         temp_s0 -= self->ext.nova.laserPulseDist;

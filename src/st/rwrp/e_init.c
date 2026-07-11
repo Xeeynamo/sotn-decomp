@@ -25,8 +25,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     OVL_EXPORT(EntityHeartDrop),
     EntityEnemyBlood,
     OVL_EXPORT(EntityMessageBox),
-    EntityDummy,
-    EntityDummy,
+    OVL_EXPORT(EntityDummy),
+    OVL_EXPORT(EntityDummy),
     OVL_EXPORT(EntityBackgroundBlock), // unused
     OVL_EXPORT(EntityLockCamera),      // unused? looks debugging stuff
     EntityUnkId13,

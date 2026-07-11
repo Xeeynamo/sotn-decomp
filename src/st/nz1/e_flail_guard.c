@@ -44,16 +44,16 @@ void EntityFlailGuard(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitFlailGuard);
+        OVL_EXPORT(InitializeEntity)(g_EInitFlailGuard);
         self->hitboxOffY = 2;
-        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
         OVL_EXPORT(CreateEntityFromEntity)(E_FLAIL_GUARD_FLAIL, self, self + 1);
         self->hitboxOffX = 4;
         self->blendMode |= BLEND_TRANSP;
         break;
     case 1:
-        UnkCollisionFunc3(D_us_801821E4);
-        if (GetDistanceToPlayerX() < 0x50) {
+        OVL_EXPORT(UnkCollisionFunc3)(D_us_801821E4);
+        if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x50) {
             self->ext.flailGuard.facingLeft = self->facingLeft;
             self->ext.flailGuard.timer = 0;
             self->step = 2;
@@ -61,7 +61,7 @@ void EntityFlailGuard(Entity* self) {
         }
         break;
     case 2:
-        if (!AnimateEntity(D_us_801821A8, self)) {
+        if (!OVL_EXPORT(AnimateEntity)(D_us_801821A8, self)) {
             self->ext.flailGuard.timer++;
         }
         if (self->poseTimer == 0) {
@@ -80,7 +80,7 @@ void EntityFlailGuard(Entity* self) {
         }
         break;
     case 3:
-        if (!AnimateEntity(D_us_801821B4, self)) {
+        if (!OVL_EXPORT(AnimateEntity)(D_us_801821B4, self)) {
             self->pose = 0;
             self->poseTimer = 0;
             self->step = 2;
@@ -94,14 +94,15 @@ void EntityFlailGuard(Entity* self) {
         break;
     case 4:
         for (i = 0; i < 8; i++) {
-            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            entity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)(E_FLAIL_GUARD, self, entity);
                 entity->params = i;
                 entity->step = 5;
                 entity->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
                                  FLAG_UNK_00200000 | FLAG_UNK_2000;
-                if ((GetSideToPlayer() & 1) ^ 1) {
+                if ((OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1) {
                     entity->velocityX = -D_us_80182160[i].x;
                 } else {
                     entity->velocityX = D_us_80182160[i].x;
@@ -110,7 +111,7 @@ void EntityFlailGuard(Entity* self) {
                 entity->ext.flailGuard.timer = D_us_801821A0[i];
             }
         }
-        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        entity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
             OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
             entity->params = 3;
@@ -121,7 +122,7 @@ void EntityFlailGuard(Entity* self) {
         break;
 
     case 5:
-        InitializeEntity(g_EInitFlailGuard);
+        OVL_EXPORT(InitializeEntity)(g_EInitFlailGuard);
         self->hitboxState = 0;
         self->animCurFrame = self->params + 8;
         self->flags |=
@@ -130,11 +131,12 @@ void EntityFlailGuard(Entity* self) {
         break;
 
     case 6:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityY += FIX(0.25);
 
         if (DECREMENT_AND_CHECK(self->ext.flailGuard.timer)) {
-            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            entity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
                 entity->params = 1;
@@ -176,7 +178,7 @@ void EntityFlailGuardFlail(Entity* self) {
 
     parent = self - 1;
     if (!self->step) {
-        InitializeEntity(g_EInitFlailGuardFlail);
+        OVL_EXPORT(InitializeEntity)(g_EInitFlailGuardFlail);
 
         self->animCurFrame = 17;
         self->ext.flailGuardFlail.unk7C = 0x100;

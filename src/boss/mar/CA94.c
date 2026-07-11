@@ -25,12 +25,12 @@ void func_us_8018CA94(Entity* self) {
     player = &PLAYER;
 
     if (OVL_EXPORT(SkipCutscene) && self->step < 12) {
-        SetStep(12);
+        OVL_EXPORT(SetStep)(12);
     }
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitSpawner));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitSpawner));
         self->animSet = ANIMSET_OVL(2);
         self->animCurFrame = 1;
         self->unk5A = 0x48;
@@ -46,28 +46,28 @@ void func_us_8018CA94(Entity* self) {
 
     case 2:
         if (OVL_EXPORT(CutsceneFlags) & 0x8) {
-            SetStep(3);
+            OVL_EXPORT(SetStep)(3);
         }
         break;
 
     case 3:
-        AnimateEntity(D_us_80180690, self);
+        OVL_EXPORT(AnimateEntity)(D_us_80180690, self);
         if (OVL_EXPORT(CutsceneFlags) & 0x10) {
-            SetStep(4);
+            OVL_EXPORT(SetStep)(4);
         }
         break;
 
     case 4:
-        AnimateEntity(D_us_801806A4, self);
+        OVL_EXPORT(AnimateEntity)(D_us_801806A4, self);
         if (OVL_EXPORT(CutsceneFlags) & 0x20) {
-            SetStep(5);
+            OVL_EXPORT(SetStep)(5);
         }
         break;
 
     case 5:
-        AnimateEntity(D_us_801806B8, self);
+        OVL_EXPORT(AnimateEntity)(D_us_801806B8, self);
         if (OVL_EXPORT(CutsceneFlags) & 0x40) {
-            SetStep(6);
+            OVL_EXPORT(SetStep)(6);
         }
         break;
 
@@ -86,42 +86,42 @@ void func_us_8018CA94(Entity* self) {
         break;
 
     case 8:
-        AnimateEntity(D_us_801806CC, self);
+        OVL_EXPORT(AnimateEntity)(D_us_801806CC, self);
         if (OVL_EXPORT(CutsceneFlags) & 0x200) {
-            SetStep(9);
+            OVL_EXPORT(SetStep)(9);
         }
         break;
 
     case 9:
-        AnimateEntity(D_us_801806E4, self);
+        OVL_EXPORT(AnimateEntity)(D_us_801806E4, self);
         if (OVL_EXPORT(CutsceneFlags) & 0x400) {
-            SetStep(10);
+            OVL_EXPORT(SetStep)(10);
         }
         break;
 
     case 10:
-        AnimateEntity(D_us_801806EC, self);
+        OVL_EXPORT(AnimateEntity)(D_us_801806EC, self);
         if (OVL_EXPORT(CutsceneFlags) & 0x800) {
-            SetStep(11);
+            OVL_EXPORT(SetStep)(11);
         }
         break;
 
     case 11:
-        AnimateEntity(D_us_80180700, self);
+        OVL_EXPORT(AnimateEntity)(D_us_80180700, self);
         if (OVL_EXPORT(CutsceneFlags) & 0x1000) {
-            SetStep(12);
+            OVL_EXPORT(SetStep)(12);
         }
         break;
 
     case 12:
-        if (!AnimateEntity(D_us_80180718, self)) {
-            SetStep(13);
+        if (!OVL_EXPORT(AnimateEntity)(D_us_80180718, self)) {
+            OVL_EXPORT(SetStep)(13);
             self->velocityX = FIX(1.5);
         }
         break;
 
     case 13:
-        pan = AnimateEntity(D_us_80180724, self);
+        pan = OVL_EXPORT(AnimateEntity)(D_us_80180724, self);
         if (pan & 0x80 && (self->pose == 3 || self->pose == 7)) {
 
             pan = (self->posX.i.hi - 120) / 16;
@@ -136,29 +136,29 @@ void func_us_8018CA94(Entity* self) {
             g_api.PlaySfxVolPan(SFX_STOMP_SOFT_B, 80, pan);
         }
 
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
 
         if (self->posX.i.hi > 184) {
-            SetStep(14);
+            OVL_EXPORT(SetStep)(14);
             self->velocityY = FIX(-4.0);
         }
 
         break;
 
     case 14:
-        AnimateEntity(D_us_80180738, self);
+        OVL_EXPORT(AnimateEntity)(D_us_80180738, self);
         self->velocityY += FIX(0.1875);
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
 
         if (self->velocityY > 0 && self->posY.i.hi > 0x83) {
             self->velocityY = 0;
-            SetStep(15);
+            OVL_EXPORT(SetStep)(15);
         }
 
         break;
 
     case 15:
-        pan = AnimateEntity(D_us_80180724, self);
+        pan = OVL_EXPORT(AnimateEntity)(D_us_80180724, self);
         if (pan & 0x80 && (self->pose == 3 || self->pose == 7)) {
 
             pan = (self->posX.i.hi - 120) / 16;
@@ -173,7 +173,7 @@ void func_us_8018CA94(Entity* self) {
             g_api.PlaySfxVolPan(SFX_STOMP_SOFT_B, 80, pan);
         }
 
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
 
         if (self->posX.i.hi > 256) {
             OVL_EXPORT(CutsceneFlags) |= 0x2000;

@@ -10,15 +10,16 @@ void EntityRoomExit(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         self->hitboxWidth = 16;
         self->hitboxHeight = 32;
         self->hitboxState = 1;
         // fallthrough
 
     case 1:
-        if (g_PlayerX < 256 && GetDistanceToPlayerX() < self->hitboxWidth &&
-            GetDistanceToPlayerY() < self->hitboxHeight) {
+        if (g_PlayerX < 256 &&
+            OVL_EXPORT(GetDistanceToPlayerX)() < self->hitboxWidth &&
+            OVL_EXPORT(GetDistanceToPlayerY)() < self->hitboxHeight) {
             g_Tilemap.x = 256;
             g_Tilemap.left++;
             g_PlayerX -= 256;

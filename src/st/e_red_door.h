@@ -52,7 +52,7 @@ void OVL_EXPORT(EntityRedDoor)(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
         self->animSet = 7;
         self->animCurFrame = 1;
         self->zPriority = PLAYER.zPriority - 0x20;
@@ -141,7 +141,7 @@ void OVL_EXPORT(EntityRedDoor)(Entity* self) {
         if (PLAYER.step != 1) {
             break;
         }
-        if (PLAYER.facingLeft == GetSideToPlayer()) {
+        if (PLAYER.facingLeft == OVL_EXPORT(GetSideToPlayer)()) {
             break;
         }
 #else
@@ -150,7 +150,7 @@ void OVL_EXPORT(EntityRedDoor)(Entity* self) {
             break;
         }
 #endif
-        if (((PLAYER.facingLeft != GetSideToPlayer()) & 1) ^ 1) {
+        if (((PLAYER.facingLeft != OVL_EXPORT(GetSideToPlayer)()) & 1) ^ 1) {
             break;
         }
         if ((PLAYER.step != 0x19 || g_PlayableCharacter == PLAYER_ALUCARD) &&

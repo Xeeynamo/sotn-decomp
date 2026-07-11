@@ -31,7 +31,7 @@ void OVL_EXPORT(EntityBoss)(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         entity = &g_Entities[80];
         OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(FAKE_RALPH), entity);
         entity->posX.i.hi = 0x100 - g_Tilemap.scrollX.i.hi;
@@ -88,7 +88,7 @@ void OVL_EXPORT(EntityBoss)(Entity* self) {
         }
         break;
     case 5:
-        entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+        entity = OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
         if (entity != NULL) {
             OVL_EXPORT(CreateEntityFromEntity)
             (E_ID(LIFE_UP_SPAWN), self, entity);

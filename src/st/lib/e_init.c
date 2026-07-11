@@ -15,8 +15,8 @@ void OVL_EXPORT(EntityRelicOrb)(Entity* self);
 void OVL_EXPORT(EntityHeartDrop)(Entity* self);
 void EntityEnemyBlood(Entity* self);
 void OVL_EXPORT(EntityMessageBox)(Entity* self);
-void EntityDummy(Entity* self);
-void EntityDummy(Entity* self);
+void OVL_EXPORT(EntityDummy)(Entity* self);
+void OVL_EXPORT(EntityDummy)(Entity* self);
 void OVL_EXPORT(EntityBackgroundBlock)(Entity* self);
 void OVL_EXPORT(EntityLockCamera)(Entity* self);
 void EntityUnkId13(Entity* self);
@@ -98,8 +98,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x0B */ OVL_EXPORT(EntityHeartDrop),
     /* 0x0C */ EntityEnemyBlood,
     /* 0x0D */ OVL_EXPORT(EntityMessageBox),
-    /* 0x0E */ EntityDummy,
-    /* 0x0F */ EntityDummy,
+    /* 0x0E */ OVL_EXPORT(EntityDummy),
+    /* 0x0F */ OVL_EXPORT(EntityDummy),
     /* 0x10 */ OVL_EXPORT(EntityBackgroundBlock),
     /* 0x11 */ OVL_EXPORT(EntityLockCamera),
     /* 0x12 */ EntityUnkId13,

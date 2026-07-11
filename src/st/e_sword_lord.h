@@ -129,8 +129,8 @@ void EntitySwordLord(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitSwordLord);
-        self->facingLeft = GetSideToPlayer() & 1;
+        OVL_EXPORT(InitializeEntity)(g_EInitSwordLord);
+        self->facingLeft = OVL_EXPORT(GetSideToPlayer)() & 1;
         tempEntity = self + 1;
         DestroyEntity(tempEntity);
         OVL_EXPORT(CreateEntityFromEntity)
@@ -138,15 +138,15 @@ void EntitySwordLord(Entity* self) {
         break;
 
     case 1:
-        if (UnkCollisionFunc3(D_us_80182A88) & 1) {
+        if (OVL_EXPORT(UnkCollisionFunc3)(D_us_80182A88) & 1) {
             self->step = 2;
         }
         break;
 
     case 2:
-        AnimateEntity(anim5, self);
-        self->facingLeft = GetSideToPlayer() & 1;
-        if (GetDistanceToPlayerX() < 0x60) {
+        OVL_EXPORT(AnimateEntity)(anim5, self);
+        self->facingLeft = OVL_EXPORT(GetSideToPlayer)() & 1;
+        if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x60) {
             self->poseTimer = 0;
             self->pose = 0;
             self->ext.swordLord.delay = delays[OVL_EXPORT(Random)() & 3];
@@ -160,13 +160,13 @@ void EntitySwordLord(Entity* self) {
         break;
 
     case 3:
-        AnimateEntity(anim0, self);
-        colRet = UnkCollisionFunc2(D_us_80182A80);
+        OVL_EXPORT(AnimateEntity)(anim0, self);
+        colRet = OVL_EXPORT(UnkCollisionFunc2)(D_us_80182A80);
         if (colRet & 0x60) {
             self->posX.val -= self->velocityX;
             self->velocityX = -self->velocityX;
         }
-        xDistance = GetDistanceToPlayerX();
+        xDistance = OVL_EXPORT(GetDistanceToPlayerX)();
         if (xDistance > 0x60) {
             if (self->facingLeft) {
                 self->velocityX = FIX(-1.0);
@@ -196,12 +196,12 @@ void EntitySwordLord(Entity* self) {
         break;
 
     case 4:
-        colRet = UnkCollisionFunc2(D_us_80182A80);
+        colRet = OVL_EXPORT(UnkCollisionFunc2)(D_us_80182A80);
         if (colRet & 0x60) {
             self->posX.val -= self->velocityX;
             self->velocityX = 0;
         }
-        if (AnimateEntity(anim1, self) == 0) {
+        if (OVL_EXPORT(AnimateEntity)(anim1, self) == 0) {
             self->pose = 0;
             self->poseTimer = 0;
             self->ext.swordLord.delay = delays[OVL_EXPORT(Random)() & 3];
@@ -240,13 +240,13 @@ void EntitySwordLord(Entity* self) {
         break;
 
     case 5:
-        colRet = UnkCollisionFunc2(D_us_80182A80);
+        colRet = OVL_EXPORT(UnkCollisionFunc2)(D_us_80182A80);
         if (colRet & 0x60) {
             self->posX.val -= self->velocityX;
             self->velocityX = 0;
         }
         self->step_s ^= 1;
-        if (AnimateEntity(anim2, self) == 0) {
+        if (OVL_EXPORT(AnimateEntity)(anim2, self) == 0) {
             self->pose = 0;
             self->poseTimer = 0;
             self->ext.swordLord.delay = delays[OVL_EXPORT(Random)() & 3];
@@ -299,7 +299,8 @@ void EntitySwordLord(Entity* self) {
         switch (self->step_s) {
         case 0:
             if ((OVL_EXPORT(Random)() & 7) == 0) {
-                tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                tempEntity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
                     OVL_EXPORT(CreateEntityFromEntity)
                     (E_INTENSE_EXPLOSION, self, tempEntity);
@@ -309,8 +310,9 @@ void EntitySwordLord(Entity* self) {
                         0x20 - (OVL_EXPORT(Random)() & 0x3F);
                 }
             }
-            if (AnimateEntity(anim3, self) == 0) {
-                tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (OVL_EXPORT(AnimateEntity)(anim3, self) == 0) {
+                tempEntity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
                     OVL_EXPORT(CreateEntityFromEntity)
                     (E_EXPLOSION, self, tempEntity);
@@ -325,7 +327,8 @@ void EntitySwordLord(Entity* self) {
 
         case 1:
             if (self->animCurFrame == 29) {
-                tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                tempEntity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
                     OVL_EXPORT(CreateEntityFromEntity)
                     (E_SWORD_LORD, self, tempEntity);
@@ -341,10 +344,11 @@ void EntitySwordLord(Entity* self) {
             if (!self->poseTimer && self->pose == 1) {
                 PlaySfxPositional(SFX_ANIME_SWORD_B);
             }
-            if (AnimateEntity(anim4, self) == 0) {
+            if (OVL_EXPORT(AnimateEntity)(anim4, self) == 0) {
                 s8 = 0;
 #ifdef STAGE_IS_NZ1
-                tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                tempEntity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
                 if (tempEntity != NULL) {
                     OVL_EXPORT(CreateEntityFromEntity)
                     (E_VANDAL_SWORD, self, tempEntity);
@@ -359,8 +363,8 @@ void EntitySwordLord(Entity* self) {
                 }
 #endif
                 for (i = s8; i < 5; i++) {
-                    tempEntity =
-                        AllocEntity(&g_Entities[224], &g_Entities[256]);
+                    tempEntity = OVL_EXPORT(AllocEntity)(
+                        &g_Entities[224], &g_Entities[256]);
                     if (tempEntity != NULL) {
                         OVL_EXPORT(CreateEntityFromEntity)
                         (E_SWORD_LORD, self, tempEntity);
@@ -394,7 +398,7 @@ void EntitySwordLord(Entity* self) {
         break;
 
     case 7:
-        InitializeEntity(g_EInitSwordLord);
+        OVL_EXPORT(InitializeEntity)(g_EInitSwordLord);
         self->hitboxState = 0;
         self->animCurFrame = self->params + 30;
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
@@ -406,7 +410,7 @@ void EntitySwordLord(Entity* self) {
         break;
 
     case 8:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityY += self->ext.swordLord.unk80;
         posX = self->posX.i.hi;
         posY = self->posY.i.hi;
@@ -419,7 +423,8 @@ void EntitySwordLord(Entity* self) {
         g_api.CheckCollision(posX, posY, &collider, 0);
         if (self->params < 2) {
             if (collider.effects != EFFECT_NONE) {
-                tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                tempEntity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
                     OVL_EXPORT(CreateEntityFromCurrentEntity)
                     (E_EXPLOSION, tempEntity);
@@ -447,7 +452,8 @@ void EntitySwordLord(Entity* self) {
         }
         posY += explosionOffsets[self->params].y;
         if (OVL_EXPORT(Random)() & 0xF) {
-            tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            tempEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
                 OVL_EXPORT(CreateEntityFromCurrentEntity)
                 (E_EXPLOSION, tempEntity);
@@ -484,7 +490,7 @@ void EntitySwordLordAttack(Entity* self) {
     Entity* swordLord;
 
     if (!self->step) {
-        InitializeEntity(g_EInitSwordLordAttack);
+        OVL_EXPORT(InitializeEntity)(g_EInitSwordLordAttack);
     }
     swordLord = self - 1;
     animFrame = swordLord->animCurFrame;

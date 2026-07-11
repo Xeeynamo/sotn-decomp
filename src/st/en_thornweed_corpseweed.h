@@ -89,9 +89,10 @@ void EntityThornweed(Entity* self) {
     // Check for death
     if ((self->flags & FLAG_DEAD) && (self->step < 6)) {
         if ((self->params) && (self->ext.thornweed.isCorpseweedSpawned)) {
-            SetStep(CORPSEWEED_DEATH);
+            OVL_EXPORT(SetStep)(CORPSEWEED_DEATH);
         } else {
-            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            entity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
                 entity->posY.i.hi -= 4;
@@ -105,7 +106,7 @@ void EntityThornweed(Entity* self) {
 
     switch (self->step) {
     case INIT:
-        InitializeEntity(g_EInitThornweed);
+        OVL_EXPORT(InitializeEntity)(g_EInitThornweed);
         if (self->params) {
             self->animCurFrame = AnimFrame_CorpseweedInit;
         } else {
@@ -114,22 +115,22 @@ void EntityThornweed(Entity* self) {
         break;
 
     case DROP_TO_GROUND:
-        if (UnkCollisionFunc3(&PhysicsSensors) & 1) {
-            SetStep(WAIT_TO_WAKE);
+        if (OVL_EXPORT(UnkCollisionFunc3)(&PhysicsSensors) & 1) {
+            OVL_EXPORT(SetStep)(WAIT_TO_WAKE);
         }
         break;
 
     case WAIT_TO_WAKE:
-        if (GetDistanceToPlayerX() < WakeDistance) {
-            SetStep(WAKE_UP);
+        if (OVL_EXPORT(GetDistanceToPlayerX)() < WakeDistance) {
+            OVL_EXPORT(SetStep)(WAKE_UP);
         }
         break;
 
     case WAKE_UP:
         animFrames = AnimFrames_All[self->params];
-        if (AnimateEntity(animFrames, self) == 0) {
+        if (OVL_EXPORT(AnimateEntity)(animFrames, self) == 0) {
             self->ext.thornweed.timer = CorpseweedSpawnDelay;
-            SetStep(IDLE);
+            OVL_EXPORT(SetStep)(IDLE);
         }
         break;
 
@@ -144,7 +145,7 @@ void EntityThornweed(Entity* self) {
                     entity = self + 1;
                     OVL_EXPORT(CreateEntityFromEntity)
                     (E_CORPSEWEED, self, entity);
-                    entity->facingLeft = (GetSideToPlayer() & 1);
+                    entity->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1);
                     self->enemyId = 0x9E;
                     self->ext.thornweed.isCorpseweedSpawned = true;
                 }
@@ -155,7 +156,7 @@ void EntityThornweed(Entity* self) {
 
         // Animate
         animFrames = AnimFrames_All[self->params + EntityFormCount];
-        AnimateEntity(animFrames, self);
+        OVL_EXPORT(AnimateEntity)(animFrames, self);
         break;
 
     case CORPSEWEED_DEATH:
@@ -168,7 +169,8 @@ void EntityThornweed(Entity* self) {
             self->step_s++;
         }
         if (!--self->opacity) {
-            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            entity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
                 entity->posY.i.hi -= 0xC;
@@ -286,12 +288,12 @@ void EntityCorpseweed(Entity* self) {
     s16 t;
 
     if ((self->flags & FLAG_DEAD) && (self->step < DEATH)) {
-        SetStep(DEATH);
+        OVL_EXPORT(SetStep)(DEATH);
     }
 
     switch (self->step) {
     case INIT:
-        InitializeEntity(g_EInitCorpseweed);
+        OVL_EXPORT(InitializeEntity)(g_EInitCorpseweed);
         self->animCurFrame = AnimFrameInit;
         self->hitboxOffX = 2;
         self->hitboxOffY = 9;
@@ -376,7 +378,7 @@ void EntityCorpseweed(Entity* self) {
 
         case GROW_LEAVES_DONE:
             self->ext.corpseweed.leavesDoneGrowing = true;
-            SetStep(GROW_STEM);
+            OVL_EXPORT(SetStep)(GROW_STEM);
             break;
         }
         break;
@@ -483,7 +485,7 @@ void EntityCorpseweed(Entity* self) {
             if (doneCount == 2) {
                 self->ext.corpseweed.stalkDoneGrowing = true;
                 self->hitboxState = 3;
-                SetStep(GROW_TO_IDLE);
+                OVL_EXPORT(SetStep)(GROW_TO_IDLE);
             }
             break;
         }
@@ -495,7 +497,7 @@ void EntityCorpseweed(Entity* self) {
             self->scaleX = self->scaleY += 8;
         } else {
             self->drawFlags = ENTITY_DEFAULT;
-            SetStep(IDLE);
+            OVL_EXPORT(SetStep)(IDLE);
         }
         break;
 
@@ -506,8 +508,8 @@ void EntityCorpseweed(Entity* self) {
         }
         self->animCurFrame = AnimFrameIdle;
         if (!--self->ext.corpseweed.timer) {
-            if ((GetSideToPlayer() & 1) == self->facingLeft) {
-                SetStep(ATTACK);
+            if ((OVL_EXPORT(GetSideToPlayer)() & 1) == self->facingLeft) {
+                OVL_EXPORT(SetStep)(ATTACK);
             } else {
                 self->ext.corpseweed.timer = DelayBetweenAttackChecks;
             }
@@ -524,16 +526,17 @@ void EntityCorpseweed(Entity* self) {
             self->step_s += 1;
             // fallthrough
         case ATTACK_DELAY:
-            AnimateEntity(AnimFrames_CorpseweedAttackCharge, self);
+            OVL_EXPORT(AnimateEntity)(AnimFrames_CorpseweedAttackCharge, self);
             if (!--self->ext.corpseweed.timer) {
-                SetSubStep(ATTACK_PROJECTILE);
+                OVL_EXPORT(SetSubStep)(ATTACK_PROJECTILE);
             }
             break;
 
         case ATTACK_PROJECTILE:
             self->animCurFrame = AnimFrameAttack;
             // Spawn projectile entity
-            entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            entity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
                 PlaySfxPositional(SFX_CORPSEWEED_ATTACK);
 
@@ -553,7 +556,7 @@ void EntityCorpseweed(Entity* self) {
             // fallthrough
         case ATTACK_RESET_DELAY:
             if (!--self->ext.corpseweed.timer) {
-                SetStep(IDLE);
+                OVL_EXPORT(SetStep)(IDLE);
             }
             break;
         }
@@ -571,7 +574,7 @@ void EntityCorpseweed(Entity* self) {
             self->step_s++;
             // fallthrough
         case DEATH_DROP_HEAD:
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             self->velocityY += DeathHeadFallAccel;
             self->rotate += DeathHeadRotateSpeed;
 
@@ -582,7 +585,8 @@ void EntityCorpseweed(Entity* self) {
             if (collider.effects & EFFECT_SOLID) {
                 g_api.PlaySfx(SFX_QUICK_STUTTER_EXPLODE_B);
                 self->posY.i.hi += collider.unk18;
-                entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                entity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
 
                 // Spawn multiple flames
                 if (entity != NULL) {
@@ -784,7 +788,7 @@ void EntityCorpseweedProjectile(Entity* self) {
         self->flags |= FLAG_DEAD;
     }
     if (self->flags & FLAG_DEAD) {
-        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        entity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
             OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
             entity->params = 0;
@@ -795,8 +799,8 @@ void EntityCorpseweedProjectile(Entity* self) {
 
     switch (self->step) {
     case INIT:
-        InitializeEntity(g_EInitCorpseweedProjectile);
-        x = GetDistanceToPlayerX();
+        OVL_EXPORT(InitializeEntity)(g_EInitCorpseweedProjectile);
+        x = OVL_EXPORT(GetDistanceToPlayerX)();
         if (x > RangeMaxX) {
             x = RangeMaxX;
         }
@@ -831,8 +835,9 @@ void EntityCorpseweedProjectile(Entity* self) {
         break;
 
     case AIRBORNE:
-        AnimateEntity(AnimFrames_CorpseweedProjectileAirborne, self);
-        MoveEntity();
+        OVL_EXPORT(AnimateEntity)
+        (AnimFrames_CorpseweedProjectileAirborne, self);
+        OVL_EXPORT(MoveEntity)();
 
         self->velocityY += Gravity;
 
@@ -843,12 +848,13 @@ void EntityCorpseweedProjectile(Entity* self) {
         if (collider.effects & EFFECT_SOLID) {
             g_api.PlaySfx(SFX_NOISE_SWEEP_DOWN_A);
             self->posY.i.hi += collider.unk18;
-            SetStep(DEATH);
+            OVL_EXPORT(SetStep)(DEATH);
         }
         break;
 
     case DEATH:
-        if (AnimateEntity(AnimFrames_CorpseweedProjectileDeath, self) == 0) {
+        if (OVL_EXPORT(AnimateEntity)(
+                AnimFrames_CorpseweedProjectileDeath, self) == 0) {
             DestroyEntity(self);
             return;
         }

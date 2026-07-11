@@ -139,7 +139,8 @@ void func_us_801B59C4(Primitive* prim) {
             prim->next->y0 += collider.unk18;
             LOW(prim->next->r1) = -LOW(prim->next->r1) / 2;
             if (LOW(prim->next->r1) > -0x4000) {
-                tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                tempEntity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
                     OVL_EXPORT(CreateEntityFromCurrentEntity)
                     (E_INTENSE_EXPLOSION, tempEntity);
@@ -172,7 +173,7 @@ void func_us_801B5FB8(Entity* self) {
     FntPrint("timer %x\n", self->ext.breakableNo2.unk80);
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitEnvironment);
+        OVL_EXPORT(InitializeEntity)(g_EInitEnvironment);
         self->animCurFrame = 0;
         if (g_CastleFlags[NO2_SECRET_WALL_OPEN]) {
             for (i = 0; i < 10; i++) {
@@ -283,7 +284,8 @@ void func_us_801B5FB8(Entity* self) {
             prim = prim->next;
             prim = prim->next;
         }
-        tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        tempEntity =
+            OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (tempEntity != NULL) {
             OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, tempEntity);
             tempEntity->posY.i.hi += 0x20;
@@ -291,7 +293,8 @@ void func_us_801B5FB8(Entity* self) {
             tempEntity->params += 0xAA00;
         }
         for (i = 0; i < 8; i++) {
-            tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            tempEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)
                 (E_INTENSE_EXPLOSION, self, tempEntity);
@@ -329,7 +332,7 @@ void func_us_801B65A4(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitEnvironment);
+        OVL_EXPORT(InitializeEntity)(g_EInitEnvironment);
         self->hitboxState = 0;
         self->animCurFrame = 0;
         break;
@@ -447,7 +450,7 @@ void func_us_801B68EC(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitEnvironment);
+        OVL_EXPORT(InitializeEntity)(g_EInitEnvironment);
         self->animCurFrame = 0;
         self->drawFlags |= ENTITY_ROTATE;
         self->rotate = 0xC00;
@@ -544,7 +547,8 @@ void func_us_801B68EC(Entity* self) {
             prim = prim->next;
             prim = prim->next;
         }
-        tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        tempEntity =
+            OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (tempEntity != NULL) {
             OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, tempEntity);
             tempEntity->posY.i.hi += 0x20;
@@ -552,7 +556,8 @@ void func_us_801B68EC(Entity* self) {
             tempEntity->params += 0xAA00;
         }
         for (i = 0; i < 8; i++) {
-            tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            tempEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)
                 (E_INTENSE_EXPLOSION, self, tempEntity);

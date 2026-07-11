@@ -29,7 +29,7 @@ void EntityBreakableWall(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         self->hitboxWidth = 0x10;
         self->hitboxHeight = 0x20;
         self->hitboxState = 2;
@@ -89,7 +89,8 @@ void EntityBreakableWall(Entity* self) {
                 tileIdx += 0x10;
             }
         }
-        tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        tempEntity =
+            OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (tempEntity != NULL) {
             OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, tempEntity);
             tempEntity->params = 0x13;
@@ -107,7 +108,8 @@ void EntityBreakableWall(Entity* self) {
                     NZ1_UPPER_WALL_OPEN);
             }
             for (i = 0; i < 8; i++) {
-                tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                tempEntity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
                     OVL_EXPORT(CreateEntityFromEntity)
                     (E_ID(SECRET_WALL_DEBRIS), self, tempEntity);
@@ -137,7 +139,7 @@ void EntityBreakableWallPartial(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         if (g_CastleFlags[NZ1_STATUE_ROOM_BREAKABLE_WALLS] &
             (1 << self->params)) {
             tileX = self->posX.i.hi;
@@ -176,13 +178,15 @@ void EntityBreakableWallPartial(Entity* self) {
             tileY += 0x10;
         }
         self->hitboxState = 0;
-        tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        tempEntity =
+            OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (tempEntity != NULL) {
             OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, tempEntity);
             tempEntity->params = 0x13;
         }
         for (i = 0; i < 3; i++) {
-            tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            tempEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)
                 (E_ID(SECRET_WALL_DEBRIS), self, tempEntity);
@@ -191,7 +195,8 @@ void EntityBreakableWallPartial(Entity* self) {
             }
         }
         g_CastleFlags[NZ1_STATUE_ROOM_BREAKABLE_WALLS] |= (1 << self->params);
-        tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+        tempEntity =
+            OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
         if (tempEntity != NULL) {
             OVL_EXPORT(CreateEntityFromEntity)
             (E_EQUIP_ITEM_DROP, self, tempEntity);
@@ -212,7 +217,7 @@ void EntitySecretWallDebris(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitEnvironment);
+        OVL_EXPORT(InitializeEntity)(g_EInitEnvironment);
         self->drawFlags = ENTITY_ROTATE;
         self->animCurFrame = 8;
         speed = (OVL_EXPORT(Random)() & 0x1F) + 0x10;
@@ -233,7 +238,7 @@ void EntitySecretWallDebris(Entity* self) {
         }
         /* fallthrough */
     case 1:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->rotate += 0x20;
         if (self->params) {
             self->rotate += 0x20;
@@ -248,7 +253,8 @@ void EntitySecretWallDebris(Entity* self) {
         self->posY.i.hi += collider.unk18;
         if (!(self->params & 0x10)) {
             for (i = 0; i < 2; i++) {
-                tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                tempEntity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
                     OVL_EXPORT(CreateEntityFromEntity)
                     (E_ID(SECRET_WALL_DEBRIS), self, tempEntity);
@@ -261,7 +267,8 @@ void EntitySecretWallDebris(Entity* self) {
         }
         if (self->velocityY < FIX(0.5)) {
             PlaySfxPositional(SFX_EXPLODE_FAST_B);
-            tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            tempEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)
                 (E_INTENSE_EXPLOSION, self, tempEntity);

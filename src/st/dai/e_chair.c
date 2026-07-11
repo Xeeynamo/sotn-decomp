@@ -59,7 +59,7 @@ void EntityChair(Entity* self) {
 
     switch (self->step) {
     case CHAIR_INIT:
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
         // Each chair spawns the curtain on the opposing side, which anchors the
         // ghost
         if (self->params & 0xFF00) {
@@ -145,7 +145,7 @@ void func_us_801B81E8(Entity* self) {
     }
     switch (self->step) {
     case CHAIR_INIT:
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
         self->animSet = ANIMSET_OVL(3);
         self->velocityY = FIX(-0.375);
         self->velocityX = FIX(0.25);

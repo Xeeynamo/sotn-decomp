@@ -31,11 +31,11 @@ void EntityFleaRider(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitFleaRider);
+        OVL_EXPORT(InitializeEntity)(g_EInitFleaRider);
         self->hitboxOffY = -4;
         // fallthrough
     case 1:
-        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        entity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
             OVL_EXPORT(CreateEntityFromEntity)(E_FLEA_RIDER, self, entity);
             self->ext.fleaRider.entity = entity;
@@ -48,9 +48,9 @@ void EntityFleaRider(Entity* self) {
         }
         // fallthrough
     case 2:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         if (self->ext.fleaRider.unk88) {
-            if (!AnimateEntity(&D_us_80181970, self)) {
+            if (!OVL_EXPORT(AnimateEntity)(&D_us_80181970, self)) {
                 self->ext.fleaRider.unk88--;
                 if (!self->ext.fleaRider.unk88) {
                     self->poseTimer = 0;
@@ -58,12 +58,12 @@ void EntityFleaRider(Entity* self) {
                 }
             }
         } else {
-            AnimateEntity(&D_us_8018197C, self);
+            OVL_EXPORT(AnimateEntity)(&D_us_8018197C, self);
         }
         if (!self->poseTimer && self->pose == 2) {
             PlaySfxPositional(SFX_WING_FLAP_A);
         }
-        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
 
         if (!--self->ext.fleaRider.unk85) {
             self->ext.fleaRider.unk88 = 2;
@@ -79,15 +79,16 @@ void EntityFleaRider(Entity* self) {
         entity->posX.i.hi += D_us_8018199C[i].x;
         entity->posY.i.hi += D_us_8018199C[i].y;
 
-        angle = GetAngleBetweenEntitiesShifted(self, entity);
-        self->ext.fleaRider.unk7C =
-            AdjustValueWithinThreshold(2, self->ext.fleaRider.unk7C, angle);
-        SetEntityVelocityFromAngle(self->ext.fleaRider.unk7C, 0x20);
+        angle = OVL_EXPORT(GetAngleBetweenEntitiesShifted)(self, entity);
+        self->ext.fleaRider.unk7C = OVL_EXPORT(AdjustValueWithinThreshold)(
+            2, self->ext.fleaRider.unk7C, angle);
+        OVL_EXPORT(SetEntityVelocityFromAngle)(self->ext.fleaRider.unk7C, 0x20);
         break;
 
     case 3:
         for (i = 0; i < FleaRiderCount; i++) {
-            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            entity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)(E_FLEA_RIDER, self, entity);
                 entity->posX.i.hi += (OVL_EXPORT(Random)() & 0x3F) - 32;
@@ -99,10 +100,11 @@ void EntityFleaRider(Entity* self) {
         self->step++;
         // fallthrough
     case 4:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityY += FIX(0.125);
         if (self->ext.fleaRider.unk85++ > 8) {
-            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            entity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
                 DestroyEntity(entity);
                 OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
@@ -114,7 +116,7 @@ void EntityFleaRider(Entity* self) {
 
     case 5:
         if (self->step_s == 0) {
-            InitializeEntity(g_EInitFleaRider);
+            OVL_EXPORT(InitializeEntity)(g_EInitFleaRider);
             self->animCurFrame = 6;
             self->step = 5;
             self->hitboxState = 0;
@@ -133,7 +135,7 @@ void EntityFleaRider(Entity* self) {
             }
             self->step_s++;
         }
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         if (self->velocityY < FIX(1.5)) {
             self->velocityY += FIX(3.0 / 64.0);
         }
@@ -148,7 +150,7 @@ void EntityFleaRider(Entity* self) {
         break;
 
     case 8:
-        InitializeEntity(g_EInitFleaRider);
+        OVL_EXPORT(InitializeEntity)(g_EInitFleaRider);
         self->hitboxState = 0;
         self->animCurFrame = 0;
         self->step = 9;

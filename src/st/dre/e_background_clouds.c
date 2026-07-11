@@ -11,7 +11,7 @@ void EntityBackgroundClouds(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 5);
         if (primIndex == -1) {
             DestroyEntity(self);

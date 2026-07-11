@@ -19,7 +19,7 @@ void func_us_801BB200(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_8018095C);
+        OVL_EXPORT(InitializeEntity)(D_us_8018095C);
         params = self->params & 0xFF;
         self->animCurFrame = params + 0xF;
         self->zPriority = 0x69;
@@ -60,7 +60,7 @@ void func_us_801BB200(Entity* self) {
         self->step++;
         /* fallthrough */
     case 3:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityY += FIX(0.125);
         params = self->params & 0xFF;
         upperParams = self->params >> 8;
@@ -96,7 +96,7 @@ void func_us_801BB200(Entity* self) {
         }
         tilePos += ((3 - params) * 0x50);
         g_Tilemap.fg[tilePos] = D_us_80181AA8[3 - params][upperParams];
-        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        newEntity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
             OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, newEntity);
             newEntity->params = 3;

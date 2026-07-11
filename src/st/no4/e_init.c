@@ -15,7 +15,7 @@ void OVL_EXPORT(EntityRelicOrb)(Entity* self);
 void OVL_EXPORT(EntityHeartDrop)(Entity* self);
 void EntityEnemyBlood(Entity* self);
 void OVL_EXPORT(EntityMessageBox)(Entity* self);
-void EntityDummy(Entity* self);
+void OVL_EXPORT(EntityDummy)(Entity* self);
 void OVL_EXPORT(EntityBackgroundBlock)(Entity* self);
 void OVL_EXPORT(EntityLockCamera)(Entity* self);
 void EntityUnkId13(Entity* self);
@@ -109,8 +109,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x0C */ OVL_EXPORT(EntityHeartDrop),
     /* 0x0D */ EntityEnemyBlood,
     /* 0x0E */ OVL_EXPORT(EntityMessageBox),
-    /* 0x0F */ EntityDummy,
-    /* 0x10 */ EntityDummy,
+    /* 0x0F */ OVL_EXPORT(EntityDummy),
+    /* 0x10 */ OVL_EXPORT(EntityDummy),
     /* 0x11 */ OVL_EXPORT(EntityBackgroundBlock),
     /* 0x12 */ OVL_EXPORT(EntityLockCamera),
     /* 0x13 */ EntityUnkId13,
@@ -144,9 +144,9 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x2F */ EntityBoatElevatorChains,
     /* 0x30 */ EntityBoatElevatorController,
     /* 0x31 */ EntityFerrymanUnused,
-    /* 0x32 */ EntityDummy,
-    /* 0x33 */ EntityDummy,
-    /* 0x34 */ EntityDummy,
+    /* 0x32 */ OVL_EXPORT(EntityDummy),
+    /* 0x33 */ OVL_EXPORT(EntityDummy),
+    /* 0x34 */ OVL_EXPORT(EntityDummy),
     /* 0x35 */ func_us_801C123C,
     /* 0x36 */ EntityWaterBox,
     /* 0x37 */ EntityWaterSpray,

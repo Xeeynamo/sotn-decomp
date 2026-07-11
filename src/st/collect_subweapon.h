@@ -22,7 +22,7 @@ static void CollectSubweapon(u16 subWeaponIdx) {
         g_CurrentEntity->step = 7;
         g_CurrentEntity->step_s = 0;
 #else
-        SetStep(7);
+        OVL_EXPORT(SetStep)(7);
 #endif
         g_CurrentEntity->velocityY = FIX(-2.5);
         g_CurrentEntity->animCurFrame = 0;

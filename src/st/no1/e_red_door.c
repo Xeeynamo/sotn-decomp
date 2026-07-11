@@ -50,7 +50,7 @@ void OVL_EXPORT(EntityRedDoor)(Entity* self) {
     case 0:
         self->ext.redDoor.isBackgroundDoor = self->params & 0x10;
         self->params &= 0xFFEF;
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
         self->animSet = 7;
         self->animCurFrame = 1;
         if (self->ext.redDoor.isBackgroundDoor) {
@@ -146,7 +146,7 @@ void OVL_EXPORT(EntityRedDoor)(Entity* self) {
         }
         break;
     case 1:
-        if (((PLAYER.facingLeft != GetSideToPlayer()) & 1) ^ 1) {
+        if (((PLAYER.facingLeft != OVL_EXPORT(GetSideToPlayer)()) & 1) ^ 1) {
             break;
         }
         if ((PLAYER.step != 0x19 || g_PlayableCharacter == PLAYER_ALUCARD) &&

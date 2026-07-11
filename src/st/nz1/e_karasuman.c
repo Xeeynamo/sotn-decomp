@@ -141,36 +141,36 @@ void EntityKarasuman(Entity* self) {
     s8* frameProperty;
 
     if (self->hitFlags & 3 && self->step & 1) {
-        SetStep(14);
+        OVL_EXPORT(SetStep)(14);
     }
     if (self->flags & FLAG_DEAD && self->step < 16) {
-        SetStep(16);
+        OVL_EXPORT(SetStep)(16);
     }
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitKarasuman);
+        OVL_EXPORT(InitializeEntity)(g_EInitKarasuman);
         self->flags &= ~(FLAG_UNK_800 | FLAG_UNK_400);
         self->animCurFrame = 1;
         // fallthrough
 
     case 1:
-        if (UnkCollisionFunc3(D_us_8018115C) & 1) {
-            SetStep(2);
+        if (OVL_EXPORT(UnkCollisionFunc3)(D_us_8018115C) & 1) {
+            OVL_EXPORT(SetStep)(2);
         }
         break;
 
     case 2:
         switch (self->step_s) {
         case 0:
-            AnimateEntity(D_us_80181174, self);
+            OVL_EXPORT(AnimateEntity)(D_us_80181174, self);
             if (D_us_80181138 & 1) {
-                SetSubStep(1);
+                OVL_EXPORT(SetSubStep)(1);
             }
             break;
         case 1:
-            if (AnimateEntity(D_us_8018117C, self) == 0) {
-                SetStep(4);
+            if (OVL_EXPORT(AnimateEntity)(D_us_8018117C, self) == 0) {
+                OVL_EXPORT(SetStep)(4);
             }
             break;
         }
@@ -178,19 +178,19 @@ void EntityKarasuman(Entity* self) {
     case 4:
         switch (self->step_s) {
         case 0:
-            if (AnimateEntity(D_us_80181194, self) == 0) {
+            if (OVL_EXPORT(AnimateEntity)(D_us_80181194, self) == 0) {
                 self->velocityX = 0;
                 self->velocityY = FIX(-4);
-                SetSubStep(1);
+                OVL_EXPORT(SetSubStep)(1);
             }
             break;
         case 1:
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             self->velocityY += FIX(0.125);
-            if (AnimateEntity(D_us_801811A0, self) == 0) {
-                SetStep(3);
+            if (OVL_EXPORT(AnimateEntity)(D_us_801811A0, self) == 0) {
+                OVL_EXPORT(SetStep)(3);
                 if (self->ext.karasuman.flag2) {
-                    SetStep(0xC);
+                    OVL_EXPORT(SetStep)(0xC);
                 }
             }
             break;
@@ -203,9 +203,9 @@ void EntityKarasuman(Entity* self) {
             self->velocityY = 0;
             self->step_s++;
         }
-        AnimateEntity(D_us_801811A8, self);
-        MoveEntity();
-        if (GetSideToPlayer() & 1) {
+        OVL_EXPORT(AnimateEntity)(D_us_801811A8, self);
+        OVL_EXPORT(MoveEntity)();
+        if (OVL_EXPORT(GetSideToPlayer)() & 1) {
             self->velocityX -= FIX(1.0 / 64.0);
             if (self->velocityX < FIX(-0.75)) {
                 self->velocityX = FIX(-0.75);
@@ -222,9 +222,9 @@ void EntityKarasuman(Entity* self) {
 
         if (!--self->ext.karasuman.timer) {
             if (self->ext.karasuman.flag0) {
-                SetStep(8);
+                OVL_EXPORT(SetStep)(8);
             } else {
-                SetStep(6);
+                OVL_EXPORT(SetStep)(6);
             }
             self->ext.karasuman.flag0 ^= 1;
         }
@@ -232,16 +232,17 @@ void EntityKarasuman(Entity* self) {
     case 6:
         switch (self->step_s) {
         case 0:
-            if (AnimateEntity(D_us_801811CC, self) == 0) {
+            if (OVL_EXPORT(AnimateEntity)(D_us_801811CC, self) == 0) {
                 self->ext.karasuman.timer = 48;
-                SetSubStep(1);
+                OVL_EXPORT(SetSubStep)(1);
             }
             break;
         case 1:
             if (!(g_Timer & 7)) {
                 PlaySfxPositional(SFX_BAT_ECHO_C);
                 for (i = 0; i < 8; i++) {
-                    entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                    entity = OVL_EXPORT(AllocEntity)(
+                        &g_Entities[160], &g_Entities[192]);
                     if (entity != NULL) {
                         OVL_EXPORT(CreateEntityFromEntity)
                         (E_ID(KARASUMAN_FEATHER_ATTACK), self, entity);
@@ -254,8 +255,8 @@ void EntityKarasuman(Entity* self) {
             }
             break;
         case 2:
-            if (AnimateEntity(D_us_801811D8, self) == 0) {
-                SetStep(7);
+            if (OVL_EXPORT(AnimateEntity)(D_us_801811D8, self) == 0) {
+                OVL_EXPORT(SetStep)(7);
                 self->step_s = 2;
             }
             break;
@@ -269,21 +270,21 @@ void EntityKarasuman(Entity* self) {
             self->step_s++;
             // fallthrough
         case 1:
-            if (AnimateEntity(D_us_801811B8, self) == 0) {
-                SetSubStep(2);
+            if (OVL_EXPORT(AnimateEntity)(D_us_801811B8, self) == 0) {
+                OVL_EXPORT(SetSubStep)(2);
             }
             break;
         case 2:
-            if (UnkCollisionFunc3(D_us_8018115C) & 1) {
+            if (OVL_EXPORT(UnkCollisionFunc3)(D_us_8018115C) & 1) {
                 self->step_s++;
             } else {
                 self->velocityY -= FIX(0.09375);
             }
             break;
         case 3:
-            if (AnimateEntity(D_us_801811C0, self) == 0) {
-                SetStep(4);
-                SetStep(0xA);
+            if (OVL_EXPORT(AnimateEntity)(D_us_801811C0, self) == 0) {
+                OVL_EXPORT(SetStep)(4);
+                OVL_EXPORT(SetStep)(0xA);
             }
             break;
         }
@@ -292,13 +293,14 @@ void EntityKarasuman(Entity* self) {
         switch (self->step_s) {
         case 0:
             self->ext.karasuman.flag1 = 0;
-            if (AnimateEntity(D_us_801811E0, self) == 0) {
-                SetSubStep(1);
+            if (OVL_EXPORT(AnimateEntity)(D_us_801811E0, self) == 0) {
+                OVL_EXPORT(SetSubStep)(1);
             }
             break;
         case 1:
             for (i = 0; i < 4; i++) {
-                entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                entity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
                     OVL_EXPORT(CreateEntityFromEntity)
                     (E_ID(KARASUMAN_ORB_ATTACK), self, entity);
@@ -311,7 +313,7 @@ void EntityKarasuman(Entity* self) {
             self->step_s++;
             // fallthrough
         case 2:
-            AnimateEntity(D_us_801811E8, self);
+            OVL_EXPORT(AnimateEntity)(D_us_801811E8, self);
             if (!(self->ext.karasuman.timer & 7)) {
                 PlaySfxPositional(SFX_RAPID_SYNTH_BUBBLE_SHORT);
             }
@@ -322,16 +324,16 @@ void EntityKarasuman(Entity* self) {
                 self->scaleX = self->scaleY = 256;
                 self->velocityY = FIX(-6.0);
                 self->velocityX = 0;
-                SetSubStep(3);
+                OVL_EXPORT(SetSubStep)(3);
             }
             break;
         case 3:
-            if (AnimateEntity(D_us_801811F0, self) == 0) {
+            if (OVL_EXPORT(AnimateEntity)(D_us_801811F0, self) == 0) {
                 self->step_s++;
             }
             // fallthrough
         case 4:
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             self->velocityY -= self->velocityY / 8;
             if (self->scaleX > 224) {
                 self->scaleX = self->scaleY -= 4;
@@ -343,7 +345,7 @@ void EntityKarasuman(Entity* self) {
             self->scaleX = self->scaleY += 8;
             if (self->scaleX > 256) {
                 self->drawFlags = ENTITY_DEFAULT;
-                SetStep(7);
+                OVL_EXPORT(SetStep)(7);
             }
             break;
         }
@@ -351,8 +353,8 @@ void EntityKarasuman(Entity* self) {
     case 10:
         switch (self->step_s) {
         case 0:
-            if (AnimateEntity(D_us_8018122C, self) == 0) {
-                SetSubStep(1);
+            if (OVL_EXPORT(AnimateEntity)(D_us_8018122C, self) == 0) {
+                OVL_EXPORT(SetSubStep)(1);
             }
             break;
         case 1:
@@ -362,7 +364,8 @@ void EntityKarasuman(Entity* self) {
             // fallthrough
         case 2:
             if (!(self->ext.karasuman.timer & 3)) {
-                entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                entity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
                     OVL_EXPORT(CreateEntityFromEntity)
                     (E_ID(KARASUMAN_RAVEN_ATTACK), self, entity);
@@ -380,8 +383,8 @@ void EntityKarasuman(Entity* self) {
             }
             break;
         case 3:
-            if (AnimateEntity(D_us_80181238, self) == 0) {
-                SetStep(4);
+            if (OVL_EXPORT(AnimateEntity)(D_us_80181238, self) == 0) {
+                OVL_EXPORT(SetStep)(4);
             }
         }
         break;
@@ -389,11 +392,11 @@ void EntityKarasuman(Entity* self) {
         switch (self->step_s) {
         case 0:
             self->ext.karasuman.flag2 = 0;
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
             self->step_s++;
             // fallthrough
         case 1:
-            if (AnimateEntity(D_us_80181240, self) == 0) {
+            if (OVL_EXPORT(AnimateEntity)(D_us_80181240, self) == 0) {
                 self->ext.karasuman.timer = 96;
                 if (self->facingLeft) {
                     self->velocityX = FIX(-2.0);
@@ -406,13 +409,14 @@ void EntityKarasuman(Entity* self) {
             break;
         case 2:
             if (self->ext.karasuman.timer > 0x48) {
-                MoveEntity();
+                OVL_EXPORT(MoveEntity)();
                 self->velocityX -= self->velocityX / 8;
                 self->velocityY -= self->velocityY / 8;
             }
             if (!(self->ext.karasuman.timer & 7)) {
                 g_api.PlaySfx(SFX_WING_FLAP_A);
-                entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                entity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
                     OVL_EXPORT(CreateEntityFromEntity)
                     (E_ID(KARASUMAN_RAVEN_ATTACK), self, entity);
@@ -422,19 +426,19 @@ void EntityKarasuman(Entity* self) {
             }
 
             if (!--self->ext.karasuman.timer) {
-                SetSubStep(3);
+                OVL_EXPORT(SetSubStep)(3);
             }
             break;
         case 3:
-            if (AnimateEntity(D_us_8018124C, self) == 0) {
-                SetStep(3);
+            if (OVL_EXPORT(AnimateEntity)(D_us_8018124C, self) == 0) {
+                OVL_EXPORT(SetStep)(3);
             }
             break;
         }
         break;
     case 14:
         if (!self->step_s) {
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
             if (self->facingLeft) {
                 self->velocityX = FIX(-4.0);
             } else {
@@ -442,7 +446,8 @@ void EntityKarasuman(Entity* self) {
             }
             self->velocityY = FIX(-2.0);
             for (i = 0; i < 8; i++) {
-                entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                entity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
                     OVL_EXPORT(CreateEntityFromEntity)
                     (E_ID(KARASUMAN_FEATHER), self, entity);
@@ -455,13 +460,13 @@ void EntityKarasuman(Entity* self) {
             };
             self->step_s++;
         }
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
 
         self->velocityX -= self->velocityX / 16;
         self->velocityY -= self->velocityY / 16;
 
-        if (AnimateEntity(D_us_80181264, self) == 0) {
-            SetStep(7);
+        if (OVL_EXPORT(AnimateEntity)(D_us_80181264, self) == 0) {
+            OVL_EXPORT(SetStep)(7);
         }
         break;
     case 16:
@@ -470,7 +475,8 @@ void EntityKarasuman(Entity* self) {
             D_us_80181138 |= 2;
             self->hitboxState = 0;
             for (i = 0; i < 32; i++) {
-                entity = AllocEntity(&g_Entities[160], &g_Entities[256]);
+                entity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[256]);
                 if (entity != NULL) {
                     OVL_EXPORT(CreateEntityFromEntity)
                     (E_ID(KARASUMAN_FEATHER), self, entity);
@@ -485,13 +491,14 @@ void EntityKarasuman(Entity* self) {
             self->step_s++;
             // fallthrough
         case 1:
-            if ((AnimateEntity(D_us_80181274, self) == 0) &&
-                (UnkCollisionFunc3(D_us_8018115C) & 1)) {
+            if ((OVL_EXPORT(AnimateEntity)(D_us_80181274, self) == 0) &&
+                (OVL_EXPORT(UnkCollisionFunc3)(D_us_8018115C) & 1)) {
                 self->step_s++;
             }
             break;
         case 2:
-            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            entity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)
                 (E_ID(KARASUMAN_RAVEN_ABSORB), self, entity);
@@ -502,7 +509,8 @@ void EntityKarasuman(Entity* self) {
             self->step_s++;
             // fallthrough
         case 3:
-            entity = AllocEntity(&g_Entities[160], &g_Entities[256]);
+            entity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[256]);
             if (entity != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)
                 (E_ID(KARASUMAN_RAVEN_ABSORB), self, entity);
@@ -526,7 +534,8 @@ void EntityKarasuman(Entity* self) {
             break;
         case 4:
             for (i = 0; i < 4; i++) {
-                entity = AllocEntity(&g_Entities[160], &g_Entities[256]);
+                entity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[256]);
                 if (entity != NULL) {
                     OVL_EXPORT(CreateEntityFromEntity)
                     (E_ID(EXPLODE_PUFF_OPAQUE), self, entity);
@@ -591,7 +600,7 @@ void EntityKarasumanFeatherAttack(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitKarasumanFeatherAttack);
+        OVL_EXPORT(InitializeEntity)(g_EInitKarasumanFeatherAttack);
         self->animCurFrame = 59;
         self->drawFlags |= ENTITY_ROTATE;
         if (OVL_EXPORT(Random)() & 1) {
@@ -610,9 +619,10 @@ void EntityKarasumanFeatherAttack(Entity* self) {
         self->posY.i.hi += FLT_TO_I(-32 * rsin(angle));
         // fallthrough
     case 1:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         if (self->flags & FLAG_DEAD) {
-            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            entity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
                 entity->params = 1;
@@ -639,7 +649,7 @@ void EntityKarasumanOrbAttack(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitKarasumanOrbAttack);
+        OVL_EXPORT(InitializeEntity)(g_EInitKarasumanOrbAttack);
         self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
         self->scaleX = self->scaleY = 0;
         self->blendMode = BLEND_TRANSP | BLEND_ADD;
@@ -653,7 +663,7 @@ void EntityKarasumanOrbAttack(Entity* self) {
         // fallthrough
 
     case 2:
-        AnimateEntity(D_us_80181200, self);
+        OVL_EXPORT(AnimateEntity)(D_us_80181200, self);
         entity = self->ext.karasuman.parent;
         if (entity->ext.karasuman.flag1) {
             self->step++;
@@ -671,8 +681,9 @@ void EntityKarasumanOrbAttack(Entity* self) {
 
     case 4:
         entity = &PLAYER;
-        angle = GetAngleBetweenEntities(self, entity);
-        angle = LimitAngleChange(24, self->ext.karasuman.angle, angle);
+        angle = OVL_EXPORT(GetAngleBetweenEntities)(self, entity);
+        angle =
+            OVL_EXPORT(LimitAngleChange)(24, self->ext.karasuman.angle, angle);
         self->velocityX = 64 * rcos(angle);
         self->velocityY = 64 * rsin(angle);
         self->ext.karasuman.angle = angle;
@@ -688,12 +699,12 @@ void EntityKarasumanOrbAttack(Entity* self) {
 
     case 5:
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
-        AnimateEntity(D_us_80181200, self);
-        MoveEntity();
+        OVL_EXPORT(AnimateEntity)(D_us_80181200, self);
+        OVL_EXPORT(MoveEntity)();
         break;
 
     case 6:
-        AnimateEntity(D_us_80181200, self);
+        OVL_EXPORT(AnimateEntity)(D_us_80181200, self);
         entity = &PLAYER;
         self->posX.i.hi = entity->posX.i.hi;
         self->posY.i.hi = entity->posY.i.hi;
@@ -715,7 +726,7 @@ void EntityKarasumanRavenAttack(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitKarasumanRavenAttack);
+        OVL_EXPORT(InitializeEntity)(g_EInitKarasumanRavenAttack);
         if (self->params) {
             self->hitboxState = 0;
             self->step = 8;
@@ -732,14 +743,15 @@ void EntityKarasumanRavenAttack(Entity* self) {
         // fallthrough
 
     case 1:
-        MoveEntity();
-        AnimateEntity(D_us_80181254, self);
+        OVL_EXPORT(MoveEntity)();
+        OVL_EXPORT(AnimateEntity)(D_us_80181254, self);
         entity = &PLAYER;
         if (entity->posY.i.hi < self->posY.i.hi) {
             self->velocityY -= FIX(1.0 / 32.0);
         }
         if (self->flags & FLAG_DEAD) {
-            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            entity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
                 entity->params = 1;
@@ -774,8 +786,9 @@ void EntityKarasumanRavenAttack(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        angle = GetAngleBetweenEntities(self, entity);
-        angle = LimitAngleChange(64, self->ext.karasuman.angle, angle);
+        angle = OVL_EXPORT(GetAngleBetweenEntities)(self, entity);
+        angle =
+            OVL_EXPORT(LimitAngleChange)(64, self->ext.karasuman.angle, angle);
         self->velocityX = 64 * rcos(angle);
         self->velocityY = 64 * rsin(angle);
         self->ext.karasuman.angle = angle;
@@ -784,8 +797,8 @@ void EntityKarasumanRavenAttack(Entity* self) {
         } else {
             self->facingLeft = 0;
         }
-        MoveEntity();
-        AnimateEntity(D_us_80181254, self);
+        OVL_EXPORT(MoveEntity)();
+        OVL_EXPORT(AnimateEntity)(D_us_80181254, self);
         offsetX = entity->posX.i.hi - self->posX.i.hi;
         offsetY = entity->posY.i.hi - self->posY.i.hi;
         opacity = SquareRoot0(SQ(offsetX) + SQ(offsetY));
@@ -818,7 +831,7 @@ void EntityKarasumanFeather(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitKarasumanFeather);
+        OVL_EXPORT(InitializeEntity)(g_EInitKarasumanFeather);
         self->animCurFrame = 63;
         self->drawFlags = ENTITY_ROTATE;
         self->facingLeft = OVL_EXPORT(Random)() & 1;
@@ -835,7 +848,7 @@ void EntityKarasumanFeather(Entity* self) {
         // fallthrough
 
     case 1:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityX -= self->velocityX / 16;
         self->velocityY -= self->velocityY / 16;
 
@@ -847,7 +860,7 @@ void EntityKarasumanFeather(Entity* self) {
         break;
 
     case 2:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->rotate += 32;
         if (self->velocityY < FIX(1.5)) {
             self->velocityY += FIX(1.0 / 32.0);
@@ -861,7 +874,7 @@ void EntityKarasumanRavenAbsorb(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitKarasumanRavenAttack);
+        OVL_EXPORT(InitializeEntity)(g_EInitKarasumanRavenAttack);
         self->blendMode = BLEND_TRANSP;
         self->drawFlags = ENTITY_ROTATE;
         self->hitboxState = 0;
@@ -882,8 +895,8 @@ void EntityKarasumanRavenAbsorb(Entity* self) {
         // fallthrough
 
     case 1:
-        MoveEntity();
-        AnimateEntity(D_us_80181254, self);
+        OVL_EXPORT(MoveEntity)();
+        OVL_EXPORT(AnimateEntity)(D_us_80181254, self);
         break;
 
     case 4:

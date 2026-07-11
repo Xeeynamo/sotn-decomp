@@ -43,12 +43,12 @@ void EntityDiplocephalusFireball(Entity* self) {
     if ((self->flags & FLAG_DEAD) && self->step < 4) {
         PlaySfxPositional(SFX_EXPLODE_FAST_A);
         self->hitboxState = 0;
-        SetStep(4);
+        OVL_EXPORT(SetStep)(4);
     }
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitDiplocephalusFireball);
+        OVL_EXPORT(InitializeEntity)(g_EInitDiplocephalusFireball);
         self->drawFlags |= ENTITY_ROTATE | ENTITY_SCALEX | ENTITY_SCALEY;
         self->scaleX = self->scaleY = 0x60;
 
@@ -85,15 +85,15 @@ void EntityDiplocephalusFireball(Entity* self) {
         self->ext.diploFireball.unk9C = 2;
         /* Fallthrough */
     case 1:
-        MoveEntity();
-        AnimateEntity(animFire0, self);
+        OVL_EXPORT(MoveEntity)();
+        OVL_EXPORT(AnimateEntity)(animFire0, self);
         self->rotate += ROT(5.625);
         self->scaleX += 16;
         if (self->scaleX > 256) {
             self->scaleX = 256;
         }
         self->scaleY = self->scaleX;
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityX -= self->velocityX / 8;
         if (abs(self->velocityX) < FIX(0.25)) {
             if (self->facingLeft) {
@@ -108,8 +108,9 @@ void EntityDiplocephalusFireball(Entity* self) {
 
     case 2:
         player = &PLAYER;
-        angle = GetAngleBetweenEntities(self, player);
-        angle = LimitAngleChange(16, self->ext.diploFireball.angle, angle);
+        angle = OVL_EXPORT(GetAngleBetweenEntities)(self, player);
+        angle = OVL_EXPORT(LimitAngleChange)(
+            16, self->ext.diploFireball.angle, angle);
         speed = self->ext.diploFireball.speed;
         speed += FLT(0.75);
         if (speed > FLT(48)) {
@@ -120,13 +121,13 @@ void EntityDiplocephalusFireball(Entity* self) {
         self->velocityY = FLT_TO_I(speed * rsin(angle));
         self->ext.diploFireball.speed = speed;
         self->ext.diploFireball.angle = angle;
-        AnimateEntity(animFire0, self);
-        MoveEntity();
+        OVL_EXPORT(AnimateEntity)(animFire0, self);
+        OVL_EXPORT(MoveEntity)();
         break;
 
     case 3:
-        AnimateEntity(animFire0, self);
-        MoveEntity();
+        OVL_EXPORT(AnimateEntity)(animFire0, self);
+        OVL_EXPORT(MoveEntity)();
         break;
 
     case 4:
@@ -147,9 +148,9 @@ void EntityDiplocephalusFireball(Entity* self) {
             self->palette = 0x2C0;
             /* fallthrough */
         case 1:
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             self->posY.val -= FIX(1.0);
-            if (!AnimateEntity(animFire1, self)) {
+            if (!OVL_EXPORT(AnimateEntity)(animFire1, self)) {
                 DestroyEntity(self);
                 return;
             }
@@ -222,7 +223,7 @@ void EntityDiplocephalusTail(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitDiplocephalusTail);
+        OVL_EXPORT(InitializeEntity)(g_EInitDiplocephalusTail);
         self->hitboxState = 1;
         self->drawFlags = ENTITY_ROTATE;
         self->ext.diploTail.angle = ROT(0);
@@ -381,7 +382,7 @@ void EntityDiplocephalusTail(Entity* self) {
         break;
 
     case 4:
-        if (!AnimateEntity(animTail4, self)) {
+        if (!OVL_EXPORT(AnimateEntity)(animTail4, self)) {
             self->poseTimer = 0;
             self->pose = 0;
             self->step = 3;
@@ -389,7 +390,7 @@ void EntityDiplocephalusTail(Entity* self) {
         break;
 
     case 5:
-        AnimateEntity(animTail0, self);
+        OVL_EXPORT(AnimateEntity)(animTail0, self);
         if (self->ext.diploTail.diplo->ext.diplo.hitParams2 != 0) {
             PlaySfxPositional(SFX_DIPLOCEPHALUS_PAIN);
             self->poseTimer = 0;
@@ -404,7 +405,7 @@ void EntityDiplocephalusTail(Entity* self) {
         break;
 
     case 6:
-        if (!AnimateEntity(animTail1, self)) {
+        if (!OVL_EXPORT(AnimateEntity)(animTail1, self)) {
             self->poseTimer = 0;
             self->pose = 0;
             self->step--;
@@ -412,15 +413,15 @@ void EntityDiplocephalusTail(Entity* self) {
         break;
 
     case 7:
-        if (!AnimateEntity(animTail2, self)) {
-            part = AllocEntity(&g_Entities[160], &g_Entities[192]);
+        if (!OVL_EXPORT(AnimateEntity)(animTail2, self)) {
+            part = OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
             if (part != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, part);
                 part->params = 3;
                 part->zPriority = self->zPriority + 9;
             }
             g_api.func_80102CD8(1);
-            EntityExplosionSpawn(0, 0);
+            OVL_EXPORT(EntityExplosionSpawn)(0, 0);
         }
         break;
 
@@ -456,11 +457,11 @@ void EntityDiplocephalusTail(Entity* self) {
     case 10:
         self->posY.val += FIX(0.25);
         PlaySfxPositional(SFX_EXPLODE_FAST_A);
-        EntityExplosionSpawn(0, 0);
+        OVL_EXPORT(EntityExplosionSpawn)(0, 0);
         break;
 
     case 11:
-        if (!AnimateEntity(animTail3, self)) {
+        if (!OVL_EXPORT(AnimateEntity)(animTail3, self)) {
             self->poseTimer = 0;
             self->pose = 0;
             self->step = 5;
@@ -468,7 +469,7 @@ void EntityDiplocephalusTail(Entity* self) {
         }
         if (self->pose == 8 && self->params) {
             PlaySfxPositional(SFX_DIPLOCEPHALUS_ATTACK);
-            part = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            part = OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
             if (part != NULL) {
                 PlaySfxPositional(SFX_FM_EXPLODE_SWISHES);
                 OVL_EXPORT(CreateEntityFromCurrentEntity)

@@ -267,7 +267,8 @@ void OVL_EXPORT(HitDetection)(void) {
         }
         hitboxCheck2 = iterEnt->hitEffect & 0x7F;
         if (hitboxCheck2 == 2 || (hitboxCheck2 == 6 && (miscVar1 & 0x20))) {
-            otherEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            otherEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
             if (otherEntity) {
                 OVL_EXPORT(CreateEntityFromEntity)
                 (E_SOUL_STEAL_ORB, entity, otherEntity);
@@ -334,8 +335,8 @@ void OVL_EXPORT(HitDetection)(void) {
                 if ((g_Status.relics[RELIC_SPIRIT_ORB] & 2) &&
                     !(entityHit->flags & FLAG_KEEP_ALIVE_OFFCAMERA) &&
                     miscVar1) {
-                    otherEntity =
-                        AllocEntity(&g_Entities[224], &g_Entities[256]);
+                    otherEntity = OVL_EXPORT(AllocEntity)(
+                        &g_Entities[224], &g_Entities[256]);
                     if (otherEntity != NULL) {
                         DestroyEntity(otherEntity);
                         otherEntity->entityId = 4;
@@ -399,8 +400,8 @@ void OVL_EXPORT(HitDetection)(void) {
                 }
                 if ((iterEnt->attackElement & ELEMENT_CUT) &&
                     (entityHit->hitboxState & 0x10)) {
-                    otherEntity =
-                        AllocEntity(&g_Entities[160], &g_Entities[192]);
+                    otherEntity = OVL_EXPORT(AllocEntity)(
+                        &g_Entities[160], &g_Entities[192]);
                     if (otherEntity != NULL) {
                         OVL_EXPORT(CreateEntityFromEntity)
                         (E_ENEMY_BLOOD, entity, otherEntity);
@@ -439,7 +440,7 @@ void OVL_EXPORT(HitDetection)(void) {
                 continue;
             }
         }
-        PreventEntityFromRespawning(entityHit);
+        OVL_EXPORT(PreventEntityFromRespawning)(entityHit);
         enemyDef = &g_api.enemyDefs[entityHit->enemyId];
         if ((entityHit->hitFlags & 0x80) == 0) {
             g_api.func_800FE044(enemyDef->exp, enemyDef->level);
@@ -451,7 +452,8 @@ void OVL_EXPORT(HitDetection)(void) {
         miscVar3 = entityHit->flags & (FLAG_UNK_800 | FLAG_UNK_400);
         if (miscVar3) {
             if ((rand() & 0xFF) < g_testCollLuckCutoff[miscVar3 >> 0xA]) {
-                otherEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                otherEntity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
                 if (otherEntity != NULL) {
                     // Determine which jewel to randomly drop from the
                     // Jewel Sword

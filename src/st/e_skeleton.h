@@ -60,18 +60,18 @@ static s16 sensors_move[][2] = {{-12, 16}, {0, -16}, {0, -16}};
 static void SkeletonAttackCheck(Entity* self) {
     u16 unk = 1 & 0xFFFF;
     u16 collision;
-    if ((UnkCollisionFunc2(sensors_special) & 0x60) == 0x60) {
+    if ((OVL_EXPORT(UnkCollisionFunc2)(sensors_special) & 0x60) == 0x60) {
         self->posX.val -= self->velocityX;
     }
 
-    collision = UnkCollisionFunc(sensors_move, LEN(sensors_move));
+    collision = OVL_EXPORT(UnkCollisionFunc)(sensors_move, LEN(sensors_move));
     if (!(unk & 1) || (collision & 2)) {
-        SetStep(SKELETON_JUMP);
+        OVL_EXPORT(SetStep)(SKELETON_JUMP);
         return;
     }
 
     if (!--self->ext.skeleton.attackTimer) {
-        SetStep(SKELETON_ATTACK);
+        OVL_EXPORT(SetStep)(SKELETON_ATTACK);
     }
 }
 
@@ -93,7 +93,7 @@ void EntitySkeleton(Entity* self) {
 
     switch (self->step) {
     case SKELETON_INIT:
-        InitializeEntity(g_EInitSkeleton);
+        OVL_EXPORT(InitializeEntity)(g_EInitSkeleton);
         self->ext.skeleton.attackTimer = 80; // Skeleton attack timer cycle
         self->ext.skeleton.facingLeft = 0;   // Facing init
         self->ext.skeleton.attackTimerIndex = 0;
@@ -111,14 +111,14 @@ void EntitySkeleton(Entity* self) {
 #endif
         break;
     case SKELETON_IDLE: // Wait for player to be close enough
-        if (UnkCollisionFunc3(sensors_ground) != 0) {
+        if (OVL_EXPORT(UnkCollisionFunc3)(sensors_ground) != 0) {
             self->step++;
         }
         break;
     case SKELETON_WALK_TOWARDS_PLAYER:
-        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
         self->ext.skeleton.facingLeft = self->facingLeft;
-        AnimateEntity(anim_walk, self);
+        OVL_EXPORT(AnimateEntity)(anim_walk, self);
 
         if (self->ext.skeleton.facingLeft) {
             self->velocityX = FIX(0.5);
@@ -126,15 +126,15 @@ void EntitySkeleton(Entity* self) {
             self->velocityX = FIX(-0.5);
         }
 
-        if (GetDistanceToPlayerX() < 76) {
+        if (OVL_EXPORT(GetDistanceToPlayerX)() < 76) {
             self->step = SKELETON_WALK_AWAY_FROM_PLAYER;
         }
         SkeletonAttackCheck(self);
         break;
     case SKELETON_WALK_AWAY_FROM_PLAYER:
-        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
         self->ext.skeleton.facingLeft = self->facingLeft ^ 1;
-        AnimateEntity(anim_walk_backwards, self);
+        OVL_EXPORT(AnimateEntity)(anim_walk_backwards, self);
 
         if (self->ext.skeleton.facingLeft) {
             self->velocityX = FIX(0.5);
@@ -142,15 +142,15 @@ void EntitySkeleton(Entity* self) {
             self->velocityX = FIX(-0.5);
         }
 
-        if (GetDistanceToPlayerX() > 92) {
+        if (OVL_EXPORT(GetDistanceToPlayerX)() > 92) {
             self->step = SKELETON_WALK_TOWARDS_PLAYER;
         }
         SkeletonAttackCheck(self);
         break;
     case SKELETON_ATTACK:
-        animStatus = AnimateEntity(anim_throw_bone, self);
+        animStatus = OVL_EXPORT(AnimateEntity)(anim_throw_bone, self);
         if (!animStatus) {
-            SetStep(SKELETON_WALK_AWAY_FROM_PLAYER);
+            OVL_EXPORT(SetStep)(SKELETON_WALK_AWAY_FROM_PLAYER);
             animStatus = (++self->ext.skeleton.attackTimerIndex) & 3;
             self->ext.skeleton.attackTimer =
                 attack_timer_cycles[self->params & 1][animStatus];
@@ -160,7 +160,8 @@ void EntitySkeleton(Entity* self) {
         if ((animStatus & 0x80) && (self->animCurFrame == 10)) {
             if ((self->posX.i.hi >= -16 && self->posX.i.hi <= 272) &&
                 (self->posY.i.hi >= 0 && self->posY.i.hi <= 240)) {
-                newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                newEntity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
                 if (newEntity != NULL) { // Spawn bone
                     PlaySfxPositional(SFX_BONE_THROW);
                     OVL_EXPORT(CreateEntityFromCurrentEntity)
@@ -179,7 +180,7 @@ void EntitySkeleton(Entity* self) {
     case SKELETON_JUMP:
         switch (self->step_s) {
         case SKELETON_JUMPING:
-            if (!(AnimateEntity(anim_jump1, self) & 1)) {
+            if (!(OVL_EXPORT(AnimateEntity)(anim_jump1, self) & 1)) {
                 animStatus = self->ext.skeleton.facingLeft;
                 if (!(OVL_EXPORT(Random)() & 3)) {
                     animStatus ^= 1;
@@ -198,22 +199,23 @@ void EntitySkeleton(Entity* self) {
             }
             break;
         case SKELETON_IN_AIR:
-            if (UnkCollisionFunc3(sensors_ground) != 0) {
+            if (OVL_EXPORT(UnkCollisionFunc3)(sensors_ground) != 0) {
                 self->step_s++;
             }
-            CheckFieldCollision(sensors_move, 2);
+            OVL_EXPORT(CheckFieldCollision)(sensors_move, 2);
             break;
         case SKELETON_LAND:
-            if (AnimateEntity(anim_jump2, self) & 1) {
+            if (OVL_EXPORT(AnimateEntity)(anim_jump2, self) & 1) {
                 self->step_s = 0;
-                SetStep(SKELETON_WALK_AWAY_FROM_PLAYER);
+                OVL_EXPORT(SetStep)(SKELETON_WALK_AWAY_FROM_PLAYER);
             }
         }
         break;
     case SKELETON_DESTROY:
         PlaySfxPositional(SFX_SKELETON_DEATH_C);
         for (i = 0; i < 6; i++) { // Spawn Skeleton pieces
-            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            newEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 OVL_EXPORT(CreateEntityFromCurrentEntity)
                 (E_SKELETON_PIECES, newEntity);
@@ -241,8 +243,8 @@ void EntitySkeletonPieces(Entity* self) { // From skeleton death explosion
     if (self->step) {
         if (--self->ext.skeleton.explosionTimer) {
             self->rotate += anim_bone_rot[self->params];
-            FallEntity();
-            MoveEntity();
+            OVL_EXPORT(FallEntity)();
+            OVL_EXPORT(MoveEntity)();
             return;
         }
 
@@ -253,7 +255,7 @@ void EntitySkeletonPieces(Entity* self) { // From skeleton death explosion
         return;
     }
 
-    InitializeEntity(g_EInitSkeletonPieces);
+    OVL_EXPORT(InitializeEntity)(g_EInitSkeletonPieces);
     self->animCurFrame = self->params + 15;
     self->drawFlags = ENTITY_ROTATE;
 
@@ -268,21 +270,21 @@ void EntitySkeletonThrownBone(Entity* self) { // Bone Projectile from Skeleton
 
     if (self->step) {
         if (self->flags & FLAG_DEAD) {
-            EntityExplosionSpawn(0, 0);
+            OVL_EXPORT(EntityExplosionSpawn)(0, 0);
             return;
         }
 
         self->rotate += 0x80;
         self->velocityY += 0x2400;
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
 
         if (self->posY.i.hi > 240) {
             DestroyEntity(self);
         }
     } else {
-        InitializeEntity(g_EInitSkeletonBone);
+        OVL_EXPORT(InitializeEntity)(g_EInitSkeletonBone);
         self->posY.val -= FIX(0.0625);
-        xDistanceToPlayer = (u32)GetDistanceToPlayerX() >> 5;
+        xDistanceToPlayer = (u32)OVL_EXPORT(GetDistanceToPlayerX)() >> 5;
         if (xDistanceToPlayer > 7) {
             xDistanceToPlayer = 7;
         }
@@ -302,7 +304,7 @@ void EntitySkeletonThrownBone(Entity* self) { // Bone Projectile from Skeleton
 // the main entity list.
 void UnusedSkeletonEntity(Entity* self) {
     if (self->step == 0) {
-        InitializeEntity(g_EInitSkeleton);
+        OVL_EXPORT(InitializeEntity)(g_EInitSkeleton);
         self->scaleX = 0x120;
         self->scaleY = 0x200;
         self->opacity = 0;

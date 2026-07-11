@@ -54,7 +54,7 @@ void EntityDemonSwitch(Entity* self) {
 
     switch (self->step) {
     case INIT:
-        InitializeEntity(g_EInitSecret);
+        OVL_EXPORT(InitializeEntity)(g_EInitSecret);
 
         self->animCurFrame = 3;
         self->hitPoints = 32767;
@@ -120,7 +120,7 @@ void EntityDemonSwitchWall(Entity* self) {
 
     switch (self->step) {
     case INIT:
-        InitializeEntity(g_EInitSecret);
+        OVL_EXPORT(InitializeEntity)(g_EInitSecret);
 
         self->animCurFrame = 1; // Default: Collision (closed)
 
@@ -180,7 +180,7 @@ void EntityDemonSwitchWall(Entity* self) {
         if (!(self->ext.demonSwitchWall.unk80 % 8)) {
             g_api.PlaySfx(SFX_WALL_DEBRIS_B);
         }
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
 
         if (self->velocityX < FIX(0.25)) {
             self->velocityX += FIX(0.0078125);
@@ -214,7 +214,7 @@ void EntityDemonSwitchWall(Entity* self) {
         // Create "ground puff" entity
         xPos = self->posX.i.hi - 0x18;
         yPos = self->posY.i.hi + 0x20;
-        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        newEntity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
             OVL_EXPORT(CreateEntityFromCurrentEntity)
             (E_ID(GREY_PUFF), newEntity);

@@ -36,7 +36,7 @@ void EntityTowerExit(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
         break;
     case 1: // It seems that the specific exit logic will be run 3 times before
     case 2: // the entity goes dormant

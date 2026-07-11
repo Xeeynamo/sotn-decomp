@@ -34,7 +34,7 @@ static u8 D_80180580[] = {
 
 #include "../../destroy_entity.h"
 
-static void SetStep(Entity* entity, u16 step) {
+static void OVL_EXPORT(SetStep)(Entity* entity, u16 step) {
     entity->step = step;
     entity->step_s = 0;
     entity->pose = 0;
@@ -296,14 +296,14 @@ void func_801B5350(void) {
         break;
 
     case 2:
-        if (!AnimateEntity(D_80180528, self)) {
-            SetStep(self, 3);
+        if (!OVL_EXPORT(AnimateEntity)(D_80180528, self)) {
+            OVL_EXPORT(SetStep)(self, 3);
         }
         self->ext.unkSelEnts.unk80.val -= FIX(1.5);
         break;
 
     case 3:
-        AnimateEntity(D_80180504, self);
+        OVL_EXPORT(AnimateEntity)(D_80180504, self);
         self->ext.unkSelEnts.unk80.val -= FIX(1.5);
         if (self->ext.unkSelEnts.unk80.i.hi < 0x40) {
             self->step = 0xFF;
@@ -391,13 +391,13 @@ void func_801B55C8(void) {
             self->unk5A = 0x48;
             self->animCurFrame = 0x2C;
             self->velocityX = FIX(-0.75);
-            SetStep(self, 2);
+            OVL_EXPORT(SetStep)(self, 2);
         }
         break;
 
     case 2:
         self->ext.unkSelEnts.unk80.val -= FIX(0.75);
-        if (!AnimateEntity(D_80180580, self)) {
+        if (!OVL_EXPORT(AnimateEntity)(D_80180580, self)) {
             self->animSet = ANIMSET_OVL(3);
             self->animCurFrame = 0xC;
             self->unk5A = 0x46;
@@ -411,16 +411,16 @@ void func_801B55C8(void) {
             self->unk5A = 0x48;
             self->animCurFrame = 0x2C;
             self->facingLeft = 0;
-            SetStep(self, 4);
+            OVL_EXPORT(SetStep)(self, 4);
         }
         break;
 
     case 4:
-        if (!AnimateEntity(D_80180578, self)) {
+        if (!OVL_EXPORT(AnimateEntity)(D_80180578, self)) {
             self->animSet = ANIMSET_OVL(3);
             self->unk5A = 0x46;
             self->animCurFrame = 0xC;
-            SetStep(self, 5);
+            OVL_EXPORT(SetStep)(self, 5);
         }
         break;
 
@@ -430,22 +430,22 @@ void func_801B55C8(void) {
             self->unk5A = 0x48;
             self->facingLeft = 1;
             self->animCurFrame = 0x2C;
-            SetStep(self, 6);
+            OVL_EXPORT(SetStep)(self, 6);
         }
         break;
 
     case 6:
-        if (!AnimateEntity(D_80180578, self)) {
+        if (!OVL_EXPORT(AnimateEntity)(D_80180578, self)) {
             self->animSet = ANIMSET_OVL(3);
             self->unk5A = 0x46;
             self->animCurFrame = 0x20;
-            SetStep(self, 7);
+            OVL_EXPORT(SetStep)(self, 7);
         }
         self->ext.unkSelEnts.unk80.val -= FIX(0.75);
         break;
 
     case 7:
-        AnimateEntity(D_80180564, self);
+        OVL_EXPORT(AnimateEntity)(D_80180564, self);
         self->ext.unkSelEnts.unk80.val -= FIX(1.5);
         if (self->ext.unkSelEnts.unk80.i.hi < 0x20) {
             self->step = 0xFF;
@@ -471,43 +471,43 @@ void func_801B585C(u16 arg0) {
         break;
 
     case 1:
-        AnimateEntity(D_80180504, self);
+        OVL_EXPORT(AnimateEntity)(D_80180504, self);
         if (D_801BC3E8 & 4) {
             self->step++;
         }
         break;
 
     case 2:
-        AnimateEntity(D_80180504, self);
+        OVL_EXPORT(AnimateEntity)(D_80180504, self);
         self->ext.unkSelEnts.unk80.val += FIX(1.5);
         if (self->ext.unkSelEnts.unk80.i.hi > 0x48) {
-            SetStep(self, 3);
+            OVL_EXPORT(SetStep)(self, 3);
         }
         break;
 
     case 3:
-        if (!AnimateEntity(D_80180538, self)) {
-            SetStep(self, 4);
+        if (!OVL_EXPORT(AnimateEntity)(D_80180538, self)) {
+            OVL_EXPORT(SetStep)(self, 4);
         }
         break;
 
     case 4:
-        AnimateEntity(D_80180554, self);
+        OVL_EXPORT(AnimateEntity)(D_80180554, self);
         if (D_801BC3E8 & 8) {
-            SetStep(self, 5);
+            OVL_EXPORT(SetStep)(self, 5);
         }
         break;
 
     case 5:
         self->facingLeft = 1;
-        if (!AnimateEntity(D_80180528, self)) {
-            SetStep(self, 6);
+        if (!OVL_EXPORT(AnimateEntity)(D_80180528, self)) {
+            OVL_EXPORT(SetStep)(self, 6);
         }
         self->ext.unkSelEnts.unk80.val -= FIX(1.5);
         break;
 
     case 6:
-        AnimateEntity(D_80180504, self);
+        OVL_EXPORT(AnimateEntity)(D_80180504, self);
         self->ext.unkSelEnts.unk80.val -= FIX(1.5);
         if ((arg0 && self->ext.unkSelEnts.unk80.i.hi < 0x20) ||
             (!arg0 && self->ext.unkSelEnts.unk80.i.hi < -0x10)) {

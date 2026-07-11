@@ -42,7 +42,7 @@ void func_us_801C82B8(Entity* self) {
     if (self->step && self->step < 5 &&
         (self->flags & FLAG_DEAD || g_CastleFlags[NO4_WATER_BLOCKED] > 2)) {
         DestroyEntity(newEnt);
-        SetStep(5);
+        OVL_EXPORT(SetStep)(5);
         self->hitboxState = 0;
         self->ext.spearGuard.unk7C = 64;
         self->drawFlags = ENTITY_OPACITY;
@@ -50,7 +50,7 @@ void func_us_801C82B8(Entity* self) {
     }
 
     if (self->step && self->step < 4 && g_CastleFlags[NO4_WATER_BLOCKED] > 1) {
-        SetStep(4);
+        OVL_EXPORT(SetStep)(4);
         self->animCurFrame = 31;
         self->ext.spearGuard.unk7C = 0;
     }
@@ -61,7 +61,7 @@ void func_us_801C82B8(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        InitializeEntity(g_EInitSpearGuard);
+        OVL_EXPORT(InitializeEntity)(g_EInitSpearGuard);
         self->ext.spearGuard.unk80 = 176;
         self->ext.spearGuard.unk7C = 64;
         self->palette += 2;
@@ -82,18 +82,18 @@ void func_us_801C82B8(Entity* self) {
         break;
 
     case 2:
-        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
         if (!--self->ext.spearGuard.unk7C) {
-            SetStep(3);
+            OVL_EXPORT(SetStep)(3);
         }
         break;
 
     case 3:
-        animStatus = AnimateEntity(D_us_8018186C, self);
+        animStatus = OVL_EXPORT(AnimateEntity)(D_us_8018186C, self);
         newEnt->attack = g_api.enemyDefs[94].attack;
         newEnt->attackElement = g_api.enemyDefs[94].attackElement;
         if (!animStatus) {
-            SetStep(2);
+            OVL_EXPORT(SetStep)(2);
             self->ext.spearGuard.unk7C = 1;
         } else if (animStatus & 0x80 && self->animCurFrame == 45) {
             PlaySfxPositional(SFX_WEAPON_SWISH_B);
@@ -110,7 +110,7 @@ void func_us_801C82B8(Entity* self) {
         break;
 
     case 5:
-        AnimateEntity(D_us_8018185C, self);
+        OVL_EXPORT(AnimateEntity)(D_us_8018185C, self);
         if (self->opacity) {
             self->opacity--;
         }
@@ -133,7 +133,8 @@ void func_us_801C82B8(Entity* self) {
                 PlaySfxPositional(SFX_EXPLODE_FAST_B);
             }
 
-            newEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            newEnt =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (newEnt != NULL) {
                 OVL_EXPORT(CreateEntityFromCurrentEntity)(E_EXPLOSION, newEnt);
                 newEnt->params = 2;

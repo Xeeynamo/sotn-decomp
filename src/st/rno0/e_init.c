@@ -15,8 +15,8 @@ void EntityRelicOrb(Entity* self);
 void EntityHeartDrop(Entity* self);
 void EntityEnemyBlood(Entity* self);
 void EntityMessageBox(Entity* self);
-void EntityDummy(Entity* self);
-void EntityDummy(Entity* self);
+void OVL_EXPORT(EntityDummy)(Entity* self);
+void OVL_EXPORT(EntityDummy)(Entity* self);
 void OVL_EXPORT(EntityBackgroundBlock)(Entity* self);
 void OVL_EXPORT(EntityLockCamera)(Entity* self);
 void EntityUnkId13(Entity* self);
@@ -32,7 +32,7 @@ void EntityStatue(Entity* self);
 void EntityStatueGear(Entity* self);
 void EntityStoneDoor(Entity* self);
 void OVL_EXPORT(Unused801C2338)(Entity* self);
-void EntityDummy(Entity* self);
+void OVL_EXPORT(EntityDummy)(Entity* self);
 void EntityArmorLord(Entity* self);
 void func_us_801D348C_from_are(Entity* self);
 void EntityArmorLordFireWave(Entity* self);
@@ -96,8 +96,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityHeartDrop,
     EntityEnemyBlood,
     EntityMessageBox,
-    EntityDummy,
-    EntityDummy,
+    OVL_EXPORT(EntityDummy),
+    OVL_EXPORT(EntityDummy),
     OVL_EXPORT(EntityBackgroundBlock),
     OVL_EXPORT(EntityLockCamera),
     EntityUnkId13,
@@ -113,7 +113,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityStatueGear,
     EntityStoneDoor,
     OVL_EXPORT(Unused801C2338),
-    EntityDummy,
+    OVL_EXPORT(EntityDummy),
     EntityArmorLord,
     func_us_801D348C_from_are,
     EntityArmorLordFireWave,

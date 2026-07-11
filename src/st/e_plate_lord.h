@@ -185,8 +185,8 @@ void EntityPlateLord(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitPlateLord);
-        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        OVL_EXPORT(InitializeEntity)(g_EInitPlateLord);
+        self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
         self->animCurFrame = 3;
         self->zPriority = 0xB0;
         self->hitboxWidth = 0xC;
@@ -339,8 +339,8 @@ void EntityPlateLord(Entity* self) {
         } else {
             towards = 0x100;
         }
-        if (GetDistanceToPlayerY() < 0x40) {
-            posX = GetDistanceToPlayerX();
+        if (OVL_EXPORT(GetDistanceToPlayerY)() < 0x40) {
+            posX = OVL_EXPORT(GetDistanceToPlayerX)();
             if (posX < towards) {
                 self->ext.plateLord.unk80 = 0x80;
                 self->step_s = 0;
@@ -349,7 +349,7 @@ void EntityPlateLord(Entity* self) {
                 } else {
                     self->step = 5;
                 }
-                if (self->facingLeft == (GetSideToPlayer() & 1)) {
+                if (self->facingLeft == (OVL_EXPORT(GetSideToPlayer)() & 1)) {
                     self->step_s = 0;
                     self->step = 4;
                 }
@@ -485,7 +485,7 @@ void EntityPlateLord(Entity* self) {
             self->ext.plateLord.unk80--;
         } else {
             self->step_s = 0;
-            if (self->facingLeft == (GetSideToPlayer() & 1)) {
+            if (self->facingLeft == (OVL_EXPORT(GetSideToPlayer)() & 1)) {
                 self->step = 4;
             } else {
                 self->step = 9;
@@ -619,7 +619,7 @@ void EntityPlateLord(Entity* self) {
             self->ext.plateLord.unk80--;
         } else {
             self->step_s = 0;
-            if (self->facingLeft == (GetSideToPlayer() & 1)) {
+            if (self->facingLeft == (OVL_EXPORT(GetSideToPlayer)() & 1)) {
                 self->step = 4;
             } else {
                 self->step = 9;
@@ -842,7 +842,7 @@ void EntityPlateLord(Entity* self) {
             if (towards == 3) {
                 self->step = 3;
                 self->step_s = 0;
-                self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+                self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
                 part = self + 5;
                 part->step = 3;
             }
@@ -969,7 +969,8 @@ void EntityPlateLord(Entity* self) {
                 posY = self->posY.i.hi;
                 posX += (OVL_EXPORT(Random)() & 0x1F) - 0x10;
                 posY += (OVL_EXPORT(Random)() & 0x1F) - 0x10;
-                part = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                part =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
                 if (part != NULL) {
                     OVL_EXPORT(CreateEntityFromCurrentEntity)
                     (E_EXPLOSION, part);
@@ -1025,7 +1026,7 @@ void func_us_801D4324(Entity* self) {
     self->facingLeft = tempEntity->facingLeft;
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitPlateLord);
+        OVL_EXPORT(InitializeEntity)(g_EInitPlateLord);
         self->hitPoints = 0x7FFE;
         self->hitboxWidth = 4;
         self->hitboxHeight = 8;
@@ -1049,7 +1050,8 @@ void func_us_801D4324(Entity* self) {
         self->ext.plateLord.unk85 = 0;
         break;
     case 16:
-        tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        tempEntity =
+            OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (tempEntity != NULL) {
             OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, tempEntity);
             tempEntity->params = 1;
@@ -1082,7 +1084,7 @@ void func_us_801D44A0(Entity* self) {
     self->rotate = (self->ext.plateLordUnknown.unkB0 - ROT(180)) / 2;
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitPlateLord);
+        OVL_EXPORT(InitializeEntity)(g_EInitPlateLord);
         self->hitPoints = 0x7FFE;
         self->animCurFrame = 2;
         self->ext.plateLordUnknown.unkB0 = ROT(168.75);
@@ -1250,7 +1252,7 @@ void func_us_801D4AA4(Entity* self) {
     self->facingLeft = tempEntity->facingLeft;
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitPlateLord);
+        OVL_EXPORT(InitializeEntity)(g_EInitPlateLord);
         self->hitPoints = 0x7FFE;
         self->hitboxWidth = 0;
         self->hitboxHeight = 0;
@@ -1350,7 +1352,7 @@ void func_us_801D4CAC(Entity* self) {
     self->facingLeft = tempEntity->facingLeft;
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180B90);
+        OVL_EXPORT(InitializeEntity)(D_us_80180B90);
         self->animCurFrame = 22;
         self->zPriority = 0xB7;
         self->hitPoints = 0x7FFF;

@@ -21,7 +21,7 @@ void func_us_801B72E8(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitParticle));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitParticle));
         params = self->params & 0xF;
         obj = &D_us_80180EF8[params];
         self->palette = obj->palette + 0x226;
@@ -41,19 +41,20 @@ void func_us_801B72E8(Entity* self) {
         break;
 
     case 1:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityY = FIX(-1.0);
-        if (!AnimateEntity(self->ext.et_801B72E8.animData, self)) {
+        if (!OVL_EXPORT(AnimateEntity)(self->ext.et_801B72E8.animData, self)) {
             DestroyEntity(self);
         }
         break;
 
     case 2:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityY = FIX(-1.0);
         switch (self->step_s) {
         case 0:
-            if (!AnimateEntity(self->ext.et_801B72E8.animData, self)) {
+            if (!OVL_EXPORT(AnimateEntity)(
+                    self->ext.et_801B72E8.animData, self)) {
                 self->drawFlags |= ENTITY_SCALEY | ENTITY_SCALEX;
                 self->drawFlags |= ENTITY_OPACITY;
                 self->scaleX = self->scaleY = 256;
@@ -73,8 +74,8 @@ void func_us_801B72E8(Entity* self) {
         break;
 
     case 3:
-        MoveEntity();
-        if (!AnimateEntity(self->ext.et_801B72E8.animData, self)) {
+        OVL_EXPORT(MoveEntity)();
+        if (!OVL_EXPORT(AnimateEntity)(self->ext.et_801B72E8.animData, self)) {
             DestroyEntity(self);
             return;
         }
