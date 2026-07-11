@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-
 extern const char* OVL_EXPORT(GoldCollectTexts)[10];
 static void InitOnce() {
     static bool is_initialized = 0;
