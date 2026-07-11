@@ -2,10 +2,9 @@
 #ifndef RWRP_H
 #define RWRP_H
 
-#include "common.h"
-#include "stage.h"
-
+#define STAGE_IS_RWRP
 #define OVL_EXPORT(x) RWRP_##x
+#include <stage.h>
 
 typedef enum EntityIDs {
     E_NONE,

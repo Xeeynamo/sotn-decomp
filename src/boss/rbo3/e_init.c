@@ -7,7 +7,7 @@ s16* D_us_80180390[] = {D_us_801814A0};
 void EntityBreakable(Entity* self);
 void EntityExplosion(Entity* self);
 void EntityPrizeDrop(Entity* self);
-void EntityDamageDisplay(Entity* self);
+void OVL_EXPORT(EntityDamageDisplay)(Entity* self);
 void OVL_EXPORT(EntityRedDoor)(Entity* self);
 void EntityIntenseExplosion(Entity* self);
 void EntitySoulStealOrb(Entity* self);
@@ -41,7 +41,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityBreakable,
     EntityExplosion,
     EntityPrizeDrop,
-    EntityDamageDisplay,
+    OVL_EXPORT(EntityDamageDisplay),
     OVL_EXPORT(EntityRedDoor),
     EntityIntenseExplosion,
     EntitySoulStealOrb,

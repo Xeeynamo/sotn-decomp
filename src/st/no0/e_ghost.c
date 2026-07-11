@@ -81,7 +81,7 @@ void EntityGhostEnemySpawner(Entity* self) {
         self->ext.ghostEnemySpawner.timer = 1;
     }
     if (!--self->ext.ghostEnemySpawner.timer) {
-        self->ext.ghostEnemySpawner.timer = (Random() & 47) + 48;
+        self->ext.ghostEnemySpawner.timer = (OVL_EXPORT(Random)() & 47) + 48;
         entity = &PLAYER;
         xPos = g_Tilemap.scrollX.i.hi + entity->posX.i.hi;
         yPos = g_Tilemap.scrollY.i.hi + entity->posY.i.hi;
@@ -99,14 +99,14 @@ void EntityGhostEnemySpawner(Entity* self) {
             entity->zPriority = 170;
             entity->posX.i.hi = xPos - g_Tilemap.scrollX.i.hi;
             entity->posY.i.hi = yPos - g_Tilemap.scrollY.i.hi;
-            xPos = (Random() & 63) + 48;
-            if (Random() & 1) {
+            xPos = (OVL_EXPORT(Random)() & 63) + 48;
+            if (OVL_EXPORT(Random)() & 1) {
                 entity->posX.i.hi += xPos;
             } else {
                 entity->posX.i.hi -= xPos;
             }
 
-            yPos = (Random() & 127) - 64;
+            yPos = (OVL_EXPORT(Random)() & 127) - 64;
             entity->posY.i.hi += yPos;
         }
     }

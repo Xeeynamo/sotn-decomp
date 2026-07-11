@@ -316,7 +316,7 @@ void EntityGraveKeeper(Entity* self) {
     case GRAVE_KEEPER_PUNCH_CLOSE:
         // Player is close enough to punch from stationary
         if (!AnimateEntity(anim_punch, self)) {
-            if (Random() & 1) {
+            if (OVL_EXPORT(Random)() & 1) {
                 SetStep(GRAVE_KEEPER_WALK_TOWARD);
             } else {
                 SetStep(GRAVE_KEEPER_GROUND_KICK);

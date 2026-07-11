@@ -171,12 +171,13 @@ void EntitySpectralSword(Entity* self) {
     case SPECTRAL_SWORD_MOVE:
         switch (self->step_s) {
         case SPECTRAL_SWORD_MOVE_INIT:
-            self->ext.spectralSword.moveTimer = ((Random() & 3) + 3);
+            self->ext.spectralSword.moveTimer =
+                ((OVL_EXPORT(Random)() & 3) + 3);
             self->ext.spectralSword.hasWeapons = true;
             self->step_s++;
             // fallthrough
         case SPECTRAL_SWORD_MOVE_LOOP:
-            angle = (Random() * 4) + 512;
+            angle = (OVL_EXPORT(Random)() * 4) + 512;
             posX = (rcos(angle) * 96) >> 12;
             posY = (rsin(angle) * -96) >> 12;
             entity = &PLAYER;

@@ -459,19 +459,19 @@ void EntityBonePillarFireBreath(Entity* self) {
              prim = prim->next) {
             prim->type = PRIM_TILE;
             if (self->facingLeft) {
-                posX = (Random() & 0x1F) + 16;
+                posX = (OVL_EXPORT(Random)() & 0x1F) + 16;
             } else {
-                posX = -(Random() & 0x1F) - 16;
+                posX = -(OVL_EXPORT(Random)() & 0x1F) - 16;
             }
             prim->x0 = self->posX.i.hi + posX;
             posY = self->posY.i.hi - posX;
-            prim->y0 = posY - (Random() & 0x1F) + 8;
+            prim->y0 = posY - (OVL_EXPORT(Random)() & 0x1F) + 8;
             prim->u0 = 1;
             prim->v0 = 1;
             prim->r0 = 224;
             prim->b0 = 136;
             prim->g0 = 160;
-            prim->p2 = (Random() & 7) + 1;
+            prim->p2 = (OVL_EXPORT(Random)() & 7) + 1;
             prim->priority = self->zPriority + 1;
             prim->drawMode =
                 DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;

@@ -84,7 +84,7 @@ void EntityHarpy(Entity* self) {
         if (!self->ext.harpy.unk80) {
             self->ext.harpy.unk80 = 64;
             self->ext.harpy.unk8C = 0;
-            self->ext.harpy.unk88 = (Random() & 0x3F) * 0x10;
+            self->ext.harpy.unk88 = (OVL_EXPORT(Random)() & 0x3F) * 0x10;
         } else {
             self->ext.harpy.unk80--;
         }
@@ -115,7 +115,7 @@ void EntityHarpy(Entity* self) {
         }
         self->ext.harpy.unk8C = velocity;
         if (!--self->ext.harpy.timer) {
-            self->ext.harpy.timer = delays[Random() & 3];
+            self->ext.harpy.timer = delays[OVL_EXPORT(Random)() & 3];
             posX = GetDistanceToPlayerX();
             posY = GetDistanceToPlayerY();
             if (posX < posY) {
@@ -344,8 +344,8 @@ void EntityHarpy(Entity* self) {
                     CreateEntityFromEntity(E_EXPLOSION, self, entity);
                     entity->params = EXPLOSION_FIREBALL;
                     entity->zPriority = self->zPriority + 1;
-                    entity->posX.i.hi += (Random() & 0x1F) - 0x10;
-                    entity->posY.i.hi += (Random() & 0x1F) - 0x10;
+                    entity->posX.i.hi += (OVL_EXPORT(Random)() & 0x1F) - 0x10;
+                    entity->posY.i.hi += (OVL_EXPORT(Random)() & 0x1F) - 0x10;
                 }
             }
         }
@@ -494,10 +494,10 @@ void EntityHarpyFeather(Entity* self) {
 
     if (!self->step) {
         InitializeEntity(g_EInitHarpyFeather);
-        self->facingLeft = Random() & 1;
+        self->facingLeft = OVL_EXPORT(Random)() & 1;
         self->drawFlags = ENTITY_ROTATE;
-        speed = (Random() & 0x1F) + 0x10;
-        angle = (Random() * 6) + ROT(202.5);
+        speed = (OVL_EXPORT(Random)() & 0x1F) + 0x10;
+        angle = (OVL_EXPORT(Random)() * 6) + ROT(202.5);
         self->velocityX = speed * rcos(angle);
         self->velocityY = speed * rsin(angle);
     }

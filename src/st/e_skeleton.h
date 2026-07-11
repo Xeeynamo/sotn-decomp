@@ -181,7 +181,7 @@ void EntitySkeleton(Entity* self) {
         case SKELETON_JUMPING:
             if (!(AnimateEntity(anim_jump1, self) & 1)) {
                 animStatus = self->ext.skeleton.facingLeft;
-                if (!(Random() & 3)) {
+                if (!(OVL_EXPORT(Random)() & 3)) {
                     animStatus ^= 1;
                 }
 

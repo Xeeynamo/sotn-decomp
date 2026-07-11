@@ -128,7 +128,7 @@ void EntityMerman2(Entity* self) {
 
     case MERMAN2_SWIMMING:
         if (!self->step_s) {
-            rnd = Random() & 3;
+            rnd = OVL_EXPORT(Random)() & 3;
             self->velocityX = g_merman2Swimvels[rnd].x;
             self->velocityY = g_merman2Swimvels[rnd].y;
             self->step_s++;
@@ -154,7 +154,7 @@ void EntityMerman2(Entity* self) {
         if (self->ext.merman2.timer++ > 32) {
             self->ext.merman2.timer = 0;
             self->step_s = 0;
-            if ((GetDistanceToPlayerX() >= 48) && !(Random() & 1)) {
+            if ((GetDistanceToPlayerX() >= 48) && !(OVL_EXPORT(Random)() & 1)) {
                 SetStep(MERMAN2_JUMPING);
             }
         }
@@ -274,7 +274,8 @@ void EntityMerman2(Entity* self) {
                 newEntity = AllocEntity(&g_Entities[232], &g_Entities[256]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(E_MERMAN2_JUMP_AIR, self, newEntity);
-                    newEntity->posX.i.hi += ((Random() & 3) * 4) - 6;
+                    newEntity->posX.i.hi +=
+                        ((OVL_EXPORT(Random)() & 3) * 4) - 6;
                     newEntity->zPriority = self->zPriority + 1;
                 }
             }
@@ -314,7 +315,7 @@ void EntityMerman2(Entity* self) {
 
         case MERMAN2_WALKING_TO_PLAYER_FACE_PLAYER:
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-            rnd = Random() & 3;
+            rnd = OVL_EXPORT(Random)() & 3;
             self->ext.merman2.timer = g_merman2_walktimers[rnd];
             self->step_s++;
             break;
@@ -343,7 +344,7 @@ void EntityMerman2(Entity* self) {
                     break;
                 }
                 if (!--self->ext.merman2.timer) {
-                    if (Random() & 1) {
+                    if (OVL_EXPORT(Random)() & 1) {
                         SetStep(MERMAN2_SPIT_FIRE);
                     } else {
                         self->step_s--;
@@ -909,16 +910,16 @@ void EntityMermanSpawner(Entity* self) {
         yVar = g_Tilemap.scrollY.i.hi + player->posY.i.hi;
         if (yVar >= 256) {
             xVar = g_Tilemap.scrollX.i.hi + player->posX.i.hi;
-            xVar += Random() - 0x80;
+            xVar += OVL_EXPORT(Random)() - 0x80;
             if (xVar < 0x40 || xVar > 0x2C0) {
                 return;
             }
             yVar = 496;
             newEntity = AllocEntity(&g_Entities[160], &g_Entities[170]);
             if (newEntity != 0) {
-                if (Random() & 1) {
+                if (OVL_EXPORT(Random)() & 1) {
                     CreateEntityFromCurrentEntity(E_MERMAN2, newEntity);
-                    newEntity->params = Random() & 1;
+                    newEntity->params = OVL_EXPORT(Random)() & 1;
                 } else {
                     CreateEntityFromCurrentEntity(E_MERMAN, newEntity);
                 }

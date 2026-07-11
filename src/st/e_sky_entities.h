@@ -17,7 +17,7 @@ void EntityLightningThunder(Entity* self) {
         InitializeEntity(g_EInitStInteractable);
         self->zPriority = 0x2A;
         self->flags &= ~FLAG_POS_CAMERA_LOCKED;
-        self->facingLeft = Random() & 1;
+        self->facingLeft = OVL_EXPORT(Random)() & 1;
         sfxPan = (self->posX.i.hi >> 0x4) - 8;
         g_api.PlaySfxVolPan(SFX_THUNDER_B, 0x40, sfxPan);
     }

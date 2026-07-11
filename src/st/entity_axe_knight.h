@@ -229,7 +229,7 @@ void func_801C4550(void) {
     if (g_CurrentEntity->ext.axeknight.unk82 > 0) {
         g_CurrentEntity->ext.axeknight.unk82 -= 3;
     } else {
-        rand = Random() & 7;
+        rand = OVL_EXPORT(Random)() & 7;
         SetStep((u16)steps[rand]);
         g_CurrentEntity->ext.axeknight.unk82 = 0x100;
     }

@@ -85,7 +85,7 @@ void func_us_801CC9B4(Entity* self) {
         return;
     }
     if ((g_GameTimer & 0xF) == 0) {
-        angle = (Random() & 7);
+        angle = (OVL_EXPORT(Random)() & 7);
         self->ext.et_801CC9B4.targetAngle = GetAnglePointToEntityShifted(
             D_us_80181C14[angle], D_us_80181C24[angle]);
     }

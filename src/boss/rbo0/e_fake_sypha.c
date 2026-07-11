@@ -171,7 +171,7 @@ void EntityFakeSypha(Entity* self) {
         case 0:
             self->velocityY = 0;
             self->ext.sypha.timer =
-                (Random() & 0x1F) + (3 - D_us_801806B4) * 0x10;
+                (OVL_EXPORT(Random)() & 0x1F) + (3 - D_us_801806B4) * 0x10;
             self->step_s++;
             // fallthrough
         case 1:
@@ -465,7 +465,7 @@ void EntityFakeSypha(Entity* self) {
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
                     CreateEntityFromEntity(E_ID(DEATH_FLAMES), self, entity);
-                    entity->posY.i.hi += (Random() & 0x1F);
+                    entity->posY.i.hi += (OVL_EXPORT(Random)() & 0x1F);
                     entity->zPriority = self->zPriority - 1;
                     entity->params = 6;
                 }
@@ -669,7 +669,7 @@ void EntityPetrifyCloud(Entity* self) {
         self->opacity = 0x40;
         self->drawFlags |= ENTITY_ROTATE | ENTITY_SCALEY | ENTITY_SCALEX;
         self->scaleX = self->scaleY = 0x80;
-        self->rotate = (Random() * 2) - ROT(22.5);
+        self->rotate = (OVL_EXPORT(Random)() * 2) - ROT(22.5);
         angle = self->rotate + ROT(90.0);
         self->velocityX = rcos(angle) * 18;
         self->velocityY = rsin(angle) * 20;
@@ -962,7 +962,7 @@ void EntitySummonAttack(Entity* self) {
 
             prim = self->ext.prim;
             while (prim != NULL) {
-                if (Random() & 1) {
+                if (OVL_EXPORT(Random)() & 1) {
                     prim->y0 = prim->y1 += 4;
                 } else {
                     prim->y0 = prim->y1 -= 4;
@@ -997,7 +997,7 @@ void EntitySummonAttack(Entity* self) {
         case 3:
             prim = self->ext.prim;
             while (prim != NULL) {
-                if (Random() & 1) {
+                if (OVL_EXPORT(Random)() & 1) {
                     prim->y0 = prim->y1 += 4;
                 } else {
                     prim->y0 = prim->y1 -= 4;
@@ -1067,8 +1067,8 @@ void EntitySummonAttack(Entity* self) {
 
 static void CreateExplosionPuff() {
     Entity* puff;
-    s32 rand3 = Random() & 3; // Random puff style 0, 1, 2
-    s16 initAngle = ((Random() & 0xF) << 8) - 0x800;
+    s32 rand3 = OVL_EXPORT(Random)() & 3; // Random puff style 0, 1, 2
+    s16 initAngle = ((OVL_EXPORT(Random)() & 0xF) << 8) - 0x800;
     s32 i;
 
     for (i = 0; i < 6; i++) {

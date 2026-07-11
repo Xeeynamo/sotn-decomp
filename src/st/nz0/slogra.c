@@ -222,7 +222,7 @@ void EntitySlogra(Entity* self) {
                 }
             }
         }
-        if ((Random() & 0x3F) == 0) {
+        if ((OVL_EXPORT(Random)() & 0x3F) == 0) {
             SetStep(SLOGRA_TAUNT_WITH_SPEAR);
         }
         if (!--self->ext.GS_Props.timer) {
@@ -371,7 +371,7 @@ void EntitySlogra(Entity* self) {
                 self->ext.GS_Props.flag ^= 1;
             }
         }
-        if ((Random() & 0x3F) == 0) {
+        if ((OVL_EXPORT(Random)() & 0x3F) == 0) {
             SetStep(SLOGRA_TAUNT_WITHOUT_SPEAR);
         }
         if (!--self->ext.GS_Props.timer) {
@@ -447,8 +447,8 @@ void EntitySlogra(Entity* self) {
                 otherEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (otherEnt != NULL) {
                     CreateEntityFromEntity(E_EXPLOSION, self, otherEnt);
-                    otherEnt->posX.i.hi += (Random() & 31) - 16;
-                    otherEnt->posY.i.hi += (Random() & 31) - 16;
+                    otherEnt->posX.i.hi += (OVL_EXPORT(Random)() & 31) - 16;
+                    otherEnt->posY.i.hi += (OVL_EXPORT(Random)() & 31) - 16;
                     otherEnt->zPriority = self->zPriority + 1;
                     otherEnt->params = 1;
                 }

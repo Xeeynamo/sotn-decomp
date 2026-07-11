@@ -2,9 +2,8 @@
 #ifndef BO4_H
 #define BO4_H
 
-#include <stage.h>
-
 #define OVL_EXPORT(x) BO4_##x
+#include <stage.h>
 
 #include "../doppleganger.h"
 

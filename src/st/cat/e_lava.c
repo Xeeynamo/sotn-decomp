@@ -329,7 +329,7 @@ void EntityLavaEmbers(Entity* self) {
             if (1) {
 #endif
                 prim->p3 = 2;
-                prim->x0 = Random() & 0xFF;
+                prim->x0 = OVL_EXPORT(Random)() & 0xFF;
                 prim->y0 = 0x100;
                 prim->u0 = prim->v0 = 1;
                 prim->priority = 0xA9;
@@ -337,8 +337,8 @@ void EntityLavaEmbers(Entity* self) {
                 prim->r0 = 0xF0;
                 prim->g0 = 0xC0;
                 prim->b0 = 0x80;
-                prim->u2 = (Random() & 0x1F) + 0x10;
-                prim->u3 = (Random() & 3) + 2;
+                prim->u2 = (OVL_EXPORT(Random)() & 0x1F) + 0x10;
+                prim->u3 = (OVL_EXPORT(Random)() & 3) + 2;
             }
         }
 

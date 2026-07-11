@@ -170,7 +170,7 @@ void EntityLargeSlime(Entity* self) {
         case 0:
             (self + 1)->step_s = 1;
             self->ext.slime.unk88 = 0x20;
-            self->ext.slime.unk89 = D_us_801827EC[Random() & 3];
+            self->ext.slime.unk89 = D_us_801827EC[OVL_EXPORT(Random)() & 3];
             self->ext.slime.unk8B = self->ext.slime.facingLeft ^ 1;
             (self + 1)->ext.slime.unk8B = self->ext.slime.facingLeft;
             self->velocityX = FIX(-0.5);
@@ -356,14 +356,15 @@ void func_us_801D3468(s32 primCount) {
         PGREY(prim, 1) = prim->r0;
         PGREY(prim, 2) = prim->r0;
         PGREY(prim, 3) = prim->r0;
-        if (g_CurrentEntity->ext.slime.largeSlimeDying && !(Random() & 0x3F)) {
+        if (g_CurrentEntity->ext.slime.largeSlimeDying &&
+            !(OVL_EXPORT(Random)() & 0x3F)) {
             ent = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (ent != NULL) {
                 CreateEntityFromCurrentEntity(E_INTENSE_EXPLOSION, ent);
                 ent->params = 0x10;
                 ent->posX.i.hi = prim->x3;
                 ent->posY.i.hi = prim->y3;
-                ent->posY.i.hi -= Random() & 7;
+                ent->posY.i.hi -= OVL_EXPORT(Random)() & 7;
             }
         }
     }
@@ -380,14 +381,14 @@ void func_us_801D3468(s32 primCount) {
             PGREY(prim, 2) = prim->r0;
             PGREY(prim, 3) = prim->r0;
             if (g_CurrentEntity->ext.slime.largeSlimeDying &&
-                !(Random() & 0x3F)) {
+                !(OVL_EXPORT(Random)() & 0x3F)) {
                 ent = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (ent != NULL) {
                     CreateEntityFromCurrentEntity(E_INTENSE_EXPLOSION, ent);
                     ent->params = 0x10;
                     ent->posX.i.hi = prim->x3;
                     ent->posY.i.hi = prim->y3;
-                    ent->posY.i.hi -= Random() & 7;
+                    ent->posY.i.hi -= OVL_EXPORT(Random)() & 7;
                 }
             }
         }
@@ -774,7 +775,7 @@ void EntitySlime(Entity* self) {
         case 0:
             (self + 1)->step_s = 1;
             self->ext.slime.unk88 = 0x10;
-            self->ext.slime.unk89 = D_us_80182808[Random() & 3];
+            self->ext.slime.unk89 = D_us_80182808[OVL_EXPORT(Random)() & 3];
             self->ext.slime.unk8B = self->ext.slime.facingLeft ^ 1;
             (self + 1)->ext.slime.unk8B = self->ext.slime.facingLeft;
             self->velocityX = FIX(-0.5);

@@ -1086,7 +1086,8 @@ void EntityVenusWeedTendril(Entity* self) {
             } else {
                 x -= InitDistMinX;
             }
-            x += (Random() & (InitDistRandRangeX * 2 + 1)) - InitDistRandRangeX;
+            x += (OVL_EXPORT(Random)() & (InitDistRandRangeX * 2 + 1)) -
+                 InitDistRandRangeX;
             self->ext.venusWeedTendril.targetX = x;
             self->step_s++;
         }

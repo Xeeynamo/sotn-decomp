@@ -589,8 +589,8 @@ void MakeExplosions(void) {
     Entity* entity;
     s32 i;
 
-    temp_s4 = Random() & 3;
-    temp_s3 = ((Random() & 0xF) << 8) - 0x800;
+    temp_s4 = OVL_EXPORT(Random)() & 3;
+    temp_s3 = ((OVL_EXPORT(Random)() & 0xF) << 8) - 0x800;
 
     for (i = 0; i < 6; i++) {
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);

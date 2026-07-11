@@ -89,7 +89,7 @@ void EntityFishhead(Entity* self) {
         if (!(self->params & 1)) {
             self->ext.fishhead.isBottomHead = 1;
         }
-        self->ext.fishhead.attackTimerIndex = Random() & 7;
+        self->ext.fishhead.attackTimerIndex = OVL_EXPORT(Random)() & 7;
         // fallthrough
     case 1:
     case 2:
@@ -125,8 +125,8 @@ void EntityFishhead(Entity* self) {
                             entity->posX.i.hi -= 0x12;
                         }
                         entity->posY.i.hi -= 4;
-                        entity->posY.i.hi -= Random() & 7;
-                        entity->posX.i.hi += (Random() & 7) - 4;
+                        entity->posY.i.hi -= OVL_EXPORT(Random)() & 7;
+                        entity->posX.i.hi += (OVL_EXPORT(Random)() & 7) - 4;
                         entity->params = 0;
                     }
                 }
@@ -315,7 +315,7 @@ void EntityFishheadParticles(Entity* self) {
         prim->u0 = prim->v0 = 1;
         prim->priority = self->zPriority;
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
-        self->velocityX = (Random() << 7) - FIX(0.25);
+        self->velocityX = (OVL_EXPORT(Random)() << 7) - FIX(0.25);
         // Passthrough
     case 1:
         // Small bubbles when Fishhead is idling
@@ -433,19 +433,19 @@ void EntityFishheadFireBreath(Entity* self) {
         while (prim != NULL) {
             prim->type = PRIM_TILE;
             if (self->facingLeft) {
-                posX = (Random() & 0x1F) + 0x10;
+                posX = (OVL_EXPORT(Random)() & 0x1F) + 0x10;
             } else {
-                posX = -(Random() & 0x1F) - 0x10;
+                posX = -(OVL_EXPORT(Random)() & 0x1F) - 0x10;
             }
             prim->x0 = self->posX.i.hi + posX;
             posY = self->posY.i.hi;
-            prim->y0 = (posY - (Random() & 0x1F)) + 8;
+            prim->y0 = (posY - (OVL_EXPORT(Random)() & 0x1F)) + 8;
             prim->u0 = 1;
             prim->v0 = 1;
             prim->r0 = 0xE0;
             prim->b0 = 0x88;
             prim->g0 = 0xA0;
-            prim->p2 = (Random() & 7) + 1;
+            prim->p2 = (OVL_EXPORT(Random)() & 7) + 1;
             prim->priority = self->zPriority + 1;
             prim->drawMode =
                 DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;

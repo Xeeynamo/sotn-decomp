@@ -96,9 +96,10 @@ void func_us_801B59C4(Primitive* prim) {
         prim->v2 = prim->v3 = 0xD8;
         prim->priority = 0x6A;
         prim->drawMode = DRAW_UNK02;
-        LOW(prim->next->u0) = -(Random() & 7) * 0x2800;
-        LOW(prim->next->r1) = -0x18000 - ((Random() & 7) << 0xD);
-        LOH(prim->next->r2) = LOH(prim->next->b2) = ((Random() & 3) * 2) + 8;
+        LOW(prim->next->u0) = -(OVL_EXPORT(Random)() & 7) * 0x2800;
+        LOW(prim->next->r1) = -0x18000 - ((OVL_EXPORT(Random)() & 7) << 0xD);
+        LOH(prim->next->r2) = LOH(prim->next->b2) =
+            ((OVL_EXPORT(Random)() & 3) * 2) + 8;
         prim->next->u2 = 4;
         break;
 
@@ -111,9 +112,10 @@ void func_us_801B59C4(Primitive* prim) {
         prim->v2 = prim->v3 = 0xD8;
         prim->priority = 0x6A;
         prim->drawMode = DRAW_UNK02;
-        LOW(prim->next->u0) = 0xE000 - ((Random() & 7) << 0xE);
-        LOW(prim->next->r1) = -0x18000 - ((Random() & 7) << 0xD);
-        LOH(prim->next->r2) = LOH(prim->next->b2) = ((Random() & 3) * 2) + 8;
+        LOW(prim->next->u0) = 0xE000 - ((OVL_EXPORT(Random)() & 7) << 0xE);
+        LOW(prim->next->r1) = -0x18000 - ((OVL_EXPORT(Random)() & 7) << 0xD);
+        LOH(prim->next->r2) = LOH(prim->next->b2) =
+            ((OVL_EXPORT(Random)() & 3) * 2) + 8;
         if (LOW(prim->next->u0) > 0) {
             prim->next->r3 = 16;
         } else {
@@ -292,8 +294,8 @@ void func_us_801B5FB8(Entity* self) {
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
                 CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, tempEntity);
-                tempEntity->posX.i.hi += 0xF - (Random() & 0x1F);
-                tempEntity->posY.i.hi += 0xF - (Random() & 0x1F);
+                tempEntity->posX.i.hi += 0xF - (OVL_EXPORT(Random)() & 0x1F);
+                tempEntity->posY.i.hi += 0xF - (OVL_EXPORT(Random)() & 0x1F);
                 tempEntity->params = 0x10;
                 tempEntity->params += 0xAA00;
             }
@@ -397,8 +399,8 @@ void func_us_801B6794(Primitive* prim) {
         prim->y0 = g_CurrentEntity->posY.i.hi + 8;
         prim->x1 = 0;
         prim->y1 = 0;
-        LOW(prim->x2) = 0x7000 - ((Random() & 7) << 0xD);
-        LOW(prim->x3) = 0x7000 - ((Random() & 7) << 0xD);
+        LOW(prim->x2) = 0x7000 - ((OVL_EXPORT(Random)() & 7) << 0xD);
+        LOW(prim->x3) = 0x7000 - ((OVL_EXPORT(Random)() & 7) << 0xD);
         prim->g3 = 1;
         prim->r3 = 0x20;
     }
@@ -552,8 +554,8 @@ void func_us_801B68EC(Entity* self) {
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
                 CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, tempEntity);
-                tempEntity->posX.i.hi += 0xF - (Random() & 0x1F);
-                tempEntity->posY.i.hi += (Random() & 0x1F);
+                tempEntity->posX.i.hi += 0xF - (OVL_EXPORT(Random)() & 0x1F);
+                tempEntity->posY.i.hi += (OVL_EXPORT(Random)() & 0x1F);
                 tempEntity->params = 0x10;
                 tempEntity->params += 0xAA00;
             }

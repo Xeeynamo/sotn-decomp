@@ -9,8 +9,8 @@ extern RoomDef OVL_EXPORT(rooms_layers)[];
 extern u_long** OVL_EXPORT(gfxBanks)[];
 
 AbbreviatedOverlay OVL_EXPORT(Overlay) = {
-    .Update = Update,
-    .HitDetection = HitDetection,
+    .Update = OVL_EXPORT(Update),
+    .HitDetection = OVL_EXPORT(HitDetection),
     .UpdateRoomPosition = UpdateRoomPosition,
     .InitRoomEntities = InitRoomEntities,
     .rooms = OVL_EXPORT(rooms),
@@ -19,7 +19,7 @@ AbbreviatedOverlay OVL_EXPORT(Overlay) = {
     .objLayoutHorizontal = &OBJ_LAYOUT_HORIZONTAL,
     .tileLayers = OVL_EXPORT(rooms_layers),
     .gfxBanks = (GfxBank**)OVL_EXPORT(gfxBanks),
-    .UpdateStageEntities = UpdateStageEntities,
+    .UpdateStageEntities = OVL_EXPORT(UpdateStageEntities),
 };
 
 #ifdef VERSION_US

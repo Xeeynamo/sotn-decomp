@@ -12,8 +12,8 @@ extern u8* g_SpriteSheet[0x34C];
 extern u8* g_PlOvlDopBatSpritesheet[6];
 
 AbbreviatedOverlay2 OVL_EXPORT(Overlay) = {
-    .Update = Update,
-    .HitDetection = HitDetection,
+    .Update = OVL_EXPORT(Update),
+    .HitDetection = OVL_EXPORT(HitDetection),
     .UpdateRoomPosition = UpdateRoomPosition,
     .InitRoomEntities = InitRoomEntities,
     .rooms = OVL_EXPORT(rooms),
@@ -22,7 +22,7 @@ AbbreviatedOverlay2 OVL_EXPORT(Overlay) = {
     .objLayoutHorizontal = OVL_EXPORT(pStObjLayoutHorizontal),
     .tileLayers = OVL_EXPORT(rooms_layers),
     .gfxBanks = OVL_EXPORT(gfxBanks),
-    .UpdateStageEntities = UpdateStageEntities,
+    .UpdateStageEntities = OVL_EXPORT(UpdateStageEntities),
     .unk2C = g_SpriteSheet,
     .unk30 = g_PlOvlDopBatSpritesheet,
 };

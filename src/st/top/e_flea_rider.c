@@ -69,7 +69,7 @@ void EntityFleaRider(Entity* self) {
             self->ext.fleaRider.unk88 = 2;
             self->poseTimer = 0;
             self->pose = 0;
-            self->ext.fleaRider.unk84 = Random() & 7;
+            self->ext.fleaRider.unk84 = OVL_EXPORT(Random)() & 7;
             self->ext.fleaRider.unk85 = 0x80;
         }
         entity = self->ext.fleaRider.entity;
@@ -90,8 +90,8 @@ void EntityFleaRider(Entity* self) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
                 CreateEntityFromEntity(E_FLEA_RIDER, self, entity);
-                entity->posX.i.hi += (Random() & 0x3F) - 32;
-                entity->posY.i.hi += (Random() & 0x3F) - 32;
+                entity->posX.i.hi += (OVL_EXPORT(Random)() & 0x3F) - 32;
+                entity->posY.i.hi += (OVL_EXPORT(Random)() & 0x3F) - 32;
                 entity->step = 5;
                 entity->flags |= FLAG_UNK_00200000 | FLAG_UNK_2000;
             }
@@ -122,9 +122,9 @@ void EntityFleaRider(Entity* self) {
             self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
                            FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
                            FLAG_UNK_00200000 | FLAG_UNK_2000;
-            self->rotate = (Random() & 7) << 8;
+            self->rotate = (OVL_EXPORT(Random)() & 7) << 8;
             self->velocityY = FIX(-1.5);
-            if (Random() & 1) {
+            if (OVL_EXPORT(Random)() & 1) {
                 self->ext.fleaRider.unk7E = 0xD00;
                 self->velocityX = -FIX(0.8125);
             } else {

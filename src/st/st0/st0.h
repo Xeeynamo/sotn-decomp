@@ -1,12 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "stage.h"
+#define STAGE_IS_ST0
+#define OVL_EXPORT(x) ST0_##x
+#include <stage.h>
 
 #undef STAGE
 #define STAGE STAGE_ST0
-
-#define STAGE_IS_ST0
-
-#define OVL_EXPORT(x) ST0_##x
 
 typedef enum EntityIDs {
     E_NONE,

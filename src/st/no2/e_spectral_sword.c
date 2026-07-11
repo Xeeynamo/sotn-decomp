@@ -125,7 +125,7 @@ void EntitySpectralSword(Entity* self) {
             self->step_s++;
             /* fallthrough */
         case 1:
-            angle = Random() * 8;
+            angle = OVL_EXPORT(Random)() * 8;
             dx = (rcos(angle) * 0x60) >> 0xC;
             dy = (rsin(angle) * -0x60) >> 0xC;
             ent = &PLAYER;

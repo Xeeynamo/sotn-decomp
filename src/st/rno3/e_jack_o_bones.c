@@ -162,7 +162,7 @@ void EntityJackOBones(Entity* self) {
         case JACKO_JUMP_WINDUP:
             if (!(AnimateEntity(anim_jump_windup, self) & 1)) {
                 var_s2 = self->ext.jackoBones.movingLeft;
-                if (!(Random() & 3)) {
+                if (!(OVL_EXPORT(Random)() & 3)) {
                     var_s2 ^= 1;
                 }
                 if (var_s2) {

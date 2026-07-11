@@ -200,11 +200,11 @@ void OVL_EXPORT(EntityBreakableDebris)(Entity* self) {
             prim->next->b3 = 128;
             prim->priority = self->zPriority;
             prim->drawMode = DRAW_UNK02;
-            self->velocityX = ((Random() & 7) << 12) + FIX(0.5);
+            self->velocityX = ((OVL_EXPORT(Random)() & 7) << 12) + FIX(0.5);
             if (!self->facingLeft) {
                 self->velocityX = -self->velocityX;
             }
-            self->velocityY = ((Random() & 7) << 12) - FIX(0.5);
+            self->velocityY = ((OVL_EXPORT(Random)() & 7) << 12) - FIX(0.5);
         }
     case UPDATE:
         MoveEntity();

@@ -306,7 +306,7 @@ void EntitySkeletonApeBarrel(Entity* self) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
                 CreateEntityFromCurrentEntity(E_EXPLOSION, entity);
-                rand = Random() & 7;
+                rand = OVL_EXPORT(Random)() & 7;
                 entity->posX.i.hi += D_us_8018333C[rand];
                 rand = (rand - 4) & 7;
                 entity->posY.i.hi += D_us_8018333C[rand];

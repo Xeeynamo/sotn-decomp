@@ -74,7 +74,7 @@ void EntityToad(Entity* self) {
         switch (self->step_s) {
         case 0:
             self->animCurFrame = 1;
-            if (!Random()) {
+            if (!OVL_EXPORT(Random)()) {
                 self->poseTimer = 0;
                 self->pose = 0;
                 self->step_s++;
@@ -109,7 +109,7 @@ void EntityToad(Entity* self) {
         switch (self->step_s) {
         case 0:
             if (!AnimateEntity(anim_jump, self)) {
-                index = Random() & 3;
+                index = OVL_EXPORT(Random)() & 3;
                 self->velocityX = jumpVelocities[index].x;
                 if (!self->facingLeft) {
                     self->velocityX = -self->velocityX;
@@ -162,7 +162,8 @@ void EntityToad(Entity* self) {
             self->hitboxWidth = 9;
             self->hitboxHeight = 10;
             if (!AnimateEntity(anim_land, self)) {
-                self->ext.frogToad.jumpTimer = jumpIntervals[Random() & 7];
+                self->ext.frogToad.jumpTimer =
+                    jumpIntervals[OVL_EXPORT(Random)() & 7];
                 SetStep(2);
             }
         }
@@ -202,7 +203,8 @@ void EntityToad(Entity* self) {
         case 3:
             if (!AnimateEntity(anim_close_mouth, self)) {
                 SetStep(2);
-                self->ext.frogToad.lickTimer = lickIntervals[Random() & 7];
+                self->ext.frogToad.lickTimer =
+                    lickIntervals[OVL_EXPORT(Random)() & 7];
             }
             break;
         }

@@ -8,6 +8,10 @@
 #include "objects.h"
 #include "sfx.h"
 
+#ifndef OVL_EXPORT
+#define OVL_EXPORT(x) (x)
+#endif
+
 #ifdef VERSION_PSP
 #define E_ID(name) D_psp_E_##name
 #else
@@ -181,7 +185,7 @@ typedef struct {
     u8 var_s5[1];
 } ST0_SCRATCHPAD;
 
-extern u16 g_ItemIconSlots[ICON_SLOT_NUM];
+extern u16 OVL_EXPORT(ItemIconSlots)[ICON_SLOT_NUM];
 
 /*
  * Sets up layout arrays and initializes stage state to
@@ -198,11 +202,12 @@ void InitRoomEntities(s32 objLayoutId);
  */
 void UpdateRoomPosition();
 
-void Update(void);
-void UpdateStageEntities();
-void HitDetection(void);
+void OVL_EXPORT(Update)(void);
+void OVL_EXPORT(UpdateStageEntities)(void);
+void OVL_EXPORT(HitDetection)(void);
+void OVL_EXPORT(EntityDamageDisplay)(Entity*);
 
-s32 Random();
+s32 OVL_EXPORT(Random)();
 #ifdef VERSION_PC
 void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity);
 #endif

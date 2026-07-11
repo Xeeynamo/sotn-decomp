@@ -4,7 +4,7 @@
 void EntityBreakable(Entity*);
 void EntityExplosion(Entity*);
 void EntityPrizeDrop(Entity*);
-void EntityDamageDisplay(Entity*);
+void OVL_EXPORT(EntityDamageDisplay)(Entity*);
 void OVL_EXPORT(EntityRedDoor)(Entity*);
 void EntityIntenseExplosion(Entity*);
 void EntitySoulStealOrb(Entity*);
@@ -35,7 +35,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityBreakable,
     EntityExplosion,
     EntityPrizeDrop,
-    EntityDamageDisplay,
+    OVL_EXPORT(EntityDamageDisplay),
     OVL_EXPORT(EntityRedDoor),
     EntityIntenseExplosion,
     EntitySoulStealOrb,

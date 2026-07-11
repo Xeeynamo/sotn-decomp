@@ -274,7 +274,7 @@ void EntityBladeSoldier(Entity* self) {
         case 2:
             // Occasionally Blade Soldier will do a sword twirl
             // animation after attacking
-            if (Random() & 1) {
+            if (OVL_EXPORT(Random)() & 1) {
                 self->ext.bladeSoldier.animPtr = (u8*)anim_sword_twirl;
             } else {
                 self->ext.bladeSoldier.animPtr = (u8*)anim_finish_attack;
@@ -308,7 +308,7 @@ void EntityBladeSoldier(Entity* self) {
         case 0:
             if (!(AnimateEntity(anim_short_hop, self) & 1)) {
                 var_s2 = self->ext.bladeSoldier.walkDirection;
-                if (!(Random() & 3)) {
+                if (!(OVL_EXPORT(Random)() & 3)) {
                     var_s2 ^= 1;
                 }
 

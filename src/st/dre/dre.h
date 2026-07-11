@@ -2,10 +2,9 @@
 #ifndef DRE_H
 #define DRE_H
 
-#include <stage.h>
-
-#define OVL_EXPORT(x) DRE_##x
 #define STAGE_IS_DRE
+#define OVL_EXPORT(x) DRE_##x
+#include <stage.h>
 
 enum Palettes {
     PAL_NONE,

@@ -302,7 +302,8 @@ void EntityBloodyZombie(Entity* self) {
             self->facingLeft ^= 1;
         }
 
-        if ((Random() & 0x3F) == 0) { // Drop BloodDrips from the enemy knife
+        if ((OVL_EXPORT(Random)() & 0x3F) ==
+            0) { // Drop BloodDrips from the enemy knife
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
                 CreateEntityFromEntity(E_BLOOD_DRIPS, self, tempEntity);
@@ -334,7 +335,8 @@ void EntityBloodyZombie(Entity* self) {
             self->velocityX = FIX(-0.75);
         }
 
-        if ((Random() & 0x3F) == 0) { // Drop BloodDrips from the enemy knife
+        if ((OVL_EXPORT(Random)() & 0x3F) ==
+            0) { // Drop BloodDrips from the enemy knife
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
                 CreateEntityFromEntity(E_BLOOD_DRIPS, self, tempEntity);

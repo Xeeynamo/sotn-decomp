@@ -9,9 +9,8 @@
 #define VERSION_BETA
 #define INCLUDE_ASM_OLD
 
-#include "stage.h"
-
 #define OVL_EXPORT(x) MAD_##x
+#include <stage.h>
 
 // This is 0xA9 in all other overlays, there may be an underlying reason.
 // For now it's just an overriding define.

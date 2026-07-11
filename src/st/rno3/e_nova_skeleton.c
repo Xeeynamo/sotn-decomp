@@ -385,7 +385,7 @@ void EntityNovaLaser(Entity* self) {
             self->step++;
         }
     case LASER_3:
-        if (Random() & 1) {
+        if (OVL_EXPORT(Random)() & 1) {
             if (self->ext.nova.laserLength < 0x88) {
                 self->ext.nova.laserLength++;
             } else if (self->ext.nova.laserLength > 0x78) {

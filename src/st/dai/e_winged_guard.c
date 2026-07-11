@@ -105,7 +105,7 @@ void EntityWingedGuardParts(Entity* self) {
         MoveEntity();
         self->rotate += 128;
         self->velocityY += FIX(0.1875);
-        if (!(Random() & 0x3F)) {
+        if (!(OVL_EXPORT(Random)() & 0x3F)) {
             explosion = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (explosion != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, explosion);
@@ -129,7 +129,7 @@ void EntityWingedGuardSpawner(Entity* self) {
         self->ext.ghostEnemySpawner.timer = 1;
     }
     if (!--self->ext.ghostEnemySpawner.timer) {
-        self->ext.ghostEnemySpawner.timer = (Random() & 47) + 192;
+        self->ext.ghostEnemySpawner.timer = (OVL_EXPORT(Random)() & 47) + 192;
         entity = &PLAYER;
         posX = g_Tilemap.scrollX.i.hi + entity->posX.i.hi;
         posY = g_Tilemap.scrollY.i.hi + entity->posY.i.hi;
@@ -147,12 +147,12 @@ void EntityWingedGuardSpawner(Entity* self) {
             entity->zPriority = 176;
             entity->posX.i.hi = posX - g_Tilemap.scrollX.i.hi;
             entity->posY.i.hi = posY - g_Tilemap.scrollY.i.hi;
-            if (Random() & 1) {
+            if (OVL_EXPORT(Random)() & 1) {
                 entity->posX.i.hi = 288;
             } else {
                 entity->posX.i.hi = -32;
             }
-            posY = ((Random() & 127) - 64);
+            posY = ((OVL_EXPORT(Random)() & 127) - 64);
             entity->posY.i.hi += posY;
         }
     }

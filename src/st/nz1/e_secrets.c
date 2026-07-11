@@ -111,8 +111,9 @@ void EntityBreakableWall(Entity* self) {
                 if (tempEntity != NULL) {
                     CreateEntityFromEntity(
                         E_ID(SECRET_WALL_DEBRIS), self, tempEntity);
-                    tempEntity->posX.i.hi += (Random() & 0xF);
-                    tempEntity->posY.i.hi += (Random() & 0x3F) - 0x20;
+                    tempEntity->posX.i.hi += (OVL_EXPORT(Random)() & 0xF);
+                    tempEntity->posY.i.hi +=
+                        (OVL_EXPORT(Random)() & 0x3F) - 0x20;
                     tempEntity->params = self->params;
                 }
             }
@@ -185,7 +186,7 @@ void EntityBreakableWallPartial(Entity* self) {
             if (tempEntity != NULL) {
                 CreateEntityFromEntity(
                     E_ID(SECRET_WALL_DEBRIS), self, tempEntity);
-                tempEntity->posY.i.hi += (Random() & 0x1F) - 0x10;
+                tempEntity->posY.i.hi += (OVL_EXPORT(Random)() & 0x1F) - 0x10;
                 tempEntity->params = 1;
             }
         }
@@ -213,16 +214,16 @@ void EntitySecretWallDebris(Entity* self) {
         InitializeEntity(g_EInitEnvironment);
         self->drawFlags = ENTITY_ROTATE;
         self->animCurFrame = 8;
-        speed = (Random() & 0x1F) + 0x10;
+        speed = (OVL_EXPORT(Random)() & 0x1F) + 0x10;
         if (self->params) {
-            angle = ((Random() & 0x3F) * 0x10) + ROT(90);
+            angle = ((OVL_EXPORT(Random)() & 0x3F) * 0x10) + ROT(90);
         } else {
-            angle = ((Random() & 0x3F) * 0x10) + ROT(270);
+            angle = ((OVL_EXPORT(Random)() & 0x3F) * 0x10) + ROT(270);
         }
         if (self->params & 0x10) {
             self->animCurFrame = 9;
-            speed = (Random() & 0x1F) + 0x10;
-            angle = (Random() * 6) + ROT(202.5);
+            speed = (OVL_EXPORT(Random)() & 0x1F) + 0x10;
+            angle = (OVL_EXPORT(Random)() * 6) + ROT(202.5);
         }
         self->velocityX = speed * rcos(angle);
         self->velocityY = speed * rsin(angle);

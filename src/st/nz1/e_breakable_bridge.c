@@ -211,8 +211,8 @@ void EntityBridgeBreakTrigger(Entity* self) {
                 CreateEntityFromEntity(E_ID(EXPLODE_PUFF_OPAQUE), self, entity);
                 entity->params = 0x10;
                 entity->zPriority = 0x72;
-                entity->posX.i.hi += (Random() & 0x7F) - 64;
-                entity->posY.i.hi += (Random() & 0xF) + 12;
+                entity->posX.i.hi += (OVL_EXPORT(Random)() & 0x7F) - 64;
+                entity->posY.i.hi += (OVL_EXPORT(Random)() & 0xF) + 12;
             }
         }
         self->drawFlags |= ENTITY_OPACITY;

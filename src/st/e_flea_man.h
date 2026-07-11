@@ -109,7 +109,7 @@ void EntityFleaMan(Entity* self) {
         if (self->hitParams && self->hitParams < 4) {
             index = 2;
         } else {
-            rand = Random() & 7;
+            rand = OVL_EXPORT(Random)() & 7;
             distanceX = GetDistanceToPlayerX();
 
             if (distanceX < 0x50) {

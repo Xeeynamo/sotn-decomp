@@ -704,7 +704,7 @@ void EntityBlade(Entity* self) {
             /* fallthrough */
         case 5:
             if ((g_Timer & 7) == 0) {
-                if (Random() & 1) {
+                if (OVL_EXPORT(Random)() & 1) {
                     PlaySfxPositional(SFX_FM_EXPLODE_B);
                 } else {
                     PlaySfxPositional(SFX_EXPLODE_D);

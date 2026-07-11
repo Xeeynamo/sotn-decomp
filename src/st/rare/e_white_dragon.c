@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rare.h"
 
-extern u16 UNK_Invincibility0[];
+extern u16 OVL_EXPORT(PalInvincibility0)[];
 extern EInit OVL_EXPORT(EInitSpawner);
 extern EInit g_EInitWhiteDragonFlameBreath;
 
@@ -232,7 +232,7 @@ void EntityWhiteDragon(Entity* self) {
     if (entity->flags & 0xF) {
         iFramePalette = entity->nFramesInvincibility << 1;
         iFramePalette += entity->flags & 1;
-        entity->palette = UNK_Invincibility0[iFramePalette];
+        entity->palette = OVL_EXPORT(PalInvincibility0)[iFramePalette];
         if (!(--entity->flags & 0xF)) {
             entity->palette = entity->hitEffect;
             entity->hitEffect = 0;
@@ -398,10 +398,11 @@ void EntityWhiteDragon(Entity* self) {
                     self->step = FLAME_BREATH;
                     self->step_s = 0;
                     self->ext.whiteDragon.unk96 = 0x10;
-                    self->ext.whiteDragon.unk9F = Random() & 1;
+                    self->ext.whiteDragon.unk9F = OVL_EXPORT(Random)() & 1;
                     self->ext.whiteDragon.unkA4 = 0;
                 }
-                self->ext.whiteDragon.attackTimer = attack_timers[Random() & 7];
+                self->ext.whiteDragon.attackTimer =
+                    attack_timers[OVL_EXPORT(Random)() & 7];
             }
 
             if (self->ext.whiteDragon.unk9A) {
@@ -748,7 +749,8 @@ void EntityWhiteDragon(Entity* self) {
                     CreateEntityFromEntity(
                         E_EXPLOSION, self + SEGMENT_COUNT, entity);
                     entity->params = EXPLOSION_FIREBALL;
-                    entity->posX.i.hi += (s16)(Random() & 0x1F) - 0x10;
+                    entity->posX.i.hi +=
+                        (s16)(OVL_EXPORT(Random)() & 0x1F) - 0x10;
                     entity->zPriority = self->zPriority + 9;
                 }
             }

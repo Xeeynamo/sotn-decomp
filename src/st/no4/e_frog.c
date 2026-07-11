@@ -128,7 +128,7 @@ void EntityFrog(Entity* self) {
             SetStep(4);
         }
 
-        if (!(Random() & 0x7F)) {
+        if (!(OVL_EXPORT(Random)() & 0x7F)) {
             SetStep(3);
         }
 
@@ -175,7 +175,7 @@ void EntityFrog(Entity* self) {
     case 3:
         switch (self->step_s) {
         case 0:
-            index = Random() & 3;
+            index = OVL_EXPORT(Random)() & 3;
             self->ext.frogToad.jumpStep = 0;
             self->step_s = jumpType[index][0];
             self->ext.frogToad.jumpCount = jumpType[index][1];

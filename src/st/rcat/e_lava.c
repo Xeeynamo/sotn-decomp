@@ -340,7 +340,7 @@ void EntitySnowflakes(Entity* self) {
             if (1) {
 #endif
                 prim->p3 = 2;
-                prim->x0 = Random() & 0xFF;
+                prim->x0 = OVL_EXPORT(Random)() & 0xFF;
                 prim->y0 = 0;
                 prim->u0 = prim->v0 = 1;
                 prim->priority = 0xA9;
@@ -348,8 +348,8 @@ void EntitySnowflakes(Entity* self) {
                 prim->r0 = 0xA0;
                 prim->g0 = 0x60;
                 prim->b0 = 0xF0;
-                prim->u2 = (Random() & 0x1F) + 0x10;
-                prim->u3 = (Random() & 3) + 2;
+                prim->u2 = (OVL_EXPORT(Random)() & 0x1F) + 0x10;
+                prim->u3 = (OVL_EXPORT(Random)() & 3) + 2;
             }
         }
 

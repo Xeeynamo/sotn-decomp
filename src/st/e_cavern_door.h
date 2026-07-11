@@ -220,7 +220,7 @@ void EntityCavernDoor(Entity* self) {
         }
         CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
         entity->posY.i.hi = 156;
-        entity->posX.i.hi += -8 + (Random() & 15);
+        entity->posX.i.hi += -8 + (OVL_EXPORT(Random)() & 15);
         entity->zPriority = self->zPriority + 2;
         entity->params = 0x10;
         entity->drawFlags |= (ENTITY_SCALEX + ENTITY_SCALEY);

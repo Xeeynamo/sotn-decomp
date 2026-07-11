@@ -491,10 +491,10 @@ void EntityDiplocephalus(Entity* self) {
                         CreateEntityFromEntity(E_OLROX_DROOL, self, entityRef);
                         if (self->facingLeft) {
                             entityRef->posX.i.hi -=
-                                (i * 4) + 24 + (Random() & 3);
+                                (i * 4) + 24 + (OVL_EXPORT(Random)() & 3);
                         } else {
                             entityRef->posX.i.hi +=
-                                (i * 4) + 24 + (Random() & 3);
+                                (i * 4) + 24 + (OVL_EXPORT(Random)() & 3);
                         }
                         entityRef->posY.i.hi += (i * 2) + 4;
                     }
@@ -548,7 +548,7 @@ void EntityDiplocephalus(Entity* self) {
         break;
 
     case 13:
-        var_s2 = Random() & 1;
+        var_s2 = OVL_EXPORT(Random)() & 1;
         entityRef = self;
 
         for (i = 0; i < 4; i++) {
@@ -653,8 +653,8 @@ void func_us_801D0898(Entity* self, s32 count) {
     s8 dx, dy;
 
     for (i = 0; i < count; i++) {
-        dx = (Random() & 0x3F) - 0x20;
-        dy = (Random() & 0x1F) - 0xF;
+        dx = (OVL_EXPORT(Random)() & 0x3F) - 0x20;
+        dy = (OVL_EXPORT(Random)() & 0x1F) - 0xF;
         newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
         if (newEntity != NULL) {
             CreateEntityFromEntity(E_EXPLOSION, self, newEntity);

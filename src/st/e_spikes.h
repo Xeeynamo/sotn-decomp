@@ -125,11 +125,11 @@ void EntitySpikesParts(Entity* self) {
 #else
         self->velocityY += FIX(0.75);
 #endif
-        self->velocityX += ((Random() & 3) << 13) - FIX(0.1875);
-        self->velocityY += ((Random() & 3) << 13) - FIX(0.1875);
+        self->velocityX += ((OVL_EXPORT(Random)() & 3) << 13) - FIX(0.1875);
+        self->velocityY += ((OVL_EXPORT(Random)() & 3) << 13) - FIX(0.1875);
         // Randomly choose between rotating left or right either
         // 2.109375 degrees or 0.703125 degrees
-        self->ext.spikes.rotate += ((Random() & 3) * 16) - 24;
+        self->ext.spikes.rotate += ((OVL_EXPORT(Random)() & 3) * 16) - 24;
         break;
     case SPIKES_PARTS_MOVE:
         MoveEntity();

@@ -767,12 +767,12 @@ void EntityEquipItemDrop(Entity* self) {
             break;
         }
 
-        for (i = 0; i < LEN(g_ItemIconSlots); i++) {
-            if (!g_ItemIconSlots[i]) {
+        for (i = 0; i < LEN(OVL_EXPORT(ItemIconSlots)); i++) {
+            if (!OVL_EXPORT(ItemIconSlots)[i]) {
                 break;
             }
         }
-        if (i >= LEN(g_ItemIconSlots)) {
+        if (i >= LEN(OVL_EXPORT(ItemIconSlots))) {
             DestroyEntity(self);
             return;
         }
@@ -791,7 +791,7 @@ void EntityEquipItemDrop(Entity* self) {
         }
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
-        g_ItemIconSlots[i] = 0x1E0;
+        OVL_EXPORT(ItemIconSlots)[i] = 0x1E0;
 #if !(defined VERSION_BETA || STAGE == STAGE_ST0)
         self->ext.equipItemDrop.iconSlot = i;
 #endif
@@ -864,7 +864,7 @@ void EntityEquipItemDrop(Entity* self) {
 #if !(defined VERSION_BETA || STAGE == STAGE_ST0)
         } else {
             i = self->ext.equipItemDrop.iconSlot;
-            g_ItemIconSlots[i] = 0x10;
+            OVL_EXPORT(ItemIconSlots)[i] = 0x10;
 #endif
         }
         break;
@@ -963,9 +963,9 @@ void EntityRelicOrb(Entity* self) {
     // prim 1: blue rectangle for Obtained text bg
 
 #if defined(VERSION_BETA) || STAGE == STAGE_ST0
-    const int MaxItemSlots = LEN(g_ItemIconSlots);
+    const int MaxItemSlots = LEN(OVL_EXPORT(ItemIconSlots));
 #else
-    const int MaxItemSlots = LEN(g_ItemIconSlots) - 1;
+    const int MaxItemSlots = LEN(OVL_EXPORT(ItemIconSlots)) - 1;
 #endif
     u16 relicId;
 #if defined(VERSION_PSP) || STAGE == STAGE_ST0
@@ -1021,7 +1021,7 @@ void EntityRelicOrb(Entity* self) {
 #endif
         InitializeEntity(OVL_EXPORT(EInitObtainable));
         for (iconSlot = 0; iconSlot < MaxItemSlots; iconSlot++) {
-            if (!g_ItemIconSlots[iconSlot]) {
+            if (!OVL_EXPORT(ItemIconSlots)[iconSlot]) {
                 break;
             }
         }
@@ -1044,7 +1044,7 @@ void EntityRelicOrb(Entity* self) {
 #else
         self->ext.relicOrb.iconSlot = iconSlot;
 #if !defined(VERSION_BETA)
-        g_ItemIconSlots[iconSlot] = 0x10;
+        OVL_EXPORT(ItemIconSlots)[iconSlot] = 0x10;
 #endif
         g_api.LoadEquipIcon(g_api.relicDefs[relicId].icon,
                             g_api.relicDefs[relicId].iconPalette, iconSlot);
@@ -1095,7 +1095,7 @@ void EntityRelicOrb(Entity* self) {
         }
         MoveEntity();
         iconSlot = self->ext.relicOrb.iconSlot;
-        g_ItemIconSlots[iconSlot] = 0x10;
+        OVL_EXPORT(ItemIconSlots)[iconSlot] = 0x10;
         break;
 #endif
     case 5:

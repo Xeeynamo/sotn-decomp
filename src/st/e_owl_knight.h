@@ -768,7 +768,7 @@ void EntityOwlKnight(Entity* self) {
         break;
     case 10:
         if (!self->step_s) {
-            self->ext.owl.unk82 = D_us_80181E5C[Random() & 3];
+            self->ext.owl.unk82 = D_us_80181E5C[OVL_EXPORT(Random)() & 3];
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->ext.owl.unk8C = 1;
             if (self->ext.owl.unk80 & 0x10) {
@@ -821,7 +821,7 @@ void EntityOwlKnight(Entity* self) {
         break;
     case 11:
         if (!self->step_s) {
-            self->ext.owl.unk82 = D_us_80181E5C[Random() & 3];
+            self->ext.owl.unk82 = D_us_80181E5C[OVL_EXPORT(Random)() & 3];
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->ext.owl.unk8C = 1;
             self->step_s++;
@@ -1030,8 +1030,8 @@ void EntityOwlKnight(Entity* self) {
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
                 CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, tempEntity);
-                tempEntity->posX.i.hi += (Random() & 0x1F) - 16;
-                tempEntity->posY.i.hi += (Random() & 0x1F) - 16;
+                tempEntity->posX.i.hi += (OVL_EXPORT(Random)() & 0x1F) - 16;
+                tempEntity->posY.i.hi += (OVL_EXPORT(Random)() & 0x1F) - 16;
             }
         }
         AnimateEntity(anim_knight_16, self);
