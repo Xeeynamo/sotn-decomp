@@ -90,6 +90,7 @@ RNO0_EntityDummy = 0x801BB548;
 RNO0_UnkCollisionFunc = 0x801BB570;
 RNO0_CheckFieldCollision = 0x801BB698;
 RNO0_GetPlayerCollisionWith = 0x801BB7F0;
+RNO0_ReplaceBreakableWithItemDrop = 0x801BBB34;
 PrizeDropFall = 0x801BBBEC;
 PrizeDropFall2 = 0x801BBC70;
 CollectHeart = 0x801BBDCC;

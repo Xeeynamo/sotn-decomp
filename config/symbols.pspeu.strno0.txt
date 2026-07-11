@@ -132,6 +132,7 @@ RNO0_EntityDummy = 0x092537E0;
 RNO0_UnkCollisionFunc = 0x09253818;
 RNO0_CheckFieldCollision = 0x09253968;
 RNO0_GetPlayerCollisionWith = 0x09253AF8;
+RNO0_ReplaceBreakableWithItemDrop = 0x09253FD0;
 UnkPrimHelper = 0x092540C8;
 FindFirstUnkPrim2 = 0x092545C8;
 PrimResetNext = 0x09254680;
