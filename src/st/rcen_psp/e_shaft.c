@@ -10,11 +10,11 @@ s16 func_us_8019A98C(s16 arg0, s16 arg1, s16 arg2) {
     v_s1 = arg2 - arg1;
     v_s0 = v_s1;
 
-    if (v_s1 > 0x800) {
-        v_s0 = v_s1 - 0x1000;
+    if (v_s1 > ROT(180)) {
+        v_s0 = v_s1 - ROT(360);
     }
-    if (v_s1 < -0x800) {
-        v_s0 = v_s1 + 0x1000;
+    if (v_s1 < ROT(-180)) {
+        v_s0 = v_s1 + ROT(360);
     }
 
     if (abs(v_s0) > arg0) {
