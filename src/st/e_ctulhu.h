@@ -277,7 +277,8 @@ void EntityCtulhu(Entity* self) {
                 PlaySfxPositional(SFX_FM_EXPLODE_SWISHES);
                 newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(E_CTULHU_FIREBALL, self, newEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_CTULHU_FIREBALL, self, newEntity);
                     newEntity->facingLeft = self->facingLeft;
                     if (self->facingLeft) {
                         newEntity->posX.i.hi += 0x10;
@@ -301,7 +302,8 @@ void EntityCtulhu(Entity* self) {
             for (i = 0; i < LEN(triple_fireball_rot_z); i++) {
                 newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(E_CTULHU_FIREBALL, self, newEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_CTULHU_FIREBALL, self, newEntity);
                     newEntity->facingLeft = self->facingLeft;
                     if (self->facingLeft) {
                         newEntity->posX.i.hi += 0x10;
@@ -326,7 +328,8 @@ void EntityCtulhu(Entity* self) {
             PlaySfxPositional(SFX_FM_THUNDER_EXPLODE);
             newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_CTULHU_ICE_SHOCKWAVE, self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_CTULHU_ICE_SHOCKWAVE, self, newEntity);
                 newEntity->facingLeft = self->facingLeft;
                 newEntity->zPriority = self->zPriority + 1;
 
@@ -655,7 +658,7 @@ void EntityCtulhuFireball(Entity* self) {
     if (self->flags & FLAG_DEAD) {
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, newEntity);
             newEntity->params = 2;
         }
         DestroyEntity(self);

@@ -415,7 +415,7 @@ void EntityDiplocephalusTail(Entity* self) {
         if (!AnimateEntity(animTail2, self)) {
             part = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (part != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, part);
+                OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, part);
                 part->params = 3;
                 part->zPriority = self->zPriority + 9;
             }

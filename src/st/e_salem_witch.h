@@ -11,7 +11,8 @@ void SalemWitchTrySpawnShadow() {
     if (!(g_Timer & 0xF)) {
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_SALEM_WITCH, g_CurrentEntity, entity);
+            OVL_EXPORT(CreateEntityFromEntity)
+            (E_SALEM_WITCH, g_CurrentEntity, entity);
             entity->facingLeft = g_CurrentEntity->facingLeft;
             entity->zPriority = g_CurrentEntity->zPriority - 1;
             entity->params = g_CurrentEntity->animCurFrame;
@@ -442,7 +443,8 @@ void EntitySalemWitch(Entity* self) {
                 PlaySfxPositional(SFX_SALEM_WITCH_CURSE_PROJ);
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_SALEM_WITCH_CURSE, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_SALEM_WITCH_CURSE, self, entity);
                     if (self->facingLeft) {
                         entity->posX.i.hi -= CurseProjectileOffsetX;
                     } else {
@@ -470,8 +472,8 @@ void EntitySalemWitch(Entity* self) {
         case ATTACK_TRIBOLT_SPAWN_PROJECTILE:
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                CreateEntityFromEntity(
-                    E_SALEM_WITCH_TRIBOLT_LAUNCH, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_SALEM_WITCH_TRIBOLT_LAUNCH, self, entity);
                 entity->zPriority = self->zPriority + 1;
                 entity->posY.i.hi += TriboltProjectileOffsetY;
             }
@@ -560,7 +562,7 @@ void EntitySalemWitch(Entity* self) {
             // Fire particles
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
                 entity->params = 2;
             }
             DestroyEntity(self);
@@ -878,8 +880,8 @@ void EntitySalemWitchTriboltLaunch(Entity* self) {
         for (i = 0; i < ProjectileCount; i++) {
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                CreateEntityFromEntity(
-                    E_SALEM_WITCH_TRIBOLT_PROJECTILE, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_SALEM_WITCH_TRIBOLT_PROJECTILE, self, entity);
                 entity->params = i;
             }
         }
@@ -964,8 +966,8 @@ void EntitySalemWitchTriboltProjectile(Entity* self) {
         if (OVL_EXPORT(Random)() & 1) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(
-                    E_SALEM_WITCH_TRIBOLT_PROJECTILE, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_SALEM_WITCH_TRIBOLT_PROJECTILE, self, entity);
                 entity->animSet = self->animSet;
                 entity->rotate = self->rotate;
                 entity->scaleX = self->scaleX;

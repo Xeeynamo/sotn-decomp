@@ -93,7 +93,8 @@ void func_us_801BB53C(Entity* self) {
         if (D_us_80181ACC & 0x4) {
             tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_ID(ID_42), self, tempEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_ID(ID_42), self, tempEntity);
                 tempEntity->posX.i.hi = 0x80;
                 tempEntity->posY.i.hi = 0x80;
                 tempEntity->params = 7;

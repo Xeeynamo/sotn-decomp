@@ -121,8 +121,8 @@ static void VandalSwordTriggerDeath(void) {
     if (!(g_Timer & 7)) {
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(
-                E_VANDAL_SWORD_DEATH, g_CurrentEntity, entity);
+            OVL_EXPORT(CreateEntityFromEntity)
+            (E_VANDAL_SWORD_DEATH, g_CurrentEntity, entity);
             entity->rotate = g_CurrentEntity->rotate;
             entity->facingLeft = g_CurrentEntity->facingLeft;
         }
@@ -368,7 +368,7 @@ void EntityVandalSword(Entity* self) {
         if (g_Timer & 1) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
                 entity->params = 1;
             }
         }

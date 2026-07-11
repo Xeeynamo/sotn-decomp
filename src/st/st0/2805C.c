@@ -64,14 +64,16 @@ void func_801A805C(Entity* self) {
                 for (i = 0; i < entityCount; i++) {
                     newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (newEntity != NULL) {
-                        CreateEntityFromEntity(E_ID_26, self, newEntity);
+                        OVL_EXPORT(CreateEntityFromEntity)
+                        (E_ID_26, self, newEntity);
                         newEntity->posY.i.hi = posY;
                         newEntity->params = paramsPtr[i];
                         newEntity->facingLeft = self->facingLeft;
                     }
                     newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (newEntity != NULL) {
-                        CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+                        OVL_EXPORT(CreateEntityFromEntity)
+                        (E_EXPLOSION, self, newEntity);
                         newEntity->posY.i.hi = posY;
                         newEntity->params = 0;
                     }

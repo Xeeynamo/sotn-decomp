@@ -487,8 +487,8 @@ void EntityBladeMaster(Entity* self) {
             entity =
                 AllocEntity(&g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
             if (entity != NULL) {
-                CreateEntityFromEntity(
-                    E_BLADE_MASTER_DEATH_PARTS, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_BLADE_MASTER_DEATH_PARTS, self, entity);
                 entity->facingLeft = self->facingLeft;
                 entity->params = i;
             }
@@ -594,7 +594,8 @@ void EntityBladeMasterDeathParts(Entity* self) {
             newEntity =
                 AllocEntity(&g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_EXPLOSION, self, newEntity);
                 newEntity->params = EXPLOSION_FIREBALL;
             }
             DestroyEntity(self);
@@ -620,8 +621,8 @@ void EntityBladeMasterDeathParts(Entity* self) {
             newEntity =
                 AllocEntity(&g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(
-                    E_BLADE_MASTER_DEATH_EXPLOSION, self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_BLADE_MASTER_DEATH_EXPLOSION, self, newEntity);
                 newEntity->zPriority = self->zPriority + 1;
             }
         }

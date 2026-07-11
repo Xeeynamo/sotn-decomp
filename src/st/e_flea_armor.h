@@ -56,7 +56,8 @@ void EntityFleaArmor(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitFleaArmor);
-        CreateEntityFromEntity(E_FLEA_ARMOR_ATTACK_HITBOX, self, self + 1);
+        OVL_EXPORT(CreateEntityFromEntity)
+        (E_FLEA_ARMOR_ATTACK_HITBOX, self, self + 1);
         self->blendMode |= BLEND_TRANSP | BLEND_ADD;
         break;
 
@@ -220,7 +221,7 @@ void EntityFleaArmor(Entity* self) {
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
             DestroyEntity(entity);
-            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
             entity->params = 1;
         }
         self->velocityX = 0;

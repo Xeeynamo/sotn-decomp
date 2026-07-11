@@ -133,7 +133,8 @@ void EntitySwordLord(Entity* self) {
         self->facingLeft = GetSideToPlayer() & 1;
         tempEntity = self + 1;
         DestroyEntity(tempEntity);
-        CreateEntityFromEntity(E_SWORD_LORD_ATTACK, self, tempEntity);
+        OVL_EXPORT(CreateEntityFromEntity)
+        (E_SWORD_LORD_ATTACK, self, tempEntity);
         break;
 
     case 1:
@@ -300,8 +301,8 @@ void EntitySwordLord(Entity* self) {
             if ((OVL_EXPORT(Random)() & 7) == 0) {
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromEntity(
-                        E_INTENSE_EXPLOSION, self, tempEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_INTENSE_EXPLOSION, self, tempEntity);
                     tempEntity->posX.i.hi +=
                         0x20 - (OVL_EXPORT(Random)() & 0x2F);
                     tempEntity->posY.i.hi +=
@@ -311,7 +312,8 @@ void EntitySwordLord(Entity* self) {
             if (AnimateEntity(anim3, self) == 0) {
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_EXPLOSION, self, tempEntity);
                     tempEntity->params = 3;
                     PlaySfxPositional(SFX_FAST_STUTTER_EXPLODE);
                 }
@@ -325,7 +327,8 @@ void EntitySwordLord(Entity* self) {
             if (self->animCurFrame == 29) {
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromEntity(E_SWORD_LORD, self, tempEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_SWORD_LORD, self, tempEntity);
                     tempEntity->params = 0;
                     tempEntity->facingLeft = self->facingLeft;
                     tempEntity->step = 7;
@@ -343,7 +346,8 @@ void EntitySwordLord(Entity* self) {
 #ifdef STAGE_IS_NZ1
                 tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromEntity(E_VANDAL_SWORD, self, tempEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_VANDAL_SWORD, self, tempEntity);
                     tempEntity->facingLeft = self->facingLeft;
                     if (self->facingLeft) {
                         tempEntity->posX.i.hi += 14;
@@ -358,7 +362,8 @@ void EntitySwordLord(Entity* self) {
                     tempEntity =
                         AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (tempEntity != NULL) {
-                        CreateEntityFromEntity(E_SWORD_LORD, self, tempEntity);
+                        OVL_EXPORT(CreateEntityFromEntity)
+                        (E_SWORD_LORD, self, tempEntity);
                         tempEntity->params = i + 1;
                         tempEntity->facingLeft = self->facingLeft;
                         tempEntity->step = 7;

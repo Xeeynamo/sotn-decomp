@@ -37,7 +37,7 @@ void EntityFleaRider(Entity* self) {
     case 1:
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_FLEA_RIDER, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_FLEA_RIDER, self, entity);
             self->ext.fleaRider.entity = entity;
             entity->step = 8;
             self->ext.fleaRider.unk85 = 1;
@@ -89,7 +89,7 @@ void EntityFleaRider(Entity* self) {
         for (i = 0; i < FleaRiderCount; i++) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_FLEA_RIDER, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)(E_FLEA_RIDER, self, entity);
                 entity->posX.i.hi += (OVL_EXPORT(Random)() & 0x3F) - 32;
                 entity->posY.i.hi += (OVL_EXPORT(Random)() & 0x3F) - 32;
                 entity->step = 5;
@@ -105,7 +105,7 @@ void EntityFleaRider(Entity* self) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
                 DestroyEntity(entity);
-                CreateEntityFromEntity(E_EXPLOSION, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
                 entity->params = 1;
             }
             self->ext.fleaRider.unk85 = 0;

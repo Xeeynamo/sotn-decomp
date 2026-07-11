@@ -285,7 +285,7 @@ void func_us_801B5FB8(Entity* self) {
         }
         tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (tempEntity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, tempEntity);
             tempEntity->posY.i.hi += 0x20;
             tempEntity->params = 0x13;
             tempEntity->params += 0xAA00;
@@ -293,7 +293,8 @@ void func_us_801B5FB8(Entity* self) {
         for (i = 0; i < 8; i++) {
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, tempEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_INTENSE_EXPLOSION, self, tempEntity);
                 tempEntity->posX.i.hi += 0xF - (OVL_EXPORT(Random)() & 0x1F);
                 tempEntity->posY.i.hi += 0xF - (OVL_EXPORT(Random)() & 0x1F);
                 tempEntity->params = 0x10;
@@ -545,7 +546,7 @@ void func_us_801B68EC(Entity* self) {
         }
         tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (tempEntity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, tempEntity);
             tempEntity->posY.i.hi += 0x20;
             tempEntity->params = 0x13;
             tempEntity->params += 0xAA00;
@@ -553,7 +554,8 @@ void func_us_801B68EC(Entity* self) {
         for (i = 0; i < 8; i++) {
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, tempEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_INTENSE_EXPLOSION, self, tempEntity);
                 tempEntity->posX.i.hi += 0xF - (OVL_EXPORT(Random)() & 0x1F);
                 tempEntity->posY.i.hi += (OVL_EXPORT(Random)() & 0x1F);
                 tempEntity->params = 0x10;

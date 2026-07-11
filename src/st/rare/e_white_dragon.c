@@ -634,8 +634,8 @@ void EntityWhiteDragon(Entity* self) {
             if (entity != NULL && self->ext.whiteDragon.unk96) {
                 self->ext.whiteDragon.unk96--;
                 DestroyEntity(entity);
-                CreateEntityFromEntity(
-                    E_WHITE_DRAGON_FLAME_BREATH, self + SEGMENT_COUNT, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_WHITE_DRAGON_FLAME_BREATH, self + SEGMENT_COUNT, entity);
                 entity->ext.whiteDragon.entity = self + SEGMENT_COUNT;
                 entity->facingLeft = self->facingLeft;
                 if (self->ext.whiteDragon.unk9F) {
@@ -746,8 +746,8 @@ void EntityWhiteDragon(Entity* self) {
                 entity = AllocEntity(
                     &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(
-                        E_EXPLOSION, self + SEGMENT_COUNT, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_EXPLOSION, self + SEGMENT_COUNT, entity);
                     entity->params = EXPLOSION_FIREBALL;
                     entity->posX.i.hi +=
                         (s16)(OVL_EXPORT(Random)() & 0x1F) - 0x10;

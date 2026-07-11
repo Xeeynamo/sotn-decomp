@@ -32,7 +32,7 @@ void EntityPhantomSkull(Entity* self) {
         PlaySfxPositional(SFX_GHOST_ENEMY_HOWL);
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
             entity->params = 2;
         }
         DestroyEntity(self);
@@ -82,7 +82,8 @@ void EntityPhantomSkull(Entity* self) {
             self->ext.phantom_skull.timer = 0;
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_PHANTOM_SKULL_TRAIL, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_PHANTOM_SKULL_TRAIL, self, entity);
                 entity->facingLeft = self->facingLeft;
             }
         }

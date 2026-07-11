@@ -56,8 +56,8 @@ void EntityDeathCutsceneManager(Entity* self) {
                 if (newEntity == NULL) {
                     break;
                 }
-                CreateEntityFromEntity(
-                    E_ID(DEATH_STOLEN_ITEM), otherEnt, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_ID(DEATH_STOLEN_ITEM), otherEnt, newEntity);
                 newEntity->params = localVar;
             }
             g_Player.padSim = PAD_SIM_UNK10000;

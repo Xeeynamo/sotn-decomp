@@ -100,7 +100,7 @@ void EntityLargeSlime(Entity* self) {
         self->ext.slime.unk84 = prevPrim;
 
         child = self + 1;
-        CreateEntityFromEntity(E_UNK_4B, self, child);
+        OVL_EXPORT(CreateEntityFromEntity)(E_UNK_4B, self, child);
         child->posX.i.hi += 0x40;
 #ifdef VERSION_US
         // BUG: likely unintended and seems removed on PSP side
@@ -719,7 +719,7 @@ void EntitySlime(Entity* self) {
         }
 
         child = self + 1;
-        CreateEntityFromEntity(E_UNK_4D, self, child);
+        OVL_EXPORT(CreateEntityFromEntity)(E_UNK_4D, self, child);
         child->posX.i.hi += 0x18;
 #ifdef VERSION_US
         // BUG: likely unintended and seems removed on PSP side

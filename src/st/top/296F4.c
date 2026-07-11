@@ -36,7 +36,8 @@ void EntityStairSwitch(Entity* self) {
             g_api.PlaySfx(SFX_WALL_DEBRIS_B);
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_STAIR_SWITCH, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_STAIR_SWITCH, self, entity);
                 entity->params = 1;
             }
             self->step++;
@@ -81,7 +82,7 @@ void EntityStairSwitch(Entity* self) {
             g_api.PlaySfx(SFX_EXPLODE_FAST_A);
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
                 entity->params = 0x11;
             }
             DestroyEntity(self);
@@ -354,7 +355,7 @@ void EntityBreakableWall(Entity* self) {
         self->animCurFrame++;
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
             entity->params = 0x13;
             entity->zPriority = self->zPriority + 1;
         }

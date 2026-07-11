@@ -105,7 +105,7 @@ void EntityBossFightManager(Entity* self) {
         if (entity == NULL) {
             return;
         }
-        CreateEntityFromEntity(E_ID(LIFE_UP_SPAWN), self, entity);
+        OVL_EXPORT(CreateEntityFromEntity)(E_ID(LIFE_UP_SPAWN), self, entity);
         entity->posX.i.hi = xPos;
         entity->posY.i.hi = newEntY;
         entity->params = 5;

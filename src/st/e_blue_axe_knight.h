@@ -206,7 +206,7 @@ static s32 func_us_801CA51C(Entity* axeKnight) {
     case 16:
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_UNK_ENTITY, axeKnight, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_UNK_ENTITY, axeKnight, entity);
         }
         PlaySfxPositional(SFX_FAST_STUTTER_EXPLODE);
         axeKnight->step_s++;
@@ -267,7 +267,8 @@ static s32 func_us_801CA51C(Entity* axeKnight) {
         if (!(g_Timer % 5)) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_INTENSE_EXPLOSION, axeKnight, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_INTENSE_EXPLOSION, axeKnight, entity);
                 entity->posX.i.hi += (OVL_EXPORT(Random)() & 0x1F) - 0x10;
                 entity->posY.i.hi += (OVL_EXPORT(Random)() & 0x1F) - 0x10;
             }
@@ -289,7 +290,8 @@ static s32 func_us_801CA51C(Entity* axeKnight) {
         if (!(g_Timer % 8)) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, axeKnight, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_EXPLOSION, axeKnight, entity);
                 entity->posX.i.hi += (OVL_EXPORT(Random)() & 0xF) - 8;
                 entity->posY.i.hi += (OVL_EXPORT(Random)() & 0x1F);
                 entity->params = 1;
@@ -352,7 +354,8 @@ void EntityAxeKnightBlue(Entity* self) {
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
             for (i = 0; i < 2; i++) {
-                CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_EXPLOSION, self, newEntity);
                 if (self->facingLeft) {
                     newEntity->posX.i.hi += 12;
                 } else {
@@ -389,7 +392,7 @@ void EntityAxeKnightBlue(Entity* self) {
         self->ext.axeknight.unk7D = 1;
         self->ext.axeknight.unk82 = 512;
         newEntity = self + 1;
-        CreateEntityFromEntity(E_AXE_KNIGHT_AXE_2, self, newEntity);
+        OVL_EXPORT(CreateEntityFromEntity)(E_AXE_KNIGHT_AXE_2, self, newEntity);
         break;
 
     case AXE_KNIGHT_IDLE:
@@ -686,7 +689,8 @@ void EntityAxeKnightBlue(Entity* self) {
             if ((temp & 7) == 0) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_EXPLOSION, self, newEntity);
                     temp >>= 3;
                     newEntity->params = 2;
                     newEntity->posX.i.hi += dead_particle_pos[temp][0];

@@ -268,7 +268,8 @@ void EntitySalome(Entity* self) {
                 PlaySfxPositional(SFX_SALOME_MAGIC_ATTACK);
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_SALOME_MAGIC_ORB, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_SALOME_MAGIC_ORB, self, entity);
                     if (self->facingLeft) {
                         entity->posX.i.hi += 0x1C;
                     } else {
@@ -319,10 +320,12 @@ void EntitySalome(Entity* self) {
                 if (entity != NULL) {
                     if (self->ext.salome.thrownObject) {
                         PlaySfxPositional(SFX_SALOME_MEOW_SHORT);
-                        CreateEntityFromEntity(E_SALOME_CAT, self, entity);
+                        OVL_EXPORT(CreateEntityFromEntity)
+                        (E_SALOME_CAT, self, entity);
                     } else {
                         PlaySfxPositional(SFX_SALOME_ATTACK);
-                        CreateEntityFromEntity(E_SALOME_SKULL, self, entity);
+                        OVL_EXPORT(CreateEntityFromEntity)
+                        (E_SALOME_SKULL, self, entity);
                     }
 
                     entity->zPriority = self->zPriority + 1;
@@ -503,7 +506,7 @@ void EntitySalomeSkull(Entity* self) {
     if (self->flags & FLAG_DEAD) {
         entity = AllocEntity(&g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
             entity->params = EXPLOSION_FIREBALL;
         }
         DestroyEntity(self);
@@ -706,7 +709,8 @@ void EntitySalomeCat(Entity* self) {
                         entity = AllocEntity(
                             &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
                         if (entity != NULL) {
-                            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+                            OVL_EXPORT(CreateEntityFromEntity)
+                            (E_EXPLOSION, self, entity);
                             entity->params = EXPLOSION_FIREBALL;
                         }
                         DestroyEntity(self);

@@ -139,8 +139,8 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
                 entity = AllocEntity(
                     &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(
-                        E_ID(BREAKABLE_DEBRIS), self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID(BREAKABLE_DEBRIS), self, entity);
                     entity->posY.i.hi = posY;
                     entity->params = debrisOffsetsY[debrisIndex];
                     entity->facingLeft = self->facingLeft;
@@ -149,7 +149,8 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
                 entity = AllocEntity(
                     &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_EXPLOSION, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_EXPLOSION, self, entity);
                     entity->posY.i.hi = posY;
                     entity->params = EXPLOSION_SMALL;
                 }
@@ -170,7 +171,7 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
             g_api.PlaySfx(SFX_GLASS_BREAK_E);
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_HEART_DROP, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)(E_HEART_DROP, self, entity);
                 entity->params = 0x28;
             }
             PreventEntityFromRespawning(self);
@@ -180,7 +181,7 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
             g_api.PlaySfx(SFX_GLASS_BREAK_E);
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_HEART_DROP, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)(E_HEART_DROP, self, entity);
                 entity->params = 0x29;
             }
             PreventEntityFromRespawning(self);

@@ -454,7 +454,8 @@ void EntityAxeKnight(Entity* self) {
             if (!(temp & 7)) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_EXPLOSION, self, newEntity);
                     temp >>= 3;
                     newEntity->params = 2;
                     newEntity->posX.i.hi += dead_particle_pos[temp][0];

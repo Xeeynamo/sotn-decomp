@@ -40,7 +40,7 @@ void EntityToad(Entity* self) {
         }
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
             entity->params = 1;
         }
 
@@ -176,7 +176,7 @@ void EntityToad(Entity* self) {
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
                 // Spawn the toad tongue
-                CreateEntityFromEntity(E_TOAD, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)(E_TOAD, self, entity);
                 entity->facingLeft = self->facingLeft;
                 entity->params = 1;
                 entity->zPriority = self->zPriority + 1;

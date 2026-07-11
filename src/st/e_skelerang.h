@@ -77,15 +77,15 @@ void EntitySkelerang(Entity* self) {
     switch (self->step) {
     case SKELERANG_INIT:
         InitializeEntity(g_EInitSkelerang);
-        CreateEntityFromEntity(E_SKELERANG_UNKNOWN, self, self + 1);
+        OVL_EXPORT(CreateEntityFromEntity)(E_SKELERANG_UNKNOWN, self, self + 1);
 
         entity = self + 2;
-        CreateEntityFromEntity(E_SKELERANG_BOOMERANG, self, entity);
+        OVL_EXPORT(CreateEntityFromEntity)(E_SKELERANG_BOOMERANG, self, entity);
         entity->params = 0;
         entity->facingLeft = self->params;
 
         entity = self + 3;
-        CreateEntityFromEntity(E_SKELERANG_BOOMERANG, self, entity);
+        OVL_EXPORT(CreateEntityFromEntity)(E_SKELERANG_BOOMERANG, self, entity);
         entity->params = 1;
         entity->facingLeft = self->params;
 
@@ -218,7 +218,7 @@ void EntitySkelerang(Entity* self) {
     case SKELERANG_DEATH_COWER:
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
             entity->params = 2;
             entity->posY.i.hi += 24;
         }
@@ -254,7 +254,7 @@ void EntitySkelerang(Entity* self) {
 
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
             entity->params = 2;
         }
         DestroyEntity(self);
@@ -267,7 +267,7 @@ void EntitySkelerang(Entity* self) {
         if (!--self->ext.skelerang.unk84) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
                 index = self->params;
                 if (self->facingLeft) {
                     entity->posX.i.hi -= positions[index].x;
@@ -362,7 +362,7 @@ void EntitySkelerangBoomerang(Entity* self) {
     case BOOMERANG_DESTROY:
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
             entity->params = 1;
         }
         DestroyEntity(self);

@@ -24,10 +24,10 @@ void EntitySkullLord(Entity* self) {
         InitializeEntity(g_EInitSkullLord);
         self->hitboxOffX = 4;
         entity = self + 1;
-        CreateEntityFromEntity(E_SKULL_LORD_OUTLINE, self, entity);
+        OVL_EXPORT(CreateEntityFromEntity)(E_SKULL_LORD_OUTLINE, self, entity);
         entity->zPriority = self->zPriority - 4;
         entity = self + 2;
-        CreateEntityFromEntity(E_SKULL_LORD_FLAMES, self, entity);
+        OVL_EXPORT(CreateEntityFromEntity)(E_SKULL_LORD_FLAMES, self, entity);
         entity->zPriority = self->zPriority - 2;
         break;
 
@@ -168,7 +168,8 @@ void EntitySkullLord(Entity* self) {
             for (i = 0; i < 24; i++) {
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_SKULL_LORD_PIECES, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_SKULL_LORD_PIECES, self, entity);
                     angle = (OVL_EXPORT(Random)() & 0x7F) * 16;
                     scale = (OVL_EXPORT(Random)() & 0x1F) + 8;
                     entity->ext.skullLord.unk82 = angle;
@@ -319,7 +320,8 @@ void EntitySkullLordOutline(Entity* self) {
         if ((self->ext.skullLord.timer & 0xF) == 0) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_SKULL_LORD_OUTLINE, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_SKULL_LORD_OUTLINE, self, entity);
                 entity->params = self->animCurFrame;
                 entity->facingLeft = self->facingLeft;
                 entity->scaleX = self->scaleX;
@@ -428,7 +430,7 @@ void EntitySkullLordFlames(Entity* self) {
     case 2:
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
             entity->zPriority = self->zPriority;
             entity->params = 2;
         }

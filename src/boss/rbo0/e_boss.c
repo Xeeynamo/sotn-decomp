@@ -90,7 +90,8 @@ void OVL_EXPORT(EntityBoss)(Entity* self) {
     case 5:
         entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_ID(LIFE_UP_SPAWN), self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)
+            (E_ID(LIFE_UP_SPAWN), self, entity);
             entity->posX.i.hi = 0x100 - g_Tilemap.scrollX.i.hi;
             entity->posY.i.hi = 0x80 - g_Tilemap.scrollY.i.hi;
             entity->params = 2;

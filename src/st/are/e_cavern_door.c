@@ -202,7 +202,8 @@ void EntityCavernDoor(Entity* self) {
                 entity = AllocEntity(
                     &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_INTENSE_EXPLOSION, self, entity);
                     entity->posY.i.hi = 0xBC;
                     entity->posX.i.hi += (OVL_EXPORT(Random)() & 0xF) - 8;
                     entity->params = 0x10;

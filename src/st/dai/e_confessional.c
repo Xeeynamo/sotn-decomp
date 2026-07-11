@@ -270,7 +270,8 @@ void EntityConfessionalGhost(Entity* self) {
                 !(OVL_EXPORT(Random)() & 3)) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_EQUIP_ITEM_DROP, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_EQUIP_ITEM_DROP, self, entity);
                     entity->params = ITEM_GRAPE_JUICE;
                 }
             }
@@ -400,7 +401,7 @@ void EntityConfessionalBlades(Entity* self) {
     if (self->flags & FLAG_DEAD) {
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
             entity->params = EXPLOSION_FIREBALL;
         }
         DestroyEntity(self);
@@ -423,8 +424,8 @@ void EntityConfessionalBlades(Entity* self) {
         for (count = 0; count < 4; count++) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(
-                    E_ID(CONFESSIONAL_BLADE_DEBRIS), self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_ID(CONFESSIONAL_BLADE_DEBRIS), self, entity);
                 if (params == 4) {
                     entity->params = 1;
                 }

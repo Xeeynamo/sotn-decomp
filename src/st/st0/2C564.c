@@ -523,7 +523,8 @@ void EntityDracula(Entity* self) {
             if (self->pose == 2 && !self->poseTimer) {
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_ID(DRACULA_UNK1F), self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID(DRACULA_UNK1F), self, entity);
                     entity->facingLeft = self->facingLeft;
                     entity->posX.i.hi -= 8;
                     entity->posY.i.hi -= 24;
@@ -637,7 +638,8 @@ void EntityDracula(Entity* self) {
             for (i = 0; i < 3; i++) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_ID(DRACULA_UNK1B), self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID(DRACULA_UNK1B), self, entity);
                     entity->facingLeft = self->facingLeft;
                     entity->zPriority = self->zPriority + 1;
                     entity->params = i;
@@ -674,7 +676,8 @@ void EntityDracula(Entity* self) {
             if (!--self->ext.dracula.unk8C) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_ID(DRACULA_UNK1C), self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID(DRACULA_UNK1C), self, entity);
                     i = self->step_s - 1;
                     entity->facingLeft = self->facingLeft;
                     if (self->facingLeft) {
@@ -1050,7 +1053,8 @@ void EntityDraculaMeteorball(Entity* entity) {
         if (!(g_Timer & 3)) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != 0) {
-                CreateEntityFromEntity(E_ID(DRACULA_METEOR), entity, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_ID(DRACULA_METEOR), entity, newEntity);
                 newEntity->zPriority = entity->zPriority + 1;
                 randomPosXYIndex = (OVL_EXPORT(Random)() & 3);
                 newEntity->posX.i.hi += D_80180A60[randomPosXYIndex].x;
@@ -1123,8 +1127,8 @@ void EntityDraculaGlass(Entity* entity) {
                 glassShardEntity =
                     AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (glassShardEntity != 0) {
-                    CreateEntityFromEntity(
-                        E_ID(DRACULA_UNK1F), entity, glassShardEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID(DRACULA_UNK1F), entity, glassShardEntity);
                     glassShardEntity->params = 1;
                 }
             }

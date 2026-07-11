@@ -218,21 +218,24 @@ void EntityForegroundTree(Entity* self) {
                     ent->opacity = 0x60;
                 } else if (self->ext.utimer.t == 7) {
                     ent2 = AllocEntity(&g_Entities[192], &g_Entities[256]);
-                    CreateEntityFromEntity(E_BACKGROUND_BLOCK, ent, ent2);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_BACKGROUND_BLOCK, ent, ent2);
                     ent2->params = 0x12;
                     ent2->posY.i.hi -= 16;
                     ent2->unk68 = var_s4;
                     ent2->opacity = 0x40;
                 } else if (self->ext.utimer.t == 10) {
                     ent2 = AllocEntity(&g_Entities[192], &g_Entities[256]);
-                    CreateEntityFromEntity(E_BACKGROUND_BLOCK, ent, ent2);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_BACKGROUND_BLOCK, ent, ent2);
                     ent2->params = 0x13;
                     ent2->posY.i.hi += 48;
                     ent2->unk68 = var_s4;
                     ent2->opacity = 0x40;
                 } else if (self->ext.utimer.t == 15) {
                     ent2 = AllocEntity(&g_Entities[192], &g_Entities[256]);
-                    CreateEntityFromEntity(E_BACKGROUND_BLOCK, ent, ent2);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_BACKGROUND_BLOCK, ent, ent2);
                     ent2->params = 0x14;
                     ent2->posY.i.hi += 4;
                     ent2->unk68 = var_s4;

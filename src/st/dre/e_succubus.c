@@ -626,7 +626,8 @@ void EntitySuccubus(Entity* self) {
             if (!(self->ext.succubus.timer & 1)) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_ID(SUCCUBUS_PETAL), self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID(SUCCUBUS_PETAL), self, entity);
                     entity->facingLeft = self->facingLeft;
                     entity->zPriority = self->zPriority - 1;
                 }
@@ -819,7 +820,8 @@ void EntitySuccubus(Entity* self) {
             temp = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
 
             for (i = 0; i < 6; i++, entity++, clonesShootOrder++, posX += 64) {
-                CreateEntityFromEntity(E_ID(SUCCUBUS_CLONE), self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_ID(SUCCUBUS_CLONE), self, entity);
                 // Giving each clone a pointer to the real Succubus
                 entity->ext.succubus.real = self;
                 if (posX == temp) {
@@ -911,8 +913,8 @@ void EntitySuccubus(Entity* self) {
                 for (i = 0; i < 2; i++) {
                     entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                     if (entity != NULL) {
-                        CreateEntityFromEntity(
-                            E_ID(SUCCUBUS_PINK_BALL_PROJECTILE), self, entity);
+                        OVL_EXPORT(CreateEntityFromEntity)
+                        (E_ID(SUCCUBUS_PINK_BALL_PROJECTILE), self, entity);
                         entity->params = i;
                         if (i != 0) {
                             entity->posX.i.hi -= 2;
@@ -949,8 +951,8 @@ void EntitySuccubus(Entity* self) {
             entity = &g_Entities[96];
             for (facingLeft = 0; facingLeft < 2; facingLeft++) {
                 for (i = 0; i < 4; i++, entity += 2) {
-                    CreateEntityFromEntity(
-                        E_ID(SUCCUBUS_WING_SPIKE), self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID(SUCCUBUS_WING_SPIKE), self, entity);
                     entity->params = i;
                     entity->zPriority = self->zPriority;
                     entity->ext.succubus.real = self;
@@ -1075,7 +1077,7 @@ void EntitySuccubusPetal(Entity* self) {
     if (self->flags & FLAG_DEAD) {
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, newEntity);
             newEntity->params = 0;
         }
         DestroyEntity(self);
@@ -1224,8 +1226,8 @@ void EntitySuccubusClone(Entity* self) {
             for (i = 0; i < 2; i++) {
                 newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(
-                        E_ID(SUCCUBUS_PINK_BALL_PROJECTILE), self, newEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID(SUCCUBUS_PINK_BALL_PROJECTILE), self, newEntity);
                     newEntity->params = i;
                     if (i != 0) {
                         newEntity->posX.i.hi -= 2;
@@ -1364,7 +1366,8 @@ void EntitySuccubusWingSpike(Entity* self) {
         self->drawFlags |= ENTITY_SCALEX;
         self->scaleX = 0x100;
         entity = self + 1;
-        CreateEntityFromEntity(E_ID(SUCCUBUS_WING_SPIKE_TIP), self, entity);
+        OVL_EXPORT(CreateEntityFromEntity)
+        (E_ID(SUCCUBUS_WING_SPIKE_TIP), self, entity);
         entity->facingLeft = self->facingLeft;
         entity->params = self->params;
         entity->rotate = self->rotate;

@@ -20,7 +20,8 @@ void EntityBloodSkeleElevButton(Entity* self) {
         self->hitboxOffY = -22;
         self->hitboxState = 1;
         newEntity = &self[-1];
-        CreateEntityFromEntity(E_ID(BLOOD_SKELETON), self, newEntity);
+        OVL_EXPORT(CreateEntityFromEntity)
+        (E_ID(BLOOD_SKELETON), self, newEntity);
         newEntity->posY.i.hi = 344 - g_Tilemap.scrollY.i.hi;
 
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);

@@ -95,7 +95,8 @@ void EntitySecretAreaDoor(Entity* self) {
             self->posX.val -= FIX(0.5);
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_INTENSE_EXPLOSION, self, entity);
                 entity->params = 0x10;
                 entity->posY.i.hi += 0x20;
                 entity->posX.i.hi -= (OVL_EXPORT(Random)() & 7);
@@ -120,7 +121,8 @@ void EntitySecretAreaDoor(Entity* self) {
             self->posX.val += FIX(0.5);
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_INTENSE_EXPLOSION, self, entity);
                 entity->params = 0x10;
                 entity->posY.i.hi += 0x20;
                 entity->posX.i.hi -= (OVL_EXPORT(Random)() & 7);

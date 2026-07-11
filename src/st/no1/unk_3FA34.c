@@ -213,8 +213,8 @@ void func_us_801BFB40(Entity* self) {
                         tempEntity =
                             AllocEntity(&g_Entities[64], &g_Entities[256]);
                         if (tempEntity != NULL) {
-                            CreateEntityFromEntity(
-                                E_INTENSE_EXPLOSION, self, tempEntity);
+                            OVL_EXPORT(CreateEntityFromEntity)
+                            (E_INTENSE_EXPLOSION, self, tempEntity);
                             tempEntity->params = 0x10;
                         }
                         DestroyEntity(self);
@@ -225,8 +225,8 @@ void func_us_801BFB40(Entity* self) {
                         tempEntity =
                             AllocEntity(&g_Entities[64], &g_Entities[256]);
                         if (tempEntity != NULL) {
-                            CreateEntityFromEntity(
-                                E_ID(ID_2F), self, tempEntity);
+                            OVL_EXPORT(CreateEntityFromEntity)
+                            (E_ID(ID_2F), self, tempEntity);
                             tempEntity->params = i;
                         }
                     }
@@ -236,8 +236,8 @@ void func_us_801BFB40(Entity* self) {
                             tempEntity =
                                 AllocEntity(&g_Entities[64], &g_Entities[256]);
                             if (tempEntity != NULL) {
-                                CreateEntityFromEntity(
-                                    E_ID(ID_31), self, tempEntity);
+                                OVL_EXPORT(CreateEntityFromEntity)
+                                (E_ID(ID_31), self, tempEntity);
                                 tempEntity->params = i + 1;
                             }
                         }
@@ -411,8 +411,8 @@ void func_us_801C01F0(Entity* self) {
                         tempEntity =
                             AllocEntity(&g_Entities[64], &g_Entities[256]);
                         if (tempEntity != NULL) {
-                            CreateEntityFromEntity(
-                                E_INTENSE_EXPLOSION, self, tempEntity);
+                            OVL_EXPORT(CreateEntityFromEntity)
+                            (E_INTENSE_EXPLOSION, self, tempEntity);
                             tempEntity->params = 0x10;
                         }
                     }
@@ -454,11 +454,13 @@ void func_us_801C05DC(Entity* self) {
             self->step++;
             tempEntity = AllocEntity(&g_Entities[64], &g_Entities[256]);
             if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_ID(ID_30), self, tempEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_ID(ID_30), self, tempEntity);
             }
             tempEntity = AllocEntity(&g_Entities[64], &g_Entities[256]);
             if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_ID(ID_30), self, tempEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_ID(ID_30), self, tempEntity);
                 tempEntity->posY.i.hi -= 0x40;
             }
         }
@@ -479,12 +481,14 @@ void func_us_801C05DC(Entity* self) {
         if (self->poseTimer == 0 && self->pose > 1) {
             tempEntity = AllocEntity(&g_Entities[64], &g_Entities[256]);
             if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_ID(ID_30), self, tempEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_ID(ID_30), self, tempEntity);
                 tempEntity->posY.i.hi -= 0x30 - (max * 16);
             }
             tempEntity = AllocEntity(&g_Entities[64], &g_Entities[256]);
             if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_ID(ID_31), self, tempEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_ID(ID_31), self, tempEntity);
                 tempEntity->posX.i.hi += 7;
                 tempEntity->posY.i.hi -= 0x38 - (max * 16);
             }
@@ -498,7 +502,8 @@ void func_us_801C05DC(Entity* self) {
             if ((g_Timer % 8) == 0) {
                 tempEntity = AllocEntity(&g_Entities[64], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromEntity(E_ID(ID_2F), self, tempEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID(ID_2F), self, tempEntity);
                     tempEntity->posY.i.hi -= 0x3D;
                     tempEntity->posX.i.hi -= (OVL_EXPORT(Random)() & 3) * 8 - 4;
                 }
@@ -506,8 +511,8 @@ void func_us_801C05DC(Entity* self) {
             if (g_Timer % 24 == 0) {
                 tempEntity = AllocEntity(&g_Entities[64], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromEntity(
-                        E_INTENSE_EXPLOSION, self, tempEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_INTENSE_EXPLOSION, self, tempEntity);
                     tempEntity->posX.i.hi -= 4;
                     tempEntity->params = 0x10;
                 }
@@ -515,7 +520,8 @@ void func_us_801C05DC(Entity* self) {
             if (g_Timer % 32 == 0) {
                 tempEntity = AllocEntity(&g_Entities[64], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_EXPLOSION, self, tempEntity);
                     tempEntity->params = 0x11;
                 }
             }

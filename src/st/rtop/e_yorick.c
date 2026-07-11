@@ -34,7 +34,7 @@ void EntityYorick(Entity* self) {
         if (UnkCollisionFunc3(D_us_80181468) & 1) {
             self->ext.yorick.unk84 = g_Tilemap.scrollX.i.hi + self->posX.i.hi;
             entity = self + 1;
-            CreateEntityFromEntity(E_YORICK_SKULL, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_YORICK_SKULL, self, entity);
             entity->ext.yorickSkull.unk84 = self->ext.yorick.unk84;
             entity->posX.i.hi += 4;
             self->step++;
@@ -192,7 +192,7 @@ void EntityYorickSkull(Entity* self) {
     if (self->flags & FLAG_DEAD) {
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
             entity->params = 0;
         }
         PlaySfxPositional(SFX_EXPLODE_E);

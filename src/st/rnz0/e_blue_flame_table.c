@@ -34,7 +34,8 @@ void EntityRelicContainer(Entity* self) {
             self->hitboxOffY = 10;
             self->hitboxState = 2;
             newEntity = self + 1;
-            CreateEntityFromEntity(E_ID(RELIC_CONTAINER), self, newEntity);
+            OVL_EXPORT(CreateEntityFromEntity)
+            (E_ID(RELIC_CONTAINER), self, newEntity);
             newEntity->params = 0x100;
         }
     case 1:
@@ -51,12 +52,12 @@ void EntityRelicContainer(Entity* self) {
     case 2:
 
         newEntity = self + 1;
-        CreateEntityFromEntity(E_HEART_DROP, self, newEntity);
+        OVL_EXPORT(CreateEntityFromEntity)(E_HEART_DROP, self, newEntity);
         newEntity->params = self->params;
 
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, newEntity);
             newEntity->posY.i.hi -= 8;
             newEntity->params = EXPLOSION_SMALL_MULTIPLE;
         }
@@ -93,7 +94,7 @@ void EntityBlueFlameTable(Entity* self) {
         break;
     case 2:
         newEntity = &self[1];
-        CreateEntityFromEntity(E_HEART_DROP, self, newEntity);
+        OVL_EXPORT(CreateEntityFromEntity)(E_HEART_DROP, self, newEntity);
         newEntity->params = self->params;
         self->step++;
     case 3:

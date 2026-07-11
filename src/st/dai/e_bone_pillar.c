@@ -165,7 +165,8 @@ void EntityBonePillarSkull(Entity* self) {
         if ((self->pose == 17) && (tempVar & 0x80)) {
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_BONE_PILLAR_FIRE, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_BONE_PILLAR_FIRE, self, entity);
                 entity->facingLeft = self->params;
                 if (self->params) {
                     entity->posY.i.hi -= 14;
@@ -185,7 +186,8 @@ void EntityBonePillarSkull(Entity* self) {
         for (i = 0; i < 2; i++) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_BONE_PILLAR_PARTS, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_BONE_PILLAR_PARTS, self, entity);
                 entity->params = i + tempVar;
                 entity->posX.i.hi += *ptr++;
                 entity->posY.i.hi += *ptr++;
@@ -193,7 +195,7 @@ void EntityBonePillarSkull(Entity* self) {
         }
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
             entity->params = EXPLOSION_SMALL_MULTIPLE;
         }
         if (!self->params) {
@@ -263,7 +265,7 @@ void EntityBonePillarSpikeBall(Entity* self) {
         PlaySfxPositional(SFX_QUICK_STUTTER_EXPLODE_B);
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
             entity->params = EXPLOSION_BIG;
         }
         DestroyEntity(self);

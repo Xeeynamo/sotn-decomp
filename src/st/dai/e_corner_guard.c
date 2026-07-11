@@ -363,7 +363,7 @@ void EntityCornerGuard(Entity* self) {
             self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA | FLAG_UNK_00200000;
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
                 entity->params = EXPLOSION_SMALL_MULTIPLE;
             }
             self->animCurFrame = 0;

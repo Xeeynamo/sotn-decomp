@@ -237,7 +237,7 @@ void EntityCloakedKnight(Entity* self) {
         PlaySfxPositional(SFX_FM_THUNDER_EXPLODE);
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
             entity->params = EXPLOSION_SMALL_MULTIPLE;
         }
         entity = self + 2;
@@ -268,7 +268,8 @@ void EntityCloakedKnight(Entity* self) {
             // aura
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_CLOAKED_KNIGHT_AURA, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_CLOAKED_KNIGHT_AURA, self, entity);
                 entity->ext.cloakedKnightAura.parent = self;
                 entity->zPriority = self->zPriority + 1;
             }

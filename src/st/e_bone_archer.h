@@ -282,8 +282,8 @@ void EntityBoneArcher(Entity* self) {
                 tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (tempEntity != NULL) {
                     PlaySfxPositional(SFX_ARROW_SHOT_C);
-                    CreateEntityFromEntity(
-                        E_BONE_ARCHER_ARROW, self, tempEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_BONE_ARCHER_ARROW, self, tempEntity);
                     tempEntity->facingLeft = self->facingLeft;
                     if (tempVar != 0) {
                         var_s2 = &D_us_80182CD4[0];
@@ -307,7 +307,7 @@ void EntityBoneArcher(Entity* self) {
             if (tempEntity == NULL) {
                 break;
             }
-            CreateEntityFromEntity(E_BONE_ARCHER, self, tempEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_BONE_ARCHER, self, tempEntity);
             tempEntity->facingLeft = self->facingLeft;
             tempEntity->params = i + 1;
             if (tempVar != 0) {
@@ -322,7 +322,7 @@ void EntityBoneArcher(Entity* self) {
         tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (tempEntity != NULL) {
             PlaySfxPositional(SFX_SKELETON_DEATH_B);
-            CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, tempEntity);
             tempEntity->params = 2;
         }
         DestroyEntity(self);
@@ -334,7 +334,8 @@ void EntityBoneArcher(Entity* self) {
         if (!--self->ext.boneArcher.unk88) {
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_EXPLOSION, self, tempEntity);
                 tempEntity->params = 0;
             }
             DestroyEntity(self);
@@ -397,8 +398,8 @@ void EntityBoneArcherArrow(Entity* self) {
             for (i = 0; i < 2; i++) {
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromEntity(
-                        E_BONE_ARCHER_ARROW, self, tempEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_BONE_ARCHER_ARROW, self, tempEntity);
                     tempEntity->params = i + 1;
                 }
             }

@@ -382,7 +382,8 @@ void EntityDraculaFinalForm(Entity* self) {
         case 1:
             part = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (part != NULL) {
-                CreateEntityFromEntity(E_ID(DRACULA_UNK21), self, part);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_ID(DRACULA_UNK21), self, part);
 #ifndef VERSION_PSP
                 // Appears to be a bug on PSX.
                 // Possibly supposed to be assigning from self
@@ -422,7 +423,8 @@ void EntityDraculaFinalForm(Entity* self) {
             part = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (part != NULL) {
                 g_api.PlaySfx(SFX_FIREBALL_SHOT_A);
-                CreateEntityFromEntity(E_ID(DRACULA_UNK21), self, part);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_ID(DRACULA_UNK21), self, part);
                 part->posX.i.hi += xShift;
                 part->posY.i.hi += yShift;
                 part->rotate = *temp_s1;
@@ -465,7 +467,8 @@ void EntityDraculaFinalForm(Entity* self) {
                 part = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (part != NULL) {
                     g_api.PlaySfx(SFX_FIREBALL_SHOT_B);
-                    CreateEntityFromEntity(E_ID(DRACULA_FIREBALL), self, part);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID(DRACULA_FIREBALL), self, part);
                     part->posX.i.hi += *temp_s1;
                     part->zPriority = (self->zPriority + 1);
                 }
@@ -503,7 +506,8 @@ void EntityDraculaFinalForm(Entity* self) {
                 g_api.PlaySfx(SFX_UNK_ST0_856);
                 part = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (part != NULL) {
-                    CreateEntityFromEntity(E_ID(DRACULA_UNK2E), self, part);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID(DRACULA_UNK2E), self, part);
                     if (self->facingLeft) {
                         part->posX.i.hi += 40;
                     } else {
@@ -733,7 +737,7 @@ void EntityDraculaFinalForm(Entity* self) {
             part = AllocEntity(&g_Entities[224], &g_Entities[256]);
             temp_s1 = &D_80181108[self->ext.dracFinalForm.unk84 * 2];
             if (part != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, part);
+                OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, part);
                 part->params = 3;
                 part->zPriority = (self->zPriority + 1);
                 part->posX.i.hi += temp_s1[0];
@@ -870,7 +874,7 @@ void EntityDraculaRainAttack(Entity* self) {
     if (self->flags & FLAG_DEAD) {
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, newEntity);
             newEntity->params = 2;
         }
         DestroyEntity(self);
@@ -906,8 +910,8 @@ void EntityDraculaRainAttack(Entity* self) {
             for (i = 0; i < 4; i++) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(
-                        E_ID(DRACULA_FIREBALL), self, newEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID(DRACULA_FIREBALL), self, newEntity);
                     newEntity->posY.i.hi += 12;
                     newEntity->params = 1;
                 }

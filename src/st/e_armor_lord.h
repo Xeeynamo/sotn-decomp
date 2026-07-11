@@ -820,7 +820,7 @@ void EntityArmorLord(Entity* self) {
 #endif
         InitializeEntity(g_EInitArmorLord);
         tempEntity = self + 1;
-        CreateEntityFromEntity(E_ARMOR_LORD_UNK1, self, tempEntity);
+        OVL_EXPORT(CreateEntityFromEntity)(E_ARMOR_LORD_UNK1, self, tempEntity);
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         break;
 
@@ -936,8 +936,8 @@ void EntityArmorLord(Entity* self) {
             PlaySfxPositional(SFX_ARMOR_LORD_FIRE_ATTACK);
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
-                CreateEntityFromEntity(
-                    E_ARMOR_LORD_FIRE_WAVE, self, tempEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_ARMOR_LORD_FIRE_WAVE, self, tempEntity);
                 tempEntity->facingLeft = self->facingLeft;
                 tempEntity->pfnUpdate = EntityArmorLordFireWave;
                 tempEntity->step = 0;
@@ -970,7 +970,8 @@ void EntityArmorLord(Entity* self) {
             PlaySfxPositional(SFX_EXPLODE_FAST_B);
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, tempEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_INTENSE_EXPLOSION, self, tempEntity);
                 tempEntity->posX.i.hi += (OVL_EXPORT(Random)() & 0x1F) - 0x10;
                 tempEntity->posY.i.hi += (OVL_EXPORT(Random)() & 0x3F) - 0x10;
             }

@@ -15,7 +15,7 @@ void EntityGhostEnemy(Entity* self) {
         PlaySfxPositional(SFX_GHOST_ENEMY_HOWL);
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, newEntity);
             newEntity->params = 1;
         }
         DestroyEntity(self);
@@ -95,7 +95,7 @@ void EntityGhostEnemySpawner(Entity* self) {
 
         entity = AllocEntity(&g_Entities[160], &g_Entities[164]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_GHOST_ENEMY, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_GHOST_ENEMY, self, entity);
             entity->zPriority = 170;
             entity->posX.i.hi = xPos - g_Tilemap.scrollX.i.hi;
             entity->posY.i.hi = yPos - g_Tilemap.scrollY.i.hi;

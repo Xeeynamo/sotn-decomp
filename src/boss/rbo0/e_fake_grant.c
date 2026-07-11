@@ -219,7 +219,8 @@ void EntityFakeGrant(Entity* self) {
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
                 // BUG! additional arg
-                CreateEntityFromEntity(E_ID(VERTICAL_DAGGER), self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_ID(VERTICAL_DAGGER), self, entity);
             }
         }
         break;
@@ -314,8 +315,8 @@ void EntityFakeGrant(Entity* self) {
                 PlaySfxPositional(SFX_ARROW_SHOT_A);
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(
-                        E_ID(HORIZONTAL_DAGGER), self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID(HORIZONTAL_DAGGER), self, entity);
                     entity->facingLeft = self->facingLeft;
                 }
             }
@@ -328,8 +329,8 @@ void EntityFakeGrant(Entity* self) {
                 PlaySfxPositional(SFX_ARROW_SHOT_A);
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(
-                        E_ID(HORIZONTAL_DAGGER), self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID(HORIZONTAL_DAGGER), self, entity);
                     entity->facingLeft = self->facingLeft;
                 }
             }
@@ -402,7 +403,8 @@ void EntityFakeGrant(Entity* self) {
             if (!(g_Timer & 3)) {
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_ID(DEATH_FLAMES), self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID(DEATH_FLAMES), self, entity);
                     entity->zPriority = self->zPriority + 1;
                     entity->params = 8;
                     entity->posY.i.hi += 0xC;

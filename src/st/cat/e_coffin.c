@@ -74,7 +74,8 @@ void EntityCoffin(Entity* self) {
                 newEntity = AllocEntity(
                     &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(E_ID(COFFIN), self, newEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID(COFFIN), self, newEntity);
                     newEntity->step = BROKEN_COFFIN_PARTS;
                     newEntity->params = i;
                     newEntity->facingLeft = self->facingLeft;
@@ -86,7 +87,8 @@ void EntityCoffin(Entity* self) {
             newEntity =
                 AllocEntity(&g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_EXPLOSION, self, newEntity);
                 newEntity->params = ((self->zPriority + 2) << 8) + 0x11;
             }
 
@@ -160,8 +162,8 @@ void EntityCoffin(Entity* self) {
                 newEntity = AllocEntity(
                     &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(
-                        E_INTENSE_EXPLOSION, self, newEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_INTENSE_EXPLOSION, self, newEntity);
                     // params & 0xF0 to EntityIntenseExplosion uses the dust
                     // cloud palette
                     newEntity->params = 16;

@@ -177,7 +177,7 @@ void EntityFallingStairs(Entity* self) {
 
         // Spawn a long dust cloud
         if (entity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
             entity->params = 0x13;
             entity->params |= 0xC000;
         }
@@ -259,7 +259,8 @@ void EntityFallingStairs(Entity* self) {
 
                 // Spawn a short dust cloud
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_EXPLOSION, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_EXPLOSION, self, entity);
                     entity->params = 0x11;
                     entity->params |= 0xC000;
                 }
@@ -481,7 +482,8 @@ void EntityFallingStep(Entity* self) {
             if (scrolledY > 0x3C0) {
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_INTENSE_EXPLOSION, self, entity);
                     entity->params = 0x10;
                 }
                 DestroyEntity(self);

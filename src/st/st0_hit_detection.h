@@ -436,11 +436,11 @@ void OVL_EXPORT(HitDetection)(void) {
                     }
                     if (miscVar3 >= 0x80) {
                         miscVar3 -= 0x80;
-                        CreateEntityFromEntity(
-                            E_EQUIP_ITEM_DROP, entity, otherEntity);
+                        OVL_EXPORT(CreateEntityFromEntity)
+                        (E_EQUIP_ITEM_DROP, entity, otherEntity);
                     } else {
-                        CreateEntityFromEntity(
-                            E_PRIZE_DROP, entity, otherEntity);
+                        OVL_EXPORT(CreateEntityFromEntity)
+                        (E_PRIZE_DROP, entity, otherEntity);
                     }
                     otherEntity->params = miscVar3;
                     // item pops up in the air a bit when spawned

@@ -29,4 +29,4 @@ INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/create_entity", RNO0_UpdateRoomPo
 
 INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/create_entity", RNO0_CreateEntityFromCurrentEntity);
 
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/create_entity", CreateEntityFromEntity);
+INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/create_entity", RNO0_CreateEntityFromEntity);

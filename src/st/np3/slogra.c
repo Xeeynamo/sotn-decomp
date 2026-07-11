@@ -234,8 +234,8 @@ void EntitySlogra(Entity* self) {
                 PlaySfxPositional(SFX_FM_EXPLODE_SWISHES);
                 otherEnt = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (otherEnt != NULL) {
-                    CreateEntityFromEntity(
-                        E_ID(SLOGRA_SPEAR_PROJECTILE), self, otherEnt);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID(SLOGRA_SPEAR_PROJECTILE), self, otherEnt);
                     if (self->facingLeft) {
                         otherEnt->posX.i.hi += 68;
                     } else {
@@ -405,7 +405,8 @@ void EntitySlogra(Entity* self) {
             if ((g_Timer & 3) == 0) {
                 otherEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (otherEnt != NULL) {
-                    CreateEntityFromEntity(E_EXPLOSION, self, otherEnt);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_EXPLOSION, self, otherEnt);
                     otherEnt->posX.i.hi += (OVL_EXPORT(Random)() & 31) - 16;
                     otherEnt->posY.i.hi += (OVL_EXPORT(Random)() & 31) - 16;
                     otherEnt->zPriority = self->zPriority + 1;
@@ -420,7 +421,7 @@ void EntitySlogra(Entity* self) {
         case SLOGRA_DYING_END:
             otherEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (otherEnt != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, otherEnt);
+                OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, otherEnt);
                 otherEnt->posY.i.hi += 16;
                 otherEnt->params = 3;
             }
@@ -498,7 +499,7 @@ void EntitySlograSpearProjectile(Entity* self) {
     if (self->flags & FLAG_DEAD) {
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
             entity->params = 1;
         }
         DestroyEntity(self);

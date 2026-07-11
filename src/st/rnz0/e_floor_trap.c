@@ -55,7 +55,7 @@ void EntityFloorTrap(Entity* self) {
             // Create the wheel
             other = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (other != NULL) {
-                CreateEntityFromEntity(E_FLOORTRAP, self, other);
+                OVL_EXPORT(CreateEntityFromEntity)(E_FLOORTRAP, self, other);
                 other->params = PARAMS_IS_WHEEL;
                 other->ext.floorTrap.wheelParent = self;
                 other->zPriority = self->zPriority + 1;

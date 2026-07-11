@@ -63,7 +63,7 @@ void EntityBreakableCeilingSecret(Entity* self) {
         newEntity =
             AllocEntity(&g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
         if (newEntity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, newEntity);
             newEntity->params = EXPLOSION_UNK_19;
         }
 

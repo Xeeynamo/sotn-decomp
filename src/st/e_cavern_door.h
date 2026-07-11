@@ -27,7 +27,8 @@ void EntityCavernDoorLever(Entity* self) {
         self->drawFlags |= ENTITY_ROTATE;
         self->rotate = -0x200;
         platform = self + 1;
-        CreateEntityFromEntity(E_ID(CAVERN_DOOR_PLATFORM), self, platform);
+        OVL_EXPORT(CreateEntityFromEntity)
+        (E_ID(CAVERN_DOOR_PLATFORM), self, platform);
         if (g_CastleFlags[NO4_TO_NP3_SHORTCUT]) {
             self->rotate = 0;
         }
@@ -218,7 +219,7 @@ void EntityCavernDoor(Entity* self) {
         if (entity == NULL) {
             break;
         }
-        CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
+        OVL_EXPORT(CreateEntityFromEntity)(E_INTENSE_EXPLOSION, self, entity);
         entity->posY.i.hi = 156;
         entity->posX.i.hi += -8 + (OVL_EXPORT(Random)() & 15);
         entity->zPriority = self->zPriority + 2;

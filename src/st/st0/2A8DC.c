@@ -54,7 +54,8 @@ void EntitySecretButton(Entity* self) {
             g_api.PlaySfx(SFX_WALL_DEBRIS_B);
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_ID(SECRET_BUTTON), self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_ID(SECRET_BUTTON), self, newEntity);
                 newEntity->params = 1;
             }
             self->step++;
@@ -97,7 +98,8 @@ void EntitySecretButton(Entity* self) {
             g_api.PlaySfx(SFX_EXPLODE_FAST_A);
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_EXPLOSION, self, newEntity);
                 newEntity->params = 0x11;
             }
             DestroyEntity(self);

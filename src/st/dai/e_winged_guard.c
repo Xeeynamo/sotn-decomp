@@ -36,13 +36,14 @@ void EntityWingedGuard(Entity* self) {
         PlaySfxPositional(SFX_SKELETON_DEATH_C);
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
             entity->params = EXPLOSION_SMALL_MULTIPLE;
         }
         for (guardPart = 0; guardPart < 8; guardPart++) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_WINGED_GUARD_PARTS, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_WINGED_GUARD_PARTS, self, entity);
                 entity->velocityX = self->velocityX;
                 entity->velocityY = self->velocityY;
                 entity->params = guardPart;
@@ -108,7 +109,8 @@ void EntityWingedGuardParts(Entity* self) {
         if (!(OVL_EXPORT(Random)() & 0x3F)) {
             explosion = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (explosion != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, explosion);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_EXPLOSION, self, explosion);
                 explosion->params = EXPLOSION_SMALL;
             }
         }
@@ -143,7 +145,7 @@ void EntityWingedGuardSpawner(Entity* self) {
 
         entity = AllocEntity(&g_Entities[168], &g_Entities[172]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_WINGED_GUARD, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_WINGED_GUARD, self, entity);
             entity->zPriority = 176;
             entity->posX.i.hi = posX - g_Tilemap.scrollX.i.hi;
             entity->posY.i.hi = posY - g_Tilemap.scrollY.i.hi;

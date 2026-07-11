@@ -405,7 +405,7 @@ void EntityVenusWeed(Entity* self) {
         if (self->flags & FLAG_DEAD) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
                 entity->posY.i.hi -= 4;
                 entity->params = 0;
             }
@@ -610,7 +610,7 @@ void EntityVenusWeed(Entity* self) {
             // Spawn explosion
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
                 entity->params = 2;
                 entity->posY.i.hi -= 0xC;
             }
@@ -852,7 +852,8 @@ void EntityVenusWeedFlower(Entity* self) {
             // Spawn spikes
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_VENUS_WEED_SPIKE, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_VENUS_WEED_SPIKE, self, entity);
                 entity->facingLeft = self->facingLeft;
                 entity->ext.venusWeedSpike.flower = self;
             }
@@ -932,7 +933,8 @@ void EntityVenusWeedFlower(Entity* self) {
             PlaySfxPositional(SFX_GLASS_SHARDS);
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_VENUS_WEED_SPIKE, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_VENUS_WEED_SPIKE, self, entity);
                 entity->facingLeft = self->facingLeft;
                 entity->ext.venusWeedSpike.flower = self;
             }
@@ -984,7 +986,8 @@ void EntityVenusWeedFlower(Entity* self) {
                 for (i = 0; i < DartsCount; i++) {
                     entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                     if (entity != NULL) {
-                        CreateEntityFromEntity(E_VENUS_WEED_DART, self, entity);
+                        OVL_EXPORT(CreateEntityFromEntity)
+                        (E_VENUS_WEED_DART, self, entity);
                         entity->rotate = rot;
                         entity->params = i;
                         entity->posX.i.hi = x;
@@ -1014,7 +1017,7 @@ void EntityVenusWeedFlower(Entity* self) {
 
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
             entity->params = 3;
         }
 
@@ -1197,7 +1200,7 @@ void EntityVenusWeedTendril(Entity* self) {
         if (!--self->ext.venusWeedTendril.timer) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
                 entity->params = 2;
                 entity->posY.i.hi -= 0xC;
             }
@@ -1334,7 +1337,7 @@ void EntityVenusWeedDart(Entity* self) {
     if (self->flags & FLAG_DEAD) {
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
             entity->params = 0;
         }
         DestroyEntity(self);

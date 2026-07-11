@@ -48,7 +48,7 @@ void EntityFlyingZombie2(Entity* self) {
         self->hitboxOffX = 1;
         self->hitboxOffY = 10;
         tempEntity = self + 1;
-        CreateEntityFromEntity(E_ID_1C, self, tempEntity);
+        OVL_EXPORT(CreateEntityFromEntity)(E_ID_1C, self, tempEntity);
         self->animCurFrame = 1;
         /* fallthrough */
     case 1:
@@ -105,7 +105,8 @@ void EntityFlyingZombie2(Entity* self) {
             for (i = 0; i < 2; i++) {
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromEntity(E_BLOOD_SPLATTER, self, tempEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_BLOOD_SPLATTER, self, tempEntity);
                     tempEntity->facingLeft = i;
                     tempEntity->posX.i.hi += 4 - (i * 8);
                 }
@@ -160,7 +161,8 @@ void EntityFlyingZombie2(Entity* self) {
             if (!--self->ext.flyingZombie.unk7C) {
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_EXPLOSION, self, tempEntity);
                     tempEntity->params = 1;
                     tempEntity->posY.i.hi -= self->ext.flyingZombie.unk7E * 8;
                 }
@@ -238,7 +240,7 @@ void EntityFlyingZombie2(Entity* self) {
     case 7:
         tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (tempEntity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, tempEntity);
             tempEntity->params = 2;
         }
         PlaySfxPositional(SFX_FM_STUTTER_EXPLODE);
@@ -318,7 +320,8 @@ void EntityFlyingZombie1(Entity* self) {
             if (UnkCollisionFunc3(D_us_8018281C) & 1) {
                 tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_EXPLOSION, self, tempEntity);
                     tempEntity->params = 3;
                 }
                 DestroyEntity(self);
@@ -327,7 +330,8 @@ void EntityFlyingZombie1(Entity* self) {
                     tempEntity =
                         AllocEntity(&g_Entities[160], &g_Entities[192]);
                     if (tempEntity != NULL) {
-                        CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
+                        OVL_EXPORT(CreateEntityFromEntity)
+                        (E_EXPLOSION, self, tempEntity);
                         tempEntity->params = 1;
                         tempEntity->drawFlags = ENTITY_ROTATE;
                         tempEntity->rotate = self->rotate;
@@ -355,7 +359,8 @@ void EntityFlyingZombie1(Entity* self) {
         if ((OVL_EXPORT(Random)() & 0x1F) == 0) {
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_BLOOD_DRIPS, self, tempEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_BLOOD_DRIPS, self, tempEntity);
                 tempEntity->posX.i.hi += (OVL_EXPORT(Random)() & 8) - 4;
                 tempEntity->posY.i.hi += 13;
                 tempEntity->pfnUpdate = EntityBloodDrips;
@@ -396,7 +401,8 @@ void EntityFlyingZombie1(Entity* self) {
             if ((OVL_EXPORT(Random)() & 0x1F) == 0) {
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromEntity(E_BLOOD_DRIPS, self, tempEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_BLOOD_DRIPS, self, tempEntity);
                     tempEntity->posX.i.hi += (OVL_EXPORT(Random)() & 8) - 4;
                     tempEntity->posY.i.hi += 13;
                     tempEntity->pfnUpdate = EntityBloodDrips;

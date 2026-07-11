@@ -63,13 +63,13 @@ void EntityOrobourous(Entity* self) {
         self->drawFlags |= ENTITY_ROTATE;
         other = self + 1;
         for (i = 0; i < 24; i++, other++) {
-            CreateEntityFromEntity(E_OROB_SEGMENT, self, other);
+            OVL_EXPORT(CreateEntityFromEntity)(E_OROB_SEGMENT, self, other);
             other->params = (i + 1);
             other->nextPart = other - 1;
         }
         self->parent = NULL;
         self->nextPart = self + 24;
-        CreateEntityFromEntity(E_OROB_RIDER, self, other);
+        OVL_EXPORT(CreateEntityFromEntity)(E_OROB_RIDER, self, other);
         self->ext.orob.unk9 = 2;
         break;
     case OROB_WAIT:
@@ -249,7 +249,7 @@ void EntityOrobourous(Entity* self) {
         }
         other = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (other != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, other);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, other);
             other->params = 3;
         }
         for (i = 0; i < 4; i++) {
@@ -258,7 +258,8 @@ void EntityOrobourous(Entity* self) {
             if (i != 1) {
                 other = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (other != NULL) {
-                    CreateEntityFromEntity(E_OROB_HEAD_PARTS, self, other);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_OROB_HEAD_PARTS, self, other);
                     other->facingLeft = self->facingLeft;
                     other->velocityX = self->velocityX;
                     other->velocityY = -0x18000;
@@ -384,14 +385,14 @@ void EntityOrobRider(Entity* self) {
         PlaySfxPositional(SFX_EXPLODE_B);
         other = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (other != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, other);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, other);
             other->params = 1;
         }
         // This creates the entity for the rider dude falling off.
         // params of 1 is what triggers this.
         other = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (other != NULL) {
-            CreateEntityFromEntity(E_OROB_HEAD_PARTS, self, other);
+            OVL_EXPORT(CreateEntityFromEntity)(E_OROB_HEAD_PARTS, self, other);
             other->facingLeft = self->facingLeft;
             other->params = 1;
         }

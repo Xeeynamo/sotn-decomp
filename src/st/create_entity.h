@@ -489,7 +489,8 @@ void OVL_EXPORT(CreateEntityFromCurrentEntity)(u16 entityId, Entity* entity) {
     entity->posY.i.hi = g_CurrentEntity->posY.i.hi;
 }
 
-void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity) {
+void OVL_EXPORT(CreateEntityFromEntity)(
+    u16 entityId, Entity* source, Entity* entity) {
     DestroyEntity(entity);
     entity->entityId = entityId;
     entity->pfnUpdate = PfnEntityUpdates[entityId - 1];

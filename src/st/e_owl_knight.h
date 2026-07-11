@@ -53,8 +53,8 @@ void EntityOwl(Entity* self) {
     case 0:
         InitializeEntity(g_EInitOwl);
         // Turns out the knight is spawned from the owl. Neat!
-        CreateEntityFromEntity(E_OWL_KNIGHT, self, KNIGHT);
-        CreateEntityFromEntity(E_OWL_TARGET, self, TARGET);
+        OVL_EXPORT(CreateEntityFromEntity)(E_OWL_KNIGHT, self, KNIGHT);
+        OVL_EXPORT(CreateEntityFromEntity)(E_OWL_TARGET, self, TARGET);
         break;
     case 1:
         AnimateEntity(anim_owl_1, self);
@@ -398,7 +398,8 @@ void EntityOwl(Entity* self) {
             PlaySfxPositional(SFX_QUICK_STUTTER_EXPLODE_B);
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_EXPLOSION, self, tempEntity);
                 tempEntity->params = 2;
             }
             self->animCurFrame = 0;
@@ -606,7 +607,7 @@ void EntityOwlKnight(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitOwlKnight);
-        CreateEntityFromEntity(E_OWL_KNIGHT_SWORD, self, SWORD);
+        OVL_EXPORT(CreateEntityFromEntity)(E_OWL_KNIGHT_SWORD, self, SWORD);
         self->hitboxOffX = -1;
         self->zPriority -= 2;
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
@@ -1029,7 +1030,8 @@ void EntityOwlKnight(Entity* self) {
             PlaySfxPositional(SFX_EXPLODE_SMALL);
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, tempEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_INTENSE_EXPLOSION, self, tempEntity);
                 tempEntity->posX.i.hi += (OVL_EXPORT(Random)() & 0x1F) - 16;
                 tempEntity->posY.i.hi += (OVL_EXPORT(Random)() & 0x1F) - 16;
             }

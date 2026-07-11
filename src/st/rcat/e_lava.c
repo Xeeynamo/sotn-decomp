@@ -60,7 +60,8 @@ void EntityLava(Entity* self) {
             newEntity =
                 AllocEntity(&g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_ID(SNOWFLAKES), self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_ID(SNOWFLAKES), self, newEntity);
             }
         }
 

@@ -86,7 +86,7 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
         self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 20;
         if (breakableType < 5) {
             entity = self + 1;
-            CreateEntityFromEntity(E_ID_3F, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_ID_3F, self, entity);
             entity->params = breakableType;
             entity->zPriority = self->zPriority;
         }
@@ -126,7 +126,7 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
             g_api.PlaySfx(SFX_GLASS_BREAK_E);
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_HEART_DROP, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)(E_HEART_DROP, self, entity);
                 entity->params = self->params & 0x1FF;
             }
             PreventEntityFromRespawning(self);
@@ -136,7 +136,7 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
             g_api.PlaySfx(SFX_GLASS_BREAK_E);
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_HEART_DROP, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)(E_HEART_DROP, self, entity);
                 entity->params = self->params & 0x1FF;
             }
             PreventEntityFromRespawning(self);
@@ -146,7 +146,7 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
             g_api.PlaySfx(SFX_GLASS_BREAK_E);
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_HEART_DROP, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)(E_HEART_DROP, self, entity);
                 entity->params = 3;
             }
             PreventEntityFromRespawning(self);

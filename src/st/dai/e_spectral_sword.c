@@ -104,13 +104,15 @@ void EntitySpectralSword(Entity* self) {
         entity = self + 1;
         // Small swords
         for (count = 0; count < 12; count++, entity++) {
-            CreateEntityFromEntity(E_SPECTRAL_SWORD_WEAPON, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)
+            (E_SPECTRAL_SWORD_WEAPON, self, entity);
             entity->params = 0;
             entity->ext.spectralSword.poltergeist = self;
         }
         // Large swords
         for (count = 0; count < 4; count++, entity++) {
-            CreateEntityFromEntity(E_SPECTRAL_SWORD_WEAPON, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)
+            (E_SPECTRAL_SWORD_WEAPON, self, entity);
             entity->params = 1;
             entity->ext.spectralSword.poltergeist = self;
         }
@@ -294,7 +296,8 @@ void EntitySpectralSword(Entity* self) {
                 PlaySfxPositional(SFX_EXPLODE_B);
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_EXPLOSION, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_EXPLOSION, self, entity);
                     entity->params = EXPLOSION_BIG;
                 }
             }
@@ -384,7 +387,8 @@ void EntitySpectralSword(Entity* self) {
         if (!(g_Timer & 0xF)) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_SPECTRAL_SWORD_AURA, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_SPECTRAL_SWORD_AURA, self, entity);
                 entity->ext.spectralSword.poltergeist = self;
             }
         }
@@ -495,7 +499,8 @@ void EntitySpectralSwordWeapon(Entity* self) {
                 PlaySfxPositional(SFX_EXPLODE_FAST_A);
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_EXPLOSION, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_EXPLOSION, self, entity);
                     entity->params = EXPLOSION_FIREBALL;
                 }
             }

@@ -127,7 +127,8 @@ void EntityFrozenHalf(Entity* self) {
         InitializeEntity(g_EInitFrozenHalf);
         self->blendMode = BLEND_ADD | BLEND_TRANSP;
         entity = self + 1;
-        CreateEntityFromEntity(E_FROZEN_HALF_ORBIT_ICICLE, self, entity);
+        OVL_EXPORT(CreateEntityFromEntity)
+        (E_FROZEN_HALF_ORBIT_ICICLE, self, entity);
         SetStep(IDLE);
         break;
     case IDLE:
@@ -275,8 +276,8 @@ void EntityFrozenHalf(Entity* self) {
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
                 PlaySfxPositional(SFX_GLASS_SHARDS);
-                CreateEntityFromEntity(
-                    E_FROZEN_HALF_THROWN_CHUNK, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_FROZEN_HALF_THROWN_CHUNK, self, entity);
                 if (self->facingLeft) {
                     entity->posX.i.hi += 0x10;
                 } else {
@@ -339,8 +340,8 @@ void EntityFrozenHalf(Entity* self) {
                 entity = AllocEntity(
                     &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(
-                        E_FROZEN_HALF_FROST_MIST, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_FROZEN_HALF_FROST_MIST, self, entity);
                     entity->posY.i.hi -= 0x20;
                     entity->params = g_Timer & 1;
                     if (!entity->params) {
@@ -360,7 +361,8 @@ void EntityFrozenHalf(Entity* self) {
         case 3:
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_FROZEN_HALF_BLIZZARD, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_FROZEN_HALF_BLIZZARD, self, entity);
                 entity->posY.i.hi -= 0x28;
                 entity->facingLeft = self->facingLeft;
                 entity->zPriority = self->zPriority - 1;

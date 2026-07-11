@@ -241,7 +241,7 @@ void EntityNovaSkeleton(Entity* self) {
         switch (self->step_s) {
         case 0:
             other = self + 1;
-            CreateEntityFromEntity(E_NOVA_LASER, self, other);
+            OVL_EXPORT(CreateEntityFromEntity)(E_NOVA_LASER, self, other);
             if (self->facingLeft) {
                 other->posX.i.hi += 0xA;
             } else {
@@ -372,7 +372,7 @@ void EntityNovaLaser(Entity* self) {
         if (!(self->ext.nova.laserTimer & 3)) {
             other = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (other != NULL) {
-                CreateEntityFromEntity(E_NOVA_PULSE, self, other);
+                OVL_EXPORT(CreateEntityFromEntity)(E_NOVA_PULSE, self, other);
                 other->zPriority = self->zPriority - 1;
                 other->ext.nova.laserLength = self->ext.nova.laserLength;
                 other->facingLeft = self->facingLeft;

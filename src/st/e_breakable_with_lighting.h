@@ -66,7 +66,8 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
 
         entity = self + 1;
         DestroyEntity(entity);
-        CreateEntityFromEntity(E_ID(BACKGROUND_BLOCK), self, entity);
+        OVL_EXPORT(CreateEntityFromEntity)
+        (E_ID(BACKGROUND_BLOCK), self, entity);
         if (breakableType) {
             entity->posY.i.hi -= LIGHT_AURA_Y_OFFSET_TALL;
         } else {
@@ -89,7 +90,8 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
         for (debrisCount = 0; debrisCount < BASE_DEBRIS_COUNT; debrisCount++) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_ID(BREAKABLE_DEBRIS), self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_ID(BREAKABLE_DEBRIS), self, entity);
                 entity->posX.i.hi += *debrisOffsetsY++;
                 entity->posY.i.hi += *debrisOffsetsY++;
                 if (breakableType) {
@@ -108,8 +110,8 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
                  debrisCount++) {
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(
-                        E_ID(BREAKABLE_DEBRIS), self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID(BREAKABLE_DEBRIS), self, entity);
                     entity->posX.i.hi += *debrisOffsetsY++;
                     entity->posY.i.hi += *debrisOffsetsY++;
                     entity->params = debrisCount + BASE_DEBRIS_COUNT;
@@ -221,7 +223,8 @@ void OVL_EXPORT(EntityBreakableDebris)(Entity* self) {
             if (self->velocityY > FIX(-0.625)) {
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_INTENSE_EXPLOSION, self, entity);
                     entity->params = 16;
                 }
                 DestroyEntity(self);

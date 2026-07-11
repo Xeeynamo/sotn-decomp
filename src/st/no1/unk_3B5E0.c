@@ -732,7 +732,7 @@ void func_us_801BCB34(Entity* self) {
             self->ext.et_801BBD90.unk7C = NULL;
         }
         tempEntity = self + 1;
-        CreateEntityFromEntity(E_ID(ID_2A), self, tempEntity);
+        OVL_EXPORT(CreateEntityFromEntity)(E_ID(ID_2A), self, tempEntity);
         tempEntity->posY.i.hi -= 0x22;
         tempEntity->ext.et_801BBD90.unk8C = 0;
         break;
@@ -862,8 +862,8 @@ void func_us_801BCB34(Entity* self) {
                         tempEntity =
                             AllocEntity(&g_Entities[224], &g_Entities[256]);
                         if (tempEntity != NULL) {
-                            CreateEntityFromEntity(
-                                E_INTENSE_EXPLOSION, self, tempEntity);
+                            OVL_EXPORT(CreateEntityFromEntity)
+                            (E_INTENSE_EXPLOSION, self, tempEntity);
                             tempEntity->posX.i.hi += (i * 8) - 8;
                             tempEntity->posY.i.hi -= 0x18;
                             tempEntity->drawFlags |= ENTITY_ROTATE;
@@ -961,8 +961,8 @@ void func_us_801BCB34(Entity* self) {
                         tempEntity =
                             AllocEntity(&g_Entities[224], &g_Entities[256]);
                         if (tempEntity != NULL) {
-                            CreateEntityFromEntity(
-                                E_INTENSE_EXPLOSION, self, tempEntity);
+                            OVL_EXPORT(CreateEntityFromEntity)
+                            (E_INTENSE_EXPLOSION, self, tempEntity);
                             tempEntity->posX.i.hi += (i * 8) - 8;
                             tempEntity->posY.i.hi += 0x24;
                             tempEntity->drawFlags |= ENTITY_ROTATE;
@@ -1001,8 +1001,8 @@ void func_us_801BCB34(Entity* self) {
                         tempEntity =
                             AllocEntity(&g_Entities[224], &g_Entities[256]);
                         if (tempEntity != NULL) {
-                            CreateEntityFromEntity(
-                                E_INTENSE_EXPLOSION, self, tempEntity);
+                            OVL_EXPORT(CreateEntityFromEntity)
+                            (E_INTENSE_EXPLOSION, self, tempEntity);
                             tempEntity->posX.i.hi += (i * 8) - 8;
                             tempEntity->posY.i.hi += 0x24;
                             tempEntity->drawFlags |= ENTITY_ROTATE;
