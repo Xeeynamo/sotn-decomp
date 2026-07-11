@@ -783,7 +783,7 @@
 | main     | func_psp_08919FBC                     |       20 |          5 |        |       |     |
 | bo0      | func_pspeu_09241078                   |       21 |          1 |        |       |     |
 | bo0      | SetSubStep                            |       21 |          1 |        |       |     |
-| bo0      | Random                                |       21 |          1 |        |       |     |
+| bo0      | BO0_Random                            |       21 |          1 |        |       |     |
 | rbo0     | func_pspeu_09247060                   |       21 |          1 |        |       |     |
 | rbo0     | func_pspeu_0924EBA8                   |       21 |          1 |        |       |     |
 | rbo0     | func_pspeu_09245500                   |       21 |          1 |        |       |     |
@@ -809,7 +809,7 @@
 | cen      | func_pspeu_09242D28                   |       21 |          1 |        |       |     |
 | cen      | func_pspeu_09251658                   |       21 |          1 |        |       |     |
 | chi      | func_psp_09240110                     |       21 |          1 |        |       |     |
-| chi      | Random                                |       21 |          1 |        |       |     |
+| chi      | CHI_Random                            |       21 |          1 |        |       |     |
 | chi      | func_psp_09247F98                     |       21 |          1 |        |       |     |
 | dai      | func_pspeu_0923E6E8                   |       21 |          1 |        |       |     |
 | dai      | func_pspeu_0924E068                   |       21 |          1 |        |       |     |
@@ -852,7 +852,7 @@
 | rcat     | func_pspeu_0923A830                   |       21 |          1 |        |       |     |
 | rcen     | func_pspeu_0923C390                   |       21 |          1 |        |       |     |
 | rcen     | SetSubStep                            |       21 |          1 |        |       |     |
-| rcen     | Random                                |       21 |          1 |        |       |     |
+| rcen     | RCEN_Random                           |       21 |          1 |        |       |     |
 | rno0     | SetSubStep                            |       21 |          1 |        |       |     |
 | rno0     | Random                                |       21 |          1 |        |       |     |
 | rno0     | func_psp_0923C390                     |       21 |          1 |        |       |     |
@@ -3436,23 +3436,23 @@
 | chi      | func_psp_092399B0                     |       79 |          8 |        |       |     |
 | no4      | func_pspeu_092427C8                   |       79 |          8 |        |       |     |
 | rnz0     | func_pspeu_0923C0A0                   |       79 |          8 |        |       |     |
-| bo0      | UpdateStageEntities                   |       79 |          9 |        |       |     |
+| bo0      | BO0_UpdateStageEntities               |       79 |          9 |        |       |     |
 | rbo0     | func_pspeu_09245920                   |       79 |          9 |        |       |     |
 | are      | func_pspeu_0924BB18                   |       79 |          9 |        |       |     |
 | are      | func_pspeu_09242858                   |       79 |          9 |        |       |     |
 | cat      | func_pspeu_0923D5C8                   |       79 |          9 |        |       |     |
 | cen      | func_pspeu_092567C0                   |       79 |          9 |        |       |     |
-| chi      | UpdateStageEntities                   |       79 |          9 |        |       |     |
+| chi      | CHI_UpdateStageEntities               |       79 |          9 |        |       |     |
 | dai      | func_pspeu_0923C850                   |       79 |          9 |        |       |     |
 | dre      | func_pspeu_0923ACD0                   |       79 |          9 |        |       |     |
-| lib      | UpdateStageEntities                   |       79 |          9 |        |       |     |
+| lib      | LIB_UpdateStageEntities               |       79 |          9 |        |       |     |
 | no0      | func_pspeu_09244C68                   |       79 |          9 |        |       |     |
 | no0      | func_pspeu_09240098                   |       79 |          9 |        |       |     |
 | no1      | func_pspeu_0923CF30                   |       79 |          9 |        |       |     |
 | no2      | func_pspeu_0923D070                   |       79 |          9 |        |       |     |
 | no3      | func_pspeu_092492E0                   |       79 |          9 |        |       |     |
-| no4      | UpdateStageEntities                   |       79 |          9 |        |       |     |
-| np3      | UpdateStageEntities                   |       79 |          9 |        |       |     |
+| no4      | NO4_UpdateStageEntities               |       79 |          9 |        |       |     |
+| np3      | NP3_UpdateStageEntities               |       79 |          9 |        |       |     |
 | nz0      | func_pspeu_092460E8                   |       79 |          9 |        |       |     |
 | nz1      | func_pspeu_0923E298                   |       79 |          9 |        |       |     |
 | rare     | func_pspeu_0923FDC0                   |       79 |          9 |        |       |     |
@@ -3461,7 +3461,7 @@
 | rno0     | UpdateStageEntities                   |       79 |          9 |        |       |     |
 | rno3     | func_pspeu_0923DD98                   |       79 |          9 |        |       |     |
 | rnz0     | func_pspeu_09242F30                   |       79 |          9 |        |       |     |
-| st0      | UpdateStageEntities                   |       79 |          9 |        |       |     |
+| st0      | ST0_UpdateStageEntities               |       79 |          9 |        |       |     |
 | wrp      | func_psp_0923AC50                     |       79 |          9 |        |       |     |
 | rno0     | func_pspeu_0923F088                   |       79 |         10 |        |       |     |
 | dra      | func_psp_09100A58                     |       79 |         11 |        |       |     |
@@ -5378,21 +5378,21 @@
 | cat      | func_pspeu_09242C88                   |      268 |         27 |        |       |     |
 | maria    | func_pspeu_092BF950                   |      269 |         26 |        |       |     |
 | cen      | func_pspeu_09250950                   |      269 |         26 |        |       |     |
-| bo0      | Update                                |      269 |         44 |        |       |     |
+| bo0      | BO0_Update                            |      269 |         44 |        |       |     |
 | rbo0     | func_pspeu_09245540                   |      269 |         44 |        |       |     |
 | are      | func_pspeu_09242478                   |      269 |         44 |        |       |     |
 | cat      | func_pspeu_0923D1E8                   |      269 |         44 |        |       |     |
 | cen      | func_pspeu_092563E0                   |      269 |         44 |        |       |     |
-| chi      | Update                                |      269 |         44 |        |       |     |
+| chi      | CHI_Update                            |      269 |         44 |        |       |     |
 | dai      | func_pspeu_0923C470                   |      269 |         44 |        |       |     |
 | dre      | func_pspeu_0923A8F0                   |      269 |         44 |        |       |     |
-| lib      | Update                                |      269 |         44 |        |       |     |
+| lib      | LIB_Update                            |      269 |         44 |        |       |     |
 | no0      | func_pspeu_0923FCB8                   |      269 |         44 |        |       |     |
 | no1      | func_pspeu_0923CB50                   |      269 |         44 |        |       |     |
 | no2      | func_pspeu_0923CC90                   |      269 |         44 |        |       |     |
 | no3      | func_pspeu_09248F00                   |      269 |         44 |        |       |     |
-| no4      | Update                                |      269 |         44 |        |       |     |
-| np3      | Update                                |      269 |         44 |        |       |     |
+| no4      | NO4_Update                            |      269 |         44 |        |       |     |
+| np3      | NP3_Update                            |      269 |         44 |        |       |     |
 | nz0      | func_pspeu_09245D08                   |      269 |         44 |        |       |     |
 | nz1      | func_pspeu_0923DEB8                   |      269 |         44 |        |       |     |
 | rare     | func_pspeu_0923F9E0                   |      269 |         44 |        |       |     |
@@ -5401,7 +5401,7 @@
 | rno0     | Update                                |      269 |         44 |        |       |     |
 | rno3     | func_pspeu_0923D9B8                   |      269 |         44 |        |       |     |
 | rnz0     | func_pspeu_09242B50                   |      269 |         44 |        |       |     |
-| st0      | Update                                |      269 |         44 |        |       |     |
+| st0      | ST0_Update                            |      269 |         44 |        |       |     |
 | wrp      | func_psp_0923A870                     |      269 |         44 |        |       |     |
 | dra      | func_psp_09138240                     |      269 |         49 |        |       |     |
 | dra      | func_psp_0912DDA8                     |      270 |         27 |        |       |     |
@@ -6250,7 +6250,7 @@
 | rno0     | func_us_801D068C                      |      678 |         87 |        |       |     |
 | no3      | func_pspeu_0925B620                   |      678 |         98 | Yes    |       |     |
 | np3      | EntityBoneScimitar                    |      678 |         98 | Yes    |       |     |
-| bo0      | EntityDamageDisplay                   |      682 |         51 |        |       |     |
+| bo0      | BO0_EntityDamageDisplay               |      682 |         51 |        |       |     |
 | rbo0     | func_pspeu_0924D0E8                   |      682 |         51 |        |       |     |
 | are      | func_pspeu_092558B8                   |      682 |         51 |        |       |     |
 | cat      | func_pspeu_0924B918                   |      682 |         51 |        |       |     |
@@ -6264,7 +6264,7 @@
 | no2      | func_pspeu_09245DB8                   |      682 |         51 |        |       |     |
 | no3      | func_pspeu_0925AB18                   |      682 |         51 |        |       |     |
 | no4      | func_pspeu_09251F28                   |      682 |         51 |        |       |     |
-| np3      | EntityDamageDisplay                   |      682 |         51 |        |       |     |
+| np3      | NP3_EntityDamageDisplay               |      682 |         51 |        |       |     |
 | nz0      | func_pspeu_0924E638                   |      682 |         51 |        |       |     |
 | nz1      | func_pspeu_09247BD0                   |      682 |         51 |        |       |     |
 | rare     | func_pspeu_09247590                   |      682 |         51 |        |       |     |
@@ -6645,21 +6645,21 @@
 | are      | func_pspeu_09259AC0                   |     1609 |        218 | Yes    |       |     |
 | no2      | func_pspeu_09246ED0                   |     1609 |        218 | Yes    |       |     |
 | nz1      | func_pspeu_092554E8                   |     1611 |        252 | Yes    |       |     |
-| bo0      | HitDetection                          |     1627 |        196 |        |       |     |
+| bo0      | BO0_HitDetection                      |     1627 |        196 |        |       |     |
 | rbo0     | func_pspeu_0924B918                   |     1627 |        196 |        |       |     |
 | are      | func_pspeu_092540E8                   |     1627 |        196 |        |       |     |
 | cat      | func_pspeu_0924A148                   |     1627 |        196 |        |       |     |
 | cen      | func_pspeu_0925C7C0                   |     1627 |        196 |        |       |     |
-| chi      | HitDetection                          |     1627 |        196 |        |       |     |
+| chi      | CHI_HitDetection                      |     1627 |        196 |        |       |     |
 | dai      | func_pspeu_09243230                   |     1627 |        196 |        |       |     |
 | dre      | func_pspeu_09240CD0                   |     1627 |        196 |        |       |     |
-| lib      | HitDetection                          |     1627 |        196 |        |       |     |
+| lib      | LIB_HitDetection                      |     1627 |        196 |        |       |     |
 | no0      | func_pspeu_0924D020                   |     1627 |        196 |        |       |     |
 | no1      | func_pspeu_09246ED0                   |     1627 |        196 |        |       |     |
 | no2      | func_pspeu_092445E8                   |     1627 |        196 |        |       |     |
 | no3      | func_pspeu_09259348                   |     1627 |        196 |        |       |     |
-| no4      | HitDetection                          |     1627 |        196 |        |       |     |
-| np3      | HitDetection                          |     1627 |        196 |        |       |     |
+| no4      | NO4_HitDetection                      |     1627 |        196 |        |       |     |
+| np3      | NP3_HitDetection                      |     1627 |        196 |        |       |     |
 | nz0      | func_pspeu_0924CE68                   |     1627 |        196 |        |       |     |
 | nz1      | func_pspeu_09246400                   |     1627 |        196 |        |       |     |
 | rare     | func_pspeu_09245DC0                   |     1627 |        196 |        |       |     |
