@@ -249,7 +249,7 @@ def inject_decompiled_function(repo_root: Path, sotn_func: SotnFunction) -> None
         safe_write(sotn_func.src_path, new_lines)
 
         print(
-            f"{sotn_func.name} was successfully decompiled in {src}, but likely will not compile without adjustments."
+            f"{sotn_func.name} was successfully decompiled in {sotn_func.src_path}, but likely will not compile without adjustments."
         )
     elif [line for line in lines if sotn_func.name in line]:
         print(
