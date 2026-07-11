@@ -107,15 +107,16 @@ void EntityBackgroundLightning(Entity* self) {
         case 0:
             otherEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (otherEnt != NULL) {
-                CreateEntityFromCurrentEntity(
-                    E_ID(LIGHTNING_THUNDER), otherEnt);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(LIGHTNING_THUNDER), otherEnt);
                 randOf3 = OVL_EXPORT(Random)() & 3;
                 otherEnt->posX.i.hi = lightningThunderXY[randOf3][0];
                 otherEnt->posY.i.hi = lightningThunderXY[randOf3][1];
             }
             otherEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (otherEnt != NULL) {
-                CreateEntityFromCurrentEntity(E_ID(LIGHTNING_CLOUD), otherEnt);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(LIGHTNING_CLOUD), otherEnt);
                 if (randOf3 > 2) {
                     randOf3 = 0;
                 }

@@ -73,7 +73,7 @@ void EntityLeftSecretRoomWall(Entity* self) {
 
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity) {
-            CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, newEntity);
             newEntity->params = 0x13;
         }
         self->ext.breakable.resetTimer = 32;
@@ -86,7 +86,8 @@ void EntityLeftSecretRoomWall(Entity* self) {
             for (i = 0; i < 8; i++) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(E_ID(WALL_DEBRIS), self, newEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID(WALL_DEBRIS), self, newEntity);
                     newEntity->posX.i.hi += (OVL_EXPORT(Random)() & 0xF);
                     newEntity->posY.i.hi +=
                         (OVL_EXPORT(Random)() & 0x3F) - 0x20;
@@ -152,7 +153,7 @@ void EntityBottomSecretRoomFloor(Entity* self) {
 
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, newEntity);
             newEntity->params = 0x11;
         }
         self->ext.breakable.resetTimer = 32;
@@ -225,8 +226,8 @@ void EntitySecretWallDebris(Entity* self) {
                 for (i = 0; i < 2; i++) {
                     newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (newEntity != NULL) {
-                        CreateEntityFromEntity(
-                            E_ID(WALL_DEBRIS), self, newEntity);
+                        OVL_EXPORT(CreateEntityFromEntity)
+                        (E_ID(WALL_DEBRIS), self, newEntity);
                         newEntity->params = 1;
                     }
                 }
@@ -236,8 +237,8 @@ void EntitySecretWallDebris(Entity* self) {
             if (self->velocityY < FIX(0.5)) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(
-                        E_INTENSE_EXPLOSION, self, newEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_INTENSE_EXPLOSION, self, newEntity);
                     newEntity->params = 16;
                 }
                 DestroyEntity(self);

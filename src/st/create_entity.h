@@ -30,7 +30,8 @@ STATIC_PAD_BSS(3);
 #define LAYOUT_OBJ_SLOT 3
 #define LAYOUT_OBJ_PARAMS 4
 
-void CreateEntityFromLayout(Entity* entity, LayoutEntity* initDesc) {
+void OVL_EXPORT(CreateEntityFromLayout)(
+    Entity* entity, LayoutEntity* initDesc) {
     Tilemap* tilemap;
 
     tilemap = &g_Tilemap;
@@ -45,7 +46,7 @@ void CreateEntityFromLayout(Entity* entity, LayoutEntity* initDesc) {
     entity->unk68 = (initDesc->entityId >> 0xA) & 7;
 }
 
-void CreateEntityWhenInVerticalRange(LayoutEntity* obj) {
+void OVL_EXPORT(CreateEntityWhenInVerticalRange)(LayoutEntity* obj) {
     s16 yClose;
     s16 yFar;
     s16 posY;
@@ -69,20 +70,20 @@ void CreateEntityWhenInVerticalRange(LayoutEntity* obj) {
         entity =
             g_Entities + STAGE_ENTITY_START + (obj->entityRoomIndex & 0xFF);
         if (!entity->entityId) {
-            CreateEntityFromLayout(entity, obj);
+            OVL_EXPORT(CreateEntityFromLayout)(entity, obj);
         }
         break;
     case 0xA000:
         entity =
             g_Entities + STAGE_ENTITY_START + (obj->entityRoomIndex & 0xFF);
-        CreateEntityFromLayout(entity, obj);
+        OVL_EXPORT(CreateEntityFromLayout)(entity, obj);
         break;
     case 0x8000:
         break;
     }
 }
 
-void CreateEntityWhenInHorizontalRange(LayoutEntity* obj) {
+void OVL_EXPORT(CreateEntityWhenInHorizontalRange)(LayoutEntity* obj) {
     s16 xClose;
     s16 xFar;
     s16 posX;
@@ -107,13 +108,13 @@ void CreateEntityWhenInHorizontalRange(LayoutEntity* obj) {
         entity =
             g_Entities + STAGE_ENTITY_START + (obj->entityRoomIndex & 0xFF);
         if (!entity->entityId) {
-            CreateEntityFromLayout(entity, obj);
+            OVL_EXPORT(CreateEntityFromLayout)(entity, obj);
         }
         break;
     case 0xA000:
         entity =
             g_Entities + STAGE_ENTITY_START + (obj->entityRoomIndex & 0xFF);
-        CreateEntityFromLayout(entity, obj);
+        OVL_EXPORT(CreateEntityFromLayout)(entity, obj);
         break;
     case 0x8000:
         break;
@@ -204,12 +205,12 @@ static void CreateEntitiesToTheRight(s16 posX) {
         if (DECREMENT_AND_CHECK(flag)) {
             if ((g_unkGraphicsStruct.D_80097428[flag >> 5] &
                  (1 << (flag & 0x1F))) == expected) {
-                CreateEntityWhenInVerticalRange(
-                    (LayoutEntity*)g_LayoutObjHorizontal);
+                OVL_EXPORT(CreateEntityWhenInVerticalRange)
+                ((LayoutEntity*)g_LayoutObjHorizontal);
             }
         } else {
-            CreateEntityWhenInVerticalRange(
-                (LayoutEntity*)g_LayoutObjHorizontal);
+            OVL_EXPORT(CreateEntityWhenInVerticalRange)
+            ((LayoutEntity*)g_LayoutObjHorizontal);
         }
 
         g_LayoutObjHorizontal += sizeof(LayoutEntity) / sizeof(u16);
@@ -255,12 +256,12 @@ static void CreateEntitiesToTheLeft(s16 posX) {
         if (DECREMENT_AND_CHECK(flag)) {
             if ((g_unkGraphicsStruct.D_80097428[flag >> 5] &
                  (1 << (flag & 0x1F))) == expected) {
-                CreateEntityWhenInVerticalRange(
-                    (LayoutEntity*)g_LayoutObjHorizontal);
+                OVL_EXPORT(CreateEntityWhenInVerticalRange)
+                ((LayoutEntity*)g_LayoutObjHorizontal);
             }
         } else {
-            CreateEntityWhenInVerticalRange(
-                (LayoutEntity*)g_LayoutObjHorizontal);
+            OVL_EXPORT(CreateEntityWhenInVerticalRange)
+            ((LayoutEntity*)g_LayoutObjHorizontal);
         }
 
         g_LayoutObjHorizontal -= sizeof(LayoutEntity) / sizeof(u16);
@@ -339,12 +340,12 @@ static void CreateEntitiesAbove(s16 posY) {
         if (DECREMENT_AND_CHECK(flag)) {
             if ((g_unkGraphicsStruct.D_80097428[flag >> 5] &
                  (1 << (flag & 0x1F))) == expected) {
-                CreateEntityWhenInHorizontalRange(
-                    (LayoutEntity*)g_LayoutObjVertical);
+                OVL_EXPORT(CreateEntityWhenInHorizontalRange)
+                ((LayoutEntity*)g_LayoutObjVertical);
             }
         } else {
-            CreateEntityWhenInHorizontalRange(
-                (LayoutEntity*)g_LayoutObjVertical);
+            OVL_EXPORT(CreateEntityWhenInHorizontalRange)
+            ((LayoutEntity*)g_LayoutObjVertical);
         }
 
         g_LayoutObjVertical += sizeof(LayoutEntity) / sizeof(u16);
@@ -382,12 +383,12 @@ static void CreateEntitiesBelow(s16 posY) {
         if (DECREMENT_AND_CHECK(flag)) {
             if ((g_unkGraphicsStruct.D_80097428[flag >> 5] &
                  (1 << (flag & 0x1F))) == expected) {
-                CreateEntityWhenInHorizontalRange(
-                    (LayoutEntity*)g_LayoutObjVertical);
+                OVL_EXPORT(CreateEntityWhenInHorizontalRange)
+                ((LayoutEntity*)g_LayoutObjVertical);
             }
         } else {
-            CreateEntityWhenInHorizontalRange(
-                (LayoutEntity*)g_LayoutObjVertical);
+            OVL_EXPORT(CreateEntityWhenInHorizontalRange)
+            ((LayoutEntity*)g_LayoutObjVertical);
         }
 
         g_LayoutObjVertical -= sizeof(LayoutEntity) / sizeof(u16);
@@ -401,7 +402,7 @@ static void CreateEntitiesBelow(s16 posY) {
  * - Parameters:
  *   - objLayoutId - the room to initialize
  */
-void InitRoomEntities(s32 objLayoutId) {
+void OVL_EXPORT(InitRoomEntities)(s32 objLayoutId) {
     Tilemap* tilemap = &g_Tilemap;
     s16 rightEdge;
     s16 temp;
@@ -455,7 +456,7 @@ void InitRoomEntities(s32 objLayoutId) {
  * Creates any new entities that may need to be created
  * based on a change in the scroll delta.
  */
-void UpdateRoomPosition() {
+void OVL_EXPORT(UpdateRoomPosition)() {
     Tilemap* tilemap = &g_Tilemap;
     s16 tmp;
     if (g_ScrollDeltaX != 0) {
@@ -481,7 +482,7 @@ void UpdateRoomPosition() {
     }
 }
 
-void CreateEntityFromCurrentEntity(u16 entityId, Entity* entity) {
+void OVL_EXPORT(CreateEntityFromCurrentEntity)(u16 entityId, Entity* entity) {
     DestroyEntity(entity);
     entity->entityId = entityId;
     entity->pfnUpdate = PfnEntityUpdates[entityId - 1];
@@ -489,7 +490,8 @@ void CreateEntityFromCurrentEntity(u16 entityId, Entity* entity) {
     entity->posY.i.hi = g_CurrentEntity->posY.i.hi;
 }
 
-void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity) {
+void OVL_EXPORT(CreateEntityFromEntity)(
+    u16 entityId, Entity* source, Entity* entity) {
     DestroyEntity(entity);
     entity->entityId = entityId;
     entity->pfnUpdate = PfnEntityUpdates[entityId - 1];

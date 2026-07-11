@@ -92,7 +92,7 @@ void EntityFrog(Entity* self) {
         PlaySfxPositional(SFX_FROG_CROAK);
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
             entity->params = 0;
         }
         DestroyEntity(self);

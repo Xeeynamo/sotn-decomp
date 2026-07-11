@@ -1008,7 +1008,7 @@ void EntityCutscenePhotograph(Entity* self) {
         }
         otherEnt = AllocEntity(self, &g_Entities[256]);
         if (otherEnt != NULL) {
-            CreateEntityFromCurrentEntity(E_ID(ID_2D), otherEnt);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(ID_2D), otherEnt);
             otherEnt->posX.i.hi = newEntX;
             otherEnt->posY.i.hi = newEntY;
             otherEnt->facingLeft = dualFlag;
@@ -1017,7 +1017,7 @@ void EntityCutscenePhotograph(Entity* self) {
 
         otherEnt = AllocEntity(self, &g_Entities[256]);
         if (otherEnt != NULL) {
-            CreateEntityFromCurrentEntity(E_ID(ID_2D), otherEnt);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(ID_2D), otherEnt);
             otherEnt->posX.i.hi = newEntX;
             otherEnt->posY.i.hi = newEntY + 0xC;
             otherEnt->facingLeft = dualFlag;

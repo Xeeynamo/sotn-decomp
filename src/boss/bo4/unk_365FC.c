@@ -57,7 +57,7 @@ void EntityUnkId1B(Entity* self) {
             next = self + 1;
             for (i = 1; i < 4; i++, next++) {
                 // no declaration
-                CreateEntityFromCurrentEntity(E_ID(ID_1B), next);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(ID_1B), next);
 #ifdef VERSION_PSP
                 next->params = i + leftBlockFlag;
 #else
@@ -67,7 +67,7 @@ void EntityUnkId1B(Entity* self) {
 
             for (i = 0; i < 4; i++, next++) {
                 // no declaration
-                CreateEntityFromCurrentEntity(E_ID(ID_1B), next);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(ID_1B), next);
 #ifdef VERSION_PSP
                 next->params = i + rightBlockFlag;
 #else

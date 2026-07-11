@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rno0.h"
 
-INCLUDE_ASM("st/rno0/nonmatchings/create_entity", CreateEntityFromLayout);
+INCLUDE_ASM("st/rno0/nonmatchings/create_entity", RNO0_CreateEntityFromLayout);
 
-INCLUDE_ASM("st/rno0/nonmatchings/create_entity", CreateEntityWhenInVerticalRange);
+INCLUDE_ASM("st/rno0/nonmatchings/create_entity", RNO0_CreateEntityWhenInVerticalRange);
 
-INCLUDE_ASM("st/rno0/nonmatchings/create_entity", CreateEntityWhenInHorizontalRange);
+INCLUDE_ASM("st/rno0/nonmatchings/create_entity", RNO0_CreateEntityWhenInHorizontalRange);
 
 INCLUDE_ASM("st/rno0/nonmatchings/create_entity", FindFirstEntityToTheRight);
 
@@ -23,10 +23,10 @@ INCLUDE_ASM("st/rno0/nonmatchings/create_entity", CreateEntitiesAbove);
 
 INCLUDE_ASM("st/rno0/nonmatchings/create_entity", CreateEntitiesBelow);
 
-INCLUDE_ASM("st/rno0/nonmatchings/create_entity", InitRoomEntities);
+INCLUDE_ASM("st/rno0/nonmatchings/create_entity", RNO0_InitRoomEntities);
 
-INCLUDE_ASM("st/rno0/nonmatchings/create_entity", UpdateRoomPosition);
+INCLUDE_ASM("st/rno0/nonmatchings/create_entity", RNO0_UpdateRoomPosition);
 
-INCLUDE_ASM("st/rno0/nonmatchings/create_entity", CreateEntityFromCurrentEntity);
+INCLUDE_ASM("st/rno0/nonmatchings/create_entity", RNO0_CreateEntityFromCurrentEntity);
 
-INCLUDE_ASM("st/rno0/nonmatchings/create_entity", CreateEntityFromEntity);
+INCLUDE_ASM("st/rno0/nonmatchings/create_entity", RNO0_CreateEntityFromEntity);

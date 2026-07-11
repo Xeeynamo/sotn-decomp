@@ -904,8 +904,8 @@ void func_us_801BD268(void) {
                         entityId = E_ID(SKELETON);
                         break;
                     }
-                    CreateEntityFromEntity(
-                        entityId, g_CurrentEntity, tempEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (entityId, g_CurrentEntity, tempEntity);
                     tempEntity->facingLeft = g_CurrentEntity->facingLeft;
                     if (g_CurrentEntity->facingLeft) {
                         tempEntity->posX.i.hi -= 8;
@@ -1235,7 +1235,8 @@ void EntityLesserDemon(Entity* self) {
             }
             tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_ID(ID_22), self, tempEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_ID(ID_22), self, tempEntity);
                 self->ext.lesserDemon.unk88 = tempEntity;
             } else {
                 self->ext.lesserDemon.unk88 = NULL;
@@ -1326,7 +1327,8 @@ void EntityLesserDemon(Entity* self) {
             if (func_us_801BBAB4()) {
                 tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromEntity(E_ID(ID_20), self, tempEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID(ID_20), self, tempEntity);
                     tempEntity->facingLeft = self->facingLeft;
                     if (self->facingLeft) {
                         tempEntity->posX.i.hi += 12;
@@ -1364,7 +1366,8 @@ void EntityLesserDemon(Entity* self) {
             self->ext.lesserDemon.unk84 = 2;
             tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_ID(ID_21), self, tempEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_ID(ID_21), self, tempEntity);
                 tempEntity->facingLeft = self->facingLeft;
             }
         }
@@ -1452,7 +1455,8 @@ void EntityLesserDemon(Entity* self) {
         if (g_Timer % 7 == 0) {
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, tempEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_INTENSE_EXPLOSION, self, tempEntity);
                 tempEntity->posX.i.hi += (OVL_EXPORT(Random)() & 0x1F) - 0x10;
                 tempEntity->posY.i.hi += (OVL_EXPORT(Random)() & 0x3F) - 0x20;
             }
@@ -1499,7 +1503,8 @@ void EntityLesserDemon(Entity* self) {
             if (g_Timer % 5 == 0) {
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_EXPLOSION, self, tempEntity);
                     tempEntity->params = 1;
                     tempEntity->posX.i.hi +=
                         (OVL_EXPORT(Random)() & 0x1F) - 0x10;

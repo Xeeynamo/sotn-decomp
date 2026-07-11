@@ -213,7 +213,8 @@ void EntityMinotaur(Entity* self) {
     case INIT:
         InitializeEntity(g_EInitMinotaur);
         entity = self + 1;
-        CreateEntityFromCurrentEntity(E_MINOTAUR_ATTACK_HITBOX, entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)
+        (E_MINOTAUR_ATTACK_HITBOX, entity);
         // fallthrough
     case FALL_TO_GROUND:
         if (UnkCollisionFunc3(sensors_ground) & 1) {
@@ -343,8 +344,8 @@ void EntityMinotaur(Entity* self) {
             if (!(g_Timer & 3)) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(
-                        E_MINOTAUR_SPIT_LIQUID, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_MINOTAUR_SPIT_LIQUID, self, entity);
                     if (self->facingLeft) {
                         entity->posX.i.hi += 0x20;
                     } else {
@@ -375,7 +376,8 @@ void EntityMinotaur(Entity* self) {
                 entity = AllocEntity(
                     &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_MINOTAUR_FIREBALL, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_MINOTAUR_FIREBALL, self, entity);
                     entity->posY.i.hi += 0x28;
                     entity->facingLeft = self->facingLeft;
                     entity->params = i;
@@ -485,7 +487,8 @@ void EntityMinotaur(Entity* self) {
                 entity = AllocEntity(
                     &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_MINOTAUR_DEATH_PUFF, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_MINOTAUR_DEATH_PUFF, self, entity);
                     entity->posX.i.hi += self->ext.minotaur.deathPuffPosX;
                     entity->posY.i.hi += 0x20;
                     entity->zPriority = self->zPriority + 1;

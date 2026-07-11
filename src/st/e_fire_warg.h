@@ -284,7 +284,7 @@ void EntityFireWarg(Entity* self) {
         part = self + 1;
         self->nextPart = part;
         // PSP version: 0x20
-        CreateEntityFromCurrentEntity(E_ID_30, part);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID_30, part);
         part->parent = self;
         if (self->params) {
             InitializeEntity(g_EInitFireWarg2);
@@ -294,7 +294,7 @@ void EntityFireWarg(Entity* self) {
             part->nextPart = ent_s4;
             part = ent_s4;
             // PSP version: 0x21
-            CreateEntityFromCurrentEntity(E_ID_31, part);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID_31, part);
             part->parent = self;
             part->nextPart = self;
         } else {
@@ -587,7 +587,8 @@ void EntityFireWarg(Entity* self) {
                 if (self->ext.fireWarg.unk80 == 0) {
                     part = AllocEntity(&g_Entities[160], &g_Entities[192]);
                     if (part != NULL) {
-                        CreateEntityFromCurrentEntity(E_FIRE_WARG_ATTACK, part);
+                        OVL_EXPORT(CreateEntityFromCurrentEntity)
+                        (E_FIRE_WARG_ATTACK, part);
                         part->facingLeft = self->facingLeft;
                         part->posY.i.hi += 0x28;
                         if (self->facingLeft) {
@@ -657,7 +658,8 @@ void EntityFireWarg(Entity* self) {
                 self->ext.fireWarg.unk80++;
                 part = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (part != NULL) {
-                    CreateEntityFromCurrentEntity(E_FIRE_WARG_DEATH, part);
+                    OVL_EXPORT(CreateEntityFromCurrentEntity)
+                    (E_FIRE_WARG_DEATH, part);
                     part->unk5A = self->unk5A;
                     if (self->hitEffect) {
                         part->palette = self->hitEffect;
@@ -926,7 +928,7 @@ void EntityUnkId31(Entity* self) {
         InitializeEntity(g_EInitFireWarg1);
         self->zPriority++;
         part = self + 1;
-        CreateEntityFromCurrentEntity(E_ID_30, part);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID_30, part);
         part->params = 1;
     }
     part = self - 2;
@@ -957,7 +959,7 @@ void EntityUnkId31(Entity* self) {
         for (i = 0; i < 3; i++) {
             part = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (part != NULL) {
-                CreateEntityFromCurrentEntity(E_EXPLOSION_3, part);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)(E_EXPLOSION_3, part);
                 if (self->facingLeft) {
                     part->posX.i.hi -= *hitboxPtr++;
                 } else {
@@ -977,7 +979,7 @@ void EntityUnkId31(Entity* self) {
                 break;
             }
 
-            CreateEntityFromCurrentEntity(E_EXPLOSION, part);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)(E_EXPLOSION, part);
             part->params = ((self->zPriority + 1) << 8) + 1;
             if (self->facingLeft) {
                 part->posX.i.hi -= *hitboxPtr++;
@@ -1140,7 +1142,7 @@ void EntityExplosion3(Entity* entity) {
     if (entity->ext.entityExplosion3.timer & 1) {
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity) {
-            CreateEntityFromCurrentEntity(E_EXPLOSION, newEntity);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)(E_EXPLOSION, newEntity);
             point = &D_80183060[(OVL_EXPORT(Random)() & 7) * 2];
             newEntity->posX.i.hi += *point++;
             newEntity->posY.i.hi += *point;
@@ -1149,7 +1151,7 @@ void EntityExplosion3(Entity* entity) {
     }
     entity->ext.entityExplosion3.timer++;
     if (entity->ext.entityExplosion3.timer >= 32) {
-        CreateEntityFromCurrentEntity(E_EXPLOSION, entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_EXPLOSION, entity);
         entity->params = 1;
     }
 }
@@ -1224,7 +1226,7 @@ void EntityFireWargWaveAttack(Entity* self) {
         }
 
         PlaySfxPositional(SFX_FIREBALL_SHOT_A);
-        CreateEntityFromCurrentEntity(E_ID_2F, newEntity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID_2F, newEntity);
         newEntity->facingLeft = self->facingLeft;
         InitializeEntity(g_EInitFireWarg3);
 

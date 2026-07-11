@@ -156,7 +156,7 @@ void EntityGaibon(Entity* self) {
         InitializeEntity(g_EInitGaibonNP3);
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         other = self + 1;
-        CreateEntityFromCurrentEntity(E_ID(GAIBON_LEG), other);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(GAIBON_LEG), other);
         other->zPriority = self->zPriority + 4;
         SetStep(GAIBON_IDLE);
         break;
@@ -270,8 +270,8 @@ void EntityGaibon(Entity* self) {
             if (!(self->ext.GS_Props.timer & speedLimit)) {
                 other = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (other != NULL) {
-                    CreateEntityFromEntity(
-                        E_ID(GAIBON_SMALL_FIREBALL), self, other);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID(GAIBON_SMALL_FIREBALL), self, other);
                     PlaySfxPositional(SFX_EXPLODE_FAST_A);
                     other->posY.i.hi -= 2;
                     if (self->facingLeft) {
@@ -368,12 +368,12 @@ void EntityGaibon(Entity* self) {
                 other = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (other != NULL) {
                     if (!self->ext.GS_Props.nearDeath) {
-                        CreateEntityFromEntity(
-                            E_ID(GAIBON_SMALL_FIREBALL), self, other);
+                        OVL_EXPORT(CreateEntityFromEntity)
+                        (E_ID(GAIBON_SMALL_FIREBALL), self, other);
                         PlaySfxPositional(SFX_EXPLODE_FAST_A);
                     } else {
-                        CreateEntityFromEntity(
-                            E_ID(GAIBON_BIG_FIREBALL), self, other);
+                        OVL_EXPORT(CreateEntityFromEntity)
+                        (E_ID(GAIBON_BIG_FIREBALL), self, other);
                         PlaySfxPositional(SFX_EXPLODE_B);
                     }
                     other->posY.i.hi -= 6;
@@ -406,8 +406,8 @@ void EntityGaibon(Entity* self) {
                 other = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (other != NULL) {
                     PlaySfxPositional(SFX_EXPLODE_B);
-                    CreateEntityFromEntity(
-                        E_ID(GAIBON_BIG_FIREBALL), self, other);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID(GAIBON_BIG_FIREBALL), self, other);
                     other->posY.i.hi -= 2;
                     if (self->facingLeft) {
                         other->posX.i.hi += 12;
@@ -631,7 +631,8 @@ void EntityGaibon(Entity* self) {
             if (!(self->ext.GS_Props.timer & 7)) {
                 other = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (other != NULL) {
-                    CreateEntityFromEntity(E_EXPLOSION, self, other);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_EXPLOSION, self, other);
                     other->posY.i.hi += 28;
                     // Scatter bones randomly between +- 32
                     other->posX.i.hi += ((OVL_EXPORT(Random)() & 63) - 32);
@@ -771,8 +772,8 @@ void EntityLargeGaibonProjectile(Entity* self) {
         if (!(g_Timer & 3)) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(
-                    E_ID(GAIBON_BIG_FIREBALL), self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_ID(GAIBON_BIG_FIREBALL), self, newEntity);
                 newEntity->params = 1;
                 newEntity->rotate = self->rotate;
                 newEntity->zPriority = self->zPriority + 1;

@@ -33,7 +33,8 @@ void EntityPrisoner(Entity* self) {
         }
         if ((self->params & 0x10) == 0) {
             tempEntity = self + 1;
-            CreateEntityFromEntity(E_ID(PRISONER), self, tempEntity);
+            OVL_EXPORT(CreateEntityFromEntity)
+            (E_ID(PRISONER), self, tempEntity);
             tempEntity->params = self->params + 0x10;
             self->step = 1;
             return;

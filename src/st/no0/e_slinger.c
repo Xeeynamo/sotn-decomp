@@ -129,8 +129,8 @@ void EntitySlinger(Entity* self) {
                 newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEntity != NULL) { // Spawn bone
                     PlaySfxPositional(SFX_BONE_THROW);
-                    CreateEntityFromCurrentEntity(
-                        E_SLINGER_THROWN_BONE, newEntity);
+                    OVL_EXPORT(CreateEntityFromCurrentEntity)
+                    (E_SLINGER_THROWN_BONE, newEntity);
                     if (self->facingLeft) {
                         newEntity->posX.i.hi -= 8;
                     } else {
@@ -187,7 +187,8 @@ void EntitySlinger(Entity* self) {
         for (i = 0; i < 7; i++) { // Spawn Slinger pieces
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(E_SLINGER_PIECES, newEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_SLINGER_PIECES, newEntity);
                 newEntity->facingLeft = self->facingLeft;
                 newEntity->params = i;
                 newEntity->ext.skeleton.explosionTimer = dead_parts_timer[i];

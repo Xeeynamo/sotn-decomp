@@ -31,7 +31,7 @@ void EntityBlock(Entity* self) {
             self->step = SHORTCUT_OPEN;
         } else {
             statue = self + 1;
-            CreateEntityFromEntity(E_ID(STATUE), self, statue);
+            OVL_EXPORT(CreateEntityFromEntity)(E_ID(STATUE), self, statue);
             statue->posX.i.hi += 16;
             statue->posY.i.hi += 16;
         case SHORTCUT_CHECK_STATUE:
@@ -93,7 +93,7 @@ void EntityStatue(Entity* self) {
     if (self->flags & FLAG_DEAD) {
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
             entity->posX.i.hi -= 8;
             entity->posY.i.hi -= 8;
             entity->params = EXPLOSION_FIREBALL;

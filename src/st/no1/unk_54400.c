@@ -116,7 +116,7 @@ void func_us_801D4558(Entity* self) {
         if ((self->ext.et_801D4558.unk7D & 3) == 0) {
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
-                CreateEntityFromCurrentEntity(E_ID_52, tempEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID_52, tempEntity);
                 tempVar = OVL_EXPORT(Random)();
                 tempEntity->posX.i.hi += D_us_801831F4[tempVar & 7];
                 tempEntity->posY.i.hi += D_us_801831F4[(tempVar - 2) & 7];

@@ -29,7 +29,7 @@ void EntityTableWithGlobe(Entity* self) {
             PlaySfxPositional(SFX_GLASS_BREAK_E);
             self->hitboxState = 0;
             child = self + 1;
-            CreateEntityFromEntity(E_HEART_DROP, self, child);
+            OVL_EXPORT(CreateEntityFromEntity)(E_HEART_DROP, self, child);
             child->params = self->params;
             SetStep(2);
         }

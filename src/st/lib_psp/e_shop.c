@@ -2447,7 +2447,8 @@ void EntityLibrarianChair(Entity* self) {
             if (!(g_CastleFlags[LIBRARIAN_DROPS] & 1)) {
                 newEnt = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEnt != NULL) {
-                    CreateEntityFromCurrentEntity(E_PRIZE_DROP, newEnt);
+                    OVL_EXPORT(CreateEntityFromCurrentEntity)
+                    (E_PRIZE_DROP, newEnt);
                     newEnt->params = 23;
                     g_CastleFlags[LIBRARIAN_DROPS] |= 1;
                 }
@@ -2457,7 +2458,8 @@ void EntityLibrarianChair(Entity* self) {
                 (self->ext.libraryChair.totalHits >= 64)) {
                 newEnt = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEnt != NULL) {
-                    CreateEntityFromCurrentEntity(E_EQUIP_ITEM_DROP, newEnt);
+                    OVL_EXPORT(CreateEntityFromCurrentEntity)
+                    (E_EQUIP_ITEM_DROP, newEnt);
                     newEnt->params = NUM_HAND_ITEMS + ITEM_AXE_LORD_ARMOR;
                     g_CastleFlags[LIBRARIAN_DROPS] |= 2;
                 }
@@ -2467,7 +2469,8 @@ void EntityLibrarianChair(Entity* self) {
                 (self->ext.libraryChair.consecutiveHits >= 16)) {
                 newEnt = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEnt != NULL) {
-                    CreateEntityFromCurrentEntity(E_EQUIP_ITEM_DROP, newEnt);
+                    OVL_EXPORT(CreateEntityFromCurrentEntity)
+                    (E_EQUIP_ITEM_DROP, newEnt);
                     newEnt->params = NUM_HAND_ITEMS + ITEM_RING_OF_ARCANA;
                     g_CastleFlags[LIBRARIAN_DROPS] |= 4;
                 }
@@ -2479,7 +2482,8 @@ void EntityLibrarianChair(Entity* self) {
                 (g_CastleFlags[INVERTED_CASTLE_UNLOCKED])) {
                 newEnt = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEnt != NULL) {
-                    CreateEntityFromCurrentEntity(E_EQUIP_ITEM_DROP, newEnt);
+                    OVL_EXPORT(CreateEntityFromCurrentEntity)
+                    (E_EQUIP_ITEM_DROP, newEnt);
                     newEnt->params = NUM_HAND_ITEMS + ITEM_DRACULA_TUNIC;
                     g_CastleFlags[LIBRARIAN_DROPS] |= 8;
                 }
@@ -3039,13 +3043,17 @@ void func_us_801B15C0(Entity* self) {
             case 0:
                 OVL_EXPORT(CutsceneFlags) |= 0x400;
                 tempEntity = self + 1;
-                CreateEntityFromCurrentEntity(E_ID(ID_27), tempEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(ID_27), tempEntity);
                 tempEntity++;
-                CreateEntityFromCurrentEntity(E_ID(ID_28), tempEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(ID_28), tempEntity);
                 tempEntity++;
-                CreateEntityFromCurrentEntity(E_ID(ID_29), tempEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(ID_29), tempEntity);
                 tempEntity++;
-                CreateEntityFromCurrentEntity(E_ID(ID_2A), tempEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(ID_2A), tempEntity);
                 SetStep(5);
                 g_api.PlaySfx(SFX_UI_CONFIRM);
                 break;
@@ -3053,7 +3061,8 @@ void func_us_801B15C0(Entity* self) {
             case 1:
                 OVL_EXPORT(CutsceneFlags) |= 0x400;
                 tempEntity = self + 1;
-                CreateEntityFromCurrentEntity(E_ID(ID_2D), tempEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(ID_2D), tempEntity);
                 SetStep(5);
                 g_api.PlaySfx(SFX_UI_CONFIRM);
                 break;
@@ -3061,7 +3070,8 @@ void func_us_801B15C0(Entity* self) {
             case 2:
                 OVL_EXPORT(CutsceneFlags) |= 0x400;
                 tempEntity = self + 1;
-                CreateEntityFromCurrentEntity(E_ID(ID_2E), tempEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(ID_2E), tempEntity);
                 SetStep(5);
                 g_api.PlaySfx(SFX_UI_CONFIRM);
                 break;
@@ -3069,7 +3079,8 @@ void func_us_801B15C0(Entity* self) {
             case 3:
                 OVL_EXPORT(CutsceneFlags) |= 0x400;
                 tempEntity = self + 1;
-                CreateEntityFromCurrentEntity(E_ID(ID_48), tempEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(ID_48), tempEntity);
                 SetStep(5);
                 g_api.PlaySfx(SFX_UI_CONFIRM);
                 break;
@@ -3082,14 +3093,18 @@ void func_us_801B15C0(Entity* self) {
             case 5:
                 OVL_EXPORT(CutsceneFlags) |= 0x400;
                 tempEntity = self + 1;
-                CreateEntityFromCurrentEntity(E_ID(ID_27), tempEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(ID_27), tempEntity);
                 tempEntity->params = 1;
                 tempEntity++;
-                CreateEntityFromCurrentEntity(E_ID(ID_28), tempEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(ID_28), tempEntity);
                 tempEntity++;
-                CreateEntityFromCurrentEntity(E_ID(ID_29), tempEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(ID_29), tempEntity);
                 tempEntity++;
-                CreateEntityFromCurrentEntity(E_ID(ID_2A), tempEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(ID_2A), tempEntity);
                 SetStep(5);
                 g_api.PlaySfx(SFX_UI_CONFIRM);
                 break;
@@ -3098,7 +3113,8 @@ void func_us_801B15C0(Entity* self) {
             case 6:
                 OVL_EXPORT(CutsceneFlags) |= 0x400;
                 tempEntity = self + 1;
-                CreateEntityFromCurrentEntity(E_ID(ID_4F), tempEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(ID_4F), tempEntity);
                 SetStep(5);
                 g_api.PlaySfx(SFX_UI_CONFIRM);
                 break;
@@ -5498,7 +5514,7 @@ void func_us_801B56E4(Entity* self) {
 
 void func_us_801B5F18(Entity* self) {
     Entity* tempEntity = &g_Entities[192];
-    CreateEntityFromCurrentEntity(E_ID(ID_25), tempEntity);
+    OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(ID_25), tempEntity);
     self->step++;
 #ifdef VERSION_PSP
     *OVL_EXPORT(cutscene_data_offset_four) = 0;
@@ -6320,7 +6336,7 @@ void func_us_801B6F30(Entity* self) {
                 prim = prim->next;
             }
             tempEntity = self + 1;
-            CreateEntityFromCurrentEntity(E_ID(ID_2F), tempEntity);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(ID_2F), tempEntity);
             tempEntity->params =
                 (self->ext.et_801B6F30.unk82 + self->ext.et_801B6F30.unk80) *
                     2 +

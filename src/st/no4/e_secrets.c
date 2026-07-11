@@ -106,7 +106,7 @@ void EntityBreakableCrystalFloor(Entity* self) {
         }
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, newEntity);
             newEntity->params = 0x11;
         }
         // There is a cooldown of 32 frames between breaks
@@ -115,7 +115,8 @@ void EntityBreakableCrystalFloor(Entity* self) {
         if (self->ext.breakable.breakCount == 3) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_EXPLOSION, self, newEntity);
                 newEntity->params = 0x13;
             }
             g_api.PlaySfx(SFX_WALL_DEBRIS_B);
@@ -183,7 +184,7 @@ void EntityBreakableWall(Entity* self) {
         }
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, newEntity);
             newEntity->params = 0x11;
         }
         self->ext.breakable.resetTimer = 0x14;
@@ -192,8 +193,8 @@ void EntityBreakableWall(Entity* self) {
             for (i = 0; i < 0x10; i++) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(
-                        E_ID(BREAKABLE_WALL_DEBRIS), self, newEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID(BREAKABLE_WALL_DEBRIS), self, newEntity);
                     newEntity->posX.i.hi += (OVL_EXPORT(Random)() & 0xF) - 4;
                     newEntity->posY.i.hi += (i * 4) - 0x1F;
                     newEntity->velocityX =
@@ -252,8 +253,8 @@ void EntityBreakableWallDebris(Entity* self) {
             if (self->velocityY < FIX(0.5)) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(
-                        E_INTENSE_EXPLOSION, self, newEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_INTENSE_EXPLOSION, self, newEntity);
                     newEntity->params = 0x10;
                 }
                 DestroyEntity(self);

@@ -15,7 +15,8 @@ void func_us_801B872C(Entity* self) {
             newEntity = AllocEntity(&g_Entities[STAGE_ENTITY_START],
                                     &g_Entities[TOTAL_ENTITY_COUNT]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_EXPLOSION, self, newEntity);
                 newEntity->params = (OVL_EXPORT(Random)() & 3) - 0x4000;
             }
         }

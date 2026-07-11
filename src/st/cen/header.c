@@ -1,9 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "cen.h"
 
-void OVL_EXPORT(Update)(void);
-void UpdateRoomPosition(void);
-void InitRoomEntities(s32 objLayoutId);
+void OVL_EXPORT(InitRoomEntities)(s32 objLayoutId);
 
 extern RoomHeader OVL_EXPORT(rooms)[];
 extern u_long* OVL_EXPORT(cluts)[];
@@ -25,8 +23,8 @@ u8* D_pspeu_09293958[];
 Overlay OVL_EXPORT(Overlay) = {
     .Update = OVL_EXPORT(Update),
     .HitDetection = OVL_EXPORT(HitDetection),
-    .UpdateRoomPosition = UpdateRoomPosition,
-    .InitRoomEntities = InitRoomEntities,
+    .UpdateRoomPosition = OVL_EXPORT(UpdateRoomPosition),
+    .InitRoomEntities = OVL_EXPORT(InitRoomEntities),
     .rooms = OVL_EXPORT(rooms),
     .spriteBanks = OVL_EXPORT(spriteBanks),
     .cluts = OVL_EXPORT(cluts),

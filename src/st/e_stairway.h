@@ -81,17 +81,19 @@ void EntityStairwayPiece(Entity* self) {
         newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
         if (newEntity != NULL) {
 #if defined(INVERTED_STAGE)
-            CreateEntityFromEntity(E_HEART_DROP, self, newEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_HEART_DROP, self, newEntity);
             newEntity->params = self->params;
 #else
-            CreateEntityFromEntity(E_EQUIP_ITEM_DROP, self, newEntity);
+            OVL_EXPORT(CreateEntityFromEntity)
+            (E_EQUIP_ITEM_DROP, self, newEntity);
             newEntity->params = ITEM_TURKEY;
 #endif
         }
 
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
-            CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, newEntity);
+            OVL_EXPORT(CreateEntityFromEntity)
+            (E_INTENSE_EXPLOSION, self, newEntity);
             newEntity->params = 0x10;
             newEntity->zPriority = self->zPriority + 1;
             newEntity->posX.i.hi += 8;
@@ -158,7 +160,7 @@ void EntityStairwayPiece(Entity* self) {
         g_api.PlaySfx(SFX_WALL_DEBRIS_B);
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, newEntity);
             newEntity->params = 0x11;
             newEntity->zPriority = self->zPriority + 1;
         }
@@ -166,7 +168,8 @@ void EntityStairwayPiece(Entity* self) {
         for (i = 0; i < 6; i++) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_ID(FALLING_ROCK), self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_ID(FALLING_ROCK), self, newEntity);
                 newEntity->params = OVL_EXPORT(Random)() & 3;
                 if (newEntity->params == 3) {
                     newEntity->params = 0;
@@ -212,7 +215,8 @@ void EntityFallingRock(Entity* self) {
         if (collider.effects & EFFECT_SOLID) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_INTENSE_EXPLOSION, self, newEntity);
                 newEntity->params = 0x10;
                 if (animFrame == 0) {
                     newEntity->params = 0x13;

@@ -205,7 +205,7 @@ void EntityClockRoomController(Entity* self) {
         // Create clock hands
         entity = self + 5;
         for (i = 0; i < 2; i++, entity++) {
-            CreateEntityFromCurrentEntity(E_CLOCK_HANDS, entity);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)(E_CLOCK_HANDS, entity);
             entity->params = i;
         }
 #ifdef VERSION_PSP
@@ -217,14 +217,14 @@ void EntityClockRoomController(Entity* self) {
         // Create Birdcage doors
         entity = self + 7;
         for (i = 0; i < 2; i++, entity++) {
-            CreateEntityFromCurrentEntity(E_BIRDCAGE_DOOR, entity);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)(E_BIRDCAGE_DOOR, entity);
             entity->params = i;
         }
         UpdateBirdcages(self, timer_minutes);
 
         // Shadow for the Bighorn sheep head on the center
         entity = self + 9;
-        CreateEntityFromCurrentEntity(E_CLOCK_ROOM_SHADOW, entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_CLOCK_ROOM_SHADOW, entity);
         entity->animSet = ANIMSET_OVL(1);
         entity->animCurFrame = 23;
         entity->zPriority = 0x40;
@@ -236,21 +236,21 @@ void EntityClockRoomController(Entity* self) {
         // Create path blocking statues
         entity = self + 1;
         for (i = 0; i < 2; i++, entity++) {
-            CreateEntityFromCurrentEntity(E_STATUE, entity);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)(E_STATUE, entity);
             entity->params = i;
         }
 
         // Create the gears that drive the statues
         entity = self + 12;
         for (i = 0; i < 2; i++, entity++) {
-            CreateEntityFromCurrentEntity(E_STATUE_GEAR, entity);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)(E_STATUE_GEAR, entity);
             entity->params = i;
         }
 
         // Create the stones on the floor
         entity = self + 14;
         for (i = 0; i < 2; i++, entity++) {
-            CreateEntityFromCurrentEntity(E_STONE_DOOR, entity);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)(E_STONE_DOOR, entity);
             entity->params = i;
         }
         break;

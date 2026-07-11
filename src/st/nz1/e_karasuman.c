@@ -243,8 +243,8 @@ void EntityKarasuman(Entity* self) {
                 for (i = 0; i < 8; i++) {
                     entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                     if (entity != NULL) {
-                        CreateEntityFromEntity(
-                            E_ID(KARASUMAN_FEATHER_ATTACK), self, entity);
+                        OVL_EXPORT(CreateEntityFromEntity)
+                        (E_ID(KARASUMAN_FEATHER_ATTACK), self, entity);
                         entity->posY.i.hi -= 28;
                     }
                 }
@@ -300,8 +300,8 @@ void EntityKarasuman(Entity* self) {
             for (i = 0; i < 4; i++) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(
-                        E_ID(KARASUMAN_ORB_ATTACK), self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID(KARASUMAN_ORB_ATTACK), self, entity);
                     entity->params = i;
                     entity->ext.karasuman.parent = self;
                     entity->zPriority = self->zPriority + 1;
@@ -364,8 +364,8 @@ void EntityKarasuman(Entity* self) {
             if (!(self->ext.karasuman.timer & 3)) {
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(
-                        E_ID(KARASUMAN_RAVEN_ATTACK), self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID(KARASUMAN_RAVEN_ATTACK), self, entity);
                     entity->ext.karasuman.parent = self;
                     entity->params = 1;
                 }
@@ -414,8 +414,8 @@ void EntityKarasuman(Entity* self) {
                 g_api.PlaySfx(SFX_WING_FLAP_A);
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(
-                        E_ID(KARASUMAN_RAVEN_ATTACK), self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID(KARASUMAN_RAVEN_ATTACK), self, entity);
                     entity->facingLeft = self->facingLeft;
                     entity->ext.karasuman.parent = self;
                 }
@@ -444,8 +444,8 @@ void EntityKarasuman(Entity* self) {
             for (i = 0; i < 8; i++) {
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(
-                        E_ID(KARASUMAN_FEATHER), self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID(KARASUMAN_FEATHER), self, entity);
                     if (OVL_EXPORT(Random)() & 1) {
                         entity->zPriority = self->zPriority + 1;
                     } else {
@@ -472,8 +472,8 @@ void EntityKarasuman(Entity* self) {
             for (i = 0; i < 32; i++) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[256]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(
-                        E_ID(KARASUMAN_FEATHER), self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID(KARASUMAN_FEATHER), self, entity);
                     if (OVL_EXPORT(Random)() & 1) {
                         entity->zPriority = self->zPriority + 1;
                     } else {
@@ -493,8 +493,8 @@ void EntityKarasuman(Entity* self) {
         case 2:
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(
-                    E_ID(KARASUMAN_RAVEN_ABSORB), self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_ID(KARASUMAN_RAVEN_ABSORB), self, entity);
                 entity->params = 1;
                 entity->zPriority = self->zPriority + 1;
             }
@@ -504,8 +504,8 @@ void EntityKarasuman(Entity* self) {
         case 3:
             entity = AllocEntity(&g_Entities[160], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(
-                    E_ID(KARASUMAN_RAVEN_ABSORB), self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_ID(KARASUMAN_RAVEN_ABSORB), self, entity);
                 entity->facingLeft = OVL_EXPORT(Random)() & 1;
                 entity->params = 0;
                 entity->zPriority = self->zPriority + 1;
@@ -528,8 +528,8 @@ void EntityKarasuman(Entity* self) {
             for (i = 0; i < 4; i++) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[256]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(
-                        E_ID(EXPLODE_PUFF_OPAQUE), self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID(EXPLODE_PUFF_OPAQUE), self, entity);
                     entity->facingLeft = OVL_EXPORT(Random)() & 1;
                     entity->zPriority = self->zPriority + 1;
                     entity->posY.i.hi += 32;
@@ -614,7 +614,7 @@ void EntityKarasumanFeatherAttack(Entity* self) {
         if (self->flags & FLAG_DEAD) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
                 entity->params = 1;
             }
             DestroyEntity(self);
@@ -741,7 +741,7 @@ void EntityKarasumanRavenAttack(Entity* self) {
         if (self->flags & FLAG_DEAD) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
                 entity->params = 1;
             }
             DestroyEntity(self);

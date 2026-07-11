@@ -137,8 +137,8 @@ void EntityHeartRoomGoldDoor(Entity* self) {
             if (!(g_Timer & 0xF)) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(
-                        E_INTENSE_EXPLOSION, self, newEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_INTENSE_EXPLOSION, self, newEntity);
                     newEntity->posY.i.hi = 188;
                     newEntity->posX.i.hi += -8 + (OVL_EXPORT(Random)() & 15);
                     newEntity->params = 0x10;

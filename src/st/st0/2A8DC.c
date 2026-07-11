@@ -54,7 +54,8 @@ void EntitySecretButton(Entity* self) {
             g_api.PlaySfx(SFX_WALL_DEBRIS_B);
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_ID(SECRET_BUTTON), self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_ID(SECRET_BUTTON), self, newEntity);
                 newEntity->params = 1;
             }
             self->step++;
@@ -97,7 +98,8 @@ void EntitySecretButton(Entity* self) {
             g_api.PlaySfx(SFX_EXPLODE_FAST_A);
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_EXPLOSION, self, newEntity);
                 newEntity->params = 0x11;
             }
             DestroyEntity(self);
@@ -156,7 +158,8 @@ void EntitySecretStairs(Entity* self) {
             self->ext.secretStairs.unk84 = true;
             otherEntity = self + 1;
             for (i = 0; i < 3; i++, otherEntity++) {
-                CreateEntityFromCurrentEntity(E_ID(SECRET_STAIRS), otherEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(SECRET_STAIRS), otherEntity);
                 otherEntity->params = i + 1;
             }
 

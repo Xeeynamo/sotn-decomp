@@ -187,7 +187,8 @@ void EntityWerewolf(Entity* self) {
     case INIT:
         InitializeEntity(g_EInitWerewolf);
         entity = self + 1;
-        CreateEntityFromCurrentEntity(E_WEREWOLF_ATTACK_HITBOX, entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)
+        (E_WEREWOLF_ATTACK_HITBOX, entity);
         // fallthrough
     case FALL_TO_GROUND:
         if (UnkCollisionFunc3(sensors_ground) & 1) {
@@ -344,8 +345,8 @@ void EntityWerewolf(Entity* self) {
                 PlaySfxPositional(SFX_OUIJA_TABLE_DEATH);
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(
-                        E_WEREWOLF_ENERGY_WAVE, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_WEREWOLF_ENERGY_WAVE, self, entity);
                     entity->facingLeft = self->facingLeft;
                     entity->posY.i.hi -= 0x10;
                 }
@@ -439,7 +440,8 @@ void EntityWerewolf(Entity* self) {
                 entity = AllocEntity(
                     &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_WEREWOLF_AFTERIMAGE, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_WEREWOLF_AFTERIMAGE, self, entity);
                     entity->facingLeft = self->facingLeft;
                     entity->rotate = self->rotate;
                     entity->params = self->animCurFrame;
@@ -463,7 +465,8 @@ void EntityWerewolf(Entity* self) {
                 entity = AllocEntity(
                     &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_WEREWOLF_AFTERIMAGE, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_WEREWOLF_AFTERIMAGE, self, entity);
                     entity->facingLeft = self->facingLeft;
                     entity->rotate = self->rotate;
                     entity->params = self->animCurFrame;
@@ -507,8 +510,8 @@ void EntityWerewolf(Entity* self) {
                 entity = AllocEntity(
                     &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(
-                        E_WEREWOLF_DEATH_FLAMES, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_WEREWOLF_DEATH_FLAMES, self, entity);
                     entity->posY.i.hi += 0x1B;
                     entity->zPriority = self->zPriority;
                 }

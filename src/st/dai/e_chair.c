@@ -65,8 +65,8 @@ void EntityChair(Entity* self) {
         if (self->params & 0xFF00) {
             confessionalGhost = self + 1;
             if (self->params & LEFT_CHAIR) {
-                CreateEntityFromCurrentEntity(
-                    E_ID(CONFESSIONAL_GHOST), confessionalGhost);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(CONFESSIONAL_GHOST), confessionalGhost);
                 confessionalGhost->posX.i.hi = 176;
                 confessionalGhost->posY.i.hi = 128;
                 confessionalGhost->params = CONFESSIONAL_GHOST_PRIEST;
@@ -76,8 +76,8 @@ void EntityChair(Entity* self) {
                 break;
             }
             if (self->params & RIGHT_CHAIR) {
-                CreateEntityFromCurrentEntity(
-                    E_ID(CONFESSIONAL_GHOST), confessionalGhost);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(CONFESSIONAL_GHOST), confessionalGhost);
                 confessionalGhost->posX.i.hi = 64;
                 confessionalGhost->posY.i.hi = 128;
                 confessionalGhost->params = CONFESSIONAL_GHOST_PARISHIONER;

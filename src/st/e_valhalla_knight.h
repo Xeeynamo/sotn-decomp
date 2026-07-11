@@ -60,12 +60,12 @@ void EntityValhallaKnight(Entity* self) {
         self->ext.valhallaKnight.unk84 =
             g_Tilemap.scrollX.i.hi + self->posX.i.hi;
         part = self + 1;
-        CreateEntityFromCurrentEntity(E_VALHALLA_KNIGHT_UNK1, part);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_VALHALLA_KNIGHT_UNK1, part);
         part->params = 0;
         self->nextPart = part;
         self->parent = NULL;
         part = self + 2;
-        CreateEntityFromCurrentEntity(E_VALHALLA_KNIGHT_UNK1, part);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_VALHALLA_KNIGHT_UNK1, part);
         part->params = 1;
         /* fallthrough */
     case 1:
@@ -226,7 +226,7 @@ void EntityValhallaKnight(Entity* self) {
         for (i = 0; i < 3; i++) {
             part = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (part != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, part);
+                OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, part);
                 if (self->facingLeft) {
                     part->posX.i.hi -= D_us_801820F4[i].x;
                 } else {
@@ -239,7 +239,8 @@ void EntityValhallaKnight(Entity* self) {
         for (i = 0; i < 13; i++) {
             part = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (part != NULL) {
-                CreateEntityFromEntity(E_VALHALLA_KNIGHT_UNK2, self, part);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_VALHALLA_KNIGHT_UNK2, self, part);
                 part->params = i;
                 part->facingLeft = self->facingLeft;
                 part->velocityX = self->velocityX;
@@ -332,7 +333,8 @@ void func_us_801C8AAC(Entity* self) {
         if ((delay & 7) == 0) {
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_EXPLOSION, self, tempEntity);
                 tempEntity->params = OVL_EXPORT(Random)() & 1;
                 tempEntity->zPriority = self->zPriority + 1;
             }

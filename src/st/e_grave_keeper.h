@@ -59,8 +59,8 @@ static void SpawnDustParticles(void) {
 
     dustEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
     if (dustEntity != NULL) {
-        CreateEntityFromEntity(
-            E_INTENSE_EXPLOSION, g_CurrentEntity, dustEntity);
+        OVL_EXPORT(CreateEntityFromEntity)
+        (E_INTENSE_EXPLOSION, g_CurrentEntity, dustEntity);
         dustEntity->posY.i.hi += 0x18;
         if (g_CurrentEntity->facingLeft) {
             dustEntity->posX.i.hi -= 8;
@@ -150,7 +150,8 @@ void EntityGraveKeeper(Entity* self) {
         InitializeEntity(g_EInitGraveKeeper);
         self->animCurFrame = 0xB;
         entity = self + 1;
-        CreateEntityFromCurrentEntity(E_GRAVE_KEEPER_HITBOX, entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)
+        (E_GRAVE_KEEPER_HITBOX, entity);
 #ifdef STAGE_IS_ARE
         self->zPriority = 0x5C;
 #endif
@@ -491,7 +492,7 @@ void EntityGraveKeeper(Entity* self) {
         case 2:
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
                 entity->params = 3;
             }
             PlaySfxPositional(SFX_FM_EXPLODE_B);

@@ -57,11 +57,11 @@ void func_us_801BE880(Entity* self) {
             self->step = 5;
         } else {
             tempEntity = self + 2;
-            CreateEntityFromEntity(E_ID(ID_25), self, tempEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_ID(ID_25), self, tempEntity);
             tempEntity->posY.i.hi -= 0x18;
             tempEntity->params = 2;
             tempEntity = self + 1;
-            CreateEntityFromEntity(E_ID(ID_25), self, tempEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_ID(ID_25), self, tempEntity);
             tempEntity->posY.i.hi -= 0x30;
             tempEntity->params = 1;
         }
@@ -73,7 +73,8 @@ void func_us_801BE880(Entity* self) {
             for (i = 0; i < 5; i++) {
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromEntity(E_ID(ID_26), self, tempEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID(ID_26), self, tempEntity);
                     tempEntity->posX.i.hi += 0x10;
                     tempEntity->posY.i.hi -= 0x30;
                     tempEntity->params = i;
@@ -123,7 +124,8 @@ void func_us_801BE880(Entity* self) {
         g_CastleFlags[NO1_SECRET_WALL_BROKEN] = 1;
         tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
         if (tempEntity != NULL) {
-            CreateEntityFromEntity(E_EQUIP_ITEM_DROP, self, tempEntity);
+            OVL_EXPORT(CreateEntityFromEntity)
+            (E_EQUIP_ITEM_DROP, self, tempEntity);
             tempEntity->params = 0x43;
             tempEntity->posY.i.hi -= 0x30;
         }
@@ -177,15 +179,16 @@ void func_us_801BEB54(Entity* self) {
         case 0:
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_EXPLOSION, self, tempEntity);
                 tempEntity->posY.i.hi -= 8;
                 tempEntity->params = 0x13;
             }
             for (i = 0; i < 3; i++) {
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromEntity(
-                        E_INTENSE_EXPLOSION, self, tempEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_INTENSE_EXPLOSION, self, tempEntity);
                     tempEntity->posX.i.hi += (i * 0x10) - 0x10;
                     tempEntity->params = 0x10;
                 }
@@ -193,7 +196,8 @@ void func_us_801BEB54(Entity* self) {
             for (i = 0; i < 5; i++) {
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromEntity(E_ID(ID_27), self, tempEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID(ID_27), self, tempEntity);
                     tempEntity->posX.i.hi +=
                         (i * 8) - 0x10 + (OVL_EXPORT(Random)() & 3);
                     tempEntity->posY.i.hi -= (OVL_EXPORT(Random)() & 7) + 0x14;
@@ -350,8 +354,8 @@ void func_us_801BF074(Entity* self) {
                     tempEntity =
                         AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (tempEntity != NULL) {
-                        CreateEntityFromEntity(
-                            E_INTENSE_EXPLOSION, self, tempEntity);
+                        OVL_EXPORT(CreateEntityFromEntity)
+                        (E_INTENSE_EXPLOSION, self, tempEntity);
                         tempEntity->params = 0x10;
                     }
                 }

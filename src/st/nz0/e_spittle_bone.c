@@ -40,7 +40,8 @@ void EntitySpittleBone(Entity* self) {
         if (UnkCollisionFunc3(D_801824CC) & 1) {
             self->ext.spittleBone.unk7C = 0;
             newEntity = self + 1;
-            CreateEntityFromEntity(E_ROTATE_SPITTLEBONE, self, newEntity);
+            OVL_EXPORT(CreateEntityFromEntity)
+            (E_ROTATE_SPITTLEBONE, self, newEntity);
             newEntity->facingLeft = self->facingLeft;
             newEntity->ext.spittleBone.unk7C = self->ext.spittleBone.unk7C;
             if (self->facingLeft) {
@@ -71,7 +72,8 @@ void EntitySpittleBone(Entity* self) {
             (OVL_EXPORT(Random)() & 0x1F) == 0) {
             newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_SPITTLEBONE_SPIT, self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_SPITTLEBONE_SPIT, self, newEntity);
                 newEntity->posY.i.hi += 24;
                 newEntity->ext.spittleBone.unk84 = self;
             }
@@ -103,7 +105,7 @@ void EntitySpittleBone(Entity* self) {
 
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, newEntity);
             newEntity->params = 1;
             newEntity->posX.i.hi += (rsin(self->rotate) * -16) >> 0xC;
             newEntity->posY.i.hi += (rcos(self->rotate) * -16) >> 0xC;
@@ -118,7 +120,8 @@ void EntitySpittleBone(Entity* self) {
         if (!--self->ext.spittleBone.unk82) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_EXPLOSION, self, newEntity);
                 newEntity->params = 0;
             }
             DestroyEntity(self);

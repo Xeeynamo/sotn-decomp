@@ -244,39 +244,39 @@ void EntityPlateLord(Entity* self) {
         part = self + 1;
         self->ext.plateLord.unk88.unk0 = part;
         self->ext.plateLord.unk88.unk10 = &D_us_80181F80[0];
-        CreateEntityFromEntity(E_PLATE_LORD_UNK1, self, part);
+        OVL_EXPORT(CreateEntityFromEntity)(E_PLATE_LORD_UNK1, self, part);
         part->params = 0;
         part = self + 2;
         self->ext.plateLord.unk9C.unk0 = part;
         self->ext.plateLord.unk9C.unk10 = &D_us_80181F80[1];
 
-        CreateEntityFromEntity(E_PLATE_LORD_UNK1, self, part);
+        OVL_EXPORT(CreateEntityFromEntity)(E_PLATE_LORD_UNK1, self, part);
         part->params = 1;
 
         part = self + 3;
-        CreateEntityFromEntity(E_PLATE_LORD_UNK2, self, part);
+        OVL_EXPORT(CreateEntityFromEntity)(E_PLATE_LORD_UNK2, self, part);
 
         part = self + 4;
-        CreateEntityFromEntity(E_PLATE_LORD_UNK3, self, part);
+        OVL_EXPORT(CreateEntityFromEntity)(E_PLATE_LORD_UNK3, self, part);
         part->params = 0;
 
         part = self + 5;
-        CreateEntityFromEntity(E_PLATE_LORD_UNK4, self, part);
+        OVL_EXPORT(CreateEntityFromEntity)(E_PLATE_LORD_UNK4, self, part);
 
         part = self + 6;
-        CreateEntityFromEntity(E_PLATE_LORD_UNK3, self, part);
+        OVL_EXPORT(CreateEntityFromEntity)(E_PLATE_LORD_UNK3, self, part);
         part->params = 1;
 
         part = self + 7;
-        CreateEntityFromEntity(E_PLATE_LORD_UNK3, self, part);
+        OVL_EXPORT(CreateEntityFromEntity)(E_PLATE_LORD_UNK3, self, part);
         part->params = 2;
 
         part = self + 8;
-        CreateEntityFromEntity(E_PLATE_LORD_UNK3, self, part);
+        OVL_EXPORT(CreateEntityFromEntity)(E_PLATE_LORD_UNK3, self, part);
         part->params = 3;
 
         part = self + 9;
-        CreateEntityFromEntity(E_PLATE_LORD_UNK5, self, part);
+        OVL_EXPORT(CreateEntityFromEntity)(E_PLATE_LORD_UNK5, self, part);
 
         part = self;
         for (i = 0; i < 8; i++, part++) {
@@ -971,7 +971,8 @@ void EntityPlateLord(Entity* self) {
                 posY += (OVL_EXPORT(Random)() & 0x1F) - 0x10;
                 part = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (part != NULL) {
-                    CreateEntityFromCurrentEntity(E_EXPLOSION, part);
+                    OVL_EXPORT(CreateEntityFromCurrentEntity)
+                    (E_EXPLOSION, part);
                     part->params = 1;
                     part->zPriority = self->zPriority + 8;
                     part->posX.i.hi = posX;
@@ -1050,7 +1051,7 @@ void func_us_801D4324(Entity* self) {
     case 16:
         tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (tempEntity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, tempEntity);
             tempEntity->params = 1;
             tempEntity->zPriority = self->zPriority + 4;
         }

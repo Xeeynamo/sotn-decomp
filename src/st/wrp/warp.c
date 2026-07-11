@@ -129,7 +129,8 @@ void EntityWarpRoom(Entity* self) {
         for (i = 0; i < 32; i++) {
             entity = AllocEntity(&g_Entities[0xA0], &g_Entities[0x100]);
             if (entity != NULL) {
-                CreateEntityFromCurrentEntity(E_ID(SMALL_ROCKS), entity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(SMALL_ROCKS), entity);
                 entity->posY.i.hi = 0xCC - g_Tilemap.scrollY.i.hi;
                 entity->posX.i.hi = (OVL_EXPORT(Random)() & 0x7F) + 0x40;
             }

@@ -42,12 +42,13 @@ void EntitySkeletonApe(Entity* self) {
         }
         self->facingLeft = (GetSideToPlayer() ^ 1) & 1;
         tempEntity = self + 1;
-        CreateEntityFromCurrentEntity(E_SKELETON_APE_PUNCH, tempEntity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)
+        (E_SKELETON_APE_PUNCH, tempEntity);
         if (self->params) {
             tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (tempEntity != NULL) {
-                CreateEntityFromCurrentEntity(
-                    E_SKELETON_APE_BARREL, tempEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_SKELETON_APE_BARREL, tempEntity);
                 tempEntity->ext.skeletonApe.unkEntity = self;
                 tempEntity->zPriority = self->zPriority - 1;
                 self->ext.skeletonApe.unkEntity = tempEntity;
@@ -165,7 +166,8 @@ void EntitySkeletonApe(Entity* self) {
             PlaySfxPositional(SFX_EXPLODE_B);
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
-                CreateEntityFromCurrentEntity(E_EXPLOSION, tempEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_EXPLOSION, tempEntity);
                 tempEntity->posY.i.hi +=
                     D_us_80183258[self->ext.skeletonApe.unk7C];
                 if (self->facingLeft) {
@@ -305,7 +307,7 @@ void EntitySkeletonApeBarrel(Entity* self) {
         if (!(self->ext.skeletonApe.unk7C & 7)) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromCurrentEntity(E_EXPLOSION, entity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)(E_EXPLOSION, entity);
                 rand = OVL_EXPORT(Random)() & 7;
                 entity->posX.i.hi += D_us_8018333C[rand];
                 rand = (rand - 4) & 7;
@@ -337,7 +339,8 @@ void EntitySkeletonApeBarrel(Entity* self) {
         for (i = 0; i < 4; i++) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromCurrentEntity(E_THROWN_BARREL, entity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_THROWN_BARREL, entity);
                 entity->params = i;
                 entity->facingLeft = self->facingLeft;
                 entity->velocityX = self->velocityX;

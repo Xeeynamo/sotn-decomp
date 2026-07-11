@@ -49,7 +49,7 @@ void EntityDiplocephalusFoot(Entity* self) {
         self->step++;
         newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
         if (newEntity != NULL) {
-            CreateEntityFromEntity(E_ID_13, self, newEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_ID_13, self, newEntity);
             newEntity->params = 2;
             newEntity->ext.ent13.parent = self;
         }
@@ -70,7 +70,8 @@ void EntityDiplocephalusFoot(Entity* self) {
         if (UnkCollisionFunc3(D_us_80181D54) & EFFECT_SOLID) {
             newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_EXPLOSION, self, newEntity);
                 newEntity->params = 3;
                 newEntity->zPriority = self->zPriority + 9;
             }
@@ -219,7 +220,7 @@ void EntityDiplocephalusLeg(Entity* self) {
         tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
         if (tempEntity != NULL) {
             DestroyEntity(tempEntity);
-            CreateEntityFromEntity(E_ID_13, self, tempEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_ID_13, self, tempEntity);
             tempEntity->params = 2;
             tempEntity->ext.ent13.parent = self;
         }
@@ -275,7 +276,8 @@ void EntityDiplocephalus(Entity* self) {
 
         for (i = 0; i < 4; i++) {
             DestroyEntity(++entityRef);
-            CreateEntityFromCurrentEntity(E_DIPLOCEPHALUS_FOOT, entityRef);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)
+            (E_DIPLOCEPHALUS_FOOT, entityRef);
             if (i < 2) {
                 entityRef->zPriority = self->zPriority + 8;
             } else {
@@ -295,7 +297,8 @@ void EntityDiplocephalus(Entity* self) {
 
         for (i = 0; i < 4; i++) {
             entityRef++;
-            CreateEntityFromCurrentEntity(E_DIPLOCEPHALUS_LEG, entityRef);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)
+            (E_DIPLOCEPHALUS_LEG, entityRef);
             if (i < 2) {
                 entityRef->zPriority = self->zPriority + 4;
             } else {
@@ -317,7 +320,8 @@ void EntityDiplocephalus(Entity* self) {
         }
 
         entityRef++;
-        CreateEntityFromCurrentEntity(E_DIPLOCEPHALUS_TAIL, entityRef);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)
+        (E_DIPLOCEPHALUS_TAIL, entityRef);
         entityRef->zPriority = self->zPriority;
         entityRef->facingLeft = self->facingLeft ^ 1;
         entityRef->ext.diploTail.diplo = self;
@@ -326,7 +330,8 @@ void EntityDiplocephalus(Entity* self) {
 
         entityRef += 9;
         DestroyEntity(entityRef);
-        CreateEntityFromEntity(E_DIPLOCEPHALUS_TORSO, self, entityRef);
+        OVL_EXPORT(CreateEntityFromEntity)
+        (E_DIPLOCEPHALUS_TORSO, self, entityRef);
         entityRef->ext.diploBody.diplo = self;
         self->ext.diplo.torso = entityRef;
 
@@ -488,7 +493,8 @@ void EntityDiplocephalus(Entity* self) {
                 for (i = 0; i < 3; i++) {
                     entityRef = AllocEntity(&g_Entities[160], &g_Entities[192]);
                     if (entityRef != NULL) {
-                        CreateEntityFromEntity(E_OLROX_DROOL, self, entityRef);
+                        OVL_EXPORT(CreateEntityFromEntity)
+                        (E_OLROX_DROOL, self, entityRef);
                         if (self->facingLeft) {
                             entityRef->posX.i.hi -=
                                 (i * 4) + 24 + (OVL_EXPORT(Random)() & 3);
@@ -563,7 +569,8 @@ void EntityDiplocephalus(Entity* self) {
         for (i = 0; i < LEN(D_us_80181D28); i++) {
             entityRef = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entityRef != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, entityRef);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_EXPLOSION, self, entityRef);
                 entityRef->params = 3;
                 entityRef->posX.i.hi += D_us_80181D28[i];
                 entityRef->zPriority = self->zPriority + 9;
@@ -588,7 +595,8 @@ void EntityDiplocephalus(Entity* self) {
                 if (!(g_Timer & 2)) {
                     entityRef = AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (entityRef != NULL) {
-                        CreateEntityFromEntity(E_EXPLOSION, self, entityRef);
+                        OVL_EXPORT(CreateEntityFromEntity)
+                        (E_EXPLOSION, self, entityRef);
                         entityRef->params = 2;
                     }
                 }
@@ -657,7 +665,7 @@ void func_us_801D0898(Entity* self, s32 count) {
         dy = (OVL_EXPORT(Random)() & 0x1F) - 0xF;
         newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
         if (newEntity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, newEntity);
             newEntity->params = 1;
             newEntity->posX.i.hi += dx;
             newEntity->posY.i.hi += dy;

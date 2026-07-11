@@ -13,8 +13,8 @@ void func_8018E1D4();
 static Overlay OVL_EXPORT(Overlay) = {
     .Update = OVL_EXPORT(Update),
     .HitDetection = OVL_EXPORT(HitDetection),
-    .UpdateRoomPosition = UpdateRoomPosition,
-    .InitRoomEntities = InitRoomEntities,
+    .UpdateRoomPosition = OVL_EXPORT(UpdateRoomPosition),
+    .InitRoomEntities = OVL_EXPORT(InitRoomEntities),
     .rooms = g_Rooms,
     .spriteBanks = OVL_EXPORT(spriteBanks),
     .cluts = OVL_EXPORT(cluts),

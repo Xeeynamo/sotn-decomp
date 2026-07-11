@@ -170,7 +170,7 @@ void EntityMedusa(Entity* self) {
         InitializeEntity(g_EInitMedusa);
         self->animCurFrame = 1;
         self->hitboxState = 0;
-        CreateEntityFromEntity(UNK_ENTITY_25, self, self + 1);
+        OVL_EXPORT(CreateEntityFromEntity)(UNK_ENTITY_25, self, self + 1);
         SetStep(1);
         // fallthrough
 
@@ -263,7 +263,7 @@ void EntityMedusa(Entity* self) {
         if (self->pose == 4 && self->poseTimer == 0) {
             entity = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
             if (entity != NULL) {
-                CreateEntityFromEntity(UNK_ENTITY_24, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)(UNK_ENTITY_24, self, entity);
                 entity->facingLeft = self->facingLeft;
                 if (self->facingLeft) {
                     entity->posX.i.hi -= 13;
@@ -290,7 +290,8 @@ void EntityMedusa(Entity* self) {
             for (i = 0; i < 2; i++) {
                 entity = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(UNK_ENTITY_26, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (UNK_ENTITY_26, self, entity);
                     entity->rotate = i * 1024 - 512;
                     if (!self->facingLeft) {
                         entity->rotate = (i * 1024) + 1536;
@@ -337,7 +338,7 @@ void EntityMedusa(Entity* self) {
         case 2:
             entity = AllocEntity(&g_Entities[0xC0], &g_Entities[0x100]);
             if (entity != NULL) {
-                CreateEntityFromEntity(UNK_ENTITY_27, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)(UNK_ENTITY_27, self, entity);
                 entity->params = 0;
                 entity->zPriority = self->zPriority + 1;
                 entity->posX.i.hi -= 16 - (OVL_EXPORT(Random)() & 31);
@@ -806,9 +807,9 @@ void func_us_80192B38(Entity* self) {
         }
 #ifdef VERSION_PSP
         // n.b.! CreateEntityFromEntity cannot be defined
-        CreateEntityFromEntity(D_psp_09254D20, self, entity);
+        OVL_EXPORT(CreateEntityFromEntity)(D_psp_09254D20, self, entity);
 #else
-        CreateEntityFromEntity(UNK_ENTITY_30, self, entity);
+        OVL_EXPORT(CreateEntityFromEntity)(UNK_ENTITY_30, self, entity);
 #endif
         entity->posX.i.hi = x;
         entity->posY.i.hi = y;

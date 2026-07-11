@@ -139,7 +139,8 @@ void EntityBlackCrow(Entity* self) {
         if (!AnimateEntity(anim_crow_death, self)) {
             explosion = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (explosion != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, explosion);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_EXPLOSION, self, explosion);
                 explosion->params = EXPLOSION_SMALL;
             }
             DestroyEntity(self);
@@ -161,7 +162,7 @@ void EntityBlueRaven(Entity* self) {
         PlaySfxPositional(SFX_CROW_DEATH);
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
             entity->params = EXPLOSION_SMALL;
         }
         DestroyEntity(self);

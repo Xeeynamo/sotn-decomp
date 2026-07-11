@@ -128,11 +128,11 @@ void EntityLossoth(Entity* self) {
 
         // Handles lantern glow effect and some death flame out visuals
         newEntity = self + 1;
-        CreateEntityFromEntity(E_LOSSOTH_EFFECTS, self, newEntity);
+        OVL_EXPORT(CreateEntityFromEntity)(E_LOSSOTH_EFFECTS, self, newEntity);
         newEntity->zPriority = self->zPriority + 1;
 
         newEntity = self + 2;
-        CreateEntityFromEntity(E_UNK_43, self, newEntity);
+        OVL_EXPORT(CreateEntityFromEntity)(E_UNK_43, self, newEntity);
         newEntity->params = 1;
         newEntity->ext.lossoth.unk9C = self;
         // fallthrough
@@ -222,7 +222,8 @@ void EntityLossoth(Entity* self) {
             for (i = 0; i < 3; i++) {
                 newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(E_LOSSOTH_FIREBALL, self, newEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_LOSSOTH_FIREBALL, self, newEntity);
                     newEntity->facingLeft = self->facingLeft;
                     newEntity->params = i;
                     if (self->facingLeft) {
@@ -245,7 +246,8 @@ void EntityLossoth(Entity* self) {
             PlaySfxPositional(SFX_FIREBALL_SHOT_A);
             newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_LOSSOTH_NAPALM, self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_LOSSOTH_NAPALM, self, newEntity);
                 newEntity->facingLeft = self->facingLeft;
                 if (self->facingLeft) {
                     newEntity->posX.i.hi += 8;
@@ -268,7 +270,8 @@ void EntityLossoth(Entity* self) {
             for (i = 0; i < 3; i++) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(E_LOSSOTH_FLAMES, self, newEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_LOSSOTH_FLAMES, self, newEntity);
                     newEntity->facingLeft = self->facingLeft;
                     newEntity->ext.lossoth.lossothEntity = self;
                     if (i == 0) {
@@ -326,7 +329,8 @@ void EntityLossoth(Entity* self) {
                 PlaySfxPositional(SFX_EXPLODE_A);
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_EXPLOSION, self, newEntity);
                     newEntity->params = 2;
                     if (self->facingLeft) {
                         newEntity->posX.i.hi += 6;
@@ -527,7 +531,8 @@ void EntityLossothEffects(Entity* self) {
             for (i = 0; i < 2; i++) {
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_LOSSOTH_FLAMES, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_LOSSOTH_FLAMES, self, entity);
                     entity->posY.i.hi += 0x10;
                     entity->posX.i.hi += (OVL_EXPORT(Random)() & 0x1F) - 0x10;
                     entity->zPriority = self->zPriority + 2;
@@ -589,7 +594,8 @@ void EntityLossothFireball(Entity* self) {
             // Spawn embers as the fireballs move
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_LOSSOTH_FLAMES, self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_LOSSOTH_FLAMES, self, newEntity);
                 newEntity->rotate = self->rotate;
             }
         }
@@ -718,7 +724,8 @@ void EntityLossothNapalmFlare(Entity* self) {
         if (!(g_Timer & 3)) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_LOSSOTH_FLAMES, self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_LOSSOTH_FLAMES, self, newEntity);
                 newEntity->zPriority = self->zPriority + 2;
                 newEntity->params = 1;
             }

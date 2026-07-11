@@ -67,12 +67,12 @@ void EntityGremlin(Entity* self) {
         self->facingLeft = self->params;
 
         entity = self + 1;
-        CreateEntityFromCurrentEntity(E_GREMLIN_EFFECT, entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_GREMLIN_EFFECT, entity);
         entity->params = 0; // Glow effect
         entity->zPriority = self->zPriority - 2;
 
         entity = self + 2;
-        CreateEntityFromCurrentEntity(E_GREMLIN_EFFECT, entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_GREMLIN_EFFECT, entity);
         entity->params = 1; // Fire (in spoon) effect
         entity->zPriority = self->zPriority - 1;
         // fallthrough
@@ -173,7 +173,8 @@ void EntityGremlin(Entity* self) {
             // Spawn
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_GREMLIN_FIRE, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_GREMLIN_FIRE, self, entity);
             }
         } else {
             self->ext.gremlin.timer--;
@@ -206,7 +207,8 @@ void EntityGremlin(Entity* self) {
                 // Spawn fire particles
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_EXPLOSION, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_EXPLOSION, self, entity);
                     entity->params = 1;
                 }
                 DestroyEntity(self);

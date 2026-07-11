@@ -205,10 +205,10 @@ void EntityFakeRalph(Entity* self) {
         InitializeEntity(D_us_801804AC);
         self->hitboxState = 0;
         entity = self - 1;
-        CreateEntityFromCurrentEntity(E_COFFIN, entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_COFFIN, entity);
         entity->posY.i.hi = 0xBA - g_Tilemap.scrollY.i.hi;
         entity = self + 1;
-        CreateEntityFromCurrentEntity(E_UNK_27, entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_UNK_27, entity);
         self->ext.ralph.itemEntityId = E_BONE_CROSS;
         SetStep(1);
         // fallthrough
@@ -554,8 +554,8 @@ void EntityFakeRalph(Entity* self) {
             if (!self->poseTimer && self->pose == 5) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(
-                        self->ext.ralph.itemEntityId, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (self->ext.ralph.itemEntityId, self, entity);
                     entity->facingLeft = self->facingLeft;
                     entity->posY.i.hi -= 0xC;
                 }
@@ -586,8 +586,8 @@ void EntityFakeRalph(Entity* self) {
             PlaySfxPositional(SFX_BOSS_RIC_ATTACK_B);
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                CreateEntityFromEntity(
-                    self->ext.ralph.itemEntityId, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (self->ext.ralph.itemEntityId, self, entity);
                 entity->facingLeft = self->facingLeft;
                 entity->posY.i.hi -= 12;
             }
@@ -644,7 +644,7 @@ void EntityFakeRalph(Entity* self) {
             if (!self->poseTimer && (self->pose == 2 || self->pose == 6)) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_DAGGER, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)(E_DAGGER, self, entity);
                     if (self->pose == 2) {
                         entity->posY.i.hi -= 9;
                     } else {
@@ -733,7 +733,8 @@ void EntityFakeRalph(Entity* self) {
             if (!(g_Timer & 3)) {
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_DEATH_FLAMES, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_DEATH_FLAMES, self, entity);
                     entity->zPriority = self->zPriority + 1;
                     entity->params = 7;
                     entity->posY.i.hi += 12;
@@ -786,7 +787,7 @@ void EntityBoneCross(Entity* self) {
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
 
-            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
             entity->params = 1;
         }
         DestroyEntity(self);
@@ -823,7 +824,8 @@ void EntityBoneCross(Entity* self) {
         if (!(g_Timer & 7)) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_BONE_CROSS_AFTER_IMAGE, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_BONE_CROSS_AFTER_IMAGE, self, entity);
                 entity->params = self->animCurFrame;
                 entity->rotate = self->rotate;
                 entity->zPriority = self->zPriority - 1;
@@ -833,7 +835,8 @@ void EntityBoneCross(Entity* self) {
         if (!(g_Timer & 3)) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_BONE_CROSS_AFTER_IMAGE, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_BONE_CROSS_AFTER_IMAGE, self, entity);
                 entity->params = 0;
                 entity->zPriority = self->zPriority + 1;
                 entity->facingLeft = self->facingLeft;
@@ -868,7 +871,7 @@ void EntityGiantBoneCross(Entity* self) {
     if (self->flags & FLAG_DEAD) {
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
             entity->params = 3;
         }
         DestroyEntity(self);
@@ -907,7 +910,8 @@ void EntityGiantBoneCross(Entity* self) {
         if (!(g_Timer & 7)) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_BONE_CROSS_AFTER_IMAGE, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_BONE_CROSS_AFTER_IMAGE, self, entity);
                 entity->params = self->animCurFrame;
                 entity->rotate = self->rotate;
                 entity->zPriority = self->zPriority - 1;
@@ -1098,7 +1102,8 @@ void EntityHolyWaterFlask(Entity* self) {
         if (!(self->ext.ralph.timer & 7)) {
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_HOLY_WATER_FLAME, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_HOLY_WATER_FLAME, self, entity);
                 entity->facingLeft = self->facingLeft ^ 1;
                 entity->posY.i.hi -= 8;
             }

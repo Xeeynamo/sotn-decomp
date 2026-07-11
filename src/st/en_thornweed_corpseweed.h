@@ -93,7 +93,7 @@ void EntityThornweed(Entity* self) {
         } else {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
                 entity->posY.i.hi -= 4;
                 entity->params = 0;
             }
@@ -142,7 +142,8 @@ void EntityThornweed(Entity* self) {
 
                     // Spawn the Corpseweed stalk/head
                     entity = self + 1;
-                    CreateEntityFromEntity(E_CORPSEWEED, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_CORPSEWEED, self, entity);
                     entity->facingLeft = (GetSideToPlayer() & 1);
                     self->enemyId = 0x9E;
                     self->ext.thornweed.isCorpseweedSpawned = true;
@@ -169,7 +170,7 @@ void EntityThornweed(Entity* self) {
         if (!--self->opacity) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
                 entity->posY.i.hi -= 0xC;
                 entity->params = 2;
             }
@@ -536,7 +537,8 @@ void EntityCorpseweed(Entity* self) {
             if (entity != NULL) {
                 PlaySfxPositional(SFX_CORPSEWEED_ATTACK);
 
-                CreateEntityFromEntity(E_CORPSEWEED_PROJECTILE, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_CORPSEWEED_PROJECTILE, self, entity);
                 entity->zPriority = self->zPriority + 1;
                 entity->facingLeft = self->facingLeft;
                 entity->posY.i.hi += ProjectileSpawnOffsetY;
@@ -584,7 +586,8 @@ void EntityCorpseweed(Entity* self) {
 
                 // Spawn multiple flames
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_EXPLOSION, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_EXPLOSION, self, entity);
                     entity->params = 1;
                 }
 
@@ -783,7 +786,7 @@ void EntityCorpseweedProjectile(Entity* self) {
     if (self->flags & FLAG_DEAD) {
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
             entity->params = 0;
         }
         DestroyEntity(self);

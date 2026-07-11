@@ -163,8 +163,8 @@ void EntitySkeleton(Entity* self) {
                 newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEntity != NULL) { // Spawn bone
                     PlaySfxPositional(SFX_BONE_THROW);
-                    CreateEntityFromCurrentEntity(
-                        E_SKELETON_THROWN_BONE, newEntity);
+                    OVL_EXPORT(CreateEntityFromCurrentEntity)
+                    (E_SKELETON_THROWN_BONE, newEntity);
                     if (self->facingLeft) {
                         newEntity->posX.i.hi -= 8;
                     } else {
@@ -215,7 +215,8 @@ void EntitySkeleton(Entity* self) {
         for (i = 0; i < 6; i++) { // Spawn Skeleton pieces
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(E_SKELETON_PIECES, newEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_SKELETON_PIECES, newEntity);
                 newEntity->facingLeft = self->facingLeft;
                 newEntity->params = i;
                 newEntity->ext.skeleton.explosionTimer = dead_parts_selector[i];

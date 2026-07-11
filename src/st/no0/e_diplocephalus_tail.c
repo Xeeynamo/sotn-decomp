@@ -233,7 +233,8 @@ void EntityDiplocephalusTail(Entity* self) {
         part = self;
         for (i = 0; i < 6; i++) {
             part++;
-            CreateEntityFromCurrentEntity(E_DIPLOCEPHALUS_TAIL, part);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)
+            (E_DIPLOCEPHALUS_TAIL, part);
             part->prevTailPart = part - 1;
             (part - 1)->nextTailPart = part;
             part->step = 3;
@@ -414,7 +415,7 @@ void EntityDiplocephalusTail(Entity* self) {
         if (!AnimateEntity(animTail2, self)) {
             part = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (part != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, part);
+                OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, part);
                 part->params = 3;
                 part->zPriority = self->zPriority + 9;
             }
@@ -470,7 +471,8 @@ void EntityDiplocephalusTail(Entity* self) {
             part = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (part != NULL) {
                 PlaySfxPositional(SFX_FM_EXPLODE_SWISHES);
-                CreateEntityFromCurrentEntity(E_DIPLOCEPHALUS_FIREBALL, part);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_DIPLOCEPHALUS_FIREBALL, part);
                 part->facingLeft = self->facingLeft;
                 if (self->facingLeft) {
                     part->posX.i.hi += 12;

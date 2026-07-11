@@ -298,7 +298,8 @@ void EntityImp(Entity* self) {
             if (!(g_Timer & 0xF)) {
                 other = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (other != NULL) {
-                    CreateEntityFromCurrentEntity(E_IMP_SMOKE, other);
+                    OVL_EXPORT(CreateEntityFromCurrentEntity)
+                    (E_IMP_SMOKE, other);
                 }
             }
             g_Player.demo_timer = 1;
@@ -390,7 +391,8 @@ void EntityImp(Entity* self) {
                 PlaySfxPositional(SFX_EXPLODE_E);
                 other = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (other != NULL) {
-                    CreateEntityFromEntity(E_EXPLOSION, self, other);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_EXPLOSION, self, other);
                     other->params = EXPLOSION_FIREBALL;
                 }
                 DestroyEntity(self);

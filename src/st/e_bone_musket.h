@@ -50,7 +50,8 @@ void EntityBoneMusket(Entity* self) {
             if (!self->params) {
                 tempEntity = self + 1;
                 for (i = 1; i < LEN(D_us_80182A4C); i++, tempEntity++) {
-                    CreateEntityFromEntity(E_BONE_MUSKET, self, tempEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_BONE_MUSKET, self, tempEntity);
                     tempEntity->facingLeft = self->facingLeft;
                     if (self->facingLeft) {
                         tempEntity->posX.i.hi -= D_us_80182A4C[i];
@@ -92,7 +93,8 @@ void EntityBoneMusket(Entity* self) {
             if (self->pose == 6 && !self->poseTimer) {
                 tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromEntity(E_BONE_MUSKET_UNK, self, tempEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_BONE_MUSKET_UNK, self, tempEntity);
                     tempEntity->facingLeft = self->facingLeft;
                 }
             }
@@ -107,7 +109,8 @@ void EntityBoneMusket(Entity* self) {
             if (self->pose == 4 && !self->poseTimer) {
                 tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromEntity(E_BONE_MUSKET_UNK, self, tempEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_BONE_MUSKET_UNK, self, tempEntity);
                     tempEntity->facingLeft = self->facingLeft;
                 }
             }
@@ -229,7 +232,7 @@ void EntityBoneMusket(Entity* self) {
         PlaySfxPositional(SFX_QUICK_STUTTER_EXPLODE_A);
         tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (tempEntity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, tempEntity);
             tempEntity->params = 2;
         }
         self->animCurFrame = 0;

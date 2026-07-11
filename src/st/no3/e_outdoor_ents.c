@@ -184,7 +184,8 @@ void EntityForegroundTree(Entity* self) {
             }
             ent = AllocEntity(&g_Entities[192], &g_Entities[256]);
             if (ent != NULL) {
-                CreateEntityFromCurrentEntity(E_BACKGROUND_BLOCK, ent);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_BACKGROUND_BLOCK, ent);
                 ent->posX.i.hi = *ptrParams++;
                 var_s3 = *ptrParams++;
                 ent->params = ((var_s3 >> 8) & 0xFF) + self->params;
@@ -206,7 +207,8 @@ void EntityForegroundTree(Entity* self) {
         if (var_s3 >= *ptrParams) {
             ent = AllocEntity(&g_Entities[192], &g_Entities[256]);
             if (ent != NULL) {
-                CreateEntityFromCurrentEntity(E_BACKGROUND_BLOCK, ent);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_BACKGROUND_BLOCK, ent);
                 ent->posX.i.hi = var_s3 - *ptrParams++ + 368;
                 var_s3 = *ptrParams;
                 ent->params = ((var_s3 >> 8) & 0xFF) + self->params;
@@ -216,21 +218,24 @@ void EntityForegroundTree(Entity* self) {
                     ent->opacity = 0x60;
                 } else if (self->ext.utimer.t == 7) {
                     ent2 = AllocEntity(&g_Entities[192], &g_Entities[256]);
-                    CreateEntityFromEntity(E_BACKGROUND_BLOCK, ent, ent2);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_BACKGROUND_BLOCK, ent, ent2);
                     ent2->params = 0x12;
                     ent2->posY.i.hi -= 16;
                     ent2->unk68 = var_s4;
                     ent2->opacity = 0x40;
                 } else if (self->ext.utimer.t == 10) {
                     ent2 = AllocEntity(&g_Entities[192], &g_Entities[256]);
-                    CreateEntityFromEntity(E_BACKGROUND_BLOCK, ent, ent2);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_BACKGROUND_BLOCK, ent, ent2);
                     ent2->params = 0x13;
                     ent2->posY.i.hi += 48;
                     ent2->unk68 = var_s4;
                     ent2->opacity = 0x40;
                 } else if (self->ext.utimer.t == 15) {
                     ent2 = AllocEntity(&g_Entities[192], &g_Entities[256]);
-                    CreateEntityFromEntity(E_BACKGROUND_BLOCK, ent, ent2);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_BACKGROUND_BLOCK, ent, ent2);
                     ent2->params = 0x14;
                     ent2->posY.i.hi += 4;
                     ent2->unk68 = var_s4;
@@ -284,7 +289,8 @@ void EntityFoliageMaker(Entity* self) {
             }
             newEntity = AllocEntity(&g_Entities[192], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(E_BACKGROUND_BLOCK, newEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_BACKGROUND_BLOCK, newEntity);
                 newEntity->posX.i.hi = *ptr++;
                 newEntity->params = *ptr++;
                 newEntity->unk68 = 0xC0;
@@ -302,7 +308,8 @@ void EntityFoliageMaker(Entity* self) {
         if (temp_s3 >= ptr[0]) {
             newEntity = AllocEntity(&g_Entities[192], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(E_BACKGROUND_BLOCK, newEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_BACKGROUND_BLOCK, newEntity);
                 newEntity->posX.i.hi = temp_s3 - *ptr++ + 288;
                 newEntity->posX.i.lo = self->posX.i.lo;
                 newEntity->params = *ptr++;
@@ -546,7 +553,8 @@ void EntityDistantTreeMaker(Entity* self) {
             }
             newEntity = AllocEntity(&g_Entities[192], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(E_BACKGROUND_BLOCK, newEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_BACKGROUND_BLOCK, newEntity);
                 newEntity->posX.i.hi = *ptr;
                 newEntity->params = 0x10;
                 newEntity->unk68 = 0x18;
@@ -563,7 +571,8 @@ void EntityDistantTreeMaker(Entity* self) {
         if (temp_s3 >= *ptr) {
             newEntity = AllocEntity(&g_Entities[192], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(E_BACKGROUND_BLOCK, newEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_BACKGROUND_BLOCK, newEntity);
                 newEntity->posX.i.hi = temp_s3 - *ptr + 288;
                 newEntity->posX.i.lo = self->posX.i.lo;
                 newEntity->params = 0x10;
@@ -879,12 +888,14 @@ void EntityBackgroundCastleWall(Entity* self) {
 
     newEntity = AllocEntity(&g_Entities[192], &g_Entities[256]);
     if (newEntity != NULL) {
-        CreateEntityFromCurrentEntity(E_BACKGROUND_BLOCK, newEntity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)
+        (E_BACKGROUND_BLOCK, newEntity);
         newEntity->params = 0xC;
         newEntity->unk68 = 0x80;
         newEntity = AllocEntity(newEntity, &g_Entities[256]);
         if (newEntity != NULL) {
-            CreateEntityFromCurrentEntity(E_BACKGROUND_BLOCK, newEntity);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)
+            (E_BACKGROUND_BLOCK, newEntity);
             newEntity->posX.i.hi += 0x40;
             newEntity->posY.i.hi = 0x80;
             newEntity->params = 0xB;
@@ -949,7 +960,8 @@ void EntityFlyingOwlAndLeaves(Entity* self) {
             for (i = 0; i < 8; i++) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    CreateEntityFromCurrentEntity(E_FALLING_LEAF, newEntity);
+                    OVL_EXPORT(CreateEntityFromCurrentEntity)
+                    (E_FALLING_LEAF, newEntity);
                     newEntity->params = i;
                 }
             }

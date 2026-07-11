@@ -12,7 +12,7 @@ void func_us_801C8248(Entity* self) {
 #endif
         posX = self->posX.val;
         posY = self->posY.val;
-        CreateEntityFromCurrentEntity(E_HEART_DROP, self);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_HEART_DROP, self);
         self->params = 10;
         self->posX.val = posX;
         self->posY.val = posY;

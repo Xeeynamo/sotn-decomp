@@ -125,7 +125,8 @@ void EntityDodoBird(Entity* self) {
                 for (i = 0; i < 5; i++) {
                     other = AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (other != NULL) {
-                        CreateEntityFromEntity(E_DODO_BIRD, self, other);
+                        OVL_EXPORT(CreateEntityFromEntity)
+                        (E_DODO_BIRD, self, other);
                         other->params = FLAG_FEATHER;
                         other->velocityX =
                             (OVL_EXPORT(Random)() & 7) * FIX(1.0 / 8);
@@ -147,7 +148,7 @@ void EntityDodoBird(Entity* self) {
         case 2:
             other = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (other != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, other);
+                OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, other);
                 other->params = 1;
             }
             DestroyEntity(self);

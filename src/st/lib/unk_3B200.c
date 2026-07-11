@@ -30,11 +30,13 @@ void func_us_801BB200(Entity* self) {
         if (!self->params) {
             newEntity = self + 1;
             for (i = 1; i < 4; i++, newEntity++) {
-                CreateEntityFromCurrentEntity(E_ID(ID_40), newEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(ID_40), newEntity);
                 newEntity->params = i;
             }
             for (i = 0; i < 4; i++, newEntity++) {
-                CreateEntityFromCurrentEntity(E_ID(ID_40), newEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(ID_40), newEntity);
                 newEntity->params = i + 0x100;
             }
         }
@@ -96,7 +98,7 @@ void func_us_801BB200(Entity* self) {
         g_Tilemap.fg[tilePos] = D_us_80181AA8[3 - params][upperParams];
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, newEntity);
             newEntity->params = 3;
         }
         self->animCurFrame = 0;

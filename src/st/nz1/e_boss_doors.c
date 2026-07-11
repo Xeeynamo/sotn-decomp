@@ -22,7 +22,7 @@ void EntityBossDoorTrigger(Entity* self) {
             return;
         }
         entity = &g_Entities[80];
-        CreateEntityFromCurrentEntity(E_ID(KARASUMAN), entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(KARASUMAN), entity);
         entity->posX.i.hi = 128 - g_Tilemap.scrollX.i.hi;
         entity->posY.i.hi = 176 - g_Tilemap.scrollY.i.hi;
         // fallthrough
@@ -40,12 +40,12 @@ void EntityBossDoorTrigger(Entity* self) {
 
     case 2:
         entity = self + 1;
-        CreateEntityFromCurrentEntity(E_ID(BOSS_DOORS), entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(BOSS_DOORS), entity);
         entity->posX.i.hi = -8 - g_Tilemap.scrollX.i.hi;
         entity->posY.i.hi = 128 - g_Tilemap.scrollY.i.hi;
         entity->params = 0;
         entity = self + 2;
-        CreateEntityFromCurrentEntity(E_ID(BOSS_DOORS), entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(BOSS_DOORS), entity);
         entity->posX.i.hi = 264 - g_Tilemap.scrollX.i.hi;
         entity->posY.i.hi = 128 - g_Tilemap.scrollY.i.hi;
         entity->params = 1;
@@ -84,7 +84,8 @@ void EntityBossDoorTrigger(Entity* self) {
         if (D_us_80181138 & 4) {
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_ID(LIFE_UP_SPAWN), self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_ID(LIFE_UP_SPAWN), self, entity);
                 entity->posX.i.hi = 128;
                 entity->posY.i.hi = 128;
                 entity->params = 7;
@@ -145,7 +146,8 @@ void EntityBossDoors(Entity* self) {
         MoveEntity();
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)
+            (E_INTENSE_EXPLOSION, self, entity);
             entity->params = 0x10;
             entity->posY.i.hi += 32;
             entity->posX.i.hi -= (OVL_EXPORT(Random)() & 7);
@@ -206,7 +208,8 @@ void EntityBossDoors(Entity* self) {
         MoveEntity();
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)
+            (E_INTENSE_EXPLOSION, self, entity);
             entity->params = 0x10;
             entity->posY.i.hi += 32;
             entity->posX.i.hi -= (OVL_EXPORT(Random)() & 7);

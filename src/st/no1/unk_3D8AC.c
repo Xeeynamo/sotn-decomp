@@ -34,16 +34,16 @@ void func_us_801BD8AC(Entity* self) {
         self->animCurFrame = 0;
         tempEntity = self + 1;
         for (i = 1; i < 6; i++) {
-            CreateEntityFromEntity(E_ID(ID_36), self, tempEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_ID(ID_36), self, tempEntity);
             tempEntity->params = i + 0x100;
             tempEntity++;
-            CreateEntityFromEntity(E_ID(ID_36), self, tempEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_ID(ID_36), self, tempEntity);
             tempEntity->params = i;
             tempEntity++;
         }
-        CreateEntityFromEntity(E_ID(ID_38), self, tempEntity);
+        OVL_EXPORT(CreateEntityFromEntity)(E_ID(ID_38), self, tempEntity);
         tempEntity++;
-        CreateEntityFromEntity(E_ID(ID_39), self, tempEntity);
+        OVL_EXPORT(CreateEntityFromEntity)(E_ID(ID_39), self, tempEntity);
         break;
 
     case 1:

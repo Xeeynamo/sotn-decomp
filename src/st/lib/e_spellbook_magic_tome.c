@@ -269,7 +269,7 @@ void EntitySpellbook(Entity* self) {
             ptr += 4;
         }
         tempEntity = self + 1;
-        CreateEntityFromCurrentEntity(E_ID_3E, tempEntity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID_3E, tempEntity);
         tempEntity->params = 0;
         self->ext.spellbookMagicTome.unk9C.vx = 0x400;
         self->ext.spellbookMagicTome.unk8A = 0x300;
@@ -382,7 +382,8 @@ void EntitySpellbook(Entity* self) {
         if ((OVL_EXPORT(Random)() & 0xF) == 0) {
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_EXPLOSION, self, tempEntity);
                 tempEntity->params = 1;
                 tempEntity->posX.i.hi += self->ext.spellbookMagicTome.unk84 / 2;
                 tempEntity->posY.i.hi += self->ext.spellbookMagicTome.unk86 / 2;
@@ -409,7 +410,8 @@ void EntitySpellbook(Entity* self) {
             if (g_Timer & 1) {
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromEntity(E_ID_31, self, tempEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID_31, self, tempEntity);
                     tempEntity->posX.i.hi +=
                         self->ext.spellbookMagicTome.unk84 / 2;
                     tempEntity->posY.i.hi +=
@@ -445,7 +447,7 @@ void EntitySpellbook(Entity* self) {
         if ((g_Timer & 0xF) == 0) {
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_ID_31, self, tempEntity);
+                OVL_EXPORT(CreateEntityFromEntity)(E_ID_31, self, tempEntity);
                 tempEntity->posX.i.hi += self->ext.spellbookMagicTome.unk84;
                 tempEntity->posY.i.hi += self->ext.spellbookMagicTome.unk86;
             }
@@ -565,7 +567,7 @@ void EntityMagicTome(Entity* self) {
             ptr += 4;
         }
         tempEntity = self + 1;
-        CreateEntityFromCurrentEntity(E_ID_3E, tempEntity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID_3E, tempEntity);
         tempEntity->params = 2;
         self->ext.spellbookMagicTome.unk9C.vx = 0x400;
         self->ext.spellbookMagicTome.unk8A = 0x300;
@@ -683,7 +685,8 @@ void EntityMagicTome(Entity* self) {
         if ((OVL_EXPORT(Random)() & 0xF) == 0) {
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_EXPLOSION, self, tempEntity);
                 tempEntity->params = 1;
                 tempEntity->posX.i.hi += self->ext.spellbookMagicTome.unk84 / 2;
                 tempEntity->posY.i.hi += self->ext.spellbookMagicTome.unk86 / 2;
@@ -710,7 +713,8 @@ void EntityMagicTome(Entity* self) {
             if (g_Timer & 1) {
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromEntity(E_ID_31, self, tempEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID_31, self, tempEntity);
                     tempEntity->posX.i.hi +=
                         self->ext.spellbookMagicTome.unk84 / 2;
                     tempEntity->posY.i.hi +=

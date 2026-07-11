@@ -194,13 +194,13 @@ extern u16 OVL_EXPORT(ItemIconSlots)[ICON_SLOT_NUM];
  * - Parameters:
  *   - objLayoutId - the room to initialize
  */
-void InitRoomEntities(s32 objLayoutId);
+void OVL_EXPORT(InitRoomEntities)(s32 objLayoutId);
 
 /*
  * An callback for notifying the stage that the
  * viewport has changed.
  */
-void UpdateRoomPosition();
+void OVL_EXPORT(UpdateRoomPosition)();
 
 void OVL_EXPORT(Update)(void);
 void OVL_EXPORT(UpdateStageEntities)(void);
@@ -215,7 +215,8 @@ void OVL_EXPORT(EntityDamageDisplay)(Entity*);
 
 s32 OVL_EXPORT(Random)();
 #ifdef VERSION_PC
-void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity);
+void OVL_EXPORT(CreateEntityFromEntity)(
+    u16 entityId, Entity* source, Entity* entity);
 #endif
 void DestroyEntity(Entity*);
 void DestroyEntitiesFromIndex(s16 index);

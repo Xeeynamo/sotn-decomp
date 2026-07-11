@@ -216,7 +216,8 @@ void EntityDemonSwitchWall(Entity* self) {
         yPos = self->posY.i.hi + 0x20;
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
-            CreateEntityFromCurrentEntity(E_ID(GREY_PUFF), newEntity);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)
+            (E_ID(GREY_PUFF), newEntity);
             newEntity->posX.i.hi = xPos + (OVL_EXPORT(Random)() & 0x1F);
             newEntity->posY.i.hi = yPos;
             newEntity->params = OVL_EXPORT(Random)() & 3;

@@ -122,11 +122,13 @@ void EntityCannon(Entity* self) {
             self->velocityX = FIX(8);
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity) {
-                CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_EXPLOSION, self, newEntity);
                 newEntity->params = 0x13;
             }
             newEntity = &self[1];
-            CreateEntityFromEntity(E_ID(CANNON_SHOT), self, newEntity);
+            OVL_EXPORT(CreateEntityFromEntity)
+            (E_ID(CANNON_SHOT), self, newEntity);
             self->step++;
         }
         break;
@@ -171,7 +173,8 @@ void EntityCannonShot(Entity* self) {
             g_api.func_80102CD8(1);
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_EXPLOSION, self, newEntity);
                 newEntity->params = 3;
             }
             g_CastleFlags[NZ0_CANNON_WALL_SHORTCUT] = 1;

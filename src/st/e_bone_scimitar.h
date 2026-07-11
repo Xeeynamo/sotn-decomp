@@ -263,7 +263,8 @@ void EntityBoneScimitar(Entity* self) {
             if (newEntity == NULL) {
                 break;
             }
-            CreateEntityFromCurrentEntity(E_BONE_SCIMITAR_PARTS, newEntity);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)
+            (E_BONE_SCIMITAR_PARTS, newEntity);
             newEntity->facingLeft = self->facingLeft;
             newEntity->params = i;
             newEntity->ext.skeleton.explosionTimer = dead_parts_selector[i];
@@ -282,7 +283,8 @@ void EntityBoneScimitar(Entity* self) {
         // If he's one of the special ones from entrance (first visit)
         if (self->params) {
             newEntity = self + 1;
-            CreateEntityFromEntity(E_EQUIP_ITEM_DROP, self, newEntity);
+            OVL_EXPORT(CreateEntityFromEntity)
+            (E_EQUIP_ITEM_DROP, self, newEntity);
             if (self->params & 1) {
                 newEntity->params = ITEM_SHORT_SWORD;
             } else {
