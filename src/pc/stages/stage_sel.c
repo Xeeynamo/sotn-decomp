@@ -2,9 +2,7 @@
 #include <game.h>
 #include "../../st/sel/sel.h"
 #include "../pc.h"
-#include "sfx.h"
 #include <string.h>
-#include <cutscene.h>
 
 extern const char* D_801803A8[10];
 

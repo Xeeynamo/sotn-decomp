@@ -3,6 +3,7 @@
 #include <string.h>
 #include "../st/cen/cen.h"
 #include "stage_loader.h"
+#include "stage_init.h"
 
 extern Overlay OVL_EXPORT(Overlay);
 extern PfnEntityUpdate OVL_EXPORT(EntityUpdates)[];

@@ -1,10 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <game.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include "../../st/wrp/wrp.h"
 #include "stage_loader.h"
+#include "stage_init.h"
 
 extern Overlay OVL_EXPORT(Overlay);
 extern PfnEntityUpdate OVL_EXPORT(EntityUpdates)[];
