@@ -326,7 +326,7 @@ void func_us_801BA290(Entity* self) {
         prim->next->y0 = 0x7E;
         prim->priority = 0x48;
         prim->drawMode = DRAW_UNK02;
-        rnd = Random() & 3;
+        rnd = OVL_EXPORT(Random)() & 3;
         if (!rnd) {
             prim->drawMode = DRAW_HIDE;
         }
@@ -488,8 +488,8 @@ void func_us_801BA290(Entity* self) {
                         AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (tempEntity != NULL) {
                         CreateEntityFromCurrentEntity(E_ID(ID_34), tempEntity);
-                        rnd = Random() & 7;
-                        if ((Random() & 1) == 0) {
+                        rnd = OVL_EXPORT(Random)() & 7;
+                        if ((OVL_EXPORT(Random)() & 1) == 0) {
                             rnd = 7;
                         }
                         tempEntity->posX.i.hi = D_us_80181474[rnd][0];
@@ -673,7 +673,7 @@ void func_us_801BB4C0(Entity* self) {
         self->zPriority = 0x49;
         self->drawFlags |= ENTITY_SCALEX | ENTITY_SCALEY;
         self->scaleY = self->scaleX;
-        self->ext.fish.timer = delays[Random() & 7];
+        self->ext.fish.timer = delays[OVL_EXPORT(Random)() & 7];
         if (self->scaleX < 0x100) {
             self->zPriority -= 4;
         }

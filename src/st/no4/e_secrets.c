@@ -194,9 +194,9 @@ void EntityBreakableWall(Entity* self) {
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(
                         E_ID(BREAKABLE_WALL_DEBRIS), self, newEntity);
-                    newEntity->posX.i.hi += (Random() & 0xF) - 4;
+                    newEntity->posX.i.hi += (OVL_EXPORT(Random)() & 0xF) - 4;
                     newEntity->posY.i.hi += (i * 4) - 0x1F;
-                    newEntity->velocityX = (Random() << 8) + FIX(0.5);
+                    newEntity->velocityX = (OVL_EXPORT(Random)() << 8) + FIX(0.5);
                     newEntity->params = 0;
                 }
             }
@@ -227,7 +227,7 @@ void EntityBreakableWallDebris(Entity* self) {
         InitializeEntity(OVL_EXPORT(EInitParticle));
         self->drawFlags = ENTITY_ROTATE;
         self->animSet = ANIMSET_OVL(1);
-        if (Random() & 1) {
+        if (OVL_EXPORT(Random)() & 1) {
             self->animCurFrame = 0x26;
         } else {
             self->animCurFrame = 0x27;

@@ -24,8 +24,8 @@ static EntityConfig puff_config[] = {
 
 void CreateExplosionPuff() {
     Entity* puff;
-    s32 rand3 = Random() & 3; // Random puff style 0, 1, 2
-    s16 initAngle = ((Random() & 0xF) << 8) - ROT(180);
+    s32 rand3 = OVL_EXPORT(Random)() & 3; // Random puff style 0, 1, 2
+    s16 initAngle = ((OVL_EXPORT(Random)() & 0xF) << 8) - ROT(180);
     s32 i;
 
     for (i = 0; i < 6; i++) {
@@ -157,15 +157,15 @@ void EntityExplosionPuffOpaque(Entity* self) {
             self->drawFlags = ENTITY_OPACITY;
             self->drawFlags |= ENTITY_ROTATE;
             self->opacity = 0x80;
-            self->facingLeft = Random() & 1;
-            self->rotate = (Random() & 0x1F) * 0x10;
+            self->facingLeft = OVL_EXPORT(Random)() & 1;
+            self->rotate = (OVL_EXPORT(Random)() & 0x1F) * 0x10;
             rotate = self->rotate;
             if (self->facingLeft) {
                 rotate = -rotate;
             }
             self->velocityX = rsin(rotate) * 0x18;
             self->velocityY = rcos(rotate) * -0x18;
-            self->ext.opaquePuff.unk8C = Random() * 0x10 + 0x4000;
+            self->ext.opaquePuff.unk8C = OVL_EXPORT(Random)() * 0x10 + 0x4000;
             self->step_s++;
         }
         MoveEntity();
@@ -179,7 +179,7 @@ void EntityExplosionPuffOpaque(Entity* self) {
 
 #else
         if (!self->step_s) {
-            self->facingLeft = Random() & 1;
+            self->facingLeft = OVL_EXPORT(Random)() & 1;
             self->drawFlags |= ENTITY_SCALEX;
             self->scaleX = 0xC0;
             self->step_s++;

@@ -48,8 +48,8 @@ void EntityPhantomSkull(Entity* self) {
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         self->ext.phantom_skull.playerAngle =
             GetAngleBetweenEntitiesShifted(self, entity);
-        self->ext.phantom_skull.playerAngle += -0x15 + ((Random() & 3) * 0x10);
-        self->ext.phantom_skull.acceleration = D_us_80182158[Random() & 3];
+        self->ext.phantom_skull.playerAngle += -0x15 + ((OVL_EXPORT(Random)() & 3) * 0x10);
+        self->ext.phantom_skull.acceleration = D_us_80182158[OVL_EXPORT(Random)() & 3];
         self->ext.phantom_skull.targetIsLeft = 0;
         self->step++;
         break;

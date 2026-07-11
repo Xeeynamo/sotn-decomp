@@ -167,7 +167,7 @@ void EntityStairwayPiece(Entity* self) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_ID(FALLING_ROCK), self, newEntity);
-                newEntity->params = Random() & 3;
+                newEntity->params = OVL_EXPORT(Random)() & 3;
                 if (newEntity->params == 3) {
                     newEntity->params = 0;
                 }
@@ -193,8 +193,8 @@ void EntityFallingRock(Entity* self) {
         self->animCurFrame = animFrame + 31;
         self->drawFlags |= ENTITY_ROTATE | ENTITY_SCALEY | ENTITY_SCALEX;
         self->scaleX = self->scaleY = 0x60;
-        rnd = (Random() & 0x1F) + 16;
-        rndAngle = (Random() * 6) + 0x900;
+        rnd = (OVL_EXPORT(Random)() & 0x1F) + 16;
+        rndAngle = (OVL_EXPORT(Random)() * 6) + 0x900;
         self->velocityX = rnd * rcos(rndAngle);
         self->velocityY = rnd * rsin(rndAngle);
         if (self->velocityX > 0) {

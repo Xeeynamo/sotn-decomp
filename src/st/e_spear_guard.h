@@ -65,15 +65,15 @@ void func_us_801D37A4(void) {
 
     if (g_Player.status & (PLAYER_STATUS_SPELLCAST | PLAYER_STATUS_SUBWPN |
                            PLAYER_STATUS_UNK400)) {
-        if (GetDistanceToPlayerX() > 0x48 && Random() & 1) {
+        if (GetDistanceToPlayerX() > 0x48 && OVL_EXPORT(Random)() & 1) {
             SetStep(9);
         }
     } else {
         if (!--g_CurrentEntity->ext.spearGuard.unk7C) {
             SetStep(steps[g_CurrentEntity->ext.spearGuard.unk84++ & 7]);
-            g_CurrentEntity->ext.spearGuard.unk7C = D_us_80182F0C[Random() & 3];
+            g_CurrentEntity->ext.spearGuard.unk7C = D_us_80182F0C[OVL_EXPORT(Random)() & 3];
             if (g_CurrentEntity->params && GetDistanceToPlayerX() > 0x50 &&
-                Random() & 1) {
+                OVL_EXPORT(Random)() & 1) {
                 SetStep(11);
             }
             g_CurrentEntity->velocityX = 0;
@@ -255,7 +255,7 @@ void EntitySpearGuard(Entity* self) {
         tempEntity->attackElement = g_api.enemyDefs[94].attackElement;
         if (!tempVar) {
             SetStep(7);
-            self->ext.spearGuard.unk7C = D_us_80182F10[Random() & 3];
+            self->ext.spearGuard.unk7C = D_us_80182F10[OVL_EXPORT(Random)() & 3];
         } else if ((tempVar & 0x80) && ((self->animCurFrame == 0x2D) ||
                                         (self->animCurFrame == 0x26))) {
             PlaySfxPositional(SFX_WEAPON_SWISH_B);

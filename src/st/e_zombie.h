@@ -38,7 +38,7 @@ void EntityZombie(Entity* self) {
         if (g_Timer & 1) {
             self->palette++;
         }
-        if (Random() & 1) {
+        if (OVL_EXPORT(Random)() & 1) {
             self->palette++;
         }
         self->animCurFrame = 0;
@@ -106,7 +106,7 @@ void EntityZombieSpawner(Entity* self) {
             newEntity = AllocEntity(&g_Entities[160], &g_Entities[168]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_ZOMBIE, self, newEntity);
-                temp = (Random() & 0x3F) + 96;
+                temp = (OVL_EXPORT(Random)() & 0x3F) + 96;
 
                 if (self->ext.zombieSpawner.spawnSide != 0) {
                     newEntity->posX.i.hi += temp;
@@ -124,7 +124,7 @@ void EntityZombieSpawner(Entity* self) {
                     DestroyEntity(newEntity);
                 }
             }
-            self->ext.zombieSpawner.spawnDelay = (Random() & 0x3F) + 32;
+            self->ext.zombieSpawner.spawnDelay = (OVL_EXPORT(Random)() & 0x3F) + 32;
         }
     }
 }

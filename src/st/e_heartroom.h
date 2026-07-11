@@ -140,7 +140,7 @@ void EntityHeartRoomGoldDoor(Entity* self) {
                     CreateEntityFromEntity(
                         E_INTENSE_EXPLOSION, self, newEntity);
                     newEntity->posY.i.hi = 188;
-                    newEntity->posX.i.hi += -8 + (Random() & 15);
+                    newEntity->posX.i.hi += -8 + (OVL_EXPORT(Random)() & 15);
                     newEntity->params = 0x10;
                     newEntity->drawFlags |= ENTITY_SCALEY | ENTITY_SCALEX;
                     newEntity->scaleX = newEntity->scaleY = 192;

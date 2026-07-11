@@ -398,10 +398,10 @@ void EntityWhiteDragon(Entity* self) {
                     self->step = FLAME_BREATH;
                     self->step_s = 0;
                     self->ext.whiteDragon.unk96 = 0x10;
-                    self->ext.whiteDragon.unk9F = Random() & 1;
+                    self->ext.whiteDragon.unk9F = OVL_EXPORT(Random)() & 1;
                     self->ext.whiteDragon.unkA4 = 0;
                 }
-                self->ext.whiteDragon.attackTimer = attack_timers[Random() & 7];
+                self->ext.whiteDragon.attackTimer = attack_timers[OVL_EXPORT(Random)() & 7];
             }
 
             if (self->ext.whiteDragon.unk9A) {
@@ -748,7 +748,7 @@ void EntityWhiteDragon(Entity* self) {
                     CreateEntityFromEntity(
                         E_EXPLOSION, self + SEGMENT_COUNT, entity);
                     entity->params = EXPLOSION_FIREBALL;
-                    entity->posX.i.hi += (s16)(Random() & 0x1F) - 0x10;
+                    entity->posX.i.hi += (s16)(OVL_EXPORT(Random)() & 0x1F) - 0x10;
                     entity->zPriority = self->zPriority + 9;
                 }
             }

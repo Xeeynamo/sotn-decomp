@@ -538,7 +538,7 @@ void EntityHuntingGirl(Entity* self) {
     case HUNTING_GIRL_HIT:
         switch (self->step_s) {
         case HUNTING_GIRL_HIT_INIT:
-            tempVar = Random() & 1;
+            tempVar = OVL_EXPORT(Random)() & 1;
             // hit and death spirit step
             self->ext.huntingGirl.random = tempVar;
             HuntingGirlDrawSpirit(
@@ -588,7 +588,7 @@ void EntityHuntingGirl(Entity* self) {
                  prim = prim->next) {
                 prim->drawMode = DRAW_HIDE;
             }
-            tempVar = Random() & 1;
+            tempVar = OVL_EXPORT(Random)() & 1;
             self->ext.huntingGirl.random = tempVar;
             HuntingGirlDrawSpirit(
                 self->ext.huntingGirl.random + 3, SPIRIT_INIT);
@@ -628,7 +628,7 @@ void EntityHuntingGirl(Entity* self) {
                     offsetX = (rsin(rotate) * -48) >> 12;
                     offsetY = (rcos(rotate) * 48) >> 12;
                     // Reuse of tempColor variable
-                    tempColor = Random() & 3;
+                    tempColor = OVL_EXPORT(Random)() & 3;
                     entity->posX.i.hi += (offsetX * tempColor) / 4;
                     entity->posY.i.hi += (offsetY * tempColor) / 4;
                 }

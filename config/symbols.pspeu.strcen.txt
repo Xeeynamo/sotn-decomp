@@ -1,6 +1,6 @@
 CreateEntityFromCurrentEntity = 0x09238598;
 CreateEntityFromEntity = 0x09238620;
-Random = 0x0923A830;
+RCEN_Random = 0x0923A830;
 PlaySfxPositional = 0x09240AF8;
 DestroyEntity = 0x09243538;
 AnimateEntity = 0x09243658;

@@ -70,7 +70,7 @@ void EntityChair(Entity* self) {
                 confessionalGhost->posX.i.hi = 176;
                 confessionalGhost->posY.i.hi = 128;
                 confessionalGhost->params = CONFESSIONAL_GHOST_PRIEST;
-                if (Random() & 1) {
+                if (OVL_EXPORT(Random)() & 1) {
                     confessionalGhost->params |= CONFESSIONAL_GHOST_BAD;
                 }
                 break;
@@ -81,7 +81,7 @@ void EntityChair(Entity* self) {
                 confessionalGhost->posX.i.hi = 64;
                 confessionalGhost->posY.i.hi = 128;
                 confessionalGhost->params = CONFESSIONAL_GHOST_PARISHIONER;
-                if (Random() & 1) {
+                if (OVL_EXPORT(Random)() & 1) {
                     confessionalGhost->params |= CONFESSIONAL_GHOST_BAD;
                 }
             }

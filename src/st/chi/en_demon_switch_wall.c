@@ -22,7 +22,7 @@ static void UpdateFallingPebble(Primitive* prim) {
 
     switch (prim->p3) {
     case 1: // Init (and fallthru to Idle)
-        rand = (Random() & 1);
+        rand = (OVL_EXPORT(Random)() & 1);
         prim->u0 = rand + 1;
         prim->v0 = rand + 1;
         prim->r0 = 0x60;
@@ -30,7 +30,7 @@ static void UpdateFallingPebble(Primitive* prim) {
         prim->b0 = 0x30;
         prim->priority = 0xA0;
         prim->drawMode = DRAW_UNK02;
-        prim->p2 = (Random() & 0x1F) + 0x10;
+        prim->p2 = (OVL_EXPORT(Random)() & 0x1F) + 0x10;
         prim->p3 = 2;
         // fallthrough
     case 2: // Idle
@@ -192,7 +192,7 @@ void EntityDemonSwitchWall(Entity* self) {
         if (prim != NULL) {
             prim->p3 = 1;
 
-            xPos = self->posX.i.hi + (Random() & 63) + -24;
+            xPos = self->posX.i.hi + (OVL_EXPORT(Random)() & 63) + -24;
             if (xPos > 0x100) {
                 xPos -= 0x10;
             }
@@ -217,9 +217,9 @@ void EntityDemonSwitchWall(Entity* self) {
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
             CreateEntityFromCurrentEntity(E_ID(GREY_PUFF), newEntity);
-            newEntity->posX.i.hi = xPos + (Random() & 0x1F);
+            newEntity->posX.i.hi = xPos + (OVL_EXPORT(Random)() & 0x1F);
             newEntity->posY.i.hi = yPos;
-            newEntity->params = Random() & 3;
+            newEntity->params = OVL_EXPORT(Random)() & 3;
             newEntity->zPriority = 0xA0;
         }
 

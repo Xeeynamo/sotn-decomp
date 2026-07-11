@@ -460,11 +460,11 @@ void EntitySuccubus(Entity* self) {
         switch (self->step_s) {
         case SUCCUBUS_FLY_0:
             self->velocityY = 0;
-            self->ext.succubus.timer = (Random() & 31) + 32;
+            self->ext.succubus.timer = (OVL_EXPORT(Random)() & 31) + 32;
             self->ext.succubus.nextAttack = SUCCUBUS_PETAL_ATTACK;
             self->ext.succubus.yOffset = 88;
-            if (!(Random() & 3)) {
-                if (Random() & 1) {
+            if (!(OVL_EXPORT(Random)() & 3)) {
+                if (OVL_EXPORT(Random)() & 1) {
                     self->ext.succubus.nextAttack = SUCCUBUS_SPIKE_ATTACK;
                     self->ext.succubus.yOffset = 120;
                 } else {
@@ -810,7 +810,7 @@ void EntitySuccubus(Entity* self) {
             }
 
             clonesShootOrder = *g_CloneShootOrder;
-            temp = Random() & 3;
+            temp = OVL_EXPORT(Random)() & 3;
             clonesShootOrder += temp * 7;
 
             entity = &g_Entities[112];
@@ -848,7 +848,7 @@ void EntitySuccubus(Entity* self) {
             break;
 
         case SUCCUBUS_CLONE_ATTACK_PLACE_REAL:
-            temp = Random() % 6;
+            temp = OVL_EXPORT(Random)() % 6;
             entity = &g_Entities[112];
             entity += temp;
 
@@ -1003,7 +1003,7 @@ void EntitySuccubus(Entity* self) {
 
     case SUCCUBUS_GET_HIT:
         if (!self->step_s) {
-            if (Random() & 1) {
+            if (OVL_EXPORT(Random)() & 1) {
                 PlaySfxPositional(SFX_SUCCUBUS_PAIN_A);
             } else {
                 PlaySfxPositional(SFX_SUCCUBUS_PAIN_B);
@@ -1025,7 +1025,7 @@ void EntitySuccubus(Entity* self) {
         self->velocityY -= self->velocityY >> 5;
         self->velocityY += FIX(0.0625);
         if (!--self->ext.succubus.timer) {
-            if (Random() & 1) {
+            if (OVL_EXPORT(Random)() & 1) {
                 self->ext.succubus.nextStep = SUCCUBUS_SPIKE_ATTACK;
             } else {
                 self->ext.succubus.nextStep = SUCCUBUS_CLONE_ATTACK;
@@ -1085,13 +1085,13 @@ void EntitySuccubusPetal(Entity* self) {
         InitializeEntity(D_801804DC);
         self->drawFlags = ENTITY_ROTATE;
         self->rotate = rand() & 0xFFF;
-        temp_s2 = Random() & 3;
+        temp_s2 = OVL_EXPORT(Random)() & 3;
         if (temp_s2 > 2) {
             temp_s2 = 0;
         }
         self->animCurFrame = temp_s2 + 64;
 
-        angle = ((Random() & 0x1F) * 16) + 0xC0;
+        angle = ((OVL_EXPORT(Random)() & 0x1F) * 16) + 0xC0;
         if (!self->facingLeft) {
             angle = 0x800 - angle;
         }
@@ -1102,14 +1102,14 @@ void EntitySuccubusPetal(Entity* self) {
 #endif
         self->velocityX = temp_s2 * rcos(angle);
         self->velocityY = temp_s2 * rsin(angle);
-        self->ext.succubus.timer = (Random() & 31) + 16;
+        self->ext.succubus.timer = (OVL_EXPORT(Random)() & 31) + 16;
 
     case 1:
         self->velocityX -= self->velocityX >> 6;
         self->velocityY -= self->velocityY >> 6;
         MoveEntity();
         if (!--self->ext.succubus.timer) {
-            self->ext.succubus.timer = (Random() & 31) + 32;
+            self->ext.succubus.timer = (OVL_EXPORT(Random)() & 31) + 32;
             self->step++;
         }
         break;

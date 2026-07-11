@@ -126,7 +126,7 @@ void EntityMerman(Entity* self) {
         if (!self->step_s) {
             self->hitboxWidth = 5;
             self->hitboxHeight = 17;
-            rnd = Random() & 3;
+            rnd = OVL_EXPORT(Random)() & 3;
             self->velocityX = swimVelocities[rnd].x;
             self->velocityY = swimVelocities[rnd].y;
             self->step_s++;
@@ -153,7 +153,7 @@ void EntityMerman(Entity* self) {
         if (self->ext.merman.timer2++ > 32) {
             self->ext.merman.timer2 = 0;
             self->step_s = 0;
-            if ((GetDistanceToPlayerX() >= 48) && !(Random() & 1)) {
+            if ((GetDistanceToPlayerX() >= 48) && !(OVL_EXPORT(Random)() & 1)) {
                 SetStep(MERMAN_JUMPING);
             }
         }
@@ -213,7 +213,7 @@ void EntityMerman(Entity* self) {
                 newEntity = AllocEntity(&g_Entities[232], &g_Entities[256]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(E_MERMAN_JUMP_AIR, self, newEntity);
-                    newEntity->posX.i.hi += ((Random() & 3) * 4) - 6;
+                    newEntity->posX.i.hi += ((OVL_EXPORT(Random)() & 3) * 4) - 6;
                     newEntity->velocityX = jumpAirXVels[self->pose - 1];
                 }
             } else {
@@ -241,7 +241,7 @@ void EntityMerman(Entity* self) {
             } else {
                 self->velocityX = FIX(-0.375);
             }
-            rnd = Random() & 3;
+            rnd = OVL_EXPORT(Random)() & 3;
             self->ext.merman.timer2 = walkDurations[rnd];
             self->step_s++;
             break;
@@ -261,7 +261,7 @@ void EntityMerman(Entity* self) {
                 self->posX.val += self->velocityX;
             }
             if (!--self->ext.merman.timer2) {
-                if (Random() & 1) {
+                if (OVL_EXPORT(Random)() & 1) {
                     SetStep(MERMAN_SPIT_FIRE);
                 } else {
                     SetStep(MERMAN_LUNGE);

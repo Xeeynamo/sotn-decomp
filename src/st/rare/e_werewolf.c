@@ -281,23 +281,23 @@ void EntityWerewolf(Entity* self) {
             entity = &PLAYER;
             if (self->facingLeft == entity->facingLeft) {
                 if (GetDistanceToPlayerX() < 0x40) {
-                    if (Random() & 3) {
+                    if (OVL_EXPORT(Random)() & 3) {
                         SetStep(SLIDE_ATTACK);
                     } else {
                         SetStep(PUNCH_ATTACK);
                     }
-                } else if (Random() & 1) {
+                } else if (OVL_EXPORT(Random)() & 1) {
                     SetStep(CHARGE_ATTACK);
                 } else {
                     SetStep(ENERGY_WAVE_ATTACK);
                 }
             } else if (GetDistanceToPlayerX() < 0x38) {
-                if (Random() & 1) {
+                if (OVL_EXPORT(Random)() & 1) {
                     SetStep(SLIDE_ATTACK);
                 } else {
                     SetStep(ENERGY_WAVE_ATTACK);
                 }
-            } else if (Random() & 1) {
+            } else if (OVL_EXPORT(Random)() & 1) {
                 SetStep(CHARGE_ATTACK);
             } else {
                 SetStep(SPIN_ATTACK);
@@ -696,7 +696,7 @@ void EntityWerewolfDeathFlames(Entity* self) {
                     prim->next->x2 = 0;
                     prim->next->y2 = 0;
                     prim->next->x1 =
-                        self->ext.werewolf.unk9C + (i * 0x555) + Random();
+                        self->ext.werewolf.unk9C + (i * 0x555) + OVL_EXPORT(Random)();
                     prim->next->y1 = 0;
                     PGREY(prim, 0) = PGREY(prim, 1) = PGREY(prim, 2) =
                         PGREY(prim, 3) = color;

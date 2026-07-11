@@ -391,7 +391,7 @@ void EntityHellfireBeast(Entity* self) {
                 // Pick a random cast attack
                 // 0 = Lightning
                 // 1 = Flame pillar
-                self->ext.hellfireBeast.attackChoice = Random() & 1;
+                self->ext.hellfireBeast.attackChoice = OVL_EXPORT(Random)() & 1;
                 SetSubStep(1);
             }
             break;
@@ -719,7 +719,7 @@ void EntityHellfireBeastThorsHammer(Entity* self) {
             var_s4 = ROT(180);
         }
 
-        var_s4 += (0xD0 - ((Random() & 7) << 6));
+        var_s4 += (0xD0 - ((OVL_EXPORT(Random)() & 7) << 6));
         var_s6 = self->ext.hellfireBeastThorsHammer.unk94 * 0x10;
         self->ext.hellfireBeastThorsHammer.unk94++;
         if (self->ext.hellfireBeastThorsHammer.unk94 > 6) {
@@ -1140,9 +1140,9 @@ void EntityHellfireBeastFlamePillar(Entity* self) {
             if (newEntity != NULL) {
                 CreateEntityFromCurrentEntity(
                     E_HELLFIRE_BEAST_FLAME_PILLAR_ANIM, newEntity);
-                newEntity->posX.i.hi = Random() & 0xF;
+                newEntity->posX.i.hi = OVL_EXPORT(Random)() & 0xF;
                 newEntity->posY.i.hi = 0x20;
-                newEntity->params = Random() & 1;
+                newEntity->params = OVL_EXPORT(Random)() & 1;
                 newEntity->ext.hellfireBeastThorsHammer.entity = self;
             }
         }

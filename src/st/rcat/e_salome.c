@@ -179,7 +179,7 @@ void EntitySalome(Entity* self) {
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         // Pick a starting thrown object randomly
         // 0 = skull, 1 = cat
-        self->ext.salome.thrownObject = Random() & 1;
+        self->ext.salome.thrownObject = OVL_EXPORT(Random)() & 1;
         self->ext.salome.attackTimer = 0x30;
         self->zPriority = 0xAA;
 

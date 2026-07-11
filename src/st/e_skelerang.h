@@ -238,14 +238,14 @@ void EntitySkelerang(Entity* self) {
                 entity->facingLeft = self->facingLeft;
                 if ((GetSideToPlayer() & 1) ^ 1) {
                     // Sus store to Entity 0xA
-                    F(entity->velocityX).i.hi = -(Random() & 3);
+                    F(entity->velocityX).i.hi = -(OVL_EXPORT(Random)() & 3);
                 } else {
                     // Sus store to Entity 0xA
                     // This + 1 - 1 is an oddity that is required to align PSP
-                    F(entity->velocityX).i.hi = (Random() & 3) + 1 - 1;
+                    F(entity->velocityX).i.hi = (OVL_EXPORT(Random)() & 3) + 1 - 1;
                 }
                 // Sus store to Entity 0xE
-                F(entity->velocityY).i.hi = -2 - (Random() & 3);
+                F(entity->velocityY).i.hi = -2 - (OVL_EXPORT(Random)() & 3);
                 entity->ext.skelerang.unk84 = 16;
                 entity->step = SKELERANG_DEATH_FLY;
             }

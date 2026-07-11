@@ -191,7 +191,7 @@ static void func_us_801D1388(Primitive* prim) {
             if (otherPrim != NULL) {
                 UnkPolyFunc2(otherPrim);
                 otherPrim->next->g3 = 1;
-                otherPrim->next->r3 = Random() & 1;
+                otherPrim->next->r3 = OVL_EXPORT(Random)() & 1;
                 if (g_CurrentEntity->facingLeft) {
                     otherPrim->x0 = prim->x1 - 0x10;
                 } else {
@@ -764,14 +764,14 @@ static s32 func_us_801D1DAC(void) {
                 prim = &g_PrimBuf[primIndex];
                 g_CurrentEntity->ext.armorLord.prim = prim;
                 while (prim != NULL) {
-                    prim->x0 = (posX + (Random() & 3)) - 2;
-                    prim->y0 = posY - 0x48 + (Random() & 0x3F);
+                    prim->x0 = (posX + (OVL_EXPORT(Random)() & 3)) - 2;
+                    prim->y0 = posY - 0x48 + (OVL_EXPORT(Random)() & 0x3F);
                     prim->u0 = 1;
                     prim->v0 = 1;
                     prim->r0 = 0xE0;
                     prim->b0 = 0x88;
                     prim->g0 = 0xA0;
-                    prim->p2 = (Random() & 7) + 1;
+                    prim->p2 = (OVL_EXPORT(Random)() & 7) + 1;
                     prim->priority = g_CurrentEntity->zPriority + 1;
                     prim->drawMode =
                         DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
@@ -839,7 +839,7 @@ void EntityArmorLord(Entity* self) {
         if (!self->step_s) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->ext.armorLord.unk84 = self->facingLeft;
-            self->ext.armorLord.unk80 = D_us_80182D70[Random() & 3];
+            self->ext.armorLord.unk80 = D_us_80182D70[OVL_EXPORT(Random)() & 3];
             self->step_s++;
         }
         if (!AnimateEntity(anim0, self)) {
@@ -860,10 +860,10 @@ void EntityArmorLord(Entity* self) {
         }
         if (!--self->ext.armorLord.unk80) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-            SetStep(D_us_80182D50[Random() & 7]);
+            SetStep(D_us_80182D50[OVL_EXPORT(Random)() & 7]);
         }
         if (g_Player.status & PLAYER_STATUS_UNK400) {
-            if (!self->ext.armorLord.unk85 && (Random() & 1)) {
+            if (!self->ext.armorLord.unk85 && (OVL_EXPORT(Random)() & 1)) {
                 self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
                 SetStep(7);
             }
@@ -970,8 +970,8 @@ void EntityArmorLord(Entity* self) {
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
                 CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, tempEntity);
-                tempEntity->posX.i.hi += (Random() & 0x1F) - 0x10;
-                tempEntity->posY.i.hi += (Random() & 0x3F) - 0x10;
+                tempEntity->posX.i.hi += (OVL_EXPORT(Random)() & 0x1F) - 0x10;
+                tempEntity->posY.i.hi += (OVL_EXPORT(Random)() & 0x3F) - 0x10;
             }
         }
         break;

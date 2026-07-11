@@ -52,7 +52,7 @@ void EntityBat(Entity* self) {
             } else {
                 self->velocityX = FIX(-0.25);
             }
-            self->pose = (Random() & 3) * 3;
+            self->pose = (OVL_EXPORT(Random)() & 3) * 3;
             self->poseTimer = 0;
             self->step++;
         }

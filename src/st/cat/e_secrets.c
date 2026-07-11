@@ -370,8 +370,8 @@ void EntityBreakableWallSegment(Entity* self) {
                 if (entity != NULL) {
                     CreateEntityFromEntity(
                         E_ID(BREAKABLE_WALL_DEBRIS), self, entity);
-                    entity->posX.i.hi += (i * 8) - 0x10 + (Random() & 3);
-                    entity->posY.i.hi -= (Random() & 7);
+                    entity->posX.i.hi += (i * 8) - 0x10 + (OVL_EXPORT(Random)() & 3);
+                    entity->posY.i.hi -= (OVL_EXPORT(Random)() & 7);
                     if (self->params == 2) {
                         entity->posY.i.hi -= 0x18;
                     }

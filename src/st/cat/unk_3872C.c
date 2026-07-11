@@ -11,12 +11,12 @@ void func_us_801B872C(Entity* self) {
         InitializeEntity(OVL_EXPORT(EInitParticle));
         break;
     case 1:
-        if (!(Random() & 7)) {
+        if (!(OVL_EXPORT(Random)() & 7)) {
             newEntity = AllocEntity(&g_Entities[STAGE_ENTITY_START],
                                     &g_Entities[TOTAL_ENTITY_COUNT]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
-                newEntity->params = (Random() & 3) - 0x4000;
+                newEntity->params = (OVL_EXPORT(Random)() & 3) - 0x4000;
             }
         }
         break;

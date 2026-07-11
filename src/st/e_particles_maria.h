@@ -35,9 +35,9 @@ void func_psp_0923AD68(Entity* self) {
                 direction ^= 1;
             }
             if (direction) {
-                angle -= g_ESoulStealOrbAngles[Random() & 7];
+                angle -= g_ESoulStealOrbAngles[OVL_EXPORT(Random)() & 7];
             } else {
-                angle += g_ESoulStealOrbAngles[Random() & 7];
+                angle += g_ESoulStealOrbAngles[OVL_EXPORT(Random)() & 7];
             }
             self->ext.soulStealOrb.angle = angle;
             self->ext.soulStealOrb.unk80 = 0x200;

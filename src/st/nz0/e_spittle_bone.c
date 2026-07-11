@@ -68,7 +68,7 @@ void EntitySpittleBone(Entity* self) {
             }
         }
         if ((self->ext.spittleBone.unk7C & 0x3F) == 1 &&
-            (Random() & 0x1F) == 0) {
+            (OVL_EXPORT(Random)() & 0x1F) == 0) {
             newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_SPITTLEBONE_SPIT, self, newEntity);
@@ -95,7 +95,7 @@ void EntitySpittleBone(Entity* self) {
                 newEntity->rotate = self->rotate;
                 newEntity->step = 4;
                 newEntity->velocityX = D_80182504[i];
-                newEntity->velocityY = FIX(-3) - ((Random() & 3) << 0xF);
+                newEntity->velocityY = FIX(-3) - ((OVL_EXPORT(Random)() & 3) << 0xF);
                 newEntity->ext.spittleBone.unk82 = D_8012518[i];
             }
         }

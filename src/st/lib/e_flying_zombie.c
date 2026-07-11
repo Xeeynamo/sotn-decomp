@@ -187,7 +187,7 @@ void EntityFlyingZombie2(Entity* self) {
     case 6:
         switch (self->step_s) {
         case 0:
-            self->ext.flyingZombie.unk7C = D_us_80182898[Random() & 3];
+            self->ext.flyingZombie.unk7C = D_us_80182898[OVL_EXPORT(Random)() & 3];
             if (self->facingLeft) {
                 self->velocityX = FIX(1.0 / 16);
             } else {
@@ -225,7 +225,7 @@ void EntityFlyingZombie2(Entity* self) {
 
         case 2:
             if (!AnimateEntity(D_us_80182868, self)) {
-                self->facingLeft = Random() & 1;
+                self->facingLeft = OVL_EXPORT(Random)() & 1;
                 self->pose = 0;
                 self->poseTimer = 0;
                 self->step_s = 0;
@@ -348,14 +348,14 @@ void EntityFlyingZombie1(Entity* self) {
         break;
 
     case 7:
-        if ((Random() & 0x7F) == 0) {
+        if ((OVL_EXPORT(Random)() & 0x7F) == 0) {
             self->ext.flyingZombie.unk80 = 1;
         }
-        if ((Random() & 0x1F) == 0) {
+        if ((OVL_EXPORT(Random)() & 0x1F) == 0) {
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
                 CreateEntityFromEntity(E_BLOOD_DRIPS, self, tempEntity);
-                tempEntity->posX.i.hi += (Random() & 8) - 4;
+                tempEntity->posX.i.hi += (OVL_EXPORT(Random)() & 8) - 4;
                 tempEntity->posY.i.hi += 13;
                 tempEntity->pfnUpdate = EntityBloodDrips;
             }
@@ -389,14 +389,14 @@ void EntityFlyingZombie1(Entity* self) {
             SetEntityVelocityFromAngle(angle, 6);
             self->step_s++;
         } else {
-            if ((Random() & 0x7F) == 0) {
+            if ((OVL_EXPORT(Random)() & 0x7F) == 0) {
                 self->ext.flyingZombie.unk80 = 1;
             }
-            if ((Random() & 0x1F) == 0) {
+            if ((OVL_EXPORT(Random)() & 0x1F) == 0) {
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
                     CreateEntityFromEntity(E_BLOOD_DRIPS, self, tempEntity);
-                    tempEntity->posX.i.hi += (Random() & 8) - 4;
+                    tempEntity->posX.i.hi += (OVL_EXPORT(Random)() & 8) - 4;
                     tempEntity->posY.i.hi += 13;
                     tempEntity->pfnUpdate = EntityBloodDrips;
                 }

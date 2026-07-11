@@ -70,9 +70,9 @@ void EntitySoulStealOrb(Entity* self) {
                 direction ^= 1;
             }
             if (direction) {
-                angle -= g_ESoulStealOrbAngles[Random() & 7];
+                angle -= g_ESoulStealOrbAngles[OVL_EXPORT(Random)() & 7];
             } else {
-                angle += g_ESoulStealOrbAngles[Random() & 7];
+                angle += g_ESoulStealOrbAngles[OVL_EXPORT(Random)() & 7];
             }
             self->ext.soulStealOrb.angle = angle;
             self->ext.soulStealOrb.unk80 = 0x400;
@@ -159,8 +159,8 @@ void EntityEnemyBlood(Entity* self) {
             prim = (FakePrim*)&g_PrimBuf[i];
             i = NParticles;
             while (true) {
-                prim->x0 = self->posX.i.hi - 5 + (Random() & 7);
-                prim->y0 = self->posY.i.hi - 5 + (Random() & 7);
+                prim->x0 = self->posX.i.hi - 5 + (OVL_EXPORT(Random)() & 7);
+                prim->y0 = self->posY.i.hi - 5 + (OVL_EXPORT(Random)() & 7);
                 prim->posX.val = 0;
                 prim->posY.val = 0;
                 prim->w = 4;
@@ -168,10 +168,10 @@ void EntityEnemyBlood(Entity* self) {
 
                 if (facingLeft) {
                     UnkEntityFunc0(
-                        0xCC0 + i * 64, (Random() & 0xF) * 0x10 + 0x180);
+                        0xCC0 + i * 64, (OVL_EXPORT(Random)() & 0xF) * 0x10 + 0x180);
                 } else {
                     UnkEntityFunc0(
-                        0xB40 - i * 64, (Random() & 0xF) * 0x10 + 0x180);
+                        0xB40 - i * 64, (OVL_EXPORT(Random)() & 0xF) * 0x10 + 0x180);
                 }
 
                 prim->velocityX.val = self->velocityX;
@@ -179,7 +179,7 @@ void EntityEnemyBlood(Entity* self) {
                 prim->accelerationX.val = -(prim->velocityX.val / 64);
                 prim->accelerationY.val = -(prim->velocityY.val / 48) + 0xC00;
 
-                prim->x2 = prim->y2 = (Random() & 7) + 7;
+                prim->x2 = prim->y2 = (OVL_EXPORT(Random)() & 7) + 7;
                 prim->r0 = 128;
                 prim->b0 = 16;
                 prim->g0 = 0;

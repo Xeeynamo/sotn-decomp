@@ -129,14 +129,14 @@ static void func_us_801D6474(Primitive* prim) {
     UnkPrimHelper(prim);
     switch (prim->next->u2) {
     case 0:
-        LOW(prim->next->u0) = ((Random() & 31) << 12) - FIX(1.0);
-        LOW(prim->next->r1) = -(Random() & 31) << 12;
+        LOW(prim->next->u0) = ((OVL_EXPORT(Random)() & 31) << 12) - FIX(1.0);
+        LOW(prim->next->r1) = -(OVL_EXPORT(Random)() & 31) << 12;
         if (LOH(prim->next->r2) + LOH(prim->next->b2) >= 48) {
             prim->next->u2 = 1;
             prim->next->x3 = 256;
         } else {
             prim->next->u2 = 2;
-            prim->next->x3 = ((Random() & 15) * 4) + 8;
+            prim->next->x3 = ((OVL_EXPORT(Random)() & 15) * 4) + 8;
         }
         /* fallthrough */
     case 1:
@@ -231,7 +231,7 @@ void EntityMarionette(Entity* self) {
             self->step_s++;
         }
         if (!AnimateEntity(self->ext.marionette.unk80, self)) {
-            if (Random() & 1) {
+            if (OVL_EXPORT(Random)() & 1) {
                 SetStep(4);
             } else {
                 SetStep(8);
@@ -246,7 +246,7 @@ void EntityMarionette(Entity* self) {
 
     case 4:
         if (!self->step_s) {
-            self->ext.marionette.unk84 = D_us_80182000[Random() & 3];
+            self->ext.marionette.unk84 = D_us_80182000[OVL_EXPORT(Random)() & 3];
             self->step_s++;
         }
         flag = AnimateEntity(anim0, self);
@@ -264,7 +264,7 @@ void EntityMarionette(Entity* self) {
         }
         self->velocityY += 0x400;
         if (!--self->ext.marionette.unk84) {
-            if (Random() & 1) {
+            if (OVL_EXPORT(Random)() & 1) {
                 SetStep(6);
             } else {
                 SetStep(5);
@@ -315,7 +315,7 @@ void EntityMarionette(Entity* self) {
                     }
                     flag = 1;
                 }
-                self->ext.marionette.unk80 = *(&anims[flag] + (Random() & 1));
+                self->ext.marionette.unk80 = *(&anims[flag] + (OVL_EXPORT(Random)() & 1));
                 self->velocityX = 0;
                 self->velocityY = FIX(-1.0);
                 if (self->pose > 0) {
@@ -393,7 +393,7 @@ void EntityMarionette(Entity* self) {
                 self->velocityX = -self->velocityX;
             }
             if (self->ext.marionette.unk84 && !--self->ext.marionette.unk84 &&
-                (Random() & 1) == 0) {
+                (OVL_EXPORT(Random)() & 1) == 0) {
                 SetStep(9);
             } else if (flag & 1) {
                 self->velocityX = 0;
@@ -404,7 +404,7 @@ void EntityMarionette(Entity* self) {
 
         case 3:
             if (!AnimateEntity(anim8, self)) {
-                if (Random() & 1) {
+                if (OVL_EXPORT(Random)() & 1) {
                     SetStep(4);
                 } else {
                     SetStep(5);
@@ -425,7 +425,7 @@ void EntityMarionette(Entity* self) {
                 self->velocityX = -self->velocityX;
             }
             self->step_s++;
-            if ((Random() & 1) == 0) {
+            if ((OVL_EXPORT(Random)() & 1) == 0) {
                 SetStep(7);
             }
             break;
@@ -460,7 +460,7 @@ void EntityMarionette(Entity* self) {
 
         case 3:
             if (!AnimateEntity(anim8, self)) {
-                if (Random() & 1) {
+                if (OVL_EXPORT(Random)() & 1) {
                     SetStep(4);
                 } else {
                     SetStep(5);

@@ -181,7 +181,7 @@ void EntityOrobourous(Entity* self) {
         // Gets re-called periodically.
         if (!self->step_s) {
             self->ext.orob.targetTimer = 0x40;
-            var_s4 = Random() * 8;
+            var_s4 = OVL_EXPORT(Random)() * 8;
             xVar = (rcos(var_s4) * 0x60) >> 0xC;
             yVar = (rsin(var_s4) * -0x60) >> 0xC;
             if (!self->ext.orob.rest_time) {

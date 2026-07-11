@@ -171,7 +171,7 @@ void EntityLossoth(Entity* self) {
     case PLAYER_AGGRO:
         if (!self->step_s) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-            self->ext.lossoth.timer = walk_timers[Random() & 3];
+            self->ext.lossoth.timer = walk_timers[OVL_EXPORT(Random)() & 3];
             self->step_s++;
         }
 
@@ -194,7 +194,7 @@ void EntityLossoth(Entity* self) {
         if (!--self->ext.lossoth.timer) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
 
-            if (Random() & 1) {
+            if (OVL_EXPORT(Random)() & 1) {
                 SetStep(ATTACK_NAPALM_FLARE);
             } else {
                 SetStep(ATTACK_FIREBALLS);
@@ -503,7 +503,7 @@ void EntityLossothEffects(Entity* self) {
             }
             prim = self->ext.lossoth.prim;
             while (prim != NULL) {
-                if (Random() & 1) {
+                if (OVL_EXPORT(Random)() & 1) {
                     prim->y0 = prim->y1 += 4;
                 } else {
                     prim->y0 = prim->y1 -= 4;
@@ -529,7 +529,7 @@ void EntityLossothEffects(Entity* self) {
                 if (entity != NULL) {
                     CreateEntityFromEntity(E_LOSSOTH_FLAMES, self, entity);
                     entity->posY.i.hi += 0x10;
-                    entity->posX.i.hi += (Random() & 0x1F) - 0x10;
+                    entity->posX.i.hi += (OVL_EXPORT(Random)() & 0x1F) - 0x10;
                     entity->zPriority = self->zPriority + 2;
                     entity->params = 6;
                 }
@@ -573,7 +573,7 @@ void EntityLossothFireball(Entity* self) {
         InitializeEntity(g_EInitLossothAttack);
         self->animCurFrame = 0x2B;
         self->drawFlags |= ENTITY_ROTATE;
-        self->rotate = Random() * 0x10;
+        self->rotate = OVL_EXPORT(Random)() * 0x10;
         params = self->params;
         self->velocityX = fireball_velocities[params].x;
         self->velocityY = fireball_velocities[params].y;
@@ -711,7 +711,7 @@ void EntityLossothNapalmFlare(Entity* self) {
                 prim->x0 = prim->x2 = self->posX.i.hi + 8;
             }
             prim->y0 = prim->y2 = self->posY.i.hi;
-            self->ext.lossothNapalm.unkA0.val += (Random() << 8) + 0x80000;
+            self->ext.lossothNapalm.unkA0.val += (OVL_EXPORT(Random)() << 8) + 0x80000;
         }
 
         if (!(g_Timer & 3)) {
@@ -791,9 +791,9 @@ void EntityLossothFlames(Entity* self) {
         // Death flame embers
         case 6:
             self->animCurFrame = 0x2D;
-            self->ext.lossoth.timer = (Random() & 0x1F) + 0x10;
+            self->ext.lossoth.timer = (OVL_EXPORT(Random)() & 0x1F) + 0x10;
             self->velocityX = FIX(0);
-            self->velocityY = FIX(-0.25) - (Random() << 8);
+            self->velocityY = FIX(-0.25) - (OVL_EXPORT(Random)() << 8);
             self->step = 1;
             break;
         // 2,3,4 = Death flames on jacket

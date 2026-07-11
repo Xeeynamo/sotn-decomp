@@ -634,7 +634,7 @@ void EntityGaibon(Entity* self) {
                     CreateEntityFromEntity(E_EXPLOSION, self, other);
                     other->posY.i.hi += 28;
                     // Scatter bones randomly between +- 32
-                    other->posX.i.hi += ((Random() & 63) - 32);
+                    other->posX.i.hi += ((OVL_EXPORT(Random)() & 63) - 32);
                     other->zPriority = self->zPriority + 1;
                     other->params = 2;
                 }

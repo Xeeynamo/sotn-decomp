@@ -128,7 +128,7 @@ u8 func_us_801BBAB4(void) {
                 prim->priority = g_CurrentEntity->zPriority + 2;
                 prim->drawMode =
                     DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
-                randomVal = Random() & 0x7F;
+                randomVal = OVL_EXPORT(Random)() & 0x7F;
                 if (g_CurrentEntity->facingLeft) {
                     // These look like they could be -= and += respectively,
                     // but that oddly does not match
@@ -138,11 +138,11 @@ u8 func_us_801BBAB4(void) {
                 }
                 prim->x0 = (g_CurrentEntity->posX.i.hi +
                             ((rcos(randomVal * 0x10) * 0x60) >> 0xC) +
-                            (Random() & 0x3F)) -
+                            (OVL_EXPORT(Random)() & 0x3F)) -
                            0x1F;
                 prim->y0 = (g_CurrentEntity->posY.i.hi +
                             ((rsin(randomVal * 0x10) * 0x60) >> 0xC) +
-                            (Random() & 0x3F)) -
+                            (OVL_EXPORT(Random)() & 0x3F)) -
                            0x1F;
                 prim->x1 = 0;
                 prim->y1 = 0;
@@ -505,13 +505,13 @@ void func_us_801BC814(Primitive* prim) {
         prim->tpage = params.y.i.lo;
         if (!prim->u2) {
             prim->u2 = 5;
-            rnd = Random() & 1;
+            rnd = OVL_EXPORT(Random)() & 1;
             if (g_CurrentEntity->facingLeft) {
                 posX = g_CurrentEntity->posX.i.hi + rnd * 16;
             } else {
                 posX = g_CurrentEntity->posX.i.hi - rnd * 16;
             }
-            posY = g_CurrentEntity->posY.i.hi + ((Random() & 3) * 8) - 12;
+            posY = g_CurrentEntity->posY.i.hi + ((OVL_EXPORT(Random)() & 3) * 8) - 12;
             posX2 = posX - prim->x1;
             posY2 = posY - prim->y1;
             angle = ratan2(-posY2, posX2);
@@ -557,7 +557,7 @@ void func_us_801BC814(Primitive* prim) {
         rgbPtr = &prim->r1;
         for (i = 0; i < 3; i++) {
             component = &rgbPtr[i];
-            if (Random() & 1) {
+            if (OVL_EXPORT(Random)() & 1) {
                 *component -= 24;
             } else {
                 *component -= 12;
@@ -569,7 +569,7 @@ void func_us_801BC814(Primitive* prim) {
         rgbPtr = &prim->r0;
         for (i = 0; i < 3; i++) {
             component = &rgbPtr[i];
-            if (Random() & 1) {
+            if (OVL_EXPORT(Random)() & 1) {
                 *component -= 16;
             } else {
                 *component -= 8;
@@ -889,7 +889,7 @@ void func_us_801BD268(void) {
                 g_CurrentEntity->ext.lesserDemon.unk84++;
                 tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (tempEntity != NULL) {
-                    switch (Random() & 3) {
+                    switch (OVL_EXPORT(Random)() & 3) {
                     case 0:
                     case 1:
                         entityId = E_ID(MUDMAN);
@@ -1072,11 +1072,11 @@ void EntityLesserDemon(Entity* self) {
         }
         if (!--self->ext.lesserDemon.timer) {
             if (!(self->posX.i.hi & 0xFF00)) {
-                if (Random() & 3) {
+                if (OVL_EXPORT(Random)() & 3) {
                     self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
                     self->ext.lesserDemon.unk84 = 0;
                     SetStep(13);
-                    if ((GetDistanceToPlayerX() < 0x40) && (Random() & 3)) {
+                    if ((GetDistanceToPlayerX() < 0x40) && (OVL_EXPORT(Random)() & 3)) {
                         SetStep(4);
                     }
                 } else {
@@ -1143,7 +1143,7 @@ void EntityLesserDemon(Entity* self) {
     case 9:
         if (!self->step_s) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-            self->ext.lesserDemon.timer = D_us_80181C34[Random() & 3];
+            self->ext.lesserDemon.timer = D_us_80181C34[OVL_EXPORT(Random)() & 3];
             self->step_s++;
         }
         AnimateEntity(D_us_80181B4C, self);
@@ -1159,7 +1159,7 @@ void EntityLesserDemon(Entity* self) {
         if (!--self->ext.lesserDemon.timer) {
             self->step_s--;
             if (self->posX.i.hi & 0xFF00) {
-                if (Random() & 3) {
+                if (OVL_EXPORT(Random)() & 3) {
                     SetStep(14);
                 } else {
                     SetStep(10);
@@ -1167,11 +1167,11 @@ void EntityLesserDemon(Entity* self) {
             } else {
                 tempVar = GetDistanceToPlayerX();
                 if (tempVar > 0x40) {
-                    if ((Random() & 7) == 0) {
+                    if ((OVL_EXPORT(Random)() & 7) == 0) {
                         SetStep(4);
                     } else {
                         SetStep(12);
-                        if ((Random() & 3) == 0) {
+                        if ((OVL_EXPORT(Random)() & 3) == 0) {
                             SetStep(14);
                         }
                     }
@@ -1450,8 +1450,8 @@ void EntityLesserDemon(Entity* self) {
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
                 CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, tempEntity);
-                tempEntity->posX.i.hi += (Random() & 0x1F) - 0x10;
-                tempEntity->posY.i.hi += (Random() & 0x3F) - 0x20;
+                tempEntity->posX.i.hi += (OVL_EXPORT(Random)() & 0x1F) - 0x10;
+                tempEntity->posY.i.hi += (OVL_EXPORT(Random)() & 0x3F) - 0x20;
             }
         }
         if ((g_Timer & 0xF) == 0) {
@@ -1498,8 +1498,8 @@ void EntityLesserDemon(Entity* self) {
                 if (tempEntity != NULL) {
                     CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
                     tempEntity->params = 1;
-                    tempEntity->posX.i.hi += (Random() & 0x1F) - 0x10;
-                    tempEntity->posY.i.hi += (Random() & 0x1F) - 0x10;
+                    tempEntity->posX.i.hi += (OVL_EXPORT(Random)() & 0x1F) - 0x10;
+                    tempEntity->posY.i.hi += (OVL_EXPORT(Random)() & 0x1F) - 0x10;
                 }
             }
             if (!--self->ext.lesserDemon.timer) {

@@ -310,17 +310,17 @@ void EntityMinotaur(Entity* self) {
             entity = &PLAYER;
             if (GetDistanceToPlayerX() < 0x48) {
                 if (self->facingLeft == entity->facingLeft) {
-                    if (Random() & 3) {
+                    if (OVL_EXPORT(Random)() & 3) {
                         SetStep(SPIT_LIQUID);
                     } else {
                         SetStep(AXE_CHARGE);
                     }
-                } else if (Random() & 3) {
+                } else if (OVL_EXPORT(Random)() & 3) {
                     SetStep(AXE_CHARGE);
                 } else {
                     SetStep(AXE_SWING);
                 }
-            } else if (Random() & 7) {
+            } else if (OVL_EXPORT(Random)() & 7) {
                 SetStep(AXE_SWING);
             } else {
                 SetStep(AXE_CHARGE);
@@ -599,7 +599,7 @@ void EntityMinotaurSpitLiquid(Entity* self) {
         }
         self->facingLeft = 0;
         // Spit flies slightly up and down randomly
-        self->rotate += ROT(11.25) - Random();
+        self->rotate += ROT(11.25) - OVL_EXPORT(Random)();
         angle = self->rotate;
         self->velocityX = rsin(angle) * 0x24;
         self->velocityY = rcos(angle) * -0x24;
@@ -636,7 +636,7 @@ void EntityMinotaurDeathPuff(Entity* self) {
         self->scaleX = 0xA0;
         self->opacity = 0x60 - (self->params * 2);
         self->velocityY = FIX(-3.0);
-        self->facingLeft = Random() & 1;
+        self->facingLeft = OVL_EXPORT(Random)() & 1;
         // fallthrough
     case 1:
         MoveEntity();

@@ -28,7 +28,7 @@ u16 UNK_Invincibility0[] = {
 
 u16 g_ItemIconSlots[ICON_SLOT_NUM];
 
-s32 Random(void) {
+s32 OVL_EXPORT(Random)(void) {
     g_randomNext = (g_randomNext * 0x01010101) + 1;
     return (g_randomNext >> 0x18) & 0xFF;
 }

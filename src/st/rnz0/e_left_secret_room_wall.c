@@ -92,8 +92,8 @@ void EntityLeftSecretRoomWall(Entity* self) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(E_ID(WALL_DEBRIS), self, newEntity);
-                    newEntity->posX.i.hi += (Random() & 0xF);
-                    newEntity->posY.i.hi += (Random() & 0x3F) - 0x20;
+                    newEntity->posX.i.hi += (OVL_EXPORT(Random)() & 0xF);
+                    newEntity->posY.i.hi += (OVL_EXPORT(Random)() & 0x3F) - 0x20;
                 }
             }
             DestroyEntity(self);
@@ -193,18 +193,18 @@ void EntitySecretWallDebris(Entity* self) {
         InitializeEntity(g_EInitWallDebris);
         self->drawFlags = ENTITY_ROTATE;
 
-        if (Random() & 1) {
+        if (OVL_EXPORT(Random)() & 1) {
             self->animCurFrame = 1;
         } else {
             self->animCurFrame = 2;
         }
 
-        range = (Random() & 0x1F) + 16;
-        angle = ((Random() & 0x3F) * 16) + 0x400;
+        range = (OVL_EXPORT(Random)() & 0x1F) + 16;
+        angle = ((OVL_EXPORT(Random)() & 0x3F) * 16) + 0x400;
         if (self->params) {
             self->animCurFrame = 3;
-            range = (Random() & 0x1F) + 16;
-            angle = (Random() * 6) + 0x900;
+            range = (OVL_EXPORT(Random)() & 0x1F) + 16;
+            angle = (OVL_EXPORT(Random)() * 6) + 0x900;
         }
 
         self->velocityX = range * rcos(angle);

@@ -42,7 +42,7 @@ void EntitySkullLord(Entity* self) {
         switch (self->step_s) {
         case 0:
             self->velocityY = 0;
-            self->ext.skullLord.timer = ((Random() & 7) * 0x10) + 0x10;
+            self->ext.skullLord.timer = ((OVL_EXPORT(Random)() & 7) * 0x10) + 0x10;
             self->ext.skullLord.unk90 = 0;
             self->step_s++;
             // fallthrough
@@ -113,11 +113,11 @@ void EntitySkullLord(Entity* self) {
             if (!self->pose) {
                 PlaySfxPositional(SFX_SKULL_KNOCK_B);
                 self->animCurFrame = 1;
-                self->poseTimer = (Random() & 0x7F) | 7;
+                self->poseTimer = (OVL_EXPORT(Random)() & 0x7F) | 7;
                 self->pose = 1;
             } else {
                 self->animCurFrame = 2;
-                self->poseTimer = (Random() & 0xF) | 3;
+                self->poseTimer = (OVL_EXPORT(Random)() & 0xF) | 3;
                 self->pose = 0;
             }
         } else {
@@ -168,12 +168,12 @@ void EntitySkullLord(Entity* self) {
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
                     CreateEntityFromEntity(E_SKULL_LORD_PIECES, self, entity);
-                    angle = (Random() & 0x7F) * 16;
-                    scale = (Random() & 0x1F) + 8;
+                    angle = (OVL_EXPORT(Random)() & 0x7F) * 16;
+                    scale = (OVL_EXPORT(Random)() & 0x1F) + 8;
                     entity->ext.skullLord.unk82 = angle;
                     entity->posX.i.hi += FLT_TO_I(scale * rcos(angle));
                     entity->posY.i.hi -= FLT_TO_I(scale * rsin(angle));
-                    if (Random() & 1) {
+                    if (OVL_EXPORT(Random)() & 1) {
                         entity->zPriority = self->zPriority + 1;
                     } else {
                         entity->zPriority = self->zPriority - 1;
@@ -444,15 +444,15 @@ void EntitySkullLordPieces(Entity* self) {
     case 0:
         InitializeEntity(g_EInitSkullLordEffects);
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
-        rand = Random() & 3;
+        rand = OVL_EXPORT(Random)() & 3;
         if (rand == 3) {
             rand = 2;
         }
         self->animCurFrame = rand + 9;
         angle = self->ext.skullLord.unk82;
-        rand = (Random() & 0xF) + 2;
+        rand = (OVL_EXPORT(Random)() & 0xF) + 2;
         self->velocityX = rand * rcos(angle);
-        rand = 0x20 - (Random() & 0x1F);
+        rand = 0x20 - (OVL_EXPORT(Random)() & 0x1F);
         self->velocityY = -rand * rsin(angle);
         self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->drawFlags = ENTITY_ROTATE;

@@ -531,7 +531,7 @@ void EntityCtulhu(Entity* self) {
                 PlaySfxPositional(SFX_FM_EXPLODE_B);
             }
             prim = self->ext.ctulhu.deathExplosionPrim;
-            posX = Random() & 0x3F;
+            posX = OVL_EXPORT(Random)() & 0x3F;
             posY = self->ext.ctulhu.y;
             if ((g_Timer & 0xF) == 0) {
                 newEntity = AllocEntity(&g_Entities[STAGE_ENTITY_START],

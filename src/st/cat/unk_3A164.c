@@ -134,7 +134,7 @@ void func_us_801BA388(Entity* self) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, newEntity);
-                newEntity->posX.i.hi += ((Random() & 7) * 2) - 8;
+                newEntity->posX.i.hi += ((OVL_EXPORT(Random)() & 7) * 2) - 8;
                 newEntity->posY.i.hi += 0x20;
                 newEntity->params = 16;
             }

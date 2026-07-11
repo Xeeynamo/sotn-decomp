@@ -93,7 +93,7 @@ static s32 func_801ABBBC(s32 step, Entity* dracula) {
             prim->y0 = prim->y1 = 0;
             PGREY(prim, 0) = 0x70;
             PGREY(prim, 1) = 0;
-            color = Random() & 7;
+            color = OVL_EXPORT(Random)() & 7;
             prim->r2 = ((color & 1) * 0x10) + 0x10;
             prim->g2 = (((color & 2) >> 1) * 0x10) + 0x10;
             prim->b2 = ((color >> 2) * 0x10) + 0x10;
@@ -167,7 +167,7 @@ static s32 func_801ABBBC(s32 step, Entity* dracula) {
             }
             PGREY(prim, 0) = 0x70;
             PGREY(prim, 1) = 0x20;
-            color = Random() & 7;
+            color = OVL_EXPORT(Random)() & 7;
             prim->r2 = ((color & 1) * 4) + 4;
             prim->g2 = (((color & 2) >> 1) * 4) + 4;
             prim->b2 = ((color >> 2) * 4) + 4;
@@ -574,7 +574,7 @@ void EntityDracula(Entity* self) {
             // fallthrough
         case 1:
             if (!--self->ext.dracula.unk8C) {
-                rand = Random() & 7;
+                rand = OVL_EXPORT(Random)() & 7;
                 self->posX.i.hi = D_80180A48[rand];
                 self->posY.i.hi = 0x82;
                 self->ext.dracula.unk9C = 0;
@@ -1050,7 +1050,7 @@ void EntityDraculaMeteorball(Entity* entity) {
             if (newEntity != 0) {
                 CreateEntityFromEntity(E_ID(DRACULA_METEOR), entity, newEntity);
                 newEntity->zPriority = entity->zPriority + 1;
-                randomPosXYIndex = (Random() & 3);
+                randomPosXYIndex = (OVL_EXPORT(Random)() & 3);
                 newEntity->posX.i.hi += D_80180A60[randomPosXYIndex].x;
                 newEntity->posY.i.hi += D_80180A60[randomPosXYIndex].y;
             }
@@ -1098,8 +1098,8 @@ void EntityDraculaGlass(Entity* entity) {
         entity->velocityY = 0;
         if (entity->params) {
             entity->animCurFrame = 0x5C;
-            speed = (Random() & 0x1F) + 0x10;
-            radians = (Random() * 6) + 0x900;
+            speed = (OVL_EXPORT(Random)() & 0x1F) + 0x10;
+            radians = (OVL_EXPORT(Random)() * 6) + 0x900;
             entity->velocityX = speed * rcos(radians);
             entity->velocityY = speed * rsin(radians);
             SetStep(3);

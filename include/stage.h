@@ -206,7 +206,7 @@ void Update(void);
 void OVL_EXPORT(UpdateStageEntities)(void);
 void OVL_EXPORT(HitDetection)(void);
 
-s32 Random();
+s32 OVL_EXPORT(Random)();
 #ifdef VERSION_PC
 void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity);
 #endif

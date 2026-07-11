@@ -394,7 +394,7 @@ void EntityDiplocephalusTail(Entity* self) {
             self->poseTimer = 0;
             self->pose = 0;
             self->step = 6;
-        } else if ((Random() & 0x7F) == 0) {
+        } else if ((OVL_EXPORT(Random)() & 0x7F) == 0) {
             self->poseTimer = 0;
             self->pose = 0;
             self->params = 1;

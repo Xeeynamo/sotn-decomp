@@ -159,11 +159,11 @@ void func_801A8328(Entity* self) {
         prim->next->b3 = 0x80;
         prim->priority = self->zPriority;
         prim->drawMode = DRAW_UNK02;
-        self->velocityX = ((Random() & 7) << 0xC) + 0x8000;
+        self->velocityX = ((OVL_EXPORT(Random)() & 7) << 0xC) + 0x8000;
         if (!self->facingLeft) {
             self->velocityX = -self->velocityX;
         }
-        self->velocityY = ((Random() & 7) << 0xC) - 0x8000;
+        self->velocityY = ((OVL_EXPORT(Random)() & 7) << 0xC) - 0x8000;
         // fallthrough
     case 1:
         MoveEntity();

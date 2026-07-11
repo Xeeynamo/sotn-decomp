@@ -404,15 +404,15 @@ void EntityWarg(Entity* self) {
                 if (self->facingLeft) {
                     self->velocityX += FIX(0.125);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, -0x20, 0x26, (Random() & 3) + 1, -4);
+                        self, 1, 1, -0x20, 0x26, (OVL_EXPORT(Random)() & 3) + 1, -4);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, 2, 0x26, (Random() & 3) + 1, -4);
+                        self, 1, 1, 2, 0x26, (OVL_EXPORT(Random)() & 3) + 1, -4);
                 } else {
                     self->velocityX -= FIX(0.125);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, -2, 0x26, (Random() & 3) + 1, 4);
+                        self, 1, 1, -2, 0x26, (OVL_EXPORT(Random)() & 3) + 1, 4);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, 0x20, 0x26, (Random() & 3) + 1, 4);
+                        self, 1, 1, 0x20, 0x26, (OVL_EXPORT(Random)() & 3) + 1, 4);
                 }
             }
             if (!AnimateEntity(D_801831FC, self)) {
@@ -434,12 +434,12 @@ void EntityWarg(Entity* self) {
 // up. There's almost certainly a single solution, but I can't find it.
 #ifdef VERSION_PSP
                 part->params =
-                    ((g_unkGraphicsStruct.g_zEntityCenter - 8 - (Random() & 7))
+                    ((g_unkGraphicsStruct.g_zEntityCenter - 8 - (OVL_EXPORT(Random)() & 7))
                      << 8) +
                     1;
 #else
                 part->params =
-                    ((g_unkGraphicsStruct.g_zEntityCenter - (Random() & 7) - 8)
+                    ((g_unkGraphicsStruct.g_zEntityCenter - (OVL_EXPORT(Random)() & 7) - 8)
                      << 8) +
                     1;
 #endif
@@ -448,11 +448,11 @@ void EntityWarg(Entity* self) {
                 part->posY.i.hi =
                     self->ext.warg.deathPosY - gTilemap->scrollY.i.hi;
                 if (self->facingLeft) {
-                    part->posX.i.hi += (((Random() & 0xF) - 8) * 8);
+                    part->posX.i.hi += (((OVL_EXPORT(Random)() & 0xF) - 8) * 8);
                 } else {
-                    part->posX.i.hi += (((Random() & 0xF) - 7) * 8);
+                    part->posX.i.hi += (((OVL_EXPORT(Random)() & 0xF) - 7) * 8);
                 }
-                part->posY.i.hi += (((Random() & 7) - 2) * 8);
+                part->posY.i.hi += (((OVL_EXPORT(Random)() & 7) - 2) * 8);
             }
         }
         switch (self->step_s) {

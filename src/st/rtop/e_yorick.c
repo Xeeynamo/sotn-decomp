@@ -136,8 +136,8 @@ void EntityYorick(Entity* self) {
 
     case 5:
         if (!self->step_s) {
-            self->ext.yorick.timer = (Random() & 0x3F) + 0x40;
-            self->facingLeft = Random() & 1;
+            self->ext.yorick.timer = (OVL_EXPORT(Random)() & 0x3F) + 0x40;
+            self->facingLeft = OVL_EXPORT(Random)() & 1;
             self->step_s++;
         }
         if (self->facingLeft) {

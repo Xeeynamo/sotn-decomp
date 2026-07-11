@@ -148,7 +148,7 @@ void EntitySwordLord(Entity* self) {
         if (GetDistanceToPlayerX() < 0x60) {
             self->poseTimer = 0;
             self->pose = 0;
-            self->ext.swordLord.delay = delays[Random() & 3];
+            self->ext.swordLord.delay = delays[OVL_EXPORT(Random)() & 3];
             self->step = 3;
             if (self->facingLeft) {
                 self->velocityX = FIX(1.0);
@@ -185,7 +185,7 @@ void EntitySwordLord(Entity* self) {
             self->poseTimer = 0;
             self->ext.swordLord.timer = 0;
             self->velocityX = 0;
-            if (Random() % 2) {
+            if (OVL_EXPORT(Random)() % 2) {
                 self->step = 4;
             } else {
                 self->ext.swordLord.unk7E = true;
@@ -203,7 +203,7 @@ void EntitySwordLord(Entity* self) {
         if (AnimateEntity(anim1, self) == 0) {
             self->pose = 0;
             self->poseTimer = 0;
-            self->ext.swordLord.delay = delays[Random() & 3];
+            self->ext.swordLord.delay = delays[OVL_EXPORT(Random)() & 3];
             if (self->facingLeft) {
                 self->velocityX = FIX(1.0);
             } else {
@@ -248,7 +248,7 @@ void EntitySwordLord(Entity* self) {
         if (AnimateEntity(anim2, self) == 0) {
             self->pose = 0;
             self->poseTimer = 0;
-            self->ext.swordLord.delay = delays[Random() & 3];
+            self->ext.swordLord.delay = delays[OVL_EXPORT(Random)() & 3];
             if (self->facingLeft) {
                 self->velocityX = FIX(1.0);
             } else {
@@ -297,13 +297,13 @@ void EntitySwordLord(Entity* self) {
     case 6:
         switch (self->step_s) {
         case 0:
-            if ((Random() & 7) == 0) {
+            if ((OVL_EXPORT(Random)() & 7) == 0) {
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
                     CreateEntityFromEntity(
                         E_INTENSE_EXPLOSION, self, tempEntity);
-                    tempEntity->posX.i.hi += 0x20 - (Random() & 0x2F);
-                    tempEntity->posY.i.hi += 0x20 - (Random() & 0x3F);
+                    tempEntity->posX.i.hi += 0x20 - (OVL_EXPORT(Random)() & 0x2F);
+                    tempEntity->posY.i.hi += 0x20 - (OVL_EXPORT(Random)() & 0x3F);
                 }
             }
             if (AnimateEntity(anim3, self) == 0) {
@@ -438,7 +438,7 @@ void EntitySwordLord(Entity* self) {
             posX -= explosionOffsets[self->params].x;
         }
         posY += explosionOffsets[self->params].y;
-        if (Random() & 0xF) {
+        if (OVL_EXPORT(Random)() & 0xF) {
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
                 CreateEntityFromCurrentEntity(E_EXPLOSION, tempEntity);

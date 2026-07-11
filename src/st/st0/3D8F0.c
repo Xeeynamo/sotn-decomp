@@ -200,7 +200,7 @@ void func_801BD8F0(Entity* self) {
             yVar >>= 0xC;
             unkStr->unk0.x = xVar;
             unkStr->unk0.y = yVar;
-            unkStr->unk14 = ((var_s7 * 3) / 2) - (Random() & 0x1F);
+            unkStr->unk14 = ((var_s7 * 3) / 2) - (OVL_EXPORT(Random)() & 0x1F);
             if (unkStr->unk14 < 0) {
                 unkStr->unk14 = 0;
             }

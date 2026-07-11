@@ -104,7 +104,7 @@ static void func_us_801D95EC(Entity* self) {
     player = &PLAYER;
 
     if (!(self->ext.frozenShade.unk86 & 0x1F)) {
-        angle = Random() & 7;
+        angle = OVL_EXPORT(Random)() & 7;
         posY = self->ext.frozenShade.unkA2 - self->posY.i.hi +
                posY_offsets[angle] - g_Tilemap.scrollY.i.hi;
         posX = self->ext.frozenShade.unkA0 - self->posX.i.hi +
@@ -719,7 +719,7 @@ void EntityFrozenShade(Entity* self) {
                         prim->posX.i.hi =
                             (prim2->x2 + prim2->x0) / 2 +
                             tilemap->scrollX.i.hi +
-                            Random() *
+                            OVL_EXPORT(Random)() *
                                 (prim2->x3 + prim2->x1 - prim2->x2 -
                                  prim2->x0) /
                                 0x200;

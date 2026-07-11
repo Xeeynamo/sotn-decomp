@@ -164,8 +164,8 @@ void func_us_801BFB40(Entity* self) {
             self->velocityY = 0;
             self->step_s++;
             if (self->params) {
-                self->velocityX = -(Random() & 7) * FIX(0.125);
-                self->velocityY = FIX(-2.25) - (Random() & 3) * FIX(0.25);
+                self->velocityX = -(OVL_EXPORT(Random)() & 7) * FIX(0.125);
+                self->velocityY = FIX(-2.25) - (OVL_EXPORT(Random)() & 3) * FIX(0.25);
             }
             break;
 
@@ -499,7 +499,7 @@ void func_us_801C05DC(Entity* self) {
                 if (tempEntity != NULL) {
                     CreateEntityFromEntity(E_ID(ID_2F), self, tempEntity);
                     tempEntity->posY.i.hi -= 0x3D;
-                    tempEntity->posX.i.hi -= (Random() & 3) * 8 - 4;
+                    tempEntity->posX.i.hi -= (OVL_EXPORT(Random)() & 3) * 8 - 4;
                 }
             }
             if (g_Timer % 24 == 0) {

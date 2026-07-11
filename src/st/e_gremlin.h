@@ -168,7 +168,7 @@ void EntityGremlin(Entity* self) {
             PlaySfxPositional(SFX_SMALL_FLAME_IGNITE);
 
             // Set next time
-            self->ext.gremlin.timer = (Random() & 0x1F) + 0x28;
+            self->ext.gremlin.timer = (OVL_EXPORT(Random)() & 0x1F) + 0x28;
 
             // Spawn
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);

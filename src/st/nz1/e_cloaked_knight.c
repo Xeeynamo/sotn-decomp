@@ -65,13 +65,13 @@ void EntityCloakedKnight(Entity* self) {
     case 3:
         switch (self->step_s) {
         case 0:
-            self->ext.cloakedKnight.unk94 = (Random() & 3) + 1;
+            self->ext.cloakedKnight.unk94 = (OVL_EXPORT(Random)() & 3) + 1;
             self->ext.cloakedKnight.unk84 = 0;
             self->step_s++;
             // fallthrough
 
         case 1:
-            angle = (Random() * 4) + FLT(0.125);
+            angle = (OVL_EXPORT(Random)() * 4) + FLT(0.125);
             posX = FLT_TO_I(rcos(angle) * 0x60);
             posY = FLT_TO_I(rsin(angle) * -0x60);
             entity = &PLAYER;

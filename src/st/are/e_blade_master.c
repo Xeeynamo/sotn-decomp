@@ -626,7 +626,7 @@ void EntityBladeMasterDeathParts(Entity* self) {
         }
 
         if (!(self->ext.bladeMaster.deathTimer & 7)) {
-            if (Random() & 1) {
+            if (OVL_EXPORT(Random)() & 1) {
                 PlaySfxPositional(SFX_EXPLODE_E);
             } else {
                 PlaySfxPositional(SFX_EXPLODE_F);

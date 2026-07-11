@@ -198,7 +198,7 @@ void EntityFakeGrant(Entity* self) {
         }
         if (GetDistanceToPlayerX() < 4) {
             SetStep(5);
-            if ((D_us_801806B4 > 0) && (Random() & 1)) {
+            if ((D_us_801806B4 > 0) && (OVL_EXPORT(Random)() & 1)) {
                 SetStep(6);
             }
         }

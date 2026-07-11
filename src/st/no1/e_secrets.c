@@ -194,8 +194,8 @@ void func_us_801BEB54(Entity* self) {
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
                     CreateEntityFromEntity(E_ID(ID_27), self, tempEntity);
-                    tempEntity->posX.i.hi += (i * 8) - 0x10 + (Random() & 3);
-                    tempEntity->posY.i.hi -= (Random() & 7) + 0x14;
+                    tempEntity->posX.i.hi += (i * 8) - 0x10 + (OVL_EXPORT(Random)() & 3);
+                    tempEntity->posY.i.hi -= (OVL_EXPORT(Random)() & 7) + 0x14;
                     tempEntity->params = i;
                 }
             }

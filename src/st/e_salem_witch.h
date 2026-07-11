@@ -285,7 +285,7 @@ void EntitySalemWitch(Entity* self) {
         case ATTACK_INIT:
             self->velocityY = 0;
             // Move towards position for between ~0.25s and ~0.75s
-            self->ext.salemWitch.timer = (Random() & 0x1F) + 0x10;
+            self->ext.salemWitch.timer = (OVL_EXPORT(Random)() & 0x1F) + 0x10;
             self->step_s++;
             // fallthrough
         case ATTACK_MOVE_TO_POSITION:
@@ -725,7 +725,7 @@ void EntitySalemWitchCurse(Entity* self) {
         prim->drawMode = DRAW_TRANSP | DRAW_UNK02 | DRAW_TPAGE | DRAW_TPAGE2;
 
         // 50/50 chance to try to spawn part of trail
-        if (Random() & 1) {
+        if (OVL_EXPORT(Random)() & 1) {
             prim = self->ext.prim;
             prim = prim->next;
             prim = FindFirstUnkPrim(prim);
@@ -961,7 +961,7 @@ void EntitySalemWitchTriboltProjectile(Entity* self) {
         self->velocityY = rsin(rotSansSpin) * LinearSpeed;
 
         // 50/50 chance to try to spawn part of trail
-        if (Random() & 1) {
+        if (OVL_EXPORT(Random)() & 1) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
                 CreateEntityFromEntity(
