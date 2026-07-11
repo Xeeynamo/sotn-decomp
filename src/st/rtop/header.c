@@ -12,8 +12,8 @@ extern u8* D_us_80182E44[];
 Overlay OVL_EXPORT(Overaly) = {
     .Update = OVL_EXPORT(Update),
     .HitDetection = OVL_EXPORT(HitDetection),
-    .UpdateRoomPosition = UpdateRoomPosition,
-    .InitRoomEntities = InitRoomEntities,
+    .UpdateRoomPosition = OVL_EXPORT(UpdateRoomPosition),
+    .InitRoomEntities = OVL_EXPORT(InitRoomEntities),
     .rooms = OVL_EXPORT(rooms),
     .spriteBanks = OVL_EXPORT(spriteBanks),
     .cluts = OVL_EXPORT(cluts),

@@ -51,7 +51,7 @@ void func_us_801B7580(Entity* self) {
         if (posX < 0x1E8) {
             if (self->params) {
                 player = self + 1;
-                CreateEntityFromEntity(E_ID(ID_32), self, player);
+                OVL_EXPORT(CreateEntityFromEntity)(E_ID(ID_32), self, player);
                 player->posX.i.hi = -0x18 - g_Tilemap.scrollX.i.hi;
                 player->params = 0;
             }

@@ -21,7 +21,7 @@ void EntityBat(Entity* self) {
     if (self->flags & FLAG_DEAD) {
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, newEntity);
             newEntity->params = 1;
         }
         g_api.PlaySfx(SFX_BAT_SCREECH);

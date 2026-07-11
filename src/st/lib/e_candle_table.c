@@ -48,7 +48,8 @@ void EntityCandleTable(Entity* self) {
             self->hitboxOffY = -10;
             self->hitboxState = 2;
             newEntity = self + 1;
-            CreateEntityFromEntity(E_ID(CANDLE_TABLE), self, newEntity);
+            OVL_EXPORT(CreateEntityFromEntity)
+            (E_ID(CANDLE_TABLE), self, newEntity);
 
             newEntity->params = 0x100;
         }
@@ -66,11 +67,11 @@ void EntityCandleTable(Entity* self) {
         newEntity = self + 1;
         // I believe this entity to be the stone mask that drops from the candle
         // 0xC is used for other things as well, so I kept the name for now
-        CreateEntityFromEntity(E_HEART_DROP, self, newEntity);
+        OVL_EXPORT(CreateEntityFromEntity)(E_HEART_DROP, self, newEntity);
         newEntity->params = 1;
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, newEntity);
             newEntity->posY.i.hi -= 8;
             newEntity->params = 2;
         }

@@ -1,7 +1,7 @@
-InitRoomEntities = 0x09238288;
-UpdateRoomPosition = 0x092384B8;
-CreateEntityFromCurrentEntity = 0x09238598;
-CreateEntityFromEntity = 0x09238620;
+CHI_InitRoomEntities = 0x09238288;
+CHI_UpdateRoomPosition = 0x092384B8;
+CHI_CreateEntityFromCurrentEntity = 0x09238598;
+CHI_CreateEntityFromEntity = 0x09238620;
 CHI_Random = 0x0923E5B0;
 CHI_Update = 0x0923E5F0;
 CHI_UpdateStageEntities = 0x0923E9D0;

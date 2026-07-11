@@ -49,7 +49,8 @@ void EntityBreakableNZ0(Entity* self) {
             g_api.PlaySfx(SFX_CANDLE_HIT);
             entityDropItem = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entityDropItem != NULL) {
-                CreateEntityFromCurrentEntity(E_EXPLOSION, entityDropItem);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_EXPLOSION, entityDropItem);
                 entityDropItem->params =
                     g_eBreakableExplosionTypes[breakableType];
             }

@@ -101,7 +101,7 @@ void EntityFakeSypha(Entity* self) {
         InitializeEntity(D_us_801804C4);
         self->hitboxState = 0;
         entity = self - 1;
-        CreateEntityFromCurrentEntity(E_ID(COFFIN), entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(COFFIN), entity);
         entity->posY.i.hi = 0xBA - g_Tilemap.scrollY.i.hi;
         SetStep(1);
         // fallthrough
@@ -290,7 +290,8 @@ void EntityFakeSypha(Entity* self) {
         case 0:
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_ID(DEATH_FLAMES), self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_ID(DEATH_FLAMES), self, entity);
                 if (self->facingLeft) {
                     entity->posX.i.hi += 0xA;
                 } else {
@@ -323,7 +324,8 @@ void EntityFakeSypha(Entity* self) {
             if (!(self->ext.sypha.timer & 3)) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_ID(HOLY_FLAME), self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID(HOLY_FLAME), self, entity);
                     if (self->facingLeft) {
                         entity->posX.i.hi += 0xA;
                     } else {
@@ -348,7 +350,8 @@ void EntityFakeSypha(Entity* self) {
         case 0:
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_ID(DEATH_FLAMES), self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_ID(DEATH_FLAMES), self, entity);
                 if (self->facingLeft) {
                     entity->posX.i.hi += 0xA;
                 } else {
@@ -376,7 +379,8 @@ void EntityFakeSypha(Entity* self) {
         case 3:
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_ID(PETRIFY_CLOUD), self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_ID(PETRIFY_CLOUD), self, entity);
                 if (self->facingLeft) {
                     entity->posX.i.hi += 8;
                 } else {
@@ -401,7 +405,8 @@ void EntityFakeSypha(Entity* self) {
         case 0:
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_ID(DEATH_FLAMES), self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_ID(DEATH_FLAMES), self, entity);
                 if (self->facingLeft) {
                     entity->posX.i.hi += 10;
                 } else {
@@ -426,7 +431,8 @@ void EntityFakeSypha(Entity* self) {
             for (i = 0; i < 3; i++) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_ID(HOLY_LIGHTNING), self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID(HOLY_LIGHTNING), self, entity);
                     if (self->facingLeft) {
                         entity->posX.i.hi += 8;
                     } else {
@@ -464,7 +470,8 @@ void EntityFakeSypha(Entity* self) {
             if (!(self->ext.sypha.timer & 3)) {
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_ID(DEATH_FLAMES), self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID(DEATH_FLAMES), self, entity);
                     entity->posY.i.hi += (OVL_EXPORT(Random)() & 0x1F);
                     entity->zPriority = self->zPriority - 1;
                     entity->params = 6;
@@ -478,7 +485,8 @@ void EntityFakeSypha(Entity* self) {
         case 2:
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_ID(RESURRECT), self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_ID(RESURRECT), self, entity);
                 entity->posX.i.hi = self->posX.i.hi;
                 entity->posY.i.hi = 0xC8 - g_Tilemap.scrollY.i.hi;
             }
@@ -542,7 +550,8 @@ void EntityFakeSypha(Entity* self) {
             if (!(g_Timer & 3)) {
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_ID(DEATH_FLAMES), self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID(DEATH_FLAMES), self, entity);
                     entity->zPriority = self->zPriority + 1;
                     entity->params = 9;
                     entity->posY.i.hi += 12;
@@ -899,7 +908,7 @@ void EntitySummonAttack(Entity* self) {
         D_us_80180C60 = 0;
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
             entity->params = 3;
         }
         PlaySfxPositional(SFX_QUICK_STUTTER_EXPLODE_A);
@@ -1074,7 +1083,8 @@ static void CreateExplosionPuff() {
     for (i = 0; i < 6; i++) {
         puff = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (puff != NULL) {
-            CreateEntityFromEntity(E_ID(DEATH_FLAMES), g_CurrentEntity, puff);
+            OVL_EXPORT(CreateEntityFromEntity)
+            (E_ID(DEATH_FLAMES), g_CurrentEntity, puff);
             puff->params = 2;
             puff->ext.opaquePuff.speed = 6 - i;
             puff->ext.opaquePuff.angle = initAngle;

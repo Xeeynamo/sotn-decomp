@@ -145,8 +145,8 @@ void EntityAlucardWaterEffect(Entity* self) {
                                 if (tempEntity == NULL) {
                                     break;
                                 }
-                                CreateEntityFromEntity(
-                                    E_SIDE_WATER_SPLASH, player, tempEntity);
+                                OVL_EXPORT(CreateEntityFromEntity)
+                                (E_SIDE_WATER_SPLASH, player, tempEntity);
                                 tempEntity->params =
                                     (u16)g_WaterXTbl[self->ext.aluwater.unk88 +
                                                      7] +
@@ -158,8 +158,8 @@ void EntityAlucardWaterEffect(Entity* self) {
                             tempEntity =
                                 AllocEntity(&g_Entities[224], &g_Entities[256]);
                             if (tempEntity != NULL) {
-                                CreateEntityFromEntity(
-                                    E_SPLASH_WATER, player, tempEntity);
+                                OVL_EXPORT(CreateEntityFromEntity)
+                                (E_SPLASH_WATER, player, tempEntity);
                                 tempEntity->posX.i.hi =
                                     self->ext.aluwater.unk80 -
                                     tilemap->scrollX.i.hi;
@@ -203,8 +203,8 @@ void EntityAlucardWaterEffect(Entity* self) {
                         if (tempEntity == NULL) {
                             break;
                         }
-                        CreateEntityFromEntity(
-                            E_SIDE_WATER_SPLASH, player, tempEntity);
+                        OVL_EXPORT(CreateEntityFromEntity)
+                        (E_SIDE_WATER_SPLASH, player, tempEntity);
                         tempEntity->params =
                             (u16)g_WaterXTbl[sp30 + 7] + (var_s1 << 4) + i;
                         tempEntity->posY.i.hi += var_s6 - var_s3;
@@ -214,8 +214,8 @@ void EntityAlucardWaterEffect(Entity* self) {
                     tempEntity =
                         AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (tempEntity != NULL) {
-                        CreateEntityFromEntity(
-                            E_SPLASH_WATER, player, tempEntity);
+                        OVL_EXPORT(CreateEntityFromEntity)
+                        (E_SPLASH_WATER, player, tempEntity);
                         if (player->velocityY > FIX(4)) {
                             tempEntity->params = var_s7 + 1;
                         } else {
@@ -236,8 +236,8 @@ void EntityAlucardWaterEffect(Entity* self) {
                         tempEntity =
                             AllocEntity(&g_Entities[224], &g_Entities[256]);
                         if (tempEntity != NULL) {
-                            CreateEntityFromEntity(
-                                E_SURFACING_WATER, player, tempEntity);
+                            OVL_EXPORT(CreateEntityFromEntity)
+                            (E_SURFACING_WATER, player, tempEntity);
                             tempEntity->posY.i.hi += var_s6 - var_s3;
                             if (player->velocityX != 0) {
                                 tempEntity->params = (sp4A - var_s3) >> 3;
@@ -259,8 +259,8 @@ void EntityAlucardWaterEffect(Entity* self) {
                     tempEntity =
                         AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (tempEntity != NULL) {
-                        CreateEntityFromEntity(
-                            E_SURFACING_WATER, player, tempEntity);
+                        OVL_EXPORT(CreateEntityFromEntity)
+                        (E_SURFACING_WATER, player, tempEntity);
                         tempEntity->posY.i.hi += var_s6 - var_s3;
                         tempEntity->params = g_WaterXTbl[sp30 + 2] << 8;
                         tempEntity->ext.aluwater.unk88 = sp30;
@@ -509,7 +509,7 @@ void EntitySplashWater(Entity* self) {
 
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
-            CreateEntityFromCurrentEntity(E_WATER_DROP, newEntity);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)(E_WATER_DROP, newEntity);
             newEntity->velocityY = self->velocityY;
         }
         break;

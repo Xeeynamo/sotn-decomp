@@ -27,10 +27,11 @@ void EntityPendulumAnchor(Entity* self) {
         entity = self + 1;
         // chain entities
         for (i = 0; i < 7; i++, entity++) {
-            CreateEntityFromEntity(E_ID(PENDULUM_BONE_CHAIN), self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)
+            (E_ID(PENDULUM_BONE_CHAIN), self, entity);
         }
         // weight creation
-        CreateEntityFromEntity(E_ID(PENDULUM_WEIGHT), self, entity);
+        OVL_EXPORT(CreateEntityFromEntity)(E_ID(PENDULUM_WEIGHT), self, entity);
         var_a0 = D_us_80180FEC;
         if (self->params) {
             var_a0++;

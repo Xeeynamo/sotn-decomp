@@ -361,7 +361,8 @@ void EntityHuntingGirl(Entity* self) {
         }
         entity = self + 1;
         for (count = 0; count < 3; count++, entity++) {
-            CreateEntityFromCurrentEntity(E_HUNTING_GIRL_ATTACK, entity);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)
+            (E_HUNTING_GIRL_ATTACK, entity);
             entity->params = count + 1;
         }
         self->ext.huntingGirl.cycleTimer = 512;
@@ -620,7 +621,8 @@ void EntityHuntingGirl(Entity* self) {
                 PlaySfxPositional(SFX_SMALL_FLAME_IGNITE);
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_INTENSE_EXPLOSION, self, entity);
                     rotate = self->rotate;
                     if (self->facingLeft) {
                         rotate = -rotate;

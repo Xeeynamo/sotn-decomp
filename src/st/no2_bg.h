@@ -154,7 +154,8 @@ void func_us_801B4210(Entity* self) {
             for (i = 0; i < 5; i++) {
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_INTENSE_EXPLOSION, self, entity);
                     entity->posX.i.hi += (rand() & 0xF) - 8;
                     entity->posY.i.hi += (rand() & 0xF) - 8;
                     entity->params = 0x10;

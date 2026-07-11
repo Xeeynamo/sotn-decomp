@@ -56,12 +56,14 @@ void EntityDragonRider(Entity* self) {
         if (UnkCollisionFunc3(sensors2) & 1) {
             other = self + 1;
             for (i = 0; i < 24; i++, other++) {
-                CreateEntityFromEntity(E_DRAGON_SEGMENT, self, other);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_DRAGON_SEGMENT, self, other);
                 other->posY.i.hi += 8;
                 other->params = (i + 1);
                 other->nextPart = other - 1;
             }
-            CreateEntityFromEntity(E_DRAGON_RIDER_HITBOX, self, other);
+            OVL_EXPORT(CreateEntityFromEntity)
+            (E_DRAGON_RIDER_HITBOX, self, other);
             other->nextPart = other - 1;
             other->parent = self;
             self->parent = NULL;
@@ -128,7 +130,7 @@ void EntityDragonRider(Entity* self) {
         }
         other = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (other != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, other);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, other);
             other->params = 3;
         }
         for (i = 0; i < 4; i++) {
@@ -136,7 +138,8 @@ void EntityDragonRider(Entity* self) {
             if (other != NULL) {
                 // NOTE: There is a dedicated entity for dragon head parts,
                 // but we actually use the orob head parts when dragon dies.
-                CreateEntityFromEntity(E_OROB_HEAD_PARTS, self, other);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_OROB_HEAD_PARTS, self, other);
                 other->facingLeft = self->facingLeft;
                 other->velocityX = self->velocityX;
                 other->velocityY = FIX(-1.5);

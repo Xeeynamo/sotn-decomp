@@ -159,7 +159,8 @@ void EntityCannonShot(Entity* self) {
             g_api.func_80102CD8(1);
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_EXPLOSION, self, newEntity);
                 newEntity->params = EXPLOSION_BIG;
             }
             g_CastleFlags[NZ0_CANNON_WALL_SHORTCUT] = 1;

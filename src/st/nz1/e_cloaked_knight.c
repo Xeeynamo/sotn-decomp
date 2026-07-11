@@ -47,10 +47,12 @@ void EntityCloakedKnight(Entity* self) {
         prim->priority = 0xC0;
         prim->drawMode = DRAW_HIDE | DRAW_UNK02;
         entity = self + 1;
-        CreateEntityFromCurrentEntity(E_CLOAKED_KNIGHT_CLOAK, entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)
+        (E_CLOAKED_KNIGHT_CLOAK, entity);
         entity->zPriority = self->zPriority - 1;
         entity = self + 2;
-        CreateEntityFromCurrentEntity(E_CLOAKED_KNIGHT_SWORD, entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)
+        (E_CLOAKED_KNIGHT_SWORD, entity);
         entity->zPriority = self->zPriority + 1;
         SetStep(2);
         break;
@@ -235,7 +237,7 @@ void EntityCloakedKnight(Entity* self) {
         PlaySfxPositional(SFX_FM_THUNDER_EXPLODE);
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
             entity->params = EXPLOSION_SMALL_MULTIPLE;
         }
         entity = self + 2;
@@ -266,7 +268,8 @@ void EntityCloakedKnight(Entity* self) {
             // aura
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_CLOAKED_KNIGHT_AURA, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_CLOAKED_KNIGHT_AURA, self, entity);
                 entity->ext.cloakedKnightAura.parent = self;
                 entity->zPriority = self->zPriority + 1;
             }
@@ -374,7 +377,8 @@ void EntityCloakedKnightSword(Entity* self) {
         self->drawFlags = ENTITY_ROTATE;
         if (!self->params) {
             entity = self + 1;
-            CreateEntityFromCurrentEntity(E_CLOAKED_KNIGHT_SWORD, entity);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)
+            (E_CLOAKED_KNIGHT_SWORD, entity);
             entity->params = 1;
         } else {
             self->flags |= FLAG_UNK_2000;

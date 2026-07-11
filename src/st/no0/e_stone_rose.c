@@ -203,7 +203,7 @@ void func_us_801D8150(Entity* self) {
         if (params == 0) {
             part = self + 1;
             for (i = 1; i < 12; i++, part++) {
-                CreateEntityFromCurrentEntity(E_ID_3D, part);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID_3D, part);
                 part->params = i;
                 part->facingLeft = self->facingLeft;
             }
@@ -357,7 +357,7 @@ void func_us_801D8150(Entity* self) {
             part = g_api.GetFreeEntity(224, 256);
             if (part != NULL) {
                 DestroyEntity(part);
-                CreateEntityFromCurrentEntity(E_EXPLOSION, part);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)(E_EXPLOSION, part);
                 part->params = 1;
                 part->zPriority = self->zPriority + 2;
                 if (self->facingLeft) {

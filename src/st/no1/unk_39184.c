@@ -338,7 +338,7 @@ void func_us_801B9BE4(Entity* self) {
         self->animCurFrame = 28;
         self->zPriority = 0x6C;
         if (!self->params) {
-            CreateEntityFromEntity(E_ID(ID_33), self, self + 1);
+            OVL_EXPORT(CreateEntityFromEntity)(E_ID(ID_33), self, self + 1);
             (self + 1)->params = 1;
             (self + 1)->posY.i.hi += 0x10;
             self->step = 3;
@@ -387,7 +387,8 @@ void func_us_801B9BE4(Entity* self) {
                 self->hitboxState = 0;
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromEntity(E_ID(ID_5E), self, tempEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID(ID_5E), self, tempEntity);
                 }
                 g_api.func_80102CD8(1);
                 g_api.func_800EA5E4(ANIMSET_OVL(3));
@@ -468,7 +469,8 @@ void func_us_801BA034(Entity* self) {
         if ((g_Timer % 10) == 0) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_INTENSE_EXPLOSION, self, entity);
                 entity->params = 0x10;
                 entity->posY.i.hi = 0xBC;
                 entity->posX.i.hi -= 11;
@@ -477,7 +479,8 @@ void func_us_801BA034(Entity* self) {
             }
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_INTENSE_EXPLOSION, self, entity);
                 entity->params = 0x10;
                 entity->posY.i.hi = 0xBC;
                 entity->posX.i.hi += 11;

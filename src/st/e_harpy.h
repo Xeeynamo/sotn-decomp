@@ -48,7 +48,7 @@ void EntityHarpy(Entity* self) {
         self->zPriority = 0x9C;
         self->ext.harpy.timer = 0x80;
         entity = self + 1;
-        CreateEntityFromCurrentEntity(E_HARPY_KICK, entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_HARPY_KICK, entity);
         SetStep(2);
         /* fallthrough */
     case 2:
@@ -157,7 +157,8 @@ void EntityHarpy(Entity* self) {
                 PlaySfxPositional(SFX_GUARD_TINK);
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_HARPY_DAGGER, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_HARPY_DAGGER, self, entity);
                     if (self->facingLeft) {
                         entity->posX.i.hi += 0x10;
                     } else {
@@ -215,7 +216,8 @@ void EntityHarpy(Entity* self) {
             for (i = 0; i < 3; i++) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_HARPY_FLAME, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_HARPY_FLAME, self, entity);
                     entity->params = i;
                     entity->zPriority = self->zPriority - 1;
                     entity->facingLeft = self->facingLeft;
@@ -293,7 +295,8 @@ void EntityHarpy(Entity* self) {
         if (self->pose < 4 && (g_Timer & 1)) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_HARPY_FEATHER, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_HARPY_FEATHER, self, entity);
                 if (self->facingLeft) {
                     entity->posX.i.hi -= 0x10;
                 } else {
@@ -328,7 +331,8 @@ void EntityHarpy(Entity* self) {
             if (g_Timer & 1) {
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_HARPY_FEATHER, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_HARPY_FEATHER, self, entity);
                     entity->zPriority = self->zPriority + 1;
                 }
             }
@@ -341,7 +345,8 @@ void EntityHarpy(Entity* self) {
             if (!(g_Timer & 3)) {
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_EXPLOSION, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_EXPLOSION, self, entity);
                     entity->params = EXPLOSION_FIREBALL;
                     entity->zPriority = self->zPriority + 1;
                     entity->posX.i.hi += (OVL_EXPORT(Random)() & 0x1F) - 0x10;
@@ -407,7 +412,7 @@ void EntityHarpyFlame(Entity* self) {
     if (self->flags & FLAG_DEAD) {
         tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (tempEntity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, tempEntity);
             tempEntity->params = 0;
         }
         DestroyEntity(self);
@@ -445,7 +450,7 @@ void EntityHarpyFlame(Entity* self) {
         AnimateEntity(anim8, self);
         tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (tempEntity != NULL) {
-            CreateEntityFromEntity(E_HARPY_FLAME, self, tempEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_HARPY_FLAME, self, tempEntity);
             tempEntity->params = self->animCurFrame << 8;
             tempEntity->rotate = self->rotate;
             tempEntity->facingLeft = self->facingLeft;

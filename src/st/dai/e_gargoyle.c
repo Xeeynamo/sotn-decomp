@@ -41,7 +41,7 @@ void EntityGargoyleTongue(Entity* self) {
             return;
         }
         block = self + 1;
-        CreateEntityFromEntity(E_ID(GARGOYLE_TONGUE), self, block);
+        OVL_EXPORT(CreateEntityFromEntity)(E_ID(GARGOYLE_TONGUE), self, block);
         block->params = BLOCK_ONLY;
         block->posY.i.hi = 160;
         if (self->params) {

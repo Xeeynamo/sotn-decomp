@@ -487,7 +487,8 @@ void func_us_801BA290(Entity* self) {
                     tempEntity =
                         AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (tempEntity != NULL) {
-                        CreateEntityFromCurrentEntity(E_ID(ID_34), tempEntity);
+                        OVL_EXPORT(CreateEntityFromCurrentEntity)
+                        (E_ID(ID_34), tempEntity);
                         rnd = OVL_EXPORT(Random)() & 7;
                         if ((OVL_EXPORT(Random)() & 1) == 0) {
                             rnd = 7;

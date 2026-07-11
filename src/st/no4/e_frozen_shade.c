@@ -338,8 +338,8 @@ void EntityFrozenShade(Entity* self) {
                     for (i = 0; i < 8; i++) {
                         tempEntity =
                             &g_Entities[self->ext.frozenShade.unkA8[i]];
-                        CreateEntityFromCurrentEntity(
-                            E_FROZEN_SHADE_CRYSTAL, tempEntity);
+                        OVL_EXPORT(CreateEntityFromCurrentEntity)
+                        (E_FROZEN_SHADE_CRYSTAL, tempEntity);
                         tempEntity->hitboxWidth = 0;
                     }
                     SetStep(3);
@@ -799,8 +799,8 @@ void EntityFrozenShade(Entity* self) {
                     tempEntity =
                         AllocEntity(&g_Entities[160], &g_Entities[192]);
                     if (tempEntity != NULL) {
-                        CreateEntityFromCurrentEntity(
-                            E_FROZEN_SHADE_ICICLE, tempEntity);
+                        OVL_EXPORT(CreateEntityFromCurrentEntity)
+                        (E_FROZEN_SHADE_ICICLE, tempEntity);
                         tempEntity->posX.i.hi += icicle_posX_offsets[tempVar];
                         tempEntity->posY.i.hi += icicle_posY_offsets[tempVar];
                         tempEntity->params = i;
@@ -976,7 +976,8 @@ void EntityFrozenShadeIcicle(Entity* self) {
             return;
         }
 
-        CreateEntityFromCurrentEntity(E_FROZEN_SHADE_ICICLE_UNK, part);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)
+        (E_FROZEN_SHADE_ICICLE_UNK, part);
         self->nextPart = part;
         part->nextPart = self;
         part->parent = self;

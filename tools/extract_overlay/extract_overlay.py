@@ -840,18 +840,18 @@ def create_header_c(header_items, ovl_name, ovl_type, version, header_path):
     ]
     common_syms = [
         "NULL",
-        "Update",
-        "HitDetection",
-        "UpdateRoomPosition",
-        "InitRoomEntities",
-        "OVL_EXPORT(rooms)",
-        "OVL_EXPORT(spriteBanks)",
-        "OVL_EXPORT(cluts)",
-        "OVL_EXPORT(pStObjLayoutHorizontal)",
+        f"{ovl_name.upper()}_Update",
+        f"{ovl_name.upper()}_HitDetection",
+        f"{ovl_name.upper()}_UpdateRoomPosition",
+        f"{ovl_name.upper()}_InitRoomEntities",
+        f"{ovl_name.upper()}_rooms)",
+        f"{ovl_name.upper()}_spriteBanks)",
+        f"{ovl_name.upper()}_cluts)",
+        f"{ovl_name.upper()}_pStObjLayoutHorizontal)",
         "g_pStObjLayoutHorizontal",
-        "OVL_EXPORT(rooms_layers)",
-        "OVL_EXPORT(gfxBanks)",
-        "OVL_EXPORT(UpdateStageEntities)",
+        f"{ovl_name.upper()}_rooms_layers)",
+        f"{ovl_name.upper()}_gfxBanks)",
+        f"{ovl_name.upper()}_UpdateStageEntities)",
     ]
     template = Template((Path(__file__).parent / "header.c.mako").read_text())
     new_header = template.render(
@@ -1002,8 +1002,8 @@ def parse_ovl_header(data_file_text, ovl_name, platform, header_symbol=None):
     ovl_header = [
         f"{ovl_name.upper()}_Update",
         f"{ovl_name.upper()}_HitDetection",
-        "UpdateRoomPosition",
-        "InitRoomEntities",
+        f"{ovl_name.upper()}_UpdateRoomPosition",
+        f"{ovl_name.upper()}_InitRoomEntities",
         f"{ovl_name.upper()}_rooms",
         f"{ovl_name.upper()}_spriteBanks",
         f"{ovl_name.upper()}_cluts",

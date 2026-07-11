@@ -13,7 +13,8 @@ void EntityClockHands(Entity* self) {
         self->drawFlags = ENTITY_ROTATE;
 
         // Create hand shadows
-        CreateEntityFromCurrentEntity(E_CLOCK_ROOM_SHADOW, handShadow);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)
+        (E_CLOCK_ROOM_SHADOW, handShadow);
         handShadow->animSet = ANIMSET_OVL(1);
         handShadow->animCurFrame = params + 25;
         handShadow->zPriority = 0x3F - params;
@@ -157,7 +158,7 @@ void EntityStatue(Entity* self) {
         self->posY.i.hi -= 58;
 
         // Create shadow for the statue
-        CreateEntityFromCurrentEntity(E_CLOCK_ROOM_SHADOW, entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_CLOCK_ROOM_SHADOW, entity);
         entity->animSet = ANIMSET_OVL(1);
         entity->animCurFrame = params + 10;
         entity->zPriority = 0x3F;

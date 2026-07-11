@@ -101,13 +101,15 @@ void EntityBonePillarSkull(Entity* self) {
         if (UnkCollisionFunc3(sensors_bone_pillar) & 1) {
             if (self->params & 0x100) {
                 entity = self + 1;
-                CreateEntityFromCurrentEntity(E_BONE_PILLAR_SPIKE_BALL, entity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_BONE_PILLAR_SPIKE_BALL, entity);
                 entity->posX.i.hi = self->posX.i.hi + 8;
                 entity->posY.i.hi = self->posY.i.hi - 8;
                 self->params = 0;
             } else {
                 entity = self + 1;
-                CreateEntityFromCurrentEntity(E_BONE_PILLAR_SKULL, entity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_BONE_PILLAR_SKULL, entity);
                 entity->params = 1;
                 entity->posX.i.hi = self->posX.i.hi;
                 entity->posY.i.hi = self->posY.i.hi;
@@ -163,7 +165,8 @@ void EntityBonePillarSkull(Entity* self) {
         if ((self->pose == 17) && (tempVar & 0x80)) {
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_BONE_PILLAR_FIRE, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_BONE_PILLAR_FIRE, self, entity);
                 entity->facingLeft = self->params;
                 if (self->params) {
                     entity->posY.i.hi -= 14;
@@ -183,7 +186,8 @@ void EntityBonePillarSkull(Entity* self) {
         for (i = 0; i < 2; i++) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_BONE_PILLAR_PARTS, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_BONE_PILLAR_PARTS, self, entity);
                 entity->params = i + tempVar;
                 entity->posX.i.hi += *ptr++;
                 entity->posY.i.hi += *ptr++;
@@ -191,7 +195,7 @@ void EntityBonePillarSkull(Entity* self) {
         }
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
             entity->params = EXPLOSION_SMALL_MULTIPLE;
         }
         if (!self->params) {
@@ -261,7 +265,7 @@ void EntityBonePillarSpikeBall(Entity* self) {
         PlaySfxPositional(SFX_QUICK_STUTTER_EXPLODE_B);
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
             entity->params = EXPLOSION_BIG;
         }
         DestroyEntity(self);

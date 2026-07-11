@@ -381,7 +381,7 @@ void func_us_801D542C(Entity* self) {
             tempEntity = self + 4;
             tempEntity2 = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity2 != NULL) {
-                CreateEntityFromEntity(6U, tempEntity, tempEntity2);
+                OVL_EXPORT(CreateEntityFromEntity)(6U, tempEntity, tempEntity2);
                 tempEntity2->zPriority = tempEntity->zPriority + 2;
                 tempEntity2->params = 0x10;
                 tempEntity2->posY.i.hi += 0xA;

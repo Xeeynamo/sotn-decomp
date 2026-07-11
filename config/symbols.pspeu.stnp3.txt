@@ -34,8 +34,8 @@ EntityExplosionPuffOpaque = 0x0923FF70;
 EntityLightningThunder = 0x092404E0;
 EntityLightningCloud = 0x092405B8;
 EntityTransparentWater = 0x092406B8;
-InitRoomEntities = 0x09241630; // source=match
-UpdateRoomPosition = 0x09241860; // source=match
+NP3_InitRoomEntities = 0x09241630; // source=match
+NP3_UpdateRoomPosition = 0x09241860; // source=match
 EntityBloodSplatter = 0x09241A50;
 EntityBloodyZombie = 0x09242228;
 EntityBloodDrips = 0x09242C40;

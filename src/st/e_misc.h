@@ -45,7 +45,8 @@ void EntityUnkId13(Entity* self) {
         if (self->ext.ent13.fiveFrameCounter++ > 4) {
             Entity* newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_EXPLOSION, self, newEntity);
                 newEntity->entityId = E_EXPLOSION;
                 newEntity->pfnUpdate = OVL_EXPORT(EntityExplosion);
                 newEntity->params = self->params;
@@ -596,9 +597,11 @@ void MakeExplosions(void) {
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
 #if defined(STAGE_IS_NO2) || defined(STAGE_IS_CAT)
-            CreateEntityFromEntity(E_BIG_RED_FIREBALL, g_CurrentEntity, entity);
+            OVL_EXPORT(CreateEntityFromEntity)
+            (E_BIG_RED_FIREBALL, g_CurrentEntity, entity);
 #else
-            CreateEntityFromEntity(E_EXPLOSION, g_CurrentEntity, entity);
+            OVL_EXPORT(CreateEntityFromEntity)
+            (E_EXPLOSION, g_CurrentEntity, entity);
 #endif
             // EntityExplosion does not seem to use these values.
             entity->ext.destructAnim.unk85 = 6 - i;

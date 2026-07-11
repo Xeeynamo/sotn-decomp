@@ -277,7 +277,8 @@ void EntityCtulhu(Entity* self) {
                 PlaySfxPositional(SFX_FM_EXPLODE_SWISHES);
                 newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(E_CTULHU_FIREBALL, self, newEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_CTULHU_FIREBALL, self, newEntity);
                     newEntity->facingLeft = self->facingLeft;
                     if (self->facingLeft) {
                         newEntity->posX.i.hi += 0x10;
@@ -301,7 +302,8 @@ void EntityCtulhu(Entity* self) {
             for (i = 0; i < LEN(triple_fireball_rot_z); i++) {
                 newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(E_CTULHU_FIREBALL, self, newEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_CTULHU_FIREBALL, self, newEntity);
                     newEntity->facingLeft = self->facingLeft;
                     if (self->facingLeft) {
                         newEntity->posX.i.hi += 0x10;
@@ -326,7 +328,8 @@ void EntityCtulhu(Entity* self) {
             PlaySfxPositional(SFX_FM_THUNDER_EXPLODE);
             newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_CTULHU_ICE_SHOCKWAVE, self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_CTULHU_ICE_SHOCKWAVE, self, newEntity);
                 newEntity->facingLeft = self->facingLeft;
                 newEntity->zPriority = self->zPriority + 1;
 
@@ -537,7 +540,8 @@ void EntityCtulhu(Entity* self) {
                 newEntity = AllocEntity(&g_Entities[STAGE_ENTITY_START],
                                         &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (newEntity != NULL) {
-                    CreateEntityFromCurrentEntity(E_EXPLOSION, newEntity);
+                    OVL_EXPORT(CreateEntityFromCurrentEntity)
+                    (E_EXPLOSION, newEntity);
                     newEntity->posX.i.hi = prim->x0 + posX;
 #ifdef VERSION_PSP
                     newEntity->posY.i.hi = prim->y2 - 0x30 + posY;
@@ -550,7 +554,8 @@ void EntityCtulhu(Entity* self) {
             newEntity = AllocEntity(&g_Entities[STAGE_ENTITY_START],
                                     &g_Entities[TOTAL_ENTITY_COUNT]);
             if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(E_CTULHU_DEATH, newEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_CTULHU_DEATH, newEntity);
                 newEntity->posX.i.hi = self->posX.i.hi - 0x20 + posX;
                 newEntity->posY.i.hi = self->posY.i.hi + posY + 4;
                 newEntity->facingLeft = colRet;
@@ -653,7 +658,7 @@ void EntityCtulhuFireball(Entity* self) {
     if (self->flags & FLAG_DEAD) {
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, newEntity);
             newEntity->params = 2;
         }
         DestroyEntity(self);

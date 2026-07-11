@@ -20,8 +20,8 @@ bool CheckMermanEnteringWater(s16 yOffset) {
         if (!g_CurrentEntity->ext.merman.isUnderwater) {
             newEntity = AllocEntity(&g_Entities[232], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(
-                    E_MERMAN_WATER_SPLASH, g_CurrentEntity, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_MERMAN_WATER_SPLASH, g_CurrentEntity, newEntity);
                 newEntity->posY.i.hi += yOffset;
                 newEntity->zPriority = g_CurrentEntity->zPriority;
             }
@@ -227,8 +227,8 @@ void EntityMerman2(Entity* self) {
                 g_api.PlaySfx(SFX_WATER_SPLASH_JUMP);
                 newEntity = AllocEntity(&g_Entities[232], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(
-                        E_MERMAN_WATER_SPLASH, self, newEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_MERMAN_WATER_SPLASH, self, newEntity);
                     newEntity->posY.i.hi -= 24;
                     newEntity->zPriority = self->zPriority;
                 }
@@ -273,7 +273,8 @@ void EntityMerman2(Entity* self) {
             if (self->velocityY < 0) {
                 newEntity = AllocEntity(&g_Entities[232], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(E_MERMAN2_JUMP_AIR, self, newEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_MERMAN2_JUMP_AIR, self, newEntity);
                     newEntity->posX.i.hi +=
                         ((OVL_EXPORT(Random)() & 3) * 4) - 6;
                     newEntity->zPriority = self->zPriority + 1;
@@ -369,16 +370,16 @@ void EntityMerman2(Entity* self) {
                 PlaySfxPositional(SFX_FIREBALL_SHOT_C);
                 newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(
-                        E_MEDIUM_WATER_SPLASH, self, newEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_MEDIUM_WATER_SPLASH, self, newEntity);
                     newEntity->posY.i.hi -= 12;
                     newEntity->facingLeft = self->facingLeft;
                 }
                 for (i = 0; i < 3; i++) {
                     newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (newEntity != NULL) {
-                        CreateEntityFromEntity(
-                            E_MERMAN2_SPIT_FIRE, self, newEntity);
+                        OVL_EXPORT(CreateEntityFromEntity)
+                        (E_MERMAN2_SPIT_FIRE, self, newEntity);
                         if (self->facingLeft) {
                             newEntity->posX.i.hi += (8 + i * 8);
                         } else {
@@ -562,8 +563,8 @@ void EntityMerman2(Entity* self) {
                 } else {
                     newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (newEntity != NULL) {
-                        CreateEntityFromEntity(
-                            E_MERMAN2_DYING, self, newEntity);
+                        OVL_EXPORT(CreateEntityFromEntity)
+                        (E_MERMAN2_DYING, self, newEntity);
                         newEntity->facingLeft = self->facingLeft;
                         newEntity->params = prim->clut;
                         newEntity->zPriority = self->zPriority;
@@ -681,7 +682,7 @@ void EntityMediumWaterSplash(Entity* self) {
     if (self->flags & FLAG_DEAD) {
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, newEntity);
             newEntity->params = 0;
         }
         DestroyEntity(self);
@@ -743,7 +744,8 @@ void EntityMermanWaterSplash(Entity* self) {
         for (i = 0; i < 7; i++) {
             newEntity = AllocEntity(&g_Entities[232], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_HIGH_WATER_SPLASH, self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_HIGH_WATER_SPLASH, self, newEntity);
                 newEntity->params = g_HighWaterSplashParams[i];
                 newEntity->posX.i.hi += g_Merman2posPtr[i];
                 newEntity->velocityX = g_Merman2velPtr[i];
@@ -918,10 +920,12 @@ void EntityMermanSpawner(Entity* self) {
             newEntity = AllocEntity(&g_Entities[160], &g_Entities[170]);
             if (newEntity != 0) {
                 if (OVL_EXPORT(Random)() & 1) {
-                    CreateEntityFromCurrentEntity(E_MERMAN2, newEntity);
+                    OVL_EXPORT(CreateEntityFromCurrentEntity)
+                    (E_MERMAN2, newEntity);
                     newEntity->params = OVL_EXPORT(Random)() & 1;
                 } else {
-                    CreateEntityFromCurrentEntity(E_MERMAN, newEntity);
+                    OVL_EXPORT(CreateEntityFromCurrentEntity)
+                    (E_MERMAN, newEntity);
                 }
                 newEntity->posX.i.hi = xVar - g_Tilemap.scrollX.i.hi;
                 newEntity->posY.i.hi = yVar - g_Tilemap.scrollY.i.hi;

@@ -81,11 +81,11 @@ void func_us_801C2184(Entity* self) {
         self->zPriority = player->zPriority + 0xC;
 
         parent = (self - 1);
-        CreateEntityFromCurrentEntity(E_ID(ID_29), parent);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(ID_29), parent);
         parent->params = 1;
 
         parent = (self - 2);
-        CreateEntityFromCurrentEntity(E_ID(ID_29), parent);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(ID_29), parent);
         parent->params = 2;
 
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 12);

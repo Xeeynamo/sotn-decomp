@@ -100,7 +100,7 @@ void EntityLargeSlime(Entity* self) {
         self->ext.slime.unk84 = prevPrim;
 
         child = self + 1;
-        CreateEntityFromEntity(E_UNK_4B, self, child);
+        OVL_EXPORT(CreateEntityFromEntity)(E_UNK_4B, self, child);
         child->posX.i.hi += 0x40;
 #ifdef VERSION_US
         // BUG: likely unintended and seems removed on PSP side
@@ -360,7 +360,8 @@ void func_us_801D3468(s32 primCount) {
             !(OVL_EXPORT(Random)() & 0x3F)) {
             ent = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (ent != NULL) {
-                CreateEntityFromCurrentEntity(E_INTENSE_EXPLOSION, ent);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_INTENSE_EXPLOSION, ent);
                 ent->params = 0x10;
                 ent->posX.i.hi = prim->x3;
                 ent->posY.i.hi = prim->y3;
@@ -384,7 +385,8 @@ void func_us_801D3468(s32 primCount) {
                 !(OVL_EXPORT(Random)() & 0x3F)) {
                 ent = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (ent != NULL) {
-                    CreateEntityFromCurrentEntity(E_INTENSE_EXPLOSION, ent);
+                    OVL_EXPORT(CreateEntityFromCurrentEntity)
+                    (E_INTENSE_EXPLOSION, ent);
                     ent->params = 0x10;
                     ent->posX.i.hi = prim->x3;
                     ent->posY.i.hi = prim->y3;
@@ -717,7 +719,7 @@ void EntitySlime(Entity* self) {
         }
 
         child = self + 1;
-        CreateEntityFromEntity(E_UNK_4D, self, child);
+        OVL_EXPORT(CreateEntityFromEntity)(E_UNK_4D, self, child);
         child->posX.i.hi += 0x18;
 #ifdef VERSION_US
         // BUG: likely unintended and seems removed on PSP side

@@ -306,7 +306,8 @@ void EntityBloodyZombie(Entity* self) {
             0) { // Drop BloodDrips from the enemy knife
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_BLOOD_DRIPS, self, tempEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_BLOOD_DRIPS, self, tempEntity);
                 if (self->facingLeft) {
                     tempEntity->posX.i.hi += 16;
                 } else {
@@ -339,7 +340,8 @@ void EntityBloodyZombie(Entity* self) {
             0) { // Drop BloodDrips from the enemy knife
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_BLOOD_DRIPS, self, tempEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_BLOOD_DRIPS, self, tempEntity);
                 if (self->facingLeft) {
                     tempEntity->posX.i.hi += 18;
                 } else {
@@ -369,7 +371,8 @@ void EntityBloodyZombie(Entity* self) {
             // Splat blood
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_BLOOD_SPLATTER, self, tempEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_BLOOD_SPLATTER, self, tempEntity);
                 tempEntity->facingLeft = GetSideToPlayer() & 1;
             }
             self->step_s++;
@@ -401,7 +404,8 @@ void EntityBloodyZombie(Entity* self) {
                 PlaySfxPositional(SFX_BLOODY_ZOMBIE_SPLATTER);
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromEntity(E_BLOOD_SPLATTER, self, tempEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_BLOOD_SPLATTER, self, tempEntity);
                     tempEntity->facingLeft = self->ext.bloodyZombie.unk84;
                     if (self->facingLeft) {
                         tempEntity->posX.i.hi -= 4;
@@ -443,7 +447,8 @@ void EntityBloodyZombie(Entity* self) {
         if (!AnimateEntity(anim_die, self)) {
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_EXPLOSION, self, tempEntity);
                 tempEntity->params = 2;
                 tempEntity->posY.i.hi += 16;
                 if (self->facingLeft) {

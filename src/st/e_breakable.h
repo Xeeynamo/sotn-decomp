@@ -8,7 +8,7 @@
 
 extern EInit OVL_EXPORT(EInitBreakable);
 
-void CreateEntityFromCurrentEntity(u16 entityId, Entity* entity);
+void OVL_EXPORT(CreateEntityFromCurrentEntity)(u16 entityId, Entity* entity);
 void ReplaceBreakableWithItemDrop(Entity*);
 Entity* AllocEntity(Entity* start, Entity* end);
 
@@ -31,7 +31,8 @@ void EntityBreakable(Entity* entity) {
 #endif
             entityDropItem = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entityDropItem != NULL) {
-                CreateEntityFromCurrentEntity(E_EXPLOSION, entityDropItem);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_EXPLOSION, entityDropItem);
                 entityDropItem->params =
                     g_eBreakableExplosionTypes[breakableType];
             }

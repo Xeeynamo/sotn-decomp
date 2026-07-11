@@ -108,8 +108,8 @@ static void SpawnDeathParts(void) {
         for (i = 5; i >= 0; i--) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(
-                    E_HELLFIRE_BEAST, g_CurrentEntity, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_HELLFIRE_BEAST, g_CurrentEntity, newEntity);
                 posX = death_parts_positions[i].x;
                 posY = death_parts_positions[i].y;
                 posX += 0x10;
@@ -255,7 +255,8 @@ void EntityHellfireBeast(Entity* self) {
         // Spawn facing the player
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         entity = self + 1;
-        CreateEntityFromCurrentEntity(E_HELLFIRE_BEAST_PUNCH_HITBOX, entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)
+        (E_HELLFIRE_BEAST_PUNCH_HITBOX, entity);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 3);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
@@ -474,7 +475,8 @@ void EntityHellfireBeast(Entity* self) {
                 if (entity != NULL) {
                     newEntityId =
                         attack_entityIds[self->ext.hellfireBeast.attackChoice];
-                    CreateEntityFromEntity(newEntityId, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (newEntityId, self, entity);
                     entity->facingLeft = self->facingLeft;
                     prim = self->ext.hellfireBeast.prim;
                     entity->posX.i.hi = prim->next->x1;
@@ -1138,8 +1140,8 @@ void EntityHellfireBeastFlamePillar(Entity* self) {
         for (i = 0; i <= 0; i++) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(
-                    E_HELLFIRE_BEAST_FLAME_PILLAR_ANIM, newEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_HELLFIRE_BEAST_FLAME_PILLAR_ANIM, newEntity);
                 newEntity->posX.i.hi = OVL_EXPORT(Random)() & 0xF;
                 newEntity->posY.i.hi = 0x20;
                 newEntity->params = OVL_EXPORT(Random)() & 1;

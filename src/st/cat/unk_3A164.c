@@ -133,7 +133,8 @@ void func_us_801BA388(Entity* self) {
             }
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_INTENSE_EXPLOSION, self, newEntity);
                 newEntity->posX.i.hi += ((OVL_EXPORT(Random)() & 7) * 2) - 8;
                 newEntity->posY.i.hi += 0x20;
                 newEntity->params = 16;
@@ -142,7 +143,7 @@ void func_us_801BA388(Entity* self) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 // func_us_801BA164
-                CreateEntityFromEntity(E_UNK_2A, self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)(E_UNK_2A, self, newEntity);
                 newEntity->posY.i.hi += 0x20;
                 if (self->params) {
                     newEntity->posX.i.hi += 8;
@@ -162,7 +163,7 @@ void func_us_801BA388(Entity* self) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 // func_us_801BA164
-                CreateEntityFromEntity(E_UNK_2A, self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)(E_UNK_2A, self, newEntity);
                 newEntity->posY.i.hi += 0x10;
                 if (self->params) {
                     newEntity->posX.i.hi += 8;

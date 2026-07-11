@@ -48,7 +48,7 @@ void EntityDhuron(Entity* self) {
     case 0:
         InitializeEntity(g_EInitDhuron);
         tempEntity = self + 1;
-        CreateEntityFromEntity(E_ID_34, self, tempEntity);
+        OVL_EXPORT(CreateEntityFromEntity)(E_ID_34, self, tempEntity);
         break;
 
     case 1:
@@ -165,7 +165,8 @@ void EntityDhuron(Entity* self) {
                 PlaySfxPositional(SFX_THUNDER_B);
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromEntity(E_ID_35, self, tempEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID_35, self, tempEntity);
                     tempEntity->facingLeft = self->facingLeft;
                     tempEntity->zPriority = self->zPriority - 1;
                     tempEntity->ext.dhuron.unk9C = self;
@@ -189,7 +190,7 @@ void EntityDhuron(Entity* self) {
         for (i = 0; i < 7; i++) {
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_ID_36, self, tempEntity);
+                OVL_EXPORT(CreateEntityFromEntity)(E_ID_36, self, tempEntity);
                 tempEntity->params = i;
                 tempEntity->facingLeft = self->facingLeft;
             } else {
@@ -198,7 +199,7 @@ void EntityDhuron(Entity* self) {
         }
         tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (tempEntity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, tempEntity);
             tempEntity->params = 3;
         }
         PlaySfxPositional(SFX_SKELETON_DEATH_A);

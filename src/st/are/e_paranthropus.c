@@ -227,7 +227,7 @@ void EntityParanthropus(Entity* self) {
         entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
         if (entity != NULL) {
             DestroyEntity(entity);
-            CreateEntityFromEntity(E_PARANTHROPUS, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_PARANTHROPUS, self, entity);
             entity->facingLeft = self->facingLeft;
             entity->posY.i.hi -= 0x18;
             if (self->facingLeft) {
@@ -257,10 +257,12 @@ void EntityParanthropus(Entity* self) {
             self->scaleX = self->scaleY = 0x100;
 
             entity = self + 1;
-            CreateEntityFromEntity(E_PARANTHROPUS_BONE_HITBOX, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)
+            (E_PARANTHROPUS_BONE_HITBOX, self, entity);
 
             entity = self + 2;
-            CreateEntityFromEntity(E_PARANTHROPUS_SKULL, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)
+            (E_PARANTHROPUS_SKULL, self, entity);
         }
         break;
     case FALL_TO_GROUND:
@@ -363,8 +365,8 @@ void EntityParanthropus(Entity* self) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
                     PlaySfxPositional(SFX_BONE_THROW);
-                    CreateEntityFromEntity(
-                        E_PARANTHROPUS_THROWN_BONE, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_PARANTHROPUS_THROWN_BONE, self, entity);
                     entity->facingLeft = self->facingLeft;
                     entity->posY.i.hi -= 0x20;
                     if (self->facingLeft) {
@@ -503,7 +505,8 @@ void EntityParanthropus(Entity* self) {
                 for (i = 0; i < 6; i++) {
                     entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                     if (entity != NULL) {
-                        CreateEntityFromEntity(E_EXPLOSION, self, entity);
+                        OVL_EXPORT(CreateEntityFromEntity)
+                        (E_EXPLOSION, self, entity);
                         entity->params = EXPLOSION_SMALL_MULTIPLE;
                         entity->posX.i.hi +=
                             xOffset + death_flames_positions[i].x;

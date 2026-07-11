@@ -31,8 +31,8 @@ void CreateExplosionPuff() {
     for (i = 0; i < 6; i++) {
         puff = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (puff != NULL) {
-            CreateEntityFromEntity(
-                E_ID(EXPLODE_PUFF_OPAQUE), g_CurrentEntity, puff);
+            OVL_EXPORT(CreateEntityFromEntity)
+            (E_ID(EXPLODE_PUFF_OPAQUE), g_CurrentEntity, puff);
             puff->params = 2;
             puff->ext.opaquePuff.speed = 6 - i;
             puff->ext.opaquePuff.angle = initAngle;

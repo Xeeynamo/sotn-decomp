@@ -57,7 +57,8 @@ void EntityBreakableWallDebris(Entity* self) {
                 for (i = 0; i < 2; i++) {
                     entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (entity != NULL) {
-                        CreateEntityFromEntity(E_ID(ID_19), self, entity);
+                        OVL_EXPORT(CreateEntityFromEntity)
+                        (E_ID(ID_19), self, entity);
                         entity->params = (OVL_EXPORT(Random)() & 3) + 9;
                         entity->params |= 0x100;
                     }
@@ -69,7 +70,8 @@ void EntityBreakableWallDebris(Entity* self) {
                 // Poof, gone
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_INTENSE_EXPLOSION, self, entity);
                     entity->params = 0x10;
                     entity->params |= 0xC000;
                 }

@@ -72,11 +72,13 @@ void EntityElevatorStationary(Entity* self) {
         self->zPriority = player->zPriority + 2;
 
         entity = self - 1;
-        CreateEntityFromCurrentEntity(E_ID(ELEVATOR_STATIONARY), entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)
+        (E_ID(ELEVATOR_STATIONARY), entity);
         entity->params = 1;
 
         entity = self - 2;
-        CreateEntityFromCurrentEntity(E_ID(ELEVATOR_STATIONARY), entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)
+        (E_ID(ELEVATOR_STATIONARY), entity);
         entity->params = 2;
 
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 12);

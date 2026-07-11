@@ -261,7 +261,8 @@ void EntityFireDemonFireball(Entity* self) {
         if (collider.effects & EFFECT_SOLID) {
             explosion = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (explosion != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, explosion);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_EXPLOSION, self, explosion);
                 explosion->params = EXPLOSION_UNK_19;
             }
             self->posY.i.hi += collider.unk18;
@@ -435,7 +436,8 @@ void EntityFireDemonFireball(Entity* self) {
             if (!(OVL_EXPORT(Random)() & 3)) {
                 explosion = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (explosion != NULL) {
-                    CreateEntityFromEntity(E_EXPLOSION, self, explosion);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_EXPLOSION, self, explosion);
                     explosion->posX.i.hi += xVar;
                     explosion->posY.i.hi +=
                         (((OVL_EXPORT(Random)() & 3) * 2) + 6);
@@ -702,7 +704,8 @@ void EntityFireDemonPopoutEffect(Entity* self) {
             (self->ext.fireDemon.timer < 32)) {
             otherEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (otherEnt != NULL) {
-                CreateEntityFromCurrentEntity(E_FD_FLAMES, otherEnt);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_FD_FLAMES, otherEnt);
                 otherEnt->params = 0x13;
                 otherEnt->zPriority = 0x72;
                 otherEnt->params += 0x7200;
@@ -820,7 +823,7 @@ void EntityFireDemon(Entity* self) {
             self->ext.fireDemon.accelerationY = 0;
             other = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (other != NULL) {
-                CreateEntityFromEntity(E_FIRE_DEMON, self, other);
+                OVL_EXPORT(CreateEntityFromEntity)(E_FIRE_DEMON, self, other);
                 other->params |= PARAM_TYPE15;
                 other->ext.fireDemon.unk9C.otherEnt = self;
                 self->ext.fireDemon.unk9C.otherEnt = other;
@@ -836,7 +839,8 @@ void EntityFireDemon(Entity* self) {
             if (!(sp7C.effects & EFFECT_SOLID)) {
                 other = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (other != NULL) {
-                    CreateEntityFromEntity(E_FD_POPOUT_EFFECT, self, other);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_FD_POPOUT_EFFECT, self, other);
                     other->posY.i.hi -= 0x18;
                 }
                 self->step_s++;
@@ -945,7 +949,8 @@ void EntityFireDemon(Entity* self) {
             if (!--self->ext.fireDemon.timer) {
                 other = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (other != NULL) {
-                    CreateEntityFromEntity(E_FD_FIREBALL, self, other);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_FD_FIREBALL, self, other);
                     if (self->facingLeft) {
                         other->posX.i.hi += 0x10;
                     } else {
@@ -1035,7 +1040,7 @@ void EntityFireDemon(Entity* self) {
                 DRAW_UNK_40 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
             other = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (other != NULL) {
-                CreateEntityFromEntity(E_FIRE_DEMON, self, other);
+                OVL_EXPORT(CreateEntityFromEntity)(E_FIRE_DEMON, self, other);
                 other->params |= 0x100;
                 other->params |= self->animCurFrame;
                 other->facingLeft = self->facingLeft;
@@ -1076,7 +1081,8 @@ void EntityFireDemon(Entity* self) {
             if (var_s3) {
                 other = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (other != NULL) {
-                    CreateEntityFromCurrentEntity(E_FD_FLAMES, other);
+                    OVL_EXPORT(CreateEntityFromCurrentEntity)
+                    (E_FD_FLAMES, other);
                     other->params = 0x22;
                     other->params += 0xD500;
                     other->posX.i.hi =
@@ -1097,7 +1103,7 @@ void EntityFireDemon(Entity* self) {
             }
             other = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (other != NULL) {
-                CreateEntityFromCurrentEntity(E_FD_FLAMES, other);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)(E_FD_FLAMES, other);
                 other->params = 0x20;
                 other->params += 0xD500;
                 other->posX.i.hi =

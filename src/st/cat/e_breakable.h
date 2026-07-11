@@ -103,7 +103,7 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
     if (self->hitParams) {
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromCurrentEntity(E_EXPLOSION, entity);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)(E_EXPLOSION, entity);
             entity->params = explosion_types[breakableType];
         }
         switch (breakableType) {
@@ -111,7 +111,7 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
             g_api.PlaySfx(SFX_GLASS_BREAK_E);
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_HEART_DROP, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)(E_HEART_DROP, self, entity);
                 entity->params = self->params & 0x1FF;
             }
             PreventEntityFromRespawning(self);
@@ -121,7 +121,7 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
             g_api.PlaySfx(SFX_GLASS_BREAK_E);
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_HEART_DROP, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)(E_HEART_DROP, self, entity);
                 entity->params = self->params & 0x1FF;
             }
             PreventEntityFromRespawning(self);
@@ -131,7 +131,7 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
             g_api.PlaySfx(SFX_GLASS_BREAK_E);
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_HEART_DROP, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)(E_HEART_DROP, self, entity);
                 entity->params = 3;
             }
             PreventEntityFromRespawning(self);

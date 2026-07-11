@@ -37,7 +37,7 @@ void EntityMudman(Entity* self) {
         self->zPriority = 0x78;
         tempEntity2 = AllocEntity(&g_Entities[64], &g_Entities[192]);
         if (tempEntity2 != NULL) {
-            CreateEntityFromEntity(E_ID_4E, self, tempEntity2);
+            OVL_EXPORT(CreateEntityFromEntity)(E_ID_4E, self, tempEntity2);
             tempEntity2->ext.mudman.unk9C = self;
         }
         self->hitboxState = 0;
@@ -361,7 +361,7 @@ void EntityMudman(Entity* self) {
         }
         tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (tempEntity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, tempEntity);
             tempEntity->params = 2;
         }
         PlaySfxPositional(SFX_SKELETON_DEATH_C);

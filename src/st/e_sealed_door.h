@@ -193,7 +193,8 @@ void EntitySealedDoor(Entity* self) {
 #endif
 
                 self->ext.sealedDoor.showedMessage = 1;
-                CreateEntityFromCurrentEntity(E_MESSAGE_BOX, messageBox);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_MESSAGE_BOX, messageBox);
                 messageBox->posX.i.hi = 0x80;
                 messageBox->posY.i.hi = 0xB0;
                 messageBox->ext.messageBox.label = sealed_door_label;

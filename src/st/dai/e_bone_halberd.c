@@ -104,7 +104,8 @@ void EntityBoneHalberd(Entity* self) {
         self->ext.boneHalberd.facingLeft = 0;
         self->ext.boneHalberd.attackIntervalIdx = 0;
         boneHalberdPart = self + 1;
-        CreateEntityFromCurrentEntity(E_BONE_HALBERD_ATTACK, boneHalberdPart);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)
+        (E_BONE_HALBERD_ATTACK, boneHalberdPart);
         break;
     case BONE_HALBERD_READY:
         // Could this function be CheckGroundCollision?
@@ -254,8 +255,8 @@ void EntityBoneHalberd(Entity* self) {
         for (partIdx = 0; partIdx < 9; partIdx++) {
             boneHalberdPart = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (boneHalberdPart != 0) {
-                CreateEntityFromCurrentEntity(
-                    E_BONE_HALBERD_PARTS, boneHalberdPart);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_BONE_HALBERD_PARTS, boneHalberdPart);
                 boneHalberdPart->facingLeft = self->facingLeft;
                 boneHalberdPart->params = partIdx;
                 boneHalberdPart->ext.boneHalberd.partLifespan =

@@ -172,7 +172,8 @@ void EntityBridgeBreakTrigger(Entity* self) {
                 entity = AllocEntity(
                     &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_EXPLOSION, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_EXPLOSION, self, entity);
                     entity->params = 0x13;
                     entity->posX.i.hi += -64 + (i << 7);
                 }
@@ -208,7 +209,8 @@ void EntityBridgeBreakTrigger(Entity* self) {
             entity =
                 AllocEntity(&g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_ID(EXPLODE_PUFF_OPAQUE), self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_ID(EXPLODE_PUFF_OPAQUE), self, entity);
                 entity->params = 0x10;
                 entity->zPriority = 0x72;
                 entity->posX.i.hi += (OVL_EXPORT(Random)() & 0x7F) - 64;

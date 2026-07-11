@@ -19,7 +19,8 @@ void EntityZombie(Entity* self) {
         // Spawn Zombie explosion
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
-            CreateEntityFromEntity(E_EXPLODE_PUFF_OPAQUE, self, newEntity);
+            OVL_EXPORT(CreateEntityFromEntity)
+            (E_EXPLODE_PUFF_OPAQUE, self, newEntity);
             newEntity->zPriority = self->zPriority + 1;
             newEntity->posY.i.hi += 12;
             newEntity->params = 3;
@@ -105,7 +106,7 @@ void EntityZombieSpawner(Entity* self) {
         if (!--self->ext.zombieSpawner.spawnDelay) {
             newEntity = AllocEntity(&g_Entities[160], &g_Entities[168]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_ZOMBIE, self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)(E_ZOMBIE, self, newEntity);
                 temp = (OVL_EXPORT(Random)() & 0x3F) + 96;
 
                 if (self->ext.zombieSpawner.spawnSide != 0) {

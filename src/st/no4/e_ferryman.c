@@ -14,7 +14,8 @@ void GenerateBowWave(Entity* self, s16 xOffset) {
 
     newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
     if (newEntity != NULL) {
-        CreateEntityFromCurrentEntity(E_ID(SURFACING_WATER), newEntity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)
+        (E_ID(SURFACING_WATER), newEntity);
 
         if (self->ext.et_surfacingWater.unk90 & 2) {
             newEntity->posY.i.hi = 288 - g_Tilemap.scrollY.i.hi;
@@ -159,14 +160,15 @@ void EntityFerrymanController(Entity* self) {
         self->zPriority = 0x9A;
         self->flags |= FLAG_POS_CAMERA_LOCKED;
         self->drawFlags = ENTITY_ROTATE;
-        CreateEntityFromCurrentEntity(E_ID(FERRYMAN), ferrymanEntity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)
+        (E_ID(FERRYMAN), ferrymanEntity);
         ferrymanEntity->facingLeft = self->facingLeft;
         break;
     case 1:
         if (playerInBoat) {
             self->step++;
             tempEntity = &g_Entities[172];
-            CreateEntityFromCurrentEntity(E_ID(ID_4F), tempEntity);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(ID_4F), tempEntity);
             tempEntity->params = self->params;
         }
         break;
@@ -313,8 +315,8 @@ void EntityFerrymanController(Entity* self) {
             if (offset > 264) {
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromCurrentEntity(
-                        E_ID(SPLASH_WATER), tempEntity);
+                    OVL_EXPORT(CreateEntityFromCurrentEntity)
+                    (E_ID(SPLASH_WATER), tempEntity);
                     tempEntity->posY.i.hi = 0x120 - g_Tilemap.scrollY.i.hi;
                     tempEntity->zPriority = 0x9B;
                     if (self->facingLeft) {
@@ -336,8 +338,8 @@ void EntityFerrymanController(Entity* self) {
                 self->ext.ferrymanBoat.splashTimer--;
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromCurrentEntity(
-                        E_ID(SPLASH_WATER), tempEntity);
+                    OVL_EXPORT(CreateEntityFromCurrentEntity)
+                    (E_ID(SPLASH_WATER), tempEntity);
                     tempEntity->posY.i.hi = 0x120 - g_Tilemap.scrollY.i.hi;
                     tempEntity->zPriority = 0x9B;
                     if (self->facingLeft) {
@@ -465,8 +467,8 @@ void EntityFerrymanController(Entity* self) {
             if (offset > 0xA0) {
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromCurrentEntity(
-                        E_ID(SPLASH_WATER), tempEntity);
+                    OVL_EXPORT(CreateEntityFromCurrentEntity)
+                    (E_ID(SPLASH_WATER), tempEntity);
                     tempEntity->posY.i.hi = 176 - g_Tilemap.scrollY.i.hi;
                     tempEntity->zPriority = 155;
                     if (self->facingLeft) {
@@ -485,8 +487,8 @@ void EntityFerrymanController(Entity* self) {
                 self->ext.ferrymanBoat.splashTimer--;
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromCurrentEntity(
-                        E_ID(SPLASH_WATER), tempEntity);
+                    OVL_EXPORT(CreateEntityFromCurrentEntity)
+                    (E_ID(SPLASH_WATER), tempEntity);
                     tempEntity->posY.i.hi = 176 - g_Tilemap.scrollY.i.hi;
                     tempEntity->zPriority = 155;
                     if (self->facingLeft) {
@@ -1281,8 +1283,8 @@ void EntityFerrymanGateController(Entity* self) {
             } else {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    CreateEntityFromCurrentEntity(
-                        E_ID(SURFACING_WATER), newEntity);
+                    OVL_EXPORT(CreateEntityFromCurrentEntity)
+                    (E_ID(SURFACING_WATER), newEntity);
                     newEntity->posY.i.hi = 176 - g_Tilemap.scrollY.i.hi;
                     newEntity->posX.i.hi +=
                         (self->ext.et_surfacingWater.unk7E * 8) - 16;

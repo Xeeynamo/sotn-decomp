@@ -30,16 +30,16 @@ void EntityUnkId18(Entity* self) {
         entity = self + 1;
 
         for (i = 1; i < 6; i++) {
-            CreateEntityFromEntity(E_ID(ID_17), self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_ID(ID_17), self, entity);
             entity->params = i + 0x100;
             entity++;
-            CreateEntityFromEntity(E_ID(ID_17), self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_ID(ID_17), self, entity);
             entity->params = i;
             entity++;
         };
-        CreateEntityFromEntity(E_ID(ID_19), self, entity);
+        OVL_EXPORT(CreateEntityFromEntity)(E_ID(ID_19), self, entity);
         entity++;
-        CreateEntityFromEntity(E_ID(ID_1A), self, entity);
+        OVL_EXPORT(CreateEntityFromEntity)(E_ID(ID_1A), self, entity);
         break;
 
     case 1:
@@ -124,7 +124,7 @@ void EntityUnkId18(Entity* self) {
         for (i = 0; i < 2; i++) {
             dop = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (dop != NULL) {
-                CreateEntityFromCurrentEntity(E_ID(ID_1C), dop);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(ID_1C), dop);
                 dop->posX.i.hi = offsetX - 64 + (i * 128);
                 dop->posY.i.hi = offsetY;
                 dop->params = i;
@@ -142,7 +142,7 @@ void EntityUnkId18(Entity* self) {
     case 9:
         dop = AllocEntity(&g_Entities[160], &g_Entities[192]);
         if (dop != NULL) {
-            CreateEntityFromEntity(E_ID(ID_1D), self, dop);
+            OVL_EXPORT(CreateEntityFromEntity)(E_ID(ID_1D), self, dop);
             dop->posX.i.hi = 0x100 - g_Tilemap.scrollX.i.hi;
             dop->posY.i.hi = 0x80 - g_Tilemap.scrollY.i.hi;
             dop->params = 4;
@@ -497,7 +497,7 @@ void EntityUnkId19(Entity* self) {
 
         prim = self->ext.et_801BE2C8.unk80;
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
-        CreateEntityFromEntity(E_ID_16, self, &DOPPLEGANGER);
+        OVL_EXPORT(CreateEntityFromEntity)(E_ID_16, self, &DOPPLEGANGER);
         g_api.TimeAttackController(
             TIMEATTACK_EVENT_DOPPLEGANGER_10_DEFEAT, TIMEATTACK_SET_VISITED);
         (self + 1)->ext.et_801BE2C8.unk84 = 1;

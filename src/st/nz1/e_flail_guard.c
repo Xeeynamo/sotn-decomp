@@ -47,7 +47,7 @@ void EntityFlailGuard(Entity* self) {
         InitializeEntity(g_EInitFlailGuard);
         self->hitboxOffY = 2;
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-        CreateEntityFromEntity(E_FLAIL_GUARD_FLAIL, self, self + 1);
+        OVL_EXPORT(CreateEntityFromEntity)(E_FLAIL_GUARD_FLAIL, self, self + 1);
         self->hitboxOffX = 4;
         self->blendMode |= BLEND_TRANSP;
         break;
@@ -96,7 +96,7 @@ void EntityFlailGuard(Entity* self) {
         for (i = 0; i < 8; i++) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_FLAIL_GUARD, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)(E_FLAIL_GUARD, self, entity);
                 entity->params = i;
                 entity->step = 5;
                 entity->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
@@ -112,7 +112,7 @@ void EntityFlailGuard(Entity* self) {
         }
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
             entity->params = 3;
         }
         entity = self + 1;
@@ -136,7 +136,7 @@ void EntityFlailGuard(Entity* self) {
         if (DECREMENT_AND_CHECK(self->ext.flailGuard.timer)) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
                 entity->params = 1;
                 if (self->facingLeft) {
                     entity->posX.i.hi -=

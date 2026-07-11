@@ -251,7 +251,8 @@ void EntityPlatform(Entity* self) {
         }
 #else
         if (OVL_EXPORT(CutsceneFlags) & 8) {
-            CreateEntityFromCurrentEntity(E_EQUIP_ITEM_DROP, &g_Entities[204]);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)
+            (E_EQUIP_ITEM_DROP, &g_Entities[204]);
             g_Entities[204].params = NUM_HAND_ITEMS + ITEM_HOLY_GLASSES;
             g_Entities[204].step = 5;
             g_Entities[204].flags = 0;
@@ -275,7 +276,8 @@ void EntityPlatform(Entity* self) {
                 self->step = 11;
                 cutsceneEntity = &g_Entities[200];
                 OVL_EXPORT(CutsceneFlags) = 1;
-                CreateEntityFromCurrentEntity(E_ID(CUTSCENE), cutsceneEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(CUTSCENE), cutsceneEntity);
                 cutsceneEntity->params = 1;
                 g_PauseAllowed = false;
                 g_Player.padSim = PAD_NONE;
@@ -386,12 +388,13 @@ void EntityPlatform(Entity* self) {
                 OVL_EXPORT(CutsceneFlags) = 1;
 
                 cutsceneEntity = &g_Entities[200];
-                CreateEntityFromCurrentEntity(E_ID(CUTSCENE), cutsceneEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(CUTSCENE), cutsceneEntity);
                 cutsceneEntity->params = 2;
 
                 holyGlassesEntity = &g_Entities[204];
-                CreateEntityFromCurrentEntity(
-                    E_EQUIP_ITEM_DROP, holyGlassesEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_EQUIP_ITEM_DROP, holyGlassesEntity);
                 holyGlassesEntity->params = NUM_HAND_ITEMS + ITEM_HOLY_GLASSES;
                 holyGlassesEntity->step = 5;
                 holyGlassesEntity->flags = 0;
@@ -492,7 +495,8 @@ void EntityPlatform(Entity* self) {
                 OVL_EXPORT(CutsceneFlags) = 1;
 
                 cutsceneEntity = &g_Entities[200];
-                CreateEntityFromCurrentEntity(E_ID(CUTSCENE), cutsceneEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(CUTSCENE), cutsceneEntity);
                 cutsceneEntity->params = 3;
             }
             g_Player.demo_timer = 1;

@@ -70,7 +70,7 @@ void EntitySpectralSword(Entity* self) {
         prim->drawMode = DRAW_HIDE | DRAW_UNK02;
         ent = self + 1;
         for (i = 1; i < 16; i++, ent++) {
-            CreateEntityFromEntity(E_POLTERGEIST, self, ent);
+            OVL_EXPORT(CreateEntityFromEntity)(E_POLTERGEIST, self, ent);
             ent->posY.i.hi = 0x120;
             ent->posY.i.hi = 0x580;
             ent->params = i;
@@ -263,7 +263,7 @@ void EntitySpectralSword(Entity* self) {
             if ((g_Timer & 7) == 0) {
                 ent = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (ent != NULL) {
-                    CreateEntityFromEntity(E_EXPLOSION, self, ent);
+                    OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, ent);
                     ent->params = 3;
                 }
             }
@@ -386,7 +386,7 @@ void EntitySpectralSword(Entity* self) {
         if ((g_Timer & 0xF) == 0) {
             ent = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (ent != NULL) {
-                CreateEntityFromEntity(E_UNK_3F, self, ent);
+                OVL_EXPORT(CreateEntityFromEntity)(E_UNK_3F, self, ent);
                 ent->ext.et_801CEB08.unk80 = self;
             }
         }
@@ -527,7 +527,8 @@ void EntityPoltergeist(Entity* self) {
             if ((g_Timer & 7) == 0) {
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_EXPLOSION, self, tempEntity);
                     tempEntity->params = 1;
                 }
             }

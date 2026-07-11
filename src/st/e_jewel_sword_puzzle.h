@@ -131,7 +131,8 @@ void EntityMermanRockLeftSide(Entity* self) {
 
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_EXPLOSION, self, newEntity);
                 newEntity->params = 0x13;
                 newEntity->zPriority = 0xA9;
                 newEntity->posX.i.hi PME self->ext.mermanRock.unk84 * 16;
@@ -143,8 +144,8 @@ void EntityMermanRockLeftSide(Entity* self) {
             for (i = 0; i < 3; i++) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(
-                        E_ID(FALLING_ROCK_2), self, newEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID(FALLING_ROCK_2), self, newEntity);
                     newEntity->params = *params++;
 #if defined(INVERTED_STAGE)
                     newEntity->velocityX =
@@ -166,7 +167,8 @@ void EntityMermanRockLeftSide(Entity* self) {
         if (self->ext.mermanRock.unk84 > 1) {
             newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_EQUIP_ITEM_DROP, self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_EQUIP_ITEM_DROP, self, newEntity);
                 newEntity->params = ITEM_POT_ROAST;
             }
             g_CastleFlags[CF_STEPS] |= rockBroken;
@@ -236,7 +238,8 @@ void EntityMermanRockRightSide(Entity* self) {
 
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_EXPLOSION, self, newEntity);
                 newEntity->params = 0x13;
                 newEntity->zPriority = 0xA9;
                 newEntity->posX.i.hi MPE self->ext.mermanRock.unk84 * 16;
@@ -248,8 +251,8 @@ void EntityMermanRockRightSide(Entity* self) {
             for (i = 0; i < 3; i++) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(
-                        E_ID(FALLING_ROCK_2), self, newEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID(FALLING_ROCK_2), self, newEntity);
                     newEntity->params = *params++;
 #if defined(INVERTED_STAGE)
                     newEntity->velocityX =
@@ -357,7 +360,8 @@ void EntityFallingRock2(Entity* self) {
             if (self->velocityY > FIX(4.0)) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != 0) {
-                    CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_EXPLOSION, self, newEntity);
                     newEntity->params = 0x11;
                     if (animFrame == 0) {
                         newEntity->params = 0x13;

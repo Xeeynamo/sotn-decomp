@@ -223,7 +223,7 @@ void EntityWarg(Entity* self) {
     case 0:
         part = self + 1;
         self->nextPart = part;
-        CreateEntityFromCurrentEntity(E_ID_4B, part);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID_4B, part);
         part->parent = self;
         InitializeEntity(g_EInitWarg);
         part->nextPart = self;
@@ -433,7 +433,8 @@ void EntityWarg(Entity* self) {
         if (++self->ext.warg.timer & 1) {
             part = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (part != NULL) {
-                CreateEntityFromCurrentEntity(E_EXPLODE_PUFF_TRANS, part);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_EXPLODE_PUFF_TRANS, part);
 // These are the same code, but compiler instruction reordering is messing it
 // up. There's almost certainly a single solution, but I can't find it.
 #ifdef VERSION_PSP

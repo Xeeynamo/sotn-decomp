@@ -87,7 +87,8 @@ void EntitySpikeRoomDarkness(Entity* self) {
                 // spawn the bounce entity func_us_801BACF4
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    CreateEntityFromCurrentEntity(E_ID(UNK_21), newEntity);
+                    OVL_EXPORT(CreateEntityFromCurrentEntity)
+                    (E_ID(UNK_21), newEntity);
                     newEntity->posX.i.hi = entity->posX.i.hi;
                     newEntity->posY.i.hi = entity->posY.i.hi;
                     newEntity->facingLeft = entity->facingLeft;
@@ -97,7 +98,8 @@ void EntitySpikeRoomDarkness(Entity* self) {
 
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    CreateEntityFromCurrentEntity(E_ID(UNK_21), newEntity);
+                    OVL_EXPORT(CreateEntityFromCurrentEntity)
+                    (E_ID(UNK_21), newEntity);
                     newEntity->posX.i.hi = entity->posX.i.hi;
                     newEntity->posY.i.hi = entity->posY.i.hi;
                     newEntity->facingLeft = entity->facingLeft;

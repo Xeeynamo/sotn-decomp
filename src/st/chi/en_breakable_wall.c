@@ -70,8 +70,8 @@ void EntityBreakableWallDebris(Entity* self) {
                 for (i = 0; i < 2; i++) {
                     entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (entity != NULL) {
-                        CreateEntityFromEntity(
-                            E_BREAKABLE_WALL_DEBRIS, self, entity);
+                        OVL_EXPORT(CreateEntityFromEntity)
+                        (E_BREAKABLE_WALL_DEBRIS, self, entity);
                         entity->params = (OVL_EXPORT(Random)() & 3) + 9;
                         entity->params |= 0x100;
                     }
@@ -83,7 +83,8 @@ void EntityBreakableWallDebris(Entity* self) {
                 // Poof, gone
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_INTENSE_EXPLOSION, self, entity);
                     entity->params = 0x10;
                     entity->params |= 0xC000;
                 }
@@ -230,7 +231,8 @@ void EntityBreakableWall(Entity* self) {
         entity = self + 1;
         for (c = 0; c < 15; c++, entity++) {
             DestroyEntity(entity);
-            CreateEntityFromEntity(E_BREAKABLE_WALL_DEBRIS, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)
+            (E_BREAKABLE_WALL_DEBRIS, self, entity);
 
             entity->params = *pSrcTile++;
             entity->posX.i.hi += *pSrcTile++;
@@ -270,7 +272,7 @@ void EntityBreakableWall(Entity* self) {
             xPos -= self->ext.breakableDebris.breakCount * 0xC;
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
                 entity->posX.i.hi = xPos;
                 entity->posY.i.hi = yPos + 0x10;
                 entity->params = 0x13;
@@ -281,7 +283,8 @@ void EntityBreakableWall(Entity* self) {
             for (c = 0; c < 3; c++) {
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_INTENSE_EXPLOSION, self, entity);
                     entity->posX.i.hi = xPos;
                     entity->posY.i.hi =
                         yPos + 0x20 - (OVL_EXPORT(Random)() & 3) * 8;
@@ -308,7 +311,7 @@ void EntityBreakableWall(Entity* self) {
         prim->x1 = prim->x3 -= 0x10;
         entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
         if (entity != NULL) {
-            CreateEntityFromCurrentEntity(E_HEART_DROP, entity);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)(E_HEART_DROP, entity);
             entity->posX.i.hi = 0x20 - g_Tilemap.scrollX.i.hi;
             entity->posY.i.hi = 0x188 - g_Tilemap.scrollY.i.hi;
             entity->params = 3;

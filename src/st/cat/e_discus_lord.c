@@ -66,7 +66,7 @@ void EntityDiscusLord(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitDiscusLord);
-        CreateEntityFromEntity(E_DISCUS, self, discus);
+        OVL_EXPORT(CreateEntityFromEntity)(E_DISCUS, self, discus);
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         // fallthrough
     case 1:
@@ -207,7 +207,8 @@ void EntityDiscusLord(Entity* self) {
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
                     // Spawn the body part entities
-                    CreateEntityFromEntity(E_DISCUS_LORD, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_DISCUS_LORD, self, entity);
 
                     posX = death_part_positions[i].x;
                     posY = death_part_positions[i].y;
@@ -226,7 +227,8 @@ void EntityDiscusLord(Entity* self) {
                 }
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
-                    CreateEntityFromCurrentEntity(E_INTENSE_EXPLOSION, entity);
+                    OVL_EXPORT(CreateEntityFromCurrentEntity)
+                    (E_INTENSE_EXPLOSION, entity);
                     entity->posX.i.hi = posX;
                     entity->posY.i.hi = posY;
                 }
@@ -337,7 +339,8 @@ void EntityDiscusLord(Entity* self) {
         if (!--self->ext.discusLord.unk82) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromCurrentEntity(E_INTENSE_EXPLOSION, entity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_INTENSE_EXPLOSION, entity);
                 entity->drawFlags |= ENTITY_SCALEY | ENTITY_SCALEX;
                 entity->scaleX = entity->scaleY = self->scaleX;
                 entity->drawFlags |= ENTITY_OPACITY;
@@ -483,7 +486,7 @@ void EntityDiscus(Entity* self) {
         self->ext.discusLord.angle = 4;
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_DISCUS_TRAIL, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_DISCUS_TRAIL, self, entity);
             entity->facingLeft = self->facingLeft;
             entity->rotate = self->rotate;
             entity->ext.discusLord.unk8C = self->ext.discusLord.unk8C;
@@ -542,7 +545,7 @@ void EntityDiscus(Entity* self) {
             return;
         }
         entity = self + 1;
-        CreateEntityFromEntity(E_DISCUS_CHAIN, self, entity);
+        OVL_EXPORT(CreateEntityFromEntity)(E_DISCUS_CHAIN, self, entity);
         // fallthrough
     case 1:
         self->rotate += self->ext.discusLord.unk8C;

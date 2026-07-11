@@ -27,11 +27,12 @@ extern RoomDef WRP_rooms_layers[];
 void WRP_UpdateStageEntities(void);
 void WRP_Update(void);
 void WRP_HitDetection(void);
+void WRP_UpdateRoomPosition(void);
 
 static Overlay g_StageDesc = {
     WRP_Update,
     WRP_HitDetection,
-    UpdateRoomPosition,
+    WRP_UpdateRoomPosition,
     MyInitRoomEntities,
     rooms,
     WRP_spriteBanks,

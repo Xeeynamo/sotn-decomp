@@ -368,7 +368,8 @@ void EntityHammer(Entity* self) {
         // (null-terminated)
         for (parts = D_us_801821AC, part = self; parts->eArrayOffset; parts++) {
             otherEnt = self + parts->eArrayOffset;
-            CreateEntityFromCurrentEntity(E_GURKHA_BODY_PARTS, otherEnt);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)
+            (E_GURKHA_BODY_PARTS, otherEnt);
             otherEnt->ext.GH_Props.length = parts->length;
             otherEnt->ext.GH_Props.parent = self + parts->eArrayParentOffset;
             otherEnt->params = parts->params;
@@ -380,7 +381,7 @@ void EntityHammer(Entity* self) {
         self->nextPart = part;
         self->parent = NULL;
         otherEnt = self + HAMMER_WEAPON;
-        CreateEntityFromCurrentEntity(E_HAMMER_WEAPON, otherEnt);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_HAMMER_WEAPON, otherEnt);
         otherEnt->ext.GH_Props.length = 12;
         otherEnt->ext.GH_Props.parent = self + ARM_LOWER;
         otherEnt->zPriority = self->zPriority + 3;

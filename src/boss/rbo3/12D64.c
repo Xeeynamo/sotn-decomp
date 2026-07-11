@@ -32,9 +32,9 @@ void func_us_80192D64(Entity* self) {
 
         next = self + 1;
 #ifdef VERSION_PSP
-        CreateEntityFromEntity(D_psp_09254D28, self, next);
+        OVL_EXPORT(CreateEntityFromEntity)(D_psp_09254D28, self, next);
 #else
-        CreateEntityFromEntity(UNK_ENTITY_29, self, self + 1);
+        OVL_EXPORT(CreateEntityFromEntity)(UNK_ENTITY_29, self, self + 1);
 #endif
 
         next->params = 2;

@@ -111,7 +111,8 @@ void EntityBitterfly(Entity* self) {
             if (!--self->ext.bitterfly.deathTimer) {
                 other = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (other != NULL) {
-                    CreateEntityFromEntity(E_EXPLOSION, self, other);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_EXPLOSION, self, other);
                     other->params = EXPLOSION_SMALL_MULTIPLE;
                 }
                 PlaySfxPositional(SFX_RAPID_SCRAPE_3X);

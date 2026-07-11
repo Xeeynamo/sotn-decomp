@@ -375,7 +375,8 @@ void OVL_EXPORT(HitDetection)(void) {
         if (hitboxCheck2 == 2 || (hitboxCheck2 == 6 && (miscVar1 & 0x20))) {
             otherEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (otherEntity) {
-                CreateEntityFromEntity(E_SOUL_STEAL_ORB, entity, otherEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_SOUL_STEAL_ORB, entity, otherEntity);
             }
         }
         miscVar1 = g_testCollEnemyLookup[entityHit->enemyId];
@@ -517,8 +518,8 @@ void OVL_EXPORT(HitDetection)(void) {
                     otherEntity =
                         AllocEntity(&g_Entities[160], &g_Entities[192]);
                     if (otherEntity != NULL) {
-                        CreateEntityFromEntity(
-                            E_ENEMY_BLOOD, entity, otherEntity);
+                        OVL_EXPORT(CreateEntityFromEntity)
+                        (E_ENEMY_BLOOD, entity, otherEntity);
                         if (x > entity->posX.i.hi) {
                             otherEntity->params = 1;
                         }
@@ -604,11 +605,11 @@ void OVL_EXPORT(HitDetection)(void) {
                     }
                     if (miscVar3 >= 0x80) {
                         miscVar3 -= 0x80;
-                        CreateEntityFromEntity(
-                            E_EQUIP_ITEM_DROP, entity, otherEntity);
+                        OVL_EXPORT(CreateEntityFromEntity)
+                        (E_EQUIP_ITEM_DROP, entity, otherEntity);
                     } else {
-                        CreateEntityFromEntity(
-                            E_PRIZE_DROP, entity, otherEntity);
+                        OVL_EXPORT(CreateEntityFromEntity)
+                        (E_PRIZE_DROP, entity, otherEntity);
                     }
                     otherEntity->ext.equipItemDrop.castleFlag = miscVar1;
                     otherEntity->params = miscVar3;

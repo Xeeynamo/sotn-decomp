@@ -57,7 +57,7 @@ void EntityWereskeleton(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitWereskeleton);
-        CreateEntityFromEntity(E_ID_42, self, self + 1);
+        OVL_EXPORT(CreateEntityFromEntity)(E_ID_42, self, self + 1);
         break;
 
     case 1:
@@ -207,7 +207,7 @@ void EntityWereskeleton(Entity* self) {
             tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (tempEntity != NULL) {
                 DestroyEntity(tempEntity);
-                CreateEntityFromEntity(E_ID_43, self, tempEntity);
+                OVL_EXPORT(CreateEntityFromEntity)(E_ID_43, self, tempEntity);
                 if (self->facingLeft) {
                     tempEntity->velocityX =
                         FIX(1) + (OVL_EXPORT(Random)() & 7) * 0x2800;
@@ -262,7 +262,7 @@ void EntityWereskeleton(Entity* self) {
         }
         tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (tempEntity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, tempEntity);
             tempEntity->params = 2;
         }
         DestroyEntity(self);
@@ -292,7 +292,7 @@ void EntityWereskeleton(Entity* self) {
         }
         tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (tempEntity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, tempEntity);
             tempEntity->params = 2;
         }
         DestroyEntity(self);
@@ -305,7 +305,8 @@ void EntityWereskeleton(Entity* self) {
         if (self->ext.wereskeleton.unk7C++ > 4) {
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_EXPLOSION, self, tempEntity);
                 tempEntity->params = 0;
                 tempEntity->posX.i.hi += (OVL_EXPORT(Random)() & 0x1F) - 0x10;
                 tempEntity->posY.i.hi += (OVL_EXPORT(Random)() & 0x1F) - 0x10;
@@ -356,7 +357,7 @@ void func_us_801CE958(Entity* self) {
         tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (tempEntity != NULL) {
             DestroyEntity(tempEntity);
-            CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, tempEntity);
             tempEntity->params = 0;
             DestroyEntity(self);
         }

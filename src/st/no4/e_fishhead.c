@@ -54,12 +54,12 @@ void EntityFishheadSpawner(Entity* self) {
 
         // Spawn two stacked fishheads
         entity = self + 1;
-        CreateEntityFromEntity(E_FISHHEAD, self, entity);
+        OVL_EXPORT(CreateEntityFromEntity)(E_FISHHEAD, self, entity);
         entity->params = params & 0x100;
         entity->facingLeft = params & 1;
 
         entity = self + 2;
-        CreateEntityFromEntity(E_FISHHEAD, self, entity);
+        OVL_EXPORT(CreateEntityFromEntity)(E_FISHHEAD, self, entity);
         entity->params = (params & 0x100) + 1;
         entity->facingLeft = (params & 2) >> 1;
         entity->posY.i.hi -= 0x18;
@@ -116,8 +116,8 @@ void EntityFishhead(Entity* self) {
                 for (i = 0; i < 5; i++) {
                     entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                     if (entity != NULL) {
-                        CreateEntityFromEntity(
-                            E_FISHHEAD_PARTICLES, self, entity);
+                        OVL_EXPORT(CreateEntityFromEntity)
+                        (E_FISHHEAD_PARTICLES, self, entity);
                         entity->zPriority = self->zPriority + 1;
                         if (self->facingLeft) {
                             entity->posX.i.hi += 0x12;
@@ -179,10 +179,11 @@ void EntityFishhead(Entity* self) {
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
                 if (self->ext.fishhead.playerIsClose) {
-                    CreateEntityFromEntity(
-                        E_FISHHEAD_FIRE_BREATH, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_FISHHEAD_FIRE_BREATH, self, entity);
                 } else {
-                    CreateEntityFromEntity(E_FISHHEAD_FIREBALL, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_FISHHEAD_FIREBALL, self, entity);
                 }
                 entity->ext.fishhead.fishheadEntity = self;
                 entity->facingLeft = self->facingLeft;
@@ -198,7 +199,8 @@ void EntityFishhead(Entity* self) {
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
                 // Spawn the puff of smoke after the fireball goes off
-                CreateEntityFromEntity(E_FISHHEAD_PARTICLES, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_FISHHEAD_PARTICLES, self, entity);
                 entity->zPriority = self->zPriority + 1;
                 if (self->facingLeft) {
                     entity->posX.i.hi += 0x12;
@@ -222,7 +224,8 @@ void EntityFishhead(Entity* self) {
         for (i = 0; i < 3; i++) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_FISHHEAD_DEATH_PARTS, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_FISHHEAD_DEATH_PARTS, self, entity);
                 entity->params = i;
                 entity->facingLeft = self->facingLeft;
                 entity->zPriority = self->zPriority + 4 - i;
@@ -230,7 +233,7 @@ void EntityFishhead(Entity* self) {
         }
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
             entity->params = 2;
         }
         PlaySfxPositional(SFX_EXPLODE_B);

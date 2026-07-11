@@ -157,7 +157,8 @@ static void SpawnDustParticles(void) {
 
     newEntity = AllocEntity(&g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
     if (newEntity != NULL) {
-        CreateEntityFromEntity(E_INTENSE_EXPLOSION, g_CurrentEntity, newEntity);
+        OVL_EXPORT(CreateEntityFromEntity)
+        (E_INTENSE_EXPLOSION, g_CurrentEntity, newEntity);
         newEntity->posY.i.hi += 0x14;
         if (g_CurrentEntity->facingLeft) {
             newEntity->posX.i.hi -= 4;
@@ -184,7 +185,8 @@ void EntityBladeSoldier(Entity* self) {
     case INIT:
         InitializeEntity(g_EInitBladeSoldier);
         entity = self + 1;
-        CreateEntityFromCurrentEntity(E_BLADE_SOLDIER_ATTACK_HITBOX, entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)
+        (E_BLADE_SOLDIER_ATTACK_HITBOX, entity);
         break;
     case FALL_TO_GROUND:
         if (UnkCollisionFunc3(sensors_ground)) {
@@ -346,7 +348,8 @@ void EntityBladeSoldier(Entity* self) {
                 break;
             }
 
-            CreateEntityFromCurrentEntity(E_BLADE_SOLDIER_DEATH_PARTS, entity);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)
+            (E_BLADE_SOLDIER_DEATH_PARTS, entity);
             entity->facingLeft = self->facingLeft;
             entity->params = i;
             entity->ext.bladeSoldier.deathPartFallDuration =

@@ -50,8 +50,8 @@ void EntitySubWeaponContainer(Entity* self) {
         self->hitboxState = 2;
         self->palette += self->params;
         newEntity = self + 1;
-        CreateEntityFromEntity(
-            E_func_801C7884, self, newEntity); // Create SubWeapon
+        OVL_EXPORT(CreateEntityFromEntity)
+        (E_func_801C7884, self, newEntity); // Create SubWeapon
         newEntity->posY.i.hi -= 72;
         newEntity->params = D_801825CC[self->params];
         newEntity->zPriority = self->zPriority - 2;
@@ -77,7 +77,8 @@ void EntitySubWeaponContainer(Entity* self) {
         if (!(g_Timer & 0xF)) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_LIQUID_BUBBLES, self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_LIQUID_BUBBLES, self, newEntity);
                 rnd = (OVL_EXPORT(Random)() & 0x18) - 12;
                 newEntity->posX.i.hi += rnd;
                 newEntity->posY.i.hi -= 30;
@@ -103,7 +104,8 @@ void EntitySubWeaponContainer(Entity* self) {
         for (i = 0; i < LEN(D_80182584); i++, glassPieceTBL++) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_FALLING_GLASS, self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_FALLING_GLASS, self, newEntity);
                 newEntity->posX.i.hi += glassPieceTBL->velX;
                 newEntity->posY.i.hi += glassPieceTBL->velY;
                 newEntity->ext.subwpnContGlass.velX = glassPieceTBL->velX;
@@ -117,7 +119,8 @@ void EntitySubWeaponContainer(Entity* self) {
             newEntity =
                 AllocEntity(&g_Entities[UNK_ENTITY_51], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_FALLING_LIQUID, self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_FALLING_LIQUID, self, newEntity);
                 rndPosX = (OVL_EXPORT(Random)() & 0x1F) - 16;
                 rndPosY = -(OVL_EXPORT(Random)() & 0x3F) - 16;
                 newEntity->posX.i.hi += rndPosX;

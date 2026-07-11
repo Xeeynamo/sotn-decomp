@@ -43,7 +43,7 @@ void EntityOuijaTable(Entity* self) {
     if (self->flags & FLAG_DEAD) {
         otherEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (otherEntity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, otherEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, otherEntity);
             otherEntity->params = 1;
         }
         PlaySfxPositional(SFX_OUIJA_TABLE_DEATH);
@@ -68,21 +68,24 @@ void EntityOuijaTable(Entity* self) {
         if (UnkCollisionFunc3(sensors_ground) & 1) {
             // Spawn objects on the table
             otherEntity = VASE;
-            CreateEntityFromEntity(E_OUIJA_TABLE_COMPONENT, self, otherEntity);
+            OVL_EXPORT(CreateEntityFromEntity)
+            (E_OUIJA_TABLE_COMPONENT, self, otherEntity);
             otherEntity->params = 0;
             otherEntity->ext.ouijaTable.parent = self;
             otherEntity->posX.i.hi -= 4;
             otherEntity->posY.i.hi -= 16;
 
             otherEntity = BEAKER;
-            CreateEntityFromEntity(E_OUIJA_TABLE_COMPONENT, self, otherEntity);
+            OVL_EXPORT(CreateEntityFromEntity)
+            (E_OUIJA_TABLE_COMPONENT, self, otherEntity);
             otherEntity->params = 1;
             otherEntity->ext.ouijaTable.parent = self;
             otherEntity->posX.i.hi += 2;
             otherEntity->posY.i.hi -= 20;
 
             otherEntity = WALKING_TABLE;
-            CreateEntityFromEntity(E_OUIJA_TABLE_COMPONENT, self, otherEntity);
+            OVL_EXPORT(CreateEntityFromEntity)
+            (E_OUIJA_TABLE_COMPONENT, self, otherEntity);
             otherEntity->params = 2;
             otherEntity->ext.ouijaTable.parent = self;
 
@@ -298,7 +301,8 @@ void EntityOuijaTableComponent(Entity* self) {
             if (!--self->ext.ouijaTable.timer) {
                 otherEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (otherEntity != NULL) {
-                    CreateEntityFromEntity(E_EXPLOSION, self, otherEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_EXPLOSION, self, otherEntity);
                     otherEntity->params = 0;
                 }
                 PlaySfxPositional(SFX_SMALL_FLAME_IGNITE);

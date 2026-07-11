@@ -216,7 +216,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
     switch (self->step) {
     case 0:
         entity = &g_Entities[192];
-        CreateEntityFromCurrentEntity(E_ID(BG_LIGHTNING), entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(BG_LIGHTNING), entity);
 #ifdef VERSION_PSP
         if ((!g_CutsceneHasControl && g_CastleFlags[IVE_BEEN_ROBBED]) ||
 #else

@@ -169,8 +169,8 @@ void EntityBoneArkProjectile(Entity* self) {
             lightningBallEntity =
                 AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (lightningBallEntity != NULL) {
-                CreateEntityFromEntity(
-                    E_BONE_ARK_PROJECTILE, self, lightningBallEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_BONE_ARK_PROJECTILE, self, lightningBallEntity);
                 lightningBallEntity->params = 1;
                 lightningBallEntity->ext.boneArk.entity = self;
                 self->ext.boneArk.entity = lightningBallEntity;
@@ -717,7 +717,8 @@ void EntityBoneArkSkull(Entity* self) {
     case 3:
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_BONE_ARK_ATTACK_EFFECTS, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)
+            (E_BONE_ARK_ATTACK_EFFECTS, self, entity);
             entity->ext.boneArk.entity = self;
             self->ext.boneArk.entity = entity;
         } else {
@@ -742,7 +743,8 @@ void EntityBoneArkSkull(Entity* self) {
             g_api.PlaySfx(SFX_START_SLAM_B);
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_BONE_ARK_PROJECTILE, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_BONE_ARK_PROJECTILE, self, entity);
                 entity->facingLeft = self->facingLeft;
                 entity->ext.boneArk.unk94 = self->ext.boneArk.unk94;
                 if (self->facingLeft) {
@@ -790,7 +792,7 @@ void EntityBoneArkSkull(Entity* self) {
         case 0:
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
                 entity->params = 1;
             }
             self->step_s++;
@@ -852,7 +854,7 @@ void EntityBoneArkUpperNeck(Entity* self) {
         if (!self->ext.boneArk.unk8C.i.lo) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
                 entity->params = 0;
                 entity->drawFlags |= ENTITY_ROTATE;
                 entity->rotate = self->ext.boneArk.unk80 - ROT(90);
@@ -942,7 +944,8 @@ static void RenderDeathParts(Primitive* prim) {
         if (LOW(prim->next->r1) > ((prim->next->r3 >> 1) << 0xF) + 0x34000) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(E_EXPLOSION, newEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_EXPLOSION, newEntity);
 
                 if (prim->next->r3 >> 1) {
                     newEntity->params = EXPLOSION_SMALL_MULTIPLE;
@@ -1002,14 +1005,14 @@ void EntityBoneArk(Entity* self) {
 
         // Spawn the two skeletons which hold the ark
         entity = self - 1;
-        CreateEntityFromEntity(E_BONE_ARK_SKELETON, self, entity);
+        OVL_EXPORT(CreateEntityFromEntity)(E_BONE_ARK_SKELETON, self, entity);
         entity->posX.i.hi -= 0x18;
         entity->params = 1;
         entity->ext.boneArk.skeletonPosX = entity->posX.i.hi;
         entity->ext.boneArk.skeletonPosY = entity->posY.i.hi - 0x14;
 
         entity = self - 2;
-        CreateEntityFromEntity(E_BONE_ARK_SKELETON, self, entity);
+        OVL_EXPORT(CreateEntityFromEntity)(E_BONE_ARK_SKELETON, self, entity);
         entity->posX.i.hi += 0x16;
         entity->params = 2;
         entity->ext.boneArk.skeletonPosX = entity->posX.i.hi;
@@ -1018,20 +1021,22 @@ void EntityBoneArk(Entity* self) {
         // Spawn 4 lower neck pieces that dangle below the ark
         for (i = 1; i < 5; i++) {
             entity = &self[i];
-            CreateEntityFromEntity(E_BONE_ARK_LOWER_NECK, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)
+            (E_BONE_ARK_LOWER_NECK, self, entity);
             entity->params = i;
         }
 
         // Spawn 4 upper neck pieces that support the skull
         for (i = 5; i < 9; i++) {
             entity = &self[i];
-            CreateEntityFromEntity(E_BONE_ARK_UPPER_NECK, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)
+            (E_BONE_ARK_UPPER_NECK, self, entity);
             entity->params = i;
         }
 
         // Spawn the skull
         entity = self + 9;
-        CreateEntityFromEntity(E_BONE_ARK_SKULL, self, entity);
+        OVL_EXPORT(CreateEntityFromEntity)(E_BONE_ARK_SKULL, self, entity);
         entity->params = 9;
 
         self->ext.boneArk.unk88.i.lo = 0x400;
@@ -1145,7 +1150,7 @@ void EntityBoneArk(Entity* self) {
             PlaySfxPositional(SFX_FM_THUNDER_EXPLODE);
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
                 entity->params = 1;
             }
 
@@ -1435,7 +1440,8 @@ void EntityBoneArkSkeleton(Entity* self) {
             self->animCurFrame = 0;
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_EXPLOSION, self, newEntity);
                 newEntity->posY.i.hi += 0xA;
                 newEntity->params = 2;
             }
