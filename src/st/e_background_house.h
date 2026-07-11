@@ -246,7 +246,8 @@ void Entity3DHouseSpawner(Entity* self) {
     if (!self->step) {
         ptr = D_us_80180CF4;
         while (*ptr != -1) {
-            tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            tempEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (tempEntity == NULL) {
                 break;
             }
@@ -280,7 +281,7 @@ void Entity3DBackgroundHouse(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 16);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;

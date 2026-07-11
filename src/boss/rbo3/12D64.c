@@ -14,7 +14,7 @@ void func_us_80192D64(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_801804BC);
+        OVL_EXPORT(InitializeEntity)(D_us_801804BC);
         self->zPriority = 0x5C;
         if (self->params & 2) {
             self->animCurFrame = 0xE;
@@ -137,7 +137,7 @@ void func_us_80193050(Entity* self) {
         return;
     }
 
-    InitializeEntity(OVL_EXPORT(EInitInteractable));
+    OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
     primIndex = g_api.AllocPrimitives(PRIM_GT4, 5);
 
     if (primIndex == -1) {

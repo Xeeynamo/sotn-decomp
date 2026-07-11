@@ -123,7 +123,7 @@ void EntityConfessionalGhost(Entity* self) {
     ghost = &confessional_ghosts[self->params & CONFESSIONAL_GHOST_PARISHIONER];
     switch (self->step) {
     case CONFESSIONAL_INIT:
-        InitializeEntity(g_EInitConfessionalGhost);
+        OVL_EXPORT(InitializeEntity)(g_EInitConfessionalGhost);
         // Default palette is the good ghost
         if (self->params & CONFESSIONAL_GHOST_BAD) {
             self->palette = PAL_CONFESSIONAL_GHOST_BAD;
@@ -182,7 +182,7 @@ void EntityConfessionalGhost(Entity* self) {
         break;
 #endif
     case CONFESSIONAL_CHECK_SEATED: // This step is set by EntityChair
-        if (UnkCollisionFunc3(sensors_seated) & 1) {
+        if (OVL_EXPORT(UnkCollisionFunc3)(sensors_seated) & 1) {
             self->step++;
         }
         break;
@@ -192,15 +192,15 @@ void EntityConfessionalGhost(Entity* self) {
             self->opacity = 192;
         }
         animPtr = ghost->animations->anim_move;
-        AnimateEntity(animPtr, self);
-        UnkCollisionFunc2(sensors_ghost);
+        OVL_EXPORT(AnimateEntity)(animPtr, self);
+        OVL_EXPORT(UnkCollisionFunc2)(sensors_ghost);
         self->posX.val += ghost->xVal;
         if (self->posX.i.hi == ghost->xHi) {
             self->posX.i.hi = ghost->xHi;
             if (self->params & CONFESSIONAL_GHOST_BAD) {
-                SetStep(CONFESSIONAL_GHOST_BAD_SIT);
+                OVL_EXPORT(SetStep)(CONFESSIONAL_GHOST_BAD_SIT);
             } else {
-                SetStep(CONFESSIONAL_GHOST_GOOD_SIT);
+                OVL_EXPORT(SetStep)(CONFESSIONAL_GHOST_GOOD_SIT);
 #ifdef VERSION_PSP
                 if (!(self->params & CONFESSIONAL_GHOST_PARISHIONER)) {
                     g_api.PlaySfx(UNK_4E7);
@@ -210,12 +210,12 @@ void EntityConfessionalGhost(Entity* self) {
         }
         if ((PLAYER.step != Player_Stand) ||
             (PLAYER.step_s != Player_Stand_ChairSit)) {
-            SetStep(CONFESSIONAL_GHOST_BREAK);
+            OVL_EXPORT(SetStep)(CONFESSIONAL_GHOST_BREAK);
         }
         break;
     case CONFESSIONAL_GHOST_GOOD_SIT:
         animPtr = ghost->animations->anim_sit_good;
-        AnimateEntity(animPtr, self);
+        OVL_EXPORT(AnimateEntity)(animPtr, self);
         if (!(self->params & CONFESSIONAL_GHOST_PARISHIONER)) {
             switch (self->step_s) {
             case CONFESSIONAL_GHOST_GOOD_INIT:
@@ -232,7 +232,7 @@ void EntityConfessionalGhost(Entity* self) {
             case CONFESSIONAL_GHOST_GOOD_PRAY:
                 FntPrint("timer %x\n", self->ext.confessionalGhost.timer);
                 if (!--self->ext.confessionalGhost.timer) {
-                    SetStep(CONFESSIONAL_GHOST_GOOD_DEPART);
+                    OVL_EXPORT(SetStep)(CONFESSIONAL_GHOST_GOOD_DEPART);
                 }
                 break;
             }
@@ -244,7 +244,7 @@ void EntityConfessionalGhost(Entity* self) {
                     g_api.PlaySfx(SET_UNK_90);
                 }
 #endif
-                SetStep(CONFESSIONAL_GHOST_GOOD_DEPART);
+                OVL_EXPORT(SetStep)(CONFESSIONAL_GHOST_GOOD_DEPART);
             }
         } else if ((PLAYER.step != Player_Stand) ||
                    (PLAYER.step_s != Player_Stand_ChairSit)) {
@@ -253,12 +253,12 @@ void EntityConfessionalGhost(Entity* self) {
                 g_api.PlaySfx(SET_UNK_90);
             }
 #endif
-            SetStep(CONFESSIONAL_GHOST_GOOD_DEPART);
+            OVL_EXPORT(SetStep)(CONFESSIONAL_GHOST_GOOD_DEPART);
         }
         break;
     case CONFESSIONAL_GHOST_GOOD_DEPART:
         animPtr = ghost->animations->anim_depart;
-        AnimateEntity(animPtr, self);
+        OVL_EXPORT(AnimateEntity)(animPtr, self);
 #ifdef VERSION_PSP
         if ((self->ext.confessionalGhost.timer) && (g_api.func_80131F68())) {
             g_api.PlaySfx(SET_UNK_90);
@@ -268,19 +268,20 @@ void EntityConfessionalGhost(Entity* self) {
             if (!(self->params & CONFESSIONAL_GHOST_PARISHIONER) &&
                 (!self->ext.confessionalGhost.timer) &&
                 !(OVL_EXPORT(Random)() & 3)) {
-                entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                entity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
                     OVL_EXPORT(CreateEntityFromEntity)
                     (E_EQUIP_ITEM_DROP, self, entity);
                     entity->params = ITEM_GRAPE_JUICE;
                 }
             }
-            SetStep(128); // No case defined, resulting in nop
+            OVL_EXPORT(SetStep)(128); // No case defined, resulting in nop
         }
         break;
     case CONFESSIONAL_GHOST_BAD_SIT:
         animPtr = ghost->animations->anim_sit_bad;
-        if (!AnimateEntity(animPtr, self)) {
+        if (!OVL_EXPORT(AnimateEntity)(animPtr, self)) {
             // Curtain closing sound
             g_api.PlaySfx(SFX_CONFESS_GHOST_CURTAIN_PULL);
             self->step++;
@@ -298,9 +299,9 @@ void EntityConfessionalGhost(Entity* self) {
     case CONFESSIONAL_GHOST_PREPARE_BLADES:
         if (!--self->ext.confessionalGhost.timer) {
             if (self->params & CONFESSIONAL_GHOST_PARISHIONER) {
-                SetStep(CONFESSIONAL_GHOST_BLADES_PARISHIONER);
+                OVL_EXPORT(SetStep)(CONFESSIONAL_GHOST_BLADES_PARISHIONER);
             } else {
-                SetStep(CONFESSIONAL_GHOST_BLADES_PRIEST);
+                OVL_EXPORT(SetStep)(CONFESSIONAL_GHOST_BLADES_PRIEST);
             }
         }
         if (self->ext.confessionalGhost.timer & 2) {
@@ -321,7 +322,8 @@ void EntityConfessionalGhost(Entity* self) {
             // fallthrough
         case CONFESSIONAL_GHOST_BLADES_ATTACK:
             if (!--self->ext.confessionalGhost.timer) {
-                entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                entity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
                     OVL_EXPORT(CreateEntityFromCurrentEntity)
                     (E_ID(CONFESSIONAL_BLADES), entity);
@@ -337,7 +339,7 @@ void EntityConfessionalGhost(Entity* self) {
             break;
         case CONFESSIONAL_GHOST_BLADES_RETRACT:
             if (!--self->ext.confessionalGhost.timer) {
-                SetStep(CONFESSIONAL_GHOST_BAD_DEPART);
+                OVL_EXPORT(SetStep)(CONFESSIONAL_GHOST_BAD_DEPART);
             }
             break;
         }
@@ -350,7 +352,8 @@ void EntityConfessionalGhost(Entity* self) {
             // fallthrough
         case CONFESSIONAL_GHOST_BLADES_ATTACK:
             if (!--self->ext.confessionalGhost.timer) {
-                entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                entity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
                     OVL_EXPORT(CreateEntityFromCurrentEntity)
                     (E_ID(CONFESSIONAL_BLADES), entity);
@@ -362,7 +365,7 @@ void EntityConfessionalGhost(Entity* self) {
             break;
         case CONFESSIONAL_GHOST_BLADES_RETRACT:
             if (!--self->ext.confessionalGhost.timer) {
-                SetStep(CONFESSIONAL_GHOST_BAD_DEPART);
+                OVL_EXPORT(SetStep)(CONFESSIONAL_GHOST_BAD_DEPART);
             }
             break;
         }
@@ -376,14 +379,14 @@ void EntityConfessionalGhost(Entity* self) {
         prim->x3 = prim->x1 -= ghost->x3;
         if (prim->x1 == ghost->x1) {
             prim->x1 = prim->x3 = ghost->x1;
-            SetStep(CONFESSIONAL_GHOST_COMPLETE);
+            OVL_EXPORT(SetStep)(CONFESSIONAL_GHOST_COMPLETE);
         }
         break;
     case CONFESSIONAL_GHOST_BREAK:
         self->opacity -= 4;
         if ((self->opacity) > 192) {
             self->animCurFrame = 0;
-            SetStep(CONFESSIONAL_GHOST_COMPLETE);
+            OVL_EXPORT(SetStep)(CONFESSIONAL_GHOST_COMPLETE);
         }
         break;
     case CONFESSIONAL_GHOST_COMPLETE:
@@ -399,7 +402,7 @@ void EntityConfessionalBlades(Entity* self) {
     s32 count;
 
     if (self->flags & FLAG_DEAD) {
-        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        entity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
             OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
             entity->params = EXPLOSION_FIREBALL;
@@ -409,7 +412,7 @@ void EntityConfessionalBlades(Entity* self) {
     }
     switch (self->step) {
     case CONFESSIONAL_BLADES_INIT:
-        InitializeEntity(g_EInitConfessionalBlades);
+        OVL_EXPORT(InitializeEntity)(g_EInitConfessionalBlades);
         self->zPriority = 158;
         params = self->params;
         self->animCurFrame += params;
@@ -422,7 +425,8 @@ void EntityConfessionalBlades(Entity* self) {
         }
         self->ext.confessionalGhost.timer = 128;
         for (count = 0; count < 4; count++) {
-            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            entity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)
                 (E_ID(CONFESSIONAL_BLADE_DEBRIS), self, entity);
@@ -439,7 +443,7 @@ void EntityConfessionalBlades(Entity* self) {
         if (self->posX.i.hi < xyx_vals[params][2]) {
             self->posX.i.hi = xyx_vals[params][2];
             self->ext.confessionalGhost.timer = 96;
-            SetStep(CONFESSIONAL_BLADES_PRIEST_ATTACK);
+            OVL_EXPORT(SetStep)(CONFESSIONAL_BLADES_PRIEST_ATTACK);
         }
         break;
     case CONFESSIONAL_BLADES_PRIEST_ATTACK:
@@ -459,7 +463,7 @@ void EntityConfessionalBlades(Entity* self) {
         if (self->posX.i.hi > xyx_vals[params][2]) {
             self->posX.i.hi = xyx_vals[params][2];
             self->ext.confessionalGhost.timer = 96;
-            SetStep(CONFESSIONAL_BLADES_PARISHIONER_ATTACK);
+            OVL_EXPORT(SetStep)(CONFESSIONAL_BLADES_PARISHIONER_ATTACK);
         }
         break;
     case CONFESSIONAL_BLADES_PARISHIONER_ATTACK:
@@ -480,7 +484,7 @@ void EntityConfessionalBlades(Entity* self) {
 
 void EntityConfessionalBladeDebris(Entity* self) {
     if (!self->step) {
-        InitializeEntity(g_EInitConfessionalBlades);
+        OVL_EXPORT(InitializeEntity)(g_EInitConfessionalBlades);
         self->animCurFrame = 42;
         self->drawFlags |= ENTITY_ROTATE;
         self->zPriority = 158;
@@ -493,7 +497,7 @@ void EntityConfessionalBladeDebris(Entity* self) {
         self->ext.confessionalGhost.timer =
             ((OVL_EXPORT(Random)() & 0x3F) + 16);
     }
-    MoveEntity();
+    OVL_EXPORT(MoveEntity)();
     self->velocityY += FIX(0.125);
     if (self->params) {
         self->rotate += ROT(2.8125);

@@ -34,12 +34,12 @@ void EntityLargeSlime(Entity* self) {
     if (self->flags & FLAG_DEAD && self->step < 7) {
         self->hitboxState = 0;
         PlaySfxPositional(SFX_NOISE_SWEEP_DOWN_A);
-        SetStep(7);
+        OVL_EXPORT(SetStep)(7);
     }
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitLargeSlime);
+        OVL_EXPORT(InitializeEntity)(g_EInitLargeSlime);
         self->ext.slime.deathTimer = 0x20;
         self->ext.slime.unk8C = 0;
         self->nextPart = self + 1;
@@ -119,7 +119,7 @@ void EntityLargeSlime(Entity* self) {
     case 3:
         switch (self->step_s) {
         case 0:
-            if (UnkCollisionFunc3(large_slime_sensors) & 1) {
+            if (OVL_EXPORT(UnkCollisionFunc3)(large_slime_sensors) & 1) {
                 if ((self + 1)->step == 3) {
                     self->ext.slime.unk9C = 0;
                     self->velocityX = 0;
@@ -142,7 +142,7 @@ void EntityLargeSlime(Entity* self) {
         if (!(--self->ext.slime.unk88)) {
             self->ext.slime.unk8C = 0;
             (self + 1)->ext.slime.unk8C = 0;
-            SetStep(5);
+            OVL_EXPORT(SetStep)(5);
         } else {
             if (!(self->ext.slime.unk88 % 4)) {
                 if (self->step_s) {
@@ -220,7 +220,7 @@ void EntityLargeSlime(Entity* self) {
                 }
 
                 if (!self->ext.slime.unk89) {
-                    SetStep(6);
+                    OVL_EXPORT(SetStep)(6);
                 }
             }
             break;
@@ -249,7 +249,7 @@ void EntityLargeSlime(Entity* self) {
                     self->velocityX = FIX(-0.25);
                 }
                 self->velocityY = FIX(-4.0);
-                SetStep(3);
+                OVL_EXPORT(SetStep)(3);
             }
             break;
         }
@@ -265,7 +265,7 @@ void EntityLargeSlime(Entity* self) {
             self->step_s++;
             break;
         case 1:
-            if (UnkCollisionFunc3(large_slime_sensors) & 1) {
+            if (OVL_EXPORT(UnkCollisionFunc3)(large_slime_sensors) & 1) {
                 self->velocityX = FIX(-0.0625);
                 self->step_s++;
             }
@@ -358,7 +358,7 @@ void func_us_801D3468(s32 primCount) {
         PGREY(prim, 3) = prim->r0;
         if (g_CurrentEntity->ext.slime.largeSlimeDying &&
             !(OVL_EXPORT(Random)() & 0x3F)) {
-            ent = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            ent = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (ent != NULL) {
                 OVL_EXPORT(CreateEntityFromCurrentEntity)
                 (E_INTENSE_EXPLOSION, ent);
@@ -383,7 +383,8 @@ void func_us_801D3468(s32 primCount) {
             PGREY(prim, 3) = prim->r0;
             if (g_CurrentEntity->ext.slime.largeSlimeDying &&
                 !(OVL_EXPORT(Random)() & 0x3F)) {
-                ent = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                ent =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
                 if (ent != NULL) {
                     OVL_EXPORT(CreateEntityFromCurrentEntity)
                     (E_INTENSE_EXPLOSION, ent);
@@ -577,18 +578,18 @@ void func_us_801D3D08(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitLargeSlime);
+        OVL_EXPORT(InitializeEntity)(g_EInitLargeSlime);
         self->hitPoints = 0x7FFF;
         self->parent = self - 1;
         self->nextPart = self - 1;
         // fallthrough
     case 1:
     case 2:
-        if (UnkCollisionFunc3(large_slime_sensors) & 1) {
+        if (OVL_EXPORT(UnkCollisionFunc3)(large_slime_sensors) & 1) {
             self->velocityX = 0;
             self->velocityY = 0;
             self->ext.slime.unk8B = 0;
-            SetStep(3);
+            OVL_EXPORT(SetStep)(3);
         } else {
             self->velocityY -= FIX(0.125);
         }
@@ -618,7 +619,7 @@ void func_us_801D3D08(Entity* self) {
             self->step_s++;
             break;
         case 1:
-            if (UnkCollisionFunc3(large_slime_sensors) & 1) {
+            if (OVL_EXPORT(UnkCollisionFunc3)(large_slime_sensors) & 1) {
                 self->velocityX = FIX(0.0625);
                 self->step_s++;
             }
@@ -669,12 +670,12 @@ void EntitySlime(Entity* self) {
     if (self->flags & FLAG_DEAD && self->step < 6) {
         PlaySfxPositional(SFX_NOISE_SWEEP_DOWN_B);
         self->hitboxState = 0;
-        SetStep(6);
+        OVL_EXPORT(SetStep)(6);
     }
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitSlime);
+        OVL_EXPORT(InitializeEntity)(g_EInitSlime);
         self->ext.slime.deathTimer = 0x10;
         self->ext.slime.unk8C = 0;
         // fallthrough
@@ -734,7 +735,7 @@ void EntitySlime(Entity* self) {
         self->ext.slime.facingLeft = self->params & 1;
         self->step++;
     case 3:
-        if (UnkCollisionFunc3(slime_sensors) & 1) {
+        if (OVL_EXPORT(UnkCollisionFunc3)(slime_sensors) & 1) {
             if ((self + 1)->step == 3) {
                 self->velocityX = 0;
                 self->velocityY = 0;
@@ -752,7 +753,7 @@ void EntitySlime(Entity* self) {
         if (!--self->ext.slime.unk88) {
             self->ext.slime.unk8C = 0;
             (self + 1)->ext.slime.unk8C = 0;
-            SetStep(5);
+            OVL_EXPORT(SetStep)(5);
         } else if (!(self->ext.slime.unk88 % 4)) {
             if (self->step_s) {
                 self->ext.slime.unk8C = -4;
@@ -890,16 +891,16 @@ void func_us_801D4744(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitSlime);
+        OVL_EXPORT(InitializeEntity)(g_EInitSlime);
         self->hitboxState = 0;
         // fallthrough
     case 1:
     case 2:
-        if (UnkCollisionFunc3(slime_sensors) & 1) {
+        if (OVL_EXPORT(UnkCollisionFunc3)(slime_sensors) & 1) {
             self->velocityX = 0;
             self->velocityY = 0;
             self->ext.slime.unk8B = 0;
-            SetStep(3);
+            OVL_EXPORT(SetStep)(3);
         } else {
             self->velocityY -= FIX(0.125);
         }

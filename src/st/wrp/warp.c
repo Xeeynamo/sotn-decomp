@@ -70,7 +70,7 @@ void EntityWarpRoom(Entity* self) {
     switch (self->step) {
     case 0:
         // Initialize all the objects in the warp room
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 24);
         if (primIndex == -1) {
             self->step = 0;
@@ -127,7 +127,8 @@ void EntityWarpRoom(Entity* self) {
         prim->drawMode = DRAW_HIDE;
         WarpBackgroundAmplitiude = 0x100;
         for (i = 0; i < 32; i++) {
-            entity = AllocEntity(&g_Entities[0xA0], &g_Entities[0x100]);
+            entity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[0xA0], &g_Entities[0x100]);
             if (entity != NULL) {
                 OVL_EXPORT(CreateEntityFromCurrentEntity)
                 (E_ID(SMALL_ROCKS), entity);
@@ -325,7 +326,7 @@ void EntityWarpSmallRocks(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(g_EInitSmallRocks);
+        OVL_EXPORT(InitializeEntity)(g_EInitSmallRocks);
         entity->drawFlags = ENTITY_ROTATE;
         entity->rotate = OVL_EXPORT(Random)() * 0x10;
         entity->animCurFrame = (OVL_EXPORT(Random)() % 5) + 1;
@@ -346,7 +347,7 @@ void EntityWarpSmallRocks(Entity* entity) {
         if (entity->ext.warpRoom.unk88) {
             entity->ext.warpRoom.unk88--;
         } else {
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             entity->velocityY += FIX(0.25);
             if (entity->velocityY > FIX(-1.0f)) {
                 entity->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
@@ -362,7 +363,7 @@ void EntityWarpSmallRocks(Entity* entity) {
         angle = ratan2(y, x);
         entity->velocityX = rcos(angle) << 5;
         entity->velocityY = rsin(angle) << 5;
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         rotation = x * x + y * y;
         rotation = SquareRoot0(rotation);
         rotation *= 2;
@@ -388,7 +389,7 @@ void EntityWarpSmallRocks(Entity* entity) {
         if (--entity->ext.warpRoom.unk88 == 0) {
             PlaySfxPositional(SFX_WALL_DEBRIS_B);
         }
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         entity->velocityY += FIX(0.1875);
         y = entity->posY.i.hi + g_Tilemap.scrollY.i.hi + 5;
         if (y > 208) {

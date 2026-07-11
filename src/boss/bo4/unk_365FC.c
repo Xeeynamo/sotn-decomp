@@ -48,7 +48,7 @@ void EntityUnkId1B(Entity* self) {
         }
 
         g_Player.demo_timer = 0x18;
-        InitializeEntity(EInitUnk17);
+        OVL_EXPORT(InitializeEntity)(EInitUnk17);
         self->animCurFrame = 0;
         self->ext.dopBGLight.unk84 = 0;
 
@@ -108,7 +108,7 @@ void EntityUnkId1B(Entity* self) {
         }
 #endif
         // undeclared AnimateEntity
-        if (!AnimateEntity(D_us_80180668, self)) {
+        if (!OVL_EXPORT(AnimateEntity)(D_us_80180668, self)) {
             self->velocityY = FIX(4.0);
             self->step++;
         }
@@ -124,7 +124,7 @@ void EntityUnkId1B(Entity* self) {
 #ifdef VERSION_PSP
         }
 #endif
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityY += FIX(0.125);
 
         blockIndex = self->params & 0xFF;
@@ -173,7 +173,7 @@ void EntityUnkId1B(Entity* self) {
             self->velocityX = FIX(-0.5);
         }
 
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
 
         offsetX = g_Tilemap.scrollX.i.hi + self->posX.i.hi;
         if (offsetX < -32 || offsetX > 0x220) {

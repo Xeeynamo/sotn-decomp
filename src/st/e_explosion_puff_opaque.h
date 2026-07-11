@@ -29,7 +29,7 @@ void CreateExplosionPuff() {
     s32 i;
 
     for (i = 0; i < 6; i++) {
-        puff = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        puff = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (puff != NULL) {
             OVL_EXPORT(CreateEntityFromEntity)
             (E_ID(EXPLODE_PUFF_OPAQUE), g_CurrentEntity, puff);
@@ -51,7 +51,7 @@ void EntityExplosionPuffOpaque(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitParticle));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitParticle));
         params = self->params & 0xF;
         obj = &puff_config[params];
         self->palette = obj->palette + PAL_PUFF_OPAQUE_OFFSET;
@@ -79,20 +79,20 @@ void EntityExplosionPuffOpaque(Entity* self) {
             self->step_s++;
         }
 #endif
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
 #if defined(STAGE_IS_ARE) || defined(STAGE_IS_NZ1)
 #elif defined(STAGE_IS_NZ0)
         self->velocityY = FIX(-1);
 #else
         self->velocityY = FIX(1);
 #endif
-        if (AnimateEntity(self->ext.opaquePuff.anim, self) == 0) {
+        if (OVL_EXPORT(AnimateEntity)(self->ext.opaquePuff.anim, self) == 0) {
             DestroyEntity(self);
         }
         break;
 
     case 2:
-        if (AnimateEntity(self->ext.opaquePuff.anim, self) == 0) {
+        if (OVL_EXPORT(AnimateEntity)(self->ext.opaquePuff.anim, self) == 0) {
             DestroyEntity(self);
             break;
         }
@@ -145,8 +145,8 @@ void EntityExplosionPuffOpaque(Entity* self) {
             self->velocityX -= self->velocityX / 4;
             self->velocityY -= self->velocityY / 4;
         }
-        MoveEntity();
-        if (AnimateEntity(self->ext.opaquePuff.anim, self) == 0) {
+        OVL_EXPORT(MoveEntity)();
+        if (OVL_EXPORT(AnimateEntity)(self->ext.opaquePuff.anim, self) == 0) {
             DestroyEntity(self);
         }
         break;
@@ -168,7 +168,7 @@ void EntityExplosionPuffOpaque(Entity* self) {
             self->ext.opaquePuff.unk8C = OVL_EXPORT(Random)() * 0x10 + 0x4000;
             self->step_s++;
         }
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->opacity -= 1;
         rotate = self->rotate;
         if (self->facingLeft) {
@@ -185,9 +185,9 @@ void EntityExplosionPuffOpaque(Entity* self) {
             self->step_s++;
             self->velocityY = FIX(-0.75);
         }
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
 #endif
-        if (AnimateEntity(self->ext.opaquePuff.anim, self) == 0) {
+        if (OVL_EXPORT(AnimateEntity)(self->ext.opaquePuff.anim, self) == 0) {
             DestroyEntity(self);
         }
         break;

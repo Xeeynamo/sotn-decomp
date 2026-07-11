@@ -24,7 +24,7 @@ void EntityLifeUpSpawn(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         self->animSet = 2;
         self->animCurFrame = 0;
         // We allocate 385 primitives for this entity!!!
@@ -191,7 +191,7 @@ void EntityLifeUpSpawn(Entity* self) {
         break;
 
     case 4:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityY += FIX(1.0 / 8);
         xVar = self->posX.i.hi;
         yVar = self->posY.i.hi + 4;

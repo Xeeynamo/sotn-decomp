@@ -20,7 +20,7 @@ void EntityEndConfessionalChime(Entity* self) {
     }
     switch (self->step) {
     case END_CHIME_INIT:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         g_api.PlaySfx(SET_STOP_SEQ);
         stopMusicFlag = true;
         self->step = 2;

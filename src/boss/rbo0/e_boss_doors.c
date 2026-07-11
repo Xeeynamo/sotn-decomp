@@ -11,7 +11,7 @@ void EntityBossDoors(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitEnvironment);
+        OVL_EXPORT(InitializeEntity)(g_EInitEnvironment);
         if (self->params & 0x100) {
             self->animCurFrame = 2;
             self->zPriority = 0x6A;

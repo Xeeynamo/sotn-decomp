@@ -19,7 +19,7 @@ void EntityBat(Entity* self) {
     bool changeDir;
 
     if (self->flags & FLAG_DEAD) {
-        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        newEntity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
             OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, newEntity);
             newEntity->params = 1;
@@ -31,21 +31,22 @@ void EntityBat(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitBat);
+        OVL_EXPORT(InitializeEntity)(g_EInitBat);
         self->animCurFrame = 31;
         break;
 
     case 1:
-        xDistance = GetDistanceToPlayerX();
-        yDistance = GetDistanceToPlayerY();
-        if (xDistance < 0x60 && yDistance < 0x70 && !(GetSideToPlayer() & 2)) {
+        xDistance = OVL_EXPORT(GetDistanceToPlayerX)();
+        yDistance = OVL_EXPORT(GetDistanceToPlayerY)();
+        if (xDistance < 0x60 && yDistance < 0x70 &&
+            !(OVL_EXPORT(GetSideToPlayer)() & 2)) {
             self->step++;
         }
         break;
 
     case 2:
-        if (AnimateEntity(bat_anim_drop, self) == 0) {
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        if (OVL_EXPORT(AnimateEntity)(bat_anim_drop, self) == 0) {
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
             self->velocityY = FIX(0.875);
             if (self->facingLeft) {
                 self->velocityX = FIX(0.25);
@@ -59,8 +60,8 @@ void EntityBat(Entity* self) {
         break;
 
     case 3:
-        AnimateEntity(bat_anim_fly, self);
-        MoveEntity();
+        OVL_EXPORT(AnimateEntity)(bat_anim_fly, self);
+        OVL_EXPORT(MoveEntity)();
         changeDir = false;
         posX = self->posX.i.hi;
         posY = self->posY.i.hi;
@@ -70,7 +71,7 @@ void EntityBat(Entity* self) {
             self->velocityY = 0;
             changeDir = true;
         }
-        if (GetDistanceToPlayerY() < 0x20) {
+        if (OVL_EXPORT(GetDistanceToPlayerY)() < 0x20) {
             changeDir = true;
         }
 
@@ -86,8 +87,8 @@ void EntityBat(Entity* self) {
         break;
 
     case 4:
-        AnimateEntity(bat_anim_fly, self);
-        MoveEntity();
+        OVL_EXPORT(AnimateEntity)(bat_anim_fly, self);
+        OVL_EXPORT(MoveEntity)();
         if (self->velocityY < FIX(-1) || self->velocityY > FIX(1)) {
             self->ext.batEnemy.accelY = -self->ext.batEnemy.accelY;
         }

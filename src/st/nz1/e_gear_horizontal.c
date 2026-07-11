@@ -11,13 +11,13 @@ void EntityGearHorizontal(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitEnvironment);
+        OVL_EXPORT(InitializeEntity)(g_EInitEnvironment);
         self->zPriority = 0x6C;
         // fallthrough
 
     case 1:
-        AnimateEntity(D_us_80180FB8, self);
-        collision = GetPlayerCollisionWith(self, 0x20, 8, 4);
+        OVL_EXPORT(AnimateEntity)(D_us_80180FB8, self);
+        collision = OVL_EXPORT(GetPlayerCollisionWith)(self, 0x20, 8, 4);
         if (collision != 0) {
             player = &PLAYER;
             if (!self->params) {

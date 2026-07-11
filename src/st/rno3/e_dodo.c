@@ -29,12 +29,12 @@ void EntityDodoBird(Entity* self) {
     s32 i;
 
     if (self->flags & FLAG_DEAD && self->step < DODO_DEAD) {
-        SetStep(DODO_DEAD);
+        OVL_EXPORT(SetStep)(DODO_DEAD);
     }
     switch (self->step) {
     case DODO_INIT:
-        InitializeEntity(g_EInitDodoBird);
-        self->facingLeft = GetSideToPlayer() & 1;
+        OVL_EXPORT(InitializeEntity)(g_EInitDodoBird);
+        self->facingLeft = OVL_EXPORT(GetSideToPlayer)() & 1;
         if (self->params & FLAG_FEATHER) {
             self->drawFlags |= ENTITY_ROTATE;
             self->animCurFrame = 9;
@@ -42,16 +42,16 @@ void EntityDodoBird(Entity* self) {
         }
         break;
     case DODO_WAIT:
-        if (UnkCollisionFunc3(sensors2) & 1) {
+        if (OVL_EXPORT(UnkCollisionFunc3)(sensors2) & 1) {
             self->step++;
         }
         break;
     case DODO_WALK:
-        AnimateEntity(dodo_walk, self);
+        OVL_EXPORT(AnimateEntity)(dodo_walk, self);
         if (!(g_Timer & 7)) {
             PlaySfxPositional(SFX_QUIET_STEPS);
         }
-        collRes = UnkCollisionFunc2(sensors1);
+        collRes = OVL_EXPORT(UnkCollisionFunc2)(sensors1);
         if (collRes == 0) {
             self->velocityY += FIX(0.25);
         } else {
@@ -67,25 +67,25 @@ void EntityDodoBird(Entity* self) {
         }
         if (collRes == 0x80) {
             self->velocityY = FIX(-4.0);
-            SetStep(DODO_WAIT);
+            OVL_EXPORT(SetStep)(DODO_WAIT);
         }
-        if (GetDistanceToPlayerX() < 64) {
-            if ((GetSideToPlayer() & 1) == self->facingLeft) {
+        if (OVL_EXPORT(GetDistanceToPlayerX)() < 64) {
+            if ((OVL_EXPORT(GetSideToPlayer)() & 1) == self->facingLeft) {
                 self->ext.dodo.doubleSpeed |= 1;
-                SetStep(DODO_FREAKOUT);
+                OVL_EXPORT(SetStep)(DODO_FREAKOUT);
                 self->ext.dodo.timer = 0x20;
             }
         }
         break;
     case DODO_FREAKOUT:
-        AnimateEntity(dodo_freakout, self);
+        OVL_EXPORT(AnimateEntity)(dodo_freakout, self);
         if (!--self->ext.dodo.timer) {
-            self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
-            SetStep(DODO_WALK);
+            self->facingLeft = ((OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1);
+            OVL_EXPORT(SetStep)(DODO_WALK);
         }
         break;
     case DODO_FEATHER:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         switch (self->step_s) {
         case 0:
             self->velocityY += FIX(0.125);
@@ -116,14 +116,15 @@ void EntityDodoBird(Entity* self) {
             self->drawFlags |= ENTITY_ROTATE;
             /* fallthrough */
         case 1:
-            AnimateEntity(dodo_freakout, self);
+            OVL_EXPORT(AnimateEntity)(dodo_freakout, self);
             self->rotate -= 0x80;
             // Every 4 frames, spawn 5 more feathers.
             // Timer starts at 16, so this will hit 4 times.
             // Total of 20 feathers.
             if (!(self->ext.dodo.timer & 3)) {
                 for (i = 0; i < 5; i++) {
-                    other = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                    other = OVL_EXPORT(AllocEntity)(
+                        &g_Entities[224], &g_Entities[256]);
                     if (other != NULL) {
                         OVL_EXPORT(CreateEntityFromEntity)
                         (E_DODO_BIRD, self, other);
@@ -146,7 +147,7 @@ void EntityDodoBird(Entity* self) {
             }
             break;
         case 2:
-            other = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            other = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (other != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, other);
                 other->params = 1;

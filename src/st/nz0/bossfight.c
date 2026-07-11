@@ -30,7 +30,7 @@ void EntityBossFightManager(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         g_BossFlag = 0;
         entity = self + 1;
         temp_s1 = (s16*)D_80181014;
@@ -101,7 +101,7 @@ void EntityBossFightManager(Entity* self) {
     case 5: // Fight is now over.
         xPos = 0x80;
         newEntY = 0x180 - g_Tilemap.scrollY.i.hi;
-        entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+        entity = OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
         if (entity == NULL) {
             return;
         }
@@ -132,7 +132,7 @@ void EntityBossFightManager(Entity* self) {
 void EntityBossRoomBlock(Entity* self) {
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitBossDoor);
+        OVL_EXPORT(InitializeEntity)(g_EInitBossDoor);
         self->animCurFrame = 8;
 
     case 1:
@@ -148,8 +148,8 @@ void EntityBossRoomBlock(Entity* self) {
         } else {
             self->velocityX = FIX(1);
         }
-        MoveEntity();
-        GetPlayerCollisionWith(self, 8, 8, 5);
+        OVL_EXPORT(MoveEntity)();
+        OVL_EXPORT(GetPlayerCollisionWith)(self, 8, 8, 5);
         if (!(g_Timer & 3)) {
             g_api.PlaySfx(SFX_STONE_MOVE_B);
         }
@@ -160,7 +160,7 @@ void EntityBossRoomBlock(Entity* self) {
         break;
 
     case 3:
-        GetPlayerCollisionWith(self, 8, 8, 5);
+        OVL_EXPORT(GetPlayerCollisionWith)(self, 8, 8, 5);
         if (g_BossFlag & BOSS_FLAG_DOORS_OPEN) {
             self->step++;
         }
@@ -173,7 +173,7 @@ void EntityBossRoomBlock(Entity* self) {
         } else {
             self->velocityX = FIX(-1);
         }
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         break;
     }
 }

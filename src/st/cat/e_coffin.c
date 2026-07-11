@@ -49,7 +49,7 @@ void EntityCoffin(Entity* self) {
 
     switch (self->step) {
     case INIT:
-        InitializeEntity(g_EInitCoffin);
+        OVL_EXPORT(InitializeEntity)(g_EInitCoffin);
         self->hitboxWidth = 8;
         self->hitboxHeight = 0x14;
         self->hitboxState = 2;
@@ -66,12 +66,12 @@ void EntityCoffin(Entity* self) {
         }
         break;
     case SPAWN_SUB_ENTITIES:
-        if (!AnimateEntity(anim_coffin_explode, self)) {
+        if (!OVL_EXPORT(AnimateEntity)(anim_coffin_explode, self)) {
             g_api.PlaySfx(SFX_FM_EXPLODE_B);
 
             // Spawn the broken coffin parts
             for (i = 0; i < 6; i++) {
-                newEntity = AllocEntity(
+                newEntity = OVL_EXPORT(AllocEntity)(
                     &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (newEntity != NULL) {
                     OVL_EXPORT(CreateEntityFromEntity)
@@ -79,20 +79,22 @@ void EntityCoffin(Entity* self) {
                     newEntity->step = BROKEN_COFFIN_PARTS;
                     newEntity->params = i;
                     newEntity->facingLeft = self->facingLeft;
-                    newEntity->ext.coffin.playerOnLeft = GetSideToPlayer() & 1;
+                    newEntity->ext.coffin.playerOnLeft =
+                        OVL_EXPORT(GetSideToPlayer)() & 1;
                     newEntity->flags |= FLAG_UNK_2000;
                 }
             }
 
-            newEntity =
-                AllocEntity(&g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
+            newEntity = OVL_EXPORT(AllocEntity)(
+                &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
             if (newEntity != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)
                 (E_EXPLOSION, self, newEntity);
                 newEntity->params = ((self->zPriority + 2) << 8) + 0x11;
             }
 
-            coffinSpawnEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            coffinSpawnEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
             if (coffinSpawnEntity != NULL) {
                 if (!self->params) {
                     OVL_EXPORT(CreateEntityFromCurrentEntity)
@@ -110,7 +112,7 @@ void EntityCoffin(Entity* self) {
         }
         break;
     case BROKEN_COFFIN_PARTS:
-        InitializeEntity(g_EInitCoffin);
+        OVL_EXPORT(InitializeEntity)(g_EInitCoffin);
         self->flags |= FLAG_UNK_2000;
         self->drawFlags |= ENTITY_ROTATE;
         self->hitboxState = 0;
@@ -137,7 +139,7 @@ void EntityCoffin(Entity* self) {
         break;
     case COFFIN_PARTS_BOUNCE:
         params = self->params;
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityY += coffin_parts_bounce_velocity[params];
         if (self->ext.coffin.playerOnLeft ^ self->facingLeft) {
             self->rotate -= coffin_parts_rotation[params];
@@ -159,7 +161,7 @@ void EntityCoffin(Entity* self) {
             // in a cloud of dust
             if (-self->velocityY <
                 coffin_parts_bounce_velocity[self->params] * 2) {
-                newEntity = AllocEntity(
+                newEntity = OVL_EXPORT(AllocEntity)(
                     &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (newEntity != NULL) {
                     OVL_EXPORT(CreateEntityFromEntity)

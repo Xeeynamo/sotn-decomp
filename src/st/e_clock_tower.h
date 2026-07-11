@@ -47,7 +47,7 @@ void EntityClouds(Entity* self) {
     SVECTOR* vector;
 
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitSpawner));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitSpawner));
         primIndex = g_api.func_800EDB58(PRIM_GT4, 0x70);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -264,7 +264,7 @@ void EntityClockTower3D(Entity* self) {
     ClockTowerData2* var_s3;
 
     if (self->step == 0) {
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
 #ifdef STAGE_IS_TOP
         self->posX.i.hi = 0x700 - g_Tilemap.scrollX.i.hi;
         self->posY.i.hi = 0x3C0 - g_Tilemap.scrollY.i.hi;

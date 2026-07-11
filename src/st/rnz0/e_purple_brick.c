@@ -13,7 +13,7 @@ void EntityPurpleBrickScrollingBackground(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         self->posX.i.hi = 0;
         self->posY.i.hi = 0;
         self->unk68 = 0x80;

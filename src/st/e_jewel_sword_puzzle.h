@@ -88,7 +88,7 @@ void EntityMermanRockLeftSide(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         self->hitboxState = 2;
         self->hitboxWidth = 16;
         self->hitboxHeight = 24;
@@ -129,7 +129,8 @@ void EntityMermanRockLeftSide(Entity* self) {
 
             g_api.PlaySfx(SFX_WALL_DEBRIS_B);
 
-            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            newEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)
                 (E_EXPLOSION, self, newEntity);
@@ -142,7 +143,8 @@ void EntityMermanRockLeftSide(Entity* self) {
             params = &newRockParams[self->ext.mermanRock.unk84 * 3];
 
             for (i = 0; i < 3; i++) {
-                newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                newEntity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
                     OVL_EXPORT(CreateEntityFromEntity)
                     (E_ID(FALLING_ROCK_2), self, newEntity);
@@ -165,7 +167,8 @@ void EntityMermanRockLeftSide(Entity* self) {
         }
 
         if (self->ext.mermanRock.unk84 > 1) {
-            newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            newEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
             if (newEntity != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)
                 (E_EQUIP_ITEM_DROP, self, newEntity);
@@ -197,7 +200,7 @@ void EntityMermanRockRightSide(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         self->hitboxState = 2;
         self->hitboxWidth = 16;
         self->hitboxHeight = 24;
@@ -236,7 +239,8 @@ void EntityMermanRockRightSide(Entity* self) {
 
             g_api.PlaySfx(SFX_WALL_DEBRIS_B);
 
-            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            newEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)
                 (E_EXPLOSION, self, newEntity);
@@ -249,7 +253,8 @@ void EntityMermanRockRightSide(Entity* self) {
             params = &newRockParams[self->ext.mermanRock.unk84 * 3];
 
             for (i = 0; i < 3; i++) {
-                newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                newEntity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
                     OVL_EXPORT(CreateEntityFromEntity)
                     (E_ID(FALLING_ROCK_2), self, newEntity);
@@ -294,7 +299,7 @@ void EntityJewelSwordDoor(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         if (g_CastleFlags[CF_OPEN]) {
             self->step = 2;
         }
@@ -341,14 +346,14 @@ void EntityFallingRock2(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(ROCK_EINIT);
+        OVL_EXPORT(InitializeEntity)(ROCK_EINIT);
         self->animCurFrame = animFrame + 31;
         self->drawFlags |= ENTITY_ROTATE;
         self->zPriority = 0x9F;
         break;
 
     case 1:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityY += FIX(0.25);
         self->rotate -= 0x20;
         collX = self->posX.i.hi;
@@ -358,7 +363,8 @@ void EntityFallingRock2(Entity* self) {
 
         if (collider.effects & EFFECT_SOLID) {
             if (self->velocityY > FIX(4.0)) {
-                newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                newEntity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != 0) {
                     OVL_EXPORT(CreateEntityFromEntity)
                     (E_EXPLOSION, self, newEntity);

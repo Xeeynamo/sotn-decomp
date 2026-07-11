@@ -5,12 +5,12 @@ extern EInit STAGE_EINIT_COMMON;
 void EntityLionLamp(Entity* self) {
     switch (self->step) {
     case 0:
-        InitializeEntity(STAGE_EINIT_COMMON);
+        OVL_EXPORT(InitializeEntity)(STAGE_EINIT_COMMON);
         self->zPriority = 0x58;
         // fallthrough
 
     case 1:
-        AnimateEntity(LionLampAnim, self);
+        OVL_EXPORT(AnimateEntity)(LionLampAnim, self);
         if (g_Timer & 1) {
             self->palette = 0;
         } else {

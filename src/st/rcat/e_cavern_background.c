@@ -37,7 +37,7 @@ void EntityCavernBackgroundIce(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         // fallthrough
     case 1:
         // nb. this is unnecessary, needed for PSP match though
@@ -175,7 +175,7 @@ void EntityCavernBackgroundIceBridge(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         // Position is offset so it doesn't clip into the transparent ice
         self->posY.i.hi = 0x80 - g_Tilemap.scrollY.i.hi;
         // fallthrough

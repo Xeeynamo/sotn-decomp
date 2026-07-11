@@ -7,7 +7,7 @@ void func_us_801B1F1C(Entity* self) {
     FntPrint("col step %x\n", self->step);
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitSpawner));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitSpawner));
         if (self->params) {
             g_Tilemap.flags &= (u16)~LAYER_SEMI_TRANS;
             DestroyEntity(self);

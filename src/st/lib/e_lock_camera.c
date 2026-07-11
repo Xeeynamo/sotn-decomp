@@ -25,7 +25,7 @@ void OVL_EXPORT(EntityLockCamera)(Entity* self) {
 
     params = self->params;
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitLockCamera));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitLockCamera));
         self->hitboxState = 1;
         facingLeft = self->ext.lockCamera.unk7C = entityLockCameraData[params];
         if (facingLeft) {
@@ -55,7 +55,7 @@ void OVL_EXPORT(EntityLockCamera)(Entity* self) {
     }
 
     if (PlayerIsWithinHitbox(self)) {
-        facingLeft = GetSideToPlayer();
+        facingLeft = OVL_EXPORT(GetSideToPlayer)();
         if (self->ext.lockCamera.unk7C) {
             facingLeft &= 2;
             facingLeft *= 2;

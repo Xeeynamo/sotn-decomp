@@ -26,7 +26,7 @@ void EntityFlyingZombie2(Entity* self) {
         self->step != 3) {
         self->hitboxState = 0;
         self->hitPoints = g_api.enemyDefs[15].hitPoints;
-        SetStep(3);
+        OVL_EXPORT(SetStep)(3);
         PlaySfxPositional(SFX_FLYING_ZOMBIE_PAIN);
     }
     if (self->flags & FLAG_DEAD) {
@@ -34,16 +34,16 @@ void EntityFlyingZombie2(Entity* self) {
             self->hitboxState = 0;
             self->flags &= ~FLAG_DEAD;
             self->hitPoints = g_api.enemyDefs[15].hitPoints;
-            SetStep(3);
+            OVL_EXPORT(SetStep)(3);
             PlaySfxPositional(SFX_FLYING_ZOMBIE_PAIN);
         } else if (self->step != 7) {
             self->hitboxState = 0;
-            SetStep(7);
+            OVL_EXPORT(SetStep)(7);
         }
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitFlyingZombie2);
+        OVL_EXPORT(InitializeEntity)(g_EInitFlyingZombie2);
         self->zPriority -= 2;
         self->hitboxOffX = 1;
         self->hitboxOffY = 10;
@@ -52,7 +52,7 @@ void EntityFlyingZombie2(Entity* self) {
         self->animCurFrame = 1;
         /* fallthrough */
     case 1:
-        if (UnkCollisionFunc3(D_us_8018280C) & 1) {
+        if (OVL_EXPORT(UnkCollisionFunc3)(D_us_8018280C) & 1) {
             self->step_s = 0;
             self->step++;
         }
@@ -61,7 +61,7 @@ void EntityFlyingZombie2(Entity* self) {
     case 2:
         switch (self->step_s) {
         case 0:
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
             if (self->facingLeft) {
                 self->velocityX = FIX(0.125);
             } else {
@@ -71,8 +71,8 @@ void EntityFlyingZombie2(Entity* self) {
             break;
 
         case 1:
-            AnimateEntity(D_us_8018283C, self);
-            UnkCollisionFunc2(D_us_80182834);
+            OVL_EXPORT(AnimateEntity)(D_us_8018283C, self);
+            OVL_EXPORT(UnkCollisionFunc2)(D_us_80182834);
             if (CheckColliderOffsets(D_us_8018282C, self->facingLeft)) {
                 self->velocityX = 0;
             }
@@ -103,7 +103,8 @@ void EntityFlyingZombie2(Entity* self) {
             PlaySfxPositional(SFX_FLYING_ZOMBIE_BODY_RIP);
             self->ext.flyingZombie.unk81 = 1;
             for (i = 0; i < 2; i++) {
-                tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                tempEntity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
                     OVL_EXPORT(CreateEntityFromEntity)
                     (E_BLOOD_SPLATTER, self, tempEntity);
@@ -116,7 +117,7 @@ void EntityFlyingZombie2(Entity* self) {
             tempEntity->hitboxState = 0;
             self->step_s++;
         }
-        if (!AnimateEntity(D_us_80182874, self)) {
+        if (!OVL_EXPORT(AnimateEntity)(D_us_80182874, self)) {
             tempEntity = self + 1;
             tempEntity->step = 3;
             tempEntity->step_s = 0;
@@ -128,7 +129,7 @@ void EntityFlyingZombie2(Entity* self) {
             self->hitPoints = g_api.enemyDefs[14].hitPoints;
             self->animCurFrame = 0x12;
             self->hitboxState = 3;
-            SetStep(5);
+            OVL_EXPORT(SetStep)(5);
         }
         break;
 
@@ -159,7 +160,8 @@ void EntityFlyingZombie2(Entity* self) {
 
         case 2:
             if (!--self->ext.flyingZombie.unk7C) {
-                tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                tempEntity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
                     OVL_EXPORT(CreateEntityFromEntity)
                     (E_EXPLOSION, self, tempEntity);
@@ -171,7 +173,7 @@ void EntityFlyingZombie2(Entity* self) {
                 if (self->ext.flyingZombie.unk7E > 1) {
                     PlaySfxPositional(SFX_FM_STUTTER_EXPLODE);
                     DestroyEntity(self + 1);
-                    SetStep(5);
+                    OVL_EXPORT(SetStep)(5);
                 }
             }
             break;
@@ -179,7 +181,7 @@ void EntityFlyingZombie2(Entity* self) {
         break;
 
     case 5:
-        if (!AnimateEntity(D_us_8018288C, self)) {
+        if (!OVL_EXPORT(AnimateEntity)(D_us_8018288C, self)) {
             self->pose = 0;
             self->poseTimer = 0;
             self->step++;
@@ -200,8 +202,8 @@ void EntityFlyingZombie2(Entity* self) {
             break;
 
         case 1:
-            AnimateEntity(D_us_80182854, self);
-            UnkCollisionFunc2(D_us_80182834);
+            OVL_EXPORT(AnimateEntity)(D_us_80182854, self);
+            OVL_EXPORT(UnkCollisionFunc2)(D_us_80182834);
             if (CheckColliderOffsets(D_us_8018282C, self->facingLeft)) {
                 self->velocityX = 0;
             }
@@ -227,7 +229,7 @@ void EntityFlyingZombie2(Entity* self) {
             break;
 
         case 2:
-            if (!AnimateEntity(D_us_80182868, self)) {
+            if (!OVL_EXPORT(AnimateEntity)(D_us_80182868, self)) {
                 self->facingLeft = OVL_EXPORT(Random)() & 1;
                 self->pose = 0;
                 self->poseTimer = 0;
@@ -238,7 +240,8 @@ void EntityFlyingZombie2(Entity* self) {
         break;
 
     case 7:
-        tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        tempEntity =
+            OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (tempEntity != NULL) {
             OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, tempEntity);
             tempEntity->params = 2;
@@ -268,7 +271,7 @@ void EntityFlyingZombie1(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitFlyingZombie1);
+        OVL_EXPORT(InitializeEntity)(g_EInitFlyingZombie1);
         self->hitboxOffX = -4;
         self->hitboxOffY = -14;
         self->ext.flyingZombie.unk80 = 0;
@@ -294,9 +297,9 @@ void EntityFlyingZombie1(Entity* self) {
             self->velocityY = FIX(-13.0 / 16);
             self->step_s++;
         }
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityY += FIX(0.5 / 16);
-        if (!AnimateEntity(D_us_80182884, self)) {
+        if (!OVL_EXPORT(AnimateEntity)(D_us_80182884, self)) {
             self->step_s = 0;
             self->step = 6;
         }
@@ -317,8 +320,9 @@ void EntityFlyingZombie1(Entity* self) {
             break;
 
         case 1:
-            if (UnkCollisionFunc3(D_us_8018281C) & 1) {
-                tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            if (OVL_EXPORT(UnkCollisionFunc3)(D_us_8018281C) & 1) {
+                tempEntity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
                 if (tempEntity != NULL) {
                     OVL_EXPORT(CreateEntityFromEntity)
                     (E_EXPLOSION, self, tempEntity);
@@ -327,8 +331,8 @@ void EntityFlyingZombie1(Entity* self) {
                 DestroyEntity(self);
             } else {
                 if (!--self->ext.flyingZombie.unk7C) {
-                    tempEntity =
-                        AllocEntity(&g_Entities[160], &g_Entities[192]);
+                    tempEntity = OVL_EXPORT(AllocEntity)(
+                        &g_Entities[160], &g_Entities[192]);
                     if (tempEntity != NULL) {
                         OVL_EXPORT(CreateEntityFromEntity)
                         (E_EXPLOSION, self, tempEntity);
@@ -344,7 +348,7 @@ void EntityFlyingZombie1(Entity* self) {
         break;
 
     case 6:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityY += FIX(0.5 / 16);
         if (self->velocityY > FIX(0.5)) {
             self->velocityY = 0;
@@ -357,7 +361,8 @@ void EntityFlyingZombie1(Entity* self) {
             self->ext.flyingZombie.unk80 = 1;
         }
         if ((OVL_EXPORT(Random)() & 0x1F) == 0) {
-            tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            tempEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)
                 (E_BLOOD_DRIPS, self, tempEntity);
@@ -367,7 +372,7 @@ void EntityFlyingZombie1(Entity* self) {
             }
         }
         if (!self->step_s) {
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
             if (self->facingLeft) {
                 self->velocityX = FIX(0.5);
             } else {
@@ -376,8 +381,8 @@ void EntityFlyingZombie1(Entity* self) {
             self->ext.flyingZombie.unk7C = 0x60;
             self->step_s++;
         } else {
-            MoveEntity();
-            AnimateEntity(D_us_80182848, self);
+            OVL_EXPORT(MoveEntity)();
+            OVL_EXPORT(AnimateEntity)(D_us_80182848, self);
             if (!--self->ext.flyingZombie.unk7C) {
                 self->pose = 0;
                 self->poseTimer = 0;
@@ -391,15 +396,17 @@ void EntityFlyingZombie1(Entity* self) {
         tempEntity = &PLAYER;
         if (!self->step_s) {
             self->ext.flyingZombie.unk7C = 0x40;
-            angle = GetAngleBetweenEntitiesShifted(self, tempEntity);
-            SetEntityVelocityFromAngle(angle, 6);
+            angle =
+                OVL_EXPORT(GetAngleBetweenEntitiesShifted)(self, tempEntity);
+            OVL_EXPORT(SetEntityVelocityFromAngle)(angle, 6);
             self->step_s++;
         } else {
             if ((OVL_EXPORT(Random)() & 0x7F) == 0) {
                 self->ext.flyingZombie.unk80 = 1;
             }
             if ((OVL_EXPORT(Random)() & 0x1F) == 0) {
-                tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                tempEntity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
                     OVL_EXPORT(CreateEntityFromEntity)
                     (E_BLOOD_DRIPS, self, tempEntity);
@@ -408,8 +415,8 @@ void EntityFlyingZombie1(Entity* self) {
                     tempEntity->pfnUpdate = EntityBloodDrips;
                 }
             }
-            MoveEntity();
-            AnimateEntity(D_us_80182848, self);
+            OVL_EXPORT(MoveEntity)();
+            OVL_EXPORT(AnimateEntity)(D_us_80182848, self);
             if (!--self->ext.flyingZombie.unk7C) {
                 self->velocityY = 0;
                 self->pose = 0;

@@ -29,7 +29,7 @@ void EntitySpittleBone(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitSpittleBone);
+        OVL_EXPORT(InitializeEntity)(g_EInitSpittleBone);
         self->flags &= ~(FLAG_UNK_2000 | FLAG_UNK_200);
         self->facingLeft = self->params;
         self->drawFlags = ENTITY_ROTATE;
@@ -37,7 +37,7 @@ void EntitySpittleBone(Entity* self) {
         break;
 
     case 1:
-        if (UnkCollisionFunc3(D_801824CC) & 1) {
+        if (OVL_EXPORT(UnkCollisionFunc3)(D_801824CC) & 1) {
             self->ext.spittleBone.unk7C = 0;
             newEntity = self + 1;
             OVL_EXPORT(CreateEntityFromEntity)
@@ -57,7 +57,7 @@ void EntitySpittleBone(Entity* self) {
         break;
 
     case 2:
-        AnimateEntity(D_80182524, self);
+        OVL_EXPORT(AnimateEntity)(D_80182524, self);
         var_s2 = (self->ext.spittleBone.unk7C & 0x3F);
         self->ext.spittleBone.unk7C =
             UnkCollisionFunc4(self->ext.spittleBone.unk7C);
@@ -70,7 +70,8 @@ void EntitySpittleBone(Entity* self) {
         }
         if ((self->ext.spittleBone.unk7C & 0x3F) == 1 &&
             (OVL_EXPORT(Random)() & 0x1F) == 0) {
-            newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            newEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
             if (newEntity != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)
                 (E_SPITTLEBONE_SPIT, self, newEntity);
@@ -84,7 +85,8 @@ void EntitySpittleBone(Entity* self) {
 
     case 3:
         for (i = 0; i < LEN(D_8012518); i++) {
-            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            newEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 MakeEntityFromId(E_SPITTLEBONE, self, newEntity);
                 newEntity->facingLeft = self->facingLeft;
@@ -103,7 +105,7 @@ void EntitySpittleBone(Entity* self) {
             }
         }
 
-        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        newEntity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
             OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, newEntity);
             newEntity->params = 1;
@@ -115,10 +117,11 @@ void EntitySpittleBone(Entity* self) {
         break;
 
     case 4:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityY += FIX(0.15625);
         if (!--self->ext.spittleBone.unk82) {
-            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            newEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)
                 (E_EXPLOSION, self, newEntity);
@@ -137,7 +140,7 @@ void EntityRotateSpittlebone(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         self->flags &= ~(FLAG_UNK_2000 | FLAG_UNK_200);
         break;
 
@@ -189,7 +192,7 @@ void EntitySpittleBoneSpit(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitSpittleBoneSpit);
+        OVL_EXPORT(InitializeEntity)(g_EInitSpittleBoneSpit);
         self->ext.spittleBone.unk82 = 0;
         self->scaleX = 0;
         self->scaleY = 0;
@@ -218,8 +221,8 @@ void EntitySpittleBoneSpit(Entity* self) {
         break;
 
     case 2:
-        AnimateEntity(D_80182534, self);
-        MoveEntity();
+        OVL_EXPORT(AnimateEntity)(D_80182534, self);
+        OVL_EXPORT(MoveEntity)();
         self->velocityY += FIX(0.0625);
         x = self->posX.i.hi;
         y = self->posY.i.hi;

@@ -32,7 +32,7 @@ void OVL_EXPORT(EntityDamageDisplay)(Entity* self) {
         params = self->params;
         nDigits = &self->ext.ndmg.nDigits;
         if (!self->step_s) {
-            InitializeEntity(OVL_EXPORT(EInitDamageNum));
+            OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitDamageNum));
             self->step = 0;
             if (params == 0xC000) {
                 self->ext.ndmg.nPrims++;

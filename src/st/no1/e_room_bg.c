@@ -50,7 +50,7 @@ void OVL_EXPORT(EntityBackgroundBlock)(Entity* self) {
     s32 primIndex;
 
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
         self->animSet = objInit->animSet;
         self->zPriority = objInit->zPriority;
 #ifdef VERSION_PSP
@@ -83,6 +83,6 @@ void OVL_EXPORT(EntityBackgroundBlock)(Entity* self) {
             prim->drawMode = DRAW_UNK02;
         }
     }
-    AnimateEntity(objInit->animFrames, self);
+    OVL_EXPORT(AnimateEntity)(objInit->animFrames, self);
     FntPrint("pri:%x\n", self->zPriority);
 }

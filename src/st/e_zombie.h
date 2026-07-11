@@ -17,7 +17,7 @@ void EntityZombie(Entity* self) {
         PlaySfxPositional(SFX_EXPLODE_SMALL);
         self->hitboxState = 0;
         // Spawn Zombie explosion
-        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        newEntity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
             OVL_EXPORT(CreateEntityFromEntity)
             (E_EXPLODE_PUFF_OPAQUE, self, newEntity);
@@ -31,7 +31,7 @@ void EntityZombie(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitZombie);
+        OVL_EXPORT(InitializeEntity)(g_EInitZombie);
         self->hitboxWidth = 8;
         self->hitboxHeight = 0;
         self->hitboxOffY = 0x10;
@@ -46,15 +46,15 @@ void EntityZombie(Entity* self) {
         break;
 
     case 1:
-        if (UnkCollisionFunc3(sensors1) & 1) {
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        if (OVL_EXPORT(UnkCollisionFunc3)(sensors1) & 1) {
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
             self->step++;
         }
         break;
 
     case 2:
-        if (AnimateEntity(anim2, self) == 0) {
-            SetStep(3);
+        if (OVL_EXPORT(AnimateEntity)(anim2, self) == 0) {
+            OVL_EXPORT(SetStep)(3);
         }
         if (!self->poseTimer) {
             self->hitboxOffY -= 2;
@@ -63,8 +63,8 @@ void EntityZombie(Entity* self) {
         break;
 
     case 3:
-        AnimateEntity(anim1, self);
-        temp_a0 = UnkCollisionFunc2(sensors2);
+        OVL_EXPORT(AnimateEntity)(anim1, self);
+        temp_a0 = OVL_EXPORT(UnkCollisionFunc2)(sensors2);
         if (self->facingLeft) {
             self->velocityX = FIX(0.5);
         } else {
@@ -73,12 +73,12 @@ void EntityZombie(Entity* self) {
 
         if (temp_a0 & 0xC0) {
             self->hitboxState = 0;
-            SetStep(4);
+            OVL_EXPORT(SetStep)(4);
         }
         break;
 
     case 4:
-        if (AnimateEntity(anim3, self) == 0) {
+        if (OVL_EXPORT(AnimateEntity)(anim3, self) == 0) {
             DestroyEntity(self);
         }
         break;
@@ -96,7 +96,7 @@ void EntityZombieSpawner(Entity* self) {
     Entity* newEntity;
 
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitSpawner));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitSpawner));
         self->flags &= FLAG_UNK_2000;
         self->ext.zombieSpawner.spawnDelay = 1;
     }
@@ -104,7 +104,8 @@ void EntityZombieSpawner(Entity* self) {
     if (g_CastleFlags[CASTLE_TURNED_ON]) {
         self->posX.i.hi = 128;
         if (!--self->ext.zombieSpawner.spawnDelay) {
-            newEntity = AllocEntity(&g_Entities[160], &g_Entities[168]);
+            newEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[168]);
             if (newEntity != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)(E_ZOMBIE, self, newEntity);
                 temp = (OVL_EXPORT(Random)() & 0x3F) + 96;

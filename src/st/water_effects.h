@@ -140,7 +140,7 @@ void EntityAlucardWaterEffect(Entity* self) {
                         }
                         if (var_s1) {
                             for (i = 0; i < 8; i++) {
-                                tempEntity = AllocEntity(
+                                tempEntity = OVL_EXPORT(AllocEntity)(
                                     &g_Entities[224], &g_Entities[256]);
                                 if (tempEntity == NULL) {
                                     break;
@@ -155,8 +155,8 @@ void EntityAlucardWaterEffect(Entity* self) {
                                 tempEntity->zPriority = player->zPriority;
                             }
                         } else {
-                            tempEntity =
-                                AllocEntity(&g_Entities[224], &g_Entities[256]);
+                            tempEntity = OVL_EXPORT(AllocEntity)(
+                                &g_Entities[224], &g_Entities[256]);
                             if (tempEntity != NULL) {
                                 OVL_EXPORT(CreateEntityFromEntity)
                                 (E_SPLASH_WATER, player, tempEntity);
@@ -198,8 +198,8 @@ void EntityAlucardWaterEffect(Entity* self) {
                 }
                 if (var_s1) {
                     for (i = 0; i < 8; i++) {
-                        tempEntity =
-                            AllocEntity(&g_Entities[224], &g_Entities[256]);
+                        tempEntity = OVL_EXPORT(AllocEntity)(
+                            &g_Entities[224], &g_Entities[256]);
                         if (tempEntity == NULL) {
                             break;
                         }
@@ -211,8 +211,8 @@ void EntityAlucardWaterEffect(Entity* self) {
                         tempEntity->zPriority = player->zPriority;
                     }
                 } else {
-                    tempEntity =
-                        AllocEntity(&g_Entities[224], &g_Entities[256]);
+                    tempEntity = OVL_EXPORT(AllocEntity)(
+                        &g_Entities[224], &g_Entities[256]);
                     if (tempEntity != NULL) {
                         OVL_EXPORT(CreateEntityFromEntity)
                         (E_SPLASH_WATER, player, tempEntity);
@@ -233,8 +233,8 @@ void EntityAlucardWaterEffect(Entity* self) {
                 var_s1 = g_WaterXTbl[sp30 + 7];
                 if (posX != self->ext.aluwater.unk80) {
                     if (var_s3 <= sp4A && sp10[0] >= 6 && sp10[1] >= 6) {
-                        tempEntity =
-                            AllocEntity(&g_Entities[224], &g_Entities[256]);
+                        tempEntity = OVL_EXPORT(AllocEntity)(
+                            &g_Entities[224], &g_Entities[256]);
                         if (tempEntity != NULL) {
                             OVL_EXPORT(CreateEntityFromEntity)
                             (E_SURFACING_WATER, player, tempEntity);
@@ -256,8 +256,8 @@ void EntityAlucardWaterEffect(Entity* self) {
                     }
                 } else if (
                     var_s1 && var_s3 <= sp4A && sp10[0] >= 6 && sp10[1] >= 6) {
-                    tempEntity =
-                        AllocEntity(&g_Entities[224], &g_Entities[256]);
+                    tempEntity = OVL_EXPORT(AllocEntity)(
+                        &g_Entities[224], &g_Entities[256]);
                     if (tempEntity != NULL) {
                         OVL_EXPORT(CreateEntityFromEntity)
                         (E_SURFACING_WATER, player, tempEntity);
@@ -357,7 +357,7 @@ void EntityAlucardWaterEffect(Entity* self) {
             }
         }
     } else {
-        InitializeEntity(OVL_EXPORT(EInitSpawner));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitSpawner));
     }
     self->ext.aluwater.unk7C = sp28;
     self->ext.aluwater.unk80 = posX;
@@ -390,7 +390,7 @@ void EntitySplashWater(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
         if (width && index2 != 7) {
             primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
         } else {
@@ -507,7 +507,7 @@ void EntitySplashWater(Entity* self) {
         self->velocityY = g_SplashYMovement[params * 2];
         self->ext.waterEffects.accelY = g_SplashYMovement[params * 2 + 1];
 
-        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        newEntity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
             OVL_EXPORT(CreateEntityFromCurrentEntity)(E_WATER_DROP, newEntity);
             newEntity->velocityY = self->velocityY;
@@ -515,7 +515,7 @@ void EntitySplashWater(Entity* self) {
         break;
 
     case 1:
-        MoveEntity(self);
+        OVL_EXPORT(MoveEntity)(self);
         self->velocityY += self->ext.waterEffects.accelY;
         if (self->velocityY > FIX(2.5)) {
             self->step++;
@@ -523,7 +523,7 @@ void EntitySplashWater(Entity* self) {
         break;
 
     case 2:
-        MoveEntity(self);
+        OVL_EXPORT(MoveEntity)(self);
         prim = &g_PrimBuf[self->primIndex];
         if (prim->r0 < 9) {
             DestroyEntity(self);
@@ -569,7 +569,7 @@ void EntitySurfacingWater(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -642,7 +642,7 @@ void EntitySurfacingWater(Entity* self) {
         break;
     }
 
-    MoveEntity(self);
+    OVL_EXPORT(MoveEntity)(self);
     i = self->velocityX;
     if (i != 0) {
         x = g_WaterXTbl[self->ext.waterEffects.unk88];
@@ -700,7 +700,7 @@ void EntitySideWaterSplash(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -744,7 +744,7 @@ void EntitySideWaterSplash(Entity* self) {
         break;
 
     case 1:
-        MoveEntity(self);
+        OVL_EXPORT(MoveEntity)(self);
         self->velocityY += self->ext.waterEffects.accelY;
         break;
     }
@@ -786,7 +786,7 @@ void EntitySmallWaterDrop(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
         primIndex = g_api.AllocPrimitives(PRIM_TILE, 1);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -831,7 +831,7 @@ void EntitySmallWaterDrop(Entity* self) {
         break;
 
     case 1:
-        MoveEntity(self);
+        OVL_EXPORT(MoveEntity)(self);
         self->velocityY += self->ext.waterEffects.accelY;
         break;
     }
@@ -859,7 +859,7 @@ void EntityWaterDrop(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
         primIndex = g_api.func_800EDB58(PRIM_TILE_ALT, 0x21);
         if (primIndex == -1) {
             DestroyEntity(self);

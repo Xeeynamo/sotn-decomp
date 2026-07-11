@@ -5,7 +5,7 @@ void EntityTriggerBeforeCastleWarp(Entity* self) {
     FntPrint("alive \n");
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         g_api.func_800EA5E4(0xC001U);
         g_api.func_800EA5E4(0xC002U);
         g_api.func_800EA5E4(0xC003U);

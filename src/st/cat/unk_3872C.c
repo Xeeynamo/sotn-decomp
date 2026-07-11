@@ -8,12 +8,13 @@ void func_us_801B872C(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitParticle));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitParticle));
         break;
     case 1:
         if (!(OVL_EXPORT(Random)() & 7)) {
-            newEntity = AllocEntity(&g_Entities[STAGE_ENTITY_START],
-                                    &g_Entities[TOTAL_ENTITY_COUNT]);
+            newEntity = OVL_EXPORT(AllocEntity)(
+                &g_Entities[STAGE_ENTITY_START],
+                &g_Entities[TOTAL_ENTITY_COUNT]);
             if (newEntity != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)
                 (E_EXPLOSION, self, newEntity);

@@ -44,7 +44,7 @@ void EntityStairwayPiece(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         self->hitboxWidth = 8;
         self->hitboxHeight = 8;
         self->posX.i.hi = XPOS - g_Tilemap.scrollX.i.hi;
@@ -78,7 +78,7 @@ void EntityStairwayPiece(Entity* self) {
         g_Tilemap.fg[TILE2] = 0x3D2;
         g_CastleFlags[CASTLE_FLAG] = true;
 
-        newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+        newEntity = OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
         if (newEntity != NULL) {
 #if defined(INVERTED_STAGE)
             OVL_EXPORT(CreateEntityFromEntity)(E_HEART_DROP, self, newEntity);
@@ -90,7 +90,7 @@ void EntityStairwayPiece(Entity* self) {
 #endif
         }
 
-        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        newEntity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
             OVL_EXPORT(CreateEntityFromEntity)
             (E_INTENSE_EXPLOSION, self, newEntity);
@@ -158,7 +158,7 @@ void EntityStairwayPiece(Entity* self) {
 
     case 4:
         g_api.PlaySfx(SFX_WALL_DEBRIS_B);
-        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        newEntity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
             OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, newEntity);
             newEntity->params = 0x11;
@@ -166,7 +166,8 @@ void EntityStairwayPiece(Entity* self) {
         }
 
         for (i = 0; i < 6; i++) {
-            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            newEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)
                 (E_ID(FALLING_ROCK), self, newEntity);
@@ -192,7 +193,7 @@ void EntityFallingRock(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(ROCK_EINIT);
+        OVL_EXPORT(InitializeEntity)(ROCK_EINIT);
         self->animCurFrame = animFrame + 31;
         self->drawFlags |= ENTITY_ROTATE | ENTITY_SCALEY | ENTITY_SCALEX;
         self->scaleX = self->scaleY = 0x60;
@@ -206,14 +207,15 @@ void EntityFallingRock(Entity* self) {
         break;
 
     case 1:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityY += FIX(0.125);
         self->rotate -= 0x20;
         x = self->posX.i.hi;
         y = self->posY.i.hi + 8;
         g_api.CheckCollision(x, y, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
-            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            newEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)
                 (E_INTENSE_EXPLOSION, self, newEntity);

@@ -51,7 +51,7 @@ void OVL_EXPORT(EntityLockCamera)(Entity* self) {
         }
 
         if (self->hitParams) {
-            var_s0 = GetSideToPlayer();
+            var_s0 = OVL_EXPORT(GetSideToPlayer)();
             if (self->ext.lockCamera.unk7C) {
                 var_s0 &= 2;
                 var_s0 *= 2;
@@ -67,7 +67,7 @@ void OVL_EXPORT(EntityLockCamera)(Entity* self) {
             g_Tilemap.height = *tilemapProps;
         }
     } else {
-        InitializeEntity(OVL_EXPORT(EInitLockCamera));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitLockCamera));
         var_s0 = self->ext.lockCamera.unk7C = entityLockCameraData[params];
         if (var_s0) {
             self->hitboxWidth = entityLockCameraHitbox[params];

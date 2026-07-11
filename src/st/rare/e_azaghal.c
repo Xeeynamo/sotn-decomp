@@ -412,7 +412,8 @@ static void func_us_801B33F4(void) {
         g_CurrentEntity->hitboxOffY = swordHitboxOffsetY / 8;
 
         for (i = 2; i < 8; i++) {
-            entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            entity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
                 OVL_EXPORT(CreateEntityFromCurrentEntity)
                 (E_AZAGHAL_SWORD_HITBOX, entity);
@@ -557,16 +558,16 @@ void EntityAzaghal(Entity* self) {
     FntPrint("step_s %x\n", self->step_s);
 
     if (self->hitFlags & 3 && self->step != HIT_BY_PLAYER) {
-        SetStep(HIT_BY_PLAYER);
+        OVL_EXPORT(SetStep)(HIT_BY_PLAYER);
     }
 
     if (self->flags & FLAG_DEAD && self->step < DEATH) {
-        SetStep(DEATH);
+        OVL_EXPORT(SetStep)(DEATH);
     }
 
     switch (self->step) {
     case INIT:
-        InitializeEntity(g_EInitAzaghal);
+        OVL_EXPORT(InitializeEntity)(g_EInitAzaghal);
         self->hitboxState = 0;
         self->hitboxWidth = self->hitboxHeight = 0xC;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x20);
@@ -611,8 +612,8 @@ void EntityAzaghal(Entity* self) {
         self->ext.azaghal.primThree = prim;
         // fallthrough
     case FALL_TO_GROUND:
-        if (UnkCollisionFunc3(sensors_ground) & 1) {
-            SetStep(IDLE_WAIT);
+        if (OVL_EXPORT(UnkCollisionFunc3)(sensors_ground) & 1) {
+            OVL_EXPORT(SetStep)(IDLE_WAIT);
         }
         break;
     case IDLE_WAIT:
@@ -634,7 +635,7 @@ void EntityAzaghal(Entity* self) {
             // fallthrough
         case 1:
             UpdateBodyDisplay(0, SHOW_BODY);
-            if (GetDistanceToPlayerX() < 0x60) {
+            if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x60) {
                 self->step_s++;
             }
             break;
@@ -683,7 +684,7 @@ void EntityAzaghal(Entity* self) {
                 prim = prim->next;
             }
             self->hitboxState = 2;
-            SetStep(SEEK_PLAYER);
+            OVL_EXPORT(SetStep)(SEEK_PLAYER);
         }
         break;
     case SWORD_OVERHEAD:
@@ -692,7 +693,7 @@ void EntityAzaghal(Entity* self) {
             if (!AnimateAzaghal(&anim_sword_overhead_a)) {
                 self->pose = 0;
                 self->poseTimer = 0;
-                self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+                self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
                 self->step_s = 1;
             }
             break;
@@ -700,7 +701,7 @@ void EntityAzaghal(Entity* self) {
             if (!AnimateAzaghal(&anim_sword_overhead_b)) {
                 self->pose = 0;
                 self->poseTimer = 0;
-                self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+                self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
                 self->step_s++;
             }
             break;
@@ -721,15 +722,15 @@ void EntityAzaghal(Entity* self) {
             if (UpdateBodyDisplay(3, HIDE_BODY)) {
                 PlaySfxPositional(SFX_VANDAL_SWORD_ATTACK);
                 if (self->ext.azaghal.attackCounter & 1) {
-                    SetStep(SLASH_DOWN);
+                    OVL_EXPORT(SetStep)(SLASH_DOWN);
                 } else {
-                    SetStep(SHORT_SLASH_HORIZONTAL);
+                    OVL_EXPORT(SetStep)(SHORT_SLASH_HORIZONTAL);
                 }
 
                 self->ext.azaghal.attackCounter++;
                 if (self->ext.azaghal.attackCounter > 3) {
                     self->ext.azaghal.attackCounter = 0;
-                    SetStep(COMBO_ATTACK);
+                    OVL_EXPORT(SetStep)(COMBO_ATTACK);
                 }
             }
             break;
@@ -752,7 +753,7 @@ void EntityAzaghal(Entity* self) {
             self->poseTimer = 0;
         }
 
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->rotate += ROT(5.625);
         self->velocityY = rsin(self->rotate) * 0xE;
         if (self->posY.val < FIX(128.5)) {
@@ -761,11 +762,11 @@ void EntityAzaghal(Entity* self) {
             self->velocityY -= FIX(0.25);
         }
 
-        if (GetDistanceToPlayerX() < 0x30) {
+        if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x30) {
             self->velocityX = FIX(0.5);
         }
 
-        if (GetDistanceToPlayerX() > 0x38) {
+        if (OVL_EXPORT(GetDistanceToPlayerX)() > 0x38) {
             self->velocityX = FIX(-0.5);
         }
 
@@ -773,12 +774,12 @@ void EntityAzaghal(Entity* self) {
             self->velocityX = -self->velocityX;
         }
 
-        if (self->facingLeft != ((GetSideToPlayer() & 1) ^ 1)) {
-            SetStep(SWORD_OVERHEAD);
+        if (self->facingLeft != ((OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1)) {
+            OVL_EXPORT(SetStep)(SWORD_OVERHEAD);
         }
 
         if (!--self->ext.azaghal.timer) {
-            SetStep(SWORD_OVERHEAD);
+            OVL_EXPORT(SetStep)(SWORD_OVERHEAD);
         }
         func_us_801B33F4();
         break;
@@ -793,7 +794,7 @@ void EntityAzaghal(Entity* self) {
             break;
         case 1:
             if (!AnimateAzaghal(&anim_slash_down_b)) {
-                SetStep(LONG_SLASH_HORIZONTAL);
+                OVL_EXPORT(SetStep)(LONG_SLASH_HORIZONTAL);
             }
             break;
         }
@@ -814,10 +815,10 @@ void EntityAzaghal(Entity* self) {
             }
             break;
         case 1:
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             self->velocityX -= self->velocityX / 16;
             if (!AnimateAzaghal(&anim_long_slash_hor_b)) {
-                SetStep(SEEK_PLAYER);
+                OVL_EXPORT(SetStep)(SEEK_PLAYER);
             }
             break;
         }
@@ -838,10 +839,10 @@ void EntityAzaghal(Entity* self) {
             }
             break;
         case 1:
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             self->velocityX -= self->velocityX / 16;
             if (!AnimateAzaghal(&anim_short_slash_hor_b)) {
-                SetStep(SLASH_UP);
+                OVL_EXPORT(SetStep)(SLASH_UP);
             }
             break;
         }
@@ -858,7 +859,7 @@ void EntityAzaghal(Entity* self) {
             break;
         case 1:
             if (!AnimateAzaghal(&anim_slash_up_b)) {
-                SetStep(SEEK_PLAYER);
+                OVL_EXPORT(SetStep)(SEEK_PLAYER);
             }
             break;
         }
@@ -984,10 +985,10 @@ void EntityAzaghal(Entity* self) {
             }
             break;
         case 6:
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             self->velocityX -= self->velocityX / 16;
             if (self->ext.azaghal.timer++ > 0x40) {
-                SetStep(SEEK_PLAYER);
+                OVL_EXPORT(SetStep)(SEEK_PLAYER);
             }
             break;
         }
@@ -1016,7 +1017,7 @@ void EntityAzaghal(Entity* self) {
         case 1:
             AnimateAzaghal(&anim_fall_backward);
             UpdateBodyDisplay(2, SHOW_BODY);
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             self->velocityX -= self->velocityX / 32;
             self->velocityY += FIX(0.125);
             if (self->velocityY > FIX(4.0)) {
@@ -1025,7 +1026,7 @@ void EntityAzaghal(Entity* self) {
             break;
         case 2:
             if (UpdateBodyDisplay(2, HIDE_BODY)) {
-                SetStep(SEEK_PLAYER);
+                OVL_EXPORT(SetStep)(SEEK_PLAYER);
             }
             break;
         }
@@ -1054,7 +1055,7 @@ void EntityAzaghal(Entity* self) {
         case 1:
             AnimateAzaghal(&anim_fall_backward);
             UpdateBodyDisplay(2, SHOW_BODY);
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             self->velocityX -= self->velocityX / 32;
             self->velocityY += FIX(0.125);
             if (self->velocityY > FIX(4.0)) {
@@ -1077,7 +1078,7 @@ void EntityAzaghal(Entity* self) {
                 }
 
                 prim->drawMode = DRAW_HIDE;
-                entity = AllocEntity(
+                entity = OVL_EXPORT(AllocEntity)(
                     &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (entity != NULL) {
                     OVL_EXPORT(CreateEntityFromCurrentEntity)
@@ -1148,7 +1149,7 @@ void EntityAzaghal(Entity* self) {
 // which can damage the player
 void EntityAzaghalSwordHitbox(Entity* self) {
     if (!self->step) {
-        InitializeEntity(g_EInitAzaghal);
+        OVL_EXPORT(InitializeEntity)(g_EInitAzaghal);
         self->hitboxState = 1;
         self->hitboxWidth = self->hitboxHeight = 4;
         return;

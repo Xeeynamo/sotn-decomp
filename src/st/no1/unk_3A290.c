@@ -62,7 +62,7 @@ void func_us_801BA290(Entity* self) {
     self->ext.et_801BA290.unk9C = g_CastleFlags[NO1_WEATHER] & 1;
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_801809C8);
+        OVL_EXPORT(InitializeEntity)(D_us_801809C8);
         self->animCurFrame = 0x3D;
         self->facingLeft = 1;
         self->hitboxState = 1;
@@ -484,8 +484,8 @@ void func_us_801BA290(Entity* self) {
                 prim = self->ext.et_801BA290.unk84;
                 LOW(prim->next->u0) = -0x1000;
                 for (i = 0; i < 3; i++) {
-                    tempEntity =
-                        AllocEntity(&g_Entities[224], &g_Entities[256]);
+                    tempEntity = OVL_EXPORT(AllocEntity)(
+                        &g_Entities[224], &g_Entities[256]);
                     if (tempEntity != NULL) {
                         OVL_EXPORT(CreateEntityFromCurrentEntity)
                         (E_ID(ID_34), tempEntity);
@@ -669,7 +669,7 @@ static s16 delays[] = {32, 24, 16, 4, 8, 28, 40, 14};
 void func_us_801BB4C0(Entity* self) {
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180A34);
+        OVL_EXPORT(InitializeEntity)(D_us_80180A34);
         self->animCurFrame = 0;
         self->zPriority = 0x49;
         self->drawFlags |= ENTITY_SCALEX | ENTITY_SCALEY;
@@ -686,7 +686,7 @@ void func_us_801BB4C0(Entity* self) {
         }
         break;
     case 2:
-        if (!AnimateEntity(D_us_801814E0, self)) {
+        if (!OVL_EXPORT(AnimateEntity)(D_us_801814E0, self)) {
             DestroyEntity(self);
         }
         break;

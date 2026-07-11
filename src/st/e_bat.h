@@ -19,7 +19,7 @@ void EntityBat(Entity* self) {
     s32 var_s2;
 
     if (self->flags & FLAG_DEAD) {
-        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        newEntity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
             OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, newEntity);
             newEntity->params = 1;
@@ -40,27 +40,27 @@ void EntityBat(Entity* self) {
         self->ext.batEnemy.xProximity = 0x78;
         self->ext.batEnemy.unk88 = (rand() & 0x3F) + 0x20;
 #endif
-        InitializeEntity(g_EInitBat);
+        OVL_EXPORT(InitializeEntity)(g_EInitBat);
         self->animCurFrame = 31;
         break;
 
     case 1:
-        xDistance = GetDistanceToPlayerX();
-        yDistance = GetDistanceToPlayerY();
+        xDistance = OVL_EXPORT(GetDistanceToPlayerX)();
+        yDistance = OVL_EXPORT(GetDistanceToPlayerY)();
 #ifdef STAGE_IS_RCAT
         if ((xDistance < self->ext.batEnemy.xProximity) &&
             (yDistance < self->ext.batEnemy.yProximity) &&
 #else
         if ((xDistance < 0x60) && (yDistance < 0x60) &&
 #endif
-            !(GetSideToPlayer() & 2)) {
+            !(OVL_EXPORT(GetSideToPlayer)() & 2)) {
             self->step++;
         }
         break;
 
     case 2:
-        if (AnimateEntity(bat_anim_drop, self) == 0) {
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        if (OVL_EXPORT(AnimateEntity)(bat_anim_drop, self) == 0) {
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
 #ifdef STAGE_IS_RCAT
             self->velocityY = FIX(1.125);
 #else
@@ -78,8 +78,8 @@ void EntityBat(Entity* self) {
         break;
 
     case 3:
-        AnimateEntity(bat_anim_fly, self);
-        MoveEntity();
+        OVL_EXPORT(AnimateEntity)(bat_anim_fly, self);
+        OVL_EXPORT(MoveEntity)();
 
 #ifdef STAGE_IS_RCAT
         var_s2 = 0;
@@ -92,7 +92,7 @@ void EntityBat(Entity* self) {
             var_s2 = 1;
         }
 
-        if (GetDistanceToPlayerY() < self->ext.batEnemy.unk88) {
+        if (OVL_EXPORT(GetDistanceToPlayerY)() < self->ext.batEnemy.unk88) {
             var_s2 = 1;
         }
 
@@ -106,7 +106,7 @@ void EntityBat(Entity* self) {
             self->step = 4;
         }
 #else
-        if (GetDistanceToPlayerY() < 0x20) {
+        if (OVL_EXPORT(GetDistanceToPlayerY)() < 0x20) {
             if (self->facingLeft) {
                 self->velocityX = FIX(1);
             } else {
@@ -119,8 +119,8 @@ void EntityBat(Entity* self) {
         break;
 
     case 4:
-        AnimateEntity(bat_anim_fly, self);
-        MoveEntity();
+        OVL_EXPORT(AnimateEntity)(bat_anim_fly, self);
+        OVL_EXPORT(MoveEntity)();
         if (self->velocityY < FIX(-1) || self->velocityY > FIX(1)) {
             self->ext.batEnemy.accelY = -self->ext.batEnemy.accelY;
         }

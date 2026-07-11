@@ -14,7 +14,7 @@ void EntityBossDoorTrigger(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         timeAttackResult = g_api.TimeAttackController(
             TIMEATTACK_EVENT_KARASUMAN_DEFEAT, TIMEATTACK_GET_RECORD);
         if (timeAttackResult) {
@@ -82,7 +82,8 @@ void EntityBossDoorTrigger(Entity* self) {
         break;
     case 6:
         if (D_us_80181138 & 4) {
-            entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            entity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)
                 (E_ID(LIFE_UP_SPAWN), self, entity);
@@ -124,7 +125,7 @@ void EntityBossDoors(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitEnvironment);
+        OVL_EXPORT(InitializeEntity)(g_EInitEnvironment);
         self->animCurFrame = 7;
         self->zPriority = 0x78;
         break;
@@ -136,15 +137,15 @@ void EntityBossDoors(Entity* self) {
         break;
 
     case 2:
-        GetPlayerCollisionWith(self, 8, 32, 5);
+        OVL_EXPORT(GetPlayerCollisionWith)(self, 8, 32, 5);
         if (self->params) {
             self->velocityX = FIX(-0.5);
         } else {
             self->velocityX = FIX(0.5);
         }
 
-        MoveEntity();
-        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        OVL_EXPORT(MoveEntity)();
+        entity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
             OVL_EXPORT(CreateEntityFromEntity)
             (E_INTENSE_EXPLOSION, self, entity);
@@ -205,8 +206,8 @@ void EntityBossDoors(Entity* self) {
         } else {
             self->velocityX = FIX(-0.75);
         }
-        MoveEntity();
-        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        OVL_EXPORT(MoveEntity)();
+        entity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
             OVL_EXPORT(CreateEntityFromEntity)
             (E_INTENSE_EXPLOSION, self, entity);
@@ -229,7 +230,7 @@ void EntityBossDoors(Entity* self) {
 static s32 BossDoorHelper(Entity* self) UNUSED {
     s32 offsetY;
 
-    MoveEntity();
+    OVL_EXPORT(MoveEntity)();
     g_CurrentEntity->velocityY += FIX(0.25);
     offsetY =
         g_CurrentEntity->posY.i.hi + self->posX.i.hi + g_Tilemap.scrollY.i.hi;

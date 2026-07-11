@@ -23,7 +23,7 @@ void EntityRoomForeground(Entity* entity) {
     ObjInit* objInit = &eRoomForegroundInit[entity->params];
 
     if (!entity->step) {
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
         entity->animSet = objInit->animSet;
         entity->zPriority = objInit->zPriority;
         entity->unk5A = objInit->unk5A;
@@ -38,5 +38,5 @@ void EntityRoomForeground(Entity* entity) {
             entity->rotate = ROT(180);
         }
     }
-    AnimateEntity(objInit->animFrames, entity);
+    OVL_EXPORT(AnimateEntity)(objInit->animFrames, entity);
 }

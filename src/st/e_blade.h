@@ -53,10 +53,10 @@ static s32 func_801D0B78(Entity* ent) {
 
     switch (g_CurrentEntity->step) {
     case 8:
-        if (GetDistanceToPlayerX() < 64) {
+        if (OVL_EXPORT(GetDistanceToPlayerX)() < 64) {
             ret = 10;
         }
-        if (GetDistanceToPlayerX() > 80) {
+        if (OVL_EXPORT(GetDistanceToPlayerX)() > 80) {
             ret = 6;
         }
         if (g_CurrentEntity->ext.et_801D0B78.unk88) {
@@ -65,13 +65,13 @@ static s32 func_801D0B78(Entity* ent) {
         break;
 
     case 10:
-        if (GetDistanceToPlayerX() < 88) {
+        if (OVL_EXPORT(GetDistanceToPlayerX)() < 88) {
             ret = 8;
         }
-        if (GetDistanceToPlayerX() < 56) {
+        if (OVL_EXPORT(GetDistanceToPlayerX)() < 56) {
             ret = 7;
         }
-        if (GetDistanceToPlayerX() > 80) {
+        if (OVL_EXPORT(GetDistanceToPlayerX)() > 80) {
             ret = 6;
         }
         if (g_CurrentEntity->ext.et_801D0B78.unk88) {
@@ -80,7 +80,7 @@ static s32 func_801D0B78(Entity* ent) {
         break;
 
     case 12:
-        if (GetDistanceToPlayerX() < 64) {
+        if (OVL_EXPORT(GetDistanceToPlayerX)() < 64) {
             ret = 10;
         }
         break;
@@ -89,19 +89,19 @@ static s32 func_801D0B78(Entity* ent) {
         if (g_CurrentEntity->ext.et_801D0B78.unk88) {
             ret = 7;
         }
-        if (GetDistanceToPlayerX() < 48) {
+        if (OVL_EXPORT(GetDistanceToPlayerX)() < 48) {
             ret = 10;
         }
-        if (GetDistanceToPlayerX() < 80) {
+        if (OVL_EXPORT(GetDistanceToPlayerX)() < 80) {
             ret = 8;
         }
         break;
 
     default:
-        if (GetDistanceToPlayerX() > 80) {
+        if (OVL_EXPORT(GetDistanceToPlayerX)() > 80) {
             ret = 6;
         }
-        if (GetDistanceToPlayerX() < 64) {
+        if (OVL_EXPORT(GetDistanceToPlayerX)() < 64) {
             ret = 10;
         }
         if (g_CurrentEntity->ext.et_801D0B78.unk88) {
@@ -110,7 +110,8 @@ static s32 func_801D0B78(Entity* ent) {
         break;
     }
 
-    if (g_CurrentEntity->facingLeft != ((GetSideToPlayer() & 1) ^ 1)) {
+    if (g_CurrentEntity->facingLeft !=
+        ((OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1)) {
         ret = 12;
     }
     return ret;
@@ -320,7 +321,7 @@ void EntityBlade(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitBlade);
+        OVL_EXPORT(InitializeEntity)(g_EInitBlade);
         // we start on frame 3
         self->animCurFrame = 3;
         // eh nah i change my mind, we start on frame 0
@@ -330,8 +331,8 @@ void EntityBlade(Entity* self) {
         self->hitboxHeight = 6;
         /* fallthrough */
     case 1:
-        if (UnkCollisionFunc3(D_801833E4) & 1) {
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        if (OVL_EXPORT(UnkCollisionFunc3)(D_801833E4) & 1) {
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
             self->step++;
         }
         break;
@@ -479,7 +480,7 @@ void EntityBlade(Entity* self) {
             self->step_s++;
             /* fallthrough */
         case 3:
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             self->velocityY += FIX(11.0 / 128);
             func_801CDF1C(ptr, D_80183720, 0);
             func_801CDE10(ptr);
@@ -740,7 +741,7 @@ void EntityBladeWeapon(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitBladeWeapon);
+        OVL_EXPORT(InitializeEntity)(g_EInitBladeWeapon);
         self->drawFlags |= ENTITY_ROTATE;
         self->hitboxWidth = 6;
         self->hitboxHeight = 6;
@@ -793,7 +794,7 @@ void EntityBladeWeapon(Entity* self) {
         } else {
             self->velocityX = FIX(-8.0);
         }
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
     }
 

@@ -65,17 +65,20 @@ void func_us_801D37A4(void) {
 
     if (g_Player.status & (PLAYER_STATUS_SPELLCAST | PLAYER_STATUS_SUBWPN |
                            PLAYER_STATUS_UNK400)) {
-        if (GetDistanceToPlayerX() > 0x48 && OVL_EXPORT(Random)() & 1) {
-            SetStep(9);
+        if (OVL_EXPORT(GetDistanceToPlayerX)() > 0x48 &&
+            OVL_EXPORT(Random)() & 1) {
+            OVL_EXPORT(SetStep)(9);
         }
     } else {
         if (!--g_CurrentEntity->ext.spearGuard.unk7C) {
-            SetStep(steps[g_CurrentEntity->ext.spearGuard.unk84++ & 7]);
+            OVL_EXPORT(SetStep)
+            (steps[g_CurrentEntity->ext.spearGuard.unk84++ & 7]);
             g_CurrentEntity->ext.spearGuard.unk7C =
                 D_us_80182F0C[OVL_EXPORT(Random)() & 3];
-            if (g_CurrentEntity->params && GetDistanceToPlayerX() > 0x50 &&
+            if (g_CurrentEntity->params &&
+                OVL_EXPORT(GetDistanceToPlayerX)() > 0x50 &&
                 OVL_EXPORT(Random)() & 1) {
-                SetStep(11);
+                OVL_EXPORT(SetStep)(11);
             }
             g_CurrentEntity->velocityX = 0;
         }
@@ -84,15 +87,15 @@ void func_us_801D37A4(void) {
 
 // Spear Guard helper
 void func_us_801D38E4() {
-    if (GetDistanceToPlayerY() > 64) {
-        SetStep(3);
+    if (OVL_EXPORT(GetDistanceToPlayerY)() > 64) {
+        OVL_EXPORT(SetStep)(3);
     }
 }
 
 // Spear Guard helper
 void func_us_801D3918(Entity* self, u8 animationIndex) {
     s32 xVelocity;
-    u16 animRet = AnimateEntity(animations[animationIndex], self);
+    u16 animRet = OVL_EXPORT(AnimateEntity)(animations[animationIndex], self);
     if ((animRet & 0x80) && (self->step == 7) && (self->pose != 3)) {
         if (self->ext.spearGuard.unk88 != self->facingLeft) {
             self->velocityX = -self->velocityX;
@@ -116,7 +119,7 @@ void func_us_801D3918(Entity* self, u8 animationIndex) {
         }
     }
     self->velocityX = xVelocity;
-    if ((UnkCollisionFunc2(D_us_80183064) & 0x60) == 0x60) {
+    if ((OVL_EXPORT(UnkCollisionFunc2)(D_us_80183064) & 0x60) == 0x60) {
         self->posX.val -= xVelocity;
     }
 }
@@ -137,7 +140,7 @@ void EntitySpearGuard(Entity* self) {
     }
     if ((self->step < 12) && (self->flags & FLAG_DEAD)) {
         DestroyEntity(tempEntity);
-        SetStep(12);
+        OVL_EXPORT(SetStep)(12);
         self->hitboxState = 0;
         self->ext.spearGuard.unk7C = 0x40;
         self->drawFlags = ENTITY_OPACITY;
@@ -145,7 +148,7 @@ void EntitySpearGuard(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitSpearGuard);
+        OVL_EXPORT(InitializeEntity)(g_EInitSpearGuard);
         self->ext.spearGuard.unk80 = 0xB0;
         self->ext.spearGuard.unk7C = 0x40;
         self->palette += self->params & 3;
@@ -155,8 +158,8 @@ void EntitySpearGuard(Entity* self) {
         break;
 
     case 1:
-        if (UnkCollisionFunc3(D_us_8018306C) & 1) {
-            SetStep(2);
+        if (OVL_EXPORT(UnkCollisionFunc3)(D_us_8018306C) & 1) {
+            OVL_EXPORT(SetStep)(2);
         }
         break;
 
@@ -169,12 +172,12 @@ void EntitySpearGuard(Entity* self) {
         }
         self->facingLeft = self->ext.spearGuard.unk88;
         func_us_801D3918(self, tempVar);
-        if (GetDistanceToPlayerY() < 0x20) {
-            SetStep(4);
+        if (OVL_EXPORT(GetDistanceToPlayerY)() < 0x20) {
+            OVL_EXPORT(SetStep)(4);
             PlaySfxPositional(SFX_SPEAR_GUARD_MOVE);
             self->velocityX = 0;
-        } else if (GetDistanceToPlayerX() < 0x18) {
-            SetStep(7);
+        } else if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x18) {
+            OVL_EXPORT(SetStep)(7);
             self->velocityX = 0;
         } else if (!--self->ext.spearGuard.unk80) {
             self->ext.spearGuard.unk80 = 0xB0;
@@ -185,7 +188,7 @@ void EntitySpearGuard(Entity* self) {
 
     case 4:
     case 5:
-        xDistance = GetDistanceToPlayerX();
+        xDistance = OVL_EXPORT(GetDistanceToPlayerX)();
         if (self->step == 4 && xDistance < 0x64) {
             self->step = 5;
             self->velocityX = 0;
@@ -194,7 +197,7 @@ void EntitySpearGuard(Entity* self) {
             self->step = 4;
             self->velocityX = 0;
         }
-        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
         if (self->step == 4) {
             self->ext.spearGuard.unk88 = self->facingLeft;
         } else {
@@ -206,9 +209,9 @@ void EntitySpearGuard(Entity* self) {
         break;
 
     case 6:
-        tempVar = AnimateEntity(anim4, self);
+        tempVar = OVL_EXPORT(AnimateEntity)(anim4, self);
         if (!tempVar) {
-            SetStep(4);
+            OVL_EXPORT(SetStep)(4);
             PlaySfxPositional(SFX_SPEAR_GUARD_MOVE);
         } else if ((tempVar & 0x80) && (self->animCurFrame == 7)) {
             PlaySfxPositional(SFX_WEAPON_SWISH_B);
@@ -227,21 +230,21 @@ void EntitySpearGuard(Entity* self) {
                 self->velocityX += FIX(0.25);
             }
         }
-        if ((UnkCollisionFunc2(D_us_80183064) & 0x60) == 0x60) {
+        if ((OVL_EXPORT(UnkCollisionFunc2)(D_us_80183064) & 0x60) == 0x60) {
             self->posX.val -= self->velocityX;
         }
         break;
 
     case 7:
-        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
         func_us_801D3918(self, 3);
         if (!--self->ext.spearGuard.unk7C) {
-            SetStep(8);
-            self->ext.spearGuard.unk8C = GetSideToPlayer();
+            OVL_EXPORT(SetStep)(8);
+            self->ext.spearGuard.unk8C = OVL_EXPORT(GetSideToPlayer)();
             self->velocityX = 0;
         }
-        if (GetDistanceToPlayerX() > 0x48) {
-            SetStep(3);
+        if (OVL_EXPORT(GetDistanceToPlayerX)() > 0x48) {
+            OVL_EXPORT(SetStep)(3);
             self->velocityX = 0;
         }
         break;
@@ -252,11 +255,11 @@ void EntitySpearGuard(Entity* self) {
         } else {
             anim = anim9;
         }
-        tempVar = AnimateEntity(anim, self);
+        tempVar = OVL_EXPORT(AnimateEntity)(anim, self);
         tempEntity->attack = g_api.enemyDefs[94].attack;
         tempEntity->attackElement = g_api.enemyDefs[94].attackElement;
         if (!tempVar) {
-            SetStep(7);
+            OVL_EXPORT(SetStep)(7);
             self->ext.spearGuard.unk7C =
                 D_us_80182F10[OVL_EXPORT(Random)() & 3];
         } else if ((tempVar & 0x80) && ((self->animCurFrame == 0x2D) ||
@@ -271,17 +274,17 @@ void EntitySpearGuard(Entity* self) {
         }
         tempEntity->hitboxState |= 2;
         tempEntity->flags |= FLAG_UNK_8000 | FLAG_UNK_4000;
-        if (!AnimateEntity(anim5, self)) {
+        if (!OVL_EXPORT(AnimateEntity)(anim5, self)) {
             tempEntity->hitboxState &= 0xFFFD;
             tempEntity->flags &= ~(FLAG_UNK_8000 | FLAG_UNK_4000);
-            SetStep(5);
+            OVL_EXPORT(SetStep)(5);
         }
         break;
 
     case 10:
-        tempVar = AnimateEntity(anim6, self);
+        tempVar = OVL_EXPORT(AnimateEntity)(anim6, self);
         if (!tempVar) {
-            SetStep(4);
+            OVL_EXPORT(SetStep)(4);
             PlaySfxPositional(SFX_SPEAR_GUARD_MOVE);
         } else if (tempVar & 0x80) {
             tempVar = self->pose - 6;
@@ -312,15 +315,15 @@ void EntitySpearGuard(Entity* self) {
                 self->velocityX += FIX(0.5);
             }
         }
-        if ((UnkCollisionFunc2(D_us_80183064) & 0x60) == 0x60) {
+        if ((OVL_EXPORT(UnkCollisionFunc2)(D_us_80183064) & 0x60) == 0x60) {
             self->posX.val -= self->velocityX;
         }
         break;
 
     case 11:
-        tempVar = AnimateEntity(anim7, self);
+        tempVar = OVL_EXPORT(AnimateEntity)(anim7, self);
         if (!tempVar) {
-            SetStep(4);
+            OVL_EXPORT(SetStep)(4);
             PlaySfxPositional(SFX_SPEAR_GUARD_MOVE);
         } else if (tempVar & 0x80) {
             tempVar = self->pose - 7;
@@ -331,7 +334,8 @@ void EntitySpearGuard(Entity* self) {
                     self->velocityX = FIX(-8.0);
                 }
                 PlaySfxPositional(SFX_WEAPON_SCRAPE_ECHO);
-                tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                tempEntity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
                 OVL_EXPORT(CreateEntityFromCurrentEntity)
                 (E_THROWN_SPEAR, tempEntity);
                 tempEntity->facingLeft = self->facingLeft;
@@ -345,13 +349,13 @@ void EntitySpearGuard(Entity* self) {
                 self->velocityX += FIX(1.0);
             }
         }
-        if ((UnkCollisionFunc2(D_us_80183064) & 0x60) == 0x60) {
+        if ((OVL_EXPORT(UnkCollisionFunc2)(D_us_80183064) & 0x60) == 0x60) {
             self->posX.val -= self->velocityX;
         }
         break;
 
     case 12:
-        AnimateEntity(anim8, self);
+        OVL_EXPORT(AnimateEntity)(anim8, self);
         if (self->opacity) {
             self->opacity--;
         }
@@ -368,7 +372,8 @@ void EntitySpearGuard(Entity* self) {
                 } else if ((i & 1) == 0) {
                     PlaySfxPositional(SFX_EXPLODE_FAST_B);
                 }
-                tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                tempEntity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
                     OVL_EXPORT(CreateEntityFromCurrentEntity)
                     (E_EXPLOSION, tempEntity);
@@ -390,7 +395,7 @@ void EntitySpearGuardBlock(Entity* self) {
     u16 animCurFrame;
 
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         self->hitboxState = 1;
     }
     if (!(self->hitFlags & 0x80) && self->hitFlags) {
@@ -424,7 +429,7 @@ void EntityThrownSpear(Entity* self) {
     spearGuard = self->ext.thrownSpear.spearGuard;
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitThrownSpear);
+        OVL_EXPORT(InitializeEntity)(g_EInitThrownSpear);
         self->drawFlags = ENTITY_ROTATE;
         self->rotate = 0;
         break;
@@ -457,7 +462,7 @@ void EntityThrownSpear(Entity* self) {
         if (!self->facingLeft) {
             self->rotate = 0x800 - self->rotate;
         }
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         break;
     }
 }

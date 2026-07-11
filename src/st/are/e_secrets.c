@@ -23,7 +23,7 @@ void EntityBreakableCeilingSecret(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitEnvironment);
+        OVL_EXPORT(InitializeEntity)(g_EInitEnvironment);
         self->animCurFrame = 0xA;
         self->zPriority = 0x69;
 
@@ -60,8 +60,8 @@ void EntityBreakableCeilingSecret(Entity* self) {
         self->ext.breakable.breakCount++;
         self->animCurFrame++;
 
-        newEntity =
-            AllocEntity(&g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
+        newEntity = OVL_EXPORT(AllocEntity)(
+            &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
         if (newEntity != NULL) {
             OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, newEntity);
             newEntity->params = EXPLOSION_UNK_19;

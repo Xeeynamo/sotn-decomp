@@ -197,7 +197,7 @@ void EntityStainedGlass(Entity* self) {
 
     switch (self->step) {
     case 0: // init
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 60);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
@@ -421,7 +421,7 @@ void EntityStainedGlassBackground(Entity* self) {
     g_GpuBuffers[1].draw.b0 = 24;
     switch (self->step) {
     case 0: // init
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 19);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;

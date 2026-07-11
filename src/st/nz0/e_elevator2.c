@@ -14,7 +14,7 @@ void EntityBloodSkeleElevButton(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         self->hitboxWidth = 6;
         self->hitboxHeight = 8;
         self->hitboxOffY = -22;
@@ -79,10 +79,10 @@ void EntityElevator2(Entity* self) {
     s32 i;
     Primitive* prim;
 
-    isPlayerColliding = GetPlayerCollisionWith(self, 16, 5, 4);
+    isPlayerColliding = OVL_EXPORT(GetPlayerCollisionWith)(self, 16, 5, 4);
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         self->hitboxOffX = 0;
         self->hitboxOffY = 68;
         g_CallElevator = 0;

@@ -21,11 +21,11 @@ void EntitySpikeRoomLightSwitch(Entity* self) {
         ROOM_LIT = 7
     };
 
-    var_s2 = GetPlayerCollisionWith(
+    var_s2 = OVL_EXPORT(GetPlayerCollisionWith)(
         self, 0x28, self->ext.spikeRoomSwitch.collisionHeight, 4);
     switch (self->step) {
     case INIT:
-        InitializeEntity(g_EInitSpikeRoomLightSwitch);
+        OVL_EXPORT(InitializeEntity)(g_EInitSpikeRoomLightSwitch);
         self->hitboxState = 1;
         self->hitboxWidth = 0x28;
         self->hitboxHeight = 8;

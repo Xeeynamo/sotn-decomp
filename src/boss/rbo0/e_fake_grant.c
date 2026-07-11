@@ -99,28 +99,28 @@ void EntityFakeGrant(Entity* self) {
     bool onLeftSide;
 
     if ((self->hitFlags & 3) && self->step < 8) {
-        SetStep(8);
+        OVL_EXPORT(SetStep)(8);
     }
     if (self->flags & FLAG_DEAD && self->step != 11) {
-        SetStep(11);
+        OVL_EXPORT(SetStep)(11);
     }
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_801804B8);
+        OVL_EXPORT(InitializeEntity)(D_us_801804B8);
         self->hitboxState = 0;
         entity = self - 1;
         OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(COFFIN), entity);
         entity->posY.i.hi = 0xBA - g_Tilemap.scrollY.i.hi;
         entity = self + 1;
         OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(UNK_26), entity);
-        SetStep(1);
+        OVL_EXPORT(SetStep)(1);
         // fallthrough
 
     case 1:
         self->animCurFrame = 3;
         if (D_us_801806B0 & 1) {
-            SetStep(2);
+            OVL_EXPORT(SetStep)(2);
         }
         break;
 
@@ -142,7 +142,7 @@ void EntityFakeGrant(Entity* self) {
         case 2:
             if (D_us_801806B0 & 2) {
                 self->hitboxState = 3;
-                SetStep(3);
+                OVL_EXPORT(SetStep)(3);
             }
             break;
         }
@@ -150,24 +150,24 @@ void EntityFakeGrant(Entity* self) {
     case 3:
         switch (self->step_s) {
         case 0:
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
             self->animCurFrame = 0x93;
             self->velocityX = 0;
             self->velocityY = FIX(-8.0);
             self->step_s++;
             // fallthrough
         case 1:
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             self->velocityY += FIX(0.09375);
             if (func_us_80196838(D_us_80180B68) & 1) {
                 PlaySfxPositional(SFX_STOMP_HARD_B);
-                SetSubStep(2);
+                OVL_EXPORT(SetSubStep)(2);
             }
             break;
         case 2:
-            MoveEntity();
-            if (!AnimateEntity(D_us_80180BE8, self)) {
-                SetStep(4);
+            OVL_EXPORT(MoveEntity)();
+            if (!OVL_EXPORT(AnimateEntity)(D_us_80180BE8, self)) {
+                OVL_EXPORT(SetStep)(4);
             }
             break;
         }
@@ -179,44 +179,46 @@ void EntityFakeGrant(Entity* self) {
             }
             self->step_s++;
         }
-        AnimateEntity(D_us_80180B78, self);
+        OVL_EXPORT(AnimateEntity)(D_us_80180B78, self);
         if (self->facingLeft) {
             self->velocityX = FIX(1.0);
         } else {
             self->velocityX = FIX(-1.0);
         }
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         if (!--self->ext.grant.timer) {
-            SetStep(4);
+            OVL_EXPORT(SetStep)(4);
             if (D_us_801806B4 > 1) {
-                SetStep(6);
+                OVL_EXPORT(SetStep)(6);
             }
         }
-        onLeftSide = ((GetSideToPlayer() & 1) ^ 1);
-        if (self->facingLeft != onLeftSide && GetDistanceToPlayerX() > 0x40) {
-            SetStep(7);
+        onLeftSide = ((OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1);
+        if (self->facingLeft != onLeftSide &&
+            OVL_EXPORT(GetDistanceToPlayerX)() > 0x40) {
+            OVL_EXPORT(SetStep)(7);
         }
-        if (GetDistanceToPlayerX() < 4) {
-            SetStep(5);
+        if (OVL_EXPORT(GetDistanceToPlayerX)() < 4) {
+            OVL_EXPORT(SetStep)(5);
             if ((D_us_801806B4 > 0) && (OVL_EXPORT(Random)() & 1)) {
-                SetStep(6);
+                OVL_EXPORT(SetStep)(6);
             }
         }
         break;
     case 7:
-        if (AnimateEntity(D_us_80180B8C, self) == 0) {
+        if (OVL_EXPORT(AnimateEntity)(D_us_80180B8C, self) == 0) {
             self->facingLeft ^= 1;
             self->animCurFrame = 0x6D;
-            SetStep(4);
+            OVL_EXPORT(SetStep)(4);
         }
         break;
     case 5:
-        if (AnimateEntity(D_us_80180BA0, self) == 0) {
-            SetStep(4);
+        if (OVL_EXPORT(AnimateEntity)(D_us_80180BA0, self) == 0) {
+            OVL_EXPORT(SetStep)(4);
         }
         if (!self->poseTimer && self->pose == 2) {
             PlaySfxPositional(SFX_ARROW_SHOT_A);
-            entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            entity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
                 // BUG! additional arg
                 OVL_EXPORT(CreateEntityFromEntity)
@@ -227,8 +229,8 @@ void EntityFakeGrant(Entity* self) {
     case 6:
         switch (self->step_s) {
         case 0:
-            if (AnimateEntity(D_us_80180BB0, self) == 0) {
-                SetSubStep(1);
+            if (OVL_EXPORT(AnimateEntity)(D_us_80180BB0, self) == 0) {
+                OVL_EXPORT(SetSubStep)(1);
             }
             if (!self->poseTimer && self->pose == 0xC) {
                 PlaySfxPositional(SFX_UI_SUBWEAPON_TINK);
@@ -242,33 +244,33 @@ void EntityFakeGrant(Entity* self) {
             // fallthrough
         case 2:
             self->rotate -= ROT(33.75);
-            AnimateEntity(D_us_80180BCC, self);
+            OVL_EXPORT(AnimateEntity)(D_us_80180BCC, self);
             if (self->hitFlags & 0x80) {
                 self->drawFlags = ENTITY_DEFAULT;
-                SetSubStep(3);
+                OVL_EXPORT(SetSubStep)(3);
             }
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             self->velocityY += FIX(0.0625);
             if (func_us_80194338(D_us_80180B58) & 1) {
                 self->drawFlags = ENTITY_DEFAULT;
-                SetSubStep(4);
+                OVL_EXPORT(SetSubStep)(4);
                 if (D_us_801806B4 > 1) {
-                    SetStep(0xA);
+                    OVL_EXPORT(SetStep)(0xA);
                 }
             }
             break;
         case 3:
-            AnimateEntity(D_us_80180BD4, self);
-            MoveEntity();
+            OVL_EXPORT(AnimateEntity)(D_us_80180BD4, self);
+            OVL_EXPORT(MoveEntity)();
             if (func_us_80194338(D_us_80180B58) & 1) {
                 PlaySfxPositional(SFX_STOMP_HARD_B);
                 self->drawFlags = ENTITY_DEFAULT;
-                SetSubStep(4);
+                OVL_EXPORT(SetSubStep)(4);
             }
             break;
         case 4:
-            if (AnimateEntity(D_us_80180BDC, self) == 0) {
-                SetStep(9);
+            if (OVL_EXPORT(AnimateEntity)(D_us_80180BDC, self) == 0) {
+                OVL_EXPORT(SetStep)(9);
             }
             break;
         }
@@ -282,17 +284,17 @@ void EntityFakeGrant(Entity* self) {
             self->step_s++;
             // fallthrough
         case 1:
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             self->velocityY += FIX(0.09375);
             if (func_us_80196838(D_us_80180B68) & 1) {
                 PlaySfxPositional(SFX_STOMP_HARD_B);
-                SetSubStep(2);
+                OVL_EXPORT(SetSubStep)(2);
             }
             break;
         case 2:
-            MoveEntity();
-            if (!AnimateEntity(D_us_80180BE8, self)) {
-                SetStep(4);
+            OVL_EXPORT(MoveEntity)();
+            if (!OVL_EXPORT(AnimateEntity)(D_us_80180BE8, self)) {
+                OVL_EXPORT(SetStep)(4);
             }
             break;
         }
@@ -300,20 +302,21 @@ void EntityFakeGrant(Entity* self) {
     case 10:
         switch (self->step_s) {
         case 0:
-            if (((GetSideToPlayer() & 1) ^ 1) == self->facingLeft) {
-                SetSubStep(2);
+            if (((OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1) == self->facingLeft) {
+                OVL_EXPORT(SetSubStep)(2);
                 break;
             }
-            SetSubStep(1);
+            OVL_EXPORT(SetSubStep)(1);
             self->facingLeft ^= 1;
         case 1:
-            if (AnimateEntity(D_us_80180C40, self) == 0) {
-                SetStep(9);
+            if (OVL_EXPORT(AnimateEntity)(D_us_80180C40, self) == 0) {
+                OVL_EXPORT(SetStep)(9);
             }
 
             if (!self->poseTimer && self->pose == 9) {
                 PlaySfxPositional(SFX_ARROW_SHOT_A);
-                entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                entity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
                     OVL_EXPORT(CreateEntityFromEntity)
                     (E_ID(HORIZONTAL_DAGGER), self, entity);
@@ -322,12 +325,13 @@ void EntityFakeGrant(Entity* self) {
             }
             break;
         case 2:
-            if (AnimateEntity(D_us_80180C14, self) == 0) {
-                SetStep(9);
+            if (OVL_EXPORT(AnimateEntity)(D_us_80180C14, self) == 0) {
+                OVL_EXPORT(SetStep)(9);
             }
             if (!self->poseTimer && (self->pose == 6 || self->pose == 15)) {
                 PlaySfxPositional(SFX_ARROW_SHOT_A);
-                entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                entity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
                     OVL_EXPORT(CreateEntityFromEntity)
                     (E_ID(HORIZONTAL_DAGGER), self, entity);
@@ -346,7 +350,7 @@ void EntityFakeGrant(Entity* self) {
                 self->hitboxState = 0;
                 D_us_801806B4++;
             }
-            if (GetSideToPlayer() & 1) {
+            if (OVL_EXPORT(GetSideToPlayer)() & 1) {
                 self->velocityX = FIX(2.0);
             } else {
                 self->velocityX = FIX(-2.0);
@@ -354,38 +358,38 @@ void EntityFakeGrant(Entity* self) {
             self->posY.i.hi--;
             if (func_us_80196838(D_us_80180B68) & 1) {
                 PlaySfxPositional(SFX_STOMP_HARD_B);
-                SetSubStep(2);
+                OVL_EXPORT(SetSubStep)(2);
             } else {
                 self->velocityY = FIX(-2.0);
-                SetSubStep(1);
+                OVL_EXPORT(SetSubStep)(1);
             }
             // fallthrough
         case 1:
-            if (AnimateEntity(D_us_80180BF4, self) == 0) {
-                SetSubStep(3);
+            if (OVL_EXPORT(AnimateEntity)(D_us_80180BF4, self) == 0) {
+                OVL_EXPORT(SetSubStep)(3);
             }
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             self->velocityY += FIX(0.125);
             if (func_us_80194338(D_us_80180B58) & 1) {
-                SetSubStep(4);
+                OVL_EXPORT(SetSubStep)(4);
             }
             break;
         case 2:
-            if (AnimateEntity(D_us_80180C00, self) == 0) {
-                SetSubStep(3);
+            if (OVL_EXPORT(AnimateEntity)(D_us_80180C00, self) == 0) {
+                OVL_EXPORT(SetSubStep)(3);
             }
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             self->velocityY += FIX(0.125);
             if (func_us_80194338(D_us_80180B58) & 1) {
-                SetSubStep(4);
+                OVL_EXPORT(SetSubStep)(4);
             }
             break;
         case 3:
-            AnimateEntity(D_us_80180C0C, self);
-            MoveEntity();
+            OVL_EXPORT(AnimateEntity)(D_us_80180C0C, self);
+            OVL_EXPORT(MoveEntity)();
             self->velocityY += FIX(0.125);
             if (func_us_80194338(D_us_80180B58) & 1) {
-                SetSubStep(4);
+                OVL_EXPORT(SetSubStep)(4);
             }
             break;
         case 4:
@@ -394,14 +398,15 @@ void EntityFakeGrant(Entity* self) {
                 PlaySfxPositional(SFX_BOSS_LARGE_FLAMES);
                 self->step_s++;
             } else if (D_us_801806B4 > 1) {
-                SetStep(0xA);
-            } else if (AnimateEntity(D_us_80180BDC, self) == 0) {
-                SetStep(9);
+                OVL_EXPORT(SetStep)(0xA);
+            } else if (OVL_EXPORT(AnimateEntity)(D_us_80180BDC, self) == 0) {
+                OVL_EXPORT(SetStep)(9);
             }
             break;
         case 5:
             if (!(g_Timer & 3)) {
-                entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                entity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
                     OVL_EXPORT(CreateEntityFromEntity)
                     (E_ID(DEATH_FLAMES), self, entity);
@@ -454,16 +459,16 @@ void EntityVerticalDagger(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180518);
+        OVL_EXPORT(InitializeEntity)(D_us_80180518);
         self->animCurFrame = 0xA8;
         self->velocityY = FIX(3.0);
         self->hitboxOffY = 5;
         // fallthrough
     case 1:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityY += FIX(0.03125);
         if (self->flags & FLAG_DEAD) {
-            if (GetSideToPlayer() & 1) {
+            if (OVL_EXPORT(GetSideToPlayer)() & 1) {
                 self->velocityX = FIX(2.0);
             } else {
                 self->velocityX = FIX(-2.0);
@@ -474,7 +479,7 @@ void EntityVerticalDagger(Entity* self) {
         }
         break;
     case 2:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityY += FIX(0.25);
         self->rotate += ROT(11.25);
         if (g_Timer & 1) {
@@ -501,7 +506,7 @@ void EntityHorizontalDagger(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180518);
+        OVL_EXPORT(InitializeEntity)(D_us_80180518);
         self->animCurFrame = 0xA8;
         self->drawFlags = ENTITY_ROTATE;
         self->rotate = ROT(90);
@@ -514,7 +519,7 @@ void EntityHorizontalDagger(Entity* self) {
         self->hitboxHeight = 4;
         // fallthrough
     case 1:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         if (self->flags & FLAG_DEAD) {
             self->hitboxState = 0;
             self->velocityX = -self->velocityX / 4;
@@ -524,7 +529,7 @@ void EntityHorizontalDagger(Entity* self) {
         }
         break;
     case 2:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityY += FIX(0.25);
         self->rotate += ROT(11.25);
         if (g_Timer & 1) {
@@ -560,7 +565,7 @@ void func_us_80197764(Entity* self) {
     s32 animCurFrame;
 
     if (!self->step) {
-        InitializeEntity(D_us_80180524);
+        OVL_EXPORT(InitializeEntity)(D_us_80180524);
         self->hitboxWidth = 0x10;
         self->hitboxHeight = 0x10;
         self->hitboxState = 0;

@@ -5,7 +5,7 @@ static s32 func_us_801946F4(void) {
     s32 ret;
     s32 status;
 
-    status = GetSideToPlayer() & 1;
+    status = OVL_EXPORT(GetSideToPlayer)() & 1;
     if (g_CurrentEntity->facingLeft != status) {
         return false;
     }
@@ -19,7 +19,7 @@ static s32 func_us_801946F4(void) {
         }
     }
     if (status & 0x400) {
-        if (GetDistanceToPlayerX() < 0x40) {
+        if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x40) {
             if (status & 0x20) {
                 ret = 0x11;
             } else {
@@ -191,18 +191,18 @@ void EntityFakeRalph(Entity* self) {
     FntPrint("step %x\n", self->step);
     FntPrint("item %x\n", self->ext.ralph.itemEntityId);
     if ((g_Player.status & PLAYER_STATUS_DEAD) && self->step < 16) {
-        SetStep(16);
+        OVL_EXPORT(SetStep)(16);
     }
     if ((self->hitFlags & 3) && self->step < 11) {
-        SetStep(11);
+        OVL_EXPORT(SetStep)(11);
     }
     if (self->flags & FLAG_DEAD && self->step != 21) {
-        SetStep(21);
+        OVL_EXPORT(SetStep)(21);
     }
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_801804AC);
+        OVL_EXPORT(InitializeEntity)(D_us_801804AC);
         self->hitboxState = 0;
         entity = self - 1;
         OVL_EXPORT(CreateEntityFromCurrentEntity)(E_COFFIN, entity);
@@ -210,12 +210,12 @@ void EntityFakeRalph(Entity* self) {
         entity = self + 1;
         OVL_EXPORT(CreateEntityFromCurrentEntity)(E_UNK_27, entity);
         self->ext.ralph.itemEntityId = E_BONE_CROSS;
-        SetStep(1);
+        OVL_EXPORT(SetStep)(1);
         // fallthrough
     case 1:
         self->animCurFrame = 1;
         if (D_us_801806B0 & 1) {
-            SetStep(2);
+            OVL_EXPORT(SetStep)(2);
         }
         break;
     case 2:
@@ -236,7 +236,7 @@ void EntityFakeRalph(Entity* self) {
         case 2:
             if (D_us_801806B0 & 2) {
                 self->hitboxState = 3;
-                SetStep(3);
+                OVL_EXPORT(SetStep)(3);
             }
             break;
         }
@@ -244,7 +244,7 @@ void EntityFakeRalph(Entity* self) {
     case 3:
         switch (self->step_s) {
         case 0:
-            if (UnkCollisionFunc3(D_us_80180958) & 1) {
+            if (OVL_EXPORT(UnkCollisionFunc3)(D_us_80180958) & 1) {
                 self->step_s++;
             }
             break;
@@ -263,61 +263,61 @@ void EntityFakeRalph(Entity* self) {
             self->step_s++;
             // fallthrough
         case 2:
-            MoveEntity();
-            AnimateEntity(D_us_8018097C, self);
+            OVL_EXPORT(MoveEntity)();
+            OVL_EXPORT(AnimateEntity)(D_us_8018097C, self);
             distanceX = 0x100 - g_Tilemap.scrollX.i.hi;
             distanceX -= self->posX.i.hi;
             if (self->facingLeft) {
                 distanceX = -distanceX;
             }
             if (distanceX < 0) {
-                SetSubStep(3);
+                OVL_EXPORT(SetSubStep)(3);
             }
             break;
         case 3:
-            SetStep(4);
+            OVL_EXPORT(SetStep)(4);
             break;
         }
         break;
 
     case 7:
-        SetStep(4);
+        OVL_EXPORT(SetStep)(4);
         if (D_us_801806B4 > 1) {
-            SetStep(5);
+            OVL_EXPORT(SetStep)(5);
         }
         break;
 
     case 6:
-        SetStep(12);
+        OVL_EXPORT(SetStep)(12);
         if (!(OVL_EXPORT(Random)() & 7)) {
-            SetStep(14);
+            OVL_EXPORT(SetStep)(14);
         }
         if (g_Player.status & PLAYER_STATUS_SUBWPN) {
-            SetStep(13);
+            OVL_EXPORT(SetStep)(13);
         }
         if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
-            SetStep(13);
+            OVL_EXPORT(SetStep)(13);
         }
-        if (GetDistanceToPlayerX() > 80) {
-            SetStep(14);
+        if (OVL_EXPORT(GetDistanceToPlayerX)() > 80) {
+            OVL_EXPORT(SetStep)(14);
         }
         if (!(OVL_EXPORT(Random)() & 0xF)) {
-            SetStep(10);
+            OVL_EXPORT(SetStep)(10);
         }
         if (D_us_801806B4 > 0) {
             if (g_Player.status & PLAYER_STATUS_UNK2000) {
-                SetStep(20);
-                if (GetDistanceToPlayerX() > 80) {
-                    SetStep(8);
+                OVL_EXPORT(SetStep)(20);
+                if (OVL_EXPORT(GetDistanceToPlayerX)() > 80) {
+                    OVL_EXPORT(SetStep)(8);
                 }
             }
             if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
-                SetStep(19);
+                OVL_EXPORT(SetStep)(19);
             }
-            if (D_us_801806B4 >= 2 && GetDistanceToPlayerX() > 80 &&
+            if (D_us_801806B4 >= 2 && OVL_EXPORT(GetDistanceToPlayerX)() > 80 &&
                 self->ext.ralph.itemEntityId == 33 &&
                 !(OVL_EXPORT(Random)() & 3)) {
-                SetStep(15);
+                OVL_EXPORT(SetStep)(15);
             }
         }
         break;
@@ -326,12 +326,12 @@ void EntityFakeRalph(Entity* self) {
             self->ext.ralph.timer = 64;
             self->step_s++;
         }
-        if (AnimateEntity(D_us_80180968, self) == 0) {
-            self->facingLeft = GetSideToPlayer() & 1;
+        if (OVL_EXPORT(AnimateEntity)(D_us_80180968, self) == 0) {
+            self->facingLeft = OVL_EXPORT(GetSideToPlayer)() & 1;
         }
 
         if (!--self->ext.ralph.timer) {
-            SetStep(5);
+            OVL_EXPORT(SetStep)(5);
         }
         if (D_us_801806B4 > 0) {
             temp_s2_3 = func_us_801946F4();
@@ -340,8 +340,8 @@ void EntityFakeRalph(Entity* self) {
     case 5:
         if (!self->step_s) {
             self->ext.ralph.timer = 128;
-            distanceX = GetDistanceToPlayerX();
-            temp_s2_3 = GetSideToPlayer() & 1;
+            distanceX = OVL_EXPORT(GetDistanceToPlayerX)();
+            temp_s2_3 = OVL_EXPORT(GetSideToPlayer)() & 1;
             if (distanceX < 0x50) {
                 self->facingLeft = temp_s2_3 ^ 1;
             } else {
@@ -349,27 +349,27 @@ void EntityFakeRalph(Entity* self) {
             }
             self->step_s++;
         }
-        AnimateEntity(D_us_8018097C, self);
+        OVL_EXPORT(AnimateEntity)(D_us_8018097C, self);
         if (self->facingLeft) {
             self->velocityX = FIX(-1);
         } else {
             self->velocityX = FIX(1);
         }
-        MoveEntity();
-        temp_s2_3 = GetSideToPlayer() & 1;
-        distanceX = GetDistanceToPlayerX();
+        OVL_EXPORT(MoveEntity)();
+        temp_s2_3 = OVL_EXPORT(GetSideToPlayer)() & 1;
+        distanceX = OVL_EXPORT(GetDistanceToPlayerX)();
         if (self->facingLeft == temp_s2_3) {
             if (distanceX < 0x50) {
-                SetStep(6);
+                OVL_EXPORT(SetStep)(6);
                 break;
             }
         } else if (distanceX > 80) {
-            SetStep(6);
+            OVL_EXPORT(SetStep)(6);
             break;
         }
 
         if (!--self->ext.ralph.timer) {
-            SetStep(6);
+            OVL_EXPORT(SetStep)(6);
         }
         if (D_us_801806B4 > 0) {
             temp_s2_3 = func_us_801946F4();
@@ -379,11 +379,11 @@ void EntityFakeRalph(Entity* self) {
 
     case 12:
         if (!self->step_s) {
-            self->facingLeft = GetSideToPlayer() & 1;
+            self->facingLeft = OVL_EXPORT(GetSideToPlayer)() & 1;
             self->step_s++;
         }
-        if (AnimateEntity(D_us_80180A08, self) == 0) {
-            SetStep(7);
+        if (OVL_EXPORT(AnimateEntity)(D_us_80180A08, self) == 0) {
+            OVL_EXPORT(SetStep)(7);
         }
         if (!self->poseTimer && self->pose == 11) {
             PlaySfxPositional(SFX_BOSS_RIC_ATTACK_A);
@@ -393,11 +393,11 @@ void EntityFakeRalph(Entity* self) {
     case 13:
         if (!self->step_s) {
             PlaySfxPositional(SFX_BOSS_RIC_ATTACK_A);
-            self->facingLeft = GetSideToPlayer() & 1;
+            self->facingLeft = OVL_EXPORT(GetSideToPlayer)() & 1;
             self->step_s++;
         }
-        if (!AnimateEntity(D_us_80180A3C, self)) {
-            SetStep(7);
+        if (!OVL_EXPORT(AnimateEntity)(D_us_80180A3C, self)) {
+            OVL_EXPORT(SetStep)(7);
         }
         break;
 
@@ -419,11 +419,11 @@ void EntityFakeRalph(Entity* self) {
             // fallthrough
         case 1:
             if (self->step == 0x12) {
-                AnimateEntity(D_us_801809F8, self);
+                OVL_EXPORT(AnimateEntity)(D_us_801809F8, self);
             } else {
-                AnimateEntity(D_us_801809DC, self);
+                OVL_EXPORT(AnimateEntity)(D_us_801809DC, self);
             }
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             self->velocityY += FIX(0.1875);
             if (self->velocityY < FIX(-1)) {
                 self->step_s++;
@@ -431,23 +431,23 @@ void EntityFakeRalph(Entity* self) {
             break;
         case 2:
             self->animCurFrame = 0x21;
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             func_us_80194338(D_us_80180958);
             self->velocityY += FIX(0.1875);
             if (self->velocityY > FIX(-1)) {
-                SetSubStep(3);
+                OVL_EXPORT(SetSubStep)(3);
             }
             break;
         case 3:
             if (self->step == 18) {
-                AnimateEntity(D_us_80180A00, self);
+                OVL_EXPORT(AnimateEntity)(D_us_80180A00, self);
             } else {
-                AnimateEntity(D_us_801809E4, self);
+                OVL_EXPORT(AnimateEntity)(D_us_801809E4, self);
             }
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             self->velocityY += FIX(0.1875);
             if (func_us_80194338(D_us_80180958) & 1) {
-                SetStep(6);
+                OVL_EXPORT(SetStep)(6);
             }
         }
         break;
@@ -456,8 +456,8 @@ void EntityFakeRalph(Entity* self) {
     case 19:
         switch (self->step_s) {
         case 0:
-            self->facingLeft = GetSideToPlayer() & 1;
-            if (GetDistanceToPlayerX() > 0x70) {
+            self->facingLeft = OVL_EXPORT(GetSideToPlayer)() & 1;
+            if (OVL_EXPORT(GetDistanceToPlayerX)() > 0x70) {
                 self->step = 19;
             }
             self->velocityY = FIX(-4.75);
@@ -474,11 +474,11 @@ void EntityFakeRalph(Entity* self) {
             // fallthrough
         case 1:
             if (self->step == 0x12) {
-                AnimateEntity(D_us_801809F8, self);
+                OVL_EXPORT(AnimateEntity)(D_us_801809F8, self);
             } else {
-                AnimateEntity(D_us_801809DC, self);
+                OVL_EXPORT(AnimateEntity)(D_us_801809DC, self);
             }
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             self->velocityY += FIX(0.1875);
             if (self->velocityY < FIX(-1)) {
                 self->step_s++;
@@ -486,7 +486,7 @@ void EntityFakeRalph(Entity* self) {
             break;
         case 2:
             self->animCurFrame = 0x21;
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             func_us_80194338(D_us_80180958);
             self->velocityY += FIX(0.1875);
             if (self->velocityY > FIX(0)) {
@@ -494,8 +494,8 @@ void EntityFakeRalph(Entity* self) {
             }
             break;
         case 3:
-            if (AnimateEntity(D_us_80180A68, self) == 0) {
-                SetSubStep(4);
+            if (OVL_EXPORT(AnimateEntity)(D_us_80180A68, self) == 0) {
+                OVL_EXPORT(SetSubStep)(4);
             }
             if (!self->poseTimer && self->pose == 5) {
                 PlaySfxPositional(SFX_BOSS_RIC_WHIP_ATTACK);
@@ -504,16 +504,16 @@ void EntityFakeRalph(Entity* self) {
         case 4:
             if (self->step_s == 4) {
                 if (self->velocityX) {
-                    AnimateEntity(D_us_80180A00, self);
+                    OVL_EXPORT(AnimateEntity)(D_us_80180A00, self);
                 } else {
-                    AnimateEntity(D_us_801809E4, self);
+                    OVL_EXPORT(AnimateEntity)(D_us_801809E4, self);
                 }
             }
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             self->velocityY += FIX(0.1875);
             if (func_us_80194338(D_us_80180958) & 1) {
                 if (self->step_s == 4) {
-                    SetStep(7);
+                    OVL_EXPORT(SetStep)(7);
                 }
             }
             break;
@@ -523,15 +523,15 @@ void EntityFakeRalph(Entity* self) {
     case 8:
         switch (self->step_s) {
         case 0:
-            self->facingLeft = GetSideToPlayer() & 1;
+            self->facingLeft = OVL_EXPORT(GetSideToPlayer)() & 1;
             self->velocityY = FIX(-4.75);
             self->velocityX = 0;
             self->step_s++;
             // fallthrough
 
         case 1:
-            AnimateEntity(D_us_801809DC, self);
-            MoveEntity();
+            OVL_EXPORT(AnimateEntity)(D_us_801809DC, self);
+            OVL_EXPORT(MoveEntity)();
             self->velocityY += FIX(0.1875);
             if (self->velocityY < FIX(-1)) {
                 self->step_s++;
@@ -539,7 +539,7 @@ void EntityFakeRalph(Entity* self) {
             break;
         case 2:
             self->animCurFrame = 0x21;
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             func_us_80194338(D_us_80180958);
             self->velocityY += FIX(0.1875);
             if (self->velocityY > FIX(0)) {
@@ -548,11 +548,12 @@ void EntityFakeRalph(Entity* self) {
             }
             break;
         case 3:
-            if (AnimateEntity(D_us_80180AA4, self) == 0) {
-                SetSubStep(4);
+            if (OVL_EXPORT(AnimateEntity)(D_us_80180AA4, self) == 0) {
+                OVL_EXPORT(SetSubStep)(4);
             }
             if (!self->poseTimer && self->pose == 5) {
-                entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                entity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
                     OVL_EXPORT(CreateEntityFromEntity)
                     (self->ext.ralph.itemEntityId, self, entity);
@@ -563,12 +564,12 @@ void EntityFakeRalph(Entity* self) {
             // fallthrough
         case 4:
             if (self->step_s == 4) {
-                AnimateEntity(D_us_801809E4, self);
+                OVL_EXPORT(AnimateEntity)(D_us_801809E4, self);
             }
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             self->velocityY += FIX(0.1875);
             if ((func_us_80194338(D_us_80180958) & 1) && self->step_s == 4) {
-                SetStep(7);
+                OVL_EXPORT(SetStep)(7);
             }
             break;
         }
@@ -576,15 +577,16 @@ void EntityFakeRalph(Entity* self) {
 
     case 14:
         if (!self->step_s) {
-            self->facingLeft = GetSideToPlayer() & 1;
+            self->facingLeft = OVL_EXPORT(GetSideToPlayer)() & 1;
             self->step_s++;
         }
-        if (AnimateEntity(D_us_80180A94, self) == 0) {
-            SetStep(7);
+        if (OVL_EXPORT(AnimateEntity)(D_us_80180A94, self) == 0) {
+            OVL_EXPORT(SetStep)(7);
         }
         if (!self->poseTimer && self->pose == 5) {
             PlaySfxPositional(SFX_BOSS_RIC_ATTACK_B);
-            entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            entity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)
                 (self->ext.ralph.itemEntityId, self, entity);
@@ -595,27 +597,27 @@ void EntityFakeRalph(Entity* self) {
         break;
 
     case 9:
-        if (AnimateEntity(D_us_801809C4, self) == 0) {
+        if (OVL_EXPORT(AnimateEntity)(D_us_801809C4, self) == 0) {
             if (OVL_EXPORT(Random)() & 1) {
-                SetStep(7);
+                OVL_EXPORT(SetStep)(7);
             } else {
-                SetStep(6);
+                OVL_EXPORT(SetStep)(6);
             }
         }
         break;
     case 10:
         if (!self->step_s) {
-            self->facingLeft = GetSideToPlayer() & 1;
+            self->facingLeft = OVL_EXPORT(GetSideToPlayer)() & 1;
             self->step_s++;
         }
-        if (AnimateEntity(D_us_80180AE0, self) == 0) {
+        if (OVL_EXPORT(AnimateEntity)(D_us_80180AE0, self) == 0) {
             temp_s2_3 = OVL_EXPORT(Random)() & 3;
             if (temp_s2_3 == 3 && D_us_801806B4 < 2) {
                 temp_s2_3 = 0;
             }
             itemID = D_us_80180B48[temp_s2_3];
             self->ext.ralph.itemEntityId = itemID;
-            SetStep(14);
+            OVL_EXPORT(SetStep)(14);
         }
         if (!self->poseTimer && self->pose == 3) {
             PlaySfxPositional(SFX_UI_SUBWEAPON_TINK);
@@ -625,24 +627,25 @@ void EntityFakeRalph(Entity* self) {
     case 15:
         switch (self->step_s) {
         case 0:
-            self->facingLeft = GetSideToPlayer() & 1;
+            self->facingLeft = OVL_EXPORT(GetSideToPlayer)() & 1;
             self->ext.ralph.timer = 8;
             self->step_s++;
             // fallthrough
         case 1:
-            if (AnimateEntity(D_us_80180AC4, self) == 0) {
-                SetSubStep(2);
+            if (OVL_EXPORT(AnimateEntity)(D_us_80180AC4, self) == 0) {
+                OVL_EXPORT(SetSubStep)(2);
             }
             break;
         case 2:
-            if (AnimateEntity(D_us_80180ACC, self) == 0) {
+            if (OVL_EXPORT(AnimateEntity)(D_us_80180ACC, self) == 0) {
                 if (!--self->ext.ralph.timer) {
-                    SetStep(7);
+                    OVL_EXPORT(SetStep)(7);
                     break;
                 }
             }
             if (!self->poseTimer && (self->pose == 2 || self->pose == 6)) {
-                entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                entity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
                     OVL_EXPORT(CreateEntityFromEntity)(E_DAGGER, self, entity);
                     if (self->pose == 2) {
@@ -659,18 +662,18 @@ void EntityFakeRalph(Entity* self) {
     case 16:
         switch (self->step_s) {
         case 0:
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             self->velocityX = 0;
             self->velocityY += FIX(0.1875);
             if (func_us_80194338(D_us_80180958) & 1) {
-                self->facingLeft = GetSideToPlayer() & 1;
+                self->facingLeft = OVL_EXPORT(GetSideToPlayer)() & 1;
                 self->step_s++;
             }
             break;
         case 1:
-            AnimateEntity(D_us_80180AB4, self);
+            OVL_EXPORT(AnimateEntity)(D_us_80180AB4, self);
             if (!(g_Player.status & PLAYER_STATUS_DEAD)) {
-                SetStep(4);
+                OVL_EXPORT(SetStep)(4);
             }
             break;
         }
@@ -678,7 +681,7 @@ void EntityFakeRalph(Entity* self) {
 
     case 11:
         if (!self->step_s) {
-            if (GetSideToPlayer() & 1) {
+            if (OVL_EXPORT(GetSideToPlayer)() & 1) {
                 self->velocityX = FIX(2);
             } else {
                 self->velocityX = FIX(-2);
@@ -688,13 +691,13 @@ void EntityFakeRalph(Entity* self) {
             self->animCurFrame = 0x22;
             self->step_s++;
         }
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityX -= self->velocityX >> 5;
         self->velocityY += FIX(0.1875);
         temp_s2_3 = func_us_80194338(D_us_80180958);
         if (!self->ext.ralph.timer) {
             if (temp_s2_3 & 1) {
-                SetStep(6);
+                OVL_EXPORT(SetStep)(6);
             }
         } else {
             self->ext.ralph.timer--;
@@ -706,7 +709,7 @@ void EntityFakeRalph(Entity* self) {
         case 0:
             D_us_801806B4++;
             self->hitboxState = 0;
-            if (GetSideToPlayer() & 1) {
+            if (OVL_EXPORT(GetSideToPlayer)() & 1) {
                 self->velocityX = FIX(2);
             } else {
                 self->velocityX = FIX(-2);
@@ -716,7 +719,7 @@ void EntityFakeRalph(Entity* self) {
             self->step_s++;
             // fallthrough
         case 1:
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             self->velocityX -= self->velocityX >> 5;
             self->velocityY += FIX(0.1875);
             if (self->ext.ralph.timer) {
@@ -731,7 +734,8 @@ void EntityFakeRalph(Entity* self) {
             break;
         case 2:
             if (!(g_Timer & 3)) {
-                entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                entity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
                     OVL_EXPORT(CreateEntityFromEntity)
                     (E_DEATH_FLAMES, self, entity);
@@ -784,7 +788,7 @@ void EntityBoneCross(Entity* self) {
         self->flags |= FLAG_DEAD;
     }
     if (self->flags & FLAG_DEAD) {
-        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        entity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
 
             OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
@@ -796,7 +800,7 @@ void EntityBoneCross(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_801804DC);
+        OVL_EXPORT(InitializeEntity)(D_us_801804DC);
         self->animCurFrame = 0x5D;
         self->drawFlags = ENTITY_ROTATE;
         if (self->facingLeft) {
@@ -807,7 +811,7 @@ void EntityBoneCross(Entity* self) {
         PlaySfxPositional(SFX_FAKE_TREVOR_BLOOD_CROSS);
         // fallthrough
     case 1:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         if (self->facingLeft) {
             if (self->velocityX < FIX(2.5)) {
                 self->velocityX += FIX(0.03125);
@@ -822,7 +826,8 @@ void EntityBoneCross(Entity* self) {
         self->rotate -= ROT(22.5) - offsetX;
 
         if (!(g_Timer & 7)) {
-            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            entity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)
                 (E_BONE_CROSS_AFTER_IMAGE, self, entity);
@@ -833,7 +838,8 @@ void EntityBoneCross(Entity* self) {
             }
         }
         if (!(g_Timer & 3)) {
-            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            entity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)
                 (E_BONE_CROSS_AFTER_IMAGE, self, entity);
@@ -869,7 +875,7 @@ void EntityGiantBoneCross(Entity* self) {
     }
 
     if (self->flags & FLAG_DEAD) {
-        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        entity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
             OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
             entity->params = 3;
@@ -880,7 +886,7 @@ void EntityGiantBoneCross(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_801804F4);
+        OVL_EXPORT(InitializeEntity)(D_us_801804F4);
         self->animCurFrame = 0x5F;
         self->drawFlags = ENTITY_ROTATE;
         if (self->facingLeft) {
@@ -890,7 +896,7 @@ void EntityGiantBoneCross(Entity* self) {
         }
         // fallthrough
     case 1:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         if (self->facingLeft) {
             if (self->velocityX < FIX(3)) {
                 self->velocityX += FIX(5.0 / 128.0);
@@ -908,7 +914,8 @@ void EntityGiantBoneCross(Entity* self) {
             PlaySfxPositional(SFX_FAST_SWORD_SWISHES);
         }
         if (!(g_Timer & 7)) {
-            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            entity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)
                 (E_BONE_CROSS_AFTER_IMAGE, self, entity);
@@ -942,7 +949,7 @@ void EntityBoneCrossAfterImage(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_801804E8);
+        OVL_EXPORT(InitializeEntity)(D_us_801804E8);
         if (!self->params) {
             if (OVL_EXPORT(Random)() & 1) {
                 self->step = 2;
@@ -968,16 +975,16 @@ void EntityBoneCrossAfterImage(Entity* self) {
         break;
     case 2:
         self->velocityY += FIX(1.0 / 64.0);
-        MoveEntity();
-        if (!AnimateEntity(D_us_80180B08, self)) {
+        OVL_EXPORT(MoveEntity)();
+        if (!OVL_EXPORT(AnimateEntity)(D_us_80180B08, self)) {
             DestroyEntity(self);
             return;
         }
         break;
     case 3:
         self->velocityY += FIX(9.0 / 512.0);
-        MoveEntity();
-        if (!AnimateEntity(D_us_80180B14, self)) {
+        OVL_EXPORT(MoveEntity)();
+        if (!OVL_EXPORT(AnimateEntity)(D_us_80180B14, self)) {
             DestroyEntity(self);
             return;
         }
@@ -996,7 +1003,7 @@ void EntityDagger(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180500);
+        OVL_EXPORT(InitializeEntity)(D_us_80180500);
         self->animCurFrame = 0xA8;
         self->drawFlags = ENTITY_ROTATE;
         self->rotate = ROT(-90);
@@ -1012,7 +1019,7 @@ void EntityDagger(Entity* self) {
         // fallthrough
 
     case 1:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         if (self->flags & FLAG_DEAD) {
             self->hitboxState = 0;
             self->velocityX = -self->velocityX / 4;
@@ -1028,7 +1035,7 @@ void EntityDagger(Entity* self) {
         } else {
             self->animCurFrame = 0xA8;
         }
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityY += FIX(0.25);
         break;
     }
@@ -1061,7 +1068,7 @@ void EntityHolyWaterFlask(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         self->animSet = 3;
         self->animCurFrame = 0x32;
         self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
@@ -1075,7 +1082,7 @@ void EntityHolyWaterFlask(Entity* self) {
         PlaySfxPositional(SFX_ARROW_SHOT_A);
         // fallthrough
     case 1:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         offsetY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
         if (offsetY > 0xE0) {
             PlaySfxPositional(SFX_RIC_HOLY_WATER_ATTACK);
@@ -1098,9 +1105,10 @@ void EntityHolyWaterFlask(Entity* self) {
         if (self->hitFlags) {
             self->velocityX = 0;
         }
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         if (!(self->ext.ralph.timer & 7)) {
-            entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            entity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)
                 (E_HOLY_WATER_FLAME, self, entity);
@@ -1138,7 +1146,7 @@ void EntityHolyWaterFlame(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_8018050C);
+        OVL_EXPORT(InitializeEntity)(D_us_8018050C);
         self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
         self->scaleX = 0x80;
         self->scaleY = 0;
@@ -1146,7 +1154,7 @@ void EntityHolyWaterFlame(Entity* self) {
         self->hitboxWidth = 4;
         // fallthrough
     case 1:
-        if (!AnimateEntity(D_us_80180B2C, self)) {
+        if (!OVL_EXPORT(AnimateEntity)(D_us_80180B2C, self)) {
             DestroyEntity(self);
         }
         self->scaleY = abs(self->pose - 8) << 6;
@@ -1172,7 +1180,7 @@ void func_us_80196768(Entity* self) {
     s32 index;
 
     if (!self->step) {
-        InitializeEntity(D_us_801804D0);
+        OVL_EXPORT(InitializeEntity)(D_us_801804D0);
     }
     entity = self - 1;
     self->posX.i.hi = entity->posX.i.hi;

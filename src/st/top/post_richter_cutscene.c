@@ -18,7 +18,7 @@ void func_us_801AD11C(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         g_PauseAllowed = false;
         g_unkGraphicsStruct.pauseEnemies = true;
         g_Player.padSim = PAD_NONE;
@@ -76,7 +76,7 @@ void func_us_801AD11C(Entity* self) {
 void func_us_801AD320(Entity* self) {
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         self->animSet = ANIMSET_OVL(2);
         self->animCurFrame = 0x11;
         self->unk5A = 0xF;
@@ -115,7 +115,7 @@ void func_us_801AD400(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         self->animSet = ANIMSET_OVL(4);
         self->animCurFrame = 0;
         self->unk5A = 0x46;
@@ -126,12 +126,12 @@ void func_us_801AD400(Entity* self) {
     case 1:
         if (OVL_EXPORT(CutsceneFlags) & 0x10) {
             self->velocityX = FIX(-1.5);
-            SetStep(2);
+            OVL_EXPORT(SetStep)(2);
         }
 
         break;
     case 2:
-        panDistance = AnimateEntity(D_us_80180DF0, self);
+        panDistance = OVL_EXPORT(AnimateEntity)(D_us_80180DF0, self);
         if ((panDistance & 0x80) && (self->pose == 3 || self->pose == 7)) {
             panDistance = (self->posX.i.hi - 0x78) / 16;
 
@@ -143,7 +143,7 @@ void func_us_801AD400(Entity* self) {
             }
             g_api.PlaySfxVolPan(SFX_STOMP_SOFT_B, 0x50, panDistance);
         }
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         if (offsetX < 0x3C0) {
             self->animCurFrame = 0xC;
             self->step++;
@@ -156,25 +156,25 @@ void func_us_801AD400(Entity* self) {
             self->unk5A = 0x48;
             self->animCurFrame = 0x2C;
             self->velocityX = FIX(-0.75);
-            SetStep(4);
+            OVL_EXPORT(SetStep)(4);
         }
         break;
 
     case 4:
-        AnimateEntity(&D_us_80180E0C, self);
-        MoveEntity();
+        OVL_EXPORT(AnimateEntity)(&D_us_80180E0C, self);
+        OVL_EXPORT(MoveEntity)();
         if (offsetX < 0x350) {
-            SetStep(5);
+            OVL_EXPORT(SetStep)(5);
         }
         break;
 
     case 5:
-        if (AnimateEntity(&D_us_80180E04, self) == 0) {
+        if (OVL_EXPORT(AnimateEntity)(&D_us_80180E04, self) == 0) {
             self->animSet = ANIMSET_OVL(4);
             self->animCurFrame = 0xC;
             self->unk5A = 0x46;
             self->facingLeft = 0;
-            SetStep(6);
+            OVL_EXPORT(SetStep)(6);
         }
         break;
 

@@ -17,7 +17,7 @@ void EntityBackgroundGears(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         self->animSet = 0;
         self->posX.i.hi = 0;
         self->posY.i.hi = 0;
@@ -41,7 +41,7 @@ void EntityBackgroundGears(Entity* self) {
         // fallthrough
 
     case 1:
-        AnimateEntity(D_us_80180FB0, self);
+        OVL_EXPORT(AnimateEntity)(D_us_80180FB0, self);
 
         posX = self->posX.i.hi;
         posX &= 0x7F;

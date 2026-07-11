@@ -57,37 +57,38 @@ void EntityBlackCrow(Entity* self) {
         self->velocityY = 0;
         self->hitboxState = 0;
         PlaySfxPositional(SFX_CROW_DEATH);
-        SetStep(CROW_DEATH);
+        OVL_EXPORT(SetStep)(CROW_DEATH);
     }
     switch (self->step) {
     case CROW_INIT:
-        InitializeEntity(g_EInitBlackCrow);
+        OVL_EXPORT(InitializeEntity)(g_EInitBlackCrow);
         self->animCurFrame = 1;
         self->ext.crow.referenceY = g_Tilemap.scrollY.val + self->posY.val;
         self->zPriority = 176;
         break;
     case CROW_READY:
-        if (!AnimateEntity(anim_crow_idle, self)) {
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        if (!OVL_EXPORT(AnimateEntity)(anim_crow_idle, self)) {
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
         }
-        if (GetDistanceToPlayerX() < 80 && GetDistanceToPlayerY() < 64) {
-            SetStep(CROW_SWOOP);
+        if (OVL_EXPORT(GetDistanceToPlayerX)() < 80 &&
+            OVL_EXPORT(GetDistanceToPlayerY)() < 64) {
+            OVL_EXPORT(SetStep)(CROW_SWOOP);
         }
         break;
     case CROW_HOVER:
-        if (!AnimateEntity(anim_crow_hover, self)) {
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        if (!OVL_EXPORT(AnimateEntity)(anim_crow_hover, self)) {
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
         }
         if (self->ext.crow.hoverTimer) {
             self->ext.crow.hoverTimer--;
         } else {
-            SetStep(CROW_SWOOP);
+            OVL_EXPORT(SetStep)(CROW_SWOOP);
         }
         break;
     case CROW_SWOOP:
         switch (self->step_s) {
         case CROW_SWOOP_INIT:
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
             if (self->facingLeft) {
                 self->velocityX = FIX(1.5);
             } else {
@@ -98,11 +99,11 @@ void EntityBlackCrow(Entity* self) {
             self->step_s++;
             break;
         case CROW_SWOOP_MOVE:
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             if (self->velocityY < FIX(-2)) {
-                AnimateEntity(anim_crow_swoop, self);
+                OVL_EXPORT(AnimateEntity)(anim_crow_swoop, self);
             } else {
-                AnimateEntity(anim_crow_hover, self);
+                OVL_EXPORT(AnimateEntity)(anim_crow_hover, self);
                 self->velocityY -= FIX(0.125);
             }
             if (self->velocityY < 0) {
@@ -115,8 +116,8 @@ void EntityBlackCrow(Entity* self) {
             }
             break;
         case CROW_SWOOP_RECOVER:
-            AnimateEntity(anim_crow_swoop, self);
-            MoveEntity();
+            OVL_EXPORT(AnimateEntity)(anim_crow_swoop, self);
+            OVL_EXPORT(MoveEntity)();
             self->velocityY += FIX(0.25);
             if (self->velocityY > FIX(0.5)) {
                 self->velocityY = FIX(0.5);
@@ -126,18 +127,19 @@ void EntityBlackCrow(Entity* self) {
             if (posY > 0) {
                 self->ext.crow.hoverTimer = 128;
                 self->animCurFrame = 1;
-                self->facingLeft = GetSideToPlayer() & 1;
-                SetStep(CROW_HOVER);
+                self->facingLeft = OVL_EXPORT(GetSideToPlayer)() & 1;
+                OVL_EXPORT(SetStep)(CROW_HOVER);
             }
             break;
         }
         break;
     case CROW_DEATH:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->rotate += 64;
         self->velocityY += FIX(0.09375);
-        if (!AnimateEntity(anim_crow_death, self)) {
-            explosion = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (!OVL_EXPORT(AnimateEntity)(anim_crow_death, self)) {
+            explosion =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (explosion != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)
                 (E_EXPLOSION, self, explosion);
@@ -160,7 +162,7 @@ void EntityBlueRaven(Entity* self) {
 
     if ((self->flags & FLAG_DEAD) && self->step != RAVEN_MATCH_HEIGHT) {
         PlaySfxPositional(SFX_CROW_DEATH);
-        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        entity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
             OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
             entity->params = EXPLOSION_SMALL;
@@ -170,17 +172,18 @@ void EntityBlueRaven(Entity* self) {
     }
     switch (self->step) {
     case RAVEN_INIT:
-        InitializeEntity(g_EInitBlueRaven);
+        OVL_EXPORT(InitializeEntity)(g_EInitBlueRaven);
         self->animCurFrame = 11;
         self->ext.crow.referenceY = g_Tilemap.scrollY.val + self->posY.val;
         self->zPriority = 176;
         break;
     case RAVEN_READY:
-        if (!AnimateEntity(anim_raven_idle, self)) {
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        if (!OVL_EXPORT(AnimateEntity)(anim_raven_idle, self)) {
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
         }
-        if (GetDistanceToPlayerX() < 96 && GetDistanceToPlayerY() < 48) {
-            SetStep(RAVEN_DISMOUNT);
+        if (OVL_EXPORT(GetDistanceToPlayerX)() < 96 &&
+            OVL_EXPORT(GetDistanceToPlayerY)() < 48) {
+            OVL_EXPORT(SetStep)(RAVEN_DISMOUNT);
         }
         break;
     case RAVEN_DISMOUNT:
@@ -191,19 +194,19 @@ void EntityBlueRaven(Entity* self) {
             self->velocityY = FIX(-1.0);
         }
         self->velocityX = 0;
-        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-        SetStep(RAVEN_MATCH_HEIGHT);
+        self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+        OVL_EXPORT(SetStep)(RAVEN_MATCH_HEIGHT);
         break;
     case RAVEN_MATCH_HEIGHT:
-        AnimateEntity(anim_raven_match_height, self);
-        MoveEntity();
-        if (GetDistanceToPlayerY() < 8) {
+        OVL_EXPORT(AnimateEntity)(anim_raven_match_height, self);
+        OVL_EXPORT(MoveEntity)();
+        if (OVL_EXPORT(GetDistanceToPlayerY)() < 8) {
             self->ext.crow.hoverTimer = 32;
-            SetStep(RAVEN_HOVER);
+            OVL_EXPORT(SetStep)(RAVEN_HOVER);
         }
         break;
     case RAVEN_HOVER:
-        AnimateEntity(anim_raven_hover, self);
+        OVL_EXPORT(AnimateEntity)(anim_raven_hover, self);
         if (!--self->ext.crow.hoverTimer) {
             if (self->facingLeft) {
                 self->velocityX = FIX(2.0);
@@ -215,8 +218,8 @@ void EntityBlueRaven(Entity* self) {
         }
         break;
     case RAVEN_ATTACK:
-        AnimateEntity(anim_raven_hover, self);
-        MoveEntity();
+        OVL_EXPORT(AnimateEntity)(anim_raven_hover, self);
+        OVL_EXPORT(MoveEntity)();
         self->velocityY -= FIX(0.03125);
         if (self->facingLeft) {
             self->velocityX += FIX(0.0625);

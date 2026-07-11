@@ -75,7 +75,7 @@ void OVL_EXPORT(EntityCutsceneStage)(Entity* self) {
 
     switch (self->step) {
     case CUTSCENE_INIT:
-        InitializeEntity(OVL_EXPORT(EInitSpawner));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitSpawner));
         g_PauseAllowed = false;
         // This seems to pause Alucard, rather than enemies
         g_unkGraphicsStruct.pauseEnemies = true;
@@ -159,7 +159,7 @@ void OVL_EXPORT(EntityCutsceneMaria)(Entity* self) {
 
     switch (self->step) {
     case MARIA_INIT:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         self->animSet = ANIMSET_OVL(15);
         self->animCurFrame = 10;
         self->unk5A = 72;
@@ -171,13 +171,13 @@ void OVL_EXPORT(EntityCutsceneMaria)(Entity* self) {
         }
         break;
     case MARIA_DEPART:
-        if (!AnimateEntity(anim_maria_step, self)) {
-            SetStep(MARIA_RUN_1);
+        if (!OVL_EXPORT(AnimateEntity)(anim_maria_step, self)) {
+            OVL_EXPORT(SetStep)(MARIA_RUN_1);
             self->velocityX = FIX(1.5);
         }
         break;
     case MARIA_RUN_1:
-        pan = AnimateEntity(anim_maria_run, self);
+        pan = OVL_EXPORT(AnimateEntity)(anim_maria_run, self);
         if (pan & 0x80 && (self->pose == 3 || self->pose == 7)) {
             pan = (self->posX.i.hi - 120) / 16;
             if (pan < -8) {
@@ -188,24 +188,24 @@ void OVL_EXPORT(EntityCutsceneMaria)(Entity* self) {
             }
             g_api.PlaySfxVolPan(SFX_STOMP_SOFT_B, 80, pan);
         }
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         if (posScrollX > 368) {
-            SetStep(MARIA_JUMP_ALUCARD);
+            OVL_EXPORT(SetStep)(MARIA_JUMP_ALUCARD);
             self->velocityY = FIX(-4);
         }
         break;
     case MARIA_JUMP_ALUCARD: // maria at alucard, jumps up stairs
-        AnimateEntity(anim_maria_jump, self);
+        OVL_EXPORT(AnimateEntity)(anim_maria_jump, self);
         self->velocityY += FIX(0.1875);
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         if (self->velocityY > 0 && posScrollY > 151) {
             self->posY.i.hi = 151 - gTilemapPtr->scrollY.i.hi;
             self->velocityY = 0;
-            SetStep(MARIA_RUN_2);
+            OVL_EXPORT(SetStep)(MARIA_RUN_2);
         }
         break;
     case MARIA_RUN_2: // maria land and run more
-        pan = AnimateEntity(anim_maria_run, self);
+        pan = OVL_EXPORT(AnimateEntity)(anim_maria_run, self);
         if (pan & 0x80 && (self->pose == 3 || self->pose == 7)) {
             pan = (self->posX.i.hi - 120) / 16;
             if (pan < -8) {
@@ -216,25 +216,25 @@ void OVL_EXPORT(EntityCutsceneMaria)(Entity* self) {
             }
             g_api.PlaySfxVolPan(SFX_STOMP_SOFT_B, 80, pan);
         }
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         if (posScrollX > 448) {
-            SetStep(MARIA_JUMP_EXIT);
+            OVL_EXPORT(SetStep)(MARIA_JUMP_EXIT);
             self->velocityY = FIX(-4);
             OVL_EXPORT(CutsceneFlags) |= DAI_CUTSCENE_CUTSCENE_CONCLUDED;
         }
         break;
     case MARIA_JUMP_EXIT:
-        AnimateEntity(anim_maria_jump, self);
+        OVL_EXPORT(AnimateEntity)(anim_maria_jump, self);
         self->velocityY += FIX(0.1875);
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         if (self->velocityY > 0 && posScrollY > 135) {
             self->posY.i.hi = 135 - gTilemapPtr->scrollY.i.hi;
             self->velocityY = 0;
-            SetStep(MARIA_DEPARTED);
+            OVL_EXPORT(SetStep)(MARIA_DEPARTED);
         }
         break;
     case MARIA_DEPARTED:
-        pan = AnimateEntity(anim_maria_run, self);
+        pan = OVL_EXPORT(AnimateEntity)(anim_maria_run, self);
         if (pan & 0x80 && (self->pose == 3 || self->pose == 7)) {
             pan = (self->posX.i.hi - 120) / 16;
             if (pan < -8) {
@@ -245,7 +245,7 @@ void OVL_EXPORT(EntityCutsceneMaria)(Entity* self) {
             }
             g_api.PlaySfxVolPan(SFX_STOMP_SOFT_B, 80, pan);
         }
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         if (posScrollX > 544) {
             DestroyEntity(self);
         }

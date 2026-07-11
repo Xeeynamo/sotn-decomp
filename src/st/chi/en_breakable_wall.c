@@ -28,7 +28,7 @@ void EntityBreakableWallDebris(Entity* self) {
 
     switch (self->step) {
     case INIT:
-        InitializeEntity(g_EInitSecret);
+        OVL_EXPORT(InitializeEntity)(g_EInitSecret);
         self->animCurFrame = self->params & 0xFF;
         self->drawFlags = ENTITY_ROTATE;
         self->zPriority = 0x69;
@@ -58,7 +58,7 @@ void EntityBreakableWallDebris(Entity* self) {
 
     case MOVEMENT:
         self->rotate += self->ext.breakableDebris.rotSpeed;
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityY += FIX(0.125);
         posX = self->posX.i.hi;
         posY = self->posY.i.hi + 6;
@@ -68,7 +68,8 @@ void EntityBreakableWallDebris(Entity* self) {
             if (self->animCurFrame > 0xB) {
                 // Break into a couple pieces
                 for (i = 0; i < 2; i++) {
-                    entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                    entity = OVL_EXPORT(AllocEntity)(
+                        &g_Entities[224], &g_Entities[256]);
                     if (entity != NULL) {
                         OVL_EXPORT(CreateEntityFromEntity)
                         (E_BREAKABLE_WALL_DEBRIS, self, entity);
@@ -81,7 +82,8 @@ void EntityBreakableWallDebris(Entity* self) {
             }
             if (self->velocityY < FIX(0.5)) {
                 // Poof, gone
-                entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                entity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
                     OVL_EXPORT(CreateEntityFromEntity)
                     (E_INTENSE_EXPLOSION, self, entity);
@@ -153,7 +155,7 @@ void EntityBreakableWall(Entity* self) {
 
     switch (self->step) {
     case INIT:
-        InitializeEntity(&g_EInitSecret);
+        OVL_EXPORT(InitializeEntity)(&g_EInitSecret);
         self->animCurFrame = 2;
         self->animCurFrame = 0;
         self->hitPoints = 0x20;
@@ -270,7 +272,8 @@ void EntityBreakableWall(Entity* self) {
             xPos = self->posX.i.hi + 0x20;
             yPos = self->posY.i.hi;
             xPos -= self->ext.breakableDebris.breakCount * 0xC;
-            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            entity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
                 entity->posX.i.hi = xPos;
@@ -281,7 +284,8 @@ void EntityBreakableWall(Entity* self) {
 
             // Rotating bricks?
             for (c = 0; c < 3; c++) {
-                entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                entity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
                     OVL_EXPORT(CreateEntityFromEntity)
                     (E_INTENSE_EXPLOSION, self, entity);
@@ -309,7 +313,7 @@ void EntityBreakableWall(Entity* self) {
         prim = self->ext.breakableDebris.prim;
         prim->u1 = prim->u3 -= 0x10;
         prim->x1 = prim->x3 -= 0x10;
-        entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+        entity = OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
         if (entity != NULL) {
             OVL_EXPORT(CreateEntityFromCurrentEntity)(E_HEART_DROP, entity);
             entity->posX.i.hi = 0x20 - g_Tilemap.scrollX.i.hi;

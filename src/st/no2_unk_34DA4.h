@@ -19,7 +19,7 @@ void func_us_801B4DA4(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitSpawner));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitSpawner));
         primIndex = g_api.func_800EDB58(PRIM_GT4, 8);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;

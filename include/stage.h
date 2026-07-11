@@ -205,6 +205,7 @@ void OVL_EXPORT(UpdateRoomPosition)();
 void OVL_EXPORT(Update)(void);
 void OVL_EXPORT(UpdateStageEntities)(void);
 void OVL_EXPORT(HitDetection)(void);
+void OVL_EXPORT(EntityDummy)(Entity*);
 void OVL_EXPORT(EntityMessageBox)(Entity*);
 void OVL_EXPORT(EntityHeartDrop)(Entity*);
 void OVL_EXPORT(EntityEquipItemDrop)(Entity*);
@@ -220,10 +221,10 @@ void OVL_EXPORT(CreateEntityFromEntity)(
 #endif
 void DestroyEntity(Entity*);
 void DestroyEntitiesFromIndex(s16 index);
-void FallEntity(void);
-Entity* AllocEntity(Entity* start, Entity* end);
+void OVL_EXPORT(FallEntity)(void);
+Entity* OVL_EXPORT(AllocEntity)(Entity* start, Entity* end);
 
 // InitializeEntity takes a EInit but treats it as a `u16[]`
-void InitializeEntity(u16 arg0[]);
+void OVL_EXPORT(InitializeEntity)(u16 arg0[]);
 
 #endif
