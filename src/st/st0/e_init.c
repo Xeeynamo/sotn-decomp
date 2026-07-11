@@ -2,15 +2,15 @@
 #include "st0.h"
 
 void func_801A805C(Entity*);
-void EntityExplosion(Entity*);
-void EntityPrizeDrop(Entity*);
+void OVL_EXPORT(EntityExplosion)(Entity*);
+void OVL_EXPORT(EntityPrizeDrop)(Entity*);
 void OVL_EXPORT(EntityDamageDisplay)(Entity*);
 void OVL_EXPORT(EntityRedDoor)(Entity*);
 void EntityIntenseExplosion(Entity*);
 void EntitySoulStealOrb(Entity*);
 void EntityRoomForeground(Entity*);
 void EntityDummy(Entity*);
-void EntityEquipItemDrop(Entity*);
+void OVL_EXPORT(EntityEquipItemDrop)(Entity*);
 void EntityDummy(Entity*);
 void EntityDummy(Entity*);
 void EntityDummy(Entity*);
@@ -50,15 +50,15 @@ void func_801BC5C0(Entity*);
 
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_801A805C,
-    EntityExplosion,
-    EntityPrizeDrop,
+    OVL_EXPORT(EntityExplosion),
+    OVL_EXPORT(EntityPrizeDrop),
     OVL_EXPORT(EntityDamageDisplay),
     OVL_EXPORT(EntityRedDoor),
     EntityIntenseExplosion,
     EntitySoulStealOrb,
     EntityRoomForeground,
     EntityDummy,
-    EntityEquipItemDrop,
+    OVL_EXPORT(EntityEquipItemDrop),
     EntityDummy,
     EntityDummy,
     EntityDummy,

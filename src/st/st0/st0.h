@@ -46,7 +46,7 @@ typedef enum EntityIDs {
 } EntityIDs;
 
 void MoveEntity();
-void EntityExplosion(Entity*);
+void OVL_EXPORT(EntityExplosion)(Entity*);
 void EntityExplosionVariants(Entity* entity);
 void EntityGreyPuff(Entity* entity);
 

@@ -237,12 +237,12 @@ void EntityLifeUpSpawn(Entity* self) {
                 params = self->params & 0xFFF;
                 if (params < 0x80) {
                     self->entityId = E_PRIZE_DROP;
-                    self->pfnUpdate = EntityPrizeDrop;
+                    self->pfnUpdate = OVL_EXPORT(EntityPrizeDrop);
                     self->poseTimer = 0;
                     self->pose = 0;
                 } else {
                     self->entityId = E_EQUIP_ITEM_DROP;
-                    self->pfnUpdate = EntityEquipItemDrop;
+                    self->pfnUpdate = OVL_EXPORT(EntityEquipItemDrop);
                     params -= 0x80;
                 }
                 self->params = params;
@@ -251,7 +251,7 @@ void EntityLifeUpSpawn(Entity* self) {
                 self->step = 0;
             } else {
                 self->entityId = E_RELIC_ORB;
-                self->pfnUpdate = EntityRelicOrb;
+                self->pfnUpdate = OVL_EXPORT(EntityRelicOrb);
                 self->poseTimer = 0;
                 self->pose = 0;
                 self->unk6D[0] = 0x10;
@@ -263,12 +263,12 @@ void EntityLifeUpSpawn(Entity* self) {
             params = self->params & 0xFFF;
             if (params < 0x80) {
                 self->entityId = E_PRIZE_DROP;
-                self->pfnUpdate = EntityPrizeDrop;
+                self->pfnUpdate = OVL_EXPORT(EntityPrizeDrop);
                 self->poseTimer = 0;
                 self->pose = 0;
             } else {
                 self->entityId = E_EQUIP_ITEM_DROP;
-                self->pfnUpdate = EntityEquipItemDrop;
+                self->pfnUpdate = OVL_EXPORT(EntityEquipItemDrop);
                 params -= 0x80;
             }
             self->params = params;

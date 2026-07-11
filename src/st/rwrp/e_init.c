@@ -9,22 +9,22 @@ void EntityExplosionVariants(Entity*);
 void EntityGreyPuff(Entity*);
 void EntityRWarpRoom(Entity*);
 void EntityWarpSmallRocks(Entity*);
-void EntityPrizeDrop(Entity*);
+void OVL_EXPORT(EntityPrizeDrop)(Entity*);
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityBreakable,
-    EntityExplosion,
-    EntityPrizeDrop,
+    OVL_EXPORT(EntityExplosion),
+    OVL_EXPORT(EntityPrizeDrop),
     OVL_EXPORT(EntityDamageDisplay),
     OVL_EXPORT(EntityRedDoor),
     EntityIntenseExplosion,
     EntitySoulStealOrb,
     EntityRoomForeground,
     EntityStageNamePopup,
-    EntityEquipItemDrop,
-    EntityRelicOrb,
-    EntityHeartDrop,
+    OVL_EXPORT(EntityEquipItemDrop),
+    OVL_EXPORT(EntityRelicOrb),
+    OVL_EXPORT(EntityHeartDrop),
     EntityEnemyBlood,
-    EntityMessageBox,
+    OVL_EXPORT(EntityMessageBox),
     EntityDummy,
     EntityDummy,
     OVL_EXPORT(EntityBackgroundBlock), // unused

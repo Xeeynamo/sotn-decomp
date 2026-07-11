@@ -223,7 +223,7 @@ void EntityJackOBonesDeathParts(Entity* self) {
             return;
         }
         self->entityId = E_EXPLOSION;
-        self->pfnUpdate = EntityExplosion;
+        self->pfnUpdate = OVL_EXPORT(EntityExplosion);
         self->params = 0;
         self->step = 0;
         return;
@@ -336,7 +336,7 @@ void EntityJackOBonesJack(Entity* self) {
     if (self->flags & FLAG_DEAD) {
         self->drawFlags = ENTITY_DEFAULT;
         self->entityId = E_EXPLOSION;
-        self->pfnUpdate = EntityExplosion;
+        self->pfnUpdate = OVL_EXPORT(EntityExplosion);
         self->params = 0;
         self->step = 0;
     }

@@ -20,7 +20,7 @@ static void func_psp_0923C390(s32 posX, s32 posY) {
     frameBufferY = posY;
 }
 
-char* BlitChar(char* str, s32 xOffset, s32 posX, s32 posY) {
+char* OVL_EXPORT(BlitChar)(char* str, s32 xOffset, s32 posX, s32 posY) {
     const u16 DOUBLE_SPACE = 0x8140;
 
     const int FontWidth = 12;
@@ -158,6 +158,6 @@ char* BlitChar(char* str, s32 xOffset, s32 posX, s32 posY) {
     pixPtr += stride * 0x10;
 
     if (ch == 1) {
-        BlitChar(str, xOffset + 0x10, posX, posY + 0x10);
+        OVL_EXPORT(BlitChar)(str, xOffset + 0x10, posX, posY + 0x10);
     }
 }
