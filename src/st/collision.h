@@ -180,7 +180,7 @@ static u16 g_eDamageDisplayClut[] = {
     PAL_UNK_1B4, PAL_UNK_1B5, PAL_UNK_1B0, PAL_UNK_1B1,
 };
 
-void HitDetection(void) {
+void OVL_EXPORT(HitDetection)(void) {
 #ifdef VERSION_PC
     u8 sp[SP_LEN];
 #endif

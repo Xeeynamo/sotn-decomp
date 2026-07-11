@@ -9,7 +9,7 @@ extern u_long** OVL_EXPORT(gfxBanks)[];
 
 static Overlay OVL_EXPORT(Overlay) = {
     .Update = Update,
-    .HitDetection = HitDetection,
+    .HitDetection = OVL_EXPORT(HitDetection),
     .UpdateRoomPosition = UpdateRoomPosition,
     .InitRoomEntities = InitRoomEntities,
     .rooms = OVL_EXPORT(rooms),

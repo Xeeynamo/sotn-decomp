@@ -12,7 +12,7 @@ void func_8018E1D4();
 
 static Overlay OVL_EXPORT(Overlay) = {
     .Update = Update,
-    .HitDetection = HitDetection,
+    .HitDetection = OVL_EXPORT(HitDetection),
     .UpdateRoomPosition = UpdateRoomPosition,
     .InitRoomEntities = InitRoomEntities,
     .rooms = g_Rooms,

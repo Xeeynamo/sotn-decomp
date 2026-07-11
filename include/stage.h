@@ -204,7 +204,7 @@ void UpdateRoomPosition();
 
 void Update(void);
 void OVL_EXPORT(UpdateStageEntities)(void);
-void HitDetection(void);
+void OVL_EXPORT(HitDetection)(void);
 
 s32 Random();
 #ifdef VERSION_PC

@@ -68,7 +68,7 @@ EntityUnkId13 = 0x0924EF18;
 EntityExplosionVariants = 0x0924F190;
 EntityGreyPuff = 0x0924F308;
 EntityIntenseExplosion = 0x0924F618;
-HitDetection = 0x0924F8E0; // source=match
+NP3_HitDetection = 0x0924F8E0; // source=match
 EntityDamageDisplay = 0x092510B0; // source=match
 EntityBoneScimitar = 0x09251BB8;
 EntityBoneScimitarParts = 0x09252588;

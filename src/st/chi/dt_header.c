@@ -16,7 +16,7 @@ extern GfxBank* OVL_EXPORT(gfxBanks)[];
 // D_80180000
 Overlay OVL_EXPORT(Overlay) = {
     .Update = Update,
-    .HitDetection = HitDetection,
+    .HitDetection = OVL_EXPORT(HitDetection),
     .UpdateRoomPosition = UpdateRoomPosition,
     .InitRoomEntities = InitRoomEntities,
     .rooms = OVL_EXPORT(rooms),

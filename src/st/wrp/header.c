@@ -2,7 +2,6 @@
 #include "wrp.h"
 
 void Update(void);
-void HitDetection(void);
 void UpdateRoomPosition(void);
 void InitRoomEntities(s32 objLayoutId);
 
@@ -14,7 +13,7 @@ extern GfxBank* OVL_EXPORT(gfxBanks)[];
 
 Overlay OVL_EXPORT(Overlay) = {
     .Update = Update,
-    .HitDetection = HitDetection,
+    .HitDetection = OVL_EXPORT(HitDetection),
     .UpdateRoomPosition = UpdateRoomPosition,
     .InitRoomEntities = InitRoomEntities,
     .rooms = OVL_EXPORT(rooms),

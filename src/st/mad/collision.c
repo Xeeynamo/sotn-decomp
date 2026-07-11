@@ -77,7 +77,7 @@ static u16 g_eDamageDisplayClut[] = {
 
 // Slightly different to other overlays. May be possible to
 //  de-duplicate with several #ifdef, but for now it's broken out.
-void HitDetection(void) {
+void OVL_EXPORT(HitDetection)(void) {
     Entity* otherEntity;
     Primitive* prim;
     Entity* entityHit;

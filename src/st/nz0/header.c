@@ -12,7 +12,7 @@ extern GfxBank* OVL_EXPORT(gfxBanks)[];
 
 AbbreviatedOverlay OVL_EXPORT(Overlay) = {
     .Update = Update,
-    .HitDetection = HitDetection,
+    .HitDetection = OVL_EXPORT(HitDetection),
     .UpdateRoomPosition = UpdateRoomPosition,
     .InitRoomEntities = InitRoomEntities,
     .rooms = OVL_EXPORT(rooms),
@@ -26,7 +26,6 @@ AbbreviatedOverlay OVL_EXPORT(Overlay) = {
 #else
 
 void Update();
-void HitDetection();
 void UpdateRoomPosition();
 void InitRoomEntities(s32 objLayoutId);
 
@@ -39,7 +38,7 @@ extern RoomHeader OVL_EXPORT(rooms)[];
 
 AbbreviatedOverlay OVL_EXPORT(Overlay) = {
     .Update = Update,
-    .HitDetection = HitDetection,
+    .HitDetection = OVL_EXPORT(HitDetection),
     .UpdateRoomPosition = UpdateRoomPosition,
     .InitRoomEntities = InitRoomEntities,
     .rooms = OVL_EXPORT(rooms),

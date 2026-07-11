@@ -1001,7 +1001,7 @@ def get_known_pairs(ovl_name, version):
 def parse_ovl_header(data_file_text, ovl_name, platform, header_symbol=None):
     ovl_header = [
         "Update",
-        "HitDetection",
+        f"{ovl_name.upper()}_HitDetection",
         "UpdateRoomPosition",
         "InitRoomEntities",
         f"{ovl_name.upper()}_rooms",
