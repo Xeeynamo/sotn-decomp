@@ -3,9 +3,9 @@
 
 INCLUDE_ASM("st/rno0/nonmatchings/create_entity", RNO0_CreateEntityFromLayout);
 
-INCLUDE_ASM("st/rno0/nonmatchings/create_entity", CreateEntityWhenInVerticalRange);
+INCLUDE_ASM("st/rno0/nonmatchings/create_entity", RNO0_CreateEntityWhenInVerticalRange);
 
-INCLUDE_ASM("st/rno0/nonmatchings/create_entity", CreateEntityWhenInHorizontalRange);
+INCLUDE_ASM("st/rno0/nonmatchings/create_entity", RNO0_CreateEntityWhenInHorizontalRange);
 
 INCLUDE_ASM("st/rno0/nonmatchings/create_entity", FindFirstEntityToTheRight);
 

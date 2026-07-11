@@ -3,9 +3,9 @@
 
 INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/create_entity", RNO0_CreateEntityFromLayout);
 
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/create_entity", CreateEntityWhenInVerticalRange);
+INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/create_entity", RNO0_CreateEntityWhenInVerticalRange);
 
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/create_entity", CreateEntityWhenInHorizontalRange);
+INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/create_entity", RNO0_CreateEntityWhenInHorizontalRange);
 
 INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/create_entity", FindFirstEntityToTheRight);
 

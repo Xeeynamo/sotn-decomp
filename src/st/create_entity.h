@@ -45,7 +45,7 @@ void OVL_EXPORT(CreateEntityFromLayout)(Entity* entity, LayoutEntity* initDesc) 
     entity->unk68 = (initDesc->entityId >> 0xA) & 7;
 }
 
-void CreateEntityWhenInVerticalRange(LayoutEntity* obj) {
+void OVL_EXPORT(CreateEntityWhenInVerticalRange)(LayoutEntity* obj) {
     s16 yClose;
     s16 yFar;
     s16 posY;
@@ -82,7 +82,7 @@ void CreateEntityWhenInVerticalRange(LayoutEntity* obj) {
     }
 }
 
-void CreateEntityWhenInHorizontalRange(LayoutEntity* obj) {
+void OVL_EXPORT(CreateEntityWhenInHorizontalRange)(LayoutEntity* obj) {
     s16 xClose;
     s16 xFar;
     s16 posX;
@@ -204,11 +204,11 @@ static void CreateEntitiesToTheRight(s16 posX) {
         if (DECREMENT_AND_CHECK(flag)) {
             if ((g_unkGraphicsStruct.D_80097428[flag >> 5] &
                  (1 << (flag & 0x1F))) == expected) {
-                CreateEntityWhenInVerticalRange(
+                OVL_EXPORT(CreateEntityWhenInVerticalRange)(
                     (LayoutEntity*)g_LayoutObjHorizontal);
             }
         } else {
-            CreateEntityWhenInVerticalRange(
+            OVL_EXPORT(CreateEntityWhenInVerticalRange)(
                 (LayoutEntity*)g_LayoutObjHorizontal);
         }
 
@@ -255,11 +255,11 @@ static void CreateEntitiesToTheLeft(s16 posX) {
         if (DECREMENT_AND_CHECK(flag)) {
             if ((g_unkGraphicsStruct.D_80097428[flag >> 5] &
                  (1 << (flag & 0x1F))) == expected) {
-                CreateEntityWhenInVerticalRange(
+                OVL_EXPORT(CreateEntityWhenInVerticalRange)(
                     (LayoutEntity*)g_LayoutObjHorizontal);
             }
         } else {
-            CreateEntityWhenInVerticalRange(
+            OVL_EXPORT(CreateEntityWhenInVerticalRange)(
                 (LayoutEntity*)g_LayoutObjHorizontal);
         }
 
@@ -339,11 +339,11 @@ static void CreateEntitiesAbove(s16 posY) {
         if (DECREMENT_AND_CHECK(flag)) {
             if ((g_unkGraphicsStruct.D_80097428[flag >> 5] &
                  (1 << (flag & 0x1F))) == expected) {
-                CreateEntityWhenInHorizontalRange(
+                OVL_EXPORT(CreateEntityWhenInHorizontalRange)(
                     (LayoutEntity*)g_LayoutObjVertical);
             }
         } else {
-            CreateEntityWhenInHorizontalRange(
+            OVL_EXPORT(CreateEntityWhenInHorizontalRange)(
                 (LayoutEntity*)g_LayoutObjVertical);
         }
 
@@ -382,11 +382,11 @@ static void CreateEntitiesBelow(s16 posY) {
         if (DECREMENT_AND_CHECK(flag)) {
             if ((g_unkGraphicsStruct.D_80097428[flag >> 5] &
                  (1 << (flag & 0x1F))) == expected) {
-                CreateEntityWhenInHorizontalRange(
+                OVL_EXPORT(CreateEntityWhenInHorizontalRange)(
                     (LayoutEntity*)g_LayoutObjVertical);
             }
         } else {
-            CreateEntityWhenInHorizontalRange(
+            OVL_EXPORT(CreateEntityWhenInHorizontalRange)(
                 (LayoutEntity*)g_LayoutObjVertical);
         }
 
