@@ -10,7 +10,7 @@ static u16 unused[] UNUSED = {
 #endif
 
 // palette
-u16 UNK_Invincibility0[] = {
+u16 OVL_EXPORT(PalInvincibility0)[] = {
     PAL_FLAG(PAL_CC_CRITICAL_EFFECT),  PAL_FLAG(PAL_CC_DARK_EFFECT),
     PAL_FLAG(PAL_CC_RED_EFFECT_A),     PAL_FLAG(PAL_CC_DARK_EFFECT),
     PAL_FLAG(PAL_CC_FIRE_EFFECT),      PAL_FLAG(PAL_CC_RED_EFFECT_A),
@@ -87,7 +87,7 @@ void OVL_EXPORT(Update)(void) {
             if (flags & 0xF) {
                 iFramePalette = e->nFramesInvincibility << 1;
                 iFramePalette += (flags & 1);
-                e->palette = UNK_Invincibility0[iFramePalette];
+                e->palette = OVL_EXPORT(PalInvincibility0)[iFramePalette];
                 if (!(--e->flags & 0xF)) {
                     e->palette = e->hitEffect;
                     e->hitEffect = 0;
@@ -139,7 +139,7 @@ void OVL_EXPORT(UpdateStageEntities)(void) {
             if (entity->flags & 0xF) {
                 iFramePalette = entity->nFramesInvincibility << 1;
                 iFramePalette += entity->flags & 1;
-                entity->palette = UNK_Invincibility0[iFramePalette];
+                entity->palette = OVL_EXPORT(PalInvincibility0)[iFramePalette];
                 if ((--entity->flags & 0xF) == 0) {
                     entity->palette = entity->hitEffect;
                     entity->hitEffect = 0;
