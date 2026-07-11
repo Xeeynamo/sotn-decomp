@@ -11,7 +11,7 @@ extern u_long** OVL_EXPORT(gfxBanks)[];
 void PrologueScroll();
 
 Overlay OVL_EXPORT(Overlay) = {
-    .Update = Update,
+    .Update = OVL_EXPORT(Update),
     .HitDetection = OVL_EXPORT(HitDetection),
     .UpdateRoomPosition = UpdateRoomPosition,
     .InitRoomEntities = InitRoomEntities,

@@ -1,6 +1,6 @@
 InitRoomEntities = 0x09238288;
 UpdateRoomPosition = 0x092384B8;
-Update = 0x0923F7E0;
+LIB_Update = 0x0923F7E0;
 LIB_UpdateStageEntities = 0x0923FBC0;
 LIB_HitDetection = 0x09249108;
 g_SpriteBanks = 0x09275A08;

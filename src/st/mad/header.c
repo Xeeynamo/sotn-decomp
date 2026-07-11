@@ -11,7 +11,7 @@ extern u_long** OVL_EXPORT(gfxBanks)[];
 void func_8018E1D4();
 
 static Overlay OVL_EXPORT(Overlay) = {
-    .Update = Update,
+    .Update = OVL_EXPORT(Update),
     .HitDetection = OVL_EXPORT(HitDetection),
     .UpdateRoomPosition = UpdateRoomPosition,
     .InitRoomEntities = InitRoomEntities,

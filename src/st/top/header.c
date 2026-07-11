@@ -10,7 +10,7 @@ extern GfxBank* OVL_EXPORT(gfxBanks)[];
 extern u8* D_us_80182E44[];
 
 AbbreviatedOverlay2 OVL_EXPORT(Overlay) = {
-    .Update = Update,
+    .Update = OVL_EXPORT(Update),
     .HitDetection = OVL_EXPORT(HitDetection),
     .UpdateRoomPosition = UpdateRoomPosition,
     .InitRoomEntities = InitRoomEntities,

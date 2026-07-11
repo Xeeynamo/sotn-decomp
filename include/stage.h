@@ -202,7 +202,7 @@ void InitRoomEntities(s32 objLayoutId);
  */
 void UpdateRoomPosition();
 
-void Update(void);
+void OVL_EXPORT(Update)(void);
 void OVL_EXPORT(UpdateStageEntities)(void);
 void OVL_EXPORT(HitDetection)(void);
 

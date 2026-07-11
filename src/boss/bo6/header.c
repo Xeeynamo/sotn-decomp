@@ -10,7 +10,7 @@ extern u_long** OVL_EXPORT(gfxBanks)[];
 extern u8 richter_sprites[];
 
 AbbreviatedOverlay2 OVL_EXPORT(Overlay) = {
-    .Update = Update,
+    .Update = OVL_EXPORT(Update),
     .HitDetection = OVL_EXPORT(HitDetection),
     .UpdateRoomPosition = UpdateRoomPosition,
     .InitRoomEntities = InitRoomEntities,

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "wrp.h"
 
-void Update(void);
+void OVL_EXPORT(Update)(void);
 void UpdateRoomPosition(void);
 void InitRoomEntities(s32 objLayoutId);
 
@@ -12,7 +12,7 @@ extern RoomDef OVL_EXPORT(rooms_layers)[];
 extern GfxBank* OVL_EXPORT(gfxBanks)[];
 
 Overlay OVL_EXPORT(Overlay) = {
-    .Update = Update,
+    .Update = OVL_EXPORT(Update),
     .HitDetection = OVL_EXPORT(HitDetection),
     .UpdateRoomPosition = UpdateRoomPosition,
     .InitRoomEntities = InitRoomEntities,

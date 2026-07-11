@@ -33,7 +33,7 @@ s32 OVL_EXPORT(Random)(void) {
     return (g_randomNext >> 0x18) & 0xFF;
 }
 
-void Update(void) {
+void OVL_EXPORT(Update)(void) {
     s16 x, y;
     Entity* e;
     s32 flags;

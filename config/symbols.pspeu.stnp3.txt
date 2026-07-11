@@ -42,7 +42,7 @@ EntityBloodDrips = 0x09242C40;
 EntityBat = 0x09242ED0;
 EntityStageNamePopup = 0x09243208; // source=match
 NP3_EntityRedDoor = 0x09244170; // source=match
-Update = 0x092453D0; // source=match
+NP3_Update = 0x092453D0; // source=match
 NP3_UpdateStageEntities = 0x092457B0; // source=match
 EntityMerman2 = 0x09245A18;
 EntityMermanFireSpit = 0x09247270;
