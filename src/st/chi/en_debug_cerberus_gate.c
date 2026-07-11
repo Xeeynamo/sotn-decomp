@@ -35,7 +35,7 @@ void EntityCerberusGateDebug(Entity* self) {
 
     switch (self->step) {
     case INIT:
-        InitializeEntity(g_EInitSecret);
+        OVL_EXPORT(InitializeEntity)(g_EInitSecret);
         self->zPriority = 0x6A;
         if (self->params) {
             self->animCurFrame = 6;
@@ -120,7 +120,7 @@ void EntityCerberusGateDebug(Entity* self) {
         self->velocityY = -self->velocityY;
         self->velocityY /= 4;
 
-        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        entity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
             OVL_EXPORT(CreateEntityFromEntity)
             (E_INTENSE_EXPLOSION, self, entity);

@@ -24,7 +24,7 @@ void EntityCandleTable(Entity* self) {
 
     switch (self->step) { /* irregular */
     case 0:
-        InitializeEntity(D_us_801808FC);
+        OVL_EXPORT(InitializeEntity)(D_us_801808FC);
         self->zPriority = 0x74;
         if (self->params & 0x400) {
             self->animCurFrame = 0x11;
@@ -55,12 +55,12 @@ void EntityCandleTable(Entity* self) {
         }
     case 1:
         if (self->params & 0x100) {
-            AnimateEntity(D_us_80181A78, self);
+            OVL_EXPORT(AnimateEntity)(D_us_80181A78, self);
             break;
         }
-        AnimateEntity(D_us_80181A68, self);
+        OVL_EXPORT(AnimateEntity)(D_us_80181A68, self);
         if (self->hitFlags) {
-            SetStep(2);
+            OVL_EXPORT(SetStep)(2);
         }
         break;
     case 2:
@@ -69,7 +69,7 @@ void EntityCandleTable(Entity* self) {
         // 0xC is used for other things as well, so I kept the name for now
         OVL_EXPORT(CreateEntityFromEntity)(E_HEART_DROP, self, newEntity);
         newEntity->params = 1;
-        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        newEntity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
             OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, newEntity);
             newEntity->posY.i.hi -= 8;

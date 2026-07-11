@@ -42,32 +42,32 @@ void EntityDhuron(Entity* self) {
     s8* hitboxPtr;
 
     if ((self->flags & FLAG_DEAD) && self->step < 8) {
-        SetStep(8);
+        OVL_EXPORT(SetStep)(8);
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitDhuron);
+        OVL_EXPORT(InitializeEntity)(g_EInitDhuron);
         tempEntity = self + 1;
         OVL_EXPORT(CreateEntityFromEntity)(E_ID_34, self, tempEntity);
         break;
 
     case 1:
-        if (UnkCollisionFunc3(D_us_80182954) & 1) {
-            SetStep(2);
+        if (OVL_EXPORT(UnkCollisionFunc3)(D_us_80182954) & 1) {
+            OVL_EXPORT(SetStep)(2);
         }
         break;
 
     case 2:
-        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-        if (GetDistanceToPlayerX() < 0x70) {
-            SetStep(3);
+        self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+        if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x70) {
+            OVL_EXPORT(SetStep)(3);
         }
         break;
 
     case 3:
         if (!self->step_s) {
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-            if (GetDistanceToPlayerX() < 0x50) {
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+            if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x50) {
                 self->ext.dhuron.unk88 = self->facingLeft ^ 1;
             } else {
                 self->ext.dhuron.unk88 = self->facingLeft;
@@ -77,20 +77,20 @@ void EntityDhuron(Entity* self) {
         if (self->animCurFrame == 6 || self->animCurFrame == 1) {
             self->velocityX = 0;
         }
-        UnkCollisionFunc2(D_us_80182964);
-        if (!AnimateEntity(D_us_8018296C, self)) {
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        OVL_EXPORT(UnkCollisionFunc2)(D_us_80182964);
+        if (!OVL_EXPORT(AnimateEntity)(D_us_8018296C, self)) {
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
             self->ext.dhuron.unk88 = self->facingLeft;
-            tempVar = GetDistanceToPlayerX();
+            tempVar = OVL_EXPORT(GetDistanceToPlayerX)();
             if (!self->ext.dhuron.unk89 && self->posY.i.hi < 0x100 &&
                 tempVar > 0x50 && (OVL_EXPORT(Random)() & 7) == 0) {
-                SetStep(5);
+                OVL_EXPORT(SetStep)(5);
                 break;
             }
             if (tempVar < 0x40) {
-                SetStep(4);
+                OVL_EXPORT(SetStep)(4);
                 if (self->ext.dhuron.unk89) {
-                    SetStep(6);
+                    OVL_EXPORT(SetStep)(6);
                 }
             }
         }
@@ -106,11 +106,11 @@ void EntityDhuron(Entity* self) {
             self->velocityX = 0;
             self->step_s++;
         }
-        if (!AnimateEntity(D_us_80182984, self)) {
-            SetStep(3);
+        if (!OVL_EXPORT(AnimateEntity)(D_us_80182984, self)) {
+            OVL_EXPORT(SetStep)(3);
             self->pose = 6;
         }
-        UnkCollisionFunc2(D_us_80182964);
+        OVL_EXPORT(UnkCollisionFunc2)(D_us_80182964);
         self->velocityX -= self->velocityX / 16;
         if (self->pose == 5) {
             if (self->ext.dhuron.unk88) {
@@ -127,18 +127,19 @@ void EntityDhuron(Entity* self) {
     case 6:
         switch (self->step_s) {
         case 0:
-            if (!AnimateEntity(D_us_801829C4, self)) {
+            if (!OVL_EXPORT(AnimateEntity)(D_us_801829C4, self)) {
                 self->ext.dhuron.unk84 = 8;
-                SetSubStep(1);
+                OVL_EXPORT(SetSubStep)(1);
             }
             break;
 
         case 1:
-            if (!AnimateEntity(D_us_801829D4, self)) {
+            if (!OVL_EXPORT(AnimateEntity)(D_us_801829D4, self)) {
                 self->ext.dhuron.unk84--;
-                if ((GetSideToPlayer() & 1) == self->facingLeft ||
-                    GetDistanceToPlayerX() > 0x60 || !self->ext.dhuron.unk84) {
-                    SetSubStep(2);
+                if ((OVL_EXPORT(GetSideToPlayer)() & 1) == self->facingLeft ||
+                    OVL_EXPORT(GetDistanceToPlayerX)() > 0x60 ||
+                    !self->ext.dhuron.unk84) {
+                    OVL_EXPORT(SetSubStep)(2);
                 }
             }
             if (!self->poseTimer && self->pose == 6) {
@@ -147,8 +148,8 @@ void EntityDhuron(Entity* self) {
             break;
 
         case 2:
-            if (!AnimateEntity(D_us_801829F0, self)) {
-                SetStep(3);
+            if (!OVL_EXPORT(AnimateEntity)(D_us_801829F0, self)) {
+                OVL_EXPORT(SetStep)(3);
             }
             break;
         }
@@ -157,13 +158,14 @@ void EntityDhuron(Entity* self) {
     case 5:
         switch (self->step_s) {
         case 0:
-            if (!AnimateEntity(D_us_801829A4, self)) {
+            if (!OVL_EXPORT(AnimateEntity)(D_us_801829A4, self)) {
                 self->ext.dhuron.unk84 = 0x20;
                 self->step_s++;
             }
             if (self->pose == 10 && !self->poseTimer) {
                 PlaySfxPositional(SFX_THUNDER_B);
-                tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                tempEntity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
                     OVL_EXPORT(CreateEntityFromEntity)
                     (E_ID_35, self, tempEntity);
@@ -179,7 +181,7 @@ void EntityDhuron(Entity* self) {
                 self->ext.dhuron.unk89 = 1;
                 (self + 1)->ext.dhuron.unk89 = 1;
                 self->blendMode |= BLEND_TRANSP | BLEND_ADD;
-                SetStep(3);
+                OVL_EXPORT(SetStep)(3);
             }
             break;
         }
@@ -188,7 +190,8 @@ void EntityDhuron(Entity* self) {
     case 8:
         self->hitboxState = 0;
         for (i = 0; i < 7; i++) {
-            tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            tempEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)(E_ID_36, self, tempEntity);
                 tempEntity->params = i;
@@ -197,7 +200,8 @@ void EntityDhuron(Entity* self) {
                 break;
             }
         }
-        tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        tempEntity =
+            OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (tempEntity != NULL) {
             OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, tempEntity);
             tempEntity->params = 3;
@@ -230,7 +234,7 @@ void func_us_801CC6B0(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_801808A8);
+        OVL_EXPORT(InitializeEntity)(D_us_801808A8);
         break;
 
     case 1:
@@ -266,7 +270,7 @@ void func_us_801CC7BC(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_801808B4);
+        OVL_EXPORT(InitializeEntity)(D_us_801808B4);
         self->drawFlags = ENTITY_ROTATE;
         self->animCurFrame = self->params + 0x1B;
         self->zPriority += self->params;
@@ -281,7 +285,7 @@ void func_us_801CC7BC(Entity* self) {
         break;
 
     case 1:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityY += FIX(2.5 / 16);
         ptr = &D_us_80182A64[self->params];
         self->rotate += ptr->rotate;
@@ -323,7 +327,7 @@ void func_us_801CC984(Entity* self) {
     switch (self->step) {
     case 0:
         self->posY.i.hi = 0;
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x28);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -465,7 +469,7 @@ void func_us_801CC984(Entity* self) {
         break;
 
     case 3:
-        if (!AnimateEntity(D_us_80182ACC, self)) {
+        if (!OVL_EXPORT(AnimateEntity)(D_us_80182ACC, self)) {
             self->step = 4;
         }
         break;

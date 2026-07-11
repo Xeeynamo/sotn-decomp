@@ -65,11 +65,11 @@ void EntityBoneArcher(Entity* self) {
 
     if (self->flags & FLAG_DEAD) {
         self->hitboxState = 0;
-        SetStep(11);
+        OVL_EXPORT(SetStep)(11);
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitBoneArcher);
+        OVL_EXPORT(InitializeEntity)(g_EInitBoneArcher);
         if (self->params) {
             self->hitboxState = 0;
             self->animCurFrame = self->params + 24;
@@ -78,20 +78,20 @@ void EntityBoneArcher(Entity* self) {
                            FLAG_UNK_00200000 | FLAG_UNK_2000;
             self->step = 12;
         } else {
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
         }
         break;
 
     case 1:
-        if (UnkCollisionFunc3(D_us_80182BD8) & 1) {
+        if (OVL_EXPORT(UnkCollisionFunc3)(D_us_80182BD8) & 1) {
             self->step = 2;
         }
         break;
 
     case 2:
-        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-        if (GetDistanceToPlayerX() < 0x80) {
-            SetStep(3);
+        self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+        if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x80) {
+            OVL_EXPORT(SetStep)(3);
         }
         break;
 
@@ -101,14 +101,14 @@ void EntityBoneArcher(Entity* self) {
             self->step_s++;
         }
         self->animCurFrame = 1;
-        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-        if (GetDistanceToPlayerX() < 0x60) {
-            SetStep(13);
+        self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+        if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x60) {
+            OVL_EXPORT(SetStep)(13);
         }
         if (!--self->ext.boneArcher.unk84) {
             step = self->ext.boneArcher.unk8C;
             step += 7;
-            SetStep(step);
+            OVL_EXPORT(SetStep)(step);
             if (++self->ext.boneArcher.unk8C > 2) {
                 self->ext.boneArcher.unk8C = 0;
             }
@@ -116,14 +116,14 @@ void EntityBoneArcher(Entity* self) {
         break;
 
     case 13:
-        if (!AnimateEntity(anim1, self)) {
-            SetStep(5);
+        if (!OVL_EXPORT(AnimateEntity)(anim1, self)) {
+            OVL_EXPORT(SetStep)(5);
         }
         break;
 
     case 14:
-        if (!AnimateEntity(anim2, self)) {
-            SetStep(3);
+        if (!OVL_EXPORT(AnimateEntity)(anim2, self)) {
+            OVL_EXPORT(SetStep)(3);
         }
         break;
 
@@ -133,11 +133,11 @@ void EntityBoneArcher(Entity* self) {
             self->ext.boneArcher.unk86 = 0x40;
             self->step_s++;
         }
-        if (!AnimateEntity(anim0, self)) {
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        if (!OVL_EXPORT(AnimateEntity)(anim0, self)) {
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
         }
         step = 0;
-        tempVar = UnkCollisionFunc2(D_us_80182BE8);
+        tempVar = OVL_EXPORT(UnkCollisionFunc2)(D_us_80182BE8);
         if (self->facingLeft) {
             self->velocityX = FIX(0.75);
         } else {
@@ -148,20 +148,20 @@ void EntityBoneArcher(Entity* self) {
         }
         switch (self->step) {
         case 4:
-            if (GetDistanceToPlayerX() < 0x40) {
-                SetStep(5);
+            if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x40) {
+                OVL_EXPORT(SetStep)(5);
             }
             if (tempVar & 0x80) {
-                tempVar = UnkCollisionFunc(D_us_80182BF0, 2);
+                tempVar = OVL_EXPORT(UnkCollisionFunc)(D_us_80182BF0, 2);
                 if (tempVar & 2) {
-                    SetStep(6);
+                    OVL_EXPORT(SetStep)(6);
                 }
             }
             break;
 
         case 5:
-            if (GetDistanceToPlayerX() > 0x80) {
-                SetStep(4);
+            if (OVL_EXPORT(GetDistanceToPlayerX)() > 0x80) {
+                OVL_EXPORT(SetStep)(4);
             }
             if (tempVar & 0x80) {
                 self->animCurFrame = 1;
@@ -175,7 +175,7 @@ void EntityBoneArcher(Entity* self) {
                 step = self->ext.boneArcher.unk8C;
                 step += 7;
             }
-            SetStep(step);
+            OVL_EXPORT(SetStep)(step);
             if (++self->ext.boneArcher.unk8C > 2) {
                 self->ext.boneArcher.unk8C = 0;
             }
@@ -193,8 +193,8 @@ void EntityBoneArcher(Entity* self) {
             self->step_s++;
             self->animCurFrame = 14;
         }
-        if (UnkCollisionFunc3(D_us_80182BD8) & 1) {
-            SetStep(4);
+        if (OVL_EXPORT(UnkCollisionFunc3)(D_us_80182BD8) & 1) {
+            OVL_EXPORT(SetStep)(4);
         }
         break;
 
@@ -220,14 +220,14 @@ void EntityBoneArcher(Entity* self) {
             break;
 
         case 1:
-            if (!AnimateEntity(anim2, self)) {
-                SetSubStep(3);
+            if (!OVL_EXPORT(AnimateEntity)(anim2, self)) {
+                OVL_EXPORT(SetSubStep)(3);
             }
             break;
 
         case 2:
-            if (!AnimateEntity(anim1, self)) {
-                SetSubStep(3);
+            if (!OVL_EXPORT(AnimateEntity)(anim1, self)) {
+                OVL_EXPORT(SetSubStep)(3);
             }
             break;
 
@@ -261,13 +261,13 @@ void EntityBoneArcher(Entity* self) {
                 }
                 break;
             }
-            if (!AnimateEntity(anim, self)) {
-                self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+            if (!OVL_EXPORT(AnimateEntity)(anim, self)) {
+                self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
                 self->ext.boneArcher.unk84 = 0x40;
                 if (self->step == 9) {
-                    SetStep(14);
+                    OVL_EXPORT(SetStep)(14);
                 } else {
-                    SetStep(3);
+                    OVL_EXPORT(SetStep)(3);
                 }
             } else if (!self->poseTimer) {
                 if (self->animCurFrame != var_s2->frameA) {
@@ -279,7 +279,8 @@ void EntityBoneArcher(Entity* self) {
                 } else {
                     tempVar = 0;
                 }
-                tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                tempEntity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
                 if (tempEntity != NULL) {
                     PlaySfxPositional(SFX_ARROW_SHOT_C);
                     OVL_EXPORT(CreateEntityFromEntity)
@@ -301,9 +302,10 @@ void EntityBoneArcher(Entity* self) {
         break;
 
     case 11:
-        tempVar = GetSideToPlayer() & 1;
+        tempVar = OVL_EXPORT(GetSideToPlayer)() & 1;
         for (i = 0; i < 8; i++) {
-            tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            tempEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (tempEntity == NULL) {
                 break;
             }
@@ -319,7 +321,8 @@ void EntityBoneArcher(Entity* self) {
             tempEntity->ext.boneArcher.unk88 = D_80182D44[i];
         }
 
-        tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        tempEntity =
+            OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (tempEntity != NULL) {
             PlaySfxPositional(SFX_SKELETON_DEATH_B);
             OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, tempEntity);
@@ -329,10 +332,11 @@ void EntityBoneArcher(Entity* self) {
         return;
 
     case 12:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityY += FIX(0.25);
         if (!--self->ext.boneArcher.unk88) {
-            tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            tempEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)
                 (E_EXPLOSION, self, tempEntity);
@@ -366,7 +370,7 @@ void EntityBoneArcherArrow(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitBoneArcherArrow);
+        OVL_EXPORT(InitializeEntity)(g_EInitBoneArcherArrow);
         self->animCurFrame = 22;
         if (self->facingLeft) {
             self->velocityX = FIX(4.0);
@@ -393,10 +397,11 @@ void EntityBoneArcherArrow(Entity* self) {
         }
         /* fallthrough */
     case 1:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         if (self->flags & FLAG_DEAD) {
             for (i = 0; i < 2; i++) {
-                tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                tempEntity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
                     OVL_EXPORT(CreateEntityFromEntity)
                     (E_BONE_ARCHER_ARROW, self, tempEntity);
@@ -429,7 +434,7 @@ void EntityBoneArcherArrow(Entity* self) {
         break;
 
     case 3:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityY += FIX(0.125);
         if (self->params == 1) {
             self->rotate -= 0x20;

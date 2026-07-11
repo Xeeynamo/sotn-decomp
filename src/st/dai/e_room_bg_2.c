@@ -10,7 +10,7 @@ void EntityBackgroundSkyLand(Entity* self) {
     s32 x;
 
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 5);
         if (primIndex == -1) {
             DestroyEntity(self);

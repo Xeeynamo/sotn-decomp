@@ -209,7 +209,7 @@ void func_us_801D8150(Entity* self) {
             }
         }
         self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
-        InitializeEntity(g_EInitStoneRose);
+        OVL_EXPORT(InitializeEntity)(g_EInitStoneRose);
         if (params == 0xB) {
             self->flags &= ~FLAG_KEEP_ALIVE_OFFCAMERA;
         }
@@ -222,7 +222,7 @@ void func_us_801D8150(Entity* self) {
             self->animCurFrame = 9;
         }
         self->zPriority = PLAYER.zPriority - 0x20 + (params * 2);
-        self->facingLeft = GetSideToPlayer() & 1;
+        self->facingLeft = OVL_EXPORT(GetSideToPlayer)() & 1;
         if (params == 0) {
             self->hitboxWidth = 12;
             self->hitboxHeight = 12;
@@ -382,7 +382,7 @@ void func_us_801D8150(Entity* self) {
             self->step++;
             if (params != 0) {
                 self->posY.i.hi += 8;
-                EntityExplosionSpawn(1, 0);
+                OVL_EXPORT(EntityExplosionSpawn)(1, 0);
                 return;
             }
             spawnSeed(2);
@@ -496,12 +496,12 @@ void func_us_801D8DF0(Entity* self) {
 
     if (self->flags & FLAG_DEAD) {
         PlaySfxPositional(SFX_SMALL_FLAME_IGNITE);
-        EntityExplosionSpawn(0, 0);
+        OVL_EXPORT(EntityExplosionSpawn)(0, 0);
         return;
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180B00);
+        OVL_EXPORT(InitializeEntity)(D_us_80180B00);
         self->animCurFrame = 44;
         if (self->facingLeft) {
             self->velocityX = FIX(-1.75);
@@ -523,7 +523,7 @@ void func_us_801D8DF0(Entity* self) {
             self->posX.i.hi, self->posY.i.hi + 4, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
             if (self->ext.stoneRose.timer == 0) {
-                EntityExplosionSpawn(0, 0);
+                OVL_EXPORT(EntityExplosionSpawn)(0, 0);
                 return;
             }
             self->posY.i.hi += collider.unk18;
@@ -564,12 +564,12 @@ void func_us_801D8FFC(Entity* self) {
 
     if (self->flags & FLAG_DEAD) {
         PlaySfxPositional(SFX_SMALL_FLAME_IGNITE);
-        EntityExplosionSpawn(0, 0);
+        OVL_EXPORT(EntityExplosionSpawn)(0, 0);
         return;
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180B0C);
+        OVL_EXPORT(InitializeEntity)(D_us_80180B0C);
         self->zPriority = PLAYER.zPriority + 0x10;
         self->anim = anim4;
         self->ext.stoneRose.timer = rand() & PSP_RANDMASK;
@@ -592,7 +592,7 @@ void func_us_801D8FFC(Entity* self) {
     case 1:
         g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
-            EntityExplosionSpawn(0, 0);
+            OVL_EXPORT(EntityExplosionSpawn)(0, 0);
             break;
         }
         g_api.UpdateAnim(NULL, NULL);

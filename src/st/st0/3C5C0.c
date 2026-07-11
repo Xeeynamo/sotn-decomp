@@ -78,7 +78,7 @@ void func_801BC5C0(Entity* self) {
     FntPrint("d_step %x\n", self->step);
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInit3DObject);
+        OVL_EXPORT(InitializeEntity)(g_EInit3DObject);
         self->zPriority = 0xC0;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x34);
         if (primIndex == -1) {
@@ -205,7 +205,7 @@ void func_801BC5C0(Entity* self) {
             self->scaleX = 0x80;
             if (self->ext.et_801BC5C0.unk9E) {
                 if (!--self->ext.et_801BC5C0.unk9E) {
-                    SetStep(3);
+                    OVL_EXPORT(SetStep)(3);
                 }
             }
         }
@@ -346,7 +346,7 @@ void func_801BC5C0(Entity* self) {
         }
         if (self->ext.et_801BC5C0.unk9C) {
             if (!--self->ext.et_801BC5C0.unk9C) {
-                SetStep(2);
+                OVL_EXPORT(SetStep)(2);
                 self->ext.et_801BC5C0.unk9E = 0x40;
             }
         }

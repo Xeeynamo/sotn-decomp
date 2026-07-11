@@ -38,7 +38,7 @@ void EntityLeftSecretRoomWall(Entity* self) {
 
     switch (self->step) {
     case LEFT_SECRET_ROOM_WALL_INIT:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         self->hitboxWidth = 16;
         self->hitboxHeight = 32;
         self->hitboxState = 2;
@@ -76,7 +76,7 @@ void EntityLeftSecretRoomWall(Entity* self) {
             tilePos -= 0x10;
         }
 
-        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        newEntity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (newEntity) {
             OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, newEntity);
             newEntity->params = EXPLOSION_UNK_19;
@@ -89,7 +89,8 @@ void EntityLeftSecretRoomWall(Entity* self) {
             g_api.RevealSecretPassageAtPlayerPositionOnMap(
                 RNZ0_SECRET_WALL_OPEN);
             for (i = 0; i < 8; i++) {
-                newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                newEntity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
                     OVL_EXPORT(CreateEntityFromEntity)
                     (E_ID(WALL_DEBRIS), self, newEntity);
@@ -121,7 +122,7 @@ void EntityBottomSecretRoomFloor(Entity* self) {
 
     switch (self->step) {
     case BOTTOM_SECRET_ROOM_FLOOR_INIT:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         self->hitboxWidth = 16;
         self->hitboxHeight = 16;
         self->hitboxState = 2;
@@ -156,7 +157,7 @@ void EntityBottomSecretRoomFloor(Entity* self) {
             ((s16*)&g_Tilemap.fg[tilePos])[-1] = tileLayoutPtr[1];
         }
 
-        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        newEntity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
             OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, newEntity);
             newEntity->params = EXPLOSION_UNK_17;
@@ -192,7 +193,7 @@ void EntitySecretWallDebris(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitWallDebris);
+        OVL_EXPORT(InitializeEntity)(g_EInitWallDebris);
         self->drawFlags = ENTITY_ROTATE;
 
         if (OVL_EXPORT(Random)() & 1) {
@@ -215,7 +216,7 @@ void EntitySecretWallDebris(Entity* self) {
             self->facingLeft = 1;
         }
     case 1:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->rotate += 0x20;
         if (self->params) {
             self->rotate += 0x20;
@@ -230,7 +231,8 @@ void EntitySecretWallDebris(Entity* self) {
             if (!self->params) {
                 g_api.PlaySfx(SFX_WALL_DEBRIS_B);
                 for (i = 0; i < 2; i++) {
-                    newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                    newEntity = OVL_EXPORT(AllocEntity)(
+                        &g_Entities[224], &g_Entities[256]);
                     if (newEntity != NULL) {
                         OVL_EXPORT(CreateEntityFromEntity)
                         (E_ID(WALL_DEBRIS), self, newEntity);
@@ -241,7 +243,8 @@ void EntitySecretWallDebris(Entity* self) {
                 break;
             }
             if (self->velocityY < FIX(0.5)) {
-                newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                newEntity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
                     OVL_EXPORT(CreateEntityFromEntity)
                     (E_INTENSE_EXPLOSION, self, newEntity);

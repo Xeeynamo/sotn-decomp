@@ -329,8 +329,8 @@ void OVL_EXPORT(HitDetection)(void) {
                 }
                 if ((g_Status.relics[RELIC_SPIRIT_ORB] & 2) &&
                     !(entityHit->flags & FLAG_KEEP_ALIVE_OFFCAMERA)) {
-                    otherEntity =
-                        AllocEntity(&g_Entities[224], &g_Entities[256]);
+                    otherEntity = OVL_EXPORT(AllocEntity)(
+                        &g_Entities[224], &g_Entities[256]);
                     if (otherEntity != NULL) {
                         DestroyEntity(otherEntity);
                         otherEntity->entityId = 4;
@@ -411,7 +411,7 @@ void OVL_EXPORT(HitDetection)(void) {
                 continue;
             }
         }
-        PreventEntityFromRespawning(entityHit);
+        OVL_EXPORT(PreventEntityFromRespawning)(entityHit);
         g_api.func_800FE044(g_api.enemyDefs[entityHit->enemyId].exp,
                             g_api.enemyDefs[miscVar1].level);
         if ((entityHit->flags & FLAG_UNK_1000) && g_Status.killCount < 999999) {
@@ -420,7 +420,8 @@ void OVL_EXPORT(HitDetection)(void) {
         if (entityHit->flags & (FLAG_UNK_800 | FLAG_UNK_400)) {
             miscVar3 = rand() & 0xFF;
             if (miscVar3 < 32) {
-                otherEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                otherEntity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
                 if (otherEntity != NULL) {
                     miscVar3 = rand() & 0xFF;
                     if (miscVar3 < g_api.enemyDefs[miscVar1].rareItemDropRate) {

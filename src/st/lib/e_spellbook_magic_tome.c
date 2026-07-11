@@ -234,11 +234,11 @@ void EntitySpellbook(Entity* self) {
     s32 mag;
 
     if ((self->flags & FLAG_DEAD) && self->step < 8) {
-        SetStep(8);
+        OVL_EXPORT(SetStep)(8);
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitSpellbook);
+        OVL_EXPORT(InitializeEntity)(g_EInitSpellbook);
         self->hitboxState = 0;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0xC);
         if (primIndex == -1) {
@@ -273,12 +273,13 @@ void EntitySpellbook(Entity* self) {
         tempEntity->params = 0;
         self->ext.spellbookMagicTome.unk9C.vx = 0x400;
         self->ext.spellbookMagicTome.unk8A = 0x300;
-        SetStep(2);
+        OVL_EXPORT(SetStep)(2);
         break;
 
     case 2:
-        if (GetDistanceToPlayerX() < 0x40 && GetDistanceToPlayerY() < 0x40) {
-            SetStep(3);
+        if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x40 &&
+            OVL_EXPORT(GetDistanceToPlayerY)() < 0x40) {
+            OVL_EXPORT(SetStep)(3);
         }
         break;
 
@@ -287,7 +288,7 @@ void EntitySpellbook(Entity* self) {
         if (self->ext.spellbookMagicTome.unk8A < 0) {
             self->ext.spellbookMagicTome.unk8A = 0;
             self->hitboxState = 3;
-            SetStep(4);
+            OVL_EXPORT(SetStep)(4);
         }
         break;
 
@@ -296,11 +297,11 @@ void EntitySpellbook(Entity* self) {
             self->ext.spellbookMagicTome.unk8E = 0x200;
             self->step_s++;
         }
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         tempEntity = &PLAYER;
-        angle = GetAngleBetweenEntities(self, tempEntity);
-        angle =
-            LimitAngleChange(0x10, self->ext.spellbookMagicTome.unk8C, angle);
+        angle = OVL_EXPORT(GetAngleBetweenEntities)(self, tempEntity);
+        angle = OVL_EXPORT(LimitAngleChange)(
+            0x10, self->ext.spellbookMagicTome.unk8C, angle);
         mag = self->ext.spellbookMagicTome.unk90;
         self->velocityX = (mag * rcos(angle)) >> 0xC;
         self->velocityY = (mag * rsin(angle)) >> 0xC;
@@ -326,7 +327,7 @@ void EntitySpellbook(Entity* self) {
         }
         func_us_801D2108();
         if (!--self->ext.spellbookMagicTome.unk8E) {
-            SetStep(5);
+            OVL_EXPORT(SetStep)(5);
         }
         break;
 
@@ -334,7 +335,7 @@ void EntitySpellbook(Entity* self) {
         switch (self->step_s) {
         case 0:
             tempEntity = &PLAYER;
-            angle = GetAngleBetweenEntities(self, tempEntity);
+            angle = OVL_EXPORT(GetAngleBetweenEntities)(self, tempEntity);
             rect.x = 0x280;
             rect.y = angle + 0x800;
             rect.w = 0x440;
@@ -372,7 +373,7 @@ void EntitySpellbook(Entity* self) {
 
         case 5:
             if (func_801CDC80(&self->ext.spellbookMagicTome.unk82, 0, 0x10)) {
-                SetStep(4);
+                OVL_EXPORT(SetStep)(4);
             }
             break;
         }
@@ -380,7 +381,8 @@ void EntitySpellbook(Entity* self) {
 
     case 8:
         if ((OVL_EXPORT(Random)() & 0xF) == 0) {
-            tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            tempEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)
                 (E_EXPLOSION, self, tempEntity);
@@ -408,7 +410,8 @@ void EntitySpellbook(Entity* self) {
             func_801CDC80(&self->ext.spellbookMagicTome.unk82, 0x200, 0x10);
             func_us_801D2108();
             if (g_Timer & 1) {
-                tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                tempEntity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
                     OVL_EXPORT(CreateEntityFromEntity)
                     (E_ID_31, self, tempEntity);
@@ -436,7 +439,7 @@ void EntitySpellbook(Entity* self) {
             break;
 
         case 2:
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             func_801CDC80(&self->ext.spellbookMagicTome.unk82, 0x700, 8);
             self->velocityY += FIX(0.0625);
             break;
@@ -445,7 +448,8 @@ void EntitySpellbook(Entity* self) {
 
     case 32:
         if ((g_Timer & 0xF) == 0) {
-            tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            tempEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)(E_ID_31, self, tempEntity);
                 tempEntity->posX.i.hi += self->ext.spellbookMagicTome.unk84;
@@ -505,7 +509,7 @@ void func_us_801D2CE0(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180908);
+        OVL_EXPORT(InitializeEntity)(D_us_80180908);
         self->animCurFrame = (OVL_EXPORT(Random)() & 0xF) + 1;
         rotate = self->rotate;
         rotate += OVL_EXPORT(Random)() * 2 - 0x100;
@@ -514,7 +518,7 @@ void func_us_801D2CE0(Entity* self) {
         break;
 
     case 1:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityY += FIX(0.125);
         break;
     }
@@ -532,11 +536,11 @@ void EntityMagicTome(Entity* self) {
     u8* ptr;
 
     if ((self->flags & FLAG_DEAD) && self->step < 8) {
-        SetStep(8);
+        OVL_EXPORT(SetStep)(8);
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitMagicTome);
+        OVL_EXPORT(InitializeEntity)(g_EInitMagicTome);
         self->hitboxState = 0;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0xC);
         if (primIndex == -1) {
@@ -571,12 +575,13 @@ void EntityMagicTome(Entity* self) {
         tempEntity->params = 2;
         self->ext.spellbookMagicTome.unk9C.vx = 0x400;
         self->ext.spellbookMagicTome.unk8A = 0x300;
-        SetStep(2);
+        OVL_EXPORT(SetStep)(2);
         break;
 
     case 2:
-        if (GetDistanceToPlayerX() < 0x68 && GetDistanceToPlayerY() < 0x60) {
-            SetStep(3);
+        if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x68 &&
+            OVL_EXPORT(GetDistanceToPlayerY)() < 0x60) {
+            OVL_EXPORT(SetStep)(3);
         }
         break;
 
@@ -585,7 +590,7 @@ void EntityMagicTome(Entity* self) {
         if (self->ext.spellbookMagicTome.unk8A < 0) {
             self->ext.spellbookMagicTome.unk8A = 0;
             self->hitboxState = 3;
-            SetStep(4);
+            OVL_EXPORT(SetStep)(4);
         }
         break;
 
@@ -624,10 +629,10 @@ void EntityMagicTome(Entity* self) {
             self->step_s++;
             /* fallthrough */
         case 2:
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             func_us_801D2108();
             if (!--self->ext.spellbookMagicTome.unk8E) {
-                SetStep(5);
+                OVL_EXPORT(SetStep)(5);
             }
             break;
         }
@@ -637,7 +642,7 @@ void EntityMagicTome(Entity* self) {
         switch (self->step_s) {
         case 0:
             tempEntity = &PLAYER;
-            angle = GetAngleBetweenEntities(self, tempEntity);
+            angle = OVL_EXPORT(GetAngleBetweenEntities)(self, tempEntity);
             rect.x = 0x280;
             rect.y = angle + 0x800;
             rect.w = 0x440;
@@ -675,7 +680,7 @@ void EntityMagicTome(Entity* self) {
 
         case 5:
             if (func_801CDC80(&self->ext.spellbookMagicTome.unk82, 0, 0x10)) {
-                SetStep(4);
+                OVL_EXPORT(SetStep)(4);
             }
             break;
         }
@@ -683,7 +688,8 @@ void EntityMagicTome(Entity* self) {
 
     case 8:
         if ((OVL_EXPORT(Random)() & 0xF) == 0) {
-            tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            tempEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)
                 (E_EXPLOSION, self, tempEntity);
@@ -711,7 +717,8 @@ void EntityMagicTome(Entity* self) {
             func_801CDC80(&self->ext.spellbookMagicTome.unk82, 0x200, 0x10);
             func_us_801D2108();
             if (g_Timer & 1) {
-                tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                tempEntity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
                     OVL_EXPORT(CreateEntityFromEntity)
                     (E_ID_31, self, tempEntity);
@@ -739,7 +746,7 @@ void EntityMagicTome(Entity* self) {
             break;
 
         case 2:
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             func_801CDC80(&self->ext.spellbookMagicTome.unk82, 0x700, 8);
             self->velocityY += FIX(0.0625);
             break;
@@ -761,7 +768,7 @@ void func_us_801D35B8(Entity* self) {
     ptr = &D_us_8018316C[self->params];
     switch (self->step) {
     case 0:
-        InitializeEntity(*ptr->unk0);
+        OVL_EXPORT(InitializeEntity)(*ptr->unk0);
         self->hitboxWidth = self->hitboxHeight = ptr->unkA;
         break;
 
@@ -769,7 +776,7 @@ void func_us_801D35B8(Entity* self) {
         self->hitboxState = 0;
         if (self->ext.spellbookMagicTome.unk94) {
             PlaySfxPositional(SFX_MAGIC_TOME_ATTACK);
-            SetStep(2);
+            OVL_EXPORT(SetStep)(2);
         }
         tempEntity = self - 1;
         if (!tempEntity->entityId || tempEntity->flags & FLAG_DEAD) {
@@ -827,7 +834,7 @@ void func_us_801D35B8(Entity* self) {
             if (self->scaleX & 0xF000) {
                 self->animCurFrame = 0;
                 self->ext.spellbookMagicTome.unk94 = 0;
-                SetStep(1);
+                OVL_EXPORT(SetStep)(1);
             }
             break;
         }

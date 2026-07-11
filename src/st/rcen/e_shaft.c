@@ -1,7 +1,33 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rcen.h"
 
-INCLUDE_ASM("st/rcen/nonmatchings/e_shaft", func_us_8019A98C);
+s16 func_us_8019A98C(s16 arg0, s16 arg1, s16 arg2) {
+    s16 v_s1;
+    s16 v_s0;
+
+    arg1 &= 0xFFF;
+
+    v_s1 = arg2 - arg1;
+    v_s0 = v_s1;
+
+    if (v_s1 > ROT(180)) {
+        v_s0 = v_s1 - ROT(360);
+    }
+    if (v_s1 < ROT(-180)) {
+        v_s0 = v_s1 + ROT(360);
+    }
+
+    if (abs(v_s0) > arg0) {
+        if (v_s1 < 0) {
+            v_s0 = arg1 - arg0;
+        } else {
+            v_s0 = arg1 + arg0;
+        }
+        return v_s0;
+    }
+
+    return arg2;
+}
 
 INCLUDE_ASM("st/rcen/nonmatchings/e_shaft", func_us_8019AA04);
 

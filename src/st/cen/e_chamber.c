@@ -80,7 +80,7 @@ void EntityPlatform(Entity* self) {
     s32 primIndex;
 
     self->posY.i.hi -= 8;
-    isPlayerTouching = GetPlayerCollisionWith(self, 0x20, 0x11, 4);
+    isPlayerTouching = OVL_EXPORT(GetPlayerCollisionWith)(self, 0x20, 0x11, 4);
     posX = player->posX.i.hi + tilemap->scrollX.i.hi;
     posY = self->posY.i.hi + tilemap->scrollY.i.hi;
 
@@ -92,7 +92,7 @@ void EntityPlatform(Entity* self) {
 #endif
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex != -1) {
-            InitializeEntity(OVL_EXPORT(EInitInteractable));
+            OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
             self->animSet = ANIMSET_OVL(2);
             self->animCurFrame = 9;
             self->zPriority = 0x80;
@@ -129,7 +129,7 @@ void EntityPlatform(Entity* self) {
         break;
 
     case 1:
-        if ((GetDistanceToPlayerX() < 32) &&
+        if ((OVL_EXPORT(GetDistanceToPlayerX)() < 32) &&
             ((self->posY.i.hi - player->posY.i.hi) < 80)) {
             g_PauseAllowed = false;
             g_unkGraphicsStruct.pauseEnemies = 1;
@@ -605,7 +605,7 @@ void EntityRoomDarkness(Entity* self) {
 
         primIndex = g_api.AllocPrimitives(PRIM_G4, 2);
         if (primIndex != -1) {
-            InitializeEntity(OVL_EXPORT(EInitInteractable));
+            OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             self->animSet = 0;

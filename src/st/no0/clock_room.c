@@ -166,7 +166,7 @@ void EntityClockRoomController(Entity* self) {
             return;
         }
 #ifndef VERSION_PSP
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
 #endif
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
@@ -180,7 +180,7 @@ void EntityClockRoomController(Entity* self) {
         prim->priority = 0x1F0;
         prim->drawMode = DRAW_HIDE;
 #ifdef VERSION_PSP
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
 #endif
 
         g_api.PlaySfx(SET_STOP_MUSIC);
@@ -286,7 +286,7 @@ void EntityClockRoomController(Entity* self) {
                 if (i == ITEM_GOLD_RING || i == ITEM_SILVER_RING) {
                     i = g_Status.equipment[ACCESSORY_2_SLOT];
                     if (i == ITEM_GOLD_RING || i == ITEM_SILVER_RING) {
-                        SetStep(2);
+                        OVL_EXPORT(SetStep)(2);
                     }
                 }
             }
@@ -448,7 +448,7 @@ void EntityClockRoomController(Entity* self) {
             if (!--self->ext.clockRoom.unk88) {
                 g_CastleFlags[CEN_OPEN] = 1;
                 g_api.RevealSecretPassageAtPlayerPositionOnMap(CEN_OPEN);
-                SetStep(3);
+                OVL_EXPORT(SetStep)(3);
                 self->ext.clockRoom.unk88 = 0x140;
             }
         }
@@ -484,7 +484,7 @@ void EntityClockRoomController(Entity* self) {
         case 1:
             func_us_801CCAAC(self);
             if (self->ext.clockRoom.unk88 >= 0x200) {
-                SetStep(1);
+                OVL_EXPORT(SetStep)(1);
             }
         }
         break;

@@ -177,8 +177,8 @@ static void PrizeDropFall2(u16 arg0) {
 
     if (arg0) {
         if (!(collider.effects & EFFECT_NOTHROUGH)) {
-            MoveEntity();
-            FallEntity();
+            OVL_EXPORT(MoveEntity)();
+            OVL_EXPORT(FallEntity)();
             return;
         }
 
@@ -195,7 +195,7 @@ static void PrizeDropFall2(u16 arg0) {
     }
 
     if (!(collider.effects & EFFECT_NOTHROUGH)) {
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         PrizeDropFall();
     }
 }
@@ -345,12 +345,15 @@ void OVL_EXPORT(EntityPrizeDrop)(Entity* self) {
     if (self->step) {
 #if defined(VERSION_PSP) && STAGE != STAGE_ST0
         if (g_PlayableCharacter == PLAYER_MARIA) {
-            AnimateEntity(g_MariaSubweaponAnimPrizeDrop[itemId], self);
+            OVL_EXPORT(AnimateEntity)
+            (g_MariaSubweaponAnimPrizeDrop[itemId], self);
         } else {
-            AnimateEntity(OVL_EXPORT(SubweaponAnimPrizeDrop)[itemId], self);
+            OVL_EXPORT(AnimateEntity)
+            (OVL_EXPORT(SubweaponAnimPrizeDrop)[itemId], self);
         }
 #else
-        AnimateEntity(OVL_EXPORT(SubweaponAnimPrizeDrop)[itemId], self);
+        OVL_EXPORT(AnimateEntity)
+        (OVL_EXPORT(SubweaponAnimPrizeDrop)[itemId], self);
 #endif
     }
 #if defined(VERSION_US) && STAGE != STAGE_ST0
@@ -370,7 +373,7 @@ void OVL_EXPORT(EntityPrizeDrop)(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitObtainable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitObtainable));
         self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 0x14;
         self->blendMode = BLEND_NO;
 #if STAGE == STAGE_ST0
@@ -460,7 +463,7 @@ void OVL_EXPORT(EntityPrizeDrop)(Entity* self) {
                 self->velocityY = 0;
             }
         }
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         g_api.CheckCollision(
             self->posX.i.hi, self->posY.i.hi + 7, &collider, 0);
         if (itemId) {
@@ -471,9 +474,9 @@ void OVL_EXPORT(EntityPrizeDrop)(Entity* self) {
                 self->ext.equipItemDrop.aliveTimer = 0xF0;
                 self->step++;
             } else {
-                FallEntity();
+                OVL_EXPORT(FallEntity)();
             }
-            CheckFieldCollision(D_80180EB8, 2);
+            OVL_EXPORT(CheckFieldCollision)(D_80180EB8, 2);
         } else if (collider.effects & EFFECT_NOTHROUGH) {
             self->posY.i.hi += collider.unk18;
             self->ext.equipItemDrop.aliveTimer = 0x60;
@@ -589,7 +592,7 @@ void OVL_EXPORT(EntityPrizeDrop)(Entity* self) {
             }
             break;
         case 1:
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             g_api.CheckCollision(
                 self->posX.i.hi, self->posY.i.hi + 7, &collider, 0);
             if (collider.effects & EFFECT_NOTHROUGH && self->velocityY > 0) {
@@ -598,9 +601,9 @@ void OVL_EXPORT(EntityPrizeDrop)(Entity* self) {
                 self->posY.i.hi += collider.unk18;
                 self->step_s++;
             } else {
-                FallEntity();
+                OVL_EXPORT(FallEntity)();
             }
-            CheckFieldCollision(D_80180EB8, 2);
+            OVL_EXPORT(CheckFieldCollision)(D_80180EB8, 2);
             self->animCurFrame = 0;
             if (self->ext.equipItemDrop.sparkleTimer) {
                 self->ext.equipItemDrop.sparkleTimer--;
@@ -650,7 +653,7 @@ void OVL_EXPORT(EntityPrizeDrop)(Entity* self) {
 //         (& 0xFF00) If non-zero, ((& 0xFF00) >> 8) will override zPriority
 void OVL_EXPORT(EntityExplosion)(Entity* entity) {
     if (!entity->step) {
-        InitializeEntity(OVL_EXPORT(EInitParticle));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitParticle));
         entity->pose = 0;
         entity->poseTimer = 0;
         entity->animSet = ANIMSET_DRA(2);
@@ -668,7 +671,8 @@ void OVL_EXPORT(EntityExplosion)(Entity* entity) {
     } else {
         entity->posY.val += entity->velocityY;
 
-        if (!AnimateEntity(g_ExplosionAnimations[entity->params], entity)) {
+        if (!OVL_EXPORT(AnimateEntity)(
+                g_ExplosionAnimations[entity->params], entity)) {
             DestroyEntity(entity);
         }
     }
@@ -706,12 +710,12 @@ void Unreferenced_MAD_ST0_func(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        FallEntity();
-        MoveEntity();
+        OVL_EXPORT(FallEntity)();
+        OVL_EXPORT(MoveEntity)();
         return;
     }
 
-    InitializeEntity(OVL_EXPORT(EInitBreakable));
+    OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitBreakable));
     self->animCurFrame = self->ext.unusedMadST0.animframe;
     self->velocityX = g_collectVelocity[self->ext.unusedMadST0.velIndex].x;
     self->velocityY = g_collectVelocity[self->ext.unusedMadST0.velIndex].y;
@@ -753,12 +757,12 @@ void OVL_EXPORT(EntityEquipItemDrop)(Entity* self) {
             self->params = 0;
             self->pfnUpdate = OVL_EXPORT(EntityPrizeDrop);
             self->entityId = 3;
-            SetStep(0);
+            OVL_EXPORT(SetStep)(0);
             OVL_EXPORT(EntityPrizeDrop)(self);
             return;
         }
 #endif
-        InitializeEntity(OVL_EXPORT(EInitObtainable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitObtainable));
         self->ext.equipItemDrop.timer = 0;
         break;
     case 1:
@@ -841,7 +845,7 @@ void OVL_EXPORT(EntityEquipItemDrop)(Entity* self) {
                 self->velocityY = 0;
             }
         }
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         g_api.CheckCollision(
             self->posX.i.hi, self->posY.i.hi + 7, &collider, 0);
         if ((collider.effects & EFFECT_NOTHROUGH) && self->velocityY > 0) {
@@ -851,9 +855,9 @@ void OVL_EXPORT(EntityEquipItemDrop)(Entity* self) {
             self->ext.equipItemDrop.aliveTimer = 240;
             self->step++;
         } else {
-            FallEntity();
+            OVL_EXPORT(FallEntity)();
         }
-        CheckFieldCollision(D_80180EB8, 2);
+        OVL_EXPORT(CheckFieldCollision)(D_80180EB8, 2);
         break;
     case 3:
         PrizeDropFall2(1);
@@ -1020,7 +1024,7 @@ void OVL_EXPORT(EntityRelicOrb)(Entity* self) {
             return;
         }
 #endif
-        InitializeEntity(OVL_EXPORT(EInitObtainable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitObtainable));
         for (iconSlot = 0; iconSlot < MaxItemSlots; iconSlot++) {
             if (!OVL_EXPORT(ItemIconSlots)[iconSlot]) {
                 break;
@@ -1094,7 +1098,7 @@ void OVL_EXPORT(EntityRelicOrb)(Entity* self) {
             self->ext.relicOrb.floatTimer = 64;
             self->ext.relicOrb.yFloatSpeed = -self->ext.relicOrb.yFloatSpeed;
         }
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         iconSlot = self->ext.relicOrb.iconSlot;
         OVL_EXPORT(ItemIconSlots)[iconSlot] = 0x10;
         break;
@@ -1524,7 +1528,7 @@ void OVL_EXPORT(EntityMessageBox)(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitObtainable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitObtainable));
         self->flags |= FLAG_UNK_10000;
         self->flags ^= FLAG_POS_CAMERA_LOCKED;
         if (!self->params) {

@@ -60,20 +60,20 @@ void EntityDiscusLord(Entity* self) {
         discus->flags |= FLAG_DEAD;
         self->flags &= ~(FLAG_UNK_20000000 | FLAG_UNK_200);
         self->flags |= FLAG_UNK_2000;
-        SetStep(16);
+        OVL_EXPORT(SetStep)(16);
     }
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitDiscusLord);
+        OVL_EXPORT(InitializeEntity)(g_EInitDiscusLord);
         OVL_EXPORT(CreateEntityFromEntity)(E_DISCUS, self, discus);
-        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
         // fallthrough
     case 1:
-        UnkCollisionFunc3(sensors_discus_lord);
-        AnimateEntity(anim_idle, self);
+        OVL_EXPORT(UnkCollisionFunc3)(sensors_discus_lord);
+        OVL_EXPORT(AnimateEntity)(anim_idle, self);
         // Idle until aggro'd
-        if (GetDistanceToPlayerX() < 0x80) {
+        if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x80) {
             self->step++;
         }
         break;
@@ -84,44 +84,44 @@ void EntityDiscusLord(Entity* self) {
         }
 
         // If we're not facing player, flip directions
-        var_s5 = (GetSideToPlayer() & 1) ^ 1;
+        var_s5 = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
         if (var_s5 ^ self->facingLeft) {
-            SetStep(3);
+            OVL_EXPORT(SetStep)(3);
         }
 
-        AnimateEntity(anim_idle, self);
+        OVL_EXPORT(AnimateEntity)(anim_idle, self);
         if (self->ext.discusLord.unk82) {
             self->ext.discusLord.unk82--;
         } else {
-            if (GetDistanceToPlayerX() < 0xB0) {
+            if (OVL_EXPORT(GetDistanceToPlayerX)() < 0xB0) {
                 // Throw disc
-                SetStep(4);
+                OVL_EXPORT(SetStep)(4);
             }
-            if (GetDistanceToPlayerX() < 0x40) {
+            if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x40) {
                 // Close range strike
-                SetStep(5);
+                OVL_EXPORT(SetStep)(5);
                 // If player is above us, strike upward
-                if (GetSideToPlayer() & 2) {
-                    SetStep(6);
+                if (OVL_EXPORT(GetSideToPlayer)() & 2) {
+                    OVL_EXPORT(SetStep)(6);
                 }
             }
         }
         break;
     case 3:
         // Face player
-        var_s5 = AnimateEntity(anim_face_player, self);
+        var_s5 = OVL_EXPORT(AnimateEntity)(anim_face_player, self);
         if ((var_s5 & 0x80) && self->pose == 3) {
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
         }
         if (!var_s5) {
-            SetStep(2);
+            OVL_EXPORT(SetStep)(2);
         }
         break;
     case 4:
         switch (self->step_s) {
         case 0:
             // Throw disc
-            if (!AnimateEntity(anim_throw_disc, self)) {
+            if (!OVL_EXPORT(AnimateEntity)(anim_throw_disc, self)) {
                 self->step_s++;
             }
             if (self->animCurFrame == 9 && !self->poseTimer) {
@@ -139,13 +139,13 @@ void EntityDiscusLord(Entity* self) {
             // Disc returning to Lord
             if (!discus->ext.discusLord.thrownDisc) {
                 PlaySfxPositional(SFX_DISCUS_BUZZ);
-                SetSubStep(2);
+                OVL_EXPORT(SetSubStep)(2);
             }
             break;
         case 2:
             // Catch disk and return to idle
-            if (!AnimateEntity(anim_catch_disc, self)) {
-                SetStep(2);
+            if (!OVL_EXPORT(AnimateEntity)(anim_catch_disc, self)) {
+                OVL_EXPORT(SetStep)(2);
             }
             break;
         }
@@ -155,8 +155,8 @@ void EntityDiscusLord(Entity* self) {
         if (self->pose < 5) {
             discus->ext.discusLord.unk98 = 0;
         }
-        if (!AnimateEntity(anim_strike_forward, self)) {
-            SetStep(2);
+        if (!OVL_EXPORT(AnimateEntity)(anim_strike_forward, self)) {
+            OVL_EXPORT(SetStep)(2);
         }
         if (!self->poseTimer && self->pose == 3) {
             PlaySfxPositional(SFX_BONE_SWORD_SWISH_C);
@@ -167,8 +167,8 @@ void EntityDiscusLord(Entity* self) {
         if (self->pose < 6) {
             discus->ext.discusLord.unk98 = 0;
         }
-        if (!AnimateEntity(anim_strike_upward, self)) {
-            SetStep(2);
+        if (!OVL_EXPORT(AnimateEntity)(anim_strike_upward, self)) {
+            OVL_EXPORT(SetStep)(2);
         }
         if (!self->poseTimer && self->pose == 4) {
             PlaySfxPositional(SFX_BONE_SWORD_SWISH_C);
@@ -204,7 +204,8 @@ void EntityDiscusLord(Entity* self) {
             }
 
             for (i = LEN(death_part_positions) - 1; i >= 0; i--) {
-                entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                entity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
                     // Spawn the body part entities
                     OVL_EXPORT(CreateEntityFromEntity)
@@ -225,7 +226,8 @@ void EntityDiscusLord(Entity* self) {
                     entity->step = 17;
                     entity->flags |= FLAG_UNK_2000;
                 }
-                entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                entity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
                     OVL_EXPORT(CreateEntityFromCurrentEntity)
                     (E_INTENSE_EXPLOSION, entity);
@@ -288,7 +290,7 @@ void EntityDiscusLord(Entity* self) {
         break;
     case 17:
         // Body part death routine
-        InitializeEntity(g_EInitDiscusLord);
+        OVL_EXPORT(InitializeEntity)(g_EInitDiscusLord);
         self->hitboxState = 0;
         self->flags &= ~(FLAG_UNK_20000000 | FLAG_UNK_200);
         self->flags |= FLAG_UNK_00200000 | FLAG_UNK_2000;
@@ -300,15 +302,15 @@ void EntityDiscusLord(Entity* self) {
         self->animCurFrame = self->params + 0x11;
         entity = self->ext.discusLord.entity;
         self->ext.discusLord.angle =
-            GetAngleBetweenEntitiesShifted(entity, self);
+            OVL_EXPORT(GetAngleBetweenEntitiesShifted)(entity, self);
         sqrt = ((OVL_EXPORT(Random)() & 3) + 1) << 0x4;
         self->ext.discusLord.unkA8 = (sqrt << 0x10) / 0x20;
         self->ext.discusLord.unkAC = self->ext.discusLord.unkA8 / 0x20;
         // fallthrough
     case 18:
-        SetEntityVelocityFromAngle(
-            self->ext.discusLord.angle, self->ext.discusLord.unkA8 >> 0xC);
-        MoveEntity();
+        OVL_EXPORT(SetEntityVelocityFromAngle)
+        (self->ext.discusLord.angle, self->ext.discusLord.unkA8 >> 0xC);
+        OVL_EXPORT(MoveEntity)();
         self->ext.discusLord.unkA8 -= self->ext.discusLord.unkAC;
         if (self->ext.discusLord.unkA8 < 0) {
             self->step++;
@@ -320,14 +322,14 @@ void EntityDiscusLord(Entity* self) {
         posY = entity->posY.i.hi - self->posY.i.hi;
         sqrt = (posX * posX) + (posY * posY);
         sqrt = SquareRoot0(sqrt);
-        var_s5 = GetAngleBetweenEntitiesShifted(self, entity);
-        SetEntityVelocityFromAngle(var_s5, sqrt / 8);
+        var_s5 = OVL_EXPORT(GetAngleBetweenEntitiesShifted)(self, entity);
+        OVL_EXPORT(SetEntityVelocityFromAngle)(var_s5, sqrt / 8);
         self->ext.discusLord.unk82 = ((OVL_EXPORT(Random)() & 0xF) * 4) + 0x40;
         self->step++;
         // fallthrough
     case 20:
         // Get sucked into the death vortex
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         if (self->params % 2) {
             self->rotate -= 4;
         } else {
@@ -337,7 +339,8 @@ void EntityDiscusLord(Entity* self) {
         self->scaleX--;
         self->scaleY = self->scaleX;
         if (!--self->ext.discusLord.unk82) {
-            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            entity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
                 OVL_EXPORT(CreateEntityFromCurrentEntity)
                 (E_INTENSE_EXPLOSION, entity);
@@ -355,7 +358,7 @@ void EntityDiscusLord(Entity* self) {
         }
         break;
     case 21:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         entity = self->ext.discusLord.entity;
         entity->posX.i.hi = self->posX.i.hi;
         entity->posY.i.hi = self->posY.i.hi;
@@ -484,7 +487,7 @@ void EntityDiscus(Entity* self) {
 
     if (!(--self->ext.discusLord.angle)) {
         self->ext.discusLord.angle = 4;
-        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        entity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
             OVL_EXPORT(CreateEntityFromEntity)(E_DISCUS_TRAIL, self, entity);
             entity->facingLeft = self->facingLeft;
@@ -504,7 +507,7 @@ void EntityDiscus(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitDiscus);
+        OVL_EXPORT(InitializeEntity)(g_EInitDiscus);
         self->hitboxOffX = 1;
         self->hitboxOffY = 1;
         self->zPriority = discusLord->zPriority + 1;
@@ -626,7 +629,7 @@ void EntityDiscus(Entity* self) {
             self->step_s++;
             // fallthrough
         case 1:
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             self->velocityX += self->ext.discusLord.unk84;
             self->velocityY += self->ext.discusLord.unk88;
             // BUG: this is set but never used
@@ -647,7 +650,7 @@ void EntityDiscus(Entity* self) {
             }
             break;
         case 2:
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             self->velocityX += self->ext.discusLord.unk84;
             self->velocityY += self->ext.discusLord.unk88;
             posX = self->posX.i.hi;
@@ -692,7 +695,7 @@ void EntityDiscus(Entity* self) {
             break;
         case 3:
             // Return the disc to Discus Lord
-            UnkCollisionFunc2(sensors_disc);
+            OVL_EXPORT(UnkCollisionFunc2)(sensors_disc);
             if (!(g_Timer % 6)) {
                 PlaySfxPositional(SFX_ANIME_SWORD_B);
             }
@@ -730,7 +733,7 @@ void EntityDiscus(Entity* self) {
             }
             break;
         case 4:
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             self->velocityY += FIX(0.375);
             if (self->velocityY > 0) {
                 // Discus Lord caught disc, return to idle
@@ -807,7 +810,7 @@ void EntityDiscus(Entity* self) {
 // Handles the "speed" ghosting trail on the discus
 void EntityDiscusTrail(Entity* self) {
     if (!self->step) {
-        InitializeEntity(g_EInitDiscus);
+        OVL_EXPORT(InitializeEntity)(g_EInitDiscus);
         self->hitboxState = 0;
         self->blendMode |= BLEND_TRANSP | BLEND_ADD;
         self->drawFlags |= ENTITY_OPACITY | ENTITY_ROTATE;
@@ -840,7 +843,7 @@ void EntityDiscusChain(Entity* self) {
     discus = self - 1;
     discusLord = self - 2;
     if (!self->step) {
-        InitializeEntity(g_EInitDiscus);
+        OVL_EXPORT(InitializeEntity)(g_EInitDiscus);
         self->animCurFrame = 0xF;
         self->hitboxState = 0;
         self->zPriority = discus->zPriority + 1;

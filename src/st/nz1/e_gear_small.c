@@ -18,7 +18,7 @@ void EntityGearSidewaysSmall(Entity* self) {
 
     switch (self->step) {
     case 0x0:
-        InitializeEntity(g_EInitEnvironment);
+        OVL_EXPORT(InitializeEntity)(g_EInitEnvironment);
         self->zPriority = 0x6C;
         self->animCurFrame = 0xC;
         self->drawFlags = ENTITY_ROTATE;
@@ -37,7 +37,7 @@ void EntityGearSidewaysSmall(Entity* self) {
 
         self->rotate += 64;
 
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         offsetY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
         params = self->params;
         if (offsetY < D_us_80180FC8[params].x) {
@@ -58,7 +58,7 @@ void EntityGearSidewaysSmall(Entity* self) {
             offsetY = (14 * rsin(angle)) << 4;
             self->hitboxOffX = (s16)(offsetX >> 0x10);
             self->hitboxOffY = (s16)(offsetY >> 0x10);
-            collision = GetPlayerCollisionWith(self, 6, 2, 4);
+            collision = OVL_EXPORT(GetPlayerCollisionWith)(self, 6, 2, 4);
             if (collision & 4) {
                 angle += 64;
                 offsetX = (rcos(angle) * 14 * 16) - offsetX;

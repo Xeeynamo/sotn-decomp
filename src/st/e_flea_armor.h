@@ -55,22 +55,22 @@ void EntityFleaArmor(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitFleaArmor);
+        OVL_EXPORT(InitializeEntity)(g_EInitFleaArmor);
         OVL_EXPORT(CreateEntityFromEntity)
         (E_FLEA_ARMOR_ATTACK_HITBOX, self, self + 1);
         self->blendMode |= BLEND_TRANSP | BLEND_ADD;
         break;
 
     case 1:
-        if (UnkCollisionFunc3(D_us_80182D8C) & 1) {
+        if (OVL_EXPORT(UnkCollisionFunc3)(D_us_80182D8C) & 1) {
             self->step++;
         }
         break;
 
     case 2:
-        AnimateEntity(D_us_80182D78, self);
-        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-        if (GetDistanceToPlayerX() < 112) {
+        OVL_EXPORT(AnimateEntity)(D_us_80182D78, self);
+        self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+        if (OVL_EXPORT(GetDistanceToPlayerX)() < 112) {
 
             if (self->facingLeft) {
                 self->velocityX = FIX(2.0);
@@ -87,8 +87,8 @@ void EntityFleaArmor(Entity* self) {
 
     case 3:
         if (self->velocityY == 0 && self->ext.fleaArmor.counter) {
-            AnimateEntity(D_us_80182D84, self);
-            collision = UnkCollisionFunc2(D_us_80182D9C);
+            OVL_EXPORT(AnimateEntity)(D_us_80182D84, self);
+            collision = OVL_EXPORT(UnkCollisionFunc2)(D_us_80182D9C);
             self->ext.fleaArmor.counter2++;
 
             if ((self->ext.fleaArmor.counter2 % 4) == 0) {
@@ -103,7 +103,7 @@ void EntityFleaArmor(Entity* self) {
             if (!(OVL_EXPORT(Random)() & 0x1F)) {
                 self->ext.fleaArmor.counter = 0;
                 self->velocityY = FIX(-2.0);
-            } else if (GetDistanceToPlayerX() < 64) {
+            } else if (OVL_EXPORT(GetDistanceToPlayerX)() < 64) {
                 self->pose = 0;
                 self->poseTimer = 0;
                 self->step_s = 0;
@@ -119,7 +119,7 @@ void EntityFleaArmor(Entity* self) {
                 self->step_s = 0;
                 self->step = 4;
             }
-        } else if (UnkCollisionFunc3(D_us_80182D8C) & 1) {
+        } else if (OVL_EXPORT(UnkCollisionFunc3)(D_us_80182D8C) & 1) {
             if (self->facingLeft) {
                 self->velocityX = FIX(2.0);
             } else {
@@ -172,7 +172,7 @@ void EntityFleaArmor(Entity* self) {
             }
         }
 
-        if (UnkCollisionFunc3(D_us_80182D8C) & 1) {
+        if (OVL_EXPORT(UnkCollisionFunc3)(D_us_80182D8C) & 1) {
             self->step_s = 0;
             self->step = 2;
         } else {
@@ -196,7 +196,8 @@ void EntityFleaArmor(Entity* self) {
         PlaySfxPositional(SFX_FLEA_ARMOR_EXPLODE);
 
         for (i = 0; i < 6; i++) {
-            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            entity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
                 DestroyEntity(entity);
                 MakeEntityFromId(E_FLEA_ARMOR, self, entity);
@@ -218,7 +219,7 @@ void EntityFleaArmor(Entity* self) {
             entity->drawFlags |= ENTITY_ROTATE;
         }
 
-        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        entity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
             DestroyEntity(entity);
             OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
@@ -235,7 +236,7 @@ void EntityFleaArmor(Entity* self) {
         break;
 
     case 9:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->rotate += ROT(22.5);
         self->velocityY += FIX(0.25);
         break;
@@ -270,7 +271,7 @@ void EntityFleaArmorAttackHitbox(Entity* self) {
     u8 animCurFrame;
 
     if (!self->step) {
-        InitializeEntity(g_EInitFleaArmorAttackHitbox);
+        OVL_EXPORT(InitializeEntity)(g_EInitFleaArmorAttackHitbox);
     }
 
     prevEntity = self - 1;

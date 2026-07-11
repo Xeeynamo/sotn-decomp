@@ -10,7 +10,7 @@ void EntityTrapDoor(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitStInteractable);
+        OVL_EXPORT(InitializeEntity)(g_EInitStInteractable);
         self->animCurFrame = 27;
         self->zPriority = 0x6A;
         self->hitboxState = 1;
@@ -42,7 +42,7 @@ void EntityTrapDoor(Entity* self) {
         break;
 
     case 2:
-        AnimateEntity(trapdoor_anim, self);
+        OVL_EXPORT(AnimateEntity)(trapdoor_anim, self);
         break;
     }
 }

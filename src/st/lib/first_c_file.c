@@ -68,7 +68,7 @@ void func_us_801AE8E8(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         self->zPriority = 0x70;
         self->hitboxWidth = 0xC;
         self->hitboxHeight = 0x30;

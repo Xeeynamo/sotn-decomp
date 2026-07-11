@@ -31,7 +31,7 @@ void func_us_801BB53C(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         timeAttackRecord = g_api.TimeAttackController(
             TIMEATTACK_EVENT_LESSER_DEMON_DEFEAT, TIMEATTACK_GET_RECORD);
         if (timeAttackRecord) {
@@ -91,7 +91,8 @@ void func_us_801BB53C(Entity* self) {
         break;
     case 5:
         if (D_us_80181ACC & 0x4) {
-            tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            tempEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
             if (tempEntity != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)
                 (E_ID(ID_42), self, tempEntity);

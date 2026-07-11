@@ -59,7 +59,7 @@ void EntityBreakableWallDebris(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitParticle));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitParticle));
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 3);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
@@ -92,7 +92,7 @@ void EntityBreakableWallDebris(Entity* self) {
 
         break;
     case 1:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityY += FIX(0.125);
         prim = self->ext.segmentedBreakableWall.prim;
         posX = prim->next->x1 = self->posX.i.hi;
@@ -123,7 +123,7 @@ void EntityBreakableWallDebris(Entity* self) {
         }
         break;
     case 2:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityY += FIX(0.125);
         prim = self->ext.segmentedBreakableWall.prim;
         posX = prim->next->x1 = self->posX.i.hi;
@@ -155,8 +155,8 @@ void EntityBreakableWallDebris(Entity* self) {
         // After hitting the ground once more crumble into dust
         g_api.CheckCollision(posX, posY, &collider, 0);
         if (collider.effects) {
-            newEntity =
-                AllocEntity(&g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
+            newEntity = OVL_EXPORT(AllocEntity)(
+                &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
             if (newEntity != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)
                 (E_INTENSE_EXPLOSION, self, newEntity);
@@ -177,7 +177,7 @@ void EntityBreakableWallParticles(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitParticle));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitParticle));
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
                        FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
         self->velocityX = breakable_wall_particle_velocity[self->params].x;
@@ -212,7 +212,7 @@ void EntityBreakableWallParticles(Entity* self) {
 
         break;
     case 1:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityY += FIX(0.0625);
         posX = self->posX.i.hi;
         posY = self->posY.i.hi;
@@ -237,7 +237,7 @@ void EntitySecretWallRight(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitEnvironment);
+        OVL_EXPORT(InitializeEntity)(g_EInitEnvironment);
         self->animCurFrame = 4;
         self->zPriority = 0xA8;
         if (g_CastleFlags[RCAT_RIGHT_SECRET_WALL_OPEN]) {
@@ -266,7 +266,7 @@ void EntitySecretWallRight(Entity* self) {
             self->ext.segmentedBreakableWall.damageTaken = 0;
 
             for (i = 0; i < 4; i++) {
-                entity = AllocEntity(
+                entity = OVL_EXPORT(AllocEntity)(
                     &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (entity != NULL) {
                     OVL_EXPORT(CreateEntityFromEntity)
@@ -330,7 +330,7 @@ void EntityBreakableWallSegment(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitBreakableWallSegment);
+        OVL_EXPORT(InitializeEntity)(g_EInitBreakableWallSegment);
         self->hitboxState = 2;
         self->hitPoints = 8;
         self->hitboxWidth = 0x10;
@@ -354,8 +354,8 @@ void EntityBreakableWallSegment(Entity* self) {
     case 2:
         switch (self->step_s) {
         case 0:
-            entity =
-                AllocEntity(&g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
+            entity = OVL_EXPORT(AllocEntity)(
+                &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
             if (entity != NULL) {
                 OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
                 entity->posY.i.hi += 8;
@@ -363,7 +363,7 @@ void EntityBreakableWallSegment(Entity* self) {
             }
 
             for (i = 0; i < 3; i++) {
-                entity = AllocEntity(
+                entity = OVL_EXPORT(AllocEntity)(
                     &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (entity != NULL) {
                     OVL_EXPORT(CreateEntityFromEntity)
@@ -374,7 +374,7 @@ void EntityBreakableWallSegment(Entity* self) {
             }
 
             for (i = 0; i < 4; i++) {
-                entity = AllocEntity(
+                entity = OVL_EXPORT(AllocEntity)(
                     &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (entity != NULL) {
                     OVL_EXPORT(CreateEntityFromEntity)
@@ -410,7 +410,7 @@ void EntitySecretWall(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitEnvironment);
+        OVL_EXPORT(InitializeEntity)(g_EInitEnvironment);
         self->animCurFrame = 0xA;
         self->zPriority = 0xA8;
         if (!self->params) {
@@ -446,7 +446,7 @@ void EntitySecretWall(Entity* self) {
             self->ext.segmentedBreakableWall.damageTaken = 0;
 
             for (i = 0; i < 4; i++) {
-                entity = AllocEntity(
+                entity = OVL_EXPORT(AllocEntity)(
                     &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (entity != NULL) {
                     OVL_EXPORT(CreateEntityFromEntity)

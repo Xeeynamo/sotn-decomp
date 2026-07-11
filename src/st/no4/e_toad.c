@@ -38,7 +38,7 @@ void EntityToad(Entity* self) {
             entity = self->ext.frogToad.tongueEntity;
             DestroyEntity(entity);
         }
-        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        entity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
             OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
             entity->params = 1;
@@ -51,7 +51,7 @@ void EntityToad(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitToad);
+        OVL_EXPORT(InitializeEntity)(g_EInitToad);
         if (self->params) {
             // params set to 1 means this is the toad's tongue
             self->hitboxHeight = 3;
@@ -63,8 +63,8 @@ void EntityToad(Entity* self) {
         }
         break;
     case 1:
-        if (UnkCollisionFunc3(sensors_ground) & 1) {
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        if (OVL_EXPORT(UnkCollisionFunc3)(sensors_ground) & 1) {
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
             self->ext.frogToad.jumpTimer = 0x20;
             self->ext.frogToad.lickTimer = 0x40;
             self->step++;
@@ -82,22 +82,22 @@ void EntityToad(Entity* self) {
             if (self->ext.frogToad.jumpTimer) {
                 self->ext.frogToad.jumpTimer--;
             } else {
-                SetStep(3);
+                OVL_EXPORT(SetStep)(3);
                 break;
             }
 
             if (self->ext.frogToad.lickTimer) {
                 self->ext.frogToad.lickTimer--;
             } else {
-                SetStep(4);
+                OVL_EXPORT(SetStep)(4);
                 break;
             }
             PlaySfxPositional(SFX_TOAD_CROAK);
 
             break;
         case 1:
-            if (!AnimateEntity(anim_change_dir, self)) {
-                self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
+            if (!OVL_EXPORT(AnimateEntity)(anim_change_dir, self)) {
+                self->facingLeft = ((OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1);
                 self->step_s--;
                 break;
             }
@@ -108,7 +108,7 @@ void EntityToad(Entity* self) {
     case 3:
         switch (self->step_s) {
         case 0:
-            if (!AnimateEntity(anim_jump, self)) {
+            if (!OVL_EXPORT(AnimateEntity)(anim_jump, self)) {
                 index = OVL_EXPORT(Random)() & 3;
                 self->velocityX = jumpVelocities[index].x;
                 if (!self->facingLeft) {
@@ -143,8 +143,8 @@ void EntityToad(Entity* self) {
                     self->velocityY = 0;
                 }
             }
-            if (UnkCollisionFunc3(sensors_ground) & 1) {
-                SetSubStep(2);
+            if (OVL_EXPORT(UnkCollisionFunc3)(sensors_ground) & 1) {
+                OVL_EXPORT(SetSubStep)(2);
             }
             if (self->velocityY < 0) {
                 self->animCurFrame = 4;
@@ -161,10 +161,10 @@ void EntityToad(Entity* self) {
             self->hitboxOffY = 2;
             self->hitboxWidth = 9;
             self->hitboxHeight = 10;
-            if (!AnimateEntity(anim_land, self)) {
+            if (!OVL_EXPORT(AnimateEntity)(anim_land, self)) {
                 self->ext.frogToad.jumpTimer =
                     jumpIntervals[OVL_EXPORT(Random)() & 7];
-                SetStep(2);
+                OVL_EXPORT(SetStep)(2);
             }
         }
         break;
@@ -173,7 +173,8 @@ void EntityToad(Entity* self) {
         switch (self->step_s) {
         case 0:
             self->step_s++;
-            entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            entity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
                 // Spawn the toad tongue
                 OVL_EXPORT(CreateEntityFromEntity)(E_TOAD, self, entity);
@@ -183,26 +184,26 @@ void EntityToad(Entity* self) {
                 self->ext.frogToad.tongueEntity = entity;
                 break;
             }
-            SetStep(2);
+            OVL_EXPORT(SetStep)(2);
             self->ext.frogToad.tongueEntity = NULL;
             break;
         case 1:
-            if (!AnimateEntity(anim_open_mouth, self)) {
+            if (!OVL_EXPORT(AnimateEntity)(anim_open_mouth, self)) {
                 PlaySfxPositional(SFX_FROG_TOAD_TONGUE);
-                SetSubStep(2);
+                OVL_EXPORT(SetSubStep)(2);
             }
             break;
         case 2:
             entity = self->ext.frogToad.tongueEntity;
-            if (!AnimateEntity(anim_tongue, entity)) {
+            if (!OVL_EXPORT(AnimateEntity)(anim_tongue, entity)) {
                 DestroyEntity(entity);
                 self->ext.frogToad.tongueEntity = NULL;
-                SetSubStep(3);
+                OVL_EXPORT(SetSubStep)(3);
             }
             break;
         case 3:
-            if (!AnimateEntity(anim_close_mouth, self)) {
-                SetStep(2);
+            if (!OVL_EXPORT(AnimateEntity)(anim_close_mouth, self)) {
+                OVL_EXPORT(SetStep)(2);
                 self->ext.frogToad.lickTimer =
                     lickIntervals[OVL_EXPORT(Random)() & 7];
             }

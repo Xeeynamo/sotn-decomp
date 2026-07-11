@@ -1767,7 +1767,7 @@ void func_us_801C9D58(Entity* self) {
     }
 
     if (self->step == 0) {
-        InitializeEntity(D_us_80180448);
+        OVL_EXPORT(InitializeEntity)(D_us_80180448);
         if (g_Dop.status & PLAYER_STATUS_POISON) {
             self->attack /= 2;
         }
@@ -4252,7 +4252,7 @@ void EntitySubwpnReboundStone(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(EInitReboundStone);
+        OVL_EXPORT(InitializeEntity)(EInitReboundStone);
         if (g_Dop.status & PLAYER_STATUS_POISON) {
             self->attack = self->attack / 2;
         }
@@ -4561,7 +4561,7 @@ void DopplegangerUnarmedAttack(Entity* self) {
         if (animIndex != 0) {
             var_a0 = &D_us_80180460;
         }
-        InitializeEntity(*var_a0);
+        OVL_EXPORT(InitializeEntity)(*var_a0);
         if (g_Dop.status & PLAYER_STATUS_POISON) {
             self->attack /= 2;
         }
@@ -4599,7 +4599,7 @@ void EntitySubwpnKnife(Entity* self) {
 
     switch (self->step) {
     case DAGGER_INIT:
-        InitializeEntity(EInitSubwpnKnife);
+        OVL_EXPORT(InitializeEntity)(EInitSubwpnKnife);
         if (g_Dop.status & PLAYER_STATUS_POISON) {
             self->attack = self->attack / 2;
         }

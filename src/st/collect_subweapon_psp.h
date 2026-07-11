@@ -35,7 +35,7 @@ static void CollectSubweapon(u16 subWeaponIdx) {
     if (subWeapon) {
         g_CurrentEntity->params = subWeapon;
         g_CurrentEntity->posY.i.hi = player->posY.i.hi + 12;
-        SetStep(7);
+        OVL_EXPORT(SetStep)(7);
         g_CurrentEntity->velocityY = FIX(-2.5);
         g_CurrentEntity->animCurFrame = 0;
         g_CurrentEntity->ext.equipItemDrop.sparkleTimer = 5;

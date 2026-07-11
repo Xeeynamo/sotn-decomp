@@ -10,7 +10,7 @@ void EntityTombstone(Entity* self) {
     Entity* entity;
 
     if (self->flags & FLAG_DEAD) {
-        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        entity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
             OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
             entity->params = 2;
@@ -21,14 +21,14 @@ void EntityTombstone(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitTombstone);
+        OVL_EXPORT(InitializeEntity)(g_EInitTombstone);
         self->hitboxOffY = -6;
         self->drawFlags |= ENTITY_ROTATE;
         self->animCurFrame = 0x15;
         break;
 
     case 1:
-        if (UnkCollisionFunc3(sensors) & 1) {
+        if (OVL_EXPORT(UnkCollisionFunc3)(sensors) & 1) {
             self->step++;
         }
         break;
@@ -36,12 +36,12 @@ void EntityTombstone(Entity* self) {
     case 2:
         if (self->ext.tombstone.timer) {
             self->ext.tombstone.timer--;
-        } else if (GetDistanceToPlayerX() < 0x40) {
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        } else if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x40) {
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
             self->ext.tombstone.timer = 0x18;
             self->rotate = 0xFC0;
             PlaySfxPositional(SFX_TOMBSTONE_MOVE);
-            SetStep(3);
+            OVL_EXPORT(SetStep)(3);
         }
         break;
 
@@ -71,7 +71,7 @@ void EntityTombstone(Entity* self) {
         } else {
             self->animCurFrame = 0x16;
         }
-        if (UnkCollisionFunc3(&sensors) & 1) {
+        if (OVL_EXPORT(UnkCollisionFunc3)(&sensors) & 1) {
             PlaySfxPositional(SFX_FM_EXPLODE_B);
             self->animCurFrame = 0x15;
             self->ext.tombstone.timer = 0x80;

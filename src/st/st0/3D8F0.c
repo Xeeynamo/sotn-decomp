@@ -44,7 +44,7 @@ void func_801BD8F0(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInit3DObject);
+        OVL_EXPORT(InitializeEntity)(g_EInit3DObject);
         g_GpuBuffers[0].draw.r0 = 0;
         g_GpuBuffers[0].draw.g0 = 0;
         g_GpuBuffers[0].draw.b0 = 0;
@@ -58,7 +58,7 @@ void func_801BD8F0(Entity* self) {
     case 2:
         primIndex = g_api.func_800EDB58(PRIM_GT4, 15 * 15);
         if (primIndex == -1) {
-            SetStep(7);
+            OVL_EXPORT(SetStep)(7);
             break;
         }
         self->flags |= FLAG_HAS_PRIMS;
@@ -97,7 +97,7 @@ void func_801BD8F0(Entity* self) {
         prim = prim->next;
         dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
         if (dr_env == NULL) {
-            SetStep(7);
+            OVL_EXPORT(SetStep)(7);
             return;
         }
         prim->type = PRIM_ENV;
@@ -119,7 +119,7 @@ void func_801BD8F0(Entity* self) {
         prim = prim->next;
         dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
         if (dr_env == NULL) {
-            SetStep(7);
+            OVL_EXPORT(SetStep)(7);
             break;
         }
         prim->type = PRIM_ENV;
