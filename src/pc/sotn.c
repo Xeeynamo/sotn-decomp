@@ -21,6 +21,8 @@ extern bool g_IsQuitRequested;
 #include "../st/e_init_common.h"
 #undef OVL_EXPORT
 
+#include "../st/animate_entity.h"
+
 PfnEntityUpdate* PfnEntityUpdates;
 LayoutEntity** g_pStObjLayoutHorizontal;
 LayoutEntity** g_pStObjLayoutVertical;
