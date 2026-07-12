@@ -266,18 +266,13 @@ void func_801C7884(Entity* self) {
     Entity* tempEntity;
     s32 params = self->params;
 
-// VERSION_US does not test g_PlayableCharacter, this define is a convenient
-// 'hack' that will compile out all tests against PLAYER_MARIA
-#ifdef VERSION_US
-#define g_PlayableCharacter PLAYER_ALUCARD
-#endif
-
     switch (self->step) {
     case 0:
         InitializeEntity(OVL_EXPORT(EInitObtainable));
         self->hitboxState = 0;
-        /* fallthrough */
+        // fallthrough
     case 1:
+#ifdef VERSION_PSP
         if (g_PlayableCharacter == PLAYER_MARIA) {
             if (params >= 14 && params < 23) {
                 switch (params) {
@@ -308,10 +303,14 @@ void func_801C7884(Entity* self) {
         } else {
             AnimateEntity(g_SubweaponAnimPrizeDrop[params], self);
         }
+#else
+        MoveEntity();
+        AnimateEntity(g_SubweaponAnimPrizeDrop[params], self);
+#endif
         self->velocityY = rsin(self->rotate) * 2;
         self->rotate += 0x20;
 
-        tempEntity = self - 1;
+        tempEntity = &self[-1];
         if (tempEntity->step != 1) {
             self->entityId = E_PRIZE_DROP;
             self->pfnUpdate = EntityPrizeDrop;
