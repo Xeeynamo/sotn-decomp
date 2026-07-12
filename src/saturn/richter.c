@@ -34,7 +34,48 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A6428, func_060A6428);
 // RicStepStand
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A64CC, func_060A64CC);
 
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A6738, func_060A6738);
+#define RicSetSpeedX(speed)                                                    \
+    do {                                                                       \
+        s32 _tmp_speed = (speed);                                              \
+        if (g_CurrentEntity->facingLeft == 1)                                  \
+            _tmp_speed = -_tmp_speed;                                          \
+        g_CurrentEntity->velocityX = _tmp_speed;                               \
+    } while (0)
+
+enum RicInputChecks {
+    CHECK_GROUND = 1,
+    CHECK_FALL = 4,
+    CHECK_FACING = 8,
+    CHECK_JUMP = 0x10,
+    CHECK_CRASH = 0x40,
+    CHECK_80 = 0x80,
+    CHECK_GRAVITY_HIT = 0x200,
+    CHECK_ATTACK = 0x1000,
+    CHECK_CROUCH = 0x2000,
+    CHECK_GRAVITY_FALL = 0x8000,
+    CHECK_GRAVITY_JUMP = 0x10000,
+    CHECK_GROUND_AFTER_HIT = 0x20000,
+    CHECK_SLIDE = 0x40000,
+};
+
+// func_060A6738
+void RicStepWalk(void) {
+    if (!RicCheckInput(CHECK_FALL | CHECK_FACING | CHECK_JUMP | CHECK_CRASH |
+                       CHECK_ATTACK | CHECK_CROUCH)) {
+        RicDecelerateX(FIX(0.15625)); // altered
+        if (RicCheckFacing() == 0) {
+            RicSetStand(0);
+            return;
+        }
+        if (PLAYER.step_s != 0) {
+            if (PLAYER.step_s) {
+            }
+        } else {
+            RicSetSpeedX(FIX(1.5625)); // altered
+        }
+    }
+}
+
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A67B0, func_060A67B0);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A68A0, func_060A68A0);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A6D64, func_060A6D64);
@@ -109,14 +150,6 @@ void RicSetStand(s32 velocityX) {
     RicSetStep(PL_S_STAND);
     RicSetAnimation(ric_anim_stand);
 }
-
-#define RicSetSpeedX(speed)                                                    \
-    do {                                                                       \
-        s32 _tmp_speed = (speed);                                              \
-        if (g_CurrentEntity->facingLeft == 1)                                  \
-            _tmp_speed = -_tmp_speed;                                          \
-        g_CurrentEntity->velocityX = _tmp_speed;                               \
-    } while (0)
 
 void RicSetRun(void);
 
