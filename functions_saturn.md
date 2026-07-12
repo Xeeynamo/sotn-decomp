@@ -233,10 +233,6 @@
 | alucard/f_nonmat/f60B8F68.s  | func_060B8F68   |       68 |          6 |       |     |
 | alucard/f_nonmat/f60BD5A4.s  | func_060BD5A4   |       68 |          6 |       |     |
 | zero/f_nonmat/f600C114.s     | func_0600C114   |       68 |          6 |       |     |
-| maria/f_nonmat/f60B295C.s    | func_060B295C   |       68 |          7 |       |     |
-| maria/f_nonmat/f60B4470.s    | func_060B4470   |       68 |          7 |       |     |
-| richter/f_nonmat/f60B33DC.s  | func_060B33DC   |       68 |          7 |       |     |
-| richter/f_nonmat/f60B5434.s  | func_060B5434   |       68 |          7 |       |     |
 | maria/f_nonmat/f60A6A1C.s    | func_060A6A1C   |       68 |          9 |       |     |
 | zero/f_nonmat/f600B12C.s     | func_0600B12C   |       69 |          5 |       |     |
 | zero/f_nonmat/f600FA4C.s     | func_0600FA4C   |       69 |          5 |       |     |
