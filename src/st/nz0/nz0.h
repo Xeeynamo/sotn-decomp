@@ -122,7 +122,7 @@ extern s32 g_BossFlag; // original names: boss_flag / beri_flag
 extern EInit OVL_EXPORT(EInitBreakable);
 extern EInit OVL_EXPORT(EInitObtainable);
 extern EInit g_EInitParticle;
-extern EInit g_EInitSpawner;
+extern GAME_IMPORT EInit g_EInitSpawner;
 extern EInit g_EInitInteractable;
 extern EInit g_EInitUnkId13;
 extern EInit g_EInitLockCamera;

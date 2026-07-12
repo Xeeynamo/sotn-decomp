@@ -10,9 +10,9 @@ extern AbbreviatedOverlay OVL_EXPORT(Overlay);
 extern PfnEntityUpdate OVL_EXPORT(EntityUpdates)[];
 extern LayoutEntity* OVL_EXPORT(pStObjLayoutHorizontal)[];
 extern LayoutEntity* OVL_EXPORT(pStObjLayoutVertical)[];
-extern PfnEntityUpdate* PfnEntityUpdates;
-extern LayoutEntity** g_pStObjLayoutHorizontal;
-extern LayoutEntity** g_pStObjLayoutVertical;
+extern GAME_IMPORT PfnEntityUpdate* PfnEntityUpdates;
+extern GAME_IMPORT LayoutEntity** g_pStObjLayoutHorizontal;
+extern GAME_IMPORT LayoutEntity** g_pStObjLayoutVertical;
 OVL_API void InitStage(Overlay* o) {
     LoadReset();
     InitOnce();

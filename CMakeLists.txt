@@ -9,6 +9,12 @@ if (WIN32)
     set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 endif()
 
+if (MSVC)
+    # HACK: force DLL CRT to avoid heap corruption
+    cmake_policy(SET CMP0091 NEW)
+    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreadedDLL")
+endif()
+
 # Overlay compatibility
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
@@ -478,6 +484,23 @@ psyz_strip_file_prefix(${PROJECT_NAME})
 if (WIN32)
     target_link_libraries(${PROJECT_NAME} PRIVATE core)
     set_target_properties(${PROJECT_NAME} PROPERTIES ENABLE_EXPORTS ON)
+    if (MSVC)
+        # Windows PE has no -rdynamic equivalent, and a DLL must resolve all
+        # externals at link time.
+        # Generates an export definition for overlays to where to link to.
+        get_filename_component(_msvc_bindir "${CMAKE_C_COMPILER}" DIRECTORY)
+        set(_sotn_def "${CMAKE_BINARY_DIR}/sotn_exports.def")
+        add_custom_command(TARGET ${PROJECT_NAME} PRE_LINK
+            COMMAND ${CMAKE_COMMAND}
+                    -DDUMPBIN=${_msvc_bindir}/dumpbin.exe
+                    -DOUT=${_sotn_def}
+                    "-DINPUTS=$<TARGET_FILE:core>$<SEMICOLON>$<TARGET_FILE:psyz>$<SEMICOLON>$<JOIN:$<TARGET_OBJECTS:${PROJECT_NAME}>,$<SEMICOLON>>"
+                    -P ${CMAKE_SOURCE_DIR}/cmake/gen_export_def.cmake
+            VERBATIM
+            COMMENT "Generating export .def for overlay symbol resolution")
+        set_property(TARGET ${PROJECT_NAME} APPEND_STRING
+                     PROPERTY LINK_FLAGS " /DEF:${_sotn_def}")
+    endif()
 elseif (APPLE)
     target_link_libraries(${PROJECT_NAME} PRIVATE core m)
     target_link_options(${PROJECT_NAME} PRIVATE -Wl,-export_dynamic)
@@ -505,6 +528,7 @@ function(add_overlay name)
         HARD_LINK
         _internal_version_us
         __psyz
+        OVERLAY_BUILD
     )
 
     # Overlays need to resolve the same libraries the main exec is linked to

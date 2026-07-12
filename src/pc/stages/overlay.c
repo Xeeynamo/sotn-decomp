@@ -8,10 +8,15 @@
 #include "overlay.h"
 
 #if defined(_WIN32)
-#include <windows.h>
+__declspec(dllimport) void* __stdcall LoadLibraryA(const char* lpLibFileName);
+__declspec(dllimport) void* __stdcall GetProcAddress(
+    void* hModule, const char* lpProcName);
+__declspec(dllimport) int __stdcall FreeLibrary(void* hLibModule);
+__declspec(dllimport) unsigned long __stdcall GetModuleFileNameA(
+    void* hModule, char* lpFilename, unsigned long nSize);
 
 #define OVL_EXT ".dll"
-typedef HMODULE OvlHandle;
+typedef void* OvlHandle;
 
 static OvlHandle OvlOpen(const char* path) { return LoadLibraryA(path); }
 static void* OvlSym(OvlHandle h, const char* name) {
@@ -22,7 +27,7 @@ static const char* OvlError(void) {
     return "LoadLibrary/GetProcAddress failed";
 }
 static bool GetExePath(char* buf, size_t size) {
-    DWORD len = GetModuleFileNameA(NULL, buf, size);
+    unsigned long len = GetModuleFileNameA(NULL, buf, (unsigned long)size);
     return len != 0 && len < size;
 }
 #elif defined(__APPLE__)

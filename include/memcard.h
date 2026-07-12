@@ -12,10 +12,10 @@
 #include <psxsdk/kernel.h>
 #include <psxsdk/libapi.h>
 
-extern MemcardInfo g_MemcardInfo[2];
-extern s32 g_MemcardBlockRead;
-extern s32 g_MemcardPortMask[];
-extern u8* g_saveIconTexture[0x10];
-extern s32 g_MemcardStep;
+extern GAME_IMPORT MemcardInfo g_MemcardInfo[2];
+extern GAME_IMPORT s32 g_MemcardBlockRead;
+extern GAME_IMPORT s32 g_MemcardPortMask[];
+extern GAME_IMPORT u8* g_saveIconTexture[0x10];
+extern GAME_IMPORT s32 g_MemcardStep;
 
 #endif
