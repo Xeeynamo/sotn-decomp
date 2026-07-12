@@ -27,7 +27,7 @@ void EntityBreakableNZ0(Entity* self) {
 
     breakableType = self->params >> 12;
     if (self->step) {
-        AnimateEntity(g_eBreakableAnimations[breakableType], self);
+        OVL_EXPORT(AnimateEntity)(g_eBreakableAnimations[breakableType], self);
         if (breakableType == 2) {
             prim = &g_PrimBuf[self->primIndex];
             if (g_Timer & 2) {
@@ -47,16 +47,18 @@ void EntityBreakableNZ0(Entity* self) {
                 self->flags &= ~FLAG_HAS_PRIMS;
             }
             g_api.PlaySfx(SFX_CANDLE_HIT);
-            entityDropItem = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            entityDropItem =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (entityDropItem != NULL) {
-                CreateEntityFromCurrentEntity(E_EXPLOSION, entityDropItem);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_EXPLOSION, entityDropItem);
                 entityDropItem->params =
                     g_eBreakableExplosionTypes[breakableType];
             }
-            ReplaceBreakableWithItemDrop(self);
+            OVL_EXPORT(ReplaceBreakableWithItemDrop)(self);
         }
     } else {
-        InitializeEntity(OVL_EXPORT(EInitBreakable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitBreakable));
         self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 20;
         self->blendMode = blend_modes[breakableType];
         self->hitboxHeight = g_eBreakableHitboxes[breakableType];

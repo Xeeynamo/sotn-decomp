@@ -9,7 +9,7 @@ typedef struct SubWpnContDebris {
 } SubWpnContDebris;
 
 extern u8* g_MariaSubweaponAnimPrizeDrop[];
-extern u8* g_SubweaponAnimPrizeDrop[];
+extern u8* OVL_EXPORT(SubweaponAnimPrizeDrop)[];
 
 static SubWpnContDebris D_80182584[] = {
     {0, -87, 3, false}, {-10, -70, 7, true}, {-11, -55, 6, false},
@@ -39,7 +39,7 @@ void EntitySubWeaponContainer(Entity* self) {
 
     switch (self->step) {
     case SUBWPNCONT_INIT:
-        InitializeEntity(g_EInitSubwpnCloche);
+        OVL_EXPORT(InitializeEntity)(g_EInitSubwpnCloche);
         self->blendMode = BLEND_TRANSP;
         self->animCurFrame = 1;
         self->zPriority = 0x70;
@@ -50,8 +50,8 @@ void EntitySubWeaponContainer(Entity* self) {
         self->hitboxState = 2;
         self->palette += self->params;
         newEntity = self + 1;
-        CreateEntityFromEntity(
-            E_func_801C7884, self, newEntity); // Create SubWeapon
+        OVL_EXPORT(CreateEntityFromEntity)
+        (E_func_801C7884, self, newEntity); // Create SubWeapon
         newEntity->posY.i.hi -= 72;
         newEntity->params = D_801825CC[self->params];
         newEntity->zPriority = self->zPriority - 2;
@@ -75,13 +75,15 @@ void EntitySubWeaponContainer(Entity* self) {
 
     case SUBWPNCONT_IDLE: // Spawn Liquid bubbles
         if (!(g_Timer & 0xF)) {
-            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            newEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_LIQUID_BUBBLES, self, newEntity);
-                rnd = (Random() & 0x18) - 12;
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_LIQUID_BUBBLES, self, newEntity);
+                rnd = (OVL_EXPORT(Random)() & 0x18) - 12;
                 newEntity->posX.i.hi += rnd;
                 newEntity->posY.i.hi -= 30;
-                newEntity->params = Random() & 3;
+                newEntity->params = OVL_EXPORT(Random)() & 3;
                 if (!newEntity->params && abs(rnd) > 8) {
                     newEntity->params = 1;
                 }
@@ -101,9 +103,11 @@ void EntitySubWeaponContainer(Entity* self) {
         g_api.PlaySfx(SFX_SUBWEAPON_CONTAINER_BREAK);
         glassPieceTBL = D_80182584;
         for (i = 0; i < LEN(D_80182584); i++, glassPieceTBL++) {
-            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            newEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_FALLING_GLASS, self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_FALLING_GLASS, self, newEntity);
                 newEntity->posX.i.hi += glassPieceTBL->velX;
                 newEntity->posY.i.hi += glassPieceTBL->velY;
                 newEntity->ext.subwpnContGlass.velX = glassPieceTBL->velX;
@@ -114,12 +118,13 @@ void EntitySubWeaponContainer(Entity* self) {
         }
 
         for (i = 0; i < 0x60; i++) { // Spawn falling liquid
-            newEntity =
-                AllocEntity(&g_Entities[UNK_ENTITY_51], &g_Entities[256]);
+            newEntity = OVL_EXPORT(AllocEntity)(
+                &g_Entities[UNK_ENTITY_51], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_FALLING_LIQUID, self, newEntity);
-                rndPosX = (Random() & 0x1F) - 16;
-                rndPosY = -(Random() & 0x3F) - 16;
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_FALLING_LIQUID, self, newEntity);
+                rndPosX = (OVL_EXPORT(Random)() & 0x1F) - 16;
+                rndPosY = -(OVL_EXPORT(Random)() & 0x3F) - 16;
                 newEntity->posX.i.hi += rndPosX;
                 newEntity->posY.i.hi += rndPosY;
                 newEntity->rotate = ratan2(rndPosY, rndPosX);
@@ -166,17 +171,17 @@ void EntitySubWeaponContainer(Entity* self) {
 void EntitySubWpnContGlass(Entity* self) {
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitSubwpnClochePieces);
+        OVL_EXPORT(InitializeEntity)(g_EInitSubwpnClochePieces);
         self->animCurFrame = self->params;
         self->palette += self->ext.subwpnContGlass.palette;
         self->drawFlags = ENTITY_ROTATE;
         self->velocityX = self->ext.subwpnContGlass.velX * 0x1000;
-        self->velocityX -= (Random() * 0x100) - FIX(0.5);
-        self->velocityY -= (Random() & 0x1F) * 0x1000;
+        self->velocityX -= (OVL_EXPORT(Random)() * 0x100) - FIX(0.5);
+        self->velocityY -= (OVL_EXPORT(Random)() & 0x1F) * 0x1000;
         break;
 
     case 1:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityY += FIX(0.125);
         if (self->velocityX != 0) {
             if (self->facingLeft) {
@@ -205,7 +210,7 @@ void func_801C7654(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitParticle));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitParticle));
         self->animSet = ANIMSET_DRA(2);
         self->palette = PAL_FLAG(PAL_CC_RED_EFFECT_B);
         self->blendMode = BLEND_TRANSP | BLEND_QUARTER;
@@ -214,8 +219,8 @@ void func_801C7654(Entity* self) {
         break;
 
     case 1:
-        AnimateEntity(D_801825F0, self);
-        MoveEntity();
+        OVL_EXPORT(AnimateEntity)(D_801825F0, self);
+        OVL_EXPORT(MoveEntity)();
         self->velocityY += FIX(0.125);
         x = self->posX.i.hi;
         y = self->posY.i.hi + 8;
@@ -230,7 +235,7 @@ void func_801C7654(Entity* self) {
         break;
 
     case 2:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->scaleY -= 8;
         if (!self->scaleY) {
             DestroyEntity(self);
@@ -243,7 +248,7 @@ void func_801C7654(Entity* self) {
 void func_801C77B8(Entity* self) {
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitSubwpnClochePieces);
+        OVL_EXPORT(InitializeEntity)(g_EInitSubwpnClochePieces);
         self->animCurFrame = self->params + 8;
         self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
         self->scaleX = self->scaleY = 0x100;
@@ -252,7 +257,7 @@ void func_801C77B8(Entity* self) {
         break;
 
     case 1:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityY -= 0x400;
         self->scaleX = self->scaleY -= 8;
         if (!self->scaleX) {
@@ -274,7 +279,7 @@ void func_801C7884(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitObtainable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitObtainable));
         self->hitboxState = 0;
         /* fallthrough */
     case 1:
@@ -302,11 +307,13 @@ void func_801C7884(Entity* self) {
                 }
             }
         }
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         if (g_PlayableCharacter == PLAYER_MARIA) {
-            AnimateEntity(g_MariaSubweaponAnimPrizeDrop[params], self);
+            OVL_EXPORT(AnimateEntity)
+            (g_MariaSubweaponAnimPrizeDrop[params], self);
         } else {
-            AnimateEntity(g_SubweaponAnimPrizeDrop[params], self);
+            OVL_EXPORT(AnimateEntity)
+            (OVL_EXPORT(SubweaponAnimPrizeDrop)[params], self);
         }
         self->velocityY = rsin(self->rotate) * 2;
         self->rotate += 0x20;
@@ -314,7 +321,7 @@ void func_801C7884(Entity* self) {
         tempEntity = self - 1;
         if (tempEntity->step != 1) {
             self->entityId = E_PRIZE_DROP;
-            self->pfnUpdate = EntityPrizeDrop;
+            self->pfnUpdate = OVL_EXPORT(EntityPrizeDrop);
             self->poseTimer = 0;
             self->pose = 0;
             self->step = 0;

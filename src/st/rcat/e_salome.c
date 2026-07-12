@@ -151,7 +151,8 @@ void EntitySalome(Entity* self) {
         DEBUG = 255,
     };
 
-    if ((GetDistanceToPlayerX() < 0x50) && (GetDistanceToPlayerY() < 0x40)) {
+    if ((OVL_EXPORT(GetDistanceToPlayerX)() < 0x50) &&
+        (OVL_EXPORT(GetDistanceToPlayerY)() < 0x40)) {
         self->ext.salome.playerWithinProximity = true;
     } else {
         self->ext.salome.playerWithinProximity = false;
@@ -159,7 +160,7 @@ void EntitySalome(Entity* self) {
 
     self->hitboxState = 3;
     entity = &PLAYER;
-    if (((GetSideToPlayer() & 1) ^ 1) == self->facingLeft &&
+    if (((OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1) == self->facingLeft &&
         self->ext.salome.playerWithinProximity) {
         self->hitboxState = 1;
     }
@@ -169,53 +170,53 @@ void EntitySalome(Entity* self) {
     }
 
     if (self->flags & FLAG_DEAD && self->step < DEATH) {
-        SetStep(DEATH);
+        OVL_EXPORT(SetStep)(DEATH);
     }
 
     switch (self->step) {
     case INIT:
-        InitializeEntity(g_EInitSalome);
+        OVL_EXPORT(InitializeEntity)(g_EInitSalome);
         // Start out looking in the player's direction
-        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
         // Pick a starting thrown object randomly
         // 0 = skull, 1 = cat
-        self->ext.salome.thrownObject = Random() & 1;
+        self->ext.salome.thrownObject = OVL_EXPORT(Random)() & 1;
         self->ext.salome.attackTimer = 0x30;
         self->zPriority = 0xAA;
 
         // Spawn the magical shield entity
         entity = self + 1;
-        CreateEntityFromCurrentEntity(E_SALOME_EFFECTS, entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_SALOME_EFFECTS, entity);
         entity->zPriority = self->zPriority + 1;
         entity->params = 0;
 
         // Spawn the lantern flicker entity
         entity = self + 2;
-        CreateEntityFromCurrentEntity(E_SALOME_EFFECTS, entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_SALOME_EFFECTS, entity);
         entity->zPriority = self->zPriority - 1;
         entity->params = 1;
 
-        SetStep(IDLE);
+        OVL_EXPORT(SetStep)(IDLE);
         // fallthrough
     case IDLE:
         switch (self->step_s) {
         case 0:
             // Rise and fall on broomstick while idling
             self->animCurFrame = 1;
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             angle = self->ext.salome.bobPhase += 0x20;
             angle &= 0xFFF;
             self->velocityX = 0;
             self->velocityY = rsin(angle) * 8;
 
             // When the player is close enough, we aggro
-            if (GetDistanceToPlayerX() < 0x60) {
+            if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x60) {
                 self->step_s++;
             }
             break;
         case 1:
-            if (!AnimateEntity(anim_turn_to_player, self)) {
-                SetStep(FLY);
+            if (!OVL_EXPORT(AnimateEntity)(anim_turn_to_player, self)) {
+                OVL_EXPORT(SetStep)(FLY);
             }
             break;
         }
@@ -224,8 +225,8 @@ void EntitySalome(Entity* self) {
         if (!self->step_s) {
             self->step_s++;
         }
-        AnimateEntity(anim_fly, self);
-        MoveEntity();
+        OVL_EXPORT(AnimateEntity)(anim_fly, self);
+        OVL_EXPORT(MoveEntity)();
         if (self->facingLeft ^ self->ext.salome.moveLeft) {
             // Fly right
             self->velocityX += FIX(3.0 / 64.0);
@@ -262,13 +263,15 @@ void EntitySalome(Entity* self) {
         if (!self->ext.salome.attackTimer) {
             // If the player is underneath us, spawn a magic orb at them,
             // otherwise move into Throw Object step
-            if (GetDistanceToPlayerX() > 0x40) {
-                SetStep(THROW_OBJECT);
+            if (OVL_EXPORT(GetDistanceToPlayerX)() > 0x40) {
+                OVL_EXPORT(SetStep)(THROW_OBJECT);
             } else {
                 PlaySfxPositional(SFX_SALOME_MAGIC_ATTACK);
-                entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                entity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_SALOME_MAGIC_ORB, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_SALOME_MAGIC_ORB, self, entity);
                     if (self->facingLeft) {
                         entity->posX.i.hi += 0x1C;
                     } else {
@@ -283,46 +286,49 @@ void EntitySalome(Entity* self) {
             self->ext.salome.attackTimer--;
         }
 
-        facingDirection = ((GetSideToPlayer() & 1) ^ 1);
+        facingDirection = ((OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1);
         if (self->facingLeft != facingDirection) {
-            SetStep(CHANGE_DIRECTION);
+            OVL_EXPORT(SetStep)(CHANGE_DIRECTION);
         }
         break;
     case CHANGE_DIRECTION:
-        if (!AnimateEntity(anim_turn_with_sparkles, self)) {
+        if (!OVL_EXPORT(AnimateEntity)(anim_turn_with_sparkles, self)) {
             self->animCurFrame = 4;
             self->facingLeft ^= 1;
-            SetStep(FLY);
+            OVL_EXPORT(SetStep)(FLY);
         }
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityX -= self->velocityX / 32;
         self->velocityY -= self->velocityY / 32;
         break;
     case THROW_OBJECT:
         switch (self->step_s) {
         case 0:
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             self->velocityX -= self->velocityX / 4;
             self->velocityY -= self->velocityY / 4;
-            if (!AnimateEntity(anim_return_to_stationary, self)) {
-                SetSubStep(1);
+            if (!OVL_EXPORT(AnimateEntity)(anim_return_to_stationary, self)) {
+                OVL_EXPORT(SetSubStep)(1);
             }
             break;
         case 1:
-            if (!AnimateEntity(anim_throw, self)) {
-                SetSubStep(2);
+            if (!OVL_EXPORT(AnimateEntity)(anim_throw, self)) {
+                OVL_EXPORT(SetSubStep)(2);
             }
 
             if (!self->poseTimer && self->pose == 5) {
                 self->ext.salome.thrownObject ^= 1;
-                entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                entity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
                     if (self->ext.salome.thrownObject) {
                         PlaySfxPositional(SFX_SALOME_MEOW_SHORT);
-                        CreateEntityFromEntity(E_SALOME_CAT, self, entity);
+                        OVL_EXPORT(CreateEntityFromEntity)
+                        (E_SALOME_CAT, self, entity);
                     } else {
                         PlaySfxPositional(SFX_SALOME_ATTACK);
-                        CreateEntityFromEntity(E_SALOME_SKULL, self, entity);
+                        OVL_EXPORT(CreateEntityFromEntity)
+                        (E_SALOME_SKULL, self, entity);
                     }
 
                     entity->zPriority = self->zPriority + 1;
@@ -337,8 +343,8 @@ void EntitySalome(Entity* self) {
             }
             break;
         case 2:
-            if (!AnimateEntity(anim_turn_to_player, self)) {
-                SetStep(FLY);
+            if (!OVL_EXPORT(AnimateEntity)(anim_turn_to_player, self)) {
+                OVL_EXPORT(SetStep)(FLY);
             }
             break;
         }
@@ -402,7 +408,7 @@ void EntitySalomeEffects(Entity* self) {
 
     switch (self->step) {
     case INIT:
-        InitializeEntity(g_EInitSalomeEffects);
+        OVL_EXPORT(InitializeEntity)(g_EInitSalomeEffects);
         self->hitboxState = 2;
         self->blendMode = BLEND_ADD | BLEND_TRANSP;
         if (!self->params) {
@@ -420,7 +426,7 @@ void EntitySalomeEffects(Entity* self) {
             break;
         }
     case SHIELD:
-        AnimateEntity(anim_shield, self);
+        OVL_EXPORT(AnimateEntity)(anim_shield, self);
         entity = self - 1;
         self->facingLeft = entity->facingLeft;
         self->posX.i.hi = entity->posX.i.hi;
@@ -449,7 +455,7 @@ void EntitySalomeEffects(Entity* self) {
         self->animCurFrame = 0;
         break;
     case LANTERN_LIGHT:
-        AnimateEntity(anim_lantern_flicker, self);
+        OVL_EXPORT(AnimateEntity)(anim_lantern_flicker, self);
         entity = self - 2;
         self->facingLeft = entity->facingLeft;
         self->posX.i.hi = entity->posX.i.hi;
@@ -480,14 +486,14 @@ void EntitySalomeMagicOrb(Entity* self) {
     s16 angle;
 
     if (!self->step) {
-        InitializeEntity(g_EInitSalomeMagicOrb);
+        OVL_EXPORT(InitializeEntity)(g_EInitSalomeMagicOrb);
         player = &PLAYER;
-        angle = GetAngleBetweenEntities(player, self);
+        angle = OVL_EXPORT(GetAngleBetweenEntities)(player, self);
         self->velocityX = (rcos(angle) * FIX(-1.0)) >> 0xC;
         self->velocityY = (rsin(angle) * FIX(-1.0)) >> 0xC;
     }
-    AnimateEntity(anim_magic_orb, self);
-    MoveEntity();
+    OVL_EXPORT(AnimateEntity)(anim_magic_orb, self);
+    OVL_EXPORT(MoveEntity)();
 
     if (self->hitFlags || self->flags & FLAG_DEAD) {
         DestroyEntity(self);
@@ -501,9 +507,10 @@ void EntitySalomeSkull(Entity* self) {
     s32 posY;
 
     if (self->flags & FLAG_DEAD) {
-        entity = AllocEntity(&g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
+        entity = OVL_EXPORT(AllocEntity)(
+            &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
             entity->params = EXPLOSION_FIREBALL;
         }
         DestroyEntity(self);
@@ -512,7 +519,7 @@ void EntitySalomeSkull(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitSalomeSkull);
+        OVL_EXPORT(InitializeEntity)(g_EInitSalomeSkull);
         if (self->facingLeft) {
             self->velocityX = FIX(1.25);
         } else {
@@ -521,8 +528,8 @@ void EntitySalomeSkull(Entity* self) {
         self->velocityY = FIX(-1.0);
         // fallthrough
     case 1:
-        AnimateEntity(anim_skull_rotate, self);
-        MoveEntity();
+        OVL_EXPORT(AnimateEntity)(anim_skull_rotate, self);
+        OVL_EXPORT(MoveEntity)();
         self->velocityY += FIX(3.0 / 32.0);
         posX = self->posX.i.hi;
         posY = self->posY.i.hi + 2;
@@ -533,11 +540,11 @@ void EntitySalomeSkull(Entity* self) {
         break;
     case 2:
         if (self->ext.salome.touchedGround) {
-            AnimateEntity(anim_skull_rotate_decel, self);
+            OVL_EXPORT(AnimateEntity)(anim_skull_rotate_decel, self);
         } else {
-            AnimateEntity(anim_skull_rotate, self);
+            OVL_EXPORT(AnimateEntity)(anim_skull_rotate, self);
         }
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityY += FIX(3.0 / 32.0);
         posX = self->posX.i.hi;
         posY = self->posY.i.hi;
@@ -610,13 +617,13 @@ void EntitySalomeCat(Entity* self) {
         self->ext.salome.unk9D = 1;
         if (self->step != 1) {
             self->velocityY = FIX(-2.0);
-            SetStep(1);
+            OVL_EXPORT(SetStep)(1);
         }
     }
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitSalomeCat);
+        OVL_EXPORT(InitializeEntity)(g_EInitSalomeCat);
         self->attackElement = 7;
         self->drawFlags |= ENTITY_ROTATE;
         if (self->facingLeft) {
@@ -631,7 +638,7 @@ void EntitySalomeCat(Entity* self) {
         }
         // fallthrough
     case 1:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->rotate = 0;
         if (self->ext.salome.isDeathCat) {
             self->animCurFrame = 0x38;
@@ -703,10 +710,11 @@ void EntitySalomeCat(Entity* self) {
                     self->ext.salome.unk9D = 0;
                     if (self->flags & FLAG_DEAD) {
                         PlaySfxPositional(SFX_STUTTER_EXPLODE_LOW);
-                        entity = AllocEntity(
+                        entity = OVL_EXPORT(AllocEntity)(
                             &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
                         if (entity != NULL) {
-                            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+                            OVL_EXPORT(CreateEntityFromEntity)
+                            (E_EXPLOSION, self, entity);
                             entity->params = EXPLOSION_FIREBALL;
                         }
                         DestroyEntity(self);
@@ -714,7 +722,7 @@ void EntitySalomeCat(Entity* self) {
                     }
                 }
                 PlaySfxPositional(SFX_STOMP_SOFT_B);
-                SetStep(2);
+                OVL_EXPORT(SetStep)(2);
             }
         } else {
             self->ext.salome.touchedGround |= 2;
@@ -773,23 +781,23 @@ void EntitySalomeCat(Entity* self) {
         }
 
         if (self->ext.salome.isDeathCat) {
-            hitFlags = AnimateEntity(anim_death_cat_move, self);
+            hitFlags = OVL_EXPORT(AnimateEntity)(anim_death_cat_move, self);
         } else {
-            hitFlags = AnimateEntity(anim_cat_move, self);
+            hitFlags = OVL_EXPORT(AnimateEntity)(anim_cat_move, self);
         }
 
         if (!hitFlags) {
             PlaySfxPositional(SFX_QUIET_STEPS);
         }
 
-        collisionTest = UnkCollisionFunc2(sensors_wall);
+        collisionTest = OVL_EXPORT(UnkCollisionFunc2)(sensors_wall);
         if (collisionTest == 0xFF) {
             self->facingLeft ^= 1;
         }
 
         if (collisionTest == 0x80) {
             self->velocityY = FIX(-2.0);
-            SetStep(1);
+            OVL_EXPORT(SetStep)(1);
         }
 
         break;

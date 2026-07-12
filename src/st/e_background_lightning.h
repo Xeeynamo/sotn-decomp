@@ -70,7 +70,7 @@ void EntityBackgroundLightning(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         self->ext.backgroundLightning.timer = 0x80;
         self->animCurFrame = 15;
 #if defined(STAGE_IS_NO3)
@@ -105,17 +105,20 @@ void EntityBackgroundLightning(Entity* self) {
             break;
 #endif
         case 0:
-            otherEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            otherEnt =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (otherEnt != NULL) {
-                CreateEntityFromCurrentEntity(
-                    E_ID(LIGHTNING_THUNDER), otherEnt);
-                randOf3 = Random() & 3;
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(LIGHTNING_THUNDER), otherEnt);
+                randOf3 = OVL_EXPORT(Random)() & 3;
                 otherEnt->posX.i.hi = lightningThunderXY[randOf3][0];
                 otherEnt->posY.i.hi = lightningThunderXY[randOf3][1];
             }
-            otherEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            otherEnt =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (otherEnt != NULL) {
-                CreateEntityFromCurrentEntity(E_ID(LIGHTNING_CLOUD), otherEnt);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(LIGHTNING_CLOUD), otherEnt);
                 if (randOf3 > 2) {
                     randOf3 = 0;
                 }
@@ -124,8 +127,9 @@ void EntityBackgroundLightning(Entity* self) {
             self->step_s++;
             /* fallthrough */
         case 1:
-            if (AnimateEntity(lightningAnim, self) == 0) {
-                self->ext.backgroundLightning.timer = (Random() & 0x7F) + 0x40;
+            if (OVL_EXPORT(AnimateEntity)(lightningAnim, self) == 0) {
+                self->ext.backgroundLightning.timer =
+                    (OVL_EXPORT(Random)() & 0x7F) + 0x40;
                 self->step_s++;
             }
 #if !defined(INVERTED_STAGE)
@@ -168,7 +172,7 @@ void EntityBackgroundLightning(Entity* self) {
             if (--self->ext.backgroundLightning.timer) {
                 break;
             }
-            SetSubStep(0);
+            OVL_EXPORT(SetSubStep)(0);
             break;
         }
 #if defined(STAGE_IS_NO3)
@@ -179,15 +183,15 @@ void EntityBackgroundLightning(Entity* self) {
         playerRealX = g_Tilemap.scrollX.i.hi + otherEnt->posX.i.hi;
         if (playerRealX > 0x300) {
             g_CastleFlags[CASTLE_TURNED_ON] = 1;
-            SetStep(2);
+            OVL_EXPORT(SetStep)(2);
         }
 #endif
         break;
 #if defined(STAGE_IS_NO3)
     case 2:
-        if (AnimateEntity(D_80180FBC, self) == 0) {
+        if (OVL_EXPORT(AnimateEntity)(D_80180FBC, self) == 0) {
             self->params = 0;
-            SetStep(1);
+            OVL_EXPORT(SetStep)(1);
         }
         g_GpuBuffers[0].draw.r0 = 16;
         g_GpuBuffers[0].draw.g0 = 8;

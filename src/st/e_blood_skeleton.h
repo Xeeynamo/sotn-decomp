@@ -40,13 +40,13 @@ void EntityBloodSkeleton(Entity* self) {
     if ((self->flags & FLAG_DEAD) && (self->step < 3)) {
         PlaySfxPositional(SFX_RED_SKEL_COLLAPSE);
         self->hitboxState = 0;
-        SetStep(BLOOD_SKELETON_DISASSEMBLE);
+        OVL_EXPORT(SetStep)(BLOOD_SKELETON_DISASSEMBLE);
     }
 
     switch (self->step) {
     case BLOOD_SKELETON_INIT:
-        InitializeEntity(g_EInitBloodSkeleton);
-        self->facingLeft = Random() & 1;
+        OVL_EXPORT(InitializeEntity)(g_EInitBloodSkeleton);
+        self->facingLeft = OVL_EXPORT(Random)() & 1;
         self->animCurFrame = 1;
 #ifdef STAGE_IS_NZ0
         self->flags &=
@@ -57,7 +57,7 @@ void EntityBloodSkeleton(Entity* self) {
         break;
 
     case BLOOD_SKELETON_IDLE:
-        if (UnkCollisionFunc3(D_80182694) & 1) {
+        if (OVL_EXPORT(UnkCollisionFunc3)(D_80182694) & 1) {
             self->step_s = 0;
             self->step++;
         }
@@ -66,13 +66,13 @@ void EntityBloodSkeleton(Entity* self) {
     case BLOOD_SKELETON_WALK:
 #if defined(STAGE_IS_CAT) || defined(STAGE_IS_RCAT)
         if (!self->step_s) {
-            self->ext.bloodSkeleton.timer = timers[Random() & 3];
+            self->ext.bloodSkeleton.timer = timers[OVL_EXPORT(Random)() & 3];
             self->step_s++;
         }
 
         if (!--self->ext.bloodSkeleton.timer) {
             self->step_s = 0;
-            self->facingLeft = Random() & 1;
+            self->facingLeft = OVL_EXPORT(Random)() & 1;
         }
 #endif
 
@@ -84,9 +84,10 @@ void EntityBloodSkeleton(Entity* self) {
             }
         }
 
-        if (!AnimateEntity(anim_walk, self) && GetDistanceToPlayerY() < 48 &&
-            (Random() & 3) == 0) {
-            self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
+        if (!OVL_EXPORT(AnimateEntity)(anim_walk, self) &&
+            OVL_EXPORT(GetDistanceToPlayerY)() < 48 &&
+            (OVL_EXPORT(Random)() & 3) == 0) {
+            self->facingLeft = ((OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1);
         }
 
         collider = CheckColliderOffsets(D_801826AC, self->facingLeft);
@@ -96,13 +97,13 @@ void EntityBloodSkeleton(Entity* self) {
         break;
 
     case BLOOD_SKELETON_DISASSEMBLE:
-        if (AnimateEntity(anim_disassemble, self) == 0) {
+        if (OVL_EXPORT(AnimateEntity)(anim_disassemble, self) == 0) {
             self->flags &= ~FLAG_DEAD;
             self->ext.bloodSkeleton.timer = 0xF0;
             if (self->params) {
                 self->ext.bloodSkeleton.timer = 4;
             }
-            SetStep(BLOOD_SKELETON_REASSEMBLE);
+            OVL_EXPORT(SetStep)(BLOOD_SKELETON_REASSEMBLE);
         }
         break;
 
@@ -137,9 +138,11 @@ void EntityBloodSkeleton(Entity* self) {
 
         case 2:
             if (!self->params) {
-                animationResult = AnimateEntity(anim_reassemble, self);
+                animationResult =
+                    OVL_EXPORT(AnimateEntity)(anim_reassemble, self);
             } else {
-                animationResult = AnimateEntity(anim_reassemble_alt, self);
+                animationResult =
+                    OVL_EXPORT(AnimateEntity)(anim_reassemble_alt, self);
             }
 
             if (!animationResult) {
@@ -151,7 +154,7 @@ void EntityBloodSkeleton(Entity* self) {
                     ~(FLAG_DESTROY_IF_OUT_OF_CAMERA |
                       FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA | FLAG_UNK_20000000);
 #endif
-                SetStep(BLOOD_SKELETON_WALK);
+                OVL_EXPORT(SetStep)(BLOOD_SKELETON_WALK);
             }
             break;
         }

@@ -106,10 +106,11 @@ static void SpawnDeathParts(void) {
         g_CurrentEntity->animCurFrame = 0;
 
         for (i = 5; i >= 0; i--) {
-            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            newEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(
-                    E_HELLFIRE_BEAST, g_CurrentEntity, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_HELLFIRE_BEAST, g_CurrentEntity, newEntity);
                 posX = death_parts_positions[i].x;
                 posY = death_parts_positions[i].y;
                 posX += 0x10;
@@ -246,16 +247,17 @@ void EntityHellfireBeast(Entity* self) {
         self->hitboxState = 0;
         self->ext.hellfireBeast.timer = 0x100;
         PlaySfxPositional(SFX_HELLFIRE_BEAST_DEATH);
-        SetStep(DEATH_INIT);
+        OVL_EXPORT(SetStep)(DEATH_INIT);
     }
 
     switch (self->step) {
     case INIT:
-        InitializeEntity(g_EInitHellfireBeast);
+        OVL_EXPORT(InitializeEntity)(g_EInitHellfireBeast);
         // Spawn facing the player
-        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
         entity = self + 1;
-        CreateEntityFromCurrentEntity(E_HELLFIRE_BEAST_PUNCH_HITBOX, entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)
+        (E_HELLFIRE_BEAST_PUNCH_HITBOX, entity);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 3);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
@@ -291,7 +293,7 @@ void EntityHellfireBeast(Entity* self) {
         }
         break;
     case DROP_TO_GROUND:
-        if (UnkCollisionFunc3(sensors_ground) & 1) {
+        if (OVL_EXPORT(UnkCollisionFunc3)(sensors_ground) & 1) {
             self->step++;
         }
         break;
@@ -300,46 +302,46 @@ void EntityHellfireBeast(Entity* self) {
             self->ext.hellfireBeast.timer = 0x40;
             self->step_s++;
         } else {
-            if (!AnimateEntity(anim_idle_breathe, self)) {
-                self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+            if (!OVL_EXPORT(AnimateEntity)(anim_idle_breathe, self)) {
+                self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
             }
 
             if (self->ext.hellfireBeast.timer) {
                 self->ext.hellfireBeast.timer--;
-            } else if (GetDistanceToPlayerX() < 64) {
+            } else if (OVL_EXPORT(GetDistanceToPlayerX)() < 64) {
                 // If player is close, use slide punch attack
-                SetStep(PUNCH_ATTACK);
+                OVL_EXPORT(SetStep)(PUNCH_ATTACK);
             } else {
                 // Otherwise prep lightning / flame pillar attack
-                SetStep(ATTACK_INIT);
+                OVL_EXPORT(SetStep)(ATTACK_INIT);
             }
         }
         break;
     case UNUSED_STUTTER:
         // This case appears unused - the animation is similar to part of the
         // punch animation so may have been intended to be part of that logic
-        animResult = AnimateEntity(anim_unused_stutter, self);
+        animResult = OVL_EXPORT(AnimateEntity)(anim_unused_stutter, self);
         if (animResult & 0x80 && self->pose == 4) {
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
         }
 
         if (!animResult) {
-            SetStep(IDLE);
+            OVL_EXPORT(SetStep)(IDLE);
         }
         break;
     case PUNCH_ATTACK:
         switch (self->step_s) {
         case 0:
             self->velocityX = 0;
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
             self->step_s++;
             break;
         case 1:
-            UnkCollisionFunc2(sensors_wall);
-            if (!AnimateEntity(anim_punch, self)) {
+            OVL_EXPORT(UnkCollisionFunc2)(sensors_wall);
+            if (!OVL_EXPORT(AnimateEntity)(anim_punch, self)) {
                 PlaySfxPositional(SFX_BONE_SWORD_SWISH_B);
                 self->ext.hellfireBeast.timer = 0xC;
-                SetSubStep(2);
+                OVL_EXPORT(SetSubStep)(2);
             }
             if (self->pose == 4) {
                 self->velocityX = FIX(-4.0);
@@ -349,7 +351,7 @@ void EntityHellfireBeast(Entity* self) {
             }
             break;
         case 2:
-            UnkCollisionFunc2(sensors_wall);
+            OVL_EXPORT(UnkCollisionFunc2)(sensors_wall);
             if (self->facingLeft) {
                 self->velocityX -= FIX(1.0 / 6.0);
             } else {
@@ -357,9 +359,9 @@ void EntityHellfireBeast(Entity* self) {
             }
 
             if (!--self->ext.hellfireBeast.timer) {
-                SetSubStep(3);
+                OVL_EXPORT(SetSubStep)(3);
                 if (!self->velocityX) {
-                    SetSubStep(4);
+                    OVL_EXPORT(SetSubStep)(4);
                 } else if (self->facingLeft) {
                     EntityGreyPuffSpawner(self, 5, 3, 0x18, 0x30, 2, -7);
                 } else {
@@ -368,18 +370,18 @@ void EntityHellfireBeast(Entity* self) {
             }
             break;
         case 3:
-            UnkCollisionFunc2(sensors_wall);
+            OVL_EXPORT(UnkCollisionFunc2)(sensors_wall);
             if (self->pose > 2) {
                 self->velocityX -= self->velocityX / 8;
             }
 
-            if (!AnimateEntity(anim_punch_skid_stop, self)) {
-                SetStep(IDLE);
+            if (!OVL_EXPORT(AnimateEntity)(anim_punch_skid_stop, self)) {
+                OVL_EXPORT(SetStep)(IDLE);
             }
             break;
         case 4:
-            if (!AnimateEntity(anim_punch_hard_stop, self)) {
-                SetStep(IDLE);
+            if (!OVL_EXPORT(AnimateEntity)(anim_punch_hard_stop, self)) {
+                OVL_EXPORT(SetStep)(IDLE);
             }
             break;
         }
@@ -387,12 +389,12 @@ void EntityHellfireBeast(Entity* self) {
     case ATTACK_INIT:
         switch (self->step_s) {
         case 0:
-            if (!AnimateEntity(anim_raise_arms_attack, self)) {
+            if (!OVL_EXPORT(AnimateEntity)(anim_raise_arms_attack, self)) {
                 // Pick a random cast attack
                 // 0 = Lightning
                 // 1 = Flame pillar
-                self->ext.hellfireBeast.attackChoice = Random() & 1;
-                SetSubStep(1);
+                self->ext.hellfireBeast.attackChoice = OVL_EXPORT(Random)() & 1;
+                OVL_EXPORT(SetSubStep)(1);
             }
             break;
         case 1:
@@ -470,11 +472,13 @@ void EntityHellfireBeast(Entity* self) {
             }
 
             if (!--self->ext.hellfireBeast.timer) {
-                entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                entity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
                     newEntityId =
                         attack_entityIds[self->ext.hellfireBeast.attackChoice];
-                    CreateEntityFromEntity(newEntityId, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (newEntityId, self, entity);
                     entity->facingLeft = self->facingLeft;
                     prim = self->ext.hellfireBeast.prim;
                     entity->posX.i.hi = prim->next->x1;
@@ -483,13 +487,13 @@ void EntityHellfireBeast(Entity* self) {
                     self->step_s++;
                 } else {
                     self->ext.hellfireBeast.attackEntity = NULL;
-                    SetStep(IDLE);
+                    OVL_EXPORT(SetStep)(IDLE);
                     return;
                 }
             }
             break;
         case 3:
-            AnimateEntity(anim_attack_cast_wiggle, self);
+            OVL_EXPORT(AnimateEntity)(anim_attack_cast_wiggle, self);
             prim = self->ext.hellfireBeast.primTwo;
             if (self->animCurFrame == 0x34) {
                 prim->drawMode |= DRAW_HIDE;
@@ -511,7 +515,7 @@ void EntityHellfireBeast(Entity* self) {
             prim->next->b3 -= 8;
             if (prim->next->b3 < 0x10) {
                 prim->drawMode = DRAW_HIDE;
-                SetStep(IDLE);
+                OVL_EXPORT(SetStep)(IDLE);
             }
             break;
         }
@@ -540,7 +544,7 @@ void EntityHellfireBeast(Entity* self) {
         break;
     case DEATH_PARTS_DROP:
         // Death parts are spawned with params 0-5 (6 total)
-        InitializeEntity(g_EInitHellfireBeast);
+        OVL_EXPORT(InitializeEntity)(g_EInitHellfireBeast);
         self->hitboxState = 0;
         self->animCurFrame = self->params + 0x2B;
         self->ext.hellfireBeast.timer = death_parts_timer[self->params];
@@ -552,7 +556,7 @@ void EntityHellfireBeast(Entity* self) {
         } else {
             self->drawFlags |= ENTITY_ROTATE;
         }
-        SetStep(DEATH_PARTS_EXPLODE);
+        OVL_EXPORT(SetStep)(DEATH_PARTS_EXPLODE);
         break;
     case DEATH_PARTS_EXPLODE:
         if (self->ext.hellfireBeast.timer) {
@@ -569,7 +573,7 @@ void EntityHellfireBeast(Entity* self) {
         }
 
         // Once the death parts hit the ground, burst into flames and despawn
-        if (UnkCollisionFunc3(death_parts_sensors_ground) & 1) {
+        if (OVL_EXPORT(UnkCollisionFunc3)(death_parts_sensors_ground) & 1) {
             PlaySfxPositional(SFX_EXPLODE_B);
             MakeExplosions();
             DestroyEntity(self);
@@ -616,7 +620,7 @@ void EntityHellfireBeastThorsHammer(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitHellfireBeastThorsHammer);
+        OVL_EXPORT(InitializeEntity)(g_EInitHellfireBeastThorsHammer);
         self->hitboxWidth = self->hitboxHeight = 0;
         self->animSet = 2;
         self->animCurFrame = 0;
@@ -719,7 +723,7 @@ void EntityHellfireBeastThorsHammer(Entity* self) {
             var_s4 = ROT(180);
         }
 
-        var_s4 += (0xD0 - ((Random() & 7) << 6));
+        var_s4 += (0xD0 - ((OVL_EXPORT(Random)() & 7) << 6));
         var_s6 = self->ext.hellfireBeastThorsHammer.unk94 * 0x10;
         self->ext.hellfireBeastThorsHammer.unk94++;
         if (self->ext.hellfireBeastThorsHammer.unk94 > 6) {
@@ -857,7 +861,7 @@ void EntityHellfireBeastThorsHammer(Entity* self) {
 
 void EntityHellfireBeastFlamePillarAnimation(Entity* self) {
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         self->animSet = 2;
         self->animCurFrame = 1;
         self->zPriority = 0x100;
@@ -1008,7 +1012,7 @@ void EntityHellfireBeastFlamePillar(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitHellfireBeastFlamePillar);
+        OVL_EXPORT(InitializeEntity)(g_EInitHellfireBeastFlamePillar);
         self->animSet = 2;
         self->animCurFrame = 0;
         self->hitboxWidth = self->hitboxHeight = 0;
@@ -1136,13 +1140,14 @@ void EntityHellfireBeastFlamePillar(Entity* self) {
         // NB. Strange way to write a single loop iteration...
         // Maybe the number of iterations changed during development?
         for (i = 0; i <= 0; i++) {
-            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            newEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(
-                    E_HELLFIRE_BEAST_FLAME_PILLAR_ANIM, newEntity);
-                newEntity->posX.i.hi = Random() & 0xF;
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_HELLFIRE_BEAST_FLAME_PILLAR_ANIM, newEntity);
+                newEntity->posX.i.hi = OVL_EXPORT(Random)() & 0xF;
                 newEntity->posY.i.hi = 0x20;
-                newEntity->params = Random() & 1;
+                newEntity->params = OVL_EXPORT(Random)() & 1;
                 newEntity->ext.hellfireBeastThorsHammer.entity = self;
             }
         }
@@ -1197,7 +1202,7 @@ void EntityHellfireBeastPunchHitbox(Entity* self) {
     Entity* hellfireBeast = self - 1;
 
     if (!self->step) {
-        InitializeEntity(g_EInitHellfireBeastPunchHitbox);
+        OVL_EXPORT(InitializeEntity)(g_EInitHellfireBeastPunchHitbox);
         self->hitboxWidth = 0xA;
         self->hitboxHeight = 4;
         self->hitboxOffX = -0x24;

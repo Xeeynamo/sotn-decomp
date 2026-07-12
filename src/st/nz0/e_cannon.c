@@ -9,7 +9,7 @@ void EntityCannonLever(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         self->hitboxWidth = 4;
         self->hitboxHeight = 20;
         self->hitboxState = 2;
@@ -48,7 +48,7 @@ void EntityCannonLever(Entity* self) {
         break;
 
     case 2:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityX -= self->velocityX / 16;
         if (abs(self->velocityX < FIX(0.125))) {
             self->step++;
@@ -76,7 +76,7 @@ void EntityCannon(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -120,13 +120,16 @@ void EntityCannon(Entity* self) {
             g_api.func_80102CD8(1);
             g_api.PlaySfx(SFX_CANNON_EXPLODE);
             self->velocityX = FIX(8);
-            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            newEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (newEntity) {
-                CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_EXPLOSION, self, newEntity);
                 newEntity->params = 0x13;
             }
             newEntity = &self[1];
-            CreateEntityFromEntity(E_ID(CANNON_SHOT), self, newEntity);
+            OVL_EXPORT(CreateEntityFromEntity)
+            (E_ID(CANNON_SHOT), self, newEntity);
             self->step++;
         }
         break;
@@ -135,7 +138,7 @@ void EntityCannon(Entity* self) {
         prim = prim->next;
         self->posX.i.hi = prim->x0 + 8;
         self->posX.i.lo = 0;
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityX -= self->velocityX / 8;
         if (abs(self->velocityX < FIX(0.125))) {
             self->step++;
@@ -157,7 +160,7 @@ void EntityCannonShot(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         self->animSet = ANIMSET_DRA(2);
         self->animCurFrame = 1;
         self->palette = PAL_FLAG(PAL_UNK_1AF);
@@ -165,13 +168,15 @@ void EntityCannonShot(Entity* self) {
         self->velocityX = FIX(-8);
 
     case 1:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         distance = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
         if (distance < 112) {
             g_api.func_80102CD8(1);
-            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            newEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_EXPLOSION, self, newEntity);
                 newEntity->params = 3;
             }
             g_CastleFlags[NZ0_CANNON_WALL_SHORTCUT] = 1;
@@ -194,7 +199,7 @@ void EntityCannonWall(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         if (g_CastleFlags[NZ0_CANNON_WALL_SHORTCUT]) {
             i = 6;
         } else {

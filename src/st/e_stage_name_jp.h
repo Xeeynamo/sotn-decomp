@@ -105,7 +105,7 @@ void EntityStageNamePopup(Entity* self) {
 #ifdef STAGE_NAME_LOAD_GFX
         LoadStageNameGraphics();
 #endif
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         // This is the only time stpopupj.unk8C is ever referenced
         self->ext.stpopupj.unk8C = 0;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, NUM_PRIMS);

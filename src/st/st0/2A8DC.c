@@ -24,7 +24,7 @@ void EntitySecretButton(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitSecretStairs);
+        OVL_EXPORT(InitializeEntity)(g_EInitSecretStairs);
         self->animCurFrame = 5;
         self->hitboxWidth = 6;
         self->hitboxHeight = 6;
@@ -52,9 +52,11 @@ void EntitySecretButton(Entity* self) {
             g_Tilemap.fg[0x1C4] = 0;
             self->animCurFrame = 4;
             g_api.PlaySfx(SFX_WALL_DEBRIS_B);
-            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            newEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_ID(SECRET_BUTTON), self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_ID(SECRET_BUTTON), self, newEntity);
                 newEntity->params = 1;
             }
             self->step++;
@@ -84,9 +86,9 @@ void EntitySecretButton(Entity* self) {
             self->step_s++;
 
         case 1:
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             self->rotate += 0x40;
-            if (UnkCollisionFunc3(D_801808F8) & 1) {
+            if (OVL_EXPORT(UnkCollisionFunc3)(D_801808F8) & 1) {
                 self->step_s++;
                 break;
             }
@@ -95,9 +97,11 @@ void EntitySecretButton(Entity* self) {
 
         case 2:
             g_api.PlaySfx(SFX_EXPLODE_FAST_A);
-            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            newEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_EXPLOSION, self, newEntity);
                 newEntity->params = 0x11;
             }
             DestroyEntity(self);
@@ -109,7 +113,7 @@ void EntitySecretButton(Entity* self) {
 void EntitySecretStairsCeiling(Entity* entity) {
     switch (entity->step) {
     case 0:
-        InitializeEntity(g_EInitSecretStairs);
+        OVL_EXPORT(InitializeEntity)(g_EInitSecretStairs);
         entity->animCurFrame = 3;
         entity->zPriority += 2;
         if (g_isSecretStairsButtonPressed) {
@@ -150,13 +154,14 @@ void EntitySecretStairs(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitSecretStairs);
+        OVL_EXPORT(InitializeEntity)(g_EInitSecretStairs);
         self->animCurFrame = 1;
         if (!self->params) {
             self->ext.secretStairs.unk84 = true;
             otherEntity = self + 1;
             for (i = 0; i < 3; i++, otherEntity++) {
-                CreateEntityFromCurrentEntity(E_ID(SECRET_STAIRS), otherEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(SECRET_STAIRS), otherEntity);
                 otherEntity->params = i + 1;
             }
 
@@ -238,7 +243,7 @@ void EntitySecretStairs(Entity* self) {
             break;
 
         case 1:
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             posX = g_Tilemap.scrollX.i.hi + self->posX.i.hi;
             posY = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
             if (temp_s0 == posX) {

@@ -43,7 +43,7 @@ void EntityUnkId1B(Entity* self) {
         }
 
         g_Player.demo_timer = 0x18;
-        InitializeEntity(EInitUnk17);
+        OVL_EXPORT(InitializeEntity)(EInitUnk17);
         self->animCurFrame = 0;
         self->ext.dopBGLight.unk84 = 0;
 
@@ -51,12 +51,12 @@ void EntityUnkId1B(Entity* self) {
             self->params += leftBlockFlag;
             next = self + 1;
             for (i = 1; i < 4; i++, next++) {
-                CreateEntityFromCurrentEntity(E_ID(ID_1B), next);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(ID_1B), next);
                 next->params = i + leftBlockFlag;
             }
 
             for (i = 0; i < 4; i++, next++) {
-                CreateEntityFromCurrentEntity(E_ID(ID_1B), next);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(ID_1B), next);
                 next->params = i + rightBlockFlag;
             }
         }
@@ -88,7 +88,7 @@ void EntityUnkId1B(Entity* self) {
             g_Player.demo_timer = 4;
         }
         // undeclared AnimateEntity
-        if (!(AnimateEntity(D_us_801806F4, self))) {
+        if (!(OVL_EXPORT(AnimateEntity)(D_us_801806F4, self))) {
             self->velocityY = FIX(4.0);
             self->step++;
         }
@@ -99,7 +99,7 @@ void EntityUnkId1B(Entity* self) {
             g_Player.padSim = 0;
             g_Player.demo_timer = 0x18;
         }
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityY += FIX(0.125);
 
         blockIndex = self->params & 0xFF;
@@ -148,7 +148,7 @@ void EntityUnkId1B(Entity* self) {
             self->velocityX = FIX(-0.5);
         }
 
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
 
         offsetX = g_Tilemap.scrollX.i.hi + self->posX.i.hi;
         if (offsetX < -32 || offsetX > 0x220) {

@@ -10,13 +10,13 @@ extern EInit HEARTROOM_EINIT;
 extern Primitive* FindFirstUnkPrim(Primitive* poly);
 
 void EntityHeartRoomSwitch(Entity* self) {
-    s32 collision = GetPlayerCollisionWith(self, 8, 4, 4);
+    s32 collision = OVL_EXPORT(GetPlayerCollisionWith)(self, 8, 4, 4);
     s32 worldPos;
     Entity* player;
 
     switch (self->step) {
     case 0:
-        InitializeEntity(HEARTROOM_EINIT);
+        OVL_EXPORT(InitializeEntity)(HEARTROOM_EINIT);
         self->animCurFrame = 9;
         self->zPriority = 0x5E;
         if (g_CastleFlags[WRP_TO_NP3_SHORTCUT]) {
@@ -57,7 +57,7 @@ void EntityHeartRoomGoldDoor(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(HEARTROOM_EINIT);
+        OVL_EXPORT(InitializeEntity)(HEARTROOM_EINIT);
         self->animCurFrame = 37;
         self->zPriority = 0x5E;
 
@@ -135,12 +135,13 @@ void EntityHeartRoomGoldDoor(Entity* self) {
                 prim->p3 = 1;
             }
             if (!(g_Timer & 0xF)) {
-                newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                newEntity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(
-                        E_INTENSE_EXPLOSION, self, newEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_INTENSE_EXPLOSION, self, newEntity);
                     newEntity->posY.i.hi = 188;
-                    newEntity->posX.i.hi += -8 + (Random() & 15);
+                    newEntity->posX.i.hi += -8 + (OVL_EXPORT(Random)() & 15);
                     newEntity->params = 0x10;
                     newEntity->drawFlags |= ENTITY_SCALEY | ENTITY_SCALEX;
                     newEntity->scaleX = newEntity->scaleY = 192;

@@ -10,7 +10,7 @@ extern s32 E_ID(ID_2F);
 
 void func_us_801BFA34(Entity* self) {
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitParticle));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitParticle));
         self->zPriority += 8;
         self->palette = PAL_FLAG(PAL_UNK_19E);
         self->animSet = 2;
@@ -122,7 +122,7 @@ void func_us_801BFB40(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitParticle));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitParticle));
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 6);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
@@ -164,8 +164,9 @@ void func_us_801BFB40(Entity* self) {
             self->velocityY = 0;
             self->step_s++;
             if (self->params) {
-                self->velocityX = -(Random() & 7) * FIX(0.125);
-                self->velocityY = FIX(-2.25) - (Random() & 3) * FIX(0.25);
+                self->velocityX = -(OVL_EXPORT(Random)() & 7) * FIX(0.125);
+                self->velocityY =
+                    FIX(-2.25) - (OVL_EXPORT(Random)() & 3) * FIX(0.25);
             }
             break;
 
@@ -179,7 +180,7 @@ void func_us_801BFB40(Entity* self) {
                 self->ext.et_801BFB40.unk80.vy += 0x80;
                 self->ext.et_801BFB40.unk80.vz -= 0x20;
             }
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             self->velocityY += FIX(0.125);
             if (!self->params) {
                 if (self->velocityX > FIX(-1.5)) {
@@ -209,11 +210,11 @@ void func_us_801BFB40(Entity* self) {
                 self->velocityY = -self->velocityY / 2;
                 if (self->params) {
                     if (self->velocityY > FIX(-0.25)) {
-                        tempEntity =
-                            AllocEntity(&g_Entities[64], &g_Entities[256]);
+                        tempEntity = OVL_EXPORT(AllocEntity)(
+                            &g_Entities[64], &g_Entities[256]);
                         if (tempEntity != NULL) {
-                            CreateEntityFromEntity(
-                                E_INTENSE_EXPLOSION, self, tempEntity);
+                            OVL_EXPORT(CreateEntityFromEntity)
+                            (E_INTENSE_EXPLOSION, self, tempEntity);
                             tempEntity->params = 0x10;
                         }
                         DestroyEntity(self);
@@ -221,22 +222,22 @@ void func_us_801BFB40(Entity* self) {
                     }
                 } else {
                     for (i = 0; i < 4; i++) {
-                        tempEntity =
-                            AllocEntity(&g_Entities[64], &g_Entities[256]);
+                        tempEntity = OVL_EXPORT(AllocEntity)(
+                            &g_Entities[64], &g_Entities[256]);
                         if (tempEntity != NULL) {
-                            CreateEntityFromEntity(
-                                E_ID(ID_2F), self, tempEntity);
+                            OVL_EXPORT(CreateEntityFromEntity)
+                            (E_ID(ID_2F), self, tempEntity);
                             tempEntity->params = i;
                         }
                     }
                     if (self->velocityY > FIX(-1.25)) {
                         g_api.PlaySfx(SFX_WALL_DEBRIS_B);
                         for (i = 0; i < 3; i++) {
-                            tempEntity =
-                                AllocEntity(&g_Entities[64], &g_Entities[256]);
+                            tempEntity = OVL_EXPORT(AllocEntity)(
+                                &g_Entities[64], &g_Entities[256]);
                             if (tempEntity != NULL) {
-                                CreateEntityFromEntity(
-                                    E_ID(ID_31), self, tempEntity);
+                                OVL_EXPORT(CreateEntityFromEntity)
+                                (E_ID(ID_31), self, tempEntity);
                                 tempEntity->params = i + 1;
                             }
                         }
@@ -330,7 +331,7 @@ void func_us_801C01F0(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitParticle));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitParticle));
         self->animSet = 8;
         self->animCurFrame = 0;
         self->palette = PAL_FLAG(4);
@@ -380,10 +381,10 @@ void func_us_801C01F0(Entity* self) {
         break;
 
     case 2:
-        if (self->params && !AnimateEntity(D_us_80181978, self)) {
+        if (self->params && !OVL_EXPORT(AnimateEntity)(D_us_80181978, self)) {
             self->animCurFrame = 0;
         }
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityY += FIX(0.125);
         prim = self->ext.et_801BFB40.unk7C;
         if (!self->params) {
@@ -407,11 +408,11 @@ void func_us_801C01F0(Entity* self) {
                 self->velocityY = -self->velocityY / 2;
                 if (self->velocityY > FIX(-0.25)) {
                     if (LOH(prim->next->r2) > 6) {
-                        tempEntity =
-                            AllocEntity(&g_Entities[64], &g_Entities[256]);
+                        tempEntity = OVL_EXPORT(AllocEntity)(
+                            &g_Entities[64], &g_Entities[256]);
                         if (tempEntity != NULL) {
-                            CreateEntityFromEntity(
-                                E_INTENSE_EXPLOSION, self, tempEntity);
+                            OVL_EXPORT(CreateEntityFromEntity)
+                            (E_INTENSE_EXPLOSION, self, tempEntity);
                             tempEntity->params = 0x10;
                         }
                     }
@@ -439,7 +440,7 @@ void func_us_801C05DC(Entity* self) {
     u8 max = 0;
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180A10);
+        OVL_EXPORT(InitializeEntity)(D_us_80180A10);
         if (g_CastleFlags[NO1_UNKNOWN_FLAG]) {
             max = 4;
             self->animCurFrame = 0;
@@ -451,20 +452,24 @@ void func_us_801C05DC(Entity* self) {
         if (g_CastleFlags[NO1_UNKNOWN_FLAG]) {
             self->zPriority -= 8;
             self->step++;
-            tempEntity = AllocEntity(&g_Entities[64], &g_Entities[256]);
+            tempEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[64], &g_Entities[256]);
             if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_ID(ID_30), self, tempEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_ID(ID_30), self, tempEntity);
             }
-            tempEntity = AllocEntity(&g_Entities[64], &g_Entities[256]);
+            tempEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[64], &g_Entities[256]);
             if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_ID(ID_30), self, tempEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_ID(ID_30), self, tempEntity);
                 tempEntity->posY.i.hi -= 0x40;
             }
         }
         break;
 
     case 2:
-        animRet = AnimateEntity(D_us_80181998, self);
+        animRet = OVL_EXPORT(AnimateEntity)(D_us_80181998, self);
         if (!animRet) {
             self->animCurFrame = 0;
             max = 4;
@@ -476,14 +481,18 @@ void func_us_801C05DC(Entity* self) {
             max = 0;
         }
         if (self->poseTimer == 0 && self->pose > 1) {
-            tempEntity = AllocEntity(&g_Entities[64], &g_Entities[256]);
+            tempEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[64], &g_Entities[256]);
             if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_ID(ID_30), self, tempEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_ID(ID_30), self, tempEntity);
                 tempEntity->posY.i.hi -= 0x30 - (max * 16);
             }
-            tempEntity = AllocEntity(&g_Entities[64], &g_Entities[256]);
+            tempEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[64], &g_Entities[256]);
             if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_ID(ID_31), self, tempEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_ID(ID_31), self, tempEntity);
                 tempEntity->posX.i.hi += 7;
                 tempEntity->posY.i.hi -= 0x38 - (max * 16);
             }
@@ -495,26 +504,31 @@ void func_us_801C05DC(Entity* self) {
 
         case 1:
             if ((g_Timer % 8) == 0) {
-                tempEntity = AllocEntity(&g_Entities[64], &g_Entities[256]);
+                tempEntity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[64], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromEntity(E_ID(ID_2F), self, tempEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID(ID_2F), self, tempEntity);
                     tempEntity->posY.i.hi -= 0x3D;
-                    tempEntity->posX.i.hi -= (Random() & 3) * 8 - 4;
+                    tempEntity->posX.i.hi -= (OVL_EXPORT(Random)() & 3) * 8 - 4;
                 }
             }
             if (g_Timer % 24 == 0) {
-                tempEntity = AllocEntity(&g_Entities[64], &g_Entities[256]);
+                tempEntity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[64], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromEntity(
-                        E_INTENSE_EXPLOSION, self, tempEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_INTENSE_EXPLOSION, self, tempEntity);
                     tempEntity->posX.i.hi -= 4;
                     tempEntity->params = 0x10;
                 }
             }
             if (g_Timer % 32 == 0) {
-                tempEntity = AllocEntity(&g_Entities[64], &g_Entities[256]);
+                tempEntity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[64], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_EXPLOSION, self, tempEntity);
                     tempEntity->params = 0x11;
                 }
             }
@@ -558,7 +572,7 @@ void func_us_801C0A40(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180A10);
+        OVL_EXPORT(InitializeEntity)(D_us_80180A10);
         self->animCurFrame = 0;
         if (!g_CastleFlags[NO1_UNKNOWN_FLAG]) {
             self->step = 2;
@@ -607,18 +621,20 @@ void func_us_801C0B9C(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_801809C8);
+        OVL_EXPORT(InitializeEntity)(D_us_801809C8);
         self->animCurFrame = 0;
         self->ext.et_801C0B9C.unk84 = 0;
         if (!self->params) {
             nextEntity = self + 1;
             for (i = 1; i < 4; i++, nextEntity++) {
-                CreateEntityFromCurrentEntity(E_ID(ID_57), nextEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(ID_57), nextEntity);
                 nextEntity->params = i;
             }
 
             for (i = 0; i < 4; i++, nextEntity++) {
-                CreateEntityFromCurrentEntity(E_ID(ID_57), nextEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(ID_57), nextEntity);
                 nextEntity->params = i + 0x100;
             }
         }
@@ -630,13 +646,13 @@ void func_us_801C0B9C(Entity* self) {
         }
         break;
     case 2:
-        if (!AnimateEntity(D_us_80181A04, self)) {
+        if (!OVL_EXPORT(AnimateEntity)(D_us_80181A04, self)) {
             self->velocityY = FIX(4);
             self->step++;
         }
         break;
     case 3:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityY += FIX(0.125);
 
         params = self->params & 0xFF;
@@ -683,7 +699,7 @@ void func_us_801C0B9C(Entity* self) {
         } else {
             self->velocityX = FIX(-0.5);
         }
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         posX = g_Tilemap.scrollX.i.hi + self->posX.i.hi;
         if (posX < -0x20 || posX > 0x220) {
             self->step++;

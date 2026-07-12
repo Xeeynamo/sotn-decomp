@@ -13,7 +13,7 @@ void func_us_80191438(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
         self->animSet = 2;
         self->animCurFrame = 1;
         self->zPriority = 176;
@@ -161,49 +161,49 @@ void EntityMedusa(Entity* self) {
 
     if (self->flags & FLAG_DEAD) {
         if (self->step != 7) {
-            SetStep(7);
+            OVL_EXPORT(SetStep)(7);
         }
     }
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitMedusa);
+        OVL_EXPORT(InitializeEntity)(g_EInitMedusa);
         self->animCurFrame = 1;
         self->hitboxState = 0;
-        CreateEntityFromEntity(UNK_ENTITY_25, self, self + 1);
-        SetStep(1);
+        OVL_EXPORT(CreateEntityFromEntity)(UNK_ENTITY_25, self, self + 1);
+        OVL_EXPORT(SetStep)(1);
         // fallthrough
 
     case 1:
         if (D_us_80180728 & 1) {
-            SetStep(2);
+            OVL_EXPORT(SetStep)(2);
         }
         break;
 
     case 2:
         // n.b.! AnimateEntity is not declared
-        if (!AnimateEntity(RBO3_PrizeDrops, self)) {
+        if (!OVL_EXPORT(AnimateEntity)(RBO3_PrizeDrops, self)) {
             self->hitboxState = 3;
-            SetStep(3);
+            OVL_EXPORT(SetStep)(3);
         }
         break;
 
     case 3:
-        AnimateEntity(D_us_801805FC, self);
+        OVL_EXPORT(AnimateEntity)(D_us_801805FC, self);
         if (self->step_s == 0) {
             self->ext.GS_Props.timer = 64;
             self->step_s++;
         }
-        if (GetDistanceToPlayerX() < 104) {
+        if (OVL_EXPORT(GetDistanceToPlayerX)() < 104) {
             self->ext.GS_Props.attackMode = 1;
         }
-        if (GetDistanceToPlayerX() > 128) {
+        if (OVL_EXPORT(GetDistanceToPlayerX)() > 128) {
             self->ext.GS_Props.attackMode = 0;
         }
-        if (GetDistanceToPlayerX() > 32) {
-            self->facingLeft = GetSideToPlayer() & 1;
+        if (OVL_EXPORT(GetDistanceToPlayerX)() > 32) {
+            self->facingLeft = OVL_EXPORT(GetSideToPlayer)() & 1;
         }
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
 
         if (self->facingLeft == self->ext.GS_Props.attackMode) {
             self->velocityX = FIX(1.0 / 2.0);
@@ -211,28 +211,28 @@ void EntityMedusa(Entity* self) {
             self->velocityX = -FIX(1.0 / 2.0);
         }
         if (self->hitFlags & 3) {
-            SetStep(6);
+            OVL_EXPORT(SetStep)(6);
         }
         x = PLAYER.posX.i.hi - self->posX.i.hi;
         if (g_Player.status & PLAYER_STATUS_UNK2000 &&
             (x * PLAYER.velocityX) < 0) {
             if (abs(x) < 80) {
-                SetStep(5);
+                OVL_EXPORT(SetStep)(5);
             }
         }
 
         if (!--self->ext.GS_Props.timer) {
-            GetSideToPlayer();
-            if (GetDistanceToPlayerX() <= 64) {
-                SetStep(5);
+            OVL_EXPORT(GetSideToPlayer)();
+            if (OVL_EXPORT(GetDistanceToPlayerX)() <= 64) {
+                OVL_EXPORT(SetStep)(5);
             } else {
-                SetStep(4);
+                OVL_EXPORT(SetStep)(4);
             }
         }
         break;
     case 5:
         if (self->step_s == 0) {
-            if (Random() & 1) {
+            if (OVL_EXPORT(Random)() & 1) {
                 PlaySfxPositional(SFX_MEDUSA_ATTACK_A);
             } else {
                 PlaySfxPositional(SFX_MEDUSA_ATTACK_B);
@@ -241,29 +241,30 @@ void EntityMedusa(Entity* self) {
             self->step_s++;
         }
         self->ext.GS_Props.flag = 1;
-        if (AnimateEntity(D_us_80180624, self) == 0) {
+        if (OVL_EXPORT(AnimateEntity)(D_us_80180624, self) == 0) {
             self->ext.GS_Props.flag = 0;
-            SetStep(3);
+            OVL_EXPORT(SetStep)(3);
         }
         break;
     case 4:
         if (self->step_s == 0) {
-            if (!(Random() & 3)) {
+            if (!(OVL_EXPORT(Random)() & 3)) {
                 PlaySfxPositional(SFX_MEDUSA_STONE);
             }
             self->step_s++;
         }
-        if (AnimateEntity(D_us_8018060C, self) == 0) {
-            SetStep(3);
+        if (OVL_EXPORT(AnimateEntity)(D_us_8018060C, self) == 0) {
+            OVL_EXPORT(SetStep)(3);
             if (g_Player.status & PLAYER_STATUS_STONE) {
-                SetStep(8);
+                OVL_EXPORT(SetStep)(8);
             }
         }
 
         if (self->pose == 4 && self->poseTimer == 0) {
-            entity = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
+            entity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[0xA0], &g_Entities[0xC0]);
             if (entity != NULL) {
-                CreateEntityFromEntity(UNK_ENTITY_24, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)(UNK_ENTITY_24, self, entity);
                 entity->facingLeft = self->facingLeft;
                 if (self->facingLeft) {
                     entity->posX.i.hi -= 13;
@@ -280,17 +281,19 @@ void EntityMedusa(Entity* self) {
             PlaySfxPositional(SFX_MEDUSA_VENOM);
             self->step_s++;
         }
-        if (AnimateEntity(D_us_80180618, self) == 0) {
-            SetStep(3);
+        if (OVL_EXPORT(AnimateEntity)(D_us_80180618, self) == 0) {
+            OVL_EXPORT(SetStep)(3);
         }
         if (self->pose == 3 && self->poseTimer == 0) {
             // This sound is never heard because it is immediately interrupted
             // by the SFX_ELECTRICITY sound call below
             PlaySfxPositional(SFX_SCIFI_BLAST);
             for (i = 0; i < 2; i++) {
-                entity = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
+                entity = OVL_EXPORT(AllocEntity)(
+                    &g_Entities[0xA0], &g_Entities[0xC0]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(UNK_ENTITY_26, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (UNK_ENTITY_26, self, entity);
                     entity->rotate = i * 1024 - 512;
                     if (!self->facingLeft) {
                         entity->rotate = (i * 1024) + 1536;
@@ -303,7 +306,7 @@ void EntityMedusa(Entity* self) {
         break;
     case 6:
         if (self->step_s == 0) {
-            if (Random() & 1) {
+            if (OVL_EXPORT(Random)() & 1) {
                 PlaySfxPositional(SFX_MEDUSA_PAIN_A);
             } else {
                 PlaySfxPositional(SFX_MEDUSA_PAIN_B);
@@ -311,9 +314,9 @@ void EntityMedusa(Entity* self) {
             self->step_s++;
         }
 
-        if (!AnimateEntity(D_us_80180630, self)) {
-            self->facingLeft = GetSideToPlayer() & 1;
-            SetStep(4);
+        if (!OVL_EXPORT(AnimateEntity)(D_us_80180630, self)) {
+            self->facingLeft = OVL_EXPORT(GetSideToPlayer)() & 1;
+            OVL_EXPORT(SetStep)(4);
         }
         break;
     case 7:
@@ -325,7 +328,7 @@ void EntityMedusa(Entity* self) {
             self->step_s++;
             // fallthrough
         case 1:
-            if (!AnimateEntity(D_us_8018063C, self)) {
+            if (!OVL_EXPORT(AnimateEntity)(D_us_8018063C, self)) {
                 self->ext.GS_Props.timer = 80;
                 // This sfxID is used by several bosses during death anim,
                 // however it was purposely muted for Medusa and Death
@@ -335,12 +338,13 @@ void EntityMedusa(Entity* self) {
             break;
 
         case 2:
-            entity = AllocEntity(&g_Entities[0xC0], &g_Entities[0x100]);
+            entity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[0xC0], &g_Entities[0x100]);
             if (entity != NULL) {
-                CreateEntityFromEntity(UNK_ENTITY_27, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)(UNK_ENTITY_27, self, entity);
                 entity->params = 0;
                 entity->zPriority = self->zPriority + 1;
-                entity->posX.i.hi -= 16 - (Random() & 31);
+                entity->posX.i.hi -= 16 - (OVL_EXPORT(Random)() & 31);
                 entity->posY.i.hi += 24;
             }
             if (!(self->ext.GS_Props.timer & 0xF)) {
@@ -390,12 +394,12 @@ void func_us_80192020(Entity* self) {
     u16 var_v0;
 
     if (self->flags & FLAG_DEAD) {
-        SetStep(2);
+        OVL_EXPORT(SetStep)(2);
     }
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180498);
+        OVL_EXPORT(InitializeEntity)(D_us_80180498);
         self->hitboxHeight = 1;
         primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
         if (primIndex == -1) {
@@ -439,7 +443,7 @@ void func_us_80192020(Entity* self) {
         self->velocityY = rsin(angle) << 7;
 
     case 1:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
 
         prim = self->ext.prim;
         posX = prim->x0 = self->posX.i.hi;
@@ -483,7 +487,7 @@ void func_us_801922EC(Entity* self) {
     s8* rect;
 
     if (!self->step) {
-        InitializeEntity(D_us_8018048C);
+        OVL_EXPORT(InitializeEntity)(D_us_8018048C);
     }
 
     prev = self - 1;
@@ -532,7 +536,7 @@ void func_us_801923DC(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_801804A4);
+        OVL_EXPORT(InitializeEntity)(D_us_801804A4);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, PrimCount);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -579,11 +583,12 @@ void func_us_801923DC(Entity* self) {
         self->ext.factory.unk80 = 0x40;
 
     case 1:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         player = &PLAYER;
-        angle = GetAngleBetweenEntities(self, player);
+        angle = OVL_EXPORT(GetAngleBetweenEntities)(self, player);
         tempY = 96 - self->ext.factory.unk80;
-        angle = LimitAngleChange(tempY, self->ext.factory.unk82, angle);
+        angle =
+            OVL_EXPORT(LimitAngleChange)(tempY, self->ext.factory.unk82, angle);
         self->velocityX = rcos(angle) * 160;
         self->velocityY = rsin(angle) * 160;
         self->ext.factory.unk82 = angle;
@@ -594,7 +599,7 @@ void func_us_801923DC(Entity* self) {
         break;
 
     case 2:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         xOffset = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
         yOffset = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
         if ((xOffset < -64) || (yOffset < -64) || (xOffset > 576) ||
@@ -705,7 +710,7 @@ void func_us_80192998(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitParticle));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitParticle));
         params = self->params & 0xF;
         obj = &D_us_8018071C[params];
         self->palette = obj->palette + 0x2E0;
@@ -730,16 +735,17 @@ void func_us_80192998(Entity* self) {
         if (self->step_s == 0) {
             self->drawFlags = ENTITY_OPACITY;
             self->opacity = 0xC0;
-            self->facingLeft = Random() & 1;
-            self->velocityX = (Random() << 8) - FIX(1.0 / 2.0);
+            self->facingLeft = OVL_EXPORT(Random)() & 1;
+            self->velocityX = (OVL_EXPORT(Random)() << 8) - FIX(1.0 / 2.0);
             self->velocityY = FIX(-0.75);
-            self->ext.e_80192998.accelY = -(Random() * 16) - FIX(1.0 / 4.0);
+            self->ext.e_80192998.accelY =
+                -(OVL_EXPORT(Random)() * 16) - FIX(1.0 / 4.0);
             self->step_s++;
         }
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityY += self->ext.e_80192998.accelY;
         self->opacity += 255;
-        if (AnimateEntity(self->ext.e_80192998.anim, self) == 0) {
+        if (OVL_EXPORT(AnimateEntity)(self->ext.e_80192998.anim, self) == 0) {
             DestroyEntity(self);
         }
         break;
@@ -757,7 +763,7 @@ void func_us_80192B38(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         // fallthrough
     case 1:
         entity = &PLAYER;
@@ -799,15 +805,15 @@ void func_us_80192B38(Entity* self) {
     case 5:
         x = 256 - g_Tilemap.scrollX.i.hi;
         y = 128 - g_Tilemap.scrollY.i.hi;
-        entity = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
+        entity = OVL_EXPORT(AllocEntity)(&g_Entities[0xA0], &g_Entities[0xC0]);
         if (entity == NULL) {
             break;
         }
 #ifdef VERSION_PSP
         // n.b.! CreateEntityFromEntity cannot be defined
-        CreateEntityFromEntity(D_psp_09254D20, self, entity);
+        OVL_EXPORT(CreateEntityFromEntity)(D_psp_09254D20, self, entity);
 #else
-        CreateEntityFromEntity(UNK_ENTITY_30, self, entity);
+        OVL_EXPORT(CreateEntityFromEntity)(UNK_ENTITY_30, self, entity);
 #endif
         entity->posX.i.hi = x;
         entity->posY.i.hi = y;

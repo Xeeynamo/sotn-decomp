@@ -34,7 +34,7 @@ void EntityTransparentWater(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         self->ext.transparentWater.unk80 = 4;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 16);
         if (primIndex == -1) {
@@ -85,7 +85,7 @@ void EntityTransparentWater(Entity* self) {
         break;
     }
 
-    AnimateEntity(transWaterAnim, self);
+    OVL_EXPORT(AnimateEntity)(transWaterAnim, self);
 
     prim_xPos = -1 * g_Tilemap.scrollX.i.hi % TILE_WIDTH;
 #if !defined(INVERTED_STAGE)

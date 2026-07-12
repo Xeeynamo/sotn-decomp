@@ -15,7 +15,7 @@ void func_us_801D4558(Entity* self) {
     s16 posX, posY;
 
     if (self->flags & FLAG_DEAD) {
-        EntityExplosionSpawn(0, 0);
+        OVL_EXPORT(EntityExplosionSpawn)(0, 0);
         return;
     }
     if (self->hitParams && self->step != 4) {
@@ -30,7 +30,7 @@ void func_us_801D4558(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180B18);
+        OVL_EXPORT(InitializeEntity)(D_us_80180B18);
         self->ext.et_801D4558.unk80 = self->hitboxState;
         self->hitboxState = 0;
         self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
@@ -43,15 +43,15 @@ void func_us_801D4558(Entity* self) {
 
     case 1:
         tempVar = (s16)self->params & 0xF8;
-        if (tempVar > GetDistanceToPlayerX() &&
-            tempVar > GetDistanceToPlayerY()) {
+        if (tempVar > OVL_EXPORT(GetDistanceToPlayerX)() &&
+            tempVar > OVL_EXPORT(GetDistanceToPlayerY)()) {
             self->step++;
             self->ext.et_801D4558.unk7C = 0;
         }
         break;
 
     case 2:
-        AnimateEntity(anim1, self);
+        OVL_EXPORT(AnimateEntity)(anim1, self);
         self->ext.et_801D4558.unk7C++;
         self->scaleX += 8;
         self->scaleY += 8;
@@ -61,31 +61,33 @@ void func_us_801D4558(Entity* self) {
         }
         if (self->ext.et_801D4558.unk7C == 0x28) {
             self->hitboxState = self->ext.et_801D4558.unk80;
-            SetStep(3);
+            OVL_EXPORT(SetStep)(3);
             self->ext.et_801D4558.unk82 = 0;
             self->drawFlags = ENTITY_DEFAULT;
         }
         break;
 
     case 3:
-        AnimateEntity(anim1, self);
-        SetEntityVelocityFromAngle(
-            self->ext.et_801D4558.unkAC, self->ext.et_801D4558.unkB0);
+        OVL_EXPORT(AnimateEntity)(anim1, self);
+        OVL_EXPORT(SetEntityVelocityFromAngle)
+        (self->ext.et_801D4558.unkAC, self->ext.et_801D4558.unkB0);
         self->velocityX >>= 8;
         self->velocityY >>= 8;
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         if (!self->ext.et_801D4558.unk82) {
-            self->ext.et_801D4558.unk84 = D_us_80183204[Random() & 7];
-            self->ext.et_801D4558.unk86 = D_us_80183204[Random() & 7];
-            self->ext.et_801D4558.unk82 = (Random() & 0x1F) + 0x20;
+            self->ext.et_801D4558.unk84 =
+                D_us_80183204[OVL_EXPORT(Random)() & 7];
+            self->ext.et_801D4558.unk86 =
+                D_us_80183204[OVL_EXPORT(Random)() & 7];
+            self->ext.et_801D4558.unk82 = (OVL_EXPORT(Random)() & 0x1F) + 0x20;
         } else {
             self->ext.et_801D4558.unk82--;
         }
         posX = tempEntity->posX.i.hi + self->ext.et_801D4558.unk84;
         posY = tempEntity->posY.i.hi + self->ext.et_801D4558.unk86;
-        self->ext.et_801D4558.unkAC = AdjustValueWithinThreshold(
+        self->ext.et_801D4558.unkAC = OVL_EXPORT(AdjustValueWithinThreshold)(
             1, self->ext.et_801D4558.unkAC,
-            GetAnglePointToEntityShifted(posX, posY));
+            OVL_EXPORT(GetAnglePointToEntityShifted)(posX, posY));
         self->ext.et_801D4558.unkB0 += 0x40;
         if (self->ext.et_801D4558.unkB0 > 0x1800) {
             self->ext.et_801D4558.unkB0 = 0x1800;
@@ -93,17 +95,18 @@ void func_us_801D4558(Entity* self) {
         break;
 
     case 4:
-        AnimateEntity(anim1, self);
+        OVL_EXPORT(AnimateEntity)(anim1, self);
         if (self->step_s) {
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             if (!--self->ext.et_801D4558.unk7C) {
                 self->step = 3;
                 self->ext.et_801D4558.unkB0 = 0;
             }
         } else {
             self->ext.et_801D4558.unkAC =
-                GetAngleBetweenEntitiesShifted(tempEntity, self);
-            SetEntityVelocityFromAngle(self->ext.et_801D4558.unkAC, 0x18);
+                OVL_EXPORT(GetAngleBetweenEntitiesShifted)(tempEntity, self);
+            OVL_EXPORT(SetEntityVelocityFromAngle)
+            (self->ext.et_801D4558.unkAC, 0x18);
             self->ext.et_801D4558.unk7C = 0x14;
             self->step_s++;
         }
@@ -112,10 +115,11 @@ void func_us_801D4558(Entity* self) {
     if (self->step > 1) {
         self->ext.et_801D4558.unk7D++;
         if ((self->ext.et_801D4558.unk7D & 3) == 0) {
-            tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            tempEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
-                CreateEntityFromCurrentEntity(E_ID_52, tempEntity);
-                tempVar = Random();
+                OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID_52, tempEntity);
+                tempVar = OVL_EXPORT(Random)();
                 tempEntity->posX.i.hi += D_us_801831F4[tempVar & 7];
                 tempEntity->posY.i.hi += D_us_801831F4[(tempVar - 2) & 7];
             }
@@ -131,13 +135,13 @@ static u8 anim2[] = {
 void func_us_801D4950(Entity* self) {
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180B18);
+        OVL_EXPORT(InitializeEntity)(D_us_80180B18);
         self->blendMode = BLEND_TRANSP;
         self->hitboxState = 0;
         break;
 
     case 1:
-        if (AnimateEntity(anim2, self) == 0) {
+        if (OVL_EXPORT(AnimateEntity)(anim2, self) == 0) {
             DestroyEntity(self);
         }
         self->posY.i.hi--;

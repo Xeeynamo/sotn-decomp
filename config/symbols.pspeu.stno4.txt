@@ -1,8 +1,8 @@
-InitRoomEntities = 0x09244590;
-UpdateRoomPosition = 0x092447C0;
-Update = 0x09247DB8;
-UpdateStageEntities = 0x09248198;
-HitDetection = 0x09250758;
+NO4_InitRoomEntities = 0x09244590;
+NO4_UpdateRoomPosition = 0x092447C0;
+NO4_Update = 0x09247DB8;
+NO4_UpdateStageEntities = 0x09248198;
+NO4_HitDetection = 0x09250758;
 sprites_no4_4 = 0x092632A0;
 g_SpriteBanks = 0x09267098;
 g_TileLayers = 0x092674F8;

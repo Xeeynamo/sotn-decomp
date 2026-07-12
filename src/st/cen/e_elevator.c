@@ -67,16 +67,18 @@ void EntityElevatorStationary(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitElevator);
+        OVL_EXPORT(InitializeEntity)(g_EInitElevator);
         self->animCurFrame = 3;
         self->zPriority = player->zPriority + 2;
 
         entity = self - 1;
-        CreateEntityFromCurrentEntity(E_ID(ELEVATOR_STATIONARY), entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)
+        (E_ID(ELEVATOR_STATIONARY), entity);
         entity->params = 1;
 
         entity = self - 2;
-        CreateEntityFromCurrentEntity(E_ID(ELEVATOR_STATIONARY), entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)
+        (E_ID(ELEVATOR_STATIONARY), entity);
         entity->params = 2;
 
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 12);
@@ -113,7 +115,7 @@ void EntityElevatorStationary(Entity* self) {
             player->posX.i.hi = self->posX.i.hi;
             self->animCurFrame = 10;
             g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 1;
-            SetStep(3);
+            OVL_EXPORT(SetStep)(3);
         }
 
         break;
@@ -157,7 +159,7 @@ void EntityElevatorStationary(Entity* self) {
             break;
 
         case 1:
-            if (!AnimateEntity(D_80180780, self)) {
+            if (!OVL_EXPORT(AnimateEntity)(D_80180780, self)) {
                 self->pose = 0;
                 self->poseTimer = 0;
                 g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 0;
@@ -177,7 +179,7 @@ void EntityElevatorStationary(Entity* self) {
 
         switch (self->step_s) {
         case 0:
-            if (!AnimateEntity(D_80180768, self)) {
+            if (!OVL_EXPORT(AnimateEntity)(D_80180768, self)) {
                 self->pose = 0;
                 self->poseTimer = 0;
                 self->step_s++;
@@ -197,7 +199,7 @@ void EntityElevatorStationary(Entity* self) {
             break;
 
         case 2:
-            if (!AnimateEntity(D_80180780, self)) {
+            if (!OVL_EXPORT(AnimateEntity)(D_80180780, self)) {
                 self->pose = 0;
                 self->poseTimer = 0;
                 g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 0;
@@ -241,7 +243,7 @@ void EntityUnkId1B(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitElevator);
+        OVL_EXPORT(InitializeEntity)(g_EInitElevator);
         if (self->params & 16) {
             self->animCurFrame = self->params & 15;
             self->zPriority = 0x6A;
@@ -255,10 +257,12 @@ void EntityUnkId1B(Entity* self) {
         self->posX.i.hi = entity->posX.i.hi;
         if (self->params == 1) {
             self->posY.i.hi = entity->posY.i.hi + 35;
-            isTouchingPlayer = GetPlayerCollisionWith(self, 12, 8, 4);
+            isTouchingPlayer =
+                OVL_EXPORT(GetPlayerCollisionWith)(self, 12, 8, 4);
         } else {
             self->posY.i.hi = entity->posY.i.hi - 24;
-            isTouchingPlayer = GetPlayerCollisionWith(self, 12, 8, 6);
+            isTouchingPlayer =
+                OVL_EXPORT(GetPlayerCollisionWith)(self, 12, 8, 6);
         }
         self->ext.cenElevator.playerCollision = isTouchingPlayer;
         break;
@@ -274,7 +278,7 @@ void EntityMovingElevator(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitElevator);
+        OVL_EXPORT(InitializeEntity)(g_EInitElevator);
         self->animCurFrame = 3;
         self->zPriority = player->zPriority + 2;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 12);
@@ -304,13 +308,13 @@ void EntityMovingElevator(Entity* self) {
             player->posX.i.hi = self->posX.i.hi;
             self->animCurFrame = 0xA;
             g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 1;
-            SetStep(2);
+            OVL_EXPORT(SetStep)(2);
         } else {
             self->posY.i.hi = player->posY.i.hi;
             player->posX.i.hi = self->posX.i.hi;
             self->animCurFrame = 0xA;
             g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 1;
-            SetStep(3);
+            OVL_EXPORT(SetStep)(3);
         }
         break;
 

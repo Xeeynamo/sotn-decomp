@@ -66,23 +66,25 @@ static s16 hitbox_offsets[] = {
 static void BoneHalberdMove(void) {
     // Is one of these functions checking for wall collision and one checking
     // for ledge collision?
-    s32 collision2 = UnkCollisionFunc2(sensors_lunge);
-    u16 collision = UnkCollisionFunc(sensors_jump, 3);
+    s32 collision2 = OVL_EXPORT(UnkCollisionFunc2)(sensors_lunge);
+    u16 collision = OVL_EXPORT(UnkCollisionFunc)(sensors_jump, 3);
 
     if ((collision2 == 128) || (collision & 2)) {
-        SetStep(BONE_HALBERD_JUMP);
+        OVL_EXPORT(SetStep)(BONE_HALBERD_JUMP);
         return;
     }
     if (!g_CurrentEntity->ext.boneHalberd.timer) {
-        if (GetDistanceToPlayerX() < 84) {
-            if (g_CurrentEntity->facingLeft ^ (GetSideToPlayer() & 1)) {
-                SetStep(BONE_HALBERD_SPIN_STAB);
+        if (OVL_EXPORT(GetDistanceToPlayerX)() < 84) {
+            if (g_CurrentEntity->facingLeft ^
+                (OVL_EXPORT(GetSideToPlayer)() & 1)) {
+                OVL_EXPORT(SetStep)(BONE_HALBERD_SPIN_STAB);
             }
         }
     } else {
         g_CurrentEntity->ext.boneHalberd.timer--;
-        if (!g_CurrentEntity->ext.boneHalberd.timer && !(Random() & 3)) {
-            SetStep(BONE_HALBERD_LUNGE);
+        if (!g_CurrentEntity->ext.boneHalberd.timer &&
+            !(OVL_EXPORT(Random)() & 3)) {
+            OVL_EXPORT(SetStep)(BONE_HALBERD_LUNGE);
         }
     }
 }
@@ -98,24 +100,25 @@ void EntityBoneHalberd(Entity* self) {
     }
     switch (self->step) {
     case BONE_HALBERD_INIT:
-        InitializeEntity(g_EInitBoneHalberd);
+        OVL_EXPORT(InitializeEntity)(g_EInitBoneHalberd);
         self->ext.boneHalberd.timer = 64;
         self->ext.boneHalberd.facingLeft = 0;
         self->ext.boneHalberd.attackIntervalIdx = 0;
         boneHalberdPart = self + 1;
-        CreateEntityFromCurrentEntity(E_BONE_HALBERD_ATTACK, boneHalberdPart);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)
+        (E_BONE_HALBERD_ATTACK, boneHalberdPart);
         break;
     case BONE_HALBERD_READY:
         // Could this function be CheckGroundCollision?
-        if (UnkCollisionFunc3(sensors_bone_halberd)) {
+        if (OVL_EXPORT(UnkCollisionFunc3)(sensors_bone_halberd)) {
             self->step++;
             return;
         }
     default:
         break;
     case BONE_HALBERD_IDLE:
-        if (!AnimateEntity(anim_idle, self)) {
-            self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
+        if (!OVL_EXPORT(AnimateEntity)(anim_idle, self)) {
+            self->facingLeft = ((OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1);
         }
         self->ext.boneHalberd.facingLeft = self->facingLeft;
         if (self->ext.boneHalberd.facingLeft) {
@@ -123,14 +126,14 @@ void EntityBoneHalberd(Entity* self) {
         } else {
             self->velocityX = FIX(-0.5);
         }
-        if (GetDistanceToPlayerX() < 76) {
+        if (OVL_EXPORT(GetDistanceToPlayerX)() < 76) {
             self->step = BONE_HALBERD_MOVE;
         }
         BoneHalberdMove();
         break;
     case BONE_HALBERD_MOVE:
-        if (!AnimateEntity(anim_move, self)) {
-            self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
+        if (!OVL_EXPORT(AnimateEntity)(anim_move, self)) {
+            self->facingLeft = ((OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1);
         }
         self->ext.boneHalberd.facingLeft = ((self->facingLeft) ^ 1);
         if (self->ext.boneHalberd.facingLeft) {
@@ -138,13 +141,13 @@ void EntityBoneHalberd(Entity* self) {
         } else {
             self->velocityX = FIX(-0.5);
         }
-        if (GetDistanceToPlayerX() > 92) {
+        if (OVL_EXPORT(GetDistanceToPlayerX)() > 92) {
             self->step = BONE_HALBERD_IDLE;
         }
         BoneHalberdMove();
         break;
     case BONE_HALBERD_SPIN_STAB:
-        tempVar = AnimateEntity(anim_spin_stab, self);
+        tempVar = OVL_EXPORT(AnimateEntity)(anim_spin_stab, self);
         if (!self->poseTimer && self->pose == 5) {
             PlaySfxPositional(SFX_FAST_SWORD_SWISHES);
         }
@@ -152,7 +155,7 @@ void EntityBoneHalberd(Entity* self) {
             PlaySfxPositional(SFX_WEAPON_STAB_B);
         }
         if (!tempVar) {
-            SetStep(BONE_HALBERD_MOVE);
+            OVL_EXPORT(SetStep)(BONE_HALBERD_MOVE);
             tempVar = ++self->ext.boneHalberd.attackIntervalIdx & 3;
             self->ext.boneHalberd.timer =
                 attack_intervals[self->params & 1][tempVar];
@@ -162,14 +165,14 @@ void EntityBoneHalberd(Entity* self) {
     case BONE_HALBERD_LUNGE:
         switch (self->step_s) {
         case BONE_HALBERD_LUNGE_INIT:
-            self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
+            self->facingLeft = ((OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1);
             self->ext.boneHalberd.lungeTimer = 192;
             self->step_s++;
             break;
         case BONE_HALBERD_LUNGE_CLOSE_GAP:
-            self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
-            AnimateEntity(anim_lunge, self);
-            collision = UnkCollisionFunc2(sensors_lunge);
+            self->facingLeft = ((OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1);
+            OVL_EXPORT(AnimateEntity)(anim_lunge, self);
+            collision = OVL_EXPORT(UnkCollisionFunc2)(sensors_lunge);
             if (self->facingLeft) {
                 self->velocityX = FIX(2.0);
             } else {
@@ -177,14 +180,15 @@ void EntityBoneHalberd(Entity* self) {
             }
             // Encounters a wall or ledge (unsure which) or timer expires
             if ((collision & 128) || (!--self->ext.boneHalberd.lungeTimer)) {
-                SetSubStep(BONE_HALBERD_MOVE);
+                OVL_EXPORT(SetSubStep)(BONE_HALBERD_MOVE);
             }
-            if (GetDistanceToPlayerX() < 56) {
+            if (OVL_EXPORT(GetDistanceToPlayerX)() < 56) {
                 // random number of stabs between 1 and 4
-                self->ext.boneHalberd.lungeTimer = ((Random() & 3) + 1);
+                self->ext.boneHalberd.lungeTimer =
+                    ((OVL_EXPORT(Random)() & 3) + 1);
                 self->poseTimer = 16;
                 self->pose = 14;
-                SetSubStep(BONE_HALBERD_LUNGE_STAB);
+                OVL_EXPORT(SetSubStep)(BONE_HALBERD_LUNGE_STAB);
                 return;
             }
             break;
@@ -195,19 +199,19 @@ void EntityBoneHalberd(Entity* self) {
             if ((!self->poseTimer) && ((self->pose) == 18)) {
                 PlaySfxPositional(SFX_WEAPON_STAB_B);
             }
-            if (!AnimateEntity(anim_spin_stab, self)) {
-                self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
+            if (!OVL_EXPORT(AnimateEntity)(anim_spin_stab, self)) {
+                self->facingLeft = ((OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1);
                 self->pose = 2;
                 self->poseTimer = 0;
                 self->ext.boneHalberd.lungeTimer--;
                 if (!self->ext.boneHalberd.lungeTimer) {
-                    SetSubStep(BONE_HALBERD_LUNGE_CONCLUDE);
+                    OVL_EXPORT(SetSubStep)(BONE_HALBERD_LUNGE_CONCLUDE);
                     return;
                 }
             }
             break;
         case BONE_HALBERD_LUNGE_CONCLUDE:
-            SetStep(BONE_HALBERD_MOVE);
+            OVL_EXPORT(SetStep)(BONE_HALBERD_MOVE);
             tempVar = ++self->ext.boneHalberd.attackIntervalIdx & 3;
             self->ext.boneHalberd.timer =
                 attack_intervals[self->params & 1][tempVar];
@@ -217,9 +221,9 @@ void EntityBoneHalberd(Entity* self) {
     case BONE_HALBERD_JUMP:
         switch (self->step_s) {
         case BONE_HALBERD_JUMP_INIT:
-            if (!(AnimateEntity(anim_jump, self) & 1)) {
+            if (!(OVL_EXPORT(AnimateEntity)(anim_jump, self) & 1)) {
                 tempVar = self->ext.boneHalberd.facingLeft;
-                if (!(Random() & 3)) {
+                if (!(OVL_EXPORT(Random)() & 3)) {
                     tempVar ^= 1;
                 }
                 if (tempVar) {
@@ -235,25 +239,26 @@ void EntityBoneHalberd(Entity* self) {
             }
             break;
         case BONE_HALBERD_JUMP_MOVE:
-            if (UnkCollisionFunc3(sensors_bone_halberd)) {
+            if (OVL_EXPORT(UnkCollisionFunc3)(sensors_bone_halberd)) {
                 PlaySfxPositional(SFX_STOMP_HARD_C);
                 self->step_s++;
             }
-            CheckFieldCollision(sensors_jump, 2);
+            OVL_EXPORT(CheckFieldCollision)(sensors_jump, 2);
             break;
         case BONE_HALBERD_JUMP_LAND:
-            if (!AnimateEntity(anim_land, self)) {
-                SetStep(BONE_HALBERD_MOVE);
+            if (!OVL_EXPORT(AnimateEntity)(anim_land, self)) {
+                OVL_EXPORT(SetStep)(BONE_HALBERD_MOVE);
             }
             break;
         }
         break;
     case BONE_HALBERD_DEATH:
         for (partIdx = 0; partIdx < 9; partIdx++) {
-            boneHalberdPart = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            boneHalberdPart =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (boneHalberdPart != 0) {
-                CreateEntityFromCurrentEntity(
-                    E_BONE_HALBERD_PARTS, boneHalberdPart);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_BONE_HALBERD_PARTS, boneHalberdPart);
                 boneHalberdPart->facingLeft = self->facingLeft;
                 boneHalberdPart->params = partIdx;
                 boneHalberdPart->ext.boneHalberd.partLifespan =
@@ -282,17 +287,17 @@ void EntityBoneHalberdParts(Entity* self) {
     if (self->step) {
         if (--self->ext.boneHalberd.partLifespan) {
             self->rotate += rotation_interval[self->params];
-            FallEntity();
-            MoveEntity();
+            OVL_EXPORT(FallEntity)();
+            OVL_EXPORT(MoveEntity)();
             return;
         }
         self->entityId = E_EXPLOSION;
-        self->pfnUpdate = EntityExplosion;
+        self->pfnUpdate = OVL_EXPORT(EntityExplosion);
         self->params = EXPLOSION_SMALL;
         self->step = 0;
         return;
     }
-    InitializeEntity(g_EInitBoneHalberd);
+    OVL_EXPORT(InitializeEntity)(g_EInitBoneHalberd);
     self->hitboxState = 0;
     self->flags |=
         FLAG_DESTROY_IF_OUT_OF_CAMERA | FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
@@ -311,7 +316,7 @@ void EntityBoneHalberdAttack(Entity* self) {
     s32 animCurFrame;
 
     if (!self->step) {
-        InitializeEntity(g_EInitBoneHalberdAttack);
+        OVL_EXPORT(InitializeEntity)(g_EInitBoneHalberdAttack);
         self->hitboxState = 1;
     }
     boneHalberd = self - 1;

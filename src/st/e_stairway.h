@@ -44,7 +44,7 @@ void EntityStairwayPiece(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         self->hitboxWidth = 8;
         self->hitboxHeight = 8;
         self->posX.i.hi = XPOS - g_Tilemap.scrollX.i.hi;
@@ -78,20 +78,22 @@ void EntityStairwayPiece(Entity* self) {
         g_Tilemap.fg[TILE2] = 0x3D2;
         g_CastleFlags[CASTLE_FLAG] = true;
 
-        newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+        newEntity = OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
         if (newEntity != NULL) {
 #if defined(INVERTED_STAGE)
-            CreateEntityFromEntity(E_HEART_DROP, self, newEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_HEART_DROP, self, newEntity);
             newEntity->params = self->params;
 #else
-            CreateEntityFromEntity(E_EQUIP_ITEM_DROP, self, newEntity);
+            OVL_EXPORT(CreateEntityFromEntity)
+            (E_EQUIP_ITEM_DROP, self, newEntity);
             newEntity->params = ITEM_TURKEY;
 #endif
         }
 
-        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        newEntity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
-            CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, newEntity);
+            OVL_EXPORT(CreateEntityFromEntity)
+            (E_INTENSE_EXPLOSION, self, newEntity);
             newEntity->params = 0x10;
             newEntity->zPriority = self->zPriority + 1;
             newEntity->posX.i.hi += 8;
@@ -156,18 +158,20 @@ void EntityStairwayPiece(Entity* self) {
 
     case 4:
         g_api.PlaySfx(SFX_WALL_DEBRIS_B);
-        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        newEntity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, newEntity);
             newEntity->params = 0x11;
             newEntity->zPriority = self->zPriority + 1;
         }
 
         for (i = 0; i < 6; i++) {
-            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            newEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_ID(FALLING_ROCK), self, newEntity);
-                newEntity->params = Random() & 3;
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_ID(FALLING_ROCK), self, newEntity);
+                newEntity->params = OVL_EXPORT(Random)() & 3;
                 if (newEntity->params == 3) {
                     newEntity->params = 0;
                 }
@@ -189,12 +193,12 @@ void EntityFallingRock(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(ROCK_EINIT);
+        OVL_EXPORT(InitializeEntity)(ROCK_EINIT);
         self->animCurFrame = animFrame + 31;
         self->drawFlags |= ENTITY_ROTATE | ENTITY_SCALEY | ENTITY_SCALEX;
         self->scaleX = self->scaleY = 0x60;
-        rnd = (Random() & 0x1F) + 16;
-        rndAngle = (Random() * 6) + 0x900;
+        rnd = (OVL_EXPORT(Random)() & 0x1F) + 16;
+        rndAngle = (OVL_EXPORT(Random)() * 6) + 0x900;
         self->velocityX = rnd * rcos(rndAngle);
         self->velocityY = rnd * rsin(rndAngle);
         if (self->velocityX > 0) {
@@ -203,16 +207,18 @@ void EntityFallingRock(Entity* self) {
         break;
 
     case 1:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityY += FIX(0.125);
         self->rotate -= 0x20;
         x = self->posX.i.hi;
         y = self->posY.i.hi + 8;
         g_api.CheckCollision(x, y, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
-            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            newEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_INTENSE_EXPLOSION, self, newEntity);
                 newEntity->params = 0x10;
                 if (animFrame == 0) {
                     newEntity->params = 0x13;

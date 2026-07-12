@@ -14,13 +14,14 @@ void EntityBloodSkeleElevButton(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         self->hitboxWidth = 6;
         self->hitboxHeight = 8;
         self->hitboxOffY = -22;
         self->hitboxState = 1;
         newEntity = &self[-1];
-        CreateEntityFromEntity(E_ID(BLOOD_SKELETON), self, newEntity);
+        OVL_EXPORT(CreateEntityFromEntity)
+        (E_ID(BLOOD_SKELETON), self, newEntity);
         newEntity->posY.i.hi = 344 - g_Tilemap.scrollY.i.hi;
 
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
@@ -78,10 +79,10 @@ void EntityElevator2(Entity* self) {
     s32 i;
     Primitive* prim;
 
-    isPlayerColliding = GetPlayerCollisionWith(self, 16, 5, 4);
+    isPlayerColliding = OVL_EXPORT(GetPlayerCollisionWith)(self, 16, 5, 4);
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         self->hitboxOffX = 0;
         self->hitboxOffY = 68;
         g_CallElevator = 0;

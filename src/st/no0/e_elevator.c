@@ -5,7 +5,7 @@
 extern s32 E_ID(ID_29);
 #endif
 
-u8 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags);
+u8 OVL_EXPORT(GetPlayerCollisionWith)(Entity* self, u16 w, u16 h, u16 flags);
 
 static u8 anim0[] = {8, 3, 4, 4, 4,  5, 4,  6,  4,  7,  4,
                      8, 4, 9, 2, 10, 1, 11, 16, 10, -1, 0};
@@ -76,16 +76,16 @@ void func_us_801C2184(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitElevator);
+        OVL_EXPORT(InitializeEntity)(g_EInitElevator);
         self->animCurFrame = 3;
         self->zPriority = player->zPriority + 0xC;
 
         parent = (self - 1);
-        CreateEntityFromCurrentEntity(E_ID(ID_29), parent);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(ID_29), parent);
         parent->params = 1;
 
         parent = (self - 2);
-        CreateEntityFromCurrentEntity(E_ID(ID_29), parent);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(ID_29), parent);
         parent->params = 2;
 
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 12);
@@ -121,7 +121,7 @@ void func_us_801C2184(Entity* self) {
             player->posX.i.hi = self->posX.i.hi;
             self->animCurFrame = 10;
             g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 1;
-            SetStep(2);
+            OVL_EXPORT(SetStep)(2);
         }
         break;
 
@@ -152,7 +152,7 @@ void func_us_801C2184(Entity* self) {
         g_Player.padSim = 0;
         switch (self->step_s) {
         case 0:
-            if (!AnimateEntity(anim0, self)) {
+            if (!OVL_EXPORT(AnimateEntity)(anim0, self)) {
                 self->pose = 0;
                 self->poseTimer = 0;
                 self->step_s += 1;
@@ -188,7 +188,7 @@ void func_us_801C2184(Entity* self) {
             break;
 
         case 1:
-            if (!AnimateEntity(anim1, self)) {
+            if (!OVL_EXPORT(AnimateEntity)(anim1, self)) {
                 self->pose = 0;
                 self->poseTimer = 0;
                 g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 0;
@@ -248,7 +248,7 @@ void func_us_801C26B8(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitElevator);
+        OVL_EXPORT(InitializeEntity)(g_EInitElevator);
         if (self->params & 0x10) {
             self->animCurFrame = self->params & 15;
             self->zPriority = 0x6A;
@@ -262,10 +262,10 @@ void func_us_801C26B8(Entity* self) {
         self->posX.i.hi = entity->posX.i.hi;
         if (self->params == 1) {
             self->posY.i.hi = entity->posY.i.hi + 35;
-            collision = GetPlayerCollisionWith(self, 12, 8, 4);
+            collision = OVL_EXPORT(GetPlayerCollisionWith)(self, 12, 8, 4);
         } else {
             self->posY.i.hi = entity->posY.i.hi - 24;
-            collision = GetPlayerCollisionWith(self, 12, 8, 6);
+            collision = OVL_EXPORT(GetPlayerCollisionWith)(self, 12, 8, 6);
         }
         self->ext.cenElevator.playerCollision = collision;
         break;
@@ -280,7 +280,7 @@ void func_us_801C27A4(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitElevator);
+        OVL_EXPORT(InitializeEntity)(g_EInitElevator);
         self->animCurFrame = 3;
         self->zPriority = player->zPriority + 2;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 12);
@@ -310,13 +310,13 @@ void func_us_801C27A4(Entity* self) {
             player->posX.i.hi = self->posX.i.hi;
             self->animCurFrame = 10;
             g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 1;
-            SetStep(2);
+            OVL_EXPORT(SetStep)(2);
         } else {
             self->posY.i.hi = player->posY.i.hi;
             player->posX.i.hi = self->posX.i.hi;
             self->animCurFrame = 10;
             g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 1;
-            SetStep(3);
+            OVL_EXPORT(SetStep)(3);
         }
         break;
 

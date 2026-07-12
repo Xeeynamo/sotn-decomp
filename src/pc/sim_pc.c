@@ -212,7 +212,6 @@ void LoadStageTileset(u8* pTilesetData, size_t len, s32 y) {
     }
 }
 
-void InitStageDummy(Overlay* o);
 void InitStageCEN(Overlay* o);
 void InitStageNZ0(Overlay* o);
 void InitStageST0(Overlay* o);
@@ -466,8 +465,8 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
             InitStageWRP(&g_api.o);
             break;
         default:
-            InitStageDummy(&g_api.o);
-            INFOF("TODO: will load stage '%s'", g_StagesLba[g_StageId].ovlName);
+            ERRORF(
+                "STAGE '%s' not implemented", g_StagesLba[g_StageId].ovlName);
             break;
         }
         return 0;

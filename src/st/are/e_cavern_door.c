@@ -15,10 +15,10 @@ void EntityCavernDoorSwitch(Entity* self) {
     Entity* player;
     s32 collision;
 
-    collision = GetPlayerCollisionWith(self, 8, 4, 4);
+    collision = OVL_EXPORT(GetPlayerCollisionWith)(self, 8, 4, 4);
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitCavernDoor);
+        OVL_EXPORT(InitializeEntity)(g_EInitCavernDoor);
         self->animCurFrame = 2;
         self->zPriority = 0x71;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
@@ -119,11 +119,11 @@ void EntityCavernDoor(Entity* self) {
     s32 primIndex;
     s32 collision;
 
-    collision =
-        GetPlayerCollisionWith(self, self->hitboxWidth, self->hitboxHeight, 5);
+    collision = OVL_EXPORT(GetPlayerCollisionWith)(
+        self, self->hitboxWidth, self->hitboxHeight, 5);
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitCavernDoor);
+        OVL_EXPORT(InitializeEntity)(g_EInitCavernDoor);
         self->animCurFrame = 1;
         self->zPriority = 0x71;
         self->hitboxWidth = 8;
@@ -199,12 +199,13 @@ void EntityCavernDoor(Entity* self) {
             }
 
             if (!(g_Timer & 0xF)) {
-                entity = AllocEntity(
+                entity = OVL_EXPORT(AllocEntity)(
                     &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_INTENSE_EXPLOSION, self, entity);
                     entity->posY.i.hi = 0xBC;
-                    entity->posX.i.hi += (Random() & 0xF) - 8;
+                    entity->posX.i.hi += (OVL_EXPORT(Random)() & 0xF) - 8;
                     entity->params = 0x10;
                     entity->drawFlags |= ENTITY_SCALEY | ENTITY_SCALEX;
                     entity->scaleX = entity->scaleY = 0xC0;

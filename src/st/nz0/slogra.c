@@ -100,7 +100,7 @@ s32 EntitySlograSpecialCollision(s16* unused) {
     s32 posX, posY;
     s32 ret = 0;
 
-    MoveEntity();
+    OVL_EXPORT(MoveEntity)();
     g_CurrentEntity->velocityY += FIX(0.25);
     posX = g_CurrentEntity->posX.i.hi + g_Tilemap.scrollX.i.hi;
 
@@ -136,58 +136,58 @@ void EntitySlogra(Entity* self) {
 
     if (self->step > SLOGRA_IDLE) {
         if ((self->hitFlags & 3) && (self->step != SLOGRA_KNOCKBACK)) {
-            SetStep(SLOGRA_KNOCKBACK);
+            OVL_EXPORT(SetStep)(SLOGRA_KNOCKBACK);
         }
         if (!self->ext.GS_Props.nearDeath) {
             if ((self->hitPoints < g_api.enemyDefs[243].hitPoints / 4) &&
                 (self->step != SLOGRA_LOSE_SPEAR)) {
-                SetStep(SLOGRA_LOSE_SPEAR);
+                OVL_EXPORT(SetStep)(SLOGRA_LOSE_SPEAR);
             }
         }
     }
 
     if ((self->flags & FLAG_DEAD) && (self->step != SLOGRA_DYING)) {
-        SetStep(SLOGRA_DYING);
+        OVL_EXPORT(SetStep)(SLOGRA_DYING);
     }
     otherEnt = self + 8;
     if (otherEnt->ext.GS_Props.grabedAscending) {
         if (self->step != SLOGRA_DYING &&
             self->step != SLOGRA_GAIBON_COMBO_ATTACK) {
-            SetStep(SLOGRA_GAIBON_COMBO_ATTACK);
+            OVL_EXPORT(SetStep)(SLOGRA_GAIBON_COMBO_ATTACK);
         }
     }
 
     switch (self->step) {
     case SLOGRA_INIT:
-        InitializeEntity(g_EInitSlogra);
+        OVL_EXPORT(InitializeEntity)(g_EInitSlogra);
         otherEnt = self + 1;
-        CreateEntityFromCurrentEntity(E_ID(SLOGRA_SPEAR), otherEnt);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(SLOGRA_SPEAR), otherEnt);
 
     case SLOGRA_FLOOR_ALIGN:
         if (EntitySlograSpecialCollision(sensors1) & 1) {
-            SetStep(SLOGRA_IDLE);
+            OVL_EXPORT(SetStep)(SLOGRA_IDLE);
         }
         break;
 
     case SLOGRA_IDLE:
-        AnimateEntity(anim2, self);
+        OVL_EXPORT(AnimateEntity)(anim2, self);
         if (self->hitFlags) {
             g_BossFlag |= BOSS_FLAG_FIGHT_BEGIN;
         }
         if (g_BossFlag & BOSS_FLAG_FIGHT_BEGIN) {
-            SetStep(SLOGRA_WALKING_WITH_SPEAR);
+            OVL_EXPORT(SetStep)(SLOGRA_WALKING_WITH_SPEAR);
         }
         break;
 
     case SLOGRA_TAUNT_WITH_SPEAR:
-        if (AnimateEntity(anim2, self) == 0) {
-            SetStep(SLOGRA_WALKING_WITH_SPEAR);
+        if (OVL_EXPORT(AnimateEntity)(anim2, self) == 0) {
+            OVL_EXPORT(SetStep)(SLOGRA_WALKING_WITH_SPEAR);
         }
         break;
 
     case SLOGRA_WALKING_WITH_SPEAR:
         if (!self->step_s) {
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
             if (self->ext.GS_Props.attackMode) { // shoot projectile ?
                 self->ext.GS_Props.flag = 1;
             } else {
@@ -196,16 +196,16 @@ void EntitySlogra(Entity* self) {
             self->ext.GS_Props.timer = 128;
             self->step_s++;
         }
-        AnimateEntity(anim1, self);
-        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        OVL_EXPORT(AnimateEntity)(anim1, self);
+        self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
         if (self->facingLeft ^ self->ext.GS_Props.flag) {
             self->velocityX = FIX(0.75);
         } else {
             self->velocityX = FIX(-0.75);
         }
-        UnkCollisionFunc2(sensors2);
+        OVL_EXPORT(UnkCollisionFunc2)(sensors2);
         if (!self->ext.GS_Props.flag) {
-            if (GetDistanceToPlayerX() < 72) {
+            if (OVL_EXPORT(GetDistanceToPlayerX)() < 72) {
                 if (!self->ext.GS_Props.attackMode) {
                     self->ext.GS_Props.timer = 1;
                 } else {
@@ -214,7 +214,7 @@ void EntitySlogra(Entity* self) {
             }
         }
         if (self->ext.GS_Props.flag) {
-            if (GetDistanceToPlayerX() > 112) {
+            if (OVL_EXPORT(GetDistanceToPlayerX)() > 112) {
                 if (self->ext.GS_Props.attackMode) {
                     self->ext.GS_Props.timer = 1;
                 } else {
@@ -222,14 +222,14 @@ void EntitySlogra(Entity* self) {
                 }
             }
         }
-        if ((Random() & 0x3F) == 0) {
-            SetStep(SLOGRA_TAUNT_WITH_SPEAR);
+        if ((OVL_EXPORT(Random)() & 0x3F) == 0) {
+            OVL_EXPORT(SetStep)(SLOGRA_TAUNT_WITH_SPEAR);
         }
         if (!--self->ext.GS_Props.timer) {
             if (self->ext.GS_Props.attackMode) {
-                SetStep(SLOGRA_SPEAR_FIRE);
+                OVL_EXPORT(SetStep)(SLOGRA_SPEAR_FIRE);
             } else {
-                SetStep(SLOGRA_SPEAR_POKE);
+                OVL_EXPORT(SetStep)(SLOGRA_SPEAR_POKE);
             }
             self->ext.GS_Props.attackMode ^= 1;
         }
@@ -240,8 +240,8 @@ void EntitySlogra(Entity* self) {
             PlaySfxPositional(SFX_SLOGRA_ROAR);
             self->step_s++;
         }
-        if (AnimateEntity(anim6, self) == 0) {
-            SetStep(SLOGRA_WALKING_WITH_SPEAR);
+        if (OVL_EXPORT(AnimateEntity)(anim6, self) == 0) {
+            OVL_EXPORT(SetStep)(SLOGRA_WALKING_WITH_SPEAR);
         }
         if (!self->poseTimer && self->pose == 4) {
             PlaySfxPositional(SFX_BOSS_WING_FLAP);
@@ -251,16 +251,17 @@ void EntitySlogra(Entity* self) {
     case SLOGRA_SPEAR_FIRE:
         switch (self->step_s) {
         case SLOGRA_FIRE_FACE_PLAYER:
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
             self->step_s++;
 
         case SLOGRA_FIRE_PROJECTILE:
-            if (AnimateEntity(anim3, self) == 0) {
+            if (OVL_EXPORT(AnimateEntity)(anim3, self) == 0) {
                 PlaySfxPositional(SFX_FM_EXPLODE_SWISHES);
-                otherEnt = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                otherEnt =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
                 if (otherEnt != NULL) {
-                    CreateEntityFromEntity(
-                        E_ID(SLOGRA_SPEAR_PROJECTILE), self, otherEnt);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID(SLOGRA_SPEAR_PROJECTILE), self, otherEnt);
                     if (self->facingLeft) {
                         otherEnt->posX.i.hi += 68;
                     } else {
@@ -270,19 +271,19 @@ void EntitySlogra(Entity* self) {
                     otherEnt->facingLeft = self->facingLeft;
                     otherEnt->zPriority = self->zPriority + 1;
                 }
-                SetSubStep(SLOGRA_FIRE_COOLDOWN);
+                OVL_EXPORT(SetSubStep)(SLOGRA_FIRE_COOLDOWN);
             }
             break;
 
         case SLOGRA_FIRE_COOLDOWN:
-            if (AnimateEntity(anim4, self) == 0) {
-                SetSubStep(SLOGRA_FIRE_END);
+            if (OVL_EXPORT(AnimateEntity)(anim4, self) == 0) {
+                OVL_EXPORT(SetSubStep)(SLOGRA_FIRE_END);
             }
             break;
 
         case SLOGRA_FIRE_END: // go back to standing position
-            if (AnimateEntity(anim5, self) == 0) {
-                SetStep(SLOGRA_WALKING_WITH_SPEAR);
+            if (OVL_EXPORT(AnimateEntity)(anim5, self) == 0) {
+                OVL_EXPORT(SetStep)(SLOGRA_WALKING_WITH_SPEAR);
             }
             break;
         }
@@ -298,7 +299,7 @@ void EntitySlogra(Entity* self) {
 
         case SLOGRA_KNOCKBACK_ACCEL:
             self->velocityY = FIX(-4);
-            if (GetSideToPlayer() & 1) {
+            if (OVL_EXPORT(GetSideToPlayer)() & 1) {
                 self->velocityX = FIX(0.5);
             } else {
                 self->velocityX = FIX(-0.5);
@@ -317,10 +318,11 @@ void EntitySlogra(Entity* self) {
             } else {
                 animation = anim7;
             }
-            if (AnimateEntity(animation, self) == 0 && entityOnFloor & 1) {
-                SetStep(SLOGRA_WALKING_WITH_SPEAR);
+            if (OVL_EXPORT(AnimateEntity)(animation, self) == 0 &&
+                entityOnFloor & 1) {
+                OVL_EXPORT(SetStep)(SLOGRA_WALKING_WITH_SPEAR);
                 if (self->ext.GS_Props.nearDeath) {
-                    SetStep(SLOGRA_TAUNT_WITHOUT_SPEAR);
+                    OVL_EXPORT(SetStep)(SLOGRA_TAUNT_WITHOUT_SPEAR);
                 }
             }
         }
@@ -328,9 +330,9 @@ void EntitySlogra(Entity* self) {
 
     case SLOGRA_LOSE_SPEAR:
         entityOnFloor = EntitySlograSpecialCollision(sensors1);
-        if (AnimateEntity(anim8, self) == 0) {
+        if (OVL_EXPORT(AnimateEntity)(anim8, self) == 0) {
             if (entityOnFloor & 1) {
-                SetStep(SLOGRA_TAUNT_WITHOUT_SPEAR);
+                OVL_EXPORT(SetStep)(SLOGRA_TAUNT_WITHOUT_SPEAR);
             }
         }
         if (self->pose > 1) {
@@ -339,49 +341,49 @@ void EntitySlogra(Entity* self) {
         break;
 
     case SLOGRA_TAUNT_WITHOUT_SPEAR:
-        if (AnimateEntity(anim10, self) == 0) {
-            SetStep(SLOGRA_WALKING_WITHOUT_SPEAR);
+        if (OVL_EXPORT(AnimateEntity)(anim10, self) == 0) {
+            OVL_EXPORT(SetStep)(SLOGRA_WALKING_WITHOUT_SPEAR);
         }
         break;
 
     case SLOGRA_WALKING_WITHOUT_SPEAR:
         if (!self->step_s) {
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
             self->ext.GS_Props.flag = 1;
             self->ext.GS_Props.timer = 128;
             self->step_s++;
         }
 
-        AnimateEntity(anim9, self);
-        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        OVL_EXPORT(AnimateEntity)(anim9, self);
+        self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
         if (self->facingLeft ^ self->ext.GS_Props.flag) {
             self->velocityX = FIX(0.75);
         } else {
             self->velocityX = FIX(-0.75);
         }
 
-        UnkCollisionFunc2(sensors2);
+        OVL_EXPORT(UnkCollisionFunc2)(sensors2);
         if (!self->ext.GS_Props.flag) {
-            if (GetDistanceToPlayerX() < 72) {
+            if (OVL_EXPORT(GetDistanceToPlayerX)() < 72) {
                 self->ext.GS_Props.flag ^= 1;
             }
         }
         if (self->ext.GS_Props.flag) {
-            if (GetDistanceToPlayerX() > 112) {
+            if (OVL_EXPORT(GetDistanceToPlayerX)() > 112) {
                 self->ext.GS_Props.flag ^= 1;
             }
         }
-        if ((Random() & 0x3F) == 0) {
-            SetStep(SLOGRA_TAUNT_WITHOUT_SPEAR);
+        if ((OVL_EXPORT(Random)() & 0x3F) == 0) {
+            OVL_EXPORT(SetStep)(SLOGRA_TAUNT_WITHOUT_SPEAR);
         }
         if (!--self->ext.GS_Props.timer) {
-            SetStep(SLOGRA_ATTACK);
+            OVL_EXPORT(SetStep)(SLOGRA_ATTACK);
         }
         break;
 
     case SLOGRA_ATTACK: // Attack without spear
-        if (AnimateEntity(anim12, self) == 0) {
-            SetStep(SLOGRA_WALKING_WITHOUT_SPEAR);
+        if (OVL_EXPORT(AnimateEntity)(anim12, self) == 0) {
+            OVL_EXPORT(SetStep)(SLOGRA_WALKING_WITHOUT_SPEAR);
         }
         if (!self->poseTimer && self->pose == 7) {
             PlaySfxPositional(SFX_BONE_THROW);
@@ -405,8 +407,8 @@ void EntitySlogra(Entity* self) {
             } else {
                 animation = anim15;
             }
-            AnimateEntity(animation, self);
-            MoveEntity();
+            OVL_EXPORT(AnimateEntity)(animation, self);
+            OVL_EXPORT(MoveEntity)();
             self->velocityY += FIX(0.25);
             posY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
             if (posY > 416) {
@@ -420,9 +422,9 @@ void EntitySlogra(Entity* self) {
 
         case SLOGRA_COMBO_ATTACK_COOLDOWN:
             if (!--self->ext.GS_Props.timer) {
-                SetStep(SLOGRA_WALKING_WITH_SPEAR);
+                OVL_EXPORT(SetStep)(SLOGRA_WALKING_WITH_SPEAR);
                 if (self->ext.GS_Props.nearDeath) {
-                    SetStep(SLOGRA_WALKING_WITHOUT_SPEAR);
+                    OVL_EXPORT(SetStep)(SLOGRA_WALKING_WITHOUT_SPEAR);
                 }
             }
             break;
@@ -442,13 +444,15 @@ void EntitySlogra(Entity* self) {
 
         case SLOGRA_DYING_EXPLODING:
             entityOnFloor = EntitySlograSpecialCollision(sensors1);
-            AnimateEntity(anim14, self);
+            OVL_EXPORT(AnimateEntity)(anim14, self);
             if ((g_Timer & 3) == 0) {
-                otherEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                otherEnt =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
                 if (otherEnt != NULL) {
-                    CreateEntityFromEntity(E_EXPLOSION, self, otherEnt);
-                    otherEnt->posX.i.hi += (Random() & 31) - 16;
-                    otherEnt->posY.i.hi += (Random() & 31) - 16;
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_EXPLOSION, self, otherEnt);
+                    otherEnt->posX.i.hi += (OVL_EXPORT(Random)() & 31) - 16;
+                    otherEnt->posY.i.hi += (OVL_EXPORT(Random)() & 31) - 16;
                     otherEnt->zPriority = self->zPriority + 1;
                     otherEnt->params = 1;
                 }
@@ -459,9 +463,10 @@ void EntitySlogra(Entity* self) {
             break;
 
         case SLOGRA_DYING_END:
-            otherEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            otherEnt =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (otherEnt != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, otherEnt);
+                OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, otherEnt);
                 otherEnt->posY.i.hi += 16;
                 otherEnt->params = 3;
             }
@@ -489,7 +494,7 @@ void EntitySlograSpear(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitSlograSpear);
+        OVL_EXPORT(InitializeEntity)(g_EInitSlograSpear);
 
     case 1:
         slogra = self - 1;
@@ -524,7 +529,7 @@ void EntitySlograSpear(Entity* self) {
             self->step_s++;
 
         case 1:
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             self->velocityY += FIX(0.15625);
             self->rotate += 0x80;
             if (!(self->rotate & 0xFFF)) {
@@ -538,9 +543,9 @@ void EntitySlograSpearProjectile(Entity* self) {
     Entity* entity;
 
     if (self->flags & FLAG_DEAD) {
-        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        entity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
             entity->params = 1;
         }
         DestroyEntity(self);
@@ -549,7 +554,7 @@ void EntitySlograSpearProjectile(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitSlograProjectile);
+        OVL_EXPORT(InitializeEntity)(g_EInitSlograProjectile);
         if (self->facingLeft) {
             self->velocityX = FIX(4);
         } else {
@@ -557,14 +562,14 @@ void EntitySlograSpearProjectile(Entity* self) {
         }
 
     case 1:
-        if (AnimateEntity(anim16, self) == 0) {
-            SetStep(SLOGRA_IDLE);
+        if (OVL_EXPORT(AnimateEntity)(anim16, self) == 0) {
+            OVL_EXPORT(SetStep)(SLOGRA_IDLE);
         }
         break;
 
     case 2:
-        MoveEntity();
-        AnimateEntity(anim17, self);
+        OVL_EXPORT(MoveEntity)();
+        OVL_EXPORT(AnimateEntity)(anim17, self);
         break;
     }
 }

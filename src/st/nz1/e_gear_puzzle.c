@@ -15,7 +15,7 @@ static s16 D_us_801C1680[4];
 void EntityWallGear(Entity* self) {
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitEnvironment);
+        OVL_EXPORT(InitializeEntity)(g_EInitEnvironment);
         self->zPriority = 0x6C;
         self->animCurFrame = 0xC;
         self->drawFlags = ENTITY_ROTATE;
@@ -72,7 +72,7 @@ void EntitySecretAreaDoor(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitEnvironment);
+        OVL_EXPORT(InitializeEntity)(g_EInitEnvironment);
         self->animCurFrame = 7;
         if (D_us_80180FD0 == 0xF) {
             self->step = 2;
@@ -93,16 +93,18 @@ void EntitySecretAreaDoor(Entity* self) {
 
         case 1:
             self->posX.val -= FIX(0.5);
-            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            entity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_INTENSE_EXPLOSION, self, entity);
                 entity->params = 0x10;
                 entity->posY.i.hi += 0x20;
-                entity->posX.i.hi -= (Random() & 7);
+                entity->posX.i.hi -= (OVL_EXPORT(Random)() & 7);
             }
             offsetX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
             if (offsetX < -15) {
-                SetStep(2);
+                OVL_EXPORT(SetStep)(2);
             }
             break;
         }
@@ -118,22 +120,24 @@ void EntitySecretAreaDoor(Entity* self) {
             break;
         case 1:
             self->posX.val += FIX(0.5);
-            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            entity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_INTENSE_EXPLOSION, self, entity);
                 entity->params = 0x10;
                 entity->posY.i.hi += 0x20;
-                entity->posX.i.hi -= (Random() & 7);
+                entity->posX.i.hi -= (OVL_EXPORT(Random)() & 7);
             }
             offsetX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
             if (offsetX > 7) {
-                SetStep(1);
+                OVL_EXPORT(SetStep)(1);
             }
             break;
         }
         break;
     }
-    GetPlayerCollisionWith(self, 8, 0x20, 5);
+    OVL_EXPORT(GetPlayerCollisionWith)(self, 8, 0x20, 5);
     if (D_us_80180FD0 == 0xF) {
         var_a1 = &D_us_80180FDC[4];
     } else {

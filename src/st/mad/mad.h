@@ -9,9 +9,8 @@
 #define VERSION_BETA
 #define INCLUDE_ASM_OLD
 
-#include "stage.h"
-
 #define OVL_EXPORT(x) MAD_##x
+#include <stage.h>
 
 // This is 0xA9 in all other overlays, there may be an underlying reason.
 // For now it's just an overriding define.
@@ -43,9 +42,10 @@ void CreateEntitiesToTheRight(s16);
 void CreateEntitiesToTheLeft(s16);
 void CreateEntitiesAbove(s16);
 void CreateEntitiesBelow(s16);
-void CreateEntityFromCurrentEntity(u16, Entity*);
+void OVL_EXPORT(CreateEntityFromCurrentEntity)(u16, Entity*);
 u8 func_80192914(s16 arg0, s16 arg1);
-void CreateEntityFromEntity(u16 entityId, Entity* ent1, Entity* ent2);
+void OVL_EXPORT(CreateEntityFromEntity)(
+    u16 entityId, Entity* ent1, Entity* ent2);
 void func_8019344C(void);
 void EntityExplosionVariants(Entity* entity);
 void EntityGreyPuff(Entity* entity);

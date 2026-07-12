@@ -35,7 +35,7 @@ static s32 FrogJump(s32 index) {
 
     switch (g_CurrentEntity->ext.frogToad.jumpStep) {
     case 0:
-        if (!AnimateEntity(anim_jump, g_CurrentEntity)) {
+        if (!OVL_EXPORT(AnimateEntity)(anim_jump, g_CurrentEntity)) {
             g_CurrentEntity->velocityX = jumpVelocities[index].x;
             if (!g_CurrentEntity->facingLeft) {
                 g_CurrentEntity->velocityX = -g_CurrentEntity->velocityX;
@@ -59,7 +59,7 @@ static s32 FrogJump(s32 index) {
         if (collider.effects & EFFECT_SOLID) {
             g_CurrentEntity->velocityX = 0;
         }
-        if (UnkCollisionFunc3(sensors_ground) & 1) {
+        if (OVL_EXPORT(UnkCollisionFunc3)(sensors_ground) & 1) {
             g_CurrentEntity->poseTimer = 0;
             g_CurrentEntity->pose = 0;
             g_CurrentEntity->ext.frogToad.jumpStep = 2;
@@ -75,7 +75,7 @@ static s32 FrogJump(s32 index) {
         }
         break;
     case 2:
-        if (!AnimateEntity(anim_jump, g_CurrentEntity)) {
+        if (!OVL_EXPORT(AnimateEntity)(anim_jump, g_CurrentEntity)) {
             return 1;
         }
         break;
@@ -90,9 +90,9 @@ void EntityFrog(Entity* self) {
 
     if (self->flags & FLAG_DEAD) {
         PlaySfxPositional(SFX_FROG_CROAK);
-        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        entity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
             entity->params = 0;
         }
         DestroyEntity(self);
@@ -101,7 +101,7 @@ void EntityFrog(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitFrog);
+        OVL_EXPORT(InitializeEntity)(g_EInitFrog);
         self->animCurFrame = 16;
         self->hitboxOffX = 1;
         self->hitboxOffY = 1;
@@ -110,34 +110,34 @@ void EntityFrog(Entity* self) {
         self->ext.frogToad.lickTimer = 0x80;
         break;
     case 1:
-        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-        if (UnkCollisionFunc3(sensors_ground) & 1) {
+        self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+        if (OVL_EXPORT(UnkCollisionFunc3)(sensors_ground) & 1) {
             self->step++;
         }
         break;
     case 2:
-        if (!AnimateEntity(anim_throat_inflate, self)) {
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        if (!OVL_EXPORT(AnimateEntity)(anim_throat_inflate, self)) {
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
             PlaySfxPositional(SFX_FROG_CROAK);
         }
 
         if (self->ext.frogToad.lickTimer) {
             self->ext.frogToad.lickTimer--;
-        } else if (GetDistanceToPlayerX() < 0x40 &&
-                   (GetSideToPlayer() & 1) ^ self->facingLeft) {
-            SetStep(4);
+        } else if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x40 &&
+                   (OVL_EXPORT(GetSideToPlayer)() & 1) ^ self->facingLeft) {
+            OVL_EXPORT(SetStep)(4);
         }
 
-        if (!(Random() & 0x7F)) {
-            SetStep(3);
+        if (!(OVL_EXPORT(Random)() & 0x7F)) {
+            OVL_EXPORT(SetStep)(3);
         }
 
         break;
     // Lick
     case 4:
-        if (!AnimateEntity(anim_tongue, self)) {
+        if (!OVL_EXPORT(AnimateEntity)(anim_tongue, self)) {
             self->ext.frogToad.lickTimer = 0x80;
-            SetStep(2);
+            OVL_EXPORT(SetStep)(2);
         }
 
         if (!self->poseTimer && self->pose == 9) {
@@ -175,7 +175,7 @@ void EntityFrog(Entity* self) {
     case 3:
         switch (self->step_s) {
         case 0:
-            index = Random() & 3;
+            index = OVL_EXPORT(Random)() & 3;
             self->ext.frogToad.jumpStep = 0;
             self->step_s = jumpType[index][0];
             self->ext.frogToad.jumpCount = jumpType[index][1];
@@ -189,7 +189,7 @@ void EntityFrog(Entity* self) {
             }
 
             if (self->ext.frogToad.jumpCount > 8) {
-                SetStep(2);
+                OVL_EXPORT(SetStep)(2);
             }
             break;
         case 2:
@@ -201,7 +201,7 @@ void EntityFrog(Entity* self) {
             }
 
             if (self->ext.frogToad.jumpCount > 3) {
-                SetStep(2);
+                OVL_EXPORT(SetStep)(2);
             }
             break;
         case 3:
@@ -213,7 +213,7 @@ void EntityFrog(Entity* self) {
             }
 
             if (!self->ext.frogToad.jumpCount) {
-                SetStep(2);
+                OVL_EXPORT(SetStep)(2);
             }
             break;
         case 4:
@@ -229,7 +229,7 @@ void EntityFrog(Entity* self) {
                 self->ext.frogToad.jumpStep = 0;
                 self->ext.frogToad.jumpCount++;
                 if (self->ext.frogToad.jumpCount > 2) {
-                    SetStep(2);
+                    OVL_EXPORT(SetStep)(2);
                 }
             }
             break;

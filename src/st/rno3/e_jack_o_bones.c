@@ -48,14 +48,14 @@ static void TryThrow(void) {
     s32 temp_s1;
     u16 temp_s0;
 
-    temp_s1 = UnkCollisionFunc2(sensors2);
-    temp_s0 = UnkCollisionFunc(sensors3, 3);
+    temp_s1 = OVL_EXPORT(UnkCollisionFunc2)(sensors2);
+    temp_s0 = OVL_EXPORT(UnkCollisionFunc)(sensors3, 3);
     if ((temp_s1 == 0x80) || (temp_s0 & 2)) {
-        SetStep(JACKO_JUMP);
+        OVL_EXPORT(SetStep)(JACKO_JUMP);
         return;
     }
     if (!g_CurrentEntity->ext.jackoBones.throwTimer) {
-        SetStep(JACKO_THROW);
+        OVL_EXPORT(SetStep)(JACKO_THROW);
         return;
     }
     g_CurrentEntity->ext.jackoBones.throwTimer--;
@@ -72,11 +72,11 @@ void EntityJackOBones(Entity* self) {
     }
     switch (self->step) {
     case JACKO_INIT:
-        InitializeEntity(g_EInitJackOBones);
+        OVL_EXPORT(InitializeEntity)(g_EInitJackOBones);
         if (self->params) {
             self->palette++;
         }
-        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
         // Cooldown for throwing jacks
         self->ext.jackoBones.throwTimer = 0x50;
         // When walking forward, this tells us if facing left. When walking
@@ -85,14 +85,14 @@ void EntityJackOBones(Entity* self) {
         self->ext.jackoBones.throwTimerIndex = 0;
         break;
     case JACKO_1:
-        if (UnkCollisionFunc3(sensors1) == 0) {
+        if (OVL_EXPORT(UnkCollisionFunc3)(sensors1) == 0) {
             break;
         }
         self->step++;
         break;
     case JACKO_WALK_FWD:
-        if (AnimateEntity(anim_walk_fwd, self) == 0) {
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        if (OVL_EXPORT(AnimateEntity)(anim_walk_fwd, self) == 0) {
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
         }
         self->ext.jackoBones.movingLeft = self->facingLeft;
         if (self->ext.jackoBones.movingLeft) {
@@ -100,14 +100,14 @@ void EntityJackOBones(Entity* self) {
         } else {
             self->velocityX = FIX(-0.5);
         }
-        if (GetDistanceToPlayerX() < 76) {
+        if (OVL_EXPORT(GetDistanceToPlayerX)() < 76) {
             self->step = JACKO_WALK_BACK;
         }
         TryThrow();
         break;
     case JACKO_WALK_BACK:
-        if (AnimateEntity(anim_walk_back, self) == 0) {
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        if (OVL_EXPORT(AnimateEntity)(anim_walk_back, self) == 0) {
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
         }
         self->ext.jackoBones.movingLeft = self->facingLeft ^ 1;
         if (self->ext.jackoBones.movingLeft) {
@@ -115,13 +115,13 @@ void EntityJackOBones(Entity* self) {
         } else {
             self->velocityX = FIX(-0.5);
         }
-        if (GetDistanceToPlayerX() > 92) {
+        if (OVL_EXPORT(GetDistanceToPlayerX)() > 92) {
             self->step = JACKO_WALK_FWD;
         }
         TryThrow();
         break;
     case JACKO_THROW:
-        var_s2 = AnimateEntity(anim_throw, self);
+        var_s2 = OVL_EXPORT(AnimateEntity)(anim_throw, self);
         // We set a value here but it is never used.
         if (self->params) {
             i = 11;
@@ -130,17 +130,17 @@ void EntityJackOBones(Entity* self) {
         }
         // Animation done. walk backward and set the timer for next throw.
         if (!var_s2) {
-            SetStep(JACKO_WALK_BACK);
+            OVL_EXPORT(SetStep)(JACKO_WALK_BACK);
             var_s2 = ++self->ext.jackoBones.throwTimerIndex & 3;
             self->ext.jackoBones.throwTimer =
                 throw_timers[self->params & 1][var_s2];
             break;
         }
         if ((var_s2 & 0x80) && (self->animCurFrame == 0xB)) {
-            other = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            other = OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
             if (other != NULL) {
                 PlaySfxPositional(SFX_BONE_THROW);
-                CreateEntityFromCurrentEntity(E_JACKO_JACK, other);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)(E_JACKO_JACK, other);
                 if (self->params) {
                     xShift = -16;
                 } else {
@@ -160,9 +160,9 @@ void EntityJackOBones(Entity* self) {
     case JACKO_JUMP:
         switch (self->step_s) {
         case JACKO_JUMP_WINDUP:
-            if (!(AnimateEntity(anim_jump_windup, self) & 1)) {
+            if (!(OVL_EXPORT(AnimateEntity)(anim_jump_windup, self) & 1)) {
                 var_s2 = self->ext.jackoBones.movingLeft;
-                if (!(Random() & 3)) {
+                if (!(OVL_EXPORT(Random)() & 3)) {
                     var_s2 ^= 1;
                 }
                 if (var_s2) {
@@ -177,25 +177,26 @@ void EntityJackOBones(Entity* self) {
             }
             break;
         case JACKO_JUMP_MIDAIR:
-            if (UnkCollisionFunc3(sensors1)) {
+            if (OVL_EXPORT(UnkCollisionFunc3)(sensors1)) {
                 self->step_s++;
             }
-            CheckFieldCollision(sensors3, 2);
+            OVL_EXPORT(CheckFieldCollision)(sensors3, 2);
             break;
         case JACKO_JUMP_LANDING:
-            if (AnimateEntity(anim_jump_landing, self) == 0) {
-                SetStep(JACKO_WALK_BACK);
+            if (OVL_EXPORT(AnimateEntity)(anim_jump_landing, self) == 0) {
+                OVL_EXPORT(SetStep)(JACKO_WALK_BACK);
             }
         }
         break;
     case JACKO_DEAD:
         PlaySfxPositional(SFX_SKELETON_DEATH_B);
         for (i = 0; i < 6; i++) {
-            other = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            other = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (other == NULL) {
                 break;
             }
-            CreateEntityFromCurrentEntity(E_JACKO_DEATH_PARTS, other);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)
+            (E_JACKO_DEATH_PARTS, other);
             other->facingLeft = self->facingLeft;
             other->params = i;
             other->params |= (self->params << 8);
@@ -218,17 +219,17 @@ void EntityJackOBonesDeathParts(Entity* self) {
     if (self->step) {
         if (--self->ext.jackoBones.deathPartLife) {
             self->rotate += death_parts_rotspeeds[self->params];
-            FallEntity();
-            MoveEntity();
+            OVL_EXPORT(FallEntity)();
+            OVL_EXPORT(MoveEntity)();
             return;
         }
         self->entityId = E_EXPLOSION;
-        self->pfnUpdate = EntityExplosion;
+        self->pfnUpdate = OVL_EXPORT(EntityExplosion);
         self->params = 0;
         self->step = 0;
         return;
     }
-    InitializeEntity(g_EInitJackOBones2);
+    OVL_EXPORT(InitializeEntity)(g_EInitJackOBones2);
     self->animCurFrame = (self->params & 0xFF) + 15;
     if (self->params & 0x100) {
         self->palette += 1;
@@ -246,7 +247,7 @@ void EntityJackOBonesJack(Entity* self) {
     s32 xVar;
 
     if (!self->step) {
-        InitializeEntity(g_EInitJackOBones3);
+        OVL_EXPORT(InitializeEntity)(g_EInitJackOBones3);
         if (self->params) {
             self->palette += 1;
         }
@@ -266,7 +267,7 @@ void EntityJackOBonesJack(Entity* self) {
         }
         self->velocityY = yVar;
     }
-    MoveEntity();
+    OVL_EXPORT(MoveEntity)();
     self->velocityY += FIX(0.1875);
     self->rotate -= 0x40;
     xVar = self->posX.i.hi;
@@ -336,7 +337,7 @@ void EntityJackOBonesJack(Entity* self) {
     if (self->flags & FLAG_DEAD) {
         self->drawFlags = ENTITY_DEFAULT;
         self->entityId = E_EXPLOSION;
-        self->pfnUpdate = EntityExplosion;
+        self->pfnUpdate = OVL_EXPORT(EntityExplosion);
         self->params = 0;
         self->step = 0;
     }

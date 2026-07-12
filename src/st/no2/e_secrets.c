@@ -96,9 +96,10 @@ void func_us_801B59C4(Primitive* prim) {
         prim->v2 = prim->v3 = 0xD8;
         prim->priority = 0x6A;
         prim->drawMode = DRAW_UNK02;
-        LOW(prim->next->u0) = -(Random() & 7) * 0x2800;
-        LOW(prim->next->r1) = -0x18000 - ((Random() & 7) << 0xD);
-        LOH(prim->next->r2) = LOH(prim->next->b2) = ((Random() & 3) * 2) + 8;
+        LOW(prim->next->u0) = -(OVL_EXPORT(Random)() & 7) * 0x2800;
+        LOW(prim->next->r1) = -0x18000 - ((OVL_EXPORT(Random)() & 7) << 0xD);
+        LOH(prim->next->r2) = LOH(prim->next->b2) =
+            ((OVL_EXPORT(Random)() & 3) * 2) + 8;
         prim->next->u2 = 4;
         break;
 
@@ -111,9 +112,10 @@ void func_us_801B59C4(Primitive* prim) {
         prim->v2 = prim->v3 = 0xD8;
         prim->priority = 0x6A;
         prim->drawMode = DRAW_UNK02;
-        LOW(prim->next->u0) = 0xE000 - ((Random() & 7) << 0xE);
-        LOW(prim->next->r1) = -0x18000 - ((Random() & 7) << 0xD);
-        LOH(prim->next->r2) = LOH(prim->next->b2) = ((Random() & 3) * 2) + 8;
+        LOW(prim->next->u0) = 0xE000 - ((OVL_EXPORT(Random)() & 7) << 0xE);
+        LOW(prim->next->r1) = -0x18000 - ((OVL_EXPORT(Random)() & 7) << 0xD);
+        LOH(prim->next->r2) = LOH(prim->next->b2) =
+            ((OVL_EXPORT(Random)() & 3) * 2) + 8;
         if (LOW(prim->next->u0) > 0) {
             prim->next->r3 = 16;
         } else {
@@ -137,10 +139,11 @@ void func_us_801B59C4(Primitive* prim) {
             prim->next->y0 += collider.unk18;
             LOW(prim->next->r1) = -LOW(prim->next->r1) / 2;
             if (LOW(prim->next->r1) > -0x4000) {
-                tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                tempEntity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromCurrentEntity(
-                        E_INTENSE_EXPLOSION, tempEntity);
+                    OVL_EXPORT(CreateEntityFromCurrentEntity)
+                    (E_INTENSE_EXPLOSION, tempEntity);
                     tempEntity->posX.i.hi = posX;
                     tempEntity->posY.i.hi = posY;
                     tempEntity->params = 0x10;
@@ -170,7 +173,7 @@ void func_us_801B5FB8(Entity* self) {
     FntPrint("timer %x\n", self->ext.breakableNo2.unk80);
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitEnvironment);
+        OVL_EXPORT(InitializeEntity)(g_EInitEnvironment);
         self->animCurFrame = 0;
         if (g_CastleFlags[NO2_SECRET_WALL_OPEN]) {
             for (i = 0; i < 10; i++) {
@@ -281,19 +284,22 @@ void func_us_801B5FB8(Entity* self) {
             prim = prim->next;
             prim = prim->next;
         }
-        tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        tempEntity =
+            OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (tempEntity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, tempEntity);
             tempEntity->posY.i.hi += 0x20;
             tempEntity->params = 0x13;
             tempEntity->params += 0xAA00;
         }
         for (i = 0; i < 8; i++) {
-            tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            tempEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, tempEntity);
-                tempEntity->posX.i.hi += 0xF - (Random() & 0x1F);
-                tempEntity->posY.i.hi += 0xF - (Random() & 0x1F);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_INTENSE_EXPLOSION, self, tempEntity);
+                tempEntity->posX.i.hi += 0xF - (OVL_EXPORT(Random)() & 0x1F);
+                tempEntity->posY.i.hi += 0xF - (OVL_EXPORT(Random)() & 0x1F);
                 tempEntity->params = 0x10;
                 tempEntity->params += 0xAA00;
             }
@@ -326,7 +332,7 @@ void func_us_801B65A4(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitEnvironment);
+        OVL_EXPORT(InitializeEntity)(g_EInitEnvironment);
         self->hitboxState = 0;
         self->animCurFrame = 0;
         break;
@@ -397,8 +403,8 @@ void func_us_801B6794(Primitive* prim) {
         prim->y0 = g_CurrentEntity->posY.i.hi + 8;
         prim->x1 = 0;
         prim->y1 = 0;
-        LOW(prim->x2) = 0x7000 - ((Random() & 7) << 0xD);
-        LOW(prim->x3) = 0x7000 - ((Random() & 7) << 0xD);
+        LOW(prim->x2) = 0x7000 - ((OVL_EXPORT(Random)() & 7) << 0xD);
+        LOW(prim->x3) = 0x7000 - ((OVL_EXPORT(Random)() & 7) << 0xD);
         prim->g3 = 1;
         prim->r3 = 0x20;
     }
@@ -444,7 +450,7 @@ void func_us_801B68EC(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitEnvironment);
+        OVL_EXPORT(InitializeEntity)(g_EInitEnvironment);
         self->animCurFrame = 0;
         self->drawFlags |= ENTITY_ROTATE;
         self->rotate = 0xC00;
@@ -541,19 +547,22 @@ void func_us_801B68EC(Entity* self) {
             prim = prim->next;
             prim = prim->next;
         }
-        tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        tempEntity =
+            OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (tempEntity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, tempEntity);
             tempEntity->posY.i.hi += 0x20;
             tempEntity->params = 0x13;
             tempEntity->params += 0xAA00;
         }
         for (i = 0; i < 8; i++) {
-            tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            tempEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, tempEntity);
-                tempEntity->posX.i.hi += 0xF - (Random() & 0x1F);
-                tempEntity->posY.i.hi += (Random() & 0x1F);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_INTENSE_EXPLOSION, self, tempEntity);
+                tempEntity->posX.i.hi += 0xF - (OVL_EXPORT(Random)() & 0x1F);
+                tempEntity->posY.i.hi += (OVL_EXPORT(Random)() & 0x1F);
                 tempEntity->params = 0x10;
                 tempEntity->params += 0xAA00;
             }

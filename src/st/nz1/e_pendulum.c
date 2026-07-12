@@ -21,16 +21,17 @@ void EntityPendulumAnchor(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitEnvironment);
+        OVL_EXPORT(InitializeEntity)(g_EInitEnvironment);
         self->animCurFrame = 13;
 
         entity = self + 1;
         // chain entities
         for (i = 0; i < 7; i++, entity++) {
-            CreateEntityFromEntity(E_ID(PENDULUM_BONE_CHAIN), self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)
+            (E_ID(PENDULUM_BONE_CHAIN), self, entity);
         }
         // weight creation
-        CreateEntityFromEntity(E_ID(PENDULUM_WEIGHT), self, entity);
+        OVL_EXPORT(CreateEntityFromEntity)(E_ID(PENDULUM_WEIGHT), self, entity);
         var_a0 = D_us_80180FEC;
         if (self->params) {
             var_a0++;
@@ -60,7 +61,7 @@ void EntityPendulumBoneChain(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitEnvironment);
+        OVL_EXPORT(InitializeEntity)(g_EInitEnvironment);
         self->animCurFrame = 0xA;
         self->drawFlags = ENTITY_ROTATE;
         // fallthrough
@@ -95,7 +96,7 @@ void EntityPendulumWeight(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitEnvironment);
+        OVL_EXPORT(InitializeEntity)(g_EInitEnvironment);
         self->hitboxWidth = self->hitboxHeight = 0xC;
         self->hitboxState = 1;
         self->animCurFrame = 0xB;
@@ -122,7 +123,7 @@ void EntityPendulumWeight(Entity* self) {
             g_unkGraphicsStruct.shoveY.i.hi += offset + 1;
         }
 
-        collision = GetPlayerCollisionWith(self, 0xC, 0xC, 4);
+        collision = OVL_EXPORT(GetPlayerCollisionWith)(self, 0xC, 0xC, 4);
         if (collision & 4) {
             posX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
             offset = posX - self->ext.pendulum.offsetX;

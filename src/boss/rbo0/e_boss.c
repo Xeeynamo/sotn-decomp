@@ -31,19 +31,19 @@ void OVL_EXPORT(EntityBoss)(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         entity = &g_Entities[80];
-        CreateEntityFromCurrentEntity(E_ID(FAKE_RALPH), entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(FAKE_RALPH), entity);
         entity->posX.i.hi = 0x100 - g_Tilemap.scrollX.i.hi;
         entity->posY.i.hi = 0xC4 - g_Tilemap.scrollY.i.hi;
 
         entity = &g_Entities[88];
-        CreateEntityFromCurrentEntity(E_ID(FAKE_GRANT), entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(FAKE_GRANT), entity);
         entity->posX.i.hi = 0xB8 - g_Tilemap.scrollX.i.hi;
         entity->posY.i.hi = 0xC4 - g_Tilemap.scrollY.i.hi;
 
         entity = &g_Entities[96];
-        CreateEntityFromCurrentEntity(E_ID(FAKE_SYPHA), entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(FAKE_SYPHA), entity);
         entity->posX.i.hi = 0x148 - g_Tilemap.scrollX.i.hi;
         entity->posY.i.hi = 0xC4 - g_Tilemap.scrollY.i.hi;
         // fallthrough
@@ -88,9 +88,10 @@ void OVL_EXPORT(EntityBoss)(Entity* self) {
         }
         break;
     case 5:
-        entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+        entity = OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_ID(LIFE_UP_SPAWN), self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)
+            (E_ID(LIFE_UP_SPAWN), self, entity);
             entity->posX.i.hi = 0x100 - g_Tilemap.scrollX.i.hi;
             entity->posY.i.hi = 0x80 - g_Tilemap.scrollY.i.hi;
             entity->params = 2;

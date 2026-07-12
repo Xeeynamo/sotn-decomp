@@ -117,28 +117,28 @@ void EntityLossoth(Entity* self) {
 
     if ((self->flags & FLAG_DEAD) && self->step < 8) {
         PlaySfxPositional(SFX_LOSSOTH_DEATH);
-        SetStep(DEATH);
+        OVL_EXPORT(SetStep)(DEATH);
     }
 
     switch (self->step) {
     case INIT:
-        InitializeEntity(g_EInitLossoth);
+        OVL_EXPORT(InitializeEntity)(g_EInitLossoth);
         self->animCurFrame = 1;
-        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
 
         // Handles lantern glow effect and some death flame out visuals
         newEntity = self + 1;
-        CreateEntityFromEntity(E_LOSSOTH_EFFECTS, self, newEntity);
+        OVL_EXPORT(CreateEntityFromEntity)(E_LOSSOTH_EFFECTS, self, newEntity);
         newEntity->zPriority = self->zPriority + 1;
 
         newEntity = self + 2;
-        CreateEntityFromEntity(E_UNK_43, self, newEntity);
+        OVL_EXPORT(CreateEntityFromEntity)(E_UNK_43, self, newEntity);
         newEntity->params = 1;
         newEntity->ext.lossoth.unk9C = self;
         // fallthrough
     case DROP_TO_GROUND:
-        if (UnkCollisionFunc3(lossoth_sensors_ground) & 1) {
-            SetStep(IDLE_WALK);
+        if (OVL_EXPORT(UnkCollisionFunc3)(lossoth_sensors_ground) & 1) {
+            OVL_EXPORT(SetStep)(IDLE_WALK);
         }
         break;
     case IDLE_WALK:
@@ -146,8 +146,8 @@ void EntityLossoth(Entity* self) {
             self->ext.lossoth.timer = 0x40;
             self->step_s++;
         }
-        AnimateEntity(anim_walk, self);
-        UnkCollisionFunc2(sensors_wall);
+        OVL_EXPORT(AnimateEntity)(anim_walk, self);
+        OVL_EXPORT(UnkCollisionFunc2)(sensors_wall);
 
         if (self->facingLeft) {
             self->velocityX = FIX(0.25);
@@ -162,24 +162,24 @@ void EntityLossoth(Entity* self) {
         }
 
         // If player is close and we're looking at them, start aggro routine
-        if (GetDistanceToPlayerX() < 0x60 &&
-            ((GetSideToPlayer() & 1) ^ self->facingLeft)) {
-            SetStep(PLAYER_AGGRO);
+        if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x60 &&
+            ((OVL_EXPORT(GetSideToPlayer)() & 1) ^ self->facingLeft)) {
+            OVL_EXPORT(SetStep)(PLAYER_AGGRO);
         }
 
         break;
     case PLAYER_AGGRO:
         if (!self->step_s) {
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-            self->ext.lossoth.timer = walk_timers[Random() & 3];
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+            self->ext.lossoth.timer = walk_timers[OVL_EXPORT(Random)() & 3];
             self->step_s++;
         }
 
-        if (!AnimateEntity(anim_walk, self)) {
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        if (!OVL_EXPORT(AnimateEntity)(anim_walk, self)) {
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
         }
 
-        var_s2 = UnkCollisionFunc2(sensors_wall);
+        var_s2 = OVL_EXPORT(UnkCollisionFunc2)(sensors_wall);
         if (var_s2 & 0x80) {
             self->ext.lossoth.timer = 1;
         }
@@ -192,37 +192,39 @@ void EntityLossoth(Entity* self) {
         }
 
         if (!--self->ext.lossoth.timer) {
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
 
-            if (Random() & 1) {
-                SetStep(ATTACK_NAPALM_FLARE);
+            if (OVL_EXPORT(Random)() & 1) {
+                OVL_EXPORT(SetStep)(ATTACK_NAPALM_FLARE);
             } else {
-                SetStep(ATTACK_FIREBALLS);
+                OVL_EXPORT(SetStep)(ATTACK_FIREBALLS);
             }
 
             if (var_s2 & 0x80) {
-                SetStep(ATTACK_FIREBALLS);
+                OVL_EXPORT(SetStep)(ATTACK_FIREBALLS);
             }
         }
 
         // If player has moved far enough away, end aggro
-        if (GetDistanceToPlayerX() > 0xC0) {
-            SetStep(IDLE_WALK);
+        if (OVL_EXPORT(GetDistanceToPlayerX)() > 0xC0) {
+            OVL_EXPORT(SetStep)(IDLE_WALK);
         }
 
         break;
     case ATTACK_FIREBALLS:
-        if (!AnimateEntity(anim_throw_fireballs, self)) {
-            SetStep(PLAYER_AGGRO);
+        if (!OVL_EXPORT(AnimateEntity)(anim_throw_fireballs, self)) {
+            OVL_EXPORT(SetStep)(PLAYER_AGGRO);
         }
 
         if (!self->poseTimer && self->pose == 3) {
             PlaySfxPositional(SFX_FIRE_SHOT);
 
             for (i = 0; i < 3; i++) {
-                newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                newEntity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(E_LOSSOTH_FIREBALL, self, newEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_LOSSOTH_FIREBALL, self, newEntity);
                     newEntity->facingLeft = self->facingLeft;
                     newEntity->params = i;
                     if (self->facingLeft) {
@@ -236,16 +238,18 @@ void EntityLossoth(Entity* self) {
         }
         break;
     case ATTACK_NAPALM_FLARE:
-        if (!AnimateEntity(anim_napalm_flare, self)) {
-            SetStep(PLAYER_AGGRO);
+        if (!OVL_EXPORT(AnimateEntity)(anim_napalm_flare, self)) {
+            OVL_EXPORT(SetStep)(PLAYER_AGGRO);
         }
 
         if (!self->poseTimer && self->pose == 3) {
             PlaySfxPositional(SFX_LOSSOTH_NAPALM_GRUNT);
             PlaySfxPositional(SFX_FIREBALL_SHOT_A);
-            newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            newEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_LOSSOTH_NAPALM, self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_LOSSOTH_NAPALM, self, newEntity);
                 newEntity->facingLeft = self->facingLeft;
                 if (self->facingLeft) {
                     newEntity->posX.i.hi += 8;
@@ -266,9 +270,11 @@ void EntityLossoth(Entity* self) {
 
             // Spawn three flames on the dying Lossoth's jacket
             for (i = 0; i < 3; i++) {
-                newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                newEntity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(E_LOSSOTH_FLAMES, self, newEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_LOSSOTH_FLAMES, self, newEntity);
                     newEntity->facingLeft = self->facingLeft;
                     newEntity->ext.lossoth.lossothEntity = self;
                     if (i == 0) {
@@ -279,14 +285,14 @@ void EntityLossoth(Entity* self) {
                     newEntity->params = i + 2;
                 }
             }
-            SetSubStep(1);
+            OVL_EXPORT(SetSubStep)(1);
             break;
         case 1:
             if (!self->opacity) {
                 self->drawFlags = ENTITY_DEFAULT;
                 self->animCurFrame = 0x18;
                 self->ext.lossoth.timer = 0;
-                SetSubStep(2);
+                OVL_EXPORT(SetSubStep)(2);
             }
             break;
         case 2:
@@ -294,11 +300,11 @@ void EntityLossoth(Entity* self) {
             if (!(g_Timer & 0xF)) {
                 PlaySfxPositional(SFX_NOISE_SWEEP_DOWN_A);
             }
-            var_s2 = AnimateEntity(anim_death_walk, self);
+            var_s2 = OVL_EXPORT(AnimateEntity)(anim_death_walk, self);
             if (!self->poseTimer && self->pose == 2) {
                 self->ext.lossoth.timer++;
             }
-            UnkCollisionFunc2(sensors_wall);
+            OVL_EXPORT(UnkCollisionFunc2)(sensors_wall);
 
             if (self->facingLeft ^ self->ext.lossoth.timer) {
                 self->velocityX = FIX(0.25);
@@ -309,7 +315,7 @@ void EntityLossoth(Entity* self) {
             if (!var_s2) {
                 self->ext.lossoth.timer++;
                 if (self->ext.lossoth.timer > 1) {
-                    SetSubStep(3);
+                    OVL_EXPORT(SetSubStep)(3);
                 }
             }
 
@@ -322,11 +328,13 @@ void EntityLossoth(Entity* self) {
             break;
         case 3:
             // Drop to knees and explode
-            if (!AnimateEntity(anim_death_drop_knees, self)) {
+            if (!OVL_EXPORT(AnimateEntity)(anim_death_drop_knees, self)) {
                 PlaySfxPositional(SFX_EXPLODE_A);
-                newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                newEntity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_EXPLOSION, self, newEntity);
                     newEntity->params = 2;
                     if (self->facingLeft) {
                         newEntity->posX.i.hi += 6;
@@ -377,13 +385,13 @@ void EntityLossothEffects(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitLossothEffects);
+        OVL_EXPORT(InitializeEntity)(g_EInitLossothEffects);
         self->hitboxState = 0;
         self->blendMode = BLEND_TRANSP | BLEND_ADD;
         // fallthrough
     case 1:
         // Walk state, move lantern glow in step with Lossoth
-        AnimateEntity(anim_lantern_glow, self);
+        OVL_EXPORT(AnimateEntity)(anim_lantern_glow, self);
 
         // self - 1 is the main Lossoth entity
         entity = self - 1;
@@ -397,7 +405,7 @@ void EntityLossothEffects(Entity* self) {
         }
         self->posY.i.hi += 6;
         if (entity->flags & FLAG_DEAD) {
-            SetStep(2);
+            OVL_EXPORT(SetStep)(2);
         }
         break;
     case 2:
@@ -415,12 +423,12 @@ void EntityLossothEffects(Entity* self) {
             self->step_s++;
             // fallthrough
         case 1:
-            if (UnkCollisionFunc3(lantern_sensors_ground) & 1) {
+            if (OVL_EXPORT(UnkCollisionFunc3)(lantern_sensors_ground) & 1) {
                 self->step_s++;
             }
             break;
         case 2:
-            if (!AnimateEntity(anim_lantern_smash, self)) {
+            if (!OVL_EXPORT(AnimateEntity)(anim_lantern_smash, self)) {
                 self->drawFlags |= ENTITY_SCALEX;
                 self->scaleX = 0x100;
                 self->step_s++;
@@ -503,7 +511,7 @@ void EntityLossothEffects(Entity* self) {
             }
             prim = self->ext.lossoth.prim;
             while (prim != NULL) {
-                if (Random() & 1) {
+                if (OVL_EXPORT(Random)() & 1) {
                     prim->y0 = prim->y1 += 4;
                 } else {
                     prim->y0 = prim->y1 -= 4;
@@ -525,11 +533,13 @@ void EntityLossothEffects(Entity* self) {
 
             // Spawn rising embers on the main Lossoth entity
             for (i = 0; i < 2; i++) {
-                entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                entity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_LOSSOTH_FLAMES, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_LOSSOTH_FLAMES, self, entity);
                     entity->posY.i.hi += 0x10;
-                    entity->posX.i.hi += (Random() & 0x1F) - 0x10;
+                    entity->posX.i.hi += (OVL_EXPORT(Random)() & 0x1F) - 0x10;
                     entity->zPriority = self->zPriority + 2;
                     entity->params = 6;
                 }
@@ -562,7 +572,7 @@ void EntityLossothFireball(Entity* self) {
 
     if (self->hitParams || self->flags & FLAG_DEAD) {
         self->drawFlags = ENTITY_DEFAULT;
-        self->pfnUpdate = EntityExplosion;
+        self->pfnUpdate = OVL_EXPORT(EntityExplosion);
         self->step = 0;
         self->params = 0;
         return;
@@ -570,10 +580,10 @@ void EntityLossothFireball(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitLossothAttack);
+        OVL_EXPORT(InitializeEntity)(g_EInitLossothAttack);
         self->animCurFrame = 0x2B;
         self->drawFlags |= ENTITY_ROTATE;
-        self->rotate = Random() * 0x10;
+        self->rotate = OVL_EXPORT(Random)() * 0x10;
         params = self->params;
         self->velocityX = fireball_velocities[params].x;
         self->velocityY = fireball_velocities[params].y;
@@ -582,14 +592,16 @@ void EntityLossothFireball(Entity* self) {
         }
         // fallthrough
     case 1:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityY += FIX(0.125);
         self->rotate -= 0xC0;
         if (!(g_Timer & 3)) {
             // Spawn embers as the fireballs move
-            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            newEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_LOSSOTH_FLAMES, self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_LOSSOTH_FLAMES, self, newEntity);
                 newEntity->rotate = self->rotate;
             }
         }
@@ -611,7 +623,7 @@ void EntityLossothFireball(Entity* self) {
             if (collider.effects & EFFECT_SOLID) {
                 self->posY.i.hi += collider.unk18;
                 self->rotate = 0;
-                SetStep(2);
+                OVL_EXPORT(SetStep)(2);
             }
 
             if (collider.effects & EFFECT_UNK_8000) {
@@ -622,7 +634,7 @@ void EntityLossothFireball(Entity* self) {
     case 2:
         // If firewall collides with a solid surface like floors or walls
         // play a burst animation
-        if (!AnimateEntity(anim_fireball_collide_burst, self)) {
+        if (!OVL_EXPORT(AnimateEntity)(anim_fireball_collide_burst, self)) {
             DestroyEntity(self);
         }
         break;
@@ -640,7 +652,7 @@ void EntityLossothNapalmFlare(Entity* self) {
     FntPrint("f_step %x\n", self->step);
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitLossothAttack);
+        OVL_EXPORT(InitializeEntity)(g_EInitLossothAttack);
         self->animCurFrame = 0;
         self->hitboxWidth = 0xC;
         self->hitboxOffX = 0x10;
@@ -685,7 +697,7 @@ void EntityLossothNapalmFlare(Entity* self) {
         prim->y0 = prim->y2 = self->posY.i.hi;
         break;
     case 1:
-        var_s2 = UnkCollisionFunc2(sensors_empty);
+        var_s2 = OVL_EXPORT(UnkCollisionFunc2)(sensors_empty);
         self->ext.lossothNapalm.unkA0.val -= abs(self->velocityX);
         if (var_s2 & 0x80) {
             self->ext.lossothNapalm.unkA0.val = 0;
@@ -711,13 +723,16 @@ void EntityLossothNapalmFlare(Entity* self) {
                 prim->x0 = prim->x2 = self->posX.i.hi + 8;
             }
             prim->y0 = prim->y2 = self->posY.i.hi;
-            self->ext.lossothNapalm.unkA0.val += (Random() << 8) + 0x80000;
+            self->ext.lossothNapalm.unkA0.val +=
+                (OVL_EXPORT(Random)() << 8) + 0x80000;
         }
 
         if (!(g_Timer & 3)) {
-            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            newEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_LOSSOTH_FLAMES, self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_LOSSOTH_FLAMES, self, newEntity);
                 newEntity->zPriority = self->zPriority + 2;
                 newEntity->params = 1;
             }
@@ -762,7 +777,7 @@ void EntityLossothFlames(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitLossoth);
+        OVL_EXPORT(InitializeEntity)(g_EInitLossoth);
 #ifdef VERSION_US
         self->flags |= FLAG_UNK_00200000 | FLAG_UNK_2000;
         self->hitboxState = 0;
@@ -791,9 +806,9 @@ void EntityLossothFlames(Entity* self) {
         // Death flame embers
         case 6:
             self->animCurFrame = 0x2D;
-            self->ext.lossoth.timer = (Random() & 0x1F) + 0x10;
+            self->ext.lossoth.timer = (OVL_EXPORT(Random)() & 0x1F) + 0x10;
             self->velocityX = FIX(0);
-            self->velocityY = FIX(-0.25) - (Random() << 8);
+            self->velocityY = FIX(-0.25) - (OVL_EXPORT(Random)() << 8);
             self->step = 1;
             break;
         // 2,3,4 = Death flames on jacket
@@ -808,7 +823,7 @@ void EntityLossothFlames(Entity* self) {
         break;
     case 1:
         // Standard embers
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         if (!--self->ext.lossoth.timer) {
             DestroyEntity(self);
         }
@@ -825,7 +840,7 @@ void EntityLossothFlames(Entity* self) {
             self->drawFlags = ENTITY_DEFAULT;
         }
 
-        AnimateEntity(anim_death_jacket_flames, self);
+        OVL_EXPORT(AnimateEntity)(anim_death_jacket_flames, self);
         params = self->params - 2;
         lossoth = self->ext.lossoth.lossothEntity;
         self->posX.i.hi = lossoth->posX.i.hi;

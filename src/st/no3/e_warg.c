@@ -67,7 +67,8 @@ void func_801CF438(Entity* entity, u8 count, u8 params, s32 xDist, s32 yDist,
     s16 x = entity->posX.i.hi + xDist;
 
     for (i = 0; i < count; ++i) {
-        Entity* newEnt = AllocEntity(&g_Entities[160], &g_Entities[192]);
+        Entity* newEnt =
+            OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
         if (newEnt != NULL) {
             newEnt->entityId = E_EXPLOSION_VARIANTS;
             newEnt->pfnUpdate = EntityExplosionVariants;
@@ -85,7 +86,7 @@ void func_801CF438(Entity* entity, u8 count, u8 params, s32 xDist, s32 yDist,
 static void func_801CF58C(Entity* self) {
     self->velocityX = 0;
     self->ext.warg.attackTimer = 0x100;
-    SetStep(6);
+    OVL_EXPORT(SetStep)(6);
     g_api.PlaySfx(SFX_WARG_GROWL);
     self->ext.warg.timer = 0x20;
 }
@@ -96,12 +97,12 @@ static void func_801CF5E0(Entity* self) {
 
     // I think this could be a mistake. The == gets
     // evaluated before the & 1. In other places they use
-    // GetSideToPlayer() & 1 but I think if they wanted to
+    // OVL_EXPORT(GetSideToPlayer)() & 1 but I think if they wanted to
     // do that here they should have put it in parentheses.
     // Makes no difference to ultimate behavior, but does mean
     // we get some weird bonus insructions (xor, sltiu) on PSP.
-    if (self->facingLeft == GetSideToPlayer() & 1) {
-        SetStep(5);
+    if (self->facingLeft == OVL_EXPORT(GetSideToPlayer)() & 1) {
+        OVL_EXPORT(SetStep)(5);
         return;
     }
 
@@ -113,21 +114,21 @@ static void func_801CF5E0(Entity* self) {
     temp_v0 = self->ext.warg.anchorX - self->posX.i.hi - tilemap->scrollX.i.hi;
 
     if (temp_v0 > 16) {
-        SetStep(3);
+        OVL_EXPORT(SetStep)(3);
         if (self->facingLeft) {
             self->ext.warg.movingBackward = false;
         } else {
             self->ext.warg.movingBackward = true;
         }
     } else if (temp_v0 < -16) {
-        SetStep(3);
+        OVL_EXPORT(SetStep)(3);
         if (self->facingLeft) {
             self->ext.warg.movingBackward = true;
         } else {
             self->ext.warg.movingBackward = false;
         }
     } else {
-        SetStep(7);
+        OVL_EXPORT(SetStep)(7);
     }
 
     self->ext.warg.timer = 0;
@@ -135,7 +136,7 @@ static void func_801CF5E0(Entity* self) {
 }
 
 static void func_801CF6D8(Entity* self) {
-    u16 xDist = GetDistanceToPlayerX();
+    u16 xDist = OVL_EXPORT(GetDistanceToPlayerX)();
 
     if (self->ext.warg.attackTimer) {
         if (xDist < 0x60) {
@@ -208,14 +209,14 @@ void EntityWarg(Entity* self) {
             self->ext.warg.deathPosX = self->posX.i.hi + gTilemap->scrollX.i.hi;
             self->ext.warg.deathPosY = self->posY.i.hi + gTilemap->scrollY.i.hi;
             g_api.PlaySfx(SFX_STUTTER_EXPLODE_A);
-            SetStep(11);
+            OVL_EXPORT(SetStep)(11);
         }
     } else if (self->hitFlags & 0xF) {
         if (self->ext.warg.attackTimer >= 0x10) {
             self->ext.warg.attackTimer /= 2;
         }
         if (switchTemp == 2 || switchTemp == 3 || switchTemp == 7) {
-            SetStep(10);
+            OVL_EXPORT(SetStep)(10);
         }
     }
     switchTemp = self->step;
@@ -223,11 +224,11 @@ void EntityWarg(Entity* self) {
     case 0:
         part = self + 1;
         self->nextPart = part;
-        CreateEntityFromCurrentEntity(E_ID_4B, part);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID_4B, part);
         part->parent = self;
-        InitializeEntity(g_EInitWarg);
+        OVL_EXPORT(InitializeEntity)(g_EInitWarg);
         part->nextPart = self;
-        self->facingLeft = (GetSideToPlayer() ^ 1) & 1;
+        self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() ^ 1) & 1;
         if (self->facingLeft) {
             self->posX.i.hi -= 0x20;
         } else {
@@ -236,16 +237,16 @@ void EntityWarg(Entity* self) {
         self->ext.warg.attackTimer = 0x40;
         break;
     case 1:
-        AnimateEntity(D_801830FC, self);
-        if (UnkCollisionFunc3(D_8018327C) & 1) {
-            SetStep(2);
+        OVL_EXPORT(AnimateEntity)(D_801830FC, self);
+        if (OVL_EXPORT(UnkCollisionFunc3)(D_8018327C) & 1) {
+            OVL_EXPORT(SetStep)(2);
             self->ext.warg.anchorX = self->posX.i.hi + gTilemap->scrollX.i.hi;
         }
         break;
     case 2:
-        AnimateEntity(D_801830FC, self);
-        if (GetDistanceToPlayerX() < 0x80 || self->hitFlags) {
-            SetStep(7);
+        OVL_EXPORT(AnimateEntity)(D_801830FC, self);
+        if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x80 || self->hitFlags) {
+            OVL_EXPORT(SetStep)(7);
         }
         break;
     case 3:
@@ -258,7 +259,7 @@ void EntityWarg(Entity* self) {
             break;
         }
         if (!self->ext.warg.movingBackward) {
-            animResult = AnimateEntity(D_801830BC, self);
+            animResult = OVL_EXPORT(AnimateEntity)(D_801830BC, self);
             if (!animResult || (animResult & 0x80)) {
                 animResult = self->pose - 1;
                 if (self->facingLeft) {
@@ -278,7 +279,7 @@ void EntityWarg(Entity* self) {
                 }
             }
         } else {
-            animResult = AnimateEntity(D_801830DC, self);
+            animResult = OVL_EXPORT(AnimateEntity)(D_801830DC, self);
             if (animResult != 1) {
                 animResult = self->pose - 1;
                 if (self->facingLeft) {
@@ -298,13 +299,13 @@ void EntityWarg(Entity* self) {
                 }
             }
         }
-        UnkCollisionFunc2(D_80183274);
+        OVL_EXPORT(UnkCollisionFunc2)(D_80183274);
         if (self->ext.warg.decisionDelay) {
             --self->ext.warg.decisionDelay;
             break;
         }
-        if ((self->facingLeft == GetSideToPlayer()) & 1) {
-            SetStep(5);
+        if ((self->facingLeft == OVL_EXPORT(GetSideToPlayer)()) & 1) {
+            OVL_EXPORT(SetStep)(5);
             break;
         }
         if (!self->ext.warg.attackTimer) {
@@ -313,13 +314,13 @@ void EntityWarg(Entity* self) {
         }
         if (xVar < 0x10 && xVar > -0x10) {
             self->velocityX = 0;
-            SetStep(7);
+            OVL_EXPORT(SetStep)(7);
             break;
         }
         break;
     case 5:
         func_801CF6D8(self);
-        if (!AnimateEntity(D_80183130, self)) {
+        if (!OVL_EXPORT(AnimateEntity)(D_80183130, self)) {
             self->facingLeft ^= 1;
             self->animCurFrame = 0xE;
             func_801CF5E0(self);
@@ -328,14 +329,14 @@ void EntityWarg(Entity* self) {
     case 6:
         switch (self->step_s) {
         case 0:
-            AnimateEntity(D_80183178, self);
+            OVL_EXPORT(AnimateEntity)(D_80183178, self);
             if (!--self->ext.warg.timer) {
-                SetSubStep(1);
+                OVL_EXPORT(SetSubStep)(1);
             }
             break;
         case 1:
             part = self + 1;
-            animResult = AnimateEntity(D_80183148, self);
+            animResult = OVL_EXPORT(AnimateEntity)(D_80183148, self);
             if (self->velocityX) {
                 if (self->velocityX < 0) {
                     self->velocityX += FIX(0.375);
@@ -358,7 +359,7 @@ void EntityWarg(Entity* self) {
                 part->attackElement = enemy->attackElement;
                 part->attack = enemy->attack;
             }
-            UnkCollisionFunc2(D_80183274);
+            OVL_EXPORT(UnkCollisionFunc2)(D_80183274);
             if (!animResult) {
                 func_801CF5E0(self);
             }
@@ -367,14 +368,14 @@ void EntityWarg(Entity* self) {
     case 7:
         self->ext.warg.timer += 1;
         func_801CF6D8(self);
-        AnimateEntity(D_80183180, self);
+        OVL_EXPORT(AnimateEntity)(D_80183180, self);
         if (self->ext.warg.decisionDelay) {
             self->ext.warg.decisionDelay -= 1;
             break;
         }
         // Same weird issue with GetSideToPlayer in func_801CF5E0
-        if (self->facingLeft == GetSideToPlayer() & 1) {
-            SetStep(5);
+        if (self->facingLeft == OVL_EXPORT(GetSideToPlayer)() & 1) {
+            OVL_EXPORT(SetStep)(5);
             break;
         }
         if (!self->ext.warg.attackTimer) {
@@ -382,7 +383,7 @@ void EntityWarg(Entity* self) {
         }
         break;
     case 8:
-        if (!AnimateEntity(D_801831A0, self)) {
+        if (!OVL_EXPORT(AnimateEntity)(D_801831A0, self)) {
             func_801CF5E0(self);
         }
         break;
@@ -390,7 +391,7 @@ void EntityWarg(Entity* self) {
         func_801CF6D8(self);
         switch (self->step_s) {
         case 0:
-            SetSubStep(1);
+            OVL_EXPORT(SetSubStep)(1);
             g_api.PlaySfx(SFX_WARG_PAIN);
             if (self->facingLeft) {
                 self->velocityX = FIX(-2.0);
@@ -399,72 +400,77 @@ void EntityWarg(Entity* self) {
             }
             break;
         case 1:
-            UnkCollisionFunc2(D_80183274);
+            OVL_EXPORT(UnkCollisionFunc2)(D_80183274);
             if (self->velocityX) {
                 if (self->facingLeft) {
                     self->velocityX += FIX(0.125);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, -0x20, 0x26, (Random() & 3) + 1, -4);
+                        self, 1, 1, -0x20, 0x26, (OVL_EXPORT(Random)() & 3) + 1,
+                        -4);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, 2, 0x26, (Random() & 3) + 1, -4);
+                        self, 1, 1, 2, 0x26, (OVL_EXPORT(Random)() & 3) + 1,
+                        -4);
                 } else {
                     self->velocityX -= FIX(0.125);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, -2, 0x26, (Random() & 3) + 1, 4);
+                        self, 1, 1, -2, 0x26, (OVL_EXPORT(Random)() & 3) + 1,
+                        4);
                     EntityExplosionVariantsSpawner(
-                        self, 1, 1, 0x20, 0x26, (Random() & 3) + 1, 4);
+                        self, 1, 1, 0x20, 0x26, (OVL_EXPORT(Random)() & 3) + 1,
+                        4);
                 }
             }
-            if (!AnimateEntity(D_801831FC, self)) {
-                SetSubStep(2);
+            if (!OVL_EXPORT(AnimateEntity)(D_801831FC, self)) {
+                OVL_EXPORT(SetSubStep)(2);
             }
             break;
         case 2:
-            if (!AnimateEntity(D_80183204, self)) {
+            if (!OVL_EXPORT(AnimateEntity)(D_80183204, self)) {
                 func_801CF5E0(self);
             }
         }
         break;
     case 11:
         if (++self->ext.warg.timer & 1) {
-            part = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            part = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (part != NULL) {
-                CreateEntityFromCurrentEntity(E_EXPLODE_PUFF_TRANS, part);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_EXPLODE_PUFF_TRANS, part);
 // These are the same code, but compiler instruction reordering is messing it
 // up. There's almost certainly a single solution, but I can't find it.
 #ifdef VERSION_PSP
-                part->params =
-                    ((g_unkGraphicsStruct.g_zEntityCenter - 8 - (Random() & 7))
-                     << 8) +
-                    1;
+                part->params = ((g_unkGraphicsStruct.g_zEntityCenter - 8 -
+                                 (OVL_EXPORT(Random)() & 7))
+                                << 8) +
+                               1;
 #else
-                part->params =
-                    ((g_unkGraphicsStruct.g_zEntityCenter - (Random() & 7) - 8)
-                     << 8) +
-                    1;
+                part->params = ((g_unkGraphicsStruct.g_zEntityCenter -
+                                 (OVL_EXPORT(Random)() & 7) - 8)
+                                << 8) +
+                               1;
 #endif
                 part->posX.i.hi =
                     self->ext.warg.deathPosX - gTilemap->scrollX.i.hi;
                 part->posY.i.hi =
                     self->ext.warg.deathPosY - gTilemap->scrollY.i.hi;
                 if (self->facingLeft) {
-                    part->posX.i.hi += (((Random() & 0xF) - 8) * 8);
+                    part->posX.i.hi += (((OVL_EXPORT(Random)() & 0xF) - 8) * 8);
                 } else {
-                    part->posX.i.hi += (((Random() & 0xF) - 7) * 8);
+                    part->posX.i.hi += (((OVL_EXPORT(Random)() & 0xF) - 7) * 8);
                 }
-                part->posY.i.hi += (((Random() & 7) - 2) * 8);
+                part->posY.i.hi += (((OVL_EXPORT(Random)() & 7) - 2) * 8);
             }
         }
         switch (self->step_s) {
         case 0:
-            if (UnkCollisionFunc3(D_8018327C) & 1) {
+            if (OVL_EXPORT(UnkCollisionFunc3)(D_8018327C) & 1) {
                 self->drawFlags = ENTITY_OPACITY;
                 self->opacity = 0x80;
-                SetSubStep(1);
+                OVL_EXPORT(SetSubStep)(1);
             }
             break;
         case 1:
-            AnimateEntity(D_801831A0, self);
+            OVL_EXPORT(AnimateEntity)(D_801831A0, self);
             self->opacity -= 2;
             if (self->opacity == 0x40) {
                 g_api.PlaySfx(SFX_WARG_DEATH_HOWL);
@@ -545,7 +551,7 @@ void EntityWarg(Entity* self) {
             self->step_s += 1;
             break;
         case 2:
-            AnimateEntity(D_801831A0, self);
+            OVL_EXPORT(AnimateEntity)(D_801831A0, self);
             self->posX.i.hi = 0x40;
             self->posY.i.hi = 0x40;
             self->zPriority = 0x40;
@@ -611,7 +617,7 @@ void EntityUnkId4B(Entity* self) {
     previous = self - 1;
 
     if (!self->step) {
-        InitializeEntity(g_EInitWarg);
+        OVL_EXPORT(InitializeEntity)(g_EInitWarg);
         self->animCurFrame = 0;
         self->hitPoints = 0x7FFF;
     }
@@ -671,7 +677,7 @@ static u8 D_8018383C[] = {3, 1, 3, 2, 3, 3,  3, 4,  3, 5,  3, 6,  3,   7,
 void EntityWargExplosionPuffTransparent(Entity* self) {
 
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitParticle));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitParticle));
         self->pose = 0;
         self->poseTimer = 0;
         self->animSet = ANIMSET_DRA(14);
@@ -687,7 +693,7 @@ void EntityWargExplosionPuffTransparent(Entity* self) {
         return;
     }
     self->posY.val += self->velocityY;
-    if (AnimateEntity(D_8018383C, self) == 0) {
+    if (OVL_EXPORT(AnimateEntity)(D_8018383C, self) == 0) {
         DestroyEntity(self);
     }
 }

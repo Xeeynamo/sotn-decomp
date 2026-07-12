@@ -23,7 +23,7 @@ void EntityDeathCutsceneManager(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitSpawner));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitSpawner));
         tilemap->y = 0xFC;
         g_PauseAllowed = false;
         g_Player.padSim = PAD_RIGHT;
@@ -52,12 +52,13 @@ void EntityDeathCutsceneManager(Entity* self) {
             g_api.InitStatsAndGear(1);
             g_api.PlaySfx(SFX_DEATH_SWISH);
             for (localVar = 0; localVar < 6; localVar++) {
-                newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                newEntity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
                 if (newEntity == NULL) {
                     break;
                 }
-                CreateEntityFromEntity(
-                    E_ID(DEATH_STOLEN_ITEM), otherEnt, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_ID(DEATH_STOLEN_ITEM), otherEnt, newEntity);
                 newEntity->params = localVar;
             }
             g_Player.padSim = PAD_SIM_UNK10000;
@@ -116,7 +117,8 @@ void EntityDeathCutsceneManager(Entity* self) {
             g_PauseAllowed = true;
             otherEnt = &g_Entities[192];
             DestroyEntity(otherEnt);
-            CreateEntityFromCurrentEntity(E_ID(BG_LIGHTNING), otherEnt);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)
+            (E_ID(BG_LIGHTNING), otherEnt);
         }
         g_Player.padSim = 0;
         g_Player.demo_timer = 1;
@@ -142,7 +144,7 @@ void EntityDeathStolenItem(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
         break;
     case 1:
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
@@ -176,14 +178,14 @@ void EntityDeathStolenItem(Entity* self) {
         self->step++;
         break;
     case 2:
-        UnkEntityFunc0(
-            stolenItemVels[params * 2], stolenItemVels[params * 2 + 1]);
+        OVL_EXPORT(UnkEntityFunc0)
+        (stolenItemVels[params * 2], stolenItemVels[params * 2 + 1]);
         self->ext.utimer.t = 16;
         self->step++;
         break;
     case 3:
         timer = --self->ext.utimer.t;
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         size = (16 - timer) * 7 / 16;
         prim = &g_PrimBuf[self->primIndex];
         prim->x0 = prim->x2 = self->posX.i.hi - size;
@@ -290,7 +292,7 @@ void EntityDeath(Entity* self) {
         } else {
             self->velocityY -= 0x200;
         }
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
     }
 
     if ((self->step >= 13) && (self->step < 18)) {
@@ -300,14 +302,14 @@ void EntityDeath(Entity* self) {
             } else {
                 self->velocityY -= 0x200;
             }
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
         }
     }
 
     if (self->step >= 19) {
         self->velocityX -= 0xC00;
         self->velocityY -= FIX(0.15625);
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
     }
 
     switch (self->step) {
@@ -315,7 +317,7 @@ void EntityDeath(Entity* self) {
         if (OVL_EXPORT(CutsceneFlags) & 0x80) {
             primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
             if (primIndex != -1) {
-                InitializeEntity(OVL_EXPORT(EInitCommon));
+                OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
                 self->flags |= FLAG_HAS_PRIMS;
                 self->primIndex = primIndex;
                 self->animSet = ANIMSET_OVL(8);
@@ -324,7 +326,8 @@ void EntityDeath(Entity* self) {
                 self->unk5A = 0x44;
                 self->ext.death.unk7C = 0;
                 DestroyEntity(newEntity);
-                CreateEntityFromCurrentEntity(E_ID(DEATH_SCYTHE), newEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(DEATH_SCYTHE), newEntity);
                 prim = &g_PrimBuf[primIndex];
 
                 for (i = 0; prim != NULL; i++) {
@@ -351,8 +354,8 @@ void EntityDeath(Entity* self) {
         break;
 
     case 1:
-        if (AnimateEntity(deathAnim14, self) == 0) {
-            SetStep(2);
+        if (OVL_EXPORT(AnimateEntity)(deathAnim14, self) == 0) {
+            OVL_EXPORT(SetStep)(2);
             self->drawFlags = ENTITY_ROTATE;
             self->rotate = 0x1000;
             self->posY.i.hi += 16;
@@ -365,7 +368,7 @@ void EntityDeath(Entity* self) {
     case 2:
         self->rotate -= 0x40;
         if (!self->rotate) {
-            SetStep(3);
+            OVL_EXPORT(SetStep)(3);
             self->drawFlags = ENTITY_DEFAULT;
         }
 
@@ -375,10 +378,11 @@ void EntityDeath(Entity* self) {
             self->ext.death.posY - (0x1000 - self->rotate) * 0x28 / 0x1000;
 
         if (!(self->rotate & 0x70)) {
-            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            newEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (newEntity != 0) {
-                CreateEntityFromCurrentEntity(
-                    E_ID(DEATH_SCYTHE_SHADOW), newEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(DEATH_SCYTHE_SHADOW), newEntity);
                 newEntity->rotate = self->rotate;
                 newEntity->animCurFrame = 0x3A;
             }
@@ -386,8 +390,8 @@ void EntityDeath(Entity* self) {
         break;
 
     case 3:
-        if (AnimateEntity(deathAnim15, self) == 0) {
-            SetStep(4);
+        if (OVL_EXPORT(AnimateEntity)(deathAnim15, self) == 0) {
+            OVL_EXPORT(SetStep)(4);
             g_api.PlaySfx(SFX_DEATH_LAUGH);
             self->ext.death.moveTimer = 64;
             self->ext.death.moveDirection = 0;
@@ -410,7 +414,7 @@ void EntityDeath(Entity* self) {
             }
             self->animCurFrame = 16;
             self->ext.death.unk7C = 32;
-            SetStep(5);
+            OVL_EXPORT(SetStep)(5);
             break;
         }
 
@@ -425,22 +429,22 @@ void EntityDeath(Entity* self) {
         break;
 
     case 5:
-        AnimateEntity(deathAnim3, self);
+        OVL_EXPORT(AnimateEntity)(deathAnim3, self);
         if (!--self->ext.death.unk7C) {
-            SetStep(6);
+            OVL_EXPORT(SetStep)(6);
         }
         break;
 
     case 6:
-        AnimateEntity(deathAnim2, self);
+        OVL_EXPORT(AnimateEntity)(deathAnim2, self);
         if (OVL_EXPORT(CutsceneFlags) & 2) {
-            SetStep(7);
+            OVL_EXPORT(SetStep)(7);
         }
         break;
 
     case 7:
-        if (AnimateEntity(deathAnim1, self) == 0) {
-            SetStep(8);
+        if (OVL_EXPORT(AnimateEntity)(deathAnim1, self) == 0) {
+            OVL_EXPORT(SetStep)(8);
         }
         if ((self->animCurFrame >= 7) && (self->animCurFrame < 11)) {
             newEntity->ext.death.unk7C = 2;
@@ -449,77 +453,77 @@ void EntityDeath(Entity* self) {
         }
 
         if (OVL_EXPORT(CutsceneFlags) & 4) {
-            SetStep(9);
+            OVL_EXPORT(SetStep)(9);
         }
         break;
 
     case 8:
-        AnimateEntity(deathAnim2, self);
+        OVL_EXPORT(AnimateEntity)(deathAnim2, self);
         if (OVL_EXPORT(CutsceneFlags) & 4) {
-            SetStep(9);
+            OVL_EXPORT(SetStep)(9);
         }
         break;
 
     case 9:
-        if (AnimateEntity(deathAnim13, self) == 0) {
-            SetStep(10);
+        if (OVL_EXPORT(AnimateEntity)(deathAnim13, self) == 0) {
+            OVL_EXPORT(SetStep)(10);
         }
         newEntity->ext.death.unk7C = 1;
 
         if (OVL_EXPORT(CutsceneFlags) & 8) {
-            SetStep(11);
+            OVL_EXPORT(SetStep)(11);
         }
         break;
 
     case 10:
-        AnimateEntity(deathAnim2, self);
+        OVL_EXPORT(AnimateEntity)(deathAnim2, self);
         if (OVL_EXPORT(CutsceneFlags) & 8) {
-            SetStep(11);
+            OVL_EXPORT(SetStep)(11);
         }
         break;
 
     case 11:
-        if (AnimateEntity(deathAnim12, self) == 0) {
-            SetStep(12);
+        if (OVL_EXPORT(AnimateEntity)(deathAnim12, self) == 0) {
+            OVL_EXPORT(SetStep)(12);
         }
         newEntity->ext.death.unk7C = 1;
 
         if (OVL_EXPORT(CutsceneFlags) & 0x10) {
-            SetStep(13);
+            OVL_EXPORT(SetStep)(13);
         }
         break;
 
     case 12:
-        AnimateEntity(deathAnim2, self);
+        OVL_EXPORT(AnimateEntity)(deathAnim2, self);
         if (OVL_EXPORT(CutsceneFlags) & 0x10) {
-            SetStep(13);
+            OVL_EXPORT(SetStep)(13);
         }
         break;
 
     case 13:
-        if (AnimateEntity(deathAnim6, self) == 0) {
-            SetStep(14);
+        if (OVL_EXPORT(AnimateEntity)(deathAnim6, self) == 0) {
+            OVL_EXPORT(SetStep)(14);
         }
         newEntity->ext.death.unk7C = 1;
         break;
 
     case 14:
-        if (AnimateEntity(deathAnim7, self) == 0) {
+        if (OVL_EXPORT(AnimateEntity)(deathAnim7, self) == 0) {
             g_api.PlaySfx(SFX_DEATH_TAKES_ITEMS);
-            SetStep(15);
+            OVL_EXPORT(SetStep)(15);
         }
         break;
 
     case 15:
-        if (AnimateEntity(deathAnim8, self) == 0) {
-            SetStep(16);
+        if (OVL_EXPORT(AnimateEntity)(deathAnim8, self) == 0) {
+            OVL_EXPORT(SetStep)(16);
             OVL_EXPORT(CutsceneFlags) |= 0x20;
         }
         break;
 
     case 16:
-        if (AnimateEntity(deathAnim9, self) == 0) {
-            SetStep(18);
+        if (OVL_EXPORT(AnimateEntity)(deathAnim9, self) == 0) {
+            OVL_EXPORT(SetStep)(18);
         }
 
         if (self->animCurFrame != 30) {
@@ -528,8 +532,8 @@ void EntityDeath(Entity* self) {
         break;
 
     case 18:
-        if (AnimateEntity(deathAnim10, self) == 0) {
-            SetStep(19);
+        if (OVL_EXPORT(AnimateEntity)(deathAnim10, self) == 0) {
+            OVL_EXPORT(SetStep)(19);
             g_api.PlaySfx(SFX_DEATH_LAUGH);
             self->velocityX = FIX(1.0);
             self->velocityY = FIX(5.0);
@@ -544,7 +548,7 @@ void EntityDeath(Entity* self) {
         break;
 
     case 19:
-        AnimateEntity(deathAnim11, self);
+        OVL_EXPORT(AnimateEntity)(deathAnim11, self);
         if (self->animCurFrame != 1) {
             newEntity->ext.death.unk7C = 2;
         } else {
@@ -552,10 +556,11 @@ void EntityDeath(Entity* self) {
         }
 
         if ((self->ext.death.moveTimer & 3) == 0) {
-            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            newEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(
-                    E_ID(DEATH_SCYTHE_SHADOW), newEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(DEATH_SCYTHE_SHADOW), newEntity);
                 newEntity->animCurFrame = self->animCurFrame;
                 newEntity->params = 1;
             }
@@ -581,7 +586,7 @@ void EntityDeathScythe(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
         self->animSet = ANIMSET_OVL(8);
         self->animCurFrame = 0;
         self->palette = 0x2D6;
@@ -593,19 +598,20 @@ void EntityDeathScythe(Entity* self) {
         if (tempstep) {
             switch (tempstep) {
             case 1:
-                AnimateEntity(deathAnim4, self);
+                OVL_EXPORT(AnimateEntity)(deathAnim4, self);
                 break;
             case 2:
-                AnimateEntity(deathAnim5, self);
+                OVL_EXPORT(AnimateEntity)(deathAnim5, self);
                 break;
             case 3:
-                AnimateEntity(deathAnim5, self);
-                otherEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                OVL_EXPORT(AnimateEntity)(deathAnim5, self);
+                otherEntity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
                 if (otherEntity == NULL) {
                     break;
                 }
-                CreateEntityFromCurrentEntity(
-                    E_ID(DEATH_SCYTHE_SHADOW), otherEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(DEATH_SCYTHE_SHADOW), otherEntity);
                 otherEntity->animCurFrame = self->animCurFrame;
                 otherEntity->params = 1;
                 break;
@@ -626,7 +632,7 @@ void EntityDeathScytheShadow(Entity* self) {
     switch (self->step) {
     case 0:
         animCurFrame = self->animCurFrame;
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
         self->animSet = ANIMSET_OVL(8);
         self->animCurFrame = animCurFrame;
         self->palette = 0x2D6;

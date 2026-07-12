@@ -19,22 +19,22 @@ void EntityYorick(Entity* self) {
     s32 offsetX;
 
     if (self->flags & FLAG_DEAD) {
-        SetStep(8);
+        OVL_EXPORT(SetStep)(8);
     }
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitSkeletonPieces);
+        OVL_EXPORT(InitializeEntity)(g_EInitSkeletonPieces);
         self->animCurFrame = 0x18;
         self->hitboxOffX = -1;
         self->hitboxOffY = 2;
 
         // fallthrough
     case 1:
-        if (UnkCollisionFunc3(D_us_80181468) & 1) {
+        if (OVL_EXPORT(UnkCollisionFunc3)(D_us_80181468) & 1) {
             self->ext.yorick.unk84 = g_Tilemap.scrollX.i.hi + self->posX.i.hi;
             entity = self + 1;
-            CreateEntityFromEntity(E_YORICK_SKULL, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_YORICK_SKULL, self, entity);
             entity->ext.yorickSkull.unk84 = self->ext.yorick.unk84;
             entity->posX.i.hi += 4;
             self->step++;
@@ -45,7 +45,7 @@ void EntityYorick(Entity* self) {
         entity = self + 1;
         offsetX = self->posX.i.hi - entity->posX.i.hi;
         if (entity->ext.yorickSkull.unk88) {
-            SetStep(3);
+            OVL_EXPORT(SetStep)(3);
         }
         if (offsetX > 0) {
             self->facingLeft = false;
@@ -59,11 +59,11 @@ void EntityYorick(Entity* self) {
             self->velocityX = FIX(-1.0);
         }
 
-        UnkCollisionFunc2(D_us_80181478);
-        AnimateEntity(D_us_80181490, self);
+        OVL_EXPORT(UnkCollisionFunc2)(D_us_80181478);
+        OVL_EXPORT(AnimateEntity)(D_us_80181490, self);
         if (entity->entityId != E_YORICK_SKULL) {
             self->ext.yorick.timer = 0;
-            SetStep(4);
+            OVL_EXPORT(SetStep)(4);
         }
         break;
 
@@ -71,14 +71,14 @@ void EntityYorick(Entity* self) {
         entity = self + 1;
         if (entity->entityId != E_YORICK_SKULL) {
             self->ext.yorick.timer = 0;
-            SetStep(4);
+            OVL_EXPORT(SetStep)(4);
             break;
         }
 
         switch (self->step_s) {
         case 0:
-            UnkCollisionFunc2(D_us_80181478);
-            AnimateEntity(D_us_80181490, self);
+            OVL_EXPORT(UnkCollisionFunc2)(D_us_80181478);
+            OVL_EXPORT(AnimateEntity)(D_us_80181490, self);
             offsetX = self->posX.i.hi - entity->posX.i.hi;
             if (self->facingLeft) {
                 offsetX = -offsetX;
@@ -88,7 +88,7 @@ void EntityYorick(Entity* self) {
                 self->animCurFrame = 0x18;
                 entity->ext.yorickSkull.unk88 = false;
                 self->ext.yorick.timer = 0x10;
-                SetSubStep(1);
+                OVL_EXPORT(SetSubStep)(1);
             }
             break;
         case 1:
@@ -99,14 +99,14 @@ void EntityYorick(Entity* self) {
             }
             break;
         case 2:
-            if (UnkCollisionFunc3(D_us_80181468) & 1) {
+            if (OVL_EXPORT(UnkCollisionFunc3)(D_us_80181468) & 1) {
                 self->ext.yorick.timer = 0x10;
                 self->step_s++;
             }
             break;
         case 3:
             if (!--self->ext.yorick.timer) {
-                SetStep(2);
+                OVL_EXPORT(SetStep)(2);
             }
         }
         break;
@@ -119,12 +119,12 @@ void EntityYorick(Entity* self) {
             self->step_s++;
             break;
         case 1:
-            AnimateEntity(D_us_801814A0, self);
-            if (UnkCollisionFunc3(D_us_80181468) & 1) {
+            OVL_EXPORT(AnimateEntity)(D_us_801814A0, self);
+            if (OVL_EXPORT(UnkCollisionFunc3)(D_us_80181468) & 1) {
                 PlaySfxPositional(SFX_STOMP_HARD_C);
                 ++self->ext.yorick.timer;
                 if (self->ext.yorick.timer > 2) {
-                    SetStep(5);
+                    OVL_EXPORT(SetStep)(5);
                     return;
                 }
                 self->step_s--;
@@ -136,8 +136,8 @@ void EntityYorick(Entity* self) {
 
     case 5:
         if (!self->step_s) {
-            self->ext.yorick.timer = (Random() & 0x3F) + 0x40;
-            self->facingLeft = Random() & 1;
+            self->ext.yorick.timer = (OVL_EXPORT(Random)() & 0x3F) + 0x40;
+            self->facingLeft = OVL_EXPORT(Random)() & 1;
             self->step_s++;
         }
         if (self->facingLeft) {
@@ -145,8 +145,8 @@ void EntityYorick(Entity* self) {
         } else {
             self->velocityX = FIX(-1.0);
         }
-        UnkCollisionFunc2(D_us_80181478);
-        AnimateEntity(D_us_80181490, self);
+        OVL_EXPORT(UnkCollisionFunc2)(D_us_80181478);
+        OVL_EXPORT(AnimateEntity)(D_us_80181490, self);
 
         if (!--self->ext.yorick.timer) {
             self->step_s = 0;
@@ -155,11 +155,12 @@ void EntityYorick(Entity* self) {
 
     case 8:
         for (i = 1; i < 6; i++) {
-            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            entity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (entity == NULL) {
                 break;
             }
-            CreateEntityFromCurrentEntity(E_SKELETON_PARTS, entity);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)(E_SKELETON_PARTS, entity);
             entity->facingLeft = self->facingLeft;
             entity->params = i;
             entity->ext.skeleton.explosionTimer2 = D_us_801814BC[i];
@@ -190,9 +191,9 @@ void EntityYorickSkull(Entity* self) {
 
     // has yorick's skull been destroyed?
     if (self->flags & FLAG_DEAD) {
-        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        entity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
             entity->params = 0;
         }
         PlaySfxPositional(SFX_EXPLODE_E);
@@ -202,13 +203,13 @@ void EntityYorickSkull(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_801805E4);
+        OVL_EXPORT(InitializeEntity)(D_us_801805E4);
         self->drawFlags |= ENTITY_ROTATE;
         self->animCurFrame = 0x1E;
         break;
 
     case 1:
-        if (UnkCollisionFunc3(&D_us_80181480) & 1) {
+        if (OVL_EXPORT(UnkCollisionFunc3)(&D_us_80181480) & 1) {
             self->step++;
         }
         break;
@@ -218,7 +219,7 @@ void EntityYorickSkull(Entity* self) {
         offsetX = entity->posX.i.hi - self->posX.i.hi;
         if (!self->ext.yorickSkull.unk88) {
             if (abs(offsetX) < 4) {
-                SetStep(3);
+                OVL_EXPORT(SetStep)(3);
             }
         } else if (abs(offsetX) < 6) {
             self->rotate += offsetX * 128;
@@ -237,7 +238,7 @@ void EntityYorickSkull(Entity* self) {
             self->step_s++;
         }
 
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityY += FIX(0.25);
         self->velocityX -= (self->velocityX / 24);
         self->rotate += self->velocityX >> 8;
@@ -294,19 +295,19 @@ void EntitySkeletonPieces(Entity* self) { // From skeleton death explosion
     if (self->step) {
         if (--self->ext.skeleton.explosionTimer2) {
             self->rotate += anim_bone_rot[self->params];
-            FallEntity();
-            MoveEntity();
+            OVL_EXPORT(FallEntity)();
+            OVL_EXPORT(MoveEntity)();
             return;
         }
 
         self->entityId = E_EXPLOSION;
-        self->pfnUpdate = (PfnEntityUpdate)EntityExplosion;
+        self->pfnUpdate = (PfnEntityUpdate)OVL_EXPORT(EntityExplosion);
         self->params = 0;
         self->step = 0;
         return;
     }
 
-    InitializeEntity(g_EInitSkeletonPieces);
+    OVL_EXPORT(InitializeEntity)(g_EInitSkeletonPieces);
     self->flags |=
         FLAG_DESTROY_IF_OUT_OF_CAMERA | FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
         FLAG_UNK_00200000 | FLAG_UNK_2000;

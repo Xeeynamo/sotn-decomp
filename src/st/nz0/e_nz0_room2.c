@@ -11,10 +11,10 @@ void EntityFloorButton(Entity* self) {
     s32 x, y;
     Entity* child;
 
-    collided = GetPlayerCollisionWith(self, 8, 8, 4);
+    collided = OVL_EXPORT(GetPlayerCollisionWith)(self, 8, 8, 4);
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         self->ext.nz0311c0.unk80 = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex == -1) {
@@ -82,7 +82,7 @@ void EntityFloorSpikes(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         self->hitboxWidth = 12;
         self->hitboxHeight = 12;
         self->attackElement = 1;
@@ -163,7 +163,7 @@ void EntityTableWithGlobe(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitTableWithGlobe);
+        OVL_EXPORT(InitializeEntity)(g_EInitTableWithGlobe);
         self->zPriority = 0x6A;
         self->hitboxWidth = 8;
         self->hitboxHeight = 12;
@@ -171,18 +171,18 @@ void EntityTableWithGlobe(Entity* self) {
         self->hitboxOffY = -10;
         self->hitboxState = 2;
     case 1:
-        AnimateEntity(D_80180EF0, self);
+        OVL_EXPORT(AnimateEntity)(D_80180EF0, self);
         if (self->hitFlags) {
             PlaySfxPositional(SFX_GLASS_BREAK_E);
             self->hitboxState = 0;
             child = self + 1;
-            CreateEntityFromEntity(E_HEART_DROP, self, child);
+            OVL_EXPORT(CreateEntityFromEntity)(E_HEART_DROP, self, child);
             child->params = D_80180F10[self->params];
-            SetStep(2);
+            OVL_EXPORT(SetStep)(2);
         }
         break;
     case 2:
-        AnimateEntity(D_80180EF8, self);
+        OVL_EXPORT(AnimateEntity)(D_80180EF8, self);
         break;
     }
 }

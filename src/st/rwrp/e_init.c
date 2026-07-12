@@ -9,24 +9,24 @@ void EntityExplosionVariants(Entity*);
 void EntityGreyPuff(Entity*);
 void EntityRWarpRoom(Entity*);
 void EntityWarpSmallRocks(Entity*);
-void EntityPrizeDrop(Entity*);
+void OVL_EXPORT(EntityPrizeDrop)(Entity*);
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityBreakable,
-    EntityExplosion,
-    EntityPrizeDrop,
-    EntityDamageDisplay,
+    OVL_EXPORT(EntityExplosion),
+    OVL_EXPORT(EntityPrizeDrop),
+    OVL_EXPORT(EntityDamageDisplay),
     OVL_EXPORT(EntityRedDoor),
     EntityIntenseExplosion,
     EntitySoulStealOrb,
     EntityRoomForeground,
     EntityStageNamePopup,
-    EntityEquipItemDrop,
-    EntityRelicOrb,
-    EntityHeartDrop,
+    OVL_EXPORT(EntityEquipItemDrop),
+    OVL_EXPORT(EntityRelicOrb),
+    OVL_EXPORT(EntityHeartDrop),
     EntityEnemyBlood,
-    EntityMessageBox,
-    EntityDummy,
-    EntityDummy,
+    OVL_EXPORT(EntityMessageBox),
+    OVL_EXPORT(EntityDummy),
+    OVL_EXPORT(EntityDummy),
     OVL_EXPORT(EntityBackgroundBlock), // unused
     OVL_EXPORT(EntityLockCamera),      // unused? looks debugging stuff
     EntityUnkId13,

@@ -31,7 +31,7 @@ void func_us_801BB53C(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         timeAttackRecord = g_api.TimeAttackController(
             TIMEATTACK_EVENT_LESSER_DEMON_DEFEAT, TIMEATTACK_GET_RECORD);
         if (timeAttackRecord) {
@@ -39,7 +39,7 @@ void func_us_801BB53C(Entity* self) {
             return;
         }
         tempEntity = &g_Entities[E_BOSS_WEAPON];
-        CreateEntityFromCurrentEntity(E_ID(ID_1F), tempEntity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(ID_1F), tempEntity);
         tempEntity->posX.i.hi = 0x200 - g_Tilemap.scrollX.i.hi;
         tempEntity->posY.i.hi = 0x2A0 - g_Tilemap.scrollY.i.hi;
 #ifdef VERSION_PSP
@@ -47,7 +47,7 @@ void func_us_801BB53C(Entity* self) {
 #else
         tempEntity--;
 #endif
-        CreateEntityFromCurrentEntity(E_ID(ID_12), tempEntity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(ID_12), tempEntity);
         tempEntity->params = 6;
         tempEntity->posX.i.hi = 0x200 - g_Tilemap.scrollX.i.hi;
         tempEntity->posY.i.hi = 0x270 - g_Tilemap.scrollY.i.hi;
@@ -91,9 +91,11 @@ void func_us_801BB53C(Entity* self) {
         break;
     case 5:
         if (D_us_80181ACC & 0x4) {
-            tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            tempEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
             if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_ID(ID_42), self, tempEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_ID(ID_42), self, tempEntity);
                 tempEntity->posX.i.hi = 0x80;
                 tempEntity->posY.i.hi = 0x80;
                 tempEntity->params = 7;

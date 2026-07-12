@@ -6,14 +6,15 @@ void EntityClockHands(Entity* self) {
     Entity* handShadow = self + 5;
 
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = params + 25;
         self->zPriority = 0x3F - params;
         self->drawFlags = ENTITY_ROTATE;
 
         // Create hand shadows
-        CreateEntityFromCurrentEntity(E_CLOCK_ROOM_SHADOW, handShadow);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)
+        (E_CLOCK_ROOM_SHADOW, handShadow);
         handShadow->animSet = ANIMSET_OVL(1);
         handShadow->animCurFrame = params + 25;
         handShadow->zPriority = 0x3F - params;
@@ -44,7 +45,7 @@ void EntityBirdcageDoor(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = anim_bird_cage[self->ext.birdcage.state & 1];
         self->ext.birdcage.prevState = self->ext.birdcage.state;
@@ -130,7 +131,7 @@ void EntityStatue(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = params + 10;
         self->hitboxWidth = 16;
@@ -157,7 +158,7 @@ void EntityStatue(Entity* self) {
         self->posY.i.hi -= 58;
 
         // Create shadow for the statue
-        CreateEntityFromCurrentEntity(E_CLOCK_ROOM_SHADOW, entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_CLOCK_ROOM_SHADOW, entity);
         entity->animSet = ANIMSET_OVL(1);
         entity->animCurFrame = params + 10;
         entity->zPriority = 0x3F;
@@ -185,7 +186,7 @@ void EntityStatue(Entity* self) {
         break;
 
     case 2:
-        GetPlayerCollisionWith(self, 16, 32, 19);
+        OVL_EXPORT(GetPlayerCollisionWith)(self, 16, 32, 19);
         if (!self->step_s) {
             if (self->ext.statue.step) {
                 if (self->params) {
@@ -235,7 +236,7 @@ void EntityStatueGear(Entity* self) {
     switch (self->step) {
     case 0:
         if (!self->step_s) {
-            InitializeEntity(OVL_EXPORT(EInitCommon));
+            OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
             self->animSet = ANIMSET_OVL(1);
             self->animCurFrame = 17;
             self->zPriority = 0x80;
@@ -275,14 +276,14 @@ void EntityStatueGear(Entity* self) {
         break;
 
     case 2:
-        AnimateEntity(anim_gear_1, self);
+        OVL_EXPORT(AnimateEntity)(anim_gear_1, self);
         if (!self->ext.statue.step) {
             self->step = 1;
         }
         break;
 
     case 3:
-        AnimateEntity(anim_gear_2, self);
+        OVL_EXPORT(AnimateEntity)(anim_gear_2, self);
         if (!self->ext.statue.step) {
             self->step = 1;
         }
@@ -318,7 +319,7 @@ void EntityStoneDoor(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = params + 27;
         self->zPriority = 0x40;

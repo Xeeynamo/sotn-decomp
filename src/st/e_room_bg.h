@@ -7,7 +7,7 @@ extern ObjInit2 OVL_EXPORT(BackgroundBlockInit)[];
 void OVL_EXPORT(EntityBackgroundBlock)(Entity* self) {
     ObjInit2* objInit = &OVL_EXPORT(BackgroundBlockInit)[self->params];
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
         self->animSet = objInit->animSet;
         self->zPriority = objInit->zPriority;
 #if defined(BG_FACING_LEFT_FIX)
@@ -30,5 +30,5 @@ void OVL_EXPORT(EntityBackgroundBlock)(Entity* self) {
         }
 #endif
     }
-    AnimateEntity(objInit->animFrames, self);
+    OVL_EXPORT(AnimateEntity)(objInit->animFrames, self);
 }

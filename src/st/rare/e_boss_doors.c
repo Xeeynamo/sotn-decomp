@@ -12,7 +12,7 @@ void EntityBossDoors(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitEnvironment);
+        OVL_EXPORT(InitializeEntity)(g_EInitEnvironment);
         if (self->params & 0x100) {
             self->animCurFrame = 2;
             self->zPriority = 0x6A;
@@ -35,14 +35,16 @@ void EntityBossDoors(Entity* self) {
             self->posY.i.hi = 0x5A - g_Tilemap.scrollY.i.hi;
 
             nextEntity = self + 1;
-            CreateEntityFromEntity(E_ID(BOSS_DOORS), self, nextEntity);
+            OVL_EXPORT(CreateEntityFromEntity)
+            (E_ID(BOSS_DOORS), self, nextEntity);
             nextEntity->posX.i.hi += 7;
             nextEntity->posY.i.hi -= 0xD;
             nextEntity->facingLeft = self->facingLeft;
             nextEntity->params = 0x100;
 
             nextEntity = self + 2;
-            CreateEntityFromEntity(E_ID(BOSS_DOORS), self, nextEntity);
+            OVL_EXPORT(CreateEntityFromEntity)
+            (E_ID(BOSS_DOORS), self, nextEntity);
             nextEntity->posX.i.hi += 7;
             nextEntity->facingLeft = self->facingLeft;
             nextEntity->posY.i.hi -= 0x31;
@@ -55,14 +57,16 @@ void EntityBossDoors(Entity* self) {
             self->posY.i.hi = 0x6A - g_Tilemap.scrollY.i.hi;
 
             nextEntity = self + 1;
-            CreateEntityFromEntity(E_ID(BOSS_DOORS), self, nextEntity);
+            OVL_EXPORT(CreateEntityFromEntity)
+            (E_ID(BOSS_DOORS), self, nextEntity);
             nextEntity->posX.i.hi -= 7;
             nextEntity->facingLeft = self->facingLeft;
             nextEntity->posY.i.hi -= 0x14;
             nextEntity->params = 0x100;
 
             nextEntity = self + 2;
-            CreateEntityFromEntity(E_ID(BOSS_DOORS), self, nextEntity);
+            OVL_EXPORT(CreateEntityFromEntity)
+            (E_ID(BOSS_DOORS), self, nextEntity);
             nextEntity->posX.i.hi -= 6;
             nextEntity->posY.i.hi -= 0x41;
             nextEntity->facingLeft = self->facingLeft;

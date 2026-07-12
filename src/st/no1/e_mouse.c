@@ -18,7 +18,7 @@ void EntityMouse(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
         self->animSet = ANIMSET_OVL(1);
         self->zPriority = PLAYER.zPriority - 0x10;
         self->facingLeft = true;

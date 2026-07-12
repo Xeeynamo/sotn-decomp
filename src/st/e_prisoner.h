@@ -25,7 +25,7 @@ void EntityPrisoner(Entity* self) {
     tempEntity = self + 1;
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitPrisoner);
+        OVL_EXPORT(InitializeEntity)(g_EInitPrisoner);
         self->animCurFrame = 0;
         self->zPriority = 0x1E;
         if (self->params & 1) {
@@ -33,7 +33,8 @@ void EntityPrisoner(Entity* self) {
         }
         if ((self->params & 0x10) == 0) {
             tempEntity = self + 1;
-            CreateEntityFromEntity(E_ID(PRISONER), self, tempEntity);
+            OVL_EXPORT(CreateEntityFromEntity)
+            (E_ID(PRISONER), self, tempEntity);
             tempEntity->params = self->params + 0x10;
             self->step = 1;
             return;
@@ -46,16 +47,16 @@ void EntityPrisoner(Entity* self) {
         break;
 
     case 1:
-        if (GetDistanceToPlayerX() < 0x40) {
+        if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x40) {
             if (self->ext.prisoner.unk80) {
-                rand = Random() & 0xF;
+                rand = OVL_EXPORT(Random)() & 0xF;
             } else {
-                rand = Random() & 1;
+                rand = OVL_EXPORT(Random)() & 1;
             }
             if (!rand) {
                 self->ext.prisoner.unk80 |= 1;
-                self->ext.prisoner.unk84 = (Random() & 3) * 7;
-                if (Random() & 1) {
+                self->ext.prisoner.unk84 = (OVL_EXPORT(Random)() & 3) * 7;
+                if (OVL_EXPORT(Random)() & 1) {
                     self->ext.prisoner.unk84 = -self->ext.prisoner.unk84;
                 }
                 self->posX.i.hi += self->ext.prisoner.unk84;
@@ -69,65 +70,65 @@ void EntityPrisoner(Entity* self) {
         break;
 
     case 2:
-        AnimateEntity(D_us_80180E44, self);
+        OVL_EXPORT(AnimateEntity)(D_us_80180E44, self);
         tempEntity->animCurFrame = self->animCurFrame;
         tempEntity->opacity -= 1;
         if (!tempEntity->opacity) {
-            SetStep(3);
+            OVL_EXPORT(SetStep)(3);
         }
         break;
 
     case 3:
 #ifndef BOSS_IS_BO0
-        if (!AnimateEntity(D_us_80180E58, self)) {
+        if (!OVL_EXPORT(AnimateEntity)(D_us_80180E58, self)) {
             PlaySfxPositional(SFX_DUNGEON_PRISONER_RATTLE);
         }
 #else // BOSS_IS_BO0
-        AnimateEntity(D_us_80180E58, self);
+        OVL_EXPORT(AnimateEntity)(D_us_80180E58, self);
 #endif
         tempEntity->animCurFrame = self->animCurFrame + 2;
         tempEntity->zPriority = 0x6A;
         tempEntity->blendMode = BLEND_NO;
         tempEntity->drawFlags = ENTITY_DEFAULT;
-        if (GetDistanceToPlayerX() > 0x40) {
+        if (OVL_EXPORT(GetDistanceToPlayerX)() > 0x40) {
             tempEntity->blendMode = BLEND_TRANSP | BLEND_SUB;
             tempEntity->drawFlags |= ENTITY_OPACITY;
             tempEntity->zPriority = self->zPriority + 1;
-            SetStep(4);
+            OVL_EXPORT(SetStep)(4);
         }
         break;
 
     case 4:
         switch (self->step_s) {
         case 0:
-            if (!AnimateEntity(D_us_80180E68, self)) {
-                if (Random() & 1) {
-                    SetStep(5);
+            if (!OVL_EXPORT(AnimateEntity)(D_us_80180E68, self)) {
+                if (OVL_EXPORT(Random)() & 1) {
+                    OVL_EXPORT(SetStep)(5);
                 } else {
-                    SetSubStep(1);
+                    OVL_EXPORT(SetSubStep)(1);
                 }
             }
             break;
 
         case 1:
-            if (!AnimateEntity(D_us_80180E7C, self)) {
-                if (GetDistanceToPlayerX() < 0x40) {
-                    SetSubStep(2);
+            if (!OVL_EXPORT(AnimateEntity)(D_us_80180E7C, self)) {
+                if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x40) {
+                    OVL_EXPORT(SetSubStep)(2);
                 } else {
-                    SetSubStep(3);
+                    OVL_EXPORT(SetSubStep)(3);
                 }
             }
             break;
 
         case 2:
-            if (!AnimateEntity(D_us_80180E8C, self)) {
-                SetStep(3);
+            if (!OVL_EXPORT(AnimateEntity)(D_us_80180E8C, self)) {
+                OVL_EXPORT(SetStep)(3);
             }
             break;
 
         case 3:
-            if (!AnimateEntity(D_us_80180E84, self)) {
-                SetStep(5);
+            if (!OVL_EXPORT(AnimateEntity)(D_us_80180E84, self)) {
+                OVL_EXPORT(SetStep)(5);
             }
             break;
         }
@@ -135,19 +136,19 @@ void EntityPrisoner(Entity* self) {
         break;
 
     case 5:
-        AnimateEntity(D_us_80180E94, self);
+        OVL_EXPORT(AnimateEntity)(D_us_80180E94, self);
         tempEntity->animCurFrame = self->animCurFrame;
         tempEntity->opacity++;
         if (tempEntity->opacity > 0x80) {
             self->posX.i.hi -= self->ext.prisoner.unk84;
-            SetStep(1);
+            OVL_EXPORT(SetStep)(1);
         }
         break;
 
     case 6:
         self->animCurFrame = 0;
         tempEntity->animCurFrame = 0;
-        if (GetDistanceToPlayerX() > 0x40) {
+        if (OVL_EXPORT(GetDistanceToPlayerX)() > 0x40) {
             self->step = 1;
         }
         break;

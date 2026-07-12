@@ -59,29 +59,29 @@ void EntityChair(Entity* self) {
 
     switch (self->step) {
     case CHAIR_INIT:
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
         // Each chair spawns the curtain on the opposing side, which anchors the
         // ghost
         if (self->params & 0xFF00) {
             confessionalGhost = self + 1;
             if (self->params & LEFT_CHAIR) {
-                CreateEntityFromCurrentEntity(
-                    E_ID(CONFESSIONAL_GHOST), confessionalGhost);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(CONFESSIONAL_GHOST), confessionalGhost);
                 confessionalGhost->posX.i.hi = 176;
                 confessionalGhost->posY.i.hi = 128;
                 confessionalGhost->params = CONFESSIONAL_GHOST_PRIEST;
-                if (Random() & 1) {
+                if (OVL_EXPORT(Random)() & 1) {
                     confessionalGhost->params |= CONFESSIONAL_GHOST_BAD;
                 }
                 break;
             }
             if (self->params & RIGHT_CHAIR) {
-                CreateEntityFromCurrentEntity(
-                    E_ID(CONFESSIONAL_GHOST), confessionalGhost);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_ID(CONFESSIONAL_GHOST), confessionalGhost);
                 confessionalGhost->posX.i.hi = 64;
                 confessionalGhost->posY.i.hi = 128;
                 confessionalGhost->params = CONFESSIONAL_GHOST_PARISHIONER;
-                if (Random() & 1) {
+                if (OVL_EXPORT(Random)() & 1) {
                     confessionalGhost->params |= CONFESSIONAL_GHOST_BAD;
                 }
             }
@@ -145,7 +145,7 @@ void func_us_801B81E8(Entity* self) {
     }
     switch (self->step) {
     case CHAIR_INIT:
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
         self->animSet = ANIMSET_OVL(3);
         self->velocityY = FIX(-0.375);
         self->velocityX = FIX(0.25);

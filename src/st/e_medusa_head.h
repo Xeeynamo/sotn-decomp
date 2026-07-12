@@ -42,7 +42,7 @@ void EntityMedusaHeadSpawner(Entity* self) {
         return;
     }
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitSpawner));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitSpawner));
         self->flags &= ~FLAG_UNK_2000;
     }
     if ((g_Tilemap.scrollY.i.hi >= params->yMax) &&
@@ -52,7 +52,7 @@ void EntityMedusaHeadSpawner(Entity* self) {
             self->ext.medusaHead.timer--;
             return;
         }
-        tempEntity = AllocEntity(
+        tempEntity = OVL_EXPORT(AllocEntity)(
             &g_Entities[128], &g_Entities[128 + params->spawnCount]);
         if (tempEntity != NULL) {
             DestroyEntity(tempEntity);
@@ -94,11 +94,11 @@ void EntityMedusaHeadBlue(Entity* self) {
     Entity* player = &PLAYER;
 
     if (self->flags & FLAG_DEAD) {
-        EntityExplosionSpawn(0, 0);
+        OVL_EXPORT(EntityExplosionSpawn)(0, 0);
         return;
     }
     if (self->step) {
-        AnimateEntity(anim_medusa_head, self);
+        OVL_EXPORT(AnimateEntity)(anim_medusa_head, self);
         if (self->velocityY > 0) {
             self->animCurFrame += 2;
         }
@@ -110,14 +110,14 @@ void EntityMedusaHeadBlue(Entity* self) {
         if (side >= FIX(2.5)) {
             self->ext.medusaHead.accelY = -self->ext.medusaHead.accelY;
         }
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         return;
     }
 
     if (!self->params) {
-        InitializeEntity(g_EInitMedusaHeadBlue);
+        OVL_EXPORT(InitializeEntity)(g_EInitMedusaHeadBlue);
     } else {
-        InitializeEntity(g_EInitMedusaHeadYellow);
+        OVL_EXPORT(InitializeEntity)(g_EInitMedusaHeadYellow);
     }
 
     self->posY.i.hi = player->posY.i.hi - 0;
@@ -134,7 +134,7 @@ void EntityMedusaHeadBlue(Entity* self) {
     self->posX.i.hi = medusaHeadInitParams[side].posX;
     self->velocityX = medusaHeadInitParams[side].velocityX;
     self->facingLeft = medusaHeadInitParams[side].facingLeft;
-    self->velocityY = FIX(2.5) - ((Random() & 0xF) * FIX(2.5) >> 3);
+    self->velocityY = FIX(2.5) - ((OVL_EXPORT(Random)() & 0xF) * FIX(2.5) >> 3);
     if (self->velocityY > 0) {
         self->ext.medusaHead.accelY = FIX(-5.0 / 32);
     } else {

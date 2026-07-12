@@ -34,16 +34,16 @@ EntityExplosionPuffOpaque = 0x0923FF70;
 EntityLightningThunder = 0x092404E0;
 EntityLightningCloud = 0x092405B8;
 EntityTransparentWater = 0x092406B8;
-InitRoomEntities = 0x09241630; // source=match
-UpdateRoomPosition = 0x09241860; // source=match
+NP3_InitRoomEntities = 0x09241630; // source=match
+NP3_UpdateRoomPosition = 0x09241860; // source=match
 EntityBloodSplatter = 0x09241A50;
 EntityBloodyZombie = 0x09242228;
 EntityBloodDrips = 0x09242C40;
 EntityBat = 0x09242ED0;
 EntityStageNamePopup = 0x09243208; // source=match
 NP3_EntityRedDoor = 0x09244170; // source=match
-Update = 0x092453D0; // source=match
-UpdateStageEntities = 0x092457B0; // source=match
+NP3_Update = 0x092453D0; // source=match
+NP3_UpdateStageEntities = 0x092457B0; // source=match
 EntityMerman2 = 0x09245A18;
 EntityMermanFireSpit = 0x09247270;
 EntityMediumWaterSplash = 0x09247508;
@@ -58,18 +58,18 @@ EntityMermanJumpAir = 0x092493D0;
 EntityMermanExplosion = 0x09249480;
 EntitySoulStealOrb = 0x0924A008; // source=match
 EntityEnemyBlood = 0x0924A568; // source=match
-EntityPrizeDrop = 0x0924B9E0; // source=match
-EntityExplosion = 0x0924C7F8; // source=match
-EntityEquipItemDrop = 0x0924CAF8; // source=match
-EntityRelicOrb = 0x0924D350; // source=match
-EntityHeartDrop = 0x0924E488; // source=match
-EntityMessageBox = 0x0924E658; // source=match
+NP3_EntityPrizeDrop = 0x0924B9E0; // source=match
+NP3_EntityExplosion = 0x0924C7F8; // source=match
+NP3_EntityEquipItemDrop = 0x0924CAF8; // source=match
+NP3_EntityRelicOrb = 0x0924D350; // source=match
+NP3_EntityHeartDrop = 0x0924E488; // source=match
+NP3_EntityMessageBox = 0x0924E658; // source=match
 EntityUnkId13 = 0x0924EF18;
 EntityExplosionVariants = 0x0924F190;
 EntityGreyPuff = 0x0924F308;
 EntityIntenseExplosion = 0x0924F618;
-HitDetection = 0x0924F8E0; // source=match
-EntityDamageDisplay = 0x092510B0; // source=match
+NP3_HitDetection = 0x0924F8E0; // source=match
+NP3_EntityDamageDisplay = 0x092510B0; // source=match
 EntityBoneScimitar = 0x09251BB8;
 EntityBoneScimitarParts = 0x09252588;
 EntityAlucardWaterEffect = 0x092528C0; // source=match
@@ -83,7 +83,7 @@ EntityOwl = 0x09255E70;
 EntityOwlKnight = 0x09257AD8;
 EntityOwlKnightSword = 0x092598E0;
 EntityOwlTarget = 0x09259A18;
-EntityDummy = 0x0925ABA0;
+NP3_EntityDummy = 0x0925ABA0;
 EntityBlade = 0x0925C350;
 EntityBladeWeapon = 0x0925D890;
 EntityGurkha = 0x0925DF90;

@@ -7,7 +7,7 @@ extern EInit g_EInitRTOPCommon;
 void EntityStairSwitch(Entity* self) {
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitRTOPCommon);
+        OVL_EXPORT(InitializeEntity)(g_EInitRTOPCommon);
         self->animCurFrame = 5;
         self->hitboxWidth = 6;
         self->hitboxHeight = 6;
@@ -36,7 +36,7 @@ void func_us_801A0BF4(Entity* self) {
     FntPrint("w_y %x\n", g_PlayerY);
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitRTOPCommon);
+        OVL_EXPORT(InitializeEntity)(g_EInitRTOPCommon);
 
         // cursed!
         *((volatile s16*)&self->animCurFrame) = 3;
@@ -80,13 +80,14 @@ void EntitySecretStairs(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitRTOPCommon);
+        OVL_EXPORT(InitializeEntity)(g_EInitRTOPCommon);
         self->animCurFrame = 1;
         if (!self->params) {
             self->ext.secretStairs.unk84 = 1;
             entity = self + 1;
             for (i = 0; i < 3; i++, entity++) {
-                CreateEntityFromCurrentEntity(E_STAIR_SEGMENT, entity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_STAIR_SEGMENT, entity);
                 entity->params = i + 1;
             }
         }
@@ -148,7 +149,7 @@ void EntitySecretStairs(Entity* self) {
             break;
 
         case 1:
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             offsetX = g_Tilemap.scrollX.i.hi + self->posX.i.hi;
             offsetY = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
             if (posX == offsetX) {
@@ -191,7 +192,7 @@ void EntityBreakableWall(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitRTOPCommon);
+        OVL_EXPORT(InitializeEntity)(g_EInitRTOPCommon);
         self->animCurFrame = 0xF;
         self->hitboxWidth = 8;
         self->hitboxHeight = 0x18;
@@ -236,9 +237,9 @@ void EntityBreakableWall(Entity* self) {
     case 2:
         self->ext.breakable.breakCount++;
         self->animCurFrame++;
-        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        entity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
             entity->params = 0x13;
             entity->zPriority = self->zPriority + 1;
         }
@@ -263,7 +264,7 @@ void EntityBreakableWall(Entity* self) {
             }
 
             self->entityId = 0xC;
-            self->pfnUpdate = EntityHeartDrop;
+            self->pfnUpdate = OVL_EXPORT(EntityHeartDrop);
             self->step = 0;
             self->step_s = 0;
             self->pose = 0;
@@ -302,7 +303,7 @@ void EntityTriangleElevator(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitRTOPCommon);
+        OVL_EXPORT(InitializeEntity)(g_EInitRTOPCommon);
         self->animCurFrame = 0xD;
         self->hitboxState = 1;
         self->ext.topElevator.unk88 = 0;
@@ -392,7 +393,7 @@ void EntityTriangleElevator(Entity* self) {
             self->velocityY = -FIX(0.5);
         }
         self->velocityX = 0;
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->ext.topElevator.unk88++;
 
         if (self->ext.topElevator.playerCollision & 4) {
@@ -416,7 +417,7 @@ void EntityTriangleElevator(Entity* self) {
             self->ext.topElevator.unk80 & 0xF0) {
             flags |= 0x10;
         }
-        collision = GetPlayerCollisionWith(self, 0x10, 7, flags);
+        collision = OVL_EXPORT(GetPlayerCollisionWith)(self, 0x10, 7, flags);
 
         if (self->ext.topElevator.unk80 & 0xF) {
             if (self->ext.topElevator.unk80 & 0xF0) {
@@ -489,7 +490,7 @@ void func_us_801A1940(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitRTOPCommon);
+        OVL_EXPORT(InitializeEntity)(g_EInitRTOPCommon);
         self->animCurFrame = 0xC;
         self->hitboxState = 1;
         self->ext.topElevator.unk88 = 0;
@@ -531,7 +532,7 @@ void func_us_801A1940(Entity* self) {
         break;
 
     case 1:
-        collision = GetPlayerCollisionWith(self, 0x10, 7, 4);
+        collision = OVL_EXPORT(GetPlayerCollisionWith)(self, 0x10, 7, 4);
         switch (self->step_s) {
         case 0:
             if (collision & 4) {
@@ -564,7 +565,7 @@ void func_us_801A1940(Entity* self) {
             g_CastleFlags[TOP_LION_LIGHTS] = 1;
             self->velocityY = FIX(-0.5);
             self->ext.topElevator.unk8C = 0x28;
-            SetStep(2);
+            OVL_EXPORT(SetStep)(2);
             break;
         }
         break;
@@ -616,7 +617,7 @@ void func_us_801A1940(Entity* self) {
         }
 
         self->velocityX = 0;
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->ext.topElevator.unk88++;
         if (self->ext.topElevator.playerCollision & 4) {
             offsetY = self->posY.i.hi + g_Tilemap.scrollY.i.hi -
@@ -641,7 +642,7 @@ void func_us_801A1940(Entity* self) {
             flags |= 0x10;
         }
 
-        collision = GetPlayerCollisionWith(self, 0x10, 7, flags);
+        collision = OVL_EXPORT(GetPlayerCollisionWith)(self, 0x10, 7, flags);
         if (self->ext.topElevator.unk80 & 0xF) {
             if (self->ext.topElevator.unk80 & 0xF0) {
                 offsetY =
@@ -711,7 +712,7 @@ void func_us_801A21F8(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitRTOPCommon);
+        OVL_EXPORT(InitializeEntity)(g_EInitRTOPCommon);
         self->animSet = 7;
         self->animCurFrame = 3;
         self->zPriority = 0x5C;
@@ -726,7 +727,7 @@ void func_us_801A21F8(Entity* self) {
             offsetY = self->posY.i.hi + g_Tilemap.scrollY.i.hi + 0x20;
             if (offsetY > D_us_801B10D8) {
                 g_CastleFlags[TOP_LION_LIGHTS] |= 1 << (self->params + 2);
-                SetStep(3);
+                OVL_EXPORT(SetStep)(3);
             }
         }
         break;

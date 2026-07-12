@@ -2,21 +2,21 @@
 #include "st0.h"
 
 void func_801A805C(Entity*);
-void EntityExplosion(Entity*);
-void EntityPrizeDrop(Entity*);
-void EntityDamageDisplay(Entity*);
+void OVL_EXPORT(EntityExplosion)(Entity*);
+void OVL_EXPORT(EntityPrizeDrop)(Entity*);
+void OVL_EXPORT(EntityDamageDisplay)(Entity*);
 void OVL_EXPORT(EntityRedDoor)(Entity*);
 void EntityIntenseExplosion(Entity*);
 void EntitySoulStealOrb(Entity*);
 void EntityRoomForeground(Entity*);
-void EntityDummy(Entity*);
-void EntityEquipItemDrop(Entity*);
-void EntityDummy(Entity*);
-void EntityDummy(Entity*);
-void EntityDummy(Entity*);
-void EntityDummy(Entity*);
-void EntityDummy(Entity*);
-void EntityDummy(Entity*);
+void OVL_EXPORT(EntityDummy)(Entity*);
+void OVL_EXPORT(EntityEquipItemDrop)(Entity*);
+void OVL_EXPORT(EntityDummy)(Entity*);
+void OVL_EXPORT(EntityDummy)(Entity*);
+void OVL_EXPORT(EntityDummy)(Entity*);
+void OVL_EXPORT(EntityDummy)(Entity*);
+void OVL_EXPORT(EntityDummy)(Entity*);
+void OVL_EXPORT(EntityDummy)(Entity*);
 void OVL_EXPORT(EntityBackgroundBlock)(Entity*);
 void OVL_EXPORT(EntityLockCamera)(Entity*);
 void EntityUnkId13(Entity*);
@@ -50,21 +50,21 @@ void func_801BC5C0(Entity*);
 
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_801A805C,
-    EntityExplosion,
-    EntityPrizeDrop,
-    EntityDamageDisplay,
+    OVL_EXPORT(EntityExplosion),
+    OVL_EXPORT(EntityPrizeDrop),
+    OVL_EXPORT(EntityDamageDisplay),
     OVL_EXPORT(EntityRedDoor),
     EntityIntenseExplosion,
     EntitySoulStealOrb,
     EntityRoomForeground,
-    EntityDummy,
-    EntityEquipItemDrop,
-    EntityDummy,
-    EntityDummy,
-    EntityDummy,
-    EntityDummy,
-    EntityDummy,
-    EntityDummy,
+    OVL_EXPORT(EntityDummy),
+    OVL_EXPORT(EntityEquipItemDrop),
+    OVL_EXPORT(EntityDummy),
+    OVL_EXPORT(EntityDummy),
+    OVL_EXPORT(EntityDummy),
+    OVL_EXPORT(EntityDummy),
+    OVL_EXPORT(EntityDummy),
+    OVL_EXPORT(EntityDummy),
     OVL_EXPORT(EntityBackgroundBlock),
     OVL_EXPORT(EntityLockCamera),
     EntityUnkId13,

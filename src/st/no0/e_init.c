@@ -2,21 +2,21 @@
 #include "no0.h"
 
 void EntityBreakable(Entity*);
-void EntityExplosion(Entity*);
-void EntityPrizeDrop(Entity*);
-void EntityDamageDisplay(Entity*);
+void OVL_EXPORT(EntityExplosion)(Entity*);
+void OVL_EXPORT(EntityPrizeDrop)(Entity*);
+void OVL_EXPORT(EntityDamageDisplay)(Entity*);
 void OVL_EXPORT(EntityRedDoor)(Entity*);
 void EntityIntenseExplosion(Entity*);
 void EntitySoulStealOrb(Entity*);
 void EntityRoomForeground(Entity*);
 void EntityStageNamePopup(Entity*);
-void EntityEquipItemDrop(Entity*);
-void EntityRelicOrb(Entity*);
-void EntityHeartDrop(Entity*);
+void OVL_EXPORT(EntityEquipItemDrop)(Entity*);
+void OVL_EXPORT(EntityRelicOrb)(Entity*);
+void OVL_EXPORT(EntityHeartDrop)(Entity*);
 void EntityEnemyBlood(Entity*);
-void EntityMessageBox(Entity*);
-void EntityDummy(Entity*);
-void EntityDummy(Entity*);
+void OVL_EXPORT(EntityMessageBox)(Entity*);
+void OVL_EXPORT(EntityDummy)(Entity*);
+void OVL_EXPORT(EntityDummy)(Entity*);
 void OVL_EXPORT(EntityBackgroundBlock)(Entity*);
 void OVL_EXPORT(EntityLockCamera)(Entity*);
 void EntityUnkId13(Entity*);
@@ -32,7 +32,7 @@ void EntityStatue(Entity*);
 void EntityStatueGear(Entity*);
 void EntityStoneDoor(Entity*);
 void EntityClockRoomUnused(Entity*);
-void EntityDummy(Entity*);
+void OVL_EXPORT(EntityDummy)(Entity*);
 void EntityDiplocephalus(Entity*);
 void EntityDiplocephalusFoot(Entity*);
 void EntityDiplocephalusLeg(Entity*);
@@ -80,26 +80,26 @@ void EntityFleaMan(Entity*);
 void EntitySkeleton(Entity*);
 void EntitySkeletonThrownBone(Entity*);
 void EntitySkeletonPieces(Entity*);
-void EntityDummy(Entity*);
+void OVL_EXPORT(EntityDummy)(Entity*);
 void EntitySealedDoor(Entity*);
 
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityBreakable,
-    EntityExplosion,
-    EntityPrizeDrop,
-    EntityDamageDisplay,
+    OVL_EXPORT(EntityExplosion),
+    OVL_EXPORT(EntityPrizeDrop),
+    OVL_EXPORT(EntityDamageDisplay),
     OVL_EXPORT(EntityRedDoor),
     EntityIntenseExplosion,
     EntitySoulStealOrb,
     EntityRoomForeground,
     EntityStageNamePopup,
-    EntityEquipItemDrop,
-    EntityRelicOrb,
-    EntityHeartDrop,
+    OVL_EXPORT(EntityEquipItemDrop),
+    OVL_EXPORT(EntityRelicOrb),
+    OVL_EXPORT(EntityHeartDrop),
     EntityEnemyBlood,
-    EntityMessageBox,
-    EntityDummy,
-    EntityDummy,
+    OVL_EXPORT(EntityMessageBox),
+    OVL_EXPORT(EntityDummy),
+    OVL_EXPORT(EntityDummy),
     OVL_EXPORT(EntityBackgroundBlock),
     OVL_EXPORT(EntityLockCamera),
     EntityUnkId13,
@@ -115,7 +115,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityStatueGear,
     EntityStoneDoor,
     EntityClockRoomUnused,
-    EntityDummy,
+    OVL_EXPORT(EntityDummy),
     EntityDiplocephalus,
     EntityDiplocephalusFoot,
     EntityDiplocephalusLeg,
@@ -163,7 +163,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntitySkeleton,
     EntitySkeletonThrownBone,
     EntitySkeletonPieces,
-    EntityDummy,
+    OVL_EXPORT(EntityDummy),
     EntitySealedDoor,
 };
 

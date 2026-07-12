@@ -51,30 +51,30 @@ void EntityValhallaKnight(Entity* self) {
     s32 temp_a0_2;
 
     if (self->flags & FLAG_DEAD) {
-        SetStep(6);
+        OVL_EXPORT(SetStep)(6);
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitValhallaKnight);
+        OVL_EXPORT(InitializeEntity)(g_EInitValhallaKnight);
         self->animCurFrame = 1;
         self->ext.valhallaKnight.unk84 =
             g_Tilemap.scrollX.i.hi + self->posX.i.hi;
         part = self + 1;
-        CreateEntityFromCurrentEntity(E_VALHALLA_KNIGHT_UNK1, part);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_VALHALLA_KNIGHT_UNK1, part);
         part->params = 0;
         self->nextPart = part;
         self->parent = NULL;
         part = self + 2;
-        CreateEntityFromCurrentEntity(E_VALHALLA_KNIGHT_UNK1, part);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_VALHALLA_KNIGHT_UNK1, part);
         part->params = 1;
         /* fallthrough */
     case 1:
-        if (UnkCollisionFunc3(D_us_80182028) & 1) {
-            self->facingLeft = GetSideToPlayer() & 1;
+        if (OVL_EXPORT(UnkCollisionFunc3)(D_us_80182028) & 1) {
+            self->facingLeft = OVL_EXPORT(GetSideToPlayer)() & 1;
 #ifdef STAGE_IS_ARE
             self->facingLeft = self->params & 1;
 #endif
-            SetStep(2);
+            OVL_EXPORT(SetStep)(2);
         }
         break;
 
@@ -83,17 +83,17 @@ void EntityValhallaKnight(Entity* self) {
             self->ext.valhallaKnight.unk80 = 0x80;
             self->step_s++;
         }
-        if (!AnimateEntity(D_us_8018204C, self)) {
+        if (!OVL_EXPORT(AnimateEntity)(D_us_8018204C, self)) {
             PlaySfxPositional(SFX_VALHALLA_KNIGHT_GALLOP);
         }
-        temp_a0_2 = UnkCollisionFunc2(D_us_80182038);
+        temp_a0_2 = OVL_EXPORT(UnkCollisionFunc2)(D_us_80182038);
         if (self->facingLeft) {
             self->velocityX = FIX(-2.5);
         } else {
             self->velocityX = FIX(2.5);
         }
         if (temp_a0_2 == 0x80) {
-            SetStep(5);
+            OVL_EXPORT(SetStep)(5);
             self->step_s = 2;
         }
         posX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
@@ -107,7 +107,7 @@ void EntityValhallaKnight(Entity* self) {
 #else
         if (posX > 0x60) {
 #endif
-            SetStep(3);
+            OVL_EXPORT(SetStep)(3);
         }
         break;
 
@@ -116,7 +116,7 @@ void EntityValhallaKnight(Entity* self) {
             PlaySfxPositional(SFX_VALHALLA_KNIGHT_NEIGH);
             self->step_s++;
         }
-        UnkCollisionFunc2(D_us_80182038);
+        OVL_EXPORT(UnkCollisionFunc2)(D_us_80182038);
         self->velocityX -= self->velocityX / 0x20;
         if (!self->poseTimer) {
             if (self->facingLeft) {
@@ -125,15 +125,16 @@ void EntityValhallaKnight(Entity* self) {
                 EntityGreyPuffSpawner(self, 5, 3, 4, 40, 0, -4);
             }
         }
-        if (!AnimateEntity(D_us_80182058, self)) {
+        if (!OVL_EXPORT(AnimateEntity)(D_us_80182058, self)) {
             self->facingLeft ^= 1;
             tempEntity2 = &PLAYER;
-            if (tempEntity2->velocityY != 0 && GetDistanceToPlayerX() < 0x80) {
+            if (tempEntity2->velocityY != 0 &&
+                OVL_EXPORT(GetDistanceToPlayerX)() < 0x80) {
                 self->animCurFrame = 1;
-                SetStep(5);
+                OVL_EXPORT(SetStep)(5);
             } else {
                 self->animCurFrame = 6;
-                SetStep(2);
+                OVL_EXPORT(SetStep)(2);
             }
         }
         break;
@@ -150,12 +151,12 @@ void EntityValhallaKnight(Entity* self) {
             self->step_s++;
             /* fallthrough */
         case 1:
-            if (!AnimateEntity(D_us_80182040, self)) {
+            if (!OVL_EXPORT(AnimateEntity)(D_us_80182040, self)) {
                 PlaySfxPositional(SFX_VALHALLA_KNIGHT_GALLOP);
             }
-            UnkCollisionFunc2(D_us_80182038);
+            OVL_EXPORT(UnkCollisionFunc2)(D_us_80182038);
             if (!self->ext.valhallaKnight.unk80) {
-                if (GetDistanceToPlayerX() < 0x50) {
+                if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x50) {
                     self->step_s = 2;
                 }
             } else {
@@ -172,7 +173,7 @@ void EntityValhallaKnight(Entity* self) {
 #else
             if (posX > 0x60) {
 #endif
-                SetStep(3);
+                OVL_EXPORT(SetStep)(3);
             }
             break;
 
@@ -187,7 +188,7 @@ void EntityValhallaKnight(Entity* self) {
             self->step_s++;
             /* fallthrough */
         case 3:
-            UnkCollisionFunc3(D_us_80182028);
+            OVL_EXPORT(UnkCollisionFunc3)(D_us_80182028);
             self->velocityY -= FIX(5.0 / 32);
             if (self->velocityY > FIX(-0.75)) {
                 self->animCurFrame = 16;
@@ -198,7 +199,7 @@ void EntityValhallaKnight(Entity* self) {
             }
             break;
         case 4:
-            if (UnkCollisionFunc3(D_us_80182028) & 1) {
+            if (OVL_EXPORT(UnkCollisionFunc3)(D_us_80182028) & 1) {
                 g_api.PlaySfx(SFX_STOMP_HARD_B);
                 if (self->facingLeft) {
                     EntityGreyPuffSpawner(self, 5, 3, -4, 40, 0, 4);
@@ -210,13 +211,13 @@ void EntityValhallaKnight(Entity* self) {
                 } else {
                     self->velocityX = FIX(2.5);
                 }
-                SetSubStep(5);
+                OVL_EXPORT(SetSubStep)(5);
             }
             break;
         case 5:
-            UnkCollisionFunc2(D_us_80182038);
-            if (!AnimateEntity(D_us_80182064, self)) {
-                SetStep(2);
+            OVL_EXPORT(UnkCollisionFunc2)(D_us_80182038);
+            if (!OVL_EXPORT(AnimateEntity)(D_us_80182064, self)) {
+                OVL_EXPORT(SetStep)(2);
             }
             break;
         }
@@ -224,9 +225,9 @@ void EntityValhallaKnight(Entity* self) {
 
     case 6:
         for (i = 0; i < 3; i++) {
-            part = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            part = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (part != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, part);
+                OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, part);
                 if (self->facingLeft) {
                     part->posX.i.hi -= D_us_801820F4[i].x;
                 } else {
@@ -237,9 +238,10 @@ void EntityValhallaKnight(Entity* self) {
             }
         }
         for (i = 0; i < 13; i++) {
-            part = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            part = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (part != NULL) {
-                CreateEntityFromEntity(E_VALHALLA_KNIGHT_UNK2, self, part);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_VALHALLA_KNIGHT_UNK2, self, part);
                 part->params = i;
                 part->facingLeft = self->facingLeft;
                 part->velocityX = self->velocityX;
@@ -273,9 +275,9 @@ void func_us_801C8954(Entity* self) {
 
     if (!self->step) {
         if (self->params) {
-            InitializeEntity(g_EInitValhallaKnightUnk3);
+            OVL_EXPORT(InitializeEntity)(g_EInitValhallaKnightUnk3);
         } else {
-            InitializeEntity(g_EInitValhallaKnightUnk2);
+            OVL_EXPORT(InitializeEntity)(g_EInitValhallaKnightUnk2);
             self->parent = self - 1;
             self->nextPart = self - 1;
         }
@@ -308,7 +310,7 @@ void func_us_801C8AAC(Entity* self) {
     s32 delay;
 
     if (!self->step) {
-        InitializeEntity(g_EInitValhallaKnightUnk1);
+        OVL_EXPORT(InitializeEntity)(g_EInitValhallaKnightUnk1);
         self->animCurFrame = self->params + 18;
         self->zPriority += self->params;
         self->flags |= FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
@@ -322,7 +324,7 @@ void func_us_801C8AAC(Entity* self) {
         }
         self->velocityY += ptr->velocityY;
     }
-    MoveEntity();
+    OVL_EXPORT(MoveEntity)();
     self->velocityY += FIX(0.0625);
     ptr = D_us_80182100;
     ptr += self->params;
@@ -330,10 +332,12 @@ void func_us_801C8AAC(Entity* self) {
     if ((self->params & 3) == 0) {
         delay = g_Timer - (self->params >> 2);
         if ((delay & 7) == 0) {
-            tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            tempEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
-                tempEntity->params = Random() & 1;
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_EXPLOSION, self, tempEntity);
+                tempEntity->params = OVL_EXPORT(Random)() & 1;
                 tempEntity->zPriority = self->zPriority + 1;
             }
         }

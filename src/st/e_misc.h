@@ -39,15 +39,17 @@ u8 CheckColliderOffsets(s16* arg0, u8 facing) {
 void EntityUnkId13(Entity* self) {
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitUnkId13));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitUnkId13));
         self->ext.ent13.parentId = self->ext.ent13.parent->entityId;
     case 1:
         if (self->ext.ent13.fiveFrameCounter++ > 4) {
-            Entity* newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            Entity* newEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_EXPLOSION, self, newEntity);
                 newEntity->entityId = E_EXPLOSION;
-                newEntity->pfnUpdate = EntityExplosion;
+                newEntity->pfnUpdate = OVL_EXPORT(EntityExplosion);
                 newEntity->params = self->params;
             }
             self->ext.ent13.fiveFrameCounter = 0;
@@ -75,7 +77,7 @@ void EntityExplosionVariantsSpawner(
     s16 newY = self->posY.i.hi + y;
 
     for (i = 0; i < count; i++) {
-        newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+        newEntity = OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
         if (newEntity != NULL) {
             newEntity->entityId = E_EXPLOSION_VARIANTS;
             newEntity->pfnUpdate = EntityExplosionVariants;
@@ -99,7 +101,7 @@ void EntityGreyPuffSpawner(
     s16 newY = self->posY.i.hi + y;
 
     for (i = 0; i < count; i++) {
-        newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+        newEntity = OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
         if (newEntity != NULL) {
             newEntity->entityId = E_GREY_PUFF;
             newEntity->pfnUpdate = EntityGreyPuff;
@@ -198,7 +200,7 @@ void EntityOlroxDrool(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitParticle));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitParticle));
         primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
         if (primIndex == -1) {
             return;
@@ -256,7 +258,7 @@ void EntityOlroxDrool(Entity* self) {
 bool UnkCollisionFunc5(s16* pointXY) {
     Collider collider;
 
-    FallEntity();
+    OVL_EXPORT(FallEntity)();
     g_CurrentEntity->posX.val += g_CurrentEntity->velocityX;
     g_CurrentEntity->posY.val += g_CurrentEntity->velocityY;
 
@@ -288,7 +290,7 @@ u8 UnkCollisionFunc4(u8 arg0) {
     s16 posY;
     u8 bits_01;
 
-    MoveEntity();
+    OVL_EXPORT(MoveEntity)();
     bits_67 = 0;
     bits_23 = 0;
     bits_45 = 0;
@@ -464,7 +466,7 @@ u8 UnkCollisionFunc4(u8 arg0) {
 //         (& 0xFF00) if non-zero, uses ((& 0xFF00) >> 8) as the zPriority
 void EntityIntenseExplosion(Entity* self) {
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitParticle));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitParticle));
         self->palette = PAL_FLAG(PAL_UNK_170);
         self->animSet = ANIMSET_DRA(5);
         self->animCurFrame = 1;
@@ -495,7 +497,7 @@ static u8 g_UnkEntityAnim[] = {2, 1, 2, 2, 2, 3, 2, 4, 2, 5, 4, 6, -1, 0};
 
 void InitializeUnkEntity(Entity* self) {
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitParticle));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitParticle));
         self->zPriority += 16;
         self->opacity = 0xF0;
         self->scaleX = 0x1A0;
@@ -511,8 +513,8 @@ void InitializeUnkEntity(Entity* self) {
 
         self->step++;
     } else {
-        MoveEntity();
-        if (!AnimateEntity(g_UnkEntityAnim, self)) {
+        OVL_EXPORT(MoveEntity)();
+        if (!OVL_EXPORT(AnimateEntity)(g_UnkEntityAnim, self)) {
             DestroyEntity(self);
         }
     }
@@ -530,7 +532,7 @@ void func_801966B0(u16* sensors) {
         g_CurrentEntity->step_s++;
         break;
     case 1:
-        if (UnkCollisionFunc3(sensors) & 1) {
+        if (OVL_EXPORT(UnkCollisionFunc3)(sensors) & 1) {
             g_CurrentEntity->animCurFrame = 1;
             g_CurrentEntity->step_s++;
         }
@@ -554,7 +556,7 @@ void func_801966B0(u16* sensors) {
         if (!--D_80199DE8) {
             g_CurrentEntity->hitboxState = 3;
             g_CurrentEntity->palette = g_CurrentEntity->hitEffect;
-            SetStep(1);
+            OVL_EXPORT(SetStep)(1);
         }
         break;
     }
@@ -589,16 +591,18 @@ void MakeExplosions(void) {
     Entity* entity;
     s32 i;
 
-    temp_s4 = Random() & 3;
-    temp_s3 = ((Random() & 0xF) << 8) - 0x800;
+    temp_s4 = OVL_EXPORT(Random)() & 3;
+    temp_s3 = ((OVL_EXPORT(Random)() & 0xF) << 8) - 0x800;
 
     for (i = 0; i < 6; i++) {
-        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        entity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
 #if defined(STAGE_IS_NO2) || defined(STAGE_IS_CAT)
-            CreateEntityFromEntity(E_BIG_RED_FIREBALL, g_CurrentEntity, entity);
+            OVL_EXPORT(CreateEntityFromEntity)
+            (E_BIG_RED_FIREBALL, g_CurrentEntity, entity);
 #else
-            CreateEntityFromEntity(E_EXPLOSION, g_CurrentEntity, entity);
+            OVL_EXPORT(CreateEntityFromEntity)
+            (E_EXPLOSION, g_CurrentEntity, entity);
 #endif
             // EntityExplosion does not seem to use these values.
             entity->ext.destructAnim.unk85 = 6 - i;
@@ -608,7 +612,7 @@ void MakeExplosions(void) {
     }
 }
 
-extern u8 g_bigRedFireballAnim[];
+extern u8 OVL_EXPORT(BigRedFireballAnim)[];
 
 // Not used in any current overlays. Seems to resemble Gaibon's big fireball,
 // but is not actually called in NZ0. Will need to check future overlays for
@@ -617,7 +621,7 @@ void EntityBigRedFireball(Entity* self) {
     s32 speedTemp;
 
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitParticle));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitParticle));
         self->animSet = ANIMSET_DRA(2);
         self->palette = PAL_FLAG(PAL_UNK_1B6);
         self->drawFlags |= (ENTITY_ROTATE + ENTITY_OPACITY);
@@ -654,9 +658,9 @@ void EntityBigRedFireball(Entity* self) {
         self->velocityY *= 3;
     }
 
-    MoveEntity();
+    OVL_EXPORT(MoveEntity)();
 
-    if (!AnimateEntity(g_bigRedFireballAnim, self)) {
+    if (!OVL_EXPORT(AnimateEntity)(OVL_EXPORT(BigRedFireballAnim), self)) {
         DestroyEntity(self);
     }
 }

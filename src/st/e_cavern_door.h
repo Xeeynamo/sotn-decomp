@@ -22,12 +22,13 @@ void EntityCavernDoorLever(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(CAVERN_DOOR_EINIT);
+        OVL_EXPORT(InitializeEntity)(CAVERN_DOOR_EINIT);
         self->animCurFrame = 18;
         self->drawFlags |= ENTITY_ROTATE;
         self->rotate = -0x200;
         platform = self + 1;
-        CreateEntityFromEntity(E_ID(CAVERN_DOOR_PLATFORM), self, platform);
+        OVL_EXPORT(CreateEntityFromEntity)
+        (E_ID(CAVERN_DOOR_PLATFORM), self, platform);
         if (g_CastleFlags[NO4_TO_NP3_SHORTCUT]) {
             self->rotate = 0;
         }
@@ -65,13 +66,13 @@ void EntityCavernDoorPlatform(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(CAVERN_DOOR_EINIT);
+        OVL_EXPORT(InitializeEntity)(CAVERN_DOOR_EINIT);
         self->animCurFrame = 17;
         self->ext.cavernDoor.xCoord.val = self->posX.val;
         self->ext.cavernDoor.xCoord.val = self->posX.val; // ? WTF
 
     case 1:
-        collision = GetPlayerCollisionWith(self, 6, 5, 4);
+        collision = OVL_EXPORT(GetPlayerCollisionWith)(self, 6, 5, 4);
         self->ext.cavernDoor.collision = collision;
 
         if (collision != 0) {
@@ -104,7 +105,7 @@ void EntityCavernDoor(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(CAVERN_DOOR_EINIT);
+        OVL_EXPORT(InitializeEntity)(CAVERN_DOOR_EINIT);
         self->animCurFrame = 10;
         self->zPriority = 0x9F;
 
@@ -214,13 +215,13 @@ void EntityCavernDoor(Entity* self) {
         if (g_Timer & 15) {
             break;
         }
-        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        entity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (entity == NULL) {
             break;
         }
-        CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
+        OVL_EXPORT(CreateEntityFromEntity)(E_INTENSE_EXPLOSION, self, entity);
         entity->posY.i.hi = 156;
-        entity->posX.i.hi += -8 + (Random() & 15);
+        entity->posX.i.hi += -8 + (OVL_EXPORT(Random)() & 15);
         entity->zPriority = self->zPriority + 2;
         entity->params = 0x10;
         entity->drawFlags |= (ENTITY_SCALEX + ENTITY_SCALEY);

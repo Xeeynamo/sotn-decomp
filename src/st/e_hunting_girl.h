@@ -302,7 +302,7 @@ static void HuntingGirlTransitionToStep(s32 step) {
     g_CurrentEntity->ext.huntingGirl.attackStep = 0;
     g_CurrentEntity->ext.huntingGirl.frames = 0;
     g_CurrentEntity->ext.huntingGirl.nextStep = step;
-    SetStep(HUNTING_GIRL_TRANSITION);
+    OVL_EXPORT(SetStep)(HUNTING_GIRL_TRANSITION);
 }
 
 void EntityHuntingGirl(Entity* self) {
@@ -321,14 +321,14 @@ void EntityHuntingGirl(Entity* self) {
 
     if ((self->hitFlags & 3) && (self->step != HUNTING_GIRL_HIT)) {
         self->ext.huntingGirl.attacking = false;
-        SetStep(HUNTING_GIRL_HIT);
+        OVL_EXPORT(SetStep)(HUNTING_GIRL_HIT);
     }
     if ((self->flags & FLAG_DEAD) && (self->step < HUNTING_GIRL_DEATH)) {
-        SetStep(HUNTING_GIRL_DEATH);
+        OVL_EXPORT(SetStep)(HUNTING_GIRL_DEATH);
     }
     switch (self->step) {
     case HUNTING_GIRL_INIT:
-        InitializeEntity(g_EInitHuntingGirl);
+        OVL_EXPORT(InitializeEntity)(g_EInitHuntingGirl);
         self->hitboxWidth = self->hitboxHeight = 10;
         self->hitboxState = 2;
 #ifdef STAGE_IS_DAI
@@ -361,14 +361,15 @@ void EntityHuntingGirl(Entity* self) {
         }
         entity = self + 1;
         for (count = 0; count < 3; count++, entity++) {
-            CreateEntityFromCurrentEntity(E_HUNTING_GIRL_ATTACK, entity);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)
+            (E_HUNTING_GIRL_ATTACK, entity);
             entity->params = count + 1;
         }
         self->ext.huntingGirl.cycleTimer = 512;
         break;
     case HUNTING_GIRL_READY:
-        if (UnkCollisionFunc3(sensors) & 1) {
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        if (OVL_EXPORT(UnkCollisionFunc3)(sensors) & 1) {
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
             self->ext.huntingGirl.scrollY =
                 self->posY.i.hi + g_Tilemap.scrollY.i.hi;
             HuntingGirlTransitionToStep(HUNTING_GIRL_IDLE);
@@ -382,7 +383,8 @@ void EntityHuntingGirl(Entity* self) {
             // fallthrough
         case HUNTING_GIRL_IDLE_PULSE:
             HuntingGirlDrawSpirit(SPIRIT_IDLE, SPIRIT_PULSE);
-            if (GetDistanceToPlayerX() < 80 && GetDistanceToPlayerY() < 48) {
+            if (OVL_EXPORT(GetDistanceToPlayerX)() < 80 &&
+                OVL_EXPORT(GetDistanceToPlayerY)() < 48) {
                 self->step_s++;
             }
             break;
@@ -406,7 +408,7 @@ void EntityHuntingGirl(Entity* self) {
             if (!--self->ext.huntingGirl.attackTimer) {
                 self->step_s++;
             }
-            if (GetDistanceToPlayerX() < 64) {
+            if (OVL_EXPORT(GetDistanceToPlayerX)() < 64) {
                 HuntingGirlTransitionToStep(HUNTING_GIRL_ATTACK);
             }
             break;
@@ -423,23 +425,23 @@ void EntityHuntingGirl(Entity* self) {
             self->step_s++;
         }
         HuntingGirlDrawAttack(attack_pattern_1);
-        if (GetDistanceToPlayerX() > 80) {
+        if (OVL_EXPORT(GetDistanceToPlayerX)() > 80) {
             self->ext.huntingGirl.cycleTimer--;
         }
         if (!self->ext.huntingGirl.cycleTimer) {
             self->ext.huntingGirl.cycleTimer = 512;
             HuntingGirlTransitionToStep(HUNTING_GIRL_RECOVER);
         }
-        if (((GetSideToPlayer() & 1) ^ 1) != self->facingLeft) {
+        if (((OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1) != self->facingLeft) {
             HuntingGirlTransitionToStep(HUNTING_GIRL_ATTACK);
         }
         if (!self->ext.huntingGirl.attackTimer) {
-            if (GetDistanceToPlayerX() < 80) {
+            if (OVL_EXPORT(GetDistanceToPlayerX)() < 80) {
                 HuntingGirlTransitionToStep(HUNTING_GIRL_ATTACK);
             }
         } else {
             self->ext.huntingGirl.attackTimer--;
-            if (GetDistanceToPlayerX() < 56) {
+            if (OVL_EXPORT(GetDistanceToPlayerX)() < 56) {
                 HuntingGirlTransitionToStep(HUNTING_GIRL_RETURN_TO_READY);
             }
         }
@@ -450,21 +452,21 @@ void EntityHuntingGirl(Entity* self) {
             self->step_s++;
         }
         HuntingGirlDrawAttack(attack_pattern_2);
-        if (GetDistanceToPlayerX() > 80) {
+        if (OVL_EXPORT(GetDistanceToPlayerX)() > 80) {
             self->ext.huntingGirl.cycleTimer--;
         }
         if (!self->ext.huntingGirl.cycleTimer) {
             self->ext.huntingGirl.cycleTimer = 512;
             HuntingGirlTransitionToStep(HUNTING_GIRL_RECOVER);
         }
-        if (GetDistanceToPlayerX() > 96) {
+        if (OVL_EXPORT(GetDistanceToPlayerX)() > 96) {
             HuntingGirlTransitionToStep(HUNTING_GIRL_PREPARE_ATTACK);
         }
-        if (((GetSideToPlayer() & 1) ^ 1) != self->facingLeft) {
+        if (((OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1) != self->facingLeft) {
             HuntingGirlTransitionToStep(HUNTING_GIRL_ATTACK);
         }
         if (!self->ext.huntingGirl.attackTimer) {
-            if (GetDistanceToPlayerX() < 80) {
+            if (OVL_EXPORT(GetDistanceToPlayerX)() < 80) {
                 HuntingGirlTransitionToStep(HUNTING_GIRL_ATTACK);
             }
         } else {
@@ -526,24 +528,25 @@ void EntityHuntingGirl(Entity* self) {
             }
             break;
         case HUNTING_GIRL_TRANSITION_TURN:
-            tempVar = (GetSideToPlayer() & 1) ^ 1; // Player on right
+            tempVar =
+                (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1; // Player on right
             if (tempVar != self->facingLeft) {
                 self->rotate = -self->rotate;
             }
             self->facingLeft = tempVar;
-            SetStep(self->ext.huntingGirl.nextStep);
+            OVL_EXPORT(SetStep)(self->ext.huntingGirl.nextStep);
             break;
         }
         break;
     case HUNTING_GIRL_HIT:
         switch (self->step_s) {
         case HUNTING_GIRL_HIT_INIT:
-            tempVar = Random() & 1;
+            tempVar = OVL_EXPORT(Random)() & 1;
             // hit and death spirit step
             self->ext.huntingGirl.random = tempVar;
             HuntingGirlDrawSpirit(
                 self->ext.huntingGirl.random + 3, SPIRIT_INIT);
-            if (GetSideToPlayer() & 1) { // Player on left
+            if (OVL_EXPORT(GetSideToPlayer)() & 1) { // Player on left
                 self->velocityX = FIX(1.5);
             } else {
                 self->velocityX = FIX(-1.5);
@@ -560,7 +563,7 @@ void EntityHuntingGirl(Entity* self) {
         case HUNTING_GIRL_HIT_KNOCKBACK:
             HuntingGirlDrawSpirit(
                 self->ext.huntingGirl.random + 3, SPIRIT_PULSE);
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             self->velocityX -= self->velocityX / 32;
             self->velocityY += FIX(0.125);
             if (self->velocityY > FIX(2.0)) {
@@ -588,7 +591,7 @@ void EntityHuntingGirl(Entity* self) {
                  prim = prim->next) {
                 prim->drawMode = DRAW_HIDE;
             }
-            tempVar = Random() & 1;
+            tempVar = OVL_EXPORT(Random)() & 1;
             self->ext.huntingGirl.random = tempVar;
             HuntingGirlDrawSpirit(
                 self->ext.huntingGirl.random + 3, SPIRIT_INIT);
@@ -600,7 +603,7 @@ void EntityHuntingGirl(Entity* self) {
         case HUNTING_GIRL_DEATH_KNOCKBACK:
             HuntingGirlDrawSpirit(
                 self->ext.huntingGirl.random + 3, SPIRIT_PULSE);
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             self->velocityY += FIX(0.125);
             if (self->velocityY > 0) {
                 self->step_s++;
@@ -614,13 +617,15 @@ void EntityHuntingGirl(Entity* self) {
             }
             break;
         case HUNTING_GIRL_DEATH_EXPLODE:
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             self->velocityY += FIX(0.0625);
             if (!(g_Timer & 7)) {
                 PlaySfxPositional(SFX_SMALL_FLAME_IGNITE);
-                entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                entity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_INTENSE_EXPLOSION, self, entity);
                     rotate = self->rotate;
                     if (self->facingLeft) {
                         rotate = -rotate;
@@ -628,7 +633,7 @@ void EntityHuntingGirl(Entity* self) {
                     offsetX = (rsin(rotate) * -48) >> 12;
                     offsetY = (rcos(rotate) * 48) >> 12;
                     // Reuse of tempColor variable
-                    tempColor = Random() & 3;
+                    tempColor = OVL_EXPORT(Random)() & 3;
                     entity->posX.i.hi += (offsetX * tempColor) / 4;
                     entity->posY.i.hi += (offsetY * tempColor) / 4;
                 }
@@ -637,7 +642,7 @@ void EntityHuntingGirl(Entity* self) {
         }
         break;
     }
-    AnimateEntity(anim, self);
+    OVL_EXPORT(AnimateEntity)(anim, self);
     if (!(self->flags & FLAG_DEAD)) {
         posX = self->posX.i.hi;
         posY = self->posY.i.hi;
@@ -683,7 +688,7 @@ void EntityHuntingGirlAttack(Entity* self) {
     Entity* entity;
 
     if (!self->step) {
-        InitializeEntity(g_EInitHuntingGirl);
+        OVL_EXPORT(InitializeEntity)(g_EInitHuntingGirl);
         self->hitboxWidth = self->hitboxHeight = 2;
         self->hitboxState = 1;
         self->ext.huntingGirl.attack = self->attack;

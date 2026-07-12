@@ -133,19 +133,19 @@ static void CheckSurroundings(void) {
     s32 collisionTestOne;
     u16 collisionTestTwo;
 
-    collisionTestOne = UnkCollisionFunc2(sensors_wall);
+    collisionTestOne = OVL_EXPORT(UnkCollisionFunc2)(sensors_wall);
     if (collisionTestOne == 0x80) {
-        collisionTestTwo = UnkCollisionFunc(sensors_unk, 3);
+        collisionTestTwo = OVL_EXPORT(UnkCollisionFunc)(sensors_unk, 3);
         // Think this is triggered when encountering an edge of a pit or hole
         if (collisionTestTwo & 2) {
-            SetStep(SHORT_HOP);
+            OVL_EXPORT(SetStep)(SHORT_HOP);
         }
     } else if (!g_CurrentEntity->ext.bladeSoldier.attackTimer) {
         // If our attack timer has expired and the player
         // is close enough, attack
-        if (GetDistanceToPlayerX() < 0x40 &&
-            g_CurrentEntity->facingLeft ^ (GetSideToPlayer() & 1)) {
-            SetStep(CHARGE_STAB);
+        if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x40 &&
+            g_CurrentEntity->facingLeft ^ (OVL_EXPORT(GetSideToPlayer)() & 1)) {
+            OVL_EXPORT(SetStep)(CHARGE_STAB);
         }
     } else {
         g_CurrentEntity->ext.bladeSoldier.attackTimer--;
@@ -155,9 +155,11 @@ static void CheckSurroundings(void) {
 static void SpawnDustParticles(void) {
     Entity* newEntity;
 
-    newEntity = AllocEntity(&g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
+    newEntity = OVL_EXPORT(AllocEntity)(
+        &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
     if (newEntity != NULL) {
-        CreateEntityFromEntity(E_INTENSE_EXPLOSION, g_CurrentEntity, newEntity);
+        OVL_EXPORT(CreateEntityFromEntity)
+        (E_INTENSE_EXPLOSION, g_CurrentEntity, newEntity);
         newEntity->posY.i.hi += 0x14;
         if (g_CurrentEntity->facingLeft) {
             newEntity->posX.i.hi -= 4;
@@ -177,32 +179,33 @@ void EntityBladeSoldier(Entity* self) {
     s32 var_s2;
 
     if (self->flags & FLAG_DEAD) {
-        SetStep(DEATH);
+        OVL_EXPORT(SetStep)(DEATH);
     }
 
     switch (self->step) {
     case INIT:
-        InitializeEntity(g_EInitBladeSoldier);
+        OVL_EXPORT(InitializeEntity)(g_EInitBladeSoldier);
         entity = self + 1;
-        CreateEntityFromCurrentEntity(E_BLADE_SOLDIER_ATTACK_HITBOX, entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)
+        (E_BLADE_SOLDIER_ATTACK_HITBOX, entity);
         break;
     case FALL_TO_GROUND:
-        if (UnkCollisionFunc3(sensors_ground)) {
-            SetStep(IDLE);
+        if (OVL_EXPORT(UnkCollisionFunc3)(sensors_ground)) {
+            OVL_EXPORT(SetStep)(IDLE);
         }
         break;
     case IDLE:
-        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-        AnimateEntity(anim_idle, self);
+        self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+        OVL_EXPORT(AnimateEntity)(anim_idle, self);
 
         // When the player is close enough wake and begin walking to and fro
-        if (GetDistanceToPlayerX() < 0x60) {
-            SetStep(WALK_FORWARD_BACK);
+        if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x60) {
+            OVL_EXPORT(SetStep)(WALK_FORWARD_BACK);
         }
         break;
     case WALK_TOWARDS:
-        if (!AnimateEntity(anim_walk_towards, self)) {
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        if (!OVL_EXPORT(AnimateEntity)(anim_walk_towards, self)) {
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
         }
         self->ext.bladeSoldier.walkDirection = self->facingLeft;
 
@@ -214,15 +217,15 @@ void EntityBladeSoldier(Entity* self) {
 
         // Once we're back close enough to the player,
         // begin the to and fro walk again
-        if (GetDistanceToPlayerX() < 0x4C) {
+        if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x4C) {
             self->step = WALK_FORWARD_BACK;
         }
 
         CheckSurroundings();
         break;
     case WALK_FORWARD_BACK:
-        if (!AnimateEntity(anim_walk_forward_back, self)) {
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        if (!OVL_EXPORT(AnimateEntity)(anim_walk_forward_back, self)) {
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
         }
         // Walk left and right repeatedly
         self->ext.bladeSoldier.walkDirection = self->facingLeft ^ 1;
@@ -234,7 +237,7 @@ void EntityBladeSoldier(Entity* self) {
         }
 
         // If the player gets too far away walk directly towards them
-        if (GetDistanceToPlayerX() > 0x5C) {
+        if (OVL_EXPORT(GetDistanceToPlayerX)() > 0x5C) {
             self->step = WALK_TOWARDS;
         }
 
@@ -243,14 +246,14 @@ void EntityBladeSoldier(Entity* self) {
     case CHARGE_STAB:
         switch (self->step_s) {
         case 0:
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
             self->ext.bladeSoldier.chargeDuration = 0x20;
             self->velocityX = 0;
             self->velocityY = 0;
             self->step_s++;
             // fallthrough
         case 1:
-            if (!AnimateEntity(anim_charge_stab, self)) {
+            if (!OVL_EXPORT(AnimateEntity)(anim_charge_stab, self)) {
                 if (!--self->ext.bladeSoldier.chargeDuration) {
                     self->step_s++;
                 }
@@ -269,21 +272,22 @@ void EntityBladeSoldier(Entity* self) {
             }
 
             // NOTE: result appears unused?
-            var_s2 = UnkCollisionFunc2(sensors_wall);
+            var_s2 = OVL_EXPORT(UnkCollisionFunc2)(sensors_wall);
             break;
         case 2:
             // Occasionally Blade Soldier will do a sword twirl
             // animation after attacking
-            if (Random() & 1) {
+            if (OVL_EXPORT(Random)() & 1) {
                 self->ext.bladeSoldier.animPtr = (u8*)anim_sword_twirl;
             } else {
                 self->ext.bladeSoldier.animPtr = (u8*)anim_finish_attack;
             }
-            SetSubStep(3);
+            OVL_EXPORT(SetSubStep)(3);
             break;
         case 3:
-            var_s2 = AnimateEntity(self->ext.bladeSoldier.animPtr, self);
-            UnkCollisionFunc2(sensors_wall);
+            var_s2 =
+                OVL_EXPORT(AnimateEntity)(self->ext.bladeSoldier.animPtr, self);
+            OVL_EXPORT(UnkCollisionFunc2)(sensors_wall);
 
             if (abs(self->velocityX) > 0x10000) {
                 SpawnDustParticles();
@@ -300,15 +304,15 @@ void EntityBladeSoldier(Entity* self) {
             // Set the amount of time until we attack the player again
             var_s2 = ++self->ext.bladeSoldier.attackCount & 7;
             self->ext.bladeSoldier.attackTimer = attack_timers[var_s2];
-            SetStep(WALK_FORWARD_BACK);
+            OVL_EXPORT(SetStep)(WALK_FORWARD_BACK);
         }
         break;
     case SHORT_HOP:
         switch (self->step_s) {
         case 0:
-            if (!(AnimateEntity(anim_short_hop, self) & 1)) {
+            if (!(OVL_EXPORT(AnimateEntity)(anim_short_hop, self) & 1)) {
                 var_s2 = self->ext.bladeSoldier.walkDirection;
-                if (!(Random() & 3)) {
+                if (!(OVL_EXPORT(Random)() & 3)) {
                     var_s2 ^= 1;
                 }
 
@@ -325,28 +329,29 @@ void EntityBladeSoldier(Entity* self) {
             }
             break;
         case 1:
-            if (UnkCollisionFunc3(sensors_ground)) {
+            if (OVL_EXPORT(UnkCollisionFunc3)(sensors_ground)) {
                 PlaySfxPositional(SFX_STOMP_HARD_C);
                 self->step_s++;
             }
-            CheckFieldCollision(sensors_unk, 2);
+            OVL_EXPORT(CheckFieldCollision)(sensors_unk, 2);
             break;
         case 2:
-            if (!AnimateEntity(&anim_hop_land, self)) {
-                SetStep(WALK_FORWARD_BACK);
+            if (!OVL_EXPORT(AnimateEntity)(&anim_hop_land, self)) {
+                OVL_EXPORT(SetStep)(WALK_FORWARD_BACK);
             }
             break;
         }
         break;
     case DEATH:
         for (i = 0; i < 8; i++) {
-            entity =
-                AllocEntity(&g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
+            entity = OVL_EXPORT(AllocEntity)(
+                &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
             if (entity == NULL) {
                 break;
             }
 
-            CreateEntityFromCurrentEntity(E_BLADE_SOLDIER_DEATH_PARTS, entity);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)
+            (E_BLADE_SOLDIER_DEATH_PARTS, entity);
             entity->facingLeft = self->facingLeft;
             entity->params = i;
             entity->ext.bladeSoldier.deathPartFallDuration =
@@ -373,19 +378,19 @@ void EntityBladeSoldierDeathParts(Entity* self) {
     if (self->step) {
         if (--self->ext.bladeSoldier.deathPartFallDuration) {
             self->rotate += death_parts_rotation[self->params];
-            FallEntity();
-            MoveEntity();
+            OVL_EXPORT(FallEntity)();
+            OVL_EXPORT(MoveEntity)();
             return;
         }
 
         self->entityId = E_EXPLOSION;
-        self->pfnUpdate = EntityExplosion;
+        self->pfnUpdate = OVL_EXPORT(EntityExplosion);
         self->params = EXPLOSION_SMALL;
         self->step = 0;
         return;
     }
 
-    InitializeEntity(g_EInitBladeSoldier);
+    OVL_EXPORT(InitializeEntity)(g_EInitBladeSoldier);
     self->hitboxState = 0;
     self->flags |=
         FLAG_DESTROY_IF_OUT_OF_CAMERA | FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
@@ -403,7 +408,7 @@ void EntityBladeSoldierAttackHitbox(Entity* self) {
     Entity* bladeSoldier;
 
     if (!self->step) {
-        InitializeEntity(g_EInitBladeSoldierAttackHitbox);
+        OVL_EXPORT(InitializeEntity)(g_EInitBladeSoldierAttackHitbox);
         self->hitboxState = 1;
     }
 

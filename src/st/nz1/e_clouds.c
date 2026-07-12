@@ -20,7 +20,7 @@ void EntityClouds(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitEnvironment);
+        OVL_EXPORT(InitializeEntity)(g_EInitEnvironment);
         self->animCurFrame = 2;
         self->drawFlags = ENTITY_OPACITY;
         self->opacity = 0x40;

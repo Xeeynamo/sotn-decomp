@@ -62,24 +62,24 @@ void EntityCtulhu(Entity* self) {
 
     if ((g_Player.status & PLAYER_STATUS_DEAD) &&
         self->step < CTULHU_PLAYER_DEAD) {
-        SetStep(CTULHU_PLAYER_DEAD);
+        OVL_EXPORT(SetStep)(CTULHU_PLAYER_DEAD);
     }
 
     if ((self->flags & FLAG_DEAD) && self->step < CTULHU_DEATH) {
         self->hitboxState = 0;
         PlaySfxPositional(SFX_CTULHU_DEATH);
-        SetStep(CTULHU_DEATH);
+        OVL_EXPORT(SetStep)(CTULHU_DEATH);
     }
 
     switch (self->step) {
     case CTULHU_INIT:
-        InitializeEntity(g_EInitCtulhu);
+        OVL_EXPORT(InitializeEntity)(g_EInitCtulhu);
         self->animCurFrame = 1;
         // fallthrough
     case CTULHU_GROUND_INIT:
-        if (UnkCollisionFunc3(sensors_ground) & 1) {
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-            SetStep(CTULHU_IDLE);
+        if (OVL_EXPORT(UnkCollisionFunc3)(sensors_ground) & 1) {
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+            OVL_EXPORT(SetStep)(CTULHU_IDLE);
         }
         break;
     case CTULHU_IDLE:
@@ -87,29 +87,29 @@ void EntityCtulhu(Entity* self) {
             self->ext.ctulhu.timer = 0x40;
             self->step_s++;
         }
-        AnimateEntity(anim_idle_breath, self);
+        OVL_EXPORT(AnimateEntity)(anim_idle_breath, self);
         if (self->ext.ctulhu.timer == 0x20) {
             self->facingLeft ^= 1;
         }
 
         // When player is close enough to the direction Ctulhu is looking,
         // switch to attack routine
-        if (self->facingLeft == ((GetSideToPlayer() & 1) ^ 1) &&
-            GetDistanceToPlayerX() < 0x48) {
-            SetStep(CTULHU_HOP);
+        if (self->facingLeft == ((OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1) &&
+            OVL_EXPORT(GetDistanceToPlayerX)() < 0x48) {
+            OVL_EXPORT(SetStep)(CTULHU_HOP);
         }
 
         if (!--self->ext.ctulhu.timer) {
-            SetStep(CTULHU_FLY);
+            OVL_EXPORT(SetStep)(CTULHU_FLY);
         }
         break;
     case CTULHU_FLY:
         switch (self->step_s) {
         case 0:
-            if (!AnimateEntity(anim_fly_from_ground, self)) {
+            if (!OVL_EXPORT(AnimateEntity)(anim_fly_from_ground, self)) {
                 self->ext.ctulhu.y =
                     self->posY.i.hi + g_Tilemap.scrollY.i.hi - 0x20;
-                SetSubStep(1);
+                OVL_EXPORT(SetSubStep)(1);
             }
             break;
         case 1:
@@ -119,7 +119,7 @@ void EntityCtulhu(Entity* self) {
             self->step_s++;
             // fallthrough
         case 2:
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             self->velocityY += FIX(3.0 / 16);
             posY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
             posY -= self->ext.ctulhu.y;
@@ -128,7 +128,7 @@ void EntityCtulhu(Entity* self) {
             }
             break;
         case 3:
-            AnimateEntity(anim_wing_flap, self);
+            OVL_EXPORT(AnimateEntity)(anim_wing_flap, self);
             if (!self->poseTimer && self->pose == 3) {
                 PlaySfxPositional(SFX_WING_FLAP_A);
             }
@@ -146,11 +146,11 @@ void EntityCtulhu(Entity* self) {
             break;
         case 4:
             // Fly horizontally for a period
-            AnimateEntity(anim_wing_flap, self);
+            OVL_EXPORT(AnimateEntity)(anim_wing_flap, self);
             if (!self->poseTimer && self->pose == 3) {
                 PlaySfxPositional(SFX_WING_FLAP_A);
             }
-            colRet = UnkCollisionFunc2(sensors_unk);
+            colRet = OVL_EXPORT(UnkCollisionFunc2)(sensors_unk);
             if (colRet & 0x80) {
                 self->facingLeft ^= 1;
             }
@@ -162,7 +162,7 @@ void EntityCtulhu(Entity* self) {
 
             if (!self->ext.ctulhu.timer) {
                 if (colRet == 1) {
-                    SetSubStep(5);
+                    OVL_EXPORT(SetSubStep)(5);
                 }
             } else {
                 self->ext.ctulhu.timer--;
@@ -171,14 +171,14 @@ void EntityCtulhu(Entity* self) {
         case 5:
             // Land again
             self->animCurFrame = 6;
-            if (UnkCollisionFunc3(sensors_ground) & 1) {
+            if (OVL_EXPORT(UnkCollisionFunc3)(sensors_ground) & 1) {
                 PlaySfxPositional(SFX_EXPLODE_B);
-                SetSubStep(6);
+                OVL_EXPORT(SetSubStep)(6);
             }
             break;
         case 6:
-            if (!AnimateEntity(anim_land, self)) {
-                SetStep(CTULHU_IDLE);
+            if (!OVL_EXPORT(AnimateEntity)(anim_land, self)) {
+                OVL_EXPORT(SetStep)(CTULHU_IDLE);
             }
             break;
         }
@@ -196,13 +196,13 @@ void EntityCtulhu(Entity* self) {
             self->step_s++;
             // fallthrough
         case 1:
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             self->velocityY += FIX(3.0 / 16);
             if (self->velocityY > 0) {
                 self->step_s++;
                 if (!self->ext.ctulhu.hopCount) {
                     self->ext.ctulhu.hopCount = 2;
-                    SetStep(CTULHU_SINGLE_FIREBALL);
+                    OVL_EXPORT(SetStep)(CTULHU_SINGLE_FIREBALL);
                 } else {
                     self->ext.ctulhu.hopCount--;
                 }
@@ -210,22 +210,22 @@ void EntityCtulhu(Entity* self) {
             break;
         case 2:
             self->animCurFrame = 6;
-            if (UnkCollisionFunc3(sensors_ground) & 1) {
+            if (OVL_EXPORT(UnkCollisionFunc3)(sensors_ground) & 1) {
                 PlaySfxPositional(SFX_EXPLODE_B);
-                SetSubStep(3);
+                OVL_EXPORT(SetSubStep)(3);
             }
             break;
         case 3:
-            if (!AnimateEntity(anim_land, self)) {
-                if (GetDistanceToPlayerX() > 0x40) {
-                    self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+            if (!OVL_EXPORT(AnimateEntity)(anim_land, self)) {
+                if (OVL_EXPORT(GetDistanceToPlayerX)() > 0x40) {
+                    self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
                 }
-                SetSubStep(0);
+                OVL_EXPORT(SetSubStep)(0);
 
                 // When Ctulhu has done a hop after shooting a single fireball,
                 // shoot a triple
                 if (self->ext.ctulhu.hopCount == 1) {
-                    SetStep(CTULHU_TRIPLE_FIREBALL);
+                    OVL_EXPORT(SetStep)(CTULHU_TRIPLE_FIREBALL);
 #ifndef DISABLE_TRIPLE_FIREBALL
                     posX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
 
@@ -238,7 +238,7 @@ void EntityCtulhu(Entity* self) {
 #endif
                     if (++self->ext.ctulhu.tripleFireballCount > 2) {
                         self->ext.ctulhu.tripleFireballCount = 0;
-                        SetStep(CTULHU_ICE_SHOCKWAVE);
+                        OVL_EXPORT(SetStep)(CTULHU_ICE_SHOCKWAVE);
                     }
                 } else {
                     posX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
@@ -254,8 +254,8 @@ void EntityCtulhu(Entity* self) {
         }
         break;
     case CTULHU_SINGLE_FIREBALL:
-        if (!AnimateEntity(anim_shoot_single_fireball, self)) {
-            SetStep(CTULHU_HOP);
+        if (!OVL_EXPORT(AnimateEntity)(anim_shoot_single_fireball, self)) {
+            OVL_EXPORT(SetStep)(CTULHU_HOP);
             self->step_s = 2;
         }
 
@@ -273,11 +273,13 @@ void EntityCtulhu(Entity* self) {
             if (angle < ROT(-56.25)) {
                 angle = ROT(-56.25);
             }
-            if (GetDistanceToPlayerY() < 0x60) {
+            if (OVL_EXPORT(GetDistanceToPlayerY)() < 0x60) {
                 PlaySfxPositional(SFX_FM_EXPLODE_SWISHES);
-                newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                newEntity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(E_CTULHU_FIREBALL, self, newEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_CTULHU_FIREBALL, self, newEntity);
                     newEntity->facingLeft = self->facingLeft;
                     if (self->facingLeft) {
                         newEntity->posX.i.hi += 0x10;
@@ -292,16 +294,18 @@ void EntityCtulhu(Entity* self) {
         }
         break;
     case CTULHU_TRIPLE_FIREBALL:
-        if (!AnimateEntity(anim_shoot_triple_fireball, self)) {
-            SetStep(CTULHU_HOP);
+        if (!OVL_EXPORT(AnimateEntity)(anim_shoot_triple_fireball, self)) {
+            OVL_EXPORT(SetStep)(CTULHU_HOP);
         }
-        if (GetDistanceToPlayerY() < 0x60 && self->animCurFrame == 0x24 &&
-            !self->poseTimer) {
+        if (OVL_EXPORT(GetDistanceToPlayerY)() < 0x60 &&
+            self->animCurFrame == 0x24 && !self->poseTimer) {
             PlaySfxPositional(SFX_FM_EXPLODE_SWISHES);
             for (i = 0; i < LEN(triple_fireball_rot_z); i++) {
-                newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                newEntity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(E_CTULHU_FIREBALL, self, newEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_CTULHU_FIREBALL, self, newEntity);
                     newEntity->facingLeft = self->facingLeft;
                     if (self->facingLeft) {
                         newEntity->posX.i.hi += 0x10;
@@ -315,18 +319,20 @@ void EntityCtulhu(Entity* self) {
         }
         break;
     case CTULHU_ICE_SHOCKWAVE:
-        if (!AnimateEntity(anim_shockwave_throw, self)) {
-            SetStep(CTULHU_IDLE);
+        if (!OVL_EXPORT(AnimateEntity)(anim_shockwave_throw, self)) {
+            OVL_EXPORT(SetStep)(CTULHU_IDLE);
         }
 
-        if (GetDistanceToPlayerY() < 0x60 && self->pose == 0x9 &&
+        if (OVL_EXPORT(GetDistanceToPlayerY)() < 0x60 && self->pose == 0x9 &&
             !self->poseTimer) {
             // Don't think SFX can overlap so this laugh never plays?
             PlaySfxPositional(SFX_CTULHU_LAUGH);
             PlaySfxPositional(SFX_FM_THUNDER_EXPLODE);
-            newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            newEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_CTULHU_ICE_SHOCKWAVE, self, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_CTULHU_ICE_SHOCKWAVE, self, newEntity);
                 newEntity->facingLeft = self->facingLeft;
                 newEntity->zPriority = self->zPriority + 1;
 
@@ -343,24 +349,24 @@ void EntityCtulhu(Entity* self) {
         switch (self->step_s) {
         case 0:
             // Once Ctulhu is on the group begin laughing SFX
-            if (UnkCollisionFunc3(sensors_ground) & 1) {
+            if (OVL_EXPORT(UnkCollisionFunc3)(sensors_ground) & 1) {
                 PlaySfxPositional(SFX_CTULHU_LAUGH);
                 self->step_s++;
             }
             break;
         case 1:
-            if (!AnimateEntity(anim_player_death_laugh, self)) {
-                SetSubStep(2);
+            if (!OVL_EXPORT(AnimateEntity)(anim_player_death_laugh, self)) {
+                OVL_EXPORT(SetSubStep)(2);
             }
             break;
         case 2:
             if ((g_Timer & 0xF) == 0) {
                 PlaySfxPositional(SFX_CTULHU_ROAR);
             }
-            AnimateEntity(anim_laugh_static, self);
+            OVL_EXPORT(AnimateEntity)(anim_laugh_static, self);
             // If player is revived, return back to standard action
             if (!(g_Player.status & PLAYER_STATUS_DEAD)) {
-                SetStep(CTULHU_IDLE);
+                OVL_EXPORT(SetStep)(CTULHU_IDLE);
             }
         }
         break;
@@ -531,13 +537,15 @@ void EntityCtulhu(Entity* self) {
                 PlaySfxPositional(SFX_FM_EXPLODE_B);
             }
             prim = self->ext.ctulhu.deathExplosionPrim;
-            posX = Random() & 0x3F;
+            posX = OVL_EXPORT(Random)() & 0x3F;
             posY = self->ext.ctulhu.y;
             if ((g_Timer & 0xF) == 0) {
-                newEntity = AllocEntity(&g_Entities[STAGE_ENTITY_START],
-                                        &g_Entities[TOTAL_ENTITY_COUNT]);
+                newEntity = OVL_EXPORT(AllocEntity)(
+                    &g_Entities[STAGE_ENTITY_START],
+                    &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (newEntity != NULL) {
-                    CreateEntityFromCurrentEntity(E_EXPLOSION, newEntity);
+                    OVL_EXPORT(CreateEntityFromCurrentEntity)
+                    (E_EXPLOSION, newEntity);
                     newEntity->posX.i.hi = prim->x0 + posX;
 #ifdef VERSION_PSP
                     newEntity->posY.i.hi = prim->y2 - 0x30 + posY;
@@ -547,10 +555,12 @@ void EntityCtulhu(Entity* self) {
                     newEntity->params = 3;
                 }
             }
-            newEntity = AllocEntity(&g_Entities[STAGE_ENTITY_START],
-                                    &g_Entities[TOTAL_ENTITY_COUNT]);
+            newEntity = OVL_EXPORT(AllocEntity)(
+                &g_Entities[STAGE_ENTITY_START],
+                &g_Entities[TOTAL_ENTITY_COUNT]);
             if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(E_CTULHU_DEATH, newEntity);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)
+                (E_CTULHU_DEATH, newEntity);
                 newEntity->posX.i.hi = self->posX.i.hi - 0x20 + posX;
                 newEntity->posY.i.hi = self->posY.i.hi + posY + 4;
                 newEntity->facingLeft = colRet;
@@ -599,7 +609,7 @@ void EntityCtulhuFireball(Entity* self) {
     s16 rotate;
 
     if (!self->step) {
-        InitializeEntity(g_EInitCtulhuFireball);
+        OVL_EXPORT(InitializeEntity)(g_EInitCtulhuFireball);
         self->drawFlags = ENTITY_ROTATE;
         rotate = self->rotate;
         if (self->facingLeft) {
@@ -635,8 +645,8 @@ void EntityCtulhuFireball(Entity* self) {
             DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
     }
 
-    AnimateEntity(anim_fireball, self);
-    MoveEntity();
+    OVL_EXPORT(AnimateEntity)(anim_fireball, self);
+    OVL_EXPORT(MoveEntity)();
     prim = self->ext.prim;
     prim->x0 = prim->x2 = self->posX.i.hi - 24;
     prim->x1 = prim->x3 = self->posX.i.hi + 24;
@@ -651,9 +661,9 @@ void EntityCtulhuFireball(Entity* self) {
     }
 
     if (self->flags & FLAG_DEAD) {
-        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        newEntity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, newEntity);
             newEntity->params = 2;
         }
         DestroyEntity(self);
@@ -674,7 +684,7 @@ void EntityCtulhuIceShockwave(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitCtulhuIceShockwave);
+        OVL_EXPORT(InitializeEntity)(g_EInitCtulhuIceShockwave);
         self->animCurFrame = 44;
         self->hitboxOffX = 7;
         self->blendMode = BLEND_TRANSP | BLEND_ADD;
@@ -703,7 +713,7 @@ void EntityCtulhuIceShockwave(Entity* self) {
         } else {
             self->velocityX = FIX(-4.0);
         }
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
 
         if (g_Timer & 1) {
             self->scaleY = 264;
@@ -780,7 +790,7 @@ void EntityCtulhuIceShockwave(Entity* self) {
         }
         break;
     case 2:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->opacity -= 8;
         self->scaleY += 24;
         self->velocityX -= self->velocityX / 8;
@@ -880,7 +890,7 @@ static u8 anim_death[] = {3, 1, 3, 2, 3, 3,  3, 4,  3, 5,  3, 6,  3,  7,
 void EntityCtulhuDeath(Entity* self) {
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         self->animSet = 14;
         self->unk5A = 121;
         self->palette = PAL_FLAG(PAL_CTULHU_DEATH);
@@ -897,7 +907,7 @@ void EntityCtulhuDeath(Entity* self) {
         // fallthrough
     case 1:
         self->posY.val -= FIX(1);
-        if (!AnimateEntity(anim_death, self)) {
+        if (!OVL_EXPORT(AnimateEntity)(anim_death, self)) {
             DestroyEntity(self);
         }
         break;

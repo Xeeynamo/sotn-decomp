@@ -131,7 +131,7 @@ void func_us_801BB984(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180A1C);
+        OVL_EXPORT(InitializeEntity)(D_us_80180A1C);
         self->animCurFrame = 0x1F;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
         if (primIndex != -1) {
@@ -175,13 +175,13 @@ void func_us_801BB984(Entity* self) {
         if (g_CastleFlags[NO1_ELEVATOR_ACTIVATED]) {
             if (tempEntity->ext.et_801BBD90.unk84 == params &&
                 tempEntity->ext.et_801BBD90.unk85 == params) {
-                SetStep(2);
+                OVL_EXPORT(SetStep)(2);
             }
             tempEntity = &PLAYER;
             dx = self->posX.i.hi - tempEntity->posX.i.hi;
             if (dx < 0) {
                 self->ext.et_801BBD90.unk88 = 0x20;
-            } else if (dx < 0x20 && GetDistanceToPlayerY() < 0x10) {
+            } else if (dx < 0x20 && OVL_EXPORT(GetDistanceToPlayerY)() < 0x10) {
                 if (!--self->ext.et_801BBD90.unk88) {
                     self->step = 4;
                 }
@@ -266,7 +266,7 @@ void func_us_801BBD90(Entity* self) {
     magnitude = 8;
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_801809F8);
+        OVL_EXPORT(InitializeEntity)(D_us_801809F8);
         self->animCurFrame = 0;
         break;
 
@@ -585,15 +585,15 @@ static void func_us_801BC598(Primitive* prim) {
         }
         UpdateAnimation(D_us_80181540, prim);
         UnkPrimHelper(prim);
-        if (Random() % 8 == 0) {
+        if (OVL_EXPORT(Random)() % 8 == 0) {
             otherPrim = g_CurrentEntity->ext.et_801BBD90.unk7C;
             otherPrim = FindFirstUnkPrim2(otherPrim, 2);
             if (otherPrim != NULL) {
                 UnkPolyFunc2(otherPrim);
                 otherPrim->x0 = prim->next->x1;
                 otherPrim->y0 = prim->next->y0;
-                otherPrim->g1 = (Random() & 1) + 1;
-                otherPrim->g2 = (Random() & 3) + 1;
+                otherPrim->g1 = (OVL_EXPORT(Random)() & 1) + 1;
+                otherPrim->g2 = (OVL_EXPORT(Random)() & 3) + 1;
                 otherPrim->next->u2 = 4;
                 otherPrim->next->r3 = prim->next->r3;
             }
@@ -710,7 +710,7 @@ void func_us_801BCB34(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_801809F8);
+        OVL_EXPORT(InitializeEntity)(D_us_801809F8);
         self->ext.et_801BBD90.unk84 = self->params;
         self->ext.et_801BBD90.unk85 = self->ext.et_801BBD90.unk84;
         self->ext.et_801BBD90.unk86 = 0;
@@ -732,7 +732,7 @@ void func_us_801BCB34(Entity* self) {
             self->ext.et_801BBD90.unk7C = NULL;
         }
         tempEntity = self + 1;
-        CreateEntityFromEntity(E_ID(ID_2A), self, tempEntity);
+        OVL_EXPORT(CreateEntityFromEntity)(E_ID(ID_2A), self, tempEntity);
         tempEntity->posY.i.hi -= 0x22;
         tempEntity->ext.et_801BBD90.unk8C = 0;
         break;
@@ -741,7 +741,8 @@ void func_us_801BCB34(Entity* self) {
         break;
     case 2:
         self->velocityY = 0;
-        if (GetDistanceToPlayerX() < 6 && GetDistanceToPlayerY() < 16) {
+        if (OVL_EXPORT(GetDistanceToPlayerX)() < 6 &&
+            OVL_EXPORT(GetDistanceToPlayerY)() < 16) {
             i = g_Player.status;
             if (i & PLAYER_STATUS_ELEVATOR_READY_MASK) {
                 break;
@@ -795,7 +796,7 @@ void func_us_801BCB34(Entity* self) {
             g_Player.padSim = 0;
             g_Player.demo_timer = 64;
         }
-        if (AnimateEntity(D_us_80181550, self) == 0) {
+        if (OVL_EXPORT(AnimateEntity)(D_us_80181550, self) == 0) {
             PlaySfxPositional(SFX_ELEVATOR_START);
             if (!self->ext.et_801BBD90.unk94) {
                 g_unkGraphicsStruct.unk1C |= 1;
@@ -817,11 +818,11 @@ void func_us_801BCB34(Entity* self) {
     case 4:
         if (!self->ext.et_801BBD90.unk94) {
             if (!self->ext.et_801BBD90.unk88) {
-                MoveEntity();
+                OVL_EXPORT(MoveEntity)();
                 player->posY.i.hi = self->posY.i.hi - 4;
             } else {
                 player->posY.i.hi = self->posY.i.hi - 4;
-                MoveEntity();
+                OVL_EXPORT(MoveEntity)();
                 self->ext.et_801BBD90.unk88 -= 1;
             }
             g_api.func_8010DFF0(0, 1);
@@ -830,14 +831,14 @@ void func_us_801BCB34(Entity* self) {
             g_Player.demo_timer = 2;
             g_Player.vram_flag |= VRAM_FLAG_UNK40 | TOUCHING_GROUND;
         } else {
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
         }
         posY = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
         switch (self->step_s) {
         case 0:
             self->velocityY -= FIX(0.125);
             if (self->ext.et_801BBD90.unk7C != NULL) {
-                if ((Random() % 10) == 0) {
+                if ((OVL_EXPORT(Random)() % 10) == 0) {
                     prim = self->ext.et_801BBD90.unk7C;
                     prim = FindFirstUnkPrim2(prim, 2);
                     if (prim != NULL) {
@@ -859,11 +860,11 @@ void func_us_801BCB34(Entity* self) {
                     self->velocityY = -self->velocityY;
                     self->step_s = 2;
                     for (i = 0; i < 3; i++) {
-                        tempEntity =
-                            AllocEntity(&g_Entities[224], &g_Entities[256]);
+                        tempEntity = OVL_EXPORT(AllocEntity)(
+                            &g_Entities[224], &g_Entities[256]);
                         if (tempEntity != NULL) {
-                            CreateEntityFromEntity(
-                                E_INTENSE_EXPLOSION, self, tempEntity);
+                            OVL_EXPORT(CreateEntityFromEntity)
+                            (E_INTENSE_EXPLOSION, self, tempEntity);
                             tempEntity->posX.i.hi += (i * 8) - 8;
                             tempEntity->posY.i.hi -= 0x18;
                             tempEntity->drawFlags |= ENTITY_ROTATE;
@@ -915,11 +916,11 @@ void func_us_801BCB34(Entity* self) {
     case 5:
         if (!self->ext.et_801BBD90.unk94) {
             if (!self->ext.et_801BBD90.unk88) {
-                MoveEntity();
+                OVL_EXPORT(MoveEntity)();
                 player->posY.i.hi = self->posY.i.hi - 4;
             } else {
                 player->posY.i.hi = self->posY.i.hi - 4;
-                MoveEntity();
+                OVL_EXPORT(MoveEntity)();
                 self->ext.et_801BBD90.unk88 -= 1;
             }
             g_api.func_8010DFF0(0, 1);
@@ -927,14 +928,14 @@ void func_us_801BCB34(Entity* self) {
             g_Player.padSim = PAD_DOWN;
             g_Player.demo_timer = 2;
         } else {
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
         }
         posY = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
         switch (self->step_s) {
         case 0:
             self->velocityY += FIX(0.25);
             if (self->ext.et_801BBD90.unk7C != NULL) {
-                if (Random() % 10 == 0) {
+                if (OVL_EXPORT(Random)() % 10 == 0) {
                     prim = self->ext.et_801BBD90.unk7C;
                     prim = FindFirstUnkPrim2(prim, 2);
                     if (prim != NULL) {
@@ -958,11 +959,11 @@ void func_us_801BCB34(Entity* self) {
                     self->posY.i.hi += collider.unk18;
                     self->step_s = 2;
                     for (i = 0; i < 3; i++) {
-                        tempEntity =
-                            AllocEntity(&g_Entities[224], &g_Entities[256]);
+                        tempEntity = OVL_EXPORT(AllocEntity)(
+                            &g_Entities[224], &g_Entities[256]);
                         if (tempEntity != NULL) {
-                            CreateEntityFromEntity(
-                                E_INTENSE_EXPLOSION, self, tempEntity);
+                            OVL_EXPORT(CreateEntityFromEntity)
+                            (E_INTENSE_EXPLOSION, self, tempEntity);
                             tempEntity->posX.i.hi += (i * 8) - 8;
                             tempEntity->posY.i.hi += 0x24;
                             tempEntity->drawFlags |= ENTITY_ROTATE;
@@ -998,11 +999,11 @@ void func_us_801BCB34(Entity* self) {
                     self->velocityY = 0;
                     self->step_s = 3;
                     for (i = 0; i < 3; i++) {
-                        tempEntity =
-                            AllocEntity(&g_Entities[224], &g_Entities[256]);
+                        tempEntity = OVL_EXPORT(AllocEntity)(
+                            &g_Entities[224], &g_Entities[256]);
                         if (tempEntity != NULL) {
-                            CreateEntityFromEntity(
-                                E_INTENSE_EXPLOSION, self, tempEntity);
+                            OVL_EXPORT(CreateEntityFromEntity)
+                            (E_INTENSE_EXPLOSION, self, tempEntity);
                             tempEntity->posX.i.hi += (i * 8) - 8;
                             tempEntity->posY.i.hi += 0x24;
                             tempEntity->drawFlags |= ENTITY_ROTATE;
@@ -1047,7 +1048,7 @@ void func_us_801BCB34(Entity* self) {
                 g_Player.padSim = 0;
                 g_Player.demo_timer = 2;
             }
-            if (AnimateEntity(D_us_8018155C, self) == 0) {
+            if (OVL_EXPORT(AnimateEntity)(D_us_8018155C, self) == 0) {
                 self->pose = 0;
                 self->poseTimer = 0;
                 self->step_s++;

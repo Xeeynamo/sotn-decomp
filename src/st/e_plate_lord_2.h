@@ -248,7 +248,7 @@ void func_us_801D542C(Entity* self) {
     tempEntity->attack = 1;
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitPlateLord);
+        OVL_EXPORT(InitializeEntity)(g_EInitPlateLord);
         self->animCurFrame = 7;
         self->zPriority = 0xB4;
         self->drawFlags |= ENTITY_ROTATE;
@@ -379,9 +379,10 @@ void func_us_801D542C(Entity* self) {
         if (!(g_Timer & self->ext.plateLordUnknown.unk9C)) {
             self->ext.plateLordUnknown.unk9C++;
             tempEntity = self + 4;
-            tempEntity2 = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            tempEntity2 =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (tempEntity2 != NULL) {
-                CreateEntityFromEntity(6U, tempEntity, tempEntity2);
+                OVL_EXPORT(CreateEntityFromEntity)(6U, tempEntity, tempEntity2);
                 tempEntity2->zPriority = tempEntity->zPriority + 2;
                 tempEntity2->params = 0x10;
                 tempEntity2->posY.i.hi += 0xA;

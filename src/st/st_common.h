@@ -58,7 +58,7 @@ void DestroyEntitiesFromIndex(s16 index) {
 }
 #endif
 
-void PreventEntityFromRespawning(Entity* entity) {
+void OVL_EXPORT(PreventEntityFromRespawning)(Entity* entity) {
     if (entity->entityRoomIndex) {
         u16 index = entity->entityRoomIndex - 1 >> 5;
         g_unkGraphicsStruct.D_80097428[index] |=
@@ -76,7 +76,7 @@ void PreventEntityFromRespawning(Entity* entity) {
 
 #define SELF_BB (*((u8*)&self->unkB8 + 3))
 
-u8 UnkAnimFunc(u8 frames[], Entity* self, u8 arg2) {
+u8 OVL_EXPORT(UnkAnimFunc)(u8 frames[], Entity* self, u8 arg2) {
     u16 animFrameStart = self->pose * 2;
     u8* var_s1 = &frames[animFrameStart];
     s16 var_a1 = 0;
@@ -94,7 +94,7 @@ u8 UnkAnimFunc(u8 frames[], Entity* self, u8 arg2) {
             var_s1 = frames;
             self->pose = 0;
             self->poseTimer = 0;
-            SELF_BB = (arg2 * Random()) >> 8;
+            SELF_BB = (arg2 * OVL_EXPORT(Random)()) >> 8;
             self->poseTimer = *var_s1++ + SELF_BB;
             self->animCurFrame = *var_s1;
             self->pose++;
@@ -108,7 +108,7 @@ u8 UnkAnimFunc(u8 frames[], Entity* self, u8 arg2) {
 }
 
 // Absolute distance from g_CurrentEntity to the player in the X Axis
-s16 GetDistanceToPlayerX(void) {
+s16 OVL_EXPORT(GetDistanceToPlayerX)(void) {
     Entity* player = &PLAYER;
     s16 xDistance = g_CurrentEntity->posX.i.hi - player->posX.i.hi;
 
@@ -119,7 +119,7 @@ s16 GetDistanceToPlayerX(void) {
 }
 
 // Absolute distance from g_CurrentEntity to the player in the Y Axis
-s32 GetDistanceToPlayerY(void) {
+s32 OVL_EXPORT(GetDistanceToPlayerY)(void) {
     Entity* player = &PLAYER;
     s32 yDistance = g_CurrentEntity->posY.i.hi - player->posY.i.hi;
 
@@ -135,7 +135,7 @@ s32 GetDistanceToPlayerY(void) {
  * 1 = Player is on the left side
  * 2 = Player is above
  */
-u8 GetSideToPlayer() {
+u8 OVL_EXPORT(GetSideToPlayer)() {
     u8 side = 0;
     Entity* player = &PLAYER;
 
@@ -149,12 +149,12 @@ u8 GetSideToPlayer() {
     return side;
 }
 
-void MoveEntity(void) {
+void OVL_EXPORT(MoveEntity)(void) {
     g_CurrentEntity->posX.val += g_CurrentEntity->velocityX;
     g_CurrentEntity->posY.val += g_CurrentEntity->velocityY;
 }
 
-void FallEntity(void) {
+void OVL_EXPORT(FallEntity)(void) {
 #define TERMINAL_VELOCITY FIX(6)
 #define GRAVITY FIX(0.25f)
 
@@ -168,8 +168,8 @@ u8 func_8019214C(void) {
     u8 unkState;
     Entity* entity;
 
-    MoveEntity();
-    FallEntity();
+    OVL_EXPORT(MoveEntity)();
+    OVL_EXPORT(FallEntity)();
 
     entity = g_CurrentEntity;
 
@@ -181,15 +181,15 @@ u8 func_8019214C(void) {
 }
 #endif
 
-s32 UnkCollisionFunc3(s16* sensors) {
+s32 OVL_EXPORT(UnkCollisionFunc3)(s16* sensors) {
     Collider col;
     Collider colBack;
     s16 x;
     s16 y;
     s16 i;
 
-    MoveEntity();
-    FallEntity();
+    OVL_EXPORT(MoveEntity)();
+    OVL_EXPORT(FallEntity)();
     if (g_CurrentEntity->velocityY >= 0) {
         x = g_CurrentEntity->posX.i.hi;
         y = g_CurrentEntity->posY.i.hi;
@@ -241,8 +241,8 @@ s32 func_80192408(u16* sensors, u16 arg1) {
     s16 y;
     Collider* c;
 
-    MoveEntity();
-    FallEntity();
+    OVL_EXPORT(MoveEntity)();
+    OVL_EXPORT(FallEntity)();
     if (g_CurrentEntity->velocityY >= 0) {
         x = g_CurrentEntity->posX.i.hi;
         y = i = g_CurrentEntity->posY.i.hi; // FAKE, no reason to set i.
@@ -294,7 +294,7 @@ s32 func_80192408(u16* sensors, u16 arg1) {
 }
 #endif
 
-s32 UnkCollisionFunc2(s16* posX) {
+s32 OVL_EXPORT(UnkCollisionFunc2)(s16* posX) {
     Collider collider;
     s16 x, y;
 
@@ -344,7 +344,7 @@ s32 UnkCollisionFunc2(s16* posX) {
     return 1;
 }
 
-Entity* AllocEntity(Entity* start, Entity* end) {
+Entity* OVL_EXPORT(AllocEntity)(Entity* start, Entity* end) {
     Entity* current = start;
 
     while (current < end) {
@@ -357,37 +357,38 @@ Entity* AllocEntity(Entity* start, Entity* end) {
     return NULL;
 }
 
-s32 GetSineScaled(u8 arg0, s16 arg1) {
+s32 OVL_EXPORT(GetSineScaled)(u8 arg0, s16 arg1) {
     s32 sine = g_SineTable[arg0];
     return sine * arg1;
 }
 
-s16 GetSine(u8 arg0) { return g_SineTable[arg0]; }
+s16 OVL_EXPORT(GetSine)(u8 arg0) { return g_SineTable[arg0]; }
 
-void SetEntityVelocityFromAngle(u8 arg0, s16 arg1) {
-    g_CurrentEntity->velocityX = GetSineScaled(arg0, arg1);
-    g_CurrentEntity->velocityY = GetSineScaled(arg0 - 0x40, arg1);
+void OVL_EXPORT(SetEntityVelocityFromAngle)(u8 arg0, s16 arg1) {
+    g_CurrentEntity->velocityX = OVL_EXPORT(GetSineScaled)(arg0, arg1);
+    g_CurrentEntity->velocityY = OVL_EXPORT(GetSineScaled)(arg0 - 0x40, arg1);
 }
 
-u8 Ratan2Shifted(s16 x, s16 y) {
+u8 OVL_EXPORT(Ratan2Shifted)(s16 x, s16 y) {
     u8 angle = ratan2(y, x) >> 4;
     return angle + 0x40;
 }
 
-u8 GetAngleBetweenEntitiesShifted(Entity* a, Entity* b) {
+u8 OVL_EXPORT(GetAngleBetweenEntitiesShifted)(Entity* a, Entity* b) {
     s16 dx = b->posX.i.hi - a->posX.i.hi;
     s16 dy = b->posY.i.hi - a->posY.i.hi;
-    return Ratan2Shifted(dx, dy);
+    return OVL_EXPORT(Ratan2Shifted)(dx, dy);
 }
 
 // original name: search_point
-u8 GetAnglePointToEntityShifted(s16 x, s16 y) {
+u8 OVL_EXPORT(GetAnglePointToEntityShifted)(s16 x, s16 y) {
     s16 dx = x - g_CurrentEntity->posX.i.hi;
     s16 dy = y - g_CurrentEntity->posY.i.hi;
-    return Ratan2Shifted(dx, dy);
+    return OVL_EXPORT(Ratan2Shifted)(dx, dy);
 }
 
-u8 AdjustValueWithinThreshold(u8 threshold, u8 currentValue, u8 targetValue) {
+u8 OVL_EXPORT(AdjustValueWithinThreshold)(
+    u8 threshold, u8 currentValue, u8 targetValue) {
     u8 absoluteDifference;
     s8 relativeDifference = targetValue - currentValue;
 
@@ -410,20 +411,20 @@ u8 AdjustValueWithinThreshold(u8 threshold, u8 currentValue, u8 targetValue) {
     return targetValue;
 }
 
-void UnkEntityFunc0(u16 slope, s16 speed) {
+void OVL_EXPORT(UnkEntityFunc0)(u16 slope, s16 speed) {
     g_CurrentEntity->velocityX = rcos(slope) * speed / 16;
     g_CurrentEntity->velocityY = rsin(slope) * speed / 16;
 }
 
-u16 Ratan2(s16 x, s16 y) { return ratan2(y, x); }
+u16 OVL_EXPORT(Ratan2)(s16 x, s16 y) { return ratan2(y, x); }
 
-u16 GetAngleBetweenEntities(Entity* a, Entity* b) {
+u16 OVL_EXPORT(GetAngleBetweenEntities)(Entity* a, Entity* b) {
     s32 dx = b->posX.i.hi - a->posX.i.hi;
     s32 dy = b->posY.i.hi - a->posY.i.hi;
     return ratan2(dy, dx);
 }
 
-u16 GetAnglePointToEntity(s32 x, s32 y) {
+u16 OVL_EXPORT(GetAnglePointToEntity)(s32 x, s32 y) {
     s16 dx = x - (u16)g_CurrentEntity->posX.i.hi;
     s16 dy = y - (u16)g_CurrentEntity->posY.i.hi;
     return ratan2(dy, dx);
@@ -435,7 +436,7 @@ u16 GetAnglePointToEntity(s32 x, s32 y) {
 // some function (perhaps pointing toward the player). The limited delta
 // forces the angle to only rotate by a certain amount per frame.
 // Enables smooth rotation from one angle to another.
-u16 LimitAngleChange(u16 delta, u16 base, u16 target) {
+u16 OVL_EXPORT(LimitAngleChange)(u16 delta, u16 base, u16 target) {
     u16 diff = (s16)(target - base);
     u16 ret;
 
@@ -466,20 +467,20 @@ u16 LimitAngleChange(u16 delta, u16 base, u16 target) {
     return target;
 }
 
-void SetStep(u8 step) {
+void OVL_EXPORT(SetStep)(u8 step) {
     g_CurrentEntity->step = step;
     g_CurrentEntity->step_s = 0;
     g_CurrentEntity->pose = 0;
     g_CurrentEntity->poseTimer = 0;
 }
 
-void SetSubStep(u8 step_s) {
+void OVL_EXPORT(SetSubStep)(u8 step_s) {
     g_CurrentEntity->step_s = step_s;
     g_CurrentEntity->pose = 0;
     g_CurrentEntity->poseTimer = 0;
 }
 
-void EntityExplosionSpawn(u16 params, u16 arg1) {
+void OVL_EXPORT(EntityExplosionSpawn)(u16 params, u16 arg1) {
 #if STAGE != STAGE_ST0
     if (arg1) {
 #if defined VERSION_BETA
@@ -495,7 +496,7 @@ void EntityExplosionSpawn(u16 params, u16 arg1) {
     }
 
     g_CurrentEntity->entityId = E_EXPLOSION;
-    g_CurrentEntity->pfnUpdate = (PfnEntityUpdate)EntityExplosion;
+    g_CurrentEntity->pfnUpdate = (PfnEntityUpdate)OVL_EXPORT(EntityExplosion);
     g_CurrentEntity->params = params;
     g_CurrentEntity->animCurFrame = 0;
     g_CurrentEntity->drawFlags = ENTITY_DEFAULT;
@@ -503,7 +504,7 @@ void EntityExplosionSpawn(u16 params, u16 arg1) {
     g_CurrentEntity->step_s = 0;
 }
 
-void InitializeEntity(u16 arg0[]) {
+void OVL_EXPORT(InitializeEntity)(u16 arg0[]) {
     u16 enemyId;
     EnemyDef* enemyDef;
 
@@ -532,13 +533,13 @@ void InitializeEntity(u16 arg0[]) {
     }
 }
 
-void EntityDummy(Entity* arg0) {
+void OVL_EXPORT(EntityDummy)(Entity* arg0) {
     if (!arg0->step) {
         arg0->step++;
     }
 }
 
-s32 UnkCollisionFunc(s16* hitSensors, s16 sensorCount) {
+s32 OVL_EXPORT(UnkCollisionFunc)(s16* hitSensors, s16 sensorCount) {
     Collider collider;
     s32 velocityX;
     s16 i;
@@ -569,7 +570,7 @@ s32 UnkCollisionFunc(s16* hitSensors, s16 sensorCount) {
     // implicit return
 }
 
-void CheckFieldCollision(s16* hitSensors, s16 sensorCount) {
+void OVL_EXPORT(CheckFieldCollision)(s16* hitSensors, s16 sensorCount) {
     Collider collider;
     s32 velocityX;
     s16 i;
@@ -608,7 +609,7 @@ void CheckFieldCollision(s16* hitSensors, s16 sensorCount) {
 // and from which direction.
 // w and h holds the collider size of the entity
 // while flags stores which sides are solid
-u8 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
+u8 OVL_EXPORT(GetPlayerCollisionWith)(Entity* self, u16 w, u16 h, u16 flags) {
     Entity* player = &PLAYER;
     s16 x, y;
     u16 checks;
@@ -740,10 +741,10 @@ u8 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
     return 0;
 }
 
-void ReplaceBreakableWithItemDrop(Entity* self) {
+void OVL_EXPORT(ReplaceBreakableWithItemDrop)(Entity* self) {
     u16 params;
 
-    PreventEntityFromRespawning(self);
+    OVL_EXPORT(PreventEntityFromRespawning)(self);
 
 #if STAGE != STAGE_ST0
     if (!(g_Status.relics[RELIC_CUBE_OF_ZOE] & 2)) {
@@ -756,12 +757,12 @@ void ReplaceBreakableWithItemDrop(Entity* self) {
 
     if (params < 0x80) {
         self->entityId = E_PRIZE_DROP;
-        self->pfnUpdate = (PfnEntityUpdate)EntityPrizeDrop;
+        self->pfnUpdate = (PfnEntityUpdate)OVL_EXPORT(EntityPrizeDrop);
         self->poseTimer = 0;
         self->pose = 0;
     } else {
         self->entityId = E_EQUIP_ITEM_DROP;
-        self->pfnUpdate = (PfnEntityUpdate)EntityEquipItemDrop;
+        self->pfnUpdate = (PfnEntityUpdate)OVL_EXPORT(EntityEquipItemDrop);
         params -= 0x80;
     }
 

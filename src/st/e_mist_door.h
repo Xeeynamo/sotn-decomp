@@ -41,7 +41,7 @@ void EntityMistDoor(Entity* self) {
     Entity* messageBox;
 
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         self->hitboxState = 1;
         self->hitPoints = 0x7FFF;
         self->attack = 0;
@@ -49,9 +49,11 @@ void EntityMistDoor(Entity* self) {
         self->hitboxHeight = 0x18;
     }
     if (self->hitFlags) {
-        messageBox = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        messageBox =
+            OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (messageBox != NULL) {
-            CreateEntityFromCurrentEntity(E_MESSAGE_BOX, messageBox);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)
+            (E_MESSAGE_BOX, messageBox);
             messageBox->posX.i.hi = 0x80;
             messageBox->posY.i.hi = 0xB0;
 #ifdef VERSION_PSP

@@ -22,7 +22,7 @@ static void UpdateFallingPebble(Primitive* prim) {
 
     switch (prim->p3) {
     case 1: // Init (and fallthru to Idle)
-        rand = (Random() & 1);
+        rand = (OVL_EXPORT(Random)() & 1);
         prim->u0 = rand + 1;
         prim->v0 = rand + 1;
         prim->r0 = 0x60;
@@ -30,7 +30,7 @@ static void UpdateFallingPebble(Primitive* prim) {
         prim->b0 = 0x30;
         prim->priority = 0xA0;
         prim->drawMode = DRAW_UNK02;
-        prim->p2 = (Random() & 0x1F) + 0x10;
+        prim->p2 = (OVL_EXPORT(Random)() & 0x1F) + 0x10;
         prim->p3 = 2;
         // fallthrough
     case 2: // Idle
@@ -54,7 +54,7 @@ void EntityDemonSwitch(Entity* self) {
 
     switch (self->step) {
     case INIT:
-        InitializeEntity(g_EInitSecret);
+        OVL_EXPORT(InitializeEntity)(g_EInitSecret);
 
         self->animCurFrame = 3;
         self->hitPoints = 32767;
@@ -120,7 +120,7 @@ void EntityDemonSwitchWall(Entity* self) {
 
     switch (self->step) {
     case INIT:
-        InitializeEntity(g_EInitSecret);
+        OVL_EXPORT(InitializeEntity)(g_EInitSecret);
 
         self->animCurFrame = 1; // Default: Collision (closed)
 
@@ -180,7 +180,7 @@ void EntityDemonSwitchWall(Entity* self) {
         if (!(self->ext.demonSwitchWall.unk80 % 8)) {
             g_api.PlaySfx(SFX_WALL_DEBRIS_B);
         }
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
 
         if (self->velocityX < FIX(0.25)) {
             self->velocityX += FIX(0.0078125);
@@ -192,7 +192,7 @@ void EntityDemonSwitchWall(Entity* self) {
         if (prim != NULL) {
             prim->p3 = 1;
 
-            xPos = self->posX.i.hi + (Random() & 63) + -24;
+            xPos = self->posX.i.hi + (OVL_EXPORT(Random)() & 63) + -24;
             if (xPos > 0x100) {
                 xPos -= 0x10;
             }
@@ -214,12 +214,13 @@ void EntityDemonSwitchWall(Entity* self) {
         // Create "ground puff" entity
         xPos = self->posX.i.hi - 0x18;
         yPos = self->posY.i.hi + 0x20;
-        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        newEntity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
-            CreateEntityFromCurrentEntity(E_ID(GREY_PUFF), newEntity);
-            newEntity->posX.i.hi = xPos + (Random() & 0x1F);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)
+            (E_ID(GREY_PUFF), newEntity);
+            newEntity->posX.i.hi = xPos + (OVL_EXPORT(Random)() & 0x1F);
             newEntity->posY.i.hi = yPos;
-            newEntity->params = Random() & 3;
+            newEntity->params = OVL_EXPORT(Random)() & 3;
             newEntity->zPriority = 0xA0;
         }
 

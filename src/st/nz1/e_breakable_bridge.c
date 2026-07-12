@@ -89,7 +89,7 @@ void EntityBridgeBreakTrigger(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitEnvironment);
+        OVL_EXPORT(InitializeEntity)(g_EInitEnvironment);
         self->zPriority = 0x5F;
         self->animCurFrame = 1;
         params = self->params & 0xF;
@@ -169,10 +169,11 @@ void EntityBridgeBreakTrigger(Entity* self) {
         var_s3 = (self->params >> 8) - 1;
         for (i = 0; i < 2; i++) {
             if (var_s3 != i) {
-                entity = AllocEntity(
+                entity = OVL_EXPORT(AllocEntity)(
                     &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_EXPLOSION, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_EXPLOSION, self, entity);
                     entity->params = 0x13;
                     entity->posX.i.hi += -64 + (i << 7);
                 }
@@ -197,7 +198,7 @@ void EntityBridgeBreakTrigger(Entity* self) {
             self->rotate -= 4;
         }
 
-        if (UnkCollisionFunc3(D_us_80180EE0) & 1) {
+        if (OVL_EXPORT(UnkCollisionFunc3)(D_us_80180EE0) & 1) {
             PlaySfxPositional(SFX_FIREBALL_SHOT_A);
             self->step++;
         }
@@ -205,14 +206,15 @@ void EntityBridgeBreakTrigger(Entity* self) {
 
     case 5:
         for (i = 0; i < 16; i++) {
-            entity =
-                AllocEntity(&g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
+            entity = OVL_EXPORT(AllocEntity)(
+                &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_ID(EXPLODE_PUFF_OPAQUE), self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_ID(EXPLODE_PUFF_OPAQUE), self, entity);
                 entity->params = 0x10;
                 entity->zPriority = 0x72;
-                entity->posX.i.hi += (Random() & 0x7F) - 64;
-                entity->posY.i.hi += (Random() & 0xF) + 12;
+                entity->posX.i.hi += (OVL_EXPORT(Random)() & 0x7F) - 64;
+                entity->posY.i.hi += (OVL_EXPORT(Random)() & 0xF) + 12;
             }
         }
         self->drawFlags |= ENTITY_OPACITY;
@@ -232,7 +234,7 @@ void EntityBridgeBackgroundPiece(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
         if (primIndex == -1) {
             DestroyEntity(self);

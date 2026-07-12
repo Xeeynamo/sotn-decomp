@@ -18,7 +18,7 @@ void EntityRelicContainer(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitPrizeContainer);
+        OVL_EXPORT(InitializeEntity)(g_EInitPrizeContainer);
         if (self->params & 0x100) {
             self->blendMode = BLEND_TRANSP | BLEND_ADD;
         } else {
@@ -29,34 +29,35 @@ void EntityRelicContainer(Entity* self) {
             self->hitboxOffY = -0xA;
             self->hitboxState = 2;
             newEntity = self + 1;
-            CreateEntityFromEntity(E_ID(RELIC_CONTAINER), self, newEntity);
+            OVL_EXPORT(CreateEntityFromEntity)
+            (E_ID(RELIC_CONTAINER), self, newEntity);
             newEntity->params = 0x100;
         }
     case 1:
         if (self->params & 0x100) {
-            AnimateEntity(anim_relic_container_alt, self);
+            OVL_EXPORT(AnimateEntity)(anim_relic_container_alt, self);
             break;
         }
-        AnimateEntity(anim_relic_container, self);
+        OVL_EXPORT(AnimateEntity)(anim_relic_container, self);
         if (self->hitFlags) {
             self->hitboxState = 0;
-            SetStep(2);
+            OVL_EXPORT(SetStep)(2);
         }
         break;
     case 2:
         if (self->params > 0x1) {
             newEntity = self + 1;
-            CreateEntityFromEntity(E_RELIC_ORB, self, newEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_RELIC_ORB, self, newEntity);
             newEntity->params = D_80180F9C[self->params];
         } else {
             newEntity = self + 1;
-            CreateEntityFromEntity(E_HEART_DROP, self, newEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_HEART_DROP, self, newEntity);
             newEntity->params = D_80180F9C[self->params];
         }
 
-        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        newEntity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, newEntity);
             newEntity->posY.i.hi -= 8;
             newEntity->params = 2;
         }
@@ -76,7 +77,7 @@ void EntityBlueFlameTable(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitPrizeContainer);
+        OVL_EXPORT(InitializeEntity)(g_EInitPrizeContainer);
         self->zPriority = 0x6A;
         self->hitboxWidth = 8;
         self->hitboxHeight = 16;
@@ -84,16 +85,16 @@ void EntityBlueFlameTable(Entity* self) {
         self->hitboxOffY = -10;
         self->hitboxState = 2;
     case 1:
-        AnimateEntity(anim_blue_flame_table, self);
+        OVL_EXPORT(AnimateEntity)(anim_blue_flame_table, self);
         if (self->hitFlags) {
             g_api.PlaySfx(SFX_CANDLE_HIT);
             self->hitboxState = 0;
-            SetStep(2);
+            OVL_EXPORT(SetStep)(2);
         }
         break;
     case 2:
         newEntity = &self[1];
-        CreateEntityFromEntity(E_HEART_DROP, self, newEntity);
+        OVL_EXPORT(CreateEntityFromEntity)(E_HEART_DROP, self, newEntity);
         newEntity->params = D_80180F9C[self->params];
         self->step++;
     case 3:

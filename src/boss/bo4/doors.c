@@ -23,27 +23,27 @@ void EntityUnkId18(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
 
         self->animSet = 0;
         self->animCurFrame = 0;
         entity = self + 1;
 
         for (i = 1; i < 6; i++) {
-            CreateEntityFromEntity(E_ID(ID_17), self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_ID(ID_17), self, entity);
             entity->params = i + 0x100;
             entity++;
-            CreateEntityFromEntity(E_ID(ID_17), self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_ID(ID_17), self, entity);
             entity->params = i;
             entity++;
         };
-        CreateEntityFromEntity(E_ID(ID_19), self, entity);
+        OVL_EXPORT(CreateEntityFromEntity)(E_ID(ID_19), self, entity);
         entity++;
-        CreateEntityFromEntity(E_ID(ID_1A), self, entity);
+        OVL_EXPORT(CreateEntityFromEntity)(E_ID(ID_1A), self, entity);
         break;
 
     case 1:
-        if (GetDistanceToPlayerX() < 64) {
+        if (OVL_EXPORT(GetDistanceToPlayerX)() < 64) {
             g_Player.demo_timer = 2;
             if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
 #ifdef VERSION_PSP
@@ -122,9 +122,9 @@ void EntityUnkId18(Entity* self) {
         offsetX = 0x100 - g_Tilemap.scrollX.i.hi;
         offsetY = 0x80 - g_Tilemap.scrollY.i.hi;
         for (i = 0; i < 2; i++) {
-            dop = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            dop = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (dop != NULL) {
-                CreateEntityFromCurrentEntity(E_ID(ID_1C), dop);
+                OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(ID_1C), dop);
                 dop->posX.i.hi = offsetX - 64 + (i * 128);
                 dop->posY.i.hi = offsetY;
                 dop->params = i;
@@ -140,9 +140,9 @@ void EntityUnkId18(Entity* self) {
         break;
 
     case 9:
-        dop = AllocEntity(&g_Entities[160], &g_Entities[192]);
+        dop = OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
         if (dop != NULL) {
-            CreateEntityFromEntity(E_ID(ID_1D), self, dop);
+            OVL_EXPORT(CreateEntityFromEntity)(E_ID(ID_1D), self, dop);
             dop->posX.i.hi = 0x100 - g_Tilemap.scrollX.i.hi;
             dop->posY.i.hi = 0x80 - g_Tilemap.scrollY.i.hi;
             dop->params = 4;
@@ -188,7 +188,7 @@ void EntityUnkId17(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(EInitUnk17);
+        OVL_EXPORT(InitializeEntity)(EInitUnk17);
         self->drawFlags |=
             ENTITY_OPACITY | ENTITY_ROTATE | ENTITY_SCALEY | ENTITY_SCALEX;
         if ((self->params & 0xF) > 1) {
@@ -240,9 +240,9 @@ void EntityUnkId17(Entity* self) {
             self->step++;
         } else {
             if (self->params & 0x100) {
-                AnimateEntity(D_us_801805D4, self);
+                OVL_EXPORT(AnimateEntity)(D_us_801805D4, self);
             } else {
-                AnimateEntity(D_us_801805CC, self);
+                OVL_EXPORT(AnimateEntity)(D_us_801805CC, self);
             }
             if ((g_Timer & 0xF) == 0) {
                 g_api.PlaySfx(SFX_STONE_MOVE_B);
@@ -275,9 +275,9 @@ void EntityUnkId17(Entity* self) {
         self->posX.i.hi = prim->x0 + xOffset;
         self->posY.i.hi = prim->y0 + yOffset;
         if (self->params & 0x100) {
-            AnimateEntity(D_us_801805D4, self);
+            OVL_EXPORT(AnimateEntity)(D_us_801805D4, self);
         } else {
-            AnimateEntity(D_us_801805CC, self);
+            OVL_EXPORT(AnimateEntity)(D_us_801805CC, self);
         }
         if ((g_Timer & 0xF) == 0) {
             g_api.PlaySfx(SFX_STONE_MOVE_B);
@@ -313,9 +313,9 @@ void EntityUnkId17(Entity* self) {
         self->posX.i.hi = prim->x0 + xOffset;
         self->posY.i.hi = prim->y0 + yOffset;
         if (self->params & 0x100) {
-            AnimateEntity(D_us_801805E4, self);
+            OVL_EXPORT(AnimateEntity)(D_us_801805E4, self);
         } else {
-            AnimateEntity(D_us_801805DC, self);
+            OVL_EXPORT(AnimateEntity)(D_us_801805DC, self);
         }
         self->rotate += D_us_801805B4[self->params & 0xF];
         if (self->params & 0x100) {
@@ -336,7 +336,7 @@ void EntityUnkId1C(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(EInitUnk17);
+        OVL_EXPORT(InitializeEntity)(EInitUnk17);
         self->drawFlags |= ENTITY_ROTATE;
         self->rotate = -0x400;
         if (self->params & 1) {
@@ -350,11 +350,11 @@ void EntityUnkId1C(Entity* self) {
         // fallthrough
 
     case 1:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         if (self->params & 1) {
-            AnimateEntity(D_us_801805D4, self);
+            OVL_EXPORT(AnimateEntity)(D_us_801805D4, self);
         } else {
-            AnimateEntity(D_us_801805CC, self);
+            OVL_EXPORT(AnimateEntity)(D_us_801805CC, self);
         }
 
         offsetX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
@@ -408,7 +408,7 @@ void EntityUnkId19(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         break;
 
     case 1:
@@ -497,7 +497,7 @@ void EntityUnkId19(Entity* self) {
 
         prim = self->ext.et_801BE2C8.unk80;
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
-        CreateEntityFromEntity(E_ID_16, self, &DOPPLEGANGER);
+        OVL_EXPORT(CreateEntityFromEntity)(E_ID_16, self, &DOPPLEGANGER);
         g_api.TimeAttackController(
             TIMEATTACK_EVENT_DOPPLEGANGER_10_DEFEAT, TIMEATTACK_SET_VISITED);
         (self + 1)->ext.et_801BE2C8.unk84 = 1;
@@ -630,7 +630,7 @@ void EntityUnkId1A(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
         break;
 
     case 1:

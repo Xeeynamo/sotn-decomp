@@ -57,7 +57,7 @@ void InitializeMinion(s16* unkArg) {
         break;
 
     case 1:
-        if (UnkCollisionFunc3(unkArg) & 1) {
+        if (OVL_EXPORT(UnkCollisionFunc3)(unkArg) & 1) {
             g_CurrentEntity->animCurFrame = 1;
             g_CurrentEntity->step_s++;
         }
@@ -82,7 +82,7 @@ void InitializeMinion(s16* unkArg) {
         if (!(--g_CurrentEntity->ext.lesserDemon.unkAC)) {
             g_CurrentEntity->palette = g_EInitLesserDemon[3];
             g_CurrentEntity->hitboxState = 3;
-            SetStep(1);
+            OVL_EXPORT(SetStep)(1);
         }
         break;
     }
@@ -114,7 +114,7 @@ u8 SpitWindup(void) {
                 prim->priority = g_CurrentEntity->zPriority + 2;
                 prim->drawMode =
                     DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
-                randomVal = Random() & 0x7F;
+                randomVal = OVL_EXPORT(Random)() & 0x7F;
                 if (g_CurrentEntity->facingLeft) {
                     // These look like they could be -= and += respectively,
                     // but that oddly does not match
@@ -124,11 +124,11 @@ u8 SpitWindup(void) {
                 }
                 prim->x0 = (g_CurrentEntity->posX.i.hi +
                             ((rcos(randomVal * 0x10) * 0x60) >> 0xC) +
-                            (Random() & 0x3F)) -
+                            (OVL_EXPORT(Random)() & 0x3F)) -
                            0x1F;
                 prim->y0 = (g_CurrentEntity->posY.i.hi +
                             ((rsin(randomVal * 0x10) * 0x60) >> 0xC) +
-                            (Random() & 0x3F)) -
+                            (OVL_EXPORT(Random)() & 0x3F)) -
                            0x1F;
                 prim->x1 = 0;
                 prim->y1 = 0;
@@ -202,7 +202,7 @@ void EntityLesserDemonSpit(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitLesserDemonSpit);
+        OVL_EXPORT(InitializeEntity)(g_EInitLesserDemonSpit);
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
         self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->drawFlags |= ENTITY_SCALEY | ENTITY_SCALEX;
@@ -221,8 +221,8 @@ void EntityLesserDemonSpit(Entity* self) {
         break;
 
     case 2:
-        MoveEntity();
-        AnimateEntity(animSpitFly, self);
+        OVL_EXPORT(MoveEntity)();
+        OVL_EXPORT(AnimateEntity)(animSpitFly, self);
         if (CheckColliderOffsets(sensors2, 0)) {
             self->pose = 0;
             self->poseTimer = 0;
@@ -235,7 +235,7 @@ void EntityLesserDemonSpit(Entity* self) {
         break;
 
     case 3:
-        if (!AnimateEntity(animSpitHit, self)) {
+        if (!OVL_EXPORT(AnimateEntity)(animSpitHit, self)) {
             primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
             if (primIndex != -1) {
                 self->flags |= FLAG_HAS_PRIMS;
@@ -309,7 +309,7 @@ void EntityLesserDemonSpit(Entity* self) {
 
     case 6:
         self->scaleY -= 0x20;
-        if (!AnimateEntity(animSpitFizzle, self)) {
+        if (!OVL_EXPORT(AnimateEntity)(animSpitFizzle, self)) {
             self->drawFlags |= ENTITY_OPACITY;
             self->opacity = 0x80;
             self->step++;
@@ -497,13 +497,14 @@ static void fireballHelper(Primitive* prim) {
         prim->tpage = params.y.i.lo;
         if (!prim->u2) {
             prim->u2 = 5;
-            rnd = Random() & 1;
+            rnd = OVL_EXPORT(Random)() & 1;
             if (g_CurrentEntity->facingLeft) {
                 posX = g_CurrentEntity->posX.i.hi + rnd * 16;
             } else {
                 posX = g_CurrentEntity->posX.i.hi - rnd * 16;
             }
-            posY = g_CurrentEntity->posY.i.hi + ((Random() & 3) * 8) - 12;
+            posY = g_CurrentEntity->posY.i.hi +
+                   ((OVL_EXPORT(Random)() & 3) * 8) - 12;
             posX2 = posX - prim->x1;
             posY2 = posY - prim->y1;
             angle = ratan2(-posY2, posX2);
@@ -549,7 +550,7 @@ static void fireballHelper(Primitive* prim) {
         rgbPtr = &prim->r1;
         for (i = 0; i < 3; i++) {
             component = &rgbPtr[i];
-            if (Random() & 1) {
+            if (OVL_EXPORT(Random)() & 1) {
                 *component -= 24;
             } else {
                 *component -= 12;
@@ -561,7 +562,7 @@ static void fireballHelper(Primitive* prim) {
         rgbPtr = &prim->r0;
         for (i = 0; i < 3; i++) {
             component = &rgbPtr[i];
-            if (Random() & 1) {
+            if (OVL_EXPORT(Random)() & 1) {
                 *component -= 16;
             } else {
                 *component -= 8;
@@ -591,7 +592,7 @@ void EntityLesserDemonFireball(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitLesserDemonFireball);
+        OVL_EXPORT(InitializeEntity)(g_EInitLesserDemonFireball);
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
         self->drawFlags = ENTITY_SCALEX;
         self->scaleX = 0x180;
@@ -672,8 +673,8 @@ void EntityLesserDemonFireball(Entity* self) {
         break;
 
     case 1:
-        AnimateEntity(blueFireballAnim, self);
-        MoveEntity();
+        OVL_EXPORT(AnimateEntity)(blueFireballAnim, self);
+        OVL_EXPORT(MoveEntity)();
         prim = self->ext.lesserDemon.prim;
         if (self->facingLeft) {
             prim->x0 = self->posX.i.hi;
@@ -894,10 +895,11 @@ void spawnMinion(void) {
         if (g_CurrentEntity->ext.lesserDemon.timer % 2) {
             if (!--g_CurrentEntity->ext.lesserDemon.unk85) {
                 g_CurrentEntity->ext.lesserDemon.unk84++;
-                tempEntity = AllocEntity(&g_Entities[176], &g_Entities[192]);
+                tempEntity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[176], &g_Entities[192]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromEntity(
-                        E_LESSER_DEMON, g_CurrentEntity, tempEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_LESSER_DEMON, g_CurrentEntity, tempEntity);
                     tempEntity->facingLeft = g_CurrentEntity->facingLeft;
                     if (g_CurrentEntity->facingLeft) {
                         tempEntity->posX.i.hi -= 8;
@@ -1017,11 +1019,11 @@ void EntityLesserDemon(Entity* self) {
             self->flags &= ~FLAG_HAS_PRIMS;
         }
         self->hitboxState = 0;
-        SetStep(15);
+        OVL_EXPORT(SetStep)(15);
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitLesserDemon);
+        OVL_EXPORT(InitializeEntity)(g_EInitLesserDemon);
 #ifdef VERSION_US
         self->flags |= FLAG_UNK_02000000;
 #endif
@@ -1035,19 +1037,20 @@ void EntityLesserDemon(Entity* self) {
         }
         break;
     case LD_STEP_MINION_INIT:
-        // Note: this function calls SetStep(1) so we progress from there.
+        // Note: this function calls OVL_EXPORT(SetStep)(1) so we progress from
+        // there.
         InitializeMinion(sensors1);
         break;
     case 1:
-        if (UnkCollisionFunc3(sensors1) & 1) {
-            SetStep(3);
+        if (OVL_EXPORT(UnkCollisionFunc3)(sensors1) & 1) {
+            OVL_EXPORT(SetStep)(3);
         }
         break;
 
     case 2:
-        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-        if (GetDistanceToPlayerX() < 0x80) {
-            SetStep(3);
+        self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+        if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x80) {
+            OVL_EXPORT(SetStep)(3);
         }
         break;
 
@@ -1060,27 +1063,27 @@ void EntityLesserDemon(Entity* self) {
         if (hit) {
             self->facingLeft ^= 1;
         }
-        if (!AnimateEntity(animWalk, self)) {
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        if (!OVL_EXPORT(AnimateEntity)(animWalk, self)) {
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
         }
         if (hit) {
-            SetStep(6);
+            OVL_EXPORT(SetStep)(6);
         }
         if (--self->ext.lesserDemon.timer) {
             break;
         }
         if (!(self->posX.i.hi & 0xFF00)) {
-            if (Random() & 1) {
-                self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+            if (OVL_EXPORT(Random)() & 1) {
+                self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
                 self->ext.lesserDemon.unk84 = 0;
-                SetStep(13);
+                OVL_EXPORT(SetStep)(13);
             } else {
-                SetStep(8);
+                OVL_EXPORT(SetStep)(8);
             }
         } else if (g_Timer % 4 == 0) {
-            SetStep(3);
+            OVL_EXPORT(SetStep)(3);
         } else {
-            SetStep(8);
+            OVL_EXPORT(SetStep)(8);
         }
 
         break;
@@ -1088,7 +1091,7 @@ void EntityLesserDemon(Entity* self) {
     case 6:
         switch (self->step_s) {
         case 0:
-            if (!AnimateEntity(animJumpWindup, self)) {
+            if (!OVL_EXPORT(AnimateEntity)(animJumpWindup, self)) {
                 self->pose = 0;
                 self->poseTimer = 0;
                 self->step_s++;
@@ -1102,8 +1105,8 @@ void EntityLesserDemon(Entity* self) {
             break;
 
         case 1:
-            AnimateEntity(animFlying, self);
-            if (UnkCollisionFunc3(sensors1) & 1) {
+            OVL_EXPORT(AnimateEntity)(animFlying, self);
+            if (OVL_EXPORT(UnkCollisionFunc3)(sensors1) & 1) {
                 PlaySfxPositional(SFX_STOMP_HARD_B);
                 self->pose = 0;
                 self->poseTimer = 0;
@@ -1114,38 +1117,38 @@ void EntityLesserDemon(Entity* self) {
             break;
 
         case 2:
-            if (!AnimateEntity(animJumpLand, self)) {
-                SetStep(3);
+            if (!OVL_EXPORT(AnimateEntity)(animJumpLand, self)) {
+                OVL_EXPORT(SetStep)(3);
             }
             break;
         }
         break;
 
     case 8:
-        if (!AnimateEntity(animFlyingSlow, self)) {
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        if (!OVL_EXPORT(AnimateEntity)(animFlyingSlow, self)) {
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
         }
         if (!self->poseTimer && self->pose == 7) {
             PlaySfxPositional(SFX_WING_FLAP_B);
         }
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityX = 0;
         self->velocityY = FIX(-1.5);
         if (self->posY.i.hi < 0x50) {
             self->velocityY = 0;
-            SetStep(9);
+            OVL_EXPORT(SetStep)(9);
         }
         break;
 
     case 9:
         if (!self->step_s) {
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-            self->ext.lesserDemon.timer = step9Timers[Random() & 3];
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+            self->ext.lesserDemon.timer = step9Timers[OVL_EXPORT(Random)() & 3];
             self->step_s++;
             break;
         }
-        AnimateEntity(animFlyingSlow, self);
-        MoveEntity();
+        OVL_EXPORT(AnimateEntity)(animFlyingSlow, self);
+        OVL_EXPORT(MoveEntity)();
         if (!self->poseTimer && self->pose == 7) {
             PlaySfxPositional(SFX_WING_FLAP_B);
         }
@@ -1158,35 +1161,35 @@ void EntityLesserDemon(Entity* self) {
             self->step_s--;
             if (self->posX.i.hi & 0xFF00) {
                 if (g_Timer % 2) {
-                    SetStep(10);
+                    OVL_EXPORT(SetStep)(10);
                 } else {
-                    SetStep(14);
+                    OVL_EXPORT(SetStep)(14);
                 }
             } else {
-                tempVar = GetDistanceToPlayerX();
+                tempVar = OVL_EXPORT(GetDistanceToPlayerX)();
                 if (tempVar > 0x40) {
-                    if (Random() & 1) {
-                        SetStep(4);
+                    if (OVL_EXPORT(Random)() & 1) {
+                        OVL_EXPORT(SetStep)(4);
                     } else {
-                        SetStep(12);
+                        OVL_EXPORT(SetStep)(12);
                     }
                 } else {
-                    if (Random() & 1) {
-                        SetStep(14);
+                    if (OVL_EXPORT(Random)() & 1) {
+                        OVL_EXPORT(SetStep)(14);
                     } else {
-                        SetStep(11);
+                        OVL_EXPORT(SetStep)(11);
                     }
                 }
             }
             if (self->posY.i.hi < 0) {
-                SetStep(11);
+                OVL_EXPORT(SetStep)(11);
             }
         }
         break;
 
     case 10:
         if (!self->step_s) {
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
             if (self->facingLeft) {
                 self->velocityX = FIX(2.0);
             } else {
@@ -1196,13 +1199,13 @@ void EntityLesserDemon(Entity* self) {
             self->step_s++;
             break;
         }
-        MoveEntity();
-        AnimateEntity(animFlyingFast, self);
+        OVL_EXPORT(MoveEntity)();
+        OVL_EXPORT(AnimateEntity)(animFlyingFast, self);
         if (g_Timer % 8 == 0) {
             PlaySfxPositional(SFX_WING_FLAP_B);
         }
         if (!--self->ext.lesserDemon.timer) {
-            SetStep(9);
+            OVL_EXPORT(SetStep)(9);
         }
         break;
 
@@ -1229,9 +1232,11 @@ void EntityLesserDemon(Entity* self) {
             }
             self->animCurFrame = 0x18;
 
-            tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            tempEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
             if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_LESSER_DEMON_DUMMY, self, tempEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_LESSER_DEMON_DUMMY, self, tempEntity);
                 self->ext.lesserDemon.unk88 = tempEntity;
             } else {
                 self->ext.lesserDemon.unk88 = NULL;
@@ -1241,29 +1246,29 @@ void EntityLesserDemon(Entity* self) {
             self->step_s++;
             break;
         case 1:
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             posX = self->posX.i.hi;
             posY = self->posY.i.hi + 0x20;
             g_api.CheckCollision(posX, posY, &collider, 0);
             if (collider.effects & EFFECT_SOLID) {
                 PlaySfxPositional(SFX_STOMP_HARD_B);
                 self->posY.i.hi += collider.unk18;
-                self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+                self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
                 self->step_s++;
                 if (self->ext.lesserDemon.unk88 == NULL) {
-                    SetStep(3);
+                    OVL_EXPORT(SetStep)(3);
                 }
             }
             break;
 
         case 2:
             tempEntity = self->ext.lesserDemon.unk88;
-            if (!AnimateEntity(animPunch, self) &&
+            if (!OVL_EXPORT(AnimateEntity)(animPunch, self) &&
                 !(self->flags & FLAG_HAS_PRIMS)) {
                 self->ext.lesserDemon.unk87 = 0;
                 DestroyEntity(tempEntity);
                 self->ext.lesserDemon.unk88 = NULL;
-                SetStep(3);
+                OVL_EXPORT(SetStep)(3);
                 break;
             }
             if (!self->poseTimer && self->pose == 5) {
@@ -1291,24 +1296,24 @@ void EntityLesserDemon(Entity* self) {
         break;
 
     case 11:
-        AnimateEntity(animFlyingSlow, self);
+        OVL_EXPORT(AnimateEntity)(animFlyingSlow, self);
         if (!self->poseTimer && self->pose == 7) {
             PlaySfxPositional(SFX_WING_FLAP_B);
         }
-        if (UnkCollisionFunc3(sensors1) & 1) {
+        if (OVL_EXPORT(UnkCollisionFunc3)(sensors1) & 1) {
             PlaySfxPositional(SFX_STOMP_HARD_B);
-            SetStep(3);
+            OVL_EXPORT(SetStep)(3);
         }
         if (self->posY.i.hi > 0xD0) {
-            SetStep(8);
+            OVL_EXPORT(SetStep)(8);
         }
         break;
 
     case 12:
         switch (self->step_s) {
         case 0:
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-            AnimateEntity(animMinionWindup, self);
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+            OVL_EXPORT(AnimateEntity)(animMinionWindup, self);
             if (self->pose == 2) {
                 PlaySfxPositional(SFX_LESSER_DEMON_POISON);
                 self->ext.lesserDemon.unk84 = 0;
@@ -1319,10 +1324,11 @@ void EntityLesserDemon(Entity* self) {
 
         case 1:
             if (SpitWindup()) {
-                tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                tempEntity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromEntity(
-                        E_LESSER_DEMON_SPIT, self, tempEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_LESSER_DEMON_SPIT, self, tempEntity);
                     tempEntity->facingLeft = self->facingLeft;
                     if (self->facingLeft) {
                         tempEntity->posX.i.hi += 12;
@@ -1338,8 +1344,8 @@ void EntityLesserDemon(Entity* self) {
             break;
 
         case 2:
-            if (!AnimateEntity(animMinionWindup, self)) {
-                SetStep(9);
+            if (!OVL_EXPORT(AnimateEntity)(animMinionWindup, self)) {
+                OVL_EXPORT(SetStep)(9);
             }
             break;
         }
@@ -1350,18 +1356,19 @@ void EntityLesserDemon(Entity* self) {
             self->ext.lesserDemon.unk84 = 0;
             self->step_s++;
         }
-        if (!AnimateEntity(animFireball, self)) {
+        if (!OVL_EXPORT(AnimateEntity)(animFireball, self)) {
             self->ext.lesserDemon.unk84 = 0;
-            SetStep(3);
+            OVL_EXPORT(SetStep)(3);
             break;
         }
         if (self->pose == 3 && self->poseTimer == 0) {
             PlaySfxPositional(SFX_SCIFI_BLAST);
             self->ext.lesserDemon.unk84 = 2;
-            tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            tempEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
             if (tempEntity != NULL) {
-                CreateEntityFromEntity(
-                    E_LESSER_DEMON_FIREBALL, self, tempEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_LESSER_DEMON_FIREBALL, self, tempEntity);
                 tempEntity->facingLeft = self->facingLeft;
             }
         }
@@ -1382,7 +1389,7 @@ void EntityLesserDemon(Entity* self) {
                 g_api.CheckCollision(posX, tempVar, &collider, 0);
                 if (collider.effects != EFFECT_NONE) {
                     self->ext.lesserDemon.unk87 = 0;
-                    SetStep(9);
+                    OVL_EXPORT(SetStep)(9);
                     return;
                 }
             }
@@ -1397,11 +1404,11 @@ void EntityLesserDemon(Entity* self) {
             }
             if (!hit) {
                 self->ext.lesserDemon.unk87 = 0;
-                SetStep(9);
+                OVL_EXPORT(SetStep)(9);
                 return;
             }
-            AnimateEntity(animMinionSpawn, self);
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+            OVL_EXPORT(AnimateEntity)(animMinionSpawn, self);
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
             if (self->pose == 3) {
                 self->ext.lesserDemon.unk84 = 0;
                 PlaySfxPositional(SFX_RAPID_SYNTH_BUBBLE);
@@ -1429,10 +1436,10 @@ void EntityLesserDemon(Entity* self) {
 
         case 2:
             self->ext.lesserDemon.timer--;
-            if (!AnimateEntity(animMinionSpawn, self) &&
+            if (!OVL_EXPORT(AnimateEntity)(animMinionSpawn, self) &&
                 !(self->flags & FLAG_HAS_PRIMS)) {
                 self->ext.lesserDemon.unk87 = 0;
-                SetStep(9);
+                OVL_EXPORT(SetStep)(9);
             } else {
                 spawnMinion();
             }
@@ -1443,11 +1450,13 @@ void EntityLesserDemon(Entity* self) {
     case 15:
         self->palette = PAL_FLAG(PAL_CC_FIRE_EFFECT);
         if (!(g_Timer % 8)) {
-            tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            tempEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, tempEntity);
-                tempEntity->posX.i.hi += (Random() & 0x1F) - 0x10;
-                tempEntity->posY.i.hi += (Random() & 0x3F) - 0x20;
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_INTENSE_EXPLOSION, self, tempEntity);
+                tempEntity->posX.i.hi += (OVL_EXPORT(Random)() & 0x1F) - 0x10;
+                tempEntity->posY.i.hi += (OVL_EXPORT(Random)() & 0x3F) - 0x20;
             }
         }
         if ((g_Timer & 0xF) == 0) {
@@ -1455,11 +1464,11 @@ void EntityLesserDemon(Entity* self) {
         }
         switch (self->step_s) {
         case 0:
-            AnimateEntity(animFlyingSlow, self);
+            OVL_EXPORT(AnimateEntity)(animFlyingSlow, self);
             if (!self->poseTimer && self->pose == 7) {
                 PlaySfxPositional(SFX_WING_FLAP_B);
             }
-            if (UnkCollisionFunc3(sensors1) & 1) {
+            if (OVL_EXPORT(UnkCollisionFunc3)(sensors1) & 1) {
                 self->step_s++;
                 self->pose = 0;
                 self->poseTimer = 0;
@@ -1470,7 +1479,7 @@ void EntityLesserDemon(Entity* self) {
 
         case 1:
             hit = checkHit();
-            if (!AnimateEntity(animDying, self) || hit) {
+            if (!OVL_EXPORT(AnimateEntity)(animDying, self) || hit) {
                 self->pose = 0;
                 self->poseTimer = 0;
                 self->drawFlags = ENTITY_OPACITY;
@@ -1487,15 +1496,19 @@ void EntityLesserDemon(Entity* self) {
                 DestroyEntity(self);
                 break;
             }
-            AnimateEntity(animDeathFade, self);
+            OVL_EXPORT(AnimateEntity)(animDeathFade, self);
             self->opacity -= 2;
             if (g_Timer % 5 == 0) {
-                tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                tempEntity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_EXPLOSION, self, tempEntity);
                     tempEntity->params = 1;
-                    tempEntity->posX.i.hi += (Random() & 0x1F) - 0x10;
-                    tempEntity->posY.i.hi += (Random() & 0x1F) - 0x10;
+                    tempEntity->posX.i.hi +=
+                        (OVL_EXPORT(Random)() & 0x1F) - 0x10;
+                    tempEntity->posY.i.hi +=
+                        (OVL_EXPORT(Random)() & 0x1F) - 0x10;
                 }
             }
 
@@ -1531,7 +1544,7 @@ extern EInit g_EInitLesserDemonDummy;
 void EntityLesserDemonDummy(Entity* self) {
     FntPrint("duumy_set\n");
     if (!self->step) {
-        InitializeEntity(g_EInitLesserDemonDummy);
+        OVL_EXPORT(InitializeEntity)(g_EInitLesserDemonDummy);
         self->hitboxWidth = 0x1C;
         self->hitboxHeight = 4;
         self->hitboxOffX = -0x14;

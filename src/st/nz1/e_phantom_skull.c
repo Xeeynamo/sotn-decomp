@@ -22,7 +22,7 @@ void EntityPhantomSkull(Entity* self) {
 
     if (self->hitParams) {
         self->ext.phantom_skull.playerAngle =
-            GetAngleBetweenEntitiesShifted(self, entity) - 0x80;
+            OVL_EXPORT(GetAngleBetweenEntitiesShifted)(self, entity) - 0x80;
         self->ext.phantom_skull.acceleration = 0x1800;
         self->ext.phantom_skull.targetIsLeft = 0;
         self->step = 2;
@@ -30,9 +30,9 @@ void EntityPhantomSkull(Entity* self) {
 
     if (self->flags & FLAG_DEAD) {
         PlaySfxPositional(SFX_GHOST_ENEMY_HOWL);
-        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        entity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
             entity->params = 2;
         }
         DestroyEntity(self);
@@ -41,22 +41,25 @@ void EntityPhantomSkull(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitPhantomSkull);
+        OVL_EXPORT(InitializeEntity)(g_EInitPhantomSkull);
         self->blendMode |= BLEND_TRANSP | BLEND_ADD;
         break;
     case 1:
-        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
         self->ext.phantom_skull.playerAngle =
-            GetAngleBetweenEntitiesShifted(self, entity);
-        self->ext.phantom_skull.playerAngle += -0x15 + ((Random() & 3) * 0x10);
-        self->ext.phantom_skull.acceleration = D_us_80182158[Random() & 3];
+            OVL_EXPORT(GetAngleBetweenEntitiesShifted)(self, entity);
+        self->ext.phantom_skull.playerAngle +=
+            -0x15 + ((OVL_EXPORT(Random)() & 3) * 0x10);
+        self->ext.phantom_skull.acceleration =
+            D_us_80182158[OVL_EXPORT(Random)() & 3];
         self->ext.phantom_skull.targetIsLeft = 0;
         self->step++;
         break;
     case 2:
-        MoveEntity();
-        SetEntityVelocityFromAngle(self->ext.phantom_skull.playerAngle,
-                                   FLT_TO_I(self->ext.phantom_skull.velocity));
+        OVL_EXPORT(MoveEntity)();
+        OVL_EXPORT(SetEntityVelocityFromAngle)
+        (self->ext.phantom_skull.playerAngle,
+         FLT_TO_I(self->ext.phantom_skull.velocity));
         if (self->ext.phantom_skull.targetIsLeft) {
             self->ext.phantom_skull.velocity -=
                 self->ext.phantom_skull.acceleration;
@@ -72,21 +75,23 @@ void EntityPhantomSkull(Entity* self) {
         if (self->ext.phantom_skull.velocity < 0) {
             self->ext.phantom_skull.velocity = 0;
             self->ext.phantom_skull.targetIsLeft = 0;
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
             self->step++;
         }
 
         if (self->ext.phantom_skull.timer++ > 4) {
             self->ext.phantom_skull.timer = 0;
-            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            entity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_PHANTOM_SKULL_TRAIL, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_PHANTOM_SKULL_TRAIL, self, entity);
                 entity->facingLeft = self->facingLeft;
             }
         }
         break;
     case 3:
-        if (!AnimateEntity(D_us_80182134, self)) {
+        if (!OVL_EXPORT(AnimateEntity)(D_us_80182134, self)) {
             self->step = 1;
         }
         if (!self->poseTimer) {
@@ -113,7 +118,7 @@ extern EInit g_EInitPhantomSkullTrail;
 void EntityPhantomSkullTrail(Entity* self) {
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitPhantomSkullTrail);
+        OVL_EXPORT(InitializeEntity)(g_EInitPhantomSkullTrail);
         self->hitboxState = 0;
         self->animCurFrame = 0x12;
         self->blendMode |= BLEND_TRANSP | BLEND_ADD;

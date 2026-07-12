@@ -33,23 +33,24 @@ void EntityMudman(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitMudman);
+        OVL_EXPORT(InitializeEntity)(g_EInitMudman);
         self->zPriority = 0x78;
-        tempEntity2 = AllocEntity(&g_Entities[64], &g_Entities[192]);
+        tempEntity2 =
+            OVL_EXPORT(AllocEntity)(&g_Entities[64], &g_Entities[192]);
         if (tempEntity2 != NULL) {
-            CreateEntityFromEntity(E_ID_4E, self, tempEntity2);
+            OVL_EXPORT(CreateEntityFromEntity)(E_ID_4E, self, tempEntity2);
             tempEntity2->ext.mudman.unk9C = self;
         }
         self->hitboxState = 0;
         self->flags |= FLAG_UNK_2000;
         self->ext.mudman.unk84 = 0;
         self->ext.mudman.unk81 = 0;
-        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
         self->nextPart = NULL;
         break;
 
     case 1:
-        if (UnkCollisionFunc3(D_us_80182E70) & 1) {
+        if (OVL_EXPORT(UnkCollisionFunc3)(D_us_80182E70) & 1) {
             self->step++;
             primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
             if (primIndex != -1) {
@@ -245,10 +246,10 @@ void EntityMudman(Entity* self) {
         break;
 
     case 6:
-        AnimateEntity(D_us_80182E3C, self);
-        colRet = UnkCollisionFunc2(D_us_80182E80);
+        OVL_EXPORT(AnimateEntity)(D_us_80182E3C, self);
+        colRet = OVL_EXPORT(UnkCollisionFunc2)(D_us_80182E80);
         self->hitboxState = 3;
-        if (GetDistanceToPlayerX() < 0x40) {
+        if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x40) {
             self->pose = 0;
             self->poseTimer = 0;
             self->step = 7;
@@ -259,7 +260,7 @@ void EntityMudman(Entity* self) {
         break;
 
     case 7:
-        if (AnimateEntity(D_us_80182E4C, self) == 0) {
+        if (OVL_EXPORT(AnimateEntity)(D_us_80182E4C, self) == 0) {
             self->pose = 0;
             self->poseTimer = 0;
             self->ext.mudman.unk81 = 1;
@@ -349,19 +350,21 @@ void EntityMudman(Entity* self) {
 
     case 10:
         for (i = 0; i < 4; i++) {
-            tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            tempEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
                 MakeEntityFromId(E_MUDMAN, self, tempEntity);
-                tempEntity->animCurFrame = (Random() & 1) + 0x10;
+                tempEntity->animCurFrame = (OVL_EXPORT(Random)() & 1) + 0x10;
                 tempEntity->step = 11;
                 tempEntity->velocityX = D_us_80182E88[i][0];
                 tempEntity->velocityY = D_us_80182E88[i][1];
                 tempEntity->flags |= FLAG_UNK_2000;
             }
         }
-        tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        tempEntity =
+            OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (tempEntity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, tempEntity);
             tempEntity->params = 2;
         }
         PlaySfxPositional(SFX_SKELETON_DEATH_C);
@@ -369,7 +372,7 @@ void EntityMudman(Entity* self) {
         break;
 
     case 11:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
                        FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
         self->velocityY += FIX(0.25);
@@ -393,7 +396,7 @@ void func_us_801D1298(Entity* self) {
     s32 curFrame;
 
     if (!self->step) {
-        InitializeEntity(D_us_801809EC);
+        OVL_EXPORT(InitializeEntity)(D_us_801809EC);
     }
     tempEntity = self->ext.mudman.unk9C;
     curFrame = tempEntity->animCurFrame;

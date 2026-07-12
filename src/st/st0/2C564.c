@@ -93,7 +93,7 @@ static s32 func_801ABBBC(s32 step, Entity* dracula) {
             prim->y0 = prim->y1 = 0;
             PGREY(prim, 0) = 0x70;
             PGREY(prim, 1) = 0;
-            color = Random() & 7;
+            color = OVL_EXPORT(Random)() & 7;
             prim->r2 = ((color & 1) * 0x10) + 0x10;
             prim->g2 = (((color & 2) >> 1) * 0x10) + 0x10;
             prim->b2 = ((color >> 2) * 0x10) + 0x10;
@@ -167,7 +167,7 @@ static s32 func_801ABBBC(s32 step, Entity* dracula) {
             }
             PGREY(prim, 0) = 0x70;
             PGREY(prim, 1) = 0x20;
-            color = Random() & 7;
+            color = OVL_EXPORT(Random)() & 7;
             prim->r2 = ((color & 1) * 4) + 4;
             prim->g2 = (((color & 2) >> 1) * 4) + 4;
             prim->b2 = ((color >> 2) * 4) + 4;
@@ -417,7 +417,7 @@ static s32 func_801AC458(s16 arg0) {
 
     case 1:
         e2 = &g_CurrentEntity[1];
-        if (AnimateEntity(D_80180964, e2) == 0) {
+        if (OVL_EXPORT(AnimateEntity)(D_80180964, e2) == 0) {
             ret++;
         }
         if (e2->pose == 6 && e2->poseTimer == 0) {
@@ -450,7 +450,7 @@ void EntityDracula(Entity* self) {
     if ((self->flags & FLAG_DEAD) && (self->step < 8)) {
         self->hitboxState = 0;
         (self + 1)->hitboxState = 0;
-        SetStep(8);
+        OVL_EXPORT(SetStep)(8);
     }
 
     if (self->hitFlags == 1) {
@@ -467,13 +467,13 @@ void EntityDracula(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitDracula);
+        OVL_EXPORT(InitializeEntity)(g_EInitDracula);
         self->animCurFrame = 0x4F;
         self->hitboxState = 0;
         self->ext.dracula.unkA1 = 1;
         self->facingLeft = 1;
         entity = self + 1;
-        CreateEntityFromCurrentEntity(E_ID(DRACULA_UNK1D), entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(DRACULA_UNK1D), entity);
         entity->zPriority = self->zPriority + 1;
 
         primIndex = g_api.func_800EDB58(PRIM_GT4, 128);
@@ -490,40 +490,42 @@ void EntityDracula(Entity* self) {
             prim->drawMode = DRAW_HIDE;
             prim = prim->next;
         }
-        SetStep(2);
+        OVL_EXPORT(SetStep)(2);
         break;
 
     case 2:
-        SetStep(3);
+        OVL_EXPORT(SetStep)(3);
         break;
 
     case 3:
         switch (self->step_s) {
         case 0:
             if (OVL_EXPORT(CutsceneFlags) & 0x10) {
-                SetSubStep(1);
+                OVL_EXPORT(SetSubStep)(1);
             }
             break;
 
         case 1:
-            if (!AnimateEntity(D_80180A0C, self) &&
+            if (!OVL_EXPORT(AnimateEntity)(D_80180A0C, self) &&
                 (OVL_EXPORT(CutsceneFlags) & 0x20)) {
-                SetSubStep(2);
+                OVL_EXPORT(SetSubStep)(2);
             }
             break;
 
         case 2:
-            if (!AnimateEntity(D_80180A20, self)) {
+            if (!OVL_EXPORT(AnimateEntity)(D_80180A20, self)) {
                 OVL_EXPORT(CutsceneFlags) |= 0x100;
             }
             if (OVL_EXPORT(CutsceneFlags) & 0x40) {
                 D_8003C744 = 1;
-                SetSubStep(3);
+                OVL_EXPORT(SetSubStep)(3);
             }
             if (self->pose == 2 && !self->poseTimer) {
-                entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                entity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_ID(DRACULA_UNK1F), self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID(DRACULA_UNK1F), self, entity);
                     entity->facingLeft = self->facingLeft;
                     entity->posX.i.hi -= 8;
                     entity->posY.i.hi -= 24;
@@ -532,10 +534,10 @@ void EntityDracula(Entity* self) {
             break;
 
         case 3:
-            if (!AnimateEntity(D_80180A2C, self)) {
+            if (!OVL_EXPORT(AnimateEntity)(D_80180A2C, self)) {
                 g_api.TimeAttackController(
                     TIMEATTACK_EVENT_DRACULA_DEFEAT, TIMEATTACK_SET_VISITED);
-                SetStep(4);
+                OVL_EXPORT(SetStep)(4);
             }
         }
         break;
@@ -561,7 +563,7 @@ void EntityDracula(Entity* self) {
             break;
 
         case 2:
-            SetStep(5);
+            OVL_EXPORT(SetStep)(5);
             break;
         }
         break;
@@ -574,7 +576,7 @@ void EntityDracula(Entity* self) {
             // fallthrough
         case 1:
             if (!--self->ext.dracula.unk8C) {
-                rand = Random() & 7;
+                rand = OVL_EXPORT(Random)() & 7;
                 self->posX.i.hi = D_80180A48[rand];
                 self->posY.i.hi = 0x82;
                 self->ext.dracula.unk9C = 0;
@@ -588,7 +590,7 @@ void EntityDracula(Entity* self) {
             if (self->ext.dracula.unkA0) {
                 g_api.PlaySfx(SFX_DRACULA_LAUGH_A);
                 self->animCurFrame = 1;
-                self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+                self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
                 self->ext.dracula.unkA0 = 0;
             }
             if (self->ext.dracula.unk9C == 0xFF) {
@@ -597,26 +599,26 @@ void EntityDracula(Entity* self) {
             break;
 
         case 3:
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
             self->hitboxState = 3;
             self->ext.dracula.unkA2++;
             self->ext.dracula.unkA2 &= 3;
             if (!self->ext.dracula.unkA2) {
-                SetStep(6);
+                OVL_EXPORT(SetStep)(6);
                 break;
             }
-            SetStep(7);
+            OVL_EXPORT(SetStep)(7);
         }
         break;
 
     case 7:
         switch (self->step_s) {
         case 0:
-            if (!AnimateEntity(D_80180914, self)) {
+            if (!OVL_EXPORT(AnimateEntity)(D_80180914, self)) {
                 entity = self + 1;
                 entity->poseTimer = 0;
                 entity->pose = 0;
-                SetSubStep(1);
+                OVL_EXPORT(SetSubStep)(1);
 #ifdef VERSION_PSP
                 g_api.PlaySfx(SFX_PSP_DRACULA_FIREBALL_ATTACK);
 #else
@@ -627,17 +629,19 @@ void EntityDracula(Entity* self) {
 
         case 1:
             entity = self + 1;
-            if (!AnimateEntity(D_801809A4, entity)) {
+            if (!OVL_EXPORT(AnimateEntity)(D_801809A4, entity)) {
                 entity->animCurFrame = 0;
-                SetSubStep(2);
+                OVL_EXPORT(SetSubStep)(2);
             }
             break;
 
         case 2:
             for (i = 0; i < 3; i++) {
-                entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                entity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_ID(DRACULA_UNK1B), self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID(DRACULA_UNK1B), self, entity);
                     entity->facingLeft = self->facingLeft;
                     entity->zPriority = self->zPriority + 1;
                     entity->params = i;
@@ -652,8 +656,8 @@ void EntityDracula(Entity* self) {
             self->step_s++;
 
         case 3:
-            if (!AnimateEntity(D_80180924, self)) {
-                SetStep(4);
+            if (!OVL_EXPORT(AnimateEntity)(D_80180924, self)) {
+                OVL_EXPORT(SetStep)(4);
             }
         }
         break;
@@ -661,8 +665,8 @@ void EntityDracula(Entity* self) {
     case 6:
         switch (self->step_s) {
         case 0:
-            if (!AnimateEntity(D_80180934, self)) {
-                SetSubStep(1);
+            if (!OVL_EXPORT(AnimateEntity)(D_80180934, self)) {
+                OVL_EXPORT(SetSubStep)(1);
                 self->ext.dracula.unk8C = 2;
                 g_api.PlaySfx(SFX_FIREBALL_SHOT_A);
                 g_api.PlaySfx(SFX_DRACULA_HERE_IS_TRUE_POWER);
@@ -672,9 +676,11 @@ void EntityDracula(Entity* self) {
         case 1:
         case 2:
             if (!--self->ext.dracula.unk8C) {
-                entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                entity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_ID(DRACULA_UNK1C), self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID(DRACULA_UNK1C), self, entity);
                     i = self->step_s - 1;
                     entity->facingLeft = self->facingLeft;
                     if (self->facingLeft) {
@@ -698,8 +704,8 @@ void EntityDracula(Entity* self) {
             break;
 
         case 4:
-            if (!AnimateEntity(D_80180944, self)) {
-                SetStep(4);
+            if (!OVL_EXPORT(AnimateEntity)(D_80180944, self)) {
+                OVL_EXPORT(SetStep)(4);
             }
         }
         break;
@@ -718,7 +724,7 @@ void EntityDracula(Entity* self) {
             self->step_s++;
 
         case 1:
-            if (!AnimateEntity(D_80180954, self)) {
+            if (!OVL_EXPORT(AnimateEntity)(D_80180954, self)) {
                 self->ext.dracula.unk8C = 0x28;
                 self->unk5A = 0x59;
                 self->step_s++;
@@ -869,11 +875,13 @@ void EntityDracula(Entity* self) {
             }
 
             entity = self + 2;
-            CreateEntityFromCurrentEntity(E_ID(DRACULA_UNK2B), entity);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)
+            (E_ID(DRACULA_UNK2B), entity);
             entity->facingLeft = self->facingLeft;
 
             entity = self + 5;
-            CreateEntityFromCurrentEntity(E_ID(DRACULA_UNK20), entity);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)
+            (E_ID(DRACULA_UNK20), entity);
             entity->facingLeft = self->facingLeft;
             entity->posY.i.hi += 2;
             self->step_s++;
@@ -930,7 +938,7 @@ void EntityDraculaBody(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitDracula);
+        OVL_EXPORT(InitializeEntity)(g_EInitDracula);
         self->hitboxState = 1;
         self->hitPoints = 0x7FFF;
         self->animCurFrame = 0;
@@ -966,14 +974,14 @@ void EntityDraculaFireball(Entity* self) {
 
     if (self->flags & FLAG_DEAD) {
         self->step = 0;
-        self->pfnUpdate = EntityExplosion;
+        self->pfnUpdate = OVL_EXPORT(EntityExplosion);
         self->params = 2;
         return;
     }
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitDraculaFireball);
+        OVL_EXPORT(InitializeEntity)(g_EInitDraculaFireball);
 
         if (self->facingLeft) {
             self->velocityX = FIX(2);
@@ -991,8 +999,8 @@ void EntityDraculaFireball(Entity* self) {
         self->ext.dracula.unk8C = 0x28;
 
     case 1:
-        AnimateEntity(D_8018097C, self);
-        MoveEntity();
+        OVL_EXPORT(AnimateEntity)(D_8018097C, self);
+        OVL_EXPORT(MoveEntity)();
 
         if (!--self->ext.dracula.unk8C) {
             self->velocityY = 0;
@@ -1009,7 +1017,7 @@ void EntityDraculaMeteorball(Entity* entity) {
 
     if (g_isDraculaFirstFormDefeated) {
         entity->entityId = E_EXPLOSION;
-        entity->pfnUpdate = EntityExplosion;
+        entity->pfnUpdate = OVL_EXPORT(EntityExplosion);
         entity->step = 0;
         entity->step_s = 0;
         entity->params = 1;
@@ -1018,19 +1026,19 @@ void EntityDraculaMeteorball(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(g_EInitDraculaMeteorball);
+        OVL_EXPORT(InitializeEntity)(g_EInitDraculaMeteorball);
         entity->drawFlags |= ENTITY_ROTATE;
         entity->hitboxState = 0;
         break;
     case 1:
-        if (AnimateEntity(D_801809B0, entity) == 0) {
+        if (OVL_EXPORT(AnimateEntity)(D_801809B0, entity) == 0) {
             entity->hitboxState = 1;
-            SetStep(2);
+            OVL_EXPORT(SetStep)(2);
         }
         break;
     case 2:
-        AnimateEntity(D_80180990, entity);
-        MoveEntity();
+        OVL_EXPORT(AnimateEntity)(D_80180990, entity);
+        OVL_EXPORT(MoveEntity)();
         entity->rotate += 4;
 
         if (entity->params) {
@@ -1046,11 +1054,13 @@ void EntityDraculaMeteorball(Entity* entity) {
         }
 
         if (!(g_Timer & 3)) {
-            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            newEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (newEntity != 0) {
-                CreateEntityFromEntity(E_ID(DRACULA_METEOR), entity, newEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_ID(DRACULA_METEOR), entity, newEntity);
                 newEntity->zPriority = entity->zPriority + 1;
-                randomPosXYIndex = (Random() & 3);
+                randomPosXYIndex = (OVL_EXPORT(Random)() & 3);
                 newEntity->posX.i.hi += D_80180A60[randomPosXYIndex].x;
                 newEntity->posY.i.hi += D_80180A60[randomPosXYIndex].y;
             }
@@ -1068,14 +1078,14 @@ void func_801AD838(Entity* entity) {
     }
 
     if (!entity->step) {
-        InitializeEntity(g_EInitDraculaFireball);
+        OVL_EXPORT(InitializeEntity)(g_EInitDraculaFireball);
         entity->animCurFrame = 0;
         entity->hitboxState = 0;
         entity->velocityY = FIX(-1);
     }
-    MoveEntity();
+    OVL_EXPORT(MoveEntity)();
 
-    if (!AnimateEntity(D_801809E0, entity)) {
+    if (!OVL_EXPORT(AnimateEntity)(D_801809E0, entity)) {
         DestroyEntity(entity);
     }
 }
@@ -1090,7 +1100,7 @@ void EntityDraculaGlass(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(g_EInitDraculaFireball);
+        OVL_EXPORT(InitializeEntity)(g_EInitDraculaFireball);
         entity->animCurFrame = 0x59;
         entity->hitboxState = 0;
         entity->drawFlags = ENTITY_ROTATE;
@@ -1098,31 +1108,31 @@ void EntityDraculaGlass(Entity* entity) {
         entity->velocityY = 0;
         if (entity->params) {
             entity->animCurFrame = 0x5C;
-            speed = (Random() & 0x1F) + 0x10;
-            radians = (Random() * 6) + 0x900;
+            speed = (OVL_EXPORT(Random)() & 0x1F) + 0x10;
+            radians = (OVL_EXPORT(Random)() * 6) + 0x900;
             entity->velocityX = speed * rcos(radians);
             entity->velocityY = speed * rsin(radians);
-            SetStep(3);
+            OVL_EXPORT(SetStep)(3);
         }
     case 1:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         entity->rotate += 0x20;
         entity->velocityY += FIX(0.125);
         if (entity->posY.i.hi > 204) {
             g_api.PlaySfx(SFX_DRA_GLASS_BREAK); // "What is a man?!"
             entity->posY.i.hi = 204;
-            SetStep(2);
+            OVL_EXPORT(SetStep)(2);
         }
         break;
     case 2:
         entity->drawFlags = ENTITY_DEFAULT;
-        if (!AnimateEntity(D_80180A40, entity)) {
+        if (!OVL_EXPORT(AnimateEntity)(D_80180A40, entity)) {
             for (i = 0; i < 8; i++) {
                 glassShardEntity =
-                    AllocEntity(&g_Entities[224], &g_Entities[256]);
+                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
                 if (glassShardEntity != 0) {
-                    CreateEntityFromEntity(
-                        E_ID(DRACULA_UNK1F), entity, glassShardEntity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_ID(DRACULA_UNK1F), entity, glassShardEntity);
                     glassShardEntity->params = 1;
                 }
             }
@@ -1130,7 +1140,7 @@ void EntityDraculaGlass(Entity* entity) {
         }
         break;
     case 3:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         entity->velocityY += FIX(0.125);
         if (entity->posY.i.hi > 204) {
             DestroyEntity(entity);

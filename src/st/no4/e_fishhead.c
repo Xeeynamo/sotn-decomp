@@ -48,18 +48,18 @@ void EntityFishheadSpawner(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitFishheadSpawner);
+        OVL_EXPORT(InitializeEntity)(g_EInitFishheadSpawner);
         self->animCurFrame = 0x13;
         params = self->params;
 
         // Spawn two stacked fishheads
         entity = self + 1;
-        CreateEntityFromEntity(E_FISHHEAD, self, entity);
+        OVL_EXPORT(CreateEntityFromEntity)(E_FISHHEAD, self, entity);
         entity->params = params & 0x100;
         entity->facingLeft = params & 1;
 
         entity = self + 2;
-        CreateEntityFromEntity(E_FISHHEAD, self, entity);
+        OVL_EXPORT(CreateEntityFromEntity)(E_FISHHEAD, self, entity);
         entity->params = (params & 0x100) + 1;
         entity->facingLeft = (params & 2) >> 1;
         entity->posY.i.hi -= 0x18;
@@ -76,12 +76,12 @@ void EntityFishhead(Entity* self) {
     s8* ptr;
 
     if (self->flags & FLAG_DEAD && self->step != 5) {
-        SetStep(5);
+        OVL_EXPORT(SetStep)(5);
     }
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitFishhead);
+        OVL_EXPORT(InitializeEntity)(g_EInitFishhead);
         self->animCurFrame = 1;
         self->palette += 5;
 
@@ -89,7 +89,7 @@ void EntityFishhead(Entity* self) {
         if (!(self->params & 1)) {
             self->ext.fishhead.isBottomHead = 1;
         }
-        self->ext.fishhead.attackTimerIndex = Random() & 7;
+        self->ext.fishhead.attackTimerIndex = OVL_EXPORT(Random)() & 7;
         // fallthrough
     case 1:
     case 2:
@@ -102,7 +102,7 @@ void EntityFishhead(Entity* self) {
             self->step_s++;
             // fallthrough
         case 1:
-            AnimateEntity(anim_idle, self);
+            OVL_EXPORT(AnimateEntity)(anim_idle, self);
             if (!(self->flags & 0xF)) {
                 self->ext.fishhead.palette += 0x10;
                 if (self->ext.fishhead.palette > 0xA80) {
@@ -114,10 +114,11 @@ void EntityFishhead(Entity* self) {
             if (!(self->ext.fishhead.attackTimer & 0xF)) {
                 // Spawn 5 bubbles that float above the Fishhead
                 for (i = 0; i < 5; i++) {
-                    entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                    entity = OVL_EXPORT(AllocEntity)(
+                        &g_Entities[160], &g_Entities[192]);
                     if (entity != NULL) {
-                        CreateEntityFromEntity(
-                            E_FISHHEAD_PARTICLES, self, entity);
+                        OVL_EXPORT(CreateEntityFromEntity)
+                        (E_FISHHEAD_PARTICLES, self, entity);
                         entity->zPriority = self->zPriority + 1;
                         if (self->facingLeft) {
                             entity->posX.i.hi += 0x12;
@@ -125,8 +126,8 @@ void EntityFishhead(Entity* self) {
                             entity->posX.i.hi -= 0x12;
                         }
                         entity->posY.i.hi -= 4;
-                        entity->posY.i.hi -= Random() & 7;
-                        entity->posX.i.hi += (Random() & 7) - 4;
+                        entity->posY.i.hi -= OVL_EXPORT(Random)() & 7;
+                        entity->posX.i.hi += (OVL_EXPORT(Random)() & 7) - 4;
                         entity->params = 0;
                     }
                 }
@@ -139,24 +140,24 @@ void EntityFishhead(Entity* self) {
             break;
         case 2:
             self->palette = g_EInitFishhead[3];
-            playerFacing = (GetSideToPlayer() & 1) ^ 1;
-            if (GetDistanceToPlayerX() < 0x48) {
+            playerFacing = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+            if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x48) {
                 self->ext.fishhead.playerIsClose = 1;
             } else {
                 self->ext.fishhead.playerIsClose = 0;
             }
-            SetStep(4);
+            OVL_EXPORT(SetStep)(4);
             if (self->facingLeft != playerFacing && !(self->params & 0x100)) {
-                SetStep(3);
+                OVL_EXPORT(SetStep)(3);
             }
             break;
         }
         break;
     case 3:
-        if (!AnimateEntity(anim_rotate, self)) {
+        if (!OVL_EXPORT(AnimateEntity)(anim_rotate, self)) {
             self->facingLeft ^= 1;
             self->animCurFrame = 2;
-            SetStep(2);
+            OVL_EXPORT(SetStep)(2);
         }
         break;
     case 4:
@@ -169,20 +170,22 @@ void EntityFishhead(Entity* self) {
         }
         switch (self->step_s) {
         case 0:
-            if (!AnimateEntity(anim_prep_attack, self)) {
-                SetSubStep(1);
+            if (!OVL_EXPORT(AnimateEntity)(anim_prep_attack, self)) {
+                OVL_EXPORT(SetSubStep)(1);
             }
             break;
         case 1:
             PlaySfxPositional(SFX_FIRE_SHOT);
 
-            entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            entity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
                 if (self->ext.fishhead.playerIsClose) {
-                    CreateEntityFromEntity(
-                        E_FISHHEAD_FIRE_BREATH, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_FISHHEAD_FIRE_BREATH, self, entity);
                 } else {
-                    CreateEntityFromEntity(E_FISHHEAD_FIREBALL, self, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_FISHHEAD_FIREBALL, self, entity);
                 }
                 entity->ext.fishhead.fishheadEntity = self;
                 entity->facingLeft = self->facingLeft;
@@ -195,10 +198,12 @@ void EntityFishhead(Entity* self) {
                 entity->posY.i.hi++;
             }
 
-            entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            entity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
                 // Spawn the puff of smoke after the fireball goes off
-                CreateEntityFromEntity(E_FISHHEAD_PARTICLES, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_FISHHEAD_PARTICLES, self, entity);
                 entity->zPriority = self->zPriority + 1;
                 if (self->facingLeft) {
                     entity->posX.i.hi += 0x12;
@@ -211,8 +216,8 @@ void EntityFishhead(Entity* self) {
             self->step_s++;
             // fallthrough
         case 2:
-            if (!AnimateEntity(anim_post_attack, self)) {
-                SetStep(2);
+            if (!OVL_EXPORT(AnimateEntity)(anim_post_attack, self)) {
+                OVL_EXPORT(SetStep)(2);
             }
             break;
         }
@@ -220,17 +225,19 @@ void EntityFishhead(Entity* self) {
     case 5:
         self->ext.fishhead.isBottomHead = 1;
         for (i = 0; i < 3; i++) {
-            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            entity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_FISHHEAD_DEATH_PARTS, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_FISHHEAD_DEATH_PARTS, self, entity);
                 entity->params = i;
                 entity->facingLeft = self->facingLeft;
                 entity->zPriority = self->zPriority + 4 - i;
             }
         }
-        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        entity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
             entity->params = 2;
         }
         PlaySfxPositional(SFX_EXPLODE_B);
@@ -256,14 +263,15 @@ void EntityFishhead(Entity* self) {
     self->hitboxOffY = *ptr++;
     self->hitboxWidth = *ptr++;
     self->hitboxHeight = *ptr++;
-    GetPlayerCollisionWith(self, self->hitboxWidth - 4, self->hitboxHeight, 4);
+    OVL_EXPORT(GetPlayerCollisionWith)
+    (self, self->hitboxWidth - 4, self->hitboxHeight, 4);
 }
 
 // Fishhead fireball
 void EntityFishheadFireball(Entity* self) {
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitFishheadFireball);
+        OVL_EXPORT(InitializeEntity)(g_EInitFishheadFireball);
         if (self->facingLeft) {
             self->velocityX = FIX(4.0);
         } else {
@@ -271,11 +279,11 @@ void EntityFishheadFireball(Entity* self) {
         }
         // fallthrough
     case 1:
-        MoveEntity();
-        AnimateEntity(anim_fireball, self);
+        OVL_EXPORT(MoveEntity)();
+        OVL_EXPORT(AnimateEntity)(anim_fireball, self);
         if (self->flags & FLAG_DEAD) {
             self->step = 0;
-            self->pfnUpdate = EntityExplosion;
+            self->pfnUpdate = OVL_EXPORT(EntityExplosion);
             self->params = 0;
         }
     }
@@ -293,7 +301,7 @@ void EntityFishheadParticles(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitFishheadPieces);
+        OVL_EXPORT(InitializeEntity)(g_EInitFishheadPieces);
         if (self->params) {
             // Fireball puff
             self->step = 2;
@@ -315,11 +323,11 @@ void EntityFishheadParticles(Entity* self) {
         prim->u0 = prim->v0 = 1;
         prim->priority = self->zPriority;
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
-        self->velocityX = (Random() << 7) - FIX(0.25);
+        self->velocityX = (OVL_EXPORT(Random)() << 7) - FIX(0.25);
         // Passthrough
     case 1:
         // Small bubbles when Fishhead is idling
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         if (self->velocityY > FIX(-2)) {
             self->velocityY -= 0x400;
         }
@@ -344,11 +352,11 @@ void EntityFishheadParticles(Entity* self) {
         break;
     case 2:
         // Vertical puff of smoke after shooting fireball
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         if (self->velocityY > FIX(-2)) {
             self->velocityY -= 0x400;
         }
-        if (!AnimateEntity(anim_fireball_puff, self)) {
+        if (!OVL_EXPORT(AnimateEntity)(anim_fireball_puff, self)) {
             DestroyEntity(self);
         }
         break;
@@ -368,7 +376,7 @@ void EntityFishheadFireBreath(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitFishheadFireBreath);
+        OVL_EXPORT(InitializeEntity)(g_EInitFishheadFireBreath);
         self->animSet = 0;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x10);
         if (primIndex == -1) {
@@ -409,7 +417,7 @@ void EntityFishheadFireBreath(Entity* self) {
     case 1:
         entity = self->ext.fishhead.fishheadEntity;
         self->posY.i.hi = entity->posY.i.hi + 1;
-        if (!AnimateEntity(anim_fire_breath, self)) {
+        if (!OVL_EXPORT(AnimateEntity)(anim_fire_breath, self)) {
             self->hitboxState = 0;
             self->step += 1;
             return;
@@ -433,19 +441,19 @@ void EntityFishheadFireBreath(Entity* self) {
         while (prim != NULL) {
             prim->type = PRIM_TILE;
             if (self->facingLeft) {
-                posX = (Random() & 0x1F) + 0x10;
+                posX = (OVL_EXPORT(Random)() & 0x1F) + 0x10;
             } else {
-                posX = -(Random() & 0x1F) - 0x10;
+                posX = -(OVL_EXPORT(Random)() & 0x1F) - 0x10;
             }
             prim->x0 = self->posX.i.hi + posX;
             posY = self->posY.i.hi;
-            prim->y0 = (posY - (Random() & 0x1F)) + 8;
+            prim->y0 = (posY - (OVL_EXPORT(Random)() & 0x1F)) + 8;
             prim->u0 = 1;
             prim->v0 = 1;
             prim->r0 = 0xE0;
             prim->b0 = 0x88;
             prim->g0 = 0xA0;
-            prim->p2 = (Random() & 7) + 1;
+            prim->p2 = (OVL_EXPORT(Random)() & 7) + 1;
             prim->priority = self->zPriority + 1;
             prim->drawMode =
                 DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
@@ -482,7 +490,7 @@ void EntityFishheadDeathParts(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitFishheadPieces);
+        OVL_EXPORT(InitializeEntity)(g_EInitFishheadPieces);
         self->hitboxState = 0;
         self->animCurFrame = self->params + 0x14;
         self->ext.fishhead.attackTimer = self->params + 0xC;
@@ -493,7 +501,7 @@ void EntityFishheadDeathParts(Entity* self) {
         }
         break;
     case 2:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityY += FIX(0.15625);
         posX = self->posX.i.hi;
         posY = self->posY.i.hi + death_parts_posY_offset[self->params];
@@ -507,7 +515,7 @@ void EntityFishheadDeathParts(Entity* self) {
     case 3:
         if (!--self->ext.fishhead.attackTimer) {
             self->step = 0;
-            self->pfnUpdate = EntityExplosion;
+            self->pfnUpdate = OVL_EXPORT(EntityExplosion);
             self->params = 2;
         }
         break;

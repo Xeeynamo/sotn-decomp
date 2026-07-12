@@ -25,12 +25,12 @@ void EntityCloakedKnight(Entity* self) {
     s32 scale;
 
     if (self->flags & FLAG_DEAD && self->step != 6) {
-        SetStep(6);
+        OVL_EXPORT(SetStep)(6);
     }
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitCloakedKnight);
+        OVL_EXPORT(InitializeEntity)(g_EInitCloakedKnight);
         self->animCurFrame = 1;
         self->hitboxOffY = 11;
         primIndex = g_api.AllocPrimitives(PRIM_TILE, 1);
@@ -47,31 +47,33 @@ void EntityCloakedKnight(Entity* self) {
         prim->priority = 0xC0;
         prim->drawMode = DRAW_HIDE | DRAW_UNK02;
         entity = self + 1;
-        CreateEntityFromCurrentEntity(E_CLOAKED_KNIGHT_CLOAK, entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)
+        (E_CLOAKED_KNIGHT_CLOAK, entity);
         entity->zPriority = self->zPriority - 1;
         entity = self + 2;
-        CreateEntityFromCurrentEntity(E_CLOAKED_KNIGHT_SWORD, entity);
+        OVL_EXPORT(CreateEntityFromCurrentEntity)
+        (E_CLOAKED_KNIGHT_SWORD, entity);
         entity->zPriority = self->zPriority + 1;
-        SetStep(2);
+        OVL_EXPORT(SetStep)(2);
         break;
 
     case 2:
-        if (GetDistanceToPlayerX() < 0x50) {
+        if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x50) {
             self->ext.cloakedKnight.unkA2 = 0x20;
-            SetStep(3);
+            OVL_EXPORT(SetStep)(3);
         }
         break;
 
     case 3:
         switch (self->step_s) {
         case 0:
-            self->ext.cloakedKnight.unk94 = (Random() & 3) + 1;
+            self->ext.cloakedKnight.unk94 = (OVL_EXPORT(Random)() & 3) + 1;
             self->ext.cloakedKnight.unk84 = 0;
             self->step_s++;
             // fallthrough
 
         case 1:
-            angle = (Random() * 4) + FLT(0.125);
+            angle = (OVL_EXPORT(Random)() * 4) + FLT(0.125);
             posX = FLT_TO_I(rcos(angle) * 0x60);
             posY = FLT_TO_I(rsin(angle) * -0x60);
             entity = &PLAYER;
@@ -97,7 +99,7 @@ void EntityCloakedKnight(Entity* self) {
             break;
 
         case 3:
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             if (!--self->ext.cloakedKnight.timer) {
                 self->step_s = 1;
             }
@@ -116,7 +118,7 @@ void EntityCloakedKnight(Entity* self) {
             if (distance < 6) {
                 self->step_s = 1;
                 if (!--self->ext.cloakedKnight.unk94) {
-                    SetStep(4);
+                    OVL_EXPORT(SetStep)(4);
                 }
             }
             if (posX < 0) {
@@ -126,11 +128,11 @@ void EntityCloakedKnight(Entity* self) {
 #ifdef VERSION_PSP
             angle = self->hitFlags & 3;
             if (angle) {
-                SetStep(5);
+                OVL_EXPORT(SetStep)(5);
             }
 #else
             if (self->hitFlags & 3) {
-                SetStep(5);
+                OVL_EXPORT(SetStep)(5);
             }
 #endif
             break;
@@ -156,7 +158,7 @@ void EntityCloakedKnight(Entity* self) {
 
         case 1:
             entity = &PLAYER;
-            angle = GetAngleBetweenEntities(self, entity);
+            angle = OVL_EXPORT(GetAngleBetweenEntities)(self, entity);
             angle &= 0xFFF;
             angle -= self->rotate & 0xFFF;
 
@@ -196,7 +198,7 @@ void EntityCloakedKnight(Entity* self) {
 
         case 4:
             if (StepTowards(&self->ext.cloakedKnight.unkA2, 0x20, 1) != 0) {
-                SetStep(3);
+                OVL_EXPORT(SetStep)(3);
             }
             break;
         }
@@ -218,12 +220,12 @@ void EntityCloakedKnight(Entity* self) {
             // fallthrough
 
         case 1:
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             self->velocityX -= self->velocityX / 32;
             self->velocityY -= self->velocityY / 32;
             if (!--self->ext.cloakedKnight.timer) {
                 self->animCurFrame = 1;
-                SetStep(3);
+                OVL_EXPORT(SetStep)(3);
             }
             break;
         }
@@ -233,9 +235,9 @@ void EntityCloakedKnight(Entity* self) {
         self->hitboxState = 0;
         PlaySfxPositional(SFX_CLOAKED_KNIGHT_DEATH);
         PlaySfxPositional(SFX_FM_THUNDER_EXPLODE);
-        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        entity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
             entity->params = EXPLOSION_SMALL_MULTIPLE;
         }
         entity = self + 2;
@@ -264,9 +266,11 @@ void EntityCloakedKnight(Entity* self) {
         pos->y.val = posY;
         if (!(g_Timer & 0xF) && (self->step != 5)) {
             // aura
-            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            entity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_CLOAKED_KNIGHT_AURA, self, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_CLOAKED_KNIGHT_AURA, self, entity);
                 entity->ext.cloakedKnightAura.parent = self;
                 entity->zPriority = self->zPriority + 1;
             }
@@ -283,14 +287,14 @@ void EntityCloakedKnightCloak(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitCloakedKnight);
+        OVL_EXPORT(InitializeEntity)(g_EInitCloakedKnight);
         self->hitboxState = 0;
         self->flags |= FLAG_UNK_00200000 | FLAG_UNK_2000;
         self->drawFlags = ENTITY_ROTATE;
         // fallthrough
 
     case 1:
-        AnimateEntity(anim_cloak, self);
+        OVL_EXPORT(AnimateEntity)(anim_cloak, self);
         prev = self - 1;
         self->posX.i.hi = prev->posX.i.hi;
         self->posY.i.hi = prev->posY.i.hi;
@@ -317,7 +321,7 @@ void EntityCloakedKnightAura(Entity* self) {
     Entity* parent;
 
     if (!self->step) {
-        InitializeEntity(g_EInitCloakedKnightAura);
+        OVL_EXPORT(InitializeEntity)(g_EInitCloakedKnightAura);
         self->hitboxState = 0;
         self->flags |= FLAG_UNK_00200000 | FLAG_UNK_2000;
         self->animCurFrame = 1;
@@ -362,19 +366,20 @@ void EntityCloakedKnightSword(Entity* self) {
             entity->entityId != E_CLOAKED_KNIGHT) {
             if (self->step != 4) {
                 self->hitboxState = 0;
-                SetStep(4);
+                OVL_EXPORT(SetStep)(4);
             }
         }
     }
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitCloakedKnightSword);
+        OVL_EXPORT(InitializeEntity)(g_EInitCloakedKnightSword);
         self->animCurFrame = 7;
         self->drawFlags = ENTITY_ROTATE;
         if (!self->params) {
             entity = self + 1;
-            CreateEntityFromCurrentEntity(E_CLOAKED_KNIGHT_SWORD, entity);
+            OVL_EXPORT(CreateEntityFromCurrentEntity)
+            (E_CLOAKED_KNIGHT_SWORD, entity);
             entity->params = 1;
         } else {
             self->flags |= FLAG_UNK_2000;
@@ -394,7 +399,7 @@ void EntityCloakedKnightSword(Entity* self) {
         break;
 
     case 2:
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         pos = &self->ext.cloakedKnightSword.targetPos;
         offsetX = pos->x.i.hi - self->posX.i.hi;
         offsetY = pos->y.i.hi - self->posY.i.hi;
@@ -405,7 +410,7 @@ void EntityCloakedKnightSword(Entity* self) {
             scale = 0x38;
         }
         if (scale < 4) {
-            SetStep(3);
+            OVL_EXPORT(SetStep)(3);
         }
         rotate = ratan2(offsetY, offsetX);
         self->velocityX = scale * rcos(rotate);
@@ -421,7 +426,7 @@ void EntityCloakedKnightSword(Entity* self) {
     case 4:
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
                        FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         self->velocityY += FIX(0.125);
         self->rotate += ROT(11.25);
         break;

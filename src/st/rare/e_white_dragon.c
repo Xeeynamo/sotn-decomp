@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rare.h"
 
-extern u16 UNK_Invincibility0[];
+extern u16 OVL_EXPORT(PalInvincibility0)[];
 extern EInit OVL_EXPORT(EInitSpawner);
 extern EInit g_EInitWhiteDragonFlameBreath;
 
@@ -35,14 +35,16 @@ static void func_us_801B4F00(void) {
     prim = var_s4->ext.whiteDragon.prim;
     for (i = SEGMENT_COUNT - 1; i >= 0; i--) {
         dx = (currentEntity + 1)->ext.whiteDragon.unk84;
-        baseSine = GetSineScaled(currentEntity->ext.whiteDragon.unk80, dx);
+        baseSine =
+            OVL_EXPORT(GetSineScaled)(currentEntity->ext.whiteDragon.unk80, dx);
         magnitude = (((0x100 - dx) * var_s4->ext.whiteDragon.unk88) / FIX(10));
         if (!var_s4->facingLeft) {
             magnitude = -magnitude;
         }
-        sineX = GetSineScaled(
+        sineX = OVL_EXPORT(GetSineScaled)(
             currentEntity->ext.whiteDragon.unk83 + 0x40, magnitude);
-        sineY = GetSineScaled(currentEntity->ext.whiteDragon.unk83, magnitude);
+        sineY = OVL_EXPORT(GetSineScaled)(
+            currentEntity->ext.whiteDragon.unk83, magnitude);
         (currentEntity + 1)->ext.whiteDragon.posY.val =
             currentEntity->ext.whiteDragon.posY.val + baseSine + sineY;
         (currentEntity + 1)->ext.whiteDragon.posX.val =
@@ -65,9 +67,9 @@ static void func_us_801B4F00(void) {
                   (currentEntity - 1)->ext.whiteDragon.posX.i.hi);
             dy = currentEntity->ext.whiteDragon.posY.i.hi -
                  (currentEntity - 1)->ext.whiteDragon.posY.i.hi;
-            angle = Ratan2Shifted(dx, dy);
-            var_s6 = GetSineScaled(angle + 0x20, 0xB5);
-            var_s5 = GetSineScaled(angle - 0x20, 0xB5);
+            angle = OVL_EXPORT(Ratan2Shifted)(dx, dy);
+            var_s6 = OVL_EXPORT(GetSineScaled)(angle + 0x20, 0xB5);
+            var_s5 = OVL_EXPORT(GetSineScaled)(angle - 0x20, 0xB5);
 
             var_s2 = currentEntity->posX.val;
             prim->x0 = ((var_s2 + var_s6) >> 0x10);
@@ -232,7 +234,7 @@ void EntityWhiteDragon(Entity* self) {
     if (entity->flags & 0xF) {
         iFramePalette = entity->nFramesInvincibility << 1;
         iFramePalette += entity->flags & 1;
-        entity->palette = UNK_Invincibility0[iFramePalette];
+        entity->palette = OVL_EXPORT(PalInvincibility0)[iFramePalette];
         if (!(--entity->flags & 0xF)) {
             entity->palette = entity->hitEffect;
             entity->hitEffect = 0;
@@ -267,7 +269,7 @@ void EntityWhiteDragon(Entity* self) {
     switch (self->step) {
     case INIT:
         if (!self->step_s) {
-            InitializeEntity(OVL_EXPORT(EInitSpawner));
+            OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitSpawner));
             self->step = INIT;
             self->step_s++;
             self->flags |=
@@ -387,7 +389,8 @@ void EntityWhiteDragon(Entity* self) {
             if (self->ext.whiteDragon.attackTimer) {
                 self->ext.whiteDragon.attackTimer--;
             } else {
-                angle = GetAngleBetweenEntitiesShifted(self, &PLAYER);
+                angle =
+                    OVL_EXPORT(GetAngleBetweenEntitiesShifted)(self, &PLAYER);
                 if (self->facingLeft) {
                     angle -= 0x20;
                 } else {
@@ -398,10 +401,11 @@ void EntityWhiteDragon(Entity* self) {
                     self->step = FLAME_BREATH;
                     self->step_s = 0;
                     self->ext.whiteDragon.unk96 = 0x10;
-                    self->ext.whiteDragon.unk9F = Random() & 1;
+                    self->ext.whiteDragon.unk9F = OVL_EXPORT(Random)() & 1;
                     self->ext.whiteDragon.unkA4 = 0;
                 }
-                self->ext.whiteDragon.attackTimer = attack_timers[Random() & 7];
+                self->ext.whiteDragon.attackTimer =
+                    attack_timers[OVL_EXPORT(Random)() & 7];
             }
 
             if (self->ext.whiteDragon.unk9A) {
@@ -409,7 +413,7 @@ void EntityWhiteDragon(Entity* self) {
                 return;
             }
 
-            angle = GetAngleBetweenEntitiesShifted(self, &PLAYER);
+            angle = OVL_EXPORT(GetAngleBetweenEntitiesShifted)(self, &PLAYER);
             if (self->facingLeft) {
                 angle -= 0x20;
             } else {
@@ -474,7 +478,8 @@ void EntityWhiteDragon(Entity* self) {
             if (self->ext.whiteDragon.unk96) {
                 self->ext.whiteDragon.unk96--;
             } else {
-                angle = GetAngleBetweenEntitiesShifted(self, &PLAYER);
+                angle =
+                    OVL_EXPORT(GetAngleBetweenEntitiesShifted)(self, &PLAYER);
                 if (self->facingLeft) {
                     self->ext.whiteDragon.angle = angle - 0x40;
                 } else {
@@ -615,7 +620,8 @@ void EntityWhiteDragon(Entity* self) {
                 LOHU(self->ext.whiteDragon.unk98) = 0;
                 self->step_s++;
                 entity = self + SEGMENT_COUNT;
-                angle = GetAngleBetweenEntitiesShifted(entity, &PLAYER);
+                angle =
+                    OVL_EXPORT(GetAngleBetweenEntitiesShifted)(entity, &PLAYER);
                 if (!self->ext.whiteDragon.unk9F) {
                     entity->ext.whiteDragon.unk9E = angle;
                 } else {
@@ -628,13 +634,14 @@ void EntityWhiteDragon(Entity* self) {
             }
             break;
         case 1:
-            AnimateEntity(&anim_mouth_open, self + SEGMENT_COUNT);
-            entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            OVL_EXPORT(AnimateEntity)(&anim_mouth_open, self + SEGMENT_COUNT);
+            entity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL && self->ext.whiteDragon.unk96) {
                 self->ext.whiteDragon.unk96--;
                 DestroyEntity(entity);
-                CreateEntityFromEntity(
-                    E_WHITE_DRAGON_FLAME_BREATH, self + SEGMENT_COUNT, entity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_WHITE_DRAGON_FLAME_BREATH, self + SEGMENT_COUNT, entity);
                 entity->ext.whiteDragon.entity = self + SEGMENT_COUNT;
                 entity->facingLeft = self->facingLeft;
                 if (self->ext.whiteDragon.unk9F) {
@@ -669,7 +676,8 @@ void EntityWhiteDragon(Entity* self) {
                 }
 
                 if (self->ext.whiteDragon.unk96 < 0x19) {
-                    AnimateEntity(&anim_breathe_fire, self + SEGMENT_COUNT);
+                    OVL_EXPORT(AnimateEntity)
+                    (&anim_breathe_fire, self + SEGMENT_COUNT);
                 }
                 self->ext.whiteDragon.unk96--;
             } else {
@@ -742,13 +750,14 @@ void EntityWhiteDragon(Entity* self) {
             }
 
             if (!(self->ext.whiteDragon.unk96 & 1)) {
-                entity = AllocEntity(
+                entity = OVL_EXPORT(AllocEntity)(
                     &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(
-                        E_EXPLOSION, self + SEGMENT_COUNT, entity);
+                    OVL_EXPORT(CreateEntityFromEntity)
+                    (E_EXPLOSION, self + SEGMENT_COUNT, entity);
                     entity->params = EXPLOSION_FIREBALL;
-                    entity->posX.i.hi += (s16)(Random() & 0x1F) - 0x10;
+                    entity->posX.i.hi +=
+                        (s16)(OVL_EXPORT(Random)() & 0x1F) - 0x10;
                     entity->zPriority = self->zPriority + 9;
                 }
             }
@@ -759,13 +768,13 @@ void EntityWhiteDragon(Entity* self) {
                 entity->drawFlags = ENTITY_DEFAULT;
                 if (i & 1) {
                     entity->entityId = E_EXPLOSION;
-                    entity->pfnUpdate = EntityExplosion;
+                    entity->pfnUpdate = OVL_EXPORT(EntityExplosion);
                     entity->params = EXPLOSION_FIREBALL;
                 } else {
                     j = self->params >> 1;
                     if (j) {
                         entity->entityId = E_PRIZE_DROP;
-                        entity->pfnUpdate = EntityPrizeDrop;
+                        entity->pfnUpdate = OVL_EXPORT(EntityPrizeDrop);
                         entity->params = j;
                         entity->zPriority = 0;
                         entity->animCurFrame = 0;
@@ -786,7 +795,7 @@ static void func_us_801B6578(Entity* self) {
     Entity* entity;
 
     entity = self->ext.whiteDragon.entity;
-    SetEntityVelocityFromAngle(entity->ext.whiteDragon.angle, 0x60);
+    OVL_EXPORT(SetEntityVelocityFromAngle)(entity->ext.whiteDragon.angle, 0x60);
     self->posX.val = entity->posX.val + self->velocityX;
     self->posY.val = entity->posY.val + self->velocityY;
 
@@ -846,21 +855,22 @@ void EntityWhiteDragonFlameBreath(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitWhiteDragonFlameBreath);
+        OVL_EXPORT(InitializeEntity)(g_EInitWhiteDragonFlameBreath);
         self->zPriority += 1;
         self->hitboxState = 0;
         self->blendMode = BLEND_TRANSP | BLEND_ADD;
         entity = self->ext.whiteDragon.entity;
-        SetEntityVelocityFromAngle(entity->ext.whiteDragon.angle, 0x60);
+        OVL_EXPORT(SetEntityVelocityFromAngle)
+        (entity->ext.whiteDragon.angle, 0x60);
         LOWU(self->ext.whiteDragon.unk80) = 0x28;
         return;
     case 1:
         if (self->params == 1) {
-            AnimateEntity(anim_flame_inhale, self);
+            OVL_EXPORT(AnimateEntity)(anim_flame_inhale, self);
         }
 
         if (!--LOWU(self->ext.whiteDragon.unk80)) {
-            SetStep(2);
+            OVL_EXPORT(SetStep)(2);
             self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 0xC;
             self->hitboxState = 1;
             self->ext.whiteDragon.unk84 = 0;
@@ -874,27 +884,28 @@ void EntityWhiteDragonFlameBreath(Entity* self) {
                 return;
             }
 
-            AnimateEntity(anim_flame_inhale, self);
+            OVL_EXPORT(AnimateEntity)(anim_flame_inhale, self);
             // HACK: bit ugly, can this be rewritten?
             size = (s16)(LOWU(self->ext.whiteDragon.unk80) - 0x10) * 32;
             params = self->params & 0x7F;
             prevVelocityX = self->velocityX;
             prevVelocityY = self->velocityY;
-            SetEntityVelocityFromAngle(flame_sine_indices[params], size);
+            OVL_EXPORT(SetEntityVelocityFromAngle)
+            (flame_sine_indices[params], size);
             if (!self->facingLeft) {
                 self->velocityX = -self->velocityX;
             }
-            MoveEntity();
+            OVL_EXPORT(MoveEntity)();
             self->velocityX = prevVelocityX;
             self->velocityY = prevVelocityY;
         }
         break;
     case 2:
-        if (!AnimateEntity(anim_flame_breathe, self)) {
+        if (!OVL_EXPORT(AnimateEntity)(anim_flame_breathe, self)) {
             DestroyEntity(self);
         }
 
-        MoveEntity();
+        OVL_EXPORT(MoveEntity)();
         if (self->animCurFrame > 6) {
             self->hitboxState = 0;
         }

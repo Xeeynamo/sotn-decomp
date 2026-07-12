@@ -2,9 +2,8 @@
 #ifndef RBO5_H
 #define RBO5_H
 
-#include <stage.h>
-
 #define OVL_EXPORT(x) RBO5_##x
+#include <stage.h>
 
 #include "../doppleganger.h"
 

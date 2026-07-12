@@ -77,7 +77,7 @@ static u16 g_eDamageDisplayClut[] = {
 
 // Slightly different to other overlays. May be possible to
 //  de-duplicate with several #ifdef, but for now it's broken out.
-void HitDetection(void) {
+void OVL_EXPORT(HitDetection)(void) {
     Entity* otherEntity;
     Primitive* prim;
     Entity* entityHit;
@@ -267,9 +267,11 @@ void HitDetection(void) {
         }
         hitboxCheck2 = iterEnt->hitEffect & 0x7F;
         if (hitboxCheck2 == 2 || (hitboxCheck2 == 6 && (miscVar1 & 0x20))) {
-            otherEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            otherEntity =
+                OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
             if (otherEntity) {
-                CreateEntityFromEntity(E_SOUL_STEAL_ORB, entity, otherEntity);
+                OVL_EXPORT(CreateEntityFromEntity)
+                (E_SOUL_STEAL_ORB, entity, otherEntity);
             }
         }
         miscVar1 = g_testCollEnemyLookup[entityHit->enemyId];
@@ -307,9 +309,11 @@ void HitDetection(void) {
                 while (prim != NULL) {
                     if (prim->drawMode == DRAW_HIDE) {
                         prim->clut = PAL_UNK_199;
-                        prim->x0 = prim->x2 = x - 13 + (Random() & 7) - 3;
+                        prim->x0 = prim->x2 =
+                            x - 13 + (OVL_EXPORT(Random)() & 7) - 3;
                         prim->x1 = prim->x3 = prim->x0 + 0x20;
-                        prim->y0 = prim->y1 = y - 10 + (Random() & 7) - 3;
+                        prim->y0 = prim->y1 =
+                            y - 10 + (OVL_EXPORT(Random)() & 7) - 3;
                         prim->y2 = prim->y3 = prim->y0 + 0x20;
                         prim->p1 = 0;
                         if (iterEnt->zPriority > entity->zPriority) {
@@ -331,12 +335,13 @@ void HitDetection(void) {
                 if ((g_Status.relics[RELIC_SPIRIT_ORB] & 2) &&
                     !(entityHit->flags & FLAG_KEEP_ALIVE_OFFCAMERA) &&
                     miscVar1) {
-                    otherEntity =
-                        AllocEntity(&g_Entities[224], &g_Entities[256]);
+                    otherEntity = OVL_EXPORT(AllocEntity)(
+                        &g_Entities[224], &g_Entities[256]);
                     if (otherEntity != NULL) {
                         DestroyEntity(otherEntity);
                         otherEntity->entityId = 4;
-                        otherEntity->pfnUpdate = EntityDamageDisplay;
+                        otherEntity->pfnUpdate =
+                            OVL_EXPORT(EntityDamageDisplay);
                         otherEntity->posX.i.hi = x;
                         otherEntity->posY.i.hi = y;
                         otherEntity->params = miscVar1;
@@ -395,11 +400,11 @@ void HitDetection(void) {
                 }
                 if ((iterEnt->attackElement & ELEMENT_CUT) &&
                     (entityHit->hitboxState & 0x10)) {
-                    otherEntity =
-                        AllocEntity(&g_Entities[160], &g_Entities[192]);
+                    otherEntity = OVL_EXPORT(AllocEntity)(
+                        &g_Entities[160], &g_Entities[192]);
                     if (otherEntity != NULL) {
-                        CreateEntityFromEntity(
-                            E_ENEMY_BLOOD, entity, otherEntity);
+                        OVL_EXPORT(CreateEntityFromEntity)
+                        (E_ENEMY_BLOOD, entity, otherEntity);
                         if (x > entity->posX.i.hi) {
                             otherEntity->params = 1;
                         }
@@ -435,7 +440,7 @@ void HitDetection(void) {
                 continue;
             }
         }
-        PreventEntityFromRespawning(entityHit);
+        OVL_EXPORT(PreventEntityFromRespawning)(entityHit);
         enemyDef = &g_api.enemyDefs[entityHit->enemyId];
         if ((entityHit->hitFlags & 0x80) == 0) {
             g_api.func_800FE044(enemyDef->exp, enemyDef->level);
@@ -447,7 +452,8 @@ void HitDetection(void) {
         miscVar3 = entityHit->flags & (FLAG_UNK_800 | FLAG_UNK_400);
         if (miscVar3) {
             if ((rand() & 0xFF) < g_testCollLuckCutoff[miscVar3 >> 0xA]) {
-                otherEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                otherEntity =
+                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
                 if (otherEntity != NULL) {
                     // Determine which jewel to randomly drop from the
                     // Jewel Sword
@@ -485,11 +491,11 @@ void HitDetection(void) {
                     }
                     if (miscVar3 >= 0x80) {
                         miscVar3 -= 0x80;
-                        CreateEntityFromEntity(
-                            E_EQUIP_ITEM_DROP, entity, otherEntity);
+                        OVL_EXPORT(CreateEntityFromEntity)
+                        (E_EQUIP_ITEM_DROP, entity, otherEntity);
                     } else {
-                        CreateEntityFromEntity(
-                            E_PRIZE_DROP, entity, otherEntity);
+                        OVL_EXPORT(CreateEntityFromEntity)
+                        (E_PRIZE_DROP, entity, otherEntity);
                     }
                     otherEntity->params = miscVar3;
                     // item pops up in the air a bit when spawned

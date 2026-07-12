@@ -6,7 +6,7 @@ extern EInit OVL_EXPORT(EInitSpawner);
 void EntityUnkId16(Entity* self) {
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitSpawner));
+        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitSpawner));
         self->ext.entrance16.r = 16;
         self->ext.entrance16.g = 8;
         self->ext.entrance16.b = 56;

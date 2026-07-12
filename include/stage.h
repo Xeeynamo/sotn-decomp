@@ -8,6 +8,10 @@
 #include "objects.h"
 #include "sfx.h"
 
+#ifndef OVL_EXPORT
+#define OVL_EXPORT(x) (x)
+#endif
+
 #ifdef VERSION_PSP
 #define E_ID(name) D_psp_E_##name
 #else
@@ -181,7 +185,7 @@ typedef struct {
     u8 var_s5[1];
 } ST0_SCRATCHPAD;
 
-extern u16 g_ItemIconSlots[ICON_SLOT_NUM];
+extern u16 OVL_EXPORT(ItemIconSlots)[ICON_SLOT_NUM];
 
 /*
  * Sets up layout arrays and initializes stage state to
@@ -190,28 +194,37 @@ extern u16 g_ItemIconSlots[ICON_SLOT_NUM];
  * - Parameters:
  *   - objLayoutId - the room to initialize
  */
-void InitRoomEntities(s32 objLayoutId);
+void OVL_EXPORT(InitRoomEntities)(s32 objLayoutId);
 
 /*
  * An callback for notifying the stage that the
  * viewport has changed.
  */
-void UpdateRoomPosition();
+void OVL_EXPORT(UpdateRoomPosition)();
 
-void Update(void);
-void UpdateStageEntities();
-void HitDetection(void);
+void OVL_EXPORT(Update)(void);
+void OVL_EXPORT(UpdateStageEntities)(void);
+void OVL_EXPORT(HitDetection)(void);
+void OVL_EXPORT(EntityDummy)(Entity*);
+void OVL_EXPORT(EntityMessageBox)(Entity*);
+void OVL_EXPORT(EntityHeartDrop)(Entity*);
+void OVL_EXPORT(EntityEquipItemDrop)(Entity*);
+void OVL_EXPORT(EntityExplosion)(Entity*);
+void OVL_EXPORT(EntityPrizeDrop)(Entity*);
+void OVL_EXPORT(EntityRelicOrb)(Entity*);
+void OVL_EXPORT(EntityDamageDisplay)(Entity*);
 
-s32 Random();
+s32 OVL_EXPORT(Random)();
 #ifdef VERSION_PC
-void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity);
+void OVL_EXPORT(CreateEntityFromEntity)(
+    u16 entityId, Entity* source, Entity* entity);
 #endif
 void DestroyEntity(Entity*);
 void DestroyEntitiesFromIndex(s16 index);
-void FallEntity(void);
-Entity* AllocEntity(Entity* start, Entity* end);
+void OVL_EXPORT(FallEntity)(void);
+Entity* OVL_EXPORT(AllocEntity)(Entity* start, Entity* end);
 
 // InitializeEntity takes a EInit but treats it as a `u16[]`
-void InitializeEntity(u16 arg0[]);
+void OVL_EXPORT(InitializeEntity)(u16 arg0[]);
 
 #endif
