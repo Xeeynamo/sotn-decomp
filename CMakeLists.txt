@@ -291,6 +291,7 @@ set(SOURCE_FILES_STAGE_NZ0
 set (SOURCE_FILES_STAGE_ST0
     src/pc/stages/stage_st0.c
     src/st/st0/header.c
+    src/st/st0/bss.c
     src/st/st0/gen/e_laydef.c
     src/st/st0/e_init.c
     src/st/st0/gen/rooms.c
