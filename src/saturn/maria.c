@@ -93,7 +93,40 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A939C, func_060A939C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9474, func_060A9474);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A955C, func_060A955C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9608, func_060A9608);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A96D4, func_060A96D4);
+
+// func_060A96D4
+static s32 MariaCheckSubwpnChainLimit(s16 subwpnId, s16 limit) {
+    Entity* entity;
+    s32 i;
+    s32 nFound;
+    s32 nEmpty;
+
+    // Iterate through entities 32-48 (which hold subweapons)
+    // Any that match the proposed ID increments the count.
+    // If at any point the count reaches the limit, return -1.
+    entity = &g_Entities[32];
+    for (i = 0, nFound = 0, nEmpty = 0; i < 16; i++, entity++) {
+        if (!entity->entityId) {
+            nEmpty++;
+        }
+        if (entity->ext.subweapon.subweaponId &&
+            entity->ext.subweapon.subweaponId == subwpnId) {
+            nFound++;
+        }
+        if (nFound >= limit) {
+            return -1;
+        }
+    }
+    // This will indicate that there is an available entity slot
+    // to hold the subweapon we're trying to spawn.
+    // At the end, if this is zero, there are none available so return
+    // -1 to indicate there is no room for the proposed subweapon.
+    if (nEmpty) {
+        return 0;
+    }
+    return -1;
+}
+
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A973C, func_060A973C);
 
 u8 d_060c1980[1];
@@ -584,7 +617,40 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BEB74, func_060BEB74);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BEE30, func_060BEE30);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BF0F4, func_060BF0F4);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BF180, func_060BF180);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BF35C, func_060BF35C);
+
+struct Unk0605cd70 {
+    u16 unk0;
+    u16 unk2;
+    u32 unk4;
+    u32 unk8;
+};
+
+struct Unk0605cd70 d_0605cd70;
+u32 d_06085534;
+u16 d_0605c672;
+u8 d_06057f68;
+
+s32 func_060732E4(u16);
+void func_060BF180(void);
+
+void func_060BF35C(void) {
+    if (d_0605cd70.unk8 != 0) {
+        if (d_0605cd70.unk8 == 1) {
+            goto after;
+        }
+        return;
+    } else {
+        func_060732E4(d_0605cd70.unk0);
+        d_0605cd70.unk8 += 1;
+    }
+after:
+    if ((d_06057f68 == 0) && ((d_0605c672 & 0x100) != 0)) {
+        d_06085534 = 6;
+        d_06057f68 = 4;
+    }
+    func_060BF180();
+}
+
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BF3D0, func_060BF3D0);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BF704, func_060BF704);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BF7B0, func_060BF7B0);
