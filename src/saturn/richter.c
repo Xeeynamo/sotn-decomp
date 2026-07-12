@@ -608,8 +608,25 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B2EE4, func_060B2EE4);
 // RicEntityCrashVibhuti
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B3074, func_060B3074);
 
-// RicEntityCrashReboundStoneParticles
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B33DC, func_060B33DC);
+// func_060B33DC
+void RicEntityCrashReboundStoneParticles(Entity* entity) {
+    switch (entity->step) {
+    case 0:
+        entity->flags = FLAG_KEEP_ALIVE_OFFCAMERA;
+        entity->ext.subweapon.subweaponId = PL_W_CRASH_REBOUND_STONE;
+        RicSetSubweaponParams(entity);
+        entity->hitboxWidth = 5; // 4 on ps1
+        entity->hitboxHeight = 4;
+        entity->step++;
+        break;
+    case 1:
+        entity->ext.subweapon.timer++;
+        if (entity->ext.subweapon.timer > 3) {
+            DestroyEntity(entity);
+        }
+        break;
+    }
+}
 
 // ===== 319C4.c
 
@@ -633,8 +650,25 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B4644, func_060B4644);
 // RicEntityCrashStopwatchDoneSparkle
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B47EC, func_060B47EC);
 
-// RicEntityStopwatchCrashLightning
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B5434, func_060B5434);
+// func_060B5434
+void RicEntityStopwatchCrashLightning(Entity* entity) {
+    switch (entity->step) {
+    case 0:
+        entity->flags = FLAG_KEEP_ALIVE_OFFCAMERA;
+        entity->ext.subweapon.subweaponId = PL_W_30;
+        RicSetSubweaponParams(entity);
+        entity->hitboxWidth = 10;
+        entity->hitboxHeight = 8;
+        entity->step++;
+        break;
+    case 1:
+        entity->ext.subweapon.timer++;
+        if (entity->ext.subweapon.timer > 4) {
+            DestroyEntity(entity);
+        }
+        break;
+    }
+}
 
 // RicEntityCrashStopwatch
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B54AC, func_060B54AC);

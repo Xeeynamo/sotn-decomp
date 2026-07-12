@@ -464,7 +464,27 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B1A58, func_060B1A58);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B1E78, func_060B1E78);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B2474, func_060B2474);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B2604, func_060B2604);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B295C, func_060B295C);
+
+// func_060B295C
+void MariaEntityCrashReboundStoneParticles(Entity* entity) {
+    switch (entity->step) {
+    case 0:
+        entity->flags = FLAG_KEEP_ALIVE_OFFCAMERA;
+        entity->ext.subweapon.subweaponId = PL_W_CRASH_REBOUND_STONE;
+        MariaSetSubweaponParams(entity);
+        entity->hitboxWidth = 5;
+        entity->hitboxHeight = 4;
+        entity->step++;
+        break;
+    case 1:
+        entity->ext.subweapon.timer++;
+        if (entity->ext.subweapon.timer > 3) {
+            DestroyEntity(entity);
+        }
+        break;
+    }
+}
+
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B29D4, func_060B29D4);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B2F8C, func_060B2F8C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B2FC8, func_060B2FC8);
@@ -474,7 +494,27 @@ void func_060B3678() {}
 
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B3684, func_060B3684);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B382C, func_060B382C);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B4470, func_060B4470);
+
+// func_060B4470
+void MariaEntityStopwatchCrashLightning(Entity* entity) {
+    switch (entity->step) {
+    case 0:
+        entity->flags = FLAG_KEEP_ALIVE_OFFCAMERA;
+        entity->ext.subweapon.subweaponId = PL_W_30;
+        MariaSetSubweaponParams(entity);
+        entity->hitboxWidth = 10;
+        entity->hitboxHeight = 8;
+        entity->step++;
+        break;
+    case 1:
+        entity->ext.subweapon.timer++;
+        if (entity->ext.subweapon.timer > 4) {
+            DestroyEntity(entity);
+        }
+        break;
+    }
+}
+
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B44E8, func_060B44E8);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B4598, func_060B4598);
 

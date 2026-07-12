@@ -855,4 +855,39 @@ typedef struct {
     /* 0x4 */ s32 y;
 } Point32; // size = 0x8
 
+enum RicSubweapons {
+    PL_W_NONE,
+    PL_W_DAGGER,
+    PL_W_AXE,
+    PL_W_HOLYWATER,
+    PL_W_CROSS,
+    PL_W_BIBLE,
+    PL_W_STOPWATCH,
+    PL_W_REBNDSTONE,
+    PL_W_VIBHUTI,
+    PL_W_AGUNEA,
+    PL_W_10,
+    PL_W_HOLYWATER_FLAMES,
+    PL_W_CRASH_CROSS,
+    PL_W_CRASH_CROSS_BEAM,
+    PL_W_WHIP,
+    PL_W_15,
+    PL_W_HYDROSTORM,
+    PL_W_BIBLE_BEAM,
+    PL_W_KICK,
+    PL_W_19,
+    PL_W_20,
+    PL_W_21,
+    PL_W_HIGHJUMP,
+    PL_W_23,
+    PL_W_CRASH_VIBHUTI,
+    PL_W_CRASH_REBOUND_STONE,
+    PL_W_CRASH_AGUNEA,
+    PL_W_27,
+    PL_W_28,
+    PL_W_CRASH_REBOUND_EXPLOSION,
+    PL_W_30,
+    NUM_WEAPONS,
+};
+
 #endif
