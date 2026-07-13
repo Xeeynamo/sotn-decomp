@@ -52,17 +52,21 @@
 #define UNUSED
 #endif
 #define ASSERT(x) assert(x)
+#define SYNC_FIELD(struct1, struct2, field)                                    \
+    STATIC_ASSERT(OFF(struct1, field) == OFF(struct2, field), "unsynced")
 
 #elif defined(VERSION_PSP)
 #define ASSERT(x)
 #define STATIC_ASSERT(x, y)
 #define PACKED
 #define UNUSED
+#define SYNC_FIELD(struct1, struct2, field)
 #else
 #define ASSERT(x)
 #define STATIC_ASSERT(x, ...)
 #define PACKED
 #define UNUSED
+#define SYNC_FIELD(struct1, struct2, field)
 #endif
 
 #define LOBU(x) (*(u8*)&(x))

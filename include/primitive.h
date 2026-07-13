@@ -89,6 +89,21 @@ typedef struct Primitive {
     /* 0x32 */ u16 drawMode;
 } Primitive; /* size=0x34 */
 
+SYNC_FIELD(POLY_GT3, Primitive, x0);
+SYNC_FIELD(POLY_GT3, Primitive, y0);
+SYNC_FIELD(POLY_GT3, Primitive, x1);
+SYNC_FIELD(POLY_GT3, Primitive, y1);
+SYNC_FIELD(POLY_GT3, Primitive, x2);
+SYNC_FIELD(POLY_GT3, Primitive, y2);
+SYNC_FIELD(POLY_GT4, Primitive, x0);
+SYNC_FIELD(POLY_GT4, Primitive, y0);
+SYNC_FIELD(POLY_GT4, Primitive, x1);
+SYNC_FIELD(POLY_GT4, Primitive, y1);
+SYNC_FIELD(POLY_GT4, Primitive, x2);
+SYNC_FIELD(POLY_GT4, Primitive, y2);
+SYNC_FIELD(POLY_GT4, Primitive, x3);
+SYNC_FIELD(POLY_GT4, Primitive, y3);
+
 // FakePrim is really the wrong name for this.
 // But it's an alternate use of the Primitive structure.
 typedef struct FakePrim {
