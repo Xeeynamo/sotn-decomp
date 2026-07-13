@@ -122,7 +122,24 @@ bool CheckIfAllButtonsAreAssigned(void) {
     }
 }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6073280, func_06073280);
+void func_0600971C(void);
+extern u16 SclProcess;
+extern s16 DAT_0605d772;
+void (*func_060645B0)(void);
+extern s16 DAT_06065470;
+void UpdateCapePalette(void);
+extern s16 DAT_060862a4;
+
+void func_06073280(void) {
+    if (g_PlayableCharacter == 0) {
+        UpdateCapePalette();
+    }
+    DAT_0605d772 = 8;
+    (*func_060645B0)();
+    DAT_06065470 |= DAT_060862a4;
+    SclProcess = 1;
+    func_0600971C();
+}
 
 extern s8 DAT_06057f68;
 void (*func_060645BC)(void);
@@ -371,7 +388,6 @@ extern char* g_LuckCode;
 extern char* g_AxeArmorCode;
 extern char* g_GTIClubCode;
 
-extern void UpdateCapePalette(void);
 extern s32 TimeAttackController(s32 eventId, s32 action);
 extern u32 MTH_GetRand(void);
 
