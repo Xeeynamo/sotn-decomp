@@ -30,6 +30,7 @@ typedef unsigned long long u64;
 
 #define SFX_BAT_SCREECH 0x64E
 #define SFX_HEART_PICKUP 0x67A
+#define SFX_UI_MOVE 0x67B
 #define SFX_UI_ALERT_TINK 0x6AD
 
 #define PLAYER g_Entities[PLAYER_CHARACTER]

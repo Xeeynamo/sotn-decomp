@@ -127,8 +127,109 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f6073280, func_06073280);
 // _INIT_SUB_GAMEN
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60732E4, func_060732E4);
 
-// _PSX_cursor_up_down
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f60733A4, func_060733A4);
+extern s32 DAT_060855ac;
+
+// original name: PSX_cursor_up_down
+void MenuHandleCursorInput(s32* nav, u8 nOptions, u32 type) {
+    u8 prevCursor = *nav;
+
+    switch (type) {
+    case 3: // vertical clamp
+        if (g_pads[0].repeat & 0x1000) {
+            if (*nav) {
+                *nav -= 1;
+            }
+        }
+        if (g_pads[0].repeat & 0x2000) {
+            if (*nav != nOptions - 1) {
+                *nav += 1;
+            }
+        }
+        break;
+    case 0: // vertical loop
+        if (g_pads[0].repeat & 0x1000) {
+            *nav -= 1;
+            if (*nav == -1) {
+                *nav = nOptions - 1;
+            }
+        }
+        if (g_pads[0].repeat & 0x2000) {
+            *nav += 1;
+            if (*nav == nOptions) {
+                *nav = 0;
+            }
+        }
+        break;
+    case 4: // horizontal clamp
+        if (g_pads[0].repeat & 0x4000) {
+            if (*nav) {
+                *nav -= 1;
+            }
+        }
+        if (g_pads[0].repeat & 0x8000) {
+            if (*nav != nOptions - 1) {
+                *nav += 1;
+            }
+        }
+        break;
+    case 5: // horizontal loop
+        if (g_pads[0].repeat & 0x4000) {
+            *nav -= 1;
+            if (*nav == -1) {
+                *nav = nOptions - 1;
+            }
+        }
+        if (g_pads[0].repeat & 0x8000) {
+            *nav += 1;
+            if (*nav == nOptions) {
+                *nav = 0;
+            }
+        }
+        break;
+    case 1:
+    case 2:
+        if (g_pads[0].repeat & 0x1000) {
+            if (*nav >= 2) {
+                *nav -= 2;
+            }
+        } else if (g_pads[0].repeat & 0x2000) {
+            if (*nav == nOptions - 2) {
+                if (*nav & 1) {
+                    *nav += 1;
+                }
+            }
+            if (*nav < nOptions - 2) {
+                *nav += 2;
+            }
+        }
+        if (g_pads[0].repeat & 0xC000) {
+            *nav ^= 1;
+            if (*nav == nOptions) {
+                *nav ^= 1;
+            }
+        }
+        if ((type == 2) && (DAT_060855ac == 0)) {
+            if (g_pads[0].repeat & 8) {
+                if (*nav >= 10) {
+                    *nav -= 10;
+                } else {
+                    *nav = 0;
+                }
+            }
+            if (g_pads[0].repeat & 0x80) {
+                if (*nav < nOptions - 10) {
+                    *nav += 10;
+                } else {
+                    *nav = nOptions - 1;
+                }
+            }
+        }
+        break;
+    }
+    if (prevCursor != *nav) {
+        PlaySfx(SFX_UI_MOVE);
+    }
+}
 
 // SAT: func_0607356C
 bool func_800FB1EC(s32 arg0) {
