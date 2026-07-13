@@ -52,6 +52,8 @@
 #define UNUSED
 #endif
 #define ASSERT(x) assert(x)
+#define SYNC_FIELD(struct1, struct2, field)                                    \
+    STATIC_ASSERT(OFF(struct1, field) == OFF(struct2, field), "unsynced")
 
 #elif defined(VERSION_PSP)
 #define ASSERT(x)
