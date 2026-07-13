@@ -688,7 +688,7 @@ void MarEntitySmokePuff(Entity* self) {
         self->velocityY = velocity_x_80154C5C[paramsLo];
         if (paramsHi == 1) {
             self->velocityY = FIX(-0.25);
-            MarSetSpeedX(-0x3000);
+            MarSetSpeedX(FIX(-0.1875));
             self->scaleX = rot_x_80154C74[1] + 0x40;
         }
         if (paramsHi == 5) {
@@ -696,7 +696,7 @@ void MarEntitySmokePuff(Entity* self) {
         }
         if (paramsHi == 2) {
             self->velocityY = FIX(-0.5);
-            MarSetSpeedX(-0x3000);
+            MarSetSpeedX(FIX(-0.1875));
             self->scaleX = rot_x_80154C74[1] + 0x40;
         }
         self->scaleY = self->scaleX;
