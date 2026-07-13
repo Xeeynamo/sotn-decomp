@@ -10,9 +10,8 @@ if (WIN32)
 endif()
 
 if (MSVC)
-    # HACK: force DLL CRT to avoid heap corruption
     cmake_policy(SET CMP0091 NEW)
-    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreadedDLL")
+    set(CMAKE_MSVC_RUNTIME_LIBRARY "$<$<CONFIG:Debug>:MultiThreadedDebugDLL>$<$<NOT:$<CONFIG:Debug>>:MultiThreadedDLL>")
 endif()
 
 # Overlay compatibility
