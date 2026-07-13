@@ -124,8 +124,50 @@ bool CheckIfAllButtonsAreAssigned(void) {
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6073280, func_06073280);
 
-// _INIT_SUB_GAMEN
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f60732E4, func_060732E4);
+extern s8 DAT_06057f68;
+void (*func_060645BC)(void);
+void (*func_060645FC)(void);
+void (*func_06064600)(void);
+void (*func_06064620)(void);
+void (*func_06064638)(void);
+extern s16 DAT_06086220[];
+
+void func_06074278(s32);
+
+// original name: INIT_SUB_GAMEN
+void func_060732E4(s32 arg0) {
+    s16 sVar3;
+    s32 i;
+
+    switch (arg0) {
+    case 7:
+        (*func_06064638)();
+        for (i = 0; i < 10; i++) {
+            DAT_06086220[i] = 0x7E + i * 14;
+        }
+        func_06074278(0);
+        break;
+    case 8:
+        (*func_060645FC)();
+        func_06074278(0);
+        break;
+    case 9:
+        (*func_060645BC)();
+        func_06074278(0);
+        break;
+    case 10:
+        (*func_06064620)();
+        func_06009570(3);
+        func_06074278(1);
+        break;
+    case 11:
+        (*func_06064600)();
+        func_06009570(4);
+        func_06074278(1);
+        break;
+    }
+    DAT_06057f68 = 1;
+}
 
 extern s32 DAT_060855ac;
 
