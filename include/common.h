@@ -60,6 +60,7 @@
 #define STATIC_ASSERT(x, y)
 #define PACKED
 #define UNUSED
+#define SYNC_FIELD(struct1, struct2, field)
 #else
 #define ASSERT(x)
 #define STATIC_ASSERT(x, ...)
