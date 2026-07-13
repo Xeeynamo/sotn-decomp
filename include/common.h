@@ -65,6 +65,7 @@
 #define STATIC_ASSERT(x, ...)
 #define PACKED
 #define UNUSED
+#define SYNC_FIELD(struct1, struct2, field)
 #endif
 
 #define LOBU(x) (*(u8*)&(x))
