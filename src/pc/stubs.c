@@ -149,3 +149,7 @@ u16* func_80106A28(u32 arg0, u16 kind) {
     NOT_IMPLEMENTED;
     return g_FontCharData;
 }
+
+void SeAutoPan(short arg0, short arg1, short arg2, short arg3) {
+    NOT_IMPLEMENTED;
+}
