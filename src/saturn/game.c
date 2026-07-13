@@ -122,13 +122,173 @@ bool CheckIfAllButtonsAreAssigned(void) {
     }
 }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6073280, func_06073280);
+void func_0600971C(void);
+extern u16 SclProcess;
+extern s16 DAT_0605d772;
+void (*func_060645B0)(void);
+extern s16 DAT_06065470;
+void UpdateCapePalette(void);
+extern s16 DAT_060862a4;
 
-// _INIT_SUB_GAMEN
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f60732E4, func_060732E4);
+void func_06073280(void) {
+    if (g_PlayableCharacter == 0) {
+        UpdateCapePalette();
+    }
+    DAT_0605d772 = 8;
+    (*func_060645B0)();
+    DAT_06065470 |= DAT_060862a4;
+    SclProcess = 1;
+    func_0600971C();
+}
 
-// _PSX_cursor_up_down
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f60733A4, func_060733A4);
+extern s8 DAT_06057f68;
+void (*func_060645BC)(void);
+void (*func_060645FC)(void);
+void (*func_06064600)(void);
+void (*func_06064620)(void);
+void (*func_06064638)(void);
+extern s16 DAT_06086220[];
+
+void func_06074278(s32);
+
+// original name: INIT_SUB_GAMEN
+void func_060732E4(s32 arg0) {
+    s16 sVar3;
+    s32 i;
+
+    switch (arg0) {
+    case 7:
+        (*func_06064638)();
+        for (i = 0; i < 10; i++) {
+            DAT_06086220[i] = 0x7E + i * 14;
+        }
+        func_06074278(0);
+        break;
+    case 8:
+        (*func_060645FC)();
+        func_06074278(0);
+        break;
+    case 9:
+        (*func_060645BC)();
+        func_06074278(0);
+        break;
+    case 10:
+        (*func_06064620)();
+        func_06009570(3);
+        func_06074278(1);
+        break;
+    case 11:
+        (*func_06064600)();
+        func_06009570(4);
+        func_06074278(1);
+        break;
+    }
+    DAT_06057f68 = 1;
+}
+
+extern s32 DAT_060855ac;
+
+// original name: PSX_cursor_up_down
+void MenuHandleCursorInput(s32* nav, u8 nOptions, u32 type) {
+    u8 prevCursor = *nav;
+
+    switch (type) {
+    case 3: // vertical clamp
+        if (g_pads[0].repeat & PAD_UP) {
+            if (*nav) {
+                *nav -= 1;
+            }
+        }
+        if (g_pads[0].repeat & PAD_DOWN) {
+            if (*nav != nOptions - 1) {
+                *nav += 1;
+            }
+        }
+        break;
+    case 0: // vertical loop
+        if (g_pads[0].repeat & PAD_UP) {
+            *nav -= 1;
+            if (*nav == -1) {
+                *nav = nOptions - 1;
+            }
+        }
+        if (g_pads[0].repeat & PAD_DOWN) {
+            *nav += 1;
+            if (*nav == nOptions) {
+                *nav = 0;
+            }
+        }
+        break;
+    case 4: // horizontal clamp
+        if (g_pads[0].repeat & PAD_LEFT) {
+            if (*nav) {
+                *nav -= 1;
+            }
+        }
+        if (g_pads[0].repeat & PAD_RIGHT) {
+            if (*nav != nOptions - 1) {
+                *nav += 1;
+            }
+        }
+        break;
+    case 5: // horizontal loop
+        if (g_pads[0].repeat & PAD_LEFT) {
+            *nav -= 1;
+            if (*nav == -1) {
+                *nav = nOptions - 1;
+            }
+        }
+        if (g_pads[0].repeat & PAD_RIGHT) {
+            *nav += 1;
+            if (*nav == nOptions) {
+                *nav = 0;
+            }
+        }
+        break;
+    case 1:
+    case 2:
+        if (g_pads[0].repeat & PAD_UP) {
+            if (*nav >= 2) {
+                *nav -= 2;
+            }
+        } else if (g_pads[0].repeat & PAD_DOWN) {
+            if (*nav == nOptions - 2) {
+                if (*nav & 1) {
+                    *nav += 1;
+                }
+            }
+            if (*nav < nOptions - 2) {
+                *nav += 2;
+            }
+        }
+        if (g_pads[0].repeat & (PAD_LEFT | PAD_RIGHT)) {
+            *nav ^= 1;
+            if (*nav == nOptions) {
+                *nav ^= 1;
+            }
+        }
+        if ((type == 2) && (DAT_060855ac == 0)) {
+            if (g_pads[0].repeat & PAD_L1) {
+                if (*nav >= 10) {
+                    *nav -= 10;
+                } else {
+                    *nav = 0;
+                }
+            }
+            if (g_pads[0].repeat & PAD_R1) {
+                if (*nav < nOptions - 10) {
+                    *nav += 10;
+                } else {
+                    *nav = nOptions - 1;
+                }
+            }
+        }
+        break;
+    }
+    if (prevCursor != *nav) {
+        PlaySfx(SFX_UI_MOVE);
+    }
+}
 
 // SAT: func_0607356C
 bool func_800FB1EC(s32 arg0) {
@@ -228,7 +388,6 @@ extern char* g_LuckCode;
 extern char* g_AxeArmorCode;
 extern char* g_GTIClubCode;
 
-extern void UpdateCapePalette(void);
 extern s32 TimeAttackController(s32 eventId, s32 action);
 extern u32 MTH_GetRand(void);
 

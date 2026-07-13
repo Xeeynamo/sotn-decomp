@@ -18,8 +18,15 @@ typedef unsigned long long u64;
 #define NULL 0
 #define FIX(x) ((s32)((x) * 65536.0))
 
-#define PAD_RIGHT 0x8000
-#define PAD_LEFT 0x4000
+typedef enum {
+    PAD_NONE = 0x0000,
+    PAD_L1 = 0x0008,
+    PAD_R1 = 0x0080,
+    PAD_UP = 0x1000,
+    PAD_DOWN = 0x2000,
+    PAD_LEFT = 0x4000,
+    PAD_RIGHT = 0x8000,
+} PlayerPad;
 
 #define STAGE_INVERTEDCASTLE_MASK 0x1F
 #define STAGE_INVERTEDCASTLE_FLAG 0x20
@@ -30,6 +37,7 @@ typedef unsigned long long u64;
 
 #define SFX_BAT_SCREECH 0x64E
 #define SFX_HEART_PICKUP 0x67A
+#define SFX_UI_MOVE 0x67B
 #define SFX_UI_ALERT_TINK 0x6AD
 
 #define PLAYER g_Entities[PLAYER_CHARACTER]

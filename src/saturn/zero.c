@@ -208,7 +208,7 @@ void ResetPadsRepeat(void) {
     u8* ptr;
     s32 i;
 
-    g_pads[0].repeat = 0;
+    g_pads[0].repeat = PAD_NONE;
     ptr = g_PadsRepeatTimer;
     for (i = 0; i < 0x10; i++) {
         *ptr++ = 0x10;
@@ -221,7 +221,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004C70, func_06004C70);
 // func_06004CDC
 void InitializePads(void) {
     g_pads[0].previous = g_pads[0].pressed = g_pads[0].tapped =
-        g_pads[0].repeat = 0;
+        g_pads[0].repeat = PAD_NONE;
 }
 
 // SET_VBLANK

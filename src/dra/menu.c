@@ -2520,12 +2520,13 @@ void func_800F9F40(void) {
     }
 }
 
-void MenuHandleCursorInput(s32* nav, u8 nOptions, u32 arg2) {
+// original name: PSX_cursor_up_down
+void MenuHandleCursorInput(s32* nav, u8 nOptions, u32 type) {
     const int ItemsPerPage = 12;
     s32 limit;
     u8 prevCursor = *nav;
 
-    switch (arg2) {
+    switch (type) {
     case 3:
         if (g_pads[0].repeat & PAD_UP) {
             if (*nav) {
@@ -2601,7 +2602,7 @@ void MenuHandleCursorInput(s32* nav, u8 nOptions, u32 arg2) {
                 *nav ^= 1;
             }
         }
-        if (arg2 == 2) {
+        if (type == 2) {
             if (g_pads[0].repeat & PAD_L1) {
                 if (*nav >= ItemsPerPage) {
                     *nav -= ItemsPerPage;
