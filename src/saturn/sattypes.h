@@ -973,6 +973,7 @@ typedef enum {
     DRAW_UNK_800 = 0x800,   // unknown
     DRAW_UNK_1000 = 0x1000, // unknown
     DRAW_ABSPOS = 0x2000,   // use absolute coordinates with DRAW_MENU
+    DRAW_INVALID = 0xFFFF,
 } DrawMode;
 
 #endif

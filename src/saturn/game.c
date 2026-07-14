@@ -176,7 +176,7 @@ void InitRoom(void) {
     D_801375A8 = D_801375A8 >> 16;
     for (i = 0, prim = &g_PrimBuf[0]; i < 0x200; i++, prim++) {
         if ((prim->drawMode & DRAW_UNK_100) &&
-            (prim->drawMode != ~DRAW_DEFAULT)) {
+            (prim->drawMode != DRAW_INVALID)) {
             switch (prim->type & 0xF) {
             case 2:
             case 3:

@@ -46,12 +46,11 @@ s32 func_0601AEA8(void) { return 0xff; }
 
 void func_0601AEB4(void) { DAT_060645D0 = DAT_060cf040; }
 
-s32 d_0605D7E4;
 void (*func_060cf000)(void);
 
 // call familiar update function
 void func_0601AECC() {
-    if (d_0605D7E4) {
+    if (g_Servant != 0) {
         (*func_060cf000)();
     }
 }
