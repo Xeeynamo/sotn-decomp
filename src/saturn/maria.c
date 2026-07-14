@@ -737,7 +737,42 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE994, func_060BE994);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BEA54, func_060BEA54);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BEB74, func_060BEB74);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BEE30, func_060BEE30);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BF0F4, func_060BF0F4);
+
+s16 PTR_DAT_060bf174[1];
+void func_060BF0F4(u32 param_1) {
+    int first;
+    int cur;
+    int offset;
+    int i;
+    u8* ptr;
+
+    if (param_1 == 6)
+        offset = 0x28;
+    else if (param_1 & 1)
+        offset = 0x28;
+    else
+        offset = 0;
+
+    first = PTR_DAT_060bf174[param_1];
+
+    for (cur = first; cur < first + 4; cur++) {
+        int tile = cur << 6;
+
+        ptr = (u8*)tile;
+        ptr += (u32)0x25E58000 + offset;
+
+        for (i = 0; i < 0x20; i++)
+            *ptr++ = 0;
+
+        if (offset == 0x28) {
+            ptr = (u8*)(0x25E58800 + tile);
+
+            for (i = 0; i < 0x10; i++)
+                *ptr++ = 0;
+        }
+    }
+}
+
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BF180, func_060BF180);
 
 struct Unk0605cd70 {
@@ -784,6 +819,27 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BFECC, func_060BFECC);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60C00B4, func_060C00B4);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60C0428, func_060C0428);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60C0920, func_060C0920);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60C0A5C, func_060C0A5C);
+
+u32* d_06086234;
+u32* d_06086250;
+u32* d_0605D784;
+
+void func_060C0A5C(void) {
+    if (d_06086234 == 0) {
+        memset((void*)0x25e58288, 0, 0xC);
+        memset((void*)0x25e582C8, 0, 0xC);
+    }
+
+    if (d_06086250 == 0) {
+        memset((void*)0x25e58348, 0, 0xC);
+        memset((void*)0x25e58388, 0, 0xC);
+    }
+
+    if (d_0605D784 == 0) {
+        memset((void*)0x25e584C8, 0, 0x10);
+        memset((void*)0x25e58508, 0, 0x10);
+    }
+}
+
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60C0AE4, func_060C0AE4);
 INCLUDE_ASM("asm/saturn/maria/data", d60C16B8, d_060C16B8);

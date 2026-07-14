@@ -276,8 +276,23 @@ void RicSetDeadPrologue() { RicSetStep(PL_S_DEAD_PROLOGUE); }
 // RicSetSlide
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A9A74, func_060A9A74);
 
-// RicSetSlideKick
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A9AFC, func_060A9AFC);
+extern AnimationFrame D_8015577C[1];
+#define SFX_VO_RIC_ATTACK_B 0x711
+
+// PlaySfx needs to be undefined here to match
+// func_060A9AFC
+void RicSetSlideKick(void) {
+    g_Player.unk44 = 0x100; // changed
+    RicSetStep(PL_S_SLIDE_KICK);
+    RicSetAnimation(D_8015577C);
+    g_CurrentEntity->velocityY = FIX(-2);
+    RicSetSpeedX(FIX(6.625)); // changed
+    func_8015CC28();
+    RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_25, 0);
+    PlaySfx(SFX_VO_RIC_ATTACK_B);
+    g_Player.timers[PL_T_12] = 4;
+    RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_31, 0);
+}
 
 // RicSetBladeDash
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A9B9C, func_060A9B9C);
