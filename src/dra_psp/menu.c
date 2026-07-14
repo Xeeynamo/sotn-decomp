@@ -3075,6 +3075,7 @@ void func_800FAEC4(s32* cursor, u8 count, const char* str, u16 icon, u16 pal) {
     g_MenuStep++;
 }
 
+// original name: PSX_equip_id_init
 void func_800FAF44(bool isAccessory) {
     s32 i;
     s32* ptr;
@@ -3134,6 +3135,7 @@ EquipMenuHelper g_EquipMenuHelper[] = {
     {EQUIP_ACCESSORY, 3, true}, // ACCESSORY_2_SLOT
 };
 
+// original name : PSX_id_init
 void func_800FB0FC(void) {
     EquipMenuHelper* helper = &g_EquipMenuHelper[g_MenuNavigation.cursorEquip];
 
