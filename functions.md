@@ -641,8 +641,8 @@
 | maria    | func_pspeu_092B3810                    |       19 |          1 |        |       |     |
 | ric      | func_pspeu_092B1238                    |       19 |          1 |        |       |     |
 | cen      | func_pspeu_09261DB8                    |       19 |          1 |        |       |     |
-| cen      | func_pspeu_092430E0                    |       19 |          1 |        |       |     |
 | cen      | SetCutsceneEnd                         |       19 |          1 |        |       |     |
+| cen      | func_pspeu_092430E0                    |       19 |          1 |        |       |     |
 | dai      | func_pspeu_092541E8                    |       19 |          1 |        |       |     |
 | dre      | func_pspeu_092458A8                    |       19 |          1 |        |       |     |
 | lib      | func_psp_0925AFB0                      |       19 |          1 |        |       |     |
@@ -1746,8 +1746,8 @@
 | main     | func_psp_08917F28                      |       37 |          3 |        |       |     |
 | main     | ClearOTag                              |       37 |          3 |        |       |     |
 | maria    | func_pspeu_092BEA38                    |       37 |          3 |        |       |     |
+| cen      | func_pspeu_09263D20                    |       37 |          3 |        |       |     |
 | cen      | func_pspeu_0924FA38                    |       37 |          3 |        |       |     |
-| cen      | CutsceneUnk3                           |       37 |          3 |        |       |     |
 | dai      | func_pspeu_09253E28                    |       37 |          3 |        |       |     |
 | dre      | func_pspeu_092454E8                    |       37 |          3 |        |       |     |
 | no4      | func_pspeu_0925E178                    |       37 |          3 |        |       |     |
@@ -2504,7 +2504,7 @@
 | maria    | func_pspeu_092AB6B0                    |       51 |         10 |        |       |     |
 | ric      | func_pspeu_092ACE78                    |       51 |         10 |        |       |     |
 | are      | func_pspeu_092562C0                    |       51 |         10 |        |       |     |
-| cen      | GetLang                                |       51 |         10 |        |       |     |
+| cen      | func_pspeu_09263968                    |       51 |         10 |        |       |     |
 | dai      | func_pspeu_09253A70                    |       51 |         10 |        |       |     |
 | dai      | func_pspeu_09246968                    |       51 |         10 |        |       |     |
 | dai      | func_pspeu_09245408                    |       51 |         10 |        |       |     |
@@ -2786,7 +2786,7 @@
 | dra      | func_psp_09106008                      |       61 |          9 |        |       |     |
 | bo0      | EntitySpikesDust                       |       61 |         10 |        |       |     |
 | cat      | func_pspeu_09262070                    |       61 |         10 |        |       |     |
-| cen      | GetLangAt                              |       61 |         10 |        |       |     |
+| cen      | func_pspeu_09260818                    |       61 |         10 |        |       |     |
 | dai      | func_pspeu_092580D8                    |       61 |         10 |        |       |     |
 | dai      | func_pspeu_092510C0                    |       61 |         10 |        |       |     |
 | dre      | func_pspeu_09244890                    |       61 |         10 |        |       |     |
@@ -4687,7 +4687,7 @@
 | dra      | func_psp_091121C0                      |      152 |         23 |        |       |     |
 | dra      | func_psp_09111D30                      |      152 |         28 |        |       |     |
 | main     | floor                                  |      152 |         29 |        |       |     |
-| cen      | CEN_Load                               |      153 |         11 |        |       |     |
+| cen      | func_pspeu_09260988                    |      153 |         11 |        |       |     |
 | no3      | func_pspeu_0923FDB0                    |      153 |         14 |        |       |     |
 | maria    | func_pspeu_092A7950                    |      153 |         16 |        |       |     |
 | cen      | func_pspeu_09238708                    |      153 |         16 |        |       |     |
