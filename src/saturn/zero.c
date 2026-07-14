@@ -48,15 +48,6 @@ extern u16 DAT_0605cea0;
 extern u16 DAT_0605cea2;
 extern s32 DAT_0605d7f0;
 extern s32 DAT_0605d7f8;
-void (*func_06064580)();
-void (*func_060645e0)();
-void (*func_06064614)();
-void (*func_0606463c)();
-void (*func_06064644)();
-void (*func_06064674)();
-void (*func_06064688)();
-void (*func_0606468c)();
-s32 (*func_06064690)();
 
 void func_060040d8(void) {
     g_Timer++;

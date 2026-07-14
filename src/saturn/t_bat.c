@@ -1002,11 +1002,11 @@ void ProcessEvent(Entity* self, bool resetEvent) {
             }
 
             if (evt->roomX < 0) {
-                if (!(g_StageId & 0x20)) {
+                if (!(DAT_0605d750.stageID & STAGE_INVERTEDCASTLE_FLAG)) {
                     continue;
                 }
             } else {
-                if (g_StageId & 0x20) {
+                if (DAT_0605d750.stageID & STAGE_INVERTEDCASTLE_FLAG) {
                     continue;
                 }
             }
@@ -1151,7 +1151,7 @@ s32 CheckAllEntitiesValid(void) {
 
 // SAT: func_060D1808
 s32 ServantUnk0(void) {
-    if (g_StageId >= 0x20 && g_StageId < 0x35) {
+    if (DAT_0605d750.stageID >= 0x20 && DAT_0605d750.stageID < 0x35) {
         if (D_8003C708.flags == 0x22) {
             return 1;
         }
