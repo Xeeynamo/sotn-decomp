@@ -111,10 +111,9 @@ static void AxeKnightUnkFunc1(AxePrim* prim) {
         prim->next->unk10 += 0x1800;
         prim->next->timer--;
         if (!prim->next->timer) {
-            newEnt =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            newEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEnt != NULL) {
-                OVL_EXPORT(CreateEntityFromCurrentEntity)(E_EXPLOSION, newEnt);
+                CreateEntityFromCurrentEntity(E_EXPLOSION, newEnt);
                 newEnt->posX.i.hi = prim->next->x1;
                 newEnt->posY.i.hi = prim->next->y0;
                 newEnt->params = 0;
@@ -230,8 +229,8 @@ void func_801C4550(void) {
     if (g_CurrentEntity->ext.axeknight.unk82 > 0) {
         g_CurrentEntity->ext.axeknight.unk82 -= 3;
     } else {
-        rand = OVL_EXPORT(Random)() & 7;
-        OVL_EXPORT(SetStep)((u16)steps[rand]);
+        rand = Random() & 7;
+        SetStep((u16)steps[rand]);
         g_CurrentEntity->ext.axeknight.unk82 = 0x100;
     }
 }
@@ -251,22 +250,22 @@ void EntityAxeKnight(Entity* self) {
             self->hitboxState = 0;
             self->zPriority -= 0x10;
             self->ext.axeknight.unk80 = 65;
-            OVL_EXPORT(SetStep)(AXE_KNIGHT_DYING);
+            SetStep(AXE_KNIGHT_DYING);
         }
     }
 
     switch (self->step) {
     case AXE_KNIGHT_INIT:
-        OVL_EXPORT(InitializeEntity)(g_EInitAxeKnight);
-        self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+        InitializeEntity(g_EInitAxeKnight);
+        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         self->hitboxOffY = 10;
         self->ext.axeknight.unk7D = 0;
         self->ext.axeknight.unk82 = 512;
 
     case AXE_KNIGHT_IDLE:
-        if (OVL_EXPORT(UnkCollisionFunc3)(sensors_ground) & 1) {
-            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
-            OVL_EXPORT(SetStep)(AXE_KNIGHT_WALK_TOWARDS_PLAYER);
+        if (UnkCollisionFunc3(sensors_ground) & 1) {
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+            SetStep(AXE_KNIGHT_WALK_TOWARDS_PLAYER);
         }
         break;
 
@@ -280,9 +279,9 @@ void EntityAxeKnight(Entity* self) {
             self->step_s++;
         }
 
-        animStatus = OVL_EXPORT(AnimateEntity)(anim_walk, self);
+        animStatus = AnimateEntity(anim_walk, self);
         if (!self->poseTimer) {
-            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
 
         if (!animStatus) {
@@ -291,8 +290,8 @@ void EntityAxeKnight(Entity* self) {
             } else {
                 self->velocityX = FIX(-0.1875);
             }
-            if (OVL_EXPORT(GetDistanceToPlayerX)() < 96) {
-                OVL_EXPORT(SetStep)(AXE_KNIGHT_WALK_AWAY_FROM_PLAYER);
+            if (GetDistanceToPlayerX() < 96) {
+                SetStep(AXE_KNIGHT_WALK_AWAY_FROM_PLAYER);
                 self->ext.axeknight.unk7C = 1;
             }
         }
@@ -311,7 +310,7 @@ void EntityAxeKnight(Entity* self) {
             }
         }
 
-        if (OVL_EXPORT(UnkCollisionFunc2)(sensors_move) & 0x60) {
+        if (UnkCollisionFunc2(sensors_move) & 0x60) {
             self->posX.val -= self->velocityX;
             self->velocityX = 0;
         }
@@ -328,9 +327,9 @@ void EntityAxeKnight(Entity* self) {
             self->step_s++;
         }
 
-        animStatus = OVL_EXPORT(AnimateEntity)(anim_walk, self);
+        animStatus = AnimateEntity(anim_walk, self);
         if (!self->poseTimer) {
-            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
         if (!animStatus) {
             if (self->facingLeft) {
@@ -339,8 +338,8 @@ void EntityAxeKnight(Entity* self) {
                 self->velocityX = FIX(0.1875);
             }
 
-            if (OVL_EXPORT(GetDistanceToPlayerX)() > 80) {
-                OVL_EXPORT(SetStep)(AXE_KNIGHT_WALK_TOWARDS_PLAYER);
+            if (GetDistanceToPlayerX() > 80) {
+                SetStep(AXE_KNIGHT_WALK_TOWARDS_PLAYER);
                 self->ext.axeknight.unk7C = 0;
             }
         }
@@ -359,7 +358,7 @@ void EntityAxeKnight(Entity* self) {
             }
         }
 
-        if (OVL_EXPORT(UnkCollisionFunc2)(sensors_move) & 0x60) {
+        if (UnkCollisionFunc2(sensors_move) & 0x60) {
             self->posX.val -= self->velocityX;
             self->velocityX = 0;
         }
@@ -367,22 +366,20 @@ void EntityAxeKnight(Entity* self) {
         break;
 
     case AXE_KNIGHT_STANDING_THROW:
-        animStatus = OVL_EXPORT(AnimateEntity)(anim_throw_stand, self);
+        animStatus = AnimateEntity(anim_throw_stand, self);
         if (!animStatus) {
-            if (OVL_EXPORT(GetDistanceToPlayerX)() > 88) {
-                OVL_EXPORT(SetStep)(AXE_KNIGHT_WALK_TOWARDS_PLAYER);
+            if (GetDistanceToPlayerX() > 88) {
+                SetStep(AXE_KNIGHT_WALK_TOWARDS_PLAYER);
                 self->ext.axeknight.unk7C = 0;
             } else {
-                OVL_EXPORT(SetStep)(AXE_KNIGHT_WALK_AWAY_FROM_PLAYER);
+                SetStep(AXE_KNIGHT_WALK_AWAY_FROM_PLAYER);
                 self->ext.axeknight.unk7C = 1;
             }
         } else if ((animStatus & 0x80) && self->pose == 7) {
             PlaySfxPositional(SFX_AXE_KNIGHT_ATTACK);
-            newEntity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
+            newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (newEntity != NULL) {
-                OVL_EXPORT(CreateEntityFromCurrentEntity)
-                (E_AXE_KNIGHT_AXE, newEntity);
+                CreateEntityFromCurrentEntity(E_AXE_KNIGHT_AXE, newEntity);
                 newEntity->facingLeft = self->facingLeft;
                 newEntity->posY.i.hi -= 12;
                 if (newEntity->facingLeft) {
@@ -395,22 +392,20 @@ void EntityAxeKnight(Entity* self) {
         break;
 
     case AXE_KNIGHT_DUCKING_THROW:
-        animStatus = OVL_EXPORT(AnimateEntity)(anim_throw_duck, self);
+        animStatus = AnimateEntity(anim_throw_duck, self);
         if (!animStatus) {
-            if (OVL_EXPORT(GetDistanceToPlayerX)() > 88) {
-                OVL_EXPORT(SetStep)(AXE_KNIGHT_WALK_TOWARDS_PLAYER);
+            if (GetDistanceToPlayerX() > 88) {
+                SetStep(AXE_KNIGHT_WALK_TOWARDS_PLAYER);
                 self->ext.axeknight.unk7C = 0;
             } else {
-                OVL_EXPORT(SetStep)(AXE_KNIGHT_WALK_AWAY_FROM_PLAYER);
+                SetStep(AXE_KNIGHT_WALK_AWAY_FROM_PLAYER);
                 self->ext.axeknight.unk7C = 1;
             }
         } else if ((animStatus & 0x80) && self->pose == 6) {
             PlaySfxPositional(SFX_AXE_KNIGHT_ATTACK);
-            newEntity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
+            newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (newEntity != NULL) {
-                OVL_EXPORT(CreateEntityFromCurrentEntity)
-                (E_AXE_KNIGHT_AXE, newEntity);
+                CreateEntityFromCurrentEntity(E_AXE_KNIGHT_AXE, newEntity);
                 newEntity->facingLeft = self->facingLeft;
                 newEntity->params = 1;
                 newEntity->posY.i.hi += 12;
@@ -424,22 +419,20 @@ void EntityAxeKnight(Entity* self) {
         break;
 
     case AXE_KNIGHT_ARCING_THROW: // unused
-        var_s4 = OVL_EXPORT(AnimateEntity)(anim_throw_stand, self);
+        var_s4 = AnimateEntity(anim_throw_stand, self);
         if (!var_s4) {
-            if (OVL_EXPORT(GetDistanceToPlayerX)() > 88) {
-                OVL_EXPORT(SetStep)(AXE_KNIGHT_WALK_TOWARDS_PLAYER);
+            if (GetDistanceToPlayerX() > 88) {
+                SetStep(AXE_KNIGHT_WALK_TOWARDS_PLAYER);
                 self->ext.axeknight.unk7C = 0;
             } else {
-                OVL_EXPORT(SetStep)(AXE_KNIGHT_WALK_AWAY_FROM_PLAYER);
+                SetStep(AXE_KNIGHT_WALK_AWAY_FROM_PLAYER);
                 self->ext.axeknight.unk7C = 1;
             }
         } else if ((var_s4 & 0x80) && self->pose == 7) {
             PlaySfxPositional(SFX_AXE_KNIGHT_ATTACK);
-            newEntity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
+            newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (newEntity != NULL) {
-                OVL_EXPORT(CreateEntityFromCurrentEntity)
-                (E_AXE_KNIGHT_AXE, newEntity);
+                CreateEntityFromCurrentEntity(E_AXE_KNIGHT_AXE, newEntity);
                 newEntity->facingLeft = self->facingLeft;
                 newEntity->params = 2;
                 newEntity->posY.i.hi -= 40;
@@ -456,11 +449,9 @@ void EntityAxeKnight(Entity* self) {
         if (self->ext.axeknight.unk80) {
             temp = --self->ext.axeknight.unk80;
             if (!(temp & 7)) {
-                newEntity =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+                newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    OVL_EXPORT(CreateEntityFromEntity)
-                    (E_EXPLOSION, self, newEntity);
+                    CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                     temp >>= 3;
                     newEntity->params = 2;
                     newEntity->posX.i.hi += dead_particle_pos[temp][0];
@@ -469,7 +460,7 @@ void EntityAxeKnight(Entity* self) {
             }
         }
 
-        if (OVL_EXPORT(AnimateEntity)(anim_die, self) == 0) {
+        if (AnimateEntity(anim_die, self) == 0) {
             if (func_801C4198(self) != 0) {
                 DestroyEntity(self);
                 return;
@@ -503,13 +494,13 @@ void EntityAxeKnightThrowingAxe(Entity* self) {
 
     if (self->flags & FLAG_DEAD) {
         PlaySfxPositional(SFX_AXE_KNIGHT_WEAPON_BREAK);
-        OVL_EXPORT(EntityExplosionSpawn)(0, 0);
+        EntityExplosionSpawn(0, 0);
         return;
     }
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitAxeKnightAxe);
+        InitializeEntity(g_EInitAxeKnightAxe);
         self->drawFlags = ENTITY_ROTATE;
         self->velocityY = init_velocity_y[self->params];
         velocityX = init_velocity_x[self->params];
@@ -538,13 +529,13 @@ void EntityAxeKnightThrowingAxe(Entity* self) {
         }
 
         self->ext.timer.t++;
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         break;
 
     case 2:
         EntityAxeKnightRotateAxe();
         self->velocityY += FIX(0.125);
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         break;
     }
 }

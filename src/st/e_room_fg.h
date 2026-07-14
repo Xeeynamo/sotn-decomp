@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stage.h>
 
-extern EInit OVL_EXPORT(EInitCommon);
+extern EInit g_EInitCommon;
 
 static u8 foregroundAnim1[] = {64, 1, -1, 0};
 static u8 foregroundAnim2[] = {64, 2, -1, 0};
@@ -23,7 +23,7 @@ void EntityRoomForeground(Entity* entity) {
     ObjInit* objInit = &eRoomForegroundInit[entity->params];
 
     if (!entity->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         entity->animSet = objInit->animSet;
         entity->zPriority = objInit->zPriority;
         entity->unk5A = objInit->unk5A;
@@ -38,5 +38,5 @@ void EntityRoomForeground(Entity* entity) {
             entity->rotate = ROT(180);
         }
     }
-    OVL_EXPORT(AnimateEntity)(objInit->animFrames, entity);
+    AnimateEntity(objInit->animFrames, entity);
 }

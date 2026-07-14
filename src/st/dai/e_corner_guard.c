@@ -78,10 +78,10 @@ static void CornerGuardDeath(EntranceCascadePrim* prim) {
     UnkPrimHelper(prim);
     switch (prim->next->step) {
     case CORNER_GUARD_DEATH_INIT:
-        prim->next->unk10 = ((OVL_EXPORT(Random)() & 0x1F) << 12) - FIX(1);
-        prim->next->unk14 = -(OVL_EXPORT(Random)() & 0x1F) * FLT(1);
+        prim->next->unk10 = ((Random() & 0x1F) << 12) - FIX(1);
+        prim->next->unk14 = -(Random() & 0x1F) * FLT(1);
         prim->next->step = CORNER_GUARD_DEATH_CONCLUDE;
-        prim->next->velocityX.i.lo = (OVL_EXPORT(Random)() & 0xF) + 8;
+        prim->next->velocityX.i.lo = (Random() & 0xF) + 8;
         // fallthrough
     case CORNER_GUARD_DEATH_CONCLUDE:
         if (prim->next->unk10 > 0) {
@@ -92,11 +92,9 @@ static void CornerGuardDeath(EntranceCascadePrim* prim) {
         prim->next->unk14 += FLT(1.5);
         prim->next->velocityX.i.lo--;
         if (!prim->next->velocityX.i.lo) {
-            explosion =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            explosion = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (explosion != NULL) {
-                OVL_EXPORT(CreateEntityFromCurrentEntity)
-                (E_EXPLOSION, explosion);
+                CreateEntityFromCurrentEntity(E_EXPLOSION, explosion);
                 explosion->posX.i.hi = prim->next->x1;
                 explosion->posY.i.hi = prim->next->y0;
                 explosion->params = EXPLOSION_SMALL;
@@ -118,50 +116,48 @@ void EntityCornerGuard(Entity* self) {
     s16 palette;
 
     if ((self->flags & FLAG_DEAD) && ((self->step) < CORNER_GUARD_DEATH)) {
-        OVL_EXPORT(SetStep)(CORNER_GUARD_DEATH);
+        SetStep(CORNER_GUARD_DEATH);
     }
     switch (self->step) {
     case CORNER_GUARD_INIT:
-        OVL_EXPORT(InitializeEntity)(g_EInitCornerGuard);
+        InitializeEntity(g_EInitCornerGuard);
         self->animCurFrame = 1;
         entity = self + 1;
-        OVL_EXPORT(CreateEntityFromCurrentEntity)
-        (E_CORNER_GUARD_ATTACK, entity);
+        CreateEntityFromCurrentEntity(E_CORNER_GUARD_ATTACK, entity);
         // fallthrough
     case CORNER_GUARD_HEAD_INIT:
-        if (OVL_EXPORT(UnkCollisionFunc3)(sensors_head) & 1) {
-            self->ext.cornerGuard.prevPlayerOnLeft = OVL_EXPORT(Random)() & 1;
+        if (UnkCollisionFunc3(sensors_head) & 1) {
+            self->ext.cornerGuard.prevPlayerOnLeft = Random() & 1;
             self->ext.cornerGuard.facingLeft =
                 self->ext.cornerGuard.prevPlayerOnLeft;
-            OVL_EXPORT(SetStep)(CORNER_GUARD_MOVE);
+            SetStep(CORNER_GUARD_MOVE);
         }
         break;
     case CORNER_GUARD_MOVE:
         self->animCurFrame = 1;
-        distance = OVL_EXPORT(GetDistanceToPlayerX)();
+        distance = GetDistanceToPlayerX();
         if (distance < 96) {
-            playerOnLeft = OVL_EXPORT(GetSideToPlayer)() & 1;
+            playerOnLeft = GetSideToPlayer() & 1;
             // Player has switched sides since last frame
             if (playerOnLeft != self->ext.cornerGuard.prevPlayerOnLeft) {
-                OVL_EXPORT(SetStep)(CORNER_GUARD_SHAKE_HEAD);
+                SetStep(CORNER_GUARD_SHAKE_HEAD);
                 // Player is on the left or above
             } else if (self->ext.cornerGuard.prevPlayerOnLeft) {
-                OVL_EXPORT(SetStep)(CORNER_GUARD_MOVE_LEFT);
+                SetStep(CORNER_GUARD_MOVE_LEFT);
             } else {
-                OVL_EXPORT(SetStep)(CORNER_GUARD_MOVE_RIGHT);
+                SetStep(CORNER_GUARD_MOVE_RIGHT);
             }
         }
         break;
     case CORNER_GUARD_SHAKE_HEAD:
-        if (!OVL_EXPORT(AnimateEntity)(anim_shake_head, self)) {
-            self->ext.cornerGuard.prevPlayerOnLeft =
-                OVL_EXPORT(GetSideToPlayer)() & 1;
+        if (!AnimateEntity(anim_shake_head, self)) {
+            self->ext.cornerGuard.prevPlayerOnLeft = GetSideToPlayer() & 1;
             self->ext.cornerGuard.facingLeft =
                 self->ext.cornerGuard.prevPlayerOnLeft;
             if (self->ext.cornerGuard.prevPlayerOnLeft) {
-                OVL_EXPORT(SetStep)(CORNER_GUARD_MOVE_LEFT);
+                SetStep(CORNER_GUARD_MOVE_LEFT);
             } else {
-                OVL_EXPORT(SetStep)(CORNER_GUARD_MOVE_RIGHT);
+                SetStep(CORNER_GUARD_MOVE_RIGHT);
             }
         }
         break;
@@ -173,29 +169,29 @@ void EntityCornerGuard(Entity* self) {
                 self->velocityX = FIX(-0.75);
             }
             self->ext.cornerGuard.attackInterval =
-                attack_intervals[OVL_EXPORT(Random)() & 3];
+                attack_intervals[Random() & 3];
             self->step_s++;
         }
-        OVL_EXPORT(AnimateEntity)(anim_move_right, self);
-        OVL_EXPORT(UnkCollisionFunc2)(sensors_body);
+        AnimateEntity(anim_move_right, self);
+        UnkCollisionFunc2(sensors_body);
         if (!CornerGuardCheckMovement(pos_offsets)) {
             self->posX.val -= self->velocityX;
             self->velocityX = 0;
         }
         if ((self->ext.cornerGuard.prevPlayerOnLeft ^
              self->ext.cornerGuard.facingLeft) &&
-            (OVL_EXPORT(GetDistanceToPlayerX)() > 96)) {
+            (GetDistanceToPlayerX() > 96)) {
             self->ext.cornerGuard.facingLeft =
                 self->ext.cornerGuard.prevPlayerOnLeft;
             self->velocityX = FIX(0.5);
         }
         if (!self->ext.cornerGuard.attackInterval) {
-            if (OVL_EXPORT(GetDistanceToPlayerX)() < 48) {
-                OVL_EXPORT(SetStep)(CORNER_GUARD_SLASH);
+            if (GetDistanceToPlayerX() < 48) {
+                SetStep(CORNER_GUARD_SLASH);
             }
-            playerOnLeft = OVL_EXPORT(GetSideToPlayer)() & 1;
+            playerOnLeft = GetSideToPlayer() & 1;
             if (playerOnLeft != self->ext.cornerGuard.prevPlayerOnLeft) {
-                OVL_EXPORT(SetStep)(CORNER_GUARD_SHAKE_HEAD);
+                SetStep(CORNER_GUARD_SHAKE_HEAD);
             }
         } else {
             self->ext.cornerGuard.attackInterval--;
@@ -206,12 +202,12 @@ void EntityCornerGuard(Entity* self) {
             PlaySfxPositional(SFX_BONE_SWORD_SWISH_B);
             self->step_s++;
         }
-        if (!OVL_EXPORT(AnimateEntity)(anim_slash, self)) {
-            playerOnLeft = OVL_EXPORT(GetSideToPlayer)() & 1;
+        if (!AnimateEntity(anim_slash, self)) {
+            playerOnLeft = GetSideToPlayer() & 1;
             if (playerOnLeft != self->ext.cornerGuard.prevPlayerOnLeft) {
-                OVL_EXPORT(SetStep)(CORNER_GUARD_SHAKE_HEAD);
+                SetStep(CORNER_GUARD_SHAKE_HEAD);
             } else {
-                OVL_EXPORT(SetStep)(CORNER_GUARD_MOVE_RIGHT);
+                SetStep(CORNER_GUARD_MOVE_RIGHT);
             }
         }
         break;
@@ -223,29 +219,29 @@ void EntityCornerGuard(Entity* self) {
                 self->velocityX = FIX(0.5);
             }
             self->ext.cornerGuard.attackInterval =
-                attack_intervals[OVL_EXPORT(Random)() & 3];
+                attack_intervals[Random() & 3];
             self->step_s++;
         }
-        OVL_EXPORT(AnimateEntity)(anim_move_left, self);
-        OVL_EXPORT(UnkCollisionFunc2)(sensors_body);
+        AnimateEntity(anim_move_left, self);
+        UnkCollisionFunc2(sensors_body);
         if (!CornerGuardCheckMovement(pos_offsets)) {
             self->posX.val -= self->velocityX;
             self->velocityX = 0;
         }
         if ((self->ext.cornerGuard.prevPlayerOnLeft ^
              (self->ext.cornerGuard.facingLeft)) &&
-            (OVL_EXPORT(GetDistanceToPlayerX)() > 96)) {
+            (GetDistanceToPlayerX() > 96)) {
             self->ext.cornerGuard.facingLeft =
                 self->ext.cornerGuard.prevPlayerOnLeft;
             self->velocityX = FIX(-0.75);
         }
         if (!self->ext.cornerGuard.attackInterval) {
-            if (OVL_EXPORT(GetDistanceToPlayerX)() < 96) {
-                OVL_EXPORT(SetStep)(CORNER_GUARD_LUNGE);
+            if (GetDistanceToPlayerX() < 96) {
+                SetStep(CORNER_GUARD_LUNGE);
             }
-            playerOnLeft = OVL_EXPORT(GetSideToPlayer)() & 1;
+            playerOnLeft = GetSideToPlayer() & 1;
             if (playerOnLeft != self->ext.cornerGuard.prevPlayerOnLeft) {
-                OVL_EXPORT(SetStep)(CORNER_GUARD_SHAKE_HEAD);
+                SetStep(CORNER_GUARD_SHAKE_HEAD);
             }
         } else {
             self->ext.cornerGuard.attackInterval--;
@@ -254,8 +250,8 @@ void EntityCornerGuard(Entity* self) {
     case CORNER_GUARD_LUNGE:
         switch (self->step_s) {
         case CORNER_GUARD_LUNGE_INIT:
-            if (!OVL_EXPORT(AnimateEntity)(anim_wind_up, self)) {
-                OVL_EXPORT(SetSubStep)(CORNER_GUARD_LUNGE_START);
+            if (!AnimateEntity(anim_wind_up, self)) {
+                SetSubStep(CORNER_GUARD_LUNGE_START);
             }
             break;
         case CORNER_GUARD_LUNGE_START:
@@ -265,7 +261,7 @@ void EntityCornerGuard(Entity* self) {
             self->step_s++;
             // fallthrough
         case CORNER_GUARD_LUNGE_MOVE:
-            OVL_EXPORT(UnkCollisionFunc2)(sensors_body);
+            UnkCollisionFunc2(sensors_body);
             if (!CornerGuardCheckMovement(pos_offsets)) {
                 self->posX.val -= self->velocityX;
                 self->velocityX = 0;
@@ -275,7 +271,7 @@ void EntityCornerGuard(Entity* self) {
             if (!(g_Timer & 7) && (abs(self->velocityX) > FIX(0.75))) {
                 EntityExplosionVariantsSpawner(self, 1, 1, 12, 8, 5, 1);
             }
-            if (!OVL_EXPORT(AnimateEntity)(anim_lunge, self)) {
+            if (!AnimateEntity(anim_lunge, self)) {
                 self->step_s++;
             }
             break;
@@ -287,15 +283,15 @@ void EntityCornerGuard(Entity* self) {
             break;
         case CORNER_GUARD_LUNGE_LOOK: // Looks back and forth after lunge if
                                       // the player jumped over it
-            playerOnLeft = OVL_EXPORT(GetSideToPlayer)() & 1;
+            playerOnLeft = GetSideToPlayer() & 1;
             if (playerOnLeft != self->ext.cornerGuard.prevPlayerOnLeft) {
-                OVL_EXPORT(SetStep)(CORNER_GUARD_SHAKE_HEAD);
+                SetStep(CORNER_GUARD_SHAKE_HEAD);
             } else {
-                if (OVL_EXPORT(GetDistanceToPlayerX)() < 64) {
+                if (GetDistanceToPlayerX() < 64) {
                     self->ext.cornerGuard.facingLeft =
                         ((self->ext.cornerGuard.prevPlayerOnLeft) ^ 1);
                 }
-                OVL_EXPORT(SetStep)(CORNER_GUARD_MOVE_LEFT);
+                SetStep(CORNER_GUARD_MOVE_LEFT);
             }
             break;
         }
@@ -363,10 +359,9 @@ void EntityCornerGuard(Entity* self) {
             DestroyEntity(entity);
             self->hitboxState = 0;
             self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA | FLAG_UNK_00200000;
-            entity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
+                CreateEntityFromEntity(E_EXPLOSION, self, entity);
                 entity->params = EXPLOSION_SMALL_MULTIPLE;
             }
             self->animCurFrame = 0;
@@ -410,7 +405,7 @@ void EntityCornerGuardAttack(Entity* self) {
     Entity* cornerGuard;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(g_EInitCornerGuardAttack);
+        InitializeEntity(g_EInitCornerGuardAttack);
     }
     cornerGuard = self - 1;
     if ((cornerGuard->entityId) != E_CORNER_GUARD) {

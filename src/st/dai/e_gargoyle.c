@@ -30,7 +30,7 @@ void EntityGargoyleTongue(Entity* self) {
 
     switch (self->step) {
     case GARGOYLE_INIT:
-        OVL_EXPORT(InitializeEntity)(g_EInitEnvironment);
+        InitializeEntity(g_EInitEnvironment);
         self->zPriority = 92;
         self->animCurFrame = 12;
         if (self->params & FACING_RIGHT) {
@@ -41,7 +41,7 @@ void EntityGargoyleTongue(Entity* self) {
             return;
         }
         block = self + 1;
-        OVL_EXPORT(CreateEntityFromEntity)(E_ID(GARGOYLE_TONGUE), self, block);
+        CreateEntityFromEntity(E_ID(GARGOYLE_TONGUE), self, block);
         block->params = BLOCK_ONLY;
         block->posY.i.hi = 160;
         if (self->params) {

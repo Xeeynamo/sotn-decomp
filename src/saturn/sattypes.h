@@ -18,8 +18,15 @@ typedef unsigned long long u64;
 #define NULL 0
 #define FIX(x) ((s32)((x) * 65536.0))
 
-#define PAD_RIGHT 0x8000
-#define PAD_LEFT 0x4000
+typedef enum {
+    PAD_NONE = 0x0000,
+    PAD_L1 = 0x0008,
+    PAD_R1 = 0x0080,
+    PAD_UP = 0x1000,
+    PAD_DOWN = 0x2000,
+    PAD_LEFT = 0x4000,
+    PAD_RIGHT = 0x8000,
+} PlayerPad;
 
 #define STAGE_INVERTEDCASTLE_MASK 0x1F
 #define STAGE_INVERTEDCASTLE_FLAG 0x20
@@ -30,6 +37,7 @@ typedef unsigned long long u64;
 
 #define SFX_BAT_SCREECH 0x64E
 #define SFX_HEART_PICKUP 0x67A
+#define SFX_UI_MOVE 0x67B
 #define SFX_UI_ALERT_TINK 0x6AD
 
 #define PLAYER g_Entities[PLAYER_CHARACTER]
@@ -802,7 +810,6 @@ u32 SquareRoot0(s32);
 s32 func_800F4D38(s32, s32);
 void func_800F4994(void);
 extern int rand(void);
-void PlaySfx(s32 sfxId);
 
 // Not 100% sure about address, gcc seems to added the offset within
 // the struct to the base address
@@ -854,5 +861,40 @@ typedef struct {
     /* 0x0 */ s32 x;
     /* 0x4 */ s32 y;
 } Point32; // size = 0x8
+
+enum RicSubweapons {
+    PL_W_NONE,
+    PL_W_DAGGER,
+    PL_W_AXE,
+    PL_W_HOLYWATER,
+    PL_W_CROSS,
+    PL_W_BIBLE,
+    PL_W_STOPWATCH,
+    PL_W_REBNDSTONE,
+    PL_W_VIBHUTI,
+    PL_W_AGUNEA,
+    PL_W_10,
+    PL_W_HOLYWATER_FLAMES,
+    PL_W_CRASH_CROSS,
+    PL_W_CRASH_CROSS_BEAM,
+    PL_W_WHIP,
+    PL_W_15,
+    PL_W_HYDROSTORM,
+    PL_W_BIBLE_BEAM,
+    PL_W_KICK,
+    PL_W_19,
+    PL_W_20,
+    PL_W_21,
+    PL_W_HIGHJUMP,
+    PL_W_23,
+    PL_W_CRASH_VIBHUTI,
+    PL_W_CRASH_REBOUND_STONE,
+    PL_W_CRASH_AGUNEA,
+    PL_W_27,
+    PL_W_28,
+    PL_W_CRASH_REBOUND_EXPLOSION,
+    PL_W_30,
+    NUM_WEAPONS,
+};
 
 #endif

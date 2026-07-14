@@ -9,6 +9,16 @@ if (WIN32)
     set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 endif()
 
+if (MSVC)
+    cmake_policy(SET CMP0091 NEW)
+    set(CMAKE_MSVC_RUNTIME_LIBRARY "$<$<CONFIG:Debug>:MultiThreadedDebugDLL>$<$<NOT:$<CONFIG:Debug>>:MultiThreadedDLL>")
+endif()
+
+# Overlay compatibility
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+
 if (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang|AppleClang")
     set(CMAKE_BUILD_TYPE Debug)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address")
@@ -45,6 +55,7 @@ set(SOURCE_FILES_PC
     src/pc/pl_ric.c
     src/pc/servant_pc.c
     src/pc/stages/stage_loader.c
+    src/pc/stages/overlay.c
     src/pc/weapon_pc.c
 )
 
@@ -279,6 +290,7 @@ set(SOURCE_FILES_STAGE_NZ0
 set (SOURCE_FILES_STAGE_ST0
     src/pc/stages/stage_st0.c
     src/st/st0/header.c
+    src/st/st0/bss.c
     src/st/st0/gen/e_laydef.c
     src/st/st0/e_init.c
     src/st/st0/gen/rooms.c
@@ -431,12 +443,6 @@ set_source_files_properties(src/weapon/w_052.c PROPERTIES COMPILE_DEFINITIONS WE
 set(SOURCE_FILES_CORE
     ${SOURCE_FILES_DRA}
     ${SOURCE_FILES_RIC}
-    ${SOURCE_FILES_STAGE_SEL}
-    ${SOURCE_FILES_STAGE_CEN}
-    ${SOURCE_FILES_STAGE_NZ0}
-    ${SOURCE_FILES_STAGE_ST0}
-    ${SOURCE_FILES_BOSS_BO4}
-    ${SOURCE_FILES_STAGE_WRP}
     ${SOURCE_FILES_WEAPON}
     ${SOURCE_FILES_TT_000}
     ${SOURCE_FILES_TT_001}
@@ -477,6 +483,67 @@ target_compile_definitions(psyz PRIVATE __psyz)
 psyz_strip_file_prefix(${PROJECT_NAME})
 if (WIN32)
     target_link_libraries(${PROJECT_NAME} PRIVATE core)
-else()
+    set_target_properties(${PROJECT_NAME} PROPERTIES ENABLE_EXPORTS ON)
+    if (MSVC)
+        # Windows PE has no -rdynamic equivalent, and a DLL must resolve all
+        # externals at link time.
+        # Generates an export definition for overlays to where to link to.
+        get_filename_component(_msvc_bindir "${CMAKE_C_COMPILER}" DIRECTORY)
+        set(_sotn_def "${CMAKE_BINARY_DIR}/sotn_exports.def")
+        add_custom_command(TARGET ${PROJECT_NAME} PRE_LINK
+            COMMAND ${CMAKE_COMMAND}
+                    -DDUMPBIN=${_msvc_bindir}/dumpbin.exe
+                    -DOUT=${_sotn_def}
+                    "-DINPUTS=$<TARGET_FILE:core>$<SEMICOLON>$<TARGET_FILE:psyz>$<SEMICOLON>$<JOIN:$<TARGET_OBJECTS:${PROJECT_NAME}>,$<SEMICOLON>>"
+                    -P ${CMAKE_SOURCE_DIR}/cmake/gen_export_def.cmake
+            VERBATIM
+            COMMENT "Generating export .def for overlay symbol resolution")
+        set_property(TARGET ${PROJECT_NAME} APPEND_STRING
+                     PROPERTY LINK_FLAGS " /DEF:${_sotn_def}")
+    endif()
+elseif (APPLE)
     target_link_libraries(${PROJECT_NAME} PRIVATE core m)
+    target_link_options(${PROJECT_NAME} PRIVATE -Wl,-export_dynamic)
+else()
+    target_link_libraries(${PROJECT_NAME} PRIVATE core m ${CMAKE_DL_LIBS})
+    target_link_options(${PROJECT_NAME} PRIVATE -rdynamic)
 endif()
+
+function(add_overlay name)
+    add_library(${name} SHARED ${ARGN})
+    set_target_properties(${name} PROPERTIES PREFIX "")
+
+    target_include_directories(${name} PRIVATE
+        include
+        src/dra
+        src/pc/3rd
+        src/pc
+    )
+
+    target_compile_definitions(${name} PRIVATE
+        _USE_MATH_DEFINES
+        VERSION_PC
+        PERMUTER
+        NON_MATCHING
+        HARD_LINK
+        _internal_version_us
+        __psyz
+        OVERLAY_BUILD
+    )
+
+    # Overlays need to resolve the same libraries the main exec is linked to
+    target_include_directories(${name} PRIVATE tools/psyz/psyz/include)
+    if (WIN32)
+        target_link_libraries(${name} PRIVATE ${PROJECT_NAME})
+    elseif (APPLE)
+        target_link_options(${name} PRIVATE -Wl,-undefined,dynamic_lookup)
+    endif()
+
+    psyz_strip_file_prefix(${name})
+endfunction()
+
+add_overlay(cen ${SOURCE_FILES_STAGE_CEN})
+add_overlay(sel ${SOURCE_FILES_STAGE_SEL})
+add_overlay(wrp ${SOURCE_FILES_STAGE_WRP})
+add_overlay(nz0 ${SOURCE_FILES_STAGE_NZ0})
+add_overlay(st0 ${SOURCE_FILES_STAGE_ST0})

@@ -33,31 +33,31 @@ void EntityBitterfly(Entity* self) {
     s32 tempVar; // Used as a temp in 2 different places
 
     if ((self->flags & FLAG_DEAD) && (self->step < BF_DEAD)) {
-        OVL_EXPORT(SetStep)(BF_DEAD);
+        SetStep(BF_DEAD);
     }
     if ((self->hitFlags & 3) && (self->step != BF_HIT)) {
-        OVL_EXPORT(SetStep)(BF_HIT);
+        SetStep(BF_HIT);
     }
     switch (self->step) {
     case BF_INIT:
-        OVL_EXPORT(InitializeEntity)(g_EInitBitterfly);
+        InitializeEntity(g_EInitBitterfly);
         self->drawFlags = ENTITY_OPACITY;
         self->opacity = 0;
         self->blendMode = BLEND_ADD | BLEND_TRANSP;
         self->hitboxOffY = 1;
-        OVL_EXPORT(SetStep)(BF_IDLE);
+        SetStep(BF_IDLE);
         break;
     case BF_IDLE:
-        OVL_EXPORT(AnimateEntity)(anim_passive_flying, self);
-        OVL_EXPORT(MoveEntity)();
+        AnimateEntity(anim_passive_flying, self);
+        MoveEntity();
         switch (self->step_s) {
         case 0:
             other = &PLAYER;
             xVar = other->posX.i.hi - self->posX.i.hi;
             yVar = (other->posY.i.hi - 0x40) - self->posY.i.hi;
             angle = ratan2(yVar, xVar);
-            self->ext.bitterfly.angle = OVL_EXPORT(LimitAngleChange)(
-                8, self->ext.bitterfly.angle, angle);
+            self->ext.bitterfly.angle =
+                LimitAngleChange(8, self->ext.bitterfly.angle, angle);
             self->velocityX = (rcos(self->ext.bitterfly.angle) << 0xF) >> 0xC;
             self->velocityY = (rsin(self->ext.bitterfly.angle) << 0xF) >> 0xC;
             if (self->velocityX > 0) {
@@ -66,15 +66,14 @@ void EntityBitterfly(Entity* self) {
                 self->facingLeft = 0;
             }
 
-            tempVar = ((OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1);
-            if (self->facingLeft == tempVar &&
-                OVL_EXPORT(GetDistanceToPlayerX)() < 0x20) {
+            tempVar = ((GetSideToPlayer() & 1) ^ 1);
+            if (self->facingLeft == tempVar && GetDistanceToPlayerX() < 0x20) {
                 self->step_s = 1;
             }
             break;
         case 1:
-            if ((OVL_EXPORT(GetDistanceToPlayerY)() > 0x50) ||
-                (OVL_EXPORT(GetDistanceToPlayerX)() > 0x50)) {
+            if ((GetDistanceToPlayerY() > 0x50) ||
+                (GetDistanceToPlayerX() > 0x50)) {
                 self->step_s = 0;
             }
             break;
@@ -82,8 +81,8 @@ void EntityBitterfly(Entity* self) {
         break;
     case BF_HIT:
         // Run hit animation and go back to idle.
-        if (OVL_EXPORT(AnimateEntity)(anim_hit, self) == 0) {
-            OVL_EXPORT(SetStep)(BF_IDLE);
+        if (AnimateEntity(anim_hit, self) == 0) {
+            SetStep(BF_IDLE);
         }
         break;
     case BF_DEAD:
@@ -96,13 +95,13 @@ void EntityBitterfly(Entity* self) {
             self->step_s += 1;
             /* fallthrough */
         case BF_DEAD_BECOME_SKULL:
-            if (OVL_EXPORT(AnimateEntity)(anim_become_skull, self) == 0) {
+            if (AnimateEntity(anim_become_skull, self) == 0) {
                 self->ext.bitterfly.deathTimer = 0;
                 self->step_s += 1;
             }
             break;
         case BF_DEAD_FALL:
-            if (OVL_EXPORT(UnkCollisionFunc3)(sensors) & 1) {
+            if (UnkCollisionFunc3(sensors) & 1) {
                 PlaySfxPositional(SFX_SKULL_KNOCK_B);
                 self->ext.bitterfly.deathTimer = 0x18;
                 self->step_s += 1;
@@ -110,11 +109,9 @@ void EntityBitterfly(Entity* self) {
             break;
         case BF_DEAD_EXPLODE:
             if (!--self->ext.bitterfly.deathTimer) {
-                other =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+                other = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (other != NULL) {
-                    OVL_EXPORT(CreateEntityFromEntity)
-                    (E_EXPLOSION, self, other);
+                    CreateEntityFromEntity(E_EXPLOSION, self, other);
                     other->params = EXPLOSION_SMALL_MULTIPLE;
                 }
                 PlaySfxPositional(SFX_RAPID_SCRAPE_3X);

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit g_EInitInteractable;
 
 SVECTOR v0 = {-8, -8, 0};
 SVECTOR v1 = {8, -8, 0};
@@ -24,7 +24,7 @@ void EntityLifeUpSpawn(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = 2;
         self->animCurFrame = 0;
         // We allocate 385 primitives for this entity!!!
@@ -191,7 +191,7 @@ void EntityLifeUpSpawn(Entity* self) {
         break;
 
     case 4:
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         self->velocityY += FIX(1.0 / 8);
         xVar = self->posX.i.hi;
         yVar = self->posY.i.hi + 4;
@@ -237,12 +237,12 @@ void EntityLifeUpSpawn(Entity* self) {
                 params = self->params & 0xFFF;
                 if (params < 0x80) {
                     self->entityId = E_PRIZE_DROP;
-                    self->pfnUpdate = OVL_EXPORT(EntityPrizeDrop);
+                    self->pfnUpdate = EntityPrizeDrop;
                     self->poseTimer = 0;
                     self->pose = 0;
                 } else {
                     self->entityId = E_EQUIP_ITEM_DROP;
-                    self->pfnUpdate = OVL_EXPORT(EntityEquipItemDrop);
+                    self->pfnUpdate = EntityEquipItemDrop;
                     params -= 0x80;
                 }
                 self->params = params;
@@ -251,7 +251,7 @@ void EntityLifeUpSpawn(Entity* self) {
                 self->step = 0;
             } else {
                 self->entityId = E_RELIC_ORB;
-                self->pfnUpdate = OVL_EXPORT(EntityRelicOrb);
+                self->pfnUpdate = EntityRelicOrb;
                 self->poseTimer = 0;
                 self->pose = 0;
                 self->unk6D[0] = 0x10;
@@ -263,12 +263,12 @@ void EntityLifeUpSpawn(Entity* self) {
             params = self->params & 0xFFF;
             if (params < 0x80) {
                 self->entityId = E_PRIZE_DROP;
-                self->pfnUpdate = OVL_EXPORT(EntityPrizeDrop);
+                self->pfnUpdate = EntityPrizeDrop;
                 self->poseTimer = 0;
                 self->pose = 0;
             } else {
                 self->entityId = E_EQUIP_ITEM_DROP;
-                self->pfnUpdate = OVL_EXPORT(EntityEquipItemDrop);
+                self->pfnUpdate = EntityEquipItemDrop;
                 params -= 0x80;
             }
             self->params = params;

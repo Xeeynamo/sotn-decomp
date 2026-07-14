@@ -58,7 +58,7 @@ static u8 unused[] = {0x06, 0x01, 0x04, 0x01, 0x04, 0x02, 0x06, 0x03,
                       0x05, 0x04, 0x05, 0x05, 0x00, 0x00, 0x00, 0x00};
 #endif
 
-extern EInit OVL_EXPORT(EInitParticle);
+extern EInit g_EInitParticle;
 Primitive* FindFirstUnkPrim2(Primitive* prim, u8 index);
 
 void EntityBloodSplatter(Entity* self) {
@@ -67,7 +67,7 @@ void EntityBloodSplatter(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitParticle));
+        InitializeEntity(g_EInitParticle);
         break;
 
     case 1:
@@ -258,27 +258,27 @@ void EntityBloodyZombie(Entity* self) {
     if (self->hitParams && self->step % 2) {
         PlaySfxPositional(SFX_BLOODY_ZOMBIE_PAIN);
         PlaySfxPositional(SFX_BLOODY_ZOMBIE_BODY_HIT);
-        OVL_EXPORT(SetStep)(BLOODY_ZOMBIE_TAKE_HIT);
+        SetStep(BLOODY_ZOMBIE_TAKE_HIT);
     }
 
     if (self->flags & FLAG_DEAD && self->step < 8) {
         PlaySfxPositional(SFX_BLOODY_ZOMBIE_DEATH);
         self->hitboxState = 0;
         self->flags &= ~FLAG_UNK_20000000;
-        OVL_EXPORT(SetStep)(BLOODY_ZOMBIE_DYING);
+        SetStep(BLOODY_ZOMBIE_DYING);
     }
 
     switch (self->step) {
     case BLOODY_ZOMBIE_INIT:
-        OVL_EXPORT(InitializeEntity)(g_EInitBloodyZombie);
+        InitializeEntity(g_EInitBloodyZombie);
         self->hitboxOffX = 1;
         self->hitboxOffY = 4;
-        OVL_EXPORT(SetStep)(BLOODY_ZOMBIE_UNK_2);
+        SetStep(BLOODY_ZOMBIE_UNK_2);
         break;
 
     case BLOODY_ZOMBIE_UNK_2:
-        if (OVL_EXPORT(UnkCollisionFunc3)(sensors_ground) & 1) {
-            OVL_EXPORT(SetStep)(BLOODY_ZOMBIE_WALK);
+        if (UnkCollisionFunc3(sensors_ground) & 1) {
+            SetStep(BLOODY_ZOMBIE_WALK);
         }
         break;
 
@@ -288,8 +288,8 @@ void EntityBloodyZombie(Entity* self) {
             self->step_s++;
         }
 
-        OVL_EXPORT(AnimateEntity)(anim_walk, self);
-        OVL_EXPORT(UnkCollisionFunc2)(sensors_move);
+        AnimateEntity(anim_walk, self);
+        UnkCollisionFunc2(sensors_move);
 
         if (self->facingLeft) {
             self->velocityX = FIX(0.375);
@@ -302,13 +302,10 @@ void EntityBloodyZombie(Entity* self) {
             self->facingLeft ^= 1;
         }
 
-        if ((OVL_EXPORT(Random)() & 0x3F) ==
-            0) { // Drop BloodDrips from the enemy knife
-            tempEntity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+        if ((Random() & 0x3F) == 0) { // Drop BloodDrips from the enemy knife
+            tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)
-                (E_BLOOD_DRIPS, self, tempEntity);
+                CreateEntityFromEntity(E_BLOOD_DRIPS, self, tempEntity);
                 if (self->facingLeft) {
                     tempEntity->posX.i.hi += 16;
                 } else {
@@ -318,19 +315,18 @@ void EntityBloodyZombie(Entity* self) {
             }
         }
         tempEntity = &PLAYER;
-        facing = OVL_EXPORT(GetSideToPlayer)() & 1;
-        if (tempEntity->facingLeft == facing &&
-            OVL_EXPORT(GetDistanceToPlayerX)() < 128) {
+        facing = GetSideToPlayer() & 1;
+        if (tempEntity->facingLeft == facing && GetDistanceToPlayerX() < 128) {
             self->facingLeft = facing ^ 1;
-            OVL_EXPORT(SetStep)(BLOODY_ZOMBIE_CHASE);
+            SetStep(BLOODY_ZOMBIE_CHASE);
         }
         break;
 
     case BLOODY_ZOMBIE_CHASE:
-        if (!OVL_EXPORT(AnimateEntity)(anim_chase, self)) {
-            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+        if (!AnimateEntity(anim_chase, self)) {
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
-        OVL_EXPORT(UnkCollisionFunc2)(sensors_move);
+        UnkCollisionFunc2(sensors_move);
 
         if (self->facingLeft) {
             self->velocityX = FIX(0.75);
@@ -338,13 +334,10 @@ void EntityBloodyZombie(Entity* self) {
             self->velocityX = FIX(-0.75);
         }
 
-        if ((OVL_EXPORT(Random)() & 0x3F) ==
-            0) { // Drop BloodDrips from the enemy knife
-            tempEntity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+        if ((Random() & 0x3F) == 0) { // Drop BloodDrips from the enemy knife
+            tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)
-                (E_BLOOD_DRIPS, self, tempEntity);
+                CreateEntityFromEntity(E_BLOOD_DRIPS, self, tempEntity);
                 if (self->facingLeft) {
                     tempEntity->posX.i.hi += 18;
                 } else {
@@ -354,36 +347,34 @@ void EntityBloodyZombie(Entity* self) {
             }
         }
 
-        if (OVL_EXPORT(GetDistanceToPlayerX)() < 40) {
-            OVL_EXPORT(SetStep)(BLOODY_ZOMBIE_ATTACK);
+        if (GetDistanceToPlayerX() < 40) {
+            SetStep(BLOODY_ZOMBIE_ATTACK);
         }
         break;
 
     case BLOODY_ZOMBIE_ATTACK:
-        animStatus = OVL_EXPORT(AnimateEntity)(anim_attack, self);
+        animStatus = AnimateEntity(anim_attack, self);
         if (animStatus & 0x80 && self->pose == 10) {
             PlaySfxPositional(SFX_WEAPON_SWISH_B);
         }
         if (animStatus == 0) {
-            OVL_EXPORT(SetStep)(BLOODY_ZOMBIE_WALK);
+            SetStep(BLOODY_ZOMBIE_WALK);
         }
         break;
 
     case BLOODY_ZOMBIE_TAKE_HIT:
         if (!self->step_s) {
             // Splat blood
-            tempEntity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)
-                (E_BLOOD_SPLATTER, self, tempEntity);
-                tempEntity->facingLeft = OVL_EXPORT(GetSideToPlayer)() & 1;
+                CreateEntityFromEntity(E_BLOOD_SPLATTER, self, tempEntity);
+                tempEntity->facingLeft = GetSideToPlayer() & 1;
             }
             self->step_s++;
         }
 
-        if (!OVL_EXPORT(AnimateEntity)(anim_hit, self)) {
-            OVL_EXPORT(SetStep)(BLOODY_ZOMBIE_WALK);
+        if (!AnimateEntity(anim_hit, self)) {
+            SetStep(BLOODY_ZOMBIE_WALK);
             self->step_s++;
         }
         break;
@@ -406,11 +397,9 @@ void EntityBloodyZombie(Entity* self) {
         if (self->pose < 13) {
             if ((g_Timer % 8) == 0) {
                 PlaySfxPositional(SFX_BLOODY_ZOMBIE_SPLATTER);
-                tempEntity =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+                tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    OVL_EXPORT(CreateEntityFromEntity)
-                    (E_BLOOD_SPLATTER, self, tempEntity);
+                    CreateEntityFromEntity(E_BLOOD_SPLATTER, self, tempEntity);
                     tempEntity->facingLeft = self->ext.bloodyZombie.unk84;
                     if (self->facingLeft) {
                         tempEntity->posX.i.hi -= 4;
@@ -449,12 +438,10 @@ void EntityBloodyZombie(Entity* self) {
             }
         }
 
-        if (!OVL_EXPORT(AnimateEntity)(anim_die, self)) {
-            tempEntity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+        if (!AnimateEntity(anim_die, self)) {
+            tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)
-                (E_EXPLOSION, self, tempEntity);
+                CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
                 tempEntity->params = 2;
                 tempEntity->posY.i.hi += 16;
                 if (self->facingLeft) {
@@ -507,7 +494,7 @@ void EntityBloodDrips(Entity* self) { // BloodDrips
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitParticle));
+        InitializeEntity(g_EInitParticle);
         primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
         if (primIndex != -1) {
             self->primIndex = primIndex;

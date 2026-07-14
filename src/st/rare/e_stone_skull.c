@@ -40,7 +40,7 @@ void EntityStoneSkull(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitStoneSkull);
+        InitializeEntity(g_EInitStoneSkull);
         self->drawFlags = ENTITY_OPACITY;
         self->opacity = 0xFF;
         self->ext.stoneSkull.startingPosY =
@@ -48,8 +48,8 @@ void EntityStoneSkull(Entity* self) {
         self->velocityY = FIX(1.0);
         /* fallthrough */
     case 1:
-        OVL_EXPORT(AnimateEntity)(D_us_80181BE4, self);
-        OVL_EXPORT(MoveEntity)();
+        AnimateEntity(D_us_80181BE4, self);
+        MoveEntity();
         posY = (self->posY.i.hi + g_Tilemap.scrollY.i.hi);
         posY = self->ext.stoneSkull.startingPosY - posY;
         if (self->velocityY > 0) {

@@ -2,8 +2,9 @@
 #ifndef BO4_H
 #define BO4_H
 
-#define OVL_EXPORT(x) BO4_##x
 #include <stage.h>
+
+#define OVL_EXPORT(x) BO4_##x
 
 #include "../doppleganger.h"
 
@@ -24,7 +25,7 @@ extern s32 D_pspeu_0926BCD0;
 #define E_ID(ID_1D) D_pspeu_0926BC98
 #endif
 
-extern EInit OVL_EXPORT(EInitParticle);
-extern EInit OVL_EXPORT(EInitLockCamera);
+extern EInit g_EInitParticle;
+extern EInit g_EInitLockCamera;
 
 #endif // BO4_H

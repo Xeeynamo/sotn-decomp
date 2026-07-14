@@ -20,8 +20,8 @@ static s32 g_HandId = HAND_ID;
 
 #include "shared.h"
 
-extern s32 D_13F000_8017B3B8;
-extern s32 D_13F000_8017B3BC;
+static s32 D_13F000_8017B3B8;
+static s32 D_13F000_8017B3BC;
 
 int func_13F000_8017A718() {
     int var;

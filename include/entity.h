@@ -4471,9 +4471,6 @@ typedef union { // offset=0x7C
     ET_Dodo dodo;
 } Ext;
 
-#define SYNC_FIELD(struct1, struct2, field)                                    \
-    STATIC_ASSERT(OFF(struct1, field) == OFF(struct2, field), "unsynced")
-
 SYNC_FIELD(ET_Player, ET_Weapon, anim);
 SYNC_FIELD(ET_Player, ET_WeaponUnk006, anim);
 SYNC_FIELD(ET_Player, ET_WeaponUnk012, anim);

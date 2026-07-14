@@ -351,14 +351,14 @@ void EntityHammer(Entity* self) {
     }
     switch (self->step) {
     case HAMMER_STEP_0:
-        OVL_EXPORT(InitializeEntity)(g_EInitHammer);
+        InitializeEntity(g_EInitHammer);
         self->animCurFrame = 3;
         self->hitboxWidth = 6;
         self->hitboxHeight = 6;
         /* fallthrough */
     case HAMMER_STEP_1:
-        if (OVL_EXPORT(UnkCollisionFunc3)(sensors1) & 1) {
-            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+        if (UnkCollisionFunc3(sensors1) & 1) {
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->step++;
         }
         break;
@@ -368,8 +368,7 @@ void EntityHammer(Entity* self) {
         // (null-terminated)
         for (parts = D_us_801821AC, part = self; parts->eArrayOffset; parts++) {
             otherEnt = self + parts->eArrayOffset;
-            OVL_EXPORT(CreateEntityFromCurrentEntity)
-            (E_GURKHA_BODY_PARTS, otherEnt);
+            CreateEntityFromCurrentEntity(E_GURKHA_BODY_PARTS, otherEnt);
             otherEnt->ext.GH_Props.length = parts->length;
             otherEnt->ext.GH_Props.parent = self + parts->eArrayParentOffset;
             otherEnt->params = parts->params;
@@ -381,7 +380,7 @@ void EntityHammer(Entity* self) {
         self->nextPart = part;
         self->parent = NULL;
         otherEnt = self + HAMMER_WEAPON;
-        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_HAMMER_WEAPON, otherEnt);
+        CreateEntityFromCurrentEntity(E_HAMMER_WEAPON, otherEnt);
         otherEnt->ext.GH_Props.length = 12;
         otherEnt->ext.GH_Props.parent = self + ARM_LOWER;
         otherEnt->zPriority = self->zPriority + 3;
@@ -494,7 +493,7 @@ void EntityHammer(Entity* self) {
             self->step_s++;
             /* fallthrough */
         case 3:
-            OVL_EXPORT(MoveEntity)();
+            MoveEntity();
             self->velocityY += FIX(0.375);
             func_801CDF1C(ptr, D_us_801824E8, 0);
             func_801CDE10(ptr);
@@ -648,10 +647,10 @@ void EntityHammer(Entity* self) {
             self->step_s++;
             /* fallthrough */
         case 1:
-            OVL_EXPORT(MoveEntity)();
+            MoveEntity();
             self->velocityY += FIX(0.1875);
             if ((g_Timer & 7) == 0) {
-                if (OVL_EXPORT(Random)() & 1) {
+                if (Random() & 1) {
                     PlaySfxPositional(SFX_FM_EXPLODE_B);
                 } else {
                     PlaySfxPositional(SFX_EXPLODE_D);
@@ -681,15 +680,15 @@ void EntityGurkhaBodyParts(Entity* self) {
     case 0:
         switch (self->params >> 8) {
         case 0:
-            OVL_EXPORT(InitializeEntity)(g_EInitHammer);
+            InitializeEntity(g_EInitHammer);
             break;
 
         case 1:
-            OVL_EXPORT(InitializeEntity)(g_EInitGurkha);
+            InitializeEntity(g_EInitGurkha);
             break;
 
         case 2:
-            OVL_EXPORT(InitializeEntity)(g_EInitBlade);
+            InitializeEntity(g_EInitBlade);
             break;
         }
         self->params &= 0xFF;
@@ -706,23 +705,23 @@ void EntityGurkhaBodyParts(Entity* self) {
     case 24:
         switch (self->step_s) {
         case 0:
-            speed = (OVL_EXPORT(Random)() & 0x1F) + 0x10;
-            angle = (OVL_EXPORT(Random)() * 6) + 0x900;
+            speed = (Random() & 0x1F) + 0x10;
+            angle = (Random() * 6) + 0x900;
             self->velocityX = speed * rcos(angle) / 2;
             self->velocityY = speed * rsin(angle);
-            self->ext.GH_Props.timer = (OVL_EXPORT(Random)() & 0x1F) + 0x20;
+            self->ext.GH_Props.timer = (Random() & 0x1F) + 0x20;
             self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
             self->hitboxState = 0;
             self->step_s++;
             break;
 
         case 1:
-            OVL_EXPORT(MoveEntity)();
+            MoveEntity();
             self->velocityY += FIX(0.125);
             self->rotate += self->ext.GH_Props.rotVel;
             if (!--self->ext.GH_Props.timer) {
                 self->step = 0;
-                self->pfnUpdate = OVL_EXPORT(EntityExplosion);
+                self->pfnUpdate = EntityExplosion;
                 self->params = 0;
                 self->drawFlags = ENTITY_DEFAULT;
             }
@@ -778,7 +777,7 @@ void EntityHammerWeapon(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitHammerWeapon);
+        InitializeEntity(g_EInitHammerWeapon);
         self->drawFlags |= ENTITY_ROTATE;
         self->hitboxWidth = 10;
         self->hitboxHeight = 10;
@@ -793,8 +792,8 @@ void EntityHammerWeapon(Entity* self) {
     case 24:
         switch (self->step_s) {
         case 0:
-            speed = (OVL_EXPORT(Random)() & 0x1F) + 0x10;
-            angle = (OVL_EXPORT(Random)() * 6) + 0x900;
+            speed = (Random() & 0x1F) + 0x10;
+            angle = (Random() * 6) + 0x900;
             self->velocityX = speed * rcos(angle) / 2;
             self->velocityY = speed * rsin(angle);
             self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
@@ -803,7 +802,7 @@ void EntityHammerWeapon(Entity* self) {
             break;
 
         case 1:
-            OVL_EXPORT(MoveEntity)();
+            MoveEntity();
             self->velocityY += FIX(0.125);
             func_801CDC80(&self->rotate, 0x800, 0x20);
             break;

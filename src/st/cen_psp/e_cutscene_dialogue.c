@@ -1,20 +1,26 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../cen/cen.h"
+#include <cutscene.h>
 
-INCLUDE_ASM("st/cen_psp/nonmatchings/cen_psp/e_cutscene_dialogue", GetLang);
+extern Dialogue OVL_EXPORT(Dialogue);
 
-INCLUDE_ASM("st/cen_psp/nonmatchings/cen_psp/e_cutscene_dialogue", DrawCutsceneActorName);
+#include "../../get_lang.h"
 
-INCLUDE_ASM("st/cen_psp/nonmatchings/cen_psp/e_cutscene_dialogue", CutsceneUnk3);
+#include "../cutscene_actor_name.h"
 
-INCLUDE_ASM("st/cen_psp/nonmatchings/cen_psp/e_cutscene_dialogue", CutsceneUnk4);
+#include "../cutscene_unk3.h"
 
-INCLUDE_ASM("st/cen_psp/nonmatchings/cen_psp/e_cutscene_dialogue", CutsceneUnk1);
+#include "../cutscene_unk4.h"
 
-INCLUDE_ASM("st/cen_psp/nonmatchings/cen_psp/e_cutscene_dialogue", SetCutsceneScript);
+#define CUTSCENE_UNK1_NEXT_X 0
+#define CUTSCENE_UNK1_UNK17 2
+#include "../cutscene_unk1.h"
 
-INCLUDE_ASM("st/cen_psp/nonmatchings/cen_psp/e_cutscene_dialogue", SetCutsceneEnd);
+#include "../set_cutscene_script.h"
 
-INCLUDE_ASM("st/cen_psp/nonmatchings/cen_psp/e_cutscene_dialogue", CutsceneRun);
+#include "../set_cutscene_end.h"
+
+#define CUTSCENE_TILEMAP_SCROLL
+#include "../cutscene_run.h"
 
 INCLUDE_ASM("st/cen_psp/nonmatchings/cen_psp/e_cutscene_dialogue", CEN_EntityCutscene);

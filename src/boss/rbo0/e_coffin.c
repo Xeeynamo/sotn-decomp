@@ -256,7 +256,7 @@ void EntityCoffin(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 8);
         if (primIndex == -1) {
             self->ext.prim = NULL;

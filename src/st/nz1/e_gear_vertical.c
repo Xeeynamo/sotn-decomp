@@ -16,24 +16,23 @@ void EntityGearVertical(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitEnvironment);
+        InitializeEntity(g_EInitEnvironment);
         self->zPriority = 0x6C;
         self->drawFlags = ENTITY_ROTATE;
         self->rotate = 0x400;
         // fallthrough
 
     case 1:
-        OVL_EXPORT(AnimateEntity)(D_us_80180FC0, self);
+        AnimateEntity(D_us_80180FC0, self);
 #ifdef VERSION_PSP
-        collision = OVL_EXPORT(GetPlayerCollisionWith)(self, 8, 0x20, 5);
+        collision = GetPlayerCollisionWith(self, 8, 0x20, 5);
 #else
         if (g_Player.vram_flag & (TOUCHING_L_WALL | TOUCHING_R_WALL)) {
             collision = 4;
         } else {
             collision = 5;
         }
-        collision =
-            OVL_EXPORT(GetPlayerCollisionWith)(self, 8, 0x20, collision | 0x8);
+        collision = GetPlayerCollisionWith(self, 8, 0x20, collision | 0x8);
 #endif
         self->ext.gearPuzzle.cooldownTimer = 0x20;
         if (collision & 4) {
@@ -42,7 +41,7 @@ void EntityGearVertical(Entity* self) {
         break;
 
     case 2:
-        OVL_EXPORT(AnimateEntity)(&D_us_80180FC0, self);
+        AnimateEntity(&D_us_80180FC0, self);
 #ifndef VERSION_PSP
         collision = 0;
 #endif
@@ -60,7 +59,7 @@ void EntityGearVertical(Entity* self) {
                 g_unkGraphicsStruct.shoveY.val += offsetY;
             }
 #ifdef VERSION_PSP
-            collision = OVL_EXPORT(GetPlayerCollisionWith)(
+            collision = GetPlayerCollisionWith(
                 self, 8, self->ext.gearPuzzle.cooldownTimer, 5);
 #else
             if (g_Player.vram_flag & (TOUCHING_L_WALL | TOUCHING_R_WALL)) {
@@ -68,7 +67,7 @@ void EntityGearVertical(Entity* self) {
             } else {
                 collision = 5;
             }
-            collision = OVL_EXPORT(GetPlayerCollisionWith)(
+            collision = GetPlayerCollisionWith(
                 self, 8, self->ext.gearPuzzle.cooldownTimer, collision | 0x8);
 #endif
             if (!(collision & 4)) {
@@ -79,7 +78,7 @@ void EntityGearVertical(Entity* self) {
         break;
 
     case 3:
-        OVL_EXPORT(AnimateEntity)(&D_us_80180FC0, self);
+        AnimateEntity(&D_us_80180FC0, self);
         collision = 0;
 
         if (!--self->ext.gearPuzzle.timer2) {

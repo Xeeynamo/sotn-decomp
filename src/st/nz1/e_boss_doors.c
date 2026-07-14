@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz1.h"
 
-extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit g_EInitInteractable;
 extern EInit g_EInitEnvironment;
 
 s32 D_us_80181134 = 0;
@@ -14,7 +14,7 @@ void EntityBossDoorTrigger(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         timeAttackResult = g_api.TimeAttackController(
             TIMEATTACK_EVENT_KARASUMAN_DEFEAT, TIMEATTACK_GET_RECORD);
         if (timeAttackResult) {
@@ -22,7 +22,7 @@ void EntityBossDoorTrigger(Entity* self) {
             return;
         }
         entity = &g_Entities[80];
-        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(KARASUMAN), entity);
+        CreateEntityFromCurrentEntity(E_ID(KARASUMAN), entity);
         entity->posX.i.hi = 128 - g_Tilemap.scrollX.i.hi;
         entity->posY.i.hi = 176 - g_Tilemap.scrollY.i.hi;
         // fallthrough
@@ -40,12 +40,12 @@ void EntityBossDoorTrigger(Entity* self) {
 
     case 2:
         entity = self + 1;
-        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(BOSS_DOORS), entity);
+        CreateEntityFromCurrentEntity(E_ID(BOSS_DOORS), entity);
         entity->posX.i.hi = -8 - g_Tilemap.scrollX.i.hi;
         entity->posY.i.hi = 128 - g_Tilemap.scrollY.i.hi;
         entity->params = 0;
         entity = self + 2;
-        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(BOSS_DOORS), entity);
+        CreateEntityFromCurrentEntity(E_ID(BOSS_DOORS), entity);
         entity->posX.i.hi = 264 - g_Tilemap.scrollX.i.hi;
         entity->posY.i.hi = 128 - g_Tilemap.scrollY.i.hi;
         entity->params = 1;
@@ -82,11 +82,9 @@ void EntityBossDoorTrigger(Entity* self) {
         break;
     case 6:
         if (D_us_80181138 & 4) {
-            entity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
+            entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)
-                (E_ID(LIFE_UP_SPAWN), self, entity);
+                CreateEntityFromEntity(E_ID(LIFE_UP_SPAWN), self, entity);
                 entity->posX.i.hi = 128;
                 entity->posY.i.hi = 128;
                 entity->params = 7;
@@ -125,7 +123,7 @@ void EntityBossDoors(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitEnvironment);
+        InitializeEntity(g_EInitEnvironment);
         self->animCurFrame = 7;
         self->zPriority = 0x78;
         break;
@@ -137,21 +135,20 @@ void EntityBossDoors(Entity* self) {
         break;
 
     case 2:
-        OVL_EXPORT(GetPlayerCollisionWith)(self, 8, 32, 5);
+        GetPlayerCollisionWith(self, 8, 32, 5);
         if (self->params) {
             self->velocityX = FIX(-0.5);
         } else {
             self->velocityX = FIX(0.5);
         }
 
-        OVL_EXPORT(MoveEntity)();
-        entity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+        MoveEntity();
+        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            OVL_EXPORT(CreateEntityFromEntity)
-            (E_INTENSE_EXPLOSION, self, entity);
+            CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
             entity->params = 0x10;
             entity->posY.i.hi += 32;
-            entity->posX.i.hi -= (OVL_EXPORT(Random)() & 7);
+            entity->posX.i.hi -= (Random() & 7);
         }
         if (!(g_Timer & 0xF)) {
             g_api.PlaySfx(SFX_STONE_MOVE_B);
@@ -206,14 +203,13 @@ void EntityBossDoors(Entity* self) {
         } else {
             self->velocityX = FIX(-0.75);
         }
-        OVL_EXPORT(MoveEntity)();
-        entity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+        MoveEntity();
+        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            OVL_EXPORT(CreateEntityFromEntity)
-            (E_INTENSE_EXPLOSION, self, entity);
+            CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
             entity->params = 0x10;
             entity->posY.i.hi += 32;
-            entity->posX.i.hi -= (OVL_EXPORT(Random)() & 7);
+            entity->posX.i.hi -= (Random() & 7);
         }
         offsetX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
         if (self->params) {
@@ -230,7 +226,7 @@ void EntityBossDoors(Entity* self) {
 static s32 BossDoorHelper(Entity* self) UNUSED {
     s32 offsetY;
 
-    OVL_EXPORT(MoveEntity)();
+    MoveEntity();
     g_CurrentEntity->velocityY += FIX(0.25);
     offsetY =
         g_CurrentEntity->posY.i.hi + self->posX.i.hi + g_Tilemap.scrollY.i.hi;

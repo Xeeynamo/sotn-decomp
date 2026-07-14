@@ -1,7 +1,7 @@
 // Holds flags that maintain the persistant "state" of the castle.
 // These cover a wide range of uses, but what they have in common is a need to
 // track something across rooms or stages.
-extern u8 g_CastleFlags[0x300]; // starts at 0x8003BDEC
+extern GAME_IMPORT u8 g_CastleFlags[0x300]; // starts at 0x8003BDEC
 
 // All offsets and values included for organizational convenience.
 typedef enum {

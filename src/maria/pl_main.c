@@ -130,7 +130,7 @@ void MarInit(s16 initParam) {
     DestroyEntity(g_CurrentEntity);
     PLAYER.posX.val = FIX(32);
     PLAYER.posY.val = FIX(32);
-    PLAYER.animSet = ANIMSET_OVL(0x10);
+    PLAYER.animSet = ANIMSET_PL_MARIA;
     PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter;
     PLAYER.facingLeft = 0;
     PLAYER.palette = PAL_MARIA;
@@ -172,7 +172,7 @@ void MarInit(s16 initParam) {
     *spriteptr = (SpriteParts*)wpn_doll_spr; // ANIMSET_WPN_DOLL
     for (e = &g_Entities[E_AFTERIMAGE_1], i = 0; i < 3; i++, e++) {
         DestroyEntity(e);
-        e->animSet = ANIMSET_OVL(0x10);
+        e->animSet = ANIMSET_PL_MARIA;
         e->unk5A = i + 1;
         e->palette = PAL_MARIA;
         e->flags = FLAG_UNK_20000 | FLAG_POS_CAMERA_LOCKED;

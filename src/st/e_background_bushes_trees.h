@@ -3,8 +3,8 @@
 #define UVWH(u, v, w, h) u, v, w, h
 
 #if defined(INVERTED_STAGE)
-extern EInit OVL_EXPORT(EInitInteractable);
-#define E_INIT OVL_EXPORT(EInitInteractable)
+extern EInit g_EInitInteractable;
+#define E_INIT g_EInitInteractable
 #define PLUSMINUS +
 #define GEOMOFFY 0x68
 #else
@@ -58,7 +58,7 @@ void EntityBackgroundBushes(Entity* self) {
     MATRIX m;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(E_INIT);
+        InitializeEntity(E_INIT);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x48);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -168,7 +168,7 @@ void EntityBackgroundTrees(Entity* self) {
     s32 posY;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(E_INIT);
+        InitializeEntity(E_INIT);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 32);
         if (primIndex == -1) {
             DestroyEntity(self);

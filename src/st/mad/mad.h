@@ -9,8 +9,9 @@
 #define VERSION_BETA
 #define INCLUDE_ASM_OLD
 
+#include "stage.h"
+
 #define OVL_EXPORT(x) MAD_##x
-#include <stage.h>
 
 // This is 0xA9 in all other overlays, there may be an underlying reason.
 // For now it's just an overriding define.
@@ -42,10 +43,9 @@ void CreateEntitiesToTheRight(s16);
 void CreateEntitiesToTheLeft(s16);
 void CreateEntitiesAbove(s16);
 void CreateEntitiesBelow(s16);
-void OVL_EXPORT(CreateEntityFromCurrentEntity)(u16, Entity*);
+void CreateEntityFromCurrentEntity(u16, Entity*);
 u8 func_80192914(s16 arg0, s16 arg1);
-void OVL_EXPORT(CreateEntityFromEntity)(
-    u16 entityId, Entity* ent1, Entity* ent2);
+void CreateEntityFromEntity(u16 entityId, Entity* ent1, Entity* ent2);
 void func_8019344C(void);
 void EntityExplosionVariants(Entity* entity);
 void EntityGreyPuff(Entity* entity);
@@ -54,9 +54,9 @@ void EntityGreyPuff(Entity* entity);
 extern s32 D_80096ED0_mad;
 
 // ST/MAD
-extern EInit OVL_EXPORT(EInitLockCamera);
+extern EInit g_EInitLockCamera;
 extern EInit OVL_EXPORT(EInitObtainable);
-extern EInit OVL_EXPORT(EInitCommon);
+extern EInit g_EInitCommon;
 extern u16 D_80180538[];
 extern ObjInit D_8018056C[];
 extern u8 D_801805B4[];
@@ -70,7 +70,7 @@ extern s32 D_80180EC4[];
 extern u16 D_80180FBC[];
 extern s32 D_80180FCC[];
 extern ObjInit D_801810F4[];
-extern EInit OVL_EXPORT(EInitParticle);
+extern EInit g_EInitParticle;
 extern u8 g_UnkEntityAnimData[];
 // extern u16 g_testCollEnemyLookup[];
 // extern u8 g_testCollLuckCutoff[];

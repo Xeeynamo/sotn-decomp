@@ -9,17 +9,17 @@ extern RoomDef OVL_EXPORT(rooms_layers)[];
 extern u_long** OVL_EXPORT(gfxBanks)[];
 
 AbbreviatedOverlay OVL_EXPORT(Overlay) = {
-    .Update = OVL_EXPORT(Update),
-    .HitDetection = OVL_EXPORT(HitDetection),
-    .UpdateRoomPosition = OVL_EXPORT(UpdateRoomPosition),
-    .InitRoomEntities = OVL_EXPORT(InitRoomEntities),
+    .Update = Update,
+    .HitDetection = HitDetection,
+    .UpdateRoomPosition = UpdateRoomPosition,
+    .InitRoomEntities = InitRoomEntities,
     .rooms = OVL_EXPORT(rooms),
     .spriteBanks = (SpriteParts**)OVL_EXPORT(spriteBanks),
     .cluts = OVL_EXPORT(cluts),
     .objLayoutHorizontal = &OBJ_LAYOUT_HORIZONTAL,
     .tileLayers = OVL_EXPORT(rooms_layers),
     .gfxBanks = (GfxBank**)OVL_EXPORT(gfxBanks),
-    .UpdateStageEntities = OVL_EXPORT(UpdateStageEntities),
+    .UpdateStageEntities = UpdateStageEntities,
 };
 
 #ifdef VERSION_US

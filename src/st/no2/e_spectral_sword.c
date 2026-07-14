@@ -40,12 +40,12 @@ void EntitySpectralSword(Entity* self) {
 
     if (self->flags & FLAG_DEAD) {
         if (self->step < 8) {
-            OVL_EXPORT(SetStep)(8);
+            SetStep(8);
         }
     }
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitSpectralSword);
+        InitializeEntity(g_EInitSpectralSword);
         self->animCurFrame = 1;
 #ifdef VERSION_PSP
         self->blendMode |= BLEND_TRANSP | BLEND_ADD;
@@ -70,7 +70,7 @@ void EntitySpectralSword(Entity* self) {
         prim->drawMode = DRAW_HIDE | DRAW_UNK02;
         ent = self + 1;
         for (i = 1; i < 16; i++, ent++) {
-            OVL_EXPORT(CreateEntityFromEntity)(E_POLTERGEIST, self, ent);
+            CreateEntityFromEntity(E_POLTERGEIST, self, ent);
             ent->posY.i.hi = 0x120;
             ent->posY.i.hi = 0x580;
             ent->params = i;
@@ -82,9 +82,8 @@ void EntitySpectralSword(Entity* self) {
         break;
 
     case 1:
-        if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x40 &&
-            OVL_EXPORT(GetDistanceToPlayerY)() < 0x60) {
-            OVL_EXPORT(SetStep)(2);
+        if (GetDistanceToPlayerX() < 0x40 && GetDistanceToPlayerY() < 0x60) {
+            SetStep(2);
         }
         break;
 
@@ -102,14 +101,14 @@ void EntitySpectralSword(Entity* self) {
             /* fallthrough */
         case 1:
             if (!--self->ext.spectralSword.timer) {
-                OVL_EXPORT(SetStep)(4);
+                SetStep(4);
             }
             break;
         }
         break;
 
     case 3:
-        OVL_EXPORT(SetStep)(4);
+        SetStep(4);
         break;
 
     case 4:
@@ -126,7 +125,7 @@ void EntitySpectralSword(Entity* self) {
             self->step_s++;
             /* fallthrough */
         case 1:
-            angle = OVL_EXPORT(Random)() * 8;
+            angle = Random() * 8;
             dx = (rcos(angle) * 0x60) >> 0xC;
             dy = (rsin(angle) * -0x60) >> 0xC;
             ent = &PLAYER;
@@ -149,17 +148,16 @@ void EntitySpectralSword(Entity* self) {
                 self->step_s = 1;
             }
             if (!--self->ext.spectralSword.moveTimer) {
-                OVL_EXPORT(SetStep)(5);
+                SetStep(5);
             }
             break;
         }
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         prim = self->ext.spectralSword.prim;
         dx = prim->x0 - self->posX.i.hi;
         dy = prim->y0 - self->posY.i.hi;
         angle = ratan2(dy, dx);
-        angle = OVL_EXPORT(LimitAngleChange)(
-            0x20, self->ext.spectralSword.angle, angle);
+        angle = LimitAngleChange(0x20, self->ext.spectralSword.angle, angle);
         self->velocityX = rcos(angle) * 0x10;
         self->velocityY = rsin(angle) * 0x10;
         self->ext.spectralSword.angle = angle;
@@ -180,10 +178,10 @@ void EntitySpectralSword(Entity* self) {
             /* fallthrough */
         case 1:
             if (!--self->ext.spectralSword.timer) {
-                if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x40) {
+                if (GetDistanceToPlayerX() < 0x40) {
                     self->step_s++;
                 } else {
-                    OVL_EXPORT(SetStep)(4);
+                    SetStep(4);
                 }
             }
             break;
@@ -223,11 +221,11 @@ void EntitySpectralSword(Entity* self) {
 
         case 4:
             if (!--self->ext.spectralSword.timer) {
-                OVL_EXPORT(SetStep)(4);
+                SetStep(4);
             }
             break;
         }
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         ent = &PLAYER;
         dx = 0x80;
         dy = ent->posY.i.hi - 0x60;
@@ -259,14 +257,13 @@ void EntitySpectralSword(Entity* self) {
             break;
 
         case 1:
-            OVL_EXPORT(MoveEntity)();
+            MoveEntity();
             self->velocityY += FIX(3.0 / 32);
             self->rotate -= 4;
             if ((g_Timer & 7) == 0) {
-                ent =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+                ent = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (ent != NULL) {
-                    OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, ent);
+                    CreateEntityFromEntity(E_EXPLOSION, self, ent);
                     ent->params = 3;
                 }
             }
@@ -387,9 +384,9 @@ void EntitySpectralSword(Entity* self) {
             }
         }
         if ((g_Timer & 0xF) == 0) {
-            ent = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            ent = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (ent != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)(E_UNK_3F, self, ent);
+                CreateEntityFromEntity(E_UNK_3F, self, ent);
                 ent->ext.et_801CEB08.unk80 = self;
             }
         }
@@ -400,7 +397,7 @@ void func_us_801CEB08(Entity* self) {
     Entity* tempEntity;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(D_us_8018097C);
+        InitializeEntity(D_us_8018097C);
         self->animCurFrame = 1;
         self->palette += 2;
         self->drawFlags |= ENTITY_OPACITY | ENTITY_SCALEY | ENTITY_SCALEX;
@@ -428,11 +425,11 @@ void EntityPoltergeist(Entity* self) {
     s8* hitboxPtr;
 
     if ((self->flags & FLAG_DEAD) && self->step < 16) {
-        OVL_EXPORT(SetStep)(16);
+        SetStep(16);
     }
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitPoltergeist);
+        InitializeEntity(g_EInitPoltergeist);
         self->animCurFrame = self->params + 1;
         self->drawFlags |= ENTITY_ROTATE;
         hitboxPtr = D_us_8018336C;
@@ -449,12 +446,12 @@ void EntityPoltergeist(Entity* self) {
     case 1:
         if (self->ext.spectralSword.weaponIndex) {
             self->ext.spectralSword.weaponIndex = 0;
-            OVL_EXPORT(SetStep)(3);
+            SetStep(3);
         }
         break;
 
     case 2:
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         StepTowards(&self->rotate, 0, 8);
         pos = &self->ext.spectralSword.weaponPos;
         dx = pos->x.i.hi - self->posX.i.hi;
@@ -475,7 +472,7 @@ void EntityPoltergeist(Entity* self) {
         if (self->ext.spectralSword.weaponIndex) {
             PlaySfxPositional(SFX_BONE_SWORD_SWISH_B);
             self->ext.spectralSword.weaponIndex = 0;
-            OVL_EXPORT(SetStep)(3);
+            SetStep(3);
         }
         break;
 
@@ -483,7 +480,7 @@ void EntityPoltergeist(Entity* self) {
         switch (self->step_s) {
         case 0:
             tempEntity = &PLAYER;
-            angle = OVL_EXPORT(GetAngleBetweenEntities)(self, tempEntity);
+            angle = GetAngleBetweenEntities(self, tempEntity);
             self->ext.spectralSword.angle = angle + 0x1000;
             self->step_s++;
             /* fallthrough */
@@ -504,12 +501,12 @@ void EntityPoltergeist(Entity* self) {
             self->step_s++;
             /* fallthrough */
         case 3:
-            OVL_EXPORT(MoveEntity)();
+            MoveEntity();
             if (!--self->ext.spectralSword.timer) {
-                OVL_EXPORT(SetStep)(2);
+                SetStep(2);
             }
             if (self->posY.i.hi > 0xE0) {
-                OVL_EXPORT(SetStep)(2);
+                SetStep(2);
             }
             break;
         }
@@ -525,14 +522,12 @@ void EntityPoltergeist(Entity* self) {
             self->step_s++;
             /* fallthrough */
         case 1:
-            OVL_EXPORT(MoveEntity)();
+            MoveEntity();
             self->velocityY += FIX(0.125);
             if ((g_Timer & 7) == 0) {
-                tempEntity =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+                tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    OVL_EXPORT(CreateEntityFromEntity)
-                    (E_EXPLOSION, self, tempEntity);
+                    CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
                     tempEntity->params = 1;
                 }
             }

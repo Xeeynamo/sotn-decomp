@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rcat.h"
 
-extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit g_EInitInteractable;
 
 #ifdef VERSION_PSP
 extern s32 E_ID(UNK_21);
@@ -16,7 +16,7 @@ void EntitySpikeRoomDarkness(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         if (!g_CastleFlags[RCAT_SPIKE_ROOM_LIT]) {
             entity = &PLAYER;
             entity->zPriority = 0xD8;
@@ -85,11 +85,9 @@ void EntitySpikeRoomDarkness(Entity* self) {
             if (entity->entityId == 0x34 && !entity->ext.spikes.echoCooldown) {
                 // If user has initiated the echo and we're not on cooldown,
                 // spawn the bounce entity func_us_801BACF4
-                newEntity =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+                newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    OVL_EXPORT(CreateEntityFromCurrentEntity)
-                    (E_ID(UNK_21), newEntity);
+                    CreateEntityFromCurrentEntity(E_ID(UNK_21), newEntity);
                     newEntity->posX.i.hi = entity->posX.i.hi;
                     newEntity->posY.i.hi = entity->posY.i.hi;
                     newEntity->facingLeft = entity->facingLeft;
@@ -97,11 +95,9 @@ void EntitySpikeRoomDarkness(Entity* self) {
                     newEntity->params = 0;
                 }
 
-                newEntity =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+                newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    OVL_EXPORT(CreateEntityFromCurrentEntity)
-                    (E_ID(UNK_21), newEntity);
+                    CreateEntityFromCurrentEntity(E_ID(UNK_21), newEntity);
                     newEntity->posX.i.hi = entity->posX.i.hi;
                     newEntity->posY.i.hi = entity->posY.i.hi;
                     newEntity->facingLeft = entity->facingLeft;

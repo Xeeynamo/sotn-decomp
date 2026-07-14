@@ -9,7 +9,7 @@
 #define SEALED_DOOR_CLUT SEALED_DOOR_PALETTE - 1
 #endif
 
-extern EInit OVL_EXPORT(EInitCommon);
+extern EInit g_EInitCommon;
 
 static u8 g_eBlueDoorUV[][8] = {
     {0x03, 0x0D, 0x03, 0x0D, 0x03, 0x03, 0x45, 0x45},
@@ -80,7 +80,7 @@ void EntitySealedDoor(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         self->animSet = 0;
         self->animCurFrame = 1;
         self->zPriority = PLAYER.zPriority - 0x20;
@@ -160,7 +160,7 @@ void EntitySealedDoor(Entity* self) {
             break;
         }
     case 1:
-        OVL_EXPORT(GetPlayerCollisionWith)(self, 8, 32, 5);
+        GetPlayerCollisionWith(self, 8, 32, 5);
         self->ext.sealedDoor.angle = 0xC00;
         for (prim = &g_PrimBuf[self->primIndex], i = 0; prim->next != NULL; i++,
             prim = prim->next) {
@@ -172,7 +172,7 @@ void EntitySealedDoor(Entity* self) {
         }
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
 
-        if (!(((PLAYER.facingLeft != OVL_EXPORT(GetSideToPlayer)()) & 1) ^ 1) &&
+        if (!(((PLAYER.facingLeft != GetSideToPlayer()) & 1) ^ 1) &&
             ((PLAYER.step == 25 && g_PlayableCharacter != PLAYER_ALUCARD) ||
              PLAYER.step == 1) &&
             SealedDoorIsNearPlayer(self)) {
@@ -181,8 +181,7 @@ void EntitySealedDoor(Entity* self) {
                 if (self->ext.sealedDoor.showedMessage) {
                     break;
                 }
-                messageBox =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+                messageBox = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (messageBox == NULL) {
                     break;
                 }
@@ -194,8 +193,7 @@ void EntitySealedDoor(Entity* self) {
 #endif
 
                 self->ext.sealedDoor.showedMessage = 1;
-                OVL_EXPORT(CreateEntityFromCurrentEntity)
-                (E_MESSAGE_BOX, messageBox);
+                CreateEntityFromCurrentEntity(E_MESSAGE_BOX, messageBox);
                 messageBox->posX.i.hi = 0x80;
                 messageBox->posY.i.hi = 0xB0;
                 messageBox->ext.messageBox.label = sealed_door_label;
@@ -216,8 +214,7 @@ void EntitySealedDoor(Entity* self) {
             self->animCurFrame = 0;
             g_Player.padSim = 0;
             g_Player.demo_timer = 2;
-            self->ext.sealedDoor.sideToPlayer =
-                (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+            self->ext.sealedDoor.sideToPlayer = (GetSideToPlayer() & 1) ^ 1;
             g_api.PlaySfx(SFX_DOOR_OPEN);
             self->step++;
         }

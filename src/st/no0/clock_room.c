@@ -166,7 +166,7 @@ void EntityClockRoomController(Entity* self) {
             return;
         }
 #ifndef VERSION_PSP
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
 #endif
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
@@ -180,7 +180,7 @@ void EntityClockRoomController(Entity* self) {
         prim->priority = 0x1F0;
         prim->drawMode = DRAW_HIDE;
 #ifdef VERSION_PSP
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
 #endif
 
         g_api.PlaySfx(SET_STOP_MUSIC);
@@ -205,7 +205,7 @@ void EntityClockRoomController(Entity* self) {
         // Create clock hands
         entity = self + 5;
         for (i = 0; i < 2; i++, entity++) {
-            OVL_EXPORT(CreateEntityFromCurrentEntity)(E_CLOCK_HANDS, entity);
+            CreateEntityFromCurrentEntity(E_CLOCK_HANDS, entity);
             entity->params = i;
         }
 #ifdef VERSION_PSP
@@ -217,14 +217,14 @@ void EntityClockRoomController(Entity* self) {
         // Create Birdcage doors
         entity = self + 7;
         for (i = 0; i < 2; i++, entity++) {
-            OVL_EXPORT(CreateEntityFromCurrentEntity)(E_BIRDCAGE_DOOR, entity);
+            CreateEntityFromCurrentEntity(E_BIRDCAGE_DOOR, entity);
             entity->params = i;
         }
         UpdateBirdcages(self, timer_minutes);
 
         // Shadow for the Bighorn sheep head on the center
         entity = self + 9;
-        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_CLOCK_ROOM_SHADOW, entity);
+        CreateEntityFromCurrentEntity(E_CLOCK_ROOM_SHADOW, entity);
         entity->animSet = ANIMSET_OVL(1);
         entity->animCurFrame = 23;
         entity->zPriority = 0x40;
@@ -236,21 +236,21 @@ void EntityClockRoomController(Entity* self) {
         // Create path blocking statues
         entity = self + 1;
         for (i = 0; i < 2; i++, entity++) {
-            OVL_EXPORT(CreateEntityFromCurrentEntity)(E_STATUE, entity);
+            CreateEntityFromCurrentEntity(E_STATUE, entity);
             entity->params = i;
         }
 
         // Create the gears that drive the statues
         entity = self + 12;
         for (i = 0; i < 2; i++, entity++) {
-            OVL_EXPORT(CreateEntityFromCurrentEntity)(E_STATUE_GEAR, entity);
+            CreateEntityFromCurrentEntity(E_STATUE_GEAR, entity);
             entity->params = i;
         }
 
         // Create the stones on the floor
         entity = self + 14;
         for (i = 0; i < 2; i++, entity++) {
-            OVL_EXPORT(CreateEntityFromCurrentEntity)(E_STONE_DOOR, entity);
+            CreateEntityFromCurrentEntity(E_STONE_DOOR, entity);
             entity->params = i;
         }
         break;
@@ -286,7 +286,7 @@ void EntityClockRoomController(Entity* self) {
                 if (i == ITEM_GOLD_RING || i == ITEM_SILVER_RING) {
                     i = g_Status.equipment[ACCESSORY_2_SLOT];
                     if (i == ITEM_GOLD_RING || i == ITEM_SILVER_RING) {
-                        OVL_EXPORT(SetStep)(2);
+                        SetStep(2);
                     }
                 }
             }
@@ -448,7 +448,7 @@ void EntityClockRoomController(Entity* self) {
             if (!--self->ext.clockRoom.unk88) {
                 g_CastleFlags[CEN_OPEN] = 1;
                 g_api.RevealSecretPassageAtPlayerPositionOnMap(CEN_OPEN);
-                OVL_EXPORT(SetStep)(3);
+                SetStep(3);
                 self->ext.clockRoom.unk88 = 0x140;
             }
         }
@@ -484,7 +484,7 @@ void EntityClockRoomController(Entity* self) {
         case 1:
             func_us_801CCAAC(self);
             if (self->ext.clockRoom.unk88 >= 0x200) {
-                OVL_EXPORT(SetStep)(1);
+                SetStep(1);
             }
         }
         break;

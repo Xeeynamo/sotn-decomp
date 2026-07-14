@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-u8 OVL_EXPORT(AnimateEntity)(u8 frames[], Entity* entity) {
+u8 AnimateEntity(u8 frames[], Entity* entity) {
     u16 flag;
     u16 currentFrameIndex;
     u8* currentFrame;

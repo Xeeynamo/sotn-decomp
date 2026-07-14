@@ -18,7 +18,7 @@ typedef struct {
 extern s32 E_ID(BELL);
 #endif
 
-extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit g_EInitInteractable;
 
 static SVECTOR vector_one_0 = {-16, 0, 0};
 static SVECTOR vector_one_1 = {16, 0, 0};
@@ -74,7 +74,7 @@ void EntityBell(Entity* self) {
     MATRIX mtx;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->zPriority = g_unkGraphicsStruct.g_zEntityCenter + 8;
         self->ext.bell.ringTimer = 0;
         bellParams = &bell_params[self->params];
@@ -362,9 +362,9 @@ void EntityBellSpawner(Entity* self) {
     s16* ptr = *bell_spawner_params;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         for (bell = self + 1, count = 0; count < 2; count++, bell++) {
-            OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(BELL), bell);
+            CreateEntityFromCurrentEntity(E_ID(BELL), bell);
             bell->posX.i.hi = *ptr++ - g_Tilemap.scrollX.i.hi;
             bell->posY.i.hi = *ptr++ - g_Tilemap.scrollY.i.hi;
             bell->params = *ptr++;

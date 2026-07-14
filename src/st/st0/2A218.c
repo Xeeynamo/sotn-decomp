@@ -61,7 +61,7 @@ void EntityCutscene(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitCutscene);
+        InitializeEntity(g_EInitCutscene);
         self->unk5A = 0x46;
         self->palette = PAL_RICHTER;
         break;
@@ -81,7 +81,7 @@ void EntityCutscene(Entity* self) {
                 g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 1;
                 g_Player.demo_timer = 255;
                 func_801AA218(posX);
-                OVL_EXPORT(SetStep)(2);
+                SetStep(2);
             }
         } else {
             if ((player->posX.i.hi + tilemap->scrollX.i.hi) < 0xE1) {
@@ -117,13 +117,13 @@ void EntityCutscene(Entity* self) {
         g_Player.demo_timer = 1;
         g_Player.padSim = 0;
         if (!--self->ext.utimer.t) {
-            OVL_EXPORT(SetStep)(4);
+            SetStep(4);
         }
         break;
 
     case 4:
         g_Player.demo_timer = 1;
-        if (OVL_EXPORT(AnimateEntity)(D_80180830, self) == 0) {
+        if (AnimateEntity(D_80180830, self) == 0) {
             self->step++;
             g_Tilemap.width = 0x100;
         }
@@ -137,15 +137,15 @@ void EntityCutscene(Entity* self) {
             player->animCurFrame = 0;
             self->animSet = ANIMSET_OVL(5);
             self->animCurFrame = 1;
-            OVL_EXPORT(SetStep)(6);
+            SetStep(6);
         }
         break;
 
     case 6:
         g_Player.demo_timer = 1;
-        if (OVL_EXPORT(AnimateEntity)(D_8018083C, self) == 0) {
+        if (AnimateEntity(D_8018083C, self) == 0) {
             if (OVL_EXPORT(CutsceneFlags) & 0x800) {
-                OVL_EXPORT(SetStep)(7);
+                SetStep(7);
             }
         }
         player->animCurFrame = 0;
@@ -153,9 +153,9 @@ void EntityCutscene(Entity* self) {
 
     case 7:
         g_Player.demo_timer = 1;
-        if (OVL_EXPORT(AnimateEntity)(D_8018084C, self) == 0) {
+        if (AnimateEntity(D_8018084C, self) == 0) {
             if (OVL_EXPORT(CutsceneFlags) & 0x1000) {
-                OVL_EXPORT(SetStep)(8);
+                SetStep(8);
             }
         }
         player->animCurFrame = 0;
@@ -163,9 +163,9 @@ void EntityCutscene(Entity* self) {
 
     case 8:
         g_Player.demo_timer = 1;
-        if (OVL_EXPORT(AnimateEntity)(D_8018085C, self) == 0) {
+        if (AnimateEntity(D_8018085C, self) == 0) {
             if (OVL_EXPORT(CutsceneFlags) & 0x2000) {
-                OVL_EXPORT(SetStep)(9);
+                SetStep(9);
             }
         }
         player->animCurFrame = 0;
@@ -173,9 +173,9 @@ void EntityCutscene(Entity* self) {
 
     case 9:
         g_Player.demo_timer = 1;
-        if (OVL_EXPORT(AnimateEntity)(D_80180864, self) == 0) {
+        if (AnimateEntity(D_80180864, self) == 0) {
             if (OVL_EXPORT(CutsceneFlags) & 0x4000) {
-                OVL_EXPORT(SetStep)(10);
+                SetStep(10);
             }
         }
         player->animCurFrame = 0;
@@ -183,9 +183,9 @@ void EntityCutscene(Entity* self) {
 
     case 10:
         g_Player.demo_timer = 1;
-        if (OVL_EXPORT(AnimateEntity)(D_8018086C, self) == 0) {
+        if (AnimateEntity(D_8018086C, self) == 0) {
             if (OVL_EXPORT(CutsceneFlags) & 0x8000) {
-                OVL_EXPORT(SetStep)(11);
+                SetStep(11);
             }
         }
         player->animCurFrame = 0;
@@ -193,9 +193,9 @@ void EntityCutscene(Entity* self) {
 
     case 11:
         g_Player.demo_timer = 1;
-        if (OVL_EXPORT(AnimateEntity)(D_8018087C, self) == 0) {
+        if (AnimateEntity(D_8018087C, self) == 0) {
             if (OVL_EXPORT(CutsceneFlags) & 0x10000) {
-                OVL_EXPORT(SetStep)(12);
+                SetStep(12);
             }
         }
         player->animCurFrame = 0;
@@ -203,9 +203,9 @@ void EntityCutscene(Entity* self) {
 
     case 12:
         g_Player.demo_timer = 1;
-        if (OVL_EXPORT(AnimateEntity)(D_80180884, self) == 0) {
+        if (AnimateEntity(D_80180884, self) == 0) {
             if (OVL_EXPORT(CutsceneFlags) & 0x20000) {
-                OVL_EXPORT(SetStep)(13);
+                SetStep(13);
             }
         }
         player->animCurFrame = 0;
@@ -213,9 +213,9 @@ void EntityCutscene(Entity* self) {
 
     case 13:
         g_Player.demo_timer = 1;
-        if (OVL_EXPORT(AnimateEntity)(D_8018088C, self) == 0) {
+        if (AnimateEntity(D_8018088C, self) == 0) {
             if (OVL_EXPORT(CutsceneFlags) & 0x40000) {
-                OVL_EXPORT(SetStep)(14);
+                SetStep(14);
             }
         }
         player->animCurFrame = 0;
@@ -224,10 +224,10 @@ void EntityCutscene(Entity* self) {
     case 14:
         g_Player.demo_timer = 1;
         player->animCurFrame = 0;
-        if (OVL_EXPORT(AnimateEntity)(D_80180894, self) == 0) {
+        if (AnimateEntity(D_80180894, self) == 0) {
             self->animCurFrame = 0;
             player->animCurFrame = 7;
-            OVL_EXPORT(SetStep)(15);
+            SetStep(15);
         }
         break;
 

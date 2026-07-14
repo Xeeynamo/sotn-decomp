@@ -71,7 +71,7 @@ void EntityClouds(Entity* self) {
     cloudData* cloudData;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         primIndex = g_api.func_800EDB58(PRIM_GT4, 0x60);
         if (primIndex == -1) {
             DestroyEntity(self);

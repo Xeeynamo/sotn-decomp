@@ -2,6 +2,8 @@
 #include "inc_asm.h"
 #include "sattypes.h"
 
+void PlaySfx(s32 sfxId);
+
 typedef struct {
     s32 delayFrames;
     s32 angleStep;

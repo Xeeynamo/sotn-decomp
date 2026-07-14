@@ -52,18 +52,17 @@ static s16 sensors_special[] = {0, 20, 12, 0};
 static s16 sensor_move[] = {XY(-12, 16), XY(0, -16), XY(0, -16)};
 
 static void BoneScimitarAttackCheck(void) {
-    s32 temp = OVL_EXPORT(UnkCollisionFunc2)(sensors_special);
-    u16 temp2 = OVL_EXPORT(UnkCollisionFunc)(sensor_move, 3);
+    s32 temp = UnkCollisionFunc2(sensors_special);
+    u16 temp2 = UnkCollisionFunc(sensor_move, 3);
 
     if (temp == 0x80 || temp2 & 2) {
-        OVL_EXPORT(SetStep)(BONE_SCIMITAR_JUMP);
+        SetStep(BONE_SCIMITAR_JUMP);
         return;
     }
     if (!g_CurrentEntity->ext.skeleton.attackTimer) {
-        if (OVL_EXPORT(GetDistanceToPlayerX)() < 64) {
-            if (g_CurrentEntity->facingLeft ^
-                OVL_EXPORT(GetSideToPlayer)() & 1) {
-                OVL_EXPORT(SetStep)(BONE_SCIMITAR_ATTACK);
+        if (GetDistanceToPlayerX() < 64) {
+            if (g_CurrentEntity->facingLeft ^ GetSideToPlayer() & 1) {
+                SetStep(BONE_SCIMITAR_ATTACK);
             }
         }
     } else {
@@ -84,7 +83,7 @@ void EntityBoneScimitar(Entity* self) {
 
     switch (self->step) {
     case BONE_SCIMITAR_INIT:
-        OVL_EXPORT(InitializeEntity)(g_EInitBoneScimitar);
+        InitializeEntity(g_EInitBoneScimitar);
         if (self->params) {
             self->palette += self->params;
             self->flags &= ~(FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
@@ -103,17 +102,17 @@ void EntityBoneScimitar(Entity* self) {
         break;
 
     case BONE_SCIMITAR_IDLE:
-        if (OVL_EXPORT(UnkCollisionFunc3)(sensors_ground) != 0) {
+        if (UnkCollisionFunc3(sensors_ground) != 0) {
             self->step++;
             if (self->params) {
-                OVL_EXPORT(SetStep)(BONE_SCIMITAR_SPECIAL);
+                SetStep(BONE_SCIMITAR_SPECIAL);
             }
         }
         break;
 
     case BONE_SCIMITAR_WALK_TOWARDS_PLAYER:
-        if (OVL_EXPORT(AnimateEntity)(anim_walk, self) == 0) {
-            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+        if (AnimateEntity(anim_walk, self) == 0) {
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
         self->ext.skeleton.facingLeft = self->facingLeft;
 
@@ -123,15 +122,15 @@ void EntityBoneScimitar(Entity* self) {
             self->velocityX = FIX(-0.5);
         }
 
-        if (OVL_EXPORT(GetDistanceToPlayerX)() < 76) {
+        if (GetDistanceToPlayerX() < 76) {
             self->step = BONE_SCIMITAR_WALK_AWAY_FROM_PLAYER;
         }
         BoneScimitarAttackCheck();
         break;
 
     case BONE_SCIMITAR_WALK_AWAY_FROM_PLAYER:
-        if (OVL_EXPORT(AnimateEntity)(anim_walk_backwards, self) == 0) {
-            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+        if (AnimateEntity(anim_walk_backwards, self) == 0) {
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
         self->ext.skeleton.facingLeft = self->facingLeft ^ 1;
 
@@ -141,14 +140,14 @@ void EntityBoneScimitar(Entity* self) {
             self->velocityX = FIX(-0.5);
         }
 
-        if (OVL_EXPORT(GetDistanceToPlayerX)() > 92) {
+        if (GetDistanceToPlayerX() > 92) {
             self->step = BONE_SCIMITAR_WALK_TOWARDS_PLAYER;
         }
         BoneScimitarAttackCheck();
         break;
 
     case BONE_SCIMITAR_ATTACK:
-        tempByte = OVL_EXPORT(AnimateEntity)(anim_swing_sword, self);
+        tempByte = AnimateEntity(anim_swing_sword, self);
         if (self->animCurFrame == 12) {
             self->hitboxWidth = 20;
             self->hitboxHeight = 17;
@@ -166,12 +165,12 @@ void EntityBoneScimitar(Entity* self) {
         }
 
         if (!tempByte) {
-            OVL_EXPORT(SetStep)(BONE_SCIMITAR_WALK_AWAY_FROM_PLAYER);
+            SetStep(BONE_SCIMITAR_WALK_AWAY_FROM_PLAYER);
             tempByte = ++self->ext.skeleton.attackTimerIndex & 3;
             self->ext.skeleton.attackTimer =
                 attack_timer_cycles[self->params & 1][tempByte];
             if (self->params) {
-                OVL_EXPORT(SetStep)(BONE_SCIMITAR_SPECIAL);
+                SetStep(BONE_SCIMITAR_SPECIAL);
             }
         }
         break;
@@ -179,10 +178,10 @@ void EntityBoneScimitar(Entity* self) {
     case BONE_SCIMITAR_JUMP:
         switch (self->step_s) {
         case BONE_SCIMITAR_JUMPING:
-            if (!(OVL_EXPORT(AnimateEntity)(anim_jump, self) & 1)) {
+            if (!(AnimateEntity(anim_jump, self) & 1)) {
                 tempByte = self->ext.skeleton.facingLeft;
 
-                if ((OVL_EXPORT(Random)() & 3) == 0) {
+                if ((Random() & 3) == 0) {
                     tempByte ^= 1;
                 }
                 if (tempByte) {
@@ -199,22 +198,22 @@ void EntityBoneScimitar(Entity* self) {
             break;
 
         case BONE_SCIMITAR_IN_AIR:
-            if (OVL_EXPORT(UnkCollisionFunc3)(sensors_ground) != 0) {
+            if (UnkCollisionFunc3(sensors_ground) != 0) {
                 self->step_s++;
             }
-            OVL_EXPORT(CheckFieldCollision)(sensor_move, 2);
+            CheckFieldCollision(sensor_move, 2);
             break;
 
         case BONE_SCIMITAR_LAND:
-            if (OVL_EXPORT(AnimateEntity)(anim_land, self) == 0) {
-                OVL_EXPORT(SetStep)(BONE_SCIMITAR_WALK_AWAY_FROM_PLAYER);
+            if (AnimateEntity(anim_land, self) == 0) {
+                SetStep(BONE_SCIMITAR_WALK_AWAY_FROM_PLAYER);
             }
         }
         break;
 
     case BONE_SCIMITAR_SPECIAL:
-        self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
-        OVL_EXPORT(UnkCollisionFunc2)(sensors_special);
+        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        UnkCollisionFunc2(sensors_special);
         if (self->velocityX < 0) {
             leftTemp = true;
         } else {
@@ -222,9 +221,9 @@ void EntityBoneScimitar(Entity* self) {
         }
         leftTemp ^= self->facingLeft;
         if (leftTemp) {
-            OVL_EXPORT(AnimateEntity)(anim_walk, self);
+            AnimateEntity(anim_walk, self);
         } else {
-            OVL_EXPORT(AnimateEntity)(anim_walk_backwards, self);
+            AnimateEntity(anim_walk_backwards, self);
         }
 
         switch (self->step_s) {
@@ -252,22 +251,19 @@ void EntityBoneScimitar(Entity* self) {
             return;
         }
 
-        if (OVL_EXPORT(GetDistanceToPlayerX)() < 48 &&
-            OVL_EXPORT(GetDistanceToPlayerY)() < 32) {
-            OVL_EXPORT(SetStep)(BONE_SCIMITAR_ATTACK);
+        if (GetDistanceToPlayerX() < 48 && GetDistanceToPlayerY() < 32) {
+            SetStep(BONE_SCIMITAR_ATTACK);
         }
         break;
 
     case BONE_SCIMITAR_DESTROY:
         g_api.PlaySfx(SFX_SKELETON_DEATH_C);
         for (i = 0; i < LEN(dead_parts_pos_x); i++) {
-            newEntity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity == NULL) {
                 break;
             }
-            OVL_EXPORT(CreateEntityFromCurrentEntity)
-            (E_BONE_SCIMITAR_PARTS, newEntity);
+            CreateEntityFromCurrentEntity(E_BONE_SCIMITAR_PARTS, newEntity);
             newEntity->facingLeft = self->facingLeft;
             newEntity->params = i;
             newEntity->ext.skeleton.explosionTimer = dead_parts_selector[i];
@@ -286,8 +282,7 @@ void EntityBoneScimitar(Entity* self) {
         // If he's one of the special ones from entrance (first visit)
         if (self->params) {
             newEntity = self + 1;
-            OVL_EXPORT(CreateEntityFromEntity)
-            (E_EQUIP_ITEM_DROP, self, newEntity);
+            CreateEntityFromEntity(E_EQUIP_ITEM_DROP, self, newEntity);
             if (self->params & 1) {
                 newEntity->params = ITEM_SHORT_SWORD;
             } else {
@@ -306,17 +301,17 @@ void EntityBoneScimitarParts(Entity* self) {
     if (self->step) {
         if (--self->ext.skeleton.explosionTimer) {
             self->rotate += anim_bone_rot[self->params];
-            OVL_EXPORT(FallEntity)();
-            OVL_EXPORT(MoveEntity)();
+            FallEntity();
+            MoveEntity();
             return;
         }
         self->entityId = E_EXPLOSION;
-        self->pfnUpdate = OVL_EXPORT(EntityExplosion);
+        self->pfnUpdate = EntityExplosion;
         self->params = 0;
         self->step = 0;
         return;
     }
-    OVL_EXPORT(InitializeEntity)(g_EInitScimitarParts);
+    InitializeEntity(g_EInitScimitarParts);
     self->animCurFrame = (self->params & 0xFF) + 16;
     self->drawFlags = ENTITY_ROTATE;
 

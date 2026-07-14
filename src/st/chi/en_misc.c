@@ -12,13 +12,13 @@ void EntityGreyPuff(Entity* self);
 
 #define HEART_DROP_CASTLE_FLAG 0xB0
 
-// D_80181314: OVL_EXPORT(RelicOrbTexts)
-// D_80181318: OVL_EXPORT(RelicOrbTextBg1EY)
-// D_80181328: OVL_EXPORT(RelicOrbTextBg1SY)
-// D_80181338: OVL_EXPORT(RelicOrbTextBg2SY)
-// D_80181348: OVL_EXPORT(RelicOrbTextBg2EY)
-// D_80181358: OVL_EXPORT(RelicOrbSparkleX)
-// D_80181368: OVL_EXPORT(RelicOrbSparkleY)
+// D_80181314: g_RelicOrbTexts
+// D_80181318: g_RelicOrbTextBg1EY
+// D_80181328: g_RelicOrbTextBg1SY
+// D_80181338: g_RelicOrbTextBg2SY
+// D_80181348: g_RelicOrbTextBg2EY
+// D_80181358: g_RelicOrbSparkleX
+// D_80181368: g_RelicOrbSparkleY
 // func_801A3F58: [E_RELIC_ORB] EntityRelicOrb
 // func_801A4A28: [E_HEART_DROP] EntityHeartDrop
 // func_801A4B50: [E_SAVE_GAME_POPUP] EntityMessageBox

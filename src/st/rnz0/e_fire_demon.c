@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rnz0.h"
 
-extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit g_EInitInteractable;
 // Fire demon head and arms go back. Maybe prep for shooting fireball?
 static u8 anim_charge_unused_atk[] = {
     1, 13, 1, 14, 2, 16, 8, 2, 10, 3, 10, 4, 10, 5, 10, 6, 255, 0};
@@ -26,7 +26,7 @@ static u16 unusedEntAnimDurations[] = {16, 24, 42, 46};
 
 void EntityFireDemonFlames(Entity* self) {
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = 2;
         self->animCurFrame = unusedEntAnimStarts[self->params & 0xF];
         self->velocityY = unusedEntYvels[self->params & 0xF];
@@ -181,7 +181,7 @@ void EntityFireDemonFireball(Entity* self) {
     ((u16*)&D_8006C384)[3] = self->step; // what is this madness
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitFireDemonFireball);
+        InitializeEntity(g_EInitFireDemonFireball);
         self->animCurFrame = 0;
         angle = 0x600;
         if (self->facingLeft) {
@@ -234,7 +234,7 @@ void EntityFireDemonFireball(Entity* self) {
         }
         self->ext.fireDemon.primA4 = NULL;
     case 1:
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         self->ext.fireDemon.timer++;
         prim = self->ext.prim;
         if (!(self->ext.fireDemon.timer % 2)) {
@@ -259,11 +259,9 @@ void EntityFireDemonFireball(Entity* self) {
         yVar = self->posY.i.hi;
         g_api.CheckCollision(xVar, yVar, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
-            explosion =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            explosion = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (explosion != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)
-                (E_EXPLOSION, self, explosion);
+                CreateEntityFromEntity(E_EXPLOSION, self, explosion);
                 explosion->params = EXPLOSION_UNK_19;
             }
             self->posY.i.hi += collider.unk18;
@@ -434,15 +432,12 @@ void EntityFireDemonFireball(Entity* self) {
     if (self->ext.fireDemon.unkA0) {
         for (xVar = self->ext.fireDemon.unk9C.xVars[0];
              xVar < self->ext.fireDemon.unk9C.xVars[1]; xVar += 8) {
-            if (!(OVL_EXPORT(Random)() & 3)) {
-                explosion =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            if (!(Random() & 3)) {
+                explosion = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (explosion != NULL) {
-                    OVL_EXPORT(CreateEntityFromEntity)
-                    (E_EXPLOSION, self, explosion);
+                    CreateEntityFromEntity(E_EXPLOSION, self, explosion);
                     explosion->posX.i.hi += xVar;
-                    explosion->posY.i.hi +=
-                        (((OVL_EXPORT(Random)() & 3) * 2) + 6);
+                    explosion->posY.i.hi += (((Random() & 3) * 2) + 6);
                     explosion->params = 0x5F00;
                 }
             }
@@ -465,7 +460,7 @@ void ent20Helper1(Primitive* prim) {
         return;
     case 1:
         prim->drawMode = DRAW_DEFAULT;
-        FD_NEXT->unk10 = 0x7000 - ((OVL_EXPORT(Random)() & 7) << 0xD);
+        FD_NEXT->unk10 = 0x7000 - ((Random() & 7) << 0xD);
         FD_NEXT->unk14 = FIX(-4);
         FD_NEXT->unk28++;
         return;
@@ -512,7 +507,7 @@ void ent20Helper2(Primitive* prim) {
 
     case 1:
         prim->drawMode = DRAW_DEFAULT;
-        LOW(prim->x2) = 0x8000 - (OVL_EXPORT(Random)() << 8);
+        LOW(prim->x2) = 0x8000 - (Random() << 8);
         LOW(prim->x3) = -0x40000;
         prim->g3++;
         break;
@@ -565,7 +560,7 @@ void EntityFireDemonPopoutEffect(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         primIndex = g_api.func_800EDB58(0x11, 0x42);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
@@ -644,13 +639,13 @@ void EntityFireDemonPopoutEffect(Entity* self) {
                 prim->type = PRIM_GT4;
                 prim->tpage = 0xA;
                 prim->clut = 0x9B;
-                prim->u0 = ((OVL_EXPORT(Random)() & 3) * 0x10);
-                prim->u1 = prim->u0 + (OVL_EXPORT(Random)() & 7) + 8;
+                prim->u0 = ((Random() & 3) * 0x10);
+                prim->u1 = prim->u0 + (Random() & 7) + 8;
                 prim->u2 = prim->u0;
                 prim->u3 = prim->u1;
-                prim->v0 = (((OVL_EXPORT(Random)() & 2) * 0x10) + 0x20);
+                prim->v0 = (((Random() & 2) * 0x10) + 0x20);
                 prim->v1 = prim->v0;
-                prim->v2 = prim->v0 + (OVL_EXPORT(Random)() & 7) + 8;
+                prim->v2 = prim->v0 + (Random() & 7) + 8;
                 prim->v3 = prim->v2;
                 FD_NEXT->unk20 = prim->u1 - prim->u0 + 1;
                 FD_NEXT->unk22 = prim->v2 - prim->v0 + 1;
@@ -704,11 +699,9 @@ void EntityFireDemonPopoutEffect(Entity* self) {
         prim->drawMode = DRAW_DEFAULT;
         if ((self->ext.fireDemon.timer % 8 == 0) &&
             (self->ext.fireDemon.timer < 32)) {
-            otherEnt =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            otherEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (otherEnt != NULL) {
-                OVL_EXPORT(CreateEntityFromCurrentEntity)
-                (E_FD_FLAMES, otherEnt);
+                CreateEntityFromCurrentEntity(E_FD_FLAMES, otherEnt);
                 otherEnt->params = 0x13;
                 otherEnt->zPriority = 0x72;
                 otherEnt->params += 0x7200;
@@ -768,11 +761,11 @@ void EntityFireDemon(Entity* self) {
     if ((self->flags & FLAG_DEAD) && ((self->step) < 0x10)) {
         PlaySfxPositional(SFX_UNK_RNZ0_711);
         self->hitboxState = 0;
-        OVL_EXPORT(SetStep)(FIRE_DEMON_DEAD);
+        SetStep(FIRE_DEMON_DEAD);
     }
     switch (self->step) {
     case FIRE_DEMON_INIT:
-        OVL_EXPORT(InitializeEntity)(g_EInitFireDemon);
+        InitializeEntity(g_EInitFireDemon);
         self->hitboxState = 0;
         self->ext.fireDemon.zPriority = self->zPriority;
         self->zPriority = 0x6E;
@@ -784,7 +777,7 @@ void EntityFireDemon(Entity* self) {
         self->hitboxState = 3;
         self->zPriority = self->ext.fireDemon.zPriority;
         self->animCurFrame = 3;
-        OVL_EXPORT(SetStep)(FIRE_DEMON_IDLE);
+        SetStep(FIRE_DEMON_IDLE);
         if (self->params & PARAM_TYPE15) {
             self->palette = PAL_FLAG(SECONDARY_PAL);
             self->blendMode = BLEND_ADD | BLEND_TRANSP;
@@ -792,7 +785,7 @@ void EntityFireDemon(Entity* self) {
             self->opacity = 0x60;
             self->ext.fireDemon.timer = 0x60;
             self->flags |= FLAG_UNK_00200000 | FLAG_UNK_2000;
-            OVL_EXPORT(SetStep)(FIRE_DEMON_TYPE15);
+            SetStep(FIRE_DEMON_TYPE15);
         }
         if (self->params & 0x100) {
             self->palette = PAL_FLAG(PAL_FIREDEMON_15E);
@@ -801,14 +794,14 @@ void EntityFireDemon(Entity* self) {
             self->ext.fireDemon.timer = 0x20;
             self->zPriority -= 1;
             self->flags |= FLAG_UNK_00200000 | FLAG_UNK_2000;
-            OVL_EXPORT(SetStep)(FIRE_DEMON_TYPE14);
+            SetStep(FIRE_DEMON_TYPE14);
         }
         break;
     // Unused. Fire demon originally was supposed to lurk
     // underground and pop out when the player gets close!
     case FIRE_DEMON_HIDE:
-        self->facingLeft = ((OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1);
-        if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x40) {
+        self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
+        if (GetDistanceToPlayerX() < 0x40) {
             self->step++;
         }
         break;
@@ -824,9 +817,9 @@ void EntityFireDemon(Entity* self) {
             }
             self->velocityY = FIX(-8.5);
             self->ext.fireDemon.accelerationY = 0;
-            other = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            other = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (other != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)(E_FIRE_DEMON, self, other);
+                CreateEntityFromEntity(E_FIRE_DEMON, self, other);
                 other->params |= PARAM_TYPE15;
                 other->ext.fireDemon.unk9C.otherEnt = self;
                 self->ext.fireDemon.unk9C.otherEnt = other;
@@ -840,18 +833,16 @@ void EntityFireDemon(Entity* self) {
             yVar = self->posY.i.hi - 0x20;
             g_api.CheckCollision(xVar, yVar, &sp7C, 0);
             if (!(sp7C.effects & EFFECT_SOLID)) {
-                other =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+                other = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (other != NULL) {
-                    OVL_EXPORT(CreateEntityFromEntity)
-                    (E_FD_POPOUT_EFFECT, self, other);
+                    CreateEntityFromEntity(E_FD_POPOUT_EFFECT, self, other);
                     other->posY.i.hi -= 0x18;
                 }
                 self->step_s++;
             }
             /* fallthrough */
         case 2:
-            OVL_EXPORT(MoveEntity)();
+            MoveEntity();
             self->velocityY += self->ext.fireDemon.accelerationY;
             self->ext.fireDemon.accelerationY += FIX(1.0 / 16);
             if (self->velocityY > 0) {
@@ -861,24 +852,24 @@ void EntityFireDemon(Entity* self) {
             }
             break;
         case 3:
-            if (OVL_EXPORT(UnkCollisionFunc3)(sensors1) & 1) {
+            if (UnkCollisionFunc3(sensors1) & 1) {
                 self->ext.fireDemon.timer = 0x20;
-                OVL_EXPORT(SetSubStep)(4);
+                SetSubStep(4);
             } else {
                 self->velocityY -= FIX(0.1875);
             }
             break;
         case 4:
-            OVL_EXPORT(AnimateEntity)(anim_charge_fireball, self);
+            AnimateEntity(anim_charge_fireball, self);
             if (!--self->ext.fireDemon.timer) {
-                OVL_EXPORT(SetSubStep)(5);
+                SetSubStep(5);
             }
             break;
         case 5:
-            OVL_EXPORT(AnimateEntity)(anim_charge_unused_atk, self);
+            AnimateEntity(anim_charge_unused_atk, self);
             self->opacity++;
             if (self->opacity > 128) {
-                OVL_EXPORT(SetStep)(FIRE_DEMON_IDLE);
+                SetStep(FIRE_DEMON_IDLE);
                 self->drawFlags = ENTITY_DEFAULT;
             }
             break;
@@ -892,35 +883,35 @@ void EntityFireDemon(Entity* self) {
             self->ext.fireDemon.timer = 0x80;
             self->step_s++;
         }
-        OVL_EXPORT(AnimateEntity)(anim_idle, self);
+        AnimateEntity(anim_idle, self);
         if (!--self->ext.fireDemon.timer) {
             self->zPriority = self->ext.fireDemon.zPriority;
             self->ext.fireDemon.timer = 0x80;
-            OVL_EXPORT(SetStep)(FIRE_DEMON_APPROACH);
+            SetStep(FIRE_DEMON_APPROACH);
         }
         break;
     case FIRE_DEMON_APPROACH:
         var_s2 = 0x10;
         if (!self->step_s) {
-            self->facingLeft = ((OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1);
+            self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
             self->velocityX = FIX(-0.25);
             if (self->facingLeft) {
                 self->velocityX = -self->velocityX;
             }
             self->step_s++;
         }
-        if (!OVL_EXPORT(AnimateEntity)(anim_walk, self)) {
+        if (!AnimateEntity(anim_walk, self)) {
             PlaySfxPositional(SFX_STOMP_HARD_A);
             self->step_s = 0;
         }
-        var_s3 = OVL_EXPORT(UnkCollisionFunc2)(sensors2);
+        var_s3 = UnkCollisionFunc2(sensors2);
         if (var_s3 & 0x60) {
             self->velocityX = -self->velocityX;
         }
         if (self->ext.fireDemon.timer) {
             self->ext.fireDemon.timer--;
-        } else if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x80) {
-            OVL_EXPORT(SetStep)(FIRE_DEMON_SHOOT);
+        } else if (GetDistanceToPlayerX() < 0x80) {
+            SetStep(FIRE_DEMON_SHOOT);
         }
         break;
     case FIRE_DEMON_SHOOT:
@@ -929,12 +920,12 @@ void EntityFireDemon(Entity* self) {
         self->ext.fireDemon.palOffMin = 3;
         switch (self->step_s) {
         case 0:
-            self->facingLeft = ((OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1);
+            self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
             self->ext.fireDemon.timer = 0x80;
             self->step_s++;
             break;
         case 1:
-            OVL_EXPORT(AnimateEntity)(anim_charge_fireball, self);
+            AnimateEntity(anim_charge_fireball, self);
             var_s2 = (self->ext.fireDemon.timer >> 4);
             if ((var_s2) < 2) {
                 var_s2 = 2;
@@ -944,18 +935,16 @@ void EntityFireDemon(Entity* self) {
             }
             if (!--self->ext.fireDemon.timer) {
                 self->ext.fireDemon.timer = 0x20;
-                OVL_EXPORT(SetSubStep)(2);
+                SetSubStep(2);
             }
             break;
         case 2:
             var_s2 = 1;
-            OVL_EXPORT(AnimateEntity)(anim_windup_fireball, self);
+            AnimateEntity(anim_windup_fireball, self);
             if (!--self->ext.fireDemon.timer) {
-                other =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
+                other = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (other != NULL) {
-                    OVL_EXPORT(CreateEntityFromEntity)
-                    (E_FD_FIREBALL, self, other);
+                    CreateEntityFromEntity(E_FD_FIREBALL, self, other);
                     if (self->facingLeft) {
                         other->posX.i.hi += 0x10;
                     } else {
@@ -965,15 +954,15 @@ void EntityFireDemon(Entity* self) {
                     other->facingLeft = self->facingLeft;
                 }
                 PlaySfxPositional(SFX_EXPLODE_SMALL);
-                OVL_EXPORT(SetSubStep)(3);
+                SetSubStep(3);
             }
             break;
         case 3:
             var_s2 = 1;
             self->ext.fireDemon.palOffMin = 6;
             self->palette = 0x220;
-            if (!OVL_EXPORT(AnimateEntity)(anim_shoot_fireball, self)) {
-                OVL_EXPORT(SetStep)(FIRE_DEMON_IDLE);
+            if (!AnimateEntity(anim_shoot_fireball, self)) {
+                SetStep(FIRE_DEMON_IDLE);
             }
             break;
         }
@@ -1043,9 +1032,9 @@ void EntityFireDemon(Entity* self) {
             prim->priority = self->zPriority;
             prim->drawMode =
                 DRAW_UNK_40 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
-            other = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            other = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (other != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)(E_FIRE_DEMON, self, other);
+                CreateEntityFromEntity(E_FIRE_DEMON, self, other);
                 other->params |= 0x100;
                 other->params |= self->animCurFrame;
                 other->facingLeft = self->facingLeft;
@@ -1084,17 +1073,14 @@ void EntityFireDemon(Entity* self) {
                 PlaySfxPositional(SFX_EXPLODE_FAST_A);
             }
             if (var_s3) {
-                other =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+                other = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (other != NULL) {
-                    OVL_EXPORT(CreateEntityFromCurrentEntity)
-                    (E_FD_FLAMES, other);
+                    CreateEntityFromCurrentEntity(E_FD_FLAMES, other);
                     other->params = 0x22;
                     other->params += 0xD500;
                     other->posX.i.hi =
-                        self->posX.i.hi + ((OVL_EXPORT(Random)() & 3) * 8) - 12;
-                    other->posY.i.hi =
-                        0x100 - ((OVL_EXPORT(Random)() & 7) * 0x10);
+                        self->posX.i.hi + ((Random() & 3) * 8) - 12;
+                    other->posY.i.hi = 0x100 - ((Random() & 7) * 0x10);
                 }
             }
             break;
@@ -1107,13 +1093,13 @@ void EntityFireDemon(Entity* self) {
                 self->ext.fireDemon.timer = 0x40;
                 self->step_s++;
             }
-            other = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            other = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (other != NULL) {
-                OVL_EXPORT(CreateEntityFromCurrentEntity)(E_FD_FLAMES, other);
+                CreateEntityFromCurrentEntity(E_FD_FLAMES, other);
                 other->params = 0x20;
                 other->params += 0xD500;
                 other->posX.i.hi =
-                    (self->posX.i.hi + ((OVL_EXPORT(Random)() & 3) * 8)) - 0xC;
+                    (self->posX.i.hi + ((Random() & 3) * 8)) - 0xC;
                 other->posY.i.hi = (prim->v2) - 4;
             }
             break;

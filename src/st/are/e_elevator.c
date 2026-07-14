@@ -34,10 +34,10 @@ void EntityElevator(Entity* self) {
     s32 primIndex;
 
     self->hitboxOffY = 0x22;
-    playerCollision = OVL_EXPORT(GetPlayerCollisionWith)(self, 0x30, 4, 4);
+    playerCollision = GetPlayerCollisionWith(self, 0x30, 4, 4);
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitEnvironment);
+        InitializeEntity(g_EInitEnvironment);
         self->animCurFrame = 0x10;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x20);
         if (primIndex == -1) {
@@ -86,16 +86,16 @@ void EntityElevator(Entity* self) {
             self->posY.i.hi = current_position - g_Tilemap.scrollY.i.hi - 0x100;
         }
 
-        OVL_EXPORT(SetStep)(1);
+        SetStep(1);
         if (targetPosition < self->posY.i.hi) {
-            OVL_EXPORT(SetStep)(3);
+            SetStep(3);
             if (!self->params) {
                 self->posY.i.hi -= 0x18;
             }
         }
 
         if (self->posY.i.hi < targetPosition) {
-            OVL_EXPORT(SetStep)(4);
+            SetStep(4);
             if (self->params) {
                 self->posY.i.hi += 0x17;
             }
@@ -120,7 +120,7 @@ void EntityElevator(Entity* self) {
                 }
             }
         } else if (g_Player.vram_flag & TOUCHING_GROUND &&
-                   OVL_EXPORT(GetDistanceToPlayerX)() < 0x68) {
+                   GetDistanceToPlayerX() < 0x68) {
             if (!--self->ext.areElevator.unk80) {
                 player = &PLAYER;
                 targetPosition = player->posY.i.hi + g_Tilemap.scrollY.i.hi;
@@ -137,23 +137,23 @@ void EntityElevator(Entity* self) {
             targetPosition = target_positions[self->params][elevator_position] -
                              g_Tilemap.scrollY.i.hi;
             if (targetPosition < self->posY.i.hi) {
-                OVL_EXPORT(SetStep)(3);
+                SetStep(3);
             } else {
-                OVL_EXPORT(SetStep)(4);
+                SetStep(4);
             }
         }
 
         self->ext.areElevator.elevatorPosition = elevator_position;
         break;
     case 3:
-        OVL_EXPORT(AnimateEntity)(anim_elevator, self);
+        AnimateEntity(anim_elevator, self);
         self->posY.i.hi--;
         targetPosition = target_positions[self->params][elevator_position] -
                          g_Tilemap.scrollY.i.hi;
         if (self->posY.i.hi < targetPosition) {
             g_api.PlaySfx(SFX_LEVER_METAL_BANG);
             self->posY.i.hi = targetPosition;
-            OVL_EXPORT(SetStep)(1);
+            SetStep(1);
         } else {
             if (!(g_Timer & 0xF)) {
                 PlaySfxPositional(SFX_METAL_CLANG_A);
@@ -168,14 +168,14 @@ void EntityElevator(Entity* self) {
         }
         break;
     case 4:
-        OVL_EXPORT(AnimateEntity)(anim_elevator, self);
+        AnimateEntity(anim_elevator, self);
         self->posY.i.hi++;
         targetPosition = target_positions[self->params][elevator_position] -
                          g_Tilemap.scrollY.i.hi;
         if (targetPosition < self->posY.i.hi) {
             g_api.PlaySfx(SFX_LEVER_METAL_BANG);
             self->posY.i.hi = targetPosition;
-            OVL_EXPORT(SetStep)(1);
+            SetStep(1);
         } else {
             if (!(g_Timer & 0xF)) {
                 PlaySfxPositional(SFX_METAL_CLANG_A);
@@ -205,7 +205,7 @@ void EntityElevator(Entity* self) {
                 tileMapIndex += g_Tilemap.hSize * 0x10;
             }
 
-            OVL_EXPORT(SetStep)(1);
+            SetStep(1);
         }
         break;
     case 0xFF:
@@ -242,7 +242,7 @@ void EntityElevatorGates(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitEnvironment);
+        InitializeEntity(g_EInitEnvironment);
         self->animCurFrame = 0xF;
         self->zPriority = 0x69;
         if (self->params & 1) {
@@ -290,13 +290,13 @@ void EntityElevatorGates(Entity* self) {
 }
 
 void EntityElevatorSwitch(Entity* self) {
-    s32 collision = OVL_EXPORT(GetPlayerCollisionWith)(self, 8, 4, 4);
+    s32 collision = GetPlayerCollisionWith(self, 8, 4, 4);
     s32 worldPos;
     Entity* player;
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitEnvironment);
+        InitializeEntity(g_EInitEnvironment);
         self->animCurFrame = 9;
         self->zPriority = 0x69;
         if (g_CastleFlags[ARE_ELEVATOR_ACTIVATED]) {

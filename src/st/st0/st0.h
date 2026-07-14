@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#define STAGE_IS_ST0
-#define OVL_EXPORT(x) ST0_##x
-#include <stage.h>
+#include "stage.h"
 
 #undef STAGE
 #define STAGE STAGE_ST0
+
+#define STAGE_IS_ST0
+
+#define OVL_EXPORT(x) ST0_##x
 
 typedef enum EntityIDs {
     E_NONE,
@@ -45,15 +47,15 @@ typedef enum EntityIDs {
     E_DRACULA_UNK2E,
 } EntityIDs;
 
-void OVL_EXPORT(MoveEntity)();
-void OVL_EXPORT(EntityExplosion)(Entity*);
+void MoveEntity();
+void EntityExplosion(Entity*);
 void EntityExplosionVariants(Entity* entity);
 void EntityGreyPuff(Entity* entity);
 
 extern EInit OVL_EXPORT(EInitBreakable);
-extern EInit OVL_EXPORT(EInitParticle);
+extern EInit g_EInitParticle;
 extern EInit g_EInitCutscene;
-extern EInit OVL_EXPORT(EInitCommon);
+extern EInit g_EInitCommon;
 extern EInit g_EInit3DObject;
 extern EInit g_EInitDracula;
 extern EInit g_EInitDraculaFireball;

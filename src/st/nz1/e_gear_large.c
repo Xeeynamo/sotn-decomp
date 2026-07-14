@@ -12,7 +12,7 @@ void EntityGearSidewaysLarge(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitEnvironment);
+        InitializeEntity(g_EInitEnvironment);
         self->zPriority = 0x6C;
         self->hitboxState = 1;
         self->hitboxWidth = 8;
@@ -45,7 +45,7 @@ void EntityGearSidewaysLarge(Entity* self) {
                 (PLAYER_STATUS_MIST_FORM | PLAYER_STATUS_BAT_FORM)) {
                 collision = 0;
             } else {
-                collision = OVL_EXPORT(GetPlayerCollisionWith)(self, 8, 3, 4);
+                collision = GetPlayerCollisionWith(self, 8, 3, 4);
             }
 
             if (collision & 4) {

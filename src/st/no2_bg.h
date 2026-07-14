@@ -65,7 +65,7 @@ void func_us_801B3F30(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(2);
         self->animCurFrame = 3;
         self->ext.et_801B3F30.unk7C = 2;
@@ -113,7 +113,7 @@ void func_us_801B3F30(Entity* self) {
 
 void func_us_801B4148(Entity* self) {
     if (self->step == 0) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(2);
         self->animCurFrame = 1;
         self->zPriority = 0xA0;
@@ -144,7 +144,7 @@ void func_us_801B4210(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(2);
         self->zPriority = 0x80;
         break;
@@ -152,11 +152,9 @@ void func_us_801B4210(Entity* self) {
         if (self->ext.et_801B4210.unk7C == 0 && flag) {
             self->pose = self->poseTimer = 0;
             for (i = 0; i < 5; i++) {
-                entity =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+                entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
-                    OVL_EXPORT(CreateEntityFromEntity)
-                    (E_INTENSE_EXPLOSION, self, entity);
+                    CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
                     entity->posX.i.hi += (rand() & 0xF) - 8;
                     entity->posY.i.hi += (rand() & 0xF) - 8;
                     entity->params = 0x10;
@@ -166,9 +164,9 @@ void func_us_801B4210(Entity* self) {
         break;
     }
     if (!flag) {
-        OVL_EXPORT(AnimateEntity)(D_us_80180BA8, self);
+        AnimateEntity(D_us_80180BA8, self);
     } else {
-        OVL_EXPORT(AnimateEntity)(D_us_80180BB4, self);
+        AnimateEntity(D_us_80180BB4, self);
     }
     self->ext.et_801B4210.unk7C = flag;
 }

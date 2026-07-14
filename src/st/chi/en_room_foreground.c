@@ -12,6 +12,4 @@
 // D_801814BC: foregroundAnim5
 // D_801814C0: eRoomForegroundInit
 // func_801A7C8C: [E_ROOM_FOREGROUND] EntityRoomForeground
-#include "chi.h"
-
 #include "../e_room_fg.h"

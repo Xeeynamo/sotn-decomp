@@ -58,7 +58,7 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
 
     breakableType = self->params >> 12;
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitBreakable));
+        InitializeEntity(OVL_EXPORT(EInitBreakable));
         self->zPriority = BREAKABLE_ZPRIORITY;
         self->blendMode = blend_modes[breakableType];
         self->hitboxHeight = hitbox_heights[breakableType];
@@ -66,8 +66,7 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
 
         entity = self + 1;
         DestroyEntity(entity);
-        OVL_EXPORT(CreateEntityFromEntity)
-        (E_ID(BACKGROUND_BLOCK), self, entity);
+        CreateEntityFromEntity(E_ID(BACKGROUND_BLOCK), self, entity);
         if (breakableType) {
             entity->posY.i.hi -= LIGHT_AURA_Y_OFFSET_TALL;
         } else {
@@ -76,23 +75,21 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
         entity->params = LIGHT_AURA;
     }
 
-    OVL_EXPORT(AnimateEntity)(animations[breakableType], self);
+    AnimateEntity(animations[breakableType], self);
 
     if (self->hitParams) {
         g_api.PlaySfx(CANDLE_HIT_SFX);
-        entity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            OVL_EXPORT(CreateEntityFromCurrentEntity)(E_EXPLOSION, entity);
+            CreateEntityFromCurrentEntity(E_EXPLOSION, entity);
             entity->params = explosion_types[breakableType];
             entity->params |= 16;
         }
         debrisOffsetsY = debris_offsets_y;
         for (debrisCount = 0; debrisCount < BASE_DEBRIS_COUNT; debrisCount++) {
-            entity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)
-                (E_ID(BREAKABLE_DEBRIS), self, entity);
+                CreateEntityFromEntity(E_ID(BREAKABLE_DEBRIS), self, entity);
                 entity->posX.i.hi += *debrisOffsetsY++;
                 entity->posY.i.hi += *debrisOffsetsY++;
                 if (breakableType) {
@@ -109,11 +106,10 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
         if (breakableType) {
             for (debrisCount = 0; debrisCount < TALL_EXTRA_DEBRIS;
                  debrisCount++) {
-                entity =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+                entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
-                    OVL_EXPORT(CreateEntityFromEntity)
-                    (E_ID(BREAKABLE_DEBRIS), self, entity);
+                    CreateEntityFromEntity(
+                        E_ID(BREAKABLE_DEBRIS), self, entity);
                     entity->posX.i.hi += *debrisOffsetsY++;
                     entity->posY.i.hi += *debrisOffsetsY++;
                     entity->params = debrisCount + BASE_DEBRIS_COUNT;
@@ -121,13 +117,13 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
             }
         }
 #ifdef NO_HITBOX_STATE
-        OVL_EXPORT(ReplaceBreakableWithItemDrop)(self);
+        ReplaceBreakableWithItemDrop(self);
         entity = self + 1;
         DestroyEntity(entity);
 #else
         entity = self + 1;
         DestroyEntity(entity);
-        OVL_EXPORT(ReplaceBreakableWithItemDrop)(self);
+        ReplaceBreakableWithItemDrop(self);
 #endif
     }
 }
@@ -146,16 +142,16 @@ void OVL_EXPORT(EntityBreakableDebris)(Entity* self) {
 
     switch (self->step) {
     case INIT:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitBreakable));
+        InitializeEntity(OVL_EXPORT(EInitBreakable));
 #ifndef NO_HITBOX_STATE
         self->hitboxState = 0;
 #endif
         self->zPriority = BREAKABLE_ZPRIORITY;
         self->drawFlags = ENTITY_ROTATE;
         self->animCurFrame = self->params + 28;
-        facingLeft = OVL_EXPORT(GetSideToPlayer)() & 1;
+        facingLeft = GetSideToPlayer() & 1;
 
-        self->ext.breakableDebris.angle = (OVL_EXPORT(Random)() & 30) + 8;
+        self->ext.breakableDebris.angle = (Random() & 30) + 8;
         if (self->facingLeft) {
             self->ext.breakableDebris.angle = -self->ext.breakableDebris.angle;
         }
@@ -170,7 +166,7 @@ void OVL_EXPORT(EntityBreakableDebris)(Entity* self) {
             self->velocityX = FIX(-1);
         }
 
-        self->velocityX += FIX(0.5) - (OVL_EXPORT(Random)() << 8);
+        self->velocityX += FIX(0.5) - (Random() << 8);
         self->velocityY = FIX(-3);
         self->velocityY += (self->params >> 1) * FIX(0.375);
 
@@ -212,7 +208,7 @@ void OVL_EXPORT(EntityBreakableDebris)(Entity* self) {
         break;
 
     case UPDATE:
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         self->rotate += self->ext.breakableDebris.angle;
         self->velocityY += FIX(0.25);
         posX = self->posX.i.hi;
@@ -223,11 +219,9 @@ void OVL_EXPORT(EntityBreakableDebris)(Entity* self) {
             self->velocityY = -self->velocityY / 2;
             self->velocityX -= self->velocityX / 3;
             if (self->velocityY > FIX(-0.625)) {
-                entity =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+                entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
-                    OVL_EXPORT(CreateEntityFromEntity)
-                    (E_INTENSE_EXPLOSION, self, entity);
+                    CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
                     entity->params = 16;
                 }
                 DestroyEntity(self);

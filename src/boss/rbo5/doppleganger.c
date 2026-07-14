@@ -1001,7 +1001,7 @@ void EntityUnkId16(Entity* self) {
 
     g_Dop.unk6A = DOPPLEGANGER.hitPoints;
     if (self->step == 0) {
-        OVL_EXPORT(InitializeEntity)(EInitUnk16);
+        InitializeEntity(EInitUnk16);
         if (PLAYER.posX.i.hi > 0x80) {
             DOPPLEGANGER.posX.i.hi = 0x10;
         } else {

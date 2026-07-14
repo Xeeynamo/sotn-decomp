@@ -50,29 +50,29 @@ void EntityGremlin(Entity* self) {
 #ifndef GREMLIN_SILENT_HURT
         PlaySfxPositional(SFX_GREMLIN_HURT);
 #endif
-        OVL_EXPORT(SetStep)(HURT_DEATH);
+        SetStep(HURT_DEATH);
     }
     // Check for being dead
     if (self->flags & FLAG_DEAD) {
         if (self->step != HURT_DEATH) {
             self->hitboxState = 0;
-            OVL_EXPORT(SetStep)(HURT_DEATH);
+            SetStep(HURT_DEATH);
         }
     }
     switch (self->step) {
     case INIT:
-        OVL_EXPORT(InitializeEntity)(g_EInitGremlin);
+        InitializeEntity(g_EInitGremlin);
         self->animCurFrame = 1;
         self->hitboxOffX = 6;
         self->facingLeft = self->params;
 
         entity = self + 1;
-        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_GREMLIN_EFFECT, entity);
+        CreateEntityFromCurrentEntity(E_GREMLIN_EFFECT, entity);
         entity->params = 0; // Glow effect
         entity->zPriority = self->zPriority - 2;
 
         entity = self + 2;
-        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_GREMLIN_EFFECT, entity);
+        CreateEntityFromCurrentEntity(E_GREMLIN_EFFECT, entity);
         entity->params = 1; // Fire (in spoon) effect
         entity->zPriority = self->zPriority - 1;
         // fallthrough
@@ -87,8 +87,8 @@ void EntityGremlin(Entity* self) {
             self->step_s += 1;
         }
 
-        OVL_EXPORT(AnimateEntity)(&AnimFrames_Running, self);
-        OVL_EXPORT(MoveEntity)();
+        AnimateEntity(&AnimFrames_Running, self);
+        MoveEntity();
 
         // Update to correct facing based on movement
         if (self->velocityX > 0) {
@@ -168,14 +168,12 @@ void EntityGremlin(Entity* self) {
             PlaySfxPositional(SFX_SMALL_FLAME_IGNITE);
 
             // Set next time
-            self->ext.gremlin.timer = (OVL_EXPORT(Random)() & 0x1F) + 0x28;
+            self->ext.gremlin.timer = (Random() & 0x1F) + 0x28;
 
             // Spawn
-            entity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
+            entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)
-                (E_GREMLIN_FIRE, self, entity);
+                CreateEntityFromEntity(E_GREMLIN_FIRE, self, entity);
             }
         } else {
             self->ext.gremlin.timer--;
@@ -190,7 +188,7 @@ void EntityGremlin(Entity* self) {
         }
 
         self->animCurFrame = AnimFrameDeath;
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
 
         // Slow movement
         self->velocityX -= self->velocityX / DecelerateSpeed;
@@ -198,7 +196,7 @@ void EntityGremlin(Entity* self) {
 
         // If wait time is over, check for death
         if (!--self->ext.gremlin.timer) {
-            OVL_EXPORT(SetStep)(IDLE);
+            SetStep(IDLE);
 
             // Check if dead
             if (self->flags & FLAG_DEAD) {
@@ -206,11 +204,9 @@ void EntityGremlin(Entity* self) {
                 PlaySfxPositional(SFX_GREMLIN_DEATH);
 #endif
                 // Spawn fire particles
-                entity =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+                entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
-                    OVL_EXPORT(CreateEntityFromEntity)
-                    (E_EXPLOSION, self, entity);
+                    CreateEntityFromEntity(E_EXPLOSION, self, entity);
                     entity->params = 1;
                 }
                 DestroyEntity(self);
@@ -240,7 +236,7 @@ void EntityGremlinEffect(Entity* self) {
 
     switch (self->step) {
     case INIT:
-        OVL_EXPORT(InitializeEntity)(g_EInitGremlin);
+        InitializeEntity(g_EInitGremlin);
         self->flags |= FLAG_UNK_2000;
         self->hitboxState = 0;
 
@@ -258,7 +254,7 @@ void EntityGremlinEffect(Entity* self) {
         break;
 
     case GLOW:
-        OVL_EXPORT(AnimateEntity)(&AnimFrames_Glow, self);
+        AnimateEntity(&AnimFrames_Glow, self);
 
         entityGremlin = self - 1;
         self->facingLeft = entityGremlin->facingLeft;
@@ -273,7 +269,7 @@ void EntityGremlinEffect(Entity* self) {
         break;
 
     case FIRE:
-        OVL_EXPORT(AnimateEntity)(&AnimFrames_Fire, self);
+        AnimateEntity(&AnimFrames_Fire, self);
 
         entityGremlin = self - 2;
         self->facingLeft = entityGremlin->facingLeft;
@@ -307,25 +303,25 @@ void EntityGremlinFire(Entity* self) {
     if (self->flags & FLAG_DEAD) {
         if (self->step != DEATH) {
             self->hitboxState = 0;
-            OVL_EXPORT(SetStep)(DEATH);
+            SetStep(DEATH);
         }
     }
 
     switch (self->step) {
     case INIT:
-        OVL_EXPORT(InitializeEntity)(g_EInitGremlinFire);
+        InitializeEntity(g_EInitGremlinFire);
         self->ext.gremlinFire.timer = FireDuration;
         // fallthrough
     case IDLE:
-        OVL_EXPORT(AnimateEntity)(&AnimFrames_FireIdle, self);
-        OVL_EXPORT(MoveEntity)();
+        AnimateEntity(&AnimFrames_FireIdle, self);
+        MoveEntity();
 
         // Bounce up and down slightly
         self->velocityY = rcos(self->rotate);
         self->rotate += BounceSpeed;
         if (!--self->ext.gremlinFire.timer) {
             self->hitboxState = 0;
-            OVL_EXPORT(SetStep)(DEATH);
+            SetStep(DEATH);
         }
         break;
 
@@ -339,7 +335,7 @@ void EntityGremlinFire(Entity* self) {
             self->step_s++;
             // fallthrough
         case DEATH_SHRINK:
-            OVL_EXPORT(AnimateEntity)(&AnimFrames_FireIdle, self);
+            AnimateEntity(&AnimFrames_FireIdle, self);
             self->scaleX -= 8;
             self->scaleY -= 6;
             if (!self->scaleX) {

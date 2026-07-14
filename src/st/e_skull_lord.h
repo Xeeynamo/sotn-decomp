@@ -16,25 +16,25 @@ void EntitySkullLord(Entity* self) {
 
     if ((self->flags & FLAG_DEAD) && self->step != 4) {
         PlaySfxPositional(SFX_SKULL_LORD_DEATH);
-        OVL_EXPORT(SetStep)(4);
+        SetStep(4);
     }
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitSkullLord);
+        InitializeEntity(g_EInitSkullLord);
         self->hitboxOffX = 4;
         entity = self + 1;
-        OVL_EXPORT(CreateEntityFromEntity)(E_SKULL_LORD_OUTLINE, self, entity);
+        CreateEntityFromEntity(E_SKULL_LORD_OUTLINE, self, entity);
         entity->zPriority = self->zPriority - 4;
         entity = self + 2;
-        OVL_EXPORT(CreateEntityFromEntity)(E_SKULL_LORD_FLAMES, self, entity);
+        CreateEntityFromEntity(E_SKULL_LORD_FLAMES, self, entity);
         entity->zPriority = self->zPriority - 2;
         break;
 
     case 1:
         self->step_s = 0;
-        if (OVL_EXPORT(GetDistanceToPlayerY)() < 0x80) {
-            OVL_EXPORT(SetStep)(2);
+        if (GetDistanceToPlayerY() < 0x80) {
+            SetStep(2);
         }
         break;
 
@@ -42,14 +42,13 @@ void EntitySkullLord(Entity* self) {
         switch (self->step_s) {
         case 0:
             self->velocityY = 0;
-            self->ext.skullLord.timer =
-                ((OVL_EXPORT(Random)() & 7) * 0x10) + 0x10;
+            self->ext.skullLord.timer = ((Random() & 7) * 0x10) + 0x10;
             self->ext.skullLord.unk90 = 0;
             self->step_s++;
             // fallthrough
 
         case 1:
-            OVL_EXPORT(MoveEntity)();
+            MoveEntity();
             entity = &PLAYER;
             offsetY = self->posY.i.hi - entity->posY.i.hi;
             if (self->hitFlags & 3) {
@@ -84,10 +83,10 @@ void EntitySkullLord(Entity* self) {
                     self->velocityX = -FIX(1.25);
                 }
             }
-            sideToPlayer = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+            sideToPlayer = (GetSideToPlayer() & 1) ^ 1;
             if (sideToPlayer != self->facingLeft) {
                 self->ext.skullLord.unk8C = 1;
-                if (OVL_EXPORT(GetDistanceToPlayerX)() > 0x20) {
+                if (GetDistanceToPlayerX() > 0x20) {
                     self->facingLeft ^= 1;
                 }
             } else {
@@ -99,7 +98,7 @@ void EntitySkullLord(Entity* self) {
             break;
 
         case 2:
-            OVL_EXPORT(MoveEntity)();
+            MoveEntity();
             self->velocityX -= self->velocityX / 16;
             self->velocityY -= self->velocityY / 16;
 
@@ -114,24 +113,24 @@ void EntitySkullLord(Entity* self) {
             if (!self->pose) {
                 PlaySfxPositional(SFX_SKULL_KNOCK_B);
                 self->animCurFrame = 1;
-                self->poseTimer = (OVL_EXPORT(Random)() & 0x7F) | 7;
+                self->poseTimer = (Random() & 0x7F) | 7;
                 self->pose = 1;
             } else {
                 self->animCurFrame = 2;
-                self->poseTimer = (OVL_EXPORT(Random)() & 0xF) | 3;
+                self->poseTimer = (Random() & 0xF) | 3;
                 self->pose = 0;
             }
         } else {
             self->poseTimer--;
         }
         if (self->hitFlags & 0x80) {
-            OVL_EXPORT(SetStep)(3);
+            SetStep(3);
         }
         break;
 
     case 3:
         if (!self->step_s) {
-            if (OVL_EXPORT(GetSideToPlayer)() & 1) {
+            if (GetSideToPlayer() & 1) {
                 self->velocityX = FIX(0.75);
             } else {
                 self->velocityX = FIX(-0.75);
@@ -141,11 +140,11 @@ void EntitySkullLord(Entity* self) {
             self->ext.skullLord.timer = 0x60;
             self->step_s++;
         }
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         self->velocityX -= self->velocityX >> 5;
         self->velocityY -= self->velocityY >> 5;
         if (!--self->ext.skullLord.timer) {
-            OVL_EXPORT(SetStep)(2);
+            SetStep(2);
         }
         break;
 
@@ -166,17 +165,15 @@ void EntitySkullLord(Entity* self) {
         case 2:
             self->animCurFrame = 3;
             for (i = 0; i < 24; i++) {
-                entity =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+                entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
-                    OVL_EXPORT(CreateEntityFromEntity)
-                    (E_SKULL_LORD_PIECES, self, entity);
-                    angle = (OVL_EXPORT(Random)() & 0x7F) * 16;
-                    scale = (OVL_EXPORT(Random)() & 0x1F) + 8;
+                    CreateEntityFromEntity(E_SKULL_LORD_PIECES, self, entity);
+                    angle = (Random() & 0x7F) * 16;
+                    scale = (Random() & 0x1F) + 8;
                     entity->ext.skullLord.unk82 = angle;
                     entity->posX.i.hi += FLT_TO_I(scale * rcos(angle));
                     entity->posY.i.hi -= FLT_TO_I(scale * rsin(angle));
-                    if (OVL_EXPORT(Random)() & 1) {
+                    if (Random() & 1) {
                         entity->zPriority = self->zPriority + 1;
                     } else {
                         entity->zPriority = self->zPriority - 1;
@@ -236,7 +233,7 @@ void EntitySkullLordOutline(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitSkullLordEffects);
+        InitializeEntity(g_EInitSkullLordEffects);
         self->hitboxState = 0;
         self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
         self->blendMode = BLEND_TRANSP | BLEND_QUARTER;
@@ -250,7 +247,7 @@ void EntitySkullLordOutline(Entity* self) {
         // fallthrough
 
     case 1:
-        OVL_EXPORT(AnimateEntity)(D_us_80181EF0, self);
+        AnimateEntity(D_us_80181EF0, self);
         entity = self - 1;
 
         if (entity->entityId != E_SKULL_LORD) {
@@ -319,11 +316,9 @@ void EntitySkullLordOutline(Entity* self) {
         }
 
         if ((self->ext.skullLord.timer & 0xF) == 0) {
-            entity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)
-                (E_SKULL_LORD_OUTLINE, self, entity);
+                CreateEntityFromEntity(E_SKULL_LORD_OUTLINE, self, entity);
                 entity->params = self->animCurFrame;
                 entity->facingLeft = self->facingLeft;
                 entity->scaleX = self->scaleX;
@@ -357,7 +352,7 @@ void EntitySkullLordFlames(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitSkullLordEffects);
+        InitializeEntity(g_EInitSkullLordEffects);
         self->palette = PAL_UNK_1CF;
         self->animCurFrame = 4;
         primIndex = g_api.AllocPrimitives(PRIM_SPRT, 1);
@@ -416,7 +411,7 @@ void EntitySkullLordFlames(Entity* self) {
         }
 
         entity = &PLAYER;
-        angle = OVL_EXPORT(GetAngleBetweenEntities)(self, entity);
+        angle = GetAngleBetweenEntities(self, entity);
         offsetX = FLT_TO_I(rcos(angle) * 4);
         self->posX.i.hi += offsetX / 2;
         offsetX = self->posX.i.hi + offsetX;
@@ -430,9 +425,9 @@ void EntitySkullLordFlames(Entity* self) {
         break;
 
     case 2:
-        entity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
+            CreateEntityFromEntity(E_EXPLOSION, self, entity);
             entity->zPriority = self->zPriority;
             entity->params = 2;
         }
@@ -447,24 +442,24 @@ void EntitySkullLordPieces(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitSkullLordEffects);
+        InitializeEntity(g_EInitSkullLordEffects);
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
-        rand = OVL_EXPORT(Random)() & 3;
+        rand = Random() & 3;
         if (rand == 3) {
             rand = 2;
         }
         self->animCurFrame = rand + 9;
         angle = self->ext.skullLord.unk82;
-        rand = (OVL_EXPORT(Random)() & 0xF) + 2;
+        rand = (Random() & 0xF) + 2;
         self->velocityX = rand * rcos(angle);
-        rand = 0x20 - (OVL_EXPORT(Random)() & 0x1F);
+        rand = 0x20 - (Random() & 0x1F);
         self->velocityY = -rand * rsin(angle);
         self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->drawFlags = ENTITY_ROTATE;
         break;
 
     case 1:
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         self->velocityY += FIX(0.125);
         if (self->velocityX > 0) {
             self->rotate += ROT(11.25);

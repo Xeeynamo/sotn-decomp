@@ -3,8 +3,8 @@
 #include "clock_tower.h"
 #include <scratchpad.h>
 
-extern EInit OVL_EXPORT(EInitInteractable);
-extern EInit OVL_EXPORT(EInitSpawner);
+extern EInit g_EInitInteractable;
+extern EInit g_EInitSpawner;
 
 extern s16 D_us_80181BFC[];
 
@@ -47,7 +47,7 @@ void EntityClouds(Entity* self) {
     SVECTOR* vector;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitSpawner));
+        InitializeEntity(g_EInitSpawner);
         primIndex = g_api.func_800EDB58(PRIM_GT4, 0x70);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -264,7 +264,7 @@ void EntityClockTower3D(Entity* self) {
     ClockTowerData2* var_s3;
 
     if (self->step == 0) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
 #ifdef STAGE_IS_TOP
         self->posX.i.hi = 0x700 - g_Tilemap.scrollX.i.hi;
         self->posY.i.hi = 0x3C0 - g_Tilemap.scrollY.i.hi;

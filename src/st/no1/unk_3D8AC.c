@@ -29,21 +29,21 @@ void func_us_801BD8AC(Entity* self) {
     switch (self->step) {
     case 0:
 
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = 0;
         self->animCurFrame = 0;
         tempEntity = self + 1;
         for (i = 1; i < 6; i++) {
-            OVL_EXPORT(CreateEntityFromEntity)(E_ID(ID_36), self, tempEntity);
+            CreateEntityFromEntity(E_ID(ID_36), self, tempEntity);
             tempEntity->params = i + 0x100;
             tempEntity++;
-            OVL_EXPORT(CreateEntityFromEntity)(E_ID(ID_36), self, tempEntity);
+            CreateEntityFromEntity(E_ID(ID_36), self, tempEntity);
             tempEntity->params = i;
             tempEntity++;
         }
-        OVL_EXPORT(CreateEntityFromEntity)(E_ID(ID_38), self, tempEntity);
+        CreateEntityFromEntity(E_ID(ID_38), self, tempEntity);
         tempEntity++;
-        OVL_EXPORT(CreateEntityFromEntity)(E_ID(ID_39), self, tempEntity);
+        CreateEntityFromEntity(E_ID(ID_39), self, tempEntity);
         break;
 
     case 1:
@@ -78,7 +78,7 @@ void func_us_801BDA0C(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(D_us_801809C8);
+        InitializeEntity(D_us_801809C8);
         self->drawFlags |=
             ENTITY_OPACITY | ENTITY_ROTATE | ENTITY_SCALEY | ENTITY_SCALEX;
         if ((self->params & 0xF) > 1) {
@@ -129,9 +129,9 @@ void func_us_801BDA0C(Entity* self) {
             self->step++;
         } else {
             if (self->params & 0x100) {
-                OVL_EXPORT(AnimateEntity)(anim1, self);
+                AnimateEntity(anim1, self);
             } else {
-                OVL_EXPORT(AnimateEntity)(anim0, self);
+                AnimateEntity(anim0, self);
             }
             if ((g_Timer & 0xF) == 0) {
                 g_api.PlaySfx(SFX_STONE_MOVE_B);
@@ -164,9 +164,9 @@ void func_us_801BDA0C(Entity* self) {
         self->posX.i.hi = prim->x0 + xOffset;
         self->posY.i.hi = prim->y0 + yOffset;
         if (self->params & 0x100) {
-            OVL_EXPORT(AnimateEntity)(anim1, self);
+            AnimateEntity(anim1, self);
         } else {
-            OVL_EXPORT(AnimateEntity)(anim0, self);
+            AnimateEntity(anim0, self);
         }
         if ((g_Timer & 0xF) == 0) {
             g_api.PlaySfx(SFX_STONE_MOVE_B);
@@ -202,9 +202,9 @@ void func_us_801BDA0C(Entity* self) {
         self->posX.i.hi = prim->x0 + xOffset;
         self->posY.i.hi = prim->y0 + yOffset;
         if (self->params & 0x100) {
-            OVL_EXPORT(AnimateEntity)(anim3, self);
+            AnimateEntity(anim3, self);
         } else {
-            OVL_EXPORT(AnimateEntity)(anim2, self);
+            AnimateEntity(anim2, self);
         }
         self->rotate += D_us_80181580[self->params & 0xF];
         if (self->params & 0x100) {
@@ -230,7 +230,7 @@ void func_us_801BDF9C(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         break;
 
     case 1:
@@ -357,7 +357,7 @@ void func_us_801BE2C8(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         break;
 
     case 1:

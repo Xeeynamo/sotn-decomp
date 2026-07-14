@@ -41,13 +41,13 @@ static void UpdateWeightChains(WeightSelect weight) {
 
 // switch to lower the weights to the right of Cube of Zoe
 void EntityWeightsSwitch(Entity* self) {
-    s32 collision = OVL_EXPORT(GetPlayerCollisionWith)(self, 8, 4, 4);
+    s32 collision = GetPlayerCollisionWith(self, 8, 4, 4);
     s32 worldPos;
     Entity* player;
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(WEIGHTS_INIT);
+        InitializeEntity(WEIGHTS_INIT);
         self->animCurFrame = 9;
         self->zPriority = 0x5E;
         if (g_CastleFlags[NO0_TO_NP3_SHORTCUT]) {
@@ -84,7 +84,7 @@ void EntityPathBlockSmallWeight(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(WEIGHTS_INIT);
+        InitializeEntity(WEIGHTS_INIT);
         self->animCurFrame = 8;
         self->zPriority = 0x5E;
         // All the prims below here are for the chain.
@@ -147,7 +147,7 @@ void EntityPathBlockSmallWeight(Entity* self) {
     }
 
     if (self->step < 3) {
-        collision = OVL_EXPORT(GetPlayerCollisionWith)(self, 16, 16, 5);
+        collision = GetPlayerCollisionWith(self, 16, 16, 5);
         if (collision & 4) {
             Entity* player = &PLAYER;
 
@@ -168,7 +168,7 @@ void EntityPathBlockTallWeight(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(WEIGHTS_INIT);
+        InitializeEntity(WEIGHTS_INIT);
         self->animCurFrame = 7;
         self->zPriority = 0x5E;
 #if defined(INVERTED_STAGE)

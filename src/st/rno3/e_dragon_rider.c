@@ -43,40 +43,38 @@ void EntityDragonRider(Entity* self) {
     s16* temp_s2;
 
     if (self->flags & FLAG_DEAD) {
-        OVL_EXPORT(SetStep)(DRAGON_DEAD);
+        SetStep(DRAGON_DEAD);
     }
     switch (self->step) {
     case DRAGON_INIT:
-        OVL_EXPORT(InitializeEntity)(g_EInitDragonRider1);
+        InitializeEntity(g_EInitDragonRider1);
         self->animCurFrame = 1;
         self->drawFlags |= ENTITY_ROTATE;
         self->ext.orob.unk9 = 2;
         break;
     case DRAGON_WAIT:
-        if (OVL_EXPORT(UnkCollisionFunc3)(sensors2) & 1) {
+        if (UnkCollisionFunc3(sensors2) & 1) {
             other = self + 1;
             for (i = 0; i < 24; i++, other++) {
-                OVL_EXPORT(CreateEntityFromEntity)
-                (E_DRAGON_SEGMENT, self, other);
+                CreateEntityFromEntity(E_DRAGON_SEGMENT, self, other);
                 other->posY.i.hi += 8;
                 other->params = (i + 1);
                 other->nextPart = other - 1;
             }
-            OVL_EXPORT(CreateEntityFromEntity)
-            (E_DRAGON_RIDER_HITBOX, self, other);
+            CreateEntityFromEntity(E_DRAGON_RIDER_HITBOX, self, other);
             other->nextPart = other - 1;
             other->parent = self;
             self->parent = NULL;
             self->nextPart = other;
-            OVL_EXPORT(SetStep)(DRAGON_BOUNCING);
+            SetStep(DRAGON_BOUNCING);
         }
         break;
     case DRAGON_BOUNCING:
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         self->velocityY += self->ext.orob.gravity;
         self->ext.orob.gravity += 0x100;
         if (self->ext.orob.movingLeft != self->facingLeft &&
-            (OVL_EXPORT(AnimateEntity)(anim_head_flip_withrider, self) == 0)) {
+            (AnimateEntity(anim_head_flip_withrider, self) == 0)) {
             self->animCurFrame = 1;
             self->facingLeft = self->ext.orob.movingLeft;
         }
@@ -92,7 +90,7 @@ void EntityDragonRider(Entity* self) {
             self->velocityY = FIX(-2.75);
             self->ext.orob.gravity = 0;
             temp_s6 = self->ext.orob.movingLeft;
-            if (temp_s6 == (OVL_EXPORT(GetSideToPlayer)() & 1)) {
+            if (temp_s6 == (GetSideToPlayer() & 1)) {
                 self->ext.orob.unk9--;
             } else {
                 self->ext.orob.unk9 = 2;
@@ -128,18 +126,17 @@ void EntityDragonRider(Entity* self) {
         for (i = 0; i < 24; i++, other++) {
             other->flags |= FLAG_DEAD;
         }
-        other = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+        other = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (other != NULL) {
-            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, other);
+            CreateEntityFromEntity(E_EXPLOSION, self, other);
             other->params = 3;
         }
         for (i = 0; i < 4; i++) {
-            other = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            other = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (other != NULL) {
                 // NOTE: There is a dedicated entity for dragon head parts,
                 // but we actually use the orob head parts when dragon dies.
-                OVL_EXPORT(CreateEntityFromEntity)
-                (E_OROB_HEAD_PARTS, self, other);
+                CreateEntityFromEntity(E_OROB_HEAD_PARTS, self, other);
                 other->facingLeft = self->facingLeft;
                 other->velocityX = self->velocityX;
                 other->velocityY = FIX(-1.5);
@@ -179,11 +176,11 @@ void EntityDragonSegment(Entity* self) {
         self->hitboxState = 0;
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
                        FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
-        OVL_EXPORT(SetStep)(DRAGSEG_DEAD);
+        SetStep(DRAGSEG_DEAD);
     }
     switch (self->step) { /* irregular */
     case DRAGSEG_INIT:
-        OVL_EXPORT(InitializeEntity)(g_EInitDragonRider2);
+        InitializeEntity(g_EInitDragonRider2);
         self->pose = self->params % 6;
         self->drawFlags |= ENTITY_OPACITY;
         temp_s0 = self->params;
@@ -203,7 +200,7 @@ void EntityDragonSegment(Entity* self) {
         }
         break;
     case DRAGSEG_FOLLOW:
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         self->velocityY += self->ext.orob.gravity;
         self->ext.orob.gravity += 0x100;
         xVar = self->posX.i.hi;
@@ -225,11 +222,11 @@ void EntityDragonSegment(Entity* self) {
         }
         break;
     case DRAGSEG_DEAD:
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         self->velocityY += 0x1400;
         return;
     }
-    OVL_EXPORT(AnimateEntity)(&anim_bone_twisting2, self);
+    AnimateEntity(&anim_bone_twisting2, self);
     temp_s0 = self->params & 3;
     if ((g_Timer & 3) == temp_s0) {
         self->hitboxState = 3;
@@ -242,7 +239,7 @@ void EntityDragonSegment(Entity* self) {
 void EntityDragonHeadParts(Entity* self) {
     adhoc_vels_rot* temp_s0;
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(g_EInitDragonRiderHead);
+        InitializeEntity(g_EInitDragonRiderHead);
         self->drawFlags = ENTITY_ROTATE;
         self->hitboxState = 0;
         self->animCurFrame = self->params + 8;
@@ -255,7 +252,7 @@ void EntityDragonHeadParts(Entity* self) {
         }
         self->velocityY += temp_s0->velY;
     }
-    OVL_EXPORT(MoveEntity)();
+    MoveEntity();
     self->velocityY += FIX(0.09375);
     temp_s0 = &headPartsParams[self->params];
     self->rotate += temp_s0->rotate;
@@ -272,7 +269,7 @@ void EntityDragonRiderHitbox(Entity* self) {
     Entity* other;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(g_EInitDragonRider1);
+        InitializeEntity(g_EInitDragonRider1);
         self->animCurFrame = 0;
     }
     other = self - 25;
