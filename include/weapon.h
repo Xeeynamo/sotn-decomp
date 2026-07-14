@@ -25,7 +25,7 @@ typedef struct {
 } Weapon /* 0x40 */;
 
 #define N_WEAPON_PAL 12
-extern u16 D_8006EDCC[2][N_WEAPON_PAL * PALETTE_LEN];
+extern GAME_IMPORT u16 D_8006EDCC[2][N_WEAPON_PAL * PALETTE_LEN];
 #endif
 
 #ifdef VERSION_PC

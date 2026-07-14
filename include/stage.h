@@ -8,10 +8,6 @@
 #include "objects.h"
 #include "sfx.h"
 
-#ifndef OVL_EXPORT
-#define OVL_EXPORT(x) (x)
-#endif
-
 #ifdef VERSION_PSP
 #define E_ID(name) D_psp_E_##name
 #else
@@ -34,6 +30,9 @@ typedef enum {
 // cannot be declared as a struct, field order:
 // animSet, animCurFrame, unk5A, palette, enemyID
 typedef u16 EInit[5];
+
+// common stage initialization data
+extern GAME_IMPORT EInit g_EInitSpawner;
 
 typedef struct AnimateEntityFrame {
     u8 duration;
@@ -185,7 +184,7 @@ typedef struct {
     u8 var_s5[1];
 } ST0_SCRATCHPAD;
 
-extern u16 OVL_EXPORT(ItemIconSlots)[ICON_SLOT_NUM];
+extern u16 g_ItemIconSlots[ICON_SLOT_NUM];
 
 /*
  * Sets up layout arrays and initializes stage state to
@@ -194,37 +193,28 @@ extern u16 OVL_EXPORT(ItemIconSlots)[ICON_SLOT_NUM];
  * - Parameters:
  *   - objLayoutId - the room to initialize
  */
-void OVL_EXPORT(InitRoomEntities)(s32 objLayoutId);
+void InitRoomEntities(s32 objLayoutId);
 
 /*
  * An callback for notifying the stage that the
  * viewport has changed.
  */
-void OVL_EXPORT(UpdateRoomPosition)();
+void UpdateRoomPosition();
 
-void OVL_EXPORT(Update)(void);
-void OVL_EXPORT(UpdateStageEntities)(void);
-void OVL_EXPORT(HitDetection)(void);
-void OVL_EXPORT(EntityDummy)(Entity*);
-void OVL_EXPORT(EntityMessageBox)(Entity*);
-void OVL_EXPORT(EntityHeartDrop)(Entity*);
-void OVL_EXPORT(EntityEquipItemDrop)(Entity*);
-void OVL_EXPORT(EntityExplosion)(Entity*);
-void OVL_EXPORT(EntityPrizeDrop)(Entity*);
-void OVL_EXPORT(EntityRelicOrb)(Entity*);
-void OVL_EXPORT(EntityDamageDisplay)(Entity*);
+void Update(void);
+void UpdateStageEntities();
+void HitDetection(void);
 
-s32 OVL_EXPORT(Random)();
+s32 Random();
 #ifdef VERSION_PC
-void OVL_EXPORT(CreateEntityFromEntity)(
-    u16 entityId, Entity* source, Entity* entity);
+void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity);
 #endif
 void DestroyEntity(Entity*);
 void DestroyEntitiesFromIndex(s16 index);
-void OVL_EXPORT(FallEntity)(void);
-Entity* OVL_EXPORT(AllocEntity)(Entity* start, Entity* end);
+void FallEntity(void);
+Entity* AllocEntity(Entity* start, Entity* end);
 
 // InitializeEntity takes a EInit but treats it as a `u16[]`
-void OVL_EXPORT(InitializeEntity)(u16 arg0[]);
+void InitializeEntity(u16 arg0[]);
 
 #endif

@@ -679,7 +679,7 @@ void EntityMaria(Entity* self) {
     if (!self->ext.factory.paramsBase) {
         if (g_CastleFlags[MET_MARIA_IN_CEN]) {
             metMaria = true;
-            OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitSpawner));
+            InitializeEntity(g_EInitSpawner);
             self->flags = FLAG_POS_CAMERA_LOCKED;
             self->animSet = ANIMSET_EN_MARIA;
             self->animCurFrame = 0xA;

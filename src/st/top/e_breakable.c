@@ -6,8 +6,8 @@
 #define OVL_BREAKABLE_ANIMSET ANIMSET_OVL(6)
 
 extern EInit OVL_EXPORT(EInitBreakable);
-extern EInit OVL_EXPORT(EInitInteractable);
-extern EInit OVL_EXPORT(EInitParticle);
+extern EInit g_EInitInteractable;
+extern EInit g_EInitParticle;
 
 static AnimateEntityFrame anim_candelabra_wall_double[] = {
     {4, 1}, {4, 2}, POSE_LOOP(0)};

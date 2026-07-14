@@ -203,13 +203,13 @@ void func_us_801D8150(Entity* self) {
         if (params == 0) {
             part = self + 1;
             for (i = 1; i < 12; i++, part++) {
-                OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID_3D, part);
+                CreateEntityFromCurrentEntity(E_ID_3D, part);
                 part->params = i;
                 part->facingLeft = self->facingLeft;
             }
         }
         self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
-        OVL_EXPORT(InitializeEntity)(g_EInitStoneRose);
+        InitializeEntity(g_EInitStoneRose);
         if (params == 0xB) {
             self->flags &= ~FLAG_KEEP_ALIVE_OFFCAMERA;
         }
@@ -222,7 +222,7 @@ void func_us_801D8150(Entity* self) {
             self->animCurFrame = 9;
         }
         self->zPriority = PLAYER.zPriority - 0x20 + (params * 2);
-        self->facingLeft = OVL_EXPORT(GetSideToPlayer)() & 1;
+        self->facingLeft = GetSideToPlayer() & 1;
         if (params == 0) {
             self->hitboxWidth = 12;
             self->hitboxHeight = 12;
@@ -357,7 +357,7 @@ void func_us_801D8150(Entity* self) {
             part = g_api.GetFreeEntity(224, 256);
             if (part != NULL) {
                 DestroyEntity(part);
-                OVL_EXPORT(CreateEntityFromCurrentEntity)(E_EXPLOSION, part);
+                CreateEntityFromCurrentEntity(E_EXPLOSION, part);
                 part->params = 1;
                 part->zPriority = self->zPriority + 2;
                 if (self->facingLeft) {
@@ -382,7 +382,7 @@ void func_us_801D8150(Entity* self) {
             self->step++;
             if (params != 0) {
                 self->posY.i.hi += 8;
-                OVL_EXPORT(EntityExplosionSpawn)(1, 0);
+                EntityExplosionSpawn(1, 0);
                 return;
             }
             spawnSeed(2);
@@ -496,12 +496,12 @@ void func_us_801D8DF0(Entity* self) {
 
     if (self->flags & FLAG_DEAD) {
         PlaySfxPositional(SFX_SMALL_FLAME_IGNITE);
-        OVL_EXPORT(EntityExplosionSpawn)(0, 0);
+        EntityExplosionSpawn(0, 0);
         return;
     }
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(D_us_80180B00);
+        InitializeEntity(D_us_80180B00);
         self->animCurFrame = 44;
         if (self->facingLeft) {
             self->velocityX = FIX(-1.75);
@@ -523,7 +523,7 @@ void func_us_801D8DF0(Entity* self) {
             self->posX.i.hi, self->posY.i.hi + 4, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
             if (self->ext.stoneRose.timer == 0) {
-                OVL_EXPORT(EntityExplosionSpawn)(0, 0);
+                EntityExplosionSpawn(0, 0);
                 return;
             }
             self->posY.i.hi += collider.unk18;
@@ -564,12 +564,12 @@ void func_us_801D8FFC(Entity* self) {
 
     if (self->flags & FLAG_DEAD) {
         PlaySfxPositional(SFX_SMALL_FLAME_IGNITE);
-        OVL_EXPORT(EntityExplosionSpawn)(0, 0);
+        EntityExplosionSpawn(0, 0);
         return;
     }
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(D_us_80180B0C);
+        InitializeEntity(D_us_80180B0C);
         self->zPriority = PLAYER.zPriority + 0x10;
         self->anim = anim4;
         self->ext.stoneRose.timer = rand() & PSP_RANDMASK;
@@ -592,7 +592,7 @@ void func_us_801D8FFC(Entity* self) {
     case 1:
         g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
-            OVL_EXPORT(EntityExplosionSpawn)(0, 0);
+            EntityExplosionSpawn(0, 0);
             break;
         }
         g_api.UpdateAnim(NULL, NULL);
@@ -612,13 +612,13 @@ void func_us_801D91C4(Entity* self) {
 
     if (self->step == 0) {
         self->params = 1;
-        OVL_EXPORT(EntityExplosion)(fakeEntity);
+        EntityExplosion(fakeEntity);
         self->zPriority = PLAYER.zPriority + 0x20;
         angle = rand() & 0x7FF;
         self->velocityX = FLT_TO_FIX(rcos(angle)) * 4;
         self->velocityY = -FLT_TO_FIX(rsin(angle)) * 4;
     } else {
         self->posX.val += self->velocityX;
-        OVL_EXPORT(EntityExplosion)(fakeEntity);
+        EntityExplosion(fakeEntity);
     }
 }

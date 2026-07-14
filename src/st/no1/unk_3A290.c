@@ -62,7 +62,7 @@ void func_us_801BA290(Entity* self) {
     self->ext.et_801BA290.unk9C = g_CastleFlags[NO1_WEATHER] & 1;
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(D_us_801809C8);
+        InitializeEntity(D_us_801809C8);
         self->animCurFrame = 0x3D;
         self->facingLeft = 1;
         self->hitboxState = 1;
@@ -326,7 +326,7 @@ void func_us_801BA290(Entity* self) {
         prim->next->y0 = 0x7E;
         prim->priority = 0x48;
         prim->drawMode = DRAW_UNK02;
-        rnd = OVL_EXPORT(Random)() & 3;
+        rnd = Random() & 3;
         if (!rnd) {
             prim->drawMode = DRAW_HIDE;
         }
@@ -484,13 +484,12 @@ void func_us_801BA290(Entity* self) {
                 prim = self->ext.et_801BA290.unk84;
                 LOW(prim->next->u0) = -0x1000;
                 for (i = 0; i < 3; i++) {
-                    tempEntity = OVL_EXPORT(AllocEntity)(
-                        &g_Entities[224], &g_Entities[256]);
+                    tempEntity =
+                        AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (tempEntity != NULL) {
-                        OVL_EXPORT(CreateEntityFromCurrentEntity)
-                        (E_ID(ID_34), tempEntity);
-                        rnd = OVL_EXPORT(Random)() & 7;
-                        if ((OVL_EXPORT(Random)() & 1) == 0) {
+                        CreateEntityFromCurrentEntity(E_ID(ID_34), tempEntity);
+                        rnd = Random() & 7;
+                        if ((Random() & 1) == 0) {
                             rnd = 7;
                         }
                         tempEntity->posX.i.hi = D_us_80181474[rnd][0];
@@ -669,12 +668,12 @@ static s16 delays[] = {32, 24, 16, 4, 8, 28, 40, 14};
 void func_us_801BB4C0(Entity* self) {
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(D_us_80180A34);
+        InitializeEntity(D_us_80180A34);
         self->animCurFrame = 0;
         self->zPriority = 0x49;
         self->drawFlags |= ENTITY_SCALEX | ENTITY_SCALEY;
         self->scaleY = self->scaleX;
-        self->ext.fish.timer = delays[OVL_EXPORT(Random)() & 7];
+        self->ext.fish.timer = delays[Random() & 7];
         if (self->scaleX < 0x100) {
             self->zPriority -= 4;
         }
@@ -686,7 +685,7 @@ void func_us_801BB4C0(Entity* self) {
         }
         break;
     case 2:
-        if (!OVL_EXPORT(AnimateEntity)(D_us_801814E0, self)) {
+        if (!AnimateEntity(D_us_801814E0, self)) {
             DestroyEntity(self);
         }
         break;

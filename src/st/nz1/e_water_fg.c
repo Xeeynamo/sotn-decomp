@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz1.h"
 
-extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit g_EInitInteractable;
 
 static s16 D_us_80181094[][4] = {
     {0x010, 0x2C0, 0x50, 0x20}, {0x070, 0x2C0, 0x80, 0x20},
@@ -19,7 +19,7 @@ void EntityWaterForeground(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         primIndex = g_api.AllocPrimitives(PRIM_TILE, 1);
         if (primIndex == -1) {
             DestroyEntity(self);

@@ -9,7 +9,7 @@ void EntityPushAlucard(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitSpawner));
+        InitializeEntity(g_EInitSpawner);
 #ifdef VERSION_PSP
         g_CastleFlags[PROLOGUE_COMPLETE] = 0;
 #endif
@@ -103,7 +103,7 @@ void EntityCastleDoorTransition(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitSpawner));
+        InitializeEntity(g_EInitSpawner);
         g_Entities[E_AFTERIMAGE_1].ext.alucardController.disableAfterImageFlag =
             true;
         g_Player.padSim = PAD_RIGHT;
@@ -125,7 +125,7 @@ void EntityCastleDoorTransition(Entity* self) {
         if (self->ext.castleDoorTransition.playerVelocity != 0) {
             self->ext.castleDoorTransition.playerVelocity -= FIX(5.0 / 32);
             EntityExplosionVariantsSpawner(
-                player, 1, 1, 4, 0x18, (OVL_EXPORT(Random)() & 3) + 1, -4);
+                player, 1, 1, 4, 0x18, (Random() & 3) + 1, -4);
         } else {
             self->step++;
             g_PauseAllowed = true;
@@ -174,7 +174,7 @@ void EntityForegroundTree(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitSpawner));
+        InitializeEntity(g_EInitSpawner);
         self->flags |= FLAG_POS_CAMERA_LOCKED;
         self->unk68 = var_s4;
         // This is a weird way to make a while-loop.
@@ -182,10 +182,9 @@ void EntityForegroundTree(Entity* self) {
             if (*ptrParams > 352) {
                 break;
             }
-            ent = OVL_EXPORT(AllocEntity)(&g_Entities[192], &g_Entities[256]);
+            ent = AllocEntity(&g_Entities[192], &g_Entities[256]);
             if (ent != NULL) {
-                OVL_EXPORT(CreateEntityFromCurrentEntity)
-                (E_BACKGROUND_BLOCK, ent);
+                CreateEntityFromCurrentEntity(E_BACKGROUND_BLOCK, ent);
                 ent->posX.i.hi = *ptrParams++;
                 var_s3 = *ptrParams++;
                 ent->params = ((var_s3 >> 8) & 0xFF) + self->params;
@@ -205,10 +204,9 @@ void EntityForegroundTree(Entity* self) {
         self->posX.i.hi = 128;
         var_s3 = tilemap->scrollX.i.hi * var_s4 / 256 + 352;
         if (var_s3 >= *ptrParams) {
-            ent = OVL_EXPORT(AllocEntity)(&g_Entities[192], &g_Entities[256]);
+            ent = AllocEntity(&g_Entities[192], &g_Entities[256]);
             if (ent != NULL) {
-                OVL_EXPORT(CreateEntityFromCurrentEntity)
-                (E_BACKGROUND_BLOCK, ent);
+                CreateEntityFromCurrentEntity(E_BACKGROUND_BLOCK, ent);
                 ent->posX.i.hi = var_s3 - *ptrParams++ + 368;
                 var_s3 = *ptrParams;
                 ent->params = ((var_s3 >> 8) & 0xFF) + self->params;
@@ -217,28 +215,22 @@ void EntityForegroundTree(Entity* self) {
                 if (self->params) {
                     ent->opacity = 0x60;
                 } else if (self->ext.utimer.t == 7) {
-                    ent2 = OVL_EXPORT(AllocEntity)(
-                        &g_Entities[192], &g_Entities[256]);
-                    OVL_EXPORT(CreateEntityFromEntity)
-                    (E_BACKGROUND_BLOCK, ent, ent2);
+                    ent2 = AllocEntity(&g_Entities[192], &g_Entities[256]);
+                    CreateEntityFromEntity(E_BACKGROUND_BLOCK, ent, ent2);
                     ent2->params = 0x12;
                     ent2->posY.i.hi -= 16;
                     ent2->unk68 = var_s4;
                     ent2->opacity = 0x40;
                 } else if (self->ext.utimer.t == 10) {
-                    ent2 = OVL_EXPORT(AllocEntity)(
-                        &g_Entities[192], &g_Entities[256]);
-                    OVL_EXPORT(CreateEntityFromEntity)
-                    (E_BACKGROUND_BLOCK, ent, ent2);
+                    ent2 = AllocEntity(&g_Entities[192], &g_Entities[256]);
+                    CreateEntityFromEntity(E_BACKGROUND_BLOCK, ent, ent2);
                     ent2->params = 0x13;
                     ent2->posY.i.hi += 48;
                     ent2->unk68 = var_s4;
                     ent2->opacity = 0x40;
                 } else if (self->ext.utimer.t == 15) {
-                    ent2 = OVL_EXPORT(AllocEntity)(
-                        &g_Entities[192], &g_Entities[256]);
-                    OVL_EXPORT(CreateEntityFromEntity)
-                    (E_BACKGROUND_BLOCK, ent, ent2);
+                    ent2 = AllocEntity(&g_Entities[192], &g_Entities[256]);
+                    CreateEntityFromEntity(E_BACKGROUND_BLOCK, ent, ent2);
                     ent2->params = 0x14;
                     ent2->posY.i.hi += 4;
                     ent2->unk68 = var_s4;
@@ -281,7 +273,7 @@ void EntityFoliageMaker(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitSpawner));
+        InitializeEntity(g_EInitSpawner);
         self->flags |= FLAG_POS_CAMERA_LOCKED;
         self->unk68 = 0xC0;
         self->ext.utimer.t = 0;
@@ -290,11 +282,9 @@ void EntityFoliageMaker(Entity* self) {
             if (*ptr > 288) {
                 break;
             }
-            newEntity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[192], &g_Entities[256]);
+            newEntity = AllocEntity(&g_Entities[192], &g_Entities[256]);
             if (newEntity != NULL) {
-                OVL_EXPORT(CreateEntityFromCurrentEntity)
-                (E_BACKGROUND_BLOCK, newEntity);
+                CreateEntityFromCurrentEntity(E_BACKGROUND_BLOCK, newEntity);
                 newEntity->posX.i.hi = *ptr++;
                 newEntity->params = *ptr++;
                 newEntity->unk68 = 0xC0;
@@ -310,11 +300,9 @@ void EntityFoliageMaker(Entity* self) {
         ptr = &foliageParams[self->ext.utimer.t * 2];
         temp_s3 = tilemap->scrollX.i.hi * 0xC0 / 0x100 + 288;
         if (temp_s3 >= ptr[0]) {
-            newEntity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[192], &g_Entities[256]);
+            newEntity = AllocEntity(&g_Entities[192], &g_Entities[256]);
             if (newEntity != NULL) {
-                OVL_EXPORT(CreateEntityFromCurrentEntity)
-                (E_BACKGROUND_BLOCK, newEntity);
+                CreateEntityFromCurrentEntity(E_BACKGROUND_BLOCK, newEntity);
                 newEntity->posX.i.hi = temp_s3 - *ptr++ + 288;
                 newEntity->posX.i.lo = self->posX.i.lo;
                 newEntity->params = *ptr++;
@@ -381,7 +369,7 @@ void EntityBackgroundPineTrees(Entity* self) {
     var_s4 = pineWidths[xpos];
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitSpawner));
+        InitializeEntity(g_EInitSpawner);
         self->flags |= FLAG_POS_CAMERA_LOCKED;
         self->unk68 = selfUnk68;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 32);
@@ -548,7 +536,7 @@ void EntityDistantTreeMaker(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitSpawner));
+        InitializeEntity(g_EInitSpawner);
         self->flags |= FLAG_POS_CAMERA_LOCKED;
         self->ext.utimer.t = 0;
         ptr = treeXLocations;
@@ -556,11 +544,9 @@ void EntityDistantTreeMaker(Entity* self) {
             if (*ptr > 288) {
                 break;
             }
-            newEntity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[192], &g_Entities[256]);
+            newEntity = AllocEntity(&g_Entities[192], &g_Entities[256]);
             if (newEntity != NULL) {
-                OVL_EXPORT(CreateEntityFromCurrentEntity)
-                (E_BACKGROUND_BLOCK, newEntity);
+                CreateEntityFromCurrentEntity(E_BACKGROUND_BLOCK, newEntity);
                 newEntity->posX.i.hi = *ptr;
                 newEntity->params = 0x10;
                 newEntity->unk68 = 0x18;
@@ -575,11 +561,9 @@ void EntityDistantTreeMaker(Entity* self) {
         ptr = &treeXLocations[self->ext.utimer.t];
         temp_s3 = tilemap->scrollX.i.hi * 0x18 / 0x100 + 288;
         if (temp_s3 >= *ptr) {
-            newEntity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[192], &g_Entities[256]);
+            newEntity = AllocEntity(&g_Entities[192], &g_Entities[256]);
             if (newEntity != NULL) {
-                OVL_EXPORT(CreateEntityFromCurrentEntity)
-                (E_BACKGROUND_BLOCK, newEntity);
+                CreateEntityFromCurrentEntity(E_BACKGROUND_BLOCK, newEntity);
                 newEntity->posX.i.hi = temp_s3 - *ptr + 288;
                 newEntity->posX.i.lo = self->posX.i.lo;
                 newEntity->params = 0x10;
@@ -652,7 +636,7 @@ void EntityCastleBridge(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitSpawner));
+        InitializeEntity(g_EInitSpawner);
 
         primIndex = g_api.AllocPrimitives(PRIM_GT4, primCount);
 
@@ -849,7 +833,7 @@ void EntityDistantBackgroundTrees(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitSpawner));
+        InitializeEntity(g_EInitSpawner);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 9);
         if (primIndex == 0) {
             DestroyEntity(self);
@@ -893,16 +877,14 @@ void EntityDistantBackgroundTrees(Entity* self) {
 void EntityBackgroundCastleWall(Entity* self) {
     Entity* newEntity;
 
-    newEntity = OVL_EXPORT(AllocEntity)(&g_Entities[192], &g_Entities[256]);
+    newEntity = AllocEntity(&g_Entities[192], &g_Entities[256]);
     if (newEntity != NULL) {
-        OVL_EXPORT(CreateEntityFromCurrentEntity)
-        (E_BACKGROUND_BLOCK, newEntity);
+        CreateEntityFromCurrentEntity(E_BACKGROUND_BLOCK, newEntity);
         newEntity->params = 0xC;
         newEntity->unk68 = 0x80;
-        newEntity = OVL_EXPORT(AllocEntity)(newEntity, &g_Entities[256]);
+        newEntity = AllocEntity(newEntity, &g_Entities[256]);
         if (newEntity != NULL) {
-            OVL_EXPORT(CreateEntityFromCurrentEntity)
-            (E_BACKGROUND_BLOCK, newEntity);
+            CreateEntityFromCurrentEntity(E_BACKGROUND_BLOCK, newEntity);
             newEntity->posX.i.hi += 0x40;
             newEntity->posY.i.hi = 0x80;
             newEntity->params = 0xB;
@@ -926,7 +908,7 @@ void EntityFlyingOwlAndLeaves(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 56;
         if (self->params) {
@@ -956,7 +938,7 @@ void EntityFlyingOwlAndLeaves(Entity* self) {
             g_api.PlaySfx(SFX_TREE_BRANCH_SNAP);
         }
         if (self->posX.i.hi < 192) {
-            OVL_EXPORT(SetStep)(3);
+            SetStep(3);
             if (self->params) {
                 self->velocityX = FIX(8);
                 self->velocityY = FIX(3);
@@ -965,11 +947,9 @@ void EntityFlyingOwlAndLeaves(Entity* self) {
             self->velocityX = FIX(10);
             self->velocityY = FIX(1.625);
             for (i = 0; i < 8; i++) {
-                newEntity =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+                newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    OVL_EXPORT(CreateEntityFromCurrentEntity)
-                    (E_FALLING_LEAF, newEntity);
+                    CreateEntityFromCurrentEntity(E_FALLING_LEAF, newEntity);
                     newEntity->params = i;
                 }
             }
@@ -978,15 +958,15 @@ void EntityFlyingOwlAndLeaves(Entity* self) {
 
     case 3:
         if (self->params) {
-            animFlag = OVL_EXPORT(AnimateEntity)(owlAnim2, self);
+            animFlag = AnimateEntity(owlAnim2, self);
             self->velocityY -= 0xA00;
         } else {
-            animFlag = OVL_EXPORT(AnimateEntity)(owlAnim1, self);
+            animFlag = AnimateEntity(owlAnim1, self);
             if (self->velocityY > FIX(-2)) {
                 self->velocityY -= FIX(0.03125);
             }
         }
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         if (!self->params && (tilemap->scrollX.i.hi > 0xD80)) {
             self->step++;
         }
@@ -999,8 +979,8 @@ void EntityFlyingOwlAndLeaves(Entity* self) {
         if (self->velocityY > FIX(-2)) {
             self->velocityY -= FIX(0.03125);
         }
-        animFlag = OVL_EXPORT(AnimateEntity)(owlAnim1, self);
-        OVL_EXPORT(MoveEntity)();
+        animFlag = AnimateEntity(owlAnim1, self);
+        MoveEntity();
         if (self->opacity < 0x78) {
             self->opacity += 2;
         }
@@ -1023,7 +1003,7 @@ void EntityFallingLeaf(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = (self->params & 1) + 63;
         self->zPriority = 0xC1;
@@ -1042,7 +1022,7 @@ void EntityFallingLeaf(Entity* self) {
         if (self->velocityY > FIX(1.0)) {
             self->velocityY -= FIX(1.0 / 64);
         }
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         break;
     }
 }

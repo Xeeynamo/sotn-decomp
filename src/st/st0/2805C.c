@@ -44,10 +44,10 @@ void func_801A805C(Entity* self) {
     u16 params = self->params >> 0xC;
 
     if (self->step) {
-        OVL_EXPORT(AnimateEntity)(anims_801A805C[params], self);
+        AnimateEntity(anims_801A805C[params], self);
         if (self->hitParams) {
             if (params == 2 || params == 3) {
-                self->facingLeft = OVL_EXPORT(GetSideToPlayer)() & 1;
+                self->facingLeft = GetSideToPlayer() & 1;
                 posY = self->posY.i.hi - 40;
 
                 if (params == 2) {
@@ -62,20 +62,16 @@ void func_801A805C(Entity* self) {
                 }
 
                 for (i = 0; i < entityCount; i++) {
-                    newEntity = OVL_EXPORT(AllocEntity)(
-                        &g_Entities[224], &g_Entities[256]);
+                    newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (newEntity != NULL) {
-                        OVL_EXPORT(CreateEntityFromEntity)
-                        (E_ID_26, self, newEntity);
+                        CreateEntityFromEntity(E_ID_26, self, newEntity);
                         newEntity->posY.i.hi = posY;
                         newEntity->params = paramsPtr[i];
                         newEntity->facingLeft = self->facingLeft;
                     }
-                    newEntity = OVL_EXPORT(AllocEntity)(
-                        &g_Entities[224], &g_Entities[256]);
+                    newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (newEntity != NULL) {
-                        OVL_EXPORT(CreateEntityFromEntity)
-                        (E_EXPLOSION, self, newEntity);
+                        CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                         newEntity->posY.i.hi = posY;
                         newEntity->params = 0;
                     }
@@ -83,11 +79,9 @@ void func_801A805C(Entity* self) {
                 }
                 g_api.PlaySfx(SFX_CANDLE_HIT_WHOOSH_B);
             } else if (params == 9) {
-                entityTwo =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
+                entityTwo = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entityTwo != NULL) {
-                    OVL_EXPORT(CreateEntityFromCurrentEntity)
-                    (E_ID_26, entityTwo);
+                    CreateEntityFromCurrentEntity(E_ID_26, entityTwo);
                     entityTwo->params = 0x100;
                 }
                 g_api.PlaySfx(SFX_GLASS_BREAK_E);
@@ -95,17 +89,15 @@ void func_801A805C(Entity* self) {
                 g_api.PlaySfx(SFX_GLASS_BREAK_E);
             }
 
-            entityTwo =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            entityTwo = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entityTwo != NULL) {
-                OVL_EXPORT(CreateEntityFromCurrentEntity)
-                (E_EXPLOSION, entityTwo);
+                CreateEntityFromCurrentEntity(E_EXPLOSION, entityTwo);
                 entityTwo->params = explosion_params[params];
             }
-            OVL_EXPORT(ReplaceBreakableWithItemDrop)(self);
+            ReplaceBreakableWithItemDrop(self);
         }
     } else {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitBreakable));
+        InitializeEntity(OVL_EXPORT(EInitBreakable));
         self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 0x14;
         self->blendMode = blend_modes[params];
         self->hitboxHeight = hitbox_height[params];
@@ -128,7 +120,7 @@ void func_801A8328(Entity* self) {
     switch (self->step) {
     case 0:
         if (self->params & 0x100) {
-            OVL_EXPORT(InitializeEntity)(g_EInit3DObject);
+            InitializeEntity(g_EInit3DObject);
             self->animSet = ANIMSET_OVL(4);
             self->unk5A = 0x5B;
             self->palette = 0x212;
@@ -138,7 +130,7 @@ void func_801A8328(Entity* self) {
             break;
         }
 
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitParticle));
+        InitializeEntity(g_EInitParticle);
 
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
         if (primIndex == -1) {
@@ -167,14 +159,14 @@ void func_801A8328(Entity* self) {
         prim->next->b3 = 0x80;
         prim->priority = self->zPriority;
         prim->drawMode = DRAW_UNK02;
-        self->velocityX = ((OVL_EXPORT(Random)() & 7) << 0xC) + 0x8000;
+        self->velocityX = ((Random() & 7) << 0xC) + 0x8000;
         if (!self->facingLeft) {
             self->velocityX = -self->velocityX;
         }
-        self->velocityY = ((OVL_EXPORT(Random)() & 7) << 0xC) - 0x8000;
+        self->velocityY = ((Random() & 7) << 0xC) - 0x8000;
         // fallthrough
     case 1:
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         self->velocityY += FIX(0.125);
         prim = self->ext.prim;
         prim->next->x1 = self->posX.i.hi;
@@ -193,11 +185,9 @@ void func_801A8328(Entity* self) {
         g_api.CheckCollision(posX, posY, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
             g_api.PlaySfx(SFX_SMALL_FLAME_IGNITE);
-            newEntity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                OVL_EXPORT(CreateEntityFromCurrentEntity)
-                (E_EXPLOSION, newEntity);
+                CreateEntityFromCurrentEntity(E_EXPLOSION, newEntity);
                 newEntity->params = 0;
             }
             DestroyEntity(self);
@@ -216,7 +206,7 @@ void func_801A8620(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         entity->animSet = ANIMSET_DRA(2);
         entity->animCurFrame = 1;
         entity->zPriority = 0xB0;

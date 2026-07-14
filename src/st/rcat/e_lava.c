@@ -5,7 +5,7 @@
 // its entity Ext, however in RCAT it is icy and spawns snowflakes instead of
 // embers.
 
-extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit g_EInitInteractable;
 
 static u8 lava_priorities[] = {0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0};
 static s16 lava_tpages[] = {2, 8, -4, 0, -3, -10, 4, 12, 0, 7, 1, -8};
@@ -51,17 +51,16 @@ void EntityLava(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->ext.lava.prim = NULL;
         self->ext.lava.unk89 = 1;
         self->ext.lava.unk84 = 0;
         self->zPriority = 0xA8;
         if (!self->params) {
-            newEntity = OVL_EXPORT(AllocEntity)(
-                &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
+            newEntity =
+                AllocEntity(&g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
             if (newEntity != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)
-                (E_ID(SNOWFLAKES), self, newEntity);
+                CreateEntityFromEntity(E_ID(SNOWFLAKES), self, newEntity);
             }
         }
 
@@ -314,7 +313,7 @@ void EntitySnowflakes(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         primIndex = g_api.func_800EDB58(PRIM_TILE_ALT, 0x14);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
@@ -341,7 +340,7 @@ void EntitySnowflakes(Entity* self) {
             if (1) {
 #endif
                 prim->p3 = 2;
-                prim->x0 = OVL_EXPORT(Random)() & 0xFF;
+                prim->x0 = Random() & 0xFF;
                 prim->y0 = 0;
                 prim->u0 = prim->v0 = 1;
                 prim->priority = 0xA9;
@@ -349,8 +348,8 @@ void EntitySnowflakes(Entity* self) {
                 prim->r0 = 0xA0;
                 prim->g0 = 0x60;
                 prim->b0 = 0xF0;
-                prim->u2 = (OVL_EXPORT(Random)() & 0x1F) + 0x10;
-                prim->u3 = (OVL_EXPORT(Random)() & 3) + 2;
+                prim->u2 = (Random() & 0x1F) + 0x10;
+                prim->u3 = (Random() & 3) + 2;
             }
         }
 

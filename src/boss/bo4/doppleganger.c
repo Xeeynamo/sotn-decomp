@@ -834,7 +834,7 @@ void EntityUnkId16(Entity* self) {
 
     g_Dop.unk6A = DOPPLEGANGER.hitPoints;
     if (self->step == 0) {
-        OVL_EXPORT(InitializeEntity)(EInitUnk16);
+        InitializeEntity(EInitUnk16);
         func_us_801C1A38();
 
         entity = &g_Entities[STAGE_ENTITY_START + 4];

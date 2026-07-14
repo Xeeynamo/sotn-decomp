@@ -9,17 +9,17 @@ void DoorCascadePhysics(EntranceCascadePrim* prim) {
 
     switch (prim->p3) {
     case 1:
-        xVar = (OVL_EXPORT(Random)() & 0xF) - 8;
+        xVar = (Random() & 0xF) - 8;
         prim->x0 = g_CurrentEntity->posX.i.hi + xVar;
         prim->y0 = 0x9C;
         prim->x1 = 0;
         prim->y1 = 0;
         if (xVar > 0) {
-            prim->velocityX.val = OVL_EXPORT(Random)() * 0x40;
+            prim->velocityX.val = Random() * 0x40;
         } else {
-            prim->velocityX.val = -OVL_EXPORT(Random)() * 0x40;
+            prim->velocityX.val = -Random() * 0x40;
         }
-        prim->velocityY.val = (OVL_EXPORT(Random)() << 8) - FIX(4);
+        prim->velocityY.val = (Random() << 8) - FIX(4);
         prim->drawMode = DRAW_UNK02;
         prim->p3++;
         /* fallthrough */

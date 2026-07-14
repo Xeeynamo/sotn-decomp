@@ -13,7 +13,7 @@ static EntityConfig D_us_80180EF8[] = {
     {ANIMSET_OVL(12), 0x53, 9, BLEND_NO, D_us_80180ED8},
 };
 
-extern EInit OVL_EXPORT(EInitParticle);
+extern EInit g_EInitParticle;
 
 void func_us_801B72E8(Entity* self) {
     s32 params;
@@ -21,7 +21,7 @@ void func_us_801B72E8(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitParticle));
+        InitializeEntity(g_EInitParticle);
         params = self->params & 0xF;
         obj = &D_us_80180EF8[params];
         self->palette = obj->palette + 0x226;
@@ -41,20 +41,19 @@ void func_us_801B72E8(Entity* self) {
         break;
 
     case 1:
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         self->velocityY = FIX(-1.0);
-        if (!OVL_EXPORT(AnimateEntity)(self->ext.et_801B72E8.animData, self)) {
+        if (!AnimateEntity(self->ext.et_801B72E8.animData, self)) {
             DestroyEntity(self);
         }
         break;
 
     case 2:
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         self->velocityY = FIX(-1.0);
         switch (self->step_s) {
         case 0:
-            if (!OVL_EXPORT(AnimateEntity)(
-                    self->ext.et_801B72E8.animData, self)) {
+            if (!AnimateEntity(self->ext.et_801B72E8.animData, self)) {
                 self->drawFlags |= ENTITY_SCALEY | ENTITY_SCALEX;
                 self->drawFlags |= ENTITY_OPACITY;
                 self->scaleX = self->scaleY = 256;
@@ -74,8 +73,8 @@ void func_us_801B72E8(Entity* self) {
         break;
 
     case 3:
-        OVL_EXPORT(MoveEntity)();
-        if (!OVL_EXPORT(AnimateEntity)(self->ext.et_801B72E8.animData, self)) {
+        MoveEntity();
+        if (!AnimateEntity(self->ext.et_801B72E8.animData, self)) {
             DestroyEntity(self);
             return;
         }

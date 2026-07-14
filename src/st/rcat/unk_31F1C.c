@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rcat.h"
 
-extern EInit OVL_EXPORT(EInitSpawner);
+extern EInit g_EInitSpawner;
 
 void func_us_801B1F1C(Entity* self) {
     FntPrint("col step %x\n", self->step);
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitSpawner));
+        InitializeEntity(g_EInitSpawner);
         if (self->params) {
             g_Tilemap.flags &= (u16)~LAYER_SEMI_TRANS;
             DestroyEntity(self);

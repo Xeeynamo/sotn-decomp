@@ -43,12 +43,12 @@ void EntityCSMoveAlucard(Entity* self) {
 #endif
 
     if (OVL_EXPORT(SkipCutscene) && (self->step < 8)) {
-        OVL_EXPORT(SetStep)(8);
+        SetStep(8);
     }
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(D_8018047C);
+        InitializeEntity(D_8018047C);
         g_PauseAllowed = false;
         g_unkGraphicsStruct.pauseEnemies = 1;
         g_Player.padSim = PAD_NONE;
@@ -135,14 +135,14 @@ void EntityCSMoveAlucard(Entity* self) {
     case 5: // Conversation with fake lisa
         g_Player.demo_timer = 1;
         if (OVL_EXPORT(CutsceneFlags) & 8) {
-            OVL_EXPORT(SetStep)(6);
+            SetStep(6);
         }
         break;
 
     case 6: // Alucard's reaction to realizing she's not his mother
         g_Player.demo_timer = 1;
-        if (!OVL_EXPORT(AnimateEntity)(D_80180944, self)) {
-            OVL_EXPORT(SetStep)(7);
+        if (!AnimateEntity(D_80180944, self)) {
+            SetStep(7);
         } else {
             player->animCurFrame = self->animCurFrame;
         }
@@ -151,7 +151,7 @@ void EntityCSMoveAlucard(Entity* self) {
     case 7:
         g_Player.demo_timer = 1;
         if (OVL_EXPORT(CutsceneFlags) & 0x200) {
-            OVL_EXPORT(SetStep)(8);
+            SetStep(8);
         }
         break;
 
@@ -179,7 +179,7 @@ void EntityUnkId23(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(D_8018047C);
+        InitializeEntity(D_8018047C);
         g_PauseAllowed = false;
         g_unkGraphicsStruct.pauseEnemies = 1;
         g_Player.padSim = PAD_NONE;
@@ -295,7 +295,7 @@ void EntityFadeToWhite1(Entity* self) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_G4, 1);
         if (primIndex != -1) {
-            OVL_EXPORT(InitializeEntity)(D_8018047C);
+            InitializeEntity(D_8018047C);
             self->animSet = ANIMSET_DRA(0);
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
@@ -368,7 +368,7 @@ void EntityFadeToWhite2(Entity* self) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_G4, 2);
         if (primIndex != -1) {
-            OVL_EXPORT(InitializeEntity)(D_8018047C);
+            InitializeEntity(D_8018047C);
             self->animSet = ANIMSET_DRA(0);
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;

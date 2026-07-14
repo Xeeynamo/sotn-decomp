@@ -2,9 +2,10 @@
 #ifndef NZ1_H
 #define NZ1_H
 
-#define STAGE_IS_NZ1
-#define OVL_EXPORT(x) NZ1_##x
 #include <stage.h>
+
+#define OVL_EXPORT(x) NZ1_##x
+#define STAGE_IS_NZ1
 
 enum Palettes {
     PAL_NONE,

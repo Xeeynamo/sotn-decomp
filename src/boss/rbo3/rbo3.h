@@ -2,9 +2,11 @@
 #ifndef RBO3_H
 #define RBO3_H
 
+#include <game.h>
+#include <stage.h>
+
 #define STAGE_IS_RBO3
 #define OVL_EXPORT(x) RBO3_##x
-#include <stage.h>
 
 typedef enum {
     /* 0x00 */ E_NONE,
@@ -27,9 +29,9 @@ typedef enum {
     /* 0x1E */ UNK_ENTITY_30,
 } EntityIDs;
 
-extern EInit OVL_EXPORT(EInitInteractable);
-extern EInit OVL_EXPORT(EInitCommon);
-extern EInit OVL_EXPORT(EInitParticle);
-extern EInit OVL_EXPORT(EInitLockCamera);
+extern EInit g_EInitInteractable;
+extern EInit g_EInitCommon;
+extern EInit g_EInitParticle;
+extern EInit g_EInitLockCamera;
 
 #endif // RBO3_H

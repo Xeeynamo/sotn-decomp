@@ -65,7 +65,7 @@ void EntityClouds(Entity* self) {
     SVECTOR* vector;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(g_EInit3DObject);
+        InitializeEntity(g_EInit3DObject);
         primIndex = g_api.func_800EDB58(PRIM_GT4, 0x70);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -376,7 +376,7 @@ void EntityClockTower3D(Entity* self) {
     Primitive* prim;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(g_EInit3DObject);
+        InitializeEntity(g_EInit3DObject);
         xBase = 0x480;
         self->posX.i.hi = xBase - g_Tilemap.scrollX.i.hi;
         self->posY.i.hi = 0x80 - g_Tilemap.scrollY.i.hi;
@@ -534,7 +534,7 @@ void EntityCutscenePhotograph(Entity* self) {
 #ifdef VERSION_PSP
         func_psp_0891B0BC(0);
 #endif
-        OVL_EXPORT(InitializeEntity)(g_EInit3DObject);
+        InitializeEntity(g_EInit3DObject);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 8);
         if (primIndex == -1) {
             self->step = 0;
@@ -698,7 +698,7 @@ void EntityCutscenePhotograph(Entity* self) {
         prim = prim->next;
         dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
         if (dr_env == NULL) {
-            OVL_EXPORT(SetStep)(12);
+            SetStep(12);
             return;
         }
         prim->type = PRIM_ENV;
@@ -721,7 +721,7 @@ void EntityCutscenePhotograph(Entity* self) {
         prim = prim->next;
         dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
         if (dr_env == NULL) {
-            OVL_EXPORT(SetStep)(12);
+            SetStep(12);
             return;
         }
         prim->type = PRIM_ENV;
@@ -887,7 +887,7 @@ void EntityCutscenePhotograph(Entity* self) {
         prim = prim->next;
         dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
         if (dr_env == NULL) {
-            OVL_EXPORT(SetStep)(12);
+            SetStep(12);
             return;
         }
         prim->type = PRIM_ENV;
@@ -910,7 +910,7 @@ void EntityCutscenePhotograph(Entity* self) {
         prim = prim->next;
         dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
         if (dr_env == NULL) {
-            OVL_EXPORT(SetStep)(12);
+            SetStep(12);
             return;
         }
         prim->type = PRIM_ENV;
@@ -1006,18 +1006,18 @@ void EntityCutscenePhotograph(Entity* self) {
         } else {
             dualFlag = 1;
         }
-        otherEnt = OVL_EXPORT(AllocEntity)(self, &g_Entities[256]);
+        otherEnt = AllocEntity(self, &g_Entities[256]);
         if (otherEnt != NULL) {
-            OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(ID_2D), otherEnt);
+            CreateEntityFromCurrentEntity(E_ID(ID_2D), otherEnt);
             otherEnt->posX.i.hi = newEntX;
             otherEnt->posY.i.hi = newEntY;
             otherEnt->facingLeft = dualFlag;
             otherEnt->params = 0;
         }
 
-        otherEnt = OVL_EXPORT(AllocEntity)(self, &g_Entities[256]);
+        otherEnt = AllocEntity(self, &g_Entities[256]);
         if (otherEnt != NULL) {
-            OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(ID_2D), otherEnt);
+            CreateEntityFromCurrentEntity(E_ID(ID_2D), otherEnt);
             otherEnt->posX.i.hi = newEntX;
             otherEnt->posY.i.hi = newEntY + 0xC;
             otherEnt->facingLeft = dualFlag;
@@ -1067,7 +1067,7 @@ static u8 D_801824CC[] = {
 void EntityCutscenePhotographFire(Entity* entity) {
     switch (entity->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInit3DObject);
+        InitializeEntity(g_EInit3DObject);
         entity->animSet = ANIMSET_OVL(7);
         entity->unk5A = 0x57;
         entity->palette = PAL_FLAG(0x285);
@@ -1084,7 +1084,7 @@ void EntityCutscenePhotographFire(Entity* entity) {
         }
     case 1:
         entity->posY.val -= FIX(1.0);
-        if (OVL_EXPORT(AnimateEntity)(D_801824CC, entity) == 0) {
+        if (AnimateEntity(D_801824CC, entity) == 0) {
             DestroyEntity(entity);
         }
         break;

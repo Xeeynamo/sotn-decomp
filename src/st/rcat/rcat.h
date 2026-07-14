@@ -2,10 +2,11 @@
 #ifndef RCAT_H
 #define RCAT_H
 
+#include <stage.h>
+
+#define OVL_EXPORT(x) RCAT_##x
 #define STAGE_IS_RCAT
 #define INVERTED_STAGE
-#define OVL_EXPORT(x) RCAT_##x
-#include <stage.h>
 
 enum Palettes {
     PAL_NONE,

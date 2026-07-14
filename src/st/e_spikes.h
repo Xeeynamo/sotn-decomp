@@ -39,10 +39,10 @@ enum SpikesPointDirections {
 #define START_COUNT 0
 #endif
 
-extern EInit OVL_EXPORT(EInitParticle);
+extern EInit g_EInitParticle;
 extern EInit g_EInitEnvironment;
-extern EInit OVL_EXPORT(EInitSpawner);
-extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit g_EInitSpawner;
+extern EInit g_EInitInteractable;
 
 static AnimateEntityFrame anim_dust[] = {
     {2, 1}, {2, 2}, {2, 3}, {2, 4}, {2, 5}, {4, 6}, POSE_END};
@@ -54,17 +54,17 @@ void EntitySpikesDust(Entity* self) {
     s16 angle;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitParticle));
+        InitializeEntity(g_EInitParticle);
         self->zPriority = 160;
         self->animSet = 8;
         self->animCurFrame = 1;
         self->palette = PAL_FLAG(PAL_SPIKES_DUST);
-        angle = OVL_EXPORT(GetAngleBetweenEntitiesShifted)(self, &PLAYER);
-        OVL_EXPORT(SetEntityVelocityFromAngle)(angle, 40);
+        angle = GetAngleBetweenEntitiesShifted(self, &PLAYER);
+        SetEntityVelocityFromAngle(angle, 40);
         return;
     }
-    OVL_EXPORT(MoveEntity)();
-    if (!OVL_EXPORT(AnimateEntity)(anim_dust, self)) {
+    MoveEntity();
+    if (!AnimateEntity(anim_dust, self)) {
         DestroyEntity(self);
     }
 }
@@ -76,7 +76,7 @@ void EntitySpikesParts(Entity* self) {
 
     switch (self->step) {
     case SPIKES_PARTS_INIT:
-        OVL_EXPORT(InitializeEntity)(g_EInitEnvironment);
+        InitializeEntity(g_EInitEnvironment);
 #ifdef SPIKES_PARTS_FRAME
         self->animCurFrame = SPIKES_PARTS_FRAME;
 #endif
@@ -125,14 +125,14 @@ void EntitySpikesParts(Entity* self) {
 #else
         self->velocityY += FIX(0.75);
 #endif
-        self->velocityX += ((OVL_EXPORT(Random)() & 3) << 13) - FIX(0.1875);
-        self->velocityY += ((OVL_EXPORT(Random)() & 3) << 13) - FIX(0.1875);
+        self->velocityX += ((Random() & 3) << 13) - FIX(0.1875);
+        self->velocityY += ((Random() & 3) << 13) - FIX(0.1875);
         // Randomly choose between rotating left or right either
         // 2.109375 degrees or 0.703125 degrees
-        self->ext.spikes.rotate += ((OVL_EXPORT(Random)() & 3) * 16) - 24;
+        self->ext.spikes.rotate += ((Random() & 3) * 16) - 24;
         break;
     case SPIKES_PARTS_MOVE:
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         self->velocityY += FIX(0.15625);
         self->rotate += self->ext.spikes.rotate;
         posX = self->posX.i.hi;
@@ -183,10 +183,9 @@ static void SpikesBreak(u32 tileIdx) {
     tilePosX -= g_Tilemap.scrollX.i.hi;
     tilePosY -= g_Tilemap.scrollY.i.hi;
     for (count = START_COUNT; count < 3; count++) {
-        entity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            OVL_EXPORT(CreateEntityFromCurrentEntity)
-            (E_ID(SPIKES_PARTS), entity);
+            CreateEntityFromCurrentEntity(E_ID(SPIKES_PARTS), entity);
             entity->posX.i.hi = tilePosX;
             entity->posY.i.hi = tilePosY;
 #ifdef HAS_ORIENTATIONS
@@ -196,17 +195,17 @@ static void SpikesBreak(u32 tileIdx) {
 #endif
         }
     }
-    entity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+    entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
     if (entity != NULL) {
-        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_INTENSE_EXPLOSION, entity);
+        CreateEntityFromCurrentEntity(E_INTENSE_EXPLOSION, entity);
         entity->posX.i.hi = tilePosX;
         entity->posY.i.hi = tilePosY;
         // params & 0xF0 to EntityIntenseExplosion uses the dust cloud palette
         entity->params = 16;
     }
-    entity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+    entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
     if (entity != NULL) {
-        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(SPIKES_DUST), entity);
+        CreateEntityFromCurrentEntity(E_ID(SPIKES_DUST), entity);
         entity->posX.i.hi = tilePosX;
         entity->posY.i.hi = tilePosY;
     }
@@ -231,10 +230,9 @@ static void SpikesApplyDamage(u32 tileIdx) {
 
 #ifdef DAMAGE_ENT_ON_HIT
     // Create the damage entity at tile location
-    spikesDamage = OVL_EXPORT(AllocEntity)(&DAMAGE_ENT_START, &DAMAGE_ENT_END);
+    spikesDamage = AllocEntity(&DAMAGE_ENT_START, &DAMAGE_ENT_END);
     if (spikesDamage != NULL) {
-        OVL_EXPORT(CreateEntityFromCurrentEntity)
-        (E_ID(SPIKES_DAMAGE), spikesDamage);
+        CreateEntityFromCurrentEntity(E_ID(SPIKES_DAMAGE), spikesDamage);
         spikesDamage->posX.i.hi = tilePosX;
         spikesDamage->posY.i.hi = tilePosY;
     }
@@ -262,10 +260,10 @@ void EntitySpikes(Entity* self) {
     playerPtr = &PLAYER;
     switch (self->step) {
     case SPIKES_INIT:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitSpawner));
+        InitializeEntity(g_EInitSpawner);
 #ifdef DAMAGE_ENT_ON_SPAWN
         entity = self + 1;
-        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(SPIKES_DAMAGE), entity);
+        CreateEntityFromCurrentEntity(E_ID(SPIKES_DAMAGE), entity);
 #endif
 #ifdef HAS_ORIENTATIONS
         break;
@@ -328,7 +326,7 @@ void EntitySpikes(Entity* self) {
 
 void EntitySpikesDamage(Entity* self) {
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->attackElement = SPIKES_ELEMENT;
         self->attack = 15;
         self->hitboxState = 1;

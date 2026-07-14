@@ -82,11 +82,11 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
 
     breakableType = self->params >> 12;
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitBreakable));
+        InitializeEntity(OVL_EXPORT(EInitBreakable));
         self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 20;
         if (breakableType < 5) {
             entity = self + 1;
-            OVL_EXPORT(CreateEntityFromEntity)(E_ID_3F, self, entity);
+            CreateEntityFromEntity(E_ID_3F, self, entity);
             entity->params = breakableType;
             entity->zPriority = self->zPriority;
         }
@@ -101,11 +101,11 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
         self->hitboxOffY = hitbox_offsets_y[breakableType];
 #endif
     }
-    OVL_EXPORT(AnimateEntity)(animations[breakableType], self);
+    AnimateEntity(animations[breakableType], self);
     if (self->hitParams) {
-        entity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            OVL_EXPORT(CreateEntityFromCurrentEntity)(E_EXPLOSION, entity);
+            CreateEntityFromCurrentEntity(E_EXPLOSION, entity);
             entity->params = explosion_types[breakableType];
         }
         switch (breakableType) {
@@ -117,64 +117,59 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
             PlaySfxPositional(SFX_GLASS_BREAK_E);
             break;
         case BUST:
-            entity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
+            entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                OVL_EXPORT(CreateEntityFromCurrentEntity)
-                (E_BREAKABLE_DEBRIS, entity);
+                CreateEntityFromCurrentEntity(E_BREAKABLE_DEBRIS, entity);
                 entity->params = 256;
             }
             g_api.PlaySfx(SFX_GLASS_BREAK_E);
-            entity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
+            entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)(E_HEART_DROP, self, entity);
+                CreateEntityFromEntity(E_HEART_DROP, self, entity);
                 entity->params = self->params & 0x1FF;
             }
-            OVL_EXPORT(PreventEntityFromRespawning)(self);
+            PreventEntityFromRespawning(self);
             DestroyEntity(self);
             return;
         case URN:
             g_api.PlaySfx(SFX_GLASS_BREAK_E);
-            entity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
+            entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)(E_HEART_DROP, self, entity);
+                CreateEntityFromEntity(E_HEART_DROP, self, entity);
                 entity->params = self->params & 0x1FF;
             }
-            OVL_EXPORT(PreventEntityFromRespawning)(self);
+            PreventEntityFromRespawning(self);
             DestroyEntity(self);
             return;
         case JUG:
             g_api.PlaySfx(SFX_GLASS_BREAK_E);
-            entity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
+            entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)(E_HEART_DROP, self, entity);
+                CreateEntityFromEntity(E_HEART_DROP, self, entity);
                 entity->params = 3;
             }
-            OVL_EXPORT(PreventEntityFromRespawning)(self);
+            PreventEntityFromRespawning(self);
             DestroyEntity(self);
             return;
         default:
             g_api.PlaySfx(SFX_CANDLE_HIT);
             break;
         }
-        OVL_EXPORT(ReplaceBreakableWithItemDrop)(self);
+        ReplaceBreakableWithItemDrop(self);
     }
 }
 
 void EntityBreakableHelper(Entity* self) {
     Entity* entity;
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->animSet = ANIMSET_OVL(1);
     }
     if (!self->params) {
-        OVL_EXPORT(AnimateEntity)(anim_hanging_lamp_long, self);
+        AnimateEntity(anim_hanging_lamp_long, self);
     } else {
-        OVL_EXPORT(AnimateEntity)(anim_hanging_lamp_short, self);
+        AnimateEntity(anim_hanging_lamp_short, self);
     }
     entity = self - 1;
     if (entity->entityId != E_BREAKABLE) {
@@ -192,7 +187,7 @@ void OVL_EXPORT(EntityBreakableDebris)(Entity* self) {
     switch (self->step) {
     case INIT:
         if (self->params & 256) {
-            OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+            InitializeEntity(g_EInitInteractable);
             self->animSet = BREAKABLE_ANIMSET;
             self->unk5A = 91;
             self->palette = PAL_BREAKABLE;
@@ -200,7 +195,7 @@ void OVL_EXPORT(EntityBreakableDebris)(Entity* self) {
             self->zPriority = 106;
             self->step = DEBRIS_NOP; // No case defined, resulting in nop
         } else {
-            OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitParticle));
+            InitializeEntity(g_EInitParticle);
         }
         break;
     case UPDATE:

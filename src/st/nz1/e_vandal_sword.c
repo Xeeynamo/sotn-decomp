@@ -119,10 +119,10 @@ static void VandalSwordTriggerDeath(void) {
     Entity* entity;
 
     if (!(g_Timer & 7)) {
-        entity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            OVL_EXPORT(CreateEntityFromEntity)
-            (E_VANDAL_SWORD_DEATH, g_CurrentEntity, entity);
+            CreateEntityFromEntity(
+                E_VANDAL_SWORD_DEATH, g_CurrentEntity, entity);
             entity->rotate = g_CurrentEntity->rotate;
             entity->facingLeft = g_CurrentEntity->facingLeft;
         }
@@ -160,14 +160,14 @@ void EntityVandalSword(Entity* self) {
         DestroyEntity(entity);
         self->hitboxState = 0;
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
-        OVL_EXPORT(SetStep)(8);
+        SetStep(8);
     } else if (self->hitFlags & 3 && self->step != 8) {
-        OVL_EXPORT(SetStep)(8);
+        SetStep(8);
     }
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitVandalSword);
+        InitializeEntity(g_EInitVandalSword);
         self->drawFlags = ENTITY_ROTATE;
         self->rotate = 0;
         self->hitboxState = 2;
@@ -175,8 +175,7 @@ void EntityVandalSword(Entity* self) {
         self->hitPoints = 0x20;
 
         entity = self + 1;
-        OVL_EXPORT(CreateEntityFromCurrentEntity)
-        (E_VANDAL_SWORD_HITBOX, entity);
+        CreateEntityFromCurrentEntity(E_VANDAL_SWORD_HITBOX, entity);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -219,7 +218,7 @@ void EntityVandalSword(Entity* self) {
             }
             self->ext.vandalSword.timer2 = 0x40;
             if (VandalSwordDrawAlastor(0, 2)) {
-                OVL_EXPORT(SetStep)(3);
+                SetStep(3);
             }
             break;
         }
@@ -238,14 +237,13 @@ void EntityVandalSword(Entity* self) {
             // fallthrough
 
         case 1:
-            OVL_EXPORT(MoveEntity)();
+            MoveEntity();
             VandalSwordTriggerDeath();
             prim = self->ext.vandalSword.prim;
             posX = prim->x0 - self->posX.i.hi;
             posY = prim->y0 - self->posY.i.hi;
             angle = ratan2(posY, posX);
-            angle = OVL_EXPORT(LimitAngleChange)(
-                0x18, self->ext.vandalSword.angle, angle);
+            angle = LimitAngleChange(0x18, self->ext.vandalSword.angle, angle);
             self->velocityX = FLT_TO_I(rcos(angle) * FLT(0x18));
             self->velocityY = FLT_TO_I(rsin(angle) * FLT(0x18));
             self->ext.vandalSword.angle = angle;
@@ -261,7 +259,7 @@ void EntityVandalSword(Entity* self) {
 
         if (!--self->ext.vandalSword.timer2) {
             self->ext.vandalSword.timer2 = 0x60;
-            OVL_EXPORT(SetStep)(5);
+            SetStep(5);
         }
         break;
 
@@ -321,9 +319,9 @@ void EntityVandalSword(Entity* self) {
 
         case 5:
             VandalSwordTriggerDeath();
-            OVL_EXPORT(MoveEntity)();
+            MoveEntity();
             if (!--self->ext.vandalSword.timer) {
-                OVL_EXPORT(SetStep)(3);
+                SetStep(3);
             }
             break;
         }
@@ -332,7 +330,7 @@ void EntityVandalSword(Entity* self) {
         switch (self->step_s) {
         case 0:
             VandalSwordDrawAlastor(2, 0);
-            if (OVL_EXPORT(GetSideToPlayer)() & 1) {
+            if (GetSideToPlayer() & 1) {
                 self->velocityX = FIX(1.5);
             } else {
                 self->velocityX = FIX(-1.5);
@@ -344,7 +342,7 @@ void EntityVandalSword(Entity* self) {
 
         case 1:
             VandalSwordDrawAlastor(2, 1);
-            OVL_EXPORT(MoveEntity)();
+            MoveEntity();
             self->velocityX -= self->velocityX / 32;
             self->velocityY += FIX(0.125);
             if (self->velocityY > FIX(2)) {
@@ -353,24 +351,23 @@ void EntityVandalSword(Entity* self) {
             break;
         case 2:
             if (VandalSwordDrawAlastor(2, 2)) {
-                OVL_EXPORT(SetStep)(3);
+                SetStep(3);
                 if (self->flags & FLAG_DEAD) {
                     PlaySfxPositional(SFX_VANDAL_SWORD_DEATH);
-                    OVL_EXPORT(SetStep)(9);
+                    SetStep(9);
                 }
             }
             break;
         }
         break;
     case 9:
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
         self->velocityY += FIX(0.125);
         if (g_Timer & 1) {
-            entity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
+                CreateEntityFromEntity(E_EXPLOSION, self, entity);
                 entity->params = 1;
             }
         }
@@ -388,7 +385,7 @@ void EntityVandalSwordHitbox(Entity* self) {
     s32 posY;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(g_EInitVandalSword);
+        InitializeEntity(g_EInitVandalSword);
         self->animCurFrame = 0;
         self->hitboxState = 1;
         self->hitboxWidth = self->hitboxHeight = 6;
@@ -412,7 +409,7 @@ extern EInit g_EInitVandSwordDeath;
 
 void EntityVandalSwordDeath(Entity* self) {
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(g_EInitVandSwordDeath);
+        InitializeEntity(g_EInitVandSwordDeath);
         self->hitboxState = 0;
         self->drawFlags = ENTITY_OPACITY | ENTITY_ROTATE;
         self->opacity = 0x80;

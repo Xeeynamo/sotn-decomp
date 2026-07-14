@@ -1219,9 +1219,7 @@ def hydrate_stage_export_table_symbols(splat_config, version: str, export_table)
     # add_symbol(splat_config, version, "NULL", export_table[7]) # ??????
     add_symbol(splat_config, version, "g_TileLayers", export_table[8])
     add_symbol(splat_config, version, "g_EntityGfxs", export_table[9])
-    add_symbol(
-        splat_config, version, "OVL_EXPORT(UpdateStageEntities)", export_table[10]
-    )
+    add_symbol(splat_config, version, "UpdateStageEntities", export_table[10])
     add_symbol(splat_config, version, "g_SpriteBank1", export_table[11])
     if len(export_table) <= 12:
         return

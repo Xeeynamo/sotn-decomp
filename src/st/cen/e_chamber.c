@@ -80,7 +80,7 @@ void EntityPlatform(Entity* self) {
     s32 primIndex;
 
     self->posY.i.hi -= 8;
-    isPlayerTouching = OVL_EXPORT(GetPlayerCollisionWith)(self, 0x20, 0x11, 4);
+    isPlayerTouching = GetPlayerCollisionWith(self, 0x20, 0x11, 4);
     posX = player->posX.i.hi + tilemap->scrollX.i.hi;
     posY = self->posY.i.hi + tilemap->scrollY.i.hi;
 
@@ -92,7 +92,7 @@ void EntityPlatform(Entity* self) {
 #endif
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex != -1) {
-            OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+            InitializeEntity(g_EInitInteractable);
             self->animSet = ANIMSET_OVL(2);
             self->animCurFrame = 9;
             self->zPriority = 0x80;
@@ -129,7 +129,7 @@ void EntityPlatform(Entity* self) {
         break;
 
     case 1:
-        if ((OVL_EXPORT(GetDistanceToPlayerX)() < 32) &&
+        if ((GetDistanceToPlayerX() < 32) &&
             ((self->posY.i.hi - player->posY.i.hi) < 80)) {
             g_PauseAllowed = false;
             g_unkGraphicsStruct.pauseEnemies = 1;
@@ -251,8 +251,7 @@ void EntityPlatform(Entity* self) {
         }
 #else
         if (OVL_EXPORT(CutsceneFlags) & 8) {
-            OVL_EXPORT(CreateEntityFromCurrentEntity)
-            (E_EQUIP_ITEM_DROP, &g_Entities[204]);
+            CreateEntityFromCurrentEntity(E_EQUIP_ITEM_DROP, &g_Entities[204]);
             g_Entities[204].params = NUM_HAND_ITEMS + ITEM_HOLY_GLASSES;
             g_Entities[204].step = 5;
             g_Entities[204].flags = 0;
@@ -276,8 +275,7 @@ void EntityPlatform(Entity* self) {
                 self->step = 11;
                 cutsceneEntity = &g_Entities[200];
                 OVL_EXPORT(CutsceneFlags) = 1;
-                OVL_EXPORT(CreateEntityFromCurrentEntity)
-                (E_ID(CUTSCENE), cutsceneEntity);
+                CreateEntityFromCurrentEntity(E_ID(CUTSCENE), cutsceneEntity);
                 cutsceneEntity->params = 1;
                 g_PauseAllowed = false;
                 g_Player.padSim = PAD_NONE;
@@ -388,13 +386,12 @@ void EntityPlatform(Entity* self) {
                 OVL_EXPORT(CutsceneFlags) = 1;
 
                 cutsceneEntity = &g_Entities[200];
-                OVL_EXPORT(CreateEntityFromCurrentEntity)
-                (E_ID(CUTSCENE), cutsceneEntity);
+                CreateEntityFromCurrentEntity(E_ID(CUTSCENE), cutsceneEntity);
                 cutsceneEntity->params = 2;
 
                 holyGlassesEntity = &g_Entities[204];
-                OVL_EXPORT(CreateEntityFromCurrentEntity)
-                (E_EQUIP_ITEM_DROP, holyGlassesEntity);
+                CreateEntityFromCurrentEntity(
+                    E_EQUIP_ITEM_DROP, holyGlassesEntity);
                 holyGlassesEntity->params = NUM_HAND_ITEMS + ITEM_HOLY_GLASSES;
                 holyGlassesEntity->step = 5;
                 holyGlassesEntity->flags = 0;
@@ -495,8 +492,7 @@ void EntityPlatform(Entity* self) {
                 OVL_EXPORT(CutsceneFlags) = 1;
 
                 cutsceneEntity = &g_Entities[200];
-                OVL_EXPORT(CreateEntityFromCurrentEntity)
-                (E_ID(CUTSCENE), cutsceneEntity);
+                CreateEntityFromCurrentEntity(E_ID(CUTSCENE), cutsceneEntity);
                 cutsceneEntity->params = 3;
             }
             g_Player.demo_timer = 1;
@@ -605,7 +601,7 @@ void EntityRoomDarkness(Entity* self) {
 
         primIndex = g_api.AllocPrimitives(PRIM_G4, 2);
         if (primIndex != -1) {
-            OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+            InitializeEntity(g_EInitInteractable);
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             self->animSet = 0;

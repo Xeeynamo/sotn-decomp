@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+#include <stage.h>
 
 #define OVL_EXPORT(x) WRP_##x
-#include <stage.h>
 
 typedef enum EntityIDs {
     E_NONE,
@@ -30,9 +30,9 @@ typedef enum EntityIDs {
     E_SMALL_ROCKS,
 } EntityIDs;
 
-extern EInit OVL_EXPORT(EInitLockCamera);
+extern EInit g_EInitLockCamera;
 extern EInit OVL_EXPORT(EInitObtainable);
-extern EInit OVL_EXPORT(EInitParticle);
-extern EInit OVL_EXPORT(EInitInteractable);
-extern EInit OVL_EXPORT(EInitCommon);
+extern EInit g_EInitParticle;
+extern EInit g_EInitInteractable;
+extern EInit g_EInitCommon;
 extern EInit g_EInitSmallRocks;

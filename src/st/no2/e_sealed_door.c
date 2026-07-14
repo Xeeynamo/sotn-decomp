@@ -53,7 +53,7 @@ void EntitySealedDoor(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         self->animSet = 7;
         self->animCurFrame = 1;
         if (self->params & 0x1000) {
@@ -145,7 +145,7 @@ void EntitySealedDoor(Entity* self) {
         break;
 
     case 1:
-        if (!(((PLAYER.facingLeft != OVL_EXPORT(GetSideToPlayer)()) & 1) ^ 1) &&
+        if (!(((PLAYER.facingLeft != GetSideToPlayer()) & 1) ^ 1) &&
             ((PLAYER.step == 25 && g_PlayableCharacter != PLAYER_ALUCARD) ||
              PLAYER.step == 1) &&
             SealedDoorIsNearPlayer(self)) {

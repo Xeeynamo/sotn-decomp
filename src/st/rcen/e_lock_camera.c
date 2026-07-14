@@ -3,9 +3,9 @@
 
 #include "../player_is_within_hitbox.h"
 
-extern EInit OVL_EXPORT(EInitLockCamera);
+extern EInit g_EInitLockCamera;
 
-extern EInit OVL_EXPORT(EInitLockCamera);
+extern EInit g_EInitLockCamera;
 
 static u8 hitboxes[] = {0x20, 0x20, 0x20, 0x20};
 static u8 entityLockCameraData[] = {0x01, 0x00, 0x00, 0x00};
@@ -22,7 +22,7 @@ void OVL_EXPORT(EntityLockCamera)(Entity* self) {
 
     params = self->params;
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitLockCamera));
+        InitializeEntity(g_EInitLockCamera);
         self->hitboxState = 1;
         facingLeft = self->ext.lockCamera.unk7C = entityLockCameraData[params];
         if (facingLeft) {
@@ -40,7 +40,7 @@ void OVL_EXPORT(EntityLockCamera)(Entity* self) {
     }
 
     if (PlayerIsWithinHitbox(self)) {
-        facingLeft = OVL_EXPORT(GetSideToPlayer)();
+        facingLeft = GetSideToPlayer();
         if (self->ext.lockCamera.unk7C) {
             facingLeft &= 2;
             facingLeft *= 2;

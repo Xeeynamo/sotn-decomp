@@ -19,7 +19,7 @@ void func_us_801C2A34(Entity* self) {
     s16 angle;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 33;
         self->zPriority = 0x50;
@@ -42,7 +42,7 @@ void func_us_801C2B24(Entity* self) {
     s16 distance;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(D_us_80180A88);
+        InitializeEntity(D_us_80180A88);
     }
     if ((g_Timer % 60) == 0) {
         switch (self->params) {
@@ -79,10 +79,10 @@ void func_us_801C2B24(Entity* self) {
 }
 
 void func_us_801C2CD8(Entity* self) {
-    s32 var = OVL_EXPORT(GetPlayerCollisionWith)(self, 16, 8, 5);
+    s32 var = GetPlayerCollisionWith(self, 16, 8, 5);
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 0x2D;
         self->zPriority = 0x9E;
@@ -136,7 +136,7 @@ void func_us_801C2E7C(Entity* self) {
     no4Open = g_CastleFlags[NO4_OPEN];
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         self->animCurFrame = 0;
         self->zPriority = 0x9E;
 

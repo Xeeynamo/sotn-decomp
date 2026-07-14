@@ -21,7 +21,7 @@ void func_us_801B8F50(Entity* self) {
     u8* anim;
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(D_us_80180A1C);
+        InitializeEntity(D_us_80180A1C);
         self->animCurFrame = D_us_801813FC[self->params];
         self->zPriority = 0x6A;
         break;
@@ -34,7 +34,7 @@ void func_us_801B8F50(Entity* self) {
 
     case 2:
         anim = D_us_80181408[self->params];
-        OVL_EXPORT(AnimateEntity)(anim, self);
+        AnimateEntity(anim, self);
         break;
     }
 }

@@ -12,7 +12,7 @@ static u16 tiles[2][4] = {
     {0x051E, 0x001D, 0x001D, 0x001D}, {0x0025, 0x0000, 0x0000, 0x0000}};
 static s32 D_us_80181680 = 0;
 extern EInit g_EInitEnvironment;
-extern EInit OVL_EXPORT(EInitParticle);
+extern EInit g_EInitParticle;
 
 // Appears to be unused in CAT despite appearing in the entity list
 void func_us_801BA164(Entity* self) {
@@ -26,7 +26,7 @@ void func_us_801BA164(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitParticle));
+        InitializeEntity(g_EInitParticle);
         self->ext.et_801BA164.unk80 = 0x40;
         primIndex = g_api.func_800EDB58(PRIM_TILE_ALT, 8);
         if (primIndex != -1) {
@@ -96,7 +96,7 @@ void func_us_801BA388(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitEnvironment);
+        InitializeEntity(g_EInitEnvironment);
         self->animCurFrame = self->params + 0x10;
         if (self->params) {
             self->posX.i.hi = 7 - g_Tilemap.scrollX.i.hi;
@@ -131,21 +131,18 @@ void func_us_801BA388(Entity* self) {
                 D_us_80181680 |= 0x10;
                 g_api.func_80102CD8(1);
             }
-            newEntity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)
-                (E_INTENSE_EXPLOSION, self, newEntity);
-                newEntity->posX.i.hi += ((OVL_EXPORT(Random)() & 7) * 2) - 8;
+                CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, newEntity);
+                newEntity->posX.i.hi += ((Random() & 7) * 2) - 8;
                 newEntity->posY.i.hi += 0x20;
                 newEntity->params = 16;
             }
 
-            newEntity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 // func_us_801BA164
-                OVL_EXPORT(CreateEntityFromEntity)(E_UNK_2A, self, newEntity);
+                CreateEntityFromEntity(E_UNK_2A, self, newEntity);
                 newEntity->posY.i.hi += 0x20;
                 if (self->params) {
                     newEntity->posX.i.hi += 8;
@@ -162,11 +159,10 @@ void func_us_801BA388(Entity* self) {
 
         if (!self->ext.et_801BA164.unk84 && self->velocityY > FIX(4.0)) {
             self->ext.et_801BA164.unk84 = true;
-            newEntity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 // func_us_801BA164
-                OVL_EXPORT(CreateEntityFromEntity)(E_UNK_2A, self, newEntity);
+                CreateEntityFromEntity(E_UNK_2A, self, newEntity);
                 newEntity->posY.i.hi += 0x10;
                 if (self->params) {
                     newEntity->posX.i.hi += 8;

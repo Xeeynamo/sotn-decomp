@@ -44,7 +44,7 @@ static void CheckFieldCollisionY(s16 hitSensors[], s16 sensorCount) {
 }
 
 static void UpdateFacingDirection(void) {
-    g_CurrentEntity->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+    g_CurrentEntity->facingLeft = (GetSideToPlayer() & 1) ^ 1;
 }
 
 void EntityFleaMan(Entity* self) {
@@ -60,7 +60,7 @@ void EntityFleaMan(Entity* self) {
 
     if (self->flags & FLAG_DEAD) {
         PlaySfxPositional(SFX_SMALL_FLAME_IGNITE);
-        OVL_EXPORT(EntityExplosionSpawn)(1, 0);
+        EntityExplosionSpawn(1, 0);
         return;
     }
 
@@ -73,7 +73,7 @@ void EntityFleaMan(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitFleaMan);
+        InitializeEntity(g_EInitFleaMan);
         self->animCurFrame = 16;
         if (self->params & 1) {
             self->facingLeft = 1;
@@ -92,17 +92,16 @@ void EntityFleaMan(Entity* self) {
         break;
 
     case 1:
-        OVL_EXPORT(AnimateEntity)(anim_stand, self);
+        AnimateEntity(anim_stand, self);
         UpdateFacingDirection();
-        if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x60 &&
-            OVL_EXPORT(GetDistanceToPlayerY)() < 0x40) {
+        if (GetDistanceToPlayerX() < 0x60 && GetDistanceToPlayerY() < 0x40) {
             self->step = 3;
         }
         break;
 
     case 2:
         self->zPriority = 0;
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         break;
 
     case 3:
@@ -110,8 +109,8 @@ void EntityFleaMan(Entity* self) {
         if (self->hitParams && self->hitParams < 4) {
             index = 2;
         } else {
-            rand = OVL_EXPORT(Random)() & 7;
-            distanceX = OVL_EXPORT(GetDistanceToPlayerX)();
+            rand = Random() & 7;
+            distanceX = GetDistanceToPlayerX();
 
             if (distanceX < 0x50) {
                 switch (rand) {
@@ -179,11 +178,11 @@ void EntityFleaMan(Entity* self) {
             index = 18;
         }
         self->animCurFrame = index;
-        if (OVL_EXPORT(UnkCollisionFunc3)(sensors_ground) & 1) {
+        if (UnkCollisionFunc3(sensors_ground) & 1) {
             self->step = 3;
         }
         CheckFieldCollisionY(*sensors_move_y, 3);
-        OVL_EXPORT(CheckFieldCollision)(sensors_move_x, 2);
+        CheckFieldCollision(sensors_move_x, 2);
         break;
     }
 }

@@ -23,7 +23,7 @@ void EntityBlock(Entity* self) {
 
     switch (self->step) {
     case SHORTCUT_INIT:
-        OVL_EXPORT(InitializeEntity)(g_EInitEnvironment);
+        InitializeEntity(g_EInitEnvironment);
         self->animCurFrame = 1;
         if (g_CastleFlags[NO2_TO_DAI_SHORTCUT]) {
             self->posX.i.hi += 32;
@@ -31,7 +31,7 @@ void EntityBlock(Entity* self) {
             self->step = SHORTCUT_OPEN;
         } else {
             statue = self + 1;
-            OVL_EXPORT(CreateEntityFromEntity)(E_ID(STATUE), self, statue);
+            CreateEntityFromEntity(E_ID(STATUE), self, statue);
             statue->posX.i.hi += 16;
             statue->posY.i.hi += 16;
         case SHORTCUT_CHECK_STATUE:
@@ -44,7 +44,7 @@ void EntityBlock(Entity* self) {
         break;
     case SHORTCUT_MOVE_BLOCK:
         self->velocityX = FIX(0.25);
-        collision = OVL_EXPORT(UnkCollisionFunc2)(sensors);
+        collision = UnkCollisionFunc2(sensors);
         if (!(g_Timer & 7)) {
             g_api.PlaySfx(SFX_WALL_DEBRIS_B);
         }
@@ -59,7 +59,7 @@ void EntityBlock(Entity* self) {
     self->hitboxWidth = 8;
     self->hitboxHeight = 6;
     // Collision with top
-    collision = OVL_EXPORT(GetPlayerCollisionWith)(self, 8, 6, 4);
+    collision = GetPlayerCollisionWith(self, 8, 6, 4);
     if (collision & 4) {
         playerPtr = &PLAYER;
         playerPtr->posY.i.hi++;
@@ -70,14 +70,14 @@ void EntityBlock(Entity* self) {
     self->hitboxWidth = 16;
     self->hitboxHeight = 48;
     // Any collision
-    collision = OVL_EXPORT(GetPlayerCollisionWith)(self, 16, 48, 7);
+    collision = GetPlayerCollisionWith(self, 16, 48, 7);
 }
 
 void EntityStatue(Entity* self) {
     Entity* entity;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(g_EInitEnvironment);
+        InitializeEntity(g_EInitEnvironment);
         self->animCurFrame = 2;
         self->hitboxState = 2;
         self->hitPoints = 4;
@@ -91,9 +91,9 @@ void EntityStatue(Entity* self) {
         }
     }
     if (self->flags & FLAG_DEAD) {
-        entity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
+            CreateEntityFromEntity(E_EXPLOSION, self, entity);
             entity->posX.i.hi -= 8;
             entity->posY.i.hi -= 8;
             entity->params = EXPLOSION_FIREBALL;

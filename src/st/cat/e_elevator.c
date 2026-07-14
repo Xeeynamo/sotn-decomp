@@ -32,7 +32,7 @@ void EntityElevator(Entity* self) {
         }
         self->velocityX = 0;
         self->ext.topElevator.unk88++;
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         if (self->ext.topElevator.playerCollision & 4) {
             posY = self->posY.i.hi + g_Tilemap.scrollY.i.hi -
                    self->ext.topElevator.mapPos.y;
@@ -55,8 +55,7 @@ void EntityElevator(Entity* self) {
             flags |= 0x10;
         }
 
-        isPlayerTouching =
-            OVL_EXPORT(GetPlayerCollisionWith)(self, 16, 7, flags);
+        isPlayerTouching = GetPlayerCollisionWith(self, 16, 7, flags);
         if (self->ext.topElevator.unk80 & 0xF) {
             // Applies a small up/down jitter to the elevator
             // when the player lands on it
@@ -90,7 +89,7 @@ void EntityElevator(Entity* self) {
         }
         self->ext.topElevator.playerCollision = isPlayerTouching;
     } else {
-        OVL_EXPORT(InitializeEntity)(g_EInitElevator);
+        InitializeEntity(g_EInitElevator);
         self->hitboxState = 1;
         self->ext.topElevator.unk88 = 0;
         self->ext.topElevator.movingUp = false;

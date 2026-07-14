@@ -94,7 +94,7 @@ void EntityStageNamePopup(Entity* self) {
         }
 
         g_CastleFlags[STAGE_FLAG]++; // Unusual way of setting the flag
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         LoadStageNameGraphics();
 
         self->ext.stpopupj.unk8C = 0;

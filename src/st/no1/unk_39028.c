@@ -14,7 +14,7 @@ static u16 D_us_80181440[] = {
 void func_us_801B9028(Entity* self) {
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(D_us_80180A4C);
+        InitializeEntity(D_us_80180A4C);
         self->animCurFrame = self->params + 1;
         self->zPriority = D_us_8018142C[self->params];
         self->drawFlags = ENTITY_OPACITY;

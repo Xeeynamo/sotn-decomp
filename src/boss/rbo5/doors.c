@@ -8,7 +8,7 @@ s32 g_stone_flag = 0;
 
 extern s32 D_us_801D43C0;
 extern s32 D_us_801D43C4;
-extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit g_EInitInteractable;
 
 #ifdef VERSION_PSP
 extern s32 D_pspeu_0926BCC8;
@@ -38,27 +38,27 @@ void EntityUnkId18(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
 
         self->animSet = 0;
         self->animCurFrame = 0;
         entity = self + 1;
 
         for (i = 1; i < 6; i++) {
-            OVL_EXPORT(CreateEntityFromEntity)(E_ID(ID_17), self, entity);
+            CreateEntityFromEntity(E_ID(ID_17), self, entity);
             entity->params = i + 0x100;
             entity++;
-            OVL_EXPORT(CreateEntityFromEntity)(E_ID(ID_17), self, entity);
+            CreateEntityFromEntity(E_ID(ID_17), self, entity);
             entity->params = i;
             entity++;
         };
-        OVL_EXPORT(CreateEntityFromEntity)(E_ID(ID_19), self, entity);
+        CreateEntityFromEntity(E_ID(ID_19), self, entity);
         entity++;
-        OVL_EXPORT(CreateEntityFromEntity)(E_ID(ID_1A), self, entity);
+        CreateEntityFromEntity(E_ID(ID_1A), self, entity);
         break;
 
     case 1:
-        if (OVL_EXPORT(GetDistanceToPlayerX)() < 64) {
+        if (GetDistanceToPlayerX() < 64) {
             g_Player.demo_timer = 2;
             if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
 #ifdef VERSION_PSP
@@ -140,9 +140,9 @@ void EntityUnkId18(Entity* self) {
         offsetX = 0x100 - g_Tilemap.scrollX.i.hi;
         offsetY = 0x80 - g_Tilemap.scrollY.i.hi;
         for (i = 0; i < 2; i++) {
-            dop = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            dop = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (dop != NULL) {
-                OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(ID_1C), dop);
+                CreateEntityFromCurrentEntity(E_ID(ID_1C), dop);
                 dop->posX.i.hi = offsetX - 64 + (i * 128);
                 dop->posY.i.hi = offsetY;
                 dop->params = i;
@@ -159,9 +159,9 @@ void EntityUnkId18(Entity* self) {
         break;
 
     case 9:
-        dop = OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
+        dop = AllocEntity(&g_Entities[160], &g_Entities[192]);
         if (dop != NULL) {
-            OVL_EXPORT(CreateEntityFromEntity)(E_ID(ID_1D), self, dop);
+            CreateEntityFromEntity(E_ID(ID_1D), self, dop);
             dop->posX.i.hi = 0x100 - g_Tilemap.scrollX.i.hi;
             dop->posY.i.hi = 0x80 - g_Tilemap.scrollY.i.hi;
             dop->params = 4;
@@ -211,7 +211,7 @@ void EntityUnkId17(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(EInitUnk17);
+        InitializeEntity(EInitUnk17);
         self->drawFlags |=
             ENTITY_OPACITY | ENTITY_ROTATE | ENTITY_SCALEY | ENTITY_SCALEX;
         if ((self->params & 0xF) > 1) {
@@ -263,9 +263,9 @@ void EntityUnkId17(Entity* self) {
             self->step++;
         } else {
             if (self->params & 0x100) {
-                OVL_EXPORT(AnimateEntity)(D_us_801805EC, self);
+                AnimateEntity(D_us_801805EC, self);
             } else {
-                OVL_EXPORT(AnimateEntity)(D_us_801805E4, self);
+                AnimateEntity(D_us_801805E4, self);
             }
             if ((g_Timer & 0xF) == 0) {
                 g_api.PlaySfx(SFX_STONE_MOVE_B);
@@ -298,9 +298,9 @@ void EntityUnkId17(Entity* self) {
         self->posX.i.hi = prim->x0 + xOffset;
         self->posY.i.hi = prim->y0 + yOffset;
         if (self->params & 0x100) {
-            OVL_EXPORT(AnimateEntity)(D_us_801805EC, self);
+            AnimateEntity(D_us_801805EC, self);
         } else {
-            OVL_EXPORT(AnimateEntity)(D_us_801805E4, self);
+            AnimateEntity(D_us_801805E4, self);
         }
         if ((g_Timer & 0xF) == 0) {
             g_api.PlaySfx(SFX_STONE_MOVE_B);
@@ -336,9 +336,9 @@ void EntityUnkId17(Entity* self) {
         self->posX.i.hi = prim->x0 + xOffset;
         self->posY.i.hi = prim->y0 + yOffset;
         if (self->params & 0x100) {
-            OVL_EXPORT(AnimateEntity)(D_us_801805FC, self);
+            AnimateEntity(D_us_801805FC, self);
         } else {
-            OVL_EXPORT(AnimateEntity)(D_us_801805F4, self);
+            AnimateEntity(D_us_801805F4, self);
         }
         self->rotate += D_us_801805CC[self->params & 0xF];
         if (self->params & 0x100) {
@@ -359,7 +359,7 @@ void EntityUnkId1C(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(EInitUnk17);
+        InitializeEntity(EInitUnk17);
         self->rotate = -0x400;
         self->drawFlags |= ENTITY_ROTATE;
         if (self->params & 1) {
@@ -373,11 +373,11 @@ void EntityUnkId1C(Entity* self) {
         // fallthrough
 
     case 1:
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         if (self->params & 1) {
-            OVL_EXPORT(AnimateEntity)(D_us_801805EC, self);
+            AnimateEntity(D_us_801805EC, self);
         } else {
-            OVL_EXPORT(AnimateEntity)(D_us_801805E4, self);
+            AnimateEntity(D_us_801805E4, self);
         }
         offsetX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
         if (self->velocityX > 0) {
@@ -424,7 +424,7 @@ void EntityUnkId19(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         break;
 
     case 1:
@@ -513,7 +513,7 @@ void EntityUnkId19(Entity* self) {
 
         prim = self->ext.et_801BE2C8.unk80;
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
-        OVL_EXPORT(CreateEntityFromEntity)(E_ID_16, self, &DOPPLEGANGER);
+        CreateEntityFromEntity(E_ID_16, self, &DOPPLEGANGER);
         // BUG! Sets Doppleganger 10 defeat flag instead of Doppleganger 40
         g_api.TimeAttackController(
             TIMEATTACK_EVENT_DOPPLEGANGER_10_DEFEAT, TIMEATTACK_SET_VISITED);
@@ -644,7 +644,7 @@ void EntityUnkId1A(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         break;
 
     case 1:
@@ -832,7 +832,7 @@ void func_us_801B5004(Tilemap* map, s32 arg1) {
 extern s32 D_us_801805B0;
 #endif
 
-extern EInit OVL_EXPORT(EInitCommon);
+extern EInit g_EInitCommon;
 
 void EntityUnkId1E(Entity* self) {
     Entity* entity;
@@ -846,7 +846,7 @@ void EntityUnkId1E(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(15);
         self->animCurFrame = 0x25;
         self->facingLeft = D_us_8018068C[params >> 1];
@@ -871,13 +871,13 @@ void EntityUnkId1E(Entity* self) {
         } else {
             self->posX.i.hi -= 8;
         }
-        OVL_EXPORT(GetPlayerCollisionWith)(self, 0x10U, 0x20U, 0xBU);
+        GetPlayerCollisionWith(self, 0x10U, 0x20U, 0xBU);
         if (self->facingLeft) {
             self->posX.i.hi -= 8;
         } else {
             self->posX.i.hi += 8;
         }
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         offsetY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
         if (offsetY < 128) {
             break;
@@ -889,7 +889,7 @@ void EntityUnkId1E(Entity* self) {
         break;
     case 3:
         self->velocityY += FIX(1.0 / 8);
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         offsetY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
         if (offsetY >= 128) {
             self->posY.i.hi = 128 - g_Tilemap.scrollY.i.hi;
@@ -943,10 +943,9 @@ void EntityUnkId1E(Entity* self) {
         if (self->params != 1) {
             self->step++;
         } else {
-            entity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
+            entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)(E_ID(ID_1D), self, entity);
+                CreateEntityFromEntity(E_ID(ID_1D), self, entity);
                 entity->posX.i.hi = 0x80;
                 entity->posY.i.hi = 0x70;
                 entity->params = 4;
@@ -972,13 +971,13 @@ void EntityUnkId1E(Entity* self) {
         } else {
             self->posX.i.hi -= 8;
         }
-        OVL_EXPORT(GetPlayerCollisionWith)(self, 0x10U, 0x20U, 0xB);
+        GetPlayerCollisionWith(self, 0x10U, 0x20U, 0xB);
         if (self->facingLeft) {
             self->posX.i.hi -= 8;
         } else {
             self->posX.i.hi += 8;
         }
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         offsetY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
         if (offsetY < 57) {
             self->step++;

@@ -110,7 +110,7 @@ void MarInit(s16 initParam) {
 
     MARIA_Load();
     g_CurrentEntity = &MARIA;
-    OVL_EXPORT(InitializeEntity)(&g_EInitUnk);
+    InitializeEntity(&g_EInitUnk);
     g_CurrentEntity->unk5A = 0xC;
     MARIA.posX.val = FIX(32);
     MARIA.posY.val = FIX(32);

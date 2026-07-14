@@ -41,10 +41,9 @@ void EntityOuijaTable(Entity* self) {
     Entity* otherEntity;
 
     if (self->flags & FLAG_DEAD) {
-        otherEntity =
-            OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+        otherEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (otherEntity != NULL) {
-            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, otherEntity);
+            CreateEntityFromEntity(E_EXPLOSION, self, otherEntity);
             otherEntity->params = 1;
         }
         PlaySfxPositional(SFX_OUIJA_TABLE_DEATH);
@@ -60,33 +59,30 @@ void EntityOuijaTable(Entity* self) {
 
     switch (self->step) {
     case OUIJA_TABLE_INIT:
-        OVL_EXPORT(InitializeEntity)(g_EInitOuijaTable);
+        InitializeEntity(g_EInitOuijaTable);
         self->animCurFrame = 5;
         self->hitboxOffY = 2;
         break;
 
     case OUIJA_TABLE_INIT_SUBENTITIES:
-        if (OVL_EXPORT(UnkCollisionFunc3)(sensors_ground) & 1) {
+        if (UnkCollisionFunc3(sensors_ground) & 1) {
             // Spawn objects on the table
             otherEntity = VASE;
-            OVL_EXPORT(CreateEntityFromEntity)
-            (E_OUIJA_TABLE_COMPONENT, self, otherEntity);
+            CreateEntityFromEntity(E_OUIJA_TABLE_COMPONENT, self, otherEntity);
             otherEntity->params = 0;
             otherEntity->ext.ouijaTable.parent = self;
             otherEntity->posX.i.hi -= 4;
             otherEntity->posY.i.hi -= 16;
 
             otherEntity = BEAKER;
-            OVL_EXPORT(CreateEntityFromEntity)
-            (E_OUIJA_TABLE_COMPONENT, self, otherEntity);
+            CreateEntityFromEntity(E_OUIJA_TABLE_COMPONENT, self, otherEntity);
             otherEntity->params = 1;
             otherEntity->ext.ouijaTable.parent = self;
             otherEntity->posX.i.hi += 2;
             otherEntity->posY.i.hi -= 20;
 
             otherEntity = WALKING_TABLE;
-            OVL_EXPORT(CreateEntityFromEntity)
-            (E_OUIJA_TABLE_COMPONENT, self, otherEntity);
+            CreateEntityFromEntity(E_OUIJA_TABLE_COMPONENT, self, otherEntity);
             otherEntity->params = 2;
             otherEntity->ext.ouijaTable.parent = self;
 
@@ -103,15 +99,14 @@ void EntityOuijaTable(Entity* self) {
 
     case OUIJA_TABLE_COME_ALIVE:
         // When player approaches, spring to life
-        if (OVL_EXPORT(GetDistanceToPlayerX)() < 80 &&
-            OVL_EXPORT(GetDistanceToPlayerY)() < 64) {
-            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+        if (GetDistanceToPlayerX() < 80 && GetDistanceToPlayerY() < 64) {
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             otherEntity = BEAKER;
             otherEntity->ext.ouijaTable.spawned = true;
 
             otherEntity = VASE;
             otherEntity->ext.ouijaTable.spawned = true;
-            OVL_EXPORT(SetStep)(3);
+            SetStep(3);
         }
         break;
 
@@ -120,10 +115,10 @@ void EntityOuijaTable(Entity* self) {
             self->ext.ouijaTable.timer = 128;
             self->step_s++;
         }
-        if (OVL_EXPORT(AnimateEntity)(anim_walk, self) == 0) {
-            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+        if (AnimateEntity(anim_walk, self) == 0) {
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
-        OVL_EXPORT(UnkCollisionFunc2)(sensors_special);
+        UnkCollisionFunc2(sensors_special);
 
         if (self->facingLeft) {
             self->velocityX = FIX(0.5);
@@ -163,13 +158,13 @@ void EntityOuijaTableComponent(Entity* self) {
     if (self->step < OUIJA_COMPONENT_DEATH) {
         otherEntity = self->ext.ouijaTable.parent;
         if (otherEntity->entityId != E_OUIJA_TABLE) {
-            OVL_EXPORT(SetStep)(OUIJA_COMPONENT_DEATH);
+            SetStep(OUIJA_COMPONENT_DEATH);
         }
     }
 
     switch (self->step) {
     case OUIJA_COMPONENT_INIT:
-        OVL_EXPORT(InitializeEntity)(g_EInitOuijaTableComponent);
+        InitializeEntity(g_EInitOuijaTableComponent);
         switch (self->params) {
         // Vase
         case 0:
@@ -204,7 +199,7 @@ void EntityOuijaTableComponent(Entity* self) {
         break;
 
     case OUIJA_COMPONENT_INIT_POS:
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         otherEntity = self->ext.ouijaTable.parent;
         posX = otherEntity->posX.i.hi;
         posY = otherEntity->posY.i.hi - 32;
@@ -246,7 +241,7 @@ void EntityOuijaTableComponent(Entity* self) {
         // Fly towards player in attack motion
         if (self->ext.ouijaTable.isThrown) {
             otherEntity = &PLAYER;
-            angle = OVL_EXPORT(GetAngleBetweenEntities)(self, otherEntity);
+            angle = GetAngleBetweenEntities(self, otherEntity);
             self->velocityX = FLT_TO_I(rcos(angle) * FLT(64));
             self->velocityY = FLT_TO_I(rsin(angle) * FLT(64));
             self->step = OUIJA_COMPONENT_SEEK_ATTACK;
@@ -263,7 +258,7 @@ void EntityOuijaTableComponent(Entity* self) {
                 self->velocityY = 0;
             }
         }
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
 
         self->velocityX -= self->velocityX / 32;
         self->velocityY -= self->velocityY / 32;
@@ -289,7 +284,7 @@ void EntityOuijaTableComponent(Entity* self) {
             // When hit, components rotate and fall to floor
             // After hitting the floor, begin death timer
             self->rotate += 64;
-            if (OVL_EXPORT(UnkCollisionFunc3)(sensors_ground_components) & 1) {
+            if (UnkCollisionFunc3(sensors_ground_components) & 1) {
                 self->drawFlags = ENTITY_DEFAULT;
                 self->animCurFrame++;
                 self->ext.ouijaTable.timer = 32;
@@ -301,11 +296,9 @@ void EntityOuijaTableComponent(Entity* self) {
         case OUIJA_COMPONENT_DIE_IN_FLAMES:
             // Once death timer expires, burst into flames and get destroyed
             if (!--self->ext.ouijaTable.timer) {
-                otherEntity =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+                otherEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (otherEntity != NULL) {
-                    OVL_EXPORT(CreateEntityFromEntity)
-                    (E_EXPLOSION, self, otherEntity);
+                    CreateEntityFromEntity(E_EXPLOSION, self, otherEntity);
                     otherEntity->params = 0;
                 }
                 PlaySfxPositional(SFX_SMALL_FLAME_IGNITE);

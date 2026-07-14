@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+#include "stage.h"
 #include <romio.h>
 #include "memcard.h"
 
 #define OVL_EXPORT(x) SEL_##x
-#include <stage.h>
 
 #define DISP_W 512
 
@@ -133,7 +133,7 @@ typedef struct {
     u16 isRGB24;
 } StreamInfo;
 
-extern s32 g_CurrentStream;
+extern GAME_IMPORT s32 g_CurrentStream;
 extern StageName D_80180128[80];
 
 extern const s32 D_801A7B8C[2];
@@ -166,6 +166,6 @@ extern s32 g_StreamRewindSwitch[1];
 extern u8 g_StreamImageBuffer[0x14000];
 extern s32 D_801D104C[0x1680];
 extern StreamEnv g_StreamEnv;
-extern s32 g_MemcardBlockRead;
-extern s32 g_MemcardStep;
+extern GAME_IMPORT s32 g_MemcardBlockRead;
+extern GAME_IMPORT s32 g_MemcardStep;
 extern s32 D_801D6B24;

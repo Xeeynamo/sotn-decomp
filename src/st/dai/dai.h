@@ -2,9 +2,9 @@
 #ifndef DAI_H
 #define DAI_H
 
-#define STAGE_IS_DAI
+#include "stage.h"
 #define OVL_EXPORT(x) DAI_##x
-#include <stage.h>
+#define STAGE_IS_DAI
 
 // Used for cluts and in g_EInits
 enum OVL_EXPORT(Palette) {

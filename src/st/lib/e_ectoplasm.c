@@ -43,7 +43,7 @@ void func_us_801CCF6C(Entity* self) {
 
     s32 params = self->params;
     if (self->step == 0) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->scaleX = D_us_80182AE0[params][0] & 0xFF;
         self->scaleY = D_us_80182AE0[params][1] & 0xFF;
         self->rotate = D_us_80182AE0[params][2] & 0x7F;
@@ -159,7 +159,7 @@ void func_us_801CD318(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitEctoplasm);
+        InitializeEntity(g_EInitEctoplasm);
         if (self->params == 0) {
             self->anim = D_us_80182AF0;
         } else {
@@ -315,7 +315,7 @@ void func_us_801CD9EC(Entity* self) {
     tempEntity = self->ext.ectoplasm.unk8C;
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitEctoplasm);
+        InitializeEntity(g_EInitEctoplasm);
         self->flags |=
             FLAG_DESTROY_IF_OUT_OF_CAMERA | FLAG_UNK_00200000 | FLAG_UNK_2000;
         self->flags &= ~FLAG_UNK_20000000;

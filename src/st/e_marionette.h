@@ -129,14 +129,14 @@ static void func_us_801D6474(Primitive* prim) {
     UnkPrimHelper(prim);
     switch (prim->next->u2) {
     case 0:
-        LOW(prim->next->u0) = ((OVL_EXPORT(Random)() & 31) << 12) - FIX(1.0);
-        LOW(prim->next->r1) = -(OVL_EXPORT(Random)() & 31) << 12;
+        LOW(prim->next->u0) = ((Random() & 31) << 12) - FIX(1.0);
+        LOW(prim->next->r1) = -(Random() & 31) << 12;
         if (LOH(prim->next->r2) + LOH(prim->next->b2) >= 48) {
             prim->next->u2 = 1;
             prim->next->x3 = 256;
         } else {
             prim->next->u2 = 2;
-            prim->next->x3 = ((OVL_EXPORT(Random)() & 15) * 4) + 8;
+            prim->next->x3 = ((Random() & 15) * 4) + 8;
         }
         /* fallthrough */
     case 1:
@@ -161,11 +161,9 @@ static void func_us_801D6474(Primitive* prim) {
         LOW(prim->next->r1) += 0x1800;
         prim->next->x3 -= 1;
         if (!prim->next->x3) {
-            newEntity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                OVL_EXPORT(CreateEntityFromCurrentEntity)
-                (E_EXPLOSION, newEntity);
+                CreateEntityFromCurrentEntity(E_EXPLOSION, newEntity);
                 newEntity->posX.i.hi = prim->next->x1;
                 newEntity->posY.i.hi = prim->next->y0;
                 newEntity->params = 0;
@@ -196,21 +194,21 @@ void EntityMarionette(Entity* self) {
 #else
         self->palette = self->hitEffect = g_EInitSlinger[0] + 1;
 #endif
-        OVL_EXPORT(SetStep)(10);
+        SetStep(10);
         PlaySfxPositional(SFX_MARIONETTE_YELL);
     }
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitMarionette);
+        InitializeEntity(g_EInitMarionette);
         self->animCurFrame = 34;
         self->facingLeft = self->params & 1;
         break;
 
     case 1:
         self->animCurFrame = 34;
-        OVL_EXPORT(UnkCollisionFunc3)(D_us_80181FF0);
-        if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x80) {
-            OVL_EXPORT(SetStep)(3);
+        UnkCollisionFunc3(D_us_80181FF0);
+        if (GetDistanceToPlayerX() < 0x80) {
+            SetStep(3);
         }
         break;
 
@@ -232,11 +230,11 @@ void EntityMarionette(Entity* self) {
             }
             self->step_s++;
         }
-        if (!OVL_EXPORT(AnimateEntity)(self->ext.marionette.unk80, self)) {
-            if (OVL_EXPORT(Random)() & 1) {
-                OVL_EXPORT(SetStep)(4);
+        if (!AnimateEntity(self->ext.marionette.unk80, self)) {
+            if (Random() & 1) {
+                SetStep(4);
             } else {
-                OVL_EXPORT(SetStep)(8);
+                SetStep(8);
             }
         }
         func_us_801D6254(D_us_80181FE8);
@@ -248,13 +246,12 @@ void EntityMarionette(Entity* self) {
 
     case 4:
         if (!self->step_s) {
-            self->ext.marionette.unk84 =
-                D_us_80182000[OVL_EXPORT(Random)() & 3];
+            self->ext.marionette.unk84 = D_us_80182000[Random() & 3];
             self->step_s++;
         }
-        flag = OVL_EXPORT(AnimateEntity)(anim0, self);
+        flag = AnimateEntity(anim0, self);
         if (!flag) {
-            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
         flag = func_us_801D6254(D_us_80181FE8);
         if (flag & 4) {
@@ -267,14 +264,14 @@ void EntityMarionette(Entity* self) {
         }
         self->velocityY += 0x400;
         if (!--self->ext.marionette.unk84) {
-            if (OVL_EXPORT(Random)() & 1) {
-                OVL_EXPORT(SetStep)(6);
+            if (Random() & 1) {
+                SetStep(6);
             } else {
-                OVL_EXPORT(SetStep)(5);
+                SetStep(5);
             }
 
-            if (OVL_EXPORT(GetDistanceToPlayerX)() > 0x60) {
-                OVL_EXPORT(SetStep)(5);
+            if (GetDistanceToPlayerX() > 0x60) {
+                SetStep(5);
             }
         }
         break;
@@ -295,7 +292,7 @@ void EntityMarionette(Entity* self) {
             posY = self->posY.i.hi + 0x1C;
             g_api.CheckCollision(posX, posY, &collider, 0);
             if (collider.effects & EFFECT_UNK_8000) {
-                OVL_EXPORT(SetStep)(8);
+                SetStep(8);
             } else {
                 posY -= 4;
                 posX += 0x18;
@@ -310,7 +307,7 @@ void EntityMarionette(Entity* self) {
                 g_api.CheckCollision(posX, posY, &collider, 0);
                 if (collider.effects & EFFECT_SOLID) {
                     if (flag) {
-                        OVL_EXPORT(SetStep)(8);
+                        SetStep(8);
                         break;
                     }
                     if (!self->facingLeft) {
@@ -318,8 +315,7 @@ void EntityMarionette(Entity* self) {
                     }
                     flag = 1;
                 }
-                self->ext.marionette.unk80 =
-                    *(&anims[flag] + (OVL_EXPORT(Random)() & 1));
+                self->ext.marionette.unk80 = *(&anims[flag] + (Random() & 1));
                 self->velocityX = 0;
                 self->velocityY = FIX(-1.0);
                 if (self->pose > 0) {
@@ -332,15 +328,15 @@ void EntityMarionette(Entity* self) {
             break;
 
         case 2:
-            if (!OVL_EXPORT(AnimateEntity)(self->ext.marionette.unk80, self)) {
-                if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x100) {
+            if (!AnimateEntity(self->ext.marionette.unk80, self)) {
+                if (GetDistanceToPlayerX() < 0x100) {
                     self->ext.marionette.unk84--;
                 }
                 if (!self->ext.marionette.unk84) {
-                    OVL_EXPORT(SetStep)(3);
+                    SetStep(3);
                 }
-                if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x60) {
-                    OVL_EXPORT(SetStep)(3);
+                if (GetDistanceToPlayerX() < 0x60) {
+                    SetStep(3);
                 }
             }
             break;
@@ -350,8 +346,8 @@ void EntityMarionette(Entity* self) {
     case 7:
         switch (self->step_s) {
         case 0:
-            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
-            posX = OVL_EXPORT(GetDistanceToPlayerX)();
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+            posX = GetDistanceToPlayerX();
             if (posX < 0x20) {
                 posX = 0x20;
             }
@@ -367,8 +363,8 @@ void EntityMarionette(Entity* self) {
             break;
 
         case 1:
-            if (!OVL_EXPORT(AnimateEntity)(anim6, self)) {
-                OVL_EXPORT(SetSubStep)(2);
+            if (!AnimateEntity(anim6, self)) {
+                SetSubStep(2);
             }
             flag = func_us_801D6254(D_us_80181FE8);
             if (flag & 4) {
@@ -379,13 +375,13 @@ void EntityMarionette(Entity* self) {
             break;
 
         case 2:
-            OVL_EXPORT(AnimateEntity)(anim7, self);
+            AnimateEntity(anim7, self);
             flag = func_us_801D6254(D_us_80181FE8);
             if (flag & 4) {
                 self->velocityX = 0;
             }
             self->velocityY += FIX(1.0 / 16);
-            posX = OVL_EXPORT(GetDistanceToPlayerX)();
+            posX = GetDistanceToPlayerX();
             if (posX < 0x20) {
                 posX = 0x20;
             }
@@ -397,21 +393,21 @@ void EntityMarionette(Entity* self) {
                 self->velocityX = -self->velocityX;
             }
             if (self->ext.marionette.unk84 && !--self->ext.marionette.unk84 &&
-                (OVL_EXPORT(Random)() & 1) == 0) {
-                OVL_EXPORT(SetStep)(9);
+                (Random() & 1) == 0) {
+                SetStep(9);
             } else if (flag & 1) {
                 self->velocityX = 0;
                 self->velocityY = 0;
-                OVL_EXPORT(SetSubStep)(3);
+                SetSubStep(3);
             }
             break;
 
         case 3:
-            if (!OVL_EXPORT(AnimateEntity)(anim8, self)) {
-                if (OVL_EXPORT(Random)() & 1) {
-                    OVL_EXPORT(SetStep)(4);
+            if (!AnimateEntity(anim8, self)) {
+                if (Random() & 1) {
+                    SetStep(4);
                 } else {
-                    OVL_EXPORT(SetStep)(5);
+                    SetStep(5);
                     self->pose = 10;
                 }
             }
@@ -422,15 +418,15 @@ void EntityMarionette(Entity* self) {
     case 6:
         switch (self->step_s) {
         case 0:
-            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->velocityY = 0;
             self->velocityX = FIX(-0.75);
             if (self->facingLeft) {
                 self->velocityX = -self->velocityX;
             }
             self->step_s++;
-            if ((OVL_EXPORT(Random)() & 1) == 0) {
-                OVL_EXPORT(SetStep)(7);
+            if ((Random() & 1) == 0) {
+                SetStep(7);
             }
             break;
 
@@ -439,8 +435,8 @@ void EntityMarionette(Entity* self) {
             if (flag & 4) {
                 self->velocityX = 0;
             }
-            if (!OVL_EXPORT(AnimateEntity)(anim6, self)) {
-                OVL_EXPORT(SetSubStep)(2);
+            if (!AnimateEntity(anim6, self)) {
+                SetSubStep(2);
                 self->velocityX = FIX(-1.125);
                 if (self->facingLeft) {
                     self->velocityX = -self->velocityX;
@@ -450,7 +446,7 @@ void EntityMarionette(Entity* self) {
             break;
 
         case 2:
-            OVL_EXPORT(AnimateEntity)(anim7, self);
+            AnimateEntity(anim7, self);
             flag = func_us_801D6254(D_us_80181FE8);
             if (flag & 4) {
                 self->velocityX = 0;
@@ -458,16 +454,16 @@ void EntityMarionette(Entity* self) {
             if (!--self->ext.marionette.unk84 || flag & 4) {
                 self->velocityX = 0;
                 self->velocityY = 0;
-                OVL_EXPORT(SetSubStep)(3);
+                SetSubStep(3);
             }
             break;
 
         case 3:
-            if (!OVL_EXPORT(AnimateEntity)(anim8, self)) {
-                if (OVL_EXPORT(Random)() & 1) {
-                    OVL_EXPORT(SetStep)(4);
+            if (!AnimateEntity(anim8, self)) {
+                if (Random() & 1) {
+                    SetStep(4);
                 } else {
-                    OVL_EXPORT(SetStep)(5);
+                    SetStep(5);
                     self->pose = 10;
                 }
             }
@@ -486,28 +482,28 @@ void EntityMarionette(Entity* self) {
             break;
 
         case 1:
-            OVL_EXPORT(AnimateEntity)(anim5, self);
+            AnimateEntity(anim5, self);
             if (!--self->ext.marionette.unk84) {
-                OVL_EXPORT(SetSubStep)(2);
+                SetSubStep(2);
                 self->pose = 5;
                 self->poseTimer = 0;
             }
-            if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x40) {
-                OVL_EXPORT(SetSubStep)(3);
+            if (GetDistanceToPlayerX() < 0x40) {
+                SetSubStep(3);
                 self->pose = 5;
                 self->poseTimer = 0;
             }
             break;
 
         case 2:
-            if (!OVL_EXPORT(AnimateEntity)(anim5, self)) {
-                OVL_EXPORT(SetStep)(4);
+            if (!AnimateEntity(anim5, self)) {
+                SetStep(4);
             }
             break;
 
         case 3:
-            if (!OVL_EXPORT(AnimateEntity)(anim5, self)) {
-                OVL_EXPORT(SetStep)(6);
+            if (!AnimateEntity(anim5, self)) {
+                SetStep(6);
             }
             break;
         }
@@ -517,8 +513,8 @@ void EntityMarionette(Entity* self) {
         func_us_801D6254(D_us_80181FE8);
         self->velocityX -= self->velocityX / 24;
         self->velocityY -= self->velocityY / 24;
-        if (!OVL_EXPORT(AnimateEntity)(anim4, self)) {
-            OVL_EXPORT(SetStep)(4);
+        if (!AnimateEntity(anim4, self)) {
+            SetStep(4);
         }
         break;
 

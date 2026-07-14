@@ -6,5 +6,4 @@
  */
 
 // func_801A7D78: BottomCornerText
-#include "chi.h"
 #include "../popup.h"

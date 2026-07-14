@@ -156,7 +156,7 @@ void OVL_EXPORT(RicEntitySubwpnHolyWater)(Entity* self) {
     switch (self->step) {
     case 0:
         self->ext.holywater.subweaponId = PL_W_HOLYWATER;
-        OVL_EXPORT(InitializeEntity)(D_us_80180460);
+        InitializeEntity(D_us_80180460);
         self->flags = FLAG_POS_CAMERA_LOCKED;
         self->animSet = ANIMSET_OVL(3);
         self->animCurFrame = 0x23;
@@ -306,7 +306,7 @@ void OVL_EXPORT(RicEntitySubwpnCross)(Entity* self) {
     switch (self->step) {
     case 0:
         self->ext.crossBoomerang.subweaponId = PL_W_CROSS;
-        OVL_EXPORT(InitializeEntity)(D_us_80180454);
+        InitializeEntity(D_us_80180454);
         self->flags =
             FLAG_UNK_20000000 | FLAG_UNK_10000000 | FLAG_POS_CAMERA_LOCKED;
         D_us_801D10C8 = self->hitboxState;
@@ -537,7 +537,7 @@ void OVL_EXPORT(RicEntityCrashAxe)(Entity* self) {
     switch (self->step) {
     case 0:
         self->ext.subwpnAxe.subweaponId = 2;
-        OVL_EXPORT(InitializeEntity)(D_us_80180490);
+        InitializeEntity(D_us_80180490);
         self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 5);
         if (self->primIndex == -1) {
             DestroyEntity(self);

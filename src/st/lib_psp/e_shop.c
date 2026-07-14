@@ -2200,7 +2200,7 @@ void func_us_801AFE0C(Entity* self) {
 #ifdef VERSION_PSP
         func_psp_0925D4D0();
 #endif
-        OVL_EXPORT(InitializeEntity)(D_us_80180824);
+        InitializeEntity(D_us_80180824);
         if (player->posX.i.hi < 0x100) {
             // sfxID for SEQ_LIB was originally 0x202 but is 0x302 on PSP
 #ifdef VERSION_PSP
@@ -2237,7 +2237,7 @@ void func_us_801AFE0C(Entity* self) {
             g_Player.padSim = PAD_WOLF;
         }
         g_Player.demo_timer = 1;
-        OVL_EXPORT(SetStep)(2);
+        SetStep(2);
         break;
 
     case 2:
@@ -2362,7 +2362,7 @@ void func_us_801AFE0C(Entity* self) {
             case 2:
                 g_Player.padSim = PAD_NONE;
                 g_Player.demo_timer = 128;
-                OVL_EXPORT(SetStep)(10);
+                SetStep(10);
                 break;
             }
             player->posX.i.hi = 0x74;
@@ -2405,7 +2405,7 @@ void func_us_801AFE0C(Entity* self) {
 #ifdef VERSION_PSP
             g_PauseAllowed = true;
 #endif
-            OVL_EXPORT(SetStep)(9);
+            SetStep(9);
         }
         break;
     }
@@ -2424,13 +2424,13 @@ void EntityLibrarianChair(Entity* self) {
     if (player->posX.i.hi < 0x38) {
         self->zPriority = 0xC0;
         if (g_Player.status & PLAYER_STATUS_TRANSFORM) {
-            OVL_EXPORT(GetPlayerCollisionWith)(self, 16, 12, 2);
+            GetPlayerCollisionWith(self, 16, 12, 2);
             // If the chair is not in step 16, and the player is high enough,
             // and moving upward, trigger a hit.
         } else if (self->step < 16 &&
                    ((player->posY.i.hi + tilemap->scrollY.i.hi) < 201) &&
                    F(player->velocityY).i.hi < 0) {
-            OVL_EXPORT(SetStep)(16);
+            SetStep(16);
             if (PLAYER.step == Player_HighJump) {
                 g_Player.unk4A = 0x1C;
                 if (PLAYER.step_s == 0) {
@@ -2445,11 +2445,9 @@ void EntityLibrarianChair(Entity* self) {
 
             // At first hit, give Life Max Up.
             if (!(g_CastleFlags[LIBRARIAN_DROPS] & 1)) {
-                newEnt =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
+                newEnt = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEnt != NULL) {
-                    OVL_EXPORT(CreateEntityFromCurrentEntity)
-                    (E_PRIZE_DROP, newEnt);
+                    CreateEntityFromCurrentEntity(E_PRIZE_DROP, newEnt);
                     newEnt->params = 23;
                     g_CastleFlags[LIBRARIAN_DROPS] |= 1;
                 }
@@ -2457,11 +2455,9 @@ void EntityLibrarianChair(Entity* self) {
             // Getting Axe Lord Armor requires hitting librarian 64 times.
             if (!(g_CastleFlags[LIBRARIAN_DROPS] & 2) &&
                 (self->ext.libraryChair.totalHits >= 64)) {
-                newEnt =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
+                newEnt = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEnt != NULL) {
-                    OVL_EXPORT(CreateEntityFromCurrentEntity)
-                    (E_EQUIP_ITEM_DROP, newEnt);
+                    CreateEntityFromCurrentEntity(E_EQUIP_ITEM_DROP, newEnt);
                     newEnt->params = NUM_HAND_ITEMS + ITEM_AXE_LORD_ARMOR;
                     g_CastleFlags[LIBRARIAN_DROPS] |= 2;
                 }
@@ -2469,11 +2465,9 @@ void EntityLibrarianChair(Entity* self) {
             // Ring of Arcana requires 16 hits, without touching ground
             if (!(g_CastleFlags[LIBRARIAN_DROPS] & 4) &&
                 (self->ext.libraryChair.consecutiveHits >= 16)) {
-                newEnt =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
+                newEnt = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEnt != NULL) {
-                    OVL_EXPORT(CreateEntityFromCurrentEntity)
-                    (E_EQUIP_ITEM_DROP, newEnt);
+                    CreateEntityFromCurrentEntity(E_EQUIP_ITEM_DROP, newEnt);
                     newEnt->params = NUM_HAND_ITEMS + ITEM_RING_OF_ARCANA;
                     g_CastleFlags[LIBRARIAN_DROPS] |= 4;
                 }
@@ -2483,11 +2477,9 @@ void EntityLibrarianChair(Entity* self) {
             if (!(g_CastleFlags[LIBRARIAN_DROPS] & 8) &&
                 (self->ext.libraryChair.consecutiveHits >= 24) &&
                 (g_CastleFlags[INVERTED_CASTLE_UNLOCKED])) {
-                newEnt =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
+                newEnt = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEnt != NULL) {
-                    OVL_EXPORT(CreateEntityFromCurrentEntity)
-                    (E_EQUIP_ITEM_DROP, newEnt);
+                    CreateEntityFromCurrentEntity(E_EQUIP_ITEM_DROP, newEnt);
                     newEnt->params = NUM_HAND_ITEMS + ITEM_DRACULA_TUNIC;
                     g_CastleFlags[LIBRARIAN_DROPS] |= 8;
                 }
@@ -2502,7 +2494,7 @@ void EntityLibrarianChair(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         self->zPriority = 0x80;
         self->animSet = ANIMSET_OVL(11);
         self->animCurFrame = 2;
@@ -2522,90 +2514,90 @@ void EntityLibrarianChair(Entity* self) {
     case 1:
         if (OVL_EXPORT(CutsceneFlags) & 2) {
             if (--self->ext.libraryChair.timer) {
-                OVL_EXPORT(SetStep)(2);
+                SetStep(2);
             }
         } else {
             if (OVL_EXPORT(CutsceneFlags) & 0x80) {
-                OVL_EXPORT(SetStep)(9);
+                SetStep(9);
             }
         }
         break;
     case 2:
-        if (OVL_EXPORT(AnimateEntity)(D_us_801811FC, self) == 0) {
-            OVL_EXPORT(SetStep)(3);
+        if (AnimateEntity(D_us_801811FC, self) == 0) {
+            SetStep(3);
         }
         break;
     case 3:
-        OVL_EXPORT(AnimateEntity)(D_us_80181204, self);
+        AnimateEntity(D_us_80181204, self);
         if (OVL_EXPORT(CutsceneFlags) & 4) {
-            OVL_EXPORT(SetStep)(4);
+            SetStep(4);
         }
         break;
     case 4:
-        OVL_EXPORT(AnimateEntity)(D_us_80181210, self);
+        AnimateEntity(D_us_80181210, self);
         if (OVL_EXPORT(CutsceneFlags) & 8) {
-            OVL_EXPORT(SetStep)(5);
+            SetStep(5);
         }
         break;
     case 5:
-        OVL_EXPORT(AnimateEntity)(D_us_8018121C, self);
+        AnimateEntity(D_us_8018121C, self);
         if (OVL_EXPORT(CutsceneFlags) & 0x10) {
-            OVL_EXPORT(SetStep)(6);
+            SetStep(6);
         }
         break;
     case 6:
-        OVL_EXPORT(AnimateEntity)(D_us_80181234, self);
+        AnimateEntity(D_us_80181234, self);
         if (OVL_EXPORT(CutsceneFlags) & 0x20) {
-            OVL_EXPORT(SetStep)(7);
+            SetStep(7);
         }
         break;
     case 7:
-        if (OVL_EXPORT(AnimateEntity)(D_us_80181244, self) == 0) {
-            OVL_EXPORT(SetStep)(11);
+        if (AnimateEntity(D_us_80181244, self) == 0) {
+            SetStep(11);
         }
         break;
     case 9:
-        if (OVL_EXPORT(AnimateEntity)(D_us_801811FC, self) == 0) {
-            OVL_EXPORT(SetStep)(10);
+        if (AnimateEntity(D_us_801811FC, self) == 0) {
+            SetStep(10);
         }
         break;
     case 10:
-        if (OVL_EXPORT(AnimateEntity)(D_us_801812C0, self) == 0) {
-            OVL_EXPORT(SetStep)(11);
+        if (AnimateEntity(D_us_801812C0, self) == 0) {
+            SetStep(11);
         }
         break;
     case 11:
         if (OVL_EXPORT(CutsceneFlags) & 0x800) {
-            OVL_EXPORT(SetStep)(12);
+            SetStep(12);
             self->ext.libraryChair.timer = 0x30;
         }
         if (OVL_EXPORT(CutsceneFlags) & 0x1000) {
-            OVL_EXPORT(SetStep)(13);
+            SetStep(13);
         }
         break;
     case 12:
-        OVL_EXPORT(AnimateEntity)(D_us_801812C8, self);
+        AnimateEntity(D_us_801812C8, self);
         if (!--self->ext.libraryChair.timer) {
             OVL_EXPORT(CutsceneFlags) &= ~0x800;
             self->animCurFrame = 2;
-            OVL_EXPORT(SetStep)(11);
+            SetStep(11);
         }
         if (OVL_EXPORT(CutsceneFlags) & 0x1000) {
             self->animCurFrame = 2;
-            OVL_EXPORT(SetStep)(13);
+            SetStep(13);
         }
         break;
     case 13:
         break;
     case 16:
-        OVL_EXPORT(AnimateEntity)(D_us_801812D0, self);
+        AnimateEntity(D_us_801812D0, self);
         if (g_Player.status & PLAYER_STATUS_TRANSFORM) {
             self->velocityY += FIX(3.0 / 8);
             if (self->velocityY > FIX(7)) {
                 self->velocityY = FIX(7);
             }
-            OVL_EXPORT(MoveEntity)();
-            OVL_EXPORT(GetPlayerCollisionWith)(self, 16, 12, 0x12);
+            MoveEntity();
+            GetPlayerCollisionWith(self, 16, 12, 0x12);
         } else {
             if (PLAYER.step == Player_HighJump && PLAYER.step_s == 0) {
                 PLAYER.step_s = 1;
@@ -2617,7 +2609,7 @@ void EntityLibrarianChair(Entity* self) {
         if ((self->posY.i.hi + tilemap->scrollY.i.hi) >= 172) {
             self->posY.i.hi = 172 - tilemap->scrollY.i.hi;
             self->animCurFrame = 2;
-            OVL_EXPORT(SetStep)(1);
+            SetStep(1);
         }
         break;
     case 255:
@@ -2634,8 +2626,7 @@ void EntityLibrarianChair(Entity* self) {
                 self->poseTimer = 0;
             }
         }
-        OVL_EXPORT(AnimateEntity)
-        (D_us_801812D8[self->ext.libraryChair.debugAnimID], self);
+        AnimateEntity(D_us_801812D8[self->ext.libraryChair.debugAnimID], self);
         break;
     }
 }
@@ -2864,7 +2855,7 @@ void func_us_801B15C0(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         primIndex = g_api.AllocPrimitives(PRIM_G4, 7);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
@@ -2953,7 +2944,7 @@ void func_us_801B15C0(Entity* self) {
 
     case 2:
         if (OVL_EXPORT(CutsceneFlags) & 0x200) {
-            OVL_EXPORT(SetStep)(3);
+            SetStep(3);
             self->ext.et_801B15C0.unk7C = 0;
             self->ext.et_801B15C0.unk7E = 0;
             self->ext.et_801B15C0.unk80 = 0;
@@ -3025,7 +3016,7 @@ void func_us_801B15C0(Entity* self) {
             prim = prim->next;
         }
         if (self->ext.et_801B15C0.unk7C == 0x40) {
-            OVL_EXPORT(SetStep)(4);
+            SetStep(4);
         }
         break;
 
@@ -3048,69 +3039,58 @@ void func_us_801B15C0(Entity* self) {
             case 0:
                 OVL_EXPORT(CutsceneFlags) |= 0x400;
                 tempEntity = self + 1;
-                OVL_EXPORT(CreateEntityFromCurrentEntity)
-                (E_ID(ID_27), tempEntity);
+                CreateEntityFromCurrentEntity(E_ID(ID_27), tempEntity);
                 tempEntity++;
-                OVL_EXPORT(CreateEntityFromCurrentEntity)
-                (E_ID(ID_28), tempEntity);
+                CreateEntityFromCurrentEntity(E_ID(ID_28), tempEntity);
                 tempEntity++;
-                OVL_EXPORT(CreateEntityFromCurrentEntity)
-                (E_ID(ID_29), tempEntity);
+                CreateEntityFromCurrentEntity(E_ID(ID_29), tempEntity);
                 tempEntity++;
-                OVL_EXPORT(CreateEntityFromCurrentEntity)
-                (E_ID(ID_2A), tempEntity);
-                OVL_EXPORT(SetStep)(5);
+                CreateEntityFromCurrentEntity(E_ID(ID_2A), tempEntity);
+                SetStep(5);
                 g_api.PlaySfx(SFX_UI_CONFIRM);
                 break;
 
             case 1:
                 OVL_EXPORT(CutsceneFlags) |= 0x400;
                 tempEntity = self + 1;
-                OVL_EXPORT(CreateEntityFromCurrentEntity)
-                (E_ID(ID_2D), tempEntity);
-                OVL_EXPORT(SetStep)(5);
+                CreateEntityFromCurrentEntity(E_ID(ID_2D), tempEntity);
+                SetStep(5);
                 g_api.PlaySfx(SFX_UI_CONFIRM);
                 break;
 
             case 2:
                 OVL_EXPORT(CutsceneFlags) |= 0x400;
                 tempEntity = self + 1;
-                OVL_EXPORT(CreateEntityFromCurrentEntity)
-                (E_ID(ID_2E), tempEntity);
-                OVL_EXPORT(SetStep)(5);
+                CreateEntityFromCurrentEntity(E_ID(ID_2E), tempEntity);
+                SetStep(5);
                 g_api.PlaySfx(SFX_UI_CONFIRM);
                 break;
 
             case 3:
                 OVL_EXPORT(CutsceneFlags) |= 0x400;
                 tempEntity = self + 1;
-                OVL_EXPORT(CreateEntityFromCurrentEntity)
-                (E_ID(ID_48), tempEntity);
-                OVL_EXPORT(SetStep)(5);
+                CreateEntityFromCurrentEntity(E_ID(ID_48), tempEntity);
+                SetStep(5);
                 g_api.PlaySfx(SFX_UI_CONFIRM);
                 break;
 
             case 4:
-                OVL_EXPORT(SetStep)(6);
+                SetStep(6);
                 g_api.PlaySfx(SFX_UI_CONFIRM);
                 break;
 
             case 5:
                 OVL_EXPORT(CutsceneFlags) |= 0x400;
                 tempEntity = self + 1;
-                OVL_EXPORT(CreateEntityFromCurrentEntity)
-                (E_ID(ID_27), tempEntity);
+                CreateEntityFromCurrentEntity(E_ID(ID_27), tempEntity);
                 tempEntity->params = 1;
                 tempEntity++;
-                OVL_EXPORT(CreateEntityFromCurrentEntity)
-                (E_ID(ID_28), tempEntity);
+                CreateEntityFromCurrentEntity(E_ID(ID_28), tempEntity);
                 tempEntity++;
-                OVL_EXPORT(CreateEntityFromCurrentEntity)
-                (E_ID(ID_29), tempEntity);
+                CreateEntityFromCurrentEntity(E_ID(ID_29), tempEntity);
                 tempEntity++;
-                OVL_EXPORT(CreateEntityFromCurrentEntity)
-                (E_ID(ID_2A), tempEntity);
-                OVL_EXPORT(SetStep)(5);
+                CreateEntityFromCurrentEntity(E_ID(ID_2A), tempEntity);
+                SetStep(5);
                 g_api.PlaySfx(SFX_UI_CONFIRM);
                 break;
 
@@ -3118,15 +3098,14 @@ void func_us_801B15C0(Entity* self) {
             case 6:
                 OVL_EXPORT(CutsceneFlags) |= 0x400;
                 tempEntity = self + 1;
-                OVL_EXPORT(CreateEntityFromCurrentEntity)
-                (E_ID(ID_4F), tempEntity);
-                OVL_EXPORT(SetStep)(5);
+                CreateEntityFromCurrentEntity(E_ID(ID_4F), tempEntity);
+                SetStep(5);
                 g_api.PlaySfx(SFX_UI_CONFIRM);
                 break;
 #endif
             }
         } else if (g_pads[0].tapped & BUTTON_CANCEL) {
-            OVL_EXPORT(SetStep)(6);
+            SetStep(6);
             g_api.PlaySfx(SFX_UI_CONFIRM);
         }
         prim = &g_PrimBuf[self->primIndex];
@@ -3163,7 +3142,7 @@ void func_us_801B15C0(Entity* self) {
                     self->ext.et_801B15C0.unk82 |= 0x10;
                 }
 #endif
-                OVL_EXPORT(SetStep)(9);
+                SetStep(9);
             }
             break;
         }
@@ -3195,7 +3174,7 @@ void func_us_801B15C0(Entity* self) {
 
         case 2:
             if (!--self->ext.et_801B15C0.unk7C) {
-                OVL_EXPORT(SetStep)(7);
+                SetStep(7);
                 OVL_EXPORT(CutsceneFlags) |= 0x100;
                 g_PauseAllowed = true;
                 g_unkGraphicsStruct.pauseEnemies = 0;
@@ -3287,7 +3266,7 @@ void func_us_801B15C0(Entity* self) {
         }
         if (!self->ext.et_801B15C0.unk7C) {
             OVL_EXPORT(CutsceneFlags) &= ~0x200;
-            OVL_EXPORT(SetStep)(2);
+            SetStep(2);
         }
         break;
 
@@ -3303,13 +3282,13 @@ void func_us_801B15C0(Entity* self) {
         func_us_801B12D0(self, self->ext.et_801B15C0.unk82);
         if (self->ext.et_801B15C0.unk7C >= 0x18) {
             OVL_EXPORT(CutsceneFlags) &= ~0x200;
-            OVL_EXPORT(SetStep)(11);
+            SetStep(11);
         }
         break;
 
     case 11:
         if (OVL_EXPORT(CutsceneFlags) & 0x200) {
-            OVL_EXPORT(SetStep)(12);
+            SetStep(12);
             self->ext.et_801B15C0.unk7C = 0x18;
         }
         break;
@@ -3318,7 +3297,7 @@ void func_us_801B15C0(Entity* self) {
         self->ext.et_801B15C0.unk7C--;
         func_us_801B12D0(self, self->ext.et_801B15C0.unk82);
         if (!self->ext.et_801B15C0.unk7C) {
-            OVL_EXPORT(SetStep)(4);
+            SetStep(4);
         }
         break;
     }
@@ -3627,7 +3606,7 @@ void func_us_801B2BE4(Entity* self) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_G4, 0xD);
         if (primIndex != -1) {
-            OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
+            InitializeEntity(g_EInitCommon);
             i = 0;
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
@@ -3695,7 +3674,7 @@ void func_us_801B2BE4(Entity* self) {
 
     case 1:
         if (OVL_EXPORT(CutsceneFlags) & 0x400) {
-            OVL_EXPORT(SetStep)(2);
+            SetStep(2);
             if (self->params) {
                 // if showing the selling menu
                 ptr = D_us_801814D8;
@@ -3793,9 +3772,9 @@ void func_us_801B2BE4(Entity* self) {
                          self->ext.et_801B6F30.unk7C * 2, 0x74, 0x20, 8, 1);
         if (self->ext.et_801B6F30.unk7C == 0x10) {
             if (self->params) {
-                OVL_EXPORT(SetStep)(5);
+                SetStep(5);
             } else {
-                OVL_EXPORT(SetStep)(3);
+                SetStep(3);
             }
         }
         break;
@@ -3911,11 +3890,11 @@ void func_us_801B2BE4(Entity* self) {
                 } else {
                     D_us_801D415C[itemId] = 0;
                 }
-                OVL_EXPORT(SetStep)(4);
+                SetStep(4);
                 g_api.PlaySfx(SFX_UI_CONFIRM);
             }
         } else if (tempVar & BUTTON_CANCEL) {
-            OVL_EXPORT(SetStep)(7);
+            SetStep(7);
         }
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 10; i++) {
@@ -3955,7 +3934,7 @@ void func_us_801B2BE4(Entity* self) {
             if (!g_api.func_80131F68()) {
                 OVL_EXPORT(CutsceneFlags) |= 0x800;
                 g_api.PlaySfx(NA_VO_ML_THANKS);
-                OVL_EXPORT(SetStep)(3);
+                SetStep(3);
             }
             break;
         }
@@ -4006,11 +3985,11 @@ void func_us_801B2BE4(Entity* self) {
                 g_Status.equipBodyCount[ptr->itemId] -= D_us_801D415C[itemId];
                 D_us_801D425C[itemId] -= D_us_801D415C[itemId];
                 D_us_801D415C[itemId] = 0;
-                OVL_EXPORT(SetStep)(6);
+                SetStep(6);
                 g_api.PlaySfx(SFX_UI_CONFIRM);
             }
         } else if (tempVar & BUTTON_CANCEL) {
-            OVL_EXPORT(SetStep)(7);
+            SetStep(7);
         }
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 10; i++) {
@@ -4050,7 +4029,7 @@ void func_us_801B2BE4(Entity* self) {
             if (!g_api.func_80131F68()) {
                 OVL_EXPORT(CutsceneFlags) |= 0x800;
                 g_api.PlaySfx(NA_VO_ML_THANKS);
-                OVL_EXPORT(SetStep)(5);
+                SetStep(5);
             }
             break;
         }
@@ -4531,7 +4510,7 @@ void func_us_801B4830(Entity* self) {
         primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x53);
 #endif
         if (primIndex != -1) {
-            OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
+            InitializeEntity(g_EInitCommon);
             i = 0;
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
@@ -4657,7 +4636,7 @@ void func_us_801B4830(Entity* self) {
             }
             self->step_s++;
         } else if (OVL_EXPORT(CutsceneFlags) & 0x400) {
-            OVL_EXPORT(SetStep)(2);
+            SetStep(2);
             self->ext.et_801B6F30.unk7C = 0x10;
         }
         break;
@@ -4673,7 +4652,7 @@ void func_us_801B4830(Entity* self) {
                 prim->drawMode = DRAW_DEFAULT;
                 prim = prim->next;
             }
-            OVL_EXPORT(SetStep)(3);
+            SetStep(3);
             self->ext.et_801B6F30.unk7C = 0;
             self->ext.et_801B6F30.unk7E = 0;
         }
@@ -4686,7 +4665,7 @@ void func_us_801B4830(Entity* self) {
         func_us_801B245C(prim, self->ext.et_801B6F30.unk7E,
                          self->ext.et_801B6F30.unk7C * 2, 0x42, 0x18, 0x32, 1);
         if (self->ext.et_801B6F30.unk7C == 0x10) {
-            OVL_EXPORT(SetStep)(4);
+            SetStep(4);
         }
         break;
 
@@ -4696,7 +4675,7 @@ void func_us_801B4830(Entity* self) {
         if ((OVL_EXPORT(CutsceneFlags) & 0x400) == 0) {
             self->ext.et_801B6F30.unk7E = 0x400;
             self->ext.et_801B6F30.unk7C = 0x10;
-            OVL_EXPORT(SetStep)(8);
+            SetStep(8);
         }
         break;
 
@@ -4714,7 +4693,7 @@ void func_us_801B4830(Entity* self) {
                 prim->drawMode = DRAW_HIDE;
                 prim = prim->next;
             }
-            OVL_EXPORT(SetStep)(9);
+            SetStep(9);
         }
         break;
 
@@ -4922,7 +4901,7 @@ void func_us_801B5068(Entity* self) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 7);
         if (primIndex != -1) {
-            OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
+            InitializeEntity(g_EInitCommon);
             i = 0;
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
@@ -4979,14 +4958,14 @@ void func_us_801B5068(Entity* self) {
             func_us_801B4ED4(0, tempEntity->params);
             self->step_s++;
         } else if (OVL_EXPORT(CutsceneFlags) & 0x400) {
-            OVL_EXPORT(SetStep)(2);
+            SetStep(2);
             self->ext.et_801B6F30.unk7C = 0x18;
         }
         break;
 
     case 2:
         if (!--self->ext.et_801B6F30.unk7C) {
-            OVL_EXPORT(SetStep)(3);
+            SetStep(3);
             self->ext.et_801B6F30.unk7C = 0x10;
             self->ext.et_801B6F30.unk7E = 0;
         }
@@ -5058,7 +5037,7 @@ void func_us_801B5068(Entity* self) {
         }
 #endif
         if (!self->ext.et_801B6F30.unk7C) {
-            OVL_EXPORT(SetStep)(4);
+            SetStep(4);
         }
         break;
 
@@ -5088,7 +5067,7 @@ void func_us_801B5068(Entity* self) {
         }
         if ((OVL_EXPORT(CutsceneFlags) & 0x400) == 0) {
             prim->drawMode = DRAW_HIDE;
-            OVL_EXPORT(SetStep)(7);
+            SetStep(7);
             self->ext.et_801B6F30.unk7C = 0x10;
         }
         break;
@@ -5278,7 +5257,7 @@ void func_us_801B56E4(Entity* self) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x13A);
         if (primIndex != -1) {
-            OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
+            InitializeEntity(g_EInitCommon);
             i = 0;
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
@@ -5327,9 +5306,9 @@ void func_us_801B56E4(Entity* self) {
     case 1:
         if (OVL_EXPORT(CutsceneFlags) & 0x400) {
             if (tempEntity->params) {
-                OVL_EXPORT(SetStep)(4);
+                SetStep(4);
             } else {
-                OVL_EXPORT(SetStep)(2);
+                SetStep(2);
             }
         }
         break;
@@ -5444,7 +5423,7 @@ void func_us_801B56E4(Entity* self) {
                 prim->drawMode = DRAW_HIDE;
                 prim = prim->next;
             }
-            OVL_EXPORT(SetStep)(3);
+            SetStep(3);
         }
         break;
 
@@ -5511,7 +5490,7 @@ void func_us_801B56E4(Entity* self) {
                 prim->drawMode = DRAW_HIDE;
                 prim = prim->next;
             }
-            OVL_EXPORT(SetStep)(3);
+            SetStep(3);
         }
         break;
     }
@@ -5519,7 +5498,7 @@ void func_us_801B56E4(Entity* self) {
 
 void func_us_801B5F18(Entity* self) {
     Entity* tempEntity = &g_Entities[192];
-    OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(ID_25), tempEntity);
+    CreateEntityFromCurrentEntity(E_ID(ID_25), tempEntity);
     self->step++;
 #ifdef VERSION_PSP
     *OVL_EXPORT(cutscene_data_offset_four) = 0;
@@ -5542,7 +5521,7 @@ void func_us_801B5F84(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         if (g_PlayableCharacter) {
             self->step++;
         } else if ((player->posY.i.hi + g_Tilemap.scrollY.i.hi) < 0x100 &&
@@ -5575,11 +5554,11 @@ void func_us_801B5F84(Entity* self) {
 void func_us_801B60C8(Entity* self) {
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         break;
 
     case 1:
-        OVL_EXPORT(GetPlayerCollisionWith)(self, 8, 0x48, 1);
+        GetPlayerCollisionWith(self, 8, 0x48, 1);
         break;
     }
 }
@@ -5706,7 +5685,7 @@ void func_us_801B6324(Entity* self) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x140);
         if (primIndex != -1) {
-            OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
+            InitializeEntity(g_EInitCommon);
             i = 0;
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
@@ -5815,7 +5794,7 @@ void func_us_801B6324(Entity* self) {
 
     case 1:
         if (OVL_EXPORT(CutsceneFlags) & 0x400) {
-            OVL_EXPORT(SetStep)(2);
+            SetStep(2);
             var_v1 = 0;
             for (i = 0; i < LEN(D_us_8018173C); i++) {
                 itemID = D_us_8018173C[i].itemId;
@@ -5855,7 +5834,7 @@ void func_us_801B6324(Entity* self) {
         }
         func_us_801B6124(prim, self);
         if (self->ext.et_801B6F30.unk7C == 0x10) {
-            OVL_EXPORT(SetStep)(3);
+            SetStep(3);
         }
         break;
 
@@ -5897,19 +5876,19 @@ void func_us_801B6324(Entity* self) {
                     itemID = D_us_8018173C[itemID].itemId;
                     g_CastleFlags[(itemID >> 3) + ENEMY_TACTICS_180] |=
                         (1 << (itemID & 7));
-                    OVL_EXPORT(SetStep)(4);
+                    SetStep(4);
                     g_api.PlaySfx(SFX_UI_CONFIRM);
                 }
                 break;
 
             case 2:
             case 3:
-                OVL_EXPORT(SetStep)(4);
+                SetStep(4);
                 g_api.PlaySfx(SFX_UI_CONFIRM);
                 break;
             }
         } else if (pads & BUTTON_CANCEL) {
-            OVL_EXPORT(SetStep)(7);
+            SetStep(7);
         }
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 10; i++) {
@@ -5980,7 +5959,7 @@ void func_us_801B6324(Entity* self) {
                 prim->drawMode = DRAW_HIDE;
                 prim = prim->next;
             }
-            OVL_EXPORT(SetStep)(9);
+            SetStep(9);
         }
         break;
 
@@ -6047,7 +6026,7 @@ void func_us_801B6F30(Entity* self) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x140);
         if (primIndex != -1) {
-            OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
+            InitializeEntity(g_EInitCommon);
             i = 0;
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
@@ -6164,7 +6143,7 @@ void func_us_801B6F30(Entity* self) {
 
     case 1:
         if (OVL_EXPORT(CutsceneFlags) & 0x400) {
-            OVL_EXPORT(SetStep)(2);
+            SetStep(2);
             self->ext.et_801B6F30.unk7C = 0;
             self->ext.et_801B6F30.unk7E = 0;
             g_CastleFlags[ENEMY_LIST_190] |= 1;
@@ -6182,7 +6161,7 @@ void func_us_801B6F30(Entity* self) {
         }
         func_us_801B6E20(prim, self);
         if (self->ext.et_801B6F30.unk7C == 0x10) {
-            OVL_EXPORT(SetStep)(3);
+            SetStep(3);
         }
         break;
 
@@ -6248,12 +6227,12 @@ void func_us_801B6F30(Entity* self) {
             if (g_CastleFlags[(enemyIndex >> 3) + ENEMY_LIST_190] &
                 (1 << (enemyIndex & 7))) {
                 g_api.PlaySfx(SFX_UI_CONFIRM);
-                OVL_EXPORT(SetStep)(4);
+                SetStep(4);
             } else {
                 g_api.PlaySfx(SFX_UI_ERROR);
             }
         } else if (pads & BUTTON_CANCEL) {
-            OVL_EXPORT(SetStep)(7);
+            SetStep(7);
         }
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 10; i++) {
@@ -6310,7 +6289,7 @@ void func_us_801B6F30(Entity* self) {
                     prim->drawMode = DRAW_HIDE;
                     self->ext.et_801B6F30.unk7E = 0x400;
                     self->ext.et_801B6F30.unk7C = 0x10;
-                    OVL_EXPORT(SetStep)(5);
+                    SetStep(5);
                 }
             }
             break;
@@ -6341,13 +6320,13 @@ void func_us_801B6F30(Entity* self) {
                 prim = prim->next;
             }
             tempEntity = self + 1;
-            OVL_EXPORT(CreateEntityFromCurrentEntity)(E_ID(ID_2F), tempEntity);
+            CreateEntityFromCurrentEntity(E_ID(ID_2F), tempEntity);
             tempEntity->params =
                 (self->ext.et_801B6F30.unk82 + self->ext.et_801B6F30.unk80) *
                     2 +
                 self->ext.et_801B6F30.unk84;
             OVL_EXPORT(CutsceneFlags) &= ~0x400;
-            OVL_EXPORT(SetStep)(1);
+            SetStep(1);
         }
         break;
 
@@ -6384,7 +6363,7 @@ void func_us_801B6F30(Entity* self) {
                 prim->drawMode = DRAW_HIDE;
                 prim = prim->next;
             }
-            OVL_EXPORT(SetStep)(9);
+            SetStep(9);
         }
         break;
 
@@ -6631,7 +6610,7 @@ void func_us_801B8234(Entity* self) {
         primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x86);
 #endif
         if (primIndex != -1) {
-            OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
+            InitializeEntity(g_EInitCommon);
             i = 0;
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
@@ -6791,7 +6770,7 @@ void func_us_801B8234(Entity* self) {
             func_us_801B7DF8(prim, self, enemyId);
             self->ext.et_801B6F30.unk7C = 0;
             self->ext.et_801B6F30.unk7E = 0;
-            OVL_EXPORT(SetStep)(2);
+            SetStep(2);
         }
         break;
 
@@ -6807,7 +6786,7 @@ void func_us_801B8234(Entity* self) {
                          self->ext.et_801B6F30.unk7C * 2, 0x78, 0x20, 7, 0);
 #endif
         if (self->ext.et_801B6F30.unk7C == 0x10) {
-            OVL_EXPORT(SetStep)(3);
+            SetStep(3);
         }
         break;
 
@@ -6825,7 +6804,7 @@ void func_us_801B8234(Entity* self) {
                         (1 << (enemyIndex & 7)) &&
                     D_us_80180E90[self->params] != 0xFFFF) {
                     self->params = enemyIndex;
-                    OVL_EXPORT(SetStep)(4);
+                    SetStep(4);
                     break;
                 }
             }
@@ -6835,21 +6814,21 @@ void func_us_801B8234(Entity* self) {
                         (1 << (enemyIndex & 7)) &&
                     D_us_80180E90[self->params] != 0xFFFF) {
                     self->params = enemyIndex;
-                    OVL_EXPORT(SetStep)(4);
+                    SetStep(4);
                     break;
                 }
             }
         }
         pads = g_pads[0].tapped;
         if (pads & BUTTON_CANCEL) {
-            OVL_EXPORT(SetStep)(7);
+            SetStep(7);
         }
         break;
 
     case 4:
         self->ext.et_801B6F30.unk7E = 0x400;
         self->ext.et_801B6F30.unk7C = 0x10;
-        OVL_EXPORT(SetStep)(5);
+        SetStep(5);
         break;
 
     case 5:
@@ -6864,7 +6843,7 @@ void func_us_801B8234(Entity* self) {
                          self->ext.et_801B6F30.unk7C, 0x74, 0x20, 7, 0);
 #endif
         if (!self->ext.et_801B6F30.unk7C) {
-            OVL_EXPORT(SetStep)(1);
+            SetStep(1);
         }
         break;
 
@@ -6972,7 +6951,7 @@ void func_psp_0926AED0(Entity* self) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x140);
         if (primIndex != -1) {
-            OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
+            InitializeEntity(g_EInitCommon);
             i = 0;
 #ifdef VERSION_PSP
             self->ext.et_801B6F30.unk86 = 0;
@@ -7115,7 +7094,7 @@ void func_psp_0926AED0(Entity* self) {
         }
 #endif
         if (OVL_EXPORT(CutsceneFlags) & 0x400) {
-            OVL_EXPORT(SetStep)(2);
+            SetStep(2);
             self->ext.et_801B6F30.unk7C = 0;
             self->ext.et_801B6F30.unk7E = 0;
         }
@@ -7137,7 +7116,7 @@ void func_psp_0926AED0(Entity* self) {
 #endif
         if (self->ext.et_801B6F30.unk7C == 0x10) {
             g_api.PlaySfx(SET_STOP_SEQ);
-            OVL_EXPORT(SetStep)(3);
+            SetStep(3);
         }
         break;
 
@@ -7210,9 +7189,9 @@ void func_psp_0926AED0(Entity* self) {
         pads = g_pads[0].tapped;
         if (pads & BUTTON_CONFIRM) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
-            OVL_EXPORT(SetStep)(4);
+            SetStep(4);
         } else if (pads & BUTTON_CANCEL) {
-            OVL_EXPORT(SetStep)(6);
+            SetStep(6);
         }
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 10; i++) {
@@ -7278,7 +7257,7 @@ void func_psp_0926AED0(Entity* self) {
                 sfxIndex = self->ext.et_801B6F30.unk84 +
                            self->ext.et_801B6F30.unk80 * 2;
                 g_api.PlaySfx(D_psp_092A4CF0[sfxIndex]);
-                OVL_EXPORT(SetStep)(3);
+                SetStep(3);
             }
             break;
         }
@@ -7304,7 +7283,7 @@ void func_psp_0926AED0(Entity* self) {
                 sfxIndex =
                     self->ext.et_801B6F30.unk80 + self->ext.et_801B6F30.unk82;
                 g_api.PlaySfx(D_psp_092A4CF0[sfxIndex]);
-                OVL_EXPORT(SetStep)(3);
+                SetStep(3);
             }
             break;
         }
@@ -7354,7 +7333,7 @@ void func_psp_0926AED0(Entity* self) {
                 prim->drawMode = DRAW_HIDE;
                 prim = prim->next;
             }
-            OVL_EXPORT(SetStep)(9);
+            SetStep(9);
         }
         break;
 
@@ -7433,7 +7412,7 @@ void func_us_801B8A00(Entity* self) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x140);
         if (primIndex != -1) {
-            OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
+            InitializeEntity(g_EInitCommon);
             i = 0;
             self->flags |= FLAG_HAS_PRIMS;
             self->ext.et_801B6F30.unk86 = 0;
@@ -7535,7 +7514,7 @@ void func_us_801B8A00(Entity* self) {
 
     case 1:
         if (OVL_EXPORT(CutsceneFlags) & 0x400) {
-            OVL_EXPORT(SetStep)(2);
+            SetStep(2);
             self->ext.et_801B6F30.unk7C = 0;
             self->ext.et_801B6F30.unk7E = 0;
         }
@@ -7553,7 +7532,7 @@ void func_us_801B8A00(Entity* self) {
         func_us_801B8958(prim, self);
         if (self->ext.et_801B6F30.unk7C == 0x10) {
             g_api.PlaySfx(SET_STOP_SEQ);
-            OVL_EXPORT(SetStep)(3);
+            SetStep(3);
         }
         break;
 
@@ -7603,9 +7582,9 @@ void func_us_801B8A00(Entity* self) {
         pads = g_pads[0].tapped;
         if (pads & g_ConfirmButton) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
-            OVL_EXPORT(SetStep)(4);
+            SetStep(4);
         } else if (pads & g_CancelButton) {
-            OVL_EXPORT(SetStep)(6);
+            SetStep(6);
         }
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 10; i++) {
@@ -7655,7 +7634,7 @@ void func_us_801B8A00(Entity* self) {
                 sfxIndex =
                     self->ext.et_801B6F30.unk80 + self->ext.et_801B6F30.unk82;
                 g_api.PlaySfx(D_us_80181978[sfxIndex]);
-                OVL_EXPORT(SetStep)(3);
+                SetStep(3);
             }
             break;
         }
@@ -7702,7 +7681,7 @@ void func_us_801B8A00(Entity* self) {
                 prim->drawMode = DRAW_HIDE;
                 prim = prim->next;
             }
-            OVL_EXPORT(SetStep)(9);
+            SetStep(9);
         }
         break;
 

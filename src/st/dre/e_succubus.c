@@ -212,76 +212,75 @@ void EntitySuccubus(Entity* self) {
     FntPrint("multiple_count %x\n", multiple_count);
 
     if ((self->hitFlags & 3) && (self->step & SUCCUBUS_CS_1)) {
-        OVL_EXPORT(SetStep)(SUCCUBUS_GET_HIT);
+        SetStep(SUCCUBUS_GET_HIT);
     }
 
     if (self->flags & FLAG_DEAD) {
         if (self->step != SUCCUBUS_DYING) {
             self->hitboxState = 0;
-            OVL_EXPORT(SetStep)(SUCCUBUS_DYING);
+            SetStep(SUCCUBUS_DYING);
         }
     }
 
     switch (self->step) {
     case SUCCUBUS_INIT:
-        OVL_EXPORT(InitializeEntity)(g_EInitSuccubus);
+        InitializeEntity(g_EInitSuccubus);
         self->animCurFrame = 82;
-        OVL_EXPORT(SetStep)(SUCCUBUS_CS_1);
+        SetStep(SUCCUBUS_CS_1);
         entity = self + 1;
-        OVL_EXPORT(CreateEntityFromCurrentEntity)
-        (E_ID(SUCCUBUS_WING_OVERLAY), entity);
+        CreateEntityFromCurrentEntity(E_ID(SUCCUBUS_WING_OVERLAY), entity);
 
     case SUCCUBUS_CS_1: // Disguised as Lisa
         if (g_CastleFlags[SUCCUBUS_CS] || (g_DemoMode != Demo_None)) {
             self->facingLeft = 0;
             self->posX.i.hi = 416 - g_Tilemap.scrollX.i.hi;
             self->posY.i.hi = 175 - g_Tilemap.scrollY.i.hi;
-            OVL_EXPORT(SetStep)(SUCCUBUS_CS_4);
+            SetStep(SUCCUBUS_CS_4);
             self->step_s = 3;
         }
         self->animCurFrame = 82;
         if (OVL_EXPORT(CutsceneFlags) & 4) {
-            OVL_EXPORT(SetStep)(SUCCUBUS_CS_2);
+            SetStep(SUCCUBUS_CS_2);
         }
         break;
 
     case SUCCUBUS_CS_2: // Disguised as Lisa
         if (OVL_EXPORT(SkipCutscene)) {
-            OVL_EXPORT(SetSubStep)(4);
+            SetSubStep(4);
         }
         switch (self->step_s) {
         case 0:
-            OVL_EXPORT(AnimateEntity)(D_8018079C, self);
+            AnimateEntity(D_8018079C, self);
             if (OVL_EXPORT(CutsceneFlags) & 0x400) {
-                OVL_EXPORT(SetSubStep)(1);
+                SetSubStep(1);
             }
             break;
 
         case 1:
-            OVL_EXPORT(AnimateEntity)(D_801807AC, self);
+            AnimateEntity(D_801807AC, self);
             if (OVL_EXPORT(CutsceneFlags) & 0x800) {
                 self->animCurFrame = 84;
-                OVL_EXPORT(SetSubStep)(2);
+                SetSubStep(2);
             }
             break;
 
         case 2:
             if (OVL_EXPORT(CutsceneFlags) & 0x1000) {
-                OVL_EXPORT(SetSubStep)(3);
+                SetSubStep(3);
             }
             break;
 
         case 3:
             self->animCurFrame = 83;
             if (OVL_EXPORT(CutsceneFlags) & 0x2000) {
-                OVL_EXPORT(SetSubStep)(4);
+                SetSubStep(4);
             }
             break;
 
         case 4:
             self->animCurFrame = 84;
             if (OVL_EXPORT(CutsceneFlags) & 0x20) {
-                OVL_EXPORT(SetStep)(SUCCUBUS_CS_3);
+                SetStep(SUCCUBUS_CS_3);
             }
             break;
         }
@@ -290,7 +289,7 @@ void EntitySuccubus(Entity* self) {
     // Sets Succubus in position
     case SUCCUBUS_CS_3:
         if (OVL_EXPORT(SkipCutscene) && self->step_s) {
-            OVL_EXPORT(SetStep)(SUCCUBUS_CS_4);
+            SetStep(SUCCUBUS_CS_4);
         } else {
             switch (self->step_s) {
             case 0:
@@ -300,29 +299,29 @@ void EntitySuccubus(Entity* self) {
                 self->step_s++;
 
             case 1:
-                OVL_EXPORT(AnimateEntity)(D_8018066C, self);
+                AnimateEntity(D_8018066C, self);
                 if (OVL_EXPORT(CutsceneFlags) & 0x40) {
-                    OVL_EXPORT(SetSubStep)(2);
+                    SetSubStep(2);
                 }
                 break;
 
             case 2:
                 self->animCurFrame = 4;
                 if (OVL_EXPORT(CutsceneFlags) & 0x80) {
-                    OVL_EXPORT(SetSubStep)(3);
+                    SetSubStep(3);
                 }
                 break;
 
             case 3:
-                OVL_EXPORT(AnimateEntity)(D_80180674, self);
+                AnimateEntity(D_80180674, self);
                 if (OVL_EXPORT(CutsceneFlags) & 0x100) {
-                    OVL_EXPORT(SetSubStep)(4);
+                    SetSubStep(4);
                 }
                 break;
 
             case 4:
-                if (!OVL_EXPORT(AnimateEntity)(D_80180680, self)) {
-                    OVL_EXPORT(SetStep)(SUCCUBUS_CS_4);
+                if (!AnimateEntity(D_80180680, self)) {
+                    SetStep(SUCCUBUS_CS_4);
                 }
                 break;
             }
@@ -333,8 +332,8 @@ void EntitySuccubus(Entity* self) {
     case SUCCUBUS_CS_4:
         switch (self->step_s) {
         case 0:
-            if (!OVL_EXPORT(AnimateEntity)(D_80180694, self)) {
-                OVL_EXPORT(SetSubStep)(1);
+            if (!AnimateEntity(D_80180694, self)) {
+                SetSubStep(1);
             }
             break;
 
@@ -347,20 +346,20 @@ void EntitySuccubus(Entity* self) {
             self->step_s++;
 
         case 2:
-            OVL_EXPORT(MoveEntity)();
+            MoveEntity();
             self->velocityY += FIX(0.125);
             if (self->velocityY > 0) {
                 self->velocityY = 0;
             }
-            if (!OVL_EXPORT(AnimateEntity)(D_801806A0, self)) {
-                OVL_EXPORT(SetStep)(SUCCUBUS_IDLE);
+            if (!AnimateEntity(D_801806A0, self)) {
+                SetStep(SUCCUBUS_IDLE);
             }
             break;
 
         case 3:
-            OVL_EXPORT(AnimateEntity)(D_80180694, self);
-            if (OVL_EXPORT(GetDistanceToPlayerX)() < 96) {
-                OVL_EXPORT(SetSubStep)(1);
+            AnimateEntity(D_80180694, self);
+            if (GetDistanceToPlayerX() < 96) {
+                SetSubStep(1);
             }
             break;
         }
@@ -371,8 +370,7 @@ void EntitySuccubus(Entity* self) {
         case SUCCUBUS_DYING_SETUP:
             PlaySfxPositional(SFX_SUCCUBUS_DEFEAT);
             entity = &g_Entities[200];
-            OVL_EXPORT(CreateEntityFromCurrentEntity)
-            (E_ID(SUCCUBUS_CUTSCENE), entity);
+            CreateEntityFromCurrentEntity(E_ID(SUCCUBUS_CUTSCENE), entity);
             entity->params = 1;
             multiple_count = 0;
             D_80180664 |= 2;
@@ -390,8 +388,8 @@ void EntitySuccubus(Entity* self) {
             break;
 
         case SUCCUBUS_DYING_FALL:
-            OVL_EXPORT(AnimateEntity)(D_80180768, self);
-            OVL_EXPORT(MoveEntity)();
+            AnimateEntity(D_80180768, self);
+            MoveEntity();
             self->velocityY += FIX(0.125);
             if (self->velocityY > 0) {
                 self->step_s = 2;
@@ -399,14 +397,14 @@ void EntitySuccubus(Entity* self) {
             break;
 
         case SUCCUBUS_DYING_LAND:
-            OVL_EXPORT(AnimateEntity)(D_80180768, self);
-            OVL_EXPORT(MoveEntity)();
+            AnimateEntity(D_80180768, self);
+            MoveEntity();
             self->velocityY += FIX(0.125);
             posY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
             if (posY > 175) {
                 PlaySfxPositional(SFX_STOMP_HARD_A);
                 self->posY.i.hi = 175 - g_Tilemap.scrollY.i.hi;
-                OVL_EXPORT(SetSubStep)(SUCCUBUS_DYING_ANIM_1);
+                SetSubStep(SUCCUBUS_DYING_ANIM_1);
                 posX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
                 if (posX < 80) {
                     *D_801816C4 = self->facingLeft = 1;
@@ -414,21 +412,21 @@ void EntitySuccubus(Entity* self) {
                     *D_801816C4 = self->facingLeft = 0;
                 } else {
                     *D_801816C4 = self->facingLeft =
-                        (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+                        (GetSideToPlayer() & 1) ^ 1;
                 }
                 OVL_EXPORT(CutsceneFlags) |= 2;
             }
             break;
 
         case SUCCUBUS_DYING_ANIM_1:
-            OVL_EXPORT(AnimateEntity)(D_80180770, self);
+            AnimateEntity(D_80180770, self);
             if (OVL_EXPORT(CutsceneFlags) & 0x10) {
-                OVL_EXPORT(SetSubStep)(SUCCUBUS_DYING_ANIM_2);
+                SetSubStep(SUCCUBUS_DYING_ANIM_2);
             }
             break;
 
         case SUCCUBUS_DYING_ANIM_2:
-            OVL_EXPORT(AnimateEntity)(D_80180778, self);
+            AnimateEntity(D_80180778, self);
         }
         break;
 
@@ -438,7 +436,7 @@ void EntitySuccubus(Entity* self) {
             self->step_s++;
         }
 
-        OVL_EXPORT(AnimateEntity)(D_801806C4, self);
+        AnimateEntity(D_801806C4, self);
         if (!self->poseTimer && self->pose == 3) {
             PlaySfxPositional(SFX_BOSS_WING_FLAP);
         }
@@ -450,12 +448,11 @@ void EntitySuccubus(Entity* self) {
 
         if (!--self->ext.succubus.timer) {
             self->ext.succubus.nextStep = SUCCUBUS_FLY;
-            OVL_EXPORT(SetStep)(SUCCUBUS_FACE_PLAYER);
+            SetStep(SUCCUBUS_FACE_PLAYER);
         }
-        if ((self->ext.succubus.timer < 80) &&
-            (OVL_EXPORT(GetDistanceToPlayerX)() < 80)) {
+        if ((self->ext.succubus.timer < 80) && (GetDistanceToPlayerX() < 80)) {
             self->ext.succubus.nextStep = SUCCUBUS_FLY;
-            OVL_EXPORT(SetStep)(SUCCUBUS_FACE_PLAYER);
+            SetStep(SUCCUBUS_FACE_PLAYER);
         }
         break;
 
@@ -463,11 +460,11 @@ void EntitySuccubus(Entity* self) {
         switch (self->step_s) {
         case SUCCUBUS_FLY_0:
             self->velocityY = 0;
-            self->ext.succubus.timer = (OVL_EXPORT(Random)() & 31) + 32;
+            self->ext.succubus.timer = (Random() & 31) + 32;
             self->ext.succubus.nextAttack = SUCCUBUS_PETAL_ATTACK;
             self->ext.succubus.yOffset = 88;
-            if (!(OVL_EXPORT(Random)() & 3)) {
-                if (OVL_EXPORT(Random)() & 1) {
+            if (!(Random() & 3)) {
+                if (Random() & 1) {
                     self->ext.succubus.nextAttack = SUCCUBUS_SPIKE_ATTACK;
                     self->ext.succubus.yOffset = 120;
                 } else {
@@ -478,12 +475,12 @@ void EntitySuccubus(Entity* self) {
             self->step_s++;
 
         case SUCCUBUS_FLY_1:
-            OVL_EXPORT(AnimateEntity)(D_801806E8, self);
+            AnimateEntity(D_801806E8, self);
             if (!self->poseTimer && self->pose == 3) {
                 PlaySfxPositional(SFX_BOSS_WING_FLAP);
             }
 
-            OVL_EXPORT(MoveEntity)();
+            MoveEntity();
             posY = self->posY.i.hi - self->ext.succubus.yOffset;
             if (posY > 8) {
                 self->velocityY = FIX(-0.75);
@@ -510,7 +507,7 @@ void EntitySuccubus(Entity* self) {
                 posX = 96;
             }
 
-            temp = OVL_EXPORT(GetDistanceToPlayerX)();
+            temp = GetDistanceToPlayerX();
             if (!self->ext.succubus.facingLeft && temp < posX) {
                 self->ext.succubus.facingLeft ^= 1;
             }
@@ -518,11 +515,11 @@ void EntitySuccubus(Entity* self) {
                 self->ext.succubus.facingLeft ^= 1;
             }
 
-            sideToPlayer = ((OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1);
+            sideToPlayer = ((GetSideToPlayer() & 1) ^ 1);
             if (self->facingLeft != sideToPlayer) {
                 if (temp > 16) {
                     self->ext.succubus.nextStep = SUCCUBUS_CLONE_ATTACK;
-                    OVL_EXPORT(SetStep)(SUCCUBUS_NEXT_ACTION_CHECK);
+                    SetStep(SUCCUBUS_NEXT_ACTION_CHECK);
                 }
             }
 
@@ -537,14 +534,14 @@ void EntitySuccubus(Entity* self) {
             }
 
             if (!self->ext.succubus.timer) {
-                if (OVL_EXPORT(GetDistanceToPlayerX)() < 96) {
+                if (GetDistanceToPlayerX() < 96) {
                     if (self->ext.succubus.nextAttack ==
                         SUCCUBUS_PETAL_ATTACK) {
-                        OVL_EXPORT(SetStep)(SUCCUBUS_PETAL_ATTACK);
+                        SetStep(SUCCUBUS_PETAL_ATTACK);
                     } else {
                         self->ext.succubus.nextStep =
                             self->ext.succubus.nextAttack;
-                        OVL_EXPORT(SetStep)(SUCCUBUS_NEXT_ACTION_CHECK);
+                        SetStep(SUCCUBUS_NEXT_ACTION_CHECK);
                     }
                 }
             } else {
@@ -564,11 +561,11 @@ void EntitySuccubus(Entity* self) {
                     self->velocityX = FIX(-1.375);
                 }
             }
-            OVL_EXPORT(AnimateEntity)(D_801806E8, self);
+            AnimateEntity(D_801806E8, self);
             if (!self->poseTimer && self->pose == 3) {
                 PlaySfxPositional(SFX_BOSS_WING_FLAP);
             }
-            OVL_EXPORT(MoveEntity)();
+            MoveEntity();
             if (!--self->ext.succubus.timer) {
                 self->step_s = 0;
             }
@@ -578,27 +575,27 @@ void EntitySuccubus(Entity* self) {
 
     case SUCCUBUS_FACE_PLAYER:
         if (!self->step_s) {
-            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->step_s++;
         }
 
-        if (!OVL_EXPORT(AnimateEntity)(D_801806D4, self)) {
+        if (!AnimateEntity(D_801806D4, self)) {
             if (self->ext.succubus.nextStep) {
-                OVL_EXPORT(SetStep)(self->ext.succubus.nextStep);
+                SetStep(self->ext.succubus.nextStep);
                 self->ext.succubus.nextStep = 0;
             } else {
-                OVL_EXPORT(SetStep)(SUCCUBUS_FLY);
+                SetStep(SUCCUBUS_FLY);
             }
         }
         break;
 
     case SUCCUBUS_NEXT_ACTION_CHECK:
-        if (!OVL_EXPORT(AnimateEntity)(D_801806F8, self)) {
+        if (!AnimateEntity(D_801806F8, self)) {
             if (self->ext.succubus.nextStep) {
-                OVL_EXPORT(SetStep)(self->ext.succubus.nextStep);
+                SetStep(self->ext.succubus.nextStep);
                 self->ext.succubus.nextStep = 0;
             } else {
-                OVL_EXPORT(SetStep)(SUCCUBUS_IDLE);
+                SetStep(SUCCUBUS_IDLE);
             }
         }
         break;
@@ -606,7 +603,7 @@ void EntitySuccubus(Entity* self) {
     case SUCCUBUS_PETAL_ATTACK:
         switch (self->step_s) {
         case SUCCUBUS_PETAL_ATTACK_SETUP:
-            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             if (g_Player.status & PLAYER_STATUS_CURSE) {
                 self->ext.succubus.unk87 = false;
             } else {
@@ -616,7 +613,7 @@ void EntitySuccubus(Entity* self) {
             self->step_s++;
 
         case SUCCUBUS_PETAL_ATTACK_ANIM:
-            if (!OVL_EXPORT(AnimateEntity)(D_8018070C, self)) {
+            if (!AnimateEntity(D_8018070C, self)) {
                 self->ext.succubus.timer = 128;
                 PlaySfxPositional(SFX_SUCCUBUS_LAUGH);
                 self->step_s++;
@@ -625,11 +622,9 @@ void EntitySuccubus(Entity* self) {
 
         case SUCCUBUS_PETAL_ATTACK_CREATE_PETALS:
             if (!(self->ext.succubus.timer & 1)) {
-                entity =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
+                entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
-                    OVL_EXPORT(CreateEntityFromEntity)
-                    (E_ID(SUCCUBUS_PETAL), self, entity);
+                    CreateEntityFromEntity(E_ID(SUCCUBUS_PETAL), self, entity);
                     entity->facingLeft = self->facingLeft;
                     entity->zPriority = self->zPriority - 1;
                 }
@@ -638,16 +633,16 @@ void EntitySuccubus(Entity* self) {
                 PlaySfxPositional(SFX_GLASS_SHARDS);
             }
             if (!--self->ext.succubus.timer) {
-                OVL_EXPORT(SetStep)(SUCCUBUS_FLY);
+                SetStep(SUCCUBUS_FLY);
             }
             if (self->ext.succubus.unk87) {
                 if (g_Player.status & PLAYER_STATUS_CURSE) {
-                    OVL_EXPORT(SetStep)(SUCCUBUS_CHARGE);
+                    SetStep(SUCCUBUS_CHARGE);
                 }
             } else if (D_80180668) {
-                if (OVL_EXPORT(GetDistanceToPlayerX)() > 72) {
+                if (GetDistanceToPlayerX() > 72) {
                     self->ext.succubus.nextStep = SUCCUBUS_TAUNT;
-                    OVL_EXPORT(SetStep)(SUCCUBUS_FACE_PLAYER);
+                    SetStep(SUCCUBUS_FACE_PLAYER);
                 }
             }
             break;
@@ -684,7 +679,7 @@ void EntitySuccubus(Entity* self) {
                 self->velocityX = 0;
             }
 
-            OVL_EXPORT(MoveEntity)();
+            MoveEntity();
 
             entity = &PLAYER;
             posX = entity->posX.i.hi - self->posX.i.hi;
@@ -723,7 +718,7 @@ void EntitySuccubus(Entity* self) {
             if (!g_Player.unk60) {
                 if (!--self->ext.succubus.timer) {
                     self->ext.succubus.unk87 = false;
-                    OVL_EXPORT(SetStep)(SUCCUBUS_FLY);
+                    SetStep(SUCCUBUS_FLY);
                 }
             }
             break;
@@ -743,7 +738,7 @@ void EntitySuccubus(Entity* self) {
             self->step_s++;
 
         case SUCCUBUS_CHARGE_DEAL_DAMAGE:
-            if (!OVL_EXPORT(AnimateEntity)(D_8018071C, self)) {
+            if (!AnimateEntity(D_8018071C, self)) {
                 g_Player.unk64 = g_api.enemyDefs[347].attack;
                 g_Player.unk60 = 3;
                 self->ext.succubus.timer = 48;
@@ -768,11 +763,11 @@ void EntitySuccubus(Entity* self) {
             break;
 
         case SUCCUBUS_CHARGE_DECELERATE:
-            OVL_EXPORT(MoveEntity)();
+            MoveEntity();
             self->velocityX -= self->velocityX >> 5;
             self->velocityY -= self->velocityY >> 5;
             if (!--self->ext.succubus.timer) {
-                OVL_EXPORT(SetStep)(SUCCUBUS_TAUNT);
+                SetStep(SUCCUBUS_TAUNT);
             }
             break;
         }
@@ -781,7 +776,7 @@ void EntitySuccubus(Entity* self) {
     case SUCCUBUS_TAUNT:
         if (!self->step_s) {
             self->ext.succubus.timer = 80;
-            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->step_s++;
             if (self->ext.succubus.unk87) {
                 PlaySfxPositional(SFX_SUCCUBUS_DELICIOUS);
@@ -790,10 +785,9 @@ void EntitySuccubus(Entity* self) {
             }
             self->ext.succubus.unk87 = false;
         }
-        OVL_EXPORT(AnimateEntity)(D_8018072C, self);
-        if (!--self->ext.succubus.timer ||
-            OVL_EXPORT(GetDistanceToPlayerX)() < 32) {
-            OVL_EXPORT(SetStep)(SUCCUBUS_FLY);
+        AnimateEntity(D_8018072C, self);
+        if (!--self->ext.succubus.timer || GetDistanceToPlayerX() < 32) {
+            SetStep(SUCCUBUS_FLY);
         }
         break;
 
@@ -816,15 +810,14 @@ void EntitySuccubus(Entity* self) {
             }
 
             clonesShootOrder = *g_CloneShootOrder;
-            temp = OVL_EXPORT(Random)() & 3;
+            temp = Random() & 3;
             clonesShootOrder += temp * 7;
 
             entity = &g_Entities[112];
             temp = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
 
             for (i = 0; i < 6; i++, entity++, clonesShootOrder++, posX += 64) {
-                OVL_EXPORT(CreateEntityFromEntity)
-                (E_ID(SUCCUBUS_CLONE), self, entity);
+                CreateEntityFromEntity(E_ID(SUCCUBUS_CLONE), self, entity);
                 // Giving each clone a pointer to the real Succubus
                 entity->ext.succubus.real = self;
                 if (posX == temp) {
@@ -848,14 +841,14 @@ void EntitySuccubus(Entity* self) {
 
         case SUCCUBUS_CLONE_ATTACK_ANIM_1:
             self->ext.succubus.unk85 = false;
-            OVL_EXPORT(AnimateEntity)(D_80180734, self);
+            AnimateEntity(D_80180734, self);
             if (!self->poseTimer && self->pose == 4) {
                 self->step_s++;
             }
             break;
 
         case SUCCUBUS_CLONE_ATTACK_PLACE_REAL:
-            temp = OVL_EXPORT(Random)() % 6;
+            temp = Random() % 6;
             entity = &g_Entities[112];
             entity += temp;
 
@@ -869,17 +862,17 @@ void EntitySuccubus(Entity* self) {
             self->step_s++;
 
         case SUCCUBUS_CLONE_ATTACK_ANIM_2:
-            if (!OVL_EXPORT(AnimateEntity)(D_80180734, self)) {
-                OVL_EXPORT(SetSubStep)(SUCCUBUS_CLONE_ATTACK_SET_SHOOTING);
+            if (!AnimateEntity(D_80180734, self)) {
+                SetSubStep(SUCCUBUS_CLONE_ATTACK_SET_SHOOTING);
             }
             break;
 
         case SUCCUBUS_CLONE_ATTACK_SET_SHOOTING:
-            if (!OVL_EXPORT(AnimateEntity)(D_80180760, self)) {
+            if (!AnimateEntity(D_80180760, self)) {
                 // PinkBall attack delay set
                 self->ext.succubus.timer = (self->params * 48) + 1;
                 self->ext.succubus.unk85 = true;
-                OVL_EXPORT(SetSubStep)(SUCCUBUS_CLONE_ATTACK_STOP_SHOOTING);
+                SetSubStep(SUCCUBUS_CLONE_ATTACK_STOP_SHOOTING);
             }
             break;
 
@@ -888,15 +881,15 @@ void EntitySuccubus(Entity* self) {
             if (!--self->ext.succubus.timer) {
                 self->ext.succubus.unk85 = false;
                 /*! @bug: Likely a typo meant to be
-                 * OVL_EXPORT(SetSubStep)(SUCCUBUS_CLONE_ATTACK_SHOOT_PINKBALLS);
+                 * SetSubStep(SUCCUBUS_CLONE_ATTACK_SHOOT_PINKBALLS);
                  * case SUCCUBUS_CLONE_ATTACK_SHOOT_PINKBALLS is
                  * inaccessible causing the real Succubus to be
                  * unable to do the PinkBall attack.
                  */
-                OVL_EXPORT(SetSubStep)(SUCCUBUS_CLONE_ATTACK_STOP_SHOOTING);
+                SetSubStep(SUCCUBUS_CLONE_ATTACK_STOP_SHOOTING);
             }
             if (!multiple_count) {
-                OVL_EXPORT(SetStep)(SUCCUBUS_IDLE);
+                SetStep(SUCCUBUS_IDLE);
             }
             break;
 
@@ -906,19 +899,18 @@ void EntitySuccubus(Entity* self) {
          * she doesn't shoot at all.
          */
         case SUCCUBUS_CLONE_ATTACK_SHOOT_PINKBALLS:
-            if (!OVL_EXPORT(AnimateEntity)(D_80180780, self)) {
+            if (!AnimateEntity(D_80180780, self)) {
                 self->ext.succubus.timer = 288;
-                OVL_EXPORT(SetSubStep)(SUCCUBUS_CLONE_ATTACK_ANIM_2);
+                SetSubStep(SUCCUBUS_CLONE_ATTACK_ANIM_2);
             }
             if (!self->poseTimer && self->pose == 4) {
                 PlaySfxPositional(SFX_RIC_SUC_REVIVE);
 
                 for (i = 0; i < 2; i++) {
-                    entity = OVL_EXPORT(AllocEntity)(
-                        &g_Entities[160], &g_Entities[192]);
+                    entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                     if (entity != NULL) {
-                        OVL_EXPORT(CreateEntityFromEntity)
-                        (E_ID(SUCCUBUS_PINK_BALL_PROJECTILE), self, entity);
+                        CreateEntityFromEntity(
+                            E_ID(SUCCUBUS_PINK_BALL_PROJECTILE), self, entity);
                         entity->params = i;
                         if (i != 0) {
                             entity->posX.i.hi -= 2;
@@ -955,8 +947,8 @@ void EntitySuccubus(Entity* self) {
             entity = &g_Entities[96];
             for (facingLeft = 0; facingLeft < 2; facingLeft++) {
                 for (i = 0; i < 4; i++, entity += 2) {
-                    OVL_EXPORT(CreateEntityFromEntity)
-                    (E_ID(SUCCUBUS_WING_SPIKE), self, entity);
+                    CreateEntityFromEntity(
+                        E_ID(SUCCUBUS_WING_SPIKE), self, entity);
                     entity->params = i;
                     entity->zPriority = self->zPriority;
                     entity->ext.succubus.real = self;
@@ -972,12 +964,12 @@ void EntitySuccubus(Entity* self) {
             self->step_s++;
 
         case SUCCUBUS_SPIKE_ATTACK_1:
-            if (!OVL_EXPORT(AnimateEntity)(D_80180748, self)) {
+            if (!AnimateEntity(D_80180748, self)) {
                 self->ext.succubus.unk85 = true;
                 PlaySfxPositional(SFX_GUARD_TINK);
                 PlaySfxPositional(SFX_SUCCUBUS_WING_ATTACK);
                 self->ext.succubus.timer = 64;
-                OVL_EXPORT(SetSubStep)(2);
+                SetSubStep(2);
             }
             break;
 
@@ -996,13 +988,13 @@ void EntitySuccubus(Entity* self) {
             break;
 
         case SUCCUBUS_SPIKE_ATTACK_4:
-            if (!OVL_EXPORT(AnimateEntity)(D_80180760, self)) {
-                OVL_EXPORT(SetStep)(SUCCUBUS_IDLE);
+            if (!AnimateEntity(D_80180760, self)) {
+                SetStep(SUCCUBUS_IDLE);
             }
             if (D_80180668) {
-                if (OVL_EXPORT(GetDistanceToPlayerX)() > 64) {
+                if (GetDistanceToPlayerX() > 64) {
                     self->ext.succubus.nextStep = SUCCUBUS_TAUNT;
-                    OVL_EXPORT(SetStep)(SUCCUBUS_FACE_PLAYER);
+                    SetStep(SUCCUBUS_FACE_PLAYER);
                 }
             }
             break;
@@ -1011,7 +1003,7 @@ void EntitySuccubus(Entity* self) {
 
     case SUCCUBUS_GET_HIT:
         if (!self->step_s) {
-            if (OVL_EXPORT(Random)() & 1) {
+            if (Random() & 1) {
                 PlaySfxPositional(SFX_SUCCUBUS_PAIN_A);
             } else {
                 PlaySfxPositional(SFX_SUCCUBUS_PAIN_B);
@@ -1019,7 +1011,7 @@ void EntitySuccubus(Entity* self) {
 
             self->ext.succubus.timer = 32;
             multiple_count = 0;
-            if (OVL_EXPORT(GetSideToPlayer)() & 1) {
+            if (GetSideToPlayer() & 1) {
                 self->velocityX = FIX(2);
             } else {
                 self->velocityX = FIX(-2);
@@ -1027,18 +1019,18 @@ void EntitySuccubus(Entity* self) {
             self->velocityY = FIX(-2);
             self->step_s++;
         }
-        OVL_EXPORT(AnimateEntity)(D_80180768, self);
-        OVL_EXPORT(MoveEntity)();
+        AnimateEntity(D_80180768, self);
+        MoveEntity();
         self->velocityX -= self->velocityX >> 5;
         self->velocityY -= self->velocityY >> 5;
         self->velocityY += FIX(0.0625);
         if (!--self->ext.succubus.timer) {
-            if (OVL_EXPORT(Random)() & 1) {
+            if (Random() & 1) {
                 self->ext.succubus.nextStep = SUCCUBUS_SPIKE_ATTACK;
             } else {
                 self->ext.succubus.nextStep = SUCCUBUS_CLONE_ATTACK;
             }
-            OVL_EXPORT(SetStep)(SUCCUBUS_NEXT_ACTION_CHECK);
+            SetStep(SUCCUBUS_NEXT_ACTION_CHECK);
         }
         break;
 
@@ -1079,9 +1071,9 @@ void EntitySuccubusPetal(Entity* self) {
     }
 
     if (self->flags & FLAG_DEAD) {
-        newEntity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
-            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, newEntity);
+            CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
             newEntity->params = 0;
         }
         DestroyEntity(self);
@@ -1090,16 +1082,16 @@ void EntitySuccubusPetal(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(D_801804DC);
+        InitializeEntity(D_801804DC);
         self->drawFlags = ENTITY_ROTATE;
         self->rotate = rand() & 0xFFF;
-        temp_s2 = OVL_EXPORT(Random)() & 3;
+        temp_s2 = Random() & 3;
         if (temp_s2 > 2) {
             temp_s2 = 0;
         }
         self->animCurFrame = temp_s2 + 64;
 
-        angle = ((OVL_EXPORT(Random)() & 0x1F) * 16) + 0xC0;
+        angle = ((Random() & 0x1F) * 16) + 0xC0;
         if (!self->facingLeft) {
             angle = 0x800 - angle;
         }
@@ -1110,20 +1102,20 @@ void EntitySuccubusPetal(Entity* self) {
 #endif
         self->velocityX = temp_s2 * rcos(angle);
         self->velocityY = temp_s2 * rsin(angle);
-        self->ext.succubus.timer = (OVL_EXPORT(Random)() & 31) + 16;
+        self->ext.succubus.timer = (Random() & 31) + 16;
 
     case 1:
         self->velocityX -= self->velocityX >> 6;
         self->velocityY -= self->velocityY >> 6;
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         if (!--self->ext.succubus.timer) {
-            self->ext.succubus.timer = (OVL_EXPORT(Random)() & 31) + 32;
+            self->ext.succubus.timer = (Random() & 31) + 32;
             self->step++;
         }
         break;
 
     case 2:
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         self->rotate += self->ext.succubus.timer;
         break;
     }
@@ -1134,7 +1126,7 @@ void EntitySuccubusWingOverlay(Entity* self) {
     Entity* entity;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(D_801804E8);
+        InitializeEntity(D_801804E8);
     }
 
     entity = self - 1;
@@ -1173,13 +1165,13 @@ void EntitySuccubusClone(Entity* self) {
             self->hitboxState = 0;
             self->flags |= FLAG_DEAD;
             g_api.PlaySfxVolPan(SFX_BOSS_CLONE_DISAPPEAR, 0x54, 0);
-            OVL_EXPORT(SetStep)(5);
+            SetStep(5);
         }
     }
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(D_801804F4);
+        InitializeEntity(D_801804F4);
         self->hitboxState = 0;
         velX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
         velX = (self->ext.succubus.clonePosX - velX) << 0x10;
@@ -1187,13 +1179,13 @@ void EntitySuccubusClone(Entity* self) {
         self->ext.succubus.timer = 64;
 
     case 1:
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         newEntity = self->ext.succubus.real;
         self->animCurFrame = newEntity->animCurFrame;
         self->facingLeft = newEntity->facingLeft;
         if (!--self->ext.succubus.timer) {
             self->hitboxState = 3;
-            OVL_EXPORT(SetStep)(2);
+            SetStep(2);
         }
         break;
 
@@ -1203,14 +1195,14 @@ void EntitySuccubusClone(Entity* self) {
         self->facingLeft = newEntity->facingLeft;
         if (newEntity->ext.succubus.unk85) {
             self->ext.succubus.timer = (self->params * 48) + 1;
-            OVL_EXPORT(SetStep)(3);
+            SetStep(3);
         }
         break;
 
     case 3:
         self->animCurFrame = 26;
         if (!--self->ext.succubus.timer) {
-            OVL_EXPORT(SetStep)(4);
+            SetStep(4);
         }
         break;
 
@@ -1220,19 +1212,18 @@ void EntitySuccubusClone(Entity* self) {
             self->step_s++;
         }
 
-        if (!OVL_EXPORT(AnimateEntity)(D_80180780, self)) {
+        if (!AnimateEntity(D_80180780, self)) {
             self->ext.succubus.timer = 288;
-            OVL_EXPORT(SetStep)(3);
+            SetStep(3);
         }
 
         if (!self->poseTimer && self->pose == 4) {
             PlaySfxPositional(SFX_RIC_SUC_REVIVE);
             for (i = 0; i < 2; i++) {
-                newEntity =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
+                newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEntity != NULL) {
-                    OVL_EXPORT(CreateEntityFromEntity)
-                    (E_ID(SUCCUBUS_PINK_BALL_PROJECTILE), self, newEntity);
+                    CreateEntityFromEntity(
+                        E_ID(SUCCUBUS_PINK_BALL_PROJECTILE), self, newEntity);
                     newEntity->params = i;
                     if (i != 0) {
                         newEntity->posX.i.hi -= 2;
@@ -1293,7 +1284,7 @@ void EntityPinkBallProjectile(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(D_80180500);
+        InitializeEntity(D_80180500);
         self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
         self->scaleX = self->scaleY = 0;
@@ -1303,7 +1294,7 @@ void EntityPinkBallProjectile(Entity* self) {
         if (self->scaleX > 256) {
             self->drawFlags = ENTITY_DEFAULT;
         }
-        OVL_EXPORT(AnimateEntity)(D_80180794, self);
+        AnimateEntity(D_80180794, self);
 
         entity = self->ext.succubus.real;
         if (entity->ext.succubus.unk85) {
@@ -1324,12 +1315,11 @@ void EntityPinkBallProjectile(Entity* self) {
         self->step++;
 
     case 3:
-        OVL_EXPORT(AnimateEntity)(D_80180794, self);
-        OVL_EXPORT(MoveEntity)();
+        AnimateEntity(D_80180794, self);
+        MoveEntity();
         entity = &PLAYER;
-        temp_s0 = OVL_EXPORT(GetAngleBetweenEntities)(self, entity);
-        temp_s0 = OVL_EXPORT(LimitAngleChange)(
-            0x10, self->ext.succubus.unkA2, temp_s0);
+        temp_s0 = GetAngleBetweenEntities(self, entity);
+        temp_s0 = LimitAngleChange(0x10, self->ext.succubus.unkA2, temp_s0);
         self->velocityX = rcos(temp_s0) * 0x38;
         self->velocityY = rsin(temp_s0) * 0x38;
         self->ext.succubus.unkA2 = temp_s0;
@@ -1345,8 +1335,8 @@ void EntityPinkBallProjectile(Entity* self) {
 
     case 4:
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
-        OVL_EXPORT(AnimateEntity)(D_80180794, self);
-        OVL_EXPORT(MoveEntity)();
+        AnimateEntity(D_80180794, self);
+        MoveEntity();
         break;
     }
 }
@@ -1364,7 +1354,7 @@ void EntitySuccubusWingSpike(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(D_801804E8);
+        InitializeEntity(D_801804E8);
         self->drawFlags = ENTITY_ROTATE;
         self->animCurFrame = 0;
         var_s0 = D_801807F0[self->params];
@@ -1372,8 +1362,7 @@ void EntitySuccubusWingSpike(Entity* self) {
         self->drawFlags |= ENTITY_SCALEX;
         self->scaleX = 0x100;
         entity = self + 1;
-        OVL_EXPORT(CreateEntityFromEntity)
-        (E_ID(SUCCUBUS_WING_SPIKE_TIP), self, entity);
+        CreateEntityFromEntity(E_ID(SUCCUBUS_WING_SPIKE_TIP), self, entity);
         entity->facingLeft = self->facingLeft;
         entity->params = self->params;
         entity->rotate = self->rotate;
@@ -1424,7 +1413,7 @@ void EntitySuccubusWingSpikeTip(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(D_8018050C);
+        InitializeEntity(D_8018050C);
         self->animCurFrame = 0;
         self->drawFlags = ENTITY_ROTATE;
         self->hitboxState = 0;

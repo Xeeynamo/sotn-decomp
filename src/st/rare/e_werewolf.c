@@ -4,7 +4,7 @@
 extern EInit g_EInitWerewolf;
 extern EInit g_EInitWerewolfAttackHitbox;
 extern EInit g_EInitWerewolfEnergyWave;
-extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit g_EInitInteractable;
 extern s16* sprites_rare_4[];
 
 static s16 sensors[] = {0, 27, 4, 0};
@@ -180,44 +180,43 @@ void EntityWerewolf(Entity* self) {
     s32 velocityX;
 
     if (self->flags & FLAG_DEAD && self->step < DEATH) {
-        OVL_EXPORT(SetStep)(DEATH);
+        SetStep(DEATH);
     }
 
     switch (self->step) {
     case INIT:
-        OVL_EXPORT(InitializeEntity)(g_EInitWerewolf);
+        InitializeEntity(g_EInitWerewolf);
         entity = self + 1;
-        OVL_EXPORT(CreateEntityFromCurrentEntity)
-        (E_WEREWOLF_ATTACK_HITBOX, entity);
+        CreateEntityFromCurrentEntity(E_WEREWOLF_ATTACK_HITBOX, entity);
         // fallthrough
     case FALL_TO_GROUND:
-        if (OVL_EXPORT(UnkCollisionFunc3)(sensors_ground) & 1) {
-            OVL_EXPORT(SetStep)(IDLE_WAIT);
+        if (UnkCollisionFunc3(sensors_ground) & 1) {
+            SetStep(IDLE_WAIT);
         }
         break;
     case IDLE_WAIT:
-        OVL_EXPORT(AnimateEntity)(anim_idle, self);
-        if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x60) {
-            OVL_EXPORT(SetStep)(PLAYER_AGGRO);
+        AnimateEntity(anim_idle, self);
+        if (GetDistanceToPlayerX() < 0x60) {
+            SetStep(PLAYER_AGGRO);
         }
         break;
     case PLAYER_AGGRO:
         if (!self->step_s) {
-            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             if (!self->ext.werewolf.moveTimer) {
                 self->ext.werewolf.moveTimer = 0x20;
             }
             self->step_s++;
         }
 
-        if (!OVL_EXPORT(AnimateEntity)(anim_idle, self)) {
-            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+        if (!AnimateEntity(anim_idle, self)) {
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
 
         if (self->ext.werewolf.moveTimer) {
             self->ext.werewolf.moveTimer--;
         } else {
-            OVL_EXPORT(SetStep)(MOVE);
+            SetStep(MOVE);
         }
 
         entity = &PLAYER;
@@ -228,20 +227,20 @@ void EntityWerewolf(Entity* self) {
 
         // If the player is already close enough, we can punch right away
         if (self->facingLeft == entity->facingLeft &&
-            OVL_EXPORT(GetDistanceToPlayerX)() < 0x38 && velocityX > 0) {
-            OVL_EXPORT(SetStep)(PUNCH_ATTACK);
+            GetDistanceToPlayerX() < 0x38 && velocityX > 0) {
+            SetStep(PUNCH_ATTACK);
         }
         break;
     case MOVE:
         if (!self->step_s) {
-            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->ext.werewolf.moveAway = false;
             self->ext.werewolf.timer = 0x20;
             self->step_s++;
         }
 
-        if (!OVL_EXPORT(AnimateEntity)(anim_head_tilt, self)) {
-            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+        if (!AnimateEntity(anim_head_tilt, self)) {
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
 
         if (self->facingLeft ^ self->ext.werewolf.moveAway) {
@@ -250,22 +249,22 @@ void EntityWerewolf(Entity* self) {
             self->velocityX = FIX(-1.0);
         }
 
-        OVL_EXPORT(UnkCollisionFunc2)(sensors);
-        if (OVL_EXPORT(GetDistanceToPlayerX)() > 0x70) {
+        UnkCollisionFunc2(sensors);
+        if (GetDistanceToPlayerX() > 0x70) {
             self->ext.werewolf.moveAway = false;
         }
 
-        if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x30) {
+        if (GetDistanceToPlayerX() < 0x30) {
             self->ext.werewolf.moveAway = true;
         }
 
         if (!--self->ext.werewolf.timer) {
-            OVL_EXPORT(SetStep)(CHOOSE_ATTACK);
+            SetStep(CHOOSE_ATTACK);
         }
         break;
     case CHOOSE_ATTACK:
-        if (!OVL_EXPORT(AnimateEntity)(anim_idle, self)) {
-            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+        if (!AnimateEntity(anim_idle, self)) {
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
 
         switch (self->step_s) {
@@ -281,34 +280,34 @@ void EntityWerewolf(Entity* self) {
         case 2:
             entity = &PLAYER;
             if (self->facingLeft == entity->facingLeft) {
-                if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x40) {
-                    if (OVL_EXPORT(Random)() & 3) {
-                        OVL_EXPORT(SetStep)(SLIDE_ATTACK);
+                if (GetDistanceToPlayerX() < 0x40) {
+                    if (Random() & 3) {
+                        SetStep(SLIDE_ATTACK);
                     } else {
-                        OVL_EXPORT(SetStep)(PUNCH_ATTACK);
+                        SetStep(PUNCH_ATTACK);
                     }
-                } else if (OVL_EXPORT(Random)() & 1) {
-                    OVL_EXPORT(SetStep)(CHARGE_ATTACK);
+                } else if (Random() & 1) {
+                    SetStep(CHARGE_ATTACK);
                 } else {
-                    OVL_EXPORT(SetStep)(ENERGY_WAVE_ATTACK);
+                    SetStep(ENERGY_WAVE_ATTACK);
                 }
-            } else if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x38) {
-                if (OVL_EXPORT(Random)() & 1) {
-                    OVL_EXPORT(SetStep)(SLIDE_ATTACK);
+            } else if (GetDistanceToPlayerX() < 0x38) {
+                if (Random() & 1) {
+                    SetStep(SLIDE_ATTACK);
                 } else {
-                    OVL_EXPORT(SetStep)(ENERGY_WAVE_ATTACK);
+                    SetStep(ENERGY_WAVE_ATTACK);
                 }
-            } else if (OVL_EXPORT(Random)() & 1) {
-                OVL_EXPORT(SetStep)(CHARGE_ATTACK);
+            } else if (Random() & 1) {
+                SetStep(CHARGE_ATTACK);
             } else {
-                OVL_EXPORT(SetStep)(SPIN_ATTACK);
+                SetStep(SPIN_ATTACK);
             }
             break;
         }
         break;
     case PUNCH_ATTACK:
-        if (!OVL_EXPORT(AnimateEntity)(anim_punch, self)) {
-            OVL_EXPORT(SetStep)(PLAYER_AGGRO);
+        if (!AnimateEntity(anim_punch, self)) {
+            SetStep(PLAYER_AGGRO);
         }
 
         if (!self->poseTimer && self->pose == 8) {
@@ -320,34 +319,33 @@ void EntityWerewolf(Entity* self) {
         switch (self->step_s) {
         case 0:
             // Jump into the air
-            if (!OVL_EXPORT(AnimateEntity)(anim_energy_wave_jump, self)) {
+            if (!AnimateEntity(anim_energy_wave_jump, self)) {
                 self->animCurFrame = 0x2D;
                 self->velocityX = FIX(-2.0);
                 if (self->facingLeft) {
                     self->velocityX = -self->velocityX;
                 }
                 self->velocityY = FIX(-2.0);
-                OVL_EXPORT(SetSubStep)(1);
+                SetSubStep(1);
             }
             break;
         case 1:
-            if (OVL_EXPORT(UnkCollisionFunc3)(&sensors_ground) & 1) {
+            if (UnkCollisionFunc3(&sensors_ground) & 1) {
                 self->step_s++;
             }
             break;
         case 2:
             // After we've landed on the ground, spawn an energy wave projectile
-            if (!OVL_EXPORT(AnimateEntity)(anim_energy_wave, self)) {
-                OVL_EXPORT(SetStep)(PLAYER_AGGRO);
+            if (!AnimateEntity(anim_energy_wave, self)) {
+                SetStep(PLAYER_AGGRO);
             }
 
             if (!self->poseTimer && self->pose == 4) {
                 PlaySfxPositional(SFX_OUIJA_TABLE_DEATH);
-                entity =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
+                entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
-                    OVL_EXPORT(CreateEntityFromEntity)
-                    (E_WEREWOLF_ENERGY_WAVE, self, entity);
+                    CreateEntityFromEntity(
+                        E_WEREWOLF_ENERGY_WAVE, self, entity);
                     entity->facingLeft = self->facingLeft;
                     entity->posY.i.hi -= 0x10;
                 }
@@ -359,13 +357,13 @@ void EntityWerewolf(Entity* self) {
         if (!self->step_s) {
             self->velocityX = 0;
             self->velocityY = 0;
-            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->step_s++;
         }
 
-        OVL_EXPORT(UnkCollisionFunc2)(sensors);
-        if (!OVL_EXPORT(AnimateEntity)(anim_slide_attack, self)) {
-            OVL_EXPORT(SetStep)(PLAYER_AGGRO);
+        UnkCollisionFunc2(sensors);
+        if (!AnimateEntity(anim_slide_attack, self)) {
+            SetStep(PLAYER_AGGRO);
         }
 
         self->velocityX -= self->velocityX / 16;
@@ -381,12 +379,12 @@ void EntityWerewolf(Entity* self) {
     case CHARGE_ATTACK:
         switch (self->step_s) {
         case 0:
-            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->step_s++;
             // fallthrough
         case 1:
-            if (!OVL_EXPORT(AnimateEntity)(anim_charge_init, self)) {
-                OVL_EXPORT(SetSubStep)(2);
+            if (!AnimateEntity(anim_charge_init, self)) {
+                SetSubStep(2);
             }
             break;
         case 2:
@@ -400,10 +398,10 @@ void EntityWerewolf(Entity* self) {
             self->step_s++;
             // fallthrough
         case 3:
-            OVL_EXPORT(UnkCollisionFunc2)(sensors);
+            UnkCollisionFunc2(sensors);
             self->velocityX -= self->velocityX / 32;
-            if (!OVL_EXPORT(AnimateEntity)(anim_charge_attack, self)) {
-                OVL_EXPORT(SetStep)(PLAYER_AGGRO);
+            if (!AnimateEntity(anim_charge_attack, self)) {
+                SetStep(PLAYER_AGGRO);
             }
             break;
         }
@@ -411,7 +409,7 @@ void EntityWerewolf(Entity* self) {
     case SPIN_ATTACK:
         switch (self->step_s) {
         case 0:
-            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             if (self->facingLeft) {
                 self->velocityX = FIX(4.5);
             } else {
@@ -421,7 +419,7 @@ void EntityWerewolf(Entity* self) {
             self->step_s++;
             // fallthrough
         case 1:
-            if (!OVL_EXPORT(AnimateEntity)(anim_spin_attack, self)) {
+            if (!AnimateEntity(anim_spin_attack, self)) {
                 self->ext.werewolf.timer = 0x20;
                 self->animCurFrame = 0x15;
                 self->drawFlags |= ENTITY_ROTATE;
@@ -431,18 +429,17 @@ void EntityWerewolf(Entity* self) {
             }
             break;
         case 2:
-            OVL_EXPORT(UnkCollisionFunc2)(sensors);
+            UnkCollisionFunc2(sensors);
             self->rotate -= ROT(22.5);
             if (!(g_Timer & 8)) {
                 PlaySfxPositional(SFX_WEREWOLF_SPIN_ATTACK);
             }
 
             if (!(self->ext.werewolf.timer & 3)) {
-                entity = OVL_EXPORT(AllocEntity)(
+                entity = AllocEntity(
                     &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (entity != NULL) {
-                    OVL_EXPORT(CreateEntityFromEntity)
-                    (E_WEREWOLF_AFTERIMAGE, self, entity);
+                    CreateEntityFromEntity(E_WEREWOLF_AFTERIMAGE, self, entity);
                     entity->facingLeft = self->facingLeft;
                     entity->rotate = self->rotate;
                     entity->params = self->animCurFrame;
@@ -463,18 +460,17 @@ void EntityWerewolf(Entity* self) {
             }
 
             if (!(g_Timer & 3)) {
-                entity = OVL_EXPORT(AllocEntity)(
+                entity = AllocEntity(
                     &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (entity != NULL) {
-                    OVL_EXPORT(CreateEntityFromEntity)
-                    (E_WEREWOLF_AFTERIMAGE, self, entity);
+                    CreateEntityFromEntity(E_WEREWOLF_AFTERIMAGE, self, entity);
                     entity->facingLeft = self->facingLeft;
                     entity->rotate = self->rotate;
                     entity->params = self->animCurFrame;
                 }
             }
 
-            if (OVL_EXPORT(UnkCollisionFunc3)(sensors_ground) & 1) {
+            if (UnkCollisionFunc3(sensors_ground) & 1) {
                 self->drawFlags = ENTITY_DEFAULT;
                 self->animCurFrame = 0xA;
                 self->ext.werewolf.timer = 0x10;
@@ -483,7 +479,7 @@ void EntityWerewolf(Entity* self) {
             break;
         case 4:
             if (!--self->ext.werewolf.timer) {
-                OVL_EXPORT(SetStep)(PLAYER_AGGRO);
+                SetStep(PLAYER_AGGRO);
             }
             break;
         }
@@ -502,26 +498,26 @@ void EntityWerewolf(Entity* self) {
             self->step_s++;
             // fallthrough
         case 1:
-            if (OVL_EXPORT(UnkCollisionFunc3)(sensors_ground) & 1) {
+            if (UnkCollisionFunc3(sensors_ground) & 1) {
                 self->step_s++;
             }
             break;
         case 2:
-            if (!OVL_EXPORT(AnimateEntity)(anim_death_pain, self)) {
-                entity = OVL_EXPORT(AllocEntity)(
+            if (!AnimateEntity(anim_death_pain, self)) {
+                entity = AllocEntity(
                     &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (entity != NULL) {
-                    OVL_EXPORT(CreateEntityFromEntity)
-                    (E_WEREWOLF_DEATH_FLAMES, self, entity);
+                    CreateEntityFromEntity(
+                        E_WEREWOLF_DEATH_FLAMES, self, entity);
                     entity->posY.i.hi += 0x1B;
                     entity->zPriority = self->zPriority;
                 }
-                OVL_EXPORT(SetSubStep)(3);
+                SetSubStep(3);
             }
             break;
         case 3:
-            if (!OVL_EXPORT(AnimateEntity)(anim_death_melt, self)) {
-                OVL_EXPORT(SetSubStep)(4);
+            if (!AnimateEntity(anim_death_melt, self)) {
+                SetSubStep(4);
             }
             break;
         case 4:
@@ -548,7 +544,7 @@ void EntityWerewolfAttackHitbox(Entity* self) {
     Entity* werewolf;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(g_EInitWerewolfAttackHitbox);
+        InitializeEntity(g_EInitWerewolfAttackHitbox);
         self->animCurFrame = 0;
     }
 
@@ -576,7 +572,7 @@ void EntityWerewolfEnergyWave(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitWerewolfEnergyWave);
+        InitializeEntity(g_EInitWerewolfEnergyWave);
         self->animCurFrame = 0x39;
         if (self->facingLeft) {
             self->velocityX = FIX(4.5);
@@ -586,7 +582,7 @@ void EntityWerewolfEnergyWave(Entity* self) {
         self->velocityY = 0;
         // fallthrough
     case 1:
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         self->velocityY -= FIX(5.0 / 64.0);
         angle = ratan2(-self->velocityY, abs(self->velocityX));
 
@@ -609,7 +605,7 @@ void EntityWerewolfEnergyWave(Entity* self) {
 // Params here is the animCurFrame of the main Werewolf entity
 void EntityWerewolfSpinAttackAfterImage(Entity* self) {
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(g_EInitWerewolf);
+        InitializeEntity(g_EInitWerewolf);
         self->palette = g_EInitWerewolf[3] + PAL_FLAG(9);
         self->hitboxState = 0;
         self->flags |= FLAG_UNK_00200000 | FLAG_UNK_2000;
@@ -655,7 +651,7 @@ void EntityWerewolfDeathFlames(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x80);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -699,8 +695,8 @@ void EntityWerewolfDeathFlames(Entity* self) {
                     UnkPolyFunc2(prim);
                     prim->next->x2 = 0;
                     prim->next->y2 = 0;
-                    prim->next->x1 = self->ext.werewolf.unk9C + (i * 0x555) +
-                                     OVL_EXPORT(Random)();
+                    prim->next->x1 =
+                        self->ext.werewolf.unk9C + (i * 0x555) + Random();
                     prim->next->y1 = 0;
                     PGREY(prim, 0) = PGREY(prim, 1) = PGREY(prim, 2) =
                         PGREY(prim, 3) = color;

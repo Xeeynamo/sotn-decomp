@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "top.h"
 
-extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit g_EInitInteractable;
 extern u32 OVL_EXPORT(CutsceneFlags);
 
 // Alucard walks to the Warp platform
@@ -18,7 +18,7 @@ void func_us_801AD11C(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         g_PauseAllowed = false;
         g_unkGraphicsStruct.pauseEnemies = true;
         g_Player.padSim = PAD_NONE;
@@ -76,7 +76,7 @@ void func_us_801AD11C(Entity* self) {
 void func_us_801AD320(Entity* self) {
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = ANIMSET_OVL(2);
         self->animCurFrame = 0x11;
         self->unk5A = 0xF;
@@ -100,7 +100,7 @@ void func_us_801AD320(Entity* self) {
 extern s8 D_us_80180DF0[];
 extern s8 D_us_80180E04[];
 extern s8 D_us_80180E0C[];
-extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit g_EInitInteractable;
 
 void func_us_801AD400(Entity* self) {
     Entity* player;
@@ -115,7 +115,7 @@ void func_us_801AD400(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = ANIMSET_OVL(4);
         self->animCurFrame = 0;
         self->unk5A = 0x46;
@@ -126,12 +126,12 @@ void func_us_801AD400(Entity* self) {
     case 1:
         if (OVL_EXPORT(CutsceneFlags) & 0x10) {
             self->velocityX = FIX(-1.5);
-            OVL_EXPORT(SetStep)(2);
+            SetStep(2);
         }
 
         break;
     case 2:
-        panDistance = OVL_EXPORT(AnimateEntity)(D_us_80180DF0, self);
+        panDistance = AnimateEntity(D_us_80180DF0, self);
         if ((panDistance & 0x80) && (self->pose == 3 || self->pose == 7)) {
             panDistance = (self->posX.i.hi - 0x78) / 16;
 
@@ -143,7 +143,7 @@ void func_us_801AD400(Entity* self) {
             }
             g_api.PlaySfxVolPan(SFX_STOMP_SOFT_B, 0x50, panDistance);
         }
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         if (offsetX < 0x3C0) {
             self->animCurFrame = 0xC;
             self->step++;
@@ -156,25 +156,25 @@ void func_us_801AD400(Entity* self) {
             self->unk5A = 0x48;
             self->animCurFrame = 0x2C;
             self->velocityX = FIX(-0.75);
-            OVL_EXPORT(SetStep)(4);
+            SetStep(4);
         }
         break;
 
     case 4:
-        OVL_EXPORT(AnimateEntity)(&D_us_80180E0C, self);
-        OVL_EXPORT(MoveEntity)();
+        AnimateEntity(&D_us_80180E0C, self);
+        MoveEntity();
         if (offsetX < 0x350) {
-            OVL_EXPORT(SetStep)(5);
+            SetStep(5);
         }
         break;
 
     case 5:
-        if (OVL_EXPORT(AnimateEntity)(&D_us_80180E04, self) == 0) {
+        if (AnimateEntity(&D_us_80180E04, self) == 0) {
             self->animSet = ANIMSET_OVL(4);
             self->animCurFrame = 0xC;
             self->unk5A = 0x46;
             self->facingLeft = 0;
-            OVL_EXPORT(SetStep)(6);
+            SetStep(6);
         }
         break;
 

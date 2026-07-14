@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+#include "stage.h"
+
 #define STAGE_IS_LIB
 #define OVL_EXPORT(x) LIB_##x
-#include <stage.h>
 
 enum Palettes {
     PAL_NONE = 0,
@@ -99,13 +100,13 @@ extern Primitive* FindFirstUnkPrim2(Primitive* prim, u8 index);
 
 extern EInit OVL_EXPORT(EInitBreakable);
 extern EInit OVL_EXPORT(EInitObtainable);
-extern EInit OVL_EXPORT(EInitParticle);
+extern EInit g_EInitParticle;
 extern EInit D_us_80180824;
-extern EInit OVL_EXPORT(EInitInteractable);
-extern EInit OVL_EXPORT(EInitUnkId13);
-extern EInit OVL_EXPORT(EInitLockCamera);
-extern EInit OVL_EXPORT(EInitCommon);
-extern EInit OVL_EXPORT(EInitDamageNum);
+extern EInit g_EInitInteractable;
+extern EInit g_EInitUnkId13;
+extern EInit g_EInitLockCamera;
+extern EInit g_EInitCommon;
+extern EInit g_EInitDamageNum;
 extern EInit g_EInitBloodyZombie;
 extern EInit g_EInitFlyingZombie2;
 extern EInit g_EInitFlyingZombie1;

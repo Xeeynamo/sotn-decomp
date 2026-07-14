@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-extern EInit OVL_EXPORT(EInitParticle);
+extern EInit g_EInitParticle;
 
 #if defined(INVERTED_STAGE)
 #define LEFT_OFFX -26
@@ -39,7 +39,7 @@ void EntityShuttingWindow(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitParticle));
+        InitializeEntity(g_EInitParticle);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
         if (primIndex == -1) {
             DestroyEntity(self);

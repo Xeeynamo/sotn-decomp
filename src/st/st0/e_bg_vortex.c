@@ -36,7 +36,7 @@ void EntityBackgroundVortex(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInit3DObject);
+        InitializeEntity(g_EInit3DObject);
         self->posX.i.hi = 0x80;
         self->posY.i.hi = 0x1A0;
         primIndex = g_api.func_800EDB58(PRIM_GT4, 0x110);

@@ -4,7 +4,7 @@
 extern s32 E_ID(FALLING_ROCK_2);
 #endif
 
-extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit g_EInitInteractable;
 
 #if defined(INVERTED_STAGE)
 #define CF_STEPS JEWEL_ROOM_STEPS
@@ -88,7 +88,7 @@ void EntityMermanRockLeftSide(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->hitboxState = 2;
         self->hitboxWidth = 16;
         self->hitboxHeight = 24;
@@ -129,11 +129,9 @@ void EntityMermanRockLeftSide(Entity* self) {
 
             g_api.PlaySfx(SFX_WALL_DEBRIS_B);
 
-            newEntity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)
-                (E_EXPLOSION, self, newEntity);
+                CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                 newEntity->params = 0x13;
                 newEntity->zPriority = 0xA9;
                 newEntity->posX.i.hi PME self->ext.mermanRock.unk84 * 16;
@@ -143,22 +141,19 @@ void EntityMermanRockLeftSide(Entity* self) {
             params = &newRockParams[self->ext.mermanRock.unk84 * 3];
 
             for (i = 0; i < 3; i++) {
-                newEntity =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+                newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    OVL_EXPORT(CreateEntityFromEntity)
-                    (E_ID(FALLING_ROCK_2), self, newEntity);
+                    CreateEntityFromEntity(
+                        E_ID(FALLING_ROCK_2), self, newEntity);
                     newEntity->params = *params++;
 #if defined(INVERTED_STAGE)
-                    newEntity->velocityX =
-                        (OVL_EXPORT(Random)() << 8) + 0x10000;
-                    newEntity->velocityY = -OVL_EXPORT(Random)() * 0x100;
+                    newEntity->velocityX = (Random() << 8) + 0x10000;
+                    newEntity->velocityY = -Random() * 0x100;
                     newEntity->posY.i.hi -= -16 + (i * 16);
                     newEntity->facingLeft = 1;
 #else
-                    newEntity->velocityX =
-                        (-OVL_EXPORT(Random)() << 8) - 0x8000;
-                    newEntity->velocityY = -OVL_EXPORT(Random)() * 0x100;
+                    newEntity->velocityX = (-Random() << 8) - 0x8000;
+                    newEntity->velocityY = -Random() * 0x100;
                     newEntity->posY.i.hi += -16 + (i * 16);
 #endif
                 }
@@ -167,11 +162,9 @@ void EntityMermanRockLeftSide(Entity* self) {
         }
 
         if (self->ext.mermanRock.unk84 > 1) {
-            newEntity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
+            newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (newEntity != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)
-                (E_EQUIP_ITEM_DROP, self, newEntity);
+                CreateEntityFromEntity(E_EQUIP_ITEM_DROP, self, newEntity);
                 newEntity->params = ITEM_POT_ROAST;
             }
             g_CastleFlags[CF_STEPS] |= rockBroken;
@@ -200,7 +193,7 @@ void EntityMermanRockRightSide(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->hitboxState = 2;
         self->hitboxWidth = 16;
         self->hitboxHeight = 24;
@@ -239,11 +232,9 @@ void EntityMermanRockRightSide(Entity* self) {
 
             g_api.PlaySfx(SFX_WALL_DEBRIS_B);
 
-            newEntity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)
-                (E_EXPLOSION, self, newEntity);
+                CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                 newEntity->params = 0x13;
                 newEntity->zPriority = 0xA9;
                 newEntity->posX.i.hi MPE self->ext.mermanRock.unk84 * 16;
@@ -253,21 +244,19 @@ void EntityMermanRockRightSide(Entity* self) {
             params = &newRockParams[self->ext.mermanRock.unk84 * 3];
 
             for (i = 0; i < 3; i++) {
-                newEntity =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+                newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    OVL_EXPORT(CreateEntityFromEntity)
-                    (E_ID(FALLING_ROCK_2), self, newEntity);
+                    CreateEntityFromEntity(
+                        E_ID(FALLING_ROCK_2), self, newEntity);
                     newEntity->params = *params++;
 #if defined(INVERTED_STAGE)
-                    newEntity->velocityX =
-                        (-OVL_EXPORT(Random)() << 8) - 0x10000;
-                    newEntity->velocityY = -OVL_EXPORT(Random)() * 0x100;
+                    newEntity->velocityX = (-Random() << 8) - 0x10000;
+                    newEntity->velocityY = -Random() * 0x100;
                     newEntity->posY.i.hi -= -16 + (i * 16);
                     newEntity->facingLeft = 0;
 #else
-                    newEntity->velocityX = (OVL_EXPORT(Random)() << 8) + 0x8000;
-                    newEntity->velocityY = -OVL_EXPORT(Random)() * 0x100;
+                    newEntity->velocityX = (Random() << 8) + 0x8000;
+                    newEntity->velocityY = -Random() * 0x100;
                     newEntity->posY.i.hi += -16 + (i * 16);
                     newEntity->facingLeft = 1;
 #endif
@@ -299,7 +288,7 @@ void EntityJewelSwordDoor(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         if (g_CastleFlags[CF_OPEN]) {
             self->step = 2;
         }
@@ -346,14 +335,14 @@ void EntityFallingRock2(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(ROCK_EINIT);
+        InitializeEntity(ROCK_EINIT);
         self->animCurFrame = animFrame + 31;
         self->drawFlags |= ENTITY_ROTATE;
         self->zPriority = 0x9F;
         break;
 
     case 1:
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         self->velocityY += FIX(0.25);
         self->rotate -= 0x20;
         collX = self->posX.i.hi;
@@ -363,11 +352,9 @@ void EntityFallingRock2(Entity* self) {
 
         if (collider.effects & EFFECT_SOLID) {
             if (self->velocityY > FIX(4.0)) {
-                newEntity =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+                newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != 0) {
-                    OVL_EXPORT(CreateEntityFromEntity)
-                    (E_EXPLOSION, self, newEntity);
+                    CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                     newEntity->params = 0x11;
                     if (animFrame == 0) {
                         newEntity->params = 0x13;

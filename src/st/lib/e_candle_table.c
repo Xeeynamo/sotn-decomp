@@ -24,7 +24,7 @@ void EntityCandleTable(Entity* self) {
 
     switch (self->step) { /* irregular */
     case 0:
-        OVL_EXPORT(InitializeEntity)(D_us_801808FC);
+        InitializeEntity(D_us_801808FC);
         self->zPriority = 0x74;
         if (self->params & 0x400) {
             self->animCurFrame = 0x11;
@@ -48,30 +48,29 @@ void EntityCandleTable(Entity* self) {
             self->hitboxOffY = -10;
             self->hitboxState = 2;
             newEntity = self + 1;
-            OVL_EXPORT(CreateEntityFromEntity)
-            (E_ID(CANDLE_TABLE), self, newEntity);
+            CreateEntityFromEntity(E_ID(CANDLE_TABLE), self, newEntity);
 
             newEntity->params = 0x100;
         }
     case 1:
         if (self->params & 0x100) {
-            OVL_EXPORT(AnimateEntity)(D_us_80181A78, self);
+            AnimateEntity(D_us_80181A78, self);
             break;
         }
-        OVL_EXPORT(AnimateEntity)(D_us_80181A68, self);
+        AnimateEntity(D_us_80181A68, self);
         if (self->hitFlags) {
-            OVL_EXPORT(SetStep)(2);
+            SetStep(2);
         }
         break;
     case 2:
         newEntity = self + 1;
         // I believe this entity to be the stone mask that drops from the candle
         // 0xC is used for other things as well, so I kept the name for now
-        OVL_EXPORT(CreateEntityFromEntity)(E_HEART_DROP, self, newEntity);
+        CreateEntityFromEntity(E_HEART_DROP, self, newEntity);
         newEntity->params = 1;
-        newEntity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
-            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, newEntity);
+            CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
             newEntity->posY.i.hi -= 8;
             newEntity->params = 2;
         }
