@@ -36,7 +36,7 @@ typedef enum EntityIDs {
     /* 0x15 */ E_GREY_PUFF,
     /* 0x16 */ E_CUTSCENE,
     /* 0x17 */ E_PLATFORM,
-    /* 0x18 */ E_MARIA,
+    /* 0x18 */ E_BOSS_MARIA,
     /* 0x19 */ E_ROOM_DARKNESS,
     /* 0x1A */ E_ELEVATOR_STATIONARY_UNUSED,
     /* 0x1B */ E_ELEVATOR_STATIONARY,

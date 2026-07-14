@@ -98,7 +98,8 @@ segments:
       - [0x4EF78, .data, cen/e_room_fg]
       - [0x4F018, data]
       - [0x50088, .data, cen/e_init]
-      - [0x501A8, data]
+      - [0x501A8, data] # CEN_rooms
+      - [0x501D8, .data, cen_psp/st_init] # cutscenes
       - [0x516A0, .data, cen/e_breakable]
       - [0x51728, data]
       - [0x5C2E0, .data, cen/header]
@@ -125,5 +126,7 @@ segments:
       - [0x5EB90, .bss, cen/st_update]
       - [0x5EBD0, .bss, cen/e_collect]
       - [0x5EBF0, bss, 5EBF0]
+      - [0x5EC00, .bss, cen_psp/st_init]
+      - [0x5ECA8, bss, 5ECA8]
       - [0x5F2C0, .bss, cen/e_lock_camera]
   - [0x5F300]
