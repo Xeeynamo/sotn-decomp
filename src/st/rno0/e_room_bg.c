@@ -8,19 +8,19 @@ u16 animSets[] = {
     ANIMSET_OVL(2), ANIMSET_OVL(2), ANIMSET_OVL(2), ANIMSET_OVL(2),
     ANIMSET_OVL(2), ANIMSET_OVL(2), ANIMSET_OVL(2)};
 
-u8 anim1[] = {64, 2, 255};
-u8 anim2[] = {64, 6, 255};
-u8 anim3[] = {64, 1, 255};
-u8 anim4[] = {64, 2, 255};
-u8 anim5[] = {64, 47, 255};
-u8 anim6[] = {4, 34, 0};
-u8 anim7[] = {4, 35, 0};
-u8 anim8[] = {4, 36, 0};
-u8 anim9[] = {4, 37, 0};
-u8 anim10[] = {4, 38, 0};
-u8 anim11[] = {4, 39, 0};
-u8 anim12[] = {4, 40, 0};
-u8 anim13[] = {4, 42, 0};
+u8 anim1[] = {64, 2, POSE_END};
+u8 anim2[] = {64, 6, POSE_END};
+u8 anim3[] = {64, 1, POSE_END};
+u8 anim4[] = {64, 2, POSE_END};
+u8 anim5[] = {64, 47, POSE_END};
+u8 anim6[] = {4, 34, POSE_LOOP(0)};
+u8 anim7[] = {4, 35, POSE_LOOP(0)};
+u8 anim8[] = {4, 36, POSE_LOOP(0)};
+u8 anim9[] = {4, 37, POSE_LOOP(0)};
+u8 anim10[] = {4, 38, POSE_LOOP(0)};
+u8 anim11[] = {4, 39, POSE_LOOP(0)};
+u8 anim12[] = {4, 40, POSE_LOOP(0)};
+u8 anim13[] = {4, 42, POSE_LOOP(0)};
 
 u16 zPrioritys[] = {0x1fa, 0x40, 0x80, 0x80, 0x3f, 0x80, 0x80, 0x80, 0x80, 0x80,
                     0x80,  0x80, 0x80, 0x80, 0x80, 0x80, 0x9e, 0x9e, 0x80};
