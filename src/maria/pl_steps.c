@@ -115,11 +115,11 @@ void MarStepWalk(void) {
             MarCreateEntFactoryFromEntity(g_CurrentEntity, BP_SKID_SMOKE, 0);
             return;
         }
-        if (PLAYER.step_s != 0) {
-            if (PLAYER.step_s) {
-            }
-        } else {
+
+        switch (PLAYER.step_s) {
+        case 0:
             MarSetSpeedX(FIX(2.25));
+            break;
         }
     }
 }
@@ -135,8 +135,9 @@ void MarStepJump(void) {
         PLAYER.velocityY = FIX(-0.25);
         g_Player.unk44 |= 0x20;
     }
-    if (MarCheckInput(CHECK_GROUND | CHECK_FACING | CHECK_ATTACK |
-                      CHECK_GRAVITY_JUMP | 0x460)) {
+    if (MarCheckInput(
+            CHECK_GROUND | CHECK_FACING | CHECK_DOUBLEJUMP | CHECK_CRASH |
+            CHECK_400 | CHECK_ATTACK | CHECK_GRAVITY_JUMP)) {
         return;
     }
     switch (PLAYER.step_s) {
@@ -236,9 +237,9 @@ void MarStepJump(void) {
         PLAYER.step_s = 0x70;
         MarCreateEntFactoryFromEntity(g_CurrentEntity, _BP_5, 0);
         g_Player.unk44 &= ~0x80;
-        PLAYER.velocityY = 0x60000;
+        PLAYER.velocityY = FIX(6);
         if (facing) {
-            MarSetSpeedX(0x48000);
+            MarSetSpeedX(FIX(4.5));
         }
         PlaySfx(SFX_VO_MAR_8EA);
     }
@@ -1211,7 +1212,7 @@ void MarStepTeleport(void) {
 }
 
 void MarStepBladeDash(void) {
-    MarDecelerateX(FIX(0.109375));
+    MarDecelerateX(FIX(7.0 / 64));
     if (PLAYER.poseTimer < 0) {
         g_Player.unk46 = 0;
         MarSetStand(0);

@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "maria.h"
+#include "../cen/cen.h"
 
+extern s32 subweaponIdx;
+
+// bss
 static s32 D_80174F80[11];
 static u8 D_80174FAC;
 static u8 D_80174FB0;
@@ -10,15 +13,8 @@ static Point16 D_80175000[32];
 static s32 D_80154F7C[16];
 static AnimationFrame g_MarEmptyAnimGroup[ZERO_LEN];
 
-static u8 D_80154674[][4] = {
-    {16, 127, 63, 0},
-    {16, 127, 0, 0},
-    {16, 63, 63, 127},
-    {16, 63, 127, 63},
-    {16, 47, 63, 127}};
-
 static SubweaponDef subweapons_def[] = {
-#include "gen/subweapons.h"
+#include "../cen/gen/subweapons.h"
 };
 STATIC_ASSERT(LEN(subweapons_def) == NUM_WEAPONS, "weapons array wrong size");
 
@@ -44,11 +40,12 @@ static Entity* MarGetFreeEntityReverse(s16 start, s16 end) {
     }
     return NULL;
 }
+
 void func_maria_8015F9F0(Entity* entity) {
     s32 i;
     s32 enemyId;
 
-    if (entity < &g_Entities[32]) {
+    if (entity < &g_Entities[STAGE_ENTITY_START + 32]) {
         entity->enemyId = 1;
         return;
     }
@@ -64,18 +61,14 @@ void func_maria_8015F9F0(Entity* entity) {
     }
 }
 
-void func_maria_8015FA5C(s32 arg0) {
-    D_80174FAC = D_80154674[arg0][0];
-    D_80174FB0 = D_80154674[arg0][1];
-    D_80174FB4 = D_80154674[arg0][2];
-    D_80174FB8 = D_80154674[arg0][3];
-}
+// nb. no func_maria_8015FA5C
 
 void MarSetSubweaponParams(Entity* entity) {
     SubweaponDef* subwpn = &subweapons_def[entity->ext.subweapon.subweaponId];
     entity->attack = subwpn->attack;
     entity->attackElement = subwpn->attackElement;
-    entity->hitboxState = subwpn->hitboxState + 0;
+    entity->hitboxState = subwpn->hitboxState | 1;
+    entity->flags |= FLAG_NOT_AN_ENEMY;
     entity->nFramesInvincibility = subwpn->nFramesInvincibility;
     entity->stunFrames = subwpn->stunFrames;
     entity->hitEffect = subwpn->hitEffect;
@@ -88,28 +81,20 @@ s32 MarCheckSubweapon(
     SubweaponDef* actualSubwpn, s32 isItemCrash, s32 useHearts) {
     SubweaponDef* subwpn;
 
+    useHearts = false;
+
     // Not an item crash. Just read the item in.
     if (isItemCrash == 0) {
-        *actualSubwpn = subweapons_def[g_Status.subWeapon];
-        if (g_Status.hearts >= actualSubwpn->heartCost) {
-            if (useHearts) {
-                g_Status.hearts -= actualSubwpn->heartCost;
-            }
-            return g_Status.subWeapon;
-        }
-        return -1;
+        *actualSubwpn = subweapons_def[subweaponIdx];
+        return subweaponIdx;
     }
+
     // If it's a crash, load the subweapon by referencing our
     // subweapon's crash ID and loading that.
-    subwpn = &subweapons_def[g_Status.subWeapon];
+    subwpn = &subweapons_def[subweaponIdx];
     *actualSubwpn = subweapons_def[subwpn->crashId];
-    if (g_Status.hearts >= actualSubwpn->heartCost) {
-        if (useHearts) {
-            g_Status.hearts -= actualSubwpn->heartCost;
-        }
-        return g_Status.subWeapon;
-    }
-    return -1;
+
+    return subweaponIdx;
 }
 
 // Corresponding DRA function is func_80119E78
@@ -119,7 +104,8 @@ static u8 uv_anim_801548F4[6][8] = {
     {0x70, 0x40, 0x80, 0x40, 0x70, 0x50, 0x80, 0x50},
     {0x70, 0x30, 0x78, 0x30, 0x70, 0x38, 0x78, 0x38},
     {0x78, 0x30, 0x80, 0x30, 0x78, 0x38, 0x80, 0x38},
-    {0x70, 0x38, 0x78, 0x38, 0x77, 0x40, 0x78, 0x40}};
+    {0x70, 0x38, 0x78, 0x38, 0x77, 0x40, 0x78, 0x40},
+};
 static s32 func_8015FDB0(Primitive* prim, s16 posX, s16 posY) {
     s16 offset;
     s32 ret;
@@ -165,41 +151,43 @@ static s32 func_8015FDB0(Primitive* prim, s16 posX, s16 posY) {
 }
 
 void MarEntityDummy(Entity* self) {}
+
 void MarEntityFactory(Entity* self);
-void MarEntitySmokePuff(Entity* self);
 void EntityMariaDragonAttack(Entity* self);
+void EntityMariaCrashSummon(Entity* self);
+void MarEntitySmokePuff(Entity* self);
 void EntityMariaDollAttack(Entity* self);
 void MarEntityHitByCutBlood(Entity* self);
-void EntityMariaCrashSummon(Entity* self);
 void EntityMariaTurtleAttack(Entity* self);
-void EntityMariaTurtleCrashVortex(Entity* self);
 void func_maria_80161C2C(Entity* self);
+void EntityMariaTurtleCrashVortex(Entity* self);
 void EntityMariaOwl(Entity* self);
-void EntityMariaTurtleCrash(Entity* self);
 void EntityMariaDragonCrash(Entity* self);
-void EntityMariaDragonCrashBodyPart(Entity* self);
-void func_pspeu_092BEB40(Entity* self);
-void func_pspeu_092BFD30(Entity* self);
+void func_pspeu_0924FB40(Entity* self);
 void func_pspeu_092BFF78(Entity* self);
 void MarEntityApplyMariaPowerAnim(Entity* self);
+void EntityMariaTurtleCrash(Entity* self);
+void EntityMariaDragonCrashBodyPart(Entity* self);
+void func_pspeu_09250D30(Entity* self);
 void MarEntitySlideKick(Entity* self);
 void MarEntityBladeDash(Entity* self);
-void func_maria_801623E0(Entity* self);
-void func_maria_80162604(Entity* self);
 void func_maria_80160F0C(Entity* self);
 void MarEntityNotImplemented4(Entity* self);
-void MarEntityPlayerBlinkWhite(Entity* self);
 void MarEntityShrinkingPowerUpRing(Entity* self);
+void func_maria_801623E0(Entity* self);
+void MarEntityPlayerBlinkWhite(Entity* self);
 void EntityMariaCatCrashAttack(Entity* self);
 void EntityMariaCatAttack(Entity* self);
-void EntityMariaCatCrash(Entity* self);
-void EntityMariaCardinalAttack(Entity* self);
-void EntityMariaCardinalCrash(Entity* self);
 void MarEntityHitByIce(Entity* self);
-void MarEntityHitByLightning(Entity* self);
-void EntityMariaCardinalCrashFireball(Entity* self);
 void EntityMariaDollActivate(Entity* self);
 void MarEntityTeleport(Entity* self);
+void func_maria_80162604(Entity* self);
+void EntityMariaCatCrash(Entity* self);
+void MarEntityHitByLightning(Entity* self);
+void EntityMariaCardinalAttack(Entity* self);
+void EntityMariaCardinalCrash(Entity* self);
+void EntityMariaCardinalCrashFireball(Entity* self);
+
 static PfnEntityUpdate entity_functions[] = {
     MarEntityDummy,
     MarEntityFactory,
@@ -217,8 +205,8 @@ static PfnEntityUpdate entity_functions[] = {
     EntityMariaDragonCrash,
     EntityMariaDragonCrashBodyPart,
     MarEntityDummy,
-    func_pspeu_092BEB40,
-    func_pspeu_092BFD30,
+    func_pspeu_0924FB40,
+    func_pspeu_09250D30,
     func_pspeu_092BFF78,
     MarEntityDummy,
     MarEntityDummy,
@@ -268,7 +256,8 @@ static PfnEntityUpdate entity_functions[] = {
     MarEntityDummy,
     MarEntityDummy,
     MarEntityTeleport,
-    MarEntityDummy};
+    MarEntityDummy,
+};
 STATIC_ASSERT(LEN(entity_functions) == NUM_ENTITIES, "entity array wrong size");
 
 // Corresponding DRA function is UpdatePlayerEntities
@@ -279,26 +268,24 @@ void MarUpdatePlayerEntities(void) {
     s32 i;
     s32 j;
     Entity* entity;
+    PfnEntityUpdate updateFn;
 
     isPrologueTimeStopped = g_unkGraphicsStruct.unk20;
-    entity = g_CurrentEntity = &g_Entities[4];
-    for (i = 4; i < STAGE_ENTITY_START; i++, g_CurrentEntity++, entity++) {
-        if (entity->entityId != 0) {
-            if (entity->step == 0) {
-                entity->pfnUpdate = entity_functions[entity->entityId];
-            }
-            if (!isPrologueTimeStopped || (entity->flags & FLAG_UNK_10000)) {
-                entity->pfnUpdate(entity);
-                entity = g_CurrentEntity;
-                if (entity->entityId != 0) {
-                    if (!(entity->flags & FLAG_KEEP_ALIVE_OFFCAMERA) &&
-                        (entity->posX.i.hi > 288 || entity->posX.i.hi < -32 ||
-                         entity->posY.i.hi > 256 || entity->posY.i.hi < -16)) {
-                        DestroyEntity(g_CurrentEntity);
-                    } else if (entity->flags & FLAG_UNK_100000) {
-                        g_api.UpdateAnim(
-                            0, (AnimationFrame**)g_MarEmptyAnimGroup);
-                    }
+    entity = g_CurrentEntity = &g_Entities[STAGE_ENTITY_START + 4];
+    for (i = (STAGE_ENTITY_START + 4); i < (STAGE_ENTITY_START * 2); i++,
+        g_CurrentEntity++, entity++) {
+        if (entity->entityId != 0 &&
+            (!isPrologueTimeStopped || (entity->flags & FLAG_UNK_10000))) {
+            updateFn = entity_functions[entity->entityId];
+            updateFn(entity);
+            entity = g_CurrentEntity;
+            if (entity->entityId != 0) {
+                if (!(entity->flags & FLAG_KEEP_ALIVE_OFFCAMERA) &&
+                    (entity->posX.i.hi > 288 || entity->posX.i.hi < -32 ||
+                     entity->posY.i.hi > 256 || entity->posY.i.hi < -16)) {
+                    DestroyEntity(g_CurrentEntity);
+                } else if (entity->flags & FLAG_UNK_100000) {
+                    g_api.UpdateAnim(0, (AnimationFrame**)g_MarEmptyAnimGroup);
                 }
             }
         }
@@ -310,16 +297,16 @@ void MarUpdatePlayerEntities(void) {
         }
     }
     D_80174F80[1] = D_80174F80[2] = 0;
-    if (g_Entities[E_WEAPON].enemyId == 1) {
+    if (g_Entities[E_BOSS_WEAPON].enemyId == 1) {
         D_80174F80[1] = 1;
-    } else if (g_Entities[E_WEAPON].enemyId == 2) {
+    } else if (g_Entities[E_BOSS_WEAPON].enemyId == 2) {
         D_80174F80[2] = 1;
     }
     for (j = 3; j < 11; j++) {
         D_80174F80[j] = 0;
     }
-    entity = &g_Entities[17];
-    for (j = 17; j < 48; entity++, j++) {
+    entity = &g_Entities[UNK_ENTITY_51];
+    for (j = UNK_ENTITY_51; j < 112; entity++, j++) {
         enemyId = entity->enemyId;
         if (enemyId > 2) {
             D_80174F80[enemyId]++;
@@ -328,12 +315,13 @@ void MarUpdatePlayerEntities(void) {
     // This IF will fire if we have enough hearts to use a subweapon crash.
     // No idea what it's doing here.
     if (MarCheckSubweapon(&subwpn, true, false) >= 0) {
-        g_Player.status |= PLAYER_STATUS_UNK200000;
+        g_Maria.status |= PLAYER_STATUS_UNK200000;
     }
-    if (g_Player.status & (PLAYER_STATUS_DEAD | PLAYER_STATUS_UNK80000)) {
+    if (g_Maria.status & (PLAYER_STATUS_DEAD | PLAYER_STATUS_UNK80000)) {
         FntPrint("dead player\n");
-        entity = &g_Entities[4];
-        for (i = 4; i < 64; i++, entity++) {
+        entity = &g_Entities[(STAGE_ENTITY_START + 4)];
+        for (i = (STAGE_ENTITY_START + 4); i < (STAGE_ENTITY_START * 2); i++,
+            entity++) {
             entity->hitboxState = 0;
         }
     }
@@ -342,9 +330,10 @@ void MarUpdatePlayerEntities(void) {
 // Similar to the version in DRA but with some logic removed.
 // arg2 is unused, but needed to match other functions that call this function,
 // probably part of the code for a debug build
+// MarCreateEntFactoryFromEntity
 Entity* MarCreateEntFactoryFromEntity(
     Entity* source, u32 factoryParams, s32 arg2) {
-    Entity* entity = MarGetFreeEntity(8, 16);
+    Entity* entity = MarGetFreeEntity(72, 80);
     if (!entity) {
         return NULL;
     }
@@ -365,7 +354,7 @@ Entity* MarCreateEntFactoryFromEntity(
 }
 
 static FactoryBlueprint blueprints[] = {
-#include "gen/blueprints.h"
+#include "../cen/gen/blueprints.h"
 };
 STATIC_ASSERT(LEN(blueprints) == NUM_BLUEPRINTS, "bp array wrong size");
 static u8 entity_ranges[NUM_BLUEPRINT_KIND][2] = {
@@ -377,6 +366,7 @@ static u8 entity_ranges[NUM_BLUEPRINT_KIND][2] = {
     {0x30, 0x30}, // B_CUTSCENE_MARIA
     {0x10, 0x2F}, // B_WEAPON_CHILDREN
 };
+
 void MarEntityFactory(Entity* self) {
     Entity* newEntity;
     s16 nPerCycle;
@@ -410,8 +400,8 @@ void MarEntityFactory(Entity* self) {
             self->flags |= FLAG_POS_PLAYER_LOCKED;
         case B_ORIGIN_FOLLOW_PLAYER_WHILE_PLAYER_IS_HIT:
         case B_ORIGIN_FOLLOW_PLAYER_WHILE_PLAYER_IS_NOT_HIT:
-            self->posX.val = PLAYER.posX.val;
-            self->posY.val = PLAYER.posY.val;
+            self->posX.val = MARIA.posX.val;
+            self->posY.val = MARIA.posY.val;
             break;
         case B_ORIGIN_FOLLOW_PARENT_ENTITY:
             self->flags |= FLAG_POS_PLAYER_LOCKED;
@@ -425,26 +415,26 @@ void MarEntityFactory(Entity* self) {
             break;
         case B_ORIGIN_SUBWEAPON_CRASH_PARTICLE:
         case B_ORIGIN_FOLLOW_PLAYER:
-            self->posX.val = PLAYER.posX.val;
-            self->posY.val = PLAYER.posY.val;
+            self->posX.val = MARIA.posX.val;
+            self->posY.val = MARIA.posY.val;
             break;
         case B_ORIGIN_FOLLOW_PLAYER_WHILE_PLAYER_IS_RUNNING:
-            self->posX.val = PLAYER.posX.val;
-            self->posY.val = PLAYER.posY.val;
+            self->posX.val = MARIA.posX.val;
+            self->posY.val = MARIA.posY.val;
             self->entityId = 0;
             return;
         case B_ORIGIN_FOLLOW_PLAYER_WHILE_PLAYER_IS_HIT:
-            self->posX.val = PLAYER.posX.val;
-            self->posY.val = PLAYER.posY.val;
-            if (PLAYER.step == PL_S_HIT) {
+            self->posX.val = MARIA.posX.val;
+            self->posY.val = MARIA.posY.val;
+            if (MARIA.step == PL_S_HIT) {
                 self->entityId = 0;
                 return;
             }
             break;
         case B_ORIGIN_FOLLOW_PLAYER_WHILE_PLAYER_IS_NOT_HIT:
-            self->posX.val = PLAYER.posX.val;
-            self->posY.val = PLAYER.posY.val;
-            if (PLAYER.step != PL_S_HIT) {
+            self->posX.val = MARIA.posX.val;
+            self->posY.val = MARIA.posY.val;
+            if (MARIA.step != PL_S_HIT) {
                 self->entityId = 0;
                 return;
             }
@@ -466,13 +456,15 @@ void MarEntityFactory(Entity* self) {
         data = entity_ranges[0];
         data += self->ext.factory.kind * 2;
         startIndex = *data++;
+        startIndex += 0x40;
         endIndex = *data;
+        endIndex += 0x40;
         if (self->ext.factory.kind == B_DECORATION) {
             newEntity = MarGetFreeEntityReverse(startIndex, endIndex + 1);
         } else if (self->ext.factory.kind == B_WHIP) {
-            newEntity = &g_Entities[31];
+            newEntity = &g_Entities[95];
         } else if (self->ext.factory.kind == B_CUTSCENE_MARIA) {
-            newEntity = &g_Entities[48];
+            newEntity = &g_Entities[112];
         } else {
             newEntity = MarGetFreeEntity(startIndex, endIndex + 1);
         }
@@ -514,12 +506,12 @@ void MarEntityFactory(Entity* self) {
 }
 
 void MarEntitySlideKick(Entity* entity) {
-    if (PLAYER.step != PL_S_SLIDE) {
+    if (MARIA.step != PL_S_SLIDE) {
         DestroyEntity(entity);
     } else {
-        entity->posX.i.hi = PLAYER.posX.i.hi;
-        entity->posY.i.hi = PLAYER.posY.i.hi;
-        entity->facingLeft = PLAYER.facingLeft;
+        entity->posX.i.hi = MARIA.posX.i.hi;
+        entity->posY.i.hi = MARIA.posY.i.hi;
+        entity->facingLeft = MARIA.facingLeft;
         if (entity->step == 0) {
             entity->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED |
                             FLAG_KEEP_ALIVE_OFFCAMERA;
@@ -532,10 +524,10 @@ void MarEntitySlideKick(Entity* entity) {
             entity->step++;
         }
         entity->hitboxState = entity->ext.subweapon.timer;
-        if (PLAYER.pose < 2) {
+        if (MARIA.pose < 2) {
             entity->hitboxState = 0;
         }
-        if (PLAYER.pose > 7) {
+        if (MARIA.pose > 7) {
             DestroyEntity(entity);
         }
     }
@@ -543,12 +535,12 @@ void MarEntitySlideKick(Entity* entity) {
 
 // created from a blueprint, #24
 void MarEntityBladeDash(Entity* self) {
-    if (PLAYER.step != PL_S_BLADEDASH) {
+    if (MARIA.step != PL_S_BLADEDASH) {
         DestroyEntity(self);
     } else {
-        self->posX.i.hi = PLAYER.posX.i.hi;
-        self->posY.i.hi = PLAYER.posY.i.hi;
-        self->facingLeft = PLAYER.facingLeft;
+        self->posX.i.hi = MARIA.posX.i.hi;
+        self->posY.i.hi = MARIA.posY.i.hi;
+        self->facingLeft = MARIA.facingLeft;
         if (self->step == 0) {
             self->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED |
                           FLAG_KEEP_ALIVE_OFFCAMERA;
@@ -558,20 +550,20 @@ void MarEntityBladeDash(Entity* self) {
             MarSetSubweaponParams(self);
             self->step++;
         }
-        if (PLAYER.pose > 12) {
+        if (MARIA.pose > 0x12) {
             DestroyEntity(self);
         }
     }
 }
 
 void func_maria_80160F0C(Entity* self) {
-    if (PLAYER.step != PL_S_HIGHJUMP) {
+    if (MARIA.step != PL_S_HIGHJUMP) {
         DestroyEntity(self);
         return;
     }
-    self->posX.i.hi = PLAYER.posX.i.hi;
-    self->posY.i.hi = PLAYER.posY.i.hi;
-    self->facingLeft = PLAYER.facingLeft;
+    self->posX.i.hi = MARIA.posX.i.hi;
+    self->posY.i.hi = MARIA.posY.i.hi;
+    self->facingLeft = MARIA.facingLeft;
     if (self->step == 0) {
         self->flags =
             FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA;
@@ -603,6 +595,7 @@ static AnimationFrame anim_smoke_puff[] = {
     POSE_END};
 static u8 sensors1_80154CE4[] = {2, 9, 3, 10, 1, 8, 4, 11, 0, 7, 5, 12, 6, 13};
 static u8 sensors2_80154CF4[] = {2, 9, 3, 10, 4, 11, 5, 12, 6, 13};
+
 void MarEntitySmokePuff(Entity* self) {
     s16 posX;
     s32 i;
@@ -610,7 +603,7 @@ void MarEntitySmokePuff(Entity* self) {
     s16 paramsHi = self->params >> 8;
     s16 paramsLo = self->params & 0xFF;
 
-    if ((g_Player.status & PLAYER_STATUS_UNK20000) && (paramsHi != 9)) {
+    if ((g_Maria.status & PLAYER_STATUS_UNK20000) && (paramsHi != 9)) {
         DestroyEntity(self);
         return;
     }
@@ -618,7 +611,7 @@ void MarEntitySmokePuff(Entity* self) {
     case 0:
         self->animSet = ANIMSET_DRA(5);
         self->anim = anim_smoke_puff;
-        self->zPriority = PLAYER.zPriority + 2;
+        self->zPriority = MARIA.zPriority + 2;
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000 | FLAG_UNK_10000;
         self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY | ENTITY_OPACITY;
@@ -641,7 +634,7 @@ void MarEntitySmokePuff(Entity* self) {
         }
         if (paramsHi == 4) {
             for (i = paramsLo * 2; i < LEN(sensors1_80154CE4); i++) {
-                if (g_Player.colWall[sensors1_80154CE4[i]].effects &
+                if (g_Maria.colWall[sensors1_80154CE4[i]].effects &
                     (EFFECT_UNK_0002 | EFFECT_SOLID)) {
                     break;
                 }
@@ -651,9 +644,9 @@ void MarEntitySmokePuff(Entity* self) {
                 return;
             }
             self->posX.i.hi =
-                PLAYER.posX.i.hi + g_MarSensorsWall[sensors1_80154CE4[i]].x;
+                MARIA.posX.i.hi + g_MarSensorsWall[sensors1_80154CE4[i]].x;
             self->posY.i.hi =
-                PLAYER.posY.i.hi + g_MarSensorsWall[sensors1_80154CE4[i]].y;
+                MARIA.posY.i.hi + g_MarSensorsWall[sensors1_80154CE4[i]].y;
             self->velocityY = FIX(-0.25);
             self->scaleX = rot_x_80154C74[1] + 0x40;
             self->scaleY = self->scaleX;
@@ -662,7 +655,7 @@ void MarEntitySmokePuff(Entity* self) {
         }
         if (paramsHi == 8) {
             for (i = paramsLo * 2; i < LEN(sensors2_80154CF4); i++) {
-                if (g_Player.colWall[sensors2_80154CF4[i]].effects &
+                if (g_Maria.colWall[sensors2_80154CF4[i]].effects &
                     (EFFECT_UNK_0002 | EFFECT_SOLID)) {
                     break;
                 }
@@ -672,9 +665,9 @@ void MarEntitySmokePuff(Entity* self) {
                 return;
             }
             self->posX.i.hi =
-                PLAYER.posX.i.hi + g_MarSensorsWall[sensors2_80154CF4[i]].x;
+                MARIA.posX.i.hi + g_MarSensorsWall[sensors2_80154CF4[i]].x;
             self->posY.i.hi =
-                PLAYER.posY.i.hi + g_MarSensorsWall[sensors2_80154CF4[i]].y;
+                MARIA.posY.i.hi + g_MarSensorsWall[sensors2_80154CF4[i]].y;
             self->velocityY = velocity_x_80154C5C[paramsLo];
             self->scaleX = rot_x_80154C74[paramsLo] + 0x20;
             self->scaleY = self->scaleX;
@@ -682,7 +675,7 @@ void MarEntitySmokePuff(Entity* self) {
             return;
         }
         if (paramsHi == 1) {
-            if (g_Player.vram_flag & TOUCHING_ANY_SLOPE) {
+            if (g_Maria.vram_flag & TOUCHING_ANY_SLOPE) {
                 posX /= 2;
             }
         }
@@ -748,6 +741,7 @@ static unkStr_8011E4BC D_80154D90 = {
 static unkStr_8011E4BC* D_80154DA0[] = {
     &D_80154D00, &D_80154D10, &D_80154D20, &D_80154D30, &D_80154D40,
     &D_80154D50, &D_80154D60, &D_80154D70, &D_80154D80, &D_80154D90};
+
 void MarEntityHitByCutBlood(Entity* self) {
     byte stackpad[0x28];
     u8 thickness;
@@ -768,8 +762,8 @@ void MarEntityHitByCutBlood(Entity* self) {
     props = D_80154DA0[variant];
     x = self->posX.i.hi;
     y = self->posY.i.hi;
-    playerX = PLAYER.posX.i.hi;
-    playerY = PLAYER.posY.i.hi;
+    playerX = MARIA.posX.i.hi;
+    playerY = MARIA.posY.i.hi;
     switch (self->step) {
     case 0:
         self->primIndex = g_api.func_800EDB58(PRIM_TILE_ALT, props->count + 1);
@@ -797,7 +791,7 @@ void MarEntityHitByCutBlood(Entity* self) {
         i = 0;
         while (1) {
             tilePrim->drawMode = props->drawMode;
-            tilePrim->priority = PLAYER.zPriority + props->priority;
+            tilePrim->priority = MARIA.zPriority + props->priority;
             if (tilePrim->next == NULL) {
                 tilePrim->drawMode &= ~DRAW_HIDE;
                 tilePrim->y0 = tilePrim->x0 = tilePrim->w = 0;
@@ -972,7 +966,7 @@ void MarEntityHitByCutBlood(Entity* self) {
                     tilePrim->posX.val += tilePrim->velocityX.val;
                     if (g_unkGraphicsStruct.D_80097448 == 0 ||
                         !(tilePrim->posY.i.hi >
-                          (PLAYER.posY.i.hi - g_unkGraphicsStruct.D_80097448 +
+                          (MARIA.posY.i.hi - g_unkGraphicsStruct.D_80097448 +
                            0x19))) {
                         tilePrim->drawMode |= DRAW_HIDE;
                     }
@@ -999,6 +993,7 @@ static AnimationFrame anim_80154E04[] = {
     POSE(2, 13, 0), POSE(2, 14, 0), POSE(2, 15, 0), POSE(2, 16, 0),
     POSE(2, 17, 0), POSE(2, 18, 0), POSE(3, 19, 0), POSE(4, 20, 0),
     POSE_END};
+
 void func_maria_80161C2C(Entity* self) {
     s16 paramsHi;
     s16 paramsLo;
@@ -1029,19 +1024,19 @@ void func_maria_80161C2C(Entity* self) {
         }
         self->flags = FLAG_UNK_20000 | FLAG_UNK_100000 | FLAG_POS_CAMERA_LOCKED;
         if (rand() & 3) {
-            self->zPriority = PLAYER.zPriority + 2;
+            self->zPriority = MARIA.zPriority + 2;
         } else {
-            self->zPriority = PLAYER.zPriority - 2;
+            self->zPriority = MARIA.zPriority - 2;
         }
         if (paramsHi == 2) {
-            self->posX.i.hi = PLAYER.posX.i.hi + (rand() % 44) - 22;
+            self->posX.i.hi = MARIA.posX.i.hi + (rand() % 44) - 22;
         } else {
-            self->posX.i.hi = PLAYER.posX.i.hi + (rand() & 15) - 8;
+            self->posX.i.hi = MARIA.posX.i.hi + (rand() & 15) - 8;
         }
         self->posY.i.hi =
-            PLAYER.posY.i.hi + PLAYER.hitboxOffY + (rand() & 31) - 16;
+            MARIA.posY.i.hi + MARIA.hitboxOffY + (rand() & 31) - 16;
         self->velocityY = FIX(-0.5);
-        self->velocityX = PLAYER.velocityX >> 2;
+        self->velocityX = MARIA.velocityX >> 2;
         self->step++;
         break;
     case 1:
@@ -1081,6 +1076,7 @@ static Props_80161FF0 D_80154E5C[] = {
     {+0x40, 0, -FIX(2.5), FIX(0), 0x0048, 0x1B, 0x0119, 0, 128},
     {0, -0x40, FIX(0), +FIX(2.5), 0x0030, 0x19, 0x011A, 0, 0},
     {0, +0x40, FIX(0), -FIX(2.5), 0x0018, 0x19, 0x011B, 128, 0}};
+
 void MarEntityApplyMariaPowerAnim(Entity* self) {
     Primitive* prim;
     s16 posX;
@@ -1112,7 +1108,7 @@ void MarEntityApplyMariaPowerAnim(Entity* self) {
         prim->v3 = props->vBase + 0x6F;
         prim->tpage = props->tpage;
         prim->clut = props->clut;
-        prim->priority = PLAYER.zPriority + 8;
+        prim->priority = MARIA.zPriority + 8;
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
         self->velocityX = props->velocityX;
         self->velocityY = props->velocityY;
@@ -1166,8 +1162,8 @@ void MarEntityApplyMariaPowerAnim(Entity* self) {
 void func_maria_801623E0(Entity* self) {
     Primitive* prim;
 
-    self->posX.val = PLAYER.posX.val;
-    self->posY.val = PLAYER.posY.val;
+    self->posX.val = MARIA.posX.val;
+    self->posY.val = MARIA.posY.val;
     switch (self->step) {
     case 0:
         self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
@@ -1183,7 +1179,7 @@ void func_maria_801623E0(Entity* self) {
         prim->v2 = prim->v3 = 255;
         prim->tpage = 0x1A;
         prim->clut = 0x13E;
-        prim->priority = PLAYER.zPriority + 8;
+        prim->priority = MARIA.zPriority + 8;
         prim->drawMode = DRAW_DEFAULT;
         self->flags = FLAG_UNK_10000 | FLAG_POS_PLAYER_LOCKED |
                       FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
@@ -1215,8 +1211,8 @@ void func_maria_801623E0(Entity* self) {
 void func_maria_80162604(Entity* self) {
     Primitive* prim;
 
-    self->posX.val = PLAYER.posX.val;
-    self->posY.val = PLAYER.posY.val;
+    self->posX.val = MARIA.posX.val;
+    self->posY.val = MARIA.posY.val;
     switch (self->step) {
     case 0:
         self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
@@ -1234,7 +1230,7 @@ void func_maria_80162604(Entity* self) {
         prim->tpage = 0x1A;
 
         prim->clut = PAL_CC_MAGIC_HUD_EFFECT;
-        prim->priority = PLAYER.zPriority - 4;
+        prim->priority = MARIA.zPriority - 4;
         prim->drawMode = DRAW_DEFAULT;
         self->flags = FLAG_UNK_10000 | FLAG_POS_PLAYER_LOCKED |
                       FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
@@ -1278,11 +1274,12 @@ void MarSetWeaponParams(Entity* entity, s32 attack, s32 attackElement,
                         s32 stunFrames, s32 hitEffect, s32 entityRoomIndex) {
     entity->attack = attack;
     entity->attackElement = attackElement;
-    entity->hitboxState = hitboxState;
+    entity->hitboxState = hitboxState | 1;
     entity->nFramesInvincibility = nFramesInvincibility;
     entity->stunFrames = stunFrames;
     entity->hitEffect = hitEffect;
     entity->entityRoomIndex = entityRoomIndex;
+    entity->flags |= FLAG_NOT_AN_ENEMY;
     entity->attack = g_api.CalcDealDamageMaria(entity->attack);
     func_maria_8015F9F0(entity);
 }
@@ -1299,37 +1296,35 @@ static AnimationFrame D_pspeu_092C59E8[] = {
     POSE(5, 1, 0),  POSE(1, 2, 0), POSE(1, 3, 0), POSE(1, 4, 0), POSE(3, 5, 0),
     POSE(3, 6, 0),  POSE(2, 7, 0), POSE(4, 8, 0), POSE(2, 7, 0), POSE(3, 9, 0),
     POSE(3, 10, 0), POSE(1, 4, 0), POSE(1, 3, 0), POSE(1, 2, 0), POSE_LOOP(0)};
+
 void EntityMariaOwl(Entity* self) {
     s32 acceleration;
 
     acceleration = 0x40;
     switch (self->step) {
     case 0:
+        self->hitFlags = 0;
         self->flags = FLAG_UNK_100000 | FLAG_KEEP_ALIVE_OFFCAMERA |
                       FLAG_POS_CAMERA_LOCKED;
-#ifdef VERSION_PSP
-        self->unk5A = 0x18;
-#else
-        self->unk5A = 0x66;
-#endif
-        self->zPriority = PLAYER.zPriority - 8;
+        self->unk5A = 0x58;
+        self->zPriority = MARIA.zPriority - 8;
         self->palette = PAL_WPN_OWL;
         self->animSet = ANIMSET_WPN_OWL;
         MarSetAnimation(D_pspeu_092C59E8);
-        self->facingLeft = PLAYER.facingLeft;
+        self->facingLeft = MARIA.facingLeft;
         self->velocityX = FIX(4);
-        self->posX.i.hi = PLAYER.posX.i.hi + (PLAYER.facingLeft ? -4 : 4);
-        self->posY.i.hi = PLAYER.posY.i.hi - 0xC;
-        if (PLAYER.step == PL_S_CROUCH) {
+        self->posX.i.hi = MARIA.posX.i.hi + (MARIA.facingLeft ? -4 : 4);
+        self->posY.i.hi = MARIA.posY.i.hi - 0xC;
+        if (MARIA.step == PL_S_CROUCH) {
             self->posY.i.hi += 12;
         }
         self->ext.mariaOwl.angle += self->facingLeft ? 0 : 0x800;
-        self->hitboxWidth = 16;
-        self->hitboxHeight = 16;
-        self->hitboxOffX = 0;
-        self->hitboxOffY = 0;
+        self->hitboxWidth = 5;
+        self->hitboxHeight = 5;
+        self->hitboxOffX = 5;
+        self->hitboxOffY = 5;
         self->ext.mariaOwl.unkB0 = 0;
-        MarSetWeaponParams(self, 12, ELEMENT_HOLY, 2, 40, 16, 1, 0);
+        MarSetWeaponParams(self, 24, ELEMENT_HOLY, 12, 16, 16, 1, 0);
         self->ext.mariaOwl.timer = 0;
         self->step++;
         break;
@@ -1340,6 +1335,10 @@ void EntityMariaOwl(Entity* self) {
             self->step++;
             return;
         }
+
+        if (self->flags & FLAG_DEAD) {
+            self->step++;
+        }
         break;
     case 2:
         self->velocityY = FIX(1);
@@ -1347,7 +1346,7 @@ void EntityMariaOwl(Entity* self) {
         self->ext.mariaOwl.unk7E++;
         self->velocityX -= FIX(1);
         self->posX.val += self->facingLeft ? -self->velocityX : self->velocityX;
-        if (self->velocityX <= 0) {
+        if (self->velocityX <= 0 || self->flags & FLAG_DEAD) {
             self->facingLeft = self->facingLeft ? 0 : 1;
             self->velocityX = 0;
             self->step++;
@@ -1378,10 +1377,9 @@ void EntityMariaOwl(Entity* self) {
         s32 x;
         s32 y;
         s32 var_s0;
-        x = PLAYER.posX.i.hi;
-        y = PLAYER.posY.i.hi +
-            (PLAYER.step == PL_S_CROUCH || PLAYER.step == PL_S_SLIDE ? -12
-                                                                     : -24);
+        x = MARIA.posX.i.hi;
+        y = MARIA.posY.i.hi +
+            (MARIA.step == PL_S_CROUCH || MARIA.step == PL_S_SLIDE ? -12 : -24);
         if (abs(x - self->posX.i.hi) < 12 && abs(y - self->posY.i.hi) < 12) {
             self->step++;
             return;
@@ -1408,7 +1406,7 @@ void EntityMariaOwl(Entity* self) {
         }
         SetGeomOffset(0, 0);
         func_psp_089285A0(
-            self->ext.mariaOwl.angle, &sp6C); // rotate matirx by angle
+            self->ext.mariaOwl.angle, &sp6C); // rotate matrix by angle
         TransMatrix(&sp6C, &sp5C);
         SetRotMatrix(&sp6C);
         SetTransMatrix(&sp6C);
@@ -1440,8 +1438,8 @@ bool func_maria_80162E9C(Entity* entity) {
 
     objId = entity->entityId;
     params = entity->params;
-    for (e = &g_Entities[E_WEAPON], i = E_WEAPON; i < STAGE_ENTITY_START; e++,
-        i++) {
+    for (e = &g_Entities[E_BOSS_WEAPON], i = E_BOSS_WEAPON;
+         i < (STAGE_ENTITY_START * 2); e++, i++) {
         if (objId == e->entityId && params == e->params && e != entity) {
             return true;
         }
@@ -1503,14 +1501,14 @@ void MarEntityPlayerBlinkWhite(Entity* self) {
     s16 greenDivide;
     void* dummy48;
 
-    if (!PLAYER.animSet || !(PLAYER.animCurFrame & 0x7FFF)) {
+    if (!MARIA.animSet || !(MARIA.animCurFrame & 0x7FFF)) {
         DestroyEntity(self);
         return;
     }
-    self->posY.i.hi = PLAYER.posY.i.hi;
-    self->posX.i.hi = PLAYER.posX.i.hi;
-    self->facingLeft = PLAYER.facingLeft;
-    sp44 = maria_spr[PLAYER.animCurFrame & 0x7FFF];
+    self->posY.i.hi = MARIA.posY.i.hi;
+    self->posX.i.hi = MARIA.posX.i.hi;
+    self->facingLeft = MARIA.facingLeft;
+    sp44 = maria_spr[MARIA.animCurFrame & 0x7FFF];
     plSpriteIndex = *sp44++;
     plSpriteIndex &= 0x7FFF;
     selfX = self->posX.i.hi;
@@ -1525,12 +1523,12 @@ void MarEntityPlayerBlinkWhite(Entity* self) {
     xPivot = sp44[0] + plSprite[2];
     yPivot = sp44[1] + plSprite[3];
 
-    self->rotate = PLAYER.rotate;
-    self->drawFlags = PLAYER.drawFlags;
-    self->scaleX = PLAYER.scaleX;
-    self->scaleY = PLAYER.scaleY;
-    self->rotPivotY = PLAYER.rotPivotY;
-    self->rotPivotX = PLAYER.rotPivotX;
+    self->rotate = MARIA.rotate;
+    self->drawFlags = MARIA.drawFlags;
+    self->scaleX = MARIA.scaleX;
+    self->scaleY = MARIA.scaleY;
+    self->rotPivotY = MARIA.rotPivotY;
+    self->rotPivotX = MARIA.rotPivotX;
     upperParams = (self->params & 0x7F00) >> 8;
     dataPtr = D_80154FBC[upperParams & 0x3F];
     switch (self->step) {
@@ -1554,7 +1552,7 @@ void MarEntityPlayerBlinkWhite(Entity* self) {
             prim->r0 = prim->b0 = prim->g0 = prim->r1 = prim->b1 = prim->g1 =
                 prim->r2 = prim->b2 = prim->g2 = prim->r3 = prim->b3 =
                     prim->g3 = 0x80;
-            prim->priority = PLAYER.zPriority + 2;
+            prim->priority = MARIA.zPriority + 2;
             prim->drawMode =
                 dataPtr[8] + DRAW_UNK_200 + DRAW_UNK_100 + DRAW_COLORS;
             prim = prim->next;
@@ -1575,24 +1573,24 @@ void MarEntityPlayerBlinkWhite(Entity* self) {
         if (dataPtr[7] >= 0x7000) {
             switch ((u32)dataPtr[7]) {
             case 0x7000:
-                if (g_Player.timers[PL_T_POISON] == 0) {
+                if (g_Maria.timers[PL_T_POISON] == 0) {
                     self->step++;
                 }
                 break;
             case 0x7001:
-                if (g_Player.timers[PL_T_INVINCIBLE_SCENE] == 0) {
+                if (g_Maria.timers[PL_T_INVINCIBLE_SCENE] == 0) {
                     self->step++;
                 }
                 break;
             case 0x7007:
             case 0x7002:
-                if (PLAYER.step != PL_S_HIT) {
+                if (MARIA.step != PL_S_HIT) {
                     self->step++;
                 }
                 break;
             case 0x7005:
             case 0x7006:
-                if (PLAYER.step_s == 3) {
+                if (MARIA.step_s == 3) {
                     self->step++;
                 }
                 break;
@@ -1822,7 +1820,7 @@ void MarEntityPlayerBlinkWhite(Entity* self) {
                                    self->ext.playerBlink.unk90 / blueDivide);
             D_80154F7C[i] += self->ext.playerBlink.unk8A;
         }
-        prim->priority = PLAYER.zPriority + 2;
+        prim->priority = MARIA.zPriority + 2;
         prim = prim->next;
     }
     if ((upperParams & 0x3F) == 0 || (upperParams & 0x3F) == 7) {
@@ -1871,8 +1869,8 @@ void MarEntityShrinkingPowerUpRing(Entity* self) {
     bMod = loadedParams[4];
     gOffset = loadedParams[0];
     bOffset = loadedParams[1];
-    self->posX.i.hi = PLAYER.posX.i.hi;
-    self->posY.i.hi = PLAYER.posY.i.hi;
+    self->posX.i.hi = MARIA.posX.i.hi;
+    self->posY.i.hi = MARIA.posY.i.hi;
     switch (self->step) {
     case 0:
         self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 32);
@@ -1903,7 +1901,7 @@ void MarEntityShrinkingPowerUpRing(Entity* self) {
             prim2->v3 = prim1->v1 = (prim2->v1 + prim1->v3) / 2;
             prim1->tpage = prim2->tpage = 0x1A;
             prim1->clut = prim2->clut = PAL_FILL_WHITE;
-            prim1->priority = prim2->priority = PLAYER.zPriority + 2;
+            prim1->priority = prim2->priority = MARIA.zPriority + 2;
             prim1->drawMode = prim2->drawMode =
                 DRAW_UNK_200 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
                 DRAW_TRANSP;
@@ -2051,10 +2049,10 @@ void MarEntityHitByIce(Entity* self) {
     Point16* pos;
     Primitive* prim;
 
-    self->posX.i.hi = PLAYER.posX.i.hi;
-    self->posY.i.hi = PLAYER.posY.i.hi;
+    self->posX.i.hi = MARIA.posX.i.hi;
+    self->posY.i.hi = MARIA.posY.i.hi;
     terminateFlag = 0;
-    if (!(g_Player.status & PLAYER_STATUS_UNK10000)) {
+    if (!(g_Maria.status & PLAYER_STATUS_UNK10000)) {
         terminateFlag = 1;
     }
     switch (self->step) {
@@ -2078,28 +2076,28 @@ void MarEntityHitByIce(Entity* self) {
                                  DRAW_COLORS | DRAW_TRANSP;
             }
             prim->type = PRIM_G4;
-            prim->priority = PLAYER.zPriority + 2;
+            prim->priority = MARIA.zPriority + 2;
             prim = prim->next;
         }
         // Weird repeated conditional
-        if (PLAYER.velocityY != 0) {
+        if (MARIA.velocityY != 0) {
             self->ext.hitbyice.unk7E = 1;
         }
-        if (PLAYER.velocityY != 0) {
-            if (PLAYER.facingLeft) {
+        if (MARIA.velocityY != 0) {
+            if (MARIA.facingLeft) {
                 self->rotate = 0x100;
             } else {
                 self->rotate = -0x100;
             }
         } else {
-            if (PLAYER.velocityX > 0) {
+            if (MARIA.velocityX > 0) {
                 self->rotate = 0x80;
             } else {
                 self->rotate = 0xF80;
             }
         }
-        if (PLAYER.step == PL_S_DEAD) {
-            if (PLAYER.facingLeft) {
+        if (MARIA.step == PL_S_DEAD) {
+            if (MARIA.facingLeft) {
                 self->rotate = 0x180;
             } else {
                 self->rotate = -0x180;
@@ -2114,23 +2112,23 @@ void MarEntityHitByIce(Entity* self) {
         self->step++;
         break;
     case 1:
-        if (PLAYER.step == PL_S_DEAD) {
-            if ((PLAYER.animCurFrame & 0x7FFF) == 0x21) {
-                if (PLAYER.facingLeft) {
+        if (MARIA.step == PL_S_DEAD) {
+            if ((MARIA.animCurFrame & 0x7FFF) == 0x21) {
+                if (MARIA.facingLeft) {
                     self->rotate = 0x280;
                 } else {
                     self->rotate = -0x280;
                 }
             }
-            if ((PLAYER.animCurFrame & 0x7FFF) == 0x22) {
-                if (PLAYER.facingLeft) {
+            if ((MARIA.animCurFrame & 0x7FFF) == 0x22) {
+                if (MARIA.facingLeft) {
                     self->rotate = 0x380;
                 } else {
                     self->rotate = -0x380;
                 }
             }
-            if ((PLAYER.animCurFrame & 0x7FFF) == 0x20) {
-                if (PLAYER.facingLeft) {
+            if ((MARIA.animCurFrame & 0x7FFF) == 0x20) {
+                if (MARIA.facingLeft) {
                     self->rotate = 0x180;
                 } else {
                     self->rotate = -0x180;
@@ -2141,7 +2139,7 @@ void MarEntityHitByIce(Entity* self) {
             terminateFlag = true;
         }
         if (self->ext.hitbyice.unk7E &&
-            g_Player.vram_flag & (TOUCHING_L_WALL | TOUCHING_R_WALL)) {
+            g_Maria.vram_flag & (TOUCHING_L_WALL | TOUCHING_R_WALL)) {
             terminateFlag = true;
         }
         if (terminateFlag) {
@@ -2263,7 +2261,7 @@ void MarEntityHitByLightning(Entity* self) {
         if (++self->ext.hitbylightning.unk9C > 0x90) {
             terminate = true;
         }
-    } else if (PLAYER.step != PL_S_HIT) {
+    } else if (MARIA.step != PL_S_HIT) {
         terminate = true;
     }
     switch (self->step) {
@@ -2285,7 +2283,7 @@ void MarEntityHitByLightning(Entity* self) {
             prim->y0 = prim->y1 = prim->y2 = prim->y3 = self->posY.i.hi;
             prim->tpage = 0x1A;
             prim->clut = lightning_clut[rand() & 1];
-            prim->priority = PLAYER.zPriority - 2;
+            prim->priority = MARIA.zPriority - 2;
             prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
                 prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 =
                     prim->b3 = 0x80;
@@ -2293,7 +2291,7 @@ void MarEntityHitByLightning(Entity* self) {
                              DRAW_UNK02 | DRAW_TRANSP;
             prim = prim->next;
         }
-        if ((PLAYER.velocityY != 0) && (PLAYER.step != PL_S_DEAD)) {
+        if ((MARIA.velocityY != 0) && (MARIA.step != PL_S_DEAD)) {
             self->ext.hitbylightning.unk92 = 1;
         }
         self->ext.hitbylightning.unk94 = 0x10;
@@ -2306,10 +2304,10 @@ void MarEntityHitByLightning(Entity* self) {
         self->ext.hitbylightning.unk80 += self->ext.hitbylightning.unk82;
         xMod = ((rcos(self->ext.hitbylightning.unk7C) * mul) >> 7) * 12;
         yMod = (-((rsin(self->ext.hitbylightning.unk7C) * mul) >> 7) * 7) << 1;
-        self->posX.val = xMod + PLAYER.posX.val;
-        self->posY.val = yMod + PLAYER.posY.val;
+        self->posX.val = xMod + MARIA.posX.val;
+        self->posY.val = yMod + MARIA.posY.val;
         if (self->ext.hitbylightning.unk92 &&
-            g_Player.vram_flag &
+            g_Maria.vram_flag &
                 (TOUCHING_L_WALL | TOUCHING_R_WALL | TOUCHING_CEILING)) {
             terminate = true;
         }
@@ -2335,8 +2333,8 @@ void MarEntityHitByLightning(Entity* self) {
         yMod = -((rsin(self->ext.hitbylightning.unk7C) * mul) >> 7) *
                    ((rand() % 8) + 10) +
                self->ext.hitbylightning.unk98;
-        self->posX.val = PLAYER.posX.val + xMod;
-        self->posY.val = PLAYER.posY.val + yMod;
+        self->posX.val = MARIA.posX.val + xMod;
+        self->posY.val = MARIA.posY.val + yMod;
         self->ext.hitbylightning.unk98 -= 0x8000;
         prim = &g_PrimBuf[self->primIndex];
         break;
@@ -2369,11 +2367,11 @@ void MarEntityHitByLightning(Entity* self) {
     prim->y3 = y - (((rsin(angle) >> 4) * mul2) >> 8);
     angle = self->ext.hitbylightning.unk80 & 0xFFF;
     if (angle < 0x400) {
-        prim->priority = PLAYER.zPriority + 2;
+        prim->priority = MARIA.zPriority + 2;
     } else if (angle < 0xC00) {
-        prim->priority = PLAYER.zPriority - 2;
+        prim->priority = MARIA.zPriority - 2;
     } else {
-        prim->priority = PLAYER.zPriority + 2;
+        prim->priority = MARIA.zPriority + 2;
     }
     prim->u0 = prim->u2 = (i << 4) + 0x90;
     prim->u1 = prim->u3 = ((i + 1) << 4) + 0x90;
@@ -2419,14 +2417,11 @@ static void func_80165DD8(
 }
 
 static void func_80166024() {
-    PLAYER.palette = PAL_FLAG(PAL_FILL_BLACK);
-    PLAYER.blendMode = BLEND_TRANSP | BLEND_QUARTER;
+    MARIA.palette = PAL_FLAG(PAL_FILL_BLACK);
+    MARIA.blendMode = BLEND_TRANSP | BLEND_QUARTER;
 }
 
-static void func_80166044() {
-    PLAYER.palette = PAL_FLAG(PAL_RICHTER);
-    PLAYER.blendMode = BLEND_NO;
-}
+// nb. no func_80166044
 
 // Entity ID 66. Made by blueprint 77 (the very last one).
 // Created in 3 spots in 2 functions (total of 6 calls).
@@ -2444,7 +2439,7 @@ void MarEntityTeleport(Entity* self) {
     bool var_s5;
 
     upperParams = self->params & 0xFE00;
-    FntPrint("pl_warp_flag:%02x\n", g_Player.warp_flag);
+    FntPrint("pl_warp_flag:%02x\n", g_Maria.warp_flag);
     showParticles = false;
     var_s5 = false;
     switch (self->step) {
@@ -2474,7 +2469,7 @@ void MarEntityTeleport(Entity* self) {
             prim = prim->next;
         }
         for (i = 0; i < LEN(D_80175000); i++) {
-            xVar = PLAYER.posX.i.hi + (rand() % 28) - 14;
+            xVar = MARIA.posX.i.hi + (rand() % 28) - 14;
             yVar = 0xE0 - (rand() & 0x3F);
             D_80175000[i].x = xVar;
             D_80175000[i].y = yVar;
@@ -2535,7 +2530,7 @@ void MarEntityTeleport(Entity* self) {
             self->ext.teleport.colorIntensity = 0x100;
         }
         if (--self->ext.teleport.timer == 0) {
-            PLAYER.palette = PAL_FLAG(PAL_PLAYER_HIDDEN);
+            MARIA.palette = PAL_FLAG(PAL_PLAYER_HIDDEN);
             self->step++;
         }
         break;
@@ -2602,7 +2597,7 @@ void MarEntityTeleport(Entity* self) {
             self->ext.teleport.width = 0;
             self->ext.teleport.timer = 4;
             self->step++;
-            g_Player.warp_flag = 1;
+            g_Maria.warp_flag = 1;
             g_api.PlaySfx(SFX_TELEPORT_BANG_B);
             DestroyEntity(self);
             return;
@@ -2610,10 +2605,10 @@ void MarEntityTeleport(Entity* self) {
         break;
     }
 
-    self->posX.i.hi = PLAYER.posX.i.hi;
-    self->posY.i.hi = PLAYER.posY.i.hi;
-    xVar = PLAYER.posX.i.hi;
-    yVar = PLAYER.posY.i.hi;
+    self->posX.i.hi = MARIA.posX.i.hi;
+    self->posY.i.hi = MARIA.posY.i.hi;
+    xVar = MARIA.posX.i.hi;
+    yVar = MARIA.posY.i.hi;
     w = self->ext.teleport.width;
     h = self->ext.teleport.height;
     prim = &g_PrimBuf[self->primIndex];
@@ -2679,14 +2674,16 @@ void SetOpacity(Entity* entity, s32 opacity) {
 }
 
 s32 func_pspeu_092BEAB0(s16 setUnk80) {
-    Entity* entity = MarGetFreeEntity(0x38, 0x40);
+    Entity* entity = MarGetFreeEntity(120, 128);
+
     if (entity == NULL) {
         return -1;
     }
+
     DestroyEntity(entity);
     entity->entityId = E_UNK_16;
-    entity->posX.val = PLAYER.posX.val;
-    entity->posY.val = PLAYER.posY.val;
+    entity->posX.val = MARIA.posX.val;
+    entity->posY.val = MARIA.posY.val;
     entity->ext.maria092BEAB0.unk80 = setUnk80;
     entity->ext.maria092BEAB0.unk82 = 1;
     return 0;
@@ -2694,7 +2691,7 @@ s32 func_pspeu_092BEAB0(s16 setUnk80) {
 
 s16 AllocPrimitives(PrimitiveType, s32);
 
-void func_pspeu_092BEB40(Entity* self) {
+void func_pspeu_0924FB40(Entity* self) {
     s32 timer;
     u16 value;
     s16 x2;
@@ -2951,18 +2948,21 @@ void func_pspeu_092BEB40(Entity* self) {
 s32 SpawnCrashSummon(s32 crashId) {
     Entity* entity;
 
-    entity = MarGetFreeEntity(8, 16);
+    entity = MarGetFreeEntity(72, 80);
     if (entity == NULL) {
-        g_Player.unk5C = 1;
+        g_Maria.unk5C = 1;
         return -1;
     }
+
     DestroyEntity(entity);
     entity->entityId = E_CRASH_SUMMON;
-    entity->posX.val = PLAYER.posX.val;
-    entity->posY.val = PLAYER.posY.val;
+    entity->posX.val = MARIA.posX.val;
+    entity->posY.val = MARIA.posY.val;
     entity->ext.mariaCrashSummon.crashId = crashId;
     return 0;
 }
+
+void LoadCrashSummonResouces(s32 crashId);
 
 void EntityMariaCrashSummon(Entity* self) {
     s32 x;
@@ -2973,16 +2973,12 @@ void EntityMariaCrashSummon(Entity* self) {
     case 0:
         self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (self->primIndex == -1) {
-            g_Player.unk5C = 1;
+            g_Maria.unk5C = 1;
             DestroyEntity(self);
             return;
         }
         self->flags = FLAG_HAS_PRIMS | FLAG_KEEP_ALIVE_OFFCAMERA;
-#ifdef VERSION_PSP
-        self->unk5A = 0x1C;
-#else
-        self->unk5A = 0x70;
-#endif
+        self->unk5A = 0x5C;
 
         self->zPriority = 0x1C0;
         LoadCrashSummonResouces(self->ext.mariaCrashSummon.crashId);
@@ -2994,12 +2990,8 @@ void EntityMariaCrashSummon(Entity* self) {
         self->ext.mariaCrashSummon.timer -= 0x10;
         if (self->ext.mariaCrashSummon.timer > 0) {
             prim = &g_PrimBuf[self->primIndex];
-#ifdef VERSION_PSP
-            prim->tpage = 7;
-#else
-            prim->tpage = 0x1C;
-#endif
-            prim->clut = 0x11E;
+            prim->tpage = 0x17;
+            prim->clut = 0x13A;
             prim->priority = 0x1C0;
             x = (self->ext.mariaCrashSummon.timer * 128) / 256;
             y = (self->ext.mariaCrashSummon.timer * 112) / 256;
@@ -3025,27 +3017,29 @@ void EntityMariaCrashSummon(Entity* self) {
         self->step = 2;
         break;
     case 2:
-        g_Player.timers[PL_T_INVINCIBLE_SCENE] = 0;
-        g_Player.unk5C = 1;
+        g_Maria.timers[PL_T_INVINCIBLE_SCENE] = 0;
+        g_Maria.unk5C = 1;
         DestroyEntity(self);
         break;
     }
 }
 
-void func_pspeu_092BFD30(Entity* self) {
-    if (PLAYER.step_s != 0x70) {
+void func_pspeu_09250D30(Entity* self) {
+    if (MARIA.step_s != 0x70) {
         DestroyEntity(self);
         return;
     }
     self->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
-    self->facingLeft = PLAYER.facingLeft;
-    self->posY.i.hi = PLAYER.posY.i.hi;
-    self->posX.i.hi = PLAYER.posX.i.hi;
-    g_Player.unk44 &= ~0x80;
+    self->facingLeft = MARIA.facingLeft;
+    self->posY.i.hi = MARIA.posY.i.hi;
+    self->posX.i.hi = MARIA.posX.i.hi;
+    g_Maria.unk44 &= ~0x80;
+    self->flags |= FLAG_NOT_AN_ENEMY;
     if (self->step == 0) {
         self->attack = 30;
         self->attackElement = ELEMENT_HIT;
-        self->hitboxState = 2;
+        self->hitboxState = 3;
+        self->flags |= FLAG_NOT_AN_ENEMY;
         self->nFramesInvincibility = 16;
         self->stunFrames = 16;
         self->hitEffect = 1;
@@ -3058,8 +3052,8 @@ void func_pspeu_092BFD30(Entity* self) {
         self->step++;
         return;
     }
-    if (self->hitFlags == 1) {
-        g_Player.unk44 |= 0x80;
+    if (self->hitFlags == 0x80) {
+        g_Maria.unk44 |= 0x80;
     }
 }
 
@@ -3067,12 +3061,12 @@ s32 func_pspeu_092BFEB0(Entity* parent) {
     Entity* entity;
     s32 amount;
 
-    amount = g_Player.unk24 / 20;
+    amount = g_Maria.unk24 / 20;
     if (amount <= 0) {
         amount = 1;
     }
     while (amount-- > 0) {
-        entity = MarGetFreeEntity(8, 0x10);
+        entity = MarGetFreeEntity(72, 80);
         if (entity == NULL) {
             return -1;
         }
@@ -3085,7 +3079,7 @@ s32 func_pspeu_092BFEB0(Entity* parent) {
 }
 
 void func_pspeu_092BFF78(Entity* self) {
-    if (g_Player.unk28) {
-        g_Player.unk28(self);
+    if (g_Maria.unk28) {
+        g_Maria.unk28(self);
     }
 }

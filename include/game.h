@@ -1947,72 +1947,73 @@ enum AluTimers {
 #define NUM_VERTICAL_SENSORS 7
 
 typedef struct {
-    /* 80072BD0 */ Collider colFloor[NUM_HORIZONTAL_SENSORS];
-    /* 80072C60 */ Collider colCeiling[NUM_HORIZONTAL_SENSORS];
-    /* 80072CF0 */ Collider colWall[NUM_VERTICAL_SENSORS * 2];
-    /* 80072EE8 */ u32 padPressed;
-    /* 80072EEC */ u32 padTapped;
-    /* 80072EF0 */ u32 padHeld;
-    /* 80072EF4 */ u32 padSim; // simulate input to force player actions
-    /* 80072EF8 */ u32 D_80072EF8;
-    /* 80072EFC */ s32 demo_timer; // player frozen timer
-    /* 80072F00 */ s16 timers[16]; /// Indexed with AluTimers
-    /* 80072F20 */ s32 vram_flag;
-    /* 80072F24 */ s32 unk04; // copy of the previous field
-    /* 80072F28 */ s32 unk08;
-    /* 80072F2C */ PlayerStateStatus status;
-    /* 80072F30 */ s32 unk10;
-    /* 80072F34 */ u32 unk14;
+    /* 0x0 80072BD0 */ Collider colFloor[NUM_HORIZONTAL_SENSORS];
+    /* 0x90 80072C60 */ Collider colCeiling[NUM_HORIZONTAL_SENSORS];
+    /* 0x120 80072CF0 */ Collider colWall[NUM_VERTICAL_SENSORS * 2];
+    /* 0x318 80072EE8 */ u32 padPressed;
+    /* 0x31C 80072EEC */ u32 padTapped;
+    /* 0x320 80072EF0 */ u32 padHeld;
+    /* 0x324 80072EF4 */ u32 padSim; // simulate input to force player actions
+    /* 0x328 80072EF8 */ u32 D_80072EF8;
+    /* 0x32C 80072EFC */ s32 demo_timer; // player frozen timer
+    /* 0x330 80072F00 */ s16 timers[16]; /// Indexed with AluTimers
+    /* 0x350 80072F20 */ s32 vram_flag;
+    /* 0x354 80072F24 */ s32 unk04; // copy of the previous field
+    /* 0x358 80072F28 */ s32 unk08;
+    /* 0x35C 80072F2C */ PlayerStateStatus status;
+    /* 0x360 80072F30 */ s32 unk10;
+    /* 0x364 80072F34 */ u32 unk14;
     // unk18 & 0xFA00 give elemental status of damage received
-    /* 80072F38 */ s32 unk18;
-    /* 80072F3C */ s32 warp_flag;
+    /* 0x368 80072F38 */ s32 unk18;
+    /* 0x36C 80072F3C */ s32 warp_flag;
 #if defined(VERSION_PC)
     /* 80072F40 */ signed long long unk20; // used as an Entity for maria
 #else
-    /* 80072F40 */ s32 unk20; // used as an Entity for maria
+    /* 0x370 80072F40 */ s32 unk20; // used as an Entity for maria
 #endif
-    /* 80072F44 */ u32 unk24; // exclusive to maria?
-    /* 80072F48 */ PfnEntityUpdate unk28;
-    /* 80072F4C */ s32 unk2C;
-    /* 80072F50 */ s32 unk30;
-    /* 80072F54 */ s32 unk34;
-    /* 80072F58 */ s32 unk38;
-    /* 80072F5C */ s32 unk3C;
-    /* 80072F60 */ u16 damagePalette;
-    /* 80072F62 */ u16 high_jump_timer;
-    /* 80072F64 */ u16 unk44;
-    /* 80072F66 */ u16 unk46;
-    /* 80072F68 */ u16 unk48;
+    /* 0x374 80072F44 */ u32 unk24; // exclusive to maria?
+    /* 0x378 80072F48 */ PfnEntityUpdate unk28;
+    /* 0x37C 80072F4C */ s32 unk2C;
+    /* 0x380 80072F50 */ s32 unk30;
+    /* 0x384 80072F54 */ s32 unk34;
+    /* 0x388 80072F58 */ s32 unk38;
+    /* 0x38C 80072F5C */ s32 unk3C;
+    /* 0x390 80072F60 */ u16 damagePalette;
+    /* 0x392 80072F62 */ u16 high_jump_timer;
+    /* 0x394 80072F64 */ u16 unk44;
+    /* 0x396 80072F66 */ u16 unk46;
+    /* 0x398 80072F68 */ u16 unk48;
 #ifdef VERSION_PSP
-    /* 80072F6A */ u16 unk4A;
+    /* 0x39A 80072F6A */ u16 unk4A;
 #else
-    /* 80072F6A */ s16 unk4A;
+    /* 0x39A 80072F6A */ s16 unk4A;
 #endif
-    /* 80072F6C */ u16 unk4C;
-    /* 80072F6E */ u16 unk4E;
-    /* 80072F70 */ u16 prev_step;
-    /* 80072F72 */ u16 prev_step_s;
-    /* 80072F74 */ u16 unk54;
-    /* 80072F76 */ u16 unk56;
-    /* 80072F78 */ u16 unk58;
-    /* 80072F7A */ u16 damageTaken;
-    /* 80072F7C */ u16 unk5C; // ALU: hellfire spell state, RIC: isPrologue
-    /* 80072F7E */ u16 unk5E; // status ailment timer
-    /* 80072F80 */ u16 unk60;
-    /* 80072F82 */ u16 unk62;
-    /* 80072F84 */ u16 unk64;
-    /* 80072F86 */ u16 unk66;
-    /* 80072F88 */ u16 unk68;
-    /* 80072F8A */ u16 unk6A;
-    /* 80072F8C */ u16 unk6C;
-    /* 80072F8E */ u16 unk6E;
-    /* 80072F90 */ u16 unk70;
-    /* 80072F92 */ u16 unk72;
-    /* 80072F94 */ u32 unk74;
-    /* 80072F98 */ u16 unk78;
-    /* 80072F9A */ u16 unk7A;
-    /* 80072F9C */ u16 unk7C;
-    /* 80072F9E */ u16 unk7E;
+    /* 0x39C 80072F6C */ u16 unk4C;
+    /* 0x39E 80072F6E */ u16 unk4E;
+    /* 0x3A0 80072F70 */ u16 prev_step;
+    /* 0x3A2 80072F72 */ u16 prev_step_s;
+    /* 0x3A4 80072F74 */ u16 unk54;
+    /* 0x3A6 80072F76 */ u16 unk56;
+    /* 0x3A8 80072F78 */ u16 unk58;
+    /* 0x3AA 80072F7A */ u16 damageTaken;
+    /* 0x3AC 80072F7C */ u16
+        unk5C; // ALU: hellfire spell state, RIC: isPrologue
+    /* 0x3AE 80072F7E */ u16 unk5E; // status ailment timer
+    /* 0x3B0 80072F80 */ u16 unk60;
+    /* 0x3B2 80072F82 */ u16 unk62;
+    /* 0x3B4 80072F84 */ u16 unk64;
+    /* 0x3B6 80072F86 */ u16 unk66;
+    /* 0x3B8 80072F88 */ u16 unk68;
+    /* 0x3BA 80072F8A */ u16 unk6A;
+    /* 0x3BC 80072F8C */ u16 unk6C;
+    /* 0x3BE 80072F8E */ u16 unk6E;
+    /* 0x3C0 80072F90 */ u16 unk70;
+    /* 0x3C2 80072F92 */ u16 unk72;
+    /* 0x3C4 80072F94 */ u32 unk74;
+    /* 0x3C8 80072F98 */ u16 unk78;
+    /* 0x3CA 80072F9A */ u16 unk7A;
+    /* 0x3CC 80072F9C */ u16 unk7C;
+    /* 0x3CE 80072F9E */ u16 unk7E;
 } PlayerState; /* size = 0x3D0 */
 
 // Primitive used ad-hoc for the Player entity and the after-image effect
