@@ -10,7 +10,43 @@ INCLUDE_ASM("asm/saturn/richter/data", d60A5000, d_060A5000);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A5060, func_060A5060);
 
 // func_80156DE4
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A5154, func_060A5154);
+extern s32 D_80154568[];
+static s16 func_80156DE4(void) {
+    Collider collider;
+    s32 yvar;
+    s32 collisions;
+    s32 i;
+    s32 xCenter;
+    s32 xRight;
+    s32 xLeft;
+    s32 filter;
+
+    filter = EFFECT_SOLID_FROM_ABOVE | EFFECT_SOLID;
+    xCenter = PLAYER.posX.val;
+    xRight = PLAYER.posX.val + FIX(4);
+    xLeft = PLAYER.posX.val - FIX(4);
+
+    for (i = 0; i < 3; i++) {
+        yvar = PLAYER.posY.val + D_80154568[i];
+        collisions = 0;
+        CheckCollision(xCenter, yvar, &collider, 0);
+        if ((collider.effects & filter) == EFFECT_SOLID) {
+            collisions++;
+        }
+        CheckCollision(xRight, yvar, &collider, 0);
+        if ((collider.effects & filter) == EFFECT_SOLID) {
+            collisions++;
+        }
+        CheckCollision(xLeft, yvar, &collider, 0);
+        if ((collider.effects & filter) == EFFECT_SOLID) {
+            collisions++;
+        }
+        if (collisions != 0) {
+            return i + 1;
+        }
+    }
+    return 0;
+}
 
 // RicInit
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A5208, func_060A5208);
@@ -78,16 +114,86 @@ void RicStepWalk(void) {
 
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A67B0, func_060A67B0);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A68A0, func_060A68A0);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A6D64, func_060A6D64);
+// func_060A6D64
+void RicStepFall(void) {
+    if (RicCheckInput(
+            CHECK_GROUND | CHECK_FACING | CHECK_ATTACK | CHECK_GRAVITY_FALL)) {
+        return;
+    }
+    RicDecelerateX(0x1400);
+    switch (PLAYER.step_s) {
+    case 0:
+        if (g_Player.timers[PL_T_5] && (g_Player.padTapped & 0x100)) {
+            RicSetJump();
+        } else if (RicCheckFacing()) {
+            RicSetSpeedX(0xF000);
+        }
+        break;
+    }
+}
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A6DFC, func_060A6DFC);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A726C, func_060A726C);
+static void func_80159C04(void) {
+    Entity* entity;
+    s16 var_s3;
+    s16 var_s2;
+    s16 var_s1;
+
+    entity = (Entity*)PLAYER.unkB4;
+    if (entity->facingLeft) {
+        var_s3 = -entity->hitboxOffX;
+    } else {
+        var_s3 = entity->hitboxOffX;
+    }
+    if (PLAYER.facingLeft) {
+        var_s2 = -PLAYER.hitboxOffX;
+    } else {
+        var_s2 = PLAYER.hitboxOffX;
+    }
+
+    var_s1 = PLAYER.posX.i.hi + var_s2 - entity->posX.i.hi - var_s3;
+    if (ABS(var_s1) < 16 && entity->velocityX != 0) {
+        if (entity->velocityX < 0) {
+            PLAYER.entityRoomIndex = 0;
+            return;
+        } else {
+            PLAYER.entityRoomIndex = 1;
+            return;
+        }
+    }
+    if (var_s1 < 0) {
+        PLAYER.entityRoomIndex = 0;
+    } else {
+        PLAYER.entityRoomIndex = 1;
+    }
+}
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A7310, func_060A7310);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A7B78, func_060A7B78);
 INCLUDE_ASM("asm/saturn/richter/data", d60A7CF0, d_060A7CF0);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A7FD4, func_060A7FD4);
 
 // RicStepEnableFlameWhip
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A80B0, func_060A80B0);
+void RicStepEnableFlameWhip(void) {
+    if (PLAYER.animCurFrame == 181 && PLAYER.poseTimer == 1) {
+        RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_35, 0);
+        func_06011278(0x62F);
+    }
+
+    if (PLAYER.poseTimer < 0) {
+        RicSetStand(0);
+        g_Player.unk46 = 0;
+        RicCreateEntFactoryFromEntity(
+            g_CurrentEntity, FACTORY(BP_RIC_BLINK, 0x45), 0);
+        g_Player.timers[PL_T_POISON] = 0x800;
+    }
+
+    if (!(g_Player.vram_flag & TOUCHING_GROUND)) {
+        RicSetFall();
+        g_Player.unk46 = 0;
+        RicCreateEntFactoryFromEntity(
+            g_CurrentEntity, FACTORY(BP_RIC_BLINK, 0x45), 0);
+        g_Player.timers[PL_T_POISON] = 0x800;
+    }
+}
 
 // func_060A8170
 void RicStepHydrostorm(void) {
@@ -103,7 +209,19 @@ void RicStepHydrostorm(void) {
 }
 
 // RicStepGenericSubwpnCrash
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A81C4, func_060A81C4);
+extern u32 g_SubwpnCrashTimer;
+void RicStepGenericSubwpnCrash(void) {
+    if (g_Player.unk4E || ++g_SubwpnCrashTimer > 300) {
+        g_SubwpnCrashTimer = 0;
+        RicSetStand(0);
+        g_Player.unk46 = 0;
+    }
+
+    if (!(g_Player.vram_flag & TOUCHING_GROUND)) {
+        RicSetFall();
+        g_Player.unk46 = 0;
+    }
+}
 
 // RicStepThrowDaggers
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8234, func_060A8234);
@@ -112,7 +230,25 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8234, func_060A8234);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A82F8, func_060A82F8);
 
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8664, func_060A8664);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A887C, func_060A887C);
+extern s32 g_PlayerX;
+static void func_8015BB80(void) {
+    if (g_StageId == STAGE_TOP) {
+        if (ABS((g_Tilemap.left << 8) + g_PlayerX) - 8079 > 0) {
+            PLAYER.posX.i.hi--;
+        }
+        if (ABS((g_Tilemap.left << 8) + g_PlayerX) - 8079 < 0) {
+            PLAYER.posX.i.hi++;
+        }
+    }
+    if (g_StageId == (STAGE_TOP | STAGE_INVERTEDCASTLE_FLAG)) {
+        if (ABS((g_Tilemap.left << 8) + g_PlayerX) - 8430 > 0) {
+            PLAYER.posX.i.hi--;
+        }
+        if (ABS((g_Tilemap.left << 8) + g_PlayerX) - 8430 < 0) {
+            PLAYER.posX.i.hi++;
+        }
+    }
+}
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A892C, func_060A892C);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8A58, func_060A8A58);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8C88, func_060A8C88);
@@ -139,7 +275,28 @@ void RicSetInit(s32 step_s) {
 }
 
 // RicSetCrouch
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8F00, func_060A8F00);
+extern AnimationFrame ric_anim_crouch[];
+extern AnimationFrame ric_anim_crouch_from_stand2[];
+extern AnimationFrame ric_anim_crouch_from_stand[];
+extern AnimationFrame ric_anim_land_from_air_run[];
+void RicSetCrouch(s32 kind, s32 velocityX) {
+    RicSetStep(PL_S_CROUCH);
+    RicSetAnimation(ric_anim_crouch);
+    PLAYER.velocityX = velocityX;
+    PLAYER.velocityY = 0;
+    if (kind == 1) {
+        PLAYER.anim = ric_anim_crouch_from_stand2;
+        PLAYER.step_s = 4;
+    }
+    if (kind == 2) {
+        PLAYER.anim = ric_anim_crouch_from_stand;
+        PLAYER.step_s = 1;
+    }
+    if (kind == 3) {
+        PLAYER.anim = ric_anim_land_from_air_run;
+        PLAYER.step_s = 4;
+    }
+}
 
 // RicSetStand
 extern AnimationFrame ric_anim_stand[];
@@ -173,7 +330,21 @@ void RicSetWalk(s32 arg0) {
 }
 
 // RicSetRun
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A9068, func_060A9068);
+extern AnimationFrame ric_anim_run[];
+void RicSetRun(void) {
+    if (g_Player.unk7A) {
+        RicSetWalk(0);
+        return;
+    }
+    g_Player.unk44 = 0;
+    RicSetStep(PL_S_RUN);
+    RicSetAnimation(ric_anim_run);
+    RicSetSpeedX(0x2D000);
+    g_Player.timers[PL_T_RUN] = 40;
+    PLAYER.velocityY = 0;
+    RicCreateEntFactoryFromEntity(
+        g_CurrentEntity, FACTORY(BP_SMOKE_PUFF, 5), 0);
+}
 
 void RicSetFall(void) {
     if (g_Player.prev_step != PL_S_RUN && g_Player.prev_step != PL_S_SLIDE) {
@@ -227,7 +398,22 @@ void RicSetJump(void) {
 }
 
 // RicSetHighJump
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A92D8, func_060A92D8);
+extern AnimationFrame ric_anim_high_jump[];
+void RicSetHighJump(void) {
+    RicSetStep(PL_S_HIGHJUMP);
+    PLAYER.velocityX = 0;
+    RicSetSpeedX(0x19000);
+    PLAYER.velocityY = -0x78000;
+    g_Player.high_jump_timer = 0;
+    RicSetAnimation(ric_anim_high_jump);
+    func_8015CC28();
+    RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_HIGH_JUMP, 0);
+    func_06011278(0x712);
+    g_Player.timers[PL_T_12] = 4;
+    if (g_Player.unk72) {
+        PLAYER.velocityY = 0;
+    }
+}
 
 // func_060A938C
 static s32 RicCheckSubwpnChainLimit(s16 subwpnId, s16 limit) {
@@ -274,7 +460,18 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A97B0, func_060A97B0);
 void RicSetDeadPrologue() { RicSetStep(PL_S_DEAD_PROLOGUE); }
 
 // RicSetSlide
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A9A74, func_060A9A74);
+extern AnimationFrame D_80155750[];
+void RicSetSlide(void) {
+    RicCheckFacing();
+    RicSetStep(PL_S_SLIDE);
+    RicSetAnimation(D_80155750);
+    g_CurrentEntity->velocityY = 0;
+    RicSetSpeedX(0x6A000);
+    func_8015CC28();
+    RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_25, 0);
+    func_06011278(0x71A);
+    g_Player.timers[PL_T_12] = 4;
+}
 
 extern AnimationFrame D_8015577C[1];
 #define SFX_VO_RIC_ATTACK_B 0x711
@@ -295,7 +492,19 @@ void RicSetSlideKick(void) {
 }
 
 // RicSetBladeDash
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A9B9C, func_060A9B9C);
+extern AnimationFrame ric_anim_blade_dash[];
+void RicSetBladeDash(void) {
+    RicSetStep(PL_S_BLADEDASH);
+    RicSetAnimation(ric_anim_blade_dash);
+    g_CurrentEntity->velocityY = 0;
+    RicSetSpeedX(0x6A000);
+    g_Player.unk46 = 5;
+    g_Player.timers[PL_T_12] = 4;
+    RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_BLADE_DASH, 0);
+    func_8015CC28();
+    func_06011278(0x712);
+    func_06011278(0x71A);
+}
 
 // ===== pl_utils.c
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A9C2C, func_060A9C2C);
@@ -390,7 +599,30 @@ void RicSetInvincibilityFrames(s32 kind, s16 invincibilityFrames) {
 }
 
 // DisableAfterImage
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA438, func_060AA438);
+void DisableAfterImage(s32 resetAnims, s32 arg1) {
+    Primitive* prim;
+    Entity* entity;
+    s32 i;
+
+    if (resetAnims) {
+        g_Entities[E_AFTERIMAGE_1].ext.afterImage.resetFlag = 1;
+        entity = &g_Entities[E_AFTERIMAGE_1];
+        for (i = 0; i < 3; i++, entity++) {
+            entity->animCurFrame = 0;
+            entity->unk0->unk0 = 0;
+        }
+        prim = &g_PrimBuf[g_Entities[E_AFTERIMAGE_1].primIndex];
+        while (prim) {
+            prim->x1 = 0;
+            prim = *(Primitive**)((u8*)prim + 0x20);
+        }
+    }
+    g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 1;
+    g_Entities[E_AFTERIMAGE_1].ext.afterImage.index = 10;
+    if (arg1) {
+        g_Player.timers[PL_T_AFTERIMAGE_DISABLE] = 4;
+    }
+}
 
 void func_8015CC28(void) {
     g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag =
@@ -501,7 +733,61 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ABA98, func_060ABA98);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ABB78, func_060ABB78);
 
 // func_8015FDB0
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ABC24, func_060ABC24);
+typedef struct {
+    u8 pad[8];
+    u16 uv0;
+    u16 uv1;
+    s16 x0;
+    s16 y0;
+    u16 frame;
+    u16 timer;
+    s16 x1;
+    s16 y1;
+} RicPrimitive;
+
+typedef struct {
+    u16 uv0;
+    u16 uv1;
+} RicUvPair;
+
+extern u16 D_060C2F40;
+extern u8 D_060BF1A4[];
+extern RicUvPair D_0605AEC0[];
+
+s32 func_8015FDB0(RicPrimitive* prim, s16 posX, s16 posY) {
+    s16 offset;
+    s16 xOffset;
+    RicUvPair* uvAnim;
+    u16* frameWord = &prim->frame;
+    u8 frame = ((u8*)frameWord)[1];
+
+    if (frame >= 3) {
+        offset = 4;
+    } else {
+        offset = 6;
+    }
+
+    if (frame == 6) {
+        return -1;
+    }
+
+    xOffset = offset | 1;
+    prim->x0 = posX - xOffset;
+    prim->y0 = posY - offset;
+    prim->x1 = posX + xOffset;
+    prim->y1 = posY + offset;
+
+    uvAnim = &D_0605AEC0[D_060C2F40 + D_060BF1A4[frame]];
+    prim->uv0 = uvAnim->uv0;
+    prim->uv1 = uvAnim->uv1;
+
+    prim->timer++;
+    if (!(prim->timer & 1)) {
+        (*frameWord)++;
+    }
+    return 0;
+}
+const u16 pad_60ABCD4[] = {0xAAAA, 0xAAAB};
 
 // RicEntityHitByHoly
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ABCD8, func_060ABCD8);
@@ -529,10 +815,56 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AC824, func_060AC824);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AC908, func_060AC908);
 
 // RicEntityBladeDash
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ACA10, func_060ACA10);
+void RicEntityBladeDash(Entity* self) {
+    void RicSetSubweaponParams(Entity * entity);
+
+    if (PLAYER.step != PL_S_BLADEDASH) {
+        DestroyEntity(self);
+    } else {
+        self->posX.i.hi = PLAYER.posX.i.hi;
+        self->posY.i.hi = PLAYER.posY.i.hi;
+        self->facingLeft = PLAYER.facingLeft;
+        if (self->step == 0) {
+            self->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED |
+                          FLAG_KEEP_ALIVE_OFFCAMERA;
+            self->hitboxOffX = self->hitboxOffY = 0;
+            self->hitboxWidth = 25;
+            self->hitboxHeight = 20;
+            self->ext.subweapon.subweaponId = 17;
+            RicSetSubweaponParams(self);
+            self->step++;
+        }
+        if (PLAYER.pose > 18) {
+            DestroyEntity(self);
+        }
+    }
+}
 
 // func_80160F0C
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ACACC, func_060ACACC);
+void func_80160F0C(Entity* self) {
+    void RicSetSubweaponParams(Entity * entity);
+
+    if (PLAYER.step != PL_S_HIGHJUMP) {
+        DestroyEntity(self);
+        return;
+    }
+    self->posX.i.hi = PLAYER.posX.i.hi;
+    self->posY.i.hi = PLAYER.posY.i.hi;
+    self->facingLeft = PLAYER.facingLeft;
+    if (self->step == 0) {
+        self->flags =
+            FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA;
+        self->hitboxOffX = 15;
+        self->hitboxOffY = -26;
+        self->hitboxWidth = 15;
+        self->hitboxHeight = 12;
+        self->ext.subweapon.subweaponId = PL_W_HIGHJUMP;
+        RicSetSubweaponParams(self);
+        self->step++;
+    }
+}
+
+const u16 pad_60ACB6C[] = {0x8888, 0x8889};
 
 // RicEntitySmokePuff
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ACB70, func_060ACB70);
@@ -627,7 +959,26 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B061C, func_060B061C);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B12CC, func_060B12CC);
 
 // func_80167964
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B1458, func_060B1458);
+extern s16 D_80155D30[];
+void func_80167964(Entity* entity) {
+    if (g_Player.unk46 == 0) {
+        DestroyEntity(entity);
+        return;
+    }
+    if (entity->step == 0) {
+        entity->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED |
+                        FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_10000;
+        entity->step++;
+    }
+    if (!(entity->params & 0xFF00)) {
+        g_Entities[D_80155D30[entity->poseTimer]].palette = 5;
+    }
+    g_Entities[D_80155D30[entity->poseTimer]].ext.whip.unkA0 = 4;
+    entity->poseTimer++;
+    if (entity->poseTimer == 15) {
+        DestroyEntity(entity);
+    }
+}
 
 // ===== pl_subweapon_dummy.c
 
@@ -719,7 +1070,41 @@ void RicEntityStopwatchCrashLightning(Entity* entity) {
 }
 
 // RicEntityCrashStopwatch
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B54AC, func_060B54AC);
+void RicEntityCrashStopwatch(Entity* self) {
+    switch (self->step) {
+    case 0:
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_20000;
+        self->ext.subweapon.crashIndex = 0;
+        self->step_s++;
+        if (self->step_s > 3) {
+            self->step++;
+        }
+        break;
+    case 1:
+    case 3:
+    case 5:
+    case 7:
+        self->ext.subweapon.crashIndex++;
+        RicCreateEntFactoryFromEntity(
+            self, FACTORY(BP_SUBWPN_STOPWATCH, self->ext.subweapon.crashIndex),
+            0);
+        self->ext.subweapon.timer = 0;
+        self->step++;
+        break;
+    case 2:
+    case 4:
+    case 6:
+        self->ext.subweapon.timer++;
+        if (self->ext.subweapon.timer > 15) {
+            self->step++;
+        }
+        break;
+    case 8:
+        DestroyEntity(self);
+        break;
+    }
+}
+const u16 pad_60B5560[] = {0xAAAA, 0xAAAB};
 
 // GetAguneaLightningAngle
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B5564, func_060B5564);

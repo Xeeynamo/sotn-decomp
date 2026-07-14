@@ -31,6 +31,7 @@ typedef enum {
 #define STAGE_INVERTEDCASTLE_MASK 0x1F
 #define STAGE_INVERTEDCASTLE_FLAG 0x20
 #define STAGE_ST0 0x1F
+#define STAGE_TOP 0x0B
 #define TOTAL_ENTITY_COUNT 256
 #define STAGE_ENTITY_START 64
 #define FACTORY(id, param) ((id) + (param << 16))
@@ -181,7 +182,7 @@ typedef struct {
     s32 _align_parent[2];
 #endif
     /* 0x7C */ s16 timer;
-    /* 0x7E */ s16 : 16;
+    /* 0x7E */ s16 crashIndex;
     /* 0x80 */ s32 : 32;
     /* 0x84 */ s32 : 32;
     /* 0x88 */ s32 : 32;
@@ -237,6 +238,10 @@ typedef union { // offset=0x78
     ET_Subweapon subweapon;
     ET_BatFamBlueTrail batFamBlueTrail;
     ET_Bat bat;
+    struct {
+        u8 pad[0x28];
+        u16 unkA0;
+    } whip;
 } Ext;
 
 typedef struct Entity {
@@ -508,14 +513,16 @@ typedef struct {
     u16 unk322;
     char pad324[0x8C];
     /* 0x3B0 */ u32 padPressed;
-    char pad3B4[0x14];
+    /* 0x3B4 */ u32 padTapped;
+    char pad3B8[0x10];
     /* 0x3C8 */ s16 timers[16]; // the array is bigger than PSX
     char pad3E8[4];
     /* 0x3EC */ s32 vram_flag;
     char pad2[8];
     /* 0x3F8 */ u32 status;
     u32 unk3FC;
-    char pad3FC[0x30];
+    char pad400[0x2E];
+    /* 0x42E */ u16 high_jump_timer;
     /* 0x430 */ u16 unk44;
     /* 0x432 */ u16 unk46;
     /* 0x434 */ u16 unk48;
