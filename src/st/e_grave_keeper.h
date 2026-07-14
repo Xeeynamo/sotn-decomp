@@ -57,10 +57,10 @@ typedef enum GraveKeeperStep {
 static void SpawnDustParticles(void) {
     Entity* dustEntity;
 
-    dustEntity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+    dustEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
     if (dustEntity != NULL) {
-        OVL_EXPORT(CreateEntityFromEntity)
-        (E_INTENSE_EXPLOSION, g_CurrentEntity, dustEntity);
+        CreateEntityFromEntity(
+            E_INTENSE_EXPLOSION, g_CurrentEntity, dustEntity);
         dustEntity->posY.i.hi += 0x18;
         if (g_CurrentEntity->facingLeft) {
             dustEntity->posX.i.hi -= 8;
@@ -93,7 +93,7 @@ void func_us_801D12E0(u32 resetColliderEffects) {
             g_CurrentEntity->facingLeft ^= 1;
             g_CurrentEntity->ext.graveKeeper.unk82 = 0;
             g_CurrentEntity->ext.graveKeeper.resetColliderEffects = 1;
-            OVL_EXPORT(SetStep)(GRAVE_KEEPER_JUMP_KICK);
+            SetStep(GRAVE_KEEPER_JUMP_KICK);
             return;
         }
 
@@ -102,7 +102,7 @@ void func_us_801D12E0(u32 resetColliderEffects) {
             g_CurrentEntity->facingLeft ^= 1;
             g_CurrentEntity->ext.graveKeeper.unk82 = 0;
             g_CurrentEntity->ext.graveKeeper.resetColliderEffects = 1;
-            OVL_EXPORT(SetStep)(GRAVE_KEEPER_JUMP_KICK);
+            SetStep(GRAVE_KEEPER_JUMP_KICK);
         }
     } else {
         posX -= 0x10;
@@ -115,7 +115,7 @@ void func_us_801D12E0(u32 resetColliderEffects) {
             g_CurrentEntity->facingLeft ^= 1;
             g_CurrentEntity->ext.graveKeeper.unk82 = 0;
             g_CurrentEntity->ext.graveKeeper.resetColliderEffects = 1;
-            OVL_EXPORT(SetStep)(GRAVE_KEEPER_JUMP_KICK);
+            SetStep(GRAVE_KEEPER_JUMP_KICK);
             return;
         }
 
@@ -124,7 +124,7 @@ void func_us_801D12E0(u32 resetColliderEffects) {
             g_CurrentEntity->facingLeft ^= 1;
             g_CurrentEntity->ext.graveKeeper.unk82 = 0;
             g_CurrentEntity->ext.graveKeeper.resetColliderEffects = 1;
-            OVL_EXPORT(SetStep)(GRAVE_KEEPER_JUMP_KICK);
+            SetStep(GRAVE_KEEPER_JUMP_KICK);
         }
     }
 }
@@ -142,33 +142,32 @@ void EntityGraveKeeper(Entity* self) {
         entity = self + 1;
         DestroyEntity(entity);
         self->hitboxState = 0;
-        OVL_EXPORT(SetStep)(GRAVE_KEEPER_DEATH);
+        SetStep(GRAVE_KEEPER_DEATH);
     }
 
     switch (self->step) {
     case GRAVE_KEEPER_INIT:
-        OVL_EXPORT(InitializeEntity)(g_EInitGraveKeeper);
+        InitializeEntity(g_EInitGraveKeeper);
         self->animCurFrame = 0xB;
         entity = self + 1;
-        OVL_EXPORT(CreateEntityFromCurrentEntity)
-        (E_GRAVE_KEEPER_HITBOX, entity);
+        CreateEntityFromCurrentEntity(E_GRAVE_KEEPER_HITBOX, entity);
 #ifdef STAGE_IS_ARE
         self->zPriority = 0x5C;
 #endif
         // fallthrough
     case GRAVE_KEEPER_CHECK_SENSORS:
-        if (OVL_EXPORT(UnkCollisionFunc3)(sensors_ground) & 1) {
-            OVL_EXPORT(SetStep)(GRAVE_KEEPER_WAIT_FOR_AGGRO);
+        if (UnkCollisionFunc3(sensors_ground) & 1) {
+            SetStep(GRAVE_KEEPER_WAIT_FOR_AGGRO);
         }
         break;
     case GRAVE_KEEPER_WAIT_FOR_AGGRO:
         self->animCurFrame = 0xB;
-        self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         self->hitboxHeight = 8;
         self->hitboxOffY = 8;
         // Sit and wait for player to aggro
-        if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x60) {
-            OVL_EXPORT(SetStep)(GRAVE_KEEPER_STAND);
+        if (GetDistanceToPlayerX() < 0x60) {
+            SetStep(GRAVE_KEEPER_STAND);
         }
         break;
     case GRAVE_KEEPER_STAND:
@@ -177,21 +176,21 @@ void EntityGraveKeeper(Entity* self) {
             SpawnDustParticles();
             self->step_s++;
         }
-        if (!OVL_EXPORT(AnimateEntity)(anim_stand, self)) {
+        if (!AnimateEntity(anim_stand, self)) {
             self->hitboxHeight = 0x14;
             self->hitboxOffY = 0;
-            OVL_EXPORT(SetStep)(GRAVE_KEEPER_WALK_TOWARD);
+            SetStep(GRAVE_KEEPER_WALK_TOWARD);
         }
         break;
     case GRAVE_KEEPER_WALK_TOWARD:
     case GRAVE_KEEPER_WALK_AWAY:
         if (!self->step_s) {
-            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->step_s++;
         }
-        OVL_EXPORT(UnkCollisionFunc2)(D_us_801826CC);
-        if (!OVL_EXPORT(AnimateEntity)(anim_walk, self)) {
-            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+        UnkCollisionFunc2(D_us_801826CC);
+        if (!AnimateEntity(anim_walk, self)) {
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->ext.graveKeeper.unk82 = 1;
         }
 
@@ -209,40 +208,39 @@ void EntityGraveKeeper(Entity* self) {
         switch (self->step) {
         case GRAVE_KEEPER_WALK_TOWARD:
             // If we're too close, walk backwards away from player
-            if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x40) {
-                OVL_EXPORT(SetStep)(GRAVE_KEEPER_WALK_AWAY);
+            if (GetDistanceToPlayerX() < 0x40) {
+                SetStep(GRAVE_KEEPER_WALK_AWAY);
             }
 
             // BUG: This may be uninitialised!
             if (collisionDetected & 0x80) {
-                collisionDetected =
-                    OVL_EXPORT(UnkCollisionFunc)(D_us_801826D4, 2);
+                collisionDetected = UnkCollisionFunc(D_us_801826D4, 2);
                 if (collisionDetected & 2) {
-                    OVL_EXPORT(SetStep)(GRAVE_KEEPER_WALL_JUMP);
+                    SetStep(GRAVE_KEEPER_WALL_JUMP);
                 }
             }
             break;
         case GRAVE_KEEPER_WALK_AWAY:
             // If we're too far away, walk towards player
-            if (OVL_EXPORT(GetDistanceToPlayerX)() > 0x80) {
-                OVL_EXPORT(SetStep)(GRAVE_KEEPER_WALK_TOWARD);
+            if (GetDistanceToPlayerX() > 0x80) {
+                SetStep(GRAVE_KEEPER_WALK_TOWARD);
             }
             break;
         }
 
-        if (self->facingLeft != (OVL_EXPORT(GetSideToPlayer)() & 1)) {
+        if (self->facingLeft != (GetSideToPlayer() & 1)) {
             player = &PLAYER;
-            distanceToPlayer = OVL_EXPORT(GetDistanceToPlayerX)();
+            distanceToPlayer = GetDistanceToPlayerX();
             // BUG: this goes unused
             var_s5 = PLAYER.posY.i.hi - self->posY.i.hi;
             if ((PLAYER.step_s & 0x40) && distanceToPlayer < 0x30) {
                 if (PLAYER.step == Player_Crouch) {
                     self->ext.graveKeeper.unk82 = 2;
-                    OVL_EXPORT(SetStep)(GRAVE_KEEPER_WALL_JUMP);
+                    SetStep(GRAVE_KEEPER_WALL_JUMP);
                 } else {
                     // If we're walking away and the player attempts to attack
                     // close while standing, we can duck the attack
-                    OVL_EXPORT(SetStep)(GRAVE_KEEPER_DUCK);
+                    SetStep(GRAVE_KEEPER_DUCK);
                 }
             } else if (self->ext.graveKeeper.unk82) {
                 playerMovingSameDirection = 0;
@@ -261,18 +259,18 @@ void EntityGraveKeeper(Entity* self) {
                     } else {
                         self->ext.graveKeeper.unk82 = 1;
                     }
-                    OVL_EXPORT(SetStep)(GRAVE_KEEPER_JUMP_KICK);
+                    SetStep(GRAVE_KEEPER_JUMP_KICK);
                 } else if (distanceToPlayer < 0x40) {
                     if (!playerMovingSameDirection & 1) {
-                        OVL_EXPORT(SetStep)(GRAVE_KEEPER_GROUND_KICK);
+                        SetStep(GRAVE_KEEPER_GROUND_KICK);
                     } else {
-                        OVL_EXPORT(SetStep)(GRAVE_KEEPER_PUNCH_CLOSE);
+                        SetStep(GRAVE_KEEPER_PUNCH_CLOSE);
                     }
                 } else if (distanceToPlayer < 0x100) {
                     if (!playerMovingSameDirection & 1) {
-                        OVL_EXPORT(SetStep)(GRAVE_KEEPER_JUMP_KICK);
+                        SetStep(GRAVE_KEEPER_JUMP_KICK);
                     } else {
-                        OVL_EXPORT(SetStep)(GRAVE_KEEPER_PUNCH_DASH);
+                        SetStep(GRAVE_KEEPER_PUNCH_DASH);
                     }
                 }
             }
@@ -285,15 +283,14 @@ void EntityGraveKeeper(Entity* self) {
         }
         self->hitboxHeight = 8;
         self->hitboxOffY = 8;
-        if (!OVL_EXPORT(AnimateEntity)(anim_duck, self) &&
-            !(PLAYER.step_s & 0x40)) {
-            OVL_EXPORT(SetStep)(GRAVE_KEEPER_STAND);
+        if (!AnimateEntity(anim_duck, self) && !(PLAYER.step_s & 0x40)) {
+            SetStep(GRAVE_KEEPER_STAND);
         }
         break;
     case GRAVE_KEEPER_WALL_JUMP:
         switch (self->step_s) {
         case 0:
-            if (!OVL_EXPORT(AnimateEntity)(anim_jump, self)) {
+            if (!AnimateEntity(anim_jump, self)) {
                 if (self->facingLeft) {
                     self->velocityX = FIX(2.0);
                 } else {
@@ -303,14 +300,14 @@ void EntityGraveKeeper(Entity* self) {
                 if (self->ext.graveKeeper.unk82 & 2) {
                     self->velocityX = -self->velocityX;
                 }
-                OVL_EXPORT(SetSubStep)(1);
+                SetSubStep(1);
             }
             break;
         case 1:
-            if (OVL_EXPORT(UnkCollisionFunc3)(sensors_ground) & 1) {
+            if (UnkCollisionFunc3(sensors_ground) & 1) {
                 // We've hit the ground so return back to walk phase
                 PlaySfxPositional(SFX_STOMP_HARD_B);
-                OVL_EXPORT(SetStep)(GRAVE_KEEPER_WALK_TOWARD);
+                SetStep(GRAVE_KEEPER_WALK_TOWARD);
             } else {
                 func_us_801D12E0(self->ext.graveKeeper.resetColliderEffects);
             }
@@ -318,11 +315,11 @@ void EntityGraveKeeper(Entity* self) {
         break;
     case GRAVE_KEEPER_PUNCH_CLOSE:
         // Player is close enough to punch from stationary
-        if (!OVL_EXPORT(AnimateEntity)(anim_punch, self)) {
-            if (OVL_EXPORT(Random)() & 1) {
-                OVL_EXPORT(SetStep)(GRAVE_KEEPER_WALK_TOWARD);
+        if (!AnimateEntity(anim_punch, self)) {
+            if (Random() & 1) {
+                SetStep(GRAVE_KEEPER_WALK_TOWARD);
             } else {
-                OVL_EXPORT(SetStep)(GRAVE_KEEPER_GROUND_KICK);
+                SetStep(GRAVE_KEEPER_GROUND_KICK);
             }
         }
 
@@ -334,7 +331,7 @@ void EntityGraveKeeper(Entity* self) {
         // Player is farther away, we need to dash punch
         switch (self->step_s) {
         case 0:
-            if (!OVL_EXPORT(AnimateEntity)(anim_dash, self)) {
+            if (!AnimateEntity(anim_dash, self)) {
                 PlaySfxPositional(SFX_GRAVE_KEEPER_HIYAH);
                 if (self->facingLeft) {
                     self->velocityX = FIX(2.0);
@@ -349,8 +346,8 @@ void EntityGraveKeeper(Entity* self) {
             break;
         case 2:
             self->velocityX -= self->velocityX / 0x20;
-            if (!OVL_EXPORT(AnimateEntity)(anim_punch, self)) {
-                OVL_EXPORT(SetStep)(GRAVE_KEEPER_WALK_TOWARD);
+            if (!AnimateEntity(anim_punch, self)) {
+                SetStep(GRAVE_KEEPER_WALK_TOWARD);
                 break;
             }
             if (self->pose == 2 && !self->poseTimer) {
@@ -361,18 +358,18 @@ void EntityGraveKeeper(Entity* self) {
             }
             // fallthrough
         case 1:
-            collisionDetected = OVL_EXPORT(UnkCollisionFunc2)(D_us_801826CC);
+            collisionDetected = UnkCollisionFunc2(D_us_801826CC);
             if (collisionDetected & 0x80) {
                 self->ext.graveKeeper.unk82 = 0;
-                OVL_EXPORT(SetStep)(GRAVE_KEEPER_JUMP_KICK);
+                SetStep(GRAVE_KEEPER_JUMP_KICK);
             }
 
             if (!--self->ext.graveKeeper.walkTimer) {
-                OVL_EXPORT(SetStep)(GRAVE_KEEPER_WALK_TOWARD);
+                SetStep(GRAVE_KEEPER_WALK_TOWARD);
                 break;
             }
 
-            if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x30) {
+            if (GetDistanceToPlayerX() < 0x30) {
                 self->step_s = 2;
             }
 
@@ -384,7 +381,7 @@ void EntityGraveKeeper(Entity* self) {
     case GRAVE_KEEPER_JUMP_KICK:
         switch (self->step_s) {
         case 0:
-            if (!OVL_EXPORT(AnimateEntity)(anim_jump, self)) {
+            if (!AnimateEntity(anim_jump, self)) {
                 PlaySfxPositional(SFX_GRAVE_KEEPER_GRAAH);
                 if (self->ext.graveKeeper.unk82 & 1) {
                     // Player is jumping away, do a bigger jump
@@ -420,16 +417,15 @@ void EntityGraveKeeper(Entity* self) {
             }
 
             if (self->velocityY > FIX(1.0)) {
-                collisionDetected =
-                    OVL_EXPORT(UnkCollisionFunc3)(sensors_ground);
+                collisionDetected = UnkCollisionFunc3(sensors_ground);
                 if (collisionDetected & 1) {
                     self->ext.graveKeeper.resetColliderEffects = 0;
                     PlaySfxPositional(SFX_STOMP_HARD_B);
-                    OVL_EXPORT(SetStep)(GRAVE_KEEPER_JUMP_LANDED);
+                    SetStep(GRAVE_KEEPER_JUMP_LANDED);
                     break;
                 }
             } else {
-                OVL_EXPORT(MoveEntity)();
+                MoveEntity();
                 self->velocityY += FIX(0.25);
             }
 
@@ -445,8 +441,8 @@ void EntityGraveKeeper(Entity* self) {
             SpawnDustParticles();
             self->step_s++;
         }
-        if (!OVL_EXPORT(AnimateEntity)(anim_kick_land, self)) {
-            OVL_EXPORT(SetStep)(GRAVE_KEEPER_WALK_TOWARD);
+        if (!AnimateEntity(anim_kick_land, self)) {
+            SetStep(GRAVE_KEEPER_WALK_TOWARD);
         }
         break;
     case GRAVE_KEEPER_GROUND_KICK:
@@ -464,14 +460,14 @@ void EntityGraveKeeper(Entity* self) {
             }
         }
 
-        OVL_EXPORT(UnkCollisionFunc2)(D_us_801826CC);
+        UnkCollisionFunc2(D_us_801826CC);
         self->velocityX -= self->velocityX / 0x20;
         if (self->velocityX != 0 && !(g_Timer & 7)) {
             SpawnDustParticles();
         }
 
-        if (!OVL_EXPORT(AnimateEntity)(anim_kick, self)) {
-            OVL_EXPORT(SetStep)(GRAVE_KEEPER_WALK_TOWARD);
+        if (!AnimateEntity(anim_kick, self)) {
+            SetStep(GRAVE_KEEPER_WALK_TOWARD);
         }
         break;
     case GRAVE_KEEPER_DEATH:
@@ -479,24 +475,23 @@ void EntityGraveKeeper(Entity* self) {
         switch (self->step_s) {
         case 0:
             self->velocityX = FIX(2.0);
-            if ((OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1) {
+            if ((GetSideToPlayer() & 1) ^ 1) {
                 self->velocityX = -self->velocityX;
             }
             PlaySfxPositional(SFX_GRAVE_KEEPER_DEATH);
             self->step_s++;
             break;
         case 1:
-            OVL_EXPORT(UnkCollisionFunc2)(D_us_801826CC);
+            UnkCollisionFunc2(D_us_801826CC);
             self->velocityX -= self->velocityX / 0x20;
-            if (!OVL_EXPORT(AnimateEntity)(anim_death, self)) {
+            if (!AnimateEntity(anim_death, self)) {
                 self->step_s++;
             }
             break;
         case 2:
-            entity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
+                CreateEntityFromEntity(E_EXPLOSION, self, entity);
                 entity->params = 3;
             }
             PlaySfxPositional(SFX_FM_EXPLODE_B);
@@ -513,7 +508,7 @@ void EntityGraveKeeperHitbox(Entity* self) {
     s16* ptr;
 
     if (!self->step_s) {
-        OVL_EXPORT(InitializeEntity)(g_EInitGraveKeeperHitbox);
+        InitializeEntity(g_EInitGraveKeeperHitbox);
     }
 
     parent = self - 1;

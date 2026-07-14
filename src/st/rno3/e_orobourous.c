@@ -53,35 +53,35 @@ void EntityOrobourous(Entity* self) {
     s32 i;
 
     if (self->flags & FLAG_DEAD) {
-        OVL_EXPORT(SetStep)(OROB_DEAD);
+        SetStep(OROB_DEAD);
     }
 
     switch (self->step) {
     case OROB_INIT:
-        OVL_EXPORT(InitializeEntity)(g_EInitOrobourous);
+        InitializeEntity(g_EInitOrobourous);
         self->animCurFrame = 14;
         self->drawFlags |= ENTITY_ROTATE;
         other = self + 1;
         for (i = 0; i < 24; i++, other++) {
-            OVL_EXPORT(CreateEntityFromEntity)(E_OROB_SEGMENT, self, other);
+            CreateEntityFromEntity(E_OROB_SEGMENT, self, other);
             other->params = (i + 1);
             other->nextPart = other - 1;
         }
         self->parent = NULL;
         self->nextPart = self + 24;
-        OVL_EXPORT(CreateEntityFromEntity)(E_OROB_RIDER, self, other);
+        CreateEntityFromEntity(E_OROB_RIDER, self, other);
         self->ext.orob.unk9 = 2;
         break;
     case OROB_WAIT:
-        if (OVL_EXPORT(UnkCollisionFunc3)(sensors1) & 1) {
-            OVL_EXPORT(SetStep)(OROB_2);
+        if (UnkCollisionFunc3(sensors1) & 1) {
+            SetStep(OROB_2);
         }
         break;
     case OROB_2:
-        OVL_EXPORT(SetStep)(OROB_BOUNCING);
+        SetStep(OROB_BOUNCING);
         break;
     case OROB_BOUNCING:
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         self->velocityY += self->ext.orob.gravity;
         self->ext.orob.gravity += 0x100;
         if (self->velocityY < 0) {
@@ -90,7 +90,7 @@ void EntityOrobourous(Entity* self) {
             self->animCurFrame = 14;
         }
         if (((self->ext.orob.movingLeft) != self->facingLeft) &&
-            (OVL_EXPORT(AnimateEntity)(anim_head_flipdirs, self) == 0)) {
+            (AnimateEntity(anim_head_flipdirs, self) == 0)) {
             self->animCurFrame = 14;
             self->facingLeft = self->ext.orob.movingLeft;
         }
@@ -106,7 +106,7 @@ void EntityOrobourous(Entity* self) {
             self->velocityY = FIX(-3.0);
             self->ext.orob.gravity = 0;
             var_s7 = self->ext.orob.movingLeft;
-            if (var_s7 == (OVL_EXPORT(GetSideToPlayer)() & 1)) {
+            if (var_s7 == (GetSideToPlayer() & 1)) {
                 self->ext.orob.unk9--;
             } else {
                 self->ext.orob.unk9 = 2;
@@ -137,7 +137,7 @@ void EntityOrobourous(Entity* self) {
         }
         if (self->ext.orob.riderDead) {
             self->animCurFrame = 14;
-            OVL_EXPORT(SetStep)(OROB_SET_FREE);
+            SetStep(OROB_SET_FREE);
         }
         break;
     case OROB_SET_FREE:
@@ -151,7 +151,7 @@ void EntityOrobourous(Entity* self) {
         self->hitboxState = 0;
         self->ext.orob.rest_time = 0x800;
         self->ext.orob.stepTimer = 0x10;
-        other = OVL_EXPORT(AllocEntity)(&g_Entities[32], &g_Entities[47]);
+        other = AllocEntity(&g_Entities[32], &g_Entities[47]);
         if (other != NULL) {
             DestroyEntity(other);
             // Normally we would put in an E_WHATEVER for this, but
@@ -163,7 +163,7 @@ void EntityOrobourous(Entity* self) {
         } else {
             self->ext.orob.rest_time = -1;
         }
-        OVL_EXPORT(SetStep)(OROB_INIT_FLY);
+        SetStep(OROB_INIT_FLY);
         /* fallthrough */
     case OROB_INIT_FLY:
         if (!--self->ext.orob.stepTimer) {
@@ -171,7 +171,7 @@ void EntityOrobourous(Entity* self) {
             other = self + self->ext.orob.unk9;
             other->palette += 2;
             if (self->ext.orob.unk9++ > 24) {
-                OVL_EXPORT(SetStep)(OROB_FLYAROUND);
+                SetStep(OROB_FLYAROUND);
             }
         }
         /* fallthrough */
@@ -181,7 +181,7 @@ void EntityOrobourous(Entity* self) {
         // Gets re-called periodically.
         if (!self->step_s) {
             self->ext.orob.targetTimer = 0x40;
-            var_s4 = OVL_EXPORT(Random)() * 8;
+            var_s4 = Random() * 8;
             xVar = (rcos(var_s4) * 0x60) >> 0xC;
             yVar = (rsin(var_s4) * -0x60) >> 0xC;
             if (!self->ext.orob.rest_time) {
@@ -202,13 +202,13 @@ void EntityOrobourous(Entity* self) {
         }
 
         if (self->ext.orob.movingLeft != self->facingLeft &&
-            (OVL_EXPORT(AnimateEntity)(anim_head_flipdirs, self) == 0)) {
+            (AnimateEntity(anim_head_flipdirs, self) == 0)) {
             self->animCurFrame = 14;
             self->facingLeft = self->ext.orob.movingLeft;
             self->pose = 0;
             self->poseTimer = 0;
         }
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         if (self->velocityX > 0) {
             self->ext.orob.movingLeft = 1;
         } else {
@@ -217,8 +217,7 @@ void EntityOrobourous(Entity* self) {
         xVar = self->ext.orob.targetX - self->posX.i.hi;
         yVar = self->ext.orob.targetY - self->posY.i.hi;
         var_s4 = ratan2(yVar, xVar);
-        var_s4 = OVL_EXPORT(LimitAngleChange)(
-            0x20, self->ext.orob.vel_angle, var_s4);
+        var_s4 = LimitAngleChange(0x20, self->ext.orob.vel_angle, var_s4);
         self->velocityX = rcos(var_s4) * 36;
         self->velocityY = rsin(var_s4) * 36;
         self->ext.orob.vel_angle = var_s4;
@@ -237,7 +236,7 @@ void EntityOrobourous(Entity* self) {
             for (i = 0; i < 24; i++, other++) {
                 DestroyEntity(other);
             }
-            OVL_EXPORT(PreventEntityFromRespawning)(self);
+            PreventEntityFromRespawning(self);
             DestroyEntity(self);
             return;
         }
@@ -248,20 +247,18 @@ void EntityOrobourous(Entity* self) {
         for (i = 0; i < 25; i++, other++) {
             other->flags |= FLAG_DEAD;
         }
-        other = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+        other = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (other != NULL) {
-            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, other);
+            CreateEntityFromEntity(E_EXPLOSION, self, other);
             other->params = 3;
         }
         for (i = 0; i < 4; i++) {
             // i = 1 would make params 1 so anim frame 9, which is
             // the rider dude. Skip making him, he already fell off.
             if (i != 1) {
-                other =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+                other = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (other != NULL) {
-                    OVL_EXPORT(CreateEntityFromEntity)
-                    (E_OROB_HEAD_PARTS, self, other);
+                    CreateEntityFromEntity(E_OROB_HEAD_PARTS, self, other);
                     other->facingLeft = self->facingLeft;
                     other->velocityX = self->velocityX;
                     other->velocityY = -0x18000;
@@ -296,11 +293,11 @@ void EntityOrobSegment(Entity* self) {
         self->hitboxState = 0;
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
                        FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
-        OVL_EXPORT(SetStep)(OROB_DEAD);
+        SetStep(OROB_DEAD);
     }
     switch (self->step) {
     case OROB_INIT:
-        OVL_EXPORT(InitializeEntity)(g_EInitOruburos);
+        InitializeEntity(g_EInitOruburos);
         self->hitboxOffY = 1;
         self->pose = self->params % 6;
         self->drawFlags |= ENTITY_OPACITY;
@@ -321,7 +318,7 @@ void EntityOrobSegment(Entity* self) {
         }
         break;
     case OROB_WAIT:
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         other = self - 1;
         xVar = other->posX.i.hi - self->posX.i.hi;
         yVar = other->posY.i.hi - self->posY.i.hi;
@@ -338,12 +335,12 @@ void EntityOrobSegment(Entity* self) {
         }
         break;
     case OROB_DEAD:
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         self->velocityY += FIX(10.0 / 128);
         return;
     }
     if (((self->params) != 4) && ((self->params) != 12)) {
-        OVL_EXPORT(AnimateEntity)(anim_bone_twisting, self);
+        AnimateEntity(anim_bone_twisting, self);
     }
     miscTemp = (self->params & 3);
     if ((g_Timer & 3) == miscTemp) {
@@ -360,7 +357,7 @@ void EntityOrobHeadParts(Entity* self) {
     adhoc_vels_rot* temp_s0;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(g_EInitOruburosHead);
+        InitializeEntity(g_EInitOruburosHead);
         self->drawFlags = ENTITY_ROTATE;
         self->hitboxState = 0;
         // We create 4 of this entity, with params 0 to 3.
@@ -374,7 +371,7 @@ void EntityOrobHeadParts(Entity* self) {
         }
         self->velocityY += temp_s0->velY;
     }
-    OVL_EXPORT(MoveEntity)();
+    MoveEntity();
     self->velocityY += FIX(0.09375);
     temp_s0 = &headPartsParams[self->params];
     self->rotate += temp_s0->rotate;
@@ -385,16 +382,16 @@ void EntityOrobRider(Entity* self) {
 
     if (self->flags & FLAG_DEAD) {
         PlaySfxPositional(SFX_EXPLODE_B);
-        other = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+        other = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (other != NULL) {
-            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, other);
+            CreateEntityFromEntity(E_EXPLOSION, self, other);
             other->params = 1;
         }
         // This creates the entity for the rider dude falling off.
         // params of 1 is what triggers this.
-        other = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+        other = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (other != NULL) {
-            OVL_EXPORT(CreateEntityFromEntity)(E_OROB_HEAD_PARTS, self, other);
+            CreateEntityFromEntity(E_OROB_HEAD_PARTS, self, other);
             other->facingLeft = self->facingLeft;
             other->params = 1;
         }
@@ -407,7 +404,7 @@ void EntityOrobRider(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitOruburosRider);
+        InitializeEntity(g_EInitOruburosRider);
         self->animCurFrame = 13;
         self->hitboxOffX = 5;
         self->hitboxOffY = -2;

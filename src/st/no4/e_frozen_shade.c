@@ -104,7 +104,7 @@ static void func_us_801D95EC(Entity* self) {
     player = &PLAYER;
 
     if (!(self->ext.frozenShade.unk86 & 0x1F)) {
-        angle = OVL_EXPORT(Random)() & 7;
+        angle = Random() & 7;
         posY = self->ext.frozenShade.unkA2 - self->posY.i.hi +
                posY_offsets[angle] - g_Tilemap.scrollY.i.hi;
         posX = self->ext.frozenShade.unkA0 - self->posX.i.hi +
@@ -112,7 +112,7 @@ static void func_us_801D95EC(Entity* self) {
         self->ext.frozenShade.unk88 = (s16)ratan2(posY, posX);
     }
     self->ext.frozenShade.unk86++;
-    angle = self->ext.frozenShade.unk7E = OVL_EXPORT(LimitAngleChange)(
+    angle = self->ext.frozenShade.unk7E = LimitAngleChange(
         0x40, self->ext.frozenShade.unk7E, self->ext.frozenShade.unk88);
     self->posX.val += (rcos(angle) * 128) / 16;
     self->posY.val += (rsin(angle) * 128) / 16;
@@ -152,7 +152,7 @@ void EntityFrozenShade(Entity* self) {
     }
     tempEntity = &PLAYER;
     if ((self->flags & FLAG_DEAD) && (self->step != 4)) {
-        OVL_EXPORT(SetStep)(4);
+        SetStep(4);
     }
     if (self->ext.frozenShade.unk82) {
         prim = (FrozenShadePrim*)&g_PrimBuf[self->primIndex];
@@ -275,7 +275,7 @@ void EntityFrozenShade(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitFrozenShade);
+        InitializeEntity(g_EInitFrozenShade);
         self->opacity = 0x40;
         self->palette += self->params;
         self->blendMode = BLEND_TRANSP | BLEND_ADD;
@@ -310,18 +310,17 @@ void EntityFrozenShade(Entity* self) {
         break;
 
     case 1:
-        OVL_EXPORT(AnimateEntity)(anim_idle, self);
-        tempVar = OVL_EXPORT(GetDistanceToPlayerX)();
+        AnimateEntity(anim_idle, self);
+        tempVar = GetDistanceToPlayerX();
         var_s4 = tempEntity->posX.i.hi - self->posX.i.hi;
         if (tempVar < 0x10) {
-            OVL_EXPORT(SetStep)(2);
+            SetStep(2);
         } else if ((var_s4 < 0 && self->facingLeft) ||
                    (var_s4 >= 0 && !self->facingLeft)) {
-            OVL_EXPORT(SetStep)(2);
+            SetStep(2);
         }
         if ((self->posX.i.hi & 0x100) == 0 && !--self->ext.frozenShade.unk84) {
-            if (tempVar < 0x60 && OVL_EXPORT(GetDistanceToPlayerY)() < 0x40 &&
-                rand() & 3) {
+            if (tempVar < 0x60 && GetDistanceToPlayerY() < 0x40 && rand() & 3) {
                 j = 0xA0;
                 var_s0_3 = 0;
                 for (tempEntity = &g_Entities[160];
@@ -339,11 +338,11 @@ void EntityFrozenShade(Entity* self) {
                     for (i = 0; i < 8; i++) {
                         tempEntity =
                             &g_Entities[self->ext.frozenShade.unkA8[i]];
-                        OVL_EXPORT(CreateEntityFromCurrentEntity)
-                        (E_FROZEN_SHADE_CRYSTAL, tempEntity);
+                        CreateEntityFromCurrentEntity(
+                            E_FROZEN_SHADE_CRYSTAL, tempEntity);
                         tempEntity->hitboxWidth = 0;
                     }
-                    OVL_EXPORT(SetStep)(3);
+                    SetStep(3);
                     PlaySfxPositional(SFX_UI_SUBWEAPON_TINK);
                     self->ext.frozenShade.unk98 = 0;
                     self->ext.frozenShade.unk8A = 0;
@@ -361,33 +360,33 @@ void EntityFrozenShade(Entity* self) {
 
     case 2:
         // Player has switched sides, rotate to face
-        OVL_EXPORT(AnimateEntity)(anim_rotate, self);
-        tempVar = OVL_EXPORT(GetDistanceToPlayerX)();
+        AnimateEntity(anim_rotate, self);
+        tempVar = GetDistanceToPlayerX();
         if (tempVar > 0x10) {
             tempVar = self->posX.i.hi - tempEntity->posX.i.hi;
             if (self->facingLeft) {
                 if (tempVar > 0) {
                     if (self->pose == 5) {
-                        OVL_EXPORT(SetStep)(1);
+                        SetStep(1);
                         self->facingLeft = false;
-                        OVL_EXPORT(AnimateEntity)(anim_idle, self);
+                        AnimateEntity(anim_idle, self);
                     }
                 } else {
                     if (self->pose == 1) {
-                        OVL_EXPORT(SetStep)(1);
-                        OVL_EXPORT(AnimateEntity)(anim_idle, self);
+                        SetStep(1);
+                        AnimateEntity(anim_idle, self);
                     }
                 }
             } else if (tempVar < 0) {
                 if (self->pose == 5) {
-                    OVL_EXPORT(SetStep)(1);
+                    SetStep(1);
                     self->facingLeft = true;
-                    OVL_EXPORT(AnimateEntity)(anim_idle, self);
+                    AnimateEntity(anim_idle, self);
                 }
             } else {
                 if (self->pose == 1) {
-                    OVL_EXPORT(SetStep)(1);
-                    OVL_EXPORT(AnimateEntity)(anim_idle, self);
+                    SetStep(1);
+                    AnimateEntity(anim_idle, self);
                 }
             }
         }
@@ -403,7 +402,7 @@ void EntityFrozenShade(Entity* self) {
             } else if (self->velocityY > 0) {
                 self->velocityY -= 0x200;
             }
-            tempVar = OVL_EXPORT(AnimateEntity)(anim_crystal, self);
+            tempVar = AnimateEntity(anim_crystal, self);
             j = self->ext.frozenShade.unk8A++;
             self->ext.frozenShade.unk98 += 0x20;
             SetGeomScreen(0x100);
@@ -541,7 +540,7 @@ void EntityFrozenShade(Entity* self) {
             break;
 
         case 1:
-            OVL_EXPORT(AnimateEntity)(anim_ice_wind, self);
+            AnimateEntity(anim_ice_wind, self);
             if (self->velocityX != 0) {
                 if (self->facingLeft) {
                     self->velocityX += 0x600;
@@ -555,18 +554,18 @@ void EntityFrozenShade(Entity* self) {
                 self->poseTimer = 0;
                 self->ext.frozenShade.unk82++;
             }
-            OVL_EXPORT(MoveEntity)(self);
+            MoveEntity(self);
             break;
 
         case 2:
-            if (!OVL_EXPORT(AnimateEntity)(anim_ice_wind_end, self)) {
-                OVL_EXPORT(SetStep)(1);
+            if (!AnimateEntity(anim_ice_wind_end, self)) {
+                SetStep(1);
                 self->ext.frozenShade.unk7E = 0xC00;
                 self->ext.frozenShade.unk84 = (rand() & 0x1F) + 0x80;
             }
             break;
         }
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         break;
 
     case 4:
@@ -720,7 +719,7 @@ void EntityFrozenShade(Entity* self) {
                         prim->posX.i.hi =
                             (prim2->x2 + prim2->x0) / 2 +
                             tilemap->scrollX.i.hi +
-                            OVL_EXPORT(Random)() *
+                            Random() *
                                 (prim2->x3 + prim2->x1 - prim2->x2 -
                                  prim2->x0) /
                                 0x200;
@@ -773,7 +772,7 @@ void EntityFrozenShade(Entity* self) {
         break;
 
     case 5:
-        OVL_EXPORT(AnimateEntity)(anim_idle, self);
+        AnimateEntity(anim_idle, self);
         switch (self->step_s) {
         case 0:
             if (self->velocityY < 0) {
@@ -797,11 +796,11 @@ void EntityFrozenShade(Entity* self) {
 #endif
                 tempVar = self->ext.frozenShade.unk9C;
                 for (i = 0; i < 3; i++) {
-                    tempEntity = OVL_EXPORT(AllocEntity)(
-                        &g_Entities[160], &g_Entities[192]);
+                    tempEntity =
+                        AllocEntity(&g_Entities[160], &g_Entities[192]);
                     if (tempEntity != NULL) {
-                        OVL_EXPORT(CreateEntityFromCurrentEntity)
-                        (E_FROZEN_SHADE_ICICLE, tempEntity);
+                        CreateEntityFromCurrentEntity(
+                            E_FROZEN_SHADE_ICICLE, tempEntity);
                         tempEntity->posX.i.hi += icicle_posX_offsets[tempVar];
                         tempEntity->posY.i.hi += icicle_posY_offsets[tempVar];
                         tempEntity->params = i;
@@ -813,11 +812,11 @@ void EntityFrozenShade(Entity* self) {
             }
             if (self->ext.frozenShade.unk8A >= 0x40) {
                 self->ext.frozenShade.unk84 = (rand() & 0x1F) + 0x80;
-                OVL_EXPORT(SetStep)(1);
+                SetStep(1);
             }
             break;
         }
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         break;
     }
     if (self->animCurFrame >= 10 && self->animCurFrame < 18) {
@@ -835,7 +834,7 @@ void EntityFrozenShade(Entity* self) {
 
 void EntityFrozenShadeCrystal(struct Entity* self) {
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(g_EInitFrozenShadeCrystal);
+        InitializeEntity(g_EInitFrozenShadeCrystal);
         self->hitboxState |= 6;
     }
 }
@@ -972,17 +971,16 @@ void EntityFrozenShadeIcicle(Entity* self) {
             return;
         }
 
-        part = OVL_EXPORT(AllocEntity)(self, &g_Entities[192]);
+        part = AllocEntity(self, &g_Entities[192]);
         if (part == NULL) {
             return;
         }
 
-        OVL_EXPORT(CreateEntityFromCurrentEntity)
-        (E_FROZEN_SHADE_ICICLE_UNK, part);
+        CreateEntityFromCurrentEntity(E_FROZEN_SHADE_ICICLE_UNK, part);
         self->nextPart = part;
         part->nextPart = self;
         part->parent = self;
-        OVL_EXPORT(InitializeEntity)(g_EInitFrozenShadeIcicle);
+        InitializeEntity(g_EInitFrozenShadeIcicle);
         self->primIndex = primIndex;
         self->flags |= FLAG_HAS_PRIMS;
         self->hitboxState = 0;
@@ -1023,16 +1021,14 @@ void EntityFrozenShadeIcicle(Entity* self) {
             self->step++;
             self->ext.frozenShadeIcicle.unk84 = 0;
             self->ext.frozenShadeIcicle.angle =
-                (OVL_EXPORT(GetAngleBetweenEntities)(self, &PLAYER) - 0x400) &
-                0xFFF;
+                (GetAngleBetweenEntities(self, &PLAYER) - 0x400) & 0xFFF;
         }
         func_us_801DB1E8(self);
         break;
     case 3:
         self->ext.frozenShadeIcicle.unk7C += 0x20;
-        i = OVL_EXPORT(LimitAngleChange)(
-            0x40, self->ext.frozenShadeIcicle.unk7E,
-            self->ext.frozenShadeIcicle.angle);
+        i = LimitAngleChange(0x40, self->ext.frozenShadeIcicle.unk7E,
+                             self->ext.frozenShadeIcicle.angle);
         self->ext.frozenShadeIcicle.unk7E = i;
         if (self->ext.frozenShadeIcicle.angle == i) {
             self->step++;
@@ -1045,9 +1041,8 @@ void EntityFrozenShadeIcicle(Entity* self) {
     case 4:
         self->ext.frozenShadeIcicle.unk7C += 0x20;
         if (!self->ext.frozenShadeIcicle.unk84) {
-            OVL_EXPORT(UnkEntityFunc0)
-            (self->ext.frozenShadeIcicle.angle, 0x600);
-            OVL_EXPORT(MoveEntity)(self);
+            UnkEntityFunc0(self->ext.frozenShadeIcicle.angle, 0x600);
+            MoveEntity(self);
         } else {
             self->ext.frozenShadeIcicle.unk84--;
         }
@@ -1065,9 +1060,10 @@ void EntityFrozenShadeIcicle(Entity* self) {
         i = 0;
         func_us_801DB1E8(self);
         while (prim != NULL) {
-            OVL_EXPORT(UnkEntityFunc0)
-            ((self->ext.frozenShadeIcicle.angle + ice_shard_angles[i]) & 0xFFF,
-             ice_shard_speeds[i] * self->ext.frozenShadeIcicle.unk84);
+            UnkEntityFunc0(
+                (self->ext.frozenShadeIcicle.angle + ice_shard_angles[i]) &
+                    0xFFF,
+                ice_shard_speeds[i] * self->ext.frozenShadeIcicle.unk84);
             velocity = F(self->velocityX).i.hi;
             prim->x0 += velocity;
             prim->x1 += velocity;
@@ -1113,7 +1109,7 @@ void EntityFrozenShadeIcicleUnk(Entity* self) {
     }
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(g_EInitFrozenShadeIcicle);
+        InitializeEntity(g_EInitFrozenShadeIcicle);
         self->flags &= ~(FLAG_DESTROY_IF_OUT_OF_CAMERA |
                          FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA);
         self->hitboxWidth = 2;
@@ -1127,6 +1123,6 @@ void EntityFrozenShadeIcicleUnk(Entity* self) {
     } else {
         self->hitboxState = 0;
     }
-    OVL_EXPORT(UnkEntityFunc0)(self->params, 0x1800);
-    OVL_EXPORT(MoveEntity)(self);
+    UnkEntityFunc0(self->params, 0x1800);
+    MoveEntity(self);
 }

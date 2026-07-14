@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rno3.h"
 
-extern EInit OVL_EXPORT(EInitCommon);
+extern EInit g_EInitCommon;
 
 static u8 anim1[] = {64, 1, 255, 0};
 static u8 anim2[] = {64, 2, 255, 0};
@@ -22,7 +22,7 @@ void EntityRoomForeground(Entity* self) {
     ObjInit* objInit = &objData[self->params];
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         self->animSet = objInit->animSet;
         self->zPriority = objInit->zPriority;
         self->unk5A = objInit->unk5A;
@@ -37,5 +37,5 @@ void EntityRoomForeground(Entity* self) {
             self->rotate = 0x800;
         }
     }
-    OVL_EXPORT(AnimateEntity)(objInit->animFrames, self);
+    AnimateEntity(objInit->animFrames, self);
 }

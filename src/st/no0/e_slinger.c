@@ -46,13 +46,13 @@ static s16 sensors_ground[][2] = {{0, 19}, {8, 0}};
 static s16 sensors_move[][2] = {{-12, 16}, {0, -16}, {0, -16}};
 
 void SlingerAttackCheck(Entity* self) {
-    u16 groundCollision = OVL_EXPORT(UnkCollisionFunc2)(sensors_ground);
-    u16 moveCollision = OVL_EXPORT(UnkCollisionFunc)(sensors_move, 3);
+    u16 groundCollision = UnkCollisionFunc2(sensors_ground);
+    u16 moveCollision = UnkCollisionFunc(sensors_move, 3);
 
     if (groundCollision == 128 && (moveCollision & 2) != 0) {
-        OVL_EXPORT(SetStep)(SLINGER_JUMP);
+        SetStep(SLINGER_JUMP);
     } else if (!--self->ext.skeleton.attackTimer) {
-        OVL_EXPORT(SetStep)(SLINGER_ATTACK);
+        SetStep(SLINGER_ATTACK);
     }
 }
 
@@ -67,22 +67,22 @@ void EntitySlinger(Entity* self) {
 
     switch (self->step) {
     case SLINGER_INIT:
-        OVL_EXPORT(InitializeEntity)(g_EInitSlinger);
+        InitializeEntity(g_EInitSlinger);
         self->ext.skeleton.attackTimer = 80; // Slinger attack timer cycle
         self->ext.skeleton.facingLeft = 0;   // Facing init
         self->ext.skeleton.attackTimerIndex = 0;
         break;
 
     case SLINGER_IDLE: // Wait for player to be close enough
-        if (OVL_EXPORT(UnkCollisionFunc3)(sensors_ground)) {
+        if (UnkCollisionFunc3(sensors_ground)) {
             self->step++;
         }
         break;
 
     case SLINGER_WALK_TOWARDS_PLAYER:
-        self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         self->ext.skeleton.facingLeft = self->facingLeft;
-        OVL_EXPORT(AnimateEntity)(anim_walk, self);
+        AnimateEntity(anim_walk, self);
 
         if (self->ext.skeleton.facingLeft) {
             self->velocityX = FIX(0.5);
@@ -90,16 +90,16 @@ void EntitySlinger(Entity* self) {
             self->velocityX = FIX(-0.5);
         }
 
-        if (OVL_EXPORT(GetDistanceToPlayerX)() < 76) {
+        if (GetDistanceToPlayerX() < 76) {
             self->step = SLINGER_WALK_AWAY_FROM_PLAYER;
         }
         SlingerAttackCheck(self);
         break;
 
     case SLINGER_WALK_AWAY_FROM_PLAYER:
-        self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         self->ext.skeleton.facingLeft = self->facingLeft ^ 1;
-        OVL_EXPORT(AnimateEntity)(anim_walk_backwards, self);
+        AnimateEntity(anim_walk_backwards, self);
 
         if (self->ext.skeleton.facingLeft) {
             self->velocityX = FIX(0.5);
@@ -107,16 +107,16 @@ void EntitySlinger(Entity* self) {
             self->velocityX = FIX(-0.5);
         }
 
-        if (OVL_EXPORT(GetDistanceToPlayerX)() > 92) {
+        if (GetDistanceToPlayerX() > 92) {
             self->step = SLINGER_WALK_TOWARDS_PLAYER;
         }
         SlingerAttackCheck(self);
         break;
 
     case SLINGER_ATTACK:
-        var_s2 = OVL_EXPORT(AnimateEntity)(anim_throw_bone, self);
+        var_s2 = AnimateEntity(anim_throw_bone, self);
         if (!var_s2) {
-            OVL_EXPORT(SetStep)(SLINGER_WALK_AWAY_FROM_PLAYER);
+            SetStep(SLINGER_WALK_AWAY_FROM_PLAYER);
             var_s2 = ++self->ext.skeleton.attackTimerIndex & 3;
             self->ext.skeleton.attackTimer =
                 attack_timer_cycles[self->params & 1][var_s2];
@@ -126,12 +126,11 @@ void EntitySlinger(Entity* self) {
         if ((var_s2 & 0x80) && self->animCurFrame == 10) {
             if ((self->posX.i.hi >= -16 && self->posX.i.hi <= 272) &&
                 (self->posY.i.hi >= 0 && self->posY.i.hi <= 240)) {
-                newEntity =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
+                newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEntity != NULL) { // Spawn bone
                     PlaySfxPositional(SFX_BONE_THROW);
-                    OVL_EXPORT(CreateEntityFromCurrentEntity)
-                    (E_SLINGER_THROWN_BONE, newEntity);
+                    CreateEntityFromCurrentEntity(
+                        E_SLINGER_THROWN_BONE, newEntity);
                     if (self->facingLeft) {
                         newEntity->posX.i.hi -= 8;
                     } else {
@@ -147,10 +146,10 @@ void EntitySlinger(Entity* self) {
     case SLINGER_JUMP:
         switch (self->step_s) {
         case SLINGER_JUMPING:
-            if (!(OVL_EXPORT(AnimateEntity)(anim_jump1, self) & 1)) {
+            if (!(AnimateEntity(anim_jump1, self) & 1)) {
                 var_s2 = self->ext.skeleton.facingLeft;
 
-                if ((OVL_EXPORT(Random)() & 3) == 0) {
+                if ((Random() & 3) == 0) {
                     var_s2 ^= 1;
                 }
 
@@ -168,16 +167,16 @@ void EntitySlinger(Entity* self) {
             break;
 
         case SLINGER_IN_AIR:
-            if (OVL_EXPORT(UnkCollisionFunc3)(sensors_ground) != 0) {
+            if (UnkCollisionFunc3(sensors_ground) != 0) {
                 self->step_s++;
             }
-            OVL_EXPORT(CheckFieldCollision)(sensors_move, 2);
+            CheckFieldCollision(sensors_move, 2);
             break;
 
         case SLINGER_LAND:
-            if (OVL_EXPORT(AnimateEntity)(anim_jump2, self) & 1) {
+            if (AnimateEntity(anim_jump2, self) & 1) {
                 self->step_s = 0;
-                OVL_EXPORT(SetStep)(SLINGER_WALK_AWAY_FROM_PLAYER);
+                SetStep(SLINGER_WALK_AWAY_FROM_PLAYER);
             }
             break;
         }
@@ -186,11 +185,9 @@ void EntitySlinger(Entity* self) {
     case SLINGER_DESTROY:
         PlaySfxPositional(SFX_SKELETON_DEATH_B);
         for (i = 0; i < 7; i++) { // Spawn Slinger pieces
-            newEntity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                OVL_EXPORT(CreateEntityFromCurrentEntity)
-                (E_SLINGER_PIECES, newEntity);
+                CreateEntityFromCurrentEntity(E_SLINGER_PIECES, newEntity);
                 newEntity->facingLeft = self->facingLeft;
                 newEntity->params = i;
                 newEntity->ext.skeleton.explosionTimer = dead_parts_timer[i];
@@ -217,19 +214,19 @@ void EntitySlingerPieces(Entity* self) {
     if (self->step) {
         if (--self->ext.skeleton.explosionTimer) {
             self->rotate += anim_bone_rot[self->params];
-            OVL_EXPORT(FallEntity)();
-            OVL_EXPORT(MoveEntity)();
+            FallEntity();
+            MoveEntity();
             return;
         }
 
         self->entityId = E_EXPLOSION;
-        self->pfnUpdate = (PfnEntityUpdate)OVL_EXPORT(EntityExplosion);
+        self->pfnUpdate = (PfnEntityUpdate)EntityExplosion;
         self->params = 0;
         self->step = 0;
         return;
     }
 
-    OVL_EXPORT(InitializeEntity)(g_EInitSlingerPieces);
+    InitializeEntity(g_EInitSlingerPieces);
     self->animCurFrame = self->params + 15;
     self->drawFlags = ENTITY_ROTATE;
 
@@ -244,18 +241,18 @@ void EntitySlingerRib(Entity* self) {
 
     if (self->step) {
         if (self->flags & FLAG_DEAD) {
-            OVL_EXPORT(EntityExplosionSpawn)(0, 0);
+            EntityExplosionSpawn(0, 0);
             return;
         }
         self->rotate += ROT(11.25);
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         if (self->posY.i.hi > 0xF0) {
             DestroyEntity(self);
         }
     } else {
-        OVL_EXPORT(InitializeEntity)(g_EInitSlingerRib);
+        InitializeEntity(g_EInitSlingerRib);
         self->posY.val -= FIX(1.0 / 16);
-        var_s1 = (u32)OVL_EXPORT(GetDistanceToPlayerX)() >> 5;
+        var_s1 = (u32)GetDistanceToPlayerX() >> 5;
         if (var_s1 > 7) {
             var_s1 = 7;
         }

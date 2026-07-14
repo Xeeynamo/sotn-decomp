@@ -7,7 +7,7 @@ extern s16 D_801CB738[];
 static s32 D_80180EB4 = 0;
 
 void BoxPuzzleFloorButton(Entity* self) {
-    s32 temp_s1 = OVL_EXPORT(GetPlayerCollisionWith)(self, 8, 8, 4);
+    s32 temp_s1 = GetPlayerCollisionWith(self, 8, 8, 4);
     s32 primIndex;
     Primitive* prim;
     Entity* player;
@@ -15,7 +15,7 @@ void BoxPuzzleFloorButton(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -75,7 +75,7 @@ void BoxPuzzleSpikes(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->hitboxWidth = 12;
         self->hitboxHeight = 12;
         self->attackElement = 1;
@@ -150,10 +150,10 @@ void EntityMovableBox(Entity* self) {
     s32 var_s1;
     s32 var_s4;
 
-    var_s1 = OVL_EXPORT(GetPlayerCollisionWith)(self, 0x10, 0x10, 5);
+    var_s1 = GetPlayerCollisionWith(self, 0x10, 0x10, 5);
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -177,21 +177,20 @@ void EntityMovableBox(Entity* self) {
         self->velocityY = 0;
         player = &PLAYER;
         if (var_s1 & 1) {
-            if ((OVL_EXPORT(GetSideToPlayer)() & 1) && player->velocityX > 0) {
+            if ((GetSideToPlayer() & 1) && player->velocityX > 0) {
                 if (!(g_Timer & 7)) {
                     g_api.PlaySfx(SFX_STONE_MOVE_B);
                 }
                 self->velocityX = FIX(0.5);
             }
-            if ((OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1 &&
-                player->velocityX < 0) {
+            if ((GetSideToPlayer() & 1) ^ 1 && player->velocityX < 0) {
                 if (!(g_Timer & 7)) {
                     g_api.PlaySfx(SFX_STONE_MOVE_B);
                 }
                 self->velocityX = FIX(-0.5);
             }
         }
-        OVL_EXPORT(UnkCollisionFunc2)(D_80180EB8);
+        UnkCollisionFunc2(D_80180EB8);
         if (!self->params) {
             var_s1 = 0;
             var_s4 = self->posX.i.hi + g_Tilemap.scrollX.i.hi;

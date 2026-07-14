@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rnz0.h"
 
-extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit g_EInitInteractable;
 
 static s32 D_80180ED0[] = {0};
 void EntityCannonLever(Entity* self) {
@@ -11,7 +11,7 @@ void EntityCannonLever(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->hitboxWidth = 4;
         self->hitboxHeight = 20;
         self->hitboxState = 2;
@@ -50,7 +50,7 @@ void EntityCannonLever(Entity* self) {
         break;
 
     case 2:
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         self->velocityX -= self->velocityX / 16;
         if (abs(self->velocityX < FIX(0.125))) {
             self->step++;
@@ -77,7 +77,7 @@ void EntityCannon(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -127,7 +127,7 @@ void EntityCannon(Entity* self) {
         prim = prim->next;
         self->posX.i.hi = prim->x0 + 8;
         self->posX.i.lo = 0;
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         self->velocityX -= self->velocityX / 8;
         if (abs(self->velocityX < FIX(0.125))) {
             self->step++;
@@ -145,7 +145,7 @@ void EntityCannonShot(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = ANIMSET_DRA(2);
         self->animCurFrame = 1;
         self->palette = PAL_FLAG(PAL_UNK_1AF);
@@ -153,15 +153,13 @@ void EntityCannonShot(Entity* self) {
         self->velocityX = FIX(-8);
 
     case 1:
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         distance = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
         if (distance < 112) {
             g_api.func_80102CD8(1);
-            newEntity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)
-                (E_EXPLOSION, self, newEntity);
+                CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                 newEntity->params = EXPLOSION_BIG;
             }
             g_CastleFlags[NZ0_CANNON_WALL_SHORTCUT] = 1;
@@ -184,7 +182,7 @@ void EntityCannonWall(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         i = 6;
         tileLayoutPtr = tiles_wall + i;
         tilePos = 0xB9;

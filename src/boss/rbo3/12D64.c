@@ -14,7 +14,7 @@ void func_us_80192D64(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(D_us_801804BC);
+        InitializeEntity(D_us_801804BC);
         self->zPriority = 0x5C;
         if (self->params & 2) {
             self->animCurFrame = 0xE;
@@ -32,9 +32,9 @@ void func_us_80192D64(Entity* self) {
 
         next = self + 1;
 #ifdef VERSION_PSP
-        OVL_EXPORT(CreateEntityFromEntity)(D_psp_09254D28, self, next);
+        CreateEntityFromEntity(D_psp_09254D28, self, next);
 #else
-        OVL_EXPORT(CreateEntityFromEntity)(UNK_ENTITY_29, self, self + 1);
+        CreateEntityFromEntity(UNK_ENTITY_29, self, self + 1);
 #endif
 
         next->params = 2;
@@ -126,7 +126,7 @@ void func_us_80192D64(Entity* self) {
     }
 }
 
-extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit g_EInitInteractable;
 
 void func_us_80193050(Entity* self) {
     Primitive* prim;
@@ -137,7 +137,7 @@ void func_us_80193050(Entity* self) {
         return;
     }
 
-    OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+    InitializeEntity(g_EInitInteractable);
     primIndex = g_api.AllocPrimitives(PRIM_GT4, 5);
 
     if (primIndex == -1) {

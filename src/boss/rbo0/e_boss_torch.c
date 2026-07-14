@@ -26,7 +26,7 @@ static s16 scale[] = {256, 200, 164};
 void EntityBossTorch(Entity* self) {
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitEnvironment);
+        InitializeEntity(g_EInitEnvironment);
 #ifdef INVERTED_STAGE
         self->zPriority = 0x6A;
 #endif
@@ -35,9 +35,9 @@ void EntityBossTorch(Entity* self) {
         // fallthrough
     case 1:
 #ifdef VERSION_PSP
-        OVL_EXPORT(AnimateEntity)(frames, self);
+        AnimateEntity(frames, self);
 #else
-        OVL_EXPORT(AnimateEntity)(RBO0_PrizeDrops, self);
+        AnimateEntity(RBO0_PrizeDrops, self);
 #endif
         if (g_Timer & 4) {
             self->palette = (self->params * 2) + PAL_FLAG(PAL_TORCH_A);

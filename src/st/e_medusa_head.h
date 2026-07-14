@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <types.h>
 
-extern EInit OVL_EXPORT(EInitSpawner);
 extern EInit g_EInitMedusaHeadBlue;
 extern EInit g_EInitMedusaHeadYellow;
 
@@ -42,7 +41,7 @@ void EntityMedusaHeadSpawner(Entity* self) {
         return;
     }
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitSpawner));
+        InitializeEntity(g_EInitSpawner);
         self->flags &= ~FLAG_UNK_2000;
     }
     if ((g_Tilemap.scrollY.i.hi >= params->yMax) &&
@@ -52,7 +51,7 @@ void EntityMedusaHeadSpawner(Entity* self) {
             self->ext.medusaHead.timer--;
             return;
         }
-        tempEntity = OVL_EXPORT(AllocEntity)(
+        tempEntity = AllocEntity(
             &g_Entities[128], &g_Entities[128 + params->spawnCount]);
         if (tempEntity != NULL) {
             DestroyEntity(tempEntity);
@@ -94,11 +93,11 @@ void EntityMedusaHeadBlue(Entity* self) {
     Entity* player = &PLAYER;
 
     if (self->flags & FLAG_DEAD) {
-        OVL_EXPORT(EntityExplosionSpawn)(0, 0);
+        EntityExplosionSpawn(0, 0);
         return;
     }
     if (self->step) {
-        OVL_EXPORT(AnimateEntity)(anim_medusa_head, self);
+        AnimateEntity(anim_medusa_head, self);
         if (self->velocityY > 0) {
             self->animCurFrame += 2;
         }
@@ -110,14 +109,14 @@ void EntityMedusaHeadBlue(Entity* self) {
         if (side >= FIX(2.5)) {
             self->ext.medusaHead.accelY = -self->ext.medusaHead.accelY;
         }
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         return;
     }
 
     if (!self->params) {
-        OVL_EXPORT(InitializeEntity)(g_EInitMedusaHeadBlue);
+        InitializeEntity(g_EInitMedusaHeadBlue);
     } else {
-        OVL_EXPORT(InitializeEntity)(g_EInitMedusaHeadYellow);
+        InitializeEntity(g_EInitMedusaHeadYellow);
     }
 
     self->posY.i.hi = player->posY.i.hi - 0;
@@ -134,7 +133,7 @@ void EntityMedusaHeadBlue(Entity* self) {
     self->posX.i.hi = medusaHeadInitParams[side].posX;
     self->velocityX = medusaHeadInitParams[side].velocityX;
     self->facingLeft = medusaHeadInitParams[side].facingLeft;
-    self->velocityY = FIX(2.5) - ((OVL_EXPORT(Random)() & 0xF) * FIX(2.5) >> 3);
+    self->velocityY = FIX(2.5) - ((Random() & 0xF) * FIX(2.5) >> 3);
     if (self->velocityY > 0) {
         self->ext.medusaHead.accelY = FIX(-5.0 / 32);
     } else {

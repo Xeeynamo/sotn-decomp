@@ -1,8 +1,8 @@
 PrologueScroll = 0x09237D10;
-ST0_InitRoomEntities = 0x09248C08;
-ST0_UpdateRoomPosition = 0x09248E38;
-ST0_Update = 0x0924A370;
-ST0_UpdateStageEntities = 0x0924A750;
+InitRoomEntities = 0x09248C08;
+UpdateRoomPosition = 0x09248E38;
+Update = 0x0924A370;
+UpdateStageEntities = 0x0924A750;
 ST0_HitDetection = 0x0924D8F8;
 g_SpriteBanks = 0x092528E8;
 g_TileLayers = 0x09252998;

@@ -702,12 +702,12 @@ mod tests {
         let expected = r#"/* 0x18C */ {"\x27\x55\x41\x52\x44\x49\x41\x4E\xFF", 500, 50, 33, 34, 35, 0x0000, 0x0040, 0xE000, 0x0800, 60, 1500, 321, 255, 2, 1, 6, 24, 0x08403410},"#;
         assert_eq!(out, expected);
 
-let line = r#"const char* OVL_EXPORT(GoldCollectTexts)[] = {
+let line = r#"const char* g_goldCollectTexts[] = {
     _S("$1"),   _S("$25"),  _S("$50"),   _S("$100"),  _S("$250"),
     _S("$400"), _S("$700"), _S("$1000"), _S("$2000"), _S("$5000"),
 };"#;
 
-let expected = r#"const char* OVL_EXPORT(GoldCollectTexts)[] = {
+let expected = r#"const char* g_goldCollectTexts[] = {
     "\x04\x11\xFF",   "\x04\x12\x15\xFF",  "\x04\x15\x10\xFF",   "\x04\x11\x10\x10\xFF",  "\x04\x12\x15\x10\xFF",
     "\x04\x14\x10\x10\xFF", "\x04\x17\x10\x10\xFF", "\x04\x11\x10\x10\x10\xFF", "\x04\x12\x10\x10\x10\xFF", "\x04\x15\x10\x10\x10\xFF",
 };"#;

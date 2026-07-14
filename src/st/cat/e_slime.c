@@ -34,12 +34,12 @@ void EntityLargeSlime(Entity* self) {
     if (self->flags & FLAG_DEAD && self->step < 7) {
         self->hitboxState = 0;
         PlaySfxPositional(SFX_NOISE_SWEEP_DOWN_A);
-        OVL_EXPORT(SetStep)(7);
+        SetStep(7);
     }
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitLargeSlime);
+        InitializeEntity(g_EInitLargeSlime);
         self->ext.slime.deathTimer = 0x20;
         self->ext.slime.unk8C = 0;
         self->nextPart = self + 1;
@@ -100,7 +100,7 @@ void EntityLargeSlime(Entity* self) {
         self->ext.slime.unk84 = prevPrim;
 
         child = self + 1;
-        OVL_EXPORT(CreateEntityFromEntity)(E_UNK_4B, self, child);
+        CreateEntityFromEntity(E_UNK_4B, self, child);
         child->posX.i.hi += 0x40;
 #ifdef VERSION_US
         // BUG: likely unintended and seems removed on PSP side
@@ -119,7 +119,7 @@ void EntityLargeSlime(Entity* self) {
     case 3:
         switch (self->step_s) {
         case 0:
-            if (OVL_EXPORT(UnkCollisionFunc3)(large_slime_sensors) & 1) {
+            if (UnkCollisionFunc3(large_slime_sensors) & 1) {
                 if ((self + 1)->step == 3) {
                     self->ext.slime.unk9C = 0;
                     self->velocityX = 0;
@@ -142,7 +142,7 @@ void EntityLargeSlime(Entity* self) {
         if (!(--self->ext.slime.unk88)) {
             self->ext.slime.unk8C = 0;
             (self + 1)->ext.slime.unk8C = 0;
-            OVL_EXPORT(SetStep)(5);
+            SetStep(5);
         } else {
             if (!(self->ext.slime.unk88 % 4)) {
                 if (self->step_s) {
@@ -170,7 +170,7 @@ void EntityLargeSlime(Entity* self) {
         case 0:
             (self + 1)->step_s = 1;
             self->ext.slime.unk88 = 0x20;
-            self->ext.slime.unk89 = D_us_801827EC[OVL_EXPORT(Random)() & 3];
+            self->ext.slime.unk89 = D_us_801827EC[Random() & 3];
             self->ext.slime.unk8B = self->ext.slime.facingLeft ^ 1;
             (self + 1)->ext.slime.unk8B = self->ext.slime.facingLeft;
             self->velocityX = FIX(-0.5);
@@ -220,7 +220,7 @@ void EntityLargeSlime(Entity* self) {
                 }
 
                 if (!self->ext.slime.unk89) {
-                    OVL_EXPORT(SetStep)(6);
+                    SetStep(6);
                 }
             }
             break;
@@ -249,7 +249,7 @@ void EntityLargeSlime(Entity* self) {
                     self->velocityX = FIX(-0.25);
                 }
                 self->velocityY = FIX(-4.0);
-                OVL_EXPORT(SetStep)(3);
+                SetStep(3);
             }
             break;
         }
@@ -265,7 +265,7 @@ void EntityLargeSlime(Entity* self) {
             self->step_s++;
             break;
         case 1:
-            if (OVL_EXPORT(UnkCollisionFunc3)(large_slime_sensors) & 1) {
+            if (UnkCollisionFunc3(large_slime_sensors) & 1) {
                 self->velocityX = FIX(-0.0625);
                 self->step_s++;
             }
@@ -356,16 +356,14 @@ void func_us_801D3468(s32 primCount) {
         PGREY(prim, 1) = prim->r0;
         PGREY(prim, 2) = prim->r0;
         PGREY(prim, 3) = prim->r0;
-        if (g_CurrentEntity->ext.slime.largeSlimeDying &&
-            !(OVL_EXPORT(Random)() & 0x3F)) {
-            ent = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+        if (g_CurrentEntity->ext.slime.largeSlimeDying && !(Random() & 0x3F)) {
+            ent = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (ent != NULL) {
-                OVL_EXPORT(CreateEntityFromCurrentEntity)
-                (E_INTENSE_EXPLOSION, ent);
+                CreateEntityFromCurrentEntity(E_INTENSE_EXPLOSION, ent);
                 ent->params = 0x10;
                 ent->posX.i.hi = prim->x3;
                 ent->posY.i.hi = prim->y3;
-                ent->posY.i.hi -= OVL_EXPORT(Random)() & 7;
+                ent->posY.i.hi -= Random() & 7;
             }
         }
     }
@@ -382,16 +380,14 @@ void func_us_801D3468(s32 primCount) {
             PGREY(prim, 2) = prim->r0;
             PGREY(prim, 3) = prim->r0;
             if (g_CurrentEntity->ext.slime.largeSlimeDying &&
-                !(OVL_EXPORT(Random)() & 0x3F)) {
-                ent =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+                !(Random() & 0x3F)) {
+                ent = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (ent != NULL) {
-                    OVL_EXPORT(CreateEntityFromCurrentEntity)
-                    (E_INTENSE_EXPLOSION, ent);
+                    CreateEntityFromCurrentEntity(E_INTENSE_EXPLOSION, ent);
                     ent->params = 0x10;
                     ent->posX.i.hi = prim->x3;
                     ent->posY.i.hi = prim->y3;
-                    ent->posY.i.hi -= OVL_EXPORT(Random)() & 7;
+                    ent->posY.i.hi -= Random() & 7;
                 }
             }
         }
@@ -578,18 +574,18 @@ void func_us_801D3D08(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitLargeSlime);
+        InitializeEntity(g_EInitLargeSlime);
         self->hitPoints = 0x7FFF;
         self->parent = self - 1;
         self->nextPart = self - 1;
         // fallthrough
     case 1:
     case 2:
-        if (OVL_EXPORT(UnkCollisionFunc3)(large_slime_sensors) & 1) {
+        if (UnkCollisionFunc3(large_slime_sensors) & 1) {
             self->velocityX = 0;
             self->velocityY = 0;
             self->ext.slime.unk8B = 0;
-            OVL_EXPORT(SetStep)(3);
+            SetStep(3);
         } else {
             self->velocityY -= FIX(0.125);
         }
@@ -619,7 +615,7 @@ void func_us_801D3D08(Entity* self) {
             self->step_s++;
             break;
         case 1:
-            if (OVL_EXPORT(UnkCollisionFunc3)(large_slime_sensors) & 1) {
+            if (UnkCollisionFunc3(large_slime_sensors) & 1) {
                 self->velocityX = FIX(0.0625);
                 self->step_s++;
             }
@@ -670,12 +666,12 @@ void EntitySlime(Entity* self) {
     if (self->flags & FLAG_DEAD && self->step < 6) {
         PlaySfxPositional(SFX_NOISE_SWEEP_DOWN_B);
         self->hitboxState = 0;
-        OVL_EXPORT(SetStep)(6);
+        SetStep(6);
     }
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitSlime);
+        InitializeEntity(g_EInitSlime);
         self->ext.slime.deathTimer = 0x10;
         self->ext.slime.unk8C = 0;
         // fallthrough
@@ -720,7 +716,7 @@ void EntitySlime(Entity* self) {
         }
 
         child = self + 1;
-        OVL_EXPORT(CreateEntityFromEntity)(E_UNK_4D, self, child);
+        CreateEntityFromEntity(E_UNK_4D, self, child);
         child->posX.i.hi += 0x18;
 #ifdef VERSION_US
         // BUG: likely unintended and seems removed on PSP side
@@ -735,7 +731,7 @@ void EntitySlime(Entity* self) {
         self->ext.slime.facingLeft = self->params & 1;
         self->step++;
     case 3:
-        if (OVL_EXPORT(UnkCollisionFunc3)(slime_sensors) & 1) {
+        if (UnkCollisionFunc3(slime_sensors) & 1) {
             if ((self + 1)->step == 3) {
                 self->velocityX = 0;
                 self->velocityY = 0;
@@ -753,7 +749,7 @@ void EntitySlime(Entity* self) {
         if (!--self->ext.slime.unk88) {
             self->ext.slime.unk8C = 0;
             (self + 1)->ext.slime.unk8C = 0;
-            OVL_EXPORT(SetStep)(5);
+            SetStep(5);
         } else if (!(self->ext.slime.unk88 % 4)) {
             if (self->step_s) {
                 self->ext.slime.unk8C = -4;
@@ -778,7 +774,7 @@ void EntitySlime(Entity* self) {
         case 0:
             (self + 1)->step_s = 1;
             self->ext.slime.unk88 = 0x10;
-            self->ext.slime.unk89 = D_us_80182808[OVL_EXPORT(Random)() & 3];
+            self->ext.slime.unk89 = D_us_80182808[Random() & 3];
             self->ext.slime.unk8B = self->ext.slime.facingLeft ^ 1;
             (self + 1)->ext.slime.unk8B = self->ext.slime.facingLeft;
             self->velocityX = FIX(-0.5);
@@ -891,16 +887,16 @@ void func_us_801D4744(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitSlime);
+        InitializeEntity(g_EInitSlime);
         self->hitboxState = 0;
         // fallthrough
     case 1:
     case 2:
-        if (OVL_EXPORT(UnkCollisionFunc3)(slime_sensors) & 1) {
+        if (UnkCollisionFunc3(slime_sensors) & 1) {
             self->velocityX = 0;
             self->velocityY = 0;
             self->ext.slime.unk8B = 0;
-            OVL_EXPORT(SetStep)(3);
+            SetStep(3);
         } else {
             self->velocityY -= FIX(0.125);
         }

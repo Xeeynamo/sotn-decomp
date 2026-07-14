@@ -2,20 +2,20 @@
 #include "cen.h"
 
 void OVL_EXPORT(EntityBreakable)(Entity*);
-void OVL_EXPORT(EntityExplosion)(Entity*);
-void OVL_EXPORT(EntityPrizeDrop)(Entity*);
-void OVL_EXPORT(EntityDamageDisplay)(Entity*);
+void EntityExplosion(Entity*);
+void EntityPrizeDrop(Entity*);
+void EntityDamageDisplay(Entity*);
 void OVL_EXPORT(EntityRedDoor)(Entity*);
 void EntityIntenseExplosion(Entity*);
 void EntitySoulStealOrb(Entity*);
 void EntityRoomForeground(Entity*);
 void EntityStageNamePopup(Entity*);
-void OVL_EXPORT(EntityEquipItemDrop)(Entity*);
-void OVL_EXPORT(EntityRelicOrb)(Entity*);
-void OVL_EXPORT(EntityHeartDrop)(Entity*);
+void EntityEquipItemDrop(Entity*);
+void EntityRelicOrb(Entity*);
+void EntityHeartDrop(Entity*);
 void EntityEnemyBlood(Entity*);
-void OVL_EXPORT(EntityMessageBox)(Entity*);
-void OVL_EXPORT(EntityDummy)(Entity*);
+void EntityMessageBox(Entity*);
+void EntityDummy(Entity*);
 void OVL_EXPORT(EntityBackgroundBlock)(Entity*);
 void OVL_EXPORT(EntityLockCamera)(Entity*);
 void EntityUnkId13(Entity*);
@@ -31,21 +31,21 @@ void EntityMovingElevator(Entity*);
 
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     OVL_EXPORT(EntityBreakable),
-    OVL_EXPORT(EntityExplosion),
-    OVL_EXPORT(EntityPrizeDrop),
-    OVL_EXPORT(EntityDamageDisplay),
+    EntityExplosion,
+    EntityPrizeDrop,
+    EntityDamageDisplay,
     OVL_EXPORT(EntityRedDoor),
     EntityIntenseExplosion,
     EntitySoulStealOrb,
     EntityRoomForeground,
     EntityStageNamePopup,
-    OVL_EXPORT(EntityEquipItemDrop),
-    OVL_EXPORT(EntityRelicOrb),
-    OVL_EXPORT(EntityHeartDrop),
+    EntityEquipItemDrop,
+    EntityRelicOrb,
+    EntityHeartDrop,
     EntityEnemyBlood,
-    OVL_EXPORT(EntityMessageBox),
-    OVL_EXPORT(EntityDummy),
-    OVL_EXPORT(EntityDummy),
+    EntityMessageBox,
+    EntityDummy,
+    EntityDummy,
     OVL_EXPORT(EntityBackgroundBlock),
     OVL_EXPORT(EntityLockCamera),
     EntityUnkId13,

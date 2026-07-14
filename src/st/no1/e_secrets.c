@@ -48,7 +48,7 @@ void func_us_801BE880(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(D_us_801809C8);
+        InitializeEntity(D_us_801809C8);
         self->zPriority = 0x70;
         self->hitPoints = 0x7FFF;
         self->hitboxState = 0;
@@ -57,11 +57,11 @@ void func_us_801BE880(Entity* self) {
             self->step = 5;
         } else {
             tempEntity = self + 2;
-            OVL_EXPORT(CreateEntityFromEntity)(E_ID(ID_25), self, tempEntity);
+            CreateEntityFromEntity(E_ID(ID_25), self, tempEntity);
             tempEntity->posY.i.hi -= 0x18;
             tempEntity->params = 2;
             tempEntity = self + 1;
-            OVL_EXPORT(CreateEntityFromEntity)(E_ID(ID_25), self, tempEntity);
+            CreateEntityFromEntity(E_ID(ID_25), self, tempEntity);
             tempEntity->posY.i.hi -= 0x30;
             tempEntity->params = 1;
         }
@@ -71,11 +71,9 @@ void func_us_801BE880(Entity* self) {
         if (self->ext.segmentedBreakableWall.damageTaken > 8) {
             self->ext.segmentedBreakableWall.damageTaken = 0;
             for (i = 0; i < 5; i++) {
-                tempEntity =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+                tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    OVL_EXPORT(CreateEntityFromEntity)
-                    (E_ID(ID_26), self, tempEntity);
+                    CreateEntityFromEntity(E_ID(ID_26), self, tempEntity);
                     tempEntity->posX.i.hi += 0x10;
                     tempEntity->posY.i.hi -= 0x30;
                     tempEntity->params = i;
@@ -123,11 +121,9 @@ void func_us_801BE880(Entity* self) {
     case 4:
         self->animCurFrame = 0x50;
         g_CastleFlags[NO1_SECRET_WALL_BROKEN] = 1;
-        tempEntity =
-            OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
+        tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
         if (tempEntity != NULL) {
-            OVL_EXPORT(CreateEntityFromEntity)
-            (E_EQUIP_ITEM_DROP, self, tempEntity);
+            CreateEntityFromEntity(E_EQUIP_ITEM_DROP, self, tempEntity);
             tempEntity->params = 0x43;
             tempEntity->posY.i.hi -= 0x30;
         }
@@ -154,7 +150,7 @@ void func_us_801BEB54(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(D_us_801809D4);
+        InitializeEntity(D_us_801809D4);
         self->hitPoints = 0x18;
         self->hitboxWidth = 0x10;
         self->hitboxHeight = 0xC;
@@ -179,33 +175,27 @@ void func_us_801BEB54(Entity* self) {
     case 2:
         switch (self->step_s) {
         case 0:
-            tempEntity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)
-                (E_EXPLOSION, self, tempEntity);
+                CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
                 tempEntity->posY.i.hi -= 8;
                 tempEntity->params = 0x13;
             }
             for (i = 0; i < 3; i++) {
-                tempEntity =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+                tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    OVL_EXPORT(CreateEntityFromEntity)
-                    (E_INTENSE_EXPLOSION, self, tempEntity);
+                    CreateEntityFromEntity(
+                        E_INTENSE_EXPLOSION, self, tempEntity);
                     tempEntity->posX.i.hi += (i * 0x10) - 0x10;
                     tempEntity->params = 0x10;
                 }
             }
             for (i = 0; i < 5; i++) {
-                tempEntity =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+                tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    OVL_EXPORT(CreateEntityFromEntity)
-                    (E_ID(ID_27), self, tempEntity);
-                    tempEntity->posX.i.hi +=
-                        (i * 8) - 0x10 + (OVL_EXPORT(Random)() & 3);
-                    tempEntity->posY.i.hi -= (OVL_EXPORT(Random)() & 7) + 0x14;
+                    CreateEntityFromEntity(E_ID(ID_27), self, tempEntity);
+                    tempEntity->posX.i.hi += (i * 8) - 0x10 + (Random() & 3);
+                    tempEntity->posY.i.hi -= (Random() & 7) + 0x14;
                     tempEntity->params = i;
                 }
             }
@@ -223,7 +213,7 @@ void func_us_801BEE00(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitParticle));
+        InitializeEntity(g_EInitParticle);
         self->animSet = 8;
         self->animCurFrame = 1;
         self->palette = PAL_FLAG(4);
@@ -269,7 +259,7 @@ void func_us_801BEE00(Entity* self) {
         prim->next->x1 = self->posX.i.hi;
         prim->next->y0 = self->posY.i.hi;
         UnkPrimHelper(prim);
-        if (!OVL_EXPORT(AnimateEntity)(D_us_801816E8, self)) {
+        if (!AnimateEntity(D_us_801816E8, self)) {
             self->animCurFrame = 0;
         }
         if (UnkCollisionFunc5(D_us_80181668) != 0) {
@@ -291,7 +281,7 @@ void func_us_801BF074(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitParticle));
+        InitializeEntity(g_EInitParticle);
         self->animSet = 8;
         self->animCurFrame = 1;
         self->palette = PAL_FLAG(4);
@@ -338,10 +328,10 @@ void func_us_801BF074(Entity* self) {
         prim->next->x1 = self->posX.i.hi;
         prim->next->y0 = self->posY.i.hi;
         UnkPrimHelper(prim);
-        if (!OVL_EXPORT(AnimateEntity)(D_us_801816E8, self)) {
+        if (!AnimateEntity(D_us_801816E8, self)) {
             self->animCurFrame = 0;
         }
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         self->velocityY += FIX(0.125);
         if (self->velocityY < 0) {
             break;
@@ -356,11 +346,11 @@ void func_us_801BF074(Entity* self) {
             self->velocityY = -self->velocityY / 2;
             if (self->velocityY > FIX(-0.25)) {
                 if (LOH(prim->next->r2) > 6) {
-                    tempEntity = OVL_EXPORT(AllocEntity)(
-                        &g_Entities[224], &g_Entities[256]);
+                    tempEntity =
+                        AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (tempEntity != NULL) {
-                        OVL_EXPORT(CreateEntityFromEntity)
-                        (E_INTENSE_EXPLOSION, self, tempEntity);
+                        CreateEntityFromEntity(
+                            E_INTENSE_EXPLOSION, self, tempEntity);
                         tempEntity->params = 0x10;
                     }
                 }
@@ -387,12 +377,11 @@ void func_us_801BF3F4(Entity* self) {
                            PLAYER_STATUS_BAT_FORM)) {
         collision = 0;
     } else {
-        collision =
-            OVL_EXPORT(GetPlayerCollisionWith)(self, 16, 8 - self->params, 4);
+        collision = GetPlayerCollisionWith(self, 16, 8 - self->params, 4);
     }
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(D_us_80180A40);
+        InitializeEntity(D_us_80180A40);
         self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->zPriority = 0x6A;
         if (self->params) {
@@ -419,8 +408,7 @@ void func_us_801BF3F4(Entity* self) {
         }
         if (D_us_80181664 != 0) {
             self->posY.i.hi = 0xEE - g_Tilemap.scrollY.i.hi;
-            collision = OVL_EXPORT(GetPlayerCollisionWith)(
-                self, 16, 8 - self->params, 4);
+            collision = GetPlayerCollisionWith(self, 16, 8 - self->params, 4);
             if (collision) {
                 g_Player.padSim = 0;
                 g_Player.demo_timer = 2;
@@ -435,7 +423,7 @@ void func_us_801BF3F4(Entity* self) {
 
     case 1:
         FntPrint("timer %x\n", self->ext.et_801BF3F4.unk88);
-        if (collision && (OVL_EXPORT(GetDistanceToPlayerX)() < 6)) {
+        if (collision && (GetDistanceToPlayerX() < 6)) {
             if (!--self->ext.et_801BF3F4.unk88) {
                 g_Player.padSim = 0;
                 g_Player.demo_timer = 2;
@@ -492,7 +480,7 @@ void func_us_801BF3F4(Entity* self) {
         break;
 
     case 5:
-        if (collision && OVL_EXPORT(GetDistanceToPlayerX)() < 6) {
+        if (collision && GetDistanceToPlayerX() < 6) {
             g_api.func_8010DFF0(0, 1);
             g_Player.demo_timer = 2;
             g_Player.padSim = 0;

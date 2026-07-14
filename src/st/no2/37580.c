@@ -22,7 +22,7 @@ void func_us_801B7580(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(D_us_801808EC);
+        InitializeEntity(D_us_801808EC);
         self->zPriority = 0x69;
         if (self->params) {
             self->posX.i.hi = 0x218 - g_Tilemap.scrollX.i.hi;
@@ -51,7 +51,7 @@ void func_us_801B7580(Entity* self) {
         if (posX < 0x1E8) {
             if (self->params) {
                 player = self + 1;
-                OVL_EXPORT(CreateEntityFromEntity)(E_ID(ID_32), self, player);
+                CreateEntityFromEntity(E_ID(ID_32), self, player);
                 player->posX.i.hi = -0x18 - g_Tilemap.scrollX.i.hi;
                 player->params = 0;
             }
@@ -68,8 +68,8 @@ void func_us_801B7580(Entity* self) {
             }
             self->step_s++;
         }
-        OVL_EXPORT(GetPlayerCollisionWith)(self, 24, 32, 5);
-        OVL_EXPORT(MoveEntity)();
+        GetPlayerCollisionWith(self, 24, 32, 5);
+        MoveEntity();
         posX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
         if (self->params) {
             if (posX < 0x1E8) {

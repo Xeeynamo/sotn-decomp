@@ -24,7 +24,7 @@ typedef enum {
     BOOMERANG_DESTROY
 } SkelerangBoomerangSteps;
 
-extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit g_EInitInteractable;
 extern EInit g_EInitSkelerang;
 extern EInit g_EInitSkelerangBoomerang;
 
@@ -56,9 +56,9 @@ void EntitySkelerang(Entity* self) {
     s32 i;
     u8 index;
 
-    if ((self->step % 2) != 0 && OVL_EXPORT(GetDistanceToPlayerY)() < 32 &&
-        OVL_EXPORT(GetDistanceToPlayerX)() < 80) {
-        OVL_EXPORT(SetStep)(SKELERANG_COWER);
+    if ((self->step % 2) != 0 && GetDistanceToPlayerY() < 32 &&
+        GetDistanceToPlayerX() < 80) {
+        SetStep(SKELERANG_COWER);
     }
 
     if ((self->flags & FLAG_DEAD) && self->step < 10) {
@@ -68,24 +68,24 @@ void EntitySkelerang(Entity* self) {
         (self + 2)->step = BOOMERANG_DESTROY;
         (self + 3)->step = BOOMERANG_DESTROY;
         if (self->animCurFrame > 39) {
-            OVL_EXPORT(SetStep)(SKELERANG_DEATH_COWER);
+            SetStep(SKELERANG_DEATH_COWER);
         } else {
-            OVL_EXPORT(SetStep)(SKELERANG_DEATH);
+            SetStep(SKELERANG_DEATH);
         }
     }
 
     switch (self->step) {
     case SKELERANG_INIT:
-        OVL_EXPORT(InitializeEntity)(g_EInitSkelerang);
-        OVL_EXPORT(CreateEntityFromEntity)(E_SKELERANG_UNKNOWN, self, self + 1);
+        InitializeEntity(g_EInitSkelerang);
+        CreateEntityFromEntity(E_SKELERANG_UNKNOWN, self, self + 1);
 
         entity = self + 2;
-        OVL_EXPORT(CreateEntityFromEntity)(E_SKELERANG_BOOMERANG, self, entity);
+        CreateEntityFromEntity(E_SKELERANG_BOOMERANG, self, entity);
         entity->params = 0;
         entity->facingLeft = self->params;
 
         entity = self + 3;
-        OVL_EXPORT(CreateEntityFromEntity)(E_SKELERANG_BOOMERANG, self, entity);
+        CreateEntityFromEntity(E_SKELERANG_BOOMERANG, self, entity);
         entity->params = 1;
         entity->facingLeft = self->params;
 
@@ -93,25 +93,24 @@ void EntitySkelerang(Entity* self) {
         break;
 
     case SKELERANG_GROUND_INIT:
-        if (OVL_EXPORT(UnkCollisionFunc3)(sensors_ground) & 1) {
-            OVL_EXPORT(SetStep)(SKELERANG_IDLE);
+        if (UnkCollisionFunc3(sensors_ground) & 1) {
+            SetStep(SKELERANG_IDLE);
         }
         break;
 
     case SKELERANG_IDLE:
         self->animCurFrame = 1;
         // When player gets close enough shift into wake up animation
-        if (!(self->posY.i.hi & 256) &&
-            OVL_EXPORT(GetDistanceToPlayerX)() < 128) {
-            if (((OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1) == self->facingLeft) {
-                OVL_EXPORT(SetStep)(SKELERANG_WAKE_ANIM);
+        if (!(self->posY.i.hi & 256) && GetDistanceToPlayerX() < 128) {
+            if (((GetSideToPlayer() & 1) ^ 1) == self->facingLeft) {
+                SetStep(SKELERANG_WAKE_ANIM);
             }
         }
         break;
 
     case SKELERANG_WAKE_ANIM:
-        if (!OVL_EXPORT(AnimateEntity)(anim_wake, self)) {
-            OVL_EXPORT(SetStep)(SKELERANG_ATTACK_INIT);
+        if (!AnimateEntity(anim_wake, self)) {
+            SetStep(SKELERANG_ATTACK_INIT);
         }
         break;
 
@@ -120,26 +119,25 @@ void EntitySkelerang(Entity* self) {
             self->ext.skelerang.unk84 = 0;
             self->step_s++;
         }
-        if (!OVL_EXPORT(AnimateEntity)(anim_bounce, self)) {
+        if (!AnimateEntity(anim_bounce, self)) {
             self->ext.skelerang.unk84++;
         }
         if (self->ext.skelerang.unk84 == 3) {
             self->ext.skelerang.unk84 = 0;
             // If player is still in range after throwing 3 boomerangs, keep
             // attacking, else return to idle
-            if (OVL_EXPORT(GetDistanceToPlayerX)() < 144 &&
-                OVL_EXPORT(GetDistanceToPlayerY)() < 144 &&
-                ((OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1) == self->facingLeft) {
-                OVL_EXPORT(SetStep)(SKELERANG_ATTACK_INIT);
+            if (GetDistanceToPlayerX() < 144 && GetDistanceToPlayerY() < 144 &&
+                ((GetSideToPlayer() & 1) ^ 1) == self->facingLeft) {
+                SetStep(SKELERANG_ATTACK_INIT);
             } else {
-                OVL_EXPORT(SetStep)(SKELERANG_IDLE);
+                SetStep(SKELERANG_IDLE);
             }
         }
         break;
 
     case SKELERANG_ATTACK_INIT:
-        if (!OVL_EXPORT(AnimateEntity)(anim_spin_boomerang, self)) {
-            OVL_EXPORT(SetStep)(SKELERANG_BOOMERANG_CHECK);
+        if (!AnimateEntity(anim_spin_boomerang, self)) {
+            SetStep(SKELERANG_BOOMERANG_CHECK);
         }
         if (self->animCurFrame == 30) {
             // Spawn thrown boomerangs
@@ -171,18 +169,18 @@ void EntitySkelerang(Entity* self) {
             entityTwo->step == BOOMERANG_IN_HAND) {
             entity->step = BOOMERANG_PRETHROW;
             entityTwo->step = BOOMERANG_PRETHROW;
-            OVL_EXPORT(SetStep)(SKELERANG_CATCH);
+            SetStep(SKELERANG_CATCH);
         }
         break;
 
     case SKELERANG_CATCH:
-        if (!OVL_EXPORT(AnimateEntity)(anim_catch, self)) {
+        if (!AnimateEntity(anim_catch, self)) {
             self->ext.skelerang.unk84++;
             // Throw boomerangs 3 times, then return to attack init
             if (self->ext.skelerang.unk84 > 2) {
-                OVL_EXPORT(SetStep)(SKELERANG_POST_ATTACK);
+                SetStep(SKELERANG_POST_ATTACK);
             } else {
-                OVL_EXPORT(SetStep)(SKELERANG_ATTACK_INIT);
+                SetStep(SKELERANG_ATTACK_INIT);
             }
         }
         break;
@@ -190,7 +188,7 @@ void EntitySkelerang(Entity* self) {
     case SKELERANG_COWER:
         switch (self->step_s) {
         case 0:
-            if (!OVL_EXPORT(AnimateEntity)(anim_cower_crouch, self)) {
+            if (!AnimateEntity(anim_cower_crouch, self)) {
                 self->pose = 0;
                 self->poseTimer = 0;
                 self->step_s++;
@@ -199,9 +197,8 @@ void EntitySkelerang(Entity* self) {
 
         case 1:
             // Play cower animation until player gets far enough away
-            OVL_EXPORT(AnimateEntity)(anim_cower, self);
-            if (OVL_EXPORT(GetDistanceToPlayerX)() > 80 ||
-                OVL_EXPORT(GetDistanceToPlayerY)() > 48) {
+            AnimateEntity(anim_cower, self);
+            if (GetDistanceToPlayerX() > 80 || GetDistanceToPlayerY() > 48) {
                 self->pose = 0;
                 self->poseTimer = 0;
                 self->step_s++;
@@ -211,17 +208,17 @@ void EntitySkelerang(Entity* self) {
         case 2:
             // Once player is far enough away move out of cower and back into
             // potential attack state
-            if (!OVL_EXPORT(AnimateEntity)(anim_cower_stand, self)) {
-                OVL_EXPORT(SetStep)(SKELERANG_POST_ATTACK);
+            if (!AnimateEntity(anim_cower_stand, self)) {
+                SetStep(SKELERANG_POST_ATTACK);
             }
             break;
         }
         break;
 
     case SKELERANG_DEATH_COWER:
-        entity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
+            CreateEntityFromEntity(E_EXPLOSION, self, entity);
             entity->params = 2;
             entity->posY.i.hi += 24;
         }
@@ -230,8 +227,7 @@ void EntitySkelerang(Entity* self) {
 
     case SKELERANG_DEATH:
         for (i = 0; i < 8; i++) {
-            entity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
                 MakeEntityFromId(E_SKELERANG, self, entity);
                 entity->flags = FLAG_DESTROY_IF_OUT_OF_CAMERA |
@@ -240,25 +236,24 @@ void EntitySkelerang(Entity* self) {
                 entity->animCurFrame = i + 44;
                 entity->params = i;
                 entity->facingLeft = self->facingLeft;
-                if ((OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1) {
+                if ((GetSideToPlayer() & 1) ^ 1) {
                     // Sus store to Entity 0xA
-                    F(entity->velocityX).i.hi = -(OVL_EXPORT(Random)() & 3);
+                    F(entity->velocityX).i.hi = -(Random() & 3);
                 } else {
                     // Sus store to Entity 0xA
                     // This + 1 - 1 is an oddity that is required to align PSP
-                    F(entity->velocityX).i.hi =
-                        (OVL_EXPORT(Random)() & 3) + 1 - 1;
+                    F(entity->velocityX).i.hi = (Random() & 3) + 1 - 1;
                 }
                 // Sus store to Entity 0xE
-                F(entity->velocityY).i.hi = -2 - (OVL_EXPORT(Random)() & 3);
+                F(entity->velocityY).i.hi = -2 - (Random() & 3);
                 entity->ext.skelerang.unk84 = 16;
                 entity->step = SKELERANG_DEATH_FLY;
             }
         }
 
-        entity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
+            CreateEntityFromEntity(E_EXPLOSION, self, entity);
             entity->params = 2;
         }
         DestroyEntity(self);
@@ -266,13 +261,12 @@ void EntitySkelerang(Entity* self) {
 
     case SKELERANG_DEATH_FLY:
         // When dying body goes flying back in flames
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         self->velocityY += FIX(0.1875);
         if (!--self->ext.skelerang.unk84) {
-            entity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
+                CreateEntityFromEntity(E_EXPLOSION, self, entity);
                 index = self->params;
                 if (self->facingLeft) {
                     entity->posX.i.hi -= positions[index].x;
@@ -310,7 +304,7 @@ void EntitySkelerangBoomerang(Entity* self) {
 
     switch (self->step) {
     case BOOMERANG_INIT:
-        OVL_EXPORT(InitializeEntity)(g_EInitSkelerangBoomerang);
+        InitializeEntity(g_EInitSkelerangBoomerang);
         self->drawFlags |= ENTITY_ROTATE;
         self->animCurFrame = 0;
         self->hitboxState = 0;
@@ -333,7 +327,7 @@ void EntitySkelerangBoomerang(Entity* self) {
 
     case BOOMERANG_FLY:
         self->hitboxState = 1;
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         self->rotate += ROT(22.5);
         if (!self->ext.skelerang.unk84) {
             self->step_s = 1;
@@ -341,11 +335,11 @@ void EntitySkelerangBoomerang(Entity* self) {
             self->ext.skelerang.unk84--;
         }
         entity = (self - 1) - self->params - self->step_s;
-        angle = OVL_EXPORT(GetAngleBetweenEntitiesShifted)(self, entity);
+        angle = GetAngleBetweenEntitiesShifted(self, entity);
         step = self->step_s + 3;
-        self->ext.skelerang.angle = OVL_EXPORT(AdjustValueWithinThreshold)(
-            step, self->ext.skelerang.angle, angle);
-        OVL_EXPORT(SetEntityVelocityFromAngle)(self->ext.skelerang.angle, 48);
+        self->ext.skelerang.angle =
+            AdjustValueWithinThreshold(step, self->ext.skelerang.angle, angle);
+        SetEntityVelocityFromAngle(self->ext.skelerang.angle, 48);
         posX = entity->posX.i.hi - self->posX.i.hi;
         posY = entity->posY.i.hi - self->posY.i.hi;
         posX = abs(posX);
@@ -365,9 +359,9 @@ void EntitySkelerangBoomerang(Entity* self) {
         break;
 
     case BOOMERANG_DESTROY:
-        entity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
+            CreateEntityFromEntity(E_EXPLOSION, self, entity);
             entity->params = 1;
         }
         DestroyEntity(self);
@@ -378,7 +372,7 @@ void EntitySkelerangBoomerang(Entity* self) {
 void EntitySkelerangUnknown(Entity* self) {
     Entity* parent;
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
     }
     parent = self - 1;
     if (parent->entityId != E_SKELERANG) {

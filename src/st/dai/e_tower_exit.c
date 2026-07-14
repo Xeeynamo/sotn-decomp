@@ -21,7 +21,7 @@ enum ExitLocation {
     TO_SAVE,
 };
 
-extern EInit OVL_EXPORT(EInitCommon);
+extern EInit g_EInitCommon;
 
 // Handles when the screen transition is not at the edge of the screen when
 // leaving dai towers, but does not seem to handle transition into the towers.
@@ -36,7 +36,7 @@ void EntityTowerExit(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         break;
     case 1: // It seems that the specific exit logic will be run 3 times before
     case 2: // the entity goes dormant

@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-extern EInit OVL_EXPORT(EInitCommon);
+extern EInit g_EInitCommon;
 
 extern ObjInit2 OVL_EXPORT(BackgroundBlockInit)[];
 
 void OVL_EXPORT(EntityBackgroundBlock)(Entity* self) {
     ObjInit2* objInit = &OVL_EXPORT(BackgroundBlockInit)[self->params];
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         self->animSet = objInit->animSet;
         self->zPriority = objInit->zPriority;
 #if defined(BG_FACING_LEFT_FIX)
@@ -30,5 +30,5 @@ void OVL_EXPORT(EntityBackgroundBlock)(Entity* self) {
         }
 #endif
     }
-    OVL_EXPORT(AnimateEntity)(objInit->animFrames, self);
+    AnimateEntity(objInit->animFrames, self);
 }

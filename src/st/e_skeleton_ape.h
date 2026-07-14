@@ -36,20 +36,18 @@ void EntitySkeletonApe(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitSkeletonApe);
+        InitializeEntity(g_EInitSkeletonApe);
         if (self->params == 2) {
             self->flags |= FLAG_UNK_2000;
         }
-        self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() ^ 1) & 1;
+        self->facingLeft = (GetSideToPlayer() ^ 1) & 1;
         tempEntity = self + 1;
-        OVL_EXPORT(CreateEntityFromCurrentEntity)
-        (E_SKELETON_APE_PUNCH, tempEntity);
+        CreateEntityFromCurrentEntity(E_SKELETON_APE_PUNCH, tempEntity);
         if (self->params) {
-            tempEntity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
+            tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (tempEntity != NULL) {
-                OVL_EXPORT(CreateEntityFromCurrentEntity)
-                (E_SKELETON_APE_BARREL, tempEntity);
+                CreateEntityFromCurrentEntity(
+                    E_SKELETON_APE_BARREL, tempEntity);
                 tempEntity->ext.skeletonApe.unkEntity = self;
                 tempEntity->zPriority = self->zPriority - 1;
                 self->ext.skeletonApe.unkEntity = tempEntity;
@@ -66,12 +64,12 @@ void EntitySkeletonApe(Entity* self) {
 
     case 1:
         if (self->step_s) {
-            if (!OVL_EXPORT(AnimateEntity)(D_us_801832E8, self)) {
-                OVL_EXPORT(SetStep)(2);
+            if (!AnimateEntity(D_us_801832E8, self)) {
+                SetStep(2);
             }
-        } else if (OVL_EXPORT(UnkCollisionFunc3)(D_us_80183230) & 1) {
+        } else if (UnkCollisionFunc3(D_us_80183230) & 1) {
             if (self->params) {
-                OVL_EXPORT(SetStep)(2);
+                SetStep(2);
             } else {
                 self->step_s++;
                 self->pose = 0;
@@ -81,17 +79,16 @@ void EntitySkeletonApe(Entity* self) {
         break;
 
     case 2:
-        tempVar = OVL_EXPORT(GetDistanceToPlayerX)();
+        tempVar = GetDistanceToPlayerX();
         if (self->params) {
-            OVL_EXPORT(AnimateEntity)(D_us_8018329C, self);
+            AnimateEntity(D_us_8018329C, self);
             tempEntity = self->ext.skeletonApe.unkEntity;
             if (tempEntity == NULL) {
                 self->params = 0;
                 break;
-            } else if (
-                (tempVar < 0x60 && OVL_EXPORT(GetDistanceToPlayerY)() < 0x50) ||
-                self->params == 2) {
-                OVL_EXPORT(SetStep)(6);
+            } else if ((tempVar < 0x60 && GetDistanceToPlayerY() < 0x50) ||
+                       self->params == 2) {
+                SetStep(6);
                 tempEntity->step++;
                 tempEntity->ext.skeletonApe.unk7C = 4;
                 if (self->params == 2) {
@@ -100,15 +97,15 @@ void EntitySkeletonApe(Entity* self) {
                 return;
             }
         } else {
-            OVL_EXPORT(AnimateEntity)(D_us_80183268, self);
-            if ((self->facingLeft ^ OVL_EXPORT(GetSideToPlayer)()) & 1) {
+            AnimateEntity(D_us_80183268, self);
+            if ((self->facingLeft ^ GetSideToPlayer()) & 1) {
                 if (tempVar < 0x22) {
-                    OVL_EXPORT(SetStep)(4);
+                    SetStep(4);
                     break;
                 }
             } else {
                 if (tempVar < 0x1C) {
-                    OVL_EXPORT(SetStep)(5);
+                    SetStep(5);
                     break;
                 }
             }
@@ -118,13 +115,13 @@ void EntitySkeletonApe(Entity* self) {
         } else {
             self->velocityX = FIX(-0.25);
         }
-        if ((OVL_EXPORT(UnkCollisionFunc2)(D_us_80183240) & 0x60) == 0x60) {
+        if ((UnkCollisionFunc2(D_us_80183240) & 0x60) == 0x60) {
             self->posX.val -= self->velocityX;
         }
         break;
 
     case 3:
-        if (!OVL_EXPORT(AnimateEntity)(D_us_801832E8, self)) {
+        if (!AnimateEntity(D_us_801832E8, self)) {
             self->step = 1;
             if (self->facingLeft) {
                 self->velocityX = FIX(0.25);
@@ -136,41 +133,39 @@ void EntitySkeletonApe(Entity* self) {
         break;
 
     case 4:
-        tempVar = OVL_EXPORT(AnimateEntity)(D_us_80183280, self);
+        tempVar = AnimateEntity(D_us_80183280, self);
         if (!tempVar) {
-            OVL_EXPORT(SetStep)(2);
+            SetStep(2);
         } else if ((tempVar & 0x80) && self->pose == 3) {
             PlaySfxPositional(SFX_WEAPON_STAB_A);
         }
         break;
 
     case 5:
-        tempVar = OVL_EXPORT(AnimateEntity)(D_us_80183294, self);
+        tempVar = AnimateEntity(D_us_80183294, self);
         if (!tempVar) {
-            OVL_EXPORT(SetStep)(2);
+            SetStep(2);
         } else if ((tempVar & 0x80) && self->pose == 2) {
             PlaySfxPositional(SFX_BONE_THROW);
         }
         break;
 
     case 6:
-        if (OVL_EXPORT(AnimateEntity)(D_us_801832B4, self) == 0) {
-            OVL_EXPORT(SetStep)(2);
+        if (AnimateEntity(D_us_801832B4, self) == 0) {
+            SetStep(2);
             self->params = 0;
         }
         break;
 
     case 7:
-        tempVar = OVL_EXPORT(AnimateEntity)(D_us_801832C4, self);
+        tempVar = AnimateEntity(D_us_801832C4, self);
         if (!tempVar) {
-            OVL_EXPORT(EntityExplosionSpawn)(2, SFX_FM_THUNDER_EXPLODE);
+            EntityExplosionSpawn(2, SFX_FM_THUNDER_EXPLODE);
         } else if ((tempVar & 0x80) && self->animCurFrame > 28) {
             PlaySfxPositional(SFX_EXPLODE_B);
-            tempEntity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
-                OVL_EXPORT(CreateEntityFromCurrentEntity)
-                (E_EXPLOSION, tempEntity);
+                CreateEntityFromCurrentEntity(E_EXPLOSION, tempEntity);
                 tempEntity->posY.i.hi +=
                     D_us_80183258[self->ext.skeletonApe.unk7C];
                 if (self->facingLeft) {
@@ -192,7 +187,7 @@ void EntitySkeletonApePunch(Entity* self) {
     u16 animCurFrame;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(g_EInitSkeletonApePunch);
+        InitializeEntity(g_EInitSkeletonApePunch);
     }
     parent = self - 1;
     animCurFrame = parent->animCurFrame - 9;
@@ -234,11 +229,11 @@ void EntitySkeletonApeBarrel(Entity* self) {
     FntPrint("step %x\n", self->step);
     entity = self->ext.skeletonApe.unkEntity;
     if ((self->flags & FLAG_DEAD) && (self->step != 4)) {
-        OVL_EXPORT(SetStep)(4);
+        SetStep(4);
     }
     if (self->step < 3) {
         if (entity->step == 7) {
-            OVL_EXPORT(SetStep)(4);
+            SetStep(4);
         } else {
             if (entity->entityId != E_SKELETON_APE) {
                 DestroyEntity(self);
@@ -248,7 +243,7 @@ void EntitySkeletonApeBarrel(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitSkeletonApeBarrel);
+        InitializeEntity(g_EInitSkeletonApeBarrel);
         self->facingLeft = entity->facingLeft;
         SkeletonApeBarrelHelper(self, entity);
         if (self->params) {
@@ -284,10 +279,10 @@ void EntitySkeletonApeBarrel(Entity* self) {
         break;
 
     case 3:
-        OVL_EXPORT(AnimateEntity)(D_us_80183324, self);
+        AnimateEntity(D_us_80183324, self);
         self->rotate -= 64;
         velocityY = self->velocityY;
-        if (OVL_EXPORT(UnkCollisionFunc3)(D_us_8018332C) & 1) {
+        if (UnkCollisionFunc3(D_us_8018332C) & 1) {
             if (velocityY > 0) {
                 velocityY = velocityY / 2;
                 if (velocityY < FIX(1.0 / 2.0)) {
@@ -297,7 +292,7 @@ void EntitySkeletonApeBarrel(Entity* self) {
 
                 self->ext.skeletonApe.unk84++;
                 if (self->ext.skeletonApe.unk84 >= 3) {
-                    OVL_EXPORT(SetStep)(4);
+                    SetStep(4);
                     return;
                 }
             }
@@ -308,11 +303,10 @@ void EntitySkeletonApeBarrel(Entity* self) {
             self->velocityX = FIX(-2);
         }
         if (!(self->ext.skeletonApe.unk7C & 7)) {
-            entity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                OVL_EXPORT(CreateEntityFromCurrentEntity)(E_EXPLOSION, entity);
-                rand = OVL_EXPORT(Random)() & 7;
+                CreateEntityFromCurrentEntity(E_EXPLOSION, entity);
+                rand = Random() & 7;
                 entity->posX.i.hi += D_us_8018333C[rand];
                 rand = (rand - 4) & 7;
                 entity->posY.i.hi += D_us_8018333C[rand];
@@ -329,23 +323,21 @@ void EntitySkeletonApeBarrel(Entity* self) {
             }
             g_api.CheckCollision(x, y, &collider, 0);
             if (collider.effects & EFFECT_UNK_0002) {
-                OVL_EXPORT(SetStep)(4);
+                SetStep(4);
             }
         }
         break;
 
     case 4:
         if (self->step_s) {
-            OVL_EXPORT(EntityExplosionSpawn)(3, SFX_FM_EXPLODE_A);
+            EntityExplosionSpawn(3, SFX_FM_EXPLODE_A);
             return;
         }
         entity->ext.skeletonApe.unkEntity = NULL;
         for (i = 0; i < 4; i++) {
-            entity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                OVL_EXPORT(CreateEntityFromCurrentEntity)
-                (E_THROWN_BARREL, entity);
+                CreateEntityFromCurrentEntity(E_THROWN_BARREL, entity);
                 entity->params = i;
                 entity->facingLeft = self->facingLeft;
                 entity->velocityX = self->velocityX;
@@ -379,7 +371,7 @@ void EntityThrownBarrel(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitSkeletonApeBarrel);
+        InitializeEntity(g_EInitSkeletonApeBarrel);
         self->hitboxState = 0;
         self->flags =
             FLAG_DESTROY_IF_OUT_OF_CAMERA |
@@ -401,7 +393,7 @@ void EntityThrownBarrel(Entity* self) {
         self->velocityX = self->ext.skeletonApeBarrel.unk80;
         velocityY = self->velocityY;
         sensor = D_us_801833BC[self->params];
-        if (OVL_EXPORT(UnkCollisionFunc3)(sensor) & 1) {
+        if (UnkCollisionFunc3(sensor) & 1) {
             if (velocityY > 0) {
                 velocityY /= 2;
                 self->ext.skeletonApeBarrel.unk80 /= 2;
@@ -412,7 +404,7 @@ void EntityThrownBarrel(Entity* self) {
                 self->velocityY = -velocityY;
                 self->velocityX = self->ext.skeletonApeBarrel.unk80;
             } else {
-                OVL_EXPORT(EntityExplosionSpawn)(0, SFX_EXPLODE_B);
+                EntityExplosionSpawn(0, SFX_EXPLODE_B);
             }
         }
 
@@ -425,9 +417,9 @@ void EntityThrownBarrel(Entity* self) {
         }
         g_api.CheckCollision(x, y, &collider, 0);
         if (collider.effects & EFFECT_UNK_0002) {
-            OVL_EXPORT(EntityExplosionSpawn)(0, SFX_EXPLODE_B);
+            EntityExplosionSpawn(0, SFX_EXPLODE_B);
         } else if (!--self->ext.skeletonApeBarrel.unk7C) {
-            OVL_EXPORT(EntityExplosionSpawn)(0, SFX_EXPLODE_B);
+            EntityExplosionSpawn(0, SFX_EXPLODE_B);
         }
         break;
     }

@@ -16,7 +16,7 @@ void func_us_801CC750(Entity* self) {
         return;
     }
 
-    OVL_EXPORT(InitializeEntity)(D_us_80180A88);
+    InitializeEntity(D_us_80180A88);
     primIndex = g_api.AllocPrimitives(PRIM_GT4, 9);
     if (primIndex != -1) {
         self->primIndex = primIndex;
@@ -53,7 +53,7 @@ void func_us_801CC750(Entity* self) {
 
 void func_us_801CC8F8(Entity* self) {
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 3;
         self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 0x54;
@@ -76,7 +76,7 @@ void func_us_801CC9B4(Entity* self) {
     u8 angle;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 5;
         self->zPriority = 1;
@@ -85,15 +85,13 @@ void func_us_801CC9B4(Entity* self) {
         return;
     }
     if ((g_GameTimer & 0xF) == 0) {
-        angle = (OVL_EXPORT(Random)() & 7);
-        self->ext.et_801CC9B4.targetAngle =
-            OVL_EXPORT(GetAnglePointToEntityShifted)(
-                D_us_80181C14[angle], D_us_80181C24[angle]);
+        angle = (Random() & 7);
+        self->ext.et_801CC9B4.targetAngle = GetAnglePointToEntityShifted(
+            D_us_80181C14[angle], D_us_80181C24[angle]);
     }
-    angle = OVL_EXPORT(AdjustValueWithinThreshold)(
-        8, self->ext.et_801CC9B4.currentAngle,
-        self->ext.et_801CC9B4.targetAngle);
-    OVL_EXPORT(SetEntityVelocityFromAngle)(angle, 4);
-    OVL_EXPORT(MoveEntity)();
+    angle = AdjustValueWithinThreshold(8, self->ext.et_801CC9B4.currentAngle,
+                                       self->ext.et_801CC9B4.targetAngle);
+    SetEntityVelocityFromAngle(angle, 4);
+    MoveEntity();
     self->ext.et_801CC9B4.currentAngle = angle;
 }

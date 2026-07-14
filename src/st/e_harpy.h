@@ -34,38 +34,37 @@ void EntityHarpy(Entity* self) {
     s32 velocity;
 
     if ((self->step & 1) && (self->hitFlags & 3)) {
-        OVL_EXPORT(SetStep)(12);
+        SetStep(12);
     }
 
     if (self->flags & FLAG_DEAD && self->step != 14) {
         PlaySfxPositional(SFX_HARPY_DEATH);
-        OVL_EXPORT(SetStep)(14);
+        SetStep(14);
     }
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitHarpy);
+        InitializeEntity(g_EInitHarpy);
         self->zPriority = 0x9C;
         self->ext.harpy.timer = 0x80;
         entity = self + 1;
-        OVL_EXPORT(CreateEntityFromCurrentEntity)(E_HARPY_KICK, entity);
-        OVL_EXPORT(SetStep)(2);
+        CreateEntityFromCurrentEntity(E_HARPY_KICK, entity);
+        SetStep(2);
         /* fallthrough */
     case 2:
-        self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
-        OVL_EXPORT(AnimateEntity)(anim2, self);
+        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        AnimateEntity(anim2, self);
         if (self->pose == 1 && !self->poseTimer) {
             PlaySfxPositional(SFX_HARPY_WING_FLAP);
         }
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         angle = self->ext.harpy.angle += ROT(2.8125);
         angle &= 0xFFF;
 
         self->velocityX = rcos(angle) * 2;
         self->velocityY = rsin(angle) * 8;
-        if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x70 &&
-            OVL_EXPORT(GetDistanceToPlayerY)() < 0x40) {
-            OVL_EXPORT(SetStep)(4);
+        if (GetDistanceToPlayerX() < 0x70 && GetDistanceToPlayerY() < 0x40) {
+            SetStep(4);
         }
         break;
 
@@ -75,17 +74,17 @@ void EntityHarpy(Entity* self) {
             self->ext.harpy.unk80 = 0;
             self->step_s++;
         }
-        self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
-        OVL_EXPORT(AnimateEntity)(anim0, self);
+        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        AnimateEntity(anim0, self);
         if (self->pose == 1 && !self->poseTimer) {
             PlaySfxPositional(SFX_HARPY_WING_FLAP);
         }
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
 
         if (!self->ext.harpy.unk80) {
             self->ext.harpy.unk80 = 64;
             self->ext.harpy.unk8C = 0;
-            self->ext.harpy.unk88 = (OVL_EXPORT(Random)() & 0x3F) * 0x10;
+            self->ext.harpy.unk88 = (Random() & 0x3F) * 0x10;
         } else {
             self->ext.harpy.unk80--;
         }
@@ -116,13 +115,13 @@ void EntityHarpy(Entity* self) {
         }
         self->ext.harpy.unk8C = velocity;
         if (!--self->ext.harpy.timer) {
-            self->ext.harpy.timer = delays[OVL_EXPORT(Random)() & 3];
-            posX = OVL_EXPORT(GetDistanceToPlayerX)();
-            posY = OVL_EXPORT(GetDistanceToPlayerY)();
+            self->ext.harpy.timer = delays[Random() & 3];
+            posX = GetDistanceToPlayerX();
+            posY = GetDistanceToPlayerY();
             if (posX < posY) {
-                OVL_EXPORT(SetStep)(11);
+                SetStep(11);
             } else {
-                OVL_EXPORT(SetStep)(7);
+                SetStep(7);
             }
         }
         break;
@@ -130,7 +129,7 @@ void EntityHarpy(Entity* self) {
     case 4:
         switch (self->step_s) {
         case 0:
-            if (OVL_EXPORT(AnimateEntity)(anim3, self) == 0) {
+            if (AnimateEntity(anim3, self) == 0) {
                 self->animCurFrame = 8;
                 self->drawFlags = ENTITY_ROTATE;
                 self->rotate = ROT(0);
@@ -146,21 +145,19 @@ void EntityHarpy(Entity* self) {
             if (self->rotate > ROT(360)) {
                 self->drawFlags = ENTITY_DEFAULT;
                 self->animCurFrame = 10;
-                OVL_EXPORT(SetSubStep)(2);
+                SetSubStep(2);
             }
             break;
 
         case 2:
-            if (OVL_EXPORT(AnimateEntity)(anim4, self) == 0) {
-                OVL_EXPORT(SetStep)(5);
+            if (AnimateEntity(anim4, self) == 0) {
+                SetStep(5);
             }
             if (!self->poseTimer && self->pose == 3) {
                 PlaySfxPositional(SFX_GUARD_TINK);
-                entity =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
+                entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
-                    OVL_EXPORT(CreateEntityFromEntity)
-                    (E_HARPY_DAGGER, self, entity);
+                    CreateEntityFromEntity(E_HARPY_DAGGER, self, entity);
                     if (self->facingLeft) {
                         entity->posX.i.hi += 0x10;
                     } else {
@@ -191,7 +188,7 @@ void EntityHarpy(Entity* self) {
     case 11:
         switch (self->step_s) {
         case 0:
-            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->ext.harpy.unk84 = 0;
             self->step_s++;
             /* fallthrough */
@@ -201,11 +198,11 @@ void EntityHarpy(Entity* self) {
             } else {
                 self->velocityX = FIX(1.25);
             }
-            OVL_EXPORT(MoveEntity)();
+            MoveEntity();
             if (self->pose == 1 && !self->poseTimer) {
                 PlaySfxPositional(SFX_HARPY_WING_FLAP);
             }
-            if (OVL_EXPORT(AnimateEntity)(anim1, self) == 0) {
+            if (AnimateEntity(anim1, self) == 0) {
                 self->ext.harpy.unk84++;
             }
             if (self->ext.harpy.unk84 > 2) {
@@ -216,24 +213,22 @@ void EntityHarpy(Entity* self) {
         case 2:
             PlaySfxPositional(SFX_FM_EXPLODE_SWISHES);
             for (i = 0; i < 3; i++) {
-                entity =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
+                entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
-                    OVL_EXPORT(CreateEntityFromEntity)
-                    (E_HARPY_FLAME, self, entity);
+                    CreateEntityFromEntity(E_HARPY_FLAME, self, entity);
                     entity->params = i;
                     entity->zPriority = self->zPriority - 1;
                     entity->facingLeft = self->facingLeft;
                 }
             };
-            OVL_EXPORT(SetStep)(5);
+            SetStep(5);
         }
         break;
 
     case 7:
         switch (self->step_s) {
         case 0:
-            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             player = &PLAYER;
             posX = player->posX.i.hi;
             posY = player->posY.i.hi;
@@ -253,7 +248,7 @@ void EntityHarpy(Entity* self) {
             self->step_s++;
             /* fallthrough */
         case 1:
-            OVL_EXPORT(MoveEntity)();
+            MoveEntity();
             posX = self->ext.harpy.unk90 - g_Tilemap.scrollX.i.hi;
             posY = self->ext.harpy.unk92 - g_Tilemap.scrollY.i.hi;
 
@@ -261,12 +256,12 @@ void EntityHarpy(Entity* self) {
             posY -= self->posY.i.hi;
 
             if (abs(posX) < 24 && abs(posY) < 24) {
-                OVL_EXPORT(SetSubStep)(2);
+                SetSubStep(2);
             }
             break;
 
         case 2:
-            OVL_EXPORT(MoveEntity)();
+            MoveEntity();
             self->velocityX -= self->velocityX / 32;
             self->velocityY -= self->velocityY / 32;
 
@@ -274,15 +269,15 @@ void EntityHarpy(Entity* self) {
                 PlaySfxPositional(SFX_AXE_KNIGHT_WEAPON_BREAK);
             }
 
-            if (OVL_EXPORT(AnimateEntity)(anim5, self) == 0) {
-                OVL_EXPORT(SetStep)(5);
+            if (AnimateEntity(anim5, self) == 0) {
+                SetStep(5);
             }
         }
         break;
 
     case 12:
         if (!self->step_s) {
-            if ((OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1) {
+            if ((GetSideToPlayer() & 1) ^ 1) {
                 self->velocityX = FIX(-2);
             } else {
                 self->velocityX = FIX(2);
@@ -291,16 +286,14 @@ void EntityHarpy(Entity* self) {
             self->step_s++;
         }
 
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
 
         self->velocityX -= self->velocityX / 32;
         self->velocityY -= self->velocityY / 32;
         if (self->pose < 4 && (g_Timer & 1)) {
-            entity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)
-                (E_HARPY_FEATHER, self, entity);
+                CreateEntityFromEntity(E_HARPY_FEATHER, self, entity);
                 if (self->facingLeft) {
                     entity->posX.i.hi -= 0x10;
                 } else {
@@ -310,8 +303,8 @@ void EntityHarpy(Entity* self) {
                 entity->zPriority = self->zPriority + 1;
             }
         }
-        if (OVL_EXPORT(AnimateEntity)(anim6, self) == 0) {
-            OVL_EXPORT(SetStep)(5);
+        if (AnimateEntity(anim6, self) == 0) {
+            SetStep(5);
         }
         break;
 
@@ -327,36 +320,32 @@ void EntityHarpy(Entity* self) {
             self->step_s++;
             /* fallthrough */
         case 1:
-            if (OVL_EXPORT(AnimateEntity)(anim7, self) == 0) {
+            if (AnimateEntity(anim7, self) == 0) {
                 self->flags |= FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
                 self->step_s++;
             }
             self->rotate += ROT(1.40625);
             if (g_Timer & 1) {
-                entity =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+                entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
-                    OVL_EXPORT(CreateEntityFromEntity)
-                    (E_HARPY_FEATHER, self, entity);
+                    CreateEntityFromEntity(E_HARPY_FEATHER, self, entity);
                     entity->zPriority = self->zPriority + 1;
                 }
             }
             break;
 
         case 2:
-            OVL_EXPORT(MoveEntity)();
+            MoveEntity();
             self->velocityY += FIX(0.0625);
             self->rotate += ROT(2.8125);
             if (!(g_Timer & 3)) {
-                entity =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+                entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
-                    OVL_EXPORT(CreateEntityFromEntity)
-                    (E_EXPLOSION, self, entity);
+                    CreateEntityFromEntity(E_EXPLOSION, self, entity);
                     entity->params = EXPLOSION_FIREBALL;
                     entity->zPriority = self->zPriority + 1;
-                    entity->posX.i.hi += (OVL_EXPORT(Random)() & 0x1F) - 0x10;
-                    entity->posY.i.hi += (OVL_EXPORT(Random)() & 0x1F) - 0x10;
+                    entity->posX.i.hi += (Random() & 0x1F) - 0x10;
+                    entity->posY.i.hi += (Random() & 0x1F) - 0x10;
                 }
             }
         }
@@ -372,11 +361,11 @@ void EntityHarpyDagger(Entity* self) {
     s16 angle;
 
     if (self->flags & FLAG_DEAD && self->step != 2) {
-        OVL_EXPORT(SetStep)(2);
+        SetStep(2);
     }
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitHarpyDagger);
+        InitializeEntity(g_EInitHarpyDagger);
         self->animCurFrame = 18;
         self->drawFlags = ENTITY_ROTATE;
         angle = self->rotate;
@@ -390,7 +379,7 @@ void EntityHarpyDagger(Entity* self) {
         self->velocityY = FLT_TO_I(rsin(angle) * FLT(48));
         /* fallthrough */
     case 1:
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         self->rotate += ROT(11.25);
         break;
 
@@ -403,7 +392,7 @@ void EntityHarpyDagger(Entity* self) {
             self->step_s++;
             /* fallthrough */
         case 1:
-            OVL_EXPORT(MoveEntity)();
+            MoveEntity();
             self->velocityY += FIX(3.0 / 16);
             self->rotate -= ROT(16.875);
         }
@@ -416,10 +405,9 @@ void EntityHarpyFlame(Entity* self) {
     s16 angle;
 
     if (self->flags & FLAG_DEAD) {
-        tempEntity =
-            OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+        tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (tempEntity != NULL) {
-            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, tempEntity);
+            CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
             tempEntity->params = 0;
         }
         DestroyEntity(self);
@@ -427,7 +415,7 @@ void EntityHarpyFlame(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitHarpyFlame);
+        InitializeEntity(g_EInitHarpyFlame);
         self->drawFlags = ENTITY_ROTATE;
         self->drawFlags |= ENTITY_SCALEX | ENTITY_SCALEY;
         self->scaleX = self->scaleY = 0x200;
@@ -453,12 +441,11 @@ void EntityHarpyFlame(Entity* self) {
         angle = self->rotate - ROT(180);
         self->velocityX = FLT_TO_I(rcos(angle) * FLT(56));
         self->velocityY = FLT_TO_I(rsin(angle) * FLT(56));
-        OVL_EXPORT(MoveEntity)();
-        OVL_EXPORT(AnimateEntity)(anim8, self);
-        tempEntity =
-            OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+        MoveEntity();
+        AnimateEntity(anim8, self);
+        tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (tempEntity != NULL) {
-            OVL_EXPORT(CreateEntityFromEntity)(E_HARPY_FLAME, self, tempEntity);
+            CreateEntityFromEntity(E_HARPY_FLAME, self, tempEntity);
             tempEntity->params = self->animCurFrame << 8;
             tempEntity->rotate = self->rotate;
             tempEntity->facingLeft = self->facingLeft;
@@ -480,7 +467,7 @@ void EntityHarpyKick(Entity* self) {
     Entity* harpy;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(g_EInitHarpyKick);
+        InitializeEntity(g_EInitHarpyKick);
     }
     harpy = self - 1;
     self->facingLeft = harpy->facingLeft;
@@ -506,15 +493,15 @@ void EntityHarpyFeather(Entity* self) {
     s16 angle;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(g_EInitHarpyFeather);
-        self->facingLeft = OVL_EXPORT(Random)() & 1;
+        InitializeEntity(g_EInitHarpyFeather);
+        self->facingLeft = Random() & 1;
         self->drawFlags = ENTITY_ROTATE;
-        speed = (OVL_EXPORT(Random)() & 0x1F) + 0x10;
-        angle = (OVL_EXPORT(Random)() * 6) + ROT(202.5);
+        speed = (Random() & 0x1F) + 0x10;
+        angle = (Random() * 6) + ROT(202.5);
         self->velocityX = speed * rcos(angle);
         self->velocityY = speed * rsin(angle);
     }
-    OVL_EXPORT(MoveEntity)();
+    MoveEntity();
     self->rotate += 0x20;
     self->velocityY += FIX(1.0 / 8);
 }

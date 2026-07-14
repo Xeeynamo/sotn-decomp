@@ -26,8 +26,8 @@ enum OVL_EXPORT(CutsceneFlags) {
     DAI_CUTSCENE_CUTSCENE_CONCLUDED = 1 << 3,
 };
 
-extern EInit OVL_EXPORT(EInitSpawner);
-extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit g_EInitSpawner;
+extern EInit g_EInitInteractable;
 extern u32 OVL_EXPORT(CutsceneFlags); // defined by e_cutscene_dialogue
 
 static AnimateEntityFrame unused_anims[] = {
@@ -75,7 +75,7 @@ void OVL_EXPORT(EntityCutsceneStage)(Entity* self) {
 
     switch (self->step) {
     case CUTSCENE_INIT:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitSpawner));
+        InitializeEntity(g_EInitSpawner);
         g_PauseAllowed = false;
         // This seems to pause Alucard, rather than enemies
         g_unkGraphicsStruct.pauseEnemies = true;
@@ -159,7 +159,7 @@ void OVL_EXPORT(EntityCutsceneMaria)(Entity* self) {
 
     switch (self->step) {
     case MARIA_INIT:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = ANIMSET_OVL(15);
         self->animCurFrame = 10;
         self->unk5A = 72;
@@ -171,13 +171,13 @@ void OVL_EXPORT(EntityCutsceneMaria)(Entity* self) {
         }
         break;
     case MARIA_DEPART:
-        if (!OVL_EXPORT(AnimateEntity)(anim_maria_step, self)) {
-            OVL_EXPORT(SetStep)(MARIA_RUN_1);
+        if (!AnimateEntity(anim_maria_step, self)) {
+            SetStep(MARIA_RUN_1);
             self->velocityX = FIX(1.5);
         }
         break;
     case MARIA_RUN_1:
-        pan = OVL_EXPORT(AnimateEntity)(anim_maria_run, self);
+        pan = AnimateEntity(anim_maria_run, self);
         if (pan & 0x80 && (self->pose == 3 || self->pose == 7)) {
             pan = (self->posX.i.hi - 120) / 16;
             if (pan < -8) {
@@ -188,24 +188,24 @@ void OVL_EXPORT(EntityCutsceneMaria)(Entity* self) {
             }
             g_api.PlaySfxVolPan(SFX_STOMP_SOFT_B, 80, pan);
         }
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         if (posScrollX > 368) {
-            OVL_EXPORT(SetStep)(MARIA_JUMP_ALUCARD);
+            SetStep(MARIA_JUMP_ALUCARD);
             self->velocityY = FIX(-4);
         }
         break;
     case MARIA_JUMP_ALUCARD: // maria at alucard, jumps up stairs
-        OVL_EXPORT(AnimateEntity)(anim_maria_jump, self);
+        AnimateEntity(anim_maria_jump, self);
         self->velocityY += FIX(0.1875);
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         if (self->velocityY > 0 && posScrollY > 151) {
             self->posY.i.hi = 151 - gTilemapPtr->scrollY.i.hi;
             self->velocityY = 0;
-            OVL_EXPORT(SetStep)(MARIA_RUN_2);
+            SetStep(MARIA_RUN_2);
         }
         break;
     case MARIA_RUN_2: // maria land and run more
-        pan = OVL_EXPORT(AnimateEntity)(anim_maria_run, self);
+        pan = AnimateEntity(anim_maria_run, self);
         if (pan & 0x80 && (self->pose == 3 || self->pose == 7)) {
             pan = (self->posX.i.hi - 120) / 16;
             if (pan < -8) {
@@ -216,25 +216,25 @@ void OVL_EXPORT(EntityCutsceneMaria)(Entity* self) {
             }
             g_api.PlaySfxVolPan(SFX_STOMP_SOFT_B, 80, pan);
         }
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         if (posScrollX > 448) {
-            OVL_EXPORT(SetStep)(MARIA_JUMP_EXIT);
+            SetStep(MARIA_JUMP_EXIT);
             self->velocityY = FIX(-4);
             OVL_EXPORT(CutsceneFlags) |= DAI_CUTSCENE_CUTSCENE_CONCLUDED;
         }
         break;
     case MARIA_JUMP_EXIT:
-        OVL_EXPORT(AnimateEntity)(anim_maria_jump, self);
+        AnimateEntity(anim_maria_jump, self);
         self->velocityY += FIX(0.1875);
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         if (self->velocityY > 0 && posScrollY > 135) {
             self->posY.i.hi = 135 - gTilemapPtr->scrollY.i.hi;
             self->velocityY = 0;
-            OVL_EXPORT(SetStep)(MARIA_DEPARTED);
+            SetStep(MARIA_DEPARTED);
         }
         break;
     case MARIA_DEPARTED:
-        pan = OVL_EXPORT(AnimateEntity)(anim_maria_run, self);
+        pan = AnimateEntity(anim_maria_run, self);
         if (pan & 0x80 && (self->pose == 3 || self->pose == 7)) {
             pan = (self->posX.i.hi - 120) / 16;
             if (pan < -8) {
@@ -245,7 +245,7 @@ void OVL_EXPORT(EntityCutsceneMaria)(Entity* self) {
             }
             g_api.PlaySfxVolPan(SFX_STOMP_SOFT_B, 80, pan);
         }
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         if (posScrollX > 544) {
             DestroyEntity(self);
         }

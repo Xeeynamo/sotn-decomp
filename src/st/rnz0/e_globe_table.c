@@ -16,7 +16,7 @@ void EntityTableWithGlobe(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitTableWithGlobe);
+        InitializeEntity(g_EInitTableWithGlobe);
         self->zPriority = 0x6A;
         self->hitboxWidth = 8;
         self->hitboxHeight = 12;
@@ -24,18 +24,18 @@ void EntityTableWithGlobe(Entity* self) {
         self->hitboxOffY = 10;
         self->hitboxState = 2;
     case 1:
-        OVL_EXPORT(AnimateEntity)(D_80180EF0, self);
+        AnimateEntity(D_80180EF0, self);
         if (self->hitFlags) {
             PlaySfxPositional(SFX_GLASS_BREAK_E);
             self->hitboxState = 0;
             child = self + 1;
-            OVL_EXPORT(CreateEntityFromEntity)(E_HEART_DROP, self, child);
+            CreateEntityFromEntity(E_HEART_DROP, self, child);
             child->params = self->params;
-            OVL_EXPORT(SetStep)(2);
+            SetStep(2);
         }
         break;
     case 2:
-        OVL_EXPORT(AnimateEntity)(D_80180EF8, self);
+        AnimateEntity(D_80180EF8, self);
         break;
     }
 }

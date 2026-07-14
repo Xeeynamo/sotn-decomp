@@ -91,7 +91,7 @@ void EntityClockRoomController(Entity* self) {
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
 
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         g_api.PlaySfx(SET_STOP_MUSIC);
         stopMusicFlag = true;
         g_Statues[RIGHT_STATUE] = false; // right statue closed
@@ -103,7 +103,7 @@ void EntityClockRoomController(Entity* self) {
         // Create clock hands
         newEntity = &self[5];
         for (i = 0; i < 2; i++) {
-            OVL_EXPORT(CreateEntityFromCurrentEntity)(E_CLOCK_HANDS, newEntity);
+            CreateEntityFromCurrentEntity(E_CLOCK_HANDS, newEntity);
             newEntity->params = i;
             newEntity++;
         }
@@ -116,8 +116,7 @@ void EntityClockRoomController(Entity* self) {
         // Create Birdcage doors
         newEntity = &self[birdcageDoor1];
         for (i = 0; i < 2; i++) {
-            OVL_EXPORT(CreateEntityFromCurrentEntity)
-            (E_BIRDCAGE_DOOR, newEntity);
+            CreateEntityFromCurrentEntity(E_BIRDCAGE_DOOR, newEntity);
             newEntity->params = i;
             newEntity++;
         }
@@ -135,8 +134,7 @@ void EntityClockRoomController(Entity* self) {
         }
 
         // Shadow for the Bighorn sheep head on the center
-        OVL_EXPORT(CreateEntityFromCurrentEntity)
-        (E_CLOCK_ROOM_SHADOW, &self[shadow]);
+        CreateEntityFromCurrentEntity(E_CLOCK_ROOM_SHADOW, &self[shadow]);
         self[shadow].animSet = ANIMSET_OVL(1);
         self[shadow].animCurFrame = 23;
         self[shadow].zPriority = 0x40;
@@ -150,7 +148,7 @@ void EntityClockRoomController(Entity* self) {
         // Create path blocking statues
         newEntity = &self[statues];
         for (i = 0; i < 2; i++) {
-            OVL_EXPORT(CreateEntityFromCurrentEntity)(E_STATUE, newEntity);
+            CreateEntityFromCurrentEntity(E_STATUE, newEntity);
             newEntity->params = i;
             newEntity++;
         }
@@ -158,7 +156,7 @@ void EntityClockRoomController(Entity* self) {
         // Create the gears that drive the statues
         newEntity = &self[gears];
         for (j = 0; j < 2; j++) {
-            OVL_EXPORT(CreateEntityFromCurrentEntity)(E_STATUE_GEAR, newEntity);
+            CreateEntityFromCurrentEntity(E_STATUE_GEAR, newEntity);
             newEntity->params = j;
             newEntity++;
         }
@@ -166,7 +164,7 @@ void EntityClockRoomController(Entity* self) {
         // Create the stones on the floor
         newEntity = &self[stoneDoors];
         for (j = 0; j < 2; j++) {
-            OVL_EXPORT(CreateEntityFromCurrentEntity)(E_STONE_DOOR, newEntity);
+            CreateEntityFromCurrentEntity(E_STONE_DOOR, newEntity);
             newEntity->params = j;
             newEntity++;
         }

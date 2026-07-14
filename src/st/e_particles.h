@@ -5,7 +5,7 @@ extern EInit OVL_EXPORT(EInitObtainable);
 
 // the signature is purposely wrong for this file
 // this is how the original source code worked
-void OVL_EXPORT(MoveEntity)(Entity*);
+void MoveEntity(Entity*);
 
 #if defined(VERSION_HD)
 static u32 padding = 0;
@@ -55,13 +55,13 @@ void EntitySoulStealOrb(Entity* self) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex != -1) {
-            OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitObtainable));
+            InitializeEntity(OVL_EXPORT(EInitObtainable));
             prim = &g_PrimBuf[primIndex];
             prim->drawMode = DRAW_HIDE;
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             self->animSet = ANIMSET_DRA(0);
-            angle = OVL_EXPORT(GetAngleBetweenEntities)(self, &PLAYER);
+            angle = GetAngleBetweenEntities(self, &PLAYER);
             direction = 0;
             if (self->posY.i.hi > 112) {
                 direction = 1;
@@ -70,9 +70,9 @@ void EntitySoulStealOrb(Entity* self) {
                 direction ^= 1;
             }
             if (direction) {
-                angle -= g_ESoulStealOrbAngles[OVL_EXPORT(Random)() & 7];
+                angle -= g_ESoulStealOrbAngles[Random() & 7];
             } else {
-                angle += g_ESoulStealOrbAngles[OVL_EXPORT(Random)() & 7];
+                angle += g_ESoulStealOrbAngles[Random() & 7];
             }
             self->ext.soulStealOrb.angle = angle;
             self->ext.soulStealOrb.unk80 = 0x400;
@@ -106,13 +106,13 @@ void EntitySoulStealOrb(Entity* self) {
             self->ext.soulStealOrb.unk80 += 4;
         }
         // soulStealOrb.angle changed to u16
-        angle = OVL_EXPORT(GetAngleBetweenEntities)(self, &PLAYER);
-        self->ext.soulStealOrb.angle = angle = OVL_EXPORT(LimitAngleChange)(
+        angle = GetAngleBetweenEntities(self, &PLAYER);
+        self->ext.soulStealOrb.angle = angle = LimitAngleChange(
             self->ext.soulStealOrb.unk7E, self->ext.soulStealOrb.angle, angle);
-        OVL_EXPORT(UnkEntityFunc0)(angle, self->ext.soulStealOrb.unk80);
-        OVL_EXPORT(MoveEntity)(self);
+        UnkEntityFunc0(angle, self->ext.soulStealOrb.unk80);
+        MoveEntity(self);
         prim = &g_PrimBuf[self->primIndex];
-        OVL_EXPORT(AnimateEntity)(g_ESoulStealOrbAnim, self);
+        AnimateEntity(g_ESoulStealOrbAnim, self);
         prim->tpage = 0x18;
         prim->clut = PAL_UNK_194;
         angle = self->animCurFrame;
@@ -145,7 +145,7 @@ void EntityEnemyBlood(Entity* self) {
     case 0:
         i = g_api.func_800EDB58(PRIM_TILE_ALT, NParticles);
         if (i != -1) {
-            OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitObtainable));
+            InitializeEntity(OVL_EXPORT(EInitObtainable));
             facingLeft = self->params;
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = i;
@@ -159,21 +159,19 @@ void EntityEnemyBlood(Entity* self) {
             prim = (FakePrim*)&g_PrimBuf[i];
             i = NParticles;
             while (true) {
-                prim->x0 = self->posX.i.hi - 5 + (OVL_EXPORT(Random)() & 7);
-                prim->y0 = self->posY.i.hi - 5 + (OVL_EXPORT(Random)() & 7);
+                prim->x0 = self->posX.i.hi - 5 + (Random() & 7);
+                prim->y0 = self->posY.i.hi - 5 + (Random() & 7);
                 prim->posX.val = 0;
                 prim->posY.val = 0;
                 prim->w = 4;
                 prim->h = 4;
 
                 if (facingLeft) {
-                    OVL_EXPORT(UnkEntityFunc0)
-                    (0xCC0 + i * 64,
-                     (OVL_EXPORT(Random)() & 0xF) * 0x10 + 0x180);
+                    UnkEntityFunc0(
+                        0xCC0 + i * 64, (Random() & 0xF) * 0x10 + 0x180);
                 } else {
-                    OVL_EXPORT(UnkEntityFunc0)
-                    (0xB40 - i * 64,
-                     (OVL_EXPORT(Random)() & 0xF) * 0x10 + 0x180);
+                    UnkEntityFunc0(
+                        0xB40 - i * 64, (Random() & 0xF) * 0x10 + 0x180);
                 }
 
                 prim->velocityX.val = self->velocityX;
@@ -181,7 +179,7 @@ void EntityEnemyBlood(Entity* self) {
                 prim->accelerationX.val = -(prim->velocityX.val / 64);
                 prim->accelerationY.val = -(prim->velocityY.val / 48) + 0xC00;
 
-                prim->x2 = prim->y2 = (OVL_EXPORT(Random)() & 7) + 7;
+                prim->x2 = prim->y2 = (Random() & 7) + 7;
                 prim->r0 = 128;
                 prim->b0 = 16;
                 prim->g0 = 0;
@@ -219,7 +217,7 @@ void EntityEnemyBlood(Entity* self) {
                 self->velocityX += self->ext.bloodDroplets.speed;
 
                 x = self->posX.i.hi;
-                OVL_EXPORT(MoveEntity)(self);
+                MoveEntity(self);
                 x -= self->posX.i.hi;
                 if (x < 0) {
                     x = -x;

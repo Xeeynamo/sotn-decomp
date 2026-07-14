@@ -9,6 +9,8 @@
 #include <lba.h>
 #include "weapon_pc.h"
 #include "servant_pc.h"
+#include "stages/overlay.h"
+#include <ctype.h>
 
 s32 g_SimVabId = 0;
 
@@ -212,11 +214,6 @@ void LoadStageTileset(u8* pTilesetData, size_t len, s32 y) {
     }
 }
 
-void InitStageCEN(Overlay* o);
-void InitStageNZ0(Overlay* o);
-void InitStageST0(Overlay* o);
-void InitStageWRP(Overlay* o);
-void InitStageSEL(Overlay* o);
 void InitPlayerArc(const struct FileUseContent* file);
 void InitPlayerRic(void);
 void InitPlayerMaria(void);
@@ -383,6 +380,18 @@ static bool isFirstBoot() {
     return g_StageId == STAGE_SEL && g_GameState == Game_Init;
 }
 
+static void LoadStagePrg(const char* name) {
+    char ovlName[16];
+    unsigned i;
+    for (i = 0; name[i] && i < LEN(ovlName) - 1; i++) {
+        ovlName[i] = (char)tolower((unsigned char)name[i]);
+    }
+    ovlName[i] = '\0';
+    if (!LoadStageOverlay(ovlName, &g_api.o)) {
+        ERRORF("stage '%s' was not loaded", ovlName);
+    }
+}
+
 s32 LoadFileSim(s32 fileId, SimFileType type) {
     char smolbuf[48];
     char buf[128];
@@ -451,24 +460,7 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
                 g_GameStep = 1;
             }
         }
-        switch (g_StageId) {
-        case STAGE_SEL:
-            InitStageSEL(&g_api.o);
-            break;
-        case STAGE_CEN:
-            InitStageCEN(&g_api.o);
-            break;
-        case STAGE_NZ0:
-            InitStageNZ0(&g_api.o);
-            break;
-        case STAGE_WRP:
-            InitStageWRP(&g_api.o);
-            break;
-        default:
-            ERRORF(
-                "STAGE '%s' not implemented", g_StagesLba[g_StageId].ovlName);
-            break;
-        }
+        LoadStagePrg(g_StagesLba[g_StageId].ovlName);
         return 0;
     case SimFileType_Vh:
         g_SimFile = &sim;

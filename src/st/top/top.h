@@ -3,8 +3,10 @@
 #define TOP_H
 
 #define STAGE_IS_TOP
-#define OVL_EXPORT(x) TOP_##x
+
 #include <stage.h>
+
+#define OVL_EXPORT(x) TOP_##x
 
 enum OVL_EXPORT(Palette) {
     PAL_NONE = 0,

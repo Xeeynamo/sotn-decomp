@@ -338,12 +338,12 @@ void EntityVenusWeed(Entity* self) {
 
     // Death check
     if ((self->flags & FLAG_DEAD) && (self->step < VENUS_WEED_DEATH)) {
-        OVL_EXPORT(SetStep)(VENUS_WEED_DEATH);
+        SetStep(VENUS_WEED_DEATH);
     }
 
     switch (self->step) {
     case VENUS_WEED_INIT:
-        OVL_EXPORT(InitializeEntity)(g_EInitVenusWeedRoot);
+        InitializeEntity(g_EInitVenusWeedRoot);
         self->hitboxOffX = 1;
         self->hitboxOffY = -7;
 #if defined(BLUE)
@@ -389,24 +389,23 @@ void EntityVenusWeed(Entity* self) {
         break;
 
     case VENUS_WEED_DROP_TO_GROUND:
-        if (OVL_EXPORT(UnkCollisionFunc3)(&PhysicsSensors) & 1) {
-            OVL_EXPORT(SetStep)(VENUS_WEED_THORNWEED_DISGUISE);
+        if (UnkCollisionFunc3(&PhysicsSensors) & 1) {
+            SetStep(VENUS_WEED_THORNWEED_DISGUISE);
         }
         break;
 
     case VENUS_WEED_THORNWEED_DISGUISE:
-        OVL_EXPORT(AnimateEntity)(&AnimFrames_ThornweedDisguise, self);
-        if (OVL_EXPORT(GetDistanceToPlayerX)() < ActivateDistanceX) {
+        AnimateEntity(&AnimFrames_ThornweedDisguise, self);
+        if (GetDistanceToPlayerX() < ActivateDistanceX) {
             self->hitboxState = 0;
-            OVL_EXPORT(SetStep)(VENUS_WEED_GROW);
+            SetStep(VENUS_WEED_GROW);
         }
 
         // Death check
         if (self->flags & FLAG_DEAD) {
-            entity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
+                CreateEntityFromEntity(E_EXPLOSION, self, entity);
                 entity->posY.i.hi -= 4;
                 entity->params = 0;
             }
@@ -418,7 +417,7 @@ void EntityVenusWeed(Entity* self) {
         break;
 
     case VENUS_WEED_GROW:
-        OVL_EXPORT(AnimateEntity)(&AnimFrames_ThornweedQuickWiggle, self);
+        AnimateEntity(&AnimFrames_ThornweedQuickWiggle, self);
 
         checkCount = 0;
         switch (self->step_s) {
@@ -494,13 +493,12 @@ void EntityVenusWeed(Entity* self) {
             entity = self + 1; // Flower
 
             // Spawn flower
-            OVL_EXPORT(CreateEntityFromCurrentEntity)
-            (E_VENUS_WEED_FLOWER, entity);
+            CreateEntityFromCurrentEntity(E_VENUS_WEED_FLOWER, entity);
             entity->posX.i.hi = self->posX.i.hi;
             entity->posY.i.hi = self->posY.i.hi - FlowerOffsetY;
 
             // Face the player
-            entity->facingLeft = OVL_EXPORT(GetSideToPlayer)() & 1;
+            entity->facingLeft = GetSideToPlayer() & 1;
             entity->zPriority = (s32)self->zPriority;
 
             self->step_s++;
@@ -509,8 +507,7 @@ void EntityVenusWeed(Entity* self) {
         case GROW_TENDRILS:
             entity = self + 2; // Tendrils start
             for (i = 0; i < TENDRIL_COUNT; i++, entity++) {
-                OVL_EXPORT(CreateEntityFromCurrentEntity)
-                (E_VENUS_WEED_TENDRIL, entity);
+                CreateEntityFromCurrentEntity(E_VENUS_WEED_TENDRIL, entity);
                 entity->params = i;
                 entity->zPriority = self->zPriority + 1;
             }
@@ -524,7 +521,7 @@ void EntityVenusWeed(Entity* self) {
         break;
 
     case VENUS_WEED_IDLE: // Set by the flower entity (self + 1)
-        OVL_EXPORT(AnimateEntity)(&AnimFrames_ThornweedDisguise, self);
+        AnimateEntity(&AnimFrames_ThornweedDisguise, self);
         break;
 
     case VENUS_WEED_ATTACK: // Set by the flower entity (self + 1)
@@ -533,7 +530,7 @@ void EntityVenusWeed(Entity* self) {
             self->ext.venusWeed.timer = AttackDuration;
         }
         if (self->ext.venusWeed.timer) {
-            OVL_EXPORT(AnimateEntity)(&AnimFrames_ThornweedQuickWiggle, self);
+            AnimateEntity(&AnimFrames_ThornweedQuickWiggle, self);
             self->ext.venusWeed.timer--;
         }
         break;
@@ -609,10 +606,9 @@ void EntityVenusWeed(Entity* self) {
 
         case DEATH_DONE:
             // Spawn explosion
-            entity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
+                CreateEntityFromEntity(E_EXPLOSION, self, entity);
                 entity->params = 2;
                 entity->posY.i.hi -= 0xC;
             }
@@ -620,7 +616,7 @@ void EntityVenusWeed(Entity* self) {
             PlaySfxPositional(SFX_EXPLODE_B);
 
             // Destroy
-            OVL_EXPORT(PreventEntityFromRespawning)(self);
+            PreventEntityFromRespawning(self);
             DestroyEntity(self);
             return;
         }
@@ -734,12 +730,12 @@ void EntityVenusWeedFlower(Entity* self) {
     // Death check
     if ((self->flags & FLAG_DEAD) && (self->step < DEATH)) {
         PlaySfxPositional(SFX_VENUS_WEED_DEATH);
-        OVL_EXPORT(SetStep)(DEATH);
+        SetStep(DEATH);
     }
 
     switch (self->step) {
     case INIT:
-        OVL_EXPORT(InitializeEntity)(g_EInitVenusWeedFlower);
+        InitializeEntity(g_EInitVenusWeedFlower);
         self->hitboxOffX = HitboxOffsetX;
         self->hitboxOffY = HitboxOffsetY;
         self->hitboxWidth = HitboxWidth;
@@ -757,18 +753,18 @@ void EntityVenusWeedFlower(Entity* self) {
             self->hitboxState = 3;
 
             PlaySfxPositional(SFX_MAGIC_WEAPON_APPEAR_A);
-            OVL_EXPORT(SetStep)(REVEAL);
+            SetStep(REVEAL);
         }
         break;
 
     case REVEAL:
-        if (OVL_EXPORT(AnimateEntity)(AnimFrames_Reveal, self) == 0) {
+        if (AnimateEntity(AnimFrames_Reveal, self) == 0) {
             // Tell root to idle
             entity = self - 1; // Root
             entity->step = VENUS_WEED_IDLE;
             entity->step_s = 0;
 
-            OVL_EXPORT(SetStep)(IDLE);
+            SetStep(IDLE);
         }
         break;
 
@@ -780,25 +776,25 @@ void EntityVenusWeedFlower(Entity* self) {
         }
 
         // Animate, occasionally turning to face player
-        if (OVL_EXPORT(AnimateEntity)(AnimFrames_FlowerPulse, self) == 0) {
-            self->facingLeft = OVL_EXPORT(GetSideToPlayer)() & 1;
+        if (AnimateEntity(AnimFrames_FlowerPulse, self) == 0) {
+            self->facingLeft = GetSideToPlayer() & 1;
         }
 
         // Only once, when entering IDLE state
         if (!--self->ext.venusWeedFlower.triggerAttack) {
             // Face player
-            self->facingLeft = OVL_EXPORT(GetSideToPlayer)() & 1;
+            self->facingLeft = GetSideToPlayer() & 1;
             // Blue chooses by distance, non-blue alternates
 #if defined(BLUE)
-            OVL_EXPORT(SetStep)(DARTS);
-            if (OVL_EXPORT(GetDistanceToPlayerX)() < 64) {
-                OVL_EXPORT(SetStep)(SPIKES);
+            SetStep(DARTS);
+            if (GetDistanceToPlayerX() < 64) {
+                SetStep(SPIKES);
             }
 #else
             if (self->ext.venusWeedFlower.nextAttackIsDarts) {
-                OVL_EXPORT(SetStep)(DARTS);
+                SetStep(DARTS);
             } else {
-                OVL_EXPORT(SetStep)(SPIKES);
+                SetStep(SPIKES);
             }
             // Toggle between darts and tendril spikes attacks
             self->ext.venusWeedFlower.nextAttackIsDarts ^= 1;
@@ -834,38 +830,34 @@ void EntityVenusWeedFlower(Entity* self) {
             // fallthrough
 #if defined(BLUE)
         case SPIKES_1:
-            OVL_EXPORT(AnimateEntity)(AnimFrames_FlowerPulse, self);
+            AnimateEntity(AnimFrames_FlowerPulse, self);
             if (self->ext.venusWeedFlower.unk93 == 8) {
                 entity = self - 1;
                 entity->step = 5;
                 entity->step_s = 0;
-                OVL_EXPORT(SetSubStep)(SPIKES_CHARGE);
+                SetSubStep(SPIKES_CHARGE);
             }
             break;
 #endif
         case SPIKES_CHARGE:
-            if (!OVL_EXPORT(AnimateEntity)(
-                    AnimFrames_FlowerAttackSpikesCharge, self)) {
-                OVL_EXPORT(SetSubStep)(SPIKES_SPAWN);
+            if (!AnimateEntity(AnimFrames_FlowerAttackSpikesCharge, self)) {
+                SetSubStep(SPIKES_SPAWN);
             }
             break;
         case SPIKES_SPAWN:
             PlaySfxPositional(SFX_GLASS_SHARDS);
 
             // Spawn spikes
-            entity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)
-                (E_VENUS_WEED_SPIKE, self, entity);
+                CreateEntityFromEntity(E_VENUS_WEED_SPIKE, self, entity);
                 entity->facingLeft = self->facingLeft;
                 entity->ext.venusWeedSpike.flower = self;
             }
             self->step_s++;
             // fallthrough
         case SPIKES_LAUNCH:
-            if (OVL_EXPORT(AnimateEntity)(
-                    AnimFrames_FlowerAttackSpikesLaunch, self) == 0) {
+            if (AnimateEntity(AnimFrames_FlowerAttackSpikesLaunch, self) == 0) {
                 entity = self + 1; // Tendrils start
 #if !defined(BLUE)
                 if (g_Timer & 1) {
@@ -884,14 +876,13 @@ void EntityVenusWeedFlower(Entity* self) {
                     spikeStartTimeOffsetIndex &= 0x7;
 #endif
                 }
-                OVL_EXPORT(SetSubStep)(SPIKES_ANIM_RESET);
+                SetSubStep(SPIKES_ANIM_RESET);
             }
             break;
 
         case SPIKES_ANIM_RESET: // Anim: Reset to idle
-            if (OVL_EXPORT(AnimateEntity)(
-                    AnimFrames_FlowerAttackSpikesReset, self) == 0) {
-                OVL_EXPORT(SetSubStep)(SPIKES_RESET_TO_IDLE);
+            if (AnimateEntity(AnimFrames_FlowerAttackSpikesReset, self) == 0) {
+                SetSubStep(SPIKES_RESET_TO_IDLE);
             }
             break;
 
@@ -900,7 +891,7 @@ void EntityVenusWeedFlower(Entity* self) {
             entity = self - 1; // Root
             entity->step = VENUS_WEED_IDLE;
 
-            OVL_EXPORT(SetStep)(IDLE);
+            SetStep(IDLE);
             break;
         }
 #if !defined(BLUE)
@@ -930,27 +921,23 @@ void EntityVenusWeedFlower(Entity* self) {
             self->step_s += 1;
             // fallthrough
         case DARTS_DELAY:
-            if (OVL_EXPORT(AnimateEntity)(
-                    AnimFrames_FlowerAttackDartsCharge, self) == 0) {
-                OVL_EXPORT(SetSubStep)(DARTS_CHARGE);
+            if (AnimateEntity(AnimFrames_FlowerAttackDartsCharge, self) == 0) {
+                SetSubStep(DARTS_CHARGE);
             }
             break;
 
         case DARTS_CHARGE:
             PlaySfxPositional(SFX_GLASS_SHARDS);
-            entity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)
-                (E_VENUS_WEED_SPIKE, self, entity);
+                CreateEntityFromEntity(E_VENUS_WEED_SPIKE, self, entity);
                 entity->facingLeft = self->facingLeft;
                 entity->ext.venusWeedSpike.flower = self;
             }
             self->step_s++;
             // fallthrough
         case DARTS_LAUNCH:
-            if (OVL_EXPORT(AnimateEntity)(
-                    AnimFrames_FlowerAttackDartsLaunch, self) == 0) {
+            if (AnimateEntity(AnimFrames_FlowerAttackDartsLaunch, self) == 0) {
                 self->step_s++;
             }
             if (!self->poseTimer && self->pose == DartsSfxpose) {
@@ -993,11 +980,9 @@ void EntityVenusWeedFlower(Entity* self) {
 
                 // Spawn darts
                 for (i = 0; i < DartsCount; i++) {
-                    entity = OVL_EXPORT(AllocEntity)(
-                        &g_Entities[160], &g_Entities[192]);
+                    entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                     if (entity != NULL) {
-                        OVL_EXPORT(CreateEntityFromEntity)
-                        (E_VENUS_WEED_DART, self, entity);
+                        CreateEntityFromEntity(E_VENUS_WEED_DART, self, entity);
                         entity->rotate = rot;
                         entity->params = i;
                         entity->posX.i.hi = x;
@@ -1011,7 +996,7 @@ void EntityVenusWeedFlower(Entity* self) {
         case DARTS_RESET_TO_IDLE:
             entity = self - 1; // Root
             entity->step = VENUS_WEED_IDLE;
-            OVL_EXPORT(SetStep)(IDLE);
+            SetStep(IDLE);
         }
         break;
 
@@ -1025,9 +1010,9 @@ void EntityVenusWeedFlower(Entity* self) {
         PlaySfxPositional(SFX_FM_EXPLODE_B);
         self->hitboxState = 0;
 
-        entity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
+            CreateEntityFromEntity(E_EXPLOSION, self, entity);
             entity->params = 3;
         }
 
@@ -1069,18 +1054,18 @@ void EntityVenusWeedTendril(Entity* self) {
     u32 hitboxIndex;
 
     if ((self->flags & FLAG_DEAD) && (self->step < VENUS_WEED_TENDRIL_DEATH)) {
-        OVL_EXPORT(SetStep)(VENUS_WEED_TENDRIL_DEATH);
+        SetStep(VENUS_WEED_TENDRIL_DEATH);
     }
 
     switch (self->step) {
     case VENUS_WEED_TENDRIL_INIT:
-        OVL_EXPORT(InitializeEntity)(g_EInitVenusWeedTendril);
+        InitializeEntity(g_EInitVenusWeedTendril);
         self->animCurFrame = 0;
         break;
 
     case VENUS_WEED_TENDRIL_DROP_TO_GROUND:
-        if (OVL_EXPORT(UnkCollisionFunc3)(PhysicsSensors) & 1) {
-            OVL_EXPORT(SetStep)(VENUS_WEED_TENDRIL_MOVE_TO_RANDOM_POSITION);
+        if (UnkCollisionFunc3(PhysicsSensors) & 1) {
+            SetStep(VENUS_WEED_TENDRIL_MOVE_TO_RANDOM_POSITION);
         }
         break;
 
@@ -1101,15 +1086,13 @@ void EntityVenusWeedTendril(Entity* self) {
             } else {
                 x -= InitDistMinX;
             }
-            x += (OVL_EXPORT(Random)() & (InitDistRandRangeX * 2 + 1)) -
-                 InitDistRandRangeX;
+            x += (Random() & (InitDistRandRangeX * 2 + 1)) - InitDistRandRangeX;
             self->ext.venusWeedTendril.targetX = x;
             self->step_s++;
         }
 
-        OVL_EXPORT(AnimateEntity)(AnimFrames_TendrilBounce, self);
-        OVL_EXPORT(UnkCollisionFunc2)
-        (WalkSensors_Tendril); // "Walk", respecting walls/etc
+        AnimateEntity(AnimFrames_TendrilBounce, self);
+        UnkCollisionFunc2(WalkSensors_Tendril); // "Walk", respecting walls/etc
 
 #if defined(BLUE)
         entity = &PLAYER;
@@ -1121,7 +1104,7 @@ void EntityVenusWeedTendril(Entity* self) {
             x -= self->posX.i.hi; // Remaining distance
         }
         if (abs(x) < 2) {
-            OVL_EXPORT(SetStep)(VENUS_WEED_TENDRIL_STEP5);
+            SetStep(VENUS_WEED_TENDRIL_STEP5);
         } else if (x > 0) {
             self->velocityX = (abs(x) << 0xC);
         } else {
@@ -1131,12 +1114,12 @@ void EntityVenusWeedTendril(Entity* self) {
             self->ext.venusWeedTendril.unk93 = 0;
             entity = self - 1 - self->params;
             entity->ext.venusWeedTendril.unk93++;
-            OVL_EXPORT(SetStep)(VENUS_WEED_TENDRIL_ATTACK);
+            SetStep(VENUS_WEED_TENDRIL_ATTACK);
         }
         break;
     case VENUS_WEED_TENDRIL_STEP5:
-        if (OVL_EXPORT(AnimateEntity)(D_pspeu_09258EA0, self) == 0) {
-            OVL_EXPORT(SetStep)(VENUS_WEED_TENDRIL_ATTACK);
+        if (AnimateEntity(D_pspeu_09258EA0, self) == 0) {
+            SetStep(VENUS_WEED_TENDRIL_ATTACK);
             self->step_s = 1;
             self->pose = 8;
         }
@@ -1158,14 +1141,14 @@ void EntityVenusWeedTendril(Entity* self) {
     case VENUS_WEED_TENDRIL_ATTACK:
         switch (self->step_s) {
         case VENUS_WEED_TENDRIL_ATTACK_INIT:
-            OVL_EXPORT(AnimateEntity)(AnimFrames_TendrilBounce, self);
+            AnimateEntity(AnimFrames_TendrilBounce, self);
             if (self->ext.venusWeedTendril.spikeStartTimeOffsetIndex) {
 #if !defined(BLUE)
                 self->ext.venusWeedTendril.timer = TendrilSpikeStartTimeOffset
                     [self->ext.venusWeedTendril.spikeStartTimeOffsetIndex - 1];
 #endif
                 self->ext.venusWeedTendril.spikeStartTimeOffsetIndex = 0;
-                OVL_EXPORT(SetSubStep)(1); // go to next one, but varies
+                SetSubStep(1); // go to next one, but varies
             }
             break;
 #if !defined(BLUE)
@@ -1178,9 +1161,8 @@ void EntityVenusWeedTendril(Entity* self) {
             // Fallthrough
 #endif
         case VENUS_WEED_TENDRIL_ATTACK_CHARGE:
-            if (OVL_EXPORT(AnimateEntity)(
-                    AnimFrames_TendrilAttackCharge, self) == 0) {
-                OVL_EXPORT(SetSubStep)(VENUS_WEED_TENDRIL_ATTACK_LAUNCH);
+            if (AnimateEntity(AnimFrames_TendrilAttackCharge, self) == 0) {
+                SetSubStep(VENUS_WEED_TENDRIL_ATTACK_LAUNCH);
             }
             if (!self->poseTimer && self->pose == SpikeSfxpose) {
                 PlaySfxPositional(SFX_VENUS_WEED_CHARGE_ATTACK);
@@ -1188,9 +1170,8 @@ void EntityVenusWeedTendril(Entity* self) {
             break;
 
         case VENUS_WEED_TENDRIL_ATTACK_LAUNCH:
-            if (OVL_EXPORT(AnimateEntity)(
-                    AnimFrames_TendrilAttackLaunch, self) == 0) {
-                OVL_EXPORT(SetStep)(VENUS_WEED_TENDRIL_MOVE_TO_RANDOM_POSITION);
+            if (AnimateEntity(AnimFrames_TendrilAttackLaunch, self) == 0) {
+                SetStep(VENUS_WEED_TENDRIL_MOVE_TO_RANDOM_POSITION);
             }
             break;
         }
@@ -1211,10 +1192,9 @@ void EntityVenusWeedTendril(Entity* self) {
             self->step_s++;
         }
         if (!--self->ext.venusWeedTendril.timer) {
-            entity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
+                CreateEntityFromEntity(E_EXPLOSION, self, entity);
                 entity->params = 2;
                 entity->posY.i.hi -= 0xC;
             }
@@ -1261,7 +1241,7 @@ void EntityVenusWeedDart(Entity* self) {
 
     switch (self->step) {
     case INIT:
-        OVL_EXPORT(InitializeEntity)(g_EInitVenusWeedDart);
+        InitializeEntity(g_EInitVenusWeedDart);
         self->animCurFrame = AnimFrameIndexInit;
         self->drawFlags = ENTITY_ROTATE;
         rot = self->rotate;
@@ -1272,7 +1252,7 @@ void EntityVenusWeedDart(Entity* self) {
         self->ext.venusWeedDart.speed = StartSpeed;
         // fallthrough
     case FLY:
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
 
         rot = self->rotate;
         speed = self->ext.venusWeedDart.speed;
@@ -1301,7 +1281,7 @@ void EntityVenusWeedDart(Entity* self) {
             }
             self->hitboxState = 0;
             self->ext.venusWeedDart.clutIndex = ClutIdxWallHit;
-            OVL_EXPORT(SetStep)(DEATH);
+            SetStep(DEATH);
         }
         if (self->hitFlags & 0x80) {
             entity = &PLAYER;
@@ -1311,7 +1291,7 @@ void EntityVenusWeedDart(Entity* self) {
                 entity->posY.i.hi - self->posY.i.hi;
             self->ext.venusWeedDart.clutIndex = ClutIdxPlayerHit;
             self->hitboxState = 0;
-            OVL_EXPORT(SetStep)(DECAY);
+            SetStep(DECAY);
             break;
         }
         if (self->hitParams) {
@@ -1349,9 +1329,9 @@ void EntityVenusWeedDart(Entity* self) {
 
     // Death check
     if (self->flags & FLAG_DEAD) {
-        entity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
+            CreateEntityFromEntity(E_EXPLOSION, self, entity);
             entity->params = 0;
         }
         DestroyEntity(self);
@@ -1375,7 +1355,7 @@ void EntityVenusWeedSpike(Entity* self) {
 
     switch (self->step) {
     case INIT:
-        OVL_EXPORT(InitializeEntity)(g_EInitVenusWeedFlower);
+        InitializeEntity(g_EInitVenusWeedFlower);
 
         self->flags |= FLAG_UNK_2000 | FLAG_UNK_00200000;
         self->hitboxState = 0;

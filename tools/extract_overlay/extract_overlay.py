@@ -840,18 +840,18 @@ def create_header_c(header_items, ovl_name, ovl_type, version, header_path):
     ]
     common_syms = [
         "NULL",
-        f"{ovl_name.upper()}_Update",
-        f"{ovl_name.upper()}_HitDetection",
-        f"{ovl_name.upper()}_UpdateRoomPosition",
-        f"{ovl_name.upper()}_InitRoomEntities",
-        f"{ovl_name.upper()}_rooms)",
-        f"{ovl_name.upper()}_spriteBanks)",
-        f"{ovl_name.upper()}_cluts)",
-        f"{ovl_name.upper()}_pStObjLayoutHorizontal)",
+        "Update",
+        "HitDetection",
+        "UpdateRoomPosition",
+        "InitRoomEntities",
+        "OVL_EXPORT(rooms)",
+        "OVL_EXPORT(spriteBanks)",
+        "OVL_EXPORT(cluts)",
+        "OVL_EXPORT(pStObjLayoutHorizontal)",
         "g_pStObjLayoutHorizontal",
-        f"{ovl_name.upper()}_rooms_layers)",
-        f"{ovl_name.upper()}_gfxBanks)",
-        f"{ovl_name.upper()}_UpdateStageEntities)",
+        "OVL_EXPORT(rooms_layers)",
+        "OVL_EXPORT(gfxBanks)",
+        "UpdateStageEntities",
     ]
     template = Template((Path(__file__).parent / "header.c.mako").read_text())
     new_header = template.render(
@@ -1000,10 +1000,10 @@ def get_known_pairs(ovl_name, version):
 
 def parse_ovl_header(data_file_text, ovl_name, platform, header_symbol=None):
     ovl_header = [
-        f"{ovl_name.upper()}_Update",
-        f"{ovl_name.upper()}_HitDetection",
-        f"{ovl_name.upper()}_UpdateRoomPosition",
-        f"{ovl_name.upper()}_InitRoomEntities",
+        "Update",
+        "HitDetection",
+        "UpdateRoomPosition",
+        "InitRoomEntities",
         f"{ovl_name.upper()}_rooms",
         f"{ovl_name.upper()}_spriteBanks",
         f"{ovl_name.upper()}_cluts",
@@ -1014,7 +1014,7 @@ def parse_ovl_header(data_file_text, ovl_name, platform, header_symbol=None):
         ),
         f"{ovl_name.upper()}_rooms_layers",
         f"{ovl_name.upper()}_gfxBanks",
-        "OVL_EXPORT(UpdateStageEntities)",
+        "UpdateStageEntities",
         "unk2C",  # g_SpriteBank1
         "unk30",  # g_SpriteBank2
         "unk34",
@@ -1129,21 +1129,21 @@ def parse_entity_updates(data_file_text, ovl_name, entity_updates_symbol):
     parsed_entity_updates = None
     known_entity_updates = [
         f"{ovl_name.upper()}_EntityBreakable",
-        f"{ovl_name.upper()}_EntityExplosion",
-        f"{ovl_name.upper()}_EntityPrizeDrop",
-        f"{ovl_name.upper()}_EntityDamageDisplay",
+        "EntityExplosion",
+        "EntityPrizeDrop",
+        "EntityDamageDisplay",
         f"{ovl_name.upper()}_EntityRedDoor",
         "EntityIntenseExplosion",
         "EntitySoulStealOrb",
         "EntityRoomForeground",
         "EntityStageNamePopup",
-        f"{ovl_name.upper()}_EntityEquipItemDrop",
-        f"{ovl_name.upper()}_EntityRelicOrb",
-        f"{ovl_name.upper()}_EntityHeartDrop",
+        "EntityEquipItemDrop",
+        "EntityRelicOrb",
+        "EntityHeartDrop",
         "EntityEnemyBlood",
-        f"{ovl_name.upper()}_EntityMessageBox",
-        f"{ovl_name.upper()}_EntityDummy",
-        f"{ovl_name.upper()}_EntityDummy",
+        "EntityMessageBox",
+        "EntityDummy",
+        "EntityDummy",
         f"{ovl_name.upper()}_EntityBackgroundBlock",
         f"{ovl_name.upper()}_EntityLockCamera",
         "EntityUnkId13",
@@ -1401,13 +1401,13 @@ def parse_e_inits(data_file_text, first_e_init, ovl_name, platform, config_yaml_
     known_e_inits = [
         f"{ovl_name.upper()}_EInitBreakable",
         f"{ovl_name.upper()}_EInitObtainable",
-        f"{ovl_name.upper()}_EInitParticle",
-        f"{ovl_name.upper()}_EInitSpawner",
-        f"{ovl_name.upper()}_EInitInteractable",
-        f"{ovl_name.upper()}_EInitUnkId13",
-        f"{ovl_name.upper()}_EInitLockCamera",
-        f"{ovl_name.upper()}_EInitCommon",
-        f"{ovl_name.upper()}_EInitDamageNum",
+        "g_EInitParticle",
+        "g_EInitSpawner",
+        "g_EInitInteractable",
+        "g_EInitUnkId13",
+        "g_EInitLockCamera",
+        "g_EInitCommon",
+        "g_EInitDamageNum",
     ]
 
     text = data_file_text[data_file_text.find(f"glabel {first_e_init}") :]

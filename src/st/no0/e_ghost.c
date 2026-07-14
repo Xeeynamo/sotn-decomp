@@ -13,9 +13,9 @@ void EntityGhostEnemy(Entity* self) {
 
     if (self->flags & FLAG_DEAD) {
         PlaySfxPositional(SFX_GHOST_ENEMY_HOWL);
-        newEntity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
-            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, newEntity);
+            CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
             newEntity->params = 1;
         }
         DestroyEntity(self);
@@ -24,34 +24,33 @@ void EntityGhostEnemy(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitGhostEnemy);
+        InitializeEntity(g_EInitGhostEnemy);
         self->hitboxOffX = 1;
         self->hitboxOffY = -1;
         self->hitboxState = 0;
         /* fallthrough */
     case 1:
-        self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         self->step++;
         break;
 
     case 2:
-        if (!OVL_EXPORT(AnimateEntity)(anim_phase_in, self)) {
+        if (!AnimateEntity(anim_phase_in, self)) {
             self->hitboxState = 7;
-            OVL_EXPORT(SetStep)(3);
+            SetStep(3);
         }
         break;
 
     case 3:
-        if (!OVL_EXPORT(AnimateEntity)(anim_burning, self)) {
-            self->facingLeft = (OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1;
+        if (!AnimateEntity(anim_burning, self)) {
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
 
         // Seek towards player
         newEntity = &PLAYER;
-        angle = OVL_EXPORT(GetAngleBetweenEntities)(self, newEntity);
-        angle =
-            OVL_EXPORT(LimitAngleChange)(16, self->ext.ghostEnemy.angle, angle);
+        angle = GetAngleBetweenEntities(self, newEntity);
+        angle = LimitAngleChange(16, self->ext.ghostEnemy.angle, angle);
         speed = self->ext.ghostEnemy.speed;
         self->velocityX = FLT_TO_I(speed * rcos(angle));
         self->velocityY = FLT_TO_I(speed * rsin(angle));
@@ -77,12 +76,12 @@ void EntityGhostEnemySpawner(Entity* self) {
     s16* minMaxPositions;
 
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(D_us_80180A88);
+        InitializeEntity(D_us_80180A88);
         self->flags &= ~FLAG_UNK_2000;
         self->ext.ghostEnemySpawner.timer = 1;
     }
     if (!--self->ext.ghostEnemySpawner.timer) {
-        self->ext.ghostEnemySpawner.timer = (OVL_EXPORT(Random)() & 47) + 48;
+        self->ext.ghostEnemySpawner.timer = (Random() & 47) + 48;
         entity = &PLAYER;
         xPos = g_Tilemap.scrollX.i.hi + entity->posX.i.hi;
         yPos = g_Tilemap.scrollY.i.hi + entity->posY.i.hi;
@@ -94,20 +93,20 @@ void EntityGhostEnemySpawner(Entity* self) {
             }
         }
 
-        entity = OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[164]);
+        entity = AllocEntity(&g_Entities[160], &g_Entities[164]);
         if (entity != NULL) {
-            OVL_EXPORT(CreateEntityFromEntity)(E_GHOST_ENEMY, self, entity);
+            CreateEntityFromEntity(E_GHOST_ENEMY, self, entity);
             entity->zPriority = 170;
             entity->posX.i.hi = xPos - g_Tilemap.scrollX.i.hi;
             entity->posY.i.hi = yPos - g_Tilemap.scrollY.i.hi;
-            xPos = (OVL_EXPORT(Random)() & 63) + 48;
-            if (OVL_EXPORT(Random)() & 1) {
+            xPos = (Random() & 63) + 48;
+            if (Random() & 1) {
                 entity->posX.i.hi += xPos;
             } else {
                 entity->posX.i.hi -= xPos;
             }
 
-            yPos = (OVL_EXPORT(Random)() & 127) - 64;
+            yPos = (Random() & 127) - 64;
             entity->posY.i.hi += yPos;
         }
     }

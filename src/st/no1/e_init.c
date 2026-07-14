@@ -2,21 +2,21 @@
 #include "no1.h"
 
 void OVL_EXPORT(EntityBreakable)(Entity* self);
-void OVL_EXPORT(EntityExplosion)(Entity* self);
-void OVL_EXPORT(EntityPrizeDrop)(Entity* self);
-void OVL_EXPORT(EntityDamageDisplay)(Entity* self);
+void EntityExplosion(Entity* self);
+void EntityPrizeDrop(Entity* self);
+void EntityDamageDisplay(Entity* self);
 void OVL_EXPORT(EntityRedDoor)(Entity* self);
 void EntityIntenseExplosion(Entity* self);
 void EntitySoulStealOrb(Entity* self);
 void EntityRoomForeground(Entity* self);
 void EntityStageNamePopup(Entity* self);
-void OVL_EXPORT(EntityEquipItemDrop)(Entity* self);
-void OVL_EXPORT(EntityRelicOrb)(Entity* self);
-void OVL_EXPORT(EntityHeartDrop)(Entity* self);
+void EntityEquipItemDrop(Entity* self);
+void EntityRelicOrb(Entity* self);
+void EntityHeartDrop(Entity* self);
 void EntityEnemyBlood(Entity* self);
-void OVL_EXPORT(EntityMessageBox)(Entity* self);
-void OVL_EXPORT(EntityDummy)(Entity* self);
-void OVL_EXPORT(EntityDummy)(Entity* self);
+void EntityMessageBox(Entity* self);
+void EntityDummy(Entity* self);
+void EntityDummy(Entity* self);
 void OVL_EXPORT(EntityBackgroundBlock)(Entity* self);
 void OVL_EXPORT(EntityLockCamera)(Entity* self);
 void EntityUnkId13(Entity* self);
@@ -100,21 +100,21 @@ void func_us_801C10F4(Entity* self);
 
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x00 */ OVL_EXPORT(EntityBreakable),
-    /* 0x01 */ OVL_EXPORT(EntityExplosion),
-    /* 0x02 */ OVL_EXPORT(EntityPrizeDrop),
-    /* 0x03 */ OVL_EXPORT(EntityDamageDisplay),
+    /* 0x01 */ EntityExplosion,
+    /* 0x02 */ EntityPrizeDrop,
+    /* 0x03 */ EntityDamageDisplay,
     /* 0x04 */ OVL_EXPORT(EntityRedDoor),
     /* 0x05 */ EntityIntenseExplosion,
     /* 0x06 */ EntitySoulStealOrb,
     /* 0x07 */ EntityRoomForeground,
     /* 0x08 */ EntityStageNamePopup,
-    /* 0x09 */ OVL_EXPORT(EntityEquipItemDrop),
-    /* 0x0A */ OVL_EXPORT(EntityRelicOrb),
-    /* 0x0B */ OVL_EXPORT(EntityHeartDrop),
+    /* 0x09 */ EntityEquipItemDrop,
+    /* 0x0A */ EntityRelicOrb,
+    /* 0x0B */ EntityHeartDrop,
     /* 0x0C */ EntityEnemyBlood,
-    /* 0x0D */ OVL_EXPORT(EntityMessageBox),
-    /* 0x0E */ OVL_EXPORT(EntityDummy),
-    /* 0x0F */ OVL_EXPORT(EntityDummy),
+    /* 0x0D */ EntityMessageBox,
+    /* 0x0E */ EntityDummy,
+    /* 0x0F */ EntityDummy,
     /* 0x10 */ OVL_EXPORT(EntityBackgroundBlock),
     /* 0x11 */ OVL_EXPORT(EntityLockCamera),
     /* 0x12 */ EntityUnkId13,
@@ -199,19 +199,16 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
 
 EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_DRA(3), 0x00, 0x00, 0x000, 0x000};
 EInit OVL_EXPORT(EInitObtainable) = {ANIMSET_DRA(3), 0x00, 0x00, 0x000, 0x001};
-EInit OVL_EXPORT(EInitParticle) = {ANIMSET_DRA(3), 0x00, 0x00, 0x000, 0x002};
-EInit OVL_EXPORT(EInitSpawner) = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x004};
-EInit OVL_EXPORT(
-    EInitInteractable) = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x005};
+EInit g_EInitParticle = {ANIMSET_DRA(3), 0x00, 0x00, 0x000, 0x002};
+EInit g_EInitSpawner = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x004};
+EInit g_EInitInteractable = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x005};
 EInit D_us_80180974 = {ANIMSET_OVL(0x05), 0x00, 0x24, 0x000, 0x003}; // unused
 EInit D_us_80180980 = {ANIMSET_DRA(0x02), 0x00, 0x48, 0x000, 0x05B}; // unused
 EInit D_us_8018098C = {ANIMSET_DRA(3), 0x00, 0x48, 0x000, 0x05C};    // unused
-EInit OVL_EXPORT(EInitUnkId13) = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x002};
-EInit OVL_EXPORT(
-    EInitLockCamera) = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x001};
-EInit OVL_EXPORT(EInitCommon) = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x003};
-EInit OVL_EXPORT(
-    EInitDamageNum) = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x003};
+EInit g_EInitUnkId13 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x002};
+EInit g_EInitLockCamera = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x001};
+EInit g_EInitCommon = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x003};
+EInit g_EInitDamageNum = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x003};
 EInit D_us_801809C8 = {ANIMSET_OVL(0x01), 0x4B, 0x00, 0x000, 0x005};
 EInit D_us_801809D4 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x000};
 EInit g_EInitAxeKnight = {ANIMSET_OVL(0x03), 0x01, 0x48, 0x200, 0x006};

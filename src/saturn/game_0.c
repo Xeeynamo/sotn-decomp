@@ -3,6 +3,8 @@
 #include "sattypes.h"
 #include "game.h"
 
+void PlaySfx(s32 sfxId);
+
 // __game_start
 INCLUDE_ASM("asm/saturn/game/data", d6066000, d_06066000);
 

@@ -19,9 +19,9 @@ static void UpdateDustParticles(Primitive* prim) {
         prim->u0 = prim->v0 = 1;
         prim->drawMode = DRAW_UNK02;
 #ifdef VERSION_PSP
-        LOW(prim->x2) = -(OVL_EXPORT(Random)() & 0x7F) << 9;
+        LOW(prim->x2) = -(Random() & 0x7F) << 9;
 #else
-        LOW(prim->x2) = -((OVL_EXPORT(Random)() & 0x7F) << 9);
+        LOW(prim->x2) = -((Random() & 0x7F) << 9);
 #endif
         LOW(prim->x3) = 0;
         prim->p2 = 1U;
@@ -124,7 +124,7 @@ void EntityFallingStairs(Entity* self) {
         // Change position to be prepared for stairs falling
         self->posX.i.hi = NotFallenPosX - g_Tilemap.scrollX.i.hi;
         self->posY.i.hi = NotFallenPosY - g_Tilemap.scrollY.i.hi;
-        OVL_EXPORT(InitializeEntity)(g_EInitSecret);
+        InitializeEntity(g_EInitSecret);
 
         self->drawFlags |= ENTITY_ROTATE;
         self->animCurFrame = 0;
@@ -173,11 +173,11 @@ void EntityFallingStairs(Entity* self) {
         g_api.func_80102CD8(1); // Not sure what this does.
                                 // Removal doesn't make an obvious difference
         g_api.PlaySfx(SFX_WALL_DEBRIS_B);
-        entity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
 
         // Spawn a long dust cloud
         if (entity != NULL) {
-            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
+            CreateEntityFromEntity(E_EXPLOSION, self, entity);
             entity->params = 0x13;
             entity->params |= 0xC000;
         }
@@ -215,8 +215,8 @@ void EntityFallingStairs(Entity* self) {
                 if (prim != NULL) {
                     prim->p3 = 1;
                     prim->p2 = 0;
-                    prim->x0 = xPos + (OVL_EXPORT(Random)() & 4) - 2;
-                    prim->y0 = yPos + (OVL_EXPORT(Random)() & 0x1F);
+                    prim->x0 = xPos + (Random() & 4) - 2;
+                    prim->y0 = yPos + (Random() & 0x1F);
                 }
             }
         } else {
@@ -228,7 +228,7 @@ void EntityFallingStairs(Entity* self) {
     case FALLING:
         switch (self->step_s) {
         case ROTATE_CLOCKWISE:
-            OVL_EXPORT(MoveEntity)();
+            MoveEntity();
             self->rotate += 0x12;
             self->velocityY += FIX(0.25);
             scrolledY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
@@ -245,8 +245,8 @@ void EntityFallingStairs(Entity* self) {
                     if (prim != NULL) {
                         prim->p3 = 1;
                         prim->p2 = 0;
-                        prim->x0 = xPos + (OVL_EXPORT(Random)() & 7) - 3;
-                        prim->y0 = yPos + (OVL_EXPORT(Random)() & 0x1F);
+                        prim->x0 = xPos + (Random() & 7) - 3;
+                        prim->y0 = yPos + (Random() & 0x1F);
                     }
                 }
             }
@@ -255,13 +255,11 @@ void EntityFallingStairs(Entity* self) {
             if (scrolledY > RightSideHitHeight) {
                 self->posY.i.hi = RightSideHitHeight - g_Tilemap.scrollY.i.hi;
                 g_api.PlaySfx(SFX_EXPLODE_B);
-                entity =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+                entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
 
                 // Spawn a short dust cloud
                 if (entity != NULL) {
-                    OVL_EXPORT(CreateEntityFromEntity)
-                    (E_EXPLOSION, self, entity);
+                    CreateEntityFromEntity(E_EXPLOSION, self, entity);
                     entity->params = 0x11;
                     entity->params |= 0xC000;
                 }
@@ -277,8 +275,8 @@ void EntityFallingStairs(Entity* self) {
                         if (prim != NULL) {
                             prim->p3 = 1;
                             prim->p2 = 0;
-                            prim->x0 = (xPos + (OVL_EXPORT(Random)() & 7)) - 3;
-                            prim->y0 = yPos + (OVL_EXPORT(Random)() & 3);
+                            prim->x0 = (xPos + (Random() & 7)) - 3;
+                            prim->y0 = yPos + (Random() & 3);
                         }
                     }
                 }
@@ -296,13 +294,11 @@ void EntityFallingStairs(Entity* self) {
                 self->rotate = 0; // Don't over-rotate
                 g_api.PlaySfx(SFX_EXPLODE_B);
                 g_api.func_80102CD8(1);
-                entity =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+                entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
 
                 // Spawn a dust cloud
                 if (entity != NULL) {
-                    OVL_EXPORT(CreateEntityFromCurrentEntity)
-                    (E_INTENSE_EXPLOSION, entity);
+                    CreateEntityFromCurrentEntity(E_INTENSE_EXPLOSION, entity);
                     entity->params = 0x10;
                     entity->params |= 0xC000;
                     entity->posX.i.hi = xPos;
@@ -318,8 +314,8 @@ void EntityFallingStairs(Entity* self) {
                         if (prim != NULL) {
                             prim->p3 = 1;
                             prim->p2 = 0;
-                            prim->x0 = (xPos + (OVL_EXPORT(Random)() & 7)) - 3;
-                            prim->y0 = yPos + (OVL_EXPORT(Random)() & 3);
+                            prim->x0 = (xPos + (Random() & 7)) - 3;
+                            prim->y0 = yPos + (Random() & 3);
                         }
                     }
                 }
@@ -416,7 +412,7 @@ void EntityFallingStep(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        OVL_EXPORT(InitializeEntity)(g_EInitSecret);
+        InitializeEntity(g_EInitSecret);
         self->animCurFrame = 0;
         self->drawFlags |= ENTITY_ROTATE;
         g_Tilemap.fg[TilePos] = TileInitVal;
@@ -471,7 +467,7 @@ void EntityFallingStep(Entity* self) {
         break;
 
     case FALLING:
-        OVL_EXPORT(MoveEntity)();
+        MoveEntity();
         self->rotate -= 0x20;
         self->velocityY += FIX(0.25);
         posX = self->posX.i.hi;
@@ -482,11 +478,9 @@ void EntityFallingStep(Entity* self) {
 
             // Check for lowest possible position
             if (scrolledY > 0x3C0) {
-                entity =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+                entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
-                    OVL_EXPORT(CreateEntityFromEntity)
-                    (E_INTENSE_EXPLOSION, self, entity);
+                    CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
                     entity->params = 0x10;
                 }
                 DestroyEntity(self);
@@ -525,8 +519,8 @@ void EntityFallingStep(Entity* self) {
                 if (prim != NULL) {
                     prim->p3 = 1;
                     prim->p2 = 0;
-                    prim->x0 = (posX + (OVL_EXPORT(Random)() & 7)) - 3;
-                    prim->y0 = posY + (OVL_EXPORT(Random)() & 0xF);
+                    prim->x0 = (posX + (Random() & 7)) - 3;
+                    prim->y0 = posY + (Random() & 0xF);
                 }
             }
         }

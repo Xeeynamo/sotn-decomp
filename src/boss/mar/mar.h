@@ -2,8 +2,9 @@
 #ifndef MAR_H
 #define MAR_H
 
-#define OVL_EXPORT(x) MAR_##x
 #include <stage.h>
+
+#define OVL_EXPORT(x) MAR_##x
 
 typedef enum {
     /* 0x00 */ E_NONE,
@@ -41,9 +42,9 @@ typedef enum Statues {
     /* 1 */ LEFT_STATUE,
 } Statues;
 
-extern EInit OVL_EXPORT(EInitCommon);
-extern EInit OVL_EXPORT(EInitSpawner);
-extern EInit OVL_EXPORT(EInitParticle);
-extern EInit OVL_EXPORT(EInitLockCamera);
+extern EInit g_EInitCommon;
+extern EInit g_EInitSpawner;
+extern EInit g_EInitParticle;
+extern EInit g_EInitLockCamera;
 
 #endif

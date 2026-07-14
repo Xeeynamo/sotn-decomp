@@ -29,11 +29,11 @@ void EntityBoneMusket(Entity* self) {
     s16* hitboxPtr;
 
     if ((self->flags & FLAG_DEAD) && (self->step < 8)) {
-        OVL_EXPORT(SetStep)(8);
+        SetStep(8);
     }
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitBoneMusket);
+        InitializeEntity(g_EInitBoneMusket);
         if (self->params & 0x100) {
             self->facingLeft = 1;
             self->params &= 0xFF;
@@ -46,12 +46,11 @@ void EntityBoneMusket(Entity* self) {
         self->ext.et_801CEB28.unk88 = self + D_us_80182A54[self->params];
         /* fallthrough */
     case 1:
-        if (OVL_EXPORT(UnkCollisionFunc3)(D_us_80182998) & 1) {
+        if (UnkCollisionFunc3(D_us_80182998) & 1) {
             if (!self->params) {
                 tempEntity = self + 1;
                 for (i = 1; i < LEN(D_us_80182A4C); i++, tempEntity++) {
-                    OVL_EXPORT(CreateEntityFromEntity)
-                    (E_BONE_MUSKET, self, tempEntity);
+                    CreateEntityFromEntity(E_BONE_MUSKET, self, tempEntity);
                     tempEntity->facingLeft = self->facingLeft;
                     if (self->facingLeft) {
                         tempEntity->posX.i.hi -= D_us_80182A4C[i];
@@ -61,13 +60,13 @@ void EntityBoneMusket(Entity* self) {
                     tempEntity->params = i;
                 }
             }
-            OVL_EXPORT(SetStep)(2);
+            SetStep(2);
         }
         break;
 
     case 2:
         if (!self->params) {
-            if (OVL_EXPORT(GetDistanceToPlayerX)() < 0xC0) {
+            if (GetDistanceToPlayerX() < 0xC0) {
                 tempEntity = self;
                 for (i = 0; i < LEN(D_us_80182A60); i++, tempEntity++) {
                     tempEntity->step = D_us_80182A60[i][0];
@@ -80,47 +79,43 @@ void EntityBoneMusket(Entity* self) {
     case 3:
         switch (self->step_s) {
         case 0:
-            if (OVL_EXPORT(AnimateEntity)(D_us_80182A38, self) == 0) {
+            if (AnimateEntity(D_us_80182A38, self) == 0) {
                 self->ext.et_801CEB28.unk8D = 0;
-                OVL_EXPORT(SetSubStep)(1);
+                SetSubStep(1);
             }
             break;
 
         case 1:
-            if (OVL_EXPORT(AnimateEntity)(D_us_801829B0, self) == 0) {
-                OVL_EXPORT(SetSubStep)(2);
+            if (AnimateEntity(D_us_801829B0, self) == 0) {
+                SetSubStep(2);
             }
             if (self->pose == 6 && !self->poseTimer) {
-                tempEntity =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
+                tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (tempEntity != NULL) {
-                    OVL_EXPORT(CreateEntityFromEntity)
-                    (E_BONE_MUSKET_UNK, self, tempEntity);
+                    CreateEntityFromEntity(E_BONE_MUSKET_UNK, self, tempEntity);
                     tempEntity->facingLeft = self->facingLeft;
                 }
             }
             break;
 
         case 2:
-            if (OVL_EXPORT(AnimateEntity)(D_us_801829C8, self) == 0) {
+            if (AnimateEntity(D_us_801829C8, self) == 0) {
                 tempEntity = self->ext.et_801CEB28.unk88;
                 tempEntity->ext.et_801CEB28.unk8C = 1;
-                OVL_EXPORT(SetSubStep)(3);
+                SetSubStep(3);
             }
             if (self->pose == 4 && !self->poseTimer) {
-                tempEntity =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
+                tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (tempEntity != NULL) {
-                    OVL_EXPORT(CreateEntityFromEntity)
-                    (E_BONE_MUSKET_UNK, self, tempEntity);
+                    CreateEntityFromEntity(E_BONE_MUSKET_UNK, self, tempEntity);
                     tempEntity->facingLeft = self->facingLeft;
                 }
             }
             break;
 
         case 3:
-            if (OVL_EXPORT(AnimateEntity)(D_us_80182A24, self) == 0) {
-                OVL_EXPORT(SetStep)(4);
+            if (AnimateEntity(D_us_80182A24, self) == 0) {
+                SetStep(4);
             }
             break;
         }
@@ -137,8 +132,8 @@ void EntityBoneMusket(Entity* self) {
                 g_Tilemap.scrollX.i.hi + self->posX.i.hi;
             self->step_s++;
         }
-        OVL_EXPORT(UnkCollisionFunc2)(D_us_801829A8);
-        OVL_EXPORT(AnimateEntity)(D_us_80182A2C, self);
+        UnkCollisionFunc2(D_us_801829A8);
+        AnimateEntity(D_us_80182A2C, self);
         posX = g_Tilemap.scrollX.i.hi + self->posX.i.hi;
         if (self->facingLeft) {
             posX = self->ext.et_801CEB28.unk84 - posX;
@@ -155,7 +150,7 @@ void EntityBoneMusket(Entity* self) {
                     (self->ext.et_801CEB28.unk84 - g_Tilemap.scrollX.i.hi) +
                     0x28;
             }
-            OVL_EXPORT(SetStep)(5);
+            SetStep(5);
         }
         break;
 
@@ -170,8 +165,8 @@ void EntityBoneMusket(Entity* self) {
                 g_Tilemap.scrollX.i.hi + self->posX.i.hi;
             self->step_s++;
         }
-        OVL_EXPORT(UnkCollisionFunc2)(D_us_801829A8);
-        OVL_EXPORT(AnimateEntity)(D_us_80182A2C, self);
+        UnkCollisionFunc2(D_us_801829A8);
+        AnimateEntity(D_us_80182A2C, self);
         posX = g_Tilemap.scrollX.i.hi + self->posX.i.hi;
         if (self->facingLeft) {
             posX = posX - self->ext.et_801CEB28.unk84;
@@ -189,9 +184,9 @@ void EntityBoneMusket(Entity* self) {
                     0x14;
             }
             if (self->ext.et_801CEB28.unk8D) {
-                OVL_EXPORT(SetStep)(3);
+                SetStep(3);
             } else {
-                OVL_EXPORT(SetStep)(7);
+                SetStep(7);
             }
         }
         break;
@@ -199,14 +194,14 @@ void EntityBoneMusket(Entity* self) {
     case 5:
         switch (self->step_s) {
         case 0:
-            if (OVL_EXPORT(AnimateEntity)(D_us_80182A38, self) == 0) {
-                OVL_EXPORT(SetSubStep)(1);
+            if (AnimateEntity(D_us_80182A38, self) == 0) {
+                SetSubStep(1);
             }
             break;
 
         case 1:
-            if (OVL_EXPORT(AnimateEntity)(D_us_801829E0, self) == 0) {
-                OVL_EXPORT(SetSubStep)(2);
+            if (AnimateEntity(D_us_801829E0, self) == 0) {
+                SetSubStep(2);
             }
             if (!self->poseTimer && self->pose == 0x1C) {
                 PlaySfxPositional(SFX_BONE_MUSKET_RELOAD);
@@ -214,8 +209,8 @@ void EntityBoneMusket(Entity* self) {
             break;
 
         case 2:
-            if (OVL_EXPORT(AnimateEntity)(D_us_80182A24, self) == 0) {
-                OVL_EXPORT(SetStep)(6);
+            if (AnimateEntity(D_us_80182A24, self) == 0) {
+                SetStep(6);
                 self->ext.et_801CEB28.unk8D = 0;
             }
             break;
@@ -225,22 +220,21 @@ void EntityBoneMusket(Entity* self) {
     case 7:
         if (self->ext.et_801CEB28.unk8C) {
             self->ext.et_801CEB28.unk8C = 0;
-            OVL_EXPORT(SetStep)(6);
+            SetStep(6);
             self->ext.et_801CEB28.unk8D = 1;
         }
         break;
 
     case 8:
         PlaySfxPositional(SFX_QUICK_STUTTER_EXPLODE_A);
-        tempEntity =
-            OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+        tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (tempEntity != NULL) {
-            OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, tempEntity);
+            CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
             tempEntity->params = 2;
         }
         self->animCurFrame = 0;
         self->hitboxState = 0;
-        OVL_EXPORT(SetStep)(9);
+        SetStep(9);
         break;
 
     case 9:
@@ -282,7 +276,7 @@ void func_us_801CF298(Entity* self) {
         if (tempVar < -0x60) {
             self->posX.i.hi = -0x60;
         }
-        OVL_EXPORT(InitializeEntity)(D_us_80180AA0);
+        InitializeEntity(D_us_80180AA0);
         self->hitboxOffY = -8;
         self->hitboxHeight = 1;
         primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
@@ -356,7 +350,7 @@ void func_us_801CF298(Entity* self) {
         self->hitboxState = 0;
         break;
     }
-    if (OVL_EXPORT(AnimateEntity)(D_us_80182A40, self) == 0) {
+    if (AnimateEntity(D_us_80182A40, self) == 0) {
         DestroyEntity(self);
     }
 }

@@ -4,8 +4,10 @@
 #define CAT_H
 
 #define STAGE_IS_CAT
+
+#include "stage.h"
+
 #define OVL_EXPORT(x) CAT_##x
-#include <stage.h>
 
 #include "../pfn_entity_update.h"
 
@@ -124,14 +126,14 @@ enum EntityIDs {
     NUM_ENTITIES,
 };
 
-extern EInit OVL_EXPORT(EInitParticle);
-extern EInit OVL_EXPORT(EInitSpawner);
-extern EInit OVL_EXPORT(EInitInteractable);
-extern EInit OVL_EXPORT(EInitDamageNum);
+extern EInit g_EInitParticle;
+extern EInit g_EInitSpawner;
+extern EInit g_EInitInteractable;
+extern EInit g_EInitDamageNum;
 extern EInit g_EInitEnvironment;
 extern EInit g_EInitGremlin;
 extern EInit g_EInitGremlinFire;
-extern EInit OVL_EXPORT(EInitLockCamera);
+extern EInit g_EInitLockCamera;
 extern EInit OVL_EXPORT(EInitObtainable);
 extern EInit g_EInitWereskeleton;
 extern EInit D_us_80180A88;

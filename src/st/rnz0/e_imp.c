@@ -39,20 +39,20 @@ void EntityImp(Entity* self) {
         PLAYER_STATUS_UNK10 | PLAYER_STATUS_TRANSFORM;
 
     if ((self->hitFlags & 3) && (self->step < IMP_RETREAT_HIT)) {
-        OVL_EXPORT(SetStep)(IMP_RETREAT_HIT);
+        SetStep(IMP_RETREAT_HIT);
     }
     if ((self->flags & FLAG_DEAD) && (self->step != IMP_DEAD)) {
-        OVL_EXPORT(SetStep)(IMP_DEAD);
+        SetStep(IMP_DEAD);
     }
     switch (self->step) {
     case IMP_INIT:
-        OVL_EXPORT(InitializeEntity)(g_EInitImp);
-        OVL_EXPORT(SetStep)(IMP_IDLE);
+        InitializeEntity(g_EInitImp);
+        SetStep(IMP_IDLE);
         break;
     case IMP_IDLE:
-        OVL_EXPORT(AnimateEntity)(anim_imp, self);
-        if (OVL_EXPORT(GetDistanceToPlayerX)() < 0x80) {
-            OVL_EXPORT(SetStep)(IMP_3);
+        AnimateEntity(anim_imp, self);
+        if (GetDistanceToPlayerX() < 0x80) {
+            SetStep(IMP_3);
         }
         break;
     case IMP_3:
@@ -60,10 +60,10 @@ void EntityImp(Entity* self) {
             self->ext.imp.timer = 0xC0;
             self->step_s += 1;
         }
-        OVL_EXPORT(AnimateEntity)(anim_imp, self);
-        OVL_EXPORT(MoveEntity)();
+        AnimateEntity(anim_imp, self);
+        MoveEntity();
         // Face toward player.
-        tempVar = OVL_EXPORT(GetSideToPlayer)() & 1;
+        tempVar = GetSideToPlayer() & 1;
         self->facingLeft = tempVar;
         other = &PLAYER;
         angle = self->ext.imp.angle;
@@ -91,23 +91,23 @@ void EntityImp(Entity* self) {
             playerStatus = g_Player.status;
             if (playerStatus & PLAYER_STATUS_UNK400) {
                 if ((abs(xVar) < 0x40) && (abs(yVar) < 0x20)) {
-                    OVL_EXPORT(SetStep)(IMP_FLEE_HORIZ);
+                    SetStep(IMP_FLEE_HORIZ);
                 }
             }
             if (playerStatus &
                 (PLAYER_STATUS_SPELLCAST | PLAYER_STATUS_SUBWPN)) {
                 yVar += 12;
                 if (yVar < 0x50U) {
-                    OVL_EXPORT(SetStep)(IMP_FLEE_VERT);
+                    SetStep(IMP_FLEE_VERT);
                 }
             }
         }
 
         if (!--self->ext.imp.timer) {
             if (self->facingLeft == tempVar) {
-                OVL_EXPORT(SetStep)(IMP_5);
+                SetStep(IMP_5);
             } else {
-                OVL_EXPORT(SetStep)(IMP_4);
+                SetStep(IMP_4);
             }
         }
         break;
@@ -115,7 +115,7 @@ void EntityImp(Entity* self) {
     case IMP_FLEE_VERT:
         if (!self->step_s) {
             // Face toward player, and fly backward.
-            self->facingLeft = OVL_EXPORT(GetSideToPlayer)() & 1;
+            self->facingLeft = GetSideToPlayer() & 1;
             if (!self->facingLeft) {
                 self->velocityX = FIX(-8);
             } else {
@@ -129,12 +129,12 @@ void EntityImp(Entity* self) {
             self->ext.imp.timer = 0x20;
             self->step_s += 1;
         }
-        OVL_EXPORT(AnimateEntity)(anim_imp, self);
-        OVL_EXPORT(MoveEntity)();
+        AnimateEntity(anim_imp, self);
+        MoveEntity();
         self->velocityX -= self->velocityX >> 3;
         self->velocityY -= self->velocityY >> 4;
         if (!--self->ext.imp.timer) {
-            OVL_EXPORT(SetStep)(IMP_3);
+            SetStep(IMP_3);
         }
         break;
     case IMP_5:
@@ -155,8 +155,8 @@ void EntityImp(Entity* self) {
             self->step_s += 1;
             /* fallthrough */
         case 1:
-            OVL_EXPORT(AnimateEntity)(&anim_imp, self);
-            OVL_EXPORT(MoveEntity)();
+            AnimateEntity(&anim_imp, self);
+            MoveEntity();
             other = &PLAYER;
             xVar = other->posX.i.hi - self->posX.i.hi;
             yVar = (other->posY.i.hi - 0x18) - self->posY.i.hi;
@@ -184,16 +184,16 @@ void EntityImp(Entity* self) {
                 xVar = -xVar;
             }
             if ((yVar < 6) && (xVar < 4)) {
-                OVL_EXPORT(SetStep)(IMP_JAM_PLAYER);
+                SetStep(IMP_JAM_PLAYER);
             }
             break;
         case 2:
-            OVL_EXPORT(AnimateEntity)(anim_imp, self);
-            OVL_EXPORT(MoveEntity)();
+            AnimateEntity(anim_imp, self);
+            MoveEntity();
             self->velocityX -= self->velocityX >> 4;
             self->velocityY -= self->velocityY >> 4;
             if (!--self->ext.imp.timer) {
-                OVL_EXPORT(SetStep)(IMP_3);
+                SetStep(IMP_3);
             }
         }
         break;
@@ -212,8 +212,8 @@ void EntityImp(Entity* self) {
             self->step_s += 1;
             /* fallthrough */
         case 1:
-            OVL_EXPORT(AnimateEntity)(&anim_imp, self);
-            OVL_EXPORT(MoveEntity)();
+            AnimateEntity(&anim_imp, self);
+            MoveEntity();
             other = &PLAYER;
             xVar = other->posX.i.hi - self->posX.i.hi;
             if (!self->facingLeft) {
@@ -227,7 +227,7 @@ void EntityImp(Entity* self) {
                     self->step_s -= 1;
                 }
                 if (tempVar == 0) {
-                    OVL_EXPORT(SetStep)(IMP_3);
+                    SetStep(IMP_3);
                 }
             }
             break;
@@ -248,22 +248,22 @@ void EntityImp(Entity* self) {
             self->step_s += 1;
             /* fallthrough */
         case 3:
-            OVL_EXPORT(AnimateEntity)(&anim_imp, self);
-            OVL_EXPORT(MoveEntity)();
+            AnimateEntity(&anim_imp, self);
+            MoveEntity();
             other = &PLAYER;
             xVar = other->posX.i.hi - self->posX.i.hi;
             if (!self->facingLeft) {
                 xVar = -xVar;
             }
             if (xVar > 0x40) {
-                OVL_EXPORT(SetStep)(IMP_5);
+                SetStep(IMP_5);
             } else {
                 tempVar = --self->ext.imp.timer;
                 if (!(tempVar & 0xF)) {
                     self->step_s -= 1;
                 }
                 if (tempVar == 0) {
-                    OVL_EXPORT(SetStep)(IMP_3);
+                    SetStep(IMP_3);
                 }
             }
         }
@@ -284,28 +284,26 @@ void EntityImp(Entity* self) {
             }
             self->ext.imp.jamOffsetY = -24;
             if (g_Player.status & immuneStates) {
-                OVL_EXPORT(SetStep)(IMP_3);
+                SetStep(IMP_3);
             }
             self->hitboxState = 0;
             self->ext.imp.playerJamTimer = 0x20;
             self->step_s += 1;
             /* fallthrough */
         case 1:
-            OVL_EXPORT(AnimateEntity)(&anim_imp, self);
+            AnimateEntity(&anim_imp, self);
             other = &PLAYER;
             self->posX.i.hi = other->posX.i.hi + self->ext.imp.jamOffsetX;
             self->posY.i.hi = other->posY.i.hi + self->ext.imp.jamOffsetY;
             if (!(g_Timer & 0xF)) {
-                other =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+                other = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (other != NULL) {
-                    OVL_EXPORT(CreateEntityFromCurrentEntity)
-                    (E_IMP_SMOKE, other);
+                    CreateEntityFromCurrentEntity(E_IMP_SMOKE, other);
                 }
             }
             g_Player.demo_timer = 1;
             if (g_Timer & 1) {
-                if (OVL_EXPORT(Random)() & 1) {
+                if (Random() & 1) {
                     g_Player.padSim = PAD_SQUARE;
                 } else {
                     g_Player.padSim = PAD_CIRCLE;
@@ -319,13 +317,13 @@ void EntityImp(Entity* self) {
             if (tempVar != self->ext.imp.prevDirsPressed) {
                 // And once the jam timer runs out, you're freed in step 7.
                 if (!--self->ext.imp.playerJamTimer) {
-                    OVL_EXPORT(SetStep)(IMP_RETREAT_ESCAPE);
+                    SetStep(IMP_RETREAT_ESCAPE);
                 }
             }
             // Log current pressed buttons for the next time around.
             self->ext.imp.prevDirsPressed = tempVar;
             if (g_Player.status & immuneStates) {
-                OVL_EXPORT(SetStep)(IMP_RETREAT_ESCAPE);
+                SetStep(IMP_RETREAT_ESCAPE);
             }
         }
         break;
@@ -334,7 +332,7 @@ void EntityImp(Entity* self) {
     case IMP_RETREAT_HIT:
         switch (self->step_s) {
         case 0:
-            self->facingLeft = OVL_EXPORT(GetSideToPlayer)() & 1;
+            self->facingLeft = GetSideToPlayer() & 1;
             if (!self->facingLeft) {
                 self->velocityX = FIX(-4);
             } else {
@@ -348,8 +346,8 @@ void EntityImp(Entity* self) {
             if (self->ext.imp.timer < 0x28) {
                 self->hitboxState = 3;
             }
-            OVL_EXPORT(AnimateEntity)(anim_imp, self);
-            OVL_EXPORT(MoveEntity)();
+            AnimateEntity(anim_imp, self);
+            MoveEntity();
             self->velocityX -= self->velocityX >> 3;
             self->velocityY -= self->velocityY >> 3;
             if (!--self->ext.imp.timer) {
@@ -357,7 +355,7 @@ void EntityImp(Entity* self) {
             }
             break;
         case 2:
-            self->facingLeft = ((OVL_EXPORT(GetSideToPlayer)() & 1) ^ 1);
+            self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
             if (!self->facingLeft) {
                 self->velocityX = FIX(2.5);
             } else {
@@ -366,10 +364,10 @@ void EntityImp(Entity* self) {
             self->step_s += 1;
             /* fallthrough */
         case 3:
-            OVL_EXPORT(AnimateEntity)(anim_imp, self);
-            OVL_EXPORT(MoveEntity)();
-            if (OVL_EXPORT(GetDistanceToPlayerX)() > 0x60) {
-                OVL_EXPORT(SetStep)(IMP_3);
+            AnimateEntity(anim_imp, self);
+            MoveEntity();
+            if (GetDistanceToPlayerX() > 0x60) {
+                SetStep(IMP_3);
             }
         }
         break;
@@ -384,17 +382,15 @@ void EntityImp(Entity* self) {
             self->step_s += 1;
             /* fallthrough */
         case 1:
-            OVL_EXPORT(AnimateEntity)(&anim_imp, self);
+            AnimateEntity(&anim_imp, self);
             self->rotate += 0x40;
-            OVL_EXPORT(MoveEntity)();
+            MoveEntity();
             self->velocityY += FIX(0.03125);
             if (!--self->ext.imp.timer) {
                 PlaySfxPositional(SFX_EXPLODE_E);
-                other =
-                    OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+                other = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (other != NULL) {
-                    OVL_EXPORT(CreateEntityFromEntity)
-                    (E_EXPLOSION, self, other);
+                    CreateEntityFromEntity(E_EXPLOSION, self, other);
                     other->params = EXPLOSION_FIREBALL;
                 }
                 DestroyEntity(self);
@@ -408,7 +404,7 @@ void EntityImp(Entity* self) {
 void EntityImpSmoke(Entity* self) {
     Entity* player;
     if (!self->step) {
-        OVL_EXPORT(InitializeEntity)(g_EInitImpSmoke);
+        InitializeEntity(g_EInitImpSmoke);
         self->zPriority = g_unkGraphicsStruct.g_zEntityCenter + 4;
         player = &PLAYER;
         self->posX.i.hi = player->posX.i.hi;
@@ -421,7 +417,7 @@ void EntityImpSmoke(Entity* self) {
         g_api.PlaySfx(SFX_BONE_THROW);
     }
     self->posY.val -= FIX(0.5);
-    if (OVL_EXPORT(AnimateEntity)(&anim_smoke, self) == 0) {
+    if (AnimateEntity(&anim_smoke, self) == 0) {
         DestroyEntity(self);
     }
 }

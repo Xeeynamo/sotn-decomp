@@ -68,7 +68,7 @@ void EntityBoneArkProjectile(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitBoneArkProjectile);
+        InitializeEntity(g_EInitBoneArkProjectile);
         self->drawFlags |= ENTITY_ROTATE;
         if (self->params) {
             self->drawFlags |= ENTITY_SCALEY | ENTITY_SCALEX;
@@ -141,8 +141,8 @@ void EntityBoneArkProjectile(Entity* self) {
 
         break;
     case 1:
-        OVL_EXPORT(AnimateEntity)(anim_projectile, self);
-        OVL_EXPORT(MoveEntity)();
+        AnimateEntity(anim_projectile, self);
+        MoveEntity();
 
         // Projectile decreases in speed as it travels
         self->ext.boneArk.projectileVelocity -= FIX(0.25);
@@ -167,10 +167,10 @@ void EntityBoneArkProjectile(Entity* self) {
             self->ext.boneArk.unk8C.i.lo = 0;
             self->step++;
             lightningBallEntity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+                AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (lightningBallEntity != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)
-                (E_BONE_ARK_PROJECTILE, self, lightningBallEntity);
+                CreateEntityFromEntity(
+                    E_BONE_ARK_PROJECTILE, self, lightningBallEntity);
                 lightningBallEntity->params = 1;
                 lightningBallEntity->ext.boneArk.entity = self;
                 self->ext.boneArk.entity = lightningBallEntity;
@@ -181,7 +181,7 @@ void EntityBoneArkProjectile(Entity* self) {
         break;
     case 2:
         self->rotate += ROT(135);
-        OVL_EXPORT(AnimateEntity)(anim_lightning, self);
+        AnimateEntity(anim_lightning, self);
         switch (self->step_s) {
         case 0:
             self->scaleX += 0x10;
@@ -259,7 +259,7 @@ void EntityBoneArkProjectile(Entity* self) {
         break;
     case 3:
         if (self->animCurFrame) {
-            OVL_EXPORT(AnimateEntity)(anim_lightning, self);
+            AnimateEntity(anim_lightning, self);
         }
         self->opacity -= 4;
         self->scaleX += 0x20;
@@ -423,7 +423,7 @@ static void DrawChargeLines(Primitive* prim) {
 
     switch (prim->p1) {
     case 0:
-        var_s2 = (OVL_EXPORT(Random)() & 0x1F);
+        var_s2 = (Random() & 0x1F);
         var_s2 = var_s2 + 0x70 + (g_CurrentEntity->rotate / 16);
         prim->x0 = g_CurrentEntity->posX.i.hi +
                    ((rcos((var_s2) * 0x10) * 0x78) >> 0xC);
@@ -536,7 +536,7 @@ void EntityBoneArkAttackEffects(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitBoneArkAttackEffects);
+        InitializeEntity(g_EInitBoneArkAttackEffects);
         self->animCurFrame = 0x2A;
         self->palette = PAL_FLAG(PAL_BONE_ARK_PROJECTILE);
         self->drawFlags = ENTITY_OPACITY | ENTITY_ROTATE | ENTITY_SCALEX;
@@ -637,7 +637,7 @@ void EntityBoneArkSkull(Entity* self) {
         PlaySfxPositional(SFX_QUICK_STUTTER_EXPLODE_B);
         self->animCurFrame = 0;
         self->hitboxState = 0;
-        OVL_EXPORT(SetStep)(7);
+        SetStep(7);
         boneArkEntity->ext.boneArk.headDying |= 1;
         if (self->flags & FLAG_HAS_PRIMS) {
             primIndex = self->primIndex;
@@ -653,7 +653,7 @@ void EntityBoneArkSkull(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitBoneArkAttackEffects);
+        InitializeEntity(g_EInitBoneArkAttackEffects);
         self->ext.boneArk.unk80 = 0x800;
         self->zPriority = (self - self->params)->zPriority + 2;
         self->drawFlags |= ENTITY_ROTATE;
@@ -715,10 +715,9 @@ void EntityBoneArkSkull(Entity* self) {
         }
         break;
     case 3:
-        entity = OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            OVL_EXPORT(CreateEntityFromEntity)
-            (E_BONE_ARK_ATTACK_EFFECTS, self, entity);
+            CreateEntityFromEntity(E_BONE_ARK_ATTACK_EFFECTS, self, entity);
             entity->ext.boneArk.entity = self;
             self->ext.boneArk.entity = entity;
         } else {
@@ -741,11 +740,9 @@ void EntityBoneArkSkull(Entity* self) {
     case 5:
         if (self->ext.boneArk.unk90) {
             g_api.PlaySfx(SFX_START_SLAM_B);
-            entity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[160], &g_Entities[192]);
+            entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)
-                (E_BONE_ARK_PROJECTILE, self, entity);
+                CreateEntityFromEntity(E_BONE_ARK_PROJECTILE, self, entity);
                 entity->facingLeft = self->facingLeft;
                 entity->ext.boneArk.unk94 = self->ext.boneArk.unk94;
                 if (self->facingLeft) {
@@ -791,10 +788,9 @@ void EntityBoneArkSkull(Entity* self) {
     case 7:
         switch (self->step_s) {
         case 0:
-            entity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
+                CreateEntityFromEntity(E_EXPLOSION, self, entity);
                 entity->params = 1;
             }
             self->step_s++;
@@ -834,7 +830,7 @@ void EntityBoneArkUpperNeck(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitBoneArkNeck);
+        InitializeEntity(g_EInitBoneArkNeck);
         self->animCurFrame = 0x10;
         self->zPriority = (self - self->params)->zPriority + 1;
         // fallthrough
@@ -854,10 +850,9 @@ void EntityBoneArkUpperNeck(Entity* self) {
     case 2:
         // Wait a short delay after the head explodes to also explode the neck
         if (!self->ext.boneArk.unk8C.i.lo) {
-            entity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
+                CreateEntityFromEntity(E_EXPLOSION, self, entity);
                 entity->params = 0;
                 entity->drawFlags |= ENTITY_ROTATE;
                 entity->rotate = self->ext.boneArk.unk80 - ROT(90);
@@ -889,7 +884,7 @@ void EntityBoneArkLowerNeck(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(g_EInitBoneArkNeck);
+        InitializeEntity(g_EInitBoneArkNeck);
         self->animCurFrame += self->params - 1;
         // fallthrough
     case 1:
@@ -925,31 +920,29 @@ static void RenderDeathParts(Primitive* prim) {
     switch (prim->next->u2) {
     case 0:
         LOW(prim->next->u0) = (prim->next->r3 % 2) * 0x18000 - 0xC000;
-        LOW(prim->next->u0) += ((OVL_EXPORT(Random)() & 3) << 0xD) - 0x4000;
+        LOW(prim->next->u0) += ((Random() & 3) << 0xD) - 0x4000;
         LOW(prim->next->r1) = -0x40000;
         LOW(prim->next->r1) -= (prim->next->r3 >> 1) << 0xD;
-        LOW(prim->next->r1) += ((OVL_EXPORT(Random)() & 3) << 0xE) - 0x8000;
+        LOW(prim->next->r1) += ((Random() & 3) << 0xE) - 0x8000;
         prim->next->u2 = 1;
         break;
     case 1:
         UnkPrimHelper(prim);
         if (prim->next->r3 % 2) {
             LOH(prim->next->tpage) += 0xD0 - ((prim->next->r3 >> 1) * 0x60);
-            prim->next->x3 += ((OVL_EXPORT(Random)() & 3) * 0x10) + 0x100;
-            prim->next->y3 += ((OVL_EXPORT(Random)() & 3) * 0x10) + 0x20;
+            prim->next->x3 += ((Random() & 3) * 0x10) + 0x100;
+            prim->next->y3 += ((Random() & 3) * 0x10) + 0x20;
         } else {
             LOH(prim->next->tpage) -= 0xD0 - ((prim->next->r3 >> 1) * 0x60);
-            prim->next->x3 -= ((OVL_EXPORT(Random)() & 3) * 0x10) + 0x100;
-            prim->next->y3 -= ((OVL_EXPORT(Random)() & 3) * 0x10) + 0x20;
+            prim->next->x3 -= ((Random() & 3) * 0x10) + 0x100;
+            prim->next->y3 -= ((Random() & 3) * 0x10) + 0x20;
         }
 
         LOW(prim->next->r1) += 0x3000 - ((prim->next->r3 >> 1) << 0xC);
         if (LOW(prim->next->r1) > ((prim->next->r3 >> 1) << 0xF) + 0x34000) {
-            newEntity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                OVL_EXPORT(CreateEntityFromCurrentEntity)
-                (E_EXPLOSION, newEntity);
+                CreateEntityFromCurrentEntity(E_EXPLOSION, newEntity);
 
                 if (prim->next->r3 >> 1) {
                     newEntity->params = EXPLOSION_SMALL_MULTIPLE;
@@ -996,12 +989,12 @@ void EntityBoneArk(Entity* self) {
     FntPrint("main_step_s %x\n", self->step_s);
     FntPrint("hd_flag %x\n", self->ext.boneArk.headDying);
     if (self->ext.boneArk.headDying && self->step < DEATH) {
-        OVL_EXPORT(SetStep)(DEATH);
+        SetStep(DEATH);
     }
 
     switch (self->step) {
     case INIT:
-        OVL_EXPORT(InitializeEntity)(g_EInitBoneArk);
+        InitializeEntity(g_EInitBoneArk);
         self->drawFlags |= ENTITY_ROTATE;
         self->hitboxState = 0;
         self->rotate = 0;
@@ -1009,14 +1002,14 @@ void EntityBoneArk(Entity* self) {
 
         // Spawn the two skeletons which hold the ark
         entity = self - 1;
-        OVL_EXPORT(CreateEntityFromEntity)(E_BONE_ARK_SKELETON, self, entity);
+        CreateEntityFromEntity(E_BONE_ARK_SKELETON, self, entity);
         entity->posX.i.hi -= 0x18;
         entity->params = 1;
         entity->ext.boneArk.skeletonPosX = entity->posX.i.hi;
         entity->ext.boneArk.skeletonPosY = entity->posY.i.hi - 0x14;
 
         entity = self - 2;
-        OVL_EXPORT(CreateEntityFromEntity)(E_BONE_ARK_SKELETON, self, entity);
+        CreateEntityFromEntity(E_BONE_ARK_SKELETON, self, entity);
         entity->posX.i.hi += 0x16;
         entity->params = 2;
         entity->ext.boneArk.skeletonPosX = entity->posX.i.hi;
@@ -1025,22 +1018,20 @@ void EntityBoneArk(Entity* self) {
         // Spawn 4 lower neck pieces that dangle below the ark
         for (i = 1; i < 5; i++) {
             entity = &self[i];
-            OVL_EXPORT(CreateEntityFromEntity)
-            (E_BONE_ARK_LOWER_NECK, self, entity);
+            CreateEntityFromEntity(E_BONE_ARK_LOWER_NECK, self, entity);
             entity->params = i;
         }
 
         // Spawn 4 upper neck pieces that support the skull
         for (i = 5; i < 9; i++) {
             entity = &self[i];
-            OVL_EXPORT(CreateEntityFromEntity)
-            (E_BONE_ARK_UPPER_NECK, self, entity);
+            CreateEntityFromEntity(E_BONE_ARK_UPPER_NECK, self, entity);
             entity->params = i;
         }
 
         // Spawn the skull
         entity = self + 9;
-        OVL_EXPORT(CreateEntityFromEntity)(E_BONE_ARK_SKULL, self, entity);
+        CreateEntityFromEntity(E_BONE_ARK_SKULL, self, entity);
         entity->params = 9;
 
         self->ext.boneArk.unk88.i.lo = 0x400;
@@ -1152,10 +1143,9 @@ void EntityBoneArk(Entity* self) {
             break;
         case 1:
             PlaySfxPositional(SFX_FM_THUNDER_EXPLODE);
-            entity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)(E_EXPLOSION, self, entity);
+                CreateEntityFromEntity(E_EXPLOSION, self, entity);
                 entity->params = 1;
             }
 
@@ -1221,7 +1211,7 @@ void EntityBoneArk(Entity* self) {
             }
 
             if (!var_s5) {
-                OVL_EXPORT(PreventEntityFromRespawning)(self);
+                PreventEntityFromRespawning(self);
                 DestroyEntity(self);
                 return;
             }
@@ -1297,8 +1287,8 @@ void EntityBoneArkSkeleton(Entity* self) {
 
     if (self->ext.boneArk.unk90 == 0xFF) {
         if (!(self->flags & FLAG_DEAD)) {
-            self->facingLeft = OVL_EXPORT(GetSideToPlayer)() & 1;
-            OVL_EXPORT(SetStep)(FLEE);
+            self->facingLeft = GetSideToPlayer() & 1;
+            SetStep(FLEE);
             self->hitboxHeight = 0x12;
             self->hitboxOffY = 0;
             self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
@@ -1316,16 +1306,16 @@ void EntityBoneArkSkeleton(Entity* self) {
         if (!self->ext.boneArk.skeletonDied) {
             otherSkeletonEntity->ext.boneArk.skeletonDied = true;
         }
-        OVL_EXPORT(SetStep)(DEATH);
+        SetStep(DEATH);
     }
 
     switch (self->step) {
     case INIT:
-        OVL_EXPORT(InitializeEntity)(g_EInitBoneArkSkeleton);
+        InitializeEntity(g_EInitBoneArkSkeleton);
         self->zPriority = boneArkEntity->zPriority + 1 - self->params;
         // fallthrough
     case DROP_TO_GROUND:
-        if (OVL_EXPORT(UnkCollisionFunc3)(sensors_ground) & 1) {
+        if (UnkCollisionFunc3(sensors_ground) & 1) {
             self->pose = self->params;
             self->step++;
         }
@@ -1349,8 +1339,8 @@ void EntityBoneArkSkeleton(Entity* self) {
             self->step_s++;
         }
 
-        OVL_EXPORT(AnimateEntity)(anim_skeleton_walk, self);
-        collisionDetected = OVL_EXPORT(UnkCollisionFunc2)(sensors_skeleton);
+        AnimateEntity(anim_skeleton_walk, self);
+        collisionDetected = UnkCollisionFunc2(sensors_skeleton);
         if (collisionDetected & 0x80) {
             if (self->params == 1) {
                 otherSkeletonEntity->posX.val -= otherSkeletonEntity->velocityX;
@@ -1365,7 +1355,7 @@ void EntityBoneArkSkeleton(Entity* self) {
 
         if (self->ext.boneArk.crouching) {
             self->velocityX = 0;
-            OVL_EXPORT(SetStep)(CROUCH);
+            SetStep(CROUCH);
         }
 
         break;
@@ -1387,7 +1377,7 @@ void EntityBoneArkSkeleton(Entity* self) {
         case 2:
             if (!self->ext.boneArk.unk8C.i.hi) {
                 boneArkEntity->ext.boneArk.unk90 |= 1 << self->params;
-                OVL_EXPORT(SetStep)(STAND);
+                SetStep(STAND);
             } else {
                 self->ext.boneArk.unk8C.i.hi--;
             }
@@ -1398,7 +1388,7 @@ void EntityBoneArkSkeleton(Entity* self) {
         if (boneArkEntity->step == IDLE_WALK) {
             self->hitboxHeight = 0x12;
             self->hitboxOffY = 0;
-            OVL_EXPORT(SetStep)(DROP_TO_GROUND);
+            SetStep(DROP_TO_GROUND);
         }
         break;
     case FLEE:
@@ -1406,9 +1396,9 @@ void EntityBoneArkSkeleton(Entity* self) {
         switch (self->step_s) {
         case 16:
         case 0:
-            collisionDetected = OVL_EXPORT(UnkCollisionFunc2)(sensors_skeleton);
-            if (!OVL_EXPORT(AnimateEntity)(anim_skeleton_flee, self)) {
-                self->facingLeft = OVL_EXPORT(GetSideToPlayer)() & 1;
+            collisionDetected = UnkCollisionFunc2(sensors_skeleton);
+            if (!AnimateEntity(anim_skeleton_flee, self)) {
+                self->facingLeft = GetSideToPlayer() & 1;
             }
 
             if (collisionDetected == 0xFF) {
@@ -1433,21 +1423,19 @@ void EntityBoneArkSkeleton(Entity* self) {
             break;
         case 17:
         case 1:
-            if (OVL_EXPORT(UnkCollisionFunc3)(sensors_ground) & 1) {
+            if (UnkCollisionFunc3(sensors_ground) & 1) {
                 self->step_s--;
             }
             break;
         }
         break;
     case DEATH:
-        if (!OVL_EXPORT(AnimateEntity)(anim_skeleton_death, self)) {
+        if (!AnimateEntity(anim_skeleton_death, self)) {
             PlaySfxPositional(SFX_FM_STUTTER_EXPLODE);
             self->animCurFrame = 0;
-            newEntity =
-                OVL_EXPORT(AllocEntity)(&g_Entities[224], &g_Entities[256]);
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                OVL_EXPORT(CreateEntityFromEntity)
-                (E_EXPLOSION, self, newEntity);
+                CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                 newEntity->posY.i.hi += 0xA;
                 newEntity->params = 2;
             }
@@ -1456,7 +1444,7 @@ void EntityBoneArkSkeleton(Entity* self) {
         }
         break;
     case POST_DEATH:
-        OVL_EXPORT(UnkCollisionFunc2)(sensors_skeleton);
+        UnkCollisionFunc2(sensors_skeleton);
         self->velocityX = otherSkeletonEntity->velocityX;
         if (self->ext.boneArk.crouching) {
             boneArkEntity->ext.boneArk.unk90 |= 1 << self->params;

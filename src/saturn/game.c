@@ -4,6 +4,8 @@
 #include "game.h"
 #include "lib/scl.h"
 
+void PlaySfx(s32 sfxId);
+
 bool func_800F27F4(s32 arg0) {
     if (arg0 == 0) {
         if (g_unkGraphicsStruct.D_800973FC != 0 || D_8006BB00 != 0) {

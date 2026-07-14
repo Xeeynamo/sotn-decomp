@@ -877,7 +877,6 @@ u32 SquareRoot0(s32);
 s32 func_800F4D38(s32, s32);
 void func_800F4994(void);
 extern int rand(void);
-void PlaySfx(s32 sfxId);
 
 // Not 100% sure about address, gcc seems to added the offset within
 // the struct to the base address

@@ -695,7 +695,7 @@ void MarEntitySmokePuff(Entity* self) {
         self->velocityY = velocity_x_80154C5C[paramsLo];
         if (paramsHi == 1) {
             self->velocityY = FIX(-0.25);
-            MarSetSpeedX(-0x3000);
+            MarSetSpeedX(FIX(-0.1875));
             self->scaleX = rot_x_80154C74[1] + 0x40;
         }
         if (paramsHi == 5) {
@@ -703,7 +703,7 @@ void MarEntitySmokePuff(Entity* self) {
         }
         if (paramsHi == 2) {
             self->velocityY = FIX(-0.5);
-            MarSetSpeedX(-0x3000);
+            MarSetSpeedX(FIX(-0.1875));
             self->scaleX = rot_x_80154C74[1] + 0x40;
         }
         self->scaleY = self->scaleX;
@@ -1295,7 +1295,7 @@ static s32 NormalizeAngle(s32 angle) {
     return angle;
 }
 
-static u16 D_pspeu_092C59E8[][2] = {
+static AnimationFrame D_pspeu_092C59E8[] = {
     POSE(5, 1, 0),  POSE(1, 2, 0), POSE(1, 3, 0), POSE(1, 4, 0), POSE(3, 5, 0),
     POSE(3, 6, 0),  POSE(2, 7, 0), POSE(4, 8, 0), POSE(2, 7, 0), POSE(3, 9, 0),
     POSE(3, 10, 0), POSE(1, 4, 0), POSE(1, 3, 0), POSE(1, 2, 0), POSE_LOOP(0)};

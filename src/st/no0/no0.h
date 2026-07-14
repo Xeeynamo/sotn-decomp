@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+#include "stage.h"
+
 #define STAGE_IS_NO0
+
 #define OVL_EXPORT(x) NO0_##x
-#include <stage.h>
 
 void EntityExplosionVariants(Entity* entity);
 void EntityGreyPuff(Entity* entity);
@@ -109,20 +111,20 @@ extern Primitive* FindFirstUnkPrim(Primitive* poly);
 
 extern EInit OVL_EXPORT(EInitBreakable);
 extern EInit OVL_EXPORT(EInitObtainable);
-extern EInit OVL_EXPORT(EInitParticle);
+extern EInit g_EInitParticle;
 extern EInit D_us_80180A88;
-extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit g_EInitInteractable;
 extern EInit D_us_80180AA0;
 extern EInit D_us_80180AAC;
 extern EInit D_us_80180AB8;
 extern EInit D_us_80180AC4;
-extern EInit OVL_EXPORT(EInitUnkId13);
-extern EInit OVL_EXPORT(EInitLockCamera);
-extern EInit OVL_EXPORT(EInitCommon);
+extern EInit g_EInitUnkId13;
+extern EInit g_EInitLockCamera;
+extern EInit g_EInitCommon;
 extern EInit g_EInitStoneRose;
 extern EInit D_us_80180B00;
 extern EInit D_us_80180B0C;
-extern EInit OVL_EXPORT(EInitDamageNum);
+extern EInit g_EInitDamageNum;
 extern EInit g_EInitDiplocephalus;
 extern EInit g_EInitDiplocephalusFoot;
 extern EInit D_us_80180B3C;

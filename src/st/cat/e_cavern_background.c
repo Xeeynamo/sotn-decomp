@@ -34,7 +34,7 @@ void EntityCavernBackgroundLossoth(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         g_api.func_800EA5E4(0xC001);
         // fallthrough
     case 1:
@@ -192,7 +192,7 @@ void EntityCavernBackgroundDiscusLord(Entity* self) {
 
     switch (self->step) {
     case 0:
-        OVL_EXPORT(InitializeEntity)(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         g_api.func_800EA5E4(0xC002);
         // Position is offset so it doesn't clip into the transparent lava
         self->posY.i.hi = 0x180 - g_Tilemap.scrollY.i.hi;
