@@ -315,7 +315,13 @@ s32 LoadFileSimToMem(SimKind kind) {
 
 bool LoadFilePc(const struct FileUseContent* file) {
     SimFile* sim = (SimFile*)file->param;
-    sim->addr = file->content;
+    if (sim->kind == SIM_VH || sim->kind == SIM_VB) {
+        // file->content is freed after the call, but sound file data must
+        // remain present in memory. Just do a memcpy to solve it.
+        memcpy(sim->addr, file->content, file->length);
+    } else {
+        sim->addr = file->content;
+    }
     switch (sim->kind) { // slowly replacing the original func
     case SIM_1:
         LoadStageTileset(sim->addr, file->length, 0x100);
@@ -547,6 +553,7 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
                      g_StagesLba[g_StageId].ovlName,
                      g_StagesLba[g_StageId].ovlName);
             sim.path = sim.path;
+            sim.addr = D_80280000;
             sim.size = g_StagesLba[g_StageId].vbLen;
             sim.kind = SIM_VB;
         }
