@@ -164,6 +164,7 @@ set(SOURCE_FILES_TT_000
     src/servant/tt_000/bat.c
     src/servant/tt_000/servant_clutdata.c
     src/servant/tt_000/servant_spriteparts.c
+    src/pc/servants/servant_000.c
 )
 
 set(SOURCE_FILES_TT_001
@@ -171,12 +172,14 @@ set(SOURCE_FILES_TT_001
     src/servant/tt_001/ghost.c
     src/servant/tt_001/servant_clutdata.c
     src/servant/tt_001/servant_spriteparts.c
+    src/pc/servants/servant_001.c
 )
 
 set(SOURCE_FILES_TT_002
     src/servant/tt_002/init.c
     src/servant/tt_002/faerie.c
     src/servant/tt_002/faerie_spriteparts.c
+    src/pc/servants/servant_002.c
 )
 
 set(SOURCE_FILES_STAGE_SEL
@@ -436,9 +439,6 @@ set(SOURCE_FILES_CORE
     ${SOURCE_FILES_DRA}
     ${SOURCE_FILES_RIC}
     ${SOURCE_FILES_WEAPON}
-#    ${SOURCE_FILES_TT_000}
-#    ${SOURCE_FILES_TT_001}
-#    ${SOURCE_FILES_TT_002}
 )
 if (USE_PLAYER_MARIA)
     add_compile_definitions(USE_PLAYER_MARIA)
@@ -538,3 +538,7 @@ add_overlay(sel ${SOURCE_FILES_STAGE_SEL})
 add_overlay(wrp ${SOURCE_FILES_STAGE_WRP})
 add_overlay(nz0 ${SOURCE_FILES_STAGE_NZ0})
 add_overlay(st0 ${SOURCE_FILES_STAGE_ST0})
+
+add_overlay(tt_000 ${SOURCE_FILES_TT_000})
+add_overlay(tt_001 ${SOURCE_FILES_TT_001})
+add_overlay(tt_002 ${SOURCE_FILES_TT_002})

@@ -97,8 +97,8 @@ static const char* GetExeDir(void) {
     return dir;
 }
 
-static OvlHandle CurrentStageOverlay = NULL;
-bool LoadStageOverlay(const char* name, Overlay* o) {
+static void* OpenOverlayEntrypoint(
+    const char* name, const char* entrypointName, OvlHandle* outHandle) {
     char path[512];
     const char* exeDir = GetExeDir();
     if (exeDir) {
@@ -112,23 +112,50 @@ bool LoadStageOverlay(const char* name, Overlay* o) {
     OvlHandle handle = OvlOpen(path);
     if (!handle) {
         ERRORF("failed to load '%s': %s", path, OvlError());
-        return false;
+        return NULL;
     }
 
-    PfnInitStage entrypoint = (PfnInitStage)OvlSym(handle, OVL_ENTRYPOINT_NAME);
+    void* entrypoint = OvlSym(handle, entrypointName);
     if (!entrypoint) {
         ERRORF("failed as '%s' has no '%s' entrypoint: %s", path,
-               OVL_ENTRYPOINT_NAME, OvlError());
+               entrypointName, OvlError());
         OvlClose(handle);
-        return false;
+        return NULL;
     }
 
+    INFOF("loaded '%s'", path);
+    *outHandle = handle;
+    return entrypoint;
+}
+
+static OvlHandle CurrentStageOverlay = NULL;
+bool LoadStageOverlay(const char* name, Overlay* o) {
+    OvlHandle handle;
+    PfnInitStage entrypoint = (PfnInitStage)OpenOverlayEntrypoint(
+        name, OVL_STAGE_ENTRYPOINT_NAME, &handle);
+    if (!entrypoint) {
+        return false;
+    }
     if (CurrentStageOverlay) {
         OvlClose(CurrentStageOverlay);
     }
     CurrentStageOverlay = handle;
+    entrypoint(o);
+    return true;
+}
 
-    INFOF("loaded '%s'", path);
+static OvlHandle CurrentServantOverlay = NULL;
+bool LoadServantOverlay(const char* name, ServantDesc* o) {
+    OvlHandle handle;
+    PfnInitServant entrypoint = (PfnInitServant)OpenOverlayEntrypoint(
+        name, OVL_SERVANT_ENTRYPOINT_NAME, &handle);
+    if (!entrypoint) {
+        return false;
+    }
+    if (CurrentServantOverlay) {
+        OvlClose(CurrentServantOverlay);
+    }
+    CurrentServantOverlay = handle;
     entrypoint(o);
     return true;
 }
