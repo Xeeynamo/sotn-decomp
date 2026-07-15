@@ -914,6 +914,8 @@ files:
           - [0x558, gfx_banks, graphics_banks]
           - [0x820, layout, entity_layouts]
           - [0x9C8, skip]
+          - [0x233C, rooms, rooms]
+          - [0x23C8, skip]
           - [0x3834, cmpgfx, unused_cmpgfx, 128, 128, 4]
           - [0x3AF0, cmpgfx, D_80183AF0, 128, 128, 4]
           - [0x3FA8, cmpgfx, D_80183FA8, 128, 128, 4]
