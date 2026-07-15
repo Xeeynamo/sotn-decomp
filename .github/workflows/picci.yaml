@@ -7,6 +7,7 @@ on:
     paths:
       - 'include/**'
       - 'src/**'
+      - 'config/assets.*.yaml'
       - 'tools/sotn-assets/**'
       - 'cmake/**'
       - 'CMakeLists*'
@@ -15,6 +16,7 @@ on:
     paths:
       - 'include/**'
       - 'src/**'
+      - 'config/assets.*.yaml'
       - 'tools/sotn-assets/**'
       - 'cmake/**'
       - 'CMakeLists*'
