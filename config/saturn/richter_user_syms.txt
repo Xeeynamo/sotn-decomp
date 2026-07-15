@@ -199,3 +199,6 @@ _CheckCollision = 0x607b7b4;
 _DestroyEntity = 0x0600ffb8;
 _D_8015577C = 0x060c0010;
 _PlaySfx = 0x06011278;
+_g_GameTimer = 0x0605CD50;
+_D_80155528 = 0x060BFDBC;
+_DAT_0605d750 = 0x0605D750;
