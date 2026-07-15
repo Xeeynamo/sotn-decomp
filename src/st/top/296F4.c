@@ -816,8 +816,47 @@ void func_us_801AABA4(Entity* self) {
 
 extern u8 D_us_80180CF0[];
 
-#define STAGE_EINIT_COMMON g_EInitTOPCommon
-#include "../e_lion_lamp.h"
+extern u8 LionLampAnim[];
+
+void EntityLionLamp(Entity* self) {
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitTOPCommon);
+        self->zPriority = 0x58;
+        // fallthrough
+
+    case 1:
+        AnimateEntity(LionLampAnim, self);
+        if (g_Timer & 1) {
+            self->palette = 0;
+        } else {
+            self->palette = 1;
+        }
+        break;
+
+    case 0xFF:
+        FntPrint("charal %x\n", self->animCurFrame);
+        if (g_pads[1].pressed & PAD_SQUARE) {
+            if (self->params) {
+                return;
+            }
+            self->animCurFrame++;
+            self->params |= 1;
+        } else {
+            self->params = 0;
+        }
+
+        if (g_pads[1].pressed & PAD_CIRCLE) {
+            if (self->step_s == 0) {
+                self->animCurFrame--;
+                self->step_s |= 1;
+            }
+        } else {
+            self->step_s = 0;
+        }
+        break;
+    }
+}
 
 extern u8 D_us_80180CFC[];
 
