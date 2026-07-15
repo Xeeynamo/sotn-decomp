@@ -288,8 +288,7 @@ void RicStepBladeDash(void) {
     if (PLAYER.poseTimer < 0) {
         g_Player.unk46 = 0;
         RicSetStand(0);
-    } else if (PLAYER.pose >= 0x12 &&
-               !(g_Player.vram_flag & TOUCHING_GROUND)) {
+    } else if (PLAYER.pose >= 0x12 && !(g_Player.vram_flag & TOUCHING_GROUND)) {
         g_Player.unk46 = 0;
         RicSetFall();
     } else {
