@@ -40,7 +40,7 @@ PfnEntityUpdate EntityUpdates[] = {
     func_us_801A95F4,    func_us_801A9208,        func_us_801A9944,
 };
 
-EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_DRA(3), 0, 0, 0x0, 0};
+EInit g_EInitBreakable = {ANIMSET_DRA(3), 0, 0, 0x0, 0};
 
 #include "../../st/e_init_common.h"
 

@@ -21,7 +21,7 @@ extern s32 E_ID(BACKGROUND_BLOCK);
 extern s32 E_ID(BREAKABLE_DEBRIS);
 #endif
 
-extern EInit OVL_EXPORT(EInitBreakable);
+extern EInit g_EInitBreakable;
 
 static AnimateEntityFrame anim_brazier_short[] = {
     {3, 14}, {4, 15}, {4, 16}, {4, 17},
@@ -58,7 +58,7 @@ void EntityBreakable(Entity* self) {
 
     breakableType = self->params >> 12;
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitBreakable));
+        InitializeEntity(g_EInitBreakable);
         self->zPriority = BREAKABLE_ZPRIORITY;
         self->blendMode = blend_modes[breakableType];
         self->hitboxHeight = hitbox_heights[breakableType];
@@ -142,7 +142,7 @@ void EntityBreakableDebris(Entity* self) {
 
     switch (self->step) {
     case INIT:
-        InitializeEntity(OVL_EXPORT(EInitBreakable));
+        InitializeEntity(g_EInitBreakable);
 #ifndef NO_HITBOX_STATE
         self->hitboxState = 0;
 #endif

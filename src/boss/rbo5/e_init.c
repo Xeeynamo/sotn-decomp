@@ -45,7 +45,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityUnkId1C,       EntityLifeUpSpawn,       EntityUnkId1E,
 };
 
-EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_DRA(3), 0, 0x00, 0x000, 0};
+EInit g_EInitBreakable = {ANIMSET_DRA(3), 0, 0x00, 0x000, 0};
 
 #include "../../st/e_init_common.h"
 

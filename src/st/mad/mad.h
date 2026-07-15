@@ -82,7 +82,7 @@ extern u8 g_UnkEntityAnimData[];
 // extern u16 g_jewelSwordDropTable;
 extern RoomHeader g_rooms[];
 
-extern EInit OVL_EXPORT(EInitBreakable);
+extern EInit g_EInitBreakable;
 extern u8 blend_modes[];
 
 extern s16 D_80199DE8;

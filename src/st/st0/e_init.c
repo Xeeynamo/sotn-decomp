@@ -97,7 +97,7 @@ PfnEntityUpdate EntityUpdates[] = {
     func_801BC5C0,
 };
 
-EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_DRA(3), 0, 0x7C, 0x0100, 0};
+EInit g_EInitBreakable = {ANIMSET_DRA(3), 0, 0x7C, 0x0100, 0};
 EInit g_EInitObtainable = {ANIMSET_OVL(3), 0x0000, 0x007C, 0x0100, 0x0001};
 EInit g_EInitParticle = {0x0003, 0x0000, 0x0000, 0x0000, 0x0002};
 EInit g_EInitCutscene = {0x0000, 0x0000, 0x0000, 0x0000, 0x0004};

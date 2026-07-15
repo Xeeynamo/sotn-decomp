@@ -86,7 +86,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntitySkullLordPieces,
 };
 
-EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_OVL(1), 0, 0, 0x0, 0};
+EInit g_EInitBreakable = {ANIMSET_OVL(1), 0, 0, 0x0, 0};
 
 #include "../e_init_common.h"
 

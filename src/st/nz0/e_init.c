@@ -159,7 +159,7 @@ PfnEntityUpdate EntityUpdates[] = {
     func_801B8E0C,
 };
 
-EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_DRA(3), 0, 0x00, 0x000, 0};
+EInit g_EInitBreakable = {ANIMSET_DRA(3), 0, 0x00, 0x000, 0};
 #include "../e_init_common.h"
 EInit g_EInitEnemy3 = {ANIMSET_OVL(1), 0, 0x00, 0x000, 3};
 EInit g_EInitBloodSkeleton = {0x8002, 0x0000, 0x004C, 0x0200, 0x0046};

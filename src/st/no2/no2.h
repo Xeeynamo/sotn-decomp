@@ -97,7 +97,7 @@ enum EntityIDs {
 extern Primitive* FindFirstUnkPrim(Primitive* prim);
 extern Primitive* FindFirstUnkPrim2(Primitive* prim, u8 index);
 
-extern EInit OVL_EXPORT(EInitBreakable);
+extern EInit g_EInitBreakable;
 extern EInit g_EInitObtainable;
 extern EInit g_EInitParticle;
 extern EInit g_EInitSpawner;

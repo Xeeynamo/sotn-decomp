@@ -199,7 +199,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityWargExplosionPuffTransparent,
     EntityExplosionPuffOpaque};
 
-EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_DRA(3), 0, 0x00, 0x000, 0};
+EInit g_EInitBreakable = {ANIMSET_DRA(3), 0, 0x00, 0x000, 0};
 #include "../e_init_common.h"
 EInit g_EInitStInteractable = {0x8001, 0, 0x0, 0x0, 5};
 EInit g_EInitFireWarg1 = {0x8006, 1, 0x48, 0x2cb, 148};

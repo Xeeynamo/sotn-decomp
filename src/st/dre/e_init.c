@@ -79,7 +79,7 @@ PfnEntityUpdate EntityUpdates[] = {
 
 // clang-format off
 // animSet, animCurFrame, unk5A, palette, enemyID
-EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_OVL(1), 0, 0, PAL_NULL, 0x000};
+EInit g_EInitBreakable = {ANIMSET_OVL(1), 0, 0, PAL_NULL, 0x000};
 EInit g_EInitObtainable = {ANIMSET_DRA(3), 0, 0, PAL_NULL, 0x001};
 EInit g_EInitParticle = {ANIMSET_DRA(3), 0, 0, PAL_NULL, 0x002};
 EInit D_8018047C = {ANIMSET_DRA(0), 0, 0, PAL_NULL, 0x004};

@@ -50,7 +50,7 @@ typedef enum EntityIDs {
     /* 0x29 */ E_SKULL_LORD_PIECES,
 } EntityIDs;
 
-extern EInit OVL_EXPORT(EInitBreakable);
+extern EInit g_EInitBreakable;
 extern EInit g_EInitObtainable;
 extern EInit g_EInitParticle;
 extern EInit g_EInitSpawner;

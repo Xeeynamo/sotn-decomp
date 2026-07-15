@@ -124,7 +124,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntitySalemWitchTriboltProjectile,
 };
 
-EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_OVL(1), 0, 0, PAL_NULL, 0x000};
+EInit g_EInitBreakable = {ANIMSET_OVL(1), 0, 0, PAL_NULL, 0x000};
 #include "../e_init_common.h"
 EInit g_EInitFloorTrap = {ANIMSET_OVL(3), 0, 75, 0x200, 0x005};
 EInit g_EInitCtulhu = {ANIMSET_OVL(4), 0, 72, 0x209, 0x0E9};

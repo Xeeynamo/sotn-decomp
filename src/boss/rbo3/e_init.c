@@ -56,7 +56,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityClouds,          func_us_80193050,
 };
 
-EInit OVL_EXPORT(EInitBreakable) = {
+EInit g_EInitBreakable = {
     ANIMSET_DRA(3), 0x0000, 0x0000, PAL_NULL, 0x0000,
 };
 EInit g_EInitObtainable = {ANIMSET_DRA(3), 0x0000, 0x0000, PAL_NULL, 0x0001};

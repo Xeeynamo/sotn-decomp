@@ -102,7 +102,7 @@ PfnEntityUpdate EntityUpdates[] = {
 };
 
 // D_80180610
-EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_OVL(1), 0, 0x00, 0x000, 0};
+EInit g_EInitBreakable = {ANIMSET_OVL(1), 0, 0x00, 0x000, 0};
 
 #include "../e_init_common.h"
 

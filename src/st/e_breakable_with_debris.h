@@ -22,7 +22,7 @@ enum BreakableDebrisSteps {
 extern s32 E_ID(BREAKABLE_DEBRIS);
 #endif
 
-extern EInit OVL_EXPORT(EInitBreakable);
+extern EInit g_EInitBreakable;
 extern EInit g_EInitInteractable;
 extern EInit g_EInitParticle;
 
@@ -36,7 +36,7 @@ void EntityBreakable(Entity* self) {
 
     breakableType = self->params >> 12;
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitBreakable));
+        InitializeEntity(g_EInitBreakable);
         self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 20;
         self->blendMode = blend_modes[breakableType];
         self->hitboxHeight = hitbox_heights[breakableType];

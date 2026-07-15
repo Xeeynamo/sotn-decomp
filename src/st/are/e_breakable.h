@@ -6,7 +6,7 @@ extern EInit g_EInitEnvironmentBreakable;
 extern EInit g_EInitEnvironment;
 #endif
 extern EInit g_EInitParticle;
-extern EInit OVL_EXPORT(EInitBreakable);
+extern EInit g_EInitBreakable;
 
 #ifdef VERSION_PSP
 extern s32 E_ID(BREAKABLE_DEBRIS);
@@ -86,7 +86,7 @@ void EntityBreakable(Entity* self) {
 
     breakableType = self->params >> 0xC;
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitBreakable));
+        InitializeEntity(g_EInitBreakable);
         self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 0x14;
         self->blendMode = blend_modes[breakableType];
         self->hitboxHeight = hitbox_heights[breakableType];

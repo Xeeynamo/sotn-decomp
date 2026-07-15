@@ -46,7 +46,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityUnkId1B,         EntityMovingElevator,
 };
 
-EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_OVL(1), 0, 0x00, 0x000, 0};
+EInit g_EInitBreakable = {ANIMSET_OVL(1), 0, 0x00, 0x000, 0};
 #ifndef VERSION_PSP
 #define USE_ENEMY_3
 #endif

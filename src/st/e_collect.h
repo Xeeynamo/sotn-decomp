@@ -710,7 +710,7 @@ void Unreferenced_MAD_ST0_func(Entity* self) {
         return;
     }
 
-    InitializeEntity(OVL_EXPORT(EInitBreakable));
+    InitializeEntity(g_EInitBreakable);
     self->animCurFrame = self->ext.unusedMadST0.animframe;
     self->velocityX = g_collectVelocity[self->ext.unusedMadST0.velIndex].x;
     self->velocityY = g_collectVelocity[self->ext.unusedMadST0.velIndex].y;
