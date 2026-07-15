@@ -60,7 +60,7 @@ segments:
       - [0x1340, .data, e_particles]
       - [0x13C0, .data, e_room_fg]
       - [0x144C, .data, e_tombstone]
-      - [0x1468, data]
+      - [0x1468, .data, e_yorick]
       - [0x151C, .data, e_skull_lord]
       - [0x1530, data]
       - [0x1A64, .data, gen/e_layout]
