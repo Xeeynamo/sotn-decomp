@@ -61,7 +61,7 @@ segments:
       - [0x111C, .data, d_prize_drops]
       - [0x1134, .data, e_boss_doors]
       - [0x115C, .data, e_karasuman]
-      - [0x1318, .data, st_update]
+      - [0x12F8, .data, st_update]
       - [0x1344, .data, collision]
       - [0x1704, .data, e_red_door]
       - [0x171C, .data, st_common]

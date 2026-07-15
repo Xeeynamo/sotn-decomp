@@ -1,13 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <game.h>
 
-#if !defined(STAGE_IS_CAT) && !defined(STAGE_IS_NZ1) &&                        \
-    !defined(STAGE_IS_ARE) && !defined(STAGE_IS_RARE) &&                       \
-    !defined(STAGE_IS_RNO3) && !defined(STAGE_IS_RCEN)
+// NOTE: take care here, this may appear merged with the end of the previous
+// data split but should reside here!
 static u16 unused[] UNUSED = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0001, 0x0000, 0x0001, 0x0000,
     0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0101};
-#endif
 
 // palette
 u16 UNK_Invincibility0[] = {
