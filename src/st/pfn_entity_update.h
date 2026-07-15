@@ -21,11 +21,11 @@ extern GAME_IMPORT LayoutEntity** g_pStObjLayoutVertical;
 #define PfnEntityUpdates EntityUpdates
 
 // A horizontally ordered array with head and tail sigils in the 1st field
-extern LayoutEntity* OVL_EXPORT(pStObjLayoutHorizontal)[];
-#define OBJ_LAYOUT_HORIZONTAL OVL_EXPORT(pStObjLayoutHorizontal)
+extern LayoutEntity* entityLayoutHorizontal[];
+#define OBJ_LAYOUT_HORIZONTAL entityLayoutHorizontal
 
 // A vertically ordered array with head and tail sigils in the 1st field
-extern LayoutEntity* OVL_EXPORT(pStObjLayoutVertical)[];
-#define OBJ_LAYOUT_VERTICAL OVL_EXPORT(pStObjLayoutVertical)
+extern LayoutEntity* entityLayoutVertical[];
+#define OBJ_LAYOUT_VERTICAL entityLayoutVertical
 
 #endif

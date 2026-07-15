@@ -4,7 +4,7 @@
 extern RoomHeader rooms[];
 extern s16** spriteBanks[];
 extern u_long* cluts[];
-extern LayoutEntity* OVL_EXPORT(pStObjLayoutHorizontal)[];
+extern LayoutEntity* entityLayoutHorizontal[];
 extern RoomDef rooms_layers[];
 extern u_long** gfxBanks[];
 extern u8 richter_sprites[];
@@ -17,7 +17,7 @@ AbbreviatedOverlay2 OVL_EXPORT(Overlay) = {
     .rooms = rooms,
     .spriteBanks = spriteBanks,
     .cluts = cluts,
-    .objLayoutHorizontal = OVL_EXPORT(pStObjLayoutHorizontal),
+    .objLayoutHorizontal = entityLayoutHorizontal,
     .tileLayers = rooms_layers,
     .gfxBanks = gfxBanks,
     .UpdateStageEntities = UpdateStageEntities,

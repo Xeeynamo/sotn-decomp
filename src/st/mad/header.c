@@ -4,7 +4,7 @@
 extern RoomHeader g_Rooms[];
 extern s16** spriteBanks[];
 extern u_long* cluts[];
-extern LayoutEntity* OVL_EXPORT(pStObjLayoutHorizontal)[];
+extern LayoutEntity* entityLayoutHorizontal[];
 extern RoomDef rooms_layers[];
 extern u_long** gfxBanks[];
 void func_8018E1D4();
@@ -17,7 +17,7 @@ static Overlay OVL_EXPORT(Overlay) = {
     .rooms = g_Rooms,
     .spriteBanks = spriteBanks,
     .cluts = cluts,
-    .objLayoutHorizontal = OVL_EXPORT(pStObjLayoutHorizontal),
+    .objLayoutHorizontal = entityLayoutHorizontal,
     .tileLayers = rooms_layers,
     .gfxBanks = gfxBanks,
     .UpdateStageEntities = UpdateStageEntities,
