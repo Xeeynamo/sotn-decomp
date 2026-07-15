@@ -5,6 +5,6 @@ gfxBanks = 0x80180490;
 entityLayoutHorizontal = 0x801804BC;
 entityLayoutVertical = 0x80180590;
 RARE_BackgroundBlockInit = 0x80180824;
-RARE_RedDoorTiles = 0x80180888;
+g_RedDoorTiles = 0x80180888;
 rooms = 0x80181C58;
 sprites_rare_4 = 0x801A4D58;

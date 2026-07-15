@@ -3,6 +3,6 @@ spriteBanks = 0x09253C50;
 rooms_layers = 0x09253DE0;
 cluts = 0x09253EC0;
 gfxBanks = 0x092540B8;
-RARE_RedDoorTiles = 0x092540E8;
+g_RedDoorTiles = 0x092540E8;
 rooms = 0x09254300;
 RARE_BackgroundBlockInit = 0x092728A8;

@@ -144,6 +144,6 @@ g_EInitGurkha = 0x0926B3D8;
 g_EInitGurkhaWeapon = 0x0926B3E8;
 g_EInitBlade = 0x0926B3F8;
 g_EInitBladeWeapon = 0x0926B408;
-NP3_RedDoorTiles = 0x0926B418;
+g_RedDoorTiles = 0x0926B418;
 rooms = 0x0926B438;
 NP3_Overlay = 0x0928E820;
