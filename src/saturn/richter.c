@@ -254,7 +254,32 @@ void RicStepGenericSubwpnCrash(void) {
 }
 
 // RicStepThrowDaggers
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8234, func_060A8234);
+extern s32 throw_dagger_timer;
+void RicStepThrowDaggers(void) {
+    if (PLAYER.step_s == 0) {
+        throw_dagger_timer = 0x200;
+        PLAYER.step_s++;
+    } else {
+        RicCheckFacing();
+        if (!--throw_dagger_timer) {
+            g_Player.unk46 = 0;
+            RicSetStand(0);
+            g_Player.unk4E = 1;
+        }
+    }
+    if (g_Player.padTapped & PAD_CROSS) {
+        RicSetJump();
+        g_Player.unk46 = 0;
+        g_Player.unk4E = 1;
+        throw_dagger_timer = 0;
+    }
+    if (!(g_Player.vram_flag & TOUCHING_GROUND)) {
+        RicSetFall();
+        g_Player.unk46 = 0;
+        g_Player.unk4E = 1;
+        throw_dagger_timer = 0;
+    }
+}
 
 // RicStepDeadPrologue
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A82F8, func_060A82F8);
@@ -854,7 +879,42 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AC2DC, func_060AC2DC);
 Entity* RicCreateEntFactoryFromEntity(
     Entity* source, u32 factoryParams, s32 arg2);
 // RicCreateEntFactoryFromEntity
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AC398, func_060AC398);
+Entity* RicCreateEntFactoryFromEntity(
+    Entity* source, u32 factoryParams, s32 arg2) {
+    Entity* entity;
+    Entity* current;
+    s16 i;
+    s16 end = 16;
+
+    current = &g_Entities[8];
+    for (i = 8; i < end; i++, current++) {
+        if (current->entityId == E_NONE) {
+            entity = current;
+            goto found;
+        }
+    }
+    entity = NULL;
+found:
+    if (!entity) {
+        return NULL;
+    }
+    DestroyEntity(entity);
+    entity->entityId = 1;
+    entity->ext.factory.parent = source;
+    entity->posX.val = source->posX.val;
+    entity->posY.val = source->posY.val;
+    entity->facingLeft = source->facingLeft;
+    entity->zPriority = source->zPriority;
+    entity->params = factoryParams & 0xFFF;
+    entity->ext.factory.paramsBase = (factoryParams & 0xFF0000) >> 8;
+    if (source->flags & FLAG_POS_CAMERA_LOCKED) {
+        entity->flags |= FLAG_POS_CAMERA_LOCKED;
+    }
+    if (source->flags & FLAG_UNK_10000) {
+        entity->flags |= FLAG_UNK_10000;
+    }
+    return entity;
+}
 
 // RicEntityFactory
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AC46C, func_060AC46C);
@@ -1222,7 +1282,44 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B9A2C, func_060B9A2C);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B9A50, func_060B9A50);
 
 // RicCheckHolyWaterCollision
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B9D6C, func_060B9D6C);
+s32 RicCheckHolyWaterCollision(s32 baseY, s32 baseX) {
+    Collider res1;
+    Collider res2;
+    s32 newY;
+    s32 x;
+    s32 y;
+    s32 collEffs;
+    const u32 colFullSet = 0xF801;
+    const u32 colSetNo800 = 0xF001;
+    const u32 colSet1 = 0x8801;
+    const u32 colSet2 = 0x8001;
+
+    x = g_CurrentEntity->posX.val + baseX;
+    y = g_CurrentEntity->posY.val + baseY;
+    CheckCollision(x, y, &res1, 0);
+    collEffs = res1.effects & colFullSet;
+    y = y - FIX(1) + res1.unk18;
+    CheckCollision(x, y, &res2, 0);
+    newY = g_CurrentEntity->posY.val + res1.unk18 + baseY;
+
+    if ((collEffs & colSet1) == EFFECT_SOLID ||
+        (collEffs & colSet1) == (EFFECT_UNK_0800 | EFFECT_SOLID)) {
+        collEffs = res2.effects & colSetNo800;
+        if (!(collEffs & EFFECT_SOLID)) {
+            g_CurrentEntity->posY.val = newY;
+            return 1;
+        }
+        if ((res2.effects & colSet2) == colSet2) {
+            g_CurrentEntity->posY.val = newY - FIX(1) + res2.unk18;
+            return collEffs;
+        }
+        return 0;
+    } else if ((collEffs & colSet2) == colSet2) {
+        g_CurrentEntity->posY.val = newY;
+        return collEffs & colSetNo800;
+    }
+    return 0;
+}
 
 #define EFFECT_UNK_0002 1 << 1
 

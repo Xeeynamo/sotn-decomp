@@ -22,6 +22,7 @@ typedef enum {
     PAD_NONE = 0x0000,
     PAD_L1 = 0x0008,
     PAD_R1 = 0x0080,
+    PAD_CROSS = 0x0100,
     PAD_UP = 0x1000,
     PAD_DOWN = 0x2000,
     PAD_LEFT = 0x4000,
@@ -169,6 +170,13 @@ typedef struct {
 } ET_AfterImage;
 
 typedef struct {
+    /* 0x78 */ u8 pad78[0x10];
+    /* 0x88 */ struct Entity* parent;
+    /* 0x8C */ u8 pad8C[0x10];
+    /* 0x9C */ u16 paramsBase;
+} ET_Factory;
+
+typedef struct {
     /* 0x7C */ u8 pad0[0x4];
     /* 0x80 */ u8* anim;
     /* 0x84 */ s16 unk84;
@@ -234,6 +242,7 @@ typedef struct {
 typedef union { // offset=0x78
     u8 base[0x38];
     ET_AfterImage afterImage; // g_Entities[1], not entityID 1
+    ET_Factory factory;
     ET_ExplosionPuffOpaque opaquePuff;
     ET_Subweapon subweapon;
     ET_BatFamBlueTrail batFamBlueTrail;
