@@ -806,6 +806,7 @@ const char* GetEquipmentName(EquipKind kind, s32 equipId);
 u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
 void GetSpellDef(SpellDef* spell, s32 id);
 void LearnSpell(s32 spellId);
+s32 HandleGravityBootsMP(CallMode mode);
 void func_800FDE00(void);
 s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts);
 void GetEquipProperties(s32 handId, Equipment* res, s32 equipId);
