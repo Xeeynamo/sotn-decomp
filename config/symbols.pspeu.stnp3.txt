@@ -20,8 +20,8 @@ EntityLargeGaibonProjectile = 0x0923D978;
 EntityTilemapShufflerUnused = 0x0923DC40;
 EntityShuttingWindow = 0x0923DD78;
 EntityUnkId16 = 0x0923E118;
-NP3_EntityBackgroundBlock = 0x0923E1F0;
-NP3_EntityLockCamera = 0x0923E2E8; // source=match
+EntityBackgroundBlock = 0x0923E1F0;
+EntityLockCamera = 0x0923E2E8; // source=match
 EntityCavernDoorLever = 0x0923E768;
 EntityCavernDoorPlatform = 0x0923E948;
 EntityCavernDoor = 0x0923EAA0;
@@ -41,7 +41,7 @@ EntityBloodyZombie = 0x09242228;
 EntityBloodDrips = 0x09242C40;
 EntityBat = 0x09242ED0;
 EntityStageNamePopup = 0x09243208; // source=match
-NP3_EntityRedDoor = 0x09244170; // source=match
+EntityRedDoor = 0x09244170; // source=match
 Update = 0x092453D0; // source=match
 UpdateStageEntities = 0x092457B0; // source=match
 EntityMerman2 = 0x09245A18;
@@ -105,13 +105,13 @@ sprites_np3_8 = 0x09267710;
 sprites_np3_9 = 0x09267910;
 sprites_np3_10 = 0x092692F8;
 sprites_np3_11 = 0x0926A5C8;
-NP3_spriteBanks = 0x0926A988;
-NP3_rooms_layers = 0x0926AC98;
-NP3_cluts = 0x0926AEA0;
-NP3_gfxBanks = 0x0926B038;
-NP3_EntityUpdates = 0x0926B088;
+spriteBanks = 0x0926A988;
+rooms_layers = 0x0926AC98;
+cluts = 0x0926AEA0;
+gfxBanks = 0x0926B038;
+EntityUpdates = 0x0926B088;
 NP3_EInitBreakable = 0x0926B1F8;
-NP3_EInitObtainable = 0x0926B208;
+g_EInitObtainable = 0x0926B208;
 g_EInitParticle = 0x0926B218;
 g_EInitSpawner = 0x0926B228;
 g_EInitInteractable = 0x0926B238;
@@ -145,5 +145,5 @@ g_EInitGurkhaWeapon = 0x0926B3E8;
 g_EInitBlade = 0x0926B3F8;
 g_EInitBladeWeapon = 0x0926B408;
 NP3_RedDoorTiles = 0x0926B418;
-NP3_rooms = 0x0926B438;
+rooms = 0x0926B438;
 NP3_Overlay = 0x0928E820;

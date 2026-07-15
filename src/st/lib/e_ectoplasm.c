@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "lib.h"
 
-extern PfnEntityUpdate OVL_EXPORT(EntityUpdates)[];
-#define PfnEntityUpdates OVL_EXPORT(EntityUpdates)
+extern PfnEntityUpdate EntityUpdates[];
+#define PfnEntityUpdates EntityUpdates
 extern s32 D_us_80181ACC;
 
 static s16 D_us_80182AE0[][4] = {

@@ -44,9 +44,7 @@ static void SetStep(Entity* entity, u16 step) {
     entity->poseTimer = 0;
 }
 
-#ifndef HARD_LINK
 #include "../animate_entity.h"
-#endif
 
 // Note: SEL uses entities weirdly. This probably shouldn't be PLAYER.
 // g_Entities[0] is probably its own thing.
@@ -798,7 +796,7 @@ void func_801B60D4(void) {
     case 3:
         func_801B5A7C();
         ent = &g_Entities[UNK_ENTITY_4];
-        OVL_EXPORT(EntityCutscene)(ent);
+        EntityCutscene(ent);
         func_801B4C68();
         func_801B519C();
         func_801B4D78();

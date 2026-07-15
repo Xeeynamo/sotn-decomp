@@ -50,7 +50,7 @@ static s16 debris_offsets_y[] = {
 //                 Any non-zero value is considered a "tall" breakable,
 //                 meaning it breaks into more debris,
 //                 some of which spawns higher up
-void OVL_EXPORT(EntityBreakable)(Entity* self) {
+void EntityBreakable(Entity* self) {
     Entity* entity;
     s16* debrisOffsetsY;
     u16 breakableType;
@@ -131,7 +131,7 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
 // params: Index of breakable debris to use
 //         (>= 4) Considered a "tall" breakable debris
 //         (== 6) The "last standing" debris, that doesn't move
-void OVL_EXPORT(EntityBreakableDebris)(Entity* self) {
+void EntityBreakableDebris(Entity* self) {
     Entity* entity;
     Collider collider;
     Primitive* prim;

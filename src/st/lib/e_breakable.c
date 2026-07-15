@@ -76,7 +76,7 @@ static u16 hitbox_offsets_y[12] = {0};
 
 extern EInit OVL_EXPORT(EInitBreakable);
 
-void OVL_EXPORT(EntityBreakable)(Entity* self) {
+void EntityBreakable(Entity* self) {
     Entity* entity;
     u16 breakableType;
 
@@ -181,7 +181,7 @@ void EntityBreakableHelper(Entity* self) {
     }
 }
 
-void OVL_EXPORT(EntityBreakableDebris)(Entity* self) {
+void EntityBreakableDebris(Entity* self) {
     u32 pad[10];
 
     switch (self->step) {

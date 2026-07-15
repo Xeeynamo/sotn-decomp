@@ -58,7 +58,7 @@ AnimateEntityFrame* animations[] = {
 
 extern EInit OVL_EXPORT(EInitCommon);
 
-void OVL_EXPORT(EntityBackgroundBlock)(Entity* self) {
+void EntityBackgroundBlock(Entity* self) {
     u16 params = self->params;
     u32 flags;
     if (!self->step) {

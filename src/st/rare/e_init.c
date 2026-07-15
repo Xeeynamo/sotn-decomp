@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rare.h"
 
-void OVL_EXPORT(EntityBreakable)(Entity* self);
+void EntityBreakable(Entity* self);
 void EntityExplosion(Entity* self);
 void EntityPrizeDrop(Entity* self);
 void EntityDamageDisplay(Entity* self);
-void OVL_EXPORT(EntityRedDoor)(Entity* self);
+void EntityRedDoor(Entity* self);
 void EntityIntenseExplosion(Entity* self);
 void EntitySoulStealOrb(Entity* self);
 void EntityRoomForeground(Entity* self);
@@ -17,8 +17,8 @@ void EntityEnemyBlood(Entity* self);
 void EntityMessageBox(Entity* self);
 void EntityDummy(Entity* self);
 void EntityDummy(Entity* self);
-void OVL_EXPORT(EntityBackgroundBlock)(Entity* self);
-void OVL_EXPORT(EntityLockCamera)(Entity* self);
+void EntityBackgroundBlock(Entity* self);
+void EntityLockCamera(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
@@ -35,7 +35,7 @@ void EntityMinotaurDeathPuff(Entity* self);
 void EntityAzaghal(Entity* self);
 void EntityAzaghalSwordHitbox(Entity* self);
 void EntityBreakableFloorSecret(Entity* self);
-void OVL_EXPORT(EntityBreakableDebris)(Entity* self);
+void EntityBreakableDebris(Entity* self);
 void EntityBackgroundDoorRubble(Entity* self);
 void EntityFountainWater(Entity* self);
 void EntityBossTorch(Entity* self);
@@ -44,12 +44,12 @@ void EntityWhiteDragon(Entity* self);
 void EntityWhiteDragonFlameBreath(Entity* self);
 void EntityStoneSkull(Entity* self);
 
-PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
-    OVL_EXPORT(EntityBreakable),
+PfnEntityUpdate EntityUpdates[] = {
+    EntityBreakable,
     EntityExplosion,
     EntityPrizeDrop,
     EntityDamageDisplay,
-    OVL_EXPORT(EntityRedDoor),
+    EntityRedDoor,
     EntityIntenseExplosion,
     EntitySoulStealOrb,
     EntityRoomForeground,
@@ -61,8 +61,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityMessageBox,
     EntityDummy,
     EntityDummy,
-    OVL_EXPORT(EntityBackgroundBlock),
-    OVL_EXPORT(EntityLockCamera),
+    EntityBackgroundBlock,
+    EntityLockCamera,
     EntityUnkId13,
     EntityExplosionVariants,
     EntityGreyPuff,
@@ -79,7 +79,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityAzaghal,
     EntityAzaghalSwordHitbox,
     EntityBreakableFloorSecret,
-    OVL_EXPORT(EntityBreakableDebris),
+    EntityBreakableDebris,
     EntityBackgroundDoorRubble,
     EntityFountainWater,
     EntityBossTorch,
@@ -91,7 +91,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
 
 // animSet, animCurFrame, unk5A, palette, enemyID
 EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_DRA(3), 0, 0, 0, 0x000};
-EInit OVL_EXPORT(EInitObtainable) = {ANIMSET_DRA(3), 0, 0, 0, 0x001};
+EInit g_EInitObtainable = {ANIMSET_DRA(3), 0, 0, 0, 0x001};
 EInit g_EInitParticle = {ANIMSET_DRA(3), 0, 0, 0, 0x002};
 EInit g_EInitSpawner = {ANIMSET_DRA(0), 0, 0, 0, 0x004};
 EInit g_EInitInteractable = {ANIMSET_DRA(0), 0, 0, 0, 0x005};

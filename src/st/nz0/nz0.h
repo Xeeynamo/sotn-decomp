@@ -120,7 +120,7 @@ extern s32 E_ID(LIFE_UP_SPAWN);
 extern s32 g_BossFlag; // original names: boss_flag / beri_flag
 
 extern EInit OVL_EXPORT(EInitBreakable);
-extern EInit OVL_EXPORT(EInitObtainable);
+extern EInit g_EInitObtainable;
 extern EInit g_EInitParticle;
 extern GAME_IMPORT EInit g_EInitSpawner;
 extern EInit g_EInitInteractable;

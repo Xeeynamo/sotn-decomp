@@ -5,7 +5,7 @@ void EntityBreakable(Entity* self);
 void EntityExplosion(Entity* self);
 void EntityPrizeDrop(Entity* self);
 void EntityDamageDisplay(Entity* self);
-void OVL_EXPORT(EntityRedDoor)(Entity* self);
+void EntityRedDoor(Entity* self);
 void EntityIntenseExplosion(Entity* self);
 void EntitySoulStealOrb(Entity* self);
 void EntityRoomForeground(Entity* self);
@@ -16,8 +16,8 @@ void EntityHeartDrop(Entity* self);
 void EntityEnemyBlood(Entity* self);
 void EntityMessageBox(Entity* self);
 void EntityDummy(Entity* self);
-void OVL_EXPORT(EntityBackgroundBlock)(Entity* self);
-void OVL_EXPORT(EntityLockCamera)(Entity* self);
+void EntityBackgroundBlock(Entity* self);
+void EntityLockCamera(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
@@ -86,7 +86,7 @@ void EntityCastleDoorTransition(Entity* self);
 void EntityCastleBridge(Entity* self);
 void EntityDistantBackgroundTrees(Entity* self);
 void EntityBackgroundCastleWall(Entity* self);
-void OVL_EXPORT(EntityCutscene)(Entity* self);
+void EntityCutscene(Entity* self);
 void EntityDeathCutsceneManager(Entity* self);
 void EntityDeathStolenItem(Entity* self);
 void EntityDeath(Entity* self);
@@ -99,12 +99,12 @@ void EntityFallingLeaf(Entity* self);
 void EntityWargExplosionPuffTransparent(Entity* self);
 void EntityExplosionPuffOpaque(Entity* self);
 
-PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
+PfnEntityUpdate EntityUpdates[] = {
     EntityBreakable,
     EntityExplosion,
     EntityPrizeDrop,
     EntityDamageDisplay,
-    OVL_EXPORT(EntityRedDoor),
+    EntityRedDoor,
     EntityIntenseExplosion,
     EntitySoulStealOrb,
     EntityRoomForeground,
@@ -116,8 +116,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityMessageBox,
     EntityDummy,
     EntityDummy, // 0x10
-    OVL_EXPORT(EntityBackgroundBlock),
-    OVL_EXPORT(EntityLockCamera),
+    EntityBackgroundBlock,
+    EntityLockCamera,
     EntityUnkId13,
     EntityExplosionVariants,
     EntityGreyPuff,
@@ -186,7 +186,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityCastleBridge,
     EntityDistantBackgroundTrees,
     EntityBackgroundCastleWall,
-    OVL_EXPORT(EntityCutscene),
+    EntityCutscene,
     EntityDeathCutsceneManager,
     EntityDeathStolenItem,
     EntityDeath,

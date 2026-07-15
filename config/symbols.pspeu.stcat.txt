@@ -1,8 +1,8 @@
-CAT_spriteBanks = 0x09268C80;
-CAT_rooms_layers = 0x09269040;
-CAT_cluts = 0x092697F8;
-CAT_gfxBanks = 0x09269A50;
+spriteBanks = 0x09268C80;
+rooms_layers = 0x09269040;
+cluts = 0x092697F8;
+gfxBanks = 0x09269A50;
 CAT_RedDoorTiles = 0x09269A98;
-CAT_rooms = 0x0926D890;
+rooms = 0x0926D890;
 CAT_PrizeDrops = 0x09296BB0;
 CAT_BackgroundBlockInit = 0x09296C90;

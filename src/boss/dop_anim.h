@@ -10,7 +10,7 @@ static u8 g_afterImageTimerTable[] = {
 extern PlayerState g_Dop;
 
 // Same function in RIC is func_8015C4AC (InitRicAfterImage)
-void OVL_EXPORT(InitPlayerAfterImage)(void) {
+void InitPlayerAfterImage(void) {
     byte stackpad[40];
     Primitive* prim;
     s32 i;
@@ -95,7 +95,7 @@ static u8 g_D_800ACF3C[] = {
     8, 12, 16, 20, 24, 28, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32};
 
 // Equivalent in RIC is func_8015C6D4 (DrawRicAfterImage)
-void OVL_EXPORT(DrawPlayerAfterImage)(void) {
+void DrawPlayerAfterImage(void) {
     PlayerDraw pad;
     PlayerDraw* plDraw;
     Primitive* prim;
@@ -233,7 +233,7 @@ s32 OVL_EXPORT(UpdateUnarmedAnim)(s8* frameProps, u16** frames) {
     }
 }
 
-void OVL_EXPORT(PlayAnimation)(s8* frameProps, AnimationFrame** frames) {
+void PlayAnimation(s8* frameProps, AnimationFrame** frames) {
     AnimationFrame* animFrame;
 
     animFrame = OVL_EXPORT(func_8010DA70)(frames);

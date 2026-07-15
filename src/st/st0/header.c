@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "st0.h"
 
-extern RoomHeader OVL_EXPORT(rooms)[];
-extern s16** OVL_EXPORT(spriteBanks)[];
-extern u_long* OVL_EXPORT(cluts)[];
+extern RoomHeader rooms[];
+extern s16** spriteBanks[];
+extern u_long* cluts[];
 extern LayoutEntity* OVL_EXPORT(pStObjLayoutHorizontal)[];
-extern RoomDef OVL_EXPORT(rooms_layers)[];
-extern u_long** OVL_EXPORT(gfxBanks)[];
+extern RoomDef rooms_layers[];
+extern u_long** gfxBanks[];
 void OVL_EXPORT(HitDetection)();
 void PrologueScroll();
 
@@ -15,12 +15,12 @@ Overlay OVL_EXPORT(Overlay) = {
     .HitDetection = OVL_EXPORT(HitDetection),
     .UpdateRoomPosition = UpdateRoomPosition,
     .InitRoomEntities = InitRoomEntities,
-    .rooms = OVL_EXPORT(rooms),
-    .spriteBanks = OVL_EXPORT(spriteBanks),
-    .cluts = OVL_EXPORT(cluts),
+    .rooms = rooms,
+    .spriteBanks = spriteBanks,
+    .cluts = cluts,
     .objLayoutHorizontal = OVL_EXPORT(pStObjLayoutHorizontal),
-    .tileLayers = OVL_EXPORT(rooms_layers),
-    .gfxBanks = OVL_EXPORT(gfxBanks),
+    .tileLayers = rooms_layers,
+    .gfxBanks = gfxBanks,
     .UpdateStageEntities = UpdateStageEntities,
     .StageEndCutScene = PrologueScroll,
 };

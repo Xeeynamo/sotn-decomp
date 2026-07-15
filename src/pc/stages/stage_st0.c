@@ -6,7 +6,7 @@
 #include "stage_loader.h"
 
 extern Overlay OVL_EXPORT(Overlay);
-extern PfnEntityUpdate OVL_EXPORT(EntityUpdates)[];
+extern PfnEntityUpdate EntityUpdates[];
 extern LayoutEntity* OVL_EXPORT(pStObjLayoutHorizontal)[];
 extern LayoutEntity* OVL_EXPORT(pStObjLayoutVertical)[];
 extern GAME_IMPORT PfnEntityUpdate* PfnEntityUpdates;
@@ -15,7 +15,7 @@ extern GAME_IMPORT LayoutEntity** g_pStObjLayoutVertical;
 OVL_API void InitStage(Overlay* o) {
     LoadReset();
     memcpy(o, &OVL_EXPORT(Overlay), sizeof(Overlay));
-    PfnEntityUpdates = OVL_EXPORT(EntityUpdates);
+    PfnEntityUpdates = EntityUpdates;
     g_pStObjLayoutHorizontal = OVL_EXPORT(pStObjLayoutHorizontal);
     g_pStObjLayoutVertical = OVL_EXPORT(pStObjLayoutVertical);
 }

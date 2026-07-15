@@ -1,2 +1,2 @@
-RCAT_rooms_layers = 0x09256978;
-RCAT_cluts = 0x092570E8;
+rooms_layers = 0x09256978;
+cluts = 0x092570E8;

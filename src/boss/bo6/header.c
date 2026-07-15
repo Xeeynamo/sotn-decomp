@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "bo6.h"
 
-extern RoomHeader OVL_EXPORT(rooms)[];
-extern s16** OVL_EXPORT(spriteBanks)[];
-extern u_long* OVL_EXPORT(cluts)[];
+extern RoomHeader rooms[];
+extern s16** spriteBanks[];
+extern u_long* cluts[];
 extern LayoutEntity* OVL_EXPORT(pStObjLayoutHorizontal)[];
-extern RoomDef OVL_EXPORT(rooms_layers)[];
-extern u_long** OVL_EXPORT(gfxBanks)[];
+extern RoomDef rooms_layers[];
+extern u_long** gfxBanks[];
 extern u8 richter_sprites[];
 
 AbbreviatedOverlay2 OVL_EXPORT(Overlay) = {
@@ -14,12 +14,12 @@ AbbreviatedOverlay2 OVL_EXPORT(Overlay) = {
     .HitDetection = HitDetection,
     .UpdateRoomPosition = UpdateRoomPosition,
     .InitRoomEntities = InitRoomEntities,
-    .rooms = OVL_EXPORT(rooms),
-    .spriteBanks = OVL_EXPORT(spriteBanks),
-    .cluts = OVL_EXPORT(cluts),
+    .rooms = rooms,
+    .spriteBanks = spriteBanks,
+    .cluts = cluts,
     .objLayoutHorizontal = OVL_EXPORT(pStObjLayoutHorizontal),
-    .tileLayers = OVL_EXPORT(rooms_layers),
-    .gfxBanks = OVL_EXPORT(gfxBanks),
+    .tileLayers = rooms_layers,
+    .gfxBanks = gfxBanks,
     .UpdateStageEntities = UpdateStageEntities,
     .unk2C = richter_sprites,
     .unk30 = richter_sprites,
@@ -30,7 +30,7 @@ extern s16* D_us_801A4628[];
 extern s16* D_us_801A43A4[];
 extern s16* D_us_801A4AAC[];
 
-s16** OVL_EXPORT(spriteBanks)[] = {
+s16** spriteBanks[] = {
     NULL, D_us_801A39B0, NULL, D_us_801A4628, D_us_801A43A4, D_us_801A4AAC,
     NULL, NULL,          NULL, NULL,          NULL,          NULL,
     NULL, NULL,          NULL, NULL,          NULL,          NULL,
@@ -53,7 +53,7 @@ static u_long* D_us_80180094[] = {
     PAL_TERMINATE(),
 };
 
-u_long* OVL_EXPORT(cluts)[] = {
+u_long* cluts[] = {
     D_us_80180094,
 };
 

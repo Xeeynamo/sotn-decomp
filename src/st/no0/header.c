@@ -2,23 +2,23 @@
 #include "no0.h"
 #include "../pfn_entity_update.h"
 
-extern RoomHeader OVL_EXPORT(rooms)[];
-extern s16** OVL_EXPORT(spriteBanks)[];
-extern u_long* OVL_EXPORT(cluts)[];
-extern RoomDef OVL_EXPORT(rooms_layers)[];
-extern u_long** OVL_EXPORT(gfxBanks)[];
+extern RoomHeader rooms[];
+extern s16** spriteBanks[];
+extern u_long* cluts[];
+extern RoomDef rooms_layers[];
+extern u_long** gfxBanks[];
 
 AbbreviatedOverlay OVL_EXPORT(Overlay) = {
     .Update = Update,
     .HitDetection = HitDetection,
     .UpdateRoomPosition = UpdateRoomPosition,
     .InitRoomEntities = InitRoomEntities,
-    .rooms = OVL_EXPORT(rooms),
-    .spriteBanks = (SpriteParts**)OVL_EXPORT(spriteBanks),
-    .cluts = OVL_EXPORT(cluts),
+    .rooms = rooms,
+    .spriteBanks = (SpriteParts**)spriteBanks,
+    .cluts = cluts,
     .objLayoutHorizontal = &OBJ_LAYOUT_HORIZONTAL,
-    .tileLayers = OVL_EXPORT(rooms_layers),
-    .gfxBanks = (GfxBank**)OVL_EXPORT(gfxBanks),
+    .tileLayers = rooms_layers,
+    .gfxBanks = (GfxBank**)gfxBanks,
     .UpdateStageEntities = UpdateStageEntities,
 };
 

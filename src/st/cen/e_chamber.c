@@ -3,7 +3,7 @@
 #include "game.h"
 #include "sfx.h"
 
-extern u32 OVL_EXPORT(CutsceneFlags);
+extern u32 g_CutsceneFlags;
 
 static u16 tile_layout[] = {
     0x014A, 0x014B, 0x014E, 0x014F, 0x014C, 0x014D, 0x0150, 0x0151,
@@ -120,7 +120,7 @@ void EntityPlatform(Entity* self) {
             if (g_CastleFlags[INVERTED_CASTLE_UNLOCKED]) {
                 self->step = 9;
             } else if (PlayerAlucardMetMaria()) {
-                OVL_EXPORT(CutsceneFlags) |= 8;
+                g_CutsceneFlags |= 8;
             } else if (g_PlayableCharacter != PLAYER_ALUCARD) {
                 self->step = 9;
             }
@@ -197,7 +197,7 @@ void EntityPlatform(Entity* self) {
             g_Player.padSim = PAD_LEFT;
             self->step++;
             g_api.PlaySfx(SFX_METAL_CLANG_A);
-            OVL_EXPORT(CutsceneFlags) |= 1;
+            g_CutsceneFlags |= 1;
             tilemap->height = ((s16)tilemap->scrollY.i.hi + 0x100);
 #ifndef VERSION_PSP
             func_8018F8EC(0);
@@ -223,7 +223,7 @@ void EntityPlatform(Entity* self) {
             if (!player->facingLeft) {
                 g_Player.padSim = PAD_LEFT;
             }
-            OVL_EXPORT(CutsceneFlags) |= 4;
+            g_CutsceneFlags |= 4;
 #ifdef VERSION_PSP
             self->ext.platformUnk.unk7C = 0;
 #endif
@@ -237,20 +237,20 @@ void EntityPlatform(Entity* self) {
         g_Player.padSim = PAD_NONE;
         g_Player.demo_timer = 1;
 #ifdef VERSION_PSP
-        if (g_Tilemap.height == 0x200 && OVL_EXPORT(CutsceneFlags) & 8) {
+        if (g_Tilemap.height == 0x200 && g_CutsceneFlags & 8) {
             self->ext.platformUnk.unk7C++;
             if (self->ext.platformUnk.unk7C > 3) {
                 g_PauseAllowed = true;
                 if (PlayerAlucardMetMaria()) {
                     self->step = 20;
                 } else {
-                    OVL_EXPORT(CutsceneFlags) |= 0x10;
+                    g_CutsceneFlags |= 0x10;
                     self->step++;
                 }
             }
         }
 #else
-        if (OVL_EXPORT(CutsceneFlags) & 8) {
+        if (g_CutsceneFlags & 8) {
             CreateEntityFromCurrentEntity(E_EQUIP_ITEM_DROP, &g_Entities[204]);
             g_Entities[204].params = NUM_HAND_ITEMS + ITEM_HOLY_GLASSES;
             g_Entities[204].step = 5;
@@ -263,18 +263,18 @@ void EntityPlatform(Entity* self) {
     case 6:
 #ifdef VERSION_PSP
         SetTilemap();
-        if (OVL_EXPORT(CutsceneFlags) & 0x200) {
+        if (g_CutsceneFlags & 0x200) {
             g_Player.padSim = PAD_NONE;
             g_Player.demo_timer = 1;
         }
 
-        if (OVL_EXPORT(CutsceneFlags) & 0x20) {
+        if (g_CutsceneFlags & 0x20) {
             if (g_DemoMode != Demo_None) {
                 self->step = 1000;
             } else {
                 self->step = 11;
                 cutsceneEntity = &g_Entities[200];
-                OVL_EXPORT(CutsceneFlags) = 1;
+                g_CutsceneFlags = 1;
                 CreateEntityFromCurrentEntity(E_ID(CUTSCENE), cutsceneEntity);
                 cutsceneEntity->params = 1;
                 g_PauseAllowed = false;
@@ -283,7 +283,7 @@ void EntityPlatform(Entity* self) {
             }
         }
 #else
-        if (OVL_EXPORT(CutsceneFlags) & 2) {
+        if (g_CutsceneFlags & 2) {
             self->step++;
             g_api.PlaySfx(SFX_METAL_CLANG_A);
         }
@@ -331,7 +331,7 @@ void EntityPlatform(Entity* self) {
             g_Player.padSim = PAD_LEFT;
             self->step = 7;
             g_api.PlaySfx(SFX_METAL_CLANG_A);
-            OVL_EXPORT(CutsceneFlags) |= 1;
+            g_CutsceneFlags |= 1;
             tilemap->height = tilemap->scrollY.i.hi + 0x100;
             g_Player.padSim = PAD_NONE;
             g_Player.demo_timer = 1;
@@ -342,7 +342,7 @@ void EntityPlatform(Entity* self) {
     case 11:
         g_Player.padSim = PAD_NONE;
         g_Player.demo_timer = 1;
-        if (OVL_EXPORT(CutsceneFlags) & 0x80) {
+        if (g_CutsceneFlags & 0x80) {
             var_s5 = g_Entities[64].posX.i.hi + tilemap->scrollX.i.hi;
             g_Player.padSim = PAD_NONE;
             if (g_Player.status &
@@ -382,8 +382,8 @@ void EntityPlatform(Entity* self) {
                 tilemap->height = tilemap->scrollY.i.hi + 0x100;
                 g_Player.padSim = PAD_NONE;
                 g_Player.demo_timer = 1;
-                OVL_EXPORT(CutsceneFlags) |= 0x100;
-                OVL_EXPORT(CutsceneFlags) = 1;
+                g_CutsceneFlags |= 0x100;
+                g_CutsceneFlags = 1;
 
                 cutsceneEntity = &g_Entities[200];
                 CreateEntityFromCurrentEntity(E_ID(CUTSCENE), cutsceneEntity);
@@ -402,7 +402,7 @@ void EntityPlatform(Entity* self) {
     case 12:
         g_Player.padSim = PAD_NONE;
         g_Player.demo_timer = 1;
-        if ((OVL_EXPORT(CutsceneFlags) & 0x60) == 0x60) {
+        if ((g_CutsceneFlags & 0x60) == 0x60) {
             self->step = 10;
         }
         break;
@@ -441,14 +441,14 @@ void EntityPlatform(Entity* self) {
     case 20:
         g_PauseAllowed = false;
         if (PlayerAlucardMetMaria()) {
-            OVL_EXPORT(CutsceneFlags) |= 0x80;
+            g_CutsceneFlags |= 0x80;
         }
         self->step++;
         break;
     case 21:
         g_Player.padSim = PAD_NONE;
         g_Player.demo_timer = 1;
-        if (OVL_EXPORT(CutsceneFlags) & 0x80) {
+        if (g_CutsceneFlags & 0x80) {
             var_s5 = g_Entities[64].posX.i.hi + tilemap->scrollX.i.hi;
             g_Player.padSim = PAD_NONE;
             if (g_Player.status &
@@ -489,7 +489,7 @@ void EntityPlatform(Entity* self) {
                 tilemap->height = tilemap->scrollY.i.hi + 0x100;
                 g_Player.padSim = PAD_NONE;
                 g_Player.demo_timer = 1;
-                OVL_EXPORT(CutsceneFlags) = 1;
+                g_CutsceneFlags = 1;
 
                 cutsceneEntity = &g_Entities[200];
                 CreateEntityFromCurrentEntity(E_ID(CUTSCENE), cutsceneEntity);
@@ -501,7 +501,7 @@ void EntityPlatform(Entity* self) {
     case 22:
         g_Player.padSim = PAD_NONE;
         g_Player.demo_timer = 1;
-        if ((OVL_EXPORT(CutsceneFlags) & 0x40) == 0x40) {
+        if ((g_CutsceneFlags & 0x40) == 0x40) {
             self->step++;
         }
         break;
@@ -543,7 +543,7 @@ void EntityPlatform(Entity* self) {
             g_Player.padSim = PAD_LEFT;
             self->step = 7;
             g_api.PlaySfx(SFX_METAL_CLANG_A);
-            OVL_EXPORT(CutsceneFlags) |= 1;
+            g_CutsceneFlags |= 1;
             tilemap->height = tilemap->scrollY.i.hi + 0x100;
             g_Player.padSim = PAD_NONE;
             g_Player.demo_timer = 1;
@@ -633,9 +633,9 @@ void EntityRoomDarkness(Entity* self) {
         break;
 
     case 1:
-        if (OVL_EXPORT(CutsceneFlags) & 4) {
+        if (g_CutsceneFlags & 4) {
 #ifdef VERSION_PSP
-            if (OVL_EXPORT(CutsceneFlags) & 8) {
+            if (g_CutsceneFlags & 8) {
                 self->step++;
                 break;
             }

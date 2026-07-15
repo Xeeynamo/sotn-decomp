@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stage.h>
 
-extern EInit OVL_EXPORT(EInitObtainable);
+extern EInit g_EInitObtainable;
 
 // the signature is purposely wrong for this file
 // this is how the original source code worked
@@ -55,7 +55,7 @@ void EntitySoulStealOrb(Entity* self) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex != -1) {
-            InitializeEntity(OVL_EXPORT(EInitObtainable));
+            InitializeEntity(g_EInitObtainable);
             prim = &g_PrimBuf[primIndex];
             prim->drawMode = DRAW_HIDE;
             self->flags |= FLAG_HAS_PRIMS;
@@ -145,7 +145,7 @@ void EntityEnemyBlood(Entity* self) {
     case 0:
         i = g_api.func_800EDB58(PRIM_TILE_ALT, NParticles);
         if (i != -1) {
-            InitializeEntity(OVL_EXPORT(EInitObtainable));
+            InitializeEntity(g_EInitObtainable);
             facingLeft = self->params;
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = i;

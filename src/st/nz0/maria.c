@@ -19,8 +19,8 @@ static u8 anim9[] = {6, 47, 6, 46, 6, 44, -1, 0};
 static u8 anim10[] = {2, 50, 4, 51, 4, 52, 5, 53, 4, 54, 4, 55, 4, 56,
                       4, 57, 4, 58, 5, 59, 4, 60, 4, 61, 2, 50, 0, 0};
 
-extern u32 OVL_EXPORT(SkipCutscene);
-extern u32 OVL_EXPORT(CutsceneFlags);
+extern u32 g_SkipCutscene;
+extern u32 g_CutsceneFlags;
 
 void func_801B8E0C(Entity* self) {
     Tilemap* tilemap = &g_Tilemap;
@@ -56,7 +56,7 @@ void func_801B8E0C(Entity* self) {
         break;
 
     case 2:
-        if (OVL_EXPORT(CutsceneFlags) & 0x2000) {
+        if (g_CutsceneFlags & 0x2000) {
             g_PauseAllowed = true;
             if (g_unkGraphicsStruct.pauseEnemies != 0) {
                 g_unkGraphicsStruct.pauseEnemies = 0;
@@ -77,9 +77,9 @@ void EntityMariaNZ0(Entity* self) {
     Primitive* prim;
     s32 i;
 
-    if (OVL_EXPORT(SkipCutscene) && self->step < 12) {
-        if (!(OVL_EXPORT(CutsceneFlags) & 1)) {
-            OVL_EXPORT(CutsceneFlags) |= 1;
+    if (g_SkipCutscene && self->step < 12) {
+        if (!(g_CutsceneFlags & 1)) {
+            g_CutsceneFlags |= 1;
         }
         SetStep(12);
     }
@@ -93,7 +93,7 @@ void EntityMariaNZ0(Entity* self) {
         self->posX.i.hi = -0x10;
         break;
     case 1:
-        if (OVL_EXPORT(CutsceneFlags) & 4) {
+        if (g_CutsceneFlags & 4) {
             // Maria comes through the door on the left, the door is in entity
             // slot 192.
             redDoor = &g_Entities[192];
@@ -129,7 +129,7 @@ void EntityMariaNZ0(Entity* self) {
         AnimateEntity(anim0, self);
         MoveEntity();
         if (self->posX.i.hi > 0x18) {
-            OVL_EXPORT(CutsceneFlags) |= 2;
+            g_CutsceneFlags |= 2;
             redDoor->step = 5;
             self->step++;
         }
@@ -138,63 +138,63 @@ void EntityMariaNZ0(Entity* self) {
         AnimateEntity(anim0, self);
         MoveEntity();
         if (self->posX.i.hi > 0x50) {
-            OVL_EXPORT(CutsceneFlags) |= 1;
+            g_CutsceneFlags |= 1;
             SetStep(5);
             self->velocityX = 0;
         }
         break;
     case 5:
         AnimateEntity(anim1, self);
-        if (OVL_EXPORT(CutsceneFlags) & 8) {
+        if (g_CutsceneFlags & 8) {
             SetStep(6);
             AnimateEntity(anim2, self);
         }
         break;
     case 6:
         AnimateEntity(anim2, self);
-        if (OVL_EXPORT(CutsceneFlags) & 0x10) {
+        if (g_CutsceneFlags & 0x10) {
             SetStep(7);
         }
         break;
     case 7:
         AnimateEntity(anim3, self);
-        if (OVL_EXPORT(CutsceneFlags) & 0x20) {
+        if (g_CutsceneFlags & 0x20) {
             SetStep(8);
         }
         break;
     case 8:
         AnimateEntity(anim4, self);
-        if (OVL_EXPORT(CutsceneFlags) & 0x40) {
+        if (g_CutsceneFlags & 0x40) {
             SetStep(9);
         }
         break;
     case 9:
         AnimateEntity(anim5, self);
-        if (OVL_EXPORT(CutsceneFlags) & 0x80) {
+        if (g_CutsceneFlags & 0x80) {
             SetStep(10);
         }
         break;
     case 10:
         AnimateEntity(anim6, self);
-        if (OVL_EXPORT(CutsceneFlags) & 0x100) {
+        if (g_CutsceneFlags & 0x100) {
             SetStep(11);
         }
         break;
     case 11:
         AnimateEntity(anim7, self);
-        if (OVL_EXPORT(CutsceneFlags) & 0x200) {
+        if (g_CutsceneFlags & 0x200) {
             SetStep(12);
         }
         break;
     case 12:
         AnimateEntity(anim8, self);
-        if (OVL_EXPORT(CutsceneFlags) & 0x400) {
+        if (g_CutsceneFlags & 0x400) {
             SetStep(13);
         }
         break;
     case 13:
         AnimateEntity(anim9, self);
-        if (OVL_EXPORT(CutsceneFlags) & 0x800) {
+        if (g_CutsceneFlags & 0x800) {
             SetStep(14);
             self->velocityX = FIX(0.75);
         }
@@ -203,7 +203,7 @@ void EntityMariaNZ0(Entity* self) {
         AnimateEntity(anim10, self);
         MoveEntity();
         if (self->posX.i.hi > 0xE0) {
-            OVL_EXPORT(CutsceneFlags) |= 0x1000;
+            g_CutsceneFlags |= 0x1000;
             self->step++;
         }
         break;

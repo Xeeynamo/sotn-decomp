@@ -105,7 +105,7 @@ extern void EntityGreyPuff(Entity* entity);
 extern void EntitySkeletonApe(Entity* entity);
 
 extern EInit g_EInitBreakable;
-extern EInit OVL_EXPORT(EInitObtainable);
+extern EInit g_EInitObtainable;
 extern EInit g_EInitParticle;
 extern EInit g_EInitSpawner;
 extern EInit g_EInitInteractable;

@@ -89,7 +89,7 @@ static u16 hitbox_offsets_y[] = {0, 0, -24, -16, 0, 0, 0, 0, 0, 0, 0, 0};
 // used with the short candelabra
 static s16 candelabra_debris_offsets_y[] = {0, 1, 2, 2, 3, 0, 1, 2, 3, 0};
 
-void OVL_EXPORT(EntityBreakable)(Entity* self) {
+void EntityBreakable(Entity* self) {
     Entity* entity;
     Primitive* prim;
     s16* debrisOffsetsY;
@@ -234,7 +234,7 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
     }
 }
 
-void OVL_EXPORT(EntityBreakableDebris)(Entity* self) {
+void EntityBreakableDebris(Entity* self) {
     Collider collider;
     Entity* explosion;
     Primitive* prim;

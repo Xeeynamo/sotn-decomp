@@ -123,7 +123,7 @@ void EntityGreyPuff(Entity* entity);
 
 /*** Initializers ***/
 extern EInit OVL_EXPORT(EInitBreakable);
-extern EInit OVL_EXPORT(EInitObtainable);
+extern EInit g_EInitObtainable;
 extern GAME_IMPORT EInit g_EInitSpawner;
 extern EInit g_EInitInteractable;
 extern EInit g_EInitCommon;

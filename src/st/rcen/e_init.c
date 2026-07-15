@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rcen.h"
 
-void OVL_EXPORT(EntityBreakable)(Entity* self);
+void EntityBreakable(Entity* self);
 void EntityExplosion(Entity* self);
 void EntityPrizeDrop(Entity* self);
 void EntityDamageDisplay(Entity* self);
-void OVL_EXPORT(EntityRedDoor)(Entity* self);
+void EntityRedDoor(Entity* self);
 void EntityIntenseExplosion(Entity* self);
 void EntitySoulStealOrb(Entity* self);
 void EntityRoomForeground(Entity* self);
@@ -17,8 +17,8 @@ void EntityEnemyBlood(Entity* self);
 void EntityMessageBox(Entity* self);
 void EntityDummy(Entity* self);
 void EntityDummy(Entity* self);
-void OVL_EXPORT(EntityBackgroundBlock)(Entity* self);
-void OVL_EXPORT(EntityLockCamera)(Entity* self);
+void EntityBackgroundBlock(Entity* self);
+void EntityLockCamera(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
@@ -33,7 +33,7 @@ void func_us_8019C7B8(Entity* self);
 void func_us_8019CDA0(Entity* self);
 void func_us_8019CDF8(Entity* self);
 void func_us_8019D330(Entity* self);
-void OVL_EXPORT(EntityCutscene)(Entity* self);
+void EntityCutscene(Entity* self);
 void func_us_8019F148(Entity* self);
 void func_us_8019F5F0(Entity* self);
 void func_us_8019FE9C(Entity* self);
@@ -42,12 +42,12 @@ void func_us_8019F9C0(Entity* self);
 void func_us_801B4148_from_bo0(Entity* self);
 void func_us_801C123C_from_no4(Entity* self);
 
-PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
+PfnEntityUpdate EntityUpdates[] = {
     EntityBreakable,
     EntityExplosion,
     EntityPrizeDrop,
     EntityDamageDisplay,
-    OVL_EXPORT(EntityRedDoor),
+    EntityRedDoor,
     EntityIntenseExplosion,
     EntitySoulStealOrb,
     EntityRoomForeground,
@@ -59,8 +59,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityMessageBox,
     EntityDummy,
     EntityDummy,
-    OVL_EXPORT(EntityBackgroundBlock),
-    OVL_EXPORT(EntityLockCamera),
+    EntityBackgroundBlock,
+    EntityLockCamera,
     EntityUnkId13,
     EntityExplosionVariants,
     EntityGreyPuff,
@@ -75,7 +75,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_8019CDA0,
     func_us_8019CDF8,
     func_us_8019D330,
-    OVL_EXPORT(EntityCutscene),
+    EntityCutscene,
     func_us_8019F148,
     func_us_8019F5F0,
     func_us_8019FE9C,
@@ -88,7 +88,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
 // clang-format off
 // animSet, animCurFrame, unk5A, palette, enemyID
 EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_OVL(1), 0, 0, 0, 0x000};
-EInit OVL_EXPORT(EInitObtainable) = {ANIMSET_DRA(3), 0, 0, 0, 0x001};
+EInit g_EInitObtainable = {ANIMSET_DRA(3), 0, 0, 0, 0x001};
 EInit g_EInitParticle = {ANIMSET_DRA(3), 0, 0, 0, 0x002};
 EInit g_EInitSpawner = {ANIMSET_DRA(0), 0, 0, 0, 0x004};
 EInit g_EInitInteractable = {ANIMSET_DRA(0), 0, 0, 0, 0x005};

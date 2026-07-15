@@ -7,11 +7,11 @@
 
 #include "chi.h"
 
-void OVL_EXPORT(EntityBreakable)(Entity*);
+void EntityBreakable(Entity*);
 void EntityExplosion(Entity*);
 void EntityPrizeDrop(Entity*);
 void EntityDamageDisplay(Entity*);
-void OVL_EXPORT(EntityRedDoor)(Entity*);
+void EntityRedDoor(Entity*);
 void EntityIntenseExplosion(Entity*);
 void EntitySoulStealOrb(Entity*);
 void EntityRoomForeground(Entity*);
@@ -22,8 +22,8 @@ void EntityHeartDrop(Entity*);
 void EntityEnemyBlood(Entity*);
 void EntityMessageBox(Entity*);
 void EntityDummy(Entity*);
-void OVL_EXPORT(EntityBackgroundBlock)(Entity*);
-void OVL_EXPORT(EntityLockCamera)(Entity*);
+void EntityBackgroundBlock(Entity*);
+void EntityLockCamera(Entity*);
 void EntityUnkId13(Entity*);
 void EntityExplosionVariants(Entity*);
 void EntityGreyPuff(Entity*);
@@ -31,7 +31,7 @@ void EntityDemonSwitchWall(Entity*);
 void EntityDemonSwitch(Entity*);
 void EntityBreakableWall(Entity*);
 void EntityBreakableWallDebris(Entity*);
-void OVL_EXPORT(EntityBreakableDebris)(Entity*);
+void EntityBreakableDebris(Entity*);
 void EntityFallingStairs(Entity*);
 void EntityCerberusGateDebug(Entity*);
 void EntityFallingStep(Entity*);
@@ -53,12 +53,12 @@ void EntityVenusWeedDart(Entity*);
 void EntityVenusWeedSpike(Entity*);
 
 // D_8018055C
-PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
-    OVL_EXPORT(EntityBreakable),
+PfnEntityUpdate EntityUpdates[] = {
+    EntityBreakable,
     EntityExplosion,
     EntityPrizeDrop,
     EntityDamageDisplay,
-    OVL_EXPORT(EntityRedDoor),
+    EntityRedDoor,
     EntityIntenseExplosion,
     EntitySoulStealOrb,
     EntityRoomForeground,
@@ -70,16 +70,16 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityMessageBox,
     EntityDummy,
     EntityDummy,
-    OVL_EXPORT(EntityBackgroundBlock),
-    OVL_EXPORT(EntityLockCamera), // EntityCameraLock
-    EntityUnkId13,                // EntityParticleTrail
+    EntityBackgroundBlock,
+    EntityLockCamera, // EntityCameraLock
+    EntityUnkId13,    // EntityParticleTrail
     EntityExplosionVariants,
     EntityGreyPuff,
     EntityDemonSwitchWall,
     EntityDemonSwitch,
     EntityBreakableWall,
     EntityBreakableWallDebris,
-    OVL_EXPORT(EntityBreakableDebris),
+    EntityBreakableDebris,
     EntityCerberusGateDebug,
     EntityFallingStairs,
     EntityFallingStep,

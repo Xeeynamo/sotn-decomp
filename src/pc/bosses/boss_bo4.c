@@ -8,7 +8,7 @@
 #include "../boss/bo4/bo4.h"
 
 extern AbbreviatedOverlay2 OVL_EXPORT(Overlay);
-extern PfnEntityUpdate OVL_EXPORT(EntityUpdates)[];
+extern PfnEntityUpdate EntityUpdates[];
 extern LayoutEntity* OVL_EXPORT(pStObjLayoutHorizontal)[];
 extern LayoutEntity* OVL_EXPORT(pStObjLayoutVertical)[];
 extern GAME_IMPORT PfnEntityUpdate* PfnEntityUpdates;
@@ -26,7 +26,7 @@ SpriteParts* D_us_801B252C[1] = {0};
 OVL_API void InitStage(Overlay* o) {
     LoadReset();
     memcpy(o, &OVL_EXPORT(Overlay), sizeof(AbbreviatedOverlay2));
-    PfnEntityUpdates = OVL_EXPORT(EntityUpdates);
+    PfnEntityUpdates = EntityUpdates;
     g_pStObjLayoutHorizontal = OVL_EXPORT(pStObjLayoutHorizontal);
     g_pStObjLayoutVertical = OVL_EXPORT(pStObjLayoutVertical);
 }

@@ -26,7 +26,7 @@ extern EInit OVL_EXPORT(EInitBreakable);
 extern EInit g_EInitInteractable;
 extern EInit g_EInitParticle;
 
-void OVL_EXPORT(EntityBreakable)(Entity* self) {
+void EntityBreakable(Entity* self) {
     Entity* entity;
     s16* debrisOffsetsY;
     u16 breakableType;
@@ -147,7 +147,7 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
     }
 }
 
-void OVL_EXPORT(EntityBreakableDebris)(Entity* self) {
+void EntityBreakableDebris(Entity* self) {
     Collider collider;
     Entity* explosion;
     Primitive* prim;
