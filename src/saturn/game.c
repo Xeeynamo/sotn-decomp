@@ -2,6 +2,7 @@
 #include "inc_asm.h"
 #include "sattypes.h"
 #include "game.h"
+#include "lib/scl.h"
 
 void PlaySfx(s32 sfxId);
 
@@ -66,8 +67,191 @@ void func_800F2860(void) {
 INCLUDE_ASM("asm/saturn/game/data", d6070A60, d_06070A60);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6071C3C, func_06071C3C);
 
-// _INIT_ROOM
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f60720F4, func_060720F4);
+extern s32 DAT_0605c120;
+extern s32 g_PlayerY;
+extern s32 D_80097C98;
+extern s32 DAT_0605c668;
+extern s32 DAT_0605cd54;
+extern s32 g_PlayerX;
+extern s16 DAT_0605cd70;
+extern s32 DAT_0605ceb0;
+extern s32 DAT_0605d7dc;
+extern s32 DAT_060860bc;
+extern s32 DAT_060860c0;
+extern s32 D_801375A8;
+extern s32 D_801375A0;
+extern RoomLoadDefHolder D_801375BC;
+extern s32 D_8013759C;
+extern s32 D_801375A4;
+
+void FUN_060666a4(s32);
+void FUN_060726a8(s32);
+void FUN_0606d358(s32);
+void func_0600ff08(void);
+void func_06009510(s32);
+
+// original name: INIT_ROOM
+void InitRoom(void) {
+    u16 uVar9;
+    u32 i;
+    Entity* ent;
+    Primitive* prim;
+
+    if (DAT_0605d750.unk4 < 0x50) {
+        D_8003C708.flags = 0;
+    }
+    DAT_0605c668 = 1;
+    DAT_0605ceb0 = 0;
+    Scl_w_reg.win1_start[0] = 0;
+    Scl_w_reg.win1_start[1] = 0;
+    Scl_w_reg.win1_end[0] = 0;
+    Scl_w_reg.win1_end[1] = 0;
+    Scl_w_reg.wincontrl[0] = 0x8383;
+    SclProcess = 1;
+    func_0600ff08();
+    if (DAT_0605d750.unk4 < 0x50) {
+        D_801375BC.def =
+            (RoomLoadDef*)FUN_0606d804(DAT_0605d750.stageID & 0xDF);
+        D_801375BC.def =
+            (RoomLoadDef*)((u8*)D_801375BC.def + DAT_0605d750.unk4 * 6 + 4);
+    }
+    D_8013759C = PLAYER.posX.val;
+    D_801375A0 = PLAYER.posY.val;
+    PLAYER.posX.i.hi = D_801375BC.pos.x + g_Tilemap.scrollX.i.hi;
+    PLAYER.posY.i.hi = D_801375BC.pos.y + g_Tilemap.scrollY.i.hi;
+    DAT_060860bc = 0;
+    DAT_060860c0 = 0;
+    FUN_0606d358(1);
+    uVar9 = DAT_0605d750.stageID & 0xDF;
+    if ((uVar9 == 6 || uVar9 == 11 || uVar9 == 9 || uVar9 == 3) &&
+        DAT_0605d750.unkA != DAT_0605d750.unk8) {
+        DAT_0605d750.unkA = DAT_0605d750.unk8;
+    } else {
+        DAT_0605d7dc = DAT_0605c120;
+    }
+    func_06009510(DAT_0605d750.unk4);
+    PLAYER.posX.i.hi = PLAYER.posX.i.hi % 0x140;
+    PLAYER.posY.i.hi = PLAYER.posY.i.hi % 0x100;
+
+    g_Tilemap.left = (D_801375BC.def - 1)->tileLayoutId;
+    g_Tilemap.top = (D_801375BC.def - 1)->tilesetId;
+    g_Tilemap.right = (D_801375BC.def - 1)->objGfxId;
+    g_Tilemap.bottom = (D_801375BC.def - 1)->objLayoutId;
+
+    g_Tilemap.hSize = g_Tilemap.right - g_Tilemap.left + 1;
+    g_Tilemap.vSize = g_Tilemap.bottom - g_Tilemap.top + 1;
+    g_Tilemap.x = ((D_801375BC.def - 1)->tileLayoutId - g_Tilemap.left) * 0x140;
+    g_Tilemap.y = ((D_801375BC.def - 1)->tilesetId - g_Tilemap.top) * 0x100;
+    g_Tilemap.width =
+        ((D_801375BC.def - 1)->objGfxId - g_Tilemap.left + 1) * 0x140;
+    g_Tilemap.height =
+        ((D_801375BC.def - 1)->objLayoutId - g_Tilemap.top + 1) * 0x100;
+    g_Tilemap.scrollX.i.hi = (DAT_0605d750.unkC - g_Tilemap.left) * 0x140;
+    g_Tilemap.scrollY.i.hi = (DAT_0605d750.unk10 - g_Tilemap.top) * 0x100;
+    g_PlayerX = PLAYER.posX.i.hi + g_Tilemap.scrollX.i.hi;
+    g_PlayerY = PLAYER.posY.i.hi + g_Tilemap.scrollY.i.hi;
+    func_800F0CD8(0);
+    func_06064608();
+    if (PLAYER.posX.val < 0) {
+        PLAYER.posX.val = 0;
+        PLAYER.posX.i.lo = 0;
+        PLAYER.posX.i.hi = 0;
+    }
+    if (PLAYER.posY.val < 0) {
+        PLAYER.posY.val = 0;
+        PLAYER.posY.i.lo = 0;
+        PLAYER.posY.i.hi = 0;
+    }
+
+    g_PlayerX = PLAYER.posX.i.hi + g_Tilemap.scrollX.i.hi;
+    g_PlayerY = PLAYER.posY.i.hi + g_Tilemap.scrollY.i.hi;
+    func_800F0CD8(0);
+    D_801375A4 = D_8013759C - PLAYER.posX.val;
+    D_801375A8 = D_801375A0 - PLAYER.posY.val;
+    for (i = 0, ent = g_Entities; i < 0x100; i++, ent++) {
+        if (ent->flags & FLAG_UNK_20000) {
+            ent->posX.val -= D_801375A4;
+            ent->posY.val -= D_801375A8;
+        }
+    }
+    D_801375A4 = D_801375A4 >> 16;
+    D_801375A8 = D_801375A8 >> 16;
+    for (i = 0, prim = &g_PrimBuf[0]; i < 0x200; i++, prim++) {
+        if ((prim->drawMode & DRAW_UNK_100) &&
+            (prim->drawMode != DRAW_INVALID)) {
+            switch (prim->type & 0xF) {
+            case 2:
+            case 3:
+            case 4:
+                prim->x3 -= D_801375A4;
+                prim->y3 -= D_801375A8;
+                prim->x2 -= D_801375A4;
+                prim->y2 -= D_801375A8;
+            case 5:
+                prim->x1 -= D_801375A4;
+                prim->y1 -= D_801375A8;
+            case 0:
+            case 1:
+                prim->x0 -= D_801375A4;
+                prim->y0 -= D_801375A8;
+            }
+        }
+    }
+    if (DAT_0605d750.stageID != 0x2B) {
+        for (i = 0; i < 8; i++) {
+            g_unkGraphicsStruct.D_80097428[i] = 0;
+        }
+        func_800F0CD8(0);
+        func_800F0CD8(0);
+        for (i = 0; i < 8; i++) {
+            g_unkGraphicsStruct.D_80097428[i] = 0;
+        }
+    }
+
+    if (D_80097C98 == 2) {
+        D_80097C98 = 3;
+    } else {
+        D_80097C98 = 0;
+    }
+    DAT_0605c680.unk4 = DAT_0605c680.unk8 = g_Tilemap.scrollX.i.hi << 0x10;
+    DAT_0605c680.unkC = DAT_0605c680.unk10 = g_Tilemap.scrollY.i.hi << 0x10;
+    DAT_0605c680.g_ScrollDeltaX = 0;
+    DAT_0605c680.g_ScrollDeltaY = 0;
+    DAT_0605c680.unk3C = DAT_0605c680.unk8;
+    DAT_0605c680.unk34 = DAT_0605c680.unk4;
+    DAT_0605c680.unk40 = DAT_0605c680.unkC;
+    DAT_0605c680.unk38 = DAT_0605c680.unk10;
+    FUN_060726a8(0);
+    func_800F0CD8(0);
+    func_800F0CD8(0);
+    FUN_060666a4(DAT_0605d750.unk4);
+    FUN_0606c160();
+    FUN_0606c160();
+    DAT_0605cd70++;
+    if ((DAT_0605d750.unk6 == 0x50) || (DAT_0605d750.unk6 == 0x60)) {
+        if (g_unkGraphicsStruct.D_800973FC == 0) {
+            PlaySfx(FUN_060727dc(
+                g_PlayableCharacter, DAT_0605d750.stageID, DAT_0605d750.unk4));
+        } else {
+            currentMusicId = FUN_060727dc(
+                g_PlayableCharacter, DAT_0605d750.stageID, DAT_0605d750.unk4);
+            DAT_0605cd54 = 1;
+        }
+    }
+    if ((DAT_0605d750.unk4 == 0x50) || (DAT_0605d750.unk4 == 0x60)) {
+        if (func_06012dfc() != 0) {
+            PlaySfx(0xF000000A);
+        }
+        if ((g_unkGraphicsStruct.D_800973FC != 0) && (D_8006BB00 != 0)) {
+            if (DAT_0605d750.unk4 == 0x50) {
+                PlaySfx(0xF000000A);
+                DAT_0605cd54 = 1;
+            }
+        } else {
+            PlaySfx(0xF0000080);
+        }
+    }
+}
 
 // _SET_DEFAULT_SCL_PRIORITY
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60726A8, func_060726A8);
@@ -125,9 +309,7 @@ bool CheckIfAllButtonsAreAssigned(void) {
 }
 
 void func_0600971C(void);
-extern u16 SclProcess;
 extern s16 DAT_0605d772;
-void (*func_060645B0)(void);
 extern s16 DAT_06065470;
 void UpdateCapePalette(void);
 extern s16 DAT_060862a4;
@@ -137,18 +319,13 @@ void func_06073280(void) {
         UpdateCapePalette();
     }
     DAT_0605d772 = 8;
-    (*func_060645B0)();
+    func_060645B0();
     DAT_06065470 |= DAT_060862a4;
     SclProcess = 1;
     func_0600971C();
 }
 
 extern s8 DAT_06057f68;
-void (*func_060645BC)(void);
-void (*func_060645FC)(void);
-void (*func_06064600)(void);
-void (*func_06064620)(void);
-void (*func_06064638)(void);
 extern s16 DAT_06086220[];
 
 void func_06074278(s32);
@@ -160,27 +337,27 @@ void func_060732E4(s32 arg0) {
 
     switch (arg0) {
     case 7:
-        (*func_06064638)();
+        func_06064638();
         for (i = 0; i < 10; i++) {
             DAT_06086220[i] = 0x7E + i * 14;
         }
         func_06074278(0);
         break;
     case 8:
-        (*func_060645FC)();
+        func_060645FC();
         func_06074278(0);
         break;
     case 9:
-        (*func_060645BC)();
+        func_060645BC();
         func_06074278(0);
         break;
     case 10:
-        (*func_06064620)();
+        func_06064620();
         func_06009570(3);
         func_06074278(1);
         break;
     case 11:
-        (*func_06064600)();
+        func_06064600();
         func_06009570(4);
         func_06074278(1);
         break;
@@ -327,8 +504,23 @@ void func_800F7244(void) {
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607360C, func_0607360C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607369C, func_0607369C);
 
-// _PSX_id_init
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f60736D4, func_060736D4);
+typedef struct EquipMenuHelper {
+    s32 equipTypeFilter;
+    s32 index;
+    s32 isAccessory;
+} EquipMenuHelper;
+
+extern EquipMenuHelper g_EquipMenuHelper[];
+
+// original name : PSX_id_init
+void func_800FB0FC(void) {
+    EquipMenuHelper* helper = &g_EquipMenuHelper[g_MenuNavigation.cursorEquip];
+
+    D_801375CC = helper->equipTypeFilter;
+    D_801375D4 = helper->index;
+    func_800FAF44(helper->isAccessory);
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607371C, func_0607371C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6073740, func_06073740);
 
@@ -340,8 +532,27 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f6073E58, func_06073E58);
 // _PSX_sort_item
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6073EEC, func_06073EEC);
 
-// _PSX_equip_id_init
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6073FEC, func_06073FEC);
+// original name: PSX_equip_id_init
+void func_800FAF44(bool isAccessory) {
+    s32 i;
+    s32* ptr;
+
+    D_801375D8 = (s32*)0x002F2000;
+    ptr = (s32*)0x002F2000;
+
+    if (!isAccessory) {
+        for (i = 0; i < 0xB0; i++) {
+            *ptr++ = i;
+        }
+    } else {
+        for (i = 0; i < 0x5C; i++) {
+            if (g_AccessoryDefs[i].equipType == D_801375D4) {
+                *ptr++ = i;
+            }
+        }
+    }
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6074048, func_06074048);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6074068, func_06074068);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60740F8, func_060740F8);
@@ -391,7 +602,6 @@ extern char* g_AxeArmorCode;
 extern char* g_GTIClubCode;
 
 extern s32 TimeAttackController(s32 eventId, s32 action);
-extern u32 MTH_GetRand(void);
 
 static inline void func_800FF708(s32 equipType, s32 arg1) {
     s32 rnd;
@@ -491,7 +701,7 @@ void InitStatsAndGear(s32 isDeathTakingItems) {
         g_Status.spells[i] = 0;
     }
     g_Status.spellsLearnt = 0;
-    if ((g_StageId == 0x1F) || (g_PlayableCharacter != 0)) {
+    if ((DAT_0605d750.stageID == STAGE_ST0) || (g_PlayableCharacter != 0)) {
         for (i = 0; i < 0x20; i++) {
             g_Status.relics[i] = 1;
         }
@@ -517,10 +727,11 @@ void InitStatsAndGear(s32 isDeathTakingItems) {
         g_Status.equipment[5] = 0x30;
         g_Status.equipment[6] = 0x3A;
         g_Status.equipment[7] = 0x3A;
-        if ((g_StageId != 0x1F) && (g_StageId != 0x41)) {
+        if ((DAT_0605d750.stageID != STAGE_ST0) &&
+            (DAT_0605d750.stageID != 0x41)) {
             g_Status.subWeapon = MTH_GetRand() % 9 + 1;
         }
-        if (g_StageId == 0x1F) {
+        if (DAT_0605d750.stageID == STAGE_ST0) {
             g_Status.hpMax = g_Status.hp = 50;
             g_Status.hearts = 30;
             g_Status.heartsMax = 99;
@@ -537,7 +748,7 @@ void InitStatsAndGear(s32 isDeathTakingItems) {
             g_Status.equipment[3] = 0x2D;
             g_Status.mp = g_Status.mpMax = 200;
         }
-        if (g_StageId == 0x41) {
+        if (DAT_0605d750.stageID == 0x41) {
             TimeAttackController(27, 1);
             TimeAttackController(9, 1);
             TimeAttackController(4, 1);
@@ -551,7 +762,7 @@ void InitStatsAndGear(s32 isDeathTakingItems) {
         make_all();
         return;
     }
-    if (g_StageId == 0x41) {
+    if (DAT_0605d750.stageID == 0x41) {
         g_Status.statsBase[0] = 6;
         g_Status.statsBase[1] = 6;
         g_Status.statsBase[2] = 6;
@@ -699,7 +910,7 @@ void InitStatsAndGear(s32 isDeathTakingItems) {
         g_Status.heartsMax = 2000;
         g_Status.gold = 500000;
         g_Status.exp = 11000;
-        if (g_StageId & 0x20) {
+        if (DAT_0605d750.stageID & STAGE_INVERTEDCASTLE_FLAG) {
             g_Status.exp = 110000;
         }
         for (i = 0; i < 0x20; i++) {
@@ -1254,7 +1465,6 @@ u8 UnkCollisionFunc4(Entity* entity, u8 arg1) {
     return bits_01;
 }
 
-void (*GetPlayerSensor)(Collider* col);
 u8 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
     Entity* player;
     s16 x, y;
@@ -1281,7 +1491,7 @@ u8 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
     }
     y -= g_CurrentEntity->hitboxOffY;
 
-    (*GetPlayerSensor)(&col);
+    GetPlayerSensor(&col);
     w += col.unk14 >> 0x10;
     h += col.unk18 >> 0x10;
 
