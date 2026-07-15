@@ -8,19 +8,19 @@ u16 animSets[] = {
     ANIMSET_OVL(2), ANIMSET_OVL(2), ANIMSET_OVL(2), ANIMSET_OVL(2),
     ANIMSET_OVL(2), ANIMSET_OVL(2), ANIMSET_OVL(2)};
 
-u8 anim1[] = {64, 2, POSE_END};
-u8 anim2[] = {64, 6, POSE_END};
-u8 anim3[] = {64, 1, POSE_END};
-u8 anim4[] = {64, 2, POSE_END};
-u8 anim5[] = {64, 47, POSE_END};
-u8 anim6[] = {4, 34, POSE_LOOP(0)};
-u8 anim7[] = {4, 35, POSE_LOOP(0)};
-u8 anim8[] = {4, 36, POSE_LOOP(0)};
-u8 anim9[] = {4, 37, POSE_LOOP(0)};
-u8 anim10[] = {4, 38, POSE_LOOP(0)};
-u8 anim11[] = {4, 39, POSE_LOOP(0)};
-u8 anim12[] = {4, 40, POSE_LOOP(0)};
-u8 anim13[] = {4, 42, POSE_LOOP(0)};
+AnimateEntityFrame anim1[] = {{64, 2}, POSE_END};
+AnimateEntityFrame anim2[] = {{64, 6}, POSE_END};
+AnimateEntityFrame anim3[] = {{64, 1}, POSE_END};
+AnimateEntityFrame anim4[] = {{64, 2}, POSE_END};
+AnimateEntityFrame anim5[] = {{64, 47}, POSE_END};
+AnimateEntityFrame anim6[] = {{4, 34}, POSE_LOOP(0)};
+AnimateEntityFrame anim7[] = {{4, 35}, POSE_LOOP(0)};
+AnimateEntityFrame anim8[] = {{4, 36}, POSE_LOOP(0)};
+AnimateEntityFrame anim9[] = {{4, 37}, POSE_LOOP(0)};
+AnimateEntityFrame anim10[] = {{4, 38}, POSE_LOOP(0)};
+AnimateEntityFrame anim11[] = {{4, 39}, POSE_LOOP(0)};
+AnimateEntityFrame anim12[] = {{4, 40}, POSE_LOOP(0)};
+AnimateEntityFrame anim13[] = {{4, 42}, POSE_LOOP(0)};
 
 u16 zPrioritys[] = {0x1fa, 0x40, 0x80, 0x80, 0x3f, 0x80, 0x80, 0x80, 0x80, 0x80,
                     0x80,  0x80, 0x80, 0x80, 0x80, 0x80, 0x9e, 0x9e, 0x80};
@@ -52,9 +52,9 @@ u32 flagses[19] = {0};
 
 u32 unused[] = {0, 0, 0,   0,   0,   0,   0, 0,   0,  0,
                 0, 0, 0x1, 0x1, 0x1, 0x1, 0, 0x1, 0x1};
-u8* animations[] = {anim1,  anim2,  anim3,  anim4,  anim5,  anim6, anim7,
-                    anim8,  anim9,  anim10, anim11, anim12, anim7, anim8,
-                    anim10, anim12, anim13, anim13, anim11};
+AnimateEntityFrame* animations[] = {
+    anim1,  anim2,  anim3, anim4, anim5,  anim6,  anim7,  anim8,  anim9, anim10,
+    anim11, anim12, anim7, anim8, anim10, anim12, anim13, anim13, anim11};
 
 extern EInit OVL_EXPORT(EInitCommon);
 
