@@ -249,6 +249,9 @@ extern void RicSetWalk(s32);
 extern void RicSetRun(void);
 extern void RicSetFall(void);
 extern bool RicCheckInput(s32 checks);
+extern bool RicDoCrash(void);
+extern bool RicDoAttack(void);
+extern bool RicDebug(void);
 extern void RicSetSubweaponParams(Entity*);
 extern Entity* RicCreateEntFactoryFromEntity(
     Entity* entity, u32 arg1, s32 arg2);
