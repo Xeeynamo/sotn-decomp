@@ -52,7 +52,6 @@ jobs:
       matrix:
         compiler: ["gcc"]
         build_type: ["RelWithDebInfo"]
-        sound_engine: ["lle"]
         standard: ["c99"]
         arch: ["x86_64"]
     runs-on: ubuntu-24.04
@@ -72,7 +71,10 @@ jobs:
           ref: ${{ github.ref }}
           submodules: false
       - name: Clone psyz backend
-        run: git submodule update --init --recursive tools/psyz
+        run: |
+          git submodule update --init tools/psyz
+          cd tools/psyz
+          git submodule update --init --recursive external/SDL
       - name: Get assets
         uses: actions/download-artifact@v4
         with:
@@ -82,22 +84,17 @@ jobs:
         run: make -j build_assets
       - name: Build
         run: |
-          export PC_FLAGS="-DCMAKE_C_FLAGS='-std=${{ matrix.standard }}' -DCMAKE_CXX_FLAGS='-std=${{ matrix.standard }}' "
-          if [[ "${{ matrix.sound_engine }}" == "lle" ]]; then
-            export PC_FLAGS="-DWANT_LIBSND_LLE=1"
-          fi
           if [[ "${{ matrix.arch }}" == "i686" ]]; then
-            export PC_FLAGS="$PC_FLAGS -DCMAKE_C_FLAGS=-m32 -DCMAKE_CXX_FLAGS=-m32"
+            export PC_FLAGS="-DCMAKE_C_FLAGS=-m32 -DCMAKE_CXX_FLAGS=-m32"
           fi
           export CC=${{ matrix.compiler }}
-          cmake -B ${{github.workspace}}/pc ${PC_FLAGS} -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+          cmake -B ${{github.workspace}}/pc $PC_FLAGS -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
           cmake --build ${{github.workspace}}/pc --config ${{ matrix.build_type }}
 
   build-macos:
     strategy:
       matrix:
         build_type: ["RelWithDebInfo"]
-        sound_engine: ["lle"]
     runs-on: macos-latest
     needs: extract-assets
     steps:
@@ -109,7 +106,10 @@ jobs:
           ref: ${{ github.ref }}
           submodules: false
       - name: Clone psyz backend
-        run: git submodule update --init --recursive tools/psyz
+        run: |
+          git submodule update --init tools/psyz
+          cd tools/psyz
+          git submodule update --init --recursive external/SDL
       - uses: actions/setup-go@v6
         with:
           go-version-file: 'go.work'
@@ -124,18 +124,13 @@ jobs:
         run: make -j build_assets
       - name: Build
         run: |
-          export PC_FLAGS=""
-          if [[ "${{ matrix.sound_engine }}" == "lle" ]]; then
-            export PC_FLAGS="-DWANT_LIBSND_LLE=1"
-          fi
-          cmake -B ${{github.workspace}}/pc ${PC_FLAGS} -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+          cmake -B ${{github.workspace}}/pc -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
           cmake --build ${{github.workspace}}/pc --config ${{ matrix.build_type }}
 
   build-windows:
     strategy:
       matrix:
         build_type: ["RelWithDebInfo"]
-        sound_engine: ["lle"]
     runs-on: windows-latest
     needs: extract-assets
     steps:
@@ -166,9 +161,5 @@ jobs:
         & make -j build_assets SOTNASSETS=$SOTN_ASSETS
     - name: Build
       run: |
-        $PC_FLAGS=""
-        if ("${{ matrix.sound_engine }}" -eq "lle") {
-          $PC_FLAGS="-DWANT_LIBSND_LLE=1"
-        }
-        cmake -B ${{github.workspace}}/pc $PC_FLAGS -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DSDL2_PATH=C:\temp-sdl2\SDL2-2.28.5
+        cmake -B ${{github.workspace}}/pc -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DSDL2_PATH=C:\temp-sdl2\SDL2-2.28.5
         cmake --build ${{github.workspace}}/pc --config ${{ matrix.build_type }}
