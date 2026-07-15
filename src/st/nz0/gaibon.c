@@ -76,24 +76,36 @@ typedef enum {
 } GaibonDyingSubSteps;
 
 static s16 sensors[] = {0, 28, 0, 4, 4, -4, -8, 0};
-static u8 anim1[] = {6, 1, 3, 9, 2, 2, 2, 3, 3, 4, 4, 10, 5, 3, 5, 2, 0, 0};
-static u8 anim2[] = {2, 1, 1, 9, 1, 2, 1, 3, 1, 4,  1,  10, 2, 3, 2, 2, 4,
-                     1, 2, 9, 1, 2, 1, 3, 2, 4, 2,  10, 3,  3, 3, 2, 5, 1,
-                     2, 9, 2, 2, 2, 3, 2, 4, 3, 10, 4,  3,  4, 2, 0, 0};
-static u8 anim3[] = {6, 5, 3, 11, 2, 6, 2, 7, 3, 8, 4, 12, 5, 7, 5, 6, 0, 0};
-static u8 anim4[] = {6,  32, 3,  33, 2,  34, 2,  35, 3,
-                     36, 4,  37, 5,  35, 5,  34, 0,  0};
-static u8 anim5[] = {5, 13, 5, 14, 4, 15, 8, 14, -1, 0};
-static u8 anim6[] = {3, 14, 3, 16, 3, 17, 4, 18, 4, 19, 34, 18, -1, 0};
-static u8 anim7[] = {4,  3, 1,  22, 1,  21, 1,  22, 4,
-                     21, 4, 23, 4,  20, 1,  24, -1, 0};
-static u8 anim8[] = {5, 13, 5, 18, 5, 25, 4, 26, 41, 25, -1, 0};
-static u8 anim9[] = {2, 25, 2, 27, 0, 0};
-static u8 anim10[] = {16, 25, 5, 28, 6, 29, 32, 30, -1, 0};
-static s8 gaibonHitboxes[] = {
-    0,  0,  0,  0,  -3,  -4,  15, 27, -3, -3, 15, 25, -3, -1, 15, 24,
-    -3, -1, 15, 23, -4,  4,   15, 23, -3, -3, 16, 21, -3, -3, 16, 20,
-    -5, 4,  17, 23, -59, -74, 0,  0,  -5, -7, 15, 20, -5, -5, 15, 18};
+static AnimateEntityFrame anim1[] = {
+    {6, 1},  {3, 9}, {2, 2}, {2, 3},      {3, 4},
+    {4, 10}, {5, 3}, {5, 2}, POSE_LOOP(0)};
+static AnimateEntityFrame anim2[] = {
+    {2, 1},  {1, 9}, {1, 2}, {1, 3},      {1, 4}, {1, 10}, {2, 3},
+    {2, 2},  {4, 1}, {2, 9}, {1, 2},      {1, 3}, {2, 4},  {2, 10},
+    {3, 3},  {3, 2}, {5, 1}, {2, 9},      {2, 2}, {2, 3},  {2, 4},
+    {3, 10}, {4, 3}, {4, 2}, POSE_LOOP(0)};
+static AnimateEntityFrame anim3[] = {
+    {6, 5},  {3, 11}, {2, 6}, {2, 7},      {3, 8},
+    {4, 12}, {5, 7},  {5, 6}, POSE_LOOP(0)};
+static AnimateEntityFrame anim4[] = {
+    {6, 32}, {3, 33}, {2, 34}, {2, 35},     {3, 36},
+    {4, 37}, {5, 35}, {5, 34}, POSE_LOOP(0)};
+static AnimateEntityFrame anim5[] = {
+    {5, 13}, {5, 14}, {4, 15}, {8, 14}, POSE_END};
+static AnimateEntityFrame anim6[] = {
+    {3, 14}, {3, 16}, {3, 17}, {4, 18}, {4, 19}, {34, 18}, POSE_END};
+static AnimateEntityFrame anim7[] = {
+    {4, 3},  {1, 22}, {1, 21}, {1, 22}, {4, 21},
+    {4, 23}, {4, 20}, {1, 24}, POSE_END};
+static AnimateEntityFrame anim8[] = {
+    {5, 13}, {5, 18}, {5, 25}, {4, 26}, {41, 25}, POSE_END};
+static AnimateEntityFrame anim9[] = {{2, 25}, {2, 27}, POSE_LOOP(0)};
+static AnimateEntityFrame anim10[] = {
+    {16, 25}, {5, 28}, {6, 29}, {32, 30}, POSE_END};
+static s8 gaibonHitboxes[][4] = {
+    {0, 0, 0, 0},     {-3, -4, 15, 27}, {-3, -3, 15, 25}, {-3, -1, 15, 24},
+    {-3, -1, 15, 23}, {-4, 4, 15, 23},  {-3, -3, 16, 21}, {-3, -3, 16, 20},
+    {-5, 4, 17, 23},  {-59, -74, 0, 0}, {-5, -7, 15, 20}, {-5, -5, 15, 18}};
 static u8 gaibonHitboxIdx[] = {
     0, 1, 2, 3, 4, 1, 2, 3, 4, 1, 4,  1,  4,  4,  5,  5,  5,  5,  5,  5, 5, 6,
     6, 7, 8, 8, 8, 8, 8, 8, 9, 9, 10, 10, 10, 11, 11, 11, 10, 11, 11, 0, 0, 0};
@@ -592,7 +604,7 @@ void EntityGaibon(Entity* self) {
         if (self->velocityY > 0 && yVar > 0x1A4) {
             self->posY.i.hi = 0x1A4 - g_Tilemap.scrollY.i.hi;
         }
-        hitboxPtr = &gaibonHitboxes[0];
+        hitboxPtr = (s8*)gaibonHitboxes;
         hitboxPtr += gaibonHitboxIdx[self->animCurFrame] * 4;
         self->hitboxOffX = *hitboxPtr++;
         self->hitboxOffY = *hitboxPtr++;
