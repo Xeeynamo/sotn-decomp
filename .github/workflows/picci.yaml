@@ -1,4 +1,4 @@
-name: Build C code
+name: Build cross-platform codebase
 
 on:
   push:
