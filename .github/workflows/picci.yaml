@@ -100,8 +100,6 @@ jobs:
     runs-on: macos-latest
     needs: extract-assets
     steps:
-      - name: Install requirements
-        run: brew install SDL2
       - name: Clone repo
         uses: actions/checkout@v6
         with:
@@ -136,11 +134,6 @@ jobs:
     runs-on: windows-latest
     needs: extract-assets
     steps:
-    - name: Install requirements
-      run: |
-        mkdir C:\temp-sdl2
-        powershell Invoke-WebRequest 'https://github.com/libsdl-org/SDL/releases/download/release-2.28.5/SDL2-devel-2.28.5-VC.zip' -OutFile C:\temp-sdl2\SDL2-devel-2.28.5-VC.zip
-        7z x C:\temp-sdl2\SDL2-devel-2.28.5-VC.zip -oC:\temp-sdl2
     - name: Clone repo
       uses: actions/checkout@v6
       with:
@@ -163,5 +156,5 @@ jobs:
         & make -j build_assets SOTNASSETS=$SOTN_ASSETS
     - name: Build
       run: |
-        cmake -B ${{github.workspace}}/pc -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DSDL2_PATH=C:\temp-sdl2\SDL2-2.28.5
+        cmake -B ${{github.workspace}}/pc -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
         cmake --build ${{github.workspace}}/pc --config ${{ matrix.build_type }}
