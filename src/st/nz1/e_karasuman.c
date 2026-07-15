@@ -119,11 +119,6 @@ static u8 D_us_801812B8[] = {
     8, 8, 8, 1, 1, 10, 7, 7, 7, 5, 11, 11, 11, 11, 11, 12, 10, 13, 13, 14,
 };
 
-static u8 __unused[] UNUSED = {
-    0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0,
-    1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1,
-};
-
 #ifdef VERSION_PSP
 extern s32 E_ID(EXPLODE_PUFF_OPAQUE);
 extern s32 E_ID(KARASUMAN_FEATHER_ATTACK);

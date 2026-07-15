@@ -59,7 +59,7 @@ segments:
       - [0x16FC, .data, unk_3ACF4]
       - [0x1744, .data, unk_3B4CC]
       - [0x174C, .data, d_prize_drops]
-      - [0x1798, .data, st_update]
+      - [0x1778, .data, st_update]
       - [0x17C4, .data, st_collision]
       - [0x1B84, .data, e_red_door]
       - [0x1B9C, .data, st_common]
