@@ -140,7 +140,10 @@ jobs:
         ref: ${{ github.ref }}
         submodules: false
     - name: Clone psyz backend
-      run: git submodule update --init --recursive tools/psyz
+      run: |
+        git submodule update --init tools/psyz
+        cd tools/psyz
+        git submodule update --init --recursive external/SDL
     - name: Get assets
       uses: actions/download-artifact@v4
       with:
