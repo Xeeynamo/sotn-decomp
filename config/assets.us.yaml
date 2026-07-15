@@ -903,6 +903,44 @@ files:
     asset_path: assets/st/nz1
     src_path: src/st/nz1
     splat_config_path: config/splat.us.stnz1.yaml
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x40, sprite_banks, sprite_banks]
+          #- [0xA0, paldef, palette_def] Issue #2401
+          - [0xA0, skip]
+          - [0x360, layers, layers]
+          - [0x558, gfx_banks, graphics_banks]
+          - [0x820, layout, entity_layouts]
+          - [0x9C8, skip]
+          - [0x233C, rooms, rooms]
+          - [0x23C8, skip]
+          - [0x3834, cmpgfx, unused_cmpgfx, 128, 128, 4]
+          - [0x3AF0, cmpgfx, D_80183AF0, 128, 128, 4]
+          - [0x3FA8, cmpgfx, D_80183FA8, 128, 128, 4]
+          - [0x58F4, cmpgfx, D_801858F4, 128, 128, 4]
+          - [0x6530, cmpgfx, D_80186530, 128, 128, 4]
+          - [0x684C, cmpgfx, D_8018684C, 128, 128, 4]
+          - [0x7CCC, cmpgfx, D_80187CCC, 128, 128, 4]
+          - [0x9088, cmpgfx, D_80189088, 128, 128, 4]
+          - [0xA0CC, cmpgfx, D_8018A0CC, 128, 128, 4]
+          - [0xA618, cmpgfx, D_8018A618, 128, 128, 4]
+          - [0xAEE0, cmpgfx, D_8018AEE0, 128, 128, 4]
+          - [0xBCF0, cmpgfx, D_8018BCF0, 128, 128, 4]
+          - [0xC984, cmpgfx, D_8018C984, 128, 128, 4]
+          - [0xD054, cmpgfx, D_8018D054, 128, 128, 4]
+          - [0xD510, cmpgfx, D_8018D510, 128, 128, 4]
+          - [0xDF40, cmpgfx, D_8018DF40, 128, 128, 4]
+          - [0xE664, cmpgfx, D_8018E664, 128, 128, 4]
+          - [0xF130, cmpgfx, D_8018F130, 128, 128, 4]
+          - [0xF6F8, cmpgfx, D_8018F6F8, 128, 128, 4]
+          - [0x100AC, cmpgfx, D_801900AC, 128, 128, 4]
+          - [0x10AFC, cmpgfx, D_80190AFC, 128, 128, 4]
+          - [0x11678, cmpgfx, D_80191678, 128, 128, 4]
+          - [0x1222C, cmpgfx, D_8019222C, 128, 128, 4]
+          - [0x12B68, cmpgfx, D_80192B68, 128, 128, 4]
+          - [0x12DD8, skip]
   - target: disks/us/ST/ST0/ST0.BIN
     asset_path: assets/st/st0
     src_path: src/st/st0

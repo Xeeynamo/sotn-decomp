@@ -1,7 +1,1 @@
-NZ1_spriteBanks = 0x80180040;
 NZ1_cluts = 0x80180358;
-NZ1_rooms_layers = 0x801804E0;
-NZ1_gfxBanks = 0x801807CC;
-NZ1_pStObjLayoutHorizontal = 0x80180820;
-NZ1_pStObjLayoutVertical = 0x801808F4;
-NZ1_rooms = 0x8018233C;
