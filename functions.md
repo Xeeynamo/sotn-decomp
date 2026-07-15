@@ -3892,7 +3892,7 @@
 | wrp      | func_psp_09240AF8                 |       97 |         12 |        |       |     |
 | are      | func_pspeu_0925E158               |       97 |         13 |        |       |     |
 | main     | func_psp_08930120                 |       97 |         17 |        |       |     |
-| rno0     | RNO0_EntityBackgroundBlock        |       98 |          5 |        |       |     |
+| rno0     | func_pspeu_0925E2B8               |       98 |          5 |        |       |     |
 | nz0      | func_pspeu_092590C8               |       98 |          7 |        |       |     |
 | dra      | func_psp_09116B88                 |       98 |         10 |        |       |     |
 | ric      | func_pspeu_092AF738               |       98 |         10 |        |       |     |
