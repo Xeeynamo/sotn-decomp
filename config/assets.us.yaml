@@ -909,7 +909,10 @@ files:
         assets:
           - [0x40, sprite_banks, sprite_banks]
           #- [0xA0, paldef, palette_def] Issue #2401
-          - [0x360, skip]
+          - [0xA0, skip]
+          - [0x360, layers, layers]
+          - [0x558, skip]
+
   - target: disks/us/ST/ST0/ST0.BIN
     asset_path: assets/st/st0
     src_path: src/st/st0

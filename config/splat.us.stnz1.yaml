@@ -41,7 +41,8 @@ segments:
       - [0x0, .data, header]
       - [0x40, .data, sprite_banks]
       - [0xA0, data, palette_def] # Issue #2401
-      - [0x360, data]
+      - [0x360, .data, layers]
+      - [0x558, data]
       - [0x9C8, .data, e_init]
       - [0xCF0, .data, background_block_init]
       - [0xD80, .data, e_red_door_tiles]
@@ -85,6 +86,7 @@ segments:
       - [0x233C, data]
       - [0x23C8, .data, e_life_up]
       - [0x241C, data]
+      - [0x137D8, .data, tilemaps] # layout entries header
       - [0x20BF8, .data, gen/sprites]
       - [0x258D4, .rodata, e_breakable]
       - [0x258F8, .rodata, e_breakable_bridge]
