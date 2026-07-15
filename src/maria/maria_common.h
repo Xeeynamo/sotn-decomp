@@ -286,6 +286,11 @@ extern DebugInfo g_MarDebug;
 extern s32 mar_80175958[32];
 extern s32 mar_801759D8[32];
 
+bool MarDoCrash(void);
+bool MarDoAttack(void);
+bool MarDebug(void);
+bool MarCheckInput(s32 checks);
+
 extern Point16 g_MarSensorsCeiling[];
 extern Point16 g_MarSensorsFloor[];
 extern Point16 g_MarSensorsWall[];
