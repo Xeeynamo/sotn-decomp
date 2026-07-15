@@ -88,7 +88,7 @@ segments:
       - [0x23C8, .data, e_life_up]
       - [0x241C, .data, gen/e_layout] # layout entries data
       - [0x3834, .data, stage_data]
-      - [0x12DD8, data]
+      - [0x12DD8, data] # The palettes
       - [0x137D8, .data, tilemaps] # layout entries header
       - [0x20BF8, .data, gen/sprites]
       - [0x258D4, .rodata, e_breakable]
