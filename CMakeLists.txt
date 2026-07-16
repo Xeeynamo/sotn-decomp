@@ -75,7 +75,56 @@ set(_sotn_str_args "${SOTN_STR_BIN};cc")
 
 # Allows to run the sotn_str pre-compiler only to selected targets
 function(sotn_str_apply target)
-    set_target_properties(${target} PROPERTIES C_COMPILER_LAUNCHER "${_sotn_str_args}")
+    if(MSVC)
+        sotn_str_apply_msvc(${target})
+    else()
+        set_target_properties(${target} PROPERTIES C_COMPILER_LAUNCHER "${_sotn_str_args}")
+    endif()
+endfunction()
+
+# specific target for MSVC
+function(sotn_str_apply_msvc target)
+    get_target_property(_srcs ${target} SOURCES)
+    file(GLOB_RECURSE _sotn_str_headers CONFIGURE_DEPENDS "${CMAKE_SOURCE_DIR}/include/*.h")
+    set(_inc "$<TARGET_PROPERTY:${target},INCLUDE_DIRECTORIES>")
+    set(_def "$<TARGET_PROPERTY:${target},COMPILE_DEFINITIONS>")
+    set(_inc_arg "$<$<BOOL:${_inc}>:/I$<JOIN:${_inc},;/I>>")
+    set(_def_arg "$<$<BOOL:${_def}>:/D$<JOIN:${_def},;/D>>")
+
+    set(_new_srcs "")
+    foreach(_src ${_srcs})
+        get_filename_component(_ext "${_src}" EXT)
+        if(NOT _ext STREQUAL ".c")
+            list(APPEND _new_srcs "${_src}")
+            continue()
+        endif()
+
+        get_filename_component(_abs "${_src}" ABSOLUTE)
+        file(RELATIVE_PATH _rel "${CMAKE_SOURCE_DIR}" "${_abs}")
+        set(_out "${CMAKE_BINARY_DIR}/sotn_str_gen/${target}/${_rel}")
+        get_filename_component(_out_dir "${_out}" DIRECTORY)
+
+        get_source_file_property(_sdefs "${_src}" COMPILE_DEFINITIONS)
+        set(_sdef_args "")
+        if(_sdefs AND NOT _sdefs STREQUAL "NOTFOUND")
+            foreach(_d ${_sdefs})
+                list(APPEND _sdef_args "/D${_d}")
+            endforeach()
+        endif()
+
+        add_custom_command(
+            OUTPUT "${_out}"
+            COMMAND ${CMAKE_COMMAND} -E make_directory "${_out_dir}"
+            COMMAND "${CMAKE_C_COMPILER}" /nologo /E /DSOTN_STR "${_inc_arg}" "${_def_arg}" ${_sdef_args} "${_abs}" > "${_out}.i"
+            COMMAND "${SOTN_STR_BIN}" process -f "${_out}.i" > "${_out}"
+            DEPENDS "${_abs}" "${SOTN_STR_BIN}" ${_sotn_str_headers}
+            COMMAND_EXPAND_LISTS
+            VERBATIM
+            COMMENT "sotn_str: re-encoding ${_rel}")
+        list(APPEND _new_srcs "${_out}")
+    endforeach()
+
+    set_property(TARGET ${target} PROPERTY SOURCES "${_new_srcs}")
 endfunction()
 
 set(SOURCE_FILES_PC
