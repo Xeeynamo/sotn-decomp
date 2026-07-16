@@ -2807,7 +2807,7 @@
 | bo0      | func_pspeu_0926A6F8               |       62 |          4 |        |       |     |
 | no2      | func_pspeu_0925C018               |       62 |          4 |        |       |     |
 | bo0      | func_pspeu_09241670               |       62 |          5 |        |       |     |
-| bo0      | BO0_EntityBackgroundBlock         |       62 |          5 |        |       |     |
+| bo0      | EntityBackgroundBlock             |       62 |          5 |        |       |     |
 | rbo0     | func_pspeu_09247658               |       62 |          5 |        |       |     |
 | rbo0     | func_pspeu_0923A0E8               |       62 |          5 |        |       |     |
 | dra      | func_psp_09118330                 |       62 |          5 |        |       |     |
@@ -3064,7 +3064,7 @@
 | dra      | func_psp_090ED570                 |       68 |          5 |        |       |     |
 | no3      | func_pspeu_09242A30               |       68 |          5 |        |       |     |
 | no4      | func_pspeu_0923B288               |       68 |          5 |        |       |     |
-| np3      | NP3_EntityBackgroundBlock         |       68 |          5 |        |       |     |
+| np3      | EntityBackgroundBlock             |       68 |          5 |        |       |     |
 | rno3     | func_pspeu_09256F08               |       68 |          5 |        |       |     |
 | dra      | func_psp_09102800                 |       68 |          6 | Yes    |       |     |
 | maria    | func_pspeu_092B6528               |       68 |          6 |        |       |     |
@@ -4515,7 +4515,7 @@
 | no2      | func_pspeu_0924EDE0               |      133 |         11 |        |       |     |
 | np3      | func_pspeu_0925B7A0               |      133 |         11 |        |       |     |
 | rno0     | func_801CDAC8                     |      133 |         11 |        |       |     |
-| rno0     | RNO0_EntityBreakable              |      133 |         16 |        |       |     |
+| rno0     | EntityBreakable                   |      133 |         16 |        |       |     |
 | no3      | func_pspeu_092512E0               |      133 |         17 |        |       |     |
 | np3      | EntityMermanFireball              |      133 |         17 |        |       |     |
 | st0      | func_pspeu_09241268               |      133 |         18 |        |       |     |
@@ -4776,7 +4776,7 @@
 | rno0     | EntityArmorLordFireWave           |      164 |         26 |        |       |     |
 | maria    | func_pspeu_092B1110               |      164 |         28 |        |       |     |
 | cen      | func_pspeu_092409D0               |      164 |         28 |        |       |     |
-| bo0      | BO0_EntityLockCamera              |      165 |         18 |        |       |     |
+| bo0      | EntityLockCamera                  |      165 |         18 |        |       |     |
 | rbo0     | func_pspeu_09240398               |      165 |         18 |        |       |     |
 | are      | func_pspeu_092399E0               |      165 |         18 |        |       |     |
 | cat      | func_pspeu_09260030               |      165 |         18 |        |       |     |
@@ -4787,10 +4787,10 @@
 | no2      | func_pspeu_0925B018               |      165 |         18 |        |       |     |
 | no3      | func_pspeu_092457F8               |      165 |         18 |        |       |     |
 | no4      | func_pspeu_09238600               |      165 |         18 |        |       |     |
-| np3      | NP3_EntityLockCamera              |      165 |         18 |        |       |     |
+| np3      | EntityLockCamera                  |      165 |         18 |        |       |     |
 | rare     | func_pspeu_09238A10               |      165 |         18 |        |       |     |
 | rcat     | func_pspeu_0924D930               |      165 |         18 |        |       |     |
-| rno0     | RNO0_EntityLockCamera             |      165 |         18 |        |       |     |
+| rno0     | EntityLockCamera                  |      165 |         18 |        |       |     |
 | rno3     | func_pspeu_09257000               |      165 |         18 |        |       |     |
 | rnz0     | func_pspeu_09257648               |      165 |         18 |        |       |     |
 | wrp      | func_psp_09244AC8                 |      165 |         18 |        |       |     |
@@ -6579,7 +6579,7 @@
 | no3      | func_pspeu_09247CA0               |     1232 |        112 | Yes    |       |     |
 | rnz0     | func_pspeu_092445D8               |     1241 |        171 | Yes    |       |     |
 | rare     | func_pspeu_0924DB40               |     1242 |        223 |        |       |     |
-| bo0      | BO0_EntityRedDoor                 |     1247 |        112 | Yes    |       |     |
+| bo0      | EntityRedDoor                     |     1247 |        112 | Yes    |       |     |
 | rbo0     | func_pspeu_092442E0               |     1247 |        112 | Yes    |       |     |
 | are      | func_pspeu_09241218               |     1247 |        112 | Yes    |       |     |
 | cat      | func_pspeu_0923BF88               |     1247 |        112 | Yes    |       |     |
@@ -6591,12 +6591,12 @@
 | no0      | func_pspeu_0923EA58               |     1247 |        112 | Yes    |       |     |
 | no2      | func_pspeu_0923BA30               |     1247 |        112 | Yes    |       |     |
 | no4      | func_pspeu_09246B58               |     1247 |        112 | Yes    |       |     |
-| np3      | NP3_EntityRedDoor                 |     1247 |        112 | Yes    |       |     |
+| np3      | EntityRedDoor                     |     1247 |        112 | Yes    |       |     |
 | nz0      | func_pspeu_09244AA8               |     1247 |        112 | Yes    |       |     |
 | rare     | func_pspeu_0923E780               |     1247 |        112 | Yes    |       |     |
 | rcat     | func_pspeu_09239610               |     1247 |        112 | Yes    |       |     |
 | rcen     | func_pspeu_09239610               |     1247 |        112 | Yes    |       |     |
-| rno0     | RNO0_EntityRedDoor                |     1247 |        112 | Yes    |       |     |
+| rno0     | EntityRedDoor                     |     1247 |        112 | Yes    |       |     |
 | rno3     | func_pspeu_0923C758               |     1247 |        112 | Yes    |       |     |
 | rnz0     | func_pspeu_092418F0               |     1247 |        112 | Yes    |       |     |
 | st0      | func_pspeu_09249110               |     1247 |        112 | Yes    |       |     |
@@ -6724,7 +6724,7 @@
 | rcen     | func_pspeu_09246800               |     2252 |        207 | Yes    |       |     |
 | dre      | func_pspeu_09245D80               |     2261 |        214 | Yes    |       |     |
 | bo0      | func_pspeu_09258F58               |     2364 |        367 | Yes    |       |     |
-| cen      | CEN_EntityCutscene                |     2388 |        232 | Yes    |       |     |
+| cen      | EntityCutscene                    |     2388 |        232 | Yes    |       |     |
 | no4      | func_pspeu_09256330               |     2580 |        253 | Yes    |       |     |
 | dra      | func_psp_09106238                 |     2716 |        467 | Yes    |       |     |
 | dre      | func_pspeu_09248110               |     2742 |        414 | Yes    |       |     |
