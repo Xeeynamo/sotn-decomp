@@ -2,6 +2,35 @@
 #include "dra.h"
 #include "dra_bss.h"
 
+#if defined(VERSION_PSP)
+extern u32 g_DebugCurPal;
+extern s32 g_DebugEnabled2;
+
+// BSS
+u8 D_psp_091CB700[0x2000];
+
+void func_psp_090DFBD0(void) {
+    if ((s8)g_SaveAreaNames[g_StageId][0] != 0) {
+        StoreSaveData((SaveData*)D_psp_091CB700, 0, rand() & 0xF);
+        if (D_psp_08B42044 != 0) {
+            D_psp_08B42044 = 0;
+            D_psp_091CB700[0x1FFF] = 0;
+        } else {
+            D_psp_091CB700[0x1FFF] = 0xFF;
+        }
+        D_psp_091CB700[0x1FFE] = D_8006C374;
+    }
+}
+
+void func_psp_090DFC68() {
+    memcpy(D_psp_091CB700, &g_Pix, sizeof(D_psp_091CB700));
+}
+
+void func_psp_090DFC80() {
+    WriteQuickSaveData(D_psp_091CB700, sizeof(D_psp_091CB700), D_8006C378);
+}
+#endif
+
 void func_800EA538(s32 arg0) {
     s32 i;
     Unkstruct_8006C3C4* ptr;

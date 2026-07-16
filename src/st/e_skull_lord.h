@@ -27,7 +27,7 @@ void EntitySkullLord(Entity* self) {
         CreateEntityFromEntity(E_SKULL_LORD_OUTLINE, self, entity);
         entity->zPriority = self->zPriority - 4;
         entity = self + 2;
-        CreateEntityFromEntity(E_SKULL_LORD_FLAMES, self, entity);
+        CreateEntityFromEntity(E_SKULL_LORD_EYE, self, entity);
         entity->zPriority = self->zPriority - 2;
         break;
 
@@ -341,7 +341,7 @@ void EntitySkullLordOutline(Entity* self) {
     }
 }
 
-void EntitySkullLordFlames(Entity* self) {
+void EntitySkullLordEye(Entity* self) {
     Entity* entity;
     Primitive* prim;
     s32 offsetX;
@@ -353,6 +353,10 @@ void EntitySkullLordFlames(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitSkullLordEffects);
+        // BUG: This uses a palette in the 0x100-0x1FF range (specifically 0x1CF).
+        // That is not part of the stage overlay or enemy ranges. This creates issues with the Skull Lord in RTOP.
+        // If you go from RTOP to the warp room and back out, the skull lord gets a glitchy red eye. This goes away
+        // if you pause and unpause. It is not known what the intended behavior here was.
         self->palette = PAL_UNK_1CF;
         self->animCurFrame = 4;
         primIndex = g_api.AllocPrimitives(PRIM_SPRT, 1);

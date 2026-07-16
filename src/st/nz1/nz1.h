@@ -84,7 +84,7 @@ enum EntityIDs {
     E_SPIKES_DAMAGE,            // EntitySpikesDamage
     E_SKULL_LORD,               // EntitySkullLord
     E_SKULL_LORD_OUTLINE,       // EntitySkullLordOutline
-    E_SKULL_LORD_FLAMES,        // EntitySkullLordFlames
+    E_SKULL_LORD_EYE,        // EntitySkullLordEye
     E_SKULL_LORD_PIECES,        // EntitySkullLordPieces
     E_HARPY,                    // EntityHarpy
     E_HARPY_DAGGER,             // EntityHarpyDagger
