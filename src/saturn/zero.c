@@ -1216,7 +1216,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6012D88, func_06012D88);
 // original name : xa_play_ck
 bool func_80131F68(void) {
     bool ret;
-    
+
     if (D_8013B61C == 9 || (D_8013B61C == 0 && g_PlayingXaBgmId == 0)) {
         ret = 0;
     } else {
@@ -1240,7 +1240,7 @@ extern u8 DAT_0606423a;
 // SAT: 0x06012E18
 bool CdSoundCommandQueueEmpty(void) {
     bool ret;
-    
+
     if (DAT_06064250 != 0 || DAT_06064414 != DAT_0606423a) {
         ret = 0;
     } else {
