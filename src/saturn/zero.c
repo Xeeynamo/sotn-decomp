@@ -1156,10 +1156,9 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011F58, func_06011F58);
 // _KeyOffBGM2
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011FC8, func_06011FC8);
 
-extern s32 d_06063BE0;
 void func_06012030(void) {
     func_06011F40(7);
-    d_06063BE0 = 0;
+    D_8013B61C = 0;
 }
 
 // _KeyOffVox
@@ -1214,18 +1213,41 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6012CAC, func_06012CAC);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6012D30, func_06012D30);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6012D88, func_06012D88);
 
-// _xa_play_ck
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6012DD0, func_06012DD0);
+// original name : xa_play_ck
+bool func_80131F68(void) {
+    bool ret;
+    
+    if (D_8013B61C == 9 || (D_8013B61C == 0 && g_PlayingXaBgmId == 0)) {
+        ret = 0;
+    } else {
+        ret = 1;
+    }
+    return ret;
+}
 
-// _vox_play_ck
+// original name : vox_play_ck
 bool func_06012DFC(void) {
-    if (DAT_06064214 != 0) {
+    if (g_PlayingXaBgmId != 0) {
         return 1;
     }
     return 0;
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6012E18, func_06012E18);
+extern s32 DAT_06064250;
+extern u8 DAT_06064414;
+extern u8 DAT_0606423a;
+
+// SAT: 0x06012E18
+bool CdSoundCommandQueueEmpty(void) {
+    bool ret;
+    
+    if (DAT_06064250 != 0 || DAT_06064414 != DAT_0606423a) {
+        ret = 0;
+    } else {
+        ret = 1;
+    }
+    return ret;
+}
 
 // _sd_xapause_chk
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6012E4C, func_06012E4C);
@@ -1246,13 +1268,13 @@ bool func_06013320(void) {
 // _sd_reset2
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601333C, func_0601333C);
 
-void func_06013394(void) {
-    DAT_060644c1 = 1;
+void MuteCd(void) {
+    g_MuteCd = 1;
     DAT_060644dc = 2;
 }
 
-void func_060133B0(void) {
-    DAT_060644c1 = 0;
+void UnMuteCd(void) {
+    g_MuteCd = 0;
     DAT_060644dc = 2;
 }
 
