@@ -503,9 +503,15 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
             return 0;
         } else {
             sim.path = smolbuf;
-            snprintf(smolbuf, sizeof(smolbuf), "ST/%s/SD_ZK%s.VH",
-                     g_StagesLba[g_StageId].ovlName,
-                     g_StagesLba[g_StageId].ovlName);
+            if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
+                snprintf(smolbuf, sizeof(smolbuf), "ST/%s/SD_Z%s.VH",
+                         g_StagesLba[g_StageId].ovlName,
+                         g_StagesLba[g_StageId].ovlName);
+            } else {
+                snprintf(smolbuf, sizeof(smolbuf), "ST/%s/SD_ZK%s.VH",
+                         g_StagesLba[g_StageId].ovlName,
+                         g_StagesLba[g_StageId].ovlName);
+            }
             sim.addr = aPbav_2;
             sim.path = smolbuf;
             sim.size = g_StagesLba[g_StageId].vhLen;
@@ -549,9 +555,15 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
             return 0;
         } else {
             sim.path = smolbuf;
-            snprintf(smolbuf, sizeof(smolbuf), "ST/%s/SD_ZK%s.VB",
-                     g_StagesLba[g_StageId].ovlName,
-                     g_StagesLba[g_StageId].ovlName);
+            if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
+                snprintf(smolbuf, sizeof(smolbuf), "ST/%s/SD_Z%s.VB",
+                         g_StagesLba[g_StageId].ovlName,
+                         g_StagesLba[g_StageId].ovlName);
+            } else {
+                snprintf(smolbuf, sizeof(smolbuf), "ST/%s/SD_ZK%s.VB",
+                         g_StagesLba[g_StageId].ovlName,
+                         g_StagesLba[g_StageId].ovlName);
+            }
             sim.path = sim.path;
             sim.addr = D_80280000;
             sim.size = g_StagesLba[g_StageId].vbLen;
