@@ -37,3 +37,7 @@ objdiff*.json
 
 # rust
 target/**
+
+# recording files
+recs*/
+recording.bin
