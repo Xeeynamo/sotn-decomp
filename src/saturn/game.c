@@ -258,7 +258,7 @@ extern u8* DAT_060645b8;
 // original name: SET_DEFAULT_SCL_PRIORITY
 void SetDefaultSCLPriority(s32 arg0) {
     u8* ptr;
-    
+
     if (DAT_0605d750.unk4 < 0x20) {
         ptr = &DAT_060645b8[DAT_0605d750.unk4 * 12];
         SCL_SetPriority(0x4, ptr[0]);
