@@ -6,12 +6,12 @@
 extern EInit g_EInitInteractable;
 extern EInit g_EInitSpawner;
 
-extern s16 D_us_80181BFC[];
+extern s16 D_us_80181BFC[] = {0, 0, 0, 0, 0xC181, 0xC1BE, 0xDE81, 0xDEBE, 0xE181, 0xE1BE, 0xFE81, 0xFEBE, 0xC181, 0xC1BE, 0xDE81, 0xDEBE, 0xE181, 0xE1BE, 0xFE81, 0xFEBE, 0x8181, 0x81BE, 0xA081, 0xA0BE, 0xA081, 0xA0BE, 0xBE81, 0xBEBE, 0x81C1, 0x81FE, 0xA0C1, 0xA0FE, 0xA0C1, 0xA0FE, 0xBEC1, 0xBEFE};
 
-extern SVECTOR cloudVectorOne;
-extern SVECTOR cloudVectorTwo;
-extern SVECTOR cloudVectorThree;
-extern SVECTOR cloudVectorFour;
+extern SVECTOR cloudVectorOne = {-128, 0, 0, 0};
+extern SVECTOR cloudVectorTwo = {128, 0, 0, 0};
+extern SVECTOR cloudVectorThree = {-128, 0, 224, 0};
+extern SVECTOR cloudVectorFour = {128, 0, 224, 0};
 
 extern cloudData data[];
 extern SVECTOR empty;
