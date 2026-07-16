@@ -567,6 +567,128 @@ use clap::{Arg};
 // }
 use clap::{ArgAction, Command};
 
+/// Parses a GCC/Clang-style compile command line to find:
+/// - index of the source file argument
+/// - presence for -o <output> arg
+/// - presence for -c arg
+fn parse_command(args: &[String]) -> (Option<usize>, bool, bool) {
+    let mut input_index = None;
+    let mut output_present = false;
+    let mut is_compile = false;
+
+    let mut i = 0;
+    while i < args.len() {
+        let a = &args[i];
+        if a == "-c" {
+            is_compile = true;
+        } else if a == "-o" {
+            output_present = true;
+            i += 1; // skip the output path
+        } else if a.starts_with("-o") && a.len() > 2 {
+            output_present = true;
+        } else if a.ends_with(".c") {
+            input_index = Some(i);
+        }
+        i += 1;
+    }
+
+    (input_index, output_present, is_compile)
+}
+
+/// Builds the argument list for the preprocessing pass:
+/// strips `-c`/`-o ...`, appends `-E -DSOTN_STR`.
+fn preprocess_args(args: &[String]) -> Vec<String> {
+    let mut out = Vec::new();
+    let mut skip_next = false;
+    for a in args {
+        if skip_next {
+            skip_next = false;
+            continue;
+        }
+        if a == "-c" {
+            continue;
+        }
+        if a == "-o" {
+            skip_next = true;
+            continue;
+        }
+        if a.starts_with("-o") && a.len() > 2 {
+            continue;
+        }
+        out.push(a.clone());
+    }
+    out.push("-E".to_string());
+    out.push("-DSOTN_STR".to_string());
+    out
+}
+
+fn cc_fail(msg: &str) -> ! {
+    eprintln!("sotn_str cc: {}", msg);
+    std::process::exit(1);
+}
+
+// injects a temporary, `_S`-transformed file to the compiler
+fn cc(cc_args: &[String]) -> io::Result<i32> {
+    use std::io::Write;
+    use std::process::{Command as PCommand, Stdio};
+
+    if cc_args.is_empty() {
+        cc_fail("usage: sotn_str cc <compiler> <args...>");
+    }
+
+    let compiler = &cc_args[0];
+    let args = &cc_args[1..];
+
+    let (input_index, output_present, is_compile) = parse_command(args);
+
+    if !is_compile || input_index.is_none() || !output_present {
+        let status = PCommand::new(compiler).args(args).status()?;
+        return Ok(status.code().unwrap_or(1));
+    }
+    let input_index = input_index.unwrap();
+
+    let pp_args = preprocess_args(args);
+    let pp_output = PCommand::new(compiler)
+        .args(&pp_args)
+        .stdout(Stdio::piped())
+        .output()?;
+    if !pp_output.status.success() {
+        return Ok(pp_output.status.code().unwrap_or(1));
+    }
+
+    let text = String::from_utf8_lossy(&pp_output.stdout);
+    let mut encoded = String::with_capacity(text.len());
+    for line in text.split_inclusive('\n') {
+        encoded.push_str(&do_sub(line, false));
+    }
+
+    let tmp = tempfile_path();
+    {
+        let mut f = File::create(&tmp)?;
+        f.write_all(encoded.as_bytes())?;
+    }
+
+    let mut compile_args: Vec<String> = args.to_vec();
+    compile_args[input_index] = tmp.to_string_lossy().into_owned();
+
+    let status = PCommand::new(compiler).args(&compile_args).status()?;
+
+    let _ = std::fs::remove_file(&tmp);
+
+    Ok(status.code().unwrap_or(1))
+}
+
+fn tempfile_path() -> std::path::PathBuf {
+    use std::time::{SystemTime, UNIX_EPOCH};
+    let nanos = SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .unwrap()
+        .as_nanos();
+    let mut dir = std::env::temp_dir();
+    dir.push(format!("sotn_str_cc_{}_{}.c", std::process::id(), nanos));
+    dir
+}
+
 fn main() {
     let matches = Command::new("string processor")
         .version("1.0")
@@ -591,6 +713,17 @@ fn main() {
                         .action(ArgAction::SetTrue)
                 )
         )
+        .subcommand(
+            Command::new("cc")
+                .about("use for C_COMPILER_LAUNCHER, re-encodes _S() strings on the fly")
+                .trailing_var_arg(true)
+                .allow_hyphen_values(true)
+                .arg(
+                    Arg::new("args")
+                        .action(ArgAction::Append)
+                        .num_args(0..)
+                )
+        )
         .get_matches();
 
     match matches.subcommand() {
@@ -611,9 +744,19 @@ fn main() {
                 .get_one::<String>("filename")
                 .expect("is present");
                 let _ = process(Some(filename.to_string()), false);
-            } 
+            }
             else {
                 let _ = process(None, false);
+            }
+        }
+        Some(("cc", sub_m)) => {
+            let args: Vec<String> = sub_m
+                .get_many::<String>("args")
+                .map(|v| v.cloned().collect())
+                .unwrap_or_default();
+            match cc(&args) {
+                Ok(code) => std::process::exit(code),
+                Err(e) => cc_fail(&format!("{}", e)),
             }
         }
         _ => {}

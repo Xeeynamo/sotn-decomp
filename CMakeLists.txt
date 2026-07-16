@@ -45,13 +45,45 @@ else()
     add_compile_options(-funsigned-char)
 endif()
 
+find_program(SOTN_STR_BIN sotn_str
+    PATHS ${CMAKE_SOURCE_DIR}/tools/sotn_str/target/release
+    NO_DEFAULT_PATH)
+if(NOT SOTN_STR_BIN)
+    find_program(CARGO_BIN cargo)
+    if(NOT CARGO_BIN)
+        message(FATAL_ERROR
+            "cargo is required to compile sotn_str\n"
+            "https://doc.rust-lang.org/stable/cargo/getting-started/installation.html")
+    endif()
+    message(STATUS "sotn_str not found; building it with cargo")
+    execute_process(
+        COMMAND ${CARGO_BIN} build --release
+                --manifest-path ${CMAKE_SOURCE_DIR}/tools/sotn_str/Cargo.toml
+        RESULT_VARIABLE _sotn_str_build_result)
+    if(NOT _sotn_str_build_result EQUAL 0)
+        message(FATAL_ERROR "failed to build sotn_str")
+    endif()
+    find_program(SOTN_STR_BIN sotn_str
+        PATHS ${CMAKE_SOURCE_DIR}/tools/sotn_str/target/release
+        NO_DEFAULT_PATH)
+    if(NOT SOTN_STR_BIN)
+        message(FATAL_ERROR "sotn_str build succeeded but the binary was not found")
+    endif()
+endif()
+
+set(_sotn_str_args "${SOTN_STR_BIN};cc")
+
+# Allows to run the sotn_str pre-compiler only to selected targets
+function(sotn_str_apply target)
+    set_target_properties(${target} PROPERTIES C_COMPILER_LAUNCHER "${_sotn_str_args}")
+endfunction()
+
 set(SOURCE_FILES_PC
     src/pc/main.c
     src/pc/stubs.c
     src/pc/sotn.c
     src/pc/pc.c
     src/pc/io.c
-    src/pc/str.c
     src/pc/sim_pc.c
     src/pc/pl_arc.c
     src/pc/pl_ric.c
@@ -474,6 +506,7 @@ target_compile_definitions(${PROJECT_NAME} PUBLIC
 target_include_directories(psyz PUBLIC tools/psyz/psyz/include)
 target_compile_definitions(psyz PRIVATE __psyz)
 psyz_strip_file_prefix(${PROJECT_NAME})
+sotn_str_apply(${PROJECT_NAME})
 if (WIN32)
     target_link_libraries(${PROJECT_NAME} PRIVATE psyz)
     set_target_properties(${PROJECT_NAME} PROPERTIES ENABLE_EXPORTS ON)
@@ -533,6 +566,7 @@ function(add_overlay name)
     endif()
 
     psyz_strip_file_prefix(${name})
+    sotn_str_apply(${name})
 endfunction()
 
 add_overlay(cen ${SOURCE_FILES_STAGE_CEN})
