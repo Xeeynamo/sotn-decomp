@@ -580,9 +580,8 @@ typedef struct {
     s32 : 32;
     s32 : 32;
     s32 : 32;
-    s16 unk90;
-    s16 unk92;
-    s16 unk94;
+    SotnFixed32 shoveX;
+    SotnFixed32 shoveY;
 } unkGraphicsStruct;
 
 typedef struct {

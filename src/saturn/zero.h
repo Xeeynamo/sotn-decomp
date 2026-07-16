@@ -113,7 +113,7 @@ extern s32* DAT_06066000;
 
 void func_06006FA8(void);
 
-extern u8 DAT_060644c1;
+extern u8 g_MuteCd;
 extern u8 DAT_060644dc;
 
 extern s32 DAT_060476a4;
@@ -142,7 +142,8 @@ void func_0600841C(void);
 void func_0600AD98(void);
 void func_0600B254(void);
 
-extern s32 DAT_06064214;
+extern s32 D_8013B61C;
+extern s32 g_PlayingXaBgmId;
 extern s8 DAT_060644C0;
 
 extern u16 DAT_0605cea2;
