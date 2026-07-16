@@ -44,7 +44,7 @@ segments:
     align: 128
     subalign: 8
     subsegments:
-      - [0x80, c, top_psp/create_entity]
+      - [0x80, c, top/create_entity]
       - [0x1028, c, top_psp/e_blue_axe_knight]
       - [0x12B0, c, top_psp/unk_12B0]
       - [0x33D8, c, top_psp/e_stage_name]
@@ -83,5 +83,6 @@ segments:
       - [0x3F320, .rodata, top_psp/func_pspeu_09245958]
       - [0x3F348, .rodata, top_psp/unk_118F0]
       - [0x3F380, .rodata, top_psp/e_cutscene_dialogue]
-      - [0x3F480, bss]
+      - [0x3F480, .bss, top/create_entity]
+      - [0x3F4A0, bss, 3F4A0]
   - [0x3FC80]
