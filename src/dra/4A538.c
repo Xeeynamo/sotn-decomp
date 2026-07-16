@@ -282,10 +282,12 @@ void func_800EA7CC(void) {
     offset = 0;
     desc = g_Clut[0];
     clutX = 0x200;
-    for (i = 0xF0; i < 0x100; i++, desc = (s16*)desc + 0x100, offset++) {
+    for (i = 0xF0; i < 0x100; i++) {
         if (palettes[offset]) {
             LoadClut(desc, clutX, i);
         }
+        desc = (s16*)desc + 0x100;
+        offset++;
     }
 
     // re-upload updated shared entity palette
@@ -298,10 +300,12 @@ void func_800EA7CC(void) {
 
     // re-upload updated stage-specific entities palette
     clutX = 0x100;
-    for (i = 0xF0; i < 0x100; i++, desc = (s16*)desc + 0x100, offset++) {
+    for (i = 0xF0; i < 0x100; i++) {
         if (palettes[offset]) {
             LoadClut(desc, clutX, i);
         }
+        desc = (s16*)desc + 0x100;
+        offset++;
     }
 }
 

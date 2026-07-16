@@ -260,7 +260,7 @@ void func_800EA7CC(void) {
                 count = desc[1];
                 clut += clutOffset;
                 for (j = 0; j < count; j++) {
-                    *clut++ = *data++;
+                    *clut++ = clutX = *data++;
                 }
                 if (desc[3] == -1) {
                     break;
