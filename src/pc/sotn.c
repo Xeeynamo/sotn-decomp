@@ -111,10 +111,14 @@ void InitVbVh(void);
 
 s32 func_800EDB58(u8 primType, s32 count);
 
+static void GameLoopCallback(void) { Replay_OnFrame(); }
+
 struct InitGameParams g_GameParams;
 bool InitGame(struct InitGameParams* params) {
     Psyz_SetTitle("Castlevania: Symphony of the Night");
     g_GameParams = *params;
+    Replay_Init(params);
+    Psyz_SetVSyncCb(GameLoopCallback);
     if (params->diskPath) {
         if (Psyz_CdSetDiskPath(params->diskPath) < 0) {
             WARNF("failed to parse CD layout at '%s'. Music will be disabled",
@@ -218,7 +222,10 @@ bool InitGame(struct InitGameParams* params) {
 }
 
 void ResetPlatform(void);
-void ResetGame(void) { ResetPlatform(); }
+void ResetGame(void) {
+    Replay_Reset();
+    ResetPlatform();
+}
 
 void InitSotnMenuTable(void);
 void InitStrings(void) {

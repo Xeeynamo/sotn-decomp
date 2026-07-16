@@ -49,6 +49,7 @@ set(SOURCE_FILES_PC
     src/pc/main.c
     src/pc/stubs.c
     src/pc/sotn.c
+    src/pc/replay.c
     src/pc/pc.c
     src/pc/io.c
     src/pc/str.c
