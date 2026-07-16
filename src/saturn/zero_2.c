@@ -40,9 +40,9 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601AD14, func_0601AD14);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601AE2C, func_0601AE2C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601AE5C, func_0601AE5C);
 
-s32 func_0601AE9C(void) { return 0xff; }
+s32 func_0601AE9C(void) { return 0xFF; }
 
-s32 func_0601AEA8(void) { return 0xff; }
+s32 func_0601AEA8(void) { return 0xFF; }
 
 void func_0601AEB4(void) { DAT_060645D0 = DAT_060cf040; }
 
