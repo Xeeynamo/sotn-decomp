@@ -1,3 +1,3 @@
-NO2_spriteBanks = 0x09265FC0;
-NO2_cluts = 0x09266368;
-NO2_gfxBanks = 0x092664C8;
+spriteBanks = 0x09265FC0;
+cluts = 0x09266368;
+gfxBanks = 0x092664C8;

@@ -55,7 +55,7 @@ extern s32 D_80096ED0_mad;
 
 // ST/MAD
 extern EInit g_EInitLockCamera;
-extern EInit OVL_EXPORT(EInitObtainable);
+extern EInit g_EInitObtainable;
 extern EInit g_EInitCommon;
 extern u16 D_80180538[];
 extern ObjInit D_8018056C[];
@@ -82,7 +82,7 @@ extern u8 g_UnkEntityAnimData[];
 // extern u16 g_jewelSwordDropTable;
 extern RoomHeader g_rooms[];
 
-extern EInit OVL_EXPORT(EInitBreakable);
+extern EInit g_EInitBreakable;
 extern u8 blend_modes[];
 
 extern s16 D_80199DE8;

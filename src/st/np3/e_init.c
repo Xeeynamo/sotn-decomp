@@ -5,7 +5,7 @@ void EntityBreakable(Entity* self);
 void EntityExplosion(Entity* self);
 void EntityPrizeDrop(Entity* self);
 void EntityDamageDisplay(Entity* self);
-void OVL_EXPORT(EntityRedDoor)(Entity* self);
+void EntityRedDoor(Entity* self);
 void EntityIntenseExplosion(Entity* self);
 void EntitySoulStealOrb(Entity* self);
 void EntityRoomForeground(Entity* self);
@@ -17,8 +17,8 @@ void EntityEnemyBlood(Entity* self);
 void EntityMessageBox(Entity* self);
 void EntityDummy(Entity* self);
 void EntityDummy(Entity* self);
-void OVL_EXPORT(EntityBackgroundBlock)(Entity* self);
-void OVL_EXPORT(EntityLockCamera)(Entity* self);
+void EntityBackgroundBlock(Entity* self);
+void EntityLockCamera(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
@@ -93,12 +93,12 @@ void EntityGurkhaWeapon(Entity* self);
 void EntityBlade(Entity* self);
 void EntityBladeWeapon(Entity* self);
 
-PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
+PfnEntityUpdate EntityUpdates[] = {
     EntityBreakable,
     EntityExplosion,
     EntityPrizeDrop,
     EntityDamageDisplay,
-    OVL_EXPORT(EntityRedDoor),
+    EntityRedDoor,
     EntityIntenseExplosion,
     EntitySoulStealOrb,
     EntityRoomForeground,
@@ -110,8 +110,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityMessageBox,
     EntityDummy,
     EntityDummy, // 0x10
-    OVL_EXPORT(EntityBackgroundBlock),
-    OVL_EXPORT(EntityLockCamera),
+    EntityBackgroundBlock,
+    EntityLockCamera,
     EntityUnkId13,
     EntityExplosionVariants,
     EntityGreyPuff,
@@ -187,8 +187,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityBladeWeapon,
 };
 
-EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_DRA(3), 0x00, 0x00, 0x000, 0x000};
-EInit OVL_EXPORT(EInitObtainable) = {ANIMSET_DRA(3), 0x00, 0x00, 0x000, 0x001};
+EInit g_EInitBreakable = {ANIMSET_DRA(3), 0x00, 0x00, 0x000, 0x000};
+EInit g_EInitObtainable = {ANIMSET_DRA(3), 0x00, 0x00, 0x000, 0x001};
 EInit g_EInitParticle = {ANIMSET_DRA(3), 0x00, 0x00, 0x000, 0x002};
 EInit g_EInitSpawner = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x004};
 EInit g_EInitInteractable = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x005};

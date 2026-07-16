@@ -15,11 +15,11 @@ enum Palettes {
 
 enum Entities {
     E_NONE,
-    E_BREAKABLE,          // OVL_EXPORT(EntityBreakable)
+    E_BREAKABLE,          // EntityBreakable
     E_EXPLOSION,          // EntityExplosion
     E_PRIZE_DROP,         // EntityPrizeDrop
     E_DAMAGE_DISPLAY,     // EntityDamageDisplay
-    E_RED_DOOR,           // OVL_EXPORT(EntityRedDoor)
+    E_RED_DOOR,           // EntityRedDoor
     E_INTENSE_EXPLOSION,  // EntityIntenseExplosion
     E_SOUL_STEAL_ORB,     // EntitySoulStealOrb
     E_ROOM_FOREGROUND,    // EntityRoomForeground
@@ -31,8 +31,8 @@ enum Entities {
     E_MESSAGE_BOX,        // EntityMessageBox
     E_DUMMY_F,            // EntityDummy
     E_DUMMY_10,           // EntityDummy
-    E_BACKGROUND_BLOCK,   // OVL_EXPORT(EntityBackgroundBlock)
-    E_LOCK_CAMERA,        // OVL_EXPORT(EntityLockCamera)
+    E_BACKGROUND_BLOCK,   // EntityBackgroundBlock
+    E_LOCK_CAMERA,        // EntityLockCamera
     E_UNK_ID13,           // EntityUnkId13
     E_EXPLOSION_VARIANTS, // EntityExplosionVariants
     E_GREY_PUFF,          // EntityGreyPuff
@@ -47,7 +47,7 @@ enum Entities {
     E_UNK_1E,             // func_us_8019CDA0
     E_UNK_1F,             // func_us_8019CDF8
     E_UNK_20,             // func_us_8019D330
-    E_CUTSCENE_DIALOGUE,  // OVL_EXPORT(EntityCutscene)
+    E_CUTSCENE_DIALOGUE,  // EntityCutscene
     E_UNK_22,             // func_us_8019F148
     E_UNK_23,             // func_us_8019F5F0
     E_UNK_24,             // func_us_8019FE9C

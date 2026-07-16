@@ -100,7 +100,7 @@ static u8* animations[] = {
     red_moveable_floor,  red_moveable_floor,
     window_highlight_3};
 
-void OVL_EXPORT(EntityBackgroundBlock)(Entity* self) {
+void EntityBackgroundBlock(Entity* self) {
     u16 params;
     s32 flag;
 

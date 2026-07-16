@@ -1,3 +1,3 @@
-NO0_pStObjLayoutHorizontal = 0x80180778;
-NO0_pStObjLayoutVertical = 0x8018084C;
+entityLayoutHorizontal = 0x80180778;
+entityLayoutVertical = 0x8018084C;
 ctulhu_shockwave_uvs = 0x801C11B0;

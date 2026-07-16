@@ -122,7 +122,7 @@ typedef enum EntityIDs {
 
 extern Primitive* FindFirstUnkPrim(Primitive* poly);
 
-extern EInit OVL_EXPORT(EInitObtainable);
+extern EInit g_EInitObtainable;
 extern EInit g_EInitParticle;
 extern EInit g_EInitSpawner;
 extern EInit g_EInitInteractable;

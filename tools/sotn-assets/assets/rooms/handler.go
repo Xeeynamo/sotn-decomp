@@ -57,7 +57,7 @@ func (h *handler) Build(e assets.BuildArgs) error {
 
 	content := strings.Builder{}
 	content.WriteString("// clang-format off\n")
-	content.WriteString(fmt.Sprintf("unsigned char %s_rooms[] = {\n", strings.ToUpper(e.OvlName)))
+	content.WriteString("unsigned char rooms[] = {\n")
 	for _, room := range rooms {
 		s := fmt.Sprintf("    %d, %d, %d, %d, %d, %d, %d, %d,\n",
 			room.Left, room.Top, room.Right, room.Bottom,

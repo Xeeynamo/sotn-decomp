@@ -3,8 +3,8 @@
 
 extern EInit D_8018047C;
 
-extern s32 OVL_EXPORT(CutsceneFlags);
-extern s32 OVL_EXPORT(SkipCutscene);
+extern s32 g_CutsceneFlags;
+extern s32 g_SkipCutscene;
 
 #ifdef VERSION_PSP
 extern u8* D_801816C0; // defined in st_init_psp
@@ -42,7 +42,7 @@ void EntityCSMoveAlucard(Entity* self) {
     FntPrint("step %x\n", self->step);
 #endif
 
-    if (OVL_EXPORT(SkipCutscene) && (self->step < 8)) {
+    if (g_SkipCutscene && (self->step < 8)) {
         SetStep(8);
     }
 
@@ -93,8 +93,8 @@ void EntityCSMoveAlucard(Entity* self) {
         g_Player.padSim = PAD_RIGHT;
         posX = player->posX.i.hi + currentRoomTileLayout->scrollX.i.hi;
         if (posX > 256) {
-            if (!(OVL_EXPORT(CutsceneFlags) & 1)) {
-                OVL_EXPORT(CutsceneFlags) |= 1;
+            if (!(g_CutsceneFlags & 1)) {
+                g_CutsceneFlags |= 1;
             }
         }
         if (posX > 288) {
@@ -109,7 +109,7 @@ void EntityCSMoveAlucard(Entity* self) {
         g_Player.padSim = PAD_NONE;
         g_Player.demo_timer = 1;
         CutsceneCameraPan(0x20);
-        if (OVL_EXPORT(CutsceneFlags) & 2) {
+        if (g_CutsceneFlags & 2) {
             self->step++;
         }
         break;
@@ -118,8 +118,8 @@ void EntityCSMoveAlucard(Entity* self) {
         g_Player.padSim = PAD_RIGHT;
         posX = player->posX.i.hi + currentRoomTileLayout->scrollX.i.hi;
         if (posX > 256) {
-            if (!(OVL_EXPORT(CutsceneFlags) & 1)) {
-                OVL_EXPORT(CutsceneFlags) |= 1;
+            if (!(g_CutsceneFlags & 1)) {
+                g_CutsceneFlags |= 1;
             }
         }
         if (posX > 352) {
@@ -134,7 +134,7 @@ void EntityCSMoveAlucard(Entity* self) {
 
     case 5: // Conversation with fake lisa
         g_Player.demo_timer = 1;
-        if (OVL_EXPORT(CutsceneFlags) & 8) {
+        if (g_CutsceneFlags & 8) {
             SetStep(6);
         }
         break;
@@ -150,7 +150,7 @@ void EntityCSMoveAlucard(Entity* self) {
 
     case 7:
         g_Player.demo_timer = 1;
-        if (OVL_EXPORT(CutsceneFlags) & 0x200) {
+        if (g_CutsceneFlags & 0x200) {
             SetStep(8);
         }
         break;
@@ -205,8 +205,8 @@ void EntityUnkId23(Entity* self) {
                     g_Player.padSim = PAD_WOLF;
                 }
             }
-        } else if ((g_Player.vram_flag & TOUCHING_GROUND) &&
-                   (OVL_EXPORT(CutsceneFlags) & 2)) {
+        } else if (
+            (g_Player.vram_flag & TOUCHING_GROUND) && (g_CutsceneFlags & 2)) {
             delta = player->posX.i.hi - entity->posX.i.hi;
             if (delta < -0x50) {
                 g_Player.padSim = PAD_RIGHT;
@@ -266,10 +266,10 @@ void EntityUnkId23(Entity* self) {
         break;
 
     case 4:
-        OVL_EXPORT(CutsceneFlags) |= 1;
+        g_CutsceneFlags |= 1;
         g_Player.padSim = PAD_NONE;
         g_Player.demo_timer = 1;
-        if (OVL_EXPORT(CutsceneFlags) & 0x20) {
+        if (g_CutsceneFlags & 0x20) {
             self->step++;
         }
         break;
@@ -311,7 +311,7 @@ void EntityFadeToWhite1(Entity* self) {
         break;
 
     case 1:
-        if (OVL_EXPORT(CutsceneFlags) & 0x10) {
+        if (g_CutsceneFlags & 0x10) {
             prim = &g_PrimBuf[self->primIndex];
             prim->drawMode =
                 DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
@@ -324,7 +324,7 @@ void EntityFadeToWhite1(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         PRED(prim) = PGRN(prim) = PBLU(prim) += 4;
         if (prim->r0 > 240) {
-            OVL_EXPORT(CutsceneFlags) |= 0x20;
+            g_CutsceneFlags |= 0x20;
             self->ext.fadeToWhite.unk7C = 1;
             self->ext.fadeToWhite.unk7E = 0x200;
             self->ext.fadeToWhite.unk80 = 0;
@@ -343,7 +343,7 @@ void EntityFadeToWhite1(Entity* self) {
         break;
 
     case 4:
-        if (OVL_EXPORT(CutsceneFlags) & 0x200) {
+        if (g_CutsceneFlags & 0x200) {
             self->ext.fadeToWhite.unk7C = 0;
             g_api.PlaySfx(0xA1);
             DestroyEntity(self);
@@ -389,7 +389,7 @@ void EntityFadeToWhite2(Entity* self) {
         break;
 
     case 1:
-        if (OVL_EXPORT(CutsceneFlags) & 0x10) {
+        if (g_CutsceneFlags & 0x10) {
             prim = &g_PrimBuf[self->primIndex];
             prim->drawMode =
                 DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
@@ -414,7 +414,7 @@ void EntityFadeToWhite2(Entity* self) {
         prim = prim->next;
         PRED(prim) = PGRN(prim) = PBLU(prim) += 8;
         if (prim->r0 > 240) {
-            OVL_EXPORT(CutsceneFlags) |= 0x40;
+            g_CutsceneFlags |= 0x40;
             self->step++;
         }
         break;

@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rtop.h"
 
-void OVL_EXPORT(EntityBreakable)(Entity*);
+void EntityBreakable(Entity*);
 void EntityExplosion(Entity*);
 void EntityPrizeDrop(Entity*);
 void EntityDamageDisplay(Entity*);
-void OVL_EXPORT(EntityRedDoor)(Entity*);
+void EntityRedDoor(Entity*);
 void EntityIntenseExplosion(Entity*);
 void EntitySoulStealOrb(Entity*);
 void EntityRoomForeground(Entity*);
@@ -16,8 +16,8 @@ void EntityHeartDrop(Entity*);
 void EntityEnemyBlood(Entity*);
 void EntityMessageBox(Entity*);
 void EntityDummy(Entity*);
-void OVL_EXPORT(EntityBackgroundBlock)(Entity*);
-void OVL_EXPORT(EntityLockCamera)(Entity*);
+void EntityBackgroundBlock(Entity*);
+void EntityLockCamera(Entity*);
 void EntityUnkId13(Entity*);
 void EntityExplosionVariants(Entity*);
 void EntityGreyPuff(Entity*);
@@ -27,7 +27,7 @@ void EntitySecretStairs(Entity*);
 void EntityClockTower3D(Entity*);
 void EntityClouds(Entity*);
 void EntityBreakableWall(Entity*);
-void OVL_EXPORT(EntityBreakableDebris)(Entity*);
+void EntityBreakableDebris(Entity*);
 void EntityTriangleElevator(Entity*);
 void EntityLionLamp(Entity*);
 void func_us_801A21F8(Entity*);
@@ -42,12 +42,12 @@ void EntitySkullLordOutline(Entity*);
 void EntitySkullLordFlames(Entity*);
 void EntitySkullLordPieces(Entity*);
 
-PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
-    OVL_EXPORT(EntityBreakable),
+PfnEntityUpdate EntityUpdates[] = {
+    EntityBreakable,
     EntityExplosion,
     EntityPrizeDrop,
     EntityDamageDisplay,
-    OVL_EXPORT(EntityRedDoor),
+    EntityRedDoor,
     EntityIntenseExplosion,
     EntitySoulStealOrb,
     EntityRoomForeground,
@@ -59,8 +59,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityMessageBox,
     EntityDummy,
     EntityDummy,
-    OVL_EXPORT(EntityBackgroundBlock),
-    OVL_EXPORT(EntityLockCamera),
+    EntityBackgroundBlock,
+    EntityLockCamera,
     EntityUnkId13,
     EntityExplosionVariants,
     EntityGreyPuff,
@@ -70,7 +70,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityClockTower3D,
     EntityClouds,
     EntityBreakableWall,
-    OVL_EXPORT(EntityBreakableDebris),
+    EntityBreakableDebris,
     EntityTriangleElevator,
     EntityLionLamp,
     func_us_801A21F8,
@@ -86,7 +86,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntitySkullLordPieces,
 };
 
-EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_OVL(1), 0, 0, 0x0, 0};
+EInit g_EInitBreakable = {ANIMSET_OVL(1), 0, 0, 0x0, 0};
 
 #include "../e_init_common.h"
 

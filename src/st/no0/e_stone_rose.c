@@ -29,7 +29,7 @@ static Entity* spawnSeed(s32 params) {
 
     DestroyEntity(newEntity);
     newEntity->entityId = E_STONEROSE_SEED;
-    newEntity->pfnUpdate = OVL_EXPORT(EntityUpdates)[newEntity->entityId - 1];
+    newEntity->pfnUpdate = EntityUpdates[newEntity->entityId - 1];
     newEntity->params = params;
     newEntity->ext.stoneRose.parent = g_CurrentEntity;
     newEntity->posX.val = g_CurrentEntity->posX.val;
@@ -116,8 +116,7 @@ void func_us_801D7DAC(Entity* self) {
                 i++;
             }
         }
-        newEntity->pfnUpdate =
-            OVL_EXPORT(EntityUpdates)[newEntity->entityId - 1];
+        newEntity->pfnUpdate = EntityUpdates[newEntity->entityId - 1];
         newEntity->params = self->hitEffect;
         newEntity->ext.stoneRose.parent = self->ext.stoneRose.parent;
         newEntity->posX.val = self->posX.val;

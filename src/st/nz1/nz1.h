@@ -33,11 +33,11 @@ enum Palettes {
 
 enum EntityIDs {
     E_NONE,
-    E_BREAKABLE,                // OVL_EXPORT(EntityBreakable)
+    E_BREAKABLE,                // EntityBreakable
     E_EXPLOSION,                // EntityExplosion
     E_PRIZE_DROP,               // EntityPrizeDrop
     E_DAMAGE_DISPLAY,           // EntityDamageDisplay
-    E_RED_DOOR,                 // OVL_EXPORT(EntityRedDoor)
+    E_RED_DOOR,                 // EntityRedDoor
     E_INTENSE_EXPLOSION,        // EntityIntenseExplosion
     E_SOUL_STEAL_ORB,           // EntitySoulStealOrb
     E_ROOM_FOREGROUND,          // EntityRoomForeground
@@ -49,8 +49,8 @@ enum EntityIDs {
     E_MESSAGE_BOX,              // EntityMessageBox
     E_DUMMY_F,                  // EntityDummy
     E_DUMMY_10,                 // EntityDummy
-    E_BACKGROUND_BLOCK,         // OVL_EXPORT(EntityBackgroundBlock)
-    E_LOCK_CAMERA,              // OVL_EXPORT(EntityLockCamera)
+    E_BACKGROUND_BLOCK,         // EntityBackgroundBlock
+    E_LOCK_CAMERA,              // EntityLockCamera
     E_UNK_ID13,                 // EntityUnkId13
     E_EXPLOSION_VARIANTS,       // EntityExplosionVariants
     E_GREY_PUFF,                // EntityGreyPuff
@@ -108,7 +108,7 @@ enum EntityIDs {
     E_FLEA_ARMOR,               // EntityFleaArmor
     E_FLEA_ARMOR_ATTACK_HITBOX, // EntityFleaArmorAttackHitbox
     E_FLEA_MAN,                 // EntityFleaMan
-    E_BREAKABLE_DEBRIS,         // OVL_EXPORT(EntityBreakableDebris)
+    E_BREAKABLE_DEBRIS,         // EntityBreakableDebris
     E_BOSS_DOOR_TRIGGER,        // EntityBossDoorTrigger
     E_BOSS_DOORS,               // EntityBossDoors
     E_KARASUMAN,                // EntityKarasuman

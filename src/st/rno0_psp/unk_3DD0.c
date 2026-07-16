@@ -3,4 +3,4 @@
 
 INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_3DD0", func_pspeu_0923B450);
 
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_3DD0", RNO0_EntityRedDoor);
+INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_3DD0", EntityRedDoor);

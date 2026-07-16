@@ -11,7 +11,7 @@ static u16 D_80180664[] = {
     0x0000, 0x0000, 0x0500, 0x0100, // 1
 };
 
-void OVL_EXPORT(EntityLockCamera)(Entity* self) {
+void EntityLockCamera(Entity* self) {
     u16* rect16;
     u16 params;
     u16 facingLeft;

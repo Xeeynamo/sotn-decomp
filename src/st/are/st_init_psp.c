@@ -136,7 +136,7 @@ void InitEntityIds(void) {
 
 void OVL_EXPORT(Load)(void) {
     InitEntityIds();
-    PfnEntityUpdates = OVL_EXPORT(EntityUpdates);
+    PfnEntityUpdates = EntityUpdates;
     g_pStObjLayoutHorizontal = &D_8D2E3F0;
     g_pStObjLayoutVertical = &D_8D2E4C4;
     func_892A018();

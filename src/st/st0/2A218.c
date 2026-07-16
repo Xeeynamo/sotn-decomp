@@ -14,16 +14,16 @@ static void func_801AA218(s16 arg0) {
     }
 }
 
-extern s32 OVL_EXPORT(SkipCutscene);
+extern s32 g_SkipCutscene;
 #ifdef VERSION_PSP
-extern u32 OVL_EXPORT(CutsceneFlags);
-extern bool OVL_EXPORT(IsCutsceneDone);
+extern u32 g_CutsceneFlags;
+extern bool g_IsCutsceneDone;
 #else
 // These two variables are initialized in cutscene.c, but defined here because
 // there is an unrelated variable stuck in between them and the rest of the
 // cutscene bss variables for the us version
-u32 OVL_EXPORT(CutsceneFlags);
-bool OVL_EXPORT(IsCutsceneDone);
+u32 g_CutsceneFlags;
+bool g_IsCutsceneDone;
 #endif
 
 static u8 D_80180830[] = {0x08, 0x05, 0x08, 0x06, 0x08, 0x07, 0xFF, 0x00};
@@ -44,7 +44,7 @@ static u8 D_80180884[] = {0x02, 0x08, 0x02, 0x07, 0xFF, 0x00, 0x00, 0x00};
 static u8 D_8018088C[] = {0x06, 0x0C, 0x06, 0x0B, 0xFF, 0x00, 0x00, 0x00};
 static u8 D_80180894[] = {0x06, 0x0C, 0x30, 0x0A, 0x10, 0x01, 0xFF, 0x00};
 
-void EntityCutscene(Entity* self) {
+void EntityCutsceneSupport(Entity* self) {
     Tilemap* tilemap = &g_Tilemap;
     Entity* player = &PLAYER;
     u16 posX;
@@ -52,8 +52,8 @@ void EntityCutscene(Entity* self) {
     self->posX.i.hi = player->posX.i.hi;
     self->posY.i.hi = player->posY.i.hi - 1;
 
-    if ((self->step != 14) && OVL_EXPORT(SkipCutscene) &&
-        OVL_EXPORT(IsCutsceneDone) && (self->step > 4)) {
+    if ((self->step != 14) && g_SkipCutscene && g_IsCutsceneDone &&
+        (self->step > 4)) {
         self->step = 15;
         self->animSet = ANIMSET_DRA(0);
         self->animCurFrame = 0;
@@ -102,7 +102,7 @@ void EntityCutscene(Entity* self) {
             g_Player.demo_timer = 1;
             g_Player.padSim = PAD_LEFT;
             self->ext.utimer.t = 0x18;
-            OVL_EXPORT(CutsceneFlags) |= 1;
+            g_CutsceneFlags |= 1;
             self->step++;
         }
         func_801AA218(posX);
@@ -133,7 +133,7 @@ void EntityCutscene(Entity* self) {
     case 5:
         g_Player.demo_timer = 1;
         player->animCurFrame = self->animCurFrame;
-        if (OVL_EXPORT(CutsceneFlags) & 0x400) {
+        if (g_CutsceneFlags & 0x400) {
             player->animCurFrame = 0;
             self->animSet = ANIMSET_OVL(5);
             self->animCurFrame = 1;
@@ -144,7 +144,7 @@ void EntityCutscene(Entity* self) {
     case 6:
         g_Player.demo_timer = 1;
         if (AnimateEntity(D_8018083C, self) == 0) {
-            if (OVL_EXPORT(CutsceneFlags) & 0x800) {
+            if (g_CutsceneFlags & 0x800) {
                 SetStep(7);
             }
         }
@@ -154,7 +154,7 @@ void EntityCutscene(Entity* self) {
     case 7:
         g_Player.demo_timer = 1;
         if (AnimateEntity(D_8018084C, self) == 0) {
-            if (OVL_EXPORT(CutsceneFlags) & 0x1000) {
+            if (g_CutsceneFlags & 0x1000) {
                 SetStep(8);
             }
         }
@@ -164,7 +164,7 @@ void EntityCutscene(Entity* self) {
     case 8:
         g_Player.demo_timer = 1;
         if (AnimateEntity(D_8018085C, self) == 0) {
-            if (OVL_EXPORT(CutsceneFlags) & 0x2000) {
+            if (g_CutsceneFlags & 0x2000) {
                 SetStep(9);
             }
         }
@@ -174,7 +174,7 @@ void EntityCutscene(Entity* self) {
     case 9:
         g_Player.demo_timer = 1;
         if (AnimateEntity(D_80180864, self) == 0) {
-            if (OVL_EXPORT(CutsceneFlags) & 0x4000) {
+            if (g_CutsceneFlags & 0x4000) {
                 SetStep(10);
             }
         }
@@ -184,7 +184,7 @@ void EntityCutscene(Entity* self) {
     case 10:
         g_Player.demo_timer = 1;
         if (AnimateEntity(D_8018086C, self) == 0) {
-            if (OVL_EXPORT(CutsceneFlags) & 0x8000) {
+            if (g_CutsceneFlags & 0x8000) {
                 SetStep(11);
             }
         }
@@ -194,7 +194,7 @@ void EntityCutscene(Entity* self) {
     case 11:
         g_Player.demo_timer = 1;
         if (AnimateEntity(D_8018087C, self) == 0) {
-            if (OVL_EXPORT(CutsceneFlags) & 0x10000) {
+            if (g_CutsceneFlags & 0x10000) {
                 SetStep(12);
             }
         }
@@ -204,7 +204,7 @@ void EntityCutscene(Entity* self) {
     case 12:
         g_Player.demo_timer = 1;
         if (AnimateEntity(D_80180884, self) == 0) {
-            if (OVL_EXPORT(CutsceneFlags) & 0x20000) {
+            if (g_CutsceneFlags & 0x20000) {
                 SetStep(13);
             }
         }
@@ -214,7 +214,7 @@ void EntityCutscene(Entity* self) {
     case 13:
         g_Player.demo_timer = 1;
         if (AnimateEntity(D_8018088C, self) == 0) {
-            if (OVL_EXPORT(CutsceneFlags) & 0x40000) {
+            if (g_CutsceneFlags & 0x40000) {
                 SetStep(14);
             }
         }
@@ -234,7 +234,7 @@ void EntityCutscene(Entity* self) {
     case 15:
         g_Player.demo_timer = 1;
         player->animCurFrame = 7;
-        if (OVL_EXPORT(CutsceneFlags) & 4) {
+        if (g_CutsceneFlags & 4) {
             g_Player.padSim = PAD_LEFT;
             DestroyEntity(self);
             g_PauseAllowed = true;
