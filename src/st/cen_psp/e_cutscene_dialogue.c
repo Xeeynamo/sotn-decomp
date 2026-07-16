@@ -2,7 +2,7 @@
 #include "../cen/cen.h"
 #include <cutscene.h>
 
-extern Dialogue OVL_EXPORT(Dialogue);
+extern Dialogue g_Dialogue;
 
 #include "../../get_lang.h"
 
@@ -23,4 +23,4 @@ extern Dialogue OVL_EXPORT(Dialogue);
 #define CUTSCENE_TILEMAP_SCROLL
 #include "../cutscene_run.h"
 
-INCLUDE_ASM("st/cen_psp/nonmatchings/cen_psp/e_cutscene_dialogue", CEN_EntityCutscene);
+INCLUDE_ASM("st/cen_psp/nonmatchings/cen_psp/e_cutscene_dialogue", EntityCutscene);

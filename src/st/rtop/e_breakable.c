@@ -5,7 +5,7 @@
 #define BREAKABLE_HIT_SFX SFX_SMALL_FLAME_IGNITE
 #define OVL_BREAKABLE_ANIMSET ANIMSET_OVL(4)
 
-extern EInit OVL_EXPORT(EInitBreakable);
+extern EInit g_EInitBreakable;
 extern EInit g_EInitInteractable;
 extern EInit g_EInitParticle;
 

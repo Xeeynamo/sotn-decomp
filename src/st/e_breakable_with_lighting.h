@@ -21,7 +21,7 @@ extern s32 E_ID(BACKGROUND_BLOCK);
 extern s32 E_ID(BREAKABLE_DEBRIS);
 #endif
 
-extern EInit OVL_EXPORT(EInitBreakable);
+extern EInit g_EInitBreakable;
 
 static AnimateEntityFrame anim_brazier_short[] = {
     {3, 14}, {4, 15}, {4, 16}, {4, 17},
@@ -50,7 +50,7 @@ static s16 debris_offsets_y[] = {
 //                 Any non-zero value is considered a "tall" breakable,
 //                 meaning it breaks into more debris,
 //                 some of which spawns higher up
-void OVL_EXPORT(EntityBreakable)(Entity* self) {
+void EntityBreakable(Entity* self) {
     Entity* entity;
     s16* debrisOffsetsY;
     u16 breakableType;
@@ -58,7 +58,7 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
 
     breakableType = self->params >> 12;
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitBreakable));
+        InitializeEntity(g_EInitBreakable);
         self->zPriority = BREAKABLE_ZPRIORITY;
         self->blendMode = blend_modes[breakableType];
         self->hitboxHeight = hitbox_heights[breakableType];
@@ -131,7 +131,7 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
 // params: Index of breakable debris to use
 //         (>= 4) Considered a "tall" breakable debris
 //         (== 6) The "last standing" debris, that doesn't move
-void OVL_EXPORT(EntityBreakableDebris)(Entity* self) {
+void EntityBreakableDebris(Entity* self) {
     Entity* entity;
     Collider collider;
     Primitive* prim;
@@ -142,7 +142,7 @@ void OVL_EXPORT(EntityBreakableDebris)(Entity* self) {
 
     switch (self->step) {
     case INIT:
-        InitializeEntity(OVL_EXPORT(EInitBreakable));
+        InitializeEntity(g_EInitBreakable);
 #ifndef NO_HITBOX_STATE
         self->hitboxState = 0;
 #endif

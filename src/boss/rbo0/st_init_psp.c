@@ -39,7 +39,7 @@ extern Overlay OVL_EXPORT(Overlay);
 
 void OVL_EXPORT(Load)(void) {
     InitEntityIds();
-    PfnEntityUpdates = OVL_EXPORT(EntityUpdates);
+    PfnEntityUpdates = EntityUpdates;
     g_pStObjLayoutHorizontal = &D_8D2DE10;
     g_pStObjLayoutVertical = &D_8D2DEE4;
     func_892A018();

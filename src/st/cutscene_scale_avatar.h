@@ -6,12 +6,12 @@ static void ScaleCutsceneAvatar(const u8 ySteps) {
     s32 primIndex;
     s32 i;
 
-    primIndex = OVL_EXPORT(Dialogue).nextCharY + 1;
+    primIndex = g_Dialogue.nextCharY + 1;
     while (primIndex >= PrimCount) {
         primIndex -= PrimCount;
     }
     if (g_CurrentEntity->step_s == 0) {
-        prim = OVL_EXPORT(Dialogue).prim[primIndex];
+        prim = g_Dialogue.prim[primIndex];
         prim->v0 += ySteps;
         prim->v1 -= ySteps;
         if (prim->v1 == 0) {
@@ -22,9 +22,9 @@ static void ScaleCutsceneAvatar(const u8 ySteps) {
 
     for (i = 0; i < PrimCount; i++) {
         if (i != primIndex) {
-            prim = OVL_EXPORT(Dialogue).prim[i];
+            prim = g_Dialogue.prim[i];
             prim->y0 -= ySteps;
         }
     }
-    OVL_EXPORT(Dialogue).portraitAnimTimer++;
+    g_Dialogue.portraitAnimTimer++;
 }

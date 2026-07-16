@@ -42,7 +42,7 @@ static void DrawCutsceneActorName(u16 actorIndex, Entity* self) {
 
     // Fill prims to render the actor name on screen
     prim = &g_PrimBuf[primIndex];
-    OVL_EXPORT(Dialogue).primIndex[1] = primIndex;
+    g_Dialogue.primIndex[1] = primIndex;
     actorName = actor_names[DRAW_NAME_ACTOR_INDEX];
     x = 0x38;
     while (prim != NULL) {
@@ -63,7 +63,7 @@ static void DrawCutsceneActorName(u16 actorIndex, Entity* self) {
 #ifdef DRAW_NAME_PRIM_Y0
             prim->y0 = DRAW_NAME_PRIM_Y0;
 #else
-            prim->y0 = OVL_EXPORT(Dialogue).startY + 6;
+            prim->y0 = g_Dialogue.startY + 6;
 #endif
             prim = prim->next;
             x += FONT_GAP;

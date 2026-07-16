@@ -116,7 +116,7 @@ func buildSprites(jsonFileName, name, outputDir, ovlName string) error {
 		symbols = append(symbols, symbol)
 	}
 
-	sbHeader.WriteString("s16** OVL_EXPORT(spriteBanks)[] = {\n")
+	sbHeader.WriteString("s16** spriteBanks[] = {\n")
 	for _, index := range spritesBanks.Indices {
 		if index >= 0 {
 			sbHeader.WriteString(fmt.Sprintf("    %s,\n", symbols[index]))

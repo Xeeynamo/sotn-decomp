@@ -5,7 +5,7 @@ void EntityBreakable(Entity*);
 void EntityExplosion(Entity*);
 void EntityPrizeDrop(Entity*);
 void EntityDamageDisplay(Entity*);
-void OVL_EXPORT(EntityRedDoor)(Entity*);
+void EntityRedDoor(Entity*);
 void EntityIntenseExplosion(Entity*);
 void EntitySoulStealOrb(Entity*);
 void EntityRoomForeground(Entity*);
@@ -16,8 +16,8 @@ void EntityHeartDrop(Entity*);
 void EntityEnemyBlood(Entity*);
 void EntityMessageBox(Entity*);
 void EntityDummy(Entity*);
-void OVL_EXPORT(EntityBackgroundBlock)(Entity*);
-void OVL_EXPORT(EntityLockCamera)(Entity*);
+void EntityBackgroundBlock(Entity*);
+void EntityLockCamera(Entity*);
 void EntityUnkId13(Entity*);
 void EntityExplosionVariants(Entity*);
 void EntityGreyPuff(Entity*);
@@ -28,37 +28,19 @@ void func_us_801A95F4(Entity*);
 void func_us_801A9208(Entity*);
 void func_us_801A9944(Entity*);
 
-PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
-    EntityBreakable,
-    EntityExplosion,
-    EntityPrizeDrop,
-    EntityDamageDisplay,
-    BO6_EntityRedDoor,
-    EntityIntenseExplosion,
-    EntitySoulStealOrb,
-    EntityRoomForeground,
-    EntityStageNamePopup,
-    EntityEquipItemDrop,
-    EntityRelicOrb,
-    EntityHeartDrop,
-    EntityEnemyBlood,
-    EntityMessageBox,
-    EntityDummy,
-    EntityDummy,
-    BO6_EntityBackgroundBlock,
-    BO6_EntityLockCamera,
-    EntityUnkId13,
-    EntityExplosionVariants,
-    EntityGreyPuff,
-    EntityRichter,
-    func_us_801A7DC0,
-    func_us_801A9084,
-    func_us_801A95F4,
-    func_us_801A9208,
-    func_us_801A9944,
+PfnEntityUpdate EntityUpdates[] = {
+    EntityBreakable,     EntityExplosion,         EntityPrizeDrop,
+    EntityDamageDisplay, EntityRedDoor,           EntityIntenseExplosion,
+    EntitySoulStealOrb,  EntityRoomForeground,    EntityStageNamePopup,
+    EntityEquipItemDrop, EntityRelicOrb,          EntityHeartDrop,
+    EntityEnemyBlood,    EntityMessageBox,        EntityDummy,
+    EntityDummy,         EntityBackgroundBlock,   EntityLockCamera,
+    EntityUnkId13,       EntityExplosionVariants, EntityGreyPuff,
+    EntityRichter,       func_us_801A7DC0,        func_us_801A9084,
+    func_us_801A95F4,    func_us_801A9208,        func_us_801A9944,
 };
 
-EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_DRA(3), 0, 0, 0x0, 0};
+EInit g_EInitBreakable = {ANIMSET_DRA(3), 0, 0, 0x0, 0};
 
 #include "../../st/e_init_common.h"
 

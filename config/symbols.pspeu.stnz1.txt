@@ -1,5 +1,5 @@
-NZ1_spriteBanks = 0x09262B40;
-NZ1_rooms_layers = 0x09262D10;
-NZ1_cluts = 0x09263048;
-NZ1_gfxBanks = 0x092632F0;
-NZ1_rooms = 0x09263728;
+spriteBanks = 0x09262B40;
+rooms_layers = 0x09262D10;
+cluts = 0x09263048;
+gfxBanks = 0x092632F0;
+rooms = 0x09263728;

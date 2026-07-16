@@ -12,8 +12,8 @@ extern u8 D_us_80180700[];
 extern u8 D_us_80180718[];
 extern u8 D_us_80180724[];
 extern u8 D_us_80180738[];
-extern u32 OVL_EXPORT(CutsceneFlags);
-extern s32 OVL_EXPORT(SkipCutscene);
+extern u32 g_CutsceneFlags;
+extern s32 g_SkipCutscene;
 
 void func_us_8018CA94(Entity* self) {
     Entity* player;
@@ -24,7 +24,7 @@ void func_us_8018CA94(Entity* self) {
     tilemap = &g_Tilemap;
     player = &PLAYER;
 
-    if (OVL_EXPORT(SkipCutscene) && self->step < 12) {
+    if (g_SkipCutscene && self->step < 12) {
         SetStep(12);
     }
 
@@ -38,77 +38,77 @@ void func_us_8018CA94(Entity* self) {
         break;
 
     case 1:
-        if (OVL_EXPORT(CutsceneFlags) & 0x4) {
+        if (g_CutsceneFlags & 0x4) {
             self->animCurFrame = 2;
             self->step++;
         }
         break;
 
     case 2:
-        if (OVL_EXPORT(CutsceneFlags) & 0x8) {
+        if (g_CutsceneFlags & 0x8) {
             SetStep(3);
         }
         break;
 
     case 3:
         AnimateEntity(D_us_80180690, self);
-        if (OVL_EXPORT(CutsceneFlags) & 0x10) {
+        if (g_CutsceneFlags & 0x10) {
             SetStep(4);
         }
         break;
 
     case 4:
         AnimateEntity(D_us_801806A4, self);
-        if (OVL_EXPORT(CutsceneFlags) & 0x20) {
+        if (g_CutsceneFlags & 0x20) {
             SetStep(5);
         }
         break;
 
     case 5:
         AnimateEntity(D_us_801806B8, self);
-        if (OVL_EXPORT(CutsceneFlags) & 0x40) {
+        if (g_CutsceneFlags & 0x40) {
             SetStep(6);
         }
         break;
 
     case 6:
         self->animCurFrame = 19;
-        if (OVL_EXPORT(CutsceneFlags) & 0x80) {
+        if (g_CutsceneFlags & 0x80) {
             self->step++;
         }
         break;
 
     case 7:
         self->animCurFrame = 0x12;
-        if (OVL_EXPORT(CutsceneFlags) & 0x100) {
+        if (g_CutsceneFlags & 0x100) {
             self->step++;
         }
         break;
 
     case 8:
         AnimateEntity(D_us_801806CC, self);
-        if (OVL_EXPORT(CutsceneFlags) & 0x200) {
+        if (g_CutsceneFlags & 0x200) {
             SetStep(9);
         }
         break;
 
     case 9:
         AnimateEntity(D_us_801806E4, self);
-        if (OVL_EXPORT(CutsceneFlags) & 0x400) {
+        if (g_CutsceneFlags & 0x400) {
             SetStep(10);
         }
         break;
 
     case 10:
         AnimateEntity(D_us_801806EC, self);
-        if (OVL_EXPORT(CutsceneFlags) & 0x800) {
+        if (g_CutsceneFlags & 0x800) {
             SetStep(11);
         }
         break;
 
     case 11:
         AnimateEntity(D_us_80180700, self);
-        if (OVL_EXPORT(CutsceneFlags) & 0x1000) {
+        if (g_CutsceneFlags & 0x1000) {
             SetStep(12);
         }
         break;
@@ -176,7 +176,7 @@ void func_us_8018CA94(Entity* self) {
         MoveEntity();
 
         if (self->posX.i.hi > 256) {
-            OVL_EXPORT(CutsceneFlags) |= 0x2000;
+            g_CutsceneFlags |= 0x2000;
         }
 
         if (self->posX.i.hi > 272) {

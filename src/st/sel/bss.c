@@ -5,8 +5,8 @@
 
 #define OVL_EXPORT(x) SEL_##x
 
-u32 OVL_EXPORT(SkipCutscene);
-u32 OVL_EXPORT(Dialogue);
+u32 g_SkipCutscene;
+u32 g_Dialogue;
 u16 D_801BC358;
 u16 D_801BC35A;
 u16 D_801BC35C;

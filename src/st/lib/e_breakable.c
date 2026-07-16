@@ -74,15 +74,15 @@ static u16 unk_5A[] = {
     0x00, 0x00, 0x00, 0x00, 0x5B, 0x5B, 0x5B, 0x5B, 0x5B, 0x5B};
 static u16 hitbox_offsets_y[12] = {0};
 
-extern EInit OVL_EXPORT(EInitBreakable);
+extern EInit g_EInitBreakable;
 
-void OVL_EXPORT(EntityBreakable)(Entity* self) {
+void EntityBreakable(Entity* self) {
     Entity* entity;
     u16 breakableType;
 
     breakableType = self->params >> 12;
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitBreakable));
+        InitializeEntity(g_EInitBreakable);
         self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 20;
         if (breakableType < 5) {
             entity = self + 1;
@@ -181,7 +181,7 @@ void EntityBreakableHelper(Entity* self) {
     }
 }
 
-void OVL_EXPORT(EntityBreakableDebris)(Entity* self) {
+void EntityBreakableDebris(Entity* self) {
     u32 pad[10];
 
     switch (self->step) {

@@ -7,16 +7,16 @@ void UpdateRoomPosition(void);
 void InitRoomEntities(s32 objLayoutId);
 void UpdateStageEntities(void);
 
-extern RoomHeader OVL_EXPORT(rooms)[];
-extern u_long* OVL_EXPORT(cluts)[];
-extern RoomDef OVL_EXPORT(rooms_layers)[];
+extern RoomHeader rooms[];
+extern u_long* cluts[];
+extern RoomDef rooms_layers[];
 
 #ifdef VERSION_PSP
-extern SpriteParts* OVL_EXPORT(spriteBanks)[];
-extern GfxBank* OVL_EXPORT(gfxBanks)[];
+extern SpriteParts* spriteBanks[];
+extern GfxBank* gfxBanks[];
 #else
-extern s16** OVL_EXPORT(spriteBanks)[];
-extern u_long** OVL_EXPORT(gfxBanks)[];
+extern s16** spriteBanks[];
+extern u_long** gfxBanks[];
 #endif
 
 #ifdef VERSION_PSP
@@ -29,12 +29,12 @@ Overlay OVL_EXPORT(Overlay) = {
     .HitDetection = HitDetection,
     .UpdateRoomPosition = UpdateRoomPosition,
     .InitRoomEntities = InitRoomEntities,
-    .rooms = OVL_EXPORT(rooms),
-    .spriteBanks = OVL_EXPORT(spriteBanks),
-    .cluts = OVL_EXPORT(cluts),
+    .rooms = rooms,
+    .spriteBanks = spriteBanks,
+    .cluts = cluts,
     .objLayoutHorizontal = NULL,
-    .tileLayers = OVL_EXPORT(rooms_layers),
-    .gfxBanks = OVL_EXPORT(gfxBanks),
+    .tileLayers = rooms_layers,
+    .gfxBanks = gfxBanks,
     .UpdateStageEntities = UpdateStageEntities,
 #ifdef VERSION_PSP
     .unk2C = NULL,

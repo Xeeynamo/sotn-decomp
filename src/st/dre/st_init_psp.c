@@ -99,7 +99,7 @@ void OVL_EXPORT(Load)(void) {
         (u8*)cutscene_script_post_fight_ge, (u8*)cutscene_script_post_fight_it);
 
     InitEntityIds();
-    PfnEntityUpdates = OVL_EXPORT(EntityUpdates);
+    PfnEntityUpdates = EntityUpdates;
     g_pStObjLayoutHorizontal = &D_8D2DE60;
     g_pStObjLayoutVertical = &D_8D2DF34;
     func_psp_0892A018();

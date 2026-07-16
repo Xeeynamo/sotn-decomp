@@ -561,12 +561,12 @@ void func_801966B0(u16* sensors) {
 }
 #endif
 
-extern PfnEntityUpdate OVL_EXPORT(EntityUpdates)[];
+extern PfnEntityUpdate EntityUpdates[];
 
 void MakeEntityFromId(u16 entityId, Entity* src, Entity* dst) {
     DestroyEntity(dst);
     dst->entityId = entityId;
-    dst->pfnUpdate = OVL_EXPORT(EntityUpdates)[entityId - 1];
+    dst->pfnUpdate = EntityUpdates[entityId - 1];
     dst->posX.i.hi = src->posX.i.hi;
     dst->posY.i.hi = src->posY.i.hi;
     dst->unk5A = src->unk5A;

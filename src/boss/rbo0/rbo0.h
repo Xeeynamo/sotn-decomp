@@ -16,7 +16,7 @@ enum OVL_EXPORT(Entities) {
     E_EXPLOSION,              // EntityExplosion
     E_PRIZE_DROP,             // EntityPrizeDrop
     E_DAMAGE_DISPLAY,         // EntityDamageDisplay
-    E_RED_DOOR,               // OVL_EXPORT(EntityRedDoor)
+    E_RED_DOOR,               // EntityRedDoor
     E_INTENSE_EXPLOSION,      // EntityIntenseExplosion
     E_SOUL_STEAL_ORB,         // EntitySoulStealOrb
     E_ROOM_FOREGROUND,        // EntityRoomForeground
@@ -28,8 +28,8 @@ enum OVL_EXPORT(Entities) {
     E_MESSAGE_BOX,            // EntityMessageBox
     E_DUMMY_F,                // EntityDummy
     E_DUMMY_10,               // EntityDummy
-    E_BACKGROUND_BLOCK,       // OVL_EXPORT(EntityBackgroundBlock)
-    E_LOCK_CAMERA,            // OVL_EXPORT(EntityLockCamera)
+    E_BACKGROUND_BLOCK,       // EntityBackgroundBlock
+    E_LOCK_CAMERA,            // EntityLockCamera
     E_UNK_ID13,               // EntityUnkId13
     E_EXPLOSION_VARIANTS,     // EntityExplosionVariants
     E_GREY_PUFF,              // EntityGreyPuff

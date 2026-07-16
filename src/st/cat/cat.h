@@ -39,11 +39,11 @@ enum OVL_EXPORT(Palette) {
 
 enum EntityIDs {
     E_NONE,
-    E_BREAKABLE,                        // OVL_EXPORT(EntityBreakable)
+    E_BREAKABLE,                        // EntityBreakable
     E_EXPLOSION,                        // EntityExplosion
     E_PRIZE_DROP,                       // EntityPrizeDrop
     E_DAMAGE_DISPLAY,                   // EntityDamageDisplay
-    E_RED_DOOR,                         // OVL_EXPORT(EntityRedDoor)
+    E_RED_DOOR,                         // EntityRedDoor
     E_INTENSE_EXPLOSION,                // EntityIntenseExplosion
     E_SOUL_STEAL_ORB,                   // EntitySoulStealOrb
     E_ROOM_FOREGROUND,                  // EntityRoomForeground
@@ -55,8 +55,8 @@ enum EntityIDs {
     E_MESSAGE_BOX,                      // EntityMessageBox
     E_DUMMY_F,                          // EntityDummy
     E_DUMMY_10,                         // EntityDummy
-    E_BACKGROUND_BLOCK,                 // OVL_EXPORT(EntityBackgroundBlock)
-    E_LOCK_CAMERA,                      // OVL_EXPORT(EntityLockCamera)
+    E_BACKGROUND_BLOCK,                 // EntityBackgroundBlock
+    E_LOCK_CAMERA,                      // EntityLockCamera
     E_UNK_ID13,                         // EntityUnkId13
     E_EXPLOSION_VARIANTS,               // EntityExplosionVariants
     E_GREY_PUFF,                        // EntityGreyPuff
@@ -134,7 +134,7 @@ extern EInit g_EInitEnvironment;
 extern EInit g_EInitGremlin;
 extern EInit g_EInitGremlinFire;
 extern EInit g_EInitLockCamera;
-extern EInit OVL_EXPORT(EInitObtainable);
+extern EInit g_EInitObtainable;
 extern EInit g_EInitWereskeleton;
 extern EInit D_us_80180A88;
 

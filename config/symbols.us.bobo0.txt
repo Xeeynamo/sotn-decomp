@@ -1,13 +1,13 @@
 BO0_Overlay = 0x80180000;
-BO0_spriteBanks = 0x8018002C;
-BO0_cluts = 0x801800F4;
-BO0_rooms_layers = 0x80180118;
-BO0_gfxBanks = 0x801802D0;
-BO0_pStObjLayoutHorizontal = 0x80180320;
-BO0_pStObjLayoutVertical = 0x801803F4;
-BO0_EntityUpdates = 0x801804C8;
-BO0_EInitBreakable = 0x801805F4;
-BO0_EInitObtainable = 0x80180600;
+spriteBanks = 0x8018002C;
+cluts = 0x801800F4;
+rooms_layers = 0x80180118;
+gfxBanks = 0x801802D0;
+entityLayoutHorizontal = 0x80180320;
+entityLayoutVertical = 0x801803F4;
+EntityUpdates = 0x801804C8;
+g_EInitBreakable = 0x801805F4;
+g_EInitObtainable = 0x80180600;
 g_EInitParticle = 0x8018060C;
 g_EInitSpawner = 0x80180618;
 g_EInitInteractable = 0x80180624;
@@ -27,12 +27,12 @@ g_EInitOwl = 0x801806B4;
 g_EInitBloodyZombie = 0x801806C0;
 g_EInitOlroxAfterImage = 0x801806CC;
 BO0_BackgroundBlockInit = 0x80180748;
-BO0_RedDoorTiles = 0x8018075C;
+g_RedDoorTiles = 0x8018075C;
 BO0_PrizeDrops = 0x80181444;
-BO0_rooms = 0x80182614;
+rooms = 0x80182614;
 sprites_bo0_8 = 0x801A1D74;
-BO0_EntityBackgroundBlock = 0x801A99FC; // source=match
-BO0_EntityLockCamera = 0x801A9AC4; // source=match
+EntityBackgroundBlock = 0x801A99FC; // source=match
+EntityLockCamera = 0x801A9AC4; // source=match
 EntityBreakable = 0x801A9C80; // source=match
 func_us_801B3D8C = 0x801A9DB4; // source=match
 func_us_801B3F30 = 0x801A9F58; // source=match
@@ -59,7 +59,7 @@ InitRoomEntities = 0x801BE528; // source=match
 UpdateRoomPosition = 0x801BE6A0; // source=match
 CreateEntityFromCurrentEntity = 0x801BE754; // source=match
 CreateEntityFromEntity = 0x801BE7C8; // source=match
-BO0_EntityRedDoor = 0x801BE8BC; // source=match
+EntityRedDoor = 0x801BE8BC; // source=match
 DestroyEntity = 0x801BF4F4; // source=match
 AnimateEntity = 0x801BF624; // source=match
 GetDistanceToPlayerX = 0x801BF7F4; // source=match

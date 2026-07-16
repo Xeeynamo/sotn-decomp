@@ -4,7 +4,7 @@
 
 extern EInit g_EInitLockCamera;
 
-void OVL_EXPORT(EntityLockCamera)(Entity* self) {
+void EntityLockCamera(Entity* self) {
     Tilemap* tilemap = &g_Tilemap;
     u16* dataPtr;
     // These vars are all reused for things; hard to make good names :(

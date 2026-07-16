@@ -151,7 +151,7 @@ void OVL_EXPORT(Load)(void) {
         (u8*)cutscene_script_helphim_it);
 
     InitEntityIds();
-    PfnEntityUpdates = OVL_EXPORT(EntityUpdates);
+    PfnEntityUpdates = EntityUpdates;
     g_pStObjLayoutHorizontal = &D_pspeu_09266B68;
     g_pStObjLayoutVertical = &D_pspeu_09266C40;
     memcpy(&g_api.o, &OVL_EXPORT(Overlay), sizeof(Overlay));

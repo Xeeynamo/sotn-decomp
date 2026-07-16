@@ -2373,6 +2373,6 @@ typedef enum {
     PAL_UNK_1CF = 0x1CF,
     PAL_UNK_1F3 = 0x1F3,
     // 0x200-0x2FF is not included here
-};
+} PaletteIndices;
 
 #endif

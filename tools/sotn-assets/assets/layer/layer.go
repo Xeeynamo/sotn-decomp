@@ -256,7 +256,7 @@ func buildLayers(inputDir, fileName, outputDir, ovlName string) (string, error) 
 	}
 	sb.WriteString("};\n")
 
-	sb.WriteString("RoomDef OVL_EXPORT(rooms_layers)[] = {\n")
+	sb.WriteString("RoomDef rooms_layers[] = {\n")
 	for _, rl := range roomsLayers {
 		if l, found := rl["fg"]; found {
 			sb.WriteString(fmt.Sprintf("    { &layers[%d], ", pool[getHash(*l)]-1))

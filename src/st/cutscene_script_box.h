@@ -21,8 +21,8 @@ static void CutsceneUnk4(void) {
 #endif
     Primitive* prim;
 
-    CutsceneUnk3(OVL_EXPORT(Dialogue).nextCharY);
-    prim = OVL_EXPORT(Dialogue).prim[OVL_EXPORT(Dialogue).nextCharY];
+    CutsceneUnk3(g_Dialogue.nextCharY);
+    prim = g_Dialogue.prim[g_Dialogue.nextCharY];
     prim->tpage = CUTSCENE_UNK4_TPAGE;
 #ifdef CUTSCENE_UNK4_HAS_ARGS
     prim->clut = PAL_UNK_1A1;
@@ -31,11 +31,11 @@ static void CutsceneUnk4(void) {
     prim->y0 = nextLineY + 44;
     prim->v0 = nextLineY - 128;
 #else
-    prim->clut = OVL_EXPORT(Dialogue).clutIndex;
-    prim->y0 = OVL_EXPORT(Dialogue).nextLineY;
+    prim->clut = g_Dialogue.clutIndex;
+    prim->y0 = g_Dialogue.nextLineY;
     prim->u0 = 0;
-    prim->x0 = OVL_EXPORT(Dialogue).startX + 4;
-    prim->v0 = OVL_EXPORT(Dialogue).nextCharY * 12 + 128;
+    prim->x0 = g_Dialogue.startX + 4;
+    prim->v0 = g_Dialogue.nextCharY * 12 + 128;
 #endif
     prim->u1 = 192;
     prim->v1 = 12;
