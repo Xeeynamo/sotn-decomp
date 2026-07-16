@@ -133,3 +133,4 @@ g_LayoutObjVertical = 0x09276B10;
 g_LayoutObjHorizontal = 0x09276B18;
 TOPDialogue = 0x09277258;
 TOPSkipCutscene = 0x09277298;
+g_EInitDamageNum = 0x092570B8;
