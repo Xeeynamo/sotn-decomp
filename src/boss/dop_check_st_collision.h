@@ -51,7 +51,7 @@ static void OVL_EXPORT(CheckWallLeft)(void);
 static void OVL_EXPORT(CheckFloor)(void);
 static void OVL_EXPORT(CheckCeiling)(void);
 
-static void OVL_EXPORT(CheckStageCollision)(bool checkSensors) {
+static void CheckStageCollision(bool checkSensors) {
     s16 argX;
     s16 argY;
     s32 xVel;

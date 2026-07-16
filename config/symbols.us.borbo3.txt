@@ -1,5 +1,5 @@
-RBO3_pStObjLayoutHorizontal = 0x801801EC;
-RBO3_pStObjLayoutVertical = 0x801802C0;
+entityLayoutHorizontal = 0x801801EC;
+entityLayoutVertical = 0x801802C0;
 g_eBreakableAnimations = 0x801805A0;
 g_eBreakableHitboxes = 0x801805C0;
 g_eBreakableExplosionTypes = 0x801805C8;

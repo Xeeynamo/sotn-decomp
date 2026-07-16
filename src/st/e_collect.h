@@ -9,7 +9,7 @@
 //
 #include <stage.h>
 
-extern EInit OVL_EXPORT(EInitObtainable);
+extern EInit g_EInitObtainable;
 extern EInit g_EInitParticle;
 
 #if defined(VERSION_PSP)
@@ -369,7 +369,7 @@ void EntityPrizeDrop(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitObtainable));
+        InitializeEntity(g_EInitObtainable);
         self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 0x14;
         self->blendMode = BLEND_NO;
 #if STAGE == STAGE_ST0
@@ -710,7 +710,7 @@ void Unreferenced_MAD_ST0_func(Entity* self) {
         return;
     }
 
-    InitializeEntity(OVL_EXPORT(EInitBreakable));
+    InitializeEntity(g_EInitBreakable);
     self->animCurFrame = self->ext.unusedMadST0.animframe;
     self->velocityX = g_collectVelocity[self->ext.unusedMadST0.velIndex].x;
     self->velocityY = g_collectVelocity[self->ext.unusedMadST0.velIndex].y;
@@ -757,7 +757,7 @@ void EntityEquipItemDrop(Entity* self) {
             return;
         }
 #endif
-        InitializeEntity(OVL_EXPORT(EInitObtainable));
+        InitializeEntity(g_EInitObtainable);
         self->ext.equipItemDrop.timer = 0;
         break;
     case 1:
@@ -1019,7 +1019,7 @@ void EntityRelicOrb(Entity* self) {
             return;
         }
 #endif
-        InitializeEntity(OVL_EXPORT(EInitObtainable));
+        InitializeEntity(g_EInitObtainable);
         for (iconSlot = 0; iconSlot < MaxItemSlots; iconSlot++) {
             if (!g_ItemIconSlots[iconSlot]) {
                 break;
@@ -1519,7 +1519,7 @@ void EntityMessageBox(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitObtainable));
+        InitializeEntity(g_EInitObtainable);
         self->flags |= FLAG_UNK_10000;
         self->flags ^= FLAG_POS_CAMERA_LOCKED;
         if (!self->params) {

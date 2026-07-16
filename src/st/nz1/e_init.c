@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz1.h"
 
-void OVL_EXPORT(EntityBreakable)(Entity* self);
+void EntityBreakable(Entity* self);
 void EntityExplosion(Entity* self);
 void EntityPrizeDrop(Entity* self);
 void EntityDamageDisplay(Entity* self);
-void OVL_EXPORT(EntityRedDoor)(Entity* self);
+void EntityRedDoor(Entity* self);
 void EntityIntenseExplosion(Entity* self);
 void EntitySoulStealOrb(Entity* self);
 void EntityRoomForeground(Entity* self);
@@ -17,8 +17,8 @@ void EntityEnemyBlood(Entity* self);
 void EntityMessageBox(Entity* self);
 void EntityDummy(Entity* self);
 void EntityDummy(Entity* self);
-void OVL_EXPORT(EntityBackgroundBlock)(Entity* self);
-void OVL_EXPORT(EntityLockCamera)(Entity* self);
+void EntityBackgroundBlock(Entity* self);
+void EntityLockCamera(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
@@ -76,7 +76,7 @@ void EntityBridgeBackgroundPiece(Entity* self);
 void EntityFleaArmor(Entity* self);
 void EntityFleaArmorAttackHitbox(Entity* self);
 void EntityFleaMan(Entity* self);
-void OVL_EXPORT(EntityBreakableDebris)(Entity* self);
+void EntityBreakableDebris(Entity* self);
 void EntityBossDoorTrigger(Entity* self);
 void EntityBossDoors(Entity* self);
 void EntityKarasuman(Entity* self);
@@ -90,12 +90,12 @@ void EntityMedusaHeadSpawner(Entity* self);
 void EntityMedusaHeadBlue(Entity* self);
 void EntityMedusaHeadYellow(Entity* self);
 
-PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
-    OVL_EXPORT(EntityBreakable),
+PfnEntityUpdate EntityUpdates[] = {
+    EntityBreakable,
     EntityExplosion,
     EntityPrizeDrop,
     EntityDamageDisplay,
-    OVL_EXPORT(EntityRedDoor),
+    EntityRedDoor,
     EntityIntenseExplosion,
     EntitySoulStealOrb,
     EntityRoomForeground,
@@ -107,8 +107,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityMessageBox,
     EntityDummy,
     EntityDummy,
-    OVL_EXPORT(EntityBackgroundBlock),
-    OVL_EXPORT(EntityLockCamera),
+    EntityBackgroundBlock,
+    EntityLockCamera,
     EntityUnkId13,
     EntityExplosionVariants,
     EntityGreyPuff,
@@ -166,7 +166,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityFleaArmor,
     EntityFleaArmorAttackHitbox,
     EntityFleaMan,
-    OVL_EXPORT(EntityBreakableDebris),
+    EntityBreakableDebris,
     EntityBossDoorTrigger,
     EntityBossDoors,
     EntityKarasuman,
@@ -183,8 +183,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
 
 // clang-format off
 // animSet, animCurFrame, unk5A, palette, enemyID
-EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_OVL(1), 0, 0, PAL_NONE, 0x000};
-EInit OVL_EXPORT(EInitObtainable) = {ANIMSET_DRA(3), 0, 0, PAL_NONE, 0x001};
+EInit g_EInitBreakable = {ANIMSET_OVL(1), 0, 0, PAL_NONE, 0x000};
+EInit g_EInitObtainable = {ANIMSET_DRA(3), 0, 0, PAL_NONE, 0x001};
 EInit g_EInitParticle = {ANIMSET_DRA(3), 0, 0, PAL_NONE, 0x002};
 EInit g_EInitSpawner = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 0x004};
 EInit g_EInitInteractable = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 0x005};

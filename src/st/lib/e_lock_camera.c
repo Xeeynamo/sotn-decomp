@@ -16,7 +16,7 @@ static u16 tileMapProps[] = {
 
 extern s32 D_us_80181AD0;
 
-void OVL_EXPORT(EntityLockCamera)(Entity* self) {
+void EntityLockCamera(Entity* self) {
     Tilemap* tilemap = &g_Tilemap;
     u16* dataPtr;
     u16 facingLeft;

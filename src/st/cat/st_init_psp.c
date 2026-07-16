@@ -148,7 +148,7 @@ void InitEntityIds(void) {
 
 void CAT_Load(void) {
     InitEntityIds();
-    PfnEntityUpdates = OVL_EXPORT(EntityUpdates);
+    PfnEntityUpdates = EntityUpdates;
     g_pStObjLayoutHorizontal = &D_8D2EA64;
     g_pStObjLayoutVertical = &D_8D2EB38;
     func_psp_0892A018();

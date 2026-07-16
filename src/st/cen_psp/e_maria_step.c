@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../cen/cen.h"
 
-extern s32 OVL_EXPORT(CutsceneFlags);
+extern s32 g_CutsceneFlags;
 extern AnimationFrame D_pspeu_09285860[];
 
 // bss
@@ -811,7 +811,7 @@ void MarStepDead(s32 damageEffect, s32 damageKind, s32 step, s32 step_s) {
 
     switch (MARIA.step_s) {
     case 0:
-        OVL_EXPORT(CutsceneFlags) |= 0x200;
+        g_CutsceneFlags |= 0x200;
         MarResetPose();
         func_80159C04();
         func_maria_8015CAAC(FIX(-0.75));
@@ -869,7 +869,7 @@ void MarStepDead(s32 damageEffect, s32 damageKind, s32 step, s32 step_s) {
         }
         break;
     case 128:
-        OVL_EXPORT(CutsceneFlags) |= 0x20;
+        g_CutsceneFlags |= 0x20;
         break;
     }
 }

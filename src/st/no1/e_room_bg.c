@@ -43,7 +43,7 @@ static ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
     {ANIMSET_OVL(4), 0x064, 0x4A, 0, 0x207, 0, BLEND_NO, 0, anim11},
 };
 
-void OVL_EXPORT(EntityBackgroundBlock)(Entity* self) {
+void EntityBackgroundBlock(Entity* self) {
     ObjInit2* objInit = &OVL_EXPORT(BackgroundBlockInit)[self->params];
 
     Primitive* prim;

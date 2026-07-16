@@ -75,9 +75,9 @@ static u8 blend_modes[] = {
 static u16 z_priorities[] = {168, 168, 96, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 static u16 hitbox_offsets_y[12] = {0};
 
-extern EInit OVL_EXPORT(EInitBreakable);
+extern EInit g_EInitBreakable;
 
-void OVL_EXPORT(EntityBreakable)(Entity* self) {
+void EntityBreakable(Entity* self) {
     Entity* entity;
     s16* debrisOffsetsY;
     u16 breakableType;
@@ -87,7 +87,7 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
 
     breakableType = self->params >> 12;
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitBreakable));
+        InitializeEntity(g_EInitBreakable);
         self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 20;
         if (z_priorities[breakableType]) {
             self->zPriority = z_priorities[breakableType];

@@ -7,10 +7,10 @@ static
     void
     SetCutsceneEnd(u8* ptr) {
 #if !defined(VERSION_PSP)
-    OVL_EXPORT(Dialogue).scriptEnd = ptr + 0x100000;
+    g_Dialogue.scriptEnd = ptr + 0x100000;
 #else
-    OVL_EXPORT(Dialogue).scriptEnd = ptr;
+    g_Dialogue.scriptEnd = ptr;
 #endif
-    OVL_EXPORT(Dialogue).timer = 0;
-    OVL_EXPORT(Dialogue).unk3C = 1;
+    g_Dialogue.timer = 0;
+    g_Dialogue.unk3C = 1;
 }

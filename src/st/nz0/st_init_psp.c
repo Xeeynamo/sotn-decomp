@@ -153,7 +153,7 @@ void OVL_EXPORT(Load)(void) {
         (u8*)D_pspeu_09265E90, (u8*)D_pspeu_092658B8);
 
     InitEntityIds();
-    PfnEntityUpdates = OVL_EXPORT(EntityUpdates);
+    PfnEntityUpdates = EntityUpdates;
     g_pStObjLayoutHorizontal = &D_8D2E52C;
     g_pStObjLayoutVertical = &D_8D2E600;
     func_892A018();

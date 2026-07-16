@@ -5,7 +5,7 @@ void EntityBreakableNZ0(Entity*);
 void EntityExplosion(Entity*);
 void EntityPrizeDrop(Entity*);
 void EntityDamageDisplay(Entity*);
-void OVL_EXPORT(EntityRedDoor)(Entity*);
+void EntityRedDoor(Entity*);
 void EntityIntenseExplosion(Entity*);
 void EntitySoulStealOrb(Entity*);
 void EntityRoomForeground(Entity*);
@@ -17,8 +17,8 @@ void EntityEnemyBlood(Entity*);
 void EntityMessageBox(Entity*);
 void EntityDummy(Entity*);
 void EntityDummy(Entity*);
-void OVL_EXPORT(EntityBackgroundBlock)(Entity*);
-void OVL_EXPORT(EntityLockCamera)(Entity*);
+void EntityBackgroundBlock(Entity*);
+void EntityLockCamera(Entity*);
 void EntityUnkId13(Entity*);
 void EntityExplosionVariants(Entity*);
 void EntityGreyPuff(Entity*);
@@ -75,16 +75,16 @@ void EntityElevator(Entity*);
 void func_801B6DE4(Entity*);
 void EntityLifeUpSpawn(Entity*);
 void EntitySealedDoor(Entity*);
-void OVL_EXPORT(EntityCutscene)(Entity*);
+void EntityCutscene(Entity*);
 void EntityMariaNZ0(Entity*);
 void func_801B8E0C(Entity*);
 
-PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
+PfnEntityUpdate EntityUpdates[] = {
     EntityBreakableNZ0,
     EntityExplosion,
     EntityPrizeDrop,
     EntityDamageDisplay,
-    OVL_EXPORT(EntityRedDoor),
+    EntityRedDoor,
     EntityIntenseExplosion,
     EntitySoulStealOrb,
     EntityRoomForeground,
@@ -96,8 +96,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityMessageBox,
     EntityDummy,
     EntityDummy,
-    OVL_EXPORT(EntityBackgroundBlock),
-    OVL_EXPORT(EntityLockCamera),
+    EntityBackgroundBlock,
+    EntityLockCamera,
     EntityUnkId13,
     EntityExplosionVariants,
     EntityGreyPuff,
@@ -154,12 +154,12 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_801B6DE4,
     EntityLifeUpSpawn,
     EntitySealedDoor,
-    OVL_EXPORT(EntityCutscene),
+    EntityCutscene,
     EntityMariaNZ0,
     func_801B8E0C,
 };
 
-EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_DRA(3), 0, 0x00, 0x000, 0};
+EInit g_EInitBreakable = {ANIMSET_DRA(3), 0, 0x00, 0x000, 0};
 #include "../e_init_common.h"
 EInit g_EInitEnemy3 = {ANIMSET_OVL(1), 0, 0x00, 0x000, 3};
 EInit g_EInitBloodSkeleton = {0x8002, 0x0000, 0x004C, 0x0200, 0x0046};

@@ -26,7 +26,7 @@ static u_long* D_us_801800CC[] = {
     PAL_TERMINATE(),
 };
 
-u_long* OVL_EXPORT(cluts)[] = {
+u_long* cluts[] = {
     D_us_80180094,
     D_us_801800B8,
     D_us_801800CC,

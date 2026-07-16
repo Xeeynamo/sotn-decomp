@@ -285,13 +285,13 @@ func buildEntityLayouts(fileName, outputDir, subDir string, ovlName string) erro
 	laydefFile.WriteString("#include \"common.h\"\n\n")
 	laydefFile.WriteString("// clang-format off\n")
 	laydefFile.WriteString(fmt.Sprintf("extern LayoutEntity %s_x[];\n", symbolName))
-	laydefFile.WriteString(fmt.Sprintf("LayoutEntity* %s_pStObjLayoutHorizontal[] = {\n", strings.ToUpper(ovlName)))
+	laydefFile.WriteString("LayoutEntity* entityLayoutHorizontal[] = {\n")
 	for _, i := range el.Indices {
 		laydefFile.WriteString(fmt.Sprintf("    &%s_x[%d],\n", symbolName, offsets[i]/5))
 	}
 	laydefFile.WriteString(fmt.Sprintf("};\n"))
 	laydefFile.WriteString(fmt.Sprintf("extern LayoutEntity %s_y[];\n", symbolName))
-	laydefFile.WriteString(fmt.Sprintf("LayoutEntity* %s_pStObjLayoutVertical[] = {\n", strings.ToUpper(ovlName)))
+	laydefFile.WriteString("LayoutEntity* entityLayoutVertical[] = {\n")
 	for _, i := range el.Indices {
 		laydefFile.WriteString(fmt.Sprintf("    &%s_y[%d],\n", symbolName, offsets[i]/5))
 	}

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../cen/cen.h"
 
-extern s32 OVL_EXPORT(CutsceneFlags);
+extern s32 g_CutsceneFlags;
 extern s32 D_psp_091CE570; // dra bss
 
 // bss
@@ -699,8 +699,7 @@ void EntityMaria(Entity* self) {
         return;
     }
 
-    if (!self->ext.factory.incParamsKind &&
-        (OVL_EXPORT(CutsceneFlags) & 0x10)) {
+    if (!self->ext.factory.incParamsKind && (g_CutsceneFlags & 0x10)) {
         if (!(cutscene_flags & 0x10)) {
             think_step = 0;
             self->ext.factory.incParamsKind = 1;
@@ -728,7 +727,7 @@ void EntityMaria(Entity* self) {
     MarUpdatePlayerEntities();
 
     g_Maria.unk6C = g_Maria.unk6A;
-    cutscene_flags = OVL_EXPORT(CutsceneFlags);
+    cutscene_flags = g_CutsceneFlags;
 }
 
 void EntityUnused(Entity* self) {}

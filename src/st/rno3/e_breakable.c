@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rno3.h"
-extern EInit OVL_EXPORT(EInitBreakable);
+extern EInit g_EInitBreakable;
 
 static u8 anim_1[] = {4, 1, 4, 2, 0, 0};
 static u8 anim_2[] = {4, 0, 4, 0, 0};

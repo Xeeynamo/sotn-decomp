@@ -20,7 +20,7 @@ func (h *handler) Name() string { return "layers" }
 func (h *handler) Extract(e assets.ExtractArgs) error {
 	roomLayersOffset, err := findRoomsLayerArray(e)
 	if err != nil {
-		return fmt.Errorf("unable to find the start of OVL_EXPORT(rooms_layers): %w", err)
+		return fmt.Errorf("unable to find the start of rooms_layers: %w", err)
 	}
 	r := bytes.NewReader(e.Data)
 	l, _, err := readLayers(r, roomLayersOffset, e.RamBase)
@@ -97,7 +97,7 @@ func findRoomsLayerArray(e assets.ExtractArgs) (psx.Addr, error) {
 	// format is:
 	//   LayerDef layer_empty = {a bunch of nulls}
 	//   LayerDef layers[???] = {...}
-	//   RoomDef OVL_EXPORT(rooms_layers)[???] = {...}
+	//   RoomDef rooms_layers[???] = {...}
 	// we need to find 'rooms_layers' first. This is done by assuming each entry
 	// is a 0x10 long 'LayerDef'. We need to save the offset of each entry.
 	// As soon as we read an entry where the address points to one of the LayerDef,

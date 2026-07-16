@@ -195,8 +195,8 @@ extern u8 D_801816C4[]; // Succubus facing assigned to it
 #endif
 
 // bss
-extern s32 OVL_EXPORT(SkipCutscene);
-extern u32 OVL_EXPORT(CutsceneFlags);
+extern s32 g_SkipCutscene;
+extern u32 g_CutsceneFlags;
 
 void EntitySuccubus(Entity* self) {
     u8* clonesShootOrder;
@@ -239,47 +239,47 @@ void EntitySuccubus(Entity* self) {
             self->step_s = 3;
         }
         self->animCurFrame = 82;
-        if (OVL_EXPORT(CutsceneFlags) & 4) {
+        if (g_CutsceneFlags & 4) {
             SetStep(SUCCUBUS_CS_2);
         }
         break;
 
     case SUCCUBUS_CS_2: // Disguised as Lisa
-        if (OVL_EXPORT(SkipCutscene)) {
+        if (g_SkipCutscene) {
             SetSubStep(4);
         }
         switch (self->step_s) {
         case 0:
             AnimateEntity(D_8018079C, self);
-            if (OVL_EXPORT(CutsceneFlags) & 0x400) {
+            if (g_CutsceneFlags & 0x400) {
                 SetSubStep(1);
             }
             break;
 
         case 1:
             AnimateEntity(D_801807AC, self);
-            if (OVL_EXPORT(CutsceneFlags) & 0x800) {
+            if (g_CutsceneFlags & 0x800) {
                 self->animCurFrame = 84;
                 SetSubStep(2);
             }
             break;
 
         case 2:
-            if (OVL_EXPORT(CutsceneFlags) & 0x1000) {
+            if (g_CutsceneFlags & 0x1000) {
                 SetSubStep(3);
             }
             break;
 
         case 3:
             self->animCurFrame = 83;
-            if (OVL_EXPORT(CutsceneFlags) & 0x2000) {
+            if (g_CutsceneFlags & 0x2000) {
                 SetSubStep(4);
             }
             break;
 
         case 4:
             self->animCurFrame = 84;
-            if (OVL_EXPORT(CutsceneFlags) & 0x20) {
+            if (g_CutsceneFlags & 0x20) {
                 SetStep(SUCCUBUS_CS_3);
             }
             break;
@@ -288,7 +288,7 @@ void EntitySuccubus(Entity* self) {
 
     // Sets Succubus in position
     case SUCCUBUS_CS_3:
-        if (OVL_EXPORT(SkipCutscene) && self->step_s) {
+        if (g_SkipCutscene && self->step_s) {
             SetStep(SUCCUBUS_CS_4);
         } else {
             switch (self->step_s) {
@@ -300,21 +300,21 @@ void EntitySuccubus(Entity* self) {
 
             case 1:
                 AnimateEntity(D_8018066C, self);
-                if (OVL_EXPORT(CutsceneFlags) & 0x40) {
+                if (g_CutsceneFlags & 0x40) {
                     SetSubStep(2);
                 }
                 break;
 
             case 2:
                 self->animCurFrame = 4;
-                if (OVL_EXPORT(CutsceneFlags) & 0x80) {
+                if (g_CutsceneFlags & 0x80) {
                     SetSubStep(3);
                 }
                 break;
 
             case 3:
                 AnimateEntity(D_80180674, self);
-                if (OVL_EXPORT(CutsceneFlags) & 0x100) {
+                if (g_CutsceneFlags & 0x100) {
                     SetSubStep(4);
                 }
                 break;
@@ -414,13 +414,13 @@ void EntitySuccubus(Entity* self) {
                     *D_801816C4 = self->facingLeft =
                         (GetSideToPlayer() & 1) ^ 1;
                 }
-                OVL_EXPORT(CutsceneFlags) |= 2;
+                g_CutsceneFlags |= 2;
             }
             break;
 
         case SUCCUBUS_DYING_ANIM_1:
             AnimateEntity(D_80180770, self);
-            if (OVL_EXPORT(CutsceneFlags) & 0x10) {
+            if (g_CutsceneFlags & 0x10) {
                 SetSubStep(SUCCUBUS_DYING_ANIM_2);
             }
             break;

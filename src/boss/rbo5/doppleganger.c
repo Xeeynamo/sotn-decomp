@@ -439,7 +439,7 @@ void EntityDoppleganger40(void) {
         g_Dop.timers[15] = 4;
         DOPPLEGANGER.palette = PAL_FLAG(0x200);
     }
-    OVL_EXPORT(PlayAnimation)(D_us_80183CFC, D_us_80183D40);
+    PlayAnimation(D_us_80183CFC, D_us_80183D40);
     if (g_Dop.status & PLAYER_STATUS_DEAD) {
         if (DOPPLEGANGER.poseTimer < 0) {
             DOPPLEGANGER.animCurFrame |= 0x8000;
@@ -454,7 +454,7 @@ void EntityDoppleganger40(void) {
             DOPPLEGANGER.hitboxState = 0;
         }
     }
-    OVL_EXPORT(InitPlayerAfterImage)();
+    InitPlayerAfterImage();
     vram_flag = g_Dop.vram_flag;
     posX = DOPPLEGANGER.posX.val;
     posY = DOPPLEGANGER.posY.val;
@@ -467,19 +467,19 @@ void EntityDoppleganger40(void) {
         DOPPLEGANGER.velocityY >>= 2;
         if (DOPPLEGANGER.posY.i.hi >= 0) {
             if (g_Dop.status & PLAYER_STATUS_UNK400000) {
-                OVL_EXPORT(CheckStageCollision)(0);
+                CheckStageCollision(0);
             } else {
-                OVL_EXPORT(CheckStageCollision)(1);
+                CheckStageCollision(1);
             }
         }
         if (DOPPLEGANGER.posY.i.hi >= 0) {
-            OVL_EXPORT(CheckStageCollision)(0);
+            CheckStageCollision(0);
         }
         if (DOPPLEGANGER.posY.i.hi >= 0) {
-            OVL_EXPORT(CheckStageCollision)(0);
+            CheckStageCollision(0);
         }
         if (DOPPLEGANGER.posY.i.hi >= 0) {
-            OVL_EXPORT(CheckStageCollision)(0);
+            CheckStageCollision(0);
         }
         if (DOPPLEGANGER.posY.i.hi < 0) {
             DOPPLEGANGER.posY.val = FIX(-1);
@@ -488,13 +488,13 @@ void EntityDoppleganger40(void) {
         DOPPLEGANGER.velocityX *= 4;
         DOPPLEGANGER.velocityY *= 4;
     } else if (g_Dop.status & PLAYER_STATUS_UNK800000) {
-        OVL_EXPORT(CheckStageCollision)(0);
+        CheckStageCollision(0);
     } else {
-        OVL_EXPORT(CheckStageCollision)(1);
+        CheckStageCollision(1);
     }
 
     g_Dop.unk04 = vram_flag;
-    OVL_EXPORT(DrawPlayerAfterImage)();
+    DrawPlayerAfterImage();
 
     if (DOPPLEGANGER.animSet == (s16)ANIMSET_OVL(2)) {
         parts = D_us_801B1674[DOPPLEGANGER.animCurFrame & 0x7FFF];

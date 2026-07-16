@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz1.h"
 
-extern RoomHeader OVL_EXPORT(rooms)[];
-extern SpriteParts* OVL_EXPORT(spriteBanks)[];
-extern u_long* OVL_EXPORT(cluts)[];
-extern RoomDef OVL_EXPORT(rooms_layers)[];
-extern GfxBank* OVL_EXPORT(gfxBanks)[];
+extern RoomHeader rooms[];
+extern SpriteParts* spriteBanks[];
+extern u_long* cluts[];
+extern RoomDef rooms_layers[];
+extern GfxBank* gfxBanks[];
 void UpdateStageEntities(void);
 
 Overlay OVL_EXPORT(Overlay) = {
@@ -13,12 +13,12 @@ Overlay OVL_EXPORT(Overlay) = {
     .HitDetection = HitDetection,
     .UpdateRoomPosition = UpdateRoomPosition,
     .InitRoomEntities = InitRoomEntities,
-    .rooms = OVL_EXPORT(rooms),
-    .spriteBanks = OVL_EXPORT(spriteBanks),
-    .cluts = OVL_EXPORT(cluts),
+    .rooms = rooms,
+    .spriteBanks = spriteBanks,
+    .cluts = cluts,
     .objLayoutHorizontal = NULL,
-    .tileLayers = OVL_EXPORT(rooms_layers),
-    .gfxBanks = OVL_EXPORT(gfxBanks),
+    .tileLayers = rooms_layers,
+    .gfxBanks = gfxBanks,
     .UpdateStageEntities = UpdateStageEntities,
     .unk2C = NULL,
     .unk30 = NULL,

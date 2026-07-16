@@ -3,4 +3,4 @@
 
 INCLUDE_ASM("st/rno0/nonmatchings/unk_39A8C", func_us_801B9A8C);
 
-INCLUDE_ASM("st/rno0/nonmatchings/unk_39A8C", RNO0_EntityRedDoor);
+INCLUDE_ASM("st/rno0/nonmatchings/unk_39A8C", EntityRedDoor);

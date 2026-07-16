@@ -93,7 +93,7 @@ func (h *handler) Build(e assets.BuildArgs) error {
 		sb.WriteString("    GFX_TERMINATE(),\n")
 		sb.WriteString("};\n")
 	}
-	sb.WriteString("u_long** OVL_EXPORT(gfxBanks)[] = {\n")
+	sb.WriteString("u_long** gfxBanks[] = {\n")
 	for _, i := range gfxBanks.Indices {
 		if i == -1 { // exception for ST0
 			sb.WriteString("    NULL,\n")
