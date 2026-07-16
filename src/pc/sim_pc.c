@@ -442,6 +442,14 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
             sim.path = "BIN/RIC.BIN";
             sim.kind = 99;
             break;
+        case 6:
+            sim.path = "BIN/F_PROLO0.BIN";
+            sim.kind = SIM_11;
+            break;
+        case 7:
+            sim.path = "BIN/F_PROLO1.BIN";
+            sim.kind = SIM_12;
+            break;
         case 12:
             sim.path = "ST/SEL/F_SEL.BIN";
             sim.kind = SIM_STAGE_CHR;
