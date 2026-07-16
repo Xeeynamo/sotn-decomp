@@ -550,6 +550,7 @@ target_compile_definitions(${PROJECT_NAME} PUBLIC
     NON_MATCHING
     HARD_LINK
     _internal_version_us
+    __psyz
 )
 
 target_include_directories(psyz PUBLIC tools/psyz/psyz/include)
