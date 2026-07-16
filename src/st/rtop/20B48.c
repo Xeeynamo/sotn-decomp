@@ -64,9 +64,20 @@ void func_us_801A0BF4(Entity* self) {
     }
 }
 
-extern Point16 D_us_8018080C[];
-extern s32 D_us_8018080E[];
-extern u16 D_us_8018081C[];
+static Point16 D_us_8018080C[] = {
+    {0x0580, 0x0330}, {0x0598, 0x0348}, {0x05B0, 0x0360}, {0x05C0, 0x0370}};
+// This probably has some extra stuff at the end, but going with this for now
+static u16 D_us_8018081C[] = {
+    0x1956, 0x0645, 0x1957, 0x0646, 0x19D6, 0x0644, 0x19D7, 0x0643, 0x19D8,
+    0x0641, 0x1A57, 0x0642, 0x1A58, 0x0640, 0x1A59, 0x063B, 0x1AD8, 0x063F,
+    0x1AD9, 0x063C, 0x1ADA, 0x0639, 0x1B59, 0x063E, 0x1B5A, 0x063A, 0x1B5B,
+    0x0638, 0x1BDA, 0x063D, 0x1BDB, 0x0637, 0x1BDC, 0x0636, 0xFFFF, 0xFFFF,
+    0x1956, 0x0119, 0x1957, 0x0118, 0x19D6, 0x0002, 0x19D7, 0x0002, 0x19D8,
+    0x017F, 0x1A57, 0x0166, 0x1A58, 0x0187, 0x1A59, 0x0188, 0x1AD8, 0x018F,
+    0x1AD9, 0x0190, 0x1ADA, 0x0191, 0x1B59, 0x0198, 0x1B5A, 0x0199, 0x1B5B,
+    0x019A, 0x1BDA, 0x01A1, 0x1BDB, 0x01A2, 0x1BDC, 0x01A3, 0xFFFF, 0xFFFF,
+    0,      0x0008, 0,      0x0004, 0x0004, 0xFFFC, 0xFFF8, 0,
+};
 
 void EntitySecretStairs(Entity* self) {
     Entity* entity;
@@ -179,8 +190,7 @@ void EntitySecretStairs(Entity* self) {
 }
 
 // breakable wall behind leap stone or power of mist
-extern u16 D_us_801808BC[];
-extern u16 D_us_801808C2[];
+static u16 D_us_801808BC[] = {0x0019, 0x001A, 0x001B, 0x0386, 0x0389, 0x001C};
 
 void EntityBreakableWall(Entity* self) {
     s32 wallStatus;
@@ -250,7 +260,7 @@ void EntityBreakableWall(Entity* self) {
             } else {
                 g_CastleFlags[OVL_EXPORT(SECRET_WALL_2_BROKEN)] = 1;
             }
-            wallTiles = D_us_801808C2;
+            wallTiles = &D_us_801808BC[3];
             if (!self->params) {
                 var_a1 = 0x1AE7;
             } else {
@@ -288,7 +298,7 @@ void EntityBreakableWall(Entity* self) {
 }
 
 // odd +1 reference to D_us_80180CC6
-extern s16 D_us_801808C8[];
+static s16 D_us_801808C8[] = {-2, -1, -1, 0, 0, 1, 1, 2};
 
 void EntityTriangleElevator(Entity* self) {
     Primitive* prim;
@@ -463,7 +473,9 @@ void EntityTriangleElevator(Entity* self) {
     self->ext.topElevator.mapPos.y = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
 }
 
-extern u8 D_us_801808D8[][3];
+static u8 D_us_801808D8[][3] = {
+    {153, 154, 155}, {156, 157, 158}, {159, 160, 161}, {162, 163, 164},
+    {146, 147, 148}, {165, 166, 167}, {172, 173, 174}, {180, 181, 182}};
 // map pos y
 extern s32 D_us_801B10D8;
 
@@ -698,10 +710,50 @@ void func_us_801A1940(Entity* self) {
     prim->y2 = prim->y3 = self->posY.i.hi + 24;
 }
 
-#define STAGE_EINIT_COMMON g_EInitRTOPCommon
-#include "../e_lion_lamp.h"
+static u8 LionLampAnim[] = {3, 6, 3, 7, 3, 8, 3, 9, 3, 10, 0};
 
-extern u8 D_us_801808FC[];
+void EntityLionLamp(Entity* self) {
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitRTOPCommon);
+        self->zPriority = 0x58;
+        // fallthrough
+
+    case 1:
+        AnimateEntity(LionLampAnim, self);
+        if (g_Timer & 1) {
+            self->palette = 0;
+        } else {
+            self->palette = 1;
+        }
+        break;
+
+    case 0xFF:
+        FntPrint("charal %x\n", self->animCurFrame);
+        if (g_pads[1].pressed & PAD_SQUARE) {
+            if (self->params) {
+                return;
+            }
+            self->animCurFrame++;
+            self->params |= 1;
+        } else {
+            self->params = 0;
+        }
+
+        if (g_pads[1].pressed & PAD_CIRCLE) {
+            if (self->step_s == 0) {
+                self->animCurFrame--;
+                self->step_s |= 1;
+            }
+        } else {
+            self->step_s = 0;
+        }
+        break;
+    }
+}
+
+static u8 D_us_801808FC[] = {146, 149, 150, 151, 152, 165, 168, 169, 170, 171,
+                             172, 175, 176, 177, 178, 180, 183, 184, 185, 186};
 
 void func_us_801A21F8(Entity* self) {
     u8* lookup;
