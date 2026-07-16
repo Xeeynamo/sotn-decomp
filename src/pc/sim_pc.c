@@ -578,6 +578,9 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
             sim.kind = SIM_VB;
         }
         break;
+    case SimFileType_Seq:
+        LoadFileSimToMem(SIM_SEQ);
+        return 0;
     case SimFileType_StageChr:
         sim.kind = SIM_STAGE_CHR;
         sim.path = smolbuf;
