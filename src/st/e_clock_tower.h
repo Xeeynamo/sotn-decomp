@@ -6,15 +6,36 @@
 extern EInit g_EInitInteractable;
 extern EInit g_EInitSpawner;
 
-extern s16 D_us_80181BFC[] = {0, 0, 0, 0, 0xC181, 0xC1BE, 0xDE81, 0xDEBE, 0xE181, 0xE1BE, 0xFE81, 0xFEBE, 0xC181, 0xC1BE, 0xDE81, 0xDEBE, 0xE181, 0xE1BE, 0xFE81, 0xFEBE, 0x8181, 0x81BE, 0xA081, 0xA0BE, 0xA081, 0xA0BE, 0xBE81, 0xBEBE, 0x81C1, 0x81FE, 0xA0C1, 0xA0FE, 0xA0C1, 0xA0FE, 0xBEC1, 0xBEFE};
+static s16 D_us_80181BFC[] = {0, 0, 0, 0, 0xC181, 0xC1BE, 0xDE81, 0xDEBE, 0xE181, 0xE1BE, 0xFE81, 0xFEBE, 0xC181, 0xC1BE, 0xDE81, 0xDEBE, 0xE181, 0xE1BE, 0xFE81, 0xFEBE, 0x8181, 0x81BE, 0xA081, 0xA0BE, 0xA081, 0xA0BE, 0xBE81, 0xBEBE, 0x81C1, 0x81FE, 0xA0C1, 0xA0FE, 0xA0C1, 0xA0FE, 0xBEC1, 0xBEFE};
 
-extern SVECTOR cloudVectorOne = {-128, 0, 0, 0};
-extern SVECTOR cloudVectorTwo = {128, 0, 0, 0};
-extern SVECTOR cloudVectorThree = {-128, 0, 224, 0};
-extern SVECTOR cloudVectorFour = {128, 0, 224, 0};
+static SVECTOR cloudVectorOne = {-128, 0, 0, 0};
+static SVECTOR cloudVectorTwo = {128, 0, 0, 0};
+static SVECTOR cloudVectorThree = {-128, 0, 224, 0};
+static SVECTOR cloudVectorFour = {128, 0, 224, 0};
 
-extern cloudData data[];
-extern SVECTOR empty;
+static u8 cloudData1[] = {5, 0, 7, 0, 0, 8, 0, 0, 6, 0, 8, 5, 0, 0, 7, 5, 0, 5, 0, 6, 5, 0, 8, 6, 0, 6, 0, 0, 6, 0, 0, 0, 5, 0, 0, 7, 0, 0, 0, 7, 6, 5, 0, 8, 0, 5, 5, 8, 0, 6, 0, 5, 5, 6, 6, 0, 0, 0, 0, 6, 6, 7, 0, 0};
+static u8 cloudData2[] = {4, 3, 3, 4, 2, 4, 3, 4, 1, 3, 2, 3, 4, 2, 2, 4, 3, 2, 2, 3, 2, 4, 3, 4, 2, 2, 4, 3, 1, 3, 2, 4, 1, 1, 2, 1, 4, 4, 4, 4, 3, 2, 2, 3, 2, 1, 2, 2, 1, 2, 2, 2, 3, 4, 2, 2, 3, 3, 4, 2, 2, 4, 3, 4};
+#if !defined(INVERTED_STAGE)
+#define UP +
+#define DOWN -
+#define UNK9C 0x4B
+#define UNKA0 0
+#define X_OFF 0x65
+#define POSX_3D 0x700
+#define POSY_3D 0x3C0
+#define ROTZ_3D 0
+#else
+#define UP -
+#define DOWN +
+#define UNK9C 0xB5
+#define UNKA0 0x100
+#define X_OFF 0x7B
+#define POSX_3D 0x100
+#define POSY_3D 0x440
+#define ROTZ_3D 0x800
+#endif
+static cloudData data[] = {{cloudData1, DOWN 320, 24}, {cloudData2, UP 320, 28}};
+static SVECTOR empty = {0,0,0};
 
 // very simliar to ST0's EntityClouds, however,
 // TOP & RTOP are much taller so many dimensional constants
@@ -68,13 +89,9 @@ void EntityClouds(Entity* self) {
         prim->y0 = prim->y1 = 0;
         prim->y2 = prim->y3 = 0x7B;
 
-#ifdef STAGE_IS_TOP
-        self->ext.clouds.unk9C.i.hi = 0x4B;
-        self->ext.clouds.unkA0.i.hi = 0;
-#else // STAGE_IS_RTOP
-        self->ext.clouds.unk9C.i.hi = 0xB5;
-        self->ext.clouds.unkA0.i.hi = 0x100;
-#endif
+        self->ext.clouds.unk9C.i.hi = UNK9C;
+        self->ext.clouds.unkA0.i.hi = UNKA0;
+
         prim->priority = 4;
         prim->drawMode = DRAW_DEFAULT;
         prim = prim->next;
@@ -130,17 +147,10 @@ void EntityClouds(Entity* self) {
     }
 
     prim->x0 = prim->x2 = self->ext.clouds.unk9C.i.hi;
-#ifdef STAGE_IS_TOP
-    prim->x1 = prim->x3 = self->ext.clouds.unk9C.i.hi + 0x65;
-#else // STAGE_IS_RTOP
-    prim->x1 = prim->x3 = self->ext.clouds.unk9C.i.hi - 0x65;
-#endif
+    prim->x1 = prim->x3 = self->ext.clouds.unk9C.i.hi UP 0x65;
     prim->y0 = prim->y1 = self->ext.clouds.unkA0.i.hi;
-#ifdef STAGE_IS_TOP
-    prim->y2 = prim->y3 = self->ext.clouds.unkA0.i.hi + 0x7B;
-#else // STAGE_IS_RTOP
-    prim->y2 = prim->y3 = self->ext.clouds.unkA0.i.hi - 0x7B;
-#endif
+    prim->y2 = prim->y3 = self->ext.clouds.unkA0.i.hi UP 0x7B;
+
     prim = prim->next;
 
     for (i = 0; i < 2; i++, cloudData++, var_s1 += 4) {
@@ -265,13 +275,10 @@ void EntityClockTower3D(Entity* self) {
 
     if (self->step == 0) {
         InitializeEntity(g_EInitInteractable);
-#ifdef STAGE_IS_TOP
-        self->posX.i.hi = 0x700 - g_Tilemap.scrollX.i.hi;
-        self->posY.i.hi = 0x3C0 - g_Tilemap.scrollY.i.hi;
-#else // STAGE_IS_RTOP
-        self->posX.i.hi = 0x100 - g_Tilemap.scrollX.i.hi;
-        self->posY.i.hi = 0x440 - g_Tilemap.scrollY.i.hi;
-#endif
+
+        self->posX.i.hi = POSX_3D - g_Tilemap.scrollX.i.hi;
+        self->posY.i.hi = POSY_3D - g_Tilemap.scrollY.i.hi;
+
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x28);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -295,13 +302,8 @@ void EntityClockTower3D(Entity* self) {
     SetGeomScreen(0x300);
     SetGeomOffset(0x80, 0x80);
     rotVector.vx = 0;
-#ifdef STAGE_IS_TOP
-    rotVector.vy = -0x90;
-    rotVector.vz = 0;
-#else // STAGE_IS_RTOP
-    rotVector.vy = 0x90;
-    rotVector.vz = 0x800;
-#endif
+    rotVector.vy = DOWN 0x90;
+    rotVector.vz = ROTZ_3D;
     rotVector.vx += self->ext.clockTower.unk9C;
     rotVector.vy += self->ext.clockTower.unk9E;
     rotVector.vz += self->ext.clockTower.unkA0;
