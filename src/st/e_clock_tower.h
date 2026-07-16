@@ -6,15 +6,25 @@
 extern EInit g_EInitInteractable;
 extern EInit g_EInitSpawner;
 
-static s16 D_us_80181BFC[] = {0, 0, 0, 0, 0xC181, 0xC1BE, 0xDE81, 0xDEBE, 0xE181, 0xE1BE, 0xFE81, 0xFEBE, 0xC181, 0xC1BE, 0xDE81, 0xDEBE, 0xE181, 0xE1BE, 0xFE81, 0xFEBE, 0x8181, 0x81BE, 0xA081, 0xA0BE, 0xA081, 0xA0BE, 0xBE81, 0xBEBE, 0x81C1, 0x81FE, 0xA0C1, 0xA0FE, 0xA0C1, 0xA0FE, 0xBEC1, 0xBEFE};
+static s16 D_us_80181BFC[] = {
+    0,      0,      0,      0,      0xC181, 0xC1BE, 0xDE81, 0xDEBE, 0xE181,
+    0xE1BE, 0xFE81, 0xFEBE, 0xC181, 0xC1BE, 0xDE81, 0xDEBE, 0xE181, 0xE1BE,
+    0xFE81, 0xFEBE, 0x8181, 0x81BE, 0xA081, 0xA0BE, 0xA081, 0xA0BE, 0xBE81,
+    0xBEBE, 0x81C1, 0x81FE, 0xA0C1, 0xA0FE, 0xA0C1, 0xA0FE, 0xBEC1, 0xBEFE};
 
 static SVECTOR cloudVectorOne = {-128, 0, 0, 0};
 static SVECTOR cloudVectorTwo = {128, 0, 0, 0};
 static SVECTOR cloudVectorThree = {-128, 0, 224, 0};
 static SVECTOR cloudVectorFour = {128, 0, 224, 0};
 
-static u8 cloudData1[] = {5, 0, 7, 0, 0, 8, 0, 0, 6, 0, 8, 5, 0, 0, 7, 5, 0, 5, 0, 6, 5, 0, 8, 6, 0, 6, 0, 0, 6, 0, 0, 0, 5, 0, 0, 7, 0, 0, 0, 7, 6, 5, 0, 8, 0, 5, 5, 8, 0, 6, 0, 5, 5, 6, 6, 0, 0, 0, 0, 6, 6, 7, 0, 0};
-static u8 cloudData2[] = {4, 3, 3, 4, 2, 4, 3, 4, 1, 3, 2, 3, 4, 2, 2, 4, 3, 2, 2, 3, 2, 4, 3, 4, 2, 2, 4, 3, 1, 3, 2, 4, 1, 1, 2, 1, 4, 4, 4, 4, 3, 2, 2, 3, 2, 1, 2, 2, 1, 2, 2, 2, 3, 4, 2, 2, 3, 3, 4, 2, 2, 4, 3, 4};
+static u8 cloudData1[] = {
+    5, 0, 7, 0, 0, 8, 0, 0, 6, 0, 8, 5, 0, 0, 7, 5, 0, 5, 0, 6, 5, 0,
+    8, 6, 0, 6, 0, 0, 6, 0, 0, 0, 5, 0, 0, 7, 0, 0, 0, 7, 6, 5, 0, 8,
+    0, 5, 5, 8, 0, 6, 0, 5, 5, 6, 6, 0, 0, 0, 0, 6, 6, 7, 0, 0};
+static u8 cloudData2[] = {
+    4, 3, 3, 4, 2, 4, 3, 4, 1, 3, 2, 3, 4, 2, 2, 4, 3, 2, 2, 3, 2, 4,
+    3, 4, 2, 2, 4, 3, 1, 3, 2, 4, 1, 1, 2, 1, 4, 4, 4, 4, 3, 2, 2, 3,
+    2, 1, 2, 2, 1, 2, 2, 2, 3, 4, 2, 2, 3, 3, 4, 2, 2, 4, 3, 4};
 #if !defined(INVERTED_STAGE)
 #define UP +
 #define DOWN -
@@ -34,8 +44,9 @@ static u8 cloudData2[] = {4, 3, 3, 4, 2, 4, 3, 4, 1, 3, 2, 3, 4, 2, 2, 4, 3, 2, 
 #define POSY_3D 0x440
 #define ROTZ_3D 0x800
 #endif
-static cloudData data[] = {{cloudData1, DOWN 320, 24}, {cloudData2, UP 320, 28}};
-static SVECTOR empty = {0,0,0};
+static cloudData data[] = {
+    {cloudData1, DOWN 320, 24}, {cloudData2, UP 320, 28}};
+static SVECTOR empty = {0, 0, 0};
 
 // very simliar to ST0's EntityClouds, however,
 // TOP & RTOP are much taller so many dimensional constants
@@ -276,7 +287,8 @@ static SVECTOR D_801821C8[] = {
     {0, -182, 65},  {0, -182, -65}, {-65, -99, -65},
     {-65, -99, 65}, {65, -99, 65},  {65, -99, -65},
 };
-static SVECTOR D_801821F8[] = { //1d70
+static SVECTOR D_801821F8[] = {
+    // 1d70
     {83, -163, -82}, {65, -99, -99}, {65, -99, -65},
     {99, -99, -99},  {99, -99, -65},
 };
@@ -309,19 +321,16 @@ static SVECTOR D_80182358[] = {
 };
 
 static SVECTOR D_801818C8[] = {
-    {-65, 616, 65}, {-65, 450, 65}, {-65, 450, -65}, {-65, 616, -65}, 
-    {65, 450, -65}, {65, 616, -65}, {65, 450, 65}, {65, 616, 65}
-};
+    {-65, 616, 65}, {-65, 450, 65}, {-65, 450, -65}, {-65, 616, -65},
+    {65, 450, -65}, {65, 616, -65}, {65, 450, 65},   {65, 616, 65}};
 
 static SVECTOR D_80181908[] = {
-    {-65, 783, 65}, {-65, 616, 65}, {-65, 616, -65}, {-65, 783, -65}, 
-    {65, 616, -65}, {65, 783, -65}, {65, 616, 65}, {65, 783, 65}
-};
+    {-65, 783, 65}, {-65, 616, 65}, {-65, 616, -65}, {-65, 783, -65},
+    {65, 616, -65}, {65, 783, -65}, {65, 616, 65},   {65, 783, 65}};
 
 static SVECTOR D_80181948[] = {
-    {-65, 983, 65}, {-65, 783, 65}, {-65, 783, -65}, {-65, 983, -65}, 
-    {65, 783, -65}, {65, 983, -65}, {65, 783, 65}, {65, 983, 65}
-};
+    {-65, 983, 65}, {-65, 783, 65}, {-65, 783, -65}, {-65, 983, -65},
+    {65, 783, -65}, {65, 983, -65}, {65, 783, 65},   {65, 983, 65}};
 
 // clocktower roof
 static u8 s_ClockRoofScript[] = {
@@ -376,10 +385,8 @@ static u8 s_ClockTowerScript[] = {
 };
 
 SVECTOR* s_ClockVertexSets[] = {
-    D_801821C8, D_801821F8, D_80182220, D_80182248, D_80182270,
-    D_80182298, D_801822D8, D_80182318, D_80182358, D_801818C8,
-    D_80181908, D_80181948
-};
+    D_801821C8, D_801821F8, D_80182220, D_80182248, D_80182270, D_80182298,
+    D_801822D8, D_80182318, D_80182358, D_801818C8, D_80181908, D_80181948};
 
 void EntityClockTower3D(Entity* self) {
     SVECTOR rotVector;
