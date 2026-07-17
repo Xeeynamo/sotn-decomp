@@ -2,35 +2,6 @@
 #include "dra.h"
 #include "dra_bss.h"
 
-#if defined(VERSION_PSP)
-extern u32 g_DebugCurPal;
-extern s32 g_DebugEnabled2;
-
-// BSS
-u8 D_psp_091CB700[0x2000];
-
-void func_psp_090DFBD0(void) {
-    if ((s8)g_SaveAreaNames[g_StageId][0] != 0) {
-        StoreSaveData((SaveData*)D_psp_091CB700, 0, rand() & 0xF);
-        if (D_psp_08B42044 != 0) {
-            D_psp_08B42044 = 0;
-            D_psp_091CB700[0x1FFF] = 0;
-        } else {
-            D_psp_091CB700[0x1FFF] = 0xFF;
-        }
-        D_psp_091CB700[0x1FFE] = D_8006C374;
-    }
-}
-
-void func_psp_090DFC68() {
-    memcpy(D_psp_091CB700, &g_Pix, sizeof(D_psp_091CB700));
-}
-
-void func_psp_090DFC80() {
-    WriteQuickSaveData(D_psp_091CB700, sizeof(D_psp_091CB700), D_8006C378);
-}
-#endif
-
 void func_800EA538(s32 arg0) {
     s32 i;
     Unkstruct_8006C3C4* ptr;
@@ -282,12 +253,10 @@ void func_800EA7CC(void) {
     offset = 0;
     desc = g_Clut[0];
     clutX = 0x200;
-    for (i = 0xF0; i < 0x100; i++) {
+    for (i = 0xF0; i < 0x100; i++, desc = (s16*)desc + 0x100, offset++) {
         if (palettes[offset]) {
             LoadClut(desc, clutX, i);
         }
-        desc = (s16*)desc + 0x100;
-        offset++;
     }
 
     // re-upload updated shared entity palette
@@ -300,12 +269,10 @@ void func_800EA7CC(void) {
 
     // re-upload updated stage-specific entities palette
     clutX = 0x100;
-    for (i = 0xF0; i < 0x100; i++) {
+    for (i = 0xF0; i < 0x100; i++, desc = (s16*)desc + 0x100, offset++) {
         if (palettes[offset]) {
             LoadClut(desc, clutX, i);
         }
-        desc = (s16*)desc + 0x100;
-        offset++;
     }
 }
 

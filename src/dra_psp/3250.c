@@ -3,7 +3,6 @@
 #include "../dra/dra.h"
 #include "../dra/dra_bss.h"
 
-#if defined(VERSION_PSP)
 extern u32 g_DebugCurPal;
 extern s32 g_DebugEnabled2;
 
@@ -30,7 +29,6 @@ void func_psp_090DFC68() {
 void func_psp_090DFC80() {
     WriteQuickSaveData(D_psp_091CB700, sizeof(D_psp_091CB700), D_8006C378);
 }
-#endif
 
 void func_800EA538(s32 arg0) {
     s32 i;
@@ -260,7 +258,7 @@ void func_800EA7CC(void) {
                 count = desc[1];
                 clut += clutOffset;
                 for (j = 0; j < count; j++) {
-                    *clut++ = clutX = *data++;
+                    *clut++ = *data++;
                 }
                 if (desc[3] == -1) {
                     break;
