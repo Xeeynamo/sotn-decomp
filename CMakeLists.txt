@@ -88,7 +88,7 @@ set(SOURCE_FILES_DRA
     src/dra/62DEC.c
     src/dra/d_37d8.c
     src/dra/66590.c
-    src/dra/d_CD80.c
+    src/dra/d_Vram.c
     src/dra/692E8.c
     src/dra/6BF64.c
     src/dra/alu_anim.c

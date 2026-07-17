@@ -850,7 +850,7 @@ void func_801B60D4(void) {
         break;
 
     case 4:
-        ClearImage(&g_Vram.rects[1], 0, 0, 0);
+        ClearImage(&g_Vram[1], 0, 0, 0);
         g_GameEngineStep++;
         break;
 

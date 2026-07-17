@@ -118,7 +118,7 @@ void DrawEntitiesHitbox(s32 drawMode) {
     }
 
     if (g_GpuUsage.drawModes < MAX_DRAW_MODES) {
-        SetDrawMode(drMode, 0, 0, (drawMode - 1) << 5, &g_Vram.rects[0]);
+        SetDrawMode(drMode, 0, 0, (drawMode - 1) << 5, &g_Vram[0]);
         AddPrim(&ot[otIdx], drMode);
         g_GpuUsage.drawModes++;
     }

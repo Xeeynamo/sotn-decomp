@@ -382,31 +382,31 @@ s32 LoadFileSimToMem(SimKind kind) {
     case SIM_1:
         LoadStageTileset(STAGE_PRG_PTR, 0x100);
         DrawSync(0);
-        LoadImage(&g_Vram.rects[3], (u_long*)D_800A04CC);
-        LoadImage(&g_Vram.rects[5], 0x801C0000);
+        LoadImage(&g_Vram[3], (u_long*)D_800A04CC);
+        LoadImage(&g_Vram[5], 0x801C0000);
         while (DrawSync(1)) {
         }
         clutAddr = (u_long*)g_Clut[1];
-        StoreImage(&g_Vram.rects[5], clutAddr);
+        StoreImage(&g_Vram[5], clutAddr);
         break;
     case SIM_STAGE_CHR:
     case SIM_11:
         LoadStageTileset(SIM_CHR0, 0);
         DrawSync(0);
         clutAddr = (u_long*)g_Clut[0];
-        StoreImage(&g_Vram.rects[7], clutAddr);
+        StoreImage(&g_Vram[7], clutAddr);
         if (kind == SIM_11) {
             clutAddr = (u_long*)g_Clut[2];
-            StoreImage(&g_Vram.rects[7], clutAddr);
+            StoreImage(&g_Vram[7], clutAddr);
             DrawSync(0);
-            LoadImage(&g_Vram.rects[6], clutAddr);
+            LoadImage(&g_Vram[6], clutAddr);
         }
         break;
     case SIM_12:
     case SIM_13:
         LoadStageTileset(SIM_CHR0, 0x100);
         if (kind == SIM_13) {
-            LoadImage(&g_Vram.rects[3], (u_long*)D_800A04CC);
+            LoadImage(&g_Vram[3], (u_long*)D_800A04CC);
         }
         DrawSync(0);
         break;
@@ -434,26 +434,26 @@ s32 LoadFileSimToMem(SimKind kind) {
         }
         break;
     case SIM_6:
-        LoadImage(&g_Vram.rects[8], (u_long*)STAGE_PRG_PTR);
+        LoadImage(&g_Vram[8], (u_long*)STAGE_PRG_PTR);
         break;
     case SIM_14:
-        LoadImage(&g_Vram.rects[10], (u_long*)SIM_PTR);
+        LoadImage(&g_Vram[10], (u_long*)SIM_PTR);
         break;
     case SIM_21:
-        LoadImage(&g_Vram.rects[12], (u_long*)SIM_PTR);
+        LoadImage(&g_Vram[12], (u_long*)SIM_PTR);
         break;
     case SIM_15:
-        LoadImage(&g_Vram.rects[11], (u_long*)SIM_PTR);
+        LoadImage(&g_Vram[11], (u_long*)SIM_PTR);
         break;
     case SIM_16:
-        LoadImage(&g_Vram.rects[7], (u_long*)SIM_PTR);
+        LoadImage(&g_Vram[7], (u_long*)SIM_PTR);
         clutAddr = (u_long*)g_Clut[2];
-        StoreImage(&g_Vram.rects[7], clutAddr);
+        StoreImage(&g_Vram[7], clutAddr);
         break;
     case SIM_17:
-        LoadImage(&g_Vram.rects[5], (u_long*)SIM_PTR);
+        LoadImage(&g_Vram[5], (u_long*)SIM_PTR);
         clutAddr = (u_long*)g_Clut[0];
-        StoreImage(&g_Vram.rects[5], clutAddr);
+        StoreImage(&g_Vram[5], clutAddr);
         break;
     }
     return 0;

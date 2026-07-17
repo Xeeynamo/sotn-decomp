@@ -924,7 +924,7 @@ void func_800F2120(void) {
     s32 idx;
 
     repaintMapTilesOnCastleBlueprint(g_StageId & STAGE_INVERTEDCASTLE_FLAG);
-    ClearImage(&g_Vram.rects[13], 0, 0, 0);
+    ClearImage(&g_Vram[13], 0, 0, 0);
     DrawSync(0);
 
     for (tileY = 0; tileY < 64; tileY++) {
@@ -1972,7 +1972,7 @@ void RunMainEngine(void) {
             currentMusicId = 0;
             if (g_StageId == STAGE_ST0) {
                 SetGameState(Game_GameOver);
-                ClearImage(&g_Vram.rects[4], 0xFF, 0xFF, 0xFF);
+                ClearImage(&g_Vram[4], 0xFF, 0xFF, 0xFF);
                 SetGPUBuffRGB(-1);
                 DestroyEntitiesFromIndex(0);
                 DestroyAllPrimitives();

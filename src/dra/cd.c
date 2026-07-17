@@ -852,20 +852,20 @@ void UpdateCd(void) {
             break;
         case CdCallback_6:
             clutAddr = g_Clut[0];
-            StoreImage(&g_Vram.rects[7], clutAddr);
+            StoreImage(&g_Vram[7], clutAddr);
             clutAddr = g_Clut[2];
-            StoreImage(&g_Vram.rects[7], clutAddr);
+            StoreImage(&g_Vram[7], clutAddr);
             DrawSync(0);
-            LoadImage(&g_Vram.rects[6], clutAddr);
+            LoadImage(&g_Vram[6], clutAddr);
             break;
         case CdCallback_0:
-            LoadImage(&g_Vram.rects[3], &D_800A04CC);
+            LoadImage(&g_Vram[3], &D_800A04CC);
             break;
         case CdCallback_1:
-            StoreImage(&g_Vram.rects[5], g_Clut[1]);
+            StoreImage(&g_Vram[5], g_Clut[1]);
             break;
         case CdCallback_StageChr:
-            StoreImage(&g_Vram.rects[7], g_Clut[0]);
+            StoreImage(&g_Vram[7], g_Clut[0]);
             break;
         case CdCallback_16:
             D_80137FB0 = (short)SsVabOpenHeadSticky(
