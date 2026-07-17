@@ -4,8 +4,14 @@
 #include <psyz/log.h>
 #include <psyz/video.h>
 #include "pc.h"
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#if defined(_WIN32)
+#include <direct.h>
+#else
+#include <sys/stat.h>
+#endif
 
 // Main recording header
 #define RECORDING_MAGIC "SOTN"
@@ -23,7 +29,7 @@
 // Intervaled input + drift check
 #define CHUNK_MAGIC_PDRF "PDRF"
 
-#define DEFAULT_RECORDING_PATH "recording.bin"
+#define RECORDINGS_DIR "recordings"
 
 extern bool g_IsQuitRequested;
 
@@ -451,9 +457,43 @@ static void StartReplay(const struct InitGameParams* params) {
     mode = REPLAY_MODE_REPLAY;
 }
 
+// Rotate the default recordings. rec4.bin is deleted, existing recordings are
+// shifted up by one (rec1 -> rec2, ...), recordings/rec1.bin is free to use.
+static void RotateRecordings(void) {
+    const int rotationCount = 4;
+    char oldPath[256];
+    char newPath[256];
+    int i;
+
+#if defined(_WIN32)
+    _mkdir(RECORDINGS_DIR);
+#else
+    mkdir(RECORDINGS_DIR, 0755);
+#endif
+    snprintf(oldPath, sizeof(oldPath), "%s/rec%d.bin", RECORDINGS_DIR,
+             rotationCount);
+    remove(oldPath);
+
+    for (i = rotationCount - 1; i >= 1; i--) {
+        snprintf(oldPath, sizeof(oldPath), "%s/rec%d.bin", RECORDINGS_DIR, i);
+        snprintf(
+            newPath, sizeof(newPath), "%s/rec%d.bin", RECORDINGS_DIR, i + 1);
+        rename(oldPath, newPath);
+    }
+}
+
 static void StartRecording(const struct InitGameParams* params) {
-    const char* path =
-        params->recordPath ? params->recordPath : DEFAULT_RECORDING_PATH;
+    char defaultPath[64];
+    const char* path;
+
+    if (params->recordPath) {
+        path = params->recordPath;
+    } else {
+        RotateRecordings();
+        snprintf(
+            defaultPath, sizeof(defaultPath), "%s/rec1.bin", RECORDINGS_DIR);
+        path = defaultPath;
+    }
     file = fopen(path, "wb");
     if (!file) {
         WARNF("failed to open '%s' for recording", path);
