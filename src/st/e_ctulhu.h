@@ -494,7 +494,7 @@ void EntityCtulhu(Entity* self) {
             prim = self->ext.prim;
             prim->type = PRIM_ENV;
 
-            dr_env = (DR_ENV*)LOW(prim->r1);
+            dr_env = PRIM_DR_ENV(prim);
             drawEnv = g_CurrentBuffer->draw;
             drawEnv.isbg = 0;
             drawEnv.dtd = 0;

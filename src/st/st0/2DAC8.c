@@ -1148,7 +1148,7 @@ void func_801AF774(Entity* self) {
         drawEnv.clip = rect;
         drawEnv.ofs[0] = 0;
         drawEnv.ofs[1] = 0x100;
-        drEnv = (DR_ENV*)LOW(prim->r1);
+        drEnv = PRIM_DR_ENV(prim);
         SetDrawEnv(drEnv, &drawEnv);
         prim->priority = 0x9F;
         prim->drawMode = DRAW_DEFAULT;
@@ -1161,7 +1161,7 @@ void func_801AF774(Entity* self) {
     case 2:
         func_801AF380();
         prim = self->ext.et_801AF774.prim4;
-        drEnv = (DR_ENV*)LOW(prim->r1);
+        drEnv = PRIM_DR_ENV(prim);
         drawEnv = g_CurrentBuffer->draw;
         drawEnv.isbg = 1;
         drawEnv.isbg = 0;
