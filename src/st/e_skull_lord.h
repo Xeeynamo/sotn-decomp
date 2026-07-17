@@ -353,10 +353,6 @@ void EntitySkullLordEye(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitSkullLordEffects);
-        // BUG: This uses a palette in the 0x100-0x1FF range (specifically 0x1CF).
-        // That is not part of the stage overlay or enemy ranges. This creates issues with the Skull Lord in RTOP.
-        // If you go from RTOP to the warp room and back out, the skull lord gets a glitchy red eye. This goes away
-        // if you pause and unpause. It is not known what the intended behavior here was.
         self->palette = PAL_UNK_1CF;
         self->animCurFrame = 4;
         primIndex = g_api.AllocPrimitives(PRIM_SPRT, 1);
@@ -370,6 +366,18 @@ void EntitySkullLordEye(Entity* self) {
         prim = &g_PrimBuf[primIndex];
         self->ext.skullLord.prim = prim;
         prim->type = PRIM_GT4;
+        /* BUG: In NZ1, the Skull Lord uses tpage 0x13. We pull the eye texture
+         from that tpage. That's fine. But in RTOP, the Skull Lord uses tpage
+         0x12. We pull the eye from tpage 0x13 either way. In RTOP, this
+         creates a graphical glitch. If you came through a CD room into RTOP,
+         stale graphics from the CD room can be left behind, making the eye
+         use the wrong texture. However, it will still come out as a red eye
+         and end up looking passable. If you cause the tpages to reload (and it
+         is sufficient to just pause and unpause to do this) then that portion
+         of tpage 0x13 gets wiped to black, giving the Skull Lord an empty eye
+         socket. Changing this value to 0x12 in RTOP restores the eye as
+         intended.
+         */
         prim->tpage = 0x13;
         prim->clut = PAL_UNK_220; // n.b.! double assignment
         prim->clut = PAL_CC_RED_EFFECT_B;
