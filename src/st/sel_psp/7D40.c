@@ -259,7 +259,7 @@ void SetGameState(GameState gameState) {
     g_backbufferY = 0;
 }
 
-void func_801B18F4(void) { ClearImage(&g_Vram.dudes.D_800ACDA0, 0, 0, 0); }
+void func_801B18F4(void) { ClearImage(&g_Vram.rects[4], 0, 0, 0); }
 
 void SetDisplayBufferColorsToBlack(void) {
     g_GpuBuffers[0].draw.r0 = 0;
@@ -486,7 +486,7 @@ void func_801B2700(s32 tpage, s32 otIdx) {
     OT_TYPE* ot = g_CurrentBuffer->ot;
     DR_MODE* drawMode = &g_CurrentBuffer->drawModes[g_GpuUsage.drawModes];
 
-    SetDrawMode(drawMode, 0, 0, tpage, &g_Vram.dudes.D_800ACD80);
+    SetDrawMode(drawMode, 0, 0, tpage, &g_Vram.rects[0]);
     AddPrim(&ot[otIdx], drawMode);
     g_GpuUsage.drawModes++;
 }

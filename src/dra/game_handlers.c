@@ -117,7 +117,7 @@ void func_800E414C(void) {
     }
 }
 
-void ClearBackbuffer(void) { ClearImage(&g_Vram.dudes.D_800ACDA0, 0, 0, 0); }
+void ClearBackbuffer(void) { ClearImage(&g_Vram.rects[4], 0, 0, 0); }
 
 void HandleTitle(void) {
     void (*callback)();
@@ -174,7 +174,7 @@ void HandleTitle(void) {
     case 101:
         SetDispMask(1);
         if (D_8013640C == 0 || --D_8013640C == 0) {
-            ClearImage(&g_Vram.dudes.D_800ACDF0, 0, 0, 0);
+            ClearImage(&g_Vram.rects[14], 0, 0, 0);
             SetStageDisplayBuffer();
             g_StageId = STAGE_SEL;
             if (g_UseDisk) {
@@ -613,7 +613,7 @@ void HandlePlay(void) {
             }
         }
 #ifndef VERSION_PSP
-        MoveImage(&g_Vram.dudes.D_800ACD80, 0, 0x100);
+        MoveImage(&g_Vram.rects[0], 0, 0x100);
 #endif
 
         g_GpuBuffers[0].draw.isbg = g_GpuBuffers[1].draw.isbg = 1;
@@ -899,12 +899,12 @@ void HandleGameOver(void) {
             if (g_IsUsingCd) {
                 break;
             }
-            LoadImage(&g_Vram.dudes.D_800ACDD0, (u_long*)STAGE_PRG_PTR);
-            LoadImage(&g_Vram.dudes.D_800ACDD8, (u_long*)STAGE_PRG_PTR + 0x2000);
-            LoadImage(&g_Vram.dudes.D_800ACDB8, (u_long*)STAGE_PRG_PTR + 0x6000);
-            StoreImage(&g_Vram.dudes.D_800ACDB8, (u_long*)g_Clut[2]);
-            LoadImage(&g_Vram.dudes.D_800ACDA8, (u_long*)STAGE_PRG_PTR + 0x6800);
-            StoreImage(&g_Vram.dudes.D_800ACDA8, (u_long*)g_Clut[0]);
+            LoadImage(&g_Vram.rects[10], (u_long*)STAGE_PRG_PTR);
+            LoadImage(&g_Vram.rects[11], (u_long*)STAGE_PRG_PTR + 0x2000);
+            LoadImage(&g_Vram.rects[7], (u_long*)STAGE_PRG_PTR + 0x6000);
+            StoreImage(&g_Vram.rects[7], (u_long*)g_Clut[2]);
+            LoadImage(&g_Vram.rects[5], (u_long*)STAGE_PRG_PTR + 0x6800);
+            StoreImage(&g_Vram.rects[5], (u_long*)g_Clut[0]);
         } else {
             if (LoadFileSim(8, SimFileType_System) < 0) {
                 break;
@@ -2110,12 +2110,12 @@ void HandleEnding(void) {
             if (g_IsUsingCd) {
                 break;
             }
-            LoadImage(&g_Vram.dudes.D_800ACDE0, (u_long*)STAGE_PRG_PTR);
-            LoadImage(&g_Vram.dudes.D_800ACDD8, (u_long*)STAGE_PRG_PTR + 0x800);
-            LoadImage(&g_Vram.dudes.D_800ACDB8, (u_long*)STAGE_PRG_PTR + 0x4800);
-            StoreImage(&g_Vram.dudes.D_800ACDB8, (u_long*)g_Clut[2]);
-            LoadImage(&g_Vram.dudes.D_800ACDA8, (u_long*)STAGE_PRG_PTR + 0x5000);
-            StoreImage(&g_Vram.dudes.D_800ACDA8, (u_long*)g_Clut[0]);
+            LoadImage(&g_Vram.rects[12], (u_long*)STAGE_PRG_PTR);
+            LoadImage(&g_Vram.rects[11], (u_long*)STAGE_PRG_PTR + 0x800);
+            LoadImage(&g_Vram.rects[7], (u_long*)STAGE_PRG_PTR + 0x4800);
+            StoreImage(&g_Vram.rects[7], (u_long*)g_Clut[2]);
+            LoadImage(&g_Vram.rects[5], (u_long*)STAGE_PRG_PTR + 0x5000);
+            StoreImage(&g_Vram.rects[5], (u_long*)g_Clut[0]);
         } else {
             if (LoadFileSim(14, SimFileType_System) < 0) {
                 break;

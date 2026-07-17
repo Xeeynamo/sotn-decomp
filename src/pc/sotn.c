@@ -198,18 +198,18 @@ bool InitGame(struct InitGameParams* params) {
     InitStrings();
 
     // forcing g_Vram values while waiting to import the data
-    g_Vram.dudes.D_800ACD98.x = 0x0380;
-    g_Vram.dudes.D_800ACD98.y = 0x0180;
-    g_Vram.dudes.D_800ACD98.w = 0x0010;
-    g_Vram.dudes.D_800ACD98.h = 0x0001;
-    g_Vram.dudes.D_800ACDA0.x = 0;
-    g_Vram.dudes.D_800ACDA0.y = 0;
-    g_Vram.dudes.D_800ACDA0.w = 0x0200;
-    g_Vram.dudes.D_800ACDA0.h = 0x0200;
-    g_Vram.dudes.D_800ACDA8.x = 0;
-    g_Vram.dudes.D_800ACDA8.y = 0x00F0;
-    g_Vram.dudes.D_800ACDA8.w = 0x0100;
-    g_Vram.dudes.D_800ACDA8.h = 0x0010;
+    g_Vram.rects[3].x = 0x0380;
+    g_Vram.rects[3].y = 0x0180;
+    g_Vram.rects[3].w = 0x0010;
+    g_Vram.rects[3].h = 0x0001;
+    g_Vram.rects[4].x = 0;
+    g_Vram.rects[4].y = 0;
+    g_Vram.rects[4].w = 0x0200;
+    g_Vram.rects[4].h = 0x0200;
+    g_Vram.rects[5].x = 0;
+    g_Vram.rects[5].y = 0x00F0;
+    g_Vram.rects[5].w = 0x0100;
+    g_Vram.rects[5].h = 0x0010;
 
     FileOpenRead(InitPalEquipIcons, "assets/dra/g_PalEquipIcon.bin", NULL);
     InitVbVh();
