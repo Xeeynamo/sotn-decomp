@@ -703,6 +703,7 @@ void UnMuteCd(void) {
 
 s32 func_80131F28(void) { return D_80138F7C; }
 
+// original name : xa_play_ck
 bool func_80131F68(void) {
     bool ret;
     if (D_8013B61C) {
