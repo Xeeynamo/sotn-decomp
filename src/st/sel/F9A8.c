@@ -3,15 +3,15 @@
 
 #ifndef HARD_LINK
 u8 gfx_portrait_alucard[] = {
-#include "gen/gfx_portrait_alucard.h"
+    #include "gen/gfx_portrait_alucard.h"
 };
 
 u8 gfx_portrait_maria[] = {
-#include "gen/gfx_portrait_maria.h"
+    #include "gen/gfx_portrait_maria.h"
 };
 
 u8 gfx_portrait_richter[] = {
-#include "gen/gfx_portrait_richter.h"
+    #include "gen/gfx_portrait_richter.h"
 };
 #endif
 

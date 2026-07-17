@@ -10,10 +10,10 @@
 #define STAGE_FLAG OVL_EXPORT(STAGE_FLAG)
 
 #ifdef VERSION_PSP
-#define STAGE_NAME_LOAD_GFX
-#define NUM_PRIMS 181
-#define STAGE_NAME_BOX_LEFT_X 8
-#define STAGE_NAME_BOX_RIGHT_X 0xF8
+    #define STAGE_NAME_LOAD_GFX
+    #define NUM_PRIMS 181
+    #define STAGE_NAME_BOX_LEFT_X 8
+    #define STAGE_NAME_BOX_RIGHT_X 0xF8
 
 extern s32 D_psp_091CE570; // Defined in global address space
 
@@ -39,19 +39,19 @@ static MATRIX color_matrix = {{{FLT(0.0), FLT(-0.5), FLT(0.5)},
                                {FLT(0.0), FLT(0.5), FLT(0.5)}}};
 
 static u8 stage_name_en[] = {
-#include "gen/stage_name_en.h"
+    #include "gen/stage_name_en.h"
 };
 static u8 stage_name_it[] = {
-#include "gen/stage_name_it.h"
+    #include "gen/stage_name_it.h"
 };
 static u8 stage_name_sp[] = {
-#include "gen/stage_name_sp.h"
+    #include "gen/stage_name_sp.h"
 };
 static u8 stage_name_ge[] = {
-#include "gen/stage_name_ge.h"
+    #include "gen/stage_name_ge.h"
 };
 static u8 stage_name_fr[] = {
-#include "gen/stage_name_fr.h"
+    #include "gen/stage_name_fr.h"
 };
 
 static u_long* gfxBank[] = {
@@ -410,7 +410,7 @@ void EntityStageNamePopup(Entity* self) {
     }
 }
 #else
-// func_801AD0EC: StageNamePopupHelper
-// func_801AD2BC: [E_STAGE_NAME_POPUP] EntityStageNamePopup
-#include "../e_stage_name_us.h"
+    // func_801AD0EC: StageNamePopupHelper
+    // func_801AD2BC: [E_STAGE_NAME_POPUP] EntityStageNamePopup
+    #include "../e_stage_name_us.h"
 #endif

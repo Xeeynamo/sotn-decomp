@@ -3,39 +3,39 @@
 extern EInit g_EInitInteractable;
 
 #ifndef STAGE_FLAG
-#define STAGE_FLAG NULL_STAGE_FLAG
+    #define STAGE_FLAG NULL_STAGE_FLAG
 #endif
 
 #ifdef STAGE_NAME_BOX_MARGIN
-#define STAGE_NAME_BOX_LEFT_X STAGE_NAME_BOX_MARGIN
-#define STAGE_NAME_BOX_RIGHT_X 256 - STAGE_NAME_BOX_MARGIN
+    #define STAGE_NAME_BOX_LEFT_X STAGE_NAME_BOX_MARGIN
+    #define STAGE_NAME_BOX_RIGHT_X 256 - STAGE_NAME_BOX_MARGIN
 #else
-#define STAGE_NAME_BOX_LEFT_X 8
-#define STAGE_NAME_BOX_RIGHT_X 248
+    #define STAGE_NAME_BOX_LEFT_X 8
+    #define STAGE_NAME_BOX_RIGHT_X 248
 #endif
 
 #if defined(VERSION_HD) || defined(VERSION_BETA)
-#define NUM_PRIMS 181
-#define TEXT_X 192
-#define TEXT_Y 177
-#define TEXT_V 20
-#define BOX_BOTTOM_Y 198
-#define BOX_INITIAL_Y 176
-#define PRIM_LEFT_SIDE_X 64
-#define PRIM_RIGHT_SIDE_X 192
-#define PRIM_BOTTOM_Y 196
-#define PRIM_BOTTOM_V 39
+    #define NUM_PRIMS 181
+    #define TEXT_X 192
+    #define TEXT_Y 177
+    #define TEXT_V 20
+    #define BOX_BOTTOM_Y 198
+    #define BOX_INITIAL_Y 176
+    #define PRIM_LEFT_SIDE_X 64
+    #define PRIM_RIGHT_SIDE_X 192
+    #define PRIM_BOTTOM_Y 196
+    #define PRIM_BOTTOM_V 39
 #else
-#define NUM_PRIMS 183
-#define TEXT_X 128
-#define TEXT_Y 173
-#define TEXT_V 16
-#define BOX_BOTTOM_Y 191
-#define BOX_INITIAL_Y 173
-#define PRIM_LEFT_SIDE_X 0
-#define PRIM_RIGHT_SIDE_X 256
-#define PRIM_BOTTOM_Y 189
-#define PRIM_BOTTOM_V 32
+    #define NUM_PRIMS 183
+    #define TEXT_X 128
+    #define TEXT_Y 173
+    #define TEXT_V 16
+    #define BOX_BOTTOM_Y 191
+    #define BOX_INITIAL_Y 173
+    #define PRIM_LEFT_SIDE_X 0
+    #define PRIM_RIGHT_SIDE_X 256
+    #define PRIM_BOTTOM_Y 189
+    #define PRIM_BOTTOM_V 32
 #endif
 
 enum StageNameSteps {

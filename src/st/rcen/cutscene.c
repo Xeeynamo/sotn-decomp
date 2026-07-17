@@ -87,7 +87,7 @@ static u16 actor_names_ge[] = {
 static u8 actor_name_len_ge[] = {7, 7, 5, 7, 5, 12, 4, 8, 8, 5};
 // clang-format on
 
-#include "../../get_lang.h"
+    #include "../../get_lang.h"
 
 #endif
 
@@ -156,19 +156,19 @@ extern u32 D_8943B8C;
 extern u32 D_894490C;
 extern u32 D_pspeu_09260F58;
 
-#include "../cutscene_actor_name.h"
+    #include "../cutscene_actor_name.h"
 
-#include "../cutscene_unk3.h"
+    #include "../cutscene_unk3.h"
 
-#include "../cutscene_unk4.h"
+    #include "../cutscene_unk4.h"
 
-#define CUTSCENE_UNK1_NEXT_X 0
-#define CUTSCENE_UNK1_UNK17 2
-#include "../cutscene_unk1.h"
+    #define CUTSCENE_UNK1_NEXT_X 0
+    #define CUTSCENE_UNK1_UNK17 2
+    #include "../cutscene_unk1.h"
 
-#include "../set_cutscene_script.h"
+    #include "../set_cutscene_script.h"
 
-#include "../set_cutscene_end.h"
+    #include "../set_cutscene_end.h"
 #else
 // This array is in Data, but the strings within it are rodata. That rodata
 // lives between the jump tables in this file, so we have to import the rodata,
@@ -185,18 +185,18 @@ STATIC_PAD_BSS(0x68);
 u32 g_CutsceneFlags;
 s32 dialogue_started;
 
-// Different order on PSX/PSP
-#include "../cutscene_unk1.h"
+    // Different order on PSX/PSP
+    #include "../cutscene_unk1.h"
 
-#include "../set_cutscene_script.h"
+    #include "../set_cutscene_script.h"
 
-#include "../cutscene_unk3.h"
+    #include "../cutscene_unk3.h"
 
-#include "../cutscene_unk4.h"
+    #include "../cutscene_unk4.h"
 
-#include "../cutscene_actor_name.h"
+    #include "../cutscene_actor_name.h"
 
-#include "../set_cutscene_end.h"
+    #include "../set_cutscene_end.h"
 #endif
 
 #define CUTSCENE_TILEMAP_SCROLL

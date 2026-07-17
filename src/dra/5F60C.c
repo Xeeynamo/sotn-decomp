@@ -566,9 +566,9 @@ void InitStatsAndGear(bool isDeathTakingItems) {
         g_Status.timerMinutes = 0;
         g_Status.timerSeconds = 0;
         g_Status.timerFrames = 0;
-#ifdef VERSION_PSP
+    #ifdef VERSION_PSP
         D_psp_091FC3F8 = D_psp_091FC400 = D_psp_091FC408 = D_psp_091FC410 = 0;
-#endif
+    #endif
         g_Status.subWeapon = SUBWPN_STOPWATCH;
 
         if (rand() & 3) {
@@ -607,9 +607,9 @@ void InitStatsAndGear(bool isDeathTakingItems) {
 static PlayerHud g_PlayerHud;
 
 #ifdef VERSION_PSP
-#define RIC_HUD_NUM_SPRITES 10
+    #define RIC_HUD_NUM_SPRITES 10
 #else
-#define RIC_HUD_NUM_SPRITES 9
+    #define RIC_HUD_NUM_SPRITES 9
 #endif
 
 void DrawRichterHud(void) {
@@ -739,11 +739,11 @@ RicSubwpnIconParams D_psp_09147418[] = {
     {0x005, 0x009, 0x01F, 0x017, 0x0E0, 0x0C8, 0x01E, 0x17F},
     {0x004, 0x000, 0x01F, 0x01F, 0x0E0, 0x0E0, 0x01E, 0x17F}};
 
-// Appears that the data might have just been an array of s32.
-// But that's much harder to read. This macro takes the pointer
-// and index, and treats it as if it was S32 for the sake of indexing.
-// For pointer p and index i, returns &p[i]
-#define PTR_CVT(p, i) &(((s32*)p)[(i) * (sizeof(*p) / sizeof(s32*))])
+    // Appears that the data might have just been an array of s32.
+    // But that's much harder to read. This macro takes the pointer
+    // and index, and treats it as if it was S32 for the sake of indexing.
+    // For pointer p and index i, returns &p[i]
+    #define PTR_CVT(p, i) &(((s32*)p)[(i) * (sizeof(*p) / sizeof(s32*))])
 
 Primitive* func_psp_090E4828(Primitive* prim) {
     RicSubwpnIconParams* ptr;

@@ -4,20 +4,21 @@
 #include <version.h>
 
 #ifndef M2CTX
-#if defined(_MSC_VER)
-#if defined(_WIN64) || defined(_M_X64) || defined(_M_ARM64)
-#define PLATFORM_64BIT
-#endif
-#elif defined(__GNUC__) || defined(__clang__) || defined(__MWERKS__)
-#if defined(__x86_64__) || defined(__aarch64__) || defined(__ppc64__) ||       \
-    defined(__powerpc64__) || defined(__riscv_xlen)
-#define PLATFORM_64BIT
-#endif
-#else
-#if (defined(__LP64__) || defined(_LP64))
-#define PLATFORM_64BIT
-#endif
-#endif
+    #if defined(_MSC_VER)
+        #if defined(_WIN64) || defined(_M_X64) || defined(_M_ARM64)
+            #define PLATFORM_64BIT
+        #endif
+    #elif defined(__GNUC__) || defined(__clang__) || defined(__MWERKS__)
+        #if defined(__x86_64__) || defined(__aarch64__) ||                     \
+            defined(__ppc64__) || defined(__powerpc64__) ||                    \
+            defined(__riscv_xlen)
+            #define PLATFORM_64BIT
+        #endif
+    #else
+        #if (defined(__LP64__) || defined(_LP64))
+            #define PLATFORM_64BIT
+        #endif
+    #endif
 #endif
 
 #include "include_asm.h"
@@ -31,50 +32,50 @@
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
 
 #ifdef _MSC_VER
-#define __builtin_memcpy memcpy
+    #define __builtin_memcpy memcpy
 #endif
 
 #if defined(VERSION_PSP) || defined(_MSC_VER)
-#define ZERO_LEN 1
+    #define ZERO_LEN 1
 #else
-#define ZERO_LEN 0
+    #define ZERO_LEN 0
 #endif
 
 #if defined(VERSION_PC)
-#include <assert.h>
-#ifndef _MSC_VER
-#define STATIC_ASSERT _Static_assert
-#define PACKED __attribute__((packed))
-#define UNUSED __attribute__((unused))
-#else
-#define STATIC_ASSERT(x, ...)
-#define PACKED
-#define UNUSED
-#endif
-#define ASSERT(x) assert(x)
-#define SYNC_FIELD(struct1, struct2, field)                                    \
-    STATIC_ASSERT(OFF(struct1, field) == OFF(struct2, field), "unsynced")
+    #include <assert.h>
+    #ifndef _MSC_VER
+        #define STATIC_ASSERT _Static_assert
+        #define PACKED __attribute__((packed))
+        #define UNUSED __attribute__((unused))
+    #else
+        #define STATIC_ASSERT(x, ...)
+        #define PACKED
+        #define UNUSED
+    #endif
+    #define ASSERT(x) assert(x)
+    #define SYNC_FIELD(struct1, struct2, field)                                \
+        STATIC_ASSERT(OFF(struct1, field) == OFF(struct2, field), "unsynced")
 
-#if defined(_WIN32) && defined(OVERLAY_BUILD)
-#define GAME_IMPORT __declspec(dllimport)
-#else
-#define GAME_IMPORT
-#endif
+    #if defined(_WIN32) && defined(OVERLAY_BUILD)
+        #define GAME_IMPORT __declspec(dllimport)
+    #else
+        #define GAME_IMPORT
+    #endif
 
 #elif defined(VERSION_PSP)
-#define ASSERT(x)
-#define STATIC_ASSERT(x, y)
-#define PACKED
-#define UNUSED
-#define SYNC_FIELD(struct1, struct2, field)
-#define GAME_IMPORT
+    #define ASSERT(x)
+    #define STATIC_ASSERT(x, y)
+    #define PACKED
+    #define UNUSED
+    #define SYNC_FIELD(struct1, struct2, field)
+    #define GAME_IMPORT
 #else
-#define ASSERT(x)
-#define STATIC_ASSERT(x, ...)
-#define PACKED
-#define UNUSED
-#define SYNC_FIELD(struct1, struct2, field)
-#define GAME_IMPORT
+    #define ASSERT(x)
+    #define STATIC_ASSERT(x, ...)
+    #define PACKED
+    #define UNUSED
+    #define SYNC_FIELD(struct1, struct2, field)
+    #define GAME_IMPORT
 #endif
 
 #define LOBU(x) (*(u8*)&(x))
@@ -90,9 +91,9 @@
 #define CVEC(x) (*(CVECTOR*)&(x))
 
 #if defined(HACKS) && !defined(PERMUTER)
-#define ALIGNED4 __attribute__((aligned(4)))
+    #define ALIGNED4 __attribute__((aligned(4)))
 #else
-#define ALIGNED4
+    #define ALIGNED4
 #endif
 
 // Converts a given value to a fixed-point value, where
@@ -149,15 +150,15 @@
 #define UNKNOWN_CRITICAL_PAD_FIELD(size) CRITICAL_PAD_FIELD(size)
 
 #ifndef VERSION_PC
-#define PAD_FIELD(size) const CRITICAL_PAD_FIELD(size)
-#define STATIC_PAD_BSS(size) static CRITICAL_PAD_FIELD(size)
-#define STATIC_PAD_DATA(size) STATIC_PAD_BSS(size) = {0}
-#define STATIC_PAD_RODATA(size) const STATIC_PAD_BSS(size) = {0}
+    #define PAD_FIELD(size) const CRITICAL_PAD_FIELD(size)
+    #define STATIC_PAD_BSS(size) static CRITICAL_PAD_FIELD(size)
+    #define STATIC_PAD_DATA(size) STATIC_PAD_BSS(size) = {0}
+    #define STATIC_PAD_RODATA(size) const STATIC_PAD_BSS(size) = {0}
 #else
-#define PAD_FIELD(size)
-#define STATIC_PAD_BSS(size)
-#define STATIC_PAD_DATA(size)
-#define STATIC_PAD_RODATA(size)
+    #define PAD_FIELD(size)
+    #define STATIC_PAD_BSS(size)
+    #define STATIC_PAD_DATA(size)
+    #define STATIC_PAD_RODATA(size)
 #endif
 
 #endif

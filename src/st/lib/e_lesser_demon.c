@@ -5,7 +5,7 @@
 extern s32 D_us_80181ACC;
 
 #ifdef VERSION_PSP
-#define BUTTON_SYMBOL g_ConfirmButton
+    #define BUTTON_SYMBOL g_ConfirmButton
 extern s32 E_ID(ID_22);
 extern s32 E_ID(ID_21);
 extern s32 E_ID(ID_20);

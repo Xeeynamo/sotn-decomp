@@ -1,16 +1,16 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #ifndef CUTSCENE_UNK4_TPAGE
-#define CUTSCENE_UNK4_TPAGE 0x10
+    #define CUTSCENE_UNK4_TPAGE 0x10
 #endif
 
 #ifndef CUTSCENE_UNK4_V_OFFSET
-#define CUTSCENE_UNK4_V_OFFSET 128
+    #define CUTSCENE_UNK4_V_OFFSET 128
 #endif
 
 #ifdef VERSION_HD
-#define CUTSCENE_UNK4_V 16
+    #define CUTSCENE_UNK4_V 16
 #else
-#define CUTSCENE_UNK4_V 12
+    #define CUTSCENE_UNK4_V 12
 #endif
 
 #ifndef VERSION_HD

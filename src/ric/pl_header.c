@@ -19,5 +19,5 @@ PlayerOvl RIC_player = {
 };
 
 #if !defined(VERSION_PSP)
-#include "gen/richter.h"
+    #include "gen/richter.h"
 #endif

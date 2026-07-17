@@ -48,19 +48,19 @@ u8 func_us_801B9184(Primitive* prim) {
 
 #ifdef VERSION_PSP
 static u8 D_pspeu_09297E48[] = {
-#include "gen/D_pspeu_09297E48.h"
+    #include "gen/D_pspeu_09297E48.h"
 };
 static u8 D_pspeu_09298448[] = {
-#include "gen/D_pspeu_09298448.h"
+    #include "gen/D_pspeu_09298448.h"
 };
 static u8 D_pspeu_09298A38[] = {
-#include "gen/D_pspeu_09298A38.h"
+    #include "gen/D_pspeu_09298A38.h"
 };
 static u8 D_pspeu_09299018[] = {
-#include "gen/D_pspeu_09299018.h"
+    #include "gen/D_pspeu_09299018.h"
 };
 static u8 D_pspeu_09299608[] = {
-#include "gen/D_pspeu_09299608.h"
+    #include "gen/D_pspeu_09299608.h"
 };
 static u_long* D_pspeu_09299BB0[] = {
     (u_long*)GFX_BANK_COMPRESSED,

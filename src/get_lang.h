@@ -3,7 +3,7 @@
 
 #ifdef VERSION_PSP
 
-#pragma optimization_level 0
+    #pragma optimization_level 0
 
 static void* GetLang(void* en, void* fr, void* sp, void* ge, void* it) {
     switch (g_UserLanguage) {
@@ -21,6 +21,6 @@ static void* GetLang(void* en, void* fr, void* sp, void* ge, void* it) {
     }
 }
 
-#pragma optimization_level reset
+    #pragma optimization_level reset
 
 #endif

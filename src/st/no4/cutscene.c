@@ -125,17 +125,17 @@ extern u16 actor_names[];
 extern bool dialogue_started;
 extern u8* cutscene_script_ptr; // cutscene_script?
 
-// psp only, can probably be added to cutscene_actor_name.h
-#include "../../get_lang.h"
+    // psp only, can probably be added to cutscene_actor_name.h
+    #include "../../get_lang.h"
 
-#define CUTSCENE_UNK1_NEXT_X 0
-#define CUTSCENE_UNK1_UNK17 2
-#define NUM_CUTSCENE_PRIM 7
+    #define CUTSCENE_UNK1_NEXT_X 0
+    #define CUTSCENE_UNK1_UNK17 2
+    #define NUM_CUTSCENE_PRIM 7
 
-// These three are reversed in order from psx
-#include "../cutscene_actor_name.h"
-#include "../cutscene_script_box.h"
-#include "cutscene_script_text.h"
+    // These three are reversed in order from psx
+    #include "../cutscene_actor_name.h"
+    #include "../cutscene_script_box.h"
+    #include "cutscene_script_text.h"
 #else
 extern u8 OVL_EXPORT(cutscene_script)[];
 extern u8 cutscene_data_ferryman_left[];
@@ -150,17 +150,17 @@ STATIC_PAD_BSS(88);
 u32 g_CutsceneFlags; // Used by EntityFerrymanController
 static bool dialogue_started;
 
-#define CUTSCENE_UNK1_NEXT_X 2
-#define CUTSCENE_UNK1_UNK17 8
-#define CUTSCENE_UNK4_HAS_ARGS
-#define NUM_CUTSCENE_PRIM 5
-#define DRAW_NAME_ACTOR_INDEX 0
-#define DRAW_NAME_PRIM_Y0 30
+    #define CUTSCENE_UNK1_NEXT_X 2
+    #define CUTSCENE_UNK1_UNK17 8
+    #define CUTSCENE_UNK4_HAS_ARGS
+    #define NUM_CUTSCENE_PRIM 5
+    #define DRAW_NAME_ACTOR_INDEX 0
+    #define DRAW_NAME_PRIM_Y0 30
 
-// These three are reversed in order from psp
-#include "cutscene_script_text.h"
-#include "../cutscene_script_box.h"
-#include "../cutscene_actor_name.h"
+    // These three are reversed in order from psp
+    #include "cutscene_script_text.h"
+    #include "../cutscene_script_box.h"
+    #include "../cutscene_actor_name.h"
 #endif
 
 // Unused by pspeu and deadstripped

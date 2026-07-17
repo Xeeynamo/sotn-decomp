@@ -8,11 +8,11 @@ extern s32 E_ID(LIGHTNING_CLOUD);
 extern EInit g_EInitInteractable;
 
 #if defined(INVERTED_STAGE)
-#define R_VAL 0x28
-#define G_VAL 0
+    #define R_VAL 0x28
+    #define G_VAL 0
 #else
-#define R_VAL 0x10
-#define G_VAL 8
+    #define R_VAL 0x10
+    #define G_VAL 8
 #endif
 
 #if defined(STAGE_IS_NO3)
@@ -90,9 +90,9 @@ void EntityBackgroundLightning(Entity* self) {
             self->params = 0;
         }
 #else
-#if !defined(INVERTED_STAGE)
+    #if !defined(INVERTED_STAGE)
         g_CastleFlags[CASTLE_TURNED_ON] |= 1;
-#endif
+    #endif
         if (self->params & FLAG_DEAD) {
             self->step = 4;
             break;
@@ -130,11 +130,11 @@ void EntityBackgroundLightning(Entity* self) {
             }
 #if !defined(INVERTED_STAGE)
             clutIndices = &lightningClutIndices[0];
-#if defined(STAGE_IS_NO3)
+    #if defined(STAGE_IS_NO3)
             if (!self->params) {
                 clutIndices += 0x30;
             }
-#endif
+    #endif
             for (animFrame = self->animCurFrame; *clutIndices != 0xFF;
                  clutIndices += 4) {
                 i = *clutIndices;

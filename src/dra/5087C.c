@@ -16,9 +16,9 @@ extern void (*D_psp_08CE9C48)();
 extern s32 D_psp_091CE570;
 
 #if defined(VERSION_PSP)
-#define CAN_PAUSE g_PauseAllowed&& D_psp_091CE578
+    #define CAN_PAUSE g_PauseAllowed&& D_psp_091CE578
 #else
-#define CAN_PAUSE g_PauseAllowed
+    #define CAN_PAUSE g_PauseAllowed
 #endif
 
 // BSS
@@ -1680,11 +1680,11 @@ void RunMainEngine(void) {
             PlaySfx(SET_UNPAUSE_SFX_SCRIPTS);
             PlaySfx(SET_KEY_ON_20_21);
             PlaySfx(SET_KEY_ON_22_23);
-#if defined(VERSION_US)
+    #if defined(VERSION_US)
             if (g_StageId == STAGE_ST0) {
                 UnMuteCd();
             }
-#endif
+    #endif
         }
 #endif
         UpdateFade(true);

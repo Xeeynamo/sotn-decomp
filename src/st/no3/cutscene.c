@@ -70,7 +70,7 @@ static u16 actor_names_ge[] = {
 static u8 actor_name_len_ge[] = {7, 7, 5, 7, 5, 12, 4, 8, 8, 5};
 // clang-format on
 
-#include "../../get_lang.h"
+    #include "../../get_lang.h"
 
 #endif
 
@@ -104,7 +104,7 @@ static s32 g_CutsceneHasControl;
 static u8 D_80181A2C[2]; // Can't get this one to go where it should
 static s32 g_IsCutsceneDone;
 
-#include "../cutscene_actor_name_psp.h"
+    #include "../cutscene_actor_name_psp.h"
 
 #else
 static const char* actor_names[] = {_S("Alucard"), _S("Death")};
@@ -117,10 +117,10 @@ u32 D_801D7D68[26];
 u32 g_CutsceneFlags;
 s32 g_IsCutsceneDone;
 
-#define CUTSCENE_UNK1_NEXT_X 0x182
-#include "../cutscene_unk1.h"
+    #define CUTSCENE_UNK1_NEXT_X 0x182
+    #include "../cutscene_unk1.h"
 
-#include "../set_cutscene_script.h"
+    #include "../set_cutscene_script.h"
 #endif
 
 #define CUTSCENE_UNK3_RECT_X 384
@@ -134,13 +134,13 @@ s32 g_IsCutsceneDone;
 #include "../cutscene_unk4.h"
 
 #ifdef VERSION_PSP
-#define CUTSCENE_UNK1_NEXT_X 0x180
-#define CUTSCENE_UNK1_UNK17 2
-#include "../cutscene_unk1.h"
+    #define CUTSCENE_UNK1_NEXT_X 0x180
+    #define CUTSCENE_UNK1_UNK17 2
+    #include "../cutscene_unk1.h"
 
-#include "../set_cutscene_script.h"
+    #include "../set_cutscene_script.h"
 #else
-#include "../cutscene_actor_name.h"
+    #include "../cutscene_actor_name.h"
 #endif
 
 #include "../set_cutscene_end.h"
@@ -166,7 +166,7 @@ extern u_long D_894490C;
 extern u_long D_894568C;
 extern u_long D_8943B8C;
 #else
-#include "../cutscene_scale_avatar.h"
+    #include "../cutscene_scale_avatar.h"
 
 extern u8 OVL_EXPORT(cutscene_data)[];
 #endif

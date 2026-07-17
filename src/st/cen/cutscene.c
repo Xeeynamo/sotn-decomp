@@ -64,7 +64,7 @@ static s32 g_IsCutsceneDone;
 #include "../cutscene_run.h"
 
 #ifndef VERSION_HD
-#include "../cutscene_scale_avatar.h"
+    #include "../cutscene_scale_avatar.h"
 #endif
 
 extern u8 OVL_EXPORT(cutscene_data)[];

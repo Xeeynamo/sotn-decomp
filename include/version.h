@@ -13,27 +13,27 @@
 #define VERSION_H
 
 #if defined(_internal_version_us)
-#define VERSION_US
-#define VERSION_TOKEN us
+    #define VERSION_US
+    #define VERSION_TOKEN us
 #elif defined(_internal_version_hd)
-#define VERSION_HD
-#define VERSION_TOKEN hd
+    #define VERSION_HD
+    #define VERSION_TOKEN hd
 #elif defined(_internal_version_pspeu)
-#define VERSION_PSP
-// use this to flag code as only non-psp due to deadstripping.
-// will make it easier to restore stripped code if we ever work out a
-// solution for doing proper deadstripping like the original.
-#define PSP_DEADSTRIP
-#define VERSION_TOKEN psp
-#define NOP                                                                    \
-    static asm nop_##line##() { nop }
+    #define VERSION_PSP
+    // use this to flag code as only non-psp due to deadstripping.
+    // will make it easier to restore stripped code if we ever work out a
+    // solution for doing proper deadstripping like the original.
+    #define PSP_DEADSTRIP
+    #define VERSION_TOKEN psp
+    #define NOP                                                                \
+        static asm nop_##line##() { nop }
 #elif defined(_internal_version_beta)
-#define VERSION_BETA
-#define VERSION_TOKEN beta
+    #define VERSION_BETA
+    #define VERSION_TOKEN beta
 #else
-#warning "Version not specified. Falling back to the US version."
-#define VERSION_US
-#define VERSION_TOKEN us
+    #warning "Version not specified. Falling back to the US version."
+    #define VERSION_US
+    #define VERSION_TOKEN us
 #endif
 
 #define __CPP_STR(x) #x

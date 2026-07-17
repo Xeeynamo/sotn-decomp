@@ -3,10 +3,10 @@
 #include "sfx.h"
 
 #ifdef VERSION_PC
-// BUG! fix a OOB where x can be -1
-#define PUZZLE_MODIFIER(x) D_801CB738[x]
+    // BUG! fix a OOB where x can be -1
+    #define PUZZLE_MODIFIER(x) D_801CB738[x]
 #else
-#define PUZZLE_MODIFIER(x) D_801CB738[x - 1]
+    #define PUZZLE_MODIFIER(x) D_801CB738[x - 1]
 #endif
 
 extern s16 D_801CB738[];

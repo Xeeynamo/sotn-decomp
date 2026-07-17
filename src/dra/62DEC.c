@@ -197,42 +197,42 @@ static Primitive* func_80103148(Primitive* prim, Primitive* basis) {
 
 static s32 HandleSaveMenu(s32 arg0) {
 #if defined(VERSION_US)
-#define CONFIRM PAD_CROSS
-#define EXIT PAD_TRIANGLE
+    #define CONFIRM PAD_CROSS
+    #define EXIT PAD_TRIANGLE
 #elif defined(VERSION_HD)
-#define CONFIRM (PAD_START | PAD_SQUARE | PAD_CIRCLE)
-#define EXIT PAD_CROSS
+    #define CONFIRM (PAD_START | PAD_SQUARE | PAD_CIRCLE)
+    #define EXIT PAD_CROSS
 #elif defined(VERSION_PSP)
-#define CONFIRM (PAD_START | PAD_SQUARE | g_ConfirmButton)
-#define EXIT g_CancelButton
+    #define CONFIRM (PAD_START | PAD_SQUARE | g_ConfirmButton)
+    #define EXIT g_CancelButton
 #endif
 
 // Somewhat clumsy way to avoid ifdef throughout the code.
 // V86P70 means "Value is 86, except on PSP it's 70"
 #ifdef VERSION_PSP
-#define V86P70 70
-#define Vx60Px90 0x90
-#define Vx70PxA0 0xA0
-#define V72P56 56
-#define V86P62 62
-#define V96P152 152
-#define V80P56 56
-#define V62P46 46
-#define V144P184 184
-#define V56P40 40
-#define V24P36 36
+    #define V86P70 70
+    #define Vx60Px90 0x90
+    #define Vx70PxA0 0xA0
+    #define V72P56 56
+    #define V86P62 62
+    #define V96P152 152
+    #define V80P56 56
+    #define V62P46 46
+    #define V144P184 184
+    #define V56P40 40
+    #define V24P36 36
 #else
-#define V86P70 86
-#define Vx60Px90 0x60
-#define Vx70PxA0 0x70
-#define V72P56 72
-#define V86P62 86
-#define V96P152 96
-#define V80P56 80
-#define V62P46 62
-#define V144P184 144
-#define V56P40 56
-#define V24P36 24
+    #define V86P70 86
+    #define Vx60Px90 0x60
+    #define Vx70PxA0 0x70
+    #define V72P56 72
+    #define V86P62 86
+    #define V96P152 96
+    #define V80P56 80
+    #define V62P46 62
+    #define V144P184 144
+    #define V56P40 56
+    #define V24P36 24
 #endif
     u8 temp_t0;
 
@@ -422,15 +422,15 @@ static s32 HandleSaveMenu(s32 arg0) {
         if (temp_t0 == 0) {
             PlaySfx(SFX_UI_ALERT_TINK);
             prim2->p1 += 2;
-#if defined(VERSION_US)
+    #if defined(VERSION_US)
             func_800F9D88("  Select the slot．", 0, 1);
             func_800F9D88(" Slot １", 1, 0);
             func_800F9D88(" Slot ２", 2, 0);
-#elif defined(VERSION_HD)
+    #elif defined(VERSION_HD)
             func_800F9D40("スロットを選んで下さい　", 0, 1);
             func_800F9D40("スロット１　", 1, 0);
             func_800F9D40("スロット２　", 2, 0);
-#endif
+    #endif
             SetTexturedPrimRect(prim2, 56, 79, 144, 0, 0, 0);
             prim2->drawMode = DRAW_DEFAULT;
             prim1->drawMode = DRAW_DITHERING | DRAW_COLORS;
@@ -1334,7 +1334,7 @@ void func_80105428(void) {
 #elif defined(VERSION_HD)
     const s32 PAD_MASK = PAD_START | PAD_SQUARE | PAD_CROSS | PAD_CIRCLE;
 #elif defined(VERSION_PSP)
-#define PAD_MASK (PAD_START | PAD_SQUARE | g_ConfirmButton | g_CancelButton)
+    #define PAD_MASK (PAD_START | PAD_SQUARE | g_ConfirmButton | g_CancelButton)
 #endif
     s32 temp_s0;
     s32 temp_result;

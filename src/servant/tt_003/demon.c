@@ -15,10 +15,10 @@ static s32 s_LastTargetedEntityIndex;
 
 #ifdef VERSION_PSP
 extern s16 D_092F2810[];
-#define buggyPtr D_092F2810
+    #define buggyPtr D_092F2810
 #else
 extern ServantEvent g_Events[];
-#define buggyPtr ((s16*)g_Events)
+    #define buggyPtr ((s16*)g_Events)
 #endif
 
 static void SetAnimationFrame(Entity* self, s32 animationIndex) {

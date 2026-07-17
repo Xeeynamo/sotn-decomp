@@ -73,9 +73,9 @@ static void SetWeaponAnimation(u8 anim) {
 
 #if !defined(W_044)
 
-#include "../decelerate.h"
+    #include "../decelerate.h"
 
-#include "../set_speed_x.h"
+    #include "../set_speed_x.h"
 
 #endif
 

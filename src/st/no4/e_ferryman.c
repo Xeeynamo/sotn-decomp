@@ -944,9 +944,9 @@ static u8 anim_floor_open[] = {0x04, 0x23, 0x84, 0x24, 0xFF, 0x00, 0x00, 0x00};
 static u8 anim_floor_close[] = {0x04, 0x23, 0x04, 0x05, 0xFF, 0x00, 0x00, 0x00};
 
 #ifdef VERSION_PSP
-#define COLLISION_WIDTH 0x24
+    #define COLLISION_WIDTH 0x24
 #else
-#define COLLISION_WIDTH 0x20
+    #define COLLISION_WIDTH 0x20
 #endif
 
 void EntityBoatElevatorController(Entity* self) {

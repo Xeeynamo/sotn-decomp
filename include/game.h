@@ -8,10 +8,10 @@
 
 // lseek etc. conflicts
 #ifndef VERSION_PC
-#include <libapi.h>
-#include <libc.h>
+    #include <libapi.h>
+    #include <libc.h>
 #else
-#include <psyz.h>
+    #include <psyz.h>
 #endif
 
 #include <libcd.h>
@@ -26,9 +26,9 @@
 // PSP does & 7FFF for many calls to rand(), PS1 does not.
 // This works around that.
 #ifdef VERSION_PSP
-#define PSP_RANDMASK 0x7FFF
+    #define PSP_RANDMASK 0x7FFF
 #else
-#define PSP_RANDMASK 0xFFFFFFFF
+    #define PSP_RANDMASK 0xFFFFFFFF
 #endif
 
 typedef long Event;
@@ -187,9 +187,9 @@ typedef enum {
 #define STAGE_WIDTH 256
 
 #ifdef VERSION_PSP // PSP does not need a double buffer
-#define DISP_STAGE_NEXT_X 0
+    #define DISP_STAGE_NEXT_X 0
 #else
-#define DISP_STAGE_NEXT_X DISP_STAGE_W
+    #define DISP_STAGE_NEXT_X DISP_STAGE_W
 #endif
 
 // PSP buttons use same order as PSX, rather than by
@@ -257,18 +257,18 @@ typedef enum {
 
 // PSP's wolf controls are slightly different.
 #ifdef VERSION_PSP
-#define PAD_SHOULDERS (PAD_L1 | PAD_R1)
-// PSP only has one shoulder button, so it uses L1 for wolf transform.
-#define BTN_WOLF PAD_L1
-// PSP allows you to do the Wolf Charge spell with either square or circle.
-// This was changed from PS1, which only accepts square.
-#define WOLF_CHARGE_ATK_BTN (PAD_SQUARE | PAD_CIRCLE)
-#define BTN_MIST (PAD_L1 | PAD_R1)
+    #define PAD_SHOULDERS (PAD_L1 | PAD_R1)
+    // PSP only has one shoulder button, so it uses L1 for wolf transform.
+    #define BTN_WOLF PAD_L1
+    // PSP allows you to do the Wolf Charge spell with either square or circle.
+    // This was changed from PS1, which only accepts square.
+    #define WOLF_CHARGE_ATK_BTN (PAD_SQUARE | PAD_CIRCLE)
+    #define BTN_MIST (PAD_L1 | PAD_R1)
 #else
-#define PAD_SHOULDERS (PAD_L1 | PAD_R1 | PAD_L2 | PAD_R2)
-#define BTN_WOLF PAD_R2
-#define WOLF_CHARGE_ATK_BTN (PAD_SQUARE)
-#define BTN_MIST PAD_L1
+    #define PAD_SHOULDERS (PAD_L1 | PAD_R1 | PAD_L2 | PAD_R2)
+    #define BTN_WOLF PAD_R2
+    #define WOLF_CHARGE_ATK_BTN (PAD_SQUARE)
+    #define BTN_MIST PAD_L1
 #endif
 
 #define MAX_PRIM_COUNT 0x500
@@ -288,41 +288,41 @@ typedef enum {
 #define WEAPON_1_START 0xF0
 
 #if !defined(VERSION_PC) && (defined(VERSION_US) || defined(VERSION_HD))
-#define DRA_PRG_PTR 0x800A0000
-#define SAVE_DATA_PTR 0x801EA000
-#define RIC_PRG_PTR 0x8013C000
-#define SPRITESHEET_PTR 0x8013C020
-#define FAMILIAR_PTR 0x80170000
-#define WEAPON0_PTR 0x8017A000
-#define WEAPON1_PTR 0x8017D000
-#define STAGE_PRG_PTR 0x80180000
-#define CASTLE_MAP_PTR 0x801E0000
+    #define DRA_PRG_PTR 0x800A0000
+    #define SAVE_DATA_PTR 0x801EA000
+    #define RIC_PRG_PTR 0x8013C000
+    #define SPRITESHEET_PTR 0x8013C020
+    #define FAMILIAR_PTR 0x80170000
+    #define WEAPON0_PTR 0x8017A000
+    #define WEAPON1_PTR 0x8017D000
+    #define STAGE_PRG_PTR 0x80180000
+    #define CASTLE_MAP_PTR 0x801E0000
 
-#ifndef DEMO_KEY_PTR
-#define DEMO_KEY_PTR 0x801E8000
-#endif
+    #ifndef DEMO_KEY_PTR
+        #define DEMO_KEY_PTR 0x801E8000
+    #endif
 
-#define SIM_CHR0 0x80280000
-#define SIM_CHR1 0x80284000
-#define SIM_PTR 0x80280000
+    #define SIM_CHR0 0x80280000
+    #define SIM_CHR1 0x80284000
+    #define SIM_PTR 0x80280000
 #else
-#define DRA_PRG_PTR 0x800A0000
-#define SAVE_DATA_PTR D_psp_08D97C40
-#define RIC_PRG_PTR &g_PlOvl
-#define SPRITESHEET_PTR g_PlOvlSpritesheet
-#define FAMILIAR_PTR 0x80170000
-#define WEAPON0_PTR 0x8017A000
-#define WEAPON1_PTR &D_8017D000
-#define STAGE_PRG_PTR D_psp_08D2DC40
-#define CASTLE_MAP_PTR g_BmpCastleMap
+    #define DRA_PRG_PTR 0x800A0000
+    #define SAVE_DATA_PTR D_psp_08D97C40
+    #define RIC_PRG_PTR &g_PlOvl
+    #define SPRITESHEET_PTR g_PlOvlSpritesheet
+    #define FAMILIAR_PTR 0x80170000
+    #define WEAPON0_PTR 0x8017A000
+    #define WEAPON1_PTR &D_8017D000
+    #define STAGE_PRG_PTR D_psp_08D2DC40
+    #define CASTLE_MAP_PTR g_BmpCastleMap
 
-#ifndef DEMO_KEY_PTR
-#define DEMO_KEY_PTR D_psp_08D95C40
-#endif
+    #ifndef DEMO_KEY_PTR
+        #define DEMO_KEY_PTR D_psp_08D95C40
+    #endif
 
-#define SIM_CHR0 D_psp_08C6BC40
-#define SIM_CHR1 D_psp_08C6FC40
-#define SIM_PTR D_psp_08C6BC40
+    #define SIM_CHR0 D_psp_08C6BC40
+    #define SIM_CHR1 D_psp_08C6FC40
+    #define SIM_PTR D_psp_08C6BC40
 
 extern GAME_IMPORT u8 g_BmpCastleMap[0x20000];
 extern GAME_IMPORT u8 D_psp_08C6BC40[];
@@ -492,17 +492,17 @@ typedef enum {
 #define ANIMSET_OVL(x) ((x) | ANIMSET_OVL_FLAG)
 
 #ifndef SOTN_STR
-// Decorator to re-encode strings with ./tools/sotn_str when building
-// the game. Certain strings in SOTN do not follow the ASCII encoding and each
-// character is offseted by 0x20. This is only for strings that use the 8x8
-// font. e.g. _S("I am a Symphony of the Night encoded string")
-#define _S(x) (x)
+    // Decorator to re-encode strings with ./tools/sotn_str when building
+    // the game. Certain strings in SOTN do not follow the ASCII encoding and
+    // each character is offseted by 0x20. This is only for strings that use the
+    // 8x8 font. e.g. _S("I am a Symphony of the Night encoded string")
+    #define _S(x) (x)
 
-// Decorator to re-encode strings with ./tools/sotn_str when building
-// the game. PSP uses a variant of Shift-JIS that replaces half-width katakana
-// characters with accent characters for european languages. e.g. _SE("Eliminé
-// par Richter ")
-#define _SE(x) (x)
+    // Decorator to re-encode strings with ./tools/sotn_str when building
+    // the game. PSP uses a variant of Shift-JIS that replaces half-width
+    // katakana characters with accent characters for european languages. e.g.
+    // _SE("Eliminé par Richter ")
+    #define _SE(x) (x)
 #endif
 // same as above, but it processes a single character from CPP
 #define CH(x) ((x) - 0x20)
@@ -543,9 +543,9 @@ typedef struct {
 } MemcardInfo; /* size=0x278 */
 
 #if defined(VERSION_US)
-#define MEMCARD_ID "BASLUS-00067DRAX00"
+    #define MEMCARD_ID "BASLUS-00067DRAX00"
 #else
-#define MEMCARD_ID "BISLPM-86023DRAX00"
+    #define MEMCARD_ID "BISLPM-86023DRAX00"
 #endif
 
 #define ICON_SLOT_NUM 32
@@ -1086,9 +1086,9 @@ typedef struct {
 #define RELIC_FLAG_FOUND 1
 #define RELIC_FLAG_ACTIVE 2
 #if defined(VERSION_US)
-#define NUM_AVAIL_RELICS (NUM_RELICS - 2)
+    #define NUM_AVAIL_RELICS (NUM_RELICS - 2)
 #else
-#define NUM_AVAIL_RELICS (NUM_RELICS)
+    #define NUM_AVAIL_RELICS (NUM_RELICS)
 #endif
 typedef enum {
     RELIC_SOUL_OF_BAT,

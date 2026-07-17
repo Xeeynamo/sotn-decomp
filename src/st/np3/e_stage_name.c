@@ -4,9 +4,9 @@
 #define STAGE_FLAG OVL_EXPORT(STAGE_FLAG)
 
 #ifdef VERSION_US
-#include "../e_stage_name_us.h"
+    #include "../e_stage_name_us.h"
 #endif
 
 #if defined(VERSION_PSP) || defined(VERSION_HD)
-#include "../e_stage_name_jp.h"
+    #include "../e_stage_name_jp.h"
 #endif

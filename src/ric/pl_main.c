@@ -415,9 +415,9 @@ void RicMain(void) {
     g_Player.unk72 = func_80156DE4();
 #ifndef VERSION_PSP
     FntPrint("pl_head_f:%02x\n", g_Player.unk72);
-#if defined(VERSION_HD)
+    #if defined(VERSION_HD)
     FntPrint("run_disable_f:%02x\n", g_Player.unk7A);
-#endif
+    #endif
 #endif
 
 #if defined(VERSION_PC) || defined(VERSION_PSP)

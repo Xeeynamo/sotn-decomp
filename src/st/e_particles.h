@@ -29,7 +29,7 @@ s16 g_ESoulStealOrbSprt[] = {
 u8 g_ESoulStealOrbAnim[] = {4, 2, 3, 3, 3, 4, 3, 5, 3, 6, 3, 3, 0, 0};
 
 #ifdef VERSION_PSP
-#include "e_particles_maria.h"
+    #include "e_particles_maria.h"
 #endif
 
 // The white flying orbs of energy that Alucard summons as part of the Soul

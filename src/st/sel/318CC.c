@@ -387,7 +387,7 @@ void func_801B263C(char* str, s32 id) {
 }
 
 #ifndef HARD_LINK
-#include "../../set_prim_rect.h"
+    #include "../../set_prim_rect.h"
 #endif
 
 void func_801B2700(s32 tpage, s32 otIdx) {

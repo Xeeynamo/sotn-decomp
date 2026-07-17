@@ -824,13 +824,13 @@ static void func_8012F178(Primitive* prim, s32 count, bool finishUp) {
     scratchpad_8012F178* s;
 
 #ifdef VERSION_PSP
-#define LEFTVEL -0x13
-#define TPAGE 0x4118
-#define V_OFFSET 0
+    #define LEFTVEL -0x13
+    #define TPAGE 0x4118
+    #define V_OFFSET 0
 #else
-#define LEFTVEL -0x14
-#define TPAGE 0x118
-#define V_OFFSET 0xC0
+    #define LEFTVEL -0x14
+    #define TPAGE 0x118
+    #define V_OFFSET 0xC0
 #endif
 #ifdef VERSION_PC
     scratchpad_8012F178 _s;

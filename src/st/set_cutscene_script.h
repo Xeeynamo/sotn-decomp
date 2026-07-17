@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 #if defined(VERSION_PC)
-#define NUM_CUTSCENE_PRIM 8
+    #define NUM_CUTSCENE_PRIM 8
 #else
-#define NUM_CUTSCENE_PRIM 7
+    #define NUM_CUTSCENE_PRIM 7
 #endif
 
 static u8 SetCutsceneScript(u8* script) {

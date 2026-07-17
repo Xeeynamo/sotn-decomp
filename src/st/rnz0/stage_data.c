@@ -5,7 +5,7 @@
 
 // This is an unused image that says "Golem Maker". Likely stripped on PSP.
 u8 D_8018326C[] = {
-#include "gen/D_8018326C.h"
+    #include "gen/D_8018326C.h"
 };
 
 #endif

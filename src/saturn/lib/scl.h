@@ -321,10 +321,10 @@ typedef struct SclSblSgl {
 #define __PRI_GLVAR
 
 #ifndef __PRI_MACRO
-#define __PRI_MACRO
+    #define __PRI_MACRO
 
-#ifndef __PRI_REG
-#define __PRI_REG
+    #ifndef __PRI_REG
+        #define __PRI_REG
 
 typedef struct {
     Uint16 SpriteControl;
@@ -384,7 +384,7 @@ typedef struct {
     Uint32 SclColOffset : 1;
 } SclPriBuffDirtyFlags;
 
-#endif
+    #endif
 
 extern SclOtherPriRegister SclOtherPri;
 extern SclSpPriNumRegister SclSpPriNum;
@@ -394,711 +394,716 @@ extern SclBgColMixRegister SclBgColMix;
 extern SclColOffsetRegister SclColOffset;
 extern SclPriBuffDirtyFlags SclPriBuffDirty;
 
-#define SCL_SET_SPCCCS(spcccs)                                                 \
-    (SclPriBuffDirty.SclOtherPri = 1,                                          \
-     SclOtherPri.SpriteControl =                                               \
-         (SclOtherPri.SpriteControl & 0x0FFF) | ((spcccs) << 12))
+    #define SCL_SET_SPCCCS(spcccs)                                             \
+        (SclPriBuffDirty.SclOtherPri = 1,                                      \
+         SclOtherPri.SpriteControl =                                           \
+             (SclOtherPri.SpriteControl & 0x0FFF) | ((spcccs) << 12))
 
-#define SCL_GET_SPCCCS() ((SclOtherPri.SpriteControl & 0x3000) >> 12)
+    #define SCL_GET_SPCCCS() ((SclOtherPri.SpriteControl & 0x3000) >> 12)
 
-#define SCL_SET_SPCCN(spccn)                                                   \
-    (SclPriBuffDirty.SclOtherPri = 1,                                          \
-     SclOtherPri.SpriteControl =                                               \
-         (SclOtherPri.SpriteControl & 0xF0FF) | ((spccn) << 8))
+    #define SCL_SET_SPCCN(spccn)                                               \
+        (SclPriBuffDirty.SclOtherPri = 1,                                      \
+         SclOtherPri.SpriteControl =                                           \
+             (SclOtherPri.SpriteControl & 0xF0FF) | ((spccn) << 8))
 
-#define SCL_GET_SPCCN() ((SclOtherPri.SpriteControl & 0x0700) >> 8)
+    #define SCL_GET_SPCCN() ((SclOtherPri.SpriteControl & 0x0700) >> 8)
 
-#define SCL_SET_SPCLMD(spclmd)                                                 \
-    (SclPriBuffDirty.SclOtherPri = 1,                                          \
-     SclOtherPri.SpriteControl =                                               \
-         (SclOtherPri.SpriteControl & 0xFFDF) | ((spclmd) << 5))
+    #define SCL_SET_SPCLMD(spclmd)                                             \
+        (SclPriBuffDirty.SclOtherPri = 1,                                      \
+         SclOtherPri.SpriteControl =                                           \
+             (SclOtherPri.SpriteControl & 0xFFDF) | ((spclmd) << 5))
 
-#define SCL_GET_SPCLMD() ((SclOtherPri.SpriteControl & 0x0020) >> 5)
+    #define SCL_GET_SPCLMD() ((SclOtherPri.SpriteControl & 0x0020) >> 5)
 
-#define SCL_SET_SPWINEN(spwinen)                                               \
-    (SclPriBuffDirty.SclOtherPri = 1,                                          \
-     SclOtherPri.SpriteControl =                                               \
-         (SclOtherPri.SpriteControl & 0xFFEF) | ((spwinen) << 4))
+    #define SCL_SET_SPWINEN(spwinen)                                           \
+        (SclPriBuffDirty.SclOtherPri = 1,                                      \
+         SclOtherPri.SpriteControl =                                           \
+             (SclOtherPri.SpriteControl & 0xFFEF) | ((spwinen) << 4))
 
-#define SCL_GET_SPWINEN() ((SclOtherPri.SpriteControl & 0x0010) >> 4)
+    #define SCL_GET_SPWINEN() ((SclOtherPri.SpriteControl & 0x0010) >> 4)
 
-#define SCL_SET_SPTYPE(sptype)                                                 \
-    (SclPriBuffDirty.SclOtherPri = 1,                                          \
-     SclOtherPri.SpriteControl =                                               \
-         (SclOtherPri.SpriteControl & 0xFFF0) | (sptype))
+    #define SCL_SET_SPTYPE(sptype)                                             \
+        (SclPriBuffDirty.SclOtherPri = 1,                                      \
+         SclOtherPri.SpriteControl =                                           \
+             (SclOtherPri.SpriteControl & 0xFFF0) | (sptype))
 
-#define SCL_GET_SPTYPE() (SclOtherPri.SpriteControl & 0x000F)
+    #define SCL_GET_SPTYPE() (SclOtherPri.SpriteControl & 0x000F)
 
-#define SCL_SET_S0PRIN(s0prin)                                                 \
-    (SclPriBuffDirty.SclSpPriNum = 1,                                          \
-     SclSpPriNum.PriorityNumberSP01 =                                          \
-         (SclSpPriNum.PriorityNumberSP01 & 0xFFF0) | (s0prin))
+    #define SCL_SET_S0PRIN(s0prin)                                             \
+        (SclPriBuffDirty.SclSpPriNum = 1,                                      \
+         SclSpPriNum.PriorityNumberSP01 =                                      \
+             (SclSpPriNum.PriorityNumberSP01 & 0xFFF0) | (s0prin))
 
-#define SCL_GET_S0PRIN() ((SclSpPriNum.PriorityNumberSP01 & 0x0007))
+    #define SCL_GET_S0PRIN() ((SclSpPriNum.PriorityNumberSP01 & 0x0007))
 
-#define SCL_SET_S1PRIN(s1prin)                                                 \
-    (SclPriBuffDirty.SclSpPriNum = 1,                                          \
-     SclSpPriNum.PriorityNumberSP01 =                                          \
-         (SclSpPriNum.PriorityNumberSP01 & 0xF0FF) | ((s1prin) << 8))
+    #define SCL_SET_S1PRIN(s1prin)                                             \
+        (SclPriBuffDirty.SclSpPriNum = 1,                                      \
+         SclSpPriNum.PriorityNumberSP01 =                                      \
+             (SclSpPriNum.PriorityNumberSP01 & 0xF0FF) | ((s1prin) << 8))
 
-#define SCL_GET_S1PRIN() ((SclSpPriNum.PriorityNumberSP01 & 0x0700) >> 8)
+    #define SCL_GET_S1PRIN() ((SclSpPriNum.PriorityNumberSP01 & 0x0700) >> 8)
 
-#define SCL_SET_S2PRIN(s2prin)                                                 \
-    (SclPriBuffDirty.SclSpPriNum = 1,                                          \
-     SclSpPriNum.PriorityNumberSP23 =                                          \
-         (SclSpPriNum.PriorityNumberSP23 & 0xFFF0) | ((s2prin)))
+    #define SCL_SET_S2PRIN(s2prin)                                             \
+        (SclPriBuffDirty.SclSpPriNum = 1,                                      \
+         SclSpPriNum.PriorityNumberSP23 =                                      \
+             (SclSpPriNum.PriorityNumberSP23 & 0xFFF0) | ((s2prin)))
 
-#define SCL_GET_S2PRIN() ((SclSpPriNum.PriorityNumberSP23 & 0x0007))
+    #define SCL_GET_S2PRIN() ((SclSpPriNum.PriorityNumberSP23 & 0x0007))
 
-#define SCL_SET_S3PRIN(s3prin)                                                 \
-    (SclPriBuffDirty.SclSpPriNum = 1,                                          \
-     SclSpPriNum.PriorityNumberSP23 =                                          \
-         (SclSpPriNum.PriorityNumberSP23 & 0xF0FF) | ((s3prin) << 8))
+    #define SCL_SET_S3PRIN(s3prin)                                             \
+        (SclPriBuffDirty.SclSpPriNum = 1,                                      \
+         SclSpPriNum.PriorityNumberSP23 =                                      \
+             (SclSpPriNum.PriorityNumberSP23 & 0xF0FF) | ((s3prin) << 8))
 
-#define SCL_GET_S3PRIN() ((SclSpPriNum.PriorityNumberSP23 & 0x0700) >> 8)
+    #define SCL_GET_S3PRIN() ((SclSpPriNum.PriorityNumberSP23 & 0x0700) >> 8)
 
-#define SCL_SET_S4PRIN(s4prin)                                                 \
-    (SclPriBuffDirty.SclSpPriNum = 1,                                          \
-     SclSpPriNum.PriorityNumberSP45 =                                          \
-         (SclSpPriNum.PriorityNumberSP45 & 0xFFF0) | ((s4prin)))
+    #define SCL_SET_S4PRIN(s4prin)                                             \
+        (SclPriBuffDirty.SclSpPriNum = 1,                                      \
+         SclSpPriNum.PriorityNumberSP45 =                                      \
+             (SclSpPriNum.PriorityNumberSP45 & 0xFFF0) | ((s4prin)))
 
-#define SCL_GET_S4PRIN() ((SclSpPriNum.PriorityNumberSP45 & 0x0007))
+    #define SCL_GET_S4PRIN() ((SclSpPriNum.PriorityNumberSP45 & 0x0007))
 
-#define SCL_SET_S5PRIN(s5prin)                                                 \
-    (SclPriBuffDirty.SclSpPriNum = 1,                                          \
-     SclSpPriNum.PriorityNumberSP45 =                                          \
-         (SclSpPriNum.PriorityNumberSP45 & 0xF0FF) | ((s5prin) << 8))
+    #define SCL_SET_S5PRIN(s5prin)                                             \
+        (SclPriBuffDirty.SclSpPriNum = 1,                                      \
+         SclSpPriNum.PriorityNumberSP45 =                                      \
+             (SclSpPriNum.PriorityNumberSP45 & 0xF0FF) | ((s5prin) << 8))
 
-#define SCL_GET_S5PRIN() ((SclSpPriNum.PriorityNumberSP45 & 0x0700) >> 8)
+    #define SCL_GET_S5PRIN() ((SclSpPriNum.PriorityNumberSP45 & 0x0700) >> 8)
 
-#define SCL_SET_S6PRIN(s6prin)                                                 \
-    (SclPriBuffDirty.SclSpPriNum = 1,                                          \
-     SclSpPriNum.PriorityNumberSP67 =                                          \
-         (SclSpPriNum.PriorityNumberSP67 & 0xFFF0) | ((s6prin)))
+    #define SCL_SET_S6PRIN(s6prin)                                             \
+        (SclPriBuffDirty.SclSpPriNum = 1,                                      \
+         SclSpPriNum.PriorityNumberSP67 =                                      \
+             (SclSpPriNum.PriorityNumberSP67 & 0xFFF0) | ((s6prin)))
 
-#define SCL_GET_S6PRIN() ((SclSpPriNum.PriorityNumberSP67 & 0x0007))
+    #define SCL_GET_S6PRIN() ((SclSpPriNum.PriorityNumberSP67 & 0x0007))
 
-#define SCL_SET_S7PRIN(s7prin)                                                 \
-    (SclPriBuffDirty.SclSpPriNum = 1,                                          \
-     SclSpPriNum.PriorityNumberSP67 =                                          \
-         (SclSpPriNum.PriorityNumberSP67 & 0xF0FF) | ((s7prin) << 8))
+    #define SCL_SET_S7PRIN(s7prin)                                             \
+        (SclPriBuffDirty.SclSpPriNum = 1,                                      \
+         SclSpPriNum.PriorityNumberSP67 =                                      \
+             (SclSpPriNum.PriorityNumberSP67 & 0xF0FF) | ((s7prin) << 8))
 
-#define SCL_GET_S7PRIN() ((SclSpPriNum.PriorityNumberSP67 & 0x0700) >> 8)
+    #define SCL_GET_S7PRIN() ((SclSpPriNum.PriorityNumberSP67 & 0x0700) >> 8)
 
-#define SCL_SET_S0CCRT(s0ccrt)                                                 \
-    (SclPriBuffDirty.SclSpColMix = 1,                                          \
-     SclSpColMix.ColMixRateSP01 =                                              \
-         (SclSpColMix.ColMixRateSP01 & 0xFF00) | ((s0ccrt)))
+    #define SCL_SET_S0CCRT(s0ccrt)                                             \
+        (SclPriBuffDirty.SclSpColMix = 1,                                      \
+         SclSpColMix.ColMixRateSP01 =                                          \
+             (SclSpColMix.ColMixRateSP01 & 0xFF00) | ((s0ccrt)))
 
-#define SCL_GET_S0CCRT() ((SclSpColMix.ColMixRateSP01 & 0x001F) >> 0)
+    #define SCL_GET_S0CCRT() ((SclSpColMix.ColMixRateSP01 & 0x001F) >> 0)
 
-#define SCL_SET_S1CCRT(s1ccrt)                                                 \
-    (SclPriBuffDirty.SclSpColMix = 1,                                          \
-     SclSpColMix.ColMixRateSP01 =                                              \
-         (SclSpColMix.ColMixRateSP01 & 0x00FF) | ((s1ccrt) << 8))
+    #define SCL_SET_S1CCRT(s1ccrt)                                             \
+        (SclPriBuffDirty.SclSpColMix = 1,                                      \
+         SclSpColMix.ColMixRateSP01 =                                          \
+             (SclSpColMix.ColMixRateSP01 & 0x00FF) | ((s1ccrt) << 8))
 
-#define SCL_GET_S1CCRT() ((SclSpColMix.ColMixRateSP01 & 0x1F00) >> 8)
+    #define SCL_GET_S1CCRT() ((SclSpColMix.ColMixRateSP01 & 0x1F00) >> 8)
 
-#define SCL_SET_S2CCRT(s2ccrt)                                                 \
-    (SclPriBuffDirty.SclSpColMix = 1,                                          \
-     SclSpColMix.ColMixRateSP23 =                                              \
-         (SclSpColMix.ColMixRateSP23 & 0xFF00) | ((s2ccrt)))
+    #define SCL_SET_S2CCRT(s2ccrt)                                             \
+        (SclPriBuffDirty.SclSpColMix = 1,                                      \
+         SclSpColMix.ColMixRateSP23 =                                          \
+             (SclSpColMix.ColMixRateSP23 & 0xFF00) | ((s2ccrt)))
 
-#define SCL_GET_S2CCRT() ((SclSpColMix.ColMixRateSP23 & 0x001F))
+    #define SCL_GET_S2CCRT() ((SclSpColMix.ColMixRateSP23 & 0x001F))
 
-#define SCL_SET_S3CCRT(s3ccrt)                                                 \
-    (SclPriBuffDirty.SclSpColMix = 1,                                          \
-     SclSpColMix.ColMixRateSP23 =                                              \
-         (SclSpColMix.ColMixRateSP23 & 0x00FF) | ((s3ccrt) << 8))
+    #define SCL_SET_S3CCRT(s3ccrt)                                             \
+        (SclPriBuffDirty.SclSpColMix = 1,                                      \
+         SclSpColMix.ColMixRateSP23 =                                          \
+             (SclSpColMix.ColMixRateSP23 & 0x00FF) | ((s3ccrt) << 8))
 
-#define SCL_GET_S3CCRT() ((SclSpColMix.ColMixRateSP23 & 0x1F00) >> 8)
+    #define SCL_GET_S3CCRT() ((SclSpColMix.ColMixRateSP23 & 0x1F00) >> 8)
 
-#define SCL_SET_S4CCRT(s4ccrt)                                                 \
-    (SclPriBuffDirty.SclSpColMix = 1,                                          \
-     SclSpColMix.ColMixRateSP45 =                                              \
-         (SclSpColMix.ColMixRateSP45 & 0xFF00) | ((s4ccrt)))
+    #define SCL_SET_S4CCRT(s4ccrt)                                             \
+        (SclPriBuffDirty.SclSpColMix = 1,                                      \
+         SclSpColMix.ColMixRateSP45 =                                          \
+             (SclSpColMix.ColMixRateSP45 & 0xFF00) | ((s4ccrt)))
 
-#define SCL_GET_S4CCRT() ((SclSpColMix.ColMixRateSP45 & 0x001F))
+    #define SCL_GET_S4CCRT() ((SclSpColMix.ColMixRateSP45 & 0x001F))
 
-#define SCL_SET_S5CCRT(s5ccrt)                                                 \
-    (SclPriBuffDirty.SclSpColMix = 1,                                          \
-     SclSpColMix.ColMixRateSP45 =                                              \
-         (SclSpColMix.ColMixRateSP45 & 0x00FF) | ((s5ccrt) << 8))
+    #define SCL_SET_S5CCRT(s5ccrt)                                             \
+        (SclPriBuffDirty.SclSpColMix = 1,                                      \
+         SclSpColMix.ColMixRateSP45 =                                          \
+             (SclSpColMix.ColMixRateSP45 & 0x00FF) | ((s5ccrt) << 8))
 
-#define SCL_GET_S5CCRT() ((SclSpColMix.ColMixRateSP45 & 0x1F00) >> 8)
+    #define SCL_GET_S5CCRT() ((SclSpColMix.ColMixRateSP45 & 0x1F00) >> 8)
 
-#define SCL_SET_S6CCRT(s6ccrt)                                                 \
-    (SclPriBuffDirty.SclSpColMix = 1,                                          \
-     SclSpColMix.ColMixRateSP67 =                                              \
-         (SclSpColMix.ColMixRateSP67 & 0xFF00) | ((s6ccrt)))
+    #define SCL_SET_S6CCRT(s6ccrt)                                             \
+        (SclPriBuffDirty.SclSpColMix = 1,                                      \
+         SclSpColMix.ColMixRateSP67 =                                          \
+             (SclSpColMix.ColMixRateSP67 & 0xFF00) | ((s6ccrt)))
 
-#define SCL_GET_S6CCRT() ((SclSpColMix.ColMixRateSP67 & 0x001F))
+    #define SCL_GET_S6CCRT() ((SclSpColMix.ColMixRateSP67 & 0x001F))
 
-#define SCL_SET_S7CCRT(s7ccrt)                                                 \
-    (SclPriBuffDirty.SclSpColMix = 1,                                          \
-     SclSpColMix.ColMixRateSP67 =                                              \
-         (SclSpColMix.ColMixRateSP67 & 0x00FF) | ((s7ccrt) << 8))
+    #define SCL_SET_S7CCRT(s7ccrt)                                             \
+        (SclPriBuffDirty.SclSpColMix = 1,                                      \
+         SclSpColMix.ColMixRateSP67 =                                          \
+             (SclSpColMix.ColMixRateSP67 & 0x00FF) | ((s7ccrt) << 8))
 
-#define SCL_GET_S7CCRT() ((SclSpColMix.ColMixRateSP67 & 0x1F00) >> 8)
+    #define SCL_GET_S7CCRT() ((SclSpColMix.ColMixRateSP67 & 0x1F00) >> 8)
 
-#define SCL_SET_N0CAOS(n0caos)                                                 \
-    (SclPriBuffDirty.SclOtherPri = 1,                                          \
-     SclOtherPri.ColorRamOffset0 =                                             \
-         (SclOtherPri.ColorRamOffset0 & 0xFFF0) | ((n0caos)))
+    #define SCL_SET_N0CAOS(n0caos)                                             \
+        (SclPriBuffDirty.SclOtherPri = 1,                                      \
+         SclOtherPri.ColorRamOffset0 =                                         \
+             (SclOtherPri.ColorRamOffset0 & 0xFFF0) | ((n0caos)))
 
-#define SCL_GET_N0CAOS() ((SclOtherPri.ColorRamOffset0 & 0x0007))
+    #define SCL_GET_N0CAOS() ((SclOtherPri.ColorRamOffset0 & 0x0007))
 
-#define SCL_SET_N1CAOS(n1caos)                                                 \
-    (SclPriBuffDirty.SclOtherPri = 1,                                          \
-     SclOtherPri.ColorRamOffset0 =                                             \
-         (SclOtherPri.ColorRamOffset0 & 0xFF0F) | ((n1caos) << 4))
+    #define SCL_SET_N1CAOS(n1caos)                                             \
+        (SclPriBuffDirty.SclOtherPri = 1,                                      \
+         SclOtherPri.ColorRamOffset0 =                                         \
+             (SclOtherPri.ColorRamOffset0 & 0xFF0F) | ((n1caos) << 4))
 
-#define SCL_GET_N1CAOS() ((SclOtherPri.ColorRamOffset0 & 0x0070) >> 4)
+    #define SCL_GET_N1CAOS() ((SclOtherPri.ColorRamOffset0 & 0x0070) >> 4)
 
-#define SCL_SET_N2CAOS(n2caos)                                                 \
-    (SclPriBuffDirty.SclOtherPri = 1,                                          \
-     SclOtherPri.ColorRamOffset0 =                                             \
-         (SclOtherPri.ColorRamOffset0 & 0xF0FF) | ((n2caos) << 8))
+    #define SCL_SET_N2CAOS(n2caos)                                             \
+        (SclPriBuffDirty.SclOtherPri = 1,                                      \
+         SclOtherPri.ColorRamOffset0 =                                         \
+             (SclOtherPri.ColorRamOffset0 & 0xF0FF) | ((n2caos) << 8))
 
-#define SCL_GET_N2CAOS() ((SclOtherPri.ColorRamOffset0 & 0x0700) >> 8)
+    #define SCL_GET_N2CAOS() ((SclOtherPri.ColorRamOffset0 & 0x0700) >> 8)
 
-#define SCL_SET_N3CAOS(n3caos)                                                 \
-    (SclPriBuffDirty.SclOtherPri = 1,                                          \
-     SclOtherPri.ColorRamOffset0 =                                             \
-         (SclOtherPri.ColorRamOffset0 & 0x0FFF) | ((n3caos) << 12))
+    #define SCL_SET_N3CAOS(n3caos)                                             \
+        (SclPriBuffDirty.SclOtherPri = 1,                                      \
+         SclOtherPri.ColorRamOffset0 =                                         \
+             (SclOtherPri.ColorRamOffset0 & 0x0FFF) | ((n3caos) << 12))
 
-#define SCL_GET_N3CAOS() ((SclOtherPri.ColorRamOffset0 & 0x7000) >> 12)
+    #define SCL_GET_N3CAOS() ((SclOtherPri.ColorRamOffset0 & 0x7000) >> 12)
 
-#define SCL_SET_R0CAOS(r0caos)                                                 \
-    (SclPriBuffDirty.SclOtherPri = 1,                                          \
-     SclOtherPri.ColorRamOffset1 =                                             \
-         (SclOtherPri.ColorRamOffset1 & 0xFFF0) | ((r0caos) << 0))
+    #define SCL_SET_R0CAOS(r0caos)                                             \
+        (SclPriBuffDirty.SclOtherPri = 1,                                      \
+         SclOtherPri.ColorRamOffset1 =                                         \
+             (SclOtherPri.ColorRamOffset1 & 0xFFF0) | ((r0caos) << 0))
 
-#define SCL_GET_R0CAOS() ((SclOtherPri.ColorRamOffset1 & 0x0007) >> 0)
+    #define SCL_GET_R0CAOS() ((SclOtherPri.ColorRamOffset1 & 0x0007) >> 0)
 
-#define SCL_SET_SPCAOS(spcaos)                                                 \
-    (SclPriBuffDirty.SclOtherPri = 1,                                          \
-     SclOtherPri.ColorRamOffset1 =                                             \
-         (SclOtherPri.ColorRamOffset1 & 0xFF0F) | ((spcaos) << 4))
+    #define SCL_SET_SPCAOS(spcaos)                                             \
+        (SclPriBuffDirty.SclOtherPri = 1,                                      \
+         SclOtherPri.ColorRamOffset1 =                                         \
+             (SclOtherPri.ColorRamOffset1 & 0xFF0F) | ((spcaos) << 4))
 
-#define SCL_GET_SPCAOS() ((SclOtherPri.ColorRamOffset1 & 0x0070) >> 4)
+    #define SCL_GET_SPCAOS() ((SclOtherPri.ColorRamOffset1 & 0x0070) >> 4)
 
-#define SCL_SET_N0LCEN(n0lcen)                                                 \
-    (SclPriBuffDirty.SclOtherPri = 1,                                          \
-     SclOtherPri.LineColorEnable =                                             \
-         (SclOtherPri.LineColorEnable & 0xFFFE) | ((n0lcen)))
+    #define SCL_SET_N0LCEN(n0lcen)                                             \
+        (SclPriBuffDirty.SclOtherPri = 1,                                      \
+         SclOtherPri.LineColorEnable =                                         \
+             (SclOtherPri.LineColorEnable & 0xFFFE) | ((n0lcen)))
 
-#define SCL_GET_N0LCEN() ((SclOtherPri.LineColorEnable & 0x0001))
+    #define SCL_GET_N0LCEN() ((SclOtherPri.LineColorEnable & 0x0001))
 
-#define SCL_SET_N1LCEN(n1lcen)                                                 \
-    (SclPriBuffDirty.SclOtherPri = 1,                                          \
-     SclOtherPri.LineColorEnable =                                             \
-         (SclOtherPri.LineColorEnable & 0xFFFD) | ((n1lcen) << 1))
+    #define SCL_SET_N1LCEN(n1lcen)                                             \
+        (SclPriBuffDirty.SclOtherPri = 1,                                      \
+         SclOtherPri.LineColorEnable =                                         \
+             (SclOtherPri.LineColorEnable & 0xFFFD) | ((n1lcen) << 1))
 
-#define SCL_GET_N1LCEN() ((SclOtherPri.LineColorEnable & 0x0002) >> 1)
+    #define SCL_GET_N1LCEN() ((SclOtherPri.LineColorEnable & 0x0002) >> 1)
 
-#define SCL_SET_N2LCEN(n2lcen)                                                 \
-    (SclPriBuffDirty.SclOtherPri = 1,                                          \
-     SclOtherPri.LineColorEnable =                                             \
-         (SclOtherPri.LineColorEnable & 0xFFFB) | ((n2lcen) << 2))
+    #define SCL_SET_N2LCEN(n2lcen)                                             \
+        (SclPriBuffDirty.SclOtherPri = 1,                                      \
+         SclOtherPri.LineColorEnable =                                         \
+             (SclOtherPri.LineColorEnable & 0xFFFB) | ((n2lcen) << 2))
 
-#define SCL_GET_N2LCEN() ((SclOtherPri.LineColorEnable & 0x0004) >> 2)
+    #define SCL_GET_N2LCEN() ((SclOtherPri.LineColorEnable & 0x0004) >> 2)
 
-#define SCL_SET_N3LCEN(n3lcen)                                                 \
-    (SclPriBuffDirty.SclOtherPri = 1,                                          \
-     SclOtherPri.LineColorEnable =                                             \
-         (SclOtherPri.LineColorEnable & 0xFFF7) | ((n3lcen) << 3))
+    #define SCL_SET_N3LCEN(n3lcen)                                             \
+        (SclPriBuffDirty.SclOtherPri = 1,                                      \
+         SclOtherPri.LineColorEnable =                                         \
+             (SclOtherPri.LineColorEnable & 0xFFF7) | ((n3lcen) << 3))
 
-#define SCL_GET_N3LCEN() ((SclOtherPri.LineColorEnable & 0x0008) >> 3)
+    #define SCL_GET_N3LCEN() ((SclOtherPri.LineColorEnable & 0x0008) >> 3)
 
-#define SCL_SET_R0LCEN(r0lcen)                                                 \
-    (SclPriBuffDirty.SclOtherPri = 1,                                          \
-     SclOtherPri.LineColorEnable =                                             \
-         (SclOtherPri.LineColorEnable & 0xFFEF) | ((r0lcen) << 4))
+    #define SCL_SET_R0LCEN(r0lcen)                                             \
+        (SclPriBuffDirty.SclOtherPri = 1,                                      \
+         SclOtherPri.LineColorEnable =                                         \
+             (SclOtherPri.LineColorEnable & 0xFFEF) | ((r0lcen) << 4))
 
-#define SCL_GET_R0LCEN() ((SclOtherPri.LineColorEnable & 0x0010) >> 4)
+    #define SCL_GET_R0LCEN() ((SclOtherPri.LineColorEnable & 0x0010) >> 4)
 
-#define SCL_SET_SPLCEN(splcen)                                                 \
-    (SclPriBuffDirty.SclOtherPri = 1,                                          \
-     SclOtherPri.LineColorEnable =                                             \
-         (SclOtherPri.LineColorEnable & 0xFFDF) | ((splcen) << 5))
+    #define SCL_SET_SPLCEN(splcen)                                             \
+        (SclPriBuffDirty.SclOtherPri = 1,                                      \
+         SclOtherPri.LineColorEnable =                                         \
+             (SclOtherPri.LineColorEnable & 0xFFDF) | ((splcen) << 5))
 
-#define SCL_GET_SPLCEN() ((SclOtherPri.LineColorEnable & 0x0020) >> 5)
+    #define SCL_GET_SPLCEN() ((SclOtherPri.LineColorEnable & 0x0020) >> 5)
 
-#define SCL_SET_N0SPRM(n0sprm)                                                 \
-    (SclPriBuffDirty.SclOtherPri = 1,                                          \
-     SclOtherPri.SpecialPriorityMode =                                         \
-         (SclOtherPri.SpecialPriorityMode & 0xFFFC) | ((n0sprm)))
+    #define SCL_SET_N0SPRM(n0sprm)                                             \
+        (SclPriBuffDirty.SclOtherPri = 1,                                      \
+         SclOtherPri.SpecialPriorityMode =                                     \
+             (SclOtherPri.SpecialPriorityMode & 0xFFFC) | ((n0sprm)))
 
-#define SCL_GET_N0SPRM() ((SclOtherPri.SpecialPriorityMode & 0x0003))
+    #define SCL_GET_N0SPRM() ((SclOtherPri.SpecialPriorityMode & 0x0003))
 
-#define SCL_SET_N1SPRM(n1sprm)                                                 \
-    (SclPriBuffDirty.SclOtherPri = 1,                                          \
-     SclOtherPri.SpecialPriorityMode =                                         \
-         (SclOtherPri.SpecialPriorityMode & 0xFFF3) | ((n1sprm) << 2))
+    #define SCL_SET_N1SPRM(n1sprm)                                             \
+        (SclPriBuffDirty.SclOtherPri = 1,                                      \
+         SclOtherPri.SpecialPriorityMode =                                     \
+             (SclOtherPri.SpecialPriorityMode & 0xFFF3) | ((n1sprm) << 2))
 
-#define SCL_GET_N1SPRM() ((SclOtherPri.SpecialPriorityMode & 0x000C) >> 2)
+    #define SCL_GET_N1SPRM() ((SclOtherPri.SpecialPriorityMode & 0x000C) >> 2)
 
-#define SCL_SET_N2SPRM(n2sprm)                                                 \
-    (SclPriBuffDirty.SclOtherPri = 1,                                          \
-     SclOtherPri.SpecialPriorityMode =                                         \
-         (SclOtherPri.SpecialPriorityMode & 0xFFCF) | ((n2sprm) << 4))
+    #define SCL_SET_N2SPRM(n2sprm)                                             \
+        (SclPriBuffDirty.SclOtherPri = 1,                                      \
+         SclOtherPri.SpecialPriorityMode =                                     \
+             (SclOtherPri.SpecialPriorityMode & 0xFFCF) | ((n2sprm) << 4))
 
-#define SCL_GET_N2SPRM() ((SclOtherPri.SpecialPriorityMode & 0x0030) >> 4)
+    #define SCL_GET_N2SPRM() ((SclOtherPri.SpecialPriorityMode & 0x0030) >> 4)
 
-#define SCL_SET_N3SPRM(n3sprm)                                                 \
-    (SclPriBuffDirty.SclOtherPri = 1,                                          \
-     SclOtherPri.SpecialPriorityMode =                                         \
-         (SclOtherPri.SpecialPriorityMode & 0xFF3F) | ((n3sprm) << 6))
+    #define SCL_SET_N3SPRM(n3sprm)                                             \
+        (SclPriBuffDirty.SclOtherPri = 1,                                      \
+         SclOtherPri.SpecialPriorityMode =                                     \
+             (SclOtherPri.SpecialPriorityMode & 0xFF3F) | ((n3sprm) << 6))
 
-#define SCL_GET_N3SPRM() ((SclOtherPri.SpecialPriorityMode & 0x00C0) >> 6)
+    #define SCL_GET_N3SPRM() ((SclOtherPri.SpecialPriorityMode & 0x00C0) >> 6)
 
-#define SCL_SET_R0SPRM(r0sprm)                                                 \
-    (SclPriBuffDirty.SclOtherPri = 1,                                          \
-     SclOtherPri.SpecialPriorityMode =                                         \
-         (SclOtherPri.SpecialPriorityMode & 0xFCFF) | ((r0sprm) << 8))
+    #define SCL_SET_R0SPRM(r0sprm)                                             \
+        (SclPriBuffDirty.SclOtherPri = 1,                                      \
+         SclOtherPri.SpecialPriorityMode =                                     \
+             (SclOtherPri.SpecialPriorityMode & 0xFCFF) | ((r0sprm) << 8))
 
-#define SCL_GET_R0SPRM() ((SclOtherPri.SpecialPriorityMode & 0x0300) >> 8)
+    #define SCL_GET_R0SPRM() ((SclOtherPri.SpecialPriorityMode & 0x0300) >> 8)
 
-#define SCL_SET_N0PRIN(n0prin)                                                 \
-    (SclPriBuffDirty.SclBgPriNum = 1,                                          \
-     SclBgPriNum.PriorityNumberNBG01 =                                         \
-         (SclBgPriNum.PriorityNumberNBG01 & 0xFF00) | ((n0prin)))
+    #define SCL_SET_N0PRIN(n0prin)                                             \
+        (SclPriBuffDirty.SclBgPriNum = 1,                                      \
+         SclBgPriNum.PriorityNumberNBG01 =                                     \
+             (SclBgPriNum.PriorityNumberNBG01 & 0xFF00) | ((n0prin)))
 
-#define SCL_GET_N0PRIN() ((SclBgPriNum.PriorityNumberNBG01 & 0x0007))
+    #define SCL_GET_N0PRIN() ((SclBgPriNum.PriorityNumberNBG01 & 0x0007))
 
-#define SCL_SET_N1PRIN(n1prin)                                                 \
-    (SclPriBuffDirty.SclBgPriNum = 1,                                          \
-     SclBgPriNum.PriorityNumberNBG01 =                                         \
-         (SclBgPriNum.PriorityNumberNBG01 & 0x00FF) | ((n1prin) << 8))
+    #define SCL_SET_N1PRIN(n1prin)                                             \
+        (SclPriBuffDirty.SclBgPriNum = 1,                                      \
+         SclBgPriNum.PriorityNumberNBG01 =                                     \
+             (SclBgPriNum.PriorityNumberNBG01 & 0x00FF) | ((n1prin) << 8))
 
-#define SCL_GET_N1PRIN() ((SclBgPriNum.PriorityNumberNBG01 & 0x0700) >> 8)
+    #define SCL_GET_N1PRIN() ((SclBgPriNum.PriorityNumberNBG01 & 0x0700) >> 8)
 
-#define SCL_SET_N2PRIN(n2prin)                                                 \
-    (SclPriBuffDirty.SclBgPriNum = 1,                                          \
-     SclBgPriNum.PriorityNumberNBG23 =                                         \
-         (SclBgPriNum.PriorityNumberNBG23 & 0xFF00) | ((n2prin)))
+    #define SCL_SET_N2PRIN(n2prin)                                             \
+        (SclPriBuffDirty.SclBgPriNum = 1,                                      \
+         SclBgPriNum.PriorityNumberNBG23 =                                     \
+             (SclBgPriNum.PriorityNumberNBG23 & 0xFF00) | ((n2prin)))
 
-#define SCL_GET_N2PRIN() ((SclBgPriNum.PriorityNumberNBG23 & 0x0007))
+    #define SCL_GET_N2PRIN() ((SclBgPriNum.PriorityNumberNBG23 & 0x0007))
 
-#define SCL_SET_N3PRIN(n3prin)                                                 \
-    (SclPriBuffDirty.SclBgPriNum = 1,                                          \
-     SclBgPriNum.PriorityNumberNBG23 =                                         \
-         (SclBgPriNum.PriorityNumberNBG23 & 0x00FF) | ((n3prin) << 8))
+    #define SCL_SET_N3PRIN(n3prin)                                             \
+        (SclPriBuffDirty.SclBgPriNum = 1,                                      \
+         SclBgPriNum.PriorityNumberNBG23 =                                     \
+             (SclBgPriNum.PriorityNumberNBG23 & 0x00FF) | ((n3prin) << 8))
 
-#define SCL_GET_N3PRIN() ((SclBgPriNum.PriorityNumberNBG23 & 0x0700) >> 8)
+    #define SCL_GET_N3PRIN() ((SclBgPriNum.PriorityNumberNBG23 & 0x0700) >> 8)
 
-#define SCL_SET_R0PRIN(r0prin)                                                 \
-    (SclPriBuffDirty.SclBgPriNum = 1,                                          \
-     SclBgPriNum.PriorityNumberRBG0 = ((r0prin)))
+    #define SCL_SET_R0PRIN(r0prin)                                             \
+        (SclPriBuffDirty.SclBgPriNum = 1,                                      \
+         SclBgPriNum.PriorityNumberRBG0 = ((r0prin)))
 
-#define SCL_GET_R0PRIN() ((SclBgPriNum.PriorityNumberRBG0 & 0x0007))
+    #define SCL_GET_R0PRIN() ((SclBgPriNum.PriorityNumberRBG0 & 0x0007))
 
-#define SCL_SET_BOKEN(boken)                                                   \
-    (SclPriBuffDirty.SclOtherPri = 1,                                          \
-     SclOtherPri.ColorMixControl =                                             \
-         (SclOtherPri.ColorMixControl & 0x7FFF) | ((boken) << 15))
+    #define SCL_SET_BOKEN(boken)                                               \
+        (SclPriBuffDirty.SclOtherPri = 1,                                      \
+         SclOtherPri.ColorMixControl =                                         \
+             (SclOtherPri.ColorMixControl & 0x7FFF) | ((boken) << 15))
 
-#define SCL_GET_B0KEN() ((SclOtherPri.ColorMixControl & 0x8000) >> 15)
+    #define SCL_GET_B0KEN() ((SclOtherPri.ColorMixControl & 0x8000) >> 15)
 
-#define SCL_SET_BOKN(bokn)                                                     \
-    (SclPriBuffDirty.SclOtherPri = 1,                                          \
-     SclOtherPri.ColorMixControl =                                             \
-         (SclOtherPri.ColorMixControl & 0x8FFF) | ((bokn) << 12))
+    #define SCL_SET_BOKN(bokn)                                                 \
+        (SclPriBuffDirty.SclOtherPri = 1,                                      \
+         SclOtherPri.ColorMixControl =                                         \
+             (SclOtherPri.ColorMixControl & 0x8FFF) | ((bokn) << 12))
 
-#define SCL_GET_BOKN() ((SclOtherPri.ColorMixControl & 0x7000) >> 12)
+    #define SCL_GET_BOKN() ((SclOtherPri.ColorMixControl & 0x7000) >> 12)
 
-#define SCL_SET_EXCCEN(exccn)                                                  \
-    (SclPriBuffDirty.SclOtherPri = 1,                                          \
-     SclOtherPri.ColorMixControl =                                             \
-         (SclOtherPri.ColorMixControl & 0xFBFF) | ((exccn) << 10))
+    #define SCL_SET_EXCCEN(exccn)                                              \
+        (SclPriBuffDirty.SclOtherPri = 1,                                      \
+         SclOtherPri.ColorMixControl =                                         \
+             (SclOtherPri.ColorMixControl & 0xFBFF) | ((exccn) << 10))
 
-#define SCL_GET_EXCCEN() ((SclOtherPri.ColorMixControl & 0x0400) >> 10)
+    #define SCL_GET_EXCCEN() ((SclOtherPri.ColorMixControl & 0x0400) >> 10)
 
-#define SCL_SET_CCRTMD(ccrtmd)                                                 \
-    (SclPriBuffDirty.SclOtherPri = 1,                                          \
-     SclOtherPri.ColorMixControl =                                             \
-         (SclOtherPri.ColorMixControl & 0xFDFF) | ((Uint32)(ccrtmd) << 9))
+    #define SCL_SET_CCRTMD(ccrtmd)                                             \
+        (SclPriBuffDirty.SclOtherPri = 1,                                      \
+         SclOtherPri.ColorMixControl =                                         \
+             (SclOtherPri.ColorMixControl & 0xFDFF) | ((Uint32)(ccrtmd) << 9))
 
-#define SCL_GET_CCRTMD() ((SclOtherPri.ColorMixControl & 0x0200) >> 9)
+    #define SCL_GET_CCRTMD() ((SclOtherPri.ColorMixControl & 0x0200) >> 9)
 
-#define SCL_SET_CCMD(ccmd)                                                     \
-    (SclPriBuffDirty.SclOtherPri = 1,                                          \
-     SclOtherPri.ColorMixControl =                                             \
-         (SclOtherPri.ColorMixControl & 0xFEFF) | ((Uint32)(ccmd) << 8))
+    #define SCL_SET_CCMD(ccmd)                                                 \
+        (SclPriBuffDirty.SclOtherPri = 1,                                      \
+         SclOtherPri.ColorMixControl =                                         \
+             (SclOtherPri.ColorMixControl & 0xFEFF) | ((Uint32)(ccmd) << 8))
 
-#define SCL_GET_CCMD() ((SclOtherPri.ColorMixControl & 0x0100) >> 8)
+    #define SCL_GET_CCMD() ((SclOtherPri.ColorMixControl & 0x0100) >> 8)
 
-#define SCL_SET_SPCCEN(spccen)                                                 \
-    (SclPriBuffDirty.SclOtherPri = 1,                                          \
-     SclOtherPri.ColorMixControl =                                             \
-         (SclOtherPri.ColorMixControl & 0xFFBF) | ((spccen) << 6))
+    #define SCL_SET_SPCCEN(spccen)                                             \
+        (SclPriBuffDirty.SclOtherPri = 1,                                      \
+         SclOtherPri.ColorMixControl =                                         \
+             (SclOtherPri.ColorMixControl & 0xFFBF) | ((spccen) << 6))
 
-#define SCL_GET_SPCCEN() ((SclOtherPri.ColorMixControl & 0x0040) >> 6)
+    #define SCL_GET_SPCCEN() ((SclOtherPri.ColorMixControl & 0x0040) >> 6)
 
-#define SCL_SET_LCCCEN(lcccen)                                                 \
-    (SclPriBuffDirty.SclOtherPri = 1,                                          \
-     SclOtherPri.ColorMixControl =                                             \
-         (SclOtherPri.ColorMixControl & 0xFFDF) | ((lcccen) << 5))
+    #define SCL_SET_LCCCEN(lcccen)                                             \
+        (SclPriBuffDirty.SclOtherPri = 1,                                      \
+         SclOtherPri.ColorMixControl =                                         \
+             (SclOtherPri.ColorMixControl & 0xFFDF) | ((lcccen) << 5))
 
-#define SCL_GET_LCCCEN() ((SclOtherPri.ColorMixControl & 0x0020) >> 5)
+    #define SCL_GET_LCCCEN() ((SclOtherPri.ColorMixControl & 0x0020) >> 5)
 
-#define SCL_SET_R0CCEN(r0ccen)                                                 \
-    (SclPriBuffDirty.SclOtherPri = 1,                                          \
-     SclOtherPri.ColorMixControl =                                             \
-         (SclOtherPri.ColorMixControl & 0xFFEF) | ((r0ccen) << 4))
+    #define SCL_SET_R0CCEN(r0ccen)                                             \
+        (SclPriBuffDirty.SclOtherPri = 1,                                      \
+         SclOtherPri.ColorMixControl =                                         \
+             (SclOtherPri.ColorMixControl & 0xFFEF) | ((r0ccen) << 4))
 
-#define SCL_GET_R0CCEN() ((SclOtherPri.ColorMixControl & 0x0010) >> 4)
+    #define SCL_GET_R0CCEN() ((SclOtherPri.ColorMixControl & 0x0010) >> 4)
 
-#define SCL_SET_N3CCEN(n3ccen)                                                 \
-    (SclPriBuffDirty.SclOtherPri = 1,                                          \
-     SclOtherPri.ColorMixControl =                                             \
-         (SclOtherPri.ColorMixControl & 0xFFF7) | ((n3ccen) << 3))
+    #define SCL_SET_N3CCEN(n3ccen)                                             \
+        (SclPriBuffDirty.SclOtherPri = 1,                                      \
+         SclOtherPri.ColorMixControl =                                         \
+             (SclOtherPri.ColorMixControl & 0xFFF7) | ((n3ccen) << 3))
 
-#define SCL_GET_N3CCEN() ((SclOtherPri.ColorMixControl & 0x0008) >> 3)
+    #define SCL_GET_N3CCEN() ((SclOtherPri.ColorMixControl & 0x0008) >> 3)
 
-#define SCL_SET_N2CCEN(n2ccen)                                                 \
-    (SclPriBuffDirty.SclOtherPri = 1,                                          \
-     SclOtherPri.ColorMixControl =                                             \
-         (SclOtherPri.ColorMixControl & 0xFFFB) | ((n2ccen) << 2))
+    #define SCL_SET_N2CCEN(n2ccen)                                             \
+        (SclPriBuffDirty.SclOtherPri = 1,                                      \
+         SclOtherPri.ColorMixControl =                                         \
+             (SclOtherPri.ColorMixControl & 0xFFFB) | ((n2ccen) << 2))
 
-#define SCL_GET_N2CCEN() ((SclOtherPri.ColorMixControl & 0x0004) >> 2)
+    #define SCL_GET_N2CCEN() ((SclOtherPri.ColorMixControl & 0x0004) >> 2)
 
-#define SCL_SET_N1CCEN(n1ccen)                                                 \
-    (SclPriBuffDirty.SclOtherPri = 1,                                          \
-     SclOtherPri.ColorMixControl =                                             \
-         (SclOtherPri.ColorMixControl & 0xFFFD) | ((n1ccen) << 1))
+    #define SCL_SET_N1CCEN(n1ccen)                                             \
+        (SclPriBuffDirty.SclOtherPri = 1,                                      \
+         SclOtherPri.ColorMixControl =                                         \
+             (SclOtherPri.ColorMixControl & 0xFFFD) | ((n1ccen) << 1))
 
-#define SCL_GET_N1CCEN() ((SclOtherPri.ColorMixControl & 0x0002) >> 1)
+    #define SCL_GET_N1CCEN() ((SclOtherPri.ColorMixControl & 0x0002) >> 1)
 
-#define SCL_SET_N0CCEN(n0ccen)                                                 \
-    (SclPriBuffDirty.SclOtherPri = 1,                                          \
-     SclOtherPri.ColorMixControl =                                             \
-         (SclOtherPri.ColorMixControl & 0xFFFE) | ((n0ccen)))
+    #define SCL_SET_N0CCEN(n0ccen)                                             \
+        (SclPriBuffDirty.SclOtherPri = 1,                                      \
+         SclOtherPri.ColorMixControl =                                         \
+             (SclOtherPri.ColorMixControl & 0xFFFE) | ((n0ccen)))
 
-#define SCL_GET_N0CCEN() ((SclOtherPri.ColorMixControl & 0x0001))
+    #define SCL_GET_N0CCEN() ((SclOtherPri.ColorMixControl & 0x0001))
 
-#define SCL_SET_N0SCCM(n0sccm)                                                 \
-    (SclPriBuffDirty.SclOtherPri = 1,                                          \
-     SclOtherPri.SpecialColorMixMode =                                         \
-         (SclOtherPri.SpecialColorMixMode & 0xFFFC) | ((n0sccm)))
+    #define SCL_SET_N0SCCM(n0sccm)                                             \
+        (SclPriBuffDirty.SclOtherPri = 1,                                      \
+         SclOtherPri.SpecialColorMixMode =                                     \
+             (SclOtherPri.SpecialColorMixMode & 0xFFFC) | ((n0sccm)))
 
-#define SCL_GET_N0SCCM() ((SclOtherPri.SpecialColorMixMode & 0x0003))
+    #define SCL_GET_N0SCCM() ((SclOtherPri.SpecialColorMixMode & 0x0003))
 
-#define SCL_SET_N1SCCM(n1sccm)                                                 \
-    (SclPriBuffDirty.SclOtherPri = 1,                                          \
-     SclOtherPri.SpecialColorMixMode =                                         \
-         (SclOtherPri.SpecialColorMixMode & 0xFFF3) | ((n1sccm) << 2))
+    #define SCL_SET_N1SCCM(n1sccm)                                             \
+        (SclPriBuffDirty.SclOtherPri = 1,                                      \
+         SclOtherPri.SpecialColorMixMode =                                     \
+             (SclOtherPri.SpecialColorMixMode & 0xFFF3) | ((n1sccm) << 2))
 
-#define SCL_GET_N1SCCM() ((SclOtherPri.SpecialColorMixMode & 0x000C) >> 2)
+    #define SCL_GET_N1SCCM() ((SclOtherPri.SpecialColorMixMode & 0x000C) >> 2)
 
-#define SCL_SET_N2SCCM(n2sccm)                                                 \
-    (SclPriBuffDirty.SclOtherPri = 1,                                          \
-     SclOtherPri.SpecialColorMixMode =                                         \
-         (SclOtherPri.SpecialColorMixMode & 0xFFCF) | ((n2sccm) << 4))
+    #define SCL_SET_N2SCCM(n2sccm)                                             \
+        (SclPriBuffDirty.SclOtherPri = 1,                                      \
+         SclOtherPri.SpecialColorMixMode =                                     \
+             (SclOtherPri.SpecialColorMixMode & 0xFFCF) | ((n2sccm) << 4))
 
-#define SCL_GET_N2SCCM() ((SclOtherPri.SpecialColorMixMode & 0x0030) >> 4)
+    #define SCL_GET_N2SCCM() ((SclOtherPri.SpecialColorMixMode & 0x0030) >> 4)
 
-#define SCL_SET_N3SCCM(n3sccm)                                                 \
-    (SclPriBuffDirty.SclOtherPri = 1,                                          \
-     SclOtherPri.SpecialColorMixMode =                                         \
-         (SclOtherPri.SpecialColorMixMode & 0xFF3F) | ((n3sccm) << 6))
+    #define SCL_SET_N3SCCM(n3sccm)                                             \
+        (SclPriBuffDirty.SclOtherPri = 1,                                      \
+         SclOtherPri.SpecialColorMixMode =                                     \
+             (SclOtherPri.SpecialColorMixMode & 0xFF3F) | ((n3sccm) << 6))
 
-#define SCL_GET_N3SCCM() ((SclOtherPri.SpecialColorMixMode & 0x00C0) >> 6)
+    #define SCL_GET_N3SCCM() ((SclOtherPri.SpecialColorMixMode & 0x00C0) >> 6)
 
-#define SCL_SET_R0SCCM(r0sccm)                                                 \
-    (SclPriBuffDirty.SclOtherPri = 1,                                          \
-     SclOtherPri.SpecialColorMixMode =                                         \
-         (SclOtherPri.SpecialColorMixMode & 0xFCFF) | ((r0sccm) << 8))
+    #define SCL_SET_R0SCCM(r0sccm)                                             \
+        (SclPriBuffDirty.SclOtherPri = 1,                                      \
+         SclOtherPri.SpecialColorMixMode =                                     \
+             (SclOtherPri.SpecialColorMixMode & 0xFCFF) | ((r0sccm) << 8))
 
-#define SCL_GET_R0SCCM() ((SclOtherPri.SpecialColorMixMode & 0x0300) >> 8)
+    #define SCL_GET_R0SCCM() ((SclOtherPri.SpecialColorMixMode & 0x0300) >> 8)
 
-#define SCL_SET_N0CCRT(n0ccrt)                                                 \
-    (SclPriBuffDirty.SclBgColMix = 1,                                          \
-     SclBgColMix.ColMixRateNBG01 =                                             \
-         (SclBgColMix.ColMixRateNBG01 & 0xFF00) | ((n0ccrt)))
+    #define SCL_SET_N0CCRT(n0ccrt)                                             \
+        (SclPriBuffDirty.SclBgColMix = 1,                                      \
+         SclBgColMix.ColMixRateNBG01 =                                         \
+             (SclBgColMix.ColMixRateNBG01 & 0xFF00) | ((n0ccrt)))
 
-#define SCL_GET_N0CCRT() ((SclBgColMix.ColMixRateNBG01 & 0x001F))
+    #define SCL_GET_N0CCRT() ((SclBgColMix.ColMixRateNBG01 & 0x001F))
 
-#define SCL_SET_N1CCRT(n1ccrt)                                                 \
-    (SclPriBuffDirty.SclBgColMix = 1,                                          \
-     SclBgColMix.ColMixRateNBG01 =                                             \
-         (SclBgColMix.ColMixRateNBG01 & 0x00FF) | ((n1ccrt) << 8))
+    #define SCL_SET_N1CCRT(n1ccrt)                                             \
+        (SclPriBuffDirty.SclBgColMix = 1,                                      \
+         SclBgColMix.ColMixRateNBG01 =                                         \
+             (SclBgColMix.ColMixRateNBG01 & 0x00FF) | ((n1ccrt) << 8))
 
-#define SCL_GET_N1CCRT() ((SclBgColMix.ColMixRateNBG01 & 0x1F00) >> 8)
+    #define SCL_GET_N1CCRT() ((SclBgColMix.ColMixRateNBG01 & 0x1F00) >> 8)
 
-#define SCL_SET_N2CCRT(n2ccrt)                                                 \
-    (SclPriBuffDirty.SclBgColMix = 1,                                          \
-     SclBgColMix.ColMixRateNBG23 =                                             \
-         (SclBgColMix.ColMixRateNBG23 & 0xFF00) | ((n2ccrt)))
+    #define SCL_SET_N2CCRT(n2ccrt)                                             \
+        (SclPriBuffDirty.SclBgColMix = 1,                                      \
+         SclBgColMix.ColMixRateNBG23 =                                         \
+             (SclBgColMix.ColMixRateNBG23 & 0xFF00) | ((n2ccrt)))
 
-#define SCL_GET_N2CCRT() ((SclBgColMix.ColMixRateNBG23 & 0x001F))
+    #define SCL_GET_N2CCRT() ((SclBgColMix.ColMixRateNBG23 & 0x001F))
 
-#define SCL_SET_N3CCRT(n3ccrt)                                                 \
-    (SclPriBuffDirty.SclBgColMix = 1,                                          \
-     SclBgColMix.ColMixRateNBG23 =                                             \
-         (SclBgColMix.ColMixRateNBG23 & 0x00FF) | ((n3ccrt) << 8))
+    #define SCL_SET_N3CCRT(n3ccrt)                                             \
+        (SclPriBuffDirty.SclBgColMix = 1,                                      \
+         SclBgColMix.ColMixRateNBG23 =                                         \
+             (SclBgColMix.ColMixRateNBG23 & 0x00FF) | ((n3ccrt) << 8))
 
-#define SCL_GET_N3CCRT() ((SclBgColMix.ColMixRateNBG23 & 0x1F00) >> 8)
+    #define SCL_GET_N3CCRT() ((SclBgColMix.ColMixRateNBG23 & 0x1F00) >> 8)
 
-#define SCL_SET_R0CCRT(r0ccrt)                                                 \
-    (SclPriBuffDirty.SclBgColMix = 1, SclBgColMix.ColMixRateRBG0 = ((r0ccrt)))
+    #define SCL_SET_R0CCRT(r0ccrt)                                             \
+        (SclPriBuffDirty.SclBgColMix = 1,                                      \
+         SclBgColMix.ColMixRateRBG0 = ((r0ccrt)))
 
-#define SCL_GET_R0CCRT() ((SclBgColMix.ColMixRateRBG0 & 0x001F))
+    #define SCL_GET_R0CCRT() ((SclBgColMix.ColMixRateRBG0 & 0x001F))
 
-#define SCL_SET_LCCCRT(lcccrt)                                                 \
-    (SclPriBuffDirty.SclBgColMix = 1,                                          \
-     SclBgColMix.ColMixRateLCBAK =                                             \
-         (SclBgColMix.ColMixRateLCBAK & 0xFF00) | ((lcccrt)))
+    #define SCL_SET_LCCCRT(lcccrt)                                             \
+        (SclPriBuffDirty.SclBgColMix = 1,                                      \
+         SclBgColMix.ColMixRateLCBAK =                                         \
+             (SclBgColMix.ColMixRateLCBAK & 0xFF00) | ((lcccrt)))
 
-#define SCL_GET_LCCCRT() ((SclBgColMix.ColMixRateLCBAK & 0x001F))
+    #define SCL_GET_LCCCRT() ((SclBgColMix.ColMixRateLCBAK & 0x001F))
 
-#define SCL_SET_BKCCRT(bkccrt)                                                 \
-    (SclPriBuffDirty.SclBgColMix = 1,                                          \
-     SclBgColMix.ColMixRateLCBAK =                                             \
-         (SclBgColMix.ColMixRateLCBAK & 0x00FF) | ((bkccrt) << 8))
+    #define SCL_SET_BKCCRT(bkccrt)                                             \
+        (SclPriBuffDirty.SclBgColMix = 1,                                      \
+         SclBgColMix.ColMixRateLCBAK =                                         \
+             (SclBgColMix.ColMixRateLCBAK & 0x00FF) | ((bkccrt) << 8))
 
-#define SCL_GET_BKCCRT() ((SclBgColMix.ColMixRateLCBAK & 0x1F00) >> 8)
+    #define SCL_GET_BKCCRT() ((SclBgColMix.ColMixRateLCBAK & 0x1F00) >> 8)
 
-#define SCL_SET_N0COEN(n0coen)                                                 \
-    (SclPriBuffDirty.SclColOffset = 1,                                         \
-     SclColOffset.ColorOffsetEnable =                                          \
-         (SclColOffset.ColorOffsetEnable & 0xFFFE) | ((n0coen)))
+    #define SCL_SET_N0COEN(n0coen)                                             \
+        (SclPriBuffDirty.SclColOffset = 1,                                     \
+         SclColOffset.ColorOffsetEnable =                                      \
+             (SclColOffset.ColorOffsetEnable & 0xFFFE) | ((n0coen)))
 
-#define SCL_GET_N0COEN() ((SclColOffset.ColorOffsetEnable & 0x0001))
+    #define SCL_GET_N0COEN() ((SclColOffset.ColorOffsetEnable & 0x0001))
 
-#define SCL_SET_N1COEN(n1coen)                                                 \
-    (SclPriBuffDirty.SclColOffset = 1,                                         \
-     SclColOffset.ColorOffsetEnable =                                          \
-         (SclColOffset.ColorOffsetEnable & 0xFFFD) | ((n1coen) << 1))
+    #define SCL_SET_N1COEN(n1coen)                                             \
+        (SclPriBuffDirty.SclColOffset = 1,                                     \
+         SclColOffset.ColorOffsetEnable =                                      \
+             (SclColOffset.ColorOffsetEnable & 0xFFFD) | ((n1coen) << 1))
 
-#define SCL_GET_N1COEN() ((SclColOffset.ColorOffsetEnable & 0x0002) >> 1)
+    #define SCL_GET_N1COEN() ((SclColOffset.ColorOffsetEnable & 0x0002) >> 1)
 
-#define SCL_SET_N2COEN(n2coen)                                                 \
-    (SclPriBuffDirty.SclColOffset = 1,                                         \
-     SclColOffset.ColorOffsetEnable =                                          \
-         (SclColOffset.ColorOffsetEnable & 0xFFFB) | ((n2coen) << 2))
+    #define SCL_SET_N2COEN(n2coen)                                             \
+        (SclPriBuffDirty.SclColOffset = 1,                                     \
+         SclColOffset.ColorOffsetEnable =                                      \
+             (SclColOffset.ColorOffsetEnable & 0xFFFB) | ((n2coen) << 2))
 
-#define SCL_GET_N2COEN() ((SclColOffset.ColorOffsetEnable & 0x0004) >> 2)
+    #define SCL_GET_N2COEN() ((SclColOffset.ColorOffsetEnable & 0x0004) >> 2)
 
-#define SCL_SET_N3COEN(n3coen)                                                 \
-    (SclPriBuffDirty.SclColOffset = 1,                                         \
-     SclColOffset.ColorOffsetEnable =                                          \
-         (SclColOffset.ColorOffsetEnable & 0xFFF7) | ((n3coen) << 3))
+    #define SCL_SET_N3COEN(n3coen)                                             \
+        (SclPriBuffDirty.SclColOffset = 1,                                     \
+         SclColOffset.ColorOffsetEnable =                                      \
+             (SclColOffset.ColorOffsetEnable & 0xFFF7) | ((n3coen) << 3))
 
-#define SCL_GET_N3COEN() ((SclColOffset.ColorOffsetEnable & 0x0008) >> 3)
+    #define SCL_GET_N3COEN() ((SclColOffset.ColorOffsetEnable & 0x0008) >> 3)
 
-#define SCL_SET_R0COEN(r0coen)                                                 \
-    (SclPriBuffDirty.SclColOffset = 1,                                         \
-     SclColOffset.ColorOffsetEnable =                                          \
-         (SclColOffset.ColorOffsetEnable & 0xFFEF) | ((r0coen) << 4))
+    #define SCL_SET_R0COEN(r0coen)                                             \
+        (SclPriBuffDirty.SclColOffset = 1,                                     \
+         SclColOffset.ColorOffsetEnable =                                      \
+             (SclColOffset.ColorOffsetEnable & 0xFFEF) | ((r0coen) << 4))
 
-#define SCL_GET_R0COEN() ((SclColOffset.ColorOffsetEnable & 0x0010) >> 4)
+    #define SCL_GET_R0COEN() ((SclColOffset.ColorOffsetEnable & 0x0010) >> 4)
 
-#define SCL_SET_BKCOEN(bkcoen)                                                 \
-    (SclPriBuffDirty.SclColOffset = 1,                                         \
-     SclColOffset.ColorOffsetEnable =                                          \
-         (SclColOffset.ColorOffsetEnable & 0xFFDF) | ((bkcoen) << 5))
+    #define SCL_SET_BKCOEN(bkcoen)                                             \
+        (SclPriBuffDirty.SclColOffset = 1,                                     \
+         SclColOffset.ColorOffsetEnable =                                      \
+             (SclColOffset.ColorOffsetEnable & 0xFFDF) | ((bkcoen) << 5))
 
-#define SCL_GET_BKCOEN() ((SclColOffset.ColorOffsetEnable & 0x0020) >> 5)
+    #define SCL_GET_BKCOEN() ((SclColOffset.ColorOffsetEnable & 0x0020) >> 5)
 
-#define SCL_SET_SPCOEN(spcoen)                                                 \
-    (SclPriBuffDirty.SclColOffset = 1,                                         \
-     SclColOffset.ColorOffsetEnable =                                          \
-         (SclColOffset.ColorOffsetEnable & 0xFFBF) | ((spcoen) << 6))
+    #define SCL_SET_SPCOEN(spcoen)                                             \
+        (SclPriBuffDirty.SclColOffset = 1,                                     \
+         SclColOffset.ColorOffsetEnable =                                      \
+             (SclColOffset.ColorOffsetEnable & 0xFFBF) | ((spcoen) << 6))
 
-#define SCL_GET_SPCOEN() ((SclColOffset.ColorOffsetEnable & 0x0040) >> 6)
+    #define SCL_GET_SPCOEN() ((SclColOffset.ColorOffsetEnable & 0x0040) >> 6)
 
-#define SCL_SET_N0COSL(n0cosl)                                                 \
-    (SclPriBuffDirty.SclColOffset = 1,                                         \
-     SclColOffset.ColorOffsetSelect =                                          \
-         (SclColOffset.ColorOffsetSelect & 0xFFFE) | (n0cosl))
+    #define SCL_SET_N0COSL(n0cosl)                                             \
+        (SclPriBuffDirty.SclColOffset = 1,                                     \
+         SclColOffset.ColorOffsetSelect =                                      \
+             (SclColOffset.ColorOffsetSelect & 0xFFFE) | (n0cosl))
 
-#define SCL_GET_N0COSL() ((SclColOffset.ColorOffsetSelect & 0x0001))
+    #define SCL_GET_N0COSL() ((SclColOffset.ColorOffsetSelect & 0x0001))
 
-#define SCL_SET_N1COSL(n1cosl)                                                 \
-    (SclPriBuffDirty.SclColOffset = 1,                                         \
-     SclColOffset.ColorOffsetSelect =                                          \
-         (SclColOffset.ColorOffsetSelect & 0xFFFD) | ((n1cosl) << 1))
+    #define SCL_SET_N1COSL(n1cosl)                                             \
+        (SclPriBuffDirty.SclColOffset = 1,                                     \
+         SclColOffset.ColorOffsetSelect =                                      \
+             (SclColOffset.ColorOffsetSelect & 0xFFFD) | ((n1cosl) << 1))
 
-#define SCL_GET_N1COSL() ((SclColOffset.ColorOffsetSelect & 0x0002) >> 1)
+    #define SCL_GET_N1COSL() ((SclColOffset.ColorOffsetSelect & 0x0002) >> 1)
 
-#define SCL_SET_N2COSL(n2cosl)                                                 \
-    (SclPriBuffDirty.SclColOffset = 1,                                         \
-     SclColOffset.ColorOffsetSelect =                                          \
-         (SclColOffset.ColorOffsetSelect & 0xFFFB) | ((n2cosl) << 2))
+    #define SCL_SET_N2COSL(n2cosl)                                             \
+        (SclPriBuffDirty.SclColOffset = 1,                                     \
+         SclColOffset.ColorOffsetSelect =                                      \
+             (SclColOffset.ColorOffsetSelect & 0xFFFB) | ((n2cosl) << 2))
 
-#define SCL_GET_N2COSL() ((SclColOffset.ColorOffsetSelect & 0x0004) >> 2)
+    #define SCL_GET_N2COSL() ((SclColOffset.ColorOffsetSelect & 0x0004) >> 2)
 
-#define SCL_SET_N3COSL(n3cosl)                                                 \
-    (SclPriBuffDirty.SclColOffset = 1,                                         \
-     SclColOffset.ColorOffsetSelect =                                          \
-         (SclColOffset.ColorOffsetSelect & 0xFFF7) | ((n3cosl) << 3))
+    #define SCL_SET_N3COSL(n3cosl)                                             \
+        (SclPriBuffDirty.SclColOffset = 1,                                     \
+         SclColOffset.ColorOffsetSelect =                                      \
+             (SclColOffset.ColorOffsetSelect & 0xFFF7) | ((n3cosl) << 3))
 
-#define SCL_GET_N3COSL() ((SclColOffset.ColorOffsetSelect & 0x0008) >> 3)
+    #define SCL_GET_N3COSL() ((SclColOffset.ColorOffsetSelect & 0x0008) >> 3)
 
-#define SCL_SET_R0COSL(r0cosl)                                                 \
-    (SclPriBuffDirty.SclColOffset = 1,                                         \
-     SclColOffset.ColorOffsetSelect =                                          \
-         (SclColOffset.ColorOffsetSelect & 0xFFEF) | ((r0cosl) << 4))
+    #define SCL_SET_R0COSL(r0cosl)                                             \
+        (SclPriBuffDirty.SclColOffset = 1,                                     \
+         SclColOffset.ColorOffsetSelect =                                      \
+             (SclColOffset.ColorOffsetSelect & 0xFFEF) | ((r0cosl) << 4))
 
-#define SCL_GET_R0COSL() ((SclColOffset.ColorOffsetSelect & 0x0010) >> 4)
+    #define SCL_GET_R0COSL() ((SclColOffset.ColorOffsetSelect & 0x0010) >> 4)
 
-#define SCL_SET_BKCOSL(bkcosl)                                                 \
-    (SclPriBuffDirty.SclColOffset = 1,                                         \
-     SclColOffset.ColorOffsetSelect =                                          \
-         (SclColOffset.ColorOffsetSelect & 0xFFDF) | ((bkcosl) << 5))
+    #define SCL_SET_BKCOSL(bkcosl)                                             \
+        (SclPriBuffDirty.SclColOffset = 1,                                     \
+         SclColOffset.ColorOffsetSelect =                                      \
+             (SclColOffset.ColorOffsetSelect & 0xFFDF) | ((bkcosl) << 5))
 
-#define SCL_GET_BKCOSL() ((SclColOffset.ColorOffsetSelect & 0x0020) >> 5)
+    #define SCL_GET_BKCOSL() ((SclColOffset.ColorOffsetSelect & 0x0020) >> 5)
 
-#define SCL_SET_SPCOSL(spcosl)                                                 \
-    (SclPriBuffDirty.SclColOffset = 1,                                         \
-     SclColOffset.ColorOffsetSelect =                                          \
-         (SclColOffset.ColorOffsetSelect & 0xFFBF) | ((spcosl) << 6))
+    #define SCL_SET_SPCOSL(spcosl)                                             \
+        (SclPriBuffDirty.SclColOffset = 1,                                     \
+         SclColOffset.ColorOffsetSelect =                                      \
+             (SclColOffset.ColorOffsetSelect & 0xFFBF) | ((spcosl) << 6))
 
-#define SCL_GET_SPCOSL() ((SclColOffset.ColorOffsetSelect & 0x0040) >> 6)
+    #define SCL_GET_SPCOSL() ((SclColOffset.ColorOffsetSelect & 0x0040) >> 6)
 
-#define SCL_SET_COARD(coard)                                                   \
-    (SclPriBuffDirty.SclColOffset = 1, SclColOffset.ColorOffsetA_RED = (coard))
+    #define SCL_SET_COARD(coard)                                               \
+        (SclPriBuffDirty.SclColOffset = 1,                                     \
+         SclColOffset.ColorOffsetA_RED = (coard))
 
-#define SCL_GET_COARD() (SclColOffset.ColorOffsetA_RED & 0x01FF)
+    #define SCL_GET_COARD() (SclColOffset.ColorOffsetA_RED & 0x01FF)
 
-#define SCL_SET_COAGR(coagr)                                                   \
-    (SclPriBuffDirty.SclColOffset = 1,                                         \
-     SclColOffset.ColorOffsetA_GREEN = (coagr))
+    #define SCL_SET_COAGR(coagr)                                               \
+        (SclPriBuffDirty.SclColOffset = 1,                                     \
+         SclColOffset.ColorOffsetA_GREEN = (coagr))
 
-#define SCL_GET_COAGR() (SclColOffset.ColorOffsetA_GREEN & 0x01FF)
+    #define SCL_GET_COAGR() (SclColOffset.ColorOffsetA_GREEN & 0x01FF)
 
-#define SCL_SET_COABL(coabl)                                                   \
-    (SclPriBuffDirty.SclColOffset = 1, SclColOffset.ColorOffsetA_BLUE = (coabl))
+    #define SCL_SET_COABL(coabl)                                               \
+        (SclPriBuffDirty.SclColOffset = 1,                                     \
+         SclColOffset.ColorOffsetA_BLUE = (coabl))
 
-#define SCL_GET_COABL() (SclColOffset.ColorOffsetA_BLUE & 0x01FF)
+    #define SCL_GET_COABL() (SclColOffset.ColorOffsetA_BLUE & 0x01FF)
 
-#define SCL_SET_COBRD(cobrd)                                                   \
-    (SclPriBuffDirty.SclColOffset = 1, SclColOffset.ColorOffsetB_RED = (cobrd))
+    #define SCL_SET_COBRD(cobrd)                                               \
+        (SclPriBuffDirty.SclColOffset = 1,                                     \
+         SclColOffset.ColorOffsetB_RED = (cobrd))
 
-#define SCL_GET_COBRD() (SclColOffset.ColorOffsetB_RED & 0x01FF)
+    #define SCL_GET_COBRD() (SclColOffset.ColorOffsetB_RED & 0x01FF)
 
-#define SCL_SET_COBGR(cobgr)                                                   \
-    (SclPriBuffDirty.SclColOffset = 1,                                         \
-     SclColOffset.ColorOffsetB_GREEN = (cobgr))
+    #define SCL_SET_COBGR(cobgr)                                               \
+        (SclPriBuffDirty.SclColOffset = 1,                                     \
+         SclColOffset.ColorOffsetB_GREEN = (cobgr))
 
-#define SCL_GET_COBGR() (SclColOffset.ColorOffsetB_GREEN & 0x01FF)
+    #define SCL_GET_COBGR() (SclColOffset.ColorOffsetB_GREEN & 0x01FF)
 
-#define SCL_SET_COBBL(cobbl)                                                   \
-    (SclPriBuffDirty.SclColOffset = 1, SclColOffset.ColorOffsetB_BLUE = (cobbl))
+    #define SCL_SET_COBBL(cobbl)                                               \
+        (SclPriBuffDirty.SclColOffset = 1,                                     \
+         SclColOffset.ColorOffsetB_BLUE = (cobbl))
 
-#define SCL_GET_COBBL() (SclColOffset.ColorOffsetB_BLUE & 0x01FF)
+    #define SCL_GET_COBBL() (SclColOffset.ColorOffsetB_BLUE & 0x01FF)
 
-#define SCL_SET_N0SDEN(n0sden)                                                 \
-    (SclPriBuffDirty.SclOtherPri = 1,                                          \
-     SclOtherPri.ShadowControl =                                               \
-         (SclOtherPri.ShadowControl & 0xFFFE) | ((n0sden)))
+    #define SCL_SET_N0SDEN(n0sden)                                             \
+        (SclPriBuffDirty.SclOtherPri = 1,                                      \
+         SclOtherPri.ShadowControl =                                           \
+             (SclOtherPri.ShadowControl & 0xFFFE) | ((n0sden)))
 
-#define SCL_GET_N0SDEN() ((SclOtherPri.ShadowControl & 0x0001))
+    #define SCL_GET_N0SDEN() ((SclOtherPri.ShadowControl & 0x0001))
 
-#define SCL_SET_N1SDEN(n1sden)                                                 \
-    (SclPriBuffDirty.SclOtherPri = 1,                                          \
-     SclOtherPri.ShadowControl =                                               \
-         (SclOtherPri.ShadowControl & 0xFFFD) | ((n1sden) << 1))
+    #define SCL_SET_N1SDEN(n1sden)                                             \
+        (SclPriBuffDirty.SclOtherPri = 1,                                      \
+         SclOtherPri.ShadowControl =                                           \
+             (SclOtherPri.ShadowControl & 0xFFFD) | ((n1sden) << 1))
 
-#define SCL_GET_N1SDEN() ((SclOtherPri.ShadowControl & 0x0002) >> 1)
+    #define SCL_GET_N1SDEN() ((SclOtherPri.ShadowControl & 0x0002) >> 1)
 
-#define SCL_SET_N2SDEN(n2sden)                                                 \
-    (SclPriBuffDirty.SclOtherPri = 1,                                          \
-     SclOtherPri.ShadowControl =                                               \
-         (SclOtherPri.ShadowControl & 0xFFFB) | ((n2sden) << 2))
+    #define SCL_SET_N2SDEN(n2sden)                                             \
+        (SclPriBuffDirty.SclOtherPri = 1,                                      \
+         SclOtherPri.ShadowControl =                                           \
+             (SclOtherPri.ShadowControl & 0xFFFB) | ((n2sden) << 2))
 
-#define SCL_GET_N2SDEN() ((SclOtherPri.ShadowControl & 0x0004) >> 2)
+    #define SCL_GET_N2SDEN() ((SclOtherPri.ShadowControl & 0x0004) >> 2)
 
-#define SCL_SET_N3SDEN(n3sden)                                                 \
-    (SclPriBuffDirty.SclOtherPri = 1,                                          \
-     SclOtherPri.ShadowControl =                                               \
-         (SclOtherPri.ShadowControl & 0xFFF7) | ((n3sden) << 3))
+    #define SCL_SET_N3SDEN(n3sden)                                             \
+        (SclPriBuffDirty.SclOtherPri = 1,                                      \
+         SclOtherPri.ShadowControl =                                           \
+             (SclOtherPri.ShadowControl & 0xFFF7) | ((n3sden) << 3))
 
-#define SCL_GET_N3SDEN() ((SclOtherPri.ShadowControl & 0x0008) >> 3)
+    #define SCL_GET_N3SDEN() ((SclOtherPri.ShadowControl & 0x0008) >> 3)
 
-#define SCL_SET_R0SDEN(r0sden)                                                 \
-    (SclPriBuffDirty.SclOtherPri = 1,                                          \
-     SclOtherPri.ShadowControl =                                               \
-         (SclOtherPri.ShadowControl & 0xFFEF) | ((r0sden) << 4))
+    #define SCL_SET_R0SDEN(r0sden)                                             \
+        (SclPriBuffDirty.SclOtherPri = 1,                                      \
+         SclOtherPri.ShadowControl =                                           \
+             (SclOtherPri.ShadowControl & 0xFFEF) | ((r0sden) << 4))
 
-#define SCL_GET_R0SDEN() ((SclOtherPri.ShadowControl & 0x0010) >> 4)
+    #define SCL_GET_R0SDEN() ((SclOtherPri.ShadowControl & 0x0010) >> 4)
 
-#define SCL_SET_BKSDEN(bksden)                                                 \
-    (SclPriBuffDirty.SclOtherPri = 1,                                          \
-     SclOtherPri.ShadowControl =                                               \
-         (SclOtherPri.ShadowControl & 0xFFDF) | ((bksden) << 5))
+    #define SCL_SET_BKSDEN(bksden)                                             \
+        (SclPriBuffDirty.SclOtherPri = 1,                                      \
+         SclOtherPri.ShadowControl =                                           \
+             (SclOtherPri.ShadowControl & 0xFFDF) | ((bksden) << 5))
 
-#define SCL_GET_BKSDEN() ((SclOtherPri.ShadowControl & 0x0020) >> 5)
+    #define SCL_GET_BKSDEN() ((SclOtherPri.ShadowControl & 0x0020) >> 5)
 
-#define SCL_SET_TPSDSL(tpsden)                                                 \
-    (SclPriBuffDirty.SclOtherPri = 1,                                          \
-     SclOtherPri.ShadowControl =                                               \
-         (SclOtherPri.ShadowControl & 0xFEFF) | ((tpsden) << 8))
+    #define SCL_SET_TPSDSL(tpsden)                                             \
+        (SclPriBuffDirty.SclOtherPri = 1,                                      \
+         SclOtherPri.ShadowControl =                                           \
+             (SclOtherPri.ShadowControl & 0xFEFF) | ((tpsden) << 8))
 
-#define SCL_GET_TPSDSL() ((SclOtherPri.ShadowControl & 0x0100) >> 8)
+    #define SCL_GET_TPSDSL() ((SclOtherPri.ShadowControl & 0x0100) >> 8)
 
-#define SCL_RBG0 0x00000001
-#define SCL_RBG1 0x00000002
-#define SCL_NBG0 0x00000004
-#define SCL_NBG1 0x00000008
-#define SCL_NBG2 0x00000010
-#define SCL_NBG3 0x00000020
+    #define SCL_RBG0 0x00000001
+    #define SCL_RBG1 0x00000002
+    #define SCL_NBG0 0x00000004
+    #define SCL_NBG1 0x00000008
+    #define SCL_NBG2 0x00000010
+    #define SCL_NBG3 0x00000020
 
-#define SCL_EXBG 0x00000080
-#define SCL_SPR 0x00000100
-#define SCL_SP0 0x00000100
-#define SCL_SP1 0x00000200
-#define SCL_SP2 0x00000400
-#define SCL_SP3 0x00000800
-#define SCL_SP4 0x00001000
-#define SCL_SP5 0x00002000
-#define SCL_SP6 0x00004000
-#define SCL_SP7 0x00008000
-#define SCL_RP 0x00010000
-#define SCL_RP_R 0xfffeffff
-#define SCL_CC 0x00020000
-#define SCL_LNCL 0x00040000
-#define SCL_BACK 0x00080000
+    #define SCL_EXBG 0x00000080
+    #define SCL_SPR 0x00000100
+    #define SCL_SP0 0x00000100
+    #define SCL_SP1 0x00000200
+    #define SCL_SP2 0x00000400
+    #define SCL_SP3 0x00000800
+    #define SCL_SP4 0x00001000
+    #define SCL_SP5 0x00002000
+    #define SCL_SP6 0x00004000
+    #define SCL_SP7 0x00008000
+    #define SCL_RP 0x00010000
+    #define SCL_RP_R 0xfffeffff
+    #define SCL_CC 0x00020000
+    #define SCL_LNCL 0x00040000
+    #define SCL_BACK 0x00080000
 
-#define SCL_RBG_TB_A SCL_RBG0
-#define SCL_RBG_TB_B SCL_RBG1
+    #define SCL_RBG_TB_A SCL_RBG0
+    #define SCL_RBG_TB_B SCL_RBG1
 
-#define SCL_CRM15_1024 0
-#define SCL_CRM15_2048 1
-#define SCL_CRM24_1024 2
+    #define SCL_CRM15_1024 0
+    #define SCL_CRM15_2048 1
+    #define SCL_CRM24_1024 2
 
-#define SCL_TYPE0 0
-#define SCL_TYPE1 1
-#define SCL_TYPE2 2
-#define SCL_TYPE3 3
-#define SCL_TYPE4 4
-#define SCL_TYPE5 5
-#define SCL_TYPE6 6
-#define SCL_TYPE7 7
-#define SCL_TYPE8 8
-#define SCL_TYPE9 9
-#define SCL_TYPEA 10
-#define SCL_TYPEB 11
-#define SCL_TYPEC 12
-#define SCL_TYPED 13
-#define SCL_TYPEE 14
-#define SCL_TYPEF 15
+    #define SCL_TYPE0 0
+    #define SCL_TYPE1 1
+    #define SCL_TYPE2 2
+    #define SCL_TYPE3 3
+    #define SCL_TYPE4 4
+    #define SCL_TYPE5 5
+    #define SCL_TYPE6 6
+    #define SCL_TYPE7 7
+    #define SCL_TYPE8 8
+    #define SCL_TYPE9 9
+    #define SCL_TYPEA 10
+    #define SCL_TYPEB 11
+    #define SCL_TYPEC 12
+    #define SCL_TYPED 13
+    #define SCL_TYPEE 14
+    #define SCL_TYPEF 15
 
-#define SCL_PALETTE 0
-#define SCL_MIX 1
+    #define SCL_PALETTE 0
+    #define SCL_MIX 1
 
-#define SCL_MSB_SHADOW 0
-#define SCL_SP_WINDOW 1
+    #define SCL_MSB_SHADOW 0
+    #define SCL_SP_WINDOW 1
 
-#define SCL_IF_BEHIND 0
-#define SCL_IF_EQUAL 1
-#define SCL_IF_FRONT 2
-#define SCL_MSB_ON 3
+    #define SCL_IF_BEHIND 0
+    #define SCL_IF_EQUAL 1
+    #define SCL_IF_FRONT 2
+    #define SCL_MSB_ON 3
 
-#define SCL_OFFSET_A 0
-#define SCL_OFFSET_B 1
+    #define SCL_OFFSET_A 0
+    #define SCL_OFFSET_B 1
 
 #endif
 

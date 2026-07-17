@@ -13,9 +13,9 @@ static NowLoadingModel g_NowLoadingModel;
 
 // Function used in a good number of places throughout
 #ifdef VERSION_PSP
-#define LOADFILESIM_PSPALT(F, T) func_psp_090FAB30(F, T, true)
+    #define LOADFILESIM_PSPALT(F, T) func_psp_090FAB30(F, T, true)
 #else
-#define LOADFILESIM_PSPALT(F, T) LoadFileSim(F, T)
+    #define LOADFILESIM_PSPALT(F, T) LoadFileSim(F, T)
 #endif
 
 void SetGameState(GameState gameState) {
@@ -360,35 +360,35 @@ static RECT D_800A01C0[] = {
 static char* D_psp_0914C3D8[] = {"alucard ", "richter ", "maria   "};
 
 static u8 game_over_left_it[] = {
-#include "../dra/gen/game_over_left_it.h"
+    #include "../dra/gen/game_over_left_it.h"
 };
 
 static u8 game_over_left_sp[] = {
-#include "../dra/gen/game_over_left_sp.h"
+    #include "../dra/gen/game_over_left_sp.h"
 };
 
 static u8 game_over_left_fr[] = {
-#include "../dra/gen/game_over_left_fr.h"
+    #include "../dra/gen/game_over_left_fr.h"
 };
 
 static u8 game_over_left_ge[] = {
-#include "../dra/gen/game_over_left_ge.h"
+    #include "../dra/gen/game_over_left_ge.h"
 };
 
 static u8 game_over_right_it[] = {
-#include "../dra/gen/game_over_right_it.h"
+    #include "../dra/gen/game_over_right_it.h"
 };
 
 static u8 game_over_right_sp[] = {
-#include "../dra/gen/game_over_right_sp.h"
+    #include "../dra/gen/game_over_right_sp.h"
 };
 
 static u8 game_over_right_fr[] = {
-#include "../dra/gen/game_over_right_fr.h"
+    #include "../dra/gen/game_over_right_fr.h"
 };
 
 static u8 game_over_right_ge[] = {
-#include "../dra/gen/game_over_right_ge.h"
+    #include "../dra/gen/game_over_right_ge.h"
 };
 
 static u_long* D_psp_09156F10[] = {
@@ -1093,26 +1093,26 @@ extern u8 D_psp_09146400;
 extern u8 D_psp_09146401;
 
 u8 D_psp_09156F48[] = {
-#include "../dra/gen/D_psp_09156F48.h"
+    #include "../dra/gen/D_psp_09156F48.h"
 };
 u16 D_psp_0915AF48[] = {
-#include "../dra/gen/D_psp_0915AF48.h"
+    #include "../dra/gen/D_psp_0915AF48.h"
 };
 
 static u8 loading_fr[] = {
-#include "../dra/gen/loading_fr.h"
+    #include "../dra/gen/loading_fr.h"
 };
 
 static u8 loading_it[] = {
-#include "../dra/gen/loading_it.h"
+    #include "../dra/gen/loading_it.h"
 };
 
 static u8 loading_ge[] = {
-#include "../dra/gen/loading_ge.h"
+    #include "../dra/gen/loading_ge.h"
 };
 
 static u8 loading_sp[] = {
-#include "../dra/gen/loading_sp.h"
+    #include "../dra/gen/loading_sp.h"
 };
 
 static u_long* D_psp_0915E4E8[] = {
@@ -1298,9 +1298,9 @@ void HandleNowLoading(void) {
     NowLoadingModel* nowLoadingModel = &g_NowLoadingModel;
 
 #ifdef VERSION_PSP
-#define ANIM_LIMIT Play_PrepareNextStage
+    #define ANIM_LIMIT Play_PrepareNextStage
 #else
-#define ANIM_LIMIT Play_Default
+    #define ANIM_LIMIT Play_Default
 #endif
     if (g_GameStep >= ANIM_LIMIT && g_GameStep < Play_16) {
         AnimateNowLoading(nowLoadingModel, 0x40, 0x70, false);
@@ -1822,35 +1822,35 @@ void HandleNowLoading(void) {
 }
 #ifdef VERSION_PSP
 static u8 intro_left_sp[] = {
-#include "../dra/gen/intro_left_sp.h"
+    #include "../dra/gen/intro_left_sp.h"
 };
 
 static u8 intro_left_it[] = {
-#include "../dra/gen/intro_left_it.h"
+    #include "../dra/gen/intro_left_it.h"
 };
 
 static u8 intro_left_ge[] = {
-#include "../dra/gen/intro_left_ge.h"
+    #include "../dra/gen/intro_left_ge.h"
 };
 
 static u8 intro_left_fr[] = {
-#include "../dra/gen/intro_left_fr.h"
+    #include "../dra/gen/intro_left_fr.h"
 };
 
 static u8 intro_right_sp[] = {
-#include "../dra/gen/intro_right_sp.h"
+    #include "../dra/gen/intro_right_sp.h"
 };
 
 static u8 intro_right_it[] = {
-#include "../dra/gen/intro_right_it.h"
+    #include "../dra/gen/intro_right_it.h"
 };
 
 static u8 intro_right_ge[] = {
-#include "../dra/gen/intro_right_ge.h"
+    #include "../dra/gen/intro_right_ge.h"
 };
 
 static u8 intro_right_fr[] = {
-#include "../dra/gen/intro_right_fr.h"
+    #include "../dra/gen/intro_right_fr.h"
 };
 
 static u_long* D_psp_0915FBF8[] = {
@@ -1923,11 +1923,11 @@ void HandleVideoPlayback(void) {
 #ifndef VERSION_PSP
             if (temp == 96) {
                 prim2 = prim->next;
-#if defined(VERSION_US)
+    #if defined(VERSION_US)
                 prim2->drawMode = DRAW_HIDE;
-#elif defined(VERSION_HD)
+    #elif defined(VERSION_HD)
                 prim2->drawMode = DRAW_DEFAULT;
-#endif
+    #endif
             }
 #endif
 

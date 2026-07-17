@@ -3,7 +3,7 @@
 
 #ifdef VERSION_PSP
 u8 gfx_stage_name_jp_sm[] = {
-#include "gen/gfx_stage_name_jp_sm.h"
+    #include "gen/gfx_stage_name_jp_sm.h"
 };
 #endif
 
@@ -14,22 +14,22 @@ u8 gfx_stage_name_jp_lg[] = {
 #ifdef VERSION_US
 // unreferenced
 u8 D_801843AC[] = {
-#include "gen/D_801843AC.h"
+    #include "gen/D_801843AC.h"
 };
 
 // unreferenced
 u8 D_80185BD4[] = {
-#include "gen/D_80185BD4.h"
+    #include "gen/D_80185BD4.h"
 };
 
 // unreferenced
 u8 D_80187470[] = {
-#include "gen/D_80187470.h"
+    #include "gen/D_80187470.h"
 };
 
 // unreferenced
 u8 D_80187CA4[] = {
-#include "gen/D_80187CA4.h"
+    #include "gen/D_80187CA4.h"
 };
 #endif
 
@@ -87,7 +87,7 @@ u8 gfx_spectral_sword[] = {
 
 #ifndef VERSION_PSP
 u8 gfx_sealed_door[] = {
-#include "gen/gfx_sealed_door.h"
+    #include "gen/gfx_sealed_door.h"
 };
 #endif
 
@@ -113,11 +113,11 @@ u8 gfx_cutscene_2[] = {
 
 #ifndef VERSION_PSP
 u8 gfx_stage_name_en[] = {
-#include "gen/gfx_stage_name_en.h"
+    #include "gen/gfx_stage_name_en.h"
 };
 #else
 u8 gfx_sealed_door[] = {
-#include "gen/gfx_sealed_door.h"
+    #include "gen/gfx_sealed_door.h"
 };
 #endif
 
@@ -127,7 +127,7 @@ u16 pal_skelerang_spittle_bone[] = {
 
 #ifndef VERSION_PSP
 u16 pal_unused_1698C[] = {
-#include "gen/pal_unused_1698C.h"
+    #include "gen/pal_unused_1698C.h"
 };
 #endif
 

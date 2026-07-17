@@ -5,7 +5,7 @@
 
 // This is an unused image that says "Golem Maker". Likely stripped on PSP.
 u8 golem_maker[] = {
-#include "gen/golem_maker.h"
+    #include "gen/golem_maker.h"
 };
 
 #endif
@@ -65,7 +65,7 @@ u8 D_8018E514[] = {
 // Unused. Stripped on PSP. Ifdef here because on PSP the .h file doesn't exist
 #ifndef VERSION_PSP
 u16 e_skyswirl_p[] = {
-#include "gen/e_skyswirl_p.h"
+    #include "gen/e_skyswirl_p.h"
 };
 #endif
 
@@ -88,7 +88,7 @@ u16 pal_dragons[] = {
 // Stripped on PSP
 #if !defined(VERSION_PSP)
 u16 pal_unused[] = {
-#include "gen/pal_unused.h"
+    #include "gen/pal_unused.h"
 };
 #endif
 u16 pal_venus_weed[] = {

@@ -81,11 +81,11 @@ enum ActorNameIndices {
 #define SCRIPT_UNKNOWN_23() CSOP_SCRIPT_UNKNOWN_23
 #define WAIT_FOR_FLAG_RESET(x) CSOP_WAIT_FOR_FLAG_RESET, x
 #if defined(VERSION_PSP) || defined(VERSION_HD)
-#define CS_LINE_SPACING 16
-#define CS_LINE_MAX 3
+    #define CS_LINE_SPACING 16
+    #define CS_LINE_MAX 3
 #else
-#define CS_LINE_SPACING 12
-#define CS_LINE_MAX 4
+    #define CS_LINE_SPACING 12
+    #define CS_LINE_MAX 4
 #endif
 #define ASCII_SPACE 32
 
