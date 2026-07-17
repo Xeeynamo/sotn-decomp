@@ -936,7 +936,7 @@ void RicEntitySlideKick(Entity* entity) {
             entity->hitboxOffY = 12;
             entity->hitboxWidth = 11;
             entity->hitboxHeight = 9;
-            entity->ext.subweapon.subweaponId = 18;
+            entity->ext.subweapon.subweaponId = PL_W_KICK;
             RicSetSubweaponParams(entity);
             entity->ext.subweapon.timer = entity->hitboxState;
             entity->step++;
