@@ -2092,26 +2092,6 @@ typedef struct {
     /* 0x8009748C */ f32 shoveY;
 } unkGraphicsStruct;
 
-typedef struct dumbdudes{
-            RECT D_800ACD80;
-            RECT D_800ACD88;
-            RECT D_800ACD90;
-            RECT D_800ACD98;
-            RECT D_800ACDA0;
-            RECT D_800ACDA8;
-            RECT D_800ACDB0;
-            RECT D_800ACDB8;
-            RECT D_800ACDC0;
-            RECT D_800ACDC8;
-            RECT D_800ACDD0;
-            RECT D_800ACDD8;
-            RECT D_800ACDE0;
-            RECT D_800ACDE8;
-        #ifdef VERSION_US
-            RECT D_800ACDF0;
-        #endif
-} dumbdudes;
-
 #ifdef VERSION_US
 #define VRAM_RECT_COUNT 15
 #else
@@ -2120,7 +2100,6 @@ typedef struct dumbdudes{
 
 typedef union {
     RECT rects[VRAM_RECT_COUNT];
-    dumbdudes dudes;
 } Vram;
 
 // Used in dra/4A538, dra_psp/3250, game.h
