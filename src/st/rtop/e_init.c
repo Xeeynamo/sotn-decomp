@@ -39,7 +39,7 @@ void EntitySkeletonPieces(Entity*);
 void EntityTombstone(Entity*);
 void EntitySkullLord(Entity*);
 void EntitySkullLordOutline(Entity*);
-void EntitySkullLordFlames(Entity*);
+void EntitySkullLordEye(Entity*);
 void EntitySkullLordPieces(Entity*);
 
 PfnEntityUpdate EntityUpdates[] = {
@@ -82,7 +82,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityTombstone,
     EntitySkullLord,
     EntitySkullLordOutline,
-    EntitySkullLordFlames,
+    EntitySkullLordEye,
     EntitySkullLordPieces,
 };
 
