@@ -1,17 +1,21 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rtop.h"
+extern EInit g_EInitSkeletonPieces;
 
 // Yorick
-extern u8 D_us_80181490[];
-extern u8 D_us_801814A0[];
-extern u8 D_us_801814BC[];
-extern s32 D_us_801814C4[];
-extern s32 D_us_801814E0[];
-extern s16 D_us_801814FC[];
-extern s16 D_us_8018150C[];
-extern EInit g_EInitSkeletonPieces;
-extern s16 D_us_80181468[];
-extern s16 D_us_80181478[];
+static s16 D_us_80181468[] = {0, 20, 0, 4, 8, -4, -16, 0};
+static s16 D_us_80181478[] = {0, 20, 12, 0};
+static s16 D_us_80181480[] = {0, 4, 0, 4, 8, -4, -16, 0};
+static u8 D_us_80181490[] = {3, 24, 3, 25, 3, 26, 3, 27, 3, 28, 3, 29, 0};
+static u8 D_us_801814A0[] = {2, 24, 2, 25, 2, 26, 2, 25, 0};
+static u16 anim_bone_rot[] = {0x100, 0x80, 0x48, 0x20, 0x40, 0x10, 0x18, 0};
+static u8 D_us_801814BC[] = {48, 32, 20, 12, 24, 16, 20, 0};
+static s32 D_us_801814C4[] = {
+    FIX(0.75), FIX(1.75), FIX(1.5), FIX(1.0), FIX(2.0), FIX(1.75), FIX(0.75)};
+static s32 D_us_801814E0[] = {FIX(-5.0), FIX(-3.0),   FIX(-2.0), FIX(-3.0),
+                              FIX(-4.0), FIX(-0.875), FIX(-4.0)};
+static s16 D_us_801814FC[] = {-4, 0, 4, -4, -4, 4, 0, 0};
+static s16 D_us_8018150C[] = {-16, -8, -4, -4, 9, 9, 0, 0};
 
 void EntityYorick(Entity* self) {
     Entity* entity;
@@ -179,7 +183,6 @@ void EntityYorick(Entity* self) {
 }
 
 extern EInit D_us_801805E4;
-extern u16 D_us_80181480[];
 
 void EntityYorickSkull(Entity* self) {
     Entity* entity;
@@ -287,8 +290,6 @@ void EntityYorickSkull(Entity* self) {
                        FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
     }
 }
-
-extern u16 anim_bone_rot[];
 
 void EntitySkeletonPieces(Entity* self) { // From skeleton death explosion
     if (self->step) {

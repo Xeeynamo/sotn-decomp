@@ -57,6 +57,8 @@ segments:
       - [0x1964, data]
       - [0x19BC, .data, e_blue_axe_knight]
       - [0x1B78, data]
+      - [0x1BFC, .data, e_clock_tower]
+      - [0x20AC, data]
       - [0x288E8, .rodata, e_lock_camera]
       - [0x28904, .rodata, e_richter_fight_trigger]
       - [0x2891C, .rodata, e_breakable]

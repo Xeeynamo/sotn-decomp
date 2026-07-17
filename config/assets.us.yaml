@@ -1196,6 +1196,32 @@ files:
     asset_path: assets/st/rtop
     src_path: src/st/rtop
     splat_config_path: config/splat.us.strtop.yaml
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x40, sprite_banks, sprite_banks]
+          - [0xA0, paldef, palette_def]
+          - [0xE8, layers, layers]
+          - [0x230, gfx_banks, graphics_banks]
+          - [0x2FC, layout, entity_layouts]
+          - [0x4A4, skip]
+          - [0x1530, rooms, rooms]
+          - [0x15B4, skip]
+          - [0x22FC, cmpgfx, D_801822FC, 128, 128, 4]
+          - [0x2640, cmpgfx, D_80182640, 128, 128, 4]
+          - [0x58E0, cmpgfx, D_801858E0, 128, 128, 4]
+          - [0x6294, cmpgfx, D_80186294, 128, 128, 4]
+          - [0x6EA0, cmpgfx, D_80186EA0, 128, 128, 4]
+          - [0x7B04, cmpgfx, D_80187B04, 128, 128, 4]
+          - [0x83F8, cmpgfx, D_801883F8, 128, 128, 4]
+          - [0x9878, cmpgfx, D_80189878, 128, 128, 4]
+          - [0xAC34, palette, D_8018AC34, 16]
+          - [0xB054, palette, D_8018B054, 16]
+          - [0xB154, palette, D_8018B154, 16]
+          - [0xB174, palette, D_8018B174, 16]
+          - [0xB1B4, palette, D_8018B1B4, 16]
+          - [0xB274, skip]
   - target: disks/us/ST/RWRP/RWRP.BIN
     asset_path: assets/st/rwrp
     src_path: src/st/rwrp

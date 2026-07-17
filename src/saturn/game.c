@@ -64,7 +64,7 @@ void func_800F2860(void) {
 }
 
 // RunMainEngine
-INCLUDE_ASM("asm/saturn/game/data", d6070A60, d_06070A60);
+INCLUDE_ASM("asm/saturn/game/f_match", f6070A60, RunMainEngine);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6071C3C, func_06071C3C);
 
 extern s32 DAT_0605c120;
@@ -85,7 +85,7 @@ extern s32 D_8013759C;
 extern s32 D_801375A4;
 
 void FUN_060666a4(s32);
-void FUN_060726a8(s32);
+void SetDefaultSCLPriority(s32);
 void FUN_0606d358(s32);
 void func_0600ff08(void);
 void func_06009510(s32);
@@ -221,7 +221,7 @@ void InitRoom(void) {
     DAT_0605c680.unk34 = DAT_0605c680.unk4;
     DAT_0605c680.unk40 = DAT_0605c680.unkC;
     DAT_0605c680.unk38 = DAT_0605c680.unk10;
-    FUN_060726a8(0);
+    SetDefaultSCLPriority(0);
     func_800F0CD8(0);
     func_800F0CD8(0);
     FUN_060666a4(DAT_0605d750.unk4);
@@ -253,8 +253,43 @@ void InitRoom(void) {
     }
 }
 
-// _SET_DEFAULT_SCL_PRIORITY
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f60726A8, func_060726A8);
+extern u8* DAT_060645b8;
+
+// original name: SET_DEFAULT_SCL_PRIORITY
+void SetDefaultSCLPriority(s32 arg0) {
+    u8* ptr;
+
+    if (DAT_0605d750.unk4 < 0x20) {
+        ptr = &DAT_060645b8[DAT_0605d750.unk4 * 12];
+        SCL_SetPriority(0x4, ptr[0]);
+        SCL_SetPriority(0x8, ptr[1]);
+        SCL_SetPriority(0x10, ptr[2]);
+        SCL_SetPriority(0x20, ptr[3]);
+        SCL_SetPriority(0x100, ptr[4]);
+        SCL_SetPriority(0x200, ptr[5]);
+        SCL_SetPriority(0x400, ptr[6]);
+        SCL_SetPriority(0x800, ptr[7]);
+        SCL_SetPriority(0x1000, ptr[8]);
+        SCL_SetPriority(0x2000, ptr[9]);
+        SCL_SetPriority(0x4000, ptr[10]);
+        SCL_SetPriority(0x8000, ptr[11]);
+    } else {
+        SCL_SetPriority(0x4, 7);
+        SCL_SetPriority(0x8, 4);
+        SCL_SetPriority(0x10, 2);
+        SCL_SetPriority(0x20, 3);
+        SCL_SetPriority(0x100, 3);
+        SCL_SetPriority(0x200, 1);
+        SCL_SetPriority(0x400, 2);
+        SCL_SetPriority(0x800, 3);
+        SCL_SetPriority(0x1000, 4);
+        SCL_SetPriority(0x2000, 6);
+        SCL_SetPriority(0x4000, 7);
+        SCL_SetPriority(0x8000, 0);
+    }
+    SCL_SetColMixMode(6, 1);
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60727DC, func_060727DC);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607284C, func_0607284C);
 INCLUDE_ASM("asm/saturn/game/data", d60728B4, d_060728B4);
@@ -1513,7 +1548,7 @@ u8 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
             if ((flags & 4) && checks ^ 2 && player->velocityY >= 0) {
                 if (y < 8) {
                     player->posY.i.hi -= y;
-                    g_unkGraphicsStruct.unk94 -= y;
+                    g_unkGraphicsStruct.shoveY.i.hi -= y;
                     g_Player.vram_flag |= VRAM_FLAG_UNK40 | TOUCHING_GROUND;
                     if (plStatus & 3) {
                         return 0;
@@ -1526,7 +1561,7 @@ u8 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
                 y = h - y;
                 if (y < 0x10) {
                     player->posY.i.hi += y;
-                    g_unkGraphicsStruct.unk94 += y;
+                    g_unkGraphicsStruct.shoveY.i.hi += y;
                     g_Player.vram_flag |= VRAM_FLAG_UNK40 | TOUCHING_CEILING;
                     if (plStatus & 3) {
                         return 0;
@@ -1543,7 +1578,7 @@ u8 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
                         x = 2;
                     }
                     player->posX.i.hi += x;
-                    g_unkGraphicsStruct.unk90 += x;
+                    g_unkGraphicsStruct.shoveX.i.hi += x;
                     g_Player.vram_flag |= VRAM_FLAG_UNK40 | TOUCHING_L_WALL;
                     return 1;
                 } else {
@@ -1551,7 +1586,7 @@ u8 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
                         x = 2;
                     }
                     player->posX.i.hi -= x;
-                    g_unkGraphicsStruct.unk90 -= x;
+                    g_unkGraphicsStruct.shoveX.i.hi -= x;
                     g_Player.vram_flag |= VRAM_FLAG_UNK40 | TOUCHING_R_WALL;
                     return 1;
                 }

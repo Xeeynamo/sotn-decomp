@@ -63,11 +63,6 @@ segments:
       - start: 0xA938
         type: c
         file: game
-        end: 0xAA5F
-        # function that doesn't have an rts TODO
-      - start: 0xAA60
-        type: data
-        file: game
         end: 0xBC3B
       - start: 0xBC3C
         type: c
