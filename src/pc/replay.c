@@ -77,7 +77,7 @@ static unsigned pdrfFrameCount = 0;
 static long pdrfCountFileOffset = 0;
 
 static char* replayPadFrames = NULL;
-static DriftRecord* replayDrifRecords = NULL;
+static DriftRecord* replayDriftRecords = NULL;
 static unsigned replayFrameCount = 0;
 static unsigned replayFrameCursor = 0;
 
@@ -102,7 +102,7 @@ static bool ReadChunkHeader(
     return true;
 }
 
-static void CaptureDrifRecord(DriftRecord* out) {
+static void CaptureDriftRecord(DriftRecord* out) {
     out->posXHi = g_Entities[0].posX.i.hi;
     out->posYHi = g_Entities[0].posY.i.hi;
     out->stageId = g_StageId;
@@ -130,7 +130,7 @@ static void CaptureDrifRecord(DriftRecord* out) {
         matched = false;                                                       \
     }
 
-static bool DrifRecordsMatch(const DriftRecord* a, const DriftRecord* b) {
+static bool DriftRecordsMatch(const DriftRecord* a, const DriftRecord* b) {
     bool matched = true;
     DRIF_FIELD_MISMATCH(posXHi);
     DRIF_FIELD_MISMATCH(posYHi);
@@ -309,7 +309,7 @@ fail:
     fseek(f, chunkEnd, SEEK_SET);
 }
 
-#define PDRF_FRAME_LEN (PSYZ_PAD_BUF_LEN + sizeof(DrifRecord))
+#define PDRF_FRAME_LEN (PSYZ_PAD_BUF_LEN + sizeof(DriftRecord))
 
 static void LoadPdrfChunk(FILE* f, unsigned length) {
     long payloadStart = ftell(f);
@@ -337,11 +337,11 @@ static void LoadPdrfChunk(FILE* f, unsigned length) {
     fseek(f, payloadStart + sizeof(frameCount), SEEK_SET);
 
     replayPadFrames = malloc((size_t)frameCount * PSYZ_PAD_BUF_LEN);
-    replayDrifRecords = malloc((size_t)frameCount * sizeof(DriftRecord));
+    replayDriftRecords = malloc((size_t)frameCount * sizeof(DriftRecord));
     for (i = 0; i < frameCount; i++) {
         if (fread(&replayPadFrames[(size_t)i * PSYZ_PAD_BUF_LEN], 1,
                   PSYZ_PAD_BUF_LEN, f) != PSYZ_PAD_BUF_LEN ||
-            fread(&replayDrifRecords[i], sizeof(DrifRecord), 1, f) != 1) {
+            fread(&replayDriftRecords[i], sizeof(DriftRecord), 1, f) != 1) {
             WARNF("PDRF chunk has fewer frames than declared; got %u of %u", i,
                   frameCount);
             frameCount = i;
@@ -383,7 +383,7 @@ static void RecordFrame(void) {
     fwrite(frame, 1, sizeof(frame), file);
 
     DriftRecord drift;
-    CaptureDrifRecord(&drift);
+    CaptureDriftRecord(&drift);
     fwrite(&drift, sizeof(drift), 1, file);
 
     // ensure frame gets written in the event the game crashes right after
@@ -397,9 +397,9 @@ static void ReplayFrameReal(void) {
         PSYZ_PAD_BUF_LEN);
 
     DriftRecord live;
-    const DriftRecord* expected = &replayDrifRecords[replayFrameCursor];
-    CaptureDrifRecord(&live);
-    if (!didDrift && !DrifRecordsMatch(&live, expected)) {
+    const DriftRecord* expected = &replayDriftRecords[replayFrameCursor];
+    CaptureDriftRecord(&live);
+    if (!didDrift && !DriftRecordsMatch(&live, expected)) {
         didDrift = true;
         WARNF("replay drifted from recording at frame %u; rest of the "
               "playthrough may be inaccurate",
@@ -460,7 +460,7 @@ static void StartRecording(const struct InitGameParams* params) {
         return;
     }
 #if defined(__APPLE__) || defined(__linux__)
-    int fd = fileno(stream);
+    int fd = fileno(file);
     if (fd >= 0) {
         // make fflush non-blocking, useful for very slow drives
         fcntl(fd, F_SETFL, fcntl(fd, F_GETFL, 0) | O_NONBLOCK);
@@ -479,7 +479,7 @@ static void StartRecording(const struct InitGameParams* params) {
     WriteChunkHeader(file, CHUNK_MAGIC_PDRF, 1, 0);
     pdrfCountFileOffset = ftell(file);
     unsigned placeholderFrameCount = 0;
-    fwrite(&placeholderFrameCount, sizeof(placeholderCount), 1, file);
+    fwrite(&placeholderFrameCount, sizeof(placeholderFrameCount), 1, file);
     fflush(file);
 
     mode = REPLAY_MODE_RECORD;
@@ -510,8 +510,8 @@ void Replay_Reset(void) {
         }
         free(replayPadFrames);
         replayPadFrames = NULL;
-        free(replayDrifRecords);
-        replayDrifRecords = NULL;
+        free(replayDriftRecords);
+        replayDriftRecords = NULL;
         replayFrameCount = 0;
         replayFrameCursor = 0;
         exitAfterReplay = false;
