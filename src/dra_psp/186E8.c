@@ -335,7 +335,7 @@ void func_800E2B00(void) {
     sprite->clut = g_ClutIds[g_DebugCurPal];
     AddPrim(&g_CurrentOT[0x1FE], sprite);
     g_GpuUsage.sp++;
-    SetDrawMode(drMode, 0, 0, (D_801362B4 >> 2) + var_s7, &g_Vram.D_800ACD80);
+    SetDrawMode(drMode, 0, 0, (D_801362B4 >> 2) + var_s7, &g_Vram.dudes.D_800ACD80);
     AddPrim(&g_CurrentOT[0x1FE], drMode++);
 
     i = 0;
@@ -381,7 +381,7 @@ void func_800E2B00(void) {
         i++;
     }
 
-    SetDrawMode(drMode, 0, 0, 0, &g_Vram.D_800ACD80);
+    SetDrawMode(drMode, 0, 0, 0, &g_Vram.dudes.D_800ACD80);
     AddPrim(&g_CurrentOT[0x1FE], drMode);
     g_GpuUsage.drawModes++;
 }
@@ -1444,8 +1444,8 @@ void MainGame(void) {
     GsInitVcount();
     g_GpuBuffers[0].next = &g_GpuBuffers[1];
     g_GpuBuffers[1].next = &g_GpuBuffers[0];
-    ClearImage(&g_Vram.D_800ACD88, 0x5A, 0x50, 0x46);
-    ClearImage(&g_Vram.D_800ACD90, 0, 0, 0);
+    ClearImage(&g_Vram.dudes.D_800ACD88, 0x5A, 0x50, 0x46);
+    ClearImage(&g_Vram.dudes.D_800ACD90, 0, 0, 0);
     for (i = 0; i < LEN(g_ApiInit); i++) {
         ((void**)&g_api)[i] = g_ApiInit[i];
     }

@@ -238,30 +238,30 @@ s32 LoadFileSimToMem(SimKind kind) {
     case SIM_1:
         LoadStageTileset(STAGE_PRG_PTR, 0, 0x100);
         DrawSync(0);
-        LoadImage(&g_Vram.D_800ACD98, D_800A04CC);
-        LoadImage(&g_Vram.D_800ACDA8, 0x801C0000);
+        LoadImage(&g_Vram.dudes.D_800ACD98, D_800A04CC);
+        LoadImage(&g_Vram.dudes.D_800ACDA8, 0x801C0000);
         while (DrawSync(1)) {
         }
-        StoreImage(&g_Vram.D_800ACDA8, g_Clut[1]);
+        StoreImage(&g_Vram.dudes.D_800ACDA8, g_Clut[1]);
         break;
     case SIM_STAGE_CHR:
     case SIM_11:
         LoadStageTileset(SIM_CHR0, 0, 0);
         DrawSync(0);
         clutAddr = g_Clut[0];
-        StoreImage(&g_Vram.D_800ACDB8, clutAddr);
+        StoreImage(&g_Vram.dudes.D_800ACDB8, clutAddr);
         if (kind == 11) {
             clutAddr += 0x2000;
-            StoreImage(&g_Vram.D_800ACDB8, clutAddr);
+            StoreImage(&g_Vram.dudes.D_800ACDB8, clutAddr);
             DrawSync(0);
-            LoadImage(&g_Vram.D_800ACDB0, clutAddr);
+            LoadImage(&g_Vram.dudes.D_800ACDB0, clutAddr);
         }
         break;
     case SIM_12:
     case SIM_13:
         LoadStageTileset(SIM_CHR0, 0, 0x100);
         if (kind == 13) {
-            LoadImage(&g_Vram.D_800ACD98, D_800A04CC);
+            LoadImage(&g_Vram.dudes.D_800ACD98, D_800A04CC);
         }
         DrawSync(0);
         break;
@@ -290,24 +290,24 @@ s32 LoadFileSimToMem(SimKind kind) {
         }
         break;
     case SIM_6:
-        LoadImage(&g_Vram.D_800ACDC0, STAGE_PRG_PTR);
+        LoadImage(&g_Vram.dudes.D_800ACDC0, STAGE_PRG_PTR);
         break;
     case SIM_14:
-        LoadImage(&g_Vram.D_800ACDD0, SIM_PTR);
+        LoadImage(&g_Vram.dudes.D_800ACDD0, SIM_PTR);
         break;
     case SIM_21:
-        LoadImage(&g_Vram.D_800ACDE0, SIM_PTR);
+        LoadImage(&g_Vram.dudes.D_800ACDE0, SIM_PTR);
         break;
     case SIM_15:
-        LoadImage(&g_Vram.D_800ACDD8, SIM_PTR);
+        LoadImage(&g_Vram.dudes.D_800ACDD8, SIM_PTR);
         break;
     case SIM_16:
-        LoadImage(&g_Vram.D_800ACDB8, SIM_PTR);
-        StoreImage(&g_Vram.D_800ACDB8, g_Clut[2]);
+        LoadImage(&g_Vram.dudes.D_800ACDB8, SIM_PTR);
+        StoreImage(&g_Vram.dudes.D_800ACDB8, g_Clut[2]);
         break;
     case SIM_17:
-        LoadImage(&g_Vram.D_800ACDA8, SIM_PTR);
-        StoreImage(&g_Vram.D_800ACDA8, g_Clut[0]);
+        LoadImage(&g_Vram.dudes.D_800ACDA8, SIM_PTR);
+        StoreImage(&g_Vram.dudes.D_800ACDA8, g_Clut[0]);
         break;
     }
     return 0;
@@ -325,19 +325,19 @@ bool LoadFilePc(const struct FileUseContent* file) {
     switch (sim->kind) { // slowly replacing the original func
     case SIM_1:
         LoadStageTileset(sim->addr, file->length, 0x100);
-        LoadImage(&g_Vram.D_800ACD98, D_800A04CC);
-        LoadImage(&g_Vram.D_800ACDA8, (u8*)sim->addr + 0x40000);
-        StoreImage(&g_Vram.D_800ACDA8, g_Clut[1]);
+        LoadImage(&g_Vram.dudes.D_800ACD98, D_800A04CC);
+        LoadImage(&g_Vram.dudes.D_800ACDA8, (u8*)sim->addr + 0x40000);
+        StoreImage(&g_Vram.dudes.D_800ACDA8, g_Clut[1]);
         break;
     case SIM_STAGE_CHR:
         LoadStageTileset(sim->addr, file->length, 0);
-        StoreImage(&g_Vram.D_800ACDB8, g_Clut[0]);
+        StoreImage(&g_Vram.dudes.D_800ACDB8, g_Clut[0]);
         break;
     case SIM_12:
         LoadStageTileset(sim->addr, file->length, 0x100);
     case SIM_13:
         LoadStageTileset(sim->addr, file->length, 0x100);
-        LoadImage(&g_Vram.D_800ACD98, D_800A04CC);
+        LoadImage(&g_Vram.dudes.D_800ACD98, D_800A04CC);
         break;
     case 99:
         switch (g_PlayableCharacter) {

@@ -479,51 +479,51 @@ s32 LoadFileSimToMem(SimKind kind) {
         break;
     case SIM_1:
         LoadStageTileset(STAGE_PRG_PTR, 0x100);
-        LoadImage(&g_Vram.D_800ACD98, (u_long*)D_800A04CC);
+        LoadImage(&g_Vram.dudes.D_800ACD98, (u_long*)D_800A04CC);
         D_psp_091CE378 = &D_psp_08D6DC40;
-        LoadImage(&g_Vram.D_800ACDA8, D_psp_091CE378);
+        LoadImage(&g_Vram.dudes.D_800ACDA8, D_psp_091CE378);
         clutAddr = (u_long*)g_Clut[1];
-        StoreImage(&g_Vram.D_800ACDA8, clutAddr);
+        StoreImage(&g_Vram.dudes.D_800ACDA8, clutAddr);
         break;
     case SIM_STAGE_CHR:
     case SIM_11:
         LoadStageTileset(SIM_CHR0, 0);
         clutAddr = (u_long*)g_Clut[0];
-        StoreImage(&g_Vram.D_800ACDB8, clutAddr);
+        StoreImage(&g_Vram.dudes.D_800ACDB8, clutAddr);
         if (kind == SIM_11) {
             clutAddr = (u_long*)g_Clut[2];
-            StoreImage(&g_Vram.D_800ACDB8, clutAddr);
-            LoadImage(&g_Vram.D_800ACDB0, clutAddr);
+            StoreImage(&g_Vram.dudes.D_800ACDB8, clutAddr);
+            LoadImage(&g_Vram.dudes.D_800ACDB0, clutAddr);
         }
         break;
     case SIM_12:
     case SIM_13:
         LoadStageTileset(SIM_CHR0, 0x100);
         if (kind == SIM_13) {
-            LoadImage(&g_Vram.D_800ACD98, (u_long*)D_800A04CC);
+            LoadImage(&g_Vram.dudes.D_800ACD98, (u_long*)D_800A04CC);
         }
         break;
     case SIM_6:
-        LoadImage(&g_Vram.D_800ACDC0, (u_long*)STAGE_PRG_PTR);
+        LoadImage(&g_Vram.dudes.D_800ACDC0, (u_long*)STAGE_PRG_PTR);
         break;
     case SIM_14:
-        LoadImage(&g_Vram.D_800ACDD0, (u_long*)SIM_PTR);
+        LoadImage(&g_Vram.dudes.D_800ACDD0, (u_long*)SIM_PTR);
         break;
     case SIM_21:
-        LoadImage(&g_Vram.D_800ACDE0, (u_long*)SIM_PTR);
+        LoadImage(&g_Vram.dudes.D_800ACDE0, (u_long*)SIM_PTR);
         break;
     case SIM_15:
-        LoadImage(&g_Vram.D_800ACDD8, (u_long*)SIM_PTR);
+        LoadImage(&g_Vram.dudes.D_800ACDD8, (u_long*)SIM_PTR);
         break;
     case SIM_16:
-        LoadImage(&g_Vram.D_800ACDB8, (u_long*)SIM_PTR);
+        LoadImage(&g_Vram.dudes.D_800ACDB8, (u_long*)SIM_PTR);
         clutAddr = (u_long*)g_Clut[2];
-        StoreImage(&g_Vram.D_800ACDB8, clutAddr);
+        StoreImage(&g_Vram.dudes.D_800ACDB8, clutAddr);
         break;
     case SIM_17:
-        LoadImage(&g_Vram.D_800ACDA8, (u_long*)SIM_PTR);
+        LoadImage(&g_Vram.dudes.D_800ACDA8, (u_long*)SIM_PTR);
         clutAddr = (u_long*)g_Clut[0];
-        StoreImage(&g_Vram.D_800ACDA8, clutAddr);
+        StoreImage(&g_Vram.dudes.D_800ACDA8, clutAddr);
         break;
     }
     return 0;
