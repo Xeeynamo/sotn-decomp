@@ -13,6 +13,8 @@
 #include <sys/stat.h>
 #endif
 
+#define PAD_BUF_LEN 16
+
 // Main recording header
 #define RECORDING_MAGIC "SOTN"
 #define RECORDING_VERSION 1
@@ -27,7 +29,7 @@
 #define CHUNK_MAGIC_INIT "INIT"
 
 // Intervaled input + drift check
-#define CHUNK_MAGIC_PDRF "PDRF"
+#define CHUNK_MAGIC_FRAM "FRAM"
 
 #define RECORDINGS_DIR "recordings"
 
@@ -36,23 +38,23 @@ extern bool g_IsQuitRequested;
 typedef struct {
     s16 posXHi;
     s16 posYHi;
-    s32 stageId;
-    s32 servant;
-    u32 subWeapon;
-    s32 level;
+    u8 stageId;
+    u8 servant;
+    u8 subWeapon;
+    u8 level;
+    u16 hp;
+    u16 hpMax;
+    u16 mp;
+    u16 mpMax;
+    u16 hearts;
+    u16 heartsMax;
     u32 exp;
     s32 gold;
-    s32 hp;
-    s32 hpMax;
-    s32 mp;
-    s32 mpMax;
-    s32 hearts;
-    s32 heartsMax;
     u32 randomNext;
     u32 gameStep;
     u32 gameState;
-    u32 cdStep;
 } DriftRecord;
+STATIC_ASSERT(!(sizeof(DriftRecord) % 8), "must be aligned by 8");
 
 typedef struct {
     u32 randomNext;
@@ -65,7 +67,10 @@ typedef struct {
     s32 gameClearFlag;
     u32 roomCount;
     u32 timer;
+    s32 debugPlayer;
+    s32 useDisk;
 } InitScalars;
+STATIC_ASSERT(!(sizeof(InitScalars) % 8), "must be aligned by 8");
 
 enum ReplayMode {
     REPLAY_MODE_NONE,
@@ -79,8 +84,8 @@ static bool didDrift = false;
 static bool exitAfterReplay = false;
 static bool fastReplay = false;
 
-static unsigned pdrfFrameCount = 0;
-static long pdrfCountFileOffset = 0;
+static unsigned frameCount = 0;
+static long framCountFileOffset = 0;
 
 static char* replayPadFrames = NULL;
 static DriftRecord* replayDriftRecords = NULL;
@@ -111,22 +116,21 @@ static bool ReadChunkHeader(
 static void CaptureDriftRecord(DriftRecord* out) {
     out->posXHi = g_Entities[0].posX.i.hi;
     out->posYHi = g_Entities[0].posY.i.hi;
-    out->stageId = g_StageId;
-    out->servant = g_Servant;
-    out->subWeapon = g_Status.subWeapon;
-    out->level = g_Status.level;
+    out->stageId = (u8)g_StageId;
+    out->servant = (u8)g_Servant;
+    out->subWeapon = (u8)g_Status.subWeapon;
+    out->level = (u8)g_Status.level;
+    out->hp = (u16)g_Status.hp;
+    out->hpMax = (u16)g_Status.hpMax;
+    out->mp = (u16)g_Status.mp;
+    out->mpMax = (u16)g_Status.mpMax;
+    out->hearts = (u16)g_Status.hearts;
+    out->heartsMax = (u16)g_Status.heartsMax;
     out->exp = g_Status.exp;
     out->gold = g_Status.gold;
-    out->hp = g_Status.hp;
-    out->hpMax = g_Status.hpMax;
-    out->mp = g_Status.mp;
-    out->mpMax = g_Status.mpMax;
-    out->hearts = g_Status.hearts;
-    out->heartsMax = g_Status.heartsMax;
     out->randomNext = g_randomNext;
     out->gameStep = g_GameStep;
     out->gameState = g_GameState;
-    out->cdStep = g_CdStep;
 }
 
 #define DRIF_FIELD_MISMATCH(field)                                             \
@@ -144,18 +148,17 @@ static bool DriftRecordsMatch(const DriftRecord* a, const DriftRecord* b) {
     DRIF_FIELD_MISMATCH(servant);
     DRIF_FIELD_MISMATCH(subWeapon);
     DRIF_FIELD_MISMATCH(level);
-    DRIF_FIELD_MISMATCH(exp);
-    DRIF_FIELD_MISMATCH(gold);
     DRIF_FIELD_MISMATCH(hp);
     DRIF_FIELD_MISMATCH(hpMax);
     DRIF_FIELD_MISMATCH(mp);
     DRIF_FIELD_MISMATCH(mpMax);
     DRIF_FIELD_MISMATCH(hearts);
     DRIF_FIELD_MISMATCH(heartsMax);
+    DRIF_FIELD_MISMATCH(exp);
+    DRIF_FIELD_MISMATCH(gold);
     DRIF_FIELD_MISMATCH(randomNext);
     DRIF_FIELD_MISMATCH(gameStep);
     DRIF_FIELD_MISMATCH(gameState);
-    DRIF_FIELD_MISMATCH(cdStep);
     return matched;
 }
 
@@ -236,6 +239,8 @@ static void WriteInitChunk(FILE* f) {
     scalars.gameClearFlag = g_GameClearFlag;
     scalars.roomCount = g_RoomCount;
     scalars.timer = g_Timer;
+    scalars.debugPlayer = g_DebugPlayer;
+    scalars.useDisk = g_UseDisk;
 
     length = sizeof(scalars) + sizeof(unsigned) + statusSize +
              sizeof(unsigned) + castleMapSize + sizeof(unsigned) +
@@ -274,6 +279,8 @@ static void ApplyInitChunk(FILE* f, unsigned length) {
     g_GameClearFlag = scalars.gameClearFlag;
     g_RoomCount = scalars.roomCount;
     g_Timer = scalars.timer;
+    g_DebugPlayer = scalars.debugPlayer;
+    g_UseDisk = scalars.useDisk;
 
     if (fread(&blobSize, sizeof(blobSize), 1, f) != 1 ||
         blobSize != sizeof(PlayerStatus)) {
@@ -315,9 +322,9 @@ fail:
     fseek(f, chunkEnd, SEEK_SET);
 }
 
-#define PDRF_FRAME_LEN (PSYZ_PAD_BUF_LEN + sizeof(DriftRecord))
+#define FRAM_FRAME_LEN (PAD_BUF_LEN + sizeof(DriftRecord))
 
-static void LoadPdrfChunk(FILE* f, unsigned length) {
+static void LoadFramChunk(FILE* f, unsigned length) {
     long payloadStart = ftell(f);
     long chunkEnd = payloadStart + (long)length;
     unsigned frameCount;
@@ -325,7 +332,7 @@ static void LoadPdrfChunk(FILE* f, unsigned length) {
     unsigned i;
 
     if (fread(&frameCount, sizeof(frameCount), 1, f) != 1) {
-        WARNF("PDRF chunk is malformed, skipping remaining bytes");
+        WARNF("FRAM chunk is malformed, skipping remaining bytes");
         fseek(f, chunkEnd, SEEK_SET);
         return;
     }
@@ -335,20 +342,20 @@ static void LoadPdrfChunk(FILE* f, unsigned length) {
     if (length == 0 || chunkEnd > fileEnd) {
         chunkEnd = fileEnd;
         length = (u32)(chunkEnd - payloadStart);
-        frameCount = (length - sizeof(frameCount)) / PDRF_FRAME_LEN;
-        WARNF("PDRF chunk was not finalized with a clean shutdown; "
+        frameCount = (length - sizeof(frameCount)) / FRAM_FRAME_LEN;
+        WARNF("FRAM chunk was not finalized with a clean shutdown; "
               "recovering %u frames from the rest of the file",
               frameCount);
     }
     fseek(f, payloadStart + sizeof(frameCount), SEEK_SET);
 
-    replayPadFrames = malloc((size_t)frameCount * PSYZ_PAD_BUF_LEN);
+    replayPadFrames = malloc((size_t)frameCount * PAD_BUF_LEN);
     replayDriftRecords = malloc((size_t)frameCount * sizeof(DriftRecord));
     for (i = 0; i < frameCount; i++) {
-        if (fread(&replayPadFrames[(size_t)i * PSYZ_PAD_BUF_LEN], 1,
-                  PSYZ_PAD_BUF_LEN, f) != PSYZ_PAD_BUF_LEN ||
+        if (fread(&replayPadFrames[(size_t)i * PAD_BUF_LEN], 1, PAD_BUF_LEN,
+                  f) != PAD_BUF_LEN ||
             fread(&replayDriftRecords[i], sizeof(DriftRecord), 1, f) != 1) {
-            WARNF("PDRF chunk has fewer frames than declared; got %u of %u", i,
+            WARNF("FRAM chunk has fewer frames than declared; got %u of %u", i,
                   frameCount);
             frameCount = i;
             break;
@@ -370,8 +377,8 @@ static void ParseChunks(FILE* f) {
             ApplyInitChunk(f, length);
         } else if (memcmp(magic, CHUNK_MAGIC_PARA, 4) == 0 && version == 1) {
             ApplyParaChunk(f, length);
-        } else if (memcmp(magic, CHUNK_MAGIC_PDRF, 4) == 0 && version == 1) {
-            LoadPdrfChunk(f, length);
+        } else if (memcmp(magic, CHUNK_MAGIC_FRAM, 4) == 0 && version == 1) {
+            LoadFramChunk(f, length);
         } else if (memcmp(magic, CHUNK_MAGIC_OS, 4) == 0) {
             fseek(f, length, SEEK_CUR);
         } else {
@@ -384,7 +391,7 @@ static void ParseChunks(FILE* f) {
 
 // intervaled PAD0 input + drift detection record
 static void RecordFrame(void) {
-    char frame[PSYZ_PAD_BUF_LEN] = {0};
+    char frame[PAD_BUF_LEN] = {0};
     Psyz_PadsGet(0, frame, sizeof(frame));
     fwrite(frame, 1, sizeof(frame), file);
 
@@ -394,13 +401,12 @@ static void RecordFrame(void) {
 
     // ensure frame gets written in the event the game crashes right after
     fflush(file);
-    pdrfFrameCount++;
+    frameCount++;
 }
 
 static void ReplayFrameReal(void) {
-    Psyz_PadsSet(
-        0, &replayPadFrames[(size_t)replayFrameCursor * PSYZ_PAD_BUF_LEN],
-        PSYZ_PAD_BUF_LEN);
+    Psyz_PadsSet(0, &replayPadFrames[(size_t)replayFrameCursor * PAD_BUF_LEN],
+                 PAD_BUF_LEN);
 
     DriftRecord live;
     const DriftRecord* expected = &replayDriftRecords[replayFrameCursor];
@@ -516,8 +522,8 @@ static void StartRecording(const struct InitGameParams* params) {
 
     // we don't yet know how many frames the records will be, for now user 0.
     // if replaying will find a 0, it means the game likely crashed
-    WriteChunkHeader(file, CHUNK_MAGIC_PDRF, 1, 0);
-    pdrfCountFileOffset = ftell(file);
+    WriteChunkHeader(file, CHUNK_MAGIC_FRAM, 1, 0);
+    framCountFileOffset = ftell(file);
     unsigned placeholderFrameCount = 0;
     fwrite(&placeholderFrameCount, sizeof(placeholderFrameCount), 1, file);
     fflush(file);
@@ -537,12 +543,12 @@ void Replay_Init(const struct InitGameParams* params) {
 void Replay_Reset(void) {
     if (mode == REPLAY_MODE_RECORD) {
         if (file) {
-            fseek(file, pdrfCountFileOffset, SEEK_SET);
-            fwrite(&pdrfFrameCount, sizeof(pdrfFrameCount), 1, file);
+            fseek(file, framCountFileOffset, SEEK_SET);
+            fwrite(&frameCount, sizeof(frameCount), 1, file);
             fclose(file);
             file = NULL;
         }
-        pdrfFrameCount = 0;
+        frameCount = 0;
     } else if (mode == REPLAY_MODE_REPLAY) {
         if (file) {
             fclose(file);
