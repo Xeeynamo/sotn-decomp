@@ -1456,11 +1456,10 @@ extern RicGouraudTable* DAT_0606471C;
 extern s32 d_0605c6e4;
 s32* func_060784A8(void);
 
-// 70% match
-#ifdef NON_MATCHING
 void func_060BB90C(void) {
     s32* ptr;
-    u16* colors;
+    u16* colors0;
+    u16* colors1;
 
     ptr = func_060784A8();
     func_060BBDE0(ptr);
@@ -1470,21 +1469,14 @@ void func_060BB90C(void) {
         d_060476A0 = 0x252000;
         d_060476A4 = 1;
     }
-    colors = DAT_0606471C->colors0;
-    colors[1] = 0xB18C;
-    colors[0] = 0xB18C;
-    colors[3] = 0xD294;
-    colors[2] = 0xD294;
-    colors = DAT_0606471C->colors1;
-    colors[3] = 0x9084;
-    colors[2] = 0x9084;
-    colors[1] = 0x9084;
-    colors[0] = 0x9084;
+    colors0 = DAT_0606471C->colors0;
+    colors0[0] = colors0[1] = 0xB18C;
+    colors0[2] = colors0[3] = 0xD294;
+    colors1 = DAT_0606471C->colors1;
+    colors1[0] = colors1[1] = colors1[2] = colors1[3] = 0x9084;
     d_0605c6e4 = 1;
 }
-#else
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BB90C, func_060BB90C);
-#endif
+
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BB9BC, func_060BB9BC);
 
 s32 d_06086390;
@@ -1606,51 +1598,7 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BCE64, func_060BCE64);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BD11C, func_060BD11C);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BD2AC, func_060BD2AC);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BD3D8, func_060BD3D8);
-extern s32 D_060CEE6C[];
-extern s32 D_060CEEDC[];
-s32 func_0606F21C(s32 eventId, s32 action);
-
-// 95% match
-#ifdef NON_MATCHING
-void func_060BD4EC(void) {
-    s32 i;
-    s32 swaps;
-    s32 temp;
-    s32* times;
-    s32* nextTimes;
-    s32* indices;
-    s32* nextIndices;
-
-    for (i = 0; i < 28; i++) {
-        D_060CEE6C[i] = func_0606F21C(i, 0);
-        if (D_060CEE6C[i] == 0) {
-            D_060CEE6C[i] = 1000000;
-        }
-        D_060CEEDC[i] = i;
-    }
-
-    times = D_060CEE6C;
-    nextTimes = times + 1;
-    indices = D_060CEEDC;
-    nextIndices = indices + 1;
-    do {
-        swaps = 0;
-        for (i = 0; i < 27; i++) {
-            if (times[i] > nextTimes[i]) {
-                temp = times[i];
-                times[i] = nextTimes[i];
-                nextTimes[i] = temp;
-                temp = indices[i];
-                swaps++;
-                indices[i] = nextIndices[i];
-                nextIndices[i] = temp;
-            }
-        }
-    } while (swaps != 0);
-}
-#else
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BD4EC, func_060BD4EC);
-#endif
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BD580, func_060BD580);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BD768, func_060BD768);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BDADC, func_060BDADC);
