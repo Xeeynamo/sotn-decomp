@@ -8,6 +8,19 @@
 #include "chi.h"
 
 // D_801809E4
-u16 OVL_EXPORT(
-    PrizeDrops)[] = {0x00C8, 0x0098, 0x00F2, 0x00C5, 0x0170, 0x0094, 0x00A5,
-                     0x00A5, 0x00B9, 0x00A3, 0x00A3, 0x00A3, 0x00A3, 0x0000};
+u16 OVL_EXPORT(PrizeDrops)[] = {
+    ITEMDROP_POWER_OF_SIRE,
+    ITEMDROP_KARMA_COIN,
+    // Stone Sword is an enemy drop, not an item drop, likely cut
+    ITEMDROP_STONE_SWORD,
+    ITEMDROP_TURKEY,
+    ITEMDROP_RING_OF_ARES,
+    ITEMDROP_COMBAT_KNIFE,
+    ITEMDROP_SHIITAKE,
+    ITEMDROP_SHIITAKE,
+    ITEMDROP_BARLEY_TEA,
+    ITEMDROP_PEANUTS,
+    ITEMDROP_PEANUTS,
+    ITEMDROP_PEANUTS,
+    ITEMDROP_PEANUTS,
+};
