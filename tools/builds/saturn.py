@@ -95,6 +95,8 @@ snd_srcs = [
     'src/saturn/game_0.c',
     'src/saturn/game.c',
     'src/saturn/richter.c',
+    'src/saturn/ric/d54568.c',
+    'src/saturn/ric/rictail.c',
     'src/saturn/stage_02.c',
     'src/saturn/t_bat.c',
     'src/saturn/warp.c',
@@ -158,7 +160,6 @@ def link_objs(srcs, output_dir):
 
 objs = [
     'build/saturn/alucard.o',
-    'build/saturn/richter.o',
     'build/saturn/stage_02.o',
     'build/saturn/warp.o',
     'build/saturn/t_bat.o',
@@ -185,6 +186,10 @@ def link_multi(multi_objs, output_dir):
                 'objs': sub_objs})
 
 multi_objs = {
+    'build/saturn/richter.o' : [
+        'build/saturn/ric/d54568.o',
+        'build/saturn/ric/rictail.o',
+    ],
     'build/saturn/game.o' : [
         'build/saturn/game_0.o',
     ],
