@@ -2,8 +2,10 @@ options:
   target_path:  disks/saturn/RICHTER.PRG
   asm_path:     asm/saturn/richter
   src_path:     src/saturn
+  obj_path:     build/saturn
   ld_scripts_path: config/saturn
   syms_path: config/saturn
+  check_layout: true
   decomp_empty_funcs: false
 segments:
   - name: richter
@@ -39,4 +41,9 @@ segments:
       - start: 0x19D58
         type: data
         file: richter
+        end: 0x19D6F
+      - [0x19D70, .data, ric/d54568]
+      - start: 0x19D7C
+        type: .text
+        file: ric/rictail
         end: 0x2F04B
