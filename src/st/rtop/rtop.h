@@ -46,7 +46,7 @@ typedef enum EntityIDs {
     /* 0x25 */ E_TOMBSTONE,
     /* 0x26 */ E_SKULL_LORD,
     /* 0x27 */ E_SKULL_LORD_OUTLINE,
-    /* 0x28 */ E_SKULL_LORD_FLAMES,
+    /* 0x28 */ E_SKULL_LORD_EYE,
     /* 0x29 */ E_SKULL_LORD_PIECES,
 } EntityIDs;
 

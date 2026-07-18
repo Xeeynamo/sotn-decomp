@@ -100,5 +100,6 @@ segments:
       - [0x2F858, c, e_clock_tower]
       - [0x30460, .bss, create_entity]
       - [0x30470, bss]
+      - [0x310D8, .bss, 20B48]
       - [0x310DC, .bss, e_collect]
   - [0x3111C]

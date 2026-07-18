@@ -123,6 +123,17 @@ typedef struct {
 typedef struct PACKED {
     /* 0x7C */ s16 lifetime;
     /* 0x7E */ s16 unk7E;
+    /* 0x80 */ struct Entity* unk80; // Y?
+    // /* 0x84 */ struct Entity* some_ent;
+    u8 pad[16];
+    /* 0x8C */ struct Entity* parent;
+    u8 pad2[8];
+    /* 0x88 */ s8 childPalette;
+} ET_B0_Unk;
+
+typedef struct PACKED {
+    /* 0x7C */ s16 lifetime;
+    /* 0x7E */ s16 unk7E;
     /* 0x80 */ s16 unk80; // Y?
     /* 0x82 */ s16 unk82; // X?
     /* 0x84 */ struct Entity* some_ent;
@@ -4469,6 +4480,7 @@ typedef union { // offset=0x7C
     ET_NovaSkeleton nova;
     ET_Orobourous orob;
     ET_Dodo dodo;
+    ET_B0_Unk b0Unk;
 } Ext;
 
 SYNC_FIELD(ET_Player, ET_Weapon, anim);

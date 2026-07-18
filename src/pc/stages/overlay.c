@@ -131,13 +131,16 @@ static void* OpenOverlayEntrypoint(
 static OvlHandle CurrentStageOverlay = NULL;
 bool LoadStageOverlay(const char* name, Overlay* o) {
     OvlHandle handle;
-    PfnInitStage entrypoint = (PfnInitStage)OpenOverlayEntrypoint(
+    PfnInitStage entrypoint;
+
+    if (CurrentStageOverlay) {
+        OvlClose(CurrentStageOverlay);
+        CurrentStageOverlay = NULL;
+    }
+    entrypoint = (PfnInitStage)OpenOverlayEntrypoint(
         name, OVL_STAGE_ENTRYPOINT_NAME, &handle);
     if (!entrypoint) {
         return false;
-    }
-    if (CurrentStageOverlay) {
-        OvlClose(CurrentStageOverlay);
     }
     CurrentStageOverlay = handle;
     entrypoint(o);
@@ -147,13 +150,16 @@ bool LoadStageOverlay(const char* name, Overlay* o) {
 static OvlHandle CurrentServantOverlay = NULL;
 bool LoadServantOverlay(const char* name, ServantDesc* o) {
     OvlHandle handle;
-    PfnInitServant entrypoint = (PfnInitServant)OpenOverlayEntrypoint(
+    PfnInitServant entrypoint;
+
+    if (CurrentServantOverlay) {
+        OvlClose(CurrentServantOverlay);
+        CurrentServantOverlay = NULL;
+    }
+    entrypoint = (PfnInitServant)OpenOverlayEntrypoint(
         name, OVL_SERVANT_ENTRYPOINT_NAME, &handle);
     if (!entrypoint) {
         return false;
-    }
-    if (CurrentServantOverlay) {
-        OvlClose(CurrentServantOverlay);
     }
     CurrentServantOverlay = handle;
     entrypoint(o);

@@ -52,7 +52,7 @@ void EntitySpikesDust(Entity* self);
 void EntitySpikesDamage(Entity* self);
 void EntitySkullLord(Entity* self);
 void EntitySkullLordOutline(Entity* self);
-void EntitySkullLordFlames(Entity* self);
+void EntitySkullLordEye(Entity* self);
 void EntitySkullLordPieces(Entity* self);
 void EntityHarpy(Entity* self);
 void EntityHarpyDagger(Entity* self);
@@ -142,7 +142,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntitySpikesDamage,
     EntitySkullLord,
     EntitySkullLordOutline,
-    EntitySkullLordFlames,
+    EntitySkullLordEye,
     EntitySkullLordPieces,
     EntityHarpy,
     EntityHarpyDagger,
