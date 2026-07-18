@@ -2019,8 +2019,352 @@ void PlaySfxPositional(s32 sfxId) {
     }
 }
 
-void (*CheckCollision)(s32 x, s32 y, Collider* res, s32 unk);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B7B4, func_0607B7B4);
+extern u16 DAT_0605cdb8;
+extern u8 DAT_0608FFF8[];
+
+void CheckCollision(s32 x, s32 y, Collider* res, u16 unk) {
+    Collider col0;
+    Collider col1;
+    s32 posX, posY;
+    s32 maxX, maxY;
+    s32 offset;
+    u8 colType;
+
+    posX = x + g_Tilemap.scrollX.val;
+    posY = y + g_Tilemap.scrollY.val;
+    maxX = g_Tilemap.width << 0x10;
+    maxY = g_Tilemap.height << 0x10;
+    if (posX < 1 || posX >= maxX || posY < 1 || posY >= maxY) {
+        colType = 0;
+        res->effects = EFFECT_NONE;
+        return;
+    } else {
+        u32 A;
+        u16 B;
+        u16 C;
+        u16 D;
+        u16 E;
+        posX = posX * 4 / 5;
+        A = DAT_0605cdb8 * 4 / 5;
+        B = A / 2;
+        C = posX >> 20;
+        D = posY >> 20;
+        E = C + D * B;
+        colType = DAT_0608FFF8[E];
+        res->effects = EFFECT_NONE;
+    }
+    res->unk4 = res->unk14 = -(posX & 0xF0000);
+    res->unkC = res->unk1C = res->unk14 + 0xF0000;
+    res->unk8 = res->unk18 = -(posY & 0xF0000);
+    res->unk10 = res->unk20 = res->unk18 + 0xF0000;
+    if ((colType & 0x80) == 0) {
+        res->effects = colType & 3;
+    } else {
+        offset = 0;
+        switch (colType - 0x80) {
+        case 0x01:
+        case 0x02:
+        case 0x0A:
+        case 0x0B:
+        case 0x18:
+        case 0x19:
+            if (unk == 0) {
+                CheckCollision(x, y + res->unk18 - 0x10000, &col0, true);
+                if (col0.effects & EFFECT_UNK_8000) {
+                    if (col0.effects & EFFECT_SOLID) {
+                        res->unk18 += col0.unk18 - 0x10000;
+                    }
+                    res->effects = col0.effects |=
+                        EFFECT_UNK_0002 | EFFECT_SOLID;
+                } else {
+                    res->effects =
+                        EFFECT_UNK_8000 | EFFECT_UNK_0002 | EFFECT_SOLID;
+                }
+            } else {
+                res->effects = EFFECT_SOLID;
+            }
+            break;
+
+        case 0x00:
+            if (res->unk1C + res->unk20 < 0x100000) {
+                res->unk14 = res->unk18 = res->unk1C + res->unk20 - 0xF0000;
+                res->effects = EFFECT_UNK_8000 | EFFECT_SOLID;
+            } else {
+                res->effects = EFFECT_UNK_8000;
+            }
+            break;
+
+        case 0x08:
+            offset = 0x100000;
+        case 0x09:
+            if (res->unk1C + offset + res->unk20 * 2 < 0x200000) {
+                res->unk14 = res->unk1C + offset + res->unk20 * 2 - 0x1F0000;
+                res->unk18 = (res->unk1C + offset) / 2 + res->unk20 - 0xF0000;
+                res->effects = EFFECT_UNK_8000 | EFFECT_UNK_1000 | EFFECT_SOLID;
+            } else {
+                res->effects = EFFECT_UNK_8000 | EFFECT_UNK_1000;
+            }
+            break;
+
+        case 0x14:
+            offset = 0x100000;
+        case 0x15:
+            offset += 0x100000;
+        case 0x16:
+            offset += 0x100000;
+        case 0x17:
+            if (res->unk1C + offset + res->unk20 * 4 < 0x400000) {
+                res->unk14 = res->unk1C + offset + res->unk20 * 4 - 0x3F0000;
+                res->unk18 = (res->unk1C + offset) / 4 + res->unk20 - 0xF0000;
+                res->effects = EFFECT_UNK_8000 | EFFECT_UNK_2000 | EFFECT_SOLID;
+            } else {
+                res->effects = EFFECT_UNK_8000 | EFFECT_UNK_2000;
+            }
+            break;
+
+        case 0x03:
+            if (res->unk1C >= res->unk20) {
+                res->unk18 = res->unk20 - res->unk1C;
+                res->unk1C = -res->unk18;
+                res->effects = EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_SOLID;
+            } else {
+                res->effects = EFFECT_UNK_8000 | EFFECT_UNK_4000;
+            }
+            break;
+
+        case 0x0C:
+            offset = 0x100000;
+        case 0x0D:
+            if (res->unk1C + offset >= res->unk20 * 2) {
+                res->unk18 = res->unk20 - (res->unk1C + offset) / 2;
+                res->effects = EFFECT_UNK_8000 | EFFECT_UNK_4000 |
+                               EFFECT_UNK_1000 | EFFECT_SOLID;
+            } else {
+                res->effects =
+                    EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_1000;
+            }
+            break;
+
+        case 0x1A:
+            offset = 0x100000;
+        case 0x1B:
+            offset += 0x100000;
+        case 0x1C:
+            offset += 0x100000;
+        case 0x1D:
+            if (res->unk1C + offset >= res->unk20 * 4) {
+                res->unk18 = res->unk20 - (res->unk1C + offset) / 4;
+                res->effects = EFFECT_UNK_8000 | EFFECT_UNK_4000 |
+                               EFFECT_UNK_2000 | EFFECT_SOLID;
+            } else {
+                res->effects =
+                    EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000;
+            }
+            break;
+
+        case 0x05:
+        case 0x06:
+        case 0x10:
+        case 0x11:
+        case 0x22:
+        case 0x23:
+            if (unk == 0) {
+                CheckCollision(x, y + res->unk20 + 0x10000, &col1, true);
+                if (col1.effects & EFFECT_UNK_0800) {
+                    if (col1.effects & EFFECT_SOLID) {
+                        res->unk20 += col1.unk20 + 0x10000;
+                    }
+                    res->effects = col1.effects |=
+                        EFFECT_UNK_0002 | EFFECT_SOLID;
+                } else {
+                    res->effects =
+                        EFFECT_UNK_0800 | EFFECT_UNK_0002 | EFFECT_SOLID;
+                }
+            } else {
+                res->effects = EFFECT_SOLID;
+            }
+            break;
+
+        case 0x04:
+            if (res->unk1C <= res->unk20) {
+                res->unk14 = res->unk1C - res->unk20;
+                res->unk20 = -res->unk14;
+                res->effects = EFFECT_UNK_0800 | EFFECT_SOLID;
+            } else {
+                res->effects = EFFECT_UNK_0800;
+            }
+            break;
+
+        case 0x0E:
+            offset = 0x100000;
+        case 0x0F:
+            if (res->unk1C + offset <= res->unk20 * 2) {
+                res->unk14 = res->unk1C + offset - res->unk20 * 2;
+                res->unk20 = -res->unk14 / 2;
+                res->effects = EFFECT_UNK_1000 | EFFECT_UNK_0800 | EFFECT_SOLID;
+            } else {
+                res->effects = EFFECT_UNK_1000 | EFFECT_UNK_0800;
+            }
+            break;
+
+        case 0x1E:
+            offset = 0x100000;
+        case 0x1F:
+            offset += 0x100000;
+        case 0x20:
+            offset += 0x100000;
+        case 0x21:
+            if (res->unk1C + offset <= res->unk20 * 4) {
+                res->unk14 = res->unk1C + offset - res->unk20 * 4;
+                res->unk20 = -res->unk14 / 4;
+                res->effects = EFFECT_UNK_2000 | EFFECT_UNK_0800 | EFFECT_SOLID;
+            } else {
+                res->effects = EFFECT_UNK_2000 | EFFECT_UNK_0800;
+            }
+            break;
+
+        case 0x07:
+            if (res->unk1C + res->unk20 > 0xE0000) {
+                res->unk1C = res->unk20 = res->unk14 + 0xF0000 + res->unk18;
+                res->effects = EFFECT_UNK_4000 | EFFECT_UNK_0800 | EFFECT_SOLID;
+            } else {
+                res->effects = EFFECT_UNK_4000 | EFFECT_UNK_0800;
+            }
+            break;
+
+        case 0x12:
+            offset = 0x100000;
+        case 0x13:
+            if (res->unk1C + offset + res->unk20 * 2 > 0x1D0000) {
+                res->unk20 = ((res->unk14 + offset - 0xF0000) / 2) + 0xF0000 +
+                             res->unk18;
+                res->effects = EFFECT_UNK_4000 | EFFECT_UNK_1000 |
+                               EFFECT_UNK_0800 | EFFECT_SOLID;
+            } else {
+                res->effects =
+                    EFFECT_UNK_4000 | EFFECT_UNK_1000 | EFFECT_UNK_0800;
+            }
+            break;
+
+        case 0x24:
+            offset = 0x100000;
+        case 0x25:
+            offset += 0x100000;
+        case 0x26:
+            offset += 0x100000;
+        case 0x27:
+            if (res->unk1C + offset + res->unk20 * 4 > 0x3B0000) {
+                res->unk20 = ((res->unk14 + offset - 0x2D0000) / 4) + 0xF0000 +
+                             res->unk18;
+                res->effects = EFFECT_UNK_4000 | EFFECT_UNK_2000 |
+                               EFFECT_UNK_0800 | EFFECT_SOLID;
+            } else {
+                res->effects =
+                    EFFECT_UNK_4000 | EFFECT_UNK_2000 | EFFECT_UNK_0800;
+            }
+            break;
+
+        case 0x7F:
+            if (res->unk20 < 0x80000) {
+                res->effects = EFFECT_UNK_0002 | EFFECT_SOLID;
+                res->unk18 += 0x80000;
+            }
+            break;
+
+        case 0x7E:
+            if (res->unk20 >= 0x80000) {
+                res->effects = EFFECT_UNK_0002 | EFFECT_SOLID;
+                res->unk20 -= 0x80000;
+            }
+            break;
+
+        case 0x7D:
+            if (res->unk20 < 0x80000) {
+                res->effects = EFFECT_SOLID;
+                res->unk18 += 0x80000;
+            }
+            break;
+
+        case 0x7C:
+            if (res->unk20 >= 0x80000) {
+                res->effects = EFFECT_SOLID;
+                res->unk20 -= 0x80000;
+            }
+            break;
+
+        case 0x79:
+            if (res->unk20 < 0x80000) {
+                res->effects = EFFECT_WATER;
+                res->unk18 += 0x80000;
+            }
+            break;
+
+        case 0x78:
+            res->effects = EFFECT_MIST_ONLY | EFFECT_UNK_0002 | EFFECT_SOLID;
+            break;
+
+        case 0x74:
+        case 0x75:
+        case 0x76:
+        case 0x77:
+            res->effects = EFFECT_UNK_0020;
+            break;
+
+        case 0x6E:
+        case 0x6F:
+        case 0x70:
+        case 0x71:
+        case 0x72:
+        case 0x73:
+            res->effects = EFFECT_UNK_0002 | EFFECT_SOLID;
+            break;
+
+        case 0x6D:
+            res->effects = EFFECT_WATER;
+            break;
+
+        case 0x6A:
+            if (res->unk20 >= 0x80000) {
+                res->effects = EFFECT_WATER;
+                res->unk20 -= 0x80000;
+            }
+            break;
+
+        case 0x68:
+            if (res->unk20 < 0x80000) {
+                res->effects = EFFECT_SOLID_FROM_ABOVE | EFFECT_SOLID;
+                res->unk18 += 0x80000;
+            }
+            break;
+
+        case 0x67:
+            if (res->unk20 >= 0x80000) {
+                res->effects = EFFECT_SOLID_FROM_ABOVE | EFFECT_SOLID;
+                res->unk20 -= 0x80000;
+            }
+            break;
+
+        case 0x66:
+            if (res->unk20 < 0x80000) {
+                res->effects = EFFECT_SOLID_FROM_BELOW | EFFECT_SOLID;
+                res->unk18 += 0x80000;
+            }
+            break;
+
+        case 0x65:
+            if (res->unk20 >= 0x80000) {
+                res->effects = EFFECT_SOLID_FROM_BELOW | EFFECT_SOLID;
+                res->unk20 -= 0x80000;
+            }
+            break;
+        }
+    }
+
+    res->unk14 = res->unk14 * 5 / 4;
+    res->unk4 = res->unk4 * 5 / 4;
+    res->unk1C = res->unk1C * 5 / 4;
+    res->unkC = res->unkC * 5 / 4;
+}
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607BE38, func_0607BE38);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607BED0, func_0607BED0);
