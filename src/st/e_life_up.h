@@ -6,9 +6,16 @@ SVECTOR v0 = {-8, -8, 0};
 SVECTOR v1 = {8, -8, 0};
 SVECTOR v2 = {-8, 8, 0};
 SVECTOR v3 = {8, 8, 0};
-u16 D_80182850[] = {0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17,
-                    0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17,
-                    0x17, 0x19, 0x1A, 0x1B, 0x1C, 0x1D};
+u16 boss_drops[] = {
+    ITEMDROP_LIFE_VESSEL, ITEMDROP_LIFE_VESSEL, ITEMDROP_LIFE_VESSEL,
+    ITEMDROP_LIFE_VESSEL, ITEMDROP_LIFE_VESSEL, ITEMDROP_LIFE_VESSEL,
+    ITEMDROP_LIFE_VESSEL, ITEMDROP_LIFE_VESSEL, ITEMDROP_LIFE_VESSEL,
+    ITEMDROP_LIFE_VESSEL, ITEMDROP_LIFE_VESSEL, ITEMDROP_LIFE_VESSEL,
+    ITEMDROP_LIFE_VESSEL, ITEMDROP_LIFE_VESSEL, ITEMDROP_LIFE_VESSEL,
+    ITEMDROP_LIFE_VESSEL, ITEMDROP_LIFE_VESSEL, RELIC_HEART_OF_VLAD,
+    RELIC_TOOTH_OF_VLAD,  RELIC_RIB_OF_VLAD,    RELIC_RING_OF_VLAD,
+    RELIC_EYE_OF_VLAD,
+};
 SVECTOR clearRotation = {ROT(0), ROT(0), ROT(0)};
 
 void EntityLifeUpSpawn(Entity* self) {
@@ -233,7 +240,9 @@ void EntityLifeUpSpawn(Entity* self) {
     case 6:
         if (self->params > 0x10) {
             if (g_PlayableCharacter != PLAYER_ALUCARD) {
-                self->params = 0x17;
+                // Only player Alucard will get the X of Vlad items
+                // Other playable characters just get life vessels
+                self->params = ITEMDROP_LIFE_VESSEL;
                 params = self->params & 0xFFF;
                 if (params < 0x80) {
                     self->entityId = E_PRIZE_DROP;
@@ -250,16 +259,17 @@ void EntityLifeUpSpawn(Entity* self) {
                 self->params |= 0x8000;
                 self->step = 0;
             } else {
+                // Drop the X of Vlad boss relics
                 self->entityId = E_RELIC_ORB;
                 self->pfnUpdate = EntityRelicOrb;
                 self->poseTimer = 0;
                 self->pose = 0;
                 self->unk6D[0] = 0x10;
-                self->params = D_80182850[self->params];
+                self->params = boss_drops[self->params];
                 self->step = 0;
             }
         } else {
-            self->params = D_80182850[self->params];
+            self->params = boss_drops[self->params];
             params = self->params & 0xFFF;
             if (params < 0x80) {
                 self->entityId = E_PRIZE_DROP;

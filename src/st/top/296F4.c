@@ -385,8 +385,10 @@ void EntityBreakableWall(Entity* self) {
             self->poseTimer = 0;
 
             if (!self->params) {
+                // PrizeDrops[2] = Fire Mail
                 self->params = 2;
             } else {
+                // PrizeDrops[1] = Turkey
                 self->params = 1;
             }
             // n.b.! odd return, but necessary for PSP

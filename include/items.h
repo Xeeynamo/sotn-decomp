@@ -82,7 +82,7 @@ typedef enum HandItems {
     /* 0x041 */ ITEM_CHINESE_BUN,
     /* 0x042 */ ITEM_DIM_SUM_SET,
     /* 0x043 */ ITEM_POT_ROAST,
-    /* 0x044 */ ITEM_SIRLION,
+    /* 0x044 */ ITEM_SIRLOIN,
     /* 0x045 */ ITEM_TURKEY,
     /* 0x046 */ ITEM_MEAL_TICKET,
     /* 0x047 */ ITEM_NEUTRON_BOMB,
@@ -280,6 +280,7 @@ typedef enum BodyItems {
     /* 0x5A */ NUM_BODY_ITEMS,
 } BodyItems;
 
+// Used by d_prize_drops and corresponds to a lookup inside e_collect.h
 typedef enum ItemDrops {
     /* EntityPrizeDrop drops */
 
@@ -392,7 +393,7 @@ typedef enum ItemDrops {
     /* 0xC1 */ ITEMDROP_CHINESE_BUN,
     /* 0xC2 */ ITEMDROP_DIM_SUM_SET,
     /* 0xC3 */ ITEMDROP_POT_ROAST,
-    /* 0xC4 */ ITEMDROP_SIRLION,
+    /* 0xC4 */ ITEMDROP_SIRLOIN,
     /* 0xC5 */ ITEMDROP_TURKEY,
     /* 0xC6 */ ITEMDROP_MEAL_TICKET,
     /* 0xC7 */ ITEMDROP_NEUTRON_BOMB,

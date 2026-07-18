@@ -4,7 +4,7 @@
 u16 OVL_EXPORT(PrizeDrops)[] = {
     ITEMDROP_HEART_VESSEL,
     ITEMDROP_SHIELD_ROD,
-    // Moon Rod does not appear in ARE, possibly removed?
+    // Moon Rod does not appear in ARE, unused?
     ITEMDROP_MOON_ROD,
     ITEMDROP_BLOOD_CLOAK,
     ITEMDROP_KNIGHT_SHIELD,
