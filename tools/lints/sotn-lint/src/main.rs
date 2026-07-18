@@ -13,6 +13,7 @@ mod enum_line_transformer;
 mod enum_statement;
 mod fixed;
 mod flags;
+mod item_drops;
 mod line_transformer;
 mod linter;
 mod player_status;
@@ -28,6 +29,7 @@ use drawflags::DrawFlagsTransformer;
 use drawmodes::DrawModeTransformer;
 use fixed::FixedTransformer;
 use flags::FlagsTransformer;
+use item_drops::ItemDropsTransformer;
 use line_transformer::LineTransformer;
 use linter::EntityRangeLinter;
 use linter::Linter;
@@ -120,6 +122,7 @@ fn process_directory(dir_path: &str) -> bool {
         Box::new(attack_element_transformer),
         Box::new(vram_flag_transformer),
         Box::new(SfxLineTransformer::new()),
+        Box::new(ItemDropsTransformer::new()),
     ];
 
     let linters: Vec<Box<dyn Linter>> = vec![
