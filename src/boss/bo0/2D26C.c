@@ -31,7 +31,16 @@ INCLUDE_ASM("boss/bo0/nonmatchings/2D26C", func_us_801B0930);
 
 INCLUDE_ASM("boss/bo0/nonmatchings/2D26C", func_us_801B13A8);
 
-INCLUDE_ASM("boss/bo0/nonmatchings/2D26C", func_us_801B1590);
+void func_us_801B1590(u8 step) {
+    ET_B0_Unk* temp = (ET_B0_Unk*)g_CurrentEntity->ext.b0Unk.unk80;
+
+    g_CurrentEntity->step = step;
+    g_CurrentEntity->step_s = 0;
+
+    temp->childPalette = 0;
+    temp = (ET_B0_Unk*)temp->parent;
+    temp->childPalette = 0;
+}
 
 INCLUDE_ASM("boss/bo0/nonmatchings/2D26C", func_us_801B15BC);
 
