@@ -100,7 +100,6 @@ void DebugInputWait(const char* msg);
 
 // called before MainGame
 bool InitPlatform(void);
-void InitStrings(void);
 bool InitEquipDefs(const char* jsonContent);
 bool InitAccessoryDefs(const char* jsonContent);
 void InitRelicDefs(void);
@@ -199,8 +198,6 @@ bool InitGame(struct InitGameParams* params) {
     memset(&g_ApiInit.o, 0, sizeof(Overlay));
     memcpy(&g_ApiInit, &api, sizeof(g_ApiInit));
 
-    InitStrings();
-
     // forcing g_Vram values while waiting to import the data
     g_Vram.D_800ACD98.x = 0x0380;
     g_Vram.D_800ACD98.y = 0x0180;
@@ -225,23 +222,6 @@ void ResetPlatform(void);
 void ResetGame(void) {
     Replay_Reset();
     ResetPlatform();
-}
-
-void InitSotnMenuTable(void);
-void InitStrings(void) {
-    InitSotnMenuTable();
-    for (int i = 0; i < LEN(g_EquipDefs); i++) {
-        g_EquipDefs[i].name = AnsiToSotnMenuString(g_EquipDefs[i].name);
-    }
-    for (int i = 0; i < LEN(g_AccessoryDefs); i++) {
-        g_AccessoryDefs[i].name = AnsiToSotnMenuString(g_AccessoryDefs[i].name);
-    }
-    for (int i = 0; i < LEN(g_MenuStr); i++) {
-        g_MenuStr[i] = AnsiToSotnMenuString(g_MenuStr[i]);
-    }
-    for (int i = 0; i < LEN(g_EnemyDefs); i++) {
-        g_EnemyDefs[i].name = AnsiToSotnMenuString(g_EnemyDefs[i].name);
-    }
 }
 
 int MyClearImage(RECT* rect, u_char r, u_char g, u_char b) {
