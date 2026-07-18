@@ -5,6 +5,7 @@ options:
   obj_path:     build/saturn
   ld_scripts_path: config/saturn
   syms_path: config/saturn
+  check_layout: true
   # some sort of alignment issues
   decomp_empty_funcs: false
 segments:
@@ -14,10 +15,10 @@ segments:
     vram:  0x06066000
     subalign: 2
     subsegments:
-      - start: 0x0
-        type: data
-        file: game_0
-        end: 0x3F
+      - [0x0, .data, game/header]
+      - start: 0x30
+        type: .text
+        file: game/hdrstub
       - start: 0x40
         type: c
         file: game_0
@@ -27,36 +28,45 @@ segments:
         file: game_0
         end: 0x92B
       - start: 0x92C
-        type: data
-        file: game_0
-        end: 0xB2F
+        type: .data
+        file: game/savemsg
       - start: 0xB30
         type: c
-        file: game_0
+        file: game_1
         end: 0x197B
         # misdetected function TODO
       - start: 0x197C
         type: data
-        file: game_0
+        file: game_1
         end: 0x1A03
       - start: 0x1A04
         type: c
-        file: game_0
+        file: game_1
+        end: 0x1A3B
+      - start: 0x1A3C
+        type: .text
+        file: game/cfgjp
+      - start: 0x56D4
+        type: .text
+        file: game/cfgstr
+      - start: 0x56F8
+        type: c
+        file: game_3
         end: 0x80C7
       - start: 0x80C8
         type: data
-        file: game_0
+        file: game_3
         end: 0x80CF
       - start: 0x80D0
         type: c
-        file: game_0
+        file: game_3
         end: 0x92BF
 
         # file split here
 
       - start: 0x92C0
         type: c
-        file: game_0
+        file: game_3
         end: 0xA937
 
         # file split here
@@ -79,10 +89,40 @@ segments:
         file: game
         end: 0xEC9B
       - start: 0xEC9C
-        type: data
-        file: game
-        end: 0xECBF
+        type: .text
+        file: game/miscend
       - start: 0xECC0
         type: c
-        file: game
-        end: 0x2008B
+        file: game_2
+        end: 0x1614B
+      - [0x1614C, .data, game/cfgjp]
+      - start: 0x1E6A8
+        type: .text
+        file: game/cfgrw1
+      - [0x1F0EC, .data, game/jewel]
+      - start: 0x1F0F4
+        type: .text
+        file: game/cfgrw4
+      - [0x1F4C8, .data, game/btnmask]
+      - start: 0x1F4D8
+        type: .text
+        file: game/cfgrw2
+      - [0x1F4E0, .data, game/lvlhp]
+      - start: 0x1F508
+        type: .text
+        file: game/cfgrw3
+      - [0x1F524, .data, game/mnstate]
+      - start: 0x1F528
+        type: .text
+        file: game/cfgrw5
+      - [0x1F54C, .data, game/eqhelp]
+      - [0x1F5AC, .data, game/mnscroll]
+      - start: 0x1F5B0
+        type: .text
+        file: game/cfgrest
+      - [0x1FC30, .data, game/capetbl]
+      - [0x1FC70, .data, game/joseph]
+      - [0x1FC78, .data, game/capecon]
+      - [0x1FC88, .data, game/capepal]
+      - [0x1FC90, .data, game/miscend]
+      - [0x1FE86, .data, game/sinetbl]

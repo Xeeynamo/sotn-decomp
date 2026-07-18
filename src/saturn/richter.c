@@ -1,9 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "richter.h"
 
-// export table
-INCLUDE_ASM("asm/saturn/richter/data", d60A5000, d_060A5000);
-
 // ===== pl_main.c
 
 // GetTeleportToOtherCastle
@@ -1424,8 +1421,8 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BA788, func_060BA788);
 
 void func_060BB330();
 
-s32 DAT_060c4118;
-s32 DAT_060c411c;
+extern s32 DAT_060c4118;
+extern s32 DAT_060c411c;
 
 void func_060BACA4(void) {
     memset(&DAT_060c4118, 0, 4);
@@ -1482,8 +1479,8 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BB9BC, func_060BB9BC);
 s32 d_06086390;
 s32 d_060476A0;
 s32 d_060476A4;
-s32 d_060cd748;
-s32 d_060cd74c;
+extern s32 d_060cd748;
+extern s32 d_060cd74c;
 void func_060BB9BC(s32*);
 
 void func_060BBA88(void) {

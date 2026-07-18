@@ -14,10 +14,10 @@ segments:
     vram:  0x060A5000
     subalign: 2
     subsegments:
-      - start: 0x0
-        type: data
-        file: richter
-        end: 0x5F
+      - [0x0, .data, ric/header]
+      - start: 0x44
+        type: .text
+        file: ric/hdrstub
       - start: 0x60
         type: c
         file: richter
@@ -46,4 +46,37 @@ segments:
       - start: 0x19D7C
         type: .text
         file: ric/rictail
+      - [0x19D9C, .data, ric/gprolog]
+      - start: 0x19DA0
+        type: .text
+        file: ric/rictl2
+      - [0x19DD0, .data, ric/timers]
+      - [0x19E08, .data, ric/sensors]
+      - start: 0x19F20
+        type: .text
+        file: ric/rictl3
+      - [0x1AC50, .data, ric/anims]
+      - start: 0x1B1F8
+        type: .text
+        file: ric/rictl4
+      - [0x1DF40, .data, ric/c2f40]
+      - start: 0x1DF42
+        type: .text
+        file: ric/rictl6
+      - [0x1E952, .data, ric/whipdat]
+      - start: 0x1E982
+        type: .text
+        file: ric/rictl7
+      - [0x1F118, .data, ric/globdat]
+      - start: 0x1F120
+        type: .text
+        file: ric/rictl8
+      - [0x28748, .data, ric/savevar]
+      - start: 0x28750
+        type: .text
+        file: ric/rictl9
+      - [0x287F0, .data, ric/ptrtbl]
+      - start: 0x28800
+        type: .text
+        file: ric/rictl10
         end: 0x2F04B

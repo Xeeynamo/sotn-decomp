@@ -433,7 +433,8 @@ typedef struct {
     /* 0x2C */ u16 icon;
     /* 0x2E */ u16 palette;
     /* 0x30 */ u16 criticalRate;
-} Equipment; /* size=0x32 */
+    /* 0x32 */ u16 unk32;
+} Equipment; /* size=0x34 */
 
 // Defines armor, cloak and rings
 typedef struct {
@@ -449,7 +450,8 @@ typedef struct {
     /* 0x18 */ u16 icon;
     /* 0x1A */ u16 palette;
     /* 0x1C */ u16 equipType;
-} Accessory; /* size=0x1E */
+    /* 0x1E */ u16 unk1E;
+} Accessory; /* size=0x20 */
 
 typedef struct {
     /* 0x00 */ const char* name;
@@ -463,7 +465,8 @@ typedef struct {
     /* 0x14 */ s16 unk14;
     /* 0x16 */ u16 attackElement;
     /* 0x18 */ s16 attack;
-} SpellDef;
+    /* 0x1A */ u16 unk1A;
+} SpellDef; /* size=0x1C */
 
 typedef struct {
     /* 0x00 */ const char* name;
@@ -586,9 +589,9 @@ typedef struct {
 
 typedef struct {
     const char* name;
-    s32 : 32;
-    u16 : 16;
-    u16 : 16;
+    const char* description;
+    u16 unk08;
+    u16 unk0A;
     s32 unk0C;
 } RelicDesc;
 
