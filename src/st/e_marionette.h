@@ -3,9 +3,9 @@ extern EInit g_EInitSlinger;
 extern EInit g_EInitMarionette;
 
 #ifdef STAGE_IS_NO0
-#define SPRITES sprites_no0_8
+    #define SPRITES sprites_no0_8
 #else // BO0
-#define SPRITES sprites_bo0_8
+    #define SPRITES sprites_bo0_8
 #endif
 
 extern s16* SPRITES[];
@@ -186,11 +186,11 @@ void EntityMarionette(Entity* self) {
     if ((self->flags & FLAG_DEAD) && self->step < 10) {
         self->hitboxState = 0;
 #ifndef BOSS_IS_BO0
-#ifdef VERSION_PSP
+    #ifdef VERSION_PSP
         self->palette = self->hitEffect = g_EInitSlinger[3] + 1;
-#else
+    #else
         self->palette = self->hitEffect = g_EInitSlinger[5] + 1;
-#endif
+    #endif
 #else
         self->palette = self->hitEffect = g_EInitSlinger[0] + 1;
 #endif

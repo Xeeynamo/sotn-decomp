@@ -9,18 +9,18 @@
 #define SYS_VER_250
 
 #ifndef SYS_VER_250
-#define SYS_SETUINT(_Num_, _Hdr_)                                              \
-    ((**(volatile void (**)(Uint32, void*))0x6000300)((_Num_), (_Hdr_)))
-#define SYS_GETUINT(_Num_)                                                     \
-    ((void*)(**(void (*(**)(Uint32))(Uint32))0x6000304)(_Num_))
+    #define SYS_SETUINT(_Num_, _Hdr_)                                          \
+        ((**(volatile void (**)(Uint32, void*))0x6000300)((_Num_), (_Hdr_)))
+    #define SYS_GETUINT(_Num_)                                                 \
+        ((void*)(**(void (*(**)(Uint32))(Uint32))0x6000304)(_Num_))
 #else
 
-#define SYS_SETUINT(_Num_, _Hdr_) SYS_SetUintMacSave(_Num_, _Hdr_);
-#define SYS_SETUINT_NO_MACSAVE(_Num_, _Hdr_)                                   \
-    ((**(volatile void (**)(Uint32, void*))0x6000300)((_Num_), (_Hdr_)))
-#define SYS_GETUINT(_Num_) SYS_GetUintMacSave(_Num_);
-#define SYS_GETUINT_NO_MACSAVE(_Num_)                                          \
-    ((void*)(**(void (*(**)(Uint32))(Uint32))0x6000304)(_Num_))
+    #define SYS_SETUINT(_Num_, _Hdr_) SYS_SetUintMacSave(_Num_, _Hdr_);
+    #define SYS_SETUINT_NO_MACSAVE(_Num_, _Hdr_)                               \
+        ((**(volatile void (**)(Uint32, void*))0x6000300)((_Num_), (_Hdr_)))
+    #define SYS_GETUINT(_Num_) SYS_GetUintMacSave(_Num_);
+    #define SYS_GETUINT_NO_MACSAVE(_Num_)                                      \
+        ((void*)(**(void (*(**)(Uint32))(Uint32))0x6000304)(_Num_))
 #endif
 
 #define SYS_SETSINT(_Num_, _Hdr_)                                              \

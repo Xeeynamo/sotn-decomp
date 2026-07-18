@@ -34,7 +34,7 @@ static u8 D_80180580[] = {
     0x04, 0x36, 0x04, 0x37, 0x02, 0x2C, 0xFF, 0x00};
 
 #ifndef HARD_LINK
-#include "../../destroy_entity.h"
+    #include "../../destroy_entity.h"
 #endif
 
 static void SetStep(Entity* entity, u16 step) {

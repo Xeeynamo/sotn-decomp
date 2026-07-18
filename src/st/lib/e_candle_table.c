@@ -12,9 +12,9 @@ static u8 D_us_80181A78[] = {
 #ifdef VERSION_PSP
 static s32 D_us_80181A8C = 0;
 extern s32 E_ID(CANDLE_TABLE);
-// I expect this symbol will change depending on the function that is
-// including pad2_anim_debug.h
-#define BUTTON_SYMBOL g_ConfirmButton
+    // I expect this symbol will change depending on the function that is
+    // including pad2_anim_debug.h
+    #define BUTTON_SYMBOL g_ConfirmButton
 #else
 static s32 D_us_80181A8C = 3;
 #endif

@@ -4,14 +4,14 @@
 
 #if defined(INVERTED_STAGE)
 extern EInit g_EInitInteractable;
-#define E_INIT g_EInitInteractable
-#define PLUSMINUS +
-#define GEOMOFFY 0x68
+    #define E_INIT g_EInitInteractable
+    #define PLUSMINUS +
+    #define GEOMOFFY 0x68
 #else
 extern EInit g_EInitStInteractable;
-#define E_INIT g_EInitStInteractable
-#define PLUSMINUS -
-#define GEOMOFFY 0x98
+    #define E_INIT g_EInitStInteractable
+    #define PLUSMINUS -
+    #define GEOMOFFY 0x98
 #endif
 
 static u8 bush_uvwh[] = {

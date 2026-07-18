@@ -3,9 +3,9 @@
 #include "disk.h"
 
 #ifdef VERSION_PSP
-#define GET_CLUT(x, y) getClut(x, y)
+    #define GET_CLUT(x, y) getClut(x, y)
 #else
-#define GET_CLUT(x, y) GetClut(x, y)
+    #define GET_CLUT(x, y) GetClut(x, y)
 #endif
 
 static ProloguePrimitive D_80181568[] = {

@@ -27,18 +27,18 @@ enum DialogueSubsteps {
 
 // e_cutscene/cutscene_script_text
 #ifdef VERSION_PSP
-#define CUTSCENE_UNK1_NEXT_X 0
-#define CUTSCENE_UNK1_UNK17 2
+    #define CUTSCENE_UNK1_NEXT_X 0
+    #define CUTSCENE_UNK1_UNK17 2
 #else
-#define CUTSCENE_UNK1_NEXT_X 2
-#define CUTSCENE_UNK1_UNK17 8
+    #define CUTSCENE_UNK1_NEXT_X 2
+    #define CUTSCENE_UNK1_UNK17 8
 #endif
 
 // e_cutscene/set_cutscene_script
 #ifdef VERSION_PC
-#define NUM_CUTSCENE_PRIM 8
+    #define NUM_CUTSCENE_PRIM 8
 #else
-#define NUM_CUTSCENE_PRIM 7
+    #define NUM_CUTSCENE_PRIM 7
 #endif
 
 #ifdef VERSION_PSP
@@ -173,13 +173,13 @@ static u16 actor_names[256];
 static u8 v_coords[8];
 static bool dialogue_started;
 
-// psp only, can probably be added to cutscene_actor_name.h
-#include "../../get_lang.h"
+    // psp only, can probably be added to cutscene_actor_name.h
+    #include "../../get_lang.h"
 
-// These three are reversed in order from psx
-#include "../cutscene_actor_name.h"
-#include "../cutscene_script_box.h"
-#include "../cutscene_script_text.h"
+    // These three are reversed in order from psx
+    #include "../cutscene_actor_name.h"
+    #include "../cutscene_script_box.h"
+    #include "../cutscene_script_text.h"
 #else
 // This array is in Data, but the strings within it are rodata. That rodata
 // lives between the jump tables in this file, so we have to import the rodata,
@@ -194,10 +194,10 @@ STATIC_PAD_BSS(104);
 u32 g_CutsceneFlags; // used by e_cutscene_actors and e_succubus
 static bool dialogue_started;
 
-// These three are reversed in order from psp
-#include "../cutscene_script_text.h"
-#include "../cutscene_script_box.h"
-#include "../cutscene_actor_name.h"
+    // These three are reversed in order from psp
+    #include "../cutscene_script_text.h"
+    #include "../cutscene_script_box.h"
+    #include "../cutscene_actor_name.h"
 #endif
 
 #ifdef VERSION_PSP

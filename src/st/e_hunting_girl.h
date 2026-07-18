@@ -3,14 +3,14 @@
 // HuntingGirlDrawAttack has conditions that can be expected to attempt to
 // divide by 0, therefore psp uses a division guard.
 #ifdef VERSION_PSP
-#define DIV_GUARD(q, a, b)                                                     \
-    if (b) {                                                                   \
-        q = a / b;                                                             \
-    } else {                                                                   \
-        q = 0;                                                                 \
-    }
+    #define DIV_GUARD(q, a, b)                                                 \
+        if (b) {                                                               \
+            q = a / b;                                                         \
+        } else {                                                               \
+            q = 0;                                                             \
+        }
 #else
-#define DIV_GUARD(q, a, b) q = a / b;
+    #define DIV_GUARD(q, a, b) q = a / b;
 #endif
 
 #define END_ATTACK 0xFFF

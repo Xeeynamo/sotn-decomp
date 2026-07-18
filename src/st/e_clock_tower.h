@@ -26,23 +26,23 @@ static u8 cloudData2[] = {
     3, 4, 2, 2, 4, 3, 1, 3, 2, 4, 1, 1, 2, 1, 4, 4, 4, 4, 3, 2, 2, 3,
     2, 1, 2, 2, 1, 2, 2, 2, 3, 4, 2, 2, 3, 3, 4, 2, 2, 4, 3, 4};
 #if !defined(INVERTED_STAGE)
-#define UP +
-#define DOWN -
-#define UNK9C 0x4B
-#define UNKA0 0
-#define X_OFF 0x65
-#define POSX_3D 0x700
-#define POSY_3D 0x3C0
-#define ROTZ_3D 0
+    #define UP +
+    #define DOWN -
+    #define UNK9C 0x4B
+    #define UNKA0 0
+    #define X_OFF 0x65
+    #define POSX_3D 0x700
+    #define POSY_3D 0x3C0
+    #define ROTZ_3D 0
 #else
-#define UP -
-#define DOWN +
-#define UNK9C 0xB5
-#define UNKA0 0x100
-#define X_OFF 0x7B
-#define POSX_3D 0x100
-#define POSY_3D 0x440
-#define ROTZ_3D 0x800
+    #define UP -
+    #define DOWN +
+    #define UNK9C 0xB5
+    #define UNKA0 0x100
+    #define X_OFF 0x7B
+    #define POSX_3D 0x100
+    #define POSY_3D 0x440
+    #define ROTZ_3D 0x800
 #endif
 static cloudData data[] = {
     {cloudData1, DOWN 320, 24}, {cloudData2, UP 320, 28}};

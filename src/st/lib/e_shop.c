@@ -282,11 +282,11 @@ extern u16 D_psp_092A4AA0[];
 extern s16 D_psp_092A49B8[];
 extern u8** D_psp_092A5F48;
 extern u8** D_psp_092A5F98;
-#define BUTTON_CONFIRM g_ConfirmButton
-#define BUTTON_CANCEL g_CancelButton
+    #define BUTTON_CONFIRM g_ConfirmButton
+    #define BUTTON_CANCEL g_CancelButton
 #else
-#define BUTTON_CONFIRM PAD_CROSS
-#define BUTTON_CANCEL PAD_TRIANGLE
+    #define BUTTON_CONFIRM PAD_CROSS
+    #define BUTTON_CANCEL PAD_TRIANGLE
 #endif
 
 // bss

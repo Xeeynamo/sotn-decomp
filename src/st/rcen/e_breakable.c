@@ -15,7 +15,7 @@ static u8 blend_modes[8] = {
 static u8 unused[] = {0, 0, 0, 0, 0, 0, 0, 0};
 
 #ifndef SFX_BREAKABLE_HIT
-#define SFX_BREAKABLE_HIT SFX_CANDLE_HIT
+    #define SFX_BREAKABLE_HIT SFX_CANDLE_HIT
 #endif
 
 #include "../e_breakable.h"

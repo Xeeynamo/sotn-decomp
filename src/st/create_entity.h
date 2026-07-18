@@ -168,9 +168,9 @@ static void FindFirstEntityToTheLeft(s16 posX) {
 }
 
 #ifdef VERSION_PSP
-#define DECREMENT_AND_CHECK(x) (x)--
+    #define DECREMENT_AND_CHECK(x) (x)--
 #else
-#define DECREMENT_AND_CHECK(x) --(x) != (u8) - 1
+    #define DECREMENT_AND_CHECK(x) --(x) != (u8) - 1
 #endif
 
 /*

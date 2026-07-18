@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 #if defined(VERSION_PSP) && !defined(BOSS_IS_BO0)
-#define TPAGE_FLAG 0x1000
+    #define TPAGE_FLAG 0x1000
 #else
-#define TPAGE_FLAG 0
+    #define TPAGE_FLAG 0
 #endif
 
 void func_us_801B4DA4(Entity* self) {

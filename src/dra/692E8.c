@@ -63,27 +63,27 @@ s32 D_800ACE48[] = {
 RECT D_800ACE60 = {0x0200, 0x01C0, 0x003F, 0x003F};
 
 static u8 font_eu[] = {
-#include "gen/font_eu.h"
+    #include "gen/font_eu.h"
 };
 
 static u8 D_psp_0917DCA8[] = {
-#include "gen/D_psp_0917DCA8.h"
+    #include "gen/D_psp_0917DCA8.h"
 };
 
 static u8 D_psp_0917ED60[] = {
-#include "gen/D_psp_0917ED60.h"
+    #include "gen/D_psp_0917ED60.h"
 };
 
 static u8 D_psp_0917FF10[] = {
-#include "gen/D_psp_0917FF10.h"
+    #include "gen/D_psp_0917FF10.h"
 };
 
 static u8 D_psp_09180EC0[] = {
-#include "gen/D_psp_09180EC0.h"
+    #include "gen/D_psp_09180EC0.h"
 };
 
 static u8 D_psp_09182028[] = {
-#include "gen/D_psp_09182028.h"
+    #include "gen/D_psp_09182028.h"
 };
 
 static u_long* g_FontImage[] = {
@@ -614,9 +614,9 @@ static TeleportCheck GetTeleportToOtherCastle(void) {
 
 void EntityAlucard() {
 #if defined(VERSION_PSP)
-#define CHECK_SHOULDER(x) ((g_Player.padTapped & PAD_SHOULDERS) == x)
+    #define CHECK_SHOULDER(x) ((g_Player.padTapped & PAD_SHOULDERS) == x)
 #else
-#define CHECK_SHOULDER(x) (g_Player.padTapped & x)
+    #define CHECK_SHOULDER(x) (g_Player.padTapped & x)
 #endif
     s32 vramFlag;
     s32 posX;
@@ -843,11 +843,12 @@ void EntityAlucard() {
     } else {
         g_Player.padPressed = g_pads[0].pressed & ~(PAD_SHOULDERS | PAD_SHAPES);
 #if defined(VERSION_PSP)
-#define TEST_BTN()                                                             \
-    ((g_pads[0].pressed & g_Settings.buttonMask[i]) == g_Settings.buttonMask[i])
+    #define TEST_BTN()                                                         \
+        ((g_pads[0].pressed & g_Settings.buttonMask[i]) ==                     \
+         g_Settings.buttonMask[i])
         for (i = 0; i < 6; i++) {
 #else
-#define TEST_BTN() (g_pads[0].pressed & g_Settings.buttonMask[i])
+    #define TEST_BTN() (g_pads[0].pressed & g_Settings.buttonMask[i])
         for (i = 0; i < 8; i++) {
 #endif
             if (TEST_BTN()) {

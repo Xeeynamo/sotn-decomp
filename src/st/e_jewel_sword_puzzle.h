@@ -7,34 +7,34 @@ extern s32 E_ID(FALLING_ROCK_2);
 extern EInit g_EInitInteractable;
 
 #if defined(INVERTED_STAGE)
-#define CF_STEPS JEWEL_ROOM_STEPS
-#define CF_OPEN JEWEL_ROOM_OPEN
-#define PLUSMINUS -
-#define PME -=
-#define MPE +=
-#define LEFT_TILESTART 0x40E
-#define RIGHT_TILESTART 0x402
-#define JEWELROOM_TILESTART 0x1DF
-#define ROCK_EINIT D_us_80180A34
+    #define CF_STEPS JEWEL_ROOM_STEPS
+    #define CF_OPEN JEWEL_ROOM_OPEN
+    #define PLUSMINUS -
+    #define PME -=
+    #define MPE +=
+    #define LEFT_TILESTART 0x40E
+    #define RIGHT_TILESTART 0x402
+    #define JEWELROOM_TILESTART 0x1DF
+    #define ROCK_EINIT D_us_80180A34
 #else
-#define CF_STEPS JEWEL_SWORD_ROOM_STEPS
-#define CF_OPEN JEWEL_SWORD_ROOM_OPEN
-#define PLUSMINUS +
-#define PME +=
-#define MPE -=
-#define LEFT_TILESTART 0x1F1
-#define RIGHT_TILESTART 0x1FD
-#define JEWELROOM_TILESTART 0x420
-#define ROCK_EINIT g_EInitStInteractable
+    #define CF_STEPS JEWEL_SWORD_ROOM_STEPS
+    #define CF_OPEN JEWEL_SWORD_ROOM_OPEN
+    #define PLUSMINUS +
+    #define PME +=
+    #define MPE -=
+    #define LEFT_TILESTART 0x1F1
+    #define RIGHT_TILESTART 0x1FD
+    #define JEWELROOM_TILESTART 0x420
+    #define ROCK_EINIT g_EInitStInteractable
 #endif
 
 extern EInit ROCK_EINIT;
 
 // why devs why
 #ifdef STAGE_IS_NO3
-#define TILE_PTR_TYPE u16
+    #define TILE_PTR_TYPE u16
 #else
-#define TILE_PTR_TYPE s16
+    #define TILE_PTR_TYPE s16
 #endif
 
 // Tiles come in sets of 6. Keep them aligned as such.

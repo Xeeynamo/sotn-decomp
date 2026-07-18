@@ -6,7 +6,7 @@ enum OVL_EXPORT(BreakableDebrisSteps) {
 };
 
 #ifndef CANDLE_HIT_SFX
-#define CANDLE_HIT_SFX SFX_CANDLE_HIT
+    #define CANDLE_HIT_SFX SFX_CANDLE_HIT
 #endif
 
 #define LIGHT_AURA 1

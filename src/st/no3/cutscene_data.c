@@ -5,28 +5,28 @@
 #ifdef VERSION_PSP
 
 u8 cutscene_data_it[] = {
-#include "gen/cutscene_data_it.h"
+    #include "gen/cutscene_data_it.h"
 };
 
 u8 cutscene_data_sp[] = {
-#include "gen/cutscene_data_sp.h"
+    #include "gen/cutscene_data_sp.h"
 };
 
 u8 cutscene_data_fr[] = {
-#include "gen/cutscene_data_fr.h"
+    #include "gen/cutscene_data_fr.h"
 };
 
 u8 cutscene_data_ge[] = {
-#include "gen/cutscene_data_ge.h"
+    #include "gen/cutscene_data_ge.h"
 };
 
 u8 cutscene_data_en[] = {
-#include "gen/cutscene_data_en.h"
+    #include "gen/cutscene_data_en.h"
 };
 
 #else
 u8 OVL_EXPORT(cutscene_data)[] = {
-#include "gen/cutscene_data.h"
+    #include "gen/cutscene_data.h"
 };
 
 #endif

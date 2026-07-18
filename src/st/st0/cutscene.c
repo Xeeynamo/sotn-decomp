@@ -28,18 +28,18 @@ enum DialogueSubsteps {
 
 // e_cutscene/cutscene_script_text
 #ifdef VERSION_PSP
-#define CUTSCENE_UNK1_NEXT_X 0
-#define CUTSCENE_UNK1_UNK17 2
+    #define CUTSCENE_UNK1_NEXT_X 0
+    #define CUTSCENE_UNK1_UNK17 2
 #else
-#define CUTSCENE_UNK1_NEXT_X 2
-#define CUTSCENE_UNK1_UNK17 8
+    #define CUTSCENE_UNK1_NEXT_X 2
+    #define CUTSCENE_UNK1_UNK17 8
 #endif
 
 // e_cutscene/set_cutscene_script
 #ifdef VERSION_PC
-#define NUM_CUTSCENE_PRIM 8
+    #define NUM_CUTSCENE_PRIM 8
 #else
-#define NUM_CUTSCENE_PRIM 7
+    #define NUM_CUTSCENE_PRIM 7
 #endif
 
 #ifdef VERSION_PSP
@@ -162,13 +162,13 @@ extern u32 D_8943B8C;
 extern u32 D_894490C;
 extern u32 D_894568C;
 
-#include "../cutscene_actor_name_psp.h"
-#include "../cutscene_unk3.h"
-#include "../cutscene_unk4.h"
-#include "../cutscene_unk1.h"
-#include "../set_cutscene_script.h"
-#include "../set_cutscene_end.h"
-#include "../cutscene_run.h"
+    #include "../cutscene_actor_name_psp.h"
+    #include "../cutscene_unk3.h"
+    #include "../cutscene_unk4.h"
+    #include "../cutscene_unk1.h"
+    #include "../set_cutscene_script.h"
+    #include "../set_cutscene_end.h"
+    #include "../cutscene_run.h"
 #else
 static const char* actor_names[] = {_S("Richter"), _S("Dracula")};
 
@@ -182,7 +182,7 @@ extern bool g_IsCutsceneDone; // defined in 2A218
 // extern data
 extern u8 OVL_EXPORT(cutscene_script)[];
 
-#include "../cutscene_unk1.h"
+    #include "../cutscene_unk1.h"
 
 static u8 SetCutsceneScript(u8* script) {
     Primitive* prim;
@@ -244,12 +244,12 @@ static u8 SetCutsceneScript(u8* script) {
     return 1;
 }
 
-#include "../cutscene_unk3.h"
-#include "../cutscene_unk4.h"
-#include "../cutscene_actor_name.h"
-#include "../set_cutscene_end.h"
-#include "../cutscene_run.h"
-#include "../cutscene_scale_avatar.h"
+    #include "../cutscene_unk3.h"
+    #include "../cutscene_unk4.h"
+    #include "../cutscene_actor_name.h"
+    #include "../set_cutscene_end.h"
+    #include "../cutscene_run.h"
+    #include "../cutscene_scale_avatar.h"
 #endif
 
 void EntityCutscene(Entity* self) {

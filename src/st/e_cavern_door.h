@@ -4,9 +4,9 @@ extern s32 E_ID(CAVERN_DOOR_PLATFORM);
 #endif
 
 #if defined(INVERTED_STAGE)
-#define CAVERN_DOOR_EINIT D_us_80180A34
+    #define CAVERN_DOOR_EINIT D_us_80180A34
 #else
-#define CAVERN_DOOR_EINIT g_EInitStInteractable
+    #define CAVERN_DOOR_EINIT g_EInitStInteractable
 #endif
 
 extern EInit CAVERN_DOOR_EINIT;
@@ -140,10 +140,10 @@ void EntityCavernDoor(Entity* self) {
 #if defined(INVERTED_STAGE)
         tilePos = 0x89;
         tileLayoutPtr += 3;
-#define NEXTTILE (tilePos -= 0x10)
+    #define NEXTTILE (tilePos -= 0x10)
 #else
         tilePos = 0x76;
-#define NEXTTILE (tilePos += 0x10)
+    #define NEXTTILE (tilePos += 0x10)
 #endif
         for (i = 0; i < 3; i++) {
             g_Tilemap.fg[tilePos] = *tileLayoutPtr++;

@@ -5,9 +5,9 @@
 #include "sfx.h"
 
 #if USE_CD_SPEED_DOUBLE == 0
-#define CDL_MODE_SPEED CdlModeSpeedNormal
+    #define CDL_MODE_SPEED CdlModeSpeedNormal
 #else
-#define CDL_MODE_SPEED CdlModeSpeedDouble
+    #define CDL_MODE_SPEED CdlModeSpeedDouble
 #endif
 
 #define _CD_BLOCK 11 // 2048 (0x800) bytes per sector

@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 #if defined(INVERTED_STAGE)
-#define TILE_START 0x1BA
-#define TILE_STEP -0x20
+    #define TILE_START 0x1BA
+    #define TILE_STEP -0x20
 #else
-#define TILE_START 0x445
-#define TILE_STEP 0x20
+    #define TILE_START 0x445
+    #define TILE_STEP 0x20
 #endif
 
 static SVECTOR doorvec1 = {-8, -128, -48};
@@ -129,11 +129,11 @@ void EntityCastleDoor(Entity* self) {
             g_Tilemap.fg[tilePos] = castleDoorTilesShut[i];
         }
 #else
-#if defined(INVERTED_STAGE)
+    #if defined(INVERTED_STAGE)
         if (1) {
-#else
+    #else
         if (g_CastleFlags[PROLOGUE_COMPLETE]) {
-#endif
+    #endif
             self->ext.castleDoor.rotate = 0;
             self->step = 5;
         }
@@ -146,9 +146,9 @@ void EntityCastleDoor(Entity* self) {
         self->ext.castleDoor.rotate = -0x380;
         self->ext.castleDoor.timer = 32;
         self->step = 4;
-#if !defined(INVERTED_STAGE)
+    #if !defined(INVERTED_STAGE)
         g_CastleFlags[PROLOGUE_COMPLETE] = 1;
-#endif
+    #endif
         break;
 
     case 2:

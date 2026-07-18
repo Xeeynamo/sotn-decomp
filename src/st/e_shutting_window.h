@@ -2,11 +2,11 @@
 extern EInit g_EInitParticle;
 
 #if defined(INVERTED_STAGE)
-#define LEFT_OFFX -26
-#define RIGHT_OFFX 23
+    #define LEFT_OFFX -26
+    #define RIGHT_OFFX 23
 #else
-#define LEFT_OFFX 25
-#define RIGHT_OFFX -24
+    #define LEFT_OFFX 25
+    #define RIGHT_OFFX -24
 #endif
 
 static SVECTOR window_vec1 = {0, -120, 0};

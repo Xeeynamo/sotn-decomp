@@ -52,7 +52,7 @@ void func_us_801C5430(s16 a0, s16 minTime) {
 }
 
 #ifndef VERSION_PC
-#include "../../decelerate.h"
+    #include "../../decelerate.h"
 #endif
 
 s32 OVL_EXPORT(CheckMoveDirection)(void) {
@@ -94,7 +94,7 @@ s32 func_us_801C55A8(s32 minX, s32 maxX) {
 }
 
 #ifndef VERSION_PC
-#include "../../set_speed_x.h"
+    #include "../../set_speed_x.h"
 #endif
 
 void DopSetVelocity(s32 velocityX) {

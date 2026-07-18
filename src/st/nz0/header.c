@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz0.h"
 #ifdef VERSION_PSP
-#include "../pfn_entity_update.h"
+    #include "../pfn_entity_update.h"
 
 // common
 extern RoomHeader rooms[];
@@ -52,8 +52,8 @@ AbbreviatedOverlay OVL_EXPORT(Overlay) = {
     .UpdateStageEntities = UpdateStageEntities,
 };
 
-#include "gen/sprite_banks.h"
-#include "gen/palette_def.h"
-#include "gen/layers.h"
-#include "gen/graphics_banks.h"
+    #include "gen/sprite_banks.h"
+    #include "gen/palette_def.h"
+    #include "gen/layers.h"
+    #include "gen/graphics_banks.h"
 #endif

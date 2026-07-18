@@ -3,34 +3,34 @@
  */
 
 #ifndef PRIMITIVE_H
-#define PRIMITIVE_H
-#include "common.h"
+    #define PRIMITIVE_H
+    #include "common.h"
 
 typedef enum {
     PRIORITY_DIALOGUE = 0x1FE,
 } PrimitivePriority;
 
-// Macros for simplifying long stretches setting prim colors.
-// "prim red". Do PRED(prim) = 0x80 to set all reds to 0x80.
-#define PRED(p) p->r0 = p->r1 = p->r2 = p->r3
-// "prim green". Do PGRN(prim) = 0x80 to set all greens to 0x80.
-#define PGRN(p) p->g0 = p->g1 = p->g2 = p->g3
-// "prim blue". Do PBLU(prim) = 0x80 to set all blues to 0x80.
-#define PBLU(p) p->b0 = p->b1 = p->b2 = p->b3
-// "prim color". Do PCOL(prim) =  0x80 to set all RGBs to 0x80.
-#define PCOL(p) PRED(p) = PGRN(p) = PBLU(p)
+    // Macros for simplifying long stretches setting prim colors.
+    // "prim red". Do PRED(prim) = 0x80 to set all reds to 0x80.
+    #define PRED(p) p->r0 = p->r1 = p->r2 = p->r3
+    // "prim green". Do PGRN(prim) = 0x80 to set all greens to 0x80.
+    #define PGRN(p) p->g0 = p->g1 = p->g2 = p->g3
+    // "prim blue". Do PBLU(prim) = 0x80 to set all blues to 0x80.
+    #define PBLU(p) p->b0 = p->b1 = p->b2 = p->b3
+    // "prim color". Do PCOL(prim) =  0x80 to set all RGBs to 0x80.
+    #define PCOL(p) PRED(p) = PGRN(p) = PBLU(p)
 
-// Alternatively, set a point in a prim to a given shade of grey.
-// prim->r0 = prim->g0 = prim->b0 = 255 becomes
-// PGREY(prim, 0) = 255
-#define PGREY(p, n) p->r##n = p->g##n = p->b##n
-// TODO: Merge these two macros
-// This one was created to work for both PSP and PSX, but touches
-// enough files to justify a separate PR to change the original.
-#define PGREY_ALT(p, n, v)                                                     \
-    p->r##n = v;                                                               \
-    p->g##n = v;                                                               \
-    p->b##n = v;
+    // Alternatively, set a point in a prim to a given shade of grey.
+    // prim->r0 = prim->g0 = prim->b0 = 255 becomes
+    // PGREY(prim, 0) = 255
+    #define PGREY(p, n) p->r##n = p->g##n = p->b##n
+    // TODO: Merge these two macros
+    // This one was created to work for both PSP and PSX, but touches
+    // enough files to justify a separate PR to change the original.
+    #define PGREY_ALT(p, n, v)                                                 \
+        p->r##n = v;                                                           \
+        p->g##n = v;                                                           \
+        p->b##n = v;
 
 typedef enum {
     PRIM_NONE,
@@ -48,9 +48,9 @@ typedef enum {
 
 typedef struct Primitive {
     /* 0x00 */ struct Primitive* next;
-#if defined(VERSION_PC) || defined(VERSION_PSP)
+    #if defined(VERSION_PC) || defined(VERSION_PSP)
     u_long dummy;
-#endif
+    #endif
     /* 0x04 */ u8 r0;
     /* 0x05 */ u8 g0;
     /* 0x06 */ u8 b0;
@@ -108,9 +108,9 @@ SYNC_FIELD(POLY_GT4, Primitive, y3);
 // But it's an alternate use of the Primitive structure.
 typedef struct FakePrim {
     struct FakePrim* next;
-#if defined(VERSION_PC) || defined(VERSION_PSP)
+    #if defined(VERSION_PC) || defined(VERSION_PSP)
     u_long dummy;
-#endif
+    #endif
     /* 0x04 */ u8 r0;
     /* 0x05 */ u8 g0;
     /* 0x06 */ u8 b0;
@@ -139,9 +139,9 @@ typedef struct FakePrim {
 // it this for now. That one use is in RicEntityCrashHydroStorm.
 typedef struct PrimLineG2 {
     struct PrimLineG2* next;
-#if defined(VERSION_PC) || defined(VERSION_PSP)
+    #if defined(VERSION_PC) || defined(VERSION_PSP)
     u_long dummy;
-#endif
+    #endif
     /* 0x04 */ u8 r0;
     /* 0x05 */ u8 g0;
     /* 0x06 */ u8 b0;
@@ -169,9 +169,9 @@ typedef struct PrimLineG2 {
 
 typedef struct AxePrim {
     struct AxePrim* next;
-#if defined(VERSION_PC) || defined(VERSION_PSP)
+    #if defined(VERSION_PC) || defined(VERSION_PSP)
     u_long dummy;
-#endif
+    #endif
     /* 0x04 */ u8 r0;
     /* 0x05 */ u8 g0;
     /* 0x06 */ u8 b0;
@@ -204,9 +204,9 @@ typedef struct AxePrim {
 // dai/e_corner_guard
 typedef struct EntranceCascadePrim {
     /* 0x00 */ struct EntranceCascadePrim* next;
-#if defined(VERSION_PC) || defined(VERSION_PSP)
+    #if defined(VERSION_PC) || defined(VERSION_PSP)
     u_long dummy;
-#endif
+    #endif
     /* 0x04 */ s32 : 32;
     /* 0x08 */ s16 x0;
     /* 0x0A */ s16 y0;

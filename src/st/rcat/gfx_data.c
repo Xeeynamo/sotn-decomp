@@ -4,7 +4,7 @@
 #ifdef VERSION_US
 
 u8 gfx_alucard_sleep[] = {
-#include "gen/gfx_alucard_sleep.h"
+    #include "gen/gfx_alucard_sleep.h"
 };
 
 #endif
@@ -24,7 +24,7 @@ u8 gfx_unk_8934[] = {
 #ifdef VERSION_US
 
 u8 gfx_unk_925C[] = {
-#include "gen/gfx_unk_925C.h"
+    #include "gen/gfx_unk_925C.h"
 };
 
 #endif

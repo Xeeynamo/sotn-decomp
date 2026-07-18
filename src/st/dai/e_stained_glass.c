@@ -379,9 +379,9 @@ void EntityStainedGlass(Entity* self) {
 }
 
 #ifdef VERSION_PSP
-#define SETROTMATRIX(x) SetRotMatrix(x)
+    #define SETROTMATRIX(x) SetRotMatrix(x)
 #else
-#define SETROTMATRIX(x) gte_SetRotMatrix(x)
+    #define SETROTMATRIX(x) gte_SetRotMatrix(x)
 #endif
 
 // There are a few things about this function that probably aren't quite right,
