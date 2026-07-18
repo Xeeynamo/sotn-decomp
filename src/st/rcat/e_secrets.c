@@ -42,7 +42,7 @@ extern s32 E_ID(BREAKABLE_WALL_DEBRIS);
 #endif
 
 extern EInit g_EInitEnvironment;
-extern EInit OVL_EXPORT(EInitParticle);
+extern EInit g_EInitParticle;
 extern EInit g_EInitBreakableWallSegment;
 
 // Larger bricks that drop after breaking wall
@@ -59,7 +59,7 @@ void EntityBreakableWallDebris(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitParticle));
+        InitializeEntity(g_EInitParticle);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 3);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
@@ -176,7 +176,7 @@ void EntityBreakableWallParticles(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitParticle));
+        InitializeEntity(g_EInitParticle);
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
                        FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
         self->velocityX = breakable_wall_particle_velocity[self->params].x;

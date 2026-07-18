@@ -9,6 +9,8 @@
 #include <lba.h>
 #include "weapon_pc.h"
 #include "servant_pc.h"
+#include "stages/overlay.h"
+#include <ctype.h>
 
 s32 g_SimVabId = 0;
 
@@ -212,12 +214,6 @@ void LoadStageTileset(u8* pTilesetData, size_t len, s32 y) {
     }
 }
 
-void InitStageDummy(Overlay* o);
-void InitStageCEN(Overlay* o);
-void InitStageNZ0(Overlay* o);
-void InitStageST0(Overlay* o);
-void InitStageWRP(Overlay* o);
-void InitStageSEL(Overlay* o);
 void InitPlayerArc(const struct FileUseContent* file);
 void InitPlayerRic(void);
 void InitPlayerMaria(void);
@@ -319,7 +315,13 @@ s32 LoadFileSimToMem(SimKind kind) {
 
 bool LoadFilePc(const struct FileUseContent* file) {
     SimFile* sim = (SimFile*)file->param;
-    sim->addr = file->content;
+    if (sim->kind == SIM_VH || sim->kind == SIM_VB) {
+        // file->content is freed after the call, but sound file data must
+        // remain present in memory. Just do a memcpy to solve it.
+        memcpy(sim->addr, file->content, file->length);
+    } else {
+        sim->addr = file->content;
+    }
     switch (sim->kind) { // slowly replacing the original func
     case SIM_1:
         LoadStageTileset(sim->addr, file->length, 0x100);
@@ -384,6 +386,18 @@ static bool isFirstBoot() {
     return g_StageId == STAGE_SEL && g_GameState == Game_Init;
 }
 
+static void LoadStagePrg(const char* name) {
+    char ovlName[16];
+    unsigned i;
+    for (i = 0; name[i] && i < LEN(ovlName) - 1; i++) {
+        ovlName[i] = (char)tolower((unsigned char)name[i]);
+    }
+    ovlName[i] = '\0';
+    if (!LoadStageOverlay(ovlName, &g_api.o)) {
+        ERRORF("stage '%s' was not loaded", ovlName);
+    }
+}
+
 s32 LoadFileSim(s32 fileId, SimFileType type) {
     char smolbuf[48];
     char buf[128];
@@ -428,6 +442,14 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
             sim.path = "BIN/RIC.BIN";
             sim.kind = 99;
             break;
+        case 6:
+            sim.path = "BIN/F_PROLO0.BIN";
+            sim.kind = SIM_11;
+            break;
+        case 7:
+            sim.path = "BIN/F_PROLO1.BIN";
+            sim.kind = SIM_12;
+            break;
         case 12:
             sim.path = "ST/SEL/F_SEL.BIN";
             sim.kind = SIM_STAGE_CHR;
@@ -452,24 +474,7 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
                 g_GameStep = 1;
             }
         }
-        switch (g_StageId) {
-        case STAGE_SEL:
-            InitStageSEL(&g_api.o);
-            break;
-        case STAGE_CEN:
-            InitStageCEN(&g_api.o);
-            break;
-        case STAGE_NZ0:
-            InitStageNZ0(&g_api.o);
-            break;
-        case STAGE_WRP:
-            InitStageWRP(&g_api.o);
-            break;
-        default:
-            InitStageDummy(&g_api.o);
-            INFOF("TODO: will load stage '%s'", g_StagesLba[g_StageId].ovlName);
-            break;
-        }
+        LoadStagePrg(g_StagesLba[g_StageId].ovlName);
         return 0;
     case SimFileType_Vh:
         g_SimFile = &sim;
@@ -506,9 +511,15 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
             return 0;
         } else {
             sim.path = smolbuf;
-            snprintf(smolbuf, sizeof(smolbuf), "ST/%s/SD_ZK%s.VH",
-                     g_StagesLba[g_StageId].ovlName,
-                     g_StagesLba[g_StageId].ovlName);
+            if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
+                snprintf(smolbuf, sizeof(smolbuf), "ST/%s/SD_Z%s.VH",
+                         g_StagesLba[g_StageId].ovlName,
+                         g_StagesLba[g_StageId].ovlName);
+            } else {
+                snprintf(smolbuf, sizeof(smolbuf), "ST/%s/SD_ZK%s.VH",
+                         g_StagesLba[g_StageId].ovlName,
+                         g_StagesLba[g_StageId].ovlName);
+            }
             sim.addr = aPbav_2;
             sim.path = smolbuf;
             sim.size = g_StagesLba[g_StageId].vhLen;
@@ -552,10 +563,17 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
             return 0;
         } else {
             sim.path = smolbuf;
-            snprintf(smolbuf, sizeof(smolbuf), "ST/%s/SD_ZK%s.VB",
-                     g_StagesLba[g_StageId].ovlName,
-                     g_StagesLba[g_StageId].ovlName);
+            if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
+                snprintf(smolbuf, sizeof(smolbuf), "ST/%s/SD_Z%s.VB",
+                         g_StagesLba[g_StageId].ovlName,
+                         g_StagesLba[g_StageId].ovlName);
+            } else {
+                snprintf(smolbuf, sizeof(smolbuf), "ST/%s/SD_ZK%s.VB",
+                         g_StagesLba[g_StageId].ovlName,
+                         g_StagesLba[g_StageId].ovlName);
+            }
             sim.path = sim.path;
+            sim.addr = D_80280000;
             sim.size = g_StagesLba[g_StageId].vbLen;
             sim.kind = SIM_VB;
         }

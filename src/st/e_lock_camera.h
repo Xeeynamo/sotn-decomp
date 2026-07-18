@@ -2,9 +2,9 @@
 // n.b.! this may only work for TOP and RTOP
 #include "player_is_within_hitbox.h"
 
-extern EInit OVL_EXPORT(EInitLockCamera);
+extern EInit g_EInitLockCamera;
 
-void OVL_EXPORT(EntityLockCamera)(Entity* self) {
+void EntityLockCamera(Entity* self) {
     Tilemap* tilemap = &g_Tilemap;
     u16* dataPtr;
     // These vars are all reused for things; hard to make good names :(
@@ -28,7 +28,7 @@ void OVL_EXPORT(EntityLockCamera)(Entity* self) {
 #endif
     params = self->params;
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitLockCamera));
+        InitializeEntity(g_EInitLockCamera);
         self->hitboxState = 1;
         var_s2 = self->ext.lockCamera.unk7C = entityLockCameraData[params];
         if (var_s2) {

@@ -17,7 +17,7 @@ void EntityBackgroundBookcase(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
@@ -108,7 +108,7 @@ void EntityBackgroundFurniture(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
@@ -193,7 +193,7 @@ void EntityBackgroundShadow(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         primIndex = g_api.func_800EDB58(PRIM_TILE_ALT, 10);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
@@ -324,7 +324,7 @@ void func_us_801AFA80(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->posX.i.hi =
             D_us_80180E78[self->params].x - g_Tilemap.scrollX.i.hi;
         self->posY.i.hi =

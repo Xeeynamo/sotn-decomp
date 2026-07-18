@@ -68,14 +68,14 @@ typedef enum {
     /* 0x2D */ E_VENUS_WEED_SPIKE,
 } EntityIDs;
 
-extern EInit OVL_EXPORT(EInitBreakable);
-extern EInit OVL_EXPORT(EInitObtainable);
-extern EInit OVL_EXPORT(EInitParticle);
-extern EInit OVL_EXPORT(EInitInteractable);
-extern EInit OVL_EXPORT(EInitUnkId13);
-extern EInit OVL_EXPORT(EInitLockCamera);
-extern EInit OVL_EXPORT(EInitCommon);
-extern EInit OVL_EXPORT(EInitDamageNum);
+extern EInit g_EInitBreakable;
+extern EInit g_EInitObtainable;
+extern EInit g_EInitParticle;
+extern EInit g_EInitInteractable;
+extern EInit g_EInitUnkId13;
+extern EInit g_EInitLockCamera;
+extern EInit g_EInitCommon;
+extern EInit g_EInitDamageNum;
 extern EInit g_EInitSecret;
 extern EInit g_EInitSalemWitch;
 extern EInit g_EInitSalemWitchCurse;

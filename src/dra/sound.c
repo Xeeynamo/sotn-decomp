@@ -81,6 +81,7 @@ u16 func_80131F38(void) {
     return g_SeqPlayingId | 0x200;
 }
 
+// original name : xa_play_ck
 bool func_80131F68(void) {
     bool ret;
     if (D_8013B61C) {

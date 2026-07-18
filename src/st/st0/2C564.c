@@ -437,7 +437,7 @@ static s32 func_801AC458(s16 arg0) {
     return ret;
 }
 
-extern u32 OVL_EXPORT(CutsceneFlags);
+extern u32 g_CutsceneFlags;
 void EntityDracula(Entity* self) {
     Primitive* prim;
     Entity* entity;
@@ -500,23 +500,22 @@ void EntityDracula(Entity* self) {
     case 3:
         switch (self->step_s) {
         case 0:
-            if (OVL_EXPORT(CutsceneFlags) & 0x10) {
+            if (g_CutsceneFlags & 0x10) {
                 SetSubStep(1);
             }
             break;
 
         case 1:
-            if (!AnimateEntity(D_80180A0C, self) &&
-                (OVL_EXPORT(CutsceneFlags) & 0x20)) {
+            if (!AnimateEntity(D_80180A0C, self) && (g_CutsceneFlags & 0x20)) {
                 SetSubStep(2);
             }
             break;
 
         case 2:
             if (!AnimateEntity(D_80180A20, self)) {
-                OVL_EXPORT(CutsceneFlags) |= 0x100;
+                g_CutsceneFlags |= 0x100;
             }
-            if (OVL_EXPORT(CutsceneFlags) & 0x40) {
+            if (g_CutsceneFlags & 0x40) {
                 D_8003C744 = 1;
                 SetSubStep(3);
             }

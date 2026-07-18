@@ -2,7 +2,7 @@
 #include "dai.h"
 #include <scratchpad.h>
 
-extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit g_EInitInteractable;
 
 static s16 indices[] = {0, 2, 3, 5, 3, 5, 6, 8};
 static SVECTOR glass_points_0 = {-208, -192, 0};
@@ -197,7 +197,7 @@ void EntityStainedGlass(Entity* self) {
 
     switch (self->step) {
     case 0: // init
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 60);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
@@ -421,7 +421,7 @@ void EntityStainedGlassBackground(Entity* self) {
     g_GpuBuffers[1].draw.b0 = 24;
     switch (self->step) {
     case 0: // init
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 19);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;

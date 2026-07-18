@@ -6,7 +6,7 @@ s32 g_stone_flag = 0;
 
 extern s32 D_us_801D4DF0;
 extern s32 D_us_801D4DF4;
-extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit g_EInitInteractable;
 
 // hit during enter sequence
 void EntityUnkId18(Entity* self) {
@@ -23,7 +23,7 @@ void EntityUnkId18(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
 
         self->animSet = 0;
         self->animCurFrame = 0;
@@ -408,7 +408,7 @@ void EntityUnkId19(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         break;
 
     case 1:
@@ -630,7 +630,7 @@ void EntityUnkId1A(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         break;
 
     case 1:

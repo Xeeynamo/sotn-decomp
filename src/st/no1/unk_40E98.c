@@ -100,7 +100,7 @@ void func_us_801C10F4(Entity* self) {
     FntPrint("elemess_step%x\n", self->step);
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->ext.et_801C10F4.unk80 = 0;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x20);
         if (primIndex == -1) {

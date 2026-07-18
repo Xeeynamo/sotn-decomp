@@ -5,7 +5,7 @@ void EntityBreakable(Entity* self);
 void EntityExplosion(Entity* self);
 void EntityPrizeDrop(Entity* self);
 void EntityDamageDisplay(Entity* self);
-void OVL_EXPORT(EntityRedDoor)(Entity* self);
+void EntityRedDoor(Entity* self);
 void EntityIntenseExplosion(Entity* self);
 void EntitySoulStealOrb(Entity* self);
 void EntityRoomForeground(Entity* self);
@@ -17,8 +17,8 @@ void EntityEnemyBlood(Entity* self);
 void EntityMessageBox(Entity* self);
 void EntityDummy(Entity* self);
 void EntityDummy(Entity* self);
-void OVL_EXPORT(EntityBackgroundBlock)(Entity* self);
-void OVL_EXPORT(EntityLockCamera)(Entity* self);
+void EntityBackgroundBlock(Entity* self);
+void EntityLockCamera(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
@@ -80,12 +80,12 @@ void EntitySmallWaterDrop(Entity* self);
 void EntityWaterDrop(Entity* self);
 void EntityDodoBird(Entity* self);
 
-PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
+PfnEntityUpdate EntityUpdates[] = {
     EntityBreakable,
     EntityExplosion,
     EntityPrizeDrop,
     EntityDamageDisplay,
-    OVL_EXPORT(EntityRedDoor),
+    EntityRedDoor,
     EntityIntenseExplosion,
     EntitySoulStealOrb,
     EntityRoomForeground,
@@ -97,8 +97,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityMessageBox,
     EntityDummy,
     EntityDummy,
-    OVL_EXPORT(EntityBackgroundBlock),
-    OVL_EXPORT(EntityLockCamera),
+    EntityBackgroundBlock,
+    EntityLockCamera,
     EntityUnkId13,
     EntityExplosionVariants,
     EntityGreyPuff,
@@ -163,32 +163,32 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
 
 // clang-format off
 // animSet, animCurFrame, unk5A, palette, enemyID
-EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_DRA(3), 0, 0, 0, 0x000};
-EInit OVL_EXPORT(EInitObtainable) = {ANIMSET_DRA(3), 0, 0, 0, 0x001};
-EInit OVL_EXPORT(EInitParticle) = {ANIMSET_DRA(3), 0, 0, 0, 0x002};
-EInit OVL_EXPORT(EInitSpawner) = {ANIMSET_DRA(0), 0, 0, 0, 0x004};
-EInit OVL_EXPORT(EInitInteractable) = {ANIMSET_DRA(0), 0, 0, 0, 0x005};
-EInit OVL_EXPORT(EInitUnkId13) = {ANIMSET_DRA(0), 0, 0, 0, 0x002};
-EInit OVL_EXPORT(EInitLockCamera) = {ANIMSET_DRA(0), 0, 0, 0, 0x001};
-EInit OVL_EXPORT(EInitCommon) = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
-EInit OVL_EXPORT(EInitDamageNum) = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
+EInit g_EInitBreakable = {ANIMSET_DRA(3), 0, 0, 0, 0x000};
+EInit g_EInitObtainable = {ANIMSET_DRA(3), 0, 0, 0, 0x001};
+EInit g_EInitParticle = {ANIMSET_DRA(3), 0, 0, 0, 0x002};
+EInit g_EInitSpawner = {ANIMSET_DRA(0), 0, 0, 0, 0x004};
+EInit g_EInitInteractable = {ANIMSET_DRA(0), 0, 0, 0, 0x005};
+EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0, 0, 0, 0x002};
+EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0, 0, 0, 0x001};
+EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
+EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
 EInit g_EInitUnused80180938 = {ANIMSET_OVL(1), 0, 0, 0, 0x005};
 EInit g_EInitStInteractable = {ANIMSET_OVL(2), 0, 0, 0, 0x005};
 EInit g_EInitFireWarg1 = {ANIMSET_OVL(3), 1, 75, 512, 0x094};
 EInit g_EInitFireWarg2 = {ANIMSET_OVL(3), 1, 75, 512, 0x097};
 EInit g_EInitFireWarg3 = {ANIMSET_DRA(0), 0, 75, 512, 0x096};
 EInit g_EInitJackOBones = {ANIMSET_OVL(4), 1, 74, 524, 0x074};
-EInit D_us_80180980 = {ANIMSET_OVL(4), 0, 74, 524, 0x002};
-EInit D_us_8018098C = {ANIMSET_OVL(4), 21, 74, 524, 0x075};
+EInit g_EInitJackOBones2 = {ANIMSET_OVL(4), 0, 74, 524, 0x002};
+EInit g_EInitJackOBones3 = {ANIMSET_OVL(4), 21, 74, 524, 0x075};
 EInit g_EInitNovaSkeleton = {ANIMSET_OVL(5), 1, 72, 532, 0x07E};
-EInit D_us_801809A4 = {ANIMSET_OVL(5), 0, 72, 532, 0x07F};
+EInit g_EInitNovaSkeleton2 = {ANIMSET_OVL(5), 0, 72, 532, 0x07F};
 EInit g_EInitOrobourous = {ANIMSET_OVL(6), 1, 81, 561, 0x08D};
 EInit g_EInitOruburos = {ANIMSET_OVL(6), 4, 81, 561, 0x08E};
-EInit D_us_801809C8 = {ANIMSET_OVL(6), 4, 81, 561, 0x002};
+EInit g_EInitOruburosHead = {ANIMSET_OVL(6), 4, 81, 561, 0x002};
 EInit g_EInitOruburosRider = {ANIMSET_OVL(6), 4, 81, 561, 0x08F};
 EInit g_EInitDragonRider1 = {ANIMSET_OVL(6), 1, 80, 561, 0x090};
 EInit g_EInitDragonRider2 = {ANIMSET_OVL(6), 4, 80, 561, 0x091};
-EInit D_us_801809F8 = {ANIMSET_OVL(6), 4, 80, 561, 0x002};
+EInit g_EInitDragonRiderHead = {ANIMSET_OVL(6), 4, 80, 561, 0x002};
 EInit g_EInitVenusWeedRoot = {ANIMSET_OVL(7), 0, 80, 576, 0x188};
 EInit g_EInitVenusWeedFlower = {ANIMSET_OVL(7), 0, 80, 576, 0x189};
 EInit g_EInitVenusWeedTendril = {ANIMSET_OVL(7), 0, 80, 576, 0x18A};

@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-extern EInit OVL_EXPORT(EInitSpawner);
 
 #if defined(VERSION_PSP) && !defined(BOSS_IS_BO0)
 #define TPAGE_FLAG 0x1000
@@ -19,7 +18,7 @@ void func_us_801B4DA4(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitSpawner));
+        InitializeEntity(g_EInitSpawner);
         primIndex = g_api.func_800EDB58(PRIM_GT4, 8);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;

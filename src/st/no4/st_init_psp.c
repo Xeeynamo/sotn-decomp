@@ -222,7 +222,7 @@ void OVL_EXPORT(Load)(void) {
         (u8*)cutscene_data_ferryman_left_it);
 
     InitEntityIds();
-    PfnEntityUpdates = OVL_EXPORT(EntityUpdates);
+    PfnEntityUpdates = EntityUpdates;
     g_pStObjLayoutHorizontal = &D_8D2E4B0;
     g_pStObjLayoutVertical = &D_8D2E584;
     func_psp_0892A018();

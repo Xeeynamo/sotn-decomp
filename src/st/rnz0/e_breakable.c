@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rnz0.h"
 
-extern EInit OVL_EXPORT(EInitBreakable);
+extern EInit g_EInitBreakable;
 
 static u8 anim_1[] = {4, 1, 4, 2, 0, 0};
 static u8 anim_2[] = {4, 4, 4, 5, 4, 6, 4, 5, 0, 0};
@@ -56,7 +56,7 @@ void EntityBreakableNZ0(Entity* self) {
             ReplaceBreakableWithItemDrop(self);
         }
     } else {
-        InitializeEntity(OVL_EXPORT(EInitBreakable));
+        InitializeEntity(g_EInitBreakable);
         self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 20;
         self->blendMode = blend_modes[breakableType];
         self->hitboxHeight = g_eBreakableHitboxes[breakableType];

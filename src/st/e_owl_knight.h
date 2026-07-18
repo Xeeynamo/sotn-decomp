@@ -3,7 +3,7 @@
 extern EInit g_EInitOwl;
 extern EInit g_EInitOwlKnight;
 extern EInit g_EInitOwlKnightSword;
-extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit g_EInitInteractable;
 
 static u16 D_us_80181C1C[] = {0, 8, 0, 6, 8, -6, -16, 0};
 static u16 D_us_80181C2C[] = {0, 31, 8, 0, 0, 16, 255, 0}; // unused
@@ -1105,6 +1105,6 @@ void EntityOwlKnightSword(Entity* self) {
 
 void EntityOwlTarget(Entity* self) {
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
     }
 }

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rnz0.h"
 
-extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit g_EInitInteractable;
 
 static s32 D_80180ED0[] = {0};
 void EntityCannonLever(Entity* self) {
@@ -11,7 +11,7 @@ void EntityCannonLever(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->hitboxWidth = 4;
         self->hitboxHeight = 20;
         self->hitboxState = 2;
@@ -77,7 +77,7 @@ void EntityCannon(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -145,7 +145,7 @@ void EntityCannonShot(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = ANIMSET_DRA(2);
         self->animCurFrame = 1;
         self->palette = PAL_FLAG(PAL_UNK_1AF);
@@ -182,7 +182,7 @@ void EntityCannonWall(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         i = 6;
         tileLayoutPtr = tiles_wall + i;
         tilePos = 0xB9;

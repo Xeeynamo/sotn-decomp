@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz1.h"
 
-extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit g_EInitInteractable;
 
 // This is the entity that transitions the player out of the large secret area
 // behind the breakable wall and the left side of the room with the pendulums
@@ -10,7 +10,7 @@ void EntityRoomExit(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->hitboxWidth = 16;
         self->hitboxHeight = 32;
         self->hitboxState = 1;

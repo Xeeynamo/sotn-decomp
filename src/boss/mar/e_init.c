@@ -5,7 +5,7 @@ void EntityBreakable(Entity* self);
 void EntityExplosion(Entity* self);
 void EntityPrizeDrop(Entity* self);
 void EntityDamageDisplay(Entity* self);
-void OVL_EXPORT(EntityRedDoor)(Entity* self);
+void EntityRedDoor(Entity* self);
 void EntityIntenseExplosion(Entity* self);
 void EntitySoulStealOrb(Entity* self);
 void EntityRoomForeground(Entity* self);
@@ -17,8 +17,8 @@ void EntityEnemyBlood(Entity* self);
 void EntityMessageBox(Entity* self);
 void EntityDummy(Entity* self);
 void EntityDummy(Entity* self);
-void OVL_EXPORT(EntityBackgroundBlock)(Entity* self);
-void OVL_EXPORT(EntityLockCamera)(Entity* self);
+void EntityBackgroundBlock(Entity* self);
+void EntityLockCamera(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
@@ -30,55 +30,38 @@ void EntityStatueGear(Entity* self);
 void EntityStoneDoor(Entity* self);
 void EntityClockRoomUnused(Entity* self);
 void EntityDummy(Entity* self);
-void OVL_EXPORT(EntityCutscene)(Entity* self);
+void EntityCutscene(Entity* self);
 void func_us_8018C90C(Entity* self);
 void func_us_8018CA94(Entity* self);
 
-PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
-    EntityBreakable,
-    EntityExplosion,
-    EntityPrizeDrop,
-    EntityDamageDisplay,
-    OVL_EXPORT(EntityRedDoor),
-    EntityIntenseExplosion,
-    EntitySoulStealOrb,
-    EntityRoomForeground,
-    EntityStageNamePopup,
-    EntityEquipItemDrop,
-    EntityRelicOrb,
-    EntityHeartDrop,
-    EntityEnemyBlood,
-    EntityMessageBox,
-    EntityDummy,
-    EntityDummy,
-    OVL_EXPORT(EntityBackgroundBlock),
-    OVL_EXPORT(EntityLockCamera),
-    EntityUnkId13,
-    EntityExplosionVariants,
-    EntityGreyPuff,
-    EntityClockRoomController,
-    EntityClockHands,
-    EntityBirdcageDoor,
-    EntityStatue,
-    EntityStatueGear,
-    EntityStoneDoor,
-    EntityClockRoomUnused,
-    EntityDummy,
-    OVL_EXPORT(EntityCutscene),
-    func_us_8018C90C,
-    func_us_8018CA94,
+PfnEntityUpdate EntityUpdates[] = {
+    EntityBreakable,       EntityExplosion,
+    EntityPrizeDrop,       EntityDamageDisplay,
+    EntityRedDoor,         EntityIntenseExplosion,
+    EntitySoulStealOrb,    EntityRoomForeground,
+    EntityStageNamePopup,  EntityEquipItemDrop,
+    EntityRelicOrb,        EntityHeartDrop,
+    EntityEnemyBlood,      EntityMessageBox,
+    EntityDummy,           EntityDummy,
+    EntityBackgroundBlock, EntityLockCamera,
+    EntityUnkId13,         EntityExplosionVariants,
+    EntityGreyPuff,        EntityClockRoomController,
+    EntityClockHands,      EntityBirdcageDoor,
+    EntityStatue,          EntityStatueGear,
+    EntityStoneDoor,       EntityClockRoomUnused,
+    EntityDummy,           EntityCutscene,
+    func_us_8018C90C,      func_us_8018CA94,
 };
 
-EInit OVL_EXPORT(EInitBreakable) = {0x0003, 0x0000, 0x0000, 0x0000, 0x0000};
-EInit OVL_EXPORT(
-    EInitObtainable) = {ANIMSET_DRA(3), 0x0000, 0x0000, 0x0000, 0x0001};
-EInit OVL_EXPORT(EInitParticle) = {0x0003, 0x0000, 0x0000, 0x0000, 0x0002};
-EInit OVL_EXPORT(EInitSpawner) = {0x0000, 0x0000, 0x0000, 0x0000, 0x0004};
-EInit OVL_EXPORT(EInitInteractable) = {0x0000, 0x0000, 0x0000, 0x0000, 0x0005};
-EInit OVL_EXPORT(EInitUnkId13) = {0x0000, 0x0000, 0x0000, 0x0000, 0x0002};
-EInit OVL_EXPORT(EInitLockCamera) = {0x0000, 0x0000, 0x0000, 0x0000, 0x0001};
-EInit OVL_EXPORT(EInitCommon) = {0x0000, 0x0000, 0x0000, 0x0000, 0x0003};
-EInit OVL_EXPORT(EInitDamageNum) = {0x0000, 0x0000, 0x0000, 0x0000, 0x0003};
+EInit g_EInitBreakable = {0x0003, 0x0000, 0x0000, 0x0000, 0x0000};
+EInit g_EInitObtainable = {ANIMSET_DRA(3), 0x0000, 0x0000, 0x0000, 0x0001};
+EInit g_EInitParticle = {0x0003, 0x0000, 0x0000, 0x0000, 0x0002};
+EInit g_EInitSpawner = {0x0000, 0x0000, 0x0000, 0x0000, 0x0004};
+EInit g_EInitInteractable = {0x0000, 0x0000, 0x0000, 0x0000, 0x0005};
+EInit g_EInitUnkId13 = {0x0000, 0x0000, 0x0000, 0x0000, 0x0002};
+EInit g_EInitLockCamera = {0x0000, 0x0000, 0x0000, 0x0000, 0x0001};
+EInit g_EInitCommon = {0x0000, 0x0000, 0x0000, 0x0000, 0x0003};
+EInit g_EInitDamageNum = {0x0000, 0x0000, 0x0000, 0x0000, 0x0003};
 
 static u16 unused[][6] = {
     {0x0000, 0x0000, 0x0000, 0x0000, 0x0133, 0x0000},

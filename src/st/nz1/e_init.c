@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz1.h"
 
-void OVL_EXPORT(EntityBreakable)(Entity* self);
+void EntityBreakable(Entity* self);
 void EntityExplosion(Entity* self);
 void EntityPrizeDrop(Entity* self);
 void EntityDamageDisplay(Entity* self);
-void OVL_EXPORT(EntityRedDoor)(Entity* self);
+void EntityRedDoor(Entity* self);
 void EntityIntenseExplosion(Entity* self);
 void EntitySoulStealOrb(Entity* self);
 void EntityRoomForeground(Entity* self);
@@ -17,8 +17,8 @@ void EntityEnemyBlood(Entity* self);
 void EntityMessageBox(Entity* self);
 void EntityDummy(Entity* self);
 void EntityDummy(Entity* self);
-void OVL_EXPORT(EntityBackgroundBlock)(Entity* self);
-void OVL_EXPORT(EntityLockCamera)(Entity* self);
+void EntityBackgroundBlock(Entity* self);
+void EntityLockCamera(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
@@ -52,7 +52,7 @@ void EntitySpikesDust(Entity* self);
 void EntitySpikesDamage(Entity* self);
 void EntitySkullLord(Entity* self);
 void EntitySkullLordOutline(Entity* self);
-void EntitySkullLordFlames(Entity* self);
+void EntitySkullLordEye(Entity* self);
 void EntitySkullLordPieces(Entity* self);
 void EntityHarpy(Entity* self);
 void EntityHarpyDagger(Entity* self);
@@ -76,7 +76,7 @@ void EntityBridgeBackgroundPiece(Entity* self);
 void EntityFleaArmor(Entity* self);
 void EntityFleaArmorAttackHitbox(Entity* self);
 void EntityFleaMan(Entity* self);
-void OVL_EXPORT(EntityBreakableDebris)(Entity* self);
+void EntityBreakableDebris(Entity* self);
 void EntityBossDoorTrigger(Entity* self);
 void EntityBossDoors(Entity* self);
 void EntityKarasuman(Entity* self);
@@ -90,12 +90,12 @@ void EntityMedusaHeadSpawner(Entity* self);
 void EntityMedusaHeadBlue(Entity* self);
 void EntityMedusaHeadYellow(Entity* self);
 
-PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
-    OVL_EXPORT(EntityBreakable),
+PfnEntityUpdate EntityUpdates[] = {
+    EntityBreakable,
     EntityExplosion,
     EntityPrizeDrop,
     EntityDamageDisplay,
-    OVL_EXPORT(EntityRedDoor),
+    EntityRedDoor,
     EntityIntenseExplosion,
     EntitySoulStealOrb,
     EntityRoomForeground,
@@ -107,8 +107,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityMessageBox,
     EntityDummy,
     EntityDummy,
-    OVL_EXPORT(EntityBackgroundBlock),
-    OVL_EXPORT(EntityLockCamera),
+    EntityBackgroundBlock,
+    EntityLockCamera,
     EntityUnkId13,
     EntityExplosionVariants,
     EntityGreyPuff,
@@ -142,7 +142,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntitySpikesDamage,
     EntitySkullLord,
     EntitySkullLordOutline,
-    EntitySkullLordFlames,
+    EntitySkullLordEye,
     EntitySkullLordPieces,
     EntityHarpy,
     EntityHarpyDagger,
@@ -166,7 +166,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityFleaArmor,
     EntityFleaArmorAttackHitbox,
     EntityFleaMan,
-    OVL_EXPORT(EntityBreakableDebris),
+    EntityBreakableDebris,
     EntityBossDoorTrigger,
     EntityBossDoors,
     EntityKarasuman,
@@ -183,15 +183,15 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
 
 // clang-format off
 // animSet, animCurFrame, unk5A, palette, enemyID
-EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_OVL(1), 0, 0, PAL_NONE, 0x000};
-EInit OVL_EXPORT(EInitObtainable) = {ANIMSET_DRA(3), 0, 0, PAL_NONE, 0x001};
-EInit OVL_EXPORT(EInitParticle) = {ANIMSET_DRA(3), 0, 0, PAL_NONE, 0x002};
-EInit OVL_EXPORT(EInitSpawner) = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 0x004};
-EInit OVL_EXPORT(EInitInteractable) = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 0x005};
-EInit OVL_EXPORT(EInitUnkId13) = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 0x002};
-EInit OVL_EXPORT(EInitLockCamera) = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 0x001};
-EInit OVL_EXPORT(EInitCommon) = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 0x003};
-EInit OVL_EXPORT(EInitDamageNum) = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 0x003};
+EInit g_EInitBreakable = {ANIMSET_OVL(1), 0, 0, PAL_NONE, 0x000};
+EInit g_EInitObtainable = {ANIMSET_DRA(3), 0, 0, PAL_NONE, 0x001};
+EInit g_EInitParticle = {ANIMSET_DRA(3), 0, 0, PAL_NONE, 0x002};
+EInit g_EInitSpawner = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 0x004};
+EInit g_EInitInteractable = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 0x005};
+EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 0x002};
+EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 0x001};
+EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 0x003};
+EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 0x003};
 EInit g_EInitEnvironment = {ANIMSET_OVL(1), 0, 0, PAL_NONE, 0x005};
 EInit g_EInitSkullLord = {ANIMSET_OVL(3), 1, 76, PAL_UNK_200, 0x105};
 EInit g_EInitSkullLordEffects = {ANIMSET_OVL(3), 1, 76, PAL_UNK_200, 0x005};

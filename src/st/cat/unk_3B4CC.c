@@ -17,7 +17,7 @@ void func_us_801BB4CC(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->palette = PAL_FLAG(PAL_FILL_BLACK);
         self->drawFlags |= ENTITY_OPACITY | ENTITY_SCALEX | ENTITY_SCALEY;
         self->scaleX = 0x120;

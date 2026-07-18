@@ -10,7 +10,7 @@ extern s32 E_ID(ID_2F);
 
 void func_us_801BFA34(Entity* self) {
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitParticle));
+        InitializeEntity(g_EInitParticle);
         self->zPriority += 8;
         self->palette = PAL_FLAG(PAL_UNK_19E);
         self->animSet = 2;
@@ -122,7 +122,7 @@ void func_us_801BFB40(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitParticle));
+        InitializeEntity(g_EInitParticle);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 6);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
@@ -330,7 +330,7 @@ void func_us_801C01F0(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitParticle));
+        InitializeEntity(g_EInitParticle);
         self->animSet = 8;
         self->animCurFrame = 0;
         self->palette = PAL_FLAG(4);

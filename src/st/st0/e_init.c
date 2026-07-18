@@ -5,7 +5,7 @@ void func_801A805C(Entity*);
 void EntityExplosion(Entity*);
 void EntityPrizeDrop(Entity*);
 void EntityDamageDisplay(Entity*);
-void OVL_EXPORT(EntityRedDoor)(Entity*);
+void EntityRedDoor(Entity*);
 void EntityIntenseExplosion(Entity*);
 void EntitySoulStealOrb(Entity*);
 void EntityRoomForeground(Entity*);
@@ -17,13 +17,13 @@ void EntityDummy(Entity*);
 void EntityDummy(Entity*);
 void EntityDummy(Entity*);
 void EntityDummy(Entity*);
-void OVL_EXPORT(EntityBackgroundBlock)(Entity*);
-void OVL_EXPORT(EntityLockCamera)(Entity*);
+void EntityBackgroundBlock(Entity*);
+void EntityLockCamera(Entity*);
 void EntityUnkId13(Entity*);
 void EntityExplosionVariants(Entity*);
 void EntityGreyPuff(Entity*);
-void OVL_EXPORT(EntityCutscene)(Entity*);
 void EntityCutscene(Entity*);
+void EntityCutsceneSupport(Entity*);
 void EntityStageTitleCard(Entity*);
 void EntityStageTitleFadeout(Entity*);
 void EntityDracula(Entity*);
@@ -48,12 +48,12 @@ void EntityCutscenePhotograph(Entity*);
 void EntityCutscenePhotographFire(Entity*);
 void func_801BC5C0(Entity*);
 
-PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
+PfnEntityUpdate EntityUpdates[] = {
     func_801A805C,
     EntityExplosion,
     EntityPrizeDrop,
     EntityDamageDisplay,
-    OVL_EXPORT(EntityRedDoor),
+    EntityRedDoor,
     EntityIntenseExplosion,
     EntitySoulStealOrb,
     EntityRoomForeground,
@@ -65,13 +65,13 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityDummy,
     EntityDummy,
     EntityDummy,
-    OVL_EXPORT(EntityBackgroundBlock),
-    OVL_EXPORT(EntityLockCamera),
+    EntityBackgroundBlock,
+    EntityLockCamera,
     EntityUnkId13,
     EntityExplosionVariants,
     EntityGreyPuff,
-    OVL_EXPORT(EntityCutscene),
     EntityCutscene,
+    EntityCutsceneSupport,
     EntityStageTitleCard,
     EntityStageTitleFadeout,
     EntityDracula,
@@ -97,15 +97,14 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_801BC5C0,
 };
 
-EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_DRA(3), 0, 0x7C, 0x0100, 0};
-EInit OVL_EXPORT(
-    EInitObtainable) = {ANIMSET_OVL(3), 0x0000, 0x007C, 0x0100, 0x0001};
-EInit OVL_EXPORT(EInitParticle) = {0x0003, 0x0000, 0x0000, 0x0000, 0x0002};
+EInit g_EInitBreakable = {ANIMSET_DRA(3), 0, 0x7C, 0x0100, 0};
+EInit g_EInitObtainable = {ANIMSET_OVL(3), 0x0000, 0x007C, 0x0100, 0x0001};
+EInit g_EInitParticle = {0x0003, 0x0000, 0x0000, 0x0000, 0x0002};
 EInit g_EInitCutscene = {0x0000, 0x0000, 0x0000, 0x0000, 0x0004};
-EInit OVL_EXPORT(EInitUnkId13) = {0x0000, 0x0000, 0x0000, 0x0000, 0x0002};
-EInit OVL_EXPORT(EInitLockCamera) = {0x0000, 0x0000, 0x0000, 0x0000, 0x0001};
-EInit OVL_EXPORT(EInitCommon) = {0x0000, 0x0000, 0x0000, 0x0000, 0x0003};
-EInit OVL_EXPORT(EInitDamageNum) = {0x0000, 0x0000, 0x0000, 0x0000, 0x0003};
+EInit g_EInitUnkId13 = {0x0000, 0x0000, 0x0000, 0x0000, 0x0002};
+EInit g_EInitLockCamera = {0x0000, 0x0000, 0x0000, 0x0000, 0x0001};
+EInit g_EInitCommon = {0x0000, 0x0000, 0x0000, 0x0000, 0x0003};
+EInit g_EInitDamageNum = {0x0000, 0x0000, 0x0000, 0x0000, 0x0003};
 EInit g_EInit3DObject = {0x0000, 0x0000, 0x0000, 0x0000, 0x0005};
 EInit g_EInitDracula = {0x8001, 0x0000, 0x0048, 0x0200, 0x00A9};
 EInit g_EInitDraculaFireball = {0x8001, 0x0000, 0x0048, 0x0200, 0x00AA};

@@ -2,9 +2,9 @@
 #include <game.h>
 #include "../../st/sel/sel.h"
 #include "../pc.h"
-#include "sfx.h"
 #include <string.h>
 #include <cutscene.h>
+#include "overlay.h"
 
 extern const char* D_801803A8[10];
 
@@ -19,7 +19,7 @@ extern Overlay OVL_EXPORT(Overlay);
 s32 LoadFileSim(s32 fileId, s32 type);
 
 static bool g_WereStringsInitialised = false;
-void InitStageSEL(Overlay* o) {
+OVL_API void InitStage(Overlay* o) {
     memcpy(o, &OVL_EXPORT(Overlay), sizeof(Overlay));
     if (!g_WereStringsInitialised) {
         g_WereStringsInitialised = true;

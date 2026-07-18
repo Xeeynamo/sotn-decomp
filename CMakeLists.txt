@@ -2,12 +2,24 @@ cmake_minimum_required(VERSION 3.10)
 
 project(sotn)
 
+set(CMAKE_C_STANDARD 17)
+set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if (WIN32)
     set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 endif()
+
+if (MSVC)
+    cmake_policy(SET CMP0091 NEW)
+    set(CMAKE_MSVC_RUNTIME_LIBRARY "$<$<CONFIG:Debug>:MultiThreadedDebugDLL>$<$<NOT:$<CONFIG:Debug>>:MultiThreadedDLL>")
+endif()
+
+# Overlay compatibility
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
 if (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang|AppleClang")
     set(CMAKE_BUILD_TYPE Debug)
@@ -45,7 +57,7 @@ set(SOURCE_FILES_PC
     src/pc/pl_ric.c
     src/pc/servant_pc.c
     src/pc/stages/stage_loader.c
-    src/pc/stages/stage_dummy.c
+    src/pc/stages/overlay.c
     src/pc/weapon_pc.c
 )
 
@@ -154,6 +166,7 @@ set(SOURCE_FILES_TT_000
     src/servant/tt_000/bat.c
     src/servant/tt_000/servant_clutdata.c
     src/servant/tt_000/servant_spriteparts.c
+    src/pc/servants/servant_000.c
 )
 
 set(SOURCE_FILES_TT_001
@@ -161,12 +174,14 @@ set(SOURCE_FILES_TT_001
     src/servant/tt_001/ghost.c
     src/servant/tt_001/servant_clutdata.c
     src/servant/tt_001/servant_spriteparts.c
+    src/pc/servants/servant_001.c
 )
 
 set(SOURCE_FILES_TT_002
     src/servant/tt_002/init.c
     src/servant/tt_002/faerie.c
     src/servant/tt_002/faerie_spriteparts.c
+    src/pc/servants/servant_002.c
 )
 
 set(SOURCE_FILES_STAGE_SEL
@@ -280,6 +295,7 @@ set(SOURCE_FILES_STAGE_NZ0
 set (SOURCE_FILES_STAGE_ST0
     src/pc/stages/stage_st0.c
     src/st/st0/header.c
+    src/st/st0/bss.c
     src/st/st0/gen/e_laydef.c
     src/st/st0/e_init.c
     src/st/st0/gen/rooms.c
@@ -421,27 +437,10 @@ set_source_files_properties(src/weapon/w_046.c PROPERTIES COMPILE_DEFINITIONS WE
 set_source_files_properties(src/weapon/w_051.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_051)
 set_source_files_properties(src/weapon/w_052.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_052)
 
-# organization is:
-# two executables, sdl2 and null, plus a shared library "core"
-# any executable links core (which is pc shared code + sotn psx code)
-# the null backend is present to try and help with developing a backend-agnostic interface
-# and for a basic "does it segfault" check in CI
-
-# core library
-
 set(SOURCE_FILES_CORE
     ${SOURCE_FILES_DRA}
     ${SOURCE_FILES_RIC}
-    ${SOURCE_FILES_STAGE_SEL}
-    ${SOURCE_FILES_STAGE_CEN}
-    ${SOURCE_FILES_STAGE_NZ0}
-    ${SOURCE_FILES_STAGE_ST0}
-    ${SOURCE_FILES_BOSS_BO4}
-    ${SOURCE_FILES_STAGE_WRP}
     ${SOURCE_FILES_WEAPON}
-    ${SOURCE_FILES_TT_000}
-    ${SOURCE_FILES_TT_001}
-    ${SOURCE_FILES_TT_002}
 )
 if (USE_PLAYER_MARIA)
     add_compile_definitions(USE_PLAYER_MARIA)
@@ -450,15 +449,20 @@ if (USE_PLAYER_MARIA)
             src/pc/pl_maria.c)
 endif()
 
-add_library(core ${SOURCE_FILES_CORE})
+add_subdirectory(tools/psyz/psyz)
 
-target_include_directories(core PUBLIC
+add_executable(${PROJECT_NAME}
+    ${SOURCE_FILES_PC}
+    ${SOURCE_FILES_3RD}
+    ${SOURCE_FILES_CORE})
+
+target_include_directories(${PROJECT_NAME} PUBLIC
     include
     src/dra
     src/pc/3rd
 )
 
-target_compile_definitions(core PUBLIC
+target_compile_definitions(${PROJECT_NAME} PUBLIC
     _USE_MATH_DEFINES # needed for msvc
     VERSION_PC
     PERMUTER
@@ -467,17 +471,76 @@ target_compile_definitions(core PUBLIC
     _internal_version_us
 )
 
-add_executable(${PROJECT_NAME}
-    ${SOURCE_FILES_PC}
-    ${SOURCE_FILES_MOCK_SDK}
-    ${SOURCE_FILES_3RD})
-add_subdirectory(tools/psyz/psyz)
-target_link_libraries(core PUBLIC psyz)
 target_include_directories(psyz PUBLIC tools/psyz/psyz/include)
 target_compile_definitions(psyz PRIVATE __psyz)
 psyz_strip_file_prefix(${PROJECT_NAME})
 if (WIN32)
-    target_link_libraries(${PROJECT_NAME} PRIVATE core)
+    target_link_libraries(${PROJECT_NAME} PRIVATE psyz)
+    set_target_properties(${PROJECT_NAME} PROPERTIES ENABLE_EXPORTS ON)
+    if (MSVC)
+        # Windows PE has no -rdynamic equivalent, and a DLL must resolve all
+        # externals at link time.
+        # Generates an export definition for overlays to where to link to.
+        get_filename_component(_msvc_bindir "${CMAKE_C_COMPILER}" DIRECTORY)
+        set(_sotn_def "${CMAKE_BINARY_DIR}/sotn_exports.def")
+        add_custom_command(TARGET ${PROJECT_NAME} PRE_LINK
+            COMMAND ${CMAKE_COMMAND}
+                    -DDUMPBIN=${_msvc_bindir}/dumpbin.exe
+                    -DOUT=${_sotn_def}
+                    "-DINPUTS=$<TARGET_FILE:psyz>$<SEMICOLON>$<JOIN:$<TARGET_OBJECTS:${PROJECT_NAME}>,$<SEMICOLON>>"
+                    -P ${CMAKE_SOURCE_DIR}/cmake/gen_export_def.cmake
+            VERBATIM
+            COMMENT "Generating export .def for overlay symbol resolution")
+        set_property(TARGET ${PROJECT_NAME} APPEND_STRING
+                     PROPERTY LINK_FLAGS " /DEF:${_sotn_def}")
+    endif()
+elseif (APPLE)
+    target_link_libraries(${PROJECT_NAME} PRIVATE psyz m)
+    target_link_options(${PROJECT_NAME} PRIVATE -Wl,-export_dynamic)
 else()
-    target_link_libraries(${PROJECT_NAME} PRIVATE core m)
+    target_link_libraries(${PROJECT_NAME} PRIVATE psyz m ${CMAKE_DL_LIBS})
+    target_link_options(${PROJECT_NAME} PRIVATE -rdynamic)
 endif()
+
+function(add_overlay name)
+    add_library(${name} SHARED ${ARGN})
+    set_target_properties(${name} PROPERTIES PREFIX "")
+
+    target_include_directories(${name} PRIVATE
+        include
+        src/dra
+        src/pc/3rd
+        src/pc
+    )
+
+    target_compile_definitions(${name} PRIVATE
+        _USE_MATH_DEFINES
+        VERSION_PC
+        PERMUTER
+        NON_MATCHING
+        HARD_LINK
+        _internal_version_us
+        __psyz
+        OVERLAY_BUILD
+    )
+
+    # Overlays need to resolve the same libraries the main exec is linked to
+    target_include_directories(${name} PRIVATE tools/psyz/psyz/include)
+    if (WIN32)
+        target_link_libraries(${name} PRIVATE ${PROJECT_NAME})
+    elseif (APPLE)
+        target_link_options(${name} PRIVATE -Wl,-undefined,dynamic_lookup)
+    endif()
+
+    psyz_strip_file_prefix(${name})
+endfunction()
+
+add_overlay(cen ${SOURCE_FILES_STAGE_CEN})
+add_overlay(sel ${SOURCE_FILES_STAGE_SEL})
+add_overlay(wrp ${SOURCE_FILES_STAGE_WRP})
+add_overlay(nz0 ${SOURCE_FILES_STAGE_NZ0})
+add_overlay(st0 ${SOURCE_FILES_STAGE_ST0})
+
+add_overlay(tt_000 ${SOURCE_FILES_TT_000})
+add_overlay(tt_001 ${SOURCE_FILES_TT_001})
+add_overlay(tt_002 ${SOURCE_FILES_TT_002})

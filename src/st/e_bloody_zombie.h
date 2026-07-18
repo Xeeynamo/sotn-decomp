@@ -58,7 +58,7 @@ static u8 unused[] = {0x06, 0x01, 0x04, 0x01, 0x04, 0x02, 0x06, 0x03,
                       0x05, 0x04, 0x05, 0x05, 0x00, 0x00, 0x00, 0x00};
 #endif
 
-extern EInit OVL_EXPORT(EInitParticle);
+extern EInit g_EInitParticle;
 Primitive* FindFirstUnkPrim2(Primitive* prim, u8 index);
 
 void EntityBloodSplatter(Entity* self) {
@@ -67,7 +67,7 @@ void EntityBloodSplatter(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitParticle));
+        InitializeEntity(g_EInitParticle);
         break;
 
     case 1:
@@ -494,7 +494,7 @@ void EntityBloodDrips(Entity* self) { // BloodDrips
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitParticle));
+        InitializeEntity(g_EInitParticle);
         primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
         if (primIndex != -1) {
             self->primIndex = primIndex;

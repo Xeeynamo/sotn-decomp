@@ -4,7 +4,7 @@
 extern s32 E_ID(FALLING_ROCK_2);
 #endif
 
-extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit g_EInitInteractable;
 
 #if defined(INVERTED_STAGE)
 #define CF_STEPS JEWEL_ROOM_STEPS
@@ -88,7 +88,7 @@ void EntityMermanRockLeftSide(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->hitboxState = 2;
         self->hitboxWidth = 16;
         self->hitboxHeight = 24;
@@ -193,7 +193,7 @@ void EntityMermanRockRightSide(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->hitboxState = 2;
         self->hitboxWidth = 16;
         self->hitboxHeight = 24;
@@ -288,7 +288,7 @@ void EntityJewelSwordDoor(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         if (g_CastleFlags[CF_OPEN]) {
             self->step = 2;
         }

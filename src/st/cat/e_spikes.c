@@ -84,7 +84,7 @@ void EntitySpikeRoomDarkness(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         if (!g_CastleFlags[CAT_SPIKE_ROOM_LIT]) {
             entity = &PLAYER;
             entity->zPriority = 0xD8;

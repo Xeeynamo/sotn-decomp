@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "../rno3/rno3.h"
+#include "rno3.h"
 #include "../pfn_entity_update.h"
 
 extern LayoutEntity* D_8D2E22C;
@@ -137,7 +137,7 @@ void InitEntityIds(void) {
 
 void OVL_EXPORT(Load)(void) {
     InitEntityIds();
-    PfnEntityUpdates = OVL_EXPORT(EntityUpdates);
+    PfnEntityUpdates = EntityUpdates;
     g_pStObjLayoutHorizontal = &D_8D2E22C;
     g_pStObjLayoutVertical = &D_8D2E300;
     func_892A018();

@@ -2,13 +2,13 @@
 #include "rnz0.h"
 #include "sfx.h"
 
-extern EInit OVL_EXPORT(EInitEnemy3);
+extern EInit g_EInitEnemy3;
 
 // bust with red eyes that can have a candle on it
 void EntityRedEyeBust(Entity* self) {
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitEnemy3));
+        InitializeEntity(g_EInitEnemy3);
         self->animCurFrame = 7;
         self->zPriority = 0x70;
         break;

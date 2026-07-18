@@ -616,7 +616,7 @@ void EntityDiplocephalusTorso(Entity* self) {
     s32 posY;
 
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->ext.diploBody.unkA4 = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
         self->ext.diploBody.unkA8 = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
     }

@@ -97,7 +97,7 @@ void func_801A805C(Entity* self) {
             ReplaceBreakableWithItemDrop(self);
         }
     } else {
-        InitializeEntity(OVL_EXPORT(EInitBreakable));
+        InitializeEntity(g_EInitBreakable);
         self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 0x14;
         self->blendMode = blend_modes[params];
         self->hitboxHeight = hitbox_height[params];
@@ -130,7 +130,7 @@ void func_801A8328(Entity* self) {
             break;
         }
 
-        InitializeEntity(OVL_EXPORT(EInitParticle));
+        InitializeEntity(g_EInitParticle);
 
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
         if (primIndex == -1) {
@@ -206,7 +206,7 @@ void func_801A8620(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         entity->animSet = ANIMSET_DRA(2);
         entity->animCurFrame = 1;
         entity->zPriority = 0xB0;

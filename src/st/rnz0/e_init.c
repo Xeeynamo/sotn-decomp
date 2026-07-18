@@ -6,7 +6,7 @@ void EntityBreakableNZ0(Entity* self);
 void EntityExplosion(Entity* self);
 void EntityPrizeDrop(Entity* self);
 void EntityDamageDisplay(Entity* self);
-void OVL_EXPORT(EntityRedDoor)(Entity* self);
+void EntityRedDoor(Entity* self);
 void EntityIntenseExplosion(Entity* self);
 void EntitySoulStealOrb(Entity* self);
 void EntityRoomForeground(Entity* self);
@@ -18,8 +18,8 @@ void EntityEnemyBlood(Entity* self);
 void EntityMessageBox(Entity* self);
 void EntityDummy(Entity* self);
 void EntityDummy(Entity* self);
-void OVL_EXPORT(EntityBackgroundBlock)(Entity* self);
-void OVL_EXPORT(EntityLockCamera)(Entity* self);
+void EntityBackgroundBlock(Entity* self);
+void EntityLockCamera(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
@@ -62,12 +62,12 @@ void EntitySalemWitchCurse(Entity* self);
 void EntitySalemWitchTriboltLaunch(Entity* self);
 void EntitySalemWitchTriboltProjectile(Entity* self);
 
-PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
+PfnEntityUpdate EntityUpdates[] = {
     EntityBreakableNZ0,
     EntityExplosion,
     EntityPrizeDrop,
     EntityDamageDisplay,
-    OVL_EXPORT(EntityRedDoor),
+    EntityRedDoor,
     EntityIntenseExplosion,
     EntitySoulStealOrb,
     EntityRoomForeground,
@@ -79,8 +79,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityMessageBox,
     EntityDummy,
     EntityDummy,
-    OVL_EXPORT(EntityBackgroundBlock),
-    OVL_EXPORT(EntityLockCamera),
+    EntityBackgroundBlock,
+    EntityLockCamera,
     EntityUnkId13,
     EntityExplosionVariants,
     EntityGreyPuff,
@@ -124,7 +124,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntitySalemWitchTriboltProjectile,
 };
 
-EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_OVL(1), 0, 0, PAL_NULL, 0x000};
+EInit g_EInitBreakable = {ANIMSET_OVL(1), 0, 0, PAL_NULL, 0x000};
 #include "../e_init_common.h"
 EInit g_EInitFloorTrap = {ANIMSET_OVL(3), 0, 75, 0x200, 0x005};
 EInit g_EInitCtulhu = {ANIMSET_OVL(4), 0, 72, 0x209, 0x0E9};
@@ -137,7 +137,7 @@ EInit g_EInitLesserDemonSpit = {ANIMSET_OVL(6), 25, 76, 0x22D, 0x019};
 EInit g_EInitLesserDemonFireball = {ANIMSET_DRA(9), 1, 0, 0x81B0, 0x01A};
 EInit g_EInitLesserDemonDummy = {ANIMSET_DRA(0), 0, 0, PAL_NULL, 0x018};
 EInit g_EInitWallDebris = {ANIMSET_OVL(1), 0, 0, PAL_NULL, 0x003};
-EInit OVL_EXPORT(EInitEnemy3) = {ANIMSET_OVL(2), 0, 0, PAL_NULL, 0x003};
+EInit g_EInitEnemy3 = {ANIMSET_OVL(2), 0, 0, PAL_NULL, 0x003};
 EInit g_EInitTableWithGlobe = {ANIMSET_OVL(7), 0, 75, 0x236, 0x005};
 EInit g_EInitLifeMaxTank = {ANIMSET_OVL(8), 0, 79, 0x23A, 0x005};
 EInit g_EInitPrizeContainer = {ANIMSET_OVL(9), 0, 83, 0x23E, 0x005};

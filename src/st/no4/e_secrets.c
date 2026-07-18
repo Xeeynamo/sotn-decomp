@@ -57,7 +57,7 @@ void EntityBreakableCrystalFloor(Entity* self) {
         // wall is visible
         // Overwrite the foreground tiles based on whether the floor has
         // already been broken or not
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->hitboxWidth = 16;
         self->hitboxHeight = 16;
         self->hitboxState = 2;
@@ -144,7 +144,7 @@ void EntityBreakableWall(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->hitboxWidth = 8;
         self->hitboxHeight = 0x20;
         self->hitboxState = 2;
@@ -224,7 +224,7 @@ void EntityBreakableWallDebris(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitParticle));
+        InitializeEntity(g_EInitParticle);
         self->drawFlags = ENTITY_ROTATE;
         self->animSet = ANIMSET_OVL(1);
         if (Random() & 1) {

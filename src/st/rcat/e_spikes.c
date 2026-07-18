@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rcat.h"
 
-extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit g_EInitInteractable;
 
 #ifdef VERSION_PSP
 extern s32 E_ID(UNK_21);
@@ -16,7 +16,7 @@ void EntitySpikeRoomDarkness(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         if (!g_CastleFlags[RCAT_SPIKE_ROOM_LIT]) {
             entity = &PLAYER;
             entity->zPriority = 0xD8;

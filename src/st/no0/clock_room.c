@@ -166,7 +166,7 @@ void EntityClockRoomController(Entity* self) {
             return;
         }
 #ifndef VERSION_PSP
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
 #endif
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
@@ -180,7 +180,7 @@ void EntityClockRoomController(Entity* self) {
         prim->priority = 0x1F0;
         prim->drawMode = DRAW_HIDE;
 #ifdef VERSION_PSP
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
 #endif
 
         g_api.PlaySfx(SET_STOP_MUSIC);

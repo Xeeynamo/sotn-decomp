@@ -171,7 +171,7 @@ void EntityDoppleganger10(void) {
                         case 14:
                             break;
                         case 15:
-                            OVL_EXPORT(EnableAfterImage)();
+                            EnableAfterImage();
                             break;
                         }
                     }
@@ -300,13 +300,13 @@ void EntityDoppleganger10(void) {
         DopplegangerStepJump();
         break;
     case Dop_MorphBat:
-        OVL_EXPORT(ControlBatForm)();
+        ControlBatForm();
         break;
     case Dop_UnmorphBat:
         DopplegangerStepUnmorphBat();
         break;
     case Dop_MorphMist:
-        OVL_EXPORT(ControlMistForm)();
+        ControlMistForm();
         break;
     case Dop_UnmorphMist:
         DopplegangerStepUnmorphMist();
@@ -352,7 +352,7 @@ void EntityDoppleganger10(void) {
     case Dop_MorphBat:
         func_us_801C5354(1, 1);
         if (DOPPLEGANGER.step_s == 3) {
-            OVL_EXPORT(func_us_801C5430)(1, 4);
+            func_us_801C5430(1, 4);
         }
         status = PLAYER_STATUS_UNK100000 | PLAYER_STATUS_BAT_FORM;
         ;
@@ -362,7 +362,7 @@ void EntityDoppleganger10(void) {
         break;
     case Dop_MorphMist:
         func_us_801C5354(1, 1);
-        OVL_EXPORT(func_us_801C5430)(1, 4);
+        func_us_801C5430(1, 4);
         status = PLAYER_STATUS_UNK100000 | PLAYER_STATUS_MIST_FORM;
         DOPPLEGANGER.palette = PAL_FLAG(0x20D);
         break;
@@ -371,7 +371,7 @@ void EntityDoppleganger10(void) {
         status = PLAYER_STATUS_UNK800000 | PLAYER_STATUS_UNK100000 |
                  PLAYER_STATUS_MIST_FORM;
         DOPPLEGANGER.palette = PAL_FLAG(0x20D);
-        OVL_EXPORT(func_us_801C5430)(1, 4);
+        func_us_801C5430(1, 4);
         break;
     case Dop_UnmorphBat:
         func_us_801C5354(1, 1);
@@ -380,17 +380,17 @@ void EntityDoppleganger10(void) {
         if (DOPPLEGANGER.step_s == 0) {
             DOPPLEGANGER.animSet = ANIMSET_OVL(2);
         }
-        OVL_EXPORT(func_us_801C5430)(1, 4);
+        func_us_801C5430(1, 4);
         break;
     case Dop_HighJump:
         func_us_801C5354(1, 1);
-        OVL_EXPORT(func_us_801C5430)(1, 4);
+        func_us_801C5430(1, 4);
         DOPPLEGANGER.animSet = ANIMSET_OVL(1);
         break;
     case Dop_Hit:
         status = PLAYER_STATUS_UNK100000 | PLAYER_STATUS_UNK10000;
         func_us_801C5354(1, 1);
-        OVL_EXPORT(func_us_801C5430)(1, 4);
+        func_us_801C5430(1, 4);
         DOPPLEGANGER.animSet = ANIMSET_OVL(1);
         break;
     case Dop_Kill:
@@ -400,13 +400,13 @@ void EntityDoppleganger10(void) {
             status |= PLAYER_STATUS_UNK80000;
         }
         func_us_801C5354(1, 1);
-        OVL_EXPORT(func_us_801C5430)(1, 4);
+        func_us_801C5430(1, 4);
         DOPPLEGANGER.animSet = ANIMSET_OVL(1);
         break;
     case Dop_SwordWarp:
         status = PLAYER_STATUS_UNK100000;
         func_us_801C5354(1, 1);
-        OVL_EXPORT(func_us_801C5430)(4, 0x30);
+        func_us_801C5430(4, 0x30);
         DOPPLEGANGER.animSet = ANIMSET_OVL(1);
         DOPPLEGANGER.palette = PAL_FLAG(0x20D);
         break;
@@ -430,7 +430,7 @@ void EntityDoppleganger10(void) {
         g_Dop.timers[ALU_T_15] = 4;
         DOPPLEGANGER.palette = PAL_FLAG(0x200);
     }
-    OVL_EXPORT(PlayAnimation)(D_us_80183C70, D_us_80183CB4);
+    PlayAnimation(D_us_80183C70, D_us_80183CB4);
     if (g_Dop.status & PLAYER_STATUS_DEAD) {
         if (DOPPLEGANGER.poseTimer < 0) {
             DOPPLEGANGER.animCurFrame |= 0x8000;
@@ -446,7 +446,7 @@ void EntityDoppleganger10(void) {
             DOPPLEGANGER.hitboxState = 0;
         }
     }
-    OVL_EXPORT(InitPlayerAfterImage)();
+    InitPlayerAfterImage();
     vram_flag = g_Dop.vram_flag;
     posX = DOPPLEGANGER.posX.val;
     posY = DOPPLEGANGER.posY.val;
@@ -459,19 +459,19 @@ void EntityDoppleganger10(void) {
         DOPPLEGANGER.velocityY >>= 2;
         if (DOPPLEGANGER.posY.i.hi >= 0) {
             if (g_Dop.status & PLAYER_STATUS_UNK400000) {
-                OVL_EXPORT(CheckStageCollision)(0);
+                CheckStageCollision(0);
             } else {
-                OVL_EXPORT(CheckStageCollision)(1);
+                CheckStageCollision(1);
             }
         }
         if (DOPPLEGANGER.posY.i.hi >= 0) {
-            OVL_EXPORT(CheckStageCollision)(0);
+            CheckStageCollision(0);
         }
         if (DOPPLEGANGER.posY.i.hi >= 0) {
-            OVL_EXPORT(CheckStageCollision)(0);
+            CheckStageCollision(0);
         }
         if (DOPPLEGANGER.posY.i.hi >= 0) {
-            OVL_EXPORT(CheckStageCollision)(0);
+            CheckStageCollision(0);
         }
         if (DOPPLEGANGER.posY.i.hi < 0) {
             DOPPLEGANGER.posY.val = FIX(-1);
@@ -480,13 +480,13 @@ void EntityDoppleganger10(void) {
         DOPPLEGANGER.velocityX *= 4;
         DOPPLEGANGER.velocityY *= 4;
     } else if (g_Dop.status & PLAYER_STATUS_UNK800000) {
-        OVL_EXPORT(CheckStageCollision)(0);
+        CheckStageCollision(0);
     } else {
-        OVL_EXPORT(CheckStageCollision)(1);
+        CheckStageCollision(1);
     }
 
     g_Dop.unk04 = vram_flag;
-    OVL_EXPORT(DrawPlayerAfterImage)();
+    DrawPlayerAfterImage();
 
     if (DOPPLEGANGER.animSet == (s16)ANIMSET_OVL(2)) {
         parts = D_us_801B159C[DOPPLEGANGER.animCurFrame & 0x7FFF];

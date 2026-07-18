@@ -1,0 +1,72 @@
+options:
+  target_path:  disks/saturn/MARIA.PRG
+  asm_path:     asm/saturn/maria
+  src_path:     src/saturn
+  ld_scripts_path: config/saturn
+  syms_path: config/saturn
+  decomp_empty_funcs: false
+segments:
+  - name: maria
+    type: code
+    start: 0x00000000
+    vram:  0x060A5000
+    subalign: 2
+    subsegments:
+      - start: 0x0
+        type: data
+        file: maria
+        end: 0x5F
+      - start: 0x60
+        type: c
+        file: maria
+        end: 0x2f6f
+        # bugs func_060A7F70
+      - start: 0x2F70
+        type: data
+        file: maria
+        end: 0x3247
+      - start: 0x3248
+        type: c
+        file: maria
+        end: 0xB473
+      # func_060b0474
+      - start: 0xB474
+        type: data
+        file: maria
+        end: 0xB8D9
+      - start: 0xB8DA
+        type: data
+        file: maria
+        end: 0xB99b
+      - start: 0xB99C
+        file: maria
+        type: c
+        end: 0xC871
+      - start: 0xC872
+        type: data
+        file: maria
+        end: 0xC8C7
+      - start: 0xC8C8
+        type: c
+        file: maria    
+        end: 0x1261D
+      - start: 0x1261E
+        type: data
+        file: maria    
+        end: 0x1276b
+      - start: 0x1276c
+        type: c
+        file: maria    
+        end: 0x13665
+      - start: 0x13666
+        type: data
+        file: maria
+        end: 0x1368b
+      - start: 0x1368C
+        type: c
+        file: maria
+        end: 0x1C6B7
+      - start: 0x1C6B8
+        type: data
+        file: maria
+        end: 0x2F04B

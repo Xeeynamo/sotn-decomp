@@ -501,7 +501,7 @@ static u16 explosionDurations[] = {16, 24, 42, 47};
 // part of explosion when merman dies
 void EntityMermanExplosion(Entity* self) {
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitParticle));
+        InitializeEntity(g_EInitParticle);
         self->palette = PAL_FLAG(0x2BB);
         self->animSet = ANIMSET_DRA(2);
         self->animCurFrame = explosionFrames[self->params];

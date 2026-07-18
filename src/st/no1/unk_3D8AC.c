@@ -29,7 +29,7 @@ void func_us_801BD8AC(Entity* self) {
     switch (self->step) {
     case 0:
 
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = 0;
         self->animCurFrame = 0;
         tempEntity = self + 1;
@@ -230,7 +230,7 @@ void func_us_801BDF9C(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         break;
 
     case 1:
@@ -357,7 +357,7 @@ void func_us_801BE2C8(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         break;
 
     case 1:

@@ -21,7 +21,7 @@ extern s32 E_ID(FALLING_ROCK);
 #endif
 
 extern EInit ROCK_EINIT;
-extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit g_EInitInteractable;
 
 // Stairway piece you can break before Death encounter
 void EntityStairwayPiece(Entity* self) {
@@ -44,7 +44,7 @@ void EntityStairwayPiece(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->hitboxWidth = 8;
         self->hitboxHeight = 8;
         self->posX.i.hi = XPOS - g_Tilemap.scrollX.i.hi;

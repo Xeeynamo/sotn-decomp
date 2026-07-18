@@ -170,7 +170,7 @@ void func_us_801B8430(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         self->flags &= ~(FLAG_DESTROY_IF_OUT_OF_CAMERA |
                          FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA);
         self->animSet = ANIMSET_OVL(1);
@@ -196,7 +196,7 @@ void func_us_801B84E4(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         self->flags |= FLAG_UNK_10000000;
         self->flags &= ~(FLAG_DESTROY_IF_OUT_OF_CAMERA |
                          FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
@@ -357,7 +357,7 @@ void func_us_801B8B00(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         self->flags |= FLAG_UNK_10000000;
         self->flags &= ~(FLAG_DESTROY_IF_OUT_OF_CAMERA |
                          FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
@@ -447,7 +447,7 @@ void func_us_801B8D30(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = 0;
         self->animCurFrame = 0;
 

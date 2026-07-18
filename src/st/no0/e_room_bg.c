@@ -100,13 +100,13 @@ static u8* animations[] = {
     red_moveable_floor,  red_moveable_floor,
     window_highlight_3};
 
-void OVL_EXPORT(EntityBackgroundBlock)(Entity* self) {
+void EntityBackgroundBlock(Entity* self) {
     u16 params;
     s32 flag;
 
     params = self->params;
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         self->animSet = (u16)animset[params];
         self->zPriority = zPriority[params];
         self->unk5A = unk5A[params];

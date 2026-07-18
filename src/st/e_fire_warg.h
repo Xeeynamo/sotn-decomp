@@ -8,7 +8,7 @@ void EntityExplosionVariants(Entity* entity);
 extern EInit g_EInitFireWarg1;
 extern EInit g_EInitFireWarg2;
 extern EInit g_EInitFireWarg3;
-extern EInit OVL_EXPORT(EInitCommon);
+extern EInit g_EInitCommon;
 
 static u8 D_801827DC[] = {14, 1, 14, 2, 14, 3, 14, 4, 14, 5, 14, 6, 0};
 static u8 D_801827EC[] = {14, 57, 14, 58, 14, 59, 14, 60, 14, 61, 14, 62, 0};
@@ -1433,7 +1433,7 @@ void EntityFireWargDeathBeams(Entity* self) {
         temp_s1_u16 = (u16)temp_s1;
 #endif
 
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
 
         if (primIndex != -1) {

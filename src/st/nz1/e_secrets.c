@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz1.h"
 
-extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit g_EInitInteractable;
 extern EInit g_EInitEnvironment;
 
 static s16 D_us_80180FF8[] = {
@@ -29,7 +29,7 @@ void EntityBreakableWall(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->hitboxWidth = 0x10;
         self->hitboxHeight = 0x20;
         self->hitboxState = 2;
@@ -136,7 +136,7 @@ void EntityBreakableWallPartial(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         if (g_CastleFlags[NZ1_STATUE_ROOM_BREAKABLE_WALLS] &
             (1 << self->params)) {
             tileX = self->posX.i.hi;

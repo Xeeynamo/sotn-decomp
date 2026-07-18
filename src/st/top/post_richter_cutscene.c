@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "top.h"
 
-extern EInit OVL_EXPORT(EInitInteractable);
-extern u32 OVL_EXPORT(CutsceneFlags);
+extern EInit g_EInitInteractable;
+extern u32 g_CutsceneFlags;
 
 // Alucard walks to the Warp platform
 void func_us_801AD11C(Entity* self) {
@@ -18,7 +18,7 @@ void func_us_801AD11C(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         g_PauseAllowed = false;
         g_unkGraphicsStruct.pauseEnemies = true;
         g_Player.padSim = PAD_NONE;
@@ -26,7 +26,7 @@ void func_us_801AD11C(Entity* self) {
         break;
 
     case 1:
-        if (OVL_EXPORT(CutsceneFlags) & 0x40) {
+        if (g_CutsceneFlags & 0x40) {
             g_Player.padSim = PAD_RIGHT;
             self->step++;
         }
@@ -37,7 +37,7 @@ void func_us_801AD11C(Entity* self) {
         g_Player.padSim = PAD_NONE;
         g_Player.demo_timer = 1;
         player->posX.i.hi = 0x380 - tilemap->scrollX.i.hi;
-        if (OVL_EXPORT(CutsceneFlags) & 0x20) {
+        if (g_CutsceneFlags & 0x20) {
             self->step++;
         }
         break;
@@ -76,20 +76,20 @@ void func_us_801AD11C(Entity* self) {
 void func_us_801AD320(Entity* self) {
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = ANIMSET_OVL(2);
         self->animCurFrame = 0x11;
         self->unk5A = 0xF;
         self->palette = PAL_FLAG(0x230);
         break;
     case 1:
-        if (OVL_EXPORT(CutsceneFlags) & 4) {
+        if (g_CutsceneFlags & 4) {
             self->animCurFrame = 0x12;
             self->step++;
         }
         break;
     case 2:
-        if (OVL_EXPORT(CutsceneFlags) & 8) {
+        if (g_CutsceneFlags & 8) {
             self->animCurFrame = 0x11;
             self->step++;
         }
@@ -100,7 +100,7 @@ void func_us_801AD320(Entity* self) {
 extern s8 D_us_80180DF0[];
 extern s8 D_us_80180E04[];
 extern s8 D_us_80180E0C[];
-extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit g_EInitInteractable;
 
 void func_us_801AD400(Entity* self) {
     Entity* player;
@@ -115,7 +115,7 @@ void func_us_801AD400(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = ANIMSET_OVL(4);
         self->animCurFrame = 0;
         self->unk5A = 0x46;
@@ -124,7 +124,7 @@ void func_us_801AD400(Entity* self) {
         break;
 
     case 1:
-        if (OVL_EXPORT(CutsceneFlags) & 0x10) {
+        if (g_CutsceneFlags & 0x10) {
             self->velocityX = FIX(-1.5);
             SetStep(2);
         }
@@ -151,7 +151,7 @@ void func_us_801AD400(Entity* self) {
         break;
 
     case 3:
-        if (OVL_EXPORT(CutsceneFlags) & 0x80) {
+        if (g_CutsceneFlags & 0x80) {
             self->animSet = ANIMSET_OVL(5);
             self->unk5A = 0x48;
             self->animCurFrame = 0x2C;

@@ -169,7 +169,7 @@ void OVL_EXPORT(Load)(void) {
         (u8*)cutscene_data_ge, (u8*)cutscene_data_it);
 
     InitEntityIds();
-    PfnEntityUpdates = OVL_EXPORT(EntityUpdates);
+    PfnEntityUpdates = EntityUpdates;
     g_pStObjLayoutHorizontal = &D_8D2E160;
     g_pStObjLayoutVertical = &D_8D2E234;
     func_psp_0892A018();

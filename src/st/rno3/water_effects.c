@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rno3.h"
 
-extern EInit OVL_EXPORT(EInitCommon);
-extern EInit OVL_EXPORT(EInitSpawner);
+extern EInit g_EInitCommon;
 
 extern u16 g_WaterSounds[];
 extern s16 g_WaterXTbl[];
@@ -303,7 +302,7 @@ void EntityAlucardWaterEffect(Entity* self) {
         }
         g_unkGraphicsStruct.D_80097450 = var_s3;
     } else {
-        InitializeEntity(OVL_EXPORT(EInitSpawner));
+        InitializeEntity(g_EInitSpawner);
     }
     self->ext.aluwater.unk7C = sp28;
     self->ext.aluwater.unk80 = posX;
@@ -342,7 +341,7 @@ void EntitySplashWater(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         if (width && index2 != 7) {
             primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
         } else {
@@ -523,7 +522,7 @@ void EntitySurfacingWater(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -657,7 +656,7 @@ void EntitySideWaterSplash(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -747,7 +746,7 @@ void EntitySmallWaterDrop(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         primIndex = g_api.AllocPrimitives(PRIM_TILE, 1);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -820,7 +819,7 @@ void EntityWaterDrop(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         primIndex = g_api.func_800EDB58(PRIM_TILE_ALT, 0x21);
         if (primIndex == -1) {
             DestroyEntity(self);

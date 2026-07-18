@@ -27,7 +27,7 @@ void InitEntityIds(void) {
 
 void OVL_EXPORT(Load)(void) {
     InitEntityIds();
-    PfnEntityUpdates = OVL_EXPORT(EntityUpdates);
+    PfnEntityUpdates = EntityUpdates;
     g_pStObjLayoutHorizontal = &D_8D2DE7C;
     g_pStObjLayoutVertical = &D_8D2DF50;
     func_psp_0892A018();

@@ -3,6 +3,8 @@
 #include "sattypes.h"
 #include "game.h"
 
+void PlaySfx(s32 sfxId);
+
 // __game_start
 INCLUDE_ASM("asm/saturn/game/data", d6066000, d_06066000);
 
@@ -279,8 +281,6 @@ void UpdateRoomPosition(void) {
         }
     }
 }
-
-void (*func_06064684)();
 
 // SAT: func_060668D4
 void func_8011A9D8(void) {
@@ -826,7 +826,7 @@ bool CalcPlayerDamage(DamageParam* damage) {
 
 // SAT: func_0606F328
 s32 func_800FD664(s32 arg0) {
-    if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
+    if (DAT_0605d750.stageID & STAGE_INVERTEDCASTLE_FLAG) {
         arg0 *= 2;
     }
     return arg0;
@@ -1312,7 +1312,7 @@ void GetEquipProperties(s32 handId, Equipment* res, s32 equipId) {
     if (criticalRate < 0) {
         criticalRate = 0;
     }
-    if (g_StageId == STAGE_ST0) {
+    if (DAT_0605d750.stageID == STAGE_ST0) {
         criticalRate = 0;
     }
 

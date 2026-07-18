@@ -857,7 +857,7 @@ void EntityHellfireBeastThorsHammer(Entity* self) {
 
 void EntityHellfireBeastFlamePillarAnimation(Entity* self) {
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = 2;
         self->animCurFrame = 1;
         self->zPriority = 0x100;

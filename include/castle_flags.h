@@ -1,7 +1,7 @@
 // Holds flags that maintain the persistant "state" of the castle.
 // These cover a wide range of uses, but what they have in common is a need to
 // track something across rooms or stages.
-extern u8 g_CastleFlags[0x300]; // starts at 0x8003BDEC
+extern GAME_IMPORT u8 g_CastleFlags[0x300]; // starts at 0x8003BDEC
 
 // All offsets and values included for organizational convenience.
 typedef enum {
@@ -170,9 +170,11 @@ typedef enum {
 
     /* 0xD4 */ SUCCUBUS_CS = 212, // After Succubus (as Lisa) cutscene
     /* 0xD5 */ DRE_STAGE_FLAG = 213,
-    /* 0xD8 */ MET_MARIA_IN_CEN = 216, // Holy Glasses cutscene in CEN
-    /* 0xDC */ DEATH_FIGHT_CS = 220,   // Cutscene during fight with Death
-    /* 0xE4 */ RCEN_OPEN = 228,        // Have all 5 Vlad relics in R Clock Room
+    /* 0xD8 */ MET_MARIA_IN_CEN = 216,    // Holy Glasses cutscene in CEN
+    /* 0xDC */ DEATH_FIGHT_CS = 220,      // Cutscene during fight with Death
+    /* 0xE0 */ SHAFT_FIGHT_CS_UNK1 = 224, // Cutscene with Shaft
+    /* 0xE3 */ SHAFT_FIGHT_CS_UNK2 = 227, // Cutscene with Shaft, PSP only?
+    /* 0xE4 */ RCEN_OPEN = 228, // Have all 5 Vlad relics in R Clock Room
     /* 0x100 */ CASTLE_COLLECTIBLES_100 = 256,
     /* 10000000 */ // NO0_CLOCK_LIFE_VESSEL
     /* 01000000 */ // NO0_ALUCART_SHIELD

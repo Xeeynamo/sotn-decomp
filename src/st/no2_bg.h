@@ -65,7 +65,7 @@ void func_us_801B3F30(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(2);
         self->animCurFrame = 3;
         self->ext.et_801B3F30.unk7C = 2;
@@ -113,7 +113,7 @@ void func_us_801B3F30(Entity* self) {
 
 void func_us_801B4148(Entity* self) {
     if (self->step == 0) {
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(2);
         self->animCurFrame = 1;
         self->zPriority = 0xA0;
@@ -144,7 +144,7 @@ void func_us_801B4210(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(2);
         self->zPriority = 0x80;
         break;

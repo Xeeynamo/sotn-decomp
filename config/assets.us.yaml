@@ -903,6 +903,44 @@ files:
     asset_path: assets/st/nz1
     src_path: src/st/nz1
     splat_config_path: config/splat.us.stnz1.yaml
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x40, sprite_banks, sprite_banks]
+          #- [0xA0, paldef, palette_def] Issue #2401
+          - [0xA0, skip]
+          - [0x360, layers, layers]
+          - [0x558, gfx_banks, graphics_banks]
+          - [0x820, layout, entity_layouts]
+          - [0x9C8, skip]
+          - [0x233C, rooms, rooms]
+          - [0x23C8, skip]
+          - [0x3834, cmpgfx, unused_cmpgfx, 128, 128, 4]
+          - [0x3AF0, cmpgfx, D_80183AF0, 128, 128, 4]
+          - [0x3FA8, cmpgfx, D_80183FA8, 128, 128, 4]
+          - [0x58F4, cmpgfx, D_801858F4, 128, 128, 4]
+          - [0x6530, cmpgfx, D_80186530, 128, 128, 4]
+          - [0x684C, cmpgfx, D_8018684C, 128, 128, 4]
+          - [0x7CCC, cmpgfx, D_80187CCC, 128, 128, 4]
+          - [0x9088, cmpgfx, D_80189088, 128, 128, 4]
+          - [0xA0CC, cmpgfx, D_8018A0CC, 128, 128, 4]
+          - [0xA618, cmpgfx, D_8018A618, 128, 128, 4]
+          - [0xAEE0, cmpgfx, D_8018AEE0, 128, 128, 4]
+          - [0xBCF0, cmpgfx, D_8018BCF0, 128, 128, 4]
+          - [0xC984, cmpgfx, D_8018C984, 128, 128, 4]
+          - [0xD054, cmpgfx, D_8018D054, 128, 128, 4]
+          - [0xD510, cmpgfx, D_8018D510, 128, 128, 4]
+          - [0xDF40, cmpgfx, D_8018DF40, 128, 128, 4]
+          - [0xE664, cmpgfx, D_8018E664, 128, 128, 4]
+          - [0xF130, cmpgfx, D_8018F130, 128, 128, 4]
+          - [0xF6F8, cmpgfx, D_8018F6F8, 128, 128, 4]
+          - [0x100AC, cmpgfx, D_801900AC, 128, 128, 4]
+          - [0x10AFC, cmpgfx, D_80190AFC, 128, 128, 4]
+          - [0x11678, cmpgfx, D_80191678, 128, 128, 4]
+          - [0x1222C, cmpgfx, D_8019222C, 128, 128, 4]
+          - [0x12B68, cmpgfx, D_80192B68, 128, 128, 4]
+          - [0x12DD8, skip]
   - target: disks/us/ST/ST0/ST0.BIN
     asset_path: assets/st/st0
     src_path: src/st/st0
@@ -1047,10 +1085,16 @@ files:
             - [0x12E54, palette, pal_skeleton, 16] # 0x260
             - [0x12E74, skip]
   - target: disks/us/ST/RCEN/RCEN.BIN
+    asset_path: assets/st/rcen
+    src_path: src/st/rcen
+    splat_config_path: config/splat.us.strcen.yaml
   - target: disks/us/ST/RCHI/RCHI.BIN
   - target: disks/us/ST/RDAI/RDAI.BIN
   - target: disks/us/ST/RLIB/RLIB.BIN
   - target: disks/us/ST/RNO0/RNO0.BIN
+    asset_path: assets/st/rno0
+    src_path: src/st/rno0
+    splat_config_path: config/splat.us.strno0.yaml
   - target: disks/us/ST/RNO1/RNO1.BIN
   - target: disks/us/ST/RNO2/RNO2.BIN
   - target: disks/us/ST/RNO3/RNO3.BIN
@@ -1061,32 +1105,37 @@ files:
       - start: 0
         vram: 0x80180000
         assets:
-          - [0x2C, sprite_banks, sprite_banks]
+          - [0x2C, sprite_banks, us/sprite_banks]
           - [0x8C, paldef, palette_def]
           - [0xEC, layers, us/layers]
           - [0x4CC, gfx_banks, graphics_banks]
           - [0x5EC, layout, entity_layouts]
           - [0x794, skip]
-          - [0x42A4, cmpgfx, D_801842A4, 128, 128, 4]
-          - [0x5430, cmpgfx, D_80185430, 128, 128, 4]
-          - [0x6510, cmpgfx, D_80186510, 128, 128, 4]
-          - [0x76B4, cmpgfx, D_801876B4, 128, 128, 4]
-          - [0x879C, cmpgfx, D_8018879C, 128, 128, 4]
-          - [0x92FC, cmpgfx, D_801892FC, 128, 128, 4]
-          - [0x9D2C, cmpgfx, D_80189D2C, 128, 128, 4]
-          - [0xAB14, cmpgfx, D_8018AB14, 128, 128, 4]
+          - [0x2B20, rooms, us/rooms]
+          - [0x2C24, skip]
+          - [0x39BC, cmpgfx, golem_maker, 128, 128, 4]
+          - [0x42A4, cmpgfx, e_fire_warg, 128, 128, 4]
+          - [0x5430, cmpgfx, e_fire_warg2, 128, 128, 4]
+          - [0x6510, cmpgfx, e_fire_warg3, 128, 128, 4]
+          - [0x76B4, cmpgfx, e_fire_warg4, 128, 128, 4]
+          - [0x879C, cmpgfx, e_fire_warg_rider, 128, 128, 4]
+          - [0x92FC, cmpgfx, e_jacko, 128, 128, 4]
+          - [0x9D2C, cmpgfx, e_nova_skeleton, 128, 128, 4]
+          - [0xAB14, cmpgfx, e_nova_laser, 128, 128, 4]
           - [0xB460, cmpgfx, D_8018B460, 128, 128, 4]
           - [0xBBD8, cmpgfx, D_8018BBD8, 128, 128, 4]
           - [0xC860, cmpgfx, D_8018C860, 128, 128, 4]
           - [0xD3EC, cmpgfx, D_8018D3EC, 128, 128, 4]
           - [0xE514, cmpgfx, D_8018E514, 128, 128, 4]
-          - [0xFF08, palette, D_8018FF08, 16]
-          - [0x10008, palette, D_80190008, 16]
-          - [0x102C8, palette, D_801902C8, 16]
-          - [0x10308, palette, D_80190308, 16]
-          - [0x103A8, palette, D_801903A8, 16]
-          - [0x10948, palette, D_80190948, 16]
-          - [0x10E68, palette, D_80190E68, 16]
+          - [0xED88, palette, e_skyswirl_p, 16]
+          - [0xFF08, palette, pal_fire_warg, 16]
+          - [0x10008, palette, pal_2e0, 16]
+          - [0x102C8, palette, pal_jacko_bones, 16]
+          - [0x10308, palette, pal_nova_skeleton, 16]
+          - [0x103A8, palette, pal_dragons, 16]
+          - [0x10428, palette, pal_unused, 16]
+          - [0x10948, palette, pal_venus_weed, 16]
+          - [0x10E68, palette, pal_dodo, 16]
           - [0x10E88, skip]
   - target: disks/us/ST/RNO4/RNO4.BIN
   - target: disks/us/ST/RNZ0/RNZ0.BIN
@@ -1147,6 +1196,32 @@ files:
     asset_path: assets/st/rtop
     src_path: src/st/rtop
     splat_config_path: config/splat.us.strtop.yaml
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x40, sprite_banks, sprite_banks]
+          - [0xA0, paldef, palette_def]
+          - [0xE8, layers, layers]
+          - [0x230, gfx_banks, graphics_banks]
+          - [0x2FC, layout, entity_layouts]
+          - [0x4A4, skip]
+          - [0x1530, rooms, rooms]
+          - [0x15B4, skip]
+          - [0x22FC, cmpgfx, D_801822FC, 128, 128, 4]
+          - [0x2640, cmpgfx, D_80182640, 128, 128, 4]
+          - [0x58E0, cmpgfx, D_801858E0, 128, 128, 4]
+          - [0x6294, cmpgfx, D_80186294, 128, 128, 4]
+          - [0x6EA0, cmpgfx, D_80186EA0, 128, 128, 4]
+          - [0x7B04, cmpgfx, D_80187B04, 128, 128, 4]
+          - [0x83F8, cmpgfx, D_801883F8, 128, 128, 4]
+          - [0x9878, cmpgfx, D_80189878, 128, 128, 4]
+          - [0xAC34, palette, D_8018AC34, 16]
+          - [0xB054, palette, D_8018B054, 16]
+          - [0xB154, palette, D_8018B154, 16]
+          - [0xB174, palette, D_8018B174, 16]
+          - [0xB1B4, palette, D_8018B1B4, 16]
+          - [0xB274, skip]
   - target: disks/us/ST/RWRP/RWRP.BIN
     asset_path: assets/st/rwrp
     src_path: src/st/rwrp

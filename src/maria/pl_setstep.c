@@ -185,6 +185,7 @@ static s16 D_pspeu_092C5040[] = {
     SFX_VO_MAR_8E6, SFX_VO_MAR_ATTACK_C, SFX_VO_MAR_8E8,
     SFX_VO_MAR_8E9, SFX_VO_MAR_8EA,
 };
+
 static void PlayGruntAttackSoundEffect(s32 max) {
     s16 sfxIndex;
 

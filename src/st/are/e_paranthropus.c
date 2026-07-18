@@ -4,7 +4,7 @@
 extern EInit g_EInitParanthropus;
 extern EInit g_EInitParanthropusThrownBone;
 extern EInit g_EInitParanthropusBoneHitbox;
-extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit g_EInitInteractable;
 
 static s16 sensors_ground[] = {0, 27, 0, 4, 16, -4, -32, 0};
 static s16 skull_sensors_ground[] = {0, 8, 0, 4, 16, -4, -32, 0};
@@ -670,7 +670,7 @@ void EntityParanthropusSkull(Entity* self) {
     Entity* entity;
 
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->attack = 0;
         self->attackElement = ELEMENT_NONE;
     }

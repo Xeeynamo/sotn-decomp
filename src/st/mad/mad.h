@@ -54,9 +54,9 @@ void EntityGreyPuff(Entity* entity);
 extern s32 D_80096ED0_mad;
 
 // ST/MAD
-extern EInit OVL_EXPORT(EInitLockCamera);
-extern EInit OVL_EXPORT(EInitObtainable);
-extern EInit OVL_EXPORT(EInitCommon);
+extern EInit g_EInitLockCamera;
+extern EInit g_EInitObtainable;
+extern EInit g_EInitCommon;
 extern u16 D_80180538[];
 extern ObjInit D_8018056C[];
 extern u8 D_801805B4[];
@@ -70,7 +70,7 @@ extern s32 D_80180EC4[];
 extern u16 D_80180FBC[];
 extern s32 D_80180FCC[];
 extern ObjInit D_801810F4[];
-extern EInit OVL_EXPORT(EInitParticle);
+extern EInit g_EInitParticle;
 extern u8 g_UnkEntityAnimData[];
 // extern u16 g_testCollEnemyLookup[];
 // extern u8 g_testCollLuckCutoff[];
@@ -82,7 +82,7 @@ extern u8 g_UnkEntityAnimData[];
 // extern u16 g_jewelSwordDropTable;
 extern RoomHeader g_rooms[];
 
-extern EInit OVL_EXPORT(EInitBreakable);
+extern EInit g_EInitBreakable;
 extern u8 blend_modes[];
 
 extern s16 D_80199DE8;

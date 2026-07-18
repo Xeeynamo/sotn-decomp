@@ -3,29 +3,29 @@
 // NOTE: include this AFTER the stage entity is included
 // this is to ensure OVL_EXPORT is defined
 
-extern PfnEntityUpdate OVL_EXPORT(EntityUpdates)[];
+extern PfnEntityUpdate EntityUpdates[];
 
 #if defined(VERSION_PSP) || defined(VERSION_PC)
 
-extern PfnEntityUpdate* PfnEntityUpdates;
+extern GAME_IMPORT PfnEntityUpdate* PfnEntityUpdates;
 
 // A horizontally ordered array with head and tail sigils in the 1st field
-extern LayoutEntity** g_pStObjLayoutHorizontal;
+extern GAME_IMPORT LayoutEntity** g_pStObjLayoutHorizontal;
 #define OBJ_LAYOUT_HORIZONTAL g_pStObjLayoutHorizontal
 
 // A vertically ordered array with head and tail sigils in the 1st field
-extern LayoutEntity** g_pStObjLayoutVertical;
+extern GAME_IMPORT LayoutEntity** g_pStObjLayoutVertical;
 #define OBJ_LAYOUT_VERTICAL g_pStObjLayoutVertical
 #else
 
-#define PfnEntityUpdates OVL_EXPORT(EntityUpdates)
+#define PfnEntityUpdates EntityUpdates
 
 // A horizontally ordered array with head and tail sigils in the 1st field
-extern LayoutEntity* OVL_EXPORT(pStObjLayoutHorizontal)[];
-#define OBJ_LAYOUT_HORIZONTAL OVL_EXPORT(pStObjLayoutHorizontal)
+extern LayoutEntity* entityLayoutHorizontal[];
+#define OBJ_LAYOUT_HORIZONTAL entityLayoutHorizontal
 
 // A vertically ordered array with head and tail sigils in the 1st field
-extern LayoutEntity* OVL_EXPORT(pStObjLayoutVertical)[];
-#define OBJ_LAYOUT_VERTICAL OVL_EXPORT(pStObjLayoutVertical)
+extern LayoutEntity* entityLayoutVertical[];
+#define OBJ_LAYOUT_VERTICAL entityLayoutVertical
 
 #endif

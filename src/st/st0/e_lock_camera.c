@@ -3,7 +3,7 @@
 
 #include "../player_is_within_hitbox.h"
 
-extern EInit OVL_EXPORT(EInitLockCamera);
+extern EInit g_EInitLockCamera;
 static u8 D_8018065C[] = {32, 0};
 static u8 D_80180660[] = {0, 0};
 static u16 D_80180664[] = {
@@ -11,14 +11,14 @@ static u16 D_80180664[] = {
     0x0000, 0x0000, 0x0500, 0x0100, // 1
 };
 
-void OVL_EXPORT(EntityLockCamera)(Entity* self) {
+void EntityLockCamera(Entity* self) {
     u16* rect16;
     u16 params;
     u16 facingLeft;
 
     params = self->params & 0xFF;
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitLockCamera));
+        InitializeEntity(g_EInitLockCamera);
         self->hitboxState = 1;
 
         facingLeft = self->ext.lockCamera.unk7C = D_80180660[params];

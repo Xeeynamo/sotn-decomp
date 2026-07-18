@@ -296,9 +296,9 @@ STATIC_PAD_BSS(8);
 static ShopItem D_us_801D4364[75];
 STATIC_PAD_BSS(8);
 
-extern s32 OVL_EXPORT(SkipCutscene);
-extern u32 OVL_EXPORT(CutsceneFlags);
-extern s32 OVL_EXPORT(IsCutsceneDone);
+extern s32 g_SkipCutscene;
+extern u32 g_CutsceneFlags;
+extern s32 g_IsCutsceneDone;
 
 // This is probably EntityLibrarian, but I don't know for sure
 void func_us_801AFE0C(Entity* self) {
@@ -379,7 +379,7 @@ void func_us_801AFE0C(Entity* self) {
                 g_Player.padSim = PAD_LEFT;
             }
         } else {
-            OVL_EXPORT(CutsceneFlags) |= 1;
+            g_CutsceneFlags |= 1;
             g_Player.padSim = PAD_NONE;
             player->posX.i.hi = 0xE8;
             self->step++;
@@ -388,7 +388,7 @@ void func_us_801AFE0C(Entity* self) {
         break;
 
     case 3:
-        if (OVL_EXPORT(CutsceneFlags) & 0x40) {
+        if (g_CutsceneFlags & 0x40) {
             if (player->posX.i.hi > 0x74) {
                 g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 1;
                 g_Player.padSim = PAD_LEFT;
@@ -417,8 +417,8 @@ void func_us_801AFE0C(Entity* self) {
         self->step++;
         /* fallthrough */
     case 6:
-        if (OVL_EXPORT(CutsceneFlags) & 0x100) {
-            OVL_EXPORT(CutsceneFlags) |= 0x2000;
+        if (g_CutsceneFlags & 0x100) {
+            g_CutsceneFlags |= 0x2000;
             self->step = 0x10;
         } else {
             player->posX.i.hi = 0x74;
@@ -443,7 +443,7 @@ void func_us_801AFE0C(Entity* self) {
                 g_Player.padSim = PAD_NONE;
                 g_Player.demo_timer = 16;
                 self->step_s++;
-                OVL_EXPORT(CutsceneFlags) |= 1;
+                g_CutsceneFlags |= 1;
                 break;
 
             case 1:
@@ -491,8 +491,8 @@ void func_us_801AFE0C(Entity* self) {
     case 11:
         g_Player.padSim = PAD_NONE | PAD_SIM_UNK20000;
         g_Player.demo_timer = 1;
-        if (OVL_EXPORT(CutsceneFlags) & 0x100) {
-            OVL_EXPORT(CutsceneFlags) |= 0x2000;
+        if (g_CutsceneFlags & 0x100) {
+            g_CutsceneFlags |= 0x2000;
             self->step = 0x10;
         }
         break;
@@ -526,8 +526,8 @@ void EntityLibrarianChair(Entity* self) {
     Entity* player = &PLAYER;
     Tilemap* tilemap = &g_Tilemap;
 
-    if (self->step && (self->step < 11) && (OVL_EXPORT(SkipCutscene) != 0) &&
-        (OVL_EXPORT(IsCutsceneDone) != 0)) {
+    if (self->step && (self->step < 11) && (g_SkipCutscene != 0) &&
+        (g_IsCutsceneDone != 0)) {
         self->step = 11;
         self->animCurFrame = 2;
     }
@@ -604,7 +604,7 @@ void EntityLibrarianChair(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         self->zPriority = 0x80;
         self->animSet = ANIMSET_OVL(11);
         self->animCurFrame = 2;
@@ -617,17 +617,17 @@ void EntityLibrarianChair(Entity* self) {
             self->facingLeft = 1;
             self->posX.i.hi -= 8;
         }
-        OVL_EXPORT(CutsceneFlags) = 0;
-        OVL_EXPORT(IsCutsceneDone) = 0;
-        OVL_EXPORT(SkipCutscene) = 0;
+        g_CutsceneFlags = 0;
+        g_IsCutsceneDone = 0;
+        g_SkipCutscene = 0;
         break;
     case 1:
-        if (OVL_EXPORT(CutsceneFlags) & 2) {
+        if (g_CutsceneFlags & 2) {
             if (--self->ext.libraryChair.timer) {
                 SetStep(2);
             }
         } else {
-            if (OVL_EXPORT(CutsceneFlags) & 0x80) {
+            if (g_CutsceneFlags & 0x80) {
                 SetStep(9);
             }
         }
@@ -639,25 +639,25 @@ void EntityLibrarianChair(Entity* self) {
         break;
     case 3:
         AnimateEntity(D_us_80181204, self);
-        if (OVL_EXPORT(CutsceneFlags) & 4) {
+        if (g_CutsceneFlags & 4) {
             SetStep(4);
         }
         break;
     case 4:
         AnimateEntity(D_us_80181210, self);
-        if (OVL_EXPORT(CutsceneFlags) & 8) {
+        if (g_CutsceneFlags & 8) {
             SetStep(5);
         }
         break;
     case 5:
         AnimateEntity(D_us_8018121C, self);
-        if (OVL_EXPORT(CutsceneFlags) & 0x10) {
+        if (g_CutsceneFlags & 0x10) {
             SetStep(6);
         }
         break;
     case 6:
         AnimateEntity(D_us_80181234, self);
-        if (OVL_EXPORT(CutsceneFlags) & 0x20) {
+        if (g_CutsceneFlags & 0x20) {
             SetStep(7);
         }
         break;
@@ -677,22 +677,22 @@ void EntityLibrarianChair(Entity* self) {
         }
         break;
     case 11:
-        if (OVL_EXPORT(CutsceneFlags) & 0x800) {
+        if (g_CutsceneFlags & 0x800) {
             SetStep(12);
             self->ext.libraryChair.timer = 0x30;
         }
-        if (OVL_EXPORT(CutsceneFlags) & 0x1000) {
+        if (g_CutsceneFlags & 0x1000) {
             SetStep(13);
         }
         break;
     case 12:
         AnimateEntity(D_us_801812C8, self);
         if (!--self->ext.libraryChair.timer) {
-            OVL_EXPORT(CutsceneFlags) &= ~0x800;
+            g_CutsceneFlags &= ~0x800;
             self->animCurFrame = 2;
             SetStep(11);
         }
-        if (OVL_EXPORT(CutsceneFlags) & 0x1000) {
+        if (g_CutsceneFlags & 0x1000) {
             self->animCurFrame = 2;
             SetStep(13);
         }
@@ -1238,7 +1238,7 @@ void func_us_801B15C0(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         primIndex = g_api.AllocPrimitives(PRIM_G4, 7);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
@@ -1326,7 +1326,7 @@ void func_us_801B15C0(Entity* self) {
         break;
 
     case 2:
-        if (OVL_EXPORT(CutsceneFlags) & 0x200) {
+        if (g_CutsceneFlags & 0x200) {
             SetStep(3);
             self->ext.et_801B15C0.unk7C = 0;
             self->ext.et_801B15C0.unk7E = 0;
@@ -1420,7 +1420,7 @@ void func_us_801B15C0(Entity* self) {
         if (pad & BUTTON_CONFIRM) {
             switch (self->ext.et_801B15C0.unk88[self->ext.et_801B15C0.unk80]) {
             case 0:
-                OVL_EXPORT(CutsceneFlags) |= 0x400;
+                g_CutsceneFlags |= 0x400;
                 tempEntity = self + 1;
                 CreateEntityFromCurrentEntity(E_ID(ID_27), tempEntity);
                 tempEntity++;
@@ -1434,7 +1434,7 @@ void func_us_801B15C0(Entity* self) {
                 break;
 
             case 1:
-                OVL_EXPORT(CutsceneFlags) |= 0x400;
+                g_CutsceneFlags |= 0x400;
                 tempEntity = self + 1;
                 CreateEntityFromCurrentEntity(E_ID(ID_2D), tempEntity);
                 SetStep(5);
@@ -1442,7 +1442,7 @@ void func_us_801B15C0(Entity* self) {
                 break;
 
             case 2:
-                OVL_EXPORT(CutsceneFlags) |= 0x400;
+                g_CutsceneFlags |= 0x400;
                 tempEntity = self + 1;
                 CreateEntityFromCurrentEntity(E_ID(ID_2E), tempEntity);
                 SetStep(5);
@@ -1450,7 +1450,7 @@ void func_us_801B15C0(Entity* self) {
                 break;
 
             case 3:
-                OVL_EXPORT(CutsceneFlags) |= 0x400;
+                g_CutsceneFlags |= 0x400;
                 tempEntity = self + 1;
                 CreateEntityFromCurrentEntity(E_ID(ID_48), tempEntity);
                 SetStep(5);
@@ -1463,7 +1463,7 @@ void func_us_801B15C0(Entity* self) {
                 break;
 
             case 5:
-                OVL_EXPORT(CutsceneFlags) |= 0x400;
+                g_CutsceneFlags |= 0x400;
                 tempEntity = self + 1;
                 CreateEntityFromCurrentEntity(E_ID(ID_27), tempEntity);
                 tempEntity->params = 1;
@@ -1479,7 +1479,7 @@ void func_us_801B15C0(Entity* self) {
 
 #ifdef VERSION_PSP
             case 6:
-                OVL_EXPORT(CutsceneFlags) |= 0x400;
+                g_CutsceneFlags |= 0x400;
                 tempEntity = self + 1;
                 CreateEntityFromCurrentEntity(E_ID(ID_4F), tempEntity);
                 SetStep(5);
@@ -1558,7 +1558,7 @@ void func_us_801B15C0(Entity* self) {
         case 2:
             if (!--self->ext.et_801B15C0.unk7C) {
                 SetStep(7);
-                OVL_EXPORT(CutsceneFlags) |= 0x100;
+                g_CutsceneFlags |= 0x100;
                 g_PauseAllowed = true;
                 g_unkGraphicsStruct.pauseEnemies = 0;
             }
@@ -1648,7 +1648,7 @@ void func_us_801B15C0(Entity* self) {
             prim = prim->next;
         }
         if (!self->ext.et_801B15C0.unk7C) {
-            OVL_EXPORT(CutsceneFlags) &= ~0x200;
+            g_CutsceneFlags &= ~0x200;
             SetStep(2);
         }
         break;
@@ -1664,13 +1664,13 @@ void func_us_801B15C0(Entity* self) {
         self->ext.et_801B15C0.unk7C++;
         func_us_801B12D0(self, self->ext.et_801B15C0.unk82);
         if (self->ext.et_801B15C0.unk7C >= 0x18) {
-            OVL_EXPORT(CutsceneFlags) &= ~0x200;
+            g_CutsceneFlags &= ~0x200;
             SetStep(11);
         }
         break;
 
     case 11:
-        if (OVL_EXPORT(CutsceneFlags) & 0x200) {
+        if (g_CutsceneFlags & 0x200) {
             SetStep(12);
             self->ext.et_801B15C0.unk7C = 0x18;
         }
@@ -1989,7 +1989,7 @@ void func_us_801B2BE4(Entity* self) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_G4, 0xD);
         if (primIndex != -1) {
-            InitializeEntity(OVL_EXPORT(EInitCommon));
+            InitializeEntity(g_EInitCommon);
             i = 0;
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
@@ -2056,7 +2056,7 @@ void func_us_801B2BE4(Entity* self) {
         break;
 
     case 1:
-        if (OVL_EXPORT(CutsceneFlags) & 0x400) {
+        if (g_CutsceneFlags & 0x400) {
             SetStep(2);
             if (self->params) {
                 // if showing the selling menu
@@ -2315,7 +2315,7 @@ void func_us_801B2BE4(Entity* self) {
 
         case 1:
             if (!g_api.func_80131F68()) {
-                OVL_EXPORT(CutsceneFlags) |= 0x800;
+                g_CutsceneFlags |= 0x800;
                 g_api.PlaySfx(NA_VO_ML_THANKS);
                 SetStep(3);
             }
@@ -2410,7 +2410,7 @@ void func_us_801B2BE4(Entity* self) {
 
         case 1:
             if (!g_api.func_80131F68()) {
-                OVL_EXPORT(CutsceneFlags) |= 0x800;
+                g_CutsceneFlags |= 0x800;
                 g_api.PlaySfx(NA_VO_ML_THANKS);
                 SetStep(5);
             }
@@ -2419,7 +2419,7 @@ void func_us_801B2BE4(Entity* self) {
         break;
 
     case 7:
-        if ((OVL_EXPORT(CutsceneFlags) & 0x200) == 0) {
+        if ((g_CutsceneFlags & 0x200) == 0) {
             prim = &g_PrimBuf[self->primIndex];
             for (i = 0; i < 10; i++) {
                 prim = prim->next;
@@ -2434,7 +2434,7 @@ void func_us_801B2BE4(Entity* self) {
             self->ext.et_801B6F30.unk7E = 0x400;
             self->ext.et_801B6F30.unk7C = 0x10;
             self->step++;
-            OVL_EXPORT(CutsceneFlags) |= 0x200;
+            g_CutsceneFlags |= 0x200;
         }
         break;
 
@@ -2445,7 +2445,7 @@ void func_us_801B2BE4(Entity* self) {
         func_us_801B245C(prim, self->ext.et_801B6F30.unk7E,
                          self->ext.et_801B6F30.unk7C * 2, 0x74, 0x20, 8, 1);
         if (self->ext.et_801B6F30.unk7C == 1) {
-            OVL_EXPORT(CutsceneFlags) &= ~0x400;
+            g_CutsceneFlags &= ~0x400;
         }
         if (!self->ext.et_801B6F30.unk7C) {
             DestroyEntity(self);
@@ -2909,7 +2909,7 @@ void func_us_801B4830(Entity* self) {
         primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x53);
 #endif
         if (primIndex != -1) {
-            InitializeEntity(OVL_EXPORT(EInitCommon));
+            InitializeEntity(g_EInitCommon);
             i = 0;
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
@@ -3034,7 +3034,7 @@ void func_us_801B4830(Entity* self) {
 #endif
             }
             self->step_s++;
-        } else if (OVL_EXPORT(CutsceneFlags) & 0x400) {
+        } else if (g_CutsceneFlags & 0x400) {
             SetStep(2);
             self->ext.et_801B6F30.unk7C = 0x10;
         }
@@ -3071,7 +3071,7 @@ void func_us_801B4830(Entity* self) {
     case 4:
         prim = &g_PrimBuf[self->primIndex];
         func_us_801B420C(prim, tempEntity);
-        if ((OVL_EXPORT(CutsceneFlags) & 0x400) == 0) {
+        if ((g_CutsceneFlags & 0x400) == 0) {
             self->ext.et_801B6F30.unk7E = 0x400;
             self->ext.et_801B6F30.unk7C = 0x10;
             SetStep(8);
@@ -3177,7 +3177,7 @@ void func_us_801B5068(Entity* self) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 7);
         if (primIndex != -1) {
-            InitializeEntity(OVL_EXPORT(EInitCommon));
+            InitializeEntity(g_EInitCommon);
             i = 0;
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
@@ -3233,7 +3233,7 @@ void func_us_801B5068(Entity* self) {
             self->ext.et_801B6F30.unk80 = 0;
             func_us_801B4ED4(0, tempEntity->params);
             self->step_s++;
-        } else if (OVL_EXPORT(CutsceneFlags) & 0x400) {
+        } else if (g_CutsceneFlags & 0x400) {
             SetStep(2);
             self->ext.et_801B6F30.unk7C = 0x18;
         }
@@ -3341,7 +3341,7 @@ void func_us_801B5068(Entity* self) {
             func_us_801B4ED4(self->ext.et_801B6F30.unk80, tempEntity->params);
             self->step_s = 0;
         }
-        if ((OVL_EXPORT(CutsceneFlags) & 0x400) == 0) {
+        if ((g_CutsceneFlags & 0x400) == 0) {
             prim->drawMode = DRAW_HIDE;
             SetStep(7);
             self->ext.et_801B6F30.unk7C = 0x10;
@@ -3417,7 +3417,7 @@ void func_us_801B56E4(Entity* self) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x13A);
         if (primIndex != -1) {
-            InitializeEntity(OVL_EXPORT(EInitCommon));
+            InitializeEntity(g_EInitCommon);
             i = 0;
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
@@ -3464,7 +3464,7 @@ void func_us_801B56E4(Entity* self) {
         break;
 
     case 1:
-        if (OVL_EXPORT(CutsceneFlags) & 0x400) {
+        if (g_CutsceneFlags & 0x400) {
             if (tempEntity->params) {
                 SetStep(4);
             } else {
@@ -3575,7 +3575,7 @@ void func_us_801B56E4(Entity* self) {
             prim->drawMode = DRAW_HIDE;
             prim = prim->next;
         }
-        if ((OVL_EXPORT(CutsceneFlags) & 0x400) == 0) {
+        if ((g_CutsceneFlags & 0x400) == 0) {
             prim = &g_PrimBuf[self->primIndex];
             prim = prim->next;
             prim = prim->next;
@@ -3642,7 +3642,7 @@ void func_us_801B56E4(Entity* self) {
             prim->drawMode = DRAW_HIDE;
             prim = prim->next;
         }
-        if ((OVL_EXPORT(CutsceneFlags) & 0x400) == 0) {
+        if ((g_CutsceneFlags & 0x400) == 0) {
             prim = &g_PrimBuf[self->primIndex];
             prim = prim->next;
             prim = prim->next;
@@ -3681,7 +3681,7 @@ void func_us_801B5F84(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         if (g_PlayableCharacter) {
             self->step++;
         } else if ((player->posY.i.hi + g_Tilemap.scrollY.i.hi) < 0x100 &&
@@ -3714,7 +3714,7 @@ void func_us_801B5F84(Entity* self) {
 void func_us_801B60C8(Entity* self) {
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         break;
 
     case 1:
@@ -3875,7 +3875,7 @@ void func_us_801B6324(Entity* self) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x140);
         if (primIndex != -1) {
-            InitializeEntity(OVL_EXPORT(EInitCommon));
+            InitializeEntity(g_EInitCommon);
             i = 0;
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
@@ -3983,7 +3983,7 @@ void func_us_801B6324(Entity* self) {
         break;
 
     case 1:
-        if (OVL_EXPORT(CutsceneFlags) & 0x400) {
+        if (g_CutsceneFlags & 0x400) {
             SetStep(2);
             var_v1 = 0;
             for (i = 0; i < LEN(D_us_8018173C); i++) {
@@ -4117,7 +4117,7 @@ void func_us_801B6324(Entity* self) {
         break;
 
     case 7:
-        if ((OVL_EXPORT(CutsceneFlags) & 0x200) == 0) {
+        if ((g_CutsceneFlags & 0x200) == 0) {
             prim = &g_PrimBuf[self->primIndex];
             for (i = 0; i < 10; i++) {
                 prim = prim->next;
@@ -4130,7 +4130,7 @@ void func_us_801B6324(Entity* self) {
             self->ext.et_801B6F30.unk7E = 0x400;
             self->ext.et_801B6F30.unk7C = 0x10;
             self->step++;
-            OVL_EXPORT(CutsceneFlags) |= 0x200;
+            g_CutsceneFlags |= 0x200;
         }
         break;
 
@@ -4154,7 +4154,7 @@ void func_us_801B6324(Entity* self) {
         break;
 
     case 9:
-        OVL_EXPORT(CutsceneFlags) &= ~0x400;
+        g_CutsceneFlags &= ~0x400;
         DestroyEntity(self);
         break;
     }
@@ -4216,7 +4216,7 @@ void func_us_801B6F30(Entity* self) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x140);
         if (primIndex != -1) {
-            InitializeEntity(OVL_EXPORT(EInitCommon));
+            InitializeEntity(g_EInitCommon);
             i = 0;
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
@@ -4332,7 +4332,7 @@ void func_us_801B6F30(Entity* self) {
         break;
 
     case 1:
-        if (OVL_EXPORT(CutsceneFlags) & 0x400) {
+        if (g_CutsceneFlags & 0x400) {
             SetStep(2);
             self->ext.et_801B6F30.unk7C = 0;
             self->ext.et_801B6F30.unk7E = 0;
@@ -4467,7 +4467,7 @@ void func_us_801B6F30(Entity* self) {
 
         case 1:
             if (!g_api.func_80131F68()) {
-                if ((OVL_EXPORT(CutsceneFlags) & 0x200) == 0) {
+                if ((g_CutsceneFlags & 0x200) == 0) {
                     prim = &g_PrimBuf[self->primIndex];
                     for (i = 0; i < 10; i++) {
                         prim = prim->next;
@@ -4515,13 +4515,13 @@ void func_us_801B6F30(Entity* self) {
                 (self->ext.et_801B6F30.unk82 + self->ext.et_801B6F30.unk80) *
                     2 +
                 self->ext.et_801B6F30.unk84;
-            OVL_EXPORT(CutsceneFlags) &= ~0x400;
+            g_CutsceneFlags &= ~0x400;
             SetStep(1);
         }
         break;
 
     case 7:
-        if ((OVL_EXPORT(CutsceneFlags) & 0x200) == 0) {
+        if ((g_CutsceneFlags & 0x200) == 0) {
             prim = &g_PrimBuf[self->primIndex];
             for (i = 0; i < 10; i++) {
                 prim = prim->next;
@@ -4534,7 +4534,7 @@ void func_us_801B6F30(Entity* self) {
             self->ext.et_801B6F30.unk7E = 0x400;
             self->ext.et_801B6F30.unk7C = 0x10;
             self->step++;
-            OVL_EXPORT(CutsceneFlags) |= 0x200;
+            g_CutsceneFlags |= 0x200;
         }
         break;
 
@@ -4558,7 +4558,7 @@ void func_us_801B6F30(Entity* self) {
         break;
 
     case 9:
-        OVL_EXPORT(CutsceneFlags) &= ~0x400;
+        g_CutsceneFlags &= ~0x400;
         DestroyEntity(self);
         break;
     }
@@ -4786,7 +4786,7 @@ void func_us_801B8234(Entity* self) {
         primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x86);
 #endif
         if (primIndex != -1) {
-            InitializeEntity(OVL_EXPORT(EInitCommon));
+            InitializeEntity(g_EInitCommon);
             i = 0;
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
@@ -5024,7 +5024,7 @@ void func_us_801B8234(Entity* self) {
         break;
 
     case 7:
-        if ((OVL_EXPORT(CutsceneFlags) & 0x200) == 0) {
+        if ((g_CutsceneFlags & 0x200) == 0) {
             self->ext.et_801B6F30.unk7E = 0x400;
             self->ext.et_801B6F30.unk7C = 0x10;
             self->step++;
@@ -5043,7 +5043,7 @@ void func_us_801B8234(Entity* self) {
                          self->ext.et_801B6F30.unk7C * 2, 0x74, 0x20, 7, 0);
 #endif
         if (!self->ext.et_801B6F30.unk7C) {
-            OVL_EXPORT(CutsceneFlags) |= 0x400;
+            g_CutsceneFlags |= 0x400;
             DestroyEntity(self);
         }
         break;
@@ -5157,7 +5157,7 @@ void func_us_801B8A00(Entity* self) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x140);
         if (primIndex != -1) {
-            InitializeEntity(OVL_EXPORT(EInitCommon));
+            InitializeEntity(g_EInitCommon);
             i = 0;
 #ifdef VERSION_PSP
             self->ext.et_801B6F30.unk86 = 0;
@@ -5299,7 +5299,7 @@ void func_us_801B8A00(Entity* self) {
             break;
         }
 #endif
-        if (OVL_EXPORT(CutsceneFlags) & 0x400) {
+        if (g_CutsceneFlags & 0x400) {
             SetStep(2);
             self->ext.et_801B6F30.unk7C = 0;
             self->ext.et_801B6F30.unk7E = 0;
@@ -5458,8 +5458,7 @@ void func_us_801B8A00(Entity* self) {
             break;
 
         case 1:
-            if (!g_api.func_80131F68() &&
-                (OVL_EXPORT(CutsceneFlags) & 0x200) == 0) {
+            if (!g_api.func_80131F68() && (g_CutsceneFlags & 0x200) == 0) {
                 sfxIndex = self->ext.et_801B6F30.unk84 +
                            self->ext.et_801B6F30.unk80 * 2;
                 g_api.PlaySfx(D_us_80181978[sfxIndex]);
@@ -5484,8 +5483,7 @@ void func_us_801B8A00(Entity* self) {
             break;
 
         case 2:
-            if (!g_api.func_80131F68() &&
-                (OVL_EXPORT(CutsceneFlags) & 0x200) == 0) {
+            if (!g_api.func_80131F68() && (g_CutsceneFlags & 0x200) == 0) {
                 sfxIndex =
                     self->ext.et_801B6F30.unk80 + self->ext.et_801B6F30.unk82;
                 g_api.PlaySfx(D_us_80181978[sfxIndex]);
@@ -5504,7 +5502,7 @@ void func_us_801B8A00(Entity* self) {
         break;
 
     case 7:
-        if ((OVL_EXPORT(CutsceneFlags) & 0x200) == 0) {
+        if ((g_CutsceneFlags & 0x200) == 0) {
             prim = &g_PrimBuf[self->primIndex];
             for (i = 0; i < 10; i++) {
                 prim = prim->next;
@@ -5518,7 +5516,7 @@ void func_us_801B8A00(Entity* self) {
             self->ext.et_801B6F30.unk7C = 0x10;
             self->step++;
             g_api.PlaySfx(MU_SEQ_LIBRARIAN);
-            OVL_EXPORT(CutsceneFlags) |= 0x200;
+            g_CutsceneFlags |= 0x200;
         }
         break;
 
@@ -5547,7 +5545,7 @@ void func_us_801B8A00(Entity* self) {
             g_api.PlaySfx(MU_SEQ_LIBRARIAN_PSP);
         }
 #endif
-        OVL_EXPORT(CutsceneFlags) &= ~0x400;
+        g_CutsceneFlags &= ~0x400;
         DestroyEntity(self);
         return;
     }

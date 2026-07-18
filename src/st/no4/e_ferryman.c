@@ -84,7 +84,7 @@ void MoveBoat(u16 playerInBoat, Entity* entity) {
     }
 }
 
-extern u32 OVL_EXPORT(CutsceneFlags);
+extern u32 g_CutsceneFlags;
 static u8 anim_row[] = {
     0x18, 0x1C, 0x10, 0x1D, 0x10, 0x1E, 0x10, 0x1F, 0x10, 0x20, 0x00, 0x00};
 static u8 anim_stationary[] = {0x18, 0x1C, 0x10, 0x1D, 0x10, 0x1E, 0x10, 0x1F,
@@ -146,7 +146,7 @@ void EntityFerrymanController(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         if (PLAYER.posX.i.hi < self->posX.i.hi) {
             self->facingLeft = true;
         } else {
@@ -172,7 +172,7 @@ void EntityFerrymanController(Entity* self) {
         break;
     case 2:
         // If we already met the ferryman we can skip straight to rowing
-        if (OVL_EXPORT(CutsceneFlags) & 0x80) {
+        if (g_CutsceneFlags & 0x80) {
             self->step += 2;
         } else {
             // Otherwise pause world state and put Alucard into human form
@@ -192,7 +192,7 @@ void EntityFerrymanController(Entity* self) {
     case 3:
         g_Player.demo_timer = 1;
         g_Player.padSim = PAD_NONE;
-        if (OVL_EXPORT(CutsceneFlags) & 0x80) {
+        if (g_CutsceneFlags & 0x80) {
             // Unpause world state once meeting ferryman cutscene is over
             g_PauseAllowed = true;
             g_unkGraphicsStruct.pauseEnemies = false;
@@ -590,7 +590,7 @@ void EntityFerryman(Entity* self) {
     Entity* boatEntity = self - 1;
 
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 0x1C;
         self->flags |= FLAG_POS_CAMERA_LOCKED;
@@ -670,7 +670,7 @@ void EntityBoatElevatorChains(Entity* self) {
     scrollX = g_Tilemap.scrollX.i.hi;
     scrollY = g_Tilemap.scrollY.i.hi;
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 13);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
@@ -987,7 +987,7 @@ void EntityBoatElevatorController(Entity* self) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 5);
         if (primIndex != -1) {
-            InitializeEntity(OVL_EXPORT(EInitInteractable));
+            InitializeEntity(g_EInitInteractable);
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             self->drawFlags = ENTITY_ROTATE;
@@ -1249,7 +1249,7 @@ void EntityFerrymanGateController(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(1);
         if (g_CastleFlags[FERRYMAN_GATE_OPEN]) {
             LoadFerrymanGateTiles();

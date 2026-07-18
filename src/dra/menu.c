@@ -2520,12 +2520,13 @@ void func_800F9F40(void) {
     }
 }
 
-void MenuHandleCursorInput(s32* nav, u8 nOptions, u32 arg2) {
+// original name: PSX_cursor_up_down
+void MenuHandleCursorInput(s32* nav, u8 nOptions, u32 type) {
     const int ItemsPerPage = 12;
     s32 limit;
     u8 prevCursor = *nav;
 
-    switch (arg2) {
+    switch (type) {
     case 3:
         if (g_pads[0].repeat & PAD_UP) {
             if (*nav) {
@@ -2601,7 +2602,7 @@ void MenuHandleCursorInput(s32* nav, u8 nOptions, u32 arg2) {
                 *nav ^= 1;
             }
         }
-        if (arg2 == 2) {
+        if (type == 2) {
             if (g_pads[0].repeat & PAD_L1) {
                 if (*nav >= ItemsPerPage) {
                     *nav -= ItemsPerPage;
@@ -2945,6 +2946,7 @@ void func_800FAEC4(s32* cursor, u8 count, const char* str, u16 icon, u16 pal) {
     g_MenuStep++;
 }
 
+// original name: PSX_equip_id_init
 void func_800FAF44(bool isAccessory) {
     s32 i;
     s32* ptr;
@@ -3004,6 +3006,7 @@ EquipMenuHelper g_EquipMenuHelper[] = {
     {EQUIP_ACCESSORY, 3, true}, // ACCESSORY_2_SLOT
 };
 
+// original name : PSX_id_init
 void func_800FB0FC(void) {
     EquipMenuHelper* helper = &g_EquipMenuHelper[g_MenuNavigation.cursorEquip];
 

@@ -1,5 +1,5 @@
-NO1_spriteBanks = 0x8018002C;
-NO1_cluts = 0x801801C4;
-NO1_rooms_layers = 0x80180314;
-NO1_gfxBanks = 0x801805DC;
+spriteBanks = 0x8018002C;
+cluts = 0x801801C4;
+rooms_layers = 0x80180314;
+gfxBanks = 0x801805DC;
 sprites_3 = 0x801A86BC;

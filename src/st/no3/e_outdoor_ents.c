@@ -9,7 +9,7 @@ void EntityPushAlucard(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitSpawner));
+        InitializeEntity(g_EInitSpawner);
 #ifdef VERSION_PSP
         g_CastleFlags[PROLOGUE_COMPLETE] = 0;
 #endif
@@ -103,7 +103,7 @@ void EntityCastleDoorTransition(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        InitializeEntity(OVL_EXPORT(EInitSpawner));
+        InitializeEntity(g_EInitSpawner);
         g_Entities[E_AFTERIMAGE_1].ext.alucardController.disableAfterImageFlag =
             true;
         g_Player.padSim = PAD_RIGHT;
@@ -174,7 +174,7 @@ void EntityForegroundTree(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitSpawner));
+        InitializeEntity(g_EInitSpawner);
         self->flags |= FLAG_POS_CAMERA_LOCKED;
         self->unk68 = var_s4;
         // This is a weird way to make a while-loop.
@@ -273,7 +273,7 @@ void EntityFoliageMaker(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitSpawner));
+        InitializeEntity(g_EInitSpawner);
         self->flags |= FLAG_POS_CAMERA_LOCKED;
         self->unk68 = 0xC0;
         self->ext.utimer.t = 0;
@@ -369,7 +369,7 @@ void EntityBackgroundPineTrees(Entity* self) {
     var_s4 = pineWidths[xpos];
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitSpawner));
+        InitializeEntity(g_EInitSpawner);
         self->flags |= FLAG_POS_CAMERA_LOCKED;
         self->unk68 = selfUnk68;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 32);
@@ -536,7 +536,7 @@ void EntityDistantTreeMaker(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitSpawner));
+        InitializeEntity(g_EInitSpawner);
         self->flags |= FLAG_POS_CAMERA_LOCKED;
         self->ext.utimer.t = 0;
         ptr = treeXLocations;
@@ -636,7 +636,7 @@ void EntityCastleBridge(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitSpawner));
+        InitializeEntity(g_EInitSpawner);
 
         primIndex = g_api.AllocPrimitives(PRIM_GT4, primCount);
 
@@ -833,7 +833,7 @@ void EntityDistantBackgroundTrees(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitSpawner));
+        InitializeEntity(g_EInitSpawner);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 9);
         if (primIndex == 0) {
             DestroyEntity(self);
@@ -908,7 +908,7 @@ void EntityFlyingOwlAndLeaves(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 56;
         if (self->params) {
@@ -1003,7 +1003,7 @@ void EntityFallingLeaf(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = (self->params & 1) + 63;
         self->zPriority = 0xC1;

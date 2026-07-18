@@ -69,11 +69,11 @@ typedef struct ServantEvent {
 #define FOR_CASTLE_FLAG(x) CHECK_CASTLE_FLAG | x
 
 #ifndef NO_SERVANT_CLUT
-extern SpriteParts* g_ServantSpriteParts[];
-extern u16 g_ServantClut[48];
+extern GAME_IMPORT SpriteParts* g_ServantSpriteParts[];
+extern GAME_IMPORT u16 g_ServantClut[48];
 #endif
 
 void DestroyEntity(Entity* entity);
-extern ServantDesc g_ServantDesc;
+extern GAME_IMPORT ServantDesc g_ServantDesc;
 
 #endif

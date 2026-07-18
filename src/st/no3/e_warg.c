@@ -671,7 +671,7 @@ static u8 D_8018383C[] = {3, 1, 3, 2, 3, 3,  3, 4,  3, 5,  3, 6,  3,   7,
 void EntityWargExplosionPuffTransparent(Entity* self) {
 
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitParticle));
+        InitializeEntity(g_EInitParticle);
         self->pose = 0;
         self->poseTimer = 0;
         self->animSet = ANIMSET_DRA(14);

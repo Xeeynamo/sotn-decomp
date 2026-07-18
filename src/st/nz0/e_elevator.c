@@ -14,7 +14,7 @@ void func_801B6DE4(Entity* self) {
     hitFlags = self->hitFlags;
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->ext.elevator.yPos = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
         self->hitboxWidth = 6;
         self->hitboxHeight = 8;
@@ -94,7 +94,7 @@ void EntityElevator(Entity* self) {
 
     switch (self->step) {
     case ELEVATOR_INIT:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->hitboxOffX = 0;
         self->hitboxOffY = 68;
         self->hitboxWidth = 16;

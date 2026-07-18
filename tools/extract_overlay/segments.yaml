@@ -630,7 +630,7 @@ e_skull_lord:
   functions:
   - EntitySkullLord
   - EntitySkullLordOutline
-  - EntitySkullLordFlames
+  - EntitySkullLordEye
   - EntitySkullLordPieces
 e_sky_entities:
   functions:

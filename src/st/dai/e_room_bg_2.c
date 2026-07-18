@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dai.h"
 
-extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit g_EInitInteractable;
 
 // This is the row of blue "land" tiles at the bottom of the sky background
 void EntityBackgroundSkyLand(Entity* self) {
@@ -10,7 +10,7 @@ void EntityBackgroundSkyLand(Entity* self) {
     s32 x;
 
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 5);
         if (primIndex == -1) {
             DestroyEntity(self);

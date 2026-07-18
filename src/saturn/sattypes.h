@@ -18,18 +18,28 @@ typedef unsigned long long u64;
 #define NULL 0
 #define FIX(x) ((s32)((x) * 65536.0))
 
-#define PAD_RIGHT 0x8000
-#define PAD_LEFT 0x4000
+typedef enum {
+    PAD_NONE = 0x0000,
+    PAD_L1 = 0x0008,
+    PAD_R1 = 0x0080,
+    PAD_CROSS = 0x0100,
+    PAD_UP = 0x1000,
+    PAD_DOWN = 0x2000,
+    PAD_LEFT = 0x4000,
+    PAD_RIGHT = 0x8000,
+} PlayerPad;
 
 #define STAGE_INVERTEDCASTLE_MASK 0x1F
 #define STAGE_INVERTEDCASTLE_FLAG 0x20
 #define STAGE_ST0 0x1F
+#define STAGE_TOP 0x0B
 #define TOTAL_ENTITY_COUNT 256
 #define STAGE_ENTITY_START 64
 #define FACTORY(id, param) ((id) + (param << 16))
 
 #define SFX_BAT_SCREECH 0x64E
 #define SFX_HEART_PICKUP 0x67A
+#define SFX_UI_MOVE 0x67B
 #define SFX_UI_ALERT_TINK 0x6AD
 
 #define PLAYER g_Entities[PLAYER_CHARACTER]
@@ -160,6 +170,13 @@ typedef struct {
 } ET_AfterImage;
 
 typedef struct {
+    /* 0x78 */ u8 pad78[0x10];
+    /* 0x88 */ struct Entity* parent;
+    /* 0x8C */ u8 pad8C[0x10];
+    /* 0x9C */ u16 paramsBase;
+} ET_Factory;
+
+typedef struct {
     /* 0x7C */ u8 pad0[0x4];
     /* 0x80 */ u8* anim;
     /* 0x84 */ s16 unk84;
@@ -173,7 +190,7 @@ typedef struct {
     s32 _align_parent[2];
 #endif
     /* 0x7C */ s16 timer;
-    /* 0x7E */ s16 : 16;
+    /* 0x7E */ s16 crashIndex;
     /* 0x80 */ s32 : 32;
     /* 0x84 */ s32 : 32;
     /* 0x88 */ s32 : 32;
@@ -225,10 +242,15 @@ typedef struct {
 typedef union { // offset=0x78
     u8 base[0x38];
     ET_AfterImage afterImage; // g_Entities[1], not entityID 1
+    ET_Factory factory;
     ET_ExplosionPuffOpaque opaquePuff;
     ET_Subweapon subweapon;
     ET_BatFamBlueTrail batFamBlueTrail;
     ET_Bat bat;
+    struct {
+        u8 pad[0x28];
+        u16 unkA0;
+    } whip;
 } Ext;
 
 typedef struct Entity {
@@ -293,9 +315,28 @@ typedef struct Unk0600B344 {
 } Unk0600B344;
 
 typedef struct {
-    /* 8003C7F4 */ Entity* (*CreateEntFactoryFromEntity)(
+    /* 060645A8 */ Entity* (*CreateEntFactoryFromEntity)(
         Entity* self, u32 flags, s32 arg2);
-} GameApi; /* size=0x140 */
+} GameApi;
+
+void (*func_06064580)();
+void (*func_060645B0)();
+void (*func_060645BC)();
+void (*func_060645e0)();
+void (*func_060645FC)();
+void (*func_06064600)();
+void (*func_06064608)();
+void (*func_06064614)();
+void (*func_06064620)();
+void (*GetPlayerSensor)(Collider* col);
+void (*func_06064638)();
+void (*func_0606463c)();
+void (*func_06064644)();
+void (*func_06064674)();
+void (*func_06064684)();
+void (*func_06064688)();
+void (*func_0606468c)();
+s32 (*func_06064690)();
 
 typedef struct {
     s32 unk0;
@@ -481,13 +522,16 @@ typedef struct {
     u16 unk322;
     char pad324[0x8C];
     /* 0x3B0 */ u32 padPressed;
-    char pad3B4[0x14];
+    /* 0x3B4 */ u32 padTapped;
+    char pad3B8[0x10];
     /* 0x3C8 */ s16 timers[16]; // the array is bigger than PSX
     char pad3E8[4];
     /* 0x3EC */ s32 vram_flag;
     char pad2[8];
     /* 0x3F8 */ u32 status;
-    char pad3FC[0x34];
+    u32 unk3FC;
+    char pad400[0x2E];
+    /* 0x42E */ u16 high_jump_timer;
     /* 0x430 */ u16 unk44;
     /* 0x432 */ u16 unk46;
     /* 0x434 */ u16 unk48;
@@ -536,9 +580,8 @@ typedef struct {
     s32 : 32;
     s32 : 32;
     s32 : 32;
-    s16 unk90;
-    s16 unk92;
-    s16 unk94;
+    SotnFixed32 shoveX;
+    SotnFixed32 shoveY;
 } unkGraphicsStruct;
 
 typedef struct {
@@ -600,7 +643,7 @@ typedef struct {
 } PlayerHud;
 
 typedef struct {
-    s16 : 16;
+    s16 type;
     s16 : 16;
     s16 : 16;
     s16 : 16;
@@ -615,7 +658,7 @@ typedef struct {
     s16 x3;
     s16 y3;
     s16 : 16;
-    s16 : 16;
+    u16 drawMode;
     s32 : 32;
 } Primitive;
 
@@ -630,22 +673,37 @@ typedef struct {
     SotnFixed32 scrollX;
     SotnFixed32 scrollY;
     s32 : 32;
-    s32 : 32;
-    s32 : 32;
+    s32 hSize;
+    s32 vSize;
     s32 : 32;
     s32 left;
     s32 top;
+    s32 right;
+    s32 bottom;
+    s32 x;
+    s32 y;
+    s32 width;
+    s32 height;
 } Tilemap;
 
 typedef struct {
-    s32 : 32;
-    s32 : 32;
-    s32 : 32;
-    s32 : 32;
-    s32 : 32;
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    s32 unkC;
+    s32 unk10;
     s32 g_ScrollDeltaX;
-    s32 : 32;
+    s32 unk18;
     s32 g_ScrollDeltaY;
+    s32 unk20;
+    s32 unk24;
+    s32 unk28;
+    s32 unk2C;
+    s32 unk30;
+    s32 unk34;
+    s32 unk38;
+    s32 unk3C;
+    s32 unk40;
 } UNK_0605c680;
 
 typedef struct {
@@ -677,6 +735,39 @@ typedef struct {
     u16 unk8;
     u16 unk10;
 } Unk060ED26C;
+
+typedef struct {
+    u16 stageID;
+    u16 unk2;
+    u16 unk4;
+    u16 unk6;
+    u16 unk8;
+    u16 unkA;
+    s32 unkC;
+    s32 unk10;
+} Unk0605D750;
+
+typedef struct {
+    /* 0x0 */ s16 x;
+    /* 0x2 */ s16 y;
+} Point16; // size = 0x4
+
+typedef struct {
+    /* 0x0 */ s32 x;
+    /* 0x4 */ s32 y;
+} Point32; // size = 0x8
+
+typedef struct {
+    /* 0x0 */ u8 tileLayoutId;
+    /* 0x1 */ u8 tilesetId;
+    /* 0x2 */ u8 objGfxId;
+    /* 0x3 */ u8 objLayoutId;
+} RoomLoadDef; // size = 0x4
+
+typedef struct {
+    RoomLoadDef* def;
+    Point32 pos;
+} RoomLoadDefHolder;
 
 typedef enum {
     PLAYER_CHARACTER,
@@ -801,7 +892,6 @@ u32 SquareRoot0(s32);
 s32 func_800F4D38(s32, s32);
 void func_800F4994(void);
 extern int rand(void);
-void PlaySfx(s32 sfxId);
 
 // Not 100% sure about address, gcc seems to added the offset within
 // the struct to the base address
@@ -811,7 +901,7 @@ extern GameSettings g_Settings;
 extern GameApi g_api;
 extern Entity g_Entities[TOTAL_ENTITY_COUNT]; // 0x060997F8
 extern EntityEntry** PfnEntityUpdates[];
-extern u16 g_StageId; // u32 in psx
+extern Unk0605D750 DAT_0605d750;
 extern SpellDef g_SpellDefs[];
 extern Accessory g_AccessoryDefs[];
 extern s32 D_80137960;
@@ -820,6 +910,8 @@ extern s32 D_80137968;
 extern s32 g_StatBuffTimers[];
 extern s32 D_8013B5E8;
 extern s32 D_801375CC;
+extern s32 D_801375D4;
+extern s32* D_801375D8;
 extern PlayerState g_Player;
 extern Entity* g_CurrentEntity;
 extern PlayerStatus g_Status;
@@ -844,14 +936,58 @@ extern Primitive g_PrimBuf[];
 #define NUM_HORIZONTAL_SENSORS 4
 #define NUM_VERTICAL_SENSORS 7
 
-typedef struct {
-    /* 0x0 */ s16 x;
-    /* 0x2 */ s16 y;
-} Point16; // size = 0x4
+enum RicSubweapons {
+    PL_W_NONE,
+    PL_W_DAGGER,
+    PL_W_AXE,
+    PL_W_HOLYWATER,
+    PL_W_CROSS,
+    PL_W_BIBLE,
+    PL_W_STOPWATCH,
+    PL_W_REBNDSTONE,
+    PL_W_VIBHUTI,
+    PL_W_AGUNEA,
+    PL_W_10,
+    PL_W_HOLYWATER_FLAMES,
+    PL_W_CRASH_CROSS,
+    PL_W_CRASH_CROSS_BEAM,
+    PL_W_WHIP,
+    PL_W_15,
+    PL_W_HYDROSTORM,
+    PL_W_BIBLE_BEAM,
+    PL_W_KICK,
+    PL_W_19,
+    PL_W_20,
+    PL_W_21,
+    PL_W_HIGHJUMP,
+    PL_W_23,
+    PL_W_CRASH_VIBHUTI,
+    PL_W_CRASH_REBOUND_STONE,
+    PL_W_CRASH_AGUNEA,
+    PL_W_27,
+    PL_W_28,
+    PL_W_CRASH_REBOUND_EXPLOSION,
+    PL_W_30,
+    NUM_WEAPONS,
+};
 
-typedef struct {
-    /* 0x0 */ s32 x;
-    /* 0x4 */ s32 y;
-} Point32; // size = 0x8
+typedef enum {
+    DRAW_DEFAULT = 0x00,
+    DRAW_TRANSP = 0x01, // make it semi transparent
+    DRAW_UNK02 = 0x02,  // unknown
+    DRAW_COLORS = 0x04, // use color blending
+    DRAW_HIDE = 0x08,   // do not render the primitive
+    DRAW_TPAGE = 0x10,  // use custom tpage
+    DRAW_TPAGE2 = 0x20, // use custom tpage
+    DRAW_UNK_40 = 0x40,
+    DRAW_MENU = 0x80,       // render only if D_800973EC is set
+    DRAW_UNK_100 = 0x100,   // unknown
+    DRAW_UNK_200 = 0x200,   // unknown
+    DRAW_DITHERING = 0x400, // enable PS1 dithering via DTD flag
+    DRAW_UNK_800 = 0x800,   // unknown
+    DRAW_UNK_1000 = 0x1000, // unknown
+    DRAW_ABSPOS = 0x2000,   // use absolute coordinates with DRAW_MENU
+    DRAW_INVALID = 0xFFFF,
+} DrawMode;
 
 #endif

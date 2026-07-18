@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <types.h>
 
-extern EInit OVL_EXPORT(EInitSpawner);
 extern EInit g_EInitMedusaHeadBlue;
 extern EInit g_EInitMedusaHeadYellow;
 
@@ -42,7 +41,7 @@ void EntityMedusaHeadSpawner(Entity* self) {
         return;
     }
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitSpawner));
+        InitializeEntity(g_EInitSpawner);
         self->flags &= ~FLAG_UNK_2000;
     }
     if ((g_Tilemap.scrollY.i.hi >= params->yMax) &&

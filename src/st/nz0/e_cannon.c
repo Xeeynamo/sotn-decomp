@@ -9,7 +9,7 @@ void EntityCannonLever(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->hitboxWidth = 4;
         self->hitboxHeight = 20;
         self->hitboxState = 2;
@@ -76,7 +76,7 @@ void EntityCannon(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -157,7 +157,7 @@ void EntityCannonShot(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = ANIMSET_DRA(2);
         self->animCurFrame = 1;
         self->palette = PAL_FLAG(PAL_UNK_1AF);
@@ -194,7 +194,7 @@ void EntityCannonWall(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         if (g_CastleFlags[NZ0_CANNON_WALL_SHORTCUT]) {
             i = 6;
         } else {

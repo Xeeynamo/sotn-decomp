@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rnz0.h"
 
-extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit g_EInitInteractable;
 // Fire demon head and arms go back. Maybe prep for shooting fireball?
 static u8 anim_charge_unused_atk[] = {
     1, 13, 1, 14, 2, 16, 8, 2, 10, 3, 10, 4, 10, 5, 10, 6, 255, 0};
@@ -26,7 +26,7 @@ static u16 unusedEntAnimDurations[] = {16, 24, 42, 46};
 
 void EntityFireDemonFlames(Entity* self) {
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = 2;
         self->animCurFrame = unusedEntAnimStarts[self->params & 0xF];
         self->velocityY = unusedEntYvels[self->params & 0xF];
@@ -560,7 +560,7 @@ void EntityFireDemonPopoutEffect(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         primIndex = g_api.func_800EDB58(0x11, 0x42);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;

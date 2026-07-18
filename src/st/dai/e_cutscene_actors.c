@@ -19,16 +19,16 @@ enum MariaSteps {
     MARIA_DEPARTED = 7,
 };
 
-enum OVL_EXPORT(CutsceneFlags) {
+enum g_CutsceneFlags {
     DAI_CUTSCENE_ALUCARD_READY = 1 << 0,
     DAI_CUTSCENE_MARIA_DEPARTING = 1 << 1,
     DAI_CUTSCENE_DIALOGUE_CONCLUDED = 1 << 2,
     DAI_CUTSCENE_CUTSCENE_CONCLUDED = 1 << 3,
 };
 
-extern EInit OVL_EXPORT(EInitSpawner);
-extern EInit OVL_EXPORT(EInitInteractable);
-extern u32 OVL_EXPORT(CutsceneFlags); // defined by e_cutscene_dialogue
+extern EInit g_EInitSpawner;
+extern EInit g_EInitInteractable;
+extern u32 g_CutsceneFlags; // defined by e_cutscene_dialogue
 
 static AnimateEntityFrame unused_anims[] = {
     1,  1,  -1, 0,  1,  2,  -1, 0,  1,  2,  7,  3,  7,  4,  7,  5,  7,  6,
@@ -75,7 +75,7 @@ void OVL_EXPORT(EntityCutsceneStage)(Entity* self) {
 
     switch (self->step) {
     case CUTSCENE_INIT:
-        InitializeEntity(OVL_EXPORT(EInitSpawner));
+        InitializeEntity(g_EInitSpawner);
         g_PauseAllowed = false;
         // This seems to pause Alucard, rather than enemies
         g_unkGraphicsStruct.pauseEnemies = true;
@@ -115,7 +115,7 @@ void OVL_EXPORT(EntityCutsceneStage)(Entity* self) {
         } else {
             player->posX.i.hi = 368 - g_Tilemap.scrollX.i.hi;
             g_Player.padSim = PAD_NONE;
-            OVL_EXPORT(CutsceneFlags) |= DAI_CUTSCENE_ALUCARD_READY;
+            g_CutsceneFlags |= DAI_CUTSCENE_ALUCARD_READY;
             self->step++;
         }
         g_Player.demo_timer = 1;
@@ -124,7 +124,7 @@ void OVL_EXPORT(EntityCutsceneStage)(Entity* self) {
         // Pans camera left to center actors
         CutsceneCameraPan(176);
         g_Player.demo_timer = 1;
-        if (OVL_EXPORT(CutsceneFlags) & DAI_CUTSCENE_MARIA_DEPARTING) {
+        if (g_CutsceneFlags & DAI_CUTSCENE_MARIA_DEPARTING) {
             self->step++;
             return;
         }
@@ -133,7 +133,7 @@ void OVL_EXPORT(EntityCutsceneStage)(Entity* self) {
         // Pans camera right to recenter on Alucard
         CutsceneCameraPan(128);
         if ((g_unkGraphicsStruct.unkC == 128) &&
-            (OVL_EXPORT(CutsceneFlags) & DAI_CUTSCENE_CUTSCENE_CONCLUDED)) {
+            (g_CutsceneFlags & DAI_CUTSCENE_CUTSCENE_CONCLUDED)) {
             g_PauseAllowed = true;
             if (g_unkGraphicsStruct.pauseEnemies) {
                 g_unkGraphicsStruct.pauseEnemies = false;
@@ -159,14 +159,14 @@ void OVL_EXPORT(EntityCutsceneMaria)(Entity* self) {
 
     switch (self->step) {
     case MARIA_INIT:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = ANIMSET_OVL(15);
         self->animCurFrame = 10;
         self->unk5A = 72;
         self->palette = PAL_CUTSCENE;
         break;
     case MARIA_WAIT:
-        if (OVL_EXPORT(CutsceneFlags) & DAI_CUTSCENE_DIALOGUE_CONCLUDED) {
+        if (g_CutsceneFlags & DAI_CUTSCENE_DIALOGUE_CONCLUDED) {
             self->step++;
         }
         break;
@@ -220,7 +220,7 @@ void OVL_EXPORT(EntityCutsceneMaria)(Entity* self) {
         if (posScrollX > 448) {
             SetStep(MARIA_JUMP_EXIT);
             self->velocityY = FIX(-4);
-            OVL_EXPORT(CutsceneFlags) |= DAI_CUTSCENE_CUTSCENE_CONCLUDED;
+            g_CutsceneFlags |= DAI_CUTSCENE_CUTSCENE_CONCLUDED;
         }
         break;
     case MARIA_JUMP_EXIT:

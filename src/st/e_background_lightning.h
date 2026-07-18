@@ -5,7 +5,7 @@ extern s32 E_ID(LIGHTNING_THUNDER);
 extern s32 E_ID(LIGHTNING_CLOUD);
 #endif
 
-extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit g_EInitInteractable;
 
 #if defined(INVERTED_STAGE)
 #define R_VAL 0x28
@@ -70,7 +70,7 @@ void EntityBackgroundLightning(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->ext.backgroundLightning.timer = 0x80;
         self->animCurFrame = 15;
 #if defined(STAGE_IS_NO3)

@@ -98,6 +98,7 @@ snd_srcs = [
     'src/saturn/stage_02.c',
     'src/saturn/t_bat.c',
     'src/saturn/warp.c',
+    'src/saturn/maria.c'
 ]
 
 lib_srcs = [
@@ -160,7 +161,8 @@ objs = [
     'build/saturn/richter.o',
     'build/saturn/stage_02.o',
     'build/saturn/warp.o',
-    'build/saturn/t_bat.o'
+    'build/saturn/t_bat.o',
+    'build/saturn/maria.o'
 ]
 
 link_objs(objs, 'build/saturn')
@@ -221,7 +223,8 @@ prgs = {
     'richter.elf': 'RICHTER.PRG',
     'stage_02.elf': 'STAGE_02.PRG',
     'warp.elf': 'WARP.PRG',
-    't_bat.elf': 'T_BAT.PRG'
+    't_bat.elf': 'T_BAT.PRG',
+    'maria.elf': 'MARIA.PRG'
 }
 
 def make_prgs(prgs, output_dir):

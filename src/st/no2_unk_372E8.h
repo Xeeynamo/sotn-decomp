@@ -13,7 +13,7 @@ static EntityConfig D_us_80180EF8[] = {
     {ANIMSET_OVL(12), 0x53, 9, BLEND_NO, D_us_80180ED8},
 };
 
-extern EInit OVL_EXPORT(EInitParticle);
+extern EInit g_EInitParticle;
 
 void func_us_801B72E8(Entity* self) {
     s32 params;
@@ -21,7 +21,7 @@ void func_us_801B72E8(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitParticle));
+        InitializeEntity(g_EInitParticle);
         params = self->params & 0xF;
         obj = &D_us_80180EF8[params];
         self->palette = obj->palette + 0x226;

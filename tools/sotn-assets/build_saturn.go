@@ -16,6 +16,7 @@ var saturnSplitterYAMLs = []string{
 	"config/saturn/warp.prg.yaml",
 	"config/saturn/alucard.prg.yaml",
 	"config/saturn/richter.prg.yaml",
+	"config/saturn/maria.prg.yaml",
 }
 
 func buildSaturn() error {

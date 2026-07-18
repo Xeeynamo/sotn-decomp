@@ -70,7 +70,7 @@ s32 E_ID(CUTSCENE_STAGE);
 s32 E_ID(CUTSCENE_MARIA);
 s32 E_ID(MIST_DOOR);
 
-// Used by dai/e_cutscene_dialogue/DAI_EntityCutsceneDialogue
+// Used by dai/e_cutscene_dialogue/EntityCutsceneDialogue
 u8* OVL_EXPORT(cutscene_script);     // bss
 u8* OVL_EXPORT(cutscene_script_ptr); // bss
 
@@ -149,7 +149,7 @@ void OVL_EXPORT(Load)(void) {
         (u8*)OVL_EXPORT(cutscene_script_ge),
         (u8*)OVL_EXPORT(cutscene_script_it));
     InitEntityIds();
-    PfnEntityUpdates = OVL_EXPORT(EntityUpdates);
+    PfnEntityUpdates = EntityUpdates;
     g_pStObjLayoutHorizontal = &D_8D2E2B0;
     g_pStObjLayoutVertical = &D_8D2E384;
     func_psp_0892A018();

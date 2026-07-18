@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit g_EInitInteractable;
 #ifdef INVERTED_STAGE
 extern EInit g_EInitEnvironmentBreakable;
 #else
 extern EInit g_EInitEnvironment;
 #endif
-extern EInit OVL_EXPORT(EInitParticle);
-extern EInit OVL_EXPORT(EInitBreakable);
+extern EInit g_EInitParticle;
+extern EInit g_EInitBreakable;
 
 #ifdef VERSION_PSP
 extern s32 E_ID(BREAKABLE_DEBRIS);
@@ -75,7 +75,7 @@ static u8 blend_modes[] = {
 static u16 hitbox_offsets_y[] = {0, 0, -24, -16, 0, 0, 0, 0, 0, 0, 0, 0};
 static s16 candelabra_debris_offsets_y[] = {0, 1, 2, 2, 3, 0, 1, 2, 3, 0};
 
-void OVL_EXPORT(EntityBreakable)(Entity* self) {
+void EntityBreakable(Entity* self) {
     Entity* entity;
     Primitive* prim;
     s16* debrisOffsetsY;
@@ -86,7 +86,7 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
 
     breakableType = self->params >> 0xC;
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitBreakable));
+        InitializeEntity(g_EInitBreakable);
         self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 0x14;
         self->blendMode = blend_modes[breakableType];
         self->hitboxHeight = hitbox_heights[breakableType];
@@ -194,7 +194,7 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
     }
 }
 
-void OVL_EXPORT(EntityBreakableDebris)(Entity* self) {
+void EntityBreakableDebris(Entity* self) {
     Collider collider;
     Entity* explosion;
     Primitive* prim;
@@ -215,7 +215,7 @@ void OVL_EXPORT(EntityBreakableDebris)(Entity* self) {
         }
 
         if (self->params & 256) {
-            InitializeEntity(OVL_EXPORT(EInitInteractable));
+            InitializeEntity(g_EInitInteractable);
             self->animSet = ANIMSET_OVL(10);
             self->unk5A = 91;
             self->palette = PAL_BREAKABLE;
@@ -225,7 +225,7 @@ void OVL_EXPORT(EntityBreakableDebris)(Entity* self) {
             return;
         }
 
-        InitializeEntity(OVL_EXPORT(EInitParticle));
+        InitializeEntity(g_EInitParticle);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
         if (primIndex == -1) {
             DestroyEntity(self);

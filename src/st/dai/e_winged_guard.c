@@ -14,7 +14,7 @@ enum WingedGuardPartsSteps {
 
 extern EInit g_EInitWingedGuard;
 extern EInit g_EInitWingedGuardParts;
-extern EInit OVL_EXPORT(EInitSpawner);
+extern EInit g_EInitSpawner;
 
 static AnimateEntityFrame anim_move[] = {
     {6, 1}, {4, 2}, {4, 3}, {6, 4}, {4, 3}, {4, 2}, POSE_LOOP(0),
@@ -124,7 +124,7 @@ void EntityWingedGuardSpawner(Entity* self) {
     s16* minMaxPositions;
 
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitSpawner));
+        InitializeEntity(g_EInitSpawner);
         // This is not a mistake, Winged Guard and Ghost use the same spawner
         self->ext.ghostEnemySpawner.timer = 1;
     }

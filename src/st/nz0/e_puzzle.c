@@ -2,6 +2,13 @@
 #include "nz0.h"
 #include "sfx.h"
 
+#ifdef VERSION_PC
+// BUG! fix a OOB where x can be -1
+#define PUZZLE_MODIFIER(x) D_801CB738[x]
+#else
+#define PUZZLE_MODIFIER(x) D_801CB738[x - 1]
+#endif
+
 extern s16 D_801CB738[];
 
 static s32 D_80180EB4 = 0;
@@ -15,7 +22,7 @@ void BoxPuzzleFloorButton(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -75,7 +82,7 @@ void BoxPuzzleSpikes(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->hitboxWidth = 12;
         self->hitboxHeight = 12;
         self->attackElement = 1;
@@ -136,7 +143,7 @@ void BoxPuzzleSpikes(Entity* self) {
     prim->x0 = self->posX.i.hi - 16;
     prim->y0 = self->posY.i.hi - 16;
     temp = 480 - (g_Tilemap.scrollY.i.hi + self->posY.i.hi);
-    D_801CB738[self->params - 1] = temp;
+    PUZZLE_MODIFIER(self->params) = temp;
 }
 
 // movable box for spike/switch areas
@@ -153,7 +160,7 @@ void EntityMovableBox(Entity* self) {
     var_s1 = GetPlayerCollisionWith(self, 0x10, 0x10, 5);
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -199,15 +206,15 @@ void EntityMovableBox(Entity* self) {
             }
             if (abs(var_s4 - 256) < 24) {
                 var_s1 = 2;
-            }
-            if (self->ext.nz0311c0.unk84 == 0 && D_801CB738[var_s1 - 1]) {
+            };
+            if (self->ext.nz0311c0.unk84 == 0 && PUZZLE_MODIFIER(var_s1)) {
                 self->posX.val -= self->velocityX;
                 var_s1 = 0;
             }
             self->ext.nz0311c0.unk84 = var_s1;
             if (self->ext.nz0311c0.unk84 != 0) {
                 self->posY.i.hi = (0x1C0 - g_Tilemap.scrollY.i.hi) -
-                                  D_801CB738[self->ext.nz0311c0.unk84 - 1];
+                                  PUZZLE_MODIFIER(self->ext.nz0311c0.unk84);
             }
         }
         break;

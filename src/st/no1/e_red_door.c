@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
 
-extern EInit OVL_EXPORT(EInitCommon);
+extern EInit g_EInitCommon;
 
-extern s16 OVL_EXPORT(RedDoorTiles)[2][8];
+extern s16 g_RedDoorTiles[2][8];
 
 static u8 g_eRedDoorUV[][8] = {
     {0xB1, 0xB7, 0xB1, 0xB7, 0x21, 0x21, 0x5F, 0x5F},
@@ -35,7 +35,7 @@ static bool EntityIsNearPlayer(Entity* self) {
 // params: (& 0x100) Opens to the right
 //         (& 0xFF) Index into map-specific tiles (g_eRedDoorTiles)
 //                  to place behind the door
-void OVL_EXPORT(EntityRedDoor)(Entity* self) {
+void EntityRedDoor(Entity* self) {
     Primitive* prim;
     s32 i;
     s16 angle;
@@ -50,7 +50,7 @@ void OVL_EXPORT(EntityRedDoor)(Entity* self) {
     case 0:
         self->ext.redDoor.isBackgroundDoor = self->params & 0x10;
         self->params &= 0xFFEF;
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         self->animSet = 7;
         self->animCurFrame = 1;
         if (self->ext.redDoor.isBackgroundDoor) {
@@ -379,7 +379,7 @@ void OVL_EXPORT(EntityRedDoor)(Entity* self) {
             scrollX = x + g_Tilemap.scrollX.i.hi;
             scrollY = y + g_Tilemap.scrollY.i.hi;
             tileIdx = (scrollX >> 4) + (scrollY >> 4) * g_Tilemap.hSize * 0x10;
-            g_Tilemap.fg[tileIdx] = OVL_EXPORT(RedDoorTiles)[sp3F][i];
+            g_Tilemap.fg[tileIdx] = g_RedDoorTiles[sp3F][i];
         }
     } else {
         for (i = 0; i < 4; i++) {
@@ -388,7 +388,7 @@ void OVL_EXPORT(EntityRedDoor)(Entity* self) {
             scrollX = x + g_Tilemap.scrollX.i.hi;
             scrollY = y + g_Tilemap.scrollY.i.hi;
             tileIdx = (scrollX >> 4) + (scrollY >> 4) * g_Tilemap.hSize * 0x10;
-            g_Tilemap.fg[tileIdx] = OVL_EXPORT(RedDoorTiles)[sp3F][i + 4];
+            g_Tilemap.fg[tileIdx] = g_RedDoorTiles[sp3F][i + 4];
         }
     }
 }

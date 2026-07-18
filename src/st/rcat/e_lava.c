@@ -5,7 +5,7 @@
 // its entity Ext, however in RCAT it is icy and spawns snowflakes instead of
 // embers.
 
-extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit g_EInitInteractable;
 
 static u8 lava_priorities[] = {0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0};
 static s16 lava_tpages[] = {2, 8, -4, 0, -3, -10, 4, 12, 0, 7, 1, -8};
@@ -51,7 +51,7 @@ void EntityLava(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->ext.lava.prim = NULL;
         self->ext.lava.unk89 = 1;
         self->ext.lava.unk84 = 0;
@@ -313,7 +313,7 @@ void EntitySnowflakes(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         primIndex = g_api.func_800EDB58(PRIM_TILE_ALT, 0x14);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;

@@ -82,7 +82,7 @@ void func_us_801C12B0(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = 0;
         self->ext.et_801C12B0.unk80 = 4;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 16);
@@ -209,7 +209,7 @@ void func_us_801C15F8(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = 0;
         self->ext.et_801C12B0.unk80 = 4;
         primIndex = g_api.AllocPrimitives(PRIM_TILE, 16);
@@ -340,7 +340,7 @@ void func_us_801C1844(Entity* self) {
     Primitive* prim;
 
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = 0;
         self->ext.et_801C12B0.unk80 = 4;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x10);
@@ -494,7 +494,7 @@ void func_us_801C1C94(Entity* self) {
     Primitive* prim;
 
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = 0;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 10);
         if (primIndex == -1) {
@@ -591,7 +591,7 @@ void func_us_801C1EE4(Entity* self) {
     s16* ptr;
 
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = 0;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 16);
         if (primIndex == -1) {
@@ -705,7 +705,7 @@ void func_us_801C21AC(Entity* self) {
 
     params = self->params;
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitParticle));
+        InitializeEntity(g_EInitParticle);
         self->animSet = 0;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
         if (primIndex == -1) {
@@ -865,7 +865,7 @@ void func_us_801C2474(Entity* self) {
 #endif
 
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = 0;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
         if (primIndex == -1) {
@@ -970,7 +970,7 @@ void func_us_801C2850(Entity* self) {
     s32 var_s1;
 
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = 0;
         primIndex = g_api.AllocPrimitives(PRIM_G4, 3);
         if (primIndex == -1) {
@@ -1073,7 +1073,7 @@ void func_us_801C2B78(Entity* self) {
     s32 scrollY;
 
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = 0;
         primIndex = g_api.AllocPrimitives(PRIM_TILE, 128);
         if (primIndex == -1) {
@@ -1164,7 +1164,7 @@ void func_us_801C2E60(Entity* self) {
     Primitive* prim;
 
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = 0;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 32);
         if (primIndex == -1) {
@@ -1259,7 +1259,7 @@ void func_us_801C3160(Entity* self) {
 
     params = self->params;
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = 0;
         if (!params) {
             primIndex = g_api.AllocPrimitives(PRIM_TILE, 0x80);
@@ -1367,7 +1367,7 @@ void func_us_801C34EC(Entity* self) {
     Primitive* prim;
 
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = 0;
         primIndex = g_api.AllocPrimitives(PRIM_TILE, 0x40);
         if (primIndex == -1) {
@@ -1442,7 +1442,7 @@ void func_us_801C37C8(Entity* self) {
     s32 clut;
 
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = 0;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex == -1) {
@@ -1519,7 +1519,7 @@ void func_us_801C3A04(Entity* self) {
     s32 scrollY;
 
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         self->animSet = 0;
         primIndex = g_api.AllocPrimitives(PRIM_TILE, 0x40);
         if (primIndex == -1) {
@@ -1604,7 +1604,7 @@ void func_us_801C3CC4(Entity* self) {
     Primitive* prim;
 
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitParticle));
+        InitializeEntity(g_EInitParticle);
         self->animSet = 0;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x20);
         if (primIndex == -1) {
@@ -1703,7 +1703,7 @@ void func_us_801C3FB0(Entity* self) {
     Primitive* prim;
 
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = 0;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x10);
         if (primIndex == -1) {
@@ -1800,7 +1800,7 @@ void func_us_801C4228(Entity* self) {
     Primitive* prim;
 
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = 0;
         primIndex = g_api.AllocPrimitives(PRIM_G4, 4);
         if (primIndex == -1) {
@@ -1913,7 +1913,7 @@ void EntityWaterBox(Entity* self) {
     u16 collision;
 
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 6;
         if (g_CastleFlags[NO4_WATER_BLOCKED]) {
@@ -1971,7 +1971,7 @@ void EntityWaterSpray(Entity* self) {
     s16* var_s1;
 
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = ANIMSET_OVL(1);
         self->palette = 0x44;
         self->drawFlags = ENTITY_MASK_R;
@@ -2055,7 +2055,7 @@ void EntityFloatingIcePlatform(Entity* self) {
     hitboxIndex = self->params;
 
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = hitboxIndex + 25;
         self->drawFlags = ENTITY_ROTATE;
@@ -2126,7 +2126,7 @@ void func_us_801C4BD8(Entity* self) {
     s32 volume;
 
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = 0;
     }
 
@@ -2170,7 +2170,7 @@ void func_us_801C4D2C(Entity* self) {
     u16 tile;
 
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = 0;
     }
 
@@ -2246,7 +2246,7 @@ void func_us_801C4D2C(Entity* self) {
 
 void func_us_801C5020(Entity* self) {
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 12;
         self->drawFlags = ENTITY_OPACITY | ENTITY_ROTATE;
@@ -2323,7 +2323,7 @@ void func_us_801C5268(Entity* self) {
     s16 offsetX;
 
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = ANIMSET_OVL(0);
         self->posX.i.hi = 0x380 - g_Tilemap.scrollX.i.hi;
         if (g_CastleFlags[NO4_SKELETON_APE_AND_BRIDGE] > 1) {
@@ -2377,7 +2377,7 @@ static s32 D_us_8018160C[] = {
 void func_us_801C542C(Entity* self) {
     u16 params = self->params;
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = D_us_801815DC[params];
         self->facingLeft = D_us_801815EC[params];
@@ -2405,7 +2405,7 @@ void func_us_801C5518(Entity* self) {
     player = &PLAYER;
 
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = 0;
     }
 
@@ -2456,7 +2456,7 @@ void func_us_801C5628(Entity* self) {
     u16 collision;
 
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 40;
         if (!g_CastleFlags[NO4_SKELETON_APE_AND_BRIDGE]) {
@@ -2533,7 +2533,7 @@ void func_us_801C58A0(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         if (g_CastleFlags[NO4_SKELETON_APE_AND_BRIDGE]) {
             func_us_801C5868();
             DestroyEntity(self);

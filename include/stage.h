@@ -31,6 +31,9 @@ typedef enum {
 // animSet, animCurFrame, unk5A, palette, enemyID
 typedef u16 EInit[5];
 
+// common stage initialization data
+extern GAME_IMPORT EInit g_EInitSpawner;
+
 typedef struct AnimateEntityFrame {
     u8 duration;
     u8 pose;

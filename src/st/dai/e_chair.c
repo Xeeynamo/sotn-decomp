@@ -26,7 +26,7 @@ enum ChairSteps {
 extern s32 E_ID(CONFESSIONAL_GHOST);
 #endif
 
-extern EInit OVL_EXPORT(EInitCommon);
+extern EInit g_EInitCommon;
 
 static AnimationFrame anim[] = {{8, 8}, {8, 9}, {8, 10}, {8, 11}, POSE_END};
 
@@ -59,7 +59,7 @@ void EntityChair(Entity* self) {
 
     switch (self->step) {
     case CHAIR_INIT:
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         // Each chair spawns the curtain on the opposing side, which anchors the
         // ghost
         if (self->params & 0xFF00) {
@@ -145,7 +145,7 @@ void func_us_801B81E8(Entity* self) {
     }
     switch (self->step) {
     case CHAIR_INIT:
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(3);
         self->velocityY = FIX(-0.375);
         self->velocityX = FIX(0.25);

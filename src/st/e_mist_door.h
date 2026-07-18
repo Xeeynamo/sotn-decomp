@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit g_EInitInteractable;
 
 #if defined(VERSION_PSP)
 static char alucard_mist_ENG[] = "\xBC\x10Mist could pass.";
@@ -41,7 +41,7 @@ void EntityMistDoor(Entity* self) {
     Entity* messageBox;
 
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->hitboxState = 1;
         self->hitPoints = 0x7FFF;
         self->attack = 0;

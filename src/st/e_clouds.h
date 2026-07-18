@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <scratchpad.h>
 
-extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit g_EInitInteractable;
 
 static MedusaCloudsUVal cloudUVals[] = {
     {0x0000, 0x0000, 0x0000, 0x0000}, {0x8181, 0x81BE, 0x9E81, 0x9EBE},
@@ -69,7 +69,7 @@ void EntityClouds(Entity* self) {
     cloudData* cloudData;
 
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         primIndex = g_api.func_800EDB58(PRIM_GT4, 0x60);
         if (primIndex == -1) {
             DestroyEntity(self);

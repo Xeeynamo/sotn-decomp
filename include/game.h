@@ -324,12 +324,12 @@ typedef enum {
 #define SIM_CHR1 D_psp_08C6FC40
 #define SIM_PTR D_psp_08C6BC40
 
-extern u8 g_BmpCastleMap[0x20000];
-extern u8 D_psp_08C6BC40[];
-extern u8 D_psp_08C6FC40[];
-extern u8 D_psp_08D2DC40[];
-extern u8 D_psp_08D95C40[];
-extern u8 D_psp_08D97C40[];
+extern GAME_IMPORT u8 g_BmpCastleMap[0x20000];
+extern GAME_IMPORT u8 D_psp_08C6BC40[];
+extern GAME_IMPORT u8 D_psp_08C6FC40[];
+extern GAME_IMPORT u8 D_psp_08D2DC40[];
+extern GAME_IMPORT u8 D_psp_08D95C40[];
+extern GAME_IMPORT u8 D_psp_08D97C40[];
 
 #endif
 
@@ -1785,9 +1785,9 @@ typedef struct {
     u8** sprites2;
     u8** sprites3;
 } PlayerOvl;
-extern PlayerOvl g_PlOvl;
-extern u8** g_PlOvlAluBatSpritesheet[1];
-extern u8* g_PlOvlSpritesheet[];
+extern GAME_IMPORT PlayerOvl g_PlOvl;
+extern GAME_IMPORT u8** g_PlOvlAluBatSpritesheet[1];
+extern GAME_IMPORT u8* g_PlOvlSpritesheet[];
 
 /**** Helper signatures - used for M2C, not in main repo ****/
 extern void (*g_api_FreePrimitives)(s32);
@@ -1947,72 +1947,73 @@ enum AluTimers {
 #define NUM_VERTICAL_SENSORS 7
 
 typedef struct {
-    /* 80072BD0 */ Collider colFloor[NUM_HORIZONTAL_SENSORS];
-    /* 80072C60 */ Collider colCeiling[NUM_HORIZONTAL_SENSORS];
-    /* 80072CF0 */ Collider colWall[NUM_VERTICAL_SENSORS * 2];
-    /* 80072EE8 */ u32 padPressed;
-    /* 80072EEC */ u32 padTapped;
-    /* 80072EF0 */ u32 padHeld;
-    /* 80072EF4 */ u32 padSim; // simulate input to force player actions
-    /* 80072EF8 */ u32 D_80072EF8;
-    /* 80072EFC */ s32 demo_timer; // player frozen timer
-    /* 80072F00 */ s16 timers[16]; /// Indexed with AluTimers
-    /* 80072F20 */ s32 vram_flag;
-    /* 80072F24 */ s32 unk04; // copy of the previous field
-    /* 80072F28 */ s32 unk08;
-    /* 80072F2C */ PlayerStateStatus status;
-    /* 80072F30 */ s32 unk10;
-    /* 80072F34 */ u32 unk14;
+    /* 0x0 80072BD0 */ Collider colFloor[NUM_HORIZONTAL_SENSORS];
+    /* 0x90 80072C60 */ Collider colCeiling[NUM_HORIZONTAL_SENSORS];
+    /* 0x120 80072CF0 */ Collider colWall[NUM_VERTICAL_SENSORS * 2];
+    /* 0x318 80072EE8 */ u32 padPressed;
+    /* 0x31C 80072EEC */ u32 padTapped;
+    /* 0x320 80072EF0 */ u32 padHeld;
+    /* 0x324 80072EF4 */ u32 padSim; // simulate input to force player actions
+    /* 0x328 80072EF8 */ u32 D_80072EF8;
+    /* 0x32C 80072EFC */ s32 demo_timer; // player frozen timer
+    /* 0x330 80072F00 */ s16 timers[16]; /// Indexed with AluTimers
+    /* 0x350 80072F20 */ s32 vram_flag;
+    /* 0x354 80072F24 */ s32 unk04; // copy of the previous field
+    /* 0x358 80072F28 */ s32 unk08;
+    /* 0x35C 80072F2C */ PlayerStateStatus status;
+    /* 0x360 80072F30 */ s32 unk10;
+    /* 0x364 80072F34 */ u32 unk14;
     // unk18 & 0xFA00 give elemental status of damage received
-    /* 80072F38 */ s32 unk18;
-    /* 80072F3C */ s32 warp_flag;
+    /* 0x368 80072F38 */ s32 unk18;
+    /* 0x36C 80072F3C */ s32 warp_flag;
 #if defined(VERSION_PC)
     /* 80072F40 */ signed long long unk20; // used as an Entity for maria
 #else
-    /* 80072F40 */ s32 unk20; // used as an Entity for maria
+    /* 0x370 80072F40 */ s32 unk20; // used as an Entity for maria
 #endif
-    /* 80072F44 */ u32 unk24; // exclusive to maria?
-    /* 80072F48 */ PfnEntityUpdate unk28;
-    /* 80072F4C */ s32 unk2C;
-    /* 80072F50 */ s32 unk30;
-    /* 80072F54 */ s32 unk34;
-    /* 80072F58 */ s32 unk38;
-    /* 80072F5C */ s32 unk3C;
-    /* 80072F60 */ u16 damagePalette;
-    /* 80072F62 */ u16 high_jump_timer;
-    /* 80072F64 */ u16 unk44;
-    /* 80072F66 */ u16 unk46;
-    /* 80072F68 */ u16 unk48;
+    /* 0x374 80072F44 */ u32 unk24; // exclusive to maria?
+    /* 0x378 80072F48 */ PfnEntityUpdate unk28;
+    /* 0x37C 80072F4C */ s32 unk2C;
+    /* 0x380 80072F50 */ s32 unk30;
+    /* 0x384 80072F54 */ s32 unk34;
+    /* 0x388 80072F58 */ s32 unk38;
+    /* 0x38C 80072F5C */ s32 unk3C;
+    /* 0x390 80072F60 */ u16 damagePalette;
+    /* 0x392 80072F62 */ u16 high_jump_timer;
+    /* 0x394 80072F64 */ u16 unk44;
+    /* 0x396 80072F66 */ u16 unk46;
+    /* 0x398 80072F68 */ u16 unk48;
 #ifdef VERSION_PSP
-    /* 80072F6A */ u16 unk4A;
+    /* 0x39A 80072F6A */ u16 unk4A;
 #else
-    /* 80072F6A */ s16 unk4A;
+    /* 0x39A 80072F6A */ s16 unk4A;
 #endif
-    /* 80072F6C */ u16 unk4C;
-    /* 80072F6E */ u16 unk4E;
-    /* 80072F70 */ u16 prev_step;
-    /* 80072F72 */ u16 prev_step_s;
-    /* 80072F74 */ u16 unk54;
-    /* 80072F76 */ u16 unk56;
-    /* 80072F78 */ u16 unk58;
-    /* 80072F7A */ u16 damageTaken;
-    /* 80072F7C */ u16 unk5C; // ALU: hellfire spell state, RIC: isPrologue
-    /* 80072F7E */ u16 unk5E; // status ailment timer
-    /* 80072F80 */ u16 unk60;
-    /* 80072F82 */ u16 unk62;
-    /* 80072F84 */ u16 unk64;
-    /* 80072F86 */ u16 unk66;
-    /* 80072F88 */ u16 unk68;
-    /* 80072F8A */ u16 unk6A;
-    /* 80072F8C */ u16 unk6C;
-    /* 80072F8E */ u16 unk6E;
-    /* 80072F90 */ u16 unk70;
-    /* 80072F92 */ u16 unk72;
-    /* 80072F94 */ u32 unk74;
-    /* 80072F98 */ u16 unk78;
-    /* 80072F9A */ u16 unk7A;
-    /* 80072F9C */ u16 unk7C;
-    /* 80072F9E */ u16 unk7E;
+    /* 0x39C 80072F6C */ u16 unk4C;
+    /* 0x39E 80072F6E */ u16 unk4E;
+    /* 0x3A0 80072F70 */ u16 prev_step;
+    /* 0x3A2 80072F72 */ u16 prev_step_s;
+    /* 0x3A4 80072F74 */ u16 unk54;
+    /* 0x3A6 80072F76 */ u16 unk56;
+    /* 0x3A8 80072F78 */ u16 unk58;
+    /* 0x3AA 80072F7A */ u16 damageTaken;
+    /* 0x3AC 80072F7C */ u16
+        unk5C; // ALU: hellfire spell state, RIC: isPrologue
+    /* 0x3AE 80072F7E */ u16 unk5E; // status ailment timer
+    /* 0x3B0 80072F80 */ u16 unk60;
+    /* 0x3B2 80072F82 */ u16 unk62;
+    /* 0x3B4 80072F84 */ u16 unk64;
+    /* 0x3B6 80072F86 */ u16 unk66;
+    /* 0x3B8 80072F88 */ u16 unk68;
+    /* 0x3BA 80072F8A */ u16 unk6A;
+    /* 0x3BC 80072F8C */ u16 unk6C;
+    /* 0x3BE 80072F8E */ u16 unk6E;
+    /* 0x3C0 80072F90 */ u16 unk70;
+    /* 0x3C2 80072F92 */ u16 unk72;
+    /* 0x3C4 80072F94 */ u32 unk74;
+    /* 0x3C8 80072F98 */ u16 unk78;
+    /* 0x3CA 80072F9A */ u16 unk7A;
+    /* 0x3CC 80072F9C */ u16 unk7C;
+    /* 0x3CE 80072F9E */ u16 unk7E;
 } PlayerState; /* size = 0x3D0 */
 
 // Primitive used ad-hoc for the Player entity and the after-image effect
@@ -2122,79 +2123,79 @@ typedef struct {
     /* 0x10 */ u8 unkArray[0x30]; // color buffer
 } Unkstruct_8006C3C4;             // size = 0x40
 
-extern s32 D_8003925C;
-extern s32 g_GameClearFlag;
+extern GAME_IMPORT s32 D_8003925C;
+extern GAME_IMPORT s32 g_GameClearFlag;
 
-extern s32 D_8003C0EC[4];
-extern s32 D_8003C100;
-extern u16 g_ClutIds[]; // array of palette VRAM offsets
-extern s32 g_CutsceneHasControl;
-extern FgLayer D_8003C708;
-extern s16 D_8003C710;
-extern s16 D_8003C712;
-extern s32 D_8003C728;
-extern s32 D_8003C730;
-extern GameState g_GameState;
-extern s32 D_8003C738;
-extern s32 D_8003C73C;
-extern u32 D_8003C744;
-extern u32 g_RoomCount;
-extern Vram g_Vram;
-extern GameApi g_api;
-extern bool g_PauseAllowed;
-extern u32 g_GameTimer; // Increases when unpaused
-extern bool D_8003C908;
-extern s32 g_EquippedWeaponIds[2];
-extern u32 g_Timer; // Increases continuously
-extern s16* D_92641C8[];
-extern s32 g_MapCursorTimer;
-/* 0x8003C9A0 */ extern s32 g_PlayableCharacter;
-/* 0x8003C9A4 */ extern u32 g_GameEngineStep;
-/* 0x8003C9A8 */ extern MenuNavigation g_MenuNavigation;
-/* 0x8003C9F8 */ extern GameSettings g_Settings;
-extern GpuBuffer g_GpuBuffers[2];
-extern s16 g_GpuBuffers_1_buf_draw_clip_y; // member of D_800542FC, TODO
-                                           // overlap, hard to remove
-extern const char g_MemcardSavePath[];
-extern const char aBaslus00067dra[19];
-extern const char g_strMemcardRootPath[];
-extern s32 g_LoadFile;
-extern s32 D_8006BB00;
-extern u8 g_CastleMap[0x800];
-extern s32 D_8006C374;
-extern s32 D_8006C378;
-extern GpuBuffer* g_CurrentBuffer; // g_CurrentBuffer;
-extern Point32 D_8006C384;
-extern Point32 D_8006C38C;
-extern u32 g_CdStep; // CdStep
-extern s32 D_8006C3AC;
-extern s32 g_backbufferX;
-extern s32 g_backbufferY;
-extern s32 g_IsUsingCd;
-extern Entity* g_CurrentEntity;
-extern Unkstruct_8006C3C4 D_8006C3C4[32];
-extern s32 g_Servant; // Currently selected familiar in the menu
+extern GAME_IMPORT s32 D_8003C0EC[4];
+extern GAME_IMPORT s32 D_8003C100;
+extern GAME_IMPORT u16 g_ClutIds[]; // array of palette VRAM offsets
+extern GAME_IMPORT s32 g_CutsceneHasControl;
+extern GAME_IMPORT FgLayer D_8003C708;
+extern GAME_IMPORT s16 D_8003C710;
+extern GAME_IMPORT s16 D_8003C712;
+extern GAME_IMPORT s32 D_8003C728;
+extern GAME_IMPORT s32 D_8003C730;
+extern GAME_IMPORT GameState g_GameState;
+extern GAME_IMPORT s32 D_8003C738;
+extern GAME_IMPORT s32 D_8003C73C;
+extern GAME_IMPORT u32 D_8003C744;
+extern GAME_IMPORT u32 g_RoomCount;
+extern GAME_IMPORT Vram g_Vram;
+extern GAME_IMPORT GameApi g_api;
+extern GAME_IMPORT bool g_PauseAllowed;
+extern GAME_IMPORT u32 g_GameTimer; // Increases when unpaused
+extern GAME_IMPORT bool D_8003C908;
+extern GAME_IMPORT s32 g_EquippedWeaponIds[2];
+extern GAME_IMPORT u32 g_Timer; // Increases continuously
+extern GAME_IMPORT s16* D_92641C8[];
+extern GAME_IMPORT s32 g_MapCursorTimer;
+/* 0x8003C9A0 */ extern GAME_IMPORT s32 g_PlayableCharacter;
+/* 0x8003C9A4 */ extern GAME_IMPORT u32 g_GameEngineStep;
+/* 0x8003C9A8 */ extern GAME_IMPORT MenuNavigation g_MenuNavigation;
+/* 0x8003C9F8 */ extern GAME_IMPORT GameSettings g_Settings;
+extern GAME_IMPORT GpuBuffer g_GpuBuffers[2];
+// member of D_800542FC, TODO: overlap, hard to remove
+extern GAME_IMPORT s16 g_GpuBuffers_1_buf_draw_clip_y;
+extern GAME_IMPORT const char g_MemcardSavePath[];
+extern GAME_IMPORT const char aBaslus00067dra[19];
+extern GAME_IMPORT const char g_strMemcardRootPath[];
+extern GAME_IMPORT s32 g_LoadFile;
+extern GAME_IMPORT s32 D_8006BB00;
+extern GAME_IMPORT u8 g_CastleMap[0x800];
+extern GAME_IMPORT s32 D_8006C374;
+extern GAME_IMPORT s32 D_8006C378;
+extern GAME_IMPORT GpuBuffer* g_CurrentBuffer; // g_CurrentBuffer;
+extern GAME_IMPORT Point32 D_8006C384;
+extern GAME_IMPORT Point32 D_8006C38C;
+extern GAME_IMPORT u32 g_CdStep; // CdStep
+extern GAME_IMPORT s32 D_8006C3AC;
+extern GAME_IMPORT s32 g_backbufferX;
+extern GAME_IMPORT s32 g_backbufferY;
+extern GAME_IMPORT s32 g_IsUsingCd;
+extern GAME_IMPORT Entity* g_CurrentEntity;
+extern GAME_IMPORT Unkstruct_8006C3C4 D_8006C3C4[32];
+extern GAME_IMPORT s32 g_Servant; // Currently selected familiar in the menu
 
 #define CLUT_INDEX_SERVANT 0x400
 #define CLUT_INDEX_SERVANT_OVERWRITE 0x430
-extern u16 g_Clut[3][0x1000];
+extern GAME_IMPORT u16 g_Clut[3][0x1000];
 
-extern PlayerState g_Player;
+extern GAME_IMPORT PlayerState g_Player;
 
-extern GfxLoad g_GfxLoad[0x10];
-extern u32 g_GameStep;
-extern s32 g_ServantLoaded; // Currently loaded servant in-memory
-extern Event g_EvSwCardEnd; // 80073068
-extern Event g_EvSwCardErr; // 8007306C
-extern Event g_EvSwCardTmo; // 80073070
-extern s32 g_PrevScrollX;
-extern Event g_EvSwCardNew; // 80073078
-extern s32 g_PrevScrollY;
-extern s32 D_80073080;
-extern Tilemap g_Tilemap;
+extern GAME_IMPORT GfxLoad g_GfxLoad[0x10];
+extern GAME_IMPORT u32 g_GameStep;
+extern GAME_IMPORT s32 g_ServantLoaded; // Currently loaded servant in-memory
+extern GAME_IMPORT Event g_EvSwCardEnd; // 80073068
+extern GAME_IMPORT Event g_EvSwCardErr; // 8007306C
+extern GAME_IMPORT Event g_EvSwCardTmo; // 80073070
+extern GAME_IMPORT s32 g_PrevScrollX;
+extern GAME_IMPORT Event g_EvSwCardNew; // 80073078
+extern GAME_IMPORT s32 g_PrevScrollY;
+extern GAME_IMPORT s32 D_80073080;
+extern GAME_IMPORT Tilemap g_Tilemap;
 // this was previously g_Tilemap.bg, but func_801BD8F0 showed that it is a
 // separate symbol.
-extern BgLayer g_BgLayers[MAX_BG_LAYER_COUNT]; /* 800730D8 */
+extern GAME_IMPORT BgLayer g_BgLayers[MAX_BG_LAYER_COUNT]; /* 800730D8 */
 
 #define PLAYER_CHARACTER 0
 #define TOTAL_ENTITY_COUNT 256
@@ -2236,48 +2237,48 @@ typedef enum {
 // 0x30-0x3F: mostly used for decoration and graphics effects
 // 0x40-0x7F: stage entities, other entities can interact with
 // 0x80-0xFF: stage entities, only player can interact with
-extern Entity g_Entities[TOTAL_ENTITY_COUNT];
+extern GAME_IMPORT Entity g_Entities[TOTAL_ENTITY_COUNT];
 
-extern Event g_EvHwCardEnd;
-extern Event g_EvHwCardErr;
-extern Event g_EvHwCardTmo;
-extern Event g_EvHwCardNew;
-extern u8 g_Pix[4][128 * 128 / 2];
-extern Primitive g_PrimBuf[MAX_PRIM_COUNT];
-extern s32 g_PlayerX;
-extern s32 g_PlayerY;
-extern u32 g_randomNext;
-extern s32 D_80096ED8[];
-extern s32 D_800973EC; // flag to check if the menu is shown
-extern unkGraphicsStruct g_unkGraphicsStruct;
-extern Pad g_pads[PAD_COUNT];
-extern Stages g_StageId;
-extern s32 D_800974A4; // map open
-extern DR_ENV D_800974AC[16];
-extern s32 g_UseDisk;
-extern s32 D_800978B4;
-extern s32 D_800978C4;
-extern u32 g_MenuStep;
-extern s32 D_80097904;
-extern s32 g_ScrollDeltaX;
-extern s32 g_ScrollDeltaY;
-extern s32 currentMusicId;
-extern DemoMode g_DemoMode;
-extern s32 g_LoadOvlIdx; // 0x80097918
-extern Point32 D_8009791C;
-extern s32 D_80097924;
-extern s32 stopMusicFlag;
-extern GpuUsage g_GpuUsage;
-extern PlayerStatus g_Status;
-extern u32 D_80097C98;
-extern s32 subWeapon; // g_SubweaponId
-extern s32 D_80097C40[];
-extern PlayerDraw g_PlayerDraw[0x10];
-extern bool g_InvincibleFlag;
-extern s32 D_800987B4;
-extern StHEADER* D_800987C8;
-extern s32 g_DebugPlayer;
-extern s32 D_80098894;
+extern GAME_IMPORT Event g_EvHwCardEnd;
+extern GAME_IMPORT Event g_EvHwCardErr;
+extern GAME_IMPORT Event g_EvHwCardTmo;
+extern GAME_IMPORT Event g_EvHwCardNew;
+extern GAME_IMPORT u8 g_Pix[4][128 * 128 / 2];
+extern GAME_IMPORT Primitive g_PrimBuf[MAX_PRIM_COUNT];
+extern GAME_IMPORT s32 g_PlayerX;
+extern GAME_IMPORT s32 g_PlayerY;
+extern GAME_IMPORT u32 g_randomNext;
+extern GAME_IMPORT s32 D_80096ED8[];
+extern GAME_IMPORT s32 D_800973EC; // flag to check if the menu is shown
+extern GAME_IMPORT unkGraphicsStruct g_unkGraphicsStruct;
+extern GAME_IMPORT Pad g_pads[PAD_COUNT];
+extern GAME_IMPORT Stages g_StageId;
+extern GAME_IMPORT s32 D_800974A4; // map open
+extern GAME_IMPORT DR_ENV D_800974AC[16];
+extern GAME_IMPORT s32 g_UseDisk;
+extern GAME_IMPORT s32 D_800978B4;
+extern GAME_IMPORT s32 D_800978C4;
+extern GAME_IMPORT u32 g_MenuStep;
+extern GAME_IMPORT s32 D_80097904;
+extern GAME_IMPORT s32 g_ScrollDeltaX;
+extern GAME_IMPORT s32 g_ScrollDeltaY;
+extern GAME_IMPORT s32 currentMusicId;
+extern GAME_IMPORT DemoMode g_DemoMode;
+extern GAME_IMPORT s32 g_LoadOvlIdx; // 0x80097918
+extern GAME_IMPORT Point32 D_8009791C;
+extern GAME_IMPORT s32 D_80097924;
+extern GAME_IMPORT s32 stopMusicFlag;
+extern GAME_IMPORT GpuUsage g_GpuUsage;
+extern GAME_IMPORT PlayerStatus g_Status;
+extern GAME_IMPORT u32 D_80097C98;
+extern GAME_IMPORT s32 subWeapon; // g_SubweaponId
+extern GAME_IMPORT s32 D_80097C40[];
+extern GAME_IMPORT PlayerDraw g_PlayerDraw[0x10];
+extern GAME_IMPORT bool g_InvincibleFlag;
+extern GAME_IMPORT s32 D_800987B4;
+extern GAME_IMPORT StHEADER* D_800987C8;
+extern GAME_IMPORT s32 g_DebugPlayer;
+extern GAME_IMPORT s32 D_80098894;
 
 #include <game_psp.h>
 
@@ -2372,6 +2373,6 @@ typedef enum {
     PAL_UNK_1CF = 0x1CF,
     PAL_UNK_1F3 = 0x1F3,
     // 0x200-0x2FF is not included here
-};
+} PaletteIndices;
 
 #endif

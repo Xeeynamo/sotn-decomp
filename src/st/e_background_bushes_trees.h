@@ -3,8 +3,8 @@
 #define UVWH(u, v, w, h) u, v, w, h
 
 #if defined(INVERTED_STAGE)
-extern EInit OVL_EXPORT(EInitInteractable);
-#define E_INIT OVL_EXPORT(EInitInteractable)
+extern EInit g_EInitInteractable;
+#define E_INIT g_EInitInteractable
 #define PLUSMINUS +
 #define GEOMOFFY 0x68
 #else

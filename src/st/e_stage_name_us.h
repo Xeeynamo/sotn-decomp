@@ -93,7 +93,7 @@ static void StageNamePopupDissolver(Primitive* prim) {
     }
 }
 
-extern EInit OVL_EXPORT(EInitInteractable);
+extern EInit g_EInitInteractable;
 
 // This is the banner version which fades the text in and then dissolves it away
 void EntityStageNamePopup(Entity* self) {
@@ -111,7 +111,7 @@ void EntityStageNamePopup(Entity* self) {
             return;
         }
 
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 87);
         if (primIndex == -1) {
             DestroyEntity(self);

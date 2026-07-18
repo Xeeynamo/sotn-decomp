@@ -8,7 +8,7 @@ void func_us_801B872C(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitParticle));
+        InitializeEntity(g_EInitParticle);
         break;
     case 1:
         if (!(Random() & 7)) {

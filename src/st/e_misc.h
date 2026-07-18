@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-extern EInit OVL_EXPORT(EInitUnkId13);
-extern EInit OVL_EXPORT(EInitParticle);
+extern EInit g_EInitUnkId13;
+extern EInit g_EInitParticle;
 
 extern void EntityExplosionVariants(Entity* entity);
 extern void EntityGreyPuff(Entity* entity);
@@ -39,7 +39,7 @@ u8 CheckColliderOffsets(s16* arg0, u8 facing) {
 void EntityUnkId13(Entity* self) {
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitUnkId13));
+        InitializeEntity(g_EInitUnkId13);
         self->ext.ent13.parentId = self->ext.ent13.parent->entityId;
     case 1:
         if (self->ext.ent13.fiveFrameCounter++ > 4) {
@@ -198,7 +198,7 @@ void EntityOlroxDrool(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitParticle));
+        InitializeEntity(g_EInitParticle);
         primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
         if (primIndex == -1) {
             return;
@@ -464,7 +464,7 @@ u8 UnkCollisionFunc4(u8 arg0) {
 //         (& 0xFF00) if non-zero, uses ((& 0xFF00) >> 8) as the zPriority
 void EntityIntenseExplosion(Entity* self) {
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitParticle));
+        InitializeEntity(g_EInitParticle);
         self->palette = PAL_FLAG(PAL_UNK_170);
         self->animSet = ANIMSET_DRA(5);
         self->animCurFrame = 1;
@@ -495,7 +495,7 @@ static u8 g_UnkEntityAnim[] = {2, 1, 2, 2, 2, 3, 2, 4, 2, 5, 4, 6, -1, 0};
 
 void InitializeUnkEntity(Entity* self) {
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitParticle));
+        InitializeEntity(g_EInitParticle);
         self->zPriority += 16;
         self->opacity = 0xF0;
         self->scaleX = 0x1A0;
@@ -561,12 +561,12 @@ void func_801966B0(u16* sensors) {
 }
 #endif
 
-extern PfnEntityUpdate OVL_EXPORT(EntityUpdates)[];
+extern PfnEntityUpdate EntityUpdates[];
 
 void MakeEntityFromId(u16 entityId, Entity* src, Entity* dst) {
     DestroyEntity(dst);
     dst->entityId = entityId;
-    dst->pfnUpdate = OVL_EXPORT(EntityUpdates)[entityId - 1];
+    dst->pfnUpdate = EntityUpdates[entityId - 1];
     dst->posX.i.hi = src->posX.i.hi;
     dst->posY.i.hi = src->posY.i.hi;
     dst->unk5A = src->unk5A;
@@ -617,7 +617,7 @@ void EntityBigRedFireball(Entity* self) {
     s32 speedTemp;
 
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitParticle));
+        InitializeEntity(g_EInitParticle);
         self->animSet = ANIMSET_DRA(2);
         self->palette = PAL_FLAG(PAL_UNK_1B6);
         self->drawFlags |= (ENTITY_ROTATE + ENTITY_OPACITY);

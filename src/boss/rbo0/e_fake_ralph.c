@@ -1056,7 +1056,7 @@ void EntityHolyWaterFlask(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitInteractable));
+        InitializeEntity(g_EInitInteractable);
         self->animSet = 3;
         self->animCurFrame = 0x32;
         self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;

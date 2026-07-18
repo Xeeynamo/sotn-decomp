@@ -53,7 +53,7 @@ void EntitySealedDoor(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         self->animSet = 7;
         self->animCurFrame = 1;
         if (self->params & 0x1000) {
