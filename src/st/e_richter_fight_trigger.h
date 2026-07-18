@@ -3,7 +3,7 @@
 extern EInit g_EInitCommon;
 
 // block to determine richter fight
-void func_us_801A9250(Entity* self) {
+void EntityRichterFightTrigger(Entity* self) {
     FntPrint("step:%02x\n", self->step);
     FntPrint("p_x:%02x\n", PLAYER.posX.i.hi);
 

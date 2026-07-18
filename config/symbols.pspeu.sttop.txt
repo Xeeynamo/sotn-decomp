@@ -50,6 +50,7 @@ CutsceneSkip = 0x0924CB20;
 TOP_EntityCutscene = 0x0924CC10;
 EntityBackgroundBlock = 0x0924EDB8;
 EntityLockCamera = 0x0924EF98;
+EntityRichterFightTrigger = 0x0924F6C8;
 EntityClockTower3D = 0x0924FD00;
 EntityClouds = 0x09250290;
 sprites_3 = 0x09254390;

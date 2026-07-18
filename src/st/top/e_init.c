@@ -34,7 +34,7 @@ void func_us_801AB45C(Entity*);
 void EntityTriggerBeforeCastleWarp(Entity*);
 void func_us_801AABA4(Entity*);
 void EntityFleaRider(Entity*);
-void func_us_801A9250(Entity*);
+void EntityRichterFightTrigger(Entity*);
 void EntityCutscene(Entity*);
 void func_us_801AD11C(Entity*);
 void func_us_801AD320(Entity*);
@@ -79,7 +79,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityTriggerBeforeCastleWarp,
     func_us_801AABA4,
     EntityFleaRider,
-    func_us_801A9250,
+    EntityRichterFightTrigger,
     EntityCutscene,
     func_us_801AD11C,
     func_us_801AD320,
