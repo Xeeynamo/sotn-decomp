@@ -2,9 +2,32 @@
 #include "top.h"
 
 extern EInit g_EInitFleaRider;
-extern u8 D_us_80181970[10];
-extern u8 D_us_8018197C[29];
-extern Point16 D_us_8018199C[];
+
+static AnimateEntityFrame unused_anim[] = {
+    {0x05, 0x01}, {0x08, 0x02}, {0x09, 0x03},
+    {0x09, 0x04}, {0x0A, 0x02}, POSE_LOOP(0)};
+static AnimateEntityFrame D_us_80181970[] = {
+    {0x02, 0x01}, {0x03, 0x02}, {0x04, 0x03},
+    {0x04, 0x04}, {0x04, 0x02}, POSE_LOOP(0),
+};
+static AnimateEntityFrame D_us_8018197C[] = {
+    {0x07, 0x01}, {0x0A, 0x02}, {0x0B, 0x03},
+    {0x0B, 0x04}, {0x0C, 0x02}, POSE_LOOP(0),
+};
+static AnimateEntityFrame unused_anim_2[] = {
+    {0x02, 0x01},
+    {0x08, 0x02},
+    {0x04, 0x03},
+    POSE_END,
+};
+static AnimateEntityFrame unused_anim_3[] = {
+    {0x04, 0x03}, {0x09, 0x04}, {0x0A, 0x02}, {0x03, 0x01}, POSE_END,
+};
+
+static Point16 D_us_8018199C[] = {
+    {0, -64}, {32, -32}, {64, 0},  {32, 32},
+    {0, 64},  {-32, 32}, {-64, 0}, {-32, -32},
+};
 
 void EntityFleaRider(Entity* self) {
     const int FleaRiderCount = 6;
@@ -12,20 +35,19 @@ void EntityFleaRider(Entity* self) {
     Entity* player;
     s16 angle;
     u8 i;
-    s32 temp_v0_7;
-    s32 posIndex;
 
     player = &PLAYER;
 
     if (self->flags & FLAG_DEAD && self->step < 3) {
         PlaySfxPositional(SFX_FLEA_RIDER_EXPLODE);
         PlaySfxPositional(SFX_FLEA_RIDER_DEATH);
-        self->animCurFrame = 5;
         self->hitboxState = 0;
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
                        FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
+        self->animCurFrame = 5;
         self->zPriority -= 2;
-        DestroyEntity((Entity*)self->ext.fleaRider.entity);
+        entity = self->ext.fleaRider.entity;
+        DestroyEntity(entity);
         self->step = 3;
     }
 
@@ -50,7 +72,7 @@ void EntityFleaRider(Entity* self) {
     case 2:
         MoveEntity();
         if (self->ext.fleaRider.unk88) {
-            if (!AnimateEntity(&D_us_80181970, self)) {
+            if (!AnimateEntity(D_us_80181970, self)) {
                 self->ext.fleaRider.unk88--;
                 if (!self->ext.fleaRider.unk88) {
                     self->poseTimer = 0;
@@ -58,7 +80,7 @@ void EntityFleaRider(Entity* self) {
                 }
             }
         } else {
-            AnimateEntity(&D_us_8018197C, self);
+            AnimateEntity(D_us_8018197C, self);
         }
         if (!self->poseTimer && self->pose == 2) {
             PlaySfxPositional(SFX_WING_FLAP_A);
@@ -113,15 +135,15 @@ void EntityFleaRider(Entity* self) {
         break;
 
     case 5:
-        if (self->step_s == 0) {
+        if (!self->step_s) {
             InitializeEntity(g_EInitFleaRider);
-            self->animCurFrame = 6;
-            self->step = 5;
             self->hitboxState = 0;
-            self->drawFlags = ENTITY_ROTATE;
             self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
                            FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
                            FLAG_UNK_00200000 | FLAG_UNK_2000;
+            self->animCurFrame = 6;
+            self->step = 5;
+            self->drawFlags = ENTITY_ROTATE;
             self->rotate = (Random() & 7) << 8;
             self->velocityY = FIX(-1.5);
             if (Random() & 1) {
@@ -149,10 +171,10 @@ void EntityFleaRider(Entity* self) {
 
     case 8:
         InitializeEntity(g_EInitFleaRider);
+        self->flags |= FLAG_UNK_00200000 | FLAG_UNK_2000;
         self->hitboxState = 0;
         self->animCurFrame = 0;
         self->step = 9;
-        self->flags |= FLAG_UNK_00200000 | FLAG_UNK_2000;
         break;
 
     case 9:

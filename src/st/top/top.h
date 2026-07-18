@@ -47,7 +47,7 @@ enum Entities {
     E_UNK_1E,                  // func_pspeu_0924BCD0
     E_UNK_1F,                  // func_pspeu_0924F810
     E_UNK_20,                  // func_pspeu_0924A3B0
-    E_FLEA_RIDER = 0x21,       // func_pspeu_09245958
+    E_FLEA_RIDER = 0x21,       // EntityFleaRider
     E_UNK_22,                  // func_pspeu_0924F6C8
     E_CUTSCENE = 0x23,         // func_pspeu_0924CC10
     E_UNK_24,                  // func_pspeu_09248F70

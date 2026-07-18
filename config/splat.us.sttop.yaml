@@ -54,7 +54,7 @@ segments:
       - [0x17A0, .data, e_misc]
       - [0x1858, .data, e_particles]
       - [0x18D8, .data, e_room_fg]
-      - [0x1964, data]
+      - [0x1964, .data, e_flea_rider]
       - [0x19BC, .data, e_blue_axe_knight]
       - [0x1B78, data]
       - [0x1BFC, .data, e_clouds]
