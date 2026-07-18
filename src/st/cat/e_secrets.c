@@ -496,8 +496,10 @@ void EntitySecretWall(Entity* self) {
         self->poseTimer = self->pose = 0;
         self->pfnUpdate = EntityHeartDrop;
         if (self->params) {
+            // PrizeDrops[4] = Library Card
             self->params = 4;
         } else {
+            // PrizeDrops[0] = Cat-Eye Circlet
             self->params = 0;
         }
         break;

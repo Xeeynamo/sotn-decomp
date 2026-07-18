@@ -81,6 +81,4 @@ bool FileAsString(bool (*cb)(const struct FileAsString* file),
 bool FileUseContent(bool (*cb)(const struct FileUseContent* file, void* param),
                     const char* filename, void* param);
 
-const char* AnsiToSotnMenuString(const char* str);
-
 #endif

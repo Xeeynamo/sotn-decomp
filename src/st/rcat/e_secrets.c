@@ -501,10 +501,10 @@ void EntitySecretWall(Entity* self) {
         self->poseTimer = self->pose = 0;
         self->pfnUpdate = EntityHeartDrop;
         if (self->params) {
-            // Library Card
+            // PrizeDrops[8] = Library Card
             self->params = 8;
         } else {
-            // Buffalo Star
+            // PrizeDrops[1] = Buffalo Star
             self->params = 1;
         }
         return;

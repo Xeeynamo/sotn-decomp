@@ -1,5 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz1.h"
 
-u16 OVL_EXPORT(PrizeDrops)[] = {0x099, 0x0C9, 0x0F2, 0x103, 0x130, 0x14C,
-                                0x13A, 0x0DC, 0x08C, 0x135, 0x017, 0x00C};
+u16 OVL_EXPORT(PrizeDrops)[] = {
+    ITEMDROP_MAGIC_MISSILE, ITEMDROP_PENTAGRAM,
+    // Stone Sword is an enemy drop, not an item drop, likely cut
+    ITEMDROP_STONE_SWORD, ITEMDROP_STAR_FLAIL, ITEMDROP_GOLD_PLATE,
+    ITEMDROP_STEEL_HELM, ITEMDROP_HEALING_MAIL, ITEMDROP_BEKATOWA,
+    ITEMDROP_SHAMAN_SHIELD, ITEMDROP_ICE_MAIL, ITEMDROP_LIFE_VESSEL,
+    ITEMDROP_HEART_VESSEL};

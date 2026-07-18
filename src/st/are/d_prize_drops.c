@@ -2,9 +2,16 @@
 #include "are.h"
 
 u16 OVL_EXPORT(PrizeDrops)[] = {
-    0x000C, 0x0084, 0x0104, 0x015F, 0x0086, 0x0126, 0x00BA,
+    ITEMDROP_HEART_VESSEL,
+    ITEMDROP_SHIELD_ROD,
+    // Moon Rod does not appear in ARE, unused?
+    ITEMDROP_MOON_ROD,
+    ITEMDROP_BLOOD_CLOAK,
+    ITEMDROP_KNIGHT_SHIELD,
+    ITEMDROP_LIBRARY_CARD,
+    ITEMDROP_GREEN_TEA,
 #ifndef VERSION_PSP
     // Holy Sword is replaced with N Demon Familiar on PSP
-    0x00F3
+    ITEMDROP_HOLY_SWORD,
 #endif
 };

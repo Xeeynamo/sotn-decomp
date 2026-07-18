@@ -257,7 +257,7 @@ void EntityBell(Entity* self) {
     posX = playerPtr->posX.i.hi - tempPosX;
     posY = tempPosY + 124 - playerPtr->posY.i.hi;
     if ((u16)(posY) < 80 && (abs(posX) < 24)) {
-        drEnv = (DR_ENV*)LOW(prim->r1);
+        drEnv = PRIM_DR_ENV(prim);
         drawEnv = g_CurrentBuffer->draw;
         drawEnv.isbg = 0;
         drawEnv.ofs[0] = 0;

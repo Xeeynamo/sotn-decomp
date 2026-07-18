@@ -2,8 +2,22 @@
 #include "no2.h"
 
 u16 OVL_EXPORT(PrizeDrops)[] = {
-    0x017, 0x00C, 0x0C9, 0x08B, 0x0DB, 0x16B,
-    0x0AF, 0x122, 0x119, 0x115, 0x0DF, 0x107,
+    ITEMDROP_LIFE_VESSEL,
+    ITEMDROP_HEART_VESSEL,
+    // Pentagram does not appear in NO2, unused?
+    ITEMDROP_PENTAGRAM,
+    // Goddess Shield does not appear in NO2, unused?
+    ITEMDROP_GODDESS_SHIELD,
+    ITEMDROP_BROADSWORD,
+    ITEMDROP_ONYX,
+    ITEMDROP_CHEESE,
+    ITEMDROP_MANNA_PRISM,
+    ITEMDROP_RESIST_FIRE,
+    ITEMDROP_LUCK_POTION,
+    ITEMDROP_ESTOC,
+    ITEMDROP_IRON_BALL,
+#ifndef VERSION_PSP
+    // Garnet is replaced with Sword Card on PSP
+    ITEMDROP_GARNET,
+#endif
 };
-
-static u32 D_us_80181004 = 0x0000016C; // dirty

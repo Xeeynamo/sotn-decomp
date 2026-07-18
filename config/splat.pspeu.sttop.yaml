@@ -1,0 +1,108 @@
+options:
+  platform: psp
+  basename: sttop
+  base_path: ..
+  build_path: build/pspeu
+  target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/top.bin
+  asm_path: asm/pspeu/st/top_psp
+  asset_path: assets/st/top
+  src_path: src/st
+  ld_script_path: build/pspeu/sttop.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.pspeu.txt
+    - config/symbols.pspeu.sttop.txt
+  undefined_funcs_auto_path: build/pspeu/config/undefined_funcs_auto.pspeu.sttop.txt
+  undefined_syms_auto_path: build/pspeu/config/undefined_syms_auto.pspeu.sttop.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: pspeu_$VRAM
+  disassemble_all: true
+  section_order:
+    - .text
+    - .data
+    - .rodata
+    - .bss
+  ld_bss_is_noload: true
+  disasm_unknown: true
+  global_vram_start: 0x08000000
+  ld_generate_symbol_per_data_segment: true
+  asm_inc_header: |
+    .set noat      /* allow manual use of $at */
+    .set noreorder /* don't insert nops after branches */
+sha1: c18ec76648fe3c49c97372d8c756f9084fd73ce2
+segments:
+  - [0x0, bin, mwo_header]
+  - name: sttop
+    type: code
+    start: 0x80
+    vram: 0x09237700
+    bss_start_address: 0x09276B00
+    bss_size: 0x800
+    align: 128
+    subalign: 8
+    subsegments:
+      - [0x80, c, top/create_entity]
+      - [0x1028, c, top/e_blue_axe_knight]
+      - [0x33D8, c, top/e_stage_name]
+      - [0x42D8, c, top/e_red_door]
+      - [0x55E0, c, top/st_update]
+      - [0x5B18, c, top/e_particles]
+      - [0x70A8, c, top/e_collect]
+      - [0xB2F8, c, top/e_misc]
+      - [0xBB08, c, top/collision]
+      - [0xDCE0, c, top/popup]
+      - [0xE2D8, c, top/e_flea_rider]
+      - [0xE9C8, c, top/e_room_fg]
+      - [0xEAE0, c, top/st_common]
+      - [0x10450, c, top/prim_helpers]
+      - [0x10BE8, c, top_psp/st_init]
+      - [0x10FB8, c, top/e_breakable]
+      - [0x118F0, c, top_psp/unk_118F0]
+      - [0x14930, c, top_psp/cutscene]
+      - [0x17738, c, top/e_room_bg]
+      - [0x17818, c, top/e_lock_camera]
+      - [0x18048, c, top/e_richter_fight_trigger]
+      - [0x18190, c, top_psp/unk_18190]
+      - [0x18680, c, top/e_clock_tower]
+      - [0x18C10, c, top/e_clouds]
+      - [0x19580, .data, top/e_blue_axe_knight]
+      - [0x19760, .data, top/e_stage_name]
+      - [0x1A2A0, .data, top/e_red_door]
+      - [0x1A2B8, .data, top/st_update]
+      - [0x1A2E8, .data, top/e_particles]
+      - [0x1A368, .data, top/e_collect]
+      - [0x1A8B0, .data, top/e_misc]
+      - [0x1A910, .data, top/collision]
+      - [0x1ACE8, .data, top/e_flea_rider]
+      - [0x1AD28, .data, top/e_room_fg]
+      - [0x1ADC8, .data, top/st_common]
+      - [0x1AFC8, data]
+      - [0x1F8D0, .data, top/e_red_door_tiles]
+      - [0x1F900, data, top/e_init]
+      - [0x1FA88, data]
+      - [0x20A78, .data, top/e_breakable]
+      - [0x20BC0, data]
+      - [0x3E6E0, .data, top/header]
+      - [0x3E718, data]
+      - [0x3EC70, .data, top/e_room_bg]
+      - [0x3ECB0, .data, top/e_lock_camera]
+      - [0x3ED30, .data, top/e_richter_fight_trigger]
+      - [0x3ED50, data]
+      - [0x3ED68, .data, top/e_clock_tower]
+      - [0x3F120, .data, top/e_clouds]
+      - [0x3F280, .rodata, top/e_blue_axe_knight]
+      - [0x3F2A8, .rodata, top/e_red_door]
+      - [0x3F2C0, .rodata, top/e_collect]
+      - [0x3F320, .rodata, top/e_flea_rider]
+      - [0x3F348, .rodata, top_psp/unk_118F0]
+      - [0x3F380, .rodata, top_psp/cutscene]
+      - [0x3F480, .bss, top/create_entity]
+      - [0x3F4A0, .bss, top/st_update]
+      - [0x3F4E0, .bss, top/e_collect]
+      - [0x3F500, bss, 3F500]
+      - [0x3FC28, .bss, top/e_clouds]
+      - [0x3FC30, bss, 3FC30]
+  - [0x3FC80]

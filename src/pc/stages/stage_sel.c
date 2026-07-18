@@ -18,19 +18,8 @@ extern Overlay OVL_EXPORT(Overlay);
 
 s32 LoadFileSim(s32 fileId, s32 type);
 
-static bool g_WereStringsInitialised = false;
 OVL_API void InitStage(Overlay* o) {
     memcpy(o, &OVL_EXPORT(Overlay), sizeof(Overlay));
-    if (!g_WereStringsInitialised) {
-        g_WereStringsInitialised = true;
-        for (int i = 0; i < LEN(D_80180128); i++) {
-            D_80180128[i].line1 = AnsiToSotnMenuString(D_80180128[i].line1);
-            D_80180128[i].line2 = AnsiToSotnMenuString(D_80180128[i].line2);
-        }
-        for (int i = 0; i < LEN(D_801803A8); i++) {
-            D_801803A8[i] = AnsiToSotnMenuString(D_801803A8[i]);
-        }
-    }
 }
 
 void func_801B9C80(void) {
