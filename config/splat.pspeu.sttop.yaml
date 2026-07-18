@@ -45,8 +45,7 @@ segments:
     subalign: 8
     subsegments:
       - [0x80, c, top/create_entity]
-      - [0x1028, c, top_psp/e_blue_axe_knight]
-      - [0x12B0, c, top_psp/unk_12B0]
+      - [0x1028, c, top/e_blue_axe_knight]
       - [0x33D8, c, top/e_stage_name]
       - [0x42D8, c, top/e_red_door]
       - [0x55E0, c, top/st_update]
@@ -68,7 +67,7 @@ segments:
       - [0x18048, c, top_psp/unk_18048]
       - [0x18680, c, top_psp/e_clock_tower]
       - [0x18C10, c, top_psp/e_clouds]
-      - [0x19580, data]
+      - [0x19580, .data, top/e_blue_axe_knight]
       - [0x19760, .data, top/e_stage_name]
       - [0x1A2A0, .data, top/e_red_door]
       - [0x1A2B8, .data, top/st_update]
@@ -90,7 +89,7 @@ segments:
       - [0x3EC70, .data, top/e_room_bg]
       - [0x3ECB0, .data, top/e_lock_camera]
       - [0x3ED30, data]
-      - [0x3F280, .rodata, top_psp/unk_12B0]
+      - [0x3F280, .rodata, top/e_blue_axe_knight]
       - [0x3F2A8, .rodata, top/e_red_door]
       - [0x3F2C0, .rodata, top/e_collect]
       - [0x3F320, .rodata, top_psp/func_pspeu_09245958]
