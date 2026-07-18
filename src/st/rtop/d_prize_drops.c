@@ -34,5 +34,6 @@ u16 OVL_EXPORT(PrizeDrops)[] = {
     ITEMDROP_LIFE_VESSEL,
     ITEMDROP_LIFE_VESSEL,
     ITEMDROP_LIFE_VESSEL,
-    0,
-    0};
+    // TODO: Incorrect split?
+    ITEMDROP_NONE,
+};
