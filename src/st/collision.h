@@ -181,9 +181,6 @@ static u16 g_eDamageDisplayClut[] = {
 };
 
 void HitDetection(void) {
-#ifdef VERSION_PC
-    u8 sp[SP_LEN];
-#endif
     Entity* otherEntity;
     Primitive* prim;
     Entity* entityHit;

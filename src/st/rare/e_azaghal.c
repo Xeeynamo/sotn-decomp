@@ -335,9 +335,6 @@ static s32 UpdateBodyDisplay(s32 index, s32 action) {
 }
 
 static void func_us_801B33F4(void) {
-#ifdef VERSION_PC
-    u8 sp[SP_LEN];
-#endif
     long flag;
     long p;
     SVECTOR sVec;

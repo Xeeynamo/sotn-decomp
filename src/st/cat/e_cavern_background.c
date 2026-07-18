@@ -16,9 +16,6 @@ static SVECTOR D_us_8018222C = {0};
 
 // Handles cavern background in the Lossoth rooms
 void EntityCavernBackgroundLossoth(Entity* self) {
-#ifdef VERSION_PC
-    u8 sp[SP_LEN];
-#endif
     s32 pad[2];
     long p;
     long flag;
@@ -174,9 +171,6 @@ void EntityCavernBackgroundLossoth(Entity* self) {
 // such as colour and Y positioning to prevent it clipping into the transparent
 // lave prim
 void EntityCavernBackgroundDiscusLord(Entity* self) {
-#ifdef VERSION_PC
-    u8 sp[SP_LEN];
-#endif
     s32 pad[2];
     long p;
     long flag;
