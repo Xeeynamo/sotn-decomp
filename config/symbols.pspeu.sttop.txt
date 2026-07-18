@@ -7,7 +7,6 @@ EntityAxeKnightBlue = 0x09239580;
 EntityAxeKnightRotateAxe = 0x0923A690;
 EntityAxeKnightThrowingAxe = 0x0923A6F0;
 func_us_801CBA30 = 0x0923A8F8;
-LoadStageNameGraphics = 0x0923AA58;
 EntityStageNamePopup = 0x0923AAA8;
 EntityRedDoor = 0x0923BA40;
 Random = 0x0923CC60;
