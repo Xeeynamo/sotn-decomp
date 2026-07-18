@@ -54,7 +54,7 @@ segments:
       - [0x70A8, c, top/e_collect]
       - [0xB2F8, c, top/e_misc]
       - [0xBB08, c, top/collision]
-      - [0xDCE0, c, top_psp/popup]
+      - [0xDCE0, c, top/popup]
       - [0xE2D8, c, top_psp/func_pspeu_09245958]
       - [0xE9C8, c, top/e_room_fg]
       - [0xEAE0, c, top_psp/st_common]
