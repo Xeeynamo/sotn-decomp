@@ -2,6 +2,7 @@ options:
   target_path:  disks/saturn/0.BIN
   asm_path:     asm/saturn/zero
   src_path:     src/saturn
+  obj_path:     build/saturn
   ld_scripts_path: config/saturn
   syms_path: config/saturn
   decomp_empty_funcs: false
@@ -10,7 +11,7 @@ segments:
     type: code
     start: 0x00000000
     vram:  0x06004080
-    subalign: 2
+    subalign: 4
     subsegments:
       - start: 0x0
         type: data

@@ -35,6 +35,7 @@ func buildSaturn() error {
 var saturnExtractSentinels = []string{
 	"asm/saturn/game",
 	"config/saturn/game_syms.txt",
+	"config/saturn/zero.ld",
 	"config/saturn/zero_syms.txt",
 }
 
