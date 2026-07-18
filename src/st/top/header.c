@@ -2,11 +2,13 @@
 #include "top.h"
 #include "../pfn_entity_update.h"
 
+// common
 extern RoomHeader rooms[];
 extern SpriteParts* spriteBanks[];
 extern u_long* cluts[];
 extern RoomDef rooms_layers[];
 extern GfxBank* gfxBanks[];
+void UpdateStageEntities(void);
 extern u8* D_us_80182E44[];
 
 AbbreviatedOverlay2 OVL_EXPORT(Overlay) = {
@@ -17,7 +19,7 @@ AbbreviatedOverlay2 OVL_EXPORT(Overlay) = {
     .rooms = rooms,
     .spriteBanks = spriteBanks,
     .cluts = cluts,
-    .objLayoutHorizontal = OBJ_LAYOUT_HORIZONTAL,
+    .objLayoutHorizontal = &OBJ_LAYOUT_HORIZONTAL,
     .tileLayers = rooms_layers,
     .gfxBanks = gfxBanks,
     .UpdateStageEntities = UpdateStageEntities,

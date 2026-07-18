@@ -115,7 +115,7 @@ e_bone_archer:
   - EntityBoneArcher
   - EntityBoneArcherArrow
 e_bone_musket:
-  functions: 
+  functions:
   - EntityBoneMusket
   - func_us_801CF298
 e_bone_scimitar:
@@ -520,7 +520,7 @@ e_particles:
   start:
   - EntitySoulStealOrb
   - func_us_0923AD68
-  functions: 
+  functions:
   - EntitySoulStealOrb
   - func_us_0923AD68
   - EntityEnemyBlood
@@ -577,7 +577,7 @@ e_richter:
   - ${prefix}_RicStepHighJump
 e_richter_fight_trigger:
   functions:
-  - func_us_801A9250
+  - EntityRichterFightTrigger
 e_room_bg:
   functions:
   - ${prefix}_EntityBackgroundBlock
