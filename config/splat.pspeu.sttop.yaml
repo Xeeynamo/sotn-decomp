@@ -85,7 +85,7 @@ segments:
       - [0x1ADC8, .data, top/st_common]
       - [0x1AFC8, data]
       - [0x1F8D0, .data, top/e_red_door_tiles]
-      - [0x1F900, data, top/e_init]
+      - [0x1F900, .data, top/e_init]
       - [0x1FA88, data]
       - [0x1FB10, .data, top/st_init_psp]
       - [0x20A78, .data, top/e_breakable]
