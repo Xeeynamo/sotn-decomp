@@ -4,9 +4,16 @@
 #include "common.h"
 #include "sfx.h"
 
+#if defined(VERSION_US)
 s16 GetDistanceToPlayerX();
-
 #define ImplicitGetDistanceToPlayerX ((int (*)())GetDistanceToPlayerX)
+#elif defined(VERSION_PSP)
+int GetDistanceToPlayerX();
+#define ImplicitGetDistanceToPlayerX GetDistanceToPlayerX
+#else
+s16 GetDistanceToPlayerX();
+#define ImplicitGetDistanceToPlayerX GetDistanceToPlayerX
+#endif
 
 static u32 bg_color_angle[] = {
     0x0000, 0x0200, 0x0400, 0x0600, 0x0800, 0x0A00, 0x0C00, 0x0E00,
@@ -105,7 +112,7 @@ void EntityRWarpRoom(Entity* self) {
         self->ext.warpRoom.primBg = prim;
         moveY = 0x70;
         moveX = 0x80;
-        for (i = 0; i <= 15; i++) {
+        for (i = 0; i < 16; i++) {
             angle = i << 8;
             prim->x0 = moveX + (((rcos(angle) >> 4) * 0x40) >> 8);
             prim->y0 = moveY - (((rsin(angle) >> 4) * 0x40) >> 8);

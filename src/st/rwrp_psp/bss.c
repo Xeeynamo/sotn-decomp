@@ -1,11 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <common.h>
 
-u8 D_pspeu_0924F310[0x11F0];
-u8 D_pspeu_0924F308[0x08];
-u8 D_pspeu_0924F300[0x08];
-u8 D_pspeu_0924F2F8[0x08];
-u8 D_pspeu_0924F2F0[0x08];
 u8 D_pspeu_0924F2E8[0x08];
 u8 RWRP_PrizeDrops[0x08]; // TODO move to d_prize_drops
 u8 D_pspeu_0924E2E0[0x1000];
