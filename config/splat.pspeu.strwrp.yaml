@@ -72,7 +72,7 @@ segments:
       - [0x11B30, .data, rwrp/e_init]
       - [0x11C30, data]
       - [0x168D0, .data, rwrp/header]
-      - [0x16910, data]
+      - [0x16910, .data, rwrp/background_block_init]
       - [0x16950, .data, rwrp/e_lock_camera]
       - [0x169C8, .data, rwrp/warp]
       - [0x16A80, .rodata, rwrp/e_red_door]
