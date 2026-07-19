@@ -1,10 +1,18 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "top.h"
-#include "sfx.h"
 
 extern EInit g_EInitTOPCommon;
 
-extern u8 LionLampAnim[];
+static AnimateEntityFrame LionLampAnim[] = {
+    {0x03, 0x06}, {0x03, 0x07}, {0x03, 0x08},
+    {0x03, 0x09}, {0x03, 0x0A}, POSE_LOOP(0),
+};
+
+static u8 clut_ids[] = {
+    0x92, 0x95, 0x96, 0x97, 0x98, 0xA5, 0xA8, 0xA9, 0xAA, 0xAB,
+    0xAC, 0xAF, 0xB0, 0xB1, 0xB2, 0xB4, 0xB7, 0xB8, 0xB9, 0xBA,
+};
+extern s32 D_us_801BC514;
 
 void EntityLionLamp(Entity* self) {
     switch (self->step) {
@@ -22,32 +30,10 @@ void EntityLionLamp(Entity* self) {
         }
         break;
 
-    case 0xFF:
-        FntPrint("charal %x\n", self->animCurFrame);
-        if (g_pads[1].pressed & PAD_SQUARE) {
-            if (self->params) {
-                return;
-            }
-            self->animCurFrame++;
-            self->params |= 1;
-        } else {
-            self->params = 0;
-        }
-
-        if (g_pads[1].pressed & PAD_CIRCLE) {
-            if (self->step_s == 0) {
-                self->animCurFrame--;
-                self->step_s |= 1;
-            }
-        } else {
-            self->step_s = 0;
-        }
-        break;
+    case 255:
+#include "../pad2_anim_debug.h"
     }
 }
-
-extern s32 D_us_801BC514;
-extern u8 D_us_80180CFC[];
 
 void func_us_801AB45C(Entity* self) {
     u8* lookup;
@@ -94,7 +80,7 @@ void func_us_801AB45C(Entity* self) {
 
         if (!self->poseTimer) {
             self->poseTimer = 4;
-            lookup = D_us_80180CFC;
+            lookup = clut_ids;
             lookup += self->params * 5;
             writeIndex = lookup[0];
             // cursed composition!
@@ -111,5 +97,3 @@ void func_us_801AB45C(Entity* self) {
         break;
     }
 }
-
-#include "../e_trigger_before_castle_warp.h"

@@ -63,7 +63,7 @@ segments:
       - [0x118F0, c, top/post_richter_cutscene]
       - [0x124B8, c, top/e_elevator]
       - [0x137D0, c, top/e_secret_stairs]
-      - [0x144C8, c, top_psp/e_lion_lamp]
+      - [0x144C8, c, top/e_lion_lamp]
       - [0x14930, c, top_psp/cutscene]
       - [0x17738, c, top/e_room_bg]
       - [0x17818, c, top/e_lock_camera]
@@ -93,7 +93,8 @@ segments:
       - [0x3E758, .data, top/e_elevator]
       - [0x3E780, data] # prize_drops
       - [0x3E7A8, .data, top/e_secret_stairs]
-      - [0x3E870, data]
+      - [0x3E870, .data, top/e_lion_lamp]
+      - [0x3E8A8, data]
       - [0x3EC70, .data, top/e_room_bg]
       - [0x3ECB0, .data, top/e_lock_camera]
       - [0x3ED30, .data, top/e_richter_fight_trigger]
