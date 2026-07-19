@@ -41,6 +41,11 @@ func buildVersions(versions []string) error {
 			if err := checkVersions(os.Stderr, regular); err != nil {
 				return fmt.Errorf("check: %w", err)
 			}
+			for _, v := range versions {
+				if err := copyBuildToExpectedFolder(v); err != nil {
+					return fmt.Errorf("copy build to expected folder: %w", err)
+				}
+			}
 		}
 	}
 	return nil
@@ -102,6 +107,16 @@ func genNinjaIfNeeded(versionStr string, versions []string) error {
 			return err
 		}
 		return os.WriteFile(stampFile, []byte(stamp), 0o644)
+	}
+	return nil
+}
+
+func copyBuildToExpectedFolder(version string) error {
+	buildPath := filepath.Join("build", version)
+	expectedPath := filepath.Join("expected", "build", version)
+	_ = os.RemoveAll(expectedPath)
+	if err := os.CopyFS(expectedPath, os.DirFS(buildPath)); err != nil {
+		return err
 	}
 	return nil
 }
