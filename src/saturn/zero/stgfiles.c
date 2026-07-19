@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
 
 extern const char D_0601A0E8[];
@@ -302,22 +303,7 @@ SaturnStageFileRecord g_StageFileRecords[100] = {
 };
 
 const char* g_StageAlternateMapNames[18] = {
-    D_0601AA10,
-    D_0601AB60,
-    D_0601A920,
-    D_0601AB70,
-    D_0601A980,
-    D_0601AB90,
-    D_0601AB80,
-    D_0601AAA0,
-    D_0601ABA0,
-    D_0601A530,
-    D_0601ABB0,
-    D_0601A440,
-    D_0601ABC0,
-    D_0601A4A0,
-    D_0601ABE0,
-    D_0601ABD0,
-    D_0601A5C0,
-    D_0601ABF0,
+    D_0601AA10, D_0601AB60, D_0601A920, D_0601AB70, D_0601A980, D_0601AB90,
+    D_0601AB80, D_0601AAA0, D_0601ABA0, D_0601A530, D_0601ABB0, D_0601A440,
+    D_0601ABC0, D_0601A4A0, D_0601ABE0, D_0601ABD0, D_0601A5C0, D_0601ABF0,
 };

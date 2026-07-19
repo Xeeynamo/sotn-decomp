@@ -1,19 +1,22 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
 
-#define IMA_ADPCM_ROW(step)                                                   \
-    {(step) >> 3, ((step) >> 3) + ((step) >> 2),                             \
-     ((step) >> 3) + ((step) >> 1),                                          \
-     ((step) >> 3) + ((step) >> 1) + ((step) >> 2),                          \
-     ((step) >> 3) + (step),                                                 \
-     ((step) >> 3) + (step) + ((step) >> 2),                                 \
-     ((step) >> 3) + (step) + ((step) >> 1),                                 \
-     ((step) >> 3) + (step) + ((step) >> 1) + ((step) >> 2),                 \
-     -((step) >> 3), -(((step) >> 3) + ((step) >> 2)),                       \
-     -(((step) >> 3) + ((step) >> 1)),                                       \
-     -(((step) >> 3) + ((step) >> 1) + ((step) >> 2)),                       \
-     -(((step) >> 3) + (step)),                                              \
-     -(((step) >> 3) + (step) + ((step) >> 2)),                              \
-     -(((step) >> 3) + (step) + ((step) >> 1)),                              \
+#define IMA_ADPCM_ROW(step)                                                    \
+    {(step) >> 3,                                                              \
+     ((step) >> 3) + ((step) >> 2),                                            \
+     ((step) >> 3) + ((step) >> 1),                                            \
+     ((step) >> 3) + ((step) >> 1) + ((step) >> 2),                            \
+     ((step) >> 3) + (step),                                                   \
+     ((step) >> 3) + (step) + ((step) >> 2),                                   \
+     ((step) >> 3) + (step) + ((step) >> 1),                                   \
+     ((step) >> 3) + (step) + ((step) >> 1) + ((step) >> 2),                   \
+     -((step) >> 3),                                                           \
+     -(((step) >> 3) + ((step) >> 2)),                                         \
+     -(((step) >> 3) + ((step) >> 1)),                                         \
+     -(((step) >> 3) + ((step) >> 1) + ((step) >> 2)),                         \
+     -(((step) >> 3) + (step)),                                                \
+     -(((step) >> 3) + (step) + ((step) >> 2)),                                \
+     -(((step) >> 3) + (step) + ((step) >> 1)),                                \
      -(((step) >> 3) + (step) + ((step) >> 1) + ((step) >> 2))}
 
 s32 g_AdpcmDeltaTable[89][16] = {

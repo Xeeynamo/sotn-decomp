@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
 
 u32 D_06043C48[2] = {0};
