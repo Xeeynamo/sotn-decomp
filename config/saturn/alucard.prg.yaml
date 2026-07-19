@@ -22,6 +22,9 @@ segments:
         type: c
         file: alucard
         end: 0x1be47
+        function_ranges:
+          - [0x1384, 0x141E]
+          - [0x1A94, 0x2D3A]
 
       # problem
       - start: 0x1be48
