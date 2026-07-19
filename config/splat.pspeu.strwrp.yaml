@@ -72,7 +72,8 @@ segments:
       - [0x11B30, .data, rwrp/e_init]
       - [0x11C30, data]
       - [0x11CB0, .data, rwrp/e_breakable]
-      - [0x11D00, data]
+      - [0x11D00, .data, rwrp/stage_data]
+      - [0x128B0, data] # tilemap stuff
       - [0x168D0, .data, rwrp/header]
       - [0x16910, .data, rwrp/background_block_init]
       - [0x16950, .data, rwrp/e_lock_camera]

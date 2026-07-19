@@ -129,3 +129,6 @@ g_LayoutObjPosHorizontal = 0x0924E208;
 g_LayoutObjVertical = 0x0924E210;
 g_LayoutObjHorizontal = 0x0924E218;
 g_ItemIconSlots = 0x0924E220;
+stage_title_rwrp_jp = 0x09249380;
+stage_placeholder_rwrp = 0x092496C8;
+D_80181D08 = 0x09249C70;
