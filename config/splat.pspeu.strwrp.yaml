@@ -55,7 +55,7 @@ segments:
       - [0xB7A8, c, rwrp/popup]
       - [0xBDA0, c, rwrp/e_room_fg]
       - [0xBEB8, c, rwrp/st_common]
-      - [0xCEE8, c, rwrp_psp/prim_helpers]
+      - [0xCEE8, c, rwrp/prim_helpers]
       - [0xD628, c, rwrp_psp/st_init]
       - [0xD700, c, rwrp_psp/e_breakable]
       - [0xD880, c, rwrp_psp/e_background_block]
