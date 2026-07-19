@@ -967,6 +967,8 @@ files:
         vram: 0x09237700
         assets:
           - [0x80, skip]
+          - [0x11978, layers, layers]
+          - [0x11A68, skip]
           - [0x11D00, cmpgfx, stage_title_wrp_jp, 128, 128, 4]
           - [0x12048, cmpgfx, stage_placeholder_wrp, 128, 128, 4]
           - [0x125F0, palette, D_80181D08, 16]
