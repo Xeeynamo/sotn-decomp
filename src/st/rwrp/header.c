@@ -4,7 +4,7 @@
 
 // common
 extern RoomHeader rooms[];
-extern SpriteParts* OVL_EXPORT(spriteBanks)[];
+extern SpriteParts* spriteBanks[];
 extern u_long* cluts[];
 extern RoomDef rooms_layers[];
 extern GfxBank* gfxBanks[];
@@ -16,7 +16,7 @@ Overlay OVL_EXPORT(Overlay) = {
     .UpdateRoomPosition = UpdateRoomPosition,
     .InitRoomEntities = InitRoomEntities,
     .rooms = rooms,
-    .spriteBanks = OVL_EXPORT(spriteBanks),
+    .spriteBanks = spriteBanks,
     .cluts = cluts,
     .objLayoutHorizontal = NULL,
     .tileLayers = rooms_layers,
