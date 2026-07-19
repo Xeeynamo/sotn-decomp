@@ -558,7 +558,7 @@ void EntityLibrarianChair(Entity* self) {
                 newEnt = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEnt != NULL) {
                     CreateEntityFromCurrentEntity(E_PRIZE_DROP, newEnt);
-                    newEnt->params = 23;
+                    newEnt->params = ITEMDROP_LIFE_VESSEL;
                     g_CastleFlags[LIBRARIAN_DROPS] |= 1;
                 }
             }

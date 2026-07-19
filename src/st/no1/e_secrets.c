@@ -124,7 +124,7 @@ void func_us_801BE880(Entity* self) {
         tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
         if (tempEntity != NULL) {
             CreateEntityFromEntity(E_EQUIP_ITEM_DROP, self, tempEntity);
-            tempEntity->params = 0x43;
+            tempEntity->params = ITEM_POT_ROAST;
             tempEntity->posY.i.hi -= 0x30;
         }
         self->step++;

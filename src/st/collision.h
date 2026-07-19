@@ -132,11 +132,27 @@ static u16 g_testCollElementLookup[] = {
 
 static u8 g_testColliFrames[] = {2, 4, 3, 5, 6, 7, 8, 10, 2, 1};
 
+// 1/32 - Meal Ticket
+// 1/32 - $400
+// 1/32 - $250
+// 2/32 - $100
+// 2/32 - $1
+// 2/32 - Large Heart
+// 4/32 - $50
+// 7/32 - $25
+// 12/32 - Small Heart
 static u16 g_testCollPrizeTable[] = {
-    0x0003, 0x0000, 0x0002, 0x0003, 0x0003, 0x0003, 0x0003, 0x0003,
-    0x0003, 0x0004, 0x0004, 0x0004, 0x0004, 0x0005, 0x0005, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0001, 0x0001, 0x0002, 0x0006, 0x0007, 0x00C6,
+    ITEMDROP_GOLD_2,      ITEMDROP_SMALL_HEART, ITEMDROP_GOLD_1,
+    ITEMDROP_GOLD_2,      ITEMDROP_GOLD_2,      ITEMDROP_GOLD_2,
+    ITEMDROP_GOLD_2,      ITEMDROP_GOLD_2,      ITEMDROP_GOLD_2,
+    ITEMDROP_GOLD_3,      ITEMDROP_GOLD_3,      ITEMDROP_GOLD_3,
+    ITEMDROP_GOLD_3,      ITEMDROP_GOLD_4,      ITEMDROP_GOLD_4,
+    ITEMDROP_SMALL_HEART, ITEMDROP_SMALL_HEART, ITEMDROP_SMALL_HEART,
+    ITEMDROP_SMALL_HEART, ITEMDROP_SMALL_HEART, ITEMDROP_SMALL_HEART,
+    ITEMDROP_SMALL_HEART, ITEMDROP_SMALL_HEART, ITEMDROP_SMALL_HEART,
+    ITEMDROP_SMALL_HEART, ITEMDROP_SMALL_HEART, ITEMDROP_LARGE_HEART,
+    ITEMDROP_LARGE_HEART, ITEMDROP_GOLD_1,      ITEMDROP_GOLD_5,
+    ITEMDROP_GOLD_6,      ITEMDROP_MEAL_TICKET,
 };
 
 // The Jewel Sword drop table below consists of pairs of numbers
@@ -585,8 +601,9 @@ void HitDetection(void) {
                             miscVar3 = enemyDef->rareItemId;
                             // Paranthropus check: Drops turquoise if
                             // game not beaten. Otherwise ring of Varda
-                            if (miscVar3 == 0x173 && !g_GameClearFlag) {
-                                miscVar3 = 0x16A;
+                            if (miscVar3 == ITEMDROP_RING_OF_VARDA &&
+                                !g_GameClearFlag) {
+                                miscVar3 = ITEMDROP_TURQUOISE;
                             } else {
                                 miscVar1 =
                                     g_testCollEnemyLookup[entityHit->enemyId];
