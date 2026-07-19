@@ -58,7 +58,7 @@ segments:
       - [0xCEE8, c, rwrp/prim_helpers]
       - [0xD628, c, rwrp_psp/st_init]
       - [0xD700, c, rwrp_psp/e_breakable]
-      - [0xD880, c, rwrp_psp/e_background_block]
+      - [0xD880, c, rwrp/e_room_bg]
       - [0xD990, c, rwrp/e_lock_camera]
       - [0xDBF0, c, rwrp/warp]
       - [0xF100, .data, rwrp/e_red_door]
