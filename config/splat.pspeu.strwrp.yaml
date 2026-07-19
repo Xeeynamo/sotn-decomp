@@ -82,6 +82,7 @@ segments:
       - [0x16BA0, .bss, rwrp/st_update]
       - [0x16BE0, .bss, rwrp/e_collect]
       - [0x16C00, .bss, rwrp_psp/bss]
+      - [0x17C68, .bss, rwrp/d_prize_drops]
       - [0x17C70, .bss, rwrp/e_lock_camera]
       - [0x17C78, .bss, rwrp/warp]
   - [0x17D00]
