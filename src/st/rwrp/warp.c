@@ -4,7 +4,6 @@
 #include "common.h"
 #include "sfx.h"
 
-extern s16 PLAYER_posY_i_hi;
 s16 GetDistanceToPlayerX();
 
 #define ImplicitGetDistanceToPlayerX ((int (*)())GetDistanceToPlayerX)
@@ -83,6 +82,7 @@ void EntityRWarpRoom(Entity* self) {
     s32 moveX;
     s32 moveY;
     s32 collision;
+    Entity* player;
 
     FntPrint("step %x\n", self->step);
     collision = GetPlayerCollisionWith(self, 16, 8, 4);
@@ -152,14 +152,15 @@ void EntityRWarpRoom(Entity* self) {
         WarpBackgroundAmplitiude = 0x100;
         g_CastleFlags[RWRP_UNLOCKS] |= 1 << self->params;
         D_80180648 = 0;
-        moveX = PLAYER.posX.i.hi + g_Tilemap.scrollX.i.hi;
+        player = &PLAYER;
+        moveX = player->posX.i.hi + g_Tilemap.scrollX.i.hi;
         if (moveX > 0x60 && moveX < 0xA0) {
             self->posY.i.hi = 0x90 - g_Tilemap.scrollY.i.hi;
             g_Player.padSim = 0;
             g_Player.demo_timer = 16;
             g_PauseAllowed = false;
-            D_80180648 = 1;
             self->step = 6;
+            D_80180648 = 1;
             break;
         }
         // fallthrough
@@ -171,8 +172,10 @@ void EntityRWarpRoom(Entity* self) {
             g_Player.padSim = 0;
             g_Player.demo_timer = 128;
             g_PauseAllowed = false;
+#ifdef VERSION_US
             PLAYER.velocityX = 0;
             PLAYER.velocityY = 0;
+#endif
             self->step++;
         }
         break;
@@ -183,6 +186,7 @@ void EntityRWarpRoom(Entity* self) {
         g_PauseAllowed = false;
         g_api.func_8010DFF0(0, 1);
         self->posY.i.hi--;
+        player = &PLAYER;
         moveY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
         if (moveY < 0x91) {
             self->posY.i.hi = 0x90 - g_Tilemap.scrollY.i.hi;
@@ -194,7 +198,8 @@ void EntityRWarpRoom(Entity* self) {
         g_Player.padSim = 0;
         g_Player.demo_timer = 128;
         g_PauseAllowed = false;
-        g_unkGraphicsStruct.g_zEntityCenter = PLAYER.zPriority = 0x5C;
+        player = &PLAYER;
+        g_unkGraphicsStruct.g_zEntityCenter = player->zPriority = 0x5C;
         prim = self->ext.warpRoom.primFade;
         prim->drawMode = DRAW_TRANSP | DRAW_TPAGE | DRAW_TPAGE2;
         prim->g0 = prim->b0 = prim->r0 += 2;
@@ -209,8 +214,8 @@ void EntityRWarpRoom(Entity* self) {
         g_Player.padSim = 0;
         g_Player.demo_timer = 128;
         g_PauseAllowed = false;
-        entity = &PLAYER;
-        g_unkGraphicsStruct.g_zEntityCenter = entity->zPriority = 0x5C;
+        player = &PLAYER;
+        g_unkGraphicsStruct.g_zEntityCenter = player->zPriority = 0x5C;
         prim = self->ext.warpRoom.primFade;
         prim->drawMode = DRAW_TRANSP | DRAW_TPAGE | DRAW_TPAGE2;
         if (prim->r0 < 0xF0) {
@@ -252,11 +257,11 @@ void EntityRWarpRoom(Entity* self) {
         break;
     case 6:
         // start in new room
-        g_Player.demo_timer = 16;
-        PLAYER.zPriority = 0x94;
         g_Player.padSim = 0;
-        g_unkGraphicsStruct.g_zEntityCenter = 0x94;
+        g_Player.demo_timer = 16;
         g_PauseAllowed = false;
+        player = &PLAYER;
+        g_unkGraphicsStruct.g_zEntityCenter = player->zPriority = 0x94;
         prim = self->ext.warpRoom.primFade;
         prim->drawMode = DRAW_HIDE;
         prim->g0 = prim->b0 = prim->r0 = 0;
@@ -297,8 +302,8 @@ void EntityRWarpRoom(Entity* self) {
         self->posY.i.hi++;
         if (collision & 0x4) {
             g_api.func_8010DFF0(0, 1);
-
-            PLAYER_posY_i_hi += 1;
+            player = &PLAYER;
+            player->posY.i.hi += 1;
             g_unkGraphicsStruct.shoveY.i.hi += 1;
 
             if (g_pads[0].pressed & PAD_UP &&
