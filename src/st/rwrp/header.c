@@ -7,7 +7,7 @@ extern RoomHeader OVL_EXPORT(rooms)[];
 extern SpriteParts* OVL_EXPORT(spriteBanks)[];
 extern u_long* cluts[];
 extern RoomDef rooms_layers[];
-extern GfxBank* OVL_EXPORT(gfxBanks)[];
+extern GfxBank* gfxBanks[];
 void UpdateStageEntities(void);
 
 Overlay OVL_EXPORT(Overlay) = {
@@ -20,7 +20,7 @@ Overlay OVL_EXPORT(Overlay) = {
     .cluts = cluts,
     .objLayoutHorizontal = NULL,
     .tileLayers = rooms_layers,
-    .gfxBanks = OVL_EXPORT(gfxBanks),
+    .gfxBanks = gfxBanks,
     .UpdateStageEntities = UpdateStageEntities,
     .unk2C = NULL,
     .unk30 = NULL,

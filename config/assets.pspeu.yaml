@@ -969,9 +969,10 @@ files:
           - [0x80, skip]
           - [0x11978, layers, layers]
           - [0x11A68, paldef, palette_def]
-          - [0x11A88, skip]
-          - [0x11D00, cmpgfx, stage_title_wrp_jp, 128, 128, 4]
-          - [0x12048, cmpgfx, stage_placeholder_wrp, 128, 128, 4]
+          - [0x11A88, gfx_banks, graphics_banks]
+          - [0x11B30, skip]
+          - [0x11D00, cmpgfx, stage_title_rwrp_jp, 128, 128, 4]
+          - [0x12048, cmpgfx, stage_placeholder_rwrp, 128, 128, 4]
           - [0x125F0, palette, D_80181D08, 16]
           - [0x128B0, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/mar.bin
