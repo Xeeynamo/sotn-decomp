@@ -34,8 +34,8 @@ enum Entities {
     E_UNK_ID13,           // EntityUnkId13
     E_EXPLOSION_VARIANTS, // EntityExplosionVariants
     E_GREY_PUFF,          // EntityGreyPuff
-    E_UNK_16,             // func_pspeu_09245270
-    E_UNK_17,             // func_pspeu_09246360
+    E_WARP,               // EntityRWarpRoom
+    E_SMALL_ROCKS,        // EntityWarpSmallRocks
     NUM_ENTITIES,
 };
 
