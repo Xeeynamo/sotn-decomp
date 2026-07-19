@@ -47,7 +47,7 @@ segments:
       - [0xAF8, .data, e_breakable]
       - [0xC08, data]
       - [0xC0C, .data, e_secret_stairs]
-      - [0xCBC, data]
+      - [0xCBC, .data, e_breakable_wall]
       - [0xCC8, .data, e_elevator]
       - [0xCF0, .data, e_lion_lamp]
       - [0xD10, .data, d_prize_drops]

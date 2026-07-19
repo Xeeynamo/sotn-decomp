@@ -1,12 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "top.h"
-#include "sfx.h"
 
 extern EInit g_EInitTOPCommon;
 
 // breakable wall behind leap stone or power of mist
-extern s16 D_us_80180CBC[];
-extern s16 D_us_80180CC2[];
+static s16 tiles[][3] = {
+    {0x0019, 0x001A, 0x001B},
+    {0x0386, 0x0389, 0x001C},
+};
 
 void EntityBreakableWall(Entity* self) {
     s32 wallStatus;
@@ -37,13 +38,13 @@ void EntityBreakableWall(Entity* self) {
             wallStatus = 0;
         }
 
-        wallTiles = &D_us_80180CBC[wallStatus];
+        wallTiles = &tiles[0][wallStatus];
         if (!self->params) {
             var_a1 = 0x2518;
         } else {
             var_a1 = 0x3518;
         }
-        for (i = 0; i < 3; i++, wallTiles++) {
+        for (i = 0; i < LEN(tiles[0]); i++, wallTiles++) {
             g_Tilemap.fg[var_a1] = *wallTiles;
             var_a1 += 0x80;
         }
@@ -71,42 +72,43 @@ void EntityBreakableWall(Entity* self) {
         }
         self->ext.breakable.resetTimer = 0x20;
         self->step++;
-        if (self->ext.breakable.breakCount == 3) {
-            if (!self->params) {
-                g_CastleFlags[OVL_EXPORT(SECRET_WALL_1_BROKEN)] = 1;
-            } else {
-                g_CastleFlags[OVL_EXPORT(SECRET_WALL_2_BROKEN)] = 1;
-            }
-            wallTiles = D_us_80180CC2;
-            if (!self->params) {
-                var_a1 = 0x2518;
-            } else {
-                var_a1 = 0x3518;
-            }
-
-            for (i = 0; i < 3; i++, wallTiles++) {
-                g_Tilemap.fg[var_a1] = *wallTiles;
-                var_a1 += 0x80;
-            }
-
-            self->entityId = 0xC;
-            self->pfnUpdate = EntityHeartDrop;
-            self->step = 0;
-            self->step_s = 0;
-            self->pose = 0;
-            self->poseTimer = 0;
-
-            if (!self->params) {
-                // PrizeDrops[2] = Fire Mail
-                self->params = 2;
-            } else {
-                // PrizeDrops[1] = Turkey
-                self->params = 1;
-            }
-            // n.b.! odd return, but necessary for PSP
-            return;
+        if (self->ext.breakable.breakCount != 3) {
+            break;
         }
-        break;
+
+        if (!self->params) {
+            g_CastleFlags[OVL_EXPORT(SECRET_WALL_1_BROKEN)] = 1;
+        } else {
+            g_CastleFlags[OVL_EXPORT(SECRET_WALL_2_BROKEN)] = 1;
+        }
+        wallTiles = tiles[1];
+        if (!self->params) {
+            var_a1 = 0x2518;
+        } else {
+            var_a1 = 0x3518;
+        }
+
+        for (i = 0; i < LEN(tiles[1]); i++, wallTiles++) {
+            g_Tilemap.fg[var_a1] = *wallTiles;
+            var_a1 += 0x80;
+        }
+
+        self->entityId = 0xC;
+        self->pfnUpdate = EntityHeartDrop;
+        self->step = 0;
+        self->step_s = 0;
+        self->pose = 0;
+        self->poseTimer = 0;
+
+        if (!self->params) {
+            // PrizeDrops[2] = Fire Mail
+            self->params = 2;
+        } else {
+            // PrizeDrops[1] = Turkey
+            self->params = 1;
+        }
+        // n.b.! odd return, but necessary for PSP
+        return;
 
     case 3:
         if (--self->ext.breakable.resetTimer == 0) {
