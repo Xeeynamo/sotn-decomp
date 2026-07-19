@@ -2,12 +2,13 @@
 #include "rwrp.h"
 
 extern RoomHeader rooms[];
-extern s16** spriteBanks[];
+extern SpriteParts* spriteBanks[];
 extern u_long* cluts[];
 extern RoomDef rooms_layers[];
-extern u_long** gfxBanks[];
+extern GfxBank* gfxBanks[];
+void UpdateStageEntities(void);
 
-static Overlay OVL_EXPORT(Overlay) = {
+Overlay OVL_EXPORT(Overlay) = {
     .Update = Update,
     .HitDetection = HitDetection,
     .UpdateRoomPosition = UpdateRoomPosition,
@@ -19,9 +20,9 @@ static Overlay OVL_EXPORT(Overlay) = {
     .tileLayers = rooms_layers,
     .gfxBanks = gfxBanks,
     .UpdateStageEntities = UpdateStageEntities,
+    .unk2C = NULL,
+    .unk30 = NULL,
+    .unk34 = NULL,
+    .unk38 = NULL,
+    .StageEndCutScene = NULL,
 };
-
-#include "gen/sprite_banks.h"
-#include "gen/palette_def.h"
-#include "gen/layers.h"
-#include "gen/graphics_banks.h"

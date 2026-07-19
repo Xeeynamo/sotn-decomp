@@ -959,6 +959,24 @@ files:
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rnz1.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rtop.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rwrp.bin
+    asset_path: assets/st/rwrp
+    src_path: src/st/rwrp
+    splat_config_path: config/splat.pspeu.strwrp.yaml
+    segments:
+      - start: 0x80
+        vram: 0x09237700
+        assets:
+          - [0x80, skip]
+          - [0x11918, sprite_banks, psp/sprite_banks]
+          - [0x11978, layers, layers]
+          - [0x11A68, paldef, palette_def]
+          - [0x11A88, gfx_banks, graphics_banks]
+          - [0x11C30, rooms, rooms]
+          - [0x11CB0, skip]
+          - [0x11D00, cmpgfx, stage_title_rwrp_jp, 128, 128, 4]
+          - [0x12048, cmpgfx, stage_placeholder_rwrp, 128, 128, 4]
+          - [0x125F0, palette, D_80181D08, 16]
+          - [0x128B0, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/mar.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo0.bin
     asset_path: assets/boss/bo0

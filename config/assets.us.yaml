@@ -1230,7 +1230,7 @@ files:
       - start: 0
         vram: 0x80180000
         assets:
-          - [0x40, sprite_banks, sprite_banks]
+          - [0x40, sprite_banks, us/sprite_banks]
           - [0xA0, paldef, palette_def]
           - [0xB8, layers, layers]
           - [0x1B8, gfx_banks, graphics_banks]
@@ -1241,7 +1241,6 @@ files:
           - [0x1420, cmpgfx, stage_title_rwrp_jp, 128, 128, 4]
           - [0x1764, cmpgfx, stage_placeholder_rwrp, 128, 128, 4]
           - [0x1D08, palette, D_80181D08, 16]
-          - [0x1F08, palette, D_80181F08, 16] # unused
           - [0x1FC8, skip] # tile data
           - [0x2BC8, skip] # tile definitions
           - [0x6FE8, skip] # sprites
