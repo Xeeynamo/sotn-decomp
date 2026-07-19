@@ -4,13 +4,3 @@
 INCLUDE_ASM("st/top_psp/nonmatchings/top_psp/unk_12048", func_pspeu_09249B38);
 
 INCLUDE_ASM("st/top_psp/nonmatchings/top_psp/unk_12048", func_pspeu_0924A3B0);
-
-INCLUDE_ASM("st/top_psp/nonmatchings/top_psp/unk_12048", EntitySecretButton);
-
-INCLUDE_ASM("st/top_psp/nonmatchings/top_psp/unk_12048", func_pspeu_0924B1E8);
-
-INCLUDE_ASM("st/top_psp/nonmatchings/top_psp/unk_12048", EntitySecretStairs);
-
-INCLUDE_ASM("st/top_psp/nonmatchings/top_psp/unk_12048", EntityRedEyeBust);
-
-INCLUDE_ASM("st/top_psp/nonmatchings/top_psp/unk_12048", func_pspeu_0924BCD0);
