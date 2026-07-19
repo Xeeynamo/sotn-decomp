@@ -3,7 +3,7 @@
 #ifdef VERSION_PSP
 
 // common
-extern RoomHeader OVL_EXPORT(rooms)[];
+extern RoomHeader rooms[];
 extern SpriteParts* OVL_EXPORT(spriteBanks)[];
 extern u_long* cluts[];
 extern RoomDef rooms_layers[];
@@ -15,7 +15,7 @@ Overlay OVL_EXPORT(Overlay) = {
     .HitDetection = HitDetection,
     .UpdateRoomPosition = UpdateRoomPosition,
     .InitRoomEntities = InitRoomEntities,
-    .rooms = OVL_EXPORT(rooms),
+    .rooms = rooms,
     .spriteBanks = OVL_EXPORT(spriteBanks),
     .cluts = cluts,
     .objLayoutHorizontal = NULL,

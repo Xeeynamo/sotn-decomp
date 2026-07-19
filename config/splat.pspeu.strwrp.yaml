@@ -74,7 +74,7 @@ segments:
       - [0x11A88, .data, rwrp/graphics_banks]
       - [0x11B10, .data, rwrp/e_red_door_tiles]
       - [0x11B30, .data, rwrp/e_init]
-      - [0x11C30, data]
+      - [0x11C30, .data, rwrp/gen/rooms]
       - [0x11CB0, .data, rwrp/e_breakable]
       - [0x11D00, .data, rwrp/stage_data]
       - [0x168D0, .data, rwrp/header]
