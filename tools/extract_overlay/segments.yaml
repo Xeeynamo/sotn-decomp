@@ -130,9 +130,9 @@ e_bossfight:
   - EntityBossRoomBlock
 e_breakable:
   functions:
-  - ${prefix}_EntityBreakable
+  - EntityBreakable
   - EntityBreakableHelper
-  - ${prefix}_EntityBreakableDebris
+  - EntityBreakableDebris
   - EntityBreakableDebris
   - func_us_801C123C
 e_breakable_wall:
@@ -543,7 +543,7 @@ e_plate_lord:
 e_red_door:
   functions:
   - EntityIsNearPlayer
-  - ${prefix}_EntityRedDoor
+  - EntityRedDoor
 e_richter:
   functions:
   - func_us_801B4BD0
