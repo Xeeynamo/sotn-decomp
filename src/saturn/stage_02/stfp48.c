@@ -1,0 +1,41 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+#include "sattypes.h"
+
+extern s16 g_Stage02SpittleBoneFrameData[715];
+
+s16* g_Stage02SpittleBoneFrames[67] = {
+    &g_Stage02SpittleBoneFrameData[0],   &g_Stage02SpittleBoneFrameData[2],
+    &g_Stage02SpittleBoneFrameData[16],  &g_Stage02SpittleBoneFrameData[30],
+    &g_Stage02SpittleBoneFrameData[44],  &g_Stage02SpittleBoneFrameData[58],
+    &g_Stage02SpittleBoneFrameData[72],  &g_Stage02SpittleBoneFrameData[86],
+    &g_Stage02SpittleBoneFrameData[108], &g_Stage02SpittleBoneFrameData[130],
+    &g_Stage02SpittleBoneFrameData[152], &g_Stage02SpittleBoneFrameData[174],
+    &g_Stage02SpittleBoneFrameData[196], &g_Stage02SpittleBoneFrameData[218],
+    &g_Stage02SpittleBoneFrameData[240], &g_Stage02SpittleBoneFrameData[254],
+    &g_Stage02SpittleBoneFrameData[268], &g_Stage02SpittleBoneFrameData[282],
+    &g_Stage02SpittleBoneFrameData[296], &g_Stage02SpittleBoneFrameData[310],
+    &g_Stage02SpittleBoneFrameData[324], &g_Stage02SpittleBoneFrameData[338],
+    &g_Stage02SpittleBoneFrameData[352], &g_Stage02SpittleBoneFrameData[366],
+    &g_Stage02SpittleBoneFrameData[380], &g_Stage02SpittleBoneFrameData[394],
+    &g_Stage02SpittleBoneFrameData[400], &g_Stage02SpittleBoneFrameData[406],
+    &g_Stage02SpittleBoneFrameData[412], &g_Stage02SpittleBoneFrameData[418],
+    &g_Stage02SpittleBoneFrameData[428], &g_Stage02SpittleBoneFrameData[438],
+    &g_Stage02SpittleBoneFrameData[448], &g_Stage02SpittleBoneFrameData[458],
+    &g_Stage02SpittleBoneFrameData[468], &g_Stage02SpittleBoneFrameData[478],
+    &g_Stage02SpittleBoneFrameData[488], &g_Stage02SpittleBoneFrameData[498],
+    &g_Stage02SpittleBoneFrameData[520], &g_Stage02SpittleBoneFrameData[542],
+    &g_Stage02SpittleBoneFrameData[548], &g_Stage02SpittleBoneFrameData[558],
+    &g_Stage02SpittleBoneFrameData[564], &g_Stage02SpittleBoneFrameData[570],
+    &g_Stage02SpittleBoneFrameData[576], &g_Stage02SpittleBoneFrameData[582],
+    &g_Stage02SpittleBoneFrameData[588], &g_Stage02SpittleBoneFrameData[594],
+    &g_Stage02SpittleBoneFrameData[600], &g_Stage02SpittleBoneFrameData[606],
+    &g_Stage02SpittleBoneFrameData[612], &g_Stage02SpittleBoneFrameData[618],
+    &g_Stage02SpittleBoneFrameData[624], &g_Stage02SpittleBoneFrameData[630],
+    &g_Stage02SpittleBoneFrameData[636], &g_Stage02SpittleBoneFrameData[642],
+    &g_Stage02SpittleBoneFrameData[648], &g_Stage02SpittleBoneFrameData[654],
+    &g_Stage02SpittleBoneFrameData[660], &g_Stage02SpittleBoneFrameData[666],
+    &g_Stage02SpittleBoneFrameData[672], &g_Stage02SpittleBoneFrameData[678],
+    &g_Stage02SpittleBoneFrameData[684], &g_Stage02SpittleBoneFrameData[690],
+    &g_Stage02SpittleBoneFrameData[696], &g_Stage02SpittleBoneFrameData[702],
+    &g_Stage02SpittleBoneFrameData[708],
+};

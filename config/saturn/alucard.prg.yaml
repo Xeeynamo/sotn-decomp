@@ -13,15 +13,18 @@ segments:
     vram:  0x060A5000
     subalign: 2
     subsegments:
-      - start: 0x0
-        type: data
-        file: alucard
-        end: 0x5f
+      - [0x0, .data, alucard/header]
+      - start: 0x44
+        type: .text
+        file: alucard/hdrstub
 
       - start: 0x60
         type: c
         file: alucard
         end: 0x1be47
+        function_ranges:
+          - [0x1384, 0x141E]
+          - [0x1A94, 0x2D3A]
 
       # problem
       - start: 0x1be48

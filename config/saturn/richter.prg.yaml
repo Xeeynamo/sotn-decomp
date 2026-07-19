@@ -22,6 +22,8 @@ segments:
         type: c
         file: richter
         end: 0x2CEF
+        function_ranges:
+          - [0x1272, 0x1426]
       - start: 0x2CF0
         type: data
         file: richter
@@ -30,6 +32,8 @@ segments:
         type: c
         file: richter
         end: 0xD3B5
+        function_ranges:
+          - [0xB52A, 0xB5EA]
       - start: 0xD3B6
         type: data
         file: richter
@@ -38,6 +42,10 @@ segments:
         type: c
         file: richter
         end: 0x19D57
+        function_ranges:
+          - [0xEA0C, 0xEA46]
+          - [0x139CE, 0x13B1A]
+          - [0x14A2C, 0x14A4E]
       - start: 0x19D58
         type: data
         file: richter

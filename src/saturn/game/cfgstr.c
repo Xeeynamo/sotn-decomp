@@ -1,4 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "inc_asm.h"
+#include "sattypes.h"
 
-INCLUDE_ASM("asm/saturn/game/data", d606B6D4, d_0606B6D4);
+char g_SubProgramFileName[8] = "SUB.PRG";
+char g_KanjiFontFileName[10] = "KANJI.FON";
+u16 g_KanjiFontFileNamePadding = 0x0009;
+char g_SubDisplayMapFileName[14] = "SUB_DISP.MAP";
+u16 g_SubDisplayMapFileNamePadding = 0x0009;

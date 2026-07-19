@@ -484,7 +484,7 @@ void SetVdp2BackgroundColor(void) {
 }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600815C, func_0600815C);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60081C8, func_060081C8);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600819C, func_0600819C);
 
 // func_0600824C
 void InitScuDma(void) {
@@ -630,7 +630,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008C2C, func_06008C2C);
 INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f6008E3A, func_06008E3A);
 INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f6008FBE, func_06008FBE);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008FF0, func_06008FF0);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6009038, func_06009038);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6009010, func_06009010);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6009058, func_06009058);
 
 // _GAME_SCROLL_SET
@@ -800,7 +800,6 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600CC5C, func_0600CC5C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600CD70, func_0600CD70);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600CE1C, func_0600CE1C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600CED0, func_0600CED0);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600CFE0, func_0600CFE0);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600D028, func_0600D028);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600D0DC, func_0600D0DC);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600D1A0, func_0600D1A0);
@@ -1111,7 +1110,7 @@ void func_06011264(void) {
     return;
 }
 
-INCLUDE_ASM("asm/saturn/zero/data", d6011278, d_06011278);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011278, func_06011278);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011A6C, func_06011A6C);
 
 extern s32 DAT_06064230;

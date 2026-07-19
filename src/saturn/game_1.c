@@ -12,5 +12,5 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f6066FE0, func_06066FE0);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6067090, func_06067090);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60674B8, func_060674B8);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6067958, func_06067958);
-INCLUDE_ASM("asm/saturn/game/data", d606797C, d_0606797C);
+INCLUDE_ASM("asm/saturn/game/f_nonmat", f606797C, func_0606797C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6067A04, func_06067A04);

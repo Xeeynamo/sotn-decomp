@@ -1,0 +1,8 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+#include "sattypes.h"
+
+// Saturn uses a packed, platform-specific SpriteParts representation here.
+u16 g_Stage02SkeletonSpriteParts1[17] = {
+    0x0001, 0xC400, 0x8C63, 0xA507, 0xB5AD, 0xC631, 0xD6B5, 0xEB5A, 0xB5A6,
+    0x87E1, 0x83E1, 0x83E1, 0x87E1, 0x8011, 0x801B, 0x83E0, 0x8421,
+};

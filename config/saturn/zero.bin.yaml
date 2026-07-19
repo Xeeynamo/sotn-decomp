@@ -22,6 +22,18 @@ segments:
         type: c
         file: zero
         end: 0xA5C3
+        function_ranges:
+          - [0x0768, 0x07C2]
+          - [0x0806, 0x0874]
+          - [0x08B2, 0x0956]
+          - [0x09C6, 0x09E2]
+          - [0x0AA0, 0x0B56]
+          - [0x40DC, 0x4110]
+          - [0x411C, 0x419C]
+          - [0x4BAC, 0x4C5E]
+          - [0x4DBA, 0x4E3C]
+          - [0x4F3E, 0x4F4C]
+          - [0x4F90, 0x4FCC]
 
       - start: 0xA5C4
         type: data
@@ -69,14 +81,22 @@ segments:
         
       # bug
       - start: 0xD1F8
-        type: data
+        type: c
         file: zero
         end: 0xD9EB
+        function_ranges:
+          - [0xD1F8, 0xD9EA]
         
       - start: 0xD9EC
         type: c
         file: zero
         end: 0x14647
+        function_ranges:
+          - [0x1154C, 0x11BEE]
+          - [0x11BF0, 0x1243A]
+          - [0x1243C, 0x12592]
+          - [0x12594, 0x12626]
+          - [0x12628, 0x12AC2]
 
       - start: 0x14648
         type: c
@@ -93,6 +113,27 @@ segments:
         type: c
         file: lib/gfs
         end: 0x1D76B
+        function_ranges:
+          - [0x178B2, 0x178E2]
+          - [0x17918, 0x17956]
+          - [0x17B06, 0x17B7A]
+          - [0x17BF4, 0x17C7A]
+          - [0x17DEA, 0x17E26]
+          - [0x17FBA, 0x17FF4]
+          - [0x1801E, 0x1805C]
+          - [0x1808A, 0x180C4]
+          - [0x180EE, 0x1812C]
+          - [0x18AC6, 0x18B38]
+          - [0x18C00, 0x18C16]
+          - [0x18C88, 0x18CC4]
+          - [0x1AEC8, 0x1AEDC]
+          - [0x1AF1C, 0x1AF30]
+          - [0x1B0A8, 0x1B0BE]
+          - [0x1B3CA, 0x1B40C]
+          - [0x1B4A8, 0x1B4E8]
+          - [0x1B54C, 0x1B55E]
+          - [0x1B5BA, 0x1B5E0]
+          - [0x1B748, 0x1B7A0]
 
       # SPR_1C
       - start: 0x1D76C

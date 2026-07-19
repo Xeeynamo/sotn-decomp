@@ -1,4 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "inc_asm.h"
+#include "sattypes.h"
 
-INCLUDE_ASM("asm/saturn/game/data", d60854D8, d_060854D8);
+void func_0606F1C8(Entity* entity);
+
+PfnEntityUpdate g_GameEntityUpdates[] = {
+    NULL,
+    func_0606F1C8,
+};

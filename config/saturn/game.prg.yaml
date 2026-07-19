@@ -17,7 +17,7 @@ segments:
     subsegments:
       - [0x0, .data, game/header]
       - start: 0x30
-        type: .text
+        type: .data
         file: game/hdrstub
       - start: 0x40
         type: c
@@ -33,11 +33,8 @@ segments:
       - start: 0xB30
         type: c
         file: game_1
-        end: 0x197B
-        # misdetected function TODO
-      - start: 0x197C
-        type: data
-        file: game_1
+        function_ranges:
+          - [0x197C, 0x19F6]
         end: 0x1A03
       - start: 0x1A04
         type: c
@@ -47,26 +44,26 @@ segments:
         type: .text
         file: game/cfgjp
       - start: 0x56D4
-        type: .text
+        type: .data
         file: game/cfgstr
       - start: 0x56F8
         type: c
-        file: game_3
+        file: game_3a
         end: 0x80C7
       - start: 0x80C8
-        type: data
-        file: game_3
+        type: .data
+        file: game/primuv
         end: 0x80CF
       - start: 0x80D0
         type: c
-        file: game_3
+        file: game_3b
         end: 0x92BF
 
         # file split here
 
       - start: 0x92C0
         type: c
-        file: game_3
+        file: game_3b
         end: 0xA937
 
         # file split here
@@ -78,11 +75,8 @@ segments:
       - start: 0xBC3C
         type: c
         file: game
-        end: 0xC8B3
-      # todo problematic jump table
-      - start: 0xC8B4
-        type: data
-        file: game
+        function_ranges:
+          - [0xC8B4, 0xCB7E]
         end: 0xCBCB
       - start: 0xCBCC
         type: c
@@ -93,32 +87,50 @@ segments:
         file: game/miscend
       - start: 0xECC0
         type: c
-        file: game_2
+        file: game_2a
+        end: 0x1233B
+      - start: 0x1233C
+        type: .text
+        file: game/statlbl
+        end: 0x124A7
+      - start: 0x124A8
+        type: c
+        file: game_2b
+        function_ranges:
+          - [0x12684, 0x1272B]
+          - [0x1272C, 0x12747]
+          - [0x129C4, 0x12D57]
+          - [0x12D58, 0x12E7F]
+          - [0x12E80, 0x12F57]
         end: 0x1614B
       - [0x1614C, .data, game/cfgjp]
       - start: 0x1E6A8
-        type: .text
+        type: .data
         file: game/cfgrw1
+        end: 0x1E6D3
+      - start: 0x1E6D4
+        type: .data
+        file: game/cfgrw1b
+        end: 0x1E793
+      - start: 0x1E794
+        type: .data
+        file: game/cfgrw1c
+        end: 0x1EE43
+      - start: 0x1EE44
+        type: .data
+        file: game/cfgrw1d
       - [0x1F0EC, .data, game/jewel]
-      - start: 0x1F0F4
-        type: .text
-        file: game/cfgrw4
+      - [0x1F0F4, .data, game/cfgrw4]
       - [0x1F4C8, .data, game/btnmask]
-      - start: 0x1F4D8
-        type: .text
-        file: game/cfgrw2
+      - [0x1F4D8, .data, game/cfgrw2]
       - [0x1F4E0, .data, game/lvlhp]
-      - start: 0x1F508
-        type: .text
-        file: game/cfgrw3
+      - [0x1F508, .data, game/cfgrw3]
       - [0x1F524, .data, game/mnstate]
-      - start: 0x1F528
-        type: .text
-        file: game/cfgrw5
+      - [0x1F528, .data, game/cfgrw5]
       - [0x1F54C, .data, game/eqhelp]
       - [0x1F5AC, .data, game/mnscroll]
       - start: 0x1F5B0
-        type: .text
+        type: .data
         file: game/cfgrest
       - [0x1FC30, .data, game/capetbl]
       - [0x1FC70, .data, game/joseph]

@@ -291,7 +291,7 @@ void SetDefaultSCLPriority(s32 arg0) {
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60727DC, func_060727DC);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607284C, func_0607284C);
-INCLUDE_ASM("asm/saturn/game/data", d60728B4, d_060728B4);
+INCLUDE_ASM("asm/saturn/game/f_nonmat", f60728B4, func_060728B4);
 
 // _INIT_GAME_OVER
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6072BCC, func_06072BCC);

@@ -1,0 +1,47 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+#include "sattypes.h"
+
+Point16 g_MariaIceShardPoints[] = {
+    {-2, -24}, {0, -8},   {2, 8},    {0, 24},  {6, -12},  {8, 0},
+    {7, 12},   {-8, -12}, {-9, 0},   {-7, 12}, {-14, -6}, {-15, 7},
+    {13, -7},  {16, 8},   {-7, -22}, {6, -21}, {-8, 21},  {7, 22},
+};
+
+Point16* g_MariaIceShardTriangles[] = {
+    &g_MariaIceShardPoints[0],  &g_MariaIceShardPoints[4],
+    &g_MariaIceShardPoints[1],  &g_MariaIceShardPoints[4],
+    &g_MariaIceShardPoints[5],  &g_MariaIceShardPoints[1],
+    &g_MariaIceShardPoints[5],  &g_MariaIceShardPoints[2],
+    &g_MariaIceShardPoints[1],  &g_MariaIceShardPoints[5],
+    &g_MariaIceShardPoints[6],  &g_MariaIceShardPoints[2],
+    &g_MariaIceShardPoints[6],  &g_MariaIceShardPoints[3],
+    &g_MariaIceShardPoints[2],  &g_MariaIceShardPoints[2],
+    &g_MariaIceShardPoints[3],  &g_MariaIceShardPoints[9],
+    &g_MariaIceShardPoints[2],  &g_MariaIceShardPoints[9],
+    &g_MariaIceShardPoints[8],  &g_MariaIceShardPoints[1],
+    &g_MariaIceShardPoints[2],  &g_MariaIceShardPoints[8],
+    &g_MariaIceShardPoints[1],  &g_MariaIceShardPoints[8],
+    &g_MariaIceShardPoints[7],  &g_MariaIceShardPoints[1],
+    &g_MariaIceShardPoints[7],  &g_MariaIceShardPoints[0],
+    &g_MariaIceShardPoints[4],  &g_MariaIceShardPoints[12],
+    &g_MariaIceShardPoints[5],  &g_MariaIceShardPoints[12],
+    &g_MariaIceShardPoints[13], &g_MariaIceShardPoints[5],
+    &g_MariaIceShardPoints[13], &g_MariaIceShardPoints[6],
+    &g_MariaIceShardPoints[5],  &g_MariaIceShardPoints[7],
+    &g_MariaIceShardPoints[8],  &g_MariaIceShardPoints[10],
+    &g_MariaIceShardPoints[8],  &g_MariaIceShardPoints[11],
+    &g_MariaIceShardPoints[10], &g_MariaIceShardPoints[8],
+    &g_MariaIceShardPoints[9],  &g_MariaIceShardPoints[11],
+    &g_MariaIceShardPoints[0],  &g_MariaIceShardPoints[7],
+    &g_MariaIceShardPoints[14], &g_MariaIceShardPoints[0],
+    &g_MariaIceShardPoints[15], &g_MariaIceShardPoints[4],
+    &g_MariaIceShardPoints[3],  &g_MariaIceShardPoints[16],
+    &g_MariaIceShardPoints[9],  &g_MariaIceShardPoints[6],
+    &g_MariaIceShardPoints[17], &g_MariaIceShardPoints[3],
+    &g_MariaIceShardPoints[14], &g_MariaIceShardPoints[7],
+    &g_MariaIceShardPoints[10], &g_MariaIceShardPoints[15],
+    &g_MariaIceShardPoints[12], &g_MariaIceShardPoints[4],
+    &g_MariaIceShardPoints[11], &g_MariaIceShardPoints[9],
+    &g_MariaIceShardPoints[16], &g_MariaIceShardPoints[13],
+    &g_MariaIceShardPoints[17], &g_MariaIceShardPoints[6],
+};
