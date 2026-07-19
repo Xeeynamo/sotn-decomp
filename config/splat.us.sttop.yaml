@@ -48,6 +48,7 @@ segments:
       - [0xC08, data, 296F4]
       - [0xD10, .data, d_prize_drops]
       - [0xD38, data]
+      - [0xDF0, .data, post_richter_cutscene]
       - [0xE28, .data, st_update]
       - [0xE74, .data, collision]
       - [0x1234, .data, e_red_door]
