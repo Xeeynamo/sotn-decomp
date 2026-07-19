@@ -38,9 +38,10 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, .data, rwrp/header]
-      - [0xA0, .data, rwrp/header] # palette definitions
-      - [0xB8, .data, rwrp/header] # layers
-      - [0x1B8, .data, rwrp/header] # graphics banks
+      - [0x40, .data, rwrp/sprite_banks]
+      - [0xA0, .data, rwrp/palette_def]
+      - [0xB8, .data, rwrp/layers]
+      - [0x1B8, .data, rwrp/graphics_banks]
       - [0x23C, .data, rwrp/gen/e_laydef] # layout entries header
       - [0x3E4, .data, rwrp/e_init]
       - [0x4D0, .data, rwrp/background_block_init]
