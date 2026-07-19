@@ -25,7 +25,3 @@ u8 D_pspeu_0924E270[0x08];
 u8 D_pspeu_0924E268[0x08];
 u8 D_pspeu_0924E260[0x08];
 u8 g_ItemIconSlots[0x40];
-u8 g_LayoutObjHorizontal[0x08];
-u8 g_LayoutObjVertical[0x08];
-u8 g_LayoutObjPosHorizontal[0x08];
-u8 g_LayoutObjPosVertical[0x08];
