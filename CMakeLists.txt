@@ -338,6 +338,68 @@ set(SOURCE_FILES_STAGE_NO2
     src/st/no2/hammer.c
 )
 
+set(SOURCE_FILES_STAGE_DAI
+    src/pc/stages/stage_dai.c
+    src/st/dai/header.c
+    src/st/dai/gen/e_laydef.c
+    src/st/dai/e_init.c
+    src/st/dai/gen/rooms.c
+    src/st/dai/gen/e_layout.c
+    src/st/dai/gen/us/sprites.c
+    src/st/dai/gfx_data.c
+    src/st/dai/graphics_banks.c
+    src/st/dai/layers.c
+    src/st/dai/palette_def.c
+    src/st/dai/pal_stained_glass.c
+    src/st/dai/sprite_banks.c
+    src/st/dai/tilemaps.c
+    src/st/dai/background_block_init.c
+    src/st/dai/e_room_bg.c
+    src/st/dai/e_room_bg_2.c
+    src/st/dai/e_lock_camera.c
+    src/st/dai/e_breakable.c
+    src/st/dai/d_prize_drops.c
+    src/st/dai/cutscene_data.c
+    src/st/dai/st_update.c
+    src/st/dai/st_collision.c
+    src/st/dai/create_entity.c
+    src/st/dai/e_red_door_tiles.c
+    src/st/dai/e_red_door.c
+    src/st/dai/st_common.c
+    src/st/dai/e_collect.c
+    src/st/dai/e_misc.c
+    src/st/dai/e_stage_name.c
+    src/st/dai/e_particles.c
+    src/st/dai/e_room_fg.c
+    src/st/dai/e_room_fg_2.c
+    src/st/dai/popup.c
+    src/st/dai/prim_helpers.c
+    src/st/dai/e_bat.c
+    src/st/dai/e_bell.c
+    src/st/dai/e_bone_halberd.c
+    src/st/dai/e_bone_pillar.c
+    src/st/dai/e_chair.c
+    src/st/dai/e_clouds.c
+    src/st/dai/e_confessional.c
+    src/st/dai/e_corner_guard.c
+    src/st/dai/e_crow.c
+    src/st/dai/e_cutscene_actors.c
+    src/st/dai/e_cutscene_dialogue.c
+    src/st/dai/e_dai_no2_shortcut.c
+    src/st/dai/e_end_chime.c
+    src/st/dai/e_gargoyle.c
+    src/st/dai/e_hunting_girl.c
+    src/st/dai/e_mist_door.c
+    src/st/dai/e_sealed_door.c
+    src/st/dai/e_skelerang.c
+    src/st/dai/e_spectral_sword.c
+    src/st/dai/e_spikes.c
+    src/st/dai/e_stained_glass.c
+    src/st/dai/e_tower_exit.c
+    src/st/dai/e_winged_guard.c
+    src/st/dai/unk_data_psx.c
+)
+
 set(SOURCE_FILES_STAGE_CEN
     src/pc/stages/stage_cen.c
     src/st/cen/header.c
@@ -710,6 +772,7 @@ function(add_overlay name)
 endfunction()
 
 add_overlay(no2 ${SOURCE_FILES_STAGE_NO2})
+add_overlay(dai ${SOURCE_FILES_STAGE_DAI})
 add_overlay(cen ${SOURCE_FILES_STAGE_CEN})
 add_overlay(sel ${SOURCE_FILES_STAGE_SEL})
 add_overlay(wrp ${SOURCE_FILES_STAGE_WRP})
