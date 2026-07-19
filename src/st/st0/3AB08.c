@@ -752,7 +752,7 @@ void EntityCutscenePhotograph(Entity* self) {
         prim->drawMode = DRAW_HIDE;
         prim = prim->next;
         for (i = 0; i < 2; i++) {
-            dr_env = (DR_ENV*)LOW(prim->r1);
+            dr_env = PRIM_DR_ENV(prim);
             dr_env->tag = 0;
             prim->type = PRIM_GT4;
             prim = prim->next;
@@ -947,7 +947,7 @@ void EntityCutscenePhotograph(Entity* self) {
 
         prim = prim->next;
         prim->type = PRIM_ENV;
-        dr_env = (DR_ENV*)LOW(prim->r1);
+        dr_env = PRIM_DR_ENV(prim);
 
         drawEnv = g_CurrentBuffer->draw;
 

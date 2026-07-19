@@ -15,9 +15,12 @@ if not os.path.exists('tools/builds/GCCSH'):
 
 ninja = ninja_syntax.Writer(open("build.ninja", "w"))
 
+ninja.pool('dosemu_pool', 1)
+
 ninja.rule('compile',
            command='sh ./tools/builds/dosemu_wrapper.sh $in $out $args $tmpdir',
-           description='Building $out from $in')
+           description='Building $out from $in',
+           pool='dosemu_pool')
 
 ninja.rule(
         'check',
@@ -27,6 +30,19 @@ ninja.rule(
 ninja.rule('coff2elf',
            command="sh-elf-objcopy -Icoff-sh -Oelf32-sh $in $out",
            description='Converting $out from $in')
+
+ninja.rule('cargo_sotn_str',
+           command='cargo build --release --manifest-path tools/sotn_str/Cargo.toml',
+           description='Building tools/sotn_str/target/release/sotn_str')
+
+ninja.build(
+    'tools/sotn_str/target/release/sotn_str',
+    'cargo_sotn_str',
+    inputs=[
+        'tools/sotn_str/Cargo.toml',
+        'tools/sotn_str/Cargo.lock',
+        'tools/sotn_str/src/main.rs',
+    ])
 
 ninja.rule('link',
            command= 'sh-elf-ld -verbose --no-check-sections -nostdlib \
@@ -51,8 +67,16 @@ ninja.rule('link_multi',
            description='Linking $out from $in')
 
 ninja.rule('cpp',
-           command=f'cpp $FLAGS $in $out',
+           command='cpp $FLAGS $in > $out',
            description='Running preprocessor on $out from $in')
+
+ninja.rule('sotn_str',
+           command='tools/sotn_str/target/release/sotn_str process < $in > $out',
+           description='Expanding SOTN strings in $out from $in')
+
+ninja.rule('iconv_sjis',
+           command='iconv --from-code=UTF-8 --to-code=Shift-JIS < $in > $out',
+           description='Encoding Shift-JIS in $out from $in')
 
 ninja.rule('as',
            'sh-elf-as -no-pad-sections -I./src/saturn $in -o $out')
@@ -64,15 +88,28 @@ def add_srcs(srcs, output_dir, args):
         obj_dir = os.path.join(output_dir, os.path.dirname(relative_path))
         obj_name = os.path.join(obj_dir, f"{filename_without_extension}.cof")
         cpp_name = os.path.join(obj_dir, f"{filename_without_extension}.cpp")
+        str_name = os.path.join(obj_dir, f"{filename_without_extension}.str")
+        pre_name = os.path.join(obj_dir, f"{filename_without_extension}.pre")
         asm_name = os.path.join(obj_dir, f"{filename_without_extension}.s")
 
         flags = '-lang-c -v -I./src/saturn -I./src/saturn/lib -undef -D__GNUC__=2 -D__GNUC_MINOR__=7 -D__sh__ -D__sh__ -D__sh2__'
 
         ninja.build(
-            cpp_name,
+            pre_name,
             'cpp',
             inputs=[src],
             variables={'FLAGS': flags})
+
+        ninja.build(
+            str_name,
+            'sotn_str',
+            inputs=[pre_name],
+            implicit=['tools/sotn_str/target/release/sotn_str'])
+
+        ninja.build(
+            cpp_name,
+            'iconv_sjis',
+            inputs=[str_name])
 
         ninja.build(
             asm_name, 
@@ -93,8 +130,55 @@ snd_srcs = [
     'src/saturn/lib/snd.c',
     'src/saturn/zero_2.c',
     'src/saturn/game_0.c',
+    'src/saturn/game_1.c',
+    'src/saturn/game_3.c',
     'src/saturn/game.c',
+    'src/saturn/game_2.c',
+    'src/saturn/game/header.c',
+    'src/saturn/game/hdrstub.c',
+    'src/saturn/game/savemsg.c',
+    'src/saturn/game/cfgjp.c',
+    'src/saturn/game/cfgstr.c',
+    'src/saturn/game/cfgrw1.c',
+    'src/saturn/game/jewel.c',
+    'src/saturn/game/cfgrw4.c',
+    'src/saturn/game/btnmask.c',
+    'src/saturn/game/cfgrw2.c',
+    'src/saturn/game/lvlhp.c',
+    'src/saturn/game/cfgrw3.c',
+    'src/saturn/game/mnstate.c',
+    'src/saturn/game/cfgrw5.c',
+    'src/saturn/game/eqhelp.c',
+    'src/saturn/game/mnscroll.c',
+    'src/saturn/game/cfgrest.c',
+    'src/saturn/game/capetbl.c',
+    'src/saturn/game/joseph.c',
+    'src/saturn/game/capecon.c',
+    'src/saturn/game/capepal.c',
+    'src/saturn/game/miscend.c',
+    'src/saturn/game/sinetbl.c',
     'src/saturn/richter.c',
+    'src/saturn/ric/header.c',
+    'src/saturn/ric/hdrstub.c',
+    'src/saturn/ric/d54568.c',
+    'src/saturn/ric/gprolog.c',
+    'src/saturn/ric/timers.c',
+    'src/saturn/ric/sensors.c',
+    'src/saturn/ric/anims.c',
+    'src/saturn/ric/c2f40.c',
+    'src/saturn/ric/whipdat.c',
+    'src/saturn/ric/globdat.c',
+    'src/saturn/ric/savevar.c',
+    'src/saturn/ric/ptrtbl.c',
+    'src/saturn/ric/rictail.c',
+    'src/saturn/ric/rictl2.c',
+    'src/saturn/ric/rictl3.c',
+    'src/saturn/ric/rictl4.c',
+    'src/saturn/ric/rictl6.c',
+    'src/saturn/ric/rictl7.c',
+    'src/saturn/ric/rictl8.c',
+    'src/saturn/ric/rictl9.c',
+    'src/saturn/ric/rictl10.c',
     'src/saturn/stage_02.c',
     'src/saturn/t_bat.c',
     'src/saturn/warp.c',
@@ -158,7 +242,6 @@ def link_objs(srcs, output_dir):
 
 objs = [
     'build/saturn/alucard.o',
-    'build/saturn/richter.o',
     'build/saturn/stage_02.o',
     'build/saturn/warp.o',
     'build/saturn/t_bat.o',
@@ -185,8 +268,57 @@ def link_multi(multi_objs, output_dir):
                 'objs': sub_objs})
 
 multi_objs = {
+    'build/saturn/richter.o' : [
+        'build/saturn/ric/header.o',
+        'build/saturn/ric/hdrstub.o',
+        'build/saturn/ric/d54568.o',
+        'build/saturn/ric/gprolog.o',
+        'build/saturn/ric/timers.o',
+        'build/saturn/ric/sensors.o',
+        'build/saturn/ric/anims.o',
+        'build/saturn/ric/c2f40.o',
+        'build/saturn/ric/whipdat.o',
+        'build/saturn/ric/globdat.o',
+        'build/saturn/ric/savevar.o',
+        'build/saturn/ric/ptrtbl.o',
+        'build/saturn/ric/rictail.o',
+        'build/saturn/ric/rictl2.o',
+        'build/saturn/ric/rictl3.o',
+        'build/saturn/ric/rictl4.o',
+        'build/saturn/ric/rictl6.o',
+        'build/saturn/ric/rictl7.o',
+        'build/saturn/ric/rictl8.o',
+        'build/saturn/ric/rictl9.o',
+        'build/saturn/ric/rictl10.o',
+    ],
     'build/saturn/game.o' : [
+        'build/saturn/game/header.o',
+        'build/saturn/game/hdrstub.o',
+        'build/saturn/game_2.o',
         'build/saturn/game_0.o',
+        'build/saturn/game/savemsg.o',
+        'build/saturn/game_1.o',
+        'build/saturn/game_3.o',
+        'build/saturn/game/cfgjp.o',
+        'build/saturn/game/cfgstr.o',
+        'build/saturn/game/cfgrw1.o',
+        'build/saturn/game/jewel.o',
+        'build/saturn/game/cfgrw4.o',
+        'build/saturn/game/btnmask.o',
+        'build/saturn/game/cfgrw2.o',
+        'build/saturn/game/lvlhp.o',
+        'build/saturn/game/cfgrw3.o',
+        'build/saturn/game/mnstate.o',
+        'build/saturn/game/cfgrw5.o',
+        'build/saturn/game/eqhelp.o',
+        'build/saturn/game/mnscroll.o',
+        'build/saturn/game/cfgrest.o',
+        'build/saturn/game/capetbl.o',
+        'build/saturn/game/joseph.o',
+        'build/saturn/game/capecon.o',
+        'build/saturn/game/capepal.o',
+        'build/saturn/game/miscend.o',
+        'build/saturn/game/sinetbl.o',
     ],
     'build/saturn/zero.o' : [
         'build/saturn/lib/snd.o',

@@ -84,6 +84,13 @@
 #define HIHU(x) (((u16*)&(x))[1])
 #define LOW(x) (*(s32*)&(x))
 #define LOWU(x) (*(u32*)&(x))
+
+#ifdef VERSION_PC
+// on 64-bit builds, this needs to read 64-bit, not 32-bit with LOW
+#define PRIM_DR_ENV(prim) (*(DR_ENV**)&(prim)->r1)
+#else
+#define PRIM_DR_ENV(prim) ((DR_ENV*)LOW((prim)->r1))
+#endif
 #define F(x) (*(f32*)&(x))
 #define POS(x) (*(Pos*)&(x))
 #define UV(x) (*(uvPair*)&(x))

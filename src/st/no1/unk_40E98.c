@@ -190,7 +190,7 @@ void func_us_801C10F4(Entity* self) {
     drawEnv.clip = clipRect;
     drawEnv.ofs[0] = 0x180;
     drawEnv.ofs[1] = 0x100;
-    SetDrawEnv(LOW(prim->r1), &drawEnv);
+    SetDrawEnv(PRIM_DR_ENV(prim), &drawEnv);
     prim->drawMode = DRAW_DEFAULT;
     prim->priority = 0xC5;
 

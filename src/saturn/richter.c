@@ -1,9 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "richter.h"
 
-// export table
-INCLUDE_ASM("asm/saturn/richter/data", d60A5000, d_060A5000);
-
 // ===== pl_main.c
 
 // GetTeleportToOtherCastle
@@ -920,7 +917,36 @@ found:
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AC46C, func_060AC46C);
 
 // RicEntitySlideKick
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AC824, func_060AC824);
+void RicEntitySlideKick(Entity* entity) {
+    void RicSetSubweaponParams(Entity * entity);
+
+    if (PLAYER.step != PL_S_SLIDE) {
+        DestroyEntity(entity);
+    } else {
+        entity->posX.i.hi = PLAYER.posX.i.hi;
+        entity->posY.i.hi = PLAYER.posY.i.hi;
+        entity->facingLeft = PLAYER.facingLeft;
+        if (entity->step == 0) {
+            entity->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED |
+                            FLAG_KEEP_ALIVE_OFFCAMERA;
+            entity->hitboxOffX = 25;
+            entity->hitboxOffY = 12;
+            entity->hitboxWidth = 11;
+            entity->hitboxHeight = 9;
+            entity->ext.subweapon.subweaponId = PL_W_KICK;
+            RicSetSubweaponParams(entity);
+            entity->ext.subweapon.timer = entity->hitboxState;
+            entity->step++;
+        }
+        entity->hitboxState = entity->ext.subweapon.timer;
+        if (PLAYER.pose < 2) {
+            entity->hitboxState = 0;
+        }
+        if (PLAYER.pose > 7) {
+            DestroyEntity(entity);
+        }
+    }
+}
 
 // func_80160D2C
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AC908, func_060AC908);
@@ -1146,7 +1172,43 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B3454, func_060B3454);
 // RicEntityCrashReboundStoneExplosion, split start at mid function
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B3A0C, func_060B3A0C);
 // RicEntityCrashReboundStone
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B3A48, func_060B3A48);
+void RicEntityCrashReboundStone(Entity* entity) {
+    switch (entity->step) {
+    case 0:
+        entity->flags = FLAG_UNK_20000 | FLAG_KEEP_ALIVE_OFFCAMERA;
+        entity->step++;
+        entity->ext.subweapon.timer = 0x14;
+    case 1:
+        if (--entity->ext.subweapon.timer) {
+            break;
+        }
+    case 3:
+    case 5:
+        RicCreateEntFactoryFromEntity(entity, BP_57, 0);
+        entity->step++;
+    case 2:
+    case 4:
+    case 6:
+        entity->ext.subweapon.timer++;
+        if (entity->ext.subweapon.timer > 10) {
+            entity->ext.subweapon.timer = 0;
+            entity->posX.val = FIX(160.0);
+            entity->posY.val = 0;
+            RicCreateEntFactoryFromEntity(entity, FACTORY(BP_EMBERS, 1), 0);
+            entity->step++;
+        }
+        break;
+    case 7:
+        entity->ext.subweapon.timer++;
+        if (entity->ext.subweapon.timer > 15) {
+            DestroyEntity(entity);
+            g_Player.unk4E = 1;
+            RicCreateEntFactoryFromEntity(
+                entity, BP_CRASH_REBOUND_STONE_EXPLOSION, 0);
+        }
+        break;
+    }
+}
 
 // RicEntityCrashBibleBeam
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B3B3C, func_060B3B3C);
@@ -1359,8 +1421,8 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BA788, func_060BA788);
 
 void func_060BB330();
 
-s32 DAT_060c4118;
-s32 DAT_060c411c;
+extern s32 DAT_060c4118;
+extern s32 DAT_060c411c;
 
 void func_060BACA4(void) {
     memset(&DAT_060c4118, 0, 4);
@@ -1377,16 +1439,49 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BB330, func_060BB330);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BB454, func_060BB454);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BB58C, func_060BB58C);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BB718, func_060BB718);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BB90C, func_060BB90C);
+typedef struct {
+    u8 pad[0x1800];
+    u16 colors0[4];
+    u16 colors1[4];
+} RicGouraudTable;
+
+extern s32 d_060476A0;
+extern s32 d_060476A4;
+extern s32 d_060cd748;
+extern s32 d_060cd74c;
+extern RicGouraudTable* DAT_0606471C;
+extern s32 d_0605c6e4;
+s32* func_060784A8(void);
+
+void func_060BB90C(void) {
+    s32* ptr;
+    u16* colors0;
+    u16* colors1;
+
+    ptr = func_060784A8();
+    func_060BBDE0(ptr);
+    d_060cd748 = d_060476A0;
+    d_060cd74c = d_060476A4;
+    if (g_PlayableCharacter == 0) {
+        d_060476A0 = 0x252000;
+        d_060476A4 = 1;
+    }
+    colors0 = DAT_0606471C->colors0;
+    colors0[0] = colors0[1] = 0xB18C;
+    colors0[2] = colors0[3] = 0xD294;
+    colors1 = DAT_0606471C->colors1;
+    colors1[0] = colors1[1] = colors1[2] = colors1[3] = 0x9084;
+    d_0605c6e4 = 1;
+}
+
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BB9BC, func_060BB9BC);
 
 s32 d_06086390;
 s32 d_060476A0;
 s32 d_060476A4;
-s32 d_060cd748;
-s32 d_060cd74c;
+extern s32 d_060cd748;
+extern s32 d_060cd74c;
 void func_060BB9BC(s32*);
-s32* func_060784A8();
 
 void func_060BBA88(void) {
     s32* iVar2;
@@ -1428,9 +1523,72 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BC048, func_060BC048);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BC108, func_060BC108);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BC228, func_060BC228);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BC4E4, func_060BC4E4);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BC7A8, func_060BC7A8);
+extern s16 PTR_DAT_060cd7f0[];
+
+void func_060BC7A8(u32 arg0) {
+    s32 first;
+    s32 current;
+    s32 offset;
+    s32 i;
+    u8* ptr;
+
+    if (arg0 == 6) {
+        offset = 0x28;
+    } else if (arg0 & 1) {
+        offset = 0x28;
+    } else {
+        offset = 0;
+    }
+
+    first = PTR_DAT_060cd7f0[arg0];
+    for (current = first; current < first + 4; current++) {
+        s32 tile = current << 6;
+
+        ptr = (u8*)tile;
+        ptr += 0x25E58000 + offset;
+        for (i = 0; i < 0x20; i++) {
+            *ptr++ = 0;
+        }
+
+        if (offset == 0x28) {
+            ptr = (u8*)(0x25E58800 + tile);
+            for (i = 0; i < 0x10; i++) {
+                *ptr++ = 0;
+            }
+        }
+    }
+}
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BC834, func_060BC834);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BCA10, func_060BCA10);
+typedef struct {
+    u16 unk0;
+    u16 unk2;
+    u32 unk4;
+    u32 unk8;
+} Unk0605cd70;
+
+extern Unk0605cd70 DAT_0605cd70;
+extern u8 DAT_06057f68;
+extern u32 d_06085534;
+s32 func_060732E4(u16 arg0);
+void func_060BC834(void);
+
+void func_060BCA10(void) {
+    if (DAT_0605cd70.unk8 != 0) {
+        if (DAT_0605cd70.unk8 == 1) {
+            goto after;
+        }
+        return;
+    } else {
+        func_060732E4(DAT_0605cd70.unk0);
+        DAT_0605cd70.unk8++;
+    }
+after:
+    if ((DAT_06057f68 == 0) && ((g_pads[0].previous & 0x100) != 0)) {
+        d_06085534 = 6;
+        DAT_06057f68 = 4;
+    }
+    func_060BC834();
+}
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BCA84, func_060BCA84);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BCDB8, func_060BCDB8);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BCE64, func_060BCE64);

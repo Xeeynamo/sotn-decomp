@@ -64,6 +64,8 @@ static void printHelp(void) {
     printf("         sndlib      test sound library\n");
     printf("  --record <path>    record controller input to a file\n");
     printf("  --replay <path>    replay controller input from a file\n");
+    printf("  --replay-and-exit  quit automatically once the replay ends\n");
+    printf("  --replay-fast      disable frame limit during replay\n");
     printf("  --help             show this help message\n");
 }
 static void printAllowedParams(const char* allowedValues[], int n) {
@@ -85,6 +87,10 @@ static bool parseArgs(
     outParams->stage = -1;
     outParams->player = -1;
     outParams->scale = 1;
+    outParams->recordPath = NULL;
+    outParams->replayPath = NULL;
+    outParams->exitAfterReplay = false;
+    outParams->replayBoundlessFramerate = false;
 
     for (int i = 1; i < argc; i++) {
         if (strcmp(argv[i], "--help") == 0) {
@@ -120,6 +126,14 @@ static bool parseArgs(
                 printAllowedParams(allowed_tests, LEN(allowed_tests));
                 return false;
             }
+        } else if (strcmp(argv[i], "--record") == 0 && i + 1 < argc) {
+            outParams->recordPath = argv[++i];
+        } else if (strcmp(argv[i], "--replay") == 0 && i + 1 < argc) {
+            outParams->replayPath = argv[++i];
+        } else if (strcmp(argv[i], "--replay-and-exit") == 0) {
+            outParams->exitAfterReplay = true;
+        } else if (strcmp(argv[i], "--replay-fast") == 0) {
+            outParams->replayBoundlessFramerate = true;
         } else {
             printf("argument %s not recognized", argv[i]);
             return false;
@@ -140,6 +154,10 @@ int Main(int argc, char* argv[]) {
     }
     MainGame();
     ResetGame();
+    if (params.replayPath && Replay_DidDrift()) {
+        return -1;
+    }
+    return 0;
 }
 
 int main(int argc, char* argv[]) { return Main(argc, argv); }

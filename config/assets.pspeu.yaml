@@ -757,6 +757,20 @@ files:
           - [0x32D58, rawgfx, gfx_portrait_dracula, 48, 72, 8]
           - [0x33AD8, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/top.bin
+    asset_path: assets/st/top
+    src_path: src/st/top
+    splat_config_path: config/splat.pspeu.sttop.yaml
+    segments:
+      - start: 0x80
+        vram: 0x09237700
+        assets:
+          - [0x80, skip]
+          - [0x19760, cmpgfx, stage_name_en, 128, 64, 4]
+          - [0x19940, cmpgfx, stage_name_it, 128, 64, 4]
+          - [0x19BF8, cmpgfx, stage_name_sp, 128, 64, 4]
+          - [0x19E60, cmpgfx, stage_name_ge, 128, 64, 4]
+          - [0x1A008, cmpgfx, stage_name_fr, 128, 64, 4]
+          - [0x1A270, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/wrp.bin
     asset_path: assets/st/wrp
     src_path: src/st/wrp

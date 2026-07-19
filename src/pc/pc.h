@@ -35,6 +35,10 @@ struct InitGameParams {
     int stage;
     int player;
     int scale;
+    const char* recordPath;
+    const char* replayPath;
+    bool exitAfterReplay;
+    bool replayBoundlessFramerate;
 };
 
 struct FileOpenRead {
@@ -64,8 +68,10 @@ void MainGame(void);
 void ResetGame(void);
 
 // Controller input record/replay (src/pc/replay.c)
-void InitReplay(const struct InitGameParams* params);
-void ResetReplay(void);
+void Replay_Init(const struct InitGameParams* params);
+void Replay_Reset(void);
+void Replay_OnFrame(void);
+bool Replay_DidDrift(void);
 
 bool FileOpenRead(
     bool (*cb)(const struct FileOpenRead*), const char* filename, void* param);
@@ -74,7 +80,5 @@ bool FileAsString(bool (*cb)(const struct FileAsString* file),
                   const char* filename, void* param);
 bool FileUseContent(bool (*cb)(const struct FileUseContent* file, void* param),
                     const char* filename, void* param);
-
-const char* AnsiToSotnMenuString(const char* str);
 
 #endif

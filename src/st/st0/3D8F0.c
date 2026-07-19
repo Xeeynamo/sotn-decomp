@@ -133,7 +133,7 @@ void func_801BD8F0(Entity* self) {
 #ifndef VERSION_PSP
         prim = prim->next;
         for (i = 0; i < 2; i++) {
-            dr_env = LOW(prim->r1);
+            dr_env = PRIM_DR_ENV(prim);
             dr_env->tag = 0;
             prim->type = PRIM_GT4;
             prim = prim->next;
