@@ -61,7 +61,7 @@ segments:
       - [0x11AC, .data, gen/rooms]
       - [0x1228, .data, gen/e_layout] # layout entries data
       - [0x1420, .data, stage_data]
-      - [0x6FE8, .data, gen/sprites]
+      - [0x6FE8, .data, gen/us/sprites]
       - [0x8C48, .rodata, warp] # warp strings
       - [0x8C88, .rodata, warp] # EntityRWarpRoom
       - [0x8CB0, .rodata, warp] # EntityWarpSmallRocks
