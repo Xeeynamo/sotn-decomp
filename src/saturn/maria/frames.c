@@ -4,7 +4,8 @@
 #include <saturn_sprite.h>
 
 SaturnSpriteFrameHeader g_MariaFrame0 = {
-    0x0000, 0x0000,
+    0x0000,
+    0x0000,
 };
 
 SaturnSpriteFrame1 g_MariaFrame1 = {

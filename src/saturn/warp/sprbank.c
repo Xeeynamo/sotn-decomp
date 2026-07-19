@@ -20,22 +20,10 @@ extern struct SpriteParts* g_EntitySpriteBank15[];
 extern struct SpriteParts* g_WarpSpriteBank16[];
 
 struct SpriteParts** g_WarpSpriteBanks[18] = {
-    g_EntitySpriteBank00,
-    g_EntitySpriteBank01,
-    g_EntitySpriteBank02,
-    g_EntitySpriteBank03,
-    g_EntitySpriteBank04,
-    g_EntitySpriteBank05,
-    g_EntitySpriteBank06,
-    g_EntitySpriteBank07,
-    g_EntitySpriteBank08,
-    g_EntitySpriteBank09,
-    g_EntitySpriteBank10,
-    g_EntitySpriteBank11,
-    g_EntitySpriteBank12,
-    g_EntitySpriteBank13,
-    g_EntitySpriteBank14,
-    g_EntitySpriteBank15,
-    g_WarpSpriteBank16,
-    NULL,
+    g_EntitySpriteBank00, g_EntitySpriteBank01, g_EntitySpriteBank02,
+    g_EntitySpriteBank03, g_EntitySpriteBank04, g_EntitySpriteBank05,
+    g_EntitySpriteBank06, g_EntitySpriteBank07, g_EntitySpriteBank08,
+    g_EntitySpriteBank09, g_EntitySpriteBank10, g_EntitySpriteBank11,
+    g_EntitySpriteBank12, g_EntitySpriteBank13, g_EntitySpriteBank14,
+    g_EntitySpriteBank15, g_WarpSpriteBank16,   NULL,
 };

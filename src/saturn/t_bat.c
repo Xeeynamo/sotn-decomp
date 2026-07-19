@@ -9,7 +9,7 @@
 
 void PlaySfx(s32 sfxId);
 
-extern struct SpriteParts* g_ServantSpriteParts[];        // 0x060D19FC
+extern struct SpriteParts* g_ServantSpriteParts[]; // 0x060D19FC
 extern s32 g_CutsceneHasControl;
 
 static inline void SetEntityAnimation(Entity* entity, AnimationFrame* anim) {
@@ -652,10 +652,8 @@ void UpdateBatAttackMode(Entity* self) {
                    !(g_Player.status & PLAYER_STATUS_SUBWPN)) {
             self->ext.bat.hasShotFireball = false;
         }
-        g_BatFollowDeltaX =
-            self->ext.bat.follow->posX.i.hi - self->posX.i.hi;
-        g_BatFollowDeltaY =
-            self->ext.bat.follow->posY.i.hi - self->posY.i.hi;
+        g_BatFollowDeltaX = self->ext.bat.follow->posX.i.hi - self->posX.i.hi;
+        g_BatFollowDeltaY = self->ext.bat.follow->posY.i.hi - self->posY.i.hi;
         distance = g_BatFollowDeltaX * g_BatFollowDeltaX +
                    g_BatFollowDeltaY * g_BatFollowDeltaY;
         if (IsMovementAllowed(0) || distance > 0x18 * 0x18) {

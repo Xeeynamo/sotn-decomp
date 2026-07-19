@@ -28,5 +28,8 @@ u8 g_Stage02FallingLiquidAnim[16] = {
 };
 
 s32 g_Stage02FallingLiquidVelocities[4] = {
-    -0x10000, -0x10000, -0x8000, -0x4000,
+    -0x10000,
+    -0x10000,
+    -0x8000,
+    -0x4000,
 };

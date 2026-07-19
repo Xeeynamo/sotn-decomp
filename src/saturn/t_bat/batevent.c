@@ -4,12 +4,11 @@
 #define EVENT_NONE (-1)
 #define EVENT_RELIC(id) (0x40000000 | (id))
 #define EVENT_CASTLE_FLAG(id) (0x80000000 | (id))
-#define BAT_EVENT(servant, roomX, roomY, cameraX, cameraY, condition, delay,    \
-                  entity, params)                                             \
-    {NULL, 0, servant, roomX, roomY, cameraX, cameraY, condition, delay,       \
-     entity, params, 1}
-#define NULL_EVENT                                                            \
-    {NULL, 0, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0}
+#define BAT_EVENT(                                                             \
+    servant, roomX, roomY, cameraX, cameraY, condition, delay, entity, params) \
+    {NULL,    0,         servant, roomX,  roomY,  cameraX,                     \
+     cameraY, condition, delay,   entity, params, 1}
+#define NULL_EVENT {NULL, 0, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0}
 
 enum BatEventCondition {
     BAT_EVENT_FORM_OF_MIST = 7,
@@ -86,17 +85,17 @@ ServantEvent g_Events[49] = {
               EVENT_CASTLE_FLAG(BAT_EVENT_CAT_SPIKE_ROOM_LIT), 48,
               BAT_EVENT_ENTITY_FAERIE, 1),
     BAT_EVENT(BAT_EVENT_SERVANT_FAERIE, 21, 22, 187, 4,
-              EVENT_RELIC(BAT_EVENT_FORM_OF_MIST), 96,
-              BAT_EVENT_ENTITY_FAERIE, 2),
+              EVENT_RELIC(BAT_EVENT_FORM_OF_MIST), 96, BAT_EVENT_ENTITY_FAERIE,
+              2),
     BAT_EVENT(BAT_EVENT_SERVANT_FAERIE, 60, 26, 0, 255,
-              EVENT_RELIC(BAT_EVENT_FORM_OF_MIST), 96,
-              BAT_EVENT_ENTITY_FAERIE, 2),
+              EVENT_RELIC(BAT_EVENT_FORM_OF_MIST), 96, BAT_EVENT_ENTITY_FAERIE,
+              2),
     BAT_EVENT(BAT_EVENT_SERVANT_FAERIE, 44, 18, 791, 772,
-              EVENT_RELIC(BAT_EVENT_FORM_OF_MIST), 96,
-              BAT_EVENT_ENTITY_FAERIE, 2),
+              EVENT_RELIC(BAT_EVENT_FORM_OF_MIST), 96, BAT_EVENT_ENTITY_FAERIE,
+              2),
     BAT_EVENT(BAT_EVENT_SERVANT_FAERIE, 10, 15, 988, 4,
-              EVENT_RELIC(BAT_EVENT_FORM_OF_MIST), 96,
-              BAT_EVENT_ENTITY_FAERIE, 2),
+              EVENT_RELIC(BAT_EVENT_FORM_OF_MIST), 96, BAT_EVENT_ENTITY_FAERIE,
+              2),
     BAT_EVENT(BAT_EVENT_SERVANT_FAERIE, 39, 37, 0, 516,
               EVENT_CASTLE_FLAG(BAT_EVENT_NO4_SECRET_FLOOR_OPEN), 96,
               BAT_EVENT_ENTITY_FAERIE, 3),
@@ -132,17 +131,17 @@ ServantEvent g_Events[49] = {
               EVENT_CASTLE_FLAG(BAT_EVENT_CAT_SPIKE_ROOM_LIT), 48,
               BAT_EVENT_ENTITY_FAERIE, 1),
     BAT_EVENT(BAT_EVENT_SERVANT_YOUSEI, 21, 22, 187, 4,
-              EVENT_RELIC(BAT_EVENT_FORM_OF_MIST), 96,
-              BAT_EVENT_ENTITY_FAERIE, 2),
+              EVENT_RELIC(BAT_EVENT_FORM_OF_MIST), 96, BAT_EVENT_ENTITY_FAERIE,
+              2),
     BAT_EVENT(BAT_EVENT_SERVANT_YOUSEI, 60, 26, 0, 255,
-              EVENT_RELIC(BAT_EVENT_FORM_OF_MIST), 96,
-              BAT_EVENT_ENTITY_FAERIE, 2),
+              EVENT_RELIC(BAT_EVENT_FORM_OF_MIST), 96, BAT_EVENT_ENTITY_FAERIE,
+              2),
     BAT_EVENT(BAT_EVENT_SERVANT_YOUSEI, 44, 18, 791, 772,
-              EVENT_RELIC(BAT_EVENT_FORM_OF_MIST), 96,
-              BAT_EVENT_ENTITY_FAERIE, 2),
+              EVENT_RELIC(BAT_EVENT_FORM_OF_MIST), 96, BAT_EVENT_ENTITY_FAERIE,
+              2),
     BAT_EVENT(BAT_EVENT_SERVANT_YOUSEI, 10, 15, 988, 4,
-              EVENT_RELIC(BAT_EVENT_FORM_OF_MIST), 96,
-              BAT_EVENT_ENTITY_FAERIE, 2),
+              EVENT_RELIC(BAT_EVENT_FORM_OF_MIST), 96, BAT_EVENT_ENTITY_FAERIE,
+              2),
     BAT_EVENT(BAT_EVENT_SERVANT_YOUSEI, 39, 37, 0, 516,
               EVENT_CASTLE_FLAG(BAT_EVENT_NO4_SECRET_FLOOR_OPEN), 96,
               BAT_EVENT_ENTITY_FAERIE, 3),

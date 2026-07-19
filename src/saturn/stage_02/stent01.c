@@ -25,13 +25,8 @@ EntityEntry g_Stage02EntityEntry70 = {
 
 u32 g_Stage02EntityParameters1[2] = {0x60, 0x03600660};
 
-EntityEntry g_Stage02EntityEntry56 = {
-    g_Stage02SpriteBank21, func_060DEE20};
-EntityEntry g_Stage02EntityEntry57 = {
-    g_Stage02SpriteBank21, func_060DF264};
-EntityEntry g_Stage02EntityEntry58 = {
-    g_Stage02SpriteBank01, func_060DF3B8};
-EntityEntry g_Stage02EntityEntry59 = {
-    g_Stage02SpriteBank21, func_060DF52C};
-EntityEntry g_Stage02EntityEntry60 = {
-    g_Stage02SpriteBank00, func_060DF664};
+EntityEntry g_Stage02EntityEntry56 = {g_Stage02SpriteBank21, func_060DEE20};
+EntityEntry g_Stage02EntityEntry57 = {g_Stage02SpriteBank21, func_060DF264};
+EntityEntry g_Stage02EntityEntry58 = {g_Stage02SpriteBank01, func_060DF3B8};
+EntityEntry g_Stage02EntityEntry59 = {g_Stage02SpriteBank21, func_060DF52C};
+EntityEntry g_Stage02EntityEntry60 = {g_Stage02SpriteBank00, func_060DF664};

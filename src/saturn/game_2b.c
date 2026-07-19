@@ -18,7 +18,6 @@ extern char* g_GTIClubCode;
 
 extern s32 TimeAttackController(s32 eventId, s32 action);
 
-
 extern s32 DAT_00292000;
 
 s32* func_060784A8(void) { return &DAT_00292000; }

@@ -13,8 +13,7 @@ typedef struct {
     s16 height;
 } Stage02SoulStealOrbSpriteRect;
 
-EntityEntry g_Stage02EntityEntry06 = {
-    g_Stage02SpriteBank06, func_060E633C};
+EntityEntry g_Stage02EntityEntry06 = {g_Stage02SpriteBank06, func_060E633C};
 EntityEntry g_Stage02EntityEntry12 = {NULL, func_060E6628};
 
 u8 g_Stage02SoulStealOrbAnim[14] = {
@@ -22,12 +21,8 @@ u8 g_Stage02SoulStealOrbAnim[14] = {
 };
 
 Stage02SoulStealOrbSpriteRect g_Stage02SoulStealOrbSpriteRects[6] = {
-    {-3, -3, 8, 8},
-    {-3, -3, 8, 8},
-    {-7, -7, 16, 15},
-    {-11, -11, 24, 23},
-    {-11, -11, 24, 23},
-    {-11, -11, 24, 23},
+    {-3, -3, 8, 8},     {-3, -3, 8, 8},     {-7, -7, 16, 15},
+    {-11, -11, 24, 23}, {-11, -11, 24, 23}, {-11, -11, 24, 23},
 };
 
 u16 g_Stage02SoulStealOrbAngles[8] = {

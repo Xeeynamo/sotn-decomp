@@ -4,7 +4,8 @@
 #include <saturn_sprite.h>
 
 SaturnSpriteFrameHeader g_MariaSpritePackage2Frame0 = {
-    0x0000, 0x0000,
+    0x0000,
+    0x0000,
 };
 
 SaturnSpriteFrame6 g_MariaSpritePackage2Frame1 = {
@@ -32,19 +33,28 @@ struct {
     0x0001,
     {
         {
-            0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000,
-            0xCD2B, 0xD58C, 0xDE0E, 0xE670, 0xEEF1, 0xF753, 0xFFD5, 0xFFF9,
+            0x8000,
+            0x8000,
+            0x8000,
+            0x8000,
+            0x8000,
+            0x8000,
+            0x8000,
+            0x8000,
+            0xCD2B,
+            0xD58C,
+            0xDE0E,
+            0xE670,
+            0xEEF1,
+            0xF753,
+            0xFFD5,
+            0xFFF9,
         },
     },
     {0x0000},
 };
 
 SaturnSpriteImage g_MariaSpritePackage2Images[7] = {
-    {8, 8, 0x0000},
-    {8, 8, 0x0010},
-    {8, 8, 0x0020},
-    {8, 8, 0x0030},
-    {8, 8, 0x0040},
-    {8, 8, 0x0050},
-    {0, 0, 0x0060},
+    {8, 8, 0x0000}, {8, 8, 0x0010}, {8, 8, 0x0020}, {8, 8, 0x0030},
+    {8, 8, 0x0040}, {8, 8, 0x0050}, {0, 0, 0x0060},
 };

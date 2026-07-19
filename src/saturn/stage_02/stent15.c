@@ -10,5 +10,4 @@ u16 g_Stage02ElevatorMessage[12] = {
     0x82B3, 0x82EA, 0x82C4, 0x82A2, 0x82E9, 0,
 };
 
-EntityEntry g_Stage02EntityEntry73 = {
-    g_Stage02SpriteBank23, func_060DFAE4};
+EntityEntry g_Stage02EntityEntry73 = {g_Stage02SpriteBank23, func_060DFAE4};

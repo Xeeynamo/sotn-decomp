@@ -5,7 +5,6 @@
 
 void PlaySfx(s32 sfxId);
 
-
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606B6F8, func_0606B6F8);
 
 // _READ_SUB_OUT_MODE

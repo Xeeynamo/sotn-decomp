@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #ifndef SATURN_T_BAT_GFX_H
 #define SATURN_T_BAT_GFX_H
 

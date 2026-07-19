@@ -18,12 +18,8 @@ u8 g_WarpSoulStealOrbAnim[] = {
 };
 
 WarpSoulStealOrbSpriteRect g_WarpSoulStealOrbSpriteRects[6] = {
-    {-3, -3, 8, 8},
-    {-3, -3, 8, 8},
-    {-7, -7, 16, 15},
-    {-11, -11, 24, 23},
-    {-11, -11, 24, 23},
-    {-11, -11, 24, 23},
+    {-3, -3, 8, 8},     {-3, -3, 8, 8},     {-7, -7, 16, 15},
+    {-11, -11, 24, 23}, {-11, -11, 24, 23}, {-11, -11, 24, 23},
 };
 
 u16 g_WarpSoulStealOrbAngles[8] = {

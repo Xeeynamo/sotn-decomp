@@ -20,14 +20,10 @@ typedef struct {
     u16 padding;
 } Stage02SubweaponIndices;
 
-EntityEntry g_Stage02EntityEntry02 = {
-    g_Stage02SpriteBank00, func_060E2A80};
-EntityEntry g_Stage02EntityEntry09 = {
-    g_Stage02SpriteBank00, func_060E32DC};
-EntityEntry g_Stage02EntityEntry10 = {
-    g_Stage02SpriteBank00, func_060E37C8};
-EntityEntry g_Stage02EntityEntry11 = {
-    g_Stage02SpriteBank00, func_060E42FC};
+EntityEntry g_Stage02EntityEntry02 = {g_Stage02SpriteBank00, func_060E2A80};
+EntityEntry g_Stage02EntityEntry09 = {g_Stage02SpriteBank00, func_060E32DC};
+EntityEntry g_Stage02EntityEntry10 = {g_Stage02SpriteBank00, func_060E37C8};
+EntityEntry g_Stage02EntityEntry11 = {g_Stage02SpriteBank00, func_060E42FC};
 EntityEntry g_Stage02EntityEntry13 = {NULL, func_060E43F4};
 
 Stage02HeartPrizeValues g_Stage02HeartPrizes = {{1, 5}, {0, 0}};

@@ -23,14 +23,13 @@ s32 g_MariaSmokePuffVelocityY[] = {
 s16 g_MariaSmokePuffScale[] = {0x30, 0x40, 0x50, 0x60, 0x70, 0x80};
 
 AnimationFrame g_MariaAnimSmokePuff[] = {
-    POSE(1, 0x01, 0), POSE(1, 0x02, 0), POSE(1, 0x03, 0),
-    POSE(1, 0x04, 0), POSE(1, 0x05, 0), POSE(1, 0x06, 0),
-    POSE(1, 0x07, 0), POSE(1, 0x08, 0), POSE(1, 0x09, 0),
-    POSE(1, 0x0A, 0), POSE(1, 0x0B, 0), POSE(1, 0x0C, 0),
-    POSE(1, 0x0D, 0), POSE(1, 0x0E, 0), POSE(1, 0x0F, 0),
-    POSE(1, 0x10, 0), POSE(1, 0x11, 0), POSE(1, 0x12, 0),
-    POSE(1, 0x13, 0), POSE(1, 0x14, 0), POSE(1, 0x15, 0),
-    POSE(1, 0x16, 0), POSE(1, 0x17, 0), POSE(1, 0x18, 0), POSE_END,
+    POSE(1, 0x01, 0), POSE(1, 0x02, 0), POSE(1, 0x03, 0), POSE(1, 0x04, 0),
+    POSE(1, 0x05, 0), POSE(1, 0x06, 0), POSE(1, 0x07, 0), POSE(1, 0x08, 0),
+    POSE(1, 0x09, 0), POSE(1, 0x0A, 0), POSE(1, 0x0B, 0), POSE(1, 0x0C, 0),
+    POSE(1, 0x0D, 0), POSE(1, 0x0E, 0), POSE(1, 0x0F, 0), POSE(1, 0x10, 0),
+    POSE(1, 0x11, 0), POSE(1, 0x12, 0), POSE(1, 0x13, 0), POSE(1, 0x14, 0),
+    POSE(1, 0x15, 0), POSE(1, 0x16, 0), POSE(1, 0x17, 0), POSE(1, 0x18, 0),
+    POSE_END,
 };
 
 u8 g_MariaSmokePuffWallSensorsWide[] = {
@@ -65,10 +64,9 @@ MariaHitEffectDef* g_MariaHitEffectDefsByVariant[] = {
 };
 
 AnimationFrame g_MariaAnimMultipleEmbersA[] = {
-    POSE(2, 1, 0), POSE(2, 2, 0), POSE(2, 3, 0), POSE(2, 4, 0),
-    POSE(2, 5, 0), POSE(2, 4, 0), POSE(2, 3, 0), POSE(2, 4, 0),
-    POSE(2, 3, 0), POSE(2, 4, 0), POSE(2, 5, 0), POSE(1, 6, 0),
-    POSE(1, 7, 0), POSE(1, 8, 0), POSE_END,
+    POSE(2, 1, 0), POSE(2, 2, 0), POSE(2, 3, 0), POSE(2, 4, 0), POSE(2, 5, 0),
+    POSE(2, 4, 0), POSE(2, 3, 0), POSE(2, 4, 0), POSE(2, 3, 0), POSE(2, 4, 0),
+    POSE(2, 5, 0), POSE(1, 6, 0), POSE(1, 7, 0), POSE(1, 8, 0), POSE_END,
 };
 
 AnimationFrame g_MariaAnimMultipleEmbersB[] = {
@@ -79,7 +77,6 @@ AnimationFrame g_MariaAnimMultipleEmbersB[] = {
 };
 
 AnimationFrame g_MariaAnimRisingEmber[] = {
-    POSE(2, 1, 0), POSE(2, 2, 0), POSE(2, 3, 0), POSE(2, 4, 0),
-    POSE(2, 5, 0), POSE(2, 6, 0), POSE(2, 7, 0), POSE(2, 8, 0),
-    POSE_END,
+    POSE(2, 1, 0), POSE(2, 2, 0), POSE(2, 3, 0), POSE(2, 4, 0), POSE(2, 5, 0),
+    POSE(2, 6, 0), POSE(2, 7, 0), POSE(2, 8, 0), POSE_END,
 };

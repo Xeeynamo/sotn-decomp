@@ -23,8 +23,7 @@ u8 g_Stage02BoneScimitarAttackTimerCycles[2][4] = {
     {0xF0, 0xC0, 0xA0, 0x80},
 };
 
-s16 g_Stage02BoneScimitarGroundSensors[8] = {
-    0, 20, 0, 4, 8, -4, -16, 0};
+s16 g_Stage02BoneScimitarGroundSensors[8] = {0, 20, 0, 4, 8, -4, -16, 0};
 s16 g_Stage02BoneScimitarSpecialSensors[4] = {0, 20, 12, 0};
 s16 g_Stage02BoneScimitarMoveSensors[6] = {-12, 16, 0, -16, 0, -16};
 

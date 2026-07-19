@@ -7,9 +7,5 @@ s32 D_06085530 = 0;
 s32 D_06085534 = 0;
 
 s32 g_EmptyEquipmentIdsBySlot[] = {
-    0x1A,
-    0,
-    0x30,
-    0x3A,
-    0x3A,
+    0x1A, 0, 0x30, 0x3A, 0x3A,
 };

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #ifndef SATURN_CUTSCENE_H
 #define SATURN_CUTSCENE_H
 
@@ -31,7 +32,7 @@ typedef enum {
 
 #define SATURN_CS_CMD(op, payload)                                             \
     (((u32)(op) << 24) | ((u32)(payload) & 0xFFFFFF))
-#define SATURN_CS_CMD_U32(op, payload, value)                                 \
+#define SATURN_CS_CMD_U32(op, payload, value)                                  \
     SATURN_CS_CMD(op, payload), (u32)(value)
 #define SATURN_CS_CMD_U32_3(op, payload, value0, value1, value2)               \
     SATURN_CS_CMD(op, payload), (u32)(value0), (u32)(value1), (u32)(value2)
