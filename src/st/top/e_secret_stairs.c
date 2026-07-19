@@ -3,6 +3,8 @@
 
 extern EInit g_EInitTOPCommon;
 
+static u16 unused[] = {0, 0};
+
 static Point16 D_us_80180C0C[] = {
     {0x0580, 0x0330},
     {0x0598, 0x0348},

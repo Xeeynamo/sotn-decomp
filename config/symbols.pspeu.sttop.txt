@@ -14,7 +14,6 @@ rooms_layers = 0x09256978;
 cluts = 0x09256E10;
 gfxBanks = 0x09256F00;
 rooms = 0x09257108;
-TOP_PrizeDrops = 0x09275E00;
 actor_names_en = 0x09275F28;
 actor_name_len_en = 0x09275FB0;
 actor_names_sp = 0x09275FC0;

@@ -93,7 +93,7 @@ segments:
       - [0x3E6E0, .data, top/header]
       - [0x3E718, .data, top/post_richter_cutscene]
       - [0x3E758, .data, top/e_elevator]
-      - [0x3E780, data] # prize_drops
+      - [0x3E780, .data, top/d_prize_drops]
       - [0x3E7A8, .data, top/e_secret_stairs]
       - [0x3E870, .data, top/e_lion_lamp]
       - [0x3E8A8, data]
