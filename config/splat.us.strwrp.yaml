@@ -56,7 +56,7 @@ segments:
       - [0xC94, .data, rwrp/e_collect]
       - [0xF84, .data, rwrp/e_misc]
       - [0xFE8, .data, rwrp/e_particles]
-      - [0x1120, .data, wrp/e_room_fg]
+      - [0x1120, .data, rwrp/e_room_fg]
       - [0x11AC, .data, rwrp/gen/rooms]
       - [0x1228, .data, rwrp/gen/e_layout] # layout entries data
       - [0x1420, .data, rwrp/stage_data]
@@ -85,7 +85,7 @@ segments:
       - [0x1024C, c, rwrp/e_misc]
       - [0x1373C, c, wrp/e_stage_name]
       - [0x14590, c, rwrp/e_particles]
-      - [0x14DD4, c, wrp/e_room_fg]
+      - [0x14DD4, c, rwrp/e_room_fg]
       - [0x14EC0, c, rwrp/popup]
       - [0x151F0, c, wrp/prim_helpers]
       - [0x15A20, .bss, rwrp/create_entity]
