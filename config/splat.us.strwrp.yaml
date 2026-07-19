@@ -86,7 +86,7 @@ segments:
       - [0x1373C, c, wrp/e_stage_name]
       - [0x14590, c, rwrp/e_particles]
       - [0x14DD4, c, wrp/e_room_fg]
-      - [0x14EC0, c, wrp/popup]
+      - [0x14EC0, c, rwrp/popup]
       - [0x151F0, c, wrp/prim_helpers]
       - [0x15A20, .bss, rwrp/create_entity]
       - [0x15A36, .bss, rwrp/bss]

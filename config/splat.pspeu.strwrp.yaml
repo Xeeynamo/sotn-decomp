@@ -52,7 +52,7 @@ segments:
       - [0x4C78, c, rwrp/e_collect]
       - [0x8EC8, c, rwrp/e_misc]
       - [0x95D0, c, rwrp/collision]
-      - [0xB7A8, c, rwrp_psp/popup]
+      - [0xB7A8, c, rwrp/popup]
       - [0xBDA0, c, rwrp_psp/e_room_fg]
       - [0xBEB8, c, rwrp_psp/st_common]
       - [0xCEE8, c, rwrp_psp/prim_helpers]
