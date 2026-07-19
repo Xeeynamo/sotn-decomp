@@ -24,4 +24,3 @@ u8 D_pspeu_0924E278[0x08];
 u8 D_pspeu_0924E270[0x08];
 u8 D_pspeu_0924E268[0x08];
 u8 D_pspeu_0924E260[0x08];
-u8 g_ItemIconSlots[0x40];
