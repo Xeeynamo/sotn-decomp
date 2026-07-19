@@ -7,7 +7,7 @@ u8 D_pspeu_0924F300[0x08];
 u8 D_pspeu_0924F2F8[0x08];
 u8 D_pspeu_0924F2F0[0x08];
 u8 D_pspeu_0924F2E8[0x08];
-u8 D_pspeu_0924F2E0[0x08];
+u8 RWRP_PrizeDrops[0x08]; // TODO move to d_prize_drops
 u8 D_pspeu_0924E2E0[0x1000];
 u8 D_pspeu_0924E2D8[0x08];
 u8 D_pspeu_0924E2D0[0x08];
@@ -20,7 +20,3 @@ u8 D_pspeu_0924E2A0[0x08];
 u8 D_pspeu_0924E290[0x10];
 u8 D_pspeu_0924E288[0x08];
 u8 D_pspeu_0924E280[0x08];
-u8 D_pspeu_0924E278[0x08];
-u8 D_pspeu_0924E270[0x08];
-u8 D_pspeu_0924E268[0x08];
-u8 D_pspeu_0924E260[0x08];
