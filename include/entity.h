@@ -1534,7 +1534,10 @@ typedef struct {
     s16 unkA6;
     s32 unkA8;
     s32 unkAC;
-    s16 unkB0;
+#ifdef PLATFORM_64BIT
+    s32 _align_subweaponId[3];
+#endif
+    s16 subweaponId;
     s32 unkB4;
 } ET_Whip;
 
@@ -4541,5 +4544,6 @@ SYNC_FIELD(ET_Subweapon, ET_Agunea, subweaponId);
 SYNC_FIELD(ET_Subweapon, ET_AguneaCrash, subweaponId);
 SYNC_FIELD(ET_Subweapon, ET_GiantSpinningCross, subweaponId);
 SYNC_FIELD(ET_Subweapon, ET_CrashCross, subweaponId);
+SYNC_FIELD(ET_Subweapon, ET_Whip, subweaponId);
 
 #endif // ENTITY_H
