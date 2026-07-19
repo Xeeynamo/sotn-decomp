@@ -13,15 +13,91 @@ segments:
     vram:  0x060DC000
     subalign: 2
     subsegments:
-      - start: 0x0
-        type: data
-        file: warp
-        end: 0x3f
+      - [0x0, .data, warp/header]
       - start: 0x40
         type: c
         file: warp
         end: 0x1D74
       - start: 0x1D74
-        type: data
-        file: warp
+        type: .data
+        file: warp/obtain
+        end: 0x1D80
+      - start: 0x1D80
+        type: .text
+        file: warp/warpmid
+        end: 0x52A8
+      - [0x52A8, .data, warp/locbank]
+      - [0x52B4, .data, warp/sprbank]
+      - start: 0x52FC
+        type: .data
+        file: warp/entupd
+        end: 0x535C
+      - start: 0x535C
+        type: .data
+        file: warp/laydef
+        end: 0x5504
+      - start: 0x5504
+        type: .data
+        file: warp/hlaydat
+        end: 0x5810
+      - start: 0x5810
+        type: .data
+        file: warp/hempty
+        end: 0x5844
+      - start: 0x5844
+        type: .data
+        file: warp/vlaydat
+        end: 0x5B50
+      - start: 0x5B50
+        type: .data
+        file: warp/vempty
+        end: 0x5B84
+      - start: 0x5B84
+        type: .data
+        file: warp/layres
+        end: 0x5D9C
+      - [0x5D9C, .data, warp/roomtbl]
+      - start: 0x5E0C
+        type: .data
+        file: warp/lookup
+        end: 0x5F8C
+      - start: 0x5F8C
+        type: .data
+        file: warp/locent
+        end: 0x5F9C
+      - start: 0x5F9C
+        type: .data
+        file: warp/state
+        end: 0x5FFC
+      - start: 0x5FFC
+        type: .data
+        file: warp/collect
+        end: 0x61E0
+      - start: 0x61E0
+        type: .data
+        file: warp/entstd
+        end: 0x6208
+      - start: 0x6208
+        type: .data
+        file: warp/prizecfg
+        end: 0x6248
+      - start: 0x6248
+        type: .data
+        file: warp/relicdat
+        end: 0x62AC
+      - start: 0x62AC
+        type: .data
+        file: warp/reddoor
+        end: 0x62C4
+      - start: 0x62C4
+        type: .data
+        file: warp/expldat
+        end: 0x638C
+      - start: 0x638C
+        type: .data
+        file: warp/effect
+        end: 0x6428
+      - start: 0x6428
+        type: .data
+        file: warp/particle
         end: 0x6488

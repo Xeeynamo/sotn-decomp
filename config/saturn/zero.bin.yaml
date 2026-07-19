@@ -22,6 +22,18 @@ segments:
         type: c
         file: zero
         end: 0xA5C3
+        function_ranges:
+          - [0x0768, 0x07C2]
+          - [0x0806, 0x0874]
+          - [0x08B2, 0x0956]
+          - [0x09C6, 0x09E2]
+          - [0x0AA0, 0x0B56]
+          - [0x40DC, 0x4110]
+          - [0x411C, 0x419C]
+          - [0x4BAC, 0x4C5E]
+          - [0x4DBA, 0x4E3C]
+          - [0x4F3E, 0x4F4C]
+          - [0x4F90, 0x4FCC]
 
       - start: 0xA5C4
         type: data
@@ -69,9 +81,11 @@ segments:
         
       # bug
       - start: 0xD1F8
-        type: data
+        type: c
         file: zero
         end: 0xD9EB
+        function_ranges:
+          - [0xD1F8, 0xD9EA]
         
       - start: 0xD9EC
         type: c

@@ -1,0 +1,43 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+#include "batanim.h"
+
+AnimationFrame g_DefaultBatAnimationFrame[14] = {
+    {4, 0x415}, {1, 0x416}, {1, 0x417}, {1, 0x41E}, {1, 0x418},
+    {1, 0x419}, {4, 0x41A}, {2, 0x41B}, {2, 0x41C}, {2, 0x41D},
+    {1, 0x41E}, {2, 0x417}, {2, 0x416}, {0, 0x000},
+};
+
+AnimationFrame g_BatAlternateAnimationFrame[13] = {
+    {5, 0x41F}, {5, 0x420}, {5, 0x41F}, {5, 0x420}, {5, 0x41F},
+    {5, 0x420}, {4, 0x41F}, {4, 0x420}, {3, 0x41F}, {3, 0x420},
+    {2, 0x41F}, {16, 0x420}, {0, 0x000},
+};
+
+AnimationFrame g_BatFarFromTargetAnimationFrame[14] = {
+    {1, 0x415}, {1, 0x416}, {1, 0x417}, {1, 0x41E}, {1, 0x418},
+    {1, 0x419}, {1, 0x41A}, {1, 0x41B}, {1, 0x41C}, {1, 0x41D},
+    {1, 0x41E}, {1, 0x417}, {1, 0x416}, {0, 0x000},
+};
+
+AnimationFrame g_BatCloseToTargetAnimationFrame[40] = {
+    {1, 0x415}, {1, 0x416}, {1, 0x417}, {1, 0x41E}, {1, 0x418},
+    {1, 0x419}, {1, 0x41A}, {1, 0x41B}, {1, 0x41C}, {1, 0x41D},
+    {1, 0x41E}, {1, 0x417}, {1, 0x416}, {1, 0x415}, {1, 0x416},
+    {1, 0x417}, {1, 0x41E}, {1, 0x418}, {1, 0x419}, {2, 0x41A},
+    {2, 0x41B}, {2, 0x41C}, {2, 0x41D}, {2, 0x41E}, {2, 0x417},
+    {2, 0x416}, {2, 0x415}, {2, 0x416}, {2, 0x417}, {2, 0x41E},
+    {2, 0x418}, {2, 0x419}, {3, 0x41A}, {3, 0x41B}, {3, 0x41C},
+    {3, 0x41D}, {3, 0x41E}, {3, 0x417}, {3, 0x416}, {-2, 0x000},
+};
+
+AnimationFrame g_BatHighVelocityAnimationFrame[2] = {
+    {1, 0x415}, {-1, 0x000},
+};
+
+AnimationFrame* g_BatAnimationFrames[5] = {
+    g_DefaultBatAnimationFrame,
+    g_BatAlternateAnimationFrame,
+    g_BatFarFromTargetAnimationFrame,
+    g_BatCloseToTargetAnimationFrame,
+    g_BatHighVelocityAnimationFrame,
+};

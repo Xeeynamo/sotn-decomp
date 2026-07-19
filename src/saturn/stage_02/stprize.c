@@ -1,0 +1,14 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+#include "sattypes.h"
+#include "../../../include/items.h"
+
+u16 g_Stage02PrizeDrops[11] = {
+    ITEMDROP_DIAMOND_PLATE,  ITEMDROP_HEART_VESSEL,
+    ITEMDROP_TWILIGHT_CLOAK, ITEMDROP_LIFE_VESSEL,
+    ITEMDROP_ZWEIHANDER,     ITEMDROP_STONE_MASK,
+    ITEMDROP_HOLY_GLASSES,   ITEMDROP_RESIST_STONE,
+    ITEMDROP_LEATHER_SHIELD, ITEMDROP_BASILARD,
+    ITEMDROP_ELIXIR,
+};
+
+u16 g_Stage02PrizeDropsPadding = 0;

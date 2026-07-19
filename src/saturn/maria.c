@@ -3,7 +3,6 @@
 #include "sattypes.h"
 #include "richter.h"
 
-INCLUDE_ASM("asm/saturn/maria/data", d60A5000, d_060A5000);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A5060, func_060A5060);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A5154, func_060A5154);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A5208, func_060A5208);
@@ -68,8 +67,7 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A714C, func_060A714C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A7508, func_060A7508);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A75AC, func_060A75AC);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A7DF4, func_060A7DF4);
-// function, splitter bugs
-INCLUDE_ASM("asm/saturn/maria/data", d60A7F70, d_060A7F70);
+INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A7F70, func_060A7F70);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A8248, func_060A8248);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A8308, func_060A8308);
 
@@ -111,8 +109,8 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9064, func_060A9064);
 
 void func_060A9130(void) { func_060AA4BC(0xf0); }
 
-AnimationFrame D_80155950[];
-AnimationFrame D_8015591C[];
+extern AnimationFrame D_80155950[];
+extern AnimationFrame D_8015591C[];
 // func_060A8EB8
 void MariaSetInit(s32 step_s) {
     PLAYER.step = PL_S_INIT;
@@ -499,10 +497,7 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AF444, func_060AF444);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AFAB4, func_060AFAB4);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AFBA4, func_060AFBA4);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B0220, func_060B0220);
-// function, bugs
-INCLUDE_ASM("asm/saturn/maria/data", d60B0474, d_060B0474);
-// function, splitter bugs
-INCLUDE_ASM_NO_ALIGN("asm/saturn/maria/data", d60B08DA, d_060B08DA);
+INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B0474, func_060B0474);
 
 void func_060B099C(Entity* self) { DestroyEntity(self); }
 
@@ -515,8 +510,7 @@ s32 func_060B09C0() { return 0; }
 const u16 pad_60B09C8 = 0;
 
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B09CC, func_060B09CC);
-// function, splitter bugs
-INCLUDE_ASM_NO_ALIGN("asm/saturn/maria/data", d60B1872, d_060B1872);
+INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B1474, func_060B1474);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B18C8, func_060B18C8);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B199C, func_060B199C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B1A58, func_060B1A58);
@@ -545,7 +539,7 @@ void MariaEntityCrashReboundStoneParticles(Entity* entity) {
 }
 
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B29D4, func_060B29D4);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B2F8C, func_060B2F8C);
+INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B2E7C, func_060B2E7C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B2FC8, func_060B2FC8);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B30BC, func_060B30BC);
 
@@ -591,8 +585,7 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B5E28, func_060B5E28);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B626C, func_060B626C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B668C, func_060B668C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B6C94, func_060B6C94);
-// function, splitter bugs
-INCLUDE_ASM_NO_ALIGN("asm/saturn/maria/data", d60B761E, d_060B761E);
+INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B72B4, func_060B72B4);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B776C, func_060B776C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B7A48, func_060B7A48);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B7E08, func_060B7E08);
@@ -602,8 +595,7 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B805C, func_060B805C);
 void func_060B82AC() {}
 
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B82B8, func_060B82B8);
-// function, splitter bugs
-INCLUDE_ASM_NO_ALIGN("asm/saturn/maria/data", d60B8666, d_060B8666);
+INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B85C8, func_060B85C8);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B868C, func_060B868C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B89F0, func_060B89F0);
 
@@ -648,7 +640,7 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BAC78, func_060BAC78);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BADA8, func_060BADA8);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BAFF0, func_060BAFF0);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BB334, func_060BB334);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BB6E8, func_060BB6E8);
+INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BB4AC, func_060BB4AC);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BB724, func_060BB724);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BB868, func_060BB868);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BBEF8, func_060BBEF8);
@@ -666,12 +658,12 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BD474, func_060BD474);
 
 void func_060BB330();
 
-s32 DAT_060c4118;
-s32 DAT_060c411c;
+extern u32 g_MariaCastleMapState;
+extern u8 g_MariaCastleMapBitmap[240][160];
 
 void func_060BACA4(void) {
-    memset(&DAT_060c4118, 0, 4);
-    memcpy(0x002B2000, &DAT_060c411c, 0x9600);
+    memset(&g_MariaCastleMapState, 0, 4);
+    memcpy(0x002B2000, g_MariaCastleMapBitmap, 0x9600);
 
     func_060BB330();
 }
@@ -842,4 +834,3 @@ void func_060C0A5C(void) {
 }
 
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60C0AE4, func_060C0AE4);
-INCLUDE_ASM("asm/saturn/maria/data", d60C16B8, d_060C16B8);

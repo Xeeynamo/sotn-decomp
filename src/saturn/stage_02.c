@@ -5,8 +5,6 @@
 
 // Alchemy Laboratory
 
-INCLUDE_ASM("asm/saturn/stage_02/data", d60DC000, d_060DC000);
-
 // EntityBreakable (candles)
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DC040, func_060DC040);
 
@@ -17,11 +15,12 @@ void EntityRedEyeBust(Entity* self) {
     switch (self->step) {
     case 0:
         func_0607B264(self, 3);
-        result =
-            func_0600B344(entityRedEyeBustData.unk8, entityRedEyeBustData.unk10,
-                          entityRedEyeBustData.unk0, 1);
+        result = func_0600B344(
+            (u16)g_Stage02SharedBreakableResource.allocationIndex,
+            g_Stage02SharedBreakableResource.flags,
+            (s32)g_Stage02SharedBreakableResource.images, 1);
         self->unk0 = result;
-        func_0600AFA8(result, entityRedEyeBustData2.unk28);
+        func_0600AFA8(result, g_Stage02SharedBreakableFrames[7]);
         result->zPriority = 0x70;
         result->unk14 = *(u32*)(&self->posX);
         result->unk18 = *(u32*)(&self->posY);
@@ -77,18 +76,19 @@ void EntityTableWithGlobe(Entity* self) {
         self->hitboxOffY = -0xA;
         self->hitboxState = 2;
     case 1:
-        AnimateEntity(self, D_80180EF8, D_80180EF0);
+        AnimateEntity(self, g_Stage02TableWithGlobeIdleAnim, D_80180EF0);
         if (self->hitFlags != 0) {
             PlaySfxPositional(0x61D); // sotn-lint-ignore
             self->hitboxState = 0;
             CreateEntityFromEntity(E_HEART_DROP, self, &self[1]);
-            self[1].params = D_80180F10[self->params];
+            self[1].params =
+                g_Stage02TableWithGlobeDropParams[self->params];
             SetStep(2);
         }
         break;
 
     case 2:
-        AnimateEntity(self, dat_060ed174, D_80180EF0);
+        AnimateEntity(self, g_Stage02TableWithGlobeBreakAnim, D_80180EF0);
         break;
     }
     func_06079BB4(self);
@@ -386,4 +386,3 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EC278, func_060EC278);
 
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EC730, func_060EC730);
 INCLUDE_ASM("asm/saturn/stage_02/data", d60ECA94, d_060ECA94);
-INCLUDE_ASM("asm/saturn/stage_02/data", d60ECC50, d_060ECC50);

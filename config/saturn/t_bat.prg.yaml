@@ -14,14 +14,42 @@ segments:
     subalign: 2
     subsegments:
       - start: 0x0
-        type: data
-        file: t_bat
-        end: 0x5F
+        type: .data
+        file: t_bat/bathead
+        end: 0x40
+      - start: 0x40
+        type: .data
+        file: t_bat/batmeta
+        end: 0x60
       - start: 0x60
         type: c
         file: t_bat
         end: 0x2857
       - start: 0x2858
-        type: data
-        file: t_bat
+        type: .data
+        file: t_bat/sprdata
+        end: 0x29FC
+      - start: 0x29FC
+        type: .data
+        file: t_bat/sprbank
+        end: 0x2A88
+      - start: 0x2A88
+        type: .data
+        file: t_bat/batgfx
+        end: 0x2B84
+      - start: 0x2B84
+        type: .data
+        file: t_bat/batanim
+        end: 0x2CE4
+      - start: 0x2CE4
+        type: .data
+        file: t_bat/batstat
+        end: 0x2DFC
+      - start: 0x2DFC
+        type: .data
+        file: t_bat/batevent
+        end: 0x3744
+      - start: 0x3744
+        type: .bss
+        file: t_bat/batbss
         end: 0x7000
