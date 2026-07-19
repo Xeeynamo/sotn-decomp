@@ -1,22 +1,28 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../top/top.h"
+#include <cutscene.h>
 
-INCLUDE_ASM("st/top_psp/nonmatchings/top_psp/cutscene", GetLang);
+extern Dialogue g_Dialogue;
 
-INCLUDE_ASM("st/top_psp/nonmatchings/top_psp/cutscene", DrawCutsceneActorName);
+#include "../../get_lang.h"
 
-INCLUDE_ASM("st/top_psp/nonmatchings/top_psp/cutscene", CutsceneUnk3);
+#include "../cutscene_actor_name.h"
 
-INCLUDE_ASM("st/top_psp/nonmatchings/top_psp/cutscene", CutsceneUnk4);
+#include "../cutscene_unk3.h"
 
-INCLUDE_ASM("st/top_psp/nonmatchings/top_psp/cutscene", CutsceneUnk1);
+#include "../cutscene_unk4.h"
 
-INCLUDE_ASM("st/top_psp/nonmatchings/top_psp/cutscene", SetCutsceneScript);
+#define CUTSCENE_UNK1_NEXT_X 0
+#define CUTSCENE_UNK1_UNK17 2
+#include "../cutscene_unk1.h"
 
-INCLUDE_ASM("st/top_psp/nonmatchings/top_psp/cutscene", SetCutsceneEnd);
+#include "../set_cutscene_script.h"
 
-INCLUDE_ASM("st/top_psp/nonmatchings/top_psp/cutscene", CutsceneRun);
+#include "../set_cutscene_end.h"
 
-INCLUDE_ASM("st/top_psp/nonmatchings/top_psp/cutscene", CutsceneSkip);
+#define CUTSCENE_TILEMAP_SCROLL
+#include "../cutscene_run.h"
+
+#include "../cutscene_skip.h"
 
 INCLUDE_ASM("st/top_psp/nonmatchings/top_psp/cutscene", EntityCutscene);
