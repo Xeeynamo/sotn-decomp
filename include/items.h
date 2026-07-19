@@ -285,8 +285,8 @@ typedef enum ItemDrops {
     /* EntityPrizeDrop drops */
 
     // CollectHeart
-    /* 0x00 */ ITEMDROP_NONE,
-    /* 0x01 */ ITEMDROP_HEART,
+    /* 0x00 */ ITEMDROP_SMALL_HEART,
+    /* 0x01 */ ITEMDROP_LARGE_HEART,
 
     // CollectGold
     /* 0x02 */ ITEMDROP_GOLD_1,  // $1

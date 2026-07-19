@@ -18,7 +18,12 @@ static s16 D_us_80181038[] = {
 
 static u16 D_us_80181078[] = {0x560, 0x560, 0x560, 0x568, 0x569, 0x544};
 
-static s32 D_us_80181084[] = {0x43, 0x4B, 0x50, 0x4F};
+static s32 item_drops[] = {
+    ITEM_POT_ROAST,
+    ITEM_SHURIKEN,
+    ITEM_BWAKA_KNIFE,
+    ITEM_TNT,
+};
 
 void EntityBreakableWall(Entity* self) {
     Entity* tempEntity;
@@ -193,7 +198,7 @@ void EntityBreakableWallPartial(Entity* self) {
         tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
         if (tempEntity != NULL) {
             CreateEntityFromEntity(E_EQUIP_ITEM_DROP, self, tempEntity);
-            tempEntity->params = D_us_80181084[self->params];
+            tempEntity->params = item_drops[self->params];
         }
         self->step++;
         break;
