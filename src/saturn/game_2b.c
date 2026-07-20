@@ -5,18 +5,6 @@
 #include "lib/scl.h"
 
 void PlaySfx(s32 sfxId);
-void UpdateCapePalette(void);
-
-extern u16 D_8003C730;
-extern u8 g_CastleMap[];
-extern s32 D_801397FC;
-extern s32 D_80139008;
-extern s32 g_GameClearFlag;
-extern char* g_LuckCode;
-extern char* g_AxeArmorCode;
-extern char* g_GTIClubCode;
-
-extern s32 TimeAttackController(s32 eventId, s32 action);
 
 extern s32 DAT_00292000;
 
