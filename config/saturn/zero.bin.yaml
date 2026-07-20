@@ -14,9 +14,11 @@ segments:
     subalign: 4
     subsegments:
       - start: 0x0
-        type: data
+        type: c
         file: zero
         end: 0x57
+        function_ranges:
+          - [0x0, 0x56]
 
       - start: 0x58
         type: c
@@ -54,7 +56,16 @@ segments:
       - start: 0xaf3c
         type: data
         file: zero
+        end: 0xb73b
+
+      - start: 0xb73c
+        type: c
+        file: zero
         end: 0xb893
+        function_ranges:
+          - [0xB73C, 0xB79A]
+          - [0xB79C, 0xB7FA]
+          - [0xB7FC, 0xB892]
 
       # squareroot12
       - start: 0xB894
@@ -92,8 +103,12 @@ segments:
         file: zero
         end: 0x14647
         function_ranges:
-          - [0x1154C, 0x11BEE]
-          - [0x11BF0, 0x1243A]
+          - [0xF4B8, 0xF942]
+          - [0xF944, 0x103A2]
+          - [0x1154C, 0x11746]
+          - [0x1174C, 0x11BEE]
+          - [0x11BF0, 0x11DE2]
+          - [0x11DE8, 0x1243A]
           - [0x1243C, 0x12592]
           - [0x12594, 0x12626]
           - [0x12628, 0x12AC2]
@@ -104,6 +119,18 @@ segments:
         end: 0x14FF3
 
       - start: 0x14FF4
+        type: c
+        file: zero_2
+        end: 0x16067
+        function_ranges:
+          - [0x15FA0, 0x16066]
+
+      - start: 0x16068
+        type: data
+        file: zero_2
+        end: 0x16B7F
+
+      - start: 0x16B80
         type: c
         file: zero_2
         end: 0x17213
@@ -293,6 +320,121 @@ segments:
 
       # post-SYS
       - start: 0x3D1F0
+        type: .data
+        file: zero/snddata
+        end: 0x3E547
+
+      - start: 0x3E548
+        type: .data
+        file: zero/adpcm
+        end: 0x3FBC7
+
+      - start: 0x3FBC8
+        type: .data
+        file: zero/sndlut
+        end: 0x4004F
+
+      - start: 0x40050
+        type: .data
+        file: zero/sndcmd
+        end: 0x402C7
+
+      - start: 0x402C8
+        type: .data
+        file: zero/stgspr0
+        end: 0x4177B
+
+      - start: 0x4177C
+        type: .data
+        file: zero/stgspr1
+        end: 0x41F2B
+
+      - start: 0x41F2C
+        type: .data
+        file: zero/stgspr2
+        end: 0x41FD7
+
+      - start: 0x41FD8
+        type: .data
+        file: zero/stgspr3
+        end: 0x421B7
+
+      - start: 0x421B8
+        type: .data
+        file: zero/stgspr4
+        end: 0x4244F
+
+      - start: 0x42450
+        type: .data
+        file: zero/stgspr5
+        end: 0x4266B
+
+      - start: 0x4266C
+        type: .data
+        file: zero/stgspr6
+        end: 0x426B7
+
+      - start: 0x426B8
+        type: .data
+        file: zero/stgspr7
+        end: 0x42B83
+
+      - start: 0x42B84
+        type: .data
+        file: zero/stgspr8
+        end: 0x42C93
+
+      - start: 0x42C94
+        type: .data
+        file: zero/stgspr9
+        end: 0x42DE7
+
+      - start: 0x42DE8
+        type: .data
+        file: zero/stgspr10
+        end: 0x4339F
+
+      - start: 0x433A0
+        type: .data
+        file: zero/stgspr11
+        end: 0x434A3
+
+      - start: 0x434A4
+        type: .data
+        file: zero/stgspr12
+        end: 0x434FB
+
+      - start: 0x434FC
+        type: .data
+        file: zero/stgspr13
+        end: 0x4359F
+
+      - start: 0x435A0
+        type: .data
+        file: zero/stgspr14
+        end: 0x4361F
+
+      - start: 0x43620
+        type: .data
+        file: zero/fontmap
+        end: 0x43797
+
+      - start: 0x43798
+        type: .data
+        file: zero/stgfiles
+        end: 0x4413F
+
+      - start: 0x44140
+        type: .data
+        file: zero/sysflag
+        end: 0x44143
+
+      - start: 0x44144
+        type: .data
+        file: lib/spr/spr_data
+        end: 0x44183
+
+      - start: 0x44184
         type: data
-        file: lib/sys
+        file: lib/sys_tail
         end: 0x4C560
