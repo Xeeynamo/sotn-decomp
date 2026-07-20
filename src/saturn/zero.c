@@ -11,7 +11,7 @@
 // func_06004080
 void entrypoint(void) {
     func_06030df0();
-    Scl_s_reg.tvmode &= 0x7EFF;
+    Scl_s_reg.tvmode &= ~0x8100;
     SclProcess = 1;
     func_060044D0();
     DAT_0605cea2 = 0;
@@ -119,9 +119,9 @@ void func_060040d8(void) {
         break;
     case 0x20:
         func_06007e14();
-        Scl_s_reg.dispenbl &= 0xFFC0;
+        Scl_s_reg.dispenbl &= ~0x003F;
         SclProcess = 1;
-        Scl_s_reg.tvmode &= 0x7EFF;
+        Scl_s_reg.tvmode &= ~0x8100;
         SclProcess = 1;
         InitializePads();
         SPR_WaitDrawEnd();
@@ -136,7 +136,7 @@ void func_060040d8(void) {
         if ((DAT_06057f34 == 2) && (DAT_0605d7f8 == 0)) {
             SYS_EXECDMP();
         }
-        Scl_s_reg.tvmode &= 0x7EFF;
+        Scl_s_reg.tvmode &= ~0x8100;
         SclProcess = 1;
         SCL_DisplayFrame();
         SCL_Vdp2Init();
