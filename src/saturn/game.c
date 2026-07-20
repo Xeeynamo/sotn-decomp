@@ -546,7 +546,6 @@ bool CheckIfAllButtonsAreAssigned(void) {
 void func_0600971C(void);
 extern s16 DAT_0605d772;
 extern s16 DAT_06065470;
-void UpdateCapePalette(void);
 extern s16 DAT_060862a4;
 
 void func_06073280(void) {
