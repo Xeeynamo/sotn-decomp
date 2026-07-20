@@ -67,20 +67,13 @@ void func_800F2860(void) {
 INCLUDE_ASM("asm/saturn/game/f_match", f6070A60, RunMainEngine);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6071C3C, func_06071C3C);
 
-typedef struct {
-    u16 unk0;
-    s16 : 16;
-    s32 : 32;
-    s32 unk8;
-} UNK_0605cd70;
-
 extern s32 DAT_0605c120;
 extern s32 g_PlayerY;
 extern s32 D_80097C98;
 extern s32 DAT_0605c668;
 extern s32 DAT_0605cd54;
 extern s32 g_PlayerX;
-extern UNK_0605cd70 DAT_0605cd70;
+extern Unk0605cd70 DAT_0605cd70;
 extern s32 DAT_0605ceb0;
 extern s32 DAT_0605d7dc;
 extern s32 DAT_060860bc;

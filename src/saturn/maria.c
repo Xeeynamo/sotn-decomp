@@ -767,14 +767,7 @@ void func_060BF0F4(u32 param_1) {
 
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BF180, func_060BF180);
 
-struct Unk0605cd70 {
-    u16 unk0;
-    u16 unk2;
-    u32 unk4;
-    u32 unk8;
-};
-
-struct Unk0605cd70 d_0605cd70;
+Unk0605cd70 d_0605cd70;
 u32 d_06085534;
 u16 d_0605c672;
 u8 d_06057f68;

@@ -803,6 +803,13 @@ typedef struct {
     Point32 pos;
 } RoomLoadDefHolder;
 
+typedef struct {
+    u16 unk0;
+    u16 unk2;
+    u32 unk4;
+    u32 unk8;
+} Unk0605cd70;
+
 typedef enum {
     PLAYER_CHARACTER,
     E_AFTERIMAGE_1,
