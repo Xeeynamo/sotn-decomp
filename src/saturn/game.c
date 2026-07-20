@@ -307,9 +307,9 @@ extern s32 DAT_0605c664;
 extern s32 DAT_0605c6e4;
 extern s32 DAT_0605d7f0;
 extern s32 D_06085534;
-extern s32 DAT_06085d5c;
-extern s32 DAT_06085d60;
-extern s32 DAT_06085d64;
+extern s32 g_StatusWindowColorRed;
+extern s32 g_StatusWindowColorGreen;
+extern s32 g_StatusWindowColorBlue;
 extern s32 prevMusicId;
 extern s32 DAT_06086258;
 extern s32 DAT_06086270;
@@ -386,9 +386,9 @@ LAB_06072d9e:
     case 3:
         func_06064628(g_PlayableCharacter);
         if (g_PlayableCharacter == 0) {
-            DAT_06085d5c = g_Settings.windowColors[0];
-            DAT_06085d60 = g_Settings.windowColors[1];
-            DAT_06085d64 = g_Settings.windowColors[2];
+            g_StatusWindowColorRed = g_Settings.windowColors[0];
+            g_StatusWindowColorGreen = g_Settings.windowColors[1];
+            g_StatusWindowColorBlue = g_Settings.windowColors[2];
         } else {
             DAT_06086258 = 0;
         }

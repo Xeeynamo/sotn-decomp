@@ -35,7 +35,9 @@ u16 g_AlternateStatusHudPrimitiveLayout[33] = {
     0x1429, 0x0000, 0x0000, 0x0064, 0x0000, 0x0064,
 };
 
-s32 g_StatusPortraitColorOffset[] = {0, 0, 8};
+s32 g_StatusWindowColorRed = 0;
+s32 g_StatusWindowColorGreen = 0;
+s32 g_StatusWindowColorBlue = 8;
 
 u16 g_StatusPortraitPalette[16] = {
     0xC0A8, 0x8421, 0x84AB, 0x8D2F, 0x91D6, 0x929B, 0x994A, 0xA5CE,
