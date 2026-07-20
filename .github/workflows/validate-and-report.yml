@@ -26,6 +26,7 @@ jobs:
     # due to the missing secrets to clone the CI dependencies
     if: github.repository == 'Xeeynamo/sotn-decomp'
     runs-on: ubuntu-latest
+    environment: ${{ (github.event_name != 'pull_request_target' || contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.pull_request.author_association)) && '' || 'ci-secrets' }}
     env:
       VERSION: ${{ matrix.version }}
       FROGRESS_API_BASE_URL: ${{ secrets.FROGRESS_API_BASE_URL }}
@@ -33,11 +34,12 @@ jobs:
       DISCORD_PROGRESS_WEBHOOK: ${{ secrets.DISCORD_PROGRESS_WEBHOOK }}
     steps:
       - name: Clone main repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.sha || github.ref }}
+          allow-unsafe-pr-checkout: true
           submodules: false
-      - uses: actions/setup-go@v6
+      - uses: actions/setup-go@v7
         with:
           go-version-file: 'go.work'
           cache: true
@@ -57,7 +59,7 @@ jobs:
         run: make progress-report
       - name: Upload progress report
         if: github.ref == 'refs/heads/master' && github.event_name == 'push'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ matrix.version }}_report
           path: build/${{ matrix.version }}/report.json
@@ -65,7 +67,7 @@ jobs:
         run: rm -rf build/${{ matrix.version }}/asm build/${{ matrix.version }}/src build/${{ matrix.version }}/assets
       - name: Export build folder
         if: github.ref == 'refs/heads/master' && github.event_name == 'push'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: build_${{ matrix.version }}
           path: build/${{ matrix.version }}
@@ -83,17 +85,21 @@ jobs:
     # due to the missing secrets to clone the CI dependencies
     if: github.repository == 'Xeeynamo/sotn-decomp'
     runs-on: ubuntu-latest
+    # Gate secret access behind a manual-approval environment for untrusted
+    # authors; owners, org members and collaborators run without the gate.
+    environment: ${{ (github.event_name != 'pull_request_target' || contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.pull_request.author_association)) && '' || 'ci-secrets' }}
     env:
       DISCORD_PROGRESS_WEBHOOK: ${{ secrets.DISCORD_PROGRESS_WEBHOOK }}
     steps:
       - name: Install requirements
         run: sudo apt-get install gcc-mipsel-linux-gnu
       - name: Clone main repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.sha || github.ref }}
+          allow-unsafe-pr-checkout: true
           submodules: false
-      - uses: actions/setup-go@v6
+      - uses: actions/setup-go@v7
         with:
           go-version-file: 'go.work'
           cache: true
@@ -120,7 +126,7 @@ jobs:
       - name: Install requirements
         run: sudo apt-get install gcc-mipsel-linux-gnu
       - name: Clone main repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           submodules: false
       - name: Install tool requirements
@@ -130,17 +136,17 @@ jobs:
         with:
           token: ${{ secrets.SOTN_DECOMP_DEPENDENCIES_TOKEN }}
       - name: Obtain built binaries
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: build_${{ matrix.version }}
           path: build/${{ matrix.version }}
       - name: Clone asset repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: 'gh-duplicates'
           path: 'gh-duplicates'
       - name: Set-up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: '3.x'
       - name: Install secondary pre-requirements
@@ -177,7 +183,7 @@ jobs:
       - name: Install requirements
         run: sudo apt-get install gcc-mipsel-linux-gnu
       - name: Clone main repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           submodules: false
       - name: Install requirements
@@ -187,17 +193,17 @@ jobs:
         with:
           token: ${{ secrets.SOTN_DECOMP_DEPENDENCIES_TOKEN }}
       - name: Obtain built binaries
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: build_${{ matrix.version }}
           path: build/${{ matrix.version }}
       - name: Clone asset repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: 'gh-duplicates-${{ matrix.version }}'
           path: 'gh-duplicates'
       - name: Set-up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: '3.x'
       - name: Install secondary pre-requirements
