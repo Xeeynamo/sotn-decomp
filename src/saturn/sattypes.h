@@ -341,17 +341,26 @@ typedef struct {
 } GameApi;
 
 void (*func_06064580)();
+void (*func_06064590)();
+void (*func_06064594)();
+void (*func_060645A0)();
 void (*func_060645B0)();
+void (*func_060645B4)();
 void (*func_060645BC)();
-void (*func_060645e0)();
+void (*func_060645C0)();
+void (*func_060645E0)();
 void (*func_060645FC)();
 void (*func_06064600)();
 void (*func_06064608)();
 void (*func_06064614)();
+void (*func_06064618)();
 void (*func_06064620)();
+void (*func_06064628)(s32);
+void (*func_06064630)();
 void (*GetPlayerSensor)(Collider* col);
 void (*func_06064638)();
 void (*func_0606463c)();
+void (*func_0606464C)();
 void (*func_06064644)();
 void (*func_06064674)();
 void (*func_06064684)();

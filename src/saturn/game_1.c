@@ -3,8 +3,6 @@
 #include "sattypes.h"
 #include "game.h"
 
-void PlaySfx(s32 sfxId);
-
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6066B30, func_06066B30);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6066B74, func_06066B74);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6066CE0, func_06066CE0);

@@ -716,8 +716,7 @@ bool HantenDir1(Entity* entity) {
     return ret;
 }
 
-extern u8 DAT_06099811;
-u8 func_0607AC2C(void) { return DAT_06099811; }
+u8 func_0607AC2C(void) { return PLAYER.facingLeft; }
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AC40, func_0607AC40);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AE48, func_0607AE48);
@@ -1339,7 +1338,26 @@ void CheckCollision(s32 x, s32 y, Collider* res, u16 unk) {
     res->unkC = res->unkC * 5 / 4;
 }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607BE38, func_0607BE38);
+extern s32 DAT_06086128;
+extern s32 DAT_0608612c;
+extern s32 DAT_06086130;
+extern s32 DAT_06086134;
+
+void func_06008048();
+void func_0600C818();
+
+void func_0607BE38(void) {
+    func_0600C818();
+    DAT_06086128 = 0x50000;
+    DAT_0608612c = 0xF0000;
+    DAT_06086130 = 0x0;
+    func_06008048();
+    SCL_SET_CCMD(0);
+    SCL_SetColMixMode(0x7, 0x1);
+    DAT_06086134 = 0x1F;
+    SCL_SET_S0CCRT(DAT_06086134);
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607BED0, func_0607BED0);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607C054, func_0607C054);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607C0A0, func_0607C0A0);

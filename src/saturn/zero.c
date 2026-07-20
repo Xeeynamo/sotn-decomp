@@ -32,7 +32,7 @@ void func_06007e14();
 void func_06008264();
 void func_06008298();
 void func_06008a70();
-void func_06008d04();
+void func_06008d04(s32, s32);
 void func_06009838();
 void func_0600d8bc();
 void MoviePRGClear();
@@ -66,7 +66,7 @@ void func_060040d8(void) {
             Scl_s_reg.tvmode |= 0x8000;
             SclProcess = 1;
         }
-        func_060645e0();
+        func_060645E0();
         break;
     case 2:
         if (DAT_0605cea0 == 0) {
