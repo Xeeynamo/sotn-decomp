@@ -3,10 +3,11 @@ package spriteset
 import (
 	"encoding/binary"
 	"fmt"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"io"
 	"strings"
+
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 )
 
 type SpriteSet []*spriteParts
@@ -66,11 +67,16 @@ func BuildSpriteSet(sb *strings.Builder, set SpriteSet, mainSymbol string) {
 	for i, spriteGroup := range set {
 		if spriteGroup != nil {
 			symbol := fmt.Sprintf("%s_%d", mainSymbol, i)
-			size := len(*spriteGroup)*11 + 1
-			if (len(*spriteGroup) & 1) == 1 { // perform alignment at the end
-				size += 2
+			var size int
+			if isPlayerSprite(*spriteGroup) {
+				size = 4 // {flags|0x8000, X, Y, 0}
 			} else {
-				size += 1
+				size = len(*spriteGroup)*11 + 1
+				if (len(*spriteGroup) & 1) == 1 { // perform alignment at the end
+					size += 2
+				} else {
+					size += 1
+				}
 			}
 			sb.WriteString(fmt.Sprintf("static s16 %s[%d];\n", symbol, size))
 			symbols = append(symbols, symbol)
@@ -89,6 +95,12 @@ func BuildSpriteSet(sb *strings.Builder, set SpriteSet, mainSymbol string) {
 	sb.WriteString("};\n")
 	for i, spriteGroup := range set {
 		if spriteGroup == nil {
+			continue
+		}
+		if isPlayerSprite(*spriteGroup) {
+			s := (*spriteGroup)[0]
+			sb.WriteString(fmt.Sprintf("static s16 %s[] = {0x%02X | 0x8000, %d, %d, %d};\n",
+				symbols[i], s.Flags&0x7FFF, s.X, s.Y, s.Width))
 			continue
 		}
 		sb.WriteString(fmt.Sprintf("static s16 %s[] = {\n", symbols[i]))

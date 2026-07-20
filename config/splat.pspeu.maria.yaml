@@ -62,7 +62,7 @@ segments:
       - [0x1EEA0, .data, pl_utils]
       - [0x1EEE8, .data, pl_sensors]
       - [0x1EFC8, .data, pl_blueprints]
-      - [0x1FC80, .data, spritebank0]
+      - [0x1FC80, .data, spritebanks]
       - [0x20250, .data, ovl_load]
       - [0x3F480, .rodata, pl_subweapons]
       - [0x3F4E8, .rodata, pl_main]
