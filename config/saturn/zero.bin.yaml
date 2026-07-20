@@ -126,13 +126,13 @@ segments:
           - [0x15FA0, 0x16066]
 
       - start: 0x16068
-        type: data
-        file: zero_2
+        type: .text
+        file: zero/stgfiles
         end: 0x16B7F
 
       - start: 0x16B80
         type: c
-        file: zero_2
+        file: zero_3
         end: 0x17213
 
       # DGFS
