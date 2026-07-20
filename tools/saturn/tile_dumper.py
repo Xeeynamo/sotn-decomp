@@ -6,13 +6,13 @@ Examples:
 Dump every supported stage as a composite PNG:
 
 ```
-python3 tools/saturn_tile_dumper.py --batch
+python3 tools/saturn/tile_dumper.py --batch
 ```
 
 Choose input/output directories:
 
 ```
-python3 tools/saturn_tile_dumper.py \
+python3 tools/saturn/tile_dumper.py \
     --batch \
     --input-dir disks/saturn \
     --output-dir dumps
@@ -21,7 +21,7 @@ python3 tools/saturn_tile_dumper.py \
 Render stages in parallel, replacing existing PNGs:
 
 ```
-python3 tools/saturn_tile_dumper.py \
+python3 tools/saturn/tile_dumper.py \
     --batch \
     --jobs 8 \
     --force
@@ -30,7 +30,7 @@ python3 tools/saturn_tile_dumper.py \
 Stop batch rendering after the first failure:
 
 ```
-python3 tools/saturn_tile_dumper.py \
+python3 tools/saturn/tile_dumper.py \
     --batch \
     --fail-fast
 ```
@@ -38,7 +38,7 @@ python3 tools/saturn_tile_dumper.py \
 Render one room and one layer:
 
 ```
-python3 tools/saturn_tile_dumper.py \
+python3 tools/saturn/tile_dumper.py \
     disks/saturn/STAGE_02.PRG \
     disks/saturn/STAGE_02.MAP \
     /tmp/stage02_room0_layer0.png \
@@ -49,7 +49,7 @@ python3 tools/saturn_tile_dumper.py \
 Render one layer across the whole stage:
 
 ```
-python3 tools/saturn_tile_dumper.py \
+python3 tools/saturn/tile_dumper.py \
     disks/saturn/STAGE_02.PRG \
     disks/saturn/STAGE_02.MAP \
     /tmp/stage02_layer2.png \
@@ -60,7 +60,7 @@ python3 tools/saturn_tile_dumper.py \
 Render a whole-stage composite using each room's VDP2 priorities:
 
 ```
-python3 tools/saturn_tile_dumper.py \
+python3 tools/saturn/tile_dumper.py \
     disks/saturn/STAGE_15.PRG \
     disks/saturn/STAGE_15.MAP \
     /tmp/stage15_composite.png \
@@ -70,7 +70,7 @@ python3 tools/saturn_tile_dumper.py \
 Render STAGE_07 part A:
 
 ```
-python3 tools/saturn_tile_dumper.py \
+python3 tools/saturn/tile_dumper.py \
     disks/saturn/STAGE_07.PRG \
     disks/saturn/STAGE_7A.MAP \
     /tmp/stage7a.png \
@@ -81,7 +81,7 @@ python3 tools/saturn_tile_dumper.py \
 Render STAGE_07 part B:
 
 ```
-python3 tools/saturn_tile_dumper.py \
+python3 tools/saturn/tile_dumper.py \
     disks/saturn/STAGE_07.PRG \
     disks/saturn/STAGE_7B.MAP \
     /tmp/stage7b.png \
@@ -93,7 +93,7 @@ Render BOSS_R14 manually. Its background descriptors refer to
 RSTAGE14.MAP rather than BOSS_R14.MAP:
 
 ```
-python3 tools/saturn_tile_dumper.py \
+python3 tools/saturn/tile_dumper.py \
     disks/saturn/BOSS_R14.PRG \
     disks/saturn/RSTAGE14.MAP \
     /tmp/boss_r14.png \
