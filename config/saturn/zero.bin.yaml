@@ -306,9 +306,10 @@ segments:
         file: lib/sys
         end: 0x2CB73
 
-      # post-SYS
+      # rest of SEGA_SYS.A: SH-2 code, not data. ~128 functions with paired
+      # pr save/restore and literal pools referencing the sys_tail bss.
       - start: 0x2CB74
-        type: data
+        type: c
         file: lib/sys
         end: 0x369FB
 
