@@ -154,7 +154,7 @@ void func_060040d8(void) {
         if (DAT_0605cea2 == 6) {
             SYS_EXECDMP();
         } else {
-            PlaySfx(0xF000000B);
+            PlaySfx(SET_UNK_0B);
             while (func_06013320() == 0) {
                 func_06010400();
                 SCL_DisplayFrame();

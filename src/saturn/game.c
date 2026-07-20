@@ -11,7 +11,7 @@ bool func_800F27F4(s32 arg0) {
         if (g_unkGraphicsStruct.D_800973FC != 0 || D_8006BB00 != 0) {
             return false;
         }
-        if (D_8003C708.flags & (0x40 | 0x20)) {
+        if (D_8003C708.flags & (FLAG_UNK_40 | FLAG_UNK_20)) {
             return false;
         }
         D_801375C8 = 1;
@@ -25,7 +25,7 @@ void func_800F2860(void) {
     case 0:
         break;
     case 1:
-        PlaySfx(0xF0000080);
+        PlaySfx(SET_UNK_80);
         D_801375C8++;
         break;
     case 2:
@@ -57,7 +57,7 @@ void func_800F2860(void) {
         }
         break;
     case 8:
-        PlaySfx(0xF0000080);
+        PlaySfx(SET_UNK_80);
         D_801375C8--;
         break;
     }
@@ -240,15 +240,15 @@ void InitRoom(void) {
     }
     if ((DAT_0605d750.unk4 == 0x50) || (DAT_0605d750.unk4 == 0x60)) {
         if (func_06012dfc() != 0) {
-            PlaySfx(0xF000000A);
+            PlaySfx(SET_STOP_MUSIC);
         }
         if ((g_unkGraphicsStruct.D_800973FC != 0) && (D_8006BB00 != 0)) {
             if (DAT_0605d750.unk4 == 0x50) {
-                PlaySfx(0xF000000A);
+                PlaySfx(SET_STOP_MUSIC);
                 DAT_0605cd54 = 1;
             }
         } else {
-            PlaySfx(0xF0000080);
+            PlaySfx(SET_UNK_80);
         }
     }
 }
@@ -490,9 +490,9 @@ LAB_06072d9e:
         func_06005208(1);
         if (g_PlayableCharacter == 0) {
             UpdateCapePalette();
-            PlaySfx(0xF000000F);
-            PlaySfx(0xF00000A4);
-            PlaySfx(0xF00000A8);
+            PlaySfx(SET_UNPAUSE_SFX_SCRIPTS);
+            PlaySfx(SET_KEY_ON_20_21);
+            PlaySfx(SET_KEY_ON_22_23);
         }
         DAT_0605c6e4 = 0;
         DAT_0605c110 = 0;
