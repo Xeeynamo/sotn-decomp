@@ -492,6 +492,41 @@ SET(SOURCE_FILES_BOSS_BO4
     src/boss/bo4/bss.c
 )
 
+set(SOURCE_FILES_STAGE_RWRP
+    src/pc/stages/stage_rwrp.c
+    src/st/rwrp/header.c
+    src/st/rwrp/sprite_banks.c
+    src/st/rwrp/palette_def.c
+    src/st/rwrp/layers.c
+    src/st/rwrp/graphics_banks.c
+    src/st/rwrp/gen/e_laydef.c
+    src/st/rwrp/e_init.c
+    src/st/rwrp/gen/rooms.c
+    src/st/rwrp/gen/e_layout.c
+    src/st/rwrp/gen/us/sprites.c
+    src/st/rwrp/stage_data.c
+    src/st/rwrp/background_block_init.c
+    src/st/rwrp/e_room_bg.c
+    src/st/rwrp/e_lock_camera.c
+    src/st/rwrp/e_breakable.c
+    src/st/rwrp/d_prize_drops.c
+    src/st/rwrp/warp.c
+    src/st/rwrp/st_update.c
+    src/st/rwrp/collision.c
+    src/st/rwrp/create_entity.c
+    src/st/rwrp/e_red_door_tiles.c
+    src/st/rwrp/e_red_door.c
+    src/st/rwrp/st_common.c
+    src/st/rwrp/e_collect.c
+    src/st/rwrp/e_misc.c
+    src/st/rwrp/e_stage_name.c
+    src/st/rwrp/e_particles.c
+    src/st/rwrp/e_room_fg.c
+    src/st/rwrp/popup.c
+    src/st/rwrp/prim_helpers.c
+    src/st/rwrp/bss.c
+)
+
 set(SOURCE_FILES_WEAPON
     src/weapon/w_000.c
     src/weapon/w_002.c
@@ -625,6 +660,7 @@ add_overlay(sel ${SOURCE_FILES_STAGE_SEL})
 add_overlay(wrp ${SOURCE_FILES_STAGE_WRP})
 add_overlay(nz0 ${SOURCE_FILES_STAGE_NZ0})
 add_overlay(st0 ${SOURCE_FILES_STAGE_ST0})
+add_overlay(rwrp ${SOURCE_FILES_STAGE_RWRP})
 
 add_overlay(tt_000 ${SOURCE_FILES_TT_000})
 add_overlay(tt_001 ${SOURCE_FILES_TT_001})

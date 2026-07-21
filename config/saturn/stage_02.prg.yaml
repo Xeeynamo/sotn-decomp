@@ -14,31 +14,32 @@ segments:
     subalign: 2
     subsegments:
       - start: 0x0
-        type: data
-        file: stage_02
-        end: 0x3f
+        type: .data
+        file: stage_02/sthead
+        end: 0x28
+      - start: 0x28
+        type: .text
+        file: stage_02/stprolo
+        end: 0x40
       - start: 0x40
         type: c
         file: stage_02
         end: 0x6a7f
 
-      # something wrong with this func fixme
       - start: 0x6a80
-        type: data
+        type: .text
         file: stage_02
         end: 0x72db
 
-      # and this one too
       - start: 0x72dc
-        type: data
+        type: .text
         file: stage_02
         end: 0x87a3
 
       # alignment issue at 7c1e
 
-      # and this one
       - start: 0x87a4
-        type: data
+        type: .text
         file: stage_02
         end: 0x8907
 
@@ -47,13 +48,396 @@ segments:
         file: stage_02
         end: 0x10A93
 
-      # and this one
       - start: 0x10A94
-        type: data
+        type: .text
         file: stage_02
         end: 0x10c4f
 
       - start: 0x10c50
-        type: data
-        file: stage_02
+        type: .data
+        file: stage_02/stbrkgfx
+        end: 0x10F80
+      - start: 0x10F80
+        type: .data
+        file: stage_02/stglobe
+        end: 0x11278
+      - start: 0x11278
+        type: .data
+        file: stage_02/stlife
+        end: 0x11694
+      - start: 0x11694
+        type: .data
+        file: stage_02/stblue
+        end: 0x11A9C
+      - start: 0x11A9C
+        type: .data
+        file: stage_02/stsubgfx
+        end: 0x11E6C
+      - start: 0x11E6C
+        type: .data
+        file: stage_02/stelevgf
+        end: 0x11ED8
+      - start: 0x11ED8
+        type: .data
+        file: stage_02/st74gfx
+        end: 0x12348
+      - start: 0x12348
+        type: .data
+        file: stage_02/stmargfx
+        end: 0x12938
+      - start: 0x12938
+        type: .data
+        file: stage_02/stsprbnk
+        end: 0x129C4
+      - start: 0x129C4
+        type: .data
+        file: stage_02/stentupd
+        end: 0x12AFC
+      - start: 0x12AFC
+        type: .data
+        file: stage_02/sthlay
+        end: 0x12BD0
+      - start: 0x12BD0
+        type: .data
+        file: stage_02/stvlay
+        end: 0x12CA4
+      - start: 0x12CA4
+        type: .data
+        file: stage_02/stprize
+        end: 0x12CBC
+      - start: 0x12CBC
+        type: .data
+        file: stage_02/sthlaydt
+        end: 0x1381C
+      - start: 0x1381C
+        type: .data
+        file: stage_02/stvlaydt
+        end: 0x1437C
+      - start: 0x1437C
+        type: .data
+        file: stage_02/stlayer
+        end: 0x14ACC
+      - start: 0x14ACC
+        type: .data
+        file: stage_02/strmgfx
+        end: 0x14B9C
+      - start: 0x14B9C
+        type: .data
+        file: stage_02/stprops
+        end: 0x14C88
+      - start: 0x14C88
+        type: .data
+        file: stage_02/strooms
+        end: 0x14D50
+      - start: 0x14D50
+        type: .data
+        file: stage_02/stbreak
+        end: 0x14DF4
+      - start: 0x14DF4
+        type: .data
+        file: stage_02/stent00
+        end: 0x14E78
+      - start: 0x14E78
+        type: .data
+        file: stage_02/stent08
+        end: 0x14EC4
+      - start: 0x14EC4
+        type: .data
+        file: stage_02/stcont
+        end: 0x14F10
+      - start: 0x14F10
+        type: .data
+        file: stage_02/stpuff
+        end: 0x14F8C
+      - start: 0x14F8C
+        type: .data
+        file: stage_02/stent01
+        end: 0x14FD8
+      - start: 0x14FD8
+        type: .data
+        file: stage_02/stsubwp
+        end: 0x15078
+      - start: 0x15078
+        type: .data
+        file: stage_02/stent15
+        end: 0x15098
+      - start: 0x15098
+        type: .data
+        file: stage_02/stent20
+        end: 0x150C0
+      - start: 0x150C0
+        type: .data
+        file: stage_02/stent02
+        end: 0x150E0
+      - start: 0x150E0
+        type: .data
+        file: stage_02/stwalls
+        end: 0x15278
+      - start: 0x15278
+        type: .data
+        file: stage_02/stent16
+        end: 0x15280
+      - start: 0x15280
+        type: .data
+        file: stage_02/stent21
+        end: 0x152B0
+      - start: 0x152B0
+        type: .data
+        file: stage_02/stent22
+        end: 0x152C0
+      - start: 0x152C0
+        type: .data
+        file: stage_02/stcutdat
+        end: 0x153D4
+      - start: 0x153D4
+        type: .data
+        file: stage_02/stent17
+        end: 0x153DC
+      - start: 0x153DC
+        type: .data
+        file: stage_02/stcutst
+        end: 0x153E0
+      - start: 0x153E0
+        type: .data
+        file: stage_02/stcutsc
+        end: 0x15648
+      - start: 0x15648
+        type: .data
+        file: stage_02/stcuttrl
+        end: 0x1565C
+      - start: 0x1565C
+        type: .data
+        file: stage_02/stent03
+        end: 0x1566C
+      - start: 0x1566C
+        type: .data
+        file: stage_02/stmaria
+        end: 0x1574C
+      - start: 0x1574C
+        type: .data
+        file: stage_02/stlookup
+        end: 0x158CC
+      - start: 0x158CC
+        type: .data
+        file: stage_02/stprcfg
+        end: 0x158E8
+      - start: 0x158E8
+        type: .data
+        file: stage_02/stgold
+        end: 0x15910
+      - start: 0x15910
+        type: .data
+        file: stage_02/stprzan
+        end: 0x15AB0
+      - start: 0x15AB0
+        type: .data
+        file: stage_02/stent04
+        end: 0x15B7C
+      - start: 0x15B7C
+        type: .data
+        file: stage_02/stent09
+        end: 0x15B9C
+      - start: 0x15B9C
+        type: .data
+        file: stage_02/stexpl
+        end: 0x15C68
+      - start: 0x15C68
+        type: .data
+        file: stage_02/stent05
+        end: 0x15CE8
+      - start: 0x15CE8
+        type: .data
+        file: stage_02/stent06
+        end: 0x15D48
+      - start: 0x15D48
+        type: .data
+        file: stage_02/stent07
+        end: 0x15D78
+      - start: 0x15D78
+        type: .data
+        file: stage_02/st3dco
+        end: 0x15ECC
+      - start: 0x15ECC
+        type: .data
+        file: stage_02/st3didx
+        end: 0x16080
+      - start: 0x16080
+        type: .data
+        file: stage_02/stent18
+        end: 0x16088
+      - start: 0x16088
+        type: .data
+        file: stage_02/stdata37
+        end: 0x16134
+      - start: 0x16134
+        type: .data
+        file: stage_02/stbank28
+        end: 0x16140
+      - start: 0x16140
+        type: .data
+        file: stage_02/stent19
+        end: 0x16148
+      - start: 0x16148
+        type: .data
+        file: stage_02/stdata38
+        end: 0x1619C
+      - start: 0x1619C
+        type: .data
+        file: stage_02/stspr37
+        end: 0x16240
+      - start: 0x16240
+        type: .data
+        file: stage_02/stfrm38
+        end: 0x163D0
+      - start: 0x163D0
+        type: .data
+        file: stage_02/stspr37b
+        end: 0x16418
+      - start: 0x16418
+        type: .data
+        file: stage_02/stanim38
+        end: 0x1646C
+      - start: 0x1646C
+        type: .data
+        file: stage_02/stdat38
+        end: 0x16508
+      - start: 0x16508
+        type: .data
+        file: stage_02/stbank29
+        end: 0x16514
+      - start: 0x16514
+        type: .data
+        file: stage_02/stent11
+        end: 0x16528
+      - start: 0x16528
+        type: .data
+        file: stage_02/stsa38
+        end: 0x16588
+      - start: 0x16588
+        type: .data
+        file: stage_02/stspr38
+        end: 0x165EA
+      - start: 0x165EA
+        type: .data
+        file: stage_02/stfrm38a
+        end: 0x16878
+      - start: 0x16878
+        type: .data
+        file: stage_02/stfp38
+        end: 0x168D4
+      - start: 0x168D4
+        type: .data
+        file: stage_02/stspr38b
+        end: 0x16AB0
+      - start: 0x16AB0
+        type: .data
+        file: stage_02/stbank30
+        end: 0x16ABC
+      - start: 0x16ABC
+        type: .data
+        file: stage_02/stent14
+        end: 0x16AF0
+      - start: 0x16AF0
+        type: .data
+        file: stage_02/stsa40
+        end: 0x16BF0
+      - start: 0x16BF0
+        type: .data
+        file: stage_02/stspr40
+        end: 0x16C74
+      - start: 0x16C74
+        type: .data
+        file: stage_02/stfrm40
+        end: 0x17694
+      - start: 0x17694
+        type: .data
+        file: stage_02/stfp40
+        end: 0x1778C
+      - start: 0x1778C
+        type: .data
+        file: stage_02/stspr40b
+        end: 0x1783C
+      - start: 0x1783C
+        type: .data
+        file: stage_02/stbank31
+        end: 0x17848
+      - start: 0x17848
+        type: .data
+        file: stage_02/stent13
+        end: 0x178A0
+      - start: 0x178A0
+        type: .data
+        file: stage_02/stsa42
+        end: 0x17980
+      - start: 0x17980
+        type: .data
+        file: stage_02/stspr42
+        end: 0x179E2
+      - start: 0x179E2
+        type: .data
+        file: stage_02/stfrm42
+        end: 0x18108
+      - start: 0x18108
+        type: .data
+        file: stage_02/stfp42
+        end: 0x181CC
+      - start: 0x181CC
+        type: .data
+        file: stage_02/stspr42b
+        end: 0x182E4
+      - start: 0x182E4
+        type: .data
+        file: stage_02/stbank32
+        end: 0x182F0
+      - start: 0x182F0
+        type: .data
+        file: stage_02/stent12
+        end: 0x18328
+      - start: 0x18328
+        type: .data
+        file: stage_02/stsa45
+        end: 0x18390
+      - start: 0x18390
+        type: .data
+        file: stage_02/stspr45
+        end: 0x183B2
+      - start: 0x183B2
+        type: .data
+        file: stage_02/stfrm45
+        end: 0x18690
+      - start: 0x18690
+        type: .data
+        file: stage_02/stfp45
+        end: 0x1870C
+      - start: 0x1870C
+        type: .data
+        file: stage_02/stspr45b
+        end: 0x187E8
+      - start: 0x187E8
+        type: .data
+        file: stage_02/stbank33
+        end: 0x187F4
+      - start: 0x187F4
+        type: .data
+        file: stage_02/stent10
+        end: 0x18818
+      - start: 0x18818
+        type: .data
+        file: stage_02/stdat48
+        end: 0x18874
+      - start: 0x18874
+        type: .data
+        file: stage_02/stspr48
+        end: 0x188D6
+      - start: 0x188D6
+        type: .data
+        file: stage_02/stfrm48
+        end: 0x18E6C
+      - start: 0x18E6C
+        type: .data
+        file: stage_02/stfp48
+        end: 0x18F78
+      - start: 0x18F78
+        type: .data
+        file: stage_02/stspr48b
         end: 0x19037

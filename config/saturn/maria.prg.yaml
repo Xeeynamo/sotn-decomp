@@ -13,61 +13,153 @@ segments:
     vram:  0x060A5000
     subalign: 2
     subsegments:
-      - start: 0x0
-        type: data
-        file: maria
-        end: 0x5F
+      - [0x0, .data, maria/header]
+      - start: 0x44
+        type: .text
+        file: maria/hdrstub
       - start: 0x60
         type: c
         file: maria
         end: 0x2f6f
         # bugs func_060A7F70
       - start: 0x2F70
-        type: data
+        type: c
         file: maria
+        function_ranges:
+          - [0x2F70, 0x3230]
         end: 0x3247
       - start: 0x3248
         type: c
         file: maria
         end: 0xB473
-      # func_060b0474
       - start: 0xB474
-        type: data
+        type: c
         file: maria
-        end: 0xB8D9
-      - start: 0xB8DA
-        type: data
-        file: maria
-        end: 0xB99b
+        function_ranges:
+          - [0xB474, 0xB988]
+        end: 0xB99B
       - start: 0xB99C
-        file: maria
-        type: c
-        end: 0xC871
-      - start: 0xC872
-        type: data
-        file: maria
-        end: 0xC8C7
-      - start: 0xC8C8
-        type: c
-        file: maria    
-        end: 0x1261D
-      - start: 0x1261E
-        type: data
-        file: maria    
-        end: 0x1276b
-      - start: 0x1276c
-        type: c
-        file: maria    
-        end: 0x13665
-      - start: 0x13666
-        type: data
-        file: maria
-        end: 0x1368b
-      - start: 0x1368C
         type: c
         file: maria
+        function_ranges:
+          - [0xC474, 0xC8C0]
+          - [0xDE7C, 0xDF9C]
+          - [0x122B4, 0x12762]
+          - [0x135C8, 0x13676]
+          - [0x164AC, 0x166F8]
         end: 0x1C6B7
       - start: 0x1C6B8
-        type: data
-        file: maria
+        type: .data
+        file: maria/colpal
+      - start: 0x1C974
+        type: .data
+        file: maria/statefx
+      - start: 0x1C9BC
+        type: .data
+        file: maria/sensors
+      - start: 0x1CAD4
+        type: .data
+        file: maria/bpdefs
+      - start: 0x1D20C
+        type: .data
+        file: maria/effects
+      - start: 0x1D42C
+        type: .data
+        file: maria/blink
+      - start: 0x1D6B0
+        type: .data
+        file: maria/ring
+      - start: 0x1D710
+        type: .data
+        file: maria/ice
+      - start: 0x1D878
+        type: .data
+        file: maria/light
+      - start: 0x1D8D8
+        type: .data
+        file: maria/anims
+      - start: 0x1E7CC
+        type: .data
+        file: maria/hitboxes
+      - start: 0x1E98C
+        type: .data
+        file: maria/palette
+      - start: 0x1E9D0
+        type: .data
+        file: maria/frames
+      - start: 0x201A8
+        type: .data
+        file: maria/images
+      - start: 0x20714
+        type: .data
+        file: maria/sprpkg1
+      - start: 0x20D70
+        type: .data
+        file: maria/sprpkg2
+      - start: 0x20DF0
+        type: .data
+        file: maria/sprpkg3
+      - start: 0x20EAC
+        type: .data
+        file: maria/sprpkg4
+      - start: 0x20FD8
+        type: .data
+        file: maria/sprpkg5
+      - start: 0x213E0
+        type: .data
+        file: maria/sprpkg6
+      - start: 0x214C0
+        type: .data
+        file: maria/sprpkg7
+      - start: 0x21590
+        type: .data
+        file: maria/sprpkg8
+      - start: 0x2180C
+        type: .data
+        file: maria/sprpkg9
+      - start: 0x21978
+        type: .data
+        file: maria/sprpkg10
+      - start: 0x21ABC
+        type: .data
+        file: maria/sprpkg11
+      - start: 0x21BF0
+        type: .data
+        file: maria/sprpkg12
+      - start: 0x21D68
+        type: .data
+        file: maria/resarray
+      - start: 0x21E04
+        type: .data
+        file: maria/sprbanks
+      - start: 0x21E4C
+        type: .data
+        file: maria/gfxloads
+      - start: 0x2291C
+        type: .data
+        file: maria/ent87dat
+      - start: 0x229A0
+        type: .data
+        file: maria/subwpdat
+      - start: 0x22A18
+        type: .data
+        file: maria/entanims
+      - start: 0x22CF0
+        type: .data
+        file: maria/enddata
+      - start: 0x22D5C
+        type: .data
+        file: maria/castmap
+      - start: 0x2C360
+        type: .data
+        file: maria/mapcmd
+      - start: 0x2C380
+        type: .data
+        file: maria/mapui
+      - start: 0x2C500
+        type: .data
+        file: maria/deathgfx
+      - start: 0x2D914
+        type: .data
+        file: maria/coffsyms
         end: 0x2F04B

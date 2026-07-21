@@ -1128,11 +1128,11 @@ def parse_init_room_entities(ovl_name, platform, init_room_entities_path, vram_s
 def parse_entity_updates(data_file_text, ovl_name, entity_updates_symbol):
     parsed_entity_updates = None
     known_entity_updates = [
-        f"{ovl_name.upper()}_EntityBreakable",
+        "EntityBreakable",
         "EntityExplosion",
         "EntityPrizeDrop",
         "EntityDamageDisplay",
-        f"{ovl_name.upper()}_EntityRedDoor",
+        "EntityRedDoor",
         "EntityIntenseExplosion",
         "EntitySoulStealOrb",
         "EntityRoomForeground",
@@ -1144,8 +1144,8 @@ def parse_entity_updates(data_file_text, ovl_name, entity_updates_symbol):
         "EntityMessageBox",
         "EntityDummy",
         "EntityDummy",
-        f"{ovl_name.upper()}_EntityBackgroundBlock",
-        f"{ovl_name.upper()}_EntityLockCamera",
+        "EntityBackgroundBlock",
+        "EntityLockCamera",
         "EntityUnkId13",
         "EntityExplosionVariants",
         "EntityGreyPuff",
@@ -1608,7 +1608,7 @@ def add_initial_symbols(
     if entity_updates.get("address"):
         parsed_symbols.append(
             Symbol(
-                f"{ovl_config.name.upper()}_EntityUpdates",
+                f"EntityUpdates",
                 entity_updates.get("address"),
                 None,
             )

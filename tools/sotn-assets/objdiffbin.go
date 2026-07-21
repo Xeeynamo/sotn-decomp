@@ -59,10 +59,7 @@ func handleObjdiffReport(version string) error {
 	if err := deps.GenAndRunNinja(); err != nil {
 		return err
 	}
-	buildPath := filepath.Join("build", version)
-	expectedPath := filepath.Join("expected", "build", version)
-	_ = os.RemoveAll(expectedPath)
-	if err := os.CopyFS(expectedPath, os.DirFS(buildPath)); err != nil {
+	if err := copyBuildToExpectedFolder(version); err != nil {
 		return err
 	}
 

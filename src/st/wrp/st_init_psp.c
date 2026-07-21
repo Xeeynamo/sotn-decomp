@@ -4,7 +4,6 @@
 
 extern LayoutEntity* D_8D2DE7C;
 extern LayoutEntity* D_8D2DF50;
-
 extern Overlay OVL_EXPORT(Overlay);
 
 static s32 E_ID(ID_11);

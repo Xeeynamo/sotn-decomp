@@ -195,7 +195,7 @@ void RicEntityWhip(Entity* self) {
             self->hitboxHeight = 3;
             self->hitboxOffX = 0;
             self->hitboxOffY = 0;
-            self->ext.whip.unkB0 = PL_W_WHIP;
+            self->ext.whip.subweaponId = PL_W_WHIP;
             RicSetSubweaponParams(self);
         }
         if (psp_s4 == 0) {

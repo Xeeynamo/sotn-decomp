@@ -1,0 +1,38 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+#include "sattypes.h"
+
+extern s16 g_Stage02AxeKnightFrameData[1296];
+
+s16* g_Stage02AxeKnightFrames[62] = {
+    &g_Stage02AxeKnightFrameData[0],    &g_Stage02AxeKnightFrameData[2],
+    &g_Stage02AxeKnightFrameData[28],   &g_Stage02AxeKnightFrameData[54],
+    &g_Stage02AxeKnightFrameData[80],   &g_Stage02AxeKnightFrameData[106],
+    &g_Stage02AxeKnightFrameData[136],  &g_Stage02AxeKnightFrameData[166],
+    &g_Stage02AxeKnightFrameData[196],  &g_Stage02AxeKnightFrameData[230],
+    &g_Stage02AxeKnightFrameData[256],  &g_Stage02AxeKnightFrameData[282],
+    &g_Stage02AxeKnightFrameData[308],  &g_Stage02AxeKnightFrameData[334],
+    &g_Stage02AxeKnightFrameData[364],  &g_Stage02AxeKnightFrameData[390],
+    &g_Stage02AxeKnightFrameData[420],  &g_Stage02AxeKnightFrameData[450],
+    &g_Stage02AxeKnightFrameData[480],  &g_Stage02AxeKnightFrameData[510],
+    &g_Stage02AxeKnightFrameData[540],  &g_Stage02AxeKnightFrameData[566],
+    &g_Stage02AxeKnightFrameData[592],  &g_Stage02AxeKnightFrameData[618],
+    &g_Stage02AxeKnightFrameData[644],  &g_Stage02AxeKnightFrameData[666],
+    &g_Stage02AxeKnightFrameData[688],  &g_Stage02AxeKnightFrameData[710],
+    &g_Stage02AxeKnightFrameData[732],  &g_Stage02AxeKnightFrameData[758],
+    &g_Stage02AxeKnightFrameData[784],  &g_Stage02AxeKnightFrameData[810],
+    &g_Stage02AxeKnightFrameData[840],  &g_Stage02AxeKnightFrameData[862],
+    &g_Stage02AxeKnightFrameData[884],  &g_Stage02AxeKnightFrameData[906],
+    &g_Stage02AxeKnightFrameData[928],  &g_Stage02AxeKnightFrameData[954],
+    &g_Stage02AxeKnightFrameData[976],  &g_Stage02AxeKnightFrameData[1002],
+    &g_Stage02AxeKnightFrameData[1028], &g_Stage02AxeKnightFrameData[1054],
+    &g_Stage02AxeKnightFrameData[1080], &g_Stage02AxeKnightFrameData[1106],
+    &g_Stage02AxeKnightFrameData[1128], &g_Stage02AxeKnightFrameData[1150],
+    &g_Stage02AxeKnightFrameData[1172], &g_Stage02AxeKnightFrameData[1194],
+    &g_Stage02AxeKnightFrameData[1200], &g_Stage02AxeKnightFrameData[1206],
+    &g_Stage02AxeKnightFrameData[1212], &g_Stage02AxeKnightFrameData[1218],
+    &g_Stage02AxeKnightFrameData[1224], &g_Stage02AxeKnightFrameData[1230],
+    &g_Stage02AxeKnightFrameData[1236], &g_Stage02AxeKnightFrameData[1242],
+    &g_Stage02AxeKnightFrameData[1248], &g_Stage02AxeKnightFrameData[1254],
+    &g_Stage02AxeKnightFrameData[1260], &g_Stage02AxeKnightFrameData[1270],
+    &g_Stage02AxeKnightFrameData[1276], &g_Stage02AxeKnightFrameData[1286],
+};

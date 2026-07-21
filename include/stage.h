@@ -208,6 +208,11 @@ void HitDetection(void);
 s32 Random();
 #ifdef VERSION_PC
 void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity);
+
+// BUG! on non-MIPS processors, not adding this forward declaration results to
+// the caller receiving an undefined numbers that can be random and
+// mis-representative of the actual return value.
+u8 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags);
 #endif
 void DestroyEntity(Entity*);
 void DestroyEntitiesFromIndex(s16 index);

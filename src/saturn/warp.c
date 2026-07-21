@@ -2,8 +2,6 @@
 #include "inc_asm.h"
 #include "sattypes.h"
 
-INCLUDE_ASM("asm/saturn/warp/data", d60DC000, d_060DC000);
-
 void EntityWarpRoom(Entity* self);
 INCLUDE_ASM("asm/saturn/warp/f_nonmat", f60DC040, func_060DC040);
 
@@ -29,5 +27,3 @@ INCLUDE_ASM("asm/saturn/warp/f_nonmat", f60DD038, func_060DD038);
 
 void func_060DD894(Entity* self);
 INCLUDE_ASM("asm/saturn/warp/f_nonmat", f60DD894, func_060DD894);
-
-INCLUDE_ASM("asm/saturn/warp/data", d60DDD74, d_060DDD74);

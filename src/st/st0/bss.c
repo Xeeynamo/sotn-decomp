@@ -1,4 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <game.h>
 
-u16 msgBoxTpage[768];
+u16 msgBoxTpage[0x300];

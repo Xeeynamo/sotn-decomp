@@ -1104,7 +1104,7 @@ def get_symbol_table_from_entity_init_c(file_name: str, ovl_name: str) -> list[s
             line = f.readline()
             if not line:  # unexpected end of file
                 return []
-            if "PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {" in line:
+            if "PfnEntityUpdate EntityUpdates[] = {" in line:
                 break
         entities = []
         while True:  # loop until the end of the array

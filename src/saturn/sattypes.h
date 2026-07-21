@@ -65,6 +65,27 @@ typedef struct {
     u16 pose;
 } AnimationFrame;
 
+typedef struct {
+    s8 offsetX;
+    s8 offsetY;
+    s8 hitboxWidth;
+    s8 hitboxHeight;
+} FrameProperty;
+
+typedef struct {
+    s16 attack;
+    u8 hitboxWidth;
+    u8 hitboxHeight;
+    s8 hitboxOffX;
+    s8 hitboxOffY;
+    u16 attackElement;
+    u16 hitboxState;
+    u8 unkA;
+    u8 unkB;
+    u16 unkC;
+    u16 entityRoomIndex;
+} SaturnEntityCombatConfig;
+
 typedef struct Collider {
     /* 0x00 */ u32 effects;
     /* 0x04 */ s32 unk4; // possibly an x offset
@@ -339,7 +360,8 @@ void (*func_0606468c)();
 s32 (*func_06064690)();
 
 typedef struct {
-    s32 unk0;
+    // Either a legacy SpriteParts table or a Saturn sprite-resource descriptor.
+    void* spriteBank;
     PfnEntityUpdate func;
 } EntityEntry;
 

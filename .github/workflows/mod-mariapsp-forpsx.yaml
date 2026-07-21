@@ -28,11 +28,11 @@ jobs:
       - name: Install requirements
         run: sudo apt-get install gcc-mipsel-linux-gnu
       - name: Clone repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: ${{ github.ref }}
           submodules: false
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v7
         with:
           go-version: '>=1.24.4'
       - name: Get dependencies
@@ -47,7 +47,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Clone main repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           submodules: false
       - name: Set up Docker Buildx

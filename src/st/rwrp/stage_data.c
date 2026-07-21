@@ -10,9 +10,6 @@ u8 stage_placeholder_rwrp[] = {
 u16 D_80181D08[] = {
 #include "gen/D_80181D08.h"
 };
-u16 D_80181F08[] = {
-#include "gen/D_80181F08.h"
-};
 
 #include "gen/rwrp_tilemap_0.h"
 #include "gen/rwrp_tilemap_1.h"

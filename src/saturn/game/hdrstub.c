@@ -1,4 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "inc_asm.h"
+#include "sattypes.h"
 
-INCLUDE_ASM("asm/saturn/game/data", d6066030, d_06066030);
+u32 g_GameSpriteResourceHeader[4] = {
+    0x204C4100,
+    0x104C4100,
+    0x044C4100,
+    0xF44B4100,
+};

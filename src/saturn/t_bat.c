@@ -1,43 +1,16 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "inc_asm.h"
 #include "sattypes.h"
+#include "t_bat/batanim.h"
+#include "t_bat/batbss.h"
+#include "t_bat/batevent.h"
+#include "t_bat/batgfx.h"
+#include "t_bat/batstat.h"
 
 void PlaySfx(s32 sfxId);
 
-typedef struct {
-    s32 delayFrames;
-    s32 angleStep;
-    s32 additionalBatCount;
-    s32 minimumEnemyHp;
-    s32 makeBadAttacks;
-} BatAbilityValues;
-
-extern struct SpriteParts* g_ServantSpriteParts[];        // 0x060D19FC
-extern s32 DAT_060d1a88;                                  // 0x060D1A88
-extern Unk060ED26C DAT_060d1b70;                          // 0x060D1B70
-extern AnimationFrame g_DefaultBatAnimationFrame[];       // 0x060D1B84
-extern AnimationFrame g_BatFarFromTargetAnimationFrame[]; // 0x060D1BF0
-extern AnimationFrame g_BatCloseToTargetAnimationFrame[]; // 0x060D1C28
-extern AnimationFrame g_BatHighVelocityAnimationFrame[];  // 0x060D1CC8
-extern AnimationFrame* g_BatAnimationFrames[];            // 0x060D1CD0
-extern s16 g_BatSpriteData[4][10];                        // 0x060D1CE4
-extern BatAbilityValues g_BatAbilityStats[];              // 0x060D1D34
-extern s32 s_IsServantDestroyed;                          // 0x060D1DFC
-extern u32 s_LastTargetedEntityIndex;                     // 0x060D1E00
-extern ServantEvent g_Events[];                           // 0x060D1E04
-extern s32 g_PlaySfxStep;                                 // 0x060D2734
-extern s16 g_EntityRanges[];                              // 0x060D2738
-extern ServantEvent* g_EventQueue;                        // 0x060D2740
-extern u32 g_CurrentServant;                              // 0x060D2744
-extern s32 g_CurrentRoomX;                                // 0x060D2748
-extern s32 g_CurrentRoomY;                                // 0x060D274C
-extern s16 DAT_060d2750;                                  // 0x060D2750
-extern s16 DAT_060d2752;                                  // 0x060D2752
-extern FamiliarStats s_BatStats;                          // 0x060D2830
-extern Point16 s_BatPathingPoints[4][0x10];               // 0x060D2840
+extern struct SpriteParts* g_ServantSpriteParts[]; // 0x060D19FC
 extern s32 g_CutsceneHasControl;
-
-INCLUDE_ASM("asm/saturn/t_bat/data", d60CF000, d_060CF000);
 
 static inline void SetEntityAnimation(Entity* entity, AnimationFrame* anim) {
     if (entity->anim != anim) {
@@ -180,7 +153,8 @@ void CreateAdditionalBats(s32 amount, s32 entityId) {
         } else {
             DestroyEntity(entity);
             entity->unk0 = func_0600B344(
-                DAT_060d1b70.unk8, DAT_060d1b70.unk10, &DAT_060d1a88, 1);
+                g_BatTextureResource.vramX, g_BatTextureResource.vramY,
+                g_BatTextureSlices, 1);
             if (entity->unk0 == NULL) {
                 DestroyEntity(entity);
                 return;
@@ -221,8 +195,8 @@ void UpdatePrimWhenAlucardIsBat(Entity* entity) {
     y -= entity->ext.bat.frameCounter / 2;
 
     prim = &g_PrimBuf[entity->primIndex];
-    prim->x0 = x - g_BatSpriteData[frame][0];
-    prim->y0 = y - g_BatSpriteData[frame][1];
+    prim->x0 = x - g_BatSpriteData[frame].x;
+    prim->y0 = y - g_BatSpriteData[frame].y;
 }
 
 // SAT: func_060CF6B4
@@ -235,7 +209,8 @@ void SwitchModeInitialize(Entity* self) {
         switch (self->entityId) {
         case 0xD1:
             self->unk0 = func_0600B344(
-                DAT_060d1b70.unk8, DAT_060d1b70.unk10, &DAT_060d1a88, 1);
+                g_BatTextureResource.vramX, g_BatTextureResource.vramY,
+                g_BatTextureSlices, 1);
             if (self->unk0 == NULL) {
                 DestroyEntity(self);
                 return;
@@ -677,9 +652,10 @@ void UpdateBatAttackMode(Entity* self) {
                    !(g_Player.status & PLAYER_STATUS_SUBWPN)) {
             self->ext.bat.hasShotFireball = false;
         }
-        DAT_060d2750 = self->ext.bat.follow->posX.i.hi - self->posX.i.hi;
-        DAT_060d2752 = self->ext.bat.follow->posY.i.hi - self->posY.i.hi;
-        distance = DAT_060d2750 * DAT_060d2750 + DAT_060d2752 * DAT_060d2752;
+        g_BatFollowDeltaX = self->ext.bat.follow->posX.i.hi - self->posX.i.hi;
+        g_BatFollowDeltaY = self->ext.bat.follow->posY.i.hi - self->posY.i.hi;
+        distance = g_BatFollowDeltaX * g_BatFollowDeltaX +
+                   g_BatFollowDeltaY * g_BatFollowDeltaY;
         if (IsMovementAllowed(0) || distance > 0x18 * 0x18) {
             for (i = 0; i < 15; i++) {
                 s_BatPathingPoints[self->ext.bat.batIndex][i].x =
@@ -1170,5 +1146,3 @@ s32 ServantUnk0(void) {
         return 2;
     }
 }
-
-INCLUDE_ASM("asm/saturn/t_bat/data", d60D1858, d_060D1858);
