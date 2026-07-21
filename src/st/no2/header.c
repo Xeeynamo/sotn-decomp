@@ -16,11 +16,7 @@ AbbreviatedOverlay OVL_EXPORT(Overlay) = {
     .rooms = rooms,
     .spriteBanks = spriteBanks,
     .cluts = cluts,
-#if defined(VERSION_PSP) || defined(VERSION_PC)
     .objLayoutHorizontal = &OBJ_LAYOUT_HORIZONTAL,
-#else
-    .objLayoutHorizontal = entityLayoutHorizontal,
-#endif
     .tileLayers = rooms_layers,
     .gfxBanks = gfxBanks,
     .UpdateStageEntities = UpdateStageEntities,
