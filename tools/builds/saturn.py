@@ -128,6 +128,7 @@ snd_srcs = [
     'src/saturn/zero.c',
     'src/saturn/lib/snd.c',
     'src/saturn/zero_2.c',
+    'src/saturn/zero_3.c',
     'src/saturn/zero/stgfiles.c',
     'src/saturn/zero/snddata.c',
     'src/saturn/zero/adpcm.c',
@@ -706,6 +707,7 @@ multi_objs = {
     'build/saturn/zero.o' : [
         'build/saturn/lib/snd.o',
         'build/saturn/zero_2.o',
+        'build/saturn/zero_3.o',
         'build/saturn/lib/bup.o',
         'build/saturn/lib/cdc.o',
         'build/saturn/lib/csh.o',
