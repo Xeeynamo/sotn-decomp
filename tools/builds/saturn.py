@@ -402,6 +402,7 @@ lib_srcs = [
     'src/saturn/lib/spr/spr_2c.c',
     'src/saturn/lib/spr/spr_slv.c',
     'src/saturn/lib/sys.c',
+    'src/saturn/lib/sys_bss.c',
     'src/saturn/lib/sys_tail.c',
 ]
 
@@ -724,6 +725,7 @@ multi_objs = {
         'build/saturn/lib/spr/spr_2c.o',
         'build/saturn/lib/spr/spr_slv.o',
         'build/saturn/lib/sys.o',
+        'build/saturn/lib/sys_bss.o',
         'build/saturn/zero/snddata.o',
         'build/saturn/zero/adpcm.o',
         'build/saturn/zero/sndlut.o',
