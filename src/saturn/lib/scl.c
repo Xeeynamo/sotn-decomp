@@ -87,7 +87,7 @@ void SCL_ParametersInit(void) {
     Scl_s_reg.vramchg = 0;
     Scl_s_reg.ramcontrl = 0x2000;
     for (i = 0; i < 8; i++)
-        Scl_s_reg.vramcyc[i] = 0xffff;
+        Scl_s_reg.vramcyc[i] = 0xFFFF;
     Scl_s_reg.dispenbl = 0;
     Scl_s_reg.mosaic = 0;
     Scl_s_reg.specialcode_sel = 0;
@@ -254,13 +254,13 @@ void SCL_Scale(Fixed32 Sx, Fixed32 Sy) {
     case SCL_RBG_TB_A:
         SclRotregBuff[0].zoom.x = wSx;
         SclRotregBuff[0].zoom.y = wSy;
-        if (Scl_r_reg.k_contrl & 0x00ff)
+        if (Scl_r_reg.k_contrl & 0x00FF)
             SCL_Rotate(0, 0, 0);
         break;
     case SCL_RBG_TB_B:
         SclRotregBuff[1].zoom.x = wSx;
         SclRotregBuff[1].zoom.y = wSy;
-        if (Scl_r_reg.k_contrl & 0xff00)
+        if (Scl_r_reg.k_contrl & 0xFF00)
             SCL_Rotate(0, 0, 0);
         break;
     }
@@ -407,12 +407,12 @@ void SCL_PriIntProc(void) {
 
 // func_06024DB4
 void SCL_SetFrameInterval(Uint16 count) {
-    if (count == 0xffff) {
+    if (count == 0xFFFF) {
         SpFrameChgMode = NO_INTER_FRAME_CHG;
         SpFrameEraseMode = 0;
         SPR_WRITE_REG(SPR_W_FBCR, SPR_FBCR_MANUAL | SpFbcrMode);
         VBInterval = count;
-    } else if (count == 0xfffe) {
+    } else if (count == 0xFFFE) {
         SpFrameChgMode = NO_INTER_VBE_FRAME_CHG;
         SpFrameEraseMode = 0;
         SPR_WRITE_REG(SPR_W_FBCR, SPR_FBCR_MANUAL | SpFbcrMode);
@@ -422,7 +422,7 @@ void SCL_SetFrameInterval(Uint16 count) {
             SpFrameEraseMode = 0;
         else
             SpFrameEraseMode = 1;
-        count &= 0x7fff;
+        count &= 0x7FFF;
         if (count)
             if (count == 1)
                 SpFrameChgMode = AUTO_FRAME_CHG;
@@ -509,7 +509,7 @@ void SCL_VblankEnd(void) {
     if (SpDie) {
         tvStat = SPR_SCLREAD_REG(SPR_R_TVSTAT);
         if (tvStat & 2)
-            SPR_WRITE_REG(SPR_W_FBCR, 0x000c | SpFbcrMode);
+            SPR_WRITE_REG(SPR_W_FBCR, 0x000C | SpFbcrMode);
         else
             SPR_WRITE_REG(SPR_W_FBCR, 0x0008 | SpFbcrMode);
 
@@ -1026,7 +1026,7 @@ void SCL_SetDisplayMode(Uint8 interlace, Uint8 vertical, Uint8 horizontal) {
 
     SysClock = SYS_GETSYSCK;
 
-    Scl_s_reg.tvmode &= 0xffcf;
+    Scl_s_reg.tvmode &= ~0x0030;
     switch (vertical) {
     case SCL_224LINE:
         SclDisplayY = 224;
@@ -1041,7 +1041,7 @@ void SCL_SetDisplayMode(Uint8 interlace, Uint8 vertical, Uint8 horizontal) {
         break;
     }
 
-    Scl_s_reg.tvmode &= 0xff3f;
+    Scl_s_reg.tvmode &= ~0x00C0;
     switch (interlace) {
     case SCL_NON_INTER:
         break;
@@ -1050,11 +1050,11 @@ void SCL_SetDisplayMode(Uint8 interlace, Uint8 vertical, Uint8 horizontal) {
         break;
     case SCL_DOUBLE_INTER:
         SclDisplayY *= 2;
-        Scl_s_reg.tvmode |= 0x00c0;
+        Scl_s_reg.tvmode |= 0x00C0;
         break;
     }
 
-    Scl_s_reg.tvmode &= 0xfff0;
+    Scl_s_reg.tvmode &= ~0x000F;
     switch (horizontal) {
     case SCL_NORMAL_A:
         SclDisplayX = 320;
@@ -1177,57 +1177,57 @@ void SCL_SetVramConfig(SclVramConfig* tp) {
     SclRbgKtbOffset[0] = tp->ktboffsetA;
     SclRbgKtbOffset[1] = tp->ktboffsetB;
 
-    Scl_s_reg.ramcontrl &= 0x7fff;
+    Scl_s_reg.ramcontrl &= ~0x8000;
 
     if (tp->vramModeA == ON)
         Scl_s_reg.ramcontrl |= 0x0100;
     else
-        Scl_s_reg.ramcontrl &= 0xfeff;
+        Scl_s_reg.ramcontrl &= ~0x0100;
 
     if (tp->vramModeB == ON)
         Scl_s_reg.ramcontrl |= 0x0200;
     else
-        Scl_s_reg.ramcontrl &= 0xfdff;
+        Scl_s_reg.ramcontrl &= ~0x0200;
 
     sw = 0;
     offsw = 0;
 
     if (tp->vramA0 < 4) {
         Scl_s_reg.ramcontrl =
-            (Scl_s_reg.ramcontrl & 0xfffc) | (Uint16)tp->vramA0;
+            (Scl_s_reg.ramcontrl & ~0x0003) | (Uint16)tp->vramA0;
         if (tp->vramA0 == SCL_RBG0_K) {
             if (SclRbgKtbOffset[0])
-                Scl_s_reg.ramcontrl &= 0xfffc;
+                Scl_s_reg.ramcontrl &= ~0x0003;
             else
                 offsw = 1;
             sw = 1;
-            Scl_r_reg.k_offset &= 0xff00;
+            Scl_r_reg.k_offset &= 0xFF00;
             SclRbgKtbAddr[0] = SCL_VDP2_VRAM_A0 + SclRbgKtbOffset[0];
         }
     } else {
         if (tp->vramA0 == SCL_RBG1_K) {
-            Scl_r_reg.k_offset &= 0x00ff;
+            Scl_r_reg.k_offset &= 0x00FF;
             SclRbgKtbAddr[1] = SCL_VDP2_VRAM_A0 + SclRbgKtbOffset[1];
         }
     }
 
     if (tp->vramA1 < 4) {
         Scl_s_reg.ramcontrl =
-            (Scl_s_reg.ramcontrl & 0xfff3) | (Uint16)(tp->vramA1 << 2);
+            (Scl_s_reg.ramcontrl & ~0x000C) | (Uint16)(tp->vramA1 << 2);
         if (tp->vramA1 == SCL_RBG0_K) {
             if (sw == 0) {
                 if (SclRbgKtbOffset[0])
-                    Scl_s_reg.ramcontrl &= 0xfff3;
+                    Scl_s_reg.ramcontrl &= ~0x000C;
                 else
                     offsw = 2;
-                Scl_r_reg.k_offset &= 0xff00;
+                Scl_r_reg.k_offset &= 0xFF00;
                 Scl_r_reg.k_offset |= 0x0001;
                 SclRbgKtbAddr[0] = SCL_VDP2_VRAM_A1 + SclRbgKtbOffset[0];
                 sw = 1;
             } else {
                 if (SclRbgKtbOffset[1])
-                    Scl_s_reg.ramcontrl &= 0xfff3;
-                Scl_r_reg.k_offset &= 0x00ff;
+                    Scl_s_reg.ramcontrl &= ~0x000C;
+                Scl_r_reg.k_offset &= 0x00FF;
                 Scl_r_reg.k_offset |= 0x0100;
                 SclRbgKtbAddr[1] = SCL_VDP2_VRAM_A1 + SclRbgKtbOffset[1];
                 sw++;
@@ -1235,7 +1235,7 @@ void SCL_SetVramConfig(SclVramConfig* tp) {
         }
     } else {
         if (tp->vramA1 == SCL_RBG1_K) {
-            Scl_r_reg.k_offset &= 0x00ff;
+            Scl_r_reg.k_offset &= 0x00FF;
             Scl_r_reg.k_offset |= 0x0100;
             SclRbgKtbAddr[1] = SCL_VDP2_VRAM_A1 + SclRbgKtbOffset[1];
         }
@@ -1243,21 +1243,21 @@ void SCL_SetVramConfig(SclVramConfig* tp) {
 
     if (tp->vramB0 < 4) {
         Scl_s_reg.ramcontrl =
-            (Scl_s_reg.ramcontrl & 0xffcf) | (Uint16)(tp->vramB0 << 4);
+            (Scl_s_reg.ramcontrl & ~0x0030) | (Uint16)(tp->vramB0 << 4);
         if (tp->vramB0 == SCL_RBG0_K) {
             if (sw == 0) {
                 if (SclRbgKtbOffset[0])
-                    Scl_s_reg.ramcontrl &= 0xffcf;
+                    Scl_s_reg.ramcontrl &= ~0x0030;
                 else
                     offsw = 3;
-                Scl_r_reg.k_offset &= 0xff00;
+                Scl_r_reg.k_offset &= 0xFF00;
                 Scl_r_reg.k_offset |= 0x0002;
                 sw = 1;
                 SclRbgKtbAddr[0] = SCL_VDP2_VRAM_B0 + SclRbgKtbOffset[0];
             } else {
                 if (SclRbgKtbOffset[1])
-                    Scl_s_reg.ramcontrl &= 0xffcf;
-                Scl_r_reg.k_offset &= 0x00ff;
+                    Scl_s_reg.ramcontrl &= ~0x0030;
+                Scl_r_reg.k_offset &= 0x00FF;
                 Scl_r_reg.k_offset |= 0x0200;
                 sw++;
                 SclRbgKtbAddr[1] = SCL_VDP2_VRAM_B0 + SclRbgKtbOffset[1];
@@ -1265,7 +1265,7 @@ void SCL_SetVramConfig(SclVramConfig* tp) {
         }
     } else {
         if (tp->vramB0 == SCL_RBG1_K && SclRbgKtbOffset[1]) {
-            Scl_r_reg.k_offset &= 0x00ff;
+            Scl_r_reg.k_offset &= 0x00FF;
             Scl_r_reg.k_offset |= 0x0200;
             SclRbgKtbAddr[1] = SCL_VDP2_VRAM_B0 + SclRbgKtbOffset[1];
         }
@@ -1273,21 +1273,21 @@ void SCL_SetVramConfig(SclVramConfig* tp) {
 
     if (tp->vramB1 < 4) {
         Scl_s_reg.ramcontrl =
-            (Scl_s_reg.ramcontrl & 0xff3f) | (Uint16)(tp->vramB1 << 6);
+            (Scl_s_reg.ramcontrl & ~0x00C0) | (Uint16)(tp->vramB1 << 6);
         if (tp->vramB1 == SCL_RBG0_K) {
             if (sw == 0) {
                 if (SclRbgKtbOffset[0])
-                    Scl_s_reg.ramcontrl &= 0xff3f;
+                    Scl_s_reg.ramcontrl &= ~0x00C0;
                 else
                     offsw = 4;
-                Scl_r_reg.k_offset &= 0xff00;
+                Scl_r_reg.k_offset &= 0xFF00;
                 Scl_r_reg.k_offset |= 0x0003;
                 sw = 1;
                 SclRbgKtbAddr[0] = SCL_VDP2_VRAM_B1 + SclRbgKtbOffset[0];
             } else {
                 if (SclRbgKtbOffset[1])
-                    Scl_s_reg.ramcontrl &= 0xff3f;
-                Scl_r_reg.k_offset &= 0x00ff;
+                    Scl_s_reg.ramcontrl &= ~0x00C0;
+                Scl_r_reg.k_offset &= 0x00FF;
                 Scl_r_reg.k_offset |= 0x0300;
                 sw++;
                 SclRbgKtbAddr[1] = SCL_VDP2_VRAM_B1 + SclRbgKtbOffset[1];
@@ -1295,7 +1295,7 @@ void SCL_SetVramConfig(SclVramConfig* tp) {
         }
     } else {
         if (tp->vramB1 == SCL_RBG1_K && SclRbgKtbOffset[1]) {
-            Scl_r_reg.k_offset &= 0x00ff;
+            Scl_r_reg.k_offset &= 0x00FF;
             Scl_r_reg.k_offset |= 0x0300;
             SclRbgKtbAddr[1] = SCL_VDP2_VRAM_B1 + SclRbgKtbOffset[1];
         }
@@ -1313,29 +1313,29 @@ void SCL_SetVramConfig(SclVramConfig* tp) {
                 SclRbgKtbOffset[0] = -1;
             SclRbgKtbAddr[1] = SclRbgKtbAddr[0] + SclRbgKtbOffset[1];
             Scl_r_reg.k_offset =
-                (Scl_r_reg.k_offset & 0x00ff) | Scl_r_reg.k_offset << 8;
+                (Scl_r_reg.k_offset & 0x00FF) | Scl_r_reg.k_offset << 8;
             switch (offsw) {
             case 1:
-                Scl_s_reg.ramcontrl &= 0xfffc;
+                Scl_s_reg.ramcontrl &= ~0x0003;
                 break;
             case 2:
-                Scl_s_reg.ramcontrl &= 0xfff3;
+                Scl_s_reg.ramcontrl &= ~0x000C;
                 break;
             case 3:
-                Scl_s_reg.ramcontrl &= 0xffcf;
+                Scl_s_reg.ramcontrl &= ~0x0030;
                 break;
             case 4:
-                Scl_s_reg.ramcontrl &= 0xff3f;
+                Scl_s_reg.ramcontrl &= ~0x00C0;
                 break;
             }
         } else if (!SclRbgKtbAddr[0]) {
             if (SclRbgKtbOffset[0] && SclRa != SCL_NON) {
-                Scl_r_reg.k_offset &= 0xff00;
+                Scl_r_reg.k_offset &= 0xFF00;
                 Scl_r_reg.k_offset |= (Uint16)(SclRbgKtbOffset[0] / 0x20000);
                 SclRbgKtbAddr[0] = SCL_VDP2_VRAM + SclRbgKtbOffset[0];
             }
             if (SclRbgKtbOffset[1] && SclRb != SCL_NON) {
-                Scl_r_reg.k_offset &= 0x00ff;
+                Scl_r_reg.k_offset &= 0x00FF;
                 Scl_r_reg.k_offset |=
                     ((Uint16)(SclRbgKtbOffset[1] / 0x20000)) << 8;
                 SclRbgKtbAddr[1] = SCL_VDP2_VRAM + SclRbgKtbOffset[1];
@@ -1431,10 +1431,10 @@ void SCL_DisableLineCol(Uint32 Surface) { SCL_SetLineColReg(Surface, 0); }
 // func_06028C34
 void SCL_SetBack(Uint32 addr, Uint16 dataSize, Uint16* dataTb) {
     if (dataSize == 1 || dataSize == SclDisplayY) {
-        Scl_n_reg.backcolmode = addr & 0x0007ffff;
+        Scl_n_reg.backcolmode = addr & 0x0007FFFF;
 
-        SCL_Memcpyw(
-            (void*)(Scl_n_reg.backcolmode | 0x25e00000), dataTb, dataSize * 2);
+        SCL_Memcpyw((void*)(Scl_n_reg.backcolmode | SCL_VDP2_VRAM), dataTb,
+                    dataSize * 2);
 
         Scl_n_reg.backcolmode /= 2;
 
@@ -1486,45 +1486,45 @@ void SCL_SetConfig(Uint16 sclnum, SclConfig* scfg) {
     case SCL_NBG0:
         temp = scfg->dispenbl;
         temp &= 0x0001;
-        Scl_s_reg.dispenbl &= 0xfffe;
+        Scl_s_reg.dispenbl &= ~0x0001;
         Scl_s_reg.dispenbl |= temp;
 
         temp = scfg->charsize;
         temp &= 0x0001;
-        Scl_d_reg.charcontrl0 &= 0xfffe;
+        Scl_d_reg.charcontrl0 &= ~0x0001;
         Scl_d_reg.charcontrl0 |= temp;
 
         Scl_d_reg.patnamecontrl[0] = scfg->patnamecontrl;
 
         temp = scfg->pnamesize;
         temp = (temp << 15) & 0x8000;
-        Scl_d_reg.patnamecontrl[0] &= 0x7fff;
+        Scl_d_reg.patnamecontrl[0] &= ~0x8000;
         Scl_d_reg.patnamecontrl[0] |= temp;
 
-        Scl_d_reg.patnamecontrl[0] &= 0xbfff;
+        Scl_d_reg.patnamecontrl[0] &= ~0x4000;
         Scl_d_reg.patnamecontrl[0] |= flip;
 
         temp = scfg->platesize;
         temp &= 0x0003;
-        Scl_d_reg.platesize &= 0xfffc;
+        Scl_d_reg.platesize &= ~0x0003;
         Scl_d_reg.platesize |= temp;
 
         temp = scfg->bmpsize;
-        temp = (temp << 2) & 0x000c;
-        Scl_d_reg.charcontrl0 &= 0xfff3;
+        temp = (temp << 2) & 0x000C;
+        Scl_d_reg.charcontrl0 &= ~0x000C;
         Scl_d_reg.charcontrl0 |= temp;
 
         temp = scfg->coltype;
         temp = (temp << 4) & 0x0070;
-        Scl_d_reg.charcontrl0 &= 0xff8f;
+        Scl_d_reg.charcontrl0 &= ~0x0070;
         Scl_d_reg.charcontrl0 |= temp;
 
         temp = scfg->datatype;
         temp = (temp << 1) & 0x0002;
-        Scl_d_reg.charcontrl0 &= 0xfffd;
+        Scl_d_reg.charcontrl0 &= ~0x0002;
         Scl_d_reg.charcontrl0 |= temp;
 
-        Scl_d_reg.mapoffset0 &= 0xfff0;
+        Scl_d_reg.mapoffset0 &= ~0x000F;
         mapoffset = &Scl_d_reg.mapoffset0;
         shift = 0;
         map = &Scl_d_reg.normap[0];
@@ -1533,45 +1533,45 @@ void SCL_SetConfig(Uint16 sclnum, SclConfig* scfg) {
     case SCL_NBG1:
         temp = scfg->dispenbl;
         temp = (temp << 1) & 0x0002;
-        Scl_s_reg.dispenbl &= 0xfffD;
+        Scl_s_reg.dispenbl &= ~0x0002;
         Scl_s_reg.dispenbl |= temp;
 
         temp = scfg->charsize;
         temp = (temp << 8) & 0x0100;
-        Scl_d_reg.charcontrl0 &= 0xfeff;
+        Scl_d_reg.charcontrl0 &= ~0x0100;
         Scl_d_reg.charcontrl0 |= temp;
 
         Scl_d_reg.patnamecontrl[1] = scfg->patnamecontrl;
 
         temp = scfg->pnamesize;
         temp = (temp << 15) & 0x8000;
-        Scl_d_reg.patnamecontrl[1] &= 0x7fff;
+        Scl_d_reg.patnamecontrl[1] &= ~0x8000;
         Scl_d_reg.patnamecontrl[1] |= temp;
 
-        Scl_d_reg.patnamecontrl[1] &= 0xbfff;
+        Scl_d_reg.patnamecontrl[1] &= ~0x4000;
         Scl_d_reg.patnamecontrl[1] |= flip;
 
         temp = scfg->platesize;
-        temp = (temp << 2) & 0x000c;
-        Scl_d_reg.platesize &= 0xfff3;
+        temp = (temp << 2) & 0x000C;
+        Scl_d_reg.platesize &= ~0x000C;
         Scl_d_reg.platesize |= temp;
 
         temp = scfg->bmpsize;
-        temp = (temp << 10) & 0x0c00;
-        Scl_d_reg.charcontrl0 &= 0xf3ff;
+        temp = (temp << 10) & 0x0C00;
+        Scl_d_reg.charcontrl0 &= ~0x0C00;
         Scl_d_reg.charcontrl0 |= temp;
 
         temp = scfg->coltype;
         temp = (temp << 12) & 0x3000;
-        Scl_d_reg.charcontrl0 &= 0xcfff;
+        Scl_d_reg.charcontrl0 &= ~0x3000;
         Scl_d_reg.charcontrl0 |= temp;
 
         temp = scfg->datatype;
         temp = (temp << 9) & 0x0200;
-        Scl_d_reg.charcontrl0 &= 0xfdff;
+        Scl_d_reg.charcontrl0 &= ~0x0200;
         Scl_d_reg.charcontrl0 |= temp;
 
-        Scl_d_reg.mapoffset0 &= 0xff0f;
+        Scl_d_reg.mapoffset0 &= ~0x00F0;
         mapoffset = &Scl_d_reg.mapoffset0;
         shift = 4;
         map = &Scl_d_reg.normap[2];
@@ -1580,35 +1580,35 @@ void SCL_SetConfig(Uint16 sclnum, SclConfig* scfg) {
     case SCL_NBG2:
         temp = scfg->dispenbl;
         temp = (temp << 2) & 0x0004;
-        Scl_s_reg.dispenbl &= 0xfffb;
+        Scl_s_reg.dispenbl &= ~0x0004;
         Scl_s_reg.dispenbl |= temp;
 
         temp = scfg->charsize;
         temp = temp & 0x0001;
-        Scl_d_reg.charcontrl1 &= 0xfffe;
+        Scl_d_reg.charcontrl1 &= ~0x0001;
         Scl_d_reg.charcontrl1 |= temp;
 
         Scl_d_reg.patnamecontrl[2] = scfg->patnamecontrl;
 
         temp = scfg->pnamesize;
         temp = (temp << 15) & 0x8000;
-        Scl_d_reg.patnamecontrl[2] &= 0x7fff;
+        Scl_d_reg.patnamecontrl[2] &= ~0x8000;
         Scl_d_reg.patnamecontrl[2] |= temp;
 
-        Scl_d_reg.patnamecontrl[2] &= 0xbfff;
+        Scl_d_reg.patnamecontrl[2] &= ~0x4000;
         Scl_d_reg.patnamecontrl[2] |= flip;
 
         temp = scfg->platesize;
         temp = (temp << 4) & 0x0030;
-        Scl_d_reg.platesize &= 0xffcf;
+        Scl_d_reg.platesize &= ~0x0030;
         Scl_d_reg.platesize |= temp;
 
         temp = scfg->coltype;
         temp = (temp << 1) & 0x0002;
-        Scl_d_reg.charcontrl1 &= 0xfffd;
+        Scl_d_reg.charcontrl1 &= ~0x0002;
         Scl_d_reg.charcontrl1 |= temp;
 
-        Scl_d_reg.mapoffset0 &= 0xf0ff;
+        Scl_d_reg.mapoffset0 &= ~0x0F00;
         mapoffset = &Scl_d_reg.mapoffset0;
         shift = 8;
         map = &Scl_d_reg.normap[4];
@@ -1617,35 +1617,35 @@ void SCL_SetConfig(Uint16 sclnum, SclConfig* scfg) {
     case SCL_NBG3:
         temp = scfg->dispenbl;
         temp = (temp << 3) & 0x0008;
-        Scl_s_reg.dispenbl &= 0xfff7;
+        Scl_s_reg.dispenbl &= ~0x0008;
         Scl_s_reg.dispenbl |= temp;
 
         temp = scfg->charsize;
         temp = (temp << 4) & 0x0010;
-        Scl_d_reg.charcontrl1 &= 0xffef;
+        Scl_d_reg.charcontrl1 &= ~0x0010;
         Scl_d_reg.charcontrl1 |= temp;
 
         Scl_d_reg.patnamecontrl[3] = scfg->patnamecontrl;
 
         temp = scfg->pnamesize;
         temp = (temp << 15) & 0x8000;
-        Scl_d_reg.patnamecontrl[3] &= 0x7fff;
+        Scl_d_reg.patnamecontrl[3] &= ~0x8000;
         Scl_d_reg.patnamecontrl[3] |= temp;
 
-        Scl_d_reg.patnamecontrl[3] &= 0xbfff;
+        Scl_d_reg.patnamecontrl[3] &= ~0x4000;
         Scl_d_reg.patnamecontrl[3] |= flip;
 
         temp = scfg->platesize;
-        temp = (temp << 6) & 0x00c0;
-        Scl_d_reg.platesize &= 0xff3f;
+        temp = (temp << 6) & 0x00C0;
+        Scl_d_reg.platesize &= ~0x00C0;
         Scl_d_reg.platesize |= temp;
 
         temp = scfg->coltype;
         temp = (temp << 5) & 0x0020;
-        Scl_d_reg.charcontrl1 &= 0xffdf;
+        Scl_d_reg.charcontrl1 &= ~0x0020;
         Scl_d_reg.charcontrl1 |= temp;
 
-        Scl_d_reg.mapoffset0 &= 0x0fff;
+        Scl_d_reg.mapoffset0 &= ~0xF000;
         mapoffset = &Scl_d_reg.mapoffset0;
         shift = 12;
         map = &Scl_d_reg.normap[6];
@@ -1654,43 +1654,43 @@ void SCL_SetConfig(Uint16 sclnum, SclConfig* scfg) {
     case SCL_RBG0:
         temp = scfg->dispenbl;
         temp = (temp << 4) & 0x0010;
-        Scl_s_reg.dispenbl &= 0xffef;
+        Scl_s_reg.dispenbl &= ~0x0010;
         Scl_s_reg.dispenbl |= temp;
 
         temp = scfg->charsize;
         temp = (temp << 8) & 0x0100;
-        Scl_d_reg.charcontrl1 &= 0xfeff;
+        Scl_d_reg.charcontrl1 &= ~0x0100;
         Scl_d_reg.charcontrl1 |= temp;
 
         Scl_d_reg.patnamecontrl[4] = scfg->patnamecontrl;
 
         temp = scfg->pnamesize;
         temp = (temp << 15) & 0x8000;
-        Scl_d_reg.patnamecontrl[4] &= 0x7fff;
+        Scl_d_reg.patnamecontrl[4] &= ~0x8000;
         Scl_d_reg.patnamecontrl[4] |= temp;
 
-        Scl_d_reg.patnamecontrl[4] &= 0xbfff;
+        Scl_d_reg.patnamecontrl[4] &= ~0x4000;
         Scl_d_reg.patnamecontrl[4] |= flip;
 
         temp = scfg->bmpsize;
         temp = (temp << 10) & 0x0400;
-        Scl_d_reg.charcontrl1 &= 0xfbff;
+        Scl_d_reg.charcontrl1 &= ~0x0400;
         Scl_d_reg.charcontrl1 |= temp;
 
         temp = scfg->coltype;
         temp = (temp << 12) & 0x7000;
-        Scl_d_reg.charcontrl1 &= 0x8fff;
+        Scl_d_reg.charcontrl1 &= ~0x7000;
         Scl_d_reg.charcontrl1 |= temp;
 
         temp = scfg->datatype;
         temp = (temp << 9) & 0x0200;
-        Scl_d_reg.charcontrl1 &= 0xfdff;
+        Scl_d_reg.charcontrl1 &= ~0x0200;
         Scl_d_reg.charcontrl1 |= temp;
 
         max = 8;
 
         if ((SclRa == SCL_RBG0) && (SclRb == SCL_RBG0)) {
-            Scl_d_reg.mapoffset1 &= 0xfff0;
+            Scl_d_reg.mapoffset1 &= ~0x000F;
             mapoffset = &Scl_d_reg.mapoffset1;
             shift = 0;
             map = &Scl_d_reg.rotmap[0];
@@ -1699,90 +1699,90 @@ void SCL_SetConfig(Uint16 sclnum, SclConfig* scfg) {
 
             temp = scfg->platesize;
             temp = ((temp << 8) & 0x0300) | ((temp << 12) & 0x3000);
-            Scl_d_reg.platesize &= 0xfcff;
+            Scl_d_reg.platesize &= ~0x0300;
             Scl_d_reg.platesize |= temp;
 
             temp = scfg->mapover;
-            temp = ((temp << 10) & 0x0c00) | ((temp << 14) & 0xc000);
-            Scl_d_reg.platesize &= 0x33ff;
+            temp = ((temp << 10) & 0x0C00) | ((temp << 14) & 0xC000);
+            Scl_d_reg.platesize &= ~0xCC00;
             Scl_d_reg.platesize |= temp;
         } else {
             if (SclRa == SCL_RBG0) {
-                Scl_d_reg.mapoffset1 &= 0xfff0;
+                Scl_d_reg.mapoffset1 &= ~0x000F;
                 mapoffset = &Scl_d_reg.mapoffset1;
                 shift = 0;
                 map = &Scl_d_reg.rotmap[0];
 
                 temp = scfg->platesize;
                 temp = (temp << 8) & 0x0300;
-                Scl_d_reg.platesize &= 0xfcff;
+                Scl_d_reg.platesize &= ~0x0300;
                 Scl_d_reg.platesize |= temp;
 
                 temp = scfg->mapover;
-                temp = (temp << 10) & 0x0c00;
-                Scl_d_reg.platesize &= 0xf3ff;
+                temp = (temp << 10) & 0x0C00;
+                Scl_d_reg.platesize &= ~0x0C00;
                 Scl_d_reg.platesize |= temp;
             } else if (SclRb == SCL_RBG0) {
-                Scl_d_reg.mapoffset1 &= 0xff0f;
+                Scl_d_reg.mapoffset1 &= ~0x00F0;
                 mapoffset = &Scl_d_reg.mapoffset1;
                 shift = 4;
                 map = &Scl_d_reg.rotmap[8];
 
                 temp = scfg->platesize;
                 temp = (temp << 12) & 0x3000;
-                Scl_d_reg.platesize &= 0xcfff;
+                Scl_d_reg.platesize &= ~0x3000;
                 Scl_d_reg.platesize |= temp;
 
                 temp = scfg->mapover;
-                temp = (temp << 14) & 0xc000;
-                Scl_d_reg.platesize &= 0x3fff;
+                temp = (temp << 14) & 0xC000;
+                Scl_d_reg.platesize &= ~0xC000;
                 Scl_d_reg.platesize |= temp;
             }
         }
         break;
     case SCL_RBG1:
         if ((SclRa == SCL_RBG0) && (SclRb == SCL_RBG1)) {
-            Scl_s_reg.dispenbl &= 0xffdf;
+            Scl_s_reg.dispenbl &= ~0x0020;
             if (scfg->dispenbl)
                 Scl_s_reg.dispenbl |= 0x0020;
 
             temp = scfg->charsize;
             temp &= 0x0001;
-            Scl_d_reg.charcontrl0 &= 0xfffe;
+            Scl_d_reg.charcontrl0 &= ~0x0001;
             Scl_d_reg.charcontrl0 |= temp;
 
             Scl_d_reg.patnamecontrl[0] = scfg->patnamecontrl;
 
             temp = scfg->pnamesize;
             temp = (temp << 15) & 0x8000;
-            Scl_d_reg.patnamecontrl[0] &= 0x7fff;
+            Scl_d_reg.patnamecontrl[0] &= ~0x8000;
             Scl_d_reg.patnamecontrl[0] |= temp;
 
-            Scl_d_reg.patnamecontrl[0] &= 0xbfff;
+            Scl_d_reg.patnamecontrl[0] &= ~0x4000;
             Scl_d_reg.patnamecontrl[0] |= flip;
 
             temp = scfg->platesize;
             temp = (temp << 12) & 0x3000;
-            Scl_d_reg.platesize &= 0xcfff;
+            Scl_d_reg.platesize &= ~0x3000;
             Scl_d_reg.platesize |= temp;
 
             temp = scfg->mapover;
-            temp = (temp << 14) & 0xc000;
-            Scl_d_reg.platesize &= 0x3fff;
+            temp = (temp << 14) & 0xC000;
+            Scl_d_reg.platesize &= ~0xC000;
             Scl_d_reg.platesize |= temp;
 
             temp = scfg->coltype;
             temp = (temp << 4) & 0x0070;
-            Scl_d_reg.charcontrl0 &= 0xff8f;
+            Scl_d_reg.charcontrl0 &= ~0x0070;
             Scl_d_reg.charcontrl0 |= temp;
 
             temp = SCL_CELL;
             temp = (temp << 1) & 0x0002;
-            Scl_d_reg.charcontrl0 &= 0xfffd;
+            Scl_d_reg.charcontrl0 &= ~0x0002;
             Scl_d_reg.charcontrl0 |= temp;
 
             max = 8;
-            Scl_d_reg.mapoffset1 &= 0xff0f;
+            Scl_d_reg.mapoffset1 &= ~0x00F0;
             mapoffset = &Scl_d_reg.mapoffset1;
             shift = 4;
             map = &Scl_d_reg.rotmap[8];
@@ -1808,32 +1808,32 @@ void SCL_SetConfig(Uint16 sclnum, SclConfig* scfg) {
             }
         }
         mapoffsetW =
-            (0x01c0 & ((scfg->plate_addr[0] - SCL_VDP2_VRAM) / boundary)) >> 6;
+            (0x01C0 & ((scfg->plate_addr[0] - SCL_VDP2_VRAM) / boundary)) >> 6;
         *mapoffset |= mapoffsetW << shift;
     }
 
     for (i = 0; i < max; i++) {
         map[i] =
-            (0x003f & ((scfg->plate_addr[i * 2] - SCL_VDP2_VRAM) / boundary));
-        temp = (0x003f &
+            (0x003F & ((scfg->plate_addr[i * 2] - SCL_VDP2_VRAM) / boundary));
+        temp = (0x003F &
                 ((scfg->plate_addr[i * 2 + 1] - SCL_VDP2_VRAM) / boundary))
                << 8;
 
-        map[i] |= (temp & 0x3f00);
+        map[i] |= (temp & 0x3F00);
     }
     if (map2) {
-        *mapoffset &= 0x000f;
+        *mapoffset &= 0x000F;
         *mapoffset |= *mapoffset << shift2;
 
         for (i = 0; i < max; i++) {
             map2[i] =
-                (0x003f &
+                (0x003F &
                  ((scfg->plate_addr[16 + (i * 2)] - SCL_VDP2_VRAM) / boundary));
-            temp = (0x003f &
+            temp = (0x003F &
                     ((scfg->plate_addr[16 + (i * 2 + 1)] - SCL_VDP2_VRAM) /
                      boundary))
                    << 8;
-            map2[i] |= (temp & 0x3f00);
+            map2[i] |= (temp & 0x3F00);
         }
     }
     if (SclProcess == 0)
@@ -1853,7 +1853,7 @@ void SCL_FreeColRam(Uint32 Surface) {
     Uint32 work;
     Uint8 i;
 
-    work = Surface ^ 0xffffffff;
+    work = Surface ^ 0xFFFFFFFF;
 
     for (i = 0; i < 8; i++) {
         SclColRamAlloc256[i] &= work;
@@ -1933,7 +1933,7 @@ static Fixed32 Fsin(Fixed32 a) {
         val = fsin(a);
     }
 
-    if (val == 0x0000ffff)
+    if (val == 0x0000FFFF)
         val = FIXED(1);
 
     if (sign)
@@ -2011,10 +2011,10 @@ void SCL_Rotate(Fixed32 xy, Fixed32 z, Fixed32 disp) {
     if (!SclRotateXy[TbNum] && xy) {
         switch (SclCurSclNum) {
         case SCL_RBG_TB_A:
-            Scl_r_reg.k_contrl &= 0xff00;
+            Scl_r_reg.k_contrl &= 0xFF00;
             break;
         case SCL_RBG_TB_B:
-            Scl_r_reg.k_contrl &= 0x00ff;
+            Scl_r_reg.k_contrl &= 0x00FF;
             break;
         }
     }
@@ -2029,8 +2029,8 @@ void SCL_Rotate(Fixed32 xy, Fixed32 z, Fixed32 disp) {
     if (SclRotateXy[TbNum] || SclRotateMoveZ[TbNum]) {
         currentMatrix[TbNum][0] = SclRotregBuff[TbNum].zoom.x;
         currentMatrix[TbNum][4] = SclRotregBuff[TbNum].zoom.y;
-    } else if ((TbNum == 0 && (Scl_r_reg.k_contrl & 0x00ff)) ||
-               (TbNum == 1 && (Scl_r_reg.k_contrl & 0xff00))) {
+    } else if ((TbNum == 0 && (Scl_r_reg.k_contrl & 0x00FF)) ||
+               (TbNum == 1 && (Scl_r_reg.k_contrl & 0xFF00))) {
         currentMatrix[TbNum][0] = SclRotregBuff[TbNum].zoom.x;
         currentMatrix[TbNum][4] = SclRotregBuff[TbNum].zoom.y;
         SclRotregBuff[TbNum].matrix_a = SclRotregBuff[TbNum].zoom.x;
@@ -2133,7 +2133,7 @@ void SCL_SetColRamOffset(Uint32 Object, Uint32 Offset, Uint8 transparent) {
         if (transparent)
             Scl_s_reg.dispenbl |= 0x0100;
         else
-            Scl_s_reg.dispenbl &= 0xfeff;
+            Scl_s_reg.dispenbl &= ~0x0100;
     }
 
     if ((Object & SCL_NBG1) || (Object & SCL_EXBG)) {
@@ -2141,7 +2141,7 @@ void SCL_SetColRamOffset(Uint32 Object, Uint32 Offset, Uint8 transparent) {
         if (transparent)
             Scl_s_reg.dispenbl |= 0x0200;
         else
-            Scl_s_reg.dispenbl &= 0xfdff;
+            Scl_s_reg.dispenbl &= ~0x0200;
     }
 
     if (Object & SCL_NBG2) {
@@ -2149,7 +2149,7 @@ void SCL_SetColRamOffset(Uint32 Object, Uint32 Offset, Uint8 transparent) {
         if (transparent)
             Scl_s_reg.dispenbl |= 0x0400;
         else
-            Scl_s_reg.dispenbl &= 0xfbff;
+            Scl_s_reg.dispenbl &= ~0x0400;
     }
 
     if (Object & SCL_NBG3) {
@@ -2157,7 +2157,7 @@ void SCL_SetColRamOffset(Uint32 Object, Uint32 Offset, Uint8 transparent) {
         if (transparent)
             Scl_s_reg.dispenbl |= 0x0800;
         else
-            Scl_s_reg.dispenbl &= 0xf7ff;
+            Scl_s_reg.dispenbl &= ~0x0800;
     }
 
     if (Object & SCL_RBG0) {
@@ -2165,7 +2165,7 @@ void SCL_SetColRamOffset(Uint32 Object, Uint32 Offset, Uint8 transparent) {
         if (transparent)
             Scl_s_reg.dispenbl |= 0x1000;
         else
-            Scl_s_reg.dispenbl &= 0xefff;
+            Scl_s_reg.dispenbl &= ~0x1000;
     }
 
     if (Object & SCL_LNCL) {

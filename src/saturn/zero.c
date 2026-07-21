@@ -11,7 +11,7 @@
 // func_06004080
 void entrypoint(void) {
     func_06030df0();
-    Scl_s_reg.tvmode &= 0x7EFF;
+    Scl_s_reg.tvmode &= ~0x8100;
     SclProcess = 1;
     func_060044D0();
     DAT_0605cea2 = 0;
@@ -32,7 +32,7 @@ void func_06007e14();
 void func_06008264();
 void func_06008298();
 void func_06008a70();
-void func_06008d04();
+void func_06008d04(s32, s32);
 void func_06009838();
 void func_0600d8bc();
 void MoviePRGClear();
@@ -66,7 +66,7 @@ void func_060040d8(void) {
             Scl_s_reg.tvmode |= 0x8000;
             SclProcess = 1;
         }
-        func_060645e0();
+        func_060645E0();
         break;
     case 2:
         if (DAT_0605cea0 == 0) {
@@ -119,9 +119,9 @@ void func_060040d8(void) {
         break;
     case 0x20:
         func_06007e14();
-        Scl_s_reg.dispenbl &= 0xFFC0;
+        Scl_s_reg.dispenbl &= ~0x003F;
         SclProcess = 1;
-        Scl_s_reg.tvmode &= 0x7EFF;
+        Scl_s_reg.tvmode &= ~0x8100;
         SclProcess = 1;
         InitializePads();
         SPR_WaitDrawEnd();
@@ -136,7 +136,7 @@ void func_060040d8(void) {
         if ((DAT_06057f34 == 2) && (DAT_0605d7f8 == 0)) {
             SYS_EXECDMP();
         }
-        Scl_s_reg.tvmode &= 0x7EFF;
+        Scl_s_reg.tvmode &= ~0x8100;
         SclProcess = 1;
         SCL_DisplayFrame();
         SCL_Vdp2Init();
@@ -154,7 +154,7 @@ void func_060040d8(void) {
         if (DAT_0605cea2 == 6) {
             SYS_EXECDMP();
         } else {
-            PlaySfx(0xF000000B);
+            PlaySfx(SET_UNK_0B);
             while (func_06013320() == 0) {
                 func_06010400();
                 SCL_DisplayFrame();

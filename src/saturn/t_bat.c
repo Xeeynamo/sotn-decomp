@@ -895,7 +895,7 @@ void ProcessSfxState(Entity* entity) {
             return;
         }
         if (CdSoundCommandQueueEmpty()) {
-            PlaySfx(0xF0000010);
+            PlaySfx(SET_UNK_10);
             func_06010400();
             entity->step++;
         }
@@ -926,7 +926,7 @@ void ProcessSfxState(Entity* entity) {
             return;
         }
         if (CdSoundCommandQueueEmpty()) {
-            PlaySfx(0xF0000011);
+            PlaySfx(SET_XA_PLAYBACK);
             entity->step++;
         }
         break;
@@ -938,7 +938,7 @@ void ProcessSfxState(Entity* entity) {
         }
         break;
     case 7:
-        PlaySfx(0xF0000080);
+        PlaySfx(SET_UNK_80);
         entity->step = 4;
         break;
     case 8:
