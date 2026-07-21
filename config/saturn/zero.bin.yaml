@@ -435,7 +435,13 @@ segments:
         file: lib/spr/spr_data
         end: 0x44183
 
+      # SYS vars
       - start: 0x44184
         type: data
         file: lib/sys_tail
+        end: 0x4453F
+
+      - start: 0x44540
+        type: .data
+        file: lib/sys_bss
         end: 0x4C560
