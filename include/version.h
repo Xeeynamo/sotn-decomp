@@ -44,7 +44,6 @@
 // are unrelated to gameplay mechanics or glitch exploitation. This includes:
 //   * Array access beyond its intended boundaries
 //   * Access to uninitialized or unrelated portion of memory
-//   * Use of uninitialized or unrelated
 //   * Missing return statements
 //   * Mismatching function signatures to their original intended type
 //   * Data overflow
