@@ -3,8 +3,6 @@
 #include "sattypes.h"
 #include "game.h"
 
-void PlaySfx(s32 sfxId);
-
 extern u16* g_LayoutObjHorizontal;
 extern u16* g_LayoutObjVertical;
 extern u8 g_LayoutObjPosHorizontal;
