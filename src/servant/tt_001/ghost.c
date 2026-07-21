@@ -230,7 +230,7 @@ void OVL_EXPORT(ServantInit)(InitializeMode mode) {
     s32 i;
     SpriteParts** spriteBanks;
     Entity* e;
-#ifdef VERSION_PC
+#ifdef FIX_UB
     const int lenServantClut = LEN(g_ServantClut);
     const int leng_GhostClut = LEN(g_GhostClut);
 #else

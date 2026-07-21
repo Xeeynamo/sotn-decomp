@@ -2257,7 +2257,7 @@ void EntityAguneaHitEnemy(Entity* self) {
 }
 
 // tetra spirit out of bounds problem, add a value at beginning and end
-#ifdef VERSION_PC
+#ifdef FIX_UB
 u8 D_800B0848[] = {0x00, 0x80, 0x80, 0x80, 0x90, 0x80, 0xA0, 0x80, 0xB0,
                    0xA0, 0x80, 0xA0, 0x90, 0xA0, 0xA0, 0xA0, 0xB0, 0xC0};
 #else
@@ -2458,7 +2458,7 @@ void func_80129864(Entity* self) {
             prim->drawMode |= DRAW_HIDE;
             break;
         case 1:
-#ifdef VERSION_PC
+#ifdef FIX_UB
             // self->animCurFrame starts at 0. Seems like an out of bounds
             // bug in original?
             temp_u = D_800B0848[(self->animCurFrame) * 2];

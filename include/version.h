@@ -36,6 +36,16 @@
 #define VERSION_TOKEN us
 #endif
 
+#ifdef VERSION_PC
+
+// Macro to fix Undefined Behaviors found across the original codebase.
+// These are community, unofficial fixes brought for making the code portable
+// on different platforms, and to fix bugs in the original game release that
+// are unrelated to gameplay or glitch exploitation.
+#define FIX_UB
+
+#endif
+
 #define __CPP_STR(x) #x
 #define CPP_STR(x) __CPP_STR(x)
 // note: the "token" produced by PATH_JOIN gets stringified into a

@@ -451,7 +451,7 @@ void OVL_EXPORT(ServantInit)(InitializeMode mode) {
     SpriteParts** spriteBanks;
     Entity* entity;
 
-#ifdef VERSION_PC
+#ifdef FIX_UB
     const int len = LEN(g_FaerieClut);
 #else
     const int len = 256;

@@ -428,7 +428,7 @@ void OVL_EXPORT(ServantInit)(InitializeMode mode) {
     SpriteParts** spriteBanks;
     Entity* e;
 
-#ifdef VERSION_PC
+#ifdef FIX_UB
     const int len = LEN(g_ServantClut);
 #else
     const int len = 256;

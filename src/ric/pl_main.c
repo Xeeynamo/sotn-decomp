@@ -420,7 +420,7 @@ void RicMain(void) {
 #endif
 #endif
 
-#if defined(VERSION_PC) || defined(VERSION_PSP)
+#if defined(FIX_UB) || defined(VERSION_PSP)
     damageEffects = 0;
 #endif
     for (i = 0; i < LEN(g_Player.timers); i++) {
@@ -641,7 +641,7 @@ void RicMain(void) {
         break;
     }
     g_Player.unk08 = g_Player.status;
-#if defined(VERSION_PC) || defined(VERSION_PSP)
+#if defined(FIX_UB) || defined(VERSION_PSP)
     // uninitialized on PSX, it was a coincidence it worked
     newStatus = 0;
 #endif
