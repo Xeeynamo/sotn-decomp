@@ -300,7 +300,7 @@ void EntityBoneScimitar(Entity* self) {
 void EntityBoneScimitarParts(Entity* self) {
     if (self->step) {
         if (--self->ext.skeleton.explosionTimer) {
-#if defined(VERSION_PC)
+#if defined(FIX_UB)
             // BUG! BONE_SCIMITAR_SPECIAL assigns a self->params value bigger
             // than anim_bone_rot, causing a OOB access. On PS1 US this reads
             // at 80183da8, where NO3 rooms are stored.

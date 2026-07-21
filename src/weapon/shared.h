@@ -21,7 +21,7 @@ static void LoadWeaponPalette(s32 clutIndex) {
     }
 
     for (i = 0; i < LEN(*D_8006EDCC)
-#ifdef VERSION_PC
+#ifdef FIX_UB
                 && i < LEN(g_WeaponCluts[clutIndex])
 #endif
              ;
