@@ -134,13 +134,13 @@ void RicInit(s16 initParam) {
     }
     spriteptr = g_api.o.spriteBanks;
     spriteptr += 0x10;
-    *spriteptr = (SpriteParts*)spritebank0;
+    *spriteptr = (SpriteParts*)D_801530AC;
     spriteptr++;
-    *spriteptr = (SpriteParts*)spritebank1;
+    *spriteptr = (SpriteParts*)D_80153AA0;
     spriteptr++;
-    *spriteptr = (SpriteParts*)spritebank2;
+    *spriteptr = (SpriteParts*)D_80153D24;
     spriteptr++;
-    *spriteptr = (SpriteParts*)spritebank3;
+    *spriteptr = (SpriteParts*)D_801541A8;
     for (e = &g_Entities[E_AFTERIMAGE_1], i = 0; i < 3; i++, e++) {
         DestroyEntity(e);
         e->animSet = ANIMSET_OVL(0x10);

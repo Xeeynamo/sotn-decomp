@@ -233,10 +233,10 @@ enum BlueprintOrigin {
 
 extern PlayerOvl RIC_player;
 
-extern s16* spritebank0[];
-extern s16* spritebank1[];
-extern s16* spritebank2[];
-extern s16* spritebank3[];
+extern s16* D_801530AC[];
+extern SpriteParts* D_80153AA0[];
+extern SpriteParts* D_80153D24[];
+extern SpriteParts* D_801541A8[];
 extern void DestroyEntity(Entity* entity);
 extern void RicStepBladeDash(void);
 void RicSetAnimation(AnimationFrame* anim);

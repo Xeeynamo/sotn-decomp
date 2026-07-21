@@ -69,7 +69,6 @@ func TestStagesCompatibility(t *testing.T) {
 		"disks/us/BOSS/BO2/BO2.BIN",
 		"disks/us/BOSS/BO3/BO3.BIN",
 		"disks/us/BOSS/BO5/BO5.BIN",
-		"disks/us/BOSS/BO6/BO6.BIN",
 		"disks/us/BOSS/MAR/MAR.BIN",
 		"disks/us/BOSS/RBO0/RBO0.BIN",
 		"disks/us/BOSS/RBO1/RBO1.BIN",
@@ -109,7 +108,6 @@ func TestStagesCompatibility(t *testing.T) {
 		"disks/us/ST/TE3/TE3.BIN",
 		"disks/us/ST/TE4/TE4.BIN",
 		"disks/us/ST/TE5/TE5.BIN",
-		"disks/us/ST/TOP/TOP.BIN",
 	} {
 		t.Run(fmt.Sprintf("should be able to gather info for %q", ovlPath), func(t *testing.T) {
 			defer func() {
@@ -126,12 +124,14 @@ func TestStagesCompatibility(t *testing.T) {
 	for _, ovlPath := range []string{
 		"disks/us/ST/SEL/SEL.BIN",
 		"disks/us/ST/NO0/NO0.BIN",
+		"disks/us/ST/TOP/TOP.BIN",
 		"disks/us/ST/RCEN/RCEN.BIN",
 		"disks/us/ST/RLIB/RLIB.BIN",
 		"disks/us/ST/RNO0/RNO0.BIN",
 		"disks/us/ST/RNO2/RNO2.BIN",
 		"disks/us/ST/RNZ1/RNZ1.BIN",
 		"disks/us/BOSS/BO4/BO4.BIN",
+		"disks/us/BOSS/BO6/BO6.BIN",
 		"disks/us/BOSS/BO7/BO7.BIN",
 		"disks/us/BOSS/RBO5/RBO5.BIN",
 		"disks/us/BOSS/RBO6/RBO6.BIN",

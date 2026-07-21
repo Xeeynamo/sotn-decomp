@@ -71,7 +71,10 @@ segments:
       - [0x2D308, .data, pl_blueprints]
       - [0x2D320, .data, pl_blueprints] # subweapons
       - [0x2D590, .data, pl_blueprints]
-      - [0x2E0A8, .data, spritebanks]
+      - [0x2E0A8, .data, spritebank3]
+      - [0x2E4D0, .data, spritebank0]
+      - [0x2EEC8, .data, spritebank1]
+      - [0x2F1A0, .data, spritebank2]
       - [0x2F6B8, .data, pl_crash_cross]
       - [0x2FBE8, .data, pl_subweapon_holywater]
       - [0x2FC58, .data, pl_whip]
