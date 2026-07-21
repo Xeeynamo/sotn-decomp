@@ -20,9 +20,4 @@ typedef struct {
     s32 castleFlag;
 } RoomBossTeleport;
 
-typedef struct {
-    s32 equipmentId;
-    s32 paletteIndex;
-} EquipmentPaletteMap;
-
 #endif

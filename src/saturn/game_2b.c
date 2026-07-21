@@ -3,6 +3,8 @@
 #include "sattypes.h"
 #include "game.h"
 #include "lib/scl.h"
+#define _SPR2_
+#include "lib/spr/spr.h"
 
 void PlaySfx(s32 sfxId);
 
@@ -1346,8 +1348,61 @@ void func_0607BE38(void) {
     SCL_SET_S0CCRT(DAT_06086134);
 }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607BED0, func_0607BED0);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607C054, func_0607C054);
+extern s32 d_0605AEAC;
+extern s16 DAT_0605aec4;
+extern u32 g_Timer;
+extern s32 SpMstCmdPos;
+
+void func_0607BED0(void) {
+    SprSpCmd cmd;
+    SprSpCmd* spCmd;
+    s32 i;
+    s32 angle;
+
+    spCmd = &cmd;
+    spCmd->control = JUMP_ASSIGN;
+    spCmd->drawMode = UCLPIN_ENABLE | ECD_DISABLE;
+    spCmd->color = 0x6400;
+    spCmd->charAddr = DAT_0605aec4;
+    spCmd->charSize = 0x2801;
+    angle = DAT_06086130;
+    for (i = 0; i < 0x20; i++, angle += 0x80) {
+        spCmd->ax = func_0607C054(DAT_0608612c, DAT_06086128, angle);
+        spCmd->ay = i + 0x68;
+        if (SpMstCmdPos < 0x278) {
+            SPR_2Cmd(0x1C0, spCmd);
+            d_0605AEAC += 0x20;
+        }
+        spCmd->charAddr += 20;
+    }
+    DAT_06086130 += 0x80;
+    DAT_0608612c -= 0x2000;
+    if (DAT_0608612c < 0) {
+        DAT_0608612c = 0;
+    }
+    DAT_06086128 -= 0x800;
+    if (DAT_06086128 < 0) {
+        DAT_06086128 = 0;
+    }
+    if (g_Timer & 1) {
+        DAT_06086134--;
+        if (DAT_06086134 > 0) {
+            SCL_SET_S0CCRT(DAT_06086134);
+        } else {
+            if (DAT_06086134 == 0) {
+                SCL_SET_CCMD(1);
+                SCL_SetColMixMode(6, 1);
+                SCL_SET_S0CCRT(0);
+            }
+        }
+    }
+}
+
+s16 func_0607C054(s32 arg0, s32 arg1, s32 angle) {
+    angle &= 0xFFF;
+    return ((rsin((angle * (arg1 >> 8)) >> 8) >> 4) * (arg0 >> 8)) >> 0x10;
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607C0A0, func_0607C0A0);
 
 // _MTH_GetRand

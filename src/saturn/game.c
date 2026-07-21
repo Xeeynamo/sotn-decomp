@@ -545,7 +545,7 @@ bool CheckIfAllButtonsAreAssigned(void) {
 
 void func_0600971C(void);
 extern s16 DAT_0605d772;
-extern s16 DAT_06065470;
+extern u16 DAT_06065470;
 extern s16 DAT_060862a4;
 
 void func_06073280(void) {
@@ -802,10 +802,41 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f6074698, func_06074698);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6074700, func_06074700);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6074724, func_06074724);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6074964, func_06074964);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f60749F8, func_060749F8);
 
-extern u16 g_JosephsCloakColors[4];
-u16* func_06074A98(void) { return g_JosephsCloakColors; }
+extern u16 g_EquippedCapePalette[4];
+extern u16 D_800A37F4[][4];
+extern s32 g_CapePaletteDefs[];
+
+void UpdateCapePalette(void) {
+    s32 clut;
+    s32 i;
+
+    if (g_PlayableCharacter == 0) {
+        i = 0;
+        while (1) {
+            if (g_Status.equipment[5] == g_CapePaletteDefs[i]) {
+                break;
+            }
+
+            if (g_CapePaletteDefs[i] == -1) {
+                break;
+            }
+
+            i += 2;
+        }
+        clut = g_CapePaletteDefs[i + 1];
+        if ((g_Status.equipment[5] == 0x32) &&
+            g_Settings.isCloakLiningReversed) {
+            clut++;
+        }
+        for (i = 0; i < 4; i++) {
+            g_EquippedCapePalette[i] = D_800A37F4[clut][i];
+        }
+        func_060645A4();
+    }
+}
+
+u16* func_06074A98(void) { return D_800A37F4[8]; }
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6074AA8, func_06074AA8);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6074BF4, func_06074BF4);

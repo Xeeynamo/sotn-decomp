@@ -2,7 +2,6 @@
 #include "zero.h"
 #include "inc_asm.h"
 #include "sattypes.h"
-#include "lib/scl.h"
 #include "lib/sys.h"
 
 #define _SPR2_
@@ -410,14 +409,14 @@ void _func_06007E14(void) {
 
     if (d_06038c5c) {
         d_06038c5c--;
-        cmd.control = 0x1004;
-        cmd.drawMode = 0xC0; // sotn-lint-ignore
-        cmd.color = 0x8000;
+        cmd.control = JUMP_ASSIGN | FUNC_TEXTURE;
+        cmd.drawMode = ECDSPD_DISABLE;
+        cmd.color = RGB16_COLOR(0, 0, 0);
         cmd.ax = cmd.dx = 0;
         cmd.bx = cmd.cx = d_0605BEBE;
         cmd.ay = cmd.by = 0;
         cmd.cy = cmd.dy = d_0605AEA0[1] - 1;
-        SPR_2Cmd(0x1ff, &cmd);
+        SPR_2Cmd(0x1FF, &cmd);
         d_0605AEAC += 0x20;
     }
 
@@ -480,7 +479,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60080EC, func_060080EC);
 void SetVdp2BackgroundColor(void) {
     s16 local_c[2];
     local_c[0] = 0;
-    SCL_SetBack(0x25E7FE20, 1, local_c);
+    SCL_SetBack(SCL_VDP2_VRAM + 0x7FE20, 1, local_c);
 }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600815C, func_0600815C);
@@ -496,7 +495,7 @@ void InitScuDma(void) {
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008264, func_06008264);
 
 void func_06008298(void) {
-    int i;
+    s32 i;
     for (i = 0; i < 8; i++) {
         func_06008588(i);
     }
@@ -542,35 +541,35 @@ void func_06008588(int param_1) {
     if (puVar5->tileFlags == 0) {
         return;
     }
-    if ((puVar5->tileFlags & 1) != 0) {
+    if (puVar5->tileFlags & 1) {
         cnt = func_0600F96C(puVar6->unkc, &DAT_060485e0, puVar6->unk18);
         DmaScroll(&DAT_060485e0, puVar6->dst0, cnt);
     }
-    if ((puVar5->tileFlags & 2) != 0) {
+    if (puVar5->tileFlags & 2) {
         cnt = func_0600F96C(puVar6->unk10, &DAT_060485e0, puVar6->unk1c);
         DmaScroll(&DAT_060485e0, puVar6->dst4, cnt);
     }
-    if ((puVar5->tileFlags & 4) != 0) {
+    if (puVar5->tileFlags & 4) {
         if (DAT_060086d4 == 4) {
             func_060089F0(puVar6);
         } else {
             func_0600871C(puVar6, &DAT_0605c680, param_1);
         }
     }
-    if ((puVar5->tileFlags & 8) != 0) {
+    if (puVar5->tileFlags & 8) {
         DmaScroll(puVar5->src, puVar5->dest, puVar5->cnt);
     }
-    if ((puVar5->tileFlags & 0x10) != 0) {
+    if (puVar5->tileFlags & 0x10) {
         DmaScroll(puVar5->src, puVar5->dest, puVar5->cnt);
     }
-    if ((puVar5->tileFlags & 0x20) != 0) {
+    if (puVar5->tileFlags & 0x20) {
         DmaScroll(puVar5->src, puVar5->dest, puVar5->cnt);
     }
-    if ((puVar5->tileFlags & 0x40) != 0) {
+    if (puVar5->tileFlags & 0x40) {
         cnt = func_0600F96C(puVar6->unkc, DMA_SRC_ADDR, puVar6->unk18);
         DmaScroll(DMA_SRC_ADDR, puVar6->dst0, cnt);
     }
-    if ((puVar5->tileFlags & 0x80) != 0) {
+    if (puVar5->tileFlags & 0x80) {
         cnt = func_0600F96C(puVar6->unk10, DMA_SRC_ADDR, puVar6->unk1c);
         DmaScroll(DMA_SRC_ADDR, puVar6->dst4, cnt);
     }
@@ -588,7 +587,7 @@ void DmaScroll(s32* src, s32* dest, u32 cnt) {
 
     if (cnt != 0) {
         // sega DMA lib
-        DMA_CpuMemCopy(dest, src, cnt >> 1); // not sure which of 1-5
+        DMA_CpuMemCopy2(dest, src, cnt >> 1);
         do {
             result = DMA_CpuResult();
         } while (result == 2);
@@ -1187,10 +1186,10 @@ void func_06010008(void) {
     temp.mapover = 0;
     temp.flip = 0;
     temp.patnamecontrl = 0x66;
-    temp.plate_addr[0] = VDP2_25E58000;
-    temp.plate_addr[1] = VDP2_25E58000;
-    temp.plate_addr[2] = VDP2_25E58000;
-    temp.plate_addr[3] = VDP2_25E58000;
+    temp.plate_addr[0] = VDP2_DEBUG_TILEMAP_OFFSET;
+    temp.plate_addr[1] = VDP2_DEBUG_TILEMAP_OFFSET;
+    temp.plate_addr[2] = VDP2_DEBUG_TILEMAP_OFFSET;
+    temp.plate_addr[3] = VDP2_DEBUG_TILEMAP_OFFSET;
     SCL_SetConfig(SCL_NBG0, &temp);
     puVar2 = &DAT_0605d6c0;
     puVar2->unk30 = 0x10;
