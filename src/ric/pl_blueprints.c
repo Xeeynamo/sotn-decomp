@@ -1786,7 +1786,7 @@ void RicEntityPlayerBlinkWhite(Entity* self) {
 #if defined(VERSION_PSP)
     sp44 = D_92641C8[PLAYER.animCurFrame & 0x7FFF];
 #endif
-    sp44 = D_801530AC[PLAYER.animCurFrame & 0x7FFF];
+    sp44 = spritebank0[PLAYER.animCurFrame & 0x7FFF];
     plSpriteIndex = *sp44++;
     plSpriteIndex &= 0x7FFF;
     selfX = self->posX.i.hi;
