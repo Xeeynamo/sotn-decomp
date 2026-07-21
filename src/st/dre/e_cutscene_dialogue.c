@@ -162,7 +162,7 @@ static u8 actor_name_index[] = {
 
 // bss
 u32 g_CutsceneFlags; // used by e_cutscene_actors and e_succubus
-bool g_SkipCutscene; // used by e_cutscene_actors and e_succubus
+s32 g_SkipCutscene;  // used by e_cutscene_actors and e_succubus
 // not a true global, but must be named this because of the shared .h files
 static Dialogue g_Dialogue;
 static u8 char_buffer;
@@ -187,7 +187,7 @@ static bool dialogue_started;
 static const char* actor_names[] = {_S("Alucard"), _S("Lisa"), _S("Succubus")};
 
 // bss
-bool g_SkipCutscene; // used by e_cutscene_actors and e_succubus
+s32 g_SkipCutscene; // used by e_cutscene_actors and e_succubus
 // not a true global, but must be named this because of the shared .h files
 static Dialogue g_Dialogue;
 STATIC_PAD_BSS(104);

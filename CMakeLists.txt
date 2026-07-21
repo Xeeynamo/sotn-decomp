@@ -490,6 +490,81 @@ set(SOURCE_FILES_STAGE_NZ0
     src/st/nz0/e_life_up.c
 )
 
+set(SOURCE_FILES_STAGE_WRP
+    src/pc/stages/stage_wrp.c
+    src/st/wrp/header.c
+    src/st/wrp/sprite_banks.c
+    src/st/wrp/cluts.c
+    src/st/wrp/layers.c
+    src/st/wrp/graphics_banks.c
+    src/st/wrp/gen/e_laydef.c
+    src/st/wrp/e_init.c
+    src/st/wrp/background_block_init.c
+    src/st/wrp/e_room_bg.c
+    src/st/wrp/e_lock_camera.c
+    src/st/wrp/e_breakable.c
+    src/st/wrp/d_prize_drops.c
+    src/st/wrp/gen/rooms.c
+    src/st/wrp/gen/e_layout.c
+    src/st/wrp/stage_data.c
+    src/st/wrp/gen/us/sprites.c
+    src/st/wrp/warp.c
+    src/st/wrp/st_update.c
+    src/st/wrp/collision.c
+    src/st/wrp/create_entity.c
+    src/st/wrp/e_red_door_tiles.c
+    src/st/wrp/e_red_door.c
+    src/st/wrp/st_common.c
+    src/st/wrp/e_collect.c
+    src/st/wrp/e_misc.c
+    src/st/wrp/e_stage_name.c
+    src/st/wrp/e_particles.c
+    src/st/wrp/e_room_fg.c
+    src/st/wrp/popup.c
+    src/st/wrp/prim_helpers.c
+    src/st/wrp/bss.c
+)
+
+set(SOURCE_FILES_STAGE_DRE
+    src/pc/stages/stage_dre.c
+    src/st/dre/header.c
+    src/st/dre/gen/e_laydef.c
+    src/st/dre/e_init.c
+    src/st/dre/gen/rooms.c
+    src/st/dre/gen/e_layout.c
+    src/st/dre/gen/us/sprites.c
+    src/st/dre/gfx_banks.c
+    src/st/dre/gfx_data.c
+    src/st/dre/layers.c
+    src/st/dre/palette_def.c
+    src/st/dre/sprite_banks.c
+    src/st/dre/tilemaps.c
+    src/st/dre/background_block_init.c
+    src/st/dre/e_room_bg.c
+    src/st/dre/e_lock_camera.c
+    src/st/dre/e_breakable.c
+    src/st/dre/d_prize_drops.c
+    src/st/dre/cutscene_data.c
+    src/st/dre/st_update.c
+    src/st/dre/collision.c
+    src/st/dre/create_entity.c
+    src/st/dre/e_red_door_tiles.c
+    src/st/dre/e_red_door.c
+    src/st/dre/st_common.c
+    src/st/dre/e_collect.c
+    src/st/dre/e_misc.c
+    src/st/dre/e_stage_name.c
+    src/st/dre/e_particles.c
+    src/st/dre/e_room_fg.c
+    src/st/dre/popup.c
+    src/st/dre/prim_helpers.c
+    src/st/dre/e_background_clouds.c
+    src/st/dre/e_background_house.c
+    src/st/dre/e_cutscene_actors.c
+    src/st/dre/e_cutscene_dialogue.c
+    src/st/dre/e_succubus.c
+)
+
 set (SOURCE_FILES_STAGE_ST0
     src/pc/stages/stage_st0.c
     src/st/st0/header.c
@@ -529,41 +604,6 @@ set (SOURCE_FILES_STAGE_ST0
     src/st/st0/prim_helpers.c
     src/st/st0/3D8F0.c
     src/st/st0/e_bg_vortex.c
-)
-
-set(SOURCE_FILES_STAGE_WRP
-    src/pc/stages/stage_wrp.c
-    src/st/wrp/header.c
-    src/st/wrp/sprite_banks.c
-    src/st/wrp/cluts.c
-    src/st/wrp/layers.c
-    src/st/wrp/graphics_banks.c
-    src/st/wrp/gen/e_laydef.c
-    src/st/wrp/e_init.c
-    src/st/wrp/background_block_init.c
-    src/st/wrp/e_room_bg.c
-    src/st/wrp/e_lock_camera.c
-    src/st/wrp/e_breakable.c
-    src/st/wrp/d_prize_drops.c
-    src/st/wrp/gen/rooms.c
-    src/st/wrp/gen/e_layout.c
-    src/st/wrp/stage_data.c
-    src/st/wrp/gen/us/sprites.c
-    src/st/wrp/warp.c
-    src/st/wrp/st_update.c
-    src/st/wrp/collision.c
-    src/st/wrp/create_entity.c
-    src/st/wrp/e_red_door_tiles.c
-    src/st/wrp/e_red_door.c
-    src/st/wrp/st_common.c
-    src/st/wrp/e_collect.c
-    src/st/wrp/e_misc.c
-    src/st/wrp/e_stage_name.c
-    src/st/wrp/e_particles.c
-    src/st/wrp/e_room_fg.c
-    src/st/wrp/popup.c
-    src/st/wrp/prim_helpers.c
-    src/st/wrp/bss.c
 )
 
 SET(SOURCE_FILES_BOSS_BO4
@@ -834,12 +874,13 @@ function(add_overlay name)
     sotn_str_apply(${name})
 endfunction()
 
+add_overlay(sel ${SOURCE_FILES_STAGE_SEL})
 add_overlay(no2 ${SOURCE_FILES_STAGE_NO2})
 add_overlay(dai ${SOURCE_FILES_STAGE_DAI})
 add_overlay(cen ${SOURCE_FILES_STAGE_CEN})
-add_overlay(sel ${SOURCE_FILES_STAGE_SEL})
-add_overlay(wrp ${SOURCE_FILES_STAGE_WRP})
 add_overlay(nz0 ${SOURCE_FILES_STAGE_NZ0})
+add_overlay(wrp ${SOURCE_FILES_STAGE_WRP})
+add_overlay(dre ${SOURCE_FILES_STAGE_DRE})
 add_overlay(st0 ${SOURCE_FILES_STAGE_ST0})
 add_overlay(rwrp ${SOURCE_FILES_STAGE_RWRP})
 add_overlay(no3 ${SOURCE_FILES_STAGE_NO3})
