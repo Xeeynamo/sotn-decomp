@@ -19,11 +19,13 @@ jobs:
     # due to the missing secrets to clone the game's data repository
     if: github.repository == 'Xeeynamo/sotn-decomp'
     runs-on: ubuntu-latest
+    environment: ${{ (github.event_name != 'pull_request_target' || contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.pull_request.author_association)) && '' || 'ci-secrets' }}
     steps:
       - name: Clone main repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.sha || github.ref }}
+          allow-unsafe-pr-checkout: true
           submodules: false
       - name: Get dependencies
         uses: ./.github/actions/get-dependencies
@@ -49,9 +51,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Clone main repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.sha || github.ref }}
+          allow-unsafe-pr-checkout: true
           submodules: false
       - name: Get dependencies
         uses: ./.github/actions/get-dependencies
@@ -72,12 +75,12 @@ jobs:
       - name: Build saturn
         run: ./sotn.sh build saturn
       - name: Clone asset repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: 'gh-functions-saturn'
           path: 'gh-functions-saturn'
       - name: Set-up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: '3.x'
       - name: Install secondary pre-requirements

@@ -4,12 +4,15 @@
 #include "stage.h"
 #include "dra_bss.h"
 #include "servant.h"
+#include <scratchpad.h>
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #undef HARD_LINK
+
+u8 g_Scratchpad[SP_LEN];
 
 u16 g_RawVram[VRAM_W * VRAM_H];
 GameApi g_ApiInit = {0};
