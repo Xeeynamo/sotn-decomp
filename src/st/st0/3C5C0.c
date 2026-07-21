@@ -49,9 +49,6 @@ extern SVECTOR D_pspeu_09279DC0; // bss
 #define offsetof(st, m) (size_t)((size_t) & (((st*)0)->m)) // __builtin_offsetof
 
 void func_801BC5C0(Entity* self) {
-#ifdef VERSION_PC
-    u8 sp[sizeof(ST0_SCRATCHPAD)];
-#endif
     s16 var_s7;
     s16 var_s6;
     u8* var_s5;
