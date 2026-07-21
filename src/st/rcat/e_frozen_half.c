@@ -684,9 +684,6 @@ Primitive* UnkRecursivePrimFunc1(
 
 // Manages the blizzard storm and spawns falling ice
 void EntityFrozenHalfBlizzard(Entity* self) {
-#ifdef VERSION_PC
-    u8 sp[SP_LEN];
-#endif
     SVECTOR rot;
     VECTOR trans;
     MATRIX matrix;

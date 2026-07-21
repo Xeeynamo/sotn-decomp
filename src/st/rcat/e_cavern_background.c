@@ -19,9 +19,6 @@ static SVECTOR D_us_8018222C = {0};
 // Handles icy cavern background in the rooms with Skeleton/Frozen Halfs
 // In non-inverted this hosts the Lossoth enemies and lava instead
 void EntityCavernBackgroundIce(Entity* self) {
-#ifdef VERSION_PC
-    u8 sp[SP_LEN];
-#endif
     s32 pad[2];
     long p;
     long flag;
@@ -157,9 +154,6 @@ void EntityCavernBackgroundIce(Entity* self) {
 // For the intermediate room with the bridge on the roof
 // In non-inverted this houses the Discus Lord but here it's largely empty
 void EntityCavernBackgroundIceBridge(Entity* self) {
-#ifdef VERSION_PC
-    u8 sp[SP_LEN];
-#endif
     s32 pad[2];
     long p;
     long flag;

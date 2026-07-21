@@ -1559,12 +1559,6 @@ void func_060BC7A8(u32 arg0) {
     }
 }
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BC834, func_060BC834);
-typedef struct {
-    u16 unk0;
-    u16 unk2;
-    u32 unk4;
-    u32 unk8;
-} Unk0605cd70;
 
 extern Unk0605cd70 DAT_0605cd70;
 extern u8 DAT_06057f68;

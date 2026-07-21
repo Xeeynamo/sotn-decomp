@@ -38,9 +38,6 @@ static SVECTOR empty = {0, 0, 0};
 #endif
 
 void EntityClouds(Entity* self) {
-#ifdef VERSION_PC
-    u8 sp[SP_LEN];
-#endif
     Primitive* prim;
     s16* var_s1;
     s32 var_s2;
@@ -357,9 +354,6 @@ SVECTOR* s_ClockVertexSets[] = {
     D_80182298, D_801822D8, D_80182318, D_80182358};
 
 void EntityClockTower3D(Entity* self) {
-#ifdef VERSION_PC
-    u8 sp[SP_LEN];
-#endif
     s32 unusedHalfZ;
     SVECTOR rotVector;
     VECTOR transVector;

@@ -15,5 +15,3 @@ INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/data", d6030BF4, d_6030BF4);
 
 // 68k sound driver
 INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/data", d603AA7C, d_603AA7C);
-
-INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/data", d6041270, d_6041270);

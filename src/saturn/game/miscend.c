@@ -28,24 +28,16 @@ StatusHudSpriteOffset g_AlternateStatusHudSpriteOffsets[8] = {
     {5, 1}, {17, 0}, {17, 10}, {6, 0}, {6, 0}, {6, 0}, {6, 0}, {0, 0},
 };
 
-u16 g_AlternateStatusHudPrimitiveLayout[34] = {
+u16 g_AlternateStatusHudPrimitiveLayout[33] = {
     0x0002, 0x0018, 0x0004, 0x0074, 0x0019, 0x0074, 0x0010, 0x001D, 0x0018,
     0x001D, 0x0020, 0x001D, 0x0014, 0x0029, 0x002D, 0x0015, 0x0000, 0x1429,
     0x142D, 0x1224, 0x1425, 0x1128, 0x1425, 0x1425, 0x192E, 0x132A, 0x1125,
-    0x1429, 0x0000, 0x0000, 0x0064, 0x0000, 0x0064, 0x0000,
+    0x1429, 0x0000, 0x0000, 0x0064, 0x0000, 0x0064,
 };
 
-typedef struct {
-    u16 red;
-    u16 redPadding;
-    u16 green;
-    u16 greenPadding;
-    u16 blue;
-} StatusPortraitColorOffset;
-
-StatusPortraitColorOffset g_StatusPortraitColorOffset = {
-    0, 0, 0, 0, 8,
-};
+s32 g_StatusWindowColorRed = 0;
+s32 g_StatusWindowColorGreen = 0;
+s32 g_StatusWindowColorBlue = 8;
 
 u16 g_StatusPortraitPalette[16] = {
     0xC0A8, 0x8421, 0x84AB, 0x8D2F, 0x91D6, 0x929B, 0x994A, 0xA5CE,

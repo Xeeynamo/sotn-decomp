@@ -5,9 +5,6 @@
 void EntityBackgroundVortex(Entity* self) {
     static SVECTOR D_801C1BC8[0x100];
     static u8 D_801C23C8[0x100];
-#ifdef VERSION_PC
-    u8 sp[SP_LEN];
-#endif
     u8 brightness; // writes into an array, later that array is used for colors
     u8 leftV;
     u8 rightV;

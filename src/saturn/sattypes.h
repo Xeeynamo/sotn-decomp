@@ -37,6 +37,14 @@ typedef enum {
 #define STAGE_ENTITY_START 64
 #define FACTORY(id, param) ((id) + (param << 16))
 
+#define SET_STOP_MUSIC 0xF000000A
+#define SET_UNK_0B 0xF000000B
+#define SET_UNPAUSE_SFX_SCRIPTS 0xF000000F
+#define SET_UNK_10 0xF0000010
+#define SET_XA_PLAYBACK 0xF0000011
+#define SET_UNK_80 0xF0000080
+#define SET_KEY_ON_20_21 0xF00000A4
+#define SET_KEY_ON_22_23 0xF00000A8
 #define SFX_BAT_SCREECH 0x64E
 #define SFX_HEART_PICKUP 0x67A
 #define SFX_UI_MOVE 0x67B
@@ -341,17 +349,26 @@ typedef struct {
 } GameApi;
 
 void (*func_06064580)();
+void (*func_06064590)();
+void (*func_06064594)();
+void (*func_060645A0)();
 void (*func_060645B0)();
+void (*func_060645B4)();
 void (*func_060645BC)();
-void (*func_060645e0)();
+void (*func_060645C0)();
+void (*func_060645E0)();
 void (*func_060645FC)();
 void (*func_06064600)();
 void (*func_06064608)();
 void (*func_06064614)();
+void (*func_06064618)();
 void (*func_06064620)();
+void (*func_06064628)(s32);
+void (*func_06064630)();
 void (*GetPlayerSensor)(Collider* col);
 void (*func_06064638)();
 void (*func_0606463c)();
+void (*func_0606464C)();
 void (*func_06064644)();
 void (*func_06064674)();
 void (*func_06064684)();
@@ -793,6 +810,13 @@ typedef struct {
     RoomLoadDef* def;
     Point32 pos;
 } RoomLoadDefHolder;
+
+typedef struct {
+    u16 unk0;
+    u16 unk2;
+    u32 unk4;
+    u32 unk8;
+} Unk0605cd70;
 
 typedef enum {
     PLAYER_CHARACTER,

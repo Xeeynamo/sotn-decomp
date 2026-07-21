@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Clone main repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: ${{ github.ref }}
           submodules: false
@@ -44,7 +44,7 @@ jobs:
           make update-dependencies
           make -j extract_assets
       - name: Export assets
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: assets
           path: assets
@@ -68,7 +68,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install gcc-multilib g++-multilib libsdl2-dev:i386
       - name: Clone repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: ${{ github.ref }}
           submodules: false
@@ -78,7 +78,7 @@ jobs:
           cd tools/psyz
           git submodule update --init --recursive external/SDL
       - name: Get assets
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: assets
           path: assets
@@ -101,7 +101,7 @@ jobs:
     needs: extract-assets
     steps:
       - name: Clone repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: ${{ github.ref }}
           submodules: false
@@ -110,13 +110,13 @@ jobs:
           git submodule update --init tools/psyz
           cd tools/psyz
           git submodule update --init --recursive external/SDL
-      - uses: actions/setup-go@v6
+      - uses: actions/setup-go@v7
         with:
           go-version-file: 'go.work'
           cache: true
           cache-dependency-path: "**/*.sum"
       - name: Get assets
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: assets
           path: assets
@@ -135,7 +135,7 @@ jobs:
     needs: extract-assets
     steps:
     - name: Clone repo
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
       with:
         ref: ${{ github.ref }}
         submodules: false
@@ -145,11 +145,11 @@ jobs:
         cd tools/psyz
         git submodule update --init --recursive external/SDL
     - name: Get assets
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v8
       with:
         name: assets
         path: assets
-    - uses: actions/setup-go@v5
+    - uses: actions/setup-go@v7
       with:
         go-version: '^1.22.4'
     - name: Build assets

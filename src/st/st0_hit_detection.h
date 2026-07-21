@@ -102,9 +102,6 @@ static u16 g_eDamageDisplayClut[] = {
 // Some of the logic is removed since it doesn't apply in prologue.
 // Attempting to de-duplicate this would involve a lot of #ifdef.
 void OVL_EXPORT(HitDetection)(void) {
-#ifdef VERSION_PC
-    u8 sp[SP_LEN];
-#endif
     Entity* otherEntity;
     Primitive* prim;
     Entity* entityHit;
