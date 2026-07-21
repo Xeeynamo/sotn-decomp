@@ -6,8 +6,12 @@
 extern PfnEntityUpdate EntityUpdates[];
 
 #if defined(VERSION_PSP) || defined(VERSION_PC)
-
 extern GAME_IMPORT PfnEntityUpdate* PfnEntityUpdates;
+#else
+#define PfnEntityUpdates EntityUpdates
+#endif
+
+#if defined(VERSION_PSP)
 
 // A horizontally ordered array with head and tail sigils in the 1st field
 extern GAME_IMPORT LayoutEntity** g_pStObjLayoutHorizontal;
@@ -17,8 +21,6 @@ extern GAME_IMPORT LayoutEntity** g_pStObjLayoutHorizontal;
 extern GAME_IMPORT LayoutEntity** g_pStObjLayoutVertical;
 #define OBJ_LAYOUT_VERTICAL g_pStObjLayoutVertical
 #else
-
-#define PfnEntityUpdates EntityUpdates
 
 // A horizontally ordered array with head and tail sigils in the 1st field
 extern LayoutEntity* entityLayoutHorizontal[];

@@ -284,6 +284,60 @@ set(SOURCE_FILES_STAGE_SEL
     src/st/sel/cutscene_data.c
 )
 
+set(SOURCE_FILES_STAGE_NO2
+    src/pc/stages/stage_no2.c
+    src/st/no2/header.c
+    src/st/no2/gen/e_laydef.c
+    src/st/no2/e_init.c
+    src/st/no2/gen/rooms.c
+    src/st/no2/gen/e_layout.c
+    src/st/no2/gen/sprites.c
+    src/st/no2/graphics_banks.c
+    src/st/no2/layers.c
+    src/st/no2/palette_def.c
+    src/st/no2/sprite_banks.c
+    src/st/no2/tilemaps.c
+    src/st/no2/stage_data.c
+    src/st/no2/background_block_init.c
+    src/st/no2/e_room_bg.c
+    src/st/no2/e_lock_camera.c
+    src/st/no2/e_breakable.c
+    src/st/no2/d_prize_drops.c
+    src/st/no2/st_update.c
+    src/st/no2/collision.c
+    src/st/no2/create_entity.c
+    src/st/no2/e_red_door_tiles.c
+    src/st/no2/e_red_door.c
+    src/st/no2/st_common.c
+    src/st/no2/e_collect.c
+    src/st/no2/e_misc.c
+    src/st/no2/e_stage_name.c
+    src/st/no2/e_particles.c
+    src/st/no2/e_room_fg.c
+    src/st/no2/popup.c
+    src/st/no2/prim_helpers.c
+    src/st/no2/33D8C.c
+    src/st/no2/34DA4.c
+    src/st/no2/372E8.c
+    src/st/no2/37580.c
+    src/st/no2/4966C.c
+    src/st/no2/blade.c
+    src/st/no2/e_background_house.c
+    src/st/no2/e_bloody_zombie.c
+    src/st/no2/e_life_up.c
+    src/st/no2/e_owl_knight.c
+    src/st/no2/e_prisoner.c
+    src/st/no2/e_sealed_door.c
+    src/st/no2/e_secrets.c
+    src/st/no2/e_skelerang.c
+    src/st/no2/e_spectral_sword.c
+    src/st/no2/e_spikes.c
+    src/st/no2/e_valhalla_knight.c
+    src/st/no2/giantbro_helpers.c
+    src/st/no2/gurkha.c
+    src/st/no2/hammer.c
+)
+
 set(SOURCE_FILES_STAGE_CEN
     src/pc/stages/stage_cen.c
     src/st/cen/header.c
@@ -655,6 +709,7 @@ function(add_overlay name)
     sotn_str_apply(${name})
 endfunction()
 
+add_overlay(no2 ${SOURCE_FILES_STAGE_NO2})
 add_overlay(cen ${SOURCE_FILES_STAGE_CEN})
 add_overlay(sel ${SOURCE_FILES_STAGE_SEL})
 add_overlay(wrp ${SOURCE_FILES_STAGE_WRP})
