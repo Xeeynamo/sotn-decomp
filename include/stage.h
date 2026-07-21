@@ -206,9 +206,6 @@ void UpdateStageEntities();
 void HitDetection(void);
 
 s32 Random();
-#ifdef VERSION_PC
-void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity);
-#endif
 
 #ifdef FIX_UB
 // BUG! on non-MIPS processors, not adding this forward declaration results to
