@@ -46,9 +46,6 @@ static SVECTOR empty = {0, 0, 0};
 // TOP & RTOP are much taller so many dimensional constants
 // differ.
 void EntityClouds(Entity* self) {
-#ifdef VERSION_PC
-    u8 sp[SP_LEN];
-#endif
     Primitive* prim;
     s16* var_s1;
     s32 var_s2;

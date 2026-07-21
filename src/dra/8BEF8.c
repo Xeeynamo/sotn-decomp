@@ -21,9 +21,6 @@ typedef struct {
 
 // echo of bat effect
 void EntityBatEcho(Entity* self) {
-#ifdef VERSION_PC
-    u8 sp[SP_LEN];
-#endif
     Primitive* prim;
     Primitive* temp;
     Unkstruct_8012BEF8* unkstruct;
