@@ -216,10 +216,7 @@ set(SOURCE_FILES_RIC
     src/ric/pl_subweapons.c
     src/ric/2F8E8.c
     src/ric/319C4.c
-    src/ric/spritebank0.c
-    src/ric/spritebank1.c
-    src/ric/spritebank2.c
-    src/ric/spritebank3.c
+    src/ric/spritebanks.c
     src/ric/pl_crash_cross.c
     src/ric/bss.c
     src/ric/d_18568.c
@@ -239,7 +236,7 @@ SET(SOURCE_FILES_MARIA
     src/maria/pl_sensors.c
     src/maria/pl_collision.c
     src/maria/pl_blueprints.c
-    src/maria/spritebank0.c
+    src/maria/spritebanks.c
     src/maria/ovl_load.c
 )
 
