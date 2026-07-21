@@ -13,7 +13,6 @@ static inline void CreateEntityFromLayout(
     s32 entityId;
 
     DestroyEntity(entity);
-
     entity->entityId = initDesc->entityId & 0x3FF;
     entityId = entity->entityId - 1;
     entity->pfnUpdate = (*PfnEntityUpdates)[entityId]->func;
@@ -27,8 +26,8 @@ static inline void CreateEntityFromLayout(
 void CreateEntityWhenInVerticalRange(LayoutEntity* obj) {
     s16 yClose;
     s16 yFar;
-    Entity* entity;
     s16 posY;
+    Entity* entity;
 
     posY = g_Tilemap.scrollY.i.hi;
     yClose = posY - 0x40;
@@ -63,8 +62,8 @@ void CreateEntityWhenInVerticalRange(LayoutEntity* obj) {
 void CreateEntityWhenInHorizontalRange(LayoutEntity* obj) {
     s16 xClose;
     s16 xFar;
-    Entity* entity;
     s16 posX;
+    Entity* entity;
 
     posX = g_Tilemap.scrollX.i.hi;
     xClose = posX - 0x50;
@@ -102,6 +101,7 @@ static inline void FindFirstEntityToTheRight(s16 posX) {
             g_LayoutObjHorizontal[0] >= (u16)posX) {
             break;
         }
+
         g_LayoutObjHorizontal += 5;
     }
 }
@@ -124,6 +124,7 @@ void CreateEntitiesToTheRight(s16 posX) {
         FindFirstEntityToTheRight(posX - (DAT_0605c680.g_ScrollDeltaX >> 0x10));
         g_LayoutObjPosHorizontal = 0;
     }
+
     while (true) {
         if (g_LayoutObjHorizontal[0] == 0xFFFF ||
             posX < g_LayoutObjHorizontal[0]) {
@@ -140,6 +141,7 @@ void CreateEntitiesToTheRight(s16 posX) {
         } else {
             CreateEntityWhenInVerticalRange(g_LayoutObjHorizontal);
         }
+
         g_LayoutObjHorizontal += 5;
     }
 }
@@ -243,6 +245,7 @@ void CreateEntitiesBelow(s16 posY) {
         } else {
             CreateEntityWhenInHorizontalRange(g_LayoutObjVertical);
         }
+
         g_LayoutObjVertical -= 5;
     }
 }
@@ -344,6 +347,7 @@ void UpdateRoomPosition(void) {
             CreateEntitiesToTheLeft(tmp);
         }
     }
+
     if (DAT_0605c680.g_ScrollDeltaY != 0) {
         tmp = tilemap->scrollY.i.hi;
         if (DAT_0605c680.g_ScrollDeltaY > 0) {
