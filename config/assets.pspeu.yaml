@@ -189,11 +189,6 @@ files:
           - [0x2D590, skip]
           - [0x2D718, blueprintsdef, psp/blueprints, RicBlueprints, RicEntities]
           - [0x2D8F0, skip]
-          - [0x2E0A8, spriteset, spritebank3]
-          - [0x2E4D0, spriteset, spritebank0]
-          - [0x2EEC8, spriteset, spritebank1]
-          - [0x2F1A0, spriteset, spritebank2]
-          - [0x2F6B8, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/maria.bin
     asset_path: assets/maria
     src_path: src/maria
@@ -214,7 +209,6 @@ files:
           - [0x1F260, skip]
           - [0x1F3B0, blueprintsdef, blueprints, MarBlueprints, MarEntities]
           - [0x1F588, skip]
-          - [0x1FC80, spriteset, maria_spr]
           - [0x20250, palette, maria_pal, 16]
           - [0x20850, spriteset, wpn_owl_spr]
           - [0x20B28, palette, wpn_owl_pal, 16]
@@ -369,7 +363,6 @@ files:
           - [0x3F9B8, skip]
           - [0x3FB08, blueprintsdef, blueprints, MarBlueprints, MarEntities]
           - [0x3FCE0, skip]
-          - [0x403D8, spriteset, maria_spr]
           - [0x409A8, palette, maria_pal, 16]
           - [0x40FA8, spriteset, wpn_owl_spr]
           - [0x41280, palette, wpn_owl_pal, 16]

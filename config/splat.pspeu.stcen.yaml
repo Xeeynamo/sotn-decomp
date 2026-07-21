@@ -85,7 +85,7 @@ segments:
       - [0x3F638, .data, cen_psp/e_maria_sensors]
       - [0x3F6E0, .data, cen_psp/e_maria_cardinal]
       - [0x3F738, .data, cen_psp/e_maria_blueprints]
-      - [0x403D8, .data, cen_psp/spritebanks]
+      - [0x403D8, .data, cen_psp/spritebank0]
       - [0x409A8, .data, cen_psp/e_maria_load]
       - [0x4DF98, .data, cen_psp/e_maria_anims]
       - [0x4E4A8, .data, cen_psp/e_maria]
