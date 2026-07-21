@@ -2,12 +2,10 @@
 #ifndef ZERO_BIN_H
 #define ZERO_BIN_H
 #include "sattypes.h"
-
-#define VDP2_VRAM 0x25E00000
-#define VDP2_DEBUG_TILEMAP_OFFSET (VDP2_VRAM + 0x58000)
+#include "lib/scl.h"
 
 // func_06023394
-void DMA_CpuMemCopy(s32*, s32*, u32);
+void DMA_CpuMemCopy2(s32*, s32*, u32);
 
 // func_06023484
 s32 DMA_CpuResult();
@@ -88,8 +86,8 @@ struct Unk0605CD90 DAT_0605CD90[];
 
 extern s32* DAT_0605c120[];
 
-#define VDP2_25E58000 0x25E58000
-#define VDP2_25F00600 0x25F00600
+#define VDP2_DEBUG_TILEMAP_OFFSET (SCL_VDP2_VRAM + 0x58000)
+#define VDP2_25F00600 SCL_VDP2_VRAM + 0x100600
 
 extern s16 DAT_06062224[];
 extern s32 DAT_06039214;

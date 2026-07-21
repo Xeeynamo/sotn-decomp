@@ -84,7 +84,7 @@ u8 g_HudAnimationTextureOffsets[16] = {
     3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 3, 3,
 };
 
-EquipmentPaletteMap g_CapePaletteIndices[] = {
-    {0x30, 0}, {0x31, 3}, {0x32, 9}, {0x33, 5}, {0x35, 2},
-    {0x36, 4}, {0x37, 6}, {0x38, 8}, {0x39, 1}, {-1, 0},
+s32 g_CapePaletteDefs[] = {
+    0x30, 0, 0x31, 3, 0x32, 9, 0x33, 5, 0x35, 2,
+    0x36, 4, 0x37, 6, 0x38, 8, 0x39, 1, -1,   0,
 };

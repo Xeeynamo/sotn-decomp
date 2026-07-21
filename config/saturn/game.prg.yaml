@@ -133,8 +133,6 @@ segments:
         type: .data
         file: game/cfgrest
       - [0x1FC30, .data, game/capetbl]
-      - [0x1FC70, .data, game/joseph]
-      - [0x1FC78, .data, game/capecon]
       - [0x1FC88, .data, game/capepal]
       - [0x1FC90, .data, game/miscend]
       - [0x1FE86, .data, game/sinetbl]

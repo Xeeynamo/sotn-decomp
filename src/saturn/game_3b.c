@@ -2,6 +2,7 @@
 #include "inc_asm.h"
 #include "sattypes.h"
 #include "game.h"
+#include "lib/scl.h"
 
 void PlaySfx(s32 sfxId);
 void func_0606D880(void);
@@ -10,9 +11,84 @@ void make_all(void);
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606E0D0, func_0606E0D0);
 
-// _MODE_GAME
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606EE28, func_0606EE28);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606EEF8, func_0606EEF8);
+extern u16 DAT_0605cea0;
+extern s32 DAT_0605c11a;
+extern Unk0605cd70 DAT_0605cd70;
+
+void func_0606EEF8(u16);
+void func_06005208(s32);
+void func_0606F14C(void);
+void RunMainEngine(void);
+void func_06072C94(void);
+void func_060728B4(void);
+void CheckWeaponCombo(void);
+
+// original name: MODE_GAME
+void ModeGame(void) {
+    switch (DAT_0605cea0) {
+    case 1:
+        func_0606EEF8(DAT_0605c11a);
+        UpdateCapePalette();
+        CheckWeaponCombo();
+        func_06005208(1);
+        DAT_0605cea0++;
+        break;
+    case 2:
+        DAT_0605cea0++;
+    case 3:
+        switch (DAT_0605cd70.unk2) {
+        case 1:
+            RunMainEngine();
+            func_0606F14C();
+            break;
+        case 4:
+            func_06072C94();
+            break;
+        case 5:
+            func_060728B4();
+            break;
+        }
+        break;
+    }
+}
+
+extern SaturnStageFileRecord g_StageFileRecords[];
+extern s32 DAT_0605c108;
+extern s32 DAT_0605c10c;
+extern s32 DAT_06061dd0;
+extern u16 DAT_06065470;
+extern s32 DAT_0608609c;
+
+void func_0606F01C(void);
+void func_06074AA8(void);
+
+void func_0606EEF8(u16 param_1) {
+    u16 stageID;
+
+    g_GameTimer = 0;
+    memset(g_Entities, 0, sizeof(g_Entities));
+    stageID = DAT_0605d750.stageID;
+    if (param_1 == 0) {
+        func_0606F01C();
+        DAT_0608609c = DAT_0605c10c;
+    } else {
+        DAT_0608609c = DAT_0605c10c;
+    }
+    func_0600FEFC();
+    func_800FDE00();
+    if (DAT_06061dd0 == 0) {
+        DAT_0605c108 = g_StageFileRecords[stageID].unk14;
+    }
+    DAT_0605d750.unk2 = stageID;
+    func_06032E88(1);
+    SCL_SET_CCRTMD(0);
+    SCL_SET_CCMD(1);
+    SCL_SetColMixMode(6, 1);
+    SCL_SET_SPCCEN(1);
+    DAT_06065470 &= 0xFFFB;
+    SclProcess = 1;
+    func_06074AA8();
+}
 
 extern s16 g_ButtonMask[];
 
@@ -56,9 +132,6 @@ void func_0606F01C(void) {
         g_Status.timerSeconds = 1;
     }
 }
-
-extern s32 DAT_0605c10c;
-extern s32 DAT_0608609c;
 
 void func_0606F14C(void) {
     g_Status.timerFrames += DAT_0605c10c - DAT_0608609c;

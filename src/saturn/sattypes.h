@@ -352,6 +352,7 @@ void (*func_06064580)();
 void (*func_06064590)();
 void (*func_06064594)();
 void (*func_060645A0)();
+void (*func_060645A4)();
 void (*func_060645B0)();
 void (*func_060645B4)();
 void (*func_060645BC)();
@@ -817,6 +818,15 @@ typedef struct {
     u32 unk4;
     u32 unk8;
 } Unk0605cd70;
+
+typedef struct {
+    const char* prg;
+    const char* chr;
+    const char* map;
+    u32 unkC;
+    u32 unk10;
+    u8 unk14;
+} SaturnStageFileRecord;
 
 typedef enum {
     PLAYER_CHARACTER,

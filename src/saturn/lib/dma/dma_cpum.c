@@ -9,7 +9,7 @@
 extern void* dma_cpu_dis_adr;
 extern Uint32 dma_cpu_cnt;
 
-void DMA_CpuMemCopy(void* dst, void* src, Uint32 cnt) {
+void DMA_CpuMemCopy2(void* dst, void* src, Uint32 cnt) {
     DmaCpuComPrm com_prm;
     DmaCpuPrm prm;
     DMA_CpuStop(DMA_CPU_CH0);
