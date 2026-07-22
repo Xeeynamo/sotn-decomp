@@ -66,7 +66,6 @@ segments:
       - [0x1D14, data]
       - [0x2058, .data, pal]
       - [0x2078, .data, tilemaps]
-      - [0x4A88, data]
       - [0x8A98, .data, tiledef_1]
       - [0xCAA8, .data, gen/sprites]
       - [0xD794, .rodata, D8C8]
