@@ -1349,7 +1349,7 @@ void func_0607BE38(void) {
 }
 
 extern s32 d_0605AEAC;
-extern s16 DAT_0605aec4;
+extern u16 DAT_0605aec0[][2];
 extern u32 g_Timer;
 extern s32 SpMstCmdPos;
 
@@ -1363,7 +1363,7 @@ void func_0607BED0(void) {
     spCmd->control = JUMP_ASSIGN;
     spCmd->drawMode = UCLPIN_ENABLE | ECD_DISABLE;
     spCmd->color = 0x6400;
-    spCmd->charAddr = DAT_0605aec4;
+    spCmd->charAddr = DAT_0605aec0[1][0];
     spCmd->charSize = 0x2801;
     angle = DAT_06086130;
     for (i = 0; i < 0x20; i++, angle += 0x80) {
