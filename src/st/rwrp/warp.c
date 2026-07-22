@@ -4,7 +4,7 @@
 #include "common.h"
 #include "sfx.h"
 
-#if defined(VERSION_US)
+#if defined(VERSION_US) || defined(VERSION_HD)
 s16 GetDistanceToPlayerX();
 #define ImplicitGetDistanceToPlayerX ((int (*)())GetDistanceToPlayerX)
 #elif defined(VERSION_PSP)

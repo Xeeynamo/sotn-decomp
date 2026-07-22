@@ -1,0 +1,87 @@
+options:
+  platform: psx
+  basename: strwrp
+  base_path: ..
+  build_path: build/hd
+  target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/rwrp.bin
+  asm_path: asm/hd/st/rwrp
+  asset_path: assets/st/rwrp
+  src_path: src/st/rwrp
+  ld_script_path: build/hd/strwrp.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.hd.txt
+    - config/symbols.hd.strwrp.txt
+  undefined_funcs_auto_path: build/hd/config/undefined_funcs_auto.hd.strwrp.txt
+  undefined_syms_auto_path: build/hd/config/undefined_syms_auto.hd.strwrp.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: hd_$VRAM
+  disassemble_all: true
+  section_order:
+    - .data
+    - .rodata
+    - .text
+    - .bss
+    - .sbss
+  ld_bss_is_noload: false
+  disasm_unknown: true
+  global_vram_start: 0x80010000
+  ld_generate_symbol_per_data_segment: true
+sha1: da2921cbd9b0d65ef02cdf6c8837c07339e28d2c
+segments:
+  - name: strwrp
+    type: code
+    start: 0x0
+    vram: 0x80180000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, .data, header]
+      - [0x40, .data, sprite_banks]
+      - [0xA0, .data, palette_def]
+      - [0xB8, .data, layers]
+      - [0x1B8, .data, graphics_banks]
+      - [0x23C, .data, gen/e_laydef]
+      - [0x3E4, .data, e_init]
+      - [0x4D0, .data, background_block_init]
+      - [0x508, .data, e_red_door_tiles]
+      - [0x528, .data, e_lock_camera]
+      - [0x5A8, .data, e_breakable]
+      - [0x608, .data, d_prize_drops]
+      - [0x648, .data, warp]
+      - [0x690, .data, st_update]
+      - [0x6BC, .data, collision]
+      - [0xA7C, .data, e_red_door]
+      - [0xA94, .data, st_common]
+      - [0xC94, .data, e_collect]
+      - [0xF84, .data, e_misc]
+      - [0xFE8, .data, e_particles]
+      - [0x1124, .data, e_room_fg]
+      - [0x11B0, .data, gen/rooms]
+      - [0x122C, .data, gen/e_layout]
+      - [0x1424, .data, stage_data]
+      - [0x6FEC, .data, gen/hd/sprites]
+      - [0x8DD4, c, e_room_bg]
+      - [0x8EB4, c, e_lock_camera]
+      - [0x9070, c, e_breakable]
+      - [0x91A4, c, warp]
+      - [0xA13C, c, st_update]
+      - [0xA570, c, collision]
+      - [0xBD2C, c, create_entity]
+      - [0xC91C, c, e_red_door]
+      - [0xD554, c, st_common]
+      - [0xEC64, c, e_collect]
+      - [0xFF74, c, e_misc]
+      - [0x134DC, c, e_stage_name]
+      - [0x13C04, c, e_particles]
+      - [0x14448, c, e_room_fg]
+      - [0x14534, c, popup]
+      - [0x1490C, c, prim_helpers]
+      - [0x1513C, .bss, warp]
+      - [0x1514C, .bss, create_entity]
+      - [0x1515C, .bss, bss]
+      - [0x15DC4, .bss, st_update]
+  - [0x15E04]
