@@ -376,6 +376,7 @@ void (*func_06064684)();
 void (*func_06064688)();
 void (*func_0606468c)();
 s32 (*func_06064690)();
+void (*func_060CF01C)();
 
 typedef struct {
     // Either a legacy SpriteParts table or a Saturn sprite-resource descriptor.
