@@ -4,10 +4,12 @@
 
 // MAD was compiled earlier than the very first retail release, the JP 1.0 ver.
 // Since MAD is compiled with the US version, we need first to undefine it
+#ifndef VERSION_PC
 #undef _internal_version_us
 #define _internal_version_beta
 #define VERSION_BETA
 #define INCLUDE_ASM_OLD
+#endif
 
 #include "stage.h"
 
