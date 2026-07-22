@@ -39,10 +39,6 @@ typedef enum {
     E_GREY_PUFF
 } EntityIDs;
 
-void CreateEntitiesToTheRight(s16);
-void CreateEntitiesToTheLeft(s16);
-void CreateEntitiesAbove(s16);
-void CreateEntitiesBelow(s16);
 void CreateEntityFromCurrentEntity(u16, Entity*);
 u8 func_80192914(s16 arg0, s16 arg1);
 void CreateEntityFromEntity(u16 entityId, Entity* ent1, Entity* ent2);
@@ -62,8 +58,6 @@ extern ObjInit D_8018056C[];
 extern u8 D_801805B4[];
 extern u8 D_801805BC[];
 extern u16 D_801805C4[];
-extern u16 aluric_subweapons_idx[];
-extern u16 aluric_subweapons_id[];
 extern u16 D_80180E10[];
 extern s32 D_80180E18[];
 extern s32 D_80180EC4[];

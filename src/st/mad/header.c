@@ -9,7 +9,7 @@ extern RoomDef rooms_layers[];
 extern u_long** gfxBanks[];
 void func_8018E1D4();
 
-static Overlay OVL_EXPORT(Overlay) = {
+Overlay OVL_EXPORT(Overlay) = {
     .Update = Update,
     .HitDetection = HitDetection,
     .UpdateRoomPosition = UpdateRoomPosition,
