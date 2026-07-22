@@ -83,7 +83,6 @@ extern u8 g_UnkEntityAnimData[];
 extern RoomHeader g_rooms[];
 
 extern EInit g_EInitBreakable;
-extern u8 blend_modes[];
 
 extern s16 D_80199DE8;
 
