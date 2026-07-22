@@ -72,33 +72,75 @@ DECLARE_ENTITY(func_060B0604);
 DECLARE_ENTITY(func_060B9978);
 
 PfnEntityUpdate entity_functions[] = {
-    RicEntityDummy, RicEntityFactory, RicEntitySmokePuff,
-    RicEntitySubwpnCross, func_80169C10, RicEntityHitByCutBlood,
-    RicEntitySubwpnCrossTrail, RicEntitySubwpnHolyWater,
-    RicEntitySubwpnHolyWaterFlame, func_80161C2C, RicEntityWhip,
-    RicEntityCrashHydroStorm, RicEntityCrashCrossBeam,
-    RicEntitySubwpnCrashCross, RicEntityNotImplemented1,
-    RicEntityNotImplemented2, RicEntityArmBrandishWhip, func_80167964,
-    RicEntityDummy, func_80161EF8, RicEntityNotImplemented3,
-    RicEntityRevivalColumn, RicEntityApplyMariaPowerAnim, RicEntitySlideKick,
-    RicEntityBladeDash, func_801623E0, func_80162604, RicEntityMaria,
-    RicEntityMariaPowers, func_80160F0C, RicEntityNotImplemented4,
-    RicEntityPlayerBlinkWhite, RicEntitySubwpnCrashCrossParticles,
-    func_801641A0, RicEntityShrinkingPowerUpRing,
-    RicEntitySubwpnHolyWaterBreakGlass, RicEntitySubwpnThrownAxe,
-    RicEntityCrashAxe, RicEntitySubwpnThrownDagger, func_80160D2C,
-    RicEntityHitByIce, RicEntityHitByLightning, RicEntitySubwpnReboundStone,
-    RicEntitySubwpnThrownVibhuti, RicEntitySubwpnAgunea,
-    RicEntityAguneaHitEnemy, RicEntityCrashVibhuti,
-    RicEntityVibhutiCrashCloud, RicEntityCrashReboundStone, func_8016D9C4,
-    RicEntityCrashReboundStoneExplosion, RicEntityCrashBible,
-    RicEntityCrashBibleBeam, RicEntitySubwpnBible, RicEntitySubwpnBibleTrail,
-    RicEntitySubwpnStopwatch, RicEntitySubwpnStopwatchCircle,
-    RicEntityCrashStopwatch, func_8016F198, RicEntityAguneaCircle,
-    RicEntityAguneaLightning, RicEntityCrashReboundStoneParticles,
-    RicEntityHitByDark, RicEntityHitByHoly,
-    RicEntityCrashStopwatchDoneSparkle, RicEntityStopwatchCrashLightning,
-    RicEntityTeleport, func_060B0604, func_060B9978,
+    RicEntityDummy,
+    RicEntityFactory,
+    RicEntitySmokePuff,
+    RicEntitySubwpnCross,
+    func_80169C10,
+    RicEntityHitByCutBlood,
+    RicEntitySubwpnCrossTrail,
+    RicEntitySubwpnHolyWater,
+    RicEntitySubwpnHolyWaterFlame,
+    func_80161C2C,
+    RicEntityWhip,
+    RicEntityCrashHydroStorm,
+    RicEntityCrashCrossBeam,
+    RicEntitySubwpnCrashCross,
+    RicEntityNotImplemented1,
+    RicEntityNotImplemented2,
+    RicEntityArmBrandishWhip,
+    func_80167964,
+    RicEntityDummy,
+    func_80161EF8,
+    RicEntityNotImplemented3,
+    RicEntityRevivalColumn,
+    RicEntityApplyMariaPowerAnim,
+    RicEntitySlideKick,
+    RicEntityBladeDash,
+    func_801623E0,
+    func_80162604,
+    RicEntityMaria,
+    RicEntityMariaPowers,
+    func_80160F0C,
+    RicEntityNotImplemented4,
+    RicEntityPlayerBlinkWhite,
+    RicEntitySubwpnCrashCrossParticles,
+    func_801641A0,
+    RicEntityShrinkingPowerUpRing,
+    RicEntitySubwpnHolyWaterBreakGlass,
+    RicEntitySubwpnThrownAxe,
+    RicEntityCrashAxe,
+    RicEntitySubwpnThrownDagger,
+    func_80160D2C,
+    RicEntityHitByIce,
+    RicEntityHitByLightning,
+    RicEntitySubwpnReboundStone,
+    RicEntitySubwpnThrownVibhuti,
+    RicEntitySubwpnAgunea,
+    RicEntityAguneaHitEnemy,
+    RicEntityCrashVibhuti,
+    RicEntityVibhutiCrashCloud,
+    RicEntityCrashReboundStone,
+    func_8016D9C4,
+    RicEntityCrashReboundStoneExplosion,
+    RicEntityCrashBible,
+    RicEntityCrashBibleBeam,
+    RicEntitySubwpnBible,
+    RicEntitySubwpnBibleTrail,
+    RicEntitySubwpnStopwatch,
+    RicEntitySubwpnStopwatchCircle,
+    RicEntityCrashStopwatch,
+    func_8016F198,
+    RicEntityAguneaCircle,
+    RicEntityAguneaLightning,
+    RicEntityCrashReboundStoneParticles,
+    RicEntityHitByDark,
+    RicEntityHitByHoly,
+    RicEntityCrashStopwatchDoneSparkle,
+    RicEntityStopwatchCrashLightning,
+    RicEntityTeleport,
+    func_060B0604,
+    func_060B9978,
 };
 
 typedef struct {
@@ -112,10 +154,13 @@ typedef struct {
 
 #define B_MAKE(entityId, amount, nPerCycle, isNonCritical, incParamsKind,      \
                timerCycle, kind, origin, timerDelay)                           \
-    {(entityId), (amount),                                                     \
+    {(entityId),                                                               \
+     (amount),                                                                 \
      ((nPerCycle) & 0x3F) | ((!!(incParamsKind)) << 6) |                       \
          ((!!(isNonCritical)) << 7),                                           \
-     (timerCycle), ((kind) & 7) | (((origin) & 31) << 3), (timerDelay)}
+     (timerCycle),                                                             \
+     ((kind) & 7) | (((origin) & 31) << 3),                                    \
+     (timerDelay)}
 
 RichterFactoryBlueprint blueprints[] = {
     B_MAKE(0x02, 5, 1, 1, 1, 2, 0, 0, 0),
@@ -209,21 +254,18 @@ u8 entity_ranges[7][2] = {
 s16 pos_x_80154C50[] = {0, -4, -8, -12, -16, -20};
 
 s32 velocity_x_80154C5C[] = {
-    FIX(-0.1875), FIX(-0.25), FIX(-0.375),
-    FIX(-0.5),    FIX(-0.625), FIX(-0.75),
+    FIX(-0.1875), FIX(-0.25), FIX(-0.375), FIX(-0.5), FIX(-0.625), FIX(-0.75),
 };
 
 s16 rot_x_80154C74[] = {0x30, 0x40, 0x50, 0x60, 0x70, 0x80};
 
 AnimationFrame anim_smoke_puff[] = {
-    POSE(1, 0x01, 0), POSE(1, 0x02, 0), POSE(1, 0x03, 0),
-    POSE(1, 0x04, 0), POSE(1, 0x05, 0), POSE(1, 0x06, 0),
-    POSE(1, 0x07, 0), POSE(1, 0x08, 0), POSE(1, 0x09, 0),
-    POSE(1, 0x0A, 0), POSE(1, 0x0B, 0), POSE(1, 0x0C, 0),
-    POSE(1, 0x0D, 0), POSE(1, 0x0E, 0), POSE(1, 0x0F, 0),
-    POSE(1, 0x10, 0), POSE(1, 0x11, 0), POSE(1, 0x12, 0),
-    POSE(1, 0x13, 0), POSE(1, 0x14, 0), POSE(1, 0x15, 0),
-    POSE(1, 0x16, 0), POSE(1, 0x17, 0), POSE(1, 0x18, 0),
+    POSE(1, 0x01, 0), POSE(1, 0x02, 0), POSE(1, 0x03, 0), POSE(1, 0x04, 0),
+    POSE(1, 0x05, 0), POSE(1, 0x06, 0), POSE(1, 0x07, 0), POSE(1, 0x08, 0),
+    POSE(1, 0x09, 0), POSE(1, 0x0A, 0), POSE(1, 0x0B, 0), POSE(1, 0x0C, 0),
+    POSE(1, 0x0D, 0), POSE(1, 0x0E, 0), POSE(1, 0x0F, 0), POSE(1, 0x10, 0),
+    POSE(1, 0x11, 0), POSE(1, 0x12, 0), POSE(1, 0x13, 0), POSE(1, 0x14, 0),
+    POSE(1, 0x15, 0), POSE(1, 0x16, 0), POSE(1, 0x17, 0), POSE(1, 0x18, 0),
     POSE_END,
 };
 
@@ -273,10 +315,9 @@ RicBloodParticleProperties* D_80154DA0[] = {
 };
 
 AnimationFrame anim_80154DC8[] = {
-    POSE(2, 1, 0), POSE(2, 2, 0), POSE(2, 3, 0), POSE(2, 4, 0),
-    POSE(2, 5, 0), POSE(2, 4, 0), POSE(2, 3, 0), POSE(2, 4, 0),
-    POSE(2, 3, 0), POSE(2, 4, 0), POSE(2, 5, 0), POSE(1, 6, 0),
-    POSE(1, 7, 0), POSE(1, 8, 0), POSE_END,
+    POSE(2, 1, 0), POSE(2, 2, 0), POSE(2, 3, 0), POSE(2, 4, 0), POSE(2, 5, 0),
+    POSE(2, 4, 0), POSE(2, 3, 0), POSE(2, 4, 0), POSE(2, 3, 0), POSE(2, 4, 0),
+    POSE(2, 5, 0), POSE(1, 6, 0), POSE(1, 7, 0), POSE(1, 8, 0), POSE_END,
 };
 
 AnimationFrame anim_80154E04[] = {
@@ -287,9 +328,8 @@ AnimationFrame anim_80154E04[] = {
 };
 
 AnimationFrame anim_80154E38[] = {
-    POSE(2, 1, 0), POSE(2, 2, 0), POSE(2, 3, 0),
-    POSE(2, 4, 0), POSE(2, 5, 0), POSE(2, 6, 0),
-    POSE(2, 7, 0), POSE(2, 8, 0), POSE_END,
+    POSE(2, 1, 0), POSE(2, 2, 0), POSE(2, 3, 0), POSE(2, 4, 0), POSE(2, 5, 0),
+    POSE(2, 6, 0), POSE(2, 7, 0), POSE(2, 8, 0), POSE_END,
 };
 
 typedef struct {
@@ -315,15 +355,12 @@ RicMariaPowerProperties D_80154E5C[] = {
 };
 
 u16 D_80154EAC[] = {8, 6, 5, 7};
-s32 D_80154EB4[] = {
-    FIX(5.0 / 3.0), FIX(-5.0 / 3.0), FIX(1.0 / 3.0), -0xD555};
-s32 D_80154EC4[] = {
-    FIX(-2.0), FIX(-5.0 / 3.0), FIX(-3.0), -0x25555};
+s32 D_80154EB4[] = {FIX(5.0 / 3.0), FIX(-5.0 / 3.0), FIX(1.0 / 3.0), -0xD555};
+s32 D_80154EC4[] = {FIX(-2.0), FIX(-5.0 / 3.0), FIX(-3.0), -0x25555};
 
 AnimationFrame anim_maria_walk[] = {
-    POSE(4, 1, 0), POSE(4, 2, 0), POSE(4, 3, 0), POSE(4, 4, 0),
-    POSE(4, 5, 0), POSE(4, 6, 0), POSE(4, 7, 0), POSE(4, 8, 0),
-    POSE_LOOP(0),
+    POSE(4, 1, 0), POSE(4, 2, 0), POSE(4, 3, 0), POSE(4, 4, 0), POSE(4, 5, 0),
+    POSE(4, 6, 0), POSE(4, 7, 0), POSE(4, 8, 0), POSE_LOOP(0),
 };
 
 AnimationFrame anim_maria_offering_powers[] = {
@@ -345,30 +382,54 @@ s32 D_80154F7C[16] = {
 };
 
 s16 D_80154FBC[24][10] = {
-    {0x0000, 0x0000, 0x0000, 0x015F, 0x0080, 0x0080, 0x0080, 0x0060, 0x0031, 0x0200},
-    {0x0000, 0x0002, 0x0006, 0x015F, 0x0080, 0x0080, 0x0080, 0x0040, 0x0031, 0x0200},
-    {0x0000, 0x0000, 0x0000, 0x015F, 0x0080, 0x7000, 0x7000, 0x0040, 0x0031, 0x0140},
-    {0x0000, 0x0000, 0x0000, 0x015F, 0x0080, 0x7000, 0x0100, 0x0010, 0x0031, 0x0180},
-    {0x0000, 0x0000, 0x0000, 0x015F, 0x0080, 0x7000, 0x7000, 0x0010, 0x0031, 0x0200},
-    {0x0000, 0x0000, 0x0000, 0x015F, 0x00A0, 0x7000, 0x00C0, 0x7000, 0x0031, 0x0200},
-    {0x0000, 0x0000, 0x0000, 0x015F, 0x0080, 0x7000, 0x0080, 0x7002, 0x0031, 0x0100},
-    {0x0000, 0x0000, 0x0000, 0x015F, 0x0080, 0x0080, 0x7000, 0x0070, 0x0031, 0x0200},
-    {0x0000, 0x0000, 0x0000, 0x015F, 0x0080, 0x7000, 0x0100, 0x7006, 0x0031, 0x0200},
-    {0x0000, 0x0000, 0x0000, 0x015F, 0x0100, 0x0100, 0x0200, 0x7001, 0x0031, 0x0100},
-    {0x0000, 0x0000, 0x0000, 0x0166, 0x0080, 0x0080, 0x0080, 0x7005, 0x0031, 0x0200},
-    {0x0000, 0x0000, 0x0000, 0x0102, 0x0080, 0x7000, 0x7000, 0x0040, 0x0031, 0x0200},
-    {0x0000, 0x0000, 0x0000, 0x015F, 0x0080, 0x7100, 0x0080, 0x7005, 0x0031, 0x0200},
-    {0x0000, 0x0000, 0x0000, 0x015F, 0x0080, 0x0080, 0x0080, 0x7005, 0x0031, 0x0200},
-    {0x0000, 0x0000, 0x0000, 0x0102, 0x0080, 0x7000, 0x0100, 0x0040, 0x0031, 0x0200},
-    {0x0000, 0x0000, 0x0000, 0x0102, 0x0080, 0x7000, 0x0080, 0x0040, 0x0031, 0x0200},
-    {0x0000, 0x0000, 0x0000, 0x0102, 0x0080, 0x0080, 0x7000, 0x0000, 0x0031, 0x0200},
-    {0x0000, 0x0000, 0x0000, 0x0102, 0x0200, 0x0080, 0x0200, 0x0000, 0x0031, 0x0200},
-    {0x0000, 0x0000, 0x0000, 0x015F, 0x0080, 0x0080, 0x7000, 0x0000, 0x0031, 0x0200},
-    {0x0000, 0x0000, 0x0000, 0x015F, 0x0090, 0x0400, 0x0400, 0x7007, 0x0031, 0x0200},
-    {0x0000, 0x0000, 0x0000, 0x0102, 0x0080, 0x0080, 0x0080, 0x0000, 0x0031, 0x0200},
-    {0x0000, 0x0000, 0x0000, 0x015F, 0x0080, 0x0080, 0x0080, 0x0010, 0x0031, 0x0200},
-    {0x0008, 0x0000, 0x0008, 0x0165, 0x0080, 0x0080, 0x0080, 0x7007, 0x0051, 0x0200},
-    {0x0000, 0x0000, 0x0000, 0x0168, 0x7100, 0x7100, 0x0100, 0x7007, 0x0031, 0x0200},
+    {0x0000, 0x0000, 0x0000, 0x015F, 0x0080, 0x0080, 0x0080, 0x0060, 0x0031,
+     0x0200},
+    {0x0000, 0x0002, 0x0006, 0x015F, 0x0080, 0x0080, 0x0080, 0x0040, 0x0031,
+     0x0200},
+    {0x0000, 0x0000, 0x0000, 0x015F, 0x0080, 0x7000, 0x7000, 0x0040, 0x0031,
+     0x0140},
+    {0x0000, 0x0000, 0x0000, 0x015F, 0x0080, 0x7000, 0x0100, 0x0010, 0x0031,
+     0x0180},
+    {0x0000, 0x0000, 0x0000, 0x015F, 0x0080, 0x7000, 0x7000, 0x0010, 0x0031,
+     0x0200},
+    {0x0000, 0x0000, 0x0000, 0x015F, 0x00A0, 0x7000, 0x00C0, 0x7000, 0x0031,
+     0x0200},
+    {0x0000, 0x0000, 0x0000, 0x015F, 0x0080, 0x7000, 0x0080, 0x7002, 0x0031,
+     0x0100},
+    {0x0000, 0x0000, 0x0000, 0x015F, 0x0080, 0x0080, 0x7000, 0x0070, 0x0031,
+     0x0200},
+    {0x0000, 0x0000, 0x0000, 0x015F, 0x0080, 0x7000, 0x0100, 0x7006, 0x0031,
+     0x0200},
+    {0x0000, 0x0000, 0x0000, 0x015F, 0x0100, 0x0100, 0x0200, 0x7001, 0x0031,
+     0x0100},
+    {0x0000, 0x0000, 0x0000, 0x0166, 0x0080, 0x0080, 0x0080, 0x7005, 0x0031,
+     0x0200},
+    {0x0000, 0x0000, 0x0000, 0x0102, 0x0080, 0x7000, 0x7000, 0x0040, 0x0031,
+     0x0200},
+    {0x0000, 0x0000, 0x0000, 0x015F, 0x0080, 0x7100, 0x0080, 0x7005, 0x0031,
+     0x0200},
+    {0x0000, 0x0000, 0x0000, 0x015F, 0x0080, 0x0080, 0x0080, 0x7005, 0x0031,
+     0x0200},
+    {0x0000, 0x0000, 0x0000, 0x0102, 0x0080, 0x7000, 0x0100, 0x0040, 0x0031,
+     0x0200},
+    {0x0000, 0x0000, 0x0000, 0x0102, 0x0080, 0x7000, 0x0080, 0x0040, 0x0031,
+     0x0200},
+    {0x0000, 0x0000, 0x0000, 0x0102, 0x0080, 0x0080, 0x7000, 0x0000, 0x0031,
+     0x0200},
+    {0x0000, 0x0000, 0x0000, 0x0102, 0x0200, 0x0080, 0x0200, 0x0000, 0x0031,
+     0x0200},
+    {0x0000, 0x0000, 0x0000, 0x015F, 0x0080, 0x0080, 0x7000, 0x0000, 0x0031,
+     0x0200},
+    {0x0000, 0x0000, 0x0000, 0x015F, 0x0090, 0x0400, 0x0400, 0x7007, 0x0031,
+     0x0200},
+    {0x0000, 0x0000, 0x0000, 0x0102, 0x0080, 0x0080, 0x0080, 0x0000, 0x0031,
+     0x0200},
+    {0x0000, 0x0000, 0x0000, 0x015F, 0x0080, 0x0080, 0x0080, 0x0010, 0x0031,
+     0x0200},
+    {0x0008, 0x0000, 0x0008, 0x0165, 0x0080, 0x0080, 0x0080, 0x7007, 0x0051,
+     0x0200},
+    {0x0000, 0x0000, 0x0000, 0x0168, 0x7100, 0x7100, 0x0100, 0x7007, 0x0031,
+     0x0200},
 };
 
 s16 D_8015519C[8][6] = {

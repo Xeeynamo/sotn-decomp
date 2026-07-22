@@ -17,7 +17,6 @@ u8 g_RichterAxeEffectParams[10][4] = {
 };
 
 AnimationFrame g_RichterSubweaponCrossAnim[] = {
-    POSE(36, 1, 0), POSE(1, 2, 0), POSE(1, 3, 0), POSE(1, 4, 0),
-    POSE(1, 5, 0),  POSE(1, 6, 0), POSE(1, 7, 0), POSE(1, 8, 0),
-    POSE_LOOP(0),
+    POSE(36, 1, 0), POSE(1, 2, 0), POSE(1, 3, 0), POSE(1, 4, 0), POSE(1, 5, 0),
+    POSE(1, 6, 0),  POSE(1, 7, 0), POSE(1, 8, 0), POSE_LOOP(0),
 };

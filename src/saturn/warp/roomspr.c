@@ -3,13 +3,8 @@
 #include <saturn_sprite.h>
 
 SaturnSpriteImage g_WarpSpriteBank16Images[7] = {
-    {4, 4, 0x0000},
-    {4, 4, 0x0004},
-    {4, 8, 0x0008},
-    {8, 8, 0x0010},
-    {8, 8, 0x0020},
-    {40, 40, 0x0030},
-    {0, 0, 0x01C0},
+    {4, 4, 0x0000}, {4, 4, 0x0004},   {4, 8, 0x0008}, {8, 8, 0x0010},
+    {8, 8, 0x0020}, {40, 40, 0x0030}, {0, 0, 0x01C0},
 };
 
 SaturnSpriteFrameHeader g_WarpRoomFrame0 = {

@@ -850,8 +850,8 @@ s32 func_8015FDB0(RicPrimitive* prim, s16 posX, s16 posY) {
     prim->x1 = posX + xOffset;
     prim->y1 = posY + offset;
 
-    uvAnim = &D_0605AEC0[
-        g_RichterSpritePackage3AllocationIndex + D_060BF1A4[frame]];
+    uvAnim =
+        &D_0605AEC0[g_RichterSpritePackage3AllocationIndex + D_060BF1A4[frame]];
     prim->uv0 = uvAnim->uv0;
     prim->uv1 = uvAnim->uv1;
 

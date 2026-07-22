@@ -34,8 +34,7 @@ Fixed32 MTH_Hypot(Fixed32 x, Fixed32 y) {
         y = y / bai;
         return MTH_Sqrt(MTH_Mul(x, x) + MTH_Mul(y, y)) * bai;
     } else {
-        bun = (x > y) ? MTH_Div(MTH_FIXED(1.0), x)
-                      : MTH_Div(MTH_FIXED(1.0), y);
+        bun = (x > y) ? MTH_Div(MTH_FIXED(1.0), x) : MTH_Div(MTH_FIXED(1.0), y);
         x = MTH_Mul(x, bun);
         y = MTH_Mul(y, bun);
         return MTH_Div(MTH_Sqrt(MTH_Mul(x, x) + MTH_Mul(y, y)), bun);
