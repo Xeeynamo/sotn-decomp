@@ -528,6 +528,7 @@ files:
           - [0x49C, skip]
           - [0x1130, rooms, rooms]
           - [0x11D4, skip]
+          - [0x1D14, cmpgfx, stage_title_mad_jp, 128, 128, 4] # unused
           - [0x2058, palette, pal_2058, 16]
           - [0x2078, skip] # tile data
           - [0x4A88, tiledef, unused]

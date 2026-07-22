@@ -63,7 +63,7 @@ segments:
       - [0x10E8, .data, e_room_fg]
       - [0x1130, .data, gen/rooms]
       - [0x11D4, .data, gen/e_layout]
-      - [0x1D14, data]
+      - [0x1D14, .data, stage_data]
       - [0x2058, .data, pal]
       - [0x2078, .data, tilemaps]
       - [0x8A98, .data, tiledef_1]
