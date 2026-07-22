@@ -69,7 +69,6 @@ extern s32 D_80180E18[];
 extern s32 D_80180EC4[];
 extern u16 D_80180FBC[];
 extern s32 D_80180FCC[];
-extern ObjInit D_801810F4[];
 extern EInit g_EInitParticle;
 extern u8 g_UnkEntityAnimData[];
 // extern u16 g_testCollEnemyLookup[];
