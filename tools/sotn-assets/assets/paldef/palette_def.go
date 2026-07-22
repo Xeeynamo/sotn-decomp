@@ -61,15 +61,6 @@ func (h *handler) Build(e assets.BuildArgs) error {
 	// referenced mid-array can only be declared as incomplete arrays
 	declared := map[string]bool{}
 	for _, def := range doc.Defs {
-		for _, entry := range def.Entries {
-			sym := util.RemoveFileNameExt(entry.Name)
-			if !declared[sym] && entry.Offset == 0 {
-				declared[sym] = true
-				content.WriteString(fmt.Sprintf("extern u16* %s[0x%X];\n", sym, entry.Length))
-			}
-		}
-	}
-	for _, def := range doc.Defs {
 		for _, ref := range append(append([]paletteEntry{}, def.Data...), def.Entries...) {
 			sym := util.RemoveFileNameExt(ref.Name)
 			if !declared[sym] {
@@ -84,8 +75,8 @@ func (h *handler) Build(e assets.BuildArgs) error {
 		if def.Kind == palBulkCopy || def.Kind == palCopy {
 			for _, entry := range def.Entries {
 				if entry.Offset == 0 {
-					content.WriteString(fmt.Sprintf("    PAL_BULK(0x%04X, %s),\n",
-						entry.Destination, util.RemoveFileNameExt(entry.Name)))
+					content.WriteString(fmt.Sprintf("    PAL_BULK_(0x%04X, %s, 0x%X),\n",
+						entry.Destination, util.RemoveFileNameExt(entry.Name), entry.Length))
 				} else {
 					content.WriteString(fmt.Sprintf("    PAL_COPY_DATA_(0x%04X, %s, 0x%X),\n",
 						entry.Destination, symRef(entry.Name, entry.Offset), entry.Length))

@@ -502,8 +502,10 @@ files:
         vram: 0x80180000
         assets:
           - [0x2C, sprite_banks, sprite_banks]
-          - [0x8C, skip]
-          #- [0x8C, paldef, palette_def]
+          - [0x8C, palette, pal_08C, 16]
+          - [0xAC, palette, pal_0AC, 16]
+          - [0xCC, paldef, palette_def]
+          - [0x19C, skip]
           #- [0x1C4, layers, layers]
           #- [0x5A4, gfx_banks, graphics_banks]
           - [0x520, layout, entity_layouts]
@@ -589,7 +591,7 @@ files:
         vram: 0x80180000
         assets:
           #- [0x2C, sprite_banks, sprite_banks]
-          #- [0x8C, paldef, palette_def]
+          #- [0x8C, paldef, palette_def] # embedded interleaved clut, see issue #2401
           #- [0x1C4, layers, layers]
           #- [0x5A4, gfx_banks, graphics_banks]
           - [0x618, layout, entity_layouts]
