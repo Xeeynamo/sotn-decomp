@@ -1,0 +1,133 @@
+options:
+  platform: psx
+  basename: stare
+  base_path: ..
+  build_path: build/hd
+  target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/are.bin
+  asm_path: asm/hd/st/are
+  asset_path: assets/st/are
+  src_path: src/st/are
+  ld_script_path: build/hd/stare.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.hd.txt
+    - config/symbols.hd.stare.txt
+  undefined_funcs_auto_path: build/hd/config/undefined_funcs_auto.hd.stare.txt
+  undefined_syms_auto_path: build/hd/config/undefined_syms_auto.hd.stare.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: hd_$VRAM
+  disassemble_all: true
+  section_order:
+    - .data
+    - .rodata
+    - .text
+    - .bss
+    - .sbss
+  ld_bss_is_noload: false
+  disasm_unknown: true
+  global_vram_start: 2147549184
+  ld_generate_symbol_per_data_segment: true
+sha1: ff81d12b5c894077319046a7cca6c259bd995941
+segments:
+  - name: stare
+    type: code
+    start: 0x0
+    vram: 0x80180000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, .data, header]
+      - [0x2C, .data, sprite_banks]
+      - [0x90, data]
+      - [0x154, data, palette_def]
+      - [0x218, .data, layers]
+      - [0x3E8, .data, graphics_banks]
+      - [0x7B0, .data, gen/hd/e_laydef]
+      - [0x958, .data, e_init]
+      - [0xC84, .data, background_block_init]
+      - [0xD04, .data, e_red_door_tiles]
+      - [0xD24, .data, e_lock_camera]
+      - [0xDA4, .data, e_breakable]
+      - [0xEB8, .data, e_boss_torch]
+      - [0xECC, .data, e_boss_doors]
+      - [0xED0, .data, e_elevator]
+      - [0xF2C, .data, e_secrets]
+      - [0xF3C, .data, e_background_door_rubble]
+      - [0xF7C, .data, e_explosion_puff_opaque]
+      - [0xFE8, .data, d_prize_drops]
+      - [0xFF8, .data, st_update]
+      - [0x1044, .data, st_collision]
+      - [0x1404, .data, e_red_door]
+      - [0x141C, .data, st_common]
+      - [0x161C, .data, e_collect]
+      - [0x1970, .data, e_misc]
+      - [0x1A28, .data, e_particles]
+      - [0x1AA8, .data, e_room_fg]
+      - [0x1B34, .data, e_blade_master]
+      - [0x1D28, .data, e_blade_soldier]
+      - [0x1E88, .data, e_bone_musket]
+      - [0x1F70, .data, e_owl_knight]
+      - [0x221C, .data, e_valhalla_knight]
+      - [0x2390, .data, e_blue_axe_knight]
+      - [0x254C, .data, e_armor_lord]
+      - [0x2700, .data, e_hunting_girl]
+      - [0x2878, .data, e_paranthropus]
+      - [0x2B68, .data, e_flea_armor]
+      - [0x2BD4, .data, e_flea_man]
+      - [0x2C2C, .data, e_bone_scimitar]
+      - [0x2D20, .data, e_plate_lord]
+      - [0x2D40, .data, e_plate_lord_2]
+      - [0x2D68, .data, e_grave_keeper]
+      - [0x2E1C, .data, e_mist_door]
+      - [0x2E5C, .data, gen/rooms]
+      - [0x2F00, .data, gen/hd/e_layout]
+      - [0x3C10, .data, gfx_data]
+      - [0x19524, data, gfx_data_palettes]
+      - [0x19E64, .data, tilemaps]
+      - [0x28294, .data, gen/hd/sprites]
+      - [0x35644, c, e_room_bg]
+      - [0x3570C, c, e_lock_camera]
+      - [0x358C8, c, e_breakable]
+      - [0x35FC0, c, e_boss_torch]
+      - [0x36154, c, e_boss_doors]
+      - [0x365E8, c, e_cavern_door]
+      - [0x36EB8, c, e_elevator]
+      - [0x379B0, c, e_fountain_water]
+      - [0x37BB0, c, e_secrets]
+      - [0x37DF4, c, e_background_door_rubble]
+      - [0x37FAC, c, e_explosion_puff_opaque]
+      - [0x38408, c, st_update]
+      - [0x3883C, c, st_collision]
+      - [0x39FF8, c, create_entity]
+      - [0x3ABE8, c, e_red_door]
+      - [0x3B820, c, st_common]
+      - [0x3CF30, c, e_collect]
+      - [0x3F40C, c, e_misc]
+      - [0x417A8, c, e_stage_name]
+      - [0x41ED0, c, e_particles]
+      - [0x42714, c, e_room_fg]
+      - [0x42800, c, popup]
+      - [0x42CC0, c, e_blade_master]
+      - [0x43C60, c, e_blade_soldier]
+      - [0x44450, c, e_bone_musket]
+      - [0x44EA4, c, e_owl_knight]
+      - [0x474E4, c, e_valhalla_knight]
+      - [0x48AFC, c, e_blue_axe_knight]
+      - [0x49F54, c, e_armor_lord]
+      - [0x4C404, c, e_hunting_girl]
+      - [0x4D13C, c, e_paranthropus]
+      - [0x4E220, c, e_flea_armor]
+      - [0x4EB04, c, e_flea_man]
+      - [0x4EF04, c, e_bone_scimitar]
+      - [0x4FDAC, c, e_plate_lord]
+      - [0x52774, c, e_plate_lord_2]
+      - [0x53258, c, e_grave_keeper]
+      - [0x53FE0, c, e_mist_door]
+      - [0x540C8, c, prim_helpers]
+      - [0x548F8, .bss, create_entity]
+      - [0x54908, .bss, bss]
+      - [0x55570, .bss, st_update]
+  - [0x555B0]

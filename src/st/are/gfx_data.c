@@ -13,9 +13,11 @@ u8 gfx_cavern_door[] = {
 #include "gen/gfx_cavern_door.h"
 };
 
+#ifndef VERSION_HD
 u8 gfx_stage_name_en[] = {
 #include "gen/gfx_stage_name_en.h"
 };
+#endif
 
 u8 gfx_blade_master_1[] = {
 #include "gen/gfx_blade_master_1.h"
