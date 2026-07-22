@@ -523,10 +523,18 @@ files:
         vram: 0x80180000
         assets:
           - [0x40, sprite_banks, sprite_banks]
-          - [0xA0, skip]
-          # TODO broken
+          - [0xA0, paldef, palette_def]
+          - [0xB8, layers, layers]
+          - [0x290, gfx_banks, graphics_banks]
+          - [0x2F4, layout, entity_layouts]
+          - [0x49C, skip]
           - [0x1130, rooms, rooms]
           - [0x11D4, skip]
+          - [0x1D14, cmpgfx, stage_title_mad_jp, 128, 128, 4] # unused
+          - [0x2058, palette, pal_2058, 16]
+          - [0x2078, skip] # tile data
+          - [0x4A88, tiledef, unused]
+          - [0x8A98, skip] # the other used tile definition
   - target: disks/us/ST/NO0/NO0.BIN
     asset_path: assets/st/no0
     src_path: src/st/no0
