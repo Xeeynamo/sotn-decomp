@@ -27,7 +27,7 @@ static s16 dead_particle_pos[][2] = {
     {11, -7},
     {4, 6},
     {-3, 0},
-#if defined(VERSION_PC)
+#if defined(FIX_UB)
     // BUG! OOB on death animation
     {0, 0},
 #endif

@@ -270,7 +270,7 @@ void PlayAnimation(s8* frameProps, AnimationFrame** frames) {
         ((u16*)g_CurrentEntity->anim)[g_CurrentEntity->pose * 2]))))
 
 u32 UpdateAnim(s8* frameProps, AnimationFrame** anims) {
-#if defined(VERSION_PC)
+#ifdef FIX_UB
     s32 ret = 0;
 #else
     s32 ret;

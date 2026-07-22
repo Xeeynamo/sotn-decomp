@@ -2,7 +2,7 @@
 #include "nz0.h"
 #include "sfx.h"
 
-#ifdef VERSION_PC
+#ifdef FIX_UB
 // BUG! fix a OOB where x can be -1
 #define PUZZLE_MODIFIER(x) D_801CB738[x]
 #else

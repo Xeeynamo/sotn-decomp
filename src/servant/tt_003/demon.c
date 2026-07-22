@@ -541,7 +541,7 @@ void OVL_EXPORT(ServantInit)(InitializeMode mode) {
     SpriteParts** spriteBanks;
     Entity* entity;
 
-#ifdef VERSION_PC
+#ifdef FIX_UB
     const int lenServant = LEN(g_ServantClut);
     const int lenDemon = LEN(g_DemonClut);
 #else

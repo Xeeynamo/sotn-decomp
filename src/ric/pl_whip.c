@@ -325,9 +325,9 @@ void RicEntityWhip(Entity* self) {
                            (PLAYER.poseTimer == 13 || PLAYER.poseTimer == 14)) {
                     self->palette = PAL_FLAG(PAL_UNK_13C);
                 } else {
-// poseTimer can be -1 apparently.
-// todo this should read the previous element out of bounds?
-#ifdef VERSION_PC
+#ifdef FIX_UB
+                    // poseTimer can be -1 apparently.
+                    // todo this should read the previous element out of bounds?
                     if (PLAYER.poseTimer >= 0) {
                         self->palette =
                             D_80155C70[PLAYER.poseTimer % LEN(D_80155C70)];
@@ -386,9 +386,9 @@ void RicEntityWhip(Entity* self) {
                            PLAYER.poseTimer == 13 || PLAYER.poseTimer == 14) {
                     self->palette = PAL_FLAG(PAL_UNK_13C);
                 } else {
-// poseTimer can be -1 apparently.
-// todo this should read the previous element out of bounds?
-#ifdef VERSION_PC
+#ifdef FIX_UB
+                    // poseTimer can be -1 apparently.
+                    // todo this should read the previous element out of bounds?
                     if (PLAYER.poseTimer >= 0) {
                         self->palette = D_80155C70[PLAYER.poseTimer % 3];
                     }
