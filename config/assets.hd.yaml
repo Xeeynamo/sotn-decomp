@@ -131,9 +131,7 @@ files:
           - [0xD0, palette, pal_D0, 16]
           - [0xF0, palette, pal_F0, 16]
           - [0x110, palette, pal_110, 16]
-          - [0x130, skip] # extra palette def
-          - [0x154, paldef, palette_def]
-          - [0x214, skip] # multiple cluts here are not importing correctly, see issue #2401
+          - [0x130, paldef, palette_def]
           - [0x218, layers, layers]
           - [0x3E8, gfx_banks, hd/graphics_banks]
           - [0x7B0, layout, hd/entity_layouts]

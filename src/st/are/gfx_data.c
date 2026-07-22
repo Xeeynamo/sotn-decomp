@@ -128,64 +128,62 @@ u8 gfx_grave_keeper_tombstone[] = {
 };
 
 // Palettes
-// These can't be imported correctly until #2401 is fixed
+u16 pal_puff_opaque[] = {
+#include "gen/pal_puff_opaque.h"
+};
 
-// u16 pal_puff_opaque[] = {
-// #include "gen/pal_puff_opaque.h"
-// };
+u16 pal_cavern_door[] = {
+#include "gen/pal_cavern_door.h"
+};
 
-// u16 pal_cavern_door[] = {
-// #include "gen/pal_cavern_door.h"
-// };
+u16 pal_blade_master[] = {
+#include "gen/pal_blade_master.h"
+};
 
-// u16 pal_blade_master[] = {
-// #include "gen/pal_blade_master.h"
-// };
+u16 pal_blade_soldier[] = {
+#include "gen/pal_blade_soldier.h"
+};
 
-// u16 pal_blade_soldier[] = {
-// #include "gen/pal_blade_soldier.h"
-// };
+u16 pal_bone_musket[] = {
+#include "gen/pal_bone_musket.h"
+};
 
-// u16 pal_bone_musket[] = {
-// #include "gen/pal_bone_musket.h"
-// };
+u16 pal_owl_knight[] = {
+#include "gen/pal_owl_knight.h"
+};
 
-// u16 pal_owl_knight[] = {
-// #include "gen/pal_owl_knight.h"
-// };
+u16 pal_valhalla_knight[] = {
+#include "gen/pal_valhalla_knight.h"
+};
 
-// u16 pal_valhalla_knight[] = {
-// #include "gen/pal_valhalla_knight.h"
-// };
+u16 pal_armor_lord[] = {
+#include "gen/pal_armor_lord.h"
+};
 
-// u16 pal_armor_lord[] = {
-// #include "gen/pal_armor_lord.h"
-// };
+u16 pal_blue_axe_knight[] = {
+#include "gen/pal_blue_axe_knight.h"
+};
 
-// u16 pal_blue_axe_knight[] = {
-// #include "gen/pal_blue_axe_knight.h"
-// };
+u16 pal_hunting_girl[] = {
+#include "gen/pal_hunting_girl.h"
+};
 
-// u16 pal_hunting_girl[] = {
-// #include "gen/pal_hunting_girl.h"
-// };
+u16 pal_paranthropus[] = {
+#include "gen/pal_paranthropus.h"
+};
 
-// u16 pal_paranthropus[] = {
-// #include "gen/pal_paranthropus.h"
-// };
+u16 pal_flea_man_armor[] = {
+#include "gen/pal_flea_man_armor.h"
+};
 
-// u16 pal_flea_man_armor[] = {
-// #include "gen/pal_flea_man_armor.h"
-// };
+u16 pal_bone_scimitar[] = {
+#include "gen/pal_bone_scimitar.h"
+};
 
-// u16 pal_bone_scimitar[] = {
-// #include "gen/pal_bone_scimitar.h"
-// };
+u16 pal_plate_lord[] = {
+#include "gen/pal_plate_lord.h"
+};
 
-// u16 pal_plate_lord[] = {
-// #include "gen/pal_plate_lord.h"
-// };
-
-// u16 pal_grave_keeper_tombstone[] = {
-// #include "gen/pal_grave_keeper_tombstone.h"
-// };
+u16 pal_grave_keeper_tombstone[] = {
+#include "gen/pal_grave_keeper_tombstone.h"
+};
