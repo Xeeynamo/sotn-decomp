@@ -278,6 +278,27 @@ files:
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/rnz1.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/rtop.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/rwrp.bin
+    asset_path: assets/st/rwrp
+    src_path: src/st/rwrp
+    splat_config_path: config/splat.hd.strwrp.yaml
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x40, sprite_banks, hd/sprite_banks]
+          - [0xA0, paldef, palette_def]
+          - [0xB8, layers, layers]
+          - [0x1B8, gfx_banks, graphics_banks]
+          - [0x23C, layout, entity_layouts]
+          - [0x3E4, skip]
+          - [0x11B0, rooms, rooms]
+          - [0x122C, skip]
+          - [0x1424, cmpgfx, stage_title_rwrp_jp, 128, 128, 4]
+          - [0x1768, cmpgfx, stage_placeholder_rwrp, 128, 128, 4]
+          - [0x1D0C, palette, D_80181D08, 16]
+          - [0x1FCC, skip] # tile data
+          - [0x2BCC, skip] # tile definitions
+          - [0x6FEC, skip] # sprites
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/mar.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/bo0.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/bo1.bin
