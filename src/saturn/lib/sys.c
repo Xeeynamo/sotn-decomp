@@ -1,7 +1,26 @@
 #include "sattypes.h"
 #include "inc_asm.h"
+#include "sys.h"
 
-// SEGA_SYS.A
+const interrupt_t g_SysUintMacSaveStubs[32] = {
+    (interrupt_t)0x06030CA4, (interrupt_t)0x06030CAA,
+    (interrupt_t)0x06030CB0, (interrupt_t)0x06030CB6,
+    (interrupt_t)0x06030CBC, (interrupt_t)0x06030CC2,
+    (interrupt_t)0x06030CC8, (interrupt_t)0x06030CCE,
+    (interrupt_t)0x06030CD4, (interrupt_t)0x06030CDA,
+    (interrupt_t)0x06030CE0, (interrupt_t)0x06030CE6,
+    (interrupt_t)0x06030CEC, (interrupt_t)0x06030CF2,
+    NULL, NULL,
+    (interrupt_t)0x06030CF8, (interrupt_t)0x06030CFE,
+    (interrupt_t)0x06030D04, (interrupt_t)0x06030D0A,
+    (interrupt_t)0x06030D10, (interrupt_t)0x06030D16,
+    (interrupt_t)0x06030D1C, (interrupt_t)0x06030D22,
+    (interrupt_t)0x06030D28, (interrupt_t)0x06030D2E,
+    (interrupt_t)0x06030D34, (interrupt_t)0x06030D3A,
+    (interrupt_t)0x06030D40, (interrupt_t)0x06030D46,
+    (interrupt_t)0x06030D4C, (interrupt_t)0x06030D52,
+};
+
 const char* sys_version = "SYS Version 2.50 1997-06-10";
 const u32 pad_06030af8 = 0x00000000;
 
@@ -167,4 +186,6 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60388F8, func_060388F8);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6038930, func_06038930);
 
 // 68k sound driver
-INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/data", d603AA7C, d_603AA7C);
+const u16 g_SoundDriver68k[] = {
+#include "snd_driver_68k.inc"
+};

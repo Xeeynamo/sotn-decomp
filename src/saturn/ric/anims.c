@@ -1,6 +1,18 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
 
+extern AnimationFrame ric_anim_stand[];
+
+AnimationFrame* D_8015538C[] = {ric_anim_stand, ric_anim_stand};
+
+AnimationFrame ric_anim_press_up[] = {POSE(64, 38, 1), POSE_LOOP(0)};
+
+AnimationFrame ric_anim_stop_run[] = {
+    POSE(2, 55, 1),  POSE(1, 144, 1), POSE(2, 145, 1),
+    POSE(3, 144, 1), POSE(4, 145, 1),  POSE(12, 144, 1),
+    POSE(4, 16, 1),  POSE_JUMP(1),
+};
+
 AnimationFrame ric_anim_stand[] = {
     POSE(7, 1, 1),  POSE(7, 2, 1),  POSE(7, 3, 1),  POSE(7, 2, 1),
     POSE(7, 1, 1),  POSE(7, 2, 1),  POSE(7, 3, 1),  POSE(7, 2, 1),

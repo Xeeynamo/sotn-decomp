@@ -15,8 +15,8 @@ Entity* RicCreateEntFactoryFromEntity(
     Entity* source, u32 factoryParams, s32 arg2);
 void func_8015E484(void);
 void func_8015F9F0(Entity* entity);
-extern u8 D_060C2FA4[];
-extern SaturnPlayerGraphicsRecord D_060C2FE8[];
+extern void* g_RichterSpriteBanks[17];
+extern SaturnPlayerGraphicsRecord g_RichterPlayerGraphicsRecords[191];
 
 SaturnPlayerOvl RIC_player = {
     RicInit,
@@ -34,6 +34,6 @@ SaturnPlayerOvl RIC_player = {
     func_8015F9F0,
     (SaturnPlayerCallback)func_060B0610,
     (SaturnPlayerCallback)func_060B0610,
-    D_060C2FA4,
-    D_060C2FE8,
+    (u8*)g_RichterSpriteBanks,
+    g_RichterPlayerGraphicsRecords,
 };

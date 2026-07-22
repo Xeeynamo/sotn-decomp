@@ -18,7 +18,7 @@ segments:
         file: stage_02/sthead
         end: 0x28
       - start: 0x28
-        type: .text
+        type: .data
         file: stage_02/stprolo
         end: 0x40
       - start: 0x40
@@ -27,21 +27,21 @@ segments:
         end: 0x6a7f
 
       - start: 0x6a80
-        type: .text
+        type: c
         file: stage_02
-        end: 0x72db
+        end: 0x72dc
+        function_ranges:
+          - [0x6A80, 0x72DB]
 
       - start: 0x72dc
-        type: .text
+        type: c
         file: stage_02
-        end: 0x87a3
-
-      # alignment issue at 7c1e
-
-      - start: 0x87a4
-        type: .text
-        file: stage_02
-        end: 0x8907
+        end: 0x8908
+        function_ranges:
+          - [0x72DC, 0x77C7]
+          - [0x77C8, 0x7FBB]
+          - [0x82FC, 0x83F3]
+          - [0x83F4, 0x8907]
 
       - start: 0x8908
         type: c
@@ -49,9 +49,13 @@ segments:
         end: 0x10A93
 
       - start: 0x10A94
-        type: .text
+        type: c
         file: stage_02
-        end: 0x10c4f
+        end: 0x10c50
+        function_ranges:
+          - [0x10A94, 0x10C4F]
+        data_ranges:
+          - [0x10BAC, 0x10C13]
 
       - start: 0x10c50
         type: .data

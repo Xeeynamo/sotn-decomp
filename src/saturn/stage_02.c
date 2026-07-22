@@ -169,10 +169,13 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E2898, func_060E2898);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E29A4, func_060E29A4);
 
 // EntityHeartDrop
-INCLUDE_ASM("asm/saturn/stage_02/data", d60E2A80, d_060E2A80);
+INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E2A80, func_060E2A80);
 
-INCLUDE_ASM("asm/saturn/stage_02/data", d60E32DC, d_060E32DC);
-INCLUDE_ASM("asm/saturn/stage_02/data", d60E47A4, d_060E47A4);
+INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E32DC, func_060E32DC);
+INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E37C8, func_060E37C8);
+INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E3FBC, func_060E3FBC);
+INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E42FC, func_060E42FC);
+INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E43F4, func_060E43F4);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E4908, func_060E4908);
 
 // SAT func_060E4F78
@@ -384,4 +387,4 @@ void func_060EC240(Entity* self) {
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EC278, func_060EC278);
 
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EC730, func_060EC730);
-INCLUDE_ASM("asm/saturn/stage_02/data", d60ECA94, d_060ECA94);
+INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60ECA94, func_060ECA94);

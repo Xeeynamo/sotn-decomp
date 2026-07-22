@@ -64,7 +64,7 @@ void func_800F2860(void) {
 }
 
 // RunMainEngine
-INCLUDE_ASM("asm/saturn/game/f_match", f6070A60, RunMainEngine);
+INCLUDE_ASM("asm/saturn/game/f_nonmat", f6070A60, RunMainEngine);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6071C3C, func_06071C3C);
 
 extern s32 DAT_0605c120;

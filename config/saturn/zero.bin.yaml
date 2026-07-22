@@ -179,8 +179,8 @@ segments:
         end: 0x1F0CF
       # SPR_2A.SRC
       - start: 0x1F0D0
-        type: data
-        file: lib/spr/spr_slv
+        type: .text
+        file: lib/spr/spr_2a
         end: 0x1F313
 
       # DMA_CPUM
@@ -235,9 +235,14 @@ segments:
 
       # after PER
       - start: 0x29374
-        type: data
+        type: c
         file: lib/per
         end: 0x29423
+        function_ranges:
+          - [0x29374, 0x293AA]
+          - [0x293AC, 0x293F6]
+          - [0x293F8, 0x29406]
+          - [0x29408, 0x29422]
 
       # CDC
       - start: 0x29424
@@ -247,23 +252,23 @@ segments:
 
       # MTH_FIXD.SRC
       - start: 0x2B4D0
-        type: data
-        file: lib/mth
+        type: .text
+        file: lib/mth/mth_fixd
         end: 0x2B573
       # MTH_MTRX.SRC
       - start: 0x2B574
-        type: data
-        file: lib/mth
+        type: .text
+        file: lib/mth/mth_mtrx
         end: 0x2BA6B
       # MTH_PS2D.SRC
       - start: 0x2BA6C
-        type: data
-        file: lib/mth
+        type: .text
+        file: lib/mth/mth_ps2d
         end: 0x2BB03
       # MTH_TRI.SRC
       - start: 0x2BB04
-        type: data
-        file: lib/mth
+        type: .text
+        file: lib/mth/mth_tri
         end: 0x2C103
       # MTH_CURV.C
       - start: 0x2C104
@@ -289,10 +294,15 @@ segments:
         file: lib/bup
         end: 0x2C9C9
 
-      # after bup
+      # SYS MAC save helpers
       - start: 0x2C9CA
-        type: data
-        file: lib/bup
+        type: .text
+        file: lib/sys/sys_mac1
+        end: 0x2C9DB
+
+      - start: 0x2C9DC
+        type: .text
+        file: lib/sys
         end: 0x2CA5B
 
       # version string
@@ -315,7 +325,7 @@ segments:
 
       # 68k sound driver
       - start: 0x369FC
-        type: data
+        type: .text
         file: lib/sys
         end: 0x3D1EF
 
@@ -437,7 +447,7 @@ segments:
 
       # SYS vars
       - start: 0x44184
-        type: data
+        type: .text
         file: lib/sys_tail
         end: 0x4453F
 

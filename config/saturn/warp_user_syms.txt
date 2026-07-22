@@ -43,5 +43,5 @@ _g_EntitySpriteBank12 = 0x06047614;
 _g_EntitySpriteBank13 = 0x06047570;
 _g_EntitySpriteBank14 = 0x06047694;
 _g_EntitySpriteBank15 = 0x06044350;
-_g_WarpRoomSpriteParts = 0x060E1224;
-_g_WarpSmallRocksSpriteParts = 0x060E11E0;
+_g_WarpSpriteBank16Images = 0x060E1224;
+_g_WarpSpriteBank16Palettes = 0x060E11E0;
