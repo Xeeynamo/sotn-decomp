@@ -104,7 +104,7 @@ typedef struct {
 typedef struct {
     SaturnSpriteImage* images;
     u16* palettes;
-    s16 allocationIndex;
+    u16 allocationIndex;
     u16 flags;
 } SaturnSpriteResource;
 

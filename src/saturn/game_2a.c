@@ -3,6 +3,7 @@
 #include "sattypes.h"
 #include "game.h"
 #include "lib/scl.h"
+#include <saturn_sprite.h>
 
 void PlaySfx(s32 sfxId);
 void UpdateCapePalette(void);
@@ -413,7 +414,27 @@ void SetYH(Primitive* prim, s32 y, s32 h) {
     prim->y2 = prim->y3 = y + h - 1;
 }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f60771D4, func_060771D4);
+extern u16 DAT_0605aec0[][2];
+extern SaturnSpriteResource* DAT_06086388;
+
+static inline u16 unkFunc(u16 arg0) {
+    if (arg0 & 0x4000) {
+        return func_06007CE0(arg0 & 0xFFF);
+    } else {
+        return SPR_2LookupTblNoToVram(arg0 & 0xFFF);
+    }
+}
+
+void func_060771D4(Primitive* prim, s32 arg1) {
+    u16* ptr;
+
+    ptr = DAT_0605aec0[DAT_06086388->allocationIndex + arg1];
+    prim->unk8 = ptr[0];
+    prim->unkA = ptr[1];
+    prim->unk6 = unkFunc(DAT_06086388->flags + arg1);
+    prim->unk6 = prim->unk6 & 0x8FFF | 0x4000;
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6077260, func_06077260);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6077354, func_06077354);
 

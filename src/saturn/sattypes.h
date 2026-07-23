@@ -688,11 +688,11 @@ typedef struct {
 
 typedef struct {
     s16 type;
-    s16 : 16;
-    s16 : 16;
-    s16 : 16;
-    s16 : 16;
-    s16 : 16;
+    s16 unk2;
+    u16 unk4;
+    s16 unk6;
+    s16 unk8;
+    s16 unkA;
     s16 x0;
     s16 y0;
     s16 x1;

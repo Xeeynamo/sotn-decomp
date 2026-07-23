@@ -372,7 +372,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6007BE0, func_06007BE0);
 // _SprSetGourTbl
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6007CA0, func_06007CA0);
 
-u16 func_06007CE0(u16 param_1) { return param_1 * 0x10 + 0x400; }
+u16 func_06007CE0(u16 arg0) { return arg0 * 0x10 + 0x400; }
 
 void SPR_2ClrAllChar(void);
 
