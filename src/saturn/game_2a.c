@@ -510,15 +510,15 @@ void func_06077354(Primitive* prim) {
     prim->unk6 = prim->unk6 & 0x8FFF | 0x4000;
     if (leading_zeros != 0) {
         leading_zeros--;
-        prim->drawMode |= 0x8;
+        prim->drawMode |= DRAW_HIDE;
     } else {
-        prim->drawMode &= 0xFFF7;
+        prim->drawMode &= ~DRAW_HIDE;
         SetXW(prim, g_HudSpriteU[i], g_HudSpriteWidth[i]);
         leading_zeros = 0;
         i++;
     }
     prim = prim->next;
-    
+
     digit = (hearts / 100) % 10;
     if (digit == 0) {
         digit = 10;
@@ -531,9 +531,9 @@ void func_06077354(Primitive* prim) {
     prim->unk6 = prim->unk6 & 0x8FFF | 0x4000;
     if (leading_zeros != 0) {
         leading_zeros--;
-        prim->drawMode |= 0x8;
+        prim->drawMode |= DRAW_HIDE;
     } else {
-        prim->drawMode &= 0xFFF7;
+        prim->drawMode &= ~DRAW_HIDE;
         SetXW(prim, g_HudSpriteU[i], g_HudSpriteWidth[i]);
         leading_zeros = 0;
         i++;
@@ -551,14 +551,14 @@ void func_06077354(Primitive* prim) {
     prim->unk6 = unkFunc(uVar13);
     prim->unk6 = prim->unk6 & 0x8FFF | 0x4000;
     if (leading_zeros != 0) {
-        prim->drawMode |= 0x8;
+        prim->drawMode |= DRAW_HIDE;
     } else {
-        prim->drawMode &= 0xFFF7;
+        prim->drawMode &= ~DRAW_HIDE;
         SetXW(prim, g_HudSpriteU[i], g_HudSpriteWidth[i]);
         i++;
     }
     prim = prim->next;
-    
+
     digit = hearts % 10;
     if (digit == 0) {
         digit = 10;
@@ -580,7 +580,7 @@ void SetLifeNum(Primitive* prim) {
     u32 displayHP;
     u32 uVar11;
     u16* ptr;
-    
+
     displayHP = g_PlayerHud.displayHP;
     if (displayHP >= 1000) {
         leading_zeros = 0;
@@ -611,9 +611,9 @@ void SetLifeNum(Primitive* prim) {
     prim->unk6 = prim->unk6 & 0x8FFF | 0x4000;
     if (leading_zeros != 0) {
         leading_zeros--;
-        prim->drawMode |= 0x8;
+        prim->drawMode |= DRAW_HIDE;
     } else {
-        prim->drawMode &= 0xFFF7;
+        prim->drawMode &= ~DRAW_HIDE;
         prim->x0 = x;
         prim->y0 = g_HudSpriteV[6];
         leading_zeros = 0;
@@ -629,9 +629,9 @@ void SetLifeNum(Primitive* prim) {
     prim->unk6 = prim->unk6 & 0x8FFF | 0x4000;
     if (leading_zeros != 0) {
         leading_zeros--;
-        prim->drawMode |= 0x8;
+        prim->drawMode |= DRAW_HIDE;
     } else {
-        prim->drawMode &= 0xFFF7;
+        prim->drawMode &= ~DRAW_HIDE;
         prim->x0 = x;
         prim->y0 = g_HudSpriteV[6];
         leading_zeros = 0;
@@ -646,9 +646,9 @@ void SetLifeNum(Primitive* prim) {
     prim->unk6 = unkFunc(uVar11);
     prim->unk6 = prim->unk6 & 0x8FFF | 0x4000;
     if (leading_zeros != 0) {
-        prim->drawMode |= 0x8;
+        prim->drawMode |= DRAW_HIDE;
     } else {
-        prim->drawMode &= 0xFFF7;
+        prim->drawMode &= ~DRAW_HIDE;
         prim->x0 = x;
         prim->y0 = g_HudSpriteV[6];
         x += 7;
