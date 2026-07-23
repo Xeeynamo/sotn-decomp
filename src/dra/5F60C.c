@@ -1189,6 +1189,7 @@ bool StatusPause(s32 arg0) {
     return true;
 }
 
+// original name: status_disp_init
 void DrawHud(void) {
     Primitive* prim;
     s32 i;

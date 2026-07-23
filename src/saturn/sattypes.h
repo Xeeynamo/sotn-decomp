@@ -369,8 +369,8 @@ void (*func_06064630)();
 void (*GetPlayerSensor)(Collider* col);
 void (*func_06064638)();
 void (*func_0606463c)();
-void (*func_0606464C)();
 void (*func_06064644)();
+void (*func_0606464C)();
 void (*func_06064674)();
 void (*func_06064684)();
 void (*func_06064688)();
@@ -673,7 +673,7 @@ typedef struct {
 
 typedef struct {
     s32 displayHP;
-    s32 : 32;
+    s32 primIndex1;
     s32 : 32;
     s32 : 32;
     u32 : 32;
@@ -683,7 +683,7 @@ typedef struct {
     u32 : 32;
     u32 unk24;
     s32 : 32;
-    s32 : 32;
+    s32 g_HealingMailTimer;
 } PlayerHud;
 
 typedef struct {

@@ -392,11 +392,12 @@ bool StatusPause(s32 arg0) {
 
 s32 func_06076718(void) { return g_PlayerHud.unk24 == 0x15; }
 
+void func_0607672C(void);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607672C, func_0607672C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6076A04, func_06076A04);
 
 // original name: set_XYWH
-void SetXYWH(Primitive* prim, s32 x, s32 y, s32 w, s32 h) {
+inline void SetXYWH(Primitive* prim, s32 x, s32 y, s32 w, s32 h) {
     prim->x0 = prim->x3 = x;
     prim->x1 = prim->x2 = x + w - 1;
     prim->y0 = prim->y1 = y;
@@ -424,7 +425,7 @@ static inline u16 unkFunc(u16 arg0) {
     }
 }
 
-void func_060771D4(Primitive* prim, s32 arg1) {
+inline void func_060771D4(Primitive* prim, s32 arg1) {
     u16* ptr;
 
     ptr = DAT_0605aec0[DAT_06086388->allocationIndex + arg1];
@@ -465,6 +466,8 @@ extern SaturnSpriteResource g_SaturnSharedSpriteBank4Resource;
 extern u8 g_HudSpriteU[];
 extern u8 g_HudSpriteV[];
 extern u8 g_HudSpriteWidth[];
+extern u8 g_HudSpriteHeight[];
+extern u16 g_HudSpriteAttributes[];
 
 void func_06077354(Primitive* prim) {
     u32 digit;
@@ -665,7 +668,69 @@ void SetLifeNum(Primitive* prim) {
     prim->y0 = g_HudSpriteV[6];
 }
 
-// _status_disp_init
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6077B20, func_06077B20);
+typedef struct {
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    SaturnSpriteResource* unk2C;
+} Unk06064650;
+
+extern Unk06064650* DAT_06064650;
+void func_06075838(void);
+
+// original name: status_disp_init
+void StatusDispInit(void) {
+    Primitive* prim;
+    s32 i;
+
+    DAT_06086388 = DAT_06064650->unk2C;
+    D_8013B5E8 = 0;
+    g_PlayerHud.displayHP = g_Status.hp;
+    g_PlayerHud.g_HealingMailTimer = 0;
+
+    if ((DAT_0605d750.stageID == STAGE_ST0) || (g_PlayableCharacter == 1)) {
+        func_06075838();
+    } else if (g_PlayableCharacter == 2) {
+        func_0607672C();
+    } else {
+        g_PlayerHud.primIndex1 = AllocPrimitive(0x0, 0xE);
+        prim = &g_PrimBuf[g_PlayerHud.primIndex1];
+        for (i = 0; prim != NULL; i++) {
+            SetXYWH(prim, g_HudSpriteU[i], g_HudSpriteV[i], g_HudSpriteWidth[i],
+                    g_HudSpriteHeight[i]);
+            prim->unk2 = 0x1C0;
+            prim->drawMode = g_HudSpriteAttributes[i];
+            switch (i) {
+            case 4:
+                func_060771D4(prim, 0);
+                break;
+            case 5:
+                func_060771D4(prim, 1);
+                break;
+            case 3:
+                prim->type = 0x1004;
+                prim->unk4 = 0x4C0;
+                break;
+            case 10:
+            case 11:
+            case 12:
+            case 13:
+                prim->type = 0x1001;
+                prim->unk4 |= 0x1000;
+            }
+            prim->unk4 &= 0xFFC7;
+            prim = prim->next;
+        }
+    }
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6077D88, func_06077D88);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078120, func_06078120);
