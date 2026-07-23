@@ -161,7 +161,8 @@ typedef enum {
 
 #define PAL_BULK_COPY 5
 #define PAL_BULK_COPY_INFO(dst, n) (u_long*)(dst), (u_long*)(n)
-#define PAL_BULK(dst, data) (u_long*)(dst), (u_long*)LEN(data), (u_long*)(data)
+#define PAL_BULK(dst, src) (u_long*)(dst), (u_long*)LEN(src), (u_long*)(src)
+#define PAL_BULK_(dst, src, len) (u_long*)(dst), (u_long*)(len), (u_long*)(src)
 
 #define PAL_TERMINATE() ((u_long*)-1)
 
