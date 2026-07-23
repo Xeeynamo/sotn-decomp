@@ -688,7 +688,7 @@ typedef struct {
 
 typedef struct {
     s16 type;
-    s16 unk2;
+    s16 priority;
     u16 unk4;
     s16 unk6;
     s16 unk8;

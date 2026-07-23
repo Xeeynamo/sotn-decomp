@@ -706,7 +706,7 @@ void StatusDispInit(void) {
         for (i = 0; prim != NULL; i++) {
             SetXYWH(prim, g_HudSpriteU[i], g_HudSpriteV[i], g_HudSpriteWidth[i],
                     g_HudSpriteHeight[i]);
-            prim->unk2 = 0x1C0;
+            prim->priority = 0x1C0;
             prim->drawMode = g_HudSpriteAttributes[i];
             switch (i) {
             case 4:
