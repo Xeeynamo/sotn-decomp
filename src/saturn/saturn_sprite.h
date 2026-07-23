@@ -86,6 +86,12 @@ typedef struct {
 } SaturnSpritePalette1;
 
 typedef struct {
+    u16 countAndFlags;
+    u16 colors[2][16];
+    u16 padding;
+} SaturnSpritePalette2;
+
+typedef struct {
     u16 count;
     u16 colors[10][16];
 } SaturnSpritePalette10;

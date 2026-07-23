@@ -10,8 +10,8 @@ u16 OVL_EXPORT(PrizeDrops)[] = {
     ITEMDROP_KNIGHT_SHIELD,
     ITEMDROP_LIBRARY_CARD,
     ITEMDROP_GREEN_TEA,
-#ifndef VERSION_PSP
-    // Holy Sword is replaced with N Demon Familiar on PSP
+#ifdef VERSION_US
+    // Holy Sword is replaced with N Demon Familiar on PSP and HD
     ITEMDROP_HOLY_SWORD,
 #endif
 };

@@ -29,6 +29,9 @@ static char* alucard_mist_label; // bss
 static char* maria_mist_label;   // bss
 static char* richter_mist_label; // bss
 
+#elif defined(VERSION_HD)
+static char alucard_mist_label[] = "\x9C\x0Eこの壁は霧で抜けられそうだ";
+static char richter_mist_label[] = "\x90\x0Eこの壁は俺には関係無いな";
 #else
 static char alucard_mist_label[] = "\x7C\x0EMist could pass．";
 static char richter_mist_label[] =

@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
+#include <saturn_sprite.h>
 
-extern struct SpriteParts g_WarpRoomSpriteParts;
-extern struct SpriteParts g_WarpSmallRocksSpriteParts;
+extern SaturnSpriteImage g_WarpSpriteBank16Images[];
+extern SaturnSpritePalette2 g_WarpSpriteBank16Palettes;
 
 struct SpriteParts* g_WarpSpriteBank16[] = {
-    &g_WarpRoomSpriteParts,
-    &g_WarpSmallRocksSpriteParts,
+    (struct SpriteParts*)g_WarpSpriteBank16Images,
+    (struct SpriteParts*)&g_WarpSpriteBank16Palettes,
     (struct SpriteParts*)-1,
 };

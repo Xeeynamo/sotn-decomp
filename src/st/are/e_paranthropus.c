@@ -431,7 +431,7 @@ void EntityParanthropus(Entity* self) {
         }
         break;
     case DEATH:
-#ifdef VERSION_PSP
+#if defined(VERSION_PSP) || defined(VERSION_HD)
         if (UnkCollisionFunc3(sensors_ground) & 1) {
             PlaySfxPositional(SFX_SKELETON_DEATH_A);
             ParanthropusSetStep(DEATH_EFFECTS);

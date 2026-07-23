@@ -23,8 +23,19 @@ segments:
         file: warp/obtain
         end: 0x1D80
       - start: 0x1D80
-        type: .text
+        type: c
         file: warp/warpmid
+        end: 0x51E0
+        function_ranges:
+          - [0x1D80, 0x2573]
+          - [0x29A4, 0x2EB7]
+      - start: 0x51E0
+        type: .data
+        file: warp/rockspr
+        end: 0x5224
+      - start: 0x5224
+        type: .data
+        file: warp/roomspr
         end: 0x52A8
       - [0x52A8, .data, warp/locbank]
       - [0x52B4, .data, warp/sprbank]

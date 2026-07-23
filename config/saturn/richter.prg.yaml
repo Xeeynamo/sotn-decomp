@@ -25,66 +25,129 @@ segments:
         function_ranges:
           - [0x1272, 0x1426]
       - start: 0x2CF0
-        type: data
+        type: c
         file: richter
         end: 0x2FD3
+        function_ranges:
+          - [0x2CF0, 0x2FD2]
       - start: 0x2FD4
         type: c
         file: richter
-        end: 0xD3B5
+        end: 0xD40B
         function_ranges:
           - [0xB52A, 0xB5EA]
-      - start: 0xD3B6
-        type: data
-        file: richter
-        end: 0xD40B
       - start: 0xD40C
         type: c
         file: richter
-        end: 0x19D57
+        end: 0x19D6F
         function_ranges:
           - [0xEA0C, 0xEA46]
           - [0x139CE, 0x13B1A]
-          - [0x14A2C, 0x14A4E]
-      - start: 0x19D58
-        type: data
-        file: richter
-        end: 0x19D6F
+          - [0x14978, 0x14A4E]
       - [0x19D70, .data, ric/d54568]
       - start: 0x19D7C
         type: .text
         file: ric/rictail
       - [0x19D9C, .data, ric/gprolog]
       - start: 0x19DA0
-        type: .text
+        type: .data
         file: ric/rictl2
       - [0x19DD0, .data, ric/timers]
       - [0x19E08, .data, ric/sensors]
       - start: 0x19F20
-        type: .text
-        file: ric/rictl3
-      - [0x1AC50, .data, ric/anims]
+        type: .data
+        file: ric/subwdata
+      - start: 0x1A1E4
+        type: .data
+        file: ric/bpdefs
+      - [0x1AC20, .data, ric/anims]
       - start: 0x1B1F8
-        type: .text
-        file: ric/rictl4
-      - [0x1DF40, .data, ric/c2f40]
-      - start: 0x1DF42
-        type: .text
-        file: ric/rictl6
+        type: .data
+        file: ric/hitboxes
+      - start: 0x1B240
+        type: .data
+        file: ric/sprpal1
+      - start: 0x1B5A4
+        type: .data
+        file: ric/sprfrm1
+      - start: 0x1C2EC
+        type: .data
+        file: ric/sprimg1
+      - start: 0x1C5EC
+        type: .data
+        file: ric/sprpkg2
+      - start: 0x1CB04
+        type: .data
+        file: ric/sprpkg3
+        end: 0x1D120
+      - start: 0x1D120
+        type: .data
+        file: ric/sprpkg4
+        end: 0x1D278
+      - start: 0x1D278
+        type: .data
+        file: ric/sprpkg5
+        end: 0x1D334
+      - start: 0x1D334
+        type: .data
+        file: ric/sprpkg6
+        end: 0x1D4DC
+      - start: 0x1D4DC
+        type: .data
+        file: ric/sprpkg7
+        end: 0x1D608
+      - start: 0x1D608
+        type: .data
+        file: ric/sprpkg8
+        end: 0x1DAD4
+      - start: 0x1DAD4
+        type: .data
+        file: ric/sprpkg9
+        end: 0x1DE4C
+      - start: 0x1DE4C
+        type: .data
+        file: ric/sprpkg10
+        end: 0x1DF2C
+      - start: 0x1DF2C
+        type: .data
+        file: ric/sprres
+        end: 0x1DFE8
+      - start: 0x1DFE8
+        type: .data
+        file: ric/gfxloads
+        end: 0x1E5E0
+      - start: 0x1E5E0
+        type: .data
+        file: ric/whipdata
       - [0x1E952, .data, ric/whipdat]
       - start: 0x1E982
-        type: .text
-        file: ric/rictl7
-      - [0x1F118, .data, ric/globdat]
-      - start: 0x1F120
-        type: .text
-        file: ric/rictl8
-      - [0x28748, .data, ric/savevar]
-      - start: 0x28750
-        type: .text
-        file: ric/rictl9
-      - [0x287F0, .data, ric/ptrtbl]
-      - start: 0x28800
-        type: .text
-        file: ric/rictl10
+        type: .data
+        file: ric/vibanim
+      - start: 0x1E9BC
+        type: .data
+        file: ric/subwpfx
+        end: 0x1EA34
+      - start: 0x1EA34
+        type: .data
+        file: ric/hwdata
+        end: 0x1EAB4
+      - start: 0x1EAB4
+        type: .data
+        file: ric/crossdat
+      - start: 0x1F118
+        type: .data
+        file: ric/castmap
+        end: 0x2871C
+      - [0x2871C, .data, ric/mapcmd]
+      - start: 0x2873C
+        type: .data
+        file: ric/mapui
+        end: 0x288BC
+      - start: 0x288BC
+        type: .data
+        file: ric/deathgfx
+        end: 0x29CCC
+      - start: 0x29CCC
+        type: .data
+        file: ric/coffres
         end: 0x2F04B

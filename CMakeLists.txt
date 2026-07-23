@@ -746,6 +746,44 @@ set(SOURCE_FILES_STAGE_NO3
     src/st/no3/water_effects.c
 )
 
+set(SOURCE_FILES_STAGE_MAD
+    src/pc/stages/stage_mad.c
+    src/st/mad/header.c
+    src/st/mad/sprite_banks.c
+    src/st/mad/palette_def.c
+    src/st/mad/layers.c
+    src/st/mad/graphics_banks.c
+    src/st/mad/gen/e_laydef.c
+    src/st/mad/e_init.c
+    src/st/mad/background_block_init.c
+    src/st/mad/e_red_door_tiles.c
+    src/st/mad/e_lock_camera.c
+    src/st/mad/e_breakable.c
+    src/st/mad/st_update.c
+    src/st/mad/collision.c
+    src/st/mad/e_red_door.c
+    src/st/mad/st_common.c
+    src/st/mad/e_collect.c
+    src/st/mad/d_prize_drops.c
+    src/st/mad/e_misc.c
+    src/st/mad/e_particles.c
+    src/st/mad/e_room_fg.c
+    src/st/mad/gen/rooms.c
+    src/st/mad/gen/e_layout.c
+    src/st/mad/stage_data.c
+    src/st/mad/pal.c
+    src/st/mad/tilemaps.c
+    src/st/mad/tiledef_1.c
+    src/st/mad/gen/sprites.c
+    src/st/mad/D8C8.c
+    src/st/mad/e_room_bg.c
+    src/st/mad/create_entity.c
+    src/st/mad/e_stage_name.c
+    src/st/mad/popup.c
+    src/st/mad/prim_helpers.c
+    src/st/mad/bss.c
+)
+
 set(SOURCE_FILES_WEAPON
     src/weapon/w_000.c
     src/weapon/w_002.c
@@ -884,6 +922,7 @@ add_overlay(dre ${SOURCE_FILES_STAGE_DRE})
 add_overlay(st0 ${SOURCE_FILES_STAGE_ST0})
 add_overlay(rwrp ${SOURCE_FILES_STAGE_RWRP})
 add_overlay(no3 ${SOURCE_FILES_STAGE_NO3})
+add_overlay(mad ${SOURCE_FILES_STAGE_MAD})
 
 add_overlay(tt_000 ${SOURCE_FILES_TT_000})
 add_overlay(tt_001 ${SOURCE_FILES_TT_001})

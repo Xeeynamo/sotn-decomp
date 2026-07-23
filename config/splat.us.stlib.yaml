@@ -40,7 +40,8 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, .data, header]
-      - [0x8C, data]
+      - [0x8C, .data, palette_def]
+      - [0x19C, data]
       - [0x520, .data, gen/e_laydef] # layout entries header
       - [0x6C8, .data, e_init]
       - [0x9F8, .data, background_block_init]
