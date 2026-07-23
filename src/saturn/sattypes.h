@@ -369,8 +369,8 @@ void (*func_06064630)();
 void (*GetPlayerSensor)(Collider* col);
 void (*func_06064638)();
 void (*func_0606463c)();
-void (*func_0606464C)();
 void (*func_06064644)();
+void (*func_0606464C)();
 void (*func_06064674)();
 void (*func_06064684)();
 void (*func_06064688)();
@@ -672,8 +672,8 @@ typedef struct {
 } MenuNavigation; /* size=0x4C */
 
 typedef struct {
-    u32 : 32;
-    s32 : 32;
+    s32 displayHP;
+    s32 primIndex1;
     s32 : 32;
     s32 : 32;
     u32 : 32;
@@ -683,7 +683,7 @@ typedef struct {
     u32 : 32;
     u32 unk24;
     s32 : 32;
-    s32 : 32;
+    s32 g_HealingMailTimer;
 } PlayerHud;
 
 typedef struct {
@@ -703,7 +703,7 @@ typedef struct {
     s16 y3;
     s16 : 16;
     u16 drawMode;
-    s32 : 32;
+    struct Primitive* next;
 } Primitive;
 
 typedef struct {
@@ -978,6 +978,7 @@ extern PlayerStatus g_Status;
 extern SubweaponDef g_SubwpnDefs[];
 extern unkGraphicsStruct g_unkGraphicsStruct;
 extern u32 g_GameTimer;
+extern u32 g_Timer;
 extern FgLayer D_8003C708;
 extern s32 D_801375C8;
 extern s32 D_8006BB00;
