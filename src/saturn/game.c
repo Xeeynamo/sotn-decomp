@@ -29,7 +29,7 @@ void func_800F2860(void) {
         D_801375C8++;
         break;
     case 2:
-        if (func_80131F68() == 0) {
+        if (func_80131F68_1() == 0) {
             D_801375C8++;
         }
         break;
@@ -38,12 +38,12 @@ void func_800F2860(void) {
         D_801375C8++;
         break;
     case 4:
-        if (func_80131F68() != 0) {
+        if (func_80131F68_1() != 0) {
             D_801375C8++;
         }
         break;
     case 5:
-        if (func_80131F68() == 0) {
+        if (func_80131F68_1() == 0) {
             D_801375C8++;
         }
         break;
@@ -52,7 +52,7 @@ void func_800F2860(void) {
         D_801375C8 = 0;
         break;
     case 7:
-        if (func_80131F68() == 0) {
+        if (func_80131F68_1() == 0) {
             D_801375C8--;
         }
         break;

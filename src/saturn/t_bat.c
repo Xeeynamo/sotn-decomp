@@ -228,10 +228,10 @@ void SwitchModeInitialize(Entity* self) {
             self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_HAS_PRIMS | FLAG_UNK_20000;
             SetEntityAnimation(self, g_DefaultBatAnimationFrame);
-            self->ext.bat.randomMovementAngle = rand() & 0xFFF;
+            self->ext.bat.randomMovementAngle = MTH_GetRand() & 0xFFF;
             self->ext.bat.targetAngle = 0;
             self->ext.bat.randomMovementScaler = 12;
-            self->ext.bat.frameCounter = rand() & 0xFFF;
+            self->ext.bat.frameCounter = MTH_GetRand() & 0xFFF;
             self->ext.bat.angleStep = 0x20;
             self->step++;
             break;
@@ -276,7 +276,7 @@ void SwitchModeInitialize(Entity* self) {
                         PLAYER.posY.i.hi + self->ext.bat.cameraY;
                 }
                 self->posX.i.hi = PLAYER.facingLeft ? 0x180 : -0x80;
-                self->posY.i.hi = rand() & 0xFF;
+                self->posY.i.hi = MTH_GetRand() & 0xFF;
             }
             self->ext.bat.hasShotFireball = false;
             self->step++;
@@ -289,7 +289,7 @@ void SwitchModeInitialize(Entity* self) {
             self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_HAS_PRIMS | FLAG_UNK_20000;
             SetEntityAnimation(self, g_DefaultBatAnimationFrame);
-            self->ext.bat.frameCounter = rand() & 0xFFF;
+            self->ext.bat.frameCounter = MTH_GetRand() & 0xFFF;
             self->step++;
             break;
         case 0xD2:
@@ -693,7 +693,8 @@ void UpdateBatAttackMode(Entity* self) {
             self->step++;
             s_BatPathingPoints[self->ext.bat.batIndex][0].x =
                 PLAYER.facingLeft ? -0x80 : 0x180;
-            s_BatPathingPoints[self->ext.bat.batIndex][0].y = rand() & 0xFF;
+            s_BatPathingPoints[self->ext.bat.batIndex][0].y =
+                MTH_GetRand() & 0xFF;
             SetEntityAnimation(self, g_DefaultBatAnimationFrame);
         }
         break;
@@ -912,12 +913,12 @@ void ProcessSfxState(Entity* entity) {
         entity->step++;
         break;
     case 3:
-        if (func_80131F68()) {
+        if (func_80131F68_2()) {
             entity->step++;
         }
         break;
     case 4:
-        if (!func_80131F68()) {
+        if (!func_80131F68_2()) {
             entity->step++;
         }
         break;
