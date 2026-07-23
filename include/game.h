@@ -2093,26 +2093,6 @@ typedef struct {
     /* 0x8009748C */ f32 shoveY;
 } unkGraphicsStruct;
 
-typedef struct {
-    RECT D_800ACD80;
-    RECT D_800ACD88;
-    RECT D_800ACD90;
-    RECT D_800ACD98;
-    RECT D_800ACDA0;
-    RECT D_800ACDA8;
-    RECT D_800ACDB0;
-    RECT D_800ACDB8;
-    RECT D_800ACDC0;
-    RECT D_800ACDC8;
-    RECT D_800ACDD0;
-    RECT D_800ACDD8;
-    RECT D_800ACDE0;
-    RECT D_800ACDE8;
-#ifdef VERSION_US
-    RECT D_800ACDF0;
-#endif
-} Vram;
-
 // Used in dra/4A538, dra_psp/3250, game.h
 typedef struct {
     /* 0x00 */ u_long* desc;
@@ -2141,7 +2121,12 @@ extern GAME_IMPORT s32 D_8003C738;
 extern GAME_IMPORT s32 D_8003C73C;
 extern GAME_IMPORT u32 D_8003C744;
 extern GAME_IMPORT u32 g_RoomCount;
-extern GAME_IMPORT Vram g_Vram;
+#ifdef VERSION_US
+#define VRAM_RECT_COUNT 15
+#else
+#define VRAM_RECT_COUNT 14
+#endif
+extern GAME_IMPORT RECT g_Vram[VRAM_RECT_COUNT];
 extern GAME_IMPORT GameApi g_api;
 extern GAME_IMPORT bool g_PauseAllowed;
 extern GAME_IMPORT u32 g_GameTimer; // Increases when unpaused
