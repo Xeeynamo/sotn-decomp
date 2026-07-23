@@ -4,11 +4,13 @@
 #include "t_bat/batanim.h"
 #include "t_bat/batbss.h"
 #include "t_bat/batevent.h"
-#include "t_bat/batgfx.h"
 #include "t_bat/batstat.h"
+#include <saturn_sprite.h>
 
 void PlaySfx(s32 sfxId);
 
+extern SaturnSpriteImage g_BatTextureSlices[25];
+extern SaturnSpriteResource g_BatTextureResource;
 extern struct SpriteParts* g_ServantSpriteParts[]; // 0x060D19FC
 extern s32 g_CutsceneHasControl;
 
@@ -153,8 +155,8 @@ void CreateAdditionalBats(s32 amount, s32 entityId) {
         } else {
             DestroyEntity(entity);
             entity->unk0 = func_0600B344(
-                g_BatTextureResource.vramX, g_BatTextureResource.vramY,
-                g_BatTextureSlices, 1);
+                g_BatTextureResource.allocationIndex,
+                g_BatTextureResource.flags, g_BatTextureSlices, 1);
             if (entity->unk0 == NULL) {
                 DestroyEntity(entity);
                 return;
@@ -209,8 +211,8 @@ void SwitchModeInitialize(Entity* self) {
         switch (self->entityId) {
         case 0xD1:
             self->unk0 = func_0600B344(
-                g_BatTextureResource.vramX, g_BatTextureResource.vramY,
-                g_BatTextureSlices, 1);
+                g_BatTextureResource.allocationIndex,
+                g_BatTextureResource.flags, g_BatTextureSlices, 1);
             if (self->unk0 == NULL) {
                 DestroyEntity(self);
                 return;

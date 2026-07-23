@@ -44,7 +44,6 @@ extern struct Unk060645D0_1* DAT_060645D0;
 s32* DAT_060485e0;
 struct Unk0605d6c0* DAT_0605d6c0[];
 u16 DAT_060086d4;
-extern u32 g_Timer; // 0x0605CD7C
 s32 PTR_FUN_060086cc(s32, s32, s32);
 void func_0600871C(s32, UNK_0605c680*, s32);
 

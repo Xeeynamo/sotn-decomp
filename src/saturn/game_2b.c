@@ -1350,7 +1350,6 @@ void func_0607BE38(void) {
 
 extern s32 d_0605AEAC;
 extern u16 DAT_0605aec0[][2];
-extern u32 g_Timer;
 extern s32 SpMstCmdPos;
 
 void func_0607BED0(void) {

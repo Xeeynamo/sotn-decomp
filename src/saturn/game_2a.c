@@ -5,7 +5,6 @@
 #include "lib/scl.h"
 #include <saturn_sprite.h>
 
-void PlaySfx(s32 sfxId);
 void UpdateCapePalette(void);
 
 extern u16 D_8003C730;
@@ -404,7 +403,7 @@ void SetXYWH(Primitive* prim, s32 x, s32 y, s32 w, s32 h) {
     prim->y2 = prim->y3 = y + h - 1;
 }
 
-void SetXW(Primitive* prim, s32 x, s32 w) {
+inline void SetXW(Primitive* prim, s32 x, s32 w) {
     prim->x0 = prim->x3 = x;
     prim->x1 = prim->x2 = x + w - 1;
 }
@@ -435,11 +434,236 @@ void func_060771D4(Primitive* prim, s32 arg1) {
     prim->unk6 = prim->unk6 & 0x8FFF | 0x4000;
 }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6077260, func_06077260);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6077354, func_06077354);
+void func_06077260(Primitive* prim) {
+    u32 uVar4;
+    u16 sVar6;
+    u16 sVar7;
 
-// _set_life_num
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6077764, func_06077764);
+    uVar4 = g_GameTimer;
+    if (g_Status.mp == g_Status.mpMax) {
+        if (uVar4 & 0x10) {
+            sVar7 = uVar4 % 0x10;
+        } else {
+            sVar7 = ~uVar4 % 0x10;
+        }
+
+        prim->x1 = prim->x2 = prim->x0 + 61;
+
+        sVar6 = sVar7 + 1;
+        if (sVar6 > 0xE) {
+            sVar6 = 0xE;
+        }
+    } else {
+        prim->x1 = prim->x2 = prim->x0 + (g_Status.mp * 61) / g_Status.mpMax;
+        sVar6 = 0xF;
+    }
+    prim->unk6 = unkFunc(DAT_06086388->flags + 11);
+    prim->unk6 = sVar6 + prim->unk6 & 0x8FFF | 0x4000;
+}
+
+extern SaturnSpriteResource g_SaturnSharedSpriteBank4Resource;
+extern u8 g_HudSpriteU[];
+extern u8 g_HudSpriteV[];
+extern u8 g_HudSpriteWidth[];
+
+void func_06077354(Primitive* prim) {
+    u32 digit;
+    s32 i;
+    s32 leading_zeros;
+    u32 uVar13;
+    SubweaponDef subwpn;
+    u16* ptr;
+    u32 hearts;
+
+    i = 10;
+    hearts = g_Status.hearts;
+    if (hearts >= 1000) {
+        leading_zeros = 0;
+    } else if (hearts >= 100) {
+        leading_zeros = 1;
+    } else if (hearts >= 10) {
+        leading_zeros = 2;
+    } else {
+        leading_zeros = 3;
+        i = 11;
+    }
+
+    if (func_800FE3C4(&subwpn, 0, false)) {
+        if (g_Timer & 0x2) {
+            uVar13 = DAT_06086388->flags + 9;
+        } else {
+            uVar13 = g_SaturnSharedSpriteBank4Resource.flags + 8;
+        }
+    } else {
+        uVar13 = DAT_06086388->flags + 9;
+    }
+
+    digit = (hearts / 1000) % 10;
+    if (digit == 0) {
+        digit = 10;
+    }
+    digit += g_SaturnSharedSpriteBank4Resource.allocationIndex + 3;
+    ptr = DAT_0605aec0[digit];
+    prim->unk8 = ptr[0];
+    prim->unkA = ptr[1];
+    prim->unk6 = unkFunc(uVar13);
+    prim->unk6 = prim->unk6 & 0x8FFF | 0x4000;
+    if (leading_zeros != 0) {
+        leading_zeros--;
+        prim->drawMode |= 0x8;
+    } else {
+        prim->drawMode &= 0xFFF7;
+        SetXW(prim, g_HudSpriteU[i], g_HudSpriteWidth[i]);
+        leading_zeros = 0;
+        i++;
+    }
+    prim = prim->next;
+    
+    digit = (hearts / 100) % 10;
+    if (digit == 0) {
+        digit = 10;
+    }
+    digit += g_SaturnSharedSpriteBank4Resource.allocationIndex + 3;
+    ptr = DAT_0605aec0[digit];
+    prim->unk8 = ptr[0];
+    prim->unkA = ptr[1];
+    prim->unk6 = unkFunc(uVar13);
+    prim->unk6 = prim->unk6 & 0x8FFF | 0x4000;
+    if (leading_zeros != 0) {
+        leading_zeros--;
+        prim->drawMode |= 0x8;
+    } else {
+        prim->drawMode &= 0xFFF7;
+        SetXW(prim, g_HudSpriteU[i], g_HudSpriteWidth[i]);
+        leading_zeros = 0;
+        i++;
+    }
+    prim = prim->next;
+
+    digit = (hearts / 10) % 10;
+    if (digit == 0) {
+        digit = 10;
+    }
+    digit += g_SaturnSharedSpriteBank4Resource.allocationIndex + 3;
+    ptr = DAT_0605aec0[digit];
+    prim->unk8 = ptr[0];
+    prim->unkA = ptr[1];
+    prim->unk6 = unkFunc(uVar13);
+    prim->unk6 = prim->unk6 & 0x8FFF | 0x4000;
+    if (leading_zeros != 0) {
+        prim->drawMode |= 0x8;
+    } else {
+        prim->drawMode &= 0xFFF7;
+        SetXW(prim, g_HudSpriteU[i], g_HudSpriteWidth[i]);
+        i++;
+    }
+    prim = prim->next;
+    
+    digit = hearts % 10;
+    if (digit == 0) {
+        digit = 10;
+    }
+    digit += g_SaturnSharedSpriteBank4Resource.allocationIndex + 3;
+    ptr = DAT_0605aec0[digit];
+    prim->unk8 = ptr[0];
+    prim->unkA = ptr[1];
+    prim->unk6 = unkFunc(uVar13);
+    prim->unk6 = prim->unk6 & 0x8FFF | 0x4000;
+    SetXW(prim, g_HudSpriteU[i], g_HudSpriteWidth[i]);
+}
+
+// original name: set_life_num
+void SetLifeNum(Primitive* prim) {
+    s32 digit;
+    s32 x;
+    s32 leading_zeros;
+    u32 displayHP;
+    u32 uVar11;
+    u16* ptr;
+    
+    displayHP = g_PlayerHud.displayHP;
+    if (displayHP >= 1000) {
+        leading_zeros = 0;
+        x = g_HudSpriteU[6];
+    } else if (displayHP >= 100) {
+        leading_zeros = 1;
+        x = g_HudSpriteU[7];
+    } else if (displayHP >= 10) {
+        leading_zeros = 2;
+        x = g_HudSpriteU[8];
+    } else {
+        leading_zeros = 3;
+        x = g_HudSpriteU[9];
+    }
+    if (g_PlayerHud.displayHP == g_Status.hpMax) {
+        uVar11 = DAT_06086388->flags + 2;
+    } else if (g_PlayerHud.displayHP <= g_Status.hpMax >> 2) {
+        uVar11 = DAT_06086388->flags + 10;
+    } else {
+        uVar11 = DAT_06086388->flags;
+    }
+    digit = (displayHP / 1000) % 10;
+    digit += DAT_06086388->allocationIndex + 10;
+    ptr = DAT_0605aec0[digit];
+    prim->unk8 = ptr[0];
+    prim->unkA = ptr[1];
+    prim->unk6 = unkFunc(uVar11);
+    prim->unk6 = prim->unk6 & 0x8FFF | 0x4000;
+    if (leading_zeros != 0) {
+        leading_zeros--;
+        prim->drawMode |= 0x8;
+    } else {
+        prim->drawMode &= 0xFFF7;
+        prim->x0 = x;
+        prim->y0 = g_HudSpriteV[6];
+        leading_zeros = 0;
+        x += 7;
+    }
+    prim = prim->next;
+    digit = (displayHP / 100) % 10;
+    digit += DAT_06086388->allocationIndex + 10;
+    ptr = DAT_0605aec0[digit];
+    prim->unk8 = ptr[0];
+    prim->unkA = ptr[1];
+    prim->unk6 = unkFunc(uVar11);
+    prim->unk6 = prim->unk6 & 0x8FFF | 0x4000;
+    if (leading_zeros != 0) {
+        leading_zeros--;
+        prim->drawMode |= 0x8;
+    } else {
+        prim->drawMode &= 0xFFF7;
+        prim->x0 = x;
+        prim->y0 = g_HudSpriteV[6];
+        leading_zeros = 0;
+        x += 7;
+    }
+    prim = prim->next;
+    digit = (displayHP / 10) % 10;
+    digit += DAT_06086388->allocationIndex + 10;
+    ptr = DAT_0605aec0[digit];
+    prim->unk8 = ptr[0];
+    prim->unkA = ptr[1];
+    prim->unk6 = unkFunc(uVar11);
+    prim->unk6 = prim->unk6 & 0x8FFF | 0x4000;
+    if (leading_zeros != 0) {
+        prim->drawMode |= 0x8;
+    } else {
+        prim->drawMode &= 0xFFF7;
+        prim->x0 = x;
+        prim->y0 = g_HudSpriteV[6];
+        x += 7;
+    }
+    prim = prim->next;
+    digit = displayHP % 10;
+    digit += DAT_06086388->allocationIndex + 10;
+    ptr = DAT_0605aec0[digit];
+    prim->unk8 = ptr[0];
+    prim->unkA = ptr[1];
+    prim->unk6 = unkFunc(uVar11);
+    prim->unk6 = prim->unk6 & 0x8FFF | 0x4000;
+    prim->x0 = x;
+    prim->y0 = g_HudSpriteV[6];
+}
 
 // _status_disp_init
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6077B20, func_06077B20);
