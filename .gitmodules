@@ -27,3 +27,6 @@
 [submodule "tools/psyz"]
 	path = tools/psyz
 	url = https://github.com/Xeeynamo/psyz
+[submodule "tools/saturn/sound-player"]
+	path = tools/saturn/sound-player
+	url = https://github.com/sozud/saturn-sound-player.git
