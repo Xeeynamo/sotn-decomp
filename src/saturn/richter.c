@@ -165,7 +165,7 @@ static void func_80159C04(void) {
 }
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A7310, func_060A7310);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A7B78, func_060A7B78);
-INCLUDE_ASM("asm/saturn/richter/data", d60A7CF0, d_060A7CF0);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A7CF0, RicStepDead);
 extern u16 D_80155528[];
 extern u32 g_SubwpnCrashTimer;
 void RicStepStandInAir(void) {
@@ -823,7 +823,7 @@ typedef struct {
     u16 uv1;
 } RicUvPair;
 
-extern u16 D_060C2F40;
+extern u16 g_RichterSpritePackage3AllocationIndex;
 extern u8 D_060BF1A4[];
 extern RicUvPair D_0605AEC0[];
 
@@ -850,7 +850,8 @@ s32 func_8015FDB0(RicPrimitive* prim, s16 posX, s16 posY) {
     prim->x1 = posX + xOffset;
     prim->y1 = posY + offset;
 
-    uvAnim = &D_0605AEC0[D_060C2F40 + D_060BF1A4[frame]];
+    uvAnim =
+        &D_0605AEC0[g_RichterSpritePackage3AllocationIndex + D_060BF1A4[frame]];
     prim->uv0 = uvAnim->uv0;
     prim->uv1 = uvAnim->uv1;
 
@@ -1129,7 +1130,6 @@ const u16 pad_60B151E = 0; // file split!
 
 // RicEntitySubwpnReboundStone
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B1520, func_060B1520);
-INCLUDE_ASM_NO_ALIGN("asm/saturn/richter/data", d60B23B6, d_060B23B6);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B240C, func_060B240C);
 
 // RicEntitySubwpnAgunea
@@ -1337,8 +1337,7 @@ const u16 pad_60B9666 = 0x0009; // nop
 // RicEntitySubwpnHolyWaterBreakGlass
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B9668, func_060B9668);
 
-// bad split, part of previous function
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B9A2C, func_060B9A2C);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B9978, func_060B9978);
 
 // RicEntityCrashHydroStorm
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B9A50, func_060B9A50);
@@ -1595,4 +1594,4 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BD768, func_060BD768);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BDADC, func_060BDADC);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BDFD4, func_060BDFD4);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BE110, func_060BE110);
-INCLUDE_ASM("asm/saturn/richter/data", d60BED58, d_060BED58);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BE198, func_060BE198);

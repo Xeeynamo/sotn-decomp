@@ -127,4 +127,28 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602CF8C, func_0602CF8C);
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602D008, func_0602D008);
 
-INCLUDE_ASM("asm/saturn/zero/data", d602D3F4, d_0602D3F4);
+Uint32 PER_GetStatusRegister(void);
+void PER_SetStatusRegister(register Uint32 status);
+
+Uint32 PER_GetInterruptMask(void) {
+    Uint32 interruptMask = (PER_GetStatusRegister() & 0xF0) >> 4;
+    return interruptMask;
+}
+
+void PER_SetInterruptMask(register Uint32 interruptMask) {
+    Uint32 status = PER_GetStatusRegister();
+
+    status &= ~0xF0;
+    status |= interruptMask << 4;
+    PER_SetStatusRegister(status);
+}
+
+void PER_SetStatusRegister(register Uint32 status) {
+    __asm__ volatile("ldc\t%0, sr" : : "r"(status));
+}
+
+Uint32 PER_GetStatusRegister(void) {
+    Uint32 status;
+    __asm__ volatile("stc\tsr, %0" : "=r"(status));
+    return status;
+}

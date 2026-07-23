@@ -26,30 +26,19 @@ segments:
           - [0x1384, 0x141E]
           - [0x1A94, 0x2D3A]
 
-      # problem
       - start: 0x1be48
-        type: data
-        file: alucard
-        end: 0x1c377
-
-      # problem
-      - start: 0x1c378
-        type: data
-        file: alucard
-        end: 0x1FD9F
-
-      - start: 0x1FDA0
         type: c
         file: alucard
         end: 0x22F9F
+        function_ranges:
+          - [0x1BE48, 0x1C373]
 
-      # problem
       - start: 0x22FA0
-        type: data
+        type: c
         file: alucard
-        end: 0x234b5
+        end: 0x234b7
 
-      - start: 0x234b6
+      - start: 0x234b8
         type: data
         file: alucard
         end: 0x2947f

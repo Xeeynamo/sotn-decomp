@@ -192,21 +192,37 @@ snd_srcs = [
     'src/saturn/ric/gprolog.c',
     'src/saturn/ric/timers.c',
     'src/saturn/ric/sensors.c',
+    'src/saturn/ric/subwdata.c',
+    'src/saturn/ric/bpdefs.c',
     'src/saturn/ric/anims.c',
-    'src/saturn/ric/c2f40.c',
+    'src/saturn/ric/hitboxes.c',
+    'src/saturn/ric/sprpal1.c',
+    'src/saturn/ric/sprfrm1.c',
+    'src/saturn/ric/sprimg1.c',
+    'src/saturn/ric/sprpkg2.c',
+    'src/saturn/ric/sprpkg3.c',
+    'src/saturn/ric/sprpkg4.c',
+    'src/saturn/ric/sprpkg5.c',
+    'src/saturn/ric/sprpkg6.c',
+    'src/saturn/ric/sprpkg7.c',
+    'src/saturn/ric/sprpkg8.c',
+    'src/saturn/ric/sprpkg9.c',
+    'src/saturn/ric/sprpkg10.c',
+    'src/saturn/ric/sprres.c',
+    'src/saturn/ric/gfxloads.c',
+    'src/saturn/ric/whipdata.c',
     'src/saturn/ric/whipdat.c',
-    'src/saturn/ric/globdat.c',
-    'src/saturn/ric/savevar.c',
-    'src/saturn/ric/ptrtbl.c',
+    'src/saturn/ric/vibanim.c',
+    'src/saturn/ric/subwpfx.c',
+    'src/saturn/ric/hwdata.c',
+    'src/saturn/ric/crossdat.c',
+    'src/saturn/ric/castmap.c',
+    'src/saturn/ric/mapcmd.c',
+    'src/saturn/ric/mapui.c',
+    'src/saturn/ric/deathgfx.c',
+    'src/saturn/ric/coffres.c',
     'src/saturn/ric/rictail.c',
     'src/saturn/ric/rictl2.c',
-    'src/saturn/ric/rictl3.c',
-    'src/saturn/ric/rictl4.c',
-    'src/saturn/ric/rictl6.c',
-    'src/saturn/ric/rictl7.c',
-    'src/saturn/ric/rictl8.c',
-    'src/saturn/ric/rictl9.c',
-    'src/saturn/ric/rictl10.c',
     'src/saturn/stage_02.c',
     'src/saturn/stage_02/sthead.c',
     'src/saturn/stage_02/stprolo.c',
@@ -320,6 +336,8 @@ snd_srcs = [
     'src/saturn/warp.c',
     'src/saturn/warp/obtain.c',
     'src/saturn/warp/warpmid.c',
+    'src/saturn/warp/rockspr.c',
+    'src/saturn/warp/roomspr.c',
     'src/saturn/warp/header.c',
     'src/saturn/warp/locbank.c',
     'src/saturn/warp/sprbank.c',
@@ -406,6 +424,15 @@ lib_srcs = [
     'src/saturn/lib/sys_tail.c',
 ]
 
+asm_srcs = [
+    'src/saturn/lib/mth/mth_fixd.s',
+    'src/saturn/lib/mth/mth_mtrx.s',
+    'src/saturn/lib/mth/mth_ps2d.s',
+    'src/saturn/lib/mth/mth_tri.s',
+    'src/saturn/lib/spr/spr_2a.s',
+    'src/saturn/lib/sys/sys_mac1.s',
+]
+
 # O0 srcs
 add_srcs(lib_srcs, "build/saturn", "O0")
 
@@ -425,6 +452,18 @@ def elf_srcs(srcs, output_dir):
 
 elf_srcs(snd_srcs, "build/saturn")
 elf_srcs(lib_srcs, "build/saturn")
+
+def add_asm_srcs(srcs, output_dir):
+    for src in srcs:
+        filename_without_extension = os.path.splitext(os.path.basename(src))[0]
+        relative_path = os.path.relpath(src, 'src/saturn')
+        obj_dir = os.path.join(output_dir, os.path.dirname(relative_path))
+        cof_name = os.path.join(obj_dir, f"{filename_without_extension}.cof")
+        obj_name = os.path.join(obj_dir, f"{filename_without_extension}.o")
+        ninja.build(cof_name, 'as', inputs=[src])
+        ninja.build(obj_name, 'coff2elf', inputs=[cof_name])
+
+add_asm_srcs(asm_srcs, "build/saturn")
 
 def link_objs(srcs, output_dir):
     for src in srcs:
@@ -629,21 +668,37 @@ multi_objs = {
         'build/saturn/ric/gprolog.o',
         'build/saturn/ric/timers.o',
         'build/saturn/ric/sensors.o',
+        'build/saturn/ric/subwdata.o',
+        'build/saturn/ric/bpdefs.o',
         'build/saturn/ric/anims.o',
-        'build/saturn/ric/c2f40.o',
+        'build/saturn/ric/hitboxes.o',
+        'build/saturn/ric/sprpal1.o',
+        'build/saturn/ric/sprfrm1.o',
+        'build/saturn/ric/sprimg1.o',
+        'build/saturn/ric/sprpkg2.o',
+        'build/saturn/ric/sprpkg3.o',
+        'build/saturn/ric/sprpkg4.o',
+        'build/saturn/ric/sprpkg5.o',
+        'build/saturn/ric/sprpkg6.o',
+        'build/saturn/ric/sprpkg7.o',
+        'build/saturn/ric/sprpkg8.o',
+        'build/saturn/ric/sprpkg9.o',
+        'build/saturn/ric/sprpkg10.o',
+        'build/saturn/ric/sprres.o',
+        'build/saturn/ric/gfxloads.o',
+        'build/saturn/ric/whipdata.o',
         'build/saturn/ric/whipdat.o',
-        'build/saturn/ric/globdat.o',
-        'build/saturn/ric/savevar.o',
-        'build/saturn/ric/ptrtbl.o',
+        'build/saturn/ric/vibanim.o',
+        'build/saturn/ric/subwpfx.o',
+        'build/saturn/ric/hwdata.o',
+        'build/saturn/ric/crossdat.o',
+        'build/saturn/ric/castmap.o',
+        'build/saturn/ric/mapcmd.o',
+        'build/saturn/ric/mapui.o',
+        'build/saturn/ric/deathgfx.o',
+        'build/saturn/ric/coffres.o',
         'build/saturn/ric/rictail.o',
         'build/saturn/ric/rictl2.o',
-        'build/saturn/ric/rictl3.o',
-        'build/saturn/ric/rictl4.o',
-        'build/saturn/ric/rictl6.o',
-        'build/saturn/ric/rictl7.o',
-        'build/saturn/ric/rictl8.o',
-        'build/saturn/ric/rictl9.o',
-        'build/saturn/ric/rictl10.o',
     ],
     'build/saturn/game.o' : [
         'build/saturn/game/header.o',
@@ -682,6 +737,8 @@ multi_objs = {
     'build/saturn/warp.o' : [
         'build/saturn/warp/obtain.o',
         'build/saturn/warp/warpmid.o',
+        'build/saturn/warp/rockspr.o',
+        'build/saturn/warp/roomspr.o',
         'build/saturn/warp/header.o',
         'build/saturn/warp/locbank.o',
         'build/saturn/warp/sprbank.o',
@@ -717,6 +774,10 @@ multi_objs = {
         'build/saturn/lib/dma/dma_scu0.o',
         'build/saturn/lib/dma/dma_cpu0.o',
         'build/saturn/lib/gfs.o',
+        'build/saturn/lib/mth/mth_fixd.o',
+        'build/saturn/lib/mth/mth_mtrx.o',
+        'build/saturn/lib/mth/mth_ps2d.o',
+        'build/saturn/lib/mth/mth_tri.o',
         'build/saturn/lib/mth.o',
         'build/saturn/lib/int.o',
         'build/saturn/lib/per.o',
@@ -724,6 +785,8 @@ multi_objs = {
         'build/saturn/lib/spr/spr_1c.o',
         'build/saturn/lib/spr/spr_2c.o',
         'build/saturn/lib/spr/spr_slv.o',
+        'build/saturn/lib/spr/spr_2a.o',
+        'build/saturn/lib/sys/sys_mac1.o',
         'build/saturn/lib/sys.o',
         'build/saturn/lib/sys_bss.o',
         'build/saturn/zero/snddata.o',
