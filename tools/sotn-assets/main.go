@@ -231,6 +231,11 @@ func main() {
 		Short:        "Generate a progress report for https://decomp.dev/Xeeynamo/sotn-decomp",
 		SilenceUsage: true,
 		Args: func(cmd *cobra.Command, args []string) error {
+			// saturn bypasses getVersionFromArgs, which only knows PSX versions.
+			if len(args) > 0 && args[0] == saturnKind {
+				cmd.SetContext(context.WithValue(cmd.Context(), "version", saturnKind))
+				return nil
+			}
 			version, _, err := getVersionFromArgs(args)
 			if err != nil {
 				return err
@@ -240,6 +245,9 @@ func main() {
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			version := cmd.Context().Value("version").(string)
+			if version == saturnKind {
+				return handleSaturnReport()
+			}
 			return handleObjdiffReport(version)
 		},
 	})

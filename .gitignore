@@ -9,6 +9,7 @@ asm/
 build/
 release/
 expected/
+rpt/
 disks/
 nonmatchings/
 .vscode/settings.json
