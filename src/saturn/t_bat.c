@@ -193,10 +193,10 @@ void UpdatePrimitives(Entity* self, s32 frameIndex) {
     u16* ptr;
     SaturnSpriteImage* image;
     s32 index;
-    
+
     prim = &g_PrimBuf[self->primIndex];
     if (frameIndex == 0) {
-        prim->drawMode = 0x8;
+        prim->drawMode = DRAW_HIDE;
         return;
     }
     index = frameIndex - 1;
@@ -210,28 +210,33 @@ void UpdatePrimitives(Entity* self, s32 frameIndex) {
     switch (frameIndex) {
     case 1:
         image = &g_BatTextureResource.images[22];
-        prim->unk8 = DAT_0605aec0[g_BatTextureResource.allocationIndex][0] + image->characterOffsetUnits;
-        prim->unkA = (image->storedWidth >> 2) << 8 | (image->storedHeight) << 1;
+        prim->unk8 = DAT_0605aec0[g_BatTextureResource.allocationIndex][0] +
+                     image->characterOffsetUnits;
+        prim->unkA =
+            (image->storedWidth >> 2) << 8 | (image->storedHeight) << 1;
         prim->unk6 = unkFunc(g_BatTextureResource.flags + 3);
         break;
     case 2:
         image = &g_BatTextureResource.images[23];
-        prim->unk8 = DAT_0605aec0[g_BatTextureResource.allocationIndex][0] + image->characterOffsetUnits;
-        prim->unkA = (image->storedWidth >> 2) << 8 | (image->storedHeight) << 1;
+        prim->unk8 = DAT_0605aec0[g_BatTextureResource.allocationIndex][0] +
+                     image->characterOffsetUnits;
+        prim->unkA =
+            (image->storedWidth >> 2) << 8 | (image->storedHeight) << 1;
         prim->unk6 = unkFunc(g_BatTextureResource.flags + 3);
         break;
     default:
-        ptr = DAT_0605aec0[g_SaturnSharedSpriteBank0Resource.allocationIndex + 7];
+        ptr =
+            DAT_0605aec0[g_SaturnSharedSpriteBank0Resource.allocationIndex + 7];
         prim->unk8 = ptr[0];
         prim->unkA = ptr[1];
         prim->unk6 = unkFunc(g_SaturnSharedSpriteBank0Resource.flags + 1);
         break;
     }
-    
+
     prim->x0 = x - g_BatSpriteData[index].x;
     prim->y0 = y - g_BatSpriteData[index].y;
     prim->priority = self->zPriority + 1;
-    prim->drawMode = 0x102;
+    prim->drawMode = DRAW_UNK_100 | DRAW_UNK02;
 }
 
 // SAT: func_060CF5F4
