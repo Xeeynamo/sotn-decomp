@@ -37,21 +37,21 @@ void func_06066B74(Primitive* prim0, Primitive* prim1, Primitive* prim2) {
     prim0->unk6 = unkFunc(g_SaturnSharedSpriteBank12Resource.flags + 1);
     prim0->unk4 = prim0->unk4 & 0xFFC7;
     prim0->unk6 = prim0->unk6 & 0x8FFF | 0x4000;
-    prim0->unk2 = 0x1C0;
+    prim0->priority = 0x1C0;
     prim0->drawMode = DRAW_HIDE;
 
     prim1->type = 0x1004;
     prim1->unk4 = 0x4C0;
     prim1->unk6 = unkFunc(g_SaturnSharedSpriteBank13Resource.flags + 3) + 1;
     prim1->unk6 = prim1->unk6 & 0x8FFF | 0x4000;
-    prim1->unk2 = 0x1BE;
+    prim1->priority = 0x1BE;
     prim1->drawMode = DRAW_HIDE;
 
     prim2->type = 0x1005;
     prim2->unk4 = 0x4C0;
     prim2->unk6 = unkFunc(g_SaturnSharedSpriteBank13Resource.flags + 3);
     prim2->unk6 = prim2->unk6 & 0x8FFF | 0x4000;
-    prim2->unk2 = 0x1BF;
+    prim2->priority = 0x1BF;
     prim2->drawMode = DRAW_HIDE;
 }
 
