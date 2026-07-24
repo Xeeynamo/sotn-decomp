@@ -410,6 +410,7 @@ _g_EntityNoopEntry = 0x06044348;
 _g_EntitySpriteBank15 = 0x06044350;
 _g_Stage02SpriteBank15 = 0x06044350;
 _g_Stage02BreakableFrameData0 = 0x0604501C;
+_g_SaturnSharedSpriteBank0Resource = 0x060457F0;
 _g_EntitySpriteBank00 = 0x060457F0;
 _g_Stage02SpriteBank00 = 0x060457F0;
 _g_EntitySpriteBank01 = 0x06045FA0;
