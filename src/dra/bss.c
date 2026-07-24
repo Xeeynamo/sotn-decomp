@@ -169,8 +169,15 @@ u16 g_SfxScriptVolumeCopy[NUM_CH];
 s8* g_CurrentSfxScriptCopy[NUM_CH];
 u8 g_SeqIsPlaying;
 STATIC_PAD_BSS(3);
-SpuVoiceAttr* D_801390C8;
-SpuVoiceAttr* D_801390CC;
+#ifdef BUG_UB
+SpuVoiceAttr D_801390C8_;
+SpuVoiceAttr* D_801390C8 = &D_801390C8_;
+SpuVoiceAttr D_801390CC_;
+SpuVoiceAttr* D_801390CC = &D_801390CC_;
+#else
+SpuVoiceAttr* D_801390C8; // on PSX it points to 0x80000000 (aka NULL)
+SpuVoiceAttr* D_801390CC; // on PSX it points to 0x80000000 (aka NULL)
+#endif
 STATIC_PAD_BSS(4);
 GpuBuffer* g_BackBuffer;
 u8 D_801390D8;
