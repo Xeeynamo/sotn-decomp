@@ -23,15 +23,11 @@ u8 g_Stage02OpaquePuffAnimType1[32] = {
 
 Stage02OpaquePuffConfig g_Stage02OpaquePuffConfigs[4] = {
     {&g_SaturnSharedSpriteBank7Resource, g_SaturnSharedOpaquePuffFrames0, 0, 0,
-     0x30,
-     g_Stage02OpaquePuffAnimType0},
+     0x30, g_Stage02OpaquePuffAnimType0},
     {&g_SaturnSharedSpriteBank9Resource, g_SaturnSharedOpaquePuffFrames1, 0, 0,
-     0,
-     g_Stage02OpaquePuffAnimType1},
+     0, g_Stage02OpaquePuffAnimType1},
     {&g_SaturnSharedSpriteBank9Resource, g_SaturnSharedOpaquePuffFrames1, 3, 0,
-     0,
-     g_Stage02OpaquePuffAnimType1},
+     0, g_Stage02OpaquePuffAnimType1},
     {&g_SaturnSharedSpriteBank7Resource, g_SaturnSharedOpaquePuffFrames0, 4, 0,
-     0x30,
-     g_Stage02OpaquePuffAnimType0},
+     0x30, g_Stage02OpaquePuffAnimType0},
 };

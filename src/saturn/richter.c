@@ -202,7 +202,7 @@ checkVelocity:
 void RicStepEnableFlameWhip(void) {
     if (PLAYER.animCurFrame == 181 && PLAYER.poseTimer == 1) {
         RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_35, 0);
-        PlaySfx(0x62F);
+        PlaySfx(SFX_WEAPON_APPEAR);
     }
 
     if (PLAYER.poseTimer < 0) {
@@ -481,7 +481,7 @@ void RicSetHighJump(void) {
     RicSetAnimation(ric_anim_high_jump);
     func_8015CC28();
     RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_HIGH_JUMP, 0);
-    PlaySfx(0x712);
+    PlaySfx(SFX_UNUSED_712);
     g_Player.timers[PL_T_12] = 4;
     if (g_Player.unk72) {
         PLAYER.velocityY = 0;
@@ -542,7 +542,7 @@ void RicSetSlide(void) {
     RicSetSpeedX(FIX(6.625));
     func_8015CC28();
     RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_25, 0);
-    PlaySfx(0x71A);
+    PlaySfx(SFX_TOAD_CROAK);
     g_Player.timers[PL_T_12] = 4;
 }
 
@@ -575,8 +575,8 @@ void RicSetBladeDash(void) {
     g_Player.timers[PL_T_12] = 4;
     RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_BLADE_DASH, 0);
     func_8015CC28();
-    PlaySfx(0x712);
-    PlaySfx(0x71A);
+    PlaySfx(SFX_UNUSED_712);
+    PlaySfx(SFX_TOAD_CROAK);
 }
 
 // ===== pl_utils.c
@@ -850,8 +850,8 @@ s32 func_8015FDB0(RicPrimitive* prim, s16 posX, s16 posY) {
     prim->x1 = posX + xOffset;
     prim->y1 = posY + offset;
 
-    uvAnim = &DAT_0605aec0
-                  [g_RichterSpritePackage3AllocationIndex + D_060BF1A4[frame]];
+    uvAnim = &DAT_0605aec0[g_RichterSpritePackage3AllocationIndex +
+                           D_060BF1A4[frame]];
     prim->uv0 = uvAnim->uv0;
     prim->uv1 = uvAnim->uv1;
 

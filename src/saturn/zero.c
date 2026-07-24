@@ -541,13 +541,12 @@ void func_06008588(int param_1) {
         return;
     }
     if (puVar5->tileFlags & 1) {
-        cnt = func_0600F96C(
-            puVar6->unkc, (s32)SYS_buf_060485E0, puVar6->unk18);
+        cnt = func_0600F96C(puVar6->unkc, (s32)SYS_buf_060485E0, puVar6->unk18);
         DmaScroll((s32*)SYS_buf_060485E0, puVar6->dst0, cnt);
     }
     if (puVar5->tileFlags & 2) {
-        cnt = func_0600F96C(
-            puVar6->unk10, (s32)SYS_buf_060485E0, puVar6->unk1c);
+        cnt =
+            func_0600F96C(puVar6->unk10, (s32)SYS_buf_060485E0, puVar6->unk1c);
         DmaScroll((s32*)SYS_buf_060485E0, puVar6->dst4, cnt);
     }
     if (puVar5->tileFlags & 4) {

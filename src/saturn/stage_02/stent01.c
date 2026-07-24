@@ -17,10 +17,8 @@ extern SaturnSpriteResource g_Stage02SubweaponContainerResource;
 
 EntityEntry g_Stage02EntityEntry55 = {NULL, func_060DE348};
 u32 g_Stage02EntityEntryPadding2 = 0;
-EntityEntry g_Stage02EntityEntry71 = {
-    &entityRedEyeBustData, func_060DE6CC};
-EntityEntry g_Stage02EntityEntry70 = {
-    &entityRedEyeBustData, func_060DE970};
+EntityEntry g_Stage02EntityEntry71 = {&entityRedEyeBustData, func_060DE6CC};
+EntityEntry g_Stage02EntityEntry70 = {&entityRedEyeBustData, func_060DE970};
 
 u32 g_Stage02EntityParameters1[2] = {0x60, 0x03600660};
 

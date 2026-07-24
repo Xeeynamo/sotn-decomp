@@ -17,8 +17,7 @@ void EntityRedEyeBust(Entity* self) {
         TekiInit(self, 3);
         result = func_0600B344(
             (u16)entityRedEyeBustData.allocationIndex,
-            entityRedEyeBustData.flags,
-            (s32)entityRedEyeBustData.images, 1);
+            entityRedEyeBustData.flags, (s32)entityRedEyeBustData.images, 1);
         self->unk0 = result;
         func_0600AFA8(result, entityRedEyeBustData2[7]);
         result->zPriority = 0x70;
@@ -78,9 +77,8 @@ void EntityTableWithGlobe(Entity* self) {
         self->hitboxOffY = -0xA;
         self->hitboxState = 2;
     case 1:
-        AnimateEntityWithSpriteData(
-            self, g_Stage02TableWithGlobeIdleAnim,
-            g_Stage02TableWithGlobeFrames);
+        AnimateEntityWithSpriteData(self, g_Stage02TableWithGlobeIdleAnim,
+                                    g_Stage02TableWithGlobeFrames);
         if (self->hitFlags != 0) {
             PlaySfxPositional(0x61D); // sotn-lint-ignore
             self->hitboxState = 0;
@@ -91,9 +89,8 @@ void EntityTableWithGlobe(Entity* self) {
         break;
 
     case 2:
-        AnimateEntityWithSpriteData(
-            self, g_Stage02TableWithGlobeBreakAnim,
-            g_Stage02TableWithGlobeFrames);
+        AnimateEntityWithSpriteData(self, g_Stage02TableWithGlobeBreakAnim,
+                                    g_Stage02TableWithGlobeFrames);
         break;
     }
     func_06079BB4(self);
@@ -283,8 +280,7 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E9220, func_060E9220);
 
 void func_060E9270(Entity* self) {
     func_06079BB4(self);
-    func_0600B004(
-        self->unk0, g_Stage02Entity38Frames[self->animCurFrame]);
+    func_0600B004(self->unk0, g_Stage02Entity38Frames[self->animCurFrame]);
 }
 
 // dupe of func_060e97c4
@@ -320,8 +316,7 @@ void func_060e97c4(u16** param_1) {
 
 void func_060E97F0(Entity* self) {
     func_06079BB4(self);
-    func_0600B004(
-        self->unk0, g_Stage02BoneScimitarFrames[self->animCurFrame]);
+    func_0600B004(self->unk0, g_Stage02BoneScimitarFrames[self->animCurFrame]);
 }
 
 // EntityBoneScimitar
@@ -386,8 +381,7 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EC1F0, func_060EC1F0);
 
 void func_060EC240(Entity* self) {
     func_06079BB4(self);
-    func_0600B004(
-        self->unk0, g_Stage02SpittleBoneFrames[self->animCurFrame]);
+    func_0600B004(self->unk0, g_Stage02SpittleBoneFrames[self->animCurFrame]);
 }
 
 // EntitySpittleBone
