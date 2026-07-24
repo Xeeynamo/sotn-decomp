@@ -176,8 +176,68 @@ void CreateAdditionalBats(s32 amount, s32 entityId) {
     }
 }
 
-void UpdatePrimitives(Entity* entity, s32 frameIndex);
-INCLUDE_ASM("asm/saturn/t_bat/f_nonmat", f60CF410, func_060CF410);
+static inline u16 unkFunc(u16 arg0) {
+    if (arg0 & 0x4000) {
+        return func_06007CE0(arg0 & 0xFFF);
+    } else {
+        return SPR_2LookupTblNoToVram(arg0 & 0xFFF);
+    }
+}
+
+extern u16 DAT_0605aec0[][2];
+extern SaturnSpriteResource g_SaturnSharedSpriteBank0Resource;
+
+void UpdatePrimitives(Entity* self, s32 frameIndex) {
+    Primitive* prim;
+    s32 x, y;
+    u16* ptr;
+    SaturnSpriteImage* image;
+    s32 index;
+
+    prim = &g_PrimBuf[self->primIndex];
+    if (frameIndex == 0) {
+        prim->drawMode = DRAW_HIDE;
+        return;
+    }
+    index = frameIndex - 1;
+    if (self->facingLeft) {
+        x = self->posX.i.hi + 2;
+    } else {
+        x = self->posX.i.hi - 16;
+    }
+    y = self->posY.i.hi - 16;
+
+    switch (frameIndex) {
+    case 1:
+        image = &g_BatTextureResource.images[22];
+        prim->unk8 = DAT_0605aec0[g_BatTextureResource.allocationIndex][0] +
+                     image->characterOffsetUnits;
+        prim->unkA =
+            (image->storedWidth >> 2) << 8 | (image->storedHeight) << 1;
+        prim->unk6 = unkFunc(g_BatTextureResource.flags + 3);
+        break;
+    case 2:
+        image = &g_BatTextureResource.images[23];
+        prim->unk8 = DAT_0605aec0[g_BatTextureResource.allocationIndex][0] +
+                     image->characterOffsetUnits;
+        prim->unkA =
+            (image->storedWidth >> 2) << 8 | (image->storedHeight) << 1;
+        prim->unk6 = unkFunc(g_BatTextureResource.flags + 3);
+        break;
+    default:
+        ptr =
+            DAT_0605aec0[g_SaturnSharedSpriteBank0Resource.allocationIndex + 7];
+        prim->unk8 = ptr[0];
+        prim->unkA = ptr[1];
+        prim->unk6 = unkFunc(g_SaturnSharedSpriteBank0Resource.flags + 1);
+        break;
+    }
+
+    prim->x0 = x - g_BatSpriteData[index].x;
+    prim->y0 = y - g_BatSpriteData[index].y;
+    prim->priority = self->zPriority + 1;
+    prim->drawMode = DRAW_UNK_100 | DRAW_UNK02;
+}
 
 // SAT: func_060CF5F4
 void UpdatePrimWhenAlucardIsBat(Entity* entity) {

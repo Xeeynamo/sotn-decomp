@@ -246,7 +246,6 @@ void CreateAdditionalBats(s32 amount, s32 entityId) {
 
 static void UpdatePrimitives(Entity* entity, s32 frameIndex) {
     Primitive* prim;
-    s32 tpage;
     s32 x, y;
     s32 index;
 

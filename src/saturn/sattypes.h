@@ -567,7 +567,10 @@ typedef struct {
     char pad324[0x8C];
     /* 0x3B0 */ u32 padPressed;
     /* 0x3B4 */ u32 padTapped;
-    char pad3B8[0x10];
+    /* 0x3B8 */ s32 : 32;
+    /* 0x3BC */ u32 padSim;
+    /* 0x3C0 */ s32 : 32;
+    /* 0x3C4 */ s32 demo_timer;
     /* 0x3C8 */ s16 timers[16]; // the array is bigger than PSX
     char pad3E8[4];
     /* 0x3EC */ s32 vram_flag;
@@ -605,7 +608,7 @@ typedef struct {
     s32 : 32;
     s32 : 32;
     s32 : 32;
-    s32 : 32;
+    s32 unk28;
     s32 : 32;
     u32 D_80097428[8];
     s32 : 32;
@@ -688,7 +691,7 @@ typedef struct {
 
 typedef struct {
     s16 type;
-    s16 unk2;
+    s16 priority;
     u16 unk4;
     s16 unk6;
     s16 unk8;

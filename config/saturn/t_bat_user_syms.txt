@@ -2,6 +2,5 @@ _GetServantStats = 0x060BAA20;
 _CreateEntFactoryFromEntity = 0x060BAF44;
 _func_060C1618 = 0x060C1618;
 _UpdateAnim = 0x060C175C;
-
 _CreateAdditionalBats = 0x060CF2E8;
 _UpdatePrimitives = 0x060CF410;
