@@ -56,7 +56,7 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D6DC, func_0606D6DC);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D798, func_0606D798);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D804, func_0606D804);
 
-static inline bool IsAlucart(void) {
+static bool IsAlucart(void) {
     if (CheckEquipmentItemCount(0xAB, 0) && CheckEquipmentItemCount(0xAA, 0) &&
         CheckEquipmentItemCount(0x5B, 2))
         return true;
@@ -234,7 +234,7 @@ s32 CalcAttack(s32 equipId, s32 otherEquipId) {
     return totalAttack;
 }
 
-inline void make_att(void) {
+void make_att(void) {
     s32 i;
 
     for (i = 0; i < 2; i++) {

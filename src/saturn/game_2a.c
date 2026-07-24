@@ -18,7 +18,7 @@ extern char* g_GTIClubCode;
 
 extern s32 TimeAttackController(s32 eventId, s32 action);
 
-static inline void func_800FF708(s32 equipType, s32 arg1) {
+static void func_800FF708(s32 equipType, s32 arg1) {
     s32 rnd;
 
     while ((rnd = MTH_GetRand() % 0x5C) == 0x19 ||
@@ -397,14 +397,14 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f607672C, func_0607672C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6076A04, func_06076A04);
 
 // original name: set_XYWH
-inline void SetXYWH(Primitive* prim, s32 x, s32 y, s32 w, s32 h) {
+void SetXYWH(Primitive* prim, s32 x, s32 y, s32 w, s32 h) {
     prim->x0 = prim->x3 = x;
     prim->x1 = prim->x2 = x + w - 1;
     prim->y0 = prim->y1 = y;
     prim->y2 = prim->y3 = y + h - 1;
 }
 
-inline void SetXW(Primitive* prim, s32 x, s32 w) {
+void SetXW(Primitive* prim, s32 x, s32 w) {
     prim->x0 = prim->x3 = x;
     prim->x1 = prim->x2 = x + w - 1;
 }
@@ -417,7 +417,7 @@ void SetYH(Primitive* prim, s32 y, s32 h) {
 extern u16 DAT_0605aec0[][2];
 extern SaturnSpriteResource* DAT_06086388;
 
-static inline u16 unkFunc(u16 arg0) {
+static u16 unkFunc(u16 arg0) {
     if (arg0 & 0x4000) {
         return func_06007CE0(arg0 & 0xFFF);
     } else {
@@ -425,7 +425,7 @@ static inline u16 unkFunc(u16 arg0) {
     }
 }
 
-inline void func_060771D4(Primitive* prim, s32 arg1) {
+void func_060771D4(Primitive* prim, s32 arg1) {
     u16* ptr;
 
     ptr = DAT_0605aec0[DAT_06086388->allocationIndex + arg1];

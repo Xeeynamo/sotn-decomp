@@ -101,6 +101,12 @@ segments:
       - start: 0xD9EC
         type: c
         file: zero
+        end: 0xDFAF
+
+      # file split here
+      - start: 0xDFB0
+        type: c
+        file: zero_1
         end: 0x14647
         function_ranges:
           - [0xF4B8, 0xF942]

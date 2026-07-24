@@ -14,7 +14,7 @@ extern SaturnSpriteResource g_BatTextureResource;
 extern struct SpriteParts* g_ServantSpriteParts[]; // 0x060D19FC
 extern s32 g_CutsceneHasControl;
 
-static inline void SetEntityAnimation(Entity* entity, AnimationFrame* anim) {
+static void SetEntityAnimation(Entity* entity, AnimationFrame* anim) {
     if (entity->anim != anim) {
         entity->anim = anim;
         entity->pose = 0;
@@ -117,9 +117,9 @@ s32 CheckEntityValid(Entity* entity) {
     return 1;
 }
 
-static inline void unused_1560(Entity* self) {}
+static void unused_1560(Entity* self) {}
 
-static inline void CreateBlueTrailEntity(Entity* parent) {
+static void CreateBlueTrailEntity(Entity* parent) {
     Entity* entity;
     s32 i;
 
@@ -176,7 +176,7 @@ void CreateAdditionalBats(s32 amount, s32 entityId) {
     }
 }
 
-static inline u16 unkFunc(u16 arg0) {
+static u16 unkFunc(u16 arg0) {
     if (arg0 & 0x4000) {
         return func_06007CE0(arg0 & 0xFFF);
     } else {

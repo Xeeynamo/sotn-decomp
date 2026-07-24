@@ -8,8 +8,7 @@ extern u16* g_LayoutObjVertical;
 extern u8 g_LayoutObjPosHorizontal;
 extern u8 g_LayoutObjPosVertical;
 
-static inline void CreateEntityFromLayout(
-    Entity* entity, LayoutEntity* initDesc) {
+static void CreateEntityFromLayout(Entity* entity, LayoutEntity* initDesc) {
     s32 entityId;
 
     DestroyEntity(entity);
@@ -95,7 +94,7 @@ void CreateEntityWhenInHorizontalRange(LayoutEntity* obj) {
     }
 }
 
-static inline void FindFirstEntityToTheRight(s16 posX) {
+static void FindFirstEntityToTheRight(s16 posX) {
     while (true) {
         if (g_LayoutObjHorizontal[0] != 0xFFFE &&
             g_LayoutObjHorizontal[0] >= (u16)posX) {
@@ -106,7 +105,7 @@ static inline void FindFirstEntityToTheRight(s16 posX) {
     }
 }
 
-static inline void FindFirstEntityToTheLeft(s16 posX) {
+static void FindFirstEntityToTheLeft(s16 posX) {
     while (true) {
         if (g_LayoutObjHorizontal[0] != 0xFFFF &&
             (g_LayoutObjHorizontal[0] <= (u16)posX ||
@@ -175,7 +174,7 @@ void CreateEntitiesToTheLeft(s16 posX) {
     }
 }
 
-static inline void FindFirstEntityAbove(u16 posY) {
+static void FindFirstEntityAbove(u16 posY) {
     while (true) {
         if (g_LayoutObjVertical[1] != 0xFFFE &&
             g_LayoutObjVertical[1] >= posY) {
@@ -185,7 +184,7 @@ static inline void FindFirstEntityAbove(u16 posY) {
     }
 }
 
-static inline void FindFirstEntityBelow(u16 posY) {
+static void FindFirstEntityBelow(u16 posY) {
     while (true) {
         if (g_LayoutObjVertical[1] != 0xFFFF &&
             (g_LayoutObjVertical[1] <= posY ||
