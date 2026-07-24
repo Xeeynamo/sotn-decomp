@@ -746,10 +746,10 @@
 | maria/f_nonmat/f60B5C3C.s    | func_060B5C3C   |      267 |         20 |       |     |
 | alucard/f_nonmat/f60AEAE8.s  | func_060AEAE8   |      267 |         35 |       |     |
 | richter/f_nonmat/f60B7020.s  | func_060B7020   |      268 |         20 |       |     |
+| zero/f_nonmat/f6011CE4.s     | func_06011CE4   |      269 |         20 |       |     |
 | zero/f_nonmat/f6014D44.s     | func_06014D44   |      269 |         26 |       |     |
 | maria/f_nonmat/f60BA148.s    | func_060BA148   |      269 |         38 |       |     |
 | stage_02/f_nonmat/f60EB6E4.s | func_060EB6E4   |      270 |         17 |       |     |
-| zero/f_nonmat/f6011CE4.s     | func_06011CE4   |      270 |         20 |       |     |
 | alucard/f_nonmat/f60B2E40.s  | func_060B2E40   |      270 |         26 |       |     |
 | alucard/f_nonmat/f60B3A90.s  | func_060B3A90   |      270 |         33 |       |     |
 | zero/f_nonmat/f6008C2C.s     | func_06008C2C   |      272 |         13 |       |     |
