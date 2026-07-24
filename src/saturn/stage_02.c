@@ -223,12 +223,10 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E7508, func_060E7508);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E81D4, func_060E81D4);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E82EC, func_060E82EC);
 
-s32 arr_0605C140[];
-
 // not seeing an obvious PSX equivalent
 void func_060e8330(void) {
-    arr_0605C140[0xEF] = 0x1000;
-    arr_0605C140[0xF1] = 1;
+    g_Player.padSim = PAD_UP;
+    g_Player.demo_timer = 1;
 }
 
 // not clear if this is Entity or not

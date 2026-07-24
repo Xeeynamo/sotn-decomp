@@ -23,8 +23,11 @@ _AllocEntity = 0x0607B184;
 _PreventEntityFromRespawning = 0x0607B1C8;
 _SetStep = 0x0607B218;
 _SetSubStep = 0x0607B240;
+_Random = 0x0607B2F4;
 _CreateEntityFromCurrentEntity = 0x0607B318;
+_CreateEntityFromEntity = 0x0607B374;
 _AnimateEntity = 0x0607B674;
+_PlaySfxPositional = 0x0607B714;
 _CheckCollision = 0x0607B7B4;
 _MTH_GetRand = 0x0607C0BC;
 _g_SubwpnDefs = 0x0607C14C;
@@ -102,11 +105,6 @@ _g_Entities = 0x060997F8;
 _func_060CF01C = 0x060CF01C;
 
 /* Aliases used by modules that inherit this symbol file. */
-_Random = 0x0607B2F4;
-_CreateEntityFromEntity = 0x0607B374;
-_PlaySfxPositional = 0x0607B714;
-_d_06085534 = 0x06085534;
 _d_06086234 = 0x06086234;
 _d_06086250 = 0x06086250;
 _d_06086390 = 0x06086390;
-_d_060997f8 = 0x060997F8;

@@ -1561,7 +1561,7 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BC834, func_060BC834);
 
 extern Unk0605cd70 DAT_0605cd70;
 extern u8 DAT_06057f68;
-extern u32 d_06085534;
+extern u32 D_06085534;
 s32 func_060732E4(u16 arg0);
 void func_060BC834(void);
 
@@ -1577,7 +1577,7 @@ void func_060BCA10(void) {
     }
 after:
     if ((DAT_06057f68 == 0) && ((g_pads[0].previous & 0x100) != 0)) {
-        d_06085534 = 6;
+        D_06085534 = 6;
         DAT_06057f68 = 4;
     }
     func_060BC834();

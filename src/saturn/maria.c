@@ -329,13 +329,10 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA974, func_060AA974);
 s32 func_060aa608(u32, u32);
 s32 d_060c37cc;
 s32 d_060c28a0;
-s32 d_0605c5c0[1];
-s32* d_0605c6e0;
-s32 d_060997f8;
 
 void func_060AA9EC(void) {
-    d_0605c6e0 = &d_060997f8;
-    if (d_0605c5c0[0x28 / 4] == 4) {
+    g_CurrentEntity = &PLAYER;
+    if (g_unkGraphicsStruct.unk28 == 4) {
         func_060aa608(&d_060c37cc, &d_060c28a0);
     }
 }
@@ -768,7 +765,7 @@ void func_060BF0F4(u32 param_1) {
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BF180, func_060BF180);
 
 Unk0605cd70 d_0605cd70;
-u32 d_06085534;
+u32 D_06085534;
 u16 d_0605c672;
 u8 d_06057f68;
 
@@ -787,7 +784,7 @@ void func_060BF35C(void) {
     }
 after:
     if ((d_06057f68 == 0) && ((d_0605c672 & 0x100) != 0)) {
-        d_06085534 = 6;
+        D_06085534 = 6;
         d_06057f68 = 4;
     }
     func_060BF180();
@@ -807,22 +804,22 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60C0920, func_060C0920);
 
 u32* d_06086234;
 u32* d_06086250;
-u32* d_0605D784;
+s32 g_GameClearFlag;
 
 void func_060C0A5C(void) {
     if (d_06086234 == 0) {
-        memset((void*)0x25e58288, 0, 0xC);
-        memset((void*)0x25e582C8, 0, 0xC);
+        memset((void*)0x25E58288, 0, 0xC);
+        memset((void*)0x25E582C8, 0, 0xC);
     }
 
     if (d_06086250 == 0) {
-        memset((void*)0x25e58348, 0, 0xC);
-        memset((void*)0x25e58388, 0, 0xC);
+        memset((void*)0x25E58348, 0, 0xC);
+        memset((void*)0x25E58388, 0, 0xC);
     }
 
-    if (d_0605D784 == 0) {
-        memset((void*)0x25e584C8, 0, 0x10);
-        memset((void*)0x25e58508, 0, 0x10);
+    if (g_GameClearFlag == 0) {
+        memset((void*)0x25E584C8, 0, 0x10);
+        memset((void*)0x25E58508, 0, 0x10);
     }
 }
 
