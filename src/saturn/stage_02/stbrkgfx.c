@@ -159,7 +159,7 @@ SaturnSpriteFrame1 g_Stage02SharedBreakableFrame21 = {
     },
 };
 
-SaturnSpriteFrameHeader* g_Stage02SharedBreakableFrames[22] = {
+SaturnSpriteFrameHeader* entityRedEyeBustData2[22] = {
     (SaturnSpriteFrameHeader*)&g_Stage02SharedBreakableFrame0,
     (SaturnSpriteFrameHeader*)&g_Stage02SharedBreakableFrame1,
     (SaturnSpriteFrameHeader*)&g_Stage02SharedBreakableFrame2,
@@ -385,7 +385,7 @@ SaturnSpriteImage g_Stage02SharedBreakableImages[26] = {
     {20, 8, 0x0554},  {0, 0, 0x057C},
 };
 
-SaturnSpriteResource g_Stage02SharedBreakableResource = {
+SaturnSpriteResource entityRedEyeBustData = {
     g_Stage02SharedBreakableImages,
     (u16*)&g_Stage02SharedBreakablePalette,
     -1,

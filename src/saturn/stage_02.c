@@ -14,13 +14,12 @@ void EntityRedEyeBust(Entity* self) {
     struct Unk0600B344* result;
     switch (self->step) {
     case 0:
-        func_0607B264(self, 3);
+        TekiInit(self, 3);
         result = func_0600B344(
-            (u16)g_Stage02SharedBreakableResource.allocationIndex,
-            g_Stage02SharedBreakableResource.flags,
-            (s32)g_Stage02SharedBreakableResource.images, 1);
+            (u16)entityRedEyeBustData.allocationIndex,
+            entityRedEyeBustData.flags, (s32)entityRedEyeBustData.images, 1);
         self->unk0 = result;
-        func_0600AFA8(result, g_Stage02SharedBreakableFrames[7]);
+        func_0600AFA8(result, entityRedEyeBustData2[7]);
         result->zPriority = 0x70;
         result->unk14 = *(u32*)(&self->posX);
         result->unk18 = *(u32*)(&self->posY);
@@ -65,10 +64,12 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DDB80, func_060DDB80);
 void EntityTableWithGlobe(Entity* self) {
     switch (self->step) {
     case 0:
-        func_0607B264(self, 5);
+        TekiInit(self, 5);
         self->step++;
         self->unk0 = func_0600B344(
-            D_060ED26C.unk8, D_060ED26C.unk10, D_060ED26C.unk0, 7);
+            g_Stage02TableWithGlobeResource.allocationIndex,
+            g_Stage02TableWithGlobeResource.flags,
+            (s32)g_Stage02TableWithGlobeResource.images, 7);
         self->unk0->zPriority = 0x6A;
         self->hitboxWidth = 10;
         self->hitboxHeight = 12;
@@ -76,7 +77,8 @@ void EntityTableWithGlobe(Entity* self) {
         self->hitboxOffY = -0xA;
         self->hitboxState = 2;
     case 1:
-        AnimateEntity(self, g_Stage02TableWithGlobeIdleAnim, D_80180EF0);
+        AnimateEntityWithSpriteData(self, g_Stage02TableWithGlobeIdleAnim,
+                                    g_Stage02TableWithGlobeFrames);
         if (self->hitFlags != 0) {
             PlaySfxPositional(0x61D); // sotn-lint-ignore
             self->hitboxState = 0;
@@ -87,7 +89,8 @@ void EntityTableWithGlobe(Entity* self) {
         break;
 
     case 2:
-        AnimateEntity(self, g_Stage02TableWithGlobeBreakAnim, D_80180EF0);
+        AnimateEntityWithSpriteData(self, g_Stage02TableWithGlobeBreakAnim,
+                                    g_Stage02TableWithGlobeFrames);
         break;
     }
     func_06079BB4(self);
@@ -277,7 +280,7 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E9220, func_060E9220);
 
 void func_060E9270(Entity* self) {
     func_06079BB4(self);
-    func_0600B004(self->unk0, DAT_060f237c[self->animCurFrame]);
+    func_0600B004(self->unk0, g_Stage02Entity38Frames[self->animCurFrame]);
 }
 
 // dupe of func_060e97c4
@@ -313,7 +316,7 @@ void func_060e97c4(u16** param_1) {
 
 void func_060E97F0(Entity* self) {
     func_06079BB4(self);
-    func_0600B004(self->unk0, DAT_060f2878[self->animCurFrame]);
+    func_0600B004(self->unk0, g_Stage02BoneScimitarFrames[self->animCurFrame]);
 }
 
 // EntityBoneScimitar
@@ -378,7 +381,7 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EC1F0, func_060EC1F0);
 
 void func_060EC240(Entity* self) {
     func_06079BB4(self);
-    func_0600B004(self->unk0, DAT_060f4e6c[self->animCurFrame]);
+    func_0600B004(self->unk0, g_Stage02SpittleBoneFrames[self->animCurFrame]);
 }
 
 // EntitySpittleBone

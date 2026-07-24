@@ -1,0 +1,27 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+#ifndef SATURN_SHARED_SPRITE_BANKS_H
+#define SATURN_SHARED_SPRITE_BANKS_H
+
+#include <saturn_sprite.h>
+
+extern SaturnSpriteResource g_SaturnSharedSpriteBank0Resource;
+extern SaturnSpriteResource g_SaturnSharedSpriteBank1Resource;
+extern SaturnSpriteResource g_SaturnSharedSpriteBank2Resource;
+extern SaturnSpriteResource g_SaturnSharedSpriteBank3Resource;
+extern SaturnSpriteResource g_SaturnSharedSpriteBank4Resource;
+extern SaturnSpriteResource g_SaturnSharedSpriteBank5Resource;
+extern SaturnSpriteResource g_SaturnSharedSpriteBank6Resource;
+extern SaturnSpriteResource g_SaturnSharedSpriteBank7Resource;
+extern SaturnSpriteResource g_SaturnSharedSpriteBank8Resource;
+extern SaturnSpriteResource g_SaturnSharedSpriteBank9Resource;
+extern SaturnSpriteResource g_SaturnSharedSpriteBank10Resource;
+extern SaturnSpriteResource g_SaturnSharedSpriteBank11Resource;
+extern SaturnSpriteResource g_SaturnSharedSpriteBank12Resource;
+extern SaturnSpriteResource g_SaturnSharedSpriteBank13Resource;
+extern SaturnSpriteResource g_SaturnSharedSpriteBank14Resource;
+
+extern SaturnSpriteFrameHeader* g_SaturnSharedBreakableFrames[202];
+extern SaturnSpriteFrameHeader* g_SaturnSharedOpaquePuffFrames0[14];
+extern SaturnSpriteFrameHeader* g_SaturnSharedOpaquePuffFrames1[15];
+
+#endif

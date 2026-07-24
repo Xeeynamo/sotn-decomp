@@ -1,5 +1,7 @@
 #include "../def.h"
 
+#define BSS __attribute__((section(".bss")))
+
 /* Writable SPR library state in its original SDK order. */
 Sint32 SpInitialFlag = 0;
 Uint16 SpEraseLTPoint = 0;
@@ -16,8 +18,14 @@ XyInt scrSize[8] = {
     {640, 224}, {640, 240}, {704, 224}, {704, 240},
 };
 
-Uint16 SpTvMode = 0;
-Uint16 SpFbcrMode = 0;
-Uint16 SpDie = 0;
-Uint16 SpDil = 0;
+Uint16 g_SaturnSpriteLibraryUnusedModeDefaults[4] = {0};
 Uint32 SPR_SlaveParam = 0;
+
+/*
+ * The game allocates the live SDK mode globals in its fixed work-RAM region,
+ * rather than using the initialized copies above.
+ */
+Uint16 SpFbcrMode BSS = 0;
+Uint16 SpDil BSS = 0;
+Uint16 SpDie BSS = 0;
+Uint16 SpTvMode BSS = 0;

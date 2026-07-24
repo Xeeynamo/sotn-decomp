@@ -1,19 +1,15 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
+#include "shared_sprite_banks.h"
 
 typedef struct {
-    struct SpriteParts** spriteBank;
-    u8* frameData;
+    void* spriteBank;
+    SaturnSpriteFrameHeader** frameData;
     u16 palette;
     u8 padding;
     u8 blendMode;
     u8* animation;
 } Stage02OpaquePuffConfig;
-
-extern struct SpriteParts* g_Stage02SpriteBank07[];
-extern struct SpriteParts* g_Stage02SpriteBank09[];
-extern u8 g_Stage02OpaquePuffFrameData0[];
-extern u8 g_Stage02OpaquePuffFrameData1[];
 
 u8 g_Stage02OpaquePuffAnimType0[28] = {
     3, 1, 3, 2, 3, 3,  3, 4,  3, 5,  3, 6,  3,    7,
@@ -26,12 +22,12 @@ u8 g_Stage02OpaquePuffAnimType1[32] = {
 };
 
 Stage02OpaquePuffConfig g_Stage02OpaquePuffConfigs[4] = {
-    {g_Stage02SpriteBank07, g_Stage02OpaquePuffFrameData0, 0, 0, 0x30,
-     g_Stage02OpaquePuffAnimType0},
-    {g_Stage02SpriteBank09, g_Stage02OpaquePuffFrameData1, 0, 0, 0,
-     g_Stage02OpaquePuffAnimType1},
-    {g_Stage02SpriteBank09, g_Stage02OpaquePuffFrameData1, 3, 0, 0,
-     g_Stage02OpaquePuffAnimType1},
-    {g_Stage02SpriteBank07, g_Stage02OpaquePuffFrameData0, 4, 0, 0x30,
-     g_Stage02OpaquePuffAnimType0},
+    {&g_SaturnSharedSpriteBank7Resource, g_SaturnSharedOpaquePuffFrames0, 0, 0,
+     0x30, g_Stage02OpaquePuffAnimType0},
+    {&g_SaturnSharedSpriteBank9Resource, g_SaturnSharedOpaquePuffFrames1, 0, 0,
+     0, g_Stage02OpaquePuffAnimType1},
+    {&g_SaturnSharedSpriteBank9Resource, g_SaturnSharedOpaquePuffFrames1, 3, 0,
+     0, g_Stage02OpaquePuffAnimType1},
+    {&g_SaturnSharedSpriteBank7Resource, g_SaturnSharedOpaquePuffFrames0, 4, 0,
+     0x30, g_Stage02OpaquePuffAnimType0},
 };

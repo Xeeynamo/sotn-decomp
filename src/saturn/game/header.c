@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
 
-void func_0606EE28(void);
-void func_060668D4(void);
+void ModeGame(void);
+void func_8011A9D8(void);
 void func_0606B6F8(void);
 void func_0606B760(void);
 void func_0606BB4C(void);
@@ -11,7 +11,7 @@ void func_0606C064(void);
 void func_06074470(void);
 void func_0606C774(void);
 void func_0606C594(void);
-void func_06074CC8(void);
+void InitStatsAndGear(void);
 
 typedef struct {
     void* equipDefs;
@@ -29,7 +29,7 @@ typedef struct {
 } SaturnGameApi;
 
 SaturnGameApi g_ApiInit = {
-    g_EquipDefs,   func_0606EE28, func_060668D4, func_0606B6F8,
+    g_EquipDefs,   ModeGame,      func_8011A9D8, func_0606B6F8,
     func_0606B760, func_0606BB4C, func_0606BEE4, func_0606C064,
-    func_06074470, func_0606C774, func_0606C594, func_06074CC8,
+    func_06074470, func_0606C774, func_0606C594, InitStatsAndGear,
 };

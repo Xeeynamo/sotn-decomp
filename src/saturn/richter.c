@@ -202,7 +202,7 @@ checkVelocity:
 void RicStepEnableFlameWhip(void) {
     if (PLAYER.animCurFrame == 181 && PLAYER.poseTimer == 1) {
         RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_35, 0);
-        func_06011278(0x62F);
+        PlaySfx(SFX_WEAPON_APPEAR);
     }
 
     if (PLAYER.poseTimer < 0) {
@@ -481,7 +481,7 @@ void RicSetHighJump(void) {
     RicSetAnimation(ric_anim_high_jump);
     func_8015CC28();
     RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_HIGH_JUMP, 0);
-    func_06011278(0x712);
+    PlaySfx(SFX_UNUSED_712);
     g_Player.timers[PL_T_12] = 4;
     if (g_Player.unk72) {
         PLAYER.velocityY = 0;
@@ -542,7 +542,7 @@ void RicSetSlide(void) {
     RicSetSpeedX(FIX(6.625));
     func_8015CC28();
     RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_25, 0);
-    func_06011278(0x71A);
+    PlaySfx(SFX_TOAD_CROAK);
     g_Player.timers[PL_T_12] = 4;
 }
 
@@ -575,8 +575,8 @@ void RicSetBladeDash(void) {
     g_Player.timers[PL_T_12] = 4;
     RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_BLADE_DASH, 0);
     func_8015CC28();
-    func_06011278(0x712);
-    func_06011278(0x71A);
+    PlaySfx(SFX_UNUSED_712);
+    PlaySfx(SFX_TOAD_CROAK);
 }
 
 // ===== pl_utils.c
@@ -825,7 +825,7 @@ typedef struct {
 
 extern u16 g_RichterSpritePackage3AllocationIndex;
 extern u8 D_060BF1A4[];
-extern RicUvPair D_0605AEC0[];
+extern RicUvPair DAT_0605aec0[];
 
 s32 func_8015FDB0(RicPrimitive* prim, s16 posX, s16 posY) {
     s16 offset;
@@ -850,8 +850,8 @@ s32 func_8015FDB0(RicPrimitive* prim, s16 posX, s16 posY) {
     prim->x1 = posX + xOffset;
     prim->y1 = posY + offset;
 
-    uvAnim =
-        &D_0605AEC0[g_RichterSpritePackage3AllocationIndex + D_060BF1A4[frame]];
+    uvAnim = &DAT_0605aec0[g_RichterSpritePackage3AllocationIndex +
+                           D_060BF1A4[frame]];
     prim->uv0 = uvAnim->uv0;
     prim->uv1 = uvAnim->uv1;
 
@@ -1028,9 +1028,9 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ADFD4, func_060ADFD4);
 // RicEntityMariaPowers
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AE1B4, func_060AE1B4);
 
-s32 func_0600FFB8();
+s32 DestroyEntity();
 
-void func_060AE538(void) { func_0600FFB8(); }
+void func_060AE538(void) { DestroyEntity(); }
 
 // RicEntityMaria
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AE550, func_060AE550);
@@ -1078,7 +1078,7 @@ INCLUDE_ASM_NO_ALIGN("asm/saturn/richter/f_nonmat", f60B052A, func_060B052A);
 
 // ===== ???
 
-void RicEntityDummy(void) { func_0600FFB8(); }
+void RicEntityDummy(void) { DestroyEntity(); }
 
 void func_060B0604() {}
 
@@ -1420,12 +1420,12 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BA788, func_060BA788);
 
 void func_060BB330();
 
-extern s32 DAT_060c4118;
-extern s32 DAT_060c411c;
+extern u32 g_RichterCastleMapState;
+extern u8 g_RichterCastleMapBitmap[240][160];
 
 void func_060BACA4(void) {
-    memset(&DAT_060c4118, 0, 4);
-    memcpy(0x002B2000, &DAT_060c411c, 0x9600);
+    memset(&g_RichterCastleMapState, 0, 4);
+    memcpy(0x002B2000, g_RichterCastleMapBitmap, 0x9600);
 
     func_060BB330();
 }
@@ -1444,12 +1444,12 @@ typedef struct {
     u16 colors1[4];
 } RicGouraudTable;
 
-extern s32 d_060476A0;
-extern s32 d_060476A4;
-extern s32 d_060cd748;
-extern s32 d_060cd74c;
-extern RicGouraudTable* DAT_0606471C;
-extern s32 d_0605c6e4;
+extern s32 DAT_060476a0;
+extern s32 DAT_060476a4;
+extern s32 g_RichterSavedMapVramBase;
+extern s32 g_RichterSavedMapPlaneConfig;
+extern RicGouraudTable* SpGourTbl;
+extern s32 DAT_0605c6e4;
 s32* func_060784A8(void);
 
 void func_060BB90C(void) {
@@ -1459,41 +1459,41 @@ void func_060BB90C(void) {
 
     ptr = func_060784A8();
     func_060BBDE0(ptr);
-    d_060cd748 = d_060476A0;
-    d_060cd74c = d_060476A4;
+    g_RichterSavedMapVramBase = DAT_060476a0;
+    g_RichterSavedMapPlaneConfig = DAT_060476a4;
     if (g_PlayableCharacter == 0) {
-        d_060476A0 = 0x252000;
-        d_060476A4 = 1;
+        DAT_060476a0 = 0x252000;
+        DAT_060476a4 = 1;
     }
-    colors0 = DAT_0606471C->colors0;
+    colors0 = SpGourTbl->colors0;
     colors0[0] = colors0[1] = 0xB18C;
     colors0[2] = colors0[3] = 0xD294;
-    colors1 = DAT_0606471C->colors1;
+    colors1 = SpGourTbl->colors1;
     colors1[0] = colors1[1] = colors1[2] = colors1[3] = 0x9084;
-    d_0605c6e4 = 1;
+    DAT_0605c6e4 = 1;
 }
 
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BB9BC, func_060BB9BC);
 
-s32 d_06086390;
-s32 d_060476A0;
-s32 d_060476A4;
-extern s32 d_060cd748;
-extern s32 d_060cd74c;
+s32 DAT_06086390;
+s32 DAT_060476a0;
+s32 DAT_060476a4;
+extern s32 g_RichterSavedMapVramBase;
+extern s32 g_RichterSavedMapPlaneConfig;
 void func_060BB9BC(s32*);
 
 void func_060BBA88(void) {
     s32* iVar2;
     iVar2 = func_060784A8();
     func_060BB9BC(iVar2);
-    d_060476A0 = d_060cd748;
-    d_060476A4 = d_060cd74c;
+    DAT_060476a0 = g_RichterSavedMapVramBase;
+    DAT_060476a4 = g_RichterSavedMapPlaneConfig;
 }
 
-s32 d_06086390;
+s32 DAT_06086390;
 void func_060BBAC8(void) {
     s32* iVar2;
-    d_06086390 = 0;
+    DAT_06086390 = 0;
     iVar2 = func_060784A8();
     iVar2[0x4500] = 0xffffffff;
 }
@@ -1504,14 +1504,14 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BBCCC, func_060BBCCC);
 
 void func_060BBD88(void) {
     int* iVar2;
-    d_06086390 = 4;
+    DAT_06086390 = 4;
     iVar2 = func_060784A8();
     iVar2[0x4500] = 0xffffffff;
 }
 
 void func_060BBDB4(void) {
     int* iVar2;
-    d_06086390 = 5;
+    DAT_06086390 = 5;
     iVar2 = func_060784A8();
     iVar2[0x4500] = 0xffffffff;
 }
@@ -1522,7 +1522,7 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BC048, func_060BC048);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BC108, func_060BC108);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BC228, func_060BC228);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BC4E4, func_060BC4E4);
-extern s16 PTR_DAT_060cd7f0[];
+extern s16 g_RichterMapRevealRowIndices[];
 
 void func_060BC7A8(u32 arg0) {
     s32 first;
@@ -1539,7 +1539,7 @@ void func_060BC7A8(u32 arg0) {
         offset = 0;
     }
 
-    first = PTR_DAT_060cd7f0[arg0];
+    first = g_RichterMapRevealRowIndices[arg0];
     for (current = first; current < first + 4; current++) {
         s32 tile = current << 6;
 

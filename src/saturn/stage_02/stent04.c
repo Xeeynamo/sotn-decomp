@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
+#include "shared_sprite_banks.h"
 
 void func_060E2A80(Entity* self);
 void func_060E32DC(Entity* self);
@@ -7,7 +8,6 @@ void func_060E37C8(Entity* self);
 void func_060E42FC(Entity* self);
 void func_060E43F4(Entity* self);
 
-extern struct SpriteParts* g_Stage02SpriteBank00[];
 extern char g_Stage02ObtainedText[];
 
 typedef struct {
@@ -20,10 +20,14 @@ typedef struct {
     u16 padding;
 } Stage02SubweaponIndices;
 
-EntityEntry g_Stage02EntityEntry02 = {g_Stage02SpriteBank00, func_060E2A80};
-EntityEntry g_Stage02EntityEntry09 = {g_Stage02SpriteBank00, func_060E32DC};
-EntityEntry g_Stage02EntityEntry10 = {g_Stage02SpriteBank00, func_060E37C8};
-EntityEntry g_Stage02EntityEntry11 = {g_Stage02SpriteBank00, func_060E42FC};
+EntityEntry g_Stage02EntityEntry02 = {
+    &g_SaturnSharedSpriteBank0Resource, func_060E2A80};
+EntityEntry g_Stage02EntityEntry09 = {
+    &g_SaturnSharedSpriteBank0Resource, func_060E32DC};
+EntityEntry g_Stage02EntityEntry10 = {
+    &g_SaturnSharedSpriteBank0Resource, func_060E37C8};
+EntityEntry g_Stage02EntityEntry11 = {
+    &g_SaturnSharedSpriteBank0Resource, func_060E42FC};
 EntityEntry g_Stage02EntityEntry13 = {NULL, func_060E43F4};
 
 Stage02HeartPrizeValues g_Stage02HeartPrizes = {{1, 5}, {0, 0}};

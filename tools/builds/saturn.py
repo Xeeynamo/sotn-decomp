@@ -97,6 +97,20 @@ ninja.rule('link_multi',
                     $in $objs',
            description='Linking $out from $in')
 
+ninja.rule(
+    'export_saturn_link_symbols',
+    command='python3 tools/saturn/export_link_symbols.py $in $out',
+    description='Exporting live symbols from $in',
+)
+
+for export_target in ('zero', 'game'):
+    ninja.build(
+        f'build/saturn/{export_target}_link_syms.txt',
+        'export_saturn_link_symbols',
+        inputs=[f'build/saturn/{export_target}.elf'],
+        implicit=['tools/saturn/export_link_symbols.py'],
+    )
+
 ninja.rule('cpp',
            command='cpp $FLAGS $in > $out',
            description='Running preprocessor on $out from $in')
@@ -507,12 +521,19 @@ def inherited_symbol_files(target):
     files.append('config/saturn/zero_user_syms.txt')
     if target not in {'zero', 'game'}:
         files.append(f'config/saturn/{target}_user_syms.txt')
+    if target != 'zero':
+        files.append('build/saturn/zero_link_syms.txt')
+    if target not in {'zero', 'game'}:
+        files.append('build/saturn/game_link_syms.txt')
     return files
 
 def target_alias_options(target):
     aliases = {
         'game': {'_func_80131F68_1': 0x06012DD0},
-        'stage_02': {'_AnimateEntity': 0x0607B618},
+        'stage_02': {
+            '_AnimateEntity': 0x0607B618,
+            '_AnimateEntityWithSpriteData': 0x0607B618,
+        },
         't_bat': {'_func_80131F68_2': 0x06012DFC},
     }
     return ' '.join(

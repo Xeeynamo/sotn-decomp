@@ -12,7 +12,8 @@ void func_060AA8AC(s32 resetAnims, s32 arg1);
 void RicSetInvincibilityFrames(s32 kind, s16 invincibilityFrames);
 void func_060AA9EC(void);
 void func_060AA974(void);
-Entity* func_060AC90C(Entity* source, u32 factoryParams, s32 arg2);
+Entity* RicCreateEntFactoryFromEntity(
+    Entity* source, u32 factoryParams, s32 arg2);
 void func_060AB088(void);
 void func_8015F9F0(Entity* entity);
 extern void* g_MariaSpriteBanks[18];
@@ -29,7 +30,7 @@ SaturnPlayerOvl MARIA_player = {
     RicSetInvincibilityFrames,
     func_060AA9EC,
     func_060AA974,
-    func_060AC90C,
+    RicCreateEntFactoryFromEntity,
     func_060AB088,
     func_8015F9F0,
     (SaturnPlayerCallback)func_060B09C0,

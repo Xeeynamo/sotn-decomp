@@ -1,10 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
+#include "shared_sprite_banks.h"
 
 void func_060E633C(Entity* self);
 void func_060E6628(Entity* self);
-
-extern struct SpriteParts* g_Stage02SpriteBank06[];
 
 typedef struct {
     s16 x;
@@ -13,7 +12,8 @@ typedef struct {
     s16 height;
 } Stage02SoulStealOrbSpriteRect;
 
-EntityEntry g_Stage02EntityEntry06 = {g_Stage02SpriteBank06, func_060E633C};
+EntityEntry g_Stage02EntityEntry06 = {
+    &g_SaturnSharedSpriteBank6Resource, func_060E633C};
 EntityEntry g_Stage02EntityEntry12 = {NULL, func_060E6628};
 
 u8 g_Stage02SoulStealOrbAnim[14] = {
