@@ -258,7 +258,7 @@ s32 func_800FD6C4(EquipKind equipTypeFilter) {
 }
 
 // SAT: func_0606F3D8
-inline u8* GetEquipOrder(EquipKind kind) {
+u8* GetEquipOrder(EquipKind kind) {
     switch (kind) {
     case EQUIP_HAND:
         return g_Status.equipHandOrder;
@@ -267,7 +267,7 @@ inline u8* GetEquipOrder(EquipKind kind) {
 }
 
 // SAT: func_0606F3F8
-inline u8* GetEquipCount(EquipKind kind) {
+u8* GetEquipCount(EquipKind kind) {
     switch (kind) {
     case EQUIP_HAND:
         return g_Status.equipHandCount;
@@ -635,7 +635,7 @@ s32 func_800FE044(s32 amount, s32 type) {
 }
 
 // SAT: func_0606FC60
-inline bool IsRelicActive(s32 relicId) {
+bool IsRelicActive(s32 relicId) {
     if (g_Status.relics[relicId] & 2) {
         return 1;
     }
@@ -729,14 +729,14 @@ bool HasEnoughMp(s32 mpCount, bool subtractMp) {
 }
 
 // SAT: func_0606FFC8
-inline void func_800FE8F0(void) {
+void func_800FE8F0(void) {
     if (D_8013B5E8 == 0) {
         D_8013B5E8 = 0x40;
     }
 }
 
 // SAT: func_0606FFE4
-inline void AddHearts(s32 value) {
+void AddHearts(s32 value) {
     Entity* player;
     if (g_Status.hearts < g_Status.heartsMax) {
         g_Status.hearts += value;
@@ -1011,7 +1011,7 @@ s32 HandleGravityBootsMP(s32 mode) {
 }
 
 // SAT: func_06070568
-inline void ClearStatBuff(s32 i) { g_StatBuffTimers[i] = 0; }
+void ClearStatBuff(s32 i) { g_StatBuffTimers[i] = 0; }
 
 void ClearStatBuffs(void) {
     s32 i;

@@ -174,6 +174,7 @@ snd_srcs = [
     'src/saturn/alucard/header.c',
     'src/saturn/alucard/hdrstub.c',
     'src/saturn/zero.c',
+    'src/saturn/zero_1.c',
     'src/saturn/lib/snd.c',
     'src/saturn/zero_2.c',
     'src/saturn/zero_3.c',
@@ -484,7 +485,7 @@ asm_srcs = [
 # O0 srcs
 add_srcs(lib_srcs, "build/saturn", "O0")
 
-add_srcs(snd_srcs, "build/saturn", "O2")
+add_srcs(snd_srcs, "build/saturn", "O3")
 
 def elf_srcs(srcs, output_dir):
     for src in srcs:
@@ -849,6 +850,7 @@ multi_objs = {
         'build/saturn/warp/particle.o',
     ],
     'build/saturn/zero.o' : [
+        'build/saturn/zero_1.o',
         'build/saturn/lib/snd.o',
         'build/saturn/zero_2.o',
         'build/saturn/zero_3.o',

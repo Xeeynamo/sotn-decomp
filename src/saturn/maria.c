@@ -152,7 +152,7 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A955C, func_060A955C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9608, func_060A9608);
 
 // func_060A96D4
-static s32 MariaCheckSubwpnChainLimit(s16 subwpnId, s16 limit) {
+s32 MariaCheckSubwpnChainLimit(s16 subwpnId, s16 limit) {
     Entity* entity;
     s32 i;
     s32 nFound;
@@ -371,7 +371,7 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60ABC54, func_060ABC54);
 
 #define E_NONE 0
 // func_060AB980
-static Entity* RicGetFreeEntity(s16 start, s16 end) {
+Entity* RicGetFreeEntity(s16 start, s16 end) {
     Entity* entity = &g_Entities[start];
     s16 i;
 
@@ -384,7 +384,7 @@ static Entity* RicGetFreeEntity(s16 start, s16 end) {
 }
 
 // func_060AB9C0
-static Entity* RicGetFreeEntityReverse(s16 start, s16 end) {
+Entity* RicGetFreeEntityReverse(s16 start, s16 end) {
     Entity* entity = &g_Entities[end - 1];
     s16 i;
     for (i = end - 1; i >= start; i--, entity--) {

@@ -17,7 +17,7 @@ s32 func_06066B30(s32 arg0, s32 arg1) {
     return ret;
 }
 
-static inline u16 unkFunc(u16 arg0) {
+static u16 unkFunc(u16 arg0) {
     if (arg0 & 0x4000) {
         return func_06007CE0(arg0 & 0xFFF);
     } else {

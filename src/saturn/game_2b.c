@@ -74,7 +74,7 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079A2C, func_06079A2C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079AF0, func_06079AF0);
 
 // original name: normal_move
-inline void NormalMove(Entity* entity) {
+void NormalMove(Entity* entity) {
     Unk0600B344* temp = entity->unk0;
 
     if (temp != NULL) {
@@ -85,12 +85,12 @@ inline void NormalMove(Entity* entity) {
     }
 }
 
-inline void MoveEntity(Entity* entity) {
+void MoveEntity(Entity* entity) {
     entity->posX.val += entity->velocityX;
     entity->posY.val += entity->velocityY;
 }
 
-inline void func_06079BB4(Entity* entity) {
+void func_06079BB4(Entity* entity) {
     Unk0600B344* temp = entity->unk0;
 
     if (temp != NULL) {
@@ -99,7 +99,7 @@ inline void func_06079BB4(Entity* entity) {
     }
 }
 
-inline void func_06079BCC(Entity* entity) {
+void func_06079BCC(Entity* entity) {
     Unk0600B344* temp = entity->unk0;
 
     if (temp != NULL) {
@@ -108,7 +108,7 @@ inline void func_06079BCC(Entity* entity) {
     }
 }
 
-inline void FallEntity(Entity* entity) {
+void FallEntity(Entity* entity) {
 #define TERMINAL_VELOCITY FIX(6)
 #define GRAVITY FIX(0.25f)
 
@@ -726,7 +726,7 @@ Entity* FindFirstFreeEntity(s16 start, s16 end) {
 
 extern s16 g_SineTable[];
 
-inline s32 GetSineScaled(u8 arg0, s16 arg1) {
+s32 GetSineScaled(u8 arg0, s16 arg1) {
     s32 sine = g_SineTable[arg0];
     return sine * arg1;
 }
@@ -738,7 +738,7 @@ void SetEntityVelocityFromAngle(Entity* entity, u8 arg0, s16 arg1) {
     entity->velocityY = GetSineScaled(arg0 - 0x40, arg1);
 }
 
-inline u8 Ratan2Shifted(s16 x, s16 y) {
+u8 Ratan2Shifted(s16 x, s16 y) {
     u8 angle = ratan2(y, x) >> 4;
     return angle + 0x40;
 }

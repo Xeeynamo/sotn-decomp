@@ -489,7 +489,7 @@ void RicSetHighJump(void) {
 }
 
 // func_060A938C
-static s32 RicCheckSubwpnChainLimit(s16 subwpnId, s16 limit) {
+s32 RicCheckSubwpnChainLimit(s16 subwpnId, s16 limit) {
     Entity* entity;
     s32 i;
     s32 nFound;
@@ -739,7 +739,7 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AB7B4, func_060AB7B4);
 
 #define E_NONE 0
 // func_060AB980
-static Entity* RicGetFreeEntity(s16 start, s16 end) {
+Entity* RicGetFreeEntity(s16 start, s16 end) {
     Entity* entity = &g_Entities[start];
     s16 i;
 
@@ -752,7 +752,7 @@ static Entity* RicGetFreeEntity(s16 start, s16 end) {
 }
 
 // func_060AB9C0
-static Entity* RicGetFreeEntityReverse(s16 start, s16 end) {
+Entity* RicGetFreeEntityReverse(s16 start, s16 end) {
     Entity* entity = &g_Entities[end - 1];
     s16 i;
     for (i = end - 1; i >= start; i--, entity--) {
