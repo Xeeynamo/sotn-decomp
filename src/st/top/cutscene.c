@@ -23,7 +23,7 @@ INCLUDE_RODATA("st/top/nonmatchings/cutscene", D_us_801A8998);
 INCLUDE_RODATA("st/top/nonmatchings/cutscene", D_us_801A89A0);
 
 extern u8 OVL_EXPORT(cutscene_data)[];
-extern bool g_IsCutsceneDone;
+extern s32 g_IsCutsceneDone;
 extern u32 g_CutsceneFlags;
 extern u8 D_us_80180D38[];
 extern u8 D_us_80180D3C[];

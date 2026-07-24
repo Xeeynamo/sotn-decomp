@@ -127,7 +127,7 @@ static u8 actor_name_index[] = {NAME_IDX_ALUCARD, NAME_IDX_SHAFT};
 
 // bss
 u32 g_CutsceneFlags;
-bool g_SkipCutscene;
+s32 g_SkipCutscene;
 // not a true global, but must be named this because of the shared .h files
 static Dialogue g_Dialogue;
 static u8 char_buffer;
