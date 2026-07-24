@@ -730,7 +730,6 @@
 | richter/f_nonmat/f60AAB80.s  | func_060AAB80   |      257 |         24 |       |     |
 | richter/f_nonmat/f60AB7B4.s  | func_060AB7B4   |      257 |         28 |       |     |
 | maria/f_nonmat/f60A8860.s    | func_060A8860   |      257 |         32 |       |     |
-| t_bat/f_nonmat/f60CF410.s    | func_060CF410   |      258 |         16 |       |     |
 | alucard/f_nonmat/f60AC8F4.s  | func_060AC8F4   |      260 |         16 |       |     |
 | stage_02/f_nonmat/f60DD20C.s | func_060DD20C   |      261 |         20 |       |     |
 | alucard/f_nonmat/f60B5920.s  | func_060B5920   |      262 |         27 |       |     |
