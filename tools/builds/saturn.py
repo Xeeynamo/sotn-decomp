@@ -28,12 +28,15 @@ ninja.rule('coff2elf',
            command="sh-elf-objcopy -Icoff-sh -Oelf32-sh $in $out",
            description='Converting $out from $in')
 
+SOTN_STR = 'build/sotn_str/release/sotn_str'
+
 ninja.rule('cargo_sotn_str',
-           command='cargo build --release --manifest-path tools/sotn_str/Cargo.toml',
-           description='Building tools/sotn_str/target/release/sotn_str')
+           command='CARGO_TARGET_DIR=build/sotn_str cargo build --release '
+                   '--manifest-path tools/sotn_str/Cargo.toml',
+           description='Building $out')
 
 ninja.build(
-    'tools/sotn_str/target/release/sotn_str',
+    SOTN_STR,
     'cargo_sotn_str',
     inputs=[
         'tools/sotn_str/Cargo.toml',
@@ -41,25 +44,56 @@ ninja.build(
         'tools/sotn_str/src/main.rs',
     ])
 
+ninja.rule(
+    'check_saturn_symbol_ownership',
+    command='python3 tools/saturn/check_symbol_ownership.py '
+            '--output saturn_symbol_ownership.txt && touch $out',
+    description='Validating Saturn user-symbol ownership',
+)
+
+symbol_ownership_inputs = [
+    'tools/saturn/check_symbol_ownership.py',
+]
+for target, config_name, binary_name in [
+    ('zero', 'zero.bin.yaml', '0.BIN'),
+    ('game', 'game.prg.yaml', 'GAME.PRG'),
+    ('richter', 'richter.prg.yaml', 'RICHTER.PRG'),
+    ('maria', 'maria.prg.yaml', 'MARIA.PRG'),
+    ('alucard', 'alucard.prg.yaml', 'ALUCARD.PRG'),
+    ('stage_02', 'stage_02.prg.yaml', 'STAGE_02.PRG'),
+    ('t_bat', 't_bat.prg.yaml', 'T_BAT.PRG'),
+    ('warp', 'warp.prg.yaml', 'WARP.PRG'),
+]:
+    symbol_ownership_inputs.extend([
+        f'config/saturn/{target}_user_syms.txt',
+        f'config/saturn/{config_name}',
+        f'disks/saturn/{binary_name}',
+    ])
+
+SYMBOL_OWNERSHIP_STAMP = 'build/saturn/symbol_ownership.ok'
+ninja.build(
+    SYMBOL_OWNERSHIP_STAMP,
+    'check_saturn_symbol_ownership',
+    inputs=symbol_ownership_inputs,
+)
+
 ninja.rule('link',
-           command= 'sh-elf-ld -verbose --no-check-sections -nostdlib \
+           command= 'sh-elf-ld --no-check-sections -nostdlib \
                     -o $out \
                     -Map $out.map \
                     -T config/saturn/$ld_file \
-                    -T config/saturn/zero_syms.txt \
-                    -T config/saturn/game_syms.txt \
-                    -T config/saturn/$syms_file \
+                    $symbol_scripts \
+                    $target_aliases \
                     $in',
            description='Linking $out from $in')
 
 ninja.rule('link_multi',
-           command= 'sh-elf-ld -verbose --no-check-sections -nostdlib \
+           command= 'sh-elf-ld --no-check-sections -nostdlib \
                     -o $out \
                     -Map $out.map \
                     -T config/saturn/$ld_file \
-                    -T config/saturn/zero_syms.txt \
-                    -T config/saturn/game_syms.txt \
-                    -T config/saturn/$syms_file \
+                    $symbol_scripts \
+                    $target_aliases \
                     $in $objs',
            description='Linking $out from $in')
 
@@ -68,7 +102,7 @@ ninja.rule('cpp',
            description='Running preprocessor on $out from $in')
 
 ninja.rule('sotn_str',
-           command='tools/sotn_str/target/release/sotn_str process < $in > $out',
+           command=f'{SOTN_STR} process < $in > $out',
            description='Expanding SOTN strings in $out from $in')
 
 ninja.rule('iconv_sjis',
@@ -89,7 +123,7 @@ def add_srcs(srcs, output_dir, args):
         pre_name = os.path.join(obj_dir, f"{filename_without_extension}.pre")
         asm_name = os.path.join(obj_dir, f"{filename_without_extension}.s")
 
-        flags = '-lang-c -v -I./src/saturn -I./src/saturn/lib -undef -D__GNUC__=2 -D__GNUC_MINOR__=7 -D__sh__ -D__sh__ -D__sh2__'
+        flags = '-lang-c -I./src/saturn -I./src/saturn/lib -undef -D__GNUC__=2 -D__GNUC_MINOR__=7 -D__sh__ -D__sh__ -D__sh2__'
 
         ninja.build(
             pre_name,
@@ -101,7 +135,7 @@ def add_srcs(srcs, output_dir, args):
             str_name,
             'sotn_str',
             inputs=[pre_name],
-            implicit=['tools/sotn_str/target/release/sotn_str'])
+            implicit=[SOTN_STR])
 
         ninja.build(
             cpp_name,
@@ -465,21 +499,47 @@ def add_asm_srcs(srcs, output_dir):
 
 add_asm_srcs(asm_srcs, "build/saturn")
 
+def inherited_symbol_files(target):
+    files = ['config/saturn/zero_syms.txt']
+    if target != 'zero':
+        files.append('config/saturn/game_syms.txt')
+        files.append('config/saturn/game_user_syms.txt')
+    files.append('config/saturn/zero_user_syms.txt')
+    if target not in {'zero', 'game'}:
+        files.append(f'config/saturn/{target}_user_syms.txt')
+    return files
+
+def target_alias_options(target):
+    aliases = {
+        'game': {'_func_80131F68_1': 0x06012DD0},
+        'stage_02': {'_AnimateEntity': 0x0607B618},
+        't_bat': {'_func_80131F68_2': 0x06012DFC},
+    }
+    return ' '.join(
+        f'--defsym {name}=0x{address:08X}'
+        for name, address in aliases.get(target, {}).items()
+    )
+
 def link_objs(srcs, output_dir):
     for src in srcs:
         filename_without_extension = os.path.splitext(os.path.basename(src))[0]
         obj_name = f"{output_dir}/{filename_without_extension}.o"
         elf_name = f"{output_dir}/{filename_without_extension}.elf"
         ld_file = f'{filename_without_extension}.ld'
-        syms_file = f'{filename_without_extension}_user_syms.txt'
+        symbol_files = inherited_symbol_files(filename_without_extension)
 
         ninja.build(
             elf_name, 
             'link', 
             inputs=[obj_name],
+            implicit=[SYMBOL_OWNERSHIP_STAMP,
+                      f'config/saturn/{ld_file}'] + symbol_files,
             variables={
                 'ld_file': ld_file,
-                'syms_file': syms_file})
+                'symbol_scripts': ' '.join(
+                    f'-T {symbol_file}' for symbol_file in symbol_files),
+                'target_aliases': target_alias_options(
+                    filename_without_extension)})
 
 objs = []
 
@@ -490,16 +550,21 @@ def link_multi(multi_objs, output_dir):
         filename_without_extension = os.path.splitext(os.path.basename(main_obj))[0]
         elf_name = f"{output_dir}/{filename_without_extension}.elf"
         ld_file = f'{filename_without_extension}.ld'
-        syms_file = f'{filename_without_extension}_user_syms.txt'
+        symbol_files = inherited_symbol_files(filename_without_extension)
 
         ninja.build(
             elf_name, 
             'link_multi', 
             inputs=[main_obj],
-            implicit=[x for x in sub_objs if x],
+            implicit=[x for x in sub_objs if x] +
+                     [SYMBOL_OWNERSHIP_STAMP,
+                      f'config/saturn/{ld_file}'] + symbol_files,
             variables={
                 'ld_file': ld_file,
-                'syms_file': syms_file,
+                'symbol_scripts': ' '.join(
+                    f'-T {symbol_file}' for symbol_file in symbol_files),
+                'target_aliases': target_alias_options(
+                    filename_without_extension),
                 'objs': sub_objs})
 
 multi_objs = {
