@@ -4,7 +4,7 @@
 #include "stprops.h"
 
 extern EntityEntry* g_Stage02EntityUpdates[78];
-extern struct SpriteParts** g_Stage02SpriteBanks[];
+extern void* g_Stage02SpriteBanks[];
 extern LayoutEntity* g_Stage02LayoutHorizontal[];
 extern LayoutEntity* g_Stage02LayoutVertical[];
 extern SaturnRoomHeader g_Stage02Rooms[33];

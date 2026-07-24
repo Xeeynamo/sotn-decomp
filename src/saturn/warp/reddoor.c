@@ -1,12 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
+#include "shared_sprite_banks.h"
 
 void EntityWarpRedDoor(Entity* self);
 
-extern struct SpriteParts* g_EntitySpriteBank03[];
-
 EntityEntry g_WarpRedDoorEntry = {
-    g_EntitySpriteBank03,
+    &g_SaturnSharedSpriteBank3Resource,
     EntityWarpRedDoor,
 };
 

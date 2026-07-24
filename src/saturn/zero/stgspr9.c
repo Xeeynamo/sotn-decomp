@@ -106,7 +106,7 @@ SaturnSpriteFrame1 g_SaturnSharedSpriteBank9Frame14 = {
     },
 };
 
-SaturnSpriteFrameHeader* g_SaturnSharedSpriteBank9Frames[15] = {
+SaturnSpriteFrameHeader* g_SaturnSharedOpaquePuffFrames1[15] = {
     (SaturnSpriteFrameHeader*)&g_SaturnSharedSpriteBank9Frame0,
     (SaturnSpriteFrameHeader*)&g_SaturnSharedSpriteBank9Frame1,
     (SaturnSpriteFrameHeader*)&g_SaturnSharedSpriteBank9Frame2,

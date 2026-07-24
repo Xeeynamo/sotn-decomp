@@ -31,7 +31,6 @@ DECLARE_ENTITY(func_80162604);
 DECLARE_ENTITY(RicEntityMaria);
 DECLARE_ENTITY(RicEntityMariaPowers);
 DECLARE_ENTITY(func_80160F0C);
-DECLARE_ENTITY(RicEntityNotImplemented4);
 DECLARE_ENTITY(RicEntityPlayerBlinkWhite);
 DECLARE_ENTITY(RicEntitySubwpnCrashCrossParticles);
 DECLARE_ENTITY(func_801641A0);
@@ -102,7 +101,7 @@ PfnEntityUpdate entity_functions[] = {
     RicEntityMaria,
     RicEntityMariaPowers,
     func_80160F0C,
-    RicEntityNotImplemented4,
+    RicEntityDummy,
     RicEntityPlayerBlinkWhite,
     RicEntitySubwpnCrashCrossParticles,
     func_801641A0,

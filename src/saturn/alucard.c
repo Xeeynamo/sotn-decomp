@@ -214,9 +214,9 @@ INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BD39C, func_060BD39C);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BD5A4, func_060BD5A4);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BD61C, func_060BD61C);
 
-void func_0600FFB8();
+void DestroyEntity();
 
-void func_060BD6A8(void) { func_0600FFB8(); }
+void func_060BD6A8(void) { DestroyEntity(); }
 
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BD6C0, func_060BD6C0);
 

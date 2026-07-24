@@ -1,37 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
+#include "shared_sprite_banks.h"
 #include <saturn_sprite.h>
 
 #define DECLARE_SPRITE_BANK(index)                                             \
     extern struct SpriteParts* g_Stage02SpriteBank##index[]
 
-DECLARE_SPRITE_BANK(00);
-DECLARE_SPRITE_BANK(01);
-DECLARE_SPRITE_BANK(02);
-DECLARE_SPRITE_BANK(03);
-DECLARE_SPRITE_BANK(04);
-DECLARE_SPRITE_BANK(05);
-DECLARE_SPRITE_BANK(06);
-DECLARE_SPRITE_BANK(07);
-DECLARE_SPRITE_BANK(08);
-DECLARE_SPRITE_BANK(09);
-DECLARE_SPRITE_BANK(10);
-DECLARE_SPRITE_BANK(11);
-DECLARE_SPRITE_BANK(12);
-DECLARE_SPRITE_BANK(13);
-DECLARE_SPRITE_BANK(14);
-DECLARE_SPRITE_BANK(15);
-DECLARE_SPRITE_BANK(17);
-DECLARE_SPRITE_BANK(18);
-DECLARE_SPRITE_BANK(19);
-DECLARE_SPRITE_BANK(20);
-DECLARE_SPRITE_BANK(21);
-DECLARE_SPRITE_BANK(22);
-DECLARE_SPRITE_BANK(23);
-DECLARE_SPRITE_BANK(24);
-DECLARE_SPRITE_BANK(25);
-DECLARE_SPRITE_BANK(26);
-DECLARE_SPRITE_BANK(27);
 DECLARE_SPRITE_BANK(28);
 DECLARE_SPRITE_BANK(29);
 DECLARE_SPRITE_BANK(30);
@@ -39,37 +13,49 @@ DECLARE_SPRITE_BANK(31);
 DECLARE_SPRITE_BANK(32);
 DECLARE_SPRITE_BANK(33);
 
-extern SaturnSpriteResource g_Stage02SharedBreakableResource;
+extern SaturnSpriteResource entityRedEyeBustData;
+extern SaturnSpriteResource g_Stage02TableWithGlobeResource;
+extern SaturnSpriteResource g_Stage02LifeMaxTankResource;
+extern SaturnSpriteResource g_Stage02BlueFlameTableResource;
+extern SaturnSpriteResource g_Stage02SubweaponContainerResource;
+extern SaturnSpriteResource g_Stage02SubweaponContainerPaletteResource;
+extern SaturnSpriteResource g_Stage02ElevatorResource;
+extern SaturnSpriteResource g_Stage02ElevatorPaletteResource;
+extern SaturnSpriteResource g_Stage02Entity74Resource0;
+extern SaturnSpriteResource g_Stage02Entity74Resource1;
+extern SaturnSpriteResource g_Stage02MariaNpcResource;
+extern SaturnSpriteResource g_Stage02SpriteBank17Resource;
+extern struct SpriteParts* g_EntitySpriteBank15[];
 
 void* g_Stage02SpriteBanks[35] = {
-    g_Stage02SpriteBank00,
-    g_Stage02SpriteBank01,
-    g_Stage02SpriteBank02,
-    g_Stage02SpriteBank03,
-    g_Stage02SpriteBank04,
-    g_Stage02SpriteBank05,
-    g_Stage02SpriteBank06,
-    g_Stage02SpriteBank07,
-    g_Stage02SpriteBank08,
-    g_Stage02SpriteBank09,
-    g_Stage02SpriteBank10,
-    g_Stage02SpriteBank11,
-    g_Stage02SpriteBank12,
-    g_Stage02SpriteBank13,
-    g_Stage02SpriteBank14,
-    g_Stage02SpriteBank15,
-    &g_Stage02SharedBreakableResource,
-    g_Stage02SpriteBank17,
-    g_Stage02SpriteBank18,
-    g_Stage02SpriteBank19,
-    g_Stage02SpriteBank20,
-    g_Stage02SpriteBank21,
-    g_Stage02SpriteBank22,
-    g_Stage02SpriteBank23,
-    g_Stage02SpriteBank24,
-    g_Stage02SpriteBank25,
-    g_Stage02SpriteBank26,
-    g_Stage02SpriteBank27,
+    &g_SaturnSharedSpriteBank0Resource,
+    &g_SaturnSharedSpriteBank1Resource,
+    &g_SaturnSharedSpriteBank2Resource,
+    &g_SaturnSharedSpriteBank3Resource,
+    &g_SaturnSharedSpriteBank4Resource,
+    &g_SaturnSharedSpriteBank5Resource,
+    &g_SaturnSharedSpriteBank6Resource,
+    &g_SaturnSharedSpriteBank7Resource,
+    &g_SaturnSharedSpriteBank8Resource,
+    &g_SaturnSharedSpriteBank9Resource,
+    &g_SaturnSharedSpriteBank10Resource,
+    &g_SaturnSharedSpriteBank11Resource,
+    &g_SaturnSharedSpriteBank13Resource,
+    &g_SaturnSharedSpriteBank12Resource,
+    &g_SaturnSharedSpriteBank14Resource,
+    g_EntitySpriteBank15,
+    &entityRedEyeBustData,
+    &g_Stage02SpriteBank17Resource,
+    &g_Stage02TableWithGlobeResource,
+    &g_Stage02LifeMaxTankResource,
+    &g_Stage02BlueFlameTableResource,
+    &g_Stage02SubweaponContainerResource,
+    &g_Stage02SubweaponContainerPaletteResource,
+    &g_Stage02ElevatorResource,
+    &g_Stage02ElevatorPaletteResource,
+    &g_Stage02Entity74Resource0,
+    &g_Stage02Entity74Resource1,
+    &g_Stage02MariaNpcResource,
     g_Stage02SpriteBank28,
     g_Stage02SpriteBank29,
     g_Stage02SpriteBank30,

@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
+#include "shared_sprite_banks.h"
 
 void EntityWarpExplosion(Entity* self);
 void EntityWarpIntenseExplosion(Entity* self);
@@ -9,19 +10,15 @@ void EntityWarpGreyPuff(Entity* self);
 void EntityWarpSoulStealOrb(Entity* self);
 void EntityWarpEnemyBlood(Entity* self);
 
-extern struct SpriteParts* g_EntitySpriteBank01[];
-extern struct SpriteParts* g_EntitySpriteBank05[];
-extern struct SpriteParts* g_EntitySpriteBank06[];
-
 u16 g_WarpEInitExplosion[5] = {1, 2, 4, 5, 1};
 
 EntityEntry g_WarpExplosionEntry = {
-    g_EntitySpriteBank01,
+    &g_SaturnSharedSpriteBank1Resource,
     EntityWarpExplosion,
 };
 
 EntityEntry g_WarpIntenseExplosionEntry = {
-    g_EntitySpriteBank05,
+    &g_SaturnSharedSpriteBank5Resource,
     EntityWarpIntenseExplosion,
 };
 
@@ -31,12 +28,12 @@ EntityEntry g_WarpUnkId13Entry = {
 };
 
 EntityEntry g_WarpExplosionVariantsEntry = {
-    g_EntitySpriteBank01,
+    &g_SaturnSharedSpriteBank1Resource,
     EntityWarpExplosionVariants,
 };
 
 EntityEntry g_WarpGreyPuffEntry = {
-    g_EntitySpriteBank05,
+    &g_SaturnSharedSpriteBank5Resource,
     EntityWarpGreyPuff,
 };
 
@@ -61,7 +58,7 @@ s16 g_WarpExplosionVariantSizes[7] = {
 };
 
 EntityEntry g_WarpSoulStealOrbEntry = {
-    g_EntitySpriteBank06,
+    &g_SaturnSharedSpriteBank6Resource,
     EntityWarpSoulStealOrb,
 };
 

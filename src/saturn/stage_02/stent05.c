@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
+#include "shared_sprite_banks.h"
 
 void func_060E5AE4(Entity* self);
 void func_060E5C4C(Entity* self);
@@ -7,14 +8,15 @@ void func_060E5DB4(Entity* self);
 void func_060E5EA0(Entity* self);
 void func_060E600C(Entity* self);
 
-extern struct SpriteParts* g_Stage02SpriteBank01[];
-extern struct SpriteParts* g_Stage02SpriteBank05[];
-
-EntityEntry g_Stage02EntityEntry01 = {g_Stage02SpriteBank01, func_060E5AE4};
-EntityEntry g_Stage02EntityEntry05 = {g_Stage02SpriteBank05, func_060E5C4C};
+EntityEntry g_Stage02EntityEntry01 = {
+    &g_SaturnSharedSpriteBank1Resource, func_060E5AE4};
+EntityEntry g_Stage02EntityEntry05 = {
+    &g_SaturnSharedSpriteBank5Resource, func_060E5C4C};
 EntityEntry g_Stage02EntityEntry18 = {NULL, func_060E5DB4};
-EntityEntry g_Stage02EntityEntry19 = {g_Stage02SpriteBank01, func_060E5EA0};
-EntityEntry g_Stage02EntityEntry20 = {g_Stage02SpriteBank05, func_060E600C};
+EntityEntry g_Stage02EntityEntry19 = {
+    &g_SaturnSharedSpriteBank1Resource, func_060E5EA0};
+EntityEntry g_Stage02EntityEntry20 = {
+    &g_SaturnSharedSpriteBank5Resource, func_060E600C};
 
 s32 g_Stage02ExplosionVariantYVelocities[6] = {
     0x800, 0x2800, 0x4800, 0x7000, 0xE000, 0x12000,

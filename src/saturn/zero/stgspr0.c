@@ -5,9 +5,8 @@
 
 void func_06019058(void);
 
-u32 D_06044348 = 0;
-void (*g_SaturnSharedSpriteSetup)(void) = func_06019058;
-u32 D_06044350[2] = {0};
+EntityEntry g_EntityNoopEntry = {NULL, func_06019058};
+struct SpriteParts* g_EntitySpriteBank15[2] = {NULL, NULL};
 u32 D_06044358 = 0xFFFFFFFF;
 
 SaturnSpriteFrameHeader g_SaturnSharedSpriteBank0Frame0 = {
@@ -1528,7 +1527,7 @@ SaturnSpriteFrame1 g_SaturnSharedSpriteBank0Frame201 = {
     },
 };
 
-SaturnSpriteFrameHeader* g_SaturnSharedSpriteBank0Frames[202] = {
+SaturnSpriteFrameHeader* g_SaturnSharedBreakableFrames[202] = {
     (SaturnSpriteFrameHeader*)&g_SaturnSharedSpriteBank0Frame0,
     (SaturnSpriteFrameHeader*)&g_SaturnSharedSpriteBank0Frame1,
     (SaturnSpriteFrameHeader*)&g_SaturnSharedSpriteBank0Frame2,

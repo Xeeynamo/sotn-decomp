@@ -107,7 +107,7 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A8E34, func_060A8E34);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A8F2C, func_060A8F2C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9064, func_060A9064);
 
-void func_060A9130(void) { func_060AA4BC(0xf0); }
+void func_060A9130(void) { RicSetStep(0xf0); }
 
 extern AnimationFrame D_80155950[];
 extern AnimationFrame D_8015591C[];
@@ -186,12 +186,12 @@ static s32 MariaCheckSubwpnChainLimit(s16 subwpnId, s16 limit) {
 
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A973C, func_060A973C);
 
-u8 d_060c1980[1];
+extern u8 g_MariaInitialAfterimageTimers[];
 
 int func_060A9958(int param_1) {
     int iVar2;
 
-    iVar2 = (int)(char)d_060c1980[param_1];
+    iVar2 = (int)(char)g_MariaInitialAfterimageTimers[param_1];
     if (!(iVar2 <= g_Status.mp)) {
         iVar2 = 0;
     } else {
@@ -210,7 +210,7 @@ s32 func_060A9CE8(void) {
     return 1;
 }
 
-void func_060A9CF8(void) { func_060AA4BC(0x16); }
+void func_060A9CF8(void) { RicSetStep(0x16); }
 
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9D10, func_060A9D10);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9DA4, func_060A9DA4);
@@ -221,7 +221,7 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA0A0, func_060AA0A0);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA260, func_060AA260);
 
 // RicSetStep
-void func_060AA4BC(s16 step) {
+void RicSetStep(s16 step) {
     PLAYER.step = step;
     PLAYER.step_s = 0;
 }
@@ -236,7 +236,7 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA4FC, func_060AA4FC);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA608, func_060AA608);
 
 // func_060AA754
-void RicDecelerateX(s32 speed) {
+void MariaDecelerateX(s32 speed) {
     if (g_CurrentEntity->velocityX < 0) {
         g_CurrentEntity->velocityX += speed;
         if (g_CurrentEntity->velocityX > 0) {
@@ -326,14 +326,13 @@ void func_8015CC28(void) {
 
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA974, func_060AA974);
 
-s32 func_060aa608(u32, u32);
-s32 d_060c37cc;
-s32 d_060c28a0;
-
+s32 func_060aa608(FrameProperty*, AnimationFrame**);
+extern FrameProperty g_MariaFrameProperties[];
+extern AnimationFrame* g_MariaAnimationGroups[];
 void func_060AA9EC(void) {
     g_CurrentEntity = &PLAYER;
     if (g_unkGraphicsStruct.unk28 == 4) {
-        func_060aa608(&d_060c37cc, &d_060c28a0);
+        func_060aa608(g_MariaFrameProperties, g_MariaAnimationGroups);
     }
 }
 
@@ -426,18 +425,18 @@ void func_8015F9F0(Entity* entity) {
     }
 }
 
-extern u8 D_80154674[][4];
-extern u8 D_80174FAC;
+extern u8 g_MariaBlueprintColors[][4];
+extern u8 g_MariaEmptyAnimMarker;
 extern u8 D_80174FB0;
 extern u8 D_80174FB4;
 extern u8 D_80174FB8;
 
 // func_060ABEF8
 void func_8015FA5C(s32 arg0) {
-    D_80174FAC = D_80154674[arg0][0];
-    D_80174FB0 = D_80154674[arg0][1];
-    D_80174FB4 = D_80154674[arg0][2];
-    D_80174FB8 = D_80154674[arg0][3];
+    g_MariaEmptyAnimMarker = g_MariaBlueprintColors[arg0][0];
+    D_80174FB0 = g_MariaBlueprintColors[arg0][1];
+    D_80174FB4 = g_MariaBlueprintColors[arg0][2];
+    D_80174FB8 = g_MariaBlueprintColors[arg0][3];
 }
 
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60ABF40, func_060ABF40);
@@ -658,7 +657,7 @@ void func_060BB330();
 extern u32 g_MariaCastleMapState;
 extern u8 g_MariaCastleMapBitmap[240][160];
 
-void func_060BACA4(void) {
+void func_060BD5F0(void) {
     memset(&g_MariaCastleMapState, 0, 4);
     memcpy(0x002B2000, g_MariaCastleMapBitmap, 0x9600);
 
@@ -676,28 +675,28 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE064, func_060BE064);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE258, func_060BE258);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE308, func_060BE308);
 
-s32 d_06086390;
-s32 d_060476A0;
-s32 d_060476A4;
-s32 d_060cd748;
-s32 d_060cd74c;
+s32 DAT_06086390;
+s32 DAT_060476a0;
+s32 DAT_060476a4;
+extern s32 g_MariaSavedMapVramBase;
+extern s32 g_MariaSavedMapPlaneConfig;
 void func_060BB9BC(s32*);
 s32* func_060784A8();
 
-void func_060BBA88(void) {
+void func_060BE3D4(void) {
     s32* iVar2;
     iVar2 = func_060784A8();
     func_060BB9BC(iVar2);
-    d_060476A0 = d_060cd748;
-    d_060476A4 = d_060cd74c;
+    DAT_060476a0 = g_MariaSavedMapVramBase;
+    DAT_060476a4 = g_MariaSavedMapPlaneConfig;
 }
 
 // same sequence of funcs as in richter
 
-s32 d_06086390;
+s32 DAT_06086390;
 void func_060BE414(void) {
     s32* iVar2;
-    d_06086390 = 0;
+    DAT_06086390 = 0;
     iVar2 = func_060784A8();
     iVar2[0x4500] = 0xffffffff;
 }
@@ -708,14 +707,14 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE618, func_060BE618);
 
 void func_060BE6D4(void) {
     int* iVar2;
-    d_06086390 = 4;
+    DAT_06086390 = 4;
     iVar2 = func_060784A8();
     iVar2[0x4500] = 0xffffffff;
 }
 
 void func_060BE700(void) {
     int* iVar2;
-    d_06086390 = 5;
+    DAT_06086390 = 5;
     iVar2 = func_060784A8();
     iVar2[0x4500] = 0xffffffff;
 }
@@ -727,7 +726,7 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BEA54, func_060BEA54);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BEB74, func_060BEB74);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BEE30, func_060BEE30);
 
-s16 PTR_DAT_060bf174[1];
+extern s16 g_MariaMapRevealRowIndices[7];
 void func_060BF0F4(u32 param_1) {
     int first;
     int cur;
@@ -742,7 +741,7 @@ void func_060BF0F4(u32 param_1) {
     else
         offset = 0;
 
-    first = PTR_DAT_060bf174[param_1];
+    first = g_MariaMapRevealRowIndices[param_1];
 
     for (cur = first; cur < first + 4; cur++) {
         int tile = cur << 6;
@@ -764,28 +763,28 @@ void func_060BF0F4(u32 param_1) {
 
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BF180, func_060BF180);
 
-Unk0605cd70 d_0605cd70;
+Unk0605cd70 DAT_0605cd70;
 u32 D_06085534;
 u16 d_0605c672;
-u8 d_06057f68;
+u8 DAT_06057f68;
 
 s32 func_060732E4(u16);
 void func_060BF180(void);
 
 void func_060BF35C(void) {
-    if (d_0605cd70.unk8 != 0) {
-        if (d_0605cd70.unk8 == 1) {
+    if (DAT_0605cd70.unk8 != 0) {
+        if (DAT_0605cd70.unk8 == 1) {
             goto after;
         }
         return;
     } else {
-        func_060732E4(d_0605cd70.unk0);
-        d_0605cd70.unk8 += 1;
+        func_060732E4(DAT_0605cd70.unk0);
+        DAT_0605cd70.unk8 += 1;
     }
 after:
-    if ((d_06057f68 == 0) && ((d_0605c672 & 0x100) != 0)) {
+    if ((DAT_06057f68 == 0) && ((d_0605c672 & 0x100) != 0)) {
         D_06085534 = 6;
-        d_06057f68 = 4;
+        DAT_06057f68 = 4;
     }
     func_060BF180();
 }

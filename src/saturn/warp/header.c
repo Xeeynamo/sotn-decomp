@@ -3,7 +3,7 @@
 #include "warp/warp.h"
 
 extern EntityEntry* g_WarpEntityUpdates[];
-extern struct SpriteParts** g_WarpSpriteBanks[18];
+extern void* g_WarpSpriteBanks[18];
 extern LayoutEntity* g_WarpLayoutHorizontal[53];
 extern LayoutEntity* g_WarpLayoutVertical[53];
 extern WarpRoomTable g_WarpRooms;

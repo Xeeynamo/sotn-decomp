@@ -2,6 +2,7 @@
 #ifndef ZERO_BIN_H
 #define ZERO_BIN_H
 #include "sattypes.h"
+#include "stage_data.h"
 #include "lib/scl.h"
 
 // func_06023394
@@ -17,20 +18,18 @@ void DMA_ScuInit();
 
 void func_0600DACC();
 
-extern s32 DAT_0601ac28[];
-extern s32 DAT_0601ac2c[];
 extern s32 DAT_0601ac30[];
 extern s32 DAT_0601ac34[];
 extern s32 DAT_0601ac38[];
-extern s32 DAT_0601ac3c[];
+extern s32 DAT_060645e4[];
 extern s32 DAT_0601ac40[];
-extern s32 DAT_0601ac44[];
+extern s32 DAT_060645f8[];
 extern s32 DAT_0605D910[];
 extern s16 DAT_0605AEA8;
 extern s16 DAT_06057A10[];
 extern s32 DAT_00252000;
 extern s32 DAT_00258000;
-extern s32* DAT_0606471C;
+extern s32* SpGourTbl;
 
 struct Unk060645D0_1 {
     struct Unk060645D0_2* unk0;
@@ -41,7 +40,7 @@ struct Unk060645D0_2 {
 };
 extern struct Unk060645D0_1* DAT_060645D0;
 
-s32* DAT_060485e0;
+extern u8 SYS_buf_060485E0[];
 struct Unk0605d6c0* DAT_0605d6c0[];
 u16 DAT_060086d4;
 s32 PTR_FUN_060086cc(s32, s32, s32);
@@ -95,17 +94,12 @@ void ClearDebugPrintTilemap();
 #define SH2_REG_M_FRT_IC 0x21000000
 
 extern s32 DAT_060645d0;
-extern s32 DAT_060cf040;
+extern void* g_BatResourceDescriptorList;
 
-extern s32* DAT_06064674;
 extern s32* DAT_060a5000;
-extern s32* DAT_06064580;
-extern s32* DAT_060645e0;
 
-extern s32* DAT_06064644;
-extern s32* DAT_060dc000;
+extern SaturnStageDataTables g_StageOverlayData;
 
-extern s32* DAT_06064690;
 extern s32* DAT_06066000;
 
 void func_06006FA8(void);

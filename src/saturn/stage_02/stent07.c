@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
+#include "shared_sprite_banks.h"
 
 void func_060E6B00(Entity* self);
 void func_060E6C0C(Entity* self);
 
-extern struct SpriteParts* g_Stage02SpriteBank08[];
-
-EntityEntry g_Stage02EntityEntry14 = {g_Stage02SpriteBank08, func_060E6B00};
+EntityEntry g_Stage02EntityEntry14 = {
+    &g_SaturnSharedSpriteBank8Resource, func_060E6B00};
 
 u16 g_Stage02Entity14Animation[16] = {
     0x0000, 0x00A2, 0x0081, 0x0481, 0x0461, 0x0861, 0x0861, 0x0C41,

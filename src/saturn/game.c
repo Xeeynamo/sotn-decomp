@@ -84,7 +84,7 @@ extern RoomLoadDefHolder D_801375BC;
 extern s32 D_8013759C;
 extern s32 D_801375A4;
 
-void FUN_060666a4(s32);
+void InitRoomEntities(s32);
 void SetDefaultSCLPriority(s32);
 void FUN_0606d358(s32);
 void func_0600ff08(void);
@@ -224,7 +224,7 @@ void InitRoom(void) {
     SetDefaultSCLPriority(0);
     func_800F0CD8(0);
     func_800F0CD8(0);
-    FUN_060666a4(DAT_0605d750.unk4);
+    InitRoomEntities(DAT_0605d750.unk4);
     FUN_0606c160();
     FUN_0606c160();
     DAT_0605cd70.unk0++;
@@ -239,7 +239,7 @@ void InitRoom(void) {
         }
     }
     if ((DAT_0605d750.unk4 == 0x50) || (DAT_0605d750.unk4 == 0x60)) {
-        if (func_06012dfc() != 0) {
+        if (func_80131F68_2() != 0) {
             PlaySfx(SET_STOP_MUSIC);
         }
         if ((g_unkGraphicsStruct.D_800973FC != 0) && (D_8006BB00 != 0)) {
@@ -319,7 +319,7 @@ extern s32 DAT_0608629c;
 void func_06073280(void);
 void UpdateCapePalette(void);
 void func_06005208(s32);
-void func_06008D04(s32, s32);
+void func_06008d04(s32, s32);
 void CheckWeaponCombo(void);
 void make_all(void);
 
@@ -328,9 +328,9 @@ void SubDisp(void) {
     switch (DAT_06057f68) {
     case 1:
         if (DAT_0605cd70.unk0 == 0x14) {
-            func_06008D04(1, 0x28);
+            func_06008d04(1, 0x28);
         } else {
-            func_06008D04(1, 0xF);
+            func_06008d04(1, 0xF);
         }
         DAT_06057f68++;
         break;
@@ -341,9 +341,9 @@ void SubDisp(void) {
         break;
     case 4:
         if (DAT_0605cd70.unk0 == 0x17) {
-            func_06008D04(0, 0x28);
+            func_06008d04(0, 0x28);
         } else {
-            func_06008D04(0, 0xF);
+            func_06008d04(0, 0xF);
         }
         DAT_06057f68++;
         break;

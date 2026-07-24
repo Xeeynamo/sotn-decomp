@@ -19,7 +19,7 @@ void func_0606EEF8(u16);
 void func_06005208(s32);
 void func_0606F14C(void);
 void RunMainEngine(void);
-void func_06072C94(void);
+void SubDisp(void);
 void func_060728B4(void);
 void CheckWeaponCombo(void);
 
@@ -42,7 +42,7 @@ void ModeGame(void) {
             func_0606F14C();
             break;
         case 4:
-            func_06072C94();
+            SubDisp();
             break;
         case 5:
             func_060728B4();
