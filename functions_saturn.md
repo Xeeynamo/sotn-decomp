@@ -192,7 +192,6 @@
 | zero/f_nonmat/f6004DE8.s     | func_06004DE8   |       58 |          5 |       |     |
 | zero/f_nonmat/f6008524.s     | func_06008524   |       58 |          6 |       |     |
 | zero/f_nonmat/f600A29C.s     | func_0600A29C   |       59 |          4 |       |     |
-| game/f_nonmat/f606F798.s     | func_0606F798   |       59 |          5 |       |     |
 | alucard/f_nonmat/f60A6618.s  | func_060A6618   |       60 |          1 |       |     |
 | alucard/f_nonmat/f60ADD74.s  | func_060ADD74   |       60 |          3 |       |     |
 | zero/f_nonmat/f6011F58.s     | func_06011F58   |       60 |          3 |       |     |
