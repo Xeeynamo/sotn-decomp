@@ -241,8 +241,8 @@ e_cutscene_dialogue:
   - CutsceneUnk3
   - CutsceneUnk4
   - DrawCutsceneActorName
-  - SetCutsceneEnd
-  - CutsceneRun
+  - SetCutsceneEvents
+  - RunCutsceneEvents
   - CutsceneSkip
   - ScaleCutsceneAvatar
   - ${prefix}_EntityCutscene

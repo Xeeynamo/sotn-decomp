@@ -90,7 +90,7 @@ u8 SetCutsceneScript(u8* script) {
 
 #include "../cutscene_actor_name.h"
 
-#include "../set_cutscene_end.h"
+#include "../set_cutscene_events.h"
 
 // n.b.! unlike the stage version of this function, a `self`
 // parameter is used to store the substep instead of
@@ -301,7 +301,7 @@ void EntityCutscene(Entity* self) {
                 }
                 g_Dialogue.scriptCur--;
                 return;
-            case CSOP_SET_END:
+            case CSOP_SET_EVENTS:
                 ptr = *g_Dialogue.scriptCur++;
                 ptr <<= 4;
                 ptr |= *g_Dialogue.scriptCur++;
@@ -309,7 +309,7 @@ void EntityCutscene(Entity* self) {
                 ptr |= *g_Dialogue.scriptCur++;
                 ptr <<= 4;
                 ptr |= *g_Dialogue.scriptCur++;
-                SetCutsceneEnd((u8*)ptr);
+                SetCutsceneEvents((u8*)ptr);
                 continue;
             case CSOP_SCRIPT_UNKNOWN_13:
                 continue;

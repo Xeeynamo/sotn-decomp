@@ -259,7 +259,7 @@ u8 SetCutsceneScript(u8* script) {
     return 0;
 }
 
-#include "../set_cutscene_end.h"
+#include "../set_cutscene_events.h"
 
 void EntityCutscene(Entity* self) {
     s16 x, y;
@@ -466,7 +466,7 @@ void EntityCutscene(Entity* self) {
                     ptr <<= 4;
                     ptr |= *g_Dialogue.scriptCur++;
                     ptr += D_psp_09286860;
-                    SetCutsceneEnd((u8*)ptr);
+                    SetCutsceneEvents((u8*)ptr);
                     continue;
 
                 case 13:

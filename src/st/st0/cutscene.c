@@ -167,8 +167,8 @@ extern u32 D_894568C;
 #include "../cutscene_unk4.h"
 #include "../cutscene_unk1.h"
 #include "../set_cutscene_script.h"
-#include "../set_cutscene_end.h"
-#include "../cutscene_run.h"
+#include "../set_cutscene_events.h"
+#include "../cutscene_events.h"
 #else
 static const char* actor_names[] = {_S("Richter"), _S("Dracula")};
 
@@ -247,8 +247,8 @@ static u8 SetCutsceneScript(u8* script) {
 #include "../cutscene_unk3.h"
 #include "../cutscene_unk4.h"
 #include "../cutscene_actor_name.h"
-#include "../set_cutscene_end.h"
-#include "../cutscene_run.h"
+#include "../set_cutscene_events.h"
+#include "../cutscene_events.h"
 #include "../cutscene_scale_avatar.h"
 #endif
 
@@ -285,7 +285,7 @@ void EntityCutscene(Entity* self) {
         self->step_s = 0;
     }
     if (self->step && g_Dialogue.unk3C) {
-        CutsceneRun();
+        RunCutsceneEvents();
     }
 
     switch (self->step) {
@@ -503,7 +503,7 @@ void EntityCutscene(Entity* self) {
                     }
                     *g_Dialogue.scriptCur--;
                     return;
-                case CSOP_SET_END:
+                case CSOP_SET_EVENTS:
                     ptr = *g_Dialogue.scriptCur++;
                     ptr <<= 4;
                     ptr |= *g_Dialogue.scriptCur++;
@@ -514,7 +514,7 @@ void EntityCutscene(Entity* self) {
 #ifdef VERSION_PSP
                     ptr += (u32)OVL_EXPORT(cutscene_script);
 #endif
-                    SetCutsceneEnd((u8*)ptr);
+                    SetCutsceneEvents((u8*)ptr);
                     continue;
                 case CSOP_SCRIPT_UNKNOWN_13:
                     continue;

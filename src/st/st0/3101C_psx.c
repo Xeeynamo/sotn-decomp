@@ -31,7 +31,7 @@ typedef struct {
     /* 0x38 */ u16 unk3C; // maybe it is a begin flag?
     /* 0x3A */ u16 timer;
 #endif
-    /* 0x3C */ u8* scriptEnd;
+    /* 0x3C */ u8* eventCur;
 } DialoguePrologue;
 
 // n.b. g_Dialogue is defined as the Dialogue struct, but is used in

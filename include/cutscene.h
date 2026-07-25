@@ -14,7 +14,7 @@ typedef enum {
     CSOP_PLAY_SOUND,
     CSOP_WAIT_FOR_SOUND,
     CSOP_SCRIPT_UNKNOWN_11,
-    CSOP_SET_END,
+    CSOP_SET_EVENTS,
     CSOP_SCRIPT_UNKNOWN_13,
     CSOP_SCRIPT_SWITCH,
     CSOP_SCRIPT_UNKNOWN_15,
@@ -81,7 +81,7 @@ u8* CutsceneAddrToPc(u32 psxAddr);
 #define PLAY_SOUND(id) CSOP_PLAY_SOUND, script_half(id)
 #define WAIT_FOR_SOUND() CSOP_WAIT_FOR_SOUND
 #define SCRIPT_UNKNOWN_11() CSOP_SCRIPT_UNKNOWN_11
-#define SET_END(x) CSOP_SET_END, script_word(x)
+#define SET_EVENTS(x) CSOP_SET_EVENTS, script_word(x)
 #define SCRIPT_SWITCH(x) CSOP_SCRIPT_SWITCH, script_word(x)
 #define SCRIPT_UNKNOWN_15(x) CSOP_SCRIPT_UNKNOWN_15, script_word(x)
 #define WAIT_FOR_FLAG(x) CSOP_WAIT_FOR_FLAG, x
@@ -147,7 +147,7 @@ typedef struct {
     /* 0x30 */ s32 primIndex[3]; // primIndices: unk, actorName, unk
     /* 0x3C */ u16 unk3C;        // maybe it is a begin flag?
     /* 0x3E */ u16 timer;        // global timer
-    /* 0x40 */ u8* scriptEnd;    // pointer to the end of the script
+    /* 0x40 */ u8* eventCur;     // ptr into the event timeline
 } Dialogue;                      // size = 0x44
 
 // no4/cutscene

@@ -96,9 +96,9 @@ s32 g_IsCutsceneDone;        // used in e_shop.c
 
 #include "../set_cutscene_script.h"
 
-#include "../set_cutscene_end.h"
+#include "../set_cutscene_events.h"
 
-#include "../cutscene_run.h"
+#include "../cutscene_events.h"
 
 #include "../cutscene_skip.h"
 
@@ -162,7 +162,7 @@ void EntityCutscene(Entity* self) {
     }
 
     if (self->step && g_Dialogue.unk3C) {
-        CutsceneRun();
+        RunCutsceneEvents();
     }
 
     switch (self->step) {
@@ -346,7 +346,7 @@ void EntityCutscene(Entity* self) {
                     }
                     g_Dialogue.scriptCur--;
                     return;
-                case CSOP_SET_END:
+                case CSOP_SET_EVENTS:
                     ptr = (u_long)*g_Dialogue.scriptCur++;
                     ptr <<= 4;
                     ptr |= (u_long)*g_Dialogue.scriptCur++;
@@ -355,7 +355,7 @@ void EntityCutscene(Entity* self) {
                     ptr <<= 4;
                     ptr |= (u_long)*g_Dialogue.scriptCur++;
                     ptr += (u_long)OVL_EXPORT(cutscene_data);
-                    SetCutsceneEnd((u8*)ptr);
+                    SetCutsceneEvents((u8*)ptr);
                     continue;
                 case CSOP_SCRIPT_UNKNOWN_13:
                     continue;

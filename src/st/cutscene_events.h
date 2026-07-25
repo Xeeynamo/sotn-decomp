@@ -10,7 +10,7 @@ extern Dialogue g_Dialogue;
 extern u32 g_CutsceneFlags;
 extern PfnEntityUpdate EntityUpdates[];
 
-static void CutsceneRun(void) {
+static void RunCutsceneEvents(void) {
     Entity* entity;
     u16 startTimer;
 
@@ -21,49 +21,49 @@ static void CutsceneRun(void) {
         return;
     }
     while (true) {
-        // Start the dialogue script only if the start timer has passed
-        startTimer = *g_Dialogue.scriptEnd++ << 8;
-        startTimer |= *g_Dialogue.scriptEnd++;
+        // Run the next event only once its start timer has elapsed
+        startTimer = *g_Dialogue.eventCur++ << 8;
+        startTimer |= *g_Dialogue.eventCur++;
         if (g_Dialogue.timer < startTimer) {
             // Re-evaluate the condition at the next frame
-            g_Dialogue.scriptEnd -= 2;
+            g_Dialogue.eventCur -= 2;
             return;
         }
-        switch (*g_Dialogue.scriptEnd++) {
-        case 0:
-            entity = &g_Entities[*g_Dialogue.scriptEnd++ & 0xFF] +
+        switch (*g_Dialogue.eventCur++) {
+        case CSEV_SPAWN:
+            entity = &g_Entities[*g_Dialogue.eventCur++ & 0xFF] +
                      STAGE_ENTITY_START;
             DestroyEntity(entity);
-            entity->entityId = *g_Dialogue.scriptEnd++;
+            entity->entityId = *g_Dialogue.eventCur++;
             entity->pfnUpdate = EntityUpdates[entity->entityId - 1];
-            entity->posX.i.hi = *g_Dialogue.scriptEnd++ * 0x10;
-            entity->posX.i.hi |= *g_Dialogue.scriptEnd++;
-            entity->posY.i.hi = *g_Dialogue.scriptEnd++ * 0x10;
-            entity->posY.i.hi |= *g_Dialogue.scriptEnd++;
+            entity->posX.i.hi = *g_Dialogue.eventCur++ * 0x10;
+            entity->posX.i.hi |= *g_Dialogue.eventCur++;
+            entity->posY.i.hi = *g_Dialogue.eventCur++ * 0x10;
+            entity->posY.i.hi |= *g_Dialogue.eventCur++;
 #ifdef CUTSCENE_TILEMAP_SCROLL
             entity->posX.i.hi -= g_Tilemap.scrollX.i.hi;
             entity->posY.i.hi -= g_Tilemap.scrollY.i.hi;
 #endif
             break;
-        case 1:
-            entity = &g_Entities[*g_Dialogue.scriptEnd++ & 0xFF] +
+        case CSEV_DESTROY:
+            entity = &g_Entities[*g_Dialogue.eventCur++ & 0xFF] +
                      STAGE_ENTITY_START;
             DestroyEntity(entity);
             break;
-        case 2:
-            if (!((g_CutsceneFlags >> *g_Dialogue.scriptEnd) & 1)) {
+        case CSEV_WAIT_FOR_FLAG:
+            if (!((g_CutsceneFlags >> *g_Dialogue.eventCur) & 1)) {
 #ifdef STAGE_IS_DRE
                 g_Dialogue.timer--;
-                g_Dialogue.scriptEnd -= 3;
+                g_Dialogue.eventCur -= 3;
 #else
-                g_Dialogue.scriptEnd--;
+                g_Dialogue.eventCur--;
 #endif
                 return;
             }
-            g_CutsceneFlags &= ~(1 << *g_Dialogue.scriptEnd++);
+            g_CutsceneFlags &= ~(1 << *g_Dialogue.eventCur++);
             break;
-        case 3:
-            g_CutsceneFlags |= 1 << *g_Dialogue.scriptEnd++;
+        case CSEV_SET_FLAG:
+            g_CutsceneFlags |= 1 << *g_Dialogue.eventCur++;
             break;
         }
     }

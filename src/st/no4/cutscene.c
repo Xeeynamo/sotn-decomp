@@ -434,7 +434,7 @@ void EntityCutscene(Entity* self) {
                     }
                     *g_Dialogue.scriptCur--;
                     return;
-                case CSOP_SET_END:
+                case CSOP_SET_EVENTS:
                     continue;
                 case CSOP_SCRIPT_UNKNOWN_13:
                     continue;

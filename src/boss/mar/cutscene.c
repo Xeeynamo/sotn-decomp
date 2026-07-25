@@ -27,9 +27,9 @@ static s32 D_us_8019AF2C;
 
 #include "../../st/cutscene_actor_name.h"
 
-#include "../../st/set_cutscene_end.h"
+#include "../../st/set_cutscene_events.h"
 
-#include "../../st/cutscene_run.h"
+#include "../../st/cutscene_events.h"
 
 #include "../../st/cutscene_scale_avatar.h"
 
@@ -77,7 +77,7 @@ void EntityCutscene(Entity* self) {
             self->step_s = 0;
         }
         if (self->step && (g_Dialogue.unk3C != 0)) {
-            CutsceneRun();
+            RunCutsceneEvents();
         }
     }
     switch (self->step) {
@@ -280,7 +280,7 @@ void EntityCutscene(Entity* self) {
                 ptr |= *g_Dialogue.scriptCur++;
                 ptr <<= 4;
                 ptr |= *g_Dialogue.scriptCur++;
-                SetCutsceneEnd(ptr);
+                SetCutsceneEvents(ptr);
                 continue;
 
             case 13:
