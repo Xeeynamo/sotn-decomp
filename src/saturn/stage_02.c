@@ -344,7 +344,7 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EA264, func_060EA264);
 // EntityAxeKnightThrowingAxe
 // SAT: func_060EAC54
 void EntityAxeKnightRotateAxe(Entity* self) {
-    self->unk0->flags |= 0x40;
+    self->unk0->flags |= FLAG_UNK_40;
 
     if (self->params != 0) {
         self->unk0->rotate += 0x80;

@@ -651,10 +651,10 @@ void BicyouseiDir0(Entity* entity) {
     SpriteObject* temp = entity->unk0;
 
     if (temp->posX >= PLAYER.posX.val) {
-        temp->flags &= ~0x10;
+        temp->flags &= ~FLAG_UNK_10;
         entity->facingLeft = 0;
     } else {
-        temp->flags |= 0x10;
+        temp->flags |= FLAG_UNK_10;
         entity->facingLeft = 1;
     }
 }
@@ -663,10 +663,10 @@ void BicyouseiDir1(Entity* entity) {
     SpriteObject* temp = entity->unk0;
 
     if (temp->posX >= PLAYER.posX.val) {
-        temp->flags |= 0x10;
+        temp->flags |= FLAG_UNK_10;
         entity->facingLeft = 0;
     } else {
-        temp->flags &= ~0x10;
+        temp->flags &= ~FLAG_UNK_10;
         entity->facingLeft = 1;
     }
 }
