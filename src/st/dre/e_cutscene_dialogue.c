@@ -557,7 +557,7 @@ void OVL_EXPORT(EntityCutsceneDialogue)(Entity* self) {
                 case CSOP_SET_FLAG:
                     g_CutsceneFlags |= 1 << *g_Dialogue.scriptCur++;
                     continue;
-                case CSOP_SCRIPT_UNKNOWN_18:
+                case CSOP_STOP_EVENTS:
                     g_Dialogue.hasEvents = 0;
                     continue;
                 case CSOP_LOAD_PORTRAIT:

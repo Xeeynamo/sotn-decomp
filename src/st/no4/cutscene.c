@@ -454,7 +454,7 @@ void EntityCutscene(Entity* self) {
                 case CSOP_SET_FLAG:
                     g_CutsceneFlags |= 1 << *g_Dialogue.scriptCur++;
                     continue;
-                case CSOP_SCRIPT_UNKNOWN_18:
+                case CSOP_STOP_EVENTS:
                 case CSOP_LOAD_PORTRAIT:
                     if (skip_cutscene) {
                         g_Dialogue.scriptCur += 5;
