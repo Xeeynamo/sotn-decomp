@@ -647,7 +647,7 @@
 | maria    | func_pspeu_092B3810               |       19 |          1 |        |       |     |
 | ric      | func_pspeu_092B1238               |       19 |          1 |        |       |     |
 | cen      | func_pspeu_09261DB8               |       19 |          1 |        |       |     |
-| cen      | SetCutsceneEnd                    |       19 |          1 |        |       |     |
+| cen      | SetCutsceneEvents                 |       19 |          1 |        |       |     |
 | cen      | func_pspeu_092430E0               |       19 |          1 |        |       |     |
 | dai      | func_pspeu_092541E8               |       19 |          1 |        |       |     |
 | dre      | func_pspeu_092458A8               |       19 |          1 |        |       |     |
@@ -662,7 +662,7 @@
 | st0      | func_pspeu_092392D0               |       19 |          1 |        |       |     |
 | st0      | func_pspeu_09237868               |       19 |          1 |        |       |     |
 | st0      | func_pspeu_09237A40               |       19 |          1 |        |       |     |
-| top      | SetCutsceneEnd                    |       19 |          1 |        |       |     |
+| top      | SetCutsceneEvents                 |       19 |          1 |        |       |     |
 | dra      | func_psp_09137498                 |       19 |          2 |        |       |     |
 | main     | func_psp_089172E4                 |       19 |          2 |        |       |     |
 | main     | _gettimeofday                     |       19 |          2 |        |       |     |
@@ -5491,10 +5491,10 @@
 | np3      | EntityShuttingWindow              |      252 |         32 |        |       |     |
 | dra      | func_psp_09111648                 |      252 |         38 |        |       |     |
 | no3      | func_pspeu_09237F80               |      253 |          1 |        |       |     |
-| cen      | CutsceneRun                       |      253 |         18 |        |       |     |
+| cen      | RunCutsceneEvents                 |      253 |         18 |        |       |     |
 | dai      | func_pspeu_09254220               |      253 |         18 |        |       |     |
 | rcen     | func_pspeu_09246350               |      253 |         18 |        |       |     |
-| top      | CutsceneRun                       |      253 |         18 |        |       |     |
+| top      | RunCutsceneEvents                 |      253 |         18 |        |       |     |
 | no3      | func_pspeu_0923D998               |      253 |         24 | Yes    |       |     |
 | rno0     | EntityJackOBonesJack              |      254 |         25 |        |       |     |
 | rno3     | func_pspeu_0923E7A0               |      254 |         25 |        |       |     |
