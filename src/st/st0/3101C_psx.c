@@ -44,9 +44,6 @@ extern DialoguePrologue g_Dialogue;
 
 static u16 D_801BEE90[48][48]; // bss
 
-static u8 unused[] = {0x00, 0x81, 0x17, 0x08, 0x80, 0x08,
-                      0x80, 0xFF, 0xFF, 0x00, 0x00, 0x00};
-
 u8 func_801B101C(u8* script) {
     Primitive* prim;
     s16 i;
