@@ -22,7 +22,7 @@ u8 OVL_EXPORT(cutscene_data)[] = {
     32, 88, 8, 128, 8, 128, 0, 0, 0, 33, 90, 10, 160, 7, 120, 255, 255, 0};
 
 static void InitCutscenePc(void) {
-    static const CutsceneSymbol symbols[] = {
+    static const CutsceneSymbolRange symbols[] = {
         {OVL_EXPORT(cutscene_data), 0x80184CE0,
          sizeof(OVL_EXPORT(cutscene_data))},
         {cutscene_alucard, 0x80191b88, 0xd80},

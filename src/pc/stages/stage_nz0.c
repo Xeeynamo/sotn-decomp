@@ -23,7 +23,7 @@ u8 OVL_EXPORT(cutscene_data)[] = {
     0x4C, 0x00, 0x00, 0x08, 0x83, 0xFF, 0xFF, 0x00, 0x00, 0x00};
 
 static void InitCutscenePc(void) {
-    static const CutsceneSymbol symbols[] = {
+    static const CutsceneSymbolRange symbols[] = {
         {OVL_EXPORT(cutscene_data), 0x80183B0C,
          sizeof(OVL_EXPORT(cutscene_data))},
         {cutscene_nz0_maria, 0x80193ba4, 0xd80},

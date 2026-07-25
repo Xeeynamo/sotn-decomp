@@ -31,7 +31,7 @@ u8 OVL_EXPORT(cutscene_script)[] = {
 };
 
 static void InitCutscenePc(void) {
-    static const CutsceneSymbol symbols[] = {
+    static const CutsceneSymbolRange symbols[] = {
         {D_801816C4, 0x801816c4, sizeof(D_801816C4)},
         {OVL_EXPORT(cutscene_script), 0x801816c8,
          sizeof(OVL_EXPORT(cutscene_script))},

@@ -22,7 +22,7 @@ u8 OVL_EXPORT(cutscene_script)[] = {
     0x00, 0x81, 0x17, 0x08, 0x80, 0x08, 0x80, 0xFF, 0xFF, 0x00, 0x00, 0x00};
 
 static void InitCutscenePc(void) {
-    static const CutsceneSymbol symbols[] = {
+    static const CutsceneSymbolRange symbols[] = {
         {OVL_EXPORT(cutscene_script), 0x801829d8,
          sizeof(OVL_EXPORT(cutscene_script))},
         {gfx_portrait_richter, 0x8018f130, 0xd80},

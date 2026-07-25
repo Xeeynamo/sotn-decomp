@@ -85,9 +85,9 @@ typedef struct {
     const void* pcAddr; // equivalent of symbol address on PC
     unsigned psxAddr;   // equivalent of symbol address on PSX
     unsigned size;      // symbol size in bytes
-} CutsceneSymbol;
+} CutsceneSymbolRange;
 
-void CutscenePcAlloc(const CutsceneSymbol* symbols, int count);
+void CutscenePcAlloc(const CutsceneSymbolRange* symbols, int count);
 u8* CutsceneAddrToPc(u32 psxAddr);
 
 #endif

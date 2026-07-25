@@ -19,7 +19,7 @@ extern u8 cutscene_cen_alucard[];
 extern u8 cutscene_cen_maria[];
 
 static void InitCutscenePc(void) {
-    static const CutsceneSymbol symbols[] = {
+    static const CutsceneSymbolRange symbols[] = {
         {cutscene_cen_alucard, 0x80181f40, 0xd80},
         {cutscene_cen_maria, 0x80182cc0, 0xd80},
     };
