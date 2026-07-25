@@ -11,18 +11,18 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DC040, func_060DC040);
 // SAT: func_060DC460
 // bust with red eyes that can have a candle on it
 void EntityRedEyeBust(Entity* self) {
-    struct Unk0600B344* result;
+    SpriteObject* result;
     switch (self->step) {
     case 0:
         TekiInit(self, 3);
-        result = func_0600B344(
+        result = CreateSpriteObject(
             (u16)entityRedEyeBustData.allocationIndex,
-            entityRedEyeBustData.flags, (s32)entityRedEyeBustData.images, 1);
+            entityRedEyeBustData.flags, entityRedEyeBustData.images, 1);
         self->unk0 = result;
         func_0600AFA8(result, entityRedEyeBustData2[7]);
         result->zPriority = 0x70;
-        result->unk14 = *(u32*)(&self->posX);
-        result->unk18 = *(u32*)(&self->posY);
+        result->posX = *(u32*)(&self->posX);
+        result->posY = *(u32*)(&self->posY);
         self->step++;
         break;
     case 1:
@@ -66,10 +66,10 @@ void EntityTableWithGlobe(Entity* self) {
     case 0:
         TekiInit(self, 5);
         self->step++;
-        self->unk0 = func_0600B344(
+        self->unk0 = CreateSpriteObject(
             g_Stage02TableWithGlobeResource.allocationIndex,
             g_Stage02TableWithGlobeResource.flags,
-            (s32)g_Stage02TableWithGlobeResource.images, 7);
+            g_Stage02TableWithGlobeResource.images, 7);
         self->unk0->zPriority = 0x6A;
         self->hitboxWidth = 10;
         self->hitboxHeight = 12;
@@ -344,12 +344,12 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EA264, func_060EA264);
 // EntityAxeKnightThrowingAxe
 // SAT: func_060EAC54
 void EntityAxeKnightRotateAxe(Entity* self) {
-    self->unk0->unk0 |= 0x40;
+    self->unk0->flags |= 0x40;
 
     if (self->params != 0) {
-        self->unk0->unk8 += 0x80;
+        self->unk0->rotate += 0x80;
     } else {
-        self->unk0->unk8 -= 0x80;
+        self->unk0->rotate -= 0x80;
     }
     if (self->params != 0) {
         self->rotate += 0x80;

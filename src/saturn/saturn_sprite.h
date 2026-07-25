@@ -57,12 +57,6 @@ typedef struct {
 } SaturnSpriteFrame18;
 
 typedef struct {
-    u8 storedWidth;
-    u8 storedHeight;
-    u16 characterOffsetUnits;
-} SaturnSpriteImage;
-
-typedef struct {
     u8 width;
     u8 height;
     u8 pixels[512];

@@ -75,13 +75,13 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079AF0, func_06079AF0);
 
 // original name: normal_move
 void NormalMove(Entity* entity) {
-    Unk0600B344* temp = entity->unk0;
+    SpriteObject* temp = entity->unk0;
 
     if (temp != NULL) {
-        temp->unk14 += entity->velocityX;
-        temp->unk18 += entity->velocityY;
-        entity->posX.val = temp->unk14;
-        entity->posY.val = temp->unk18;
+        temp->posX += entity->velocityX;
+        temp->posY += entity->velocityY;
+        entity->posX.val = temp->posX;
+        entity->posY.val = temp->posY;
     }
 }
 
@@ -91,20 +91,20 @@ void MoveEntity(Entity* entity) {
 }
 
 void func_06079BB4(Entity* entity) {
-    Unk0600B344* temp = entity->unk0;
+    SpriteObject* temp = entity->unk0;
 
     if (temp != NULL) {
-        temp->unk14 = entity->posX.val;
-        temp->unk18 = entity->posY.val;
+        temp->posX = entity->posX.val;
+        temp->posY = entity->posY.val;
     }
 }
 
 void func_06079BCC(Entity* entity) {
-    Unk0600B344* temp = entity->unk0;
+    SpriteObject* temp = entity->unk0;
 
     if (temp != NULL) {
-        entity->posX.val = temp->unk14;
-        entity->posY.val = temp->unk18;
+        entity->posX.val = temp->posX;
+        entity->posY.val = temp->posY;
     }
 }
 
@@ -590,9 +590,9 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AA74, func_0607AA74);
 
 void func_0607AAA4(Entity* entity) {
     Entity* player = &PLAYER;
-    Unk0600B344* temp = entity->unk0;
+    SpriteObject* temp = entity->unk0;
 
-    if (temp->unk14 >= player->posX.val) {
+    if (temp->posX >= player->posX.val) {
         entity->facingLeft = 0;
     } else {
         entity->facingLeft = 1;
@@ -601,9 +601,9 @@ void func_0607AAA4(Entity* entity) {
 
 void func_0607AACC(Entity* entity) {
     Entity* player = &PLAYER;
-    Unk0600B344* temp = entity->unk0;
+    SpriteObject* temp = entity->unk0;
 
-    if (temp->unk14 >= player->posX.val) {
+    if (temp->posX >= player->posX.val) {
         entity->facingLeft = 1;
     } else {
         entity->facingLeft = 0;
@@ -648,41 +648,41 @@ s32 GetSideToPlayer2(Entity* self) {
 
 // original name: bicyousei_dir_0
 void BicyouseiDir0(Entity* entity) {
-    Unk0600B344* temp = entity->unk0;
+    SpriteObject* temp = entity->unk0;
 
-    if (temp->unk14 >= PLAYER.posX.val) {
-        temp->unk0 &= ~0x10;
+    if (temp->posX >= PLAYER.posX.val) {
+        temp->flags &= ~0x10;
         entity->facingLeft = 0;
     } else {
-        temp->unk0 |= 0x10;
+        temp->flags |= 0x10;
         entity->facingLeft = 1;
     }
 }
 
 void BicyouseiDir1(Entity* entity) {
-    Unk0600B344* temp = entity->unk0;
+    SpriteObject* temp = entity->unk0;
 
-    if (temp->unk14 >= PLAYER.posX.val) {
-        temp->unk0 |= 0x10;
+    if (temp->posX >= PLAYER.posX.val) {
+        temp->flags |= 0x10;
         entity->facingLeft = 0;
     } else {
-        temp->unk0 &= ~0x10;
+        temp->flags &= ~0x10;
         entity->facingLeft = 1;
     }
 }
 
 // original name: hanten_dir_0
 bool HantenDir0(Entity* entity) {
-    Unk0600B344* temp = entity->unk0;
+    SpriteObject* temp = entity->unk0;
     bool ret = false;
     Entity* player = &PLAYER;
 
     if (entity->facingLeft == 0) {
-        if (temp->unk14 < player->posX.val) {
+        if (temp->posX < player->posX.val) {
             ret = true;
         }
     } else {
-        if (temp->unk14 > player->posX.val) {
+        if (temp->posX > player->posX.val) {
             ret = true;
         }
     }
@@ -690,16 +690,16 @@ bool HantenDir0(Entity* entity) {
 }
 
 bool HantenDir1(Entity* entity) {
-    Unk0600B344* temp = entity->unk0;
+    SpriteObject* temp = entity->unk0;
     bool ret = false;
     Entity* player = &PLAYER;
 
     if (entity->facingLeft == 0) {
-        if (temp->unk14 > player->posX.val) {
+        if (temp->posX > player->posX.val) {
             ret = true;
         }
     } else {
-        if (temp->unk14 < player->posX.val) {
+        if (temp->posX < player->posX.val) {
             ret = true;
         }
     }
@@ -906,10 +906,10 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B448, func_0607B448);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B4B8, func_0607B4B8);
 
 void func_0607B604(Entity* entity) {
-    Unk0600B344* temp = entity->unk0;
+    SpriteObject* temp = entity->unk0;
 
-    temp->unk14 = entity->posX.val;
-    temp->unk18 = entity->posY.val;
+    temp->posX = entity->posX.val;
+    temp->posY = entity->posY.val;
 }
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B618, func_0607B618);
