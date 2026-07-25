@@ -510,10 +510,6 @@ def elf_srcs(srcs, output_dir):
 elf_srcs(snd_srcs, build_base_path)
 elf_srcs(lib_srcs, build_base_path)
 
-if sotn_progress_report: # skip link step
-    ninja.close()
-    raise SystemExit(0)
-
 def add_asm_srcs(srcs, output_dir):
     for src in srcs:
         filename_without_extension = os.path.splitext(os.path.basename(src))[0]
@@ -524,7 +520,14 @@ def add_asm_srcs(srcs, output_dir):
         ninja.build(cof_name, 'as', inputs=[src])
         ninja.build(obj_name, 'coff2elf', inputs=[cof_name])
 
-add_asm_srcs(asm_srcs, "build/saturn")
+# The objdiff unit list is derived from the splat configs, which include the
+# hand-written .text subsegments, so these objects must exist in the report
+# tree too.
+add_asm_srcs(asm_srcs, build_base_path)
+
+if sotn_progress_report: # skip link step
+    ninja.close()
+    raise SystemExit(0)
 
 def inherited_symbol_files(target):
     files = ['config/saturn/zero_syms.txt']
