@@ -5,6 +5,10 @@
 u8 gfx_stage_name_jp_sm[] = {
 #include "gen/gfx_stage_name_jp_sm.h"
 };
+#else
+u8 gfx_stage_name_jp_sm_psx[] = {
+#include "gen/gfx_stage_name_jp_sm_psx.h"
+};
 #endif
 
 u8 gfx_stage_name_jp_lg[] = {

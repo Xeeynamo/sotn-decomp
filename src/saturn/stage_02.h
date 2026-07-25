@@ -41,7 +41,7 @@ typedef enum {
     E_GAIBON = 0x43,
     E_GAIBON_SMALL_FIREBALL = 0x45,
     E_GAIBON_BIG_FIREBALL = 0x46,
-} EntityIDs;
+} EntityID;
 
 s16 Random(void);
 s32 AnimateEntityWithSpriteData(

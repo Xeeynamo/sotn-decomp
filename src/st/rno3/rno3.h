@@ -12,7 +12,7 @@ enum Palettes {
     PAL_NONE,
 };
 
-typedef enum EntityIDs {
+typedef enum EntityID {
     /* 0x00 */ E_NONE,
     /* 0x01 */ E_BREAKABLE,              // EntityBreakable
     /* 0x02 */ E_EXPLOSION,              // EntityExplosion
@@ -92,6 +92,6 @@ typedef enum EntityIDs {
     /* 0x4C */ E_SMALL_WATER_DROP,       // EntitySmallWaterDrop
     /* 0x4D */ E_WATER_DROP,             // EntityWaterDrop
     /* 0x4E */ E_DODO_BIRD,              // EntityDodoBird
-} EntityIDs;
+} EntityID;
 
 #endif // RNO3_H

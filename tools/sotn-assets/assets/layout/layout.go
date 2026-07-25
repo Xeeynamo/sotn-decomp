@@ -52,7 +52,7 @@ func fetchEntityIDsFromHeaderFile(overlay string) (map[int]string, error) {
 		path = "src/boss"
 	}
 	path += "/" + overlay
-	return sotn.FetchEnumWithMin(path, overlay, "EntityIDs", 0x100)
+	return sotn.FetchEnumWithMin(path, overlay, "EntityID", 0x100)
 }
 
 func readEntityLayoutEntry(file io.ReadSeeker, ovlName string) (layoutEntry, error) {

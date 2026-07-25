@@ -19,7 +19,8 @@ extern u8 gfx_portrait_dracula[];
 
 u8 OVL_EXPORT(cutscene_script)[] = {
 #include "../../st/st0/gen/cutscene_script_psx.h"
-    0x00, 0x81, 0x17, 0x08, 0x80, 0x08, 0x80, 0xFF, 0xFF, 0x00, 0x00, 0x00};
+#include "../../st/st0/gen/cutscene_events.h"
+};
 
 static void InitCutscenePc(void) {
     static const CutsceneSymbolRange symbols[] = {

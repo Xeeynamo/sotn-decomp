@@ -27,7 +27,7 @@ typedef enum {
     /* 0x1C */ UNK_ENTITY_28,
     /* 0x1D */ UNK_ENTITY_29,
     /* 0x1E */ UNK_ENTITY_30,
-} EntityIDs;
+} EntityID;
 
 extern EInit g_EInitInteractable;
 extern EInit g_EInitCommon;

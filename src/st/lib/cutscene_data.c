@@ -4,4 +4,5 @@
 
 u8 OVL_EXPORT(cutscene_data)[] = {
 #include "gen/cutscene_data.h"
+#include "gen/cutscene_events.h"
 };

@@ -168,7 +168,7 @@ extern u32 D_pspeu_09260F58;
 
 #include "../set_cutscene_script.h"
 
-#include "../set_cutscene_end.h"
+#include "../set_cutscene_events.h"
 #else
 // This array is in Data, but the strings within it are rodata. That rodata
 // lives between the jump tables in this file, so we have to import the rodata,
@@ -196,11 +196,11 @@ s32 dialogue_started;
 
 #include "../cutscene_actor_name.h"
 
-#include "../set_cutscene_end.h"
+#include "../set_cutscene_events.h"
 #endif
 
 #define CUTSCENE_TILEMAP_SCROLL
-#include "../cutscene_run.h"
+#include "../cutscene_events.h"
 
 #include "../cutscene_skip.h"
 
@@ -237,8 +237,8 @@ void EntityCutscene(Entity* self) {
             CutsceneSkip(self);
         }
     }
-    if ((self->step) && (g_Dialogue.unk3C)) {
-        CutsceneRun();
+    if (self->step && g_Dialogue.hasEvents) {
+        RunCutsceneEvents();
     }
 
     switch (self->step) {
@@ -489,7 +489,7 @@ void EntityCutscene(Entity* self) {
                     }
                     *g_Dialogue.scriptCur--;
                     return;
-                case CSOP_SET_END:
+                case CSOP_SET_EVENTS:
                     ptr = (u32)*g_Dialogue.scriptCur++;
                     ptr <<= 4;
                     ptr |= (u32)*g_Dialogue.scriptCur++;
@@ -500,7 +500,7 @@ void EntityCutscene(Entity* self) {
 #ifdef VERSION_PSP
                     ptr += (u32)D_pspeu_09269918;
 #endif
-                    SetCutsceneEnd((u8*)ptr);
+                    SetCutsceneEvents((u8*)ptr);
                     continue;
                 case CSOP_SCRIPT_UNKNOWN_13:
                     continue;
@@ -559,8 +559,8 @@ void EntityCutscene(Entity* self) {
                 case CSOP_SET_FLAG:
                     g_CutsceneFlags |= 1 << *g_Dialogue.scriptCur++;
                     continue;
-                case CSOP_SCRIPT_UNKNOWN_18:
-                    g_Dialogue.unk3C = 0;
+                case CSOP_STOP_EVENTS:
+                    g_Dialogue.hasEvents = 0;
                     continue;
                 case CSOP_LOAD_PORTRAIT:
                     if (g_SkipCutscene) {

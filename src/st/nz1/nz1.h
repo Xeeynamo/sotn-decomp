@@ -31,7 +31,7 @@ enum Palettes {
     PAL_PUFF_OPAQUE_3 = 0x2E4
 };
 
-enum EntityIDs {
+enum EntityID {
     E_NONE,
     E_BREAKABLE,                // EntityBreakable
     E_EXPLOSION,                // EntityExplosion

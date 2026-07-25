@@ -125,9 +125,9 @@ static s32 g_IsCutsceneDone; // BSS
 
 #include "../set_cutscene_script.h"
 
-#include "../set_cutscene_end.h"
+#include "../set_cutscene_events.h"
 
-#include "../cutscene_run.h"
+#include "../cutscene_events.h"
 
 // cutscene where alucard and maria discuss castle changing
 extern s32 OVL_EXPORT(cutscene_text_offset);
@@ -170,8 +170,8 @@ void EntityCutscene(Entity* self) {
             }
         }
     }
-    if (self->step && g_Dialogue.unk3C) {
-        CutsceneRun();
+    if (self->step && g_Dialogue.hasEvents) {
+        RunCutsceneEvents();
     }
     switch (self->step) {
     case 0:
@@ -350,7 +350,7 @@ void EntityCutscene(Entity* self) {
                     }
                     g_Dialogue.scriptCur--;
                     return;
-                case CSOP_SET_END:
+                case CSOP_SET_EVENTS:
                     ptr = (u_long)*g_Dialogue.scriptCur++;
                     ptr <<= 4;
                     ptr |= (u_long)*g_Dialogue.scriptCur++;
@@ -359,7 +359,7 @@ void EntityCutscene(Entity* self) {
                     ptr <<= 4;
                     ptr |= (u_long)*g_Dialogue.scriptCur++;
                     ptr += OVL_EXPORT(cutscene_text_offset);
-                    SetCutsceneEnd((u8*)ptr);
+                    SetCutsceneEvents((u8*)ptr);
                     continue;
                 case CSOP_SCRIPT_UNKNOWN_13:
                     continue;
@@ -406,8 +406,8 @@ void EntityCutscene(Entity* self) {
                 case CSOP_SET_FLAG:
                     g_CutsceneFlags |= 1 << *g_Dialogue.scriptCur++;
                     continue;
-                case CSOP_SCRIPT_UNKNOWN_18:
-                    g_Dialogue.unk3C = 0;
+                case CSOP_STOP_EVENTS:
+                    g_Dialogue.hasEvents = 0;
                     continue;
                 case CSOP_LOAD_PORTRAIT:
                     if (g_SkipCutscene) {

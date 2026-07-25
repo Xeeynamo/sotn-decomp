@@ -197,18 +197,17 @@ static bool dialogue_started;
 
 #ifdef VERSION_PSP
 // pspeu needs this to not be static
-void SetCutsceneEnd(u8* ptr) {
-    g_Dialogue.scriptEnd = ptr;
+void SetCutsceneEvents(u8* ptr) {
+    g_Dialogue.eventCur = ptr;
 #else
-static void SetCutsceneEnd(u8* ptr) {
-    g_Dialogue.scriptEnd = ptr + 0x100000;
+static void SetCutsceneEvents(u8* ptr) {
+    g_Dialogue.eventCur = ptr + 0x100000;
 #endif
     g_Dialogue.timer = 0;
-    // Cutscene has control/cutscene running?
-    g_Dialogue.unk3C = 1;
+    g_Dialogue.hasEvents = 1;
 }
 
-#include "../cutscene_run.h"
+#include "../cutscene_events.h"
 
 // Animates the portrait size of the actor by enlarging or shrinking it
 static void ScaleCutsceneAvatar(const u8 ySteps) {
@@ -280,8 +279,8 @@ void OVL_EXPORT(EntityCutsceneDialogue)(Entity* self) {
         }
     }
 
-    if (self->step && g_Dialogue.unk3C) {
-        CutsceneRun();
+    if (self->step && g_Dialogue.hasEvents) {
+        RunCutsceneEvents();
     }
 
     switch (self->step) {
@@ -512,7 +511,7 @@ void OVL_EXPORT(EntityCutsceneDialogue)(Entity* self) {
                     }
                     *g_Dialogue.scriptCur--;
                     return;
-                case CSOP_SET_END:
+                case CSOP_SET_EVENTS:
                     ptr = (u_long)*g_Dialogue.scriptCur++;
                     ptr <<= 4;
                     ptr |= (u_long)*g_Dialogue.scriptCur++;
@@ -523,7 +522,7 @@ void OVL_EXPORT(EntityCutsceneDialogue)(Entity* self) {
 #ifdef VERSION_PSP
                     ptr += (u_long)OVL_EXPORT(cutscene_script_ptr);
 #endif
-                    SetCutsceneEnd((u8*)ptr);
+                    SetCutsceneEvents((u8*)ptr);
                     continue;
                 case CSOP_SCRIPT_UNKNOWN_13:
                     continue;
@@ -583,8 +582,8 @@ void OVL_EXPORT(EntityCutsceneDialogue)(Entity* self) {
                 case CSOP_SET_FLAG:
                     g_CutsceneFlags |= 1 << *g_Dialogue.scriptCur++;
                     continue;
-                case CSOP_SCRIPT_UNKNOWN_18:
-                    g_Dialogue.unk3C = 0;
+                case CSOP_STOP_EVENTS:
+                    g_Dialogue.hasEvents = 0;
                     continue;
                 case CSOP_LOAD_PORTRAIT:
                     if (skip_cutscene) {

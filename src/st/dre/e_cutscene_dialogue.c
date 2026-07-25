@@ -200,14 +200,13 @@ static bool dialogue_started;
 #include "../cutscene_actor_name.h"
 #endif
 
-void SetCutsceneEnd(u8* ptr) {
-    g_Dialogue.scriptEnd = CS_PTR(ptr);
+void SetCutsceneEvents(u8* ptr) {
+    g_Dialogue.eventCur = CS_PTR(ptr);
     g_Dialogue.timer = 0;
-    // Cutscene has control/cutscene running?
-    g_Dialogue.unk3C = 1;
+    g_Dialogue.hasEvents = 1;
 }
 
-#include "../cutscene_run.h"
+#include "../cutscene_events.h"
 #include "../cutscene_skip.h"
 #include "../cutscene_scale_avatar.h"
 
@@ -242,8 +241,8 @@ void OVL_EXPORT(EntityCutsceneDialogue)(Entity* self) {
             CutsceneSkip(self);
         }
     }
-    if ((self->step) && (g_Dialogue.unk3C)) {
-        CutsceneRun();
+    if (self->step && g_Dialogue.hasEvents) {
+        RunCutsceneEvents();
     }
 
     switch (self->step) {
@@ -493,7 +492,7 @@ void OVL_EXPORT(EntityCutsceneDialogue)(Entity* self) {
                     }
                     *g_Dialogue.scriptCur--;
                     return;
-                case CSOP_SET_END:
+                case CSOP_SET_EVENTS:
                     ptr = (u32)*g_Dialogue.scriptCur++;
                     ptr <<= 4;
                     ptr |= (u32)*g_Dialogue.scriptCur++;
@@ -504,7 +503,7 @@ void OVL_EXPORT(EntityCutsceneDialogue)(Entity* self) {
 #ifdef VERSION_PSP
                     ptr += (u32)D_pspeu_09261388;
 #endif
-                    SetCutsceneEnd((u8*)ptr);
+                    SetCutsceneEvents((u8*)ptr);
                     continue;
                 case CSOP_SCRIPT_UNKNOWN_13:
                     continue;
@@ -558,8 +557,8 @@ void OVL_EXPORT(EntityCutsceneDialogue)(Entity* self) {
                 case CSOP_SET_FLAG:
                     g_CutsceneFlags |= 1 << *g_Dialogue.scriptCur++;
                     continue;
-                case CSOP_SCRIPT_UNKNOWN_18:
-                    g_Dialogue.unk3C = 0;
+                case CSOP_STOP_EVENTS:
+                    g_Dialogue.hasEvents = 0;
                     continue;
                 case CSOP_LOAD_PORTRAIT:
                     if (g_SkipCutscene) {

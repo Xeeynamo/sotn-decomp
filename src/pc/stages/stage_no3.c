@@ -19,7 +19,8 @@ extern u8 cutscene_death[];
 
 u8 OVL_EXPORT(cutscene_data)[] = {
 #include "../../st/no3/gen/cutscene_data.h"
-    32, 88, 8, 128, 8, 128, 0, 0, 0, 33, 90, 10, 160, 7, 120, 255, 255, 0};
+#include "../../st/no3/gen/cutscene_events.h"
+};
 
 static void InitCutscenePc(void) {
     static const CutsceneSymbolRange symbols[] = {

@@ -14,7 +14,7 @@ enum Palettes {
     PAL_PUFF_OPAQUE_OFFSET = 0x2E0,
 };
 
-typedef enum EntityIDs {
+typedef enum EntityID {
     /* 0x00 */ E_NONE,
     /* 0x01 */ E_BREAKABLE,
     /* 0x02 */ E_EXPLOSION,
@@ -94,7 +94,7 @@ typedef enum EntityIDs {
     /* 0x4C */ E_UNK4C,                   // func_pspeu_0925A980
     /* 0x4D */ E_UNK4D,                   // func_pspeu_0925A7B8
     NUM_ENTITIES,
-} EntityIDs;
+} EntityID;
 
 Primitive* FindFirstUnkPrim2(Primitive* prim, u8 index);
 

@@ -18,10 +18,10 @@ extern const char* actor_names[];
 
 #include "../../st/cutscene_actor_name.h"
 
-#include "../../st/set_cutscene_end.h"
+#include "../../st/set_cutscene_events.h"
 
 #define CUTSCENE_TILEMAP_SCROLL
-#include "../../st/cutscene_run.h"
+#include "../../st/cutscene_events.h"
 
 #include "../../st/cutscene_skip.h"
 

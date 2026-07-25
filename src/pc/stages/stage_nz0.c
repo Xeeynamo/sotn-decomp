@@ -19,8 +19,8 @@ extern u8 cutscene_nz0_alucard[];
 
 u8 OVL_EXPORT(cutscene_data)[] = {
 #include "../../st/nz0/gen/cutscene_data.h"
-    0x81, 0x4D, 0x08, 0x80, 0x08, 0x80, 0x00, 0x00, 0x00, 0x82,
-    0x4C, 0x00, 0x00, 0x08, 0x83, 0xFF, 0xFF, 0x00, 0x00, 0x00};
+#include "../../st/nz0/gen/cutscene_events.h"
+};
 
 static void InitCutscenePc(void) {
     static const CutsceneSymbolRange symbols[] = {
