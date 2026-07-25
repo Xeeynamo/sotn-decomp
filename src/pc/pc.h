@@ -81,4 +81,13 @@ bool FileAsString(bool (*cb)(const struct FileAsString* file),
 bool FileUseContent(bool (*cb)(const struct FileUseContent* file, void* param),
                     const char* filename, void* param);
 
+typedef struct {
+    const void* pcAddr; // equivalent of symbol address on PC
+    unsigned psxAddr;   // equivalent of symbol address on PSX
+    unsigned size;      // symbol size in bytes
+} CutsceneSymbol;
+
+void CutscenePcAlloc(const CutsceneSymbol* symbols, int count);
+u8* CutsceneAddrToPc(u32 psxAddr);
+
 #endif

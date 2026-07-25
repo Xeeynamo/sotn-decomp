@@ -133,6 +133,7 @@ set(SOURCE_FILES_PC
     src/pc/sotn.c
     src/pc/replay.c
     src/pc/pc.c
+    src/pc/cutscene_pc.c
     src/pc/io.c
     src/pc/sim_pc.c
     src/pc/pl_arc.c
@@ -442,7 +443,6 @@ set(SOURCE_FILES_STAGE_NZ0
     src/st/nz0/e_init.c
     src/st/nz0/gen/rooms.c
     src/st/nz0/gen/e_layout.c
-    src/st/nz0/cutscene_data.c
     src/st/nz0/stage_data.c
     src/st/nz0/gen/sprites.c
     src/st/nz0/background_block_init.c
@@ -544,7 +544,6 @@ set(SOURCE_FILES_STAGE_DRE
     src/st/dre/e_lock_camera.c
     src/st/dre/e_breakable.c
     src/st/dre/d_prize_drops.c
-    src/st/dre/cutscene_data.c
     src/st/dre/st_update.c
     src/st/dre/collision.c
     src/st/dre/create_entity.c
@@ -580,7 +579,6 @@ set (SOURCE_FILES_STAGE_ST0
     src/st/st0/e_lock_camera.c
     src/st/st0/2805C.c
     src/st/st0/cutscene.c
-    src/st/st0/cutscene_data.c
     src/st/st0/2A218.c
     src/st/st0/2A8DC.c
     src/st/st0/title_card.c
@@ -703,7 +701,6 @@ set(SOURCE_FILES_STAGE_NO3
     src/st/no3/e_breakable.c
     src/st/no3/d_prize_drops.c
     src/st/no3/cutscene.c
-    src/st/no3/cutscene_data.c
     src/st/no3/st_update.c
     src/st/no3/collision.c
     src/st/no3/create_entity.c

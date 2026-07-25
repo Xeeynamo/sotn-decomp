@@ -53,6 +53,18 @@ enum ActorNameIndices {
 
 #define CUTSCENE_FLAG_NONE 0
 
+#if defined(VERSION_PC)
+u8* CutsceneAddrToPc(u32 psxAddr);
+#define CS_NEXT(ptr) (u16*)CutsceneAddrToPc(ptr)
+#define CS_PTR(ptr) CutsceneAddrToPc((u32)(ptr) + 0x100000)
+#elif defined(VERSION_PSP)
+#define CS_NEXT(ptr) (u8*)(ptr)
+#define CS_PTR(ptr) (u8*)(ptr)
+#else
+#define CS_NEXT(ptr) (u16*)(ptr)
+#define CS_PTR(ptr) ((u8*)ptr + 0x100000)
+#endif
+
 #define script_half(x) (((x) & 0xFF0) >> 4), ((x) & 0xFF)
 #define script_word(x) (x & 0xFF000) >> 12, (x & 0xFF00) >> 8, script_half(x)
 #define SCRIPT_CASE(x) script_word(x)
