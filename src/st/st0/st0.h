@@ -8,7 +8,7 @@
 
 #define OVL_EXPORT(x) ST0_##x
 
-typedef enum EntityIDs {
+typedef enum EntityID {
     E_NONE,
     E_BREAKABLE,
     E_EXPLOSION,
@@ -45,7 +45,7 @@ typedef enum EntityIDs {
     E_DRACULA_UNK2C,
     E_ID_2D,
     E_DRACULA_UNK2E,
-} EntityIDs;
+} EntityID;
 
 void MoveEntity();
 void EntityExplosion(Entity*);

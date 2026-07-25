@@ -4,7 +4,7 @@
 #define STAGE_IS_NO4
 #define OVL_EXPORT(x) NO4_##x
 
-typedef enum EntityIDs {
+typedef enum EntityID {
     /* 0x00 */ E_NONE,
     /* 0x01 */ E_BREAKABLE,
     /* 0x02 */ E_EXPLOSION = 0x02,
@@ -98,7 +98,7 @@ typedef enum EntityIDs {
     /* 0x5A */ E_KILLER_FISH_DEATH_PUFF = 0x5A,
     /* 0x5B */ E_ID_5B,
     /* 0x5C */ E_ID_5C = 0x5C,
-} EntityIDs;
+} EntityID;
 
 extern void EntityExplosionVariants(Entity* entity);
 extern void EntityGreyPuff(Entity* entity);

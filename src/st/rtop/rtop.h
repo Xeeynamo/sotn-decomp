@@ -16,7 +16,7 @@ enum OVL_EXPORT(Palette) {
     PAL_UNK_220 = 0x220,
 };
 
-typedef enum EntityIDs {
+typedef enum EntityID {
     /* 0x00 */ E_NONE,
     /* 0x01 */ E_BREAKABLE,
     /* 0x02 */ E_EXPLOSION,
@@ -48,7 +48,7 @@ typedef enum EntityIDs {
     /* 0x27 */ E_SKULL_LORD_OUTLINE,
     /* 0x28 */ E_SKULL_LORD_EYE,
     /* 0x29 */ E_SKULL_LORD_PIECES,
-} EntityIDs;
+} EntityID;
 
 extern EInit g_EInitBreakable;
 extern EInit g_EInitObtainable;

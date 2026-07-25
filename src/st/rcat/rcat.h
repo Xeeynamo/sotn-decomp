@@ -18,7 +18,7 @@ enum Palettes {
     PAL_BREAKABLE = 0x237,
 };
 
-enum Entities {
+enum EntityID {
     E_NONE,
     E_BREAKABLE,                    // EntityBreakable
     E_EXPLOSION,                    // EntityExplosion

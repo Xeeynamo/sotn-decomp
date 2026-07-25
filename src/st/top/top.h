@@ -13,7 +13,7 @@ enum Palettes {
     PAL_BREAKABLE_DEBRIS = 0x23C,
 };
 
-enum Entities {
+enum EntityID {
     E_NONE,
     E_BREAKABLE,          // OVL_EXPORT(EntityBreakable)
     E_EXPLOSION,          // EntityExplosion

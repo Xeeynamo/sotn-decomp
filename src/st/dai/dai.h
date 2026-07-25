@@ -49,7 +49,7 @@ enum OVL_EXPORT(Palette) {
 // Used when a constant value E_ID is used for both psx and pspeu
 // The E_ID() macro should be used when psx uses a constant value, but pspeu
 // sometimes uses a bss reference
-enum EntityIDs {
+enum EntityID {
     E_NONE,
     E_BREAKABLE,                 // EntityBreakable,
     E_EXPLOSION,                 // EntityExplosion,

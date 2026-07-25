@@ -15,7 +15,7 @@ enum OVL_EXPORT(Palette) {
     PAL_BREAKABLE_DEBRIS = 0x231,
 };
 
-typedef enum EntityIDs {
+typedef enum EntityID {
     /* 0x00 */ E_NONE,
     /* 0x01 */ E_BREAKABLE,
     /* 0x02 */ E_EXPLOSION,
@@ -111,7 +111,7 @@ typedef enum EntityIDs {
     /* 0x5C */ E_BREAKABLE_DEBRIS,
     /* 0x5D */ E_MIST_DOOR,
     /* 0x5E */ E_ID_5E,
-} EntityIDs;
+} EntityID;
 
 extern EInit g_EInitBreakable;
 extern EInit g_EInitObtainable;

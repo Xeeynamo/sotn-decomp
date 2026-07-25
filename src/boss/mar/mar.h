@@ -35,7 +35,7 @@ typedef enum {
     /* 0x1B */ E_STONE_DOOR,
     /* 0x1C */ E_ID_1C,
     /* 0x1D */ E_CLOCK_ROOM_SHADOW,
-} EntityIDs;
+} EntityID;
 
 typedef enum Statues {
     /* 0 */ RIGHT_STATUE,

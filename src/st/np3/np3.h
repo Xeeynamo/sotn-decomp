@@ -12,7 +12,7 @@ enum Palettes {
     PAL_PUFF_OPAQUE_2 = 0xD3
 };
 
-typedef enum EntityIDs {
+typedef enum EntityID {
     /* 0x00 */ E_NONE,
     /* 0x01 */ E_BREAKABLE,
     /* 0x02 */ E_EXPLOSION,
@@ -105,7 +105,7 @@ typedef enum EntityIDs {
     /* 0x59 */ E_GURKHA_WEAPON,
     /* 0x5A */ E_BLADE,
     /* 0x5B */ E_BLADE_WEAPON
-} EntityIDs;
+} EntityID;
 
 extern EInit g_EInitBreakable;
 extern EInit g_EInitObtainable;

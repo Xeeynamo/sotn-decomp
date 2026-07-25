@@ -13,7 +13,7 @@ enum Palettes {
     PAL_PORTRAIT_SHAFT = 0x218
 };
 
-enum Entities {
+enum EntityID {
     E_NONE,
     E_BREAKABLE,          // EntityBreakable
     E_EXPLOSION,          // EntityExplosion

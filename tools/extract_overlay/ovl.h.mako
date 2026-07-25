@@ -14,7 +14,7 @@ enum Palettes {
 <%
 maxlen = max(len(e_id) for function, e_id in entity_updates) + 1
 %>
-enum Entities {
+enum EntityID {
     E_NONE,
 % for function, e_id in entity_updates:
     ${(e_id + ",").ljust(maxlen)} // ${function}

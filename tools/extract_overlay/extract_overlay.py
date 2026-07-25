@@ -685,7 +685,7 @@ def create_ovl_include(entity_updates, ovl_name, ovl_type, ovl_include_path):
     if not ovl_include_path.exists():
         ovl_include_path.parent.mkdir(parents=True, exist_ok=True)
         ovl_include_path.write_text(ovl_header_text)
-    elif entity_funcs and "Entities" not in ovl_include_path.read_text():
+    elif entity_funcs and "EntityID" not in ovl_include_path.read_text():
         ovl_include_path.write_text(ovl_header_text)
 
 
