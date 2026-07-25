@@ -71,7 +71,7 @@ segments:
       - [0x2690, .data, 3D8F0]
       - [0x26B8, .data, gen/e_layout] # layout entries data
       - [0x29D8, .data, cutscene_data]
-      - [0x2C4C, .data, 3101C_psx]
+      - [0x2C58, .data, 3101C_psx]
       - [0x3124, .data, stage_data]
       - [0x226E0, .data, gen/sprites]
       - [0x27984, .rodata, 2805C]

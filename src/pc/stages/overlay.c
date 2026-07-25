@@ -137,8 +137,8 @@ bool LoadStageOverlay(const char* name, Overlay* o) {
         OvlClose(CurrentStageOverlay);
         CurrentStageOverlay = NULL;
     }
-    entrypoint = (PfnInitStage)OpenOverlayEntrypoint(
-        name, OVL_STAGE_ENTRYPOINT_NAME, &handle);
+    entrypoint =
+        (PfnInitStage)OpenOverlayEntrypoint(name, "InitStage", &handle);
     if (!entrypoint) {
         return false;
     }
@@ -156,8 +156,8 @@ bool LoadServantOverlay(const char* name, ServantDesc* o) {
         OvlClose(CurrentServantOverlay);
         CurrentServantOverlay = NULL;
     }
-    entrypoint = (PfnInitServant)OpenOverlayEntrypoint(
-        name, OVL_SERVANT_ENTRYPOINT_NAME, &handle);
+    entrypoint =
+        (PfnInitServant)OpenOverlayEntrypoint(name, "InitServant", &handle);
     if (!entrypoint) {
         return false;
     }

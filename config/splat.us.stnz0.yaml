@@ -82,7 +82,6 @@ segments:
       - [0x2830, .data, e_life_up]
       - [0x2884, .data, gen/e_layout] # layout entries data
       - [0x3B0C, .data, cutscene_data]
-      - [0x3CB8, data]
       - [0x3CCC, .data, stage_data]
       - [0x26E8C, .data, gen/sprites]
       - [0x3058C, .rodata, e_red_eye_bust] # EntityRedEyeBust

@@ -200,13 +200,8 @@ static bool dialogue_started;
 #include "../cutscene_actor_name.h"
 #endif
 
-#ifdef VERSION_PSP
 void SetCutsceneEnd(u8* ptr) {
-    g_Dialogue.scriptEnd = ptr;
-#else
-static void SetCutsceneEnd(u8* ptr) {
-    g_Dialogue.scriptEnd = ptr + 0x100000;
-#endif
+    g_Dialogue.scriptEnd = CS_PTR(ptr);
     g_Dialogue.timer = 0;
     // Cutscene has control/cutscene running?
     g_Dialogue.unk3C = 1;
@@ -230,7 +225,7 @@ void OVL_EXPORT(EntityCutsceneDialogue)(Entity* self) {
     bool endLoop;
 #endif
     RECT rect;
-    s32 ptr;
+    u_long ptr;
 
 #ifdef VERSION_PSP
     DisableAutoPowerOff();
@@ -523,10 +518,8 @@ void OVL_EXPORT(EntityCutsceneDialogue)(Entity* self) {
                     ptr |= (u32)*g_Dialogue.scriptCur++;
 #ifdef VERSION_PSP
                     ptr += (u32)D_pspeu_09261388;
-#else
-                ptr += 0x100000;
 #endif
-                    g_Dialogue.scriptCur += *(u8*)ptr << 2;
+                    g_Dialogue.scriptCur += *CS_PTR(ptr) * 4;
 
                     ptr = (u32)*g_Dialogue.scriptCur++;
                     ptr <<= 4;
@@ -537,10 +530,8 @@ void OVL_EXPORT(EntityCutsceneDialogue)(Entity* self) {
                     ptr |= (u32)*g_Dialogue.scriptCur;
 #ifdef VERSION_PSP
                     ptr += (u32)D_pspeu_09261388;
-                    g_Dialogue.scriptCur = (u8*)ptr;
-#else
-                g_Dialogue.scriptCur = (u8*)ptr + 0x100000;
 #endif
+                    g_Dialogue.scriptCur = CS_PTR(ptr);
                     continue;
                 case CSOP_SCRIPT_UNKNOWN_15:
                     ptr = (u32)*g_Dialogue.scriptCur++;
@@ -552,10 +543,8 @@ void OVL_EXPORT(EntityCutsceneDialogue)(Entity* self) {
                     ptr |= (u32)*g_Dialogue.scriptCur;
 #ifdef VERSION_PSP
                     ptr += (u32)D_pspeu_09261388;
-                    g_Dialogue.scriptCur = (u8*)ptr;
-#else
-                g_Dialogue.scriptCur = (u8*)ptr + 0x100000;
 #endif
+                    g_Dialogue.scriptCur = CS_PTR(ptr);
                     continue;
                 case CSOP_WAIT_FOR_FLAG:
                     if (!((g_CutsceneFlags >> *g_Dialogue.scriptCur) &
@@ -620,7 +609,7 @@ void OVL_EXPORT(EntityCutsceneDialogue)(Entity* self) {
                             break;
                         }
 #else
-                    ptr += 0x100000;
+                    ptr = CS_PTR(ptr);
 #endif
                         j = *g_Dialogue.scriptCur++;
                         LoadTPage((u_long*)ptr, 1, 0, x_vals[j], 256, 48, 72);
