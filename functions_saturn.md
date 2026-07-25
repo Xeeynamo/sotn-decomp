@@ -465,7 +465,6 @@
 | richter/f_nonmat/f60BB09C.s  | func_060BB09C   |      129 |          8 |       |     |
 | stage_02/f_nonmat/f60E5DB4.s | func_060E5DB4   |      129 |         10 |       |     |
 | warp/f_nonmat/f60E0364.s     | func_060E0364   |      129 |         10 |       |     |
-| zero/f_nonmat/f600B344.s     | func_0600B344   |      129 |         11 |       |     |
 | alucard/f_nonmat/f60B94F8.s  | func_060B94F8   |      129 |         12 |       |     |
 | maria/f_nonmat/f60A9474.s    | func_060A9474   |      129 |         14 |       |     |
 | richter/f_nonmat/f60B9978.s  | func_060B9978   |      129 |         15 |       |     |
