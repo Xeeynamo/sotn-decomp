@@ -398,7 +398,6 @@ set(SOURCE_FILES_STAGE_DAI
     src/st/dai/e_stained_glass.c
     src/st/dai/e_tower_exit.c
     src/st/dai/e_winged_guard.c
-    src/st/dai/unk_data_psx.c
 )
 
 set(SOURCE_FILES_STAGE_CEN

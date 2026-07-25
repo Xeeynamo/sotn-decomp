@@ -18,9 +18,9 @@ extern Dialogue g_Dialogue;
 
 #include "../set_cutscene_script.h"
 
-#include "../set_cutscene_end.h"
+#include "../set_cutscene_events.h"
 
 #define CUTSCENE_TILEMAP_SCROLL
-#include "../cutscene_run.h"
+#include "../cutscene_events.h"
 
 INCLUDE_ASM("st/cen_psp/nonmatchings/cen_psp/e_cutscene_dialogue", EntityCutscene);
