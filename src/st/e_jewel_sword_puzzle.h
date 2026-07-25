@@ -9,9 +9,8 @@ extern EInit g_EInitInteractable;
 #if defined(INVERTED_STAGE)
 #define CF_STEPS JEWEL_ROOM_STEPS
 #define CF_OPEN JEWEL_ROOM_OPEN
-#define PLUSMINUS -
-#define PME -=
-#define MPE +=
+#define TILE_SHIFT -0x30
+#define TILE_ADVANCE -1
 #define LEFT_TILESTART 0x40E
 #define RIGHT_TILESTART 0x402
 #define JEWELROOM_TILESTART 0x1DF
@@ -19,9 +18,8 @@ extern EInit g_EInitInteractable;
 #else
 #define CF_STEPS JEWEL_SWORD_ROOM_STEPS
 #define CF_OPEN JEWEL_SWORD_ROOM_OPEN
-#define PLUSMINUS +
-#define PME +=
-#define MPE -=
+#define TILE_SHIFT 0x30
+#define TILE_ADVANCE +1
 #define LEFT_TILESTART 0x1F1
 #define RIGHT_TILESTART 0x1FD
 #define JEWELROOM_TILESTART 0x420
@@ -74,7 +72,7 @@ static TILE_PTR_TYPE rockTiles4[] = {
 
 static u16 rockYOffsets[] = {12, 6, 7, 0};
 
-static u8 newRockParams[] = {1, 2, 1, 2, 1};
+static u8 newRockParams[] = {1, 2, 1, 2, 1, 0};
 
 // left side of the breakable rock, drops pot roast
 void EntityMermanRockLeftSide(Entity* self) {
@@ -97,9 +95,9 @@ void EntityMermanRockLeftSide(Entity* self) {
         tilePos = LEFT_TILESTART;
         for (i = 0; i < 3; i++, tileLayoutPtr++) {
             g_BgLayers[0].layout[tilePos] = *tileLayoutPtr;
-            *(&g_BgLayers[0].layout[tilePos] PLUSMINUS 1) =
+            *(&g_BgLayers[0].layout[tilePos] + TILE_ADVANCE) =
                 *(tileLayoutPtr + 3);
-            tilePos PME 0x30;
+            tilePos += TILE_SHIFT;
         }
 
         if (g_CastleFlags[CF_STEPS] & rockBroken) {
@@ -107,8 +105,8 @@ void EntityMermanRockLeftSide(Entity* self) {
             tileLayoutPtr = &leftRockTiles[12];
             for (i = 0; i < 3; i++, tileLayoutPtr++) {
                 g_Tilemap.fg[tilePos] = *tileLayoutPtr;
-                *(&g_Tilemap.fg[tilePos] PLUSMINUS 1) = *(tileLayoutPtr + 3);
-                tilePos PME 0x30;
+                *(&g_Tilemap.fg[tilePos] + TILE_ADVANCE) = *(tileLayoutPtr + 3);
+                tilePos += TILE_SHIFT;
             }
             self->hitboxState = 1;
             self->step = 2;
@@ -123,8 +121,8 @@ void EntityMermanRockLeftSide(Entity* self) {
             tilePos = LEFT_TILESTART;
             for (i = 0; i < 3; i++, tileLayoutPtr++) {
                 g_Tilemap.fg[tilePos] = *tileLayoutPtr;
-                *(&g_Tilemap.fg[tilePos] PLUSMINUS 1) = *(tileLayoutPtr + 3);
-                tilePos PME 0x30;
+                *(&g_Tilemap.fg[tilePos] + TILE_ADVANCE) = *(tileLayoutPtr + 3);
+                tilePos += TILE_SHIFT;
             }
 
             g_api.PlaySfx(SFX_WALL_DEBRIS_B);
@@ -134,7 +132,11 @@ void EntityMermanRockLeftSide(Entity* self) {
                 CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                 newEntity->params = 0x13;
                 newEntity->zPriority = 0xA9;
-                newEntity->posX.i.hi PME self->ext.mermanRock.unk84 * 16;
+#if defined(INVERTED_STAGE)
+                newEntity->posX.i.hi -= self->ext.mermanRock.unk84 * 16;
+#else
+                newEntity->posX.i.hi += self->ext.mermanRock.unk84 * 16;
+#endif
                 newEntity->posY.i.hi += 16;
             }
 
@@ -202,9 +204,9 @@ void EntityMermanRockRightSide(Entity* self) {
         tilePos = RIGHT_TILESTART;
         for (i = 0; i < 3; i++, tileLayoutPtr++) {
             g_BgLayers[0].layout[tilePos] = *tileLayoutPtr;
-            *(&g_BgLayers[0].layout[tilePos] PLUSMINUS 1) =
+            *(&g_BgLayers[0].layout[tilePos] + TILE_ADVANCE) =
                 *(tileLayoutPtr + 3);
-            tilePos PME 0x30;
+            tilePos += TILE_SHIFT;
         }
 
         if (g_CastleFlags[CF_STEPS] & rockBroken) {
@@ -212,8 +214,8 @@ void EntityMermanRockRightSide(Entity* self) {
             tileLayoutPtr = &rightRockTiles[12];
             for (i = 0; i < 3; i++, tileLayoutPtr++) {
                 g_Tilemap.fg[tilePos] = *tileLayoutPtr;
-                *(&g_Tilemap.fg[tilePos] PLUSMINUS 1) = *(tileLayoutPtr + 3);
-                tilePos PME 0x30;
+                *(&g_Tilemap.fg[tilePos] + TILE_ADVANCE) = *(tileLayoutPtr + 3);
+                tilePos += TILE_SHIFT;
             }
             self->hitboxState = 1;
             self->step = 2;
@@ -226,8 +228,8 @@ void EntityMermanRockRightSide(Entity* self) {
             tilePos = RIGHT_TILESTART;
             for (i = 0; i < 3; i++, tileLayoutPtr++) {
                 g_Tilemap.fg[tilePos] = *tileLayoutPtr;
-                *(&g_Tilemap.fg[tilePos] PLUSMINUS 1) = *(tileLayoutPtr + 3);
-                tilePos PME 0x30;
+                *(&g_Tilemap.fg[tilePos] + TILE_ADVANCE) = *(tileLayoutPtr + 3);
+                tilePos += TILE_SHIFT;
             }
 
             g_api.PlaySfx(SFX_WALL_DEBRIS_B);
@@ -237,7 +239,11 @@ void EntityMermanRockRightSide(Entity* self) {
                 CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                 newEntity->params = 0x13;
                 newEntity->zPriority = 0xA9;
-                newEntity->posX.i.hi MPE self->ext.mermanRock.unk84 * 16;
+#if defined(INVERTED_STAGE)
+                newEntity->posX.i.hi += self->ext.mermanRock.unk84 * 16;
+#else
+                newEntity->posX.i.hi -= self->ext.mermanRock.unk84 * 16;
+#endif
                 newEntity->posY.i.hi += 16;
             }
 
@@ -303,18 +309,26 @@ void EntityJewelSwordDoor(Entity* self) {
 
     case 2:
         for (tileLayoutPtr = &rockTiles3[27], i = 0; i < 3; i++) {
-            tileLayoutPos = JEWELROOM_TILESTART PLUSMINUS i;
+#if defined(INVERTED_STAGE)
+            tileLayoutPos = JEWELROOM_TILESTART - i;
+#else
+            tileLayoutPos = JEWELROOM_TILESTART + i;
+#endif
             for (j = 0; j < 5; j++, tileLayoutPtr++) {
                 g_Tilemap.fg[tileLayoutPos] = *tileLayoutPtr;
-                tileLayoutPos PME 0x30;
+                tileLayoutPos += TILE_SHIFT;
             }
         }
 
         for (tileLayoutPtr = &rockTiles4[11], i = 0; i < 3; i++) {
-            tileLayoutPos = JEWELROOM_TILESTART PLUSMINUS i;
+#if defined(INVERTED_STAGE)
+            tileLayoutPos = JEWELROOM_TILESTART - i;
+#else
+            tileLayoutPos = JEWELROOM_TILESTART + i;
+#endif
             for (j = 0; j < 5; j++, tileLayoutPtr++) {
                 g_BgLayers[0].layout[tileLayoutPos] = *tileLayoutPtr;
-                tileLayoutPos PME 0x30;
+                tileLayoutPos += TILE_SHIFT;
             }
         }
 
