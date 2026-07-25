@@ -19,7 +19,8 @@ log_file="${TMPDIR:-/tmp}/sotn-dosemu-$$.log"
 # This wrapper is invoked as `sh dosemu_wrapper.sh`, ignoring the shebang, so
 # stick to POSIX sh (no PIPESTATUS, no process substitution).
 out_log="${TMPDIR:-/tmp}/sotn-dosemu-out-$$.log"
-dosemu -quiet -dumb -o "$log_file" -f ./dosemurc -K . \
+rc_file="${SOTN_DOSEMURC:-$(dirname "$0")/dosemurc}"
+dosemu -quiet -dumb -o "$log_file" -f "$rc_file" -K . \
     -E "TOOLS\BUILDS\BUILD.BAT $in $out $3" >"$out_log" 2>&1
 status=$?
 # The bundled Cygnus GCC 2.7 doesn't understand the linemarker format used by
