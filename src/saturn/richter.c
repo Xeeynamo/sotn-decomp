@@ -682,7 +682,7 @@ void DisableAfterImage(s32 resetAnims, s32 arg1) {
         entity = &g_Entities[E_AFTERIMAGE_1];
         for (i = 0; i < 3; i++, entity++) {
             entity->animCurFrame = 0;
-            entity->unk0->unk0 = 0;
+            entity->unk0->flags = 0;
         }
         prim = &g_PrimBuf[g_Entities[E_AFTERIMAGE_1].primIndex];
         while (prim) {

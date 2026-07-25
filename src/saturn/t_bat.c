@@ -154,7 +154,7 @@ void CreateAdditionalBats(s32 amount, s32 entityId) {
             entity->step = 0;
         } else {
             DestroyEntity(entity);
-            entity->unk0 = func_0600B344(
+            entity->unk0 = CreateSpriteObject(
                 g_BatTextureResource.allocationIndex,
                 g_BatTextureResource.flags, g_BatTextureSlices, 1);
             if (entity->unk0 == NULL) {
@@ -270,7 +270,7 @@ void SwitchModeInitialize(Entity* self) {
         self->ext.bat.doUpdateCloseAnimation = false;
         switch (self->entityId) {
         case 0xD1:
-            self->unk0 = func_0600B344(
+            self->unk0 = CreateSpriteObject(
                 g_BatTextureResource.allocationIndex,
                 g_BatTextureResource.flags, g_BatTextureSlices, 1);
             if (self->unk0 == NULL) {

@@ -53,10 +53,11 @@ void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity);
 void SetStep(u8 step);
 void DestroyEntity(Entity* entity);
 
-void func_0600AFA8(Unk0600B344*, SaturnSpriteFrameHeader*);
-void func_0600B004(Unk0600B344*, s16*);
+void func_0600AFA8(SpriteObject*, SaturnSpriteFrameHeader*);
+void func_0600B004(SpriteObject*, s16*);
 void TekiInit(Entity*, s32);
-Unk0600B344* func_0600B344(s32, s32, s32, s32);
+SpriteObject* CreateSpriteObject(
+    u16 charBase, u16 clutBase, SaturnSpriteImage* images, s32 maxParts);
 void func_06079BB4(Entity*);
 
 extern SaturnSpriteFrameHeader* entityRedEyeBustData2[22];

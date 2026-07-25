@@ -721,7 +721,78 @@ void func_0600B234(void) {
 
 // _ClearOdma
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600B254, func_0600B254);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600B344, func_0600B344);
+
+extern SpriteObject g_SpriteObjectPool[SPRITE_OBJECT_MAX]; /* 0x0608AFF8 */
+extern SpritePart g_SpritePartPool[SPRITE_PART_MAX];       /* 0x0608D7F8 */
+
+extern SpriteObject* g_SpriteObjectFreeList; /* 0x06057798 */
+extern SpritePart* g_SpritePartFreeList;     /* 0x0605779C */
+extern SpriteObject* g_SpriteListHead;       /* 0x06057790 */
+extern SpriteObject* g_SpriteListTail;       /* 0x06057794 */
+extern s32 g_SpriteListCount;                /* 0x06038DB0 */
+extern s32 g_SpriteObjectsInUse;             /* 0x06038DB4 */
+extern s32 g_SpritePartsInUse;               /* 0x06038DB8 */
+
+SpriteObject* func_0600B1A8(void);
+
+static inline SpritePart* AllocSpriteParts(s32 maxParts) {
+    SpritePart* head;
+    SpritePart* node;
+
+    if (g_SpritePartsInUse + maxParts > SPRITE_PART_MAX) {
+        return NULL;
+    }
+
+    head = node = g_SpritePartFreeList;
+    g_SpritePartsInUse += maxParts;
+    for (; maxParts > 1; maxParts--) {
+        node->attributes = 0;
+        *(int*)&node->rotate = 0x00004040;
+        node = node->next;
+    }
+    g_SpritePartFreeList = node->next;
+    node->attributes = 0;
+    *(int*)&node->rotate = 0x00004040;
+    node->next = NULL;
+    return head;
+}
+
+// func_0600B344
+SpriteObject* CreateSpriteObject(
+    u16 charBase, u16 clutBase, SaturnSpriteImage* images, s32 maxParts) {
+    SpriteObject* obj;
+    SpritePart* head;
+
+    obj = func_0600B1A8();
+    if (obj == NULL) {
+        return NULL;
+    }
+
+    head = AllocSpriteParts(maxParts);
+    if (head == NULL) {
+        obj->next = g_SpriteObjectFreeList;
+        g_SpriteObjectFreeList = obj;
+        g_SpriteObjectsInUse--;
+        return NULL;
+    }
+
+    obj->charBase = charBase;
+    obj->clutBase = clutBase;
+    obj->images = images;
+    obj->parts = head;
+    obj->next = NULL;
+
+    if (g_SpriteListTail == NULL) {
+        g_SpriteListTail = obj;
+        g_SpriteListHead = obj;
+    } else {
+        g_SpriteListTail->next = obj;
+        g_SpriteListTail = obj;
+    }
+    g_SpriteListCount++;
+    return obj;
+}
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600B428, func_0600B428);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600B4C4, func_0600B4C4);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600B954, func_0600B954);

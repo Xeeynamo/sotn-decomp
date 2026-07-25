@@ -18,6 +18,12 @@ typedef unsigned long long u64;
 #define NULL 0
 #define FIX(x) ((s32)((x) * 65536.0))
 
+typedef struct {
+    u8 storedWidth;
+    u8 storedHeight;
+    u16 characterOffsetUnits;
+} SaturnSpriteImage;
+
 typedef enum {
     PAD_NONE = 0x0000,
     PAD_L1 = 0x0008,
@@ -286,7 +292,7 @@ typedef union { // offset=0x78
 } Ext;
 
 typedef struct Entity {
-    /* 0x00 */ struct Unk0600B344* unk0;
+    /* 0x00 */ struct SpriteObject* unk0;
     /* 0x04 */ SotnFixed32 posX;
     /* 0x08 */ SotnFixed32 posY;
     /* 0x0c */ s32 velocityX;
@@ -335,16 +341,44 @@ typedef struct Entity {
     /* 0xB4 */ struct UnkStruct_060e8350* unkB4;
 } Entity; // size = 0xB8
 
-typedef struct Unk0600B344 {
-    /* 0x00 */ u16 unk0;
-    /* 0x02 */ char pad_02[0x6];
-    /* 0x08 */ s16 unk8;
-    /* 0x0A */ char pad_0A[0x4];
-    /* 0x0E */ s16 zPriority;
-    /* 0x10 */ char pad_10[0x1];
-    /* 0x14 */ s32 unk14;
-    /* 0x18 */ s32 unk18;
-} Unk0600B344;
+typedef struct SpritePart {
+    /* 0x00 */ u16 attributes;
+    /* 0x02 */ s16 offsetX;
+    /* 0x04 */ s16 offsetY;
+    /* 0x06 */ u16 imageIndex;
+    /* 0x08 */ s16 rotate;
+    /* 0x0A */ u8 scaleX;
+    /* 0x0B */ u8 scaleY;
+    /* 0x0C */ struct SpritePart* next;
+} SpritePart; /* size = 0x10 */
+
+typedef struct SpriteObject {
+    /* 0x00 */ u16 flags;
+    /* 0x02 */ u16 slotAndStreamId; /* high byte: permanent pool slot, baked in
+                                     * by func_0600B254 as (i << 8) and
+                                     * preserved (low byte cleared) on each
+                                     * alloc by func_0600B1A8.
+                                     * low 7 bits: streamed-frame id, set by
+                                     * func_0600AFA8 from commandFlags & 0x7F */
+    /* 0x04 */ u16 charBase;
+    /* 0x06 */ u16 clutBase;
+    /* 0x08 */ s16 rotate;
+    /* 0x0A */ u8 scaleX;
+    /* 0x0B */ u8 scaleY;
+    /* 0x0C */ u8 unk0C;
+    /* 0x0D */ u8 unk0D;
+    /* 0x0E */ u16 zPriority;
+    /* 0x10 */ u16 subPixelX;
+    /* 0x12 */ u16 subPixelY;
+    /* 0x14 */ s32 posX;
+    /* 0x18 */ s32 posY;
+    /* 0x1C */ SaturnSpriteImage* images;
+    /* 0x20 */ SpritePart* parts;
+    /* 0x24 */ struct SpriteObject* next;
+} SpriteObject; /* size = 0x28 */
+
+#define SPRITE_OBJECT_MAX 255 /* 0x0FF */
+#define SPRITE_PART_MAX 640   /* 0x280 */
 
 typedef struct {
     /* 060645A8 */ Entity* (*CreateEntFactoryFromEntity)(
