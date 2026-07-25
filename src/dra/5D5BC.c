@@ -264,6 +264,7 @@ bool CastSpell(SpellIds spellId) {
     }
 }
 
+// original name: waza_work_set
 void LearnSpell(s32 spellId) {
     s32 i;
 

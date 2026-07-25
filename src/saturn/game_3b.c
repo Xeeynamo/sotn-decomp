@@ -434,8 +434,20 @@ bool CastSpell(SpellIds spellId) {
     }
 }
 
-// _waza_work_set
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F798, func_0606F798);
+// original name: waza_work_set
+void LearnSpell(s32 spellId) {
+    s32 i;
+
+    if ((g_Status.spellsLearnt & (1 << spellId)) == 0) {
+        g_Status.spellsLearnt |= 1 << spellId;
+        for (i = 0; i < 8; i++) {
+            if (!g_Status.spells[i]) {
+                g_Status.spells[i] = spellId | 0x80;
+                return;
+            }
+        }
+    }
+}
 
 // original name: reduce_weapon
 bool ReduceWeapon(s32 hand) {
