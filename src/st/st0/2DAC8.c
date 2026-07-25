@@ -536,12 +536,21 @@ void EntityDraculaFinalForm(Entity* self) {
         self->posX.i.hi = part->posX.i.hi;
         self->posY.i.hi = part->posY.i.hi;
         i = part->animCurFrame - 1;
-        temp_s1 = &D_80180BE4[0][0][0];
+#ifdef FIX_UB
+        // During Dracula transformation, while the parent body is still at
+        // step=1 with animCurFrame == 0, the code right below will attempt
+        // accessing D_80180BE4[-1], reading the collision data from one of the
+        // animations. The fix is to clamp to the first default hitbox that
+        // corresponds to Dracula Final Form default pose.
+        if (i < 0) {
+            i = 0;
+        }
+#endif
+        temp_s1 = (short*)D_80180BE4;
         temp_s1 += i * 12;
         temp_s1 += (self->params - 1) * 4;
         self->hitboxOffX = *temp_s1++;
         self->hitboxOffY = *temp_s1++;
-
         self->hitboxWidth = *temp_s1++;
         self->hitboxHeight = *temp_s1++;
         if (self->params == 1) {
