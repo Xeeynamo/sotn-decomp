@@ -76,7 +76,7 @@ void EntityCutscene(Entity* self) {
             self->step = 1;
             self->step_s = 0;
         }
-        if (self->step && (g_Dialogue.unk3C != 0)) {
+        if (self->step && g_Dialogue.hasEvents) {
             RunCutsceneEvents();
         }
     }
@@ -333,7 +333,7 @@ void EntityCutscene(Entity* self) {
                 continue;
 
             case 18:
-                g_Dialogue.unk3C = 0;
+                g_Dialogue.hasEvents = 0;
                 continue;
 
             case 19:

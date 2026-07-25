@@ -35,7 +35,7 @@ u8 SetCutsceneScript(u8* script) {
     g_Dialogue.primIndex[2] = g_api.AllocPrimitives(PRIM_SPRT, 7);
     if (g_Dialogue.primIndex[2] != -1) {
         g_Dialogue.scriptCur = script;
-        g_Dialogue.unk3C = 0;
+        g_Dialogue.hasEvents = 0;
         g_Dialogue.primIndex[1] = -1;
         g_Dialogue.primIndex[0] = -1;
         CutsceneUnk1();
@@ -353,7 +353,7 @@ void EntityCutscene(Entity* self) {
                 D_801BC3E8 |= 1 << *g_Dialogue.scriptCur++;
                 continue;
             case CSOP_SCRIPT_UNKNOWN_18:
-                g_Dialogue.unk3C = 0;
+                g_Dialogue.hasEvents = 0;
                 continue;
             case CSOP_LOAD_PORTRAIT:
                 if (g_SkipCutscene) {

@@ -204,8 +204,7 @@ static void SetCutsceneEvents(u8* ptr) {
     g_Dialogue.eventCur = ptr + 0x100000;
 #endif
     g_Dialogue.timer = 0;
-    // Cutscene has control/cutscene running?
-    g_Dialogue.unk3C = 1;
+    g_Dialogue.hasEvents = 1;
 }
 
 #include "../cutscene_events.h"
@@ -280,7 +279,7 @@ void OVL_EXPORT(EntityCutsceneDialogue)(Entity* self) {
         }
     }
 
-    if (self->step && g_Dialogue.unk3C) {
+    if (self->step && g_Dialogue.hasEvents) {
         RunCutsceneEvents();
     }
 
@@ -584,7 +583,7 @@ void OVL_EXPORT(EntityCutsceneDialogue)(Entity* self) {
                     g_CutsceneFlags |= 1 << *g_Dialogue.scriptCur++;
                     continue;
                 case CSOP_SCRIPT_UNKNOWN_18:
-                    g_Dialogue.unk3C = 0;
+                    g_Dialogue.hasEvents = 0;
                     continue;
                 case CSOP_LOAD_PORTRAIT:
                     if (skip_cutscene) {

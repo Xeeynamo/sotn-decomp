@@ -28,7 +28,7 @@ typedef struct {
     /* 0x30 */ s32 : 32;
     /* 0x34 */ u8* script;
 #ifndef VERSION_PSP
-    /* 0x38 */ u16 unk3C; // maybe it is a begin flag?
+    /* 0x38 */ u16 hasEvents;
     /* 0x3A */ u16 timer;
 #endif
     /* 0x3C */ u8* eventCur;

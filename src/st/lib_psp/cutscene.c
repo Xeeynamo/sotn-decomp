@@ -161,7 +161,7 @@ void EntityCutscene(Entity* self) {
         }
     }
 
-    if (self->step && g_Dialogue.unk3C) {
+    if (self->step && g_Dialogue.hasEvents) {
         RunCutsceneEvents();
     }
 
@@ -403,7 +403,7 @@ void EntityCutscene(Entity* self) {
                     g_CutsceneFlags |= 1 << *g_Dialogue.scriptCur++;
                     continue;
                 case CSOP_SCRIPT_UNKNOWN_18:
-                    g_Dialogue.unk3C = 0;
+                    g_Dialogue.hasEvents = 0;
                     continue;
                 case CSOP_LOAD_PORTRAIT:
                     if (g_SkipCutscene) {

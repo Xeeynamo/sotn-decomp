@@ -145,10 +145,10 @@ typedef struct {
     /* 0x18 */ Primitive* prim[6]; // for dialogue graphics rendering
 #endif
     /* 0x30 */ s32 primIndex[3]; // primIndices: unk, actorName, unk
-    /* 0x3C */ u16 unk3C;        // maybe it is a begin flag?
-    /* 0x3E */ u16 timer;        // global timer
-    /* 0x40 */ u8* eventCur;     // ptr into the event timeline
-} Dialogue;                      // size = 0x44
+    /* 0x3C */ u16 hasEvents;
+    /* 0x3E */ u16 timer;    // global timer
+    /* 0x40 */ u8* eventCur; // ptr into the event timeline
+} Dialogue;                  // size = 0x44
 
 // no4/cutscene
 typedef struct {
@@ -172,7 +172,7 @@ typedef struct {
     /* 0x36 */ u16 clutIndex;
     /* 0x38 */ u16 unk12;
     /* 0x3A */ s16 : 16;
-    /* 0x3C */ u16 unk3C;
+    /* 0x3C */ u16 hasEvents;
 } Dialogue3; // size = 0x28
 
 // sel_psp/cutscene.c

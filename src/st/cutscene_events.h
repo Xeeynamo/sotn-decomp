@@ -17,7 +17,7 @@ static void RunCutsceneEvents(void) {
     g_Dialogue.timer++;
     // protect from overflows
     if (g_Dialogue.timer >= 0xFFFF) {
-        g_Dialogue.unk3C = 0;
+        g_Dialogue.hasEvents = 0;
         return;
     }
     while (true) {
@@ -31,8 +31,8 @@ static void RunCutsceneEvents(void) {
         }
         switch (*g_Dialogue.eventCur++) {
         case CSEV_SPAWN:
-            entity = &g_Entities[*g_Dialogue.eventCur++ & 0xFF] +
-                     STAGE_ENTITY_START;
+            entity =
+                &g_Entities[*g_Dialogue.eventCur++ & 0xFF] + STAGE_ENTITY_START;
             DestroyEntity(entity);
             entity->entityId = *g_Dialogue.eventCur++;
             entity->pfnUpdate = EntityUpdates[entity->entityId - 1];
@@ -46,8 +46,8 @@ static void RunCutsceneEvents(void) {
 #endif
             break;
         case CSEV_DESTROY:
-            entity = &g_Entities[*g_Dialogue.eventCur++ & 0xFF] +
-                     STAGE_ENTITY_START;
+            entity =
+                &g_Entities[*g_Dialogue.eventCur++ & 0xFF] + STAGE_ENTITY_START;
             DestroyEntity(entity);
             break;
         case CSEV_WAIT_FOR_FLAG:
