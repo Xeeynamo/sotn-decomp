@@ -111,13 +111,12 @@ typedef enum {
     CSEV_SET_FLAG,
 } CutsceneEventOpcode;
 
-#define EVENT_SPAWN_ENTITY(timer, slot, id, x, y)                              \
-    script_timer(timer), CSEV_SPAWN, slot, id, script_pos(x), script_pos(y)
-#define EVENT_DESTROY_ENTITY(timer, slot)                                      \
-    script_timer(timer), CSEV_DESTROY, slot
-#define EVENT_WAIT_FLAG(timer, flag)                                           \
-    script_timer(timer), CSEV_WAIT_FOR_FLAG, flag
-#define EVENT_SET_FLAG(timer, flag) script_timer(timer), CSEV_SET_FLAG, flag
+#define EVENT_AT(timer) script_timer(timer)
+#define EVENT_SPAWN_ENTITY(slot, id, x, y)                                     \
+    CSEV_SPAWN, slot, id, script_pos(x), script_pos(y)
+#define EVENT_DESTROY_ENTITY(slot) CSEV_DESTROY, slot
+#define EVENT_WAIT_FLAG(flag) CSEV_WAIT_FOR_FLAG, flag
+#define EVENT_SET_FLAG(flag) CSEV_SET_FLAG, flag
 #define EVENT_END() 0xFF, 0xFF
 
 #define END_CREDITS() CSOP_END_CREDITS

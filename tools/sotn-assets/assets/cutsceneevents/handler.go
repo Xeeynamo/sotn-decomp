@@ -229,11 +229,15 @@ func (h *handler) Build(e assets.BuildArgs) error {
 			return fmt.Errorf("event %q at line %d expects %d arguments but got %d",
 				op, i+1, len(def.params), len(args))
 		}
+		sb.WriteString("EVENT_AT(")
+		sb.WriteString(timer)
+		sb.WriteString("), ")
 		sb.WriteString(def.macro)
 		sb.WriteString("(")
-		sb.WriteString(timer)
-		for _, arg := range args {
-			sb.WriteString(", ")
+		for i, arg := range args {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
 			sb.WriteString(arg)
 		}
 		sb.WriteString("),\n")
