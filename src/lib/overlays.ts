@@ -17,7 +17,7 @@ export interface OverlayRow {
 }
 
 // Player / engine overlays that are not stage/boss/weapon/familiar binaries.
-const PLAYER_IDS = new Set(["dra", "ric", "maria", "main", "sel"]);
+const PLAYER_IDS = new Set(["dra", "ric", "maria", "main", "sel", "alucard"]);
 const DEBUG_ENGINE_IDS = new Set(["fname", "sd", "tek"]);
 
 function classify(id: string): CategoryId {

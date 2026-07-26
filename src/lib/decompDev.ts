@@ -35,6 +35,34 @@ export interface OverlayProgress {
 /** Map of canonical overlay id -> aggregated progress for one build. */
 export type VersionProgress = Map<string, OverlayProgress>;
 
+// The Saturn build uses its own overlay naming scheme. Map its leaf category
+// names onto the canonical overlay ids used by the other builds, so a Saturn
+// unit like "stage_02" is aggregated under "nz0" and shows up as Alchemy
+// Laboratory in the table. Ids that already match the canonical scheme (or
+// have no PS1/PSP equivalent) map to themselves.
+const SATURN_ID_REMAP: Record<string, string> = {
+  stage_00: "st0",
+  stage_0x: "no3",
+  stage_01: "np3",
+  stage_02: "nz0",
+  stage_03: "no0",
+  stage_04: "no1",
+  stage_14: "cen",
+  game: "dra",
+  title: "sel",
+  warp: "wrp",
+  rwarp: "rwrp",
+  t_bat: "tt_000",
+  zero: "main",
+  richter: "ric",
+  t_devil: "tt_003",
+  t_devil2: "tt_005",
+  t_fairy2: "tt_006",
+  t_fairy: "tt_002",
+  t_ghost: "tt_001",
+  t_sword: "tt_004",
+};
+
 // Collapse a unit's progress_categories into the canonical overlay id, i.e.
 // the original game binary the unit belongs to.
 function overlayIdForUnit(unit: ReportUnit): string | null {
@@ -59,7 +87,11 @@ function overlayIdForUnit(unit: ReportUnit): string | null {
     return null;
   }
   const parts = leaf.split(".");
-  return parts[parts.length - 1] || null;
+  const id = parts[parts.length - 1] || null;
+  if (id && parts[0] === "saturn") {
+    return SATURN_ID_REMAP[id] ?? id;
+  }
+  return id;
 }
 
 function toNumber(value: string | number | undefined): number {
