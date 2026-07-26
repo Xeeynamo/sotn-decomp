@@ -213,6 +213,23 @@ the old address symbol for unconverted callers. Verify both the storage symbol
 and legacy address resolve to the same location; do not leave a duplicate raw
 BSS allocation.
 
+Do not use an overlay binary checksum to validate BSS ownership. BSS is not
+stored in the output binary, so a build can hash exactly while allocating
+variables at incorrect addresses or shifting the raw BSS that follows them.
+Inspect the linker map after every BSS conversion. Account for the compiler's
+input-subsection alignment and verify each named variable, fill region, object
+end, and raw-BSS resume address against the original layout.
+
+An extractor may incorrectly split a short function prefix from the rest of
+an object even though a shared header emits the complete function sequence.
+Before adding a helper-only source file or a new header-selection macro, test
+whether one C object can own the complete original text range together with
+its `.data`, `.rodata`, and `.bss` ranges. Data that initially appears
+stage-specific may still be emitted byte-for-byte by existing stage guards
+when the wrapper defines the same stage constants as its PSX counterpart.
+Regenerate the splat and build files after changing the first text boundary;
+stale build rules can compile both the old and new object split.
+
 Some PSP loader/entity-ID variables are fixed symbols in an existing BSS
 range rather than storage the new C object should allocate. If ordinary
 definitions shift many unrelated references, inspect the original stores and
@@ -226,6 +243,14 @@ may reference a legacy raw-address symbol rather than the C symbol.
 external linkage where necessary and add `EXTERN(table_name)` to the overlay
 symexport file. Confirm the table address and raw-data resume boundary after
 linker input-section alignment.
+
+Reassess fixed symbol-map and symexport entries after converting an object to
+shared C. Remove entries for storage now defined and referenced entirely by C;
+the compiled definition establishes its address through the splat section
+assignment. Keep a fixed symbol-map entry when a neighboring raw segment still
+owns the definition but shared C references it, such as a stage-specific table
+inside a larger raw data block. Prove removals with a clean splat regeneration,
+not an incremental link that may retain previously generated symbolic labels.
 
 When several shared objects own adjacent PSP data, assign every subsection in
 address order rather than letting source data collect at the first available
