@@ -3,6 +3,7 @@ import { builds } from "./data/builds";
 import { fetchVersionProgress, VersionProgress } from "./lib/decompDev";
 import { buildOverlayRows, OverlayRow } from "./lib/overlays";
 import { ProgressTable } from "./components/ProgressTable";
+import { BuildSummary } from "./components/BuildSummary";
 
 const HEADER_LINKS = [
   { name: "Source Code", url: "https://github.com/xeeynamo/sotn-decomp" },
@@ -69,7 +70,12 @@ export function App() {
   return (
     <div className="app">
       <header className="app-header">
-        <h1>Castlevania: Symphony of the Night decompilation</h1>
+        <p className="eyebrow">Decompilation progress</p>
+        <h1>Castlevania: Symphony of the Night</h1>
+        <p className="tagline">
+          Per-overlay code matching across every tracked build of the game, from the
+          original PlayStation release to the Saturn and PSP ports.
+        </p>
         <nav className="links">
           {HEADER_LINKS.map((l) => (
             <a key={l.url} href={l.url} target="_blank" rel="noopener noreferrer">
@@ -80,12 +86,17 @@ export function App() {
       </header>
 
       <main>
-        {state.status === "loading" && <p className="status">Loading progress…</p>}
+        {state.status === "loading" && (
+          <div className="skeleton" role="status" aria-label="Loading progress" />
+        )}
         {state.status === "error" && (
           <p className="status error">Failed to load progress: {state.message}</p>
         )}
         {state.status === "ready" && (
-          <ProgressTable builds={builds} rows={state.rows} progress={state.progress} />
+          <>
+            <BuildSummary builds={builds} progress={state.progress} />
+            <ProgressTable builds={builds} rows={state.rows} progress={state.progress} />
+          </>
         )}
       </main>
 

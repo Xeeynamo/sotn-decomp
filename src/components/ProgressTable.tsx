@@ -12,7 +12,7 @@ interface Props {
 // Maps a 0..100 percentage to a heat colour: green only at a full 100% match,
 // yellow for anything in progress (including a yellow-ish tint at 0%), so the
 // whole table can be scanned at a glance.
-function heatStyle(percent: number): React.CSSProperties {
+export function heatStyle(percent: number): React.CSSProperties {
   if (percent >= 99.995) {
     return { backgroundColor: "hsl(125, 55%, 30%)" };
   }
@@ -32,7 +32,27 @@ function formatPercent(percent: number): string {
   return `${Math.round(percent)}%`;
 }
 
+// Sample points used to draw the heat legend swatches.
+const LEGEND_STOPS = [0, 25, 50, 75, 99, 100];
+
 export function ProgressTable({ builds, rows, progress }: Props) {
+  return (
+    <>
+      <ProgressGrid builds={builds} rows={rows} progress={progress} />
+      <div className="legend">
+        <span>Code matched</span>
+        <span className="legend-scale" aria-hidden="true">
+          {LEGEND_STOPS.map((p) => (
+            <i key={p} style={heatStyle(p)} />
+          ))}
+        </span>
+        <span>0% to 100% (green = fully matched)</span>
+      </div>
+    </>
+  );
+}
+
+function ProgressGrid({ builds, rows, progress }: Props) {
   return (
     <div className="table-scroll">
       <table className="progress-table">
