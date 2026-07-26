@@ -1,4 +1,3 @@
-PadRead = 0x80015288;
 g_api = 0x8003C774;
 g_GpuBuffers = 0x8003CB08;
 g_Clut = 0x8006CBCC;
