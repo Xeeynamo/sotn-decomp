@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "are.h"
 
-u16 OVL_EXPORT(PrizeDrops)[] = {
+u16 PrizeDrops[] = {
     ITEMDROP_HEART_VESSEL,
     ITEMDROP_SHIELD_ROD,
     // Moon Rod does not appear in ARE, unused?

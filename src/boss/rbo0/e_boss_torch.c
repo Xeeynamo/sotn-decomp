@@ -3,7 +3,7 @@
 
 // n.b.! this is identical to e_boss_torch for
 // rare, but the symbol used here is the same
-// address for RBO0_PrizeDrops. It seems like
+// address for PrizeDrops. It seems like
 // e_collect may have been linked against a
 // different definition, but is unused for
 // this boss.
@@ -13,7 +13,7 @@ extern EInit g_EInitEnvironment;
 static AnimateEntityFrame frames[] = {
 #else
 // this may be a bug, not sure how this can also be used for PrizeDrops
-AnimateEntityFrame RBO0_PrizeDrops[] = {
+AnimateEntityFrame PrizeDrops[] = {
 #endif
     {.duration = 5, .pose = 0x04}, {.duration = 5, .pose = 0x05},
     {.duration = 5, .pose = 0x06}, {.duration = 5, .pose = 0x07},
@@ -37,7 +37,7 @@ void EntityBossTorch(Entity* self) {
 #ifdef VERSION_PSP
         AnimateEntity(frames, self);
 #else
-        AnimateEntity(RBO0_PrizeDrops, self);
+        AnimateEntity(PrizeDrops, self);
 #endif
         if (g_Timer & 4) {
             self->palette = (self->params * 2) + PAL_FLAG(PAL_TORCH_A);

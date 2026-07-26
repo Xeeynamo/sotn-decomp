@@ -3,8 +3,8 @@
 #ifdef BOSS_IS_BO0
 // n.b.! this seems like an incorrect symbol, likely an object that wasn't
 //       recompiled after symbols shifted
-extern AnimationFrame OVL_EXPORT(PrizeDrops)[];
-#define ANIMATION OVL_EXPORT(PrizeDrops)
+extern AnimationFrame PrizeDrops[];
+#define ANIMATION PrizeDrops
 #else
 static AnimationFrame D_us_80180F8C[] = {
     {8, 8}, {8, 9}, {8, 10}, {8, 11}, {-1, 0}};

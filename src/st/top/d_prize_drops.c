@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "top.h"
 
-u16 OVL_EXPORT(PrizeDrops)[] = {
+u16 PrizeDrops[] = {
     ITEMDROP_TURQUOISE,
     ITEMDROP_TURKEY,
     ITEMDROP_FIRE_MAIL,

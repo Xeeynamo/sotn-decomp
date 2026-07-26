@@ -14,7 +14,7 @@ static u8 AnimFrames_80180A1C[] = {0x40, 0x22, 0xFF, 0x00};
 static u8 AnimFrames_80180A20[] = {0x40, 0x13, 0xFF, 0x00};
 static u8 AnimFrames_80180A24[] = {0x40, 0x14, 0xFF, 0x00};
 
-ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
+ObjInit2 BackgroundBlockInit[] = {
     {
         .animSet = ANIMSET_DRA(6),
         .zPriority = 0x1FA,

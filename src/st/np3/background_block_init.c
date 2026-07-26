@@ -16,7 +16,7 @@ static u8 D_80180C04[] = {0x10, 0x2E, 0x00};
 static u8 D_80180C08[] = {0x10, 0x37, 0x00};
 static u8 D_80180C0C[] = {0x10, 0x02, 0x00};
 
-ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
+ObjInit2 BackgroundBlockInit[] = {
     {0x8001, 0x0069, 0, 0, 0x0000, 0x00, BLEND_NO, 0x00000000, D_80180BD4},
     {0x8001, 0x0069, 0, 0, 0x0000, 0x00, BLEND_TRANSP | BLEND_ADD, 0x00000000,
      D_80180BD8},

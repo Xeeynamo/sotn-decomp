@@ -4,7 +4,7 @@
 static AnimateEntityFrame anim_frames[] = {{64, 2}, POSE_END};
 static AnimateEntityFrame anim_frames_2[] = {{64, 2}, POSE_END};
 
-ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
+ObjInit2 BackgroundBlockInit[] = {
     {
         .animSet = ANIMSET_DRA(6),
         .zPriority = 506,

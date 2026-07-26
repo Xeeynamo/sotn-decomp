@@ -6,7 +6,7 @@ static u8 AnimFrames_8018047C[] = {
     0x08, 0x0C, 0x08, 0x0D, 0x08, 0x0E, 0x08, 0x0F, 0x08, 0x10, 0x00, 0x00,
 };
 
-ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
+ObjInit2 BackgroundBlockInit[] = {
     {
         .animSet = ANIMSET_OVL(1),
         .zPriority = 0x69,

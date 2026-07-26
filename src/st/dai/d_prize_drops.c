@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dai.h"
 
-u16 OVL_EXPORT(PrizeDrops)[] = {
+u16 PrizeDrops[] = {
     ITEMDROP_ANKH_OF_LIFE,   ITEMDROP_MORNINGSTAR,
     ITEMDROP_SILVER_RING,    ITEMDROP_AQUAMARINE,
     ITEMDROP_MYSTIC_PENDANT, ITEMDROP_MAGIC_MISSILE,
