@@ -13,8 +13,8 @@ extern u8 D_pspeu_09265CA0[];
 extern u8 D_pspeu_09265E90[];
 extern u8 D_pspeu_092660B0[];
 
-extern u8* OVL_EXPORT(cutscene_text_offset);
-extern u8* OVL_EXPORT(cutscene_data);
+extern u8* cutscene_text_offset;
+extern u8* cutscene_data;
 
 s32 E_ID(ID_11);
 s32 E_ID(ID_12);
@@ -145,10 +145,10 @@ void InitEntityIds(void) {
 }
 
 void OVL_EXPORT(Load)(void) {
-    OVL_EXPORT(cutscene_data) = GetLangAt(
+    cutscene_data = GetLangAt(
         0, (u8*)D_pspeu_092660B0, (u8*)D_pspeu_09265CA0, (u8*)D_pspeu_09265A98,
         (u8*)D_pspeu_09265E90, (u8*)D_pspeu_092658B8);
-    OVL_EXPORT(cutscene_text_offset) = GetLangAt(
+    cutscene_text_offset = GetLangAt(
         0, (u8*)D_pspeu_092660B0, (u8*)D_pspeu_09265CA0, (u8*)D_pspeu_09265A98,
         (u8*)D_pspeu_09265E90, (u8*)D_pspeu_092658B8);
 

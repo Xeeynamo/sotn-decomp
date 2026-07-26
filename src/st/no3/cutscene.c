@@ -150,7 +150,7 @@ s32 g_IsCutsceneDone;
 #include "../cutscene_skip.h"
 
 #ifdef VERSION_PSP
-extern u8* OVL_EXPORT(cutscene_data);
+extern u8* cutscene_data;
 
 extern s32 E_ID(BG_LIGHTNING);
 
@@ -168,7 +168,7 @@ extern u_long D_8943B8C;
 #else
 #include "../cutscene_scale_avatar.h"
 
-extern u8 OVL_EXPORT(cutscene_data)[];
+extern u8 cutscene_data[];
 #endif
 
 void EntityCutscene(Entity* self) {
@@ -231,7 +231,7 @@ void EntityCutscene(Entity* self) {
             return;
         }
         entity->params = 0x100;
-        if (SetCutsceneScript(OVL_EXPORT(cutscene_data))) {
+        if (SetCutsceneScript(cutscene_data)) {
             self->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
             self->primIndex = g_Dialogue.primIndex[2];
             g_CutsceneFlags = 0;
@@ -472,7 +472,7 @@ void EntityCutscene(Entity* self) {
                     ptr <<= 4;
                     ptr |= (u_long)*g_Dialogue.scriptCur++;
 #ifdef VERSION_PSP
-                    ptr += (u_long)OVL_EXPORT(cutscene_data);
+                    ptr += (u_long)cutscene_data;
 #endif
                     SetCutsceneEvents((u8*)ptr);
                     continue;
@@ -487,7 +487,7 @@ void EntityCutscene(Entity* self) {
                     ptr <<= 4;
                     ptr |= (u_long)*g_Dialogue.scriptCur++;
 #ifdef VERSION_PSP
-                    ptr += (u_long)OVL_EXPORT(cutscene_data);
+                    ptr += (u_long)cutscene_data;
 #else
                     ptr += (u16)0x100000;
 #endif
@@ -501,7 +501,7 @@ void EntityCutscene(Entity* self) {
                     ptr <<= 4;
                     ptr |= (u_long)*g_Dialogue.scriptCur;
 #ifdef VERSION_PSP
-                    ptr += (u_long)OVL_EXPORT(cutscene_data);
+                    ptr += (u_long)cutscene_data;
 #endif
                     g_Dialogue.scriptCur = CS_PTR(ptr);
                     continue;
@@ -514,7 +514,7 @@ void EntityCutscene(Entity* self) {
                     ptr <<= 4;
                     ptr |= (u_long)*g_Dialogue.scriptCur;
 #ifdef VERSION_PSP
-                    ptr += (u_long)OVL_EXPORT(cutscene_data);
+                    ptr += (u_long)cutscene_data;
 #endif
                     g_Dialogue.scriptCur = CS_PTR(ptr);
                     continue;

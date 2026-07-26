@@ -132,9 +132,9 @@ extern u_long D_894490C;
 extern u_long D_894568C;
 
 // This is BSS from st_init_lib.c
-extern u8* OVL_EXPORT(cutscene_data_offset_eight);
-extern u8* OVL_EXPORT(cutscene_data_offset_zero);
-extern u8* OVL_EXPORT(cutscene_data);
+extern u8* cutscene_data_offset_eight;
+extern u8* cutscene_data_offset_zero;
+extern u8* cutscene_data;
 
 void EntityCutscene(Entity* self) {
     s16 uCoord;    // sp4E
@@ -168,13 +168,13 @@ void EntityCutscene(Entity* self) {
     switch (self->step) {
     case 0:
         if (g_CastleFlags[MET_LIBRARIAN]) {
-            *OVL_EXPORT(cutscene_data_offset_zero) = 1;
+            *cutscene_data_offset_zero = 1;
         } else {
-            *OVL_EXPORT(cutscene_data_offset_zero) = 0;
+            *cutscene_data_offset_zero = 0;
         }
 
         // Interestingly this cutscene is initially loaded at offset +8
-        if (SetCutsceneScript(OVL_EXPORT(cutscene_data_offset_eight))) {
+        if (SetCutsceneScript(cutscene_data_offset_eight)) {
             self->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
             self->primIndex = g_Dialogue.primIndex[2];
             g_CutsceneFlags = 0;
@@ -354,7 +354,7 @@ void EntityCutscene(Entity* self) {
                     ptr |= (u_long)*g_Dialogue.scriptCur++;
                     ptr <<= 4;
                     ptr |= (u_long)*g_Dialogue.scriptCur++;
-                    ptr += (u_long)OVL_EXPORT(cutscene_data);
+                    ptr += (u_long)cutscene_data;
                     SetCutsceneEvents((u8*)ptr);
                     continue;
                 case CSOP_SCRIPT_UNKNOWN_13:
@@ -367,7 +367,7 @@ void EntityCutscene(Entity* self) {
                     ptr |= (u_long)*g_Dialogue.scriptCur++;
                     ptr <<= 4;
                     ptr |= (u_long)*g_Dialogue.scriptCur++;
-                    ptr += (u_long)OVL_EXPORT(cutscene_data);
+                    ptr += (u_long)cutscene_data;
                     g_Dialogue.scriptCur += *(u8*)ptr << 2;
 
                     ptr = (u_long)*g_Dialogue.scriptCur++;
@@ -377,7 +377,7 @@ void EntityCutscene(Entity* self) {
                     ptr |= (u_long)*g_Dialogue.scriptCur++;
                     ptr <<= 4;
                     ptr |= (u_long)*g_Dialogue.scriptCur;
-                    ptr += (u_long)OVL_EXPORT(cutscene_data);
+                    ptr += (u_long)cutscene_data;
                     g_Dialogue.scriptCur = (u8*)ptr;
                     continue;
                 case CSOP_SCRIPT_UNKNOWN_15:
@@ -388,7 +388,7 @@ void EntityCutscene(Entity* self) {
                     ptr |= (u_long)*g_Dialogue.scriptCur++;
                     ptr <<= 4;
                     ptr |= (u_long)*g_Dialogue.scriptCur;
-                    ptr += (u_long)OVL_EXPORT(cutscene_data);
+                    ptr += (u_long)cutscene_data;
                     g_Dialogue.scriptCur = (u8*)ptr;
                     continue;
                 case CSOP_WAIT_FOR_FLAG:

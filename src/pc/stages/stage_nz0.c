@@ -17,15 +17,14 @@ extern GAME_IMPORT LayoutEntity** g_pStObjLayoutVertical;
 extern u8 cutscene_nz0_maria[];
 extern u8 cutscene_nz0_alucard[];
 
-u8 OVL_EXPORT(cutscene_data)[] = {
+u8 cutscene_data[] = {
 #include "../../st/nz0/gen/cutscene_data.h"
 #include "../../st/nz0/gen/cutscene_events.h"
 };
 
 static void InitCutscenePc(void) {
     static const CutsceneSymbolRange symbols[] = {
-        {OVL_EXPORT(cutscene_data), 0x80183B0C,
-         sizeof(OVL_EXPORT(cutscene_data))},
+        {cutscene_data, 0x80183B0C, sizeof(cutscene_data)},
         {cutscene_nz0_maria, 0x80193ba4, 0xd80},
         {cutscene_nz0_alucard, 0x80194924, 0xd80},
     };

@@ -44,7 +44,7 @@ extern s32 g_IsCutsceneDone; // bss
 #include "../cutscene_scale_avatar.h"
 
 // cutscene where alucard and maria discuss castle changing
-extern u8 OVL_EXPORT(cutscene_data)[];
+extern u8 cutscene_data[];
 void EntityCutscene(Entity* self) {
     s16 uCoord;
     s16 vCoord;
@@ -92,7 +92,7 @@ void EntityCutscene(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        if (SetCutsceneScript(OVL_EXPORT(cutscene_data))) {
+        if (SetCutsceneScript(cutscene_data)) {
             self->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
             self->primIndex = g_Dialogue.primIndex[2];
             g_CutsceneFlags = 0;
