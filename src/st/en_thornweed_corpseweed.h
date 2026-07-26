@@ -5,6 +5,7 @@ extern EInit g_EInitThornweed;
 extern EInit g_EInitCorpseweed;
 extern EInit g_EInitCorpseweedProjectile;
 
+#ifndef THORNWEED_DATA_ALREADY_DEFINED
 // D_8018173C
 static s16 PhysicsSensors[] = {
     0, 1, 0, 4, 2, -4, -4, 0,
@@ -27,7 +28,10 @@ static u8 AnimFrames_CorpseweedIdle[] = {
     0x06, 0x0D, 0x06, 0x0E, 0x06, 0x0F, 0x06, 0x10, 0x00, 0x00, 0x00, 0x00};
 
 // D_8018177C
-static u8 AnimFrames_CorpseweedAttackCharge[] = {
+#ifndef CORPSEWEED_ATTACK_CHARGE_SCOPE
+#define CORPSEWEED_ATTACK_CHARGE_SCOPE static
+#endif
+CORPSEWEED_ATTACK_CHARGE_SCOPE u8 AnimFrames_CorpseweedAttackCharge[] = {
     0x02, 0x13, 0x02, 0x14, 0x00, 0x00, 0x00, 0x00};
 
 // D_80181784
@@ -58,12 +62,14 @@ static u8 HitboxIndices[] = {
     0x04, 0x05, 0x05, 0x06, 0x06, 0x06, 0x07, 0x07, 0x08, 0x09, 0x09, 0x05, 0x0A, 0x00, 0x00, 0x00
 };
 // clang-format on
+#endif
 
 // E_THORNWEED
 // params: 0 = Thornweed, 1 = Corpseweed
 // func_801AA020
 // PSP:func_psp_09249750:Match
 // PSP:https://decomp.me/scratch/LAyvk
+#ifndef CORPSEWEED_PROJECTILE_ONLY
 void EntityThornweed(Entity* self) {
     const int EntityFormCount = 2; // Thornweed, Corpseweed
     const int AnimFrame_ThornweedInit = 1;
@@ -189,12 +195,24 @@ void EntityThornweed(Entity* self) {
     self->hitboxWidth = *hitboxData++;
     self->hitboxHeight = *hitboxData++;
 }
+#endif
 
 // E_CORPSEWEED
 // func_801AA390
 // https://decomp.me/scratch/QVcDz
 // PSP:func_psp_09249BE0:No match
 // PSP:https://decomp.me/scratch/lqXTP
+#if !defined(CORPSEWEED_PROJECTILE_ONLY) && !defined(SKIP_CORPSEWEED)
+#ifdef CORPSEWEED_ASM
+#ifdef VERSION_PSP
+INCLUDE_ASM(
+    "st/rchi_psp/nonmatchings/rchi_psp/e_thornweed_corpseweed",
+    EntityCorpseweed);
+#else
+INCLUDE_ASM(
+    "st/rchi/nonmatchings/e_thornweed_corpseweed", EntityCorpseweed);
+#endif
+#else
 void EntityCorpseweed(Entity* self) {
     // Sprites
     const int SpriteLeavesLeft = 0;
@@ -738,11 +756,14 @@ void EntityCorpseweed(Entity* self) {
         DestroyEntity(self);
     }
 }
+#endif
+#endif
 
 // E_CORPSEWEED_PROJECTILE
 // func_801AB0C0
 // PSP:func_psp_0924AE40:Match
 // PSP:https://decomp.me/scratch/qpbbH
+#ifndef THORNWEED_ONLY
 void EntityCorpseweedProjectile(Entity* self) {
     // Sprites
     const int SpriteLeft = 0x40;
@@ -906,3 +927,4 @@ void EntityCorpseweedProjectile(Entity* self) {
     self->hitboxWidth = *hitboxData++;
     self->hitboxHeight = *hitboxData++;
 }
+#endif

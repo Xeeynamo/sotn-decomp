@@ -1,0 +1,94 @@
+options:
+  platform: psx
+  basename: strchi
+  base_path: ..
+  build_path: build/us
+  target_path: disks/us/ST/RCHI/RCHI.BIN
+  asm_path: asm/us/st/rchi
+  asset_path: assets/st/rchi
+  src_path: src/st/rchi
+  ld_script_path: build/us/strchi.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.us.txt
+    - config/symbols.us.strchi.txt
+  undefined_funcs_auto_path: build/us/config/undefined_funcs_auto.us.strchi.txt
+  undefined_syms_auto_path: build/us/config/undefined_syms_auto.us.strchi.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: us_$VRAM
+  disassemble_all: true
+  section_order:
+    - .data
+    - .rodata
+    - .text
+    - .bss
+    - .sbss
+  ld_bss_is_noload: false
+  disasm_unknown: true
+  global_vram_start: 0x80010000
+  ld_generate_symbol_per_data_segment: true
+sha1: 82b75113cbef38660a266abe15ae5183a80633d9
+segments:
+  - name: strchi
+    type: code
+    start: 0x0
+    vram: 0x80180000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, .data, header]
+      - [0x2C, data]
+      - [0x4F4, .data, e_init]
+      - [0x690, .data, e_room_bg]
+      - [0x6C8, data]
+      - [0x6F8, .data, e_lock_camera]
+      - [0x778, data]
+      - [0x8FC, .data, st_update]
+      - [0x948, .data, collision]
+      - [0xD08, .data, e_red_door]
+      - [0xD20, .data, st_common]
+      - [0xF20, .data, e_collect]
+      - [0x1274, .data, e_misc]
+      - [0x132C, .data, e_particles]
+      - [0x13AC, .data, e_room_fg]
+      - [0x1438, data]
+      - [0x1780, .data, e_thornweed_corpseweed]
+      - [0x1838, data]
+      - [0x18F10, .rodata, e_demon_switch_wall]
+      - [0x18F54, .rodata, e_breakable_wall]
+      - [0x18F78, .rodata, e_bat]
+      - [0x18F8C, .rodata, e_red_door]
+      - [0x18FA4, .rodata, e_collect]
+      - [0x19078, .rodata, e_stage_name]
+      - [0x190AC, .rodata, e_slogra]
+      - [0x190B8, .rodata, e_gaibon]
+      - [0x190DC, .rodata, e_thornweed_corpseweed]
+      - [0x19118, .rodata, prim_helpers]
+      - [0x19120, c, e_room_bg]
+      - [0x19200, c, e_lock_camera]
+      - [0x193BC, c, e_breakable]
+      - [0x19A30, c, e_demon_switch_wall]
+      - [0x1A048, c, e_breakable_wall]
+      - [0x1A8DC, c, e_bat]
+      - [0x1ABF4, c, st_update]
+      - [0x1B028, c, collision]
+      - [0x1C7E4, c, create_entity]
+      - [0x1D35C, c, e_red_door]
+      - [0x1E00C, c, st_common]
+      - [0x1F4BC, c, e_collect]
+      - [0x21E2C, c, e_misc]
+      - [0x241C8, c, e_stage_name]
+      - [0x2501C, c, e_particles]
+      - [0x25860, c, e_room_fg]
+      - [0x2594C, c, popup]
+      - [0x25C7C, c, e_slogra]
+      - [0x26BD0, c, e_gaibon]
+      - [0x2811C, c, e_thornweed_corpseweed]
+      - [0x29638, c, prim_helpers]
+      - [0x29E68, .bss, create_entity]
+      - [0x29E78, bss]
+      - [0x2AAE0, .bss, st_update]
+  - [0x2AB20]
