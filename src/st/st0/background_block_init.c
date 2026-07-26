@@ -2,7 +2,7 @@
 #include "st0.h"
 
 static u8 D_80180634[] = {0x40, 0x01, 0xFF, 0x00};
-ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
+ObjInit2 BackgroundBlockInit[] = {
     {.animSet = ANIMSET_DRA(6),
      .zPriority = 0x01FA,
      .unk5A = 0x0000,

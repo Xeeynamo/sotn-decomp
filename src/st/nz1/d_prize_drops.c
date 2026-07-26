@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz1.h"
 
-u16 OVL_EXPORT(PrizeDrops)[] = {
+u16 PrizeDrops[] = {
     ITEMDROP_MAGIC_MISSILE, ITEMDROP_PENTAGRAM,
     // Stone Sword is an enemy drop, not an item drop, likely cut
     ITEMDROP_STONE_SWORD, ITEMDROP_STAR_FLAIL, ITEMDROP_GOLD_PLATE,

@@ -4,7 +4,7 @@
 static u8 anim1[] = {64, 1, 255, 0};
 static u8 anim2[] = {2, 37, 2, 38, 2, 39, 2, 38, 0};
 
-ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
+ObjInit2 BackgroundBlockInit[] = {
     {
         .animSet = ANIMSET_DRA(6),
         .zPriority = 0x01FA,

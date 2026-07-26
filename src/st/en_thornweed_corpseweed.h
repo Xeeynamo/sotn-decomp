@@ -58,7 +58,6 @@ static u8 HitboxIndices[] = {
     0x04, 0x05, 0x05, 0x06, 0x06, 0x06, 0x07, 0x07, 0x08, 0x09, 0x09, 0x05, 0x0A, 0x00, 0x00, 0x00
 };
 // clang-format on
-
 // E_THORNWEED
 // params: 0 = Thornweed, 1 = Corpseweed
 // func_801AA020
@@ -189,11 +188,10 @@ void EntityThornweed(Entity* self) {
     self->hitboxWidth = *hitboxData++;
     self->hitboxHeight = *hitboxData++;
 }
-
 // E_CORPSEWEED
 // func_801AA390
 // https://decomp.me/scratch/QVcDz
-// PSP:func_psp_09249BE0:No match
+// PSP:func_psp_09249BE0:Match with CORPSEWEED_NO_ATTACK_SFX
 // PSP:https://decomp.me/scratch/lqXTP
 void EntityCorpseweed(Entity* self) {
     // Sprites
@@ -534,7 +532,9 @@ void EntityCorpseweed(Entity* self) {
             // Spawn projectile entity
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
+#ifndef CORPSEWEED_NO_ATTACK_SFX
                 PlaySfxPositional(SFX_CORPSEWEED_ATTACK);
+#endif
 
                 CreateEntityFromEntity(E_CORPSEWEED_PROJECTILE, self, entity);
                 entity->zPriority = self->zPriority + 1;
@@ -738,7 +738,6 @@ void EntityCorpseweed(Entity* self) {
         DestroyEntity(self);
     }
 }
-
 // E_CORPSEWEED_PROJECTILE
 // func_801AB0C0
 // PSP:func_psp_0924AE40:Match

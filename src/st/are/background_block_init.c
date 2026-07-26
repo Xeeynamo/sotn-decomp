@@ -9,7 +9,7 @@ static AnimateEntityFrame anim_three[] = {{16, 0x13}, POSE_END};
 static AnimateEntityFrame anim_four[] = {{16, 0xD}, POSE_END};
 static AnimateEntityFrame anim_five[] = {{16, 0xE}, POSE_END};
 
-ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
+ObjInit2 BackgroundBlockInit[] = {
     {
         .animSet = ANIMSET_OVL(1),
         .zPriority = 105,

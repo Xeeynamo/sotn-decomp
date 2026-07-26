@@ -875,6 +875,9 @@ files:
           - [0x1C320, cutscene, cutscene_script_post_fight_en]
           - [0x1C420, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rchi.bin
+    asset_path: assets/st/rchi
+    src_path: src/st/rchi
+    splat_config_path: config/splat.pspeu.strchi.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rdai.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rlib.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rno0.bin

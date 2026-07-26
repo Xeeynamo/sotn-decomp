@@ -1472,7 +1472,7 @@ void EntityRelicOrb(Entity* self) {
 
 #if STAGE != STAGE_ST0
 // defined in d_prize_drops.c
-extern u16 OVL_EXPORT(PrizeDrops)[];
+extern u16 PrizeDrops[];
 
 // params: Local index of this drop
 void EntityHeartDrop(Entity* self) {
@@ -1491,7 +1491,7 @@ void EntityHeartDrop(Entity* self) {
         }
 
         index -= HEART_DROP_CASTLE_FLAG;
-        index = OVL_EXPORT(PrizeDrops)[index];
+        index = PrizeDrops[index];
         if (index < 128) {
             self->unkB8 = (Entity*)EntityPrizeDrop;
         } else {

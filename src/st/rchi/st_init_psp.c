@@ -1,0 +1,64 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+#include "rchi.h"
+#include "../pfn_entity_update.h"
+
+extern LayoutEntity* D_8D2DF8C;
+extern LayoutEntity* D_8D2E060;
+
+extern Overlay g_StageOverlay;
+extern PfnEntityUpdate EntityUpdates[];
+
+extern s32 E_ID(BACKGROUND_BLOCK);
+extern s32 E_ID(LOCK_CAMERA);
+extern s32 E_ID(UNK_ID13);
+extern s32 E_ID(EXPLOSION_VARIANTS);
+extern s32 E_ID(GREY_PUFF);
+extern s32 E_ID(SLOGRA);
+extern s32 E_ID(SLOGRA_SPEAR);
+extern s32 E_ID(SLOGRA_SPEAR_PROJECTILE);
+extern s32 E_ID(GAIBON);
+extern s32 E_ID(GAIBON_LEG);
+extern s32 E_ID(SMALL_GAIBON_PROJECTILE);
+extern s32 E_ID(LARGE_GAIBON_PROJECTILE);
+extern s32 E_ID(BREAKABLE_DEBRIS);
+extern s32 E_ID(DEMON_SWITCH_WALL);
+extern s32 E_ID(DEMON_SWITCH);
+extern s32 E_ID(BREAKABLE_WALL);
+extern s32 E_ID(BREAKABLE_WALL_DEBRIS);
+extern s32 E_ID(THORNWEED);
+extern s32 E_ID(CORPSEWEED);
+extern s32 E_ID(CORPSEWEED_PROJECTILE);
+extern s32 E_ID(BAT);
+
+void InitEntityIds(void) {
+    E_ID(BACKGROUND_BLOCK) = E_BACKGROUND_BLOCK;
+    E_ID(LOCK_CAMERA) = E_LOCK_CAMERA;
+    E_ID(UNK_ID13) = E_UNK_ID13;
+    E_ID(EXPLOSION_VARIANTS) = E_EXPLOSION_VARIANTS;
+    E_ID(GREY_PUFF) = E_GREY_PUFF;
+    E_ID(SLOGRA) = E_SLOGRA;
+    E_ID(SLOGRA_SPEAR) = E_SLOGRA_SPEAR;
+    E_ID(SLOGRA_SPEAR_PROJECTILE) = E_SLOGRA_SPEAR_PROJECTILE;
+    E_ID(GAIBON) = E_GAIBON;
+    E_ID(GAIBON_LEG) = E_GAIBON_LEG;
+    E_ID(SMALL_GAIBON_PROJECTILE) = E_SMALL_GAIBON_PROJECTILE;
+    E_ID(LARGE_GAIBON_PROJECTILE) = E_LARGE_GAIBON_PROJECTILE;
+    E_ID(BREAKABLE_DEBRIS) = E_BREAKABLE_DEBRIS;
+    E_ID(DEMON_SWITCH_WALL) = E_DEMON_SWITCH_WALL;
+    E_ID(DEMON_SWITCH) = E_DEMON_SWITCH;
+    E_ID(BREAKABLE_WALL) = E_BREAKABLE_WALL;
+    E_ID(BREAKABLE_WALL_DEBRIS) = E_BREAKABLE_WALL_DEBRIS;
+    E_ID(THORNWEED) = E_THORNWEED;
+    E_ID(CORPSEWEED) = E_CORPSEWEED;
+    E_ID(CORPSEWEED_PROJECTILE) = E_CORPSEWEED_PROJECTILE;
+    E_ID(BAT) = E_BAT;
+}
+
+void StageLoad(void) {
+    InitEntityIds();
+    PfnEntityUpdates = EntityUpdates;
+    g_pStObjLayoutHorizontal = &D_8D2DF8C;
+    g_pStObjLayoutVertical = &D_8D2E060;
+    func_892A018();
+    memcpy(&g_api.o, &g_StageOverlay, sizeof(Overlay));
+}

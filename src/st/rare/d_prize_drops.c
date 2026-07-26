@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rare.h"
 
-u16 OVL_EXPORT(PrizeDrops)[] = {
+u16 PrizeDrops[] = {
     ITEMDROP_FURY_PLATE,
     ITEMDROP_ZIRCON,
     ITEMDROP_BUFFALO_STAR,
