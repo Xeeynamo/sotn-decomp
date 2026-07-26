@@ -1,3 +1,2 @@
 EXTERN(_binary_assets_st_rchi_mwo_header_bin_start);
 EXTERN(StageLoad);
-EXTERN(AnimFrames_CorpseweedAttackCharge);

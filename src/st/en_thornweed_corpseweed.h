@@ -5,87 +5,64 @@ extern EInit g_EInitThornweed;
 extern EInit g_EInitCorpseweed;
 extern EInit g_EInitCorpseweedProjectile;
 
-#ifndef THORNWEED_DATA_ALREADY_DEFINED
-#ifndef THORNWEED_DATA_SCOPE
-#define THORNWEED_DATA_SCOPE static
-#endif
 // D_8018173C
-THORNWEED_DATA_SCOPE s16 PhysicsSensors[] = {
+static s16 PhysicsSensors[] = {
     0, 1, 0, 4, 2, -4, -4, 0,
 };
 
 // D_8018174C
-THORNWEED_DATA_SCOPE u8 AnimFrames_ThornweedWakeup[] = {
+static u8 AnimFrames_ThornweedWakeup[] = {
     0x02, 0x01, 0x06, 0x02, 0x06, 0x03, 0x06, 0x04, 0xFF, 0x00, 0x00, 0x00};
 
 // D_80181758
-THORNWEED_DATA_SCOPE u8 AnimFrames_ThornweedIdle[] = {
+static u8 AnimFrames_ThornweedIdle[] = {
     0x06, 0x05, 0x06, 0x06, 0x06, 0x07, 0x06, 0x08, 0x00, 0x00, 0x00, 0x00};
 
 // D_80181764
-THORNWEED_DATA_SCOPE u8 AnimFrames_CorpseweedWakeup[] = {
+static u8 AnimFrames_CorpseweedWakeup[] = {
     0x02, 0x09, 0x06, 0x0A, 0x06, 0x0B, 0x06, 0x0C, 0xFF, 0x00, 0x00, 0x00};
 
 // D_80181770
-THORNWEED_DATA_SCOPE u8 AnimFrames_CorpseweedIdle[] = {
+static u8 AnimFrames_CorpseweedIdle[] = {
     0x06, 0x0D, 0x06, 0x0E, 0x06, 0x0F, 0x06, 0x10, 0x00, 0x00, 0x00, 0x00};
 
 // D_8018177C
-#ifndef CORPSEWEED_ATTACK_CHARGE_SCOPE
-#define CORPSEWEED_ATTACK_CHARGE_SCOPE static
-#endif
-CORPSEWEED_ATTACK_CHARGE_SCOPE u8 AnimFrames_CorpseweedAttackCharge[] = {
+static u8 AnimFrames_CorpseweedAttackCharge[] = {
     0x02, 0x13, 0x02, 0x14, 0x00, 0x00, 0x00, 0x00};
 
 // D_80181784
-THORNWEED_DATA_SCOPE u8 AnimFrames_CorpseweedProjectileAirborne[] = {
+static u8 AnimFrames_CorpseweedProjectileAirborne[] = {
     0x02, 0x16, 0x02, 0x17, 0x00, 0x00, 0x00, 0x00};
 
 // D_8018178C
-THORNWEED_DATA_SCOPE u8 AnimFrames_CorpseweedProjectileDeath[] = {
+static u8 AnimFrames_CorpseweedProjectileDeath[] = {
     0x04, 0x18, 0x03, 0x19, 0x02, 0x1A, 0x02, 0x1B, 0xFF, 0x00, 0x00, 0x00};
 
 // D_80181798
-THORNWEED_DATA_SCOPE u8* AnimFrames_All[] = {
+static u8* AnimFrames_All[] = {
     AnimFrames_ThornweedWakeup, AnimFrames_CorpseweedWakeup, // WakeUp
     AnimFrames_ThornweedIdle, AnimFrames_CorpseweedIdle,     // Idle
 };
 
 // clang-format off
 // D_801817A8
-THORNWEED_DATA_SCOPE s8 HitboxData[] = {
+static s8 HitboxData[] = {
     0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x03, 0x03, 0x01, 0xFE, 0x03, 0x04, 0x00, 0xFA, 0x07, 0x09,
     0x01, 0xFB, 0x09, 0x07, 0xC1, 0xC1, 0x00, 0x00, 0x02, 0x09, 0x05, 0x08, 0x00, 0x00, 0x04, 0x04,
     0x03, 0xF5, 0x04, 0x0C, 0x04, 0xFD, 0x05, 0x05, 0x0F, 0xF5, 0x17, 0x15
 };
 
 // D_801817D4
-THORNWEED_DATA_SCOPE u8 HitboxIndices[] = {
+static u8 HitboxIndices[] = {
     0x00, 0x01, 0x02, 0x02, 0x03, 0x04, 0x04, 0x04, 0x04, 0x01, 0x02, 0x02, 0x03, 0x04, 0x04, 0x04,
     0x04, 0x05, 0x05, 0x06, 0x06, 0x06, 0x07, 0x07, 0x08, 0x09, 0x09, 0x05, 0x0A, 0x00, 0x00, 0x00
 };
 // clang-format on
-#else
-extern s16 PhysicsSensors[];
-extern u8 AnimFrames_ThornweedWakeup[];
-extern u8 AnimFrames_ThornweedIdle[];
-extern u8 AnimFrames_CorpseweedWakeup[];
-extern u8 AnimFrames_CorpseweedIdle[];
-extern u8 AnimFrames_CorpseweedAttackCharge[];
-extern u8 AnimFrames_CorpseweedProjectileAirborne[];
-extern u8 AnimFrames_CorpseweedProjectileDeath[];
-extern u8* AnimFrames_All[];
-extern s8 HitboxData[];
-extern u8 HitboxIndices[];
-#endif
-
-#ifndef THORNWEED_DATA_ONLY
 // E_THORNWEED
 // params: 0 = Thornweed, 1 = Corpseweed
 // func_801AA020
 // PSP:func_psp_09249750:Match
 // PSP:https://decomp.me/scratch/LAyvk
-#if !defined(CORPSEWEED_PROJECTILE_ONLY) && !defined(CORPSEWEED_ONLY)
 void EntityThornweed(Entity* self) {
     const int EntityFormCount = 2; // Thornweed, Corpseweed
     const int AnimFrame_ThornweedInit = 1;
@@ -211,24 +188,11 @@ void EntityThornweed(Entity* self) {
     self->hitboxWidth = *hitboxData++;
     self->hitboxHeight = *hitboxData++;
 }
-#endif
-
 // E_CORPSEWEED
 // func_801AA390
 // https://decomp.me/scratch/QVcDz
 // PSP:func_psp_09249BE0:Match with CORPSEWEED_NO_ATTACK_SFX
 // PSP:https://decomp.me/scratch/lqXTP
-#if !defined(CORPSEWEED_PROJECTILE_ONLY) && !defined(SKIP_CORPSEWEED)
-#ifdef CORPSEWEED_ASM
-#ifdef VERSION_PSP
-INCLUDE_ASM(
-    "st/rchi_psp/nonmatchings/rchi_psp/e_thornweed_corpseweed",
-    EntityCorpseweed);
-#else
-INCLUDE_ASM(
-    "st/rchi/nonmatchings/e_thornweed_corpseweed", EntityCorpseweed);
-#endif
-#else
 void EntityCorpseweed(Entity* self) {
     // Sprites
     const int SpriteLeavesLeft = 0;
@@ -774,14 +738,10 @@ void EntityCorpseweed(Entity* self) {
         DestroyEntity(self);
     }
 }
-#endif
-#endif
-
 // E_CORPSEWEED_PROJECTILE
 // func_801AB0C0
 // PSP:func_psp_0924AE40:Match
 // PSP:https://decomp.me/scratch/qpbbH
-#if !defined(THORNWEED_ONLY) && !defined(CORPSEWEED_ONLY)
 void EntityCorpseweedProjectile(Entity* self) {
     // Sprites
     const int SpriteLeft = 0x40;
@@ -945,5 +905,3 @@ void EntityCorpseweedProjectile(Entity* self) {
     self->hitboxWidth = *hitboxData++;
     self->hitboxHeight = *hitboxData++;
 }
-#endif
-#endif
