@@ -122,12 +122,12 @@ static s32 D_80181148 = 0;
 static u32 D_8018114C = 0;
 
 #ifdef VERSION_PSP
-extern s32 E_ID(DRACULA_UNK20);
-extern s32 E_ID(DRACULA_UNK21);
-extern s32 E_ID(DRACULA_UNK23);
-extern s32 E_ID(DRACULA_FIREBALL);
-extern s32 E_ID(DRACULA_UNK2C);
-extern s32 E_ID(DRACULA_UNK2E);
+extern s32 E_ID(DRACULA_FINAL_FORM);
+extern s32 E_ID(DRACULA_MEGA_FIREBALL);
+extern s32 E_ID(DEMATERIALIZE_STAGE_BG);
+extern s32 E_ID(DRACULA_RAIN_ATTACK);
+extern s32 E_ID(PHOTOGRAPH);
+extern s32 E_ID(ID_2E);
 #endif
 
 bool func_801ADAC8(s16 yOffset) {
@@ -245,7 +245,7 @@ void EntityDraculaFinalForm(Entity* self) {
             self->animCurFrame = 0;
             part = self + 1;
             for (i = 1; i < 4; i++, part++) {
-                CreateEntityFromCurrentEntity(E_ID(DRACULA_UNK20), part);
+                CreateEntityFromCurrentEntity(E_ID(DRACULA_FINAL_FORM), part);
                 part->zPriority = self->zPriority + 2;
                 part->params = i;
                 part->nextPart = part - 1;
@@ -381,7 +381,7 @@ void EntityDraculaFinalForm(Entity* self) {
         case 1:
             part = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (part != NULL) {
-                CreateEntityFromEntity(E_ID(DRACULA_UNK21), self, part);
+                CreateEntityFromEntity(E_ID(DRACULA_MEGA_FIREBALL), self, part);
 #ifndef VERSION_PSP
                 // Appears to be a bug on PSX.
                 // Possibly supposed to be assigning from self
@@ -421,7 +421,7 @@ void EntityDraculaFinalForm(Entity* self) {
             part = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (part != NULL) {
                 g_api.PlaySfx(SFX_FIREBALL_SHOT_A);
-                CreateEntityFromEntity(E_ID(DRACULA_UNK21), self, part);
+                CreateEntityFromEntity(E_ID(DRACULA_MEGA_FIREBALL), self, part);
                 part->posX.i.hi += xShift;
                 part->posY.i.hi += yShift;
                 part->rotate = *temp_s1;
@@ -464,7 +464,8 @@ void EntityDraculaFinalForm(Entity* self) {
                 part = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (part != NULL) {
                     g_api.PlaySfx(SFX_FIREBALL_SHOT_B);
-                    CreateEntityFromEntity(E_ID(DRACULA_FIREBALL), self, part);
+                    CreateEntityFromEntity(
+                        E_ID(DRACULA_RAIN_ATTACK), self, part);
                     part->posX.i.hi += *temp_s1;
                     part->zPriority = (self->zPriority + 1);
                 }
@@ -502,7 +503,7 @@ void EntityDraculaFinalForm(Entity* self) {
                 g_api.PlaySfx(SFX_UNK_ST0_856);
                 part = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (part != NULL) {
-                    CreateEntityFromEntity(E_ID(DRACULA_UNK2E), self, part);
+                    CreateEntityFromEntity(E_ID(ID_2E), self, part);
                     if (self->facingLeft) {
                         part->posX.i.hi += 40;
                     } else {
@@ -696,7 +697,7 @@ void EntityDraculaFinalForm(Entity* self) {
             break;
         case 5:
             part = self + 1;
-            CreateEntityFromCurrentEntity(E_ID(DRACULA_UNK2C), part);
+            CreateEntityFromCurrentEntity(E_ID(PHOTOGRAPH), part);
             self->step_s++;
             primIndex = g_api.AllocPrimitives(PRIM_G4, 1);
             if (primIndex == -1) {
@@ -914,7 +915,7 @@ void EntityDraculaRainAttack(Entity* self) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(
-                        E_ID(DRACULA_FIREBALL), self, newEntity);
+                        E_ID(DRACULA_RAIN_ATTACK), self, newEntity);
                     newEntity->posY.i.hi += 12;
                     newEntity->params = 1;
                 }
@@ -1279,7 +1280,7 @@ void func_801AF774(Entity* self) {
         if (self->ext.et_801AF774.unk90 && self->ext.et_801AF774.unk8E < 0x10) {
             self->ext.et_801AF774.unk90 = 0;
             entity = self + 1;
-            CreateEntityFromCurrentEntity(E_ID(DRACULA_UNK23), entity);
+            CreateEntityFromCurrentEntity(E_ID(DEMATERIALIZE_STAGE_BG), entity);
         }
         break;
     case 4:

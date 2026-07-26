@@ -21,7 +21,7 @@ static SVECTOR D_801826A8 = {8, 8, 0};
 static SVECTOR unused = {0, 0, 0};
 static unkstr_801C06B0 D_801C06B0[15 * 15];
 
-void func_801BD8F0(Entity* self) {
+void EntityDematerializeStageBg(Entity* self) {
     DRAWENV drawEnv;
     RECT cliprect;
     DR_ENV* dr_env;
@@ -273,7 +273,7 @@ void func_801BD8F0(Entity* self) {
             if (var_s8 > 14) {
                 self->ext.GS_Props.pickupFlag = 0;
                 entity = self + 1;
-                CreateEntityFromCurrentEntity(E_ID_24, entity);
+                CreateEntityFromCurrentEntity(E_BACKGROUND_VORTEX, entity);
             }
         }
         if (var_s8 == 15 * 15) {
@@ -282,7 +282,7 @@ void func_801BD8F0(Entity* self) {
         break;
     case 7:
         entity = self + 1;
-        CreateEntityFromCurrentEntity(E_ID_24, entity);
+        CreateEntityFromCurrentEntity(E_BACKGROUND_VORTEX, entity);
         DestroyEntity(self);
         break;
     }
