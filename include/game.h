@@ -288,25 +288,10 @@ typedef enum {
 #define WEAPON_0_END (WEAPON_1_START - 1)
 #define WEAPON_1_START 0xF0
 
-#if !defined(VERSION_PC) && (defined(VERSION_US) || defined(VERSION_HD))
-#define DRA_PRG_PTR 0x800A0000
-#define SAVE_DATA_PTR 0x801EA000
-#define RIC_PRG_PTR 0x8013C000
-#define SPRITESHEET_PTR 0x8013C020
-#define FAMILIAR_PTR 0x80170000
-#define WEAPON0_PTR 0x8017A000
-#define WEAPON1_PTR 0x8017D000
-#define STAGE_PRG_PTR 0x80180000
-#define CASTLE_MAP_PTR 0x801E0000
+#define DEMO_KEY_LEN 3
+#define DEMO_MAX_LEN 0x2000
 
-#ifndef DEMO_KEY_PTR
-#define DEMO_KEY_PTR 0x801E8000
-#endif
-
-#define SIM_CHR0 0x80280000
-#define SIM_CHR1 0x80284000
-#define SIM_PTR 0x80280000
-#else
+#if defined(VERSION_PSP) || defined(VERSION_PC)
 #define DRA_PRG_PTR 0x800A0000
 #define SAVE_DATA_PTR D_psp_08D97C40
 #define RIC_PRG_PTR &g_PlOvl
@@ -316,11 +301,7 @@ typedef enum {
 #define WEAPON1_PTR &D_8017D000
 #define STAGE_PRG_PTR D_psp_08D2DC40
 #define CASTLE_MAP_PTR g_BmpCastleMap
-
-#ifndef DEMO_KEY_PTR
-#define DEMO_KEY_PTR D_psp_08D95C40
-#endif
-
+#define DEMO_KEY_PTR g_DemoRecordingBuffer
 #define SIM_CHR0 D_psp_08C6BC40
 #define SIM_CHR1 D_psp_08C6FC40
 #define SIM_PTR D_psp_08C6BC40
@@ -329,9 +310,23 @@ extern GAME_IMPORT u8 g_BmpCastleMap[0x20000];
 extern GAME_IMPORT u8 D_psp_08C6BC40[];
 extern GAME_IMPORT u8 D_psp_08C6FC40[];
 extern GAME_IMPORT u8 D_psp_08D2DC40[];
-extern GAME_IMPORT u8 D_psp_08D95C40[];
+extern GAME_IMPORT u8 g_DemoRecordingBuffer[DEMO_MAX_LEN];
 extern GAME_IMPORT u8 D_psp_08D97C40[];
 
+#else
+#define DRA_PRG_PTR 0x800A0000
+#define SAVE_DATA_PTR 0x801EA000
+#define RIC_PRG_PTR 0x8013C000
+#define SPRITESHEET_PTR 0x8013C020
+#define FAMILIAR_PTR 0x80170000
+#define WEAPON0_PTR 0x8017A000
+#define WEAPON1_PTR 0x8017D000
+#define STAGE_PRG_PTR 0x80180000
+#define CASTLE_MAP_PTR 0x801E0000
+#define DEMO_KEY_PTR 0x801E8000
+#define SIM_CHR0 0x80280000
+#define SIM_CHR1 0x80284000
+#define SIM_PTR 0x80280000
 #endif
 
 // used with various equipment, enemy resistances, etc
@@ -513,9 +508,6 @@ typedef enum {
 #define CROSS 0xE9
 #define SQUARE 0xEA
 #define TRIANGLE 0xEB
-
-#define DEMO_KEY_LEN 3
-#define DEMO_MAX_LEN 0x2000
 
 #define FONT_W 8        // small font size used for dialogues and menu
 #define FONT_H 8        // small font size used for dialogues and menu

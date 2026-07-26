@@ -34,6 +34,7 @@ struct InitGameParams {
     enum TestMode testMode;
     int stage;
     int player;
+    int demo;
     int scale;
     const char* recordPath;
     const char* replayPath;

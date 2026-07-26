@@ -58,14 +58,16 @@ static void printHelp(void) {
     printf("  --disk <path>      file name of the second track\n");
     printf("  --stage <stage>    stage name or ID (e.g., nz0)\n");
     printf("  --player <name>    player name or ID (e.g. ric)\n");
+    printf("  --demo <number>    play a specific Tactics demo\n");
     printf("  --scale <number>   game internal resolution integer scale "
            "(default 1)\n");
     printf("  --test <mode>      run automated tests\n");
     printf("         sndlib      test sound library\n");
     printf("  --record <path>    record controller input to a file\n");
     printf("  --replay <path>    replay controller input from a file\n");
-    printf("  --replay-and-exit  quit automatically once the replay ends\n");
-    printf("  --replay-fast      disable frame limit during replay\n");
+    printf("  --replay-and-exit  quit automatically once the replay or demo "
+           "ends\n");
+    printf("  --replay-fast      disable frame limit during replay or demo\n");
     printf("  --help             show this help message\n");
 }
 static void printAllowedParams(const char* allowedValues[], int n) {
@@ -86,6 +88,7 @@ static bool parseArgs(
     outParams->testMode = NO_TEST;
     outParams->stage = -1;
     outParams->player = -1;
+    outParams->demo = -1;
     outParams->scale = 1;
     outParams->recordPath = NULL;
     outParams->replayPath = NULL;
@@ -111,6 +114,12 @@ static bool parseArgs(
             if (outParams->player < 0) {
                 printf("player '%s' is invalid or not recognized\n", argv[i]);
                 printAllowedParams(allowed_players, LEN(allowed_players));
+                return false;
+            }
+        } else if (strcmp(argv[i], "--demo") == 0 && i + 1 < argc) {
+            outParams->demo = parseIntParam(argv[++i]);
+            if (outParams->demo < 0) {
+                printf("invalid demo index %s\n", argv[i]);
                 return false;
             }
         } else if (strcmp(argv[i], "--scale") == 0 && i + 1 < argc) {

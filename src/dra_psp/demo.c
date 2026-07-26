@@ -6,7 +6,7 @@
 static u8* g_DemoPtr = DEMO_KEY_PTR;
 s32 g_DemoKeyIdx;
 
-static u8 D_800A243C[] = {
+static u8 demo_stages[] = {
     STAGE_ST0,       STAGE_BO0,      STAGE_BO4,      STAGE_BO1,  STAGE_BO2,
     STAGE_BO3,       STAGE_NZ0_DEMO, STAGE_BO5,      STAGE_RBO1, STAGE_DRE,
     STAGE_NZ1_DEMO,  STAGE_RBO0,     STAGE_RBO2,     STAGE_BO7,  STAGE_BO6,
@@ -30,11 +30,11 @@ void DemoGameInit(s32 arg0) {
         } else if (g_StageId == STAGE_RNZ1) {
             g_StageId = STAGE_RNZ1_DEMO;
         } else {
-            g_StageId = D_800A243C[g_DemoKeyIdx];
+            g_StageId = demo_stages[g_DemoKeyIdx];
         }
     } else {
         g_DemoKeyIdx = D_80097C98 & STAGE_INVERTEDCASTLE_MASK;
-        g_StageId = D_800A243C[g_DemoKeyIdx];
+        g_StageId = demo_stages[g_DemoKeyIdx];
     }
 
     InitStatsAndGear(0);
