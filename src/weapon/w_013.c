@@ -17,7 +17,6 @@ extern s32 g_HandId;
 #define g_Animset2 w_013_2
 #include "sfx.h"
 
-extern SpriteParts D_5F000_8017A040[];
 extern u8 D_5F000_8017A5B0[6][8];
 extern s16 D_5F000_8017A5E0[];
 
@@ -81,7 +80,7 @@ static void EntityWeaponAttack(Entity* self) {
 
     switch (self->step) {
     case 0:
-        SetSpriteBank1(D_5F000_8017A040);
+        SetSpriteBank1(g_Animset);
         self->animSet = ANIMSET_OVL(0x10);
         self->unk5A = 0x64;
         self->palette = 0x110;
@@ -250,7 +249,7 @@ static void func_ptr_80170008(Entity* self) {
 
     switch (self->step) {
     case 0:
-        SetSpriteBank1(D_5F000_8017A040);
+        SetSpriteBank1(g_Animset);
         self->animSet = ANIMSET_OVL(0x10);
         self->unk5A = 0x64;
         self->palette = 0x110;

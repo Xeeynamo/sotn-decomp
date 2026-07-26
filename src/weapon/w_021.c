@@ -16,8 +16,6 @@ extern s32 g_HandId;
 #define g_Animset2 w_021_2
 #include "sfx.h"
 
-extern SpriteParts D_97000_8017A040[];
-
 // Similar to BottomCornerText which exists in many overlays
 // This one seems to process 2 characters at a time, weird.
 void func_97000_8017AB54(u8* str, u8 lowerLeft) {
@@ -225,7 +223,7 @@ static void EntityWeaponAttack(Entity* self) {
 
     switch (self->step) {
     case 0:
-        SetSpriteBank1(D_97000_8017A040);
+        SetSpriteBank1(g_Animset);
         self->animSet = ANIMSET_OVL(0x10);
         self->palette = 0x110;
         self->unk5A = 100;
@@ -436,7 +434,7 @@ s32 func_ptr_80170004(Entity* self) {
 
     switch (self->step) {
     case 0:
-        SetSpriteBank1(D_97000_8017A040);
+        SetSpriteBank1(g_Animset);
         self->animSet = ANIMSET_OVL(0x10);
         self->palette = 0x110;
         self->unk5A = 0x64;

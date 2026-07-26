@@ -12,7 +12,6 @@ extern s32 g_HandId;
 #include "sfx.h"
 
 // Weapon 16
-extern SpriteParts D_74000_8017A040[];
 
 static void EntityWeaponAttack(Entity* self) {
     FakePrim* fakePrim;
@@ -23,7 +22,7 @@ static void EntityWeaponAttack(Entity* self) {
 
     switch (self->step) { /* irregular */
     case 0:
-        SetSpriteBank1(D_74000_8017A040);
+        SetSpriteBank1(g_Animset);
         self->animSet = ANIMSET_OVL(0x10);
         self->unk5A = 100;
         self->palette = 0x11A;
@@ -133,8 +132,6 @@ s32 func_ptr_80170004(Entity* self) {
     }
 }
 
-extern SpriteParts D_74000_8017A040[];
-
 void func_ptr_80170008(Entity* self) {
     s32 angle;
     s8 flag;
@@ -143,7 +140,7 @@ void func_ptr_80170008(Entity* self) {
 
     switch (self->step) {
     case 0:
-        SetSpriteBank1(D_74000_8017A040);
+        SetSpriteBank1(g_Animset);
         self->animSet = ANIMSET_OVL(0x10);
         self->unk5A = 0x64;
         self->palette = 0x11A;
@@ -227,7 +224,7 @@ static void func_ptr_8017000C(Entity* self) {
 
     switch (self->step) {
     case 0:
-        SetSpriteBank1(D_74000_8017A040);
+        SetSpriteBank1(g_Animset);
         self->animSet = ANIMSET_OVL(0x10);
         self->unk5A = 0x64;
         self->palette = 0x11B;
@@ -321,7 +318,7 @@ static s32 func_ptr_80170014(Entity* self) {
 
     switch (self->step) {
     case 0:
-        SetSpriteBank1(D_74000_8017A040);
+        SetSpriteBank1(g_Animset);
         self->animSet = ANIMSET_OVL(0x10);
         self->unk5A = 100;
         self->palette = 0x11D;

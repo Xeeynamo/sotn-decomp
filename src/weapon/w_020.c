@@ -11,7 +11,6 @@ extern s32 g_HandId;
 #define g_Animset2 w_020_2
 #include "sfx.h"
 
-extern SpriteParts D_90000_8017A040[];
 extern AnimationFrame D_90000_8017A850[];
 extern AnimationFrame D_90000_8017A864[];
 extern AnimationFrame D_90000_8017A8C8[];
@@ -67,7 +66,7 @@ static void EntityWeaponAttack(Entity* self) {
         }
         prim = &g_PrimBuf[self->primIndex];
         prim->drawMode = DRAW_HIDE;
-        SetSpriteBank1(D_90000_8017A040);
+        SetSpriteBank1(g_Animset);
         self->animSet = ANIMSET_OVL(0x10);
         self->palette = 0x110;
         self->unk5A = 0x64;
