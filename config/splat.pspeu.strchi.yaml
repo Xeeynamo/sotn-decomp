@@ -60,7 +60,7 @@ segments:
       - [0xF288, c, rchi/st_common]
       - [0x10410, c, rchi/prim_helpers]
       - [0x10BA0, c, rchi_psp/e_thornweed]
-      - [0x11030, asm, rchi_psp/e_corpseweed]
+      - [0x11030, c, rchi_psp/e_corpseweed]
       - [0x12270, c, rchi_psp/e_corpseweed_projectile]
       - [0x12888, c, rchi_psp/e_bat]
       - [0x12D00, c, rchi/st_init_psp]

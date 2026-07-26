@@ -85,7 +85,7 @@ extern u8 HitboxIndices[];
 // func_801AA020
 // PSP:func_psp_09249750:Match
 // PSP:https://decomp.me/scratch/LAyvk
-#ifndef CORPSEWEED_PROJECTILE_ONLY
+#if !defined(CORPSEWEED_PROJECTILE_ONLY) && !defined(CORPSEWEED_ONLY)
 void EntityThornweed(Entity* self) {
     const int EntityFormCount = 2; // Thornweed, Corpseweed
     const int AnimFrame_ThornweedInit = 1;
@@ -216,7 +216,7 @@ void EntityThornweed(Entity* self) {
 // E_CORPSEWEED
 // func_801AA390
 // https://decomp.me/scratch/QVcDz
-// PSP:func_psp_09249BE0:No match
+// PSP:func_psp_09249BE0:Match with CORPSEWEED_NO_ATTACK_SFX
 // PSP:https://decomp.me/scratch/lqXTP
 #if !defined(CORPSEWEED_PROJECTILE_ONLY) && !defined(SKIP_CORPSEWEED)
 #ifdef CORPSEWEED_ASM
@@ -568,7 +568,9 @@ void EntityCorpseweed(Entity* self) {
             // Spawn projectile entity
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
+#ifndef CORPSEWEED_NO_ATTACK_SFX
                 PlaySfxPositional(SFX_CORPSEWEED_ATTACK);
+#endif
 
                 CreateEntityFromEntity(E_CORPSEWEED_PROJECTILE, self, entity);
                 entity->zPriority = self->zPriority + 1;
@@ -779,7 +781,7 @@ void EntityCorpseweed(Entity* self) {
 // func_801AB0C0
 // PSP:func_psp_0924AE40:Match
 // PSP:https://decomp.me/scratch/qpbbH
-#ifndef THORNWEED_ONLY
+#if !defined(THORNWEED_ONLY) && !defined(CORPSEWEED_ONLY)
 void EntityCorpseweedProjectile(Entity* self) {
     // Sprites
     const int SpriteLeft = 0x40;
