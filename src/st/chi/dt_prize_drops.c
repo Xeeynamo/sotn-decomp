@@ -8,7 +8,7 @@
 #include "chi.h"
 
 // D_801809E4
-u16 OVL_EXPORT(PrizeDrops)[] = {
+u16 PrizeDrops[] = {
     ITEMDROP_POWER_OF_SIRE,
     ITEMDROP_KARMA_COIN,
     // Stone Sword is an enemy drop, not an item drop, likely cut

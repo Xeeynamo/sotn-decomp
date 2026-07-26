@@ -2,15 +2,10 @@
 
 extern EInit g_EInitCommon;
 
-#ifdef OVL_EXPORT
-#define STAGE_BACKGROUND_BLOCK_INIT OVL_EXPORT(BackgroundBlockInit)
-#else
-#define STAGE_BACKGROUND_BLOCK_INIT BackgroundBlockInit
-#endif
-extern ObjInit2 STAGE_BACKGROUND_BLOCK_INIT[];
+extern ObjInit2 BackgroundBlockInit[];
 
 void EntityBackgroundBlock(Entity* self) {
-    ObjInit2* objInit = &STAGE_BACKGROUND_BLOCK_INIT[self->params];
+    ObjInit2* objInit = &BackgroundBlockInit[self->params];
     if (!self->step) {
         InitializeEntity(g_EInitCommon);
         self->animSet = objInit->animSet;

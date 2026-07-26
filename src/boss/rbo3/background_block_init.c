@@ -3,7 +3,7 @@
 
 static u8 anim_frames[] = {0x40, 0x01, 0xFF, 0x00};
 
-ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
+ObjInit2 BackgroundBlockInit[] = {
     {.animSet = ANIMSET_DRA(6),
      .zPriority = 0x01FA,
      .facingLeft = 0,

@@ -5,7 +5,7 @@ static AnimateEntityFrame AnimFrames_80180518[] = {0x40, 0x01, 0xFF, 0x00};
 static AnimateEntityFrame AnimFrames_8018051C[] = {
     0x02, 0x25, 0x02, 0x26, 0x02, 0x27, 0x02, 0x26, 0x00, 0x00, 0x00, 0x00};
 
-ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
+ObjInit2 BackgroundBlockInit[] = {
     {
         .animSet = ANIMSET_DRA(6),
         .zPriority = 0x1FA,

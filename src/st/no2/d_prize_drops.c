@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no2.h"
 
-u16 OVL_EXPORT(PrizeDrops)[] = {
+u16 PrizeDrops[] = {
     ITEMDROP_LIFE_VESSEL,
     ITEMDROP_HEART_VESSEL,
     // Pentagram does not appear in NO2, unused?

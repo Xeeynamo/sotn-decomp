@@ -8,7 +8,7 @@ static u8 D_us_80180CFC[] = {32, 4, -1, 0};
 static u8 D_us_80180D00[] = {32, 5, -1, 0};
 static u8 D_us_80180D04[] = {32, 6, -1, 0};
 
-ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
+ObjInit2 BackgroundBlockInit[] = {
     {0x8002, 0x9F, 0x54, 0, 0xD, 0x0000, BLEND_NO, 0x00000000, D_us_80180CF0},
     {0x8002, 0x9F, 0x54, 0, 0xD, 0x0000, BLEND_NO, 0x00000000, D_us_80180CF4},
     {0x8002, 0x9F, 0x54, 0, 0xD, 0x0000, BLEND_NO, 0x00000000, D_us_80180CF8},

@@ -5,8 +5,7 @@
 #define CORPSEWEED_PAL 0x206
 #define CORPSEWEED_PROJ_PAL 0x20E
 #define g_EInitCorpseweedProjectile D_us_80180678
-/* Corpseweed differs on both platforms while Thornweed and its projectile
- * match. Keep only the platform-specific middle function in assembly. */
-#define CORPSEWEED_ASM
-#define AnimFrames_CorpseweedAttackCharge D_us_801817C0
+#define THORNWEED_DATA_ALREADY_DEFINED
+#define THORNWEED_ONLY
+#define SKIP_CORPSEWEED
 #include "../en_thornweed_corpseweed.h"

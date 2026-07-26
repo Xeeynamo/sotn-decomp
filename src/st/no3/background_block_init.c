@@ -18,7 +18,7 @@ static u8 anim13[] = {16, 60, 255, 0};
 static u8 anim14[] = {16, 61, 255, 0};
 static u8 anim15[] = {16, 62, 255, 0};
 
-ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
+ObjInit2 BackgroundBlockInit[] = {
     {0x8001, 105, 0, 0, 0x0, 0x0, BLEND_NO, 0, anim0},
     {0x8001, 105, 0, 0, 0x0, 0x0, BLEND_TRANSP | BLEND_ADD, 0, anim1},
     {0x8001, 192, 0, 0, 0x8068, 0x0, BLEND_NO, 0, anim2},
