@@ -12,8 +12,6 @@
 extern EInit g_EInitObtainable;
 extern EInit g_EInitParticle;
 
-#if !defined(E_COLLECT_ONLY_PRIZE_DROP) && !defined(E_COLLECT_ONLY_RELIC_ORB)
-
 #if defined(VERSION_PSP)
 #include "blit_char_psp.h"
 #endif
@@ -360,10 +358,6 @@ Entity* func_801939C4(void) {
 static void CollectDummy(u16 id) { DestroyEntity(g_CurrentEntity); }
 #endif
 
-#endif
-
-#if !defined(E_COLLECT_ONLY_RELIC_ORB)
-
 // if self->params & 0x8000 then the item will not disappear
 // ST0 seems to contain the earliest known version of this entity.
 // MAD has some very minor enhancements that brings it closer to the US build,
@@ -682,12 +676,6 @@ void EntityPrizeDrop(Entity* self) {
     }
 }
 
-#endif
-
-#if !defined(E_COLLECT_ONLY_PRIZE_DROP)
-
-#if !defined(E_COLLECT_ONLY_RELIC_ORB)
-
 // params: (& 0xFF) The explosion type
 //         (& 0xF0) These explosion types use a different (hardcoded) palette
 //                  and drawMode
@@ -997,8 +985,6 @@ s16 g_RelicOrbSparkleY[] = {-2, 2, 4, -3, 0, 2, -4, 3};
 
 extern u16 msgBoxTpage[0x600];
 
-#endif
-
 // params: (& 0x7FFF) Relic ID
 void EntityRelicOrb(Entity* self) {
 #if STAGE == STAGE_ST0
@@ -1226,54 +1212,26 @@ void EntityRelicOrb(Entity* self) {
         switch (g_UserLanguage) {
         case LANG_EN:
         default:
-#if defined(E_COLLECT_EXTERNAL_RELIC_STRINGS)
-            obtainedStr = g_RelicObtainedEn;
-#else
             obtainedStr = "Obtained";
-#endif
             break;
         case LANG_FR:
-#if defined(E_COLLECT_EXTERNAL_RELIC_STRINGS)
-            obtainedStr = g_RelicObtainedFr;
-#else
             obtainedStr = "Obtenu \xB1 ";
-#endif
             break;
         case LANG_SP:
-#if defined(E_COLLECT_EXTERNAL_RELIC_STRINGS)
-            obtainedStr = g_RelicObtainedSp;
-#else
             obtainedStr = "Tienes";
-#endif
             break;
         case LANG_GE:
-#if defined(E_COLLECT_EXTERNAL_RELIC_STRINGS)
-            obtainedStr = g_RelicObtainedGe;
-#else
             obtainedStr = "erhalten";
-#endif
             break;
         case LANG_IT:
-#if defined(E_COLLECT_EXTERNAL_RELIC_STRINGS)
-            obtainedStr = g_RelicObtainedIt;
-#else
             obtainedStr = "Ottenuto";
-#endif
             break;
         }
 
         if (g_UserLanguage != LANG_GE) {
-#if defined(E_COLLECT_EXTERNAL_RELIC_STRINGS)
-            sprintf(&sp34, g_RelicObtainedFormat, obtainedStr, msg);
-#else
             sprintf(&sp34, "%s %s", obtainedStr, msg);
-#endif
         } else {
-#if defined(E_COLLECT_EXTERNAL_RELIC_STRINGS)
-            sprintf(&sp34, g_RelicObtainedFormat, msg, obtainedStr);
-#else
             sprintf(&sp34, "%s %s", msg, obtainedStr);
-#endif
         }
         msgLen = strlen(sp34);
         BlitChar(&sp34[0], 0, 12, 0x100);
@@ -1511,8 +1469,6 @@ void EntityRelicOrb(Entity* self) {
 #endif
     }
 }
-
-#if !defined(E_COLLECT_ONLY_RELIC_ORB)
 
 #if STAGE != STAGE_ST0
 // defined in d_prize_drops.c
@@ -1757,10 +1713,6 @@ void EntityMessageBox(Entity* self) {
         break;
     }
 }
-#endif
-
-#endif
-
 #endif
 
 #endif
