@@ -2194,9 +2194,7 @@ extern GAME_IMPORT Event g_EvSwCardNew; // 80073078
 extern GAME_IMPORT s32 g_PrevScrollY;
 extern GAME_IMPORT s32 D_80073080;
 extern GAME_IMPORT Tilemap g_Tilemap;
-// this was previously g_Tilemap.bg, but func_801BD8F0 showed that it is a
-// separate symbol.
-extern GAME_IMPORT BgLayer g_BgLayers[MAX_BG_LAYER_COUNT]; /* 800730D8 */
+extern GAME_IMPORT BgLayer g_BgLayers[MAX_BG_LAYER_COUNT];
 
 #define PLAYER_CHARACTER 0
 #define TOTAL_ENTITY_COUNT 256

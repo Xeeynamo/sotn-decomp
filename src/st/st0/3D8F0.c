@@ -21,7 +21,7 @@ static SVECTOR D_801826A8 = {8, 8, 0};
 static SVECTOR unused = {0, 0, 0};
 static unkstr_801C06B0 D_801C06B0[15 * 15];
 
-void func_801BD8F0(Entity* self) {
+void EntityDematerializeStageBg(Entity* self) {
     DRAWENV drawEnv;
     RECT cliprect;
     DR_ENV* dr_env;
@@ -214,21 +214,10 @@ void func_801BD8F0(Entity* self) {
     case 6:
         SetGeomScreen(0x80);
         SetGeomOffset(0x80, 0x80);
-#ifndef VERSION_PC
-        m = (MATRIX*)SPAD(0);
-        sp40 = (SVECTOR*)SPAD(8);
-        vec = (VECTOR*)SPAD(10);
-        sp34 = (SVECTOR*)SPAD(14);
-#else
-        MATRIX sp38_;
-        SVECTOR sp40_;
-        VECTOR sp3c_;
-        SVECTOR sp34_;
-        m = &sp38_;
-        sp40 = &sp40_;
-        vec = &sp3c_;
-        sp34 = &sp34_;
-#endif
+        m = (MATRIX*)SP(0);
+        sp40 = (SVECTOR*)SP(sizeof(MATRIX));
+        vec = (VECTOR*)SP(sizeof(MATRIX) + sizeof(SVECTOR));
+        sp34 = (SVECTOR*)SP(sizeof(MATRIX) + sizeof(SVECTOR) + sizeof(VECTOR));
         sp34[0] = D_80182690;
         sp34[1] = D_80182698;
         sp34[2] = D_801826A0;
@@ -284,7 +273,7 @@ void func_801BD8F0(Entity* self) {
             if (var_s8 > 14) {
                 self->ext.GS_Props.pickupFlag = 0;
                 entity = self + 1;
-                CreateEntityFromCurrentEntity(E_ID_24, entity);
+                CreateEntityFromCurrentEntity(E_BACKGROUND_VORTEX, entity);
             }
         }
         if (var_s8 == 15 * 15) {
@@ -293,7 +282,7 @@ void func_801BD8F0(Entity* self) {
         break;
     case 7:
         entity = self + 1;
-        CreateEntityFromCurrentEntity(E_ID_24, entity);
+        CreateEntityFromCurrentEntity(E_BACKGROUND_VORTEX, entity);
         DestroyEntity(self);
         break;
     }

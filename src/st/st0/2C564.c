@@ -61,13 +61,13 @@ static Point16 unused[] = {
     {11, 10}, {10, 10}, {9, 9},   {9, 8},   {8, 8},   {8, 4}};
 
 #ifdef VERSION_PSP
-extern u32 E_ID(DRACULA_UNK1B);
-extern u32 E_ID(DRACULA_UNK1C);
-extern u32 E_ID(DRACULA_UNK1D);
-extern u32 E_ID(DRACULA_METEOR);
-extern u32 E_ID(DRACULA_UNK1F);
-extern u32 E_ID(DRACULA_UNK20);
-extern u32 E_ID(DRACULA_UNK2B);
+extern u32 E_ID(DRACULA_FIREBALL);
+extern u32 E_ID(DRACULA_METEORBALL);
+extern u32 E_ID(DRACULA_BODY);
+extern u32 E_ID(ID_1E);
+extern u32 E_ID(DRACULA_GLASS);
+extern u32 E_ID(DRACULA_FINAL_FORM);
+extern u32 E_ID(ID_2B);
 #endif
 
 // Helper function for EntityDracula
@@ -473,7 +473,7 @@ void EntityDracula(Entity* self) {
         self->ext.dracula.unkA1 = 1;
         self->facingLeft = 1;
         entity = self + 1;
-        CreateEntityFromCurrentEntity(E_ID(DRACULA_UNK1D), entity);
+        CreateEntityFromCurrentEntity(E_ID(DRACULA_BODY), entity);
         entity->zPriority = self->zPriority + 1;
 
         primIndex = g_api.func_800EDB58(PRIM_GT4, 128);
@@ -522,7 +522,7 @@ void EntityDracula(Entity* self) {
             if (self->pose == 2 && !self->poseTimer) {
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_ID(DRACULA_UNK1F), self, entity);
+                    CreateEntityFromEntity(E_ID(DRACULA_GLASS), self, entity);
                     entity->facingLeft = self->facingLeft;
                     entity->posX.i.hi -= 8;
                     entity->posY.i.hi -= 24;
@@ -636,7 +636,8 @@ void EntityDracula(Entity* self) {
             for (i = 0; i < 3; i++) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_ID(DRACULA_UNK1B), self, entity);
+                    CreateEntityFromEntity(
+                        E_ID(DRACULA_FIREBALL), self, entity);
                     entity->facingLeft = self->facingLeft;
                     entity->zPriority = self->zPriority + 1;
                     entity->params = i;
@@ -673,7 +674,8 @@ void EntityDracula(Entity* self) {
             if (!--self->ext.dracula.unk8C) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_ID(DRACULA_UNK1C), self, entity);
+                    CreateEntityFromEntity(
+                        E_ID(DRACULA_METEORBALL), self, entity);
                     i = self->step_s - 1;
                     entity->facingLeft = self->facingLeft;
                     if (self->facingLeft) {
@@ -868,11 +870,11 @@ void EntityDracula(Entity* self) {
             }
 
             entity = self + 2;
-            CreateEntityFromCurrentEntity(E_ID(DRACULA_UNK2B), entity);
+            CreateEntityFromCurrentEntity(E_ID(ID_2B), entity);
             entity->facingLeft = self->facingLeft;
 
             entity = self + 5;
-            CreateEntityFromCurrentEntity(E_ID(DRACULA_UNK20), entity);
+            CreateEntityFromCurrentEntity(E_ID(DRACULA_FINAL_FORM), entity);
             entity->facingLeft = self->facingLeft;
             entity->posY.i.hi += 2;
             self->step_s++;
@@ -1047,7 +1049,7 @@ void EntityDraculaMeteorball(Entity* entity) {
         if (!(g_Timer & 3)) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != 0) {
-                CreateEntityFromEntity(E_ID(DRACULA_METEOR), entity, newEntity);
+                CreateEntityFromEntity(E_ID(ID_1E), entity, newEntity);
                 newEntity->zPriority = entity->zPriority + 1;
                 randomPosXYIndex = (Random() & 3);
                 newEntity->posX.i.hi += D_80180A60[randomPosXYIndex].x;
@@ -1121,7 +1123,7 @@ void EntityDraculaGlass(Entity* entity) {
                     AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (glassShardEntity != 0) {
                     CreateEntityFromEntity(
-                        E_ID(DRACULA_UNK1F), entity, glassShardEntity);
+                        E_ID(DRACULA_GLASS), entity, glassShardEntity);
                     glassShardEntity->params = 1;
                 }
             }
