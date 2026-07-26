@@ -67,7 +67,7 @@ static s32 g_IsCutsceneDone;
 #include "../cutscene_scale_avatar.h"
 #endif
 
-extern u8 OVL_EXPORT(cutscene_data)[];
+extern u8 cutscene_data[];
 void EntityCutscene(Entity* self) {
 #ifdef VERSION_US
     RECT rect;
@@ -109,9 +109,9 @@ void EntityCutscene(Entity* self) {
             return;
         }
 #ifdef VERSION_HD
-        if (SetCutsceneScript(OVL_EXPORT(cutscene_data)) & 0xFF) {
+        if (SetCutsceneScript(cutscene_data) & 0xFF) {
 #else
-        if (SetCutsceneScript(OVL_EXPORT(cutscene_data))) {
+        if (SetCutsceneScript(cutscene_data)) {
 #endif
             self->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
             g_CutsceneHasControl = 1;

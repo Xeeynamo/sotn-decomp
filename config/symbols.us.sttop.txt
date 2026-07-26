@@ -7,7 +7,7 @@ entityLayoutHorizontal = 0x80180740;
 entityLayoutVertical = 0x80180814;
 actor_names = 0x80180DE4;
 rooms = 0x80181B78;
-TOP_cutscene_data = 0x80182C08;
+cutscene_data = 0x80182C08;
 sprites_3 = 0x801A6490;
 g_SkipCutscene = 0x801BC460;
 g_Dialogue = 0x801BC464; // size=0x44

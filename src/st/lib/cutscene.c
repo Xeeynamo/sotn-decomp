@@ -46,7 +46,7 @@ s32 g_IsCutsceneDone;
 
 #include "../cutscene_scale_avatar.h"
 
-extern u8 OVL_EXPORT(cutscene_data)[];
+extern u8 cutscene_data[];
 void EntityCutscene(Entity* self) {
     RECT rect;
     Primitive* prim;
@@ -75,7 +75,7 @@ void EntityCutscene(Entity* self) {
         } else {
             D_us_80183F60 = 0;
         }
-        if (SetCutsceneScript(OVL_EXPORT(cutscene_data))) {
+        if (SetCutsceneScript(cutscene_data)) {
             self->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
             g_CutsceneFlags = 0;
             g_IsCutsceneDone = 0;

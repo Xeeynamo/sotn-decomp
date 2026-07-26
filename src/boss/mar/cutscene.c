@@ -40,7 +40,7 @@ extern u16 D_us_801805E4[];
 extern u16 D_us_801805E8[];
 extern s16 D_us_801805F0[];
 
-extern u8 OVL_EXPORT(cutscene_data)[];
+extern u8 cutscene_data[];
 void EntityCutscene(Entity* self) {
     const int PrimCount = 72;
     Primitive* prim;
@@ -86,7 +86,7 @@ void EntityCutscene(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        if (SetCutsceneScript(OVL_EXPORT(cutscene_data)) & 0xFF) {
+        if (SetCutsceneScript(cutscene_data) & 0xFF) {
             self->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
             g_CutsceneFlags = 0;
             D_us_8019AF2C = 0;

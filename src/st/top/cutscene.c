@@ -22,7 +22,7 @@ INCLUDE_RODATA("st/top/nonmatchings/cutscene", D_us_801A8998);
 
 INCLUDE_RODATA("st/top/nonmatchings/cutscene", D_us_801A89A0);
 
-extern u8 OVL_EXPORT(cutscene_data)[];
+extern u8 cutscene_data[];
 extern s32 g_IsCutsceneDone;
 extern u32 g_CutsceneFlags;
 extern u8 D_us_80180D38[];
@@ -65,7 +65,7 @@ void EntityCutscene(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        if (SetCutsceneScript(OVL_EXPORT(cutscene_data))) {
+        if (SetCutsceneScript(cutscene_data)) {
             g_CutsceneHasControl = true;
             g_CutsceneFlags = 0;
             g_IsCutsceneDone = 0;

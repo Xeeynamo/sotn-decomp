@@ -1,3 +1,3 @@
-CEN_cutscene_data = 0x80181424;
+cutscene_data = 0x80181424;
 g_RelicOrbText = 0x8018D580;
 msgBoxTpage = 0x8019BE10;

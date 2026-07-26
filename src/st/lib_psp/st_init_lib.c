@@ -80,9 +80,9 @@ s32 E_ID(MUDMAN);
 static s32 E_ID(ID_4E);
 s32 E_ID(ID_4F);
 
-u8* OVL_EXPORT(cutscene_data_offset_eight);
-u8* OVL_EXPORT(cutscene_data);
-u8* OVL_EXPORT(cutscene_data_offset_zero);
+u8* cutscene_data_offset_eight;
+u8* cutscene_data;
+u8* cutscene_data_offset_zero;
 u8* OVL_EXPORT(cutscene_data_offset_four);
 
 void InitEntityIds(void) {
@@ -152,15 +152,15 @@ void InitEntityIds(void) {
 }
 
 void OVL_EXPORT(Load)(void) {
-    OVL_EXPORT(cutscene_data_offset_eight) = GetLangAt(
+    cutscene_data_offset_eight = GetLangAt(
         8, (u8*)cutscene_data_en, (u8*)cutscene_data_fr, (u8*)cutscene_data_sp,
         (u8*)cutscene_data_ge, (u8*)cutscene_data_it);
 
-    OVL_EXPORT(cutscene_data) = GetLangAt(
+    cutscene_data = GetLangAt(
         0, (u8*)cutscene_data_en, (u8*)cutscene_data_fr, (u8*)cutscene_data_sp,
         (u8*)cutscene_data_ge, (u8*)cutscene_data_it);
 
-    OVL_EXPORT(cutscene_data_offset_zero) = GetLangAt(
+    cutscene_data_offset_zero = GetLangAt(
         0, (u8*)cutscene_data_en, (u8*)cutscene_data_fr, (u8*)cutscene_data_sp,
         (u8*)cutscene_data_ge, (u8*)cutscene_data_it);
 

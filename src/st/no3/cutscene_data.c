@@ -25,7 +25,7 @@ u8 cutscene_data_en[] = {
 };
 
 #else
-u8 OVL_EXPORT(cutscene_data)[] = {
+u8 cutscene_data[] = {
 #include "gen/cutscene_data.h"
 #include "gen/cutscene_events.h"
 };

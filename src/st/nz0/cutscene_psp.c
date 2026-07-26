@@ -130,8 +130,8 @@ static s32 g_IsCutsceneDone; // BSS
 #include "../cutscene_events.h"
 
 // cutscene where alucard and maria discuss castle changing
-extern s32 OVL_EXPORT(cutscene_text_offset);
-extern u8* OVL_EXPORT(cutscene_data);
+extern s32 cutscene_text_offset;
+extern u8* cutscene_data;
 void EntityCutscene(Entity* self) {
     s16 uCoord;      // sp4E
     s16 vCoord;      // sp4C
@@ -180,7 +180,7 @@ void EntityCutscene(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        if (SetCutsceneScript(OVL_EXPORT(cutscene_data))) {
+        if (SetCutsceneScript(cutscene_data)) {
             self->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
             self->primIndex = g_Dialogue.primIndex[2];
             g_CutsceneFlags = 0;
@@ -358,7 +358,7 @@ void EntityCutscene(Entity* self) {
                     ptr |= (u_long)*g_Dialogue.scriptCur++;
                     ptr <<= 4;
                     ptr |= (u_long)*g_Dialogue.scriptCur++;
-                    ptr += OVL_EXPORT(cutscene_text_offset);
+                    ptr += cutscene_text_offset;
                     SetCutsceneEvents((u8*)ptr);
                     continue;
                 case CSOP_SCRIPT_UNKNOWN_13:
@@ -371,7 +371,7 @@ void EntityCutscene(Entity* self) {
                     ptr |= (u_long)*g_Dialogue.scriptCur++;
                     ptr <<= 4;
                     ptr |= (u_long)*g_Dialogue.scriptCur++;
-                    ptr += OVL_EXPORT(cutscene_text_offset);
+                    ptr += cutscene_text_offset;
                     g_Dialogue.scriptCur += *(u8*)ptr << 2;
 
                     ptr = (u_long)*g_Dialogue.scriptCur++;
@@ -381,7 +381,7 @@ void EntityCutscene(Entity* self) {
                     ptr |= (u_long)*g_Dialogue.scriptCur++;
                     ptr <<= 4;
                     ptr |= (u_long)*g_Dialogue.scriptCur;
-                    ptr += OVL_EXPORT(cutscene_text_offset);
+                    ptr += cutscene_text_offset;
                     g_Dialogue.scriptCur = (u8*)ptr;
                     continue;
                 case CSOP_SCRIPT_UNKNOWN_15:
@@ -392,7 +392,7 @@ void EntityCutscene(Entity* self) {
                     ptr |= (u_long)*g_Dialogue.scriptCur++;
                     ptr <<= 4;
                     ptr |= (u_long)*g_Dialogue.scriptCur;
-                    ptr += OVL_EXPORT(cutscene_text_offset);
+                    ptr += cutscene_text_offset;
                     g_Dialogue.scriptCur = (u8*)ptr;
                     continue;
                 case CSOP_WAIT_FOR_FLAG:

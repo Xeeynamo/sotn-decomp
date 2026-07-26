@@ -17,15 +17,14 @@ extern GAME_IMPORT LayoutEntity** g_pStObjLayoutVertical;
 extern u8 cutscene_alucard[];
 extern u8 cutscene_death[];
 
-u8 OVL_EXPORT(cutscene_data)[] = {
+u8 cutscene_data[] = {
 #include "../../st/no3/gen/cutscene_data.h"
 #include "../../st/no3/gen/cutscene_events.h"
 };
 
 static void InitCutscenePc(void) {
     static const CutsceneSymbolRange symbols[] = {
-        {OVL_EXPORT(cutscene_data), 0x80184CE0,
-         sizeof(OVL_EXPORT(cutscene_data))},
+        {cutscene_data, 0x80184CE0, sizeof(cutscene_data)},
         {cutscene_alucard, 0x80191b88, 0xd80},
         {cutscene_death, 0x80192908, 0xd80},
     };
