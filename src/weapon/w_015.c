@@ -11,7 +11,6 @@ extern s32 g_HandId;
 #define g_Animset2 w_015_2
 #include "sfx.h"
 
-extern SpriteParts D_6D000_8017A2B0[];
 extern s16 D_6D000_8017A6B8[];
 extern AnimationFrame D_6D000_8017A6C0[];
 extern s16 D_6D000_8017A6FC[];
@@ -399,7 +398,7 @@ s32 func_ptr_80170010(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        SetSpriteBank2(D_6D000_8017A2B0);
+        SetSpriteBank2(g_Animset2);
         self->animSet = ANIMSET_OVL(0x11);
         self->palette = PAL_UNK_111;
         self->unk5A = 0x65;
@@ -473,7 +472,7 @@ static s32 func_ptr_80170014(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        SetSpriteBank2(D_6D000_8017A2B0);
+        SetSpriteBank2(g_Animset2);
         self->animSet = ANIMSET_OVL(17);
         self->palette = 0x111;
         self->unk5A = 101;

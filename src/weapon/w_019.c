@@ -10,7 +10,6 @@ extern s32 g_HandId;
 #define g_Animset w_019_1
 #define g_Animset2 w_019_2
 
-extern SpriteParts D_89000_8017A040[];
 extern AnimationFrame D_89000_8017A52C[];
 
 void EntityWeaponAttack(Entity* self) {
@@ -28,7 +27,7 @@ void EntityWeaponAttack(Entity* self) {
             return;
         }
 
-        SetSpriteBank1(D_89000_8017A040);
+        SetSpriteBank1(g_Animset);
         self->animSet = ANIMSET_OVL(0x10);
         self->palette = 0x110;
         self->unk5A = 0x64;
