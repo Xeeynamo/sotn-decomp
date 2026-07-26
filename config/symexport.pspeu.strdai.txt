@@ -1,0 +1,2 @@
+EXTERN(_binary_assets_st_rdai_mwo_header_bin_start);
+EXTERN(RDAI_Load);

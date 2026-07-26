@@ -1,0 +1,113 @@
+options:
+  platform: psp
+  basename: strdai
+  base_path: ..
+  build_path: build/pspeu
+  target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rdai.bin
+  asm_path: asm/pspeu/st/rdai_psp
+  asset_path: assets/st/rdai
+  src_path: src/st
+  ld_script_path: build/pspeu/strdai.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.pspeu.txt
+    - config/symbols.pspeu.strdai.txt
+  undefined_funcs_auto_path: build/pspeu/config/undefined_funcs_auto.pspeu.strdai.txt
+  undefined_syms_auto_path: build/pspeu/config/undefined_syms_auto.pspeu.strdai.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: pspeu_$VRAM
+  disassemble_all: true
+  section_order:
+    - .text
+    - .data
+    - .rodata
+    - .bss
+  ld_bss_is_noload: true
+  disasm_unknown: true
+  global_vram_start: 0x08000000
+  ld_generate_symbol_per_data_segment: true
+  asm_inc_header: |
+    .set noat      /* allow manual use of $at */
+    .set noreorder /* don't insert nops after branches */
+sha1: 566264407fc79bb8d7928e08b04c79862df82333
+segments:
+  - [0x0, bin, mwo_header]
+  - name: strdai
+    type: code
+    start: 0x80
+    vram: 0x09237700
+    bss_start_address: 0x09283900
+    bss_size: 0x200
+    align: 128
+    subalign: 8
+    subsegments:
+      - [0x80, c, rdai_psp/unk_80]
+      - [0x2260, c, rdai/create_entity]
+      - [0x3208, c, rdai_psp/unk_3208]
+      - [0x5808, c, rdai/e_stage_name]
+      - [0x6688, c, rdai/e_red_door]
+      - [0x7990, c, rdai/st_update]
+      - [0x7EC8, c, rdai/e_particles]
+      - [0x9458, c, rdai/e_imp]
+      - [0xA640, c, rdai_psp/e_imp_smoke]
+      - [0xA748, c, rdai_psp/unk_9458]
+      - [0xA820, c, rdai/e_collect]
+      - [0xE998, c, rdai/e_misc]
+      - [0xF1E8, c, rdai/collision]
+      - [0x113C0, c, rdai/popup]
+      - [0x119B8, c, rdai/e_room_fg]
+      - [0x11AD0, c, rdai_psp/e_spectral_sword]
+      - [0x11BB0, c, rdai_psp/unk_11BB0]
+      - [0x160D8, c, rdai/st_common]
+      - [0x173A0, c, rdai/prim_helpers]
+      - [0x17AE0, c, rdai_psp/st_init]
+      - [0x17D10, c, rdai/e_breakable]
+      - [0x185E0, c, rdai/e_clouds]
+      - [0x18D80, c, rdai_psp/unk_18D80]
+      - [0x19410, c, rdai/e_background_sky_land]
+      - [0x19590, c, rdai/e_room_fg_2]
+      - [0x19A58, c, rdai_psp/unk_19A58]
+      - [0x19CC8, c, rdai/e_lock_camera]
+      - [0x19F28, c, rdai/func_us_80192d64_from_rbo3]
+      - [0x1A3C0, c, rdai/e_stained_glass]
+      - [0x1A708, c, rdai_psp/unk_1A708]
+      - [0x1BE48, c, rdai/e_spikes]
+      - [0x1C900, data]
+      - [0x1CB00, .data, rdai/e_red_door]
+      - [0x1CB18, .data, rdai/st_update]
+      - [0x1CB48, .data, rdai/e_particles]
+      - [0x1CBC8, data]
+      - [0x1CC00, .data, rdai/e_collect]
+      - [0x1D148, data]
+      - [0x1D198, .data, rdai/collision]
+      - [0x1D570, .data, rdai/e_room_fg]
+      - [0x1D610, data]
+      - [0x1D690, .data, rdai/st_common]
+      - [0x1D890, data]
+      - [0x21770, .data, rdai/e_red_door_tiles]
+      - [0x217A0, .data, rdai/e_init]
+      - [0x219A0, data]
+      - [0x4BDC8, .data, rdai/header]
+      - [0x4BDF8, .data, rdai/d_prize_drops]
+      - [0x4BE18, data]
+      - [0x4BE48, .data, rdai/e_lock_camera]
+      - [0x4BEC0, data]
+      - [0x4C0D8, .data, rdai/e_spikes]
+      - [0x4C0F8, data]
+      - [0x4C100, .rodata, rdai_psp/unk_80]
+      - [0x4C118, .rodata, rdai/e_red_door]
+      - [0x4C130, .rodata, rdai/e_imp]
+      - [0x4C160, .rodata, rdai/e_collect]
+      - [0x4C1C0, .rodata, rdai_psp/unk_11BB0]
+      - [0x4C208, .rodata, rdai_psp/unk_18D80]
+      - [0x4C248, .rodata, rdai/func_us_80192d64_from_rbo3]
+      - [0x4C280, .bss, rdai/create_entity]
+      - [0x4C2A0, .bss, rdai/st_update]
+      - [0x4C2E0, .bss, rdai/e_collect]
+      - [0x4C300, bss, 4C300]
+      - [0x4C438, .bss, rdai/e_lock_camera]
+      - [0x4C440, bss, 4C440]
+  - [0x4C6C8]
