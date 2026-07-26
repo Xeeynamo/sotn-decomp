@@ -22,7 +22,7 @@ void EntityRdaiUnk33(Entity* self) {
     s32 i;
 
     if ((self->flags & FLAG_DEAD) && !RDAI_UNK33_DEATH_STARTED(self)) {
-        PlaySfxPositional(0x655);
+        PlaySfxPositional(SFX_EXPLODE_B);
         if (self->params) {
             SetStep(5);
         } else {

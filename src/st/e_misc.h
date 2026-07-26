@@ -6,9 +6,63 @@ extern EInit g_EInitParticle;
 extern void EntityExplosionVariants(Entity* entity);
 extern void EntityGreyPuff(Entity* entity);
 
-#include "check_collider_offsets.h"
+// arg0 is a pointer to X and Y offsets from the current entity.
+// iterates through those locations, running CheckCollision on
+// each location, returning a set of bit flags indicating which
+// offset X,Y locations resulted in a collision (with EFFECT_SOLID)
+u8 CheckColliderOffsets(s16* arg0, u8 facing) {
+    u8 ret = 0;
+    Collider collider;
+    s16 posX, posY;
 
-#include "e_unk_id13.h"
+    while (*arg0 != 0xFF) {
+        ret <<= 1;
+
+        if (facing) {
+            posX = g_CurrentEntity->posX.i.hi + *arg0++;
+        } else {
+            posX = g_CurrentEntity->posX.i.hi - *arg0++;
+        }
+        posY = g_CurrentEntity->posY.i.hi + *arg0++;
+
+        g_api.CheckCollision(posX, posY, &collider, 0);
+        if (collider.effects & EFFECT_SOLID) {
+            ret |= 1;
+        }
+    }
+
+    return ret;
+}
+
+// EntityParticleTrail as a possible name here?
+// params: The E_EXPLOSION params to use for the trail
+void EntityUnkId13(Entity* self) {
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitUnkId13);
+        self->ext.ent13.parentId = self->ext.ent13.parent->entityId;
+    case 1:
+        if (self->ext.ent13.fiveFrameCounter++ > 4) {
+            Entity* newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (newEntity != NULL) {
+                CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+                newEntity->entityId = E_EXPLOSION;
+                newEntity->pfnUpdate = EntityExplosion;
+                newEntity->params = self->params;
+            }
+            self->ext.ent13.fiveFrameCounter = 0;
+        }
+        // We just follow the location of our parent
+        self->posX.i.hi = self->ext.ent13.parent->posX.i.hi;
+        self->posY.i.hi = self->ext.ent13.parent->posY.i.hi;
+        // Tests if the parent's ID is different from what it was when we were
+        // created. I suspect this is to check for the parent being destroyed.
+        if (self->ext.ent13.parent->entityId != self->ext.ent13.parentId) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 static s16 explosionVariantSizes[] = {
     0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70, 0x00};
@@ -79,8 +133,58 @@ static u8 explode_startFrame[] = {1, 9, 21, 43};
 
 static u16 explode_lifetime[] = {16, 24, 42, 47};
 
-#include "e_explosion_variants.h"
-#include "e_grey_puff.h"
+// Creates 4 different explosion animations for when objects or enemies are
+// destroyed or killed. The animations are more intense as self->params
+// increases (from 0 to 3).
+void EntityExplosionVariants(Entity* self) {
+    if (!self->step) {
+        self->velocityY = explode_yVel[self->ext.destructAnim.index];
+        self->flags =
+            FLAG_UNK_2000 | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_CAMERA_LOCKED;
+        self->palette = PAL_FLAG(PAL_UNK_195);
+        self->animSet = ANIMSET_DRA(2);
+        self->animCurFrame = explode_startFrame[self->params];
+        self->blendMode = BLEND_TRANSP;
+        self->step++;
+    } else {
+        self->posY.val -= self->velocityY;
+        ++self->poseTimer;
+        if ((self->poseTimer % 2) == 0) {
+            self->animCurFrame++;
+        }
+
+        if (self->poseTimer > explode_lifetime[self->params]) {
+            DestroyEntity(self);
+        }
+    }
+}
+
+// looks like a particle of dust fading away
+// params: Index of scaleX and velocityY to use
+void EntityGreyPuff(Entity* self) {
+    if (!self->step) {
+        self->flags =
+            FLAG_UNK_2000 | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_CAMERA_LOCKED;
+        self->palette = PAL_FLAG(PAL_UNK_195);
+        self->animSet = ANIMSET_DRA(5);
+        self->animCurFrame = 1;
+        self->blendMode = BLEND_TRANSP;
+        self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
+        self->scaleX = greyPuff_rot[self->params];
+        self->scaleY = self->scaleX;
+        self->velocityY = greyPuff_yVel[self->params];
+        self->step++;
+    } else {
+        self->posY.val -= self->velocityY;
+        self->poseTimer++;
+        if ((self->poseTimer % 2) == 0) {
+            self->animCurFrame++;
+        }
+        if (self->poseTimer > 36) {
+            DestroyEntity(self);
+        }
+    }
+}
 
 static s16 g_olroxDroolCollOffsets[] = {0x0000, 0x0000, 0x00FF, 0x0000};
 
@@ -356,7 +460,36 @@ u8 UnkCollisionFunc4(u8 arg0) {
 
 #endif
 
-#include "e_intense_explosion.h"
+// params: (& 0xF0) Use an alternate set of hardcoded palette and drawMode
+//         (& 0xFF00) if non-zero, uses ((& 0xFF00) >> 8) as the zPriority
+void EntityIntenseExplosion(Entity* self) {
+    if (!self->step) {
+        InitializeEntity(g_EInitParticle);
+        self->palette = PAL_FLAG(PAL_UNK_170);
+        self->animSet = ANIMSET_DRA(5);
+        self->animCurFrame = 1;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
+        if (self->params & 0xF0) {
+            self->palette = PAL_FLAG(PAL_UNK_195);
+            self->blendMode = BLEND_TRANSP;
+        }
+
+        if (self->params & 0xFF00) {
+            self->zPriority = (self->params & 0xFF00) >> 8;
+        }
+        self->zPriority += 8;
+    } else {
+        self->poseTimer++;
+        self->posY.val -= FIX(0.25);
+        if ((self->poseTimer % 2) == 0) {
+            self->animCurFrame++;
+        }
+
+        if (self->poseTimer > 36) {
+            DestroyEntity(self);
+        }
+    }
+}
 
 static u8 g_UnkEntityAnim[] = {2, 1, 2, 2, 2, 3, 2, 4, 2, 5, 4, 6, -1, 0};
 
@@ -823,4 +956,31 @@ void ClutLerp(RECT* rect, u16 palIdxA, u16 palIdxB, s32 steps, u16 offset) {
     }
 }
 
-#include "play_sfx_positional.h"
+void PlaySfxPositional(s16 sfxId) {
+    s32 posX, posY;
+    s16 sfxPan;
+    s16 sfxVol;
+
+    posX = g_CurrentEntity->posX.i.hi - 128;
+    sfxPan = (abs(posX) - 32) >> 5;
+    if (sfxPan > 8) {
+        sfxPan = 8;
+    } else if (sfxPan < 0) {
+        sfxPan = 0;
+    }
+    if (posX < 0) {
+        sfxPan = -sfxPan;
+    }
+    sfxVol = abs(posX) - 96;
+    posY = abs(g_CurrentEntity->posY.i.hi - 128) - 112;
+    if (posY > 0) {
+        sfxVol += posY;
+    }
+    if (sfxVol < 0) {
+        sfxVol = 0;
+    }
+    sfxVol = 127 - (sfxVol >> 1);
+    if (sfxVol > 0) {
+        g_api.PlaySfxVolPan(sfxId, sfxVol, sfxPan);
+    }
+}

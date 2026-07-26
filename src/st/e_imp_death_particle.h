@@ -8,7 +8,7 @@ void EntityImpDeathParticle(Entity* self) {
     s16 angle;
 
     if (self->flags & FLAG_DEAD) {
-        PlaySfxPositional(0x691);
+        PlaySfxPositional(SFX_SMALL_FLAME_IGNITE);
         self->pfnUpdate = EntityExplosion;
         self->step = 0;
         self->params = 0;

@@ -101,7 +101,7 @@ void func_us_801BFE6C(Entity* self) {
             }
             func_801CDC80(&self->rotate, angle, 8);
             if (!--RDAI_ARCHER_TIMER(self)) {
-                PlaySfxPositional(0x628);
+                PlaySfxPositional(SFX_ARROW_SHOT_D);
                 RDAI_ARCHER_MODE(self) = 2;
                 RDAI_ARCHER_TIMER(self) = 0x30;
                 self->step_s++;

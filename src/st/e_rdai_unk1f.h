@@ -53,8 +53,7 @@ void EntityRdaiUnk1F(Entity* self) {
         velocity = entity->velocityX >> 9;
         self->rotate -= velocity;
         RDAI_UNK1F_ANGLE(self) += velocity * 2;
-        self->posY.i.hi +=
-            abs((rsin(RDAI_UNK1F_ANGLE(self)) << 3) >> 12);
+        self->posY.i.hi += abs((rsin(RDAI_UNK1F_ANGLE(self)) << 3) >> 12);
         break;
 
     case 3:
@@ -76,8 +75,7 @@ void EntityRdaiUnk1F(Entity* self) {
         velocity = entity->velocityX >> 9;
         self->rotate -= velocity;
         RDAI_UNK1F_ANGLE(self) += velocity * 2;
-        self->posY.i.hi +=
-            abs((rsin(RDAI_UNK1F_ANGLE(self)) << 3) >> 12);
+        self->posY.i.hi += abs((rsin(RDAI_UNK1F_ANGLE(self)) << 3) >> 12);
         break;
     }
 }

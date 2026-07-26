@@ -12,8 +12,7 @@
 extern EInit g_EInitObtainable;
 extern EInit g_EInitParticle;
 
-#if !defined(E_COLLECT_ONLY_PRIZE_DROP) &&                                  \
-    !defined(E_COLLECT_ONLY_RELIC_ORB)
+#if !defined(E_COLLECT_ONLY_PRIZE_DROP) && !defined(E_COLLECT_ONLY_RELIC_ORB)
 
 #if defined(VERSION_PSP)
 #include "blit_char_psp.h"
@@ -176,9 +175,81 @@ static s16 g_PrizeDropCollisionOffsets[] = {-6, 4, 0, -8};
 s8 c_HeartPrizes[] = {1, 5};
 #endif
 
-#include "e_collect_fall.h"
+static void PrizeDropFall(void) {
+    if (g_CurrentEntity->velocityY >= 0) {
+        g_CurrentEntity->ext.equipItemDrop.fallSpeed +=
+            g_CurrentEntity->ext.equipItemDrop.gravity;
+        g_CurrentEntity->velocityX =
+            g_CurrentEntity->ext.equipItemDrop.fallSpeed;
+        if (g_CurrentEntity->velocityX == FIX(1) ||
+            g_CurrentEntity->velocityX == FIX(-1)) {
+            g_CurrentEntity->ext.equipItemDrop.gravity =
+                -g_CurrentEntity->ext.equipItemDrop.gravity;
+        }
+    }
 
-#include "e_collect_heart.h"
+    if (g_CurrentEntity->velocityY < FIX(0.25)) {
+        g_CurrentEntity->velocityY += FIX(0.125);
+    }
+}
+
+static void PrizeDropFall2(u16 arg0) {
+    Collider collider;
+
+    if (g_CurrentEntity->velocityX < 0) {
+        g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
+                             g_CurrentEntity->posY.i.hi - 7, &collider, 0);
+        if (collider.effects & EFFECT_NOTHROUGH) {
+            g_CurrentEntity->velocityY = 0;
+        }
+    }
+
+    g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
+                         g_CurrentEntity->posY.i.hi + 7, &collider, 0);
+
+    if (arg0) {
+        if (!(collider.effects & EFFECT_NOTHROUGH)) {
+            MoveEntity();
+            FallEntity();
+            return;
+        }
+
+        g_CurrentEntity->velocityX = 0;
+        g_CurrentEntity->velocityY = 0;
+
+        if (collider.effects & EFFECT_QUICKSAND) {
+            g_CurrentEntity->posY.val += FIX(0.125);
+            return;
+        }
+
+        g_CurrentEntity->posY.i.hi += collider.unk18;
+        return;
+    }
+
+    if (!(collider.effects & EFFECT_NOTHROUGH)) {
+        MoveEntity();
+        PrizeDropFall();
+    }
+}
+
+// This function is messy, maybe there's a better way.
+static void CollectHeart(u16 heartIdx) {
+#if defined VERSION_BETA || STAGE == STAGE_ST0
+    s8 heartPrizes[2] = {0x01, 0x05};
+    s8 mad_unknown[2] = {0x01, 0x02};
+#else
+#define heartPrizes c_HeartPrizes
+#endif
+
+    g_api.PlaySfx(SFX_HEART_PICKUP);
+    g_Status.hearts += heartPrizes[heartIdx];
+
+    if (g_Status.hearts > g_Status.heartsMax) {
+        g_Status.hearts = g_Status.heartsMax;
+    }
+
+    DestroyEntity(g_CurrentEntity);
+}
 
 static s32 g_ExplosionYVelocities[] = {
     FIX(-1.0), FIX(-1.5), FIX(-1.5), FIX(-1.5), FIX(-3.0)};
@@ -218,7 +289,23 @@ static AnimateEntityFrame* g_ExplosionAnimations[] = {
     g_explosionBigAnim, D_80180F6C,
 };
 
-#include "e_collect_gold.h"
+void CollectGold(u16 goldSize) {
+    g_api.PlaySfx(SFX_GOLD_PICKUP);
+    goldSize -= 2;
+    g_Status.gold += c_GoldPrizes[goldSize];
+    if (g_Status.gold > MAX_GOLD) {
+        g_Status.gold = MAX_GOLD;
+    }
+#if STAGE != STAGE_ST0
+    if (g_unkGraphicsStruct.BottomCornerTextTimer) {
+        g_api.FreePrimitives(g_unkGraphicsStruct.BottomCornerTextPrims);
+        g_unkGraphicsStruct.BottomCornerTextTimer = 0;
+    }
+
+    BottomCornerText(g_goldCollectTexts[goldSize], true);
+    DestroyEntity(g_CurrentEntity);
+#endif
+}
 
 #if defined VERSION_BETA || STAGE == STAGE_ST0
 void func_801937BC(void) {}
@@ -232,7 +319,46 @@ void UnusedDestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
 #include "collect_subweapon.h"
 #endif
 
-#include "e_collect_vessels.h"
+#if STAGE != STAGE_ST0
+void CollectHeartVessel(void) {
+#ifdef VERSION_BETA
+    if (0) { // MAD doesn't need to test character, is always alucard
+#else
+    if (g_PlayableCharacter != PLAYER_ALUCARD) {
+#endif
+        g_api.PlaySfx(SFX_HEART_PICKUP);
+        g_Status.hearts += HEART_VESSEL_RICHTER;
+
+        if (g_Status.hearts > g_Status.heartsMax) {
+            g_Status.hearts = g_Status.heartsMax;
+        }
+    } else {
+        // Alucard's version
+        g_api.PlaySfx(SFX_HEART_PICKUP);
+        g_api.func_800FE044(HEART_VESSEL_INCREASE, 0x4000);
+    }
+    DestroyEntity(g_CurrentEntity);
+}
+
+static void CollectLifeVessel(void) {
+    g_api.PlaySfx(SFX_HEART_PICKUP);
+    g_api.func_800FE044(LIFE_VESSEL_INCREASE, 0x8000);
+    DestroyEntity(g_CurrentEntity);
+}
+#endif
+
+// MAD doesn't take an argument, others do
+#if defined VERSION_BETA || (STAGE == STAGE_ST0 && !defined(VERSION_PSP))
+static void CollectDummy(void) { DestroyEntity(g_CurrentEntity); }
+// Extra unused function, putting it in this same if-block.
+Entity* func_801939C4(void) {
+    g_CurrentEntity->step = 3;
+    g_CurrentEntity->params = 4;
+    return g_CurrentEntity;
+}
+#else
+static void CollectDummy(u16 id) { DestroyEntity(g_CurrentEntity); }
+#endif
 
 #endif
 
@@ -562,12 +688,56 @@ void EntityPrizeDrop(Entity* self) {
 
 #if !defined(E_COLLECT_ONLY_RELIC_ORB)
 
-#include "e_collect_explosion.h"
+// params: (& 0xFF) The explosion type
+//         (& 0xF0) These explosion types use a different (hardcoded) palette
+//                  and drawMode
+//         (& 0xFF00) If non-zero, ((& 0xFF00) >> 8) will override zPriority
+void EntityExplosion(Entity* entity) {
+    if (!entity->step) {
+        InitializeEntity(g_EInitParticle);
+        entity->pose = 0;
+        entity->poseTimer = 0;
+        entity->animSet = ANIMSET_DRA(2);
+        entity->blendMode = BLEND_TRANSP | BLEND_ADD;
+        if (entity->params & 0xF0) {
+            entity->palette = PAL_FLAG(PAL_UNK_195);
+            entity->blendMode = BLEND_TRANSP;
+        }
+
+        if (entity->params & 0xFF00) {
+            entity->zPriority = (entity->params & 0xFF00) >> 8;
+        }
+        entity->params &= 15;
+        entity->velocityY = g_ExplosionYVelocities[entity->params];
+    } else {
+        entity->posY.val += entity->velocityY;
+
+        if (!AnimateEntity(g_ExplosionAnimations[entity->params], entity)) {
+            DestroyEntity(entity);
+        }
+    }
+}
 
 // Weird difference here. These functions are not related.
 // But MAD has one and not the other.
 #if !(defined VERSION_BETA || STAGE == STAGE_ST0)
-#include "e_collect_blink.h"
+static void BlinkItem(Entity* self, u16 timer) {
+    Primitive* prim;
+    s32 temp;
+    prim = &g_PrimBuf[self->primIndex];
+
+    prim->x0 = prim->x2 = self->posX.i.hi - 7;
+    prim->x1 = prim->x3 = prim->x0 + 14;
+
+    prim->y0 = prim->y1 = self->posY.i.hi - 7;
+    prim->y2 = prim->y3 = prim->y0 + 14;
+
+    if (timer & 2) {
+        PCOL(prim) = 0xFF;
+    } else {
+        PCOL(prim) = 0x80;
+    }
+}
 #else
 static Point16 g_collectVelocity[] = {
     {0x0160, 0xFD20}, {0xFE80, 0xFC90}, {0x00E0, 0xFC20}, {0xFF40, 0xFD30},
@@ -600,7 +770,204 @@ void Unreferenced_MAD_ST0_func(Entity* self) {
 char* obtainedStr;
 #endif
 
-#include "e_collect_equip_item_drop.h"
+void EntityEquipItemDrop(Entity* self) {
+    Collider collider;
+    Primitive* prim;
+    s16 i;
+    u16 itemId;
+    s16 index;
+    s32 primIndex;
+    const char* name;
+
+    itemId = self->params & 0x7FFF;
+    if (
+#if defined(VERSION_US) && STAGE != STAGE_ST0
+        self->step >= 2 &&
+#else
+        self->step &&
+#endif
+        self->step < 5 && self->hitFlags) {
+        self->step = 5;
+    }
+
+    switch (self->step) {
+    case 0:
+#if !(defined VERSION_BETA || STAGE == STAGE_ST0)
+        if (g_PlayableCharacter != PLAYER_ALUCARD) {
+            self->params = 0;
+            self->pfnUpdate = EntityPrizeDrop;
+            self->entityId = 3;
+            SetStep(0);
+            EntityPrizeDrop(self);
+            return;
+        }
+#endif
+        InitializeEntity(g_EInitObtainable);
+        self->ext.equipItemDrop.timer = 0;
+        break;
+    case 1:
+        g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi, &collider, 0);
+        if (collider.effects & EFFECT_NOTHROUGH_PLUS) {
+            DestroyEntity(self);
+            break;
+        }
+
+        for (i = 0; i < LEN(g_ItemIconSlots); i++) {
+            if (!g_ItemIconSlots[i]) {
+                break;
+            }
+        }
+        if (i >= LEN(g_ItemIconSlots)) {
+            DestroyEntity(self);
+            return;
+        }
+#if !(defined VERSION_BETA || STAGE == STAGE_ST0)
+        index = self->ext.equipItemDrop.castleFlag;
+        if (index) {
+            index--;
+            g_CastleFlags[(index >> 3) + ENEMY_LIST_RAREDROP_1B0] |=
+                1 << (index & 7);
+        }
+#endif
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+        g_ItemIconSlots[i] = 0x1E0;
+#if !(defined VERSION_BETA || STAGE == STAGE_ST0)
+        self->ext.equipItemDrop.iconSlot = i;
+#endif
+        if (itemId < NUM_HAND_ITEMS) {
+            g_api.LoadEquipIcon(g_api.equipDefs[itemId].icon,
+                                g_api.equipDefs[itemId].iconPalette, i);
+        } else {
+            itemId -= NUM_HAND_ITEMS;
+            g_api.LoadEquipIcon(g_api.accessoryDefs[itemId].icon,
+                                g_api.accessoryDefs[itemId].iconPalette, i);
+        }
+
+        prim = &g_PrimBuf[primIndex];
+        prim->tpage = 0x1A;
+        prim->clut = i + 464;
+
+#ifdef VERSION_PSP
+        prim->u0 = prim->u2 = (i & 7) * 0x10 + 1;
+#else
+        prim->u0 = prim->u2 = (u8)(i & 7) * 0x10 + 1;
+#endif
+        prim->u1 = prim->u3 = prim->u0 + 0xE;
+
+#ifdef VERSION_PSP
+        prim->v0 = prim->v1 = (i & 0x18) * 2 + 0x81;
+#else
+        prim->v0 = prim->v1 = (u8)(i & 0x18) * 2 + 0x81;
+#endif
+        prim->v2 = prim->v3 = prim->v0 + 0xE;
+
+        prim->priority = 0x80;
+        prim->drawMode = DRAW_UNK02 | DRAW_COLORS;
+
+        self->ext.equipItemDrop.timer = 128;
+        self->step++;
+        break;
+    case 2:
+#if defined VERSION_BETA || STAGE == STAGE_ST0
+        if (self->velocityX < 0) {
+#else
+        if (self->velocityY < 0) {
+#endif
+            g_api.CheckCollision(
+                self->posX.i.hi, self->posY.i.hi - 7, &collider, 0);
+            if (collider.effects & EFFECT_NOTHROUGH) {
+                self->velocityY = 0;
+            }
+        }
+        MoveEntity();
+        g_api.CheckCollision(
+            self->posX.i.hi, self->posY.i.hi + 7, &collider, 0);
+        if ((collider.effects & EFFECT_NOTHROUGH) && self->velocityY > 0) {
+            self->velocityX = 0;
+            self->velocityY = 0;
+            self->posY.i.hi += collider.unk18;
+            self->ext.equipItemDrop.aliveTimer = 240;
+            self->step++;
+        } else {
+            FallEntity();
+        }
+        CheckFieldCollision(g_PrizeDropCollisionOffsets, 2);
+        break;
+    case 3:
+        PrizeDropFall2(1);
+        if (!(self->params & 0x8000)) {
+            if (!--self->ext.equipItemDrop.aliveTimer) {
+                self->ext.equipItemDrop.aliveTimer = 80;
+                self->step++;
+            }
+#if !(defined VERSION_BETA || STAGE == STAGE_ST0)
+        } else {
+            i = self->ext.equipItemDrop.iconSlot;
+            g_ItemIconSlots[i] = 0x10;
+#endif
+        }
+        break;
+    case 4:
+        PrizeDropFall2(1);
+        if (--self->ext.equipItemDrop.aliveTimer) {
+            prim = &g_PrimBuf[self->primIndex];
+            if (self->ext.equipItemDrop.aliveTimer & 2) {
+                prim->drawMode = DRAW_HIDE;
+            } else {
+                prim->drawMode = DRAW_UNK02;
+            }
+        } else {
+            DestroyEntity(self);
+        }
+        break;
+    case 5:
+        if (g_unkGraphicsStruct.BottomCornerTextTimer) {
+            g_api.FreePrimitives(g_unkGraphicsStruct.BottomCornerTextPrims);
+            g_unkGraphicsStruct.BottomCornerTextTimer = 0;
+        }
+        g_api.PlaySfx(SFX_ITEM_PICKUP);
+        if (itemId < NUM_HAND_ITEMS) {
+            name = g_api.equipDefs[itemId].name;
+            g_api.AddToInventory(itemId, EQUIP_HAND);
+        } else {
+            itemId -= NUM_HAND_ITEMS;
+            name = g_api.accessoryDefs[itemId].name;
+            g_api.AddToInventory(itemId, EQUIP_ARMOR);
+        }
+        BottomCornerText(name, true);
+        DestroyEntity(self);
+        break;
+    }
+
+    if (self->step > 1) {
+#if !(defined VERSION_BETA || STAGE == STAGE_ST0)
+        if (self->ext.equipItemDrop.timer) {
+            self->ext.equipItemDrop.timer--;
+        }
+        BlinkItem(self, self->ext.equipItemDrop.timer);
+#else
+        prim = &g_PrimBuf[self->primIndex];
+        prim->x0 = prim->x2 = self->posX.i.hi - 7;
+        prim->x1 = prim->x3 = prim->x0 + 0xE;
+        prim->y0 = prim->y1 = self->posY.i.hi - 7;
+        prim->y2 = prim->y3 = prim->y0 + 0xE;
+        if (self->ext.equipItemDrop.timer) {
+            self->ext.equipItemDrop.timer--;
+            if (self->ext.equipItemDrop.timer & 2) {
+                PCOL(prim) = 0xFF;
+            } else {
+                PCOL(prim) = 0x80;
+            }
+        }
+#endif
+    }
+}
 
 #if !(defined VERSION_BETA || STAGE == STAGE_ST0 || defined(VERSION_PSP) ||    \
       defined(VERSION_HD))
@@ -1148,10 +1515,248 @@ void EntityRelicOrb(Entity* self) {
 #if !defined(E_COLLECT_ONLY_RELIC_ORB)
 
 #if STAGE != STAGE_ST0
-#include "e_collect_heart_drop.h"
+// defined in d_prize_drops.c
+extern u16 PrizeDrops[];
+
+// params: Local index of this drop
+void EntityHeartDrop(Entity* self) {
+    u16 index;
+    u8 value;
+    PfnEntityUpdate update;
+
+    if (!self->step) {
+        index = self->ext.heartDrop.unkB4 =
+            self->params + HEART_DROP_CASTLE_FLAG;
+        value = g_CastleFlags[(index >> 3) + CASTLE_COLLECTIBLES_100] >>
+                (index & 7);
+        if (value & 1) {
+            DestroyEntity(self);
+            return;
+        }
+
+        index -= HEART_DROP_CASTLE_FLAG;
+        index = PrizeDrops[index];
+        if (index < 128) {
+            self->unkB8 = (Entity*)EntityPrizeDrop;
+        } else {
+            self->unkB8 = (Entity*)EntityEquipItemDrop;
+            index -= 128;
+        }
+        self->params = index + 0x8000;
+    } else {
+        index = self->ext.heartDrop.unkB4;
+        if (self->step < 5) {
+            if (self->hitFlags) {
+                g_CastleFlags[(index >> 3) + CASTLE_COLLECTIBLES_100] |=
+                    1 << (index & 7);
+                self->step = 5;
+            }
+        }
+    }
+    update = (PfnEntityUpdate)self->unkB8;
+    update(self);
+}
 
 #if !defined(VERSION_BETA)
-#include "e_collect_message_box.h"
+// params: message box duration, in frames
+// ext.messageBox.label: box size and text to render
+void EntityMessageBox(Entity* self) {
+    const u16 VramX = 0;
+    const u16 VramY = 0x180;
+    const int FontW = 12;
+    const int FontH = 16;
+    const int FontLen = FontW * FontH / 2 / sizeof(u16); // 4bpp
+
+    Primitive* prim;
+    s32 i;
+    char* str;
+    s32 primIndex;
+    u16 xOffset;
+    u8* chPix;
+    u8* dstPix;
+    u8 ch;
+    RECT rect;
+
+    u16 x;
+    u16 y;
+    u16 nCh;
+
+    u16 chjp;
+    u16* srcJpPix;
+    u16* dstJpPix;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitObtainable);
+        self->flags |= FLAG_UNK_10000;
+        self->flags ^= FLAG_POS_CAMERA_LOCKED;
+        if (!self->params) {
+            self->params = 96; // default to 96 frames, or 1.5 seconds
+        }
+
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 3);
+        if (primIndex == -1) {
+            self->step = 0;
+            return;
+        }
+        self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+        while (prim != NULL) {
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+        }
+
+        str = self->ext.messageBox.label;
+        self->ext.messageBox.width = *str++;
+        self->ext.messageBox.height = *str++;
+        self->ext.messageBox.label += 2;
+        break;
+    case 1:
+        rect.x = 0;
+        rect.y = 0x180;
+        rect.w = 0x40;
+        rect.h = self->ext.messageBox.height;
+        ClearImage(&rect, 0, 0, 0);
+
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; prim != NULL; i++) {
+            if (i == 0) {
+                prim->type = PRIM_SPRT;
+                prim->tpage = 0x10;
+                prim->x0 = self->posX.i.hi - self->ext.messageBox.width / 2;
+                prim->y0 = self->posY.i.hi - self->ext.messageBox.height / 2;
+                prim->u0 = 0;
+                prim->v0 = 0x80;
+                prim->u1 = self->ext.messageBox.width;
+                prim->v1 = self->ext.messageBox.height;
+                prim->clut = PAL_UNK_1A1;
+                prim->priority = 0x1FD;
+                prim->drawMode = DRAW_HIDE;
+            } else {
+                prim->type = PRIM_G4;
+                prim->x0 = prim->x2 =
+                    self->posX.i.hi - self->ext.messageBox.width / 2 - 4;
+                prim->x1 = prim->x3 =
+                    self->posX.i.hi + self->ext.messageBox.width / 2 + 4;
+                PRED(prim) = 0;
+                PGRN(prim) = 0;
+                PBLU(prim) = 0;
+                if (i == 1) {
+                    prim->y0 = prim->y1 = prim->y2 = prim->y3 =
+                        self->posY.i.hi - self->ext.messageBox.height / 2 - 4;
+                    PBLU(prim) = 0x80;
+                } else {
+                    prim->y0 = prim->y1 = prim->y2 = prim->y3 =
+                        self->posY.i.hi + self->ext.messageBox.height / 2 + 4;
+                    PGRN(prim) = 0x80;
+                }
+                prim->priority = 0x1FC;
+                prim->drawMode = DRAW_TPAGE | DRAW_TRANSP;
+            }
+            prim = prim->next;
+        }
+        self->step++;
+        break;
+    case 2:
+#if defined(VERSION_US)
+        dstPix = g_Pix[0];
+        chPix = dstPix;
+        str = self->ext.messageBox.label;
+        xOffset = 0;
+        for (i = 0;
+             i < self->ext.messageBox.width / 2 * self->ext.messageBox.height;
+             i++) {
+            *chPix++ = 0;
+        }
+
+        chPix = dstPix;
+        while (true) {
+            if (*str == 0) {
+                break;
+            }
+            if (*str == 1) {
+                str++;
+                xOffset = 0;
+                chPix = &dstPix[self->ext.messageBox.width * 8];
+            } else {
+                str = BlitChar(
+                    str, &xOffset, chPix, self->ext.messageBox.width >> 1);
+            }
+        }
+        LoadTPage((u_long*)dstPix, 0, 0, VramX, VramY,
+                  self->ext.messageBox.width, self->ext.messageBox.height);
+#elif defined(VERSION_PSP)
+        nCh = 0;
+        x = VramX;
+        y = VramY;
+        str = self->ext.messageBox.label;
+        BlitChar(str, 0, 0, 0x180);
+#elif defined(VERSION_HD)
+        nCh = 0;
+        x = VramX;
+        y = VramY;
+        str = self->ext.messageBox.label;
+        while (true) {
+            chjp = *str++;
+            if (!chjp) {
+                break;
+            }
+            if (chjp == 1) {
+                y += FontH;
+                x = 0;
+            } else {
+                chjp = (*str++ | (chjp << 8));
+                srcJpPix = g_api.func_80106A28(chjp, 1);
+                if (srcJpPix) {
+                    dstJpPix = &msgBoxTpage[nCh * FontLen];
+                    for (i = 0; i < FontLen; i++) {
+                        *dstJpPix++ = *srcJpPix++;
+                    }
+                    LoadTPage(
+                        &msgBoxTpage[nCh * FontLen], 0, 0, x, y, FontW, FontH);
+                    x += 3;
+                    nCh++;
+                }
+            }
+        }
+#endif
+        self->ext.messageBox.duration = 0;
+        self->step++;
+        break;
+    case 3:
+        self->ext.messageBox.duration++;
+        prim = &g_PrimBuf[self->primIndex];
+        prim = prim->next;
+        for (i = 0; prim != NULL; i++) {
+            if (i == 0) {
+                prim->y2 = prim->y3 =
+                    prim->y0 + (self->ext.messageBox.height + 8) *
+                                   self->ext.messageBox.duration / 8;
+                prim->b0 = prim->b1 -= 0x10;
+            } else {
+                prim->y0 = prim->y1 =
+                    prim->y2 - (self->ext.messageBox.height + 8) *
+                                   self->ext.messageBox.duration / 8;
+                prim->g2 = prim->g3 -= 0x10;
+            }
+            prim = prim->next;
+        }
+        if (self->ext.messageBox.duration == 8) {
+            self->ext.messageBox.duration = 0;
+            self->step++;
+        }
+        break;
+    case 4:
+        prim = &g_PrimBuf[self->primIndex];
+        prim->drawMode = DRAW_DEFAULT;
+        self->ext.messageBox.duration++;
+        if (self->ext.messageBox.duration > self->params) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 #endif
 
 #endif
