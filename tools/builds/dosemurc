@@ -1,0 +1,11 @@
+$_cpu_vm = "emulated"
+$_cpu_vm_dpmi = "emulated"
+$_sound = (off)
+$_hogthreshold = (0)
+
+$_cpuspeed = (333.333)
+$_pci = (off)
+$_rdtsc = (off)
+$_term_color = (off)
+$_ipxsupport = (off)
+$_pktdriver = (off)

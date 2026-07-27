@@ -25,6 +25,15 @@ extern s32 E_ID(BREAKABLE_DEBRIS);
 extern EInit g_EInitBreakable;
 extern EInit g_EInitInteractable;
 extern EInit g_EInitParticle;
+extern AnimateEntityFrame* animations[];
+extern u8 hitbox_heights[];
+extern u8 explosion_types[];
+extern u16 palettes[];
+extern u16 anim_sets[];
+extern u16 unk_5A[];
+extern u8 blend_modes[];
+extern u16 hitbox_offsets_y[];
+extern s16 candelabra_debris_offsets_y[];
 
 void EntityBreakable(Entity* self) {
     Entity* entity;

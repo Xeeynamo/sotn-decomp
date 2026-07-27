@@ -94,7 +94,7 @@ s32 E_ID(FALLING_LEAF);
 s32 E_ID(EXPLODE_PUFF_TRANS);
 s32 E_ID(EXPLODE_PUFF_OPAQUE);
 
-u8* OVL_EXPORT(cutscene_data); // bss
+u8* cutscene_data; // bss
 
 extern char cutscene_data_it[];
 extern char cutscene_data_sp[];
@@ -193,7 +193,7 @@ void InitEntityIds(void) {
 }
 
 void OVL_EXPORT(Load)(void) {
-    OVL_EXPORT(cutscene_data) = GetLangAt(
+    cutscene_data = GetLangAt(
         0, (u8*)cutscene_data_en, (u8*)cutscene_data_fr, (u8*)cutscene_data_sp,
         (u8*)cutscene_data_ge, (u8*)cutscene_data_it);
 

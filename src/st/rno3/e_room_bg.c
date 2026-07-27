@@ -15,7 +15,7 @@ static u8 anim11[] = {16, 46, 0};
 static u8 anim12[] = {16, 55, 0};
 static u8 anim13[] = {16, 2, 0};
 
-ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
+ObjInit2 BackgroundBlockInit[] = {
     {.animSet = ANIMSET_OVL(1),
      .zPriority = 105,
      .facingLeft = 0,

@@ -11,10 +11,6 @@
 #define OVL_API
 #endif
 
-// public function necessary to register an overlay
-#define OVL_STAGE_ENTRYPOINT_NAME "InitStage"
-#define OVL_SERVANT_ENTRYPOINT_NAME "InitServant"
-
 // public signature for the overlay entrypoint
 typedef void (*PfnInitStage)(Overlay* o);
 typedef void (*PfnInitServant)(ServantDesc* o);

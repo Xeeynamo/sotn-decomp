@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rno3.h"
 
-u16 OVL_EXPORT(PrizeDrops)[] = {
+u16 PrizeDrops[] = {
     ITEMDROP_HAMMER,
     ITEMDROP_ANTIVENOM,
     ITEMDROP_HIGH_POTION,

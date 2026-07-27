@@ -16,7 +16,7 @@ enum Palettes {
     PAL_UNK_2E0 = 0x2E0,
 };
 
-enum Entities {
+enum EntityID {
     E_NONE,
     E_BREAKABLE,                     // EntityBreakable
     E_EXPLOSION,                     // EntityExplosion

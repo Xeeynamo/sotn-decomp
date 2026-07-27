@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz0.h"
 
-u16 OVL_EXPORT(PrizeDrops)[] = {
+u16 PrizeDrops[] = {
     ITEMDROP_HIDE_CUIRASS,
     ITEMDROP_HEART_VESSEL,
     ITEMDROP_CLOTH_CAPE,

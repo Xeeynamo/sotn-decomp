@@ -66,7 +66,7 @@ typedef enum {
     /* 0x2B */ E_VENUS_WEED_TENDRIL,
     /* 0x2C */ E_VENUS_WEED_DART,
     /* 0x2D */ E_VENUS_WEED_SPIKE,
-} EntityIDs;
+} EntityID;
 
 extern EInit g_EInitBreakable;
 extern EInit g_EInitObtainable;

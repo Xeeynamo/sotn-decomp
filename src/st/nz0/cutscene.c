@@ -37,14 +37,14 @@ extern s32 g_IsCutsceneDone; // bss
 
 #include "../cutscene_actor_name.h"
 
-#include "../set_cutscene_end.h"
+#include "../set_cutscene_events.h"
 
-#include "../cutscene_run.h"
+#include "../cutscene_events.h"
 
 #include "../cutscene_scale_avatar.h"
 
 // cutscene where alucard and maria discuss castle changing
-extern u8 OVL_EXPORT(cutscene_data)[];
+extern u8 cutscene_data[];
 void EntityCutscene(Entity* self) {
     s16 uCoord;
     s16 vCoord;
@@ -82,8 +82,8 @@ void EntityCutscene(Entity* self) {
             }
         }
     }
-    if (self->step && g_Dialogue.unk3C) {
-        CutsceneRun();
+    if (self->step && g_Dialogue.hasEvents) {
+        RunCutsceneEvents();
     }
     switch (self->step) {
     case 0:
@@ -92,7 +92,7 @@ void EntityCutscene(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        if (SetCutsceneScript(OVL_EXPORT(cutscene_data))) {
+        if (SetCutsceneScript(cutscene_data)) {
             self->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
             self->primIndex = g_Dialogue.primIndex[2];
             g_CutsceneFlags = 0;
@@ -263,7 +263,7 @@ void EntityCutscene(Entity* self) {
                 }
                 g_Dialogue.scriptCur--;
                 return;
-            case CSOP_SET_END:
+            case CSOP_SET_EVENTS:
                 ptr = (u_long)*g_Dialogue.scriptCur++;
                 ptr <<= 4;
                 ptr |= (u_long)*g_Dialogue.scriptCur++;
@@ -271,7 +271,7 @@ void EntityCutscene(Entity* self) {
                 ptr |= (u_long)*g_Dialogue.scriptCur++;
                 ptr <<= 4;
                 ptr |= (u_long)*g_Dialogue.scriptCur++;
-                SetCutsceneEnd((u8*)ptr);
+                SetCutsceneEvents((u8*)ptr);
                 continue;
             case CSOP_SCRIPT_UNKNOWN_13:
                 continue;
@@ -283,8 +283,7 @@ void EntityCutscene(Entity* self) {
                 ptr |= (u_long)*g_Dialogue.scriptCur++;
                 ptr <<= 4;
                 ptr |= (u_long)*g_Dialogue.scriptCur++;
-                ptr += (u16)0x100000;
-                g_Dialogue.scriptCur += *(u16*)ptr << 2;
+                g_Dialogue.scriptCur += *CS_NEXT(ptr) * 4;
 
                 ptr = (u_long)*g_Dialogue.scriptCur++;
                 ptr <<= 4;
@@ -293,7 +292,7 @@ void EntityCutscene(Entity* self) {
                 ptr |= (u_long)*g_Dialogue.scriptCur++;
                 ptr <<= 4;
                 ptr |= (u_long)*g_Dialogue.scriptCur;
-                g_Dialogue.scriptCur = (u8*)ptr + 0x100000;
+                g_Dialogue.scriptCur = CS_PTR(ptr);
                 continue;
             case CSOP_SCRIPT_UNKNOWN_15:
                 ptr = (u_long)*g_Dialogue.scriptCur++;
@@ -303,7 +302,7 @@ void EntityCutscene(Entity* self) {
                 ptr |= (u_long)*g_Dialogue.scriptCur++;
                 ptr <<= 4;
                 ptr |= (u_long)*g_Dialogue.scriptCur;
-                g_Dialogue.scriptCur = (u8*)ptr + 0x100000;
+                g_Dialogue.scriptCur = CS_PTR(ptr);
                 continue;
             case CSOP_WAIT_FOR_FLAG:
                 if (!((g_CutsceneFlags >> *g_Dialogue.scriptCur) & 1)) {
@@ -316,8 +315,8 @@ void EntityCutscene(Entity* self) {
             case CSOP_SET_FLAG:
                 g_CutsceneFlags |= 1 << *g_Dialogue.scriptCur++;
                 continue;
-            case CSOP_SCRIPT_UNKNOWN_18:
-                g_Dialogue.unk3C = 0;
+            case CSOP_STOP_EVENTS:
+                g_Dialogue.hasEvents = 0;
                 continue;
             case CSOP_LOAD_PORTRAIT:
                 if (g_SkipCutscene) {
@@ -330,7 +329,7 @@ void EntityCutscene(Entity* self) {
                     ptr |= (u_long)*g_Dialogue.scriptCur++;
                     ptr <<= 4;
                     ptr |= (u_long)*g_Dialogue.scriptCur++;
-                    ptr += 0x100000;
+                    ptr = (u_long)CS_PTR(ptr);
                     var_s5 = g_Dialogue.scriptCur++[0];
                     LoadTPage((u_long*)ptr, 1, 0, D_801813D4[var_s5], 0x100,
                               0x30, 0x48);

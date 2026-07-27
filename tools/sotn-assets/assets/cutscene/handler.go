@@ -180,7 +180,7 @@ var commandDefinitions = []cmdDef{
 	{name: "PLAY_SOUND", params: []int{2}},
 	{name: "WAIT_FOR_SOUND", params: []int{}},
 	{name: "SCRIPT_UNKNOWN_11", params: []int{}},
-	{name: "SET_END", params: []int{4}},
+	{name: "SET_EVENTS", params: []int{4}},
 	{name: "SCRIPT_UNKNOWN_13", params: []int{}},
 	{name: "SCRIPT_SWITCH", params: []int{4, 4, 4}},
 	{name: "SCRIPT_UNKNOWN_15", params: []int{4}},

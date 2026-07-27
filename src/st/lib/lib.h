@@ -9,7 +9,7 @@ enum Palettes {
     PAL_BREAKABLE = 0x26C,
 };
 
-typedef enum EntityIDs {
+typedef enum EntityID {
     /* 0x00 */ E_NONE,
     /* 0x01 */ E_BREAKABLE,
     /* 0x02 */ E_EXPLOSION = 0x02,
@@ -90,7 +90,7 @@ typedef enum EntityIDs {
     /* 0x4D */ E_MUDMAN,
     /* 0x4E */ E_ID_4E,
     /* 0x4F */ E_ID_4F,
-} EntityIDs;
+} EntityID;
 
 extern void EntityBloodDrips(Entity*);
 extern void EntityExplosionVariants(Entity* entity);

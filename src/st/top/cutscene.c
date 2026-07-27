@@ -10,9 +10,9 @@ extern Dialogue g_Dialogue;
 #include "../cutscene_unk3.h"
 #include "../cutscene_unk4.h"
 #include "../cutscene_actor_name.h"
-#include "../set_cutscene_end.h"
+#include "../set_cutscene_events.h"
 #define CUTSCENE_TILEMAP_SCROLL
-#include "../cutscene_run.h"
+#include "../cutscene_events.h"
 #include "../cutscene_skip.h"
 #include "../cutscene_scale_avatar.h"
 
@@ -22,8 +22,8 @@ INCLUDE_RODATA("st/top/nonmatchings/cutscene", D_us_801A8998);
 
 INCLUDE_RODATA("st/top/nonmatchings/cutscene", D_us_801A89A0);
 
-extern u8 OVL_EXPORT(cutscene_data)[];
-extern bool g_IsCutsceneDone;
+extern u8 cutscene_data[];
+extern s32 g_IsCutsceneDone;
 extern u32 g_CutsceneFlags;
 extern u8 D_us_80180D38[];
 extern u8 D_us_80180D3C[];
@@ -53,8 +53,8 @@ void EntityCutscene(Entity* self) {
             }
         }
 
-        if (self->step && g_Dialogue.unk3C) {
-            CutsceneRun();
+        if (self->step && g_Dialogue.hasEvents) {
+            RunCutsceneEvents();
         }
     }
 
@@ -65,7 +65,7 @@ void EntityCutscene(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        if (SetCutsceneScript(OVL_EXPORT(cutscene_data))) {
+        if (SetCutsceneScript(cutscene_data)) {
             g_CutsceneHasControl = true;
             g_CutsceneFlags = 0;
             g_IsCutsceneDone = 0;
@@ -236,7 +236,7 @@ void EntityCutscene(Entity* self) {
                 }
                 *g_Dialogue.scriptCur--;
                 return;
-            case CSOP_SET_END:
+            case CSOP_SET_EVENTS:
                 ptr = (u_long)*g_Dialogue.scriptCur++;
                 ptr <<= 4;
                 ptr |= (u_long)*g_Dialogue.scriptCur++;
@@ -244,7 +244,7 @@ void EntityCutscene(Entity* self) {
                 ptr |= (u_long)*g_Dialogue.scriptCur++;
                 ptr <<= 4;
                 ptr |= (u_long)*g_Dialogue.scriptCur++;
-                SetCutsceneEnd((u8*)ptr);
+                SetCutsceneEvents((u8*)ptr);
                 continue;
             case CSOP_SCRIPT_UNKNOWN_13:
                 continue;
@@ -289,8 +289,8 @@ void EntityCutscene(Entity* self) {
             case CSOP_SET_FLAG:
                 g_CutsceneFlags |= 1 << *g_Dialogue.scriptCur++;
                 continue;
-            case CSOP_SCRIPT_UNKNOWN_18:
-                g_Dialogue.unk3C = 0;
+            case CSOP_STOP_EVENTS:
+                g_Dialogue.hasEvents = 0;
                 continue;
             case CSOP_LOAD_PORTRAIT:
                 if (g_SkipCutscene) {

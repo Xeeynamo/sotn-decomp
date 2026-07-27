@@ -16,7 +16,7 @@ static u8 anim9[] = {64, 88, -1, 0};
 static u8 anim10[] = {64, 89, -1, 0};
 static u8 anim11[] = {4, 30, -1, 0};
 
-static ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
+static ObjInit2 BackgroundBlockInit[] = {
     // Life/heart max up text
     {ANIMSET_DRA(6), 0x1FA, 0x00, 0, 0x000, 0, BLEND_TRANSP, 0, anim0},
     // The hanging skeleton with the rope
@@ -44,7 +44,7 @@ static ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
 };
 
 void EntityBackgroundBlock(Entity* self) {
-    ObjInit2* objInit = &OVL_EXPORT(BackgroundBlockInit)[self->params];
+    ObjInit2* objInit = &BackgroundBlockInit[self->params];
 
     Primitive* prim;
     s32 primIndex;

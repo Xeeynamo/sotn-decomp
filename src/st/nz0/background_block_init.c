@@ -4,7 +4,7 @@
 static u32 D_80180D54[] = {0x00000B10};
 static u32 D_80180D58[] = {0x0D080C08, 0x0F080E08, 0x00001008};
 
-ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
+ObjInit2 BackgroundBlockInit[] = {
     {
         .animSet = 0x8001,
         .zPriority = 0x0069,

@@ -13,7 +13,7 @@ enum Palettes {
     PAL_BREAKABLE_DEBRIS = 0x159,
 };
 
-typedef enum EntityIDs {
+typedef enum EntityID {
     /* 0x00 */ E_NONE,
     /* 0x01 */ E_ID_01,
     /* 0x02 */ E_EXPLOSION,
@@ -44,7 +44,7 @@ typedef enum EntityIDs {
     /* 0x1B */ E_ELEVATOR_STATIONARY,
     /* 0x1C */ E_MOVING_ELEVATOR,
     /* 0x80 */ E_BREAKABLE_DEBRIS = 0x80,
-} EntityIDs;
+} EntityID;
 
 enum MarEntities {
     MAR_NONE,

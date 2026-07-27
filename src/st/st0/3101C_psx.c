@@ -28,10 +28,10 @@ typedef struct {
     /* 0x30 */ s32 : 32;
     /* 0x34 */ u8* script;
 #ifndef VERSION_PSP
-    /* 0x38 */ u16 unk3C; // maybe it is a begin flag?
+    /* 0x38 */ u16 hasEvents;
     /* 0x3A */ u16 timer;
 #endif
-    /* 0x3C */ u8* scriptEnd;
+    /* 0x3C */ u8* eventCur;
 } DialoguePrologue;
 
 // n.b. g_Dialogue is defined as the Dialogue struct, but is used in
@@ -43,9 +43,6 @@ typedef struct {
 extern DialoguePrologue g_Dialogue;
 
 static u16 D_801BEE90[48][48]; // bss
-
-static u8 unused[] = {0x00, 0x81, 0x17, 0x08, 0x80, 0x08,
-                      0x80, 0xFF, 0xFF, 0x00, 0x00, 0x00};
 
 u8 func_801B101C(u8* script) {
     Primitive* prim;

@@ -213,7 +213,7 @@ u8 SetCutsceneScript(u8* script) {
     g_Dialogue.primIndex[2] = g_api.AllocPrimitives(PRIM_SPRT, 7);
     if (g_Dialogue.primIndex[2] != -1) {
         g_Dialogue.scriptCur = script;
-        g_Dialogue.unk3C = 0;
+        g_Dialogue.hasEvents = 0;
         g_Dialogue.primIndex[1] = -1;
         g_Dialogue.primIndex[0] = -1;
         CutsceneUnk1();
@@ -259,7 +259,7 @@ u8 SetCutsceneScript(u8* script) {
     return 0;
 }
 
-#include "../set_cutscene_end.h"
+#include "../set_cutscene_events.h"
 
 void EntityCutscene(Entity* self) {
     s16 x, y;
@@ -466,7 +466,7 @@ void EntityCutscene(Entity* self) {
                     ptr <<= 4;
                     ptr |= *g_Dialogue.scriptCur++;
                     ptr += D_psp_09286860;
-                    SetCutsceneEnd((u8*)ptr);
+                    SetCutsceneEvents((u8*)ptr);
                     continue;
 
                 case 13:
@@ -519,7 +519,7 @@ void EntityCutscene(Entity* self) {
                     continue;
 
                 case 18:
-                    g_Dialogue.unk3C = 0;
+                    g_Dialogue.hasEvents = 0;
                     continue;
 
                 case 19:

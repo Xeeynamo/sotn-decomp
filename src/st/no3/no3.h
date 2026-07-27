@@ -18,7 +18,7 @@ enum Palettes {
     PAL_PUFF_OPAQUE_3 = 0xD4
 };
 
-typedef enum EntityIDs {
+typedef enum EntityID {
     /* 0x00 */ E_NONE,
     /* 0x01 */ E_BREAKABLE,
     /* 0x02 */ E_EXPLOSION,
@@ -118,7 +118,7 @@ typedef enum EntityIDs {
     /* 0x60 */ E_FALLING_LEAF,
     /* 0x61 */ E_EXPLODE_PUFF_TRANS,
     /* 0x62 */ E_EXPLODE_PUFF_OPAQUE,
-} EntityIDs;
+} EntityID;
 
 extern Primitive* FindFirstUnkPrim(Primitive* poly);
 
@@ -142,4 +142,4 @@ extern EInit g_EInitZombie;
 
 extern s16 g_WaterXTbl[];
 
-extern ObjInit2 OVL_EXPORT(BackgroundBlockInit)[];
+extern ObjInit2 BackgroundBlockInit[];

@@ -4,5 +4,5 @@ cluts = 0x092697F8;
 gfxBanks = 0x09269A50;
 g_RedDoorTiles = 0x09269A98;
 rooms = 0x0926D890;
-CAT_PrizeDrops = 0x09296BB0;
-CAT_BackgroundBlockInit = 0x09296C90;
+PrizeDrops = 0x09296BB0;
+BackgroundBlockInit = 0x09296C90;

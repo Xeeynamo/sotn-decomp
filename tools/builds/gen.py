@@ -469,8 +469,6 @@ def add_weapon_splat_config(nw: ninja_syntax.Writer, ver: str, splat_config):
                 continue
             elif kind == ".bss":
                 continue
-            elif kind == "animset":
-                continue
             else:
                 raise Exception(f"unknown subsegment type {kind}")
         if sotn_progress_report:

@@ -34,6 +34,7 @@ struct InitGameParams {
     enum TestMode testMode;
     int stage;
     int player;
+    int demo;
     int scale;
     const char* recordPath;
     const char* replayPath;
@@ -80,5 +81,14 @@ bool FileAsString(bool (*cb)(const struct FileAsString* file),
                   const char* filename, void* param);
 bool FileUseContent(bool (*cb)(const struct FileUseContent* file, void* param),
                     const char* filename, void* param);
+
+typedef struct {
+    const void* pcAddr; // equivalent of symbol address on PC
+    unsigned psxAddr;   // equivalent of symbol address on PSX
+    unsigned size;      // symbol size in bytes
+} CutsceneSymbolRange;
+
+void CutscenePcAlloc(const CutsceneSymbolRange* symbols, int count);
+u8* CutsceneAddrToPc(u32 psxAddr);
 
 #endif

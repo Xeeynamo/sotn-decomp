@@ -5,7 +5,7 @@
 static u8* g_DemoPtr;
 static s32 g_DemoKeyIdx;
 
-static u8 D_800A243C[] = {
+static u8 demo_stages[] = {
     STAGE_ST0,       STAGE_BO0,      STAGE_BO4,      STAGE_BO1,  STAGE_BO2,
     STAGE_BO3,       STAGE_NZ0_DEMO, STAGE_BO5,      STAGE_RBO1, STAGE_DRE,
     STAGE_NZ1_DEMO,  STAGE_RBO0,     STAGE_RBO2,     STAGE_BO7,  STAGE_BO6,
@@ -33,7 +33,7 @@ void DemoGameInit(s32 arg0) {
         }
     } else {
         g_DemoKeyIdx = D_80097C98 & STAGE_INVERTEDCASTLE_MASK;
-        g_StageId = D_800A243C[g_DemoKeyIdx];
+        g_StageId = demo_stages[g_DemoKeyIdx];
     }
 
     InitStatsAndGear(0);
@@ -217,6 +217,13 @@ void DemoOpenFile(s32 arg0) {
         g_LoadOvlIdx = g_DemoKeyIdx;
         return;
     }
+
+#ifdef VERSION_PC
+    memset(DEMO_KEY_PTR, 0, DEMO_MAX_LEN);
+    FileReadToBuf("disks/us/BIN/DEMOKEY.BIN", DEMO_KEY_PTR,
+                  g_DemoKeyIdx * DEMO_MAX_LEN, DEMO_MAX_LEN);
+    return;
+#endif
     if (arg0 == 0) {
         __builtin_memcpy(fileName, "sim:c:\\bin\\demo_key.bin",
                          sizeof("sim:c:\\bin\\demo_key.bin"));
@@ -288,9 +295,6 @@ void DemoUpdate(void) {
     u8 frameCount;
     s32 demoOffset;
 
-#ifdef VERSION_PC
-    g_DemoPtr = DEMO_KEY_PTR;
-#endif
     btnLo = g_DemoPtr[0];
     btnHi = g_DemoPtr[1];
     frameCount = g_DemoPtr[2];

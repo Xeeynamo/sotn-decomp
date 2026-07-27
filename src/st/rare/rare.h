@@ -32,7 +32,7 @@ enum Palettes {
     PAL_MINOTAUR_DEATH_PUFF = 0x2E8
 };
 
-enum Entities {
+enum EntityID {
     E_NONE,
     E_BREAKABLE,                 // EntityBreakable
     E_EXPLOSION,                 // EntityExplosion

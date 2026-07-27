@@ -20,6 +20,13 @@ var saturnSplitterYAMLs = []string{
 }
 
 func buildSaturn() error {
+	if err := buildSaturnObjects(); err != nil {
+		return err
+	}
+	return checkVersions(os.Stderr, []string{"saturn"})
+}
+
+func buildSaturnObjects() error {
 	if err := extractSaturn(); err != nil {
 		return fmt.Errorf("extract: %w", err)
 	}
@@ -29,7 +36,7 @@ func buildSaturn() error {
 	if err := deps.Ninja(); err != nil {
 		return fmt.Errorf("ninja: %w", err)
 	}
-	return checkVersions(os.Stderr, []string{"saturn"})
+	return nil
 }
 
 var saturnExtractSentinels = []string{
@@ -65,9 +72,11 @@ func runSaturnSplitter() error {
 	return nil
 }
 
+const saturnNinjaStampFile = "build.ninja.version"
+
 func genSaturnNinjaIfNeeded() error {
 	const ninjaFile = "build.ninja"
-	const stampFile = "build.ninja.version"
+	const stampFile = saturnNinjaStampFile
 	const stamp = "saturn"
 
 	needsRegen := false

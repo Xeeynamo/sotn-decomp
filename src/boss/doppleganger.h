@@ -5,7 +5,7 @@
 
 #define DOPPLEGANGER g_Entities[STAGE_ENTITY_START]
 
-typedef enum EntityIDs {
+typedef enum EntityID {
     /* 0x00 */ E_NONE,
     /* 0x01 */ E_FACTORY,
     /* 0x02 */ E_EXPLOSION,
@@ -58,7 +58,7 @@ typedef enum EntityIDs {
     /* 0xB8 */ E_ID_B8 = 0xB8,
     /* 0xEC */ E_ID_EC = 0xEC,
     /* 0x90 */ E_ID_90 = 0x90,
-} EntityIDs;
+} EntityID;
 
 typedef enum {
     Dop_Stand = 1,

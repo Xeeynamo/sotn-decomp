@@ -35,9 +35,9 @@ void EntityDraculaGlass(Entity*);
 void EntityDraculaFinalForm(Entity*);
 void EntityDraculaMegaFireball(Entity*);
 void EntityDraculaRainAttack(Entity*);
-void func_801BD8F0(Entity*);
+void EntityDematerializeStageBg(Entity*);
 void EntityBackgroundVortex(Entity*);
-void EntityClouds(Entity*);
+void EntityBackgroundClouds(Entity*);
 void func_801A8328(Entity*);
 void EntitySecretStairsCeiling(Entity*);
 void EntitySecretButton(Entity*);
@@ -83,9 +83,9 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityDraculaFinalForm,
     EntityDraculaMegaFireball,
     EntityDraculaRainAttack,
-    func_801BD8F0,
+    EntityDematerializeStageBg,
     EntityBackgroundVortex,
-    EntityClouds,
+    EntityBackgroundClouds,
     func_801A8328,
     EntitySecretStairsCeiling,
     EntitySecretButton,

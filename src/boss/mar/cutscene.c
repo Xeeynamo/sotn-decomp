@@ -27,9 +27,9 @@ static s32 D_us_8019AF2C;
 
 #include "../../st/cutscene_actor_name.h"
 
-#include "../../st/set_cutscene_end.h"
+#include "../../st/set_cutscene_events.h"
 
-#include "../../st/cutscene_run.h"
+#include "../../st/cutscene_events.h"
 
 #include "../../st/cutscene_scale_avatar.h"
 
@@ -40,7 +40,7 @@ extern u16 D_us_801805E4[];
 extern u16 D_us_801805E8[];
 extern s16 D_us_801805F0[];
 
-extern u8 OVL_EXPORT(cutscene_data)[];
+extern u8 cutscene_data[];
 void EntityCutscene(Entity* self) {
     const int PrimCount = 72;
     Primitive* prim;
@@ -76,8 +76,8 @@ void EntityCutscene(Entity* self) {
             self->step = 1;
             self->step_s = 0;
         }
-        if (self->step && (g_Dialogue.unk3C != 0)) {
-            CutsceneRun();
+        if (self->step && g_Dialogue.hasEvents) {
+            RunCutsceneEvents();
         }
     }
     switch (self->step) {
@@ -86,7 +86,7 @@ void EntityCutscene(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        if (SetCutsceneScript(OVL_EXPORT(cutscene_data)) & 0xFF) {
+        if (SetCutsceneScript(cutscene_data) & 0xFF) {
             self->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
             g_CutsceneFlags = 0;
             D_us_8019AF2C = 0;
@@ -280,7 +280,7 @@ void EntityCutscene(Entity* self) {
                 ptr |= *g_Dialogue.scriptCur++;
                 ptr <<= 4;
                 ptr |= *g_Dialogue.scriptCur++;
-                SetCutsceneEnd(ptr);
+                SetCutsceneEvents(ptr);
                 continue;
 
             case 13:
@@ -333,7 +333,7 @@ void EntityCutscene(Entity* self) {
                 continue;
 
             case 18:
-                g_Dialogue.unk3C = 0;
+                g_Dialogue.hasEvents = 0;
                 continue;
 
             case 19:

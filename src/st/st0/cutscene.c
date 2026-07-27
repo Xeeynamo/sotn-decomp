@@ -132,8 +132,8 @@ static u8 actor_name_indexes[] = {0, 1, 0, 0, 0, 0, 0, 0};
 
 // bss
 u32 g_CutsceneFlags;
-bool g_SkipCutscene;
-bool g_IsCutsceneDone;
+s32 g_SkipCutscene;
+s32 g_IsCutsceneDone;
 // Not truely a global, but is named for alignment with us, which is a global
 static Dialogue g_Dialogue;
 static u8* OVL_EXPORT(cutscene_script);
@@ -167,17 +167,17 @@ extern u32 D_894568C;
 #include "../cutscene_unk4.h"
 #include "../cutscene_unk1.h"
 #include "../set_cutscene_script.h"
-#include "../set_cutscene_end.h"
-#include "../cutscene_run.h"
+#include "../set_cutscene_events.h"
+#include "../cutscene_events.h"
 #else
 static const char* actor_names[] = {_S("Richter"), _S("Dracula")};
 
 // bss
-bool g_SkipCutscene;
+s32 g_SkipCutscene;
 Dialogue g_Dialogue;
 u32 D_801C2510[26];
-extern u32 g_CutsceneFlags;   // defined in 2A218
-extern bool g_IsCutsceneDone; // defined in 2A218
+extern u32 g_CutsceneFlags;  // defined in 2A218
+extern s32 g_IsCutsceneDone; // defined in 2A218
 
 // extern data
 extern u8 OVL_EXPORT(cutscene_script)[];
@@ -195,7 +195,7 @@ static u8 SetCutsceneScript(u8* script) {
         return 0;
     }
     g_Dialogue.scriptCur = script;
-    g_Dialogue.unk3C = 0;
+    g_Dialogue.hasEvents = 0;
     g_Dialogue.primIndex[1] = -1;
     g_Dialogue.primIndex[0] = -1;
     CutsceneUnk1();
@@ -247,8 +247,8 @@ static u8 SetCutsceneScript(u8* script) {
 #include "../cutscene_unk3.h"
 #include "../cutscene_unk4.h"
 #include "../cutscene_actor_name.h"
-#include "../set_cutscene_end.h"
-#include "../cutscene_run.h"
+#include "../set_cutscene_events.h"
+#include "../cutscene_events.h"
 #include "../cutscene_scale_avatar.h"
 #endif
 
@@ -266,7 +266,7 @@ void EntityCutscene(Entity* self) {
     u32 buffer3;
 #endif
     RECT rect;
-    s32 ptr;
+    u_long ptr;
 
     if (g_IsCutsceneDone && !g_SkipCutscene &&
         ((g_Settings.D_8003CB04 & 1) || g_GameClearFlag) &&
@@ -284,8 +284,8 @@ void EntityCutscene(Entity* self) {
         self->step = 1;
         self->step_s = 0;
     }
-    if (self->step && g_Dialogue.unk3C) {
-        CutsceneRun();
+    if (self->step && g_Dialogue.hasEvents) {
+        RunCutsceneEvents();
     }
 
     switch (self->step) {
@@ -503,7 +503,7 @@ void EntityCutscene(Entity* self) {
                     }
                     *g_Dialogue.scriptCur--;
                     return;
-                case CSOP_SET_END:
+                case CSOP_SET_EVENTS:
                     ptr = *g_Dialogue.scriptCur++;
                     ptr <<= 4;
                     ptr |= *g_Dialogue.scriptCur++;
@@ -514,7 +514,7 @@ void EntityCutscene(Entity* self) {
 #ifdef VERSION_PSP
                     ptr += (u32)OVL_EXPORT(cutscene_script);
 #endif
-                    SetCutsceneEnd((u8*)ptr);
+                    SetCutsceneEvents((u8*)ptr);
                     continue;
                 case CSOP_SCRIPT_UNKNOWN_13:
                     continue;
@@ -528,11 +528,7 @@ void EntityCutscene(Entity* self) {
                     ptr |= *g_Dialogue.scriptCur++;
                     // This needs help. Casting the const to short is good.
                     ptr += (u16)0x100000;
-#ifdef VERSION_PSP
-                    g_Dialogue.scriptCur += *(u8*)ptr * 4;
-#else
-                g_Dialogue.scriptCur += *(u16*)ptr * 4;
-#endif
+                    g_Dialogue.scriptCur += *CS_NEXT(ptr) * 4;
 
                     ptr = *g_Dialogue.scriptCur++;
                     ptr <<= 4;
@@ -541,11 +537,7 @@ void EntityCutscene(Entity* self) {
                     ptr |= *g_Dialogue.scriptCur++;
                     ptr <<= 4;
                     ptr |= *g_Dialogue.scriptCur;
-#ifdef VERSION_PSP
-                    g_Dialogue.scriptCur = (u8*)ptr;
-#else
-                g_Dialogue.scriptCur = (u8*)ptr + 0x100000;
-#endif
+                    g_Dialogue.scriptCur = CS_PTR(ptr);
                     continue;
                 case CSOP_SCRIPT_UNKNOWN_15:
                     ptr = *g_Dialogue.scriptCur++;
@@ -555,11 +547,7 @@ void EntityCutscene(Entity* self) {
                     ptr |= *g_Dialogue.scriptCur++;
                     ptr <<= 4;
                     ptr |= *g_Dialogue.scriptCur;
-#ifdef VERSION_PSP
-                    g_Dialogue.scriptCur = (u8*)ptr;
-#else
-                g_Dialogue.scriptCur = (u8*)ptr + 0x100000;
-#endif
+                    g_Dialogue.scriptCur = CS_PTR(ptr);
                     continue;
                 case CSOP_WAIT_FOR_FLAG:
                     // TODO: Does & 1 mean Alucard ready?
@@ -573,8 +561,8 @@ void EntityCutscene(Entity* self) {
                 case CSOP_SET_FLAG:
                     g_CutsceneFlags |= 1 << *g_Dialogue.scriptCur++;
                     continue;
-                case CSOP_SCRIPT_UNKNOWN_18:
-                    g_Dialogue.unk3C = 0;
+                case CSOP_STOP_EVENTS:
+                    g_Dialogue.hasEvents = 0;
                     continue;
                 case CSOP_LOAD_PORTRAIT:
                     if (g_SkipCutscene) {
@@ -623,12 +611,19 @@ void EntityCutscene(Entity* self) {
                             ptr = (u32)&D_894568C;
                             break;
                         }
-#else
-                    ptr += 0x100000;
-#endif
                         j = *g_Dialogue.scriptCur++;
                         // Load the portrait into the buffer
                         LoadTPage((u_long*)ptr, 1, 0, x_vals[j], 256, 48, 72);
+#elif defined(VERSION_PC)
+                    j = *g_Dialogue.scriptCur++;
+                    LoadTPage(
+                        (u_long*)CS_PTR(ptr), 1, 0, x_vals[j], 256, 48, 72);
+#else
+                        ptr += 0x100000;
+                        j = *g_Dialogue.scriptCur++;
+                        // Load the portrait into the buffer
+                        LoadTPage((u_long*)ptr, 1, 0, x_vals[j], 256, 48, 72);
+#endif
                     }
                     continue;
                 case CSOP_SCRIPT_UNKNOWN_20:

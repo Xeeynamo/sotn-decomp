@@ -36,8 +36,13 @@ void EntityBat(Entity* self) {
     switch (self->step) {
     case 0:
 #ifdef STAGE_IS_RCAT
+#ifdef STAGE_IS_RCHI
+        self->ext.batEnemy.yProximity = 0x60;
+        self->ext.batEnemy.xProximity = 0x60;
+#else
         self->ext.batEnemy.yProximity = 0xC0;
         self->ext.batEnemy.xProximity = 0x78;
+#endif
         self->ext.batEnemy.unk88 = (rand() & 0x3F) + 0x20;
 #endif
         InitializeEntity(g_EInitBat);

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rcat.h"
 
-u16 OVL_EXPORT(PrizeDrops)[] = {
+u16 PrizeDrops[] = {
     ITEMDROP_MAGIC_MISSILE,
     ITEMDROP_BUFFALO_STAR,
     ITEMDROP_RESIST_THUNDER,

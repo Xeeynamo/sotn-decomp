@@ -14,13 +14,13 @@ typedef enum {
     CSOP_PLAY_SOUND,
     CSOP_WAIT_FOR_SOUND,
     CSOP_SCRIPT_UNKNOWN_11,
-    CSOP_SET_END,
+    CSOP_SET_EVENTS,
     CSOP_SCRIPT_UNKNOWN_13,
     CSOP_SCRIPT_SWITCH,
     CSOP_SCRIPT_UNKNOWN_15,
     CSOP_WAIT_FOR_FLAG,
     CSOP_SET_FLAG,
-    CSOP_SCRIPT_UNKNOWN_18,
+    CSOP_STOP_EVENTS,
     CSOP_LOAD_PORTRAIT,
     CSOP_SCRIPT_UNKNOWN_20,
     CSOP_SCRIPT_UNKNOWN_21,
@@ -53,6 +53,18 @@ enum ActorNameIndices {
 
 #define CUTSCENE_FLAG_NONE 0
 
+#if defined(VERSION_PC)
+u8* CutsceneAddrToPc(u32 psxAddr);
+#define CS_NEXT(ptr) (u16*)CutsceneAddrToPc(ptr)
+#define CS_PTR(ptr) CutsceneAddrToPc((u32)(ptr) + 0x100000)
+#elif defined(VERSION_PSP)
+#define CS_NEXT(ptr) (u8*)(ptr)
+#define CS_PTR(ptr) (u8*)(ptr)
+#else
+#define CS_NEXT(ptr) (u16*)(ptr)
+#define CS_PTR(ptr) ((u8*)ptr + 0x100000)
+#endif
+
 #define script_half(x) (((x) & 0xFF0) >> 4), ((x) & 0xFF)
 #define script_word(x) (x & 0xFF000) >> 12, (x & 0xFF00) >> 8, script_half(x)
 #define SCRIPT_CASE(x) script_word(x)
@@ -69,12 +81,12 @@ enum ActorNameIndices {
 #define PLAY_SOUND(id) CSOP_PLAY_SOUND, script_half(id)
 #define WAIT_FOR_SOUND() CSOP_WAIT_FOR_SOUND
 #define SCRIPT_UNKNOWN_11() CSOP_SCRIPT_UNKNOWN_11
-#define SET_END(x) CSOP_SET_END, script_word(x)
+#define SET_EVENTS(x) CSOP_SET_EVENTS, script_word(x)
 #define SCRIPT_SWITCH(x) CSOP_SCRIPT_SWITCH, script_word(x)
 #define SCRIPT_UNKNOWN_15(x) CSOP_SCRIPT_UNKNOWN_15, script_word(x)
 #define WAIT_FOR_FLAG(x) CSOP_WAIT_FOR_FLAG, x
 #define SET_FLAG(x) CSOP_SET_FLAG, x
-#define SCRIPT_UNKNOWN_18() CSOP_SCRIPT_UNKNOWN_18
+#define STOP_EVENTS() CSOP_STOP_EVENTS
 #define LOAD_PORTRAIT(addr, id) CSOP_LOAD_PORTRAIT, script_word(addr), id
 #define SCRIPT_UNKNOWN_20(x) CSOP_SCRIPT_UNKNOWN_20, script_half(x)
 #define SCRIPT_UNKNOWN_21() CSOP_SCRIPT_UNKNOWN_21
@@ -88,6 +100,24 @@ enum ActorNameIndices {
 #define CS_LINE_MAX 4
 #endif
 #define ASCII_SPACE 32
+
+#define script_timer(x) (((x) & 0xFF00) >> 8), ((x) & 0xFF)
+#define script_pos(x) (((x) & 0xFF0) >> 4), ((x) & 0xFF)
+
+typedef enum {
+    CSEV_SPAWN,
+    CSEV_DESTROY,
+    CSEV_WAIT_FOR_FLAG,
+    CSEV_SET_FLAG,
+} CutsceneEventOpcode;
+
+#define EVENT_AT(timer) script_timer(timer)
+#define EVENT_SPAWN_ENTITY(slot, id, x, y)                                     \
+    CSEV_SPAWN, slot, id, script_pos(x), script_pos(y)
+#define EVENT_DESTROY_ENTITY(slot) CSEV_DESTROY, slot
+#define EVENT_WAIT_FLAG(flag) CSEV_WAIT_FOR_FLAG, flag
+#define EVENT_SET_FLAG(flag) CSEV_SET_FLAG, flag
+#define EVENT_END() 0xFF, 0xFF
 
 #define END_CREDITS() CSOP_END_CREDITS
 #define CREDITS_SUBTEXT(x) CSOP_SUBTEXT, x
@@ -114,10 +144,10 @@ typedef struct {
     /* 0x18 */ Primitive* prim[6]; // for dialogue graphics rendering
 #endif
     /* 0x30 */ s32 primIndex[3]; // primIndices: unk, actorName, unk
-    /* 0x3C */ u16 unk3C;        // maybe it is a begin flag?
-    /* 0x3E */ u16 timer;        // global timer
-    /* 0x40 */ u8* scriptEnd;    // pointer to the end of the script
-} Dialogue;                      // size = 0x44
+    /* 0x3C */ u16 hasEvents;
+    /* 0x3E */ u16 timer;    // global timer
+    /* 0x40 */ u8* eventCur; // ptr into the event timeline
+} Dialogue;                  // size = 0x44
 
 // no4/cutscene
 typedef struct {
@@ -141,7 +171,7 @@ typedef struct {
     /* 0x36 */ u16 clutIndex;
     /* 0x38 */ u16 unk12;
     /* 0x3A */ s16 : 16;
-    /* 0x3C */ u16 unk3C;
+    /* 0x3C */ u16 hasEvents;
 } Dialogue3; // size = 0x28
 
 // sel_psp/cutscene.c

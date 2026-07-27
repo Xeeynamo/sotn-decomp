@@ -45,6 +45,15 @@ jobs:
           sudo dpkg -i dosemu2_2.0~pre9-1_amd64.deb
       - name: Build saturn
         run: ./sotn.sh build saturn
+      - name: Generate progress report
+        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+        run: ./sotn.sh progress saturn
+      - name: Upload progress report
+        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+        uses: actions/upload-artifact@v7
+        with:
+          name: saturn_report
+          path: build/saturn/report.json
 
   function-finder-saturn:
     if: github.repository == 'Xeeynamo/sotn-decomp' && github.ref == 'refs/heads/master' && github.event_name == 'push'

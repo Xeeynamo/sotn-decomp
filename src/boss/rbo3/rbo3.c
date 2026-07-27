@@ -139,7 +139,7 @@ void func_us_80191438(Entity* self) {
 }
 
 extern EInit g_EInitMedusa;
-extern u8 RBO3_PrizeDrops[];
+extern u8 PrizeDrops[];
 extern u8 D_us_801805FC[];
 extern u8 D_us_8018060C[];
 extern u8 D_us_80180618[];
@@ -182,7 +182,7 @@ void EntityMedusa(Entity* self) {
 
     case 2:
         // n.b.! AnimateEntity is not declared
-        if (!AnimateEntity(RBO3_PrizeDrops, self)) {
+        if (!AnimateEntity(PrizeDrops, self)) {
             self->hitboxState = 3;
             SetStep(3);
         }

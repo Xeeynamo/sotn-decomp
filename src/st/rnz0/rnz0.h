@@ -19,7 +19,7 @@ enum Palettes {
     PAL_CTULHU_DEATH = 0x2EE,
 };
 
-typedef enum EntityIDs {
+typedef enum EntityID {
     /* 0x00 */ E_NONE,
     /* 0x01 */ E_BREAKABLE,
     /* 0x02 */ E_EXPLOSION,
@@ -80,7 +80,7 @@ typedef enum EntityIDs {
     /* 0x39 */ E_SALEM_WITCH_CURSE,
     /* 0x3A */ E_SALEM_WITCH_TRIBOLT_LAUNCH,
     /* 0x3B */ E_SALEM_WITCH_TRIBOLT_PROJECTILE
-} EntityIDs;
+} EntityID;
 
 #endif // RNZ0_H
 

@@ -83,6 +83,7 @@ static FILE* file = NULL;
 static bool didDrift = false;
 static bool exitAfterReplay = false;
 static bool fastReplay = false;
+static bool watchingDemo = false;
 
 static unsigned frameCount = 0;
 static long framCountFileOffset = 0;
@@ -420,15 +421,34 @@ static void ReplayFrameReal(void) {
     replayFrameCursor++;
 }
 
-static void ReplayFrame(void) {
-    if (replayFrameCursor < replayFrameCount) {
-        ReplayFrameReal();
-    } else if (exitAfterReplay) {
+static void ReplayEnded(void) {
+    if (exitAfterReplay) {
         g_IsQuitRequested = true;
     } else if (fastReplay) {
         fastReplay = false;
         Psyz_VideoSetVsyncMode(PSYZ_VSYNC_AUTO);
     }
+}
+
+static void ReplayFrame(void) {
+    if (replayFrameCursor < replayFrameCount) {
+        ReplayFrameReal();
+    } else {
+        ReplayEnded();
+    }
+}
+
+static void DemoFrame(void) {
+    static bool demoStarted = false;
+
+    if (g_DemoMode == Demo_PlaybackInit || g_DemoMode == Demo_Playback) {
+        demoStarted = true;
+        return;
+    }
+    if (!demoStarted) {
+        return;
+    }
+    ReplayEnded();
 }
 
 static void StartReplay(const struct InitGameParams* params) {
@@ -534,6 +554,13 @@ static void StartRecording(const struct InitGameParams* params) {
 void Replay_Init(const struct InitGameParams* params) {
     if (params->replayPath) {
         StartReplay(params);
+    } else if (params->demo >= 0) {
+        watchingDemo = true;
+        exitAfterReplay = params->exitAfterReplay;
+        fastReplay = params->replayBoundlessFramerate;
+        if (fastReplay) {
+            Psyz_VideoSetVsyncMode(PSYZ_VSYNC_LIMITLESS);
+        }
     } else {
         // always record, useful for catching bugs
         StartRecording(params);
@@ -562,6 +589,10 @@ void Replay_Reset(void) {
         replayFrameCursor = 0;
         exitAfterReplay = false;
         fastReplay = false;
+    } else if (watchingDemo) {
+        watchingDemo = false;
+        exitAfterReplay = false;
+        fastReplay = false;
     }
     mode = REPLAY_MODE_NONE;
 }
@@ -571,6 +602,8 @@ void Replay_OnFrame(void) {
         RecordFrame();
     } else if (mode == REPLAY_MODE_REPLAY) {
         ReplayFrame();
+    } else if (watchingDemo) {
+        DemoFrame();
     }
 }
 

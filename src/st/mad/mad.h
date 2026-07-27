@@ -39,7 +39,7 @@ typedef enum {
     E_DUMMY_10,
     E_EXPLOSION_VARIANTS = 0x14,
     E_GREY_PUFF
-} EntityIDs;
+} EntityID;
 
 void CreateEntityFromCurrentEntity(u16, Entity*);
 u8 func_80192914(s16 arg0, s16 arg1);

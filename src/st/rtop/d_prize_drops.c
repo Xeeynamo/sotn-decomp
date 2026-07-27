@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rtop.h"
 
-u16 OVL_EXPORT(PrizeDrops)[] = {
+u16 PrizeDrops[] = {
     ITEMDROP_SWORD_OF_DAWN,
     ITEMDROP_IRON_BALL,
     ITEMDROP_ZIRCON,

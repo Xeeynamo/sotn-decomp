@@ -3,7 +3,7 @@
 
 #define OVL_EXPORT(x) WRP_##x
 
-typedef enum EntityIDs {
+typedef enum EntityID {
     E_NONE,
     E_BREAKABLE,
     E_EXPLOSION,
@@ -28,7 +28,7 @@ typedef enum EntityIDs {
     E_GREY_PUFF,
     E_WARP,
     E_SMALL_ROCKS,
-} EntityIDs;
+} EntityID;
 
 extern EInit g_EInitLockCamera;
 extern EInit g_EInitObtainable;

@@ -393,28 +393,7 @@ void EntitySpectralSword(Entity* self) {
     }
 }
 
-void func_us_801CEB08(Entity* self) {
-    Entity* tempEntity;
-
-    if (!self->step) {
-        InitializeEntity(D_us_8018097C);
-        self->animCurFrame = 1;
-        self->palette += 2;
-        self->drawFlags |= ENTITY_OPACITY | ENTITY_SCALEY | ENTITY_SCALEX;
-        self->blendMode = BLEND_TRANSP | BLEND_ADD;
-        self->scaleX = self->scaleY = 0x100;
-        self->opacity = 0x80;
-    }
-    tempEntity = self->ext.et_801CEB08.unk80;
-    self->posX.val = tempEntity->posX.val;
-    self->posY.val = tempEntity->posY.val;
-    self->scaleX += 6;
-    self->scaleY += 6;
-    self->opacity -= 4;
-    if (self->opacity < 0x20) {
-        DestroyEntity(self);
-    }
-}
+#include "../e_spectral_sword_aura.h"
 
 void EntityPoltergeist(Entity* self) {
     Entity* tempEntity;
