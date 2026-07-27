@@ -62,7 +62,7 @@ void EntityGurkhaWeapon(Entity* self);
 void EntityBlade(Entity* self);
 void EntityBladeWeapon(Entity* self);
 void EntitySpectralSword(Entity* self);
-void func_us_801CEB08(Entity* self);
+void EntitySpectralSwordAura(Entity* self);
 void EntityPoltergeist(Entity* self);
 void EntityBreakableDebris(Entity* self);
 
@@ -129,7 +129,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityBlade,
     EntityBladeWeapon,
     EntitySpectralSword,
-    func_us_801CEB08,
+    EntitySpectralSwordAura,
     EntityPoltergeist,
     EntityBreakableDebris,
 };
@@ -171,7 +171,7 @@ EInit g_EInitBlade = {ANIMSET_OVL(0x06), 0x02, 0x4C, PAL_BLADE, 0x0BE};
 EInit g_EInitBladeWeapon = {ANIMSET_OVL(0x06), 0x13, 0x4C, PAL_BLADE, 0x0BF};
 EInit g_EInitSpectralSword = {
     ANIMSET_OVL(0x04), 0x00, 0x50, PAL_SPECTRAL_SWORD, 0x081};
-EInit D_us_8018097C = {
+EInit g_EInitSpectralSwordAura = {
     ANIMSET_OVL(0x04), 0x00, 0x50, PAL_SPECTRAL_SWORD, 0x002};
 EInit g_EInitPoltergeist = {
     ANIMSET_OVL(0x04), 0x00, 0x50, PAL_SPECTRAL_SWORD, 0x082};

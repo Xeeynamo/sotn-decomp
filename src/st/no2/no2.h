@@ -88,7 +88,7 @@ enum EntityID {
     E_BLADE,                // EntityBlade
     E_BLADE_WEAPON,         // EntityBladeWeapon
     E_SPECTRAL_SWORD,       // EntitySpectralSword
-    E_UNK_3F,               // func_us_801CEB08
+    E_UNK_3F,               // EntitySpectralSwordAura
     E_POLTERGEIST,          // EntityPoltergeist
     E_BREAKABLE_DEBRIS,     // EntityBreakableDebris
     NUM_ENTITIES,
@@ -119,5 +119,5 @@ extern EInit g_EInitGurkhaWeapon;
 extern EInit g_EInitBlade;
 extern EInit g_EInitBladeWeapon;
 extern EInit g_EInitSpectralSword;
-extern EInit D_us_8018097C;
+extern EInit g_EInitSpectralSwordAura;
 extern EInit g_EInitPoltergeist;
