@@ -267,7 +267,7 @@ void CheckFieldCollision(Entity* entity, s16* hitSensors, s16 sensorCount) {
     s32 velocityX;
     s16 x, y;
     s16 i;
-    
+
     func_06079BCC(entity);
     velocityX = entity->velocityX;
     if (velocityX != 0) {
@@ -281,8 +281,8 @@ void CheckFieldCollision(Entity* entity, s16* hitSensors, s16 sensorCount) {
             }
             y += *hitSensors++;
             CheckCollision(x * 0x10000, y * 0x10000, &col, 0);
-            if (col.effects & 0x2) {
-                if (!(col.effects & 0x8000) || (i != 0)) {
+            if (col.effects & EFFECT_UNK_0002) {
+                if (!(col.effects & EFFECT_UNK_8000) || (i != 0)) {
                     if (velocityX < 0) {
                         entity->posX.i.hi += col.unk1C / 0x10000;
                     } else {
