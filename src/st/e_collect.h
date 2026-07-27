@@ -167,7 +167,7 @@ static u32 c_GoldPrizes[] = {1, 5, 10, 20, 40, 70, 100, 200, 400, 1000};
 
 #endif
 
-static s16 D_80180EB8[] = {-6, 4, 0, -8};
+static s16 g_PrizeDropCollisionOffsets[] = {-6, 4, 0, -8};
 #if !defined(VERSION_BETA) && STAGE != STAGE_ST0
 // Note that this array is in data. MAD/ST0 have it in rodata.
 s8 c_HeartPrizes[] = {1, 5};
@@ -505,7 +505,7 @@ void EntityPrizeDrop(Entity* self) {
             } else {
                 FallEntity();
             }
-            CheckFieldCollision(D_80180EB8, 2);
+            CheckFieldCollision(g_PrizeDropCollisionOffsets, 2);
         } else if (collider.effects & EFFECT_NOTHROUGH) {
             self->posY.i.hi += collider.unk18;
             self->ext.equipItemDrop.aliveTimer = 0x60;
@@ -632,7 +632,7 @@ void EntityPrizeDrop(Entity* self) {
             } else {
                 FallEntity();
             }
-            CheckFieldCollision(D_80180EB8, 2);
+            CheckFieldCollision(g_PrizeDropCollisionOffsets, 2);
             self->animCurFrame = 0;
             if (self->ext.equipItemDrop.sparkleTimer) {
                 self->ext.equipItemDrop.sparkleTimer--;
@@ -885,7 +885,7 @@ void EntityEquipItemDrop(Entity* self) {
         } else {
             FallEntity();
         }
-        CheckFieldCollision(D_80180EB8, 2);
+        CheckFieldCollision(g_PrizeDropCollisionOffsets, 2);
         break;
     case 3:
         PrizeDropFall2(1);
@@ -1713,7 +1713,6 @@ void EntityMessageBox(Entity* self) {
         break;
     }
 }
-
 #endif
 
 #endif

@@ -879,6 +879,9 @@ files:
     src_path: src/st/rchi
     splat_config_path: config/splat.pspeu.strchi.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rdai.bin
+    asset_path: assets/st/rdai
+    src_path: src/st/rdai
+    splat_config_path: config/splat.pspeu.strdai.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rlib.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rno0.bin
     asset_path: assets/st/rno0

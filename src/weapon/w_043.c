@@ -12,7 +12,6 @@ extern s32 g_HandId;
 #include "sfx.h"
 
 extern AnimationFrame D_131000_8017AF40[];
-extern SpriteParts D_131000_8017A040[];
 extern WeaponAnimation D_131000_8017B014[];
 
 void EntityWeaponAttack(Entity* self) {
@@ -57,7 +56,7 @@ void EntityWeaponAttack(Entity* self) {
                 prim = prim->next;
             }
         }
-        SetSpriteBank1(D_131000_8017A040);
+        SetSpriteBank1(g_Animset);
         self->animSet = ANIMSET_OVL(0x10);
         self->palette = 0x110;
         self->unk5A = 0x64;

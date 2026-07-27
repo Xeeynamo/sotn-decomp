@@ -14,7 +14,6 @@ extern s32 g_HandId;
 extern AnimationFrame D_9E000_8017A760[];
 extern AnimationFrame D_9E000_8017A800[];
 
-extern SpriteParts D_9E000_8017A040[];
 extern AnimationFrame D_9E000_8017A77C[];
 
 void EntityWeaponAttack(Entity* self) {
@@ -22,7 +21,7 @@ void EntityWeaponAttack(Entity* self) {
 
     switch (self->step) {
     case 0:
-        SetSpriteBank1(D_9E000_8017A040);
+        SetSpriteBank1(g_Animset);
         self->animSet = ANIMSET_OVL(16);
         self->palette = PAL_UNK_110;
         self->unk5A = 0x64;

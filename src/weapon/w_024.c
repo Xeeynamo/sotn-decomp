@@ -11,7 +11,6 @@ extern s32 g_HandId;
 #define g_Animset2 w_024_2
 #include "sfx.h"
 
-extern SpriteParts D_AC000_8017A040[];
 extern s8 D_AC000_8017ABD8;
 extern AnimationFrame* D_AC000_8017AC20;
 extern s16* D_AC000_8017ACF8[];
@@ -57,7 +56,7 @@ static void EntityWeaponAttack(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        SetSpriteBank1(D_AC000_8017A040);
+        SetSpriteBank1(g_Animset);
         if (g_HandId != 0) {
             self->animSet = ANIMSET_OVL(0x12);
             self->ext.darkShield.pal = 0x128;
@@ -212,7 +211,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        SetSpriteBank1(D_AC000_8017A040);
+        SetSpriteBank1(g_Animset);
         if (g_HandId != 0) {
             self->animSet = ANIMSET_OVL(0x12);
             self->palette = 0x128;

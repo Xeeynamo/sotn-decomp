@@ -3,6 +3,18 @@
 
 extern EInit g_EInitInteractable;
 
+#if defined(E_CLOUDS_EXTERNAL_DATA)
+
+extern MedusaCloudsUVal cloudUVals[];
+extern SVECTOR cloudVectorOne;
+extern SVECTOR cloudVectorTwo;
+extern SVECTOR cloudVectorThree;
+extern SVECTOR cloudVectorFour;
+extern cloudData data[];
+extern SVECTOR empty;
+
+#else
+
 static MedusaCloudsUVal cloudUVals[] = {
     {0x0000, 0x0000, 0x0000, 0x0000}, {0x8181, 0x81BE, 0x9E81, 0x9EBE},
     {0x81C1, 0x81FE, 0x9EC1, 0x9EFE}, {0xA181, 0xA1BE, 0xBE81, 0xBEBE},
@@ -45,13 +57,21 @@ static cloudData data[] = {
 
 static SVECTOR empty = {0};
 
+#endif
+
 void EntityClouds(Entity* self) {
     Primitive* prim;
     Primitive* primTwo;
     MedusaCloudsUVal* uVals;
+#if defined(VERSION_PSP)
+    s32 i;
+    u8* var_s4;
+    s32 var_s3;
+#else
     u8* var_s4;
     u_long var_s3;
     s32 i;
+#endif
     s32 j;
     s32 var_s8;
     SVECTOR* vector;
@@ -95,12 +115,21 @@ void EntityClouds(Entity* self) {
     self->ext.clouds.unk90 += FIX(3);
     self->ext.clouds.unk98 += FIX(5);
 
+#if defined(STAGE_IS_RDAI)
+    g_GpuBuffers[0].draw.r0 = 0x20;
+    g_GpuBuffers[0].draw.g0 = 0x10;
+    g_GpuBuffers[0].draw.b0 = 0x60;
+    g_GpuBuffers[1].draw.r0 = 0x20;
+    g_GpuBuffers[1].draw.g0 = 0x10;
+    g_GpuBuffers[1].draw.b0 = 0x60;
+#else
     g_GpuBuffers[0].draw.r0 = 0x30;
     g_GpuBuffers[0].draw.g0 = 0x28;
     g_GpuBuffers[0].draw.b0 = 0x40;
     g_GpuBuffers[1].draw.r0 = 0x30;
     g_GpuBuffers[1].draw.g0 = 0x28;
     g_GpuBuffers[1].draw.b0 = 0x40;
+#endif
 
     matrix = (MATRIX*)SP(0);
     uVals = cloudUVals;
@@ -126,7 +155,11 @@ void EntityClouds(Entity* self) {
     var_s4[7] = 4;
 
     SetGeomScreen(0x100);
+#if defined(STAGE_IS_RDAI)
+    SetGeomOffset(0x80, 0x60);
+#else
     SetGeomOffset(0x80, 0xa0);
+#endif
     RotMatrix(&empty, matrix);
     SetRotMatrix(matrix);
     cloudData = data;
@@ -134,6 +167,11 @@ void EntityClouds(Entity* self) {
     prim = self->ext.clouds.prim;
 
     for (i = 0; i < 3; i++, cloudData++, sp38 += 4) {
+#if defined(STAGE_IS_RDAI)
+        if (self->params && i == 2) {
+            break;
+        }
+#endif
         posX = self->posX.i.hi + *sp38;
         posX %= 0x800;
         priority = cloudData->priority;

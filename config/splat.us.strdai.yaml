@@ -1,0 +1,113 @@
+options:
+  platform: psx
+  basename: strdai
+  base_path: ..
+  build_path: build/us
+  target_path: disks/us/ST/RDAI/RDAI.BIN
+  asm_path: asm/us/st/rdai
+  asset_path: assets/st/rdai
+  src_path: src/st/rdai
+  ld_script_path: build/us/strdai.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.us.txt
+    - config/symbols.us.strdai.txt
+  undefined_funcs_auto_path: build/us/config/undefined_funcs_auto.us.strdai.txt
+  undefined_syms_auto_path: build/us/config/undefined_syms_auto.us.strdai.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: us_$VRAM
+  disassemble_all: true
+  section_order:
+    - .data
+    - .rodata
+    - .text
+    - .bss
+    - .sbss
+  ld_bss_is_noload: false
+  disasm_unknown: true
+  global_vram_start: 0x80010000
+  ld_generate_symbol_per_data_segment: true
+sha1: c54bbcd0487da88c927feb9b91c515e1db0918e8
+segments:
+  - name: strdai
+    type: code
+    start: 0x0
+    vram: 0x80180000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, .data, header]
+      - [0x2C, data]
+      - [0x718, .data, e_init]
+      - [0x8CC, data]
+      - [0x944, .data, e_red_door_tiles]
+      - [0x974, .data, e_lock_camera]
+      - [0x9F4, data]
+      - [0xD2C, .data, d_prize_drops]
+      - [0xD4C, data]
+      - [0xD5C, .data, e_spikes]
+      - [0xD78, .data, st_update]
+      - [0xDC4, .data, collision]
+      - [0x1184, .data, e_red_door]
+      - [0x119C, .data, st_common]
+      - [0x139C, .data, e_collect]
+      - [0x16F0, .data, e_misc]
+      - [0x17A8, .data, e_particles]
+      - [0x1828, .data, e_room_fg]
+      - [0x18B4, data]
+      - [0x30FF8, .rodata, e_breakable]
+      - [0x31018, .rodata, func_us_801b1c34]
+      - [0x3107C, .rodata, unk_327A4]
+      - [0x31088, .rodata, func_us_80192d64_from_rbo3]
+      - [0x310B8, .rodata, e_red_door]
+      - [0x310D0, .rodata, e_collect]
+      - [0x311A4, .rodata, e_stage_name]
+      - [0x311D8, .rodata, unk_3F6B4]
+      - [0x311FC, .rodata, e_spectral_sword]
+      - [0x31224, .rodata, unk_41DE8]
+      - [0x31270, .rodata, e_imp]
+      - [0x312A0, .rodata, unk_44578]
+      - [0x312AC, .rodata, func_44c4c]
+      - [0x312C4, .rodata, func_45aa0]
+      - [0x312E4, .rodata, func_46040]
+      - [0x31378, .rodata, prim_helpers]
+      - [0x31380, c, unk_31380]
+      - [0x31448, c, e_lock_camera]
+      - [0x31604, c, e_breakable]
+      - [0x31C34, c, func_us_801b1c34]
+      - [0x320CC, c, e_room_fg_2]
+      - [0x3240C, c, func_us_801b240c]
+      - [0x32578, c, e_stained_glass]
+      - [0x327A4, c, unk_327A4]
+      - [0x33A4C, c, e_background_sky_land]
+      - [0x33B94, c, func_us_80192d64_from_rbo3]
+      - [0x33E80, c, e_spikes]
+      - [0x3462C, c, st_update]
+      - [0x34A60, c, collision]
+      - [0x3621C, c, create_entity]
+      - [0x36D94, c, e_red_door]
+      - [0x37A44, c, st_common]
+      - [0x38EF4, c, e_collect]
+      - [0x3B864, c, e_misc]
+      - [0x3DC00, c, e_stage_name]
+      - [0x3EA54, c, e_particles]
+      - [0x3F298, c, e_room_fg]
+      - [0x3F384, c, popup]
+      - [0x3F6B4, c, unk_3F6B4]
+      - [0x40BD8, c, e_spectral_sword]
+      - [0x41DE8, c, unk_41DE8]
+      - [0x438F8, c, e_imp]
+      - [0x44578, c, unk_44578]
+      - [0x44B2C, c, func_44b2c]
+      - [0x44C4C, c, func_44c4c]
+      - [0x45AA0, c, func_45aa0]
+      - [0x46040, c, func_46040]
+      - [0x467B4, c, prim_helpers]
+      - [0x46FE4, c, e_clouds]
+      - [0x47680, .bss, create_entity]
+      - [0x47690, bss]
+      - [0x482F8, .bss, st_update]
+  - [0x48338]

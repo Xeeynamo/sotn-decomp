@@ -582,6 +582,13 @@ fn do_dups_report(output_file: Option<String>, threshold: f64, cpu: Cpu) {
                 path_matcher: "st/rcen".to_string(),
             },
             SrcAsmPair {
+                asm_dir: String::from("../../asm/us/st/rdai/matchings/"),
+                src_dir: String::from("../../src/st/rdai/"),
+                overlay_name: String::from("RDAI"),
+                include_asm: get_all_include_asm("../../src/st/rdai/"),
+                path_matcher: "st/rdai".to_string(),
+            },
+            SrcAsmPair {
                 asm_dir: String::from("../../asm/us/st/rcat/matchings/"),
                 src_dir: String::from("../../src/st/rcat/"),
                 overlay_name: String::from("RCAT"),
