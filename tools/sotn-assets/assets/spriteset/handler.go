@@ -4,11 +4,13 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 )
 
 type handler struct{}
@@ -28,6 +30,12 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 		sprites, _, err = ReadSpriteSet(r, e.RamBase, e.RamBase.Sum(e.Start))
 		if err != nil {
 			return fmt.Errorf("failed to read sprites: %w", err)
+		}
+
+		// HACK: PSP adds zero padding at the end of the file that must
+		// be removed to match 1:1 with PS1
+		if sprites[len(sprites)-1] == nil && e.Version.GetPlatform() == sotn.PlatformPSP {
+			sprites = sprites[:len(sprites)-1]
 		}
 	} else {
 		sprites = make([]*spriteParts, 0)
