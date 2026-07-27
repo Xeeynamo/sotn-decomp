@@ -107,4 +107,3 @@ _func_060CF01C = 0x060CF01C;
 /* Aliases used by modules that inherit this symbol file. */
 _d_06086234 = 0x06086234;
 _d_06086250 = 0x06086250;
-_d_06086390 = 0x06086390;
