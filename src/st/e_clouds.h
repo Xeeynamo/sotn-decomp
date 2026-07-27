@@ -69,7 +69,7 @@ void EntityClouds(Entity* self) {
     s32 var_s3;
 #else
     u8* var_s4;
-    s32 var_s3;
+    u_long var_s3;
     s32 i;
 #endif
     s32 j;
@@ -246,7 +246,7 @@ void EntityClouds(Entity* self) {
                     }
                 } else {
                     // Possible FAKE: this cast to/from s32/Primitive* is odd
-                    var_s3 = (s32)prim->next;
+                    var_s3 = (u_long)prim->next;
                     *prim = *primTwo;
 
                     prim->next = (Primitive*)var_s3;
