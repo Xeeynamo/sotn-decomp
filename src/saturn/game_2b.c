@@ -229,10 +229,72 @@ s32 UnkCollisionFunc2(Entity* entity, s16* posX) {
     }
 }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079F60, func_06079F60);
+s32 UnkCollisionFunc(Entity* entity, s16* hitSensors, s16 sensorCount) {
+    Collider collider;
+    s32 velocityX;
+    s16 x, y;
+    s16 i;
 
-// _v_side_hosei
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607A030, func_0607A030);
+    func_06079BCC(entity);
+    velocityX = entity->velocityX;
+    if (velocityX != 0) {
+        x = entity->posX.i.hi;
+        y = entity->posY.i.hi;
+        for (i = 0; i < sensorCount; i++) {
+            if (velocityX < 0) {
+                x += *hitSensors++;
+            } else {
+                x -= *hitSensors++;
+            }
+
+            y += *hitSensors++;
+            CheckCollision(x * 0x10000, y * 0x10000, &collider, 0);
+            if (collider.effects & EFFECT_UNK_0002) {
+                if (!(collider.effects & EFFECT_UNK_8000) || (i != 0)) {
+                    func_06079BB4(entity);
+                    return 2;
+                }
+            }
+        }
+        func_06079BB4(entity);
+        return 0;
+    }
+}
+
+// original name: v_side_hosei
+void CheckFieldCollision(Entity* entity, s16* hitSensors, s16 sensorCount) {
+    Collider col;
+    s32 velocityX;
+    s16 x, y;
+    s16 i;
+
+    func_06079BCC(entity);
+    velocityX = entity->velocityX;
+    if (velocityX != 0) {
+        x = entity->posX.i.hi;
+        y = entity->posY.i.hi;
+        for (i = 0; i < sensorCount; i++) {
+            if (velocityX < 0) {
+                x += *hitSensors++;
+            } else {
+                x -= *hitSensors++;
+            }
+            y += *hitSensors++;
+            CheckCollision(x * 0x10000, y * 0x10000, &col, 0);
+            if (col.effects & EFFECT_UNK_0002) {
+                if (!(col.effects & EFFECT_UNK_8000) || (i != 0)) {
+                    if (velocityX < 0) {
+                        entity->posX.i.hi += col.unk1C / 0x10000;
+                    } else {
+                        entity->posX.i.hi += col.unk14 / 0x10000;
+                    }
+                    func_06079BB4(entity);
+                    return;
+                }
+            }
+        }
+    }
+}
 
 u8 CheckColliderOffsets(Entity* entity, s16* arg0, u8 facing) {
     Collider collider;
