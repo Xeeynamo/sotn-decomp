@@ -371,6 +371,7 @@ void InitStatsAndGear(s32 isDeathTakingItems) {
     return;
 }
 
+void func_06075838(void);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6075838, func_06075838);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6075D24, func_06075D24);
 
@@ -684,7 +685,6 @@ typedef struct {
 } Unk06064650;
 
 extern Unk06064650* DAT_06064650;
-void func_06075838(void);
 
 // original name: status_disp_init
 void StatusDispInit(void) {
