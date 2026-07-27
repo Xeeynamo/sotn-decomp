@@ -89,6 +89,12 @@ func main() {
 		SilenceUsage: true,
 		Args:         cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
+			if saturn, isSaturn, err := readSaturnAssetConfig(args[0]); err != nil {
+				return err
+			} else if isSaturn {
+				_ = os.Setenv("VERSION", string(saturn.Version))
+				return extractSaturnAssets(saturn)
+			}
 			c, err := readConfig(args[0])
 			if err != nil {
 				return err
@@ -105,6 +111,12 @@ func main() {
 		SilenceUsage: true,
 		Args:         cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
+			if saturn, isSaturn, err := readSaturnAssetConfig(args[0]); err != nil {
+				return err
+			} else if isSaturn {
+				_ = os.Setenv("VERSION", string(saturn.Version))
+				return buildSaturnAssets(saturn)
+			}
 			c, err := readConfig(args[0])
 			if err != nil {
 				return err
@@ -113,6 +125,23 @@ func main() {
 				_ = os.Setenv("VERSION", string(c.Version))
 			}
 			return buildFromConfig(c)
+		},
+	})
+	rootCmd.AddCommand(&cobra.Command{
+		Use:          "verify-assets <asset.yaml>",
+		Short:        "Require every extracted asset to rebuild to its retail bytes",
+		SilenceUsage: true,
+		Args:         cobra.ExactArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			saturn, isSaturn, err := readSaturnAssetConfig(args[0])
+			if err != nil {
+				return err
+			}
+			if !isSaturn {
+				return fmt.Errorf("%s: verify-assets is only implemented for Saturn", args[0])
+			}
+			_ = os.Setenv("VERSION", string(saturn.Version))
+			return verifySaturnAssets(saturn)
 		},
 	})
 	rootCmd.AddCommand(&cobra.Command{

@@ -1,0 +1,12 @@
+[package]
+name = "saturn-assets"
+version = "0.1.0"
+edition = "2021"
+description = "Lossless extract/rebuild of Saturn SOTN asset files"
+
+[dependencies]
+clap = { version = "4", features = ["derive"] }
+png = "0.17"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sha2 = "0.10"

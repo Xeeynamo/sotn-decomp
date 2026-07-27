@@ -1,0 +1,15 @@
+# 
+version: saturn
+assets:
+  - name: ascii
+    kind: font
+    profile: ascii
+    source: disks/saturn/ASCII.FON
+    path: assets/saturn/font/ascii
+    output: build/saturn/assets/ASCII.FON
+  - name: kanji
+    kind: font
+    profile: kanji
+    source: disks/saturn/KANJI.FON
+    path: assets/saturn/font/kanji
+    output: build/saturn/assets/KANJI.FON
