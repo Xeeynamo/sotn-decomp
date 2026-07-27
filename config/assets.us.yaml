@@ -1098,6 +1098,9 @@ files:
     src_path: src/st/rcen
     splat_config_path: config/splat.us.strcen.yaml
   - target: disks/us/ST/RCHI/RCHI.BIN
+    asset_path: assets/st/rchi
+    src_path: src/st/rchi
+    splat_config_path: config/splat.us.strchi.yaml
   - target: disks/us/ST/RDAI/RDAI.BIN
     asset_path: assets/st/rdai
     src_path: src/st/rdai
