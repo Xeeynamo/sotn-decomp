@@ -500,7 +500,13 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
             if (g_GameParams.player >= 0) {
                 g_PlayableCharacter = g_GameParams.player;
             }
-            if (g_GameParams.stage >= 0) {
+            if (g_GameParams.demo >= 0) {
+                D_80097C98 = 0x80000000 |
+                             (g_GameParams.demo & STAGE_INVERTEDCASTLE_MASK);
+                DemoInit(2);
+                SetGameState(Game_NowLoading);
+                g_GameStep = 1;
+            } else if (g_GameParams.stage >= 0) {
                 g_StageId = g_GameParams.stage;
                 SetGameState(Game_NowLoading);
                 g_GameStep = 1;
