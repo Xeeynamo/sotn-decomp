@@ -118,7 +118,10 @@ files:
         assets:
           - [0x0, skip]
           - [0x20, spritesheet, richter, disks/us/BIN/F_GAME2.BIN, 0x40400]
-          - [0x170AC, skip]
+          - [0x170AC, spriteset, spritebank0]
+          - [0x17AA0, spriteset, spritebank1]
+          - [0x17D24, spriteset, spritebank2]
+          - [0x181A8, spriteset, spritebank3]
           - [0x18688, subweaponsdef, subweapons, RicSubweapons, RicBlueprints]
           - [0x188F4, skip]
           - [0x18A6C, blueprintsdef, us/blueprints, RicBlueprints, RicEntities]
