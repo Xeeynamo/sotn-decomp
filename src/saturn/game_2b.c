@@ -771,7 +771,27 @@ bool HantenDir1(Entity* entity) {
 u8 func_0607AC2C(void) { return PLAYER.facingLeft; }
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AC40, func_0607AC40);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AE48, func_0607AE48);
+
+void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity);
+
+void func_0607AE48(Entity* self, u16 params) {
+    Entity* entity;
+
+    if (params == 0xFF) {
+        DestroyEntity(self);
+        return;
+    }
+    entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+    if (entity != NULL) {
+        CreateEntityFromEntity(E_EXPLOSION, self, entity);
+        entity->params = params;
+        self->animCurFrame = 0;
+        self->unk1C = 0;
+        self->step = 0;
+        self->step_s = 0;
+    }
+    DestroyEntity(self);
+}
 
 Entity* FindFirstFreeEntity(s16 start, s16 end) {
     Entity* current = &g_Entities[start];
@@ -963,9 +983,62 @@ void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity) {
     entity->posY.i.hi = source->posY.i.hi;
 }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B3D0, func_0607B3D0);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B448, func_0607B448);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B4B8, func_0607B4B8);
+void FreePrimitives(s32);
+void func_0600B428(SpriteObject*);
+
+void func_0607B3D0(u16 entityId) {
+    Entity* entity;
+
+    entity = g_CurrentEntity;
+    if (entity->unk0 != NULL) {
+        func_0600B428(entity->unk0);
+        entity->unk0 = NULL;
+    }
+    if (entity->flags & FLAG_HAS_PRIMS) {
+        FreePrimitives(entity->primIndex);
+        entity->flags &= ~FLAG_HAS_PRIMS;
+    }
+    entity->entityId = entityId;
+    entity->pfnUpdate = (*PfnEntityUpdates)[entityId - 1]->func;
+}
+
+void func_0607B448(u16 entityId, Entity* entity) {
+    entity->entityId = entityId;
+    entity->pfnUpdate = (*PfnEntityUpdates)[entityId - 1]->func;
+    if (entity->flags & FLAG_HAS_PRIMS) {
+        FreePrimitives(entity->primIndex);
+        entity->flags &= ~FLAG_HAS_PRIMS;
+    }
+    if (entity->unk0 != NULL) {
+        func_0600B428(entity->unk0);
+        entity->unk0 = NULL;
+    }
+}
+
+// SAT: func_0607B4B8
+void ReplaceBreakableWithItemDrop(Entity* self) {
+    u16 params;
+
+    PreventEntityFromRespawning(self);
+
+    if ((g_Status.relics[RELIC_CUBE_OF_ZOE] & 2) == 0) {
+        DestroyEntity(self);
+        return;
+    }
+
+    params = self->params &= 0xFFF;
+    if (params < 0x80) {
+        func_0607B448(3, self);
+        self->poseTimer = 0;
+        self->pose = 0;
+    } else {
+        func_0607B448(10, self);
+        params -= 0x80;
+    }
+    self->params = params;
+    self->unk6D[0] = 0x10;
+    self->step = 0;
+}
 
 void func_0607B604(Entity* entity) {
     SpriteObject* temp = entity->unk0;
@@ -974,7 +1047,22 @@ void func_0607B604(Entity* entity) {
     temp->posY = entity->posY.val;
 }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B618, func_0607B618);
+void func_0600B004(SpriteObject*, s16*);
+
+u32 AnimateEntityWithSpriteData(
+    Entity* entity, u8* frames, s16** spriteFrames) {
+    SpritePart* parts;
+    u32 animResult;
+
+    parts = entity->unk0->parts;
+    animResult = AnimateEntity(frames, entity);
+    if (spriteFrames != NULL) {
+        func_0600B004(entity->unk0, spriteFrames[entity->animCurFrame]);
+    } else {
+        parts->imageIndex = entity->animCurFrame;
+    }
+    return animResult;
+}
 
 u32 AnimateEntity(u8 frames[], Entity* entity) {
     u8* currentFrame;
@@ -1464,7 +1552,8 @@ s16 func_0607C054(s32 arg0, s32 arg1, s32 angle) {
     return ((rsin((angle * (arg1 >> 8)) >> 8) >> 4) * (arg0 >> 8)) >> 0x10;
 }
 
+// MTH_InitialRand
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607C0A0, func_0607C0A0);
 
-// _MTH_GetRand
+// MTH_GetRand
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607C0BC, func_0607C0BC);

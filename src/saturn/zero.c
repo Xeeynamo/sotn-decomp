@@ -528,6 +528,8 @@ void func_06008464(void) {
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008488, func_06008488);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008524, func_06008524);
 
+extern Unk0605cd70 DAT_0605cd70;
+
 // Handles transfer of background tile graphics
 // func_06008588
 void func_06008588(int param_1) {
@@ -550,7 +552,7 @@ void func_06008588(int param_1) {
         DmaScroll((s32*)SYS_buf_060485E0, puVar6->dst4, cnt);
     }
     if (puVar5->tileFlags & 4) {
-        if (DAT_060086d4 == 4) {
+        if (DAT_0605cd70.unk2 == 4) {
             func_060089F0(puVar6);
         } else {
             func_0600871C(puVar6, &DAT_0605c680, param_1);

@@ -45,7 +45,7 @@ typedef enum {
 
 s16 Random(void);
 s32 AnimateEntityWithSpriteData(
-    Entity* entity, const u8 frames[], const u8* spriteFrames[]);
+    Entity* entity, const u8 frames[], const s16* spriteFrames[]);
 Entity* AllocEntity(Entity*, Entity*);
 void InitializeEntity(u16 arg0[]);
 void PlaySfxPositional(s32 sfxId);
