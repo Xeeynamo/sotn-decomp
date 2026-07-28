@@ -1,0 +1,51 @@
+options:
+  target_path: disks/saturn/STAGE_16.PRG
+  asm_path: asm/saturn/stage_16
+  src_path: src/saturn
+  obj_path: build/saturn
+  ld_scripts_path: config/saturn
+  syms_path: config/saturn
+  decomp_empty_funcs: true
+segments:
+  - name: stage_16
+    type: code
+    start: 0x00000000
+    vram: 0x060DC000
+    subalign: 2
+    subsegments:
+      - start: 0x0
+        type: .data
+        file: stage_16/header
+        end: 0x40
+      - start: 0x40
+        type: c
+        file: stage_16
+        end: 0xD018
+      - start: 0xD018
+        type: .data
+        file: stage_16/sprbank
+        end: 0xD088
+      - start: 0xD088
+        type: .data
+        file: stage_16/entupd
+        end: 0xD13C
+      - start: 0xD13C
+        type: .data
+        file: stage_16/hlay
+        end: 0xD210
+      - start: 0xD210
+        type: .data
+        file: stage_16/vlay
+        end: 0xD2E4
+      - start: 0xD2E4
+        type: .data
+        file: stage_16/laydata
+        end: 0xDE94
+      - start: 0xDE94
+        type: .data
+        file: stage_16/metadata
+        end: 0xE0F4
+      - start: 0xE0F4
+        type: .data
+        file: stage_16/data
+        end: 0x130F4
