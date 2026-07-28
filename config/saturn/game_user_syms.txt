@@ -26,6 +26,7 @@ _SetSubStep = 0x0607B240;
 _Random = 0x0607B2F4;
 _CreateEntityFromCurrentEntity = 0x0607B318;
 _CreateEntityFromEntity = 0x0607B374;
+_AnimateEntityWithSpriteData = 0x0607B618;
 _AnimateEntity = 0x0607B674;
 _PlaySfxPositional = 0x0607B714;
 _CheckCollision = 0x0607B7B4;

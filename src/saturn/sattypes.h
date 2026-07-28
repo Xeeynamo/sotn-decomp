@@ -333,7 +333,8 @@ typedef struct Entity {
     /* 0x60 */ s16 primIndex;
     /* 0x62 */ u16 zPriority;
     /* 0x64 */ u16 unk68;
-    /* 0x66 */ char pad_66[0xE];
+    /* 0x66 */ char pad_66[3];
+    /* 0x69 */ char unk6D[11];
     /* 0x74 */ u16 entityId;
     /* 0x76 */ char pad_76[0x2];
     /* 0x78 */ Ext ext;
@@ -1036,6 +1037,8 @@ extern Primitive g_PrimBuf[];
 
 #define NUM_HORIZONTAL_SENSORS 4
 #define NUM_VERTICAL_SENSORS 7
+
+#define RELIC_CUBE_OF_ZOE 10
 
 enum RicSubweapons {
     PL_W_NONE,
