@@ -101,4 +101,10 @@ typedef struct {
 } SaturnSpritePalette11;
 
 typedef struct {
-    SaturnSpr
+    SaturnSpriteImage* images;
+    u16* palettes;
+    u16 allocationIndex;
+    u16 flags;
+} SaturnSpriteResource;
+
+#endif
