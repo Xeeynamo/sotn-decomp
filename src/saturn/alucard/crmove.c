@@ -1,0 +1,21 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+#include "sattypes.h"
+
+s32 g_AlucardCrashCrossVelocity1[] = {
+    -0x28000,
+    -0x28000,
+    -0x28000,
+};
+
+s32 g_AlucardCrashCrossVelocity2[] = {
+    0,
+    -0xC000,
+    0xC000,
+};
+
+u8 g_AlucardCrashCrossTextureCoords[][4] = {
+    {0x80, 0x80, 0x80, 0x90},
+    {0x80, 0xA0, 0x80, 0xB0},
+    {0xA0, 0x80, 0xA0, 0x90},
+    {0xA0, 0xA0, 0xA0, 0xB0},
+};

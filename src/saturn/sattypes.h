@@ -83,6 +83,12 @@ typedef struct {
 } AnimationFrame;
 
 typedef struct {
+    u8 duration;
+    u8 frame;
+    u8 hitbox;
+} SaturnAnimationFrame;
+
+typedef struct {
     s8 offsetX;
     s8 offsetY;
     s8 hitboxWidth;

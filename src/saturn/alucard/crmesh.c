@@ -1,0 +1,53 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+#include "sattypes.h"
+
+s32 g_AlucardCrashCrossVertices[][3] = {
+    {-8, -72, -4},  {8, -72, -4},  {-48, -32, -4}, {-8, -32, -4},
+    {8, -32, -4},   {48, -32, -4}, {-48, -16, -4}, {-8, -16, -4},
+    {8, -16, -4},   {48, -16, -4}, {-8, 72, -4},   {8, 72, -4},
+    {-24, -48, -4}, {-8, -48, -4}, {8, -48, -4},   {24, -48, -4},
+    {-24, -32, -4}, {24, -32, -4}, {-24, -16, -4}, {24, -16, -4},
+    {-24, 0, -4},   {-8, 0, -4},   {8, 0, -4},     {24, 0, -4},
+    {-8, -72, 4},   {8, -72, 4},   {-48, -32, 4},  {-8, -32, 4},
+    {8, -32, 4},    {48, -32, 4},  {-48, -16, 4},  {-8, -16, 4},
+    {8, -16, 4},    {48, -16, 4},  {-8, 72, 4},    {8, 72, 4},
+    {-24, -48, 4},  {-8, -48, 4},  {8, -48, 4},    {24, -48, 4},
+    {-24, -32, 4},  {24, -32, 4},  {-24, -16, 4},  {24, -16, 4},
+    {-24, 0, 4},    {-8, 0, 4},    {8, 0, 4},      {24, 0, 4},
+};
+
+#define VERTEX(index) g_AlucardCrashCrossVertices[index]
+
+s32* g_AlucardCrashCrossMesh[] = {
+    VERTEX(3),  VERTEX(4),  VERTEX(8),  VERTEX(7),  VERTEX(36), VERTEX(37),
+    VERTEX(27), VERTEX(40), VERTEX(38), VERTEX(39), VERTEX(41), VERTEX(28),
+    VERTEX(42), VERTEX(31), VERTEX(45), VERTEX(44), VERTEX(32), VERTEX(43),
+    VERTEX(47), VERTEX(46), VERTEX(27), VERTEX(37), VERTEX(36), VERTEX(40),
+    VERTEX(41), VERTEX(39), VERTEX(38), VERTEX(28), VERTEX(45), VERTEX(31),
+    VERTEX(42), VERTEX(44), VERTEX(47), VERTEX(43), VERTEX(32), VERTEX(46),
+    VERTEX(28), VERTEX(38), VERTEX(37), VERTEX(27), VERTEX(31), VERTEX(27),
+    VERTEX(40), VERTEX(42), VERTEX(43), VERTEX(41), VERTEX(28), VERTEX(32),
+    VERTEX(46), VERTEX(32), VERTEX(31), VERTEX(45), VERTEX(32), VERTEX(28),
+    VERTEX(27), VERTEX(31), VERTEX(1),  VERTEX(25), VERTEX(38), VERTEX(14),
+    VERTEX(14), VERTEX(38), VERTEX(28), VERTEX(4),  VERTEX(8),  VERTEX(32),
+    VERTEX(46), VERTEX(22), VERTEX(22), VERTEX(46), VERTEX(35), VERTEX(11),
+    VERTEX(40), VERTEX(27), VERTEX(3),  VERTEX(16), VERTEX(28), VERTEX(41),
+    VERTEX(17), VERTEX(4),  VERTEX(38), VERTEX(25), VERTEX(24), VERTEX(37),
+    VERTEX(42), VERTEX(40), VERTEX(26), VERTEX(30), VERTEX(33), VERTEX(29),
+    VERTEX(41), VERTEX(43), VERTEX(35), VERTEX(46), VERTEX(45), VERTEX(34),
+    VERTEX(37), VERTEX(24), VERTEX(0),  VERTEX(13), VERTEX(27), VERTEX(37),
+    VERTEX(13), VERTEX(3),  VERTEX(45), VERTEX(31), VERTEX(7),  VERTEX(21),
+    VERTEX(34), VERTEX(45), VERTEX(21), VERTEX(10), VERTEX(7),  VERTEX(31),
+    VERTEX(42), VERTEX(18), VERTEX(19), VERTEX(43), VERTEX(32), VERTEX(8),
+    VERTEX(7),  VERTEX(8),  VERTEX(22), VERTEX(21), VERTEX(21), VERTEX(22),
+    VERTEX(11), VERTEX(10), VERTEX(0),  VERTEX(1),  VERTEX(14), VERTEX(13),
+    VERTEX(13), VERTEX(14), VERTEX(4),  VERTEX(3),  VERTEX(5),  VERTEX(29),
+    VERTEX(33), VERTEX(9),  VERTEX(24), VERTEX(25), VERTEX(1),  VERTEX(0),
+    VERTEX(30), VERTEX(26), VERTEX(2),  VERTEX(6),  VERTEX(11), VERTEX(35),
+    VERTEX(34), VERTEX(10), VERTEX(26), VERTEX(40), VERTEX(16), VERTEX(2),
+    VERTEX(18), VERTEX(42), VERTEX(30), VERTEX(6),  VERTEX(41), VERTEX(29),
+    VERTEX(5),  VERTEX(17), VERTEX(9),  VERTEX(33), VERTEX(43), VERTEX(19),
+    VERTEX(16), VERTEX(3),  VERTEX(7),  VERTEX(18), VERTEX(4),  VERTEX(17),
+    VERTEX(19), VERTEX(8),  VERTEX(2),  VERTEX(16), VERTEX(18), VERTEX(6),
+    VERTEX(17), VERTEX(5),  VERTEX(9),  VERTEX(19),
+};

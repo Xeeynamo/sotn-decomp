@@ -53,6 +53,11 @@ typedef struct {
 
 typedef struct {
     SaturnSpriteFrameHeader header;
+    SaturnSpritePart parts[16];
+} SaturnSpriteFrame16;
+
+typedef struct {
+    SaturnSpriteFrameHeader header;
     SaturnSpritePart parts[18];
 } SaturnSpriteFrame18;
 
@@ -96,10 +101,4 @@ typedef struct {
 } SaturnSpritePalette11;
 
 typedef struct {
-    SaturnSpriteImage* images;
-    u16* palettes;
-    u16 allocationIndex;
-    u16 flags;
-} SaturnSpriteResource;
-
-#endif
+    SaturnSpr
