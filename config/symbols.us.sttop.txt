@@ -1,15 +1,1 @@
-TOP_Overlay = 0x80180000;
-spriteBanks = 0x80180034;
-cluts = 0x801804C0;
-rooms_layers = 0x801805C8;
-gfxBanks = 0x801806F0;
-entityLayoutHorizontal = 0x80180740;
-entityLayoutVertical = 0x80180814;
-actor_names = 0x80180DE4;
-rooms = 0x80181B78;
-cutscene_data = 0x80182C08;
-sprites_3 = 0x801A6490;
-g_SkipCutscene = 0x801BC460;
-g_Dialogue = 0x801BC464; // size=0x44
-g_CutsceneFlags = 0x801BC510;
-g_IsCutsceneDone = 0x801BC518;
+
