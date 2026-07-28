@@ -771,7 +771,27 @@ bool HantenDir1(Entity* entity) {
 u8 func_0607AC2C(void) { return PLAYER.facingLeft; }
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AC40, func_0607AC40);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AE48, func_0607AE48);
+
+void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity);
+
+void func_0607AE48(Entity* self, u16 params) {
+    Entity* entity;
+
+    if (params == 0xFF) {
+        DestroyEntity(self);
+        return;
+    }
+    entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+    if (entity != NULL) {
+        CreateEntityFromEntity(E_EXPLOSION, self, entity);
+        entity->params = params;
+        self->animCurFrame = 0;
+        self->unk1C = 0;
+        self->step = 0;
+        self->step_s = 0;
+    }
+    DestroyEntity(self);
+}
 
 Entity* FindFirstFreeEntity(s16 start, s16 end) {
     Entity* current = &g_Entities[start];

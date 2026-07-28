@@ -301,12 +301,13 @@ typedef struct Entity {
     /* 0x16 */ s16 hitboxOffY;
     /* 0x18 */ u16 facingLeft;
     /* 0x1A */ u16 palette;
-    /* 0x1C */ char pad_1C[0x2];
+    /* 0x1B */ u8 : 8;
+    /* 0x1C */ u8 unk1C;
     /* 0x1E */ s16 rotate;
-    /* 0x20 */ s16 unk1A;
-    /* 0x22 */ s16 unk1C;
-    /* 0x24 */ s16 ghidra_pad_24;
-    /* 0x26 */ char pad_26[0x2];
+    /* 0x20 */ s16 : 16;
+    /* 0x22 */ s16 : 16;
+    /* 0x24 */ s16 : 16;
+    /* 0x26 */ s16 : 16;
     /* 0x28 */ PfnEntityUpdate pfnUpdate;
     /* 0x2c */ u16 step;
     /* 0x2e */ u16 step_s;
@@ -1039,6 +1040,8 @@ extern Primitive g_PrimBuf[];
 #define NUM_VERTICAL_SENSORS 7
 
 #define RELIC_CUBE_OF_ZOE 10
+
+#define E_EXPLOSION 2
 
 enum RicSubweapons {
     PL_W_NONE,
