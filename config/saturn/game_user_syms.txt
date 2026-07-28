@@ -26,6 +26,7 @@ _SetSubStep = 0x0607B240;
 _Random = 0x0607B2F4;
 _CreateEntityFromCurrentEntity = 0x0607B318;
 _CreateEntityFromEntity = 0x0607B374;
+_AnimateEntityWithSpriteData = 0x0607B618;
 _AnimateEntity = 0x0607B674;
 _PlaySfxPositional = 0x0607B714;
 _CheckCollision = 0x0607B7B4;
@@ -82,8 +83,10 @@ _D_8013759C = 0x0608619C;
 _D_801375A4 = 0x060861A0;
 _g_StatBuffTimers = 0x060861B0;
 _DAT_06086220 = 0x06086220;
+_d_06086234 = 0x06086234;
 _D_801375CC = 0x06086238;
 _g_NewPlayerStatsTotal = 0x06086240;
+_d_06086250 = 0x06086250;
 _DAT_06086258 = 0x06086258;
 _D_801375D8 = 0x06086260;
 _DAT_06086270 = 0x06086270;
@@ -103,7 +106,3 @@ _g_PrimBuf = 0x060867F8;
 _DAT_0608FFF8 = 0x0608FFF8;
 _g_Entities = 0x060997F8;
 _func_060CF01C = 0x060CF01C;
-
-/* Aliases used by modules that inherit this symbol file. */
-_d_06086234 = 0x06086234;
-_d_06086250 = 0x06086250;

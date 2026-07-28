@@ -7,6 +7,8 @@
 #define DAMAGE_FLAG_ABSORB 0x8000
 #define DAMAGE_FLAG_IMMUNE 0xC000
 
+#define E_EXPLOSION 2
+
 extern EnemyDef g_EnemyDefs[];
 extern u32 g_RoomCount;
 
