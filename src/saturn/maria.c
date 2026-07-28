@@ -765,7 +765,6 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BF180, func_060BF180);
 
 Unk0605cd70 DAT_0605cd70;
 u32 D_06085534;
-u16 d_0605c672;
 u8 DAT_06057f68;
 
 s32 func_060732E4(u16);
@@ -782,7 +781,7 @@ void func_060BF35C(void) {
         DAT_0605cd70.unk8 += 1;
     }
 after:
-    if ((DAT_06057f68 == 0) && ((d_0605c672 & 0x100) != 0)) {
+    if ((DAT_06057f68 == 0) && (g_pads[0].previous & 0x100)) {
         D_06085534 = 6;
         DAT_06057f68 = 4;
     }

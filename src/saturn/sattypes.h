@@ -1041,8 +1041,6 @@ extern Primitive g_PrimBuf[];
 
 #define RELIC_CUBE_OF_ZOE 10
 
-#define E_EXPLOSION 2
-
 enum RicSubweapons {
     PL_W_NONE,
     PL_W_DAGGER,
