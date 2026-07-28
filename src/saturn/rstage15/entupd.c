@@ -78,7 +78,7 @@ EntityEntry* g_RStage15EntityUpdates[] = {
     &g_RStage15EntityEntry28, &g_RStage15EntityEntry29,
     &g_RStage15EntityEntry30, &g_RStage15EntityEntry31,
     &g_RStage15EntityEntry32, &g_RStage15EntityEntry33,
-    &g_RStage15EntityEfreet, &g_RStage15EntityEntry35,
+    &g_RStage15EntityEfreet,  &g_RStage15EntityEntry35,
     &g_RStage15EntityEntry36, &g_RStage15EntityEntry37,
     &g_RStage15EntityEntry38, &g_RStage15EntityEntry39,
     &g_RStage15EntityEntry40, &g_RStage15EntityEntry41,

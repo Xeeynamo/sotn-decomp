@@ -27,6 +27,5 @@ SaturnStageDataTables g_Stage16Data = {
 };
 
 u32 g_Stage16HeaderExtension[] = {
-    0x66732E61, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x66732E61, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
 };

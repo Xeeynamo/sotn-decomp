@@ -27,6 +27,5 @@ SaturnStageDataTables g_RStage16Data = {
 };
 
 u32 g_RStage16HeaderExtension[] = {
-    0x257B417D, 0x20257B64,
-    0x7D20257B, 0x652A7D20, 0x257B6D7D, 0x20257B4E,
+    0x257B417D, 0x20257B64, 0x7D20257B, 0x652A7D20, 0x257B6D7D, 0x20257B4E,
 };

@@ -27,6 +27,5 @@ SaturnStageDataTables g_RStage15Data = {
 };
 
 u32 g_RStage15HeaderExtension[] = {
-    0x544C4100, 0x444C4100,
-    0x344C4100, 0x244C4100, 0x144C4100, 0x044C4100,
+    0x544C4100, 0x444C4100, 0x344C4100, 0x244C4100, 0x144C4100, 0x044C4100,
 };
