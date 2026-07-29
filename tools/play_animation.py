@@ -20,6 +20,7 @@ from PIL import Image
 import numpy as np
 import matplotlib.animation as animation
 import time
+import os
 
 PRINT_DEBUG = True
 
@@ -60,21 +61,33 @@ def load_anims(src_file):
         file_lines = f.read().split("\n")
     loaded_anims = {}
     for i, line in enumerate(file_lines):
-        if line.startswith("static u8"):
+        if line.startswith("static u8") or line.startswith("static AnimateEntityFrame"):
             # handle the potential of multi-line animations
             anim = ""
             line_idx = 0
             while ";" not in anim:
                 anim += file_lines[i + line_idx]
                 line_idx += 1
-            # got full animation line. Strip spaces especially since line spacing might be weird.
+            # got full animation line. Get the name. Comes after "static, space, type, space"
+            namesearch = re.match(r"static\s+(\w+)\s+(\w+)\[\]\s*=", anim)
+            if namesearch:
+                anim_name = namesearch.group(2)
+            print(anim_name)
+            # Strip spaces especially since line spacing might be weird.
             anim = anim.replace(" ", "")
-            # Now use regex to find name and the data between the curly brackets
-            anim_name = re.findall(r"(?<=staticu8)[^\[]*", anim)[0]
-            anim_data = re.findall(r"(?<={)[^}]*", anim)[0]
-            # detect double-nested 2d arrays and skip them
-            if "{" in anim_data:
-                continue
+            # Now use regex to find data up to the semicolon
+            anim_data = re.findall(r"(?<={)[^;]*", anim)[0]
+            # flatten 2d arrays (such as AnimateEntityFrame)
+            anim_data = anim_data.replace("{", "")
+            anim_data = anim_data.replace("}", "")
+            # expand POSE_LOOP macro
+            poseloopsearch = re.search(r"POSE_LOOP\((.*)\)", anim_data)
+            if poseloopsearch:
+                anim_data = anim_data.replace(
+                    poseloopsearch.group(0), "0, " + poseloopsearch.group(1)
+                )
+            # expand POSE_END macro
+            anim_data = anim_data.replace("POSE_END", "-1, 0")
             # Turn the data into a Python list of numbers
             anim_data = [int(x, 0) for x in anim_data.split(",") if len(x) > 0]
             loaded_anims[anim_name] = anim_data
@@ -144,6 +157,8 @@ class AnimationShower:
             print("Overlay animation")
             assert overlay != "dra"
             main_array_file = f"src/st/{overlay}/gen/sprite_banks.h"
+            if not os.path.exists(main_array_file):
+                main_array_file = main_array_file.replace("gen", "gen/us")
             main_array = "spriteBanks"
             animset_file = f"src/st/{overlay}/gen/sprites.c"
         else:
@@ -254,6 +269,8 @@ class AnimationShower:
             if animation_bytes[i] == 0 or animation_bytes[i] == 255:
                 continue
             duration, anim_idx = animation_bytes[i : i + 2]
+            if duration == -1:  # Finish looping on POSE_END
+                break
             print(f"Rendering frame with {duration=}, {anim_idx=}")
             picture = self.render_frame(anim_idx)
             for _ in range(duration):
