@@ -53,6 +53,11 @@ typedef struct {
 
 typedef struct {
     SaturnSpriteFrameHeader header;
+    SaturnSpritePart parts[16];
+} SaturnSpriteFrame16;
+
+typedef struct {
+    SaturnSpriteFrameHeader header;
     SaturnSpritePart parts[18];
 } SaturnSpriteFrame18;
 

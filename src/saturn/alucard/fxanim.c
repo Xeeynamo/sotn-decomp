@@ -1,0 +1,30 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+#include "sattypes.h"
+
+u16 g_AlucardEffectAnim0[] = {
+    0x0200, 0x0600, 0x0800, 0x0800, 0x0800,
+    0x0200, 0x0200, 0x0200, 0x0200, 0xFFFF,
+};
+
+u16 g_AlucardEffectAnim1[] = {
+    0x0200, 0x0A00, 0x0C00, 0x0C00, 0x0C00, 0x0A00, 0x0200, 0x0200, 0xFFFF,
+};
+
+u16 g_AlucardEffectAnim2[] = {
+    0x0E00, 0x1000, 0x1000, 0x1000, 0x0E00, 0xFFFF,
+};
+
+u16 g_AlucardEffectAnim3[] = {
+    0x1200, 0x1400, 0x1400, 0x1400, 0x1200, 0xFFFF,
+};
+
+u16 g_AlucardEffectAnim4[] = {
+    0x0200, 0x1600, 0x0200, 0x0200, 0x0200,
+    0x0200, 0x0200, 0x0200, 0x0200, 0xFFFF,
+};
+
+u16* g_AlucardEffectAnimTable[7] = {
+    g_AlucardEffectAnim0, g_AlucardEffectAnim0, g_AlucardEffectAnim1,
+    g_AlucardEffectAnim1, g_AlucardEffectAnim2, g_AlucardEffectAnim3,
+    g_AlucardEffectAnim4,
+};

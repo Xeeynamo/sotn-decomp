@@ -21,10 +21,19 @@ segments:
       - start: 0x60
         type: c
         file: alucard
-        end: 0x1be47
+        end: 0xB753
         function_ranges:
           - [0x1384, 0x141E]
           - [0x1A94, 0x2D3A]
+
+      - start: 0xB754
+        type: .text
+        file: alucard/animstrm
+
+      - start: 0xD4E0
+        type: c
+        file: alucard2
+        end: 0x1BE47
 
       - start: 0x1be48
         type: c
@@ -39,6 +48,207 @@ segments:
         end: 0x234b7
 
       - start: 0x234b8
-        type: data
-        file: alucard
+        type: .data
+        file: alucard/coredata
+      - start: 0x235d4
+        type: .data
+        file: alucard/animdata
+      - start: 0x2397c
+        type: .data
+        file: alucard/palettes
+      - start: 0x23b80
+        type: .data
+        file: alucard/frames
+      - start: 0x24990
+        type: .data
+        file: alucard/images
+      - start: 0x24d08
+        type: .data
+        file: alucard/resanim
+      - start: 0x24de8
+        type: .data
+        file: alucard/fxpal
+      - start: 0x24e08
+        type: .data
+        file: alucard/fxmeta
+      - start: 0x24f14
+        type: .data
+        file: alucard/fximgs
+      - start: 0x24f30
+        type: .data
+        file: alucard/cmdanim
+      - start: 0x25078
+        type: .data
+        file: alucard/sprpkg2
+      - start: 0x258a4
+        type: .data
+        file: alucard/images2
+      - start: 0x259b4
+        type: .data
+        file: alucard/fxframes
+      - start: 0x25dfc
+        type: .data
+        file: alucard/fx2imgs
+      - start: 0x25e40
+        type: .data
+        file: alucard/fx2pal
+      - start: 0x25e64
+        type: .data
+        file: alucard/frames3
+      - start: 0x26244
+        type: .data
+        file: alucard/sprpkg3
+      - start: 0x26480
+        type: .data
+        file: alucard/frames4
+      - start: 0x26548
+        type: .data
+        file: alucard/sprpkg4
+      - start: 0x265d6
+        type: .data
+        file: alucard/pkg4pad
+      - start: 0x265d8
+        type: .data
+        file: alucard/frames5
+      - start: 0x26640
+        type: .data
+        file: alucard/sprpkg5
+      - start: 0x26694
+        type: .data
+        file: alucard/frames6
+      - start: 0x266dc
+        type: .data
+        file: alucard/sprpkg6
+      - start: 0x26714
+        type: .data
+        file: alucard/frames7
+      - start: 0x2673c
+        type: .data
+        file: alucard/sprpkg7
+      - start: 0x2676c
+        type: .data
+        file: alucard/frames8
+      - start: 0x26784
+        type: .data
+        file: alucard/sprpkg8
+      - start: 0x267b0
+        type: .data
+        file: alucard/frames9
+      - start: 0x26a80
+        type: .data
+        file: alucard/pkg9img
+      - start: 0x26b00
+        type: .data
+        file: alucard/pkg9pal
+      - start: 0x26c84
+        type: .data
+        file: alucard/frames10
+      - start: 0x26d5c
+        type: .data
+        file: alucard/sprpkg10
+      - start: 0x26df8
+        type: .data
+        file: alucard/resrc
+      - start: 0x26e94
+        type: .data
+        file: alucard/restbl
+      - start: 0x26ed8
+        type: .data
+        file: alucard/gfxloads
+      - start: 0x275d8
+        type: .data
+        file: alucard/sensors
+      - start: 0x2772c
+        type: .data
+        file: alucard/reserve
+      - start: 0x27784
+        type: .data
+        file: alucard/wolfdata
+      - start: 0x278b4
+        type: .data
+        file: alucard/wolfbody
+      - start: 0x27964
+        type: .data
+        file: alucard/batdata
+      - start: 0x279b8
+        type: .data
+        file: alucard/mischbox
+      - start: 0x279f8
+        type: .data
+        file: alucard/fctanim
+      - start: 0x27a54
+        type: .data
+        file: alucard/entfunc
+      - start: 0x27b78
+        type: .data
+        file: alucard/bpdefs
+      - start: 0x27e7e
+        type: .data
+        file: alucard/entrange
+      - start: 0x27e94
+        type: .data
+        file: alucard/fxanim
+      - start: 0x27f04
+        type: .data
+        file: alucard/wepanim
+      - start: 0x27f14
+        type: .data
+        file: alucard/fxmotion
+      - start: 0x27f44
+        type: .data
+        file: alucard/swpanim
+      - start: 0x27ff6
+        type: .data
+        file: alucard/subzero
+      - start: 0x28038
+        type: .data
+        file: alucard/subweap
+      - start: 0x28380
+        type: .data
+        file: alucard/colors
+      - start: 0x28470
+        type: .data
+        file: alucard/combat
+      - start: 0x2859c
+        type: .data
+        file: alucard/anims11
+      - start: 0x28644
+        type: .data
+        file: alucard/lightpal
+      - start: 0x28648
+        type: .data
+        file: alucard/offsets
+      - start: 0x287b0
+        type: .data
+        file: alucard/lookup
+      - start: 0x287f4
+        type: .data
+        file: alucard/efseq
+      - start: 0x28a24
+        type: .data
+        file: alucard/effect
+      - start: 0x28b8c
+        type: .data
+        file: alucard/crash
+      - start: 0x28bbc
+        type: .data
+        file: alucard/crossdat
+      - start: 0x28cec
+        type: .data
+        file: alucard/cranim
+      - start: 0x28d78
+        type: .data
+        file: alucard/crmove
+      - start: 0x28da0
+        type: .data
+        file: alucard/crtbl
+      - start: 0x28e1c
+        type: .data
+        file: alucard/crmesh
+      - start: 0x2933c
+        type: .data
+        file: alucard/crossgfx
+      - start: 0x29422
+        type: .data
+        file: alucard/crosscfg
         end: 0x2947f
