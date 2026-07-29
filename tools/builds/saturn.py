@@ -17,9 +17,13 @@ saturn_compiler = os.environ.get("SOTN_SATURN_COMPILER", "native64")
 if saturn_compiler == "native64":
     saturn_cc1 = os.environ.get(
         "SOTN_SATURN_CC1", "bin/cc1-saturn-960904")
-    compile_command = (f'{saturn_cc1} -$args -m2 -fsigned-char '
-                       '-quiet $in -o $out')
-    compiler_inputs = [saturn_cc1]
+    compile_command = (
+        f'sh ./tools/builds/native_cc1_wrapper.sh '
+        f'{saturn_cc1} $in $out $args')
+    compiler_inputs = [
+        saturn_cc1,
+        'tools/builds/native_cc1_wrapper.sh',
+    ]
 elif saturn_compiler == "dos":
     if "SOTN_SATURN_CC1" in os.environ:
         raise SystemExit(
