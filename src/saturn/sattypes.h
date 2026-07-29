@@ -621,7 +621,7 @@ typedef struct {
     /* 0x3EC */ s32 vram_flag;
     char pad2[8];
     /* 0x3F8 */ u32 status;
-    u32 unk3FC;
+    /* 0x3FC */ u32 unk3FC;
     char pad400[0x2E];
     /* 0x42E */ u16 high_jump_timer;
     /* 0x430 */ u16 unk44;
