@@ -762,8 +762,42 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f6073770, func_06073770);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60737A0, func_060737A0);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6073E58, func_06073E58);
 
-// _PSX_sort_item
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6073EEC, func_06073EEC);
+extern s32 g_EquipOrderType;
+
+// original name: PSX_sort_item
+void func_800FBAC4(void) {
+    s32 i, j;
+    s32* ptr;
+
+    for (i = g_EquipOrderType; i > 0; i--) {
+        j = g_Settings.equipOrderTypes[i];
+        g_Settings.equipOrderTypes[i] = g_Settings.equipOrderTypes[i - 1];
+        g_Settings.equipOrderTypes[i - 1] = j;
+    }
+    g_EquipOrderType = 0;
+    ptr = D_801375D8;
+    *ptr++ = 0;
+    for (i = 0; i < 0xB; i++) {
+        s32 importantcategory = g_Settings.equipOrderTypes[i];
+        for (j = 0; j < 0xB0; j++) {
+            s32 order = g_Status.equipHandOrder[j];
+            if (g_Status.equipHandCount[order] != 0 && order != 0 &&
+                g_EquipDefs[order].itemCategory == importantcategory) {
+                *ptr++ = order;
+            }
+        }
+    }
+    for (j = 0; j < 0xB0; j++) {
+        s32 order = g_Status.equipHandOrder[j];
+        if (g_Status.equipHandCount[order] == 0) {
+            *ptr++ = order;
+        }
+    }
+    ptr = D_801375D8;
+    for (i = 0; i < 0xB0; i++) {
+        g_Status.equipHandOrder[i] = *ptr++;
+    }
+}
 
 // original name: PSX_equip_id_init
 void func_800FAF44(bool isAccessory) {

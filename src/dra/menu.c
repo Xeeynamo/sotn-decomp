@@ -3322,6 +3322,7 @@ void func_800FB9BC(void) {
         YScrollPerElement;
 }
 
+// original name: PSX_sort_item
 void func_800FBAC4(void) {
     s32 i, j;
     s32* ptr;
