@@ -51,7 +51,7 @@ static u8 cutscene_script_talk_en[] = {
 #include "gen/cutscene_data_talk_en.h"
 };
 
-s32 D_us_80182E44 = 0x08D30C20;
+s32 richter_sprites = 0x08D30C20;
 
 s32 E_ID(BACKGROUND_BLOCK);
 s32 E_ID(LOCK_CAMERA);
@@ -146,6 +146,6 @@ void OVL_EXPORT(Load)(void) {
     g_pStObjLayoutHorizontal = &D_8D2E380;
     g_pStObjLayoutVertical = &D_8D2E454;
     func_psp_0892A018();
-    func_psp_08929FA8(D_us_80182E44, 0xC5);
+    func_psp_08929FA8(richter_sprites, 0xC5);
     memcpy(&g_api.o, &OVL_EXPORT(Overlay), sizeof(Overlay));
 }

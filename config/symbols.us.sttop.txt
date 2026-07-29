@@ -1,1 +1,2 @@
-
+richter_sprites = 0x80182E44;
+gfx_stage_name_jp_sm = 0x80183418;
