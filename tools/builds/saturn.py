@@ -13,19 +13,38 @@ if sotn_progress_report:
     build_base_path = "rpt/saturn"
     extra_cpp_defs = " -DSKIP_ASM=1"
 
-# write out current pwd to open it as a disk
-with open('./tools/builds/.dosemurc', 'w') as f:
-    f.write(f'$_hdimage = \'+0 {os.getcwd()} +1\'\n')
-
-# copy cygnus into a 8.3 folder
-if not os.path.exists('tools/builds/GCCSH'):
-    shutil.copytree('bin/cygnus-2.7-96Q3-bin', 'tools/builds/GCCSH')
+saturn_compiler = os.environ.get("SOTN_SATURN_COMPILER", "native64")
+if saturn_compiler == "native64":
+    saturn_cc1 = os.environ.get(
+        "SOTN_SATURN_CC1", "bin/cc1-saturn-960904")
+    compile_command = (f'{saturn_cc1} -$args -m2 -fsigned-char '
+                       '-quiet $in -o $out')
+    compiler_inputs = [saturn_cc1]
+elif saturn_compiler == "dos":
+    if "SOTN_SATURN_CC1" in os.environ:
+        raise SystemExit(
+            "SOTN_SATURN_CC1 cannot be used with SOTN_SATURN_COMPILER=dos")
+    # The historical compiler needs its files in a DOS-compatible 8.3 path.
+    if not os.path.exists('tools/builds/GCCSH'):
+        shutil.copytree(
+            'bin/cygnus-2.7-96Q3-bin', 'tools/builds/GCCSH')
+    compile_command = (
+        'sh ./tools/builds/dosemu_wrapper.sh $in $out $args')
+    compiler_inputs = [
+        'tools/builds/GCCSH/CC1.EXE',
+        'tools/builds/dosemu_wrapper.sh',
+        'tools/builds/build.bat',
+        'tools/builds/dosemurc',
+    ]
+else:
+    raise SystemExit(
+        "SOTN_SATURN_COMPILER must be either 'native64' or 'dos'")
 
 ninja = ninja_syntax.Writer(open("build.ninja", "w"))
 
 ninja.rule('compile',
-           command='sh ./tools/builds/dosemu_wrapper.sh $in $out $args $tmpdir',
-           description='Building $out from $in')
+           command=compile_command,
+           description=f'Building $out with {saturn_compiler} compiler')
 
 ninja.rule(
         'check',
@@ -172,6 +191,7 @@ def add_srcs(srcs, output_dir, args):
             asm_name, 
             'compile', 
             inputs=[cpp_name],
+            implicit=compiler_inputs,
             variables={
                 'args': args
             })
