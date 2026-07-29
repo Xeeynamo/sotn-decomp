@@ -45,6 +45,7 @@ _D_801375C8 = 0x06085524;
 _D_06085534 = 0x06085534;
 _g_EquipMenuHelper = 0x0608554C;
 _g_MenuPageScrollActive = 0x060855AC;
+_g_FontGlyphDataSizes = 0x060855B0;
 _g_HudSpriteU = 0x06085B38;
 _g_HudSpriteV = 0x06085B48;
 _g_HudSpriteWidth = 0x06085B58;
