@@ -799,7 +799,16 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f60744F8, func_060744F8);
 // _SS_MOJI_SET
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60745A0, func_060745A0);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6074698, func_06074698);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6074700, func_06074700);
+
+void func_06074700(void) {
+    u16 i;
+    u32* char_ram;
+
+    char_ram = (u32*)SCL_VDP2_VRAM_A1;
+    for (i = 0; i < 0x800; i++) {
+        *char_ram++ = 0;
+    }
+}
 
 extern u32 g_FontGlyphDataSizes[];
 
