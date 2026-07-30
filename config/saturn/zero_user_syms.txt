@@ -481,6 +481,7 @@ _DAT_0605c668 = 0x0605C668;
 _d_0605c672 = 0x0605C672;
 _g_PlayableCharacter = 0x0605C6D0;
 _g_CurrentEntity = 0x0605C6E0;
+_d_0605c6e4 = 0x0605C6E4;
 _DAT_0605c6e4 = 0x0605C6E4;
 _g_GameTimer = 0x0605CD50;
 _DAT_0605cd54 = 0x0605CD54;

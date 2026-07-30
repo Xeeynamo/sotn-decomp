@@ -53,13 +53,138 @@ typedef struct {
 
 typedef struct {
     SaturnSpriteFrameHeader header;
+    SaturnSpritePart parts[8];
+} SaturnSpriteFrame8;
+
+typedef struct {
+    SaturnSpriteFrameHeader header;
+    SaturnSpritePart parts[9];
+} SaturnSpriteFrame9;
+
+typedef struct {
+    SaturnSpriteFrameHeader header;
+    SaturnSpritePart parts[10];
+} SaturnSpriteFrame10;
+
+typedef struct {
+    SaturnSpriteFrameHeader header;
+    SaturnSpritePart parts[11];
+} SaturnSpriteFrame11;
+
+typedef struct {
+    SaturnSpriteFrameHeader header;
+    SaturnSpritePart parts[12];
+} SaturnSpriteFrame12;
+
+typedef struct {
+    SaturnSpriteFrameHeader header;
+    SaturnSpritePart parts[13];
+} SaturnSpriteFrame13;
+
+typedef struct {
+    SaturnSpriteFrameHeader header;
+    SaturnSpritePart parts[14];
+} SaturnSpriteFrame14;
+
+typedef struct {
+    SaturnSpriteFrameHeader header;
+    SaturnSpritePart parts[15];
+} SaturnSpriteFrame15;
+
+typedef struct {
+    SaturnSpriteFrameHeader header;
     SaturnSpritePart parts[16];
 } SaturnSpriteFrame16;
 
 typedef struct {
     SaturnSpriteFrameHeader header;
+    SaturnSpritePart parts[17];
+} SaturnSpriteFrame17;
+
+typedef struct {
+    SaturnSpriteFrameHeader header;
     SaturnSpritePart parts[18];
 } SaturnSpriteFrame18;
+
+typedef struct {
+    SaturnSpriteFrameHeader header;
+    SaturnSpritePart parts[19];
+} SaturnSpriteFrame19;
+
+typedef struct {
+    SaturnSpriteFrameHeader header;
+    SaturnSpritePart parts[20];
+} SaturnSpriteFrame20;
+
+typedef struct {
+    SaturnSpriteFrameHeader header;
+    SaturnSpritePart parts[21];
+} SaturnSpriteFrame21;
+
+typedef struct {
+    SaturnSpriteFrameHeader header;
+    SaturnSpritePart parts[22];
+} SaturnSpriteFrame22;
+
+typedef struct {
+    SaturnSpriteFrameHeader header;
+    SaturnSpritePart parts[23];
+} SaturnSpriteFrame23;
+
+typedef struct {
+    SaturnSpriteFrameHeader header;
+    SaturnSpritePart parts[24];
+} SaturnSpriteFrame24;
+
+typedef struct {
+    SaturnSpriteFrameHeader header;
+    SaturnSpritePart parts[25];
+} SaturnSpriteFrame25;
+
+typedef struct {
+    SaturnSpriteFrameHeader header;
+    SaturnSpritePart parts[26];
+} SaturnSpriteFrame26;
+
+typedef struct {
+    SaturnSpriteFrameHeader header;
+    SaturnSpritePart parts[27];
+} SaturnSpriteFrame27;
+
+typedef struct {
+    SaturnSpriteFrameHeader header;
+    SaturnSpritePart parts[28];
+} SaturnSpriteFrame28;
+
+typedef struct {
+    SaturnSpriteFrameHeader header;
+    SaturnSpritePart parts[29];
+} SaturnSpriteFrame29;
+
+typedef struct {
+    SaturnSpriteFrameHeader header;
+    SaturnSpritePart parts[30];
+} SaturnSpriteFrame30;
+
+typedef struct {
+    SaturnSpriteFrameHeader header;
+    SaturnSpritePart parts[31];
+} SaturnSpriteFrame31;
+
+typedef struct {
+    SaturnSpriteFrameHeader header;
+    SaturnSpritePart parts[32];
+} SaturnSpriteFrame32;
+
+typedef struct {
+    SaturnSpriteFrameHeader header;
+    SaturnSpritePart parts[33];
+} SaturnSpriteFrame33;
+
+typedef struct {
+    SaturnSpriteFrameHeader header;
+    SaturnSpritePart parts[34];
+} SaturnSpriteFrame34;
 
 typedef struct {
     u8 width;
