@@ -9,7 +9,7 @@ extern u_long* cluts[];
 extern RoomDef rooms_layers[];
 extern GfxBank* gfxBanks[];
 void UpdateStageEntities(void);
-extern u8* D_us_80182E44[];
+extern u8* richter_sprites[RIC_SPRITE_COUNT];
 
 AbbreviatedOverlay2 OVL_EXPORT(Overlay) = {
     .Update = Update,
@@ -24,5 +24,5 @@ AbbreviatedOverlay2 OVL_EXPORT(Overlay) = {
     .gfxBanks = gfxBanks,
     .UpdateStageEntities = UpdateStageEntities,
     .unk2C = NULL,
-    .unk30 = D_us_80182E44,
+    .unk30 = richter_sprites,
 };

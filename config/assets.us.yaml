@@ -1054,8 +1054,10 @@ files:
         - [0x1BFC, skip]
         - [0x2C08, cutscene, cutscene_data]
         - [0x2E25, cutscene_events, cutscene_events]
+        #- [0x2E44, spritesheet, richter, disks/us/BIN/F_GAME2.BIN, 0x40400]
         - [0x2E44, skip]
-        - [0x3804, cmpgfx, gfx_stage_name_jp, 128, 128, 4]
+        - [0x3418, cmpgfx, gfx_stage_name_jp_sm, 128, 128, 4]
+        - [0x3804, cmpgfx, gfx_stage_name_jp_lg, 128, 128, 4]
         - [0x6CE4, cmpgfx, gfx_flea_rider, 128, 128, 4, 0x10BB4]
         - [0xA1B4, cmpgfx, gfx_maria_1, 128, 128, 4, 0x111F4]
         - [0xB2E4, cmpgfx, gfx_maria_2, 128, 128, 4, 0x111F4]
@@ -1064,7 +1066,8 @@ files:
         - [0xE280, cmpgfx, gfx_breakable, 128, 128, 4, 0x11214]
         - [0xEC34, cmpgfx, gfx_axe_knight_1, 128, 128, 4, 0x115D4]
         - [0xFB24, cmpgfx, gfx_axe_knight_2, 128, 128, 4, 0x115D4]
-        - [0x10714, cmpgfx, gfx_stage_name_en, 128, 128, 4] # unknown size, please double-check
+        - [0x10714, cmpgfx, gfx_stage_name_en, 128, 128, 4]
+        - [0x10A34, palette, D_us_80190A34, 16] # unused
         - [0x10A54, palette, D_us_80190A54, 16] # 0x200
         - [0x10BB4, palette, pal_flea_rider, 16] # 0x206
         - [0x10BF4, palette, D_us_80190BF4, 16] # 0x210

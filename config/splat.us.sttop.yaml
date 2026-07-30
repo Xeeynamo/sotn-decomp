@@ -70,10 +70,10 @@ segments:
       - [0x1BFC, .data, e_clouds]
       - [0x1CFC, .data, e_clock_tower]
       - [0x20AC, .data, gen/e_layout]
-      - [0x2C04, data]
+      - [0x2C04, data] # e_layout padding?
       - [0x2C08, .data, cutscene_data]
-      - [0x2E44, data]
-      - [0x3804, .data, stage_data]
+      - [0x2E44, data, richter_sprites] # import not working
+      - [0x3418, .data, stage_data]
       - [0x11C54, .data, tilemaps]
       - [0x24884, .data, gen/sprites]
       - [0x288E8, .rodata, e_lock_camera]
@@ -117,8 +117,7 @@ segments:
       - [0x3A3C8, c, prim_helpers]
       - [0x3ABF8, c, e_clouds]
       - [0x3B354, c, e_clock_tower]
-      - [0x3B7F0, bss]
-      - [0x3B850, .bss, create_entity]
+      - [0x3B7F0, .bss, create_entity]
       - [0x3B860, .bss, cutscene]
       - [0x3C51C, .bss, e_collect]
   - [0x3C55C]
