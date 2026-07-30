@@ -16,7 +16,7 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f606C088, func_0606C088);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606C160, func_0606C160);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606C3E4, func_0606C3E4);
 
-void FUN_0606c504(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+void func_0606C504(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     Entity* entity;
     s32 i;
 
@@ -49,12 +49,154 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D358, func_0606D358);
 // _PSX_POSITION_GET
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D3FC, func_0606D3FC);
 
-// _PSX_TO_STAGE_NO_GET
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D554, func_0606D554);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D5FC, func_0606D5FC);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D6DC, func_0606D6DC);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D798, func_0606D798);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D804, func_0606D804);
+extern s32 DAT_0605c108;
+extern RoomTeleport g_RoomTeleports[];
+extern u16 D_8003C730;
+extern s32 D_80097C98;
+extern s32 DAT_0606459c;
+extern RoomLoadDefHolder D_801375BC;
+
+// original name: PSX_TO_STAGE_NO_GET
+void func_0606D554(s32 arg0) {
+    RoomTeleport* ptr;
+
+    ptr = &g_RoomTeleports[DAT_0605c108];
+
+    if (D_8003C730 == 0) {
+        if (D_80097C98 == 4) {
+            DAT_0605d750.stageID = 0x2B;
+        } else if (D_80097C98 == 5) {
+            DAT_0605d750.stageID = 11;
+        } else if (D_80097C98 == 6) {
+            DAT_0605d750.stageID = 0x40;
+        } else if (arg0 != 0x0) {
+            DAT_0605d750.stageID = ptr->stageId;
+            if ((DAT_0605d750.stageID & 0x10) != 0x10 &&
+                (DAT_0605d750.unk2 & 0x20) == 0x20) {
+                DAT_0605d750.stageID ^= 0x20;
+            }
+        }
+        D_801375BC.def = DAT_0606459c + ptr->roomId + 4;
+        DAT_0605d750.unk4 = D_801375BC.def->tileLayoutId;
+    }
+}
+
+void func_0606D5FC(void) {
+    RoomTeleport* ptr;
+
+    if ((D_8003C708.flags & FLAG_UNK_40) == 0) {
+        return;
+    }
+    if (D_8003C708.unk2 != 0 &&
+        (PLAYER.posX.i.hi < 8 || PLAYER.posX.i.hi > 0x318)) {
+        return;
+    }
+    switch (D_8003C708.unk2) {
+    case 0:
+        ptr = &g_RoomTeleports[DAT_0605c108];
+        D_8003C708.unk4 = ptr->stageId;
+        if (DAT_0605d750.stageID & 0x20) {
+            D_8003C708.unk4 ^= 0x20;
+        }
+        D_8003C708.zPriority = ptr->reloadStageId;
+        if (DAT_0605d750.stageID & 0x20) {
+            D_8003C708.zPriority ^= 0x20;
+        }
+        if (D_8003C708.flags == FLAG_UNK_40) {
+            g_Player.demo_timer = 0x18;
+            g_Player.padSim = 0x4000;
+        } else {
+            g_Player.demo_timer = 0x18;
+            g_Player.padSim = 0x8000;
+        }
+        D_8003C708.unk2++;
+        break;
+    case 1:
+        D_8003C708.unk2++;
+        break;
+    case 2:
+    case 3:
+        break;
+    }
+}
+
+void func_0606D6DC(void) {
+    if (DAT_0605d750.stageID == 6 && DAT_0605d750.unk8 == 0) {
+        switch (DAT_0605d750.unk4) {
+        case 2:
+        case 3:
+        case 9:
+        case 10:
+            DAT_0605d750.unkC--;
+            break;
+        case 8:
+            if (DAT_0605d750.unkA == 0 && DAT_0605d750.unk6 == 1) {
+                DAT_0605d750.unkC--;
+            }
+            break;
+        }
+    } else if (DAT_0605d750.stageID == 0x2B && DAT_0605d750.unk8 != 0) {
+        switch (DAT_0605d750.unk4) {
+        case 1:
+            if (DAT_0605d750.unk6 == 0 || DAT_0605d750.unk6 == 2 ||
+                DAT_0605d750.unk6 == 3 || DAT_0605d750.unk6 == 4) {
+                DAT_0605d750.unkC--;
+            }
+            break;
+        }
+    }
+}
+
+void func_0606D798(void) {
+    if (DAT_0605d750.stageID == 6 && DAT_0605d750.unk8 == 0) {
+        if (DAT_0605d750.unk4 != 8) {
+            if (DAT_0605d750.unk4 != 9) {
+                return;
+            }
+            DAT_0605d750.unkC++;
+        } else {
+            if (DAT_0605d750.unk6 != 2) {
+                return;
+            }
+            DAT_0605d750.unkC++;
+        }
+    } else if (DAT_0605d750.stageID == 0x26 && DAT_0605d750.unk8 == 0) {
+        if (DAT_0605d750.unk4 != 2) {
+            if (DAT_0605d750.unk4 != 3) {
+                return;
+            }
+        }
+        DAT_0605d750.unkC++;
+    }
+}
+
+s32 func_0606D804(u16 arg0) {
+    s32 ret;
+
+    ret = DAT_0606459c;
+
+    switch (arg0) {
+    case 6:
+        if (DAT_0605d750.unk8 != 0) {
+            ret += 0x6C;
+        }
+        break;
+    case 9:
+        if (DAT_0605d750.unk8 == 1) {
+            ret += 0x42;
+        } else if (DAT_0605d750.unk8 == 2) {
+            ret += 0x114;
+        }
+        break;
+    case 3:
+    case 11:
+        if (DAT_0605d750.unk8 != 0) {
+            ret += 0x66;
+        }
+        break;
+    }
+    return ret;
+}
 
 static bool IsAlucart(void) {
     if (CheckEquipmentItemCount(0xAB, 0) && CheckEquipmentItemCount(0xAA, 0) &&

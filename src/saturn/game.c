@@ -111,7 +111,7 @@ void InitRoom(void) {
     func_0600ff08();
     if (DAT_0605d750.unk4 < 0x50) {
         D_801375BC.def =
-            (RoomLoadDef*)FUN_0606d804(DAT_0605d750.stageID & 0xDF);
+            (RoomLoadDef*)func_0606D804(DAT_0605d750.stageID & 0xDF);
         D_801375BC.def =
             (RoomLoadDef*)((u8*)D_801375BC.def + DAT_0605d750.unk4 * 6 + 4);
     }

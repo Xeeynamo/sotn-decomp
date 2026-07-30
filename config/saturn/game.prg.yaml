@@ -104,21 +104,10 @@ segments:
           - [0x12E80, 0x12F57]
         end: 0x1614B
       - [0x1614C, .data, game/cfgjp]
-      - start: 0x1E6A8
-        type: .data
-        file: game/cfgrw1
-        end: 0x1E6D3
-      - start: 0x1E6D4
-        type: .data
-        file: game/cfgrw1b
-        end: 0x1E793
-      - start: 0x1E794
-        type: .data
-        file: game/cfgrw1c
-        end: 0x1EE43
-      - start: 0x1EE44
-        type: .data
-        file: game/cfgrw1d
+      - [0x1E6A8, .data, game/cfgrw1]
+      - [0x1E6D4, .data, game/cfgrw1b]
+      - [0x1E794, .data, game/cfgrw1c]
+      - [0x1EE44, .data, game/cfgrw1d]
       - [0x1F0EC, .data, game/jewel]
       - [0x1F0F4, .data, game/cfgrw4]
       - [0x1F4C8, .data, game/btnmask]
@@ -129,9 +118,7 @@ segments:
       - [0x1F528, .data, game/cfgrw5]
       - [0x1F54C, .data, game/eqhelp]
       - [0x1F5AC, .data, game/mnscroll]
-      - start: 0x1F5B0
-        type: .data
-        file: game/cfgrest
+      - [0x1F5B0, .data, game/cfgrest]
       - [0x1FC30, .data, game/capetbl]
       - [0x1FC88, .data, game/capepal]
       - [0x1FC90, .data, game/miscend]

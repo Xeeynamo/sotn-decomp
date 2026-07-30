@@ -1,5 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "data.h"
+#include "../sattypes.h"
+
+typedef struct {
+    s32 x;
+    s32 y;
+    s32 stageId;
+    s32 eventId;
+    s32 castleFlag;
+} RoomBossTeleport;
 
 RoomBossTeleport g_RoomBossTeleports[] = {
     {0x31, 0x14, 0x02, 0xFF, 0xA7}, {0x20, 0x1A, 0x00, 0x1B, 0x42},

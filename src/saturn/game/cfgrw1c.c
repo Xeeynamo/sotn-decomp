@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "data.h"
+#include "../sattypes.h"
 
 RoomTeleport g_RoomTeleports[171] = {
     {0x0010, 0x0088, 0x006C, 0x001F, 0x0041},
