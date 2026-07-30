@@ -621,7 +621,7 @@ typedef struct {
     /* 0x3EC */ s32 vram_flag;
     char pad2[8];
     /* 0x3F8 */ u32 status;
-    u32 unk3FC;
+    /* 0x3FC */ u32 unk3FC;
     char pad400[0x2E];
     /* 0x42E */ u16 high_jump_timer;
     /* 0x430 */ u16 unk44;
@@ -685,17 +685,17 @@ typedef struct {
 } RelicDesc;
 
 typedef struct {
-    s32 buttonConfig[8];
-    u16 buttonMask[8];
-    s32 timeAttackRecords[32];
-    s32 cloakColors[6];
-    s32 windowColors[3];
-    s32 equipOrderTypes[11];
-    s32 isCloakLiningReversed;
-    s32 isSoundMono;
-    s32 D_8003CB00;
-    s32 D_8003CB04;
-} GameSettings;
+    /* 0x000 */ s32 buttonConfig[8];
+    /* 0x020 */ u16 buttonMask[8];
+    /* 0x030 */ s32 timeAttackRecords[32];
+    /* 0x0B0 */ s32 cloakColors[6];
+    /* 0x0C8 */ s32 windowColors[3];
+    /* 0x0D4 */ s32 equipOrderTypes[11];
+    /* 0x100 */ s32 isCloakLiningReversed;
+    /* 0x104 */ s32 isSoundMono;
+    /* 0x108 */ s32 D_8003CB00;
+    /* 0x10C */ s32 D_8003CB04;
+} GameSettings; /* size=0x110 */
 
 typedef struct {
     u16 flags;

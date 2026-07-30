@@ -762,8 +762,42 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f6073770, func_06073770);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60737A0, func_060737A0);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6073E58, func_06073E58);
 
-// _PSX_sort_item
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6073EEC, func_06073EEC);
+extern s32 g_EquipOrderType;
+
+// original name: PSX_sort_item
+void func_800FBAC4(void) {
+    s32 i, j;
+    s32* ptr;
+
+    for (i = g_EquipOrderType; i > 0; i--) {
+        j = g_Settings.equipOrderTypes[i];
+        g_Settings.equipOrderTypes[i] = g_Settings.equipOrderTypes[i - 1];
+        g_Settings.equipOrderTypes[i - 1] = j;
+    }
+    g_EquipOrderType = 0;
+    ptr = D_801375D8;
+    *ptr++ = 0;
+    for (i = 0; i < 0xB; i++) {
+        s32 importantcategory = g_Settings.equipOrderTypes[i];
+        for (j = 0; j < 0xB0; j++) {
+            s32 order = g_Status.equipHandOrder[j];
+            if (g_Status.equipHandCount[order] != 0 && order != 0 &&
+                g_EquipDefs[order].itemCategory == importantcategory) {
+                *ptr++ = order;
+            }
+        }
+    }
+    for (j = 0; j < 0xB0; j++) {
+        s32 order = g_Status.equipHandOrder[j];
+        if (g_Status.equipHandCount[order] == 0) {
+            *ptr++ = order;
+        }
+    }
+    ptr = D_801375D8;
+    for (i = 0; i < 0xB0; i++) {
+        g_Status.equipHandOrder[i] = *ptr++;
+    }
+}
 
 // original name: PSX_equip_id_init
 void func_800FAF44(bool isAccessory) {
@@ -799,9 +833,154 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f60744F8, func_060744F8);
 // _SS_MOJI_SET
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60745A0, func_060745A0);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6074698, func_06074698);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6074700, func_06074700);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6074724, func_06074724);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6074964, func_06074964);
+
+void func_06074700(void) {
+    u16 i;
+    u32* char_ram;
+
+    char_ram = (u32*)SCL_VDP2_VRAM_A1;
+    for (i = 0; i < 0x800; i++) {
+        *char_ram++ = 0;
+    }
+}
+
+extern u32 g_FontGlyphDataSizes[];
+
+u32* func_06074724(s32 arg0, u16 arg1) {
+    switch (arg1) {
+    case 0x41:
+        if (arg0 == 0) {
+            return &g_FontGlyphDataSizes[0];
+        } else {
+            return &g_FontGlyphDataSizes[5];
+        }
+    case 0x12:
+        if (arg0 == 0) {
+            return &g_FontGlyphDataSizes[10];
+        } else {
+            return &g_FontGlyphDataSizes[34];
+        }
+    case 0x1F:
+        if (arg0 == 0) {
+            return &g_FontGlyphDataSizes[152];
+        } else {
+            return &g_FontGlyphDataSizes[158];
+        }
+    case 0x18:
+        if (arg0 == 0) {
+            return &g_FontGlyphDataSizes[58];
+        } else {
+            return &g_FontGlyphDataSizes[71];
+        }
+    case 0xB:
+        if (arg0 == 0) {
+            return &g_FontGlyphDataSizes[84];
+        } else {
+            return &g_FontGlyphDataSizes[91];
+        }
+    case 0x40:
+        if (arg0 == 0) {
+            return &g_FontGlyphDataSizes[164];
+        } else {
+            return &g_FontGlyphDataSizes[170];
+        }
+    case 0x9:
+        if (arg0 == 0) {
+            return &g_FontGlyphDataSizes[176];
+        } else {
+            return &g_FontGlyphDataSizes[178];
+        }
+    case 0x28:
+        if (arg0 == 0) {
+            return &g_FontGlyphDataSizes[98];
+        } else {
+            return &g_FontGlyphDataSizes[110];
+        }
+    case 0x38:
+        if (arg0 == 0) {
+            return &g_FontGlyphDataSizes[122];
+        } else {
+            return &g_FontGlyphDataSizes[137];
+        }
+    case 0xC:
+        if (arg0 == 0) {
+            return &g_FontGlyphDataSizes[180];
+        } else {
+            return &g_FontGlyphDataSizes[185];
+        }
+    case 0x6:
+        if (arg0 == 0) {
+            return &g_FontGlyphDataSizes[190];
+        } else {
+            return &g_FontGlyphDataSizes[195];
+        }
+    case 0x19:
+        if (arg0 == 0) {
+            return &g_FontGlyphDataSizes[200];
+        } else {
+            return &g_FontGlyphDataSizes[207];
+        }
+    case 0x1C:
+        if (arg0 == 0) {
+            return &g_FontGlyphDataSizes[214];
+        } else {
+            return &g_FontGlyphDataSizes[219];
+        }
+    case 0x8:
+        if (arg0 == 0) {
+            return &g_FontGlyphDataSizes[224];
+        } else {
+            return &g_FontGlyphDataSizes[238];
+        }
+    case 0x3C:
+        if (arg0 == 0) {
+            return &g_FontGlyphDataSizes[252];
+        } else {
+            return &g_FontGlyphDataSizes[255];
+        }
+    case 0x17:
+        if (arg0 == 0) {
+            return &g_FontGlyphDataSizes[258];
+        } else {
+            return &g_FontGlyphDataSizes[263];
+        }
+    }
+    return NULL;
+}
+
+u32* func_06074964(s32 arg0, s32 arg1) {
+    switch (arg1) {
+    case 0:
+        if (arg0 == 0) {
+            return &g_FontGlyphDataSizes[268];
+        } else {
+            return &g_FontGlyphDataSizes[269];
+        }
+    case 1:
+        if (arg0 == 0) {
+            return &g_FontGlyphDataSizes[270];
+        } else {
+            return &g_FontGlyphDataSizes[278];
+        }
+    case 2:
+        if (arg0 == 0) {
+            return &g_FontGlyphDataSizes[286];
+        } else {
+            return &g_FontGlyphDataSizes[303];
+        }
+    case 3:
+        return NULL;
+    case 4:
+        if (arg0 == 0) {
+            return &g_FontGlyphDataSizes[320];
+        } else {
+            return &g_FontGlyphDataSizes[337];
+        }
+    case 5:
+        return NULL;
+    }
+    return NULL;
+}
 
 extern u16 g_EquippedCapePalette[4];
 extern u16 D_800A37F4[][4];
@@ -838,8 +1017,35 @@ void UpdateCapePalette(void) {
 
 u16* func_06074A98(void) { return D_800A37F4[8]; }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6074AA8, func_06074AA8);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6074BF4, func_06074BF4);
+void ApplyJosephsCloakPalette(void) {
+    u16 g_JosephsCloakColors[4];
+    u16* ptr;
+    s32 i;
+
+    g_JosephsCloakColors[0] = RGB16_COLOR(
+        g_Settings.cloakColors[3] * 3 / 4, g_Settings.cloakColors[4] * 3 / 4,
+        g_Settings.cloakColors[5] * 3 / 4);
+    g_JosephsCloakColors[1] =
+        RGB16_COLOR(g_Settings.cloakColors[3], g_Settings.cloakColors[4],
+                    g_Settings.cloakColors[5]);
+    g_JosephsCloakColors[2] = RGB16_COLOR(
+        g_Settings.cloakColors[0] * 3 / 4, g_Settings.cloakColors[1] * 3 / 4,
+        g_Settings.cloakColors[2] * 3 / 4);
+    g_JosephsCloakColors[3] =
+        RGB16_COLOR(g_Settings.cloakColors[0], g_Settings.cloakColors[1],
+                    g_Settings.cloakColors[2]);
+
+    ptr = func_06074A98();
+    for (i = 0; i < 4; i++) {
+        *ptr++ = g_JosephsCloakColors[i];
+    }
+}
+
+void func_06074BF4(void) {
+    if (DAT_0605d750.stageID != STAGE_ST0 && g_PlayableCharacter == 0) {
+        UpdateCapePalette();
+    }
+}
 
 void func_06074C28(void) {
     g_Status.equipment[0] = 0xA6;
