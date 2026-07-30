@@ -11,7 +11,11 @@ import (
 	"golang.org/x/sync/errgroup"
 )
 
-const cc1Psx26Release = "cc1-psx-26"
+const (
+	cc1Psx26Release       = "cc1-psx-26"
+	saturnCompilerRepo    = "sozud/saturn-compiler-repro"
+	saturnCompilerRelease = "v1.0.0"
+)
 
 func EnsureBuildDeps(versions []string) error {
 	deps := make(map[sotn.Platform]struct{})
@@ -27,7 +31,9 @@ func EnsureBuildDeps(versions []string) error {
 		case sotn.PlatformPSP:
 			ensurePSPDeps(&eg)
 		case sotn.PlatformSaturn:
-			ensureSaturnDeps(&eg)
+			if err := ensureSaturnDeps(&eg); err != nil {
+				return err
+			}
 		default:
 			return fmt.Errorf("unsupported platform version: %s", version)
 		}
@@ -139,20 +145,44 @@ func ensurePythonDeps() error {
 	return cmd.Run()
 }
 
-func ensureSaturnDeps(eg *errgroup.Group) {
-	eg.Go(func() error {
-		if err := downloadAndExtractStructuredTarGzFromGithub(
-			"Xeeynamo/sotn-decomp", cc1Psx26Release,
-			"cygnus-2.7-96Q3-bin", "bin",
-		); err != nil {
-			return err
+func ensureSaturnDeps(eg *errgroup.Group) error {
+	compiler := os.Getenv("SOTN_SATURN_COMPILER")
+	if compiler == "" {
+		compiler = "native64"
+	}
+	switch compiler {
+	case "native64":
+		if os.Getenv("SOTN_SATURN_CC1") == "" {
+			eg.Go(func() error {
+				return downloadTarGzFromGithubIfNotExists(
+					saturnCompilerRepo, saturnCompilerRelease,
+					"cc1-native64", "bin/cc1-saturn-960904",
+				)
+			})
 		}
-		const dst = "tools/builds/GCCSH"
-		if _, err := os.Stat(dst + "/CC1.EXE"); err == nil {
-			return nil
+	case "dos":
+		if os.Getenv("SOTN_SATURN_CC1") != "" {
+			return fmt.Errorf(
+				"SOTN_SATURN_CC1 cannot be used with SOTN_SATURN_COMPILER=dos")
 		}
-		return util.CopyDirRecursive("bin/cygnus-2.7-96Q3-bin", dst)
-	})
+		eg.Go(func() error {
+			if err := downloadAndExtractStructuredTarGzFromGithub(
+				"Xeeynamo/sotn-decomp", cc1Psx26Release,
+				"cygnus-2.7-96Q3-bin", "bin",
+			); err != nil {
+				return err
+			}
+			const dst = "tools/builds/GCCSH"
+			if _, err := os.Stat(dst + "/CC1.EXE"); err == nil {
+				return nil
+			}
+			return util.CopyDirRecursive("bin/cygnus-2.7-96Q3-bin", dst)
+		})
+	default:
+		return fmt.Errorf(
+			"SOTN_SATURN_COMPILER must be either %q or %q, got %q",
+			"native64", "dos", compiler)
+	}
 	eg.Go(func() error {
 		if err := GitSubmoduleInitAndUpdate("tools/saturn-splitter", true); err != nil {
 			return err
@@ -165,4 +195,5 @@ func ensureSaturnDeps(eg *errgroup.Group) {
 		}
 		return nil
 	})
+	return nil
 }

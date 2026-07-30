@@ -13,19 +13,42 @@ if sotn_progress_report:
     build_base_path = "rpt/saturn"
     extra_cpp_defs = " -DSKIP_ASM=1"
 
-# write out current pwd to open it as a disk
-with open('./tools/builds/.dosemurc', 'w') as f:
-    f.write(f'$_hdimage = \'+0 {os.getcwd()} +1\'\n')
-
-# copy cygnus into a 8.3 folder
-if not os.path.exists('tools/builds/GCCSH'):
-    shutil.copytree('bin/cygnus-2.7-96Q3-bin', 'tools/builds/GCCSH')
+saturn_compiler = os.environ.get("SOTN_SATURN_COMPILER", "native64")
+if saturn_compiler == "native64":
+    saturn_cc1 = os.environ.get(
+        "SOTN_SATURN_CC1", "bin/cc1-saturn-960904")
+    compile_command = (
+        f'sh ./tools/builds/native_cc1_wrapper.sh '
+        f'{saturn_cc1} $in $out $args')
+    compiler_inputs = [
+        saturn_cc1,
+        'tools/builds/native_cc1_wrapper.sh',
+    ]
+elif saturn_compiler == "dos":
+    if "SOTN_SATURN_CC1" in os.environ:
+        raise SystemExit(
+            "SOTN_SATURN_CC1 cannot be used with SOTN_SATURN_COMPILER=dos")
+    # The historical compiler needs its files in a DOS-compatible 8.3 path.
+    if not os.path.exists('tools/builds/GCCSH'):
+        shutil.copytree(
+            'bin/cygnus-2.7-96Q3-bin', 'tools/builds/GCCSH')
+    compile_command = (
+        'sh ./tools/builds/dosemu_wrapper.sh $in $out $args')
+    compiler_inputs = [
+        'tools/builds/GCCSH/CC1.EXE',
+        'tools/builds/dosemu_wrapper.sh',
+        'tools/builds/build.bat',
+        'tools/builds/dosemurc',
+    ]
+else:
+    raise SystemExit(
+        "SOTN_SATURN_COMPILER must be either 'native64' or 'dos'")
 
 ninja = ninja_syntax.Writer(open("build.ninja", "w"))
 
 ninja.rule('compile',
-           command='sh ./tools/builds/dosemu_wrapper.sh $in $out $args $tmpdir',
-           description='Building $out from $in')
+           command=compile_command,
+           description=f'Building $out with {saturn_compiler} compiler')
 
 ninja.rule(
         'check',
@@ -172,6 +195,7 @@ def add_srcs(srcs, output_dir, args):
             asm_name, 
             'compile', 
             inputs=[cpp_name],
+            implicit=compiler_inputs,
             variables={
                 'args': args
             })
@@ -471,7 +495,54 @@ snd_srcs = [
     'src/saturn/stage_15/vlay.c',
     'src/saturn/stage_15/laydata.c',
     'src/saturn/stage_15/metadata.c',
-    'src/saturn/stage_15/data.c',
+    'src/saturn/stage_15/stdata.c',
+    'src/saturn/stage_15/prcfg.c',
+    'src/saturn/stage_15/gold.c',
+    'src/saturn/stage_15/przan.c',
+    'src/saturn/stage_15/ent04.c',
+    'src/saturn/stage_15/ent09.c',
+    'src/saturn/stage_15/expl.c',
+    'src/saturn/stage_15/ent05.c',
+    'src/saturn/stage_15/ent06.c',
+    'src/saturn/stage_15/ent07.c',
+    'src/saturn/stage_15/3dcoord.c',
+    'src/saturn/stage_15/3dindex.c',
+    'src/saturn/stage_15/ent15.c',
+    'src/saturn/stage_15/s23res.c',
+    'src/saturn/stage_15/entskbst.c',
+    'src/saturn/stage_15/s23gfx.c',
+    'src/saturn/stage_15/s23part.c',
+    'src/saturn/stage_15/s24res.c',
+    'src/saturn/stage_15/entgarg.c',
+    'src/saturn/stage_15/s24gfx.c',
+    'src/saturn/stage_15/s24part.c',
+    'src/saturn/stage_15/s25res.c',
+    'src/saturn/stage_15/entbreed.c',
+    'src/saturn/stage_15/s25gfx.c',
+    'src/saturn/stage_15/s25part.c',
+    'src/saturn/stage_15/s26res.c',
+    'src/saturn/stage_15/enthface.c',
+    'src/saturn/stage_15/s26gfx.c',
+    'src/saturn/stage_15/s26part.c',
+    'src/saturn/stage_15/s27res.c',
+    'src/saturn/stage_15/entwlpr.c',
+    'src/saturn/stage_15/s27gfx.c',
+    'src/saturn/stage_15/s27part.c',
+    'src/saturn/stage_15/s28res.c',
+    'src/saturn/stage_15/entvenus.c',
+    'src/saturn/stage_15/s28gfx.c',
+    'src/saturn/stage_15/s28part.c',
+    'src/saturn/stage_15/s29res.c',
+    'src/saturn/stage_15/ent58.c',
+    'src/saturn/stage_15/s29gfx.c',
+    'src/saturn/stage_15/s29part.c',
+    'src/saturn/stage_15/s30res.c',
+    'src/saturn/stage_15/entgard.c',
+    'src/saturn/stage_15/s30gfx.c',
+    'src/saturn/stage_15/s30part.c',
+    'src/saturn/stage_15/s31res.c',
+    'src/saturn/stage_15/entlead.c',
+    'src/saturn/stage_15/s31gfx.c',
     'src/saturn/rstage16.c',
     'src/saturn/rstage16/header.c',
     'src/saturn/rstage16/sprbank.c',
@@ -946,7 +1017,54 @@ multi_objs = {
         'build/saturn/stage_15/vlay.o',
         'build/saturn/stage_15/laydata.o',
         'build/saturn/stage_15/metadata.o',
-        'build/saturn/stage_15/data.o',
+        'build/saturn/stage_15/stdata.o',
+        'build/saturn/stage_15/prcfg.o',
+        'build/saturn/stage_15/gold.o',
+        'build/saturn/stage_15/przan.o',
+        'build/saturn/stage_15/ent04.o',
+        'build/saturn/stage_15/ent09.o',
+        'build/saturn/stage_15/expl.o',
+        'build/saturn/stage_15/ent05.o',
+        'build/saturn/stage_15/ent06.o',
+        'build/saturn/stage_15/ent07.o',
+        'build/saturn/stage_15/3dcoord.o',
+        'build/saturn/stage_15/3dindex.o',
+        'build/saturn/stage_15/ent15.o',
+        'build/saturn/stage_15/s23res.o',
+        'build/saturn/stage_15/entskbst.o',
+        'build/saturn/stage_15/s23gfx.o',
+        'build/saturn/stage_15/s23part.o',
+        'build/saturn/stage_15/s24res.o',
+        'build/saturn/stage_15/entgarg.o',
+        'build/saturn/stage_15/s24gfx.o',
+        'build/saturn/stage_15/s24part.o',
+        'build/saturn/stage_15/s25res.o',
+        'build/saturn/stage_15/entbreed.o',
+        'build/saturn/stage_15/s25gfx.o',
+        'build/saturn/stage_15/s25part.o',
+        'build/saturn/stage_15/s26res.o',
+        'build/saturn/stage_15/enthface.o',
+        'build/saturn/stage_15/s26gfx.o',
+        'build/saturn/stage_15/s26part.o',
+        'build/saturn/stage_15/s27res.o',
+        'build/saturn/stage_15/entwlpr.o',
+        'build/saturn/stage_15/s27gfx.o',
+        'build/saturn/stage_15/s27part.o',
+        'build/saturn/stage_15/s28res.o',
+        'build/saturn/stage_15/entvenus.o',
+        'build/saturn/stage_15/s28gfx.o',
+        'build/saturn/stage_15/s28part.o',
+        'build/saturn/stage_15/s29res.o',
+        'build/saturn/stage_15/ent58.o',
+        'build/saturn/stage_15/s29gfx.o',
+        'build/saturn/stage_15/s29part.o',
+        'build/saturn/stage_15/s30res.o',
+        'build/saturn/stage_15/entgard.o',
+        'build/saturn/stage_15/s30gfx.o',
+        'build/saturn/stage_15/s30part.o',
+        'build/saturn/stage_15/s31res.o',
+        'build/saturn/stage_15/entlead.o',
+        'build/saturn/stage_15/s31gfx.o',
     ],
     'build/saturn/rstage16.o' : [
         'build/saturn/rstage16/header.o',
