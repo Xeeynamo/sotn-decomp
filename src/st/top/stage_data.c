@@ -1,8 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stage.h>
 
-u8 gfx_stage_name_jp[] = {
-#include "gen/gfx_stage_name_jp.h"
+// #include "gen/richter.h"
+
+u8 gfx_stage_name_jp_sm[] = {
+#include "gen/gfx_stage_name_jp_sm.h"
+};
+u8 gfx_stage_name_jp_lg[] = {
+#include "gen/gfx_stage_name_jp_lg.h"
 };
 u8 gfx_flea_rider[] = {
 #include "gen/gfx_flea_rider.h"
@@ -32,6 +37,9 @@ u8 gfx_stage_name_en[] = {
 #include "gen/gfx_stage_name_en.h"
 };
 
+u16 D_us_80190A34[] = {
+#include "gen/D_us_80190A34.h"
+};
 u16 D_us_80190A54[] = {
 #include "gen/D_us_80190A54.h"
 };
