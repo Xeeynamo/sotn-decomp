@@ -60,7 +60,7 @@ extern u16 DAT_06065470;
 extern s32 DAT_0608609c;
 
 void func_0606F01C(void);
-void func_06074AA8(void);
+void ApplyJosephsCloakPalette(void);
 
 void func_0606EEF8(u16 param_1) {
     u16 stageID;
@@ -87,7 +87,7 @@ void func_0606EEF8(u16 param_1) {
     SCL_SET_SPCCEN(1);
     DAT_06065470 &= 0xFFFB;
     SclProcess = 1;
-    func_06074AA8();
+    ApplyJosephsCloakPalette();
 }
 
 extern s16 g_ButtonMask[];

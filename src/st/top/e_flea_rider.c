@@ -3,25 +3,30 @@
 
 extern EInit g_EInitFleaRider;
 
+// Animations only have 4 frames. These all just do
+//  different durations of those same frames, essentially
+
+// idle flapping
 static AnimateEntityFrame unused_anim[] = {
-    {0x05, 0x01}, {0x08, 0x02}, {0x09, 0x03},
-    {0x09, 0x04}, {0x0A, 0x02}, POSE_LOOP(0)};
-static AnimateEntityFrame D_us_80181970[] = {
-    {0x02, 0x01}, {0x03, 0x02}, {0x04, 0x03},
-    {0x04, 0x04}, {0x04, 0x02}, POSE_LOOP(0),
+    {5, 1}, {8, 2}, {9, 3}, {9, 4}, {10, 2}, POSE_LOOP(0)};
+// faster flapping
+static AnimateEntityFrame flapping_fast[] = {
+    {2, 1}, {3, 2}, {4, 3}, {4, 4}, {4, 2}, POSE_LOOP(0),
 };
-static AnimateEntityFrame D_us_8018197C[] = {
-    {0x07, 0x01}, {0x0A, 0x02}, {0x0B, 0x03},
-    {0x0B, 0x04}, {0x0C, 0x02}, POSE_LOOP(0),
+// slow flapping
+static AnimateEntityFrame flapping_slow[] = {
+    {7, 1}, {10, 2}, {11, 3}, {11, 4}, {12, 2}, POSE_LOOP(0),
 };
+// super fast flap downward
 static AnimateEntityFrame unused_anim_2[] = {
-    {0x02, 0x01},
-    {0x08, 0x02},
-    {0x04, 0x03},
+    {2, 1},
+    {8, 2},
+    {4, 3},
     POSE_END,
 };
+// Weird flap down and then up really fast
 static AnimateEntityFrame unused_anim_3[] = {
-    {0x04, 0x03}, {0x09, 0x04}, {0x0A, 0x02}, {0x03, 0x01}, POSE_END,
+    {4, 3}, {9, 4}, {10, 2}, {3, 1}, POSE_END,
 };
 
 static Point16 D_us_8018199C[] = {
@@ -72,7 +77,7 @@ void EntityFleaRider(Entity* self) {
     case 2:
         MoveEntity();
         if (self->ext.fleaRider.unk88) {
-            if (!AnimateEntity(D_us_80181970, self)) {
+            if (!AnimateEntity(flapping_fast, self)) {
                 self->ext.fleaRider.unk88--;
                 if (!self->ext.fleaRider.unk88) {
                     self->poseTimer = 0;
@@ -80,7 +85,7 @@ void EntityFleaRider(Entity* self) {
                 }
             }
         } else {
-            AnimateEntity(D_us_8018197C, self);
+            AnimateEntity(flapping_slow, self);
         }
         if (!self->poseTimer && self->pose == 2) {
             PlaySfxPositional(SFX_WING_FLAP_A);
