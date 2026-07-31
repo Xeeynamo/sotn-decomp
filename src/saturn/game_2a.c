@@ -287,7 +287,7 @@ void InitStatsAndGear(s32 isDeathTakingItems) {
             g_Status.mp = 1;
             g_Status.equipment[7] = 0x47;
         }
-        if (g_GameClearFlag != 0) {
+        if (g_GameClearFlag) {
             fileName = g_AxeArmorCode;
             for (i = 0; i < 8; i++) {
                 if (g_Status.saveName[i] != *fileName++) {
@@ -446,7 +446,7 @@ void func_06076A04(void) {
     } else {
         prim->drawMode |= DRAW_HIDE;
     }
-    sVar4 = (g_Status.mp * 0x39) / g_Status.mpMax;
+    sVar4 = (g_Status.mp * 57) / g_Status.mpMax;
     prim = prim->next;
     if (g_Status.mp == g_Status.mpMax) {
         u16 uVar11 = (g_Timer & 0x10) ? g_Timer % 0x10 : ~g_Timer % 0x10;
@@ -490,7 +490,7 @@ void func_06076A04(void) {
     prim->unk8 = ptr[0];
     prim->unkA = ptr[1];
     prim = prim->next;
-    if (g_Status.subWeapon == 0x0) {
+    if (g_Status.subWeapon == 0) {
         prim->drawMode |= DRAW_HIDE;
     } else {
         s32 sub = g_Status.subWeapon;
@@ -498,27 +498,26 @@ void func_06076A04(void) {
                            local_30[sub]];
         prim->unk8 = ptr[0];
         prim->unkA = ptr[1];
-        prim->unk6 = unkFunc(DAT_06086388->flags + local_31[sub]);
-        prim->unk6 = prim->unk6 & 0x8FFF | 0x4000;
+        prim->unk6 =
+            unkFunc(DAT_06086388->flags + local_31[sub]) & 0x8FFF | 0x4000;
         SetXY(prim, DAT_06085d3c[sub * 2], DAT_06085d3c[sub * 2 + 1]);
         prim->drawMode &= ~DRAW_HIDE;
     }
     prim = prim->next;
     if ((s32)g_Player.unk3FC > 300) {
-        iVar10 = ((g_GameTimer >> 0x2) & 0x1) + 0x5;
+        iVar10 = ((g_GameTimer >> 2) & 1) + 5;
     } else if ((s32)g_Player.unk3FC > 200) {
-        iVar10 = ((g_GameTimer >> 0x2) & 0x1) + 0x3;
+        iVar10 = ((g_GameTimer >> 2) & 1) + 3;
     } else if ((s32)g_Player.unk3FC > 100) {
-        iVar10 = ((g_GameTimer >> 0x3) & 0x1) + 0x3;
+        iVar10 = ((g_GameTimer >> 3) & 1) + 3;
     } else {
         iVar10 = 0x0;
     }
 
-    prim->unk6 = unkFunc(DAT_06086388->flags + iVar10);
-    prim->unk6 = prim->unk6 & 0x8FFF | 0x4000;
-    if (g_PlayerHud.unk24 == 0x0) {
-        if ((g_Status.D_80097BF8 & 0x1) == 0x0) {
-            if ((g_Timer & 0xF) == 0x0) {
+    prim->unk6 = unkFunc(DAT_06086388->flags + iVar10) & 0x8FFF | 0x4000;
+    if (g_PlayerHud.unk24 == 0) {
+        if ((g_Status.D_80097BF8 & 1) == 0) {
+            if ((g_Timer & 0xF) == 0) {
                 g_Status.mp++;
             }
             if (g_Status.mp > g_Status.mpMax) {
@@ -531,7 +530,7 @@ void func_06076A04(void) {
         prim->unkA = ptr[1];
         SetXY(prim, 0x2D, 0x19);
         g_PlayerHud.unk24++;
-    } else if (g_PlayerHud.unk24 < 0xc) {
+    } else if (g_PlayerHud.unk24 < 0xC) {
         ptr = DAT_0605aec0[DAT_06086388->allocationIndex + 2];
         prim->unk8 = ptr[0];
         prim->unkA = ptr[1];
@@ -603,8 +602,7 @@ void func_060771D4(Primitive* prim, s32 arg1) {
     ptr = DAT_0605aec0[DAT_06086388->allocationIndex + arg1];
     prim->unk8 = ptr[0];
     prim->unkA = ptr[1];
-    prim->unk6 = unkFunc(DAT_06086388->flags + arg1);
-    prim->unk6 = prim->unk6 & 0x8FFF | 0x4000;
+    prim->unk6 = unkFunc(DAT_06086388->flags + arg1) & 0x8FFF | 0x4000;
 }
 
 void func_06077260(Primitive* prim) {
@@ -635,11 +633,11 @@ void func_06077260(Primitive* prim) {
 }
 
 extern SaturnSpriteResource g_SaturnSharedSpriteBank4Resource;
-extern u8 g_HudSpriteU[];
-extern u8 g_HudSpriteV[];
-extern u8 g_HudSpriteWidth[];
-extern u8 g_HudSpriteHeight[];
-extern u16 g_HudSpriteAttributes[];
+extern u8 g_HudSpriteX[];
+extern u8 g_HudSpriteY[];
+extern u8 g_HudSpriteW[];
+extern u8 g_HudSpriteH[];
+extern u16 g_HudSpriteBlend[];
 
 void func_06077354(Primitive* prim) {
     u32 digit;
@@ -681,14 +679,13 @@ void func_06077354(Primitive* prim) {
     ptr = DAT_0605aec0[digit];
     prim->unk8 = ptr[0];
     prim->unkA = ptr[1];
-    prim->unk6 = unkFunc(uVar13);
-    prim->unk6 = prim->unk6 & 0x8FFF | 0x4000;
+    prim->unk6 = unkFunc(uVar13) & 0x8FFF | 0x4000;
     if (leading_zeros != 0) {
         leading_zeros--;
         prim->drawMode |= DRAW_HIDE;
     } else {
         prim->drawMode &= ~DRAW_HIDE;
-        SetXW(prim, g_HudSpriteU[i], g_HudSpriteWidth[i]);
+        SetXW(prim, g_HudSpriteX[i], g_HudSpriteW[i]);
         leading_zeros = 0;
         i++;
     }
@@ -702,14 +699,13 @@ void func_06077354(Primitive* prim) {
     ptr = DAT_0605aec0[digit];
     prim->unk8 = ptr[0];
     prim->unkA = ptr[1];
-    prim->unk6 = unkFunc(uVar13);
-    prim->unk6 = prim->unk6 & 0x8FFF | 0x4000;
+    prim->unk6 = unkFunc(uVar13) & 0x8FFF | 0x4000;
     if (leading_zeros != 0) {
         leading_zeros--;
         prim->drawMode |= DRAW_HIDE;
     } else {
         prim->drawMode &= ~DRAW_HIDE;
-        SetXW(prim, g_HudSpriteU[i], g_HudSpriteWidth[i]);
+        SetXW(prim, g_HudSpriteX[i], g_HudSpriteW[i]);
         leading_zeros = 0;
         i++;
     }
@@ -723,13 +719,12 @@ void func_06077354(Primitive* prim) {
     ptr = DAT_0605aec0[digit];
     prim->unk8 = ptr[0];
     prim->unkA = ptr[1];
-    prim->unk6 = unkFunc(uVar13);
-    prim->unk6 = prim->unk6 & 0x8FFF | 0x4000;
+    prim->unk6 = unkFunc(uVar13) & 0x8FFF | 0x4000;
     if (leading_zeros != 0) {
         prim->drawMode |= DRAW_HIDE;
     } else {
         prim->drawMode &= ~DRAW_HIDE;
-        SetXW(prim, g_HudSpriteU[i], g_HudSpriteWidth[i]);
+        SetXW(prim, g_HudSpriteX[i], g_HudSpriteW[i]);
         i++;
     }
     prim = prim->next;
@@ -742,9 +737,8 @@ void func_06077354(Primitive* prim) {
     ptr = DAT_0605aec0[digit];
     prim->unk8 = ptr[0];
     prim->unkA = ptr[1];
-    prim->unk6 = unkFunc(uVar13);
-    prim->unk6 = prim->unk6 & 0x8FFF | 0x4000;
-    SetXW(prim, g_HudSpriteU[i], g_HudSpriteWidth[i]);
+    prim->unk6 = unkFunc(uVar13) & 0x8FFF | 0x4000;
+    SetXW(prim, g_HudSpriteX[i], g_HudSpriteW[i]);
 }
 
 // original name: set_life_num
@@ -759,16 +753,16 @@ void SetLifeNum(Primitive* prim) {
     displayHP = g_PlayerHud.displayHP;
     if (displayHP >= 1000) {
         leading_zeros = 0;
-        x = g_HudSpriteU[6];
+        x = g_HudSpriteX[6];
     } else if (displayHP >= 100) {
         leading_zeros = 1;
-        x = g_HudSpriteU[7];
+        x = g_HudSpriteX[7];
     } else if (displayHP >= 10) {
         leading_zeros = 2;
-        x = g_HudSpriteU[8];
+        x = g_HudSpriteX[8];
     } else {
         leading_zeros = 3;
-        x = g_HudSpriteU[9];
+        x = g_HudSpriteX[9];
     }
     if (g_PlayerHud.displayHP == g_Status.hpMax) {
         uVar11 = DAT_06086388->flags + 2;
@@ -782,15 +776,14 @@ void SetLifeNum(Primitive* prim) {
     ptr = DAT_0605aec0[digit];
     prim->unk8 = ptr[0];
     prim->unkA = ptr[1];
-    prim->unk6 = unkFunc(uVar11);
-    prim->unk6 = prim->unk6 & 0x8FFF | 0x4000;
+    prim->unk6 = unkFunc(uVar11) & 0x8FFF | 0x4000;
     if (leading_zeros != 0) {
         leading_zeros--;
         prim->drawMode |= DRAW_HIDE;
     } else {
         prim->drawMode &= ~DRAW_HIDE;
         prim->x0 = x;
-        prim->y0 = g_HudSpriteV[6];
+        prim->y0 = g_HudSpriteY[6];
         leading_zeros = 0;
         x += 7;
     }
@@ -800,15 +793,14 @@ void SetLifeNum(Primitive* prim) {
     ptr = DAT_0605aec0[digit];
     prim->unk8 = ptr[0];
     prim->unkA = ptr[1];
-    prim->unk6 = unkFunc(uVar11);
-    prim->unk6 = prim->unk6 & 0x8FFF | 0x4000;
+    prim->unk6 = unkFunc(uVar11) & 0x8FFF | 0x4000;
     if (leading_zeros != 0) {
         leading_zeros--;
         prim->drawMode |= DRAW_HIDE;
     } else {
         prim->drawMode &= ~DRAW_HIDE;
         prim->x0 = x;
-        prim->y0 = g_HudSpriteV[6];
+        prim->y0 = g_HudSpriteY[6];
         leading_zeros = 0;
         x += 7;
     }
@@ -818,14 +810,13 @@ void SetLifeNum(Primitive* prim) {
     ptr = DAT_0605aec0[digit];
     prim->unk8 = ptr[0];
     prim->unkA = ptr[1];
-    prim->unk6 = unkFunc(uVar11);
-    prim->unk6 = prim->unk6 & 0x8FFF | 0x4000;
+    prim->unk6 = unkFunc(uVar11) & 0x8FFF | 0x4000;
     if (leading_zeros != 0) {
         prim->drawMode |= DRAW_HIDE;
     } else {
         prim->drawMode &= ~DRAW_HIDE;
         prim->x0 = x;
-        prim->y0 = g_HudSpriteV[6];
+        prim->y0 = g_HudSpriteY[6];
         x += 7;
     }
     prim = prim->next;
@@ -834,10 +825,9 @@ void SetLifeNum(Primitive* prim) {
     ptr = DAT_0605aec0[digit];
     prim->unk8 = ptr[0];
     prim->unkA = ptr[1];
-    prim->unk6 = unkFunc(uVar11);
-    prim->unk6 = prim->unk6 & 0x8FFF | 0x4000;
+    prim->unk6 = unkFunc(uVar11) & 0x8FFF | 0x4000;
     prim->x0 = x;
-    prim->y0 = g_HudSpriteV[6];
+    prim->y0 = g_HudSpriteY[6];
 }
 
 typedef struct {
@@ -875,10 +865,10 @@ void StatusDispInit(void) {
         g_PlayerHud.primIndex1 = AllocPrimitives(0x0, 0xE);
         prim = &g_PrimBuf[g_PlayerHud.primIndex1];
         for (i = 0; prim != NULL; i++) {
-            SetXYWH(prim, g_HudSpriteU[i], g_HudSpriteV[i], g_HudSpriteWidth[i],
-                    g_HudSpriteHeight[i]);
+            SetXYWH(prim, g_HudSpriteX[i], g_HudSpriteY[i], g_HudSpriteW[i],
+                    g_HudSpriteH[i]);
             prim->priority = 0x1C0;
-            prim->drawMode = g_HudSpriteAttributes[i];
+            prim->drawMode = g_HudSpriteBlend[i];
             switch (i) {
             case 4:
                 func_060771D4(prim, 0);

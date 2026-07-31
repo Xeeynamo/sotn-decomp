@@ -877,6 +877,14 @@ typedef struct {
     u8 unk14;
 } SaturnStageFileRecord;
 
+typedef struct {
+    u16 x;
+    u16 y;
+    u16 roomId;
+    u16 reloadStageId;
+    u16 stageId;
+} RoomTeleport;
+
 typedef enum {
     PLAYER_CHARACTER,
     E_AFTERIMAGE_1,
