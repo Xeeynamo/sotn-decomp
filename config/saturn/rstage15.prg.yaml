@@ -21,6 +21,8 @@ segments:
         type: c
         file: rstage15
         end: 0x10EFC
+        function_ranges:
+          - [0xF550, 0x10170]
       - start: 0x10EFC
         type: .data
         file: rstage15/sprbank
@@ -47,5 +49,161 @@ segments:
         end: 0x12404
       - start: 0x12404
         type: .data
-        file: rstage15/data
+        file: rstage15/stdata
+        end: 0x12664
+      - start: 0x12664
+        type: .data
+        file: rstage15/prcfg
+        end: 0x12680
+      - start: 0x12680
+        type: .data
+        file: rstage15/gold
+        end: 0x126A8
+      - start: 0x126A8
+        type: .data
+        file: rstage15/przan
+        end: 0x12848
+      - start: 0x12848
+        type: .data
+        file: rstage15/ent04
+        end: 0x12914
+      - start: 0x12914
+        type: .data
+        file: rstage15/ent09
+        end: 0x12934
+      - start: 0x12934
+        type: .data
+        file: rstage15/expl
+        end: 0x12A00
+      - start: 0x12A00
+        type: .data
+        file: rstage15/ent05
+        end: 0x12A80
+      - start: 0x12A80
+        type: .data
+        file: rstage15/ent06
+        end: 0x12AE0
+      - start: 0x12AE0
+        type: .data
+        file: rstage15/ent07
+        end: 0x12AF0
+      - start: 0x12AF0
+        type: .data
+        file: rstage15/3dcoord
+        end: 0x12C2C
+      - start: 0x12C2C
+        type: .data
+        file: rstage15/3dindex
+        end: 0x12DE0
+      - start: 0x12DE0
+        type: .data
+        file: rstage15/ent15
+        end: 0x12E94
+      - start: 0x12E94
+        type: .data
+        file: rstage15/s22res
+        end: 0x12EA0
+      - start: 0x12EA0
+        type: .data
+        file: rstage15/ent29
+        end: 0x12F40
+      - start: 0x12F40
+        type: .data
+        file: rstage15/s22gfx
+        end: 0x132B8
+      - start: 0x132B8
+        type: .data
+        file: rstage15/s22part
+        end: 0x133F4
+      - start: 0x133F4
+        type: .data
+        file: rstage15/s23res
+        end: 0x13400
+      - start: 0x13400
+        type: .data
+        file: rstage15/ent32
+        end: 0x135B8
+      - start: 0x135B8
+        type: .data
+        file: rstage15/s23gfx
+        end: 0x143B4
+      - start: 0x143B4
+        type: .data
+        file: rstage15/s23part
+        end: 0x144E4
+      - start: 0x144E4
+        type: .data
+        file: rstage15/s24res
+        end: 0x144F0
+      - start: 0x144F0
+        type: .data
+        file: rstage15/ent34
+        end: 0x1479C
+      - start: 0x1479C
+        type: .data
+        file: rstage15/s24gfx
+        end: 0x158B8
+      - start: 0x158B8
+        type: .data
+        file: rstage15/s24part
+        end: 0x15A2C
+      - start: 0x15A2C
+        type: .data
+        file: rstage15/s25res
+        end: 0x15A38
+      - start: 0x15A38
+        type: .data
+        file: rstage15/ent43
+        end: 0x15BEC
+      - start: 0x15BEC
+        type: .data
+        file: rstage15/s25gfx
+        end: 0x1681C
+      - start: 0x1681C
+        type: .data
+        file: rstage15/s25part
+        end: 0x16894
+      - start: 0x16894
+        type: .data
+        file: rstage15/s26res
+        end: 0x168A0
+      - start: 0x168A0
+        type: .data
+        file: rstage15/ent50
+        end: 0x16918
+      - start: 0x16918
+        type: .data
+        file: rstage15/s26gfx
+        end: 0x16C28
+      - start: 0x16C28
+        type: .data
+        file: rstage15/s26part
+        end: 0x16C38
+      - start: 0x16C38
+        type: .data
+        file: rstage15/s27res
+        end: 0x16C44
+      - start: 0x16C44
+        type: .data
+        file: rstage15/entcopp
+        end: 0x16C80
+      - start: 0x16C80
+        type: .data
+        file: rstage15/s27gfx
+        end: 0x16DAC
+      - start: 0x16DAC
+        type: .data
+        file: rstage15/s27part
+        end: 0x16E08
+      - start: 0x16E08
+        type: .data
+        file: rstage15/s28res
+        end: 0x16E14
+      - start: 0x16E14
+        type: .data
+        file: rstage15/entguard
+        end: 0x16F0C
+      - start: 0x16F0C
+        type: .data
+        file: rstage15/s28gfx
         end: 0x174D0
