@@ -1018,7 +1018,8 @@ void UpdateCapePalette(void) {
     }
 }
 
-u16* func_06074A98(void) { return D_800A37F4[8]; }
+// func_06074A98
+u16* GetCustomCloakPalette(void) { return D_800A37F4[8]; }
 
 void ApplyJosephsCloakPalette(void) {
     u16 g_JosephsCloakColors[4];
@@ -1038,7 +1039,7 @@ void ApplyJosephsCloakPalette(void) {
         RGB16_COLOR(g_Settings.cloakColors[0], g_Settings.cloakColors[1],
                     g_Settings.cloakColors[2]);
 
-    ptr = func_06074A98();
+    ptr = GetCustomCloakPalette();
     for (i = 0; i < 4; i++) {
         *ptr++ = g_JosephsCloakColors[i];
     }

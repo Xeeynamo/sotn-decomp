@@ -30,7 +30,7 @@ void func_06007d54();
 void func_06007e14();
 void func_06008264();
 void TransferAllBgLayers();
-void func_06008a70();
+void UpdateScrollForRoom();
 void func_06008d04(s32, s32);
 void func_06009838();
 void func_0600d8bc();
@@ -72,14 +72,14 @@ void func_060040d8(void) {
             DAT_0605cea0++;
         }
         func_06064688();
-        func_06008a70();
+        UpdateScrollForRoom();
         break;
     case 3:
         func_0606468c();
         break;
     case 7:
         func_06064614();
-        func_06008a70();
+        UpdateScrollForRoom();
         break;
     case 4:
         if (DAT_0605cea0 == 0) {
@@ -103,7 +103,7 @@ void func_060040d8(void) {
         } else {
             func_06009838();
             func_0606463c();
-            func_06008a70();
+            UpdateScrollForRoom();
         }
         break;
     case 5:
@@ -113,7 +113,7 @@ void func_060040d8(void) {
             DAT_0605cea0++;
         }
         func_06064644();
-        func_06008a70();
+        UpdateScrollForRoom();
         break;
     case 0x20:
         func_06007e14();
@@ -1249,7 +1249,8 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FF64, func_0600FF64);
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FFB8, func_0600FFB8);
 
-void func_06010008(void) {
+// func_06010008
+void InitDebugPrint(void) {
     struct Unk0605d6c0* puVar2;
     SclConfig temp;
 
