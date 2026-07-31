@@ -1,0 +1,69 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+#include "sattypes.h"
+#include <saturn_sprite.h>
+
+extern SaturnSpriteResource g_RStage15SpriteBank25;
+
+void func_060E8ADC(Entity* self);
+void func_060E8EFC(Entity* self);
+void func_060E9104(Entity* self);
+void func_060E9284(Entity* self);
+void func_060E98F0(Entity* self);
+void func_060E9D28(Entity* self);
+
+EntityEntry g_RStage15EntityEntry43 = {&g_RStage15SpriteBank25, func_060E8ADC};
+s16 g_RStage15Entity43InitOffset[2] = {0, 0};
+EntityEntry g_RStage15EntityEntry48 = {&g_RStage15SpriteBank25, func_060E8EFC};
+s16 g_RStage15Entity48InitOffset[2] = {0, 0};
+EntityEntry g_RStage15EntityEntry49 = {&g_RStage15SpriteBank25, func_060E9104};
+s16 g_RStage15Entity49InitOffset[2] = {0, 0};
+EntityEntry g_RStage15EntityEntry44 = {&g_RStage15SpriteBank25, func_060E9284};
+s16 g_RStage15Entity44InitOffset[2] = {0, 0};
+EntityEntry g_RStage15EntityEntry45 = {&g_RStage15SpriteBank25, func_060E98F0};
+s16 g_RStage15Entity45InitOffset[2] = {0, 0};
+EntityEntry g_RStage15EntityEntry46 = {&g_RStage15SpriteBank25, func_060E9D28};
+
+u8 g_RStage15Entity43AnimationData[] = {
+    0x10, 1,    0xA,  3,    6,    4,    6,    5,    5,    6,    5,    7,
+    5,    8,    5,    9,    5,    0xA,  0x1F, 0xC,  0xFF, 0xFF, 0x10, 0xC,
+    6,    0xE,  4,    0xF,  4,    0x10, 0x10, 0x11, 2,    0x12, 2,    0x13,
+    4,    0x14, 4,    0x15, 0x6F, 0x16, 8,    0x13, 8,    0x12, 8,    0x11,
+    8,    0x10, 0x20, 0xF,  8,    0xE,  0x20, 0xC,  0xFF, 0xFF, 0xA,  0xB,
+    0xA,  0xC,  0xA,  0xD,  0xA,  0xC,  0xFF, 0xFF, 0x10, 0x17, 8,    0x18,
+    6,    0x19, 5,    0x1A, 4,    0x1B, 0x14, 0x1C, 3,    0x1D, 2,    0x1E,
+    2,    0x1F, 2,    0x20, 2,    0x21, 0x23, 0x1F, 7,    0x38, 5,    0xF,
+    5,    0xE,  0x10, 0xC,  0xFF, 0xFF, 1,    0x26, 4,    0x27, 4,    0x28,
+    4,    0x29, 2,    0x2A, 2,    0x2B, 2,    0x2C, 2,    0x2D, 2,    0x2E,
+    2,    0x2F, 2,    0x30, 2,    0x31, 2,    0x32, 2,    0x33, 2,    0x34,
+    2,    0x35, 2,    0x36, 3,    0x33, 3,    0x34, 3,    0x35, 3,    0x36,
+    4,    0x33, 4,    0x34, 4,    0x35, 4,    0x36, 5,    0x33, 5,    0x34,
+    5,    0x35, 5,    0x36, 4,    0x33, 4,    0x34, 4,    0x35, 0xFF, 0xFF,
+    3,    0x36, 3,    0x33, 2,    0x34, 1,    0x35, 4,    0x30, 4,    0x2F,
+    4,    0x2E, 5,    0x2D, 5,    0x2C, 5,    0x2B, 5,    0x2A, 4,    0x29,
+    4,    0x28, 4,    0x27, 1,    0x26, 0xFF, 0xFF, 3,    0x22, 3,    0x23,
+    3,    0x24, 3,    0x25, 0xFF, 0xFF, 5,    0x2A, 5,    0x2B, 5,    0x2C,
+    5,    0x2D, 0xFF, 0xFF, 2,    0x2A, 2,    0x2B, 2,    0x2C, 2,    0x2D,
+    0xFF, 0xFF, 0x20, 0xC,  5,    0xE,  2,    0xF,  2,    0x10, 2,    0x11,
+    2,    0x38, 2,    0x39, 2,    0x3A, 0x24, 0x38, 2,    0x12, 2,    0x13,
+    4,    0x14, 4,    0x15, 0x6F, 0x16, 8,    0x13, 8,    0x12, 8,    0x11,
+    8,    0x10, 0x20, 0xF,  8,    0xE,  0x20, 0xC,  0xFF, 0xFF, 0x20, 0x17,
+    5,    0xE,  2,    0xF,  2,    0x10, 2,    0x11, 2,    0x38, 2,    0x39,
+    2,    0x3A, 0x20, 0x38, 8,    0x18, 6,    0x19, 5,    0x1A, 4,    0x1B,
+    0x14, 0x1C, 3,    0x1D, 2,    0x1E, 2,    0x1F, 2,    0x20, 2,    0x21,
+    0x23, 0x1F, 7,    0x38, 5,    0xF,  5,    0xE,  0xFF, 0xFF,
+};
+u16 g_RStage15Entity43AnimationPadding = 0;
+
+u8* g_RStage15Entity43Animations[] = {
+    &g_RStage15Entity43AnimationData[0],
+    &g_RStage15Entity43AnimationData[22],
+    &g_RStage15Entity43AnimationData[58],
+    &g_RStage15Entity43AnimationData[68],
+    &g_RStage15Entity43AnimationData[102],
+    &g_RStage15Entity43AnimationData[168],
+    &g_RStage15Entity43AnimationData[200],
+    &g_RStage15Entity43AnimationData[210],
+    &g_RStage15Entity43AnimationData[220],
+    &g_RStage15Entity43AnimationData[230],
+    &g_RStage15Entity43AnimationData[274],
+};

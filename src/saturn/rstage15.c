@@ -99,6 +99,7 @@ INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60EAE6C, func_060EAE6C);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60EAFF8, func_060EAFF8);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60EB150, func_060EB150);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60EB4A4, func_060EB4A4);
+INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60EB550, func_060EB550);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60EC174, func_060EC174);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60EC274, func_060EC274);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60EC374, func_060EC374);
