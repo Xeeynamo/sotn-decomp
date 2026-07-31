@@ -96,5 +96,6 @@ segments:
       - [0x524C8, c, e_medusa_head]
       - [0x5289C, c, unk_5289C]
       - [0x53688, c, prim_helpers]
-      - [0x53EB8, bss]
+      - [0x53EB8, .bss, create_entity]
+      - [0x53EC8, bss]
   - [0x54B8C]
