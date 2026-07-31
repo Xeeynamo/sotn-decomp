@@ -12,6 +12,14 @@ on:
       - '*.md'
       - '**/*.md'
   workflow_dispatch:
+    inputs:
+      saturn_compiler:
+        description: Saturn compiler backend
+        type: choice
+        options:
+          - native64
+          - dos
+        default: native64
 
 jobs:
   build-and-test-saturn:
@@ -20,6 +28,8 @@ jobs:
     if: github.repository == 'Xeeynamo/sotn-decomp'
     runs-on: ubuntu-latest
     environment: ${{ (github.event_name != 'pull_request_target' || contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.pull_request.author_association)) && '' || 'ci-secrets' }}
+    env:
+      SOTN_SATURN_COMPILER: ${{ inputs.saturn_compiler || 'native64' }}
     steps:
       - name: Clone main repo
         uses: actions/checkout@v7
@@ -31,10 +41,11 @@ jobs:
         uses: ./.github/actions/get-dependencies
         with:
           token: ${{ secrets.SOTN_DECOMP_DEPENDENCIES_TOKEN }}
-      - name: Install bchunk
+      - name: Install build tools
         run: |
           sudo apt-get install bchunk binutils-sh-elf
       - name: Install dosemu
+        if: env.SOTN_SATURN_COMPILER == 'dos'
         run: |
           git clone https://github.com/sozud/dosemu-deb.git
           cd dosemu-deb
@@ -69,18 +80,9 @@ jobs:
         uses: ./.github/actions/get-dependencies
         with:
           token: ${{ secrets.SOTN_DECOMP_DEPENDENCIES_TOKEN }}
-      - name: Install bchunk
+      - name: Install build tools
         run: |
           sudo apt-get install bchunk binutils-sh-elf
-      - name: Install dosemu
-        run: |
-          git clone https://github.com/sozud/dosemu-deb.git
-          cd dosemu-deb
-          sudo apt-get install xfonts-utils
-          sudo dpkg -i fdpp_1.6-1_amd64.deb
-          sudo dpkg -i fdpp-dev_1.6-1_amd64.deb
-          sudo dpkg -i comcom32_0.1~alpha3-1_all.deb
-          sudo dpkg -i dosemu2_2.0~pre9-1_amd64.deb
       - name: Build saturn
         run: ./sotn.sh build saturn
       - name: Clone asset repository

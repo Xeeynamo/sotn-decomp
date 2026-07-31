@@ -1018,6 +1018,66 @@ files:
     asset_path: assets/st/top
     src_path: src/st/top
     splat_config_path: config/splat.us.sttop.yaml
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+        - [0x34, sprite_banks, sprite_banks]
+        - [0x94, palette, D_us_80180094, 16]
+        - [0xB4, palette, D_us_801800B4, 16]
+        - [0xD4, palette, D_us_801800D4, 16]
+        - [0xF4, palette, D_us_801800F4, 16]
+        - [0x114, palette, D_us_80180114, 16]
+        - [0x134, palette, D_us_80180134, 16]
+        - [0x154, palette, D_us_80180154, 16]
+        - [0x174, palette, D_us_80180174, 16]
+        - [0x194, palette, D_us_80180194, 16]
+        - [0x1B4, palette, D_us_801801B4, 16]
+        - [0x1D4, palette, D_us_801801D4, 16]
+        - [0x1F4, palette, D_us_801801F4, 16]
+        - [0x214, palette, D_us_80180214, 16]
+        - [0x234, palette, D_us_80180234, 16]
+        - [0x254, palette, D_us_80180254, 16]
+        - [0x274, palette, D_us_80180274, 16]
+        - [0x294, palette, D_us_80180294, 16]
+        - [0x2B4, palette, D_us_801802B4, 16]
+        - [0x2D4, palette, D_us_801802D4, 16]
+        - [0x2F4, palette, D_us_801802F4, 16]
+        - [0x314, palette, D_us_80180314, 16]
+        - [0x334, palette, D_us_80180334, 16]
+        - [0x354, paldef, palette_def]
+        - [0x4E8, layers, layers]
+        - [0x630, gfx_banks, graphics_banks]
+        - [0x740, layout, entity_layouts]
+        - [0x8E8, skip]
+        - [0x1B78, rooms, rooms]
+        - [0x1BFC, skip]
+        - [0x2C08, cutscene, cutscene_data]
+        - [0x2E25, cutscene_events, cutscene_events]
+        #- [0x2E44, spritesheet, richter, disks/us/BIN/F_GAME2.BIN, 0x40400]
+        - [0x2E44, skip]
+        - [0x3418, cmpgfx, gfx_stage_name_jp_sm, 128, 128, 4]
+        - [0x3804, cmpgfx, gfx_stage_name_jp_lg, 128, 128, 4]
+        - [0x6CE4, cmpgfx, gfx_flea_rider, 128, 128, 4, 0x10BB4]
+        - [0xA1B4, cmpgfx, gfx_maria_1, 128, 128, 4, 0x111F4]
+        - [0xB2E4, cmpgfx, gfx_maria_2, 128, 128, 4, 0x111F4]
+        - [0xBFA4, cmpgfx, gfx_maria_3, 128, 128, 4, 0x111F4]
+        - [0xD200, cmpgfx, gfx_maria_4, 128, 128, 4, 0x111F4]
+        - [0xE280, cmpgfx, gfx_breakable, 128, 128, 4, 0x11214]
+        - [0xEC34, cmpgfx, gfx_axe_knight_1, 128, 128, 4, 0x115D4]
+        - [0xFB24, cmpgfx, gfx_axe_knight_2, 128, 128, 4, 0x115D4]
+        - [0x10714, cmpgfx, gfx_stage_name_en, 128, 128, 4]
+        - [0x10A34, palette, D_us_80190A34, 16] # unused
+        - [0x10A54, palette, D_us_80190A54, 16] # 0x200
+        - [0x10BB4, palette, pal_flea_rider, 16] # 0x206
+        - [0x10BF4, palette, D_us_80190BF4, 16] # 0x210
+        - [0x10DF4, palette, D_us_80190DF4, 16] # 0x218
+        - [0x10FF4, palette, D_us_80190FF4, 16] # 0x220
+        - [0x111F4, palette, D_us_801911F4, 16] # 0x208
+        - [0x11214, palette, pal_breakable, 16] # 0x238
+        - [0x115D4, palette, pal_blue_axe_knight, 16] # 0x240
+        - [0x11654, palette, D_us_80191654, 16] # 0x230
+        - [0x11C54, skip]
   - target: disks/us/ST/WRP/WRP.BIN
     asset_path: assets/st/wrp
     src_path: src/st/wrp

@@ -42,8 +42,6 @@ extern struct Unk060645D0_1* DAT_060645D0;
 
 extern u8 SYS_buf_060485E0[];
 struct Unk0605d6c0* DAT_0605d6c0[];
-u16 DAT_060086d4;
-s32 PTR_FUN_060086cc(s32, s32, s32);
 void func_0600871C(s32, UNK_0605c680*, s32);
 
 struct Unk0605CD90 {

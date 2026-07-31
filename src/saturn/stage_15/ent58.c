@@ -1,0 +1,126 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+#include "sattypes.h"
+#include <saturn_sprite.h>
+
+extern SaturnSpriteResource g_Stage15SpriteBank29;
+
+void func_060EDF80(Entity* self);
+void func_060EE4B8(Entity* self);
+
+EntityEntry g_Stage15EntityEntry58 = {&g_Stage15SpriteBank29, func_060EDF80};
+EntityEntry g_Stage15EntityEntry59 = {&g_Stage15SpriteBank29, func_060EE4B8};
+
+u8 g_Stage15Entity58AnimationData[] = {
+    /* Animation 0 */
+    0xF,
+    1,
+    0xF,
+    2,
+    0xF,
+    3,
+    0xF,
+    2,
+    0,
+    0,
+    /* Animation 1 */
+    0x20,
+    2,
+    3,
+    4,
+    3,
+    5,
+    3,
+    6,
+    3,
+    7,
+    0x20,
+    8,
+    0xFF,
+    0xFF,
+    /* Animation 2 */
+    0xB,
+    9,
+    0xB,
+    0xA,
+    0xB,
+    0xB,
+    0xB,
+    0xC,
+    0xB,
+    0xD,
+    0xB,
+    0xE,
+    0xB,
+    0xF,
+    0xB,
+    0x10,
+    0,
+    0,
+    /* Animation 3 */
+    5,
+    0x11,
+    6,
+    0x12,
+    7,
+    0x13,
+    8,
+    0x14,
+    4,
+    0x15,
+    3,
+    0x16,
+    2,
+    0x17,
+    1,
+    0x18,
+    8,
+    0x19,
+    0xFF,
+    0xFF,
+    /* Animation 4 */
+    7,
+    0x1A,
+    7,
+    0x1B,
+    7,
+    0x1C,
+    7,
+    0x1B,
+    7,
+    0x1D,
+    7,
+    0x1E,
+    7,
+    0x1D,
+    0xFF,
+    0xFF,
+    /* Animation 5 */
+    0x17,
+    0x24,
+    3,
+    0x1A,
+    2,
+    0x1F,
+    1,
+    0x20,
+    0xF,
+    0x21,
+    0xFF,
+    0xFF,
+    /* Animation 6 */
+    0x30,
+    0x21,
+    7,
+    0x22,
+    7,
+    0x23,
+    0xFF,
+    0xFF,
+};
+u16 g_Stage15Entity58AnimationsPadding = 0;
+u8* g_Stage15Entity58Animations[] = {
+    &g_Stage15Entity58AnimationData[0],  &g_Stage15Entity58AnimationData[10],
+    &g_Stage15Entity58AnimationData[24], &g_Stage15Entity58AnimationData[42],
+    &g_Stage15Entity58AnimationData[62], &g_Stage15Entity58AnimationData[78],
+    &g_Stage15Entity58AnimationData[90],
+};

@@ -17,6 +17,10 @@ var saturnSplitterYAMLs = []string{
 	"config/saturn/alucard.prg.yaml",
 	"config/saturn/richter.prg.yaml",
 	"config/saturn/maria.prg.yaml",
+	"config/saturn/rstage15.prg.yaml",
+	"config/saturn/stage_15.prg.yaml",
+	"config/saturn/rstage16.prg.yaml",
+	"config/saturn/stage_16.prg.yaml",
 }
 
 func buildSaturn() error {
@@ -46,7 +50,11 @@ var saturnExtractSentinels = []string{
 	"config/saturn/game.ld",
 	"config/saturn/maria.ld",
 	"config/saturn/richter.ld",
+	"config/saturn/rstage15.ld",
+	"config/saturn/rstage16.ld",
 	"config/saturn/stage_02.ld",
+	"config/saturn/stage_15.ld",
+	"config/saturn/stage_16.ld",
 	"config/saturn/t_bat.ld",
 	"config/saturn/warp.ld",
 	"config/saturn/zero.ld",
@@ -77,7 +85,14 @@ const saturnNinjaStampFile = "build.ninja.version"
 func genSaturnNinjaIfNeeded() error {
 	const ninjaFile = "build.ninja"
 	const stampFile = saturnNinjaStampFile
-	const stamp = "saturn"
+	compiler := os.Getenv("SOTN_SATURN_COMPILER")
+	if compiler == "" {
+		compiler = "native64"
+	}
+	stamp := "saturn,compiler=" + compiler
+	if compilerPath, ok := os.LookupEnv("SOTN_SATURN_CC1"); ok {
+		stamp += ",cc1=" + compilerPath
+	}
 
 	needsRegen := false
 	if stampData, err := os.ReadFile(stampFile); err != nil || string(stampData) != stamp {

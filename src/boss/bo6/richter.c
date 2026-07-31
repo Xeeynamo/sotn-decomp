@@ -18,7 +18,13 @@ INCLUDE_ASM("boss/bo6/nonmatchings/richter", BO6_CheckHighJumpInput);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/richter", BO6_RicMain);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", func_us_801B5A14);
+extern s32 D_us_801CF3C8;
+extern s32 D_us_801CF3CC;
+
+void func_us_801B5A14(s32 arg0) {
+    D_us_801CF3C8 = arg0;
+    D_us_801CF3CC = 0;
+}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/richter", RichterThinking);
 

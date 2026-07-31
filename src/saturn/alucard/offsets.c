@@ -1,0 +1,47 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+#include "sattypes.h"
+
+s16 g_AlucardEffectOffsets[][2] = {
+    {-3, -24}, {0, -8},    {3, 8},    {0, 24},  {8, -12},  {10, 0},
+    {9, 12},   {-10, -12}, {-11, 0},  {-9, 12}, {-18, -6}, {-19, 7},
+    {16, -7},  {20, 8},    {-9, -22}, {8, -21}, {-10, 21}, {9, 22},
+};
+
+s16* g_AlucardEffectOffsetTable[] = {
+    g_AlucardEffectOffsets[0],  g_AlucardEffectOffsets[4],
+    g_AlucardEffectOffsets[1],  g_AlucardEffectOffsets[4],
+    g_AlucardEffectOffsets[5],  g_AlucardEffectOffsets[1],
+    g_AlucardEffectOffsets[5],  g_AlucardEffectOffsets[2],
+    g_AlucardEffectOffsets[1],  g_AlucardEffectOffsets[5],
+    g_AlucardEffectOffsets[6],  g_AlucardEffectOffsets[2],
+    g_AlucardEffectOffsets[6],  g_AlucardEffectOffsets[3],
+    g_AlucardEffectOffsets[2],  g_AlucardEffectOffsets[2],
+    g_AlucardEffectOffsets[3],  g_AlucardEffectOffsets[9],
+    g_AlucardEffectOffsets[2],  g_AlucardEffectOffsets[9],
+    g_AlucardEffectOffsets[8],  g_AlucardEffectOffsets[1],
+    g_AlucardEffectOffsets[2],  g_AlucardEffectOffsets[8],
+    g_AlucardEffectOffsets[1],  g_AlucardEffectOffsets[8],
+    g_AlucardEffectOffsets[7],  g_AlucardEffectOffsets[1],
+    g_AlucardEffectOffsets[7],  g_AlucardEffectOffsets[0],
+    g_AlucardEffectOffsets[4],  g_AlucardEffectOffsets[12],
+    g_AlucardEffectOffsets[5],  g_AlucardEffectOffsets[12],
+    g_AlucardEffectOffsets[13], g_AlucardEffectOffsets[5],
+    g_AlucardEffectOffsets[13], g_AlucardEffectOffsets[6],
+    g_AlucardEffectOffsets[5],  g_AlucardEffectOffsets[7],
+    g_AlucardEffectOffsets[8],  g_AlucardEffectOffsets[10],
+    g_AlucardEffectOffsets[8],  g_AlucardEffectOffsets[11],
+    g_AlucardEffectOffsets[10], g_AlucardEffectOffsets[8],
+    g_AlucardEffectOffsets[9],  g_AlucardEffectOffsets[11],
+    g_AlucardEffectOffsets[0],  g_AlucardEffectOffsets[7],
+    g_AlucardEffectOffsets[14], g_AlucardEffectOffsets[0],
+    g_AlucardEffectOffsets[15], g_AlucardEffectOffsets[4],
+    g_AlucardEffectOffsets[3],  g_AlucardEffectOffsets[16],
+    g_AlucardEffectOffsets[9],  g_AlucardEffectOffsets[6],
+    g_AlucardEffectOffsets[17], g_AlucardEffectOffsets[3],
+    g_AlucardEffectOffsets[14], g_AlucardEffectOffsets[7],
+    g_AlucardEffectOffsets[10], g_AlucardEffectOffsets[15],
+    g_AlucardEffectOffsets[12], g_AlucardEffectOffsets[4],
+    g_AlucardEffectOffsets[11], g_AlucardEffectOffsets[9],
+    g_AlucardEffectOffsets[16], g_AlucardEffectOffsets[13],
+    g_AlucardEffectOffsets[17], g_AlucardEffectOffsets[6],
+};

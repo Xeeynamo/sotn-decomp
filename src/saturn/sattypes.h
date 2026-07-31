@@ -83,6 +83,12 @@ typedef struct {
 } AnimationFrame;
 
 typedef struct {
+    u8 duration;
+    u8 frame;
+    u8 hitbox;
+} SaturnAnimationFrame;
+
+typedef struct {
     s8 offsetX;
     s8 offsetY;
     s8 hitboxWidth;
@@ -301,12 +307,13 @@ typedef struct Entity {
     /* 0x16 */ s16 hitboxOffY;
     /* 0x18 */ u16 facingLeft;
     /* 0x1A */ u16 palette;
-    /* 0x1C */ char pad_1C[0x2];
+    /* 0x1B */ u8 : 8;
+    /* 0x1C */ u8 unk1C;
     /* 0x1E */ s16 rotate;
-    /* 0x20 */ s16 unk1A;
-    /* 0x22 */ s16 unk1C;
-    /* 0x24 */ s16 ghidra_pad_24;
-    /* 0x26 */ char pad_26[0x2];
+    /* 0x20 */ s16 : 16;
+    /* 0x22 */ s16 : 16;
+    /* 0x24 */ s16 : 16;
+    /* 0x26 */ s16 : 16;
     /* 0x28 */ PfnEntityUpdate pfnUpdate;
     /* 0x2c */ u16 step;
     /* 0x2e */ u16 step_s;
@@ -333,7 +340,8 @@ typedef struct Entity {
     /* 0x60 */ s16 primIndex;
     /* 0x62 */ u16 zPriority;
     /* 0x64 */ u16 unk68;
-    /* 0x66 */ char pad_66[0xE];
+    /* 0x66 */ char pad_66[3];
+    /* 0x69 */ char unk6D[11];
     /* 0x74 */ u16 entityId;
     /* 0x76 */ char pad_76[0x2];
     /* 0x78 */ Ext ext;
@@ -613,7 +621,7 @@ typedef struct {
     /* 0x3EC */ s32 vram_flag;
     char pad2[8];
     /* 0x3F8 */ u32 status;
-    u32 unk3FC;
+    /* 0x3FC */ u32 unk3FC;
     char pad400[0x2E];
     /* 0x42E */ u16 high_jump_timer;
     /* 0x430 */ u16 unk44;
@@ -677,17 +685,17 @@ typedef struct {
 } RelicDesc;
 
 typedef struct {
-    s32 buttonConfig[8];
-    u16 buttonMask[8];
-    s32 timeAttackRecords[32];
-    s32 cloakColors[6];
-    s32 windowColors[3];
-    s32 equipOrderTypes[11];
-    s32 isCloakLiningReversed;
-    s32 isSoundMono;
-    s32 D_8003CB00;
-    s32 D_8003CB04;
-} GameSettings;
+    /* 0x000 */ s32 buttonConfig[8];
+    /* 0x020 */ u16 buttonMask[8];
+    /* 0x030 */ s32 timeAttackRecords[32];
+    /* 0x0B0 */ s32 cloakColors[6];
+    /* 0x0C8 */ s32 windowColors[3];
+    /* 0x0D4 */ s32 equipOrderTypes[11];
+    /* 0x100 */ s32 isCloakLiningReversed;
+    /* 0x104 */ s32 isSoundMono;
+    /* 0x108 */ s32 D_8003CB00;
+    /* 0x10C */ s32 D_8003CB04;
+} GameSettings; /* size=0x110 */
 
 typedef struct {
     u16 flags;
@@ -1036,6 +1044,8 @@ extern Primitive g_PrimBuf[];
 
 #define NUM_HORIZONTAL_SENSORS 4
 #define NUM_VERTICAL_SENSORS 7
+
+#define RELIC_CUBE_OF_ZOE 10
 
 enum RicSubweapons {
     PL_W_NONE,

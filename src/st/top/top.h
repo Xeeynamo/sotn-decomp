@@ -6,6 +6,7 @@
 
 #define OVL_EXPORT(x) TOP_##x
 #define STAGE_IS_TOP
+#define RIC_SPRITE_COUNT 197 // useful to sync PSX and PSP
 
 enum Palettes {
     PAL_NONE,

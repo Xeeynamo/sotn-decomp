@@ -395,7 +395,189 @@ s32 func_06076718(void) { return g_PlayerHud.unk24 == 0x15; }
 
 void func_0607672C(void);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607672C, func_0607672C);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6076A04, func_06076A04);
+
+static u16 unkFunc(u16 arg0) {
+    if (arg0 & 0x4000) {
+        return func_06007CE0(arg0 & 0xFFF);
+    } else {
+        return SPR_2LookupTblNoToVram(arg0 & 0xFFF);
+    }
+}
+
+static void SetXY(Primitive* prim, s32 x, s32 y) {
+    prim->x0 = x;
+    prim->y0 = y;
+}
+
+extern SaturnSpriteResource g_SaturnSharedSpriteBank0Resource;
+extern u16 DAT_0605aec0[][2];
+extern SaturnSpriteResource* DAT_06086388;
+extern s16 g_AlternateStatusHudSpriteOffsets[][2];
+extern u8 DAT_06085d3c[];
+
+void func_06076A04(void) {
+    s32 sVar4;
+    u16 sVar9;
+    s32 iVar10;
+    Primitive* prim;
+    u16* ptr;
+
+    u8 local_30[10] = {0x0,  0x33, 0x37, 0x34, 0x38,
+                       0x35, 0x36, 0x24, 0x3A, 0x39};
+    u8 local_31[10] = {0x0, 0x8, 0x8, 0x7, 0x7, 0x8, 0x8, 0x9, 0x8, 0x8};
+
+    if (g_PlayerHud.displayHP < g_Status.hp) {
+        g_PlayerHud.displayHP += 5;
+        if (g_PlayerHud.displayHP > g_Status.hp) {
+            g_PlayerHud.displayHP = g_Status.hp;
+        }
+    } else if (g_PlayerHud.displayHP > g_Status.hp) {
+        g_PlayerHud.displayHP -= 5;
+        if (g_PlayerHud.displayHP < g_Status.hp) {
+            g_PlayerHud.displayHP = g_Status.hp;
+        }
+    }
+    prim = &g_PrimBuf[g_PlayerHud.primIndex1];
+    prim = prim->next;
+    if (g_PlayerHud.displayHP != 0) {
+        sVar4 = ((g_PlayerHud.displayHP * 90) / g_Status.hpMax);
+        prim->y2 = prim->y0 - sVar4;
+        prim->drawMode &= ~DRAW_HIDE;
+    } else {
+        prim->drawMode |= DRAW_HIDE;
+    }
+    sVar4 = (g_Status.mp * 0x39) / g_Status.mpMax;
+    prim = prim->next;
+    if (g_Status.mp == g_Status.mpMax) {
+        u16 uVar11 = (g_Timer & 0x10) ? g_Timer % 0x10 : ~g_Timer % 0x10;
+        sVar9 = uVar11 + 1;
+        if (sVar9 > 0xE) {
+            sVar9 = 0xE;
+        }
+    } else {
+        sVar9 = 0xF;
+    }
+
+    prim->unk6 = unkFunc(DAT_06086388->flags + 10);
+    prim->unk6 = sVar9 + prim->unk6 & 0x8FFF | 0x4000;
+    prim->y3 = prim->y2 = prim->y0 - sVar4;
+    prim = prim->next;
+    if (g_Status.hearts < 100) {
+        prim->drawMode |= DRAW_HIDE;
+    } else {
+        prim->drawMode &= ~DRAW_HIDE;
+        ptr = DAT_0605aec0[DAT_06086388->allocationIndex +
+                           g_AlternateStatusHudSpriteOffsets[3][0] +
+                           (g_Status.hearts / 100)];
+        prim->unk8 = ptr[0];
+        prim->unkA = ptr[1];
+    }
+    prim = prim->next;
+    if (g_Status.hearts < 10) {
+        prim->drawMode |= DRAW_HIDE;
+    } else {
+        prim->drawMode &= ~DRAW_HIDE;
+        ptr = DAT_0605aec0[DAT_06086388->allocationIndex +
+                           g_AlternateStatusHudSpriteOffsets[4][0] +
+                           ((g_Status.hearts / 10) % 10)];
+        prim->unk8 = ptr[0];
+        prim->unkA = ptr[1];
+    }
+    prim = prim->next;
+    ptr = DAT_0605aec0[DAT_06086388->allocationIndex +
+                       g_AlternateStatusHudSpriteOffsets[5][0] +
+                       (g_Status.hearts % 10)];
+    prim->unk8 = ptr[0];
+    prim->unkA = ptr[1];
+    prim = prim->next;
+    if (g_Status.subWeapon == 0x0) {
+        prim->drawMode |= DRAW_HIDE;
+    } else {
+        s32 sub = g_Status.subWeapon;
+        ptr = DAT_0605aec0[g_SaturnSharedSpriteBank0Resource.allocationIndex +
+                           local_30[sub]];
+        prim->unk8 = ptr[0];
+        prim->unkA = ptr[1];
+        prim->unk6 = unkFunc(DAT_06086388->flags + local_31[sub]);
+        prim->unk6 = prim->unk6 & 0x8FFF | 0x4000;
+        SetXY(prim, DAT_06085d3c[sub * 2], DAT_06085d3c[sub * 2 + 1]);
+        prim->drawMode &= ~DRAW_HIDE;
+    }
+    prim = prim->next;
+    if ((s32)g_Player.unk3FC > 300) {
+        iVar10 = ((g_GameTimer >> 0x2) & 0x1) + 0x5;
+    } else if ((s32)g_Player.unk3FC > 200) {
+        iVar10 = ((g_GameTimer >> 0x2) & 0x1) + 0x3;
+    } else if ((s32)g_Player.unk3FC > 100) {
+        iVar10 = ((g_GameTimer >> 0x3) & 0x1) + 0x3;
+    } else {
+        iVar10 = 0x0;
+    }
+
+    prim->unk6 = unkFunc(DAT_06086388->flags + iVar10);
+    prim->unk6 = prim->unk6 & 0x8FFF | 0x4000;
+    if (g_PlayerHud.unk24 == 0x0) {
+        if ((g_Status.D_80097BF8 & 0x1) == 0x0) {
+            if ((g_Timer & 0xF) == 0x0) {
+                g_Status.mp++;
+            }
+            if (g_Status.mp > g_Status.mpMax) {
+                g_Status.mp = g_Status.mpMax;
+            }
+        }
+    } else if (g_PlayerHud.unk24 != 0x0 && g_PlayerHud.unk24 < 0x6) {
+        ptr = DAT_0605aec0[DAT_06086388->allocationIndex + 1];
+        prim->unk8 = ptr[0];
+        prim->unkA = ptr[1];
+        SetXY(prim, 0x2D, 0x19);
+        g_PlayerHud.unk24++;
+    } else if (g_PlayerHud.unk24 < 0xc) {
+        ptr = DAT_0605aec0[DAT_06086388->allocationIndex + 2];
+        prim->unk8 = ptr[0];
+        prim->unkA = ptr[1];
+        SetXY(prim, 0x2D, 0x1D);
+        g_PlayerHud.unk24++;
+    } else if (g_PlayerHud.unk24 < 0x11) {
+        ptr = DAT_0605aec0[DAT_06086388->allocationIndex + 3];
+        prim->unk8 = ptr[0];
+        prim->unkA = ptr[1];
+        SetXY(prim, 0x2D, 0x19);
+        g_PlayerHud.unk24++;
+    } else if (g_PlayerHud.unk24 < 0x15) {
+        ptr = DAT_0605aec0[DAT_06086388->allocationIndex + 4];
+        prim->unk8 = ptr[0];
+        prim->unkA = ptr[1];
+        SetXY(prim, 0x2D, 0x15);
+        g_PlayerHud.unk24++;
+    } else if (g_PlayerHud.unk24 == 0x15) {
+    } else if (g_PlayerHud.unk24 > 0x32 && g_PlayerHud.unk24 < 0x39) {
+        ptr = DAT_0605aec0[DAT_06086388->allocationIndex + 3];
+        prim->unk8 = ptr[0];
+        prim->unkA = ptr[1];
+        SetXY(prim, 0x2D, 0x19);
+        g_PlayerHud.unk24++;
+    } else if (g_PlayerHud.unk24 < 0x3D) {
+        ptr = DAT_0605aec0[DAT_06086388->allocationIndex + 2];
+        prim->unk8 = ptr[0];
+        prim->unkA = ptr[1];
+        SetXY(prim, 0x2D, 0x1D);
+        g_PlayerHud.unk24++;
+    } else if (g_PlayerHud.unk24 < 0x42) {
+        ptr = DAT_0605aec0[DAT_06086388->allocationIndex + 1];
+        prim->unk8 = ptr[0];
+        prim->unkA = ptr[1];
+        SetXY(prim, 0x2D, 0x19);
+        g_PlayerHud.unk24++;
+    } else if (g_PlayerHud.unk24 < 0x47) {
+        ptr = DAT_0605aec0[DAT_06086388->allocationIndex];
+        prim->unk8 = ptr[0];
+        prim->unkA = ptr[1];
+        SetXY(prim, 0x2D, 0x15);
+        g_PlayerHud.unk24++;
+    } else if (g_PlayerHud.unk24 == 0x47) {
+        g_PlayerHud.unk24 = 0;
+    }
+}
 
 // original name: set_XYWH
 void SetXYWH(Primitive* prim, s32 x, s32 y, s32 w, s32 h) {
@@ -413,17 +595,6 @@ void SetXW(Primitive* prim, s32 x, s32 w) {
 void SetYH(Primitive* prim, s32 y, s32 h) {
     prim->y0 = prim->y1 = y;
     prim->y2 = prim->y3 = y + h - 1;
-}
-
-extern u16 DAT_0605aec0[][2];
-extern SaturnSpriteResource* DAT_06086388;
-
-static u16 unkFunc(u16 arg0) {
-    if (arg0 & 0x4000) {
-        return func_06007CE0(arg0 & 0xFFF);
-    } else {
-        return SPR_2LookupTblNoToVram(arg0 & 0xFFF);
-    }
 }
 
 void func_060771D4(Primitive* prim, s32 arg1) {

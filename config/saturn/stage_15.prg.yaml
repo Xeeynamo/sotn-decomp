@@ -1,0 +1,244 @@
+options:
+  target_path: disks/saturn/STAGE_15.PRG
+  asm_path: asm/saturn/stage_15
+  src_path: src/saturn
+  obj_path: build/saturn
+  ld_scripts_path: config/saturn
+  syms_path: config/saturn
+  decomp_empty_funcs: true
+segments:
+  - name: stage_15
+    type: code
+    start: 0x00000000
+    vram: 0x060DC000
+    subalign: 2
+    subsegments:
+      - start: 0x0
+        type: .data
+        file: stage_15/header
+        end: 0x40
+      - start: 0x40
+        type: c
+        file: stage_15
+        end: 0x14B74
+        function_ranges:
+          - [0x3204, 0x3314]
+          - [0x3354, 0x360A]
+          - [0xB8B8, 0xCA24]
+          - [0x126C4, 0x12DFA]
+      - start: 0x14B74
+        type: .data
+        file: stage_15/sprbank
+        end: 0x14BFC
+      - start: 0x14BFC
+        type: .data
+        file: stage_15/entupd
+        end: 0x14D1C
+      - start: 0x14D1C
+        type: .data
+        file: stage_15/hlay
+        end: 0x14DF0
+      - start: 0x14DF0
+        type: .data
+        file: stage_15/vlay
+        end: 0x14EC4
+      - start: 0x14EC4
+        type: .data
+        file: stage_15/laydata
+        end: 0x15BE8
+      - start: 0x15BE8
+        type: .data
+        file: stage_15/metadata
+        end: 0x15F04
+      - start: 0x15F04
+        type: .data
+        file: stage_15/stdata
+        end: 0x162B8
+      - start: 0x162B8
+        type: .data
+        file: stage_15/prcfg
+        end: 0x162D4
+      - start: 0x162D4
+        type: .data
+        file: stage_15/gold
+        end: 0x162FC
+      - start: 0x162FC
+        type: .data
+        file: stage_15/przan
+        end: 0x1649C
+      - start: 0x1649C
+        type: .data
+        file: stage_15/ent04
+        end: 0x16568
+      - start: 0x16568
+        type: .data
+        file: stage_15/ent09
+        end: 0x16588
+      - start: 0x16588
+        type: .data
+        file: stage_15/expl
+        end: 0x16654
+      - start: 0x16654
+        type: .data
+        file: stage_15/ent05
+        end: 0x166D4
+      - start: 0x166D4
+        type: .data
+        file: stage_15/ent06
+        end: 0x16734
+      - start: 0x16734
+        type: .data
+        file: stage_15/ent07
+        end: 0x1676C
+      - start: 0x1676C
+        type: .data
+        file: stage_15/3dcoord
+        end: 0x168A8
+      - start: 0x168A8
+        type: .data
+        file: stage_15/3dindex
+        end: 0x16A5C
+      - start: 0x16A5C
+        type: .data
+        file: stage_15/ent15
+        end: 0x16AF4
+      - start: 0x16AF4
+        type: .data
+        file: stage_15/s23res
+        end: 0x16B00
+      - start: 0x16B00
+        type: .data
+        file: stage_15/entskbst
+        end: 0x16BA0
+      - start: 0x16BA0
+        type: .data
+        file: stage_15/s23gfx
+        end: 0x16ED4
+      - start: 0x16ED4
+        type: .data
+        file: stage_15/s23part
+        end: 0x16ED8
+      - start: 0x16ED8
+        type: .data
+        file: stage_15/s24res
+        end: 0x16EE4
+      - start: 0x16EE4
+        type: .data
+        file: stage_15/entgarg
+        end: 0x16F8C
+      - start: 0x16F8C
+        type: .data
+        file: stage_15/s24gfx
+        end: 0x18228
+      - start: 0x18228
+        type: .data
+        file: stage_15/s24part
+        end: 0x183C4
+      - start: 0x183C4
+        type: .data
+        file: stage_15/s25res
+        end: 0x183D0
+      - start: 0x183D0
+        type: .data
+        file: stage_15/entbreed
+        end: 0x18668
+      - start: 0x18668
+        type: .data
+        file: stage_15/s25gfx
+        end: 0x1ACBC
+      - start: 0x1ACBC
+        type: .data
+        file: stage_15/s25part
+        end: 0x1ADC4
+      - start: 0x1ADC4
+        type: .data
+        file: stage_15/s26res
+        end: 0x1ADD0
+      - start: 0x1ADD0
+        type: .data
+        file: stage_15/enthface
+        end: 0x1AF9C
+      - start: 0x1AF9C
+        type: .data
+        file: stage_15/s26gfx
+        end: 0x1C1BC
+      - start: 0x1C1BC
+        type: .data
+        file: stage_15/s26part
+        end: 0x1C2C8
+      - start: 0x1C2C8
+        type: .data
+        file: stage_15/s27res
+        end: 0x1C2D4
+      - start: 0x1C2D4
+        type: .data
+        file: stage_15/entwlpr
+        end: 0x1C2E8
+      - start: 0x1C2E8
+        type: .data
+        file: stage_15/s27gfx
+        end: 0x1C79C
+      - start: 0x1C79C
+        type: .data
+        file: stage_15/s27part
+        end: 0x1C858
+      - start: 0x1C858
+        type: .data
+        file: stage_15/s28res
+        end: 0x1C864
+      - start: 0x1C864
+        type: .data
+        file: stage_15/entvenus
+        end: 0x1C8F8
+      - start: 0x1C8F8
+        type: .data
+        file: stage_15/s28gfx
+        end: 0x1CBD8
+      - start: 0x1CBD8
+        type: .data
+        file: stage_15/s28part
+        end: 0x1CBFC
+      - start: 0x1CBFC
+        type: .data
+        file: stage_15/s29res
+        end: 0x1CC08
+      - start: 0x1CC08
+        type: .data
+        file: stage_15/ent58
+        end: 0x1CC98
+      - start: 0x1CC98
+        type: .data
+        file: stage_15/s29gfx
+        end: 0x1D628
+      - start: 0x1D628
+        type: .data
+        file: stage_15/s29part
+        end: 0x1D6D8
+      - start: 0x1D6D8
+        type: .data
+        file: stage_15/s30res
+        end: 0x1D6E4
+      - start: 0x1D6E4
+        type: .data
+        file: stage_15/entgard
+        end: 0x1D700
+      - start: 0x1D700
+        type: .data
+        file: stage_15/s30gfx
+        end: 0x1E758
+      - start: 0x1E758
+        type: .data
+        file: stage_15/s30part
+        end: 0x1E7B8
+      - start: 0x1E7B8
+        type: .data
+        file: stage_15/s31res
+        end: 0x1E7C4
+      - start: 0x1E7C4
+        type: .data
+        file: stage_15/entlead
+        end: 0x1E828
+      - start: 0x1E828
+        type: .data
+        file: stage_15/s31gfx
+        end: 0x1F0D0
