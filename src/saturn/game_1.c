@@ -17,9 +17,9 @@ s32 func_06066B30(s32 arg0, s32 arg1) {
     return ret;
 }
 
-static u16 unkFunc(u16 arg0) {
+static u16 LookupTblNoToVram(u16 arg0) {
     if (arg0 & 0x4000) {
-        return func_06007CE0(arg0 & 0xFFF);
+        return LocalLookupTblNoToVram(arg0 & 0xFFF);
     } else {
         return SPR_2LookupTblNoToVram(arg0 & 0xFFF);
     }
@@ -34,7 +34,8 @@ void func_06066B74(Primitive* prim0, Primitive* prim1, Primitive* prim2) {
     prim0->unk4 = 0x488;
     prim0->unk8 = DAT_0605aec0[1][0];
     prim0->unkA = 0x1840;
-    prim0->unk6 = unkFunc(g_SaturnSharedSpriteBank12Resource.flags + 1);
+    prim0->unk6 =
+        LookupTblNoToVram(g_SaturnSharedSpriteBank12Resource.flags + 1);
     prim0->unk4 = prim0->unk4 & 0xFFC7;
     prim0->unk6 = prim0->unk6 & 0x8FFF | 0x4000;
     prim0->priority = 0x1C0;
@@ -42,14 +43,16 @@ void func_06066B74(Primitive* prim0, Primitive* prim1, Primitive* prim2) {
 
     prim1->type = 0x1004;
     prim1->unk4 = 0x4C0;
-    prim1->unk6 = unkFunc(g_SaturnSharedSpriteBank13Resource.flags + 3) + 1;
+    prim1->unk6 =
+        LookupTblNoToVram(g_SaturnSharedSpriteBank13Resource.flags + 3) + 1;
     prim1->unk6 = prim1->unk6 & 0x8FFF | 0x4000;
     prim1->priority = 0x1BE;
     prim1->drawMode = DRAW_HIDE;
 
     prim2->type = 0x1005;
     prim2->unk4 = 0x4C0;
-    prim2->unk6 = unkFunc(g_SaturnSharedSpriteBank13Resource.flags + 3);
+    prim2->unk6 =
+        LookupTblNoToVram(g_SaturnSharedSpriteBank13Resource.flags + 3);
     prim2->unk6 = prim2->unk6 & 0x8FFF | 0x4000;
     prim2->priority = 0x1BF;
     prim2->drawMode = DRAW_HIDE;

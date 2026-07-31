@@ -293,7 +293,7 @@ void InitRoomEntities(s32 param_1) {
     } else {
         param_1++;
     }
-    iVar9 = DAT_0605d750.unk8 * 0x35 + param_1;
+    iVar9 = g_CurrentRoom.unk8 * 0x35 + param_1;
     g_LayoutObjHorizontal = DAT_060645e4[iVar9];
     g_LayoutObjVertical = DAT_060645f8[iVar9];
     ptrH = g_LayoutObjHorizontal;

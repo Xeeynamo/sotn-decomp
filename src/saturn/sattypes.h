@@ -1017,7 +1017,7 @@ extern GameSettings g_Settings;
 extern GameApi g_api;
 extern Entity g_Entities[TOTAL_ENTITY_COUNT]; // 0x060997F8
 extern EntityEntry** PfnEntityUpdates[];
-extern Unk0605D750 DAT_0605d750;
+extern Unk0605D750 g_CurrentRoom;
 extern SpellDef g_SpellDefs[];
 extern Accessory g_AccessoryDefs[];
 extern s32 D_80137960;

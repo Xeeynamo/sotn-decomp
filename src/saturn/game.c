@@ -97,7 +97,7 @@ void InitRoom(void) {
     Entity* ent;
     Primitive* prim;
 
-    if (DAT_0605d750.unk4 < 0x50) {
+    if (g_CurrentRoom.unk4 < 0x50) {
         D_8003C708.flags = 0;
     }
     DAT_0605c668 = 1;
@@ -109,11 +109,11 @@ void InitRoom(void) {
     Scl_w_reg.wincontrl[0] = 0x8383;
     SclProcess = 1;
     func_0600ff08();
-    if (DAT_0605d750.unk4 < 0x50) {
+    if (g_CurrentRoom.unk4 < 0x50) {
         D_801375BC.def =
-            (RoomLoadDef*)func_0606D804(DAT_0605d750.stageID & 0xDF);
+            (RoomLoadDef*)func_0606D804(g_CurrentRoom.stageID & 0xDF);
         D_801375BC.def =
-            (RoomLoadDef*)((u8*)D_801375BC.def + DAT_0605d750.unk4 * 6 + 4);
+            (RoomLoadDef*)((u8*)D_801375BC.def + g_CurrentRoom.unk4 * 6 + 4);
     }
     D_8013759C = PLAYER.posX.val;
     D_801375A0 = PLAYER.posY.val;
@@ -122,14 +122,14 @@ void InitRoom(void) {
     DAT_060860bc = 0;
     DAT_060860c0 = 0;
     FUN_0606d358(1);
-    uVar9 = DAT_0605d750.stageID & 0xDF;
+    uVar9 = g_CurrentRoom.stageID & 0xDF;
     if ((uVar9 == 6 || uVar9 == 11 || uVar9 == 9 || uVar9 == 3) &&
-        DAT_0605d750.unkA != DAT_0605d750.unk8) {
-        DAT_0605d750.unkA = DAT_0605d750.unk8;
+        g_CurrentRoom.unkA != g_CurrentRoom.unk8) {
+        g_CurrentRoom.unkA = g_CurrentRoom.unk8;
     } else {
         DAT_0605d7dc = DAT_0605c120;
     }
-    func_06009510(DAT_0605d750.unk4);
+    func_06009510(g_CurrentRoom.unk4);
     PLAYER.posX.i.hi = PLAYER.posX.i.hi % 0x140;
     PLAYER.posY.i.hi = PLAYER.posY.i.hi % 0x100;
 
@@ -146,8 +146,8 @@ void InitRoom(void) {
         ((D_801375BC.def - 1)->objGfxId - g_Tilemap.left + 1) * 0x140;
     g_Tilemap.height =
         ((D_801375BC.def - 1)->objLayoutId - g_Tilemap.top + 1) * 0x100;
-    g_Tilemap.scrollX.i.hi = (DAT_0605d750.unkC - g_Tilemap.left) * 0x140;
-    g_Tilemap.scrollY.i.hi = (DAT_0605d750.unk10 - g_Tilemap.top) * 0x100;
+    g_Tilemap.scrollX.i.hi = (g_CurrentRoom.unkC - g_Tilemap.left) * 0x140;
+    g_Tilemap.scrollY.i.hi = (g_CurrentRoom.unk10 - g_Tilemap.top) * 0x100;
     g_PlayerX = PLAYER.posX.i.hi + g_Tilemap.scrollX.i.hi;
     g_PlayerY = PLAYER.posY.i.hi + g_Tilemap.scrollY.i.hi;
     func_800F0CD8(0);
@@ -197,7 +197,7 @@ void InitRoom(void) {
             }
         }
     }
-    if (DAT_0605d750.stageID != 0x2B) {
+    if (g_CurrentRoom.stageID != 0x2B) {
         for (i = 0; i < 8; i++) {
             g_unkGraphicsStruct.D_80097428[i] = 0;
         }
@@ -224,26 +224,26 @@ void InitRoom(void) {
     SetDefaultSCLPriority(0);
     func_800F0CD8(0);
     func_800F0CD8(0);
-    InitRoomEntities(DAT_0605d750.unk4);
+    InitRoomEntities(g_CurrentRoom.unk4);
     FUN_0606c160();
     FUN_0606c160();
     DAT_0605cd70.unk0++;
-    if ((DAT_0605d750.unk6 == 0x50) || (DAT_0605d750.unk6 == 0x60)) {
+    if ((g_CurrentRoom.unk6 == 0x50) || (g_CurrentRoom.unk6 == 0x60)) {
         if (g_unkGraphicsStruct.D_800973FC == 0) {
-            PlaySfx(FUN_060727dc(
-                g_PlayableCharacter, DAT_0605d750.stageID, DAT_0605d750.unk4));
+            PlaySfx(FUN_060727dc(g_PlayableCharacter, g_CurrentRoom.stageID,
+                                 g_CurrentRoom.unk4));
         } else {
             currentMusicId = FUN_060727dc(
-                g_PlayableCharacter, DAT_0605d750.stageID, DAT_0605d750.unk4);
+                g_PlayableCharacter, g_CurrentRoom.stageID, g_CurrentRoom.unk4);
             DAT_0605cd54 = 1;
         }
     }
-    if ((DAT_0605d750.unk4 == 0x50) || (DAT_0605d750.unk4 == 0x60)) {
+    if ((g_CurrentRoom.unk4 == 0x50) || (g_CurrentRoom.unk4 == 0x60)) {
         if (func_80131F68_2() != 0) {
             PlaySfx(SET_STOP_MUSIC);
         }
         if ((g_unkGraphicsStruct.D_800973FC != 0) && (D_8006BB00 != 0)) {
-            if (DAT_0605d750.unk4 == 0x50) {
+            if (g_CurrentRoom.unk4 == 0x50) {
                 PlaySfx(SET_STOP_MUSIC);
                 DAT_0605cd54 = 1;
             }
@@ -259,8 +259,8 @@ extern u8* DAT_060645b8;
 void SetDefaultSCLPriority(s32 arg0) {
     u8* ptr;
 
-    if (DAT_0605d750.unk4 < 0x20) {
-        ptr = &DAT_060645b8[DAT_0605d750.unk4 * 12];
+    if (g_CurrentRoom.unk4 < 0x20) {
+        ptr = &DAT_060645b8[g_CurrentRoom.unk4 * 12];
         SCL_SetPriority(0x4, ptr[0]);
         SCL_SetPriority(0x8, ptr[1]);
         SCL_SetPriority(0x10, ptr[2]);
@@ -834,7 +834,8 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f60744F8, func_060744F8);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60745A0, func_060745A0);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6074698, func_06074698);
 
-void func_06074700(void) {
+// func_06074700
+void ClearVdp2CharRamA1(void) {
     u16 i;
     u32* char_ram;
 
@@ -846,7 +847,8 @@ void func_06074700(void) {
 
 extern u32 g_FontGlyphDataSizes[];
 
-u32* func_06074724(s32 arg0, u16 arg1) {
+// func_06074724
+u32* GetStageTextGlyphData(s32 arg0, u16 arg1) {
     switch (arg1) {
     case 0x41:
         if (arg0 == 0) {
@@ -948,7 +950,8 @@ u32* func_06074724(s32 arg0, u16 arg1) {
     return NULL;
 }
 
-u32* func_06074964(s32 arg0, s32 arg1) {
+// func_06074964
+u32* GetEventTextGlyphData(s32 arg0, s32 arg1) {
     switch (arg1) {
     case 0:
         if (arg0 == 0) {
@@ -1042,7 +1045,7 @@ void ApplyJosephsCloakPalette(void) {
 }
 
 void func_06074BF4(void) {
-    if (DAT_0605d750.stageID != STAGE_ST0 && g_PlayableCharacter == 0) {
+    if (g_CurrentRoom.stageID != STAGE_ST0 && g_PlayableCharacter == 0) {
         UpdateCapePalette();
     }
 }

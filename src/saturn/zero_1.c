@@ -3,10 +3,10 @@
 #include "inc_asm.h"
 #include "sattypes.h"
 
-void func_06011F40(s32 param);
+void StopPcm(s32 param);
 
 void func_06012030(void) {
-    func_06011F40(7);
+    StopPcm(7);
     D_8013B61C = 0;
 }
 

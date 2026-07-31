@@ -58,7 +58,7 @@ struct Unk0605CD90 {
     u8 pad[10];
 };
 
-void func_060089F0(struct Unk0605CD90* param_1);
+void BuildSubDispTilemap(struct Unk0605CD90* param_1);
 s32 DAT_060086e4;
 s32 func_0600F96C(s32, s32, s32);
 // func_060086E8

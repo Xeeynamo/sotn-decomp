@@ -64,20 +64,20 @@ void func_0606D554(s32 arg0) {
 
     if (D_8003C730 == 0) {
         if (D_80097C98 == 4) {
-            DAT_0605d750.stageID = 0x2B;
+            g_CurrentRoom.stageID = 0x2B;
         } else if (D_80097C98 == 5) {
-            DAT_0605d750.stageID = 11;
+            g_CurrentRoom.stageID = 11;
         } else if (D_80097C98 == 6) {
-            DAT_0605d750.stageID = 0x40;
+            g_CurrentRoom.stageID = 0x40;
         } else if (arg0 != 0x0) {
-            DAT_0605d750.stageID = ptr->stageId;
-            if ((DAT_0605d750.stageID & 0x10) != 0x10 &&
-                (DAT_0605d750.unk2 & 0x20) == 0x20) {
-                DAT_0605d750.stageID ^= 0x20;
+            g_CurrentRoom.stageID = ptr->stageId;
+            if ((g_CurrentRoom.stageID & 0x10) != 0x10 &&
+                (g_CurrentRoom.unk2 & 0x20) == 0x20) {
+                g_CurrentRoom.stageID ^= 0x20;
             }
         }
         D_801375BC.def = DAT_0606459c + ptr->roomId + 4;
-        DAT_0605d750.unk4 = D_801375BC.def->tileLayoutId;
+        g_CurrentRoom.unk4 = D_801375BC.def->tileLayoutId;
     }
 }
 
@@ -95,11 +95,11 @@ void func_0606D5FC(void) {
     case 0:
         ptr = &g_RoomTeleports[DAT_0605c108];
         D_8003C708.unk4 = ptr->stageId;
-        if (DAT_0605d750.stageID & 0x20) {
+        if (g_CurrentRoom.stageID & 0x20) {
             D_8003C708.unk4 ^= 0x20;
         }
         D_8003C708.zPriority = ptr->reloadStageId;
-        if (DAT_0605d750.stageID & 0x20) {
+        if (g_CurrentRoom.stageID & 0x20) {
             D_8003C708.zPriority ^= 0x20;
         }
         if (D_8003C708.flags == FLAG_UNK_40) {
@@ -121,26 +121,26 @@ void func_0606D5FC(void) {
 }
 
 void func_0606D6DC(void) {
-    if (DAT_0605d750.stageID == 6 && DAT_0605d750.unk8 == 0) {
-        switch (DAT_0605d750.unk4) {
+    if (g_CurrentRoom.stageID == 6 && g_CurrentRoom.unk8 == 0) {
+        switch (g_CurrentRoom.unk4) {
         case 2:
         case 3:
         case 9:
         case 10:
-            DAT_0605d750.unkC--;
+            g_CurrentRoom.unkC--;
             break;
         case 8:
-            if (DAT_0605d750.unkA == 0 && DAT_0605d750.unk6 == 1) {
-                DAT_0605d750.unkC--;
+            if (g_CurrentRoom.unkA == 0 && g_CurrentRoom.unk6 == 1) {
+                g_CurrentRoom.unkC--;
             }
             break;
         }
-    } else if (DAT_0605d750.stageID == 0x2B && DAT_0605d750.unk8 != 0) {
-        switch (DAT_0605d750.unk4) {
+    } else if (g_CurrentRoom.stageID == 0x2B && g_CurrentRoom.unk8 != 0) {
+        switch (g_CurrentRoom.unk4) {
         case 1:
-            if (DAT_0605d750.unk6 == 0 || DAT_0605d750.unk6 == 2 ||
-                DAT_0605d750.unk6 == 3 || DAT_0605d750.unk6 == 4) {
-                DAT_0605d750.unkC--;
+            if (g_CurrentRoom.unk6 == 0 || g_CurrentRoom.unk6 == 2 ||
+                g_CurrentRoom.unk6 == 3 || g_CurrentRoom.unk6 == 4) {
+                g_CurrentRoom.unkC--;
             }
             break;
         }
@@ -148,25 +148,25 @@ void func_0606D6DC(void) {
 }
 
 void func_0606D798(void) {
-    if (DAT_0605d750.stageID == 6 && DAT_0605d750.unk8 == 0) {
-        if (DAT_0605d750.unk4 != 8) {
-            if (DAT_0605d750.unk4 != 9) {
+    if (g_CurrentRoom.stageID == 6 && g_CurrentRoom.unk8 == 0) {
+        if (g_CurrentRoom.unk4 != 8) {
+            if (g_CurrentRoom.unk4 != 9) {
                 return;
             }
-            DAT_0605d750.unkC++;
+            g_CurrentRoom.unkC++;
         } else {
-            if (DAT_0605d750.unk6 != 2) {
+            if (g_CurrentRoom.unk6 != 2) {
                 return;
             }
-            DAT_0605d750.unkC++;
+            g_CurrentRoom.unkC++;
         }
-    } else if (DAT_0605d750.stageID == 0x26 && DAT_0605d750.unk8 == 0) {
-        if (DAT_0605d750.unk4 != 2) {
-            if (DAT_0605d750.unk4 != 3) {
+    } else if (g_CurrentRoom.stageID == 0x26 && g_CurrentRoom.unk8 == 0) {
+        if (g_CurrentRoom.unk4 != 2) {
+            if (g_CurrentRoom.unk4 != 3) {
                 return;
             }
         }
-        DAT_0605d750.unkC++;
+        g_CurrentRoom.unkC++;
     }
 }
 
@@ -177,20 +177,20 @@ s32 func_0606D804(u16 arg0) {
 
     switch (arg0) {
     case 6:
-        if (DAT_0605d750.unk8 != 0) {
+        if (g_CurrentRoom.unk8 != 0) {
             ret += 0x6C;
         }
         break;
     case 9:
-        if (DAT_0605d750.unk8 == 1) {
+        if (g_CurrentRoom.unk8 == 1) {
             ret += 0x42;
-        } else if (DAT_0605d750.unk8 == 2) {
+        } else if (g_CurrentRoom.unk8 == 2) {
             ret += 0x114;
         }
         break;
     case 3:
     case 11:
-        if (DAT_0605d750.unk8 != 0) {
+        if (g_CurrentRoom.unk8 != 0) {
             ret += 0x66;
         }
         break;
