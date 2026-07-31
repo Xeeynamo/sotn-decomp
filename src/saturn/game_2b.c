@@ -780,7 +780,8 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AC40, func_0607AC40);
 
 void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity);
 
-void func_0607AE48(Entity* self, u16 params) {
+// func_0607AE48
+void DestroyEntityWithExplosion(Entity* self, u16 params) {
     Entity* entity;
 
     if (params == 0xFF) {
@@ -990,14 +991,15 @@ void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity) {
 }
 
 void FreePrimitives(s32);
-void func_0600B428(SpriteObject*);
+void DestroySpriteObject(SpriteObject*);
 
-void func_0607B3D0(u16 entityId) {
+// func_0607B3D0
+void ChangeCurrentEntityType(u16 entityId) {
     Entity* entity;
 
     entity = g_CurrentEntity;
     if (entity->unk0 != NULL) {
-        func_0600B428(entity->unk0);
+        DestroySpriteObject(entity->unk0);
         entity->unk0 = NULL;
     }
     if (entity->flags & FLAG_HAS_PRIMS) {
@@ -1008,7 +1010,8 @@ void func_0607B3D0(u16 entityId) {
     entity->pfnUpdate = (*PfnEntityUpdates)[entityId - 1]->func;
 }
 
-void func_0607B448(u16 entityId, Entity* entity) {
+// func_0607B448
+void ChangeEntityType(u16 entityId, Entity* entity) {
     entity->entityId = entityId;
     entity->pfnUpdate = (*PfnEntityUpdates)[entityId - 1]->func;
     if (entity->flags & FLAG_HAS_PRIMS) {
@@ -1016,7 +1019,7 @@ void func_0607B448(u16 entityId, Entity* entity) {
         entity->flags &= ~FLAG_HAS_PRIMS;
     }
     if (entity->unk0 != NULL) {
-        func_0600B428(entity->unk0);
+        DestroySpriteObject(entity->unk0);
         entity->unk0 = NULL;
     }
 }
@@ -1034,11 +1037,11 @@ void ReplaceBreakableWithItemDrop(Entity* self) {
 
     params = self->params &= 0xFFF;
     if (params < 0x80) {
-        func_0607B448(3, self);
+        ChangeEntityType(3, self);
         self->poseTimer = 0;
         self->pose = 0;
     } else {
-        func_0607B448(10, self);
+        ChangeEntityType(10, self);
         params -= 0x80;
     }
     self->params = params;
@@ -1492,7 +1495,8 @@ extern s32 DAT_06086134;
 void func_06008048();
 void func_0600C818();
 
-void func_0607BE38(void) {
+// func_0607BE38
+void InitScreenWaveEffect(void) {
     func_0600C818();
     DAT_06086128 = 0x50000;
     DAT_0608612c = 0xF0000;
@@ -1508,7 +1512,8 @@ extern s32 d_0605AEAC;
 extern u16 DAT_0605aec0[][2];
 extern s32 SpMstCmdPos;
 
-void func_0607BED0(void) {
+// func_0607BED0
+void DrawScreenWaveEffect(void) {
     SprSpCmd cmd;
     SprSpCmd* spCmd;
     s32 i;
@@ -1522,7 +1527,7 @@ void func_0607BED0(void) {
     spCmd->charSize = 0x2801;
     angle = DAT_06086130;
     for (i = 0; i < 0x20; i++, angle += 0x80) {
-        spCmd->ax = func_0607C054(DAT_0608612c, DAT_06086128, angle);
+        spCmd->ax = CalcWaveOffset(DAT_0608612c, DAT_06086128, angle);
         spCmd->ay = i + 0x68;
         if (SpMstCmdPos < 0x278) {
             SPR_2Cmd(0x1C0, spCmd);
@@ -1553,7 +1558,8 @@ void func_0607BED0(void) {
     }
 }
 
-s16 func_0607C054(s32 arg0, s32 arg1, s32 angle) {
+// func_0607C054
+s16 CalcWaveOffset(s32 arg0, s32 arg1, s32 angle) {
     angle &= 0xFFF;
     return ((rsin((angle * (arg1 >> 8)) >> 8) >> 4) * (arg0 >> 8)) >> 0x10;
 }

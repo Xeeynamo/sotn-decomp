@@ -60,7 +60,7 @@ struct Unk0605CD90 {
 
 void BuildSubDispTilemap(struct Unk0605CD90* param_1);
 s32 DAT_060086e4;
-s32 func_0600F96C(s32, s32, s32);
+s32 DecompressLzss(s32, s32, s32);
 // func_060086E8
 void DmaScroll(s32* src, s32* dest, u32 cnt);
 
