@@ -362,6 +362,8 @@ func quoteCString(value string) string {
 }
 
 func formatName(value string, platform sotn.Platform) (string, error) {
+	// PSX/HD encode _S() after expanding includes; PSP runs sotn_str before
+	// includes are expanded, so generated PSP headers must contain encoded bytes.
 	if platform != sotn.PlatformPSP {
 		return fmt.Sprintf("_S(%s)", quoteCString(value)), nil
 	}
