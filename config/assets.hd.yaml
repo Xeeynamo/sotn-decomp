@@ -28,6 +28,8 @@ files:
           - [0x1C18, rawgfx, g_saveIcon14, 16, 48, 4, 0x6C8]
           - [0x1D98, rawgfx, g_saveIcon15, 16, 48, 4, 0x6E8]
           - [0x22E4, skip]
+          - [0x88AC, enemydefs, hd/enemydefs]
+          - [0xC72C, skip]
           - [0xD298, blueprintsdef, hd/blueprints, AluBlueprints, AluEntities]
           - [0xD57C, skip]
           - [0x11140, binary, hd/vh_0, vh]

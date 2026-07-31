@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 
 	"github.com/goccy/go-yaml"
@@ -15,12 +16,15 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 )
 
-const entrySize = 0x28
+const (
+	entrySize         = 0x28
+	defaultEntryCount = 400
+)
 
 type enemyRawEntry struct {
 	NameAddr             uint32
 	HitPoints            int16
-	Attack               uint16
+	Attack               int16
 	AttackElement        uint16
 	Defense              int16
 	HitboxState          uint16
@@ -40,9 +44,10 @@ type enemyRawEntry struct {
 }
 
 type enemyModel struct {
+	ID                   string   `yaml:"id"`
 	Name                 string   `yaml:"name"`
 	HitPoints            int16    `yaml:"hit_points"`
-	Attack               uint16   `yaml:"attack"`
+	Attack               int16    `yaml:"attack"`
 	AttackElement        []string `yaml:"attack_element"`
 	Defense              int16    `yaml:"defense"`
 	HitboxState          uint16   `yaml:"hitbox_state"`
@@ -58,7 +63,10 @@ type enemyModel struct {
 	UncommonItemDropRate uint16   `yaml:"uncommon_item_drop_rate"`
 	HitboxWidth          uint8    `yaml:"hitbox_width"`
 	HitboxHeight         uint8    `yaml:"hitbox_height"`
-	Flags                uint32   `yaml:"flags"`
+	// EnemyDef declares flags as s32, but this is a bitfield. Keep its unsigned
+	// representation so YAML and generated hexadecimal literals preserve the
+	// original bits without displaying negative decimal values.
+	Flags uint32 `yaml:"flags"`
 }
 
 type handler struct{}
@@ -82,9 +90,21 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 	if len(itemFields) == 0 {
 		return fmt.Errorf("enum ItemDrops has no fields")
 	}
+	expectedCount, err := entryCount(e.Args)
+	if err != nil {
+		return err
+	}
 
 	entries, err := parse(
-		e.Data, e.Start, e.End, e.RamBase, elementFields, itemFields)
+		e.Data,
+		e.Start,
+		e.End,
+		e.RamBase,
+		e.Version.GetPlatform(),
+		expectedCount,
+		elementFields,
+		itemFields,
+	)
 	if err != nil {
 		return fmt.Errorf("parse error: %w", err)
 	}
@@ -101,19 +121,32 @@ func (h *handler) Build(e assets.BuildArgs) error {
 	if err != nil {
 		return fmt.Errorf("failed to read file: %w", err)
 	}
-	var entries []enemyModel
-	if err := yaml.Unmarshal(data, &entries); err != nil {
+	var serializedEntries []enemyModel
+	if err := yaml.Unmarshal(data, &serializedEntries); err != nil {
 		return fmt.Errorf("failed to parse %s: %w", inFileName, err)
+	}
+	expectedCount, err := entryCount(e.Args)
+	if err != nil {
+		return err
+	}
+	entries, err := normalizeEntries(serializedEntries, expectedCount)
+	if err != nil {
+		return fmt.Errorf("invalid enemy definitions in %s: %w", inFileName, err)
 	}
 
 	var sb strings.Builder
 	sb.WriteString("// clang-format off\n")
+	platform := sotn.GetPlatform()
 	for i, entry := range entries {
+		name, err := formatName(entry.Name, platform)
+		if err != nil {
+			return fmt.Errorf("enemy %#x name: %w", i, err)
+		}
 		fmt.Fprintf(
 			&sb,
-			"/* 0x%03X */ {_S(%s), %d, %d, %s, %d, %d, %s, %s, %s, %s, %d, %d, %s, %s, %d, %d, %d, %d, 0x%08X},\n",
+			"/* 0x%03X */ {%s, %d, %d, %s, %d, %d, %s, %s, %s, %s, %d, %d, %s, %s, %d, %d, %d, %d, 0x%08X},\n",
 			i,
-			quoteCString(entry.Name),
+			name,
 			entry.HitPoints,
 			entry.Attack,
 			formatFlags(entry.AttackElement),
@@ -153,6 +186,8 @@ func parse(
 	data []byte,
 	start, end int,
 	ramBase psx.Addr,
+	platform sotn.Platform,
+	expectedCount int,
 	elements, items map[int]string,
 ) ([]enemyModel, error) {
 	if size := binary.Size(enemyRawEntry{}); size != entrySize {
@@ -172,6 +207,11 @@ func parse(
 	}
 
 	count := (end - start) / entrySize
+	if count != expectedCount {
+		return nil, fmt.Errorf(
+			"enemy definition range has %d entries, expected %d",
+			count, expectedCount)
+	}
 	rawEntries := make([]enemyRawEntry, count)
 	if err := binary.Read(
 		bytes.NewReader(data[start:end]), binary.LittleEndian, &rawEntries,
@@ -181,11 +221,13 @@ func parse(
 
 	entries := make([]enemyModel, count)
 	for i, raw := range rawEntries {
-		name, err := decodePSXString(data, psx.Addr(raw.NameAddr), ramBase)
+		name, err := sotn.DecodeString(
+			data, psx.Addr(raw.NameAddr), ramBase, platform)
 		if err != nil {
 			return nil, fmt.Errorf("enemy %#x name: %w", i, err)
 		}
 		entries[i] = enemyModel{
+			ID:                   fmt.Sprintf("0x%03X", i),
 			Name:                 name,
 			HitPoints:            raw.HitPoints,
 			Attack:               raw.Attack,
@@ -208,6 +250,57 @@ func parse(
 		}
 	}
 	return entries, nil
+}
+
+func normalizeEntries(
+	serialized []enemyModel,
+	expectedCount int,
+) ([]enemyModel, error) {
+	if len(serialized) != expectedCount {
+		return nil, fmt.Errorf(
+			"got %d entries, expected %d",
+			len(serialized), expectedCount)
+	}
+
+	entries := make([]enemyModel, expectedCount)
+	seen := make([]bool, expectedCount)
+	for _, entry := range serialized {
+		index, err := strconv.ParseUint(entry.ID, 0, 16)
+		if err != nil {
+			return nil, fmt.Errorf("invalid id %q: %w", entry.ID, err)
+		}
+		if index >= uint64(expectedCount) {
+			return nil, fmt.Errorf(
+				"id %q is outside [0, %#x)", entry.ID, expectedCount)
+		}
+		if seen[index] {
+			return nil, fmt.Errorf("duplicate id %q", entry.ID)
+		}
+		seen[index] = true
+		entries[index] = entry
+	}
+	for index, present := range seen {
+		if !present {
+			return nil, fmt.Errorf("missing id 0x%03X", index)
+		}
+	}
+	return entries, nil
+}
+
+func entryCount(args []string) (int, error) {
+	if len(args) == 0 {
+		return defaultEntryCount, nil
+	}
+	if len(args) != 1 {
+		return 0, fmt.Errorf(
+			"enemydefs accepts at most one entry-count argument, got %d",
+			len(args))
+	}
+	count, err := strconv.ParseUint(args[0], 0, 16)
+	if err != nil || count == 0 {
+		return 0, fmt.Errorf("invalid enemydefs entry count %q", args[0])
+	}
+	return int(count), nil
 }
 
 func decodeFlags(value uint16, fields map[int]string) []string {
@@ -233,9 +326,9 @@ func formatFlags(flags []string) string {
 }
 
 func decodeItem(value uint16, fields map[int]string) string {
-	// Enemy definitions use zero as "no drop", while ItemDrops assigns zero to
-	// ITEMDROP_SMALL_HEART. Preserve the table's semantics instead of emitting
-	// a misleading enum name.
+	// Zero-valued item slots are normally disabled by a zero drop rate. Emitting
+	// ITEMDROP_SMALL_HEART would make those inactive slots appear populated, so
+	// preserve zero numerically.
 	if value == 0 {
 		return "0"
 	}
@@ -268,103 +361,19 @@ func quoteCString(value string) string {
 	return sb.String()
 }
 
-var psxFontTable = []rune(strings.Join([]string{
-	` !'#$%&'()男+,-./`,
-	`0123456789:人手=玉?`,
-	`石ABCDEFGHIJKLMNO`,
-	`PQRSTUVWXYZ[剣]盾_`,
-	`書abcdefghijklmno`,
-	`pqrstuvwxyz炎氷雷~女`,
-	`力。「」、・ヲァィゥェォャュョッ`,
-	`ーアイウエオカキクケコサシスセソ`,
-	`タチツテトナニヌネノハヒフヘホマ`,
-	`ミムメモヤユヨラリルレロワンﾞﾟ`,
-	`子悪魔人妖精をぁぃぅぇぉゃゅょっ`,
-	`金あいうえおかきくけこさしすせそ`,
-	`たちつてとなにぬねのはひふへほま`,
-	`みむめもやゆよらりるれろわん指輪`,
-	`←↖↑↗→↘↓↙○×□△名刀聖血`,
-	`✈★☀☁☃♂♀©®§¶∑大光邪月`,
-}, ""))
-
-func decodePSXString(data []byte, addr, ramBase psx.Addr) (string, error) {
-	if len(psxFontTable) != 0x100 {
-		return "", fmt.Errorf(
-			"PSX font table has %#x entries, expected 0x100",
-			len(psxFontTable))
+func formatName(value string, platform sotn.Platform) (string, error) {
+	if platform != sotn.PlatformPSP {
+		return fmt.Sprintf("_S(%s)", quoteCString(value)), nil
 	}
-	if addr < ramBase {
-		return "", fmt.Errorf("pointer %s precedes RAM base %s", addr, ramBase)
+	encoded, err := sotn.EncodeString(value, platform)
+	if err != nil {
+		return "", err
 	}
-	offset := addr.Real(ramBase)
-	if offset >= len(data) {
-		return "", fmt.Errorf(
-			"pointer %s resolves outside %#x-byte input", addr, len(data))
+	var sb strings.Builder
+	sb.WriteByte('"')
+	for _, value := range encoded {
+		fmt.Fprintf(&sb, "\\x%02X", value)
 	}
-
-	decoded := make([]rune, 0, 16)
-	for offset < len(data) {
-		value := data[offset]
-		offset++
-		if value != 0xFF {
-			decoded = append(decoded, psxFontTable[value])
-			continue
-		}
-		if offset >= len(data) {
-			return "", fmt.Errorf("unterminated string at %s", addr)
-		}
-
-		escaped := data[offset]
-		offset++
-		switch escaped {
-		case 0:
-			return string(decoded), nil
-		case 0xFF:
-			decoded = append(decoded, '月')
-		case 0x9E, 0x9F:
-			if len(decoded) == 0 {
-				return "", fmt.Errorf(
-					"voice mark %#x has no preceding character at %s",
-					escaped, addr)
-			}
-			base := decoded[len(decoded)-1]
-			composed, ok := composeVoiceMark(base, escaped)
-			if !ok {
-				return "", fmt.Errorf(
-					"cannot apply voice mark %#x to %q at %s",
-					escaped, base, addr)
-			}
-			decoded[len(decoded)-1] = composed
-		default:
-			return "", fmt.Errorf(
-				"unknown string escape 0xFF 0x%02X at %s", escaped, addr)
-		}
-	}
-	return "", fmt.Errorf("unterminated string at %s", addr)
-}
-
-var dakuten = map[rune]rune{
-	'か': 'が', 'き': 'ぎ', 'く': 'ぐ', 'け': 'げ', 'こ': 'ご',
-	'さ': 'ざ', 'し': 'じ', 'す': 'ず', 'せ': 'ぜ', 'そ': 'ぞ',
-	'た': 'だ', 'ち': 'ぢ', 'つ': 'づ', 'て': 'で', 'と': 'ど',
-	'は': 'ば', 'ひ': 'び', 'ふ': 'ぶ', 'へ': 'べ', 'ほ': 'ぼ',
-	'カ': 'ガ', 'キ': 'ギ', 'ク': 'グ', 'ケ': 'ゲ', 'コ': 'ゴ',
-	'サ': 'ザ', 'シ': 'ジ', 'ス': 'ズ', 'セ': 'ゼ', 'ソ': 'ゾ',
-	'タ': 'ダ', 'チ': 'ヂ', 'ツ': 'ヅ', 'テ': 'デ', 'ト': 'ド',
-	'ハ': 'バ', 'ヒ': 'ビ', 'フ': 'ブ', 'ヘ': 'ベ', 'ホ': 'ボ',
-	'ウ': 'ヴ',
-}
-
-var handakuten = map[rune]rune{
-	'は': 'ぱ', 'ひ': 'ぴ', 'ふ': 'ぷ', 'へ': 'ぺ', 'ほ': 'ぽ',
-	'ハ': 'パ', 'ヒ': 'ピ', 'フ': 'プ', 'ヘ': 'ペ', 'ホ': 'ポ',
-}
-
-func composeVoiceMark(base rune, mark byte) (rune, bool) {
-	if mark == 0x9E {
-		value, ok := dakuten[base]
-		return value, ok
-	}
-	value, ok := handakuten[base]
-	return value, ok
+	sb.WriteByte('"')
+	return sb.String(), nil
 }
