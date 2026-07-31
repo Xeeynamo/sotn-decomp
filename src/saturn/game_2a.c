@@ -116,7 +116,7 @@ void InitStatsAndGear(s32 isDeathTakingItems) {
         g_Status.spells[i] = 0;
     }
     g_Status.spellsLearnt = 0;
-    if ((DAT_0605d750.stageID == STAGE_ST0) || (g_PlayableCharacter != 0)) {
+    if ((g_CurrentRoom.stageID == STAGE_ST0) || (g_PlayableCharacter != 0)) {
         for (i = 0; i < 0x20; i++) {
             g_Status.relics[i] = 1;
         }
@@ -142,11 +142,11 @@ void InitStatsAndGear(s32 isDeathTakingItems) {
         g_Status.equipment[5] = 0x30;
         g_Status.equipment[6] = 0x3A;
         g_Status.equipment[7] = 0x3A;
-        if ((DAT_0605d750.stageID != STAGE_ST0) &&
-            (DAT_0605d750.stageID != 0x41)) {
+        if ((g_CurrentRoom.stageID != STAGE_ST0) &&
+            (g_CurrentRoom.stageID != 0x41)) {
             g_Status.subWeapon = MTH_GetRand() % 9 + 1;
         }
-        if (DAT_0605d750.stageID == STAGE_ST0) {
+        if (g_CurrentRoom.stageID == STAGE_ST0) {
             g_Status.hpMax = g_Status.hp = 50;
             g_Status.hearts = 30;
             g_Status.heartsMax = 99;
@@ -163,7 +163,7 @@ void InitStatsAndGear(s32 isDeathTakingItems) {
             g_Status.equipment[3] = 0x2D;
             g_Status.mp = g_Status.mpMax = 200;
         }
-        if (DAT_0605d750.stageID == 0x41) {
+        if (g_CurrentRoom.stageID == 0x41) {
             TimeAttackController(27, 1);
             TimeAttackController(9, 1);
             TimeAttackController(4, 1);
@@ -177,7 +177,7 @@ void InitStatsAndGear(s32 isDeathTakingItems) {
         make_all();
         return;
     }
-    if (DAT_0605d750.stageID == 0x41) {
+    if (g_CurrentRoom.stageID == 0x41) {
         g_Status.statsBase[0] = 6;
         g_Status.statsBase[1] = 6;
         g_Status.statsBase[2] = 6;
@@ -325,7 +325,7 @@ void InitStatsAndGear(s32 isDeathTakingItems) {
         g_Status.heartsMax = 2000;
         g_Status.gold = 500000;
         g_Status.exp = 11000;
-        if (DAT_0605d750.stageID & STAGE_INVERTEDCASTLE_FLAG) {
+        if (g_CurrentRoom.stageID & STAGE_INVERTEDCASTLE_FLAG) {
             g_Status.exp = 110000;
         }
         for (i = 0; i < 0x20; i++) {
@@ -396,9 +396,9 @@ s32 func_06076718(void) { return g_PlayerHud.unk24 == 0x15; }
 void func_0607672C(void);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607672C, func_0607672C);
 
-static u16 unkFunc(u16 arg0) {
+static u16 LookupTblNoToVram(u16 arg0) {
     if (arg0 & 0x4000) {
-        return func_06007CE0(arg0 & 0xFFF);
+        return LocalLookupTblNoToVram(arg0 & 0xFFF);
     } else {
         return SPR_2LookupTblNoToVram(arg0 & 0xFFF);
     }
@@ -458,7 +458,7 @@ void func_06076A04(void) {
         sVar9 = 0xF;
     }
 
-    prim->unk6 = unkFunc(DAT_06086388->flags + 10);
+    prim->unk6 = LookupTblNoToVram(DAT_06086388->flags + 10);
     prim->unk6 = sVar9 + prim->unk6 & 0x8FFF | 0x4000;
     prim->y3 = prim->y2 = prim->y0 - sVar4;
     prim = prim->next;
@@ -499,7 +499,8 @@ void func_06076A04(void) {
         prim->unk8 = ptr[0];
         prim->unkA = ptr[1];
         prim->unk6 =
-            unkFunc(DAT_06086388->flags + local_31[sub]) & 0x8FFF | 0x4000;
+            LookupTblNoToVram(DAT_06086388->flags + local_31[sub]) & 0x8FFF |
+            0x4000;
         SetXY(prim, DAT_06085d3c[sub * 2], DAT_06085d3c[sub * 2 + 1]);
         prim->drawMode &= ~DRAW_HIDE;
     }
@@ -514,7 +515,8 @@ void func_06076A04(void) {
         iVar10 = 0x0;
     }
 
-    prim->unk6 = unkFunc(DAT_06086388->flags + iVar10) & 0x8FFF | 0x4000;
+    prim->unk6 =
+        LookupTblNoToVram(DAT_06086388->flags + iVar10) & 0x8FFF | 0x4000;
     if (g_PlayerHud.unk24 == 0) {
         if ((g_Status.D_80097BF8 & 1) == 0) {
             if ((g_Timer & 0xF) == 0) {
@@ -602,7 +604,8 @@ void func_060771D4(Primitive* prim, s32 arg1) {
     ptr = DAT_0605aec0[DAT_06086388->allocationIndex + arg1];
     prim->unk8 = ptr[0];
     prim->unkA = ptr[1];
-    prim->unk6 = unkFunc(DAT_06086388->flags + arg1) & 0x8FFF | 0x4000;
+    prim->unk6 =
+        LookupTblNoToVram(DAT_06086388->flags + arg1) & 0x8FFF | 0x4000;
 }
 
 void func_06077260(Primitive* prim) {
@@ -628,7 +631,7 @@ void func_06077260(Primitive* prim) {
         prim->x1 = prim->x2 = prim->x0 + (g_Status.mp * 61) / g_Status.mpMax;
         sVar6 = 0xF;
     }
-    prim->unk6 = unkFunc(DAT_06086388->flags + 11);
+    prim->unk6 = LookupTblNoToVram(DAT_06086388->flags + 11);
     prim->unk6 = sVar6 + prim->unk6 & 0x8FFF | 0x4000;
 }
 
@@ -679,7 +682,7 @@ void func_06077354(Primitive* prim) {
     ptr = DAT_0605aec0[digit];
     prim->unk8 = ptr[0];
     prim->unkA = ptr[1];
-    prim->unk6 = unkFunc(uVar13) & 0x8FFF | 0x4000;
+    prim->unk6 = LookupTblNoToVram(uVar13) & 0x8FFF | 0x4000;
     if (leading_zeros != 0) {
         leading_zeros--;
         prim->drawMode |= DRAW_HIDE;
@@ -699,7 +702,7 @@ void func_06077354(Primitive* prim) {
     ptr = DAT_0605aec0[digit];
     prim->unk8 = ptr[0];
     prim->unkA = ptr[1];
-    prim->unk6 = unkFunc(uVar13) & 0x8FFF | 0x4000;
+    prim->unk6 = LookupTblNoToVram(uVar13) & 0x8FFF | 0x4000;
     if (leading_zeros != 0) {
         leading_zeros--;
         prim->drawMode |= DRAW_HIDE;
@@ -719,7 +722,7 @@ void func_06077354(Primitive* prim) {
     ptr = DAT_0605aec0[digit];
     prim->unk8 = ptr[0];
     prim->unkA = ptr[1];
-    prim->unk6 = unkFunc(uVar13) & 0x8FFF | 0x4000;
+    prim->unk6 = LookupTblNoToVram(uVar13) & 0x8FFF | 0x4000;
     if (leading_zeros != 0) {
         prim->drawMode |= DRAW_HIDE;
     } else {
@@ -737,7 +740,7 @@ void func_06077354(Primitive* prim) {
     ptr = DAT_0605aec0[digit];
     prim->unk8 = ptr[0];
     prim->unkA = ptr[1];
-    prim->unk6 = unkFunc(uVar13) & 0x8FFF | 0x4000;
+    prim->unk6 = LookupTblNoToVram(uVar13) & 0x8FFF | 0x4000;
     SetXW(prim, g_HudSpriteX[i], g_HudSpriteW[i]);
 }
 
@@ -776,7 +779,7 @@ void SetLifeNum(Primitive* prim) {
     ptr = DAT_0605aec0[digit];
     prim->unk8 = ptr[0];
     prim->unkA = ptr[1];
-    prim->unk6 = unkFunc(uVar11) & 0x8FFF | 0x4000;
+    prim->unk6 = LookupTblNoToVram(uVar11) & 0x8FFF | 0x4000;
     if (leading_zeros != 0) {
         leading_zeros--;
         prim->drawMode |= DRAW_HIDE;
@@ -793,7 +796,7 @@ void SetLifeNum(Primitive* prim) {
     ptr = DAT_0605aec0[digit];
     prim->unk8 = ptr[0];
     prim->unkA = ptr[1];
-    prim->unk6 = unkFunc(uVar11) & 0x8FFF | 0x4000;
+    prim->unk6 = LookupTblNoToVram(uVar11) & 0x8FFF | 0x4000;
     if (leading_zeros != 0) {
         leading_zeros--;
         prim->drawMode |= DRAW_HIDE;
@@ -810,7 +813,7 @@ void SetLifeNum(Primitive* prim) {
     ptr = DAT_0605aec0[digit];
     prim->unk8 = ptr[0];
     prim->unkA = ptr[1];
-    prim->unk6 = unkFunc(uVar11) & 0x8FFF | 0x4000;
+    prim->unk6 = LookupTblNoToVram(uVar11) & 0x8FFF | 0x4000;
     if (leading_zeros != 0) {
         prim->drawMode |= DRAW_HIDE;
     } else {
@@ -825,7 +828,7 @@ void SetLifeNum(Primitive* prim) {
     ptr = DAT_0605aec0[digit];
     prim->unk8 = ptr[0];
     prim->unkA = ptr[1];
-    prim->unk6 = unkFunc(uVar11) & 0x8FFF | 0x4000;
+    prim->unk6 = LookupTblNoToVram(uVar11) & 0x8FFF | 0x4000;
     prim->x0 = x;
     prim->y0 = g_HudSpriteY[6];
 }
@@ -857,7 +860,7 @@ void StatusDispInit(void) {
     g_PlayerHud.displayHP = g_Status.hp;
     g_PlayerHud.g_HealingMailTimer = 0;
 
-    if ((DAT_0605d750.stageID == STAGE_ST0) || (g_PlayableCharacter == 1)) {
+    if ((g_CurrentRoom.stageID == STAGE_ST0) || (g_PlayableCharacter == 1)) {
         func_06075838();
     } else if (g_PlayableCharacter == 2) {
         func_0607672C();

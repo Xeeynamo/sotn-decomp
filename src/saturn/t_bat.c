@@ -176,9 +176,9 @@ void CreateAdditionalBats(s32 amount, s32 entityId) {
     }
 }
 
-static u16 unkFunc(u16 arg0) {
+static u16 LookupTblNoToVram(u16 arg0) {
     if (arg0 & 0x4000) {
-        return func_06007CE0(arg0 & 0xFFF);
+        return LocalLookupTblNoToVram(arg0 & 0xFFF);
     } else {
         return SPR_2LookupTblNoToVram(arg0 & 0xFFF);
     }
@@ -214,7 +214,7 @@ void UpdatePrimitives(Entity* self, s32 frameIndex) {
                      image->characterOffsetUnits;
         prim->unkA =
             (image->storedWidth >> 2) << 8 | (image->storedHeight) << 1;
-        prim->unk6 = unkFunc(g_BatTextureResource.flags + 3);
+        prim->unk6 = LookupTblNoToVram(g_BatTextureResource.flags + 3);
         break;
     case 2:
         image = &g_BatTextureResource.images[23];
@@ -222,14 +222,15 @@ void UpdatePrimitives(Entity* self, s32 frameIndex) {
                      image->characterOffsetUnits;
         prim->unkA =
             (image->storedWidth >> 2) << 8 | (image->storedHeight) << 1;
-        prim->unk6 = unkFunc(g_BatTextureResource.flags + 3);
+        prim->unk6 = LookupTblNoToVram(g_BatTextureResource.flags + 3);
         break;
     default:
         ptr =
             DAT_0605aec0[g_SaturnSharedSpriteBank0Resource.allocationIndex + 7];
         prim->unk8 = ptr[0];
         prim->unkA = ptr[1];
-        prim->unk6 = unkFunc(g_SaturnSharedSpriteBank0Resource.flags + 1);
+        prim->unk6 =
+            LookupTblNoToVram(g_SaturnSharedSpriteBank0Resource.flags + 1);
         break;
     }
 
@@ -1041,11 +1042,11 @@ void ProcessEvent(Entity* self, bool resetEvent) {
             }
 
             if (evt->roomX < 0) {
-                if (!(DAT_0605d750.stageID & STAGE_INVERTEDCASTLE_FLAG)) {
+                if (!(g_CurrentRoom.stageID & STAGE_INVERTEDCASTLE_FLAG)) {
                     continue;
                 }
             } else {
-                if (DAT_0605d750.stageID & STAGE_INVERTEDCASTLE_FLAG) {
+                if (g_CurrentRoom.stageID & STAGE_INVERTEDCASTLE_FLAG) {
                     continue;
                 }
             }
@@ -1190,7 +1191,7 @@ s32 CheckAllEntitiesValid(void) {
 
 // SAT: func_060D1808
 s32 ServantUnk0(void) {
-    if (DAT_0605d750.stageID >= 0x20 && DAT_0605d750.stageID < 0x35) {
+    if (g_CurrentRoom.stageID >= 0x20 && g_CurrentRoom.stageID < 0x35) {
         if (D_8003C708.flags == 0x22) {
             return 1;
         }

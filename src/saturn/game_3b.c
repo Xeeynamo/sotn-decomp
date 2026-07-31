@@ -67,7 +67,7 @@ void func_0606EEF8(u16 param_1) {
 
     g_GameTimer = 0;
     memset(g_Entities, 0, sizeof(g_Entities));
-    stageID = DAT_0605d750.stageID;
+    stageID = g_CurrentRoom.stageID;
     if (param_1 == 0) {
         func_0606F01C();
         DAT_0608609c = DAT_0605c10c;
@@ -79,7 +79,7 @@ void func_0606EEF8(u16 param_1) {
     if (DAT_06061dd0 == 0) {
         DAT_0605c108 = g_StageFileRecords[stageID].unk14;
     }
-    DAT_0605d750.unk2 = stageID;
+    g_CurrentRoom.unk2 = stageID;
     func_06032E88(1);
     SCL_SET_CCRTMD(0);
     SCL_SET_CCMD(1);
@@ -215,7 +215,7 @@ bool CalcPlayerDamage(DamageParam* damage) {
 
 // SAT: func_0606F328
 s32 func_800FD664(s32 arg0) {
-    if (DAT_0605d750.stageID & STAGE_INVERTEDCASTLE_FLAG) {
+    if (g_CurrentRoom.stageID & STAGE_INVERTEDCASTLE_FLAG) {
         arg0 *= 2;
     }
     return arg0;
@@ -713,7 +713,7 @@ void GetEquipProperties(s32 handId, Equipment* res, s32 equipId) {
     if (criticalRate < 0) {
         criticalRate = 0;
     }
-    if (DAT_0605d750.stageID == STAGE_ST0) {
+    if (g_CurrentRoom.stageID == STAGE_ST0) {
         criticalRate = 0;
     }
 

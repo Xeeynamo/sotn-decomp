@@ -29,7 +29,7 @@ void func_0600652C();
 void func_06007d54();
 void func_06007e14();
 void func_06008264();
-void func_06008298();
+void TransferAllBgLayers();
 void func_06008a70();
 void func_06008d04(s32, s32);
 void func_06009838();
@@ -173,7 +173,7 @@ void func_060040d8(void) {
     SPR_WaitDrawEnd();
     func_06008264();
     SCL_DisplayFrame();
-    func_06008298();
+    TransferAllBgLayers();
     ((void (*)(void))rand)();
 }
 
@@ -332,10 +332,10 @@ char* WEAPON0_PRG;
 char* WEAPON0_CHR;
 char* WEAPON1_PRG;
 char* WEAPON1_CHR;
-extern s32 d_060481c0;
+extern s32 g_FileLoadEnabled;
 
 void func_06007824(int param_1, int param_2) {
-    if ((d_060481c0 == 0) || (0x3f < param_2)) {
+    if ((g_FileLoadEnabled == 0) || (0x3f < param_2)) {
         func_0601AE5C(param_1, param_2);
     } else {
         prg_info.unka = param_2 * 6;
@@ -371,7 +371,8 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6007BE0, func_06007BE0);
 // _SprSetGourTbl
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6007CA0, func_06007CA0);
 
-u16 func_06007CE0(u16 arg0) { return arg0 * 0x10 + 0x400; }
+// func_06007CE0
+u16 LocalLookupTblNoToVram(u16 arg0) { return arg0 * 0x10 + 0x400; }
 
 void SPR_2ClrAllChar(void);
 
@@ -383,7 +384,8 @@ s32 d_06038dbc;
 s32 d_0605BEC4;
 s32 d_060576AC;
 
-void func_06007CF8() {
+// func_06007CF8
+void ResetSpriteVram() {
     SPR_2ClrAllChar();
     d_0605BECA = 0;
     d_0605AEA8 = 0;
@@ -493,10 +495,11 @@ void InitScuDma(void) {
 // _VDP1_TRANS
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008264, func_06008264);
 
-void func_06008298(void) {
+// func_06008298
+void TransferAllBgLayers(void) {
     s32 i;
     for (i = 0; i < 8; i++) {
-        func_06008588(i);
+        TransferBgLayer(i);
     }
 }
 
@@ -532,7 +535,7 @@ extern Unk0605cd70 DAT_0605cd70;
 
 // Handles transfer of background tile graphics
 // func_06008588
-void func_06008588(int param_1) {
+void TransferBgLayer(int param_1) {
     s32 cnt;
     struct Unk0605d6c0* puVar5;
     struct Unk0605CD90* puVar6;
@@ -553,7 +556,7 @@ void func_06008588(int param_1) {
     }
     if (puVar5->tileFlags & 4) {
         if (DAT_0605cd70.unk2 == 4) {
-            func_060089F0(puVar6);
+            BuildSubDispTilemap(puVar6);
         } else {
             func_0600871C(puVar6, &DAT_0605c680, param_1);
         }
@@ -598,7 +601,8 @@ void DmaScroll(s32* src, s32* dest, u32 cnt) {
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600871C, func_0600871C);
 
-void func_060089F0(struct Unk0605CD90* param_1) {
+// func_060089F0
+void BuildSubDispTilemap(struct Unk0605CD90* param_1) {
     u16 sVar2;
     s16* psVar5;
     s16* psVar7;
@@ -671,10 +675,12 @@ void func_0600A31C(void) { DAT_0605D910[3] = 1; }
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A330, func_0600A330);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A350, func_0600A350);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A490, func_0600A490);
+// MapBytesThroughLutPair
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A5FC, func_0600A5FC);
 
 u8 d_060578A0[];
-void func_0600A62C(u8* param_1, u8* param_2, int param_3) {
+// func_0600A62C
+void MapBytesThroughLut(u8* param_1, u8* param_2, int param_3) {
     for (; param_3 > 0; param_3--) {
         *param_2++ = d_060578A0[*param_1++];
     }
@@ -801,7 +807,8 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600B954, func_0600B954);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600BA24, func_0600BA24);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600BCE0, func_0600BCE0);
 
-int func_0600BD4C(u8* param_1) { return SpGourTbl + param_1[2] * 2; }
+// func_0600BD4C
+int GetSpriteObjectGourTbl(u8* param_1) { return SpGourTbl + param_1[2] * 2; }
 
 // _Odma
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600BD68, func_0600BD68);
@@ -1295,7 +1302,8 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6010400, func_06010400);
 // _pause_seq
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60110C0, func_060110C0);
 
-void func_06011264(void) {
+// func_06011264
+void SignalSlaveSh2(void) {
     // set input capture flag on sub-sh2
     *((u16*)SH2_REG_M_FRT_IC) = 0xffff;
     return;
@@ -1339,7 +1347,8 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011C28, func_06011C28);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011CE4, func_06011CE4);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011EE0, func_06011EE0);
 
-void func_06011F40(s32 param) { SND_StopPcm2(); }
+// func_06011F40
+void StopPcm(s32 param) { SND_StopPcm2(); }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011F58, func_06011F58);
 

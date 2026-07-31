@@ -284,7 +284,7 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A82F8, func_060A82F8);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8664, func_060A8664);
 extern s32 g_PlayerX;
 static void func_8015BB80(void) {
-    if (DAT_0605d750.stageID == STAGE_TOP) {
+    if (g_CurrentRoom.stageID == STAGE_TOP) {
         if (ABS((g_Tilemap.left << 8) + g_PlayerX) - 8079 > 0) {
             PLAYER.posX.i.hi--;
         }
@@ -292,7 +292,7 @@ static void func_8015BB80(void) {
             PLAYER.posX.i.hi++;
         }
     }
-    if (DAT_0605d750.stageID == (STAGE_TOP | STAGE_INVERTEDCASTLE_FLAG)) {
+    if (g_CurrentRoom.stageID == (STAGE_TOP | STAGE_INVERTEDCASTLE_FLAG)) {
         if (ABS((g_Tilemap.left << 8) + g_PlayerX) - 8430 > 0) {
             PLAYER.posX.i.hi--;
         }
