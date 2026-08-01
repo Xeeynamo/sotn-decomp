@@ -3,7 +3,7 @@
 //! Driven from tools/sotn-assets and config/assets.saturn.yaml
 
 use clap::{Parser, Subcommand};
-use saturn_assets::font;
+use saturn_assets::{audio, font};
 use std::path::PathBuf;
 use std::process::ExitCode;
 
@@ -19,6 +19,31 @@ enum Command {
     /// ASCII.FON / KANJI.FON glyph pixels
     #[command(subcommand)]
     Font(FontCommand),
+    /// SD*.PCM music, mono and voice streams
+    #[command(subcommand)]
+    Audio(AudioCommand),
+}
+
+#[derive(Subcommand)]
+enum AudioCommand {
+    Extract {
+        /// codec: stereo, mono or voice
+        codec: String,
+        /// original retail file path
+        source_path: PathBuf,
+        /// directory for wav and json
+        output_dir: PathBuf,
+        /// wav playback rate, not stored on disc for mono and voice
+        #[arg(long, default_value_t = saturn_assets::adpcm::SAMPLE_RATE)]
+        rate: u32,
+    },
+    /// re-encode from json and wav
+    Rebuild { manifest: PathBuf, output: PathBuf },
+    Verify {
+        manifest: PathBuf,
+        /// retail pcm path
+        source_path: PathBuf,
+    },
 }
 
 #[derive(Subcommand)]
@@ -59,6 +84,26 @@ fn run(cli: Cli) -> saturn_assets::Result<()> {
             font_path,
         }) => {
             font::verify(&manifest, &font_path)?;
+            println!("verify passed: exact retail match");
+        }
+        Command::Audio(AudioCommand::Extract {
+            codec,
+            source_path,
+            output_dir,
+            rate,
+        }) => {
+            let manifest = audio::extract(&codec, &source_path, &output_dir, rate)?;
+            println!("{} samples -> {}", manifest.samples, output_dir.display());
+        }
+        Command::Audio(AudioCommand::Rebuild { manifest, output }) => {
+            let data = audio::rebuild(&manifest, &output)?;
+            println!("wrote {} bytes -> {}", data.len(), output.display());
+        }
+        Command::Audio(AudioCommand::Verify {
+            manifest,
+            source_path,
+        }) => {
+            audio::verify(&manifest, &source_path)?;
             println!("verify passed: exact retail match");
         }
     }

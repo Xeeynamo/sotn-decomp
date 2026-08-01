@@ -1,15 +1,100 @@
-# 
 version: saturn
 assets:
-  - name: ascii
+  - name: font-ascii
     kind: font
     profile: ascii
     source: disks/saturn/ASCII.FON
     path: assets/saturn/font/ascii
     output: build/saturn/assets/ASCII.FON
-  - name: kanji
+  - name: font-kanji
     kind: font
     profile: kanji
     source: disks/saturn/KANJI.FON
     path: assets/saturn/font/kanji
     output: build/saturn/assets/KANJI.FON
+  # 49 "DVI." block-interleaved stereo streams (func_06013538)
+  - name: music
+    kind: audio
+    codec: stereo
+    dir: disks/saturn/SD
+    path: assets/saturn/audio
+    output: build/saturn/assets/SD
+    files:
+      - SD01.PCM
+      - SD02.PCM
+      - SD03.PCM
+      - SD04.PCM
+      - SD05.PCM
+      - SD06.PCM
+      - SD07.PCM
+      - SD08.PCM
+      - SD09.PCM
+      - SD0A.PCM
+      - SD0B.PCM
+      - SD0C.PCM
+      - SD0D.PCM
+      - SD0E.PCM
+      - SD0F.PCM
+      - SD10.PCM
+      - SD11.PCM
+      - SD12.PCM
+      - SD13.PCM
+      - SD14.PCM
+      - SD15.PCM
+      - SD16.PCM
+      - SD17.PCM
+      - SD18.PCM
+      - SD19.PCM
+      - SD1A.PCM
+      - SD1B.PCM
+      - SD1C.PCM
+      - SD1D.PCM
+      - SD1E.PCM
+      - SD1F.PCM
+      - SD20.PCM
+      - SD21.PCM
+      - SD22.PCM
+      - SD23.PCM
+      - SD24.PCM
+      - SD25.PCM
+      - SD26.PCM
+      - SD27.PCM
+      - SD28.PCM
+      - SD29.PCM
+      - SD2A.PCM
+      - SD2B.PCM
+      - SD2C.PCM
+      - SD2D.PCM
+      - SD2E.PCM
+      - SD2F.PCM
+      - SD30.PCM
+      - SD31.PCM
+  # 12 headerless 8-bit signed DPCM streams
+  - name: voice
+    kind: audio
+    codec: voice
+    dir: disks/saturn/SD
+    path: assets/saturn/audio
+    output: build/saturn/assets/SD
+    files:
+      - SDD0.PCM
+      - SDD1.PCM
+      - SDD2.PCM
+      - SDE0.PCM
+      - SDE1.PCM
+      - SDE2.PCM
+      - SDE3.PCM
+      - SDE4.PCM
+      - SDE5.PCM
+      - SDE6.PCM
+      - SDE7.PCM
+      - SDE8.PCM
+  # 1 headerless mono ADPCM stream (func_060133CC)
+  - name: sfx
+    kind: audio
+    codec: mono
+    dir: disks/saturn/SD
+    path: assets/saturn/audio
+    output: build/saturn/assets/SD
+    files:
+      - SDF0.PCM

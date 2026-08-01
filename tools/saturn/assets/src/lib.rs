@@ -1,7 +1,10 @@
 use std::fmt;
 
+pub mod adpcm;
+pub mod audio;
 pub mod font;
 pub mod image;
+pub mod wav;
 
 pub type Result<T> = std::result::Result<T, Error>;
 
