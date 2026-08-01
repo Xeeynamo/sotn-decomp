@@ -17,4 +17,5 @@ static u8 blend_modes[8] = {
 // Stripped on PSP
 static u8 unused[] = {0, 0, 0, 0, 0, 0, 0, 0};
 
+#define DO_ROTATION
 #include "../e_breakable.h"

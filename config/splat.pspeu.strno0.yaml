@@ -73,7 +73,7 @@ segments:
       - [0x23758, c, rno0_psp/unk_23758]
       - [0x23D88, c, rno0_psp/e_thornweed_corpseweed]
       - [0x25A90, c, rno0_psp/st_init]
-      - [0x25E08, c, rno0_psp/e_breakable]
+      - [0x25E08, c, rno0/e_breakable]
       - [0x25FF0, c, rno0_psp/unk_25FF0]
       - [0x26C38, c, rno0/e_room_bg]
       - [0x26DA8, c, rno0/e_lock_camera]
@@ -81,6 +81,8 @@ segments:
       - [0x27680, data]
       - [0x2F6B0, .data, rno0/e_init]
       - [0x2FA30, data]
+      - [0x2FB70, .data, rno0/e_breakable]
+      - [0x2FC20, data]
       - [0x5A250, .data, rno0/header]
       - [0x5A280, data]
       - [0x5A2D0, .data, rno0/e_room_bg]
@@ -97,6 +99,7 @@ segments:
       - [0x5A6B8, .rodata, rno0_psp/e_thornweed_corpseweed]
       - { start: 0x5A700, type: .bss, vram: 0x09291D80, name: rno0/create_entity }
       - { start: 0x5A700, type: bss, vram: 0x09291DA0, name: 5A700 }
+      - [0x5A9A8, .bss, rno0/e_breakable]
       - [0x5A9B8, .bss, rno0/e_room_bg]
       - [0x5AA80, .bss, rno0/lock_camera]
   - [0x5AB00]

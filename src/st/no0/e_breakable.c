@@ -30,4 +30,5 @@ static u8 blend_modes[] = {
     BLEND_TRANSP | BLEND_ADD};
 STATIC_PAD_DATA(12);
 
+#define SPLIT_SFX
 #include "../e_breakable.h"
