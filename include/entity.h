@@ -3598,6 +3598,16 @@ typedef struct {
 } ET_HellfireBeastFlamePillar;
 
 typedef struct {
+    /* 0x7C */ s16 timer;
+    /* 0x7E */ s16 velocityAngle;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ struct Entity* parent;
+    /* 0x90 */ s16 unkTimer;
+} ET_ShaftOrb;
+
+typedef struct {
     /* 0x7C */ s16 skeletonPosX;
     /* 0x7E */ s16 skeletonPosY;
     /* 0x80 */ s16 unk80;
@@ -4439,6 +4449,7 @@ typedef union { // offset=0x7C
     ET_HellfireBeast hellfireBeast;
     ET_HellfireBeastThorsHammer hellfireBeastThorsHammer;
     ET_HellfireBeastFlamePillar hellfireBeastFlamePillar;
+    ET_ShaftOrb shaftOrb;
     ET_BoneArk boneArk;
     ET_Harpy harpy;
     ET_CloakedKnight cloakedKnight;
