@@ -41,7 +41,7 @@ func buildVersions(versions []string) error {
 			if err := checkVersions(os.Stderr, regular); err != nil {
 				return fmt.Errorf("check: %w", err)
 			}
-			for _, v := range versions {
+			for _, v := range regular {
 				if err := copyBuildToExpectedFolder(v); err != nil {
 					return fmt.Errorf("copy build to expected folder: %w", err)
 				}

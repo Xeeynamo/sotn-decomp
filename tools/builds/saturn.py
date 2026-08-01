@@ -115,7 +115,7 @@ ninja.build(
 ninja.rule('link',
            command= 'sh-elf-ld --no-check-sections -nostdlib \
                     -o $out \
-                    -Map $out.map \
+                    -Map $map_file \
                     -T config/saturn/$ld_file \
                     $symbol_scripts \
                     $target_aliases \
@@ -125,7 +125,7 @@ ninja.rule('link',
 ninja.rule('link_multi',
            command= 'sh-elf-ld --no-check-sections -nostdlib \
                     -o $out \
-                    -Map $out.map \
+                    -Map $map_file \
                     -T config/saturn/$ld_file \
                     $symbol_scripts \
                     $target_aliases \
@@ -828,6 +828,7 @@ def link_objs(srcs, output_dir):
                       f'config/saturn/{ld_file}'] + symbol_files,
             variables={
                 'ld_file': ld_file,
+                'map_file': f"{output_dir}/{filename_without_extension}.map",
                 'symbol_scripts': ' '.join(
                     f'-T {symbol_file}' for symbol_file in symbol_files),
                 'target_aliases': target_alias_options(
@@ -853,6 +854,7 @@ def link_multi(multi_objs, output_dir):
                       f'config/saturn/{ld_file}'] + symbol_files,
             variables={
                 'ld_file': ld_file,
+                'map_file': f"{output_dir}/{filename_without_extension}.map",
                 'symbol_scripts': ' '.join(
                     f'-T {symbol_file}' for symbol_file in symbol_files),
                 'target_aliases': target_alias_options(
