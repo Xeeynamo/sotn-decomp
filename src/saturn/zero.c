@@ -27,11 +27,11 @@ void func_06004f50();
 void func_06005310();
 void func_0600652C();
 void func_06007d54();
-void func_06007e14();
+void CloseSpriteList();
 void func_06008264();
 void TransferAllBgLayers();
-void func_06008a70();
-void func_06008d04(s32, s32);
+void UpdateScrollForRoom();
+void StartColorOffsetFade(s32, s32);
 void func_06009838();
 void func_0600d8bc();
 void MoviePRGClear();
@@ -72,14 +72,14 @@ void func_060040d8(void) {
             DAT_0605cea0++;
         }
         func_06064688();
-        func_06008a70();
+        UpdateScrollForRoom();
         break;
     case 3:
         func_0606468c();
         break;
     case 7:
         func_06064614();
-        func_06008a70();
+        UpdateScrollForRoom();
         break;
     case 4:
         if (DAT_0605cea0 == 0) {
@@ -103,20 +103,20 @@ void func_060040d8(void) {
         } else {
             func_06009838();
             func_0606463c();
-            func_06008a70();
+            UpdateScrollForRoom();
         }
         break;
     case 5:
         if (DAT_0605cea0 == 0) {
-            func_06008d04(0, 2);
+            StartColorOffsetFade(0, 2);
             func_06005328();
             DAT_0605cea0++;
         }
         func_06064644();
-        func_06008a70();
+        UpdateScrollForRoom();
         break;
     case 0x20:
-        func_06007e14();
+        CloseSpriteList();
         Scl_s_reg.dispenbl &= ~0x003F;
         SclProcess = 1;
         Scl_s_reg.tvmode &= ~0x8100;
@@ -164,11 +164,11 @@ void func_060040d8(void) {
                 SYS_EXECDMP();
             }
         }
-        func_06008d04(0, 4);
+        StartColorOffsetFade(0, 4);
         func_06004f50(0x30);
     }
     func_06010400();
-    func_06007e14();
+    CloseSpriteList();
     func_06005310();
     SPR_WaitDrawEnd();
     func_06008264();
@@ -405,7 +405,8 @@ s32 d_06038c5c;
 s32 d_06038c5c;
 s32 d_0605BEBE;
 u16 d_0605AEA0[4];
-void func_06007e14(void) {
+// func_06007E14
+void CloseSpriteList(void) {
     SprSpCmd cmd;
 
     if (d_06038c5c) {
@@ -427,7 +428,8 @@ void SPR_SetEraseData(
     Uint16 eraseData, Uint16 leftX, Uint16 topY, Uint16 rightX, Uint16 botY);
 
 void SPR_2FrameEraseData(Uint16);
-void FUN_06007eb8(s16 param_1) {
+// func_06007EB8
+void SetSpriteEraseData(s16 param_1) {
     SPR_2FrameEraseData(param_1);
     SPR_SetEraseData(
         param_1, d_0605AEA0[0], d_0605AEA0[1], d_0605AEA0[2], d_0605AEA0[3]);
@@ -435,7 +437,8 @@ void FUN_06007eb8(s16 param_1) {
 
 void SetVdp2BackgroundColor();
 
-void FUN_06007f04(void) {
+// func_06007F04
+void InitVdp2Display(void) {
     SCL_Vdp2Init();
     SCL_SetDisplayMode(0, 1, 0);
     SPR_2FrameChgIntr(-1);
@@ -546,12 +549,13 @@ void TransferBgLayer(int param_1) {
         return;
     }
     if (puVar5->tileFlags & 1) {
-        cnt = func_0600F96C(puVar6->unkc, (s32)SYS_buf_060485E0, puVar6->unk18);
+        cnt =
+            DecompressLzss(puVar6->unkc, (s32)SYS_buf_060485E0, puVar6->unk18);
         DmaScroll((s32*)SYS_buf_060485E0, puVar6->dst0, cnt);
     }
     if (puVar5->tileFlags & 2) {
         cnt =
-            func_0600F96C(puVar6->unk10, (s32)SYS_buf_060485E0, puVar6->unk1c);
+            DecompressLzss(puVar6->unk10, (s32)SYS_buf_060485E0, puVar6->unk1c);
         DmaScroll((s32*)SYS_buf_060485E0, puVar6->dst4, cnt);
     }
     if (puVar5->tileFlags & 4) {
@@ -571,11 +575,11 @@ void TransferBgLayer(int param_1) {
         DmaScroll(puVar5->src, puVar5->dest, puVar5->cnt);
     }
     if (puVar5->tileFlags & 0x40) {
-        cnt = func_0600F96C(puVar6->unkc, DMA_SRC_ADDR, puVar6->unk18);
+        cnt = DecompressLzss(puVar6->unkc, DMA_SRC_ADDR, puVar6->unk18);
         DmaScroll(DMA_SRC_ADDR, puVar6->dst0, cnt);
     }
     if (puVar5->tileFlags & 0x80) {
-        cnt = func_0600F96C(puVar6->unk10, DMA_SRC_ADDR, puVar6->unk1c);
+        cnt = DecompressLzss(puVar6->unk10, DMA_SRC_ADDR, puVar6->unk1c);
         DmaScroll(DMA_SRC_ADDR, puVar6->dst4, cnt);
     }
     puVar5->tileFlags = 0;
@@ -720,7 +724,7 @@ void func_0600B104(u16* param_1, int param_2, int param_3)
 }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600B12C, func_0600B12C);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600B1A8, func_0600B1A8);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600B1A8, AllocSpriteObject);
 
 void func_0600B234(void) {
     func_0600AD98();
@@ -741,7 +745,7 @@ extern s32 g_SpriteListCount;                /* 0x06038DB0 */
 extern s32 g_SpriteObjectsInUse;             /* 0x06038DB4 */
 extern s32 g_SpritePartsInUse;               /* 0x06038DB8 */
 
-SpriteObject* func_0600B1A8(void);
+SpriteObject* AllocSpriteObject(void);
 
 static inline SpritePart* AllocSpriteParts(s32 maxParts) {
     SpritePart* head;
@@ -771,7 +775,7 @@ SpriteObject* CreateSpriteObject(
     SpriteObject* obj;
     SpritePart* head;
 
-    obj = func_0600B1A8();
+    obj = AllocSpriteObject();
     if (obj == NULL) {
         return NULL;
     }
@@ -1218,7 +1222,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600F81C, func_0600F81C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600F87C, func_0600F87C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600F914, func_0600F914);
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600F96C, func_0600F96C);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600F96C, DecompressLzss);
 
 // _PSX_SHAKE_MAIN
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FA4C, func_0600FA4C);
@@ -1238,18 +1242,19 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FB9C, func_0600FB9C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FBBC, func_0600FBBC);
 
 // _all_map_check
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FC04, func_0600FC04);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FC04, RevealMapCellAtPlayer);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FCF8, func_0600FCF8);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FE98, func_0600FE98);
 
 void func_0600FEFC() {}
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FF08, func_0600FF08);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FF08, SetCanRevealMap);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FF64, func_0600FF64);
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FFB8, func_0600FFB8);
 
-void func_06010008(void) {
+// func_06010008
+void InitDebugPrint(void) {
     struct Unk0605d6c0* puVar2;
     SclConfig temp;
 

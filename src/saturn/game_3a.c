@@ -207,7 +207,8 @@ static bool IsAlucart(void) {
 
 extern u8 DAT_06057f62;
 
-void func_0606D880(void) {
+// func_0606D880
+void UpdateEquipStatBonuses(void) {
     s32* statsPtr;
     s32 correctStonesEquipped;
     s32 hourOfDay;
@@ -469,7 +470,7 @@ void CalcDefense(void) {
 }
 
 void make_all(void) {
-    func_0606D880();
+    UpdateEquipStatBonuses();
     make_att();
     CalcDefense();
 }

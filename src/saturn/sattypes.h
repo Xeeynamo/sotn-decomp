@@ -365,7 +365,7 @@ typedef struct SpriteObject {
     /* 0x02 */ u16 slotAndStreamId; /* high byte: permanent pool slot, baked in
                                      * by func_0600B254 as (i << 8) and
                                      * preserved (low byte cleared) on each
-                                     * alloc by func_0600B1A8.
+                                     * alloc by AllocSpriteObject.
                                      * low 7 bits: streamed-frame id, set by
                                      * func_0600AFA8 from commandFlags & 0x7F */
     /* 0x04 */ u16 charBase;

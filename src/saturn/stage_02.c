@@ -93,7 +93,7 @@ void EntityTableWithGlobe(Entity* self) {
                                     g_Stage02TableWithGlobeFrames);
         break;
     }
-    func_06079BB4(self);
+    SyncSpriteObjectPos(self);
 }
 
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DDF64, func_060DDF64);
@@ -279,7 +279,7 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E9058, func_060E9058);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E9220, func_060E9220);
 
 void func_060E9270(Entity* self) {
-    func_06079BB4(self);
+    SyncSpriteObjectPos(self);
     func_0600B004(self->unk0, g_Stage02Entity38Frames[self->animCurFrame]);
 }
 
@@ -315,7 +315,7 @@ void func_060e97c4(u16** param_1) {
 }
 
 void func_060E97F0(Entity* self) {
-    func_06079BB4(self);
+    SyncSpriteObjectPos(self);
     func_0600B004(self->unk0, g_Stage02BoneScimitarFrames[self->animCurFrame]);
 }
 
@@ -380,7 +380,7 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EC030, func_060EC030);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EC1F0, func_060EC1F0);
 
 void func_060EC240(Entity* self) {
-    func_06079BB4(self);
+    SyncSpriteObjectPos(self);
     func_0600B004(self->unk0, g_Stage02SpittleBoneFrames[self->animCurFrame]);
 }
 

@@ -13,6 +13,7 @@ _RunMainEngine = 0x06070A60;
 _SetDefaultSCLPriority = 0x060726A8;
 _FUN_060727dc = 0x060727DC;
 _func_800FAF44 = 0x06073FEC;
+_SetVdp2DisplayMode = 0x06074278;
 _UpdateCapePalette = 0x060749F8;
 _MoveEntity = 0x06079B9C;
 _GetDistanceToPlayerX = 0x0607A9F8;
