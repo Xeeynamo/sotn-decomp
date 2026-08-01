@@ -44,7 +44,7 @@ segments:
     align: 128
     subalign: 8
     subsegments:
-      - [0x80, c, rno0_psp/create_entity]
+      - [0x80, c, rno0/create_entity]
       - [0x1028, c, rno0_psp/unk_1028]
       - [0x1290, c, rno0_psp/e_clock_room]
       - [0x2F40, c, rno0_psp/rno0_unused801c2338]
@@ -94,7 +94,8 @@ segments:
       - [0x5A680, .rodata, rno0_psp/e_blade]
       - [0x5A698, .rodata, rno0_psp/e_gurkha]
       - [0x5A6B8, .rodata, rno0_psp/e_thornweed_corpseweed]
-      - [0x5A700, bss]
+      - { start: 0x5A700, type: .bss, vram: 0x09291D80, name: rno0/create_entity }
+      - { start: 0x5A700, type: bss, vram: 0x09291DA0, name: 5A700 }
       - [0x5A9B8, .bss, rno0/e_room_bg]
       - [0x5AA80, bss, lock_camera]
   - [0x5AB00]
