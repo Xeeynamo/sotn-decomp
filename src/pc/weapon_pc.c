@@ -68,6 +68,7 @@ extern Weapon w_012_header;
 extern Weapon w_034_header;
 extern Weapon w_037_header;
 extern Weapon w_041_header;
+extern Weapon w_043_header;
 extern Weapon w_046_header;
 extern Weapon w_051_header;
 extern Weapon w_052_header;
@@ -80,7 +81,7 @@ Weapon* g_Weapons[] = {
     &dummy_header, &dummy_header, &dummy_header, &dummy_header, &dummy_header,
     &dummy_header, &dummy_header, &dummy_header, &dummy_header, &w_034_header,
     &dummy_header, &dummy_header, &w_037_header, &dummy_header, &dummy_header,
-    &dummy_header, &w_041_header, &dummy_header, &dummy_header, &dummy_header,
+    &dummy_header, &w_041_header, &dummy_header, &w_043_header, &dummy_header,
     &dummy_header, &w_046_header, &dummy_header, &dummy_header, &dummy_header,
     &dummy_header, &w_051_header, &w_052_header, &dummy_header, &dummy_header,
     &dummy_header, &dummy_header, &dummy_header, &dummy_header,
