@@ -11,6 +11,14 @@ INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60DC734, func_060DC734);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60DC894, func_060DC894);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60DC9E0, func_060DC9E0);
 void func_060DCC58(void) {}
+
+const u16 pad_060DCC62[] = {
+    0x0000, 0x0415, 0x1010, 0x10FF, 0x0000, 0x0412, 0x1010, 0x10FF,
+    0x0000, 0x0411, 0x1010, 0x10FF, 0x0000, 0x0417, 0x1010, 0xFF00,
+    0x0009, 0x0414, 0x1010, 0xFF00, 0x0009, 0x0412, 0x1510, 0xFF00,
+    0x0009, 0x0411, 0x1010, 0xFF00, 0x0009, 0x0415, 0x10FF, 0x0000,
+    0x0009, 0x0412, 0x15FF, 0x0000, 0x0009, 0x0411, 0xFF00,
+};
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60DCCB0, func_060DCCB0);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60DCDBC, func_060DCDBC);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60DCE98, func_060DCE98);

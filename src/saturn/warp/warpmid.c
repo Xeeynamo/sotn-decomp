@@ -23,3 +23,7 @@ INCLUDE_ASM("asm/saturn/warp/f_nonmat", f60E0BD8, func_060E0BD8);
 INCLUDE_ASM("asm/saturn/warp/f_nonmat", f60E10B0, func_060E10B0);
 void DestroyEntity(void);
 void func_060E11BC(void) { DestroyEntity(); }
+
+const u8 pad_060E11D4[] = {
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+};
