@@ -336,6 +336,44 @@ set(SOURCE_FILES_STAGE_NO2
     src/st/no2/hammer.c
 )
 
+set(SOURCE_FILES_STAGE_CHI
+    src/pc/stages/stage_chi.c
+    src/st/chi/dt_header.c
+    src/st/chi/gen/e_laydef.c
+    src/st/chi/e_init.c
+    src/st/chi/background_block_init.c
+    src/st/chi/e_red_door_tiles.c
+    src/st/chi/e_lock_camera.c
+    src/st/chi/en_breakable.c
+    src/st/chi/en_demon_switch_wall.c
+    src/st/chi/en_breakable_wall.c
+    src/st/chi/en_falling_stairs.c
+    src/st/chi/dt_prize_drops.c
+    src/st/chi/st_update.c
+    src/st/chi/st_collision.c
+    src/st/chi/en_red_door.c
+    src/st/chi/ut_common.c
+    src/st/chi/en_collect.c
+    src/st/chi/en_misc.c
+    src/st/chi/en_particles.c
+    src/st/chi/en_room_foreground.c
+    src/st/chi/e_salem_witch.c
+    src/st/chi/e_gremlin.c
+    src/st/chi/en_thornweed_corpseweed.c
+    src/st/chi/en_venus_weed.c
+    src/st/chi/gen/rooms.c
+    src/st/chi/gen/e_layout.c
+    src/st/chi/stage_data.c
+    src/st/chi/gen/sprites.c
+    src/st/chi/en_debug_cerberus_gate.c
+    src/st/chi/en_stage_name.c
+    src/st/chi/ut_prim_helpers.c
+    src/st/chi/e_room_bg.c
+    src/st/chi/ut_create_entity.c
+    src/st/chi/en_popup.c
+    src/st/chi/bss.c
+)
+
 set(SOURCE_FILES_STAGE_DAI
     src/pc/stages/stage_dai.c
     src/st/dai/header.c
@@ -909,6 +947,7 @@ endfunction()
 
 add_overlay(sel ${SOURCE_FILES_STAGE_SEL})
 add_overlay(no2 ${SOURCE_FILES_STAGE_NO2})
+add_overlay(chi ${SOURCE_FILES_STAGE_CHI})
 add_overlay(dai ${SOURCE_FILES_STAGE_DAI})
 add_overlay(cen ${SOURCE_FILES_STAGE_CEN})
 add_overlay(nz0 ${SOURCE_FILES_STAGE_NZ0})
