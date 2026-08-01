@@ -47,9 +47,29 @@ INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B8F68, func_060B8F68);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B8FE0, func_060B8FE0);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B9130, func_060B9130);
 // GetFreeEntity
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B92B8, func_060B92B8);
+#define E_NONE 0
+Entity* func_060B92B8(s16 start, s16 end) {
+    Entity* entity = &g_Entities[start];
+    s16 i;
+
+    for (i = start; i < end; i++, entity++) {
+        if (entity->entityId == E_NONE) {
+            return entity;
+        }
+    }
+    return NULL;
+}
 // GetFreeEntityReverse
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B92F8, func_060B92F8);
+Entity* func_060B92F8(s16 start, s16 end) {
+    Entity* entity = &g_Entities[end - 1];
+    s16 i;
+    for (i = end - 1; i >= start; i--, entity--) {
+        if (entity->entityId == E_NONE) {
+            return entity;
+        }
+    }
+    return NULL;
+}
 // func_80118894 on PSX
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B9340, func_060B9340);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B93C4, func_060B93C4);
@@ -111,7 +131,7 @@ INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BE888, func_060BE888);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BEEF8, func_060BEEF8);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BF470, func_060BF470);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BF894, func_060BF894);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BFADC, func_060BFADC);
+void func_060BFADC(void) { DestroyEntity(); }
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BFB2C, func_060BFB2C);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60C0014, func_060C0014);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60C01C0, func_060C01C0);
@@ -141,7 +161,7 @@ INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60C3490, func_060C3490);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60C38CC, func_060C38CC);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60C3A48, func_060C3A48);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60C3BD4, func_060C3BD4);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60C3D74, func_060C3D74);
+void func_060C3D74() {}
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60C3D80, func_060C3D80);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60C3EE4, func_060C3EE4);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60C4DA0, func_060C4DA0);

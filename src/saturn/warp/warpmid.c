@@ -21,4 +21,5 @@ INCLUDE_ASM("asm/saturn/warp/f_nonmat", f60E080C, func_060E080C);
 INCLUDE_ASM("asm/saturn/warp/f_nonmat", f60E08EC, func_060E08EC);
 INCLUDE_ASM("asm/saturn/warp/f_nonmat", f60E0BD8, func_060E0BD8);
 INCLUDE_ASM("asm/saturn/warp/f_nonmat", f60E10B0, func_060E10B0);
-INCLUDE_ASM("asm/saturn/warp/f_nonmat", f60E11BC, func_060E11BC);
+void DestroyEntity(void);
+void func_060E11BC(void) { DestroyEntity(); }

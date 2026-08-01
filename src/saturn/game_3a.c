@@ -11,7 +11,8 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f606B6F8, func_0606B6F8);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606B760, func_0606B760);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606BB4C, func_0606BB4C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606BEE4, func_0606BEE4);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606C064, func_0606C064);
+s32 func_0600654C(s32 param_1, s32 param_2);
+void func_0606C064(void) { func_0600654C(0x0606C054, 0x00252000); }
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606C088, func_0606C088);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606C160, func_0606C160);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606C3E4, func_0606C3E4);
