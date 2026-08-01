@@ -662,7 +662,13 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6009F10, func_06009F10);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6009F84, func_06009F84);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A030, func_0600A030);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A088, func_0600A088);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A240, func_0600A240);
+void func_0600A240(s32 param_1) {
+    if (param_1 != 0) {
+        DAT_0605D910[0x4D] = 1;
+    } else {
+        DAT_0605D910[4] = 1;
+    }
+}
 
 // _SetCharTrans
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A264, func_0600A264);
@@ -676,7 +682,11 @@ void SetSprGourTable(u16 arg0, SprGourTbl* gourTbl) {
 // _SetPlTransNonSeparateAura
 void func_0600A31C(void) { DAT_0605D910[3] = 1; }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A330, func_0600A330);
+void func_0600A330(void) {
+    if (g_PlayableCharacter == 0) {
+        DAT_0605D910[3] = 0;
+    }
+}
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A350, func_0600A350);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A490, func_0600A490);
 // MapBytesThroughLutPair
@@ -1228,7 +1238,12 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600F96C, DecompressLzss);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FA4C, func_0600FA4C);
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FACC, func_0600FACC);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FB0C, func_0600FB0C);
+extern s32 DAT_06039128[];
+void func_0600FB0C(s32 param_1) {
+    DAT_06057A10[0] = param_1;
+    DAT_06057A10[1] = 0;
+    *(s32*)&DAT_06057A10[2] = DAT_06039128[param_1];
+}
 
 void func_0600FB34(void) {
     DAT_06057A10[0] = 0;
@@ -1238,7 +1253,8 @@ void func_0600FB34(void) {
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FB4C, func_0600FB4C);
 
 // _TEST_TEST
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FB9C, func_0600FB9C);
+s32 func_0602A778(s32 param_1, s32 param_2, s32 param_3);
+void func_0600FB9C(void) { func_0602A778(0x100, 32, 0); }
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FBBC, func_0600FBBC);
 
 // _all_map_check

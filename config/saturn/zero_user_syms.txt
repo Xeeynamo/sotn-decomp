@@ -223,6 +223,7 @@ _g_SpriteListTail = 0x06057794;
 _g_SpriteObjectFreeList = 0x06057798;
 _g_SpritePartFreeList = 0x0605779C;
 _d_060578A0 = 0x060578A0;
+_DAT_06039128 = 0x06039128;
 _DAT_06057A10 = 0x06057A10;
 _adr_com_block = 0x06057C68;
 _adr_host_int_work = 0x06057C6C;
