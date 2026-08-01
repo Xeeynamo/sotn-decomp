@@ -1,8 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dra.h"
 
-// BSS
+#ifdef VERSION_PC
+// mimic PSP behavior
+static u8* g_DemoPtr = DEMO_KEY_PTR;
+#else
 static u8* g_DemoPtr;
+#endif
 static s32 g_DemoKeyIdx;
 
 static u8 demo_stages[] = {
