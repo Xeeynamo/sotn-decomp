@@ -40,7 +40,9 @@ def is_hd(ver: str) -> bool:
 
 
 def is_weapon(ovl_name: str) -> bool:
-    return ovl_name == "weapon"
+    return (
+        ovl_name == "weapon" or ovl_name.startswith("w0_") or ovl_name.startswith("w1_")
+    )
 
 
 def is_servant(ovl_name: str) -> bool:
@@ -59,8 +61,10 @@ def is_base_ovl(ovl_name: str) -> bool:
     )
 
 
-def build_path(ver: str, base_path: str) -> str:
-    complete_path = os.path.join("build", ver, base_path)
+def build_path(ver: str, base_path: str, subdir: str = "") -> str:
+    # `subdir` keeps objects apart when the same source is compiled more than
+    # once for one version, as PSP does for the two weapon hands.
+    complete_path = os.path.join("build", ver, subdir, base_path)
     if sotn_progress_report:
         return os.path.join("expected", "report", complete_path)
     return complete_path
@@ -80,8 +84,10 @@ def is_stage(ovl_name: str) -> bool:
     )
 
 
-def add_s_dummy(nw: ninja_syntax.Writer, ver: str, file_name: str, ld_path: str):
-    output = build_path(ver, f"{file_name}.o")
+def add_s_dummy(
+    nw: ninja_syntax.Writer, ver: str, file_name: str, ld_path: str, subdir: str = ""
+):
+    output = build_path(ver, f"{file_name}.o", subdir)
     if output in entries:
         return output
     entries[output] = {}
@@ -155,9 +161,14 @@ def get_compiler_params(source_file_path: str) -> CompilerParams:
 
 
 def add_c_psx(
-    nw: ninja_syntax.Writer, ver: str, file_name: str, ld_path: str, cpp_flags: str
+    nw: ninja_syntax.Writer,
+    ver: str,
+    file_name: str,
+    ld_path: str,
+    cpp_flags: str,
+    subdir: str = "",
 ):
-    output = build_path(ver, f"{file_name}.o")
+    output = build_path(ver, f"{file_name}.o", subdir)
     if output in entries:
         return output
     entries[output] = {}
@@ -191,8 +202,10 @@ def add_c_psx(
     return output
 
 
-def add_s_psx(nw: ninja_syntax.Writer, ver: str, file_name: str, ld_path: str):
-    output = build_path(ver, f"{file_name}.o")
+def add_s_psx(
+    nw: ninja_syntax.Writer, ver: str, file_name: str, ld_path: str, subdir: str = ""
+):
+    output = build_path(ver, f"{file_name}.o", subdir)
     if output in entries:
         return output
     entries[output] = {}
@@ -215,8 +228,9 @@ def add_copy_psx(
     in_file_name: str,
     out_file_name: str,
     ld_script_path: str,
+    subdir: str = "",
 ):
-    output = build_path(ver, f"{out_file_name}.o")
+    output = build_path(ver, f"{out_file_name}.o", subdir)
     if output in entries:
         return output
     entries[output] = {}
@@ -280,9 +294,14 @@ def add_memcard_img_psx(
 
 
 def add_c_psp(
-    nw: ninja_syntax.Writer, ver: str, file_name: str, ld_path: str, cpp_flags: str
+    nw: ninja_syntax.Writer,
+    ver: str,
+    file_name: str,
+    ld_path: str,
+    cpp_flags: str,
+    subdir: str = "",
 ):
-    output = build_path(ver, f"{file_name}.o")
+    output = build_path(ver, f"{file_name}.o", subdir)
     if output in entries:
         return output
     entries[output] = {}
@@ -318,8 +337,10 @@ def add_c_psp(
     return output
 
 
-def add_s_psp(nw: ninja_syntax.Writer, ver: str, file_name: str, ld_path: str):
-    output = build_path(ver, f"{file_name}.o")
+def add_s_psp(
+    nw: ninja_syntax.Writer, ver: str, file_name: str, ld_path: str, subdir: str = ""
+):
+    output = build_path(ver, f"{file_name}.o", subdir)
     if output in entries:
         return output
     entries[output] = {}
@@ -516,6 +537,19 @@ def add_weapon_splat_config(nw: ninja_syntax.Writer, ver: str, splat_config):
         )
 
 
+def find_mwo_header_name(splat_config) -> str:
+    # Most PSP overlays share a plain `mwo_header.bin`, but the per-hand weapon
+    # overlays each carry their own, named after the overlay.
+    for segment in splat_config["segments"]:
+        if isinstance(segment, list):
+            if len(segment) > 2 and int(segment[0]) == 0:
+                return f"{segment[2]}.bin"
+        elif isinstance(segment, dict):
+            if int(segment.get("start", -1)) == 0 and "name" in segment:
+                return f"{segment["name"]}.bin"
+    return "mwo_header.bin"
+
+
 def add_splat_config(nw: ninja_syntax.Writer, ver: str, file_name: str):
     with open(file_name) as f:
         splat_config = yaml.load(f, Loader=yaml.SafeLoader)
@@ -539,7 +573,10 @@ def add_splat_config(nw: ninja_syntax.Writer, ver: str, file_name: str):
             outputs=dyn_syms_splat_config,
         )
 
-    if is_weapon(ovl_name):
+    # PSX/HD build every weapon out of the single `weapon` overlay, which needs
+    # the bespoke builder below. PSP ships each weapon as its own w0_/w1_
+    # overlay, so those go through the generic overlay path instead.
+    if not is_psp(ver) and is_weapon(ovl_name):
         add_weapon_splat_config(nw, ver, splat_config)
         return
     target_path = str(splat_config["options"]["target_path"])
@@ -573,6 +610,18 @@ def add_splat_config(nw: ninja_syntax.Writer, ver: str, file_name: str):
         raise Exception(f"platform {platform} not recognized")
     if sotn_progress_report:
         add_s = add_s_dummy
+
+    # PSP splits each weapon into a per-hand overlay (w0_XXX / w1_XXX). Both
+    # hands are built from the same src/weapon/w_XXX.c, so give each hand its
+    # own object subdirectory and tell the source which hand it is compiling.
+    obj_subdir = ""
+    cpp_flags = ""
+    if is_psp(ver) and is_weapon(ovl_name):
+        hand_id = ovl_name[1]
+        weapon_id = ovl_name[3:]
+        obj_subdir = f"weapon{hand_id}"
+        cpp_flags = f"-DW_{weapon_id} -DWEAPON{hand_id}"
+
     objs = []
     if ovl_name == "main" and platform != "psp":
         objs.append(add_s(nw, ver, f"{asm_path}/header.s", ld_path))
@@ -598,7 +647,7 @@ def add_splat_config(nw: ninja_syntax.Writer, ver: str, file_name: str):
             continue
         if segment["type"] == "data":
             asm_name = f"{asm_path}/data/{segment["name"]}.data.s"
-            objs.append(add_s(nw, ver, asm_name, ld_path))
+            objs.append(add_s(nw, ver, asm_name, ld_path, obj_subdir))
             continue
         for subsegment in segment["subsegments"]:
             if isinstance(subsegment, dict):  # handle PSP BSS
@@ -622,14 +671,24 @@ def add_splat_config(nw: ninja_syntax.Writer, ver: str, file_name: str):
                 else:
                     name = str.format("{0:X}", offset)
             if kind == "c" or kind == ".data" or kind == ".rodata" or kind == ".bss":
-                objs.append(add_c(nw, ver, f"{src_path}/{name}.c", ld_path, ""))
+                objs.append(
+                    add_c(
+                        nw, ver, f"{src_path}/{name}.c", ld_path, cpp_flags, obj_subdir
+                    )
+                )
             elif kind == "data" or kind == "rodata" or kind == "bss" or kind == "sbss":
-                obj = add_s(nw, ver, f"{asm_path}/data/{name}.{kind}.s", ld_path)
+                obj = add_s(
+                    nw, ver, f"{asm_path}/data/{name}.{kind}.s", ld_path, obj_subdir
+                )
                 objs.append(obj)
             elif kind == "textbin":
-                objs.append(add_s(nw, ver, f"{asm_path}/data/{name}.s", ld_path))
+                objs.append(
+                    add_s(nw, ver, f"{asm_path}/data/{name}.s", ld_path, obj_subdir)
+                )
             elif kind == "asm":
-                objs.append(add_s(nw, ver, f"{asm_path}/{name}.s", ld_path))
+                objs.append(
+                    add_s(nw, ver, f"{asm_path}/{name}.s", ld_path, obj_subdir)
+                )
             elif kind == "raw":
                 objs.append(
                     add_copy_psx(
@@ -638,6 +697,7 @@ def add_splat_config(nw: ninja_syntax.Writer, ver: str, file_name: str):
                         f"{asset_path}/{name}.bin",
                         f"{asset_path}/{name}",
                         ld_path,
+                        obj_subdir,
                     )
                 )
             else:
@@ -645,8 +705,8 @@ def add_splat_config(nw: ninja_syntax.Writer, ver: str, file_name: str):
     if sotn_progress_report:
         return
     if platform == "psp" and ovl_name != "main":
-        mwo = os.path.join(asset_path, "mwo_header.bin")
-        objs.append(add_copy_psx(nw, ver, mwo, mwo, ld_path))
+        mwo = os.path.join(asset_path, find_mwo_header_name(splat_config))
+        objs.append(add_copy_psx(nw, ver, mwo, mwo, ld_path, obj_subdir))
     output_elf = build_path(ver, f"{ovl_name}.elf")
     sym_version = ver
     if ovl_name == "stmad":
@@ -824,7 +884,7 @@ with open(build_ninja, "w") as f:
             " --mwcc-path bin/mwccpsp.exe --use-wibo --wibo-path bin/wibo --as-path tools/pspas/target/release/pspas"
             " --asm-dir asm/pspeu --macro-inc-path include/macro.inc "
             " -gccdep -MD"  # for metrowerks, "system" headers seem to be anything included with angle brackets
-            f" -gccinc -I$src_dir -Iinclude -Iinclude/pspsdk -Iinclude/psxsdk -D_internal_version_$version -DSOTN_STR {extra_cpp_defs} -c -lang c -sdatathreshold 0 -char unsigned -fl divbyzerocheck"
+            f" -gccinc -I$src_dir -Iinclude -Iinclude/pspsdk -Iinclude/psxsdk -D_internal_version_$version -DSOTN_STR {extra_cpp_defs} $cpp_flags -c -lang c -sdatathreshold 0 -char unsigned -fl divbyzerocheck"
             " $opt_level -opt nointrinsics"
             " -"
         ),

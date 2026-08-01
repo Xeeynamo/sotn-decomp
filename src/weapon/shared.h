@@ -9,7 +9,12 @@ static void LoadWeaponPalette(s32 clutIndex) {
     u16* dst;
     s32 i;
 
-#if !defined(W_029)
+#ifdef VERSION_PSP
+    // PSP has no D_8006EDCC; the weapon cluts live at a fixed offset into
+    // g_Clut, 0x18 entries apart per hand.
+    dst = (u16*)&((u16*)g_Clut)[(((g_HandId * 0x18) + 0x110) * 0x10)];
+    src = g_WeaponCluts[clutIndex];
+#elif !defined(W_029)
     dst = src = g_WeaponCluts[clutIndex];
     dst = D_8006EDCC[g_HandId];
 #else
@@ -21,7 +26,7 @@ static void LoadWeaponPalette(s32 clutIndex) {
     }
 
     for (i = 0; i < LEN(*D_8006EDCC)
-#ifdef FIX_UB
+#if defined(FIX_UB) && !defined(VERSION_PSP)
                 && i < LEN(g_WeaponCluts[clutIndex])
 #endif
              ;
@@ -29,22 +34,32 @@ static void LoadWeaponPalette(s32 clutIndex) {
         *dst++ = *src++;
     }
 
-#if !defined(W_029)
+#if defined(VERSION_PSP) || defined(W_029)
+    dstRect.x = 0;
     dstRect.w = 0x100;
     dstRect.h = 3;
-    dstRect.x = 0;
     dstRect.y = 0xF1;
 #else
-    dstRect.x = 0;
     dstRect.w = 0x100;
     dstRect.h = 3;
+    dstRect.x = 0;
     dstRect.y = 0xF1;
 #endif
+
+#ifdef VERSION_PSP
+    dst = (u16*)&((u16*)g_Clut)[0x1100];
+    LoadImage(&dstRect, (u_long*)dst);
+#else
     LoadImage(&dstRect, &D_8006EDCC);
+#endif
 }
 
 static void SetSpriteBank1(SpriteParts* animset) {
+#ifdef VERSION_PSP
+    SpriteParts** spriteBankDst = (SpriteParts**)g_api.o.spriteBanks;
+#else
     SpritePart** spriteBankDst = g_api.o.spriteBanks;
+#endif
 
     spriteBankDst += 0x10;
     if (g_HandId != 0) {
@@ -54,7 +69,11 @@ static void SetSpriteBank1(SpriteParts* animset) {
 }
 
 static void SetSpriteBank2(SpriteParts* animset) {
+#ifdef VERSION_PSP
+    SpriteParts** spriteBankDst = (SpriteParts**)g_api.o.spriteBanks;
+#else
     SpritePart** spriteBankDst = g_api.o.spriteBanks;
+#endif
 
     spriteBankDst += 0x11;
     if (g_HandId != 0) {
@@ -93,8 +112,14 @@ static void DestroyEntityWeapon(bool arg0) {
 
 static void SetWeaponProperties(Entity* self, s32 kind) {
     Equipment equip;
+#ifdef VERSION_PSP
+    s32 equipId = self->ext.weapon.equipId;
+
+    g_api.GetEquipProperties(g_HandId, &equip, equipId);
+#else
 
     g_api.GetEquipProperties(g_HandId, &equip, self->ext.weapon.equipId);
+#endif
     switch (kind) {
     case 0:
     case 1:

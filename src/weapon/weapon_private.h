@@ -61,13 +61,17 @@ typedef struct {
 #define WFACTORY2(id, param) FACTORY(((g_HandId + 1) << 12) + (id), (param))
 
 // create function names like w_000_EntityWeaponAttack
-#ifdef VERSION_PC
+#if defined(VERSION_PC) || defined(VERSION_PSP)
 #define CONCATENATE_DETAIL(x, y, z) x##y##_##z
 #define CONCATENATE(x, y, z) CONCATENATE_DETAIL(x, y, z)
 #define OVL_EXPORT(x) CONCATENATE(WEAPON, WEAPON_ID, x)
 #else
 #define OVL_EXPORT(x) x
 #endif
+
+// PSP builds one overlay per weapon per hand, so each w*_*.c declares its own
+// entry points and overlay table rather than sharing the ones below.
+#ifndef VERSION_PSP
 
 // exported
 static void EntityWeaponAttack(Entity* self);
@@ -114,5 +118,7 @@ Weapon OVL_EXPORT(header) = {
     WeaponUnused30,     WeaponUnused34,    WeaponUnused38,
     WeaponUnused3C,
 };
+
+#endif // !VERSION_PSP
 
 #endif

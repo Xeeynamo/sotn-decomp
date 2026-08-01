@@ -1075,6 +1075,17 @@ files:
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/tt_005.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/tt_006.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_000.bin
+    asset_path: assets/weapon
+    src_path: src/weapon
+    splat_config_path: config/splat.pspeu.w0_000.yaml
+    segments:
+      - start: 0x80
+        vram:  0x092F2E80
+        assets:
+          - [0x80, skip]
+          - [0x700, spriteset, w0/w_000_1] # should be namespaced
+          - [0x1248, spriteset, w0/w_000_2] # should be namespaced
+          - [0x1248, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_001.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_002.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_003.bin
@@ -1134,6 +1145,17 @@ files:
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_057.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_058.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_000.bin
+    asset_path: assets/weapon
+    src_path: src/weapon
+    splat_config_path: config/splat.pspeu.w1_000.yaml
+    segments:
+      - start: 0x80
+        vram:  0x092F6C80
+        assets:
+          - [0x80, skip]
+          - [0x708, spriteset, w1/w_000_1] # should be namespaced
+          - [0x1250, spriteset, w1/w_000_2] # should be namespaced
+          - [0x1250, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_001.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_002.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_003.bin
