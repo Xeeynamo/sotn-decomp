@@ -397,6 +397,67 @@ set(SOURCE_FILES_STAGE_DAI
     src/st/dai/e_winged_guard.c
 )
 
+set(SOURCE_FILES_STAGE_NP3
+    src/pc/stages/stage_np3.c
+    src/st/np3/header.c
+    src/st/np3/gen/us/e_laydef.c
+    src/st/np3/e_init.c
+    src/st/np3/gen/rooms.c
+    src/st/np3/gen/us/e_layout.c
+    src/st/np3/gen/sprites.c
+    src/st/np3/stage_data.c
+    src/st/np3/background_block_init.c
+    src/st/np3/e_room_bg.c
+    src/st/np3/e_lock_camera.c
+    src/st/np3/e_breakable.c
+    src/st/np3/d_prize_drops.c
+    src/st/np3/st_update.c
+    src/st/np3/collision.c
+    src/st/np3/create_entity.c
+    src/st/np3/e_red_door_tiles.c
+    src/st/np3/e_red_door.c
+    src/st/np3/st_common.c
+    src/st/np3/e_collect.c
+    src/st/np3/e_misc.c
+    src/st/np3/e_stage_name.c
+    src/st/np3/e_particles.c
+    src/st/np3/e_room_fg.c
+    src/st/np3/popup.c
+    src/st/np3/prim_helpers.c
+    src/st/np3/bss.c
+    src/st/np3/4E04C.c
+    src/st/np3/d_water_data.c
+    src/st/np3/water_effects.c
+    src/st/np3/entrance_weights.c
+    src/st/np3/e_background_bushes_trees.c
+    src/st/np3/e_background_lightning.c
+    src/st/np3/e_bat.c
+    src/st/np3/blade.c
+    src/st/np3/e_bloody_zombie.c
+    src/st/np3/e_bone_scimitar.c
+    src/st/np3/e_castle_door.c
+    src/st/np3/e_cavern_door.c
+    src/st/np3/e_explosion_puff_opaque.c
+    src/st/np3/e_heartroom.c
+    src/st/np3/e_jewel_sword_puzzle.c
+    src/st/np3/e_merman.c
+    src/st/np3/e_merman2.c
+    src/st/np3/e_owl_knight.c
+    src/st/np3/e_shutting_window.c
+    src/st/np3/e_sky_entities.c
+    src/st/np3/e_stairway.c
+    src/st/np3/e_tilemap_shuffler.c
+    src/st/np3/e_transparent_water.c
+    src/st/np3/e_trapdoor.c
+    src/st/np3/e_unkId16.c
+    src/st/np3/e_zombie.c
+    src/st/np3/gaibon.c
+    src/st/np3/slogra.c
+    src/st/np3/giantbro_helpers.c
+    src/st/np3/gurkha.c
+    src/st/np3/hammer.c
+)
+
 set(SOURCE_FILES_STAGE_CEN
     src/pc/stages/stage_cen.c
     src/st/cen/header.c
@@ -910,6 +971,7 @@ endfunction()
 add_overlay(sel ${SOURCE_FILES_STAGE_SEL})
 add_overlay(no2 ${SOURCE_FILES_STAGE_NO2})
 add_overlay(dai ${SOURCE_FILES_STAGE_DAI})
+add_overlay(np3 ${SOURCE_FILES_STAGE_NP3})
 add_overlay(cen ${SOURCE_FILES_STAGE_CEN})
 add_overlay(nz0 ${SOURCE_FILES_STAGE_NZ0})
 add_overlay(wrp ${SOURCE_FILES_STAGE_WRP})
