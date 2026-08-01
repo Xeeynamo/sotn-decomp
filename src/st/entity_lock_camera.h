@@ -2,7 +2,6 @@
 
 extern EInit g_EInitLockCamera;
 
-#ifndef ENTITY_LOCK_CAMERA_DATA_DEFINED
 static u8 entityLockCameraHitbox[] = {
     0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x50, 0x20,
 };
@@ -24,7 +23,6 @@ static u16 entityLockCameraTilemapProps[] = {
     0x0000, 0x0000, 0x0500, 0x0400, 0x0000, 0x01FC, 0x0500, 0x02FC,
     0x00F0, 0x01FC, 0x0310, 0x02FC, 0x00F0, 0x01FC, 0x0310, 0x02FC,
 };
-#endif
 
 // params: Which camera lock config to use
 void EntityLockCamera(Entity* self) {
