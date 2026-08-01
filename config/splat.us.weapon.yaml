@@ -169,7 +169,6 @@ segments:
     subalign: 4
     subsegments:
       - [0x3C040, .data, w_008]
-      - [0x3C804, data, w_008]
       - [0x3CAC4, .rodata, w_008]
       - [0x3CB4C, c, w_008]
   - name: f_009
