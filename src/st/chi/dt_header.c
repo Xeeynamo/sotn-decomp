@@ -9,9 +9,9 @@
 
 extern RoomHeader rooms[];
 extern s16** spriteBanks[];
-extern u_long* cluts[];
+static u_long* cluts[];
 extern RoomDef rooms_layers[];
-extern GfxBank* gfxBanks[];
+extern u_long** gfxBanks[];
 
 // D_80180000
 Overlay OVL_EXPORT(Overlay) = {
@@ -74,95 +74,4 @@ extern u8 bn_gfx_venus_weed_1[];
 extern u8 bn_gfx_venus_weed_2[];
 extern u8 bn_gfx_stage_name_en[];
 
-// D_80180298
-static GfxBank GfxBank_Null = {
-    .kind = GFX_BANK_NONE,
-    .entries =
-        {
-            GFX_ENTRY(0, 0, 0, 0, NULL),
-        },
-};
-static u_long GfxBank_Null_TERM = GFX_TERMINATE();
-
-// D_801802AC
-static GfxBank GfxBank_StageName = {
-    .kind = GFX_BANK_COMPRESSED,
-    .entries =
-        {
-            GFX_ENTRY(0x100, 0x40, 0x80, 0x80, bn_gfx_stage_name_en),
-            GFX_ENTRY(0x100, 0x60, 0x80, 0x80, bn_gfx_stage_name_jp_lg),
-        },
-};
-static u_long GfxBank_StageName_TERM = GFX_TERMINATE();
-
-// D_801802CC
-static GfxBank GfxBank_Gremlin1 = {
-    .kind = GFX_BANK_COMPRESSED,
-    .entries =
-        {
-            GFX_ENTRY(0x100, 0x80, 0x80, 0x80, bn_gfx_gremlin),
-        },
-};
-static u_long GfxBank_Gremlin1_TERM = GFX_TERMINATE();
-
-// D_801802E0
-static GfxBank GfxBank_Gremlin2 = {
-    .kind = GFX_BANK_COMPRESSED,
-    .entries =
-        {
-            GFX_ENTRY(0x100, 0x80, 0x80, 0x80, bn_gfx_gremlin),
-        },
-};
-static u_long GfxBank_Gremlin2_TERM = GFX_TERMINATE();
-
-// D_801802F4
-static GfxBank GfxBank_SalemWitch = {
-    .kind = GFX_BANK_COMPRESSED,
-    .entries =
-        {
-            GFX_ENTRY(0x100, 0x80, 0x80, 0x80, bn_gfx_salem_witch_1),
-            GFX_ENTRY(0x100, 0xA0, 0x80, 0x80, bn_gfx_salem_witch_2),
-            GFX_ENTRY(0x180, 0x80, 0x80, 0x80, bn_gfx_salem_witch_4),
-            GFX_ENTRY(0x180, 0xA0, 0x80, 0x80, bn_gfx_salem_witch_5),
-            GFX_ENTRY(0x100, 0x1C0, 0x80, 0x80, bn_gfx_salem_witch_3),
-        },
-};
-static u_long GfxBank_SalemWitch_TERM = GFX_TERMINATE();
-
-// D_80180338
-static GfxBank GfxBank_AllWeeds = {
-    .kind = GFX_BANK_COMPRESSED,
-    .entries =
-        {
-            GFX_ENTRY(0x100, 0xC0, 0x80, 0x80, bn_gfx_thornweed_corpseweed),
-            GFX_ENTRY(0x100, 0x100, 0x80, 0x80, bn_gfx_venus_weed_1),
-            GFX_ENTRY(0x100, 0x120, 0x80, 0x80, bn_gfx_venus_weed_2),
-        },
-};
-static u_long GfxBank_AllWeeds_TERM = GFX_TERMINATE();
-
-// clang-format off
-// D_80180364
-static GfxBank* gfxBanks[] = {
-    &GfxBank_Null,
-    &GfxBank_StageName,
-    &GfxBank_Gremlin1,
-    &GfxBank_SalemWitch,
-    &GfxBank_AllWeeds,
-    &GfxBank_Gremlin2,
-    &GfxBank_Null,
-    &GfxBank_Null,
-    &GfxBank_Null,
-    &GfxBank_Null,
-    &GfxBank_Null,
-    &GfxBank_Null,
-    &GfxBank_Null,
-    &GfxBank_Null,
-    &GfxBank_Null,
-    &GfxBank_Null,
-    &GfxBank_Null,
-    &GfxBank_Null,
-    &GfxBank_Null,
-    &GfxBank_Null,
-};
-// clang-format on
+#include "gen/graphics_banks.h"
