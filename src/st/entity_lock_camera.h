@@ -8,6 +8,8 @@ static u8 entityLockCameraHitbox[] = {
 
 static u8 entityLockCameraData[8] = {0};
 
+// Most stages use the same data here, so if not overrided before importing
+// this file, we will use this tilemap.
 #ifndef CAMERA_TILEMAP
 #define CAMERA_TILEMAP \
     0x0000, 0x0000, 0x0600, 0x0100, 0x0000, 0x0000, 0x0600, 0x01FC,\
