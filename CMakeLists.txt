@@ -777,39 +777,9 @@ set(SOURCE_FILES_STAGE_MAD
     src/st/mad/bss.c
 )
 
-set(SOURCE_FILES_WEAPON
-    src/weapon/w_000.c
-    src/weapon/w_002.c
-    src/weapon/w_007.c
-    src/weapon/w_012.c
-    src/weapon/w_034.c
-    src/weapon/w_037.c
-    src/weapon/w_041.c
-    src/weapon/w_043.c
-    src/weapon/w_045.c
-    src/weapon/w_046.c
-    src/weapon/w_051.c
-    src/weapon/w_052.c
-)
-
-# WEAPON_ID needs to be a string and not just a number
-set_source_files_properties(src/weapon/w_000.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_000)
-set_source_files_properties(src/weapon/w_002.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_002)
-set_source_files_properties(src/weapon/w_007.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_007)
-set_source_files_properties(src/weapon/w_012.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_012)
-set_source_files_properties(src/weapon/w_034.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_034)
-set_source_files_properties(src/weapon/w_037.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_037)
-set_source_files_properties(src/weapon/w_041.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_041)
-set_source_files_properties(src/weapon/w_043.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_043)
-set_source_files_properties(src/weapon/w_045.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_045)
-set_source_files_properties(src/weapon/w_046.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_046)
-set_source_files_properties(src/weapon/w_051.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_051)
-set_source_files_properties(src/weapon/w_052.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_052)
-
 set(SOURCE_FILES_CORE
     ${SOURCE_FILES_DRA}
     ${SOURCE_FILES_RIC}
-    ${SOURCE_FILES_WEAPON}
 )
 if (USE_PLAYER_MARIA)
     add_compile_definitions(USE_PLAYER_MARIA)
@@ -918,6 +888,13 @@ add_overlay(st0 ${SOURCE_FILES_STAGE_ST0})
 add_overlay(rwrp ${SOURCE_FILES_STAGE_RWRP})
 add_overlay(no3 ${SOURCE_FILES_STAGE_NO3})
 add_overlay(mad ${SOURCE_FILES_STAGE_MAD})
+
+foreach(id 000 002 007 008 012 034 037 041 043 045 046 051 052)
+    add_overlay(w0_${id} src/weapon/w_${id}.c)
+    target_compile_definitions(w0_${id} PRIVATE WEAPON0)
+    add_overlay(w1_${id} src/weapon/w_${id}.c)
+    target_compile_definitions(w1_${id} PRIVATE WEAPON1)
+endforeach()
 
 add_overlay(tt_000 ${SOURCE_FILES_TT_000})
 add_overlay(tt_001 ${SOURCE_FILES_TT_001})

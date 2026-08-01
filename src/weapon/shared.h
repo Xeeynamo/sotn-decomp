@@ -20,12 +20,7 @@ static void LoadWeaponPalette(s32 clutIndex) {
         return;
     }
 
-    for (i = 0; i < LEN(*D_8006EDCC)
-#ifdef FIX_UB
-                && i < LEN(g_WeaponCluts[clutIndex])
-#endif
-             ;
-         i++) {
+    for (i = 0; i < N_WEAPON_PAL * COLORS_PER_PAL; i++) {
         *dst++ = *src++;
     }
 
