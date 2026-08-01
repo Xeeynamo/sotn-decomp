@@ -1,0 +1,247 @@
+RLIB (Reverse Library / "Forbidden Library") overlay import log
+=================================================================
+Target: ST/RLIB (disks/us/ST/RLIB/RLIB.BIN), internal short name "rlib"
+Runbook: https://github.com/Xeeynamo/sotn-decomp/wiki/PSX---PSP-stage-overlay-import-runbook
+
+Phase 1 — Scope / workspace protection
+---------------------------------------
+- Working branch: boss-decomp-bo1-bo2-bo3 (local, based on stale master, 5 commits
+  behind upstream/master at time of writing).
+- Pre-existing uncommitted local work (bo0/bo2/bo5/bo7 decomp sessions, stray debug
+  files) confirmed present via `git status` before starting and explicitly excluded
+  from any staging/commit related to this import.
+
+Phase 2 — Tooling prep
+------------------------
+- tools/sotn_utils submodule was registered but its working tree was empty
+  (all tracked files showed as locally deleted, never committed missing).
+  Fixed with `git submodule update --init --recursive tools/sotn_utils` +
+  `git -C tools/sotn_utils restore .`. Root cause of the empty checkout not
+  determined (possibly an earlier `git clean` or manual deletion); flagging
+  in case other overlay contributors hit the same thing.
+- Python venv created at .venv, `pip install mako` (only missing dependency).
+- `bin/sotn-assets` rebuilt via `go build -o bin/sotn-assets ./tools/sotn-assets`.
+
+Phase 3 — PSX import + validation — DONE, VALIDATED
+-------------------------------------------------------
+- Naming gotcha: the overlay's short name is "rlib" (extractor auto-prefixes
+  "st" -> basename "strlib"). Passing "strlib" directly to the CLI fails
+  (`ValueError: Unknown overlay type for 'strlib'`) — must pass the bare "rlib".
+  Also worth flagging: "stlib" (no r) is a DIFFERENT, already-imported overlay
+  (ST/LIB, the non-inverted Library stage) — easy to confuse, would have been
+  a destructive mistake to target it instead.
+- Command used: `python3 tools/sotn_utils/extract_overlay/extract_overlay.py rlib -v us`
+- Result: extraction + internal build/validate succeeded ("Extracted us rlib",
+  48.0s). Generated config/splat.us.strlib.yaml, config/symbols.us.strlib.txt,
+  src/st/rlib/ (4 files, 465 lines total pre-split stubs), asm/us/st/rlib/
+  (156 .s files).
+- Independent SHA-1 verification (build/us/RLIB.BIN vs disks/us/ST/RLIB/RLIB.BIN):
+  MATCH — 2fe82faf41babb3f422fdca23dfc7e75031621a5 both sides.
+- 6 unhandled/ambiguous symbol matches reported by the tool (tied score 1.0,
+  mirrored left/right or above/below helper functions) — need manual disambiguation
+  before final commit, not yet resolved:
+    func_us_801A4CF8 / func_us_801A4A44  <-> FindFirstEntityToTheRight / FindFirstEntityAbove
+    func_us_801A4E98 / func_us_801A4BE4  <-> CreateEntitiesToTheLeft / CreateEntitiesBelow
+    func_us_801A4D44 / func_us_801A4A90  <-> FindFirstEntityToTheLeft / FindFirstEntityBelow
+    func_us_801AE4B4 / func_us_801AF3C8  <-> func_801CDC80 / ApproachTarget (low-confidence, only 1 real xref hit each)
+    func_us_801A4D9C / func_us_801A4AE8  <-> CreateEntitiesToTheRight / CreateEntitiesAbove
+    func_us_801A697C / func_us_801A6B10  <-> GetAnglePointToEntity / GetAnglePointToEntityShifted
+
+Phase 4 — PSP import
+-----------------------
+Not started. PSP EU disc image located at a sibling folder on the contributor's
+machine but not yet extracted into disks/pspeu/. Per runbook order, parked
+until explicitly resumed.
+
+5 of 6 ambiguous pairs resolved 2026-08-01 via structural evidence (axis-specific global var used —
+g_LayoutObjHorizontal/g_ScrollDeltaX vs g_LayoutObjVertical/g_ScrollDeltaY — and branch-count pattern
+matching the two-condition vs three-condition shape in the canonical header at
+src/st/create_entity.h; the angle-function pair was resolved directly from the jal call target name,
+`Ratan2Shifted` vs `ratan2`, embedded in the disassembly itself):
+  func_us_801A4CF8 -> FindFirstEntityAbove
+  func_us_801A4A44 -> FindFirstEntityToTheRight
+  func_us_801A4D44 -> FindFirstEntityBelow
+  func_us_801A4A90 -> FindFirstEntityToTheLeft
+  func_us_801A4D9C -> CreateEntitiesAbove
+  func_us_801A4AE8 -> CreateEntitiesToTheRight
+  func_us_801A4E98 -> CreateEntitiesBelow
+  func_us_801A4BE4 -> CreateEntitiesToTheLeft
+  func_us_801A697C -> GetAnglePointToEntityShifted
+  func_us_801A6B10 -> GetAnglePointToEntity
+Renamed in both the .s files (asm/us/st/rlib/nonmatchings/...) and the INCLUDE_ASM references in
+src/st/rlib/unk_24A44.c and unk_2697C.c. Two callers (InitRoomEntities.s, UpdateRoomPosition.s)
+needed a manual follow-up sed pass — an initial scripted rename loop missed their `jal` references.
+Also hit the known ninja-staleness gotcha (see reference_decomp_verification memory): after editing
+a `.s` file included via INCLUDE_ASM, the wrapping `.c` file's mtime must be bumped (`touch`) or
+ninja won't detect the object needs recompiling and will link stale code.
+
+One pair left UNRESOLVED on purpose: func_us_801AE4B4 / func_us_801AF3C8. These are byte-identical
+duplicate helper functions (same instruction sequence, only absolute addresses differ). The
+extractor's own candidate names for these (`func_801CDC80`, score 5; `ApproachTarget`, score 1) were
+both low-confidence — the first is itself just a raw address, not an established name. Checked
+callers: 801AE4B4 is called 5x from a single function (func_us_801AE534), 801AF3C8 is called once
+each from two different functions (func_us_801AF9E8, func_us_801AF448) — not enough to confidently
+assign directional/semantic names. Left as raw `func_us_` addresses rather than guess.
+
+Full-project `make build -j` run after these renames: RLIB and F_RLIB both ✅. Only pre-existing
+failure is ❌ BO0 (known ~20-byte GCC-scheduling residual in func_us_801AB9EC from a separate,
+unrelated bo0 session — see project_sotn_decomp_bo0 memory — not a regression from this work).
+
+Phase 5 — Cross-platform dedup (tools/dups)
+----------------------------------------------
+Not started yet — symbol disambiguation now done, this is the next step.
+
+Phase 6 — Full validation (make build both versions, ./sotn.sh build)
+--------------------------------------------------------------------------
+Not started.
+
+Phase 7 — Review + commit (overlay-specific files only, no OVL_EXPORT in new code)
+----------------------------------------------------------------------------------------
+Not started. New/modified files staged so far for THIS import only (per `git status`):
+  A  config/splat.us.strlib.yaml
+  A  config/symbols.us.strlib.txt
+  ?? src/st/rlib/ (untracked, new)
+  ?? asm/us/st/rlib/ (untracked, new, generated — not usually committed as source)
+
+Attempted shortcut (2026-08-01, reverted): tried pointing st_common.c and unk_2697C.c at the
+shared canonical `src/st/st_common.h` (the pattern every other ST overlay uses) to skip ~34
+functions of manual decompilation. Failed for two independent reasons, both worth remembering:
+  1. unk_2697C.c is a genuine SECOND physical copy of a subset of these functions at different
+     addresses in the actual ROM (not just the same logic reused) -- folding it into one copy
+     changed the binary's size/layout and broke the checksum even though F_RLIB still passed.
+  2. Several of unk_2697C.c's functions (e.g. InitializeEntity) are called BY NAME from other
+     rlib files (src/st/rlib/e_room_fg.c), so they cannot be silently anonymized back to raw
+     `func_us_` addresses either -- the semantic names are load-bearing.
+  3. Even after correctly keeping both files as separate raw INCLUDE_ASM stubs, a strict
+     substitution of st_common.c's own 18 functions with the shared header produced DIFFERENT
+     compiled bytes than the original raw asm (different SHA-1 each time), meaning this specific
+     overlay's compilation context doesn't guarantee byte-identical output from the "known good"
+     header source used elsewhere -- byte-exactness cannot be assumed by name/logic match alone.
+  Reverted both files to their original raw INCLUDE_ASM form (validated: RLIB and F_RLIB both
+  pass again, SHA-1 back to 2fe82faf41babb3f422fdca23dfc7e75031621a5, matching phase 3's baseline).
+  Conclusion: rlib's ~148 remaining functions need the normal per-function workflow (write C,
+  gcc -fsyntax-only check, real WSL diff/build verify) -- no bulk header-borrowing shortcut,
+  even for functions whose logic is confirmed identical to an existing canonical implementation.
+
+Status: PSX extraction + all symbol renames validated byte-exact (RLIB + F_RLIB ✅). Ready to
+start real function-by-function decompilation of the ~148 remaining INCLUDE_ASM stubs.
+
+Real decompilation attempt (2026-08-01, reverted, lessons kept): tried e_room_fg.c
+(EntityRoomForeground) and started e_room_bg.c (RLIB_EntityBackgroundBlock). Both have a
+per-overlay rodata table (ObjInit-style struct array) driving the function. Manually decoded
+D_us_801816D8 (e_room_fg's table, 6 entries x 20 bytes) word-by-word from the raw .word dump in
+asm/us/st/rlib/data/6C4.data.s, and found the first 4 words of every entry matched EXACTLY the
+hardcoded `eRoomForegroundInit[]` array already sitting in the shared `src/st/e_room_fg.h`
+header (same pattern LIB uses: literally `#include "../e_room_fg.h"` with zero extra code).
+Despite the apparent exact match, swapping rlib's e_room_fg.c to use the header still produced a
+checksum failure (different SHA-1 than original). Reverted to the raw INCLUDE_ASM stub, back to
+clean baseline.
+**Important lesson**: manually verifying a data table's individual field VALUES match a
+known-good source is NOT sufficient proof of byte-exact compiled output -- things like which
+order the compiler lays out separate `static` sub-arrays (foregroundAnim1..5 in this case) in
+.rodata, alignment, or subtle struct-packing differences can still cause a mismatch invisible
+from reading hex dumps alone. Only a real WSL build+SHA1 compare is proof, never manual
+inspection, no matter how confident the byte-level analysis looks.
+**Pace note for future sessions**: unlike bo0's functions (mostly self-contained logic), a
+sizeable fraction of rlib's remaining functions are these `Entity*Init`-table-driven ones, each
+requiring manually decoding a per-overlay rodata table from a combined `data/*.data.s` file
+(not split per-symbol) before any C can be written -- this is much slower per function than
+typical decomp work. Realistic estimate: real progress on 148 functions will take multiple
+sessions, working in small verified batches (1-5 functions between each real WSL build+diff),
+not a single continuous push.
+Status at end of this attempt: 0 of the ~148 remaining functions completed and verified; all
+files back to their extraction-time raw INCLUDE_ASM baseline (RLIB + F_RLIB confirmed ✅, SHA-1
+2fe82faf41babb3f422fdca23dfc7e75031621a5). Only real completed work remains the 5 symbol
+renames from phase 5. Next session should pick a function WITHOUT an associated data table
+first (faster win) -- e_candle_table.c (EntityCandleTable), e_lock_camera.c
+(RLIB_EntityLockCamera), popup.c (BottomCornerText) are pure-logic functions already captured in
+this log's asm dumps above, good candidates to start with.
+
+Phase 6 (real decompilation) — first function done
+----------------------------------------------------
+2026-08-01: RLIB_EntityLockCamera (src/st/rlib/e_lock_camera.c) decompiled from scratch and
+confirmed byte-exact on WSL: SHA-1 2fe82faf41babb3f422fdca23dfc7e75031621a5 == disks/us/ST/RLIB/
+RLIB.BIN. RLIB checksum: ✅. Only pre-existing ❌ BO0 remains in the full dashboard (unrelated).
+
+Final source (extern refs to pre-existing D_us_801807A4/AC/B4 rodata, flat top-of-function local
+declarations, `hitboxWidth` always assigned before `hitboxHeight` in both if/else branches
+matching rcen/st0's e_lock_camera.c convention):
+see src/st/rlib/e_lock_camera.c in the repo.
+
+Took ~8 WSL round-trips. Key fixes along the way, useful for the next 147 functions:
+1. extern-declare pre-existing rodata symbols (D_us_801807A4/AC/B4) instead of redeclaring as
+   local static arrays -- a local redeclaration adds real .rodata bytes and shifts every later
+   symbol's linked address (caught via 128-byte drift in build/us/strlib.map).
+2. if/else branch layout must match the target's actual physical layout, not just be logically
+   equivalent -- verify via diff.py addresses.
+3. `(a << 3) + b` compiled as `or` instead of `addu` when b's *value range* (not declared type
+   width) is provably confined to the low 3 bits -- type tricks (u8/u16/s32) had zero effect.
+4. Two independent adjacent struct-field loads before a branch get freely reordered by GCC's
+   scheduler; this reordering was immune to every C-level trick tried (explicit locals in either
+   order, `!= 0` vs implicit truthy). Fix: restructure to flat top-of-function local declarations
+   matching st0/e_lock_camera.c's established style -- this changed the scheduler's behavior for
+   the whole function.
+5. The very last diff: an if/else pair (hitboxWidth/hitboxHeight) needed `hitboxWidth` assigned
+   FIRST in BOTH branches (matching rcen's literal source order), regardless of which branch has
+   the array-lookup value and which has the plain constant. Not derivable from first-principles
+   compiler reasoning -- found by diffing against rcen's already-matched e_lock_camera.c.
+6. Twice, `touch`ing the edited .c file wasn't enough to force ninja to recompile after a real
+   source change (identical SHA-1 across two genuinely different source versions) -- had to
+   `rm -f` the specific .o file before rebuilding.
+
+Lesson for future functions in this overlay: when an instruction-order mismatch survives 2+
+rounds of targeted C-level fixes, stop guessing from compiler theory and grep src/st/*/ for a
+same-named function already matched elsewhere (st0/, rcen/, lib/, etc.) -- copy its exact
+declaration/statement shape first.
+
+Function 2, first-try byte-exact: EntityCandleTable (e_candle_table.c). Found matching sibling
+in src/st/lib/e_candle_table.c, compared statement-by-statement against RLIB's own raw asm
+(not copied verbatim) -- caught two real order differences (hitboxOffY before hitboxOffX,
+reversed from lib; params before posY.i.hi -= 8, also reversed) plus different constants
+(entity IDs, newEntity->params values, hitboxOffY sign -- plausible mirroring artifact, RLIB is
+the reversed castle). Reused shared src/st/pad2_anim_debug.h snippet verbatim for the debug
+step==255 case. Gotcha: OVL_EXPORT(x) expands to RLIB_##x, but this function's original stub
+used the bare name EntityCandleTable (e_init.c's function-pointer table references it
+unprefixed) -- wrapping it caused an undefined-reference linker error. Always check the
+original INCLUDE_ASM(..., Name) stub's exact target name before deciding whether to wrap.
+
+Function 3, first-try: BottomCornerText (popup.c). ~26 other overlays' popup.c is literally just
+`#include "../popup.h"`, a genuinely shared implementation with no per-overlay exceptions.
+Copied verbatim, byte-exact on first build.
+
+Functions 4+5: EntityBackgroundBlock (e_room_bg.c) and EntityRoomForeground (e_room_fg.c).
+Both are ObjInit-table-driven. RLIB has its OWN distinct data table (D_us_801816D8 for room-fg,
+D_us_801806F4 for room-bg), not the generic shared header's hardcoded table -- confirmed no
+other "R"-prefixed sibling has RLIB's extra unconditional `self->rotate = 0x800;` in
+EntityBackgroundBlock. Fix: extern-declare the real D_us_ symbols directly (never redefine),
+hand-write the function body from raw asm instead of #include-ing the shared header.
+e_room_bg.c matched first build. e_room_fg.c needed one fix: the `if (params >= 5) { drawFlags
+|= 4; rotate = 0x800; }` block is nested INSIDE the `if (!step)` block (only runs on init
+frame), not a separate always-run statement after it -- an easy brace-nesting misread when
+porting from a reference header.
+
+Function 6: EntityIsNearPlayer helper in e_red_door.c (RLIB_EntityRedDoor itself, 870 lines,
+left as INCLUDE_ASM for now). Found verbatim in shared src/st/e_red_door.h, copied as-is,
+matched first try -- confirms a static helper can live alongside a sibling INCLUDE_ASM stub in
+the same translation unit with no dead-code-elimination issue.
+
+Function 7: EntitySoulStealOrb + EntityEnemyBlood (e_particles.c), both in one file/build test.
+First attempt hand-copied src/st/e_particles.h's bodies, swapping OVL_EXPORT(EInitObtainable)
+for extern EInit g_EInitObtainable (confirmed via raw asm the InitializeEntity call target has
+no RLIB prefix) -- compiled and linked fine but produced wrong bytes. Root cause (confirmed via
+build/us/strlib.map: EntitySoulStealOrb linked 128 bytes past its correct address): the header's
+three hardcoded data arrays (angles/sprite offsets/anim frames) were redefined locally instead
+of extern'd, even though the exact same bytes already exist as unnamed extracted data in
+asm/us/st/rlib/data/6C4.data.s (D_us_80181644/D_us_80181654/D_us_801816B4 -- confirmed
+byte-for-byte identical via manual dump). Fix: extern-declare the three D_us_ symbols directly
+and reference them by name instead of the header's array names. Byte-exact on the next build.
+General lesson: even when a shared header's data VALUES match byte-for-byte, always grep the
+overlay's own data/*.data.s for the address(es) referenced in the raw asm before trusting a
+shared header's array -- if it's already extracted as unnamed data there, it must be extern'd,
+never redefined.
+
+Status: 7/148 real functions decompiled and WSL byte-exact confirmed (RLIB_EntityLockCamera,
+EntityCandleTable, BottomCornerText, EntityBackgroundBlock, EntityRoomForeground,
+EntityIsNearPlayer, EntitySoulStealOrb, EntityEnemyBlood).
+Next candidates: e_explosion_puff_opaque.c (CreateExplosionPuff, 55 lines), e_stage_name.c
+(StageNamePopupDissolver, 134 lines). Larger deferred: collision.c, RLIB_EntityRedDoor.
