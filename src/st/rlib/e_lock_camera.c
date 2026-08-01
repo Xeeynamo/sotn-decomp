@@ -6,7 +6,7 @@ extern u8 D_us_801807A4[];
 extern u8 D_us_801807AC[];
 extern u16 D_us_801807B4[];
 
-void OVL_EXPORT(EntityLockCamera)(Entity* self) {
+void RLIB_EntityLockCamera(Entity* self) {
     u16* dataPtr;
     u16 params;
     u16 facingLeft;

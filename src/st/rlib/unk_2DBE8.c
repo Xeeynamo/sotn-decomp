@@ -13,7 +13,27 @@ INCLUDE_ASM("st/rlib/nonmatchings/unk_2DBE8", func_us_801AE534);
 
 INCLUDE_ASM("st/rlib/nonmatchings/unk_2DBE8", func_us_801AED4C);
 
-INCLUDE_ASM("st/rlib/nonmatchings/unk_2DBE8", func_us_801AEFE0);
+extern EInit D_us_80180688;
+extern u8 D_us_80181888[];
+
+void func_us_801AEFE0(Entity* self) {
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_80180688);
+        self->blendMode = BLEND_TRANSP;
+        PlaySfxPositional(0x673);
+        // fallthrough
+    case 1: {
+        Entity* fishheadEntity = self->ext.fishhead.fishheadEntity;
+        self->posX = fishheadEntity->posX;
+        self->posY = fishheadEntity->posY;
+        if (!AnimateEntity(D_us_80181888, self)) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+    }
+}
 
 INCLUDE_ASM("st/rlib/nonmatchings/unk_2DBE8", EntityFishheadFireball);
 

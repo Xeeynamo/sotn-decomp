@@ -4,7 +4,7 @@
 extern EInit g_EInitCommon;
 extern ObjInit D_us_801806F4[];
 
-void OVL_EXPORT(EntityBackgroundBlock)(Entity* self) {
+void RLIB_EntityBackgroundBlock(Entity* self) {
     ObjInit* objInit = &D_us_801806F4[self->params];
 
     if (!self->step) {
