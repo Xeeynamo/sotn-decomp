@@ -222,7 +222,7 @@ void func_us_801C2184_from_no0(Entity* self) {
         if (dy < 0x20)
             break;
     }
-    if (prim != NULL){
+    if (prim != NULL) {
         prim = prim->next;
     }
     dx = self->posX.i.hi - dy;
