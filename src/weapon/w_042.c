@@ -50,17 +50,19 @@ static void DebugInputWait(const char* msg) {
 
 void func_12A000_8017AC08(void) {
     RECT rect;
-    RECT rectDummy;
+    u16* dst;
     s16 color;
 
     color = (g_GameTimer >> 1) % 2 ? 0x039C : 0x199D;
-    D_8006EDCC[g_HandId][8] = color;
+    dst = (u16*)g_Clut + (g_HandId * N_WEAPON_PAL + 0x110) * COLORS_PER_PAL;
+    dst[8] = color;
 
     rect.x = 0;
     rect.y = 0xF1;
     rect.w = 0x100;
     rect.h = 3;
-    LoadImage(&rect, D_8006EDCC);
+    dst = (u16*)g_Clut + 0x1100;
+    LoadImage(&rect, (u_long*)dst);
 }
 
 static void EntityWeaponAttack(Entity* self) {
