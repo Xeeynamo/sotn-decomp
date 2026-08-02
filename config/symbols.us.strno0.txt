@@ -20,6 +20,7 @@ g_EInitHammer = 0x80180B70;
 g_EInitGurkha = 0x80180B88;
 g_EInitBlade = 0x80180BA0;
 g_EInitGorgon = 0x80180BD0;
+g_EInitElevator = 0x80180BF4;
 g_EInitMedusaHead1 = 0x80180C00;
 g_EInitMedusaHead2 = 0x80180C0C;
 UNK_Invincibility0 = 0x80181068;
