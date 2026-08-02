@@ -160,11 +160,9 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6015140, func_06015140);
 // _VoxCdLoad
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60155CC, func_060155CC);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60157CC, func_060157CC);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6015C70, func_06015C70);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6015E68, func_06015E68);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60164BC, func_060164BC);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6016614, func_06016614);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60166A8, func_060166A8);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6016644, func_06016644);
 
 void code2name(u32 code, u8* name);
 s32 func_06017F5C(u8*);
