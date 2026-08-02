@@ -60,6 +60,9 @@ typedef struct {
 // addition operation and is required for all other instances.
 #define WFACTORY2(id, param) FACTORY(((g_HandId + 1) << 12) + (id), (param))
 
+// PSP builds one overlay per weapon per hand, so each w*_*.c declares its own
+// entry points and overlay table rather than sharing the ones below.
+#ifndef VERSION_PSP
 // exported
 static void EntityWeaponAttack(Entity* self);
 static void LoadWeaponPalette(s32 clutIndex);
@@ -105,6 +108,8 @@ static Weapon header = {
     WeaponUnused30,     WeaponUnused34,    WeaponUnused38,
     WeaponUnused3C,
 };
+
+#endif // !VERSION_PSP
 
 #ifdef VERSION_PC
 #include "../pc/stages/overlay.h"
