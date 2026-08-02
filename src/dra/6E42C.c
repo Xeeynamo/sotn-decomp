@@ -207,7 +207,7 @@ void DoGravityJump(void) {
     SetPlayerStep(Player_HighJump);
     PLAYER.velocityY = FIX(-12);
     SetPlayerAnim(0x21);
-    g_Player.unk4A = 0;
+    g_Player.gravBootTimer = 0;
 }
 
 s16 g_SfxAttackGrunts[] = {

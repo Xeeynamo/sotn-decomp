@@ -335,7 +335,7 @@ bool MarDoCrash(void) {
         return 0;
     }
     subWpnID = MarCheckSubweapon(&subWpn, true, true);
-    g_Player.unk4A = subWpnID;
+    g_Player.gravBootTimer = subWpnID;
     g_Player.unk46 = 4;
     g_Player.unk4E = 0;
     PLAYER.velocityX = PLAYER.velocityY = 0;
