@@ -415,7 +415,8 @@ extern SaturnSpriteResource* DAT_06086388;
 extern s16 g_AlternateStatusHudSpriteOffsets[][2];
 extern u8 DAT_06085d3c[];
 
-void func_06076A04(void) {
+// func_06076A04
+void UpdateCompactStatusHud(void) {
     s32 sVar4;
     u16 sVar9;
     s32 iVar10;
@@ -598,7 +599,8 @@ void SetYH(Primitive* prim, s32 y, s32 h) {
     prim->y2 = prim->y3 = y + h - 1;
 }
 
-void func_060771D4(Primitive* prim, s32 arg1) {
+// func_060771D4
+void SetHudPrimSprite(Primitive* prim, s32 arg1) {
     u16* ptr;
 
     ptr = DAT_0605aec0[DAT_06086388->allocationIndex + arg1];
@@ -608,7 +610,8 @@ void func_060771D4(Primitive* prim, s32 arg1) {
         LookupTblNoToVram(DAT_06086388->flags + arg1) & 0x8FFF | 0x4000;
 }
 
-void func_06077260(Primitive* prim) {
+// func_06077260
+void UpdateMpBarPrim(Primitive* prim) {
     u32 uVar4;
     u16 sVar6;
     u16 sVar7;
@@ -642,7 +645,9 @@ extern u8 g_HudSpriteW[];
 extern u8 g_HudSpriteH[];
 extern u16 g_HudSpriteBlend[];
 
-void func_06077354(Primitive* prim) {
+// func_06077354
+// original name: set_heart_num
+void SetHeartsNum(Primitive* prim) {
     u32 digit;
     s32 i;
     s32 leading_zeros;
@@ -874,10 +879,10 @@ void StatusDispInit(void) {
             prim->drawMode = g_HudSpriteBlend[i];
             switch (i) {
             case 4:
-                func_060771D4(prim, 0);
+                SetHudPrimSprite(prim, 0);
                 break;
             case 5:
-                func_060771D4(prim, 1);
+                SetHudPrimSprite(prim, 1);
                 break;
             case 3:
                 prim->type = 0x1004;

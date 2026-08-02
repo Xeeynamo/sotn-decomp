@@ -27,7 +27,13 @@ func buildSaturn() error {
 	if err := buildSaturnObjects(); err != nil {
 		return err
 	}
-	return checkVersions(os.Stderr, []string{"saturn"})
+	if err := checkVersions(os.Stderr, []string{"saturn"}); err != nil {
+		return err
+	}
+	if err := copyBuildToExpectedFolder("saturn"); err != nil {
+		return fmt.Errorf("copy build to expected folder: %w", err)
+	}
+	return nil
 }
 
 func buildSaturnObjects() error {

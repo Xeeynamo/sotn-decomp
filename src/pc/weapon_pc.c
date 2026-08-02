@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "weapon.h"
 #include "pc.h"
+#include "stages/overlay.h"
 #include <string.h>
 
 // main variable
-u16 D_8006EDCC[2][N_WEAPON_PAL * PALETTE_LEN];
+u16 D_8006EDCC[2][N_WEAPON_PAL * COLORS_PER_PAL];
 
 void EntityWeaponAttackDummy(Entity* self) { NOT_IMPLEMENTED; }
 s32 func_ptr_80170004Dummy(Entity* self) { NOT_IMPLEMENTED; }
@@ -47,89 +48,40 @@ Weapon D_8017D000 = {
     func_ptr_80170024Dummy,
     func_ptr_80170028Dummy,
 };
-static Weapon dummy_header = {
-    EntityWeaponAttackDummy,
-    func_ptr_80170004Dummy,
-    func_ptr_80170008Dummy,
-    func_ptr_8017000CDummy,
-    func_ptr_80170010Dummy,
-    func_ptr_80170014Dummy,
-    GetWeaponIdDummy,
-    LoadWeaponPaletteDummy,
-    EntityWeaponShieldSpellDummy,
-    func_ptr_80170024Dummy,
-    func_ptr_80170028Dummy,
-};
 
-extern Weapon w_000_header;
-extern Weapon w_002_header;
-extern Weapon w_007_header;
-extern Weapon w_012_header;
-extern Weapon w_034_header;
-extern Weapon w_037_header;
-extern Weapon w_041_header;
-extern Weapon w_046_header;
-extern Weapon w_051_header;
-extern Weapon w_052_header;
-Weapon* g_Weapons[] = {
-    &w_000_header, &dummy_header, &w_002_header, &dummy_header, &dummy_header,
-    &dummy_header, &dummy_header, &w_007_header, &dummy_header, &dummy_header,
-    &dummy_header, &dummy_header, &w_012_header, &dummy_header, &dummy_header,
-    &dummy_header, &dummy_header, &dummy_header, &dummy_header, &dummy_header,
-    &dummy_header, &dummy_header, &dummy_header, &dummy_header, &dummy_header,
-    &dummy_header, &dummy_header, &dummy_header, &dummy_header, &dummy_header,
-    &dummy_header, &dummy_header, &dummy_header, &dummy_header, &w_034_header,
-    &dummy_header, &dummy_header, &w_037_header, &dummy_header, &dummy_header,
-    &dummy_header, &w_041_header, &dummy_header, &dummy_header, &dummy_header,
-    &dummy_header, &w_046_header, &dummy_header, &dummy_header, &dummy_header,
-    &dummy_header, &w_051_header, &w_052_header, &dummy_header, &dummy_header,
-    &dummy_header, &dummy_header, &dummy_header, &dummy_header,
-};
+void HandleWeaponPrg(unsigned handId, unsigned weaponId) {
+    char name[16];
 
-SpriteParts* g_Animset[1];
-
-int readSubsetToBuf(char* filename, char* dest, size_t start, size_t size) {
-    FILE* file = fopen(filename, "rb");
-
-    if (file == NULL) {
-        printf("Failed to open file");
-        return 1;
+    if (handId >= 2) {
+        ERRORF("hand ID %d not valid", handId);
+        return;
     }
-
-    // seek to target position
-    fseek(file, start, SEEK_SET);
-
-    // Read the file into the buffer
-    size_t read_size = fread(dest, 1, size, file);
-    if (read_size != size) {
-        printf("Failed to read file");
-        fclose(file);
-        return 1;
+    snprintf(name, sizeof(name), "w%d_%03d", handId, weaponId);
+    if (!LoadWeaponOverlay(name, handId, handId ? &D_8017D000 : &D_8017A000)) {
+        ERRORF("weapon '%s' was not loaded", name);
+        abort();
     }
-
-    if (ferror(file)) {
-        printf("Error reading file");
-        return 1;
-    } else if (feof(file)) {
-        printf("End of file reached\n");
-        return 1;
-    }
-
-    fclose(file);
-
-    return 0;
 }
 
-void HandleWeapon0Prg(int fileId) {
-    memcpy(&D_8017A000, g_Weapons[fileId], sizeof(Weapon));
-}
-
-void HandleWeapon0Chr(int fileId) {
+void HandleWeaponChr(unsigned handId, unsigned weaponId) {
     const int Width = 256;
     const int Height = 128;
     const int PixLen = Width * Height / 2;
     const int EntryLen = 0x3000 + PixLen;
-    FileReadToBuf(
-        "disks/us/BIN/WEAPON0.BIN", &g_Pix[0], fileId * EntryLen, PixLen);
-    LoadTPage(&g_Pix[0], 0, 0, 0x240, 0x100, Width, Height);
+    char path[32];
+
+    snprintf(path, sizeof(path), "disks/us/BIN/WEAPON%d.BIN", handId);
+    switch (handId) {
+    case 0:
+        FileReadToBuf(path, g_Pix[0], weaponId * EntryLen, PixLen);
+        LoadTPage(g_Pix[0], 0, 0, 0x240, 0x100, Width, Height);
+        break;
+    case 1:
+        FileReadToBuf(path, g_Pix[2], weaponId * EntryLen, PixLen);
+        LoadTPage(g_Pix[2], 0, 0, 0x240, 0x180, Width, Height);
+        break;
+    default:
+        ERRORF("hand ID %d not valid", handId);
+        break;
+    }
 }

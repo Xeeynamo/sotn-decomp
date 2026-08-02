@@ -193,3 +193,6 @@ _D_060CEE6C = 0x060CEE6C;
 _D_060CEEDC = 0x060CEEDC;
 _func_060BD4EC = 0x060BD4EC;
 _func_060BB90C = 0x060BB90C;
+_g_RicComboButtons = 0x060CF058;
+_ric_anim_stop_run = 0x060BFC30;
+_ric_subweapons_def = 0x060BEF36;

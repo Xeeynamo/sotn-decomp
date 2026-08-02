@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "inc_asm.h"
+#include "sattypes.h"
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DC040, func_060DC040);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DC1A8, func_060DC1A8);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DC328, func_060DC328);
@@ -72,7 +73,10 @@ INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E49D4, func_060E49D4);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E49FC, func_060E49FC);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E56C8, func_060E56C8);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E57E0, func_060E57E0);
-INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E5824, func_060E5824);
+void func_060E5824(void) {
+    g_Player.padSim = 0x1000;
+    g_Player.demo_timer = 1;
+}
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E5844, func_060E5844);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E5870, func_060E5870);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E5C74, func_060E5C74);

@@ -111,7 +111,7 @@ void InitRoom(void) {
     SetCanRevealMap();
     if (g_CurrentRoom.unk4 < 0x50) {
         D_801375BC.def =
-            (RoomLoadDef*)func_0606D804(g_CurrentRoom.stageID & 0xDF);
+            (RoomLoadDef*)GetRoomLoadDefTable(g_CurrentRoom.stageID & 0xDF);
         D_801375BC.def =
             (RoomLoadDef*)((u8*)D_801375BC.def + g_CurrentRoom.unk4 * 6 + 4);
     }
@@ -820,7 +820,13 @@ void func_800FAF44(bool isAccessory) {
     }
 }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6074048, func_06074048);
+extern s32 DAT_06086210;
+void func_06074048(u8 param_1) {
+    DAT_06086210 = 0;
+    if (param_1 != 0) {
+        DAT_06086210 = 1;
+    }
+}
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6074068, func_06074068);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60740F8, func_060740F8);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6074278, SetVdp2DisplayMode);

@@ -8,7 +8,7 @@ extern LayoutEntity* entityLayoutHorizontal[];
 extern RoomDef rooms_layers[];
 extern u_long** gfxBanks[];
 
-static AbbreviatedOverlay OVL_EXPORT(Overlay) = {
+AbbreviatedOverlay OVL_EXPORT(Overlay) = {
     .Update = Update,
     .HitDetection = HitDetection,
     .UpdateRoomPosition = UpdateRoomPosition,
