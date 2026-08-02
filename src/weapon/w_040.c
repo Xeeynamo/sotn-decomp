@@ -2,24 +2,82 @@
 // Weapon ID #40. Used by weapons:
 // Monster vial 1
 #include "weapon_private.h"
-extern u16* g_WeaponCluts[];
-extern s32 g_HandId;
-#include "shared.h"
 #include "gen/w_040_1.h"
 #include "gen/w_040_2.h"
 #define g_Animset w_040_1
 #define g_Animset2 w_040_2
 #include "sfx.h"
 
-extern AnimationFrame D_11C000_8017A724[];
-extern AnimationFrame D_11C000_8017A748[];
-extern AnimationFrame D_11C000_8017A7DC[];
-extern AnimationFrame D_11C000_8017A7B8[];
-extern AnimationFrame D_11C000_8017A804[];
-extern AnimationFrame D_11C000_8017A80C[];
-extern FrameProperty D_11C000_8017A844[];
-extern s32 D_11C000_8017A85C[];
-extern s32 D_11C000_8017B540;
+static u16 pal_0[N_ARRAY_PAL][COLORS_PER_PAL] = {
+    {0x0000, 0x6B5D, 0x1ABD, 0x05BA, 0x0091, 0x0008, 0x0004, 0x0400, 0x1084,
+     0x2120, 0x1FFF, 0x01A1, 0x0E64, 0x306B, 0x2D6B, 0x77BD},
+    {0x0000, 0x7C00, 0x7C00, 0x0017, 0x0013, 0x0010, 0x000C, 0x7C00, 0x7C00,
+     0x00BF, 0x015F, 0x01FF, 0x131F, 0x2FFF, 0x4FFF, 0x7FFF},
+    {0x0000, 0xA4C6, 0xA8E7, 0xAD29, 0xB16B, 0xB5AD, 0xB9CE, 0xBDEF, 0xC210,
+     0xC631, 0xCA52, 0xCE73, 0xD294, 0xD6B5, 0xDAD6, 0xE2F6},
+    {0x0000, 0x1C65, 0x2065, 0x2886, 0x30A7, 0x34C8, 0x3CE9, 0x450A, 0x4D2B,
+     0x558C, 0x5E0E, 0x6670, 0x6EF1, 0x7753, 0x7FD5, 0x7FFF},
+    {0x0000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000,
+     0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000},
+    {0x0000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000,
+     0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000},
+    {0x0000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000,
+     0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000},
+    {0x0000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000,
+     0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000},
+    {0x0000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000,
+     0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000},
+    {0x0000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000,
+     0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000},
+    {0x0000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000,
+     0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000},
+    {0x0000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000,
+     0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000},
+    {0x0000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000,
+     0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000},
+    {0x0000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000,
+     0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000},
+    {0x0000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000,
+     0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000},
+    {0x0000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000,
+     0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000},
+    {0x0000, 0x8000, 0x8000, 0x8000, 0x0001, 0x8000, 0x8000, 0x8000, 0x8000,
+     0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x8000, 0x0400}};
+static AnimationFrame anim_0[] = {
+    POSE(2, 0x06, 1), POSE(2, 0x07, 1), POSE(2, 0x08, 1),
+    POSE(2, 0x09, 1), POSE(2, 0x0A, 1), POSE(2, 0x0B, 1),
+    POSE(2, 0x0C, 1), POSE(2, 0x0D, 1), POSE_LOOP(0)};
+static AnimationFrame anim_1[] = {
+    POSE(17, 0x01, 1), POSE(4, 0x02, 1),  POSE(1, 0x11, 1), POSE(1, 0x0F, 2),
+    POSE(10, 0x0E, 2), POSE(4, 0x0F, 2),  POSE(3, 0x10, 2), POSE(3, 0x11, 1),
+    POSE(3, 0x02, 1),  POSE(2, 0x03, 1),  POSE(8, 0x04, 1), POSE(15, 0x05, 1),
+    POSE(3, 0x02, 1),  POSE(2, 0x03, 1),  POSE(8, 0x04, 1), POSE(15, 0x05, 1),
+    POSE(3, 0x02, 1),  POSE(2, 0x03, 1),  POSE(8, 0x04, 1), POSE(15, 0x05, 1),
+    POSE(8, 0x02, 1),  POSE(16, 0x01, 1), POSE(3, 0x02, 1), POSE(2, 0x11, 1),
+    POSE(2, 0x0F, 2),  POSE(2, 0x0E, 2),  POSE(8, 0x0F, 2), POSE_END};
+static AnimationFrame anim_2[] = {
+    POSE(1, 0x12, 3), POSE(1, 0x13, 3), POSE(1, 0x14, 3),
+    POSE(1, 0x15, 3), POSE(1, 0x16, 3), POSE(1, 0x17, 3),
+    POSE(1, 0x18, 3), POSE(1, 0x19, 3), POSE_LOOP(0)};
+static AnimationFrame anim_3[] = {
+    POSE(2, 0x1B, 5), POSE(1, 0x21, 5), POSE(2, 0x1C, 5), POSE(1, 0x1D, 5),
+    POSE(1, 0x1E, 5), POSE(1, 0x1F, 5), POSE(1, 0x20, 5), POSE(1, 0x1C, 5),
+    POSE(1, 0x21, 5), POSE_END};
+static AnimationFrame anim_4[] = {POSE(128, 0x1A, 0), POSE_END};
+static AnimationFrame anim_5[] = {
+    POSE(10, 0x0E, 2), POSE(1, 0x0F, 2), POSE(1, 0x11, 1), POSE(4, 0x02, 1),
+    POSE(4, 0x01, 1),  POSE(2, 0x0D, 1), POSE(2, 0x0C, 1), POSE(2, 0x0B, 1),
+    POSE(2, 0x0A, 1),  POSE(2, 0x09, 1), POSE(2, 0x08, 1), POSE(2, 0x07, 1),
+    POSE(2, 0x06, 1),  POSE_LOOP(5)};
+static FrameProperty hitboxes[] = {
+    {0, 0, 0, 0},  {0, 1, 5, 17}, {-2, 7, 10, 11},
+    {4, 1, 10, 4}, {0, 0, 3, 3},  {-63, -63, 0, 0}};
+static s32 speed_mod[] = {FIX(0.875), FIX(1), FIX(0.75), FIX(1.125)};
+static u16* g_WeaponCluts[] = {pal_0};
+static s32 g_HandId = HAND_ID;
+static s32 D_11C000_8017B540;
+
+#include "shared.h"
 
 void func_11C000_8017AC14(void) {
     RECT rect;
@@ -56,11 +114,11 @@ static void EntityWeaponAttack(Entity* self) {
         self->zPriority = PLAYER.zPriority + 2;
         self->facingLeft = PLAYER.facingLeft;
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
-        self->anim = D_11C000_8017A804;
+        self->anim = anim_4;
         self->posY.i.hi -= 4;
 
         D_11C000_8017B540 %= 4;
-        SetSpeedX(D_11C000_8017A85C[D_11C000_8017B540]);
+        SetSpeedX(speed_mod[D_11C000_8017B540]);
         self->velocityY = -FIX(2.5);
         g_Player.timers[10] = 4;
         D_11C000_8017B540++;
@@ -73,7 +131,7 @@ static void EntityWeaponAttack(Entity* self) {
         g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi, &col, 0);
         if (col.effects & EFFECT_SOLID) {
             self->posY.i.hi += col.unk18;
-            self->anim = D_11C000_8017A7DC;
+            self->anim = anim_3;
             self->poseTimer = 0;
             self->pose = 0;
             self->blendMode = BLEND_TRANSP | BLEND_ADD;
@@ -126,7 +184,7 @@ s32 func_ptr_80170004(Entity* self) {
         self->facingLeft = (self->facingLeft + 1) & 1;
         self->flags = FLAG_POS_CAMERA_LOCKED;
         self->zPriority = self->ext.weapon.parent->zPriority - 2;
-        self->anim = D_11C000_8017A724;
+        self->anim = anim_0;
         self->drawFlags |= ENTITY_SCALEY | ENTITY_SCALEX;
         self->scaleY = 0;
         self->scaleX = 0;
@@ -138,7 +196,7 @@ s32 func_ptr_80170004(Entity* self) {
         self->scaleX += 4;
         if (self->scaleX >= 0x100) {
             self->scaleX = 0x100;
-            self->anim = D_11C000_8017A748;
+            self->anim = anim_1;
             self->pose = 0;
             self->poseTimer = 0;
             self->ext.weapon.equipId =
@@ -159,7 +217,7 @@ s32 func_ptr_80170004(Entity* self) {
             }
         }
         if (self->poseTimer < 0) {
-            self->anim = D_11C000_8017A80C;
+            self->anim = anim_5;
             self->pose = 0;
             self->poseTimer = 0;
             g_api.PlaySfx(SFX_VO_ALU_PAIN_A);
@@ -181,7 +239,7 @@ s32 func_ptr_80170004(Entity* self) {
         self->scaleY = self->scaleX;
         break;
     }
-    g_api.UpdateAnim(D_11C000_8017A844, NULL);
+    g_api.UpdateAnim(hitboxes, NULL);
     func_11C000_8017AC14();
 }
 
@@ -198,7 +256,7 @@ static void func_ptr_80170008(Entity* self) {
         self->palette = self->ext.weapon.parent->palette;
         self->flags = FLAG_POS_CAMERA_LOCKED;
         self->zPriority = self->ext.weapon.parent->zPriority - 2;
-        self->anim = D_11C000_8017A724;
+        self->anim = anim_0;
         self->posY.i.hi -= 0xA;
         var_a1 = 0x18;
         if (self->facingLeft == 0) {
@@ -206,7 +264,7 @@ static void func_ptr_80170008(Entity* self) {
         }
         self->posX.i.hi = var_a1 + self->posX.i.hi;
         SetSpeedX(-FIX(2.5));
-        self->anim = D_11C000_8017A7B8;
+        self->anim = anim_2;
         self->ext.weapon.equipId = self->ext.weapon.parent->ext.weapon.equipId;
         self->attackElement |= ELEMENT_FIRE;
         SetWeaponProperties(self, 0);
@@ -219,7 +277,7 @@ static void func_ptr_80170008(Entity* self) {
         }
     }
 
-    g_api.UpdateAnim(D_11C000_8017A844, NULL);
+    g_api.UpdateAnim(hitboxes, NULL);
 }
 
 static void func_ptr_8017000C(Entity* self) {
@@ -229,7 +287,7 @@ static void func_ptr_8017000C(Entity* self) {
         self->palette = self->ext.weapon.parent->palette;
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
         self->zPriority = self->ext.weapon.parent->zPriority + 2;
-        self->anim = D_11C000_8017A7DC;
+        self->anim = anim_3;
         self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->posY.i.hi += 0x10;
         self->step++;
