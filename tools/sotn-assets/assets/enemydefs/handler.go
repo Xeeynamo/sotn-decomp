@@ -44,7 +44,6 @@ type enemyRawEntry struct {
 }
 
 type enemyModel struct {
-	ID                   string   `yaml:"id"`
 	Name                 string   `yaml:"name"`
 	HitPoints            int16    `yaml:"hit_points"`
 	Attack               int16    `yaml:"attack"`
@@ -129,15 +128,16 @@ func (h *handler) Build(e assets.BuildArgs) error {
 	if err != nil {
 		return err
 	}
-	entries, err := normalizeEntries(serializedEntries, expectedCount)
-	if err != nil {
-		return fmt.Errorf("invalid enemy definitions in %s: %w", inFileName, err)
+	if len(serializedEntries) != expectedCount {
+		return fmt.Errorf(
+			"invalid enemy definitions in %s: got %d entries, expected %d",
+			inFileName, len(serializedEntries), expectedCount)
 	}
 
 	var sb strings.Builder
 	sb.WriteString("// clang-format off\n")
 	platform := sotn.GetPlatform()
-	for i, entry := range entries {
+	for i, entry := range serializedEntries {
 		name, err := formatName(entry.Name, platform)
 		if err != nil {
 			return fmt.Errorf("enemy %#x name: %w", i, err)
@@ -227,7 +227,6 @@ func parse(
 			return nil, fmt.Errorf("enemy %#x name: %w", i, err)
 		}
 		entries[i] = enemyModel{
-			ID:                   fmt.Sprintf("0x%03X", i),
 			Name:                 name,
 			HitPoints:            raw.HitPoints,
 			Attack:               raw.Attack,
@@ -247,41 +246,6 @@ func parse(
 			HitboxWidth:          raw.HitboxWidth,
 			HitboxHeight:         raw.HitboxHeight,
 			Flags:                raw.Flags,
-		}
-	}
-	return entries, nil
-}
-
-func normalizeEntries(
-	serialized []enemyModel,
-	expectedCount int,
-) ([]enemyModel, error) {
-	if len(serialized) != expectedCount {
-		return nil, fmt.Errorf(
-			"got %d entries, expected %d",
-			len(serialized), expectedCount)
-	}
-
-	entries := make([]enemyModel, expectedCount)
-	seen := make([]bool, expectedCount)
-	for _, entry := range serialized {
-		index, err := strconv.ParseUint(entry.ID, 0, 16)
-		if err != nil {
-			return nil, fmt.Errorf("invalid id %q: %w", entry.ID, err)
-		}
-		if index >= uint64(expectedCount) {
-			return nil, fmt.Errorf(
-				"id %q is outside [0, %#x)", entry.ID, expectedCount)
-		}
-		if seen[index] {
-			return nil, fmt.Errorf("duplicate id %q", entry.ID)
-		}
-		seen[index] = true
-		entries[index] = entry
-	}
-	for index, present := range seen {
-		if !present {
-			return nil, fmt.Errorf("missing id 0x%03X", index)
 		}
 	}
 	return entries, nil

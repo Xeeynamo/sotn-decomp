@@ -69,7 +69,6 @@ func TestParseEnemyDefs(t *testing.T) {
 	require.NoError(t, err)
 	require.Len(t, entries, defaultEntryCount)
 	require.Equal(t, enemyModel{
-		ID:                   "0x000",
 		Name:                 "Test",
 		HitPoints:            42,
 		Attack:               10,
@@ -90,7 +89,6 @@ func TestParseEnemyDefs(t *testing.T) {
 		HitboxHeight:         24,
 		Flags:                0xAA00D410,
 	}, entries[0])
-	require.Equal(t, "0x18F", entries[defaultEntryCount-1].ID)
 }
 
 func TestParseEnemyDefsRejectsInvalidRanges(t *testing.T) {
@@ -127,7 +125,6 @@ func TestBuildEnemyDefs(t *testing.T) {
 	entries := make([]enemyModel, defaultEntryCount)
 	for i := range entries {
 		entries[i] = enemyModel{
-			ID:            "0x" + formatIndex(i),
 			AttackElement: []string{},
 			Weaknesses:    []string{},
 			Strengths:     []string{},
@@ -138,7 +135,6 @@ func TestBuildEnemyDefs(t *testing.T) {
 		}
 	}
 	entries[6] = enemyModel{
-		ID:                   "0x006",
 		Name:                 "Test",
 		HitPoints:            42,
 		Attack:               10,
@@ -180,18 +176,24 @@ func TestBuildEnemyDefs(t *testing.T) {
 	)
 }
 
-func TestNormalizeEntriesRejectsInvalidIDs(t *testing.T) {
-	entries := make([]enemyModel, defaultEntryCount)
-	for i := range entries {
-		entries[i].ID = "0x" + formatIndex(i)
-	}
+func TestBuildEnemyDefsRejectsWrongEntryCount(t *testing.T) {
+	assetDir := filepath.Join(t.TempDir(), "assets")
+	srcDir := filepath.Join(t.TempDir(), "src")
+	name := "test/enemydefs"
 
-	entries[1].ID = entries[0].ID
-	_, err := normalizeEntries(entries, defaultEntryCount)
-	require.ErrorContains(t, err, "duplicate id")
+	serialized, err := yaml.Marshal(make([]enemyModel, defaultEntryCount-1))
+	require.NoError(t, err)
+	require.NoError(t, os.MkdirAll(
+		filepath.Dir(assetPath(assetDir, name)), 0o755))
+	require.NoError(t, os.WriteFile(
+		assetPath(assetDir, name), serialized, 0o644))
 
-	_, err = normalizeEntries(entries[:defaultEntryCount-1], defaultEntryCount)
-	require.ErrorContains(t, err, "expected 400")
+	err = Handler.Build(assets.BuildArgs{
+		AssetDir: assetDir,
+		SrcDir:   srcDir,
+		Name:     name,
+	})
+	require.ErrorContains(t, err, "got 399 entries, expected 400")
 }
 
 func TestEntryCount(t *testing.T) {
@@ -234,13 +236,4 @@ func TestFormattingAndFallbacks(t *testing.T) {
 	pspName, err := formatName("Aé", sotn.PlatformPSP)
 	require.NoError(t, err)
 	require.Equal(t, `"\x21\xA0\xFF"`, pspName)
-}
-
-func formatIndex(index int) string {
-	const digits = "0123456789ABCDEF"
-	return string([]byte{
-		digits[index>>8&0xF],
-		digits[index>>4&0xF],
-		digits[index&0xF],
-	})
 }
