@@ -99,6 +99,7 @@ segments:
       - [0x5A6B8, .rodata, rno0_psp/e_thornweed_corpseweed]
       - { start: 0x5A700, type: .bss, vram: 0x09291D80, name: rno0/create_entity }
       - { start: 0x5A700, type: bss, vram: 0x09291DA0, name: 5A700 }
+      - [0x5A7B0, .bss, rno0_psp/st_init]
       - [0x5A9A8, .bss, rno0/e_breakable]
       - [0x5A9B8, .bss, rno0/e_room_bg]
       - [0x5AA80, .bss, rno0/lock_camera]
