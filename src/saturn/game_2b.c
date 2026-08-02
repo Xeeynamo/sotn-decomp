@@ -1049,7 +1049,8 @@ void ReplaceBreakableWithItemDrop(Entity* self) {
     self->step = 0;
 }
 
-void func_0607B604(Entity* entity) {
+// func_0607B604
+void SyncSpriteObjectPosUnchecked(Entity* entity) {
     SpriteObject* temp = entity->unk0;
 
     temp->posX = entity->posX.val;
@@ -1492,7 +1493,7 @@ extern s32 DAT_0608612c;
 extern s32 DAT_06086130;
 extern s32 DAT_06086134;
 
-void func_06008048();
+void ResetLayerColorCalc();
 void func_0600C818();
 
 // func_0607BE38
@@ -1501,7 +1502,7 @@ void InitScreenWaveEffect(void) {
     DAT_06086128 = 0x50000;
     DAT_0608612c = 0xF0000;
     DAT_06086130 = 0x0;
-    func_06008048();
+    ResetLayerColorCalc();
     SCL_SET_CCMD(0);
     SCL_SetColMixMode(0x7, 0x1);
     DAT_06086134 = 0x1F;
