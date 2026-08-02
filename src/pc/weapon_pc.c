@@ -4,9 +4,6 @@
 #include "stages/overlay.h"
 #include <string.h>
 
-// main variable
-u16 D_8006EDCC[2][N_WEAPON_PAL * COLORS_PER_PAL];
-
 void EntityWeaponAttackDummy(Entity* self) { NOT_IMPLEMENTED; }
 s32 func_ptr_80170004Dummy(Entity* self) { NOT_IMPLEMENTED; }
 void func_ptr_80170008Dummy(Entity* self) { NOT_IMPLEMENTED; }

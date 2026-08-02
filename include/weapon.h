@@ -26,7 +26,6 @@ typedef struct {
 
 #define N_WEAPON_PAL 24
 extern GAME_IMPORT u16 D_8006EDCC[2][N_WEAPON_PAL * COLORS_PER_PAL];
-#endif
 
 #ifdef FIX_UB
 // LoadWeaponPalette reads a predetermined amount of bytes from the weapon
@@ -36,4 +35,6 @@ extern GAME_IMPORT u16 D_8006EDCC[2][N_WEAPON_PAL * COLORS_PER_PAL];
 #define N_ARRAY_PAL N_WEAPON_PAL
 #else
 #define N_ARRAY_PAL
+#endif
+
 #endif
