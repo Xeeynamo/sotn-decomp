@@ -20,7 +20,7 @@ static void func_psp_0923C390(s32 posX, s32 posY) {
     frameBufferY = posY;
 }
 
-char* BlitChar(char* str, s32 xOffset, s32 posX, s32 posY) {
+const char* BlitChar(const char* str, s32 xOffset, s32 posX, s32 posY) {
     const u16 DOUBLE_SPACE = 0x8140;
 
     const int FontWidth = 12;

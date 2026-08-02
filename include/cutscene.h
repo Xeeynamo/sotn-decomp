@@ -56,7 +56,7 @@ enum ActorNameIndices {
 #if defined(VERSION_PC)
 u8* CutsceneAddrToPc(u32 psxAddr);
 #define CS_NEXT(ptr) (u16*)CutsceneAddrToPc(ptr)
-#define CS_PTR(ptr) CutsceneAddrToPc((u32)(ptr) + 0x100000)
+#define CS_PTR(ptr) CutsceneAddrToPc((u32)(uintptr_t)(ptr) + 0x100000)
 #elif defined(VERSION_PSP)
 #define CS_NEXT(ptr) (u8*)(ptr)
 #define CS_PTR(ptr) (u8*)(ptr)
