@@ -234,3 +234,4 @@ g_LayoutObjPosVertical = 0x09291D80;
 g_LayoutObjPosHorizontal = 0x09291D88;
 g_LayoutObjVertical = 0x09291D90;
 g_LayoutObjHorizontal = 0x09291D98;
+D_psp_E_UNK_ID1B = 0x09291E68;
