@@ -58,7 +58,7 @@ struct FileAsString {
 
 typedef struct FileUseContent {
     const char* filename;
-    const void* content;
+    void* content;
     size_t length;
     void* param;
 } FileLoad;
