@@ -3,7 +3,7 @@
 
 void ModeGame(void);
 void func_8011A9D8(void);
-void func_0606B6F8(void);
+void LoadSubDisplayFiles(void);
 void func_0606B760(void);
 void func_0606BB4C(void);
 void func_0606BEE4(void);
@@ -29,7 +29,7 @@ typedef struct {
 } SaturnGameApi;
 
 SaturnGameApi g_ApiInit = {
-    g_EquipDefs,   ModeGame,      func_8011A9D8, func_0606B6F8,
+    g_EquipDefs,   ModeGame,      func_8011A9D8, LoadSubDisplayFiles,
     func_0606B760, func_0606BB4C, func_0606BEE4, func_0606C064,
     func_06074470, func_0606C774, func_0606C594, InitStatsAndGear,
 };
