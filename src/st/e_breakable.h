@@ -22,13 +22,7 @@ void EntityBreakable(Entity* entity) {
         entity->drawFlags = ENTITY_DEFAULT;
         entity->rotate = ROT(0);
 #endif
-
-#if defined(SPLIT_SFX)
-            breakableType == 1 ? g_api.PlaySfx(SFX_GLASS_BREAK_C)
-                               : g_api.PlaySfx(SFX_CANDLE_HIT_WHOOSH_A);
-#else
             g_api.PlaySfx(SFX_BREAKABLE_HIT);
-#endif
             entityDropItem = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entityDropItem != NULL) {
                 CreateEntityFromCurrentEntity(E_EXPLOSION, entityDropItem);

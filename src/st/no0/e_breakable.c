@@ -30,5 +30,35 @@ static u8 blend_modes[] = {
     BLEND_TRANSP | BLEND_ADD};
 STATIC_PAD_DATA(12);
 
-#define SPLIT_SFX
-#include "../e_breakable.h"
+void EntityBreakable(Entity* entity) {
+    u16 breakableType = entity->params >> 12;
+    if (entity->step) {
+        AnimateEntity(g_eBreakableAnimations[breakableType], entity);
+        if (entity->hitParams) { // If the candle is destroyed
+            Entity* entityDropItem;
+#if defined(DO_ROTATION)
+        entity->drawFlags = ENTITY_DEFAULT;
+        entity->rotate = ROT(0);
+#endif
+            breakableType == 1 ? g_api.PlaySfx(SFX_GLASS_BREAK_C)
+                               : g_api.PlaySfx(SFX_CANDLE_HIT_WHOOSH_A);
+            entityDropItem = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (entityDropItem != NULL) {
+                CreateEntityFromCurrentEntity(E_EXPLOSION, entityDropItem);
+                entityDropItem->params =
+                    g_eBreakableExplosionTypes[breakableType];
+            }
+            ReplaceBreakableWithItemDrop(entity);
+        }
+    } else {
+        InitializeEntity(g_EInitBreakable);
+        entity->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 20;
+        entity->blendMode = blend_modes[breakableType];
+        entity->hitboxHeight = g_eBreakableHitboxes[breakableType];
+        entity->animSet = g_eBreakableanimSets[breakableType];
+#if defined(DO_ROTATION)
+            entity->drawFlags = ENTITY_ROTATE;
+            entity->rotate = ROT(180);
+#endif
+    }
+}
