@@ -44,7 +44,7 @@ void DopplegangerStepHighJump(void) {
     s32 var_s1;
 
     var_s1 = 0;
-    g_Dop.unk4A++;
+    g_Dop.gravBootTimer++;
     if (func_us_801C5650(2) != 0) {
         return;
     }
@@ -53,7 +53,7 @@ void DopplegangerStepHighJump(void) {
     case 0:
         if (g_Dop.vram_flag & TOUCHING_CEILING) {
             func_us_801C648C(3);
-            if (g_Dop.unk4A > 4) {
+            if (g_Dop.gravBootTimer > 4) {
                 DOPPLEGANGER.step_s = 2;
                 DOPPLEGANGER.rotate = 0x800;
                 DOPPLEGANGER.rotPivotX = 0;
@@ -64,7 +64,7 @@ void DopplegangerStepHighJump(void) {
             } else {
                 DOPPLEGANGER.step_s = 3;
             }
-        } else if (g_Dop.unk4A > 28) {
+        } else if (g_Dop.gravBootTimer > 28) {
             DOPPLEGANGER.step_s = 1;
             DOPPLEGANGER.velocityY = -0x60000;
             SetDopplegangerAnim(0x1B);
@@ -87,7 +87,7 @@ void DopplegangerStepHighJump(void) {
         DOPPLEGANGER.drawFlags |= ENTITY_ROTATE;
         DOPPLEGANGER.rotPivotX = 0;
         DOPPLEGANGER.rotPivotY = 2;
-        if (g_Dop.unk4A > 56) {
+        if (g_Dop.gravBootTimer > 56) {
             SetDopplegangerAnim(0x2D);
             DOPPLEGANGER.rotate = 0;
             DOPPLEGANGER.step_s = 4;
@@ -98,7 +98,7 @@ void DopplegangerStepHighJump(void) {
         }
         break;
     case 3:
-        if (g_Dop.unk4A > 20) {
+        if (g_Dop.gravBootTimer > 20) {
             var_s1 = 1;
         }
         break;
