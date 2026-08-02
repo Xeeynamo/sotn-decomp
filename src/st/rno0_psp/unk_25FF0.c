@@ -5,6 +5,8 @@ extern EInit g_EInitElevator;
 
 extern s32 D_pspeu_09291E68;
 
+u8 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags);
+
 static u8 anim0[] = {8, 3, 4, 4, 4,  5, 4,  6,  4,  7,  4,
                      8, 4, 9, 2, 10, 1, 11, 16, 10, -1, 0};
 static u8 anim1[] = {4, 10, 4, 9, 4, 8, 4,  7, 4, 6,  4,
@@ -237,4 +239,32 @@ void func_us_801C2184_from_no0(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_25FF0", EntityUnkId1B);
+void EntityUnkId1B(Entity* self) {
+    Entity* entity = &self[self->params];
+    u8 collision;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitElevator);
+        if (self->params & 0x10) {
+            self->animCurFrame = self->params & 15;
+            self->zPriority = 0x6A;
+            self->step = 2;
+        } else {
+            self->animCurFrame = 0;
+        }
+        break;
+
+    case 1:
+        self->posX.i.hi = entity->posX.i.hi;
+        if (self->params == 1) {
+            self->posY.i.hi = entity->posY.i.hi + 27;
+            collision = GetPlayerCollisionWith(self, 12, 8, 4);
+        } else {
+            self->posY.i.hi = entity->posY.i.hi - 32;
+            collision = GetPlayerCollisionWith(self, 12, 8, 6);
+        }
+        self->ext.cenElevator.playerCollision = collision;
+        break;
+    }
+}
