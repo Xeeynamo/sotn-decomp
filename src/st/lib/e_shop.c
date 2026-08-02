@@ -1233,7 +1233,7 @@ void func_us_801B15C0(Entity* self) {
     s16 tempVar;
     s32 i;
     u16 tempVar2;
-    char* ptr;
+    const char* ptr;
     s16 pad;
 
     switch (self->step) {
@@ -4773,7 +4773,7 @@ void func_us_801B8234(Entity* self) {
     u16 enemyId;
     u16 pads;
     u8* pix;
-    char* s3;
+    const char* s3;
     EnemyDef* enemyDef;
     s32 pad[12];
 

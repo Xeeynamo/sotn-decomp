@@ -14,7 +14,7 @@
 // PSP:func_psp_0924B458:Match
 // PSP:https://decomp.me/scratch/IWYbc
 void EntityCerberusGateDebug(Entity* self) {
-    typedef enum Step {
+    enum Step {
         INIT = 0,
         WAIT_FOR_INPUT = 1,
         DROP = 2,
