@@ -36,10 +36,6 @@ void EntityBreakable(Entity* entity) {
         AnimateEntity(g_eBreakableAnimations[breakableType], entity);
         if (entity->hitParams) { // If the candle is destroyed
             Entity* entityDropItem;
-#if defined(DO_ROTATION)
-        entity->drawFlags = ENTITY_DEFAULT;
-        entity->rotate = ROT(0);
-#endif
             breakableType == 1 ? g_api.PlaySfx(SFX_GLASS_BREAK_C)
                                : g_api.PlaySfx(SFX_CANDLE_HIT_WHOOSH_A);
             entityDropItem = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -56,9 +52,5 @@ void EntityBreakable(Entity* entity) {
         entity->blendMode = blend_modes[breakableType];
         entity->hitboxHeight = g_eBreakableHitboxes[breakableType];
         entity->animSet = g_eBreakableanimSets[breakableType];
-#if defined(DO_ROTATION)
-            entity->drawFlags = ENTITY_ROTATE;
-            entity->rotate = ROT(180);
-#endif
     }
 }
