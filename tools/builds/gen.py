@@ -435,7 +435,7 @@ def add_weapon_splat_config(nw: ninja_syntax.Writer, ver: str, splat_config):
 
     nw.build(
         rule="splat",
-        outputs=[ld_path],
+        outputs=[ld_path, undefined_funcs_auto_path, undefined_syms_auto_path],
         inputs=[entry.path],
         implicit=symbol_paths,
         variables={
@@ -595,7 +595,7 @@ def add_splat_config(nw: ninja_syntax.Writer, ver: str, file_name: str):
 
     nw.build(
         rule="splat",
-        outputs=[ld_path],
+        outputs=[ld_path, undefined_funcs_auto_path, undefined_syms_auto_path],
         inputs=[entry.path],
         implicit=symbol_paths,
         variables={"version": ver, "dynamic_symbols": dynamic_symbols},
