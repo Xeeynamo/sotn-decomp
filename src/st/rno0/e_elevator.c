@@ -3,7 +3,9 @@
 
 extern EInit g_EInitElevator;
 
-extern s32 D_pspeu_09291E68;
+#ifdef VERSION_PSP
+extern s32 E_ID(UNK_48);
+#endif
 
 u8 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags);
 

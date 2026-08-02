@@ -3,7 +3,9 @@
 
 extern EInit g_EInitElevator;
 
-extern s32 D_pspeu_09291E68;
+#ifdef VERSION_PSP
+extern s32 E_ID(UNK_48);
+#endif
 
 u8 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags);
 
@@ -81,11 +83,11 @@ void func_us_801C2184_from_no0(Entity* self) {
         self->zPriority = player->zPriority + 0xC;
 
         parent = (self - 1);
-        CreateEntityFromCurrentEntity(D_pspeu_09291E68, parent);
+        CreateEntityFromCurrentEntity(E_ID(UNK_48), parent);
         parent->params = 1;
 
         parent = (self - 2);
-        CreateEntityFromCurrentEntity(D_pspeu_09291E68, parent);
+        CreateEntityFromCurrentEntity(E_ID(UNK_48), parent);
         parent->params = 2;
 
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 12);
