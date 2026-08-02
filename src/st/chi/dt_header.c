@@ -9,7 +9,7 @@
 
 extern RoomHeader rooms[];
 extern s16** spriteBanks[];
-static u_long* cluts[];
+extern u_long* cluts[];
 extern RoomDef rooms_layers[];
 extern u_long** gfxBanks[];
 
@@ -52,7 +52,7 @@ static u16** PaletteCommand0[] = {
 };
 
 // D_801800E4
-static u_long* cluts[] = {
+u_long* cluts[] = {
     PaletteCommand0,
 };
 
