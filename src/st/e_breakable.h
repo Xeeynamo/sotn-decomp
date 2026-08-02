@@ -19,14 +19,8 @@ void EntityBreakable(Entity* entity) {
         if (entity->hitParams) { // If the candle is destroyed
             Entity* entityDropItem;
 #if defined(DO_ROTATION)
-#if defined(COND_ROTATION)
-            if (!breakableType) {
-#else
-            if (1) {
-#endif
-                entity->drawFlags = ENTITY_DEFAULT;
-                entity->rotate = ROT(0);
-            }
+        entity->drawFlags = ENTITY_DEFAULT;
+        entity->rotate = ROT(0);
 #endif
 
 #if defined(SPLIT_SFX)
@@ -50,14 +44,8 @@ void EntityBreakable(Entity* entity) {
         entity->hitboxHeight = g_eBreakableHitboxes[breakableType];
         entity->animSet = g_eBreakableanimSets[breakableType];
 #if defined(DO_ROTATION)
-#if defined(COND_ROTATION)
-        if (!breakableType) {
-#else
-        if (1) {
-#endif
             entity->drawFlags = ENTITY_ROTATE;
             entity->rotate = ROT(180);
-        }
 #endif
     }
 }
