@@ -2,5 +2,6 @@
 #include "rbo7.h"
 
 u16 PrizeDrops[] = {
-    ITEMDROP_SMALL_HEART, ITEMDROP_SMALL_HEART,
+    ITEMDROP_SMALL_HEART,
+    ITEMDROP_SMALL_HEART,
 };
