@@ -4,8 +4,11 @@
 #ifdef VERSION_PSP
 extern s32 E_ID(ID_40);
 #endif
-extern u16 D_us_80181AA8[][2];
-extern s32 D_us_80181AC8;
+static u16 D_us_80181AA8[][2] = {
+    {0x0337, 0x0338}, {0x0336, 0x0333}, {0x0334, 0x0335}, {0x0333, 0x0333},
+    {0x04CE, 0x04CF}, {0x04CA, 0x04CA}, {0x04CC, 0x04CB}, {0x04CA, 0x04CD},
+};
+s32 D_us_80181AC8 = 0;
 
 // This seems to be related to the Lesser Demon boss fight somehow, but not the
 // Lesser Demon itself.

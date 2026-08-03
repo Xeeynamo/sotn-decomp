@@ -10,8 +10,8 @@ extern Entity D_91E5084;
 extern s32 currentMusicId;
 extern s32 stopMusicFlag;
 extern s32 D_us_80181AC8;
-extern s32 D_us_80181ACC;
-extern s32 D_us_80181AD0;
+s32 D_us_80181ACC = 0;
+s32 D_us_80181AD0 = 0;
 
 // PSX symbols unused in code, but referenced in ASM so may be needed for
 // importing the data.

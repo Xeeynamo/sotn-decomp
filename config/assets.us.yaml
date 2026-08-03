@@ -509,16 +509,56 @@ files:
           - [0x8C, palette, pal_08C, 16]
           - [0xAC, palette, pal_0AC, 16]
           - [0xCC, paldef, palette_def]
-          - [0x19C, skip]
-          #- [0x1C4, layers, layers]
-          #- [0x5A4, gfx_banks, graphics_banks]
+          - [0x19C, layers, layers]
+          - [0x314, gfx_banks, graphics_banks]
           - [0x520, layout, entity_layouts]
           - [0x6C8, skip]
           - [0x2EC0, rooms, rooms]
           - [0x2F44, skip]
           - [0x3F68, cutscene, cutscene_data]
           - [0x4110, cutscene_events, cutscene_events]
-          - [0x4124, skip]
+          - [0x4124, cmpgfx, gfx_flying_zombie, 128, 128, 4, 0x15710] # unused
+          - [0x4FC8, cmpgfx, gfx_stage_name_jp_sm, 128, 128, 4] # unused
+          - [0x5294, cmpgfx, gfx_stage_name_jp_lg, 128, 128, 4]
+          - [0x5784, cmpgfx, gfx_lesser_demon_1, 128, 128, 4, 0x15750]
+          - [0x65F0, cmpgfx, gfx_lesser_demon_2, 128, 128, 4, 0x15750]
+          - [0x71D8, cmpgfx, gfx_lesser_demon_3, 128, 128, 4, 0x15750]
+          - [0x7E6C, cmpgfx, gfx_librarian_1, 128, 128, 4, 0x15870]
+          - [0x8B80, cmpgfx, gfx_librarian_2, 128, 128, 4, 0x15870]
+          - [0x9990, cmpgfx, gfx_librarian_3, 128, 128, 4, 0x15870]
+          - [0xA488, rawgfx, gfx_portrait_alucard, 48, 72, 8, 0x159B0]
+          - [0xB208, rawgfx, gfx_portrait_master_librarian, 48, 72, 8, 0x15BB0]
+          - [0xBF88, cmpgfx, gfx_spellbook_magic_tome_1, 128, 128, 4, 0x15DB0]
+          - [0xD2B4, cmpgfx, gfx_spellbook_magic_tome_2, 128, 128, 4, 0x15DB0]
+          - [0xDCA4, cmpgfx, gfx_dhuron, 128, 128, 4, 0x15FD0]
+          - [0xE71C, cmpgfx, gfx_explosion_1, 128, 128, 4]
+          - [0xF44C, cmpgfx, gfx_explosion_2, 128, 128, 4]
+          - [0x105F4, cmpgfx, gfx_thornweed_corpseweed_1, 128, 128, 4, 0x16190]
+          - [0x114F0, cmpgfx, gfx_thornweed_corpseweed_2, 128, 128, 4, 0x16190]
+          - [0x1227C, cmpgfx, gfx_reading_room_furniture, 128, 128, 4]
+          - [0x1299C, cmpgfx, gfx_flea_man_armor, 128, 128, 4, 0x163B0]
+          - [0x13468, cmpgfx, gfx_mudman, 128, 128, 4, 0x16410]
+          - [0x13E74, cmpgfx, gfx_skeleton, 128, 128, 4, 0x16290]
+          - [0x149D4, cmpgfx, gfx_breakable, 128, 128, 4, 0x162B0]
+          - [0x15388, cmpgfx, gfx_stage_name_en, 128, 128, 4]
+          - [0x15710, palette, pal_flying_zombie, 16] # 0x20A
+          - [0x15750, palette, pal_lesser_demon, 16] # 0x249
+          - [0x15870, palette, pal_librarian, 16] # 0x210
+          - [0x159B0, palette, pal_portrait_alucard, 16] # 0x220
+          - [0x15AB0, palette, D_80195AB0, 16] # unused
+          - [0x15BB0, palette, portrait_master_librarian, 16] # 0x228
+          - [0x15CB0, palette, D_80195CB0, 16] # unused
+          - [0x15DB0, palette, pal_spellbook, 16] # 0x25A
+          - [0x15FD0, palette, pal_dhuron, 16] # 0x200
+          - [0x16030, palette, pal_ectoplasm, 16] # 0x23E
+          - [0x16190, palette, pal_thornweed, 16] # 0x252
+          - [0x16210, palette, pal_corpseweed, 16] # 0x256
+          - [0x16290, palette, pal_skeleton, 16] # 0x26B
+          - [0x162B0, palette, pal_breakable, 16] # 0x26C
+          - [0x163B0, palette, pal_flea_man_armor, 16] # 0x274
+          - [0x16410, palette, pal_mudman, 16] # 0x277
+          - [0x16450, palette, D_80196450, 16] # unused
+          - [0x16470, skip]
   - target: disks/us/ST/MAD/MAD.BIN
     asset_path: assets/st/mad
     src_path: src/st/mad
