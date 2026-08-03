@@ -3,7 +3,7 @@
 //! Driven from tools/sotn-assets and config/assets.saturn.yaml
 
 use clap::{Parser, Subcommand};
-use saturn_assets::{audio, font};
+use saturn_assets::{audio, font, weapon};
 use std::path::PathBuf;
 use std::process::ExitCode;
 
@@ -22,6 +22,33 @@ enum Command {
     /// SD*.PCM music, mono and voice streams
     #[command(subcommand)]
     Audio(AudioCommand),
+    /// MAR_W / RIC_W / ALC_W secondary player CHR
+    #[command(subcommand)]
+    Weapon(WeaponCommand),
+}
+
+#[derive(Subcommand)]
+enum WeaponCommand {
+    /// Export the linear atlas and, with a PRG, the per-image sprite PNGs
+    Extract {
+        /// Character profile: maria, richter or alucard
+        character: String,
+        /// The retail MAR_W.CHR / RIC_W.CHR / ALC_W.CHR
+        chr_path: PathBuf,
+        output_dir: PathBuf,
+        /// The player PRG whose sprite tables partition this CHR. Without it
+        /// only the whole-file atlas is written.
+        #[arg(long)]
+        prg: Option<PathBuf>,
+    },
+    /// Reassemble the CHR from the atlas and the sprite PNGs
+    Rebuild { manifest: PathBuf, output: PathBuf },
+    /// Require a byte-identical no-edit rebuild
+    Verify {
+        manifest: PathBuf,
+        /// The retail CHR to compare against
+        chr_path: PathBuf,
+    },
 }
 
 #[derive(Subcommand)]
@@ -104,6 +131,29 @@ fn run(cli: Cli) -> saturn_assets::Result<()> {
             source_path,
         }) => {
             audio::verify(&manifest, &source_path)?;
+            println!("verify passed: exact retail match");
+        }
+        Command::Weapon(WeaponCommand::Extract {
+            character,
+            chr_path,
+            output_dir,
+            prg,
+        }) => {
+            let manifest = weapon::extract(&character, &chr_path, prg.as_deref(), &output_dir)?;
+            let images: usize = manifest.packages.iter().map(|p| p.images.len()).sum();
+            println!(
+                "{} bytes, {} package(s), {images} image record(s) -> {}",
+                manifest.source.size,
+                manifest.packages.len(),
+                output_dir.display()
+            );
+        }
+        Command::Weapon(WeaponCommand::Rebuild { manifest, output }) => {
+            let data = weapon::rebuild(&manifest, &output)?;
+            println!("wrote {} bytes -> {}", data.len(), output.display());
+        }
+        Command::Weapon(WeaponCommand::Verify { manifest, chr_path }) => {
+            weapon::verify(&manifest, &chr_path)?;
             println!("verify passed: exact retail match");
         }
     }

@@ -5,6 +5,8 @@ pub mod audio;
 pub mod font;
 pub mod image;
 pub mod wav;
+pub mod weapon;
+pub mod weapon_sheet;
 
 pub type Result<T> = std::result::Result<T, Error>;
 
