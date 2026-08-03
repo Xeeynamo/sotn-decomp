@@ -1516,6 +1516,9 @@ files:
           - [0x2C360, palette, D_us_801AC360, 16]
           - [0x2C740, skip]
   - target: disks/us/BOSS/RBO6/RBO6.BIN
+    asset_path: assets/boss/rbo6
+    src_path: src/boss/rbo6
+    splat_config_path: config/splat.us.borbo6.yaml
   - target: disks/us/BOSS/RBO7/RBO7.BIN
     asset_path: assets/boss/rbo7
     src_path: src/boss/rbo7
