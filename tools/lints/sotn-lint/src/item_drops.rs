@@ -44,7 +44,7 @@ lazy_static! {
 
 impl LineTransformer for ItemDropsTransformer {
     fn transform_line(&self, line: &str) -> String {
-        if line.contains("OVL_EXPORT(PrizeDrops)") && line.contains("= {") {
+        if line.contains("u16 PrizeDrops[]") && line.contains("= {") {
             IN_PRIZE_DROPS.with(|s| s.set(true));
         }
 
@@ -89,7 +89,7 @@ mod test {
         reset_state();
         let t = make_transformer();
         // from src/st/are/d_prize_drops.c
-        t.transform_line("u16 OVL_EXPORT(PrizeDrops)[] = {");
+        t.transform_line("u16 PrizeDrops[] = {");
         assert_eq!(
             t.transform_line("    0x000C, 0x0084, 0x0086, 0x0017,"),
             "    ITEMDROP_HEART_VESSEL, ITEMDROP_SHIELD_ROD, ITEMDROP_KNIGHT_SHIELD, ITEMDROP_LIFE_VESSEL,"
@@ -110,7 +110,7 @@ mod test {
     fn test_stops_replacing_after_closing_brace() {
         reset_state();
         let t = make_transformer();
-        t.transform_line("u16 OVL_EXPORT(PrizeDrops)[] = {");
+        t.transform_line("u16 PrizeDrops[] = {");
         t.transform_line("    0x000C,");
         t.transform_line("};");
         assert_eq!(t.transform_line("    0x000C,"), "    0x000C,");
@@ -121,7 +121,7 @@ mod test {
         reset_state();
         let t = make_transformer();
         // from src/st/cen/d_prize_drops.c and src/boss/rbo5/d_prize_drops.c
-        let line = "u16 OVL_EXPORT(PrizeDrops)[ZERO_LEN] = {};";
+        let line = "u16 PrizeDrops[ZERO_LEN] = {};";
         assert_eq!(t.transform_line(line), line);
         // state resets on };, so subsequent lines are not touched
         assert_eq!(t.transform_line("    0x000C,"), "    0x000C,");
@@ -132,7 +132,7 @@ mod test {
         reset_state();
         let t = make_transformer();
         // extern forward-declaration in e_collect.h — no `= {`, must not activate
-        t.transform_line("extern u16 OVL_EXPORT(PrizeDrops)[];");
+        t.transform_line("extern u16 PrizeDrops[];");
         assert_eq!(t.transform_line("    0x000C,"), "    0x000C,");
     }
 
@@ -141,7 +141,7 @@ mod test {
         reset_state();
         let t = make_transformer();
         // 0x18-0x7F are unused slots in ItemDrops
-        t.transform_line("u16 OVL_EXPORT(PrizeDrops)[] = {");
+        t.transform_line("u16 PrizeDrops[] = {");
         assert_eq!(t.transform_line("    0x0018,"), "    0x0018,");
     }
 
@@ -150,10 +150,27 @@ mod test {
         reset_state();
         let t = make_transformer();
         // from src/st/rare/d_prize_drops.c
-        t.transform_line("u16 OVL_EXPORT(PrizeDrops)[] = {");
+        t.transform_line("u16 PrizeDrops[] = {");
         assert_eq!(
             t.transform_line("    0x000C, 0x0017, 0x000C,"),
             "    ITEMDROP_HEART_VESSEL, ITEMDROP_LIFE_VESSEL, ITEMDROP_HEART_VESSEL,"
         );
+    }
+
+    #[test]
+    fn weird_linking_left_unchanged() {
+        reset_state();
+        let t = make_transformer();
+        // from src/boss/rbo0/e_boss_torch.c
+        t.transform_line("AnimateEntityFrame PrizeDrops[] = {");
+        assert_eq!(t.transform_line("    0x0018,"), "    0x0018,");
+    }
+
+    #[test]
+    fn saturn_drops_left_unchanged() {
+        reset_state();
+        let t = make_transformer();
+        // from src/saturn/rstage15/laydata.c
+        assert_eq!(t.transform_line("u16 g_RStage15PrizeDrops[] = {0x012C, 0x0000};"), "u16 g_RStage15PrizeDrops[] = {0x012C, 0x0000};");
     }
 }

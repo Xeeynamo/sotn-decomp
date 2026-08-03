@@ -6,6 +6,7 @@
 
 enum Palettes {
     PAL_NONE = 0,
+    PAL_SPELLBOOK = 0x25A,
     PAL_BREAKABLE = 0x26C,
 };
 

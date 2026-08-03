@@ -28,14 +28,17 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 		return fmt.Errorf("failed to extract graphics: %v", err)
 	}
 	// the data starts from the first GfxBank, not from the GfxBanks array
-	// we need to search the actual begin
+	// we need to search the actual begin. The array is laid out after the banks
+	// and every one of its entries points backwards into the bank data, so the
+	// array starts at the first word pointing inside the range already scanned.
+	// Note the first entry is not guaranteed to point to the first bank.
 	actualStart := baseStart
 	for {
 		var a psx.Addr
 		if err := binary.Read(r, binary.LittleEndian, &a); err != nil {
 			return fmt.Errorf("failed to extract graphics: %v", err)
 		}
-		if a == baseStart {
+		if a.InRange(baseStart, actualStart) {
 			break
 		}
 		actualStart = actualStart.Sum(4)
