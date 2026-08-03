@@ -9,6 +9,7 @@
 
 enum Palettes {
     PAL_NONE,
+    PAL_240 = 0x240,
 };
 
 enum EntityID {

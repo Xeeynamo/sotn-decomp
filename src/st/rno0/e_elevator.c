@@ -9,10 +9,12 @@ extern s32 E_ID(UNK_48);
 
 u8 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags);
 
-static u8 anim0[] = {8, 3, 4, 4, 4,  5, 4,  6,  4,  7,  4,
-                     8, 4, 9, 2, 10, 1, 11, 16, 10, -1, 0};
-static u8 anim1[] = {4, 10, 4, 9, 4, 8, 4,  7, 4, 6,  4,
-                     5, 4,  4, 4, 3, 2, 12, 4, 3, -1, 0};
+static AnimateEntityFrame anim0[] = {
+    {8, 3}, {4, 4},  {4, 5},  {4, 6},   {4, 7},  {4, 8},
+    {4, 9}, {2, 10}, {1, 11}, {16, 10}, POSE_END};
+static AnimateEntityFrame anim1[] = {
+    {4, 10}, {4, 9}, {4, 8},  {4, 7}, {4, 6},  {4, 5},
+    {4, 4},  {4, 3}, {2, 12}, {4, 3}, POSE_END};
 
 static s16 func_us_801C1F98(Primitive* prim, s16 dx) {
     prim->drawMode = DRAW_UNK02;
@@ -97,7 +99,7 @@ void func_us_801C2184_from_no0(Entity* self) {
             prim = &g_PrimBuf[primIndex];
             self->ext.cenElevator.prim = prim;
             prim->tpage = 0x12;
-            prim->clut = 0x240;
+            prim->clut = PAL_240;
             prim->u0 = prim->u2 = 0x28;
             prim->u1 = prim->u3 = 0x38;
             prim->v0 = prim->v1 = 0x28;
@@ -108,7 +110,7 @@ void func_us_801C2184_from_no0(Entity* self) {
             prim = prim->next;
             while (prim != NULL) {
                 prim->tpage = 0x12;
-                prim->clut = 0x240;
+                prim->clut = PAL_240;
                 prim->priority = 0x6A;
                 prim->drawMode = DRAW_HIDE;
                 prim = prim->next;
