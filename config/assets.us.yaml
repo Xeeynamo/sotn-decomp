@@ -1477,6 +1477,10 @@ files:
           - [0x2C740, skip]
   - target: disks/us/BOSS/RBO6/RBO6.BIN
   - target: disks/us/BOSS/RBO7/RBO7.BIN
+  - target: disks/us/BOSS/RBO8/RBO8.BIN
+    asset_path: assets/boss/rbo8
+    src_path: src/boss/rbo8
+    splat_config_path: config/splat.us.borbo8.yaml
   - target: disks/us/SERVANT/TT_000.BIN
     asset_path: assets/servant/tt_000
     src_path: src/servant/tt_000
