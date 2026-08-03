@@ -98,3 +98,26 @@ assets:
     output: build/saturn/assets/SD
     files:
       - SDF0.PCM
+  # secondary player chr. subweapons, spells and hit sparks
+  # 4bpp raw
+  - name: weapon-maria
+    kind: weapon
+    profile: maria
+    source: disks/saturn/MAR_W.CHR
+    prg: disks/saturn/MARIA.PRG
+    path: assets/saturn/weapon/MAR_W
+    output: build/saturn/assets/MAR_W.CHR
+  - name: weapon-richter
+    kind: weapon
+    profile: richter
+    source: disks/saturn/RIC_W.CHR
+    prg: disks/saturn/RICHTER.PRG
+    path: assets/saturn/weapon/RIC_W
+    output: build/saturn/assets/RIC_W.CHR
+  - name: weapon-alucard
+    kind: weapon
+    profile: alucard
+    source: disks/saturn/ALC_W.CHR
+    prg: disks/saturn/ALUCARD.PRG
+    path: assets/saturn/weapon/ALC_W
+    output: build/saturn/assets/ALC_W.CHR
