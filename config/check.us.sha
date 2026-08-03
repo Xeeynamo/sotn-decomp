@@ -43,7 +43,6 @@ c1284f0c662f3c8fdb8a7c17cebf8e5cf1d96c1b  build/us/F_WRP.BIN
 08c03da5abd58a0a9b410a58793b9579f9fec8c8  build/us/RARE.BIN
 99c55a487ec3c2ae4240f3c731fc6d2717579f73  build/us/F_RARE.BIN
 de0a202f1ed432e27202f3f191425ac50c3b0d18  build/us/RCAT.BIN
-fc92cd1ff43df1292fee52b3c0ea33c6f87cab58  build/us/F_RCAT.BIN
 9e9316194bdbd6abbce552347b97b03b224b77a0  build/us/RCEN.BIN
 effac20628ef5b341066f6eaba157b1f0f571ab5  build/us/F_RCEN.BIN
 82b75113cbef38660a266abe15ae5183a80633d9  build/us/RCHI.BIN
@@ -73,6 +72,8 @@ fe067af9b7adca08dc99b108129a0f45a7ad45cd  build/us/BO6.BIN
 c721a1d2bc6bdd9901801e792d23b5996d940b97  build/us/F_RBO3.BIN
 4794abe060a76673daeb8b039d59d1077ea81f4b  build/us/RBO5.BIN
 5d93b02a50401a98c3161bb5f0c6ebb36ff65c8e  build/us/F_RBO5.BIN
+6f80107a6fe58c0ec18ffd504c911f01ddfb3cfe  build/us/RBO8.BIN
+fc92cd1ff43df1292fee52b3c0ea33c6f87cab58  build/us/F_RBO8.BIN
 82dd4ae1c4e3dc0fd483a49e5e4ab4fc5e25ada7  build/us/TT_000.BIN
 326c9d2f9b9e2af678f5d63b30b31fba99ae75d4  build/us/TT_001.BIN
 4589bb04fe475439c6d6e9b7273a8971ad859b4d  build/us/TT_002.BIN
