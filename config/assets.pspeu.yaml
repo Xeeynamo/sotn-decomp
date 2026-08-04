@@ -896,6 +896,9 @@ files:
     splat_config_path: config/splat.pspeu.strno0.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rno1.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rno2.bin
+    asset_path: assets/st/rno2
+    src_path: src/st/rno2
+    splat_config_path: config/splat.pspeu.strno2.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rno3.bin
     asset_path: assets/st/rno3
     src_path: src/st/rno3

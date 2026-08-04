@@ -1,0 +1,101 @@
+options:
+  platform: psx
+  basename: strno2
+  base_path: ..
+  build_path: build/us
+  target_path: disks/us/ST/RNO2/RNO2.BIN
+  asm_path: asm/us/st/rno2
+  asset_path: assets/st/rno2
+  src_path: src/st/rno2
+  ld_script_path: build/us/strno2.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.us.txt
+    - config/symbols.us.strno2.txt
+  undefined_funcs_auto_path: build/us/config/undefined_funcs_auto.us.strno2.txt
+  undefined_syms_auto_path: build/us/config/undefined_syms_auto.us.strno2.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: us_$VRAM
+  disassemble_all: true
+  section_order:
+    - .data
+    - .rodata
+    - .text
+    - .bss
+    - .sbss
+  ld_bss_is_noload: false
+  disasm_unknown: true
+  global_vram_start: 0x80010000
+  ld_generate_symbol_per_data_segment: true
+sha1: e92dc877e03e4785414a72bf1b3603345eade364
+segments:
+  - name: strno2
+    type: code
+    start: 0x0
+    vram: 0x80180000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, .data, header]
+      - [0x2C, data]
+      - [0x754, .data, e_init]
+      - [0x9AC, data]
+      - [0x9E4, .data, e_lock_camera]
+      - [0xA64, data]
+      - [0xF28, .data, st_update]
+      - [0xF74, data]
+      - [0xF74, .data, collision]
+      - [0x1334, data]
+      - [0x134C, .data, st_common]
+      - [0x154C, data]
+      - [0x1958, .data, e_particles]
+      - [0x19D8, .data, e_room_fg]
+      - [0x1A64, data]
+      - [0x1E30, .data, e_bloody_zombie]
+      - [0x1F28, data]
+      - [0x2318, .data, e_medusa_head]
+      - [0x2390, data]
+      - [0x31C24, .rodata, unk_322E4]
+      - [0x31C4C, .rodata, e_spikes]
+      - [0x31C54, .rodata, unk_3459C]
+      - [0x31CFC, .rodata, unk_39458]
+      - [0x31D14, .rodata, e_collect]
+      - [0x31DE8, .rodata, e_stage_name]
+      - [0x31E1C, .rodata, e_ctulhu]
+      - [0x31E48, .rodata, unk_439A4]
+      - [0x31F04, .rodata, e_bloody_zombie]
+      - [0x31F2C, .rodata, unk_47A9C]
+      - [0x32050, .rodata, e_medusa_head]
+      - [0x32058, .rodata, prim_helpers]
+      - [0x32060, c, unk_32060]
+      - [0x32128, c, e_lock_camera]
+      - [0x322E4, c, unk_322E4]
+      - [0x32F58, c, e_background_house]
+      - [0x33978, c, func_us_801b4da4_from_bo0]
+      - [0x33E88, c, e_spikes]
+      - [0x3459C, c, unk_3459C]
+      - [0x36CF0, c, st_update]
+      - [0x37124, c, collision]
+      - [0x388E0, c, create_entity]
+      - [0x39458, c, unk_39458]
+      - [0x3A108, c, st_common]
+      - [0x3B5B8, c, e_collect]
+      - [0x3DF28, c, e_misc]
+      - [0x402C4, c, e_stage_name]
+      - [0x41118, c, e_particles]
+      - [0x4195C, c, e_room_fg]
+      - [0x41A48, c, popup]
+      - [0x41D78, c, e_ctulhu]
+      - [0x439A4, c, unk_439A4]
+      - [0x46A1C, c, e_bloody_zombie]
+      - [0x47A9C, c, unk_47A9C]
+      - [0x4B11C, c, e_medusa_head]
+      - [0x4B4F0, c, prim_helpers]
+      - [0x4BD20, .bss, create_entity]
+      - [0x4BD30, bss]
+      - [0x4C998, .bss, st_update]
+      - [0x4C9D8, bss]
+  - [0x4C9D8]
