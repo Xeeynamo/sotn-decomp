@@ -1410,6 +1410,9 @@ files:
     src_path: src/boss/bo2
     splat_config_path: config/splat.us.bobo2.yaml
   - target: disks/us/BOSS/BO3/BO3.BIN
+    asset_path: assets/boss/bo3
+    src_path: src/boss/bo3
+    splat_config_path: config/splat.us.bobo3.yaml
   - target: disks/us/BOSS/BO4/BO4.BIN
     asset_path: assets/boss/bo4
     src_path: src/boss/bo4
