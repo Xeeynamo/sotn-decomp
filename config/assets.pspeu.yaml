@@ -935,6 +935,9 @@ files:
           - [0x384B0, skip]
 
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rno4.bin
+    asset_path: assets/st/rno4
+    src_path: src/st/rno4
+    splat_config_path: config/splat.pspeu.strno4.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rnz0.bin
     asset_path: assets/st/rnz0
     src_path: src/st/rnz0
