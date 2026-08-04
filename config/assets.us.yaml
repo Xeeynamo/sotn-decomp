@@ -1406,7 +1406,13 @@ files:
           - [0x0, skip]
   - target: disks/us/BOSS/BO1/BO1.BIN
   - target: disks/us/BOSS/BO2/BO2.BIN
+    asset_path: assets/boss/bo2
+    src_path: src/boss/bo2
+    splat_config_path: config/splat.us.bobo2.yaml
   - target: disks/us/BOSS/BO3/BO3.BIN
+    asset_path: assets/boss/bo3
+    src_path: src/boss/bo3
+    splat_config_path: config/splat.us.bobo3.yaml
   - target: disks/us/BOSS/BO4/BO4.BIN
     asset_path: assets/boss/bo4
     src_path: src/boss/bo4
@@ -1435,6 +1441,9 @@ files:
           - [0x2C288, palette, D_us_801AC288, 16]
           - [0x2C668, skip]
   - target: disks/us/BOSS/BO5/BO5.BIN
+    asset_path: assets/boss/bo5
+    src_path: src/boss/bo5
+    splat_config_path: config/splat.us.bobo5.yaml
   - target: disks/us/BOSS/BO6/BO6.BIN
     asset_path: assets/boss/bo6
     src_path: src/boss/bo6
