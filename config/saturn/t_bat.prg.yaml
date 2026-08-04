@@ -6,6 +6,11 @@ options:
   ld_scripts_path: config/saturn
   syms_path: config/saturn
   decomp_empty_funcs: true
+  symbol_files:
+    - game_user_syms.txt
+    - zero_user_syms.txt
+    - game_syms.gen.txt
+    - zero_syms.gen.txt
 segments:
   - name: t_bat
     type: code

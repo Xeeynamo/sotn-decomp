@@ -192,14 +192,14 @@ def add_srcs(srcs, output_dir, args):
             inputs=[str_name])
 
         ninja.build(
-            asm_name, 
-            'compile', 
+            asm_name,
+            'compile',
             inputs=[cpp_name],
             implicit=compiler_inputs,
             variables={
                 'args': args
             })
-        
+
         ninja.build(
             obj_name,
             'as',
@@ -762,8 +762,8 @@ def elf_srcs(srcs, output_dir):
         input_name = os.path.join(obj_dir, f"{filename_without_extension}.cof")
         obj_name = os.path.join(obj_dir, f"{filename_without_extension}.o")
         ninja.build(
-            obj_name, 
-            'coff2elf', 
+            obj_name,
+            'coff2elf',
             inputs=[input_name])
 
 elf_srcs(snd_srcs, build_base_path)
@@ -789,13 +789,15 @@ if sotn_progress_report: # skip link step
     raise SystemExit(0)
 
 def inherited_symbol_files(target):
-    files = ['config/saturn/zero_syms.txt']
+    files = ['config/saturn/zero_syms.gen.txt']
     if target != 'zero':
-        files.append('config/saturn/game_syms.txt')
+        files.append('config/saturn/game_syms.gen.txt')
         files.append('config/saturn/game_user_syms.txt')
     files.append('config/saturn/zero_user_syms.txt')
     if target not in {'zero', 'game'}:
         files.append(f'config/saturn/{target}_user_syms.txt')
+        files.append(f'config/saturn/{target}_syms.gen.txt')
+    files.append(f'config/saturn/{target}_data_syms.gen.txt')
     if target != 'zero':
         files.append('build/saturn/zero_link_syms.txt')
     if target not in {'zero', 'game'}:
@@ -821,8 +823,8 @@ def link_objs(srcs, output_dir):
         symbol_files = inherited_symbol_files(filename_without_extension)
 
         ninja.build(
-            elf_name, 
-            'link', 
+            elf_name,
+            'link',
             inputs=[obj_name],
             implicit=[SYMBOL_OWNERSHIP_STAMP,
                       f'config/saturn/{ld_file}'] + symbol_files,
@@ -846,8 +848,8 @@ def link_multi(multi_objs, output_dir):
         symbol_files = inherited_symbol_files(filename_without_extension)
 
         ninja.build(
-            elf_name, 
-            'link_multi', 
+            elf_name,
+            'link_multi',
             inputs=[main_obj],
             implicit=[x for x in sub_objs if x] +
                      [SYMBOL_OWNERSHIP_STAMP,

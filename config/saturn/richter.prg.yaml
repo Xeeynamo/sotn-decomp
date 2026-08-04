@@ -7,6 +7,11 @@ options:
   syms_path: config/saturn
   check_layout: true
   decomp_empty_funcs: false
+  symbol_files:
+    - game_user_syms.txt
+    - zero_user_syms.txt
+    - game_syms.gen.txt
+    - zero_syms.gen.txt
 segments:
   - name: richter
     type: code
