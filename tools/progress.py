@@ -443,6 +443,7 @@ if __name__ == "__main__":
     progress["strchi"] = DecompProgressStats("strchi", "st/rchi")
     progress["strdai"] = DecompProgressStats("strdai", "st/rdai")
     progress["strno0"] = DecompProgressStats("strno0", "st/rno0")
+    progress["strno1"] = DecompProgressStats("strno1", "st/rno1")
     progress["strno2"] = DecompProgressStats("strno2", "st/rno2")
     progress["strno3"] = DecompProgressStats("strno3", "st/rno3")
     progress["strno4"] = DecompProgressStats("strno4", "st/rno4")
