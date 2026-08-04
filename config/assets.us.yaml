@@ -1450,6 +1450,9 @@ files:
             - [0x1204, rooms, rooms]
             - [0x1210, skip]
   - target: disks/us/BOSS/BO7/BO7.BIN
+    asset_path: assets/boss/bo7
+    src_path: src/boss/bo7
+    splat_config_path: config/splat.us.bobo7.yaml
   - target: disks/us/BOSS/RBO0/RBO0.BIN
     asset_path: assets/boss/rbo0
     src_path: src/boss/rbo0
