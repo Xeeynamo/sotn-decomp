@@ -1213,6 +1213,12 @@ files:
     asset_path: assets/st/rno0
     src_path: src/st/rno0
     splat_config_path: config/splat.us.strno0.yaml
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x2C, sprite_banks, sprite_banks]
+          - [0x8C, skip]
   - target: disks/us/ST/RNO1/RNO1.BIN
     asset_path: assets/st/rno1
     src_path: src/st/rno1
