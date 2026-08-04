@@ -1066,8 +1066,8 @@
 | rdai       | SetSubStep                         |       21 |          1 |        |       |     |
 | rdai       | Random                             |       21 |          1 |        |       |     |
 | rdai       | func_psp_0923C390                  |       21 |          1 |        |       |     |
-| rno0       | SetSubStep                         |       21 |          1 |        |       |     |
 | rno0       | Random                             |       21 |          1 |        |       |     |
+| rno0       | SetSubStep                         |       21 |          1 |        |       |     |
 | rno0       | func_psp_0923C390                  |       21 |          1 |        |       |     |
 | rno1       | Random                             |       21 |          1 |        |       |     |
 | rno1       | func_psp_0923C390                  |       21 |          1 |        |       |     |
