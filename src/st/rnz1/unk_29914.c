@@ -27,8 +27,7 @@ INCLUDE_ASM("st/rnz1/nonmatchings/unk_29914", func_us_801ABA38);
 
 INCLUDE_ASM("st/rnz1/nonmatchings/unk_29914", func_us_801ABB58);
 
-void RNZ1_Unused801ABDC0(void) {
-}
+void RNZ1_Unused801ABDC0(void) {}
 
 INCLUDE_ASM("st/rnz1/nonmatchings/unk_29914", func_us_801ABDC8);
 

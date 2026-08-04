@@ -49,24 +49,19 @@ INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", func_us_801C4BD8_from_no4);
 
 INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", func_us_801C8668);
 
-void RNO4_Unused801C8704(void) {
-}
+void RNO4_Unused801C8704(void) {}
 
 INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", func_us_801C870C);
 
-void RNO4_Unused801C8768(void) {
-}
+void RNO4_Unused801C8768(void) {}
 
-void RNO4_Unused801C8770(void) {
-}
+void RNO4_Unused801C8770(void) {}
 
 INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", EntityBoatElevatorChains);
 
-void RNO4_Unused801C8BD4(void) {
-}
+void RNO4_Unused801C8BD4(void) {}
 
-void RNO4_Unused801C8BDC(void) {
-}
+void RNO4_Unused801C8BDC(void) {}
 
 INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", LoadFerrymanGateTiles);
 
