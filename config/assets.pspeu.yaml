@@ -1032,6 +1032,9 @@ files:
     splat_config_path: config/splat.pspeu.bobo3.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo4.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo5.bin
+    asset_path: assets/boss/bo5
+    src_path: src/boss/bo5
+    splat_config_path: config/splat.pspeu.bobo5.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo6.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo7.bin
     asset_path: assets/boss/bo7

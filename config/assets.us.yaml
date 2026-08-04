@@ -1441,6 +1441,9 @@ files:
           - [0x2C288, palette, D_us_801AC288, 16]
           - [0x2C668, skip]
   - target: disks/us/BOSS/BO5/BO5.BIN
+    asset_path: assets/boss/bo5
+    src_path: src/boss/bo5
+    splat_config_path: config/splat.us.bobo5.yaml
   - target: disks/us/BOSS/BO6/BO6.BIN
     asset_path: assets/boss/bo6
     src_path: src/boss/bo6
