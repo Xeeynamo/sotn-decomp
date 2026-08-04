@@ -337,7 +337,55 @@ void MakeExplosions(void) {
         }
     }
 }
-INCLUDE_ASM("boss/bo3/nonmatchings/e_misc", EntityBigRedFireball);
+extern AnimateEntityFrame g_bigRedFireballAnim[];
+
+void EntityBigRedFireball(Entity* self) {
+    s32 speedTemp;
+
+    if (!self->step) {
+        InitializeEntity(g_EInitParticle);
+        self->animSet = ANIMSET_DRA(2);
+        self->palette = PAL_FLAG(PAL_UNK_1B6);
+        self->drawFlags |= (ENTITY_ROTATE + ENTITY_OPACITY);
+        self->blendMode |= (BLEND_TRANSP + BLEND_ADD);
+        self->opacity = 0x70;
+        self->zPriority = 192;
+
+        switch (self->ext.bigredfireball.switch_control) {
+        case 1:
+            if (self->ext.bigredfireball.speed > 3) {
+                self->ext.bigredfireball.speed -= 3;
+                self->ext.bigredfireball.angle =
+                    self->ext.bigredfireball.angle - 0x800;
+            }
+            break;
+
+        case 2:
+            self->ext.bigredfireball.angle +=
+                self->ext.bigredfireball.speed * 192;
+            break;
+        }
+
+        self->ext.bigredfireball.angle &= 0xFFF;
+        self->rotate = self->ext.bigredfireball.angle;
+        speedTemp = self->ext.bigredfireball.speed * 320 / 24;
+        self->velocityX = speedTemp * rsin(self->ext.bigredfireball.angle);
+        self->velocityY = -(speedTemp * rcos(self->ext.bigredfireball.angle));
+    }
+
+    if (self->pose > 12) {
+        self->velocityX /= 4;
+        self->velocityX *= 3;
+        self->velocityY /= 4;
+        self->velocityY *= 3;
+    }
+
+    MoveEntity();
+
+    if (!AnimateEntity(g_bigRedFireballAnim, self)) {
+        DestroyEntity(self);
+    }
+}
 INCLUDE_ASM("boss/bo3/nonmatchings/e_misc", UnkRecursivePrimFunc1);
 INCLUDE_ASM("boss/bo3/nonmatchings/e_misc", UnkRecursivePrimFunc2);
 void ClutLerp(RECT* rect, u16 palIdxA, u16 palIdxB, s32 steps, u16 offset) {
