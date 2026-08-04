@@ -1048,8 +1048,14 @@ files:
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rbo2.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rbo3.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rbo4.bin
+    asset_path: assets/boss/rbo4
+    src_path: src/boss/rbo4
+    splat_config_path: config/splat.pspeu.borbo4.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rbo5.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rbo6.bin
+    asset_path: assets/boss/rbo6
+    src_path: src/boss/rbo6
+    splat_config_path: config/splat.pspeu.borbo6.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rbo7.bin
     asset_path: assets/boss/rbo7
     src_path: src/boss/rbo7
