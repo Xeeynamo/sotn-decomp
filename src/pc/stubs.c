@@ -146,3 +146,13 @@ u16* func_80106A28(u32 arg0, u16 kind) {
     NOT_IMPLEMENTED;
     return g_FontCharData;
 }
+
+void gte_stotz(long* otz) { NOT_IMPLEMENTED; }
+void gte_avsz4(void) { NOT_IMPLEMENTED; }
+
+void NormalColorDpq(SVECTOR* v0, CVECTOR* v1, CVECTOR* v2) {
+    v2->r = v1->r;
+    v2->g = v1->g;
+    v2->b = v1->b;
+    v2->cd = v1->cd;
+}
