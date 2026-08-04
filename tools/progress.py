@@ -449,6 +449,7 @@ if __name__ == "__main__":
     progress["strwrp"] = DecompProgressStats("strwrp", "st/rwrp")
     progress["bomar"] = DecompProgressStats("bomar", "boss/mar")
     progress["bobo0"] = DecompProgressStats("bobo0", "boss/bo0")
+    progress["bobo1"] = DecompProgressStats("bobo1", "boss/bo1")
     progress["bobo2"] = DecompProgressStats("bobo2", "boss/bo2")
     progress["bobo3"] = DecompProgressStats("bobo3", "boss/bo3")
     progress["bobo4"] = DecompProgressStats("bobo4", "boss/bo4")

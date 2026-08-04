@@ -1405,6 +1405,9 @@ files:
         assets:
           - [0x0, skip]
   - target: disks/us/BOSS/BO1/BO1.BIN
+    asset_path: assets/boss/bo1
+    src_path: src/boss/bo1
+    splat_config_path: config/splat.us.bobo1.yaml
   - target: disks/us/BOSS/BO2/BO2.BIN
     asset_path: assets/boss/bo2
     src_path: src/boss/bo2
