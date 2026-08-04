@@ -1,0 +1,8 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+#include "bo7.h"
+
+u16 PrizeDrops[] = {
+    ITEMDROP_POWER_OF_SIRE, ITEMDROP_KARMA_COIN,  ITEMDROP_STONE_SWORD,
+    ITEMDROP_TURKEY,        ITEMDROP_SMALL_HEART, 0x0020,
+    ITEMDROP_GOLD_7,        ITEMDROP_SMALL_HEART,
+};

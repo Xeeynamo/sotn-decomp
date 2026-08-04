@@ -1450,6 +1450,9 @@ files:
             - [0x1204, rooms, rooms]
             - [0x1210, skip]
   - target: disks/us/BOSS/BO7/BO7.BIN
+    asset_path: assets/boss/bo7
+    src_path: src/boss/bo7
+    splat_config_path: config/splat.us.bobo7.yaml
   - target: disks/us/BOSS/RBO0/RBO0.BIN
     asset_path: assets/boss/rbo0
     src_path: src/boss/rbo0
@@ -1471,7 +1474,13 @@ files:
           # - [0xB30C, palette, D_8018B30C]
           - [0xFD2C, skip]
   - target: disks/us/BOSS/RBO1/RBO1.BIN
+    asset_path: assets/boss/rbo1
+    src_path: src/boss/rbo1
+    splat_config_path: config/splat.us.borbo1.yaml
   - target: disks/us/BOSS/RBO2/RBO2.BIN
+    asset_path: assets/boss/rbo2
+    src_path: src/boss/rbo2
+    splat_config_path: config/splat.us.borbo2.yaml
   - target: disks/us/BOSS/RBO3/RBO3.BIN
     asset_path: assets/boss/rbo3
     src_path: src/boss/rbo3

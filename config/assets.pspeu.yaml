@@ -1028,6 +1028,9 @@ files:
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo5.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo6.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo7.bin
+    asset_path: assets/boss/bo7
+    src_path: src/boss/bo7
+    splat_config_path: config/splat.pspeu.bobo7.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rbo0.bin
     asset_path: assets/boss/rbo0
     src_path: src/boss/rbo0
@@ -1045,7 +1048,13 @@ files:
           - [0x1BF50, rooms, rooms]
           - [0x1BF70, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rbo1.bin
+    asset_path: assets/boss/rbo1
+    src_path: src/boss/rbo1
+    splat_config_path: config/splat.pspeu.borbo1.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rbo2.bin
+    asset_path: assets/boss/rbo2
+    src_path: src/boss/rbo2
+    splat_config_path: config/splat.pspeu.borbo2.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rbo3.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rbo4.bin
     asset_path: assets/boss/rbo4
