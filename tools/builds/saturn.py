@@ -796,6 +796,7 @@ def inherited_symbol_files(target):
     files.append('config/saturn/zero_user_syms.txt')
     if target not in {'zero', 'game'}:
         files.append(f'config/saturn/{target}_user_syms.txt')
+        files.append(f'config/saturn/{target}_syms.gen.txt')
     files.append(f'config/saturn/{target}_data_syms.gen.txt')
     if target != 'zero':
         files.append('build/saturn/zero_link_syms.txt')
