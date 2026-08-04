@@ -1310,6 +1310,9 @@ files:
           - [0x144CC, palette, D_801944CC, 16]
           - [0x1450C, skip]
   - target: disks/us/ST/RNZ1/RNZ1.BIN
+    asset_path: assets/st/rnz1
+    src_path: src/st/rnz1
+    splat_config_path: config/splat.us.strnz1.yaml
   - target: disks/us/ST/RTOP/RTOP.BIN
     asset_path: assets/st/rtop
     src_path: src/st/rtop
