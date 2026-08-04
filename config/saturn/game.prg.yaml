@@ -8,6 +8,9 @@ options:
   check_layout: true
   # some sort of alignment issues
   decomp_empty_funcs: false
+  symbol_files:
+    - zero_user_syms.txt
+    - zero_syms.gen.txt
 segments:
   - name: game
     type: code
