@@ -1478,6 +1478,9 @@ files:
     src_path: src/boss/rbo1
     splat_config_path: config/splat.us.borbo1.yaml
   - target: disks/us/BOSS/RBO2/RBO2.BIN
+    asset_path: assets/boss/rbo2
+    src_path: src/boss/rbo2
+    splat_config_path: config/splat.us.borbo2.yaml
   - target: disks/us/BOSS/RBO3/RBO3.BIN
     asset_path: assets/boss/rbo3
     src_path: src/boss/rbo3
