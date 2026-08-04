@@ -38,8 +38,9 @@ TARGET_PATH = re.compile(r"^\s*target_path:\s*(\S+)\s*$")
 VRAM = re.compile(r"^\s*vram:\s*(0x[0-9A-Fa-f]+)\s*$")
 ASSIGNMENT = re.compile(
     r"^\s*([A-Za-z_.$][A-Za-z0-9_.$]*)\s*=\s*"
-    r"(0x[0-9A-Fa-f]+)\s*;\s*(?:/\*.*\*/\s*)?$"
+    r"(0x[0-9A-Fa-f]+)\s*;\s*(?:/\*(?P<note>.*)\*/\s*)?$"
 )
+SIZE_ANNOTATION = re.compile(r"\bsize\s*=\s*(0[xX][0-9A-Fa-f]+|\d+)\b")
 
 
 @dataclass(frozen=True)
@@ -57,6 +58,23 @@ class Violation:
     name: str
     address: int
     owner: str | None
+
+
+@dataclass(frozen=True)
+class SizedSymbol:
+    path: Path
+    line_number: int
+    name: str
+    address: int
+    size: int
+
+
+@dataclass(frozen=True)
+class Overlap:
+    sized: SizedSymbol
+    other_name: str
+    other_address: int
+    other_path: Path
 
 
 @dataclass(frozen=True)
@@ -186,7 +204,7 @@ def inspect_file(
             continue
 
         assignments += 1
-        name, address_text = match.groups()
+        name, address_text = match.group(1), match.group(2)
         address = int(address_text, 16)
         exempt_region = find_exempt_region(address)
         dependency = find_dependency(expected.target, address, ownership)
@@ -215,12 +233,73 @@ def inspect_file(
     return assignments, violations, exemptions, syntax_errors
 
 
+def read_symbols(path: Path) -> tuple[list[tuple[str, int]], list[SizedSymbol]]:
+    symbols = []
+    sized = []
+    for line_number, line in enumerate(
+        path.read_text(encoding="utf-8").splitlines(), start=1
+    ):
+        match = ASSIGNMENT.match(line)
+        if match is None:
+            continue
+        name = match.group(1)
+        address = int(match.group(2), 16)
+        symbols.append((name, address))
+        note = match.group("note")
+        size_match = SIZE_ANNOTATION.search(note) if note else None
+        if size_match:
+            sized.append(
+                SizedSymbol(
+                    path, line_number, name, address, int(size_match.group(1), 0)
+                )
+            )
+    return symbols, sized
+
+
+def linked_targets(target: str) -> set[str]:
+    linked = {target}
+    for owner, dependents in DEPENDENCIES.items():
+        if target in dependents:
+            linked.add(owner)
+    return linked
+
+
+def find_overlaps(
+    symbols_by_target: dict[str, list[tuple[str, int]]],
+    sized_by_target: dict[str, list[SizedSymbol]],
+) -> list[Overlap]:
+    # find sized symbols that overlap
+    overlaps = []
+    seen = set()
+    for target, sized_symbols in sized_by_target.items():
+        neighbours = [
+            (name, address, other)
+            for other in linked_targets(target)
+            for name, address in symbols_by_target.get(other, [])
+        ]
+        for sized in sized_symbols:
+            for name, address, other in neighbours:
+                if not sized.address < address < sized.address + sized.size:
+                    continue
+                key = (sized.path, sized.line_number, name, address)
+                if key in seen:
+                    continue
+                seen.add(key)
+                overlaps.append(
+                    Overlap(
+                        sized, name, address, CONFIG_DIR / f"{other}_user_syms.txt"
+                    )
+                )
+    return overlaps
+
+
 def build_report(
     ownership: list[Ownership],
     results: list[
         tuple[Ownership, Path, int, list[Violation], list[Exemption]]
     ],
     syntax_errors: list[str],
+    overlaps: list[Overlap],
 ) -> str:
     violation_count = sum(
         len(violations) for _, _, _, violations, _ in results
@@ -301,6 +380,20 @@ def build_report(
                     f"region={exemption.region}"
                 )
 
+    lines.extend(["", "Size annotation overlaps", "------------------------"])
+    if not overlaps:
+        lines.append("(none)")
+    else:
+        for overlap in overlaps:
+            sized = overlap.sized
+            lines.append(
+                f"{sized.path}:{sized.line_number}: {sized.name} = "
+                f"0x{sized.address:08X} size=0x{sized.size:X} covers "
+                f"{overlap.other_name} = 0x{overlap.other_address:08X} "
+                f"(+0x{overlap.other_address - sized.address:X}) "
+                f"from {overlap.other_path}"
+            )
+
     lines.extend(["", "Unparsed lines", "--------------"])
     lines.extend(syntax_errors or ["(none)"])
     lines.append("")
@@ -314,12 +407,18 @@ def main() -> int:
         ownership_by_target = {item.target: item for item in ownership}
         results = []
         syntax_errors = []
+        symbols_by_target = {}
+        sized_by_target = {}
 
         for target in TARGET_CONFIGS:
             path = CONFIG_DIR / f"{target}_user_syms.txt"
             assignments, violations, exemptions, file_syntax_errors = inspect_file(
                 path, ownership_by_target[target], ownership
             )
+            (
+                symbols_by_target[target],
+                sized_by_target[target],
+            ) = read_symbols(path)
             results.append(
                 (
                     ownership_by_target[target],
@@ -331,7 +430,8 @@ def main() -> int:
             )
             syntax_errors.extend(file_syntax_errors)
 
-        report = build_report(ownership, results, syntax_errors)
+        overlaps = find_overlaps(symbols_by_target, sized_by_target)
+        report = build_report(ownership, results, syntax_errors, overlaps)
         args.output.write_text(report, encoding="utf-8")
     except (OSError, ValueError) as error:
         print(f"error: {error}", file=sys.stderr)
@@ -342,11 +442,11 @@ def main() -> int:
     )
     print(
         f"Wrote {args.output}: {violation_count} ownership violations, "
-        f"{len(syntax_errors)} unparsed lines"
+        f"{len(overlaps)} size overlaps, {len(syntax_errors)} unparsed lines"
     )
     if args.report_only:
         return 0
-    return 1 if violation_count or syntax_errors else 0
+    return 1 if violation_count or overlaps or syntax_errors else 0
 
 
 if __name__ == "__main__":

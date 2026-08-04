@@ -283,16 +283,16 @@ _d_0605BEC8 = 0x0605BEC8;
 _d_0605BECA = 0x0605BECA;
 _D_8003C730 = 0x0605C11C;
 _DAT_0605c120 = 0x0605C120;
-_g_Player = 0x0605C140;
+_g_Player = 0x0605C140; /* size = 0x46C */
 _currentMusicId = 0x0605C5AC;
 _g_PlayerY = 0x0605C5B4;
-_g_unkGraphicsStruct = 0x0605C5C0;
+_g_unkGraphicsStruct = 0x0605C5C0; /* size = 0x98 */
 _DAT_0605c658 = 0x0605C658;
-_g_pads = 0x0605C670;
-_DAT_0605c680 = 0x0605C680;
+_g_pads = 0x0605C670; /* size = 0x10 */
+_DAT_0605c680 = 0x0605C680; /* size = 0x44 */
 _g_PlayableCharacter = 0x0605C6D0;
 _g_CurrentEntity = 0x0605C6E0;
-_g_Status = 0x0605C6F0;
+_g_Status = 0x0605C6F0; /* size = 0x34C */
 _g_CastleFlags = 0x0605CA50;
 _g_PlayerX = 0x0605CD58;
 _DAT_0605cd70 = 0x0605CD70;
@@ -300,7 +300,7 @@ _d_0605cd70 = 0x0605CD70;
 _DAT_060086d4 = 0x0605CD72;
 _g_Timer = 0x0605CD7C;
 _DAT_0605CD90 = 0x0605CD90;
-_g_Tilemap = 0x0605CE50;
+_g_Tilemap = 0x0605CE50; /* size = 0x38 */
 _DAT_0605cea0 = 0x0605CEA0;
 _DAT_0605cea2 = 0x0605CEA2;
 _g_CastleMap = 0x0605CEC0;
@@ -308,10 +308,10 @@ _DAT_0605d6c0 = 0x0605D6C0;
 _g_GameClearFlag = 0x0605D784;
 _g_CutsceneHasControl = 0x0605D7E0;
 _g_Servant = 0x0605D7E4;
-_D_8003C708 = 0x0605D7E8;
+_D_8003C708 = 0x0605D7E8; /* size = 0x8 */
 _DAT_0605d7f0 = 0x0605D7F0;
 _DAT_0605d7f8 = 0x0605D7F8;
-_g_Settings = 0x0605D800;
+_g_Settings = 0x0605D800; /* size = 0x110 */
 _DAT_0605D910 = 0x0605D910;
 _d_0605DB60 = 0x0605DB60;
 _DAT_06062224 = 0x06062224;
@@ -525,17 +525,17 @@ _DAT_0605ceb0 = 0x0605CEB0;
 _D_8006BB00 = 0x0605CEB4;
 _D_8013AEE4 = 0x0605CEB8;
 _g_randomNext = 0x0605D748;
-_g_CurrentRoom = 0x0605D750;
+_g_CurrentRoom = 0x0605D750; /* size = 0x14 */
 _g_canRevealMap = 0x0605D744;
 _DAT_0605d772 = 0x0605D772;
-_g_MenuNavigation = 0x0605D790;
+_g_MenuNavigation = 0x0605D790; /* size = 0x4C */
 _DAT_0605d7dc = 0x0605D7DC;
 _DAT_06061dd0 = 0x06061DD0;
 _func_06064590 = 0x06064590;
 _func_06064594 = 0x06064594;
 _func_060645A0 = 0x060645A0;
 _func_060645A4 = 0x060645A4;
-_g_api = 0x060645A8;
+_g_api = 0x060645A8; /* size = 0x4 */
 _func_060645B0 = 0x060645B0;
 _func_060645B4 = 0x060645B4;
 _DAT_060645b8 = 0x060645B8;
