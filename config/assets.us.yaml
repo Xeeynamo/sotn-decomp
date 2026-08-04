@@ -1495,6 +1495,9 @@ files:
           - [0x7610, palette, D_80187610, 16]
           - [0x7630, skip]
   - target: disks/us/BOSS/RBO4/RBO4.BIN
+    asset_path: assets/boss/rbo4
+    src_path: src/boss/rbo4
+    splat_config_path: config/splat.us.borbo4.yaml
   - target: disks/us/BOSS/RBO5/RBO5.BIN
     asset_path: assets/boss/rbo5
     src_path: src/boss/rbo5
