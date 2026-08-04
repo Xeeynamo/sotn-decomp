@@ -254,11 +254,7 @@ void func_us_801AE8E8(Entity* self) {
     for (i = 0; i < 8; i++) {
         RotTransPers(*temp_a0_2, &((long*)SPAD(0))[i], &p, &flag);
         VectorNormalS(*temp_a0_3, &sp70);
-#ifdef VERSION_PC
-        NormalColorDpq(&sp70, &sp68, &((long*)SPAD(8))[i]);
-#else
         NormalColorDpq(&sp70, &sp68, p, &((long*)SPAD(8))[i]);
-#endif
         temp_a0_2++;
         temp_a0_3++;
     }
