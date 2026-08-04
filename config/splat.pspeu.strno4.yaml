@@ -82,7 +82,7 @@ segments:
       - [0x2BDD0, data]
       - [0x638C8, .data, rno4/header]
       - [0x63908, .data, rno4/d_prize_drops]
-      - [0x63948, data, 63948]
+      - [0x63928, data, 63928]
       - [0x63C10, .data, rno4/e_lock_camera]
       - [0x63C88, data, 63C88]
       - [0x64300, .rodata, rno4_psp/e_blue_venus_weed]
