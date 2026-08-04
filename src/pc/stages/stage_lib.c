@@ -27,6 +27,8 @@ u8 cutscene_data[] = {
 
 static void InitCutscenePc(void) {
     static const CutsceneSymbolRange symbols[] = {
+        {&metLibrarian, 0x80183f60, sizeof(s32)},
+        {&D_us_80183F64, 0x80183f64, sizeof(s32)},
         {cutscene_data, 0x80183f68, sizeof(cutscene_data)},
         {gfx_portrait_alucard, 0x8018a488, 0xD80},
         {gfx_portrait_master_librarian, 0x8018b208, 0xD80},

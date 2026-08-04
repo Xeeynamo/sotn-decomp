@@ -268,7 +268,7 @@ void EntityCutscene(Entity* self) {
                 ptr <<= 4;
                 ptr |= (u_long)*g_Dialogue.scriptCur++;
                 ptr += 0x100000;
-                g_Dialogue.scriptCur += *(u8*)ptr << 2;
+                g_Dialogue.scriptCur += (*(u8*)CS_NEXT(ptr)) * 4;
 
                 ptr = (u_long)*g_Dialogue.scriptCur++;
                 ptr <<= 4;
@@ -277,7 +277,7 @@ void EntityCutscene(Entity* self) {
                 ptr |= (u_long)*g_Dialogue.scriptCur++;
                 ptr <<= 4;
                 ptr |= (u_long)*g_Dialogue.scriptCur;
-                g_Dialogue.scriptCur = (u8*)ptr + 0x100000;
+                g_Dialogue.scriptCur = CS_PTR(ptr);
                 continue;
             case CSOP_SCRIPT_UNKNOWN_15:
                 ptr = (u_long)*g_Dialogue.scriptCur++;
@@ -287,7 +287,7 @@ void EntityCutscene(Entity* self) {
                 ptr |= (u_long)*g_Dialogue.scriptCur++;
                 ptr <<= 4;
                 ptr |= (u_long)*g_Dialogue.scriptCur;
-                g_Dialogue.scriptCur = (u8*)ptr + 0x100000;
+                g_Dialogue.scriptCur = CS_PTR(ptr);
                 continue;
             case CSOP_WAIT_FOR_FLAG:
                 if (!((g_CutsceneFlags >> *g_Dialogue.scriptCur) & 1)) {
@@ -314,7 +314,7 @@ void EntityCutscene(Entity* self) {
                     ptr |= (u_long)*g_Dialogue.scriptCur++;
                     ptr <<= 4;
                     ptr |= (u_long)*g_Dialogue.scriptCur++;
-                    ptr += 0x100000;
+                    ptr = (u_long)CS_PTR(ptr);
                     nextChar2 = g_Dialogue.scriptCur++[0];
                     LoadTPage((u_long*)ptr, 1, 0, D_us_801819C8[nextChar2],
                               0x100, 0x30, 0x48);
