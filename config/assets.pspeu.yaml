@@ -1023,6 +1023,9 @@ files:
           - [0x80, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo1.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo2.bin
+    asset_path: assets/boss/bo2
+    src_path: src/boss/bo2
+    splat_config_path: config/splat.pspeu.bobo2.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo3.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo4.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo5.bin
