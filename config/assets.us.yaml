@@ -1214,7 +1214,13 @@ files:
     src_path: src/st/rno0
     splat_config_path: config/splat.us.strno0.yaml
   - target: disks/us/ST/RNO1/RNO1.BIN
+    asset_path: assets/st/rno1
+    src_path: src/st/rno1
+    splat_config_path: config/splat.us.strno1.yaml
   - target: disks/us/ST/RNO2/RNO2.BIN
+    asset_path: assets/st/rno2
+    src_path: src/st/rno2
+    splat_config_path: config/splat.us.strno2.yaml
   - target: disks/us/ST/RNO3/RNO3.BIN
     asset_path: assets/st/rno3
     src_path: src/st/rno3
@@ -1256,6 +1262,9 @@ files:
           - [0x10E68, palette, pal_dodo, 16]
           - [0x10E88, skip]
   - target: disks/us/ST/RNO4/RNO4.BIN
+    asset_path: assets/st/rno4
+    src_path: src/st/rno4
+    splat_config_path: config/splat.us.strno4.yaml
   - target: disks/us/ST/RNZ0/RNZ0.BIN
     asset_path: assets/st/rnz0
     src_path: src/st/rnz0
@@ -1310,6 +1319,9 @@ files:
           - [0x144CC, palette, D_801944CC, 16]
           - [0x1450C, skip]
   - target: disks/us/ST/RNZ1/RNZ1.BIN
+    asset_path: assets/st/rnz1
+    src_path: src/st/rnz1
+    splat_config_path: config/splat.us.strnz1.yaml
   - target: disks/us/ST/RTOP/RTOP.BIN
     asset_path: assets/st/rtop
     src_path: src/st/rtop
@@ -1405,6 +1417,9 @@ files:
         assets:
           - [0x0, skip]
   - target: disks/us/BOSS/BO1/BO1.BIN
+    asset_path: assets/boss/bo1
+    src_path: src/boss/bo1
+    splat_config_path: config/splat.us.bobo1.yaml
   - target: disks/us/BOSS/BO2/BO2.BIN
     asset_path: assets/boss/bo2
     src_path: src/boss/bo2

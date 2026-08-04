@@ -895,7 +895,13 @@ files:
     src_path: src/st/rno0
     splat_config_path: config/splat.pspeu.strno0.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rno1.bin
+    asset_path: assets/st/rno1
+    src_path: src/st/rno1
+    splat_config_path: config/splat.pspeu.strno1.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rno2.bin
+    asset_path: assets/st/rno2
+    src_path: src/st/rno2
+    splat_config_path: config/splat.pspeu.strno2.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rno3.bin
     asset_path: assets/st/rno3
     src_path: src/st/rno3
@@ -935,6 +941,9 @@ files:
           - [0x384B0, skip]
 
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rno4.bin
+    asset_path: assets/st/rno4
+    src_path: src/st/rno4
+    splat_config_path: config/splat.pspeu.strno4.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rnz0.bin
     asset_path: assets/st/rnz0
     src_path: src/st/rnz0
@@ -991,6 +1000,9 @@ files:
           - [0x39D28, skip]
 
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rnz1.bin
+    asset_path: assets/st/rnz1
+    src_path: src/st/rnz1
+    splat_config_path: config/splat.pspeu.strnz1.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rtop.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rwrp.bin
     asset_path: assets/st/rwrp
@@ -1022,6 +1034,9 @@ files:
         assets:
           - [0x80, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo1.bin
+    asset_path: assets/boss/bo1
+    src_path: src/boss/bo1
+    splat_config_path: config/splat.pspeu.bobo1.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo2.bin
     asset_path: assets/boss/bo2
     src_path: src/boss/bo2

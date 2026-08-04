@@ -1,0 +1,108 @@
+options:
+  platform: psx
+  basename: strnz1
+  base_path: ..
+  build_path: build/us
+  target_path: disks/us/ST/RNZ1/RNZ1.BIN
+  asm_path: asm/us/st/rnz1
+  asset_path: assets/st/rnz1
+  src_path: src/st/rnz1
+  ld_script_path: build/us/strnz1.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.us.txt
+    - config/symbols.us.strnz1.txt
+  undefined_funcs_auto_path: build/us/config/undefined_funcs_auto.us.strnz1.txt
+  undefined_syms_auto_path: build/us/config/undefined_syms_auto.us.strnz1.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: us_$VRAM
+  disassemble_all: true
+  section_order:
+    - .data
+    - .rodata
+    - .text
+    - .bss
+    - .sbss
+  ld_bss_is_noload: false
+  disasm_unknown: true
+  global_vram_start: 0x80010000
+  ld_generate_symbol_per_data_segment: true
+sha1: 5983e19c68916c4c008c29ac3e384af988ec5ed8
+segments:
+  - name: strnz1
+    type: code
+    start: 0x0
+    vram: 0x80180000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, .data, header]
+      - [0x40, data]
+      - [0x9E8, .data, e_init]
+      - [0xC84, data]
+      - [0xD14, .data, e_red_door_tiles]
+      - [0xD34, data]
+      - [0xD34, .data, e_lock_camera]
+      - [0xDB4, data]
+      - [0x132C, .data, st_update]
+      - [0x1378, data]
+      - [0x1378, .data, collision]
+      - [0x1738, .data, e_red_door]
+      - [0x1750, .data, st_common]
+      - [0x1950, data]
+      - [0x1D5C, .data, e_particles]
+      - [0x1DDC, .data, e_room_fg]
+      - [0x1E68, data]
+      - [0x2550, .data, e_life_up]
+      - [0x25A4, data]
+      - [0x25F90, .rodata, unk_26568]
+      - [0x25FB4, .rodata, e_explosion_puff_opaque]
+      - [0x25FC8, .rodata, e_clouds]
+      - [0x25FD4, .rodata, unk_276A8]
+      - [0x25FE0, .rodata, unk_29914]
+      - [0x260C8, .rodata, e_red_door]
+      - [0x260E0, .rodata, e_collect]
+      - [0x261B4, .rodata, e_stage_name]
+      - [0x261E8, .rodata, unk_37BF8]
+      - [0x26214, .rodata, e_cloaked_knight]
+      - [0x26260, .rodata, e_medusa_head]
+      - [0x26268, .rodata, e_valhalla_knight]
+      - [0x26290, .rodata, unk_3BE58]
+      - [0x262A8, .rodata, prim_helpers]
+      - [0x262B0, .rodata, e_life_up]
+      - [0x262CC, c, unk_262CC]
+      - [0x263AC, c, e_lock_camera]
+      - [0x26568, c, unk_26568]
+      - [0x26D08, c, e_explosion_puff_opaque]
+      - [0x27254, c, e_clouds]
+      - [0x276A8, c, unk_276A8]
+      - [0x291A0, c, e_spikes]
+      - [0x29914, c, unk_29914]
+      - [0x2CEA0, c, st_update]
+      - [0x2D2D4, c, collision]
+      - [0x2EA90, c, create_entity]
+      - [0x2F608, c, e_red_door]
+      - [0x2F680, c, e_red_door]
+      - [0x302B8, c, st_common]
+      - [0x31768, c, e_collect]
+      - [0x340D8, c, e_misc]
+      - [0x36474, c, e_stage_name]
+      - [0x372C8, c, e_particles]
+      - [0x37B0C, c, e_room_fg]
+      - [0x37BF8, c, unk_37BF8]
+      - [0x39E44, c, popup]
+      - [0x3A174, c, e_cloaked_knight]
+      - [0x3AF90, c, e_medusa_head]
+      - [0x3B348, c, e_valhalla_knight]
+      - [0x3BE58, c, unk_3BE58]
+      - [0x3DD48, c, prim_helpers]
+      - [0x3E578, c, e_life_up]
+      - [0x3EE2C, bss]
+      - [0x3EEA8, .bss, create_entity]
+      - [0x3EEB8, bss]
+      - [0x3FB20, .bss, st_update]
+      - [0x3FB60, bss]
+  - [0x3FB60]
