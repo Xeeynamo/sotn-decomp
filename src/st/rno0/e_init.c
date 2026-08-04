@@ -202,7 +202,7 @@ EInit D_us_80180BC4 = {ANIMSET_OVL(10), 0, 76, 550, 0x002};
 EInit g_EInitGorgon = {ANIMSET_OVL(11), 0, 76, 560, 0x01F};
 EInit D_us_80180BDC = {ANIMSET_OVL(11), 0, 76, 560, 0x020};
 EInit D_us_80180BE8 = {ANIMSET_DRA(0), 0, 0, 0, 0x021};
-EInit D_us_80180BF4 = {ANIMSET_OVL(12), 1, 72, 576, 0x005};
+EInit g_EInitElevator = {ANIMSET_OVL(12), 1, 72, 576, 0x005};
 EInit g_EInitMedusaHead1 = {ANIMSET_OVL(13), 0, 95, 592, 0x12F};
 EInit g_EInitMedusaHead2 = {ANIMSET_OVL(13), 0, 95, 593, 0x130};
 // clang-format on
