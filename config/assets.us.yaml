@@ -1223,6 +1223,8 @@ files:
           - [0x59C, gfx_banks, graphics_banks]
           - [0x754, layout, entity_layouts]
           - [0x8F8, skip]
+          - [0x343C, rooms, rooms]
+          - [0x3578, skip]
           - [0x5638, cmpgfx, D_80185638, 128, 128, 4]
           - [0x5F20, cmpgfx, D_80185F20, 128, 128, 4]
           - [0x6E54, cmpgfx, D_80186E54, 128, 128, 4]
