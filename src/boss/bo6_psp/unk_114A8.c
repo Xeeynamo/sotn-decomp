@@ -123,13 +123,11 @@ INCLUDE_ASM("boss/bo6_psp/nonmatchings/bo6_psp/unk_114A8", func_80158B04);
 
 INCLUDE_ASM("boss/bo6_psp/nonmatchings/bo6_psp/unk_114A8", func_pspeu_09259418);
 
-void MarLoadGraphics_09259630(void) {
-}
+void MarLoadGraphics_09259630(void) {}
 
 INCLUDE_ASM("boss/bo6_psp/nonmatchings/bo6_psp/unk_114A8", func_pspeu_09259638);
 
-void MarLoadGraphics_09259858(void) {
-}
+void MarLoadGraphics_09259858(void) {}
 
 INCLUDE_ASM("boss/bo6_psp/nonmatchings/bo6_psp/unk_114A8", func_pspeu_09259860);
 

@@ -941,28 +941,22 @@ void RicEntitySubwpnCross(Entity* self) {
     self->ext.crossBoomerang.unk7E++;
     if (1 < self->step && self->step < 6) {
         if ((self->ext.crossBoomerang.unk7E & 0xF) == 1) {
-            RicCreateEntFactoryFromEntity
-            (self, BP_SUBWPN_CROSS_PARTICLES, 0);
+            RicCreateEntFactoryFromEntity(self, BP_SUBWPN_CROSS_PARTICLES, 0);
         }
         if ((self->ext.crossBoomerang.unk7E & 0xF) == 4) {
-            RicCreateEntFactoryFromEntity
-            (self, FACTORY(BP_EMBERS, 6), 0);
+            RicCreateEntFactoryFromEntity(self, FACTORY(BP_EMBERS, 6), 0);
         }
         if ((self->ext.crossBoomerang.unk7E & 0xF) == 6) {
-            RicCreateEntFactoryFromEntity
-            (self, BP_SUBWPN_CROSS_PARTICLES, 0);
+            RicCreateEntFactoryFromEntity(self, BP_SUBWPN_CROSS_PARTICLES, 0);
         }
         if ((self->ext.crossBoomerang.unk7E & 0xF) == 8) {
-            RicCreateEntFactoryFromEntity
-            (self, FACTORY(BP_EMBERS, 6), 0);
+            RicCreateEntFactoryFromEntity(self, FACTORY(BP_EMBERS, 6), 0);
         }
         if ((self->ext.crossBoomerang.unk7E & 0xF) == 12) {
-            RicCreateEntFactoryFromEntity
-            (self, FACTORY(BP_EMBERS, 6), 0);
+            RicCreateEntFactoryFromEntity(self, FACTORY(BP_EMBERS, 6), 0);
         }
         if ((self->ext.crossBoomerang.unk7E & 0xF) == 11) {
-            RicCreateEntFactoryFromEntity
-            (self, BP_SUBWPN_CROSS_PARTICLES, 0);
+            RicCreateEntFactoryFromEntity(self, BP_SUBWPN_CROSS_PARTICLES, 0);
         }
     }
     // Applies a flickering effect
@@ -1431,8 +1425,8 @@ void func_us_801C8618(Entity* self) {
             prim->preciseY.val += prim->velocityY.val;
             self->posX.i.hi = prim->preciseX.i.hi;
             self->posY.i.hi = prim->preciseY.i.hi;
-            RicCreateEntFactoryFromEntity
-            (self, BP_CRASH_REBOUND_STONE_PARTICLES, 0);
+            RicCreateEntFactoryFromEntity(
+                self, BP_CRASH_REBOUND_STONE_PARTICLES, 0);
             if (prim->preciseY.val < 0) {
                 prim->delay = 0;
                 prim->drawMode |= DRAW_HIDE;

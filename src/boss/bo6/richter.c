@@ -960,8 +960,7 @@ void RichterThinking(void) {
             if ((g_CutsceneFlags & 2) || (g_CastleFlags[SHAFT_ORB_DEFEATED]) ||
                 (g_DemoMode != Demo_None)) {
                 if (!--D_us_801CF3D0) {
-                    RicCreateEntFactoryFromEntity
-                    (g_CurrentEntity, 0x48, 0);
+                    RicCreateEntFactoryFromEntity(g_CurrentEntity, 0x48, 0);
                     func_us_801B5A14(0x10);
                 }
             }

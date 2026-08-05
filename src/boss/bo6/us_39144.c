@@ -344,8 +344,7 @@ s32 RicDoSubweapon(void) {
         return 2;
     }
 
-    RicCreateEntFactoryFromEntity
-    (g_CurrentEntity, subweapon.blueprintNum, 0);
+    RicCreateEntFactoryFromEntity(g_CurrentEntity, subweapon.blueprintNum, 0);
     g_Ric.timers[PL_T_10] = 4;
     switch (RIC.step) {
     case PL_S_RUN:
@@ -376,9 +375,7 @@ INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", RicDoAttack);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", RicDoCrash);
 
-void RicSetDeadPrologue() {
-    RicSetStep(PL_S_DEAD_PROLOGUE);
-}
+void RicSetDeadPrologue() { RicSetStep(PL_S_DEAD_PROLOGUE); }
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", RicSetSlide);
 
@@ -643,8 +640,7 @@ void func_us_801BD0B8(Entity* self) {
         if ((self->pose == 8) && (self->anim != D_us_801818A8)) {
             self->blendMode = BLEND_TRANSP;
             if (!(paramsLo & 1) && (self->poseTimer == 1)) {
-                RicCreateEntFactoryFromEntity
-                (self, FACTORY(4, 4), 0);
+                RicCreateEntFactoryFromEntity(self, FACTORY(4, 4), 0);
             }
         }
 
