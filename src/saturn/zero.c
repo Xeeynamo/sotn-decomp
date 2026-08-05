@@ -638,8 +638,8 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008AB4, func_06008AB4);
 // _SCROLL_DSP
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008B20, func_06008B20);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008C2C, func_06008C2C);
-INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f6008E3A, func_06008E3A);
-INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f6008FBE, func_06008FBE);
+INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f6008D04, func_06008D04);
+INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f6008EE8, func_06008EE8);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008FF0, func_06008FF0);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6009010, func_06009010);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6009058, func_06009058);
