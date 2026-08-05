@@ -28,7 +28,7 @@ segments:
         file: richter
         end: 0x2CEF
         function_ranges:
-          - [0x1272, 0x1426]
+          - [0xAA0, 0x13F4]
       - start: 0x2CF0
         type: c
         file: richter
@@ -40,14 +40,14 @@ segments:
         file: richter
         end: 0xD40B
         function_ranges:
-          - [0xB52A, 0xB5EA]
+          - [0xB0C4, 0xB5D8]
       - start: 0xD40C
         type: c
         file: richter
         end: 0x19D6F
         function_ranges:
-          - [0xEA0C, 0xEA46]
-          - [0x139CE, 0x13B1A]
+          - [0xE8FC, 0xEA1C]
+          - [0x13664, 0x13B12]
           - [0x14978, 0x14A4E]
       - [0x19D70, .data, ric/d54568]
       - start: 0x19D7C

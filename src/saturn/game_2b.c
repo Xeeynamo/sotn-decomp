@@ -18,7 +18,7 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078604, func_06078604);
 
 // _disp_num_string
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078684, func_06078684);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607872C, func_0607872C);
+INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078700, func_06078700);
 
 extern s32 DAT_06086390;
 
@@ -54,8 +54,8 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f60787C8, func_060787C8);
 // _SubDispSpecial
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078920, func_06078920);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60789C4, func_060789C4);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078D58, func_06078D58);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078E80, func_06078E80);
+INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078B48, func_06078B48);
+INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078E28, func_06078E28);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078F58, func_06078F58);
 
 // _SubDispSortKind
