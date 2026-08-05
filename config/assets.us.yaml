@@ -1213,6 +1213,49 @@ files:
     asset_path: assets/st/rno0
     src_path: src/st/rno0
     splat_config_path: config/splat.us.strno0.yaml
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          #- [0x2C, sprite_banks, sprite_banks]
+          - [0x8C, paldef, palette_def]
+          - [0x134, layers, layers]
+          - [0x59C, gfx_banks, graphics_banks]
+          - [0x754, layout, entity_layouts]
+          - [0x8F8, skip]
+          - [0x343C, rooms, rooms]
+          - [0x3578, skip]
+          - [0x5638, cmpgfx, D_80185638, 128, 128, 4]
+          - [0x5F20, cmpgfx, D_80185F20, 128, 128, 4]
+          - [0x6E54, cmpgfx, D_80186E54, 128, 128, 4]
+          - [0x7EB4, cmpgfx, D_80187EB4, 128, 128, 4]
+          - [0x8AC4, cmpgfx, D_80188AC4, 128, 128, 4]
+          - [0x9580, cmpgfx, D_80189580, 128, 128, 4]
+          - [0x98F4, cmpgfx, D_801898F4, 128, 128, 4]
+          - [0xA680, cmpgfx, D_8018A680, 128, 128, 4]
+          - [0xB3C0, cmpgfx, D_8018B3C0, 128, 128, 4]
+          - [0xBDF0, cmpgfx, D_8018BDF0, 128, 128, 4]
+          - [0xCBD8, cmpgfx, D_8018CBD8, 128, 128, 4]
+          - [0xD524, cmpgfx, D_8018D524, 128, 128, 4]
+          - [0xDC84, cmpgfx, D_8018DC84, 128, 128, 4]
+          - [0xE7D8, cmpgfx, D_8018E7D8, 128, 128, 4]
+          - [0xF444, cmpgfx, D_8018F444, 128, 128, 4]
+          - [0x101A0, cmpgfx, D_801901A0, 128, 128, 4]
+          - [0x10410, cmpgfx, D_80190410, 128, 128, 4]
+          - [0x10D20, palette, D_80190D20, 16]
+          - [0x10FE0, palette, D_80190FE0, 16]
+          - [0x11160, palette, D_80191160, 16]
+          - [0x11280, palette, D_80191280, 16]
+          - [0x11300, palette, D_80191300, 16]
+          - [0x11320, palette, D_80191320, 16]
+          - [0x11360, palette, D_80191360, 16]
+          - [0x11400, palette, D_80191400, 16]
+          - [0x11520, palette, D_80191520, 16]
+          - [0x11660, palette, D_80191660, 16]
+          - [0x117C0, palette, D_801917C0, 16]
+          - [0x11800, palette, D_80191800, 16]
+          - [0x11840, palette, D_80191840, 16]
+          - [0x11900, skip]
   - target: disks/us/ST/RNO1/RNO1.BIN
     asset_path: assets/st/rno1
     src_path: src/st/rno1
