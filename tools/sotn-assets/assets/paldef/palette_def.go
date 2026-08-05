@@ -8,7 +8,6 @@ import (
 	"io"
 	"os"
 	"path/filepath"
-	"sort"
 	"strings"
 
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
@@ -129,22 +128,35 @@ func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
 		return assets.InfoResult{}, err
 	}
 	palDefRange := datarange.New(start, header.Cluts.Sum(len(cluts)*4))
-	var splatEntries []assets.InfoSplatEntry
+	// a triplet entry carries the destination the palette is copied to, whose
+	// top bits are the clut id; pointer-only defs carry no destination, so
+	// their clut id is not derivable and must not be invented
+	var palettes []assets.InfoPalette
+	seen := map[psx.Addr]bool{}
 	for _, def := range defs {
 		for _, entry := range def.Entries {
-			splatEntries = append(splatEntries, assets.InfoSplatEntry{
-				DataRange: datarange.FromAddr(entry.addr, entry.Length*2),
-				Kind:      "pal",
-				Name:      fmt.Sprintf("D_%08X", uint32(entry.addr)),
+			if seen[entry.addr] {
+				continue
+			}
+			seen[entry.addr] = true
+			palettes = append(palettes, assets.InfoPalette{
+				Addr:   entry.addr,
+				Length: entry.Length * 2,
+				ClutID: entry.Destination >> 4,
+			})
+		}
+		for _, ref := range def.Data {
+			if seen[ref.addr] {
+				continue
+			}
+			seen[ref.addr] = true
+			palettes = append(palettes, assets.InfoPalette{
+				Addr:   ref.addr,
+				Length: 0x20, // a 16-colour palette; the def gives no length
+				ClutID: -1,
 			})
 		}
 	}
-	splatEntries = addGuessedUnusedPalettes(splatEntries)
-	splatEntries = append(splatEntries, assets.InfoSplatEntry{
-		DataRange: palDefRange,
-		Name:      "header",
-		Comment:   "palette definitions",
-	})
 	return assets.InfoResult{
 		AssetEntries: []assets.InfoAssetEntry{
 			{
@@ -153,7 +165,14 @@ func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
 				Name:      "palette_def",
 			},
 		},
-		SplatEntries: splatEntries,
+		SplatEntries: []assets.InfoSplatEntry{
+			{
+				DataRange: palDefRange,
+				Name:      "header",
+				Comment:   "palette definitions",
+			},
+		},
+		Palettes: palettes,
 	}, nil
 }
 
@@ -384,27 +403,4 @@ func palOpName(kind int) string {
 		return "PAL_BULK_COPY"
 	}
 	return fmt.Sprintf("%d", kind)
-}
-
-func addGuessedUnusedPalettes(entries []assets.InfoSplatEntry) []assets.InfoSplatEntry {
-	sort.Slice(entries, func(i, j int) bool {
-		return entries[i].DataRange.Begin() < entries[j].DataRange.Begin()
-	})
-	newEntries := make([]assets.InfoSplatEntry, 0, len(entries))
-	newEntries = append(newEntries, entries[0])
-	for i := 1; i < len(entries); i++ {
-		// if there is a gap between two entries then we add the new guessed unused palette
-		addrLeft := entries[i-1].DataRange.End()
-		addrRight := entries[i].DataRange.Begin()
-		if addrLeft != addrRight {
-			newEntries = append(newEntries, assets.InfoSplatEntry{
-				DataRange: datarange.New(addrLeft, addrRight),
-				Name:      fmt.Sprintf("D_%08X", uint32(addrLeft)),
-				Kind:      "pal",
-				Comment:   "unused",
-			})
-		}
-		newEntries = append(newEntries, entries[i])
-	}
-	return newEntries
 }
