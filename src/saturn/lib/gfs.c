@@ -31,15 +31,15 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601B860, func_0601B860); // _GFS_IsEof
 
 // _GFS_ByteToScts
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601B8B4, func_0601B8B4);
-INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f601B932, func_0601B932);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601B910, func_0601B910);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601B970, func_0601B970);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601B9E4, func_0601B9E4);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601BA0C, func_0601BA0C); // _GFS_Load
 
 // _GFS_Fread
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601BAD4, func_0601BAD4);
-INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f601BB86, func_0601BB86);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601BC74, func_0601BC74);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601BB6C, func_0601BB6C);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601BC14, func_0601BC14);
 
 // _GFS_NwCdRead
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601BD20, func_0601BD20);
@@ -49,7 +49,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601BD94, func_0601BD94);
 
 // _GFS_NwStop
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601BDD0, func_0601BDD0);
-INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f601BE6A, func_0601BE6A);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601BE3C, func_0601BE3C);
 
 // _gfs_recovRdErr
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601BEB8, func_0601BEB8);
@@ -59,7 +59,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601BEE8, func_0601BEE8);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601BFA8, func_0601BFA8);
 INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f601C03A, func_0601C03A);
 INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f601C09E, func_0601C09E);
-INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f601C10A, func_0601C10A);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601C0EC, func_0601C0EC);
 INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f601C16E, func_0601C16E);
 
 // _GFS_SetTrFunc
@@ -128,7 +128,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601C908, func_0601C908);
 // _gfs_loadRootDir
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601C9FC, func_0601C9FC);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601CA88, func_0601CA88); // _gfs_flowIn
-INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f601CB46, func_0601CB46);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601CB28, func_0601CB28);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601CBD4, func_0601CBD4); // _GFS_GetFad
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601CC2C, func_0601CC2C); // _gfs_SetSct
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601CC60, func_0601CC60);
@@ -136,7 +136,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601CC60, func_0601CC60);
 // _gfs_closeSub
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601CCA0, func_0601CCA0);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601CCF0, func_0601CCF0);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601CD08, func_0601CD08);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601CCFC, func_0601CCFC);
 
 // _gfs_convFinStat
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601CD50, func_0601CD50);
@@ -204,7 +204,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601DAD8, func_0601DAD8);
 
 // _GFDR_GetAtrDirId
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601DAEC, func_0601DAEC);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601DB08, func_0601DB08);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601DB04, func_0601DB04);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601DB1C, func_0601DB1C);
 
 // _GFDR_ChgDir
@@ -308,7 +308,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601F01C, func_0601F01C);
 
 // _gftr_reqTrn
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601F028, func_0601F028);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601F128, func_0601F128);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601F090, func_0601F090);
 
 // _gftr_remTrn
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601F160, func_0601F160);
