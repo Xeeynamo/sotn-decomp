@@ -1,5 +1,6 @@
 EXTERN(_binary_assets_boss_bo6_mwo_header_bin_start);
 EXTERN(Load);
+g_EInitLockCamera = 0x092666A8;
 g_EInitCommon = 0x0926EB18;
 g_EInitBreakable = 0x0926EAB8;
 g_eBreakableExplosionTypes = 0x0927BB30;

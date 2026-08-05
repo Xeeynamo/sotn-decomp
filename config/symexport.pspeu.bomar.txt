@@ -1,5 +1,7 @@
 EXTERN(_binary_assets_boss_mar_mwo_header_bin_start);
 EXTERN(MAR_Load);
+g_EInitLockCamera = 0x092666A8;
+g_EInitCommon = 0x092666B8;
 g_EInitObtainable = 0x0924BEC0;
 g_EInitParticle = 0x0924BED0;
 g_EInitInteractable = 0x0924BEF0;
