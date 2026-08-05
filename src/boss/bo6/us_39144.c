@@ -10,7 +10,7 @@ void func_us_801B9144(void) {
     Entity* entity;
     switch (RIC.step_s) {
     case 0:
-        BO6_RicSetAnimation(D_us_80181F1C);
+        RicSetAnimation(D_us_80181F1C);
         g_api.PlaySfx(SFX_BOSS_RIC_LAUGH);
         if (RIC.posX.i.hi < 0x80) {
             RIC.facingLeft = 0;
@@ -30,8 +30,8 @@ void func_us_801B9144(void) {
 
     case 2:
         if (D_us_80181278 == 0x1E) {
-            BO6_RicSetAnimation(D_us_801823C8);
-            BO6_RicCreateEntFactoryFromEntity(
+            RicSetAnimation(D_us_801823C8);
+            RicCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(E_ID_24, 0x1), 0);
             RIC.step_s++;
         }
@@ -39,15 +39,15 @@ void func_us_801B9144(void) {
     case 3:
         if (RIC.animCurFrame == 0xB5) {
             if (RIC.poseTimer == 1) {
-                BO6_RicCreateEntFactoryFromEntity(
+                RicCreateEntFactoryFromEntity(
                     g_CurrentEntity, FACTORY(E_ID_23, 0), 0);
                 g_api.PlaySfx(SFX_WEAPON_APPEAR);
             }
         }
         if (RIC.poseTimer < 0) {
             D_us_80181278 = 0x28;
-            BO6_RicSetStand(0);
-            BO6_RicCreateEntFactoryFromEntity(
+            RicSetStand(0);
+            RicCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(E_ID_21, 0x45), 0);
             g_Ric.timers[ALU_T_POISON] = 0x800;
         }
@@ -62,14 +62,14 @@ extern s16 D_us_8018221C[];
 void func_us_801B9340(void) {
     switch (RIC.step_s) {
     case 0:
-        BO6_RicResetPose();
+        RicResetPose();
         RIC.velocityY = FIX(-5);
         func_us_801B9ACC(0xFFFF1000);
         RIC.anim = D_us_8018221C;
         g_api.PlaySfx(SFX_BOSS_RIC_DEATH);
         g_Ric.damagePalette = 0x8166;
         g_Ric.timers[2] = 8;
-        BO6_RicCreateEntFactoryFromEntity(
+        RicCreateEntFactoryFromEntity(
             g_CurrentEntity, FACTORY(E_ID_21, 0x58), 0);
         RIC.step_s += 1;
         return;
@@ -77,7 +77,7 @@ void func_us_801B9340(void) {
         if ((g_Ric.vram_flag & TOUCHING_CEILING) && (FIX(-1) > RIC.velocityY)) {
             RIC.velocityY = FIX(-1);
         }
-        if (BO6_RicCheckInput(0x20280) != 0) {
+        if (RicCheckInput(0x20280) != 0) {
             RIC.step = 0x70;
             RIC.step_s = 2;
             return;
@@ -157,13 +157,13 @@ void func_us_801B96F4(void) {
     }
 }
 
-// BO6_RicSetStep
-void OVL_EXPORT(RicSetStep)(s16 step) {
+// RicSetStep
+void RicSetStep(s16 step) {
     RIC.step = step;
     RIC.step_s = 0;
 }
 
-void OVL_EXPORT(RicSetAnimation)(AnimationFrame* anim) {
+void RicSetAnimation(AnimationFrame* anim) {
     g_CurrentEntity->anim = anim;
     g_CurrentEntity->poseTimer = 0;
     g_CurrentEntity->pose = 0;
@@ -171,9 +171,9 @@ void OVL_EXPORT(RicSetAnimation)(AnimationFrame* anim) {
 
 #include "../../decelerate.h"
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicCheckFacing);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", RicCheckFacing);
 
-void BO6_RicSetSpeedX(s32 speed) {
+void RicSetSpeedX(s32 speed) {
     if (g_CurrentEntity->facingLeft == 1)
         speed = -speed;
     g_CurrentEntity->velocityX = speed;
@@ -186,10 +186,10 @@ void func_us_801B9ACC(s32 speed) {
     RIC.velocityX = speed;
 }
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicSetInvincibilityFrames);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", RicSetInvincibilityFrames);
 
 // similar to func_8010DFF0 in DRA or func_us_801C5354 in BO4
-void OVL_EXPORT(DisableAfterImage)(s32 resetAnims, s32 time) {
+void DisableAfterImage(s32 resetAnims, s32 time) {
     Primitive* prim;
 
     if (resetAnims) {
@@ -216,30 +216,30 @@ void func_us_801B9C14() {
     g_Entities[65].ext.afterImage.disableFlag = 0;
 }
 
-void BO6_RicSetDebug() { OVL_EXPORT(RicSetStep)(PL_S_DEBUG); }
+void RicSetDebug() { RicSetStep(PL_S_DEBUG); }
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicSetCrouch);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", RicSetCrouch);
 
 extern AnimationFrame ric_anim_stand[];
 
-void BO6_RicSetStand(s32 velocityX) {
+void RicSetStand(s32 velocityX) {
     RIC.velocityX = velocityX;
     RIC.velocityY = 0;
     g_Ric.unk44 = 0;
-    OVL_EXPORT(RicSetStep)(PL_S_STAND);
-    OVL_EXPORT(RicSetAnimation)(ric_anim_stand);
+    RicSetStep(PL_S_STAND);
+    RicSetAnimation(ric_anim_stand);
 }
 
 extern s16 D_us_801821F8[];
 
 void func_us_801B9D74(void) {
     g_Ric.unk44 = 0;
-    BO6_RicSetStep(0x1A);
-    BO6_RicSetAnimation(D_us_801821F8);
-    BO6_RicSetSpeedX(FIX(2.25));
+    RicSetStep(0x1A);
+    RicSetAnimation(D_us_801821F8);
+    RicSetSpeedX(FIX(2.25));
     g_Ric.timers[11] = 0x28;
     RIC.velocityY = 0;
-    BO6_RicCreateEntFactoryFromEntity(g_CurrentEntity, 0x50001, 0);
+    RicCreateEntFactoryFromEntity(g_CurrentEntity, 0x50001, 0);
 }
 
 extern s16 D_us_80182010[];
@@ -251,9 +251,9 @@ void func_us_801B9DE4(void) {
         g_Ric.timers[1] = 8;
         g_Ric.timers[1] = g_Ric.timers[8] = 12;
         g_Ric.unk44 = 0;
-        BO6_RicSetStep(2);
-        BO6_RicSetAnimation(D_us_80182010);
-        BO6_RicSetSpeedX(FIX(1.25));
+        RicSetStep(2);
+        RicSetAnimation(D_us_80182010);
+        RicSetSpeedX(FIX(1.25));
         RIC.velocityY = 0;
     }
 }
@@ -262,42 +262,42 @@ extern s16 D_us_80182078[];
 extern s16 D_us_80182094[];
 
 void func_us_801B9E70(void) {
-    if ((BO6_RicCheckFacing() != 0) || (RIC.step == 0x18)) {
-        BO6_RicSetAnimation(D_us_80182094);
+    if ((RicCheckFacing() != 0) || (RIC.step == 0x18)) {
+        RicSetAnimation(D_us_80182094);
         if (RIC.step == 0x1A) {
-            BO6_RicSetSpeedX(FIX(2.25));
+            RicSetSpeedX(FIX(2.25));
             g_Ric.unk44 = 0x10;
         } else {
-            BO6_RicSetSpeedX(0x14000);
+            RicSetSpeedX(0x14000);
             g_Ric.unk44 = 0;
         }
     } else {
-        BO6_RicSetAnimation(D_us_80182078);
+        RicSetAnimation(D_us_80182078);
         RIC.velocityX = 0;
         g_Ric.unk44 = 4;
     }
-    BO6_RicSetStep(5);
+    RicSetStep(5);
     RIC.velocityY = FIX(-4.6875);
 }
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicSetFall);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", RicSetFall);
 
 extern s16 D_us_80182324[];
 
 void func_us_801BA050(void) {
-    BO6_RicSetStep(9);
+    RicSetStep(9);
     RIC.velocityX = 0;
-    BO6_RicSetSpeedX(FIX(1.25));
+    RicSetSpeedX(FIX(1.25));
     RIC.velocityY = FIX(-7.5);
     g_Ric.high_jump_timer = 0;
-    BO6_RicSetAnimation(D_us_80182324);
+    RicSetAnimation(D_us_80182324);
     func_us_801B9C14();
-    BO6_RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x2D, 0), 0);
+    RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x2D, 0), 0);
     g_api.PlaySfx(SFX_BOSS_RIC_ATTACK_B);
     g_Ric.timers[12] = 4;
 }
 
-static s32 OVL_EXPORT(RicCheckSubwpnChainLimit)(s16 subwpnId, s16 limit) {
+static s32 RicCheckSubwpnChainLimit(s16 subwpnId, s16 limit) {
     Entity* entity;
     s32 i;
     u32 nEmpty;
@@ -329,7 +329,7 @@ static s32 OVL_EXPORT(RicCheckSubwpnChainLimit)(s16 subwpnId, s16 limit) {
 extern u16 D_us_80182170[][2];
 extern u16 D_us_801821C0[][2];
 
-s32 OVL_EXPORT(RicDoSubweapon)(void) {
+s32 RicDoSubweapon(void) {
     SubweaponDef subweapon;
     s16 subweaponId;
     s16 chainLimit;
@@ -338,31 +338,30 @@ s32 OVL_EXPORT(RicDoSubweapon)(void) {
         return 1;
     }
 
-    subweaponId = BO6_RicCheckSubweapon(&subweapon, 0, 0);
+    subweaponId = RicCheckSubweapon(&subweapon, 0, 0);
     chainLimit = subweapon.chainLimit;
-    if (OVL_EXPORT(RicCheckSubwpnChainLimit)(subweaponId, chainLimit) < 0) {
+    if (RicCheckSubwpnChainLimit(subweaponId, chainLimit) < 0) {
         return 2;
     }
 
-    OVL_EXPORT(RicCreateEntFactoryFromEntity)
-    (g_CurrentEntity, subweapon.blueprintNum, 0);
+    RicCreateEntFactoryFromEntity(g_CurrentEntity, subweapon.blueprintNum, 0);
     g_Ric.timers[PL_T_10] = 4;
     switch (RIC.step) {
     case PL_S_RUN:
         RIC.step = PL_S_STAND;
-        OVL_EXPORT(RicCreateEntFactoryFromEntity)(g_CurrentEntity, 0U, 0);
-        BO6_RicSetAnimation(D_us_80182170);
+        RicCreateEntFactoryFromEntity(g_CurrentEntity, 0U, 0);
+        RicSetAnimation(D_us_80182170);
         break;
     case PL_S_STAND:
     case PL_S_WALK:
     case PL_S_CROUCH:
         RIC.step = PL_S_STAND;
-        BO6_RicSetAnimation(D_us_80182170);
+        RicSetAnimation(D_us_80182170);
         break;
     case PL_S_FALL:
     case PL_S_JUMP:
         RIC.step = PL_S_JUMP;
-        BO6_RicSetAnimation(D_us_801821C0);
+        RicSetAnimation(D_us_801821C0);
         break;
     }
     g_Ric.unk46 = 3;
@@ -372,23 +371,21 @@ s32 OVL_EXPORT(RicDoSubweapon)(void) {
     return 0;
 }
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicDoAttack);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", RicDoAttack);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicDoCrash);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", RicDoCrash);
 
-void OVL_EXPORT(RicSetDeadPrologue)() {
-    OVL_EXPORT(RicSetStep)(PL_S_DEAD_PROLOGUE);
-}
+void RicSetDeadPrologue() { RicSetStep(PL_S_DEAD_PROLOGUE); }
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicSetSlide);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", RicSetSlide);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicSetSlideKick);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", RicSetSlideKick);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801BA9D0);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicCheckInput);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", RicCheckInput);
 
-Entity* OVL_EXPORT(RicGetFreeEntity)(s16 start, s16 end) {
+Entity* RicGetFreeEntity(s16 start, s16 end) {
     Entity* entity = &g_Entities[start];
     s16 i;
 
@@ -402,7 +399,7 @@ Entity* OVL_EXPORT(RicGetFreeEntity)(s16 start, s16 end) {
 
 // pl_blueprints?
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicGetFreeEntityReverse);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", RicGetFreeEntityReverse);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801BB314);
 
@@ -410,7 +407,7 @@ INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801BB370);
 
 extern SubweaponDef subweapons_def[];
 
-s32 BO6_RicCheckSubweapon(
+s32 RicCheckSubweapon(
     SubweaponDef* actualSubwpn, s32 isItemCrash, s32 useHearts) {
     SubweaponDef* subwpn;
     SubweaponDef* wpn;
@@ -461,9 +458,9 @@ s32 BO6_RicCheckSubweapon(
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801BB5BC);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntityHitByHoly);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", RicEntityHitByHoly);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntityHitByDark);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", RicEntityHitByDark);
 
 void func_us_801BBBC0(void) {}
 
@@ -519,9 +516,9 @@ void func_us_801BBBD0(void) {
     }
 }
 
-Entity* OVL_EXPORT(RicCreateEntFactoryFromEntity)(
+Entity* RicCreateEntFactoryFromEntity(
     Entity* source, u32 factoryParams, s32 arg2) {
-    Entity* entity = OVL_EXPORT(RicGetFreeEntity)(68, 80);
+    Entity* entity = RicGetFreeEntity(68, 80);
     if (!entity) {
         return NULL;
     }
@@ -538,7 +535,7 @@ Entity* OVL_EXPORT(RicCreateEntFactoryFromEntity)(
     return entity;
 }
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntityFactory);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", RicEntityFactory);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801BC2F0);
 
@@ -582,7 +579,7 @@ INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801BC5C8);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801BC678);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntityHitByCutBlood);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", RicEntityHitByCutBlood);
 
 extern AnimationFrame D_us_801818A8[];
 extern AnimationFrame D_us_801819D0[];
@@ -643,8 +640,7 @@ void func_us_801BD0B8(Entity* self) {
         if ((self->pose == 8) && (self->anim != D_us_801818A8)) {
             self->blendMode = BLEND_TRANSP;
             if (!(paramsLo & 1) && (self->poseTimer == 1)) {
-                OVL_EXPORT(RicCreateEntFactoryFromEntity)
-                (self, FACTORY(4, 4), 0);
+                RicCreateEntFactoryFromEntity(self, FACTORY(4, 4), 0);
             }
         }
 
@@ -668,7 +664,7 @@ extern s16 D_us_80181AA4[][10];
 extern s16* D_us_801A39B0[];
 extern u8* richter_sprites[];
 
-void BO6_RicEntityPlayerBlinkWhite(Entity* self) {
+void RicEntityPlayerBlinkWhite(Entity* self) {
     u8 xMargin;
     u8 yMargin;
     s16 angle;
@@ -1024,6 +1020,6 @@ void BO6_RicEntityPlayerBlinkWhite(Entity* self) {
         prim = prim->next;
     }
     if ((upperParams & 0x3F) == 0 || (upperParams & 0x3F) == 7) {
-        BO6_RicSetInvincibilityFrames(1, 10);
+        RicSetInvincibilityFrames(1, 10);
     }
 }

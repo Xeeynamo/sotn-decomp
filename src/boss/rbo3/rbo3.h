@@ -6,7 +6,6 @@
 #include <stage.h>
 
 #define STAGE_IS_RBO3
-#define OVL_EXPORT(x) RBO3_##x
 
 typedef enum {
     /* 0x00 */ E_NONE,

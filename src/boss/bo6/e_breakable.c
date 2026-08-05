@@ -19,6 +19,8 @@ static u8 blend_modes[8] = {
     BLEND_TRANSP | BLEND_ADD,
 };
 
+#ifndef VERSION_PSP
 static u8 unused[] = {0, 0, 0, 0, 0, 0, 0, 0};
+#endif
 
 #include "../../st/e_breakable.h"

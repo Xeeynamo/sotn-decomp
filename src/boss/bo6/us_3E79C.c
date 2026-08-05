@@ -4,11 +4,11 @@
 INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", func_us_801BE79C);
 
 INCLUDE_ASM(
-    "boss/bo6/nonmatchings/us_3E79C", BO6_RicEntityShrinkingPowerUpRing);
+    "boss/bo6/nonmatchings/us_3E79C", RicEntityShrinkingPowerUpRing);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_RicEntityHitByIce);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", RicEntityHitByIce);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_RicEntityHitByLightning);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", RicEntityHitByLightning);
 
 extern EInit D_us_801804B4;
 extern AnimationFrame D_us_80181E78[];
@@ -191,8 +191,8 @@ void func_us_801C03E8(Entity* self) {
 
         break;
     case 20:
-        BO6_RicCreateEntFactoryFromEntity(self, 0x49, 0);
-        BO6_RicCreateEntFactoryFromEntity(self, 0x4B, 0);
+        RicCreateEntFactoryFromEntity(self, 0x49, 0);
+        RicCreateEntFactoryFromEntity(self, 0x4B, 0);
         self->step++;
         break;
     case 21:
@@ -227,7 +227,7 @@ void func_us_801C03E8(Entity* self) {
                 (RIC.step != PL_S_DEAD)) {
                 sp30 = 1;
                 if (self->ext.ILLEGAL.s16[1]) {
-                    BO6_RicCreateEntFactoryFromEntity(self, 0x590021, 0);
+                    RicCreateEntFactoryFromEntity(self, 0x590021, 0);
                 }
             }
         }
@@ -399,7 +399,7 @@ void EntityShaft(Entity* self) {
 }
 
 // TODO: rename ShaftOrb
-Entity* BO6_RicGetFreeEntity(s16, s16);
+Entity* RicGetFreeEntity(s16, s16);
 extern u8 D_us_80181E9C[];
 
 void func_us_801C0FE8(Entity* self) {
@@ -462,7 +462,7 @@ void func_us_801C0FE8(Entity* self) {
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         if (--self->ext.shaftOrb.timer == 0) {
-            BO6_RicCreateEntFactoryFromEntity(self, 0x4A, 0);
+            RicCreateEntFactoryFromEntity(self, 0x4A, 0);
             self->velocityY = (rand() & 0x7FFF) + 0xFFFF0000;
             self->velocityX = self->velocityX >> 2;
             self->ext.shaftOrb.timer = 1;
@@ -471,7 +471,7 @@ void func_us_801C0FE8(Entity* self) {
         break;
     case 3:
         if ((self->ext.shaftOrb.timer % 4) == 0) {
-            entity = BO6_RicGetFreeEntity(0x50, 0x8F);
+            entity = RicGetFreeEntity(0x50, 0x8F);
             if (entity != NULL) {
                 DestroyEntity(entity);
                 entity->entityId = 0x43;
@@ -531,9 +531,9 @@ void func_us_801C13A8(Entity* self) {
     }
 }
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_RicEntityWhip);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", RicEntityWhip);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_RicEntityArmBrandishWhip);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", RicEntityArmBrandishWhip);
 
 extern s16 D_us_80182870[];
 // same as `ric` `func_80167964` except `g_Ric`/`g_Player` reference and lookup
@@ -561,15 +561,15 @@ void func_us_801C277C(void) {}
 void func_us_801C2784(void) {}
 
 INCLUDE_ASM(
-    "boss/bo6/nonmatchings/us_3E79C", BO6_RicEntitySubwpnHolyWaterBreakGlass);
+    "boss/bo6/nonmatchings/us_3E79C", RicEntitySubwpnHolyWaterBreakGlass);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_RicEntityCrashHydroStorm);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", RicEntityCrashHydroStorm);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_DebugShowWaitInfo);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", DebugShowWaitInfo);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_DebugInputWait);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", DebugInputWait);
 
-s32 OVL_EXPORT(RicCheckHolyWaterCollision)(s16 height, s16 width) {
+s32 RicCheckHolyWaterCollision(s16 height, s16 width) {
     Collider collider;
     Collider collider2;
     s16 maskedEffects;
@@ -629,7 +629,7 @@ static int func_8016840C() { return EFFECT_NONE; }
 
 extern EInit D_us_80180460;
 
-void OVL_EXPORT(RicEntitySubwpnHolyWater)(Entity* self) {
+void RicEntitySubwpnHolyWater(Entity* self) {
     s16 xMod;
     s32 colRes;
 
@@ -670,18 +670,18 @@ void OVL_EXPORT(RicEntitySubwpnHolyWater)(Entity* self) {
 
     case 1:
         self->posY.val += self->velocityY;
-        colRes = BO6_RicCheckHolyWaterCollision(0, 0);
+        colRes = RicCheckHolyWaterCollision(0, 0);
         self->posX.val += self->velocityX;
 
         if ((colRes & EFFECT_SOLID) || (self->hitFlags != 0)) {
-            BO6_RicCreateEntFactoryFromEntity(self, 0x28, 0);
+            RicCreateEntFactoryFromEntity(self, 0x28, 0);
             g_api.PlaySfx(SFX_RIC_HOLY_WATER_ATTACK);
             self->ext.holywater.timer = 80;
             self->animSet = 0;
             self->step = 3;
             self->velocityX >>= 2;
         } else if (self->flags & FLAG_DEAD) {
-            BO6_RicCreateEntFactoryFromEntity(self, 0x28, 0);
+            RicCreateEntFactoryFromEntity(self, 0x28, 0);
             g_api.PlaySfx(SFX_RIC_HOLY_WATER_ATTACK);
             self->ext.holywater.timer = 80;
             self->animSet = 0;
@@ -705,14 +705,14 @@ void OVL_EXPORT(RicEntitySubwpnHolyWater)(Entity* self) {
             self->velocityX = 0;
         }
         if (!(self->ext.holywater.timer & 3)) {
-            BO6_RicCreateEntFactoryFromEntity(
+            RicCreateEntFactoryFromEntity(
                 self, FACTORY(BP_HOLYWATER_FIRE, self->ext.holywater.unk82), 0);
             self->ext.holywater.unk82 += 1;
             self->velocityX -= (self->velocityX / 32);
         }
 
         self->posX.val += self->velocityX;
-        colRes = OVL_EXPORT(RicCheckHolyWaterCollision)(6, 0);
+        colRes = RicCheckHolyWaterCollision(6, 0);
         if (!(colRes & EFFECT_SOLID)) {
             self->velocityX >>= 1;
             self->step++;
@@ -724,7 +724,7 @@ void OVL_EXPORT(RicEntitySubwpnHolyWater)(Entity* self) {
         }
 
         if (!(self->ext.holywater.timer & 3)) {
-            BO6_RicCreateEntFactoryFromEntity(
+            RicCreateEntFactoryFromEntity(
                 self, FACTORY(BP_HOLYWATER_FIRE, self->ext.holywater.unk82), 0);
             self->ext.holywater.unk82 += 1;
         }
@@ -733,7 +733,7 @@ void OVL_EXPORT(RicEntitySubwpnHolyWater)(Entity* self) {
             self->velocityY = FIX(4);
         }
         self->posY.val += self->velocityY;
-        colRes = BO6_RicCheckHolyWaterCollision(0, 0);
+        colRes = RicCheckHolyWaterCollision(0, 0);
         self->posX.val += self->velocityX;
         xMod = 4;
         if (self->velocityX < 0) {
@@ -767,9 +767,9 @@ void OVL_EXPORT(RicEntitySubwpnHolyWater)(Entity* self) {
 }
 
 INCLUDE_ASM(
-    "boss/bo6/nonmatchings/us_3E79C", BO6_RicEntitySubwpnHolyWaterFlame);
+    "boss/bo6/nonmatchings/us_3E79C", RicEntitySubwpnHolyWaterFlame);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_RicEntitySubwpnCrashCross);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", RicEntitySubwpnCrashCross);
 
 extern EInit D_us_80180454;
 extern s16 D_us_801D10C8;
@@ -778,7 +778,7 @@ extern AnimationFrame anim_cross_boomerang[];
 extern Point16 D_us_801D08C4[4][128];
 extern s32 D_us_801D10C4;
 
-void OVL_EXPORT(RicEntitySubwpnCross)(Entity* self) {
+void RicEntitySubwpnCross(Entity* self) {
     s16 playerHitboxX;
     s16 playerHitboxY;
     s16 rotate;
@@ -797,13 +797,13 @@ void OVL_EXPORT(RicEntitySubwpnCross)(Entity* self) {
         self->ext.crossBoomerang.unk84 = D_us_801D08C4[D_us_801D10C4];
         D_us_801D10C4++;
         D_us_801D10C4 &= 3;
-        OVL_EXPORT(RicCreateEntFactoryFromEntity)(self, BP_5, 0);
+        RicCreateEntFactoryFromEntity(self, BP_5, 0);
         self->animSet = ANIMSET_OVL(4);
         self->unk5A = 0x44;
         self->anim = anim_cross_boomerang;
         self->facingLeft = RIC.facingLeft;
         self->zPriority = RIC.zPriority;
-        OVL_EXPORT(RicSetSpeedX)(FIX(3.5625));
+        RicSetSpeedX(FIX(3.5625));
         self->drawFlags = ENTITY_ROTATE;
         self->rotate = ROT(270);
         self->hitboxWidth = 8;
@@ -941,28 +941,22 @@ void OVL_EXPORT(RicEntitySubwpnCross)(Entity* self) {
     self->ext.crossBoomerang.unk7E++;
     if (1 < self->step && self->step < 6) {
         if ((self->ext.crossBoomerang.unk7E & 0xF) == 1) {
-            OVL_EXPORT(RicCreateEntFactoryFromEntity)
-            (self, BP_SUBWPN_CROSS_PARTICLES, 0);
+            RicCreateEntFactoryFromEntity(self, BP_SUBWPN_CROSS_PARTICLES, 0);
         }
         if ((self->ext.crossBoomerang.unk7E & 0xF) == 4) {
-            OVL_EXPORT(RicCreateEntFactoryFromEntity)
-            (self, FACTORY(BP_EMBERS, 6), 0);
+            RicCreateEntFactoryFromEntity(self, FACTORY(BP_EMBERS, 6), 0);
         }
         if ((self->ext.crossBoomerang.unk7E & 0xF) == 6) {
-            OVL_EXPORT(RicCreateEntFactoryFromEntity)
-            (self, BP_SUBWPN_CROSS_PARTICLES, 0);
+            RicCreateEntFactoryFromEntity(self, BP_SUBWPN_CROSS_PARTICLES, 0);
         }
         if ((self->ext.crossBoomerang.unk7E & 0xF) == 8) {
-            OVL_EXPORT(RicCreateEntFactoryFromEntity)
-            (self, FACTORY(BP_EMBERS, 6), 0);
+            RicCreateEntFactoryFromEntity(self, FACTORY(BP_EMBERS, 6), 0);
         }
         if ((self->ext.crossBoomerang.unk7E & 0xF) == 12) {
-            OVL_EXPORT(RicCreateEntFactoryFromEntity)
-            (self, FACTORY(BP_EMBERS, 6), 0);
+            RicCreateEntFactoryFromEntity(self, FACTORY(BP_EMBERS, 6), 0);
         }
         if ((self->ext.crossBoomerang.unk7E & 0xF) == 11) {
-            OVL_EXPORT(RicCreateEntFactoryFromEntity)
-            (self, BP_SUBWPN_CROSS_PARTICLES, 0);
+            RicCreateEntFactoryFromEntity(self, BP_SUBWPN_CROSS_PARTICLES, 0);
         }
     }
     // Applies a flickering effect
@@ -986,17 +980,17 @@ void OVL_EXPORT(RicEntitySubwpnCross)(Entity* self) {
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", func_us_801C488C);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_RicEntitySubwpnCrossTrail);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", RicEntitySubwpnCrossTrail);
 
 INCLUDE_ASM(
-    "boss/bo6/nonmatchings/us_3E79C", BO6_RicEntitySubwpnCrashCrossParticles);
+    "boss/bo6/nonmatchings/us_3E79C", RicEntitySubwpnCrashCrossParticles);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_RicEntitySubwpnThrownAxe);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", RicEntitySubwpnThrownAxe);
 
 extern EInit D_us_80180490;
 extern u8 D_us_8018299C[];
 
-void OVL_EXPORT(RicEntityCrashAxe)(Entity* self) {
+void RicEntityCrashAxe(Entity* self) {
     Primitive* primFirst;
     Primitive* prim;
     s16 angle1;
@@ -1214,25 +1208,25 @@ void OVL_EXPORT(RicEntityCrashAxe)(Entity* self) {
     }
 }
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_RicEntitySubwpnKnife);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", RicEntitySubwpnKnife);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_ReboundStoneBounce1);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", ReboundStoneBounce1);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_ReboundStoneBounce2);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", ReboundStoneBounce2);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_RicEntitySubwpnReboundStone);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", RicEntitySubwpnReboundStone);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_RicEntitySubwpnThrownVibhuti);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", RicEntitySubwpnThrownVibhuti);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_PrimDecreaseBrightness);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_RicEntitySubwpnAgunea);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", RicEntitySubwpnAgunea);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_RicEntityAguneaHitEnemy);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", RicEntityAguneaHitEnemy);
 
 extern AnimationFrame D_us_801829D4[];
 
-void BO6_RicEntityVibhutiCrashCloud(Entity* self) {
+void RicEntityVibhutiCrashCloud(Entity* self) {
     s32 angle;
 
     switch (self->step) {
@@ -1277,7 +1271,7 @@ void BO6_RicEntityVibhutiCrashCloud(Entity* self) {
     }
 }
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_RicEntityCrashVibhuti);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", RicEntityCrashVibhuti);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", func_us_801C8590);
 
@@ -1431,8 +1425,8 @@ void func_us_801C8618(Entity* self) {
             prim->preciseY.val += prim->velocityY.val;
             self->posX.i.hi = prim->preciseX.i.hi;
             self->posY.i.hi = prim->preciseY.i.hi;
-            OVL_EXPORT(RicCreateEntFactoryFromEntity)
-            (self, BP_CRASH_REBOUND_STONE_PARTICLES, 0);
+            RicCreateEntFactoryFromEntity(
+                self, BP_CRASH_REBOUND_STONE_PARTICLES, 0);
             if (prim->preciseY.val < 0) {
                 prim->delay = 0;
                 prim->drawMode |= DRAW_HIDE;
@@ -1454,35 +1448,35 @@ void func_us_801C8618(Entity* self) {
 }
 
 INCLUDE_ASM(
-    "boss/bo6/nonmatchings/us_3E79C", BO6_RicEntityCrashReboundStoneExplosion);
+    "boss/bo6/nonmatchings/us_3E79C", RicEntityCrashReboundStoneExplosion);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_RicEntityCrashReboundStone);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", RicEntityCrashReboundStone);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_RicEntityCrashBibleBeam);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", RicEntityCrashBibleBeam);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_RicEntityCrashBible);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", RicEntityCrashBible);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", func_us_801C9DE8);
 
 void func_us_801CA340(Entity* self) {
-    OVL_EXPORT(RicCreateEntFactoryFromEntity)(self, FACTORY(0x3F, 1), 0);
+    RicCreateEntFactoryFromEntity(self, FACTORY(0x3F, 1), 0);
     DestroyEntity(self);
 }
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_GetAguneaLightningAngle);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", GetAguneaLightningAngle);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_AguneaShuffleParams);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", AguneaShuffleParams);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_RicEntityAguneaLightning);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", RicEntityAguneaLightning);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_RicEntityAguneaCircle);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", RicEntityAguneaCircle);
 
 INCLUDE_ASM(
-    "boss/bo6/nonmatchings/us_3E79C", BO6_RicEntitySubwpnStopwatchCircle);
+    "boss/bo6/nonmatchings/us_3E79C", RicEntitySubwpnStopwatchCircle);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_EntityStopWatch);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", EntityStopWatch);
 
-void OVL_EXPORT(RicEntitySubwpnBibleTrail)(Entity* entity) {
+void RicEntitySubwpnBibleTrail(Entity* entity) {
     Primitive* prim;
 
     switch (entity->step) {
@@ -1524,10 +1518,10 @@ void OVL_EXPORT(RicEntitySubwpnBibleTrail)(Entity* entity) {
     PCOL(prim) = entity->ext.et_BibleSubwpn.unk7E;
 }
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_RicEntitySubwpnBible);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", RicEntitySubwpnBible);
 
 INCLUDE_RODATA("boss/bo6/nonmatchings/us_3E79C", D_us_801A7028);
 
 INCLUDE_RODATA("boss/bo6/nonmatchings/us_3E79C", D_us_801A7030);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_RicEntityCrashCrossBeam);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", RicEntityCrashCrossBeam);

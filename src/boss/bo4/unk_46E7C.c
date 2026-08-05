@@ -124,13 +124,13 @@ void DopplegangerStepHighJump(void) {
     }
 }
 
-s32 OVL_EXPORT(func_801133E68)(void) {
+s32 func_801133E68(void) {
     s16 rnd = rand() & PSP_RANDMASK;
     DOPPLEGANGER.ext.player.anim = 0x2E + (rnd % 3);
     return rnd % 16;
 }
 
-void OVL_EXPORT(func_8010FAF4)();
+void func_8010FAF4();
 
 // similar to DRA's func_80113EE0
 static void func_us_801C72BC(void) {
@@ -144,7 +144,7 @@ static void func_us_801C72BC(void) {
     g_Dop.unk46 = 0;
     DOPPLEGANGER.rotate = 0;
     if (g_Entities[STAGE_ENTITY_START + 16].entityId == E_MIST) {
-        OVL_EXPORT(func_8010FAF4)();
+        func_8010FAF4();
     }
 }
 
@@ -175,7 +175,7 @@ void DopplegangerHandleDamage(DamageParam* damage, s16 step, s16 step_s) {
             DOPPLEGANGER.velocityY = FIX(-4);
             DopSetVelocity(FIX(-5.0 / 6));
             DOPPLEGANGER.step_s = 1;
-            if (OVL_EXPORT(func_801133E68)() == 0) {
+            if (func_801133E68() == 0) {
                 DOPPLEGANGER.ext.player.anim = 0x40;
             }
             break;
@@ -209,7 +209,7 @@ void DopplegangerHandleDamage(DamageParam* damage, s16 step, s16 step_s) {
                 DOPPLEGANGER.velocityY = FIX(-2);
                 DopSetVelocity(FIX(-1.25));
                 DOPPLEGANGER.step_s = 1;
-                OVL_EXPORT(func_801133E68)();
+                func_801133E68();
                 break;
             }
             break;
@@ -282,10 +282,10 @@ void DopplegangerHandleDamage(DamageParam* damage, s16 step, s16 step_s) {
         }
         if (DOPPLEGANGER.poseTimer < 0) {
             if (DOPPLEGANGER.step_s == 6) {
-                OVL_EXPORT(func_8010E570)(0);
+                func_8010E570(0);
                 return;
             }
-            OVL_EXPORT(func_8010E470)(0, DOPPLEGANGER.velocityX);
+            func_8010E470(0, DOPPLEGANGER.velocityX);
         }
         break;
     }
@@ -473,7 +473,7 @@ void DopplegangerStepKill(DamageParam* damage, s16 dopStep, s16 arg2) {
 
 extern AnimationFrame D_us_80183B0C[];
 
-s32 OVL_EXPORT(BatFormFinished)(void) {
+s32 BatFormFinished(void) {
     if ((DOPPLEGANGER.step_s == 0) || !(g_Dop.padTapped & 8)) {
         return false;
     }
@@ -521,7 +521,7 @@ void ControlBatForm(void) {
     s16 x_offset;
     u32 directionsPressed;
 
-    if (OVL_EXPORT(BatFormFinished)()) {
+    if (BatFormFinished()) {
         return;
     }
 
@@ -561,7 +561,7 @@ void ControlBatForm(void) {
                 newEntity = CreateEntFactoryFromEntity(
                     g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x20), 0);
 
-                OVL_EXPORT(func_8010FAF4)();
+                func_8010FAF4();
                 g_Dop.unk66++;
             }
             DecelerateX(FIX(9.0 / 512.0));
@@ -589,7 +589,7 @@ void ControlBatForm(void) {
         DOPPLEGANGER.poseTimer = 1;
         DOPPLEGANGER.pose = 2;
         DOPPLEGANGER.palette = PAL_FLAG(0x200);
-        OVL_EXPORT(CheckMoveDirection)();
+        CheckMoveDirection();
         DOPPLEGANGER.step_s++;
         break;
     case 1:
@@ -736,7 +736,7 @@ void ControlBatForm(void) {
         if (!DOPPLEGANGER.facingLeft && (g_Dop.vram_flag & TOUCHING_R_WALL) ||
             DOPPLEGANGER.facingLeft && (g_Dop.vram_flag & TOUCHING_L_WALL)) {
             g_Dop.padTapped = PAD_R1;
-            OVL_EXPORT(BatFormFinished)();
+            BatFormFinished();
             g_api.func_80102CD8(2);
             g_api.PlaySfx(SFX_WALL_DEBRIS_B);
             DOPPLEGANGER.velocityX = 0;
@@ -747,7 +747,7 @@ void ControlBatForm(void) {
         // When wing smash ends, force an un-transform
         if (--g_WingSmashTimer == 0) {
             g_Dop.padTapped = PAD_R1;
-            OVL_EXPORT(BatFormFinished)();
+            BatFormFinished();
             g_Dop.demo_timer = 32;
             g_Dop.padSim = 0;
         } else {
@@ -882,7 +882,7 @@ void DopplegangerStepUnmorphBat(void) {
                 DOPPLEGANGER.velocityY = FIX(-1);
             }
             DOPPLEGANGER.palette = PAL_FLAG(0x200);
-            OVL_EXPORT(func_80111CC0)();
+            func_80111CC0();
         }
         break;
     }
@@ -892,7 +892,7 @@ s32 func_us_801C8EE4(void) {
     if (DOPPLEGANGER.step_s == 0 || !(g_Dop.padTapped & PAD_R2)) {
         return false;
     }
-    OVL_EXPORT(CheckMoveDirection)();
+    CheckMoveDirection();
     SetDopplegangerStep(15);
     return true;
 }
@@ -904,10 +904,10 @@ void ControlMistForm(void) {
         padDirection = g_Dop.padPressed & PAD_DIRECTION_MASK;
         switch (DOPPLEGANGER.step_s) {
         case 0:
-            OVL_EXPORT(CheckMoveDirection)();
+            CheckMoveDirection();
             g_Dop.unk44 = g_Dop.unk46 = g_Dop.unk48 = 0;
             g_api.func_800EA5E4(ANIMSET_OVL(3));
-            OVL_EXPORT(func_8010FAF4)();
+            func_8010FAF4();
             CreateEntFactoryFromEntity(g_CurrentEntity, 0x49U, 0);
             if (DOPPLEGANGER.velocityX > 0) {
                 DOPPLEGANGER.velocityX = FIX(1);
@@ -1092,13 +1092,13 @@ void DopplegangerStepUnmorphMist(void) {
         }
         if (g_Entities[E_ID_50].step == 5) {
             DOPPLEGANGER.palette = PAL_FLAG(0x200);
-            OVL_EXPORT(func_8010FAF4)();
+            func_8010FAF4();
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x2C, 0x5B), 0);
             func_us_801C58E4();
             if (!(g_Dop.vram_flag & TOUCHING_ANY_SLOPE)) {
                 DOPPLEGANGER.velocityY = FIX(-1);
             }
-            OVL_EXPORT(func_80111CC0)();
+            func_80111CC0();
         }
     }
 }
@@ -1114,7 +1114,7 @@ void DopplegangerStepSwordWarp(void) {
         }
     } else if (--D_us_801D3D44 == 0) {
         DOPPLEGANGER.palette = PAL_FLAG(0x200);
-        OVL_EXPORT(func_8010E570)(0);
+        func_8010E570(0);
     }
 }
 
@@ -1132,7 +1132,7 @@ void DopplegangerStepStone(s32 arg0) {
         func_us_801C7340();
         DOPPLEGANGER.velocityY = FIX(-4);
         DopSetVelocity(FIX(-0.625));
-        OVL_EXPORT(func_801133E68)();
+        func_801133E68();
         DOPPLEGANGER.palette = PAL_FLAG(PAL_CC_STONE_EFFECT);
         // This unique pain grunt doesn't have an Alucard equivalent
         g_api.PlaySfx(SFX_VO_DOP_PAIN_F);
@@ -1471,19 +1471,19 @@ void DopEntityHitByHoly(Entity* self) {
 void PrintDummySet(void) { FntPrint("dummy set\n"); }
 
 void func_us_801CA2AC(Entity*);
-void OVL_EXPORT(EntitySmokePuff)(Entity*);
-void OVL_EXPORT(EntityGravityBootBeam)(Entity*);
-void OVL_EXPORT(EntitySubwpnKnife)(Entity*);
+void EntitySmokePuff(Entity*);
+void EntityGravityBootBeam(Entity*);
+void EntitySubwpnKnife(Entity*);
 void func_us_801CD178(Entity*);
 void EntityDopplegangerBlinkWhite(Entity*);
 void func_us_801CD89C(Entity*);
-void OVL_EXPORT(EntitySubwpnReboundStone)(Entity*);
+void EntitySubwpnReboundStone(Entity*);
 void DopEntityHitByLightning(Entity*);
 void EntityDopplegangerOutline(Entity*);
 void EntityDopplegangerDissolves(Entity*);
-void OVL_EXPORT(EntityHitByIce)(Entity*);
-void OVL_EXPORT(EntityMist)(Entity*);
-void OVL_EXPORT(EntityWingSmashTrail)(Entity*);
+void EntityHitByIce(Entity*);
+void EntityMist(Entity*);
+void EntityWingSmashTrail(Entity*);
 void func_us_801CA748(Entity*);
 void DopEntityHitByHoly(Entity*);
 void DopEntityHitByDark(Entity*);
@@ -1492,9 +1492,9 @@ void DopplegangerUnarmedAttack(Entity*);
 static PfnEntityUpdate D_us_801813D0[] = {
     PrintDummySet,
     func_us_801CA2AC,
-    OVL_EXPORT(EntitySmokePuff),
-    OVL_EXPORT(EntityGravityBootBeam),
-    OVL_EXPORT(EntitySubwpnKnife),
+    EntitySmokePuff,
+    EntityGravityBootBeam,
+    EntitySubwpnKnife,
     func_us_801CD178,
     PrintDummySet,
     PrintDummySet,
@@ -1510,7 +1510,7 @@ static PfnEntityUpdate D_us_801813D0[] = {
     PrintDummySet,
     PrintDummySet,
     PrintDummySet,
-    OVL_EXPORT(EntitySubwpnReboundStone),
+    EntitySubwpnReboundStone,
     PrintDummySet,
     PrintDummySet,
     PrintDummySet,
@@ -1523,9 +1523,9 @@ static PfnEntityUpdate D_us_801813D0[] = {
     DopEntityHitByLightning,
     EntityDopplegangerOutline,
     EntityDopplegangerDissolves,
-    OVL_EXPORT(EntityHitByIce),
-    OVL_EXPORT(EntityMist),
-    OVL_EXPORT(EntityWingSmashTrail),
+    EntityHitByIce,
+    EntityMist,
+    EntityWingSmashTrail,
     func_us_801CA748,
     PrintDummySet,
     PrintDummySet,
@@ -1575,7 +1575,7 @@ void func_us_801CA014(void) {
                 DestroyEntity(g_CurrentEntity);
             } else {
                 if (entity->flags & FLAG_UNK_20000000) {
-                    OVL_EXPORT(UpdateAnim)(0, &D_us_8018136C[0].af);
+                    UpdateAnim(0, &D_us_8018136C[0].af);
                 }
                 entity->flags |= FLAG_NOT_AN_ENEMY;
             }
@@ -1836,7 +1836,7 @@ static u8 D_us_8018181C[10] = {
 };
 extern Point16 g_DopSensorsWall[NUM_VERTICAL_SENSORS * 2];
 
-void OVL_EXPORT(EntitySmokePuff)(Entity* self) {
+void EntitySmokePuff(Entity* self) {
     byte stackpad[40];
     s16 posX;
     s32 i;
@@ -3366,7 +3366,7 @@ void EntityDopplegangerOutline(Entity* self) {
     func_us_801C5354(1, 1);
 }
 
-void OVL_EXPORT(EntityGravityBootBeam)(Entity* self) {
+void EntityGravityBootBeam(Entity* self) {
     Primitive* prim;
     s16 halfWidth;
     s32 i;
@@ -3445,7 +3445,7 @@ void OVL_EXPORT(EntityGravityBootBeam)(Entity* self) {
 }
 
 // The blue outlines of the bat that show up when wing smashing
-void OVL_EXPORT(EntityWingSmashTrail)(Entity* self) {
+void EntityWingSmashTrail(Entity* self) {
     if (!(DOPPLEGANGER.step_s == 3 && DOPPLEGANGER.step == Dop_MorphBat)) {
         DestroyEntity(self);
         return;
@@ -4030,7 +4030,7 @@ static Point16* D_us_80181DF8[] = {
     &D_us_80181DF0, &D_us_80181DE4, &D_us_80181DF4, &D_us_80181DC8,
 };
 
-void OVL_EXPORT(EntityHitByIce)(Entity* self) {
+void EntityHitByIce(Entity* self) {
     s32 i;
     s16 xShift;
     s16 yShift;
@@ -4245,7 +4245,7 @@ static s16 D_us_80181F58[] = {
 static u32 D_us_80181F98[8] = {7, 0, 1, 2, 3, 4, 5, 6};
 static u32 D_us_80181FB8[8] = {2, 1, 0, 7, 6, 5, 4, 3};
 
-static Primitive* OVL_EXPORT(func_80121F58)(
+static Primitive* func_80121F58(
     bool arg0, s32 arg1, Primitive* arg2, s16 facingLeft) {
     s32 primU0;
     s32 tempU;
@@ -4353,7 +4353,7 @@ static s32 D_us_801D40AC;
 STATIC_PAD_BSS(0x68);
 
 // spawns mist (player transform)
-void OVL_EXPORT(EntityMist)(Entity* self) {
+void EntityMist(Entity* self) {
     Primitive* prim;
     Primitive* mistPrim;
     mistStruct* mistStruct;
@@ -4481,10 +4481,10 @@ void OVL_EXPORT(EntityMist)(Entity* self) {
         self->posY.i.hi = yVar4;
         prim = &g_PrimBuf[self->primIndex];
         for (j = 0; j < 16; j++) {
-            prim = OVL_EXPORT(func_80121F58)(0, j, prim, self->facingLeft);
+            prim = func_80121F58(0, j, prim, self->facingLeft);
         }
         for (j = 0; j < 16; j++) {
-            prim = OVL_EXPORT(func_80121F58)(1, j, prim, self->facingLeft);
+            prim = func_80121F58(1, j, prim, self->facingLeft);
         }
         self->flags =
             FLAG_UNK_10000000 | FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
@@ -4638,10 +4638,10 @@ void OVL_EXPORT(EntityMist)(Entity* self) {
             self->ext.mist.yTarget = yVar2 - DOPPLEGANGER.posY.i.hi;
             prim = &g_PrimBuf[self->primIndex];
             for (j = 0; j < 16; j++) {
-                prim = OVL_EXPORT(func_80121F58)(0, j, prim, self->facingLeft);
+                prim = func_80121F58(0, j, prim, self->facingLeft);
             }
             for (j = 0; j < 16; j++) {
-                prim = OVL_EXPORT(func_80121F58)(1, j, prim, self->facingLeft);
+                prim = func_80121F58(1, j, prim, self->facingLeft);
             }
             self->flags =
                 FLAG_UNK_10000000 | FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
@@ -5046,7 +5046,7 @@ void EntityDopplegangerDissolves(Entity* self) {
 #include "../../rebound_stone.h"
 
 extern EInit EInitReboundStone;
-void OVL_EXPORT(EntitySubwpnReboundStone)(Entity* self) {
+void EntitySubwpnReboundStone(Entity* self) {
     s16 playerX;
     s16 playerY;
     Collider collider;
@@ -5346,7 +5346,7 @@ void OVL_EXPORT(EntitySubwpnReboundStone)(Entity* self) {
     }
 }
 
-s32 OVL_EXPORT(UpdateUnarmedAnim)(s8*, AnimationFrame*);
+s32 UpdateUnarmedAnim(s8*, AnimationFrame*);
 extern EInit D_us_80180440;
 extern EInit D_us_8018044C;
 extern DopWeaponAnimation D_us_80184278[];
@@ -5388,14 +5388,14 @@ void DopplegangerUnarmedAttack(Entity* self) {
     if (DOPPLEGANGER.poseTimer == 1 && DOPPLEGANGER.pose == anim->soundFrame) {
         g_api.PlaySfx(anim->soundId);
     }
-    if (OVL_EXPORT(UpdateUnarmedAnim)(anim->frameProps, anim->frames) < 0) {
+    if (UpdateUnarmedAnim(anim->frameProps, anim->frames) < 0) {
         DestroyEntity(self);
     }
 }
 
 extern EInit EInitSubwpnKnife;
 
-void OVL_EXPORT(EntitySubwpnKnife)(Entity* self) {
+void EntitySubwpnKnife(Entity* self) {
     Collider collider;
     Primitive* prim;
     s32 i;
