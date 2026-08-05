@@ -184,9 +184,9 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600456C, func_0600456C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600460C, func_0600460C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60046E8, func_060046E8);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60047E8, func_060047E8);
-INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f6004886, func_06004886);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004878, func_06004878);
 INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f6004932, func_06004932);
-INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f6004A46, func_06004A46);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004A10, func_06004A10);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004B20, func_06004B20);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004C14, func_06004C14);
 
@@ -883,7 +883,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600C99C, func_0600C99C);
 // ClearFrameBuffer
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600CAB8, func_0600CAB8);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600CB04, func_0600CB04);
-INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f600CB26, func_0600CB26);
+INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f600CB20, func_0600CB20);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600CB74, Crc32);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600CBCC, func_0600CBCC);
 
@@ -916,7 +916,7 @@ void func_0600DAB4(void) { InitPrimBuf(); }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600DACC, InitPrimBuf);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600DB38, func_0600DB38);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600DCA8, func_0600DCA8);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600DCA4, func_0600DCA4);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600DCF0, func_0600DCF0);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600DD38, func_0600DD38);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600DD84, func_0600DD84);
