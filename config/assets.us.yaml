@@ -335,8 +335,8 @@ files:
           - [0x13F0, cutscene, cutscene_data]
           - [0x1658, cmpgfx, stage_title_cen_jp, 128, 128, 4]
           - [0x199C, cmpgfx, stage_placeholder_cen, 128, 128, 4]
-          - [0x1F40, binary, cutscene_alucard]
-          - [0x2CC0, binary, cutscene_maria]
+          - [0x1F40, rawgfx, cutscene_alucard, 48, 72, 8]
+          - [0x2CC0, rawgfx, cutscene_maria, 48, 72, 8]
           - [0x3A40, cmpgfx, e_maria_cen_g0, 128, 128, 4, 0x698C]
           - [0x4B70, cmpgfx, e_maria_cen_g1, 128, 128, 4, 0x698C]
           - [0x5830, cmpgfx, e_elevator_cen_g, 128, 128, 4, 0x69AC]
@@ -737,8 +737,8 @@ files:
           - [0xF870, cmpgfx, e_warg_rider_g3, 128, 128, 4, 0x17FB8]
           - [0x10958, cmpgfx, e_warg_rider_g4, 128, 128, 4, 0x17FD8]
           - [0x114B8, cmpgfx, e_zombie_g, 128, 128, 4, 0x180B8]
-          - [0x11B88, binary, cutscene_alucard]
-          - [0x12908, binary, cutscene_death]
+          - [0x11B88, rawgfx, cutscene_alucard, 48, 72, 8]
+          - [0x12908, rawgfx, cutscene_death, 48, 72, 8]
           - [0x13688, cmpgfx, e_death_g0, 128, 128, 4, 0x18518]
           - [0x14688, cmpgfx, e_death_g1, 128, 128, 4, 0x18518]
           - [0x150CC, cmpgfx, e_death_g2, 128, 128, 4, 0x18518]
@@ -799,6 +799,7 @@ files:
           - [0x9ECC, cmpgfx, D_80189ECC, 128, 128, 4]
           - [0xA608, cmpgfx, D_8018A608, 128, 128, 4]
           - [0xB8F4, cmpgfx, D_8018B8F4, 128, 128, 4]
+          - [0xC300, rawgfx, gfx_portrait_ferryman, 48, 72, 8]
           - [0xD080, cmpgfx, D_8018D080, 128, 128, 4]
           - [0xDA34, palette, D_8018DA34, 16] # 0x200
           - [0xDA54, palette, D_8018DA54, 16] # 0x201
@@ -922,8 +923,8 @@ files:
           - [0x10A58, cmpgfx, e_sealed_door_g, 128, 128, 4, 0x165BC]
           - [0x11B18, cmpgfx, e_maria_nz0_g0, 128, 128, 4, 0x1663C]
           - [0x12E2C, cmpgfx, e_maria_nz0_g1, 128, 128, 4, 0x1663C]
-          - [0x13BA4, binary, cutscene_maria]
-          - [0x14924, binary, cutscene_alucard]
+          - [0x13BA4, rawgfx, cutscene_maria, 48, 72, 8]
+          - [0x14924, rawgfx, cutscene_alucard, 48, 72, 8]
           - [0x156A4, cmpgfx, stage_title_nz0_us, 128, 128, 4]
           - [0x15C3C, palette, e_blood_skeleton_p, 16] # 0x200
           - [0x15CBC, palette, D_80195CBC, 16] # unused
@@ -1098,7 +1099,13 @@ files:
         - [0x2E44, skip]
         - [0x3418, cmpgfx, gfx_stage_name_jp_sm, 128, 128, 4]
         - [0x3804, cmpgfx, gfx_stage_name_jp_lg, 128, 128, 4]
+        - [0x3FE8, cmpgfx, gfx_clouds, 128, 128, 4] # unused?
+        - [0x4C44, cmpgfx, gfx_clock_tower_1, 128, 128, 4] # unused?
+        - [0x6528, cmpgfx, gfx_clock_tower_2, 128, 128, 4] # unused?
         - [0x6CE4, cmpgfx, gfx_flea_rider, 128, 128, 4, 0x10BB4]
+        - [0x7934, rawgfx, gfx_portrait_alucard, 48, 72, 8]
+        - [0x86B4, rawgfx, gfx_portrait_maria, 48, 72, 8]
+        - [0x9434, rawgfx, gfx_portrait_richter, 48, 72, 8]
         - [0xA1B4, cmpgfx, gfx_maria_1, 128, 128, 4, 0x111F4]
         - [0xB2E4, cmpgfx, gfx_maria_2, 128, 128, 4, 0x111F4]
         - [0xBFA4, cmpgfx, gfx_maria_3, 128, 128, 4, 0x111F4]
@@ -1169,6 +1176,8 @@ files:
             - [0x2484, rooms, rooms]
             - [0x2578, skip] # layout entries data
             - [0x3BC0, cmpgfx, gfx_alucard_sleep, 128, 128, 4] # unused and stripped from PSP
+            - [0x479C, cmpgfx, gfx_stage_name_jp_sm, 128, 128, 4] # unused and stripped from PSP
+            - [0x4AE0, cmpgfx, gfx_stage_name_jp_lg, 128, 128, 4] # unused and stripped from PSP
             - [0x5084, cmpgfx, gfx_unk_5084, 128, 128, 4]
             - [0x69B0, cmpgfx, gfx_unk_69B0, 128, 128, 4]
             - [0x8934, cmpgfx, gfx_unk_8934, 128, 128, 4]
@@ -1281,7 +1290,8 @@ files:
           - [0x898, skip]
           - [0x1FA8, rooms, rooms]
           - [0x20AC, skip]
-          - [0x326C, cmpgfx, D_8018326C, 128, 64, 4]
+          - [0x326C, cmpgfx, gfx_stage_name_jp_sm, 128, 128, 4] # unused
+          - [0x35B0, cmpgfx, gfx_stage_name_jp_lg, 128, 128, 4] # unused
           - [0x3B54, cmpgfx, D_80183B54, 128, 128, 4]
           - [0x3EC8, cmpgfx, D_80183EC8, 128, 128, 4]
           - [0x4EB8, cmpgfx, D_80184EB8, 128, 128, 4]
@@ -1340,6 +1350,9 @@ files:
           - [0x15B4, skip]
           - [0x22FC, cmpgfx, D_801822FC, 128, 128, 4]
           - [0x2640, cmpgfx, D_80182640, 128, 128, 4]
+          - [0x2BE4, cmpgfx, gfx_clouds, 128, 128, 4] # unused?
+          - [0x3840, cmpgfx, gfx_clock_tower_1, 128, 128, 4] # unused?
+          - [0x5124, cmpgfx, gfx_clock_tower_2, 128, 128, 4] # unused?
           - [0x58E0, cmpgfx, D_801858E0, 128, 128, 4]
           - [0x6294, cmpgfx, D_80186294, 128, 128, 4]
           - [0x6EA0, cmpgfx, D_80186EA0, 128, 128, 4]

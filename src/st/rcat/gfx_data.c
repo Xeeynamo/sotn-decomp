@@ -7,6 +7,14 @@ u8 gfx_alucard_sleep[] = {
 #include "gen/gfx_alucard_sleep.h"
 };
 
+u8 gfx_stage_name_jp_sm[] = {
+#include "gen/gfx_stage_name_jp_sm.h"
+};
+
+u8 gfx_stage_name_jp_lg[] = {
+#include "gen/gfx_stage_name_jp_lg.h"
+};
+
 #endif
 
 u8 gfx_unk_5084[] = {
