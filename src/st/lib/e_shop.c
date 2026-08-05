@@ -744,7 +744,7 @@ void EntityLibrarianChair(Entity* self) {
 #ifdef VERSION_PSP
 extern const char** D_us_80181310;
 #else
-extern const char* D_us_80181310[] = {
+static const char* D_us_80181310[] = {
     "\003"
     "Buy item",
     "\003"

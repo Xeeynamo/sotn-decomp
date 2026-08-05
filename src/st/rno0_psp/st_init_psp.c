@@ -62,7 +62,7 @@ s32 E_ID(UNK_44);
 s32 E_ID(UNK_45);
 s32 E_ID(UNK_46);
 s32 E_ID(UNK_47);
-s32 E_ID(UNK_ID1B);
+s32 E_ID(UNK_48);
 s32 E_ID(UNK_49);
 s32 E_ID(UNK_4A);
 s32 E_ID(UNK_4B);
@@ -127,7 +127,7 @@ void InitEntityIds(void) {
     E_ID(UNK_45) = E_UNK_45;
     E_ID(UNK_46) = E_UNK_46;
     E_ID(UNK_47) = E_UNK_47;
-    E_ID(UNK_ID1B) = E_UNK_ID1B;
+    E_ID(UNK_48) = E_UNK_48;
     E_ID(UNK_49) = E_UNK_49;
     E_ID(UNK_4A) = E_UNK_4A;
     E_ID(UNK_4B) = E_UNK_4B;
