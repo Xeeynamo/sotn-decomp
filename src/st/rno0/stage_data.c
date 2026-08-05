@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stage.h>
 
+u8 D_80185638[] = {
+#include "gen/D_80185638.h"
+};
 u8 D_80185F20[] = {
 #include "gen/D_80185F20.h"
 };

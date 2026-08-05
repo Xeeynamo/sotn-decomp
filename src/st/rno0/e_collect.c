@@ -2,7 +2,6 @@
 #include "rno0.h"
 
 #define HEART_DROP_CASTLE_FLAG 0x138
-#define g_EInitParticle RNO0_EInitParticle
 
 #ifdef VERSION_PSP
 #include "../pfn_entity_update.h"
