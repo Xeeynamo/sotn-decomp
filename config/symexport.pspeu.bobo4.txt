@@ -1,5 +1,7 @@
 EXTERN(_binary_assets_boss_bo4_mwo_header_bin_start);
 EXTERN(BO4_Load);
+doppleganger_sprites = 0x09263438;
+bat_form_sprites = 0x09263440;
 g_Clut = 0x091F5DF8;
 g_EInitLockCamera = 0x092666A8;
 g_EInitCommon = 0x092666B8;

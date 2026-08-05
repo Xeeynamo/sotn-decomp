@@ -45,7 +45,7 @@ segments:
     subalign: 8
     subsegments:
       - [0x80, c, mar/create_entity]
-      - [0x1A0, c, mar_psp/unk_1A0]
+      - [0x1028, c, mar_psp/unk_1A0]
       - [0x2830, c, mar/e_stage_name]
       - [0x36B0, c, mar_psp/e_red_door]
       - [0x3798, c, mar_psp/e_red_door]
@@ -82,7 +82,8 @@ segments:
       - [0x1D7B0, .rodata, mar/e_collect]
       - [0x1D810, .rodata, mar_psp/unk_EFF8]
       - [0x1D850, .rodata, mar_psp/unk_100C8]
-      - [0x1D980, bss]
+      - [0x1D980, .bss, mar/create_entity]
+      - [0x1D9A0, .bss, mar_psp/unk_1A0]
       - [0x1D9A8, .bss, mar/st_update]
       - [0x1D9E8, bss, 1D9E8]
       - [0x1D9F0, .bss, mar_psp/unk_6480]

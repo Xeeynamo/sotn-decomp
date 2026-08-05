@@ -45,7 +45,6 @@ segments:
     subalign: 8
     subsegments:
       - [0x80, c, rbo5/create_entity]
-      - [0x1A0, c, rbo5_psp/unk_1A0]
       - [0x1028, c, rbo5/e_life_up]
       - [0x1CA8, c, rbo5/e_stage_name]
       - [0x2B28, c, rbo5/e_red_door]
@@ -87,7 +86,7 @@ segments:
       - [0x33EB8, .rodata, rbo5/e_collect]
       - [0x33F18, .rodata, rbo5_psp/unk_E148]
       - [0x34408, .rodata, rbo5_psp/func_us_801c0b9c_from_no1]
-      - [0x34480, bss]
+      - [0x34480, .bss, rbo5/create_entity]
       - [0x344A0, .bss, rbo5/e_life_up]
       - [0x344A8, .bss, rbo5/st_update]
       - [0x344E8, bss, 344E8]

@@ -45,7 +45,6 @@ segments:
     subalign: 8
     subsegments:
       - [0x80, c, bo6/create_entity]
-      - [0x1A0, c, bo6_psp/unk_1A0]
       - [0x1028, c, bo6/e_stage_name]
       - [0x1EA8, c, bo6/e_red_door]
       - [0x1F90, c, bo6/e_red_door]
@@ -88,7 +87,7 @@ segments:
       - [0x43FF8, .rodata, bo6_psp/unk_DC80]
       - [0x440B0, .rodata, bo6_psp/unk_114A8]
       - [0x44280, .rodata, bo6_psp/unk_25C90]
-      - [0x44380, bss]
+      - [0x44380, .bss, bo6/create_entity]
       - [0x443A0, .bss, bo6/st_update]
       - [0x443E0, bss, 443E0]
       - [0x443E8, .bss, bo6_psp/unk_4C78]
