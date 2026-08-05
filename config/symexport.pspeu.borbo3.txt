@@ -1,0 +1,3 @@
+EXTERN(_binary_assets_boss_rbo3_mwo_header_bin_start);
+EXTERN(RBO3_Load);
+g_DemoMode = 0x091FC420;

@@ -51,7 +51,7 @@ void func_us_801B4BD0(void) {
 
     g_Ric.vram_flag = g_Ric.unk04 = 1;
 
-    BO6_RicSetStand(0);
+    RicSetStand(0);
     RIC.anim = D_us_80182008;
 
     for (i = 0; i < 32; i++) {
@@ -105,7 +105,7 @@ void func_us_801B4EAC(void) {
     }
 }
 
-static void BO6_CheckBladeDashInput() {
+static void CheckBladeDashInput() {
     u16 step = RIC.step;
 
     if ((step == 1 || step == 2 || RIC.step == 3 || step == 4 || step == 5) &&
@@ -114,7 +114,7 @@ static void BO6_CheckBladeDashInput() {
     }
 }
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", BO6_CheckHighJumpInput);
+INCLUDE_ASM("boss/bo6/nonmatchings/richter", CheckHighJumpInput);
 
 extern s32 D_us_80181210[];
 extern u16 D_us_80181250[];
@@ -127,7 +127,7 @@ extern FrameProperty D_us_801824A4[];
 extern s32 D_us_801D169C;
 extern u32 D_us_801D16A4;
 
-void OVL_EXPORT(RicMain)(void) {
+void RicMain(void) {
     s16 angle;
     s32 timer;
     s32 i;
@@ -194,7 +194,7 @@ void OVL_EXPORT(RicMain)(void) {
             case PL_T_INVINCIBLE:
                 break;
             case PL_T_AFTERIMAGE_DISABLE: /* switch 1 */
-                OVL_EXPORT(DisableAfterImage)(0, 0);
+                DisableAfterImage(0, 0);
                 break;
             }
 
@@ -212,11 +212,11 @@ void OVL_EXPORT(RicMain)(void) {
                     playerDraw->enableColorBlend = false;
                     break;
                 case PL_T_INVINCIBLE_SCENE: /* switch 2 */
-                    OVL_EXPORT(RicSetInvincibilityFrames)(1, 0x10);
+                    RicSetInvincibilityFrames(1, 0x10);
                     break;
                 case PL_T_6: /* switch 2 */
                     if ((RIC.step == 4) && (RIC.anim != D_us_801820BC)) {
-                        BO6_RicSetAnimation(D_us_801820BC);
+                        RicSetAnimation(D_us_801820BC);
                         g_Ric.unk44 &= ~0x10;
                     }
                     break;
@@ -255,13 +255,13 @@ void OVL_EXPORT(RicMain)(void) {
             step_s = RIC.step_s;
             damage.effects =
                 D_us_80181210[g_CurrentEntity->nFramesInvincibility];
-            OVL_EXPORT(RicSetStep)(0x11);
+            RicSetStep(0x11);
 #ifdef VERSION_PSP
             g_api.TimeAttackController(
                 TIMEATTACK_EVENT_SAVE_RICHTER, TIMEATTACK_SET_RECORD);
 #endif
         } else if (D_us_801D169C != 0) {
-            OVL_EXPORT(RicSetStep)(0x70);
+            RicSetStep(0x70);
         } else {
             if ((g_Ric.timers[PL_T_INVINCIBLE_SCENE] |
                  g_Ric.timers[PL_T_INVINCIBLE]) == 0) {
@@ -276,70 +276,70 @@ void OVL_EXPORT(RicMain)(void) {
                     } else {
                         damage.damageKind = 2;
                     }
-                    OVL_EXPORT(RicSetStep)(0xB);
+                    RicSetStep(0xB);
                 }
             }
             goto check_input_combo;
         }
     } else {
     check_input_combo:
-        BO6_CheckBladeDashInput();
-        BO6_CheckHighJumpInput();
+        CheckBladeDashInput();
+        CheckHighJumpInput();
     }
     g_Ric.prev_step = RIC.step;
     g_Ric.prev_step_s = RIC.step_s;
 
     switch (RIC.step) { /* switch 3 */
     case PL_S_STAND:    /* switch 3 */
-        BO6_RicStepStand();
+        RicStepStand();
         break;
     case PL_S_WALK: /* switch 3 */
-        BO6_RicStepWalk();
+        RicStepWalk();
         break;
     case PL_S_CROUCH: /* switch 3 */
-        BO6_RicStepCrouch();
+        RicStepCrouch();
         break;
     case PL_S_FALL: /* switch 3 */
-        BO6_RicStepFall();
+        RicStepFall();
         break;
     case PL_S_JUMP: /* switch 3 */
-        BO6_RicStepJump();
+        RicStepJump();
         break;
     case PL_S_HIGHJUMP: /* switch 3 */
-        BO6_RicStepHighJump();
+        RicStepHighJump();
         break;
     case PL_S_HIT: /* switch 3 */
-        BO6_RicStepHit(damage.effects, damage.damageKind, step, step_s);
+        RicStepHit(damage.effects, damage.damageKind, step, step_s);
         break;
     case PL_S_DEAD: /* switch 3 */
-        BO6_RicStepDead(damage.effects, damage.damageKind, step, step_s);
+        RicStepDead(damage.effects, damage.damageKind, step, step_s);
         break;
     case PL_S_STAND_IN_AIR: /* switch 3 */
-        BO6_RicStepStandInAir();
+        RicStepStandInAir();
         break;
     case PL_S_FLAME_WHIP: /* switch 3 */
-        BO6_RicStepEnableFlameWhip();
+        RicStepEnableFlameWhip();
         break;
     case PL_S_HYDROSTORM: /* switch 3 */
-        BO6_RicStepHydrostorm();
+        RicStepHydrostorm();
         break;
     case PL_S_THROW_DAGGERS: /* switch 3 */
-        BO6_RicStepThrowDaggers();
+        RicStepThrowDaggers();
         break;
     case PL_S_SUBWPN_CRASH: /* switch 3 */
-        BO6_RicStepGenericSubwpnCrash();
+        RicStepGenericSubwpnCrash();
         break;
     case PL_S_SLIDE: /* switch 3 */
-        BO6_RicStepSlide();
+        RicStepSlide();
         break;
     case PL_S_RUN: /* switch 3 */
-        BO6_RicStepRun();
+        RicStepRun();
         break;
     case PL_S_SLIDE_KICK: /* switch 3 */
-        BO6_RicStepSlideKick();
+        RicStepSlideKick();
         break;
     case PL_S_BLADEDASH: /* switch 3 */
-        BO6_RicStepBladeDash();
+        RicStepBladeDash();
         break;
     case PL_S_ENDING_1: /* switch 3 */
         func_us_801B913C();
@@ -377,11 +377,11 @@ void OVL_EXPORT(RicMain)(void) {
         status = 0x08002000;
         break;
     case PL_S_HIGHJUMP: /* switch 4 */
-        BO6_RicSetInvincibilityFrames(1, 4);
+        RicSetInvincibilityFrames(1, 4);
         break;
     case PL_S_HIT: /* switch 4 */
         status = 0x08010000;
-        BO6_RicSetInvincibilityFrames(1, 8);
+        RicSetInvincibilityFrames(1, 8);
         break;
     case PL_S_DEAD: /* switch 4 */
 #ifdef VERSION_PSP
@@ -392,7 +392,7 @@ void OVL_EXPORT(RicMain)(void) {
         if (RIC.step_s == 0x80) {
             status |= 0x80000;
         }
-        BO6_RicSetInvincibilityFrames(1, 8);
+        RicSetInvincibilityFrames(1, 8);
         break;
 
     case PL_S_FLAME_WHIP:    /* switch 4 */
@@ -403,7 +403,7 @@ void OVL_EXPORT(RicMain)(void) {
         // fallthrough
     // possibly PSP specific
     case PL_S_STAND_IN_AIR:
-        BO6_RicSetInvincibilityFrames(1, 8);
+        RicSetInvincibilityFrames(1, 8);
         break;
     case PL_S_SLIDE:      /* switch 4 */
     case PL_S_SLIDE_KICK: /* switch 4 */
@@ -414,7 +414,7 @@ void OVL_EXPORT(RicMain)(void) {
         break;
     case PL_S_ENDING_1: /* switch 4 */
     case PL_S_ENDING2:  /* switch 4 */
-        BO6_RicSetInvincibilityFrames(1, 8);
+        RicSetInvincibilityFrames(1, 8);
         status |= 0x08000000;
         break;
     case PL_S_ENDING_3: /* switch 4 */
@@ -422,13 +422,13 @@ void OVL_EXPORT(RicMain)(void) {
         g_api.TimeAttackController(
             TIMEATTACK_EVENT_SAVE_RICHTER, TIMEATTACK_SET_RECORD);
 #endif
-        BO6_RicSetInvincibilityFrames(1, 8);
+        RicSetInvincibilityFrames(1, 8);
         status |= 0x08000000;
         break;
     case PL_S_ENDING_4: /* switch 4 */
         g_api.TimeAttackController(
             TIMEATTACK_EVENT_SAVE_RICHTER, TIMEATTACK_SET_RECORD);
-        BO6_RicSetInvincibilityFrames(1, 8);
+        RicSetInvincibilityFrames(1, 8);
         status |= 0x08000000;
         break;
     }
@@ -448,18 +448,18 @@ void OVL_EXPORT(RicMain)(void) {
         if (!(g_Ric.status & PLAYER_STATUS_UNK10000)) {
             if (g_Ric.unk5C) {
                 if (g_Status.hp < 2) {
-                    OVL_EXPORT(RicSetDeadPrologue)();
-                    BO6_RicSetInvincibilityFrames(1, 8);
+                    RicSetDeadPrologue();
+                    RicSetInvincibilityFrames(1, 8);
                 }
             } else {
-                BO6_RicSetInvincibilityFrames(1, 8);
+                RicSetInvincibilityFrames(1, 8);
                 g_Ric.timers[PL_T_4] = 8;
                 RIC.palette = PAL_FLAG(0x220);
             }
         }
     }
     if (status & 0x08000000) {
-        BO6_DisableAfterImage(1, 4);
+        DisableAfterImage(1, 4);
     }
     g_api.UpdateAnim(D_us_801824A4, D_us_80181F14);
     if (RIC.anim == &D_us_8018224C[0]) {
@@ -945,14 +945,14 @@ void RichterThinking(void) {
         }
         break;
     case 18: /* switch 1 */
-        OVL_EXPORT(RicSetInvincibilityFrames)(1, 4);
+        RicSetInvincibilityFrames(1, 4);
         if (RIC.step == 1) {
             func_us_801B5A14(0x13);
         }
         break;
 
     case 19: /* switch 1 */
-        OVL_EXPORT(RicSetInvincibilityFrames)(1, 4);
+        RicSetInvincibilityFrames(1, 4);
         if (D_us_801CF3CC == 0) {
             D_us_801CF3D0 = 0x40;
             D_us_801CF3CC = 1;
@@ -960,7 +960,7 @@ void RichterThinking(void) {
             if ((g_CutsceneFlags & 2) || (g_CastleFlags[SHAFT_ORB_DEFEATED]) ||
                 (g_DemoMode != Demo_None)) {
                 if (!--D_us_801CF3D0) {
-                    OVL_EXPORT(RicCreateEntFactoryFromEntity)
+                    RicCreateEntFactoryFromEntity
                     (g_CurrentEntity, 0x48, 0);
                     func_us_801B5A14(0x10);
                 }
@@ -969,7 +969,7 @@ void RichterThinking(void) {
         break;
     case 30: /* switch 1 */
         g_Player.timers[ALU_T_INVINCIBLE_CONSUMABLES] = 3;
-        OVL_EXPORT(RicSetInvincibilityFrames)(1, 8);
+        RicSetInvincibilityFrames(1, 8);
         g_Ric.padSim = 0x1000;
         if (RIC.step == 1 && RIC.step_s == 1) {
             RIC.step = 0x50;
@@ -979,7 +979,7 @@ void RichterThinking(void) {
         break;
     case 31: /* switch 1 */
         g_Player.timers[ALU_T_INVINCIBLE_CONSUMABLES] = 3;
-        OVL_EXPORT(RicSetInvincibilityFrames)(1, 8);
+        RicSetInvincibilityFrames(1, 8);
         if (RIC.step != 0x50) {
             D_us_801CF3E0 = 1;
             func_us_801B5A14(0x20);
@@ -987,7 +987,7 @@ void RichterThinking(void) {
         break;
     case 32: /* switch 1 */
         g_Player.timers[ALU_T_INVINCIBLE_CONSUMABLES] = 3;
-        OVL_EXPORT(RicSetInvincibilityFrames)(1, 8);
+        RicSetInvincibilityFrames(1, 8);
         if (D_us_801CF3CC == 0) {
             D_us_801CF3D0 = 0x10;
             D_us_801CF3CC = 1;
@@ -1076,10 +1076,10 @@ void EntityRichter(Entity* self) {
         D_us_801CF3E0 = 0;
         g_Ric.unk70 = RIC.hitboxState;
         func_us_801B5A14(18);
-        OVL_EXPORT(DisableAfterImage)(1, 48);
+        DisableAfterImage(1, 48);
     } else {
         RichterThinking();
-        OVL_EXPORT(RicMain)(); // equivalent to EntityDoppleganger{10,40}
+        RicMain(); // equivalent to EntityDoppleganger{10,40}
         func_us_801BBBD0();
         func_us_801B6998();
     }
@@ -1088,19 +1088,19 @@ void EntityRichter(Entity* self) {
 
 // possible file split - pl_setstep
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", BO6_RicStepStand);
+INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepStand);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", BO6_RicStepWalk);
+INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepWalk);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", BO6_RicStepRun);
+INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepRun);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", BO6_RicStepJump);
+INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepJump);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", BO6_RicStepFall);
+INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepFall);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", BO6_RicStepCrouch);
+INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepCrouch);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", BO6_RicResetPose);
+INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicResetPose);
 
 void func_us_801B77D8(void) {
     if ((RIC.posX.i.hi - PLAYER.posX.i.hi) <= 0) {
@@ -1110,31 +1110,31 @@ void func_us_801B77D8(void) {
     }
 }
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", BO6_RicStepHit);
+INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepHit);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", BO6_RicStepDead);
+INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepDead);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", BO6_RicStepStandInAir);
+INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepStandInAir);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", BO6_RicStepEnableFlameWhip);
+INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepEnableFlameWhip);
 
-void OVL_EXPORT(RicStepHydrostorm)(void) {
+void RicStepHydrostorm(void) {
     if (RIC.poseTimer < 0) {
-        OVL_EXPORT(RicSetStand)(0);
+        RicSetStand(0);
         g_Ric.unk46 = 0;
     }
 }
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", BO6_RicStepGenericSubwpnCrash);
+INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepGenericSubwpnCrash);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", BO6_RicStepThrowDaggers);
+INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepThrowDaggers);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", BO6_RicStepSlide);
+INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepSlide);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", BO6_RicStepSlideKick);
+INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepSlideKick);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", BO6_RicStepBladeDash);
+INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepBladeDash);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/richter", func_us_801B8E80);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", BO6_RicStepHighJump);
+INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepHighJump);

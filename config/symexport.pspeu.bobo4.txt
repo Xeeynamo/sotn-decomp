@@ -1,0 +1,12 @@
+EXTERN(_binary_assets_boss_bo4_mwo_header_bin_start);
+EXTERN(BO4_Load);
+D_psp_E_ID_16 = 0x0926BCD0;
+D_psp_E_ID_17 = 0x0926BCC8;
+D_psp_E_ID_19 = 0x0926BCB8;
+D_psp_E_ID_1A = 0x0926BCB0;
+D_psp_E_ID_1B = 0x0926BCA8;
+D_psp_E_ID_1C = 0x0926BCA0;
+D_psp_E_ID_1D = 0x0926BC98;
+D_pspeu_0926BAF0 = 0x0926BAF0;
+D_pspeu_0926BAF8 = 0x0926BAF8;
+D_pspeu_0926BB00 = 0x0926BB00;

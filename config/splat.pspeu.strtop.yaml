@@ -1,0 +1,103 @@
+options:
+  platform: psp
+  basename: strtop
+  base_path: ..
+  build_path: build/pspeu
+  target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rtop.bin
+  asm_path: asm/pspeu/st/rtop_psp
+  asset_path: assets/st/rtop
+  src_path: src/st
+  ld_script_path: build/pspeu/strtop.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.pspeu.txt
+    - config/symbols.pspeu.strtop.txt
+  undefined_funcs_auto_path: build/pspeu/config/undefined_funcs_auto.pspeu.strtop.txt
+  undefined_syms_auto_path: build/pspeu/config/undefined_syms_auto.pspeu.strtop.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: pspeu_$VRAM
+  disassemble_all: true
+  section_order:
+    - .text
+    - .data
+    - .rodata
+    - .bss
+  ld_bss_is_noload: true
+  disasm_unknown: true
+  global_vram_start: 0x08000000
+  ld_generate_symbol_per_data_segment: true
+  asm_inc_header: |
+    .set noat      /* allow manual use of $at */
+    .set noreorder /* don't insert nops after branches */
+sha1: b4b18be96e586cbab0678c0daf1e9dd93f235286
+segments:
+  - [0x0, bin, mwo_header]
+  - name: strtop
+    type: code
+    start: 0x80
+    vram: 0x09237700
+    bss_start_address: 0x09267C00
+    bss_size: 0x180
+    align: 128
+    subalign: 8
+    subsegments:
+      - [0x80, c, rtop/create_entity]
+      - [0x1A0, c, rtop_psp/unk_1A0]
+      - [0x1028, c, rtop/e_skull_lord]
+      - [0x24A0, c, rtop/e_stage_name]
+      - [0x3320, c, rtop_psp/e_red_door]
+      - [0x3408, c, rtop_psp/e_red_door]
+      - [0x4628, c, rtop/st_update]
+      - [0x4B60, c, rtop/e_tombstone]
+      - [0x58A8, c, rtop/e_particles]
+      - [0x6420, c, rtop/e_collect]
+      - [0xA670, c, rtop_psp/unk_A670]
+      - [0xAD78, c, rtop/collision]
+      - [0xCF50, c, rtop/popup]
+      - [0xD548, c, rtop_psp/e_room_fg]
+      - [0xD660, c, rtop_psp/unk_D660]
+      - [0xE340, c, rtop/st_common]
+      - [0xF9A0, c, rtop/prim_helpers]
+      - [0x100E0, c, rtop_psp/st_init]
+      - [0x10290, c, rtop/e_breakable]
+      - [0x10BD0, c, rtop_psp/e_clouds]
+      - [0x11508, c, rtop_psp/unk_11508]
+      - [0x13600, c, rtop_psp/e_lock_camera]
+      - [0x13D80, c, rtop_psp/e_trigger_before_castle_warp]
+      - [0x13E98, c, rtop/e_clock_tower]
+      - [0x14430, c, rtop_psp/e_breakable_wall]
+      - [0x14800, .data, rtop/e_skull_lord]
+      - [0x14820, data, '14820']
+      - [0x14838, .data, rtop/st_update]
+      - [0x14868, data, '14868']
+      - [0x14868, .data, rtop/e_tombstone]
+      - [0x14878, data, '14878']
+      - [0x14878, .data, rtop/e_particles]
+      - [0x148F8, .data, rtop/e_collect]
+      - [0x14E40, .data, rtop_psp/unk_A670]
+      - [0x14E90, data, 14E90]
+      - [0x14E90, .data, rtop/collision]
+      - [0x15268, data, '15268']
+      - [0x175A8, data, rtop/e_init]
+      - [0x17740, data]
+      - [0x177C8, .data, rtop/e_breakable]
+      - [0x17910, data, '17910']
+      - [0x2FE80, .data, rtop/header]
+      - [0x2FEC0, data]
+      - [0x2FEE8, .data, rtop/d_prize_drops]
+      - [0x2FF28, data]
+      - [0x30060, .data, rtop_psp/e_trigger_before_castle_warp]
+      - [0x30068, data, '30068']
+      - [0x30068, .data, rtop/e_clock_tower]
+      - [0x30420, data, '30420']
+      - [0x30480, .rodata, rtop_psp/e_red_door]
+      - [0x30498, .rodata, rtop/e_collect]
+      - [0x304F8, .rodata, rtop_psp/unk_D660]
+      - [0x30580, bss]
+      - [0x305A0, .bss, rtop/st_update]
+      - [0x305E0, .bss, rtop/e_collect]
+      - [0x30600, bss, '30600']
+  - [0x30700]

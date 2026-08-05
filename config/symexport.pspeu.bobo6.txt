@@ -1,0 +1,7 @@
+EXTERN(_binary_assets_boss_bo6_mwo_header_bin_start);
+EXTERN(Load);
+g_EInitCommon = 0x0926EB18;
+g_EInitBreakable = 0x0926EAB8;
+g_eBreakableExplosionTypes = 0x0927BB30;
+g_EInitUnkId13 = 0x0926EAF8;
+g_EInitDamageNum = 0x0926EB28;
