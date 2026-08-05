@@ -1217,8 +1217,23 @@ files:
       - start: 0
         vram: 0x80180000
         assets:
-          - [0x2C, sprite_banks, sprite_banks]
-          - [0x8C, skip]
+          #- [0x2C, sprite_banks, sprite_banks]
+          - [0x8C, paldef, palette_def]
+          - [0x134, skip]
+          - [0x10D20, palette, D_80190D20, 16]
+          - [0x10FE0, palette, D_80190FE0, 16]
+          - [0x11160, palette, D_80191160, 16]
+          - [0x11280, palette, D_80191280, 16]
+          - [0x11300, palette, D_80191300, 16]
+          - [0x11320, palette, D_80191320, 16]
+          - [0x11360, palette, D_80191360, 16]
+          - [0x11400, palette, D_80191400, 16]
+          - [0x11520, palette, D_80191520, 16]
+          - [0x11660, palette, D_80191660, 16]
+          - [0x117C0, palette, D_801917C0, 16]
+          - [0x11800, palette, D_80191800, 16]
+          - [0x11840, palette, D_80191840, 16]
+          - [0x11900, skip]
   - target: disks/us/ST/RNO1/RNO1.BIN
     asset_path: assets/st/rno1
     src_path: src/st/rno1
