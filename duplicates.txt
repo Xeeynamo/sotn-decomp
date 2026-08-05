@@ -4200,7 +4200,7 @@
 | 1.00 | true     | func_801B3F7C                       | asm/us/st/sel/matchings/32D6C/func_801B3F7C.s 
 | 1.00 | true     | func_801B8500                       | asm/us/st/sel/matchings/save_mgr/func_801B8500.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | BO6_RicSetDeadPrologue              | asm/us/boss/bo6/matchings/us_39144/BO6_RicSetDeadPrologue.s 
+| 1.00 | true     | RicSetDeadPrologue                  | asm/us/boss/bo6/matchings/us_39144/RicSetDeadPrologue.s 
 | 1.00 | true     | func_us_801B9C3C                    | asm/us/boss/bo6/matchings/us_39144/func_us_801B9C3C.s 
 | 1.00 | true     | func_801072DC                       | asm/us/dra/matchings/66590/func_801072DC.s 
 | 1.00 | true     | func_800FAC98                       | asm/us/dra/matchings/menu/func_800FAC98.s 
@@ -4219,15 +4219,6 @@
 | 0.97 | true     | func_801B7D58                       | asm/us/st/nz0/matchings/cutscene/func_801B7D58.s 
 | 0.91 | true     | func_us_8019E064                    | asm/us/st/rcen/matchings/cutscene/func_us_8019E064.s 
 | 0.93 | true     | func_us_801AC104                    | asm/us/st/top/matchings/cutscene/func_us_801AC104.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | func_801073C0                       | asm/us/dra/matchings/cd/func_801073C0.s 
-| 0.90 | true     | func_80131FA4                       | asm/us/dra/matchings/sound/func_80131FA4.s 
-| 0.90 | true     | _addque                             | asm/us/main/matchings/psxsdk/libgpu/sys/_addque.s 
-| 0.90 | true     | SsSepClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSepClose.s 
-| 0.90 | true     | SsSeqClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSeqClose.s 
-| 0.90 | true     | SsSeqStop                           | asm/us/main/matchings/psxsdk/libsnd/stop/SsSeqStop.s 
-| 0.90 | true     | func_801BA6A8                       | asm/us/st/sel/matchings/libpress/func_801BA6A8.s 
-| 1.00 | true     | func_801B9924                       | asm/us/st/sel/matchings/stream/func_801B9924.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801CF4B0                    | asm/us/st/cat/matchings/giantbro_helpers/func_us_801CF4B0.s 
 | 1.00 | true     | func_us_801D21F4                    | asm/us/st/lib/matchings/e_spellbook_magic_tome/func_us_801D21F4.s 
@@ -4262,6 +4253,14 @@
 | 1.00 | true     | func_us_801A9D18                    | asm/us/st/nz1/matchings/e_spikes/func_us_801A9D18.s 
 | 1.00 | true     | func_us_801B171C                    | asm/us/st/rcat/matchings/e_spikes/func_us_801B171C.s 
 | 1.00 | true     | func_us_801B3E80                    | asm/us/st/rdai/matchings/e_spikes/func_us_801B3E80.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | func_801073C0                       | asm/us/dra/matchings/cd/func_801073C0.s 
+| 0.90 | true     | func_80131FA4                       | asm/us/dra/matchings/sound/func_80131FA4.s 
+| 0.90 | true     | _addque                             | asm/us/main/matchings/psxsdk/libgpu/sys/_addque.s 
+| 0.90 | true     | SsSepClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSepClose.s 
+| 0.90 | true     | SsSeqClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSeqClose.s 
+| 0.90 | true     | SsSeqStop                           | asm/us/main/matchings/psxsdk/libsnd/stop/SsSeqStop.s 
+| 1.00 | true     | func_801B9924                       | asm/us/st/sel/matchings/stream/func_801B9924.s 
 -------------------------------------------------------------------------------
 | 0.92 | true     | DMACallback                         | asm/us/main/matchings/psxsdk/libetc/intr/DMACallback.s 
 | 0.92 | true     | InterruptCallback                   | asm/us/main/matchings/psxsdk/libetc/intr/InterruptCallback.s 
@@ -4375,13 +4374,13 @@
 | 1.00 | true     | func_801CD540                       | asm/us/st/np3/matchings/e_owl_knight/func_801CD540.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801C4958                    | asm/us/boss/bo4/matchings/dop_anim/func_us_801C4958.s 
-| 1.00 | true     | BO6_RicSetStep                      | asm/us/boss/bo6/matchings/us_39144/BO6_RicSetStep.s 
+| 1.00 | true     | RicSetStep                          | asm/us/boss/bo6/matchings/us_39144/RicSetStep.s 
 | 1.00 | true     | func_us_801C3F58                    | asm/us/boss/rbo5/matchings/dop_anim/func_us_801C3F58.s 
 | 1.00 | true     | func_8010D584                       | asm/us/dra/matchings/alu_anim/func_8010D584.s 
 | 1.00 | true     | func_8015C908                       | asm/us/ric/matchings/pl_utils/func_8015C908.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801C4E10                    | asm/us/boss/bo4/matchings/dop_anim/func_us_801C4E10.s 
-| 1.00 | true     | BO6_RicSetAnimation                 | asm/us/boss/bo6/matchings/us_39144/BO6_RicSetAnimation.s 
+| 1.00 | true     | RicSetAnimation                     | asm/us/boss/bo6/matchings/us_39144/RicSetAnimation.s 
 | 1.00 | true     | func_us_801C4410                    | asm/us/boss/rbo5/matchings/dop_anim/func_us_801C4410.s 
 | 1.00 | true     | func_8010DA2C                       | asm/us/dra/matchings/alu_anim/func_8010DA2C.s 
 | 1.00 | true     | func_8015C920                       | asm/us/ric/matchings/pl_utils/func_8015C920.s 
@@ -4390,10 +4389,10 @@
 | 1.00 | true     | func_us_801C4AF0                    | asm/us/boss/rbo5/matchings/unk_44954/func_us_801C4AF0.s 
 | 1.00 | true     | func_8010E27C                       | asm/us/dra/matchings/6DF70/func_8010E27C.s 
 | 1.00 | true     | func_8015C9CC                       | asm/us/ric/matchings/pl_utils/func_8015C9CC.s 
-| 1.00 | false    | BO6_RicCheckFacing                  | asm/us/boss/bo6/nonmatchings/us_39144/BO6_RicCheckFacing.s 
+| 1.00 | false    | RicCheckFacing                      | asm/us/boss/bo6/nonmatchings/us_39144/RicCheckFacing.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801C55F8                    | asm/us/boss/bo4/matchings/unk_45354/func_us_801C55F8.s 
-| 1.00 | true     | BO6_RicSetSpeedX                    | asm/us/boss/bo6/matchings/us_39144/BO6_RicSetSpeedX.s 
+| 1.00 | true     | RicSetSpeedX                        | asm/us/boss/bo6/matchings/us_39144/RicSetSpeedX.s 
 | 1.00 | true     | func_us_801C4BF8                    | asm/us/boss/rbo5/matchings/unk_44954/func_us_801C4BF8.s 
 | 1.00 | true     | func_8010E390                       | asm/us/dra/matchings/6DF70/func_8010E390.s 
 | 1.00 | true     | func_8015CA84                       | asm/us/ric/matchings/pl_utils/func_8015CA84.s 
@@ -4405,7 +4404,7 @@
 | 1.00 | true     | func_8015CAAC                       | asm/us/ric/matchings/pl_utils/func_8015CAAC.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801C9A6C                    | asm/us/boss/bo4/matchings/unk_46E7C/func_us_801C9A6C.s 
-| 1.00 | true     | BO6_RicGetFreeEntity                | asm/us/boss/bo6/matchings/us_39144/BO6_RicGetFreeEntity.s 
+| 1.00 | true     | RicGetFreeEntity                    | asm/us/boss/bo6/matchings/us_39144/RicGetFreeEntity.s 
 | 1.00 | true     | func_us_801C907C                    | asm/us/boss/rbo5/matchings/unk_4648C/func_us_801C907C.s 
 | 1.00 | true     | func_8011879C                       | asm/us/dra/matchings/7879C/func_8011879C.s 
 | 1.00 | true     | func_8015F8F8                       | asm/us/ric/matchings/pl_blueprints/func_8015F8F8.s 
@@ -4414,7 +4413,7 @@
 | 1.00 | true     | func_us_801C90F0                    | asm/us/boss/rbo5/matchings/unk_4648C/func_us_801C90F0.s 
 | 1.00 | true     | func_80118810                       | asm/us/dra/matchings/7879C/func_80118810.s 
 | 1.00 | true     | func_8015F96C                       | asm/us/ric/matchings/pl_blueprints/func_8015F96C.s 
-| 1.00 | false    | BO6_RicGetFreeEntityReverse         | asm/us/boss/bo6/nonmatchings/us_39144/BO6_RicGetFreeEntityReverse.s 
+| 1.00 | false    | RicGetFreeEntityReverse             | asm/us/boss/bo6/nonmatchings/us_39144/RicGetFreeEntityReverse.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801C9B64                    | asm/us/boss/bo4/matchings/unk_46E7C/func_us_801C9B64.s 
 | 1.00 | true     | func_us_801C9174                    | asm/us/boss/rbo5/matchings/unk_4648C/func_us_801C9174.s 
@@ -4426,13 +4425,13 @@
 | 1.00 | true     | func_us_801C92C8                    | asm/us/boss/rbo5/matchings/unk_4648C/func_us_801C92C8.s 
 | 0.97 | true     | func_80119F70                       | asm/us/dra/matchings/7879C/func_80119F70.s 
 | 1.00 | true     | func_8015FEA8                       | asm/us/ric/matchings/pl_blueprints/func_8015FEA8.s 
-| 1.00 | false    | BO6_RicEntityHitByHoly              | asm/us/boss/bo6/nonmatchings/us_39144/BO6_RicEntityHitByHoly.s 
+| 1.00 | false    | RicEntityHitByHoly                  | asm/us/boss/bo6/nonmatchings/us_39144/RicEntityHitByHoly.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801CAE48                    | asm/us/boss/bo4/matchings/unk_46E7C/func_us_801CAE48.s 
 | 1.00 | true     | func_us_801CA458                    | asm/us/boss/rbo5/matchings/unk_4648C/func_us_801CA458.s 
 | 1.00 | true     | func_8011F074                       | asm/us/dra/matchings/7E4BC/func_8011F074.s 
 | 1.00 | true     | func_801601DC                       | asm/us/ric/matchings/pl_blueprints/func_801601DC.s 
-| 1.00 | false    | BO6_RicEntityHitByDark              | asm/us/boss/bo6/nonmatchings/us_39144/BO6_RicEntityHitByDark.s 
+| 1.00 | false    | RicEntityHitByDark                  | asm/us/boss/bo6/nonmatchings/us_39144/RicEntityHitByDark.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801CB020                    | asm/us/boss/bo4/matchings/unk_46E7C/func_us_801CB020.s 
 | 1.00 | true     | func_us_801CA630                    | asm/us/boss/rbo5/matchings/unk_4648C/func_us_801CA630.s 
@@ -4450,31 +4449,31 @@
 | 1.00 | true     | func_us_801CD178                    | asm/us/boss/rbo5/matchings/unk_4648C/func_us_801CD178.s 
 | 0.96 | true     | func_8011F24C                       | asm/us/dra/matchings/7E4BC/func_8011F24C.s 
 | 0.93 | true     | func_801656B0                       | asm/us/ric/matchings/pl_blueprints/func_801656B0.s 
-| 0.95 | false    | BO6_RicEntityHitByLightning         | asm/us/boss/bo6/nonmatchings/us_3E79C/BO6_RicEntityHitByLightning.s 
+| 0.95 | false    | RicEntityHitByLightning             | asm/us/boss/bo6/nonmatchings/us_3E79C/RicEntityHitByLightning.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801D0D4C                    | asm/us/boss/bo4/matchings/unk_46E7C/func_us_801D0D4C.s 
 | 1.00 | true     | func_us_801D02F8                    | asm/us/boss/rbo5/matchings/unk_4648C/func_us_801D02F8.s 
 | 1.00 | true     | func_80127EAC                       | asm/us/dra/matchings/84B88/func_80127EAC.s 
 | 1.00 | true     | func_8016B8E8                       | asm/us/ric/matchings/2F8E8/func_8016B8E8.s 
-| 1.00 | false    | BO6_ReboundStoneBounce1             | asm/us/boss/bo6/nonmatchings/us_3E79C/BO6_ReboundStoneBounce1.s 
+| 1.00 | false    | ReboundStoneBounce1                 | asm/us/boss/bo6/nonmatchings/us_3E79C/ReboundStoneBounce1.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801D0D90                    | asm/us/boss/bo4/matchings/unk_46E7C/func_us_801D0D90.s 
 | 1.00 | true     | func_us_801D033C                    | asm/us/boss/rbo5/matchings/unk_4648C/func_us_801D033C.s 
 | 1.00 | true     | func_80127EF0                       | asm/us/dra/matchings/84B88/func_80127EF0.s 
 | 1.00 | true     | func_8016B92C                       | asm/us/ric/matchings/2F8E8/func_8016B92C.s 
-| 1.00 | false    | BO6_ReboundStoneBounce2             | asm/us/boss/bo6/nonmatchings/us_3E79C/BO6_ReboundStoneBounce2.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | func_800F6A48                       | asm/us/dra/matchings/menu/func_800F6A48.s 
-| 0.90 | true     | def_cbread                          | asm/us/main/matchings/psxsdk/libcd/event/def_cbread.s 
-| 0.90 | true     | def_cbready                         | asm/us/main/matchings/psxsdk/libcd/event/def_cbready.s 
-| 0.90 | true     | def_cbsync                          | asm/us/main/matchings/psxsdk/libcd/event/def_cbsync.s 
-| 0.90 | true     | SpuSetNoiseVoice                    | asm/us/main/matchings/psxsdk/libspu/s_snv/SpuSetNoiseVoice.s 
+| 1.00 | false    | ReboundStoneBounce2                 | asm/us/boss/bo6/nonmatchings/us_3E79C/ReboundStoneBounce2.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CdReadCallback                      | asm/us/main/matchings/psxsdk/libcd/cdread/CdReadCallback.s 
 | 1.00 | true     | CdReadyCallback                     | asm/us/main/matchings/psxsdk/libcd/sys/CdReadyCallback.s 
 | 1.00 | true     | CdSetDebug                          | asm/us/main/matchings/psxsdk/libcd/sys/CdSetDebug.s 
 | 1.00 | true     | CdSyncCallback                      | asm/us/main/matchings/psxsdk/libcd/sys/CdSyncCallback.s 
 | 1.00 | true     | SetVideoMode                        | asm/us/main/matchings/psxsdk/libetc/vmode/SetVideoMode.s 
+-------------------------------------------------------------------------------
+| 0.90 | true     | def_cbread                          | asm/us/main/matchings/psxsdk/libcd/event/def_cbread.s 
+| 0.90 | true     | def_cbready                         | asm/us/main/matchings/psxsdk/libcd/event/def_cbready.s 
+| 0.90 | true     | def_cbsync                          | asm/us/main/matchings/psxsdk/libcd/event/def_cbsync.s 
+| 1.00 | true     | GsGetVcount                         | asm/us/main/matchings/psxsdk/libgs/gs_008/GsGetVcount.s 
+| 1.00 | true     | GsClearVcount                       | asm/us/main/matchings/psxsdk/libgs/gs_009/GsClearVcount.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_80173C64                       | asm/us/servant/tt_000/matchings/bat/func_80173C64.s 
 | 1.00 | true     | func_us_8017293C                    | asm/us/servant/tt_001/matchings/ghost/func_us_8017293C.s 
@@ -4729,12 +4728,12 @@
 | 1.00 | true     | func_800E2398                       | asm/us/dra/matchings/42398/func_800E2398.s 
 | 1.00 | true     | func_8015E380                       | asm/us/ric/matchings/pl_collision/func_8015E380.s 
 | 1.00 | true     | func_us_801B832C                    | asm/us/st/no1/matchings/unk_381E8/func_us_801B832C.s 
-| 1.00 | false    | BO6_DebugShowWaitInfo               | asm/us/boss/bo6/nonmatchings/us_3E79C/BO6_DebugShowWaitInfo.s 
+| 1.00 | false    | DebugShowWaitInfo                   | asm/us/boss/bo6/nonmatchings/us_3E79C/DebugShowWaitInfo.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_800E2438                       | asm/us/dra/matchings/42398/func_800E2438.s 
 | 1.00 | true     | func_8015E420                       | asm/us/ric/matchings/pl_collision/func_8015E420.s 
 | 1.00 | true     | func_us_801B83CC                    | asm/us/st/no1/matchings/unk_381E8/func_us_801B83CC.s 
-| 1.00 | false    | BO6_DebugInputWait                  | asm/us/boss/bo6/nonmatchings/us_3E79C/BO6_DebugInputWait.s 
+| 1.00 | false    | DebugInputWait                      | asm/us/boss/bo6/nonmatchings/us_3E79C/DebugInputWait.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_800E346C                       | asm/us/dra/matchings/42398/func_800E346C.s 
 | 1.00 | true     | func_800E34A4                       | asm/us/dra/matchings/42398/func_800E34A4.s 
@@ -4800,11 +4799,6 @@
 | 0.91 | true     | DMA_memclr                          | asm/us/main/matchings/psxsdk/libetc/intr_dma/DMA_memclr.s 
 | 0.91 | true     | VSync_memclr                        | asm/us/main/matchings/psxsdk/libetc/intr_vb/VSync_memclr.s 
 | 1.00 | true     | func_8001510C                       | asm/us/main/matchings/psxsdk/libgpu/sys/func_8001510C.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
-| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
-| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
-| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801713C8                       | asm/us/servant/tt_000/matchings/bat/func_801713C8.s 
 | 1.00 | true     | func_us_801714F4                    | asm/us/servant/tt_001/matchings/ghost/func_us_801714F4.s 
@@ -5057,7 +5051,7 @@
 | 0.90 | true     | func_80103EAC                       | asm/us/dra/matchings/62DEC/func_80103EAC.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801CA208                    | asm/us/boss/bo4/matchings/unk_46E7C/func_us_801CA208.s 
-| 1.00 | true     | BO6_RicCreateEntFactoryFromEntity   | asm/us/boss/bo6/matchings/us_39144/BO6_RicCreateEntFactoryFromEntity.s 
+| 1.00 | true     | RicCreateEntFactoryFromEntity       | asm/us/boss/bo6/matchings/us_39144/RicCreateEntFactoryFromEntity.s 
 | 1.00 | true     | func_us_801C9818                    | asm/us/boss/rbo5/matchings/unk_4648C/func_us_801C9818.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801CA834                    | asm/us/boss/bo4/matchings/unk_46E7C/func_us_801CA834.s 
@@ -5096,7 +5090,7 @@
 | 1.00 | true     | func_8010EADC                       | asm/us/dra/matchings/6E42C/func_8010EADC.s 
 | 1.00 | true     | func_8015D1D0                       | asm/us/ric/matchings/pl_setstep/func_8015D1D0.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | BO6_RicEntitySubwpnBibleTrail       | asm/us/boss/bo6/matchings/us_3E79C/BO6_RicEntitySubwpnBibleTrail.s 
+| 1.00 | true     | RicEntitySubwpnBibleTrail           | asm/us/boss/bo6/matchings/us_3E79C/RicEntitySubwpnBibleTrail.s 
 | 0.96 | true     | func_8012B78C                       | asm/us/dra/matchings/8A0A4/func_8012B78C.s 
 | 1.00 | true     | func_80172AE8                       | asm/us/ric/matchings/319C4/func_80172AE8.s 
 -------------------------------------------------------------------------------
@@ -5146,35 +5140,35 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8010E168                       | asm/us/dra/matchings/6DF70/func_8010E168.s 
 | 1.00 | true     | func_8015CAD4                       | asm/us/ric/matchings/pl_utils/func_8015CAD4.s 
-| 1.00 | false    | BO6_RicSetInvincibilityFrames       | asm/us/boss/bo6/nonmatchings/us_39144/BO6_RicSetInvincibilityFrames.s 
+| 1.00 | false    | RicSetInvincibilityFrames           | asm/us/boss/bo6/nonmatchings/us_39144/RicSetInvincibilityFrames.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801200AC                       | asm/us/dra/matchings/7E4BC/func_801200AC.s 
 | 0.91 | true     | func_80164444                       | asm/us/ric/matchings/pl_blueprints/func_80164444.s 
-| 0.91 | false    | BO6_RicEntityShrinkingPowerUpRing   | asm/us/boss/bo6/nonmatchings/us_3E79C/BO6_RicEntityShrinkingPowerUpRing.s 
+| 0.91 | false    | RicEntityShrinkingPowerUpRing       | asm/us/boss/bo6/nonmatchings/us_3E79C/RicEntityShrinkingPowerUpRing.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_80125330                       | asm/us/dra/matchings/84B88/func_80125330.s 
 | 0.93 | true     | func_8016A26C                       | asm/us/ric/matchings/pl_subweapons/func_8016A26C.s 
-| 0.91 | false    | BO6_RicEntitySubwpnThrownAxe        | asm/us/boss/bo6/nonmatchings/us_3E79C/BO6_RicEntitySubwpnThrownAxe.s 
+| 0.91 | false    | RicEntitySubwpnThrownAxe            | asm/us/boss/bo6/nonmatchings/us_3E79C/RicEntitySubwpnThrownAxe.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_80125E68                       | asm/us/dra/matchings/84B88/func_80125E68.s 
 | 0.98 | true     | func_80167A70                       | asm/us/ric/matchings/pl_subweapon_holywater/func_80167A70.s 
-| 0.98 | false    | BO6_RicEntitySubwpnHolyWaterBreakGlass | asm/us/boss/bo6/nonmatchings/us_3E79C/BO6_RicEntitySubwpnHolyWaterBreakGlass.s 
+| 0.98 | false    | RicEntitySubwpnHolyWaterBreakGlass  | asm/us/boss/bo6/nonmatchings/us_3E79C/RicEntitySubwpnHolyWaterBreakGlass.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801291C4                       | asm/us/dra/matchings/84B88/func_801291C4.s 
 | 0.99 | true     | func_8016CC74                       | asm/us/ric/matchings/2F8E8/func_8016CC74.s 
-| 0.99 | false    | BO6_RicEntityAguneaHitEnemy         | asm/us/boss/bo6/nonmatchings/us_3E79C/BO6_RicEntityAguneaHitEnemy.s 
+| 0.99 | false    | RicEntityAguneaHitEnemy             | asm/us/boss/bo6/nonmatchings/us_3E79C/RicEntityAguneaHitEnemy.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8012A528                       | asm/us/dra/matchings/8A0A4/func_8012A528.s 
 | 0.97 | true     | func_8017161C                       | asm/us/ric/matchings/319C4/func_8017161C.s 
-| 0.97 | false    | BO6_RicEntitySubwpnStopwatchCircle  | asm/us/boss/bo6/nonmatchings/us_3E79C/BO6_RicEntitySubwpnStopwatchCircle.s 
+| 0.97 | false    | RicEntitySubwpnStopwatchCircle      | asm/us/boss/bo6/nonmatchings/us_3E79C/RicEntitySubwpnStopwatchCircle.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8012B990                       | asm/us/dra/matchings/8A0A4/func_8012B990.s 
 | 0.92 | true     | func_80172D00                       | asm/us/ric/matchings/319C4/func_80172D00.s 
-| 0.93 | false    | BO6_RicEntitySubwpnBible            | asm/us/boss/bo6/nonmatchings/us_3E79C/BO6_RicEntitySubwpnBible.s 
+| 0.93 | false    | RicEntitySubwpnBible                | asm/us/boss/bo6/nonmatchings/us_3E79C/RicEntitySubwpnBible.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801315F8                       | asm/us/dra/matchings/8D3E8/func_801315F8.s 
 | 0.98 | true     | func_8017328C                       | asm/us/ric/matchings/pl_crash_cross/func_8017328C.s 
-| 0.95 | false    | BO6_RicEntityCrashCrossBeam         | asm/us/boss/bo6/nonmatchings/us_3E79C/BO6_RicEntityCrashCrossBeam.s 
+| 0.95 | false    | RicEntityCrashCrossBeam             | asm/us/boss/bo6/nonmatchings/us_3E79C/RicEntityCrashCrossBeam.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_800E4124                       | asm/us/dra/matchings/game_handlers/func_800E4124.s 
 | 1.00 | true     | func_801B18CC                       | asm/us/st/sel/matchings/318CC/func_801B18CC.s 
@@ -5191,6 +5185,10 @@
 | 0.93 | true     | _SsContRpn1                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn1.s 
 | 0.93 | true     | _SsContRpn2                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn2.s 
 | 1.00 | true     | _SsSetProgramChange                 | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsSetProgramChange.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
+| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
+| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
 -------------------------------------------------------------------------------
 | 0.92 | true     | SsVabFakeHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabFakeHead.s 
 | 1.00 | true     | SsVabOpenHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabOpenHead.s 
@@ -5625,10 +5623,10 @@
 | 1.00 | true     | func_us_801A7638                    | asm/us/boss/bo6/matchings/cutscene/func_us_801A7638.s 
 | 1.00 | true     | func_801BE75C                       | asm/us/st/no3/matchings/cutscene/func_801BE75C.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | BO6_RicEntityPlayerBlinkWhite       | asm/us/boss/bo6/matchings/us_39144/BO6_RicEntityPlayerBlinkWhite.s 
+| 1.00 | true     | RicEntityPlayerBlinkWhite           | asm/us/boss/bo6/matchings/us_39144/RicEntityPlayerBlinkWhite.s 
 | 0.99 | true     | func_80162EF8                       | asm/us/ric/matchings/pl_blueprints/func_80162EF8.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | BO6_RicSetStand                     | asm/us/boss/bo6/matchings/us_39144/BO6_RicSetStand.s 
+| 1.00 | true     | RicSetStand                         | asm/us/boss/bo6/matchings/us_39144/RicSetStand.s 
 | 0.94 | true     | func_8015CD98                       | asm/us/ric/matchings/pl_setstep/func_8015CD98.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801B9C14                    | asm/us/boss/bo6/matchings/us_39144/func_us_801B9C14.s 
@@ -5722,7 +5720,7 @@
 | 0.92 | true     | func_8016840C                       | asm/us/ric/matchings/pl_subweapon_holywater/func_8016840C.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8012A89C                       | asm/us/dra/matchings/8A0A4/func_8012A89C.s 
-| 0.93 | false    | BO6_EntityStopWatch                 | asm/us/boss/bo6/nonmatchings/us_3E79C/BO6_EntityStopWatch.s 
+| 0.93 | false    | EntityStopWatch                     | asm/us/boss/bo6/nonmatchings/us_3E79C/EntityStopWatch.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801073E8                       | asm/us/dra/matchings/cd/func_801073E8.s 
 | 1.00 | true     | StreamDiskIsReady                   | asm/us/st/sel/matchings/stream/StreamDiskIsReady.s 
@@ -5738,6 +5736,9 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_800F548C                       | asm/us/dra/matchings/menu/func_800F548C.s 
 | 0.94 | true     | func_801B1EF4                       | asm/us/st/sel/matchings/318CC/func_801B1EF4.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | func_800F6A48                       | asm/us/dra/matchings/menu/func_800F6A48.s 
+| 0.90 | true     | SpuSetNoiseVoice                    | asm/us/main/matchings/psxsdk/libspu/s_snv/SpuSetNoiseVoice.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_800F99B8                       | asm/us/dra/matchings/menu/func_800F99B8.s 
 | 0.95 | true     | func_801B2108                       | asm/us/st/sel/matchings/318CC/func_801B2108.s 
@@ -5841,11 +5842,11 @@
 | 1.00 | true     | get_ce                              | asm/us/main/matchings/psxsdk/libgpu/sys/get_ce.s 
 | 1.00 | true     | get_cs                              | asm/us/main/matchings/psxsdk/libgpu/sys/get_cs.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | GsGetVcount                         | asm/us/main/matchings/psxsdk/libgs/gs_008/GsGetVcount.s 
-| 1.00 | true     | GsClearVcount                       | asm/us/main/matchings/psxsdk/libgs/gs_009/GsClearVcount.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | _SsContModulation                   | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContModulation.s 
 | 1.00 | true     | _SsContPortaTime                    | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContPortaTime.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | SsSeqPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSeqPlay.s 
+| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | SsUtSetReverbDelay                  | asm/us/main/matchings/psxsdk/libsnd/ut_rdel/SsUtSetReverbDelay.s 
 | 1.00 | true     | SsUtSetReverbFeedback               | asm/us/main/matchings/psxsdk/libsnd/ut_rfb/SsUtSetReverbFeedback.s 
@@ -5877,56 +5878,59 @@
 | 1.00 | true     | SpuRead                             | asm/us/main/matchings/psxsdk/libspu/s_r/SpuRead.s 
 | 1.00 | true     | SpuWrite                            | asm/us/main/matchings/psxsdk/libspu/s_w/SpuWrite.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | SpuSetVoiceAttr                     | asm/us/main/matchings/psxsdk/libspu/s_sva/SpuSetVoiceAttr.s 
+| 0.90 | true     | func_801BA6A8                       | asm/us/st/sel/matchings/libpress/func_801BA6A8.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | func_8016B97C                       | asm/us/ric/matchings/2F8E8/func_8016B97C.s 
-| 0.98 | false    | BO6_RicEntitySubwpnReboundStone     | asm/us/boss/bo6/nonmatchings/us_3E79C/BO6_RicEntitySubwpnReboundStone.s 
+| 0.98 | false    | RicEntitySubwpnReboundStone         | asm/us/boss/bo6/nonmatchings/us_3E79C/RicEntitySubwpnReboundStone.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8016C1BC                       | asm/us/ric/matchings/2F8E8/func_8016C1BC.s 
-| 0.99 | false    | BO6_RicEntitySubwpnThrownVibhuti    | asm/us/boss/bo6/nonmatchings/us_3E79C/BO6_RicEntitySubwpnThrownVibhuti.s 
+| 0.99 | false    | RicEntitySubwpnThrownVibhuti        | asm/us/boss/bo6/nonmatchings/us_3E79C/RicEntitySubwpnThrownVibhuti.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8016C734                       | asm/us/ric/matchings/2F8E8/func_8016C734.s 
-| 0.98 | false    | BO6_RicEntitySubwpnAgunea           | asm/us/boss/bo6/nonmatchings/us_3E79C/BO6_RicEntitySubwpnAgunea.s 
+| 0.98 | false    | RicEntitySubwpnAgunea               | asm/us/boss/bo6/nonmatchings/us_3E79C/RicEntitySubwpnAgunea.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8016D4D8                       | asm/us/ric/matchings/2F8E8/func_8016D4D8.s 
-| 0.93 | false    | BO6_RicEntityCrashVibhuti           | asm/us/boss/bo6/nonmatchings/us_3E79C/BO6_RicEntityCrashVibhuti.s 
+| 0.93 | false    | RicEntityCrashVibhuti               | asm/us/boss/bo6/nonmatchings/us_3E79C/RicEntityCrashVibhuti.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8016D920                       | asm/us/ric/matchings/2F8E8/func_8016D920.s 
 | 1.00 | true     | func_80170548                       | asm/us/ric/matchings/319C4/func_80170548.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8016DF74                       | asm/us/ric/matchings/319C4/func_8016DF74.s 
-| 0.94 | false    | BO6_RicEntityCrashReboundStoneExplosion | asm/us/boss/bo6/nonmatchings/us_3E79C/BO6_RicEntityCrashReboundStoneExplosion.s 
+| 0.94 | false    | RicEntityCrashReboundStoneExplosion | asm/us/boss/bo6/nonmatchings/us_3E79C/RicEntityCrashReboundStoneExplosion.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8016E324                       | asm/us/ric/matchings/319C4/func_8016E324.s 
-| 1.00 | false    | BO6_RicEntityCrashReboundStone      | asm/us/boss/bo6/nonmatchings/us_3E79C/BO6_RicEntityCrashReboundStone.s 
+| 1.00 | false    | RicEntityCrashReboundStone          | asm/us/boss/bo6/nonmatchings/us_3E79C/RicEntityCrashReboundStone.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8016E46C                       | asm/us/ric/matchings/319C4/func_8016E46C.s 
-| 0.93 | false    | BO6_RicEntityCrashBibleBeam         | asm/us/boss/bo6/nonmatchings/us_3E79C/BO6_RicEntityCrashBibleBeam.s 
+| 0.93 | false    | RicEntityCrashBibleBeam             | asm/us/boss/bo6/nonmatchings/us_3E79C/RicEntityCrashBibleBeam.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8016E9E4                       | asm/us/ric/matchings/319C4/func_8016E9E4.s 
-| 0.99 | false    | BO6_RicEntityCrashBible             | asm/us/boss/bo6/nonmatchings/us_3E79C/BO6_RicEntityCrashBible.s 
+| 0.99 | false    | RicEntityCrashBible                 | asm/us/boss/bo6/nonmatchings/us_3E79C/RicEntityCrashBible.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8016F198                       | asm/us/ric/matchings/319C4/func_8016F198.s 
 | 1.00 | false    | func_us_801C9DE8                    | asm/us/boss/bo6/nonmatchings/us_3E79C/func_us_801C9DE8.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801706C0                       | asm/us/ric/matchings/319C4/func_801706C0.s 
-| 1.00 | false    | BO6_GetAguneaLightningAngle         | asm/us/boss/bo6/nonmatchings/us_3E79C/BO6_GetAguneaLightningAngle.s 
+| 1.00 | false    | GetAguneaLightningAngle             | asm/us/boss/bo6/nonmatchings/us_3E79C/GetAguneaLightningAngle.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_80170874                       | asm/us/ric/matchings/319C4/func_80170874.s 
-| 1.00 | false    | BO6_AguneaShuffleParams             | asm/us/boss/bo6/nonmatchings/us_3E79C/BO6_AguneaShuffleParams.s 
+| 1.00 | false    | AguneaShuffleParams                 | asm/us/boss/bo6/nonmatchings/us_3E79C/AguneaShuffleParams.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8017091C                       | asm/us/ric/matchings/319C4/func_8017091C.s 
-| 1.00 | false    | BO6_RicEntityAguneaLightning        | asm/us/boss/bo6/nonmatchings/us_3E79C/BO6_RicEntityAguneaLightning.s 
+| 1.00 | false    | RicEntityAguneaLightning            | asm/us/boss/bo6/nonmatchings/us_3E79C/RicEntityAguneaLightning.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_80170F64                       | asm/us/ric/matchings/319C4/func_80170F64.s 
-| 0.96 | false    | BO6_RicEntityAguneaCircle           | asm/us/boss/bo6/nonmatchings/us_3E79C/BO6_RicEntityAguneaCircle.s 
+| 0.96 | false    | RicEntityAguneaCircle               | asm/us/boss/bo6/nonmatchings/us_3E79C/RicEntityAguneaCircle.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8015FDB0                       | asm/us/ric/matchings/pl_blueprints/func_8015FDB0.s 
 | 1.00 | false    | func_us_801BB5BC                    | asm/us/boss/bo6/nonmatchings/us_39144/func_us_801BB5BC.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_80160788                       | asm/us/ric/matchings/pl_blueprints/func_80160788.s 
-| 0.90 | false    | BO6_RicEntityFactory                | asm/us/boss/bo6/nonmatchings/us_39144/BO6_RicEntityFactory.s 
+| 0.90 | false    | RicEntityFactory                    | asm/us/boss/bo6/nonmatchings/us_39144/RicEntityFactory.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8016147C                       | asm/us/ric/matchings/pl_blueprints/func_8016147C.s 
-| 1.00 | false    | BO6_RicEntityHitByCutBlood          | asm/us/boss/bo6/nonmatchings/us_39144/BO6_RicEntityHitByCutBlood.s 
+| 1.00 | false    | RicEntityHitByCutBlood              | asm/us/boss/bo6/nonmatchings/us_39144/RicEntityHitByCutBlood.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_80161EF8                       | asm/us/ric/matchings/pl_blueprints/func_80161EF8.s 
 | 1.00 | false    | func_us_801BD384                    | asm/us/boss/bo6/nonmatchings/us_39144/func_us_801BD384.s 
@@ -5935,85 +5939,85 @@
 | 1.00 | false    | func_us_801BE79C                    | asm/us/boss/bo6/nonmatchings/us_3E79C/func_us_801BE79C.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_80164DF8                       | asm/us/ric/matchings/pl_blueprints/func_80164DF8.s 
-| 1.00 | false    | BO6_RicEntityHitByIce               | asm/us/boss/bo6/nonmatchings/us_3E79C/BO6_RicEntityHitByIce.s 
+| 1.00 | false    | RicEntityHitByIce                   | asm/us/boss/bo6/nonmatchings/us_3E79C/RicEntityHitByIce.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8015DBB0                       | asm/us/ric/matchings/pl_collision/func_8015DBB0.s 
-| 0.95 | false    | BO6_RicCheckInput                   | asm/us/boss/bo6/nonmatchings/us_39144/BO6_RicCheckInput.s 
+| 0.95 | false    | RicCheckInput                       | asm/us/boss/bo6/nonmatchings/us_39144/RicCheckInput.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8015F414                       | asm/us/ric/matchings/pl_collision/func_8015F414.s 
 | 0.96 | true     | func_8015F680                       | asm/us/ric/matchings/pl_collision/func_8015F680.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8015CCC8                       | asm/us/ric/matchings/pl_setstep/func_8015CCC8.s 
-| 1.00 | false    | BO6_RicSetCrouch                    | asm/us/boss/bo6/nonmatchings/us_39144/BO6_RicSetCrouch.s 
+| 1.00 | false    | RicSetCrouch                        | asm/us/boss/bo6/nonmatchings/us_39144/RicSetCrouch.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8015CF08                       | asm/us/ric/matchings/pl_setstep/func_8015CF08.s 
-| 1.00 | false    | BO6_RicSetFall                      | asm/us/boss/bo6/nonmatchings/us_39144/BO6_RicSetFall.s 
+| 1.00 | false    | RicSetFall                          | asm/us/boss/bo6/nonmatchings/us_39144/RicSetFall.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8015D3CC                       | asm/us/ric/matchings/pl_setstep/func_8015D3CC.s 
-| 0.90 | false    | BO6_RicDoAttack                     | asm/us/boss/bo6/nonmatchings/us_39144/BO6_RicDoAttack.s 
+| 0.90 | false    | RicDoAttack                         | asm/us/boss/bo6/nonmatchings/us_39144/RicDoAttack.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8015D9D4                       | asm/us/ric/matchings/pl_setstep/func_8015D9D4.s 
-| 1.00 | false    | BO6_RicSetSlide                     | asm/us/boss/bo6/nonmatchings/us_39144/BO6_RicSetSlide.s 
+| 1.00 | false    | RicSetSlide                         | asm/us/boss/bo6/nonmatchings/us_39144/RicSetSlide.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8015DA60                       | asm/us/ric/matchings/pl_setstep/func_8015DA60.s 
-| 1.00 | false    | BO6_RicSetSlideKick                 | asm/us/boss/bo6/nonmatchings/us_39144/BO6_RicSetSlideKick.s 
+| 1.00 | false    | RicSetSlideKick                     | asm/us/boss/bo6/nonmatchings/us_39144/RicSetSlideKick.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_80158F38                       | asm/us/ric/matchings/pl_steps/func_80158F38.s 
-| 1.00 | false    | BO6_RicStepWalk                     | asm/us/boss/bo6/nonmatchings/richter/BO6_RicStepWalk.s 
+| 1.00 | false    | RicStepWalk                         | asm/us/boss/bo6/nonmatchings/richter/RicStepWalk.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801590A0                       | asm/us/ric/matchings/pl_steps/func_801590A0.s 
-| 0.90 | false    | BO6_RicStepJump                     | asm/us/boss/bo6/nonmatchings/richter/BO6_RicStepJump.s 
+| 0.90 | false    | RicStepJump                         | asm/us/boss/bo6/nonmatchings/richter/RicStepJump.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801595D8                       | asm/us/ric/matchings/pl_steps/func_801595D8.s 
-| 1.00 | false    | BO6_RicStepFall                     | asm/us/boss/bo6/nonmatchings/richter/BO6_RicStepFall.s 
+| 1.00 | false    | RicStepFall                         | asm/us/boss/bo6/nonmatchings/richter/RicStepFall.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_80159BC8                       | asm/us/ric/matchings/pl_steps/func_80159BC8.s 
-| 1.00 | false    | BO6_RicResetPose                    | asm/us/boss/bo6/nonmatchings/richter/BO6_RicResetPose.s 
+| 1.00 | false    | RicResetPose                        | asm/us/boss/bo6/nonmatchings/richter/RicResetPose.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8015A9B0                       | asm/us/ric/matchings/pl_steps/func_8015A9B0.s 
-| 0.91 | false    | BO6_RicStepDead                     | asm/us/boss/bo6/nonmatchings/richter/BO6_RicStepDead.s 
+| 0.91 | false    | RicStepDead                         | asm/us/boss/bo6/nonmatchings/richter/RicStepDead.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8015B18C                       | asm/us/ric/matchings/pl_steps/func_8015B18C.s 
 | 0.91 | true     | func_8015B1E8                       | asm/us/ric/matchings/pl_steps/func_8015B1E8.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8015B898                       | asm/us/ric/matchings/pl_steps/func_8015B898.s 
-| 0.97 | false    | BO6_RicStepSlide                    | asm/us/boss/bo6/nonmatchings/richter/BO6_RicStepSlide.s 
+| 0.97 | false    | RicStepSlide                        | asm/us/boss/bo6/nonmatchings/richter/RicStepSlide.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8015BE84                       | asm/us/ric/matchings/pl_steps/func_8015BE84.s 
-| 0.93 | false    | BO6_RicStepSlideKick                | asm/us/boss/bo6/nonmatchings/richter/BO6_RicStepSlideKick.s 
+| 0.93 | false    | RicStepSlideKick                    | asm/us/boss/bo6/nonmatchings/richter/RicStepSlideKick.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8015C178                       | asm/us/ric/matchings/pl_steps/func_8015C178.s 
-| 1.00 | false    | BO6_RicStepBladeDash                | asm/us/boss/bo6/nonmatchings/richter/BO6_RicStepBladeDash.s 
+| 1.00 | false    | RicStepBladeDash                    | asm/us/boss/bo6/nonmatchings/richter/RicStepBladeDash.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8016902C                       | asm/us/ric/matchings/pl_subweapon_cross/func_8016902C.s 
-| 0.92 | false    | BO6_RicEntitySubwpnCrashCross       | asm/us/boss/bo6/nonmatchings/us_3E79C/BO6_RicEntitySubwpnCrashCross.s 
+| 0.92 | false    | RicEntitySubwpnCrashCross           | asm/us/boss/bo6/nonmatchings/us_3E79C/RicEntitySubwpnCrashCross.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_80169C10                       | asm/us/ric/matchings/pl_subweapon_cross/func_80169C10.s 
 | 1.00 | false    | func_us_801C488C                    | asm/us/boss/bo6/nonmatchings/us_3E79C/func_us_801C488C.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_80169D74                       | asm/us/ric/matchings/pl_subweapon_cross/func_80169D74.s 
-| 0.96 | false    | BO6_RicEntitySubwpnCrossTrail       | asm/us/boss/bo6/nonmatchings/us_3E79C/BO6_RicEntitySubwpnCrossTrail.s 
+| 0.96 | false    | RicEntitySubwpnCrossTrail           | asm/us/boss/bo6/nonmatchings/us_3E79C/RicEntitySubwpnCrossTrail.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_80169F04                       | asm/us/ric/matchings/pl_subweapon_cross/func_80169F04.s 
-| 1.00 | false    | BO6_RicEntitySubwpnCrashCrossParticles | asm/us/boss/bo6/nonmatchings/us_3E79C/BO6_RicEntitySubwpnCrashCrossParticles.s 
+| 1.00 | false    | RicEntitySubwpnCrashCrossParticles  | asm/us/boss/bo6/nonmatchings/us_3E79C/RicEntitySubwpnCrashCrossParticles.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_80167EC4                       | asm/us/ric/matchings/pl_subweapon_holywater/func_80167EC4.s 
-| 0.91 | false    | BO6_RicEntityCrashHydroStorm        | asm/us/boss/bo6/nonmatchings/us_3E79C/BO6_RicEntityCrashHydroStorm.s 
+| 0.91 | false    | RicEntityCrashHydroStorm            | asm/us/boss/bo6/nonmatchings/us_3E79C/RicEntityCrashHydroStorm.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_80168A20                       | asm/us/ric/matchings/pl_subweapon_holywater/func_80168A20.s 
-| 0.95 | false    | BO6_RicEntitySubwpnHolyWaterFlame   | asm/us/boss/bo6/nonmatchings/us_3E79C/BO6_RicEntitySubwpnHolyWaterFlame.s 
+| 0.95 | false    | RicEntitySubwpnHolyWaterFlame       | asm/us/boss/bo6/nonmatchings/us_3E79C/RicEntitySubwpnHolyWaterFlame.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8016B0C0                       | asm/us/ric/matchings/pl_subweapons/func_8016B0C0.s 
-| 0.99 | false    | BO6_RicEntitySubwpnKnife            | asm/us/boss/bo6/nonmatchings/us_3E79C/BO6_RicEntitySubwpnKnife.s 
+| 0.99 | false    | RicEntitySubwpnKnife                | asm/us/boss/bo6/nonmatchings/us_3E79C/RicEntitySubwpnKnife.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8015C4AC                       | asm/us/ric/matchings/pl_utils/func_8015C4AC.s 
 | 1.00 | false    | func_us_801B94CC                    | asm/us/boss/bo6/nonmatchings/us_39144/func_us_801B94CC.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_80166784                       | asm/us/ric/matchings/pl_whip/func_80166784.s 
-| 0.99 | false    | BO6_RicEntityWhip                   | asm/us/boss/bo6/nonmatchings/us_3E79C/BO6_RicEntityWhip.s 
+| 0.99 | false    | RicEntityWhip                       | asm/us/boss/bo6/nonmatchings/us_3E79C/RicEntityWhip.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8016779C                       | asm/us/ric/matchings/pl_whip/func_8016779C.s 
-| 0.99 | false    | BO6_RicEntityArmBrandishWhip        | asm/us/boss/bo6/nonmatchings/us_3E79C/BO6_RicEntityArmBrandishWhip.s 
+| 0.99 | false    | RicEntityArmBrandishWhip            | asm/us/boss/bo6/nonmatchings/us_3E79C/RicEntityArmBrandishWhip.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801710E8                       | asm/us/servant/tt_000/matchings/bat/func_801710E8.s 
 | 1.00 | true     | func_us_80170F60                    | asm/us/servant/tt_001/matchings/ghost/func_us_80170F60.s 
