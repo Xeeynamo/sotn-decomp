@@ -4,7 +4,7 @@
 extern EInit g_EInitElevator;
 
 #ifdef VERSION_PSP
-extern s32 E_ID(UNK_48);
+extern s32 E_ID(ELEVATOR_END);
 #endif
 
 u8 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags);
@@ -85,11 +85,11 @@ void func_us_801C2184_from_no0(Entity* self) {
         self->zPriority = player->zPriority + 0xC;
 
         parent = (self - 1);
-        CreateEntityFromCurrentEntity(E_ID(UNK_48), parent);
+        CreateEntityFromCurrentEntity(E_ID(ELEVATOR_END), parent);
         parent->params = 1;
 
         parent = (self - 2);
-        CreateEntityFromCurrentEntity(E_ID(UNK_48), parent);
+        CreateEntityFromCurrentEntity(E_ID(ELEVATOR_END), parent);
         parent->params = 2;
 
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 12);
@@ -243,8 +243,10 @@ void func_us_801C2184_from_no0(Entity* self) {
     }
 }
 
-void EntityUnkId1B(Entity* self) {
-    Entity* entity = &self[self->params];
+// One on top of elevator, one on bottom. Blocks the player in.
+// Only part of elevator that has collision.
+void EntityElevatorEnd(Entity* self) {
+    Entity* mainElevator = self + self->params;
     u8 collision;
 
     switch (self->step) {
@@ -260,12 +262,12 @@ void EntityUnkId1B(Entity* self) {
         break;
 
     case 1:
-        self->posX.i.hi = entity->posX.i.hi;
+        self->posX.i.hi = mainElevator->posX.i.hi;
         if (self->params == 1) {
-            self->posY.i.hi = entity->posY.i.hi + 27;
+            self->posY.i.hi = mainElevator->posY.i.hi + 27;
             collision = GetPlayerCollisionWith(self, 12, 8, 4);
         } else {
-            self->posY.i.hi = entity->posY.i.hi - 32;
+            self->posY.i.hi = mainElevator->posY.i.hi - 32;
             collision = GetPlayerCollisionWith(self, 12, 8, 6);
         }
         self->ext.cenElevator.playerCollision = collision;
