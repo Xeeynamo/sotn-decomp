@@ -1,6 +1,55 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stage.h>
 
+u8 D_80185F20[] = {
+#include "gen/D_80185F20.h"
+};
+u8 D_80186E54[] = {
+#include "gen/D_80186E54.h"
+};
+u8 D_80187EB4[] = {
+#include "gen/D_80187EB4.h"
+};
+u8 D_80188AC4[] = {
+#include "gen/D_80188AC4.h"
+};
+u8 D_80189580[] = {
+#include "gen/D_80189580.h"
+};
+u8 D_801898F4[] = {
+#include "gen/D_801898F4.h"
+};
+u8 D_8018A680[] = {
+#include "gen/D_8018A680.h"
+};
+u8 D_8018B3C0[] = {
+#include "gen/D_8018B3C0.h"
+};
+u8 D_8018BDF0[] = {
+#include "gen/D_8018BDF0.h"
+};
+u8 D_8018CBD8[] = {
+#include "gen/D_8018CBD8.h"
+};
+u8 D_8018D524[] = {
+#include "gen/D_8018D524.h"
+};
+u8 D_8018DC84[] = {
+#include "gen/D_8018DC84.h"
+};
+u8 D_8018E7D8[] = {
+#include "gen/D_8018E7D8.h"
+};
+u8 D_8018F444[] = {
+#include "gen/D_8018F444.h"
+};
+u8 D_801901A0[] = {
+#include "gen/D_801901A0.h"
+};
+u8 D_80190410[] = {
+#include "gen/D_80190410.h"
+};
+
 u16 D_80190D20[] = {
 #include "gen/D_80190D20.h"
 };
