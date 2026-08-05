@@ -1,0 +1,5 @@
+EXTERN(_binary_assets_boss_rbo3_mwo_header_bin_start);
+EXTERN(RBO3_Load);
+g_EInitLockCamera = 0x092666A8;
+g_EInitCommon = 0x092666B8;
+g_DemoMode = 0x091FC420;

@@ -1,0 +1,10 @@
+EXTERN(_binary_assets_boss_rbo5_mwo_header_bin_start);
+EXTERN(RBO5_Load);
+g_SpriteSheet = 0x09266768;
+g_PlOvlDopBatSpritesheet = 0x09266770;
+g_Clut = 0x091F5DF8;
+g_EInitLockCamera = 0x092666A8;
+g_EInitCommon = 0x092666B8;
+D_pspeu_0926BB70 = 0x0926BB70;
+D_pspeu_0926BB78 = 0x0926BB78;
+D_pspeu_0926BB80 = 0x0926BB80;

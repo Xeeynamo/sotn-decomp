@@ -100,11 +100,11 @@ segments:
         type: c
         file: game_2b
         function_ranges:
-          - [0x12684, 0x1272B]
-          - [0x1272C, 0x12747]
-          - [0x129C4, 0x12D57]
-          - [0x12D58, 0x12E7F]
-          - [0x12E80, 0x12F57]
+          - [0x12684, 0x126F6]
+          - [0x12700, 0x12740]
+          - [0x129C4, 0x12B3A]
+          - [0x12B48, 0x12DE2]
+          - [0x12E28, 0x12F0E]
         end: 0x1614B
       - [0x1614C, .data, game/cfgjp]
       - [0x1E6A8, .data, game/cfgrw1]

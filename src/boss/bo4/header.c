@@ -1,20 +1,18 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "bo4.h"
 
+#include "../../st/pfn_entity_update.h"
+
 extern RoomHeader rooms[];
-extern s16** spriteBanks[];
+extern SpriteParts* spriteBanks[];
 extern u_long* cluts[];
-extern LayoutEntity* entityLayoutHorizontal[];
 extern RoomDef rooms_layers[];
-extern u_long** gfxBanks[];
+extern GfxBank* gfxBanks[];
 
-extern u8* doppleganger_sprites[0x34C];
-extern u8* bat_form_sprites[6];
+extern u8* doppleganger_sprites[];
+extern u8* bat_form_sprites[];
 
-extern s16** spriteBanks[];
-extern u_long* cluts[];
-
-AbbreviatedOverlay2 OVL_EXPORT(Overlay) = {
+AbbreviatedOverlay2 g_BossOverlay = {
     .Update = Update,
     .HitDetection = HitDetection,
     .UpdateRoomPosition = UpdateRoomPosition,
@@ -22,7 +20,7 @@ AbbreviatedOverlay2 OVL_EXPORT(Overlay) = {
     .rooms = rooms,
     .spriteBanks = spriteBanks,
     .cluts = cluts,
-    .objLayoutHorizontal = entityLayoutHorizontal,
+    .objLayoutHorizontal = &OBJ_LAYOUT_HORIZONTAL,
     .tileLayers = rooms_layers,
     .gfxBanks = gfxBanks,
     .UpdateStageEntities = UpdateStageEntities,

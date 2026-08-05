@@ -1,0 +1,97 @@
+options:
+  platform: psp
+  basename: bobo6
+  base_path: ..
+  build_path: build/pspeu
+  target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo6.bin
+  asm_path: asm/pspeu/boss/bo6_psp
+  asset_path: assets/boss/bo6
+  src_path: src/boss
+  ld_script_path: build/pspeu/bobo6.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.pspeu.txt
+    - config/symbols.pspeu.bobo6.txt
+  undefined_funcs_auto_path: build/pspeu/config/undefined_funcs_auto.pspeu.bobo6.txt
+  undefined_syms_auto_path: build/pspeu/config/undefined_syms_auto.pspeu.bobo6.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: pspeu_$VRAM
+  disassemble_all: true
+  section_order:
+    - .text
+    - .data
+    - .rodata
+    - .bss
+  ld_bss_is_noload: true
+  disasm_unknown: true
+  global_vram_start: 0x08000000
+  ld_generate_symbol_per_data_segment: true
+  asm_inc_header: |
+    .set noat      /* allow manual use of $at */
+    .set noreorder /* don't insert nops after branches */
+sha1: 544630b046da708572014835760914c387cbc5dd
+segments:
+  - [0x0, bin, mwo_header]
+  - name: bobo6
+    type: code
+    start: 0x80
+    vram: 0x09237700
+    bss_start_address: 0x0927BA00
+    bss_size: 0x2A80
+    align: 128
+    subalign: 8
+    subsegments:
+      - [0x80, c, bo6/create_entity]
+      - [0x1028, c, bo6/e_stage_name]
+      - [0x1EA8, c, bo6/e_red_door]
+      - [0x1F90, c, bo6/e_red_door]
+      - [0x31B0, c, bo6/st_update]
+      - [0x4100, c, bo6/e_particles]
+      - [0x4C78, c, bo6_psp/unk_4C78]
+      - [0x4D50, c, bo6/e_collect]
+      - [0x8EC0, c, bo6_psp/unk_8EC0]
+      - [0x9470, c, bo6/collision]
+      - [0xB648, c, bo6/popup]
+      - [0xBC40, c, bo6/e_room_fg]
+      - [0xBD58, c, bo6/st_common]
+      - [0xC840, c, bo6/prim_helpers]
+      - [0xCF80, c, bo6_psp/st_init]
+      - [0xD380, c, bo6/e_breakable]
+      - [0xD500, c, bo6_psp/e_cutscene_dialogue]
+      - [0xDC80, c, bo6_psp/unk_DC80]
+      - [0x11248, c, bo6_psp/e_lock_camera]
+      - [0x114A8, c, bo6_psp/unk_114A8]
+      - [0x25BC0, c, bo6_psp/e_spike_room]
+      - [0x25C90, c, bo6_psp/unk_25C90]
+      - [0x33C00, .data, bo6/e_red_door]
+      - [0x33C18, .data, bo6/st_update]
+      - [0x33C48, data, 33C48]
+      - [0x33C48, .data, bo6/e_particles]
+      - [0x33CC8, .data, bo6/e_collect]
+      - [0x34210, .data, bo6_psp/unk_8EC0]
+      - [0x34260, data, '34260']
+      - [0x34260, .data, bo6/collision]
+      - [0x34638, .data, bo6/e_room_fg]
+      - [0x346D8, data, 346D8]
+      - [0x373C8, data, bo6/e_init]
+      - [0x375E8, data]
+      - [0x38D48, .data, bo6/e_breakable]
+      - [0x38D98, data, '38D98']
+      - [0x41C98, .data, bo6/header]
+      - [0x41CD0, data]
+      - [0x43F80, .rodata, bo6/e_red_door]
+      - [0x43F98, .rodata, bo6/e_collect]
+      - [0x43FF8, .rodata, bo6_psp/unk_DC80]
+      - [0x440B0, .rodata, bo6_psp/unk_114A8]
+      - [0x44280, .rodata, bo6_psp/unk_25C90]
+      - [0x44380, .bss, bo6/create_entity]
+      - [0x443A0, .bss, bo6/st_update]
+      - [0x443E0, bss, 443E0]
+      - [0x443E8, .bss, bo6_psp/unk_4C78]
+      - [0x44400, bss, '44400']
+      - [0x444B8, .bss, bo6/d_prize_drops]
+      - [0x444C0, bss, '444C0']
+  - [0x46E00]

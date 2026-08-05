@@ -28,7 +28,7 @@ segments:
         file: alucard
         end: 0xB753
         function_ranges:
-          - [0x1384, 0x141E]
+          - [0x137C, 0x137C]
           - [0x1A94, 0x2D3A]
 
       - start: 0xB754

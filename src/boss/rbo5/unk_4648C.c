@@ -1567,7 +1567,7 @@ void func_us_801C9624(void) {
                 DestroyEntity(g_CurrentEntity);
             } else {
                 if (entity->flags & FLAG_UNK_20000000) {
-                    OVL_EXPORT(UpdateAnim)(0, &D_us_801813F8[0].af);
+                    UpdateAnim(0, &D_us_801813F8[0].af);
                 }
                 entity->flags |= FLAG_NOT_AN_ENEMY;
             }
@@ -4532,7 +4532,7 @@ void EntitySubwpnReboundStone(Entity* self) {
     }
 }
 
-s32 OVL_EXPORT(UpdateUnarmedAnim)(s8*, AnimationFrame*);
+s32 UpdateUnarmedAnim(s8*, AnimationFrame*);
 extern EInit D_us_80180454;
 extern EInit D_us_80180460;
 extern DopWeaponAnimation D_us_80184304[];
@@ -4574,7 +4574,7 @@ void DopplegangerUnarmedAttack(Entity* self) {
     if (DOPPLEGANGER.poseTimer == 1 && DOPPLEGANGER.pose == anim->soundFrame) {
         g_api.PlaySfx(anim->soundId);
     }
-    if (OVL_EXPORT(UpdateUnarmedAnim)(anim->frameProps, anim->frames) < 0) {
+    if (UpdateUnarmedAnim(anim->frameProps, anim->frames) < 0) {
         DestroyEntity(self);
     }
 }
