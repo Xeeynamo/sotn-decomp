@@ -71,7 +71,7 @@ void func_us_801D2038(Entity* self);
 void func_us_801D1BF0(Entity* self);
 void func_us_801D2264(Entity* self);
 void func_us_801D21C8(Entity* self);
-void func_us_801C2184_from_no0(Entity* self);
+void EntityElevator(Entity* self);
 void EntityElevatorPart(Entity* self);
 void func_us_801C2A34_from_no0(Entity* self);
 void func_us_801C2B24_from_no0(Entity* self);
@@ -152,7 +152,7 @@ PfnEntityUpdate EntityUpdates[] = {
     func_us_801D1BF0,
     func_us_801D2264,
     func_us_801D21C8,
-    func_us_801C2184_from_no0,
+    EntityElevator,
     EntityElevatorPart,
     func_us_801C2A34_from_no0,
     func_us_801C2B24_from_no0,

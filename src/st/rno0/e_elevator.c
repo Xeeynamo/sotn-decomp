@@ -70,7 +70,7 @@ static s16 func_us_801C2044(Primitive* prim, s16 dy) {
     return dy;
 }
 
-void func_us_801C2184_from_no0(Entity* self) {
+void EntityElevator(Entity* self) {
     Entity* player = &PLAYER;
     Entity* endcap;
     Primitive* prim;
