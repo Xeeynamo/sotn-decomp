@@ -25,7 +25,6 @@ BackgroundBlockInit = 0x80180C9C;
 rooms = 0x801824C4;
 EntityBreakable = 0x801A6568;
 EntityBreakableDebris = 0x801A6A10;
-EntityClouds = 0x801A7254;
 EntityBackgroundGears = 0x801A76A8;
 EntityGearSidewaysLarge = 0x801A78B8;
 EntityGearHorizontal = 0x801A7B30;
