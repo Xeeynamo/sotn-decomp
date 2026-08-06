@@ -2,6 +2,7 @@
 #include "rno0.h"
 
 extern EInit g_EInitCommon;
+extern EInit RNO0_EInitSpawner;
 
 void EntityPendulum(Entity* self) {
     s16 angle;
@@ -23,6 +24,47 @@ void EntityPendulum(Entity* self) {
     self->rotate = (angle >> 6) + (angle >> 7);
 }
 
-INCLUDE_ASM("st/rno0/nonmatchings/e_background_clock_pendulum", EntityClockTickSound);
+void EntityClockTickSound(Entity* self) {
+    Tilemap* tilemap = &g_Tilemap;
+    Entity* player = &PLAYER;
+    u8 volume;
+    s16 distance;
 
-void RNO0_Unused801B70FC(void) {}
+    if (!self->step) {
+        InitializeEntity(RNO0_EInitSpawner);
+    }
+    if ((g_Timer % 60) == 0) {
+        switch (self->params) {
+        case 0:
+            g_api.PlaySfx(SFX_LOW_CLOCK_TICK);
+            break;
+
+        case 1:
+            distance =
+                ((0x140 - (tilemap->scrollX.i.hi + player->posX.i.hi)) * 2) / 5;
+            if (distance < 0) {
+                volume = 0;
+            } else if (distance >= 0x80) {
+                volume = 0x7F;
+            } else {
+                volume = distance;
+            }
+            g_api.PlaySfxVolPan(SFX_LOW_CLOCK_TICK, volume, -8);
+            break;
+
+        case 2:
+            distance = ((0x40 + player->posX.i.hi) * 2) / 5;
+            if (distance < 0) {
+                volume = 0;
+            } else if (distance >= 0x80) {
+                volume = 0x7F;
+            } else {
+                volume = distance;
+            }
+            g_api.PlaySfxVolPan(SFX_LOW_CLOCK_TICK, volume, 8);
+            break;
+        }
+    }
+}
+
+void clockHelperUnused(void) {}
