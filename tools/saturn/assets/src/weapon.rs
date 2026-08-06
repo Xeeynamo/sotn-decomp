@@ -1,4 +1,9 @@
 use crate::image::{self, Indexed};
+use crate::sheet;
+use crate::sprite::{
+    display_palette, pack, parse_image_table, read_palette_banks, to_linear, unpack, RawRecord,
+    RESOURCE_STRIDE,
+};
 use crate::{sha256_hex, Error, Result};
 use serde::{Deserialize, Serialize};
 use std::path::{Path, PathBuf};
@@ -11,15 +16,8 @@ pub const CONTACT_NAME: &str = "contact.png";
 pub const SPRITES_DIR: &str = "sprites";
 pub const ENCODING: &str = "indexed4-linear-high-nibble-first";
 
-pub const LINEAR_WIDTH: u32 = 320;
-
 pub const VDP1_BASE: u32 = 0x25C0_0000;
 pub const DESTINATION_OFFSET_GLOBAL: u32 = 0x0605_BEC4;
-
-const RESOURCE_STRIDE: usize = 12;
-const OFFSET_UNIT: usize = 8;
-const MAX_IMAGES: usize = 512;
-pub const PALETTE_BANK_SIZE: usize = 16;
 
 #[derive(Clone, Copy)]
 pub struct Profile {
@@ -157,42 +155,6 @@ impl Manifest {
     }
 }
 
-pub fn unpack(data: &[u8]) -> Vec<u8> {
-    let mut pixels = Vec::with_capacity(data.len() * 2);
-    for &byte in data {
-        pixels.push(byte >> 4);
-        pixels.push(byte & 0xF);
-    }
-    pixels
-}
-
-pub fn pack(pixels: &[u8]) -> Result<Vec<u8>> {
-    if pixels.len() % 2 != 0 {
-        return Err(Error::Format(format!(
-            "packed 4bpp needs an even pixel count, got {}",
-            pixels.len()
-        )));
-    }
-    if let Some(bad) = pixels.iter().find(|&&p| p > image::MAX_INDEX) {
-        return Err(Error::Format(format!(
-            "4bpp image contains index {bad}, above {}",
-            image::MAX_INDEX
-        )));
-    }
-    Ok(pixels
-        .chunks_exact(2)
-        .map(|pair| (pair[0] << 4) | pair[1])
-        .collect())
-}
-
-pub fn to_linear(data: &[u8]) -> Indexed {
-    let pixels = unpack(data);
-    let height = (pixels.len() as u32).div_ceil(LINEAR_WIDTH).max(1);
-    let mut atlas = Indexed::new(LINEAR_WIDTH, height);
-    atlas.pixels[..pixels.len()].copy_from_slice(&pixels);
-    atlas
-}
-
 fn record_image(data: &[u8], record: &ImageRecord) -> Indexed {
     let bytes = &data[record.file_offset..record.file_offset + record.byte_count];
     Indexed {
@@ -200,120 +162,6 @@ fn record_image(data: &[u8], record: &ImageRecord) -> Indexed {
         height: record.pixel_height,
         pixels: unpack(bytes),
     }
-}
-
-#[derive(Debug)]
-struct RawRecord {
-    index: usize,
-    stored_width: u8,
-    stored_height: u8,
-    offset: usize,
-    byte_count: usize,
-    allocation_size: usize,
-}
-
-fn parse_image_table(prg: &[u8], table_offset: usize) -> Result<(Vec<RawRecord>, usize)> {
-    let mut records: Vec<RawRecord> = Vec::new();
-    let mut cursor = table_offset;
-    let package_size = loop {
-        if records.len() >= MAX_IMAGES {
-            return Err(Error::Format(format!(
-                "image table at PRG 0x{table_offset:X} has no terminator in {MAX_IMAGES} entries"
-            )));
-        }
-        if cursor + 4 > prg.len() {
-            return Err(Error::Format(format!(
-                "image table at PRG 0x{table_offset:X} runs past the end of the PRG"
-            )));
-        }
-        let stored_width = prg[cursor];
-        let stored_height = prg[cursor + 1];
-        let units = u16::from_be_bytes([prg[cursor + 2], prg[cursor + 3]]) as usize;
-        if stored_width == 0 && stored_height == 0 {
-            if records.is_empty() {
-                return Err(Error::Format(format!(
-                    "image table at PRG 0x{table_offset:X} is empty"
-                )));
-            }
-            break units * OFFSET_UNIT;
-        }
-        if stored_width == 0 || stored_height == 0 {
-            return Err(Error::Format(format!(
-                "image {} at PRG 0x{table_offset:X} has a zero dimension",
-                records.len()
-            )));
-        }
-        let offset = units * OFFSET_UNIT;
-        let byte_count = stored_width as usize * stored_height as usize * 2;
-        if let Some(previous) = records.last() {
-            if offset < previous.offset + previous.byte_count {
-                return Err(Error::Format(format!(
-                    "image {} at PRG 0x{table_offset:X} overlaps image {}",
-                    records.len(),
-                    previous.index
-                )));
-            }
-        }
-        records.push(RawRecord {
-            index: records.len(),
-            stored_width,
-            stored_height,
-            offset,
-            byte_count,
-            allocation_size: 0,
-        });
-        cursor += 4;
-    };
-
-    let last = records.last().expect("checked non-empty above");
-    if last.offset + last.byte_count > package_size {
-        return Err(Error::Format(format!(
-            "image {} at PRG 0x{table_offset:X} ends past its {package_size}-byte package",
-            last.index
-        )));
-    }
-    for index in 0..records.len() {
-        let next = records
-            .get(index + 1)
-            .map(|record| record.offset)
-            .unwrap_or(package_size);
-        records[index].allocation_size = next - records[index].offset;
-    }
-    Ok((records, package_size))
-}
-
-fn read_palette_banks(prg: &[u8], offset: usize) -> Vec<Vec<[u8; 3]>> {
-    let bank_bytes = PALETTE_BANK_SIZE * 2;
-    if offset.saturating_add(2) > prg.len() {
-        return Vec::new();
-    }
-    let count = (u16::from_be_bytes([prg[offset], prg[offset + 1]]) & 0x3FFF) as usize;
-    let mut banks = Vec::with_capacity(count);
-    for bank in 0..count {
-        let base = offset + 2 + bank * bank_bytes;
-        if base.saturating_add(bank_bytes) > prg.len() {
-            break;
-        }
-        banks.push(
-            (0..PALETTE_BANK_SIZE)
-                .map(|index| {
-                    let word =
-                        u16::from_be_bytes([prg[base + index * 2], prg[base + index * 2 + 1]]);
-                    let channel = |shift: u32| ((word >> shift) & 0x1F) as u32 * 255 / 31;
-                    [channel(0) as u8, channel(5) as u8, channel(10) as u8]
-                })
-                .collect(),
-        );
-    }
-    banks
-}
-
-fn display_palette(banks: &[Vec<[u8; 3]>]) -> Option<Vec<u8>> {
-    let bank = banks.first()?;
-    if bank.len() != PALETTE_BANK_SIZE {
-        return None;
-    }
-    Some(bank.iter().flatten().copied().collect())
 }
 
 fn read_packages(prg: &[u8], profile: &Profile, chr_size: usize) -> Result<(usize, Vec<Package>)> {
@@ -506,17 +354,29 @@ pub fn extract(
     };
 
     if let Some(name) = &manifest.contact {
-        let banks = |package: &Package| {
-            prg.as_deref()
-                .map(|prg| read_palette_banks(prg, package.palette_table_prg_offset))
-                .unwrap_or_default()
-        };
-        let sheet = crate::weapon_sheet::build(
-            &manifest,
-            |_, record| record_image(&data, record).pixels,
-            |package| display_palette(&banks(package)),
-        );
-        image::write_rgba(&output_dir.join(name), &sheet)?;
+        let groups: Vec<sheet::Group> = manifest
+            .packages
+            .iter()
+            .map(|package| sheet::Group {
+                label: Some(package.resource_index),
+                palette: prg
+                    .as_deref()
+                    .map(|prg| read_palette_banks(prg, package.palette_table_prg_offset))
+                    .as_deref()
+                    .and_then(display_palette),
+                records: package
+                    .images
+                    .iter()
+                    .map(|record| sheet::Record {
+                        index: record.index,
+                        width: record.pixel_width,
+                        height: record.pixel_height,
+                        pixels: record_image(&data, record).pixels,
+                    })
+                    .collect(),
+            })
+            .collect();
+        image::write_rgba(&output_dir.join(name), &sheet::build(&groups))?;
     }
 
     let mut json = serde_json::to_string_pretty(&manifest)?;
@@ -724,35 +584,9 @@ pub fn verify(manifest_path: &Path, chr_path: &Path) -> Result<()> {
         chr_path.display()
     )))
 }
-
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    #[test]
-    fn nibbles_round_trip_left_pixel_first() {
-        let data: Vec<u8> = (0..=255u8).collect();
-        let pixels = unpack(&data);
-        assert_eq!(&pixels[..4], &[0x0, 0x0, 0x0, 0x1]);
-        assert_eq!(pack(&pixels).unwrap(), data);
-    }
-
-    #[test]
-    fn the_atlas_round_trips_and_pads_the_last_row() {
-        let data: Vec<u8> = (0..(LINEAR_WIDTH as usize / 2) * 3 - 1)
-            .map(|i| (i * 31 + 7) as u8)
-            .collect();
-        let atlas = to_linear(&data);
-        assert_eq!((atlas.width, atlas.height), (LINEAR_WIDTH, 3));
-        assert_eq!(pack(&atlas.pixels[..data.len() * 2]).unwrap(), data);
-        assert_eq!(&atlas.pixels[data.len() * 2..], &[0, 0]);
-    }
-
-    #[test]
-    fn an_index_above_fifteen_is_refused() {
-        let err = pack(&[0, 16]).unwrap_err();
-        assert!(matches!(err, Error::Format(_)), "{err}");
-    }
 
     #[test]
     fn every_profile_names_a_distinct_character_and_file() {
@@ -760,55 +594,6 @@ mod tests {
             assert_eq!(super::profile(profile.name).unwrap().file, profile.file);
         }
         assert!(super::profile("dracula").is_err());
-    }
-
-    #[test]
-    fn an_image_table_decodes_offsets_dimensions_and_gaps() {
-        let mut prg = vec![0u8; 64];
-        prg[0..4].copy_from_slice(&[4, 4, 0, 0]);
-        prg[4..8].copy_from_slice(&[2, 3, 0, 8]);
-        prg[8..12].copy_from_slice(&[0, 0, 0, 16]);
-        let (records, size) = parse_image_table(&prg, 0).unwrap();
-        assert_eq!(size, 128);
-        assert_eq!(records.len(), 2);
-        assert_eq!((records[0].offset, records[0].byte_count), (0, 32));
-        assert_eq!(records[0].allocation_size, 64);
-        assert_eq!((records[1].offset, records[1].byte_count), (64, 12));
-        assert_eq!(records[1].allocation_size, 64);
-    }
-
-    #[test]
-    fn overlapping_image_records_are_refused() {
-        let mut prg = vec![0u8; 32];
-        prg[0..4].copy_from_slice(&[4, 4, 0, 0]);
-        prg[4..8].copy_from_slice(&[2, 2, 0, 1]);
-        prg[8..12].copy_from_slice(&[0, 0, 0, 16]);
-        let err = parse_image_table(&prg, 0).unwrap_err();
-        assert!(matches!(err, Error::Format(_)), "{err}");
-    }
-
-    #[test]
-    fn an_unterminated_image_table_is_refused() {
-        let prg = vec![1u8; MAX_IMAGES * 8];
-        let err = parse_image_table(&prg, 0).unwrap_err();
-        assert!(matches!(err, Error::Format(_)), "{err}");
-    }
-
-    #[test]
-    fn rgb555_expands_to_full_range() {
-        let prg = [0x00, 0x01, 0xFC, 0x00, 0x83, 0xE0, 0x80, 0x1F]
-            .into_iter()
-            .chain(std::iter::repeat(0).take(64))
-            .collect::<Vec<u8>>();
-        let banks = read_palette_banks(&prg, 0);
-        assert_eq!(banks.len(), 1);
-        assert_eq!(banks[0][0], [0, 0, 255]);
-        assert_eq!(banks[0][1], [0, 255, 0]);
-        assert_eq!(banks[0][2], [255, 0, 0]);
-        assert_eq!(
-            display_palette(&banks).unwrap().len(),
-            PALETTE_BANK_SIZE * 3
-        );
     }
 
     #[test]

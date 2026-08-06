@@ -2,11 +2,13 @@ use std::fmt;
 
 pub mod adpcm;
 pub mod audio;
+pub mod familiar;
 pub mod font;
 pub mod image;
+pub mod sheet;
+pub mod sprite;
 pub mod wav;
 pub mod weapon;
-pub mod weapon_sheet;
 
 pub type Result<T> = std::result::Result<T, Error>;
 

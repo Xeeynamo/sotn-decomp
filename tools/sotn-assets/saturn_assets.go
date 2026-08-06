@@ -31,7 +31,8 @@ type saturnAsset struct {
 	// retail file
 	Source string `yaml:"source"`
 	// the player overlay whose tables partition a weapon CHR
-	Prg string `yaml:"prg"`
+	Prg     string `yaml:"prg"`
+	Include string `yaml:"include"`
 	// or a directory of retail files
 	Dir   string   `yaml:"dir"`
 	Files []string `yaml:"files"`
@@ -50,6 +51,7 @@ type saturnUnit struct {
 	path    string
 	output  string
 	prg     string
+	include string
 }
 
 const saturnAssetOutputDir = "build/saturn/assets"
@@ -67,6 +69,14 @@ func (a saturnAsset) variant() (string, error) {
 			return "", fmt.Errorf("asset %q: audio needs a codec", a.Name)
 		}
 		return a.Codec, nil
+	case "familiar":
+		if a.Profile == "" {
+			return "", fmt.Errorf("asset %q: familiar needs a profile", a.Name)
+		}
+		if a.Prg == "" {
+			return "", fmt.Errorf("asset %q: familiar needs the overlay prg", a.Name)
+		}
+		return a.Profile, nil
 	case "weapon":
 		if a.Profile == "" {
 			return "", fmt.Errorf("asset %q: weapon needs a profile", a.Name)
@@ -103,6 +113,7 @@ func (a saturnAsset) units() ([]saturnUnit, error) {
 			path:    a.Path,
 			output:  output,
 			prg:     a.Prg,
+			include: a.Include,
 		}}, nil
 	}
 
@@ -173,7 +184,11 @@ func saturnUnitArgs(u saturnUnit, command string) ([]string, error) {
 	manifest := filepath.Join(u.path, "manifest.json")
 	switch command {
 	case "extract":
-		args := []string{u.kind, "extract", u.variant, u.source, u.path}
+		args := []string{u.kind, "extract", u.variant}
+		if u.kind == "familiar" {
+			return append(args, u.prg, u.source, u.path), nil
+		}
+		args = append(args, u.source, u.path)
 		// weapon chr uses tables in player prg
 		if u.kind == "weapon" {
 			args = append(args, "--prg", u.prg)
@@ -185,6 +200,20 @@ func saturnUnitArgs(u saturnUnit, command string) ([]string, error) {
 		return []string{u.kind, "verify", manifest, u.source}, nil
 	default:
 		return nil, fmt.Errorf("unknown command %q", command)
+	}
+}
+
+func runSaturnFamiliarHeader(binary string, u saturnUnit, command string) error {
+	manifest := filepath.Join(u.path, "manifest.json")
+	switch command {
+	case "extract":
+		return nil
+	case "rebuild":
+		return runSaturnAssets(binary, "familiar", "generate-header", manifest, u.include)
+	case "verify":
+		return runSaturnAssets(binary, "familiar", "verify-header", manifest, u.include)
+	default:
+		return fmt.Errorf("unknown command %q", command)
 	}
 }
 
@@ -211,7 +240,11 @@ func forEachSaturnAsset(c *saturnAssetConfig, command string) error {
 			return err
 		}
 		eg.Go(func() error {
-			if err := runSaturnAssets(binary, args...); err != nil {
+			err := runSaturnAssets(binary, args...)
+			if err == nil && unit.kind == "familiar" && unit.include != "" {
+				err = runSaturnFamiliarHeader(binary, unit, command)
+			}
+			if err != nil {
 				return fmt.Errorf("asset %q: %w", unit.name, err)
 			}
 			return nil
