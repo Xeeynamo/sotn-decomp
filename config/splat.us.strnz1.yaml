@@ -55,7 +55,7 @@ segments:
       - [0x1738, .data, e_red_door]
       - [0x1750, .data, st_common]
       - [0x1950, .data, e_collect]
-      - [0x1CA4, data]
+      - [0x1CA4, .data, e_misc]
       - [0x1D5C, .data, e_particles]
       - [0x1DDC, .data, e_room_fg]
       - [0x1E68, data]
