@@ -177,6 +177,35 @@ ninja.build(
     },
 )
 
+ninja.rule(
+    'saturn_bitmap_header',
+    command='cargo run --quiet --manifest-path tools/saturn/assets/Cargo.toml -- '
+            'bitmap extract $BITMAP $in $EXTRACT > /dev/null && '
+            'cargo run --quiet --manifest-path tools/saturn/assets/Cargo.toml -- '
+            'bitmap generate-header $EXTRACT/manifest.json $out > /dev/null',
+    description='Generating Saturn bitmap header $out',
+)
+
+for directory, bitmap, overlay in [
+    ('maria', 'maria-castle-map', 'MARIA.PRG'),
+    ('ric', 'richter-castle-map', 'RICHTER.PRG'),
+]:
+    ninja.build(
+        f'src/saturn/{directory}/gen/castmap.h',
+        'saturn_bitmap_header',
+        inputs=[f'disks/saturn/{overlay}'],
+        implicit=[
+            'tools/saturn/assets/Cargo.toml',
+            'tools/saturn/assets/src/bitmap.rs',
+            'tools/saturn/assets/src/sprite.rs',
+            'tools/saturn/assets/src/main.rs',
+        ],
+        variables={
+            'BITMAP': bitmap,
+            'EXTRACT': f'build/saturn/bitmap/{bitmap}',
+        },
+    )
+
 ninja.rule('sotn_str',
            command=f'{SOTN_STR} process < $in > $out',
            description='Expanding SOTN strings in $out from $in')
@@ -204,6 +233,8 @@ def add_srcs(srcs, output_dir, args):
         implicit = []
         if src == 'src/saturn/t_bat/batgfx.c':
             implicit.append('src/saturn/t_bat/gen/batgfx.h')
+        if src in ('src/saturn/maria/castmap.c', 'src/saturn/ric/castmap.c'):
+            implicit.append(os.path.join(os.path.dirname(src), 'gen', 'castmap.h'))
 
         ninja.build(
             pre_name,

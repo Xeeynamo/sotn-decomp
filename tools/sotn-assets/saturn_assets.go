@@ -31,7 +31,9 @@ type saturnAsset struct {
 	// retail file
 	Source string `yaml:"source"`
 	// the player overlay whose tables partition a weapon CHR
-	Prg     string `yaml:"prg"`
+	Prg string `yaml:"prg"`
+	// matching main-player CHR carrying a bitmap's VDP1 lookup table
+	Chr     string `yaml:"chr"`
 	Include string `yaml:"include"`
 	// or a directory of retail files
 	Dir   string   `yaml:"dir"`
@@ -51,6 +53,7 @@ type saturnUnit struct {
 	path    string
 	output  string
 	prg     string
+	chr     string
 	include string
 }
 
@@ -69,6 +72,14 @@ func (a saturnAsset) variant() (string, error) {
 			return "", fmt.Errorf("asset %q: audio needs a codec", a.Name)
 		}
 		return a.Codec, nil
+	case "bitmap":
+		if a.Profile == "" {
+			return "", fmt.Errorf("asset %q: bitmap needs a profile", a.Name)
+		}
+		if a.Chr == "" {
+			return "", fmt.Errorf("asset %q: bitmap needs the matching player chr", a.Name)
+		}
+		return a.Profile, nil
 	case "familiar":
 		if a.Profile == "" {
 			return "", fmt.Errorf("asset %q: familiar needs a profile", a.Name)
@@ -113,6 +124,7 @@ func (a saturnAsset) units() ([]saturnUnit, error) {
 			path:    a.Path,
 			output:  output,
 			prg:     a.Prg,
+			chr:     a.Chr,
 			include: a.Include,
 		}}, nil
 	}
@@ -188,6 +200,9 @@ func saturnUnitArgs(u saturnUnit, command string) ([]string, error) {
 		if u.kind == "familiar" {
 			return append(args, u.prg, u.source, u.path), nil
 		}
+		if u.kind == "bitmap" {
+			return append(args, u.source, u.chr, u.path), nil
+		}
 		args = append(args, u.source, u.path)
 		// weapon chr uses tables in player prg
 		if u.kind == "weapon" {
@@ -203,15 +218,17 @@ func saturnUnitArgs(u saturnUnit, command string) ([]string, error) {
 	}
 }
 
-func runSaturnFamiliarHeader(binary string, u saturnUnit, command string) error {
+var generatedHeaderKinds = map[string]bool{"familiar": true, "bitmap": true}
+
+func runSaturnGeneratedHeader(binary string, u saturnUnit, command string) error {
 	manifest := filepath.Join(u.path, "manifest.json")
 	switch command {
 	case "extract":
 		return nil
 	case "rebuild":
-		return runSaturnAssets(binary, "familiar", "generate-header", manifest, u.include)
+		return runSaturnAssets(binary, u.kind, "generate-header", manifest, u.include)
 	case "verify":
-		return runSaturnAssets(binary, "familiar", "verify-header", manifest, u.include)
+		return runSaturnAssets(binary, u.kind, "verify-header", manifest, u.include)
 	default:
 		return fmt.Errorf("unknown command %q", command)
 	}
@@ -241,8 +258,8 @@ func forEachSaturnAsset(c *saturnAssetConfig, command string) error {
 		}
 		eg.Go(func() error {
 			err := runSaturnAssets(binary, args...)
-			if err == nil && unit.kind == "familiar" && unit.include != "" {
-				err = runSaturnFamiliarHeader(binary, unit, command)
+			if err == nil && generatedHeaderKinds[unit.kind] && unit.include != "" {
+				err = runSaturnGeneratedHeader(binary, unit, command)
 			}
 			if err != nil {
 				return fmt.Errorf("asset %q: %w", unit.name, err)
