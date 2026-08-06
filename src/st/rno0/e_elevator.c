@@ -4,7 +4,7 @@
 extern EInit g_EInitElevator;
 
 #ifdef VERSION_PSP
-extern s32 E_ID(UNK_48);
+extern s32 E_ID(ELEVATOR_PART);
 #endif
 
 u8 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags);
@@ -70,9 +70,9 @@ static s16 func_us_801C2044(Primitive* prim, s16 dy) {
     return dy;
 }
 
-void func_us_801C2184_from_no0(Entity* self) {
+void EntityElevator(Entity* self) {
     Entity* player = &PLAYER;
-    Entity* parent;
+    Entity* endcap;
     Primitive* prim;
     s32 primIndex;
     s16 dx, dy;
@@ -84,13 +84,13 @@ void func_us_801C2184_from_no0(Entity* self) {
         self->animCurFrame = 3;
         self->zPriority = player->zPriority + 0xC;
 
-        parent = (self - 1);
-        CreateEntityFromCurrentEntity(E_ID(UNK_48), parent);
-        parent->params = 1;
+        endcap = (self - 1);
+        CreateEntityFromCurrentEntity(E_ID(ELEVATOR_PART), endcap);
+        endcap->params = 1;
 
-        parent = (self - 2);
-        CreateEntityFromCurrentEntity(E_ID(UNK_48), parent);
-        parent->params = 2;
+        endcap = (self - 2);
+        CreateEntityFromCurrentEntity(E_ID(ELEVATOR_PART), endcap);
+        endcap->params = 2;
 
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 12);
         if (primIndex != -1) {
@@ -243,8 +243,15 @@ void func_us_801C2184_from_no0(Entity* self) {
     }
 }
 
-void EntityUnkId1B(Entity* self) {
-    Entity* entity = &self[self->params];
+// Represents several different parts, depending on self->params.
+// The elevator entity creates two (params = 1 and 2) which
+// represent its endcaps.
+// e_layout.c creates two more. params = 0x12 creates the pulley for the chain.
+// params = 0x1E creates a "cover" on the chain dispenser block.
+// Chain renders in front of the background, cover renders in front of then
+// chain, so it looks like the chain disappears into the background block.
+void EntityElevatorPart(Entity* self) {
+    Entity* mainElevator = self + self->params;
     u8 collision;
 
     switch (self->step) {
@@ -260,12 +267,12 @@ void EntityUnkId1B(Entity* self) {
         break;
 
     case 1:
-        self->posX.i.hi = entity->posX.i.hi;
+        self->posX.i.hi = mainElevator->posX.i.hi;
         if (self->params == 1) {
-            self->posY.i.hi = entity->posY.i.hi + 27;
+            self->posY.i.hi = mainElevator->posY.i.hi + 27;
             collision = GetPlayerCollisionWith(self, 12, 8, 4);
         } else {
-            self->posY.i.hi = entity->posY.i.hi - 32;
+            self->posY.i.hi = mainElevator->posY.i.hi - 32;
             collision = GetPlayerCollisionWith(self, 12, 8, 6);
         }
         self->ext.cenElevator.playerCollision = collision;

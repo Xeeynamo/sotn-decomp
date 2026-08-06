@@ -23,7 +23,7 @@ void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
 void func_us_801CC8F8_from_no0(Entity* self);
-void func_us_801CC750_from_no0(Entity* self);
+void EntityBackgroundPillars(Entity* self);
 void func_us_801CC9B4_from_no0(Entity* self);
 void EntityClockRoomController(Entity* self);
 void EntityClockHands(Entity* self);
@@ -33,16 +33,16 @@ void EntityStatueGear(Entity* self);
 void EntityStoneDoor(Entity* self);
 void OVL_EXPORT(Unused801C2338)(Entity* self);
 void EntityDummy(Entity* self);
-void EntityArmorLord(Entity* self);
+void EntityGuardian(Entity* self);
 void func_us_801D348C_from_are(Entity* self);
-void EntityArmorLordFireWave(Entity* self);
+void EntityGuardianFireWave(Entity* self);
 void func_us_801D3700_from_are(Entity* self);
 void OVL_EXPORT(Unused801C2C50)(Entity* self);
 void EntityFloorTrap(Entity* self);
 void EntityThornweed(Entity* self);
 void EntityCorpseweed(Entity* self);
 void EntityCorpseweedProjectile(Entity* self);
-void func_us_801C7F24(Entity* self);
+void EntityStoneSkull(Entity* self);
 void EntityJackOBones(Entity* self);
 void EntityJackOBonesDeathParts(Entity* self);
 void EntityJackOBonesJack(Entity* self);
@@ -62,7 +62,7 @@ void EntitySubWpnContGlass(Entity* self);
 void func_801C7654(Entity* self);
 void func_801C77B8(Entity* self);
 void func_801C7884(Entity* self);
-void func_us_801CFEA0(Entity* self);
+void EntityGorgon(Entity* self);
 void func_us_801D068C(Entity* self);
 void func_us_801D0CFC(Entity* self);
 void func_us_801D136C(Entity* self);
@@ -71,11 +71,11 @@ void func_us_801D2038(Entity* self);
 void func_us_801D1BF0(Entity* self);
 void func_us_801D2264(Entity* self);
 void func_us_801D21C8(Entity* self);
-void func_us_801C2184_from_no0(Entity* self);
-void EntityUnkId1B(Entity* self);
-void func_us_801C2A34_from_no0(Entity* self);
-void func_us_801C2B24_from_no0(Entity* self);
-void func_us_801B7104(Entity* self);
+void EntityElevator(Entity* self);
+void EntityElevatorPart(Entity* self);
+void EntityPendulum(Entity* self);
+void EntityClockTickSound(Entity* self);
+void EntityPinkCavernsBlock(Entity* self);
 void EntityMedusaHeadSpawner(Entity* self);
 void EntityMedusaHeadBlue(Entity* self);
 void EntityMedusaHeadYellow(Entity* self);
@@ -104,7 +104,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityExplosionVariants,
     EntityGreyPuff,
     func_us_801CC8F8_from_no0,
-    func_us_801CC750_from_no0,
+    EntityBackgroundPillars,
     func_us_801CC9B4_from_no0,
     EntityClockRoomController,
     EntityClockHands,
@@ -114,16 +114,16 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityStoneDoor,
     OVL_EXPORT(Unused801C2338),
     EntityDummy,
-    EntityArmorLord,
+    EntityGuardian,
     func_us_801D348C_from_are,
-    EntityArmorLordFireWave,
+    EntityGuardianFireWave,
     func_us_801D3700_from_are,
     OVL_EXPORT(Unused801C2C50),
     EntityFloorTrap,
     EntityThornweed,
     EntityCorpseweed,
     EntityCorpseweedProjectile,
-    func_us_801C7F24,
+    EntityStoneSkull,
     EntityJackOBones,
     EntityJackOBonesDeathParts,
     EntityJackOBonesJack,
@@ -143,7 +143,7 @@ PfnEntityUpdate EntityUpdates[] = {
     func_801C7654,
     func_801C77B8,
     func_801C7884,
-    func_us_801CFEA0,
+    EntityGorgon,
     func_us_801D068C,
     func_us_801D0CFC,
     func_us_801D136C,
@@ -152,11 +152,11 @@ PfnEntityUpdate EntityUpdates[] = {
     func_us_801D1BF0,
     func_us_801D2264,
     func_us_801D21C8,
-    func_us_801C2184_from_no0,
-    EntityUnkId1B,
-    func_us_801C2A34_from_no0,
-    func_us_801C2B24_from_no0,
-    func_us_801B7104,
+    EntityElevator,
+    EntityElevatorPart,
+    EntityPendulum,
+    EntityClockTickSound,
+    EntityPinkCavernsBlock,
     EntityMedusaHeadSpawner,
     EntityMedusaHeadBlue,
     EntityMedusaHeadYellow,

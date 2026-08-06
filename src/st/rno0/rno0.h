@@ -36,7 +36,7 @@ enum EntityID {
     E_EXPLOSION_VARIANTS,        // EntityExplosionVariants
     E_GREY_PUFF,                 // EntityGreyPuff
     E_UNK_16,                    // func_us_801CC8F8_from_no0
-    E_UNK_17,                    // func_us_801CC750_from_no0
+    E_BG_PILLARS,                // EntityBackgroundPillars
     E_UNK_18,                    // func_us_801CC9B4_from_no0
     E_CLOCK_ROOM_CONTROLLER,     // EntityClockRoomController
     E_CLOCK_HANDS,               // EntityClockHands
@@ -46,16 +46,16 @@ enum EntityID {
     E_STONE_DOOR,                // EntityStoneDoor
     E_UNK_1F,                    // OVL_EXPORT(Unused801C2338)
     E_DUMMY_20,                  // EntityDummy
-    E_ARMOR_LORD,                // EntityArmorLord
+    E_GUARDIAN,                  // EntityGuardian
     E_UNK_22,                    // func_us_801D348C_from_are
-    E_ARMOR_LORD_FIRE_WAVE,      // EntityArmorLordFireWave
+    E_GUARDIAN_FIRE_WAVE,        // EntityGuardianFireWave
     E_UNK_24,                    // func_us_801D3700_from_are
     E_UNK_25,                    // OVL_EXPORT(Unused801C2C50)
     E_FLOOR_TRAP,                // EntityFloorTrap
     E_THORNWEED,                 // EntityThornweed
     E_CORPSEWEED,                // EntityCorpseweed
     E_CORPSEWEED_PROJECTILE,     // EntityCorpseweedProjectile
-    E_UNK_2A,                    // func_us_801C7F24
+    E_STONE_SKULL,               // EntityStoneSkull
     E_JACKO_BONES,               // EntityJackOBones
     E_JACKO_BONES_DEATH_PARTS,   // EntityJackOBonesDeathParts
     E_JACKO_BONES_JACK,          // EntityJackOBonesJack
@@ -75,7 +75,7 @@ enum EntityID {
     E_UNK_3B,                    // func_801C7654
     E_UNK_3C,                    // func_801C77B8
     E_UNK_3D,                    // func_801C7884
-    E_UNK_3E,                    // func_us_801CFEA0
+    E_GORGON,                    // EntityGorgon
     E_UNK_3F,                    // func_us_801D068C
     E_UNK_40,                    // func_us_801D0CFC
     E_UNK_41,                    // func_us_801D136C
@@ -84,11 +84,11 @@ enum EntityID {
     E_UNK_44,                    // func_us_801D1BF0
     E_UNK_45,                    // func_us_801D2264
     E_UNK_46,                    // func_us_801D21C8
-    E_UNK_47,                    // func_us_801C2184_from_no0
-    E_UNK_48,                    // EntityUnkId1B
-    E_UNK_49,                    // func_us_801C2A34_from_no0
-    E_UNK_4A,                    // func_us_801C2B24_from_no0
-    E_UNK_4B,                    // func_us_801B7104
+    E_ELEVATOR,                  // EntityElevator
+    E_ELEVATOR_PART,             // EntityElevatorPart
+    E_PENDULUM,                  // EntityPendulum
+    E_CLOCK_TICK_SOUND,          // EntityClockTickSound
+    E_PINK_BLOCK,                // EntityPinkCavernsBlock
     E_MEDUSA_HEAD_SPAWNER,       // EntityMedusaHeadSpawner
     E_MEDUSA_HEAD_BLUE,          // EntityMedusaHeadBlue
     E_MEDUSA_HEAD_YELLOW,        // EntityMedusaHeadYellow
