@@ -196,6 +196,7 @@ func_801C7884 = 0x801CEA6C;
 func_801CD78C_801CEB40 = 0x801CEB40;
 func_us_801D2424_from_are = 0x801CEBF0;
 StepTowards = 0x801CF5E0;
+EntityGorgon = 0x801CFEA0;
 EntityMedusaHeadSpawner = 0x801D24C8;
 EntityMedusaHeadYellow = 0x801D2694;
 EntityMedusaHeadBlue = 0x801D26B8;

@@ -52,7 +52,7 @@ s32 E_ID(SUB_WPN_CONT_GLASS);
 s32 E_ID(UNK_3B);
 s32 E_ID(UNK_3C);
 s32 E_ID(UNK_3D);
-s32 E_ID(UNK_3E);
+s32 E_ID(GORGON);
 s32 E_ID(UNK_3F);
 s32 E_ID(UNK_40);
 s32 E_ID(UNK_41);
@@ -117,7 +117,7 @@ void InitEntityIds(void) {
     E_ID(UNK_3B) = E_UNK_3B;
     E_ID(UNK_3C) = E_UNK_3C;
     E_ID(UNK_3D) = E_UNK_3D;
-    E_ID(UNK_3E) = E_UNK_3E;
+    E_ID(GORGON) = E_GORGON;
     E_ID(UNK_3F) = E_UNK_3F;
     E_ID(UNK_40) = E_UNK_40;
     E_ID(UNK_41) = E_UNK_41;

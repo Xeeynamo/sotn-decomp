@@ -75,7 +75,7 @@ enum EntityID {
     E_UNK_3B,                    // func_801C7654
     E_UNK_3C,                    // func_801C77B8
     E_UNK_3D,                    // func_801C7884
-    E_UNK_3E,                    // func_us_801CFEA0
+    E_GORGON,                    // EntityGorgon
     E_UNK_3F,                    // func_us_801D068C
     E_UNK_40,                    // func_us_801D0CFC
     E_UNK_41,                    // func_us_801D136C

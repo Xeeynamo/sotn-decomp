@@ -62,7 +62,7 @@ void EntitySubWpnContGlass(Entity* self);
 void func_801C7654(Entity* self);
 void func_801C77B8(Entity* self);
 void func_801C7884(Entity* self);
-void func_us_801CFEA0(Entity* self);
+void EntityGorgon(Entity* self);
 void func_us_801D068C(Entity* self);
 void func_us_801D0CFC(Entity* self);
 void func_us_801D136C(Entity* self);
@@ -143,7 +143,7 @@ PfnEntityUpdate EntityUpdates[] = {
     func_801C7654,
     func_801C77B8,
     func_801C7884,
-    func_us_801CFEA0,
+    EntityGorgon,
     func_us_801D068C,
     func_us_801D0CFC,
     func_us_801D136C,

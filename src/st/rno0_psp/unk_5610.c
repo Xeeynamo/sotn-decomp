@@ -37,7 +37,7 @@ INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_5610", func_pspeu_0923F198);
 
 INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_5610", func_pspeu_0923F300);
 
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_5610", func_us_801CFEA0);
+INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_5610", EntityGorgon);
 
 INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_5610", func_us_801D068C);
 
