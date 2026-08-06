@@ -144,7 +144,7 @@ segments:
       - [0x49F98, c, e_bloody_zombie] # EntityBloodyZombie
       - [0x4B018, c, e_owl_knight]
       - [0x4D658, c, giantbro_helpers]
-      - [0x4E04C, c]
+      - [0x4E04C, c, giantbro_helpers_2]
       - [0x4E4CC, c, hammer]
       - [0x4F778, c, gurkha]
       - [0x50A00, c, blade]

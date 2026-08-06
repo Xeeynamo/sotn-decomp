@@ -85,7 +85,7 @@ segments:
       - [0x24870, c, np3/blade]
       - [0x266B0, c, np3/gurkha]
       - [0x280F0, c, np3/hammer]
-      - [0x29A88, c, np3/4E04C]
+      - [0x29A88, c, np3/giantbro_helpers_2]
       - [0x2A0B8, c, np3/e_zombie]
       - [0x2A588, c, np3/prim_helpers]
       - [0x2B100, .data, np3/gen/psp/sprites]
