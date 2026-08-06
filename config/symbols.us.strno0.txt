@@ -142,6 +142,7 @@ EntityFloorTrap = 0x801C6450;
 EntityThornweed = 0x801C69FC;
 EntityCorpseweed = 0x801C6D6C;
 EntityCorpseweedProjectile = 0x801C7A9C;
+EntityStoneSkull = 0x801C7F24;
 TryThrow = 0x801C8100;
 EntityJackOBones = 0x801C81A4;
 EntityJackOBonesDeathParts = 0x801C86B4;

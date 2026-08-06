@@ -19,4 +19,4 @@ INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_18870", EntityNovaLaser);
 
 INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_18870", EntityNovaLaserPulse);
 
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_18870", func_us_801C7F24);
+INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_18870", EntityStoneSkull);

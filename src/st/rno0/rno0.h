@@ -55,7 +55,7 @@ enum EntityID {
     E_THORNWEED,                 // EntityThornweed
     E_CORPSEWEED,                // EntityCorpseweed
     E_CORPSEWEED_PROJECTILE,     // EntityCorpseweedProjectile
-    E_UNK_2A,                    // func_us_801C7F24
+    E_STONE_SKULL,                    // EntityStoneSkull
     E_JACKO_BONES,               // EntityJackOBones
     E_JACKO_BONES_DEATH_PARTS,   // EntityJackOBonesDeathParts
     E_JACKO_BONES_JACK,          // EntityJackOBonesJack

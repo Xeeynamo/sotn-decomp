@@ -42,7 +42,7 @@ void EntityFloorTrap(Entity* self);
 void EntityThornweed(Entity* self);
 void EntityCorpseweed(Entity* self);
 void EntityCorpseweedProjectile(Entity* self);
-void func_us_801C7F24(Entity* self);
+void EntityStoneSkull(Entity* self);
 void EntityJackOBones(Entity* self);
 void EntityJackOBonesDeathParts(Entity* self);
 void EntityJackOBonesJack(Entity* self);
@@ -123,7 +123,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityThornweed,
     EntityCorpseweed,
     EntityCorpseweedProjectile,
-    func_us_801C7F24,
+    EntityStoneSkull,
     EntityJackOBones,
     EntityJackOBonesDeathParts,
     EntityJackOBonesJack,
