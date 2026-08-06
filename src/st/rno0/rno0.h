@@ -86,7 +86,7 @@ enum EntityID {
     E_UNK_46,                    // func_us_801D21C8
     E_ELEVATOR,                  // EntityElevator
     E_ELEVATOR_PART,             // EntityElevatorPart
-    E_UNK_49,                    // func_us_801C2A34_from_no0
+    E_PENDULUM,                  // EntityPendulum
     E_CLOCK_TICK_SOUND,          // func_us_801C2B24_from_no0
     E_UNK_4B,                    // func_us_801B7104
     E_MEDUSA_HEAD_SPAWNER,       // EntityMedusaHeadSpawner
