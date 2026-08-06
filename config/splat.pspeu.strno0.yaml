@@ -78,6 +78,7 @@ segments:
       - [0x26C38, c, rno0/e_room_bg]
       - [0x26DA8, c, rno0/e_lock_camera]
       - [0x27008, c, rno0_psp/unk_27008]
+      - [0x27330, c, rno0_psp/e_caverns_block]
       - [0x27680, data]
       - [0x27700, .data, rno0/st_update]
       - [0x27730, data]

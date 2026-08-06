@@ -66,5 +66,3 @@ void EntityClockTickSound(Entity* self) {
         }
     }
 }
-
-void clockHelperUnused(void) {}
