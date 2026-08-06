@@ -180,20 +180,20 @@ ninja.build(
 ninja.rule(
     'saturn_bitmap_header',
     command='cargo run --quiet --manifest-path tools/saturn/assets/Cargo.toml -- '
-            'bitmap extract $BITMAP $in $EXTRACT > /dev/null && '
+            'bitmap extract $BITMAP $PRG $CHR $EXTRACT > /dev/null && '
             'cargo run --quiet --manifest-path tools/saturn/assets/Cargo.toml -- '
             'bitmap generate-header $EXTRACT/manifest.json $out > /dev/null',
     description='Generating Saturn bitmap header $out',
 )
 
 for directory, bitmap, overlay in [
-    ('maria', 'maria-castle-map', 'MARIA.PRG'),
-    ('ric', 'richter-castle-map', 'RICHTER.PRG'),
+    ('maria', 'maria-castle-map', 'MARIA'),
+    ('ric', 'richter-castle-map', 'RICHTER'),
 ]:
     ninja.build(
         f'src/saturn/{directory}/gen/castmap.h',
         'saturn_bitmap_header',
-        inputs=[f'disks/saturn/{overlay}'],
+        inputs=[f'disks/saturn/{overlay}.PRG', f'disks/saturn/{overlay}.CHR'],
         implicit=[
             'tools/saturn/assets/Cargo.toml',
             'tools/saturn/assets/src/bitmap.rs',
@@ -202,6 +202,8 @@ for directory, bitmap, overlay in [
         ],
         variables={
             'BITMAP': bitmap,
+            'PRG': f'disks/saturn/{overlay}.PRG',
+            'CHR': f'disks/saturn/{overlay}.CHR',
             'EXTRACT': f'build/saturn/bitmap/{bitmap}',
         },
     )
