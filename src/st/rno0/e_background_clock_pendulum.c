@@ -3,6 +3,6 @@
 
 INCLUDE_ASM("st/rno0/nonmatchings/e_background_clock_pendulum", EntityPendulum);
 
-INCLUDE_ASM("st/rno0/nonmatchings/e_background_clock_pendulum", func_us_801C2B24_from_no0);
+INCLUDE_ASM("st/rno0/nonmatchings/e_background_clock_pendulum", EntityClockTickSound);
 
 void RNO0_Unused801B70FC(void) {}

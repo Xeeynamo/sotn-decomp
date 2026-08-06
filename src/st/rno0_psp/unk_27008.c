@@ -3,6 +3,6 @@
 
 INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_27008", EntityPendulum);
 
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_27008", func_us_801C2B24_from_no0);
+INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_27008", EntityClockTickSound);
 
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_27008", func_us_801B7104);
+INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_27008", EntityPinkCavernsBlock);

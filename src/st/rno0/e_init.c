@@ -23,7 +23,7 @@ void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
 void func_us_801CC8F8_from_no0(Entity* self);
-void func_us_801CC750_from_no0(Entity* self);
+void EntityBackgroundPillars(Entity* self);
 void func_us_801CC9B4_from_no0(Entity* self);
 void EntityClockRoomController(Entity* self);
 void EntityClockHands(Entity* self);
@@ -74,8 +74,8 @@ void func_us_801D21C8(Entity* self);
 void EntityElevator(Entity* self);
 void EntityElevatorPart(Entity* self);
 void EntityPendulum(Entity* self);
-void func_us_801C2B24_from_no0(Entity* self);
-void func_us_801B7104(Entity* self);
+void EntityClockTickSound(Entity* self);
+void EntityPinkCavernsBlock(Entity* self);
 void EntityMedusaHeadSpawner(Entity* self);
 void EntityMedusaHeadBlue(Entity* self);
 void EntityMedusaHeadYellow(Entity* self);
@@ -104,7 +104,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityExplosionVariants,
     EntityGreyPuff,
     func_us_801CC8F8_from_no0,
-    func_us_801CC750_from_no0,
+    EntityBackgroundPillars,
     func_us_801CC9B4_from_no0,
     EntityClockRoomController,
     EntityClockHands,
@@ -155,8 +155,8 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityElevator,
     EntityElevatorPart,
     EntityPendulum,
-    func_us_801C2B24_from_no0,
-    func_us_801B7104,
+    EntityClockTickSound,
+    EntityPinkCavernsBlock,
     EntityMedusaHeadSpawner,
     EntityMedusaHeadBlue,
     EntityMedusaHeadYellow,

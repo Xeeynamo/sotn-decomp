@@ -36,7 +36,7 @@ enum EntityID {
     E_EXPLOSION_VARIANTS,        // EntityExplosionVariants
     E_GREY_PUFF,                 // EntityGreyPuff
     E_UNK_16,                    // func_us_801CC8F8_from_no0
-    E_UNK_17,                    // func_us_801CC750_from_no0
+    E_BG_PILLARS,                // EntityBackgroundPillars
     E_UNK_18,                    // func_us_801CC9B4_from_no0
     E_CLOCK_ROOM_CONTROLLER,     // EntityClockRoomController
     E_CLOCK_HANDS,               // EntityClockHands
@@ -46,16 +46,16 @@ enum EntityID {
     E_STONE_DOOR,                // EntityStoneDoor
     E_UNK_1F,                    // OVL_EXPORT(Unused801C2338)
     E_DUMMY_20,                  // EntityDummy
-    E_ARMOR_LORD,                // EntityArmorLord
+    E_GUARDIAN,                  // EntityArmorLord
     E_UNK_22,                    // func_us_801D348C_from_are
-    E_ARMOR_LORD_FIRE_WAVE,      // EntityArmorLordFireWave
+    E_GUARDIAN_FIRE_WAVE,        // EntityArmorLordFireWave
     E_UNK_24,                    // func_us_801D3700_from_are
     E_UNK_25,                    // OVL_EXPORT(Unused801C2C50)
     E_FLOOR_TRAP,                // EntityFloorTrap
     E_THORNWEED,                 // EntityThornweed
     E_CORPSEWEED,                // EntityCorpseweed
     E_CORPSEWEED_PROJECTILE,     // EntityCorpseweedProjectile
-    E_STONE_SKULL,                    // EntityStoneSkull
+    E_STONE_SKULL,               // EntityStoneSkull
     E_JACKO_BONES,               // EntityJackOBones
     E_JACKO_BONES_DEATH_PARTS,   // EntityJackOBonesDeathParts
     E_JACKO_BONES_JACK,          // EntityJackOBonesJack
@@ -87,8 +87,8 @@ enum EntityID {
     E_ELEVATOR,                  // EntityElevator
     E_ELEVATOR_PART,             // EntityElevatorPart
     E_PENDULUM,                  // EntityPendulum
-    E_CLOCK_TICK_SOUND,          // func_us_801C2B24_from_no0
-    E_UNK_4B,                    // func_us_801B7104
+    E_CLOCK_TICK_SOUND,          // EntityClockTickSound
+    E_PINK_BLOCK,                // EntityPinkCavernsBlock
     E_MEDUSA_HEAD_SPAWNER,       // EntityMedusaHeadSpawner
     E_MEDUSA_HEAD_BLUE,          // EntityMedusaHeadBlue
     E_MEDUSA_HEAD_YELLOW,        // EntityMedusaHeadYellow
