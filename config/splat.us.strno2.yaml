@@ -54,7 +54,6 @@ segments:
       - [0x134C, .data, st_common]
       - [0x154C, .data, e_collect]
       - [0x18A0, .data, e_misc]
-      - [0x18B0, data]
       - [0x1958, .data, e_particles]
       - [0x19D8, .data, e_room_fg]
       - [0x1A64, data]
