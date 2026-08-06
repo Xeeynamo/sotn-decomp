@@ -150,6 +150,33 @@ ninja.rule('cpp',
            command='cpp $FLAGS $in > $out',
            description='Running preprocessor on $out from $in')
 
+ninja.rule(
+    'saturn_familiar_header',
+    command='cargo run --quiet --manifest-path tools/saturn/assets/Cargo.toml -- '
+            'familiar extract $FAMILIAR $PRG $CHR $EXTRACT > /dev/null && '
+            'cargo run --quiet --manifest-path tools/saturn/assets/Cargo.toml -- '
+            'familiar generate-header $EXTRACT/manifest.json $out > /dev/null',
+    description='Generating Saturn familiar header $out',
+)
+
+ninja.build(
+    'src/saturn/t_bat/gen/batgfx.h',
+    'saturn_familiar_header',
+    inputs=['disks/saturn/T_BAT.PRG', 'disks/saturn/T_BAT.CHR'],
+    implicit=[
+        'tools/saturn/assets/Cargo.toml',
+        'tools/saturn/assets/src/familiar.rs',
+        'tools/saturn/assets/src/sprite.rs',
+        'tools/saturn/assets/src/main.rs',
+    ],
+    variables={
+        'FAMILIAR': 'bat',
+        'PRG': 'disks/saturn/T_BAT.PRG',
+        'CHR': 'disks/saturn/T_BAT.CHR',
+        'EXTRACT': 'build/saturn/familiar/T_BAT',
+    },
+)
+
 ninja.rule('sotn_str',
            command=f'{SOTN_STR} process < $in > $out',
            description='Expanding SOTN strings in $out from $in')
@@ -174,10 +201,15 @@ def add_srcs(srcs, output_dir, args):
 
         flags = '-lang-c -I./src/saturn -I./src/saturn/lib -undef -D__GNUC__=2 -D__GNUC_MINOR__=7 -D__sh__ -D__sh__ -D__sh2__' + extra_cpp_defs
 
+        implicit = []
+        if src == 'src/saturn/t_bat/batgfx.c':
+            implicit.append('src/saturn/t_bat/gen/batgfx.h')
+
         ninja.build(
             pre_name,
             'cpp',
             inputs=[src],
+            implicit=implicit,
             variables={'FLAGS': flags})
 
         ninja.build(

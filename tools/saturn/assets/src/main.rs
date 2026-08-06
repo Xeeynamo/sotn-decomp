@@ -3,7 +3,7 @@
 //! Driven from tools/sotn-assets and config/assets.saturn.yaml
 
 use clap::{Parser, Subcommand};
-use saturn_assets::{audio, font, weapon};
+use saturn_assets::{audio, familiar, font, weapon};
 use std::path::PathBuf;
 use std::process::ExitCode;
 
@@ -25,6 +25,35 @@ enum Command {
     /// MAR_W / RIC_W / ALC_W secondary player CHR
     #[command(subcommand)]
     Weapon(WeaponCommand),
+    /// T_BAT / T_DEVIL / T_FAIRY / ... familiar CHR
+    #[command(subcommand)]
+    Familiar(FamiliarCommand),
+}
+
+#[derive(Subcommand)]
+enum FamiliarCommand {
+    /// Export the linear dump, the sprite PNGs and the contact sheet
+    Extract {
+        /// Familiar profile: bat, devil, devil2, fairy, fairy2, ghost, sword
+        familiar: String,
+        /// The retail T_*.PRG, which carries the image table and the CLUT
+        prg_path: PathBuf,
+        /// The retail T_*.CHR
+        chr_path: PathBuf,
+        output_dir: PathBuf,
+    },
+    /// Reassemble the CHR from the sprite PNGs and the linear dump
+    Rebuild { manifest: PathBuf, output: PathBuf },
+    /// Require a byte-identical no-edit rebuild
+    Verify {
+        manifest: PathBuf,
+        /// The retail T_*.CHR to compare against
+        chr_path: PathBuf,
+    },
+    /// Emit the image table, CLUT and resource wiring as C
+    GenerateHeader { manifest: PathBuf, output: PathBuf },
+    /// Require that regenerating reproduces a checked-in header exactly
+    VerifyHeader { manifest: PathBuf, header: PathBuf },
 }
 
 #[derive(Subcommand)]
@@ -132,6 +161,38 @@ fn run(cli: Cli) -> saturn_assets::Result<()> {
         }) => {
             audio::verify(&manifest, &source_path)?;
             println!("verify passed: exact retail match");
+        }
+        Command::Familiar(FamiliarCommand::Extract {
+            familiar,
+            prg_path,
+            chr_path,
+            output_dir,
+        }) => {
+            let manifest = familiar::extract(&familiar, &prg_path, &chr_path, &output_dir)?;
+            println!(
+                "{} bytes, {} sprite(s), {} CLUT bank(s), resource 0x{:08X} -> {}",
+                manifest.source.chr_size,
+                manifest.images.len(),
+                manifest.clut.banks,
+                manifest.resource.address,
+                output_dir.display()
+            );
+        }
+        Command::Familiar(FamiliarCommand::Rebuild { manifest, output }) => {
+            let data = familiar::rebuild(&manifest, &output)?;
+            println!("wrote {} bytes -> {}", data.len(), output.display());
+        }
+        Command::Familiar(FamiliarCommand::Verify { manifest, chr_path }) => {
+            familiar::verify(&manifest, &chr_path)?;
+            println!("verify passed: exact retail match");
+        }
+        Command::Familiar(FamiliarCommand::GenerateHeader { manifest, output }) => {
+            let text = familiar::generate_header(&manifest, &output)?;
+            println!("{} lines -> {}", text.lines().count(), output.display());
+        }
+        Command::Familiar(FamiliarCommand::VerifyHeader { manifest, header }) => {
+            familiar::verify_header(&manifest, &header)?;
+            println!("verify passed: the checked-in header is what regenerates");
         }
         Command::Weapon(WeaponCommand::Extract {
             character,

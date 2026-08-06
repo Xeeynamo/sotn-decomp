@@ -121,3 +121,53 @@ assets:
     prg: disks/saturn/ALUCARD.PRG
     path: assets/saturn/weapon/ALC_W
     output: build/saturn/assets/ALC_W.CHR
+  - name: familiar-bat
+    kind: familiar
+    profile: bat
+    prg: disks/saturn/T_BAT.PRG
+    source: disks/saturn/T_BAT.CHR
+    include: src/saturn/t_bat/gen/batgfx.h
+    path: assets/saturn/familiar/T_BAT
+    output: build/saturn/assets/T_BAT.CHR
+  - name: familiar-devil
+    kind: familiar
+    profile: devil
+    prg: disks/saturn/T_DEVIL.PRG
+    source: disks/saturn/T_DEVIL.CHR
+    path: assets/saturn/familiar/T_DEVIL
+    output: build/saturn/assets/T_DEVIL.CHR
+  - name: familiar-devil2
+    kind: familiar
+    profile: devil2
+    prg: disks/saturn/T_DEVIL2.PRG
+    source: disks/saturn/T_DEVIL2.CHR
+    path: assets/saturn/familiar/T_DEVIL2
+    output: build/saturn/assets/T_DEVIL2.CHR
+  - name: familiar-fairy
+    kind: familiar
+    profile: fairy
+    prg: disks/saturn/T_FAIRY.PRG
+    source: disks/saturn/T_FAIRY.CHR
+    path: assets/saturn/familiar/T_FAIRY
+    output: build/saturn/assets/T_FAIRY.CHR
+  - name: familiar-fairy2
+    kind: familiar
+    profile: fairy2
+    prg: disks/saturn/T_FAIRY2.PRG
+    source: disks/saturn/T_FAIRY2.CHR
+    path: assets/saturn/familiar/T_FAIRY2
+    output: build/saturn/assets/T_FAIRY2.CHR
+  - name: familiar-ghost
+    kind: familiar
+    profile: ghost
+    prg: disks/saturn/T_GHOST.PRG
+    source: disks/saturn/T_GHOST.CHR
+    path: assets/saturn/familiar/T_GHOST
+    output: build/saturn/assets/T_GHOST.CHR
+  - name: familiar-sword
+    kind: familiar
+    profile: sword
+    prg: disks/saturn/T_SWORD.PRG
+    source: disks/saturn/T_SWORD.CHR
+    path: assets/saturn/familiar/T_SWORD
+    output: build/saturn/assets/T_SWORD.CHR

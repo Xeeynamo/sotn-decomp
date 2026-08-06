@@ -1,4 +1,4 @@
-use saturn_assets::{image, weapon};
+use saturn_assets::{image, sprite, weapon};
 use std::path::{Path, PathBuf};
 
 fn repo_root() -> PathBuf {
@@ -211,7 +211,7 @@ fn a_linear_edit_inside_a_record_is_refused_by_name() {
 
 #[test]
 fn an_edit_to_the_linear_padding_is_refused() {
-    let row_bytes = weapon::LINEAR_WIDTH as u64 / 2;
+    let row_bytes = sprite::LINEAR_WIDTH as u64 / 2;
     let Some((profile, chr, prg)) = available()
         .into_iter()
         .find(|(_, chr, _)| std::fs::metadata(chr).is_ok_and(|meta| meta.len() % row_bytes != 0))

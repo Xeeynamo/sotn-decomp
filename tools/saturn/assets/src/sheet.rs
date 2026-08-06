@@ -1,5 +1,18 @@
 use crate::image::Rgba;
-use crate::weapon::{ImageRecord, Manifest, Package, PALETTE_BANK_SIZE};
+use crate::sprite::PALETTE_BANK_SIZE;
+
+pub struct Record {
+    pub index: usize,
+    pub width: u32,
+    pub height: u32,
+    pub pixels: Vec<u8>,
+}
+
+pub struct Group {
+    pub label: Option<usize>,
+    pub palette: Option<Vec<u8>>,
+    pub records: Vec<Record>,
+}
 
 pub const SHEET_WIDTH: u32 = 640;
 const MARGIN: u32 = 8;
@@ -85,20 +98,20 @@ struct Placement {
     y: u32,
 }
 
-fn place(records: &[ImageRecord], top: u32) -> (Vec<Placement>, u32) {
+fn place(records: &[Record], top: u32) -> (Vec<Placement>, u32) {
     let mut placements = Vec::with_capacity(records.len());
     let mut x = MARGIN;
     let mut y = top;
     let mut shelf = 0u32;
     for record in records {
-        let height = record.pixel_height + LABEL_HEIGHT;
-        if x > MARGIN && x + record.pixel_width > SHEET_WIDTH - MARGIN {
+        let height = record.height + LABEL_HEIGHT;
+        if x > MARGIN && x + record.width > SHEET_WIDTH - MARGIN {
             x = MARGIN;
             y += shelf + GUTTER;
             shelf = 0;
         }
         placements.push(Placement { x, y });
-        x += record.pixel_width + GUTTER;
+        x += record.width + GUTTER;
         shelf = shelf.max(height);
     }
     (placements, y + shelf - top)
@@ -120,30 +133,18 @@ fn colour_of(palette: Option<&Vec<u8>>, index: u8) -> [u8; 4] {
     }
 }
 
-fn draw_record(
-    sheet: &mut Rgba,
-    at: &Placement,
-    record: &ImageRecord,
-    pixels: &[u8],
-    palette: Option<&Vec<u8>>,
-) {
-    sheet.fill_rect(
-        at.x,
-        at.y,
-        record.pixel_width,
-        record.pixel_height,
-        RECORD_BACKING,
-    );
-    for y in 0..record.pixel_height {
-        for x in 0..record.pixel_width {
-            let index = pixels[(y * record.pixel_width + x) as usize];
+fn draw_record(sheet: &mut Rgba, at: &Placement, record: &Record, palette: Option<&Vec<u8>>) {
+    sheet.fill_rect(at.x, at.y, record.width, record.height, RECORD_BACKING);
+    for y in 0..record.height {
+        for x in 0..record.width {
+            let index = record.pixels[(y * record.width + x) as usize];
             sheet.set(at.x + x, at.y + y, colour_of(palette, index));
         }
     }
     draw_number(
         sheet,
         at.x,
-        at.y + record.pixel_height + 2,
+        at.y + record.height + 2,
         record.index,
         1,
         1,
@@ -151,57 +152,41 @@ fn draw_record(
     );
 }
 
-pub fn build<'a>(
-    manifest: &'a Manifest,
-    pixels_of: impl Fn(&Package, &ImageRecord) -> Vec<u8>,
-    palette_of: impl Fn(&Package) -> Option<Vec<u8>>,
-) -> Rgba {
+pub fn build(groups: &[Group]) -> Rgba {
     let mut height = MARGIN;
-    let mut groups = Vec::with_capacity(manifest.packages.len());
-    for package in &manifest.packages {
+    let mut layout = Vec::with_capacity(groups.len());
+    for group in groups {
         height += HEADER_HEIGHT;
-        let (placements, used) = place(&package.images, height);
-        groups.push(placements);
+        let (placements, used) = place(&group.records, height);
+        layout.push(placements);
         height += used + GUTTER * 2;
     }
     height = height.max(MARGIN * 2);
 
     let mut sheet = Rgba::new(SHEET_WIDTH, height, BACKGROUND);
     let mut cursor = MARGIN;
-    for (package, placements) in manifest.packages.iter().zip(&groups) {
+    for (group, placements) in groups.iter().zip(&layout) {
         sheet.fill_rect(0, cursor, SHEET_WIDTH, HEADER_HEIGHT, HEADER_BAND);
-        draw_number(
-            &mut sheet,
-            MARGIN,
-            cursor + 4,
-            package.resource_index,
-            2,
-            2,
-            HEADER_TEXT,
-        );
-        let after = MARGIN + number_width(2, 2) + 8;
+        let mut after = MARGIN;
+        if let Some(label) = group.label {
+            draw_number(&mut sheet, MARGIN, cursor + 4, label, 2, 2, HEADER_TEXT);
+            after += number_width(2, 2) + 8;
+        }
         draw_number(
             &mut sheet,
             after,
             cursor + 7,
-            package.images.len(),
+            group.records.len(),
             1,
             1,
             LABEL_TEXT,
         );
         cursor += HEADER_HEIGHT;
 
-        let palette = palette_of(package);
         let mut used = 0;
-        for (record, at) in package.images.iter().zip(placements) {
-            draw_record(
-                &mut sheet,
-                at,
-                record,
-                &pixels_of(package, record),
-                palette.as_ref(),
-            );
-            used = used.max(at.y + record.pixel_height + LABEL_HEIGHT - cursor);
+        for (record, at) in group.records.iter().zip(placements) {
+            draw_record(&mut sheet, at, record, group.palette.as_ref());
+            used = used.max(at.y + record.height + LABEL_HEIGHT - cursor);
         }
         cursor += used + GUTTER * 2;
     }
@@ -235,18 +220,11 @@ mod tests {
 
     #[test]
     fn records_wrap_onto_a_new_shelf_instead_of_running_off_the_sheet() {
-        let record = |index: usize, width: u32| ImageRecord {
+        let record = |index: usize, width: u32| Record {
             index,
-            stored_width: (width / 2) as u8,
-            stored_height: 8,
-            pixel_width: width,
-            pixel_height: 16,
-            offset: 0,
-            byte_count: 0,
-            allocation_size: 0,
-            file_offset: 0,
-            sha256: String::new(),
-            file: String::new(),
+            width,
+            height: 16,
+            pixels: vec![0; (width * 16) as usize],
         };
         let records = vec![record(0, 300), record(1, 300), record(2, 300)];
         let (placements, height) = place(&records, 0);
