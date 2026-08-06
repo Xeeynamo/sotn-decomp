@@ -46,9 +46,9 @@ enum EntityID {
     E_STONE_DOOR,                // EntityStoneDoor
     E_UNK_1F,                    // OVL_EXPORT(Unused801C2338)
     E_DUMMY_20,                  // EntityDummy
-    E_GUARDIAN,                  // EntityArmorLord
+    E_GUARDIAN,                  // EntityGuardian
     E_UNK_22,                    // func_us_801D348C_from_are
-    E_GUARDIAN_FIRE_WAVE,        // EntityArmorLordFireWave
+    E_GUARDIAN_FIRE_WAVE,        // EntityGuardianFireWave
     E_UNK_24,                    // func_us_801D3700_from_are
     E_UNK_25,                    // OVL_EXPORT(Unused801C2C50)
     E_FLOOR_TRAP,                // EntityFloorTrap

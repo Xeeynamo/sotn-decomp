@@ -5,7 +5,7 @@ INCLUDE_ASM("st/rno0/nonmatchings/e_armor_lord_guardian", func_us_801D1184_from_
 
 INCLUDE_ASM("st/rno0/nonmatchings/e_armor_lord_guardian", func_us_801D1388_from_are);
 
-INCLUDE_ASM("st/rno0/nonmatchings/e_armor_lord_guardian", EntityArmorLordFireWave);
+INCLUDE_ASM("st/rno0/nonmatchings/e_armor_lord_guardian", EntityGuardianFireWave);
 
 void RNO0_Unused801C2C50(void) {}
 
@@ -13,7 +13,7 @@ INCLUDE_ASM("st/rno0/nonmatchings/e_armor_lord_guardian", func_us_801D1A9C_from_
 
 INCLUDE_ASM("st/rno0/nonmatchings/e_armor_lord_guardian", func_us_801D1DAC_from_are);
 
-INCLUDE_ASM("st/rno0/nonmatchings/e_armor_lord_guardian", EntityArmorLord);
+INCLUDE_ASM("st/rno0/nonmatchings/e_armor_lord_guardian", EntityGuardian);
 
 INCLUDE_ASM("st/rno0/nonmatchings/e_armor_lord_guardian", func_us_801D348C_from_are);
 
