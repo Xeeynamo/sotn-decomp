@@ -75,7 +75,6 @@ segments:
       - [0x1724, .data, e_gremlin]       # EntityGremlinFire
       - [0x173C, .data, en_thornweed_corpseweed]
       - [0x17F4, .data, en_venus_weed]
-      # Binary data
       - [0x195C, .data, gen/rooms]
       - [0x19F8, .data, gen/e_layout] # layout entities data
       - [0x20D8, .data, stage_data]
@@ -130,6 +129,6 @@ segments:
       - [0x2D0EC, c, en_stage_name]
       - [0x2DF40, c, ut_prim_helpers]
       - [0x2E770, .bss, ut_create_entity]
-      - [0x2E780, bss]
+      - [0x2E780, .bss, bss]
       - [0x2F3E8, .bss, en_collect]
   - [0x2F428]

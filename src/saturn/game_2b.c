@@ -18,7 +18,7 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078604, func_06078604);
 
 // _disp_num_string
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078684, func_06078684);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607872C, func_0607872C);
+INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078700, func_06078700);
 
 extern s32 DAT_06086390;
 
@@ -54,8 +54,8 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f60787C8, func_060787C8);
 // _SubDispSpecial
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078920, func_06078920);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60789C4, func_060789C4);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078D58, func_06078D58);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078E80, func_06078E80);
+INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078B48, func_06078B48);
+INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078E28, func_06078E28);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078F58, func_06078F58);
 
 // _SubDispSortKind
@@ -1049,7 +1049,8 @@ void ReplaceBreakableWithItemDrop(Entity* self) {
     self->step = 0;
 }
 
-void func_0607B604(Entity* entity) {
+// func_0607B604
+void SyncSpriteObjectPosUnchecked(Entity* entity) {
     SpriteObject* temp = entity->unk0;
 
     temp->posX = entity->posX.val;
@@ -1492,7 +1493,7 @@ extern s32 DAT_0608612c;
 extern s32 DAT_06086130;
 extern s32 DAT_06086134;
 
-void func_06008048();
+void ResetLayerColorCalc();
 void func_0600C818();
 
 // func_0607BE38
@@ -1501,7 +1502,7 @@ void InitScreenWaveEffect(void) {
     DAT_06086128 = 0x50000;
     DAT_0608612c = 0xF0000;
     DAT_06086130 = 0x0;
-    func_06008048();
+    ResetLayerColorCalc();
     SCL_SET_CCMD(0);
     SCL_SetColMixMode(0x7, 0x1);
     DAT_06086134 = 0x1F;

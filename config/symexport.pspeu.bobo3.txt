@@ -1,0 +1,2 @@
+EXTERN(_binary_assets_boss_bo3_mwo_header_bin_start);
+EXTERN(BO3_Load);

@@ -11,7 +11,7 @@ INCLUDE_ASM("st/rno0/nonmatchings/unk_4F968", func_us_801CFD70);
 
 INCLUDE_ASM("st/rno0/nonmatchings/unk_4F968", func_us_801CFE6C);
 
-INCLUDE_ASM("st/rno0/nonmatchings/unk_4F968", func_us_801CFEA0);
+INCLUDE_ASM("st/rno0/nonmatchings/unk_4F968", EntityGorgon);
 
 INCLUDE_ASM("st/rno0/nonmatchings/unk_4F968", func_us_801D068C);
 

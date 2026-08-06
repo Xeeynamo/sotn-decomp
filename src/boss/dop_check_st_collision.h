@@ -46,10 +46,10 @@ Point16 g_DopSensorsWall[] = {
     {-5, 24}, {-5, 17}, {-5, 9}, {-5, 1}, {-5, -7}, {-5, -14}, {-5, -21},
 };
 
-static void OVL_EXPORT(CheckWallRight)(void);
-static void OVL_EXPORT(CheckWallLeft)(void);
-static void OVL_EXPORT(CheckFloor)(void);
-static void OVL_EXPORT(CheckCeiling)(void);
+static void CheckWallRight(void);
+static void CheckWallLeft(void);
+static void CheckFloor(void);
+static void CheckCeiling(void);
 
 static void CheckStageCollision(bool checkSensors) {
     s16 argX;
@@ -121,13 +121,13 @@ static void CheckStageCollision(bool checkSensors) {
         argY = DOPPLEGANGER.posY.i.hi + g_DopSensorsFloor[i].y;
         g_api.CheckCollision(argX, argY, &g_Dop.colFloor[i], 0);
     }
-    OVL_EXPORT(CheckFloor)();
+    CheckFloor();
     for (i = 0; i < NUM_HORIZONTAL_SENSORS; i++) {
         argX = DOPPLEGANGER.posX.i.hi + g_DopSensorsCeiling[i].x;
         argY = DOPPLEGANGER.posY.i.hi + g_DopSensorsCeiling[i].y;
         g_api.CheckCollision(argX, argY, &g_Dop.colCeiling[i], 0);
     }
-    OVL_EXPORT(CheckCeiling)();
+    CheckCeiling();
     if ((*vram_ptr & 1) && (DOPPLEGANGER.velocityY >= 0)) {
         DOPPLEGANGER.posY.i.lo = 0;
     }
@@ -139,8 +139,8 @@ static void CheckStageCollision(bool checkSensors) {
         argY = DOPPLEGANGER.posY.i.hi + g_DopSensorsWall[i].y;
         g_api.CheckCollision(argX, argY, &g_Dop.colWall[i], 0);
     }
-    OVL_EXPORT(CheckWallRight)();
-    OVL_EXPORT(CheckWallLeft());
+    CheckWallRight();
+    CheckWallLeft();
     if ((*vram_ptr & 4) && (DOPPLEGANGER.velocityX > 0)) {
         DOPPLEGANGER.posX.i.lo = 0;
     }

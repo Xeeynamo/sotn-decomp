@@ -388,4 +388,4 @@ void func_060EC240(Entity* self) {
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EC278, func_060EC278);
 
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EC730, func_060EC730);
-INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60ECA94, func_060ECA94);
+INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EC888, func_060EC888);

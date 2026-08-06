@@ -542,7 +542,7 @@ void EntityLibrarianChair(Entity* self) {
                    F(player->velocityY).i.hi < 0) {
             SetStep(16);
             if (PLAYER.step == Player_HighJump) {
-                g_Player.unk4A = 0x1C;
+                g_Player.gravBootTimer = 0x1C;
                 if (PLAYER.step_s == 0) {
                     PLAYER.step_s = 1;
                     PLAYER.velocityY = FIX(-8);
@@ -744,7 +744,7 @@ void EntityLibrarianChair(Entity* self) {
 #ifdef VERSION_PSP
 extern const char** D_us_80181310;
 #else
-extern const char* D_us_80181310[] = {
+static const char* D_us_80181310[] = {
     "\003"
     "Buy item",
     "\003"

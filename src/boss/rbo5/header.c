@@ -1,17 +1,18 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rbo5.h"
 
+#include "../../st/pfn_entity_update.h"
+
 extern RoomHeader rooms[];
-extern s16** spriteBanks[];
+extern SpriteParts* spriteBanks[];
 extern u_long* cluts[];
-extern LayoutEntity* entityLayoutHorizontal[];
 extern RoomDef rooms_layers[];
-extern u_long** gfxBanks[];
+extern GfxBank* gfxBanks[];
 
-extern u8* g_SpriteSheet[0x34C];
-extern u8* g_PlOvlDopBatSpritesheet[6];
+extern u8* g_SpriteSheet[];
+extern u8* g_PlOvlDopBatSpritesheet[];
 
-AbbreviatedOverlay2 OVL_EXPORT(Overlay) = {
+AbbreviatedOverlay2 g_BossOverlay = {
     .Update = Update,
     .HitDetection = HitDetection,
     .UpdateRoomPosition = UpdateRoomPosition,
@@ -19,58 +20,10 @@ AbbreviatedOverlay2 OVL_EXPORT(Overlay) = {
     .rooms = rooms,
     .spriteBanks = spriteBanks,
     .cluts = cluts,
-    .objLayoutHorizontal = entityLayoutHorizontal,
+    .objLayoutHorizontal = &OBJ_LAYOUT_HORIZONTAL,
     .tileLayers = rooms_layers,
     .gfxBanks = gfxBanks,
     .UpdateStageEntities = UpdateStageEntities,
     .unk2C = g_SpriteSheet,
     .unk30 = g_PlOvlDopBatSpritesheet,
 };
-
-extern s16* D_us_801B0B50[];
-extern s16* D_us_801B1674[];
-extern s16* D_us_801B173C[];
-extern s16* D_us_801B2140[];
-extern s16* D_us_801B2604[];
-
-s16** spriteBanks[] = {
-    NULL, D_us_801B0B50, D_us_801B1674, D_us_801B173C, D_us_801B2140, NULL,
-    NULL, NULL,          NULL,          NULL,          NULL,          NULL,
-    NULL, NULL,          NULL,          D_us_801B2604, NULL,          NULL,
-    NULL, NULL,          NULL,          NULL,          NULL,          NULL,
-};
-
-extern s16* D_us_801AC360[0x1F0];
-
-static u_long* D_us_80180094[] = {
-    MAKE_PAL_OP(PAL_BULK_COPY, 0),
-    PAL_BULK(0x2000, D_us_801AC360),
-    PAL_TERMINATE(),
-};
-
-static u_long* D_us_801800A8[] = {
-    PAL_COPY_INFO(),
-    PAL_COPY_DATA_(0x20F0, &g_Clut[2][0xA0], 16),
-};
-
-static u_long* D_us_801800B8[] = {
-    MAKE_PAL_OP(PAL_UNK_OP2, 2),
-    PAL_COPY_DATA_(0x20F0, &g_Clut[2][0xC0], 16),
-    PAL_TERMINATE(),
-};
-
-static u_long* D_us_801800CC[] = {
-    MAKE_PAL_OP(PAL_UNK_OP2, 2),
-    PAL_COPY_DATA_(0x20F0, &g_Clut[2][0], 16),
-    PAL_TERMINATE(),
-};
-
-u_long* cluts[] = {
-    D_us_80180094,
-    D_us_801800B8,
-    D_us_801800CC,
-    D_us_801800A8,
-};
-
-#include "gen/layers.h"
-#include "gen/graphics_banks.h"

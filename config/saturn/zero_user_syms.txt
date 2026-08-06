@@ -27,7 +27,7 @@ _func_0600C298 = 0x0600C298;
 _ClearFrameBuffer = 0x0600CAB8;
 _func_0600d8bc = 0x0600D8BC;
 _MoviePRGClear = 0x0600DA90;
-_func_0600DACC = 0x0600DACC;
+_InitPrimBuf = 0x0600DACC;
 _AllocPrimitives = 0x0600DB38;
 _FreePrimitives = 0x0600DCA4;
 _SetCurrentMatrix = 0x0600E390;
@@ -37,7 +37,7 @@ _ratan2 = 0x0600EE88;
 _rsin_tbl = 0x0600EFBC;
 _rsin = 0x0600F7BC;
 _rcos = 0x0600F81C;
-_func_0600F87C = 0x0600F87C;
+_rsincos = 0x0600F87C;
 _SquareRoot0 = 0x0600F914;
 _DecompressLzss = 0x0600F96C;
 _func_0600fb4c = 0x0600FB4C;
@@ -155,11 +155,6 @@ _g_SysUintMacSaveStubs = 0x06030A5C;
 _SYS_SetUintMacSave = 0x06030AFC;
 _SYS_GetUintMacSave = 0x06030B88;
 _func_06030df0 = 0x06030DF0;
-___ashiftrt_r4_24 = 0x06030E2A;
-___ashiftrt_r4_20 = 0x06030E38;
-___ashiftrt_r4_12 = 0x06030E4C;
-___ashiftrt_r4_8 = 0x06030E54;
-___ashiftrt_r4_7 = 0x06030E56;
 ___sdivsi3 = 0x06030E6C;
 ___ashlsi3 = 0x06030F0C;
 ___udivsi3 = 0x06031048;
@@ -283,16 +278,16 @@ _d_0605BEC8 = 0x0605BEC8;
 _d_0605BECA = 0x0605BECA;
 _D_8003C730 = 0x0605C11C;
 _DAT_0605c120 = 0x0605C120;
-_g_Player = 0x0605C140;
+_g_Player = 0x0605C140; /* size = 0x46C */
 _currentMusicId = 0x0605C5AC;
 _g_PlayerY = 0x0605C5B4;
-_g_unkGraphicsStruct = 0x0605C5C0;
+_g_unkGraphicsStruct = 0x0605C5C0; /* size = 0x98 */
 _DAT_0605c658 = 0x0605C658;
-_g_pads = 0x0605C670;
-_DAT_0605c680 = 0x0605C680;
+_g_pads = 0x0605C670; /* size = 0x10 */
+_DAT_0605c680 = 0x0605C680; /* size = 0x44 */
 _g_PlayableCharacter = 0x0605C6D0;
 _g_CurrentEntity = 0x0605C6E0;
-_g_Status = 0x0605C6F0;
+_g_Status = 0x0605C6F0; /* size = 0x34C */
 _g_CastleFlags = 0x0605CA50;
 _g_PlayerX = 0x0605CD58;
 _DAT_0605cd70 = 0x0605CD70;
@@ -300,7 +295,7 @@ _d_0605cd70 = 0x0605CD70;
 _DAT_060086d4 = 0x0605CD72;
 _g_Timer = 0x0605CD7C;
 _DAT_0605CD90 = 0x0605CD90;
-_g_Tilemap = 0x0605CE50;
+_g_Tilemap = 0x0605CE50; /* size = 0x38 */
 _DAT_0605cea0 = 0x0605CEA0;
 _DAT_0605cea2 = 0x0605CEA2;
 _g_CastleMap = 0x0605CEC0;
@@ -308,10 +303,10 @@ _DAT_0605d6c0 = 0x0605D6C0;
 _g_GameClearFlag = 0x0605D784;
 _g_CutsceneHasControl = 0x0605D7E0;
 _g_Servant = 0x0605D7E4;
-_D_8003C708 = 0x0605D7E8;
+_D_8003C708 = 0x0605D7E8; /* size = 0x8 */
 _DAT_0605d7f0 = 0x0605D7F0;
 _DAT_0605d7f8 = 0x0605D7F8;
-_g_Settings = 0x0605D800;
+_g_Settings = 0x0605D800; /* size = 0x110 */
 _DAT_0605D910 = 0x0605D910;
 _d_0605DB60 = 0x0605DB60;
 _DAT_06062224 = 0x06062224;
@@ -445,6 +440,27 @@ _DAT_0601ac38 = 0x060DC008;
 _DAT_0601ac40 = 0x060DC00C;
 
 /* Aliases used by modules that inherit this symbol file. */
+_Crc32 = 0x0600CB74;
+_SaveGameState = 0x0600D508;
+_LoadGameState = 0x0600D6EC;
+_UpdatePadsRepeat = 0x06004C70;
+_InitSystem = 0x060044D0;
+_InitSpriteEngine = 0x06007968;
+_AllocGourTbl = 0x06007CA0;
+_AllocSpriteCharVram = 0x06007A34;
+_RotateVec2 = 0x0600E5A4;
+_RotateVec2Degrees = 0x0600E51C;
+_SetCurrentMatrixBinAngle = 0x0600E2D4;
+_TransformAndProjectPoints = 0x0600E450;
+_BlankScreen = 0x0600819C;
+_LookupTblNoToVramAddr = 0x0600A29C;
+_InitBackupRam = 0x0600CC5C;
+_QueueVramTransfer = 0x0600831C;
+_FlushVramTransfers = 0x06008374;
+_InitPaletteRemapLuts = 0x0600AD98;
+_ResetLayerColorCalc = 0x06008048;
+_ReadFileToAddr = 0x0600654C;
+_ReadFileToAddrAsync = 0x060066F0;
 _SetCanRevealMap = 0x0600FF08;
 _IsXaBgmPlaying = 0x06012DFC;
 _CdSoundCommandQueueEmpty = 0x06012E18;
@@ -504,17 +520,17 @@ _DAT_0605ceb0 = 0x0605CEB0;
 _D_8006BB00 = 0x0605CEB4;
 _D_8013AEE4 = 0x0605CEB8;
 _g_randomNext = 0x0605D748;
-_g_CurrentRoom = 0x0605D750;
+_g_CurrentRoom = 0x0605D750; /* size = 0x14 */
 _g_canRevealMap = 0x0605D744;
 _DAT_0605d772 = 0x0605D772;
-_g_MenuNavigation = 0x0605D790;
+_g_MenuNavigation = 0x0605D790; /* size = 0x4C */
 _DAT_0605d7dc = 0x0605D7DC;
 _DAT_06061dd0 = 0x06061DD0;
 _func_06064590 = 0x06064590;
 _func_06064594 = 0x06064594;
 _func_060645A0 = 0x060645A0;
 _func_060645A4 = 0x060645A4;
-_g_api = 0x060645A8;
+_g_api = 0x060645A8; /* size = 0x4 */
 _func_060645B0 = 0x060645B0;
 _func_060645B4 = 0x060645B4;
 _DAT_060645b8 = 0x060645B8;

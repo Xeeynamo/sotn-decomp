@@ -209,12 +209,12 @@ void EntityBreakableWall(Entity* self) {
         self->hitboxOffY = 0;
         self->hitboxState = 2;
         if (!self->params) {
-            if (g_CastleFlags[OVL_EXPORT(SECRET_WALL_1_BROKEN)]) {
+            if (g_CastleFlags[RTOP_SECRET_WALL_1_BROKEN]) {
                 wallStatus = 3;
             } else {
                 wallStatus = 0;
             }
-        } else if (g_CastleFlags[OVL_EXPORT(SECRET_WALL_2_BROKEN])) {
+        } else if (g_CastleFlags[RTOP_SECRET_WALL_2_BROKEN]) {
             wallStatus = 3;
         } else {
             wallStatus = 0;
@@ -256,9 +256,9 @@ void EntityBreakableWall(Entity* self) {
         self->step++;
         if (self->ext.breakable.breakCount == 3) {
             if (!self->params) {
-                g_CastleFlags[OVL_EXPORT(SECRET_WALL_1_BROKEN)] = 1;
+                g_CastleFlags[RTOP_SECRET_WALL_1_BROKEN] = 1;
             } else {
-                g_CastleFlags[OVL_EXPORT(SECRET_WALL_2_BROKEN)] = 1;
+                g_CastleFlags[RTOP_SECRET_WALL_2_BROKEN] = 1;
             }
             wallTiles = &D_us_801808BC[3];
             if (!self->params) {

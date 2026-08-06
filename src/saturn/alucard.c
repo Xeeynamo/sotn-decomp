@@ -77,7 +77,7 @@ INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A62E4, func_060A62E4);
 // CheckSubwpnChainLimit
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A6314, func_060A6314);
 // CheckChainLimit
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A6384, func_060A6384);
+INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A637C, func_060A637C);
 // func_8010EB5C on PSX
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A6420, func_060A6420);
 // func_8010ED54 on PSX

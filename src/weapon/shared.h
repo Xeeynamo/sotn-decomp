@@ -9,43 +9,34 @@ static void LoadWeaponPalette(s32 clutIndex) {
     u16* dst;
     s32 i;
 
-#if !defined(W_029)
-    dst = src = g_WeaponCluts[clutIndex];
-    dst = D_8006EDCC[g_HandId];
-#else
-    dst = D_8006EDCC[g_HandId];
+    dst = (u16*)g_Clut + (g_HandId * N_WEAPON_PAL + 0x110) * COLORS_PER_PAL;
     src = g_WeaponCluts[clutIndex];
-#endif
     if (src == NULL) {
         return;
     }
-
-    for (i = 0; i < LEN(*D_8006EDCC)
-#ifdef FIX_UB
-                && i < LEN(g_WeaponCluts[clutIndex])
-#endif
-             ;
-         i++) {
+    for (i = 0; i < N_WEAPON_PAL * COLORS_PER_PAL; i++) {
         *dst++ = *src++;
     }
 
-#if !defined(W_029)
+#if defined(VERSION_PSP) || defined(W_029)
+    dstRect.x = 0;
     dstRect.w = 0x100;
     dstRect.h = 3;
-    dstRect.x = 0;
     dstRect.y = 0xF1;
 #else
-    dstRect.x = 0;
     dstRect.w = 0x100;
     dstRect.h = 3;
+    dstRect.x = 0;
     dstRect.y = 0xF1;
 #endif
-    LoadImage(&dstRect, &D_8006EDCC);
+    dst = (u16*)g_Clut + 0x1100;
+    LoadImage(&dstRect, (u_long*)dst);
 }
 
 static void SetSpriteBank1(SpriteParts* animset) {
-    SpritePart** spriteBankDst = g_api.o.spriteBanks;
+    SpriteParts** spriteBankDst;
 
+    spriteBankDst = (SpriteParts**)g_api.o.spriteBanks;
     spriteBankDst += 0x10;
     if (g_HandId != 0) {
         spriteBankDst += 2;
@@ -54,8 +45,9 @@ static void SetSpriteBank1(SpriteParts* animset) {
 }
 
 static void SetSpriteBank2(SpriteParts* animset) {
-    SpritePart** spriteBankDst = g_api.o.spriteBanks;
+    SpriteParts** spriteBankDst;
 
+    spriteBankDst = (SpriteParts**)g_api.o.spriteBanks;
     spriteBankDst += 0x11;
     if (g_HandId != 0) {
         spriteBankDst += 2;
@@ -93,8 +85,10 @@ static void DestroyEntityWeapon(bool arg0) {
 
 static void SetWeaponProperties(Entity* self, s32 kind) {
     Equipment equip;
+    s32 equipId;
 
-    g_api.GetEquipProperties(g_HandId, &equip, self->ext.weapon.equipId);
+    equipId = self->ext.weapon.equipId;
+    g_api.GetEquipProperties(g_HandId, &equip, equipId);
     switch (kind) {
     case 0:
     case 1:

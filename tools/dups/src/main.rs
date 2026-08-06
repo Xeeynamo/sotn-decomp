@@ -1,9 +1,13 @@
+use glob::glob;
 use regex::Regex;
+use serde::Deserialize;
+use std::collections::HashSet;
 use std::fs;
 use std::fs::File;
 use std::io::BufReader;
 use std::io::Read;
 use std::io::Write;
+use std::path::{Path, PathBuf};
 use std::process::exit;
 
 mod levenshtein_hashmap;
@@ -226,8 +230,11 @@ Usage:
 Do a 2-way compare with ordering
 cargo run --release -- --dir ../../asm/us/st/nz0/nonmatchings/ --dir ../../asm/us/st/np3/nonmatchings/ --threshold .94
 
-Clustering report for all overlays
-cargo run --release -- --threshold .94 --output-file output.txt
+Clustering report using paths from splat configs
+cargo run --release -- --threshold .94 --splat-config-glob '../../config/splat.us.*.yaml' --output-file output.txt
+
+Saturn clustering report (legacy)
+cargo run --release -- --threshold .94 --cpu superh --output-file output.txt
 "
 )]
 struct Args {
@@ -246,6 +253,10 @@ struct Args {
     /// Base of source directory
     #[arg(short, long)]
     src_base: Option<String>,
+
+    /// Derive source and assembly paths from matching splat YAML files
+    #[arg(long, value_name = "GLOB", conflicts_with = "dir")]
+    splat_config_glob: Option<String>,
 
     /// CPU architecture for duplicate detection
     #[arg(short, long, value_enum, default_value_t = Cpu::Mips)]
@@ -342,345 +353,165 @@ struct SrcAsmPair {
     path_matcher: String,
 }
 
-fn do_dups_report(output_file: Option<String>, threshold: f64, cpu: Cpu) {
+#[derive(Debug, Deserialize)]
+struct SplatConfig {
+    options: SplatOptions,
+}
+
+#[derive(Debug, Deserialize)]
+struct SplatOptions {
+    asm_path: String,
+    src_path: String,
+    basename: String,
+}
+
+fn repository_root(splat_config_path: &Path) -> Result<PathBuf, String> {
+    let config_path = splat_config_path.canonicalize().map_err(|error| {
+        format!(
+            "unable to resolve splat config {}: {error}",
+            splat_config_path.display()
+        )
+    })?;
+    let config_dir = config_path
+        .parent()
+        .ok_or_else(|| format!("splat config has no parent: {}", config_path.display()))?;
+
+    if config_dir.file_name().is_some_and(|name| name == "config") {
+        config_dir
+            .parent()
+            .map(Path::to_path_buf)
+            .ok_or_else(|| format!("config directory has no parent: {}", config_dir.display()))
+    } else {
+        Ok(config_dir.to_path_buf())
+    }
+}
+
+fn resolve_repo_path(repository_root: &Path, path: &str) -> PathBuf {
+    let path = Path::new(path);
+    if path.is_absolute() {
+        path.to_path_buf()
+    } else {
+        repository_root.join(path)
+    }
+}
+
+fn display_asm_path(path: &str) -> String {
+    let path = Path::new(path);
+    let mut trimmed = PathBuf::new();
+    let mut found_asm = false;
+
+    for component in path.components() {
+        if component.as_os_str() == "asm" {
+            found_asm = true;
+        }
+        if found_asm {
+            trimmed.push(component.as_os_str());
+        }
+    }
+
+    let displayed = if found_asm {
+        trimmed.to_string_lossy().into_owned()
+    } else {
+        path.strip_prefix("../../")
+            .unwrap_or(path)
+            .to_string_lossy()
+            .into_owned()
+    };
+
+    displayed.replace('\\', "/")
+}
+
+fn pairs_from_splat_glob(pattern: &str) -> Result<Vec<SrcAsmPair>, String> {
+    let mut seen = HashSet::new();
+    let mut pairs = Vec::new();
+    let mut splat_paths = glob(pattern)
+        .map_err(|error| format!("invalid splat config glob {pattern:?}: {error}"))?
+        .collect::<Result<Vec<_>, _>>()
+        .map_err(|error| format!("unable to read splat config glob entry: {error}"))?;
+    splat_paths.sort();
+
+    if splat_paths.is_empty() {
+        return Err(format!("splat config glob matched no files: {pattern}"));
+    }
+
+    for splat_path in splat_paths {
+        let repository_root = repository_root(&splat_path)?;
+        let splat_contents = fs::read_to_string(&splat_path).map_err(|error| {
+            format!(
+                "unable to read splat config {}: {error}",
+                splat_path.display()
+            )
+        })?;
+        let splat: SplatConfig = serde_yaml::from_str(&splat_contents).map_err(|error| {
+            format!(
+                "unable to parse splat config {}: {error}",
+                splat_path.display()
+            )
+        })?;
+
+        let src_dir = resolve_repo_path(&repository_root, &splat.options.src_path);
+        let asm_root = resolve_repo_path(&repository_root, &splat.options.asm_path);
+        let asm_dir = asm_root.join("matchings");
+        let nonmatchings_dir = asm_root.join("nonmatchings");
+
+        // Fully decompiled or unextracted entries have nothing for this tool to scan.
+        if !asm_dir.is_dir() && !nonmatchings_dir.is_dir() {
+            continue;
+        }
+
+        let key = (src_dir.clone(), asm_root.clone());
+        if !seen.insert(key) {
+            continue;
+        }
+
+        pairs.push(SrcAsmPair {
+            asm_dir: asm_dir.to_string_lossy().into_owned(),
+            src_dir: src_dir.to_string_lossy().into_owned(),
+            overlay_name: splat.options.basename.to_uppercase(),
+            // old report data
+            include_asm: Vec::new(),
+            path_matcher: splat.options.src_path,
+        });
+    }
+
+    Ok(pairs)
+}
+
+fn do_dups_report(
+    output_file: Option<String>,
+    threshold: f64,
+    cpu: Cpu,
+    splat_config_glob: Option<String>,
+) {
     // full dups report
     let mut hash_map = LevenshteinHashMap::new(threshold);
 
     let mut files = Vec::new();
 
-    let pairs: Vec<SrcAsmPair> = match cpu {
-        Cpu::Mips => vec![
-            SrcAsmPair {
-                asm_dir: String::from("../../asm/us/boss/mar/matchings/"),
-                src_dir: String::from("../../src/boss/mar/"),
-                overlay_name: String::from("MAR"),
-                include_asm: get_all_include_asm("../../src/boss/mar/"),
-                path_matcher: "/mar/".to_string(),
-            },
-            SrcAsmPair {
-                asm_dir: String::from("../../asm/us/boss/bo0/matchings/"),
-                src_dir: String::from("../../src/boss/bo0/"),
-                overlay_name: String::from("BO0"),
-                include_asm: get_all_include_asm("../../src/boss/bo0/"),
-                path_matcher: "/bo0/".to_string(),
-            },
-            SrcAsmPair {
-                asm_dir: String::from("../../asm/us/boss/bo4/matchings/"),
-                src_dir: String::from("../../src/boss/bo4/"),
-                overlay_name: String::from("BO4"),
-                include_asm: get_all_include_asm("../../src/boss/bo4/"),
-                path_matcher: "/bo4/".to_string(),
-            },
-            SrcAsmPair {
-                asm_dir: String::from("../../asm/us/boss/bo6/matchings/"),
-                src_dir: String::from("../../src/boss/bo6/"),
-                overlay_name: String::from("BO6"),
-                include_asm: get_all_include_asm("../../src/boss/bo6/"),
-                path_matcher: "/bo6/".to_string(),
-            },
-            SrcAsmPair {
-                asm_dir: String::from("../../asm/us/boss/rbo0/matchings/"),
-                src_dir: String::from("../../src/boss/rbo0"),
-                overlay_name: String::from("RBO0"),
-                include_asm: get_all_include_asm("../../src/boss/rbo0"),
-                path_matcher: "/rbo0/".to_string(),
-            },
-            SrcAsmPair {
-                asm_dir: String::from("../../asm/us/boss/rbo3/matchings/"),
-                src_dir: String::from("../../src/boss/rbo3"),
-                overlay_name: String::from("RBO3"),
-                include_asm: get_all_include_asm("../../src/boss/rbo3"),
-                path_matcher: "/rbo3/".to_string(),
-            },
-            SrcAsmPair {
-                asm_dir: String::from("../../asm/us/boss/rbo5/matchings/"),
-                src_dir: String::from("../../src/boss/rbo5"),
-                overlay_name: String::from("RBO5"),
-                include_asm: get_all_include_asm("../../src/boss/rbo5"),
-                path_matcher: "/rbo5/".to_string(),
-            },
-            SrcAsmPair {
-                asm_dir: String::from("../../asm/us/dra/matchings/"),
-                src_dir: String::from("../../src/dra/"),
-                overlay_name: String::from("DRA"),
-                include_asm: get_all_include_asm("../../src/dra/"),
-                path_matcher: "/dra/".to_string(),
-            },
-            SrcAsmPair {
-                asm_dir: String::from("../../asm/us/main/matchings/"),
-                src_dir: String::from("../../src/main/"),
-                overlay_name: String::from("MAIN"),
-                include_asm: get_all_include_asm("../../src/main/"),
-                path_matcher: "/main/".to_string(),
-            },
-            SrcAsmPair {
-                asm_dir: String::from("../../asm/us/ric/matchings/"),
-                src_dir: String::from("../../src/ric/"),
-                overlay_name: String::from("RIC"),
-                include_asm: get_all_include_asm("../../src/ric/"),
-                path_matcher: "/ric/".to_string(),
-            },
-            SrcAsmPair {
-                asm_dir: String::from("../../asm/us/servant/tt_000/matchings/"),
-                src_dir: String::from("../../src/servant/tt_000"),
-                overlay_name: String::from("TT_000"),
-                include_asm: get_all_include_asm("../../src/servant/tt_000"),
-                path_matcher: "/tt_000/".to_string(),
-            },
-            SrcAsmPair {
-                asm_dir: String::from("../../asm/us/servant/tt_001/matchings/"),
-                src_dir: String::from("../../src/servant/tt_001"),
-                overlay_name: String::from("TT_001"),
-                include_asm: get_all_include_asm("../../src/servant/tt_001"),
-                path_matcher: "/tt_001/".to_string(),
-            },
-            SrcAsmPair {
-                asm_dir: String::from("../../asm/us/servant/tt_002/matchings/"),
-                src_dir: String::from("../../src/servant/tt_002"),
-                overlay_name: String::from("TT_002"),
-                include_asm: get_all_include_asm("../../src/servant/tt_002"),
-                path_matcher: "/tt_002/".to_string(),
-            },
-            SrcAsmPair {
-                asm_dir: String::from("../../asm/us/servant/tt_003/matchings/"),
-                src_dir: String::from("../../src/servant/tt_003"),
-                overlay_name: String::from("TT_003"),
-                include_asm: get_all_include_asm("../../src/servant/tt_003"),
-                path_matcher: "/tt_003/".to_string(),
-            },
-            SrcAsmPair {
-                asm_dir: String::from("../../asm/us/servant/tt_004/matchings/"),
-                src_dir: String::from("../../src/servant/tt_004"),
-                overlay_name: String::from("TT_004"),
-                include_asm: get_all_include_asm("../../src/servant/tt_004"),
-                path_matcher: "/tt_004/".to_string(),
-            },
-            SrcAsmPair {
-                asm_dir: String::from("../../asm/us/st/are/matchings/"),
-                src_dir: String::from("../../src/st/are/"),
-                overlay_name: String::from("ARE"),
-                include_asm: get_all_include_asm("../../src/st/are/"),
-                path_matcher: "st/are".to_string(),
-            },
-            SrcAsmPair {
-                asm_dir: String::from("../../asm/us/st/cat/matchings/"),
-                src_dir: String::from("../../src/st/cat/"),
-                overlay_name: String::from("CAT"),
-                include_asm: get_all_include_asm("../../src/st/cat/"),
-                path_matcher: "st/cat".to_string(),
-            },
-            SrcAsmPair {
-                asm_dir: String::from("../../asm/us/st/cen/matchings/"),
-                src_dir: String::from("../../src/st/cen/"),
-                overlay_name: String::from("CEN"),
-                include_asm: get_all_include_asm("../../src/st/cen/"),
-                path_matcher: "st/cen".to_string(),
-            },
-            SrcAsmPair {
-                asm_dir: String::from("../../asm/us/st/chi/matchings/"),
-                src_dir: String::from("../../src/st/chi/"),
-                overlay_name: String::from("CHI"),
-                include_asm: get_all_include_asm("../../src/st/chi/"),
-                path_matcher: "st/chi".to_string(),
-            },
-            SrcAsmPair {
-                asm_dir: String::from("../../asm/us/st/dai/matchings/"),
-                src_dir: String::from("../../src/st/dai/"),
-                overlay_name: String::from("DAI"),
-                include_asm: get_all_include_asm("../../src/st/dai/"),
-                path_matcher: "st/dai".to_string(),
-            },
-            SrcAsmPair {
-                asm_dir: String::from("../../asm/us/st/dre/matchings/"),
-                src_dir: String::from("../../src/st/dre/"),
-                overlay_name: String::from("DRE"),
-                include_asm: get_all_include_asm("../../src/st/dre/"),
-                path_matcher: "st/dre".to_string(),
-            },
-            SrcAsmPair {
-                asm_dir: String::from("../../asm/us/st/lib/matchings/"),
-                src_dir: String::from("../../src/st/lib/"),
-                overlay_name: String::from("LIB"),
-                include_asm: get_all_include_asm("../../src/st/lib/"),
-                path_matcher: "st/lib".to_string(),
-            },
-            SrcAsmPair {
-                asm_dir: String::from("../../asm/us/st/mad/matchings/"),
-                src_dir: String::from("../../src/st/mad/"),
-                overlay_name: String::from("MAD"),
-                include_asm: get_all_include_asm("../../src/st/mad/"),
-                path_matcher: "st/mad".to_string(),
-            },
-            SrcAsmPair {
-                asm_dir: String::from("../../asm/us/st/no0/matchings/"),
-                src_dir: String::from("../../src/st/no0/"),
-                overlay_name: String::from("NO0"),
-                include_asm: get_all_include_asm("../../src/st/no0/"),
-                path_matcher: "st/no0".to_string(),
-            },
-            SrcAsmPair {
-                asm_dir: String::from("../../asm/us/st/no1/matchings/"),
-                src_dir: String::from("../../src/st/no1/"),
-                overlay_name: String::from("NO1"),
-                include_asm: get_all_include_asm("../../src/st/no1/"),
-                path_matcher: "st/no1".to_string(),
-            },
-            SrcAsmPair {
-                asm_dir: String::from("../../asm/us/st/no2/matchings/"),
-                src_dir: String::from("../../src/st/no2/"),
-                overlay_name: String::from("NO2"),
-                include_asm: get_all_include_asm("../../src/st/no2/"),
-                path_matcher: "st/no2".to_string(),
-            },
-            SrcAsmPair {
-                asm_dir: String::from("../../asm/us/st/no3/matchings/"),
-                src_dir: String::from("../../src/st/no3/"),
-                overlay_name: String::from("NO3"),
-                include_asm: get_all_include_asm("../../src/st/no3/"),
-                path_matcher: "st/no3".to_string(),
-            },
-            SrcAsmPair {
-                asm_dir: String::from("../../asm/us/st/no4/matchings/"),
-                src_dir: String::from("../../src/st/no4/"),
-                overlay_name: String::from("NO4"),
-                include_asm: get_all_include_asm("../../src/st/no4/"),
-                path_matcher: "st/no4".to_string(),
-            },
-            SrcAsmPair {
-                asm_dir: String::from("../../asm/us/st/np3/matchings/"),
-                src_dir: String::from("../../src/st/np3/"),
-                overlay_name: String::from("NP3"),
-                include_asm: get_all_include_asm("../../src/st/np3/"),
-                path_matcher: "st/np3".to_string(),
-            },
-            SrcAsmPair {
-                asm_dir: String::from("../../asm/us/st/nz0/matchings/"),
-                src_dir: String::from("../../src/st/nz0/"),
-                overlay_name: String::from("NZ0"),
-                include_asm: get_all_include_asm("../../src/st/nz0/"),
-                path_matcher: "st/nz0".to_string(),
-            },
-            SrcAsmPair {
-                asm_dir: String::from("../../asm/us/st/nz1/matchings/"),
-                src_dir: String::from("../../src/st/nz1/"),
-                overlay_name: String::from("NZ1"),
-                include_asm: get_all_include_asm("../../src/st/nz1/"),
-                path_matcher: "st/nz1".to_string(),
-            },
-            SrcAsmPair {
-                asm_dir: String::from("../../asm/us/st/rare/matchings/"),
-                src_dir: String::from("../../src/st/rare/"),
-                overlay_name: String::from("RARE"),
-                include_asm: get_all_include_asm("../../src/st/rare/"),
-                path_matcher: "st/rare".to_string(),
-            },
-            SrcAsmPair {
-                asm_dir: String::from("../../asm/us/st/rcen/matchings/"),
-                src_dir: String::from("../../src/st/rcen/"),
-                overlay_name: String::from("RCEN"),
-                include_asm: get_all_include_asm("../../src/st/rcen/"),
-                path_matcher: "st/rcen".to_string(),
-            },
-            SrcAsmPair {
-                asm_dir: String::from("../../asm/us/st/rdai/matchings/"),
-                src_dir: String::from("../../src/st/rdai/"),
-                overlay_name: String::from("RDAI"),
-                include_asm: get_all_include_asm("../../src/st/rdai/"),
-                path_matcher: "st/rdai".to_string(),
-            },
-            SrcAsmPair {
-                asm_dir: String::from("../../asm/us/st/rcat/matchings/"),
-                src_dir: String::from("../../src/st/rcat/"),
-                overlay_name: String::from("RCAT"),
-                include_asm: get_all_include_asm("../../src/st/rcat/"),
-                path_matcher: "st/rcat".to_string(),
-            },
-            SrcAsmPair {
-                asm_dir: String::from("../../asm/us/st/rchi/matchings/"),
-                src_dir: String::from("../../src/st/rchi/"),
-                overlay_name: String::from("RCHI"),
-                include_asm: get_all_include_asm("../../src/st/rchi/"),
-                path_matcher: "st/rchi".to_string(),
-            },
-            SrcAsmPair {
-                asm_dir: String::from("../../asm/us/st/rno0/matchings/"),
-                src_dir: String::from("../../src/st/rno0/"),
-                overlay_name: String::from("RNO0"),
-                include_asm: get_all_include_asm("../../src/st/rno0/"),
-                path_matcher: "st/rno0".to_string(),
-            },
-            SrcAsmPair {
-                asm_dir: String::from("../../asm/us/st/rno3/matchings/"),
-                src_dir: String::from("../../src/st/rno3/"),
-                overlay_name: String::from("RNO3"),
-                include_asm: get_all_include_asm("../../src/st/rno3/"),
-                path_matcher: "st/rno3".to_string(),
-            },
-            SrcAsmPair {
-                asm_dir: String::from("../../asm/us/st/rnz0/matchings/"),
-                src_dir: String::from("../../src/st/rnz0/"),
-                overlay_name: String::from("RNZ0"),
-                include_asm: get_all_include_asm("../../src/st/rnz0/"),
-                path_matcher: "st/rnz0".to_string(),
-            },
-            SrcAsmPair {
-                asm_dir: String::from("../../asm/us/st/rtop/matchings/"),
-                src_dir: String::from("../../src/st/rtop/"),
-                overlay_name: String::from("RTOP"),
-                include_asm: get_all_include_asm("../../src/st/rtop/"),
-                path_matcher: "st/rtop".to_string(),
-            },
-            SrcAsmPair {
-                asm_dir: String::from("../../asm/us/st/rwrp/matchings/"),
-                src_dir: String::from("../../src/st/rwrp/"),
-                overlay_name: String::from("RWRP"),
-                include_asm: get_all_include_asm("../../src/st/rwrp/"),
-                path_matcher: "st/rwrp".to_string(),
-            },
-            SrcAsmPair {
-                asm_dir: String::from("../../asm/us/st/sel/matchings/"),
-                src_dir: String::from("../../src/st/sel/"),
-                overlay_name: String::from("SEL"),
-                include_asm: get_all_include_asm("../../src/st/sel/"),
-                path_matcher: "st/sel".to_string(),
-            },
-            SrcAsmPair {
-                asm_dir: String::from("../../asm/us/st/st0/matchings/"),
-                src_dir: String::from("../../src/st/st0/"),
-                overlay_name: String::from("ST0"),
-                include_asm: get_all_include_asm("../../src/st/st0/"),
-                path_matcher: "st/st0".to_string(),
-            },
-            SrcAsmPair {
-                asm_dir: String::from("../../asm/us/st/top/matchings/"),
-                src_dir: String::from("../../src/st/top/"),
-                overlay_name: String::from("TOP"),
-                include_asm: get_all_include_asm("../../src/st/top/"),
-                path_matcher: "st/top".to_string(),
-            },
-            SrcAsmPair {
-                asm_dir: String::from("../../asm/us/st/wrp/matchings/"),
-                src_dir: String::from("../../src/st/wrp/"),
-                overlay_name: String::from("WRP"),
-                include_asm: get_all_include_asm("../../src/st/wrp/"),
-                path_matcher: "st/wrp".to_string(),
-            },
-            SrcAsmPair {
-                asm_dir: String::from("../../asm/us/weapon/matchings/"),
-                src_dir: String::from("../../src/weapon/"),
-                overlay_name: String::from("WEAPON0"),
-                include_asm: get_all_include_asm("../../src/weapon/"),
-                path_matcher: "/weapon/".to_string(),
-            },
-        ],
-        // just put everything in the same bucket for saturn
-        Cpu::Superh => vec![SrcAsmPair {
-            asm_dir: "../../asm/saturn".into(),
-            src_dir: "../../src/saturn".into(),
-            overlay_name: "all".into(),
-            include_asm: get_all_include_asm("../../src/saturn"),
-            path_matcher: "/saturn/".into(),
-        }],
+    let pairs: Vec<SrcAsmPair> = if let Some(splat_config_glob) = splat_config_glob {
+        if !matches!(cpu, Cpu::Mips) {
+            eprintln!("--splat-config-glob currently supports only MIPS configurations");
+            exit(2);
+        }
+        pairs_from_splat_glob(&splat_config_glob).unwrap_or_else(|error| {
+            eprintln!("{error}");
+            exit(2);
+        })
+    } else {
+        match cpu {
+            Cpu::Mips => {
+                eprintln!("MIPS report mode requires --splat-config-glob");
+                exit(2);
+            }
+            // just put everything in the same bucket for saturn
+            Cpu::Superh => vec![SrcAsmPair {
+                asm_dir: "../../asm/saturn".into(),
+                src_dir: "../../src/saturn".into(),
+                overlay_name: "all".into(),
+                include_asm: get_all_include_asm("../../src/saturn"),
+                path_matcher: "/saturn/".into(),
+            }],
+        }
     };
 
     for pair in pairs.clone() {
@@ -729,7 +560,7 @@ fn do_dups_report(output_file: Option<String>, threshold: f64, cpu: Cpu) {
     // Then sort by the length of functions in reverse order
     entries.sort_by_key(|(_, functions)| std::cmp::Reverse(functions.len()));
 
-    if let o_file = output_file.unwrap() {
+    if let Some(o_file) = output_file {
         let mut output_file = File::create(o_file).expect("Unable to create file");
         writeln!(
             output_file,
@@ -766,7 +597,7 @@ fn do_dups_report(output_file: Option<String>, threshold: f64, cpu: Cpu) {
                         function.similarity,
                         function.decompiled,
                         function.name,
-                        function.file.strip_prefix("../../").unwrap()
+                        display_asm_path(&function.file)
                     )
                     .expect("Error writing to file");
                 }
@@ -780,7 +611,10 @@ fn do_dups_report(output_file: Option<String>, threshold: f64, cpu: Cpu) {
                 for function in functions {
                     println!(
                         "{:.2} {:?} {:?} {:?}",
-                        function.similarity, function.decompiled, function.name, function.file
+                        function.similarity,
+                        function.decompiled,
+                        function.name,
+                        display_asm_path(&function.file)
                     );
                 }
             }
@@ -860,11 +694,9 @@ fn do_ordered_compare(dirs: Vec<String>, threshold: f64, cpu: Cpu) {
     println!("{}", hyphens);
 
     for func_0 in &files[0].funcs {
-        let mut has_dup = false;
         let mut dup_name = "";
         for pair in &pairs {
             if func_0.name == pair[0].name {
-                has_dup = true;
                 dup_name = &pair[1].name;
             }
         }
@@ -880,13 +712,14 @@ fn main() {
     let dirs = args.dir;
     let output_file = args.output_file;
     let num_dirs = dirs.len();
-    let src_base_dir = args.src_base;
+    let _src_base_dir = args.src_base;
     let cpu = args.cpu;
+    let splat_config_glob = args.splat_config_glob;
 
     if num_dirs == 2 {
         do_ordered_compare(dirs, threshold, cpu);
     } else {
-        do_dups_report(output_file, threshold, cpu);
+        do_dups_report(output_file, threshold, cpu, splat_config_glob);
     }
 }
 
@@ -939,6 +772,52 @@ fn process_asm_directory(dir: &str, files: &mut Vec<DupsFile>, cpu: Cpu) {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn test_pairs_from_splat_glob() {
+        let temp_root = std::env::temp_dir().join(format!("dups-test-{}", std::process::id()));
+        let config_dir = temp_root.join("config");
+        let asm_dir = temp_root.join("asm/test/overlay/matchings");
+        fs::create_dir_all(&config_dir).unwrap();
+        fs::create_dir_all(&asm_dir).unwrap();
+        let canonical_temp_root = temp_root.canonicalize().unwrap();
+
+        let splat_config = config_dir.join("splat.test.overlay.yaml");
+        fs::write(
+            &splat_config,
+            "options:\n  basename: test\n  asm_path: asm/test/overlay\n  src_path: src/st/test\n",
+        )
+        .unwrap();
+
+        let pattern = config_dir.join("splat.test.*.yaml");
+        let pairs = pairs_from_splat_glob(&pattern.to_string_lossy()).unwrap();
+        assert_eq!(pairs.len(), 1);
+        assert_eq!(
+            pairs[0].asm_dir,
+            canonical_temp_root
+                .join("asm/test/overlay/matchings")
+                .to_string_lossy()
+        );
+        assert_eq!(
+            pairs[0].src_dir,
+            canonical_temp_root.join("src/st/test").to_string_lossy()
+        );
+        assert_eq!(pairs[0].overlay_name, "TEST");
+
+        fs::remove_dir_all(&temp_root).unwrap();
+    }
+
+    #[test]
+    fn test_display_asm_path() {
+        assert_eq!(
+            display_asm_path("/test/path/asm/us/boss/bo0/matchings/test.s"),
+            "asm/us/boss/bo0/matchings/test.s"
+        );
+        assert_eq!(
+            display_asm_path("../../asm/us/st/nz0/nonmatchings/test.s"),
+            "asm/us/st/nz0/nonmatchings/test.s"
+        );
+    }
 
     // two equal strings
     #[test]

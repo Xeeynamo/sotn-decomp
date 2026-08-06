@@ -895,7 +895,13 @@ files:
     src_path: src/st/rno0
     splat_config_path: config/splat.pspeu.strno0.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rno1.bin
+    asset_path: assets/st/rno1
+    src_path: src/st/rno1
+    splat_config_path: config/splat.pspeu.strno1.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rno2.bin
+    asset_path: assets/st/rno2
+    src_path: src/st/rno2
+    splat_config_path: config/splat.pspeu.strno2.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rno3.bin
     asset_path: assets/st/rno3
     src_path: src/st/rno3
@@ -935,6 +941,9 @@ files:
           - [0x384B0, skip]
 
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rno4.bin
+    asset_path: assets/st/rno4
+    src_path: src/st/rno4
+    splat_config_path: config/splat.pspeu.strno4.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rnz0.bin
     asset_path: assets/st/rnz0
     src_path: src/st/rnz0
@@ -991,7 +1000,13 @@ files:
           - [0x39D28, skip]
 
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rnz1.bin
+    asset_path: assets/st/rnz1
+    src_path: src/st/rnz1
+    splat_config_path: config/splat.pspeu.strnz1.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rtop.bin
+    asset_path: assets/st/rtop
+    src_path: src/st/rtop
+    splat_config_path: config/splat.pspeu.strtop.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rwrp.bin
     asset_path: assets/st/rwrp
     src_path: src/st/rwrp
@@ -1012,6 +1027,9 @@ files:
           - [0x125F0, palette, D_80181D08, 16]
           - [0x128B0, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/mar.bin
+    asset_path: assets/boss/mar
+    src_path: src/boss/mar
+    splat_config_path: config/splat.pspeu.bomar.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo0.bin
     asset_path: assets/boss/bo0
     src_path: src/boss/bo0
@@ -1022,12 +1040,33 @@ files:
         assets:
           - [0x80, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo1.bin
+    asset_path: assets/boss/bo1
+    src_path: src/boss/bo1
+    splat_config_path: config/splat.pspeu.bobo1.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo2.bin
+    asset_path: assets/boss/bo2
+    src_path: src/boss/bo2
+    splat_config_path: config/splat.pspeu.bobo2.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo3.bin
+    asset_path: assets/boss/bo3
+    src_path: src/boss/bo3
+    splat_config_path: config/splat.pspeu.bobo3.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo4.bin
+    asset_path: assets/boss/bo4
+    src_path: src/boss/bo4
+    splat_config_path: config/splat.pspeu.bobo4.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo5.bin
+    asset_path: assets/boss/bo5
+    src_path: src/boss/bo5
+    splat_config_path: config/splat.pspeu.bobo5.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo6.bin
+    asset_path: assets/boss/bo6
+    src_path: src/boss/bo6
+    splat_config_path: config/splat.pspeu.bobo6.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo7.bin
+    asset_path: assets/boss/bo7
+    src_path: src/boss/bo7
+    splat_config_path: config/splat.pspeu.bobo7.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rbo0.bin
     asset_path: assets/boss/rbo0
     src_path: src/boss/rbo0
@@ -1045,13 +1084,37 @@ files:
           - [0x1BF50, rooms, rooms]
           - [0x1BF70, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rbo1.bin
+    asset_path: assets/boss/rbo1
+    src_path: src/boss/rbo1
+    splat_config_path: config/splat.pspeu.borbo1.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rbo2.bin
+    asset_path: assets/boss/rbo2
+    src_path: src/boss/rbo2
+    splat_config_path: config/splat.pspeu.borbo2.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rbo3.bin
+    asset_path: assets/boss/rbo3
+    src_path: src/boss/rbo3
+    splat_config_path: config/splat.pspeu.borbo3.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rbo4.bin
+    asset_path: assets/boss/rbo4
+    src_path: src/boss/rbo4
+    splat_config_path: config/splat.pspeu.borbo4.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rbo5.bin
+    asset_path: assets/boss/rbo5
+    src_path: src/boss/rbo5
+    splat_config_path: config/splat.pspeu.borbo5.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rbo6.bin
+    asset_path: assets/boss/rbo6
+    src_path: src/boss/rbo6
+    splat_config_path: config/splat.pspeu.borbo6.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rbo7.bin
+    asset_path: assets/boss/rbo7
+    src_path: src/boss/rbo7
+    splat_config_path: config/splat.pspeu.borbo7.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rbo8.bin
+    asset_path: assets/boss/rbo8
+    src_path: src/boss/rbo8
+    splat_config_path: config/splat.pspeu.borbo8.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/tt_000.bin
     asset_path: assets/servant/tt_000
     src_path: src/servant/tt_000
@@ -1075,6 +1138,17 @@ files:
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/tt_005.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/tt_006.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_000.bin
+    asset_path: assets/weapon
+    src_path: src/weapon
+    splat_config_path: config/splat.pspeu.w0_000.yaml
+    segments:
+      - start: 0x80
+        vram:  0x092F2E80
+        assets:
+          - [0x80, skip]
+          - [0x700, spriteset, w0/w_000_1] # should be namespaced
+          - [0x1248, spriteset, w0/w_000_2] # should be namespaced
+          - [0x1248, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_001.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_002.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_003.bin
@@ -1134,6 +1208,17 @@ files:
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_057.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_058.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_000.bin
+    asset_path: assets/weapon
+    src_path: src/weapon
+    splat_config_path: config/splat.pspeu.w1_000.yaml
+    segments:
+      - start: 0x80
+        vram:  0x092F6C80
+        assets:
+          - [0x80, skip]
+          - [0x708, spriteset, w1/w_000_1] # should be namespaced
+          - [0x1250, spriteset, w1/w_000_2] # should be namespaced
+          - [0x1250, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_001.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_002.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_003.bin

@@ -1021,7 +1021,7 @@ void PlayerStepCrouch(void) {
     }
 }
 
-void func_801139CC(u16 arg0) {
+void CreateCeilingHitEffect(u16 arg0) {
     s16 move = 3;
     if (PLAYER.facingLeft) {
         move = -move;
@@ -1044,19 +1044,29 @@ void func_801139CC(u16 arg0) {
 }
 
 void PlayerStepHighJump(void) {
+    typedef enum {
+        JUMPING,
+        LAUNCH_DONE,
+        CEILING_CRUNCH,
+        CEILING_LOWHIT,
+        FALL_FROM_CRUNCH
+    } substeps;
+
     s16 var_s1 = 0;
 
-    g_Player.unk4A++;
+    g_Player.gravBootTimer++;
     if (func_8010FDF8(2) != 0) {
         return;
     }
 
     switch (PLAYER.step_s) {
-    case 0:
+    case JUMPING:
         if (g_Player.vram_flag & TOUCHING_CEILING) {
-            func_801139CC(3);
-            if (g_Player.unk4A > 4) {
-                PLAYER.step_s = 2;
+            CreateCeilingHitEffect(3);
+            // If we were jumping for over 4 frames, we get an animation where
+            // Alucard crunches up into the ceiling, crouched and upside down.
+            if (g_Player.gravBootTimer > 4) {
+                PLAYER.step_s = CEILING_CRUNCH;
                 PLAYER.drawFlags |= ENTITY_ROTATE;
                 PLAYER.rotate = 0x800;
                 PLAYER.rotPivotX = 0;
@@ -1065,19 +1075,21 @@ void PlayerStepHighJump(void) {
                 PLAYER.facingLeft &= 1;
                 SetPlayerAnim(0x2B);
             } else {
-                PLAYER.step_s = 3;
+                // If it was few frames (we hit the ceiling very soon) then we
+                // hit this low ceiling and maintain a normal standing pose.
+                PLAYER.step_s = CEILING_LOWHIT;
             }
-        } else if (g_Player.unk4A > 28) {
-            PLAYER.step_s = 1;
+        } else if (g_Player.gravBootTimer > 28) {
+            PLAYER.step_s = LAUNCH_DONE;
             PLAYER.velocityY = FIX(-6);
             SetPlayerAnim(0x1B);
         }
         break;
 
-    case 1:
+    case LAUNCH_DONE:
         if (g_Player.vram_flag & TOUCHING_CEILING) {
-            PLAYER.step_s = 2;
-            func_801139CC(3);
+            PLAYER.step_s = CEILING_CRUNCH;
+            CreateCeilingHitEffect(3);
         } else {
             PLAYER.velocityY += FIX(3.0 / 8);
             if (PLAYER.velocityY > FIX(0.5)) {
@@ -1086,29 +1098,33 @@ void PlayerStepHighJump(void) {
         }
         break;
 
-    case 2:
+    case CEILING_CRUNCH:
         PLAYER.drawFlags |= ENTITY_ROTATE;
         PLAYER.rotPivotX = 0;
         PLAYER.rotPivotY = 2;
-        if (g_Player.unk4A > 0x38) {
+        // We stay crunched until the total time (jumping plus crunched) has
+        // passed 56 frames. This means higher jumps (later ceiling hits)
+        // end up spending less time crunched.
+        if (g_Player.gravBootTimer > 56) {
             SetPlayerAnim(0x2D);
             PLAYER.drawFlags &=
                 (ENTITY_MASK_R | ENTITY_MASK_G | ENTITY_MASK_B | ENTITY_BLINK |
                  ENTITY_OPACITY | ENTITY_SCALEY | ENTITY_SCALEX);
             PLAYER.rotate = 0;
+            // Weird pair of instructions, pretty sure this is just ^= 1.
             PLAYER.facingLeft += 1;
             PLAYER.facingLeft &= 1;
-            PLAYER.step_s = 4;
+            PLAYER.step_s = FALL_FROM_CRUNCH;
         }
         break;
 
-    case 3:
-        if (g_Player.unk4A > 20) {
+    case CEILING_LOWHIT:
+        if (g_Player.gravBootTimer > 20) {
             var_s1 = 1;
         }
         break;
 
-    case 4:
+    case FALL_FROM_CRUNCH:
         PLAYER.velocityY += FIX(1.0 / 16);
         if (PLAYER.poseTimer < 0) {
             var_s1 = 2;
@@ -1121,7 +1137,7 @@ void PlayerStepHighJump(void) {
             SetPlayerAnim(0x1C);
         }
         PLAYER.palette = PAL_FLAG(PAL_ALUCARD);
-        PLAYER.step_s = 1;
+        PLAYER.step_s = 1; // Different step, different step_s. No enum
         PLAYER.step = Player_Jump;
     }
 }
@@ -1474,7 +1490,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
             break;
         }
         if (g_Player.vram_flag & TOUCHING_CEILING) {
-            func_801139CC(1);
+            CreateCeilingHitEffect(1);
             PLAYER.velocityX /= 2;
             PLAYER.velocityY = 0;
             g_Player.timers[8] = 24;
@@ -1568,7 +1584,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
         DecelerateX(FIX(1.0 / 8));
         if (g_Player.timers[8]) {
             if ((g_Player.vram_flag & TOUCHING_CEILING) && !(g_GameTimer & 3)) {
-                func_801139CC(0);
+                CreateCeilingHitEffect(0);
             }
             break;
         } else if (g_Player.vram_flag & (TOUCHING_L_WALL | TOUCHING_R_WALL)) {
@@ -2803,6 +2819,7 @@ void ControlBatForm(void) {
                     if (PLAYER.facingLeft) {
                         x_offset = -x_offset;
                     }
+                    // Creates ceiling dust, just like CreateCeilingHitEffect
                     PLAYER.posY.i.hi -= 8;
                     PLAYER.posX.i.hi += x_offset;
                     CreateEntFactoryFromEntity(

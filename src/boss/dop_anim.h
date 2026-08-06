@@ -160,7 +160,7 @@ void DrawPlayerAfterImage(void) {
     }
 }
 
-void OVL_EXPORT(func_8010DA2C)(AnimationFrame* frames) {
+void func_8010DA2C(AnimationFrame* frames) {
     g_CurrentEntity->anim = frames;
     g_CurrentEntity->poseTimer = 0;
     g_CurrentEntity->pose = 0;
@@ -174,7 +174,7 @@ void SetDopplegangerAnim(u8 anim) {
 
 extern AnimationFrame* g_DopAnimationFrames[];
 
-static AnimationFrame* OVL_EXPORT(func_8010DA70)(AnimationFrame** frames) {
+static AnimationFrame* func_8010DA70(AnimationFrame** frames) {
     u16* anim;
     s32 idx;
     u16* subanim;
@@ -208,7 +208,7 @@ static AnimationFrame* OVL_EXPORT(func_8010DA70)(AnimationFrame** frames) {
     }
 }
 
-s32 OVL_EXPORT(UpdateUnarmedAnim)(s8* frameProps, u16** frames) {
+s32 UpdateUnarmedAnim(s8* frameProps, u16** frames) {
     u16* frameIndex;
 
     frameIndex = frames[g_CurrentEntity->ext.player.anim] + DOPPLEGANGER.pose;
@@ -236,26 +236,26 @@ s32 OVL_EXPORT(UpdateUnarmedAnim)(s8* frameProps, u16** frames) {
 void PlayAnimation(s8* frameProps, AnimationFrame** frames) {
     AnimationFrame* animFrame;
 
-    animFrame = OVL_EXPORT(func_8010DA70)(frames);
+    animFrame = func_8010DA70(frames);
     if (g_CurrentEntity->poseTimer != -1) {
         if (g_CurrentEntity->poseTimer == 0) {
             g_CurrentEntity->poseTimer = animFrame->duration;
         } else if (--g_CurrentEntity->poseTimer == 0) {
             g_CurrentEntity->pose++;
-            animFrame = OVL_EXPORT(func_8010DA70)(frames);
+            animFrame = func_8010DA70(frames);
             // Using a switch doesn't work
             if (animFrame->duration == 0x0) {
                 g_CurrentEntity->pose = animFrame->pose;
-                animFrame = OVL_EXPORT(func_8010DA70)(frames);
+                animFrame = func_8010DA70(frames);
                 g_CurrentEntity->poseTimer = animFrame->duration;
             } else if (animFrame->duration == 0xFFFF) {
                 g_CurrentEntity->pose--;
                 g_CurrentEntity->poseTimer = -1;
-                animFrame = OVL_EXPORT(func_8010DA70)(frames);
+                animFrame = func_8010DA70(frames);
             } else if (animFrame->duration == 0xFFFE) {
                 g_CurrentEntity->ext.player.anim = animFrame->pose & 0xFF;
                 g_CurrentEntity->pose = animFrame->pose >> 8;
-                animFrame = OVL_EXPORT(func_8010DA70)(frames);
+                animFrame = func_8010DA70(frames);
                 g_CurrentEntity->poseTimer = animFrame->duration;
             } else {
                 g_CurrentEntity->poseTimer = animFrame->duration;
@@ -289,7 +289,7 @@ void PlayAnimation(s8* frameProps, AnimationFrame** frames) {
     (*((AnimationFrame*)(&(                                                    \
         ((u16*)g_CurrentEntity->anim)[g_CurrentEntity->pose * 2]))))
 
-u32 OVL_EXPORT(UpdateAnim)(s8* hitboxes, AnimationFrame** anims) {
+u32 UpdateAnim(s8* hitboxes, AnimationFrame** anims) {
 #if defined(FIX_UB)
     s32 ret = 0;
 #else

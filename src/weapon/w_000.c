@@ -6,8 +6,28 @@
 // Mourneblade, Badelaire, Unknown#169
 
 #include "weapon_private.h"
+
+#ifdef VERSION_PSP
+// when HAND_ID is zero, MetroWerks puts this in BSS. this may
+// have been in a separate file because it is located at the
+// front of .data (when HAND_ID = 1) on PSP/mwcc, but at the end
+// of .data (regardless of value) on PSX/gcc.
+static s32 g_HandId = HAND_ID;
+#endif
+
+// PSP keeps a separate copy of the generated animsets per hand.
+// clang-format off
+#define inner_path(hand, n) CPP_STR(PATH_JOIN(gen/w##hand, n))
+// clang-format on
+#define path(hand, n) inner_path(hand, n)
+
+#ifdef VERSION_PSP
+#include path(HAND_ID, w_000_1.h)
+#include path(HAND_ID, w_000_2.h)
+#else
 #include "gen/w_000_1.h"
 #include "gen/w_000_2.h"
+#endif
 #define g_Animset w_000_1
 #define g_Animset2 w_000_2
 #include "sfx.h"
@@ -171,18 +191,20 @@ static u8* g_Anim1[] = {
 };
 
 static WeaponAnimation g_SoundEvents[] = {
-    {g_Anim1, g_Hitboxes, 0, SFX_WEAPON_SWISH_B, 0x41, 4},
-    {g_Anim0, g_Hitboxes, 0, SFX_WEAPON_SWISH_B, 0x41, 4},
-    {g_Anim0, g_Hitboxes, 0, SFX_WEAPON_SWISH_C, 0x41, 4},
-    {g_Anim0, g_Hitboxes, 0, SFX_ALUCARD_SWORD_SWISH, 0x41, 4},
-    {g_Anim0, g_Hitboxes, 0, SFX_WEAPON_SWISH_C, 0x41, 4},
+    {(u16**)g_Anim1, (s8*)g_Hitboxes, 0, SFX_WEAPON_SWISH_B, 0x41, 4},
+    {(u16**)g_Anim0, (s8*)g_Hitboxes, 0, SFX_WEAPON_SWISH_B, 0x41, 4},
+    {(u16**)g_Anim0, (s8*)g_Hitboxes, 0, SFX_WEAPON_SWISH_C, 0x41, 4},
+    {(u16**)g_Anim0, (s8*)g_Hitboxes, 0, SFX_ALUCARD_SWORD_SWISH, 0x41, 4},
+    {(u16**)g_Anim0, (s8*)g_Hitboxes, 0, SFX_WEAPON_SWISH_C, 0x41, 4},
 };
 
 static u16* g_WeaponCluts[] = {
-    g_Clut1, g_Clut0, g_Clut2, g_Clut3, g_Clut4,
+    (u16*)g_Clut1, (u16*)g_Clut0, (u16*)g_Clut2, (u16*)g_Clut3, (u16*)g_Clut4,
 };
 
+#ifndef VERSION_PSP
 static s32 g_HandId = HAND_ID;
+#endif
 
 #include "shared.h"
 
@@ -191,22 +213,32 @@ static void EntityWeaponAttack(Entity* self) {
     s32 mask;
     s16 subType;
 
+#ifdef VERSION_PSP
+    subType = (self->params & 0x7FFF) >> 8;
+#endif
+
     self->posX.val = PLAYER.posX.val;
     self->posY.val = PLAYER.posY.val;
     self->facingLeft = PLAYER.facingLeft;
+#ifndef VERSION_PSP
     subType = self->params & 0x7FFF;
     subType >>= 8;
+#endif
     anim = &g_SoundEvents[subType];
 
     if (!(PLAYER.ext.weapon.anim >= anim->frameStart &&
           PLAYER.ext.weapon.anim < anim->frameStart + 7 &&
+#ifdef VERSION_PSP
+          g_Player.unk46)) {
+#else
           g_Player.unk46 != 0)) {
+#endif
         DestroyEntity(self);
         return;
     }
 
     if (self->step == 0) {
-        SetSpriteBank1(g_Animset);
+        SetSpriteBank1((SpriteParts*)g_Animset);
         self->animSet = ANIMSET_OVL(0x10);
         self->palette = 0x110;
         self->unk5A = 0x64;
@@ -238,6 +270,17 @@ static void EntityWeaponAttack(Entity* self) {
     self->rotPivotY = PLAYER.rotPivotY;
 }
 
+#ifdef VERSION_PSP
+static void func_ptr_80170004(void) {}
+
+static void func_ptr_80170008(void) {}
+
+static void func_ptr_8017000C(void) {}
+
+static void func_ptr_80170010(void) {}
+
+static void func_ptr_80170014(void) {}
+#else
 static s32 func_ptr_80170004(Entity* self) {}
 
 static void func_ptr_80170008(Entity* self) {}
@@ -247,14 +290,23 @@ static void func_ptr_8017000C(Entity* self) {}
 static s32 func_ptr_80170010(Entity* self) {}
 
 static s32 func_ptr_80170014(Entity* self) {}
+#endif
 
 static int GetWeaponId(void) { return 0; }
 
+#ifdef VERSION_PSP
+static void EntityWeaponShieldSpell(void) {}
+
+static void func_ptr_80170024(void) {}
+
+static void func_ptr_80170028(void) {}
+#else
 static void EntityWeaponShieldSpell(Entity* self) {}
 
 static void func_ptr_80170024(Entity* self) {}
 
 static void func_ptr_80170028(Entity* self) {}
+#endif
 
 static void WeaponUnused2C(void) {}
 
@@ -265,3 +317,37 @@ static void WeaponUnused34(void) {}
 static void WeaponUnused38(void) {}
 
 static void WeaponUnused3C(void) {}
+
+#ifdef VERSION_PSP
+// TODO: this should be WEAPON0_PTR
+#ifdef WEAPON0
+extern void D_8017A000[];
+#define WEAPON_PTR D_8017A000
+#else
+extern void D_8017D000[];
+#define WEAPON_PTR D_8017D000
+#endif
+extern Weapon w0_000_Overlay;
+
+// TODO: this should be OVL_EXPORT
+void w0_000_Load(void) { memcpy(&WEAPON_PTR, &w0_000_Overlay, sizeof(Weapon)); }
+
+Weapon w0_000_Overlay = {
+    EntityWeaponAttack,
+    (void (*)(Entity*))func_ptr_80170004,
+    (void (*)(Entity*))func_ptr_80170008,
+    (void (*)(Entity*))func_ptr_8017000C,
+    func_ptr_80170010,
+    (void (*)(Entity*))func_ptr_80170014,
+    GetWeaponId,
+    LoadWeaponPalette,
+    (void (*)(Entity*))EntityWeaponShieldSpell,
+    (void (*)(Entity*))func_ptr_80170024,
+    (void (*)(Entity*))func_ptr_80170028,
+    WeaponUnused2C,
+    WeaponUnused30,
+    WeaponUnused34,
+    WeaponUnused38,
+    WeaponUnused3C,
+};
+#endif
