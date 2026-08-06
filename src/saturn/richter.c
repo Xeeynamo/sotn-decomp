@@ -89,7 +89,7 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A5864, func_060A5864);
 // CheckHighJumpInput
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A5988, func_060A5988);
 
-INCLUDE_ASM_NO_ALIGN("asm/saturn/richter/f_nonmat", f60A6272, func_060A6272);
+INCLUDE_ASM_NO_ALIGN("asm/saturn/richter/f_nonmat", f60A5AA0, func_060A5AA0);
 
 // ===== pl_steps.c
 
@@ -1247,7 +1247,7 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AF704, func_060AF704);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AF7F4, func_060AF7F4);
 
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AFE70, func_060AFE70);
-INCLUDE_ASM_NO_ALIGN("asm/saturn/richter/f_nonmat", f60B052A, func_060B052A);
+INCLUDE_ASM_NO_ALIGN("asm/saturn/richter/f_nonmat", f60B00C4, func_060B00C4);
 
 // ===== ???
 
@@ -1343,7 +1343,7 @@ void RicEntityCrashReboundStoneParticles(Entity* entity) {
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B3454, func_060B3454);
 
 // RicEntityCrashReboundStoneExplosion, split start at mid function
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B3A0C, func_060B3A0C);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B38FC, func_060B38FC);
 // RicEntityCrashReboundStone
 void RicEntityCrashReboundStone(Entity* entity) {
     switch (entity->step) {
@@ -1485,7 +1485,7 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B7A4C, func_060B7A4C);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B8044, func_060B8044);
 
 // ===== pl_subweapons_cross.c
-INCLUDE_ASM_NO_ALIGN("asm/saturn/richter/f_nonmat", f60B89CE, func_060B89CE);
+INCLUDE_ASM_NO_ALIGN("asm/saturn/richter/f_nonmat", f60B8664, func_060B8664);
 
 // RicEntityRevivalColumn
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B8B1C, func_060B8B1C);

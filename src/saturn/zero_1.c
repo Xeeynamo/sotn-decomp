@@ -137,9 +137,9 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6014424, func_06014424);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601449C, func_0601449C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6014504, func_06014504);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601454C, func_0601454C);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60145B0, func_060145B0);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60145AC, func_060145AC);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60145F8, func_060145F8);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601465C, func_0601465C);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6014658, func_06014658);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60146A4, func_060146A4);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6014724, func_06014724);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601476C, func_0601476C);
@@ -160,11 +160,9 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6015140, func_06015140);
 // _VoxCdLoad
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60155CC, func_060155CC);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60157CC, func_060157CC);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6015C70, func_06015C70);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6015E68, func_06015E68);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60164BC, func_060164BC);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6016614, func_06016614);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60166A8, func_060166A8);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6016644, func_06016644);
 
 void code2name(u32 code, u8* name);
 s32 func_06017F5C(u8*);

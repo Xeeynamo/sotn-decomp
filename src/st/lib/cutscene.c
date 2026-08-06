@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "lib.h"
-#include "../cutscene.h"
+#include <cutscene.h>
 
-extern u8 D_us_80183F60;
+extern u8 metLibrarian;
 static u8 D_us_801819BC[] = {0x00, 0x40, 0x00, 0x00};
 static u8 D_us_801819C0[] = {0x00, 0x00, 0x00, 0x00};
 static u16 D_us_801819C4[] = {0x0220, 0x0228};
@@ -19,6 +19,7 @@ static s16 D_us_801819D0[] = {
     0x0035, 0x0008, 0x000E, 0x004D, 0x0011, 0x0034, 0x0041, 0x0029, 0x0048};
 static const char* actor_names[] = {_S("Alucard"), _S("Master Librarian")};
 
+STATIC_PAD_BSS(0xC00);
 s32 g_SkipCutscene;
 static Dialogue g_Dialogue;
 STATIC_PAD_BSS(104);
@@ -71,9 +72,9 @@ void EntityCutscene(Entity* self) {
     switch (self->step) {
     case 0:
         if (g_CastleFlags[MET_LIBRARIAN] != 0) {
-            D_us_80183F60 = 1;
+            metLibrarian = 1;
         } else {
-            D_us_80183F60 = 0;
+            metLibrarian = 0;
         }
         if (SetCutsceneScript(cutscene_data)) {
             self->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
@@ -267,7 +268,7 @@ void EntityCutscene(Entity* self) {
                 ptr <<= 4;
                 ptr |= (u_long)*g_Dialogue.scriptCur++;
                 ptr += 0x100000;
-                g_Dialogue.scriptCur += *(u8*)ptr << 2;
+                g_Dialogue.scriptCur += (*(u8*)CS_NEXT(ptr)) * 4;
 
                 ptr = (u_long)*g_Dialogue.scriptCur++;
                 ptr <<= 4;
@@ -276,7 +277,7 @@ void EntityCutscene(Entity* self) {
                 ptr |= (u_long)*g_Dialogue.scriptCur++;
                 ptr <<= 4;
                 ptr |= (u_long)*g_Dialogue.scriptCur;
-                g_Dialogue.scriptCur = (u8*)ptr + 0x100000;
+                g_Dialogue.scriptCur = CS_PTR(ptr);
                 continue;
             case CSOP_SCRIPT_UNKNOWN_15:
                 ptr = (u_long)*g_Dialogue.scriptCur++;
@@ -286,7 +287,7 @@ void EntityCutscene(Entity* self) {
                 ptr |= (u_long)*g_Dialogue.scriptCur++;
                 ptr <<= 4;
                 ptr |= (u_long)*g_Dialogue.scriptCur;
-                g_Dialogue.scriptCur = (u8*)ptr + 0x100000;
+                g_Dialogue.scriptCur = CS_PTR(ptr);
                 continue;
             case CSOP_WAIT_FOR_FLAG:
                 if (!((g_CutsceneFlags >> *g_Dialogue.scriptCur) & 1)) {
@@ -313,7 +314,7 @@ void EntityCutscene(Entity* self) {
                     ptr |= (u_long)*g_Dialogue.scriptCur++;
                     ptr <<= 4;
                     ptr |= (u_long)*g_Dialogue.scriptCur++;
-                    ptr += 0x100000;
+                    ptr = (u_long)CS_PTR(ptr);
                     nextChar2 = g_Dialogue.scriptCur++[0];
                     LoadTPage((u_long*)ptr, 1, 0, D_us_801819C8[nextChar2],
                               0x100, 0x30, 0x48);

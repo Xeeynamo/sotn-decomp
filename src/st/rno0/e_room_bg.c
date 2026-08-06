@@ -56,13 +56,13 @@ AnimateEntityFrame* animations[] = {
     anim1,  anim2,  anim3, anim4, anim5,  anim6,  anim7,  anim8,  anim9, anim10,
     anim11, anim12, anim7, anim8, anim10, anim12, anim13, anim13, anim11};
 
-extern EInit OVL_EXPORT(EInitCommon);
+extern EInit g_EInitCommon;
 
 void EntityBackgroundBlock(Entity* self) {
     u16 params = self->params;
     u32 flags;
     if (!self->step) {
-        InitializeEntity(OVL_EXPORT(EInitCommon));
+        InitializeEntity(g_EInitCommon);
         self->animSet = (u16)animSets[params];
         self->zPriority = zPrioritys[params];
         self->unk5A = unk5As[params];

@@ -111,6 +111,19 @@ func init() {
 	}
 }
 
+func objSubdirFor(version, basename string) string {
+	if version != "pspeu" {
+		return ""
+	}
+	if len(basename) < 2 || basename[0] != 'w' {
+		return ""
+	}
+	if basename[1] != '0' && basename[1] != '1' {
+		return ""
+	}
+	return fmt.Sprintf("weapon%c", basename[1])
+}
+
 func objdiffgen(c *assetConfig, isProgressReport bool) error {
 	if c.Version != "" {
 		_ = os.Setenv("VERSION", string(c.Version))
@@ -262,13 +275,14 @@ func objdiffgen(c *assetConfig, isProgressReport bool) error {
 				srcs[name] = cat
 			}
 		})
+		objSubdir := objSubdirFor(string(c.Version), splatConfig.Options.Basename)
 		asmDataSections := map[string]struct{}{"data": {}, "rodata": {}, "bss": {}}
 		for name, cat := range srcs {
 			srcFile := filepath.Join(splatConfig.Options.SrcPath, name+".c")
 			if _, isAsm := asmDataSections[cat]; isAsm {
 				srcFile = filepath.Join(splatConfig.Options.AsmPath, "data", fmt.Sprintf("%s.%s.s", name, cat))
 			}
-			objFile := srcFile + ".o"
+			objFile := filepath.Join(objSubdir, srcFile+".o")
 			units = append(units, objdiff.Unit{
 				Name:       fmt.Sprintf("%s/%s", categoryID, name),
 				BasePath:   filepath.Join(buildDir, objFile),

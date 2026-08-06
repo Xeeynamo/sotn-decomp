@@ -1,0 +1,96 @@
+options:
+  platform: psp
+  basename: borbo7
+  base_path: ..
+  build_path: build/pspeu
+  target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rbo7.bin
+  asm_path: asm/pspeu/boss/rbo7_psp
+  asset_path: assets/boss/rbo7
+  src_path: src/boss
+  ld_script_path: build/pspeu/borbo7.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.pspeu.txt
+    - config/symbols.pspeu.borbo7.txt
+  undefined_funcs_auto_path: build/pspeu/config/undefined_funcs_auto.pspeu.borbo7.txt
+  undefined_syms_auto_path: build/pspeu/config/undefined_syms_auto.pspeu.borbo7.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: pspeu_$VRAM
+  disassemble_all: true
+  section_order:
+    - .text
+    - .data
+    - .rodata
+    - .bss
+  ld_bss_is_noload: true
+  disasm_unknown: true
+  global_vram_start: 0x08000000
+  ld_generate_symbol_per_data_segment: true
+  asm_inc_header: |
+    .set noat      /* allow manual use of $at */
+    .set noreorder /* don't insert nops after branches */
+sha1: 587c25a23baf8a749516196b79c5fc21d50b0016
+segments:
+  - [0x0, bin, mwo_header]
+  - name: borbo7
+    type: code
+    start: 0x80
+    vram: 0x09237700
+    bss_start_address: 0x09255700
+    bss_size: 0x180
+    align: 128
+    subalign: 8
+    subsegments:
+      - [0x80, c, rbo7/create_entity]
+      - [0x1028, c, rbo7/e_life_up]
+      - [0x1CA8, c, rbo7/e_stage_name]
+      - [0x2B28, c, rbo7/e_red_door]
+      - [0x2C10, c, rbo7/e_red_door]
+      - [0x3E30, c, rbo7/st_update]
+      - [0x4D80, c, rbo7/e_particles]
+      - [0x58F8, c, rbo7_psp/unk_58F8]
+      - [0x59D0, c, rbo7/e_collect]
+      - [0x9B40, c, rbo7/e_misc]
+      - [0xA248, c, rbo7/collision]
+      - [0xC420, c, rbo7/popup]
+      - [0xCA18, c, rbo7/e_room_fg]
+      - [0xCB30, c, rbo7/st_common]
+      - [0xDE80, c, rbo7/prim_helpers]
+      - [0xE610, c, rbo7_psp/st_init]
+      - [0xE738, c, rbo7_psp/unk_E738]
+      - [0x115E0, c, rbo7/e_lock_camera]
+      - [0x11840, c, rbo7_psp/func_us_801bab18_from_bo0]
+      - [0x11F00, .data, rbo7/e_life_up]
+      - [0x11F50, .data, rbo7/e_red_door]
+      - [0x11F68, .data, rbo7/st_update]
+      - [0x11F98, data, 11F98]
+      - [0x11F98, .data, rbo7/e_particles]
+      - [0x12018, data, '12018']
+      - [0x12018, .data, rbo7/e_collect]
+      - [0x12560, data, '12560']
+      - [0x125B0, .data, rbo7/collision]
+      - [0x12988, .data, rbo7/e_room_fg]
+      - [0x12A28, data, 12A28]
+      - [0x13B80, .data, rbo7/e_red_door_tiles]
+      - [0x13B90, .data, rbo7/e_init]
+      - [0x13CC8, data]
+      - [0x1DC00, .data, rbo7/header]
+      - [0x1DC30, data]
+      - [0x1DE88, .data, rbo7/e_lock_camera]
+      - [0x1DF00, data, 1DF00]
+      - [0x1DF80, .rodata, rbo7/e_life_up]
+      - [0x1DFA0, .rodata, rbo7/e_red_door]
+      - [0x1DFB8, .rodata, rbo7/e_collect]
+      - [0x1E018, .rodata, rbo7_psp/unk_E738]
+      - [0x1E080, .bss, rbo7/create_entity]
+      - [0x1E0A0, .bss, rbo7/e_life_up]
+      - [0x1E0A8, .bss, rbo7/st_update]
+      - [0x1E0E8, bss, 1E0E8]
+      - [0x1E0E8, .bss, rbo7/e_collect]
+      - [0x1E108, bss, 1E108]
+      - [0x1E1A0, .bss, rbo7/e_lock_camera]
+      - [0x1E1A8, bss, 1E1A8]
+  - [0x1E200]

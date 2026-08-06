@@ -60,15 +60,9 @@ typedef struct {
 // addition operation and is required for all other instances.
 #define WFACTORY2(id, param) FACTORY(((g_HandId + 1) << 12) + (id), (param))
 
-// create function names like w_000_EntityWeaponAttack
-#ifdef VERSION_PC
-#define CONCATENATE_DETAIL(x, y, z) x##y##_##z
-#define CONCATENATE(x, y, z) CONCATENATE_DETAIL(x, y, z)
-#define OVL_EXPORT(x) CONCATENATE(WEAPON, WEAPON_ID, x)
-#else
-#define OVL_EXPORT(x) x
-#endif
-
+// PSP builds one overlay per weapon per hand, so each w*_*.c declares its own
+// entry points and overlay table rather than sharing the ones below.
+#ifndef VERSION_PSP
 // exported
 static void EntityWeaponAttack(Entity* self);
 static void LoadWeaponPalette(s32 clutIndex);
@@ -106,7 +100,7 @@ static void DecelerateX(s32 amount);
 static void DecelerateY(s32 amount);
 static void SetSpeedX(s32 speed);
 
-Weapon OVL_EXPORT(header) = {
+static Weapon header = {
     EntityWeaponAttack, func_ptr_80170004, func_ptr_80170008,
     func_ptr_8017000C,  func_ptr_80170010, func_ptr_80170014,
     GetWeaponId,        LoadWeaponPalette, EntityWeaponShieldSpell,
@@ -114,5 +108,14 @@ Weapon OVL_EXPORT(header) = {
     WeaponUnused30,     WeaponUnused34,    WeaponUnused38,
     WeaponUnused3C,
 };
+
+#endif // !VERSION_PSP
+
+#ifdef VERSION_PC
+#include "../pc/stages/overlay.h"
+#include <string.h>
+
+OVL_API void InitWeapon(Weapon* o) { memcpy(o, &header, sizeof(Weapon)); }
+#endif
 
 #endif

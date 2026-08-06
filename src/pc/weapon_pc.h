@@ -3,6 +3,6 @@
 #define WEAPON_PC_H
 
 #include "weapon.h"
-void HandleWeapon0Prg(int fileId);
-void HandleWeapon0Chr(int fileId);
+void HandleWeaponPrg(unsigned handId, unsigned weaponId);
+void HandleWeaponChr(unsigned handId, unsigned weaponId);
 #endif

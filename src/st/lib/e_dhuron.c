@@ -479,7 +479,8 @@ void func_us_801CC984(Entity* self) {
     }
 
     tempEntity = self->ext.dhuron.unk9C;
-#ifdef VERSION_PSP
+#if defined(FIX_UB) || defined(VERSION_PSP)
+    // Null reference here causes a crash on non PSX platforms
     if (tempEntity != NULL && tempEntity->entityId != E_ID_33) {
 #else
     if (tempEntity->entityId != E_ID_33) {

@@ -1,0 +1,91 @@
+options:
+  platform: psx
+  basename: bobo1
+  base_path: ..
+  build_path: build/us
+  target_path: disks/us/BOSS/BO1/BO1.BIN
+  asm_path: asm/us/boss/bo1
+  asset_path: assets/boss/bo1
+  src_path: src/boss/bo1
+  ld_script_path: build/us/bobo1.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.us.txt
+    - config/symbols.us.bobo1.txt
+  undefined_funcs_auto_path: build/us/config/undefined_funcs_auto.us.bobo1.txt
+  undefined_syms_auto_path: build/us/config/undefined_syms_auto.us.bobo1.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: us_$VRAM
+  disassemble_all: true
+  section_order:
+    - .data
+    - .rodata
+    - .text
+    - .bss
+    - .sbss
+  ld_bss_is_noload: false
+  disasm_unknown: true
+  global_vram_start: 0x80010000
+  ld_generate_symbol_per_data_segment: true
+sha1: 98da46f83a0060d6b10fc7819744c9b3dd2191f9
+segments:
+  - name: bobo1
+    type: code
+    start: 0x0
+    vram: 0x80180000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, .data, header]
+      - [0x2C, data]
+      - [0x9F8, .data, e_init]
+      - [0xB64, .data, e_red_door_tiles]
+      - [0xB84, data]
+      - [0xB9C, .data, e_lock_camera]
+      - [0xC1C, data]
+      - [0x1020, .data, d_prize_drops]
+      - [0x1020, .data, st_update]
+      - [0x106C, data]
+      - [0x106C, .data, collision]
+      - [0x142C, .data, e_red_door]
+      - [0x1444, .data, st_common]
+      - [0x1644, .data, e_misc]
+      - [0x1654, data]
+      - [0x16F8, .data, e_collect]
+      - [0x1A4C, data]
+      - [0x1A50, .data, e_particles]
+      - [0x1AD0, .data, e_room_fg]
+      - [0x1B5C, data]
+      - [0x1B78, .data, e_life_up]
+      - [0x1BCC, data]
+      - [0x20AA0, .rodata, unk_20F60]
+      - [0x20B98, .rodata, e_red_door]
+      - [0x20BB0, .rodata, e_collect]
+      - [0x20C84, .rodata, e_stage_name]
+      - [0x20CB8, .rodata, prim_helpers]
+      - [0x20CC0, .rodata, e_life_up]
+      - [0x20CDC, c, unk_20CDC]
+      - [0x20DA4, c, e_lock_camera]
+      - [0x20F60, c, unk_20F60]
+      - [0x255A0, c, st_update]
+      - [0x259D4, c, collision]
+      - [0x27190, c, create_entity]
+      - [0x27D08, c, e_red_door]
+      - [0x27D80, c, e_red_door]
+      - [0x289B8, c, st_common]
+      - [0x29E68, c, e_misc]
+      - [0x2C204, c, e_collect]
+      - [0x2EB68, c, e_stage_name]
+      - [0x2F9BC, c, e_particles]
+      - [0x30200, c, e_room_fg]
+      - [0x302EC, c, popup]
+      - [0x3061C, c, prim_helpers]
+      - [0x30E4C, c, e_life_up]
+      - [0x31700, .bss, create_entity]
+      - [0x31710, bss]
+      - [0x3237C, .bss, st_update]
+      - [0x323BC, bss]
+  - [0x323BC]

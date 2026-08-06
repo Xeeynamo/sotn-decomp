@@ -1,0 +1,2 @@
+EXTERN(_binary_assets_boss_rbo7_mwo_header_bin_start);
+EXTERN(RBO7_Load);

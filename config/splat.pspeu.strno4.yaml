@@ -1,0 +1,102 @@
+options:
+  platform: psp
+  basename: strno4
+  base_path: ..
+  build_path: build/pspeu
+  target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rno4.bin
+  asm_path: asm/pspeu/st/rno4_psp
+  asset_path: assets/st/rno4
+  src_path: src/st
+  ld_script_path: build/pspeu/strno4.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.pspeu.txt
+    - config/symbols.pspeu.strno4.txt
+  undefined_funcs_auto_path: build/pspeu/config/undefined_funcs_auto.pspeu.strno4.txt
+  undefined_syms_auto_path: build/pspeu/config/undefined_syms_auto.pspeu.strno4.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: pspeu_$VRAM
+  disassemble_all: true
+  section_order:
+    - .text
+    - .data
+    - .rodata
+    - .bss
+  ld_bss_is_noload: true
+  disasm_unknown: true
+  global_vram_start: 0x08000000
+  ld_generate_symbol_per_data_segment: true
+  asm_inc_header: |
+    .set noat      /* allow manual use of $at */
+    .set noreorder /* don't insert nops after branches */
+sha1: 322c4a079c01ad40229b1026e7521e9c0c80671c
+segments:
+  - [0x0, bin, mwo_header]
+  - name: strno4
+    type: code
+    start: 0x80
+    vram: 0x09237700
+    bss_start_address: 0x0929BB80
+    bss_size: 0x380
+    align: 128
+    subalign: 8
+    subsegments:
+      - [0x80, c, rno4/create_entity]
+      - [0x1028, c, rno4_psp/e_blue_venus_weed]
+      - [0x3B78, c, rno4_psp/unk_3B78]
+      - [0x7280, c, rno4/e_stage_name]
+      - [0x8100, c, rno4_psp/e_red_door]
+      - [0x81E8, c, rno4_psp/e_red_door]
+      - [0x9408, c, rno4/st_update]
+      - [0x9940, c, rno4_psp/unk_9940]
+      - [0xAFF0, c, rno4_psp/e_particles]
+      - [0xBB68, c, rno4_psp/unk_BB68]
+      - [0xCF30, c, rno4/e_collect]
+      - [0x10930, c, rno4/collision]
+      - [0x12B08, c, rno4_psp/unk_12B08]
+      - [0x15A90, c, rno4/popup]
+      - [0x16088, c, rno4/e_room_fg]
+      - [0x161A0, c, rno4_psp/unk_161A0]
+      - [0x17568, c, rno4/st_common]
+      - [0x18CC0, c, rno4_psp/unk_18CC0]
+      - [0x19DC0, c, rno4/prim_helpers]
+      - [0x1A550, c, rno4_psp/st_init]
+      - [0x1A988, c, rno4_psp/unk_1A988]
+      - [0x1BDA8, c, rno4/e_lock_camera]
+      - [0x1C008, c, rno4_psp/e_killer_fish]
+      - [0x1C5C0, c, rno4_psp/unk_1C5C0]
+      - [0x1CCF0, c, rno4_psp/e_breakable_wall]
+      - [0x1CF10, c, rno4_psp/unk_1CF10]
+      - [0x22680, data]
+      - [0x22D50, .data, rno4/st_update]
+      - [0x22D80, data, 22D80]
+      - [0x22F38, .data, rno4/e_collect]
+      - [0x23480, .data, rno4/collision]
+      - [0x23858, data, '23858']
+      - [0x23938, .data, rno4/e_room_fg]
+      - [0x239D8, data, 239D8]
+      - [0x2BA50, .data, rno4/e_init]
+      - [0x2BDD0, data]
+      - [0x638C8, .data, rno4/header]
+      - [0x63908, .data, rno4/d_prize_drops]
+      - [0x63928, data, 63928]
+      - [0x63C10, .data, rno4/e_lock_camera]
+      - [0x63C88, data, 63C88]
+      - [0x64300, .rodata, rno4_psp/e_blue_venus_weed]
+      - [0x64398, .rodata, rno4_psp/unk_3B78]
+      - [0x643C0, .rodata, rno4_psp/e_red_door]
+      - [0x643D8, .rodata, rno4_psp/unk_9940]
+      - [0x643F8, .rodata, rno4_psp/unk_BB68]
+      - [0x64428, .rodata, rno4/e_collect]
+      - [0x64488, .rodata, rno4_psp/unk_161A0]
+      - [0x644B0, .rodata, rno4_psp/unk_1A988]
+      - [0x64500, .bss, rno4/create_entity]
+      - [0x64520, .bss, rno4/st_update]
+      - [0x64560, .bss, rno4/e_collect]
+      - [0x64580, bss, '64580']
+      - [0x64848, .bss, rno4/e_lock_camera]
+      - [0x64850, bss, '64850']
+  - [0x64880]

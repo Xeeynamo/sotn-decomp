@@ -1,0 +1,96 @@
+options:
+  platform: psx
+  basename: strno4
+  base_path: ..
+  build_path: build/us
+  target_path: disks/us/ST/RNO4/RNO4.BIN
+  asm_path: asm/us/st/rno4
+  asset_path: assets/st/rno4
+  src_path: src/st/rno4
+  ld_script_path: build/us/strno4.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.us.txt
+    - config/symbols.us.strno4.txt
+  undefined_funcs_auto_path: build/us/config/undefined_funcs_auto.us.strno4.txt
+  undefined_syms_auto_path: build/us/config/undefined_syms_auto.us.strno4.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: us_$VRAM
+  disassemble_all: true
+  section_order:
+    - .data
+    - .rodata
+    - .text
+    - .bss
+    - .sbss
+  ld_bss_is_noload: false
+  disasm_unknown: true
+  global_vram_start: 0x80010000
+  ld_generate_symbol_per_data_segment: true
+sha1: 7fde040adf8bf5c9a8f22fba694249cf9278dcf7
+segments:
+  - name: strno4
+    type: code
+    start: 0x0
+    vram: 0x80180000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, .data, header]
+      - [0x40, data]
+      - [0x960, .data, e_init]
+      - [0xC68, data]
+      - [0xCA0, .data, e_red_door_tiles]
+      - [0xCC0, data]
+      - [0xCD0, .data, e_lock_camera]
+      - [0xD50, data]
+      - [0x1620, .data, d_prize_drops]
+      - [0x1640, data]
+      - [0x1788, .data, st_update]
+      - [0x17D4, data]
+      - [0x17D4, .data, collision]
+      - [0x1B94, .data, e_red_door]
+      - [0x1BAC, .data, st_common]
+      - [0x1DAC, .data, e_collect]
+      - [0x2100, data]
+      - [0x2104, .data, e_particles]
+      - [0x2184, .data, e_room_fg]
+      - [0x2210, data]
+      - [0x44474, .rodata, unk_44B0C]
+      - [0x444D8, .rodata, e_killer_fish]
+      - [0x444EC, .rodata, e_red_door]
+      - [0x44504, .rodata, e_collect]
+      - [0x445D8, .rodata, e_stage_name]
+      - [0x4460C, .rodata, unk_52ED0]
+      - [0x446E8, .rodata, e_blue_venus_weed]
+      - [0x447D8, .rodata, unk_58A30]
+      - [0x44880, .rodata, prim_helpers]
+      - [0x44888, c, unk_44888]
+      - [0x44950, c, e_lock_camera]
+      - [0x44B0C, c, unk_44B0C]
+      - [0x49C54, c, e_breakable_wall]
+      - [0x49DDC, c, e_killer_fish]
+      - [0x4A1E4, c, st_update]
+      - [0x4A618, c, collision]
+      - [0x4BDD4, c, create_entity]
+      - [0x4C94C, c, e_red_door]
+      - [0x4C9C4, c, e_red_door]
+      - [0x4D5FC, c, st_common]
+      - [0x4EAAC, c, e_collect]
+      - [0x5141C, c, e_stage_name]
+      - [0x52270, c, e_particles]
+      - [0x52AB4, c, e_room_fg]
+      - [0x52BA0, c, popup]
+      - [0x52ED0, c, unk_52ED0]
+      - [0x56E08, c, e_blue_venus_weed]
+      - [0x58A30, c, unk_58A30]
+      - [0x5C724, c, prim_helpers]
+      - [0x5CF54, bss]
+      - [0x5CF5C, .bss, create_entity]
+      - [0x5CF6C, bss]
+      - [0x5DBD4, .bss, st_update]
+      - [0x5DC14, bss]
+  - [0x5DC14]

@@ -627,16 +627,16 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
                  g_StagesLba[g_StageId].ovlName);
         break;
     case SimFileType_Weapon0Prg:
-        HandleWeapon0Prg(fileId);
+        HandleWeaponPrg(0, fileId);
         return 0;
     case SimFileType_Weapon1Prg:
-        INFOF("TODO: will load weapon 'w1_%03d'", fileId);
+        HandleWeaponPrg(1, fileId);
         return 0;
     case SimFileType_Weapon0Chr:
-        HandleWeapon0Chr(fileId);
+        HandleWeaponChr(0, fileId);
         return 0;
     case SimFileType_Weapon1Chr:
-        INFOF("TODO: will load weapon 'f1_%03d'", fileId);
+        HandleWeaponChr(1, fileId);
         return 0;
     case SimFileType_FamiliarPrg:
         HandleServantPrg();

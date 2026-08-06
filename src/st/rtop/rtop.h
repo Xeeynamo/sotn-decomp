@@ -6,10 +6,9 @@
 
 #include <stage.h>
 
-#define OVL_EXPORT(x) RTOP_##x
 #define INVERTED_STAGE
 
-enum OVL_EXPORT(Palette) {
+enum RTOP_Palette {
     PAL_NONE = 0,
     PAL_BREAKABLE = 0x200,
     PAL_BREAKABLE_DEBRIS = 0x204,

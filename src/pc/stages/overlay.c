@@ -165,3 +165,26 @@ bool LoadServantOverlay(const char* name, ServantDesc* o) {
     entrypoint(o);
     return true;
 }
+
+static OvlHandle CurrentWeaponOverlay[2] = {NULL, NULL};
+bool LoadWeaponOverlay(const char* name, unsigned handId, Weapon* o) {
+    OvlHandle handle;
+    PfnInitWeapon entrypoint;
+
+    if (handId >= LEN(CurrentWeaponOverlay)) {
+        ERRORF("hand ID %d not valid", handId);
+        return false;
+    }
+    if (CurrentWeaponOverlay[handId]) {
+        OvlClose(CurrentWeaponOverlay[handId]);
+        CurrentWeaponOverlay[handId] = NULL;
+    }
+    entrypoint =
+        (PfnInitWeapon)OpenOverlayEntrypoint(name, "InitWeapon", &handle);
+    if (!entrypoint) {
+        return false;
+    }
+    CurrentWeaponOverlay[handId] = handle;
+    entrypoint(o);
+    return true;
+}

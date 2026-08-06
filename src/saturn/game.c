@@ -111,7 +111,7 @@ void InitRoom(void) {
     SetCanRevealMap();
     if (g_CurrentRoom.unk4 < 0x50) {
         D_801375BC.def =
-            (RoomLoadDef*)func_0606D804(g_CurrentRoom.stageID & 0xDF);
+            (RoomLoadDef*)GetRoomLoadDefTable(g_CurrentRoom.stageID & 0xDF);
         D_801375BC.def =
             (RoomLoadDef*)((u8*)D_801375BC.def + g_CurrentRoom.unk4 * 6 + 4);
     }
