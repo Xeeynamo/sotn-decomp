@@ -8,6 +8,11 @@
 
 enum Palettes {
     PAL_NONE,
+    PAL_PUFF_OPAQUE_OFFSET = 0x2E0,
+    // puff params 2 (not used directly, PAL_PUFF_OPAQUE_OFFSET + 3)
+    PAL_PUFF_OPAQUE_2 = 0x2E3,
+    // puff params 3 (not used directly, PAL_PUFF_OPAQUE_OFFSET + 4)
+    PAL_PUFF_OPAQUE_3 = 0x2E4
 };
 
 enum Entities {
@@ -33,7 +38,7 @@ enum Entities {
     E_UNK_ID13,               // EntityUnkId13
     E_EXPLOSION_VARIANTS,     // EntityExplosionVariants
     E_GREY_PUFF,              // EntityGreyPuff
-    E_EXPLOSION_PUFF_OPAQUE,  // EntityExplosionPuffOpaque
+    E_EXPLODE_PUFF_OPAQUE,    // EntityExplosionPuffOpaque
     E_CLOUDS,                 // EntityClouds
     E_BACKGROUND_GEARS,       // EntityBackgroundGears
     E_GEAR_SIDEWAYS_LARGE,    // EntityGearSidewaysLarge
