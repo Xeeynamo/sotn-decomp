@@ -29,7 +29,10 @@ INCLUDE_ASM("st/rnz1/nonmatchings/unk_29914", func_us_801ABB58);
 
 void RNZ1_Unused801ABDC0(void) {}
 
-INCLUDE_ASM("st/rnz1/nonmatchings/unk_29914", func_us_801ABDC8);
+void func_us_801ABDC8(s32* arg0) {
+    arg0[0] -= 0x400;
+    arg0[5] -= 0x400;
+}
 
 INCLUDE_RODATA("st/rnz1/nonmatchings/unk_29914", D_us_801A6050);
 
