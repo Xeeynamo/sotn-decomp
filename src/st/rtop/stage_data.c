@@ -7,6 +7,15 @@ u8 D_801822FC[] = {
 u8 D_80182640[] = {
 #include "gen/D_80182640.h"
 };
+u8 gfx_clouds[] = {
+#include "gen/gfx_clouds.h"
+};
+u8 gfx_clock_tower_1[] = {
+#include "gen/gfx_clock_tower_1.h"
+};
+u8 gfx_clock_tower_2[] = {
+#include "gen/gfx_clock_tower_2.h"
+};
 u8 D_801858E0[] = {
 #include "gen/D_801858E0.h"
 };

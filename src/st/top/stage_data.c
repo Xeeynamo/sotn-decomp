@@ -9,8 +9,26 @@ u8 gfx_stage_name_jp_sm[] = {
 u8 gfx_stage_name_jp_lg[] = {
 #include "gen/gfx_stage_name_jp_lg.h"
 };
+u8 gfx_clouds[] = {
+#include "gen/gfx_clouds.h"
+};
+u8 gfx_clock_tower_1[] = {
+#include "gen/gfx_clock_tower_1.h"
+};
+u8 gfx_clock_tower_2[] = {
+#include "gen/gfx_clock_tower_2.h"
+};
 u8 gfx_flea_rider[] = {
 #include "gen/gfx_flea_rider.h"
+};
+u8 gfx_portrait_alucard[] = {
+#include "gen/gfx_portrait_alucard.h"
+};
+u8 gfx_portrait_maria[] = {
+#include "gen/gfx_portrait_maria.h"
+};
+u8 gfx_portrait_richter[] = {
+#include "gen/gfx_portrait_richter.h"
 };
 u8 gfx_maria_1[] = {
 #include "gen/gfx_maria_1.h"
