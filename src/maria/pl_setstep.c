@@ -192,7 +192,7 @@ static void PlayGruntAttackSoundEffect(s32 max) {
     if (max) {
         sfxIndex = rand() % max;
         if (sfxIndex < 5) {
-            PlaySfx(D_pspeu_092C5040[sfxIndex]);
+            MARIA_PLAY_SFX(D_pspeu_092C5040[sfxIndex]);
         }
     }
 }
@@ -306,7 +306,7 @@ s32 MarDoSubweapon(void) {
     g_Player.unk46 = 3;
     PLAYER.step_s = 0x42;
     g_Player.timers[PL_T_10] = 4;
-    PlaySfx(SFX_VO_MAR_8EB);
+    MARIA_PLAY_SFX(SFX_VO_MAR_8EB);
     return 0;
 }
 
@@ -348,7 +348,7 @@ bool MarDoCrash(void) {
         } else {
             MarSetAnimation(mar_anim_stand_relax);
         }
-        g_api.PlaySfx(SFX_VO_MAR_8EC);
+        MARIA_API_PLAY_SFX(SFX_VO_MAR_8EC);
         g_Player.unk46 = 0;
         break;
     case PL_W_CARDINAL:
@@ -356,28 +356,28 @@ bool MarDoCrash(void) {
         MarSetStep(PL_S_CARDINAL_CRASH);
         MarSetAnimation(anim_maria_use_crash);
         g_api.PlaySfx(SFX_WEAPON_APPEAR);
-        g_api.PlaySfx(SFX_VO_MAR_8EF);
+        MARIA_API_PLAY_SFX(SFX_VO_MAR_8EF);
         break;
     case PL_W_CAT:
         g_Player.unk5C = 2;
         MarSetStep(PL_S_CAT_CRASH);
         MarSetAnimation(anim_maria_use_crash);
         g_api.PlaySfx(SFX_WEAPON_APPEAR);
-        g_api.PlaySfx(SFX_VO_MAR_8EE);
+        MARIA_API_PLAY_SFX(SFX_VO_MAR_8EE);
         break;
     case PL_W_TURTLE:
         g_Player.unk5C = 2;
         MarSetStep(PL_S_TURTLE_CRASH);
         MarSetAnimation(anim_maria_use_crash);
         g_api.PlaySfx(SFX_WEAPON_APPEAR);
-        g_api.PlaySfx(SFX_VO_MAR_8ED);
+        MARIA_API_PLAY_SFX(SFX_VO_MAR_8ED);
         break;
     case PL_W_DRAGON:
         g_Player.unk5C = 2;
         MarSetStep(PL_S_DRAGON_CRASH);
         MarSetAnimation(anim_maria_use_crash);
         g_api.PlaySfx(SFX_WEAPON_APPEAR);
-        g_api.PlaySfx(SFX_VO_MAR_8F0);
+        MARIA_API_PLAY_SFX(SFX_VO_MAR_8F0);
         break;
     }
     g_Player.timers[PL_T_12] = 4;
@@ -416,5 +416,5 @@ void MarSetBladeDash(void) {
     g_Player.timers[PL_T_12] = 4;
     MarCreateEntFactoryFromEntity(g_CurrentEntity, BP_BLADE_DASH, 0);
     func_maria_8015CC28();
-    g_api.PlaySfx(SFX_VO_MAR_ATTACK_C);
+    MARIA_API_PLAY_SFX(SFX_VO_MAR_ATTACK_C);
 }
