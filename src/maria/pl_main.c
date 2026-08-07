@@ -839,4 +839,3 @@ void MarMain(void) {
     }
     D_pspeu_092E5F28 = PadReadPSP();
 }
-#endif
