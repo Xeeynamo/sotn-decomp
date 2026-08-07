@@ -3,12 +3,14 @@
 
 extern EInit g_EInitCommon;
 
-static u8 D_us_80181028[] = {
-    0x90, 0xD8, 0x40, 0x58, 0xD8, 0xFF, 0x00, 0x28, 0xD8, 0xFF, 0x28, 0x50,
+// Defines the left, right, top, bottom UV coordinates for tile textures
+#define UUVV(u1, u2, v1, v2) u1, u2, v1, v2
+static u8 tileUVs[] = {
+    UUVV(144, 216, 64, 88), UUVV(216, 255, 0, 40), UUVV(216, 255, 40, 80)
 };
 // Defines the left, right, top, and bottom offsets for each tile
 #define LRTB(l, r, t, b) l, r, t, b
-static s16 D_us_80181034[] = {
+static s16 tileXYs[] = {
     LRTB(32, -36, 0, 24), LRTB(0, -35, -32, 8),   LRTB(38, -1, -32, 8),
     LRTB(-5, 67, 0, -24), LRTB(27, 66, 32, -8),   LRTB(-67, -28, 32, -8),
     LRTB(-33, 39, 0, 24), LRTB(-1, 38, -32, 8),   LRTB(-39, 0, -32, 8),
@@ -44,7 +46,7 @@ void EntityPinkCavernsBlock(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
-        var_a0 = D_us_80181028;
+        var_a0 = tileUVs;
 
         while (prim != NULL) {
             prim->tpage = 0xF;
@@ -71,7 +73,7 @@ void EntityPinkCavernsBlock(Entity* self) {
     }
 
     if (self->step != 2) {
-        dataPtr = &D_us_80181034[(params * 2 + 1) * 12];
+        dataPtr = &tileXYs[(params * 2 + 1) * 12];
         prim = &g_PrimBuf[self->primIndex];
         posX = self->posX.i.hi;
         posY = self->posY.i.hi;
