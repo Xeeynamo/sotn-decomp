@@ -3,7 +3,7 @@
 //! Driven from tools/sotn-assets and config/assets.saturn.yaml
 
 use clap::{Parser, Subcommand};
-use saturn_assets::{audio, familiar, font, weapon};
+use saturn_assets::{audio, bitmap, familiar, font, weapon};
 use std::path::PathBuf;
 use std::process::ExitCode;
 
@@ -28,6 +28,35 @@ enum Command {
     /// T_BAT / T_DEVIL / T_FAIRY / ... familiar CHR
     #[command(subcommand)]
     Familiar(FamiliarCommand),
+    /// Packed 4bpp castle-map bitmaps in an overlay or SUB_DISP.MAP
+    #[command(subcommand)]
+    Bitmap(BitmapCommand),
+}
+
+#[derive(Subcommand)]
+enum BitmapCommand {
+    /// Export the bitmap as an indexed PNG plus a manifest
+    Extract {
+        /// Bitmap profile: alucard-, maria-, richter-, or richter2-castle-map
+        bitmap: String,
+        /// The retail file containing the packed bitmap
+        source_path: PathBuf,
+        /// The matching retail main-player CHR carrying lookup table 67
+        chr_path: PathBuf,
+        output_dir: PathBuf,
+    },
+    /// Repack the PNG into the raw array bytes
+    Rebuild { manifest: PathBuf, output: PathBuf },
+    /// Require a byte-identical no-edit repack against the retail overlay
+    Verify {
+        manifest: PathBuf,
+        /// The retail source file to compare against
+        source_path: PathBuf,
+    },
+    /// Emit the array as C
+    GenerateHeader { manifest: PathBuf, output: PathBuf },
+    /// Require that regenerating reproduces a header already in the tree
+    VerifyHeader { manifest: PathBuf, header: PathBuf },
 }
 
 #[derive(Subcommand)]
@@ -161,6 +190,41 @@ fn run(cli: Cli) -> saturn_assets::Result<()> {
         }) => {
             audio::verify(&manifest, &source_path)?;
             println!("verify passed: exact retail match");
+        }
+        Command::Bitmap(BitmapCommand::Extract {
+            bitmap,
+            source_path,
+            chr_path,
+            output_dir,
+        }) => {
+            let manifest = bitmap::extract(&bitmap, &source_path, &chr_path, &output_dir)?;
+            println!(
+                "{}x{} ({} bytes) {} -> {}",
+                manifest.width,
+                manifest.height,
+                manifest.source.size,
+                manifest.symbol,
+                output_dir.display()
+            );
+        }
+        Command::Bitmap(BitmapCommand::Rebuild { manifest, output }) => {
+            let data = bitmap::rebuild(&manifest, &output)?;
+            println!("wrote {} bytes -> {}", data.len(), output.display());
+        }
+        Command::Bitmap(BitmapCommand::Verify {
+            manifest,
+            source_path,
+        }) => {
+            bitmap::verify(&manifest, &source_path)?;
+            println!("verify passed: exact retail match");
+        }
+        Command::Bitmap(BitmapCommand::GenerateHeader { manifest, output }) => {
+            let text = bitmap::generate_header(&manifest, &output)?;
+            println!("{} lines -> {}", text.lines().count(), output.display());
+        }
+        Command::Bitmap(BitmapCommand::VerifyHeader { manifest, header }) => {
+            bitmap::verify_header(&manifest, &header)?;
+            println!("verify passed: the header in the tree is what regenerates");
         }
         Command::Familiar(FamiliarCommand::Extract {
             familiar,

@@ -121,6 +121,36 @@ assets:
     prg: disks/saturn/ALUCARD.PRG
     path: assets/saturn/weapon/ALC_W
     output: build/saturn/assets/ALC_W.CHR
+  - name: castle-map-maria
+    kind: bitmap
+    profile: maria-castle-map
+    source: disks/saturn/MARIA.PRG
+    chr: disks/saturn/MARIA.CHR
+    include: src/saturn/maria/gen/castmap.h
+    path: assets/saturn/bitmap/maria-castle-map
+    output: build/saturn/assets/maria-castle-map.bin
+  - name: castle-map-alucard
+    kind: bitmap
+    profile: alucard-castle-map
+    source: disks/saturn/SUB_DISP.MAP
+    chr: disks/saturn/ALUCARD.CHR
+    path: assets/saturn/bitmap/alucard-castle-map
+    output: build/saturn/assets/alucard-castle-map.bin
+  - name: castle-map-richter
+    kind: bitmap
+    profile: richter-castle-map
+    source: disks/saturn/RICHTER.PRG
+    chr: disks/saturn/RICHTER.CHR
+    include: src/saturn/ric/gen/castmap.h
+    path: assets/saturn/bitmap/richter-castle-map
+    output: build/saturn/assets/richter-castle-map.bin
+  - name: castle-map-richter2
+    kind: bitmap
+    profile: richter2-castle-map
+    source: disks/saturn/RICHTER2.PRG
+    chr: disks/saturn/RICHTER2.CHR
+    path: assets/saturn/bitmap/richter2-castle-map
+    output: build/saturn/assets/richter2-castle-map.bin
   - name: familiar-bat
     kind: familiar
     profile: bat
