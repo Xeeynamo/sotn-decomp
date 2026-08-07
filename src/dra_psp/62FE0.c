@@ -28,7 +28,7 @@ static u16 D_psp_091871B0[] = {
     0x860F, 0x860E, 0x8611, 0x8610, 0x8620, 0x861F, 0x8622, 0x8621,
     0x8577, 0x8586, 0x814E, 0x8636, 0x8147, 0x8621, 0x0000};
 
-u16 func_psp_0913F960(char* str, u8* type) {
+u16 func_psp_0913F960(const char* str, u8* type) {
     u32 i;
     u16 ret;
     char* ptr;

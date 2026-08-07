@@ -47,7 +47,7 @@ static void UpdateFallingPebble(Primitive* prim) {
 // E_DEMON_SWITCH
 // func_8019BDF8
 void EntityDemonSwitch(Entity* self) {
-    typedef enum Step {
+    enum Step {
         INIT = 0,
         PRESS = 1,
     };
@@ -99,7 +99,7 @@ static s16 WallTiles[] = {
 // PSP:func_psp_0924ED28:No match
 // PSP:https://decomp.me/scratch/DxiYq
 void EntityDemonSwitchWall(Entity* self) {
-    typedef enum Step {
+    enum Step {
         INIT = 0,
         IDLE_CLOSED = 1,
         PREP_TO_OPEN = 2,
