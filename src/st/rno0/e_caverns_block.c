@@ -6,8 +6,7 @@ extern EInit g_EInitCommon;
 // Defines the left, right, top, bottom UV coordinates for tile textures
 #define UUVV(u1, u2, v1, v2) u1, u2, v1, v2
 static u8 tileUVs[] = {
-    UUVV(144, 216, 64, 88), UUVV(216, 255, 0, 40), UUVV(216, 255, 40, 80)
-};
+    UUVV(144, 216, 64, 88), UUVV(216, 255, 0, 40), UUVV(216, 255, 40, 80)};
 // Defines the left, right, top, and bottom offsets for each tile
 #define LRTB(l, r, t, b) l, r, t, b
 static s16 tileXYs[] = {
