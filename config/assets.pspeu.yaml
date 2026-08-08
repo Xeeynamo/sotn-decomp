@@ -169,6 +169,16 @@ files:
           - [0xAF3E0, xamusicconfig, psp/xa_music_config]
           - [0xB16F0, sfxconfig, psp/sfx_config]
           - [0xB2C40, skip]
+          - [0xD3770, enemydefs, psp/enemydefs_en, 401]
+          - [0xD7618, skip]
+          - [0xD7CE0, enemydefs, psp/enemydefs_sp, 401]
+          - [0xDBB88, skip]
+          - [0xDC230, enemydefs, psp/enemydefs_it, 401]
+          - [0xE00D8, skip]
+          - [0xE0790, enemydefs, psp/enemydefs_ge, 401]
+          - [0xE4638, skip]
+          - [0xE4D10, enemydefs, psp/enemydefs_fr, 401]
+          - [0xE8BB8, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/ric.bin
     asset_path: assets/ric
     src_path: src/ric
