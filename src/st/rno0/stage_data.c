@@ -4,6 +4,9 @@
 u8 D_80185638[] = {
 #include "gen/D_80185638.h"
 };
+u8 D_8018597C[] = {
+#include "gen/D_8018597C.h"
+};
 u8 D_80185F20[] = {
 #include "gen/D_80185F20.h"
 };
