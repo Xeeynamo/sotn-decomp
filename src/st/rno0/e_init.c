@@ -22,9 +22,9 @@ void EntityLockCamera(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
-void func_us_801CC8F8_from_no0(Entity* self);
-void EntityBackgroundPillars(Entity* self);
-void func_us_801CC9B4_from_no0(Entity* self);
+void EntityBackgroundPillar(Entity* self);
+void EntityCorridorDecorator(Entity* self);
+void EntityLongCorridorEye(Entity* self);
 void EntityClockRoomController(Entity* self);
 void EntityClockHands(Entity* self);
 void EntityBirdcageDoor(Entity* self);
@@ -103,9 +103,9 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityUnkId13,
     EntityExplosionVariants,
     EntityGreyPuff,
-    func_us_801CC8F8_from_no0,
-    EntityBackgroundPillars,
-    func_us_801CC9B4_from_no0,
+    EntityBackgroundPillar,
+    EntityCorridorDecorator,
+    EntityLongCorridorEye,
     EntityClockRoomController,
     EntityClockHands,
     EntityBirdcageDoor,

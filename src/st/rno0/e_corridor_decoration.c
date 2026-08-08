@@ -1,13 +1,16 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rno0.h"
 
+// This file handles all the background decorations in the long corridor at the
+// end of the Marble Gallery.
+
 extern EInit g_EInitCommon;
 extern EInit RNO0_EInitSpawner;
 
-void func_us_801CC8F8_from_no0(Entity* self);
+void EntityBackgroundPillar(Entity* self);
 
-void EntityBackgroundPillars(Entity* self){
-    Entity* entityPtr;
+void EntityCorridorDecorator(Entity* self) {
+    Entity* pillar;
     s16 i;
     Primitive* prim;
     s32 primIndex;
@@ -15,8 +18,11 @@ void EntityBackgroundPillars(Entity* self){
     if (self->step) {
         return;
     }
-
     InitializeEntity(RNO0_EInitSpawner);
+
+    // This loop creates a mottled dark green and white background
+    // which is in the farthest back layer (priority 0).
+    // It can be seen sporadically through the windows.
     primIndex = g_api.AllocPrimitives(PRIM_GT4, 9);
     if (primIndex != -1) {
         self->primIndex = primIndex;
@@ -39,19 +45,16 @@ void EntityBackgroundPillars(Entity* self){
         }
     }
 
-    entityPtr = self + 1;
-
-    for (i = -0x10; i < 0x130; i += 0x60) {
-        DestroyEntity(entityPtr);
-        entityPtr->entityId = E_UNK_16;
-        entityPtr->pfnUpdate = func_us_801CC8F8_from_no0;
-        entityPtr->posY.i.hi = 0x6A;
-        entityPtr->posX.i.hi = i;
-        entityPtr++;
+    for (pillar = self + 1, i = -0x10; i < 0x130; pillar++, i += 0x60) {
+        DestroyEntity(pillar);
+        pillar->entityId = E_BG_PILLAR;
+        pillar->pfnUpdate = EntityBackgroundPillar;
+        pillar->posY.i.hi = 0x6A;
+        pillar->posX.i.hi = i;
     }
 }
 
-void func_us_801CC8F8_from_no0(Entity* self) {
+void EntityBackgroundPillar(Entity* self) {
     if (!self->step) {
         InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(2);
@@ -62,6 +65,8 @@ void func_us_801CC8F8_from_no0(Entity* self) {
         return;
     }
 
+    // Clever "loading seam" thing - pillars get shuffled to stay
+    // on screen as they pass out of view.
     if (self->posX.i.hi < -0x40) {
         self->posX.i.hi += 0x180;
     }
@@ -73,9 +78,9 @@ void func_us_801CC8F8_from_no0(Entity* self) {
 
 static s16 xBase[] = {0x50, 0x68, 0x70, 0x68, 0x50, 0x38, 0x30, 0x38};
 static s16 yBase[] = {0x90, 0x93, 0x9C, 0xA5, 0xA8, 0xA5, 0x9C, 0x93};
-                             
-// updates entity movement direction
-void func_us_801CC9B4_from_no0(Entity* self) {
+
+// No way for this to be created in RNO0, only NO0
+void EntityLongCorridorEye(Entity* self) {
     u8 angle;
 
     if (!self->step) {
@@ -89,8 +94,8 @@ void func_us_801CC9B4_from_no0(Entity* self) {
     }
     if ((g_GameTimer & 0xF) == 0) {
         angle = (Random() & 7);
-        self->ext.et_801CC9B4.targetAngle = GetAnglePointToEntityShifted(
-            xBase[angle], yBase[angle]);
+        self->ext.et_801CC9B4.targetAngle =
+            GetAnglePointToEntityShifted(xBase[angle], yBase[angle]);
     }
     angle = AdjustValueWithinThreshold(8, self->ext.et_801CC9B4.currentAngle,
                                        self->ext.et_801CC9B4.targetAngle);
