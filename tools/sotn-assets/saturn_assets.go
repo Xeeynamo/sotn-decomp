@@ -42,19 +42,21 @@ type saturnAsset struct {
 	Path string `yaml:"path"`
 	// rebuild output
 	Output string `yaml:"output"`
+	PaletteInclude string `yaml:"palette_include"`
 }
 
 // one file of work; a dir entry expands into one per file
 type saturnUnit struct {
-	name    string
-	kind    string
-	variant string
-	source  string
-	path    string
-	output  string
-	prg     string
-	chr     string
-	include string
+	name           string
+	kind           string
+	variant        string
+	source         string
+	path           string
+	output         string
+	prg            string
+	chr            string
+	include        string
+	paletteInclude string
 }
 
 const saturnAssetOutputDir = "build/saturn/assets"
@@ -72,6 +74,15 @@ func (a saturnAsset) variant() (string, error) {
 			return "", fmt.Errorf("asset %q: audio needs a codec", a.Name)
 		}
 		return a.Codec, nil
+	case "player":
+		if a.Profile == "" || a.Prg == "" {
+			return "", fmt.Errorf("asset %q: player needs a profile and the overlay prg", a.Name)
+		}
+		if (a.Include == "") != (a.PaletteInclude == "") {
+			return "", fmt.Errorf(
+				"asset %q: player needs both include and palette_include, or neither", a.Name)
+		}
+		return a.Profile, nil
 	case "bitmap":
 		if a.Profile == "" {
 			return "", fmt.Errorf("asset %q: bitmap needs a profile", a.Name)
@@ -117,15 +128,16 @@ func (a saturnAsset) units() ([]saturnUnit, error) {
 			output = filepath.Join(saturnAssetOutputDir, filepath.Base(a.Source))
 		}
 		return []saturnUnit{{
-			name:    a.Name,
-			kind:    a.Kind,
-			variant: variant,
-			source:  a.Source,
-			path:    a.Path,
-			output:  output,
-			prg:     a.Prg,
-			chr:     a.Chr,
-			include: a.Include,
+			name:           a.Name,
+			kind:           a.Kind,
+			variant:        variant,
+			source:         a.Source,
+			path:           a.Path,
+			output:         output,
+			prg:            a.Prg,
+			chr:            a.Chr,
+			include:        a.Include,
+			paletteInclude: a.PaletteInclude,
 		}}, nil
 	}
 
@@ -197,7 +209,7 @@ func saturnUnitArgs(u saturnUnit, command string) ([]string, error) {
 	switch command {
 	case "extract":
 		args := []string{u.kind, "extract", u.variant}
-		if u.kind == "familiar" {
+		if u.kind == "familiar" || u.kind == "player" {
 			return append(args, u.prg, u.source, u.path), nil
 		}
 		if u.kind == "bitmap" {
@@ -210,6 +222,9 @@ func saturnUnitArgs(u saturnUnit, command string) ([]string, error) {
 		}
 		return args, nil
 	case "rebuild":
+		if u.kind == "player" {
+			return []string{u.kind, "rebuild", manifest, u.source, u.output}, nil
+		}
 		return []string{u.kind, "rebuild", manifest, u.output}, nil
 	case "verify":
 		return []string{u.kind, "verify", manifest, u.source}, nil
@@ -218,7 +233,7 @@ func saturnUnitArgs(u saturnUnit, command string) ([]string, error) {
 	}
 }
 
-var generatedHeaderKinds = map[string]bool{"familiar": true, "bitmap": true}
+var generatedHeaderKinds = map[string]bool{"familiar": true, "bitmap": true, "player": true}
 
 func runSaturnGeneratedHeader(binary string, u saturnUnit, command string) error {
 	manifest := filepath.Join(u.path, "manifest.json")
@@ -226,8 +241,16 @@ func runSaturnGeneratedHeader(binary string, u saturnUnit, command string) error
 	case "extract":
 		return nil
 	case "rebuild":
+		if u.kind == "player" {
+			return runSaturnAssets(binary, u.kind, "generate-headers",
+				manifest, u.source, u.include, u.paletteInclude)
+		}
 		return runSaturnAssets(binary, u.kind, "generate-header", manifest, u.include)
 	case "verify":
+		if u.kind == "player" {
+			return runSaturnAssets(binary, u.kind, "verify-headers",
+				manifest, u.source, u.include, u.paletteInclude)
+		}
 		return runSaturnAssets(binary, u.kind, "verify-header", manifest, u.include)
 	default:
 		return fmt.Errorf("unknown command %q", command)
