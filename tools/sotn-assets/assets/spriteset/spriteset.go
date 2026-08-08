@@ -59,7 +59,13 @@ func ReadSpriteSet(r io.ReadSeeker, baseAddr, addr psx.Addr) (SpriteSet, dataran
 		}
 	}
 
-	return bank, datarange.MergeDataRanges(append(spriteRanges, headerRange)), nil
+	// nb. use Merge here rather than MergeDataRanges so we can probe addresses
+	// looking for a sprite bank rather than panicking.
+	merged, err := datarange.Merge(append(spriteRanges, headerRange))
+	if err != nil {
+		return nil, datarange.DataRange{}, fmt.Errorf("sprite set at %s does not add up: %w", addr, err)
+	}
+	return bank, merged, nil
 }
 
 func BuildSpriteSet(sb *strings.Builder, set SpriteSet, mainSymbol string) {
