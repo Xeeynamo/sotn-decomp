@@ -54,7 +54,7 @@ segments:
       - [0xFAC, .data, e_elevator]
       - [0xFDC, .data, e_caverns_block]
       - [0x1048, .data, st_update]
-      - [0x1094, data]
+      - [0x1094, .data, collision]
       - [0x1454, .data, e_red_door]
       - [0x146C, .data, st_common]
       - [0x166C, .data, e_collect]
