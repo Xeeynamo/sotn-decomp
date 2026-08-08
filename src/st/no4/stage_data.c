@@ -34,6 +34,9 @@ u8 D_8018A608[] = {
 u8 D_8018B8F4[] = {
 #include "gen/D_8018B8F4.h"
 };
+u8 gfx_portrait_ferryman[] = {
+#include "gen/gfx_portrait_ferryman.h"
+};
 u8 D_8018D080[] = {
 #include "gen/D_8018D080.h"
 };

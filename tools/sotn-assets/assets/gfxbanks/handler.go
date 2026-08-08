@@ -6,7 +6,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
@@ -124,33 +123,24 @@ func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
 	if err != nil {
 		return assets.InfoResult{}, fmt.Errorf("failed to read graphics banks: %w", err)
 	}
-	splatEntries := []assets.InfoSplatEntry{
-		{
-			DataRange: headerDataRange,
-			Name:      "header",
-			Comment:   "graphics banks",
-		},
-	}
-	var gfxOffsets []psx.Addr
+	// report each bank entry as a raw fact; resolving boundaries and picking
+	// the handler is the graphics classifier's job
+	var graphics []assets.InfoGraphic
+	seen := map[psx.Addr]bool{}
 	for _, bank := range gfx.Banks {
 		for _, entry := range bank.Entries {
-			gfxOffsets = append(gfxOffsets, entry.addr)
+			if entry.isEmpty() || entry.addr == psx.RamNull || seen[entry.addr] {
+				continue
+			}
+			seen[entry.addr] = true
+			graphics = append(graphics, assets.InfoGraphic{
+				Addr:   entry.addr,
+				Kind:   uint32(bank.Kind),
+				Width:  int(entry.Width),
+				Height: int(entry.Height),
+			})
 		}
 	}
-	gfxOffsets = util.SortAndFilterOffsets(gfxOffsets)
-	for i := 0; i < len(gfxOffsets)-1; i++ {
-		splatEntries = append(splatEntries, assets.InfoSplatEntry{
-			DataRange: datarange.New(gfxOffsets[i], gfxOffsets[i+1]),
-			Kind:      "cmp",
-			Name:      fmt.Sprintf("D_%08X", uint32(gfxOffsets[i])),
-		})
-	}
-	splatEntries = append(splatEntries, assets.InfoSplatEntry{
-		DataRange: datarange.FromAddr(gfxOffsets[len(gfxOffsets)-1], 4),
-		Kind:      "cmp",
-		Name:      fmt.Sprintf("D_%08X", uint32(gfxOffsets[len(gfxOffsets)-1])),
-		Comment:   "unknown size, please double-check",
-	})
 	return assets.InfoResult{
 		AssetEntries: []assets.InfoAssetEntry{
 			{
@@ -159,7 +149,14 @@ func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
 				Name:      "graphics_banks",
 			},
 		},
-		SplatEntries: splatEntries,
+		SplatEntries: []assets.InfoSplatEntry{
+			{
+				DataRange: headerDataRange,
+				Name:      "header",
+				Comment:   "graphics banks",
+			},
+		},
+		Graphics: graphics,
 	}, nil
 }
 
