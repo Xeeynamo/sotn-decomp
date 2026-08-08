@@ -103,3 +103,12 @@ enum MarAnimset {
 };
 
 #include "maria_common.h"
+
+#ifdef MARIA_SFX_MOD
+void MarPlaySfx(s32 sfx);
+#define MARIA_PLAY_SFX(sfx) MarPlaySfx(sfx)
+#define MARIA_API_PLAY_SFX(sfx) MarPlaySfx(sfx)
+#else
+#define MARIA_PLAY_SFX(sfx) PlaySfx(sfx)
+#define MARIA_API_PLAY_SFX(sfx) g_api.PlaySfx(sfx)
+#endif

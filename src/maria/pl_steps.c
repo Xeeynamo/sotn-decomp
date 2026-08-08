@@ -241,7 +241,7 @@ void MarStepJump(void) {
         if (facing) {
             MarSetSpeedX(FIX(4.5));
         }
-        PlaySfx(SFX_VO_MAR_8EA);
+        MARIA_PLAY_SFX(SFX_VO_MAR_8EA);
     }
 }
 
@@ -463,7 +463,7 @@ void MarStepHit(s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
             MarCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_MAR_BLINK, 0x46), 0);
             g_Player.timers[PL_T_2] = 6;
-            g_api.PlaySfx(SFX_VO_MAR_PAIN_C);
+            MARIA_API_PLAY_SFX(SFX_VO_MAR_PAIN_C);
             break;
         } else {
             if (damageEffect & ELEMENT_ICE) {
@@ -479,7 +479,7 @@ void MarStepHit(s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
                     func_maria_8015CAAC(FIX(-1.25));
                     PLAYER.step_s = 6;
                     PLAYER.anim = mar_anim_stun;
-                    g_api.PlaySfx(SFX_VO_MAR_PAIN_B);
+                    MARIA_API_PLAY_SFX(SFX_VO_MAR_PAIN_B);
                     MarCreateEntFactoryFromEntity(
                         g_CurrentEntity, BP_SKID_SMOKE, 0);
                     break;
@@ -490,7 +490,7 @@ void MarStepHit(s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
                     PLAYER.anim = mar_80155704;
                     MarCreateEntFactoryFromEntity(
                         g_CurrentEntity, BP_SKID_SMOKE, 0);
-                    g_api.PlaySfx(SFX_VO_MAR_PAIN_C);
+                    MARIA_API_PLAY_SFX(SFX_VO_MAR_PAIN_C);
                     break;
                 case PL_S_JUMP:
                 case PL_S_FALL:
@@ -498,7 +498,7 @@ void MarStepHit(s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
                     func_maria_8015CAAC(FIX(-1.25));
                     PLAYER.step_s = 1;
                     PLAYER.anim = D_pspeu_092C0790;
-                    g_api.PlaySfx(SFX_VO_MAR_PAIN_B);
+                    MARIA_API_PLAY_SFX(SFX_VO_MAR_PAIN_B);
                     break;
                 }
                 break;
@@ -524,7 +524,7 @@ void MarStepHit(s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
                     func_maria_8015CAAC(FIX(-1.25));
                     PLAYER.step_s = 1;
                     PLAYER.anim = mar_anim_stun;
-                    g_api.PlaySfx(SFX_VO_MAR_PAIN_B);
+                    MARIA_API_PLAY_SFX(SFX_VO_MAR_PAIN_B);
                     break;
                 case PL_S_CROUCH:
                     PLAYER.velocityY = 0;
@@ -533,7 +533,7 @@ void MarStepHit(s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
                     PLAYER.anim = mar_80155704;
                     MarCreateEntFactoryFromEntity(
                         g_CurrentEntity, BP_SKID_SMOKE, 0);
-                    g_api.PlaySfx(SFX_VO_MAR_PAIN_C);
+                    MARIA_API_PLAY_SFX(SFX_VO_MAR_PAIN_C);
                     break;
                 case PL_S_JUMP:
                 case PL_S_FALL:
@@ -541,7 +541,7 @@ void MarStepHit(s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
                     func_maria_8015CAAC(FIX(-1.25));
                     PLAYER.step_s = 1;
                     PLAYER.anim = D_pspeu_092C0790;
-                    g_api.PlaySfx(SFX_VO_MAR_PAIN_B);
+                    MARIA_API_PLAY_SFX(SFX_VO_MAR_PAIN_B);
                     break;
                 }
                 break;
@@ -764,7 +764,7 @@ void MarStepBossGrab(void) {
             PLAYER.anim = mar_anim_stun;
             g_Player.timers[PL_T_2] = 8;
             g_Player.damagePalette = PAL_FLAG(PAL_CC_RED_EFFECT_A);
-            g_api.PlaySfx(SFX_VO_MAR_PAIN_B);
+            MARIA_API_PLAY_SFX(SFX_VO_MAR_PAIN_B);
         }
         PLAYER.velocityX = PLAYER.velocityY = 0;
         PLAYER.step_s = 1;
@@ -785,7 +785,7 @@ void MarStepBossGrab(void) {
             if (g_Player.unk62 == 0) {
                 g_Player.timers[PL_T_2] = 4;
                 g_Player.damagePalette = PAL_FLAG(PAL_CC_RED_EFFECT_A);
-                g_api.PlaySfx(SFX_VO_MAR_PAIN_C);
+                MARIA_API_PLAY_SFX(SFX_VO_MAR_PAIN_C);
             }
             if (g_Player.unk62 == 2) {
             }
@@ -795,7 +795,7 @@ void MarStepBossGrab(void) {
             PLAYER.step_s = 2;
             g_Player.unk60 = 0;
             g_Player.damageTaken = g_Player.unk64;
-            g_api.PlaySfx(SFX_VO_MAR_PAIN_D);
+            MARIA_API_PLAY_SFX(SFX_VO_MAR_PAIN_D);
         } else if (g_Player.unk60 == 0) {
             PLAYER.step = PL_S_HIT;
             PLAYER.step_s = 1;
@@ -821,7 +821,7 @@ void MarStepDead(
         func_maria_8015CAAC(FIX(-0.75));
         MarSetAnimation(mar_80155544);
         PLAYER.velocityY = FIX(-1.625);
-        g_api.PlaySfx(SFX_VO_MAR_DEATH);
+        MARIA_API_PLAY_SFX(SFX_VO_MAR_DEATH);
         if (damageEffects & ELEMENT_FIRE) {
             func_maria_8015FA5C(0);
             // RIC blueprint 33 has child 31, EntityPlayerBlinkWhite

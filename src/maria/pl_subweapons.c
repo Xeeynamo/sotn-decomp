@@ -430,7 +430,7 @@ void EntityMariaCatCrash(Entity* self) {
         break;
     case 1:
         if (g_Player.unk5C == 1) {
-            g_api.PlaySfx(SFX_VO_MAR_8F1);
+            MARIA_API_PLAY_SFX(SFX_VO_MAR_8F1);
             self->step = 3;
         }
         break;
@@ -732,7 +732,7 @@ void EntityMariaDragonCrash(Entity* self) {
         if (g_Player.unk5C == 1) {
             MarCreateEntFactoryFromEntity(self, BP_DRAGON_CRASH_BODY_PART, 0);
             self->step = 2;
-            g_api.PlaySfx(SFX_VO_MAR_8F1);
+            MARIA_API_PLAY_SFX(SFX_VO_MAR_8F1);
         }
         self->drawFlags |= ENTITY_ROTATE;
         break;
@@ -1146,7 +1146,7 @@ void EntityMariaCardinalCrash(Entity* self) {
         break;
     case 1:
         if (g_Player.unk5C == 1) {
-            g_api.PlaySfx(SFX_VO_MAR_8F1);
+            MARIA_API_PLAY_SFX(SFX_VO_MAR_8F1);
             self->step = 3;
         }
         break;
@@ -1638,7 +1638,7 @@ void EntityMariaTurtleCrash(Entity* self) {
         return;
     case 1:
         if (g_Player.unk5C == 1) {
-            g_api.PlaySfx(SFX_VO_MAR_8F1);
+            MARIA_API_PLAY_SFX(SFX_VO_MAR_8F1);
             MarCreateEntFactoryFromEntity(self, BP_TURTLE_CRASH_VORTEX, 0);
             self->step = 3;
         }
