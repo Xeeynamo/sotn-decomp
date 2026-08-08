@@ -68,7 +68,7 @@ segments:
       # - [0x8900, .data, config_us] # enemies
       - [0xC910, .data, 66590]
       - [0xC958, .data, cd]
-      - [0xCD80, .data, d_CD80]
+      - [0xCD80, .data, d_Vram]
       - [0xCDF8, .data, 692E8]
       - [0xCE68, .data, 6BF64]
       - [0xCF18, .data, alu_anim]
