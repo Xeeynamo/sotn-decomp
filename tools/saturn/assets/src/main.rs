@@ -3,7 +3,7 @@
 //! Driven from tools/sotn-assets and config/assets.saturn.yaml
 
 use clap::{Parser, Subcommand};
-use saturn_assets::{audio, bitmap, familiar, font, weapon};
+use saturn_assets::{audio, bitmap, familiar, font, player, weapon};
 use std::path::PathBuf;
 use std::process::ExitCode;
 
@@ -31,6 +31,39 @@ enum Command {
     /// Packed 4bpp castle-map bitmaps in an overlay or SUB_DISP.MAP
     #[command(subcommand)]
     Bitmap(BitmapCommand),
+    #[command(subcommand)]
+    Player(PlayerCommand),
+}
+
+#[derive(Subcommand)]
+enum PlayerCommand {
+    Extract {
+        player: String,
+        prg_path: PathBuf,
+        chr_path: PathBuf,
+        output_dir: PathBuf,
+    },
+    Rebuild {
+        manifest: PathBuf,
+        chr_path: PathBuf,
+        output: PathBuf,
+    },
+    Verify {
+        manifest: PathBuf,
+        chr_path: PathBuf,
+    },
+    GenerateHeaders {
+        manifest: PathBuf,
+        chr_path: PathBuf,
+        directory_header: PathBuf,
+        palette_header: PathBuf,
+    },
+    VerifyHeaders {
+        manifest: PathBuf,
+        chr_path: PathBuf,
+        directory_header: PathBuf,
+        palette_header: PathBuf,
+    },
 }
 
 #[derive(Subcommand)]
@@ -190,6 +223,61 @@ fn run(cli: Cli) -> saturn_assets::Result<()> {
         }) => {
             audio::verify(&manifest, &source_path)?;
             println!("verify passed: exact retail match");
+        }
+        Command::Player(PlayerCommand::Extract {
+            player,
+            prg_path,
+            chr_path,
+            output_dir,
+        }) => {
+            let manifest = player::extract(&player, &prg_path, &chr_path, &output_dir)?;
+            println!(
+                "{} streams, arena 0x{:X}..0x{:X}, {} palette bank(s) -> {}",
+                manifest.images.len(),
+                manifest.arena_start,
+                manifest.arena_end,
+                manifest.palette.banks,
+                output_dir.display()
+            );
+        }
+        Command::Player(PlayerCommand::Rebuild {
+            manifest,
+            chr_path,
+            output,
+        }) => {
+            let rebuilt = player::rebuild(&manifest, &chr_path, &output)?;
+            println!(
+                "wrote {} bytes ({} stream(s) recompressed) -> {}",
+                rebuilt.chr.len(),
+                rebuilt.changed,
+                output.display()
+            );
+        }
+        Command::Player(PlayerCommand::Verify { manifest, chr_path }) => {
+            player::verify(&manifest, &chr_path)?;
+            println!("verify passed: exact retail match");
+        }
+        Command::Player(PlayerCommand::GenerateHeaders {
+            manifest,
+            chr_path,
+            directory_header,
+            palette_header,
+        }) => {
+            player::generate_headers(&manifest, &chr_path, &directory_header, &palette_header)?;
+            println!(
+                "wrote {} + {}",
+                directory_header.display(),
+                palette_header.display()
+            );
+        }
+        Command::Player(PlayerCommand::VerifyHeaders {
+            manifest,
+            chr_path,
+            directory_header,
+            palette_header,
+        }) => {
+            player::verify_headers(&manifest, &chr_path, &directory_header, &palette_header)?;
+            println!("verify passed: the headers in the tree are what regenerate");
         }
         Command::Bitmap(BitmapCommand::Extract {
             bitmap,
