@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rno0.h"
 
+extern EInit g_EInitCommon;
 extern EInit RNO0_EInitSpawner;
 
 void func_us_801CC8F8_from_no0(self);
@@ -50,6 +51,50 @@ void EntityBackgroundPillars(Entity* self){
     }
 }
 
-INCLUDE_ASM("st/rno0/nonmatchings/e_background_pillars", func_us_801CC8F8_from_no0);
+void func_us_801CC8F8_from_no0(Entity* self) {
+    if (!self->step) {
+        InitializeEntity(g_EInitCommon);
+        self->animSet = ANIMSET_OVL(2);
+        self->animCurFrame = 3;
+        self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 0x54;
+        self->unk68 = 0xC0;
+        self->flags &= ~FLAG_UNK_20000000;
+        return;
+    }
 
-INCLUDE_ASM("st/rno0/nonmatchings/e_background_pillars", func_us_801CC9B4_from_no0);
+    if (self->posX.i.hi < -0x40) {
+        self->posX.i.hi += 0x180;
+    }
+
+    if (self->posX.i.hi > 0x140) {
+        self->posX.i.hi -= 0x180;
+    }
+}
+
+static s16 xBase[] = {0x50, 0x68, 0x70, 0x68, 0x50, 0x38, 0x30, 0x38};
+static s16 yBase[] = {0x90, 0x93, 0x9C, 0xA5, 0xA8, 0xA5, 0x9C, 0x93};
+                             
+// updates entity movement direction
+void func_us_801CC9B4_from_no0(Entity* self) {
+    u8 angle;
+
+    if (!self->step) {
+        InitializeEntity(g_EInitCommon);
+        self->animSet = ANIMSET_OVL(1);
+        self->animCurFrame = 5;
+        self->zPriority = 1;
+        self->flags &= ~FLAG_POS_CAMERA_LOCKED;
+        self->ext.et_801CC9B4.currentAngle = 0;
+        return;
+    }
+    if ((g_GameTimer & 0xF) == 0) {
+        angle = (Random() & 7);
+        self->ext.et_801CC9B4.targetAngle = GetAnglePointToEntityShifted(
+            xBase[angle], yBase[angle]);
+    }
+    angle = AdjustValueWithinThreshold(8, self->ext.et_801CC9B4.currentAngle,
+                                       self->ext.et_801CC9B4.targetAngle);
+    SetEntityVelocityFromAngle(angle, 4);
+    MoveEntity();
+    self->ext.et_801CC9B4.currentAngle = angle;
+}
