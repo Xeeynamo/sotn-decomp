@@ -4,7 +4,7 @@
 extern EInit g_EInitCommon;
 extern EInit RNO0_EInitSpawner;
 
-void func_us_801CC8F8_from_no0(self);
+void func_us_801CC8F8_from_no0(Entity* self);
 
 void EntityBackgroundPillars(Entity* self){
     Entity* entityPtr;

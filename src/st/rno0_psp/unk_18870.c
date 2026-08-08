@@ -1,8 +1,0 @@
-// SPDX-License-Identifier: AGPL-3.0-or-later
-#include "../rno0/rno0.h"
-
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_18870", EntityBackgroundPillars);
-
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_18870", func_us_801CC8F8_from_no0);
-
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_18870", func_us_801CC9B4_from_no0);
