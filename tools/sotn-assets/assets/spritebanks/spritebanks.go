@@ -3,12 +3,13 @@ package spritebanks
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 	"io"
 	"os"
 	"path/filepath"
 	"sort"
 	"strings"
+
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/spriteset"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
@@ -53,6 +54,9 @@ func ReadSpritesBanks(r io.ReadSeeker, baseAddr, addr psx.Addr, numBanks int) (S
 		spriteRanges = append(spriteRanges, bankRange)
 	}
 
+	// scan for unreferenced sprite banks and add their ranges
+	spriteRanges = append(spriteRanges, recoverGaps(r, baseAddr, spriteRanges, pool)...)
+
 	// the indices do not guarantee sprites to be stored in a linear order
 	// we must sort the offsets to preserve the order sprites are stored
 	sortedOffsets := make([]psx.Addr, 0, len(pool))
@@ -83,6 +87,44 @@ func ReadSpritesBanks(r io.ReadSeeker, baseAddr, addr psx.Addr, numBanks int) (S
 		Banks:   banks,
 		Indices: indices,
 	}, datarange.MergeDataRanges(spriteRanges), nil
+}
+
+// Several overlays (RNO0, RCEN, RLIB, RNO2, RNZ1, BO7, RBO6) have an unreferenced sprite bank
+// with no corresponding entry in the table. recoverGaps attempts to parse gaps in the referenced sprite banks
+// and identify any which are unreferenced sprite banks, returning the ranges of recovered entries.
+func recoverGaps(r io.ReadSeeker, baseAddr psx.Addr, ranges []datarange.DataRange, pool map[psx.Addr]spriteset.SpriteSet) []datarange.DataRange {
+	known := append([]datarange.DataRange{}, ranges...)
+	var recovered []datarange.DataRange
+	for {
+		gapAddr, gapEnd, found := firstGap(known)
+		if !found {
+			return recovered
+		}
+		bank, bankRange, err := spriteset.ReadSpriteSet(r, baseAddr, gapAddr)
+		// Return error if the gap contains something other than a sprite bank
+		if err != nil || bankRange.Begin() != gapAddr || bankRange.End() <= gapAddr || bankRange.End() > gapEnd {
+			return recovered
+		}
+		pool[gapAddr] = bank
+		known = append(known, bankRange)
+		recovered = append(recovered, bankRange)
+	}
+}
+
+// firstGap is the lowest gap between the given ranges, as a (begin, end) pair.
+func firstGap(ranges []datarange.DataRange) (psx.Addr, psx.Addr, bool) {
+	sorted := append([]datarange.DataRange{}, ranges...)
+	sort.Slice(sorted, func(i, j int) bool { return sorted[i].Begin() < sorted[j].Begin() })
+	end := psx.RamNull
+	for _, cur := range sorted {
+		if end != psx.RamNull && end < cur.Begin() {
+			return end, cur.Begin(), true
+		}
+		if cur.End() > end {
+			end = cur.End()
+		}
+	}
+	return psx.RamNull, psx.RamNull, false
 }
 
 func buildSprites(jsonFileName, name, outputDir, ovlName string) error {
@@ -126,7 +168,7 @@ func buildSprites(jsonFileName, name, outputDir, ovlName string) error {
 	}
 	sbHeader.WriteString("};\n")
 
-    spriteBanksFileName := filepath.Join(outputDir, "gen", fmt.Sprintf("%s.h", name))
+	spriteBanksFileName := filepath.Join(outputDir, "gen", fmt.Sprintf("%s.h", name))
 	if err := util.WriteFile(filepath.Join(filepath.Dir(spriteBanksFileName), "sprites.c"), []byte(sbData.String())); err != nil {
 		return err
 	}

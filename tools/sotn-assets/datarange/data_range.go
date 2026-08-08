@@ -43,9 +43,18 @@ func (r DataRange) Empty() bool {
 }
 
 func MergeDataRanges(ranges []DataRange) DataRange {
-	if len(ranges) == 0 {
-		err := fmt.Errorf("no datarange, bug?!")
+	merged, err := Merge(ranges)
+	if err != nil {
 		panic(err)
+	}
+	return merged
+}
+
+// Merge is MergeDataRanges for callers that can report a bad range set instead
+// of dying on it.
+func Merge(ranges []DataRange) (DataRange, error) {
+	if len(ranges) == 0 {
+		return DataRange{}, fmt.Errorf("no datarange, bug?!")
 	}
 
 	sort.Slice(ranges, func(i, j int) bool {
@@ -55,20 +64,17 @@ func MergeDataRanges(ranges []DataRange) DataRange {
 	// performs a sanity check before merging everything
 	for i := 0; i < len(ranges)-1; i++ {
 		if ranges[i].end != ranges[i+1].begin {
-			var err error
 			if ranges[i].end < ranges[i+1].begin {
-				err = fmt.Errorf("gap between data detected: %s != %s", ranges[i].end, ranges[i+1].begin)
-			} else {
-				err = fmt.Errorf("overlap between data detected: %s != %s", ranges[i].end, ranges[i+1].begin)
+				return DataRange{}, fmt.Errorf("gap between data detected: %s != %s", ranges[i].end, ranges[i+1].begin)
 			}
-			panic(err)
+			return DataRange{}, fmt.Errorf("overlap between data detected: %s != %s", ranges[i].end, ranges[i+1].begin)
 		}
 	}
 
 	return DataRange{
 		begin: ranges[0].begin,
 		end:   ranges[len(ranges)-1].end,
-	}
+	}, nil
 }
 
 func ConsolidateDataRanges(ranges []DataRange) []DataRange {
