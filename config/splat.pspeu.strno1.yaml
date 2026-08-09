@@ -45,7 +45,7 @@ segments:
     subalign: 8
     subsegments:
       - [0x80, c, rno1/create_entity]
-      - [0x1028, c, rno1_psp/unk_1028]
+      - [0x1028, c, rno1/e_paranthropus]
       - [0x2940, c, rno1/e_stage_name]
       - [0x37C0, c, rno1/st_update]
       - [0x3CF8, c, rno1_psp/unk_3CF8]
@@ -66,7 +66,7 @@ segments:
       - [0x13F88, c, rno1_psp/unk_13F88]
       - [0x14428, c, rno1/e_lock_camera]
       - [0x14688, c, rno1_psp/unk_14688]
-      - [0x16000, data]
+      - [0x16000, .data, rno1/e_paranthropus]
       - [0x162F0, .data, rno1/st_update]
       - [0x16320, data, '16320']
       - [0x164A0, .data, rno1/e_collect]
@@ -83,7 +83,7 @@ segments:
       - [0x37F00, data, 37F00]
       - [0x38120, .data, rno1/e_lock_camera]
       - [0x38198, data, '38198']
-      - [0x38300, .rodata, rno1_psp/unk_1028]
+      - [0x38300, .rodata, rno1/e_paranthropus]
       - [0x38330, .rodata, rno1_psp/unk_3CF8]
       - [0x38350, .rodata, rno1/e_collect]
       - [0x383B0, .rodata, rno1_psp/unk_D470]
