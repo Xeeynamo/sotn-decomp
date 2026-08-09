@@ -35,9 +35,9 @@ enum EntityID {
     E_UNK_ID13,                  // EntityUnkId13
     E_EXPLOSION_VARIANTS,        // EntityExplosionVariants
     E_GREY_PUFF,                 // EntityGreyPuff
-    E_UNK_16,                    // func_us_801CC8F8_from_no0
-    E_BG_PILLARS,                // EntityBackgroundPillars
-    E_UNK_18,                    // func_us_801CC9B4_from_no0
+    E_BG_PILLAR,                 // EntityBackgroundPillar
+    E_CORR_DECOR,                // EntityCorridorDecorator
+    E_CORRIDOR_EYE,              // EntityLongCorridorEye
     E_CLOCK_ROOM_CONTROLLER,     // EntityClockRoomController
     E_CLOCK_HANDS,               // EntityClockHands
     E_BIRDCAGE_DOOR,             // EntityBirdcageDoor

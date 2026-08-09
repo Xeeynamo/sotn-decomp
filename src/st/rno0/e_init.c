@@ -22,9 +22,9 @@ void EntityLockCamera(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
-void func_us_801CC8F8_from_no0(Entity* self);
-void EntityBackgroundPillars(Entity* self);
-void func_us_801CC9B4_from_no0(Entity* self);
+void EntityBackgroundPillar(Entity* self);
+void EntityCorridorDecorator(Entity* self);
+void EntityLongCorridorEye(Entity* self);
 void EntityClockRoomController(Entity* self);
 void EntityClockHands(Entity* self);
 void EntityBirdcageDoor(Entity* self);
@@ -103,9 +103,9 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityUnkId13,
     EntityExplosionVariants,
     EntityGreyPuff,
-    func_us_801CC8F8_from_no0,
-    EntityBackgroundPillars,
-    func_us_801CC9B4_from_no0,
+    EntityBackgroundPillar,
+    EntityCorridorDecorator,
+    EntityLongCorridorEye,
     EntityClockRoomController,
     EntityClockHands,
     EntityBirdcageDoor,
@@ -176,7 +176,7 @@ EInit Unused_ShouldBeCommon = {ANIMSET_DRA(3), 0, 72, 0, 0x05C};
 EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0, 0, 0, 0x002};
 EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0, 0, 0, 0x001};
 EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
-EInit D_us_80180ABC = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
+EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
 EInit g_EInitGuardian = {ANIMSET_OVL(3), 1, 82, 518, 0x18C};
 EInit D_us_80180AD4 = {ANIMSET_OVL(3), 0, 82, 518, 0x18D};
 EInit D_us_80180AE0 = {ANIMSET_OVL(0), 0, 0, 0, 0x18E};
