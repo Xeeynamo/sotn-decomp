@@ -85,6 +85,8 @@ segments:
       - [0x31900, data] # background_block_init
       - [0x31A10, .data, rcen/e_lock_camera]
       - [0x31A30, data]
+      - [0x31C20, .data, rcen_psp/unk_1F0D8]
+      - [0x31C58, data]
       - [0x31D00, .rodata, rcen/e_red_door]
       - [0x31D18, .rodata, rcen/e_collect]
       - [0x31D78, .rodata, rcen/cutscene]
