@@ -85,7 +85,12 @@ void UpdateClockHands(Entity* self, PlayerStatus* status) {
 
     // self + 6 is the hour hand
     self += 1;
-    self->ext.clockRoom.hand = ((timer_hours % 12) * 300) + (timer_minutes * 5);
+    #if defined(VERSION_US) && defined(INVERTED_STAGE)
+    #define HOURS (timer_hours)
+    #else
+    #define HOURS (timer_hours % 12)
+    #endif
+    self->ext.clockRoom.hand = (HOURS * 300) + (timer_minutes * 5);
 }
 
 // Two statues. One responds to the stopwatch subweapon.
@@ -94,14 +99,6 @@ typedef enum Statues {
     /* 0 */ WATCH_STATUE,
     /* 1 */ ARE_STATUE,
 } Statues;
-
-#ifdef INVERTED_STAGE
-#define LEFT_STATUE WATCH_STATUE
-#define RIGHT_STATUE ARE_STATUE
-#else
-#define LEFT_STATUE ARE_STATUE
-#define RIGHT_STATUE WATCH_STATUE
-#endif
 
 static u16 g_Statues[2];
 #ifdef VERSION_PSP
@@ -279,7 +276,12 @@ void EntityClockRoomController(Entity* self) {
 
         if (!g_CastleFlags[RCEN_OPEN]) {
             entity = &PLAYER;
-            if (entity->posX.i.hi >= 0x50 && entity->posX.i.hi <= 0xA0) {
+            #if defined(VERSION_US) && defined(INVERTED_STAGE)
+            #define XLIM 0x60
+            #else
+            #define XLIM 0x50
+            #endif
+            if (entity->posX.i.hi >= XLIM && entity->posX.i.hi <= 0xA0) {
                 for(posX = 0, i = RELIC_HEART_OF_VLAD; i <= RELIC_EYE_OF_VLAD; i++){
                     // If we don't have the relic, set the posX flag.
                     if(!(g_Status.relics[i] & 1)){
@@ -301,6 +303,9 @@ void EntityClockRoomController(Entity* self) {
         g_Player.demo_timer = 1;
         entity = &PLAYER;
         posX = entity->posX.i.hi;
+        #if defined(VERSION_US) && defined(INVERTED_STAGE)
+        entity->posX.i.hi = (posX <= 0x80 ? 0x60 : 0xA0);
+        #endif
         switch (self->step_s) {
         case 0:
             self->ext.clockRoom.unk88 = 0;

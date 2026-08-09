@@ -63,25 +63,34 @@ void UpdateBirdcages(Entity* self, u32 timerMinutes) {
 }
 
 #ifdef VERSION_PSP
+extern s32 D_91FC3F8;
+extern s32 D_91FC400;
+extern s32 D_91FC408;
+extern s32 D_91FC410;
 #define timer_frames D_91FC3F8
 #define timer_seconds D_91FC400
 #define timer_minutes D_91FC408
 #define timer_hours D_91FC410
+void UpdateClockHands(Entity* self) {
 #else
 #define timer_frames status->timerFrames
 #define timer_seconds status->timerSeconds
 #define timer_minutes status->timerMinutes
 #define timer_hours status->timerHours
-#endif
-
 void UpdateClockHands(Entity* self, PlayerStatus* status) {
+#endif
     // self + 5 is the minute hand
     self += 5;
     self->ext.clockRoom.hand = timer_minutes * 60;
 
     // self + 6 is the hour hand
     self += 1;
-    self->ext.clockRoom.hand = (timer_hours * 300) + (timer_minutes * 5);
+    #if defined(VERSION_US) && defined(INVERTED_STAGE)
+    #define HOURS (timer_hours)
+    #else
+    #define HOURS (timer_hours % 12)
+    #endif
+    self->ext.clockRoom.hand = (HOURS * 300) + (timer_minutes * 5);
 }
 
 // Two statues. One responds to the stopwatch subweapon.
@@ -267,7 +276,12 @@ void EntityClockRoomController(Entity* self) {
 
         if (!g_CastleFlags[RCEN_OPEN]) {
             entity = &PLAYER;
-            if (entity->posX.i.hi >= 0x60 && entity->posX.i.hi <= 0xA0) {
+            #if defined(VERSION_US) && defined(INVERTED_STAGE)
+            #define XLIM 0x60
+            #else
+            #define XLIM 0x50
+            #endif
+            if (entity->posX.i.hi >= XLIM && entity->posX.i.hi <= 0xA0) {
                 for(posX = 0, i = RELIC_HEART_OF_VLAD; i <= RELIC_EYE_OF_VLAD; i++){
                     // If we don't have the relic, set the posX flag.
                     if(!(g_Status.relics[i] & 1)){
@@ -289,7 +303,9 @@ void EntityClockRoomController(Entity* self) {
         g_Player.demo_timer = 1;
         entity = &PLAYER;
         posX = entity->posX.i.hi;
+        #if defined(VERSION_US) && defined(INVERTED_STAGE)
         entity->posX.i.hi = (posX <= 0x80 ? 0x60 : 0xA0);
+        #endif
         switch (self->step_s) {
         case 0:
             self->ext.clockRoom.unk88 = 0;
@@ -419,4 +435,3 @@ void EntityClockRoomController(Entity* self) {
 }
 
 #include "../clock_room_entities.h"
-
