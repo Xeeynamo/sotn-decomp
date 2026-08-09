@@ -1218,6 +1218,9 @@ files:
     src_path: src/st/rdai
     splat_config_path: config/splat.us.strdai.yaml
   - target: disks/us/ST/RLIB/RLIB.BIN
+    asset_path: assets/st/rlib
+    src_path: src/st/rlib
+    splat_config_path: config/splat.us.strlib.yaml
   - target: disks/us/ST/RNO0/RNO0.BIN
     asset_path: assets/st/rno0
     src_path: src/st/rno0

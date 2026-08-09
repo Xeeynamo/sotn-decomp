@@ -1,0 +1,92 @@
+options:
+  platform: psp
+  basename: strlib
+  base_path: ..
+  build_path: build/pspeu
+  target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rlib.bin
+  asm_path: asm/pspeu/st/rlib_psp
+  asset_path: assets/st/rlib
+  src_path: src/st
+  ld_script_path: build/pspeu/strlib.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.pspeu.txt
+    - config/symbols.pspeu.strlib.txt
+  undefined_funcs_auto_path: build/pspeu/config/undefined_funcs_auto.pspeu.strlib.txt
+  undefined_syms_auto_path: build/pspeu/config/undefined_syms_auto.pspeu.strlib.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: pspeu_$VRAM
+  disassemble_all: true
+  section_order:
+    - .text
+    - .data
+    - .rodata
+    - .bss
+  ld_bss_is_noload: true
+  disasm_unknown: true
+  global_vram_start: 0x08000000
+  ld_generate_symbol_per_data_segment: true
+  asm_inc_header: |
+    .set noat      /* allow manual use of $at */
+    .set noreorder /* don't insert nops after branches */
+sha1: d60612b1b37df51a3cb548714d7dca7b116a2fe5
+segments:
+  - [0x0, bin, mwo_header]
+  - name: strlib
+    type: code
+    start: 0x80
+    vram: 0x09237700
+    bss_start_address: 0x09269B80
+    bss_size: 0x200
+    align: 128
+    subalign: 8
+    subsegments:
+      - [0x80, c, rlib/create_entity]
+      - [0x1028, c, rlib/e_stage_name]
+      - [0x1EA8, c, rlib/e_red_door]
+      - [0x1F90, c, rlib/e_red_door]
+      - [0x31B0, c, rlib/st_update]
+      - [0x4100, c, rlib/e_particles]
+      - [0x4C78, c, rlib_psp/unk_4C78]
+      - [0x4D50, c, rlib/e_collect]
+      - [0x8EC8, c, rlib/e_misc]
+      - [0x9FF8, c, rlib/collision]
+      - [0xC1D0, c, rlib/popup]
+      - [0xC7C8, c, rlib/e_room_fg]
+      - [0xC8E0, c, rlib_psp/unk_C8E0]
+      - [0xD8A8, c, rlib/st_common]
+      - [0xE998, c, rlib/prim_helpers]
+      - [0xF0D8, c, rlib_psp/unk_F0D8]
+      - [0x12070, c, rlib_psp/st_init]
+      - [0x12220, c, rlib_psp/unk_12220]
+      - [0x134D0, c, rlib/e_lock_camera]
+      - [0x13730, c, rlib_psp/unk_13730]
+      - [0x14100, .data, rlib/e_red_door]
+      - [0x14118, .data, rlib/st_update]
+      - [0x14148, .data, rlib/e_particles]
+      - [0x141C8, data, 141C8]
+      - [0x141C8, .data, rlib/e_collect]
+      - [0x14710, .data, rlib/e_misc]
+      - [0x14780, .data, rlib/collision]
+      - [0x14B58, .data, rlib/e_room_fg]
+      - [0x14BF8, data, 14BF8]
+      - [0x1A3F0, .data, rlib/e_init]
+      - [0x1A5C8, data]
+      - [0x32088, .data, rlib/header]
+      - [0x320B8, .data, rlib/d_prize_drops]
+      - [0x320E0, data, 320E0]
+      - [0x32340, .data, rlib/e_lock_camera]
+      - [0x323B8, data, 323B8]
+      - [0x32480, .rodata, rlib/e_red_door]
+      - [0x32498, .rodata, rlib/e_collect]
+      - [0x32500, .bss, rlib/create_entity]
+      - [0x32520, .bss, rlib/st_update]
+      - [0x32560, bss, '32560']
+      - [0x32568, .bss, rlib_psp/unk_4C78]
+      - [0x32580, bss, '32580']
+      - [0x326A0, .bss, rlib/e_lock_camera]
+      - [0x326A8, bss, 326A8]
+  - [0x32700]

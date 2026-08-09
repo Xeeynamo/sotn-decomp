@@ -20,6 +20,9 @@ void EntityBackgroundBlock(Entity* self) {
 #endif
         self->palette = objInit->palette;
         self->drawFlags = objInit->drawFlags;
+#ifdef BG_BLOCK_ROTATE_180
+        self->rotate = ROT(180);
+#endif
         self->blendMode = objInit->blendMode;
         if (objInit->flags) {
             self->flags = objInit->flags;
