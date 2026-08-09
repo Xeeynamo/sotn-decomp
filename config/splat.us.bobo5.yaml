@@ -47,6 +47,8 @@ segments:
       - [0x534, data]
       - [0x544, .data, e_lock_camera]
       - [0x5C4, data]
+      - [0x62C, .data, e_dai_no2_shortcut]
+      - [0x634, data]
       - [0xB78, .data, d_prize_drops]
       - [0xB7C, data]
       - [0xD40, .data, st_update]
