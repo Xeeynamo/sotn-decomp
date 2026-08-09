@@ -869,7 +869,7 @@
 | nz0        | e_axe_knight.rodata                |       20 |          0 | Yes    |       |     |
 | nz0        | e_bloody_zombie.rodata             |       20 |          0 | Yes    |       |     |
 | nz1        | e_cloaked_knight.rodata            |       20 |          0 | Yes    |       |     |
-| rno0       | unk_18870.rodata                   |       20 |          0 | Yes    |       |     |
+| rno0       | e_nova_skeleton.rodata             |       20 |          0 | Yes    |       |     |
 | rno1       | unk_D470.rodata                    |       20 |          0 | Yes    |       |     |
 | rno3       | e_nova_skeleton.rodata             |       20 |          0 | Yes    |       |     |
 | rno3       | e_orobourous.rodata                |       20 |          0 | Yes    |       |     |
@@ -4205,7 +4205,7 @@
 | w1_012_psp | func_pspeu_092F6D18                |       66 |          5 |        |       |     |
 | dra        | func_psp_090ED480                  |       66 |          6 |        |       |     |
 | no0        | func_pspeu_09254A38                |       66 |          6 |        |       |     |
-| rno0       | func_us_801CC8F8_from_no0          |       66 |          6 |        |       |     |
+| rno0       | EntityBackgroundPillar             |       66 |          6 |        |       |     |
 | bo0        | func_pspeu_0923E210                |       66 |          7 |        |       |     |
 | bo0        | func_pspeu_09251560                |       66 |          7 |        |       |     |
 | bo1        | func_pspeu_0923A1A8                |       66 |          7 |        |       |     |
@@ -5318,7 +5318,7 @@
 | no3        | func_pspeu_0924D9C0                |       92 |          9 |        |       |     |
 | np3        | func_pspeu_092458C8                |       92 |          9 |        |       |     |
 | no0        | func_pspeu_09254B20                |       92 |         10 |        |       |     |
-| rno0       | func_us_801CC9B4_from_no0          |       92 |         10 |        |       |     |
+| rno0       | EntityLongCorridorEye              |       92 |         10 |        |       |     |
 | bo0        | EntityUnkId13                      |       92 |         11 |        |       |     |
 | bo1        | func_pspeu_092411C0                |       92 |         11 |        |       |     |
 | bo2        | func_pspeu_092411C0                |       92 |         11 |        |       |     |
@@ -6578,7 +6578,7 @@
 | bo7        | func_us_80195AF0                   |      128 |         18 |        |       |     |
 | main       | func_psp_0892BD3C                  |      128 |         26 |        |       |     |
 | no0        | func_pspeu_09254860                |      129 |         10 |        |       |     |
-| rno0       | EntityBackgroundPillars            |      129 |         10 |        |       |     |
+| rno0       | EntityCorridorDecorator            |      129 |         10 |        |       |     |
 | dra        | func_psp_090EC608                  |      129 |         11 |        |       |     |
 | are        | func_pspeu_0924D918                |      129 |         11 |        |       |     |
 | no2        | func_pspeu_0923DCC0                |      129 |         11 |        |       |     |
@@ -8590,7 +8590,7 @@
 | rcen       | func_pspeu_09242E28                |      406 |         25 |        |       |     |
 | rchi       | func_pspeu_092461F8                |      406 |         25 |        |       |     |
 | rdai       | func_pspeu_09248A40                |      406 |         25 |        |       |     |
-| rno0       | BottomCornerText                   |      406 |         25 |        |       |     |
+| rno0       | func_pspeu_0924F7E0                |      406 |         25 |        |       |     |
 | rno1       | func_pspeu_092443E0                |      406 |         25 |        |       |     |
 | rno2       | func_pspeu_0924F058                |      406 |         25 |        |       |     |
 | rno3       | func_pspeu_0924E408                |      406 |         25 |        |       |     |
@@ -9266,7 +9266,7 @@
 | rcen       | func_pspeu_09242420                |      682 |         51 |        |       |     |
 | rchi       | func_pspeu_092457F0                |      682 |         51 |        |       |     |
 | rdai       | func_pspeu_09248038                |      682 |         51 |        |       |     |
-| rno0       | EntityDamageDisplay                |      682 |         51 |        |       |     |
+| rno0       | func_pspeu_0924D380                |      682 |         51 |        |       |     |
 | rno1       | func_pspeu_092439D8                |      682 |         51 |        |       |     |
 | rno2       | func_pspeu_0924E158                |      682 |         51 |        |       |     |
 | rno3       | func_pspeu_0924AA78                |      682 |         51 |        |       |     |
@@ -9883,7 +9883,7 @@
 | rcen       | func_pspeu_09240C50                |     1627 |        196 |        |       |     |
 | rchi       | func_pspeu_09244020                |     1627 |        196 |        |       |     |
 | rdai       | func_pspeu_09246868                |     1627 |        196 |        |       |     |
-| rno0       | HitDetection                       |     1627 |        196 |        |       |     |
+| rno0       | func_pspeu_0924BBB0                |     1627 |        196 |        |       |     |
 | rno1       | func_pspeu_09242208                |     1627 |        196 |        |       |     |
 | rno2       | func_pspeu_0924C988                |     1627 |        196 |        |       |     |
 | rno3       | func_pspeu_092492A8                |     1627 |        196 |        |       |     |
