@@ -47,7 +47,6 @@ segments:
       - [0x80, c, rlib/create_entity]
       - [0x1028, c, rlib/e_stage_name]
       - [0x1EA8, c, rlib/e_red_door]
-      - [0x1F90, c, rlib/e_red_door]
       - [0x31B0, c, rlib/st_update]
       - [0x4100, c, rlib/e_particles]
       - [0x4C78, c, rlib_psp/unk_4C78]
