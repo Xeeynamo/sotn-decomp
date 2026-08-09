@@ -19,7 +19,12 @@ INCLUDE_ASM("boss/bo0_psp/nonmatchings/bo0_psp/2D26C", func_pspeu_09256A10);
 
 INCLUDE_ASM("boss/bo0_psp/nonmatchings/bo0_psp/2D26C", func_pspeu_09257F58);
 
-INCLUDE_ASM("boss/bo0_psp/nonmatchings/bo0_psp/2D26C", func_pspeu_09258530);
+// bo0 plays positional sfx quieter than the stages; this is the overlay's
+// second copy of the helper, kept under its placeholder name (the sibling
+// asm object calls it) to avoid clashing with the wired copy at 0x09246A70
+#define PlaySfxPositional func_pspeu_09258530
+#define SFX_POSITIONAL_MAX_VOL 0x58
+#include "../../st/e_play_sfx_positional.h"
 
 INCLUDE_ASM("boss/bo0_psp/nonmatchings/bo0_psp/2D26C", func_pspeu_09258688);
 
