@@ -74,19 +74,31 @@ typedef signed int bool;
 #define S32_MAX INT32_MAX
 #define S16_MAX INT16_MAX
 
+#include "sotn_endian.h"
+
 typedef union {
     s32 val;
     struct {
+#if SOTN_BIG_ENDIAN
+        s16 hi;
+        s16 lo;
+#else
         s16 lo;
         s16 hi;
+#endif
     } i;
 } f32;
 
 typedef union {
     s16 val;
     struct {
+#if SOTN_BIG_ENDIAN
+        u8 hi;
+        u8 lo;
+#else
         u8 lo;
         u8 hi;
+#endif
     } i;
 } f16;
 
