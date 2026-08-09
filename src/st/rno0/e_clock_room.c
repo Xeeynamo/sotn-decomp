@@ -85,11 +85,11 @@ void UpdateClockHands(Entity* self, PlayerStatus* status) {
 
     // self + 6 is the hour hand
     self += 1;
-    #if defined(VERSION_US) && defined(INVERTED_STAGE)
-    #define HOURS (timer_hours)
-    #else
-    #define HOURS (timer_hours % 12)
-    #endif
+#if defined(VERSION_US) && defined(INVERTED_STAGE)
+#define HOURS (timer_hours)
+#else
+#define HOURS (timer_hours % 12)
+#endif
     self->ext.clockRoom.hand = (HOURS * 300) + (timer_minutes * 5);
 }
 
@@ -109,9 +109,9 @@ static u32 D_pspeu_092A1D00;
 extern EInit g_EInitCommon;
 
 void EntityClockRoomController(Entity* self) {
-    #ifndef VERSION_PSP
+#ifndef VERSION_PSP
     PlayerStatus* status = &g_Status;
-    #endif
+#endif
     Primitive* prim;
     Entity* entity;
     s32 primIndex;
@@ -276,20 +276,21 @@ void EntityClockRoomController(Entity* self) {
 
         if (!g_CastleFlags[RCEN_OPEN]) {
             entity = &PLAYER;
-            #if defined(VERSION_US) && defined(INVERTED_STAGE)
-            #define XLIM 0x60
-            #else
-            #define XLIM 0x50
-            #endif
+#if defined(VERSION_US) && defined(INVERTED_STAGE)
+#define XLIM 0x60
+#else
+#define XLIM 0x50
+#endif
             if (entity->posX.i.hi >= XLIM && entity->posX.i.hi <= 0xA0) {
-                for(posX = 0, i = RELIC_HEART_OF_VLAD; i <= RELIC_EYE_OF_VLAD; i++){
+                for (posX = 0, i = RELIC_HEART_OF_VLAD; i <= RELIC_EYE_OF_VLAD;
+                     i++) {
                     // If we don't have the relic, set the posX flag.
-                    if(!(g_Status.relics[i] & 1)){
+                    if (!(g_Status.relics[i] & 1)) {
                         posX++;
                     }
                 }
                 // If it's zero (we have all relics) we will open the clock
-                if(!posX){
+                if (!posX) {
                     SetStep(2);
                 }
             }
@@ -303,9 +304,9 @@ void EntityClockRoomController(Entity* self) {
         g_Player.demo_timer = 1;
         entity = &PLAYER;
         posX = entity->posX.i.hi;
-        #if defined(VERSION_US) && defined(INVERTED_STAGE)
+#if defined(VERSION_US) && defined(INVERTED_STAGE)
         entity->posX.i.hi = (posX <= 0x80 ? 0x60 : 0xA0);
-        #endif
+#endif
         switch (self->step_s) {
         case 0:
             self->ext.clockRoom.unk88 = 0;

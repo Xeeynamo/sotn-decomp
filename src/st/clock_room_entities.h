@@ -307,11 +307,11 @@ void EntityStatueGear(Entity* self) {
 extern u16 g_StoneDoorTiles[];
 
 static void UpdateStoneDoorTiles(bool doorState) {
-    #ifdef INVERTED_STAGE
-    #define TILE_START 0x24
-    #else
-    #define TILE_START 0xC4
-    #endif
+#ifdef INVERTED_STAGE
+#define TILE_START 0x24
+#else
+#define TILE_START 0xC4
+#endif
     s32 tilePos;
     s16 i, j;
 
@@ -375,19 +375,19 @@ void EntityStoneDoor(Entity* self) {
 
         ++self->ext.stoneDoor.unk80;
         if (self->ext.stoneDoor.unk80 & 1) {
-            #ifdef INVERTED_STAGE
+#ifdef INVERTED_STAGE
             if (params) {
                 self->posX.i.hi--;
             } else {
                 self->posX.i.hi++;
             }
-            #else
-if (params) {
+#else
+            if (params) {
                 self->posX.i.hi++;
             } else {
                 self->posX.i.hi--;
             }
-            #endif
+#endif
 #ifndef STAGE_IS_MAR
             g_backbufferY = 1;
 #else
