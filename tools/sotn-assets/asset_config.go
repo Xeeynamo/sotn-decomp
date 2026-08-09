@@ -14,6 +14,7 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/credits"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/cutscene"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/cutsceneevents"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/enemydefs"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/gfxbanks"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/headergfx"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/layer"
@@ -64,6 +65,7 @@ var handlers = func() map[string]assets.Handler {
 		credits.Handler,
 		cutscene.Handler,
 		cutsceneevents.Handler,
+		enemydefs.Handler,
 		gfxbanks.Handler,
 		headergfx.Handler,
 		layer.Handler,
