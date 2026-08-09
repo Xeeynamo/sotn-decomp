@@ -47,7 +47,27 @@ void UpdateBirdcages(Entity* self, u32 timerMinutes) {
     }
 }
 
-INCLUDE_ASM("st/rno0/nonmatchings/e_clock_room", UpdateClockHands);
+#ifdef VERSION_PSP
+#define timer_frames D_91FC3F8
+#define timer_seconds D_91FC400
+#define timer_minutes D_91FC408
+#define timer_hours D_91FC410
+#else
+#define timer_frames status->timerFrames
+#define timer_seconds status->timerSeconds
+#define timer_minutes status->timerMinutes
+#define timer_hours status->timerHours
+#endif
+
+void UpdateClockHands(Entity* self, PlayerStatus* status) {
+    // self + 5 is the minute hand
+    self += 5;
+    self->ext.clockRoom.hand = timer_minutes * 60;
+
+    // self + 6 is the hour hand
+    self += 1;
+    self->ext.clockRoom.hand = (timer_hours * 300) + (timer_minutes * 5);
+}
 
 INCLUDE_ASM("st/rno0/nonmatchings/e_clock_room", EntityClockRoomController);
 

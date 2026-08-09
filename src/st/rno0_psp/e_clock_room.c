@@ -47,7 +47,31 @@ void UpdateBirdcages(Entity* self, u32 timerMinutes) {
     }
 }
 
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_1028", UpdateClockHands);
+#ifdef VERSION_PSP
+extern s32 D_91FC3F8;
+extern s32 D_91FC400;
+extern s32 D_91FC408;
+extern s32 D_91FC410;
+#define timer_frames D_91FC3F8
+#define timer_seconds D_91FC400
+#define timer_minutes D_91FC408
+#define timer_hours D_91FC410
+void UpdateClockHands(Entity* self) {
+#else
+#define timer_frames status->timerFrames
+#define timer_seconds status->timerSeconds
+#define timer_minutes status->timerMinutes
+#define timer_hours status->timerHours
+void UpdateClockHands(Entity* self, PlayerStatus* status) {
+#endif
+    // self + 5 is the minute hand
+    self += 5;
+    self->ext.clockRoom.hand = timer_minutes * 60;
+
+    // self + 6 is the hour hand
+    self += 1;
+    self->ext.clockRoom.hand = ((timer_hours % 12) * 300) + (timer_minutes * 5);
+}
 
 // Two statues. One responds to the stopwatch subweapon.
 // The other leads to colloseum (ARE overlay)
@@ -64,13 +88,6 @@ typedef enum Statues {
 #define RIGHT_STATUE WATCH_STATUE
 #endif
 
-#ifdef VERSION_PSP
-extern s32 D_91FC3F8;
-extern s32 D_91FC400;
-extern s32 D_91FC408;
-extern s32 D_91FC410;
-#endif
-
 static u16 g_Statues[2];
 #ifdef VERSION_PSP
 static u32 D_pspeu_092A1D08;
@@ -80,18 +97,9 @@ static u32 D_pspeu_092A1D00;
 extern EInit g_EInitCommon;
 
 void EntityClockRoomController(Entity* self) {
-#ifdef VERSION_PSP
-#define timer_frames D_91FC3F8
-#define timer_seconds D_91FC400
-#define timer_minutes D_91FC408
-#define timer_hours D_91FC410
-#else
+    #ifndef VERSION_PSP
     PlayerStatus* status = &g_Status;
-#define timer_frames status->timerFrames
-#define timer_seconds status->timerSeconds
-#define timer_minutes status->timerMinutes
-#define timer_hours status->timerHours
-#endif
+    #endif
     Primitive* prim;
     Entity* entity;
     s32 primIndex;
