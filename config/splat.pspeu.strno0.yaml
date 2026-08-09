@@ -45,7 +45,7 @@ segments:
     subalign: 8
     subsegments:
       - [0x80, c, rno0/create_entity]
-      - [0x1028, c, rno0_psp/e_clock_room]
+      - [0x1028, c, rno0/e_clock_room]
       - [0x2F40, c, rno0_psp/rno0_unused801c2338]
       - [0x2F50, c, rno0/e_stage_name]
       - [0x3DD0, c, rno0_psp/unk_3DD0]
@@ -79,7 +79,7 @@ segments:
       - [0x26DA8, c, rno0/e_lock_camera]
       - [0x27008, c, rno0/e_background_clock]
       - [0x27330, c, rno0/e_caverns_block]
-      - [0x27680, .data, rno0_psp/e_clock_room]
+      - [0x27680, .data, rno0/e_clock_room]
       - [0x276E8, data]
       - [0x27700, .data, rno0/st_update]
       - [0x27730, data]
@@ -100,7 +100,7 @@ segments:
       - [0x5A2D0, .data, rno0/e_room_bg]
       - [0x5A400, .data, rno0/e_lock_camera]
       - [0x5A478, .data, rno0/e_caverns_block]
-      - [0x5A500, .rodata, rno0_psp/e_clock_room]
+      - [0x5A500, .rodata, rno0/e_clock_room]
       - [0x5A540, .rodata, rno0_psp/unk_3DD0]
       - [0x5A558, .rodata, rno0_psp/unk_5610]
       - [0x5A5E0, .rodata, rno0/e_collect]
