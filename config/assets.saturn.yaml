@@ -121,6 +121,38 @@ assets:
     prg: disks/saturn/ALUCARD.PRG
     path: assets/saturn/weapon/ALC_W
     output: build/saturn/assets/ALC_W.CHR
+  - name: player-maria
+    kind: player
+    profile: maria
+    prg: disks/saturn/MARIA.PRG
+    source: disks/saturn/MARIA.CHR
+    include: src/saturn/maria/gen/gfxloads.h
+    palette_include: src/saturn/maria/gen/palette.h
+    path: assets/saturn/player/MARIA
+    output: build/saturn/assets/MARIA.CHR
+  - name: player-richter
+    kind: player
+    profile: richter
+    prg: disks/saturn/RICHTER.PRG
+    source: disks/saturn/RICHTER.CHR
+    include: src/saturn/ric/gen/gfxloads.h
+    palette_include: src/saturn/ric/gen/palette.h
+    path: assets/saturn/player/RICHTER
+    output: build/saturn/assets/RICHTER.CHR
+  - name: player-richter2
+    kind: player
+    profile: richter2
+    prg: disks/saturn/RICHTER2.PRG
+    source: disks/saturn/RICHTER2.CHR
+    path: assets/saturn/player/RICHTER2
+    output: build/saturn/assets/RICHTER2.CHR
+  - name: player-alucard
+    kind: player
+    profile: alucard
+    prg: disks/saturn/ALUCARD.PRG
+    source: disks/saturn/ALUCARD.CHR
+    path: assets/saturn/player/ALUCARD
+    output: build/saturn/assets/ALUCARD.CHR
   - name: castle-map-maria
     kind: bitmap
     profile: maria-castle-map
