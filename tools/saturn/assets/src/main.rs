@@ -3,7 +3,7 @@
 //! Driven from tools/sotn-assets and config/assets.saturn.yaml
 
 use clap::{Parser, Subcommand};
-use saturn_assets::{audio, bitmap, familiar, font, player, weapon};
+use saturn_assets::{audio, bitmap, familiar, font, map, player, weapon};
 use std::path::PathBuf;
 use std::process::ExitCode;
 
@@ -33,6 +33,63 @@ enum Command {
     Bitmap(BitmapCommand),
     #[command(subcommand)]
     Player(PlayerCommand),
+    #[command(subcommand)]
+    Map(MapCommand),
+}
+
+#[derive(Subcommand)]
+enum MapCommand {
+    Extract {
+        prg_path: PathBuf,
+        map_path: PathBuf,
+        output_dir: PathBuf,
+    },
+    Rebuild {
+        manifest: PathBuf,
+        map_path: PathBuf,
+        output: PathBuf,
+    },
+    Verify {
+        manifest: PathBuf,
+        map_path: PathBuf,
+    },
+    Repack {
+        manifest: PathBuf,
+        map_path: PathBuf,
+        output: PathBuf,
+        layout: PathBuf,
+    },
+    GenerateHeaders {
+        layout: PathBuf,
+        prefix: String,
+        layer_header: PathBuf,
+        graphics_header: PathBuf,
+    },
+    VerifyHeaders {
+        layout: PathBuf,
+        prefix: String,
+        layer_header: PathBuf,
+        graphics_header: PathBuf,
+    },
+    Render {
+        prg_path: PathBuf,
+        map_path: PathBuf,
+        output: PathBuf,
+        #[arg(long, default_value_t = 0)]
+        room: usize,
+        #[arg(long, default_value_t = 0)]
+        layer: usize,
+        #[arg(long, conflicts_with = "composite")]
+        whole_stage: bool,
+        #[arg(long, conflicts_with = "whole_stage")]
+        composite: bool,
+    },
+    RenderAll {
+        input_dir: PathBuf,
+        output_dir: PathBuf,
+        #[arg(long)]
+        force: bool,
+    },
 }
 
 #[derive(Subcommand)]
@@ -223,6 +280,154 @@ fn run(cli: Cli) -> saturn_assets::Result<()> {
         }) => {
             audio::verify(&manifest, &source_path)?;
             println!("verify passed: exact retail match");
+        }
+        Command::Map(MapCommand::Extract {
+            prg_path,
+            map_path,
+            output_dir,
+        }) => {
+            let manifest = map::extract(&prg_path, &map_path, &output_dir)?;
+            println!(
+                "{} rooms, {} streams (sub-stage {}) -> {}",
+                manifest.tables.rooms,
+                manifest.streams.len(),
+                manifest.tables.substage,
+                output_dir.display()
+            );
+        }
+        Command::Map(MapCommand::Rebuild {
+            manifest,
+            map_path,
+            output,
+        }) => {
+            let (data, changed) = map::rebuild(&manifest, &map_path, &output)?;
+            println!(
+                "wrote {} bytes ({changed} stream(s) recompressed) -> {}",
+                data.len(),
+                output.display()
+            );
+        }
+        Command::Map(MapCommand::Verify { manifest, map_path }) => {
+            map::verify(&manifest, &map_path)?;
+            println!("verify passed: exact retail match");
+        }
+        Command::Map(MapCommand::Repack {
+            manifest,
+            map_path,
+            output,
+            layout,
+        }) => {
+            let result = map::repack(&manifest, &map_path, &output, &layout)?;
+            let moved = result.streams.iter().filter(|entry| entry.moved).count();
+            println!(
+                "{} bytes, {} recompressed, {moved} moved -> {} + {}",
+                result.map_size,
+                result.changed,
+                output.display(),
+                layout.display()
+            );
+        }
+        Command::Map(MapCommand::GenerateHeaders {
+            layout,
+            prefix,
+            layer_header,
+            graphics_header,
+        }) => {
+            map::generate_headers(&layout, &prefix, &layer_header, &graphics_header)?;
+            println!(
+                "wrote {} and {}",
+                layer_header.display(),
+                graphics_header.display()
+            );
+        }
+        Command::Map(MapCommand::VerifyHeaders {
+            layout,
+            prefix,
+            layer_header,
+            graphics_header,
+        }) => {
+            map::verify_headers(&layout, &prefix, &layer_header, &graphics_header)?;
+            println!("verify passed: the headers describe the MAP");
+        }
+        Command::Map(MapCommand::Render {
+            prg_path,
+            map_path,
+            output,
+            room,
+            layer,
+            whole_stage,
+            composite,
+        }) => {
+            let (image, description) = if composite {
+                (
+                    saturn_assets::map_render::render_composite(&prg_path, &map_path)?,
+                    "whole stage composite".to_string(),
+                )
+            } else if whole_stage {
+                let (image, rooms) =
+                    saturn_assets::map_render::render_stage_layer(&prg_path, &map_path, layer)?;
+                (image, format!("whole stage layer {layer}: {rooms} rooms"))
+            } else {
+                let (image, tiles) =
+                    saturn_assets::map_render::render_room(&prg_path, &map_path, room, layer)?;
+                (
+                    image,
+                    format!("room {room} layer {layer}: {tiles} characters"),
+                )
+            };
+            saturn_assets::image::write_rgba(&output, &image)?;
+            println!(
+                "rendered {description}, {}x{} -> {}",
+                image.width,
+                image.height,
+                output.display()
+            );
+        }
+        Command::Map(MapCommand::RenderAll {
+            input_dir,
+            output_dir,
+            force,
+        }) => {
+            std::fs::create_dir_all(&output_dir)?;
+            let jobs = saturn_assets::map_render::discover(&input_dir)?;
+            if jobs.is_empty() {
+                return Err(saturn_assets::Error::Format(format!(
+                    "no renderable stage PRG/MAP pairs found in {}",
+                    input_dir.display()
+                )));
+            }
+            let total = jobs.len();
+            let mut rendered = 0usize;
+            let mut skipped = 0usize;
+            let mut failures = Vec::new();
+            for (index, job) in jobs.into_iter().enumerate() {
+                let output = output_dir.join(format!("{}.png", job.name));
+                let current = index + 1;
+                let prefix = format!("[{current:02}/{total:02}] {}", job.name);
+                if output.exists() && !force {
+                    println!("{prefix}: skipped (already exists)");
+                    skipped += 1;
+                    continue;
+                }
+                match saturn_assets::map_render::render_composite(&job.prg, &job.map) {
+                    Ok(image) => match saturn_assets::image::write_rgba(&output, &image) {
+                        Ok(()) => {
+                            println!("{prefix}: done ({}x{})", image.width, image.height);
+                            rendered += 1;
+                        }
+                        Err(error) => failures.push(format!("{}: {error}", job.name)),
+                    },
+                    Err(error) => failures.push(format!("{}: {error}", job.name)),
+                }
+            }
+            println!(
+                "completed: {rendered} rendered, {skipped} skipped, {} failed; output: {}",
+                failures.len(),
+                output_dir.display()
+            );
+            if !failures.is_empty() {
+                return Err(saturn_assets::Error::Format(failures.join("\n")));
+            }
         }
         Command::Player(PlayerCommand::Extract {
             player,

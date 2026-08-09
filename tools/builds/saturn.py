@@ -241,6 +241,41 @@ for directory, player, overlay in [
         },
     )
 
+ninja.rule(
+    'saturn_map_headers',
+    command='cargo run --quiet --manifest-path tools/saturn/assets/Cargo.toml -- '
+            'map extract $PRG $MAP $EXTRACT > /dev/null && '
+            'cargo run --quiet --manifest-path tools/saturn/assets/Cargo.toml -- '
+            'map repack $EXTRACT/manifest.json $MAP $EXTRACT/repacked.MAP '
+            '$EXTRACT/layout.json > /dev/null && '
+            'cargo run --quiet --manifest-path tools/saturn/assets/Cargo.toml -- '
+            'map generate-headers $EXTRACT/layout.json $PREFIX $out $GRAPHICS > /dev/null',
+    description='Generating Saturn stage map headers $out',
+)
+
+for directory, stage, prefix in [
+    ('stage_02', 'STAGE_02', 'g_Stage02'),
+]:
+    ninja.build(
+        f'src/saturn/{directory}/gen/stlayer.h',
+        'saturn_map_headers',
+        inputs=[f'disks/saturn/{stage}.PRG', f'disks/saturn/{stage}.MAP'],
+        implicit=[
+            'tools/saturn/assets/Cargo.toml',
+            'tools/saturn/assets/src/map.rs',
+            'tools/saturn/assets/src/lzss.rs',
+            'tools/saturn/assets/src/main.rs',
+        ],
+        implicit_outputs=[f'src/saturn/{directory}/gen/strmgfx.h'],
+        variables={
+            'PRG': f'disks/saturn/{stage}.PRG',
+            'MAP': f'disks/saturn/{stage}.MAP',
+            'EXTRACT': f'build/saturn/map/{stage}',
+            'PREFIX': prefix,
+            'GRAPHICS': f'src/saturn/{directory}/gen/strmgfx.h',
+        },
+    )
+
 ninja.rule('sotn_str',
            command=f'{SOTN_STR} process < $in > $out',
            description='Expanding SOTN strings in $out from $in')
@@ -274,6 +309,10 @@ def add_srcs(srcs, output_dir, args):
             implicit.append(os.path.join(os.path.dirname(src), 'gen', 'gfxloads.h'))
         if src in ('src/saturn/maria/palette.c', 'src/saturn/ric/sprpal1.c'):
             implicit.append(os.path.join(os.path.dirname(src), 'gen', 'palette.h'))
+        if src == 'src/saturn/stage_02/stlayer.c':
+            implicit.append('src/saturn/stage_02/gen/stlayer.h')
+        if src == 'src/saturn/stage_02/strmgfx.c':
+            implicit.append('src/saturn/stage_02/gen/strmgfx.h')
 
         ninja.build(
             pre_name,
