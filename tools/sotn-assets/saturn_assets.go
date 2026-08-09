@@ -41,22 +41,26 @@ type saturnAsset struct {
 	// editable form
 	Path string `yaml:"path"`
 	// rebuild output
-	Output string `yaml:"output"`
-	PaletteInclude string `yaml:"palette_include"`
+	Output          string `yaml:"output"`
+	PaletteInclude  string `yaml:"palette_include"`
+	GraphicsInclude string `yaml:"graphics_include"`
+	Prefix          string `yaml:"prefix"`
 }
 
 // one file of work; a dir entry expands into one per file
 type saturnUnit struct {
-	name           string
-	kind           string
-	variant        string
-	source         string
-	path           string
-	output         string
-	prg            string
-	chr            string
-	include        string
-	paletteInclude string
+	name            string
+	kind            string
+	variant         string
+	source          string
+	path            string
+	output          string
+	prg             string
+	chr             string
+	include         string
+	paletteInclude  string
+	graphicsInclude string
+	prefix          string
 }
 
 const saturnAssetOutputDir = "build/saturn/assets"
@@ -108,6 +112,19 @@ func (a saturnAsset) variant() (string, error) {
 			return "", fmt.Errorf("asset %q: weapon needs the player prg", a.Name)
 		}
 		return a.Profile, nil
+	case "map":
+		if a.Prg == "" {
+			return "", fmt.Errorf("asset %q: map needs the stage prg", a.Name)
+		}
+		if (a.Include == "") != (a.GraphicsInclude == "") {
+			return "", fmt.Errorf(
+				"asset %q: map needs both include and graphics_include, or neither", a.Name)
+		}
+		if (a.Include == "") != (a.Prefix == "") {
+			return "", fmt.Errorf(
+				"asset %q: map needs a prefix for the headers it generates", a.Name)
+		}
+		return "", nil
 	default:
 		return "", fmt.Errorf("unknown Saturn asset kind %q in asset %q", a.Kind, a.Name)
 	}
@@ -128,16 +145,18 @@ func (a saturnAsset) units() ([]saturnUnit, error) {
 			output = filepath.Join(saturnAssetOutputDir, filepath.Base(a.Source))
 		}
 		return []saturnUnit{{
-			name:           a.Name,
-			kind:           a.Kind,
-			variant:        variant,
-			source:         a.Source,
-			path:           a.Path,
-			output:         output,
-			prg:            a.Prg,
-			chr:            a.Chr,
-			include:        a.Include,
-			paletteInclude: a.PaletteInclude,
+			name:            a.Name,
+			kind:            a.Kind,
+			variant:         variant,
+			source:          a.Source,
+			path:            a.Path,
+			output:          output,
+			prg:             a.Prg,
+			chr:             a.Chr,
+			include:         a.Include,
+			paletteInclude:  a.PaletteInclude,
+			graphicsInclude: a.GraphicsInclude,
+			prefix:          a.Prefix,
 		}}, nil
 	}
 
@@ -157,6 +176,7 @@ func (a saturnAsset) units() ([]saturnUnit, error) {
 			source:  filepath.Join(a.Dir, file),
 			path:    filepath.Join(a.Path, file),
 			output:  filepath.Join(outputDir, file),
+			prg:     a.Prg,
 		})
 	}
 	return units, nil
@@ -208,8 +228,11 @@ func saturnUnitArgs(u saturnUnit, command string) ([]string, error) {
 	manifest := filepath.Join(u.path, "manifest.json")
 	switch command {
 	case "extract":
-		args := []string{u.kind, "extract", u.variant}
-		if u.kind == "familiar" || u.kind == "player" {
+		args := []string{u.kind, "extract"}
+		if u.variant != "" {
+			args = append(args, u.variant)
+		}
+		if u.kind == "familiar" || u.kind == "player" || u.kind == "map" {
 			return append(args, u.prg, u.source, u.path), nil
 		}
 		if u.kind == "bitmap" {
@@ -225,6 +248,10 @@ func saturnUnitArgs(u saturnUnit, command string) ([]string, error) {
 		if u.kind == "player" {
 			return []string{u.kind, "rebuild", manifest, u.source, u.output}, nil
 		}
+		if u.kind == "map" {
+			return []string{u.kind, "repack", manifest, u.source, u.output,
+				saturnMapLayout(u)}, nil
+		}
 		return []string{u.kind, "rebuild", manifest, u.output}, nil
 	case "verify":
 		return []string{u.kind, "verify", manifest, u.source}, nil
@@ -233,7 +260,12 @@ func saturnUnitArgs(u saturnUnit, command string) ([]string, error) {
 	}
 }
 
-var generatedHeaderKinds = map[string]bool{"familiar": true, "bitmap": true, "player": true}
+var generatedHeaderKinds = map[string]bool{
+	"familiar": true, "bitmap": true, "player": true, "map": true}
+
+func saturnMapLayout(u saturnUnit) string {
+	return filepath.Join(u.path, "layout.json")
+}
 
 func runSaturnGeneratedHeader(binary string, u saturnUnit, command string) error {
 	manifest := filepath.Join(u.path, "manifest.json")
@@ -245,11 +277,29 @@ func runSaturnGeneratedHeader(binary string, u saturnUnit, command string) error
 			return runSaturnAssets(binary, u.kind, "generate-headers",
 				manifest, u.source, u.include, u.paletteInclude)
 		}
+		if u.kind == "map" {
+			return runSaturnAssets(binary, u.kind, "generate-headers",
+				saturnMapLayout(u), u.prefix, u.include, u.graphicsInclude)
+		}
 		return runSaturnAssets(binary, u.kind, "generate-header", manifest, u.include)
 	case "verify":
 		if u.kind == "player" {
 			return runSaturnAssets(binary, u.kind, "verify-headers",
 				manifest, u.source, u.include, u.paletteInclude)
+		}
+		if u.kind == "map" {
+			temp, err := os.MkdirTemp("", "sotn-saturn-map-verify-")
+			if err != nil {
+				return err
+			}
+			defer os.RemoveAll(temp)
+			layout := filepath.Join(temp, "layout.json")
+			if err := runSaturnAssets(binary, u.kind, "repack",
+				manifest, u.source, filepath.Join(temp, "repacked.MAP"), layout); err != nil {
+				return err
+			}
+			return runSaturnAssets(binary, u.kind, "verify-headers",
+				layout, u.prefix, u.include, u.graphicsInclude)
 		}
 		return runSaturnAssets(binary, u.kind, "verify-header", manifest, u.include)
 	default:

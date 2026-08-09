@@ -7,6 +7,8 @@ pub mod familiar;
 pub mod font;
 pub mod image;
 pub mod lzss;
+pub mod map;
+pub mod map_render;
 pub mod player;
 pub mod sheet;
 pub mod sprite;
