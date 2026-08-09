@@ -7,7 +7,9 @@ INCLUDE_ASM("boss/bo7_psp/nonmatchings/bo7_psp/unk_E700", EntityBreakable);
 
 INCLUDE_ASM("boss/bo7_psp/nonmatchings/bo7_psp/unk_E700", EntityBreakableDebris);
 
-INCLUDE_ASM("boss/bo7_psp/nonmatchings/bo7_psp/unk_E700", func_us_80194338);
+// bo7 arena floor sits higher than rbo0
+#define BOSS_FLOOR_Y 0xD0
+#include "../e_boss_floor_snap.h"
 
 INCLUDE_ASM("boss/bo7_psp/nonmatchings/bo7_psp/unk_E700", func_us_80194D3C);
 

@@ -1,20 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rbo0.h"
 
-bool func_us_80194338(s16* offsets) {
-    s32 posY;
-
-    offsets++;
-    posY = g_CurrentEntity->posY.i.hi + *offsets + g_Tilemap.scrollY.i.hi;
-    posY = 0xE0 - posY;
-    if (posY <= 0) {
-        g_CurrentEntity->posY.i.hi += posY;
-        g_CurrentEntity->velocityX = 0;
-        g_CurrentEntity->velocityY = 0;
-        return true;
-    }
-    return false;
-}
+#include "../e_boss_floor_snap.h"
 
 #ifdef VERSION_PSP
 extern s32 D_us_801806AC;
