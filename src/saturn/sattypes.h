@@ -29,6 +29,7 @@ typedef enum {
     PAD_L1 = 0x0008,
     PAD_R1 = 0x0080,
     PAD_CROSS = 0x0100,
+    PAD_SQUARE = 0x0400,
     PAD_UP = 0x1000,
     PAD_DOWN = 0x2000,
     PAD_LEFT = 0x4000,
@@ -329,18 +330,20 @@ typedef struct Entity {
     /* 0x44 */ u8 hitboxWidth;
     /* 0x45 */ u8 hitboxHeight;
     /* 0x46 */ u8 hitFlags; // 1 = took hit
+    /* 0x47 */ u8 nFramesInvincibility;
     /* 0x48 */ AnimationFrame* anim;
     /* 0x4c */ u16 pose;
     /* 0x4e */ s16 poseTimer;
     /* 0x50 */ s16 animSet;
     /* 0x52 */ s16 animCurFrame;
-    /* 0x54 */ char pad_54[0x2];
+    /* 0x54 */ s16 stunFrames;
     /* 0x56 */ s16 unk56;
     /* 0x58 */ char pad_58[0x8];
     /* 0x60 */ s16 primIndex;
     /* 0x62 */ u16 zPriority;
     /* 0x64 */ u16 unk68;
-    /* 0x66 */ char pad_66[3];
+    /* 0x66 */ u16 hitEffect;
+    /* 0x68 */ char pad_68[1];
     /* 0x69 */ char unk6D[11];
     /* 0x74 */ u16 entityId;
     /* 0x76 */ char pad_76[0x2];
@@ -365,7 +368,7 @@ typedef struct SpriteObject {
     /* 0x02 */ u16 slotAndStreamId; /* high byte: permanent pool slot, baked in
                                      * by func_0600B254 as (i << 8) and
                                      * preserved (low byte cleared) on each
-                                     * alloc by func_0600B1A8.
+                                     * alloc by AllocSpriteObject.
                                      * low 7 bits: streamed-frame id, set by
                                      * func_0600AFA8 from commandFlags & 0x7F */
     /* 0x04 */ u16 charBase;

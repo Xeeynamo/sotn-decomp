@@ -58,7 +58,7 @@ void func_0600B004(SpriteObject*, s16*);
 void TekiInit(Entity*, s32);
 SpriteObject* CreateSpriteObject(
     u16 charBase, u16 clutBase, SaturnSpriteImage* images, s32 maxParts);
-void func_06079BB4(Entity*);
+void SyncSpriteObjectPos(Entity*);
 
 extern SaturnSpriteFrameHeader* entityRedEyeBustData2[22];
 extern SaturnSpriteResource entityRedEyeBustData;

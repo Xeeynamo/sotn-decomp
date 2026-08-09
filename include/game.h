@@ -872,6 +872,11 @@ typedef struct {
     u16 pose; // contains both frameNo and hitboxNo
 } AnimationFrame;
 
+// WPOSE* macros are exclusive to UpdateUnarmedAnim, they are duration-less
+#define WPOSE(frameNo, hitboxNo)                                               \
+    (((frameNo) & 0x1FF) | (((hitboxNo) & 0x7F) << 9))
+#define WPOSE_END 0xFFFF // stop at last frame
+
 typedef struct {
     s8 unk0; // Entity::unk10
     s8 unk2; // Entity::unk12
@@ -1977,9 +1982,9 @@ typedef struct {
     /* 0x396 80072F66 */ u16 unk46;
     /* 0x398 80072F68 */ u16 unk48;
 #ifdef VERSION_PSP
-    /* 0x39A 80072F6A */ u16 unk4A;
+    /* 0x39A 80072F6A */ u16 gravBootTimer;
 #else
-    /* 0x39A 80072F6A */ s16 unk4A;
+    /* 0x39A 80072F6A */ s16 gravBootTimer;
 #endif
     /* 0x39C 80072F6C */ u16 unk4C;
     /* 0x39E 80072F6E */ u16 unk4E;

@@ -45,36 +45,36 @@ else()
     add_compile_options(-funsigned-char)
 endif()
 
-find_program(SOTN_STR_BIN sotn_str
-    PATHS ${CMAKE_SOURCE_DIR}/tools/sotn_str/target/release
-    NO_DEFAULT_PATH)
-if(NOT SOTN_STR_BIN)
-    find_program(CARGO_BIN cargo)
-    if(NOT CARGO_BIN)
-        message(FATAL_ERROR
-            "cargo is required to compile sotn_str\n"
-            "https://doc.rust-lang.org/stable/cargo/getting-started/installation.html")
-    endif()
-    message(STATUS "sotn_str not found; building it with cargo")
-    execute_process(
-        COMMAND ${CARGO_BIN} build --release
-                --manifest-path ${CMAKE_SOURCE_DIR}/tools/sotn_str/Cargo.toml
-        RESULT_VARIABLE _sotn_str_build_result)
-    if(NOT _sotn_str_build_result EQUAL 0)
-        message(FATAL_ERROR "failed to build sotn_str")
-    endif()
-    find_program(SOTN_STR_BIN sotn_str
-        PATHS ${CMAKE_SOURCE_DIR}/tools/sotn_str/target/release
-        NO_DEFAULT_PATH)
-    if(NOT SOTN_STR_BIN)
-        message(FATAL_ERROR "sotn_str build succeeded but the binary was not found")
-    endif()
+find_program(CARGO_BIN cargo)
+if(NOT CARGO_BIN)
+    message(FATAL_ERROR
+        "cargo is required to compile sotn_str\n"
+        "https://doc.rust-lang.org/stable/cargo/getting-started/installation.html")
 endif()
+
+# prevent sotn_str binary type conflicts when working with containers
+set(SOTN_STR_TARGET_DIR "${CMAKE_BINARY_DIR}/sotn_str")
+set(SOTN_STR_BIN
+    "${SOTN_STR_TARGET_DIR}/release/sotn_str${CMAKE_EXECUTABLE_SUFFIX}")
+add_custom_command(
+    OUTPUT "${SOTN_STR_BIN}"
+    COMMAND ${CMAKE_COMMAND} -E env
+            "CARGO_TARGET_DIR=${SOTN_STR_TARGET_DIR}"
+            "${CARGO_BIN}" build --release
+            --manifest-path "${CMAKE_SOURCE_DIR}/tools/sotn_str/Cargo.toml"
+    DEPENDS
+        "${CMAKE_SOURCE_DIR}/tools/sotn_str/Cargo.toml"
+        "${CMAKE_SOURCE_DIR}/tools/sotn_str/Cargo.lock"
+        "${CMAKE_SOURCE_DIR}/tools/sotn_str/src/main.rs"
+    VERBATIM
+    COMMENT "Building host sotn_str")
+add_custom_target(sotn_str_host DEPENDS "${SOTN_STR_BIN}")
 
 set(_sotn_str_args "${SOTN_STR_BIN};cc")
 
 # Allows to run the sotn_str pre-compiler only to selected targets
 function(sotn_str_apply target)
+    add_dependencies(${target} sotn_str_host)
     if(MSVC)
         sotn_str_apply_msvc(${target})
     else()
@@ -336,6 +336,44 @@ set(SOURCE_FILES_STAGE_NO2
     src/st/no2/hammer.c
 )
 
+set(SOURCE_FILES_STAGE_CHI
+    src/pc/stages/stage_chi.c
+    src/st/chi/dt_header.c
+    src/st/chi/gen/e_laydef.c
+    src/st/chi/e_init.c
+    src/st/chi/background_block_init.c
+    src/st/chi/e_red_door_tiles.c
+    src/st/chi/e_lock_camera.c
+    src/st/chi/en_breakable.c
+    src/st/chi/en_demon_switch_wall.c
+    src/st/chi/en_breakable_wall.c
+    src/st/chi/en_falling_stairs.c
+    src/st/chi/dt_prize_drops.c
+    src/st/chi/st_update.c
+    src/st/chi/st_collision.c
+    src/st/chi/en_red_door.c
+    src/st/chi/ut_common.c
+    src/st/chi/en_collect.c
+    src/st/chi/en_misc.c
+    src/st/chi/en_particles.c
+    src/st/chi/en_room_foreground.c
+    src/st/chi/e_salem_witch.c
+    src/st/chi/e_gremlin.c
+    src/st/chi/en_thornweed_corpseweed.c
+    src/st/chi/en_venus_weed.c
+    src/st/chi/gen/rooms.c
+    src/st/chi/gen/e_layout.c
+    src/st/chi/stage_data.c
+    src/st/chi/gen/sprites.c
+    src/st/chi/en_debug_cerberus_gate.c
+    src/st/chi/en_stage_name.c
+    src/st/chi/ut_prim_helpers.c
+    src/st/chi/e_room_bg.c
+    src/st/chi/ut_create_entity.c
+    src/st/chi/en_popup.c
+    src/st/chi/bss.c
+)
+
 set(SOURCE_FILES_STAGE_DAI
     src/pc/stages/stage_dai.c
     src/st/dai/header.c
@@ -395,6 +433,67 @@ set(SOURCE_FILES_STAGE_DAI
     src/st/dai/e_stained_glass.c
     src/st/dai/e_tower_exit.c
     src/st/dai/e_winged_guard.c
+)
+
+set(SOURCE_FILES_STAGE_NP3
+    src/pc/stages/stage_np3.c
+    src/st/np3/header.c
+    src/st/np3/gen/us/e_laydef.c
+    src/st/np3/e_init.c
+    src/st/np3/gen/rooms.c
+    src/st/np3/gen/us/e_layout.c
+    src/st/np3/gen/sprites.c
+    src/st/np3/stage_data.c
+    src/st/np3/background_block_init.c
+    src/st/np3/e_room_bg.c
+    src/st/np3/e_lock_camera.c
+    src/st/np3/e_breakable.c
+    src/st/np3/d_prize_drops.c
+    src/st/np3/st_update.c
+    src/st/np3/collision.c
+    src/st/np3/create_entity.c
+    src/st/np3/e_red_door_tiles.c
+    src/st/np3/e_red_door.c
+    src/st/np3/st_common.c
+    src/st/np3/e_collect.c
+    src/st/np3/e_misc.c
+    src/st/np3/e_stage_name.c
+    src/st/np3/e_particles.c
+    src/st/np3/e_room_fg.c
+    src/st/np3/popup.c
+    src/st/np3/prim_helpers.c
+    src/st/np3/bss.c
+    src/st/np3/4E04C.c
+    src/st/np3/d_water_data.c
+    src/st/np3/water_effects.c
+    src/st/np3/entrance_weights.c
+    src/st/np3/e_background_bushes_trees.c
+    src/st/np3/e_background_lightning.c
+    src/st/np3/e_bat.c
+    src/st/np3/blade.c
+    src/st/np3/e_bloody_zombie.c
+    src/st/np3/e_bone_scimitar.c
+    src/st/np3/e_castle_door.c
+    src/st/np3/e_cavern_door.c
+    src/st/np3/e_explosion_puff_opaque.c
+    src/st/np3/e_heartroom.c
+    src/st/np3/e_jewel_sword_puzzle.c
+    src/st/np3/e_merman.c
+    src/st/np3/e_merman2.c
+    src/st/np3/e_owl_knight.c
+    src/st/np3/e_shutting_window.c
+    src/st/np3/e_sky_entities.c
+    src/st/np3/e_stairway.c
+    src/st/np3/e_tilemap_shuffler.c
+    src/st/np3/e_transparent_water.c
+    src/st/np3/e_trapdoor.c
+    src/st/np3/e_unkId16.c
+    src/st/np3/e_zombie.c
+    src/st/np3/gaibon.c
+    src/st/np3/slogra.c
+    src/st/np3/giantbro_helpers.c
+    src/st/np3/gurkha.c
+    src/st/np3/hammer.c
 )
 
 set(SOURCE_FILES_STAGE_CEN
@@ -739,6 +838,60 @@ set(SOURCE_FILES_STAGE_NO3
     src/st/no3/water_effects.c
 )
 
+set(SOURCE_FILES_STAGE_LIB
+    src/pc/stages/stage_lib.c
+    src/st/lib/header.c
+    src/st/lib/palette_def.c
+    src/st/lib/layers.c
+    src/st/lib/graphics_banks.c
+    src/st/lib/gen/e_laydef.c
+    src/st/lib/e_init.c
+    src/st/lib/background_block_init.c
+    src/st/lib/e_red_door_tiles.c
+    src/st/lib/d_prize_drops.c
+    src/st/lib/gen/rooms.c
+    src/st/lib/gen/e_layout.c
+    src/st/lib/stage_data.c
+    src/st/lib/tilemaps.c
+    src/st/lib/gen/sprites.c
+    src/st/lib/e_room_bg.c
+    src/st/lib/e_lock_camera.c
+    src/st/lib/e_breakable.c
+    src/st/lib/first_c_file.c
+    src/st/lib/e_library_bg.c
+    src/st/lib/e_shop.c
+    src/st/lib/cutscene.c
+    src/st/lib/e_candle_table.c
+    src/st/lib/unk_3B200.c
+    src/st/lib/unk_3B53C.c
+    src/st/lib/e_lesser_demon.c
+    src/st/lib/e_chair.c
+    src/st/lib/st_update.c
+    src/st/lib/collision.c
+    src/st/lib/create_entity.c
+    src/st/lib/e_red_door.c
+    src/st/lib/e_room_fg.c
+    src/st/lib/st_common.c
+    src/st/lib/e_misc.c
+    src/st/lib/e_collect.c
+    src/st/lib/e_bloody_zombie.c
+    src/st/lib/e_flying_zombie.c
+    src/st/lib/e_stage_name.c
+    src/st/lib/e_particles.c
+    src/st/lib/popup.c
+    src/st/lib/e_dhuron.c
+    src/st/lib/e_ectoplasm.c
+    src/st/lib/en_thornweed_corpseweed.c
+    src/st/lib/e_skeleton.c
+    src/st/lib/e_mist_door.c
+    src/st/lib/e_flea_armor.c
+    src/st/lib/e_flea_man.c
+    src/st/lib/e_mudman.c
+    src/st/lib/prim_helpers.c
+    src/st/lib/e_spellbook_magic_tome.c
+    src/st/lib/e_life_up.c
+)
+
 set(SOURCE_FILES_STAGE_MAD
     src/pc/stages/stage_mad.c
     src/st/mad/header.c
@@ -777,37 +930,9 @@ set(SOURCE_FILES_STAGE_MAD
     src/st/mad/bss.c
 )
 
-set(SOURCE_FILES_WEAPON
-    src/weapon/w_000.c
-    src/weapon/w_002.c
-    src/weapon/w_007.c
-    src/weapon/w_012.c
-    src/weapon/w_034.c
-    src/weapon/w_037.c
-    src/weapon/w_041.c
-    src/weapon/w_045.c
-    src/weapon/w_046.c
-    src/weapon/w_051.c
-    src/weapon/w_052.c
-)
-
-# WEAPON_ID needs to be a string and not just a number
-set_source_files_properties(src/weapon/w_000.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_000)
-set_source_files_properties(src/weapon/w_002.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_002)
-set_source_files_properties(src/weapon/w_007.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_007)
-set_source_files_properties(src/weapon/w_012.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_012)
-set_source_files_properties(src/weapon/w_034.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_034)
-set_source_files_properties(src/weapon/w_037.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_037)
-set_source_files_properties(src/weapon/w_041.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_041)
-set_source_files_properties(src/weapon/w_045.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_045)
-set_source_files_properties(src/weapon/w_046.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_046)
-set_source_files_properties(src/weapon/w_051.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_051)
-set_source_files_properties(src/weapon/w_052.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_052)
-
 set(SOURCE_FILES_CORE
     ${SOURCE_FILES_DRA}
     ${SOURCE_FILES_RIC}
-    ${SOURCE_FILES_WEAPON}
 )
 if (USE_PLAYER_MARIA)
     add_compile_definitions(USE_PLAYER_MARIA)
@@ -907,7 +1032,9 @@ endfunction()
 
 add_overlay(sel ${SOURCE_FILES_STAGE_SEL})
 add_overlay(no2 ${SOURCE_FILES_STAGE_NO2})
+add_overlay(chi ${SOURCE_FILES_STAGE_CHI})
 add_overlay(dai ${SOURCE_FILES_STAGE_DAI})
+add_overlay(np3 ${SOURCE_FILES_STAGE_NP3})
 add_overlay(cen ${SOURCE_FILES_STAGE_CEN})
 add_overlay(nz0 ${SOURCE_FILES_STAGE_NZ0})
 add_overlay(wrp ${SOURCE_FILES_STAGE_WRP})
@@ -915,7 +1042,15 @@ add_overlay(dre ${SOURCE_FILES_STAGE_DRE})
 add_overlay(st0 ${SOURCE_FILES_STAGE_ST0})
 add_overlay(rwrp ${SOURCE_FILES_STAGE_RWRP})
 add_overlay(no3 ${SOURCE_FILES_STAGE_NO3})
+add_overlay(lib ${SOURCE_FILES_STAGE_LIB})
 add_overlay(mad ${SOURCE_FILES_STAGE_MAD})
+
+foreach(id 000 002 007 008 012 034 037 040 041 043 045 046 051 052)
+    add_overlay(w0_${id} src/weapon/w_${id}.c)
+    target_compile_definitions(w0_${id} PRIVATE WEAPON0)
+    add_overlay(w1_${id} src/weapon/w_${id}.c)
+    target_compile_definitions(w1_${id} PRIVATE WEAPON1)
+endforeach()
 
 add_overlay(tt_000 ${SOURCE_FILES_TT_000})
 add_overlay(tt_001 ${SOURCE_FILES_TT_001})

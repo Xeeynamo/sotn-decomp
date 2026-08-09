@@ -1,5 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "inc_asm.h"
+#include "sattypes.h"
+
+void DestroyEntity(void);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60DC040, func_060DC040);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60DC1A8, func_060DC1A8);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60DC2A4, func_060DC2A4);
@@ -51,11 +54,14 @@ INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E20C8, func_060E20C8);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E21A8, func_060E21A8);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E2494, func_060E2494);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E296C, func_060E296C);
-INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E2A78, func_060E2A78);
+void func_060E2A78(void) { DestroyEntity(); }
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E2A90, func_060E2A90);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E375C, func_060E375C);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E3874, func_060E3874);
-INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E38B8, func_060E38B8);
+void func_060E38B8(void) {
+    g_Player.padSim = 0x1000;
+    g_Player.demo_timer = 1;
+}
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E38D8, func_060E38D8);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E3904, func_060E3904);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E3D08, func_060E3D08);

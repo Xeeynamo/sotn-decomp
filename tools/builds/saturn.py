@@ -115,7 +115,7 @@ ninja.build(
 ninja.rule('link',
            command= 'sh-elf-ld --no-check-sections -nostdlib \
                     -o $out \
-                    -Map $out.map \
+                    -Map $map_file \
                     -T config/saturn/$ld_file \
                     $symbol_scripts \
                     $target_aliases \
@@ -125,7 +125,7 @@ ninja.rule('link',
 ninja.rule('link_multi',
            command= 'sh-elf-ld --no-check-sections -nostdlib \
                     -o $out \
-                    -Map $out.map \
+                    -Map $map_file \
                     -T config/saturn/$ld_file \
                     $symbol_scripts \
                     $target_aliases \
@@ -149,6 +149,97 @@ for export_target in ('zero', 'game'):
 ninja.rule('cpp',
            command='cpp $FLAGS $in > $out',
            description='Running preprocessor on $out from $in')
+
+ninja.rule(
+    'saturn_familiar_header',
+    command='cargo run --quiet --manifest-path tools/saturn/assets/Cargo.toml -- '
+            'familiar extract $FAMILIAR $PRG $CHR $EXTRACT > /dev/null && '
+            'cargo run --quiet --manifest-path tools/saturn/assets/Cargo.toml -- '
+            'familiar generate-header $EXTRACT/manifest.json $out > /dev/null',
+    description='Generating Saturn familiar header $out',
+)
+
+ninja.build(
+    'src/saturn/t_bat/gen/batgfx.h',
+    'saturn_familiar_header',
+    inputs=['disks/saturn/T_BAT.PRG', 'disks/saturn/T_BAT.CHR'],
+    implicit=[
+        'tools/saturn/assets/Cargo.toml',
+        'tools/saturn/assets/src/familiar.rs',
+        'tools/saturn/assets/src/sprite.rs',
+        'tools/saturn/assets/src/main.rs',
+    ],
+    variables={
+        'FAMILIAR': 'bat',
+        'PRG': 'disks/saturn/T_BAT.PRG',
+        'CHR': 'disks/saturn/T_BAT.CHR',
+        'EXTRACT': 'build/saturn/familiar/T_BAT',
+    },
+)
+
+ninja.rule(
+    'saturn_bitmap_header',
+    command='cargo run --quiet --manifest-path tools/saturn/assets/Cargo.toml -- '
+            'bitmap extract $BITMAP $PRG $CHR $EXTRACT > /dev/null && '
+            'cargo run --quiet --manifest-path tools/saturn/assets/Cargo.toml -- '
+            'bitmap generate-header $EXTRACT/manifest.json $out > /dev/null',
+    description='Generating Saturn bitmap header $out',
+)
+
+for directory, bitmap, overlay in [
+    ('maria', 'maria-castle-map', 'MARIA'),
+    ('ric', 'richter-castle-map', 'RICHTER'),
+]:
+    ninja.build(
+        f'src/saturn/{directory}/gen/castmap.h',
+        'saturn_bitmap_header',
+        inputs=[f'disks/saturn/{overlay}.PRG', f'disks/saturn/{overlay}.CHR'],
+        implicit=[
+            'tools/saturn/assets/Cargo.toml',
+            'tools/saturn/assets/src/bitmap.rs',
+            'tools/saturn/assets/src/sprite.rs',
+            'tools/saturn/assets/src/main.rs',
+        ],
+        variables={
+            'BITMAP': bitmap,
+            'PRG': f'disks/saturn/{overlay}.PRG',
+            'CHR': f'disks/saturn/{overlay}.CHR',
+            'EXTRACT': f'build/saturn/bitmap/{bitmap}',
+        },
+    )
+
+ninja.rule(
+    'saturn_player_headers',
+    command='cargo run --quiet --manifest-path tools/saturn/assets/Cargo.toml -- '
+            'player extract $PLAYER $PRG $CHR $EXTRACT > /dev/null && '
+            'cargo run --quiet --manifest-path tools/saturn/assets/Cargo.toml -- '
+            'player generate-headers $EXTRACT/manifest.json $CHR $out $PALETTE > /dev/null',
+    description='Generating Saturn player headers $out',
+)
+
+for directory, player, overlay in [
+    ('maria', 'maria', 'MARIA'),
+    ('ric', 'richter', 'RICHTER'),
+]:
+    ninja.build(
+        f'src/saturn/{directory}/gen/gfxloads.h',
+        'saturn_player_headers',
+        inputs=[f'disks/saturn/{overlay}.PRG', f'disks/saturn/{overlay}.CHR'],
+        implicit=[
+            'tools/saturn/assets/Cargo.toml',
+            'tools/saturn/assets/src/player.rs',
+            'tools/saturn/assets/src/lzss.rs',
+            'tools/saturn/assets/src/main.rs',
+        ],
+        implicit_outputs=[f'src/saturn/{directory}/gen/palette.h'],
+        variables={
+            'PLAYER': player,
+            'PRG': f'disks/saturn/{overlay}.PRG',
+            'CHR': f'disks/saturn/{overlay}.CHR',
+            'EXTRACT': f'build/saturn/player/{overlay}',
+            'PALETTE': f'src/saturn/{directory}/gen/palette.h',
+        },
+    )
 
 ninja.rule('sotn_str',
            command=f'{SOTN_STR} process < $in > $out',
@@ -174,10 +265,21 @@ def add_srcs(srcs, output_dir, args):
 
         flags = '-lang-c -I./src/saturn -I./src/saturn/lib -undef -D__GNUC__=2 -D__GNUC_MINOR__=7 -D__sh__ -D__sh__ -D__sh2__' + extra_cpp_defs
 
+        implicit = []
+        if src == 'src/saturn/t_bat/batgfx.c':
+            implicit.append('src/saturn/t_bat/gen/batgfx.h')
+        if src in ('src/saturn/maria/castmap.c', 'src/saturn/ric/castmap.c'):
+            implicit.append(os.path.join(os.path.dirname(src), 'gen', 'castmap.h'))
+        if src in ('src/saturn/maria/gfxloads.c', 'src/saturn/ric/gfxloads.c'):
+            implicit.append(os.path.join(os.path.dirname(src), 'gen', 'gfxloads.h'))
+        if src in ('src/saturn/maria/palette.c', 'src/saturn/ric/sprpal1.c'):
+            implicit.append(os.path.join(os.path.dirname(src), 'gen', 'palette.h'))
+
         ninja.build(
             pre_name,
             'cpp',
             inputs=[src],
+            implicit=implicit,
             variables={'FLAGS': flags})
 
         ninja.build(
@@ -192,14 +294,14 @@ def add_srcs(srcs, output_dir, args):
             inputs=[str_name])
 
         ninja.build(
-            asm_name, 
-            'compile', 
+            asm_name,
+            'compile',
             inputs=[cpp_name],
             implicit=compiler_inputs,
             variables={
                 'args': args
             })
-        
+
         ninja.build(
             obj_name,
             'as',
@@ -599,7 +701,46 @@ snd_srcs = [
     'src/saturn/stage_16/vlay.c',
     'src/saturn/stage_16/laydata.c',
     'src/saturn/stage_16/metadata.c',
-    'src/saturn/stage_16/data.c',
+    'src/saturn/stage_16/stdata.c',
+    'src/saturn/stage_16/prcfg.c',
+    'src/saturn/stage_16/gold.c',
+    'src/saturn/stage_16/przan.c',
+    'src/saturn/stage_16/ent04.c',
+    'src/saturn/stage_16/ent09.c',
+    'src/saturn/stage_16/expl.c',
+    'src/saturn/stage_16/ent05.c',
+    'src/saturn/stage_16/ent06.c',
+    'src/saturn/stage_16/ent07.c',
+    'src/saturn/stage_16/3dcoord.c',
+    'src/saturn/stage_16/3dindex.c',
+    'src/saturn/stage_16/ent15.c',
+    'src/saturn/stage_16/s20res.c',
+    'src/saturn/stage_16/ent23.c',
+    'src/saturn/stage_16/s20gfx.c',
+    'src/saturn/stage_16/s20part.c',
+    'src/saturn/stage_16/s21res.c',
+    'src/saturn/stage_16/ent25.c',
+    'src/saturn/stage_16/s21gfx.c',
+    'src/saturn/stage_16/s21part.c',
+    'src/saturn/stage_16/s22res.c',
+    'src/saturn/stage_16/entskbst.c',
+    'src/saturn/stage_16/s22gfx.c',
+    'src/saturn/stage_16/s22part.c',
+    'src/saturn/stage_16/s23res.c',
+    'src/saturn/stage_16/entspec.c',
+    'src/saturn/stage_16/s23gfx.c',
+    'src/saturn/stage_16/s23part.c',
+    'src/saturn/stage_16/s24res.c',
+    'src/saturn/stage_16/entgarg.c',
+    'src/saturn/stage_16/s24gfx.c',
+    'src/saturn/stage_16/s24part.c',
+    'src/saturn/stage_16/s25res.c',
+    'src/saturn/stage_16/entbreed.c',
+    'src/saturn/stage_16/s25gfx.c',
+    'src/saturn/stage_16/s25part.c',
+    'src/saturn/stage_16/s26res.c',
+    'src/saturn/stage_16/entwisp.c',
+    'src/saturn/stage_16/s26gfx.c',
     'src/saturn/t_bat.c',
     'src/saturn/t_bat/bathead.c',
     'src/saturn/t_bat/batmeta.c',
@@ -723,8 +864,8 @@ def elf_srcs(srcs, output_dir):
         input_name = os.path.join(obj_dir, f"{filename_without_extension}.cof")
         obj_name = os.path.join(obj_dir, f"{filename_without_extension}.o")
         ninja.build(
-            obj_name, 
-            'coff2elf', 
+            obj_name,
+            'coff2elf',
             inputs=[input_name])
 
 elf_srcs(snd_srcs, build_base_path)
@@ -750,13 +891,15 @@ if sotn_progress_report: # skip link step
     raise SystemExit(0)
 
 def inherited_symbol_files(target):
-    files = ['config/saturn/zero_syms.txt']
+    files = ['config/saturn/zero_syms.gen.txt']
     if target != 'zero':
-        files.append('config/saturn/game_syms.txt')
+        files.append('config/saturn/game_syms.gen.txt')
         files.append('config/saturn/game_user_syms.txt')
     files.append('config/saturn/zero_user_syms.txt')
     if target not in {'zero', 'game'}:
         files.append(f'config/saturn/{target}_user_syms.txt')
+        files.append(f'config/saturn/{target}_syms.gen.txt')
+    files.append(f'config/saturn/{target}_data_syms.gen.txt')
     if target != 'zero':
         files.append('build/saturn/zero_link_syms.txt')
     if target not in {'zero', 'game'}:
@@ -782,13 +925,14 @@ def link_objs(srcs, output_dir):
         symbol_files = inherited_symbol_files(filename_without_extension)
 
         ninja.build(
-            elf_name, 
-            'link', 
+            elf_name,
+            'link',
             inputs=[obj_name],
             implicit=[SYMBOL_OWNERSHIP_STAMP,
                       f'config/saturn/{ld_file}'] + symbol_files,
             variables={
                 'ld_file': ld_file,
+                'map_file': f"{output_dir}/{filename_without_extension}.map",
                 'symbol_scripts': ' '.join(
                     f'-T {symbol_file}' for symbol_file in symbol_files),
                 'target_aliases': target_alias_options(
@@ -806,14 +950,15 @@ def link_multi(multi_objs, output_dir):
         symbol_files = inherited_symbol_files(filename_without_extension)
 
         ninja.build(
-            elf_name, 
-            'link_multi', 
+            elf_name,
+            'link_multi',
             inputs=[main_obj],
             implicit=[x for x in sub_objs if x] +
                      [SYMBOL_OWNERSHIP_STAMP,
                       f'config/saturn/{ld_file}'] + symbol_files,
             variables={
                 'ld_file': ld_file,
+                'map_file': f"{output_dir}/{filename_without_extension}.map",
                 'symbol_scripts': ' '.join(
                     f'-T {symbol_file}' for symbol_file in symbol_files),
                 'target_aliases': target_alias_options(
@@ -1162,7 +1307,46 @@ multi_objs = {
         'build/saturn/stage_16/vlay.o',
         'build/saturn/stage_16/laydata.o',
         'build/saturn/stage_16/metadata.o',
-        'build/saturn/stage_16/data.o',
+        'build/saturn/stage_16/stdata.o',
+        'build/saturn/stage_16/prcfg.o',
+        'build/saturn/stage_16/gold.o',
+        'build/saturn/stage_16/przan.o',
+        'build/saturn/stage_16/ent04.o',
+        'build/saturn/stage_16/ent09.o',
+        'build/saturn/stage_16/expl.o',
+        'build/saturn/stage_16/ent05.o',
+        'build/saturn/stage_16/ent06.o',
+        'build/saturn/stage_16/ent07.o',
+        'build/saturn/stage_16/3dcoord.o',
+        'build/saturn/stage_16/3dindex.o',
+        'build/saturn/stage_16/ent15.o',
+        'build/saturn/stage_16/s20res.o',
+        'build/saturn/stage_16/ent23.o',
+        'build/saturn/stage_16/s20gfx.o',
+        'build/saturn/stage_16/s20part.o',
+        'build/saturn/stage_16/s21res.o',
+        'build/saturn/stage_16/ent25.o',
+        'build/saturn/stage_16/s21gfx.o',
+        'build/saturn/stage_16/s21part.o',
+        'build/saturn/stage_16/s22res.o',
+        'build/saturn/stage_16/entskbst.o',
+        'build/saturn/stage_16/s22gfx.o',
+        'build/saturn/stage_16/s22part.o',
+        'build/saturn/stage_16/s23res.o',
+        'build/saturn/stage_16/entspec.o',
+        'build/saturn/stage_16/s23gfx.o',
+        'build/saturn/stage_16/s23part.o',
+        'build/saturn/stage_16/s24res.o',
+        'build/saturn/stage_16/entgarg.o',
+        'build/saturn/stage_16/s24gfx.o',
+        'build/saturn/stage_16/s24part.o',
+        'build/saturn/stage_16/s25res.o',
+        'build/saturn/stage_16/entbreed.o',
+        'build/saturn/stage_16/s25gfx.o',
+        'build/saturn/stage_16/s25part.o',
+        'build/saturn/stage_16/s26res.o',
+        'build/saturn/stage_16/entwisp.o',
+        'build/saturn/stage_16/s26gfx.o',
     ],
     'build/saturn/t_bat.o' : [
         'build/saturn/t_bat/bathead.o',

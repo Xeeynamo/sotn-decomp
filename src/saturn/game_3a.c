@@ -5,18 +5,20 @@
 
 void PlaySfx(s32 sfxId);
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606B6F8, func_0606B6F8);
+INCLUDE_ASM("asm/saturn/game/f_nonmat", f606B6F8, LoadSubDisplayFiles);
 
 // _READ_SUB_OUT_MODE
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606B760, func_0606B760);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606BB4C, func_0606BB4C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606BEE4, func_0606BEE4);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606C064, func_0606C064);
+s32 func_0600654C(s32 param_1, s32 param_2);
+void func_0606C064(void) { func_0600654C(0x0606C054, 0x00252000); }
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606C088, func_0606C088);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606C160, func_0606C160);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606C3E4, func_0606C3E4);
 
-void func_0606C504(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+// func_0606C504
+void ScrollEntitiesWithCamera(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     Entity* entity;
     s32 i;
 
@@ -43,7 +45,7 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f606C594, func_0606C594);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606C774, func_0606C774);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606CA10, func_0606CA10);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D058, func_0606D058);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D2D0, func_0606D2D0);
+INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D2D0, FindBossTeleport);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D358, func_0606D358);
 
 // _PSX_POSITION_GET
@@ -81,7 +83,8 @@ void func_0606D554(s32 arg0) {
     }
 }
 
-void func_0606D5FC(void) {
+// func_0606D5FC
+void HandleRoomTransitionTrigger(void) {
     RoomTeleport* ptr;
 
     if ((D_8003C708.flags & FLAG_UNK_40) == 0) {
@@ -170,7 +173,8 @@ void func_0606D798(void) {
     }
 }
 
-s32 func_0606D804(u16 arg0) {
+// func_0606D804
+s32 GetRoomLoadDefTable(u16 arg0) {
     s32 ret;
 
     ret = DAT_0606459c;
@@ -207,7 +211,8 @@ static bool IsAlucart(void) {
 
 extern u8 DAT_06057f62;
 
-void func_0606D880(void) {
+// func_0606D880
+void UpdateEquipStatBonuses(void) {
     s32* statsPtr;
     s32 correctStonesEquipped;
     s32 hourOfDay;
@@ -469,7 +474,7 @@ void CalcDefense(void) {
 }
 
 void make_all(void) {
-    func_0606D880();
+    UpdateEquipStatBonuses();
     make_att();
     CalcDefense();
 }

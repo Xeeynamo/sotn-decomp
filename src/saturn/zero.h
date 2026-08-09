@@ -16,7 +16,7 @@ void DMA_ScuInit();
 
 // void SPR_2SetGourTbl(u16 arg0);
 
-void func_0600DACC();
+void InitPrimBuf();
 
 extern s32 DAT_0601ac30[];
 extern s32 DAT_0601ac34[];
@@ -60,7 +60,7 @@ struct Unk0605CD90 {
 
 void BuildSubDispTilemap(struct Unk0605CD90* param_1);
 s32 DAT_060086e4;
-s32 func_0600F96C(s32, s32, s32);
+s32 DecompressLzss(s32, s32, s32);
 // func_060086E8
 void DmaScroll(s32* src, s32* dest, u32 cnt);
 
@@ -128,7 +128,7 @@ s32 func_06017FA4(s32 param_1, s32 param_2, s32 param_3);
 void func_060082E8(void);
 void func_0600841C(void);
 
-void func_0600AD98(void);
+void InitPaletteRemapLuts(void);
 void func_0600B254(void);
 
 extern s32 D_8013B61C;
@@ -138,7 +138,7 @@ extern s8 DAT_060644C0;
 extern u16 DAT_0605cea2;
 extern u32 DAT_0605c658;
 void func_06030df0();
-void func_060044D0();
+void InitSystem();
 void func_060040D8();
 
 #endif

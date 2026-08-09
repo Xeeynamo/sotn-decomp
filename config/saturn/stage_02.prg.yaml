@@ -6,6 +6,11 @@ options:
   ld_scripts_path: config/saturn
   syms_path: config/saturn
   decomp_empty_funcs: true
+  symbol_files:
+    - game_user_syms.txt
+    - zero_user_syms.txt
+    - game_syms.gen.txt
+    - zero_syms.gen.txt
 segments:
   - name: stage_02
     type: code
@@ -46,14 +51,9 @@ segments:
       - start: 0x8908
         type: c
         file: stage_02
-        end: 0x10A93
-
-      - start: 0x10A94
-        type: c
-        file: stage_02
         end: 0x10c50
         function_ranges:
-          - [0x10A94, 0x10C4F]
+          - [0x10888, 0x10C40]
         data_ranges:
           - [0x10BAC, 0x10C13]
 

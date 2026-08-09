@@ -1,0 +1,92 @@
+options:
+  platform: psp
+  basename: borbo6
+  base_path: ..
+  build_path: build/pspeu
+  target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rbo6.bin
+  asm_path: asm/pspeu/boss/rbo6_psp
+  asset_path: assets/boss/rbo6
+  src_path: src/boss
+  ld_script_path: build/pspeu/borbo6.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.pspeu.txt
+    - config/symbols.pspeu.borbo6.txt
+  undefined_funcs_auto_path: build/pspeu/config/undefined_funcs_auto.pspeu.borbo6.txt
+  undefined_syms_auto_path: build/pspeu/config/undefined_syms_auto.pspeu.borbo6.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: pspeu_$VRAM
+  disassemble_all: true
+  section_order:
+    - .text
+    - .data
+    - .rodata
+    - .bss
+  ld_bss_is_noload: true
+  disasm_unknown: true
+  global_vram_start: 0x08000000
+  ld_generate_symbol_per_data_segment: true
+  asm_inc_header: |
+    .set noat      /* allow manual use of $at */
+    .set noreorder /* don't insert nops after branches */
+sha1: 5fc08e04124c8c846853d2924b4187e4e6309a03
+segments:
+  - [0x0, bin, mwo_header]
+  - name: borbo6
+    type: code
+    start: 0x80
+    vram: 0x09237700
+    bss_start_address: 0x0926BE80
+    bss_size: 0x1180
+    align: 128
+    subalign: 8
+    subsegments:
+      - [0x80, c, rbo6/create_entity]
+      - [0x1028, c, rbo6/e_stage_name]
+      - [0x1EA8, c, rbo6/e_red_door]
+      - [0x1F90, c, rbo6/e_red_door]
+      - [0x31B0, c, rbo6/st_update]
+      - [0x4100, c, rbo6/e_particles]
+      - [0x4C78, c, rbo6_psp/unk_4C78]
+      - [0x4D50, c, rbo6/e_collect]
+      - [0x8EC0, c, rbo6/e_misc]
+      - [0x95C8, c, rbo6/collision]
+      - [0xB7A0, c, rbo6/popup]
+      - [0xBD98, c, rbo6/e_room_fg]
+      - [0xBEB0, c, rbo6/st_common]
+      - [0xC9D8, c, rbo6_psp/prim_helpers]
+      - [0xD118, c, rbo6_psp/st_init]
+      - [0xD4E8, c, rbo6_psp/unk_D4E8]
+      - [0x15930, c, rbo6_psp/e_cutscene_dialogue]
+      - [0x160A8, c, rbo6_psp/unk_160A8]
+      - [0x19E38, c, rbo6_psp/e_lock_camera]
+      - [0x1A5B8, c, rbo6_psp/unk_1A5B8]
+      - [0x1B880, .data, rbo6/e_red_door]
+      - [0x1B898, .data, rbo6/st_update]
+      - [0x1B8C8, data, 1B8C8]
+      - [0x1B8C8, .data, rbo6/e_particles]
+      - [0x1B948, data, 1B948]
+      - [0x1B948, .data, rbo6/e_collect]
+      - [0x1BE90, data, 1BE90]
+      - [0x1BEE0, .data, rbo6/collision]
+      - [0x1C2B8, .data, rbo6/e_room_fg]
+      - [0x1C358, data, 1C358]
+      - [0x1D7F8, .data, rbo6/e_init]
+      - [0x1D9A0, data]
+      - [0x33D30, .data, rbo6/header]
+      - [0x33D70, data]
+      - [0x34600, .rodata, rbo6/e_red_door]
+      - [0x34618, .rodata, rbo6/e_collect]
+      - [0x34678, .rodata, rbo6_psp/unk_D4E8]
+      - [0x346E0, .rodata, rbo6_psp/unk_160A8]
+      - [0x34800, .bss, rbo6/create_entity]
+      - [0x34820, .bss, rbo6/st_update]
+      - [0x34860, bss, '34860']
+      - [0x34860, .bss, rbo6/e_collect]
+      - [0x34880, bss, '34880']
+      - [0x34A28, .bss, rbo6/d_prize_drops]
+      - [0x34A30, bss, 34A30]
+  - [0x35980]

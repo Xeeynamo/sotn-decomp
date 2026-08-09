@@ -6,6 +6,11 @@ options:
   ld_scripts_path: config/saturn
   syms_path: config/saturn
   decomp_empty_funcs: false
+  symbol_files:
+    - game_user_syms.txt
+    - zero_user_syms.txt
+    - game_syms.gen.txt
+    - zero_syms.gen.txt
 segments:
   - name: alucard
     type: code
@@ -23,7 +28,7 @@ segments:
         file: alucard
         end: 0xB753
         function_ranges:
-          - [0x1384, 0x141E]
+          - [0x137C, 0x137C]
           - [0x1A94, 0x2D3A]
 
       - start: 0xB754

@@ -249,7 +249,7 @@ void EntitySpellbook(Entity* self) {
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
         self->ext.spellbookMagicTome.unk7C = prim;
-        palette = 0x25A;
+        palette = PAL_SPELLBOOK;
         self->palette = palette;
         for (i = 0; i < 12; i++) {
             ptr = D_us_801830DC[i];

@@ -1,0 +1,2 @@
+EXTERN(_binary_assets_boss_rbo8_mwo_header_bin_start);
+EXTERN(RBO8_Load);

@@ -1,15 +1,235 @@
-# 
 version: saturn
 assets:
-  - name: ascii
+  - name: font-ascii
     kind: font
     profile: ascii
     source: disks/saturn/ASCII.FON
     path: assets/saturn/font/ascii
     output: build/saturn/assets/ASCII.FON
-  - name: kanji
+  - name: font-kanji
     kind: font
     profile: kanji
     source: disks/saturn/KANJI.FON
     path: assets/saturn/font/kanji
     output: build/saturn/assets/KANJI.FON
+  # 49 "DVI." block-interleaved stereo streams (func_06013538)
+  - name: music
+    kind: audio
+    codec: stereo
+    dir: disks/saturn/SD
+    path: assets/saturn/audio
+    output: build/saturn/assets/SD
+    files:
+      - SD01.PCM
+      - SD02.PCM
+      - SD03.PCM
+      - SD04.PCM
+      - SD05.PCM
+      - SD06.PCM
+      - SD07.PCM
+      - SD08.PCM
+      - SD09.PCM
+      - SD0A.PCM
+      - SD0B.PCM
+      - SD0C.PCM
+      - SD0D.PCM
+      - SD0E.PCM
+      - SD0F.PCM
+      - SD10.PCM
+      - SD11.PCM
+      - SD12.PCM
+      - SD13.PCM
+      - SD14.PCM
+      - SD15.PCM
+      - SD16.PCM
+      - SD17.PCM
+      - SD18.PCM
+      - SD19.PCM
+      - SD1A.PCM
+      - SD1B.PCM
+      - SD1C.PCM
+      - SD1D.PCM
+      - SD1E.PCM
+      - SD1F.PCM
+      - SD20.PCM
+      - SD21.PCM
+      - SD22.PCM
+      - SD23.PCM
+      - SD24.PCM
+      - SD25.PCM
+      - SD26.PCM
+      - SD27.PCM
+      - SD28.PCM
+      - SD29.PCM
+      - SD2A.PCM
+      - SD2B.PCM
+      - SD2C.PCM
+      - SD2D.PCM
+      - SD2E.PCM
+      - SD2F.PCM
+      - SD30.PCM
+      - SD31.PCM
+  # 12 headerless 8-bit signed DPCM streams
+  - name: voice
+    kind: audio
+    codec: voice
+    dir: disks/saturn/SD
+    path: assets/saturn/audio
+    output: build/saturn/assets/SD
+    files:
+      - SDD0.PCM
+      - SDD1.PCM
+      - SDD2.PCM
+      - SDE0.PCM
+      - SDE1.PCM
+      - SDE2.PCM
+      - SDE3.PCM
+      - SDE4.PCM
+      - SDE5.PCM
+      - SDE6.PCM
+      - SDE7.PCM
+      - SDE8.PCM
+  # 1 headerless mono ADPCM stream (func_060133CC)
+  - name: sfx
+    kind: audio
+    codec: mono
+    dir: disks/saturn/SD
+    path: assets/saturn/audio
+    output: build/saturn/assets/SD
+    files:
+      - SDF0.PCM
+  # secondary player chr. subweapons, spells and hit sparks
+  # 4bpp raw
+  - name: weapon-maria
+    kind: weapon
+    profile: maria
+    source: disks/saturn/MAR_W.CHR
+    prg: disks/saturn/MARIA.PRG
+    path: assets/saturn/weapon/MAR_W
+    output: build/saturn/assets/MAR_W.CHR
+  - name: weapon-richter
+    kind: weapon
+    profile: richter
+    source: disks/saturn/RIC_W.CHR
+    prg: disks/saturn/RICHTER.PRG
+    path: assets/saturn/weapon/RIC_W
+    output: build/saturn/assets/RIC_W.CHR
+  - name: weapon-alucard
+    kind: weapon
+    profile: alucard
+    source: disks/saturn/ALC_W.CHR
+    prg: disks/saturn/ALUCARD.PRG
+    path: assets/saturn/weapon/ALC_W
+    output: build/saturn/assets/ALC_W.CHR
+  - name: player-maria
+    kind: player
+    profile: maria
+    prg: disks/saturn/MARIA.PRG
+    source: disks/saturn/MARIA.CHR
+    include: src/saturn/maria/gen/gfxloads.h
+    palette_include: src/saturn/maria/gen/palette.h
+    path: assets/saturn/player/MARIA
+    output: build/saturn/assets/MARIA.CHR
+  - name: player-richter
+    kind: player
+    profile: richter
+    prg: disks/saturn/RICHTER.PRG
+    source: disks/saturn/RICHTER.CHR
+    include: src/saturn/ric/gen/gfxloads.h
+    palette_include: src/saturn/ric/gen/palette.h
+    path: assets/saturn/player/RICHTER
+    output: build/saturn/assets/RICHTER.CHR
+  - name: player-richter2
+    kind: player
+    profile: richter2
+    prg: disks/saturn/RICHTER2.PRG
+    source: disks/saturn/RICHTER2.CHR
+    path: assets/saturn/player/RICHTER2
+    output: build/saturn/assets/RICHTER2.CHR
+  - name: player-alucard
+    kind: player
+    profile: alucard
+    prg: disks/saturn/ALUCARD.PRG
+    source: disks/saturn/ALUCARD.CHR
+    path: assets/saturn/player/ALUCARD
+    output: build/saturn/assets/ALUCARD.CHR
+  - name: castle-map-maria
+    kind: bitmap
+    profile: maria-castle-map
+    source: disks/saturn/MARIA.PRG
+    chr: disks/saturn/MARIA.CHR
+    include: src/saturn/maria/gen/castmap.h
+    path: assets/saturn/bitmap/maria-castle-map
+    output: build/saturn/assets/maria-castle-map.bin
+  - name: castle-map-alucard
+    kind: bitmap
+    profile: alucard-castle-map
+    source: disks/saturn/SUB_DISP.MAP
+    chr: disks/saturn/ALUCARD.CHR
+    path: assets/saturn/bitmap/alucard-castle-map
+    output: build/saturn/assets/alucard-castle-map.bin
+  - name: castle-map-richter
+    kind: bitmap
+    profile: richter-castle-map
+    source: disks/saturn/RICHTER.PRG
+    chr: disks/saturn/RICHTER.CHR
+    include: src/saturn/ric/gen/castmap.h
+    path: assets/saturn/bitmap/richter-castle-map
+    output: build/saturn/assets/richter-castle-map.bin
+  - name: castle-map-richter2
+    kind: bitmap
+    profile: richter2-castle-map
+    source: disks/saturn/RICHTER2.PRG
+    chr: disks/saturn/RICHTER2.CHR
+    path: assets/saturn/bitmap/richter2-castle-map
+    output: build/saturn/assets/richter2-castle-map.bin
+  - name: familiar-bat
+    kind: familiar
+    profile: bat
+    prg: disks/saturn/T_BAT.PRG
+    source: disks/saturn/T_BAT.CHR
+    include: src/saturn/t_bat/gen/batgfx.h
+    path: assets/saturn/familiar/T_BAT
+    output: build/saturn/assets/T_BAT.CHR
+  - name: familiar-devil
+    kind: familiar
+    profile: devil
+    prg: disks/saturn/T_DEVIL.PRG
+    source: disks/saturn/T_DEVIL.CHR
+    path: assets/saturn/familiar/T_DEVIL
+    output: build/saturn/assets/T_DEVIL.CHR
+  - name: familiar-devil2
+    kind: familiar
+    profile: devil2
+    prg: disks/saturn/T_DEVIL2.PRG
+    source: disks/saturn/T_DEVIL2.CHR
+    path: assets/saturn/familiar/T_DEVIL2
+    output: build/saturn/assets/T_DEVIL2.CHR
+  - name: familiar-fairy
+    kind: familiar
+    profile: fairy
+    prg: disks/saturn/T_FAIRY.PRG
+    source: disks/saturn/T_FAIRY.CHR
+    path: assets/saturn/familiar/T_FAIRY
+    output: build/saturn/assets/T_FAIRY.CHR
+  - name: familiar-fairy2
+    kind: familiar
+    profile: fairy2
+    prg: disks/saturn/T_FAIRY2.PRG
+    source: disks/saturn/T_FAIRY2.CHR
+    path: assets/saturn/familiar/T_FAIRY2
+    output: build/saturn/assets/T_FAIRY2.CHR
+  - name: familiar-ghost
+    kind: familiar
+    profile: ghost
+    prg: disks/saturn/T_GHOST.PRG
+    source: disks/saturn/T_GHOST.CHR
+    path: assets/saturn/familiar/T_GHOST
+    output: build/saturn/assets/T_GHOST.CHR
+  - name: familiar-sword
+    kind: familiar
+    profile: sword
+    prg: disks/saturn/T_SWORD.PRG
+    source: disks/saturn/T_SWORD.CHR
+    path: assets/saturn/familiar/T_SWORD
+    output: build/saturn/assets/T_SWORD.CHR

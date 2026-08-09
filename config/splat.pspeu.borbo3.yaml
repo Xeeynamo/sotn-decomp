@@ -1,0 +1,94 @@
+options:
+  platform: psp
+  basename: borbo3
+  base_path: ..
+  build_path: build/pspeu
+  target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rbo3.bin
+  asm_path: asm/pspeu/boss/rbo3_psp
+  asset_path: assets/boss/rbo3
+  src_path: src/boss
+  ld_script_path: build/pspeu/borbo3.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.pspeu.txt
+    - config/symbols.pspeu.borbo3.txt
+  undefined_funcs_auto_path: build/pspeu/config/undefined_funcs_auto.pspeu.borbo3.txt
+  undefined_syms_auto_path: build/pspeu/config/undefined_syms_auto.pspeu.borbo3.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: pspeu_$VRAM
+  disassemble_all: true
+  section_order:
+    - .text
+    - .data
+    - .rodata
+    - .bss
+  ld_bss_is_noload: true
+  disasm_unknown: true
+  global_vram_start: 0x08000000
+  ld_generate_symbol_per_data_segment: true
+  asm_inc_header: |
+    .set noat      /* allow manual use of $at */
+    .set noreorder /* don't insert nops after branches */
+sha1: b2918f5a9bda4a4c563e515bb76afb3220ea54f8
+segments:
+  - [0x0, bin, mwo_header]
+  - name: borbo3
+    type: code
+    start: 0x80
+    vram: 0x09237700
+    bss_start_address: 0x09254C80
+    bss_size: 0x180
+    align: 128
+    subalign: 8
+    subsegments:
+      - [0x80, c, rbo3/create_entity]
+      - [0x1028, c, rbo3/e_life_up]
+      - [0x1CA8, c, rbo3/e_stage_name]
+      - [0x2B28, c, rbo3_psp/e_red_door]
+      - [0x2C10, c, rbo3_psp/e_red_door]
+      - [0x3E30, c, rbo3/st_update]
+      - [0x4D80, c, rbo3/e_particles]
+      - [0x58F8, c, rbo3_psp/unk_58F8]
+      - [0x59D0, c, rbo3/e_collect]
+      - [0x9B40, c, rbo3_psp/unk_9B40]
+      - [0xA248, c, rbo3/collision]
+      - [0xC420, c, rbo3/popup]
+      - [0xCA18, c, rbo3_psp/e_room_fg]
+      - [0xCB30, c, rbo3/st_common]
+      - [0xD688, c, rbo3/prim_helpers]
+      - [0xDDC8, c, rbo3_psp/func_us_80192b38_from_rbo3]
+      - [0xE0B8, c, rbo3_psp/st_init]
+      - [0xE1F8, c, rbo3_psp/unk_E1F8]
+      - [0x10410, c, rbo3_psp/e_lock_camera]
+      - [0x10670, c, rbo3_psp/unk_10670]
+      - [0x10D58, c, rbo3_psp/e_clouds]
+      - [0x11500, .data, rbo3/e_life_up]
+      - [0x11550, data, '11550']
+      - [0x11568, .data, rbo3/st_update]
+      - [0x11598, data, '11598']
+      - [0x11598, .data, rbo3/e_particles]
+      - [0x11618, .data, rbo3/e_collect]
+      - [0x11B60, .data, rbo3_psp/unk_9B40]
+      - [0x11BB0, data, 11BB0]
+      - [0x11BB0, .data, rbo3/collision]
+      - [0x11F88, data, 11F88]
+      - [0x12EC0, data, rbo3/e_init]
+      - [0x13010, data]
+      - [0x1D0E8, .data, rbo3/header]
+      - [0x1D118, data]
+      - [0x1D480, .rodata, rbo3/e_life_up]
+      - [0x1D4A0, .rodata, rbo3_psp/e_red_door]
+      - [0x1D4B8, .rodata, rbo3/e_collect]
+      - [0x1D518, .rodata, rbo3_psp/func_us_80192b38_from_rbo3]
+      - [0x1D538, .rodata, rbo3_psp/unk_E1F8]
+      - [0x1D578, .rodata, rbo3_psp/unk_10670]
+      - [0x1D600, .bss, rbo3/create_entity]
+      - [0x1D620, .bss, rbo3/e_life_up]
+      - [0x1D628, .bss, rbo3/st_update]
+      - [0x1D668, bss, 1D668]
+      - [0x1D670, .bss, rbo3_psp/unk_58F8]
+      - [0x1D688, bss, 1D688]
+  - [0x1D780]

@@ -241,7 +241,7 @@ void func_us_801C504C(void) {
     SetDopplegangerStep(9);
     DOPPLEGANGER.velocityY = FIX(-12);
     SetDopplegangerAnim(0x21);
-    g_Dop.unk4A = 0;
+    g_Dop.gravBootTimer = 0;
     g_Dop.unk44 &= 0xFFFE;
     CreateEntFactoryFromEntity(g_CurrentEntity, 2, 0);
 }

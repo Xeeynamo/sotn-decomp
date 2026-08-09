@@ -5,7 +5,7 @@
 #include "lib/scl.h"
 
 void PlaySfx(s32 sfxId);
-void func_0606D880(void);
+void UpdateEquipStatBonuses(void);
 s32 CalcAttack(s32 equipId, s32 otherEquipId);
 void make_all(void);
 
@@ -15,9 +15,9 @@ extern u16 DAT_0605cea0;
 extern s32 DAT_0605c11a;
 extern Unk0605cd70 DAT_0605cd70;
 
-void func_0606EEF8(u16);
+void ResetPlayState(u16);
 void func_06005208(s32);
-void func_0606F14C(void);
+void UpdatePlayTimer(void);
 void RunMainEngine(void);
 void SubDisp(void);
 void func_060728B4(void);
@@ -27,7 +27,7 @@ void CheckWeaponCombo(void);
 void ModeGame(void) {
     switch (DAT_0605cea0) {
     case 1:
-        func_0606EEF8(DAT_0605c11a);
+        ResetPlayState(DAT_0605c11a);
         UpdateCapePalette();
         CheckWeaponCombo();
         func_06005208(1);
@@ -39,7 +39,7 @@ void ModeGame(void) {
         switch (DAT_0605cd70.unk2) {
         case 1:
             RunMainEngine();
-            func_0606F14C();
+            UpdatePlayTimer();
             break;
         case 4:
             SubDisp();
@@ -59,17 +59,18 @@ extern s32 DAT_06061dd0;
 extern u16 DAT_06065470;
 extern s32 DAT_0608609c;
 
-void func_0606F01C(void);
+void ResetNewGameSettings(void);
 void ApplyJosephsCloakPalette(void);
 
-void func_0606EEF8(u16 param_1) {
+// func_0606EEF8
+void ResetPlayState(u16 param_1) {
     u16 stageID;
 
     g_GameTimer = 0;
     memset(g_Entities, 0, sizeof(g_Entities));
     stageID = g_CurrentRoom.stageID;
     if (param_1 == 0) {
-        func_0606F01C();
+        ResetNewGameSettings();
         DAT_0608609c = DAT_0605c10c;
     } else {
         DAT_0608609c = DAT_0605c10c;
@@ -92,7 +93,8 @@ void func_0606EEF8(u16 param_1) {
 
 extern s16 g_ButtonMask[];
 
-void func_0606F01C(void) {
+// func_0606F01C
+void ResetNewGameSettings(void) {
     s32 i;
     u8* ptr;
 
@@ -133,7 +135,8 @@ void func_0606F01C(void) {
     }
 }
 
-void func_0606F14C(void) {
+// func_0606F14C
+void UpdatePlayTimer(void) {
     g_Status.timerFrames += DAT_0605c10c - DAT_0608609c;
     DAT_0608609c = DAT_0605c10c;
     if (g_Status.timerFrames >= 60) {
@@ -718,7 +721,7 @@ void GetEquipProperties(s32 handId, Equipment* res, s32 equipId) {
     }
 
     res->criticalRate = criticalRate;
-    func_0606D880();
+    UpdateEquipStatBonuses();
     itemCategory = g_EquipDefs[equipId].itemCategory;
     if (itemCategory == ITEM_FOOD || itemCategory == ITEM_MEDICINE) {
         return;

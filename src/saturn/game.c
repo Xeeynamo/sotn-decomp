@@ -87,7 +87,7 @@ extern s32 D_801375A4;
 void InitRoomEntities(s32);
 void SetDefaultSCLPriority(s32);
 void FUN_0606d358(s32);
-void func_0600ff08(void);
+void SetCanRevealMap(void);
 void func_06009510(s32);
 
 // original name: INIT_ROOM
@@ -108,10 +108,10 @@ void InitRoom(void) {
     Scl_w_reg.win1_end[1] = 0;
     Scl_w_reg.wincontrl[0] = 0x8383;
     SclProcess = 1;
-    func_0600ff08();
+    SetCanRevealMap();
     if (g_CurrentRoom.unk4 < 0x50) {
         D_801375BC.def =
-            (RoomLoadDef*)func_0606D804(g_CurrentRoom.stageID & 0xDF);
+            (RoomLoadDef*)GetRoomLoadDefTable(g_CurrentRoom.stageID & 0xDF);
         D_801375BC.def =
             (RoomLoadDef*)((u8*)D_801375BC.def + g_CurrentRoom.unk4 * 6 + 4);
     }
@@ -319,7 +319,7 @@ extern s32 DAT_0608629c;
 void func_06073280(void);
 void UpdateCapePalette(void);
 void func_06005208(s32);
-void func_06008d04(s32, s32);
+void StartColorOffsetFade(s32, s32);
 void CheckWeaponCombo(void);
 void make_all(void);
 
@@ -328,9 +328,9 @@ void SubDisp(void) {
     switch (DAT_06057f68) {
     case 1:
         if (DAT_0605cd70.unk0 == 0x14) {
-            func_06008d04(1, 0x28);
+            StartColorOffsetFade(1, 0x28);
         } else {
-            func_06008d04(1, 0xF);
+            StartColorOffsetFade(1, 0xF);
         }
         DAT_06057f68++;
         break;
@@ -341,9 +341,9 @@ void SubDisp(void) {
         break;
     case 4:
         if (DAT_0605cd70.unk0 == 0x17) {
-            func_06008d04(0, 0x28);
+            StartColorOffsetFade(0, 0x28);
         } else {
-            func_06008d04(0, 0xF);
+            StartColorOffsetFade(0, 0xF);
         }
         DAT_06057f68++;
         break;
@@ -561,7 +561,7 @@ void func_06073280(void) {
 
 extern s16 DAT_06086220[];
 
-void func_06074278(s32);
+void SetVdp2DisplayMode(s32);
 
 // original name: INIT_SUB_GAMEN
 void func_060732E4(s32 arg0) {
@@ -574,25 +574,25 @@ void func_060732E4(s32 arg0) {
         for (i = 0; i < 10; i++) {
             DAT_06086220[i] = 0x7E + i * 14;
         }
-        func_06074278(0);
+        SetVdp2DisplayMode(0);
         break;
     case 8:
         func_060645FC();
-        func_06074278(0);
+        SetVdp2DisplayMode(0);
         break;
     case 9:
         func_060645BC();
-        func_06074278(0);
+        SetVdp2DisplayMode(0);
         break;
     case 10:
         func_06064620();
         func_06009570(3);
-        func_06074278(1);
+        SetVdp2DisplayMode(1);
         break;
     case 11:
         func_06064600();
         func_06009570(4);
-        func_06074278(1);
+        SetVdp2DisplayMode(1);
         break;
     }
     DAT_06057f68 = 1;
@@ -820,10 +820,16 @@ void func_800FAF44(bool isAccessory) {
     }
 }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6074048, func_06074048);
+extern s32 DAT_06086210;
+void func_06074048(u8 param_1) {
+    DAT_06086210 = 0;
+    if (param_1 != 0) {
+        DAT_06086210 = 1;
+    }
+}
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6074068, func_06074068);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60740F8, func_060740F8);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6074278, func_06074278);
+INCLUDE_ASM("asm/saturn/game/f_nonmat", f6074278, SetVdp2DisplayMode);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60743B8, func_060743B8);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6074470, func_06074470);
 
@@ -1018,7 +1024,8 @@ void UpdateCapePalette(void) {
     }
 }
 
-u16* func_06074A98(void) { return D_800A37F4[8]; }
+// func_06074A98
+u16* GetCustomCloakPalette(void) { return D_800A37F4[8]; }
 
 void ApplyJosephsCloakPalette(void) {
     u16 g_JosephsCloakColors[4];
@@ -1038,7 +1045,7 @@ void ApplyJosephsCloakPalette(void) {
         RGB16_COLOR(g_Settings.cloakColors[0], g_Settings.cloakColors[1],
                     g_Settings.cloakColors[2]);
 
-    ptr = func_06074A98();
+    ptr = GetCustomCloakPalette();
     for (i = 0; i < 4; i++) {
         *ptr++ = g_JosephsCloakColors[i];
     }

@@ -1,0 +1,93 @@
+options:
+  platform: psp
+  basename: bomar
+  base_path: ..
+  build_path: build/pspeu
+  target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/mar.bin
+  asm_path: asm/pspeu/boss/mar_psp
+  asset_path: assets/boss/mar
+  src_path: src/boss
+  ld_script_path: build/pspeu/bomar.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.pspeu.txt
+    - config/symbols.pspeu.bomar.txt
+  undefined_funcs_auto_path: build/pspeu/config/undefined_funcs_auto.pspeu.bomar.txt
+  undefined_syms_auto_path: build/pspeu/config/undefined_syms_auto.pspeu.bomar.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: pspeu_$VRAM
+  disassemble_all: true
+  section_order:
+    - .text
+    - .data
+    - .rodata
+    - .bss
+  ld_bss_is_noload: true
+  disasm_unknown: true
+  global_vram_start: 0x08000000
+  ld_generate_symbol_per_data_segment: true
+  asm_inc_header: |
+    .set noat      /* allow manual use of $at */
+    .set noreorder /* don't insert nops after branches */
+sha1: 95732c4d247b18262e50cfd8315720092e74d2b5
+segments:
+  - [0x0, bin, mwo_header]
+  - name: bomar
+    type: code
+    start: 0x80
+    vram: 0x09237700
+    bss_start_address: 0x09255000
+    bss_size: 0x780
+    align: 128
+    subalign: 8
+    subsegments:
+      - [0x80, c, mar/create_entity]
+      - [0x1028, c, mar_psp/unk_1A0]
+      - [0x2830, c, mar/e_stage_name]
+      - [0x36B0, c, mar_psp/e_red_door]
+      - [0x3798, c, mar_psp/e_red_door]
+      - [0x49B8, c, mar/st_update]
+      - [0x5908, c, mar/e_particles]
+      - [0x6480, c, mar_psp/unk_6480]
+      - [0x6558, c, mar/e_collect]
+      - [0xA6C8, c, mar_psp/unk_A6C8]
+      - [0xADD0, c, mar/collision]
+      - [0xCFA8, c, mar/popup]
+      - [0xD5A0, c, mar_psp/e_room_fg]
+      - [0xD6B8, c, mar/st_common]
+      - [0xE678, c, mar/prim_helpers]
+      - [0xEDB8, c, mar_psp/st_init]
+      - [0xEFF8, c, mar_psp/unk_EFF8]
+      - [0xF950, c, mar_psp/e_cutscene_dialogue]
+      - [0x100C8, c, mar_psp/unk_100C8]
+      - [0x12520, c, mar_psp/e_lock_camera]
+      - [0x12780, data]
+      - [0x12800, .data, mar/st_update]
+      - [0x12830, data, '12830']
+      - [0x12830, .data, mar/e_particles]
+      - [0x128B0, .data, mar/e_collect]
+      - [0x12DF8, .data, mar_psp/unk_A6C8]
+      - [0x12E48, data, 12E48]
+      - [0x12E48, .data, mar/collision]
+      - [0x13220, data, '13220']
+      - [0x147B0, data, mar/e_init]
+      - [0x148C0, data]
+      - [0x1D1E8, .data, mar/header]
+      - [0x1D218, data]
+      - [0x1D780, .rodata, mar_psp/unk_1A0]
+      - [0x1D798, .rodata, mar_psp/e_red_door]
+      - [0x1D7B0, .rodata, mar/e_collect]
+      - [0x1D810, .rodata, mar_psp/unk_EFF8]
+      - [0x1D850, .rodata, mar_psp/unk_100C8]
+      - [0x1D980, .bss, mar/create_entity]
+      - [0x1D9A0, .bss, mar_psp/unk_1A0]
+      - [0x1D9A8, .bss, mar/st_update]
+      - [0x1D9E8, bss, 1D9E8]
+      - [0x1D9F0, .bss, mar_psp/unk_6480]
+      - [0x1DA08, bss, 1DA08]
+      - [0x1DA98, .bss, mar/d_prize_drops]
+      - [0x1DAA0, bss, 1DAA0]
+  - [0x1E100]

@@ -34,6 +34,8 @@ u16 PrizeDrops[] = {
     ITEMDROP_LIFE_VESSEL,
     ITEMDROP_LIFE_VESSEL,
     ITEMDROP_LIFE_VESSEL,
+#if !defined(VERSION_PSP)
     // TODO: Incorrect split?
     ITEMDROP_SMALL_HEART,
+#endif
 };

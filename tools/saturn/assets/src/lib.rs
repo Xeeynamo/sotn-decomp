@@ -1,7 +1,17 @@
 use std::fmt;
 
+pub mod adpcm;
+pub mod audio;
+pub mod bitmap;
+pub mod familiar;
 pub mod font;
 pub mod image;
+pub mod lzss;
+pub mod player;
+pub mod sheet;
+pub mod sprite;
+pub mod wav;
+pub mod weapon;
 
 pub type Result<T> = std::result::Result<T, Error>;
 

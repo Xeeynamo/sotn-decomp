@@ -4,8 +4,12 @@
 #ifndef VERSION_PSP
 
 // This is an unused image that says "Golem Maker". Likely stripped on PSP.
-u8 D_8018326C[] = {
-#include "gen/D_8018326C.h"
+u8 gfx_stage_name_jp_sm[] = {
+#include "gen/gfx_stage_name_jp_sm.h"
+};
+
+u8 gfx_stage_name_jp_lg[] = {
+#include "gen/gfx_stage_name_jp_lg.h"
 };
 
 #endif

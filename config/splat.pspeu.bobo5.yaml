@@ -1,0 +1,106 @@
+options:
+  platform: psp
+  basename: bobo5
+  base_path: ..
+  build_path: build/pspeu
+  target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo5.bin
+  asm_path: asm/pspeu/boss/bo5_psp
+  asset_path: assets/boss/bo5
+  src_path: src/boss
+  ld_script_path: build/pspeu/bobo5.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.pspeu.txt
+    - config/symbols.pspeu.bobo5.txt
+  undefined_funcs_auto_path: build/pspeu/config/undefined_funcs_auto.pspeu.bobo5.txt
+  undefined_syms_auto_path: build/pspeu/config/undefined_syms_auto.pspeu.bobo5.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: pspeu_$VRAM
+  disassemble_all: true
+  section_order:
+    - .text
+    - .data
+    - .rodata
+    - .bss
+  ld_bss_is_noload: true
+  disasm_unknown: true
+  global_vram_start: 0x08000000
+  ld_generate_symbol_per_data_segment: true
+  asm_inc_header: |
+    .set noat      /* allow manual use of $at */
+    .set noreorder /* don't insert nops after branches */
+sha1: 667db208e0843664ffff24f444955806f8c1adaf
+segments:
+  - [0x0, bin, mwo_header]
+  - name: bobo5
+    type: code
+    start: 0x80
+    vram: 0x09237700
+    bss_start_address: 0x0926E880
+    bss_size: 0x800
+    align: 128
+    subalign: 8
+    subsegments:
+      - [0x80, c, bo5/create_entity]
+      - [0x1028, c, bo5/e_life_up]
+      - [0x1CA8, c, bo5/e_stage_name]
+      - [0x2B28, c, bo5/e_red_door]
+      - [0x2C10, c, bo5/e_red_door]
+      - [0x3E30, c, bo5/st_update]
+      - [0x4D80, c, bo5/e_particles]
+      - [0x58F8, c, bo5_psp/unk_58F8]
+      - [0x59D0, c, bo5/e_collect]
+      - [0x9B40, c, bo5/e_misc]
+      - [0xA498, c, bo5/collision]
+      - [0xC670, c, bo5/popup]
+      - [0xCC68, c, bo5_psp/e_room_fg]
+      - [0xCD80, c, bo5/st_common]
+      - [0xE3A0, c, bo5/prim_helpers]
+      - [0xEAE0, c, bo5_psp/e_bell]
+      - [0xF9A8, c, bo5_psp/func_us_801a4494]
+      - [0xFAE8, c, bo5_psp/st_init]
+      - [0xFE10, c, bo5_psp/unk_FE10]
+      - [0x14330, c, bo5_psp/e_room_fg_2]
+      - [0x149E8, c, bo5_psp/unk_149E8]
+      - [0x15AF8, c, bo5_psp/e_cutscene_dialogue]
+      - [0x16270, c, bo5_psp/unk_16270]
+      - [0x18730, c, bo5/e_lock_camera]
+      - [0x18990, c, bo5_psp/e_rbo3door]
+      - [0x18E30, c, bo5_psp/e_dai_no2_shortcut]
+      - [0x191F0, c, bo5_psp/e_stained_glass]
+      - [0x1AD00, c, bo5_psp/e_clouds]
+      - [0x1B480, .data, bo5/e_life_up]
+      - [0x1B4D0, .data, bo5/e_red_door]
+      - [0x1B4E8, .data, bo5/st_update]
+      - [0x1B518, data, 1B518]
+      - [0x1B518, .data, bo5/e_particles]
+      - [0x1B598, .data, bo5/e_collect]
+      - [0x1BAE0, data, 1BAE0]
+      - [0x1BB30, .data, bo5/collision]
+      - [0x1BF08, .data, bo5_psp/e_room_fg]
+      - [0x1BFA8, data, 1BFA8]
+      - [0x23C98, .data, bo5/e_init]
+      - [0x23E20, data]
+      - [0x36150, .data, bo5/header]
+      - [0x36180, data]
+      - [0x36AE8, .data, bo5/e_lock_camera]
+      - [0x36B60, data, 36B60]
+      - [0x36F00, .rodata, bo5/e_life_up]
+      - [0x36F20, .rodata, bo5/e_red_door]
+      - [0x36F38, .rodata, bo5/e_collect]
+      - [0x36F98, .rodata, bo5_psp/unk_FE10]
+      - [0x37020, .rodata, bo5_psp/unk_149E8]
+      - [0x370A0, .rodata, bo5_psp/unk_16270]
+      - [0x37158, .rodata, bo5_psp/e_rbo3door]
+      - [0x37200, .bss, bo5/create_entity]
+      - [0x37220, .bss, bo5/e_life_up]
+      - [0x37228, .bss, bo5/st_update]
+      - [0x37268, bss, '37268']
+      - [0x37270, .bss, bo5_psp/unk_58F8]
+      - [0x37288, bss, '37288']
+      - [0x379A8, .bss, bo5/e_lock_camera]
+      - [0x379B0, bss, 379B0]
+  - [0x37A00]

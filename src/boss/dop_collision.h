@@ -2,7 +2,7 @@
 
 extern Point16 g_DopSensorsFloor[];
 
-static void OVL_EXPORT(CheckFloor)(void) {
+static void CheckFloor(void) {
     Collider collider;
     s32 temp_v1;
     u32 effects;
@@ -170,7 +170,7 @@ static void OVL_EXPORT(CheckFloor)(void) {
 extern Point16 g_DopSensorsCeiling[];
 
 // same as DRA's CheckCeiling
-static void OVL_EXPORT(CheckCeiling)(void) {
+static void CheckCeiling(void) {
     Collider collider;
     s32 temp_fp;
     s32 temp_v1;
@@ -331,7 +331,7 @@ static void OVL_EXPORT(CheckCeiling)(void) {
 
 extern Point16 g_DopSensorsWall[];
 
-static void OVL_EXPORT(CheckWallRight)(void) {
+static void CheckWallRight(void) {
     Collider collider;
 
     s16* dopY;
@@ -406,7 +406,7 @@ static void OVL_EXPORT(CheckWallRight)(void) {
     }
 }
 
-static void OVL_EXPORT(CheckWallLeft)(void) {
+static void CheckWallLeft(void) {
     Collider collider;
 
     s16* dopY;

@@ -8,10 +8,11 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/deps"
 )
 
+// zero must be split first, then game
 var saturnSplitterYAMLs = []string{
+	"config/saturn/zero.bin.yaml",
 	"config/saturn/game.prg.yaml",
 	"config/saturn/t_bat.prg.yaml",
-	"config/saturn/zero.bin.yaml",
 	"config/saturn/stage_02.prg.yaml",
 	"config/saturn/warp.prg.yaml",
 	"config/saturn/alucard.prg.yaml",
@@ -27,7 +28,13 @@ func buildSaturn() error {
 	if err := buildSaturnObjects(); err != nil {
 		return err
 	}
-	return checkVersions(os.Stderr, []string{"saturn"})
+	if err := checkVersions(os.Stderr, []string{"saturn"}); err != nil {
+		return err
+	}
+	if err := copyBuildToExpectedFolder("saturn"); err != nil {
+		return fmt.Errorf("copy build to expected folder: %w", err)
+	}
+	return nil
 }
 
 func buildSaturnObjects() error {

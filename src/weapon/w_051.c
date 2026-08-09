@@ -203,7 +203,7 @@ static u16 D_169000_8017AEA4[] = {
 static u16* g_WeaponCluts[] = {
     D_169000_8017A950, D_169000_8017A990, D_169000_8017A9D0};
 
-static s32 g_HandId = 0;
+static s32 g_HandId = HAND_ID;
 
 static s32 D_169000_8017C0E0;
 
@@ -211,6 +211,7 @@ static s32 D_169000_8017C0E0;
 
 void func_169000_8017B1DC(s32 arg0) {
     RECT rect;
+    u16* dst;
     s32 colorsChanged;
     s32 palIndex;
     u16 color;
@@ -272,15 +273,17 @@ void func_169000_8017B1DC(s32 arg0) {
     }
 
     color = COLOR16(_r, _g, _b, _a);
-    palIndex = (g_HandId * 0x180);
-    palIndex += arg0 << 5;
-    D_8006EDCC[0][0x2B + palIndex] = color;
+    dst = (u16*)g_Clut + 0x110 * COLORS_PER_PAL;
+    palIndex = (g_HandId * N_WEAPON_PAL) * COLORS_PER_PAL;
+    palIndex += arg0 * 0x20;
+    dst[0x2B + palIndex] = color;
 
     rect.x = 0;
     rect.y = 0xF1;
     rect.w = 256;
     rect.h = 3;
-    LoadImage(&rect, (u_long*)D_8006EDCC);
+    dst = (u16*)g_Clut + 0x1100;
+    LoadImage(&rect, (u_long*)dst);
 }
 
 static void EntityWeaponAttack(Entity* self) {

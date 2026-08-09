@@ -19,8 +19,21 @@ def add_custom_arguments(parser):
     )
 
 
+def apply_saturn(config, args):
+    name = args.overlay
+    config["myimg"] = f"build/saturn/{name}.PRG"
+    config["source_directories"] = [f"src/saturn/"]
+    config["mapfile"] = f"build/saturn/{name.lower()}.map"
+    config["baseimg"] = f"disks/saturn/{name}.PRG"
+    config["objdump_executable"] = "sh-elf-objdump"
+    config["arch"] = "sh2"
+
+
 def apply(config, args):
     version = args.version
+    if version == "saturn":
+        apply_saturn(config, args)
+        return
     name = re.sub(
         r"^(?:st|bos?s?)/?(?=[a-z])",
         "",
@@ -32,9 +45,8 @@ def apply(config, args):
         "us": "disks/us",
         "hd": "disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin",
         "pspeu": "disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN",
-        "saturn": "disks/saturn",
     }
-    binaryExt = {"us": "BIN", "hd": "bin", "pspeu": "bin", "saturn": "PRG"}
+    binaryExt = {"us": "BIN", "hd": "bin", "pspeu": "bin"}
     path_prefix = ""
     name_prefix = ""
 
@@ -43,15 +55,11 @@ def apply(config, args):
         path_prefix = "BIN" if version == "us" else ""
         name_prefix = "weapon/"
         config["myimg"] = os.path.join(f"build/{version}", f"{name_prefix}{name}.bin")
-        config["source_directories"] = (
-            [f"src/saturn/"]
-            if version == "saturn"
-            else [
-                "include",
-                "src/weapon",
-                f"asm/{version}/weapon/data",
-            ]
-        )
+        config["source_directories"] = [
+            "include",
+            "src/weapon",
+            f"asm/{version}/weapon/data",
+        ]
     else:
         if name.lower() in os.listdir("src/st"):
             name_prefix = "st"
@@ -67,34 +75,29 @@ def apply(config, args):
         config["myimg"] = os.path.join(
             f"build/{version}", f"{name}.{binaryExt[version]}"
         )
-        if version == "saturn":
-            config["source_directories"] = [f"src/saturn/"]
-        else:
-            config["source_directories"] = [
-                "include",
-                os.path.join(
-                    "src",
-                    name_prefix.replace("bo", "boss"),
-                    name.lower().replace("tt_", "servant/tt_"),
-                ),
-                os.path.join(
-                    f"asm/{version}",
-                    name_prefix.replace("bo", "boss").replace("tt_", "servant/tt_"),
-                    name.lower().replace("tt_", "servant/tt_"),
-                ),
-            ]
-            if version == "pspeu" and not name.startswith("tt_"):
-                config["source_directories"].append(
-                    os.path.join(
-                        "src", name_prefix.replace("bo", "boss"), f"{name}_psp"
-                    )
-                )
+        config["source_directories"] = [
+            "include",
+            os.path.join(
+                "src",
+                name_prefix.replace("bo", "boss"),
+                name.lower().replace("tt_", "servant/tt_"),
+            ),
+            os.path.join(
+                f"asm/{version}",
+                name_prefix.replace("bo", "boss").replace("tt_", "servant/tt_"),
+                name.lower().replace("tt_", "servant/tt_"),
+            ),
+        ]
+        if version == "pspeu" and not name.startswith("tt_"):
+            config["source_directories"].append(
+                os.path.join("src", name_prefix.replace("bo", "boss"), f"{name}_psp")
+            )
 
     config["mapfile"] = os.path.join(
         f"build/{version}", f"{name_prefix}{name.lower()}.map"
     )
 
-    if version == "us" or version == "saturn":
+    if version == "us":
         name = re.sub(r"w0_\d{3}", "WEAPON0", name)
 
     config["baseimg"] = os.path.join(
@@ -103,12 +106,9 @@ def apply(config, args):
         f"{name.lower() if version == 'hd' else name}.{binaryExt[version]}",
     )
 
-    config["objdump_executable"] = (
-        "sh-elf-objdump" if version == "saturn" else "mipsel-linux-gnu-objdump"
-    )
+    config["objdump_executable"] = "mipsel-linux-gnu-objdump"
     config["arch"] = {
         "us": "mipsel",
         "hd": "mipsel",
         "pspeu": "mipsel:4000",
-        "saturn": "sh2",
     }[version]

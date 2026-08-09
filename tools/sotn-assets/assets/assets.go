@@ -46,6 +46,8 @@ type InfoAssetEntry struct {
 	DataRange datarange.DataRange
 	Kind      string
 	Name      string
+	Args      string // trailing YAML args, e.g. "128, 128, 4" or "16"
+	Comment   string
 }
 type InfoSplatEntry struct {
 	DataRange datarange.DataRange
@@ -53,9 +55,29 @@ type InfoSplatEntry struct {
 	Name      string
 	Comment   string
 }
+
+// InfoGraphic is a graphic as described by a gfx bank entry, before its
+// boundaries are resolved.
+type InfoGraphic struct {
+	Addr   psx.Addr
+	Kind   uint32 // 1/2/3 raw at 4/8/16bpp, 4 compressed
+	Width  int
+	Height int
+}
+
+// InfoPalette is a palette as described by a palette def. ClutID is -1 when
+// the def carries only pointers and no destination to derive it from.
+type InfoPalette struct {
+	Addr   psx.Addr
+	Length int
+	ClutID int
+}
+
 type InfoResult struct {
 	AssetEntries []InfoAssetEntry
 	SplatEntries []InfoSplatEntry
+	Graphics     []InfoGraphic
+	Palettes     []InfoPalette
 }
 type InfoGatherer interface {
 	Info(a InfoArgs) (InfoResult, error)

@@ -18,11 +18,12 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078604, func_06078604);
 
 // _disp_num_string
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078684, func_06078684);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607872C, func_0607872C);
+INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078700, func_06078700);
 
 extern s32 DAT_06086390;
 
-char* func_06078748(s32 id) {
+// func_06078748
+char* GetMenuItemName(s32 id) {
     char* ret = NULL;
     switch (DAT_06086390) {
     case 1:
@@ -53,8 +54,8 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f60787C8, func_060787C8);
 // _SubDispSpecial
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078920, func_06078920);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60789C4, func_060789C4);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078D58, func_06078D58);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078E80, func_06078E80);
+INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078B48, func_06078B48);
+INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078E28, func_06078E28);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078F58, func_06078F58);
 
 // _SubDispSortKind
@@ -90,7 +91,8 @@ void MoveEntity(Entity* entity) {
     entity->posY.val += entity->velocityY;
 }
 
-void func_06079BB4(Entity* entity) {
+// func_06079BB4
+void SyncSpriteObjectPos(Entity* entity) {
     SpriteObject* temp = entity->unk0;
 
     if (temp != NULL) {
@@ -99,7 +101,8 @@ void func_06079BB4(Entity* entity) {
     }
 }
 
-void func_06079BCC(Entity* entity) {
+// func_06079BCC
+void SyncPosFromSpriteObject(Entity* entity) {
     SpriteObject* temp = entity->unk0;
 
     if (temp != NULL) {
@@ -125,7 +128,7 @@ s32 UnkCollisionFunc3(Entity* entity, s16* sensors) {
 
     NormalMove(entity);
     FallEntity(entity);
-    func_06079BCC(entity);
+    SyncPosFromSpriteObject(entity);
 
     if (entity->velocityY >= 0) {
         x = entity->posX.i.hi;
@@ -144,7 +147,7 @@ s32 UnkCollisionFunc3(Entity* entity, s16* sensors) {
                     entity->velocityX = 0;
                     entity->velocityY = 0;
                     entity->flags &= ~FLAG_UNK_10000000;
-                    func_06079BB4(entity);
+                    SyncSpriteObjectPos(entity);
                     return 1;
                 }
             } else if ((col.effects & EFFECT_NOTHROUGH) && i != 1) {
@@ -160,13 +163,13 @@ s32 UnkCollisionFunc3(Entity* entity, s16* sensors) {
                 entity->velocityX = 0;
                 entity->velocityY = 0;
                 entity->flags &= ~FLAG_UNK_10000000;
-                func_06079BB4(entity);
+                SyncSpriteObjectPos(entity);
                 return 1;
             }
         }
     }
     entity->flags |= FLAG_UNK_10000000;
-    func_06079BB4(entity);
+    SyncSpriteObjectPos(entity);
     return 0;
 }
 
@@ -174,7 +177,7 @@ s32 UnkCollisionFunc2(Entity* entity, s16* posX) {
     Collider collider;
     s16 x, y;
 
-    func_06079BCC(entity);
+    SyncPosFromSpriteObject(entity);
     entity->posX.val += entity->velocityX;
     entity->posY.i.hi += 3;
     x = entity->posX.i.hi + *posX++;
@@ -183,7 +186,7 @@ s32 UnkCollisionFunc2(Entity* entity, s16* posX) {
     if (collider.effects & EFFECT_SOLID) {
         entity->posY.i.hi += collider.unk18 / 0x10000;
     } else {
-        func_06079BB4(entity);
+        SyncSpriteObjectPos(entity);
         return 0;
     }
     if (entity->velocityX != 0) {
@@ -200,10 +203,10 @@ s32 UnkCollisionFunc2(Entity* entity, s16* posX) {
                 EFFECT_UNK_0002) {
                 entity->posX.val -= entity->velocityX;
                 entity->velocityX = 0;
-                func_06079BB4(entity);
+                SyncSpriteObjectPos(entity);
                 return 0xFF;
             } else {
-                func_06079BB4(entity);
+                SyncSpriteObjectPos(entity);
                 return 0x61;
             }
         }
@@ -211,20 +214,20 @@ s32 UnkCollisionFunc2(Entity* entity, s16* posX) {
         CheckCollision(x * 0x10000, y * 0x10000, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
             if (collider.effects & EFFECT_UNK_8000) {
-                func_06079BB4(entity);
+                SyncSpriteObjectPos(entity);
                 return 0x61;
             } else {
-                func_06079BB4(entity);
+                SyncSpriteObjectPos(entity);
                 return 1;
             }
         } else {
             entity->posX.val -= entity->velocityX;
             entity->velocityX = 0;
-            func_06079BB4(entity);
+            SyncSpriteObjectPos(entity);
             return 0x80;
         }
     } else {
-        func_06079BB4(entity);
+        SyncSpriteObjectPos(entity);
         return 1;
     }
 }
@@ -235,7 +238,7 @@ s32 UnkCollisionFunc(Entity* entity, s16* hitSensors, s16 sensorCount) {
     s16 x, y;
     s16 i;
 
-    func_06079BCC(entity);
+    SyncPosFromSpriteObject(entity);
     velocityX = entity->velocityX;
     if (velocityX != 0) {
         x = entity->posX.i.hi;
@@ -251,12 +254,12 @@ s32 UnkCollisionFunc(Entity* entity, s16* hitSensors, s16 sensorCount) {
             CheckCollision(x * 0x10000, y * 0x10000, &collider, 0);
             if (collider.effects & EFFECT_UNK_0002) {
                 if (!(collider.effects & EFFECT_UNK_8000) || (i != 0)) {
-                    func_06079BB4(entity);
+                    SyncSpriteObjectPos(entity);
                     return 2;
                 }
             }
         }
-        func_06079BB4(entity);
+        SyncSpriteObjectPos(entity);
         return 0;
     }
 }
@@ -268,7 +271,7 @@ void CheckFieldCollision(Entity* entity, s16* hitSensors, s16 sensorCount) {
     s16 x, y;
     s16 i;
 
-    func_06079BCC(entity);
+    SyncPosFromSpriteObject(entity);
     velocityX = entity->velocityX;
     if (velocityX != 0) {
         x = entity->posX.i.hi;
@@ -288,7 +291,7 @@ void CheckFieldCollision(Entity* entity, s16* hitSensors, s16 sensorCount) {
                     } else {
                         entity->posX.i.hi += col.unk14 / 0x10000;
                     }
-                    func_06079BB4(entity);
+                    SyncSpriteObjectPos(entity);
                     return;
                 }
             }
@@ -302,7 +305,7 @@ u8 CheckColliderOffsets(Entity* entity, s16* arg0, u8 facing) {
     u8 ret;
 
     if (g_CurrentEntity->unk0 != NULL) {
-        func_06079BCC(entity);
+        SyncPosFromSpriteObject(entity);
     }
     ret = 0;
     while (*arg0 != 0xFF) {
@@ -325,7 +328,7 @@ bool UnkCollisionFunc5(Entity* entity, s16* pointXY) {
     Collider collider;
 
     FallEntity(entity);
-    func_06079BCC(entity);
+    SyncPosFromSpriteObject(entity);
     MoveEntity(entity);
 
     if (entity->velocityY >= 0) {
@@ -335,7 +338,7 @@ bool UnkCollisionFunc5(Entity* entity, s16* pointXY) {
         if (collider.effects & EFFECT_SOLID) {
             entity->posY.i.hi += collider.unk18 / 0x10000;
             entity->velocityY = -entity->velocityY / 2;
-            func_06079BB4(entity);
+            SyncSpriteObjectPos(entity);
             if (entity->velocityY > FIX(-1.0)) {
                 return true;
             }
@@ -354,7 +357,7 @@ u8 UnkCollisionFunc4(Entity* entity, u8 arg1) {
     s16 posX, posY;
 
     NormalMove(entity);
-    func_06079BCC(entity);
+    SyncPosFromSpriteObject(entity);
 
     bits_67 = 0;
     bits_23 = 0;
@@ -504,7 +507,7 @@ u8 UnkCollisionFunc4(Entity* entity, u8 arg1) {
         break;
     }
 
-    func_06079BB4(entity);
+    SyncSpriteObjectPos(entity);
 
     if (collEff & 0x8000) {
         bits_23 = 4;
@@ -650,7 +653,8 @@ s32 GetDistanceToPlayerY(Entity* self) {
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AA40, func_0607AA40);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AA74, func_0607AA74);
 
-void func_0607AAA4(Entity* entity) {
+// func_0607AAA4
+void FaceEntityAwayFromPlayer(Entity* entity) {
     Entity* player = &PLAYER;
     SpriteObject* temp = entity->unk0;
 
@@ -661,7 +665,8 @@ void func_0607AAA4(Entity* entity) {
     }
 }
 
-void func_0607AACC(Entity* entity) {
+// func_0607AACC
+void FaceEntityTowardPlayer(Entity* entity) {
     Entity* player = &PLAYER;
     SpriteObject* temp = entity->unk0;
 
@@ -768,13 +773,15 @@ bool HantenDir1(Entity* entity) {
     return ret;
 }
 
-u8 func_0607AC2C(void) { return PLAYER.facingLeft; }
+// func_0607AC2C
+u8 GetPlayerFacing(void) { return PLAYER.facingLeft; }
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AC40, func_0607AC40);
 
 void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity);
 
-void func_0607AE48(Entity* self, u16 params) {
+// func_0607AE48
+void DestroyEntityWithExplosion(Entity* self, u16 params) {
     Entity* entity;
 
     if (params == 0xFF) {
@@ -984,14 +991,15 @@ void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity) {
 }
 
 void FreePrimitives(s32);
-void func_0600B428(SpriteObject*);
+void DestroySpriteObject(SpriteObject*);
 
-void func_0607B3D0(u16 entityId) {
+// func_0607B3D0
+void ChangeCurrentEntityType(u16 entityId) {
     Entity* entity;
 
     entity = g_CurrentEntity;
     if (entity->unk0 != NULL) {
-        func_0600B428(entity->unk0);
+        DestroySpriteObject(entity->unk0);
         entity->unk0 = NULL;
     }
     if (entity->flags & FLAG_HAS_PRIMS) {
@@ -1002,7 +1010,8 @@ void func_0607B3D0(u16 entityId) {
     entity->pfnUpdate = (*PfnEntityUpdates)[entityId - 1]->func;
 }
 
-void func_0607B448(u16 entityId, Entity* entity) {
+// func_0607B448
+void ChangeEntityType(u16 entityId, Entity* entity) {
     entity->entityId = entityId;
     entity->pfnUpdate = (*PfnEntityUpdates)[entityId - 1]->func;
     if (entity->flags & FLAG_HAS_PRIMS) {
@@ -1010,7 +1019,7 @@ void func_0607B448(u16 entityId, Entity* entity) {
         entity->flags &= ~FLAG_HAS_PRIMS;
     }
     if (entity->unk0 != NULL) {
-        func_0600B428(entity->unk0);
+        DestroySpriteObject(entity->unk0);
         entity->unk0 = NULL;
     }
 }
@@ -1028,11 +1037,11 @@ void ReplaceBreakableWithItemDrop(Entity* self) {
 
     params = self->params &= 0xFFF;
     if (params < 0x80) {
-        func_0607B448(3, self);
+        ChangeEntityType(3, self);
         self->poseTimer = 0;
         self->pose = 0;
     } else {
-        func_0607B448(10, self);
+        ChangeEntityType(10, self);
         params -= 0x80;
     }
     self->params = params;
@@ -1040,7 +1049,8 @@ void ReplaceBreakableWithItemDrop(Entity* self) {
     self->step = 0;
 }
 
-void func_0607B604(Entity* entity) {
+// func_0607B604
+void SyncSpriteObjectPosUnchecked(Entity* entity) {
     SpriteObject* temp = entity->unk0;
 
     temp->posX = entity->posX.val;
@@ -1483,15 +1493,16 @@ extern s32 DAT_0608612c;
 extern s32 DAT_06086130;
 extern s32 DAT_06086134;
 
-void func_06008048();
+void ResetLayerColorCalc();
 void func_0600C818();
 
-void func_0607BE38(void) {
+// func_0607BE38
+void InitScreenWaveEffect(void) {
     func_0600C818();
     DAT_06086128 = 0x50000;
     DAT_0608612c = 0xF0000;
     DAT_06086130 = 0x0;
-    func_06008048();
+    ResetLayerColorCalc();
     SCL_SET_CCMD(0);
     SCL_SetColMixMode(0x7, 0x1);
     DAT_06086134 = 0x1F;
@@ -1502,7 +1513,8 @@ extern s32 d_0605AEAC;
 extern u16 DAT_0605aec0[][2];
 extern s32 SpMstCmdPos;
 
-void func_0607BED0(void) {
+// func_0607BED0
+void DrawScreenWaveEffect(void) {
     SprSpCmd cmd;
     SprSpCmd* spCmd;
     s32 i;
@@ -1516,7 +1528,7 @@ void func_0607BED0(void) {
     spCmd->charSize = 0x2801;
     angle = DAT_06086130;
     for (i = 0; i < 0x20; i++, angle += 0x80) {
-        spCmd->ax = func_0607C054(DAT_0608612c, DAT_06086128, angle);
+        spCmd->ax = CalcWaveOffset(DAT_0608612c, DAT_06086128, angle);
         spCmd->ay = i + 0x68;
         if (SpMstCmdPos < 0x278) {
             SPR_2Cmd(0x1C0, spCmd);
@@ -1547,7 +1559,8 @@ void func_0607BED0(void) {
     }
 }
 
-s16 func_0607C054(s32 arg0, s32 arg1, s32 angle) {
+// func_0607C054
+s16 CalcWaveOffset(s32 arg0, s32 arg1, s32 angle) {
     angle &= 0xFFF;
     return ((rsin((angle * (arg1 >> 8)) >> 8) >> 4) * (arg0 >> 8)) >> 0x10;
 }

@@ -14,9 +14,19 @@ void SetPlayerStep(PlayerSteps step) {
 }
 
 // SetSpeedX
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A5574, func_060A5574);
+void func_060A5574(s32 param_1) {
+    if (g_Entities[0].facingLeft == 1) {
+        param_1 = -param_1;
+    }
+    g_Entities[0].velocityX = param_1;
+}
 // func_8010E3B8 on PSX
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A5594, func_060A5594);
+void func_060A5594(s32 param_1) {
+    if (g_Entities[0].entityRoomIndex == 1) {
+        param_1 = -param_1;
+    }
+    g_Entities[0].velocityX = param_1;
+}
 // DecelerateX (PLAYER-specialized Saturn version)
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A55B4, func_060A55B4);
 // DecelerateY (PLAYER-specialized Saturn version)
@@ -67,7 +77,7 @@ INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A62E4, func_060A62E4);
 // CheckSubwpnChainLimit
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A6314, func_060A6314);
 // CheckChainLimit
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A6384, func_060A6384);
+INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A637C, func_060A637C);
 // func_8010EB5C on PSX
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A6420, func_060A6420);
 // func_8010ED54 on PSX
@@ -82,7 +92,7 @@ INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A7D3C, func_060A7D3C);
 // func_8010DFF0 on PSX
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A7D68, func_060A7D68);
 // EnableAfterImage
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A7DD0, func_060A7DD0);
+void func_060A7DD0() { g_Player.pad324[0x78] = 6; }
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A7DE8, func_060A7DE8);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A7E90, func_060A7E90);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A7F28, func_060A7F28);

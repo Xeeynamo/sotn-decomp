@@ -23,7 +23,10 @@ s32 func_0601AE9C(void) { return 0xFF; }
 
 s32 func_0601AEA8(void) { return 0xFF; }
 
-void func_0601AEB4(void) { DAT_060645D0 = (s32)g_BatResourceDescriptorList; }
+// func_0601AEB4
+void SetServantResourceList(void) {
+    DAT_060645D0 = (s32)g_BatResourceDescriptorList;
+}
 
 typedef struct {
     void (*Init)(void);
@@ -32,7 +35,8 @@ typedef struct {
 extern BatServantHeader g_BatServantDesc;
 
 // call familiar update function
-void func_0601AECC() {
+// func_0601AECC
+void InitServant() {
     if (g_Servant != 0) {
         g_BatServantDesc.Init();
     }
