@@ -208,6 +208,39 @@ for directory, bitmap, overlay in [
         },
     )
 
+ninja.rule(
+    'saturn_player_headers',
+    command='cargo run --quiet --manifest-path tools/saturn/assets/Cargo.toml -- '
+            'player extract $PLAYER $PRG $CHR $EXTRACT > /dev/null && '
+            'cargo run --quiet --manifest-path tools/saturn/assets/Cargo.toml -- '
+            'player generate-headers $EXTRACT/manifest.json $CHR $out $PALETTE > /dev/null',
+    description='Generating Saturn player headers $out',
+)
+
+for directory, player, overlay in [
+    ('maria', 'maria', 'MARIA'),
+    ('ric', 'richter', 'RICHTER'),
+]:
+    ninja.build(
+        f'src/saturn/{directory}/gen/gfxloads.h',
+        'saturn_player_headers',
+        inputs=[f'disks/saturn/{overlay}.PRG', f'disks/saturn/{overlay}.CHR'],
+        implicit=[
+            'tools/saturn/assets/Cargo.toml',
+            'tools/saturn/assets/src/player.rs',
+            'tools/saturn/assets/src/lzss.rs',
+            'tools/saturn/assets/src/main.rs',
+        ],
+        implicit_outputs=[f'src/saturn/{directory}/gen/palette.h'],
+        variables={
+            'PLAYER': player,
+            'PRG': f'disks/saturn/{overlay}.PRG',
+            'CHR': f'disks/saturn/{overlay}.CHR',
+            'EXTRACT': f'build/saturn/player/{overlay}',
+            'PALETTE': f'src/saturn/{directory}/gen/palette.h',
+        },
+    )
+
 ninja.rule('sotn_str',
            command=f'{SOTN_STR} process < $in > $out',
            description='Expanding SOTN strings in $out from $in')
@@ -237,6 +270,10 @@ def add_srcs(srcs, output_dir, args):
             implicit.append('src/saturn/t_bat/gen/batgfx.h')
         if src in ('src/saturn/maria/castmap.c', 'src/saturn/ric/castmap.c'):
             implicit.append(os.path.join(os.path.dirname(src), 'gen', 'castmap.h'))
+        if src in ('src/saturn/maria/gfxloads.c', 'src/saturn/ric/gfxloads.c'):
+            implicit.append(os.path.join(os.path.dirname(src), 'gen', 'gfxloads.h'))
+        if src in ('src/saturn/maria/palette.c', 'src/saturn/ric/sprpal1.c'):
+            implicit.append(os.path.join(os.path.dirname(src), 'gen', 'palette.h'))
 
         ninja.build(
             pre_name,
