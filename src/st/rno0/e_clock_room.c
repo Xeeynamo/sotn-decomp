@@ -1,6 +1,21 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rno0.h"
 
+static s16 bird_cage_pos_x[] = {0x7C, 0x72};
+static s16 bird_cage_pos_y[] = {0x9C, 0x72};
+static s16 statue_pos_x[] = {-0x51, 0x50, -0x81, 0x80};
+static s16 gear_pos_x[] = {-0x7C, 0x7C};
+static s16 stone_door_pos_x[] = {0x20, -0x20, 0x50, -0x50};
+static s16 unused[] = {-0x51, 0x50};
+static u32 statue_pos_x_3[] = {FIX(-0.5), FIX(0.5)};
+static u16 anim_bird_cage[] = {21, 22};
+static s16 unused2[] = {-14, 14, -8, 8, -23, -14, -8, 8, 14, 23, -8, 8};
+static u8 anim_gear_1[] = {6, 17, 6, 18, 6, 19, 6, 20, 0, 0};
+static u8 anim_gear_2[] = {6, 20, 6, 19, 6, 18, 6, 17, 0, 0};
+static u16 g_StoneDoorTiles[] = {
+    0x597, 0x000, 0x000, 0x000, 0x000, 0x000, 0x000, 0x597,
+};
+
 void func_us_801CCAAC(Entity* self) {
     Entity* tempEntity;
     s16 angle;
@@ -75,14 +90,6 @@ typedef enum Statues {
     /* 0 */ WATCH_STATUE,
     /* 1 */ ARE_STATUE,
 } Statues;
-
-#ifdef INVERTED_STAGE
-#define LEFT_STATUE WATCH_STATUE
-#define RIGHT_STATUE ARE_STATUE
-#else
-#define LEFT_STATUE ARE_STATUE
-#define RIGHT_STATUE WATCH_STATUE
-#endif
 
 static u16 g_Statues[2];
 #ifdef VERSION_PSP
@@ -167,14 +174,14 @@ void EntityClockRoomController(Entity* self) {
         stopMusicFlag = true;
         currentMusicId = 0;
         entity = &PLAYER;
-        g_Statues[RIGHT_STATUE] = false;
+        g_Statues[WATCH_STATUE] = false;
 
         if (entity->posY.i.hi > 0xC0) {
             posX = entity->posX.i.hi;
             if (posX < 0x40) {
-                g_Statues[RIGHT_STATUE] = true;
+                g_Statues[WATCH_STATUE] = true;
             } else if (posX > 0xC0) {
-                g_Statues[LEFT_STATUE] = true;
+                g_Statues[ARE_STATUE] = true;
             }
         }
 
@@ -204,7 +211,7 @@ void EntityClockRoomController(Entity* self) {
 
         // Shadow for the Bighorn sheep head on the center
         entity = self + 9;
-        CreateEntityFromCurrentEntity(E_DUMMY_20, entity);
+        CreateEntityFromCurrentEntity(E_CLOCK_ROOM_SHADOW, entity);
         entity->animSet = ANIMSET_OVL(2);
         entity->animCurFrame = 23;
         entity->zPriority = 0x40;
@@ -411,18 +418,5 @@ void EntityClockRoomController(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rno0/nonmatchings/e_clock_room", EntityClockHands);
+#include "../clock_room_entities.h"
 
-INCLUDE_ASM("st/rno0/nonmatchings/e_clock_room", EntityBirdcageDoor);
-
-INCLUDE_ASM("st/rno0/nonmatchings/e_clock_room", UpdateStatueTiles);
-
-INCLUDE_ASM("st/rno0/nonmatchings/e_clock_room", EntityStatue);
-
-INCLUDE_ASM("st/rno0/nonmatchings/e_clock_room", EntityStatueGear);
-
-INCLUDE_ASM("st/rno0/nonmatchings/e_clock_room", UpdateStoneDoorTiles);
-
-INCLUDE_ASM("st/rno0/nonmatchings/e_clock_room", EntityStoneDoor);
-
-void RNO0_Unused801C2338(void) {}

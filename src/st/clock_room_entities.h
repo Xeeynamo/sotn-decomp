@@ -1,20 +1,34 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sfx.h"
 
+#ifdef INVERTED_STAGE
+#define TILE_POS_1 0xAC
+#define TILE_POS_2 0xA2
+#define ANIMSET 2
+#define YSHIFT_UP +=
+#define YSHIFT_DOWN -=
+#else
+#define TILE_POS_1 2
+#define TILE_POS_2 12
+#define ANIMSET 1
+#define YSHIFT_UP -=
+#define YSHIFT_DOWN +=
+#endif
+
 void EntityClockHands(Entity* self) {
     u16 params = self->params;
     Entity* handShadow = self + 5;
 
     if (!self->step) {
         InitializeEntity(g_EInitCommon);
-        self->animSet = ANIMSET_OVL(1);
+        self->animSet = ANIMSET_OVL(ANIMSET);
         self->animCurFrame = params + 25;
         self->zPriority = 0x3F - params;
         self->drawFlags = ENTITY_ROTATE;
 
         // Create hand shadows
         CreateEntityFromCurrentEntity(E_CLOCK_ROOM_SHADOW, handShadow);
-        handShadow->animSet = ANIMSET_OVL(1);
+        handShadow->animSet = ANIMSET_OVL(ANIMSET);
         handShadow->animCurFrame = params + 25;
         handShadow->zPriority = 0x3F - params;
         handShadow->drawFlags = ENTITY_OPACITY | ENTITY_ROTATE;
@@ -45,7 +59,7 @@ void EntityBirdcageDoor(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitCommon);
-        self->animSet = ANIMSET_OVL(1);
+        self->animSet = ANIMSET_OVL(ANIMSET);
         self->animCurFrame = anim_bird_cage[self->ext.birdcage.state & 1];
         self->ext.birdcage.prevState = self->ext.birdcage.state;
         self->zPriority = 0x3C;
@@ -131,7 +145,7 @@ void EntityStatue(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitCommon);
-        self->animSet = ANIMSET_OVL(1);
+        self->animSet = ANIMSET_OVL(ANIMSET);
         self->animCurFrame = params + 10;
         self->hitboxWidth = 16;
         self->hitboxHeight = 32;
@@ -140,30 +154,30 @@ void EntityStatue(Entity* self) {
         if (!g_Statues[params]) {
             self->posX.i.hi += statue_pos_x[params];
             if (self->params) {
-                UpdateStatueTiles(2, 0x597);
+                UpdateStatueTiles(TILE_POS_1, 0x597);
             } else {
-                UpdateStatueTiles(12, 0x597);
+                UpdateStatueTiles(TILE_POS_2, 0x597);
             }
         } else {
             self->posX.i.hi += statue_pos_x[params + 2];
             if (self->params) {
-                UpdateStatueTiles(2, 0);
+                UpdateStatueTiles(TILE_POS_1, 0);
             } else {
-                UpdateStatueTiles(12, 0);
+                UpdateStatueTiles(TILE_POS_2, 0);
             }
         }
 
         self->ext.statue.step = g_Statues[params];
-        self->posY.i.hi -= 58;
+        self->posY.i.hi YSHIFT_UP 58;
 
         // Create shadow for the statue
         CreateEntityFromCurrentEntity(E_CLOCK_ROOM_SHADOW, entity);
-        entity->animSet = ANIMSET_OVL(1);
+        entity->animSet = ANIMSET_OVL(ANIMSET);
         entity->animCurFrame = params + 10;
         entity->zPriority = 0x3F;
         entity->drawFlags = ENTITY_OPACITY;
         entity->blendMode = BLEND_TRANSP;
-#ifndef STAGE_IS_NO0
+#ifdef STAGE_IS_MAR
         entity->flags = FLAG_DESTROY_IF_OUT_OF_CAMERA | FLAG_POS_CAMERA_LOCKED |
                         FLAG_KEEP_ALIVE_OFFCAMERA;
 #endif
@@ -189,9 +203,9 @@ void EntityStatue(Entity* self) {
         if (!self->step_s) {
             if (self->ext.statue.step) {
                 if (self->params) {
-                    UpdateStatueTiles(2, 0);
+                    UpdateStatueTiles(TILE_POS_1, 0);
                 } else {
-                    UpdateStatueTiles(12, 0);
+                    UpdateStatueTiles(TILE_POS_2, 0);
                 }
             }
             self->ext.statue.timer = 96;
@@ -207,9 +221,9 @@ void EntityStatue(Entity* self) {
         if (!--self->ext.statue.timer) {
             if (!self->ext.statue.step) {
                 if (self->params) {
-                    UpdateStatueTiles(2, 0x597);
+                    UpdateStatueTiles(TILE_POS_1, 0x597);
                 } else {
-                    UpdateStatueTiles(12, 0x597);
+                    UpdateStatueTiles(TILE_POS_2, 0x597);
                 }
             }
             statueGear->ext.statue.step = 0;
@@ -236,11 +250,11 @@ void EntityStatueGear(Entity* self) {
     case 0:
         if (!self->step_s) {
             InitializeEntity(g_EInitCommon);
-            self->animSet = ANIMSET_OVL(1);
+            self->animSet = ANIMSET_OVL(ANIMSET);
             self->animCurFrame = 17;
             self->zPriority = 0x80;
             self->posX.i.hi += gear_pos_x[params];
-            self->posY.i.hi -= 44;
+            self->posY.i.hi YSHIFT_UP 44;
             self->step = 0;
             self->step_s++;
         }
@@ -293,10 +307,15 @@ void EntityStatueGear(Entity* self) {
 extern u16 g_StoneDoorTiles[];
 
 static void UpdateStoneDoorTiles(bool doorState) {
+    #ifdef INVERTED_STAGE
+    #define TILE_START 0x24
+    #else
+    #define TILE_START 0xC4
+    #endif
     s32 tilePos;
     s16 i, j;
 
-    for (tilePos = 0xC4, i = 0; i < 2; i++) {
+    for (tilePos = TILE_START, i = 0; i < 2; i++) {
         for (j = 0; j < 8; j++) {
             if (doorState) {
                 // Open stone doors
@@ -312,6 +331,12 @@ static void UpdateStoneDoorTiles(bool doorState) {
 
 extern s16 stone_door_pos_x[];
 
+#ifdef INVERTED_STAGE
+#define DOOR_OPEN RCEN_OPEN
+#else
+#define DOOR_OPEN CEN_OPEN
+#endif
+
 // Stone doors on the floor leading to CEN Entity ID 0x1B
 void EntityStoneDoor(Entity* self) {
     u16 params = self->params;
@@ -319,28 +344,28 @@ void EntityStoneDoor(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitCommon);
-        self->animSet = ANIMSET_OVL(1);
+        self->animSet = ANIMSET_OVL(ANIMSET);
         self->animCurFrame = params + 27;
         self->zPriority = 0x40;
-        if (!g_CastleFlags[CEN_OPEN]) {
+        if (!g_CastleFlags[DOOR_OPEN]) {
             self->posX.i.hi += stone_door_pos_x[params];
             UpdateStoneDoorTiles(true);
         } else {
             self->posX.i.hi += stone_door_pos_x[params + 2];
             UpdateStoneDoorTiles(false);
         }
-        self->posY.i.hi += 88;
-        self->ext.stoneDoor.flag = g_CastleFlags[CEN_OPEN];
+        self->posY.i.hi YSHIFT_DOWN 88;
+        self->ext.stoneDoor.flag = g_CastleFlags[DOOR_OPEN];
         break;
 
     case 1:
         if (self->ext.stoneDoor.flag == NULL) {
-            if (g_CastleFlags[CEN_OPEN]) {
+            if (g_CastleFlags[DOOR_OPEN]) {
                 self->step++;
                 self->ext.stoneDoor.unk80 = 0;
             }
         }
-        self->ext.stoneDoor.flag = g_CastleFlags[CEN_OPEN];
+        self->ext.stoneDoor.flag = g_CastleFlags[DOOR_OPEN];
         break;
 
     case 2:
@@ -350,12 +375,20 @@ void EntityStoneDoor(Entity* self) {
 
         ++self->ext.stoneDoor.unk80;
         if (self->ext.stoneDoor.unk80 & 1) {
+            #ifdef INVERTED_STAGE
             if (params) {
+                self->posX.i.hi--;
+            } else {
+                self->posX.i.hi++;
+            }
+            #else
+if (params) {
                 self->posX.i.hi++;
             } else {
                 self->posX.i.hi--;
             }
-#ifdef STAGE_IS_NO0
+            #endif
+#ifndef STAGE_IS_MAR
             g_backbufferY = 1;
 #else
             if (self->ext.stoneDoor.unk80 % 2) {
