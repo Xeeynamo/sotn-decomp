@@ -29,11 +29,25 @@ void func_us_801CCAAC(Entity* self) {
     tempEntity->ext.clockRoom.hand = angle;
 }
 
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_1028", UpdateBirdcages);
+void UpdateBirdcages(Entity* self, u32 timerMinutes) {
+    // self + 7 is birdcage door 1
+    self += 7;
+    if (timerMinutes >= 10 && timerMinutes < 30) {
+        self->ext.birdcage.state = true;
+    } else {
+        self->ext.birdcage.state = false;
+    }
+
+    // self + 8 is birdcage door 2
+    self += 1;
+    if (timerMinutes >= 30 && timerMinutes < 50) {
+        self->ext.birdcage.state = true;
+    } else {
+        self->ext.birdcage.state = false;
+    }
+}
 
 INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_1028", UpdateClockHands);
-
-void UpdateBirdcages(Entity* self, u32 timerMinutes);
 
 // Two statues. One responds to the stopwatch subweapon.
 // The other leads to colloseum (ARE overlay)
