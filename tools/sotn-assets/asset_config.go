@@ -17,6 +17,7 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/enemydefs"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/gfxbanks"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/headergfx"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/itemdefs"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/layer"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/layout"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/paldef"
@@ -68,6 +69,7 @@ var handlers = func() map[string]assets.Handler {
 		enemydefs.Handler,
 		gfxbanks.Handler,
 		headergfx.Handler,
+		itemdefs.Handler,
 		layer.Handler,
 		layout.Handler,
 		paldef.Handler,

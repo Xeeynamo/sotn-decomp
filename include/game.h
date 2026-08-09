@@ -1045,7 +1045,7 @@ typedef enum {
     DROP_DIAMOND = 366,    // 0x016E
 } DroppedItem;
 
-typedef enum {
+typedef enum ItemCategory {
     ITEM_S_SWORD,
     ITEM_SWORD,
     ITEM_THROW_1,
