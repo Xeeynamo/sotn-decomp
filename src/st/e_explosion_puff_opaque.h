@@ -43,7 +43,7 @@ void CreateExplosionPuff() {
 
 void EntityExplosionPuffOpaque(Entity* self) {
     EntityConfig* obj;
-#ifdef STAGE_IS_NZ1
+#if defined(STAGE_IS_NZ1) || defined(STAGE_IS_RLIB)
     s16 rotate;
 #endif
     s32 params;
@@ -81,7 +81,7 @@ void EntityExplosionPuffOpaque(Entity* self) {
 #endif
         MoveEntity();
 #if defined(STAGE_IS_ARE) || defined(STAGE_IS_NZ1)
-#elif defined(STAGE_IS_NZ0)
+#elif defined(STAGE_IS_NZ0) || defined(STAGE_IS_RLIB)
         self->velocityY = FIX(-1);
 #else
         self->velocityY = FIX(1);
@@ -177,6 +177,18 @@ void EntityExplosionPuffOpaque(Entity* self) {
         self->velocityX += self->ext.opaquePuff.unk8C * rsin(rotate) >> 0xC;
         self->velocityY += -self->ext.opaquePuff.unk8C * rcos(rotate) >> 0xC;
 
+#elif defined(STAGE_IS_RLIB)
+        if (!self->step_s) {
+            self->facingLeft = Random() & 1;
+            self->drawFlags |= ENTITY_SCALEX;
+            self->scaleX = 0xC0;
+            rotate = self->rotate - ROT(90);
+            self->drawFlags |= ENTITY_ROTATE;
+            self->velocityX = rcos(rotate) * FIX(0.875) >> 0xC;
+            self->velocityY = rsin(rotate) * FIX(0.875) >> 0xC;
+            self->step_s++;
+        }
+        MoveEntity();
 #else
         if (!self->step_s) {
             self->facingLeft = Random() & 1;
