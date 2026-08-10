@@ -8,6 +8,10 @@
 
 enum Palettes {
     PAL_NONE,
+    PAL_AZAGHAL_BODY_A = 0x220,
+    PAL_AZAGHAL_BODY_B = 0x221,
+    PAL_AZAGHAL_COMBO_A = 0x222,
+    PAL_AZAGHAL_COMBO_B = 0x223,
 };
 
 enum Entities {
