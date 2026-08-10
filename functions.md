@@ -1205,7 +1205,7 @@
 | no0        | e_diplocephalus_tail.rodata        |       22 |          0 | Yes    |       |     |
 | no0        | e_marionette.rodata                |       22 |          0 | Yes    |       |     |
 | rdai       | e_imp.rodata                       |       22 |          0 | Yes    |       |     |
-| rno1       | unk_1028.rodata                    |       22 |          0 | Yes    |       |     |
+| rno1       | e_paranthropus.rodata              |       22 |          0 | Yes    |       |     |
 | rno3       | e_castle_door.rodata               |       22 |          0 | Yes    |       |     |
 | rno4       | unk_BB68.rodata                    |       22 |          0 | Yes    |       |     |
 | main       | sceGuColorMaterial                 |       22 |          1 |        |       |     |
@@ -6153,8 +6153,8 @@
 | no1        | func_pspeu_09246868                |      108 |          8 |        |       |     |
 | no3        | func_pspeu_09258EF0                |      108 |          8 |        |       |     |
 | np3        | func_pspeu_0924F488                |      108 |          8 |        |       |     |
-| rno1       | UnkCollisionFunc5                  |      108 |          8 |        |       |     |
 | rno1       | EntityParanthropusBoneHitbox       |      108 |          8 |        |       |     |
+| rno1       | UnkCollisionFunc5                  |      108 |          8 |        |       |     |
 | dra        | func_psp_090DFD70                  |      108 |          9 |        |       |     |
 | dra        | func_psp_090F0550                  |      108 |          9 |        |       |     |
 | main       | __d2b                              |      108 |         12 |        |       |     |
