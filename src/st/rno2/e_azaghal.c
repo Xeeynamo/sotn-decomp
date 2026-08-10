@@ -15,7 +15,7 @@ typedef struct {
 static s16 D_us_80181FF4[] = {0, 72, 0, 4, 4, -4, -8, 0};
 
 // { u, v, x1, y1, x2, y2 }
-static s16 D_us_80182004[][6] = {
+static s16 body_config[][6] = {
     // idle
     {64, 0, 63, 127, -8, -30},
     // combo attack
@@ -65,7 +65,7 @@ static s16 lerp_g[][2] = {
 
 static SVECTOR D_us_801819EC = {.vx = 0, .vy = 0, .vz = 224};
 static SVECTOR D_us_801819F4 = {.vx = 0, .vy = 0, .vz = 48};
-static AzaghalPosition D_us_80182140[] = {
+static AzaghalPosition anim_seek_player[] = {
     {.targetPosition = &D_us_801819EC, .lerpVals = *lerp_a},
     {.targetPosition = &D_us_801819F4, .lerpVals = *lerp_a},
 };
@@ -73,56 +73,56 @@ static AzaghalPosition D_us_80182140[] = {
 static SVECTOR D_us_80181A0C = {.vx = -1056, .vy = 816, .vz = 3296};
 static SVECTOR D_us_80181A14 = {.vx = 0, .vy = 1024, .vz = 2048};
 static SVECTOR D_us_80181A1C = {.vx = 0, .vy = 0, .vz = 1344};
-static AzaghalPosition D_us_80182168 = {
+static AzaghalPosition anim_sword_overhead_a = {
     .targetPosition = &D_us_80181A0C,
     .lerpVals = *lerp_a,
 };
-static AzaghalPosition D_us_80182170 = {
+static AzaghalPosition anim_sword_overhead_b = {
     .targetPosition = &D_us_80181A14,
     .lerpVals = *lerp_g,
 };
-static AzaghalPosition D_us_80182178 = {
+static AzaghalPosition anim_sword_overhead_c = {
     .targetPosition = &D_us_80181A1C,
     .lerpVals = *lerp_b,
 };
 
 static SVECTOR D_us_80181A3C = {.vx = -480, .vy = 32, .vz = 2000};
 static SVECTOR D_us_80181A44 = {.vx = -480, .vy = 32, .vz = -224};
-static AzaghalPosition D_us_80182190 = {
+static AzaghalPosition anim_slash_down_a = {
     .targetPosition = &D_us_80181A3C,
     .lerpVals = *lerp_c,
 };
-static AzaghalPosition D_us_80182198 = {
+static AzaghalPosition anim_slash_down_b = {
     .targetPosition = &D_us_80181A44,
     .lerpVals = *lerp_e,
 };
 
 static SVECTOR D_us_80181A5C = {.vx = -896, .vy = -32, .vz = 1792};
 static SVECTOR D_us_80181A64 = {.vx = -888, .vy = -32, .vz = -400};
-static AzaghalPosition D_us_801821B0 = {
+static AzaghalPosition anim_long_slash_hor_b = {
     .targetPosition = &D_us_80181A5C,
     .lerpVals = *lerp_d,
 };
-static AzaghalPosition D_us_801821B8 = {
+static AzaghalPosition anim_long_slash_hor_a = {
     .targetPosition = &D_us_80181A64,
     .lerpVals = *lerp_c,
 };
-static AzaghalPosition D_us_801821C0 = {
+static AzaghalPosition anim_short_slash_hor_a = {
     .targetPosition = &D_us_80181A5C,
     .lerpVals = *lerp_a,
 };
-static AzaghalPosition D_us_801821C8 = {
+static AzaghalPosition anim_short_slash_hor_b = {
     .targetPosition = &D_us_80181A64,
     .lerpVals = *lerp_d,
 };
 
 static SVECTOR D_us_80181A8C = {.vx = -464, .vy = -416, .vz = -112};
 static SVECTOR D_us_80181A94 = {.vx = -464, .vy = -160, .vz = 1744};
-static AzaghalPosition D_us_801821E0 = {
+static AzaghalPosition anim_slash_up_a = {
     .targetPosition = &D_us_80181A8C,
     .lerpVals = *lerp_c,
 };
-static AzaghalPosition D_us_801821E8 = {
+static AzaghalPosition anim_slash_up_b = {
     .targetPosition = &D_us_80181A94,
     .lerpVals = *lerp_d,
 };
@@ -144,14 +144,14 @@ static AzaghalPosition D_us_80181ABC[] = {
 };
 
 static SVECTOR D_us_80181ACC = {.vx = 0, .vy = 0, .vz = 512};
-static AzaghalPosition D_us_80182218 = {
+static AzaghalPosition anim_fall_backward = {
     .targetPosition = &D_us_80181ACC,
     .lerpVals = *lerp_d,
 };
 
 static SVECTOR D_us_80181ADC = {.vx = 0, .vy = 0, .vz = -1088};
 static SVECTOR D_us_80181AE4 = {.vx = 0, .vy = 0, .vz = 1024};
-static AzaghalPosition D_us_80182230 = {
+static AzaghalPosition anim_combo_init = {
     .targetPosition = &D_us_80181ADC,
     .lerpVals = *lerp_d,
 };
@@ -159,7 +159,7 @@ static AzaghalPosition D_us_80182230 = {
 static SVECTOR D_us_80181AF4 = {.vx = -1088, .vy = 0, .vz = -1088};
 static SVECTOR D_us_80181AFC = {.vx = -1088, .vy = 0, .vz = -1088};
 static SVECTOR D_us_80181B04 = {.vx = -1088, .vy = 0, .vz = 2560};
-static AzaghalPosition D_us_80182250[] = {
+static AzaghalPosition anim_combo[] = {
     {.targetPosition = &D_us_80181AF4, .lerpVals = *lerp_f},
     {.targetPosition = &D_us_80181AFC, .lerpVals = *lerp_f},
     {.targetPosition = &D_us_80181B04, .lerpVals = *lerp_f},
@@ -261,7 +261,6 @@ static Primitive* func_us_801B2C40_from_rare(
 
 // { u, v, x1, y1, x2, y2 } per body pose: idle, combo attack,
 // hit-by-player/dead, sword overhead
-#define body_config D_us_80182004
 extern s16 body_config[][6];
 
 enum AzaghalBodyStep {
@@ -548,35 +547,20 @@ static s32 AnimateAzaghal(AzaghalPosition* posData) {
 // azaghal animation paths: target positions and lerp curves live in the
 // data blob as (SVECTOR*, s16*) pairs; alias each path to its blob label
 // (addresses proven by the relocs in EntityAzaghal)
-#define anim_seek_player D_us_80182140
 extern AzaghalPosition anim_seek_player[];
-#define anim_sword_overhead_a D_us_80182168
 extern AzaghalPosition anim_sword_overhead_a;
-#define anim_sword_overhead_b D_us_80182170
 extern AzaghalPosition anim_sword_overhead_b;
-#define anim_sword_overhead_c D_us_80182178
 extern AzaghalPosition anim_sword_overhead_c;
-#define anim_slash_down_a D_us_80182190
 extern AzaghalPosition anim_slash_down_a;
-#define anim_slash_down_b D_us_80182198
 extern AzaghalPosition anim_slash_down_b;
-#define anim_long_slash_hor_b D_us_801821B0
 extern AzaghalPosition anim_long_slash_hor_b;
-#define anim_long_slash_hor_a D_us_801821B8
 extern AzaghalPosition anim_long_slash_hor_a;
-#define anim_short_slash_hor_a D_us_801821C0
 extern AzaghalPosition anim_short_slash_hor_a;
-#define anim_short_slash_hor_b D_us_801821C8
 extern AzaghalPosition anim_short_slash_hor_b;
-#define anim_slash_up_a D_us_801821E0
 extern AzaghalPosition anim_slash_up_a;
-#define anim_slash_up_b D_us_801821E8
 extern AzaghalPosition anim_slash_up_b;
-#define anim_fall_backward D_us_80182218
 extern AzaghalPosition anim_fall_backward;
-#define anim_combo_init D_us_80182230
 extern AzaghalPosition anim_combo_init;
-#define anim_combo D_us_80182250
 extern AzaghalPosition anim_combo[];
 
 void EntityAzaghal(Entity* self) {
