@@ -253,9 +253,80 @@ void EntityGuardianFireWave(Entity* self) {
     }
 }
 
-void Unused801C2C50(void) {}
+void EntityArmorLordUnused(void) {}
 
-INCLUDE_ASM("st/rno0/nonmatchings/e_armor_lord_guardian", func_us_801D1A9C_from_are);
+static void func_us_801D1A9C_from_are(void) {
+    Primitive* prim;
+    s32 primIndex;
+
+    switch (g_CurrentEntity->step_s) {
+    case 0:
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        if (primIndex != -1) {
+            g_CurrentEntity->flags |= FLAG_HAS_PRIMS;
+            g_CurrentEntity->primIndex = primIndex;
+            prim = &g_PrimBuf[primIndex];
+            g_CurrentEntity->ext.armorLord.prim = prim;
+            UnkPolyFunc2(prim);
+            prim->tpage = 0x1A;
+            prim->clut = PAL_CC_STONE_EFFECT;
+            prim->u0 = 0x14;
+            prim->u1 = 0x2C;
+            prim->u2 = prim->u0;
+            prim->u3 = prim->u1;
+            prim->v0 = 0xC0;
+            prim->v1 = prim->v0;
+            prim->v2 = 0xFF;
+            prim->v3 = prim->v2;
+            prim->priority = g_CurrentEntity->zPriority + 2;
+            prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
+                             DRAW_UNK02 | DRAW_TRANSP;
+            prim->p3 = 8;
+            if (g_CurrentEntity->facingLeft) {
+                prim->next->x1 = g_CurrentEntity->posX.i.hi + 0x16;
+            } else {
+                prim->next->x1 = g_CurrentEntity->posX.i.hi - 0x16;
+            }
+            prim->next->y0 = g_CurrentEntity->posY.i.hi - 4;
+            LOH(prim->next->r2) = 0;
+            LOH(prim->next->b2) = 0;
+            prim->next->b3 = 0x80;
+        } else {
+            g_CurrentEntity->step_s = 4;
+            break;
+        }
+        g_CurrentEntity->hitboxState = 1;
+        g_CurrentEntity->ext.armorLord.unk8C = 0;
+        PlaySfxPositional(SFX_MAGIC_NOISE_SWEEP);
+        g_CurrentEntity->step_s++;
+        break;
+
+    case 1:
+        prim = g_CurrentEntity->ext.armorLord.prim;
+        LOH(prim->next->r2)++;
+        LOH(prim->next->b2) += 8;
+        UnkPrimHelper(prim);
+        if (g_CurrentEntity->ext.armorLord.unk8C++ > 8) {
+            g_CurrentEntity->ext.armorLord.unk8C = 0;
+            g_CurrentEntity->step_s++;
+        }
+        break;
+
+    case 2:
+        break;
+
+    case 3:
+        prim = g_CurrentEntity->ext.armorLord.prim;
+        prim->next->b3 -= 8;
+        UnkPrimHelper(prim);
+        if (g_CurrentEntity->ext.armorLord.unk8C++ > 15) {
+            primIndex = g_CurrentEntity->primIndex;
+            g_api.FreePrimitives(primIndex);
+            g_CurrentEntity->flags &= ~FLAG_HAS_PRIMS;
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("st/rno0/nonmatchings/e_armor_lord_guardian", func_us_801D1DAC_from_are);
 

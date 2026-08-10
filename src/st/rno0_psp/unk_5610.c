@@ -61,7 +61,7 @@ INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_5610", func_us_801D1388);
 
 INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_5610", EntityGuardianFireWave);
 
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_5610", Unused801C2C50);
+INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_5610", EntityArmorLordUnused);
 
 INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_5610", func_us_801D1A9C);
 
