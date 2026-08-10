@@ -75,5 +75,6 @@ D_us_801804F0 = 0x0925B490;
 rooms = 0x0925B4A0;
 g_BossOverlay = 0x0926D7D0;
 BackgroundBlockInit = 0x0926E150;
+D_psp_E_STATUE = 0x0926E9B8;
 PrizeDrops = 0x0926EA18;
 g_Dialogue = 0x0926EFD8;
