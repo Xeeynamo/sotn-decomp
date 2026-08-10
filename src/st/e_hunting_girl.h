@@ -2,7 +2,7 @@
 
 // HuntingGirlDrawAttack has conditions that can be expected to attempt to
 // divide by 0, therefore psp uses a division guard.
-#ifdef VERSION_PSP
+#if defined(FIX_UB) || defined(VERSION_PSP)
 #define DIV_GUARD(q, a, b)                                                     \
     if (b) {                                                                   \
         q = a / b;                                                             \
@@ -97,8 +97,8 @@ typedef struct {
 
 extern EInit g_EInitHuntingGirl;
 
-static AnimateEntityFrame anim[] = {{1, 1}, {1, 2}};
-static u8 unused[] = {0, 0, 0, 0, 0, 0, 46, 0, 4, 0, 0, 0};
+static AnimateEntityFrame anim[] = {{1, 1}, {1, 2}, POSE_LOOP(0)};
+static u8 unused[] = {0, 0, 46, 0, 4, 0, 0, 0};
 static s16 sensors[] = {0, 46, 0, 4, 4, -4, -8, 0};
 #ifdef VERSION_PSP
 static s8 fade_interval[] = {8, 4, 3, 12, 8, 4, 0, 0};
@@ -228,7 +228,8 @@ static bool HuntingGirlDrawAttack(HuntingGirlAttackStep* attackPattern) {
         g_CurrentEntity->ext.huntingGirl.attackStep++;
         attackPattern++;
         prim = g_CurrentEntity->ext.huntingGirl.attackPrim;
-#ifdef VERSION_PSP
+#if defined(FIX_UB) || defined(VERSION_PSP)
+        // Null reference here on non-PSX platforms
         if (!prim) {
             return false;
         }
