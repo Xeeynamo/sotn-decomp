@@ -5,7 +5,7 @@
 extern LayoutEntity* D_8D2DE60;
 extern LayoutEntity* D_8D2DF34;
 
-extern Overlay OVL_EXPORT(Overlay);
+extern Overlay g_Overlay;
 
 extern char cutscene_script_pre_fight_it[];
 extern char cutscene_script_pre_fight_sp[];
@@ -103,5 +103,5 @@ void OVL_EXPORT(Load)(void) {
     g_pStObjLayoutHorizontal = &D_8D2DE60;
     g_pStObjLayoutVertical = &D_8D2DF34;
     func_psp_0892A018();
-    memcpy(&g_api.o, &OVL_EXPORT(Overlay), sizeof(Overlay));
+    memcpy(&g_api.o, &g_Overlay, sizeof(Overlay));
 }

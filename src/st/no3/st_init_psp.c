@@ -6,7 +6,7 @@
 extern LayoutEntity* D_8D2E3BC;
 extern LayoutEntity* D_8D2E490;
 
-extern Overlay OVL_EXPORT(Overlay);
+extern Overlay g_Overlay;
 
 #include "../get_lang_at.h"
 
@@ -202,5 +202,5 @@ void OVL_EXPORT(Load)(void) {
     g_pStObjLayoutHorizontal = &D_8D2E3BC;
     g_pStObjLayoutVertical = &D_8D2E490;
     func_psp_0892A018();
-    memcpy(&g_api.o, &OVL_EXPORT(Overlay), sizeof(Overlay));
+    memcpy(&g_api.o, &g_Overlay, sizeof(Overlay));
 }

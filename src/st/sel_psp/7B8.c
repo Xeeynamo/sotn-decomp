@@ -41,7 +41,7 @@ void func_801B60D4(void);
 void func_801B17C8(void);
 
 // DATA
-Overlay OVL_EXPORT(Overlay) = {
+Overlay g_Overlay = {
     /* 0x00 */ OVL_EXPORT(Update),
     /* 0x04 */ HandleTitleScreen,
     /* 0x08 */ func_psp_090FFAB8,

@@ -10,7 +10,7 @@ extern u_long** gfxBanks[];
 void OVL_EXPORT(HitDetection)();
 void PrologueScroll();
 
-Overlay OVL_EXPORT(Overlay) = {
+Overlay g_Overlay = {
     .Update = Update,
     .HitDetection = OVL_EXPORT(HitDetection),
     .UpdateRoomPosition = UpdateRoomPosition,

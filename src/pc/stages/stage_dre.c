@@ -6,7 +6,7 @@
 #include "../pc.h"
 #include "../../st/dre/dre.h"
 
-extern Overlay OVL_EXPORT(Overlay);
+extern Overlay g_Overlay;
 extern PfnEntityUpdate EntityUpdates[];
 extern LayoutEntity* entityLayoutHorizontal[];
 extern LayoutEntity* entityLayoutVertical[];
@@ -39,7 +39,7 @@ static void InitCutscenePc(void) {
 }
 
 OVL_API void InitStage(Overlay* o) {
-    memcpy(o, &OVL_EXPORT(Overlay), sizeof(Overlay));
+    memcpy(o, &g_Overlay, sizeof(Overlay));
     PfnEntityUpdates = EntityUpdates;
     g_pStObjLayoutHorizontal = entityLayoutHorizontal;
     g_pStObjLayoutVertical = entityLayoutVertical;

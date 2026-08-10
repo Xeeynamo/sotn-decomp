@@ -1,4 +1,4 @@
-BO0_Overlay = 0x80180000;
+g_Overlay = 0x80180000;
 spriteBanks = 0x8018002C;
 cluts = 0x801800F4;
 rooms_layers = 0x80180118;

@@ -2,7 +2,7 @@
 #include "../sel/sel.h"
 #include <cutscene.h>
 
-extern Overlay OVL_EXPORT(Overlay);
+extern Overlay g_Overlay;
 
 // BSS
 u8* D_psp_09285BA8;
@@ -285,7 +285,7 @@ void OVL_EXPORT(Load)(void) {
         GetLangAt(4, cutscene_script_en, cutscene_script_fr, cutscene_script_sp,
                   cutscene_script_ge, cutscene_script_it);
     func_psp_08929FA8(D_8018C404, 0xC5);
-    memcpy(&g_api.o, &OVL_EXPORT(Overlay), sizeof(Overlay));
+    memcpy(&g_api.o, &g_Overlay, sizeof(Overlay));
     D_psp_0927C6F0[3] =
         (u_long*)GetLang(D_psp_092630D8, D_psp_09264868, D_psp_09263700,
                          D_psp_09264290, D_psp_09263CE0);

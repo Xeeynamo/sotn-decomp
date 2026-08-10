@@ -6,7 +6,7 @@
 extern LayoutEntity* D_8D2E1B4;
 extern LayoutEntity* D_8D2E288;
 
-extern Overlay OVL_EXPORT(Overlay);
+extern Overlay g_Overlay;
 
 s32 E_ID(BACKGROUND_BLOCK);
 s32 E_ID(LOCK_CAMERA);
@@ -116,5 +116,5 @@ void OVL_EXPORT(Load)(void) {
     g_pStObjLayoutHorizontal = &D_8D2E1B4;
     g_pStObjLayoutVertical = &D_8D2E288;
     func_psp_0892A018();
-    memcpy(&g_api.o, &OVL_EXPORT(Overlay), sizeof(Overlay));
+    memcpy(&g_api.o, &g_Overlay, sizeof(Overlay));
 }

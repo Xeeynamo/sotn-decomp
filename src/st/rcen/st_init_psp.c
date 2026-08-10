@@ -8,7 +8,7 @@
 extern LayoutEntity* D_8D2DEF0;
 extern LayoutEntity* D_8D2DFC4;
 
-extern Overlay OVL_EXPORT(Overlay);
+extern Overlay g_Overlay;
 
 static u8 cutscene_script_pre_fight_it[] = {
 #include "gen/cutscene_script_pre_fight_it.h"
@@ -129,5 +129,5 @@ void OVL_EXPORT(Load)(void) {
     g_pStObjLayoutHorizontal = &D_8D2DEF0;
     g_pStObjLayoutVertical = &D_8D2DFC4;
     func_892A018();
-    memcpy(&g_api.o, &OVL_EXPORT(Overlay), sizeof(Overlay));
+    memcpy(&g_api.o, &g_Overlay, sizeof(Overlay));
 }

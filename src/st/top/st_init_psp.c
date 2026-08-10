@@ -6,7 +6,7 @@
 extern LayoutEntity* D_8D2E380;
 extern LayoutEntity* D_8D2E454;
 
-extern Overlay OVL_EXPORT(Overlay);
+extern Overlay g_Overlay;
 
 static u8 cutscene_script_post_fight_it[] = {
 #include "gen/cutscene_script_post_fight_it.h"
@@ -147,5 +147,5 @@ void OVL_EXPORT(Load)(void) {
     g_pStObjLayoutVertical = &D_8D2E454;
     func_psp_0892A018();
     func_psp_08929FA8(richter_sprites, 0xC5);
-    memcpy(&g_api.o, &OVL_EXPORT(Overlay), sizeof(Overlay));
+    memcpy(&g_api.o, &g_Overlay, sizeof(Overlay));
 }
