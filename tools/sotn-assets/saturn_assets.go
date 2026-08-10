@@ -45,6 +45,7 @@ type saturnAsset struct {
 	PaletteInclude  string `yaml:"palette_include"`
 	GraphicsInclude string `yaml:"graphics_include"`
 	Prefix          string `yaml:"prefix"`
+	Zero string `yaml:"zero"`
 }
 
 // one file of work; a dir entry expands into one per file
@@ -61,6 +62,7 @@ type saturnUnit struct {
 	paletteInclude  string
 	graphicsInclude string
 	prefix          string
+	zero            string
 }
 
 const saturnAssetOutputDir = "build/saturn/assets"
@@ -112,6 +114,12 @@ func (a saturnAsset) variant() (string, error) {
 			return "", fmt.Errorf("asset %q: weapon needs the player prg", a.Name)
 		}
 		return a.Profile, nil
+	case "stage":
+		if a.Prg == "" || a.Zero == "" {
+			return "", fmt.Errorf(
+				"asset %q: stage needs the stage prg and the shared zero overlay", a.Name)
+		}
+		return "", nil
 	case "map":
 		if a.Prg == "" {
 			return "", fmt.Errorf("asset %q: map needs the stage prg", a.Name)
@@ -157,6 +165,7 @@ func (a saturnAsset) units() ([]saturnUnit, error) {
 			paletteInclude:  a.PaletteInclude,
 			graphicsInclude: a.GraphicsInclude,
 			prefix:          a.Prefix,
+			zero:            a.Zero,
 		}}, nil
 	}
 
@@ -177,6 +186,7 @@ func (a saturnAsset) units() ([]saturnUnit, error) {
 			path:    filepath.Join(a.Path, file),
 			output:  filepath.Join(outputDir, file),
 			prg:     a.Prg,
+			zero:    a.Zero,
 		})
 	}
 	return units, nil
@@ -234,6 +244,9 @@ func saturnUnitArgs(u saturnUnit, command string) ([]string, error) {
 		}
 		if u.kind == "familiar" || u.kind == "player" || u.kind == "map" {
 			return append(args, u.prg, u.source, u.path), nil
+		}
+		if u.kind == "stage" {
+			return append(args, u.prg, u.source, u.path, "--zero", u.zero), nil
 		}
 		if u.kind == "bitmap" {
 			return append(args, u.source, u.chr, u.path), nil

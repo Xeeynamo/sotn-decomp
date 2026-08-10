@@ -12,6 +12,7 @@ pub mod map_render;
 pub mod player;
 pub mod sheet;
 pub mod sprite;
+pub mod stage;
 pub mod wav;
 pub mod weapon;
 

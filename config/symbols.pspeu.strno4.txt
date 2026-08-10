@@ -176,4 +176,6 @@ D_us_80180C50 = 0x09263430;
 g_EInitKillerFish = 0x09263440;
 rooms = 0x09263450;
 g_StageOverlay = 0x0929AF48;
+g_WaterSounds = 0x0929B058;
+g_WaterXTbl = 0x0929B060;
 BackgroundBlockInit = 0x0929B268;
