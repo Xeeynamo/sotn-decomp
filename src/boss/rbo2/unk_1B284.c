@@ -54,7 +54,7 @@ extern u32 D_us_801AE900;
 
 void func_us_8019F4AC(Entity* self) {
     Entity* entity;
-    s32 posX;
+    u32 posX;
     s32 posY;
 
     switch (self->step) {
@@ -65,7 +65,7 @@ void func_us_8019F4AC(Entity* self) {
 
     case 1:
         posX = PLAYER.posX.i.hi + g_Tilemap.scrollX.i.hi;
-        if ((u32)(posX - 0x41) < 0x17F) {
+        if ((posX - 0x41) < 0x17F) {
             D_us_80180B5C |= 1;
             self->step++;
         }
@@ -76,7 +76,7 @@ void func_us_8019F4AC(Entity* self) {
             (g_PlayableCharacter != PLAYER_ALUCARD) ||
             (g_DemoMode != Demo_None)) {
             posX = PLAYER.posX.i.hi + g_Tilemap.scrollX.i.hi;
-            if ((u32)(posX - 0x81) >= 0xFF) {
+            if ((posX - 0x81) >= 0xFF) {
                 break;
             }
         } else if (!(D_us_801AE900 & 2)) {
