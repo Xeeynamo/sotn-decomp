@@ -397,9 +397,9 @@ static void func_us_801B33F4_from_rare(void) {
                   &D_us_8018204C, (long*)&prim->x0, (long*)&prim->x1,
                   (long*)&prim->x2, (long*)&prim->x3, &p, &flag);
     primTwo = g_CurrentEntity->ext.azaghal.primThree;
-    primTwo = func_us_801B2C40_from_rare(&D_us_80182034, &D_us_8018203C,
-                               &D_us_80182044, &D_us_8018204C, prim, 3,
-                               primTwo, (u8*)SPAD(0));
+    primTwo = func_us_801B2C40_from_rare(
+        &D_us_80182034, &D_us_8018203C, &D_us_80182044, &D_us_8018204C, prim, 3,
+        primTwo, (u8*)SPAD(0));
     prim->drawMode = DRAW_HIDE;
     prim = prim->next;
 
@@ -407,9 +407,9 @@ static void func_us_801B33F4_from_rare(void) {
     RotTransPers4(&D_us_80182054, &D_us_8018205C, &D_us_80182064,
                   &D_us_8018206C, (long*)&prim->x0, (long*)&prim->x1,
                   (long*)&prim->x2, (long*)&prim->x3, &p, &flag);
-    primTwo = func_us_801B2C40_from_rare(&D_us_80182054, &D_us_8018205C,
-                               &D_us_80182064, &D_us_8018206C, prim, 3,
-                               primTwo, (u8*)SPAD(0));
+    primTwo = func_us_801B2C40_from_rare(
+        &D_us_80182054, &D_us_8018205C, &D_us_80182064, &D_us_8018206C, prim, 3,
+        primTwo, (u8*)SPAD(0));
     prim->drawMode = DRAW_HIDE;
 
     if (g_CurrentEntity->flags & FLAG_DEAD) {
@@ -491,7 +491,6 @@ static void func_us_801B33F4_from_rare(void) {
     }
 }
 
-
 static void InitPositionLerp(SVECTOR* vector) {
     SVECTOR* base = &g_CurrentEntity->ext.azaghal.base;
     SVECTOR* pos = &g_CurrentEntity->ext.azaghal.pos;
@@ -545,7 +544,6 @@ static s32 AnimateAzaghal(AzaghalPosition* posData) {
 
     return true;
 }
-
 
 // azaghal animation paths: target positions and lerp curves live in the
 // data blob as (SVECTOR*, s16*) pairs; alias each path to its blob label
