@@ -2,7 +2,7 @@
 #include "rno0.h"
 
 // Armor Lord fire wave helper
-static void func_us_801D1184_from_are(Primitive* prim) {
+static void func_us_801D1184(Primitive* prim) {
 switch (prim->next->u2) {
     case 0:
         prim->tpage = 0x1A;
@@ -62,7 +62,7 @@ switch (prim->next->u2) {
 
 extern Primitive* FindFirstUnkPrim2(Primitive* prim, u8 index);
 // Armor Lord
-static void func_us_801D1388_from_are(Primitive* prim) {
+static void func_us_801D1388(Primitive* prim) {
     Collider collider;
     Primitive* otherPrim;
     Entity* tempEntity;
@@ -193,7 +193,65 @@ static void func_us_801D1388_from_are(Primitive* prim) {
     }
 }
 
-INCLUDE_ASM("st/rno0/nonmatchings/e_armor_lord_guardian", EntityGuardianFireWave);
+extern EInit g_EInitInteractable;
+
+void EntityGuardianFireWave(Entity* self) {
+    Primitive* prim;
+    s32 primIndex;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitInteractable);
+        self->ext.armorLord.unk80 = 0;
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x1A);
+        if (primIndex != -1) {
+            self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIndex;
+            prim = &g_PrimBuf[primIndex];
+            self->ext.armorLord.prim = prim;
+            while (prim != NULL) {
+                prim->drawMode = DRAW_HIDE;
+                prim->p3 = 0;
+                prim = prim->next;
+            }
+        } else {
+            DestroyEntity(self);
+            return;
+        }
+        prim = self->ext.armorLord.prim;
+        prim = FindFirstUnkPrim2(prim, 2);
+        if (prim != NULL) {
+            UnkPolyFunc2(prim);
+            prim->x2 = self->posX.i.hi;
+            if (self->facingLeft) {
+                prim->x3 = prim->x2 + 0x20;
+            } else {
+                prim->x3 = prim->x2 - 0x20;
+            }
+            prim->y2 = self->posY.i.hi + 0x28;
+            prim->y3 = prim->y2;
+            prim->next->r3 = 5;
+            prim->next->g3 = 0;
+        }
+
+    case 1:
+        prim = self->ext.armorLord.prim;
+        while (prim != NULL) {
+            if (prim->p3 & 8) {
+                if (prim->next->g3) {
+                    func_us_801D1184(prim);
+                } else {
+                    func_us_801D1388(prim);
+                }
+            }
+            prim = prim->next;
+        }
+        if (self->ext.armorLord.unk80++ > 0x100) {
+            DestroyEntity(self);
+            return;
+        }
+    }
+}
 
 void Unused801C2C50(void) {}
 
