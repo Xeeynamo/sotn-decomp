@@ -3,7 +3,7 @@
 //! Driven from tools/sotn-assets and config/assets.saturn.yaml
 
 use clap::{Parser, Subcommand};
-use saturn_assets::{audio, bitmap, familiar, font, map, player, weapon};
+use saturn_assets::{audio, bitmap, familiar, font, map, player, stage, weapon};
 use std::path::PathBuf;
 use std::process::ExitCode;
 
@@ -35,6 +35,24 @@ enum Command {
     Player(PlayerCommand),
     #[command(subcommand)]
     Map(MapCommand),
+    #[command(subcommand)]
+    Stage(StageCommand),
+}
+
+#[derive(Subcommand)]
+enum StageCommand {
+    Extract {
+        prg_path: PathBuf,
+        chr_path: PathBuf,
+        output_dir: PathBuf,
+        #[arg(long)]
+        zero: Option<PathBuf>,
+    },
+    Rebuild { manifest: PathBuf, output: PathBuf },
+    Verify {
+        manifest: PathBuf,
+        chr_path: PathBuf,
+    },
 }
 
 #[derive(Subcommand)]
@@ -279,6 +297,33 @@ fn run(cli: Cli) -> saturn_assets::Result<()> {
             source_path,
         }) => {
             audio::verify(&manifest, &source_path)?;
+            println!("verify passed: exact retail match");
+        }
+        Command::Stage(StageCommand::Extract {
+            prg_path,
+            chr_path,
+            output_dir,
+            zero,
+        }) => {
+            let manifest = stage::extract(&prg_path, &chr_path, zero.as_deref(), &output_dir)?;
+            let shared = manifest
+                .resources
+                .iter()
+                .filter(|resource| resource.region == stage::Region::Zero)
+                .count();
+            println!(
+                "{} sprite resources ({shared} shared), {} images -> {}",
+                manifest.resources.len(),
+                manifest.images.len(),
+                output_dir.display()
+            );
+        }
+        Command::Stage(StageCommand::Rebuild { manifest, output }) => {
+            let data = stage::rebuild(&manifest, &output)?;
+            println!("wrote {} bytes -> {}", data.len(), output.display());
+        }
+        Command::Stage(StageCommand::Verify { manifest, chr_path }) => {
+            stage::verify(&manifest, &chr_path)?;
             println!("verify passed: exact retail match");
         }
         Command::Map(MapCommand::Extract {
