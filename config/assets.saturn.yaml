@@ -242,6 +242,596 @@ assets:
     graphics_include: src/saturn/stage_02/gen/strmgfx.h
     path: assets/saturn/map/STAGE_02
     output: build/saturn/assets/STAGE_02.MAP
+  - name: stage-entity-stbrkgfx
+    kind: stage-entity
+    prg: disks/saturn/STAGE_02.PRG
+    zero: disks/saturn/0.BIN
+    entity: 24
+    frames: "0x060ECD70"
+    prefix: g_Stage02SharedBreakable
+    include: src/saturn/stage_02/gen/stbrkgfx.h
+  - name: stage-entity-stglobe
+    kind: stage-entity
+    prg: disks/saturn/STAGE_02.PRG
+    zero: disks/saturn/0.BIN
+    entity: 51
+    frames: "0x060ED174"
+    prefix: g_Stage02TableWithGlobe
+    include: src/saturn/stage_02/gen/stglobe.h
+  - name: stage-entity-stlife
+    kind: stage-entity
+    prg: disks/saturn/STAGE_02.PRG
+    zero: disks/saturn/0.BIN
+    entity: 52
+    frames: "0x060ED584"
+    prefix: g_Stage02LifeMaxTank
+    include: src/saturn/stage_02/gen/stlife.h
+  - name: stage-entity-stblue
+    kind: stage-entity
+    prg: disks/saturn/STAGE_02.PRG
+    zero: disks/saturn/0.BIN
+    entity: 53
+    frames: "0x060ED970"
+    prefix: g_Stage02BlueFlameTable
+    include: src/saturn/stage_02/gen/stblue.h
+  - name: sprite-package-zero-stgspr0
+    kind: sprite-package
+    prg: disks/saturn/0.BIN
+    base: "0x06004080"
+    address: "0x0604435C"
+    symbols:
+      - {kind: frame_group, prefix: g_SaturnSharedSpriteBank0, count: 202}
+      - {name: g_SaturnSharedBreakableFrames, kind: frames, count: 202}
+      - {name: g_SaturnSharedSpriteBank0Images, kind: images}
+      - {name: g_SaturnSharedSpriteBank0Palette, kind: palette, padding: 1}
+      - {name: g_SaturnSharedSpriteBank0Resource, kind: resource}
+    include: src/saturn/zero/gen/stgspr0.h
+  - name: sprite-package-zero-stgspr1
+    kind: sprite-package
+    prg: disks/saturn/0.BIN
+    base: "0x06004080"
+    address: "0x060457FC"
+    symbols:
+      - {kind: frame_group, prefix: g_SaturnSharedSpriteBank1, count: 68}
+      - {name: g_SaturnSharedSpriteBank1Frames, kind: frames, count: 68}
+      - {name: g_SaturnSharedSpriteBank1Images, kind: images}
+      - {name: g_SaturnSharedSpriteBank1Palette, kind: palette, padding: 1}
+      - {name: g_SaturnSharedSpriteBank1Resource, kind: resource}
+    include: src/saturn/zero/gen/stgspr1.h
+  - name: sprite-package-zero-stgspr2
+    kind: sprite-package
+    prg: disks/saturn/0.BIN
+    base: "0x06004080"
+    address: "0x06045FAC"
+    symbols:
+      - {kind: frame_group, prefix: g_SaturnSharedSpriteBank2, count: 5}
+      - {name: g_SaturnSharedSpriteBank2Frames, kind: frames, count: 5}
+      - {name: g_SaturnSharedSpriteBank2Images, kind: images}
+      - {name: g_SaturnSharedSpriteBank2Palette, kind: palette, padding: 1}
+      - {name: g_SaturnSharedSpriteBank2Resource, kind: resource}
+    include: src/saturn/zero/gen/stgspr2.h
+  - name: sprite-package-zero-stgspr3
+    kind: sprite-package
+    prg: disks/saturn/0.BIN
+    base: "0x06004080"
+    address: "0x06046058"
+    symbols:
+      - {kind: frame_group, prefix: g_SaturnSharedSpriteBank3, count: 10}
+      - {name: g_SaturnSharedSpriteBank3Frames, kind: frames, count: 10}
+      - {name: g_SaturnSharedSpriteBank3Images, kind: images}
+      - {name: g_SaturnSharedSpriteBank3Palette, kind: palette, padding: 1}
+      - {name: g_SaturnSharedSpriteBank3Resource, kind: resource}
+    include: src/saturn/zero/gen/stgspr3.h
+  - name: sprite-package-zero-stgspr4
+    kind: sprite-package
+    prg: disks/saturn/0.BIN
+    base: "0x06004080"
+    address: "0x06046238"
+    symbols:
+      - {name: g_SaturnSharedSpriteBank4Images, kind: images}
+      - {name: g_SaturnSharedSpriteBank4Palette, kind: palette, padding: 1}
+      - {name: g_SaturnSharedSpriteBank4Resource, kind: resource}
+    include: src/saturn/zero/gen/stgspr4.h
+  - name: sprite-package-zero-stgspr5
+    kind: sprite-package
+    prg: disks/saturn/0.BIN
+    base: "0x06004080"
+    address: "0x060464D0"
+    symbols:
+      - {kind: frame_group, prefix: g_SaturnSharedSpriteBank5, count: 25}
+      - {name: g_SaturnSharedSpriteBank5Frames, kind: frames, count: 25}
+      - {name: g_SaturnSharedSpriteBank5Images, kind: images}
+      - {name: g_SaturnSharedSpriteBank5Palette, kind: palette, padding: 1}
+      - {name: g_SaturnSharedSpriteBank5Resource, kind: resource}
+    include: src/saturn/zero/gen/stgspr5.h
+  - name: sprite-package-zero-stgspr6
+    kind: sprite-package
+    prg: disks/saturn/0.BIN
+    base: "0x06004080"
+    address: "0x060466EC"
+    symbols:
+      - {name: g_SaturnSharedSpriteBank6Images, kind: images}
+      - {name: g_SaturnSharedSpriteBank6Palette, kind: palette, padding: 1}
+      - {name: g_SaturnSharedSpriteBank6Resource, kind: resource}
+    include: src/saturn/zero/gen/stgspr6.h
+  - name: sprite-package-zero-stgspr7
+    kind: sprite-package
+    prg: disks/saturn/0.BIN
+    base: "0x06004080"
+    address: "0x06046738"
+    symbols:
+      - {kind: frame_group, prefix: g_SaturnSharedSpriteBank7, count: 14}
+      - {name: g_SaturnSharedOpaquePuffFrames0, kind: frames, count: 14}
+      - {name: g_SaturnSharedSpriteBank7Images, kind: images}
+      - {name: g_SaturnSharedSpriteBank7Palette, kind: palette, padding: 1}
+      - {name: g_SaturnSharedSpriteBank7Resource, kind: resource}
+    include: src/saturn/zero/gen/stgspr7.h
+  - name: sprite-package-zero-stgspr8
+    kind: sprite-package
+    prg: disks/saturn/0.BIN
+    base: "0x06004080"
+    address: "0x06046C04"
+    symbols:
+      - {kind: frame_group, prefix: g_SaturnSharedSpriteBank8, count: 3}
+      - {name: g_SaturnSharedSpriteBank8Frames, kind: frames, count: 3}
+      - {name: g_SaturnSharedSpriteBank8Images, kind: images}
+      - {name: g_SaturnSharedSpriteBank8Palette, kind: palette, padding: 1}
+      - {name: g_SaturnSharedSpriteBank8Resource, kind: resource}
+    include: src/saturn/zero/gen/stgspr8.h
+  - name: sprite-package-zero-stgspr9
+    kind: sprite-package
+    prg: disks/saturn/0.BIN
+    base: "0x06004080"
+    address: "0x06046D14"
+    symbols:
+      - {kind: frame_group, prefix: g_SaturnSharedSpriteBank9, count: 15}
+      - {name: g_SaturnSharedOpaquePuffFrames1, kind: frames, count: 15}
+      - {name: g_SaturnSharedSpriteBank9Images, kind: images}
+      - {name: g_SaturnSharedSpriteBank9Palette, kind: palette, padding: 1}
+      - {name: g_SaturnSharedSpriteBank9Resource, kind: resource}
+    include: src/saturn/zero/gen/stgspr9.h
+  - name: sprite-package-zero-stgspr10
+    kind: sprite-package
+    prg: disks/saturn/0.BIN
+    base: "0x06004080"
+    address: "0x06046E68"
+    symbols:
+      - {kind: frame_group, prefix: g_SaturnSharedSpriteBank10, count: 44}
+      - {name: g_SaturnSharedSpriteBank10Frames, kind: frames, count: 44}
+      - {name: g_SaturnSharedSpriteBank10Images, kind: images}
+      - {name: g_SaturnSharedSpriteBank10Palette, kind: palette, padding: 1}
+      - {name: g_SaturnSharedSpriteBank10Resource, kind: resource}
+    include: src/saturn/zero/gen/stgspr10.h
+  - name: sprite-package-zero-stgspr11
+    kind: sprite-package
+    prg: disks/saturn/0.BIN
+    base: "0x06004080"
+    address: "0x06047420"
+    symbols:
+      - {kind: frame_group, prefix: g_SaturnSharedSpriteBank11, count: 8}
+      - {name: g_SaturnSharedSpriteBank11Frames, kind: frames, count: 8}
+      - {name: g_SaturnSharedSpriteBank11Images, kind: images}
+      - {name: g_SaturnSharedSpriteBank11Palette, kind: palette, padding: 1}
+      - {name: g_SaturnSharedSpriteBank11Resource, kind: resource}
+    include: src/saturn/zero/gen/stgspr11.h
+  - name: sprite-package-zero-stgspr12
+    kind: sprite-package
+    prg: disks/saturn/0.BIN
+    base: "0x06004080"
+    address: "0x06047524"
+    symbols:
+      - {name: g_SaturnSharedSpriteBank12Palette, kind: palette, padding: 1}
+      - {name: g_SaturnSharedSpriteBank12Images, kind: images}
+      - {name: g_SaturnSharedSpriteBank12Resource, kind: resource}
+    include: src/saturn/zero/gen/stgspr12.h
+  - name: sprite-package-zero-stgspr13
+    kind: sprite-package
+    prg: disks/saturn/0.BIN
+    base: "0x06004080"
+    address: "0x0604757C"
+    symbols:
+      - {name: g_SaturnSharedSpriteBank13Palette, kind: palette, padding: 1}
+      - {name: g_SaturnSharedSpriteBank13Images, kind: images}
+      - {name: g_SaturnSharedSpriteBank13Resource, kind: resource}
+    include: src/saturn/zero/gen/stgspr13.h
+  - name: sprite-package-zero-stgspr14
+    kind: sprite-package
+    prg: disks/saturn/0.BIN
+    base: "0x06004080"
+    address: "0x06047620"
+    symbols:
+      - {name: g_SaturnSharedSpriteBank14Palette, kind: palette, padding: 1}
+      - {name: g_SaturnSharedSpriteBank14Images, kind: images}
+      - {name: g_SaturnSharedSpriteBank14Resource, kind: resource}
+    include: src/saturn/zero/gen/stgspr14.h
+  - name: sprite-package-maria-images
+    kind: sprite-package
+    prg: disks/saturn/MARIA.PRG
+    zero: disks/saturn/0.BIN
+    base: "0x060A5000"
+    address: "0x060C51A8"
+    symbols:
+      - {name: g_MariaImages, kind: images}
+    include: src/saturn/maria/gen/images.h
+  - name: sprite-package-maria-frames
+    kind: sprite-package
+    prg: disks/saturn/MARIA.PRG
+    zero: disks/saturn/0.BIN
+    base: "0x060A5000"
+    address: "0x060C39D0"
+    symbols:
+      - {kind: frame_group, prefix: g_Maria, count: 382}
+      - {name: g_MariaFrames, kind: frames, count: 382}
+    include: src/saturn/maria/gen/frames.h
+  - name: sprite-package-maria-resarray
+    kind: sprite-package
+    prg: disks/saturn/MARIA.PRG
+    zero: disks/saturn/0.BIN
+    base: "0x060A5000"
+    address: "0x060C6D68"
+    symbols:
+      - {name: g_MariaSpriteResources, kind: resource_array, count: 13}
+    include: src/saturn/maria/gen/resarray.h
+  - name: sprite-package-maria-sprpkg1
+    kind: sprite-package
+    prg: disks/saturn/MARIA.PRG
+    zero: disks/saturn/0.BIN
+    base: "0x060A5000"
+    address: "0x060C5714"
+    symbols:
+      - {kind: frame_group, prefix: g_MariaSpritePackage1, count: 55}
+      - {name: g_MariaSpritePackage1Frames, kind: frames, count: 55}
+      - {name: g_MariaSpritePackage1Palette, kind: palette, padding: 1}
+      - {name: g_MariaSpritePackage1Images, kind: images}
+    include: src/saturn/maria/gen/sprpkg1.h
+  - name: sprite-package-maria-sprpkg2
+    kind: sprite-package
+    prg: disks/saturn/MARIA.PRG
+    zero: disks/saturn/0.BIN
+    base: "0x060A5000"
+    address: "0x060C5D70"
+    symbols:
+      - {kind: frame_group, prefix: g_MariaSpritePackage2, count: 2}
+      - {name: g_MariaSpritePackage2Frames, kind: frames, count: 2}
+      - {name: g_MariaSpritePackage2Palette, kind: palette, padding: 1}
+      - {name: g_MariaSpritePackage2Images, kind: images}
+    include: src/saturn/maria/gen/sprpkg2.h
+  - name: sprite-package-maria-sprpkg3
+    kind: sprite-package
+    prg: disks/saturn/MARIA.PRG
+    zero: disks/saturn/0.BIN
+    base: "0x060A5000"
+    address: "0x060C5DF0"
+    symbols:
+      - {kind: frame_group, prefix: g_MariaSpritePackage3, count: 4}
+      - {name: g_MariaSpritePackage3Frames, kind: frames, count: 4}
+      - {name: g_MariaSpritePackage3Palette, kind: palette, padding: 1}
+      - {name: g_MariaSpritePackage3Images, kind: images}
+    include: src/saturn/maria/gen/sprpkg3.h
+  - name: sprite-package-maria-sprpkg4
+    kind: sprite-package
+    prg: disks/saturn/MARIA.PRG
+    zero: disks/saturn/0.BIN
+    base: "0x060A5000"
+    address: "0x060C5EAC"
+    symbols:
+      - {kind: frame_group, prefix: g_MariaSpritePackage4, count: 13}
+      - {name: g_MariaSpritePackage4Frames, kind: frames, count: 13}
+      - {name: g_MariaSpritePackage4Palette, kind: palette, padding: 1}
+      - {name: g_MariaSpritePackage4Images, kind: images}
+    include: src/saturn/maria/gen/sprpkg4.h
+  - name: sprite-package-maria-sprpkg5
+    kind: sprite-package
+    prg: disks/saturn/MARIA.PRG
+    zero: disks/saturn/0.BIN
+    base: "0x060A5000"
+    address: "0x060C5FD8"
+    symbols:
+      - {kind: frame_group, prefix: g_MariaSpritePackage5, count: 38}
+      - {name: g_MariaSpritePackage5Frames, kind: frames, count: 38}
+      - {name: g_MariaSpritePackage5Palette, kind: palette, padding: 1}
+      - {name: g_MariaSpritePackage5Images, kind: images}
+    include: src/saturn/maria/gen/sprpkg5.h
+  - name: sprite-package-maria-sprpkg6
+    kind: sprite-package
+    prg: disks/saturn/MARIA.PRG
+    zero: disks/saturn/0.BIN
+    base: "0x060A5000"
+    address: "0x060C63E0"
+    symbols:
+      - {kind: frame_group, prefix: g_MariaSpritePackage6, count: 5}
+      - {name: g_MariaSpritePackage6Frames, kind: frames, count: 5}
+      - {name: g_MariaSpritePackage6Palette, kind: palette, padding: 1}
+      - {name: g_MariaSpritePackage6Images, kind: images}
+    include: src/saturn/maria/gen/sprpkg6.h
+  - name: sprite-package-maria-sprpkg7
+    kind: sprite-package
+    prg: disks/saturn/MARIA.PRG
+    zero: disks/saturn/0.BIN
+    base: "0x060A5000"
+    address: "0x060C64C0"
+    symbols:
+      - {kind: frame_group, prefix: g_MariaSpritePackage7, count: 9}
+      - {name: g_MariaSpritePackage7Frames, kind: frames, count: 9}
+      - {name: g_MariaSpritePackage7Palette, kind: palette, padding: 1}
+      - {name: g_MariaSpritePackage7Images, kind: images}
+    include: src/saturn/maria/gen/sprpkg7.h
+  - name: sprite-package-maria-sprpkg8
+    kind: sprite-package
+    prg: disks/saturn/MARIA.PRG
+    zero: disks/saturn/0.BIN
+    base: "0x060A5000"
+    address: "0x060C6590"
+    symbols:
+      - {kind: frame_group, prefix: g_MariaSpritePackage8, count: 16}
+      - {name: g_MariaSpritePackage8Frames, kind: frames, count: 17}
+      - {name: g_MariaSpritePackage8Palette, kind: palette, padding: 1}
+      - {name: g_MariaSpritePackage8Images, kind: images}
+    include: src/saturn/maria/gen/sprpkg8.h
+  - name: sprite-package-maria-sprpkg9
+    kind: sprite-package
+    prg: disks/saturn/MARIA.PRG
+    zero: disks/saturn/0.BIN
+    base: "0x060A5000"
+    address: "0x060C680C"
+    symbols:
+      - {kind: frame_group, prefix: g_MariaSpritePackage9, count: 19}
+      - {name: g_MariaSpritePackage9Frames, kind: frames, count: 20}
+      - {name: g_MariaSpritePackage9Palette, kind: palette, padding: 1}
+      - {name: g_MariaSpritePackage9Images, kind: images}
+    include: src/saturn/maria/gen/sprpkg9.h
+  - name: sprite-package-maria-sprpkg10
+    kind: sprite-package
+    prg: disks/saturn/MARIA.PRG
+    zero: disks/saturn/0.BIN
+    base: "0x060A5000"
+    address: "0x060C6978"
+    symbols:
+      - {kind: frame_group, prefix: g_MariaSpritePackage10, count: 9}
+      - {name: g_MariaSpritePackage10Frames, kind: frames, count: 10}
+      - {name: g_MariaSpritePackage10Palette, kind: palette, padding: 1}
+      - {name: g_MariaSpritePackage10Images, kind: images}
+    include: src/saturn/maria/gen/sprpkg10.h
+  - name: sprite-package-maria-sprpkg11
+    kind: sprite-package
+    prg: disks/saturn/MARIA.PRG
+    zero: disks/saturn/0.BIN
+    base: "0x060A5000"
+    address: "0x060C6ABC"
+    symbols:
+      - {kind: frame_group, prefix: g_MariaSpritePackage11, count: 14}
+      - {name: g_MariaSpritePackage11Frames, kind: frames, count: 14}
+      - {name: g_MariaSpritePackage11Palette, kind: palette, padding: 1}
+      - {name: g_MariaSpritePackage11Images, kind: images}
+    include: src/saturn/maria/gen/sprpkg11.h
+  - name: sprite-package-maria-sprpkg12
+    kind: sprite-package
+    prg: disks/saturn/MARIA.PRG
+    zero: disks/saturn/0.BIN
+    base: "0x060A5000"
+    address: "0x060C6BF0"
+    symbols:
+      - {kind: frame_group, prefix: g_MariaSpritePackage12, count: 18}
+      - {name: g_MariaSpritePackage12Frames, kind: frames, count: 19}
+      - {name: g_MariaSpritePackage12Palette, kind: palette, padding: 1}
+      - {name: g_MariaSpritePackage12Images, kind: images}
+    include: src/saturn/maria/gen/sprpkg12.h
+  - name: sprite-package-ric-sprimg1
+    kind: sprite-package
+    prg: disks/saturn/RICHTER.PRG
+    zero: disks/saturn/0.BIN
+    base: "0x060A5000"
+    address: "0x060C12EC"
+    symbols:
+      - {name: g_RichterSpritePackage1Images, kind: images}
+    include: src/saturn/ric/gen/sprimg1.h
+  - name: sprite-package-ric-sprfrm1
+    kind: sprite-package
+    prg: disks/saturn/RICHTER.PRG
+    zero: disks/saturn/0.BIN
+    base: "0x060A5000"
+    address: "0x060C05A4"
+    symbols:
+      - {kind: frame_group, prefix: g_RichterSpritePackage1, count: 213}
+      - {name: g_RichterSpritePackage1Frames, kind: frames, count: 213}
+    include: src/saturn/ric/gen/sprfrm1.h
+  - name: sprite-package-ric-sprres
+    kind: sprite-package
+    prg: disks/saturn/RICHTER.PRG
+    zero: disks/saturn/0.BIN
+    base: "0x060A5000"
+    address: "0x060C2F2C"
+    symbols:
+      - {name: g_RichterSpriteResources, kind: resource_array, count: 10}
+    include: src/saturn/ric/gen/sprres.h
+  - name: sprite-package-ric-sprpkg2
+    kind: sprite-package
+    prg: disks/saturn/RICHTER.PRG
+    zero: disks/saturn/0.BIN
+    base: "0x060A5000"
+    address: "0x060C15EC"
+    symbols:
+      - {kind: frame_group, prefix: g_RichterSpritePackage2, count: 37}
+      - {name: g_RichterSpritePackage2Frames, kind: frames, count: 37}
+      - {name: g_RichterSpritePackage2Palette, kind: palette, padding: 1}
+      - {name: g_RichterSpritePackage2Images, kind: images}
+    include: src/saturn/ric/gen/sprpkg2.h
+  - name: sprite-package-ric-sprpkg3
+    kind: sprite-package
+    prg: disks/saturn/RICHTER.PRG
+    zero: disks/saturn/0.BIN
+    base: "0x060A5000"
+    address: "0x060C1B04"
+    symbols:
+      - {kind: frame_group, prefix: g_RichterSpritePackage3, count: 55}
+      - {name: g_RichterSpritePackage3Frames, kind: frames, count: 55}
+      - {name: g_RichterSpritePackage3Palette, kind: palette, padding: 1}
+      - {name: g_RichterSpritePackage3Images, kind: images}
+    include: src/saturn/ric/gen/sprpkg3.h
+  - name: sprite-package-ric-sprpkg4
+    kind: sprite-package
+    prg: disks/saturn/RICHTER.PRG
+    zero: disks/saturn/0.BIN
+    base: "0x060A5000"
+    address: "0x060C2120"
+    symbols:
+      - {kind: frame_group, prefix: g_RichterSpritePackage4, count: 7}
+      - {name: g_RichterSpritePackage4Frames, kind: frames, count: 7}
+      - {name: g_RichterSpritePackage4Palette, kind: palette}
+      - {name: g_RichterSpritePackage4Images, kind: images}
+    include: src/saturn/ric/gen/sprpkg4.h
+  - name: sprite-package-ric-sprpkg5
+    kind: sprite-package
+    prg: disks/saturn/RICHTER.PRG
+    zero: disks/saturn/0.BIN
+    base: "0x060A5000"
+    address: "0x060C2278"
+    symbols:
+      - {kind: frame_group, prefix: g_RichterSpritePackage5, count: 4}
+      - {name: g_RichterSpritePackage5Frames, kind: frames, count: 4}
+      - {name: g_RichterSpritePackage5Palette, kind: palette, padding: 1}
+      - {name: g_RichterSpritePackage5Images, kind: images}
+    include: src/saturn/ric/gen/sprpkg5.h
+  - name: sprite-package-ric-sprpkg6
+    kind: sprite-package
+    prg: disks/saturn/RICHTER.PRG
+    zero: disks/saturn/0.BIN
+    base: "0x060A5000"
+    address: "0x060C2334"
+    symbols:
+      - {kind: frame_group, prefix: g_RichterSpritePackage6, count: 15}
+      - {name: g_RichterSpritePackage6Frames, kind: frames, count: 15}
+      - {name: g_RichterSpritePackage6Palette, kind: palette, padding: 1}
+      - {name: g_RichterSpritePackage6Images, kind: images}
+    include: src/saturn/ric/gen/sprpkg6.h
+  - name: sprite-package-ric-sprpkg7
+    kind: sprite-package
+    prg: disks/saturn/RICHTER.PRG
+    zero: disks/saturn/0.BIN
+    base: "0x060A5000"
+    address: "0x060C24DC"
+    symbols:
+      - {kind: frame_group, prefix: g_RichterSpritePackage7, count: 13}
+      - {name: g_RichterSpritePackage7Frames, kind: frames, count: 13}
+      - {name: g_RichterSpritePackage7Palette, kind: palette, padding: 1}
+      - {name: g_RichterSpritePackage7Images, kind: images}
+    include: src/saturn/ric/gen/sprpkg7.h
+  - name: sprite-package-ric-sprpkg8
+    kind: sprite-package
+    prg: disks/saturn/RICHTER.PRG
+    zero: disks/saturn/0.BIN
+    base: "0x060A5000"
+    address: "0x060C2608"
+    symbols:
+      - {kind: frame_group, prefix: g_RichterSpritePackage8, count: 52}
+      - {name: g_RichterSpritePackage8Frames, kind: frames, count: 52}
+      - {name: g_RichterSpritePackage8Palette, kind: palette, padding: 1}
+      - {name: g_RichterSpritePackage8Images, kind: images}
+    include: src/saturn/ric/gen/sprpkg8.h
+  - name: sprite-package-ric-sprpkg9
+    kind: sprite-package
+    prg: disks/saturn/RICHTER.PRG
+    zero: disks/saturn/0.BIN
+    base: "0x060A5000"
+    address: "0x060C2AD4"
+    symbols:
+      - {kind: frame_group, prefix: g_RichterSpritePackage9, count: 29}
+      - {name: g_RichterSpritePackage9Frames, kind: frames, count: 29}
+      - {name: g_RichterSpritePackage9Palette, kind: palette, padding: 1}
+      - {name: g_RichterSpritePackage9Images, kind: images}
+    include: src/saturn/ric/gen/sprpkg9.h
+  - name: sprite-package-ric-sprpkg10
+    kind: sprite-package
+    prg: disks/saturn/RICHTER.PRG
+    zero: disks/saturn/0.BIN
+    base: "0x060A5000"
+    address: "0x060C2E4C"
+    symbols:
+      - {kind: frame_group, prefix: g_RichterSpritePackage10, count: 5}
+      - {name: g_RichterSpritePackage10Frames, kind: frames, count: 5}
+      - {name: g_RichterSpritePackage10Palette, kind: palette, padding: 1}
+      - {name: g_RichterSpritePackage10Images, kind: images}
+    include: src/saturn/ric/gen/sprpkg10.h
+  - name: sprite-package-warp-roomspr
+    kind: sprite-package
+    prg: disks/saturn/WARP.PRG
+    zero: disks/saturn/0.BIN
+    base: "0x060DC000"
+    address: "0x060E1224"
+    symbols:
+      - {name: g_WarpSpriteBank16Images, kind: images}
+      - {kind: frame_group, prefix: g_WarpRoom, count: 7}
+      - {name: g_WarpSpriteBank16Frames, kind: frames, count: 7}
+    include: src/saturn/warp/gen/roomspr.h
+  - name: sprite-package-warp-rockspr
+    kind: sprite-package
+    prg: disks/saturn/WARP.PRG
+    zero: disks/saturn/0.BIN
+    base: "0x060DC000"
+    address: "0x060E11E0"
+    symbols:
+      - {name: g_WarpSpriteBank16Palettes, kind: palette, padding: 1}
+    include: src/saturn/warp/gen/rockspr.h
+  - name: sprite-package-stage_02-st74gfx
+    kind: sprite-package
+    prg: disks/saturn/STAGE_02.PRG
+    zero: disks/saturn/0.BIN
+    base: "0x060DC000"
+    address: "0x060EDED8"
+    symbols:
+      - {name: g_Stage02Entity74Palette0, kind: palette}
+      - {name: g_Stage02Entity74Texture0, kind: texture}
+      - {name: g_Stage02Entity74Images0, kind: images}
+      - {name: g_Stage02Entity74Resource0, kind: resource}
+      - {name: g_Stage02Entity74Palette1, kind: palette}
+      - {name: g_Stage02Entity74Texture1, kind: texture}
+      - {name: g_Stage02Entity74Images1, kind: images}
+      - {name: g_Stage02Entity74Resource1, kind: resource}
+    include: src/saturn/stage_02/gen/st74gfx.h
+  - name: sprite-package-stage_02-stelevgf
+    kind: sprite-package
+    prg: disks/saturn/STAGE_02.PRG
+    zero: disks/saturn/0.BIN
+    base: "0x060DC000"
+    address: "0x060EDE6C"
+    symbols:
+      - {name: g_Stage02ElevatorMainPalette, kind: palette}
+      - {name: g_Stage02ElevatorAlternatePalette, kind: palette}
+      - {name: g_Stage02ElevatorImages, kind: images}
+      - {name: g_Stage02ElevatorResource, kind: resource}
+      - {name: g_Stage02ElevatorPaletteResource, kind: resource}
+    include: src/saturn/stage_02/gen/stelevgf.h
+  - name: sprite-package-stage_02-stmargfx
+    kind: sprite-package
+    prg: disks/saturn/STAGE_02.PRG
+    zero: disks/saturn/0.BIN
+    base: "0x060DC000"
+    address: "0x060EE348"
+    symbols:
+      - {name: g_Stage02MariaNpcPalette, kind: palette, padding: 1}
+      - {name: g_Stage02MariaNpcImages, kind: images}
+      - {kind: frame_group, prefix: g_Stage02MariaNpc, count: 62}
+      - {name: g_Stage02MariaNpcFrames, kind: frames, count: 62}
+      - {name: g_Stage02MariaNpcResource, kind: resource}
+      - {name: g_Stage02SpriteBank17Palette, kind: palette, padding: 1}
+      - {name: g_Stage02SpriteBank17Images, kind: images}
+      - {name: g_Stage02SpriteBank17Resource, kind: resource}
+    include: src/saturn/stage_02/gen/stmargfx.h
+  - name: sprite-package-stage_02-stsubgfx
+    kind: sprite-package
+    prg: disks/saturn/STAGE_02.PRG
+    zero: disks/saturn/0.BIN
+    base: "0x060DC000"
+    address: "0x060EDA9C"
+    symbols:
+      - {name: g_Stage02SubweaponContainerMainPalettes, kind: palette}
+      - {name: g_Stage02SubweaponContainerAlternatePalettes, kind: palette}
+      - {kind: frame_group, prefix: g_Stage02SubweaponContainer, count: 14}
+      - {name: g_Stage02SubweaponContainerFrames, kind: frames, count: 14}
+      - {name: g_Stage02SubweaponContainerImages, kind: images}
+      - {name: g_Stage02SubweaponContainerResource, kind: resource}
+      - {name: g_Stage02SubweaponContainerPaletteResource, kind: resource}
+    include: src/saturn/stage_02/gen/stsubgfx.h
   - name: maps
     kind: map
     prg: disks/saturn

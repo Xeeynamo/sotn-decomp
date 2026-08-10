@@ -37,6 +37,8 @@ enum Command {
     Map(MapCommand),
     #[command(subcommand)]
     Stage(StageCommand),
+    #[command(subcommand)]
+    SpritePackage(SpritePackageCommand),
 }
 
 #[derive(Subcommand)]
@@ -52,6 +54,45 @@ enum StageCommand {
     Verify {
         manifest: PathBuf,
         chr_path: PathBuf,
+    },
+    EntityHeader {
+        prg_path: PathBuf,
+        entity: usize,
+        #[arg(value_parser = parse_hex_address)]
+        frames: u32,
+        prefix: String,
+        output: PathBuf,
+        #[arg(long)]
+        zero: Option<PathBuf>,
+    },
+    VerifyEntityHeader {
+        prg_path: PathBuf,
+        entity: usize,
+        #[arg(value_parser = parse_hex_address)]
+        frames: u32,
+        prefix: String,
+        output: PathBuf,
+        #[arg(long)]
+        zero: Option<PathBuf>,
+    },
+}
+
+fn parse_hex_address(text: &str) -> Result<u32, String> {
+    let digits = text.strip_prefix("0x").or_else(|| text.strip_prefix("0X")).unwrap_or(text);
+    u32::from_str_radix(digits, 16).map_err(|error| format!("{text:?} is not a hex address: {error}"))
+}
+
+#[derive(Subcommand)]
+enum SpritePackageCommand {
+    GenerateHeader {
+        config: PathBuf,
+        asset: String,
+        output: PathBuf,
+    },
+    VerifyHeader {
+        config: PathBuf,
+        asset: String,
+        output: PathBuf,
     },
 }
 
@@ -325,6 +366,43 @@ fn run(cli: Cli) -> saturn_assets::Result<()> {
         Command::Stage(StageCommand::Verify { manifest, chr_path }) => {
             stage::verify(&manifest, &chr_path)?;
             println!("verify passed: exact retail match");
+        }
+        Command::Stage(StageCommand::EntityHeader {
+            prg_path,
+            entity,
+            frames,
+            prefix,
+            output,
+            zero,
+        }) => {
+            let text = stage::generate_entity_header(
+                &prg_path,
+                zero.as_deref(),
+                entity,
+                frames,
+                &prefix,
+                &output,
+            )?;
+            println!("{} lines -> {}", text.lines().count(), output.display());
+        }
+        Command::Stage(StageCommand::VerifyEntityHeader {
+            prg_path,
+            entity,
+            frames,
+            prefix,
+            output,
+            zero,
+        }) => {
+            stage::verify_entity_header(&prg_path, zero.as_deref(), entity, frames, &prefix, &output)?;
+            println!("verify passed: the header in the tree is what regenerates");
+        }
+        Command::SpritePackage(SpritePackageCommand::GenerateHeader { config, asset, output }) => {
+            let text = stage::generate_package_header(&config, &asset, &output)?;
+            println!("{} lines -> {}", text.lines().count(), output.display());
+        }
+        Command::SpritePackage(SpritePackageCommand::VerifyHeader { config, asset, output }) => {
+            stage::verify_package_header(&config, &asset, &output)?;
+            println!("verify passed: the header in the tree is what regenerates");
         }
         Command::Map(MapCommand::Extract {
             prg_path,
