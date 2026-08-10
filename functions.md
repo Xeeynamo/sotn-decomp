@@ -1693,6 +1693,8 @@
 | nz1        | e_boss_doors.rodata                |       28 |          0 | Yes    |       |     |
 | rare       | e_azaghal.rodata                   |       28 |          0 | Yes    |       |     |
 | rchi       | e_breakable_wall.rodata            |       28 |          0 | Yes    |       |     |
+| rno2       | e_azaghal.rodata                   |       28 |          0 | Yes    |       |     |
+| rno2       | unk_3EF8.rodata                    |       28 |          0 | Yes    |       |     |
 | rno2       | unk_A130.rodata                    |       28 |          0 | Yes    |       |     |
 | st0        | e_collect.rodata                   |       28 |          0 | Yes    |       |     |
 | st0        | title_card.rodata                  |       28 |          0 | Yes    |       |     |
@@ -3464,7 +3466,6 @@
 | dra        | func_psp_09116120                  |       49 |         10 |        |       |     |
 | bo5        | unk_149E8.rodata                   |       50 |          0 | Yes    |       |     |
 | no1        | unk_381E8.rodata                   |       50 |          0 | Yes    |       |     |
-| rno2       | unk_3EF8.rodata                    |       50 |          0 | Yes    |       |     |
 | main       | func_psp_08910C74                  |       50 |          1 |        |       |     |
 | main       | sceGupLight                        |       50 |          2 |        |       |     |
 | dra        | func_psp_0910BC78                  |       50 |          3 |        |       |     |
