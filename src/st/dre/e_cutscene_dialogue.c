@@ -206,6 +206,7 @@ void SetCutsceneEvents(u8* ptr) {
     g_Dialogue.hasEvents = 1;
 }
 
+#define CUTSCENE_WAIT_FOR_FLAG_REWIND
 #include "../cutscene_events.h"
 #include "../cutscene_skip.h"
 #include "../cutscene_scale_avatar.h"
