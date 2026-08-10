@@ -6779,11 +6779,6 @@
 | 0.91 | true     | VSync_memclr                        | asm/us/main/matchings/psxsdk/libetc/intr_vb/VSync_memclr.s 
 | 1.00 | true     | func_8001510C                       | asm/us/main/matchings/psxsdk/libgpu/sys/func_8001510C.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
-| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
-| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
-| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | func_801713C8                       | asm/us/servant/tt_000/matchings/bat/func_801713C8.s 
 | 1.00 | true     | func_us_801714F4                    | asm/us/servant/tt_001/matchings/ghost/func_us_801714F4.s 
 | 1.00 | true     | func_us_80172D50                    | asm/us/servant/tt_003/matchings/demon/func_us_80172D50.s 
@@ -7201,6 +7196,10 @@
 | 0.93 | true     | _SsContRpn2                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn2.s 
 | 1.00 | true     | _SsSetProgramChange                 | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsSetProgramChange.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
+| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
+| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
+-------------------------------------------------------------------------------
 | 0.92 | true     | SsVabFakeHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabFakeHead.s 
 | 1.00 | true     | SsVabOpenHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabOpenHead.s 
 | 0.92 | true     | SsVabOpenHeadSticky                 | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabOpenHeadSticky.s 
@@ -7579,7 +7578,7 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801B2C40                    | asm/us/st/rare/matchings/e_azaghal/func_us_801B2C40.s 
 | 0.97 | true     | StainedGlassRecurse                 | asm/us/st/rdai/matchings/unk_327A4/StainedGlassRecurse.s 
-| 1.00 | false    | func_us_801B2C40_from_rare          | asm/us/st/rno2/nonmatchings/unk_47A9C/func_us_801B2C40_from_rare.s 
+| 1.00 | true     | func_us_801C88C4                    | asm/us/st/rno2/matchings/e_azaghal/func_us_801C88C4.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801B29E0                    | asm/us/st/rare/matchings/e_minotaur/func_us_801B29E0.s 
 | 0.94 | false    | EntityMinotaurSpitLiquid            | asm/us/boss/bo2/nonmatchings/unk_224DC/EntityMinotaurSpitLiquid.s 
@@ -8003,6 +8002,9 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | _SsContModulation                   | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContModulation.s 
 | 1.00 | true     | _SsContPortaTime                    | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContPortaTime.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | SsSeqPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSeqPlay.s 
+| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | SsUtSetReverbDelay                  | asm/us/main/matchings/psxsdk/libsnd/ut_rdel/SsUtSetReverbDelay.s 
 | 1.00 | true     | SsUtSetReverbFeedback               | asm/us/main/matchings/psxsdk/libsnd/ut_rfb/SsUtSetReverbFeedback.s 
@@ -8890,25 +8892,25 @@
 | 1.00 | false    | EntityWaterForeground               | asm/us/st/rnz1/nonmatchings/unk_276A8/EntityWaterForeground.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801B30A8                    | asm/us/st/rare/matchings/e_azaghal/func_us_801B30A8.s 
-| 1.00 | false    | UpdateBodyDisplay                   | asm/us/st/rno2/nonmatchings/unk_47A9C/UpdateBodyDisplay.s 
+| 1.00 | true     | func_us_801C8D2C                    | asm/us/st/rno2/matchings/e_azaghal/func_us_801C8D2C.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801B33F4                    | asm/us/st/rare/matchings/e_azaghal/func_us_801B33F4.s 
-| 1.00 | false    | func_us_801B33F4_from_rare          | asm/us/st/rno2/nonmatchings/unk_47A9C/func_us_801B33F4_from_rare.s 
+| 1.00 | true     | func_us_801C9078                    | asm/us/st/rno2/matchings/e_azaghal/func_us_801C9078.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801B3938                    | asm/us/st/rare/matchings/e_azaghal/func_us_801B3938.s 
-| 1.00 | false    | InitPositionLerp                    | asm/us/st/rno2/nonmatchings/unk_47A9C/InitPositionLerp.s 
+| 1.00 | true     | func_us_801C95BC                    | asm/us/st/rno2/matchings/e_azaghal/func_us_801C95BC.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801B398C                    | asm/us/st/rare/matchings/e_azaghal/func_us_801B398C.s 
-| 1.00 | false    | ApplyPositionLerp                   | asm/us/st/rno2/nonmatchings/unk_47A9C/ApplyPositionLerp.s 
+| 1.00 | true     | func_us_801C9610                    | asm/us/st/rno2/matchings/e_azaghal/func_us_801C9610.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801B3A1C                    | asm/us/st/rare/matchings/e_azaghal/func_us_801B3A1C.s 
-| 1.00 | false    | AnimateAzaghal                      | asm/us/st/rno2/nonmatchings/unk_47A9C/AnimateAzaghal.s 
+| 1.00 | true     | func_us_801C96A0                    | asm/us/st/rno2/matchings/e_azaghal/func_us_801C96A0.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801B3B34                    | asm/us/st/rare/matchings/e_azaghal/func_us_801B3B34.s 
-| 1.00 | false    | EntityAzaghal                       | asm/us/st/rno2/nonmatchings/unk_47A9C/EntityAzaghal.s 
+| 1.00 | true     | func_us_801C97B8                    | asm/us/st/rno2/matchings/e_azaghal/func_us_801C97B8.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801B4E9C                    | asm/us/st/rare/matchings/e_azaghal/func_us_801B4E9C.s 
-| 1.00 | false    | EntityAzaghalSwordHitbox            | asm/us/st/rno2/nonmatchings/unk_47A9C/EntityAzaghalSwordHitbox.s 
+| 1.00 | true     | func_us_801CAB28                    | asm/us/st/rno2/matchings/e_azaghal/func_us_801CAB28.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801B28F4                    | asm/us/st/rare/matchings/e_minotaur/func_us_801B28F4.s 
 | 1.00 | false    | EntityMinotaurFireball              | asm/us/boss/bo2/nonmatchings/unk_224DC/EntityMinotaurFireball.s 
