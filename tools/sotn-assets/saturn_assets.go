@@ -9,6 +9,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"runtime"
+	"strconv"
 
 	"github.com/goccy/go-yaml"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
@@ -45,7 +46,9 @@ type saturnAsset struct {
 	PaletteInclude  string `yaml:"palette_include"`
 	GraphicsInclude string `yaml:"graphics_include"`
 	Prefix          string `yaml:"prefix"`
-	Zero string `yaml:"zero"`
+	Zero            string `yaml:"zero"`
+	Entity int    `yaml:"entity"`
+	Frames string `yaml:"frames"`
 }
 
 // one file of work; a dir entry expands into one per file
@@ -63,6 +66,8 @@ type saturnUnit struct {
 	graphicsInclude string
 	prefix          string
 	zero            string
+	entity          int
+	frames          string
 }
 
 const saturnAssetOutputDir = "build/saturn/assets"
@@ -120,6 +125,21 @@ func (a saturnAsset) variant() (string, error) {
 				"asset %q: stage needs the stage prg and the shared zero overlay", a.Name)
 		}
 		return "", nil
+	case "stage-entity":
+		if a.Prg == "" || a.Zero == "" {
+			return "", fmt.Errorf(
+				"asset %q: stage-entity needs the stage prg and the shared zero overlay", a.Name)
+		}
+		if a.Frames == "" || a.Prefix == "" || a.Include == "" {
+			return "", fmt.Errorf(
+				"asset %q: stage-entity needs frames, prefix and include", a.Name)
+		}
+		return "", nil
+	case "sprite-package":
+		if a.Include == "" {
+			return "", fmt.Errorf("asset %q: sprite-package needs include", a.Name)
+		}
+		return "", nil
 	case "map":
 		if a.Prg == "" {
 			return "", fmt.Errorf("asset %q: map needs the stage prg", a.Name)
@@ -142,6 +162,25 @@ func (a saturnAsset) units() ([]saturnUnit, error) {
 	variant, err := a.variant()
 	if err != nil {
 		return nil, err
+	}
+	if a.Kind == "stage-entity" {
+		return []saturnUnit{{
+			name:    a.Name,
+			kind:    a.Kind,
+			prg:     a.Prg,
+			zero:    a.Zero,
+			entity:  a.Entity,
+			frames:  a.Frames,
+			prefix:  a.Prefix,
+			include: a.Include,
+		}}, nil
+	}
+	if a.Kind == "sprite-package" {
+		return []saturnUnit{{
+			name:    a.Name,
+			kind:    a.Kind,
+			include: a.Include,
+		}}, nil
 	}
 	if a.Source != "" && len(a.Files) > 0 {
 		return nil, fmt.Errorf("asset %q sets both source and files", a.Name)
@@ -195,6 +234,7 @@ func (a saturnAsset) units() ([]saturnUnit, error) {
 type saturnAssetConfig struct {
 	Version sotn.Version  `yaml:"version"`
 	Assets  []saturnAsset `yaml:"assets"`
+	path string
 }
 
 func readSaturnAssetConfig(path string) (*saturnAssetConfig, bool, error) {
@@ -209,6 +249,7 @@ func readSaturnAssetConfig(path string) (*saturnAssetConfig, bool, error) {
 	if c.Version != sotn.VersionSaturn {
 		return nil, false, nil
 	}
+	c.path = path
 	return &c, true, nil
 }
 
@@ -235,6 +276,9 @@ func runSaturnAssets(binary string, args ...string) error {
 }
 
 func saturnUnitArgs(u saturnUnit, command string) ([]string, error) {
+	if u.kind == "stage-entity" || u.kind == "sprite-package" {
+		return nil, nil
+	}
 	manifest := filepath.Join(u.path, "manifest.json")
 	switch command {
 	case "extract":
@@ -274,13 +318,14 @@ func saturnUnitArgs(u saturnUnit, command string) ([]string, error) {
 }
 
 var generatedHeaderKinds = map[string]bool{
-	"familiar": true, "bitmap": true, "player": true, "map": true}
+	"familiar": true, "bitmap": true, "player": true, "map": true,
+	"stage-entity": true, "sprite-package": true}
 
 func saturnMapLayout(u saturnUnit) string {
 	return filepath.Join(u.path, "layout.json")
 }
 
-func runSaturnGeneratedHeader(binary string, u saturnUnit, command string) error {
+func runSaturnGeneratedHeader(binary string, configPath string, u saturnUnit, command string) error {
 	manifest := filepath.Join(u.path, "manifest.json")
 	switch command {
 	case "extract":
@@ -293,6 +338,14 @@ func runSaturnGeneratedHeader(binary string, u saturnUnit, command string) error
 		if u.kind == "map" {
 			return runSaturnAssets(binary, u.kind, "generate-headers",
 				saturnMapLayout(u), u.prefix, u.include, u.graphicsInclude)
+		}
+		if u.kind == "stage-entity" {
+			return runSaturnAssets(binary, "stage", "entity-header",
+				u.prg, strconv.Itoa(u.entity), u.frames, u.prefix, u.include, "--zero", u.zero)
+		}
+		if u.kind == "sprite-package" {
+			return runSaturnAssets(binary, "sprite-package", "generate-header",
+				configPath, u.name, u.include)
 		}
 		return runSaturnAssets(binary, u.kind, "generate-header", manifest, u.include)
 	case "verify":
@@ -313,6 +366,14 @@ func runSaturnGeneratedHeader(binary string, u saturnUnit, command string) error
 			}
 			return runSaturnAssets(binary, u.kind, "verify-headers",
 				layout, u.prefix, u.include, u.graphicsInclude)
+		}
+		if u.kind == "stage-entity" {
+			return runSaturnAssets(binary, "stage", "verify-entity-header",
+				u.prg, strconv.Itoa(u.entity), u.frames, u.prefix, u.include, "--zero", u.zero)
+		}
+		if u.kind == "sprite-package" {
+			return runSaturnAssets(binary, "sprite-package", "verify-header",
+				configPath, u.name, u.include)
 		}
 		return runSaturnAssets(binary, u.kind, "verify-header", manifest, u.include)
 	default:
@@ -343,9 +404,12 @@ func forEachSaturnAsset(c *saturnAssetConfig, command string) error {
 			return err
 		}
 		eg.Go(func() error {
-			err := runSaturnAssets(binary, args...)
+			var err error
+			if args != nil {
+				err = runSaturnAssets(binary, args...)
+			}
 			if err == nil && generatedHeaderKinds[unit.kind] && unit.include != "" {
-				err = runSaturnGeneratedHeader(binary, unit, command)
+				err = runSaturnGeneratedHeader(binary, c.path, unit, command)
 			}
 			if err != nil {
 				return fmt.Errorf("asset %q: %w", unit.name, err)
