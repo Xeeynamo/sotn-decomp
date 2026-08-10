@@ -69,19 +69,13 @@ void func_us_8019F148(Entity* self) {
 #ifdef VERSION_PSP
         if ((GetDistanceToPlayerX() < 0x20) &&
             ((player->posY.i.hi - self->posY.i.hi) < 0x50)) {
-            g_PauseAllowed = 0;
-            g_unkGraphicsStruct.pauseEnemies = 1;
 #else
         if ((GetDistanceToPlayerX() < 0x20) &&
             ((player->posY.i.hi - self->posY.i.hi) < 0x70)) {
-            g_unkGraphicsStruct.pauseEnemies = 1;
+#endif
             g_PauseAllowed = 0;
-#endif
-#ifdef VERSION_PSP
-            if (posX > (0x181 - 1)) {
-#else
-            if (posX >= 0x181) {
-#endif
+            g_unkGraphicsStruct.pauseEnemies = 1;
+            if (posX > 0x180) {
                 g_Player.padSim = PAD_LEFT;
             } else if (posX < 0x180) {
                 g_Player.padSim = PAD_RIGHT;
@@ -99,12 +93,9 @@ void func_us_8019F148(Entity* self) {
             } else if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
                 g_Player.padSim = PAD_WOLF;
             }
-#ifdef VERSION_PSP
             g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 0;
             g_Player.demo_timer = 1;
-#else
-            g_Player.demo_timer = 1;
-            g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 0;
+#ifndef VERSION_PSP
             g_Tilemap.height = 0x200;
 #endif
             self->step++;
@@ -131,11 +122,7 @@ void func_us_8019F148(Entity* self) {
                 }
             }
         } else {
-#ifdef VERSION_PSP
-            if (posX > (0x181 - 1)) {
-#else
-            if (posX >= 0x181) {
-#endif
+            if (posX > 0x180) {
                 g_Player.padSim = PAD_LEFT;
             } else if (posX < 0x180) {
                 g_Player.padSim = PAD_RIGHT;
@@ -227,20 +214,11 @@ void func_us_8019F5F0(Entity* self) {
     Entity* player;
 #endif
     Primitive* prim;
-#ifdef VERSION_PSP
     s32 primIndex;
-#else
-    s16 primIndex;
-    u8 color;
-#endif
 
     switch (self->step) {
     case 0:
-#ifdef VERSION_PSP
-        primIndex = (s16)g_api.AllocPrimitives(PRIM_G4, 1);
-#else
         primIndex = g_api.AllocPrimitives(PRIM_G4, 1);
-#endif
         if (primIndex != -1) {
             InitializeEntity(g_EInitInteractable);
 #ifdef VERSION_PSP
@@ -330,13 +308,8 @@ void func_us_8019F5F0(Entity* self) {
     case 2:
         if (g_CutsceneFlags & 0x100) {
             g_unkGraphicsStruct.unk20 = 0;
-#ifdef VERSION_PSP
             self->step++;
             self->ext.utimer.t = 0;
-#else
-            self->ext.utimer.t = 0;
-            self->step++;
-#endif
         }
         g_Player.padSim = PAD_NONE;
         g_Player.demo_timer = 1;
@@ -344,11 +317,7 @@ void func_us_8019F5F0(Entity* self) {
 
     case 3:
         self->ext.utimer.t++;
-#ifdef VERSION_PSP
-        if (self->ext.utimer.t > (0x181 - 1)) {
-#else
-        if (self->ext.utimer.t >= 0x181) {
-#endif
+        if (self->ext.utimer.t > 0x180) {
             g_CutsceneFlags |= 0x400;
             self->step++;
         }
@@ -359,26 +328,11 @@ void func_us_8019F5F0(Entity* self) {
     case 4:
         if (g_CutsceneFlags & 0x800) {
             prim = &g_PrimBuf[self->primIndex];
-#ifdef VERSION_PSP
             prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =
                 prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 =
                     prim->b3 = 0;
             prim->drawMode =
                 DRAW_TRANSP | DRAW_COLORS | DRAW_TPAGE | DRAW_TPAGE2;
-#else
-            prim->b3 = 0;
-            prim->b2 = 0;
-            prim->b1 = 0;
-            prim->b0 = 0;
-            prim->g3 = 0;
-            prim->g2 = 0;
-            prim->g1 = 0;
-            prim->g0 = 0;
-            prim->r3 = 0;
-            prim->r2 = 0;
-            prim->r1 = 0;
-            prim->r0 = 0;
-#endif
             prim->drawMode =
                 DRAW_TRANSP | DRAW_COLORS | DRAW_TPAGE | DRAW_UNK_40;
             self->step++;
@@ -389,24 +343,8 @@ void func_us_8019F5F0(Entity* self) {
 
     case 5:
         prim = &g_PrimBuf[self->primIndex];
-#ifdef VERSION_PSP
         prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =
             prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 = ++prim->b3;
-#else
-        color = prim->b3 + 1;
-        prim->r0 = color;
-        prim->b3 = color;
-        prim->b2 = color;
-        prim->b1 = color;
-        prim->b0 = color;
-        prim->g3 = color;
-        prim->g2 = color;
-        prim->g1 = color;
-        prim->g0 = color;
-        prim->r3 = color;
-        prim->r2 = color;
-        prim->r1 = color;
-#endif
         if (prim->r0 == 0xFF) {
             if (g_PlayableCharacter != PLAYER_ALUCARD) {
                 D_800978B4 = 4;
