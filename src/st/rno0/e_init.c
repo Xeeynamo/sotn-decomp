@@ -33,9 +33,9 @@ void EntityStatueGear(Entity* self);
 void EntityStoneDoor(Entity* self);
 void EntityClockRoomUnused(Entity* self);
 void EntityDummy(Entity* self);
-void EntityGuardian(Entity* self);
-void func_us_801D348C_from_are(Entity* self);
-void EntityGuardianFireWave(Entity* self);
+void EntityArmorLord(Entity* self);
+void EntityArmorLordSwordShadow(Entity* self);
+void EntityArmorLordFireWave(Entity* self);
 void EntityArmorLordUnk2(Entity* self);
 void EntityArmorLordUnused(Entity* self);
 void EntityFloorTrap(Entity* self);
@@ -114,9 +114,9 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityStoneDoor,
     EntityClockRoomUnused,
     EntityDummy,
-    EntityGuardian,
-    func_us_801D348C_from_are,
-    EntityGuardianFireWave,
+    EntityArmorLord,
+    EntityArmorLordSwordShadow,
+    EntityArmorLordFireWave,
     EntityArmorLordUnk2,
     EntityArmorLordUnused,
     EntityFloorTrap,
@@ -177,9 +177,9 @@ EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0, 0, 0, 0x002};
 EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0, 0, 0, 0x001};
 EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
-EInit g_EInitGuardian = {ANIMSET_OVL(3), 1, 82, 518, 0x18C};
-EInit D_us_80180AD4 = {ANIMSET_OVL(3), 0, 82, 518, 0x18D};
-EInit D_us_80180AE0 = {ANIMSET_OVL(0), 0, 0, 0, 0x18E};
+EInit g_EInitArmorLord = {ANIMSET_OVL(3), 1, 82, 518, 0x18C};
+EInit g_EInitArmorLordSwordShadow = {ANIMSET_OVL(3), 0, 82, 518, 0x18D};
+EInit g_EInitArmorLordTemp = {ANIMSET_OVL(0), 0, 0, 0, 0x18E};
 EInit D_us_80180AEC = {ANIMSET_OVL(4), 0, 75, 578, 0x005};
 EInit g_EInitThornweed = {ANIMSET_OVL(5), 0, 80, 537, 0x09D};
 EInit g_EInitCorpseweedUnused = {ANIMSET_OVL(5), 0, 80, 537, 0x09E};

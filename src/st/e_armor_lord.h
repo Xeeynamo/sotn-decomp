@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 extern EInit g_EInitInteractable;
 extern EInit g_EInitArmorLord;
-extern EInit D_us_80180AE8;
-extern EInit D_us_80180AF4;
+extern EInit g_EInitArmorLordSwordShadow;
+extern EInit g_EInitArmorLordTemp;
 
 #ifdef STAGE_IS_NO1
 static s32 D_us_80182D4C = 0;
@@ -819,7 +819,7 @@ void EntityArmorLord(Entity* self) {
 #endif
         InitializeEntity(g_EInitArmorLord);
         tempEntity = self + 1;
-        CreateEntityFromEntity(E_ARMOR_LORD_UNK1, self, tempEntity);
+        CreateEntityFromEntity(E_ARMOR_LORD_SWORD_SHADOW, self, tempEntity);
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         break;
 
@@ -1016,8 +1016,9 @@ void EntityArmorLord(Entity* self) {
 #endif
 }
 
-// Some kind of helper for the Armor Lord
-void func_us_801D348C(Entity* self) {
+// Faint blue effect when Armor Lord swings his sword.
+// Animframe 0x20 is a horizontal slice, 0x21 is vertical
+void EntityArmorLordSwordShadow(Entity* self) {
     Entity* parent;
     u8 animCurFrame;
 
@@ -1029,7 +1030,7 @@ void func_us_801D348C(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180AE8);
+        InitializeEntity(g_EInitArmorLordSwordShadow);
         self->blendMode |= BLEND_TRANSP | BLEND_ADD;
         self->drawFlags |= ENTITY_OPACITY;
         self->animCurFrame = 0;
@@ -1099,7 +1100,7 @@ void func_us_801D348C(Entity* self) {
 }
 
 // Another wave attack helper
-void func_us_801D3700(Entity* self) {
+void EntityArmorLordUnk2(Entity* self) {
     Primitive* prim;
     s32 height;
     s32 offsetY;
@@ -1107,7 +1108,7 @@ void func_us_801D3700(Entity* self) {
     if (!self->step) {
         height = self->hitboxHeight;
         offsetY = self->hitboxOffY;
-        InitializeEntity(D_us_80180AF4);
+        InitializeEntity(g_EInitArmorLordTemp);
         self->hitboxWidth = 8;
         self->hitboxOffX = 8;
         self->hitboxHeight = height;
