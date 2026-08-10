@@ -8,15 +8,9 @@
 #define RBO1_BOSS_FLAG_DOORS_OPEN (1 << 4)
 
 typedef struct {
-#ifdef VERSION_PSP
     s16 x;
     s16 y;
     s16 params;
-#else
-    u16 x;
-    u16 y;
-    u16 params;
-#endif
 } Rbo1BlockPlacement;
 
 static Rbo1BlockPlacement D_us_80180988[] = {
