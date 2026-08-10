@@ -232,6 +232,7 @@ g_api_CheckCollision = 0x091CF780;
 g_api_func_80102CD8 = 0x091CF784;
 g_api_PlaySfx = 0x091CF7A0;
 g_api_func_800EDB58 = 0x091CF7A4;
+g_api_func_800EA5AC = 0x091CF7AC;
 g_api_func_800EB758 = 0x091CF7B4;
 g_api_func_800EDB08 = 0x091CF7C0;
 g_api_func_8010DFF0 = 0x091CF7E8;
