@@ -180,3 +180,4 @@ D_us_80180BE8 = 0x09267070;
 g_EInitMedusaHead1 = 0x09267090;
 g_EInitMedusaHead2 = 0x092670A0;
 rooms = 0x092670B0;
+g_Statues = 0x09291DA0;
