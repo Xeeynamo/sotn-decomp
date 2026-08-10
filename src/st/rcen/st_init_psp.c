@@ -67,7 +67,7 @@ s32 E_ID(UNK_26);
 s32 E_ID(UNK_27);
 s32 E_ID(UNK_28);
 
-u8* OVL_EXPORT(cutscene_script);
+u8* cutscene_script;
 u8* pre_fight_script_ptr1;
 u8* pre_fight_script_ptr2;
 u8* post_fight_script_ptr1;
@@ -103,7 +103,7 @@ static void InitEntityIds(void) {
 }
 
 void OVL_EXPORT(Load)(void) {
-    OVL_EXPORT(cutscene_script) = GetLangAt(
+    cutscene_script = GetLangAt(
         4, (u8*)cutscene_script_pre_fight_en, (u8*)cutscene_script_pre_fight_fr,
         (u8*)cutscene_script_pre_fight_sp, (u8*)cutscene_script_pre_fight_ge,
         (u8*)cutscene_script_pre_fight_it);

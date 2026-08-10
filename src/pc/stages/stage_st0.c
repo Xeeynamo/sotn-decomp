@@ -17,15 +17,15 @@ extern GAME_IMPORT LayoutEntity** g_pStObjLayoutVertical;
 extern u8 gfx_portrait_richter[];
 extern u8 gfx_portrait_dracula[];
 
-u8 OVL_EXPORT(cutscene_script)[] = {
+u8 cutscene_script[] = {
 #include "../../st/st0/gen/cutscene_script_psx.h"
 #include "../../st/st0/gen/cutscene_events.h"
 };
 
 static void InitCutscenePc(void) {
     static const CutsceneSymbolRange symbols[] = {
-        {OVL_EXPORT(cutscene_script), 0x801829d8,
-         sizeof(OVL_EXPORT(cutscene_script))},
+        {cutscene_script, 0x801829d8,
+         sizeof(cutscene_script)},
         {gfx_portrait_richter, 0x8018f130, 0xd80},
         {gfx_portrait_dracula, 0x8018feb0, 0xd80},
     };

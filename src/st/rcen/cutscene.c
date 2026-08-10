@@ -138,7 +138,7 @@ static u16 actor_names[256];
 static u8 v_coords[8];
 static bool dialogue_started;
 
-extern u8* OVL_EXPORT(cutscene_script); // Defined by st_init
+extern u8* cutscene_script; // Defined by st_init
 extern u8* pre_fight_script_ptr1;       // Defined by st_init
 extern u8* pre_fight_script_ptr2;       // Defined by st_init
 extern u8* post_fight_script_ptr1;      // Defined by st_init
@@ -175,7 +175,7 @@ extern u32 D_pspeu_09260F58;
 // and also the data.
 static const char* actor_names[] = {_S("Alucard"), _S("Shaft")};
 
-extern u8 OVL_EXPORT(cutscene_script)[];
+extern u8 cutscene_script[];
 
 // BSS
 STATIC_PAD_BSS(0xC00);
@@ -248,15 +248,15 @@ void EntityCutscene(Entity* self) {
             i = SetCutsceneScript(post_fight_script_ptr1);
             D_pspeu_09269918 = (u8*)post_fight_script_ptr2;
 #else
-            i = SetCutsceneScript(OVL_EXPORT(cutscene_script));
+            i = SetCutsceneScript(cutscene_script);
 #endif
         } else {
 #ifdef VERSION_PSP
-            i = SetCutsceneScript(OVL_EXPORT(cutscene_script));
+            i = SetCutsceneScript(cutscene_script);
             D_pspeu_09269918 = (u8*)pre_fight_script_ptr1;
             *pre_fight_script_ptr2 = g_CastleFlags[SHAFT_FIGHT_CS_UNK2];
 #else
-            i = SetCutsceneScript(OVL_EXPORT(cutscene_script) + 0x129);
+            i = SetCutsceneScript(cutscene_script + 0x129);
 #endif
         }
 

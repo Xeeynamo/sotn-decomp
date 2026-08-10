@@ -83,7 +83,7 @@ s32 E_ID(ID_4F);
 u8* cutscene_data_offset_eight;
 u8* cutscene_data;
 u8* cutscene_data_offset_zero;
-u8* OVL_EXPORT(cutscene_data_offset_four);
+u8* cutscene_data_offset_four;
 
 void InitEntityIds(void) {
     E_ID(ID_11) = 0x11;
@@ -164,7 +164,7 @@ void OVL_EXPORT(Load)(void) {
         0, (u8*)cutscene_data_en, (u8*)cutscene_data_fr, (u8*)cutscene_data_sp,
         (u8*)cutscene_data_ge, (u8*)cutscene_data_it);
 
-    OVL_EXPORT(cutscene_data_offset_four) = GetLangAt(
+    cutscene_data_offset_four = GetLangAt(
         4, (u8*)cutscene_data_en, (u8*)cutscene_data_fr, (u8*)cutscene_data_sp,
         (u8*)cutscene_data_ge, (u8*)cutscene_data_it);
 

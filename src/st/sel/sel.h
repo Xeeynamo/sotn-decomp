@@ -146,7 +146,7 @@ extern StreamInfo g_StreamInfo3;
 extern StreamInfo* g_Streams[4];
 extern SpriteParts* g_SpriteBanks[];
 
-extern u8 OVL_EXPORT(cutscene_endings)[];
+extern u8 cutscene_endings[];
 extern u8 OVL_EXPORT(credits)[];
 extern s32 g_StreamWidth;
 extern int g_StreamHeight;

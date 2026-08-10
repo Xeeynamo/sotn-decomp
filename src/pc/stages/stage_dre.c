@@ -21,7 +21,7 @@ extern u8 gfx_portrait_succubus[];
 u8 D_801816C0 = 0;
 u8 D_801816C4[4] = {0};
 
-u8 OVL_EXPORT(cutscene_script)[] = {
+u8 cutscene_script[] = {
 #include "../../st/dre/gen/cutscene_script_psx.h"
 #include "../../st/dre/gen/cutscene_events.h"
 };
@@ -29,8 +29,8 @@ u8 OVL_EXPORT(cutscene_script)[] = {
 static void InitCutscenePc(void) {
     static const CutsceneSymbolRange symbols[] = {
         {D_801816C4, 0x801816c4, sizeof(D_801816C4)},
-        {OVL_EXPORT(cutscene_script), 0x801816c8,
-         sizeof(OVL_EXPORT(cutscene_script))},
+        {cutscene_script, 0x801816c8,
+         sizeof(cutscene_script)},
         {gfx_portrait_alucard, 0x8018800c, 0xd80},
         {gfx_portrait_lisa, 0x80188d8c, 0xd80},
         {gfx_portrait_succubus, 0x80189b0c, 0xd80},
