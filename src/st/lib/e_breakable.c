@@ -3,7 +3,7 @@
 
 #define BREAKABLE_ANIMSET ANIMSET_OVL(12)
 
-enum OVL_EXPORT(BreakableTypes) {
+enum BreakableTypes {
     HANGING_LAMP_FLAME,
     HANGING_LAMP_FLAME_,
     HANGING_LAMP_LONG,
@@ -16,7 +16,7 @@ enum OVL_EXPORT(BreakableTypes) {
     BUST,
 };
 
-enum OVL_EXPORT(BreakableDebrisSteps) {
+enum BreakableDebrisSteps {
     INIT,
     UPDATE,
     DEBRIS_NOP = 256,

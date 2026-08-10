@@ -37,7 +37,7 @@ enum OVL_EXPORT(Entities) {
     E_BOSS_DOORS,             // EntityBossDoors
     E_LIFE_UP_SPAWN,          // EntityLifeUpSpawn
     E_COFFIN,                 // EntityCoffin
-    E_UNK_1A,                 // OVL_EXPORT(EntityBoss)
+    E_UNK_1A,                 // EntityBoss
     E_FAKE_RALPH,             // EntityFakeRalph
     E_FAKE_GRANT,             // EntityFakeGrant
     E_FAKE_SYPHA,             // EntityFakeSypha

@@ -7,12 +7,12 @@ extern u_long* cluts[];
 extern LayoutEntity* entityLayoutHorizontal[];
 extern RoomDef rooms_layers[];
 extern u_long** gfxBanks[];
-void OVL_EXPORT(HitDetection)();
+void HitDetection();
 void PrologueScroll();
 
 Overlay g_Overlay = {
     .Update = Update,
-    .HitDetection = OVL_EXPORT(HitDetection),
+    .HitDetection = HitDetection,
     .UpdateRoomPosition = UpdateRoomPosition,
     .InitRoomEntities = InitRoomEntities,
     .rooms = rooms,

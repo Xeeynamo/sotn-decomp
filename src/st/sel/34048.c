@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sel.h"
 
-void OVL_EXPORT(Init)() {
+void InitSel() {
     switch (g_GameEngineStep) {
     case Upd_Eng_Init:
         if (g_IsUsingCd) {
