@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/gfxbanks"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
@@ -52,31 +53,50 @@ func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
 	if err != nil {
 		return assets.InfoResult{}, err
 	}
-	nLayouts := 53 // it seems there are always 53 elements?!
-	_, layoutsRange, err := readEntityLayout(r, "dummy", layoutOff, boundaries.StageBegin, nLayouts, true)
+	_, layoutRanges, err := readEntityLayout(
+		r, "dummy", layoutOff, boundaries.StageBegin, entryCount, true)
 	if err != nil {
 		return assets.InfoResult{}, fmt.Errorf("unable to gather all entity layouts: %w", err)
 	}
+	blockRanges, err := datarange.ConsolidateDataRanges(layoutRanges[1:])
+	if err != nil {
+		return assets.InfoResult{}, fmt.Errorf("unable to consolidate entity layouts: %w", err)
+	}
+
+	splatEntries := []assets.InfoSplatEntry{
+		{
+			DataRange: layoutRanges[0],
+			Name:      "e_laydef",
+			Comment:   "layout entries header",
+		},
+	}
+	for i, blockRange := range blockRanges {
+		name := "e_layout"
+		comment := "layout entries data"
+		if i > 0 {
+			name = fmt.Sprintf("e_layout_%d", i+1)
+			gapBegin := blockRanges[i-1].End()
+			comment = fmt.Sprintf(
+				"layout entries data, resuming after %d unclaimed bytes at 0x%X",
+				gapBegin.DistanceTo(blockRange.Begin()),
+				gapBegin.Real(boundaries.StageBegin))
+		}
+		splatEntries = append(splatEntries, assets.InfoSplatEntry{
+			DataRange: blockRange,
+			Name:      name,
+			Comment:   comment,
+		})
+	}
+
 	return assets.InfoResult{
 		AssetEntries: []assets.InfoAssetEntry{
 			{
-				DataRange: layoutsRange[0],
+				DataRange: layoutRanges[0],
 				Kind:      "layout",
 				Name:      "entity_layouts",
 			},
 		},
-		SplatEntries: []assets.InfoSplatEntry{
-			{
-				DataRange: layoutsRange[0],
-				Name:      "e_laydef",
-				Comment:   "layout entries header",
-			},
-			{
-				DataRange: layoutsRange[1],
-				Name:      "e_layout",
-				Comment:   "layout entries data",
-			},
-		},
+		SplatEntries: splatEntries,
 	}, nil
 }
 
