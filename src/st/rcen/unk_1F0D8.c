@@ -5,7 +5,9 @@
 extern u32 g_CutsceneFlags;
 extern EInit g_EInitCommon;
 extern EInit g_EInitInteractable;
+#ifndef VERSION_PSP
 extern u16 PLAYER_posX_i_hi;
+#endif
 
 static u16 tileLayout[] = {
     0x014C, 0x014D, 0x0150, 0x0151, 0x014A, 0x014B, 0x014E, 0x014F,
@@ -15,13 +17,20 @@ static u8 glassAnimation[] = {
     0x04, 0x03, 0x04, 0x02, 0x08, 0x01, 0x04, 0x02, 0x04, 0x03, 0x18,
     0x04, 0x02, 0x03, 0x02, 0x02, 0x02, 0x01, 0x18, 0x05, 0xFF};
 
+#ifndef VERSION_PSP
 static u8 unused[] = {0x7F, 0x60, 0x58, 0x50, 0x40};
+#endif
 
 static void func_8018F8EC(u16 index) {
     u16* tileLayoutPtr;
     Tilemap* tilemap = &g_Tilemap;
     u16 tilePos = 0x316;
+#ifdef VERSION_PSP
+    s32 i;
+    s32 j;
+#else
     s32 i, j;
+#endif
 
     tileLayoutPtr = &tileLayout[index * 8];
 
@@ -32,6 +41,9 @@ static void func_8018F8EC(u16 index) {
     }
 }
 void func_us_8019F148(Entity* self) {
+#ifdef VERSION_PSP
+    Tilemap* tilemap = &g_Tilemap;
+#endif
     Entity* player = &PLAYER;
     s16 posX;
     s16 posY;
@@ -54,11 +66,22 @@ void func_us_8019F148(Entity* self) {
         break;
 
     case 1:
+#ifdef VERSION_PSP
+        if ((GetDistanceToPlayerX() < 0x20) &&
+            ((player->posY.i.hi - self->posY.i.hi) < 0x50)) {
+            g_PauseAllowed = 0;
+            g_unkGraphicsStruct.pauseEnemies = 1;
+#else
         if ((GetDistanceToPlayerX() < 0x20) &&
             ((player->posY.i.hi - self->posY.i.hi) < 0x70)) {
             g_unkGraphicsStruct.pauseEnemies = 1;
             g_PauseAllowed = 0;
+#endif
+#ifdef VERSION_PSP
+            if (posX > (0x181 - 1)) {
+#else
             if (posX >= 0x181) {
+#endif
                 g_Player.padSim = PAD_LEFT;
             } else if (posX < 0x180) {
                 g_Player.padSim = PAD_RIGHT;
@@ -68,13 +91,22 @@ void func_us_8019F148(Entity* self) {
             if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
                 g_Player.padSim = PAD_BAT;
             } else if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
+#ifdef VERSION_PSP
+                g_Player.padSim = PAD_NONE;
+#else
                 g_Player.padSim = PAD_MIST;
+#endif
             } else if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
                 g_Player.padSim = PAD_WOLF;
             }
+#ifdef VERSION_PSP
+            g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 0;
+            g_Player.demo_timer = 1;
+#else
             g_Player.demo_timer = 1;
             g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 0;
             g_Tilemap.height = 0x200;
+#endif
             self->step++;
         }
         break;
@@ -82,17 +114,28 @@ void func_us_8019F148(Entity* self) {
     case 2:
         g_Player.padSim = PAD_NONE;
         if (g_Player.status & PLAYER_STATUS_TRANSFORM) {
+#ifdef VERSION_PSP
+            g_Player.padSim = PAD_NONE;
+#endif
             if (g_Timer & 1) {
                 if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
                     g_Player.padSim = PAD_BAT;
                 } else if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
+#ifdef VERSION_PSP
+                    g_Player.padSim = PAD_NONE;
+#else
                     g_Player.padSim = PAD_MIST;
+#endif
                 } else if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
                     g_Player.padSim = PAD_WOLF;
                 }
             }
         } else {
+#ifdef VERSION_PSP
+            if (posX > (0x181 - 1)) {
+#else
             if (posX >= 0x181) {
+#endif
                 g_Player.padSim = PAD_LEFT;
             } else if (posX < 0x180) {
                 g_Player.padSim = PAD_RIGHT;
@@ -113,8 +156,10 @@ void func_us_8019F148(Entity* self) {
         if (g_Player.padSim == PAD_NONE) {
             player->posX.i.hi = 0x180 - g_Tilemap.scrollX.i.hi;
             self->step++;
+#ifndef VERSION_PSP
             g_Tilemap.x = 0x100;
             g_Tilemap.width = 0x200;
+#endif
         }
         g_Player.demo_timer = 1;
         break;
@@ -128,7 +173,9 @@ void func_us_8019F148(Entity* self) {
                 g_Player.padSim = PAD_RIGHT;
             }
             func_8018F8EC(1);
+#ifndef VERSION_PSP
             g_Tilemap.y = 0x100;
+#endif
             g_CutsceneFlags |= 1;
             self->step++;
         }
@@ -154,6 +201,12 @@ void func_us_8019F148(Entity* self) {
         break;
 
     case 7:
+#ifdef VERSION_PSP
+        g_PauseAllowed = 1;
+        g_unkGraphicsStruct.pauseEnemies = 0;
+        g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 1;
+        self->step++;
+#else
         if (g_CutsceneFlags & 4) {
             self->step++;
         }
@@ -164,20 +217,48 @@ void func_us_8019F148(Entity* self) {
         g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 1;
         g_PauseAllowed = 1;
         self->step++;
+#endif
         break;
     }
 }
 
 void func_us_8019F5F0(Entity* self) {
+#ifdef VERSION_PSP
+    Entity* player;
+#endif
     Primitive* prim;
+#ifdef VERSION_PSP
+    s32 primIndex;
+#else
     s16 primIndex;
     u8 color;
+#endif
 
     switch (self->step) {
     case 0:
+#ifdef VERSION_PSP
+        primIndex = (s16)g_api.AllocPrimitives(PRIM_G4, 1);
+#else
         primIndex = g_api.AllocPrimitives(PRIM_G4, 1);
+#endif
         if (primIndex != -1) {
             InitializeEntity(g_EInitInteractable);
+#ifdef VERSION_PSP
+            g_PauseAllowed = 0;
+            g_unkGraphicsStruct.pauseEnemies = 1;
+            self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIndex;
+            self->animSet = 0;
+            prim = &g_PrimBuf[primIndex];
+            prim->x0 = prim->x2 = 0;
+            prim->x1 = prim->x3 = 0x100;
+            prim->y0 = prim->y1 = 4;
+            prim->y2 = prim->y3 = 0xE8;
+            prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =
+                prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 =
+                    prim->b3 = 0x80;
+            prim->priority = 0x1F8;
+#else
             prim = &g_PrimBuf[primIndex];
             g_unkGraphicsStruct.pauseEnemies = 1;
             g_PauseAllowed = 0;
@@ -205,6 +286,7 @@ void func_us_8019F5F0(Entity* self) {
             prim->priority = 0x1F8;
             prim->x2 = 0;
             prim->x0 = 0;
+#endif
             prim->drawMode =
                 DRAW_TRANSP | DRAW_COLORS | DRAW_TPAGE | DRAW_TPAGE2;
             self->ext.utimer.t = 0;
@@ -216,6 +298,18 @@ void func_us_8019F5F0(Entity* self) {
     case 1:
         prim = &g_PrimBuf[self->primIndex];
         self->ext.utimer.t++;
+#ifdef VERSION_PSP
+        if (self->ext.utimer.t > (9 - 1)) {
+            g_unkGraphicsStruct.unk20 = 0xFF;
+            self->step++;
+            prim->drawMode = DRAW_HIDE;
+        } else if (self->ext.utimer.t & 1) {
+            prim->drawMode = DRAW_HIDE;
+        } else {
+            prim->drawMode =
+                DRAW_TRANSP | DRAW_COLORS | DRAW_TPAGE | DRAW_TPAGE2;
+        }
+#else
         if (self->ext.utimer.t >= 9) {
             g_unkGraphicsStruct.unk20 = 0xFF;
             self->step++;
@@ -228,6 +322,7 @@ void func_us_8019F5F0(Entity* self) {
                     DRAW_TRANSP | DRAW_COLORS | DRAW_TPAGE | DRAW_TPAGE2;
             }
         }
+#endif
         g_Player.padSim = PAD_NONE;
         g_Player.demo_timer = 1;
         break;
@@ -235,8 +330,13 @@ void func_us_8019F5F0(Entity* self) {
     case 2:
         if (g_CutsceneFlags & 0x100) {
             g_unkGraphicsStruct.unk20 = 0;
+#ifdef VERSION_PSP
+            self->step++;
+            self->ext.utimer.t = 0;
+#else
             self->ext.utimer.t = 0;
             self->step++;
+#endif
         }
         g_Player.padSim = PAD_NONE;
         g_Player.demo_timer = 1;
@@ -244,7 +344,11 @@ void func_us_8019F5F0(Entity* self) {
 
     case 3:
         self->ext.utimer.t++;
+#ifdef VERSION_PSP
+        if (self->ext.utimer.t > (0x181 - 1)) {
+#else
         if (self->ext.utimer.t >= 0x181) {
+#endif
             g_CutsceneFlags |= 0x400;
             self->step++;
         }
@@ -255,6 +359,13 @@ void func_us_8019F5F0(Entity* self) {
     case 4:
         if (g_CutsceneFlags & 0x800) {
             prim = &g_PrimBuf[self->primIndex];
+#ifdef VERSION_PSP
+            prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =
+                prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 =
+                    prim->b3 = 0;
+            prim->drawMode =
+                DRAW_TRANSP | DRAW_COLORS | DRAW_TPAGE | DRAW_TPAGE2;
+#else
             prim->b3 = 0;
             prim->b2 = 0;
             prim->b1 = 0;
@@ -267,6 +378,7 @@ void func_us_8019F5F0(Entity* self) {
             prim->r2 = 0;
             prim->r1 = 0;
             prim->r0 = 0;
+#endif
             prim->drawMode =
                 DRAW_TRANSP | DRAW_COLORS | DRAW_TPAGE | DRAW_UNK_40;
             self->step++;
@@ -277,6 +389,10 @@ void func_us_8019F5F0(Entity* self) {
 
     case 5:
         prim = &g_PrimBuf[self->primIndex];
+#ifdef VERSION_PSP
+        prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =
+            prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 = ++prim->b3;
+#else
         color = prim->b3 + 1;
         prim->r0 = color;
         prim->b3 = color;
@@ -290,13 +406,19 @@ void func_us_8019F5F0(Entity* self) {
         prim->r3 = color;
         prim->r2 = color;
         prim->r1 = color;
+#endif
         if (prim->r0 == 0xFF) {
             if (g_PlayableCharacter != PLAYER_ALUCARD) {
                 D_800978B4 = 4;
                 g_GameState = Game_Ending;
                 g_GameStep = 0;
             } else {
+#ifdef VERSION_PSP
+                player = &PLAYER;
+                player->posX.i.hi -= 0x200;
+#else
                 PLAYER_posX_i_hi -= 0x200;
+#endif
             }
             self->step++;
         }
@@ -312,22 +434,48 @@ void func_us_8019F5F0(Entity* self) {
 
 void func_us_8019F9C0(Entity* self) {
     Primitive* prim;
+#ifdef VERSION_PSP
+    s32 primIndex;
+#else
     s16 primIndex;
+#endif
     s32 animResult;
+#ifndef VERSION_PSP
     u16 posX;
     u16 posY;
     u16 priority;
+#endif
 
     switch (self->step) {
     case 0:
+#ifdef VERSION_PSP
+        primIndex = (s16)g_api.AllocPrimitives(PRIM_GT4, 1);
+#else
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+#endif
         if (primIndex != -1) {
             InitializeEntity(g_EInitCommon);
+#ifdef VERSION_PSP
+            self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIndex;
+            prim = &g_PrimBuf[primIndex];
+#else
             prim = &g_PrimBuf[primIndex];
             self->primIndex = primIndex;
             self->flags |= FLAG_HAS_PRIMS;
+#endif
             prim->tpage = 0x1A;
             prim->clut = 0x19F;
+#ifdef VERSION_PSP
+            prim->u0 = prim->u2 = 1;
+            prim->u1 = prim->u3 = 0x3F;
+            prim->v0 = prim->v1 = 0xC1;
+            prim->v2 = prim->v3 = 0xFF;
+            prim->x0 = prim->x1 = prim->x2 = prim->x3 = self->posX.i.hi;
+            prim->y0 = prim->y1 = prim->y2 = prim->y3 = self->posY.i.hi;
+            prim->priority = self->zPriority;
+            prim->drawMode = DRAW_UNK02 | DRAW_HIDE;
+#else
             prim->u2 = 1;
             prim->u0 = 1;
             prim->u3 = 0x3F;
@@ -349,9 +497,14 @@ void func_us_8019F9C0(Entity* self) {
             priority = self->zPriority;
             prim->drawMode = DRAW_UNK02 | DRAW_HIDE;
             prim->priority = priority;
+#endif
             self->animSet = ANIMSET_OVL(1);
             self->animCurFrame = 4;
+#ifdef VERSION_PSP
+            self->zPriority--;
+#else
             self->zPriority = 0x64;
+#endif
         }
         break;
 
@@ -379,11 +532,19 @@ void func_us_8019F9C0(Entity* self) {
 
     case 3:
         prim = &g_PrimBuf[self->primIndex];
+#ifdef VERSION_PSP
+        prim->x0 = --prim->x2;
+        prim->x1 = ++prim->x3;
+        prim->y0 = --prim->y1;
+        prim->y2 = ++prim->y3;
+        prim->drawMode = DRAW_TRANSP | DRAW_TPAGE | DRAW_UNK_40;
+#else
         prim->drawMode = DRAW_TRANSP | DRAW_TPAGE | DRAW_UNK_40;
         prim->x0 = prim->x2 = prim->x2 - 1;
         prim->x1 = prim->x3 = prim->x3 + 1;
         prim->y0 = prim->y1 = prim->y1 - 1;
         prim->y2 = prim->y3 = prim->y3 + 1;
+#endif
         if (prim->x0 < -0x40) {
             self->step++;
         }
@@ -395,15 +556,40 @@ void func_us_8019F9C0(Entity* self) {
 }
 
 void func_us_801B4148_from_bo0(Entity* self) {
+#ifdef VERSION_PSP
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitCommon);
+        self->animSet = ANIMSET_OVL(1);
+        self->animCurFrame = 6;
+        self->zPriority -= 2;
+    case 1:
+        break;
+    }
+#else
     if (self->step == 0) {
         InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 6;
         self->zPriority = 0x63;
     }
+#endif
 }
 
 void func_us_801C123C_from_no4(Entity* self) {
+#ifdef VERSION_PSP
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitCommon);
+        self->animSet = ANIMSET_OVL(1);
+        self->animCurFrame = 7;
+        self->drawFlags = ENTITY_ROTATE;
+        self->rotate = 0x800;
+        self->zPriority++;
+    case 1:
+        break;
+    }
+#else
     if (self->step == 0) {
         InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(1);
@@ -412,4 +598,5 @@ void func_us_801C123C_from_no4(Entity* self) {
         self->rotate = 0x800;
         self->zPriority++;
     }
+#endif
 }
