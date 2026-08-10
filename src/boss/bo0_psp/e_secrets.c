@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "no2.h"
+#include "bo0.h"
 
 extern EInit g_EInitEnvironment;
 extern Primitive* FindFirstUnkPrim(Primitive* prim);
@@ -164,19 +164,7 @@ static u16 D_us_80180E00[] = {
     0x000, 0x000, 0x000, 0x000, 0x000, 0x000, 0x40C, 0x000, 0x598, 0x40B,
 };
 
-typedef enum {
-    STEP_INIT,
-#ifndef BOSS_IS_BO0
-    STEP_SFX,
-#endif
-    STEP_ANIMATE,
-    STEP_GENERATE_DEBRIS,
-    STEP_TIMER,
-    STEP_REVEAL,
-    STEP_FINALIZE,
-} BreakableCeilingSteps;
-
-void func_us_801B5FB8(Entity* self) {
+void func_pspeu_0924FDC0(Entity* self) {
     Entity* tempEntity;
     Primitive* prim;
     s32 primIndex;
@@ -198,42 +186,12 @@ void func_us_801B5FB8(Entity* self) {
         }
         self->zPriority = 0xA8;
         self->hitboxState = 2;
-#ifndef BOSS_IS_BO0
-        self->hitPoints = 0x7FFF;
-#else
         self->hitPoints = 16;
-#endif
         self->hitboxWidth = 16;
         self->hitboxHeight = 40;
         break;
 
-#ifndef BOSS_IS_BO0
-    case STEP_SFX:
-        if (self->hitFlags) {
-            PlaySfxPositional(SFX_WALL_DEBRIS_B);
-            self->ext.breakableNo2.unk80 = 0x10;
-            self->ext.breakableNo2.unk88++;
-            self->step++;
-        }
-        if (self->ext.breakableNo2.unk88 == 3) {
-            self->hitboxState = 0;
-            self->step = 3;
-        }
-        break;
-#endif
-
-    case STEP_ANIMATE:
-#ifndef BOSS_IS_BO0
-        if (self->ext.breakableNo2.unk88 == 1) {
-            self->animCurFrame = 12;
-        }
-        if (self->ext.breakableNo2.unk88 == 2) {
-            self->animCurFrame = 13;
-        }
-        if (!--self->ext.breakableNo2.unk80) {
-            self->step--;
-        }
-#else
+    case 1:
         self->hitPoints;
         if (self->hitPoints < 16) {
             self->animCurFrame = 12;
@@ -245,10 +203,9 @@ void func_us_801B5FB8(Entity* self) {
             self->hitboxState = 0;
             self->step++;
         }
-#endif
         break;
 
-    case STEP_GENERATE_DEBRIS:
+    case 2:
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x20);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
@@ -261,10 +218,6 @@ void func_us_801B5FB8(Entity* self) {
             }
         } else {
             g_CastleFlags[NO2_SECRET_WALL_OPEN] |= 1;
-#ifndef BOSS_IS_BO0
-            g_api.RevealSecretPassageAtPlayerPositionOnMap(
-                NO2_SECRET_WALL_OPEN);
-#endif
             for (i = 0; i < 10; i++) {
                 tileIdx = D_us_80180DEC[i];
                 g_Tilemap.fg[tileIdx] = D_us_80180E00[i];
@@ -296,18 +249,15 @@ void func_us_801B5FB8(Entity* self) {
         self->step++;
         break;
 
-    case STEP_TIMER:
+    case 3:
         if (!--self->ext.breakableNo2.unk80) {
             self->step++;
         }
         break;
 
-    case STEP_REVEAL:
+    case 4:
         self->animCurFrame = 0;
         g_CastleFlags[NO2_SECRET_WALL_OPEN] |= 1;
-#ifndef BOSS_IS_BO0
-        g_api.RevealSecretPassageAtPlayerPositionOnMap(NO2_SECRET_WALL_OPEN);
-#endif
         for (i = 0; i < 10; i++) {
             tileIdx = D_us_80180DEC[i];
             g_Tilemap.fg[tileIdx] = D_us_80180E00[i];
@@ -343,7 +293,7 @@ void func_us_801B5FB8(Entity* self) {
         self->step++;
         break;
 
-    case STEP_FINALIZE:
+    case 5:
         prim = self->ext.breakableNo2.unk7C;
         while (prim != NULL) {
             if (prim->p3 & 8) {
@@ -359,7 +309,7 @@ void func_us_801B5FB8(Entity* self) {
     }
 }
 
-void func_us_801B65A4(Entity* self) {
+void func_pspeu_09250568(Entity* self) {
     Primitive* prim;
     s32 primIndex;
     s32 i;
@@ -468,14 +418,14 @@ static void func_us_801B6794(Primitive* prim) {
 }
 
 static u16 D_us_80180E14[] = {
-    0x086, 0x087, 0x088, 0x089, 0x0F6, 0x0F7, 0x0F8, 0x0F9,
+    0x86, 0x87, 0x88, 0x89, 0xF6, 0xF7, 0xF8, 0xF9,
 };
 static u16 D_us_80180E24[][8] = {
     {0x005, 0x009, 0x004, 0x009, 0x00F, 0x00D, 0x00E, 0x00D},
     {0x496, 0x497, 0x4A9, 0x4AA, 0x498, 0x499, 0x4AB, 0x4AC},
 };
 
-void func_us_801B68EC(Entity* self) {
+void func_pspeu_092509C0(Entity* self) {
     Entity* tempEntity;
     Primitive* prim;
     s32 primIndex;
@@ -501,11 +451,7 @@ void func_us_801B68EC(Entity* self) {
             g_Tilemap.fg[tileIdx] = D_us_80180E24[0][i];
         }
         self->hitboxState = 2;
-#ifndef BOSS_IS_BO0
-        self->hitPoints = 0x80;
-#else
         self->hitPoints = 16;
-#endif
         self->hitboxWidth = 0x10;
         self->hitboxHeight = 0x28;
         primIndex = g_api.func_800EDB58(PRIM_TILE_ALT, 0x1E);
@@ -557,9 +503,6 @@ void func_us_801B68EC(Entity* self) {
         g_api.FreePrimitives(primIndex);
         self->flags &= ~FLAG_HAS_PRIMS;
         g_CastleFlags[NO2_SECRET_CEILING_OPEN] = 1;
-#ifndef BOSS_IS_BO0
-        g_api.RevealSecretPassageAtPlayerPositionOnMap(NO2_SECRET_CEILING_OPEN);
-#endif
         for (i = 0; i < 8; i++) {
             tileIdx = D_us_80180E14[i];
             g_Tilemap.fg[tileIdx] = D_us_80180E24[1][i];

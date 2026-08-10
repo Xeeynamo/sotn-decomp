@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "no2.h"
+#include "bo0.h"
 
 extern EInit g_EInitEnvironment;
 extern Primitive* FindFirstUnkPrim(Primitive* prim);
@@ -176,7 +176,7 @@ typedef enum {
     STEP_FINALIZE,
 } BreakableCeilingSteps;
 
-void func_us_801B5FB8(Entity* self) {
+void func_us_801ABFE0(Entity* self) {
     Entity* tempEntity;
     Primitive* prim;
     s32 primIndex;
@@ -359,7 +359,7 @@ void func_us_801B5FB8(Entity* self) {
     }
 }
 
-void func_us_801B65A4(Entity* self) {
+void func_us_801AC54C(Entity* self) {
     Primitive* prim;
     s32 primIndex;
     s32 i;
@@ -475,7 +475,7 @@ static u16 D_us_80180E24[][8] = {
     {0x496, 0x497, 0x4A9, 0x4AA, 0x498, 0x499, 0x4AB, 0x4AC},
 };
 
-void func_us_801B68EC(Entity* self) {
+void func_us_801AC894(Entity* self) {
     Entity* tempEntity;
     Primitive* prim;
     s32 primIndex;

@@ -64,7 +64,7 @@ UnkPolyFunc0 = 0x0924F370;
 InitEntityIds = 0x09251098; // source=match
 BO0_Load = 0x09251368;
 EntityBreakable = 0x092513E0;
-func_psp_0923D390 = 0x09251648;
+EntitySealedDoor = 0x09251648;
 Entity3DHouseSpawner = 0x09253380; // source=match
 Entity3DBackgroundHouse = 0x09253480; // source=match
 EntityChair = 0x09253978;
@@ -75,11 +75,16 @@ func_us_801B4148 = 0x09254868; // source=match
 func_us_801B41A4 = 0x092548D0; // source=match
 func_us_801B4210 = 0x09254958; // source=match
 EntityBackgroundBlock = 0x09254B48;
+func_us_801BA030 = 0x09258530;
+EntityRealOlroxDrool = 0x09258688;
+func_us_801AD338 = 0x09258F58;
 EntityOlroxAfterImage = 0x0925D268;
+func_us_801B001C = 0x0925D328;
 func_psp_09239568 = 0x0925E0C8;
 func_us_801B163C = 0x0925E1B0;
 EntityPrisoner = 0x09268E80;
 EntityLockCamera = 0x09269500;
+EntityBossDoors = 0x09269760;
 func_us_801B72E8 = 0x09269E10; // source=match
 EntitySpikesDust = 0x0926A1B0;
 EntitySpikesParts = 0x0926A288; // source=match
@@ -112,13 +117,19 @@ g_EInitOwlKnightSword = 0x09275F10;
 g_EInitOwl = 0x09275F20;
 g_EInitBloodyZombie = 0x09275F30;
 g_EInitOlroxAfterImage = 0x09275F40;
+g_EInitBossDoors = 0x09275FD0;
 rooms = 0x09275FE0;
 BO0_Overlay = 0x0928F1C8;
 BackgroundBlockInit = 0x0928F488;
-D_psp_E_UNK_49 = 0x092903A8;
+frameBufferY = 0x09290370;
+frameBufferX = 0x09290378;
+pixPtr = 0x09290380;
+D_psp_E_BOSS_DOORS = 0x092903A8;
 D_psp_E_SPIKES_DAMAGE = 0x092903B0;
+D_psp_E_OLROX_DROOL = 0x09290408;
 D_psp_E_PRISONER = 0x092904A8;
 D_psp_E_SPIKES_DUST = 0x092904D8;
 D_psp_E_SPIKES_PARTS = 0x092904E0;
 D_psp_E_3D_BACKGROUND_HOUSE = 0x09290500;
 PrizeDrops = 0x09290578;
+D_us_80181190 = 0x092907A0;
