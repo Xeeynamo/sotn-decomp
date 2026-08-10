@@ -6447,17 +6447,17 @@
 | 1.00 | false    | DebugInputWait                      | asm/us/boss/bo6/nonmatchings/us_3E79C/DebugInputWait.s 
 | 1.00 | false    | RNO1_DebugInputWait                 | asm/us/st/rno1/nonmatchings/unk_26178/RNO1_DebugInputWait.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_800F6A48                       | asm/us/dra/matchings/menu/func_800F6A48.s 
-| 0.90 | true     | def_cbread                          | asm/us/main/matchings/psxsdk/libcd/event/def_cbread.s 
-| 0.90 | true     | def_cbready                         | asm/us/main/matchings/psxsdk/libcd/event/def_cbready.s 
-| 0.90 | true     | def_cbsync                          | asm/us/main/matchings/psxsdk/libcd/event/def_cbsync.s 
-| 0.90 | true     | SpuSetNoiseVoice                    | asm/us/main/matchings/psxsdk/libspu/s_snv/SpuSetNoiseVoice.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | CdReadCallback                      | asm/us/main/matchings/psxsdk/libcd/cdread/CdReadCallback.s 
 | 1.00 | true     | CdReadyCallback                     | asm/us/main/matchings/psxsdk/libcd/sys/CdReadyCallback.s 
 | 1.00 | true     | CdSetDebug                          | asm/us/main/matchings/psxsdk/libcd/sys/CdSetDebug.s 
 | 1.00 | true     | CdSyncCallback                      | asm/us/main/matchings/psxsdk/libcd/sys/CdSyncCallback.s 
 | 1.00 | true     | SetVideoMode                        | asm/us/main/matchings/psxsdk/libetc/vmode/SetVideoMode.s 
+-------------------------------------------------------------------------------
+| 0.90 | true     | def_cbread                          | asm/us/main/matchings/psxsdk/libcd/event/def_cbread.s 
+| 0.90 | true     | def_cbready                         | asm/us/main/matchings/psxsdk/libcd/event/def_cbready.s 
+| 0.90 | true     | def_cbsync                          | asm/us/main/matchings/psxsdk/libcd/event/def_cbsync.s 
+| 1.00 | true     | GsGetVcount                         | asm/us/main/matchings/psxsdk/libgs/gs_008/GsGetVcount.s 
+| 1.00 | true     | GsClearVcount                       | asm/us/main/matchings/psxsdk/libgs/gs_009/GsClearVcount.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_80173C64                       | asm/us/servant/tt_000/matchings/bat/func_80173C64.s 
 | 1.00 | true     | func_us_8017293C                    | asm/us/servant/tt_001/matchings/ghost/func_us_8017293C.s 
@@ -7757,6 +7757,12 @@
 | 1.00 | true     | func_us_801D17EC                    | asm/us/boss/bo4/matchings/unk_46E7C/func_us_801D17EC.s 
 | 0.98 | true     | func_us_801D0D98                    | asm/us/boss/rbo5/matchings/unk_4648C/func_us_801D0D98.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | EntityBlock                         | asm/us/boss/bo5/matchings/e_dai_no2_shortcut/EntityBlock.s 
+| 1.00 | true     | func_us_801C0F8C                    | asm/us/st/dai/matchings/e_dai_no2_shortcut/func_us_801C0F8C.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | EntityStatue                        | asm/us/boss/bo5/matchings/e_dai_no2_shortcut/EntityStatue.s 
+| 1.00 | true     | func_us_801C1184                    | asm/us/st/dai/matchings/e_dai_no2_shortcut/func_us_801C1184.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801A7638                    | asm/us/boss/bo6/matchings/cutscene/func_us_801A7638.s 
 | 1.00 | true     | func_801BE75C                       | asm/us/st/no3/matchings/cutscene/func_801BE75C.s 
 -------------------------------------------------------------------------------
@@ -7889,6 +7895,9 @@
 | 1.00 | true     | func_800F548C                       | asm/us/dra/matchings/menu/func_800F548C.s 
 | 0.94 | true     | func_801B1EF4                       | asm/us/st/sel/matchings/318CC/func_801B1EF4.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | func_800F6A48                       | asm/us/dra/matchings/menu/func_800F6A48.s 
+| 0.90 | true     | SpuSetNoiseVoice                    | asm/us/main/matchings/psxsdk/libspu/s_snv/SpuSetNoiseVoice.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | func_800F99B8                       | asm/us/dra/matchings/menu/func_800F99B8.s 
 | 0.95 | true     | func_801B2108                       | asm/us/st/sel/matchings/318CC/func_801B2108.s 
 -------------------------------------------------------------------------------
@@ -7990,9 +7999,6 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | get_ce                              | asm/us/main/matchings/psxsdk/libgpu/sys/get_ce.s 
 | 1.00 | true     | get_cs                              | asm/us/main/matchings/psxsdk/libgpu/sys/get_cs.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | GsGetVcount                         | asm/us/main/matchings/psxsdk/libgs/gs_008/GsGetVcount.s 
-| 1.00 | true     | GsClearVcount                       | asm/us/main/matchings/psxsdk/libgs/gs_009/GsClearVcount.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | _SsContModulation                   | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContModulation.s 
 | 1.00 | true     | _SsContPortaTime                    | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContPortaTime.s 
@@ -8377,12 +8383,6 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801C1E18                    | asm/us/st/dai/matchings/e_bell/func_us_801C1E18.s 
 | 1.00 | false    | EntityBellSpawner                   | asm/us/boss/bo5/nonmatchings/e_bell_spawner/EntityBellSpawner.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | func_us_801C0F8C                    | asm/us/st/dai/matchings/e_dai_no2_shortcut/func_us_801C0F8C.s 
-| 1.00 | false    | EntityBlock                         | asm/us/boss/bo5/nonmatchings/e_dai_no2_shortcut/EntityBlock.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | func_us_801C1184                    | asm/us/st/dai/matchings/e_dai_no2_shortcut/func_us_801C1184.s 
-| 1.00 | false    | EntityStatue                        | asm/us/boss/bo5/nonmatchings/e_dai_no2_shortcut/EntityStatue.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801C220C                    | asm/us/st/dai/matchings/e_room_fg_2/func_us_801C220C.s 
 | 1.00 | false    | EntityStaircase                     | asm/us/boss/bo5/nonmatchings/e_room_fg_2/EntityStaircase.s 
