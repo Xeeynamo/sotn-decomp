@@ -8,41 +8,6 @@ typedef struct {
     s16* lerpVals;
 } AzaghalPosition;
 
-#if defined(STAGE_IS_RNO2) && !defined(VERSION_PSP)
-// rno2 psx: this data lives in the stage's data blob
-// (labels in config/symbols.us.strno2.txt)
-extern s16 sensors_ground[];
-// { u, v, x1, y1, x2, y2 }
-extern s16 body_config[][6];
-extern SVECTOR sword_face_tl;
-extern SVECTOR sword_face_tr;
-extern SVECTOR sword_face_bl;
-extern SVECTOR sword_face_br;
-extern SVECTOR sword_edge_tl;
-extern SVECTOR sword_edge_tr;
-extern SVECTOR sword_edge_bl;
-extern SVECTOR sword_edge_br;
-extern SVECTOR sword_tip;
-// azaghal animation paths: target positions and lerp curves live in the
-// data blob as (SVECTOR*, s16*) pairs
-extern AzaghalPosition anim_seek_player[];
-extern AzaghalPosition anim_sword_overhead_a;
-extern AzaghalPosition anim_sword_overhead_b;
-extern AzaghalPosition anim_sword_overhead_c;
-extern AzaghalPosition anim_slash_down_a;
-extern AzaghalPosition anim_slash_down_b;
-extern AzaghalPosition anim_long_slash_hor_b;
-extern AzaghalPosition anim_long_slash_hor_a;
-extern AzaghalPosition anim_short_slash_hor_a;
-extern AzaghalPosition anim_short_slash_hor_b;
-extern AzaghalPosition anim_slash_up_a;
-extern AzaghalPosition anim_slash_up_b;
-extern AzaghalPosition anim_fall_backward;
-extern AzaghalPosition anim_combo_init;
-extern AzaghalPosition anim_combo[];
-extern s16 indices[];
-#else
-
 static s16 sensors_ground[] = {0, 72, 0, 4, 4, -4, -8, 0};
 
 // { u, v, x1, y1, x2, y2 }
@@ -205,8 +170,6 @@ static AzaghalPosition anim_combo[] = {
 static s16 indices[] = {0, 2, 3, 5, 3, 5, 6, 8};
 
 // nb. this is very similar to the stained glass recursive function in DAI
-#endif
-
 static Primitive* func_us_801B2C40(
     SVECTOR* p0, SVECTOR* p1, SVECTOR* p2, SVECTOR* p3, Primitive* srcPrim,
     s32 iterations, Primitive* dstPrim, u8* dataPtr) {

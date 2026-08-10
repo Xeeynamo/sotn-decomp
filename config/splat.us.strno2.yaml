@@ -60,6 +60,8 @@ segments:
       - [0x1A64, data]
       - [0x1E30, .data, e_bloody_zombie]
       - [0x1F28, data]
+      - [0x1FF4, .data, e_azaghal]
+      - [0x22A8, data]
       - [0x2318, .data, e_medusa_head]
       - [0x2390, data]
       - [0x31C24, .rodata, unk_322E4]
