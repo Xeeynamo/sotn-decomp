@@ -36,8 +36,13 @@ void EntityDummy(Entity* self);
 void EntityGuardian(Entity* self);
 void func_us_801D348C_from_are(Entity* self);
 void EntityGuardianFireWave(Entity* self);
+<<<<<<< HEAD
 void func_us_801D3700_from_are(Entity* self);
 void Unused801C2C50(Entity* self);
+=======
+void EntityArmorLordUnk2(Entity* self);
+void OVL_EXPORT(Unused801C2C50)(Entity* self);
+>>>>>>> 52d46096e (Second helper good)
 void EntityFloorTrap(Entity* self);
 void EntityThornweed(Entity* self);
 void EntityCorpseweed(Entity* self);
