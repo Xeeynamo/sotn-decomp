@@ -4131,7 +4131,7 @@
 |            | func_092EF1C0                      |       63 |         12 |        |       |     |
 |            | func_092EF838                      |       63 |         12 |        |       |     |
 |            | func_092EF6B0                      |       63 |         12 |        |       |     |
-| bo5        | unk_16270.rodata                   |       64 |          0 | Yes    |       |     |
+| bo5        | e_cutscene_dialogue.rodata         |       64 |          0 | Yes    |       |     |
 | bo6        | unk_DC80.rodata                    |       64 |          0 | Yes    |       |     |
 | rbo2       | unk_E860.rodata                    |       64 |          0 | Yes    |       |     |
 | dra        | menu.rodata                        |       64 |          0 | Yes    |       |     |
