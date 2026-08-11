@@ -28,12 +28,12 @@ typedef enum {
     AL_FADEAWAY
 } ArmorLordSteps;
 
-static u8 D_us_80182D50[] = {
+static u8 randomSteps[] = {
     AL_SWORD_HIGH, AL_FIREBALLS, AL_FIREWAVE_ATTACK, AL_FIREWAVE_ATTACK,
     AL_SWORD_HIGH, AL_FIREBALLS, AL_FIREWAVE_ATTACK, AL_SWORD_HIGH};
 static s16 sensors1[] = {0, 40, 0, 4, 8, -4, -16, 0};
 static s16 sensors2[] = {0, 40, 8, 0};
-static s16 D_us_80182D70[] =
+static s16 attackTimers[] =
 #ifdef GUARDIAN
     {16, 8, 32, 24};
 #else
@@ -901,7 +901,7 @@ void EntityArmorLord(Entity* self) {
         if (!self->step_s) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->ext.armorLord.facingLeft = self->facingLeft;
-            self->ext.armorLord.timer = D_us_80182D70[Random() & 3];
+            self->ext.armorLord.timer = attackTimers[Random() & 3];
             self->step_s++;
         }
         if (!AnimateEntity(anim_walk_cycle, self)) {
@@ -940,7 +940,7 @@ void EntityArmorLord(Entity* self) {
 #endif
         if (!--self->ext.armorLord.timer) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-            SetStep(D_us_80182D50[Random() & 7]);
+            SetStep(randomSteps[Random() & 7]);
 #ifdef GUARDIAN
             player = &PLAYER;
             if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
