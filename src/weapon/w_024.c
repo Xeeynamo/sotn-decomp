@@ -584,7 +584,7 @@ static void func_ptr_80170024(Entity* self) {
         self->velocityY = -((self->ext.shield.unk9A * FIX(3.0 / 16)) + FIX(3));
         self->ext.weapon.accelerationY =
             -((self->ext.shield.unk9A << 8) + 0x900);
-        self->ext.shield.unkAE = self->ext.shield.parent->ext.shield.unkAE;
+        self->ext.shield.equipId = self->ext.shield.parent->ext.shield.equipId;
         SetWeaponProperties(self, 0);
         self->hitboxHeight = 0x40;
         self->hitboxWidth = 0x40;

@@ -458,7 +458,7 @@ static void func_ptr_80170024(Entity* self) {
         } else {
             self->anim = D_51000_8017ABCC;
             self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
-            self->ext.shield.unkAE = self->ext.shield.parent->ext.shield.unkAE;
+            self->ext.shield.equipId = self->ext.shield.parent->ext.shield.equipId;
             SetWeaponProperties(self, 0);
             self->hitboxWidth = 8;
             self->hitboxHeight = 20;

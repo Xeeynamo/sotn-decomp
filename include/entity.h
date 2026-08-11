@@ -408,7 +408,7 @@ typedef struct PACKED {
 #endif
     /* 0xAC */ u8 anim;
     /* 0xAD */ u8 padAD;
-    /* 0xAE */ s16 unkAE;
+    /* 0xAE */ s16 equipId;
 } ET_Shield;
 
 typedef struct PACKED {
@@ -434,7 +434,7 @@ typedef struct PACKED {
     /* 0x9E */ byte pad[14];
     /* 0xAC */ u8 anim;
     /* 0xAD */ u8 padAD;
-    /* 0xAE */ s16 unkAE;
+    /* 0xAE */ s16 equipId;
 } ET_DarkShield;
 
 typedef struct {
@@ -464,7 +464,7 @@ typedef struct {
 #endif
     /* 0xAC */ u8 anim;
     /* 0xAD */ u8 unkAD;
-    /* 0xAE */ s16 unkAE;
+    /* 0xAE */ s16 equipId;
 } ET_MedusaShieldLaser;
 
 typedef struct PACKED {
@@ -517,7 +517,7 @@ typedef struct PACKED {
     s32 _align_anim[2];
 #endif
     /* 0xAC */ u8 anim;
-    /* 0xAE */ s16 unkAE;
+    /* 0xAE */ s16 equipId;
 } ET_HeraldShieldSwirlEffect;
 
 typedef struct {
@@ -4554,5 +4554,10 @@ SYNC_FIELD(ET_Subweapon, ET_AguneaCrash, subweaponId);
 SYNC_FIELD(ET_Subweapon, ET_GiantSpinningCross, subweaponId);
 SYNC_FIELD(ET_Subweapon, ET_CrashCross, subweaponId);
 SYNC_FIELD(ET_Subweapon, ET_Whip, subweaponId);
+
+SYNC_FIELD(ET_Weapon, ET_Shield, equipId);
+SYNC_FIELD(ET_Weapon, ET_DarkShield, equipId);
+SYNC_FIELD(ET_Weapon, ET_MedusaShieldLaser, equipId);
+SYNC_FIELD(ET_Weapon, ET_HeraldShieldSwirlEffect, equipId);
 
 #endif // ENTITY_H
