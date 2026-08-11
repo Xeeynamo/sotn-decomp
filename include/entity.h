@@ -4141,6 +4141,30 @@ typedef struct {
     /* 0x84 */ s16 doubleSpeed;
 } ET_Dodo;
 
+typedef struct {
+    /* 0x7C */ u32 : 32;
+    /* 0x80 */ Primitive* prim0;
+    /* 0x84 */ Primitive* prim1;
+    /* 0x88 */ Primitive* prim2;
+    /* 0x8C */ s16 brightness;
+    /* 0x8E */ s16 timer0;
+    /* 0x90 */ s16 timer1;
+} ET_801B0930;
+
+typedef struct {
+    /* 0x7C */ u32 : 32;
+    /* 0x80 */ s32 velocityX;
+    /* 0x84 */ s32 velocityY;
+    /* 0x88 */ u32 : 32;
+    /* 0x8C */ u32 : 32;
+    /* 0x90 */ u32 : 32;
+    /* 0x94 */ u32 : 32;
+    /* 0x98 */ u32 : 32;
+    /* 0x9C */ u32 : 32;
+    /* 0xA0 */ u32 : 32;
+    /* 0xA4 */ struct Entity* entity;
+} ET_OlroxDrool;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -4493,6 +4517,8 @@ typedef union { // offset=0x7C
     ET_Orobourous orob;
     ET_Dodo dodo;
     ET_B0_Unk b0Unk;
+    ET_801B0930 et_801B0930;
+    ET_OlroxDrool olroxDrool;
 } Ext;
 
 SYNC_FIELD(ET_Player, ET_Weapon, anim);

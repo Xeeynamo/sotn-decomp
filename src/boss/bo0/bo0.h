@@ -48,8 +48,8 @@ enum OVL_EXPORT(Entities) {
     E_UNK_27,              // func_pspeu_0923CB80
     E_BIG_RED_FIREBALL,    // EntityBigRedFireball
     E_PRISONER,            // EntityPrisoner
-    E_UNK_2A,              // func_us_801B001C/func_pspeu_0925D328
-    E_UNK_2B,              // func_us_801AD338/func_pspeu_09258F58
+    E_UNK_2A,              // func_us_801B001C
+    E_UNK_2B,              // func_us_801AD338
     E_OLROX_AFTER_IMAGE,   // EntityOlroxAfterImage
     E_UNK_2D,              // func_us_801AFAF4/func_pspeu_0925CBE8
     E_UNK_2E,           // func_us_801AF8C0/func_pspeu_0925C938 (EntityPortal)
@@ -67,7 +67,7 @@ enum OVL_EXPORT(Entities) {
     E_UNK_3A,           // func_us_801B9BEC/func_pspeu_09257F58
     E_UNK_3B,           // func_us_801B7BAC/func_pspeu_09267E48
     E_UNK_3C,           // func_us_801B7CC8/func_pspeu_09267FC0
-    E_UNK_3D,           // func_us_801BA128/func_pspeu_09258688
+    E_OLROX_DROOL,      // EntityRealOlroxDrool
     E_UNK_3E,           // func_us_801BA4AC/func_pspeu_09258B10
     E_LIFE_UP_SPAWN,    // EntityLifeUpSpawn
     E_OWL_KNIGHT,       // EntityOwlKnight
@@ -79,7 +79,7 @@ enum OVL_EXPORT(Entities) {
     E_BLOOD_SPLATTER,   // EntityBloodSplatter
     E_UNK_47,           // func_us_801B72E8
     E_SPIKES_DAMAGE,    // EntitySpikesDamage
-    E_UNK_49,           // func_pspeu_09269760
+    E_BOSS_DOORS,       // EntityBossDoors
     E_UNK_4A,           // func_pspeu_09251648
     E_CHAIR,            // EntityChair
     E_UNK_4C,           // 0x00000000
@@ -105,5 +105,5 @@ extern s32 E_ID(SPIKES_DUST);
 extern s32 E_ID(SPIKES_DAMAGE);
 extern s32 E_ID(PRISONER);
 extern s32 E_ID(3D_BACKGROUND_HOUSE);
-extern s32 E_ID(UNK_49);
+extern s32 E_ID(BOSS_DOORS);
 #endif
