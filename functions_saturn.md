@@ -564,7 +564,6 @@
 | richter/f_nonmat/f60B9978.s  | func_060B9978   |      129 |         15 |       |     |
 | maria/f_nonmat/f60BC23C.s    | func_060BC23C   |      129 |         18 |       |     |
 | game/f_nonmat/f6079580.s     | func_06079580   |      130 |          5 |       |     |
-| zero/f_nonmat/f600F96C.s     | func_0600F96C   |      130 |         11 |       |     |
 | alucard/f_nonmat/f60A5EA8.s  | func_060A5EA8   |      131 |          8 |       |     |
 | zero/f_nonmat/f600607C.s     | func_0600607C   |      131 |          8 |       |     |
 | alucard/f_nonmat/f60AE284.s  | func_060AE284   |      131 |         15 |       |     |
