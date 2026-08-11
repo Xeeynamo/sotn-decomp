@@ -552,12 +552,12 @@ void TransferBgLayer(int param_1) {
     }
     if (puVar5->tileFlags & 1) {
         cnt =
-            DecompressLzss(puVar6->unkc, (s32)SYS_buf_060485E0, puVar6->unk18);
+            DecompressLZSS(puVar6->unkc, (s32)SYS_buf_060485E0, puVar6->unk18);
         DmaScroll((s32*)SYS_buf_060485E0, puVar6->dst0, cnt);
     }
     if (puVar5->tileFlags & 2) {
         cnt =
-            DecompressLzss(puVar6->unk10, (s32)SYS_buf_060485E0, puVar6->unk1c);
+            DecompressLZSS(puVar6->unk10, (s32)SYS_buf_060485E0, puVar6->unk1c);
         DmaScroll((s32*)SYS_buf_060485E0, puVar6->dst4, cnt);
     }
     if (puVar5->tileFlags & 4) {
@@ -577,11 +577,11 @@ void TransferBgLayer(int param_1) {
         DmaScroll(puVar5->src, puVar5->dest, puVar5->cnt);
     }
     if (puVar5->tileFlags & 0x40) {
-        cnt = DecompressLzss(puVar6->unkc, DMA_SRC_ADDR, puVar6->unk18);
+        cnt = DecompressLZSS(puVar6->unkc, DMA_SRC_ADDR, puVar6->unk18);
         DmaScroll(DMA_SRC_ADDR, puVar6->dst0, cnt);
     }
     if (puVar5->tileFlags & 0x80) {
-        cnt = DecompressLzss(puVar6->unk10, DMA_SRC_ADDR, puVar6->unk1c);
+        cnt = DecompressLZSS(puVar6->unk10, DMA_SRC_ADDR, puVar6->unk1c);
         DmaScroll(DMA_SRC_ADDR, puVar6->dst4, cnt);
     }
     puVar5->tileFlags = 0;
@@ -1243,7 +1243,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600F914, SquareRoot0);
 
 extern u8 text_buf[N_MIN_1 + F];
 
-s32 DecompressLzss(u8* src, u8* dst, u32 srclen) {
+s32 DecompressLZSS(u8* src, u8* dst, u32 srclen) {
     s32 r;
     s32 dstCount;
     s32 srcCount;
