@@ -5,6 +5,11 @@
 //     #define CUTSCENE_TILEMAP_SCROLL:
 //
 //         adds additional decrements based on `g_Tilemap`'s scroll position
+//
+//     #define CUTSCENE_WAIT_FOR_FLAG_REWIND:
+//
+//         CSEV_WAIT_FOR_FLAG re-runs the whole opcode next frame and ticks
+//         the dialogue timer while waiting
 
 extern Dialogue g_Dialogue;
 extern u32 g_CutsceneFlags;
@@ -52,7 +57,7 @@ static void RunCutsceneEvents(void) {
             break;
         case CSEV_WAIT_FOR_FLAG:
             if (!((g_CutsceneFlags >> *g_Dialogue.eventCur) & 1)) {
-#ifdef STAGE_IS_DRE
+#ifdef CUTSCENE_WAIT_FOR_FLAG_REWIND
                 g_Dialogue.timer--;
                 g_Dialogue.eventCur -= 3;
 #else

@@ -2565,8 +2565,7 @@ typedef struct {
 } unk_PlatelordStruct; /* size = 0x14 */
 
 typedef struct {
-    /* 0x7C */ s16 : 16;
-    /* 0x7E */ s16 : 16;
+    /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ s16 unk80;
     /* 0x82 */ s16 unk82;
     /* 0x84 */ u8 unk84;
@@ -2579,8 +2578,7 @@ typedef struct {
 } ET_PlateLord;
 
 typedef struct {
-    /* 0x7C */ s16 : 16;
-    /* 0x7E */ s16 : 16;
+    /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ s16 unk80;
     /* 0x82 */ s16 unk82;
     /* 0x84 */ s16 unk84;
