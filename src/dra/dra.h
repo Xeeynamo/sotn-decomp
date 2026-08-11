@@ -766,7 +766,6 @@ void DemoGameInit(s32 arg0);
 void FreePrimitives(s32 index);
 void DemoOpenFile(s32);
 void DemoInit(s32 arg0);
-s32 func_800F087C(u32, u32);
 s32 SetNextRoomToLoad(u32 chunkX, u32 chunkY);
 s32 func_800F0CD8(s32 arg0);
 s32 func_800F16D0(void);
