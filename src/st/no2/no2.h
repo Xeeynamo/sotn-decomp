@@ -6,7 +6,7 @@
 
 #define OVL_EXPORT(x) NO2_##x
 
-enum OVL_EXPORT(Palette) {
+enum Palette {
     PAL_NONE = 0,
     PAL_SPIKES_DUST = 0x161,
     PAL_SKELERANG = 0x200,

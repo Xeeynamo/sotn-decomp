@@ -5,7 +5,7 @@
 #define BOSS_IS_BO0
 #define OVL_EXPORT(x) BO0_##x
 
-enum OVL_EXPORT(Entities) {
+typedef enum EntityID {
     E_NONE,
     E_UNK_BREAKABLE,       // EntityUnkBreakable
     E_EXPLOSION,           // EntityExplosion
@@ -86,7 +86,7 @@ enum OVL_EXPORT(Entities) {
     NUM_ENTITIES,
 };
 
-enum OVL_EXPORT(Palette) {
+enum Palette {
     PAL_NONE,
     PAL_SPIKES_DUST = 0x161,
     PAL_BREAKABLE = 0x219,

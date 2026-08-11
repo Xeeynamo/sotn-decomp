@@ -10,7 +10,7 @@ enum Palettes {
     PAL_NONE,
 };
 
-enum Entities {
+typedef enum EntityID {
     E_NONE,
     E_BREAKABLE,              // EntityBreakable
     E_EXPLOSION,              // EntityExplosion

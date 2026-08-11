@@ -10,7 +10,7 @@ enum Palettes {
     PAL_TORCH_B = 0x5B,
 };
 
-enum OVL_EXPORT(Entities) {
+typedef enum EntityID {
     E_NONE,
     E_UNK_BREAKABLE,          // EntityUnkBreakable
     E_EXPLOSION,              // EntityExplosion
