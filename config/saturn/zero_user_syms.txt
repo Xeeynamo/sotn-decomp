@@ -60,7 +60,7 @@ _rsin = 0x0600F7BC;
 _rcos = 0x0600F81C;
 _rsincos = 0x0600F87C;
 _SquareRoot0 = 0x0600F914;
-_DecompressLzss = 0x0600F96C;
+_DecompressLZSS = 0x0600F96C;
 _func_0600fb4c = 0x0600FB4C;
 _MarkRoomVisited = 0x0600FCF8;
 _RevealMapCellAtPlayer = 0x0600FC04;
@@ -332,6 +332,7 @@ _DAT_0605d7f8 = 0x0605D7F8;
 _g_Settings = 0x0605D800; /* size = 0x110 */
 _DAT_0605D910 = 0x0605D910;
 _d_0605DB60 = 0x0605DB60;
+_text_buf = 0x06061E00; /* size = 0x421 */
 _DAT_06062224 = 0x06062224;
 _d_060623B0 = 0x060623B0;
 _D_8013B61C = 0x06063BE0;
