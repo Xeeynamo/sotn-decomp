@@ -45,7 +45,7 @@ enum EntityID {
     E_STATUE,                    // EntityStatue
     E_STATUE_GEAR,               // EntityStatueGear
     E_STONE_DOOR,                // EntityStoneDoor
-    E_UNK_1F,                    // OVL_EXPORT(Unused801C2338)
+    E_UNK_1F,                    // Unused801C2338
     E_CLOCK_ROOM_SHADOW,         // EntityDummy
     E_GUARDIAN,                  // EntityGuardian
     E_UNK_22,                    // func_us_801D348C_from_are

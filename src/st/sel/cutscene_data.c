@@ -13,6 +13,6 @@ s8 D_8018BC50 = 0;
 static s8 D_8018BC51 = 0;
 static s16 D_8018BC52 = 0;
 
-u8 OVL_EXPORT(credits)[] = {
+u8 cutscene_credits[] = {
 #include "gen/credits.h"
 };

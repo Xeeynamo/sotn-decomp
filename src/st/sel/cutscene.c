@@ -613,7 +613,7 @@ s32 func_801B79D4(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        if (func_801B76F0(OVL_EXPORT(credits))) {
+        if (func_801B76F0(cutscene_credits)) {
             entity->flags |= FLAG_HAS_PRIMS;
             entity->primIndex = (s32)g_Dialogue.prim[1];
             entity->step++;
