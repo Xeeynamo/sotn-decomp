@@ -14,7 +14,7 @@ enum Palettes {
     PAL_AZAGHAL_COMBO_B = 0x223,
 };
 
-enum Entities {
+typedef enum EntityID {
     E_NONE,
     E_BREAKABLE,                // EntityBreakable
     E_EXPLOSION,                // EntityExplosion

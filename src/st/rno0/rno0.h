@@ -4,7 +4,6 @@
 
 #include <stage.h>
 
-#define OVL_EXPORT(x) RNO0_##x
 #define STAGE_IS_RNO0
 #define INVERTED_STAGE
 
@@ -45,13 +44,13 @@ enum EntityID {
     E_STATUE,                    // EntityStatue
     E_STATUE_GEAR,               // EntityStatueGear
     E_STONE_DOOR,                // EntityStoneDoor
-    E_UNK_1F,                    // OVL_EXPORT(Unused801C2338)
+    E_UNK_1F,                    // Unused801C2338
     E_CLOCK_ROOM_SHADOW,         // EntityDummy
     E_GUARDIAN,                  // EntityGuardian
     E_UNK_22,                    // func_us_801D348C_from_are
     E_GUARDIAN_FIRE_WAVE,        // EntityGuardianFireWave
     E_UNK_24,                    // func_us_801D3700_from_are
-    E_UNK_25,                    // OVL_EXPORT(Unused801C2C50)
+    E_UNK_25,                    // Unused801C2C50
     E_FLOOR_TRAP,                // EntityFloorTrap
     E_THORNWEED,                 // EntityThornweed
     E_CORPSEWEED,                // EntityCorpseweed

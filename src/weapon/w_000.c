@@ -319,7 +319,6 @@ extern void D_8017D000[];
 #endif
 extern Weapon w0_000_Overlay;
 
-// TODO: this should be OVL_EXPORT
 void w0_000_Load(void) { memcpy(&WEAPON_PTR, &w0_000_Overlay, sizeof(Weapon)); }
 
 Weapon w0_000_Overlay = {

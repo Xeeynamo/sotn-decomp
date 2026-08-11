@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rno0.h"
 
-#define g_EInitInteractable RNO0_EInitInteractable
+#define g_EInitInteractable g_EInitInteractable
 
 #ifdef VERSION_US
 #include "../e_stage_name_us.h"

@@ -4,7 +4,6 @@
 
 #include <stage.h>
 
-#define OVL_EXPORT(x) x
 #define STAGE_IS_RDAI
 
 extern EInit g_EInitSpectralSwordAura;

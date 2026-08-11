@@ -6,7 +6,7 @@
 #include "../pc.h"
 #include "../../st/no3/no3.h"
 
-extern AbbreviatedOverlay OVL_EXPORT(Overlay);
+extern AbbreviatedOverlay g_Overlay;
 extern PfnEntityUpdate EntityUpdates[];
 extern LayoutEntity* entityLayoutHorizontal[];
 extern LayoutEntity* entityLayoutVertical[];
@@ -32,7 +32,7 @@ static void InitCutscenePc(void) {
 }
 
 OVL_API void InitStage(Overlay* o) {
-    memcpy(o, &OVL_EXPORT(Overlay), sizeof(AbbreviatedOverlay));
+    memcpy(o, &g_Overlay, sizeof(AbbreviatedOverlay));
     PfnEntityUpdates = EntityUpdates;
     g_pStObjLayoutHorizontal = entityLayoutHorizontal;
     g_pStObjLayoutVertical = entityLayoutVertical;

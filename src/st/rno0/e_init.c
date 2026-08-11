@@ -37,7 +37,7 @@ void EntityGuardian(Entity* self);
 void func_us_801D348C_from_are(Entity* self);
 void EntityGuardianFireWave(Entity* self);
 void func_us_801D3700_from_are(Entity* self);
-void OVL_EXPORT(Unused801C2C50)(Entity* self);
+void Unused801C2C50(Entity* self);
 void EntityFloorTrap(Entity* self);
 void EntityThornweed(Entity* self);
 void EntityCorpseweed(Entity* self);
@@ -118,7 +118,7 @@ PfnEntityUpdate EntityUpdates[] = {
     func_us_801D348C_from_are,
     EntityGuardianFireWave,
     func_us_801D3700_from_are,
-    OVL_EXPORT(Unused801C2C50),
+    Unused801C2C50,
     EntityFloorTrap,
     EntityThornweed,
     EntityCorpseweed,
@@ -168,10 +168,10 @@ PfnEntityUpdate EntityUpdates[] = {
 EInit g_EInitBreakable = {ANIMSET_DRA(3), 0, 0, 0, 0x000};
 EInit g_EInitObtainable = {ANIMSET_DRA(3), 0, 0, 0, 0x001};
 EInit g_EInitParticle = {ANIMSET_DRA(3), 0, 0, 0, 0x002};
-EInit OVL_EXPORT(EInitSpawner) = {ANIMSET_DRA(0), 0, 0, 0, 0x004};
-EInit OVL_EXPORT(EInitInteractable) = {ANIMSET_DRA(0), 0, 0, 0, 0x005};
-EInit OVL_EXPORT(EInitUnkId13) = {ANIMSET_OVL(5), 0, 36, 0, 0x003};
-EInit OVL_EXPORT(EInitLockCamera) = {ANIMSET_DRA(2), 0, 72, 0, 0x05B};
+EInit g_EInitSpawner = {ANIMSET_DRA(0), 0, 0, 0, 0x004};
+EInit g_EInitInteractable = {ANIMSET_DRA(0), 0, 0, 0, 0x005};
+EInit g_EInitUnkIdVariant = {ANIMSET_OVL(5), 0, 36, 0, 0x003};
+EInit g_EInitLockCameraVariant = {ANIMSET_DRA(2), 0, 72, 0, 0x05B};
 EInit Unused_ShouldBeCommon = {ANIMSET_DRA(3), 0, 72, 0, 0x05C};
 EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0, 0, 0, 0x002};
 EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0, 0, 0, 0x001};

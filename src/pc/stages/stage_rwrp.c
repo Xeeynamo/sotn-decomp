@@ -4,7 +4,7 @@
 #include "overlay.h"
 #include "../../st/rwrp/rwrp.h"
 
-extern Overlay OVL_EXPORT(Overlay);
+extern Overlay g_Overlay;
 extern PfnEntityUpdate EntityUpdates[];
 extern LayoutEntity* entityLayoutHorizontal[];
 extern LayoutEntity* entityLayoutVertical[];
@@ -12,7 +12,7 @@ extern GAME_IMPORT PfnEntityUpdate* PfnEntityUpdates;
 extern GAME_IMPORT LayoutEntity** g_pStObjLayoutHorizontal;
 extern GAME_IMPORT LayoutEntity** g_pStObjLayoutVertical;
 OVL_API void InitStage(Overlay* o) {
-    memcpy(o, &OVL_EXPORT(Overlay), sizeof(Overlay));
+    memcpy(o, &g_Overlay, sizeof(Overlay));
     PfnEntityUpdates = EntityUpdates;
     g_pStObjLayoutHorizontal = entityLayoutHorizontal;
     g_pStObjLayoutVertical = entityLayoutVertical;

@@ -4,7 +4,6 @@
 
 #include <stage.h>
 
-#define OVL_EXPORT(x) ARE_##x
 #define STAGE_IS_ARE
 
 enum Palettes {

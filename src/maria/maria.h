@@ -2,8 +2,6 @@
 #include <game.h>
 #include <sfx.h>
 
-#define OVL_EXPORT(x) MAR_##x
-
 enum MarEntities {
     E_NONE,
     E_FACTORY,
