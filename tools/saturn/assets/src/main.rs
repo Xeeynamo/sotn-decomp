@@ -3,7 +3,7 @@
 //! Driven from tools/sotn-assets and config/assets.saturn.yaml
 
 use clap::{Parser, Subcommand};
-use saturn_assets::{audio, bitmap, familiar, font, map, player, stage, weapon};
+use saturn_assets::{audio, bitmap, crt, familiar, font, map, player, stage, weapon};
 use std::path::PathBuf;
 use std::process::ExitCode;
 
@@ -38,7 +38,26 @@ enum Command {
     #[command(subcommand)]
     Stage(StageCommand),
     #[command(subcommand)]
+    Crt(CrtCommand),
+    #[command(subcommand)]
     SpritePackage(SpritePackageCommand),
+}
+
+#[derive(Subcommand)]
+enum CrtCommand {
+    Extract {
+        game_path: PathBuf,
+        crt_path: PathBuf,
+        output_dir: PathBuf,
+    },
+    Rebuild { manifest: PathBuf, output: PathBuf },
+    Verify {
+        manifest: PathBuf,
+        crt_path: PathBuf,
+    },
+    Areas {
+        game_path: PathBuf,
+    },
 }
 
 #[derive(Subcommand)]
@@ -339,6 +358,56 @@ fn run(cli: Cli) -> saturn_assets::Result<()> {
         }) => {
             audio::verify(&manifest, &source_path)?;
             println!("verify passed: exact retail match");
+        }
+        Command::Crt(CrtCommand::Extract {
+            game_path,
+            crt_path,
+            output_dir,
+        }) => {
+            let manifest = crt::extract(&game_path, &crt_path, &output_dir)?;
+            let sequences = manifest
+                .areas
+                .iter()
+                .filter(|area| area.contents == crt::Contents::Sequence)
+                .count();
+            println!(
+                "{} areas ({sequences} sequence), base 0x{:02X} at 0x{:06X} -> {}",
+                manifest.areas.len(),
+                manifest.base_area,
+                manifest.base_address,
+                output_dir.display()
+            );
+        }
+        Command::Crt(CrtCommand::Rebuild { manifest, output }) => {
+            let data = crt::rebuild(&manifest, &output)?;
+            println!("wrote {} bytes -> {}", data.len(), output.display());
+        }
+        Command::Crt(CrtCommand::Verify { manifest, crt_path }) => {
+            crt::verify(&manifest, &crt_path)?;
+            println!("verify passed: exact retail match");
+        }
+        Command::Crt(CrtCommand::Areas { game_path }) => {
+            let game = std::fs::read(&game_path)?;
+            let files = crt::sound_files(&game)?;
+            for area in crt::area_map(&game)? {
+                let packages: Vec<&str> = files
+                    .iter()
+                    .filter(|(_, id)| *id == area.id)
+                    .map(|(name, _)| name.as_str())
+                    .collect();
+                println!(
+                    "area 0x{:02X} at 0x{:06X}, 0x{:X} bytes{} {}",
+                    area.id,
+                    area.address,
+                    area.size,
+                    if area.loadable { "" } else { " (not loadable)" },
+                    if packages.is_empty() {
+                        String::new()
+                    } else {
+                        format!("<- {}", packages.join(", "))
+                    }
+                );
+            }
         }
         Command::Stage(StageCommand::Extract {
             prg_path,

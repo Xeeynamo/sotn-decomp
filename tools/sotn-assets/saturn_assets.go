@@ -119,6 +119,11 @@ func (a saturnAsset) variant() (string, error) {
 			return "", fmt.Errorf("asset %q: weapon needs the player prg", a.Name)
 		}
 		return a.Profile, nil
+	case "crt":
+		if a.Prg == "" {
+			return "", fmt.Errorf("asset %q: crt needs 0.BIN as its prg", a.Name)
+		}
+		return "", nil
 	case "stage":
 		if a.Prg == "" || a.Zero == "" {
 			return "", fmt.Errorf(
@@ -294,6 +299,9 @@ func saturnUnitArgs(u saturnUnit, command string) ([]string, error) {
 		}
 		if u.kind == "bitmap" {
 			return append(args, u.source, u.chr, u.path), nil
+		}
+		if u.kind == "crt" {
+			return append(args, u.prg, u.source, u.path), nil
 		}
 		args = append(args, u.source, u.path)
 		// weapon chr uses tables in player prg

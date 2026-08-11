@@ -973,3 +973,65 @@ assets:
       - STAGE_EX.CHR
       - STAGE_MA.CHR
       - WARP.CHR
+  - name: sound-packages
+    kind: crt
+    prg: disks/saturn/0.BIN
+    dir: disks/saturn/SD
+    path: assets/saturn/sound
+    output: build/saturn/assets/SD
+    files:
+      - SD_ALK.CRT
+      - SD_CAT.CRT
+      - SD_CATX.CRT
+      - SD_CHI.CRT
+      - SD_CHIX.CRT
+      - SD_CHU.CRT
+      - SD_CHUX.CRT
+      - SD_DETH.CRT
+      - SD_DORA.CRT
+      - SD_DORA1.CRT
+      - SD_FRANK.CRT
+      - SD_GARA.CRT
+      - SD_GOLD.CRT
+      - SD_GOLDX.CRT
+      - SD_JO10.CRT
+      - SD_KAIWA.CRT
+      - SD_KERU.CRT
+      - SD_LIB.CRT
+      - SD_LIBX.CRT
+      - SD_LIH.CRT
+      - SD_MARI.CRT
+      - SD_MEDYU.CRT
+      - SD_MINO.CRT
+      - SD_MIRRA.CRT
+      - SD_MIZU.CRT
+      - SD_MIZUX.CRT
+      - SD_NALK.CRT
+      - SD_OLRO.CRT
+      - SD_OLST.CRT
+      - SD_OLSTX.CRT
+      - SD_REGI.CRT
+      - SD_RIHI.CRT
+      - SD_ROU.CRT
+      - SD_ROUG.CRT
+      - SD_ROUGX.CRT
+      - SD_ROUX.CRT
+      - SD_SAKYU.CRT
+      - SD_SHAFU.CRT
+      - SD_SIRO.CRT
+      - SD_SIRO1.CRT
+      - SD_SIROX.CRT
+      - SD_SUKYU.CRT
+      - SD_TEI.CRT
+      - SD_TEIX.CRT
+      - SD_TMARI.CRT
+      - SD_TOGI.CRT
+      - SD_TOGIX.CRT
+      - SD_TOKE.CRT
+      - SD_TOKEX.CRT
+      - SD_TOP.CRT
+      - SD_TOPX.CRT
+      - SD_TOU.CRT
+      - SD_TOUX.CRT
+      - SD_VERM.CRT
+      - SD_VERZ.CRT
