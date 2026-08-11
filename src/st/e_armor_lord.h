@@ -11,9 +11,14 @@ extern EInit g_EInitArmorLord;
 extern EInit g_EInitArmorLordSwordShadow;
 extern EInit g_EInitArmorLordTemp;
 
+// The Armor Lord in the Outer Wall has perma-death.
 #ifdef STAGE_IS_NO1
-static s32 D_us_80182D4C = 0;
+static s32 hasBeenKilled = false;
 #endif
+
+
+
+
 static u8 D_us_80182D50[] = {5, 4, 6, 6, 5, 4, 6, 5};
 static s16 D_us_80182D58[] = {0, 40, 0, 4, 8, -4, -16, 0};
 static s16 D_us_80182D68[] = {0, 40, 8, 0};
@@ -25,8 +30,10 @@ static s16 D_us_80182D70[] =
 #endif
 
 // animations
-static AnimateEntityFrame anim0[] = {{16, 1}, {24, 2}, {16, 1}, {24, 3}, POSE_LOOP(0)};
-static AnimateEntityFrame anim1[] = 
+// Animation to take a single step
+static AnimateEntityFrame anim_walk_cycle[] = {{16, 1}, {24, 2}, {16, 1}, {24, 3}, POSE_LOOP(0)};
+// Windup for the attack with 3 fireballs repeatedly blasting out end of sword
+static AnimateEntityFrame anim_charge_fireball[] = 
 #ifdef GUARDIAN
 {{4, 1}, {8, 4},  {38, 5},  {6, 6},  {6, 7},  {6,  8},
 {2,  9}, {2, 10}, {2,  11}, {1, 12}, {1, 13}, POSE_END};
@@ -34,21 +41,23 @@ static AnimateEntityFrame anim1[] =
 {{32, 1}, {8, 4},  {70, 5},  {6, 6},  {6, 7},  {6,  8},
 {2,  9}, {2, 10}, {2,  11}, {1, 12}, {1, 13}, POSE_END};
 #endif
-static AnimateEntityFrame anim2[] = {{1, 12}, {1, 13}, POSE_LOOP(0)};
-static AnimateEntityFrame anim3[] = {{8, 14}, {8, 15}, {16, 1}, POSE_END};
+// Rapidly twitching while fireballs float in the air in front of him
+static AnimateEntityFrame anim_fireball[] = {{1, 12}, {1, 13}, POSE_LOOP(0)};
+// Goes from kneeling pose back to standing
+static AnimateEntityFrame anim_end_fireball[] = {{8, 14}, {8, 15}, {16, 1}, POSE_END};
 #ifdef GUARDIAN
-static AnimateEntityFrame anim4[] = {{4, 1},  {8, 4},  {2,  17}, {40, 16}, {1, 17}, {1, 18},
+static AnimateEntityFrame anim_overhead_slice[] = {{4, 1},  {8, 4},  {2,  17}, {40, 16}, {1, 17}, {1, 18},
                      {1,  19}, {1, 20}, {33, 21}, {6,  22}, {6, 15}, POSE_END};
-static AnimateEntityFrame anim5[] = {{4, 1}, {6,  15}, {6,  23}, {6,  24}, {24, 25}, {1, 26}, {1,
+static AnimateEntityFrame anim_launch_flametrail[] = {{4, 1}, {6,  15}, {6,  23}, {6,  24}, {24, 25}, {1, 26}, {1,
                      27}, {1, 28}, {1,  29}, {32, 16}, {6,  17}, {8, 4}, POSE_END};
 #else
-static AnimateEntityFrame anim4[] = {{40, 1},  {8, 4},  {2,  17}, {72, 16}, {1, 17}, {1, 18},
+static AnimateEntityFrame anim_overhead_slice[] = {{40, 1},  {8, 4},  {2,  17}, {72, 16}, {1, 17}, {1, 18},
                      {1,  19}, {1, 20}, {33, 21}, {6,  22}, {6, 15}, POSE_LOOP(0)};
-static AnimateEntityFrame anim5[] = {{32, 1}, {6,  15}, {6,  23}, {6,  24}, {40, 25}, {1, 26}, {1,
+static AnimateEntityFrame anim_launch_flametrail[] = {{32, 1}, {6,  15}, {6,  23}, {6,  24}, {40, 25}, {1, 26}, {1,
                      27}, {1, 28}, {1,  29}, {64, 16}, {6,  17}, {32, 4}, POSE_LOOP(0)};
 #endif
-static AnimateEntityFrame anim6[] = {{8, 1}, {6, 4}, {97, 30}, {4, 4}, POSE_END};
-static AnimateEntityFrame anim7[] = {{24, 34}, {24, 35}, POSE_END};
+static AnimateEntityFrame anim_create_shield[] = {{8, 1}, {6, 4}, {97, 30}, {4, 4}, POSE_END};
+static AnimateEntityFrame anim_death[] = {{24, 34}, {24, 35}, POSE_END};
 
 static MATRIX armorLordColorMatrix = {{{FLT(0.0), FLT(0.0), FLT(1.0)},
                                        {FLT(0.0), FLT(0.0), FLT(0.5)},
@@ -837,14 +846,14 @@ void EntityArmorLord(Entity* self) {
         self->zPriority -= 4;
         self->hitboxState = 0;
 #ifdef STAGE_IS_NO1
-        D_us_80182D4C = 1;
+        hasBeenKilled = true;
 #endif
         SetStep(8);
     }
     switch (self->step) {
     case 0:
 #ifdef STAGE_IS_NO1
-        if (D_us_80182D4C != 0) {
+        if (hasBeenKilled != false) {
             DestroyEntity(self);
             return;
         }
@@ -878,7 +887,7 @@ void EntityArmorLord(Entity* self) {
             self->ext.armorLord.unk80 = D_us_80182D70[Random() & 3];
             self->step_s++;
         }
-        if (!AnimateEntity(anim0, self)) {
+        if (!AnimateEntity(anim_walk_cycle, self)) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
         UnkCollisionFunc2(D_us_80182D68);
@@ -948,7 +957,7 @@ void EntityArmorLord(Entity* self) {
     case 4:
         switch (self->step_s) {
         case 0:
-            if (!AnimateEntity(anim1, self)) {
+            if (!AnimateEntity(anim_charge_fireball, self)) {
                 self->pose = 0;
                 self->poseTimer = 0;
                 self->step_s++;
@@ -957,7 +966,7 @@ void EntityArmorLord(Entity* self) {
             break;
 
         case 1:
-            AnimateEntity(anim2, self);
+            AnimateEntity(anim_fireball, self);
             if (!--self->ext.armorLord.unk80) {
                 self->pose = 0;
                 self->poseTimer = 0;
@@ -969,7 +978,7 @@ void EntityArmorLord(Entity* self) {
             break;
 
         case 2:
-            if (!AnimateEntity(anim3, self)) {
+            if (!AnimateEntity(anim_end_fireball, self)) {
                 SetStep(3);
             }
             break;
@@ -996,7 +1005,7 @@ void EntityArmorLord(Entity* self) {
         }
         UnkCollisionFunc2(D_us_80182D68);
         self->velocityX -= self->velocityX / 8;
-        if (!AnimateEntity(anim4, self)) {
+        if (!AnimateEntity(anim_overhead_slice, self)) {
             SetStep(3);
         }
         break;
@@ -1015,13 +1024,13 @@ void EntityArmorLord(Entity* self) {
             }
             self->step_s++;
         }
-        if (!AnimateEntity(anim5, self)) {
+        if (!AnimateEntity(anim_launch_flametrail, self)) {
             SetStep(3);
         }
         break;
 
     case 7:
-        if (!AnimateEntity(anim6, self)) {
+        if (!AnimateEntity(anim_create_shield, self)) {
             self->hitboxState = 3;
             self->step_s = 3;
         }
@@ -1034,7 +1043,7 @@ void EntityArmorLord(Entity* self) {
         break;
 
     case 8:
-        if (!AnimateEntity(anim7, self)) {
+        if (!AnimateEntity(anim_death, self)) {
             SetStep(9);
         }
         if (g_Timer % 8 == 0) {
