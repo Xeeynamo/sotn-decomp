@@ -10,18 +10,36 @@ static s32 D_us_80182D4C = 0;
 static u8 D_us_80182D50[] = {5, 4, 6, 6, 5, 4, 6, 5};
 static s16 D_us_80182D58[] = {0, 40, 0, 4, 8, -4, -16, 0};
 static s16 D_us_80182D68[] = {0, 40, 8, 0};
-static s16 D_us_80182D70[] = {32, 24, 48, 40};
+static s16 D_us_80182D70[] = 
+#ifdef GUARDIAN
+{16, 8, 32, 24};
+#else
+{32, 24, 48, 40};
+#endif
 
 // animations
 static u8 anim0[] = {16, 1, 24, 2, 16, 1, 24, 3, 0, 0};
-static u8 anim1[] = {32, 1, 8, 4,  70, 5,  6, 6,  6, 7,  6,  8,
-                     2,  9, 2, 10, 2,  11, 1, 12, 1, 13, -1, 0};
+static u8 anim1[] = 
+#ifdef GUARDIAN
+{4, 1, 8, 4,  38, 5,  6, 6,  6, 7,  6,  8,
+2,  9, 2, 10, 2,  11, 1, 12, 1, 13, -1, 0};
+#else
+{32, 1, 8, 4,  70, 5,  6, 6,  6, 7,  6,  8,
+2,  9, 2, 10, 2,  11, 1, 12, 1, 13, -1, 0};
+#endif
 static u8 anim2[] = {1, 12, 1, 13, 0, 0};
 static u8 anim3[] = {8, 14, 8, 15, 16, 1, -1, 0};
+#ifdef GUARDIAN
+static u8 anim4[] = {4, 1,  8, 4,  2,  17, 40, 16, 1, 17, 1, 18,
+                     1,  19, 1, 20, 33, 21, 6,  22, 6, 15, -1, 0};
+static u8 anim5[] = {4, 1, 6,  15, 6,  23, 6,  24, 24, 25, 1, 26, 1,
+                     27, 1, 28, 1,  29, 32, 16, 6,  17, 8, 4, -1,  0};
+#else
 static u8 anim4[] = {40, 1,  8, 4,  2,  17, 72, 16, 1, 17, 1, 18,
                      1,  19, 1, 20, 33, 21, 6,  22, 6, 15, 0, 0};
 static u8 anim5[] = {32, 1, 6,  15, 6,  23, 6,  24, 40, 25, 1, 26, 1,
                      27, 1, 28, 1,  29, 64, 16, 6,  17, 32, 4, 0,  0};
+#endif
 static u8 anim6[] = {8, 1, 6, 4, 97, 30, 4, 4, -1, 0};
 static u8 anim7[] = {24, 34, 24, 35, -1, 0};
 
@@ -46,7 +64,12 @@ static u16 hitboxOffXYs[][2] = {
     {-23, 5},  {-36, 6},  {-45, 6},  {-45, 6},   {-36, 6}, {-22, -6},
     {54, 6},   {39, -13}, {21, -35}, {-18, -34}, {-38, 5}, {-36, 30},
     {-29, 19}, {-14, 21}, {-20, 29}, {-7, 27},   {-36, 7}, {-11, -6},
-    {21, -3},  {47, 3},   {-22, -4}};
+    {21, -3},  {47, 3},   {-22, -4},
+    // This could be an error in the splat or something
+    #ifdef GUARDIAN
+    {0,0}
+    #endif
+};
 
 // Armor Lord fire wave helper
 static void func_us_801D1184(Primitive* prim) {
@@ -787,6 +810,8 @@ static s32 func_us_801D1DAC(void) {
 }
 
 void EntityArmorLord(Entity* self) {
+    Entity* player;
+    u32 tempSide;
     Entity* tempEntity;
     s16 xDistance;
     s32 posX;
@@ -830,7 +855,11 @@ void EntityArmorLord(Entity* self) {
         break;
 
     case 2:
+    #ifdef GUARDIAN
+        if (GetDistanceToPlayerX() < 0xC0) {
+    #else
         if (GetDistanceToPlayerX() < 0xA0) {
+    #endif
             SetStep(3);
         }
         break;
@@ -852,16 +881,52 @@ void EntityArmorLord(Entity* self) {
             self->velocityX = FIX(-0.25);
         }
         xDistance = GetDistanceToPlayerX();
+        #ifdef GUARDIAN
+        if (xDistance < 0x40) {
+        #else
         if (xDistance < 0x50) {
+        #endif
             self->ext.armorLord.unk84 = self->facingLeft ^ 1;
         }
         if (xDistance > 0x70) {
             self->ext.armorLord.unk84 = self->facingLeft;
         }
+#ifdef GUARDIAN
+        tempSide = (GetSideToPlayer() & 1) ^ 1;
+        if ((self->facingLeft == tempSide) &&
+            g_Player.status & (PLAYER_STATUS_SPELLCAST | PLAYER_STATUS_SUBWPN | PLAYER_STATUS_UNK400)){
+            if (!self->ext.armorLord.unk85){
+                self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+                SetStep(7);
+            }
+            self->ext.armorLord.unk85 = 1;
+        } else {
+            self->ext.armorLord.unk85 = 0;
+        }
+#endif
         if (!--self->ext.armorLord.unk80) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             SetStep(D_us_80182D50[Random() & 7]);
+#ifdef GUARDIAN
+            player = &PLAYER;
+            if(g_Player.status & PLAYER_STATUS_BAT_FORM){
+                SetStep(5);
+            }
+            if(g_Player.status & PLAYER_STATUS_UNK2000){
+                SetStep(6);
+            }
+            if(g_Player.status & PLAYER_STATUS_CROUCH){
+                SetStep(6);
+            }
+            if(g_Player.status & PLAYER_STATUS_UNK400){
+                SetStep(4);
+            }
         }
+        break;
+#else
+    }
+#endif
+// Guardian has a `break` statement so never touches this!
         if (g_Player.status & PLAYER_STATUS_UNK400) {
             if (!self->ext.armorLord.unk85 && (Random() & 1)) {
                 self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
