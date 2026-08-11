@@ -500,8 +500,8 @@
 | wrp        | func_psp_0923D130                  |       15 |          2 |        |       |     |
 | dra        | func_psp_090ED2E8                  |       15 |          3 |        |       |     |
 | bo0        | e_red_door.rodata                  |       16 |          0 | Yes    |       |     |
-| bo0        | 2B9EC.rodata                       |       16 |          0 | Yes    |       |     |
-| bo0        | 3B014.rodata                       |       16 |          0 | Yes    |       |     |
+| bo0        | e_sealed_door.rodata               |       16 |          0 | Yes    |       |     |
+| bo0        | e_secrets.rodata                   |       16 |          0 | Yes    |       |     |
 | bo1        | e_red_door.rodata                  |       16 |          0 | Yes    |       |     |
 | bo2        | e_red_door.rodata                  |       16 |          0 | Yes    |       |     |
 | bo3        | e_red_door.rodata                  |       16 |          0 | Yes    |       |     |
@@ -679,6 +679,7 @@
 | rno4       | func_us_801C8C54                   |       17 |          3 |        |       |     |
 | dra        | func_psp_090EBE20                  |       17 |          4 |        |       |     |
 | bo0        | e_life_up.rodata                   |       18 |          0 | Yes    |       |     |
+| bo0        | 3053C.rodata                       |       18 |          0 | Yes    |       |     |
 | bo1        | e_life_up.rodata                   |       18 |          0 | Yes    |       |     |
 | bo1        | unk_E268.rodata                    |       18 |          0 | Yes    |       |     |
 | bo2        | e_life_up.rodata                   |       18 |          0 | Yes    |       |     |
@@ -850,6 +851,7 @@
 | maria      | func_pspeu_092C0248                |       19 |          3 |        |       |     |
 | dra        | func_psp_090DDAA8                  |       19 |          4 |        |       |     |
 | bo0        | e_bloody_zombie.rodata             |       20 |          0 | Yes    |       |     |
+| bo0        | 38794.rodata                       |       20 |          0 | Yes    |       |     |
 | bo7        | e_breakable_wall.rodata            |       20 |          0 | Yes    |       |     |
 | rbo1       | func_us_801947e4.rodata            |       20 |          0 | Yes    |       |     |
 | ric        | pl_setstep.rodata                  |       20 |          0 | Yes    |       |     |
@@ -2137,7 +2139,7 @@
 | main       | func_psp_0891A790                  |       35 |          3 |        |       |     |
 | main       | func_psp_08929FA8                  |       35 |          3 |        |       |     |
 | sel        | func_psp_09238DA8                  |       35 |          3 |        |       |     |
-| bo0        | BO0_Load                           |       35 |          4 |        |       |     |
+| bo0        | func_pspeu_09251368                |       35 |          4 |        |       |     |
 | bo1        | BO1_Load                           |       35 |          4 |        |       |     |
 | bo3        | BO3_Load                           |       35 |          4 |        |       |     |
 | bo7        | BO7_Load                           |       35 |          4 |        |       |     |
@@ -3365,6 +3367,7 @@
 | main       | func_psp_089196D8                  |       47 |          8 |        |       |     |
 | main       | func_psp_08934E14                  |       47 |          8 |        |       |     |
 | dra        | func_psp_090F5188                  |       47 |          9 |        |       |     |
+| bo0        | psp_21760.rodata                   |       48 |          0 | Yes    |       |     |
 | rbo4       | unk_FE08.rodata                    |       48 |          0 | Yes    |       |     |
 | rbo8       | func_us_80199a58.rodata            |       48 |          0 | Yes    |       |     |
 | maria      | pl_subweapons.rodata               |       48 |          0 | Yes    |       |     |
@@ -5964,7 +5967,7 @@
 | main       | ExceptionHandler.rodata            |      104 |          0 | Yes    |       |     |
 | dra        | func_psp_09143248                  |      104 |          3 |        |       |     |
 | nz1        | func_pspeu_09253E68                |      104 |          4 |        |       |     |
-| bo0        | EntityExplosionVariantsSpawner     |      104 |          5 |        |       |     |
+| bo0        | func_pspeu_092454B8                |      104 |          5 |        |       |     |
 | are        | func_pspeu_09253668                |      104 |          5 |        |       |     |
 | dai        | func_pspeu_092429E8                |      104 |          5 |        |       |     |
 | lib        | func_psp_09247D68                  |      104 |          5 |        |       |     |
@@ -6641,6 +6644,7 @@
 | bo4        | func_pspeu_0924CF50_from_rbo5      |      127 |         20 |        |       |     |
 | rbo5       | func_pspeu_0924CF50                |      127 |         20 |        |       |     |
 | bo3        | func_us_801A6568                   |      127 |         22 |        |       |     |
+| bo0        | 313A8.rodata                       |      128 |          0 | Yes    |       |     |
 | dra        | func_psp_090F1618                  |      128 |         16 |        |       |     |
 | dra        | func_psp_090EDC48                  |      128 |         17 |        |       |     |
 | bo7        | func_us_80195AF0                   |      128 |         18 |        |       |     |
@@ -7284,7 +7288,7 @@
 | bo4        | func_pspeu_0924C200_from_rbo5      |      184 |         27 |        |       |     |
 | rbo5       | func_pspeu_0924C200                |      184 |         27 |        |       |     |
 | top        | func_pspeu_09249898                |      184 |         29 |        |       |     |
-| bo0        | InitEntityIds                      |      185 |          1 |        |       |     |
+| bo0        | func_pspeu_09251098                |      185 |          1 |        |       |     |
 | cat        | func_pspeu_0925D168                |      185 |         15 |        |       |     |
 | rcat       | func_pspeu_0924AF88                |      185 |         15 |        |       |     |
 | rno0       | func_us_801D2264                   |      185 |         16 |        |       |     |
@@ -7397,7 +7401,6 @@
 | cen        | func_pspeu_09240710                |      195 |         32 |        |       |     |
 |            | func_092EEC50                      |      195 |         37 | Yes    |       |     |
 | main       | func_psp_08936534                  |      195 |         39 | Yes    |       |     |
-| bo0        | 2D26C.rodata                       |      196 |          0 | Yes    |       |     |
 | nz0        | func_pspeu_0923B1F0                |      196 |         18 |        |       |     |
 | bo4        | InitMariaAfterImage                |      196 |         22 |        |       |     |
 | rbo5       | InitMariaAfterImage                |      196 |         22 |        |       |     |
@@ -8170,7 +8173,7 @@
 | st0        | func_pspeu_0924ADF0                |      307 |         26 |        |       |     |
 | top        | func_pspeu_0923D720                |      307 |         26 |        |       |     |
 | wrp        | func_psp_0923B2F0                  |      307 |         26 |        |       |     |
-| bo0        | func_pspeu_09258688                |      307 |         28 |        |       |     |
+| bo0        | EntityRealOlroxDrool               |      307 |         28 |        |       |     |
 | lib        | func_psp_09254288                  |      307 |         37 | Yes    |       |     |
 | rcat       | func_pspeu_0924C090                |      307 |         48 |        |       |     |
 | rchi       | func_pspeu_09249F08                |      307 |         48 |        |       |     |
@@ -8259,7 +8262,7 @@
 | dra        | func_psp_09102C20                  |      331 |         39 |        |       |     |
 | rbo4       | func_us_8019846C                   |      332 |         39 |        |       |     |
 | maria      | func_pspeu_092A6280                |      332 |         40 |        |       |     |
-| bo0        | GetPlayerCollisionWith             |      332 |         41 |        |       |     |
+| bo0        | func_pspeu_0924E3A8                |      332 |         41 |        |       |     |
 | bo3        | GetPlayerCollisionWith             |      332 |         41 |        |       |     |
 | bo5        | GetPlayerCollisionWith             |      332 |         41 |        |       |     |
 | mar        | GetPlayerCollisionWith             |      332 |         41 |        |       |     |
@@ -8916,7 +8919,7 @@
 | no0        | func_pspeu_0925F0C0                |      468 |         38 |        |       |     |
 | rdai       | func_us_801B1C34                   |      468 |         57 | Yes    |       |     |
 | rnz1       | EntityBreakable                    |      468 |         60 |        |       |     |
-| bo0        | func_pspeu_09269760                |      468 |         66 |        |       |     |
+| bo0        | EntityBossDoors                    |      468 |         66 |        |       |     |
 | ric        | func_pspeu_092A6C80                |      469 |         84 |        |       |     |
 | rbo7       | func_us_801BAB18_from_bo0          |      470 |         57 |        |       |     |
 | nz1        | func_pspeu_09254A20                |      470 |         60 |        |       |     |
@@ -9256,7 +9259,7 @@
 | dra        | func_psp_090FC4E0                  |      619 |         30 |        |       |     |
 | rtop       | EntityClouds                       |      619 |         49 |        |       |     |
 | no4        | func_pspeu_0923BB30                |      621 |         50 |        |       |     |
-| bo0        | func_pspeu_0925D328                |      621 |         68 | Yes    |       |     |
+| bo0        | func_us_801B001C                   |      621 |         68 | Yes    |       |     |
 | bo3        | func_us_801A0A80                   |      621 |         89 |        |       |     |
 | bo6        | func_pspeu_092615E8                |      624 |         46 | Yes    |       |     |
 | ric        | func_pspeu_092BA5F8                |      624 |         46 | Yes    |       |     |
@@ -9895,7 +9898,7 @@
 | lib        | func_psp_092515F8                  |     1267 |        134 | Yes    |       |     |
 | rno0       | EntityCorpseweed                   |     1269 |        134 | Yes    |       |     |
 | cen        | func_pspeu_0923B190                |     1269 |        203 | Yes    |       |     |
-| bo0        | func_psp_0923D390                  |     1278 |        113 | Yes    |       |     |
+| bo0        | EntitySealedDoor                   |     1278 |        113 | Yes    |       |     |
 | no2        | func_pspeu_0924AB98                |     1280 |        160 |        |       |     |
 | no1        | func_pspeu_0924EF10                |     1298 |        180 |        |       |     |
 | no0        | func_pspeu_09246518                |     1320 |        140 | Yes    |       |     |
@@ -10061,7 +10064,7 @@
 | bo2        | BO2_EntityCutsceneDialogue         |     2279 |        214 | Yes    |       |     |
 | bo4        | func_pspeu_09254180_from_rbo5      |     2282 |        193 | Yes    |       |     |
 | rbo5       | func_pspeu_09254180                |     2282 |        193 | Yes    |       |     |
-| bo0        | func_pspeu_09258F58                |     2364 |        367 | Yes    |       |     |
+| bo0        | func_us_801AD338                   |     2364 |        367 | Yes    |       |     |
 | bo6        | EntityCutsceneDialogue             |     2377 |        231 | Yes    |       |     |
 | top        | EntityCutscene                     |     2381 |        224 | Yes    |       |     |
 | cen        | EntityCutscene                     |     2388 |        232 | Yes    |       |     |
