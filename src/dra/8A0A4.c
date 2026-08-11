@@ -494,6 +494,7 @@ void EntitySubwpnBible(Entity* self) {
 #if defined(VERSION_PSP) || defined(FIX_UB)
     // This variable is uninitialized. It's an error for PSP compiler.
     // Maybe they tossed this "= 0" line as a quick workaround.
+    // When the value is non-zero, the bible remains invisible.
     var_s4 = 0;
 #endif
 
