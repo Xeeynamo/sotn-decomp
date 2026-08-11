@@ -886,6 +886,14 @@ typedef struct {
 
 #define ANIM_FRAME_LOAD 0x8000
 
+typedef enum {
+    HITBOX_INACTIVE     = 0,
+    HITBOX_ACTIVE       = (1 << 0), // 0x01: Active hit detection
+    HITBOX_SOLID        = (1 << 1), // 0x02: Solid object / platform collision
+    HITBOX_WEAPON_HIT   = (1 << 2), // 0x04: Weapon hit state
+    HITBOX_INVULNERABLE = (1 << 7), // 0x80: Ignore hit detection / invulnerable
+} HitboxStates;
+
 typedef struct Entity {
     /* 0x00 */ f32 posX;
     /* 0x04 */ f32 posY;
@@ -912,7 +920,7 @@ typedef struct Entity {
     /* 0x34 */ s32 flags;
     /* 0x38 */ s16 : 16;
     /* 0x3A */ u16 enemyId; // also used as a Alucard weapon entity slot index
-    /* 0x3C */ u16 hitboxState;
+    /* 0x3C */ u16 hitboxState; // refer to enum HitboxStates
     /* 0x3E */ s16 hitPoints;
     /* 0x40 */ s16 attack;
     /* 0x42 */ u16 attackElement;
