@@ -195,8 +195,8 @@
 | no1        | func_pspeu_09262BC8                |        9 |          1 |        |       |     |
 | no1        | func_pspeu_09262BD8                |        9 |          1 |        |       |     |
 | no4        | func_pspeu_0923D0B8                |        9 |          1 |        |       |     |
+| rno0       | EntityGuardianUnused               |        9 |          1 |        |       |     |
 | rno0       | RNO0_Unused801C2338                |        9 |          1 |        |       |     |
-| rno0       | Unused801C2C50                     |        9 |          1 |        |       |     |
 | rno4       | RNO4_Unused801C8704                |        9 |          1 |        |       |     |
 | rno4       | RNO4_Unused801C8768                |        9 |          1 |        |       |     |
 | rno4       | RNO4_Unused801C8770                |        9 |          1 |        |       |     |
@@ -573,6 +573,8 @@
 | rno0       | e_blade.rodata                     |       16 |          0 | Yes    |       |     |
 | rno0       | unk_16708.rodata                   |       16 |          0 | Yes    |       |     |
 | rno0       | unk_3DD0.rodata                    |       16 |          0 | Yes    |       |     |
+| rno0       | jtbl_pspeu_09291C10                |       16 |          0 | Yes    |       |     |
+| rno0       | jtbl_pspeu_09291C38                |       16 |          0 | Yes    |       |     |
 | rno3       | e_dodo.rodata                      |       16 |          0 | Yes    |       |     |
 | rno3       | e_red_door.rodata                  |       16 |          0 | Yes    |       |     |
 | rno4       | e_red_door.rodata                  |       16 |          0 | Yes    |       |     |
@@ -3912,7 +3914,7 @@
 | lib        | func_psp_092410A8                  |       61 |          5 |        |       |     |
 | no1        | func_pspeu_092408A8                |       61 |          5 |        |       |     |
 | rcen       | func_8018F8EC                      |       61 |          5 |        |       |     |
-| rno0       | func_us_801D3700_from_are          |       61 |          5 |        |       |     |
+| rno0       | EntityGuardianUnk2                 |       61 |          5 |        |       |     |
 | dra        | func_psp_090F77E8                  |       61 |          6 |        |       |     |
 | main       | sceGuSignalSync                    |       61 |          6 |        |       |     |
 | main       | func_psp_0891CB80                  |       61 |          6 |        |       |     |
@@ -7804,7 +7806,7 @@
 | no2        | func_pspeu_0925B730                |      249 |         37 |        |       |     |
 | are        | func_pspeu_09246BF8                |      250 |         26 |        |       |     |
 | no1        | func_pspeu_09240518                |      250 |         26 |        |       |     |
-| rno0       | func_us_801D348C_from_are          |      250 |         26 |        |       |     |
+| rno0       | EntityGuardianSwordShadow          |      250 |         26 |        |       |     |
 | dra        | func_psp_091107E8                  |      250 |         34 |        |       |     |
 | are        | func_pspeu_0925F1C8                |      250 |         36 |        |       |     |
 | bo0        | func_pspeu_092528E0                |      251 |          6 |        |       |     |
@@ -9431,6 +9433,7 @@
 | cat        | func_pspeu_0925BE88                |      741 |         71 |        |       |     |
 | rno4       | func_us_801BBE58_from_rnz1         |      741 |        129 |        |       |     |
 | rnz1       | func_us_801BBE58                   |      741 |        129 |        |       |     |
+| rno0       | EntityGuardian                     |      741 |        134 | Yes    |       |     |
 | bo6        | func_pspeu_09260020                |      742 |         48 | Yes    |       |     |
 | ric        | func_pspeu_092B7530                |      742 |         48 | Yes    |       |     |
 | ric        | func_pspeu_092C8228                |      743 |         63 |        |       |     |
@@ -9451,7 +9454,6 @@
 | ric        | func_pspeu_092B3578                |      754 |        126 |        |       |     |
 | maria      | func_pspeu_092B7730                |      757 |         84 | Yes    |       |     |
 | ric        | func_pspeu_092C09D8                |      757 |         84 | Yes    |       |     |
-| rno0       | EntityGuardian                     |      760 |        134 | Yes    |       |     |
 | bo6        | MarEntityHitByCutBlood             |      762 |         85 | Yes    |       |     |
 | are        | func_pspeu_0925F620                |      762 |        117 | Yes    |       |     |
 | no1        | func_pspeu_0924ABE8                |      762 |        117 | Yes    |       |     |
@@ -9823,6 +9825,7 @@
 | dra        | func_psp_090F8A08                  |     1203 |        196 |        |       |     |
 | main       | func_psp_08923FA4                  |     1205 |        141 |        |       |     |
 | cat        | func_pspeu_0923A8B8                |     1207 |        109 |        |       |     |
+| rno0       | func_us_801D1DAC                   |     1210 |         86 | Yes    |       |     |
 | rbo0       | func_pspeu_09249798                |     1215 |         87 | Yes    |       |     |
 | ric        | func_pspeu_092AE368                |     1221 |        208 | Yes    |       |     |
 | rdai       | func_pspeu_0924B298                |     1222 |         89 |        |       |     |
@@ -9830,7 +9833,6 @@
 | no1        | func_pspeu_09260930                |     1228 |        104 |        |       |     |
 | are        | func_pspeu_09244FA0                |     1229 |         86 | Yes    |       |     |
 | no1        | func_pspeu_0923E850                |     1229 |         86 | Yes    |       |     |
-| rno0       | func_us_801D1DAC                   |     1229 |         86 | Yes    |       |     |
 | lib        | func_psp_09268528                  |     1229 |        132 | Yes    |       |     |
 | no3        | func_pspeu_09247CA0                |     1232 |        112 | Yes    |       |     |
 | rdai       | func_pspeu_09240AD8                |     1241 |        171 | Yes    |       |     |
