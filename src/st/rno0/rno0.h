@@ -47,11 +47,11 @@ enum EntityID {
     E_STONE_DOOR,                // EntityStoneDoor
     E_UNK_1F,                    // Unused801C2338
     E_CLOCK_ROOM_SHADOW,         // EntityDummy
-    E_GUARDIAN,                // EntityGuardian
-    E_GUARDIAN_SWORD_SHADOW,   // EntityGuardianSwordShadow
-    E_GUARDIAN_FIRE_WAVE,      // EntityGuardianFireWave
-    E_GUARDIAN_UNK2,           // EntityGuardianUnk2
-    E_GUARDIAN_UNUSED,         // EntityGuardianUnused
+    E_GUARDIAN,                  // EntityGuardian
+    E_GUARDIAN_SWORD_SHADOW,     // EntityGuardianSwordShadow
+    E_GUARDIAN_FIRE_WAVE,        // EntityGuardianFireWave
+    E_GUARDIAN_UNK2,             // EntityGuardianUnk2
+    E_GUARDIAN_UNUSED,           // EntityGuardianUnused
     E_FLOOR_TRAP,                // EntityFloorTrap
     E_THORNWEED,                 // EntityThornweed
     E_CORPSEWEED,                // EntityCorpseweed

@@ -245,7 +245,7 @@ class AnimationShower:
                 image = np.flip(image, 1)
             if frameFlags & 1:
                 frameFlags -= 1
-                image = np.flip(image,0)
+                image = np.flip(image, 0)
             if frameFlags & 8:
                 frameFlags -= 8
                 height -= 1

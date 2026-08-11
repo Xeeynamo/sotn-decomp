@@ -14,8 +14,8 @@
 #define PAL_ARMOR_LORD_UNK PAL_GUARDIAN_UNK
 
 #define EntityArmorLord EntityGuardian
-#define EntityArmorLordSwordShadow EntityGuardianSwordShadow 
-#define EntityArmorLordFireWave EntityGuardianFireWave 
+#define EntityArmorLordSwordShadow EntityGuardianSwordShadow
+#define EntityArmorLordFireWave EntityGuardianFireWave
 #define EntityArmorLordUnk2 EntityGuardianUnk2
 #define EntityArmorLordUnused EntityGuardianUnused
 
