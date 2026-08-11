@@ -2,7 +2,7 @@
 #include "sel.h"
 
 extern u8* D_8018C404; // unknown type
-extern char g_AsciiSet[];
+extern GAME_IMPORT char g_AsciiSet[];
 extern s32 g_MainMenuCursor;
 extern s32 g_InputCursorPos;
 extern s32 D_801BC3E0; // on-screen keyboard key position
