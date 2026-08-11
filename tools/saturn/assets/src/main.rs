@@ -3,7 +3,7 @@
 //! Driven from tools/sotn-assets and config/assets.saturn.yaml
 
 use clap::{Parser, Subcommand};
-use saturn_assets::{audio, bitmap, crt, familiar, font, map, player, stage, weapon};
+use saturn_assets::{audio, bitmap, crt, familiar, font, map, midi, player, seq, stage, weapon};
 use std::path::PathBuf;
 use std::process::ExitCode;
 
@@ -54,6 +54,11 @@ enum CrtCommand {
     Verify {
         manifest: PathBuf,
         crt_path: PathBuf,
+    },
+    Banks { manifest: PathBuf },
+    Midi {
+        seq_path: PathBuf,
+        output_dir: PathBuf,
     },
     Areas {
         game_path: PathBuf,
@@ -365,16 +370,45 @@ fn run(cli: Cli) -> saturn_assets::Result<()> {
             output_dir,
         }) => {
             let manifest = crt::extract(&game_path, &crt_path, &output_dir)?;
-            let sequences = manifest
-                .areas
-                .iter()
-                .filter(|area| area.contents == crt::Contents::Sequence)
-                .count();
+            let count = |kind| {
+                manifest
+                    .areas
+                    .iter()
+                    .filter(|area| area.contents == kind)
+                    .map(|area| area.entries)
+                    .sum::<usize>()
+            };
             println!(
-                "{} areas ({sequences} sequence), base 0x{:02X} at 0x{:06X} -> {}",
+                "{} areas, base 0x{:02X} at 0x{:06X}: {} songs and {} tone layers -> {}",
                 manifest.areas.len(),
                 manifest.base_area,
                 manifest.base_address,
+                count(crt::Contents::Sequence),
+                count(crt::Contents::Tone),
+                output_dir.display()
+            );
+        }
+        Command::Crt(CrtCommand::Banks { manifest }) => {
+            crt::verify_banks(&manifest)?;
+            let loaded = crt::load_manifest(&manifest)?;
+            println!(
+                "every one of the {} decoded banks re-encodes to its area exactly",
+                loaded.areas.len()
+            );
+        }
+        Command::Crt(CrtCommand::Midi {
+            seq_path,
+            output_dir,
+        }) => {
+            let bank = seq::load(&seq_path)?;
+            let stem = seq_path
+                .file_name()
+                .map(|name| name.to_string_lossy().replace(".seq.json", ""))
+                .unwrap_or_else(|| "song".to_string());
+            let written = midi::export_bank(&bank, &output_dir, &stem)?;
+            println!(
+                "wrote {} songs as MIDI -> {}",
+                written.len(),
                 output_dir.display()
             );
         }

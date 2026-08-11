@@ -1,10 +1,10 @@
 
-use crate::{sha256_hex, Error, Result};
+use crate::{seq, sha256_hex, tone, Error, Result};
 use serde::{Deserialize, Serialize};
 use std::path::{Path, PathBuf};
 
 pub const FORMAT: &str = "sotn-saturn-sound-package";
-pub const VERSION: u32 = 1;
+pub const VERSION: u32 = 2;
 pub const MANIFEST_NAME: &str = "manifest.json";
 pub const AREAS_DIR: &str = "areas";
 
@@ -30,16 +30,24 @@ pub struct Area {
 #[serde(rename_all = "lowercase")]
 pub enum Contents {
     Sequence,
-    Other,
+    Tone,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct Song {
-    pub index: usize,
-    pub offset: u32,
-    pub resolution: u16,
-    pub track_offset: u16,
-    pub tempo_offset: u16,
+impl Contents {
+    pub fn of(id: u8) -> Option<Contents> {
+        match id & 0xF0 {
+            0x10 => Some(Contents::Sequence),
+            0x00 => Some(Contents::Tone),
+            _ => None,
+        }
+    }
+
+    fn suffix(self) -> &'static str {
+        match self {
+            Contents::Sequence => "seq.json",
+            Contents::Tone => "tone.json",
+        }
+    }
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -52,8 +60,8 @@ pub struct AreaFile {
     pub contents: Contents,
     pub sha256: String,
     pub file: String,
-    #[serde(skip_serializing_if = "Vec::is_empty", default)]
-    pub songs: Vec<Song>,
+    pub decoded: String,
+    pub entries: usize,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -95,16 +103,6 @@ fn safe_join(root: &Path, relative: &str) -> Result<PathBuf> {
         )));
     }
     Ok(root.join(path))
-}
-
-fn read_u16(data: &[u8], at: usize) -> Option<u16> {
-    data.get(at..at + 2)
-        .map(|b| u16::from_be_bytes([b[0], b[1]]))
-}
-
-fn read_u32(data: &[u8], at: usize) -> Option<u32> {
-    data.get(at..at + 4)
-        .map(|b| u32::from_be_bytes([b[0], b[1], b[2], b[3]]))
 }
 
 fn boot(game: &[u8]) -> Result<()> {
@@ -178,35 +176,6 @@ pub fn base_area(game: &[u8], crt_name: &str) -> Result<u8> {
         })
 }
 
-fn songs(data: &[u8]) -> Option<Vec<Song>> {
-    let count = read_u16(data, 0)? as usize;
-    if count == 0 || count > 128 {
-        return None;
-    }
-    let mut songs = Vec::with_capacity(count);
-    for index in 0..count {
-        let offset = read_u32(data, 2 + index * 4)?;
-        let song = data.get(offset as usize..)?;
-        let resolution = read_u16(song, 0)?;
-        let track_offset = read_u16(song, 4)?;
-        let tempo_offset = read_u16(song, 6)?;
-        if !(24..=960).contains(&resolution)
-            || song.len() <= track_offset as usize
-            || song.len() < tempo_offset as usize + 8
-        {
-            return None;
-        }
-        songs.push(Song {
-            index,
-            offset,
-            resolution,
-            track_offset,
-            tempo_offset,
-        });
-    }
-    Some(songs)
-}
-
 pub fn areas_of(game: &[u8], crt_name: &str, size: usize) -> Result<(u8, u32, Vec<Area>)> {
     let base = base_area(game, crt_name)?;
     let map = area_map(game)?;
@@ -227,6 +196,75 @@ pub fn areas_of(game: &[u8], crt_name: &str, size: usize) -> Result<(u8, u32, Ve
         )));
     }
     Ok((base, start, contained))
+}
+
+fn decode_area(
+    bytes: &[u8],
+    contents: Contents,
+    id: u8,
+    output_dir: &Path,
+    decoded: &str,
+) -> Result<usize> {
+    let path = safe_join(output_dir, decoded)?;
+    match contents {
+        Contents::Sequence => {
+            let bank = seq::decode(bytes)?;
+            let songs = bank.songs.len();
+            seq::write(&bank, &path)?;
+            Ok(songs)
+        }
+        Contents::Tone => {
+            let samples_file = format!("{id:02X}.samples.bin");
+            let bank = tone::decode(bytes, &samples_file)?;
+            let layers = tone::layer_count(&bank);
+            tone::write(&bank, &path, &bytes[bank.samples.offset..])?;
+            Ok(layers)
+        }
+    }
+}
+
+pub fn encode_area(root: &Path, area: &AreaFile) -> Result<Vec<u8>> {
+    let path = safe_join(root, &area.decoded)?;
+    match area.contents {
+        Contents::Sequence => seq::encode(&seq::load(&path)?),
+        Contents::Tone => {
+            let bank = tone::load(&path)?;
+            let samples = std::fs::read(
+                path.parent()
+                    .unwrap_or_else(|| Path::new("."))
+                    .join(&bank.samples.file),
+            )?;
+            tone::encode(&bank, &samples)
+        }
+    }
+}
+
+pub fn verify_banks(manifest_path: &Path) -> Result<()> {
+    let manifest = load_manifest(manifest_path)?;
+    let root = manifest_path.parent().unwrap_or_else(|| Path::new("."));
+    for area in &manifest.areas {
+        let retail = std::fs::read(safe_join(root, &area.file)?)?;
+        let rebuilt = encode_area(root, area)
+            .map_err(|e| Error::Format(format!("area 0x{:02X}: {e}", area.id)))?;
+        if rebuilt == retail {
+            continue;
+        }
+        let detail = if rebuilt.len() != retail.len() {
+            format!("{} bytes rebuilt vs {} in the area", rebuilt.len(), retail.len())
+        } else {
+            let at = rebuilt
+                .iter()
+                .zip(&retail)
+                .position(|(a, b)| a != b)
+                .unwrap_or(0);
+            format!("first difference at offset 0x{at:X}")
+        };
+        return Err(Error::Mismatch(format!(
+            "{} does not re-encode to area 0x{:02X} ({detail})",
+            area.decoded, area.id
+        )));
+    }
+    Ok(())
 }
 
 pub fn extract(game_path: &Path, crt_path: &Path, output_dir: &Path) -> Result<Manifest> {
@@ -250,23 +288,29 @@ pub fn extract(game_path: &Path, crt_path: &Path, output_dir: &Path) -> Result<M
             )));
         }
         let bytes = &data[offset..end];
-        let songs = songs(bytes);
+        let contents = Contents::of(area.id).ok_or_else(|| {
+            Error::Format(format!(
+                "area 0x{:02X} is neither a sequence bank (0x1x) nor a tone bank (0x0x), and \
+                 nothing on the retail disc is",
+                area.id
+            ))
+        })?;
         let file = format!("{AREAS_DIR}/{:02X}.bin", area.id);
+        let decoded = format!("{AREAS_DIR}/{:02X}.{}", area.id, contents.suffix());
         std::fs::write(safe_join(output_dir, &file)?, bytes)?;
+        let entries = decode_area(bytes, contents, area.id, output_dir, &decoded)
+            .map_err(|e| Error::Format(format!("area 0x{:02X} of {name}: {e}", area.id)))?;
         files.push(AreaFile {
             id: area.id,
             address: area.address,
             offset,
             size: bytes.len(),
             loadable: area.loadable,
-            contents: if songs.is_some() {
-                Contents::Sequence
-            } else {
-                Contents::Other
-            },
+            contents,
             sha256: sha256_hex(bytes),
             file,
-            songs: songs.unwrap_or_default(),
+            decoded,
+            entries,
         });
     }
 
