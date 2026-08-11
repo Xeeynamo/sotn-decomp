@@ -1,6 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../rno0/rno0.h"
 
+
+INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/e_particles", func_psp_0923AD68);
+
+INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/e_particles", func_psp_0923B2F0);
+
 INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/e_particles", EntitySoulStealOrb);
 
 INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/e_particles", EntityEnemyBlood);
