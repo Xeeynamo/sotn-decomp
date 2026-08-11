@@ -5,9 +5,6 @@
 extern u32 g_CutsceneFlags;
 extern EInit g_EInitCommon;
 extern EInit g_EInitInteractable;
-#ifndef VERSION_PSP
-extern u16 PLAYER_posX_i_hi;
-#endif
 
 static u16 tileLayout[] = {
     0x014C, 0x014D, 0x0150, 0x0151, 0x014A, 0x014B, 0x014E, 0x014F,
@@ -17,20 +14,14 @@ static u8 glassAnimation[] = {
     0x04, 0x03, 0x04, 0x02, 0x08, 0x01, 0x04, 0x02, 0x04, 0x03, 0x18,
     0x04, 0x02, 0x03, 0x02, 0x02, 0x02, 0x01, 0x18, 0x05, 0xFF};
 
-#ifndef VERSION_PSP
 static u8 unused[] = {0x7F, 0x60, 0x58, 0x50, 0x40};
-#endif
 
 static void func_8018F8EC(u16 index) {
     u16* tileLayoutPtr;
     Tilemap* tilemap = &g_Tilemap;
     u16 tilePos = 0x316;
-#ifdef VERSION_PSP
     s32 i;
     s32 j;
-#else
-    s32 i, j;
-#endif
 
     tileLayoutPtr = &tileLayout[index * 8];
 
@@ -41,9 +32,7 @@ static void func_8018F8EC(u16 index) {
     }
 }
 void func_us_8019F148(Entity* self) {
-#ifdef VERSION_PSP
     Tilemap* tilemap = &g_Tilemap;
-#endif
     Entity* player = &PLAYER;
     s16 posX;
     s16 posY;
@@ -105,9 +94,7 @@ void func_us_8019F148(Entity* self) {
     case 2:
         g_Player.padSim = PAD_NONE;
         if (g_Player.status & PLAYER_STATUS_TRANSFORM) {
-#ifdef VERSION_PSP
             g_Player.padSim = PAD_NONE;
-#endif
             if (g_Timer & 1) {
                 if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
                     g_Player.padSim = PAD_BAT;
@@ -210,9 +197,7 @@ void func_us_8019F148(Entity* self) {
 }
 
 void func_us_8019F5F0(Entity* self) {
-#ifdef VERSION_PSP
     Entity* player;
-#endif
     Primitive* prim;
     s32 primIndex;
 
@@ -221,7 +206,6 @@ void func_us_8019F5F0(Entity* self) {
         primIndex = g_api.AllocPrimitives(PRIM_G4, 1);
         if (primIndex != -1) {
             InitializeEntity(g_EInitInteractable);
-#ifdef VERSION_PSP
             g_PauseAllowed = 0;
             g_unkGraphicsStruct.pauseEnemies = 1;
             self->flags |= FLAG_HAS_PRIMS;
@@ -236,35 +220,6 @@ void func_us_8019F5F0(Entity* self) {
                 prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 =
                     prim->b3 = 0x80;
             prim->priority = 0x1F8;
-#else
-            prim = &g_PrimBuf[primIndex];
-            g_unkGraphicsStruct.pauseEnemies = 1;
-            g_PauseAllowed = 0;
-            self->primIndex = primIndex;
-            self->animSet = 0;
-            self->flags |= FLAG_HAS_PRIMS;
-            prim->x3 = 0x100;
-            prim->x1 = 0x100;
-            prim->y1 = 4;
-            prim->y0 = 4;
-            prim->y3 = 0xE8;
-            prim->y2 = 0xE8;
-            prim->b3 = 0x80;
-            prim->b2 = 0x80;
-            prim->b1 = 0x80;
-            prim->b0 = 0x80;
-            prim->g3 = 0x80;
-            prim->g2 = 0x80;
-            prim->g1 = 0x80;
-            prim->g0 = 0x80;
-            prim->r3 = 0x80;
-            prim->r2 = 0x80;
-            prim->r1 = 0x80;
-            prim->r0 = 0x80;
-            prim->priority = 0x1F8;
-            prim->x2 = 0;
-            prim->x0 = 0;
-#endif
             prim->drawMode =
                 DRAW_TRANSP | DRAW_COLORS | DRAW_TPAGE | DRAW_TPAGE2;
             self->ext.utimer.t = 0;
@@ -276,8 +231,7 @@ void func_us_8019F5F0(Entity* self) {
     case 1:
         prim = &g_PrimBuf[self->primIndex];
         self->ext.utimer.t++;
-#ifdef VERSION_PSP
-        if (self->ext.utimer.t > (9 - 1)) {
+        if (self->ext.utimer.t > 8) {
             g_unkGraphicsStruct.unk20 = 0xFF;
             self->step++;
             prim->drawMode = DRAW_HIDE;
@@ -287,20 +241,6 @@ void func_us_8019F5F0(Entity* self) {
             prim->drawMode =
                 DRAW_TRANSP | DRAW_COLORS | DRAW_TPAGE | DRAW_TPAGE2;
         }
-#else
-        if (self->ext.utimer.t >= 9) {
-            g_unkGraphicsStruct.unk20 = 0xFF;
-            self->step++;
-            prim->drawMode = DRAW_HIDE;
-        } else {
-            if (self->ext.utimer.t & 1) {
-                prim->drawMode = DRAW_HIDE;
-            } else {
-                prim->drawMode =
-                    DRAW_TRANSP | DRAW_COLORS | DRAW_TPAGE | DRAW_TPAGE2;
-            }
-        }
-#endif
         g_Player.padSim = PAD_NONE;
         g_Player.demo_timer = 1;
         break;
@@ -351,12 +291,8 @@ void func_us_8019F5F0(Entity* self) {
                 g_GameState = Game_Ending;
                 g_GameStep = 0;
             } else {
-#ifdef VERSION_PSP
                 player = &PLAYER;
                 player->posX.i.hi -= 0x200;
-#else
-                PLAYER_posX_i_hi -= 0x200;
-#endif
             }
             self->step++;
         }
@@ -372,39 +308,19 @@ void func_us_8019F5F0(Entity* self) {
 
 void func_us_8019F9C0(Entity* self) {
     Primitive* prim;
-#ifdef VERSION_PSP
     s32 primIndex;
-#else
-    s16 primIndex;
-#endif
     s32 animResult;
-#ifndef VERSION_PSP
-    u16 posX;
-    u16 posY;
-    u16 priority;
-#endif
 
     switch (self->step) {
     case 0:
-#ifdef VERSION_PSP
         primIndex = (s16)g_api.AllocPrimitives(PRIM_GT4, 1);
-#else
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
-#endif
         if (primIndex != -1) {
             InitializeEntity(g_EInitCommon);
-#ifdef VERSION_PSP
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-#else
-            prim = &g_PrimBuf[primIndex];
-            self->primIndex = primIndex;
-            self->flags |= FLAG_HAS_PRIMS;
-#endif
             prim->tpage = 0x1A;
             prim->clut = 0x19F;
-#ifdef VERSION_PSP
             prim->u0 = prim->u2 = 1;
             prim->u1 = prim->u3 = 0x3F;
             prim->v0 = prim->v1 = 0xC1;
@@ -413,29 +329,6 @@ void func_us_8019F9C0(Entity* self) {
             prim->y0 = prim->y1 = prim->y2 = prim->y3 = self->posY.i.hi;
             prim->priority = self->zPriority;
             prim->drawMode = DRAW_UNK02 | DRAW_HIDE;
-#else
-            prim->u2 = 1;
-            prim->u0 = 1;
-            prim->u3 = 0x3F;
-            prim->u1 = 0x3F;
-            prim->v1 = 0xC1;
-            prim->v0 = 0xC1;
-            prim->v3 = 0xFF;
-            prim->v2 = 0xFF;
-            posX = self->posX.i.hi;
-            prim->x3 = posX;
-            prim->x2 = posX;
-            prim->x1 = posX;
-            prim->x0 = posX;
-            posY = self->posY.i.hi;
-            prim->y3 = posY;
-            prim->y2 = posY;
-            prim->y1 = posY;
-            prim->y0 = posY;
-            priority = self->zPriority;
-            prim->drawMode = DRAW_UNK02 | DRAW_HIDE;
-            prim->priority = priority;
-#endif
             self->animSet = ANIMSET_OVL(1);
             self->animCurFrame = 4;
 #ifdef VERSION_PSP
@@ -470,19 +363,11 @@ void func_us_8019F9C0(Entity* self) {
 
     case 3:
         prim = &g_PrimBuf[self->primIndex];
-#ifdef VERSION_PSP
         prim->x0 = --prim->x2;
         prim->x1 = ++prim->x3;
         prim->y0 = --prim->y1;
         prim->y2 = ++prim->y3;
         prim->drawMode = DRAW_TRANSP | DRAW_TPAGE | DRAW_UNK_40;
-#else
-        prim->drawMode = DRAW_TRANSP | DRAW_TPAGE | DRAW_UNK_40;
-        prim->x0 = prim->x2 = prim->x2 - 1;
-        prim->x1 = prim->x3 = prim->x3 + 1;
-        prim->y0 = prim->y1 = prim->y1 - 1;
-        prim->y2 = prim->y3 = prim->y3 + 1;
-#endif
         if (prim->x0 < -0x40) {
             self->step++;
         }
@@ -494,28 +379,22 @@ void func_us_8019F9C0(Entity* self) {
 }
 
 void func_us_801B4148_from_bo0(Entity* self) {
-#ifdef VERSION_PSP
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 6;
+#ifdef VERSION_PSP
         self->zPriority -= 2;
+#else
+        self->zPriority = 0x63;
+#endif
     case 1:
         break;
     }
-#else
-    if (self->step == 0) {
-        InitializeEntity(g_EInitCommon);
-        self->animSet = ANIMSET_OVL(1);
-        self->animCurFrame = 6;
-        self->zPriority = 0x63;
-    }
-#endif
 }
 
 void func_us_801C123C_from_no4(Entity* self) {
-#ifdef VERSION_PSP
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitCommon);
@@ -527,14 +406,4 @@ void func_us_801C123C_from_no4(Entity* self) {
     case 1:
         break;
     }
-#else
-    if (self->step == 0) {
-        InitializeEntity(g_EInitCommon);
-        self->animSet = ANIMSET_OVL(1);
-        self->animCurFrame = 7;
-        self->drawFlags = ENTITY_ROTATE;
-        self->rotate = 0x800;
-        self->zPriority++;
-    }
-#endif
 }
