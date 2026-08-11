@@ -135,7 +135,7 @@ void InitEntityIds(void) {
     E_ID(DODO_BIRD) = E_DODO_BIRD;
 }
 
-void OVL_EXPORT(Load)(void) {
+void OvlLoad(void) {
     InitEntityIds();
     PfnEntityUpdates = EntityUpdates;
     g_pStObjLayoutHorizontal = &D_8D2E22C;

@@ -192,7 +192,7 @@ void InitEntityIds(void) {
     E_ID(ID_60) = 0x60;
 }
 
-void OVL_EXPORT(Load)(void) {
+void OvlLoad(void) {
     cutscene_data_ferryman_right = GetLangAt(
         NULL, (u8*)cutscene_data_ferryman_right_en,
         (u8*)cutscene_data_ferryman_right_fr,

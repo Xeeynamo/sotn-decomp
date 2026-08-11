@@ -154,7 +154,7 @@ static void InitEntityIds(void) {
     E_ID(MEDUSA_HEAD_YELLOW) = 0x58;
 }
 
-void OVL_EXPORT(Load)(void) {
+void OvlLoad(void) {
     InitEntityIds();
     PfnEntityUpdates = EntityUpdates;
     g_pStObjLayoutHorizontal = &D_8D2E460;

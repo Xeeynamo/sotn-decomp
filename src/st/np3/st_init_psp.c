@@ -162,7 +162,7 @@ void InitEntityIds(void) {
     E_ID(BLADE_WEAPON) = E_BLADE_WEAPON;
 }
 
-void OVL_EXPORT(Load)(void) {
+void OvlLoad(void) {
     InitEntityIds();
     PfnEntityUpdates = EntityUpdates;
     g_pStObjLayoutHorizontal = &D_8D2E368;

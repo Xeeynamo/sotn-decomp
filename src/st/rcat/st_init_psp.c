@@ -88,7 +88,7 @@ void InitEntityIds(void) {
     E_ID(BAT) = E_BAT;
 }
 
-void OVL_EXPORT(Load)(void) {
+void OvlLoad(void) {
     InitEntityIds();
     PfnEntityUpdates = EntityUpdates;
     g_pStObjLayoutHorizontal = &D_8D2E96C;

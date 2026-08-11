@@ -137,7 +137,7 @@ void InitEntityIds(void) {
     E_ID(SEALED_DOOR) = E_SEALED_DOOR;
 }
 
-void OVL_EXPORT(Load)(void) {
+void OvlLoad(void) {
     InitEntityIds();
     PfnEntityUpdates = EntityUpdates;
     g_pStObjLayoutHorizontal = &D_8D2E394;

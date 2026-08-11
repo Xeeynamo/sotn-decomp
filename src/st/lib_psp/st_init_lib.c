@@ -151,7 +151,7 @@ void InitEntityIds(void) {
     E_ID(ID_4F) = 0x4F;
 }
 
-void OVL_EXPORT(Load)(void) {
+void OvlLoad(void) {
     cutscene_data_offset_eight = GetLangAt(
         8, (u8*)cutscene_data_en, (u8*)cutscene_data_fr, (u8*)cutscene_data_sp,
         (u8*)cutscene_data_ge, (u8*)cutscene_data_it);

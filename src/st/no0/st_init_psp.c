@@ -141,7 +141,7 @@ void InitEntityIds(void) {
     E_ID(ID_51) = E_ID_51;
 }
 
-void OVL_EXPORT(Load)(void) {
+void OvlLoad(void) {
     InitEntityIds();
     PfnEntityUpdates = EntityUpdates;
     g_pStObjLayoutHorizontal = &D_8D2E3B8;

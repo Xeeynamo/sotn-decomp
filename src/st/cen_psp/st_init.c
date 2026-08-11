@@ -115,7 +115,7 @@ static void InitEntityIds(void) {
     SET_E_ID(BREAKABLE_DEBRIS);
 }
 
-void OVL_EXPORT(Load)(void) {
+void OvlLoad(void) {
     pre_fight_script_ptr1 = GetLangAt(
         0, (u8*)cutscene_script_prefight_en, (u8*)cutscene_script_prefight_fr,
         (u8*)cutscene_script_prefight_sp, (u8*)cutscene_script_prefight_ge,

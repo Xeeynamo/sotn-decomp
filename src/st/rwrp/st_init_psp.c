@@ -24,7 +24,7 @@ void InitEntityIds(void) {
     E_ID(SMALL_ROCKS) = E_SMALL_ROCKS;
 }
 
-void OVL_EXPORT(Load)(void) {
+void OvlLoad(void) {
     InitEntityIds();
     PfnEntityUpdates = EntityUpdates;
     g_pStObjLayoutHorizontal = &D_8D2DE7C;

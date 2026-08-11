@@ -119,7 +119,7 @@ static void InitEntityIds(void) {
     SET_E_ID(UNK_ENTITY);
 }
 
-void OVL_EXPORT(Load)(void) {
+void OvlLoad(void) {
     post_fight_script_ptr1 = GetLangAt(
         0, (u8*)cutscene_script_post_fight_en,
         (u8*)cutscene_script_post_fight_fr, (u8*)cutscene_script_post_fight_sp,

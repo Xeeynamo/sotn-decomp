@@ -135,7 +135,7 @@ static void InitEntityIds(void) {
     SET_E_ID(MIST_DOOR);
 }
 
-void OVL_EXPORT(Load)(void) {
+void OvlLoad(void) {
     cutscene_script = GetLangAt(
         0, (u8*)cutscene_script_en,
         (u8*)cutscene_script_fr,

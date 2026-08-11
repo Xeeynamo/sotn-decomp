@@ -165,7 +165,7 @@ void InitEntityIds(void) {
     E_ID(MIST_DOOR) = E_MIST_DOOR;
 }
 
-void OVL_EXPORT(Load)(void) {
+void OvlLoad(void) {
     InitEntityIds();
     PfnEntityUpdates = EntityUpdates;
     g_pStObjLayoutHorizontal = &D_8D2E258;

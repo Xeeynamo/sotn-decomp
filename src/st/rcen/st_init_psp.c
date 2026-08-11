@@ -102,7 +102,7 @@ static void InitEntityIds(void) {
     SET_E_ID(UNK_28);
 }
 
-void OVL_EXPORT(Load)(void) {
+void OvlLoad(void) {
     cutscene_script = GetLangAt(
         4, (u8*)cutscene_script_pre_fight_en, (u8*)cutscene_script_pre_fight_fr,
         (u8*)cutscene_script_pre_fight_sp, (u8*)cutscene_script_pre_fight_ge,

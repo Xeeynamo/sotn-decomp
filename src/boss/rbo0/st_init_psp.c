@@ -37,7 +37,7 @@ extern LayoutEntity* D_8D2DE10;
 extern LayoutEntity* D_8D2DEE4;
 extern Overlay g_Overlay;
 
-void OVL_EXPORT(Load)(void) {
+void OvlLoad(void) {
     InitEntityIds();
     PfnEntityUpdates = EntityUpdates;
     g_pStObjLayoutHorizontal = &D_8D2DE10;

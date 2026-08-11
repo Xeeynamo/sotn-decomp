@@ -265,7 +265,7 @@ static u_long* D_psp_0927C7E0[] = {
 
 #include "../../get_lang.h"
 
-void OVL_EXPORT(Load)(void) {
+void OvlLoad(void) {
     D_psp_09285BA8 =
         GetLangAt(8, cutscene_script_en, cutscene_script_fr, cutscene_script_sp,
                   cutscene_script_ge, cutscene_script_it);
