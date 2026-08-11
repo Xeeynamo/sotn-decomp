@@ -87,9 +87,9 @@ enum EntityID {
     E_AXE_KNIGHT_AXE_2,             // func_us_801CBA30
     E_UNK_ENTITY,                   // InitializeUnkEntity
     E_ARMOR_LORD,                   // EntityArmorLord
-    E_ARMOR_LORD_UNK1,              // func_us_801D348C
+    E_ARMOR_LORD_SWORD_SHADOW,      // EntityArmorLordSwordShadow
     E_ARMOR_LORD_FIRE_WAVE,         // EntityArmorLordFireWave
-    E_ARMOR_LORD_UNK2,              // func_us_801D3700
+    E_ARMOR_LORD_UNK2,              // EntityArmorLordUnk2
     E_HUNTING_GIRL,                 // EntityHuntingGirl
     E_HUNTING_GIRL_ATTACK,          // EntityHuntingGirlAttack
     E_PARANTHROPUS,                 // EntityParanthropus

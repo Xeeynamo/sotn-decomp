@@ -2620,19 +2620,18 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
-    /* 0x80 */ s16 unk80;
+    /* 0x80 */ s16 timer;
     /* 0x82 */ s16 : 16;
-    /* 0x84 */ u8 unk84;
-    /* 0x85 */ u8 unk85;
-    /* 0x86 */ u8 unk86;
+    /* 0x84 */ u8 facingLeft;
+    /* 0x85 */ u8 didShield;
+    /* 0x86 */ u8 fadeOutZ;
     /* 0x87 */ u8 : 8;
-    /* 0x88 */ s16 unk88;
-    /* 0x8A */ s16 unk8A;
-    /* 0x8C */ u8 unk8C;
-    /* 0x8D */ u8 unk8D;
-    /* 0x8E */ u8 unk8E;
-    /* 0x8F */ u8 unk8F;
-    /* 0x90 */ struct Primitive* unk90;
+    /* 0x88 */ s16 fadeOutY;
+    /* 0x8A */ s16 fadeOutY2;
+    /* 0x8C */ u8 timer2;
+    /* 0x8D */ u8 timer3;
+    /* 0x8E */ u16 : 16;
+    /* 0x90 */ struct Primitive* deathPrim;
 } ET_ArmorLord;
 
 typedef struct {
