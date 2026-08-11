@@ -3,7 +3,6 @@
 #include <string.h>
 #include "overlay.h"
 #include "../../st/np3/np3.h"
-#include "stage_loader.h"
 
 extern AbbreviatedOverlay OVL_EXPORT(Overlay);
 extern PfnEntityUpdate EntityUpdates[];
@@ -33,7 +32,6 @@ static void PatchSlograPalettePc(void) {
 }
 
 OVL_API void InitStage(Overlay* o) {
-    LoadReset();
     memcpy(o, &OVL_EXPORT(Overlay), sizeof(AbbreviatedOverlay));
     PfnEntityUpdates = EntityUpdates;
     g_pStObjLayoutHorizontal = entityLayoutHorizontal;

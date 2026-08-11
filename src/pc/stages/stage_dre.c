@@ -2,8 +2,8 @@
 #include <game.h>
 #include <cutscene.h>
 #include <string.h>
-#include "stage_loader.h"
 #include "overlay.h"
+#include "../pc.h"
 #include "../../st/dre/dre.h"
 
 extern Overlay OVL_EXPORT(Overlay);
@@ -39,7 +39,6 @@ static void InitCutscenePc(void) {
 }
 
 OVL_API void InitStage(Overlay* o) {
-    LoadReset();
     memcpy(o, &OVL_EXPORT(Overlay), sizeof(Overlay));
     PfnEntityUpdates = EntityUpdates;
     g_pStObjLayoutHorizontal = entityLayoutHorizontal;
