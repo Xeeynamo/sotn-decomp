@@ -1,4 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+
+// It turns out that the Armor Lord and Guardian enemies share the
+// vast majority of their code. Armor Lord was decompiled first.
+// Simply #define GUARDIAN prior to #include on this file and it will
+// load up as a Guardian instead of Armor Lord.
+
+
 extern EInit g_EInitInteractable;
 extern EInit g_EInitArmorLord;
 extern EInit g_EInitArmorLordSwordShadow;

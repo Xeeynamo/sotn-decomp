@@ -59,19 +59,19 @@ INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_5610", func_us_801D1184);
 
 INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_5610", func_us_801D1388);
 
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_5610", EntityArmorLordFireWave);
+INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_5610", EntityGuardianFireWave);
 
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_5610", EntityArmorLordUnused);
+INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_5610", EntityGuardianUnused);
 
 INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_5610", func_us_801D1A9C);
 
 INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_5610", func_us_801D1DAC);
 
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_5610", EntityArmorLord);
+INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_5610", EntityGuardian);
 
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_5610", EntityArmorLordSwordShadow);
+INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_5610", EntityGuardianSwordShadow);
 
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_5610", EntityArmorLordUnk2);
+INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_5610", EntityGuardianUnk2);
 
 INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_5610", func_psp_0923AD68);
 
