@@ -82,7 +82,7 @@ func ensurePSPDeps(eg *errgroup.Group) {
 		)
 	})
 	eg.Go(func() error {
-		const MetroWrapVersion = "0.2.1"
+		const MetroWrapVersion = "0.2.2"
 		_, err := os.Stat("bin/.mw-version-" + MetroWrapVersion)
 		if err == nil {
 			return nil

@@ -133,7 +133,6 @@ ImgSrc g_imgUnk8013C200_impl = {
 ImgSrc* g_imgUnk8013C200 = &g_imgUnk8013C200_impl;
 ImgSrc* g_imgUnk8013C270 = &g_imgUnk8013C200_impl;
 PlayerOvl g_PlOvl = {0};
-u8** g_PlOvlAluBatSpritesheet[1] = {0};
 
 void func_801073C0(void) { NOT_IMPLEMENTED; }
 

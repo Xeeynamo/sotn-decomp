@@ -11,8 +11,12 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f606B6F8, LoadSubDisplayFiles);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606B760, func_0606B760);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606BB4C, func_0606BB4C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606BEE4, func_0606BEE4);
-s32 func_0600654C(s32 param_1, s32 param_2);
-void func_0606C064(void) { func_0600654C(0x0606C054, 0x00252000); }
+
+extern s32 DAT_0606C054;
+s32 func_0600654C(s32* param_1, s32 param_2);
+
+void func_0606C064(void) { func_0600654C(&DAT_0606C054, 0x00252000); }
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606C088, func_0606C088);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606C160, func_0606C160);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606C3E4, func_0606C3E4);
@@ -45,18 +49,135 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f606C594, func_0606C594);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606C774, func_0606C774);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606CA10, func_0606CA10);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D058, func_0606D058);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D2D0, FindBossTeleport);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D358, func_0606D358);
 
-// _PSX_POSITION_GET
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D3FC, func_0606D3FC);
+extern RoomBossTeleport g_RoomBossTeleports[];
 
-extern s32 DAT_0605c108;
+s32 FindBossTeleport(s32 chunkX, s32 chunkY) {
+    RoomBossTeleport* ptr;
+
+    for (ptr = &g_RoomBossTeleports[0]; true; ptr++) {
+        if (ptr->x == 0x80) {
+            return 0;
+        }
+        if (ptr->x != chunkX || ptr->y != chunkY ||
+            ptr->stageId != g_CurrentRoom.stageID) {
+            continue;
+        }
+        if (ptr->eventId == 0xFF) {
+            if (g_PlayableCharacter == 0) {
+                return ptr->castleFlag + 2;
+            }
+        } else {
+            if (TimeAttackController(ptr->eventId, 0) == 0) {
+                return ptr->castleFlag + 2;
+            }
+        }
+    }
+}
+
+extern s32 DAT_0605c6e4;
+extern s32 g_CutsceneHasControl;
+
+void func_0600FB34(void);
+void func_060195F0(void);
+
+// SAT: func_0606D358
+void func_800F2404(s32 arg0) {
+    u32 i;
+
+    switch (arg0) {
+    case 0:
+        g_unkGraphicsStruct.BottomCornerTextTimer = 0;
+        g_unkGraphicsStruct.primIndex = 0;
+        g_unkGraphicsStruct.D_800973FC = 0;
+        /* fallthrough */
+    case 1:
+        g_CutsceneHasControl = 0;
+        g_unkGraphicsStruct.pauseEnemies = 0;
+        g_unkGraphicsStruct.unk20 = 0;
+        g_unkGraphicsStruct.unk14 = 0xA0;
+        g_unkGraphicsStruct.unk24 = 0;
+        if (g_unkGraphicsStruct.BottomCornerTextTimer != 0) {
+            FreePrimitives(g_unkGraphicsStruct.BottomCornerTextPrims);
+        }
+        g_unkGraphicsStruct.BottomCornerTextTimer = 0;
+        g_unkGraphicsStruct.BottomCornerTextPrims = 0;
+        for (i = 0; i < 8; i++) {
+            g_unkGraphicsStruct.D_80097428[i] = 0;
+        }
+        g_unkGraphicsStruct.unk28 = 0;
+        g_unkGraphicsStruct.unk2C = 0;
+        g_unkGraphicsStruct.D_80097448 = 0;
+        g_unkGraphicsStruct.D_8009744C = 0;
+        g_unkGraphicsStruct.D_80097450 = 0;
+        func_0600FB34();
+        func_060195F0();
+        DAT_0605c6e4 = 0;
+        break;
+    }
+}
+
+extern s32 D_8006C374;
 extern RoomTeleport g_RoomTeleports[];
 extern u16 D_8003C730;
 extern s32 D_80097C98;
-extern s32 DAT_0606459c;
 extern RoomLoadDefHolder D_801375BC;
+
+// original name: PSX_POSITION_GET
+void func_0606D3FC(void) {
+    RoomTeleport* ptr;
+    s32 newY;
+
+    if ((D_8003C730 != 0) && (D_8003C708.flags != 0)) {
+        PLAYER.posX.i.hi = 0xA0;
+        PLAYER.posY.i.hi = 0xB0;
+        if (g_CurrentRoom.stageID & 0x20) {
+            PLAYER.posY.i.hi += 0x10;
+        }
+        return;
+    }
+
+    ptr = &g_RoomTeleports[D_8006C374];
+    PLAYER.posX.i.hi = ptr->x;
+    PLAYER.posY.i.hi = ptr->y;
+    if ((g_CurrentRoom.stageID & 0x30) == 0x20 &&
+        (g_CurrentRoom.unk2 & 0x10) == 0) {
+        u8* defBytes = (u8*)D_801375BC.def;
+        s32 width = defBytes[-2] - defBytes[-4];
+        s32 height = defBytes[-1] - defBytes[-3];
+
+        PLAYER.posX.i.hi = (width + 1) * 0x140 - ptr->x;
+        newY = height * 0x100 - (ptr->y & 0xFF00);
+
+        if (D_80097C98 == 4) {
+            newY |= 0x47;
+        } else if (g_CurrentRoom.stageID == 0x28) {
+            newY |= 0xD0;
+        } else if (g_CurrentRoom.stageID == 0x20 && D_8006C374 == 0x31) {
+            newY |= 0x30;
+        } else if (D_8006C374 == 0x32) {
+            newY = 0xB3;
+        } else {
+            if (newY == 0) {
+                if (newY != height) {
+                    newY = 0x88;
+                } else {
+                    newY = 0x84;
+                }
+            } else {
+                if (newY == height) {
+                    newY |= 0x84;
+                } else {
+                    newY |= 0x88;
+                }
+            }
+        }
+        PLAYER.posY.i.hi = newY;
+    }
+}
+
+extern s32 DAT_0605c108;
+extern s32 DAT_0606459c;
 
 // original name: PSX_TO_STAGE_NO_GET
 void func_0606D554(s32 arg0) {
