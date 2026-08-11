@@ -175,7 +175,7 @@ RoomTeleport D_800A245C[] = {
     {16, 132, 0x0000, 0x002D, STAGE_NZ1},
 };
 
-RoomBossTeleport D_800A297C[] = {
+RoomBossTeleport g_RoomBossTeleports[] = {
     {0x20, 0x1A, STAGE_NO0, TIMEATTACK_EVENT_FIRST_MARIA_MEET, 0x64},
     {0x00, 0x01, STAGE_DRE, 0xFF, 0x3C},
     {0x01, 0x01, STAGE_DRE, 0xFF, 0x3C},
@@ -209,24 +209,23 @@ RoomBossTeleport D_800A297C[] = {
     {0x80, 0x00, 0x00, 0x00, 0x00},
 };
 
-s32 func_800F087C(u32 chunkX, u32 chunkY) {
-    RoomBossTeleport* phi_s1;
+s32 FindBossTeleport(u32 chunkX, u32 chunkY) {
+    RoomBossTeleport* ptr;
 
-    for (phi_s1 = &D_800A297C[0]; true; phi_s1++) {
-        if (phi_s1->x == 0x80) {
+    for (ptr = &g_RoomBossTeleports[0]; true; ptr++) {
+        if (ptr->x == 0x80) {
             return 0;
         }
         // All must match, otherwise we jump out.
-        if (phi_s1->x != chunkX || phi_s1->y != chunkY ||
-            phi_s1->stageId != g_StageId) {
+        if (ptr->x != chunkX || ptr->y != chunkY || ptr->stageId != g_StageId) {
             continue;
         }
 
-        if (phi_s1->eventId == TIMEATTACK_EVENT_INVALID) {
-            return phi_s1->unk10 + 2;
+        if (ptr->eventId == TIMEATTACK_EVENT_INVALID) {
+            return ptr->unk10 + 2;
         }
-        if (TimeAttackController(phi_s1->eventId, TIMEATTACK_GET_RECORD) == 0) {
-            return phi_s1->unk10 + 2;
+        if (TimeAttackController(ptr->eventId, TIMEATTACK_GET_RECORD) == 0) {
+            return ptr->unk10 + 2;
         }
     }
 }
@@ -291,7 +290,7 @@ s32 SetNextRoomToLoad(u32 x, u32 y) {
     if (g_Player.status & PLAYER_STATUS_DEAD) {
         return 0;
     }
-    res = func_800F087C(x, y);
+    res = FindBossTeleport(x, y);
     if (res) {
         return res;
     }
@@ -534,6 +533,7 @@ void func_800F1424(void) {
     }
 }
 
+// original name: PSX_POSITION_GET
 void func_800F14CC(void) {
     RoomTeleport* temp_a2;
     s32 temp_a1;
@@ -1069,8 +1069,7 @@ void func_800F2404(s32 arg0) {
 }
 
 void func_800F24F4(void) {
-    s32 x;
-    s32 y;
+    s32 x, y;
     s32 var_a0;
 
     x = g_Tilemap.left + (g_PlayerX >> 8);

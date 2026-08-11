@@ -26,6 +26,7 @@ g_EInitOwlKnightSword = 0x801806A8;
 g_EInitOwl = 0x801806B4;
 g_EInitBloodyZombie = 0x801806C0;
 g_EInitOlroxAfterImage = 0x801806CC;
+g_EInitBossDoors = 0x80180738;
 BackgroundBlockInit = 0x80180748;
 g_RedDoorTiles = 0x8018075C;
 PrizeDrops = 0x80181444;
@@ -48,7 +49,10 @@ EntitySpikes = 0x801AB778; // source=match
 EntitySpikesDamage = 0x801AB970; // source=match
 EntityPrisoner = 0x801ACDC8;
 EntityOlroxAfterImage = 0x801AFF78;
+EntityRealOlroxDrool = 0x801BA128;
 func_us_801B72E8 = 0x801BA880; // source=match
+EntityBossDoors = 0x801BAB18;
+EntitySealedDoor = 0x801BB08C;
 EntityChair = 0x801BBD84;
 Random = 0x801BC0DC; // source=match
 Update = 0x801BC10C; // source=match
@@ -76,7 +80,6 @@ SetStep = 0x801C0134; // source=match
 SetSubStep = 0x801C0154; // source=match
 InitializeEntity = 0x801C0204; // source=match
 EntityDummy = 0x801C0300; // source=match
-GetPlayerCollisionWith = 0x801C05A8; // source=match
 EntityPrizeDrop = 0x801C0F14; // source=match
 EntityExplosion = 0x801C1788; // source=match
 EntityEquipItemDrop = 0x801C1928; // source=match
@@ -84,7 +87,6 @@ EntityRelicOrb = 0x801C21C0; // source=match
 EntityHeartDrop = 0x801C2C90; // source=match
 EntityMessageBox = 0x801C2DAC; // source=match
 EntityUnkId13 = 0x801C33F8; // source=match
-EntityExplosionVariantsSpawner = 0x801C3508; // source=match
 EntityExplosionVariants = 0x801C3720; // source=match
 EntityGreyPuff = 0x801C3810; // source=match
 EntityIntenseExplosion = 0x801C41B0; // source=match

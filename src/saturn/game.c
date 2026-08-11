@@ -86,7 +86,7 @@ extern s32 D_801375A4;
 
 void InitRoomEntities(s32);
 void SetDefaultSCLPriority(s32);
-void FUN_0606d358(s32);
+void func_800F2404(s32);
 void SetCanRevealMap(void);
 void func_06009510(s32);
 
@@ -121,7 +121,7 @@ void InitRoom(void) {
     PLAYER.posY.i.hi = D_801375BC.pos.y + g_Tilemap.scrollY.i.hi;
     DAT_060860bc = 0;
     DAT_060860c0 = 0;
-    FUN_0606d358(1);
+    func_800F2404(1);
     uVar9 = g_CurrentRoom.stageID & 0xDF;
     if ((uVar9 == 6 || uVar9 == 11 || uVar9 == 9 || uVar9 == 3) &&
         g_CurrentRoom.unkA != g_CurrentRoom.unk8) {
