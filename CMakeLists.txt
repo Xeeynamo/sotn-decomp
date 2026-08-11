@@ -139,7 +139,6 @@ set(SOURCE_FILES_PC
     src/pc/pl_arc.c
     src/pc/pl_ric.c
     src/pc/servant_pc.c
-    src/pc/stages/stage_loader.c
     src/pc/stages/overlay.c
     src/pc/weapon_pc.c
 )
