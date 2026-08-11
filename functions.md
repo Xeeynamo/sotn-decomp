@@ -196,7 +196,7 @@
 | no1        | func_pspeu_09262BD8                |        9 |          1 |        |       |     |
 | no4        | func_pspeu_0923D0B8                |        9 |          1 |        |       |     |
 | rno0       | RNO0_Unused801C2338                |        9 |          1 |        |       |     |
-| rno0       | RNO0_Unused801C2C50                |        9 |          1 |        |       |     |
+| rno0       | Unused801C2C50                     |        9 |          1 |        |       |     |
 | rno4       | RNO4_Unused801C8704                |        9 |          1 |        |       |     |
 | rno4       | RNO4_Unused801C8768                |        9 |          1 |        |       |     |
 | rno4       | RNO4_Unused801C8770                |        9 |          1 |        |       |     |
@@ -4245,7 +4245,7 @@
 | w1_012_psp | func_pspeu_092F6D18                |       66 |          5 |        |       |     |
 | dra        | func_psp_090ED480                  |       66 |          6 |        |       |     |
 | no0        | func_pspeu_09254A38                |       66 |          6 |        |       |     |
-| rno0       | EntityBackgroundPillar             |       66 |          6 |        |       |     |
+| rno0       | func_pspeu_092500C8                |       66 |          6 |        |       |     |
 | bo0        | func_pspeu_0923E210                |       66 |          7 |        |       |     |
 | bo0        | func_pspeu_09251560                |       66 |          7 |        |       |     |
 | bo1        | func_pspeu_0923A1A8                |       66 |          7 |        |       |     |
@@ -5373,7 +5373,7 @@
 | no3        | func_pspeu_0924D9C0                |       92 |          9 |        |       |     |
 | np3        | func_pspeu_092458C8                |       92 |          9 |        |       |     |
 | no0        | func_pspeu_09254B20                |       92 |         10 |        |       |     |
-| rno0       | EntityLongCorridorEye              |       92 |         10 |        |       |     |
+| rno0       | func_pspeu_092501B0                |       92 |         10 |        |       |     |
 | bo0        | EntityUnkId13                      |       92 |         11 |        |       |     |
 | bo1        | func_pspeu_092411C0                |       92 |         11 |        |       |     |
 | bo2        | func_pspeu_092411C0                |       92 |         11 |        |       |     |
@@ -6650,7 +6650,7 @@
 | bo7        | func_us_80195AF0                   |      128 |         18 |        |       |     |
 | main       | func_psp_0892BD3C                  |      128 |         26 |        |       |     |
 | no0        | func_pspeu_09254860                |      129 |         10 |        |       |     |
-| rno0       | EntityCorridorDecorator            |      129 |         10 |        |       |     |
+| rno0       | func_pspeu_0924FEF0                |      129 |         10 |        |       |     |
 | dra        | func_psp_090EC608                  |      129 |         11 |        |       |     |
 | are        | func_pspeu_0924D918                |      129 |         11 |        |       |     |
 | no2        | func_pspeu_0923DCC0                |      129 |         11 |        |       |     |
@@ -9903,7 +9903,7 @@
 | no1        | func_pspeu_0924EF10                |     1298 |        180 |        |       |     |
 | no0        | func_pspeu_09246518                |     1320 |        140 | Yes    |       |     |
 | no1        | func_pspeu_0925B2B8                |     1329 |        147 | Yes    |       |     |
-| st0        | ST0_HitDetection                   |     1332 |        147 |        |       |     |
+| st0        | HitDetection                       |     1332 |        147 |        |       |     |
 | rcen       | func_us_8019B8A8                   |     1332 |        184 | Yes    |       |     |
 | nz1        | func_pspeu_09251918                |     1335 |        185 |        |       |     |
 | dra        | func_psp_0910BE88                  |     1338 |        206 | Yes    |       |     |
