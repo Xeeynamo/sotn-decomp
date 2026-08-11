@@ -7,9 +7,24 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 )
+
+func TestExtractPropagatesLayoutReadError(t *testing.T) {
+	base := psx.Addr(0x80180000)
+	data := make([]byte, 0x40)
+	binary.LittleEndian.PutUint32(data[0x1C:], uint32(base.Sum(0x40)))
+
+	err := Handler.Extract(assets.ExtractArgs{
+		Data:     data,
+		AssetDir: t.TempDir(),
+		Name:     "entity_layouts",
+		RamBase:  base,
+	})
+	assert.Error(t, err)
+}
 
 func TestReadEntityLayoutPreservesUnclaimedRanges(t *testing.T) {
 	const count = 2

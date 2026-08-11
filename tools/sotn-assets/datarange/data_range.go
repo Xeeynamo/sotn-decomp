@@ -80,11 +80,16 @@ func Merge(ranges []DataRange) (DataRange, error) {
 // ConsolidateDataRanges collapses adjacent ranges while preserving gaps.
 // Overlapping ranges are rejected instead of being silently combined.
 func ConsolidateDataRanges(ranges []DataRange) ([]DataRange, error) {
-	if len(ranges) == 0 {
-		return nil, fmt.Errorf("no data range to consolidate")
+	sorted := make([]DataRange, 0, len(ranges))
+	for _, dataRange := range ranges {
+		if !dataRange.Empty() {
+			sorted = append(sorted, dataRange)
+		}
+	}
+	if len(sorted) == 0 {
+		return []DataRange{}, nil
 	}
 
-	sorted := append([]DataRange(nil), ranges...)
 	sort.Slice(sorted, func(i, j int) bool {
 		return sorted[i].begin < sorted[j].begin
 	})

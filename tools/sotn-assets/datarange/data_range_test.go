@@ -14,11 +14,19 @@ func TestConsolidateDataRanges(t *testing.T) {
 	}
 
 	t.Run("adjacent ranges collapse", func(t *testing.T) {
-		input := []DataRange{r(0x20, 0x30), r(0x10, 0x20)}
+		input := []DataRange{
+			r(0x20, 0x30),
+			{},
+			r(0x10, 0x20),
+		}
 		got, err := ConsolidateDataRanges(input)
 		require.NoError(t, err)
 		assert.Equal(t, []DataRange{r(0x10, 0x30)}, got)
-		assert.Equal(t, []DataRange{r(0x20, 0x30), r(0x10, 0x20)}, input)
+		assert.Equal(t, []DataRange{
+			r(0x20, 0x30),
+			{},
+			r(0x10, 0x20),
+		}, input)
 	})
 
 	t.Run("gap starts a new run", func(t *testing.T) {
@@ -38,8 +46,9 @@ func TestConsolidateDataRanges(t *testing.T) {
 		assert.ErrorContains(t, err, "overlap")
 	})
 
-	t.Run("empty input is rejected", func(t *testing.T) {
-		_, err := ConsolidateDataRanges(nil)
-		assert.Error(t, err)
+	t.Run("empty input stays empty", func(t *testing.T) {
+		got, err := ConsolidateDataRanges(nil)
+		require.NoError(t, err)
+		assert.Empty(t, got)
 	})
 }

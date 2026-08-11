@@ -29,6 +29,9 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 		return err
 	}
 	layouts, _, err := readEntityLayout(r, e.OvlName, layoutOff, e.RamBase, entryCount, true)
+	if err != nil {
+		return err
+	}
 	return util.WriteJsonFile(assetPath(e.AssetDir, e.Name), layouts)
 }
 
