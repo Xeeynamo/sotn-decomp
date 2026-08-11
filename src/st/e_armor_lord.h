@@ -25,30 +25,30 @@ static s16 D_us_80182D70[] =
 #endif
 
 // animations
-static u8 anim0[] = {16, 1, 24, 2, 16, 1, 24, 3, 0, 0};
-static u8 anim1[] = 
+static AnimateEntityFrame anim0[] = {{16, 1}, {24, 2}, {16, 1}, {24, 3}, POSE_LOOP(0)};
+static AnimateEntityFrame anim1[] = 
 #ifdef GUARDIAN
-{4, 1, 8, 4,  38, 5,  6, 6,  6, 7,  6,  8,
-2,  9, 2, 10, 2,  11, 1, 12, 1, 13, -1, 0};
+{{4, 1}, {8, 4},  {38, 5},  {6, 6},  {6, 7},  {6,  8},
+{2,  9}, {2, 10}, {2,  11}, {1, 12}, {1, 13}, POSE_END};
 #else
-{32, 1, 8, 4,  70, 5,  6, 6,  6, 7,  6,  8,
-2,  9, 2, 10, 2,  11, 1, 12, 1, 13, -1, 0};
+{{32, 1}, {8, 4},  {70, 5},  {6, 6},  {6, 7},  {6,  8},
+{2,  9}, {2, 10}, {2,  11}, {1, 12}, {1, 13}, POSE_END};
 #endif
-static u8 anim2[] = {1, 12, 1, 13, 0, 0};
-static u8 anim3[] = {8, 14, 8, 15, 16, 1, -1, 0};
+static AnimateEntityFrame anim2[] = {{1, 12}, {1, 13}, POSE_LOOP(0)};
+static AnimateEntityFrame anim3[] = {{8, 14}, {8, 15}, {16, 1}, POSE_END};
 #ifdef GUARDIAN
-static u8 anim4[] = {4, 1,  8, 4,  2,  17, 40, 16, 1, 17, 1, 18,
-                     1,  19, 1, 20, 33, 21, 6,  22, 6, 15, -1, 0};
-static u8 anim5[] = {4, 1, 6,  15, 6,  23, 6,  24, 24, 25, 1, 26, 1,
-                     27, 1, 28, 1,  29, 32, 16, 6,  17, 8, 4, -1,  0};
+static AnimateEntityFrame anim4[] = {{4, 1},  {8, 4},  {2,  17}, {40, 16}, {1, 17}, {1, 18},
+                     {1,  19}, {1, 20}, {33, 21}, {6,  22}, {6, 15}, POSE_END};
+static AnimateEntityFrame anim5[] = {{4, 1}, {6,  15}, {6,  23}, {6,  24}, {24, 25}, {1, 26}, {1,
+                     27}, {1, 28}, {1,  29}, {32, 16}, {6,  17}, {8, 4}, POSE_END};
 #else
-static u8 anim4[] = {40, 1,  8, 4,  2,  17, 72, 16, 1, 17, 1, 18,
-                     1,  19, 1, 20, 33, 21, 6,  22, 6, 15, 0, 0};
-static u8 anim5[] = {32, 1, 6,  15, 6,  23, 6,  24, 40, 25, 1, 26, 1,
-                     27, 1, 28, 1,  29, 64, 16, 6,  17, 32, 4, 0,  0};
+static AnimateEntityFrame anim4[] = {{40, 1},  {8, 4},  {2,  17}, {72, 16}, {1, 17}, {1, 18},
+                     {1,  19}, {1, 20}, {33, 21}, {6,  22}, {6, 15}, POSE_LOOP(0)};
+static AnimateEntityFrame anim5[] = {{32, 1}, {6,  15}, {6,  23}, {6,  24}, {40, 25}, {1, 26}, {1,
+                     27}, {1, 28}, {1,  29}, {64, 16}, {6,  17}, {32, 4}, POSE_LOOP(0)};
 #endif
-static u8 anim6[] = {8, 1, 6, 4, 97, 30, 4, 4, -1, 0};
-static u8 anim7[] = {24, 34, 24, 35, -1, 0};
+static AnimateEntityFrame anim6[] = {{8, 1}, {6, 4}, {97, 30}, {4, 4}, POSE_END};
+static AnimateEntityFrame anim7[] = {{24, 34}, {24, 35}, POSE_END};
 
 static MATRIX armorLordColorMatrix = {{{FLT(0.0), FLT(0.0), FLT(1.0)},
                                        {FLT(0.0), FLT(0.0), FLT(0.5)},
