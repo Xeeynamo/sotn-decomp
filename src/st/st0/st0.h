@@ -6,8 +6,6 @@
 
 #define STAGE_IS_ST0
 
-#define OVL_EXPORT(x) ST0_##x
-
 typedef enum EntityID {
     E_NONE,
     E_BREAKABLE,              // func_801A805C

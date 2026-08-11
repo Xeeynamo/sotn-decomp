@@ -2,7 +2,6 @@
 #include "stage.h"
 
 #define STAGE_IS_LIB
-#define OVL_EXPORT(x) LIB_##x
 
 enum Palettes {
     PAL_NONE = 0,

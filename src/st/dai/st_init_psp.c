@@ -137,16 +137,12 @@ static void InitEntityIds(void) {
 
 void OvlLoad(void) {
     cutscene_script = GetLangAt(
-        0, (u8*)cutscene_script_en,
-        (u8*)cutscene_script_fr,
-        (u8*)cutscene_script_sp,
-        (u8*)cutscene_script_ge,
+        0, (u8*)cutscene_script_en, (u8*)cutscene_script_fr,
+        (u8*)cutscene_script_sp, (u8*)cutscene_script_ge,
         (u8*)cutscene_script_it);
     cutscene_script_ptr = GetLangAt(
-        0, (u8*)cutscene_script_en,
-        (u8*)cutscene_script_fr,
-        (u8*)cutscene_script_sp,
-        (u8*)cutscene_script_ge,
+        0, (u8*)cutscene_script_en, (u8*)cutscene_script_fr,
+        (u8*)cutscene_script_sp, (u8*)cutscene_script_ge,
         (u8*)cutscene_script_it);
     InitEntityIds();
     PfnEntityUpdates = EntityUpdates;

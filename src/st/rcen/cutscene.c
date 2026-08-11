@@ -138,11 +138,11 @@ static u16 actor_names[256];
 static u8 v_coords[8];
 static bool dialogue_started;
 
-extern u8* cutscene_script; // Defined by st_init
-extern u8* pre_fight_script_ptr1;       // Defined by st_init
-extern u8* pre_fight_script_ptr2;       // Defined by st_init
-extern u8* post_fight_script_ptr1;      // Defined by st_init
-extern u8* post_fight_script_ptr2;      // Defined by st_init
+extern u8* cutscene_script;        // Defined by st_init
+extern u8* pre_fight_script_ptr1;  // Defined by st_init
+extern u8* pre_fight_script_ptr2;  // Defined by st_init
+extern u8* post_fight_script_ptr1; // Defined by st_init
+extern u8* post_fight_script_ptr2; // Defined by st_init
 
 extern u32 gfx_portrait_alucard;
 extern u32 D_893DD0C;

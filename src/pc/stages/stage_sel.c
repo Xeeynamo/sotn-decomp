@@ -18,9 +18,7 @@ extern Overlay g_Overlay;
 
 s32 LoadFileSim(s32 fileId, s32 type);
 
-OVL_API void InitStage(Overlay* o) {
-    memcpy(o, &g_Overlay, sizeof(Overlay));
-}
+OVL_API void InitStage(Overlay* o) { memcpy(o, &g_Overlay, sizeof(Overlay)); }
 
 void func_801B9C80(void) {
     // handles the video playback

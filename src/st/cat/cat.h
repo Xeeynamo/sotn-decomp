@@ -7,8 +7,6 @@
 
 #include "stage.h"
 
-#define OVL_EXPORT(x) CAT_##x
-
 #include "../pfn_entity_update.h"
 
 enum Palette {

@@ -12,8 +12,6 @@
 
 #define STAGE_IS_CHI
 
-#define OVL_EXPORT(x) CHI_##x
-
 enum Palette {
     PAL_NONE = 0,
     PAL_BREAKABLE_DEBRIS = 0x159,

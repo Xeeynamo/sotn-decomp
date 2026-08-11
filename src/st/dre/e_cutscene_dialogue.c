@@ -42,10 +42,10 @@ enum DialogueSubsteps {
 #endif
 
 #ifdef VERSION_PSP
-extern u8* cutscene_script; // Defined by st_init
-extern u8* D_pspeu_092600B8;            // Defined by st_init
-extern u8* D_pspeu_092600B0;            // Defined by st_init
-extern u8* D_pspeu_092600A8;            // Defined by st_init
+extern u8* cutscene_script;  // Defined by st_init
+extern u8* D_pspeu_092600B8; // Defined by st_init
+extern u8* D_pspeu_092600B0; // Defined by st_init
+extern u8* D_pspeu_092600A8; // Defined by st_init
 #else
 extern u8 cutscene_script[];
 #endif

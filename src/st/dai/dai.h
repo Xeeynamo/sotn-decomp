@@ -3,7 +3,6 @@
 #define DAI_H
 
 #include "stage.h"
-#define OVL_EXPORT(x) DAI_##x
 #define STAGE_IS_DAI
 
 // Used for cluts and in g_EInits

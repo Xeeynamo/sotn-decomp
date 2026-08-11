@@ -3,8 +3,6 @@
 #include <romio.h>
 #include "memcard.h"
 
-#define OVL_EXPORT(x) SEL_##x
-
 #define DISP_W 512
 
 #define NUM_MENU_OPTIONS 5

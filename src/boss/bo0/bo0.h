@@ -3,7 +3,6 @@
 
 #define STAGE_IS_NO2
 #define BOSS_IS_BO0
-#define OVL_EXPORT(x) BO0_##x
 
 typedef enum EntityID {
     E_NONE,

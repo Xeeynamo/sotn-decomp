@@ -3,8 +3,6 @@
 
 #define STAGE_IS_NO1
 
-#define OVL_EXPORT(x) NO1_##x
-
 void EntityExplosionVariants(Entity* entity);
 void EntityGreyPuff(Entity* entity);
 

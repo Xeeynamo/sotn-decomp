@@ -4,8 +4,6 @@
 
 #define STAGE_IS_NO2
 
-#define OVL_EXPORT(x) NO2_##x
-
 enum Palette {
     PAL_NONE = 0,
     PAL_SPIKES_DUST = 0x161,

@@ -24,8 +24,7 @@ u8 cutscene_script[] = {
 
 static void InitCutscenePc(void) {
     static const CutsceneSymbolRange symbols[] = {
-        {cutscene_script, 0x801829d8,
-         sizeof(cutscene_script)},
+        {cutscene_script, 0x801829d8, sizeof(cutscene_script)},
         {gfx_portrait_richter, 0x8018f130, 0xd80},
         {gfx_portrait_dracula, 0x8018feb0, 0xd80},
     };
