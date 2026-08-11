@@ -24,8 +24,6 @@ on:
   workflow_dispatch:
 
 env:
-  SDL_VIDEODRIVER: offscreen
-  SDL_AUDIODRIVER: dummy
   DEMOS: "0 6"
 
 jobs:
@@ -76,6 +74,9 @@ jobs:
           cmake -B ${{github.workspace}}/pc $PC_FLAGS -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DENABLE_ASAN=OFF
           cmake --build ${{github.workspace}}/pc --config ${{ matrix.build_type }}
       - name: Test demo playback
+        env:
+          SDL_VIDEODRIVER: "offscreen"
+          SDL_AUDIODRIVER: dummy
         run: |
           for demo in $DEMOS; do
             echo "::group::demo $demo"
@@ -121,7 +122,8 @@ jobs:
           cmake --build ${{github.workspace}}/pc --config ${{ matrix.build_type }}
       - name: Test demo playback
         env:
-          SDL_VIDEODRIVER: "" # must use real device
+          SDL_VIDEODRIVER: ""
+          SDL_AUDIODRIVER: dummy
         run: |
           for demo in $DEMOS; do
             echo "::group::demo $demo"
@@ -165,3 +167,21 @@ jobs:
       run: |
         cmake -B ${{github.workspace}}/pc -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
         cmake --build ${{github.workspace}}/pc --config ${{ matrix.build_type }}
+    - name: Install Vulkan software rasterizer
+      uses: jakoch/install-vulkan-sdk-action@v1
+      with:
+        install_runtime: true
+        install_lavapipe: true
+    - name: Test demo playback
+      shell: bash
+      env:
+        SDL_VIDEODRIVER: offscreen
+        SDL_GPU_DRIVER: vulkan
+        SDL_AUDIODRIVER: dummy
+      run: |
+        sotn_exe=$(find "${{github.workspace}}/pc" -maxdepth 2 -iname 'sotn.exe' -print -quit)
+        for demo in $DEMOS; do
+          echo "::group::demo $demo"
+          "$sotn_exe" --demo $demo --replay-fast --replay-and-exit
+          echo "::endgroup::"
+        done
