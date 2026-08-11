@@ -1025,7 +1025,7 @@ void EntityArmorLord(Entity* self) {
         UnkCollisionFunc2(sensors2);
         self->velocityX -= self->velocityX / 8;
         if (!AnimateEntity(anim_overhead_slice, self)) {
-            SetStep(3);
+            SetStep(AL_WALK);
         }
         break;
 
@@ -1044,7 +1044,7 @@ void EntityArmorLord(Entity* self) {
             self->step_s++;
         }
         if (!AnimateEntity(anim_launch_flametrail, self)) {
-            SetStep(3);
+            SetStep(AL_WALK);
         }
         break;
 
