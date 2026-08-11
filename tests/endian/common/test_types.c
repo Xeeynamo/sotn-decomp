@@ -1,15 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "test_common.h"
 
-_Static_assert(sizeof(s8) == 1, "s8 must be 8 bits");
-_Static_assert(sizeof(u8) == 1, "u8 must be 8 bits");
-_Static_assert(sizeof(s16) == 2, "s16 must be 16 bits");
-_Static_assert(sizeof(u16) == 2, "u16 must be 16 bits");
-_Static_assert(sizeof(s32) == 4, "s32 must be 32 bits");
-_Static_assert(sizeof(u32) == 4, "u32 must be 32 bits");
-_Static_assert(sizeof(f16) == 2, "f16 must be 2 bytes");
-_Static_assert(sizeof(f32) == 4, "f32 must be 4 bytes");
-
 void test_target_byte_order(void) {
     const uint32_t value = UINT32_C(0x01020304);
     uint8_t bytes[sizeof(value)];

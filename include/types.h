@@ -58,6 +58,26 @@ typedef signed char byte;
 typedef unsigned short ushort;
 typedef unsigned int uint;
 
+// use negative array trick for compilers that can't _Static_assert
+#if defined(__cplusplus) && __cplusplus >= 201103L
+#define SOTN_STATIC_ASSERT(cond, name) static_assert(cond, #name)
+#elif defined(__STDC_VERSION__) && __STDC_VERSION__ >= 201112L &&              \
+    (!defined(__GNUC__) || __GNUC__ >= 4)
+#define SOTN_STATIC_ASSERT(cond, name) _Static_assert(cond, #name)
+#else
+#define SOTN_STATIC_ASSERT(cond, name)                                         \
+    typedef char sotn_static_assert_##name[(cond) ? 1 : -1]
+#endif
+
+SOTN_STATIC_ASSERT(sizeof(s8) == 1, s8_is_1_byte);
+SOTN_STATIC_ASSERT(sizeof(u8) == 1, u8_is_1_byte);
+SOTN_STATIC_ASSERT(sizeof(s16) == 2, s16_is_2_bytes);
+SOTN_STATIC_ASSERT(sizeof(u16) == 2, u16_is_2_bytes);
+SOTN_STATIC_ASSERT(sizeof(s32) == 4, s32_is_4_bytes);
+SOTN_STATIC_ASSERT(sizeof(u32) == 4, u32_is_4_bytes);
+SOTN_STATIC_ASSERT(sizeof(s64) == 8, s64_is_8_bytes);
+SOTN_STATIC_ASSERT(sizeof(u64) == 8, u64_is_8_bytes);
+
 #ifdef VERSION_PC
 #include <stdbool.h>
 #else
@@ -101,6 +121,9 @@ typedef union {
 #endif
     } i;
 } f16;
+
+SOTN_STATIC_ASSERT(sizeof(f32) == 4, f32_is_4_bytes);
+SOTN_STATIC_ASSERT(sizeof(f16) == 2, f16_is_2_bytes);
 
 typedef struct {
     /* 0x0 */ s16 x;

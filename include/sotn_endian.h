@@ -7,7 +7,8 @@
 #define SOTN_BIG_ENDIAN 1
 #elif defined(__BYTE_ORDER__) && (__BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__)
 #define SOTN_BIG_ENDIAN 0
-#elif defined(_WIN32) || defined(_MIPSEL) || defined(VERSION)
+#elif defined(_WIN32) || defined(_MIPSEL) || defined(__MWERKS__) ||            \
+    defined(VERSION)
 #define SOTN_BIG_ENDIAN 0
 #else
 #error "Unable to determine target byte order"
