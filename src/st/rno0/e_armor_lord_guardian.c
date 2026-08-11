@@ -7,7 +7,7 @@ INCLUDE_ASM("st/rno0/nonmatchings/e_armor_lord_guardian", func_us_801D1388_from_
 
 INCLUDE_ASM("st/rno0/nonmatchings/e_armor_lord_guardian", EntityGuardianFireWave);
 
-void RNO0_Unused801C2C50(void) {}
+void Unused801C2C50(void) {}
 
 INCLUDE_ASM("st/rno0/nonmatchings/e_armor_lord_guardian", func_us_801D1A9C_from_are);
 

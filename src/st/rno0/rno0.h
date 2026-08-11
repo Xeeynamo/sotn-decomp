@@ -51,7 +51,7 @@ enum EntityID {
     E_UNK_22,                    // func_us_801D348C_from_are
     E_GUARDIAN_FIRE_WAVE,        // EntityGuardianFireWave
     E_UNK_24,                    // func_us_801D3700_from_are
-    E_UNK_25,                    // OVL_EXPORT(Unused801C2C50)
+    E_UNK_25,                    // Unused801C2C50
     E_FLOOR_TRAP,                // EntityFloorTrap
     E_THORNWEED,                 // EntityThornweed
     E_CORPSEWEED,                // EntityCorpseweed

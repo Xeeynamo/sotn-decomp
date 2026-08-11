@@ -37,7 +37,7 @@ void EntityGuardian(Entity* self);
 void func_us_801D348C_from_are(Entity* self);
 void EntityGuardianFireWave(Entity* self);
 void func_us_801D3700_from_are(Entity* self);
-void OVL_EXPORT(Unused801C2C50)(Entity* self);
+void Unused801C2C50(Entity* self);
 void EntityFloorTrap(Entity* self);
 void EntityThornweed(Entity* self);
 void EntityCorpseweed(Entity* self);
@@ -118,7 +118,7 @@ PfnEntityUpdate EntityUpdates[] = {
     func_us_801D348C_from_are,
     EntityGuardianFireWave,
     func_us_801D3700_from_are,
-    OVL_EXPORT(Unused801C2C50),
+    Unused801C2C50,
     EntityFloorTrap,
     EntityThornweed,
     EntityCorpseweed,
