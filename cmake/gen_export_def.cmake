@@ -6,7 +6,7 @@
 #
 # Usage:
 #   cmake -DDUMPBIN=<path-to-dumpbin.exe> -DOUT=<output.def> "-DINPUTS=a;b;c" \
-#         -P gen_export_def.cmake
+#         ["-DNODATA_SYMBOLS=d;e"] -P gen_export_def.cmake
 
 if(NOT DUMPBIN)
     message(FATAL_ERROR "gen_export_def.cmake: DUMPBIN not set")
@@ -19,6 +19,11 @@ if(NOT DEFINED INPUTS)
 endif()
 
 set(_symbols "")
+set(_data_symbols "")
+
+if(NOT DEFINED NODATA_SYMBOLS)
+    set(NODATA_SYMBOLS "")
+endif()
 
 foreach(_input ${INPUTS})
     execute_process(
@@ -58,6 +63,9 @@ foreach(_input ${INPUTS})
                         set(_name "${CMAKE_MATCH_1}")
                         if(_name MATCHES "^[A-Za-z][A-Za-z0-9_]*$")
                             list(APPEND _symbols "${_name}")
+                            if(NOT _line MATCHES "notype \\(\\)")
+                                list(APPEND _data_symbols "${_name}")
+                            endif()
                         endif()
                     endif()
                 endif()
@@ -71,7 +79,11 @@ list(SORT _symbols)
 
 set(_def_content "EXPORTS\n")
 foreach(_name ${_symbols})
+    if(_name IN_LIST _data_symbols AND NOT _name IN_LIST NODATA_SYMBOLS)
+        string(APPEND _def_content "    ${_name} DATA\n")
+    else()
     string(APPEND _def_content "    ${_name}\n")
+    endif()
 endforeach()
 
 file(WRITE "${OUT}" "${_def_content}")

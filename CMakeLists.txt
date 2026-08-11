@@ -1260,6 +1260,7 @@ if (WIN32)
                     -DDUMPBIN=${_msvc_bindir}/dumpbin.exe
                     -DOUT=${_sotn_def}
                     "-DINPUTS=$<TARGET_FILE:psyz>$<SEMICOLON>$<JOIN:$<TARGET_OBJECTS:${PROJECT_NAME}>,$<SEMICOLON>>"
+                    "-DNODATA_SYMBOLS=g_saveIconPal"
                     -P ${CMAKE_SOURCE_DIR}/cmake/gen_export_def.cmake
             VERBATIM
             COMMENT "Generating export .def for overlay symbol resolution")
