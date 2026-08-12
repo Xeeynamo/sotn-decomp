@@ -34,6 +34,7 @@ _AllocEntity = 0x0607B184;
 _PreventEntityFromRespawning = 0x0607B1C8;
 _SetStep = 0x0607B218;
 _SetSubStep = 0x0607B240;
+_TekiInit = 0x0607B264;
 _Random = 0x0607B2F4;
 _CreateEntityFromCurrentEntity = 0x0607B318;
 _CreateEntityFromEntity = 0x0607B374;

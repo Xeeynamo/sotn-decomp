@@ -53,10 +53,13 @@ typedef enum {
 #define SET_KEY_ON_20_21 0xF00000A4
 #define SET_KEY_ON_22_23 0xF00000A8
 #define SFX_WEAPON_APPEAR 0x62F
+#define SFX_UI_CONFIRM 0x633
+#define SFX_SAVE_HEARTBEAT 0x64D
 #define SFX_BAT_SCREECH 0x64E
 #define SFX_HEART_PICKUP 0x67A
 #define SFX_UI_MOVE 0x67B
 #define SFX_UI_ALERT_TINK 0x6AD
+#define SFX_SAVE_COFFIN_SWISH 0x6E0
 #define SFX_UNUSED_712 0x712
 #define SFX_TOAD_CROAK 0x71A
 
@@ -284,14 +287,42 @@ typedef struct {
     /* 0xAE */ s16 lastPlayerPosY;
 } ET_Bat;
 
+typedef union {
+    u8 u8[0x38];
+    s8 s8[0x38];
+    u16 u16[0x1C];
+    s16 s16[0x1C];
+    u32 u32[0xE];
+    s32 s32[0xE];
+} ET_Placeholder;
+
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    s32 unkC;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s16 unk1C;
+    s16 : 16;
+    s32 unk20;
+    s32 unk24;
+    s32 unk28;
+    s32 unk2C;
+    s32 unk30;
+    s32 unk34;
+} ET_SaveRoom;
+
 typedef union { // offset=0x78
-    u8 base[0x38];
+    ET_Placeholder ILLEGAL;
     ET_AfterImage afterImage; // g_Entities[1], not entityID 1
     ET_Factory factory;
     ET_ExplosionPuffOpaque opaquePuff;
     ET_Subweapon subweapon;
     ET_BatFamBlueTrail batFamBlueTrail;
     ET_Bat bat;
+    ET_SaveRoom save;
     struct {
         u8 pad[0x28];
         u16 unkA0;
@@ -308,8 +339,8 @@ typedef struct Entity {
     /* 0x16 */ s16 hitboxOffY;
     /* 0x18 */ u16 facingLeft;
     /* 0x1A */ u16 palette;
-    /* 0x1B */ u8 : 8;
-    /* 0x1C */ u8 unk1C;
+    /* 0x1C */ u8 : 8;
+    /* 0x1D */ u8 unk1D;
     /* 0x1E */ s16 rotate;
     /* 0x20 */ s16 : 16;
     /* 0x22 */ s16 : 16;
