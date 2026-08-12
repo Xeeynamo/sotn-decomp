@@ -10,10 +10,13 @@ pub mod image;
 pub mod lzss;
 pub mod map;
 pub mod map_render;
+pub mod midi;
 pub mod player;
+pub mod seq;
 pub mod sheet;
 pub mod sprite;
 pub mod stage;
+pub mod tone;
 pub mod wav;
 pub mod weapon;
 
