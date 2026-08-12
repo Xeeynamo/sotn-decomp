@@ -49,7 +49,7 @@ void func_us_8019F148(Entity* self) {
         self->animCurFrame = 9;
         self->zPriority = 0x80;
         self->drawFlags = ENTITY_ROTATE;
-        self->rotate = 0x800;
+        self->rotate = ROT(180);
         g_api.TimeAttackController(
             NUM_TIMEATTACK_EVENTS, TIMEATTACK_SET_VISITED);
         break;
@@ -401,7 +401,7 @@ void func_us_801C123C_from_no4(Entity* self) {
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 7;
         self->drawFlags = ENTITY_ROTATE;
-        self->rotate = 0x800;
+        self->rotate = ROT(180);
         self->zPriority++;
     case 1:
         break;
