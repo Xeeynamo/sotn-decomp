@@ -5,59 +5,44 @@ extern EInit g_EInitThornweed;
 extern EInit g_EInitCorpseweed;
 extern EInit g_EInitCorpseweedProjectile;
 
-// D_8018173C
 static s16 PhysicsSensors[] = {
     0, 1, 0, 4, 2, -4, -4, 0,
 };
 
-// D_8018174C
 static AnimateEntityFrame anim_ThornweedWakeup[] = {
     {2, 1}, {6, 2}, {6, 3}, {6, 4}, POSE_END};
 
-// D_80181758
 static AnimateEntityFrame anim_ThornweedIdle[] = {
     {6, 5}, {6, 6}, {6, 7}, {6, 8}, POSE_LOOP(0)};
 
-// D_80181764
 static AnimateEntityFrame anim_CorpseweedWakeup[] = {
     {2, 9}, {6, 10}, {6, 11}, {6, 12}, POSE_END};
 
-// D_80181770
 static AnimateEntityFrame anim_CorpseweedIdle[] = {
     {6, 13}, {6, 14}, {6, 15}, {6, 16}, POSE_LOOP(0)};
 
-// D_8018177C
 static AnimateEntityFrame anim_CorpseweedAttackCharge[] = {
     {2, 19}, {2, 20}, POSE_LOOP(0)};
 
-// D_80181784
 static AnimateEntityFrame anim_CorpseweedProjectileAirborne[] = {
     {2, 22}, {2, 23}, POSE_LOOP(0)};
 
-// D_8018178C
 static AnimateEntityFrame anim_CorpseweedProjectileDeath[] = {
     {4, 24}, {3, 25}, {2, 26}, {2, 27}, POSE_END};
 
-// D_80181798
 static AnimateEntityFrame* anim_All[] = {
     anim_ThornweedWakeup, anim_CorpseweedWakeup, // WakeUp
     anim_ThornweedIdle, anim_CorpseweedIdle,     // Idle
 };
 
-// clang-format off
-// D_801817A8
 static s8 HitboxData[] = {
-    0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x03, 0x03, 0x01, 0xFE, 0x03, 0x04, 0x00, 0xFA, 0x07, 0x09,
-    0x01, 0xFB, 0x09, 0x07, 0xC1, 0xC1, 0x00, 0x00, 0x02, 0x09, 0x05, 0x08, 0x00, 0x00, 0x04, 0x04,
-    0x03, 0xF5, 0x04, 0x0C, 0x04, 0xFD, 0x05, 0x05, 0x0F, 0xF5, 0x17, 0x15
+    0, 0, 0, 0, 1, 0, 3, 3, 1, -2, 3, 4, 0, -6, 7, 9, 1, -5, 9, 7, -63, -63, 0, 0, 2, 9, 5, 8, 0, 0, 4, 4, 3, -11, 4, 12, 4, -3, 5, 5, 15, -11, 23, 21
 };
 
-// D_801817D4
 static u8 HitboxIndices[] = {
-    0x00, 0x01, 0x02, 0x02, 0x03, 0x04, 0x04, 0x04, 0x04, 0x01, 0x02, 0x02, 0x03, 0x04, 0x04, 0x04,
-    0x04, 0x05, 0x05, 0x06, 0x06, 0x06, 0x07, 0x07, 0x08, 0x09, 0x09, 0x05, 0x0A, 0x00, 0x00, 0x00
+    0, 1, 2, 2, 3, 4, 4, 4, 4, 1, 2, 2, 3, 4, 4, 4, 4, 5, 5, 6, 6, 6, 7, 7, 8, 9, 9, 5, 10
 };
-// clang-format on
+
 // E_THORNWEED
 // params: 0 = Thornweed, 1 = Corpseweed
 // func_801AA020
