@@ -38,12 +38,13 @@ static AnimateEntityFrame* anim_All[] = {
 #define XYWH(x, y, w, h) x, y, w, h
 
 static s8 HitboxData[] = {
-    XYWH(0, 0, 0, 0), XYWH(1, 0, 3, 3), XYWH(1, -2, 3, 4), XYWH(0, -6, 7, 9), XYWH(1, -5, 9, 7), XYWH(-63, -63, 0, 0), XYWH(2, 9, 5, 8), XYWH(0, 0, 4, 4), XYWH(3, -11, 4, 12), XYWH(4, -3, 5, 5), XYWH(15, -11, 23, 21)
-};
+    XYWH(0, 0, 0, 0),  XYWH(1, 0, 3, 3),     XYWH(1, -2, 3, 4),
+    XYWH(0, -6, 7, 9), XYWH(1, -5, 9, 7),    XYWH(-63, -63, 0, 0),
+    XYWH(2, 9, 5, 8),  XYWH(0, 0, 4, 4),     XYWH(3, -11, 4, 12),
+    XYWH(4, -3, 5, 5), XYWH(15, -11, 23, 21)};
 
-static u8 HitboxIndices[] = {
-    0, 1, 2, 2, 3, 4, 4, 4, 4, 1, 2, 2, 3, 4, 4, 4, 4, 5, 5, 6, 6, 6, 7, 7, 8, 9, 9, 5, 10
-};
+static u8 HitboxIndices[] = {0, 1, 2, 2, 3, 4, 4, 4, 4, 1, 2, 2, 3, 4, 4,
+                             4, 4, 5, 5, 6, 6, 6, 7, 7, 8, 9, 9, 5, 10};
 
 // params: 0 = Thornweed, 1 = Corpseweed
 void EntityThornweed(Entity* self) {
