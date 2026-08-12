@@ -13,8 +13,6 @@
 
 #include "stage.h"
 
-#define OVL_EXPORT(x) MAD_##x
-
 // This is 0xA9 in all other overlays, there may be an underlying reason.
 // For now it's just an overriding define.
 #define NUM_HAND_ITEMS 0xAD

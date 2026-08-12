@@ -6,7 +6,7 @@
 extern LayoutEntity* D_8D2E3BC;
 extern LayoutEntity* D_8D2E490;
 
-extern Overlay OVL_EXPORT(Overlay);
+extern Overlay g_Overlay;
 
 #include "../get_lang_at.h"
 
@@ -192,7 +192,7 @@ void InitEntityIds(void) {
     E_ID(EXPLODE_PUFF_OPAQUE) = E_EXPLODE_PUFF_OPAQUE;
 }
 
-void OVL_EXPORT(Load)(void) {
+void OvlLoad(void) {
     cutscene_data = GetLangAt(
         0, (u8*)cutscene_data_en, (u8*)cutscene_data_fr, (u8*)cutscene_data_sp,
         (u8*)cutscene_data_ge, (u8*)cutscene_data_it);
@@ -202,5 +202,5 @@ void OVL_EXPORT(Load)(void) {
     g_pStObjLayoutHorizontal = &D_8D2E3BC;
     g_pStObjLayoutVertical = &D_8D2E490;
     func_psp_0892A018();
-    memcpy(&g_api.o, &OVL_EXPORT(Overlay), sizeof(Overlay));
+    memcpy(&g_api.o, &g_Overlay, sizeof(Overlay));
 }

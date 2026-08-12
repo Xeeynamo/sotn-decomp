@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "demon.h"
 
-void OVL_EXPORT(ServantInit)(InitializeMode);
-void OVL_EXPORT(UpdateServantDefault)(Entity*);
+void ServantInit(InitializeMode);
+void UpdateServantDefault(Entity*);
 void UpdateServantBasicAttack(Entity*);
 void UpdateServantSpecialAttack(Entity*);
 void unused_5800(Entity*);
@@ -19,8 +19,8 @@ void func_us_801771B0(Entity*);
 void func_us_80177690(Entity*);
 
 ServantDesc demon_ServantDesc = {
-    OVL_EXPORT(ServantInit),
-    OVL_EXPORT(UpdateServantDefault),
+    ServantInit,
+    UpdateServantDefault,
     UpdateServantBasicAttack,
     UpdateServantSpecialAttack,
     unused_5800,

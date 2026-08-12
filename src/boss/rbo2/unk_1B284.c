@@ -50,7 +50,7 @@ INCLUDE_ASM("boss/rbo2/nonmatchings/unk_1B284", func_us_8019F260);
 
 extern EInit g_EInitInteractable;
 extern s32 D_us_80180B5C;
-extern u32 D_us_801AE900;
+extern u32 g_CutsceneFlags;
 
 void func_us_8019F4AC(Entity* self) {
     Entity* entity;
@@ -79,7 +79,7 @@ void func_us_8019F4AC(Entity* self) {
             if ((posX - 0x81) >= 0xFF) {
                 break;
             }
-        } else if (!(D_us_801AE900 & 2)) {
+        } else if (!(g_CutsceneFlags & 2)) {
             break;
         }
         g_api.TimeAttackController(

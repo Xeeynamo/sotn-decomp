@@ -1,2 +1,2 @@
 EXTERN(_binary_assets_ric_mwo_header_bin_start);
-EXTERN(RIC_Load)
+EXTERN(OvlLoad)

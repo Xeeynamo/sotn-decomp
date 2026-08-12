@@ -3,11 +3,10 @@
 #define DAI_H
 
 #include "stage.h"
-#define OVL_EXPORT(x) DAI_##x
 #define STAGE_IS_DAI
 
 // Used for cluts and in g_EInits
-enum OVL_EXPORT(Palette) {
+enum Palette {
     PAL_NONE = 0,
     PAL_STAINED_GLASS = 0xE,
     PAL_STAINED_GLASS_BG = 0xF,
