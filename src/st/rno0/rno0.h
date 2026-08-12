@@ -9,6 +9,7 @@
 
 enum Palettes {
     PAL_NONE,
+    PAL_GUARDIAN_UNK = 0x20A,
     PAL_240 = 0x240,
 };
 
@@ -47,10 +48,10 @@ enum EntityID {
     E_UNK_1F,                    // Unused801C2338
     E_CLOCK_ROOM_SHADOW,         // EntityDummy
     E_GUARDIAN,                  // EntityGuardian
-    E_UNK_22,                    // func_us_801D348C_from_are
+    E_GUARDIAN_SWORD_SHADOW,     // EntityGuardianSwordShadow
     E_GUARDIAN_FIRE_WAVE,        // EntityGuardianFireWave
-    E_UNK_24,                    // func_us_801D3700_from_are
-    E_UNK_25,                    // Unused801C2C50
+    E_GUARDIAN_UNK2,             // EntityGuardianUnk2
+    E_GUARDIAN_UNUSED,           // EntityGuardianUnused
     E_FLOOR_TRAP,                // EntityFloorTrap
     E_THORNWEED,                 // EntityThornweed
     E_CORPSEWEED,                // EntityCorpseweed
