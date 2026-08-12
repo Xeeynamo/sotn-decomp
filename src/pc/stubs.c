@@ -98,7 +98,7 @@ GfxLoad g_GfxLoad[0x10] = {0};
 PlayerDraw g_PlayerDraw[0x10];
 DR_ENV D_800974AC[16];
 u32 D_8003C744 = 0;
-u8 D_psp_08C6BC40[0x4000];
+u8 D_psp_08C6BC40[0x8000];
 u8 D_psp_08C6FC40[0x4000];
 u8 D_psp_08D2DC40[0x4000];
 u8 D_psp_08D97C40[0x4000];
