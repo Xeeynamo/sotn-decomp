@@ -71,7 +71,7 @@ void EntityThornweed(Entity* self) {
 
     // Check for death
     if ((self->flags & FLAG_DEAD) && (self->step < 6)) {
-        if ((self->params) && (self->ext.thornweed.isCorpseweedSpawned)) {
+        if ((self->params) && (self->ext.corpseweed.isCorpseweedSpawned)) {
             SetStep(CORPSEWEED_DEATH);
         } else {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -111,7 +111,7 @@ void EntityThornweed(Entity* self) {
     case WAKE_UP:
         animFrames = anim_All[self->params];
         if (AnimateEntity(animFrames, self) == 0) {
-            self->ext.thornweed.timer = CorpseweedSpawnDelay;
+            self->ext.corpseweed.timer = CorpseweedSpawnDelay;
             SetStep(IDLE);
         }
         break;
@@ -120,7 +120,7 @@ void EntityThornweed(Entity* self) {
         // Check for any necessary idle init
         if (!self->step_s) {
             if (self->params) {
-                if (!--self->ext.thornweed.timer) {
+                if (!--self->ext.corpseweed.timer) {
                     self->step_s++;
 
                     // Spawn the Corpseweed stalk/head
@@ -128,7 +128,7 @@ void EntityThornweed(Entity* self) {
                     CreateEntityFromEntity(E_CORPSEWEED, self, entity);
                     entity->facingLeft = (GetSideToPlayer() & 1);
                     self->enemyId = 0x9E;
-                    self->ext.thornweed.isCorpseweedSpawned = true;
+                    self->ext.corpseweed.isCorpseweedSpawned = true;
                 }
             } else {
                 self->step_s++;

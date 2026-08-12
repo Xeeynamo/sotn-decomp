@@ -22,6 +22,7 @@ EntityBossTorch = 0x801A4D4C;
 EntityBossDoors = 0x801A4EE0;
 CutsceneUnk1 = 0x801A5460;
 SetCutsceneScript = 0x801A54B4;
+CutsceneUnk3 = 0x801A5678;
 CutsceneUnk4 = 0x801A56D4;
 DrawCutsceneActorName = 0x801A578C;
 SetCutsceneEvents = 0x801A5910;

@@ -1943,22 +1943,13 @@ typedef struct {
     /* 0x80 */ s16 timer;
 } ET_GremlinFire;
 
-// CHI Room 4, Thornweed
-typedef struct {
-    /* 0x7C */ char pad_7C[0x4];
-    /* 0x80 */ s16 timer;
-    /* 0x82 */ char pad_82[0x4];
-    /* 0x86 */ u8 isCorpseweedSpawned;
-} ET_Thornweed;
-
-// CHI Room 4, Corpseweed
 typedef struct {
     /* 0x7C */ Primitive* prim;
     /* 0x80 */ s16 timer;
     /* 0x82 */ char pad_82[0x2];
     /* 0x84 */ u8 leavesDoneGrowing;
     /* 0x85 */ u8 stalkDoneGrowing;
-    /* 0x86 */ char pad_86[0x2];
+    /* 0x86 */ u8 isCorpseweedSpawned;
     /* 0x88 */ s16 bobbingLeavesXT;
     /* 0x8A */ s16 bobbingLeavesYT;
     /* 0x8C */ s16 bobbingStalkXT;
@@ -4337,7 +4328,6 @@ typedef union { // offset=0x7C
     ET_SalemWitchTribolt salemWitchTribolt;
     ET_Gremlin gremlin;
     ET_GremlinFire gremlinFire;
-    ET_Thornweed thornweed;
     ET_Corpseweed corpseweed;
     ET_VenusWeed venusWeed;
     ET_VenusWeedFlower venusWeedFlower;
