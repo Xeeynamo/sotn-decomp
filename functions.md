@@ -1823,6 +1823,7 @@
 | rno4       | FindFirstUnkPrim                   |       29 |          5 |        |       |     |
 | rnz0       | func_pspeu_09254700                |       29 |          5 |        |       |     |
 | rnz1       | FindFirstUnkPrim                   |       29 |          5 |        |       |     |
+| bo2        | unk_14DB0.rodata                   |       30 |          0 | Yes    |       |     |
 | bo3        | unk_EB90.rodata                    |       30 |          0 | Yes    |       |     |
 | cat        | e_bone_ark.rodata                  |       30 |          0 | Yes    |       |     |
 | cat        | en_thornweed_corpseweed.rodata     |       30 |          0 | Yes    |       |     |
@@ -4136,6 +4137,7 @@
 |            | func_092EF1C0                      |       63 |         12 |        |       |     |
 |            | func_092EF838                      |       63 |         12 |        |       |     |
 |            | func_092EF6B0                      |       63 |         12 |        |       |     |
+| bo2        | e_cutscene_dialogue.rodata         |       64 |          0 | Yes    |       |     |
 | bo5        | e_cutscene_dialogue.rodata         |       64 |          0 | Yes    |       |     |
 | bo6        | unk_DC80.rodata                    |       64 |          0 | Yes    |       |     |
 | rbo2       | unk_E860.rodata                    |       64 |          0 | Yes    |       |     |
@@ -4624,7 +4626,7 @@
 | main       | __fixdfsi                          |       71 |         11 |        |       |     |
 | cen        | func_pspeu_092517D0                |       71 |         11 |        |       |     |
 | rbo0       | e_collect.rodata                   |       72 |          0 | Yes    |       |     |
-| rbo2       | unk_15100.rodata                   |       72 |          0 | Yes    |       |     |
+| rbo2       | e_cutscene_dialogue.rodata         |       72 |          0 | Yes    |       |     |
 | dra        | game_handlers.rodata               |       72 |          0 | Yes    |       |     |
 | cen        | e_cutscene_dialogue.rodata         |       72 |          0 | Yes    |       |     |
 | rbo1       | func_pspeu_09246448_from_rbo2      |       72 |          4 |        |       |     |
@@ -5191,7 +5193,6 @@
 | dra        | func_psp_091140D8                  |       87 |         14 |        |       |     |
 | main       | func_psp_0891ACBC                  |       87 |         17 |        |       |     |
 | dai        | func_pspeu_0924F2D0                |       87 |         18 |        |       |     |
-| bo2        | unk_12880.rodata                   |       88 |          0 | Yes    |       |     |
 | dra        | func_psp_090EC248                  |       88 |          3 |        |       |     |
 | main       | sceGuDrawBuffer                    |       88 |          6 |        |       |     |
 | rlib       | EntityHarpyKick                    |       88 |          7 |        |       |     |
@@ -10057,13 +10058,13 @@
 | no3        | func_pspeu_09243838                |     2232 |        204 | Yes    |       |     |
 | dai        | func_pspeu_092545E0                |     2235 |        203 | Yes    |       |     |
 | nz0        | func_pspeu_0923E810                |     2235 |        203 | Yes    |       |     |
-| rbo2       | RBO2_EntityCutsceneDialogue        |     2243 |        204 | Yes    |       |     |
+| rbo2       | EntityCutsceneDialogue             |     2243 |        204 | Yes    |       |     |
 | bo5        | EntityCutscene                     |     2245 |        204 | Yes    |       |     |
 | rcen       | func_pspeu_09246800                |     2252 |        207 | Yes    |       |     |
 | mar        | MAR_EntityCutsceneDialogue         |     2254 |        203 | Yes    |       |     |
 | rbo6       | EntityCutscene                     |     2257 |        206 | Yes    |       |     |
 | dre        | func_pspeu_09245D80                |     2261 |        214 | Yes    |       |     |
-| bo2        | BO2_EntityCutsceneDialogue         |     2279 |        214 | Yes    |       |     |
+| bo2        | EntityCutsceneDialogue             |     2279 |        214 | Yes    |       |     |
 | bo4        | func_pspeu_09254180_from_rbo5      |     2282 |        193 | Yes    |       |     |
 | rbo5       | func_pspeu_09254180                |     2282 |        193 | Yes    |       |     |
 | bo0        | func_us_801AD338                   |     2364 |        367 | Yes    |       |     |
