@@ -297,12 +297,26 @@ typedef union {
     s32 s32[0xF];
 } ET_Placeholder;
 
+typedef struct UnkStruct_060e8350 {
+    /* 0x00 */ s32 unk0;
+    /* 0x04 */ s32 : 32;
+    /* 0x08 */ s32 : 32;
+    /* 0x0C */ s32 : 32;
+    /* 0x10 */ s32 : 32;
+    /* 0x14 */ s32 : 32;
+    /* 0x18 */ s16 unk18;
+    /* 0x1A */ s16 : 16;
+    /* 0x1C */ s16 : 16;
+    /* 0x1E */ s16 unk1E;
+    /* 0x20 */ struct UnkStruct_060e8350* next;
+} UnkStruct_060e8350; // size = 0x24
+
 typedef struct {
     s32 unk0;
     s32 unk4;
     s32 unk8;
     s32 unkC;
-    s32 : 32;
+    UnkStruct_060e8350* unk10;
     s32 : 32;
     s32 : 32;
     s16 unk1C;

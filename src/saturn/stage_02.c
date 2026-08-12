@@ -744,20 +744,15 @@ void func_060e8330(void) {
     g_Player.demo_timer = 1;
 }
 
-// not clear if this is Entity or not
-struct Unk10 {
-    u8 pad[0x88];
-    u32* unk88;
-};
 
 void func_060E8350(Entity* self) {
-    UnkStruct_060e8350* iVar1 = ((struct Unk10*)self)->unk88;
+    UnkStruct_060e8350* iVar1 = self->ext.save.unk10;
     s32 i;
 
     for (i = 0; i < 9; i++) {
         iVar1->unk18 = 0;
         iVar1->unk1E = 8;
-        iVar1 = iVar1->unk20;
+        iVar1 = iVar1->next;
     }
 }
 
