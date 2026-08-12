@@ -201,7 +201,9 @@ class AnimationShower:
             print("I don't know what this is yet, need new program logic")
             exit()
         # Now skip to line 984. We're going to make an image from the individual images.
-        overall_image = Image.new("RGBA", (256, 256))
+        view_w = 256
+        view_h = 256
+        overall_image = Image.new("RGBA", (view_w, view_h))
         for i in range(spriteSheetIdx):
             print_debug(frame_params)
             frameFlags = frame_params[0]  # line 989
@@ -241,6 +243,9 @@ class AnimationShower:
             if frameFlags & 2:
                 frameFlags -= 2
                 image = np.flip(image, 1)
+            if frameFlags & 1:
+                frameFlags -= 1
+                image = np.flip(image, 0)
             if frameFlags & 8:
                 frameFlags -= 8
                 height -= 1
@@ -248,17 +253,18 @@ class AnimationShower:
                     frameFlags -= 1
                     yPivot += 1
             if frameFlags != 0:
-                print_debug(f"Ignoring frameFlags {frameFlags}")
+                print_debug(f"Ignoring frameFlags {frameFlags = :X}")
             pil_image = Image.fromarray(image)
-            view_w = 256
-            view_h = 256
             print_debug(f"image all good, now pasting at {xpivot}, {ypivot}")
+            image_layer = Image.new("RGBA", (view_w, view_h))
             # pass pil_image twice to get transparency
-            overall_image.paste(
+            image_layer.paste(
                 pil_image,
                 (view_w // 2 + xpivot, view_h // 2 + ypivot),
                 pil_image,
             )
+            # now pull them together
+            overall_image = Image.alpha_composite(image_layer, overall_image)
             frame_params = frame_params[11:]
         return overall_image
 

@@ -1,5 +1,5 @@
 
-use saturn_assets::crt;
+use saturn_assets::{crt, midi, seq};
 use std::path::{Path, PathBuf};
 
 fn repo_root() -> PathBuf {
@@ -51,21 +51,21 @@ fn every_package_round_trips_byte_for_byte() {
     let mut areas = 0;
     let mut sequences = 0;
     let mut songs = 0;
+    let mut layers = 0;
     for (name, path) in &packages {
         let out = scratch(name);
         match crt::extract(&game, path, &out) {
             Ok(manifest) => {
                 areas += manifest.areas.len();
-                sequences += manifest
-                    .areas
-                    .iter()
-                    .filter(|area| area.contents == crt::Contents::Sequence)
-                    .count();
-                songs += manifest
-                    .areas
-                    .iter()
-                    .map(|area| area.songs.len())
-                    .sum::<usize>();
+                for area in &manifest.areas {
+                    match area.contents {
+                        crt::Contents::Sequence => {
+                            sequences += 1;
+                            songs += area.entries;
+                        }
+                        crt::Contents::Tone => layers += area.entries,
+                    }
+                }
                 let total: usize = manifest.areas.iter().map(|area| area.size).sum();
                 if total != manifest.source.crt_size {
                     failures.push(format!(
@@ -74,6 +74,9 @@ fn every_package_round_trips_byte_for_byte() {
                     ));
                 }
                 if let Err(e) = crt::verify(&out.join(crt::MANIFEST_NAME), path) {
+                    failures.push(format!("{name}: {e}"));
+                }
+                if let Err(e) = crt::verify_banks(&out.join(crt::MANIFEST_NAME)) {
                     failures.push(format!("{name}: {e}"));
                 }
             }
@@ -89,11 +92,104 @@ fn every_package_round_trips_byte_for_byte() {
         packages.len(),
         failures.join("\n  ")
     );
+    assert_eq!(areas, 161, "sound areas across the disc");
+    assert_eq!(sequences, 106, "sequence banks");
+    assert_eq!(songs, 6137, "songs");
+    assert_eq!(layers, 795, "tone layers");
     eprintln!(
-        "{} packages round-tripped byte-exactly: {areas} sound areas, \
-         {songs} songs across the {sequences} areas that probe as sequence banks",
+        "{} packages round-tripped byte-exactly, areas and banks both: {areas} sound areas, \
+         {songs} songs across {sequences} sequence banks, {layers} layers across the rest",
         packages.len()
     );
+}
+
+#[test]
+fn every_song_exports_as_a_standard_midi_file() {
+    let packages = packages();
+    if packages.is_empty() {
+        eprintln!("skipping: no SD_*.CRT files present");
+        return;
+    }
+    let game = disc().join("0.BIN");
+
+    let mut songs = 0;
+    let mut notes = 0;
+    let mut failures = Vec::new();
+    for (name, path) in &packages {
+        let out = scratch(&format!("midi-{name}"));
+        let manifest = crt::extract(&game, path, &out).expect("extract");
+        for area in &manifest.areas {
+            if area.contents != crt::Contents::Sequence {
+                continue;
+            }
+            let bank = seq::load(&out.join(&area.decoded)).expect("load seq.json");
+            for (index, song) in bank.songs.iter().enumerate() {
+                songs += 1;
+                match midi::song_to_smf(song) {
+                    Ok(smf) => {
+                        if &smf[..4] != b"MThd" {
+                            failures.push(format!("{name} area 0x{:02X} song {index}: not an SMF", area.id));
+                            continue;
+                        }
+                        let (on, off) = count_notes(&smf);
+                        notes += on;
+                        if on != off {
+                            failures.push(format!(
+                                "{name} area 0x{:02X} song {index}: {on} note-ons, {off} note-offs",
+                                area.id
+                            ));
+                        }
+                    }
+                    Err(e) => {
+                        failures.push(format!("{name} area 0x{:02X} song {index}: {e}", area.id))
+                    }
+                }
+            }
+        }
+        std::fs::remove_dir_all(&out).ok();
+    }
+
+    assert!(
+        failures.is_empty(),
+        "{} songs failed to export:\n  {}",
+        failures.len(),
+        failures.join("\n  ")
+    );
+    assert_eq!(songs, 6137);
+    eprintln!("{songs} songs exported as MIDI, {notes} notes in total");
+}
+
+fn count_notes(smf: &[u8]) -> (usize, usize) {
+    let mut at = 14;
+    let (mut on, mut off) = (0, 0);
+    while at + 8 <= smf.len() {
+        let size =
+            u32::from_be_bytes([smf[at + 4], smf[at + 5], smf[at + 6], smf[at + 7]]) as usize;
+        let body = &smf[at + 8..at + 8 + size];
+        let mut cursor = 0;
+        while cursor < body.len() {
+            while body[cursor] & 0x80 != 0 {
+                cursor += 1; 
+            }
+            cursor += 1;
+            let status = body[cursor];
+            cursor += match status {
+                0xFF => {
+                    let length = body[cursor + 2] as usize;
+                    3 + length
+                }
+                _ if status & 0xF0 == 0xC0 || status & 0xF0 == 0xD0 => 2,
+                _ => 3,
+            };
+            match status & 0xF0 {
+                0x90 => on += 1,
+                0x80 => off += 1,
+                _ => {}
+            }
+        }
+        at += 8 + size;
+    }
+    (on, off)
 }
 
 #[test]

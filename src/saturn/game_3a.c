@@ -47,8 +47,199 @@ void ScrollEntitiesWithCamera(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606C594, func_0606C594);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606C774, func_0606C774);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606CA10, func_0606CA10);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D058, func_0606D058);
+
+extern s32 D_80097C98;
+extern RoomLoadDefHolder D_801375BC;
+extern s32 D_801375A4;
+extern s32 g_PlayerX;
+extern s32 g_PlayerY;
+
+void func_0606D798(void);
+void func_0606D6DC(void);
+
+s32 func_800F0CD8(s32 arg0) {
+    u32 dy;
+    s32 ret;
+    s32 x, y;
+
+    if (g_unkGraphicsStruct.unk20 == 0) {
+        if (D_80097C98 == 2) {
+            x = g_Tilemap.left * 0x140 + PLAYER.posX.i.hi;
+            y = g_Tilemap.top * 0x100 + PLAYER.posY.i.hi;
+            ret = SetNextRoomToLoad(x / 0x140, y / 0x100);
+            D_801375BC.pos.x = x % 0x140;
+            D_801375BC.pos.y = y % 0x100;
+            return ret;
+        }
+        if (arg0) {
+            if (g_PlayerX < g_Tilemap.x) {
+                ret = SetNextRoomToLoad(
+                    g_Tilemap.left - 1, g_Tilemap.top + g_PlayerY / 0x100);
+                if (ret) {
+                    D_801375BC.pos.x = PLAYER.posX.i.hi + 0x13C;
+                    D_801375BC.pos.y = PLAYER.posY.i.hi;
+                    g_Player.unk78 = 1;
+                    g_CurrentRoom.unkC = g_Tilemap.left - 1;
+                    g_CurrentRoom.unk10 = g_Tilemap.top + g_PlayerY / 0x100;
+                    func_0606D798();
+                    if (D_801375BC.def->tilesetId == 0xFF) {
+                        return ret;
+                    }
+                    if (g_CurrentRoom.unk4 == 0x50) {
+                        D_8003C708.flags = FLAG_UNK_40;
+                    } else if (g_CurrentRoom.unk4 > 0x5F) {
+                        D_8003C708.flags = g_CurrentRoom.unk4 - 0x41;
+                        g_CurrentRoom.unk4 &= 0x60;
+                    }
+                    return ret;
+                }
+                g_PlayerX = g_Tilemap.x;
+                PLAYER.posX.i.hi = 4;
+            }
+            if (g_PlayerX >= g_Tilemap.width) {
+                ret = SetNextRoomToLoad(
+                    g_Tilemap.right + 1, g_Tilemap.top + g_PlayerY / 0x100);
+                if (ret) {
+                    D_801375BC.pos.x = PLAYER.posX.i.hi - 0x13C;
+                    D_801375BC.pos.y = PLAYER.posY.i.hi;
+                    g_Player.unk78 = 1;
+                    g_CurrentRoom.unkC = g_Tilemap.right + 1;
+                    g_CurrentRoom.unk10 = g_Tilemap.top + g_PlayerY / 0x100;
+                    func_0606D6DC();
+                    if (D_801375BC.def->tilesetId == 0xFF) {
+                        return ret;
+                    }
+                    if (g_CurrentRoom.unk4 == 0x50) {
+                        D_8003C708.flags = 0x41;
+                    } else if (g_CurrentRoom.unk4 > 0x5F) {
+                        D_8003C708.flags = g_CurrentRoom.unk4 - 0x41;
+                        g_CurrentRoom.unk4 &= 0x60;
+                    }
+                    if (g_CurrentRoom.stageID == 0x41) {
+                        if (g_CurrentRoom.unk6 == 0x12) {
+                            g_CurrentRoom.unkC = 2;
+                            g_CurrentRoom.unk10 = 0x28;
+                        }
+                    }
+                    return ret;
+                }
+                g_PlayerX = g_Tilemap.width - 1;
+                PLAYER.posX.i.hi = 0x13C;
+            }
+        } else {
+            goto block_25;
+        }
+    }
+
+    if (g_PlayerY < g_Tilemap.y + 4) {
+        ret = SetNextRoomToLoad(
+            g_Tilemap.left + g_PlayerX / 0x140, g_Tilemap.top - 1);
+        if (ret) {
+            D_801375BC.pos.x = PLAYER.posX.i.hi;
+            D_801375BC.pos.y = PLAYER.posY.i.hi + 0xD0;
+            g_PlayerY -= 0x80;
+            g_Player.unk78 = 2;
+            g_CurrentRoom.unkC = g_Tilemap.left + g_PlayerX / 0x140;
+            g_CurrentRoom.unk10 = g_Tilemap.top - 1;
+            return ret;
+        }
+        g_PlayerY = g_Tilemap.y + 4;
+        PLAYER.posY.i.hi = 0;
+    }
+
+    if (!(g_Player.vram_flag & TOUCHING_GROUND) &&
+        !(g_Player.status &
+          (PLAYER_STATUS_MIST_FORM | PLAYER_STATUS_BAT_FORM))) {
+        dy = 24;
+    } else {
+        dy = 48;
+    }
+    if (g_PlayerY >= (g_Tilemap.height - dy) + 0x14) {
+        ret = SetNextRoomToLoad(
+            g_Tilemap.left + g_PlayerX / 0x140, g_Tilemap.bottom + 1);
+        if (ret) {
+            D_801375BC.pos.x = PLAYER.posX.i.hi;
+            D_801375BC.pos.y = PLAYER.posY.i.hi - (0x100 - dy);
+            g_PlayerY += 0x80;
+            g_Player.unk78 = 2;
+            g_CurrentRoom.unkC = g_Tilemap.left + g_PlayerX / 0x140;
+            g_CurrentRoom.unk10 = g_Tilemap.bottom + 1;
+            return ret;
+        }
+        g_PlayerY = (g_Tilemap.height - dy) + 0x13;
+        PLAYER.posY.i.hi = 0x10F - dy;
+    }
+
+block_25:
+    if (g_PlayerX < g_Tilemap.x + g_unkGraphicsStruct.unk14) {
+        if (arg0 && g_Tilemap.hSize != 1) {
+            if (g_PlayerX + D_801375A4 >
+                g_Tilemap.x + g_unkGraphicsStruct.unk14) {
+                PLAYER.posX.i.hi += (g_PlayerX + D_801375A4) -
+                                    (g_Tilemap.x + g_unkGraphicsStruct.unk14);
+            }
+        }
+        g_Tilemap.scrollX.i.hi = g_Tilemap.x;
+    } else if (
+        g_PlayerX > g_Tilemap.width + g_unkGraphicsStruct.unk14 - 0x140) {
+        if (arg0 && g_Tilemap.hSize != 1) {
+            if (g_PlayerX + D_801375A4 <
+                g_Tilemap.width + g_unkGraphicsStruct.unk14 - 0x140) {
+                PLAYER.posX.i.hi +=
+                    (g_PlayerX + D_801375A4) -
+                    (g_Tilemap.width + g_unkGraphicsStruct.unk14 - 0x140);
+            }
+        }
+        g_Tilemap.scrollX.i.hi = g_Tilemap.width - 0x140;
+    } else {
+        g_Tilemap.scrollX.i.hi = g_PlayerX - g_unkGraphicsStruct.unk14;
+        PLAYER.posX.i.hi = g_unkGraphicsStruct.unk14;
+    }
+
+    if (g_unkGraphicsStruct.unk24 != 0) {
+        if (g_PlayerY < g_Tilemap.y + 0x8C) {
+            g_Tilemap.scrollY.i.hi = g_Tilemap.y + 4;
+            PLAYER.posY.i.hi = g_PlayerY - g_Tilemap.scrollY.i.hi;
+        } else if (g_PlayerY > g_Tilemap.height - 0x74) {
+            g_Tilemap.scrollY.i.hi = g_Tilemap.height - 0xFC;
+            PLAYER.posY.i.hi = g_PlayerY - g_Tilemap.scrollY.i.hi;
+        } else {
+            g_Tilemap.scrollY.i.hi = g_PlayerY - 0x88;
+            PLAYER.posY.i.hi = 0x88;
+        }
+    } else {
+        if (g_PlayerY < g_Tilemap.y + 0x8C) {
+            if (g_Tilemap.scrollY.i.hi - (g_PlayerY - 0x88) >= 4 &&
+                g_Tilemap.scrollY.i.hi > g_Tilemap.y + 8) {
+                g_Tilemap.scrollY.i.hi -= 4;
+                PLAYER.posY.i.hi += 4;
+            } else if (
+                g_Tilemap.scrollY.i.hi < g_Tilemap.y && g_Tilemap.y != 0) {
+                g_Tilemap.scrollY.i.hi += 4;
+                PLAYER.posY.i.hi -= 4;
+            } else {
+                g_Tilemap.scrollY.i.hi = g_Tilemap.y + 4;
+                PLAYER.posY.i.hi = g_PlayerY - g_Tilemap.scrollY.i.hi;
+            }
+        } else {
+            s16* temp_a0 = &g_Tilemap.scrollY.i.hi;
+            s16* temp_a3 = &PLAYER.posY.i.hi;
+            if (g_PlayerY > g_Tilemap.height - 0x74) {
+                g_Tilemap.scrollY.i.hi = g_Tilemap.height - 0xFC;
+                PLAYER.posY.i.hi = g_PlayerY - g_Tilemap.scrollY.i.hi;
+            } else if (g_Tilemap.scrollY.i.hi - (g_PlayerY - 0x88) >= 4) {
+                *temp_a0 -= 4;
+                *temp_a3 += 4;
+            } else {
+                g_Tilemap.scrollY.i.hi = g_PlayerY - 0x88;
+                PLAYER.posY.i.hi = 0x88;
+            }
+        }
+    }
+    return 0;
+}
+
+INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D058, SetNextRoomToLoad);
 
 extern RoomBossTeleport g_RoomBossTeleports[];
 
@@ -120,8 +311,6 @@ void func_800F2404(s32 arg0) {
 extern s32 D_8006C374;
 extern RoomTeleport g_RoomTeleports[];
 extern u16 D_8003C730;
-extern s32 D_80097C98;
-extern RoomLoadDefHolder D_801375BC;
 
 // original name: PSX_POSITION_GET
 void func_0606D3FC(void) {

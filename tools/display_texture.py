@@ -113,6 +113,11 @@ def get_clut(colored_dump, clutnum):
     clut_x = block_x_position + (clut_base % 0x10) * 16
     clut_y = 240 + clut_base // 0x10
     clut = colored_dump[clut_y, clut_x : clut_x + 16]
+    # Now filter: If an entry in the clut is all zeros, but is not entry 0,
+    # it needs to be changed to 0, 0, 0, 255 to not be transparent.
+    for entry in clut[1:]:
+        if not entry.any():
+            entry[3] = 255
     return clut
 
 
@@ -197,7 +202,7 @@ if __name__ == "__main__":
     if args.showclut:
         colored = convert_rgb555(array)
         clut = get_clut(colored, args.clut_num)
-        clut = clut.reshape((1, 16, 3))  # reshape to turn the clut into a 1x16 image
+        clut = clut.reshape((1, 16, 4))  # reshape to turn the clut into a 1x16 image
         plt.imshow(clut)
         plt.show()
     elif args.whole:

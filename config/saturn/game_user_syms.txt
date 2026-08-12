@@ -7,6 +7,7 @@ _DAT_0606C054 = 0x0606C054;
 _FUN_0606c160 = 0x0606C160;
 _ScrollEntitiesWithCamera = 0x0606C504;
 _func_800F0CD8 = 0x0606CA10;
+_SetNextRoomToLoad = 0x0606D058;
 _FindBossTeleport = 0x0606D2D0;
 _func_800F2404 = 0x0606D358;
 _HandleRoomTransitionTrigger = 0x0606D5FC;
