@@ -6,8 +6,6 @@
 
 #define STAGE_IS_RNZ0
 
-#define OVL_EXPORT(x) RNZ0_##x
-
 enum Palettes {
     PAL_NONE,
     PAL_FIREDEMON_15E = 0x15E,

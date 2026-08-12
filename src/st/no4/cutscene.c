@@ -137,7 +137,7 @@ extern u8* cutscene_script_ptr; // cutscene_script?
 #include "../cutscene_script_box.h"
 #include "cutscene_script_text.h"
 #else
-extern u8 OVL_EXPORT(cutscene_script)[];
+extern u8 cutscene_script[];
 extern u8 cutscene_data_ferryman_left[];
 extern u8 cutscene_data_ferryman_right[];
 

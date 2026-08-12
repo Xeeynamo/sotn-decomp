@@ -37,7 +37,7 @@ void EntityMinotaurDeathPuff(Entity* self);
 void EntityBossTorch(Entity* self);
 void EntityBossDoors(Entity* self);
 void EntityLifeUpSpawn(Entity* self);
-void BO2_EntityCutsceneDialogue(Entity* self);
+void EntityCutsceneDialogue(Entity* self);
 void func_us_801A6EF8(Entity* self);
 void func_us_801A7340(Entity* self);
 void func_us_801A460C(Entity* self);
@@ -80,7 +80,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityBossTorch,
     EntityBossDoors,
     EntityLifeUpSpawn,
-    BO2_EntityCutsceneDialogue,
+    EntityCutsceneDialogue,
     func_us_801A6EF8,
     func_us_801A7340,
     func_us_801A460C,

@@ -44,15 +44,15 @@ enum DialogueSubsteps {
 #define CUTSCENE_TILEMAP_SCROLL
 
 #ifdef VERSION_PSP
-extern u8* OVL_EXPORT(cutscene_script); // Defined by st_init
+extern u8* cutscene_script; // Defined by st_init
 #else
-extern u8 OVL_EXPORT(cutscene_script)[];
+extern u8 cutscene_script[];
 #endif
 
 extern PfnEntityUpdate EntityUpdates[]; // Defined by e_init
 
 #ifdef VERSION_PSP
-extern u_long OVL_EXPORT(cutscene_script_ptr); // Defined by st_init
+extern u_long cutscene_script_ptr; // Defined by st_init
 extern u_long gfx_portrait_alucard;
 extern u_long gfx_portrait_maria;
 extern u_long D_893EA8C;
@@ -239,7 +239,7 @@ static void ScaleCutsceneAvatar(const u8 ySteps) {
     g_Dialogue.portraitAnimTimer++;
 }
 
-void OVL_EXPORT(EntityCutsceneDialogue)(Entity* self) {
+void EntityCutsceneDialogue(Entity* self) {
     Primitive* prim;
     s32 primIndex;
     s32 i, j;
@@ -290,7 +290,7 @@ void OVL_EXPORT(EntityCutsceneDialogue)(Entity* self) {
             DestroyEntity(self);
             break;
         }
-        if (SetCutsceneScript(OVL_EXPORT(cutscene_script))) {
+        if (SetCutsceneScript(cutscene_script)) {
             self->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
             self->primIndex = g_Dialogue.primIndex[2];
             g_CutsceneHasControl = true;
@@ -520,7 +520,7 @@ void OVL_EXPORT(EntityCutsceneDialogue)(Entity* self) {
                     ptr <<= 4;
                     ptr |= (u_long)*g_Dialogue.scriptCur++;
 #ifdef VERSION_PSP
-                    ptr += (u_long)OVL_EXPORT(cutscene_script_ptr);
+                    ptr += (u_long)cutscene_script_ptr;
 #endif
                     SetCutsceneEvents((u8*)ptr);
                     continue;
@@ -535,7 +535,7 @@ void OVL_EXPORT(EntityCutsceneDialogue)(Entity* self) {
                     ptr <<= 4;
                     ptr |= (u_long)*g_Dialogue.scriptCur++;
 #ifdef VERSION_PSP
-                    ptr += (u_long)OVL_EXPORT(cutscene_script_ptr);
+                    ptr += (u_long)cutscene_script_ptr;
 #else
                 ptr += 0x100000;
 #endif
@@ -549,7 +549,7 @@ void OVL_EXPORT(EntityCutsceneDialogue)(Entity* self) {
                     ptr <<= 4;
                     ptr |= (u_long)*g_Dialogue.scriptCur;
 #ifdef VERSION_PSP
-                    ptr += (u_long)OVL_EXPORT(cutscene_script_ptr);
+                    ptr += (u_long)cutscene_script_ptr;
                     g_Dialogue.scriptCur = (u8*)ptr;
 #else
                 g_Dialogue.scriptCur = (u8*)ptr + 0x100000;
@@ -564,7 +564,7 @@ void OVL_EXPORT(EntityCutsceneDialogue)(Entity* self) {
                     ptr <<= 4;
                     ptr |= (u_long)*g_Dialogue.scriptCur;
 #ifdef VERSION_PSP
-                    ptr += (u_long)OVL_EXPORT(cutscene_script_ptr);
+                    ptr += (u_long)cutscene_script_ptr;
                     g_Dialogue.scriptCur = (u8*)ptr;
 #else
                 g_Dialogue.scriptCur = (u8*)ptr + 0x100000;

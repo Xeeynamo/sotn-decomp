@@ -20,5 +20,3 @@ INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_1D368", polarPlacePartsWithAn
 INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_1D368", func_801CDF1C);
 
 INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_1D368", func_801CDFD8);
-
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_1D368", EntityFloorTrap);

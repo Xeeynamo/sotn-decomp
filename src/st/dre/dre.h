@@ -4,7 +4,6 @@
 
 #include <stage.h>
 
-#define OVL_EXPORT(x) DRE_##x
 #define STAGE_IS_DRE
 
 enum Palettes {
@@ -49,7 +48,7 @@ enum EntityID {
     E_SUCCUBUS_PINK_BALL_PROJECTILE, // EntityPinkBallProjectile
     E_SUCCUBUS_WING_SPIKE,           // EntitySuccubusWingSpike
     E_SUCCUBUS_WING_SPIKE_TIP,       // EntitySuccubusWingSpikeTip
-    E_SUCCUBUS_CUTSCENE,             // OVL_EXPORT(EntityCutsceneDialogue)
+    E_SUCCUBUS_CUTSCENE,             // EntityCutsceneDialogue
     E_CS_MOVE_ALUCARD,               // EntityCSMoveAlucard
     E_FADE_TO_WHITE1,                // EntityFadeToWhite1
     E_UNK_ID23,                      // EntityUnkId23

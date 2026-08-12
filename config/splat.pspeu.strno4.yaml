@@ -75,7 +75,7 @@ segments:
       - [0x22D80, data, 22D80]
       - [0x22F38, .data, rno4/e_collect]
       - [0x23480, .data, rno4/collision]
-      - [0x23858, data, '23858']
+      - [0x23858, .data, rno4_psp/unk_12B08]
       - [0x23938, .data, rno4/e_room_fg]
       - [0x239D8, data, 239D8]
       - [0x2BA50, .data, rno4/e_init]

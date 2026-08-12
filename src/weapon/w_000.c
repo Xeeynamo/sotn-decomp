@@ -213,26 +213,16 @@ static void EntityWeaponAttack(Entity* self) {
     s32 mask;
     s16 subType;
 
-#ifdef VERSION_PSP
     subType = (self->params & 0x7FFF) >> 8;
-#endif
 
     self->posX.val = PLAYER.posX.val;
     self->posY.val = PLAYER.posY.val;
     self->facingLeft = PLAYER.facingLeft;
-#ifndef VERSION_PSP
-    subType = self->params & 0x7FFF;
-    subType >>= 8;
-#endif
+
     anim = &g_SoundEvents[subType];
 
     if (!(PLAYER.ext.weapon.anim >= anim->frameStart &&
-          PLAYER.ext.weapon.anim < anim->frameStart + 7 &&
-#ifdef VERSION_PSP
-          g_Player.unk46)) {
-#else
-          g_Player.unk46 != 0)) {
-#endif
+          PLAYER.ext.weapon.anim < anim->frameStart + 7 && g_Player.unk46)) {
         DestroyEntity(self);
         return;
     }
@@ -329,7 +319,6 @@ extern void D_8017D000[];
 #endif
 extern Weapon w0_000_Overlay;
 
-// TODO: this should be OVL_EXPORT
 void w0_000_Load(void) { memcpy(&WEAPON_PTR, &w0_000_Overlay, sizeof(Weapon)); }
 
 Weapon w0_000_Overlay = {

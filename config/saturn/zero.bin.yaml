@@ -349,120 +349,29 @@ segments:
         end: 0x3D1EF
 
       # post-SYS
-      - start: 0x3D1F0
-        type: .data
-        file: zero/snddata
-        end: 0x3E547
-
-      - start: 0x3E548
-        type: .data
-        file: zero/adpcm
-        end: 0x3FBC7
-
-      - start: 0x3FBC8
-        type: .data
-        file: zero/sndlut
-        end: 0x4004F
-
-      - start: 0x40050
-        type: .data
-        file: zero/sndcmd
-        end: 0x402C7
-
-      - start: 0x402C8
-        type: .data
-        file: zero/stgspr0
-        end: 0x4177B
-
-      - start: 0x4177C
-        type: .data
-        file: zero/stgspr1
-        end: 0x41F2B
-
-      - start: 0x41F2C
-        type: .data
-        file: zero/stgspr2
-        end: 0x41FD7
-
-      - start: 0x41FD8
-        type: .data
-        file: zero/stgspr3
-        end: 0x421B7
-
-      - start: 0x421B8
-        type: .data
-        file: zero/stgspr4
-        end: 0x4244F
-
-      - start: 0x42450
-        type: .data
-        file: zero/stgspr5
-        end: 0x4266B
-
-      - start: 0x4266C
-        type: .data
-        file: zero/stgspr6
-        end: 0x426B7
-
-      - start: 0x426B8
-        type: .data
-        file: zero/stgspr7
-        end: 0x42B83
-
-      - start: 0x42B84
-        type: .data
-        file: zero/stgspr8
-        end: 0x42C93
-
-      - start: 0x42C94
-        type: .data
-        file: zero/stgspr9
-        end: 0x42DE7
-
-      - start: 0x42DE8
-        type: .data
-        file: zero/stgspr10
-        end: 0x4339F
-
-      - start: 0x433A0
-        type: .data
-        file: zero/stgspr11
-        end: 0x434A3
-
-      - start: 0x434A4
-        type: .data
-        file: zero/stgspr12
-        end: 0x434FB
-
-      - start: 0x434FC
-        type: .data
-        file: zero/stgspr13
-        end: 0x4359F
-
-      - start: 0x435A0
-        type: .data
-        file: zero/stgspr14
-        end: 0x4361F
-
-      - start: 0x43620
-        type: .data
-        file: zero/fontmap
-        end: 0x43797
-
-      - start: 0x43798
-        type: .data
-        file: zero/stgfiles
-        end: 0x4413F
-
-      - start: 0x44140
-        type: .data
-        file: zero/sysflag
-        end: 0x44143
-
-      - start: 0x44144
-        type: .data
-        file: lib/spr/spr_data
-        end: 0x44183
+      - [0x3D1F0, .data, zero/snddata]
+      - [0x3E548, .data, zero/adpcm]
+      - [0x3FBC8, .data, zero/sndlut]
+      - [0x40050, .data, zero/sndcmd]
+      - [0x402C8, .data, zero/stgspr0]
+      - [0x4177C, .data, zero/stgspr1]
+      - [0x41F2C, .data, zero/stgspr2]
+      - [0x41FD8, .data, zero/stgspr3]
+      - [0x421B8, .data, zero/stgspr4]
+      - [0x42450, .data, zero/stgspr5]
+      - [0x4266C, .data, zero/stgspr6]
+      - [0x426B8, .data, zero/stgspr7]
+      - [0x42B84, .data, zero/stgspr8]
+      - [0x42C94, .data, zero/stgspr9]
+      - [0x42DE8, .data, zero/stgspr10]
+      - [0x433A0, .data, zero/stgspr11]
+      - [0x434A4, .data, zero/stgspr12]
+      - [0x434FC, .data, zero/stgspr13]
+      - [0x435A0, .data, zero/stgspr14]
+      - [0x43620, .data, zero/fontmap]
+      - [0x43798, .data, zero/stgfiles]
+      - [0x44140, .data, zero/sysflag]
+      - [0x44144, .data, lib/spr/spr_data]
 
       # SYS vars
       - start: 0x44184

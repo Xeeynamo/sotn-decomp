@@ -13,6 +13,6 @@ EntityBreakableWall = 0x0924F6D0;
 sprites_chi_4 = 0x092527D8;
 sprites_chi_7 = 0x09252F70;
 g_EInitSecret = 0x09254BE0;
-CHI_Overlay = 0x0926B6A0;
+g_Overlay = 0x0926B6A0;
 PrizeDrops = 0x0926B6E0;
 D_psp_E_ID_19 = 0x0926BC30;

@@ -11,6 +11,7 @@ g_EInitInteractable = 0x80180694;
 g_EInitCommon = 0x801806B8;
 g_EInitParanthropus = 0x801806D0;
 g_EInitParanthropusBoneHitbox = 0x801806DC;
+g_EInitParanthropusThrownBone = 0x801806E8;
 g_EInitStoneSkull = 0x801806F4;
 g_EInitJackOBones = 0x80180700;
 g_EInitNovaSkeleton = 0x80180724;

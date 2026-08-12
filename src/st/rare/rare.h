@@ -4,7 +4,6 @@
 
 #include <stage.h>
 
-#define OVL_EXPORT(x) RARE_##x
 #define STAGE_IS_RARE
 #define INVERTED_STAGE
 
