@@ -6675,7 +6675,7 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801B4148                    | asm/us/boss/bo0/matchings/no2_bg/func_us_801B4148.s 
 | 1.00 | true     | func_us_801B4148                    | asm/us/st/no2/matchings/33D8C/func_us_801B4148.s 
-| 1.00 | false    | func_us_801B4148_from_bo0           | asm/us/st/rcen/nonmatchings/unk_1F0D8/func_us_801B4148_from_bo0.s 
+| 1.00 | true     | func_us_801B4148_from_bo0           | asm/us/st/rcen/matchings/unk_1F0D8/func_us_801B4148_from_bo0.s 
 | 1.00 | false    | func_us_801B4148_from_bo0           | asm/us/st/rno2/nonmatchings/unk_322E4/func_us_801B4148_from_bo0.s 
 -------------------------------------------------------------------------------
 | 1.00 | false    | func_us_801B1C60                    | asm/us/boss/bo0/nonmatchings/313A8/func_us_801B1C60.s 
@@ -8361,7 +8361,7 @@
 | 0.98 | true     | func_us_801B23D8                    | asm/us/st/rcat/matchings/unk_323D8/func_us_801B23D8.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8018F8EC                       | asm/us/st/cen/matchings/e_chamber/func_8018F8EC.s 
-| 1.00 | false    | func_8018F8EC                       | asm/us/st/rcen/nonmatchings/unk_1F0D8/func_8018F8EC.s 
+| 1.00 | true     | func_8018F8EC                       | asm/us/st/rcen/matchings/unk_1F0D8/func_8018F8EC.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8019040C                       | asm/us/st/cen/matchings/e_elevator/func_8019040C.s 
 | 1.00 | true     | func_us_801C1F98                    | asm/us/st/no0/matchings/e_elevator/func_us_801C1F98.s 
