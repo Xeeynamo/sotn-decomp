@@ -16,8 +16,8 @@ void EntityRedEyeBust(Entity* self) {
     case 0:
         TekiInit(self, 3);
         result = CreateSpriteObject(
-            entityRedEyeBustData.allocationIndex,
-            entityRedEyeBustData.flags, entityRedEyeBustData.images, 1);
+            entityRedEyeBustData.allocationIndex, entityRedEyeBustData.flags,
+            entityRedEyeBustData.images, 1);
         self->unk0 = result;
         func_0600AFA8(result, entityRedEyeBustData2[7]);
         result->zPriority = 0x70;
@@ -252,9 +252,7 @@ void DestroyEntity(Entity*);
 void func_060E81D4(Entity*);
 void func_060E8350(Entity*);
 
-static inline SetGeomScreen(u32 h) {
-    DAT_06061DE0[0] = DAT_06061DE0[1] = h;
-}
+static inline SetGeomScreen(u32 h) { DAT_06061DE0[0] = DAT_06061DE0[1] = h; }
 
 static inline void SetGeomOffset(u16 ofx, u16 ofy) {
     DAT_06061DE8[0] = ofx;
