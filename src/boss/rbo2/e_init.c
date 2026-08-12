@@ -35,7 +35,7 @@ void func_us_8019F260(Entity* self);
 void func_us_8019F4AC(Entity* self);
 void EntityCerberusGateDebug(Entity* self);
 void EntityLifeUpSpawn(Entity* self);
-void RBO2_EntityCutsceneDialogue(Entity* self);
+void EntityCutsceneDialogue(Entity* self);
 void func_us_801A17C8(Entity* self);
 
 PfnEntityUpdate EntityUpdates[] = {
@@ -73,7 +73,7 @@ PfnEntityUpdate EntityUpdates[] = {
     func_us_8019F4AC,
     EntityCerberusGateDebug,
     EntityLifeUpSpawn,
-    RBO2_EntityCutsceneDialogue,
+    EntityCutsceneDialogue,
     func_us_801A17C8,
 };
 

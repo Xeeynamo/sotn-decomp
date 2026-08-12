@@ -25,4 +25,4 @@ INCLUDE_ASM("boss/bo2_psp/nonmatchings/bo2_psp/e_cutscene_dialogue", RunCutscene
 
 INCLUDE_ASM("boss/bo2_psp/nonmatchings/bo2_psp/e_cutscene_dialogue", CutsceneSkip);
 
-INCLUDE_ASM("boss/bo2_psp/nonmatchings/bo2_psp/e_cutscene_dialogue", BO2_EntityCutsceneDialogue);
+INCLUDE_ASM("boss/bo2_psp/nonmatchings/bo2_psp/e_cutscene_dialogue", EntityCutsceneDialogue);

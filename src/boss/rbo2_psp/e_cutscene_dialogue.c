@@ -23,4 +23,4 @@ INCLUDE_ASM("boss/rbo2_psp/nonmatchings/rbo2_psp/e_cutscene_dialogue", SetCutsce
 
 INCLUDE_ASM("boss/rbo2_psp/nonmatchings/rbo2_psp/e_cutscene_dialogue", RunCutsceneEvents);
 
-INCLUDE_ASM("boss/rbo2_psp/nonmatchings/rbo2_psp/e_cutscene_dialogue", RBO2_EntityCutsceneDialogue);
+INCLUDE_ASM("boss/rbo2_psp/nonmatchings/rbo2_psp/e_cutscene_dialogue", EntityCutsceneDialogue);

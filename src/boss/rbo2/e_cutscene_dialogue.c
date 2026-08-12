@@ -26,4 +26,4 @@ INCLUDE_RODATA("boss/rbo2/nonmatchings/e_cutscene_dialogue", D_us_8019AE04);
 
 INCLUDE_RODATA("boss/rbo2/nonmatchings/e_cutscene_dialogue", D_us_8019AE0C);
 
-INCLUDE_ASM("boss/rbo2/nonmatchings/e_cutscene_dialogue", RBO2_EntityCutsceneDialogue);
+INCLUDE_ASM("boss/rbo2/nonmatchings/e_cutscene_dialogue", EntityCutsceneDialogue);
