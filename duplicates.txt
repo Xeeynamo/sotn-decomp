@@ -5786,9 +5786,11 @@
 | 1.00 | true     | SetTile16                           | asm/us/main/matchings/psxsdk/libgpu/prim/SetTile16.s 
 | 1.00 | true     | SetTile8                            | asm/us/main/matchings/psxsdk/libgpu/prim/SetTile8.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | ScaleCutsceneAvatar                 | asm/us/boss/bo2/matchings/e_cutscene_dialogue/ScaleCutsceneAvatar.s 
 | 1.00 | true     | ScaleCutsceneAvatar                 | asm/us/boss/bo5/matchings/e_cutscene_dialogue/ScaleCutsceneAvatar.s 
 | 1.00 | true     | ScaleCutsceneAvatar                 | asm/us/boss/bo6/matchings/cutscene/ScaleCutsceneAvatar.s 
 | 1.00 | true     | func_us_8018B74C                    | asm/us/boss/mar/matchings/cutscene/func_us_8018B74C.s 
+| 1.00 | true     | ScaleCutsceneAvatar                 | asm/us/boss/rbo2/matchings/e_cutscene_dialogue/ScaleCutsceneAvatar.s 
 | 1.00 | true     | func_8018E6C4                       | asm/us/st/cen/matchings/cutscene/func_8018E6C4.s 
 | 1.00 | true     | func_us_801C4700                    | asm/us/st/dai/matchings/e_cutscene_dialogue/func_us_801C4700.s 
 | 1.00 | true     | func_80194FF4                       | asm/us/st/dre/matchings/e_cutscene_dialogue/func_80194FF4.s 
@@ -5800,13 +5802,13 @@
 | 0.91 | true     | func_801B690C                       | asm/us/st/sel/matchings/cutscene/func_801B690C.s 
 | 1.00 | true     | func_801A910C                       | asm/us/st/st0/matchings/cutscene/func_801A910C.s 
 | 1.00 | true     | func_us_801AC000                    | asm/us/st/top/matchings/cutscene/func_us_801AC000.s 
-| 1.00 | false    | ScaleCutsceneAvatar                 | asm/us/boss/bo2/nonmatchings/unk_25910/ScaleCutsceneAvatar.s 
-| 1.00 | false    | ScaleCutsceneAvatar                 | asm/us/boss/rbo2/nonmatchings/unk_20220/ScaleCutsceneAvatar.s 
 | 1.00 | false    | ScaleCutsceneAvatar                 | asm/us/boss/rbo6/nonmatchings/unk_2208C/ScaleCutsceneAvatar.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | CutsceneUnk4                        | asm/us/boss/bo2/matchings/e_cutscene_dialogue/CutsceneUnk4.s 
 | 1.00 | true     | CutsceneUnk4                        | asm/us/boss/bo5/matchings/e_cutscene_dialogue/CutsceneUnk4.s 
 | 1.00 | true     | CutsceneUnk4                        | asm/us/boss/bo6/matchings/cutscene/CutsceneUnk4.s 
 | 1.00 | true     | func_us_8018B238                    | asm/us/boss/mar/matchings/cutscene/func_us_8018B238.s 
+| 1.00 | true     | CutsceneUnk4                        | asm/us/boss/rbo2/matchings/e_cutscene_dialogue/CutsceneUnk4.s 
 | 1.00 | true     | func_8018E180                       | asm/us/st/cen/matchings/cutscene/func_8018E180.s 
 | 1.00 | true     | func_us_801C41BC                    | asm/us/st/dai/matchings/e_cutscene_dialogue/func_us_801C41BC.s 
 | 1.00 | true     | func_801949E8                       | asm/us/st/dre/matchings/e_cutscene_dialogue/func_801949E8.s 
@@ -5817,13 +5819,13 @@
 | 1.00 | true     | func_801B66A4                       | asm/us/st/sel/matchings/cutscene/func_801B66A4.s 
 | 1.00 | true     | func_801A8BF8                       | asm/us/st/st0/matchings/cutscene/func_801A8BF8.s 
 | 1.00 | true     | func_us_801AB9DC                    | asm/us/st/top/matchings/cutscene/func_us_801AB9DC.s 
-| 1.00 | false    | CutsceneUnk4                        | asm/us/boss/bo2/nonmatchings/e_cutscene_dialogue/CutsceneUnk4.s 
-| 1.00 | false    | CutsceneUnk4                        | asm/us/boss/rbo2/nonmatchings/e_cutscene_dialogue/CutsceneUnk4.s 
 | 1.00 | false    | CutsceneUnk4                        | asm/us/boss/rbo6/nonmatchings/unk_1D690/CutsceneUnk4.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | DrawCutsceneActorName               | asm/us/boss/bo2/matchings/e_cutscene_dialogue/DrawCutsceneActorName.s 
 | 1.00 | true     | DrawCutsceneActorName               | asm/us/boss/bo5/matchings/e_cutscene_dialogue/DrawCutsceneActorName.s 
 | 1.00 | true     | DrawCutsceneActorName               | asm/us/boss/bo6/matchings/cutscene/DrawCutsceneActorName.s 
 | 1.00 | true     | func_us_8018B2F0                    | asm/us/boss/mar/matchings/cutscene/func_us_8018B2F0.s 
+| 1.00 | true     | DrawCutsceneActorName               | asm/us/boss/rbo2/matchings/e_cutscene_dialogue/DrawCutsceneActorName.s 
 | 1.00 | true     | func_8018E238                       | asm/us/st/cen/matchings/cutscene/func_8018E238.s 
 | 1.00 | true     | func_us_801C4274                    | asm/us/st/dai/matchings/e_cutscene_dialogue/func_us_801C4274.s 
 | 1.00 | true     | func_80194AA0                       | asm/us/st/dre/matchings/e_cutscene_dialogue/func_80194AA0.s 
@@ -5834,13 +5836,13 @@
 | 1.00 | true     | func_801B675C                       | asm/us/st/sel/matchings/cutscene/func_801B675C.s 
 | 1.00 | true     | func_801A8CB0                       | asm/us/st/st0/matchings/cutscene/func_801A8CB0.s 
 | 1.00 | true     | func_us_801ABA94                    | asm/us/st/top/matchings/cutscene/func_us_801ABA94.s 
-| 1.00 | false    | DrawCutsceneActorName               | asm/us/boss/bo2/nonmatchings/e_cutscene_dialogue/DrawCutsceneActorName.s 
-| 1.00 | false    | DrawCutsceneActorName               | asm/us/boss/rbo2/nonmatchings/e_cutscene_dialogue/DrawCutsceneActorName.s 
 | 1.00 | false    | DrawCutsceneActorName               | asm/us/boss/rbo6/nonmatchings/e_cutscene_dialogue/DrawCutsceneActorName.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | SetCutsceneEvents                   | asm/us/boss/bo2/matchings/e_cutscene_dialogue/SetCutsceneEvents.s 
 | 1.00 | true     | SetCutsceneEvents                   | asm/us/boss/bo5/matchings/e_cutscene_dialogue/SetCutsceneEvents.s 
 | 1.00 | true     | SetCutsceneEvents                   | asm/us/boss/bo6/matchings/cutscene/SetCutsceneEvents.s 
 | 1.00 | true     | func_us_8018B474                    | asm/us/boss/mar/matchings/cutscene/func_us_8018B474.s 
+| 1.00 | true     | SetCutsceneEvents                   | asm/us/boss/rbo2/matchings/e_cutscene_dialogue/SetCutsceneEvents.s 
 | 1.00 | true     | func_8018E3BC                       | asm/us/st/cen/matchings/cutscene/func_8018E3BC.s 
 | 1.00 | true     | func_us_801C43F8                    | asm/us/st/dai/matchings/e_cutscene_dialogue/func_us_801C43F8.s 
 | 1.00 | true     | func_80194C24                       | asm/us/st/dre/matchings/e_cutscene_dialogue/func_80194C24.s 
@@ -5851,13 +5853,13 @@
 | 1.00 | true     | func_801B68E0                       | asm/us/st/sel/matchings/cutscene/func_801B68E0.s 
 | 1.00 | true     | func_801A8E34                       | asm/us/st/st0/matchings/cutscene/func_801A8E34.s 
 | 1.00 | true     | func_us_801ABC18                    | asm/us/st/top/matchings/cutscene/func_us_801ABC18.s 
-| 1.00 | false    | SetCutsceneEvents                   | asm/us/boss/bo2/nonmatchings/unk_25910/SetCutsceneEvents.s 
-| 1.00 | false    | SetCutsceneEvents                   | asm/us/boss/rbo2/nonmatchings/unk_20220/SetCutsceneEvents.s 
 | 1.00 | false    | SetCutsceneEvents                   | asm/us/boss/rbo6/nonmatchings/unk_2208C/SetCutsceneEvents.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | SetCutsceneScript                   | asm/us/boss/bo2/matchings/e_cutscene_dialogue/SetCutsceneScript.s 
 | 1.00 | true     | SetCutsceneScript                   | asm/us/boss/bo5/matchings/e_cutscene_dialogue/SetCutsceneScript.s 
 | 1.00 | true     | SetCutsceneScript                   | asm/us/boss/bo6/matchings/cutscene/SetCutsceneScript.s 
 | 1.00 | true     | func_us_8018B018                    | asm/us/boss/mar/matchings/cutscene/func_us_8018B018.s 
+| 1.00 | true     | SetCutsceneScript                   | asm/us/boss/rbo2/matchings/e_cutscene_dialogue/SetCutsceneScript.s 
 | 1.00 | true     | func_8018DF60                       | asm/us/st/cen/matchings/cutscene/func_8018DF60.s 
 | 1.00 | true     | func_us_801C3F9C                    | asm/us/st/dai/matchings/e_cutscene_dialogue/func_us_801C3F9C.s 
 | 1.00 | true     | func_801947C8                       | asm/us/st/dre/matchings/e_cutscene_dialogue/func_801947C8.s 
@@ -5868,13 +5870,13 @@
 | 0.93 | true     | func_801B6480                       | asm/us/st/sel/matchings/cutscene/func_801B6480.s 
 | 1.00 | true     | func_801A89D8                       | asm/us/st/st0/matchings/cutscene/func_801A89D8.s 
 | 1.00 | true     | func_us_801AB7BC                    | asm/us/st/top/matchings/cutscene/func_us_801AB7BC.s 
-| 1.00 | false    | SetCutsceneScript                   | asm/us/boss/bo2/nonmatchings/e_cutscene_dialogue/SetCutsceneScript.s 
-| 1.00 | false    | SetCutsceneScript                   | asm/us/boss/rbo2/nonmatchings/e_cutscene_dialogue/SetCutsceneScript.s 
 | 1.00 | false    | SetCutsceneScript                   | asm/us/boss/rbo6/nonmatchings/unk_1D690/SetCutsceneScript.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | CutsceneUnk1                        | asm/us/boss/bo2/matchings/e_cutscene_dialogue/CutsceneUnk1.s 
 | 1.00 | true     | CutsceneUnk1                        | asm/us/boss/bo5/matchings/e_cutscene_dialogue/CutsceneUnk1.s 
 | 1.00 | true     | CutsceneUnk1                        | asm/us/boss/bo6/matchings/cutscene/CutsceneUnk1.s 
 | 1.00 | true     | func_us_8018AFC4                    | asm/us/boss/mar/matchings/cutscene/func_us_8018AFC4.s 
+| 1.00 | true     | CutsceneUnk1                        | asm/us/boss/rbo2/matchings/e_cutscene_dialogue/CutsceneUnk1.s 
 | 1.00 | true     | func_8018DF0C                       | asm/us/st/cen/matchings/cutscene/func_8018DF0C.s 
 | 1.00 | true     | func_us_801C3F48                    | asm/us/st/dai/matchings/e_cutscene_dialogue/func_us_801C3F48.s 
 | 1.00 | true     | func_80194774                       | asm/us/st/dre/matchings/e_cutscene_dialogue/func_80194774.s 
@@ -5885,11 +5887,27 @@
 | 1.00 | true     | func_801B642C                       | asm/us/st/sel/matchings/cutscene/func_801B642C.s 
 | 1.00 | true     | func_801A8984                       | asm/us/st/st0/matchings/cutscene/func_801A8984.s 
 | 1.00 | true     | func_us_801AB768                    | asm/us/st/top/matchings/cutscene/func_us_801AB768.s 
-| 1.00 | false    | CutsceneUnk1                        | asm/us/boss/bo2/nonmatchings/e_cutscene_dialogue/CutsceneUnk1.s 
-| 1.00 | false    | CutsceneUnk1                        | asm/us/boss/rbo2/nonmatchings/e_cutscene_dialogue/CutsceneUnk1.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | RunCutsceneEvents                   | asm/us/boss/bo2/matchings/e_cutscene_dialogue/RunCutsceneEvents.s 
+| 0.96 | true     | RunCutsceneEvents                   | asm/us/boss/bo5/matchings/e_cutscene_dialogue/RunCutsceneEvents.s 
+| 0.93 | true     | RunCutsceneEvents                   | asm/us/boss/bo6/matchings/cutscene/RunCutsceneEvents.s 
+| 1.00 | true     | func_us_8018B4A0                    | asm/us/boss/mar/matchings/cutscene/func_us_8018B4A0.s 
+| 0.93 | true     | RunCutsceneEvents                   | asm/us/boss/rbo2/matchings/e_cutscene_dialogue/RunCutsceneEvents.s 
+| 0.93 | true     | func_8018E3E8                       | asm/us/st/cen/matchings/cutscene/func_8018E3E8.s 
+| 0.93 | true     | func_us_801C4424                    | asm/us/st/dai/matchings/e_cutscene_dialogue/func_us_801C4424.s 
+| 0.96 | true     | func_80194C50                       | asm/us/st/dre/matchings/e_cutscene_dialogue/func_80194C50.s 
+| 1.00 | true     | func_us_801B9AC8                    | asm/us/st/lib/matchings/cutscene/func_us_801B9AC8.s 
+| 1.00 | true     | func_801BEA20                       | asm/us/st/no3/matchings/cutscene/func_801BEA20.s 
+| 1.00 | true     | func_801B79A8                       | asm/us/st/nz0/matchings/cutscene/func_801B79A8.s 
+| 0.93 | true     | func_us_8019DBA4                    | asm/us/st/rcen/matchings/cutscene/func_us_8019DBA4.s 
+| 1.00 | true     | func_801A8E60                       | asm/us/st/st0/matchings/cutscene/func_801A8E60.s 
+| 0.93 | true     | func_us_801ABC44                    | asm/us/st/top/matchings/cutscene/func_us_801ABC44.s 
+| 0.93 | false    | RunCutsceneEvents                   | asm/us/boss/rbo6/nonmatchings/unk_2208C/RunCutsceneEvents.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | CutsceneUnk3                        | asm/us/boss/bo2/matchings/e_cutscene_dialogue/CutsceneUnk3.s 
 | 1.00 | true     | CutsceneUnk3                        | asm/us/boss/bo5/matchings/e_cutscene_dialogue/CutsceneUnk3.s 
 | 1.00 | true     | func_us_8018B1DC                    | asm/us/boss/mar/matchings/cutscene/func_us_8018B1DC.s 
+| 1.00 | true     | CutsceneUnk3                        | asm/us/boss/rbo2/matchings/e_cutscene_dialogue/CutsceneUnk3.s 
 | 1.00 | true     | func_8018E124                       | asm/us/st/cen/matchings/cutscene/func_8018E124.s 
 | 1.00 | true     | func_us_801C4160                    | asm/us/st/dai/matchings/e_cutscene_dialogue/func_us_801C4160.s 
 | 1.00 | true     | func_8019498C                       | asm/us/st/dre/matchings/e_cutscene_dialogue/func_8019498C.s 
@@ -5899,8 +5917,6 @@
 | 1.00 | true     | func_801B6648                       | asm/us/st/sel/matchings/cutscene/func_801B6648.s 
 | 1.00 | true     | func_801A8B9C                       | asm/us/st/st0/matchings/cutscene/func_801A8B9C.s 
 | 1.00 | true     | func_us_801AB980                    | asm/us/st/top/matchings/cutscene/func_us_801AB980.s 
-| 1.00 | false    | CutsceneUnk3                        | asm/us/boss/bo2/nonmatchings/e_cutscene_dialogue/CutsceneUnk3.s 
-| 1.00 | false    | CutsceneUnk3                        | asm/us/boss/rbo2/nonmatchings/e_cutscene_dialogue/CutsceneUnk3.s 
 | 1.00 | false    | CutsceneUnk3                        | asm/us/boss/rbo6/nonmatchings/unk_1D690/CutsceneUnk3.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801A543C                    | asm/us/boss/rbo8/matchings/giantbro_helpers/func_us_801A543C.s 
@@ -5927,9 +5943,9 @@
 | 0.97 | true     | func_801B7D58                       | asm/us/st/nz0/matchings/cutscene/func_801B7D58.s 
 | 0.91 | true     | func_us_8019E064                    | asm/us/st/rcen/matchings/cutscene/func_us_8019E064.s 
 | 0.93 | true     | func_us_801AC104                    | asm/us/st/top/matchings/cutscene/func_us_801AC104.s 
-| 0.91 | false    | BO2_EntityCutsceneDialogue          | asm/us/boss/bo2/nonmatchings/unk_25910/BO2_EntityCutsceneDialogue.s 
+| 0.91 | false    | EntityCutsceneDialogue              | asm/us/boss/bo2/nonmatchings/e_cutscene_dialogue/EntityCutsceneDialogue.s 
 | 0.96 | false    | EntityCutscene                      | asm/us/boss/bo5/nonmatchings/e_cutscene_dialogue/EntityCutscene.s 
-| 0.96 | false    | RBO2_EntityCutsceneDialogue         | asm/us/boss/rbo2/nonmatchings/unk_20220/RBO2_EntityCutsceneDialogue.s 
+| 0.96 | false    | EntityCutsceneDialogue              | asm/us/boss/rbo2/nonmatchings/e_cutscene_dialogue/EntityCutsceneDialogue.s 
 | 0.90 | false    | EntityCutscene                      | asm/us/boss/rbo6/nonmatchings/unk_2208C/EntityCutscene.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801C4DE4                    | asm/us/st/are/matchings/e_blade_soldier/func_us_801C4DE4.s 
@@ -6032,22 +6048,13 @@
 | 1.00 | true     | func_us_801A8D00                    | asm/us/st/top/matchings/e_lock_camera/func_us_801A8D00.s 
 | 1.00 | false    | PlayerIsWithinHitbox                | asm/us/boss/rbo6/nonmatchings/e_lock_camera/PlayerIsWithinHitbox.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | RunCutsceneEvents                   | asm/us/boss/bo5/matchings/e_cutscene_dialogue/RunCutsceneEvents.s 
-| 0.96 | true     | func_us_8018B4A0                    | asm/us/boss/mar/matchings/cutscene/func_us_8018B4A0.s 
-| 1.00 | true     | func_80194C50                       | asm/us/st/dre/matchings/e_cutscene_dialogue/func_80194C50.s 
-| 0.96 | true     | func_us_801B9AC8                    | asm/us/st/lib/matchings/cutscene/func_us_801B9AC8.s 
-| 0.96 | true     | func_801BEA20                       | asm/us/st/no3/matchings/cutscene/func_801BEA20.s 
-| 0.96 | true     | func_801B79A8                       | asm/us/st/nz0/matchings/cutscene/func_801B79A8.s 
-| 0.96 | true     | func_801A8E60                       | asm/us/st/st0/matchings/cutscene/func_801A8E60.s 
-| 0.96 | false    | RunCutsceneEvents                   | asm/us/boss/bo2/nonmatchings/unk_25910/RunCutsceneEvents.s 
--------------------------------------------------------------------------------
+| 1.00 | true     | CutsceneSkip                        | asm/us/boss/bo2/matchings/e_cutscene_dialogue/CutsceneSkip.s 
 | 1.00 | true     | CutsceneSkip                        | asm/us/boss/bo6/matchings/cutscene/CutsceneSkip.s 
 | 1.00 | true     | func_80194F14                       | asm/us/st/dre/matchings/e_cutscene_dialogue/func_80194F14.s 
 | 1.00 | true     | func_us_801B9D74                    | asm/us/st/lib/matchings/cutscene/func_us_801B9D74.s 
 | 1.00 | true     | func_801BECCC                       | asm/us/st/no3/matchings/cutscene/func_801BECCC.s 
 | 1.00 | true     | func_us_8019DE80                    | asm/us/st/rcen/matchings/cutscene/func_us_8019DE80.s 
 | 1.00 | true     | func_us_801ABF20                    | asm/us/st/top/matchings/cutscene/func_us_801ABF20.s 
-| 1.00 | false    | CutsceneSkip                        | asm/us/boss/bo2/nonmatchings/unk_25910/CutsceneSkip.s 
 | 1.00 | false    | CutsceneSkip                        | asm/us/boss/rbo6/nonmatchings/unk_2208C/CutsceneSkip.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801A4F48                    | asm/us/boss/rbo8/matchings/giantbro_helpers/func_us_801A4F48.s 
@@ -6076,14 +6083,6 @@
 | 1.00 | false    | EntityWaterDrop                     | asm/us/boss/bo3/nonmatchings/unk_1CEEC/EntityWaterDrop.s 
 | 0.99 | false    | EntityWaterDrop                     | asm/us/st/rno4/nonmatchings/unk_52ED0/EntityWaterDrop.s 
 | 0.99 | false    | EntityWaterDrop                     | asm/us/st/rnz1/nonmatchings/unk_37BF8/EntityWaterDrop.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | RunCutsceneEvents                   | asm/us/boss/bo6/matchings/cutscene/RunCutsceneEvents.s 
-| 1.00 | true     | func_8018E3E8                       | asm/us/st/cen/matchings/cutscene/func_8018E3E8.s 
-| 1.00 | true     | func_us_801C4424                    | asm/us/st/dai/matchings/e_cutscene_dialogue/func_us_801C4424.s 
-| 1.00 | true     | func_us_8019DBA4                    | asm/us/st/rcen/matchings/cutscene/func_us_8019DBA4.s 
-| 1.00 | true     | func_us_801ABC44                    | asm/us/st/top/matchings/cutscene/func_us_801ABC44.s 
-| 1.00 | false    | RunCutsceneEvents                   | asm/us/boss/rbo2/nonmatchings/unk_20220/RunCutsceneEvents.s 
-| 1.00 | false    | RunCutsceneEvents                   | asm/us/boss/rbo6/nonmatchings/unk_2208C/RunCutsceneEvents.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801D0A00                       | asm/us/boss/rbo8/matchings/e_blade/func_801D0A00.s 
 | 0.95 | true     | func_us_801C98EC                    | asm/us/st/no2/matchings/4966C/func_us_801C98EC.s 
