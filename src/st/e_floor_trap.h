@@ -1,17 +1,19 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 extern EInit g_EInitFloorTrap;
 
 typedef enum {
     FLOORTRAP_INIT,
-    FLOORTRAP_1,
-    FLOORTRAP_2,
-    FLOORTRAP_3,
+    FLOORTRAP_CALIBRATE,
+    FLOORTRAP_ARMED,
+    FLOORTRAP_ATTACK,
     IM_A_WHEEL = 8,
     FLOORTRAP_DEBUG = 0xFF
 } FloorTrapSteps;
 
 // tools/play_animation.py indicates that this animation displays the wheel
 // spinning.
-static u8 anim[] = {1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1, 8, 0, 0};
+static AnimateEntityFrame anim[] = {
+    {1, 3}, {1, 4}, {1, 5}, {1, 6}, {1, 7}, {1, 8}, POSE_LOOP(0)};
 
 // Needs more study - might not be part of this file. Probably stripped on PSP
 #ifdef STAGE_IS_RNZ0
@@ -61,7 +63,9 @@ void EntityFloorTrap(Entity* self) {
             }
         }
         break;
-    case FLOORTRAP_1:
+    // Run some routines to calculate relative position compared to the other
+    // floor trap that we are partnered with. We only exist in pairs.
+    case FLOORTRAP_CALIBRATE:
         self->ext.floorTrap.unk84 = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
         // Find our partner floor trap
         if (self->params) {
@@ -83,7 +87,7 @@ void EntityFloorTrap(Entity* self) {
             self->step++;
         }
         break;
-    case FLOORTRAP_2:
+    case FLOORTRAP_ARMED:
         other = &PLAYER;
         player_dY = self->posY.i.hi - other->posY.i.hi;
         if ((g_Player.vram_flag & TOUCHING_GROUND) && (abs(player_dY) < 0x21)) {
@@ -92,13 +96,19 @@ void EntityFloorTrap(Entity* self) {
                 dX = -dX;
             }
             if ((dX < self->ext.floorTrap.unk88) && (dX > 0)) {
-                SetStep(FLOORTRAP_3);
+                SetStep(FLOORTRAP_ATTACK);
             }
         }
         break;
-    case FLOORTRAP_3:
+    case FLOORTRAP_ATTACK:
         switch (self->step_s) {
-        case 0:
+            typedef enum {
+                ATTACK_LAUNCH,
+                ATTACK_CLOSING,
+                ATTACK_COLLIDE,
+                ATTACK_RETRACT
+            } AttackSubsteps;
+        case ATTACK_LAUNCH:
             if (self->params) {
                 self->velocityX = FIX(4);
             } else {
@@ -106,7 +116,7 @@ void EntityFloorTrap(Entity* self) {
             }
             self->step_s++;
             /* fallthrough */
-        case 1:
+        case ATTACK_CLOSING:
             MoveEntity();
             dX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
             dX = self->ext.floorTrap.unk86 - dX;
@@ -121,7 +131,7 @@ void EntityFloorTrap(Entity* self) {
                 self->step_s++;
             }
             break;
-        case 2:
+        case ATTACK_COLLIDE:
             self->velocityX = 0;
             if (!--self->ext.floorTrap.timer) {
                 if (self->params) {
@@ -132,7 +142,7 @@ void EntityFloorTrap(Entity* self) {
                 self->step_s++;
             }
             break;
-        case 3:
+        case ATTACK_RETRACT:
             MoveEntity();
             dX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
             dX = self->ext.floorTrap.unk84 - dX;
@@ -143,7 +153,7 @@ void EntityFloorTrap(Entity* self) {
                 self->posX.i.hi =
                     self->ext.floorTrap.unk84 - g_Tilemap.scrollX.i.hi;
                 self->velocityX = 0;
-                SetStep(FLOORTRAP_2);
+                SetStep(FLOORTRAP_ARMED);
             }
             break;
         }
@@ -176,6 +186,7 @@ void EntityFloorTrap(Entity* self) {
     if (self->ext.floorTrap.paletteTimer) {
         self->ext.floorTrap.paletteTimer--;
     }
+    // When we hit the player, the spikes on the end turn bloody.
     self->palette =
         g_EInitFloorTrap[3] + (self->ext.floorTrap.paletteTimer >> 3);
     self->ext.floorTrap.unk90 = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
