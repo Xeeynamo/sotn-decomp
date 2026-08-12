@@ -35,8 +35,10 @@ static AnimateEntityFrame* anim_All[] = {
     anim_ThornweedIdle, anim_CorpseweedIdle,     // Idle
 };
 
+#define XYWH(x, y, w, h) x, y, w, h
+
 static s8 HitboxData[] = {
-    0, 0, 0, 0, 1, 0, 3, 3, 1, -2, 3, 4, 0, -6, 7, 9, 1, -5, 9, 7, -63, -63, 0, 0, 2, 9, 5, 8, 0, 0, 4, 4, 3, -11, 4, 12, 4, -3, 5, 5, 15, -11, 23, 21
+    XYWH(0, 0, 0, 0), XYWH(1, 0, 3, 3), XYWH(1, -2, 3, 4), XYWH(0, -6, 7, 9), XYWH(1, -5, 9, 7), XYWH(-63, -63, 0, 0), XYWH(2, 9, 5, 8), XYWH(0, 0, 4, 4), XYWH(3, -11, 4, 12), XYWH(4, -3, 5, 5), XYWH(15, -11, 23, 21)
 };
 
 static u8 HitboxIndices[] = {
