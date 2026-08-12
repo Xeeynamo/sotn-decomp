@@ -11,37 +11,37 @@ static s16 PhysicsSensors[] = {
 };
 
 // D_8018174C
-static u8 AnimFrames_ThornweedWakeup[] = {
-    0x02, 0x01, 0x06, 0x02, 0x06, 0x03, 0x06, 0x04, 0xFF, 0x00, 0x00, 0x00};
+static AnimateEntityFrame anim_ThornweedWakeup[] = {
+    {2, 1}, {6, 2}, {6, 3}, {6, 4}, POSE_END};
 
 // D_80181758
-static u8 AnimFrames_ThornweedIdle[] = {
-    0x06, 0x05, 0x06, 0x06, 0x06, 0x07, 0x06, 0x08, 0x00, 0x00, 0x00, 0x00};
+static AnimateEntityFrame anim_ThornweedIdle[] = {
+    {6, 5}, {6, 6}, {6, 7}, {6, 8}, POSE_LOOP(0)};
 
 // D_80181764
-static u8 AnimFrames_CorpseweedWakeup[] = {
-    0x02, 0x09, 0x06, 0x0A, 0x06, 0x0B, 0x06, 0x0C, 0xFF, 0x00, 0x00, 0x00};
+static AnimateEntityFrame anim_CorpseweedWakeup[] = {
+    {2, 9}, {6, 10}, {6, 11}, {6, 12}, POSE_END};
 
 // D_80181770
-static u8 AnimFrames_CorpseweedIdle[] = {
-    0x06, 0x0D, 0x06, 0x0E, 0x06, 0x0F, 0x06, 0x10, 0x00, 0x00, 0x00, 0x00};
+static AnimateEntityFrame anim_CorpseweedIdle[] = {
+    {6, 13}, {6, 14}, {6, 15}, {6, 16}, POSE_LOOP(0)};
 
 // D_8018177C
-static u8 AnimFrames_CorpseweedAttackCharge[] = {
-    0x02, 0x13, 0x02, 0x14, 0x00, 0x00, 0x00, 0x00};
+static AnimateEntityFrame anim_CorpseweedAttackCharge[] = {
+    {2, 19}, {2, 20}, POSE_LOOP(0)};
 
 // D_80181784
-static u8 AnimFrames_CorpseweedProjectileAirborne[] = {
-    0x02, 0x16, 0x02, 0x17, 0x00, 0x00, 0x00, 0x00};
+static AnimateEntityFrame anim_CorpseweedProjectileAirborne[] = {
+    {2, 22}, {2, 23}, POSE_LOOP(0)};
 
 // D_8018178C
-static u8 AnimFrames_CorpseweedProjectileDeath[] = {
-    0x04, 0x18, 0x03, 0x19, 0x02, 0x1A, 0x02, 0x1B, 0xFF, 0x00, 0x00, 0x00};
+static AnimateEntityFrame anim_CorpseweedProjectileDeath[] = {
+    {4, 24}, {3, 25}, {2, 26}, {2, 27}, POSE_END};
 
 // D_80181798
-static u8* AnimFrames_All[] = {
-    AnimFrames_ThornweedWakeup, AnimFrames_CorpseweedWakeup, // WakeUp
-    AnimFrames_ThornweedIdle, AnimFrames_CorpseweedIdle,     // Idle
+static AnimateEntityFrame* anim_All[] = {
+    anim_ThornweedWakeup, anim_CorpseweedWakeup, // WakeUp
+    anim_ThornweedIdle, anim_CorpseweedIdle,     // Idle
 };
 
 // clang-format off
@@ -81,7 +81,7 @@ void EntityThornweed(Entity* self) {
     };
 
     Entity* entity;
-    u8* animFrames;
+    AnimateEntityFrame* animFrames;
     s8* hitboxData;
     u32 hitboxIndex;
 
@@ -125,7 +125,7 @@ void EntityThornweed(Entity* self) {
         break;
 
     case WAKE_UP:
-        animFrames = AnimFrames_All[self->params];
+        animFrames = anim_All[self->params];
         if (AnimateEntity(animFrames, self) == 0) {
             self->ext.thornweed.timer = CorpseweedSpawnDelay;
             SetStep(IDLE);
@@ -152,7 +152,7 @@ void EntityThornweed(Entity* self) {
         }
 
         // Animate
-        animFrames = AnimFrames_All[self->params + EntityFormCount];
+        animFrames = anim_All[self->params + EntityFormCount];
         AnimateEntity(animFrames, self);
         break;
 
@@ -521,7 +521,7 @@ void EntityCorpseweed(Entity* self) {
             self->step_s += 1;
             // fallthrough
         case ATTACK_DELAY:
-            AnimateEntity(AnimFrames_CorpseweedAttackCharge, self);
+            AnimateEntity(anim_CorpseweedAttackCharge, self);
             if (!--self->ext.corpseweed.timer) {
                 SetSubStep(ATTACK_PROJECTILE);
             }
@@ -827,7 +827,7 @@ void EntityCorpseweedProjectile(Entity* self) {
         break;
 
     case AIRBORNE:
-        AnimateEntity(AnimFrames_CorpseweedProjectileAirborne, self);
+        AnimateEntity(anim_CorpseweedProjectileAirborne, self);
         MoveEntity();
 
         self->velocityY += Gravity;
@@ -844,7 +844,7 @@ void EntityCorpseweedProjectile(Entity* self) {
         break;
 
     case DEATH:
-        if (AnimateEntity(AnimFrames_CorpseweedProjectileDeath, self) == 0) {
+        if (AnimateEntity(anim_CorpseweedProjectileDeath, self) == 0) {
             DestroyEntity(self);
             return;
         }
