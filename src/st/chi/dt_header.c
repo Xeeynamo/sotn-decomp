@@ -14,7 +14,7 @@ extern RoomDef rooms_layers[];
 extern u_long** gfxBanks[];
 
 // D_80180000
-Overlay OVL_EXPORT(Overlay) = {
+Overlay g_Overlay = {
     .Update = Update,
     .HitDetection = HitDetection,
     .UpdateRoomPosition = UpdateRoomPosition,

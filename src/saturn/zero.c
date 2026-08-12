@@ -552,12 +552,12 @@ void TransferBgLayer(int param_1) {
     }
     if (puVar5->tileFlags & 1) {
         cnt =
-            DecompressLzss(puVar6->unkc, (s32)SYS_buf_060485E0, puVar6->unk18);
+            DecompressLZSS(puVar6->unkc, (s32)SYS_buf_060485E0, puVar6->unk18);
         DmaScroll((s32*)SYS_buf_060485E0, puVar6->dst0, cnt);
     }
     if (puVar5->tileFlags & 2) {
         cnt =
-            DecompressLzss(puVar6->unk10, (s32)SYS_buf_060485E0, puVar6->unk1c);
+            DecompressLZSS(puVar6->unk10, (s32)SYS_buf_060485E0, puVar6->unk1c);
         DmaScroll((s32*)SYS_buf_060485E0, puVar6->dst4, cnt);
     }
     if (puVar5->tileFlags & 4) {
@@ -577,11 +577,11 @@ void TransferBgLayer(int param_1) {
         DmaScroll(puVar5->src, puVar5->dest, puVar5->cnt);
     }
     if (puVar5->tileFlags & 0x40) {
-        cnt = DecompressLzss(puVar6->unkc, DMA_SRC_ADDR, puVar6->unk18);
+        cnt = DecompressLZSS(puVar6->unkc, DMA_SRC_ADDR, puVar6->unk18);
         DmaScroll(DMA_SRC_ADDR, puVar6->dst0, cnt);
     }
     if (puVar5->tileFlags & 0x80) {
-        cnt = DecompressLzss(puVar6->unk10, DMA_SRC_ADDR, puVar6->unk1c);
+        cnt = DecompressLZSS(puVar6->unk10, DMA_SRC_ADDR, puVar6->unk1c);
         DmaScroll(DMA_SRC_ADDR, puVar6->dst4, cnt);
     }
     puVar5->tileFlags = 0;
@@ -1058,7 +1058,7 @@ const short ratan_tbl[] = {
     0x203, 0x203, 0x203, 0x204, 0x204, 0x204,
 };
 
-s32 func_0600EE64(s32 param_1) { return MTH_Sqrt(param_1 << 4) >> 4; }
+s32 func_0600EE64(s32 arg0) { return MTH_Sqrt(arg0 << 4) >> 4; }
 
 long ratan2(long dx, long dy) {
     long ret;
@@ -1229,22 +1229,92 @@ const s16 rsin_tbl[1024] = {
     0x0FFF, 0x0FFF, 0x0FFF, 0x0FFF, 0x0FFF, 0x0FFF, 0x0FFF,
 };
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600F7BC, func_0600F7BC);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600F81C, func_0600F81C);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600F7BC, rsin);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600F81C, rcos);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600F87C, rsincos);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600F914, func_0600F914);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600F914, SquareRoot0);
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600F96C, DecompressLzss);
+#define N 1024 // Size of ring buffer - must be power of 2.
+#define N_MIN_1 1023
+#define F 34 // Upper limit for match_length.
+#define R N - F
+// Encode string into position and length, if match_length is greater than this.
+#define THRESHOLD 2
+
+extern u8 text_buf[N_MIN_1 + F];
+
+s32 DecompressLZSS(u8* src, u8* dst, u32 srclen) {
+    s32 r;
+    s32 dstCount;
+    s32 srcCount;
+    u32 i, j, k, c;
+    u32 flags;
+
+    if (srclen == 0) {
+        return 0;
+    }
+    for (i = 0; i < R; i++) {
+        text_buf[i] = 0;
+    }
+
+    r = R;
+    dstCount = 0;
+    srcCount = 0;
+    flags = 0;
+
+    while (true) {
+        if (((flags >>= 1) & 0x100) == 0) {
+            c = *src++;
+            srcCount++;
+            flags = c | 0xFF00;
+        }
+        if (flags & 1) {
+            c = *src++;
+            *dst++ = c;
+
+            dstCount++;
+            srcCount++;
+
+            if (srcCount == srclen) {
+                break;
+            }
+            text_buf[r++] = c;
+            r &= N_MIN_1;
+        } else {
+            i = *src++;
+            j = *src++;
+            srcCount += 2;
+
+            i |= ((j & 0xE0) << 3);
+            j = (j & 0x1F) + THRESHOLD;
+
+            for (k = 0; k <= j; k++) {
+                c = text_buf[(i + k) & N_MIN_1];
+                *dst++ = c;
+                dstCount++;
+                text_buf[r++] = c;
+                r &= N_MIN_1;
+            }
+            if (srcCount == srclen || srcCount == (srclen + 1)) {
+                break;
+            }
+        }
+    }
+
+    return dstCount;
+}
 
 // _PSX_SHAKE_MAIN
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FA4C, func_0600FA4C);
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FACC, func_0600FACC);
+
 extern s32 DAT_06039128[];
-void func_0600FB0C(s32 param_1) {
-    DAT_06057A10[0] = param_1;
+
+void func_0600FB0C(s32 arg0) {
+    DAT_06057A10[0] = arg0;
     DAT_06057A10[1] = 0;
-    *(s32*)&DAT_06057A10[2] = DAT_06039128[param_1];
+    *(s32*)&DAT_06057A10[2] = DAT_06039128[arg0];
 }
 
 void func_0600FB34(void) {
@@ -1254,9 +1324,11 @@ void func_0600FB34(void) {
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FB4C, func_0600FB4C);
 
-// _TEST_TEST
-s32 func_0602A778(s32 param_1, s32 param_2, s32 param_3);
+s32 func_0602A778(s32, s32, s32);
+
+// original name: TEST_TEST
 void func_0600FB9C(void) { func_0602A778(0x100, 32, 0); }
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FBBC, func_0600FBBC);
 
 // _all_map_check
@@ -1268,7 +1340,6 @@ void func_0600FEFC() {}
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FF08, SetCanRevealMap);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FF64, func_0600FF64);
-
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FFB8, func_0600FFB8);
 
 // func_06010008

@@ -3,6 +3,7 @@ use std::fmt;
 pub mod adpcm;
 pub mod audio;
 pub mod bitmap;
+pub mod crt;
 pub mod familiar;
 pub mod font;
 pub mod image;

@@ -644,6 +644,15 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
     case SimFileType_FamiliarChr:
         HandleServantChr();
         return 0;
+    case SimFileType_Monster:
+        static const int MonsterChrLen = 0x5800;
+        D_800A04EC = 0;
+        if (FileReadToBuf("disks/us/BIN/MONSTER.BIN", SIM_PTR,
+                          fileId * MonsterChrLen, MonsterChrLen) < 0) {
+            return -1;
+        }
+        LoadFileSimToMem(SIM_MONSTER);
+        return 0;
     }
     if (!sim.path) {
         WARNF("unimplemented %d, %d", fileId, type);

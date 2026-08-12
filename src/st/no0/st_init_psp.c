@@ -5,7 +5,7 @@
 extern LayoutEntity* D_8D2E3B8;
 extern LayoutEntity* D_8D2E48C;
 
-extern Overlay OVL_EXPORT(Overlay);
+extern Overlay g_Overlay;
 
 s32 E_ID(ID_11);
 s32 E_ID(ID_12);
@@ -141,11 +141,11 @@ void InitEntityIds(void) {
     E_ID(ID_51) = E_ID_51;
 }
 
-void OVL_EXPORT(Load)(void) {
+void OvlLoad(void) {
     InitEntityIds();
     PfnEntityUpdates = EntityUpdates;
     g_pStObjLayoutHorizontal = &D_8D2E3B8;
     g_pStObjLayoutVertical = &D_8D2E48C;
     func_892A018();
-    memcpy(&g_api.o, &OVL_EXPORT(Overlay), sizeof(Overlay));
+    memcpy(&g_api.o, &g_Overlay, sizeof(Overlay));
 }

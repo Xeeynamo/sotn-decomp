@@ -3,8 +3,6 @@
 #include <game.h>
 #include <cutscene.h>
 
-#define OVL_EXPORT(x) SEL_##x
-
 u32 g_SkipCutscene;
 u32 g_Dialogue;
 u16 D_801BC358;

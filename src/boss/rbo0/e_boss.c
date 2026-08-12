@@ -25,7 +25,7 @@ s32 D_us_801806B0 = 0;
 s32 D_us_801806B4 = 0;
 
 // main boss controller
-void OVL_EXPORT(EntityBoss)(Entity* self) {
+void EntityBoss(Entity* self) {
     Entity* entity;
     s32 offsetX;
 

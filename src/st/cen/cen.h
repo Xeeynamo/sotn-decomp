@@ -6,8 +6,6 @@
 
 #include <stage.h>
 
-#define OVL_EXPORT(x) CEN_##x
-
 enum Palettes {
     PAL_NONE = 0,
     PAL_BREAKABLE_DEBRIS = 0x159,

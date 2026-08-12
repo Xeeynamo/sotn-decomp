@@ -24,7 +24,7 @@ extern u_long** gfxBanks[];
 u8* D_pspeu_09293958[];
 #endif
 
-Overlay OVL_EXPORT(Overlay) = {
+Overlay g_Overlay = {
     .Update = Update,
     .HitDetection = HitDetection,
     .UpdateRoomPosition = UpdateRoomPosition,
