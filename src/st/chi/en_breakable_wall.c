@@ -15,7 +15,7 @@
 // func_8019C31C
 // https://decomp.me/scratch/NKGUh
 void EntityBreakableWallDebris(Entity* self) {
-    typedef enum Step {
+    enum Step {
         INIT = 0,
         CHECK_FLAG = 1,
         MOVEMENT = 2,
@@ -130,7 +130,7 @@ void EntityBreakableWall(Entity* self) {
 
     const int startTileIdx = 0x160;
 
-    typedef enum Step {
+    enum Step {
         INIT = 0,
         IDLE = 1,
         BREAK_1 = 2, // Dynamically calculated, never set directly

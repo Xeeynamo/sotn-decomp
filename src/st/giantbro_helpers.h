@@ -95,14 +95,14 @@ void func_801CDA14(Entity* ent1, Entity* ent2) {
                   ent2->ext.GH_Props.rotate, (Point32*)ent2);
 }
 // unused
-void func_801CDA6C(Entity* self, s32 arg1) {
+void func_801CDA6C(Entity* self, Point32* arg1) {
     Entity* temp_s0;
 
     temp_s0 = self->ext.GH_Props.parent;
     func_801CD78C((Point32*)self, -self->ext.GH_Props.length,
                   self->ext.GH_Props.rotate, (Point32*)temp_s0);
     func_801CD78C((Point32*)temp_s0, -temp_s0->ext.GH_Props.length,
-                  temp_s0->ext.GH_Props.rotate, (Point32*)arg1);
+                  temp_s0->ext.GH_Props.rotate, arg1);
 }
 
 void func_801CDAC8(Entity* ent1, Entity* ent2) {

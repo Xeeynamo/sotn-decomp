@@ -4733,7 +4733,7 @@ void* func_us_801B0C40(u8* pix, const char* str, s32 x, s32 y, s32 size) {
         while (*str >= 8) {
             s_8 = 0;
 #ifdef VERSION_PSP
-            ch = g_api.func_psp_0913F960((char*)str, &sp3f);
+            ch = g_api.func_psp_0913F960(str, &sp3f);
 #else
             ch = *str;
 #endif
