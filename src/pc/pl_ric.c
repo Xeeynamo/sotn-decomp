@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <game.h>
-#include "../../ric/ric.h"
+#include "../ric/ric.h"
 
 static void (*real_player_init)(u16 params);
 static void InjectPlayerInit(u16 params) {

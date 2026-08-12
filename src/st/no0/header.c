@@ -8,7 +8,7 @@ extern u_long* cluts[];
 extern RoomDef rooms_layers[];
 extern u_long** gfxBanks[];
 
-AbbreviatedOverlay OVL_EXPORT(Overlay) = {
+AbbreviatedOverlay g_Overlay = {
     .Update = Update,
     .HitDetection = HitDetection,
     .UpdateRoomPosition = UpdateRoomPosition,

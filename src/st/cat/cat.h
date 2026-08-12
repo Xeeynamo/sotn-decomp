@@ -7,11 +7,9 @@
 
 #include "stage.h"
 
-#define OVL_EXPORT(x) CAT_##x
-
 #include "../pfn_entity_update.h"
 
-enum OVL_EXPORT(Palette) {
+enum Palette {
     PAL_NONE = 0,
     PAL_BREAKABLE_WALL_DEBRIS_MAIN = 0x05C,
     PAL_LIGHT_SWITCH_HIDDEN = 0x094,

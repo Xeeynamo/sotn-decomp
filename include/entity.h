@@ -2620,19 +2620,18 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
-    /* 0x80 */ s16 unk80;
+    /* 0x80 */ s16 timer;
     /* 0x82 */ s16 : 16;
-    /* 0x84 */ u8 unk84;
-    /* 0x85 */ u8 unk85;
-    /* 0x86 */ u8 unk86;
+    /* 0x84 */ u8 facingLeft;
+    /* 0x85 */ u8 didShield;
+    /* 0x86 */ u8 fadeOutZ;
     /* 0x87 */ u8 : 8;
-    /* 0x88 */ s16 unk88;
-    /* 0x8A */ s16 unk8A;
-    /* 0x8C */ u8 unk8C;
-    /* 0x8D */ u8 unk8D;
-    /* 0x8E */ u8 unk8E;
-    /* 0x8F */ u8 unk8F;
-    /* 0x90 */ struct Primitive* unk90;
+    /* 0x88 */ s16 fadeOutY;
+    /* 0x8A */ s16 fadeOutY2;
+    /* 0x8C */ u8 timer2;
+    /* 0x8D */ u8 timer3;
+    /* 0x8E */ u16 : 16;
+    /* 0x90 */ struct Primitive* deathPrim;
 } ET_ArmorLord;
 
 typedef struct {
@@ -4141,6 +4140,30 @@ typedef struct {
     /* 0x84 */ s16 doubleSpeed;
 } ET_Dodo;
 
+typedef struct {
+    /* 0x7C */ u32 : 32;
+    /* 0x80 */ Primitive* prim0;
+    /* 0x84 */ Primitive* prim1;
+    /* 0x88 */ Primitive* prim2;
+    /* 0x8C */ s16 brightness;
+    /* 0x8E */ s16 timer0;
+    /* 0x90 */ s16 timer1;
+} ET_801B0930;
+
+typedef struct {
+    /* 0x7C */ u32 : 32;
+    /* 0x80 */ s32 velocityX;
+    /* 0x84 */ s32 velocityY;
+    /* 0x88 */ u32 : 32;
+    /* 0x8C */ u32 : 32;
+    /* 0x90 */ u32 : 32;
+    /* 0x94 */ u32 : 32;
+    /* 0x98 */ u32 : 32;
+    /* 0x9C */ u32 : 32;
+    /* 0xA0 */ u32 : 32;
+    /* 0xA4 */ struct Entity* entity;
+} ET_OlroxDrool;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -4493,6 +4516,8 @@ typedef union { // offset=0x7C
     ET_Orobourous orob;
     ET_Dodo dodo;
     ET_B0_Unk b0Unk;
+    ET_801B0930 et_801B0930;
+    ET_OlroxDrool olroxDrool;
 } Ext;
 
 SYNC_FIELD(ET_Player, ET_Weapon, anim);

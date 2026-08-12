@@ -139,13 +139,8 @@ set(SOURCE_FILES_PC
     src/pc/pl_arc.c
     src/pc/pl_ric.c
     src/pc/servant_pc.c
-    src/pc/stages/stage_loader.c
     src/pc/stages/overlay.c
     src/pc/weapon_pc.c
-)
-
-set(SOURCE_FILES_3RD
-    src/pc/3rd/cJSON/cJSON.c
 )
 
 set(SOURCE_FILES_DRA
@@ -1004,13 +999,11 @@ add_subdirectory(tools/psyz/psyz)
 
 add_executable(${PROJECT_NAME}
     ${SOURCE_FILES_PC}
-    ${SOURCE_FILES_3RD}
     ${SOURCE_FILES_CORE})
 
 target_include_directories(${PROJECT_NAME} PUBLIC
     include
     src/dra
-    src/pc/3rd
 )
 
 target_compile_definitions(${PROJECT_NAME} PUBLIC
@@ -1062,7 +1055,6 @@ function(add_overlay name)
     target_include_directories(${name} PRIVATE
         include
         src/dra
-        src/pc/3rd
         src/pc
     )
 

@@ -38,11 +38,3 @@ INCLUDE_ASM("boss/rbo6/nonmatchings/unk_1D690", func_us_801A1150);
 INCLUDE_ASM("boss/rbo6/nonmatchings/unk_1D690", func_us_801A11DC);
 
 INCLUDE_ASM("boss/rbo6/nonmatchings/unk_1D690", func_us_801A1B38);
-
-INCLUDE_ASM("boss/rbo6/nonmatchings/unk_1D690", func_us_801A1BE0);
-
-INCLUDE_ASM("boss/rbo6/nonmatchings/unk_1D690", SetCutsceneScript);
-
-INCLUDE_ASM("boss/rbo6/nonmatchings/unk_1D690", CutsceneUnk3);
-
-INCLUDE_ASM("boss/rbo6/nonmatchings/unk_1D690", CutsceneUnk4);

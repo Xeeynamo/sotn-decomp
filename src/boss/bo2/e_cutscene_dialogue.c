@@ -1,12 +1,30 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "bo2.h"
+#include <cutscene.h>
 
-INCLUDE_ASM("boss/bo2/nonmatchings/e_cutscene_dialogue", CutsceneUnk1);
+extern Dialogue g_Dialogue;
+extern const char* actor_names[];
 
-INCLUDE_ASM("boss/bo2/nonmatchings/e_cutscene_dialogue", SetCutsceneScript);
+#include "../../st/cutscene_unk1.h"
 
-INCLUDE_ASM("boss/bo2/nonmatchings/e_cutscene_dialogue", CutsceneUnk3);
+#include "../../st/set_cutscene_script.h"
 
-INCLUDE_ASM("boss/bo2/nonmatchings/e_cutscene_dialogue", CutsceneUnk4);
+#include "../../st/cutscene_unk3.h"
 
-INCLUDE_ASM("boss/bo2/nonmatchings/e_cutscene_dialogue", DrawCutsceneActorName);
+#include "../../st/cutscene_unk4.h"
+
+#include "../../st/cutscene_actor_name.h"
+
+#include "../../st/set_cutscene_events.h"
+
+#include "../../st/cutscene_events.h"
+
+#include "../../st/cutscene_skip.h"
+
+#include "../../st/cutscene_scale_avatar.h"
+
+INCLUDE_RODATA("boss/bo2/nonmatchings/e_cutscene_dialogue", D_us_801A1F6C);
+
+INCLUDE_RODATA("boss/bo2/nonmatchings/e_cutscene_dialogue", D_us_801A1F78);
+
+INCLUDE_ASM("boss/bo2/nonmatchings/e_cutscene_dialogue", EntityCutsceneDialogue);

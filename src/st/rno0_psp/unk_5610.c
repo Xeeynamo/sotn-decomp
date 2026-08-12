@@ -54,25 +54,3 @@ INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_5610", func_us_801D2038);
 INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_5610", func_us_801D21C8);
 
 INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_5610", func_us_801D2264);
-
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_5610", func_us_801D1184);
-
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_5610", func_us_801D1388);
-
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_5610", EntityGuardianFireWave);
-
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_5610", RNO0_Unused801C2C50);
-
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_5610", func_us_801D1A9C);
-
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_5610", func_us_801D1DAC);
-
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_5610", EntityGuardian);
-
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_5610", func_us_801D348C_from_are);
-
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_5610", func_us_801D3700_from_are);
-
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_5610", func_psp_0923AD68);
-
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_5610", func_psp_0923B2F0);

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-enum OVL_EXPORT(BreakableTypes) {
+enum BreakableTypes {
     WALL_LAMP_LEFT,
     WALL_LAMP_RIGHT,
     HANGING_LAMP,
