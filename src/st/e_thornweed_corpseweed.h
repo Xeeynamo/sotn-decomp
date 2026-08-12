@@ -286,7 +286,7 @@ void EntityCorpseweed(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIdx;
         prim = &g_PrimBuf[primIdx];
-        self->ext.prim = prim;
+        self->ext.corpseweed.prim = prim;
 
         // Leaves primitive
         prim->tpage = CORPSEWEED_TPAGE;
@@ -331,7 +331,7 @@ void EntityCorpseweed(Entity* self) {
         prim = prim->next;
         // Fallthrough
     case GROW_LEAVES:
-        prim = self->ext.prim;
+        prim = self->ext.corpseweed.prim;
         switch (self->step_s) {
         case GROW_LEAVES_H:
             // Expand leaves sprite horizontally
@@ -359,7 +359,7 @@ void EntityCorpseweed(Entity* self) {
         break;
 
     case GROW_STEM:
-        prim = self->ext.prim;
+        prim = self->ext.corpseweed.prim;
         prim = prim->next;
         switch (self->step_s) {
         case GROW_STEM_H1:
@@ -582,7 +582,7 @@ void EntityCorpseweed(Entity* self) {
 
         case DEATH_SHRINK_AND_FADE:
             self->ext.corpseweed.timer++;
-            prim = self->ext.prim;
+            prim = self->ext.corpseweed.prim;
 
             // Leaves: Half speed
             if (self->ext.corpseweed.timer & 1) {
@@ -654,7 +654,7 @@ void EntityCorpseweed(Entity* self) {
 
     // Update leaves for bobbing back and forth
     if (self->ext.corpseweed.leavesDoneGrowing) {
-        prim = self->ext.prim;
+        prim = self->ext.corpseweed.prim;
 
         // X
         t = self->ext.corpseweed.bobbingLeavesXT += BobbingSpeedX_Leaves;
@@ -675,7 +675,7 @@ void EntityCorpseweed(Entity* self) {
 
     // Update stalk for bobbing back and forth
     if (self->ext.corpseweed.stalkDoneGrowing) {
-        prim = self->ext.prim;
+        prim = self->ext.corpseweed.prim;
         prim = prim->next;
 
         // X
@@ -787,7 +787,7 @@ void EntityCorpseweedProjectile(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIdx;
         prim = &g_PrimBuf[primIdx];
-        self->ext.prim = prim;
+        self->ext.corpseweed.prim = prim;
 
         prim->tpage = CORPSEWEED_TPAGE;
         prim->clut = CORPSEWEED_PROJ_PAL;
@@ -826,7 +826,7 @@ void EntityCorpseweedProjectile(Entity* self) {
             return;
         }
 
-        prim = self->ext.prim;
+        prim = self->ext.corpseweed.prim;
         switch (self->step_s) {
         case DEATH_INIT:
             prim->y0 = self->posY.i.hi - 4;

@@ -1953,7 +1953,7 @@ typedef struct {
 
 // CHI Room 4, Corpseweed
 typedef struct {
-    /* 0x7C */ char pad_7C[0x4];
+    /* 0x7C */ Primitive* prim;
     /* 0x80 */ s16 timer;
     /* 0x82 */ char pad_82[0x2];
     /* 0x84 */ u8 leavesDoneGrowing;
