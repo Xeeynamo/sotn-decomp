@@ -1,2 +1,2 @@
 EXTERN(_binary_assets_st_top_mwo_header_bin_start);
-EXTERN(TOP_Load);
+EXTERN(OvlLoad);

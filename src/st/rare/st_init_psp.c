@@ -6,7 +6,7 @@
 extern LayoutEntity* D_8D2E0FC;
 extern LayoutEntity* D_8D2E1D0;
 
-extern Overlay OVL_EXPORT(Overlay);
+extern Overlay g_Overlay;
 
 s32 E_ID(BACKGROUND_BLOCK);
 s32 E_ID(LOCK_CAMERA);
@@ -64,11 +64,11 @@ void InitEntityIds(void) {
     E_ID(STONE_SKULL) = E_STONE_SKULL;
 }
 
-void OVL_EXPORT(Load)(void) {
+void OvlLoad(void) {
     InitEntityIds();
     PfnEntityUpdates = EntityUpdates;
     g_pStObjLayoutHorizontal = &D_8D2E0FC;
     g_pStObjLayoutVertical = &D_8D2E1D0;
     func_892A018();
-    memcpy(&g_api.o, &OVL_EXPORT(Overlay), sizeof(Overlay));
+    memcpy(&g_api.o, &g_Overlay, sizeof(Overlay));
 }

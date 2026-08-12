@@ -1,5 +1,9 @@
 package iso9660
 
+import (
+	"time"
+)
+
 type Timestamp struct {
 	Year   byte
 	Month  byte
@@ -77,4 +81,20 @@ func serializeTimestamp(t Timestamp) []byte {
 	data[6] = t.Offset
 
 	return data
+}
+
+func (t Timestamp) ToTime() time.Time {
+	offsetSeconds := int(int8(t.Offset)) * 15 * 60
+	tz := time.FixedZone("ISO-9660-Local", offsetSeconds)
+	year := int(t.Year) + 1900
+
+	return time.Date(
+		year,
+		time.Month(t.Month),
+		int(t.Day),
+		int(t.Hour),
+		int(t.Minute),
+		int(t.Second),
+		0,
+		tz)
 }

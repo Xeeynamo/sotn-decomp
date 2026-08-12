@@ -23,19 +23,19 @@ static s32 MainMenuMaskPrimIndex;
 static s32 g_SelNextCrossPressEngStep;
 static s32 g_SelEng220NextStep;
 
-void OVL_EXPORT(Update)(void);
+void Update(void);
 void HandleTitleScreen(void);
 void func_801B9C80(void);
-void OVL_EXPORT(Init)(s32 objLayoutId);
+void InitSel(s32 objLayoutId);
 void func_801B60D4(void);
 void func_801B17C8(void);
 
 // DATA
-Overlay OVL_EXPORT(Overlay) = {
-    /* 0x00 */ OVL_EXPORT(Update),
+Overlay g_Overlay = {
+    /* 0x00 */ Update,
     /* 0x04 */ HandleTitleScreen,
     /* 0x08 */ func_801B9C80,
-    /* 0x0C */ OVL_EXPORT(Init),
+    /* 0x0C */ InitSel,
     /* 0x10 */ NULL,
     /* 0x14 */ g_SpriteBanks,
     /* 0x18 */ g_Cluts,
@@ -1150,7 +1150,7 @@ static void func_801AEE74(void) {
     }
 }
 
-void OVL_EXPORT(Update)(void) {
+void Update(void) {
     s32 i;
     s32 port;
     s32 slot;

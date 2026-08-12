@@ -7,7 +7,7 @@
 
 #include "chi.h"
 
-#define STAGE_FLAG OVL_EXPORT(STAGE_FLAG)
+#define STAGE_FLAG CHI_STAGE_FLAG
 
 #ifdef VERSION_PSP
 #define STAGE_NAME_LOAD_GFX
