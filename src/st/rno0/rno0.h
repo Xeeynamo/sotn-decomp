@@ -52,7 +52,7 @@ enum EntityID {
     E_GUARDIAN_FIRE_WAVE,        // EntityGuardianFireWave
     E_GUARDIAN_UNK2,             // EntityGuardianUnk2
     E_GUARDIAN_UNUSED,           // EntityGuardianUnused
-    E_FLOOR_TRAP,                // EntityFloorTrap
+    E_FLOORTRAP,                 // EntityFloorTrap
     E_THORNWEED,                 // EntityThornweed
     E_CORPSEWEED,                // EntityCorpseweed
     E_CORPSEWEED_PROJECTILE,     // EntityCorpseweedProjectile

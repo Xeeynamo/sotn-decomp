@@ -26,7 +26,6 @@ EntityRbo3Door = 0x801A159C;
 EntityBackgroundSkyLand = 0x801A1884;
 CutsceneUnk1 = 0x801A459C;
 SetCutsceneScript = 0x801A45F0;
-CutsceneUnk3 = 0x801A47B4;
 CutsceneUnk4 = 0x801A4810;
 DrawCutsceneActorName = 0x801A48C8;
 SetCutsceneEvents = 0x801A4A4C;
