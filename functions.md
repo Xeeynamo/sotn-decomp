@@ -777,8 +777,8 @@
 | are        | e_valhalla_knight.rodata           |       19 |          0 | Yes    |       |     |
 | bo2        | SetCutsceneEvents                  |       19 |          1 |        |       |     |
 | bo5        | SetCutsceneEvents                  |       19 |          1 |        |       |     |
-| bo6        | func_maria_8015CC28                |       19 |          1 |        |       |     |
 | bo6        | SetCutsceneEvents                  |       19 |          1 |        |       |     |
+| bo6        | func_maria_8015CC28                |       19 |          1 |        |       |     |
 | mar        | SetCutsceneEvents                  |       19 |          1 |        |       |     |
 | rbo2       | SetCutsceneEvents                  |       19 |          1 |        |       |     |
 | rbo6       | SetCutsceneEvents                  |       19 |          1 |        |       |     |
@@ -2196,6 +2196,7 @@
 | dra        | func_psp_09116240                  |       35 |          6 |        |       |     |
 | w1_012_psp | func_pspeu_092F6F38                |       35 |          6 |        |       |     |
 | dra        | func_psp_09140CF0                  |       35 |          7 |        |       |     |
+| rbo6       | unk_185B0.rodata                   |       36 |          0 | Yes    |       |     |
 | tt_004     | jtbl_092F1C08                      |       36 |          0 | Yes    |       |     |
 | are        | e_plate_lord.rodata                |       36 |          0 | Yes    |       |     |
 | no0        | e_diplocephalus.rodata             |       36 |          0 | Yes    |       |     |
@@ -3762,8 +3763,8 @@
 |            | func_092EE878                      |       56 |          8 |        |       |     |
 | no3        | func_pspeu_0923FFE0                |       56 |          8 |        |       |     |
 | bo4        | func_pspeu_0924CD20_from_rbo5      |       56 |          9 |        |       |     |
-| bo6        | func_pspeu_09254008                |       56 |          9 |        |       |     |
 | bo6        | func_pspeu_0924A168_from_rbo2      |       56 |          9 |        |       |     |
+| bo6        | func_pspeu_09254008                |       56 |          9 |        |       |     |
 | rbo2       | func_pspeu_0924A168                |       56 |          9 |        |       |     |
 | rbo5       | func_pspeu_0924CD20                |       56 |          9 |        |       |     |
 | rlib       | func_us_801AEFE0                   |       56 |          9 |        |       |     |
@@ -4139,8 +4140,9 @@
 |            | func_092EF6B0                      |       63 |         12 |        |       |     |
 | bo2        | e_cutscene_dialogue.rodata         |       64 |          0 | Yes    |       |     |
 | bo5        | e_cutscene_dialogue.rodata         |       64 |          0 | Yes    |       |     |
-| bo6        | unk_DC80.rodata                    |       64 |          0 | Yes    |       |     |
+| bo6        | e_cutscene_dialogue.rodata         |       64 |          0 | Yes    |       |     |
 | rbo2       | unk_E860.rodata                    |       64 |          0 | Yes    |       |     |
+| rbo6       | e_cutscene_dialogue.rodata         |       64 |          0 | Yes    |       |     |
 | dra        | menu.rodata                        |       64 |          0 | Yes    |       |     |
 | dai        | e_cutscene_dialogue.rodata         |       64 |          0 | Yes    |       |     |
 | dre        | e_cutscene_dialogue.rodata         |       64 |          0 | Yes    |       |     |
@@ -5462,8 +5464,7 @@
 | cen        | func_pspeu_09241050                |       93 |         17 |        |       |     |
 | no3        | func_pspeu_09249738                |       93 |         19 |        |       |     |
 | rno3       | func_pspeu_0923EE88                |       93 |         19 |        |       |     |
-| mar        | unk_100C8.rodata                   |       94 |          0 | Yes    |       |     |
-| rbo6       | unk_160A8.rodata                   |       94 |          0 | Yes    |       |     |
+| mar        | e_cutscene_dialogue.rodata         |       94 |          0 | Yes    |       |     |
 | nz1        | func_pspeu_092494E8                |       94 |          6 |        |       |     |
 | rno3       | func_pspeu_09253BD0                |       94 |          6 |        |       |     |
 | rno3       | func_pspeu_09252CE8                |       94 |          6 |        |       |     |
@@ -10061,7 +10062,7 @@
 | rbo2       | EntityCutsceneDialogue             |     2243 |        204 | Yes    |       |     |
 | bo5        | EntityCutscene                     |     2245 |        204 | Yes    |       |     |
 | rcen       | func_pspeu_09246800                |     2252 |        207 | Yes    |       |     |
-| mar        | MAR_EntityCutsceneDialogue         |     2254 |        203 | Yes    |       |     |
+| mar        | EntityCutsceneDialogue             |     2254 |        203 | Yes    |       |     |
 | rbo6       | EntityCutscene                     |     2257 |        206 | Yes    |       |     |
 | dre        | func_pspeu_09245D80                |     2261 |        214 | Yes    |       |     |
 | bo2        | EntityCutsceneDialogue             |     2279 |        214 | Yes    |       |     |
