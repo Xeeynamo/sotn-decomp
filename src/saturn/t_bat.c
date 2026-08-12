@@ -161,7 +161,7 @@ void CreateAdditionalBats(s32 amount, s32 entityId) {
                 DestroyEntity(entity);
                 return;
             }
-            entity->pad_B0 = g_ServantSpriteParts;
+            entity->ext.bat.unkB0 = g_ServantSpriteParts;
             entity->unk0->zPriority = PLAYER.zPriority - 2;
             entity->entityId = entityId;
             entity->unk56 = 0x6C;
@@ -278,7 +278,7 @@ void SwitchModeInitialize(Entity* self) {
                 DestroyEntity(self);
                 return;
             }
-            self->pad_B0 = g_ServantSpriteParts;
+            self->ext.bat.unkB0 = g_ServantSpriteParts;
             self->unk0->zPriority = PLAYER.zPriority - 2;
             self->primIndex = AllocPrimitives(0, 1);
             if (self->primIndex == -1) {

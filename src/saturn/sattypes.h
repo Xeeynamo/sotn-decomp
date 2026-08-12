@@ -285,15 +285,16 @@ typedef struct {
     /* 0xAA */ s16 cameraY;
     /* 0xAC */ s16 lastPlayerPosX;
     /* 0xAE */ s16 lastPlayerPosY;
+    /* 0xB0 */ struct SpriteParts* unkB0;
 } ET_Bat;
 
 typedef union {
-    u8 u8[0x38];
-    s8 s8[0x38];
-    u16 u16[0x1C];
-    s16 s16[0x1C];
-    u32 u32[0xE];
-    s32 s32[0xE];
+    u8 u8[0x3C];
+    s8 s8[0x3C];
+    u16 u16[0x1E];
+    s16 s16[0x1E];
+    u32 u32[0xF];
+    s32 s32[0xF];
 } ET_Placeholder;
 
 typedef struct {
@@ -312,6 +313,7 @@ typedef struct {
     s32 unk2C;
     s32 unk30;
     s32 unk34;
+    s32 unk38;
 } ET_SaveRoom;
 
 typedef union { // offset=0x78
@@ -379,7 +381,6 @@ typedef struct Entity {
     /* 0x74 */ u16 entityId;
     /* 0x76 */ char pad_76[0x2];
     /* 0x78 */ Ext ext;
-    /* 0xB0 */ struct SpriteParts* pad_B0;
     /* 0xB4 */ struct UnkStruct_060e8350* unkB4;
 } Entity; // size = 0xB8
 

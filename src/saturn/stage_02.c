@@ -291,7 +291,7 @@ void func_060E7508(Entity* self) {
         DAT_060F1D90 = 0;
         func_060E837C(self, 0);
         self->ext.save.unk0 = 0;
-        self->pad_B0 = NULL;
+        self->ext.save.unk38 = 0;
         self->ext.save.unk4 = 0;
         if (DAT_0605DD60 != 0) {
             DAT_0605C668 = 0;
@@ -367,7 +367,7 @@ void func_060E7508(Entity* self) {
                     self->ext.save.unk0 = 0x80;
                     if (DAT_060485C0.unk5 < 0) {
                         self->ext.save.unk2C = 0;
-                        self->pad_B0 = 1;
+                        self->ext.save.unk38 = 1;
                         self->ext.save.unk0 = 2;
                         self->ext.save.unk4 = 0xA;
                     }
@@ -388,7 +388,7 @@ void func_060E7508(Entity* self) {
         func_060E8780(self->ext.save.unk8, 0, self->ext.save.unk24, 0);
         if (func_06066B30(self, 3) != 0) {
             if (self->ext.save.unk1C == 0) {
-                self->pad_B0 = 2;
+                self->ext.save.unk38 = 2;
                 self->ext.save.unk0 = 2;
                 self->ext.save.unk4 = 0x1E;
             } else {
@@ -428,11 +428,11 @@ void func_060E7508(Entity* self) {
                 self->ext.save.unk0++;
                 break;
             }
-            self->pad_B0 = 1;
+            self->ext.save.unk38 = 1;
             self->ext.save.unk0 = 2;
             self->ext.save.unk4 = 0xA;
         } else {
-            self->pad_B0 = 1;
+            self->ext.save.unk38 = 1;
             self->ext.save.unk0 = 2;
             self->ext.save.unk4 = 0xA;
         }
@@ -707,13 +707,13 @@ void func_060E7508(Entity* self) {
             }
         } else if (self->ext.save.unk20 < 1) {
             if (self->ext.save.unk0 == 0x30) {
-                self->pad_B0 = NULL;
+                self->ext.save.unk38 = 0;
                 self->ext.save.unk4 = 0;
                 self->ext.save.unk0 = 1;
             } else {
                 DAT_060485C0.unk4 = self->ext.save.unk28;
                 DAT_060485C0.unk5 = self->ext.save.unk2C;
-                self->pad_B0 = NULL;
+                self->ext.save.unk38 = 0;
                 self->ext.save.unk4 = 0;
                 self->ext.save.unk0 = 0;
                 DAT_0605C668 = 1;
