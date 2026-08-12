@@ -22,4 +22,4 @@ INCLUDE_ASM("boss/mar_psp/nonmatchings/mar_psp/e_cutscene_dialogue", SetCutscene
 
 INCLUDE_ASM("boss/mar_psp/nonmatchings/mar_psp/e_cutscene_dialogue", RunCutsceneEvents);
 
-INCLUDE_ASM("boss/mar_psp/nonmatchings/mar_psp/e_cutscene_dialogue", MAR_EntityCutsceneDialogue);
+INCLUDE_ASM("boss/mar_psp/nonmatchings/mar_psp/e_cutscene_dialogue", EntityCutsceneDialogue);
