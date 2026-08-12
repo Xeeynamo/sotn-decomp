@@ -16,13 +16,13 @@ void EntityRedEyeBust(Entity* self) {
     case 0:
         TekiInit(self, 3);
         result = CreateSpriteObject(
-            (u16)entityRedEyeBustData.allocationIndex,
+            entityRedEyeBustData.allocationIndex,
             entityRedEyeBustData.flags, entityRedEyeBustData.images, 1);
         self->unk0 = result;
         func_0600AFA8(result, entityRedEyeBustData2[7]);
         result->zPriority = 0x70;
-        result->posX = *(u32*)(&self->posX);
-        result->posY = *(u32*)(&self->posY);
+        result->posX = self->posX.val;
+        result->posY = self->posY.val;
         self->step++;
         break;
     case 1:
@@ -140,8 +140,11 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E0AF0, func_060E0AF0);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E0B24, func_060E0B24);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E0B7C, func_060E0B7C);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E0DC8, func_060E0DC8);
-void f60E0F58() {}
-void f60E0F64() {}
+
+void func_60E0F58() {}
+
+void func_60E0F64() {}
+
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E0F70, func_060E0F70);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E1A00, func_060E1A00);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E1C08, func_060E1C08);
@@ -229,23 +232,13 @@ typedef struct {
     s8 unk5;
 } unkStruct;
 
-typedef struct {
-    s32 unk0;
-    s32 unk4;
-} unkStruct2;
-
-typedef struct {
-    u16 unk0;
-    u16 unk2;
-} unkStruct3;
-
 extern unkStruct DAT_060485C0;
 extern s32 DAT_0605C658;
 extern s32 DAT_0605C668;
 extern s8 DAT_0605DD60;
 extern u16 DAT_0605DD94;
-extern unkStruct2 DAT_06061DE0;
-extern unkStruct3 DAT_06061DE8;
+extern s32 DAT_06061DE0[2];
+extern u16 DAT_06061DE8[2];
 extern s32 DAT_060F5088[2];
 extern s32 DAT_060F1D90;
 
@@ -260,12 +253,12 @@ void func_060E81D4(Entity*);
 void func_060E8350(Entity*);
 
 static inline SetGeomScreen(u32 h) {
-    DAT_06061DE0.unk0 = DAT_06061DE0.unk4 = h;
+    DAT_06061DE0[0] = DAT_06061DE0[1] = h;
 }
 
 static inline void SetGeomOffset(u16 ofx, u16 ofy) {
-    DAT_06061DE8.unk0 = ofx;
-    DAT_06061DE8.unk2 = ofy;
+    DAT_06061DE8[0] = ofx;
+    DAT_06061DE8[1] = ofy;
 }
 
 void func_060E7508(Entity* self) {
@@ -352,10 +345,10 @@ void func_060E7508(Entity* self) {
             self->ext.save.unk30++;
         }
         if (player->posX.i.hi < 0x9E) {
-            g_Player.padSim = 0x8000;
+            g_Player.padSim = PAD_RIGHT;
             g_Player.demo_timer = 1;
         } else if (player->posX.i.hi > 0xA0) {
-            g_Player.padSim = 0x4000;
+            g_Player.padSim = PAD_LEFT;
             g_Player.demo_timer = 1;
         } else {
             if (self->ext.save.unk30 ==
@@ -369,7 +362,7 @@ void func_060E7508(Entity* self) {
                         self->ext.save.unk2C = 0;
                         self->ext.save.unk38 = 1;
                         self->ext.save.unk0 = 2;
-                        self->ext.save.unk4 = 0xA;
+                        self->ext.save.unk4 = 10;
                     }
                 } else {
                     DAT_060485C0.unk4 = 0;
@@ -430,11 +423,11 @@ void func_060E7508(Entity* self) {
             }
             self->ext.save.unk38 = 1;
             self->ext.save.unk0 = 2;
-            self->ext.save.unk4 = 0xA;
+            self->ext.save.unk4 = 10;
         } else {
             self->ext.save.unk38 = 1;
             self->ext.save.unk0 = 2;
-            self->ext.save.unk4 = 0xA;
+            self->ext.save.unk4 = 10;
         }
         break;
 
@@ -462,7 +455,7 @@ void func_060E7508(Entity* self) {
         }
         func_060E8780(self->ext.save.unk8, 0, self->ext.save.unk24, 0);
         if (self->ext.save.unk24 == 0x100) {
-            if ((0x1d < self->ext.save.unk4) || (DAT_060F1D90 != 0)) {
+            if ((self->ext.save.unk4 > 0x1D) || (DAT_060F1D90 != 0)) {
                 self->ext.save.unk0++;
             } else {
                 self->ext.save.unk34++;
@@ -539,8 +532,8 @@ void func_060E7508(Entity* self) {
             func_060E8DE0(self->ext.save.unkC, 0, 0);
         }
 
-        if ((self->ext.save.unk34 == 0x10) &&
-            ((DAT_060F5088[1] & 0x7FF) >= 0x7F0)) {
+        if (self->ext.save.unk34 == 0x10 &&
+            (DAT_060F5088[1] & 0x7FF) >= 0x7F0) {
             DAT_060F5088[1] = 0;
             func_060E8780(self->ext.save.unk8, 1, self->ext.save.unk24, 0);
             func_060E8350(self);
@@ -550,7 +543,7 @@ void func_060E7508(Entity* self) {
 
     case 6:
         func_060e8330();
-        if ((self->ext.save.unk4 > 0x27) && func_06066B30(self, 0)) {
+        if (self->ext.save.unk4 > 0x27 && func_06066B30(self, 0)) {
             if (self->ext.save.unk4 == 0x2B) {
                 func_060E8350(self);
                 self->ext.save.unk0 = 0x200;
@@ -743,7 +736,6 @@ void func_060e8330(void) {
     g_Player.padSim = PAD_UP;
     g_Player.demo_timer = 1;
 }
-
 
 void func_060E8350(Entity* self) {
     UnkStruct_060e8350* iVar1 = self->ext.save.unk10;
