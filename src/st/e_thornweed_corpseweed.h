@@ -45,11 +45,7 @@ static u8 HitboxIndices[] = {
     0, 1, 2, 2, 3, 4, 4, 4, 4, 1, 2, 2, 3, 4, 4, 4, 4, 5, 5, 6, 6, 6, 7, 7, 8, 9, 9, 5, 10
 };
 
-// E_THORNWEED
 // params: 0 = Thornweed, 1 = Corpseweed
-// func_801AA020
-// PSP:func_psp_09249750:Match
-// PSP:https://decomp.me/scratch/LAyvk
 void EntityThornweed(Entity* self) {
     const int EntityFormCount = 2; // Thornweed, Corpseweed
     const int AnimFrame_ThornweedInit = 1;
@@ -175,11 +171,7 @@ void EntityThornweed(Entity* self) {
     self->hitboxWidth = *hitboxData++;
     self->hitboxHeight = *hitboxData++;
 }
-// E_CORPSEWEED
-// func_801AA390
-// https://decomp.me/scratch/QVcDz
-// PSP:func_psp_09249BE0:Match with CORPSEWEED_NO_ATTACK_SFX
-// PSP:https://decomp.me/scratch/lqXTP
+
 void EntityCorpseweed(Entity* self) {
     // Sprites
     const int SpriteLeavesLeft = 0;
@@ -725,10 +717,7 @@ void EntityCorpseweed(Entity* self) {
         DestroyEntity(self);
     }
 }
-// E_CORPSEWEED_PROJECTILE
-// func_801AB0C0
-// PSP:func_psp_0924AE40:Match
-// PSP:https://decomp.me/scratch/qpbbH
+
 void EntityCorpseweedProjectile(Entity* self) {
     // Sprites
     const int SpriteLeft = 0x40;
