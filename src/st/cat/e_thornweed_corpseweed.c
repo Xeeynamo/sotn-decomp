@@ -4,4 +4,4 @@
 #define CORPSEWEED_TPAGE 0x14
 #define CORPSEWEED_PAL 0x252
 #define CORPSEWEED_PROJ_PAL 0x255
-#include "../en_thornweed_corpseweed.h"
+#include "../e_thornweed_corpseweed.h"
