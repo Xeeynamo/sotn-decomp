@@ -887,10 +887,10 @@ typedef struct {
 #define ANIM_FRAME_LOAD 0x8000
 
 typedef enum {
-    HITBOX_INACTIVE     = 0,
-    HITBOX_ACTIVE       = (1 << 0), // 0x01: Active hit detection
-    HITBOX_SOLID        = (1 << 1), // 0x02: Solid object / platform collision
-    HITBOX_WEAPON_HIT   = (1 << 2), // 0x04: Weapon hit state
+    HITBOX_INACTIVE = 0,
+    HITBOX_ACTIVE = (1 << 0),       // 0x01: Active hit detection
+    HITBOX_SOLID = (1 << 1),        // 0x02: Solid object / platform collision
+    HITBOX_WEAPON_HIT = (1 << 2),   // 0x04: Weapon hit state
     HITBOX_INVULNERABLE = (1 << 7), // 0x80: Ignore hit detection / invulnerable
 } HitboxStates;
 
