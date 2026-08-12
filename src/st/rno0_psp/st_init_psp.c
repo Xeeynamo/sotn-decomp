@@ -5,7 +5,7 @@
 extern LayoutEntity* D_8D2E394;
 extern LayoutEntity* D_8D2E468;
 
-extern Overlay OVL_EXPORT(Overlay);
+extern Overlay g_Overlay;
 
 s32 E_ID(BACKGROUND_BLOCK);
 s32 E_ID(LOCK_CAMERA);
@@ -24,10 +24,10 @@ s32 E_ID(STONE_DOOR);
 s32 E_ID(UNK_1F);
 s32 E_ID(CLOCK_ROOM_SHADOW);
 s32 E_ID(GUARDIAN);
-s32 E_ID(UNK_22);
+s32 E_ID(GUARDIAN_SWORD_SHADOW);
 s32 E_ID(GUARDIAN_FIRE_WAVE);
-s32 E_ID(UNK_24);
-s32 E_ID(UNK_25);
+s32 E_ID(GUARDIAN_UNK2);
+s32 E_ID(GUARDIAN_UNUSED);
 s32 E_ID(FLOOR_TRAP);
 s32 E_ID(THORNWEED);
 s32 E_ID(CORPSEWEED);
@@ -89,10 +89,10 @@ void InitEntityIds(void) {
     E_ID(UNK_1F) = E_UNK_1F;
     E_ID(CLOCK_ROOM_SHADOW) = E_CLOCK_ROOM_SHADOW;
     E_ID(GUARDIAN) = E_GUARDIAN;
-    E_ID(UNK_22) = E_UNK_22;
+    E_ID(GUARDIAN_SWORD_SHADOW) = E_GUARDIAN_SWORD_SHADOW;
     E_ID(GUARDIAN_FIRE_WAVE) = E_GUARDIAN_FIRE_WAVE;
-    E_ID(UNK_24) = E_UNK_24;
-    E_ID(UNK_25) = E_UNK_25;
+    E_ID(GUARDIAN_UNK2) = E_GUARDIAN_UNK2;
+    E_ID(GUARDIAN_UNUSED) = E_GUARDIAN_UNUSED;
     E_ID(FLOOR_TRAP) = E_FLOOR_TRAP;
     E_ID(THORNWEED) = E_THORNWEED;
     E_ID(CORPSEWEED) = E_CORPSEWEED;
@@ -137,11 +137,11 @@ void InitEntityIds(void) {
     E_ID(SEALED_DOOR) = E_SEALED_DOOR;
 }
 
-void OVL_EXPORT(Load)(void) {
+void OvlLoad(void) {
     InitEntityIds();
     PfnEntityUpdates = EntityUpdates;
     g_pStObjLayoutHorizontal = &D_8D2E394;
     g_pStObjLayoutVertical = &D_8D2E468;
     func_892A018();
-    memcpy(&g_api.o, &OVL_EXPORT(Overlay), sizeof(Overlay));
+    memcpy(&g_api.o, &g_Overlay, sizeof(Overlay));
 }

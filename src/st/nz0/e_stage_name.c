@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz0.h"
 
-#define STAGE_FLAG OVL_EXPORT(STAGE_FLAG)
+#define STAGE_FLAG NZ0_STAGE_FLAG
 
 #ifdef VERSION_PSP
 #define STAGE_NAME_LOAD_GFX

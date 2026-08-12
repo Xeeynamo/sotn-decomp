@@ -14,13 +14,11 @@ RECT D_8018258C = {0};
 RECT D_801825A4 = {0};
 u8* D_8018C404[100] = {NULL};
 
-extern Overlay OVL_EXPORT(Overlay);
+extern Overlay g_Overlay;
 
 s32 LoadFileSim(s32 fileId, s32 type);
 
-OVL_API void InitStage(Overlay* o) {
-    memcpy(o, &OVL_EXPORT(Overlay), sizeof(Overlay));
-}
+OVL_API void InitStage(Overlay* o) { memcpy(o, &g_Overlay, sizeof(Overlay)); }
 
 void func_801B9C80(void) {
     // handles the video playback

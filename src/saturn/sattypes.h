@@ -646,22 +646,22 @@ typedef struct {
 } PlayerState;
 
 typedef struct {
-    s32 : 32;
+    s32 primIndex;
     s32 D_800973FC;
+    s32 pauseEnemies;
     s32 : 32;
     s32 : 32;
-    s32 : 32;
-    s32 : 32;
-    s32 : 32;
-    s32 : 32;
-    s32 : 32;
-    s32 : 32;
+    s32 unk14;
+    s32 BottomCornerTextTimer;
+    s32 BottomCornerTextPrims;
+    s32 unk20;
+    s32 unk24;
     s32 unk28;
-    s32 : 32;
+    s32 unk2C;
     u32 D_80097428[8];
-    s32 : 32;
-    s32 : 32;
-    s32 : 32;
+    s32 D_80097448;
+    s32 D_8009744C;
+    s32 D_80097450;
     s32 : 32;
     s32 : 32;
     s32 : 32;
@@ -887,6 +887,14 @@ typedef struct {
     u16 reloadStageId;
     u16 stageId;
 } RoomTeleport;
+
+typedef struct {
+    s32 x;
+    s32 y;
+    s32 stageId;
+    s32 eventId;
+    s32 castleFlag;
+} RoomBossTeleport;
 
 typedef enum {
     PLAYER_CHARACTER,

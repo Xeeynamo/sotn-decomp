@@ -3,7 +3,7 @@
 //! Driven from tools/sotn-assets and config/assets.saturn.yaml
 
 use clap::{Parser, Subcommand};
-use saturn_assets::{audio, bitmap, familiar, font, map, player, stage, weapon};
+use saturn_assets::{audio, bitmap, crt, familiar, font, map, player, stage, weapon};
 use std::path::PathBuf;
 use std::process::ExitCode;
 
@@ -37,6 +37,27 @@ enum Command {
     Map(MapCommand),
     #[command(subcommand)]
     Stage(StageCommand),
+    #[command(subcommand)]
+    Crt(CrtCommand),
+    #[command(subcommand)]
+    SpritePackage(SpritePackageCommand),
+}
+
+#[derive(Subcommand)]
+enum CrtCommand {
+    Extract {
+        game_path: PathBuf,
+        crt_path: PathBuf,
+        output_dir: PathBuf,
+    },
+    Rebuild { manifest: PathBuf, output: PathBuf },
+    Verify {
+        manifest: PathBuf,
+        crt_path: PathBuf,
+    },
+    Areas {
+        game_path: PathBuf,
+    },
 }
 
 #[derive(Subcommand)]
@@ -52,6 +73,45 @@ enum StageCommand {
     Verify {
         manifest: PathBuf,
         chr_path: PathBuf,
+    },
+    EntityHeader {
+        prg_path: PathBuf,
+        entity: usize,
+        #[arg(value_parser = parse_hex_address)]
+        frames: u32,
+        prefix: String,
+        output: PathBuf,
+        #[arg(long)]
+        zero: Option<PathBuf>,
+    },
+    VerifyEntityHeader {
+        prg_path: PathBuf,
+        entity: usize,
+        #[arg(value_parser = parse_hex_address)]
+        frames: u32,
+        prefix: String,
+        output: PathBuf,
+        #[arg(long)]
+        zero: Option<PathBuf>,
+    },
+}
+
+fn parse_hex_address(text: &str) -> Result<u32, String> {
+    let digits = text.strip_prefix("0x").or_else(|| text.strip_prefix("0X")).unwrap_or(text);
+    u32::from_str_radix(digits, 16).map_err(|error| format!("{text:?} is not a hex address: {error}"))
+}
+
+#[derive(Subcommand)]
+enum SpritePackageCommand {
+    GenerateHeader {
+        config: PathBuf,
+        asset: String,
+        output: PathBuf,
+    },
+    VerifyHeader {
+        config: PathBuf,
+        asset: String,
+        output: PathBuf,
     },
 }
 
@@ -299,6 +359,56 @@ fn run(cli: Cli) -> saturn_assets::Result<()> {
             audio::verify(&manifest, &source_path)?;
             println!("verify passed: exact retail match");
         }
+        Command::Crt(CrtCommand::Extract {
+            game_path,
+            crt_path,
+            output_dir,
+        }) => {
+            let manifest = crt::extract(&game_path, &crt_path, &output_dir)?;
+            let sequences = manifest
+                .areas
+                .iter()
+                .filter(|area| area.contents == crt::Contents::Sequence)
+                .count();
+            println!(
+                "{} areas ({sequences} sequence), base 0x{:02X} at 0x{:06X} -> {}",
+                manifest.areas.len(),
+                manifest.base_area,
+                manifest.base_address,
+                output_dir.display()
+            );
+        }
+        Command::Crt(CrtCommand::Rebuild { manifest, output }) => {
+            let data = crt::rebuild(&manifest, &output)?;
+            println!("wrote {} bytes -> {}", data.len(), output.display());
+        }
+        Command::Crt(CrtCommand::Verify { manifest, crt_path }) => {
+            crt::verify(&manifest, &crt_path)?;
+            println!("verify passed: exact retail match");
+        }
+        Command::Crt(CrtCommand::Areas { game_path }) => {
+            let game = std::fs::read(&game_path)?;
+            let files = crt::sound_files(&game)?;
+            for area in crt::area_map(&game)? {
+                let packages: Vec<&str> = files
+                    .iter()
+                    .filter(|(_, id)| *id == area.id)
+                    .map(|(name, _)| name.as_str())
+                    .collect();
+                println!(
+                    "area 0x{:02X} at 0x{:06X}, 0x{:X} bytes{} {}",
+                    area.id,
+                    area.address,
+                    area.size,
+                    if area.loadable { "" } else { " (not loadable)" },
+                    if packages.is_empty() {
+                        String::new()
+                    } else {
+                        format!("<- {}", packages.join(", "))
+                    }
+                );
+            }
+        }
         Command::Stage(StageCommand::Extract {
             prg_path,
             chr_path,
@@ -325,6 +435,43 @@ fn run(cli: Cli) -> saturn_assets::Result<()> {
         Command::Stage(StageCommand::Verify { manifest, chr_path }) => {
             stage::verify(&manifest, &chr_path)?;
             println!("verify passed: exact retail match");
+        }
+        Command::Stage(StageCommand::EntityHeader {
+            prg_path,
+            entity,
+            frames,
+            prefix,
+            output,
+            zero,
+        }) => {
+            let text = stage::generate_entity_header(
+                &prg_path,
+                zero.as_deref(),
+                entity,
+                frames,
+                &prefix,
+                &output,
+            )?;
+            println!("{} lines -> {}", text.lines().count(), output.display());
+        }
+        Command::Stage(StageCommand::VerifyEntityHeader {
+            prg_path,
+            entity,
+            frames,
+            prefix,
+            output,
+            zero,
+        }) => {
+            stage::verify_entity_header(&prg_path, zero.as_deref(), entity, frames, &prefix, &output)?;
+            println!("verify passed: the header in the tree is what regenerates");
+        }
+        Command::SpritePackage(SpritePackageCommand::GenerateHeader { config, asset, output }) => {
+            let text = stage::generate_package_header(&config, &asset, &output)?;
+            println!("{} lines -> {}", text.lines().count(), output.display());
+        }
+        Command::SpritePackage(SpritePackageCommand::VerifyHeader { config, asset, output }) => {
+            stage::verify_package_header(&config, &asset, &output)?;
+            println!("verify passed: the header in the tree is what regenerates");
         }
         Command::Map(MapCommand::Extract {
             prg_path,

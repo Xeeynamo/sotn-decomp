@@ -71,7 +71,7 @@ segments:
       - [0x11728, .rodata, e_succubus] # EntitySuccubus
       - [0x11808, .rodata, e_cutscene_dialogue]
       - [0x1181C, .rodata, e_cutscene_dialogue] #D_80180938, names
-      - [0x1183C, .rodata, e_cutscene_dialogue] #DRE_EntityCutscene
+      - [0x1183C, .rodata, e_cutscene_dialogue] #EntityCutscene
       - [0x118C0, .rodata, e_cutscene_actors] #EntityCSMoveAlucard, string and jumps
       - [0x118F8, .rodata, e_cutscene_actors] # EntityUnkId23
       - [0x11910, .rodata, e_cutscene_actors] # EntityFadeToWhite

@@ -146,4 +146,4 @@ g_EInitBlade = 0x0926B3F8;
 g_EInitBladeWeapon = 0x0926B408;
 g_RedDoorTiles = 0x0926B418;
 rooms = 0x0926B438;
-NP3_Overlay = 0x0928E820;
+g_Overlay = 0x0928E820;

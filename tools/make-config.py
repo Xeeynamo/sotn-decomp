@@ -407,18 +407,6 @@ def make_entity_init_c_path(ovl_name: str) -> str:
     return f"src/st/{make_ovl_name_from_fullname(ovl_name)}/e_init.c"
 
 
-# do a OVL_EXPORT(EntityRedDoor) -> NZ0EntityRedDoor
-def resolve_ovl_export(name: str, ovl_name: str):
-    idx = name.find("OVL_EXPORT(")
-    if idx < 0:  # not a OVL_EXPORT
-        return name
-    idx_close = name.find(")", idx + 1)
-    if idx_close < 0:  # invalid OVL_EXPORT? just ignore it
-        return name
-    ovl_prefix = make_ovl_name_from_fullname(ovl_name).upper()
-    return name.replace("OVL_EXPORT(", f"{ovl_prefix}_").rstrip(")")
-
-
 ##### YAML UTILITIES
 class HexInt(int):
     pass
@@ -1114,8 +1102,7 @@ def get_symbol_table_from_entity_init_c(file_name: str, ovl_name: str) -> list[s
             line = line.strip().rstrip(",")
             if line == "};":
                 break
-            symbol = resolve_ovl_export(line, ovl_name)
-            entities.append(symbol)
+            entities.append(line)
     return entities
 
 

@@ -4,7 +4,6 @@
 
 #include <stage.h>
 
-#define OVL_EXPORT(x) NZ1_##x
 #define STAGE_IS_NZ1
 
 enum Palettes {

@@ -4,6 +4,10 @@
 import ninja_syntax
 import os
 import shutil
+import yaml
+
+with open('config/assets.saturn.yaml') as f:
+    SATURN_ASSETS_CONFIG = yaml.safe_load(f)
 
 sotn_progress_report = "SOTN_PROGRESS_REPORT" in os.environ
 build_base_path = "build/saturn"
@@ -276,6 +280,39 @@ for directory, stage, prefix in [
         },
     )
 
+ninja.rule(
+    'saturn_stage_entity_header',
+    command='cargo run --quiet --manifest-path tools/saturn/assets/Cargo.toml -- '
+            'stage entity-header $PRG $ENTITY $FRAMES $PREFIX $out --zero $ZERO > /dev/null',
+    description='Generating Saturn stage entity header $out',
+)
+
+STAGE_ENTITIES = [
+    asset for asset in SATURN_ASSETS_CONFIG['assets']
+    if asset.get('kind') == 'stage-entity'
+]
+
+for asset in STAGE_ENTITIES:
+    ninja.build(
+        asset['include'],
+        'saturn_stage_entity_header',
+        inputs=[asset['prg'], asset['zero']],
+        implicit=[
+            'config/assets.saturn.yaml',
+            'tools/saturn/assets/Cargo.toml',
+            'tools/saturn/assets/src/stage.rs',
+            'tools/saturn/assets/src/sprite.rs',
+            'tools/saturn/assets/src/main.rs',
+        ],
+        variables={
+            'PRG': asset['prg'],
+            'ZERO': asset['zero'],
+            'ENTITY': str(asset['entity']),
+            'FRAMES': asset['frames'],
+            'PREFIX': asset['prefix'],
+        },
+    )
+
 ninja.rule('sotn_str',
            command=f'{SOTN_STR} process < $in > $out',
            description='Expanding SOTN strings in $out from $in')
@@ -286,6 +323,51 @@ ninja.rule('iconv_sjis',
 
 ninja.rule('as',
            'sh-elf-as -no-pad-sections -I./src/saturn $in -o $out')
+
+ninja.rule(
+    'saturn_sprite_package_header',
+    command='cargo run --quiet --manifest-path tools/saturn/assets/Cargo.toml -- '
+            'sprite-package generate-header $CONFIG $ASSET $out > /dev/null',
+    description='Generating Saturn sprite package header $out',
+)
+
+SPRITE_PACKAGES = [
+    asset for asset in SATURN_ASSETS_CONFIG['assets']
+    if asset.get('kind') == 'sprite-package'
+]
+
+def _generated_header_source(include):
+    directory = os.path.dirname(os.path.dirname(include))
+    stem = os.path.splitext(os.path.basename(include))[0]
+    return os.path.join(directory, f'{stem}.c')
+
+GENERATED_HEADER_DEPS = {
+    _generated_header_source(asset['include']): asset['include']
+    for asset in SATURN_ASSETS_CONFIG['assets']
+    if asset.get('kind') in ('sprite-package', 'stage-entity') and asset.get('include')
+}
+
+for asset in SPRITE_PACKAGES:
+    inputs = [asset['prg']]
+    if asset.get('zero'):
+        inputs.append(asset['zero'])
+    ninja.build(
+        asset['include'],
+        'saturn_sprite_package_header',
+        inputs=inputs,
+        implicit=[
+            'config/assets.saturn.yaml',
+            'tools/saturn/assets/Cargo.toml',
+            'tools/saturn/assets/src/stage.rs',
+            'tools/saturn/assets/src/player.rs',
+            'tools/saturn/assets/src/sprite.rs',
+            'tools/saturn/assets/src/main.rs',
+        ],
+        variables={
+            'CONFIG': 'config/assets.saturn.yaml',
+            'ASSET': asset['name'],
+        },
+    )
 
 def add_srcs(srcs, output_dir, args):
     for src in srcs:
@@ -313,6 +395,8 @@ def add_srcs(srcs, output_dir, args):
             implicit.append('src/saturn/stage_02/gen/stlayer.h')
         if src == 'src/saturn/stage_02/strmgfx.c':
             implicit.append('src/saturn/stage_02/gen/strmgfx.h')
+        if src in GENERATED_HEADER_DEPS:
+            implicit.append(GENERATED_HEADER_DEPS[src])
 
         ninja.build(
             pre_name,

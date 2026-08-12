@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "wrp.h"
 
-#define STAGE_NAME OVL_EXPORT(STAGE_NAME)
+#define STAGE_NAME WRP_STAGE_NAME
 
 #ifdef VERSION_US
 #include "../e_stage_name_us.h"

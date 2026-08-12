@@ -63,7 +63,7 @@ static void CutsceneCameraPan(s16 target) {
     }
 }
 
-void OVL_EXPORT(EntityCutsceneStage)(Entity* self) {
+void EntityCutsceneStage(Entity* self) {
     Tilemap* gTilemapPtr;
     Entity* player;
     s16 posScrollX;
@@ -145,7 +145,7 @@ void OVL_EXPORT(EntityCutsceneStage)(Entity* self) {
     }
 }
 
-void OVL_EXPORT(EntityCutsceneMaria)(Entity* self) {
+void EntityCutsceneMaria(Entity* self) {
     Tilemap* gTilemapPtr;
     Entity* player;
     s16 posScrollX, posScrollY;

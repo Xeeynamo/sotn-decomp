@@ -98,7 +98,7 @@ GfxLoad g_GfxLoad[0x10] = {0};
 PlayerDraw g_PlayerDraw[0x10];
 DR_ENV D_800974AC[16];
 u32 D_8003C744 = 0;
-u8 D_psp_08C6BC40[0x4000];
+u8 D_psp_08C6BC40[0x8000];
 u8 D_psp_08C6FC40[0x4000];
 u8 D_psp_08D2DC40[0x4000];
 u8 D_psp_08D97C40[0x4000];
@@ -133,7 +133,6 @@ ImgSrc g_imgUnk8013C200_impl = {
 ImgSrc* g_imgUnk8013C200 = &g_imgUnk8013C200_impl;
 ImgSrc* g_imgUnk8013C270 = &g_imgUnk8013C200_impl;
 PlayerOvl g_PlOvl = {0};
-u8** g_PlOvlAluBatSpritesheet[1] = {0};
 
 void func_801073C0(void) { NOT_IMPLEMENTED; }
 
