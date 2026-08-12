@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "bo0.h"
 
-void func_us_801BA030(s16 sfxId) {
+void PlayOlroxDroolSfx(s16 sfxId) {
     s32 yOffset;
     s16 vol;
     s16 pan;
@@ -81,7 +81,7 @@ void EntityRealOlroxDrool(Entity* self) {
         if (offsetY > 0x1D0) {
             prim->y1 += 2;
             if (!self->step_s) {
-                func_us_801BA030(SFX_AXE_KNIGHT_WEAPON_BREAK);
+                PlayOlroxDroolSfx(SFX_AXE_KNIGHT_WEAPON_BREAK);
                 EntityExplosionVariantsSpawner(self, 1U, 2U, 0, 0, 3U, 0);
                 self->step_s = 1;
             }
