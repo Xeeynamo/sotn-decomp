@@ -2,8 +2,10 @@
 //!
 //! Driven from tools/sotn-assets and config/assets.saturn.yaml
 
-use clap::{Parser, Subcommand};
-use saturn_assets::{audio, bitmap, crt, familiar, font, map, midi, player, seq, stage, weapon};
+use clap::{Parser, Subcommand, ValueEnum};
+use saturn_assets::{
+    audio, bitmap, crt, familiar, font, map, midi, player, psx_stage, seq, stage, weapon,
+};
 use std::path::PathBuf;
 use std::process::ExitCode;
 
@@ -50,12 +52,17 @@ enum CrtCommand {
         crt_path: PathBuf,
         output_dir: PathBuf,
     },
-    Rebuild { manifest: PathBuf, output: PathBuf },
+    Rebuild {
+        manifest: PathBuf,
+        output: PathBuf,
+    },
     Verify {
         manifest: PathBuf,
         crt_path: PathBuf,
     },
-    Banks { manifest: PathBuf },
+    Banks {
+        manifest: PathBuf,
+    },
     Midi {
         seq_path: PathBuf,
         output_dir: PathBuf,
@@ -74,7 +81,10 @@ enum StageCommand {
         #[arg(long)]
         zero: Option<PathBuf>,
     },
-    Rebuild { manifest: PathBuf, output: PathBuf },
+    Rebuild {
+        manifest: PathBuf,
+        output: PathBuf,
+    },
     Verify {
         manifest: PathBuf,
         chr_path: PathBuf,
@@ -102,8 +112,12 @@ enum StageCommand {
 }
 
 fn parse_hex_address(text: &str) -> Result<u32, String> {
-    let digits = text.strip_prefix("0x").or_else(|| text.strip_prefix("0X")).unwrap_or(text);
-    u32::from_str_radix(digits, 16).map_err(|error| format!("{text:?} is not a hex address: {error}"))
+    let digits = text
+        .strip_prefix("0x")
+        .or_else(|| text.strip_prefix("0X"))
+        .unwrap_or(text);
+    u32::from_str_radix(digits, 16)
+        .map_err(|error| format!("{text:?} is not a hex address: {error}"))
 }
 
 #[derive(Subcommand)]
@@ -126,6 +140,13 @@ enum MapCommand {
         prg_path: PathBuf,
         map_path: PathBuf,
         output_dir: PathBuf,
+    },
+    ConvertPsx {
+        prg_path: PathBuf,
+        map_path: PathBuf,
+        output_dir: PathBuf,
+        #[arg(long, value_enum, default_value_t = PsxScaleModel::Raster)]
+        scale_model: PsxScaleModel,
     },
     Rebuild {
         manifest: PathBuf,
@@ -173,6 +194,12 @@ enum MapCommand {
         #[arg(long)]
         force: bool,
     },
+}
+
+#[derive(Clone, Copy, Debug, ValueEnum)]
+enum PsxScaleModel {
+    Raster,
+    TileGroups,
 }
 
 #[derive(Subcommand)]
@@ -302,6 +329,14 @@ enum AudioCommand {
         /// retail pcm path
         source_path: PathBuf,
     },
+    ExportXa {
+        source_path: PathBuf,
+        output_dir: PathBuf,
+        #[arg(long, default_value_t = 0)]
+        file_number: u8,
+        #[arg(long, default_value_t = 0)]
+        channel: u8,
+    },
 }
 
 #[derive(Subcommand)]
@@ -363,6 +398,25 @@ fn run(cli: Cli) -> saturn_assets::Result<()> {
         }) => {
             audio::verify(&manifest, &source_path)?;
             println!("verify passed: exact retail match");
+        }
+        Command::Audio(AudioCommand::ExportXa {
+            source_path,
+            output_dir,
+            file_number,
+            channel,
+        }) => {
+            let manifest = saturn_assets::xa::export_saturn_stereo(
+                &source_path,
+                &output_dir,
+                file_number,
+                channel,
+            )?;
+            println!(
+                "{} XA sectors, loop sector {} -> {}",
+                manifest.sectors,
+                manifest.loop_sector,
+                output_dir.display()
+            );
         }
         Command::Crt(CrtCommand::Extract {
             game_path,
@@ -496,14 +550,29 @@ fn run(cli: Cli) -> saturn_assets::Result<()> {
             output,
             zero,
         }) => {
-            stage::verify_entity_header(&prg_path, zero.as_deref(), entity, frames, &prefix, &output)?;
+            stage::verify_entity_header(
+                &prg_path,
+                zero.as_deref(),
+                entity,
+                frames,
+                &prefix,
+                &output,
+            )?;
             println!("verify passed: the header in the tree is what regenerates");
         }
-        Command::SpritePackage(SpritePackageCommand::GenerateHeader { config, asset, output }) => {
+        Command::SpritePackage(SpritePackageCommand::GenerateHeader {
+            config,
+            asset,
+            output,
+        }) => {
             let text = stage::generate_package_header(&config, &asset, &output)?;
             println!("{} lines -> {}", text.lines().count(), output.display());
         }
-        Command::SpritePackage(SpritePackageCommand::VerifyHeader { config, asset, output }) => {
+        Command::SpritePackage(SpritePackageCommand::VerifyHeader {
+            config,
+            asset,
+            output,
+        }) => {
             stage::verify_package_header(&config, &asset, &output)?;
             println!("verify passed: the header in the tree is what regenerates");
         }
@@ -520,6 +589,19 @@ fn run(cli: Cli) -> saturn_assets::Result<()> {
                 manifest.tables.substage,
                 output_dir.display()
             );
+        }
+        Command::Map(MapCommand::ConvertPsx {
+            prg_path,
+            map_path,
+            output_dir,
+            scale_model,
+        }) => {
+            let scale_model = match scale_model {
+                PsxScaleModel::Raster => psx_stage::ScaleModel::Raster,
+                PsxScaleModel::TileGroups => psx_stage::ScaleModel::TileGroups,
+            };
+            psx_stage::convert(&prg_path, &map_path, &output_dir, scale_model)?;
+            println!("converted Stage 15 -> {}", output_dir.display());
         }
         Command::Map(MapCommand::Rebuild {
             manifest,
