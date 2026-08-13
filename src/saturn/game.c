@@ -70,7 +70,7 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f6071C3C, func_06071C3C);
 extern s32 DAT_0605c120;
 extern s32 g_PlayerY;
 extern s32 D_80097C98;
-extern s32 DAT_0605c668;
+extern s32 DAT_0605C668;
 extern s32 DAT_0605cd54;
 extern s32 g_PlayerX;
 extern Unk0605cd70 DAT_0605cd70;
@@ -100,7 +100,7 @@ void InitRoom(void) {
     if (g_CurrentRoom.unk4 < 0x50) {
         D_8003C708.flags = 0;
     }
-    DAT_0605c668 = 1;
+    DAT_0605C668 = 1;
     DAT_0605ceb0 = 0;
     Scl_w_reg.win1_start[0] = 0;
     Scl_w_reg.win1_start[1] = 0;
