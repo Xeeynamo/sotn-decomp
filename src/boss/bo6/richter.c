@@ -1099,7 +1099,13 @@ INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepFall);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepCrouch);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicResetPose);
+void RicResetPose(void) {
+    RIC.poseTimer = 0;
+    RIC.pose = 0;
+    g_Ric.unk44 = 0;
+    g_Ric.unk46 = 0;
+    RIC.drawFlags &= 0xFB;
+}
 
 void func_us_801B77D8(void) {
     if ((RIC.posX.i.hi - PLAYER.posX.i.hi) <= 0) {
