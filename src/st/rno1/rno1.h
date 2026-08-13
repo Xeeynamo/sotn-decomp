@@ -42,8 +42,8 @@ typedef enum EntityID {
     E_PARANTHROPUS_THROWN_BONE,  // EntityParanthropusThrownBone
     E_UNK_1D,                    // func_us_801C7F24_from_rno0
     E_JACKO_BONES,               // EntityJackOBones
-    E_JACKO_BONES_DEATH_PARTS,   // EntityJackOBonesDeathParts
-    E_JACKO_BONES_JACK,          // EntityJackOBonesJack
+    E_JACKO_DEATH_PARTS,   // EntityJackOBonesDeathParts
+    E_JACKO_JACK,          // EntityJackOBonesJack
     E_NOVA_SKELETON,             // EntityNovaSkeleton
     E_NOVA_LASER,                // EntityNovaLaser
     E_NOVA_LASER_PULSE,          // EntityNovaLaserPulse

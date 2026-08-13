@@ -58,8 +58,8 @@ enum EntityID {
     E_CORPSEWEED_PROJECTILE,     // EntityCorpseweedProjectile
     E_STONE_SKULL,               // EntityStoneSkull
     E_JACKO_BONES,               // EntityJackOBones
-    E_JACKO_BONES_DEATH_PARTS,   // EntityJackOBonesDeathParts
-    E_JACKO_BONES_JACK,          // EntityJackOBonesJack
+    E_JACKO_DEATH_PARTS,         // EntityJackOBonesDeathParts
+    E_JACKO_JACK,                // EntityJackOBonesJack
     E_NOVA_SKELETON,             // EntityNovaSkeleton
     E_NOVA_LASER,                // EntityNovaLaser
     E_NOVA_LASER_PULSE,          // EntityNovaLaserPulse
