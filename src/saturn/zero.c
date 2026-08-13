@@ -14,7 +14,7 @@ void entrypoint(void) {
     SclProcess = 1;
     InitSystem();
     DAT_0605cea2 = 0;
-    DAT_0605c658 = 1;
+    DAT_0605C658 = 1;
     do {
         func_060040d8();
     } while (true);

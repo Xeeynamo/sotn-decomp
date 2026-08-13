@@ -305,7 +305,7 @@ _g_Player = 0x0605C140; /* size = 0x46C */
 _currentMusicId = 0x0605C5AC;
 _g_PlayerY = 0x0605C5B4;
 _g_unkGraphicsStruct = 0x0605C5C0; /* size = 0x98 */
-_DAT_0605c658 = 0x0605C658;
+_DAT_0605C658 = 0x0605C658;
 _g_pads = 0x0605C670; /* size = 0x10 */
 _DAT_0605c680 = 0x0605C680; /* size = 0x44 */
 _g_PlayableCharacter = 0x0605C6D0;
@@ -510,7 +510,7 @@ _DAT_0605c11a = 0x0605C11A;
 _g_RoomCount = 0x0605C5B0;
 _D_80097C98 = 0x0605C660;
 _DAT_0605c664 = 0x0605C664;
-_DAT_0605c668 = 0x0605C668;
+_DAT_0605C668 = 0x0605C668;
 _g_PlayableCharacter = 0x0605C6D0;
 _g_CurrentEntity = 0x0605C6E0;
 _DAT_0605c6e4 = 0x0605C6E4;

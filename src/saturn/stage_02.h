@@ -5,15 +5,6 @@
 #include "sattypes.h"
 #include <saturn_sprite.h>
 
-typedef struct UnkStruct_060e8350 {
-    /* 0x00 */ s32 unk0;
-    /* 0x04 */ char pad_0[0x14];
-    /* 0x18 */ s16 unk18;
-    /* 0x1A */ char pad_1A[0x4];
-    /* 0x1E */ s16 unk1E;
-    /* 0x20 */ struct UnkStruct_060e8350* unk20;
-} UnkStruct_060e8350; // size = 0x24
-
 typedef enum {
     E_NONE,
     E_BREAKABLE,

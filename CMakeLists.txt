@@ -413,7 +413,7 @@ set(SOURCE_FILES_STAGE_CHI
     src/st/chi/en_room_foreground.c
     src/st/chi/e_salem_witch.c
     src/st/chi/e_gremlin.c
-    src/st/chi/en_thornweed_corpseweed.c
+    src/st/chi/e_thornweed_corpseweed.c
     src/st/chi/en_venus_weed.c
     src/st/chi/gen/rooms.c
     src/st/chi/gen/e_layout.c
@@ -935,7 +935,7 @@ set(SOURCE_FILES_STAGE_LIB
     src/st/lib/popup.c
     src/st/lib/e_dhuron.c
     src/st/lib/e_ectoplasm.c
-    src/st/lib/en_thornweed_corpseweed.c
+    src/st/lib/e_thornweed_corpseweed.c
     src/st/lib/e_skeleton.c
     src/st/lib/e_mist_door.c
     src/st/lib/e_flea_armor.c
