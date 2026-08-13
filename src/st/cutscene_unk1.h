@@ -12,7 +12,7 @@ static
 #endif
     void
     CutsceneUnk1(void) {
-#ifdef VERSION_HD
+#if defined(VERSION_HD) && !defined(STAGE_IS_NO3)
     g_Dialogue.nextLineX = 0;
     g_Dialogue.nextCharX = 0;
 #else
@@ -23,7 +23,7 @@ static
     g_Dialogue.unk12 = 0;
     g_Dialogue.nextCharTimer = 0;
     g_Dialogue.unk17 = CUTSCENE_UNK1_UNK17;
-#ifdef VERSION_HD
+#if defined(VERSION_HD) && !defined(STAGE_IS_NO3)
     g_Dialogue.nextLineY = g_Dialogue.startY + 0x14;
 #endif
 }

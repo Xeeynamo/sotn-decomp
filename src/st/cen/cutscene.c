@@ -38,10 +38,11 @@ static const char _pad[4] = "";
 #else
 // clang-format off
 static u16 actor_names[] = {
-    0x71, 0x99, 0x76, 0x70, 0x8084,
-    0x8F, 0x98, 0x71, 0x65, 0x97, 0x70, 0x88, 0x6F, 0x8084,
-    0x7C, 0x6C, 0x8C, 0x84,
-    0x7B, 0x77, 0x6D, 0x808A, 0x7D};
+    _WC('ア'), _WC('ル'), _WC('カ'), _WC('ー'), _WC('ド'),
+    _WC('マ'), _WC('リ'), _WC('ア'), _WC('・'), _WC('ラ'), _WC('ー'), _WC('ネ'), _WC('ッ'), _WC('ド'),
+    _WC('シ'), _WC('ャ'), _WC('フ'), _WC('ト'),
+    _WC('サ'), _WC('キ'), _WC('ュ'), _WC('バ'), _WC('ス'),
+};
 // clang-format on
 static u8 actor_prims[] = {6, 10, 4, 6};
 static u8 actor_name_len[] = {5, 9, 4, 5};

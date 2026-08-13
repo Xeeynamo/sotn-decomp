@@ -107,25 +107,40 @@ static s32 g_IsCutsceneDone;
 #include "../cutscene_actor_name_psp.h"
 
 #else
+#ifdef VERSION_US
 static const char* actor_names[] = {_S("Alucard"), _S("Death")};
+#else
+static wchar_t actor_names[] = {
+    _WC('ア'), _WC('ル'), _WC('カ'), _WC('ー'), _WC('ド'),
+    _WC('D'),  _WC('E'),  _WC('A'),  _WC('T'),  _WC('H'),
+};
+static u8 actor_prims[] = {6, 5};
+static u8 actor_name_len[] = {5, 5};
+#endif
 
 // BSS
-STATIC_PAD_BSS(0xC00);
+s16 msgBoxTpage[0x600];
 s32 g_SkipCutscene;
 Dialogue g_Dialogue;
 u32 D_801D7D68[26];
 u32 g_CutsceneFlags;
 s32 g_IsCutsceneDone;
 
+#ifdef VERSION_HD
+#define CUTSCENE_UNK1_NEXT_X 0x180
+#else
 #define CUTSCENE_UNK1_NEXT_X 0x182
+#endif
 #include "../cutscene_unk1.h"
 
 #include "../set_cutscene_script.h"
 #endif
 
 #define CUTSCENE_UNK3_RECT_X 384
+#ifdef VERSION_HD
+#define CUTSCENE_UNK3_RECT_H 16
+#endif
 #define CUTSCENE_UNK3_RECT_Y 256
-
 #include "../cutscene_unk3.h"
 
 #define CUTSCENE_UNK4_TPAGE 0x16
@@ -166,13 +181,15 @@ extern u_long D_894490C;
 extern u_long D_894568C;
 extern u_long D_8943B8C;
 #else
+#ifdef VERSION_US
 #include "../cutscene_scale_avatar.h"
+#endif
 
 extern u8 cutscene_data[];
 #endif
 
 void EntityCutscene(Entity* self) {
-#ifdef VERSION_PSP
+#ifndef VERSION_US
     const int PRIM_COUNT = 4;
     const int TIMER_DELAY = 8;
 #else
@@ -187,11 +204,16 @@ void EntityCutscene(Entity* self) {
 #ifdef VERSION_PSP
     s32 sp40;
 #endif
+#ifndef VERSION_HD
     RECT rect;
+#endif
     s32 i;
     s32 j;
     u16 nextChar;
     u_long ptr;
+#ifdef VERSION_HD
+    u16* var_v0;
+#endif
     Primitive* prim;
     s32 var_s7;
 #ifdef VERSION_PSP
@@ -249,7 +271,7 @@ void EntityCutscene(Entity* self) {
             g_api.TimeAttackController(
                 TIMEATTACK_EVENT_MEET_DEATH, TIMEATTACK_SET_RECORD);
             g_Settings.D_8003CB04 |= 4;
-#else
+#elif defined(VERSION_US)
             g_CutsceneHasControl = 1;
 #endif
         }
@@ -258,21 +280,23 @@ void EntityCutscene(Entity* self) {
         nextChar = 0;
         // this is a huge While-loop! Don't miss it!
         while (1) {
-#ifdef VERSION_PSP
+#ifndef VERSION_US
             nextChar = *g_Dialogue.scriptCur++;
+#ifdef VERSION_PSP
             sp40 = 0;
             if (PadReadPSP() & PAD_START) {
                 g_Dialogue.nextCharTimer = 0;
             }
 #endif
+#endif
             if (g_Dialogue.nextCharTimer && !g_SkipCutscene) {
                 g_Dialogue.nextCharTimer--;
-#ifdef VERSION_PSP
+#ifndef VERSION_US
                 g_Dialogue.scriptCur--;
 #endif
                 return;
             }
-#ifdef VERSION_PSP
+#ifndef VERSION_US
             if (!(nextChar & 0x80)) {
 #else
             nextChar = *g_Dialogue.scriptCur++;
@@ -288,35 +312,37 @@ void EntityCutscene(Entity* self) {
                     }
                     g_Dialogue.nextCharX = g_Dialogue.nextLineX;
                     if (!(g_Dialogue.unk12 & 1)) {
-#ifdef VERSION_PSP
+#ifndef VERSION_US
                         g_Dialogue.nextLineY += 16;
 #else
                         g_Dialogue.nextLineY += 12;
 #endif
                     }
                     g_Dialogue.nextCharY++;
-#ifdef VERSION_PSP
+#ifndef VERSION_US
                     g_Dialogue.nextCharY &= 3;
 #else
-                    if (g_Dialogue.nextCharY >= 5) {
+                    if (g_Dialogue.nextCharY > 4) {
                         g_Dialogue.nextCharY = 0;
                     }
 #endif
                     CutsceneUnk4();
                     if (!(g_Dialogue.unk12 & 1)) {
-#ifdef VERSION_PSP
+#ifndef VERSION_US
                         if (g_Dialogue.nextCharY > 2)
 #else
-                        if (g_Dialogue.nextCharY >= 4)
+                        if (g_Dialogue.nextCharY > 3)
 #endif
                         {
                             g_Dialogue.unk12 |= 1;
                             g_Dialogue.portraitAnimTimer = 0;
                             self->step_s = 0;
                             self->step++;
-#ifndef VERSION_PSP
                         } else {
+#ifdef VERSION_US
                             continue;
+#elif defined(VERSION_HD)
+                            return;
 #endif
                         }
                     } else {
@@ -488,10 +514,16 @@ void EntityCutscene(Entity* self) {
                     ptr |= (u_long)*g_Dialogue.scriptCur++;
 #ifdef VERSION_PSP
                     ptr += (u_long)cutscene_data;
-#else
-                    ptr += (u16)0x100000;
-#endif
                     g_Dialogue.scriptCur += *CS_NEXT(ptr) * 4;
+#elif defined(VERSION_HD)
+                    g_Dialogue.scriptCur += *CS_PTR(ptr) * 4;
+#else
+                // clang-format off
+                    // clang-format really wants to move these lines to the left
+                    ptr += (u16)0x100000;
+                    g_Dialogue.scriptCur += *CS_NEXT(ptr) * 4;
+                // clang-format on
+#endif
 
                     ptr = (u_long)*g_Dialogue.scriptCur++;
                     ptr <<= 4;
@@ -611,12 +643,16 @@ void EntityCutscene(Entity* self) {
                     *g_Dialogue.scriptCur++;
                     continue;
                 default:
+#ifdef VERSION_HD
+                    continue;
+#else
                     if (g_SkipCutscene) {
                         continue;
                     }
                     g_Dialogue.nextCharTimer = g_Dialogue.unk17;
 #ifdef VERSION_PSP
                     sp40 = 1;
+#endif
 #endif
                 } // Close the switch
 
@@ -625,11 +661,15 @@ void EntityCutscene(Entity* self) {
                     break; // This breaks the big while-loop!
                 }
                 continue;
-            } else {
+#endif
+            }
+#ifndef VERSION_US
+            else {
                 if (g_SkipCutscene) {
                     g_Dialogue.scriptCur++;
                     continue;
                 }
+#ifdef VERSION_PSP
                 if (0xA7 <= nextChar && nextChar < 0xAD) {
                     nextChar = nextChar + 0x27;
                 } else if (nextChar == 0xA6) {
@@ -639,27 +679,43 @@ void EntityCutscene(Entity* self) {
                 } else {
                     nextChar = nextChar - 0x11;
                 }
-                g_Dialogue.nextCharTimer = g_Dialogue.unk17;
+#else
+
+                nextChar <<= 8;
+                nextChar |= *g_Dialogue.scriptCur++;
 #endif
+                g_Dialogue.nextCharTimer = g_Dialogue.unk17;
             }
+#endif
             break;
         } // Close the giant while loop
-
+#ifdef VERSION_HD
+        var_v0 = g_api.func_80106A28(nextChar, 1);
+        if (var_v0) {
+            vCoord = (LOHU(g_Dialogue.nextCharY) * 16) + 0x100;
+            LoadTPage(
+                (u_long*)var_v0, 0, 0, g_Dialogue.nextCharX, vCoord, 0xC, 0x10);
+            g_Dialogue.nextCharX += 3;
+            return;
+        }
+#endif
 #ifdef VERSION_PSP
         var_s6 = (u8*)&D_pspeu_092997F8;
-#else
+#elif defined(VERSION_US)
         if (nextChar == ' ') {
             g_Dialogue.nextCharX += 2;
             return;
         }
 #endif
 
+#ifndef VERSION_HD
         rect.x = ((nextChar & 0xF) * 2) + 0x380;
         rect.y = ((s32)(nextChar & 0xF0) >> 1) + 0xF0;
         rect.w = 2;
         rect.h = 8;
         // Other cutscenes have + 0x180 here
         vCoord = (g_Dialogue.nextCharY * 0xC) + 0x100;
+#endif
 #ifdef VERSION_PSP
         StoreImage(&rect, (u_long*)var_s6);
         for (i = 0; i < 32; i++) {
@@ -742,15 +798,16 @@ void EntityCutscene(Entity* self) {
         if (((g_Dialogue.nextCharX - g_Dialogue.nextLineX) / 2) < 0x70) {
         };
         D_pspeu_09299818 = nextChar;
-#else
+#elif defined(VERSION_US)
         MoveImage(&rect, g_Dialogue.nextCharX, vCoord);
         g_Dialogue.nextCharX += 2;
 #endif
         break;
     case 2:
-#ifdef VERSION_PSP
-        ptr = g_Dialogue.nextCharY;
-        ptr = (ptr + 1) & 3;
+#ifdef VERSION_US
+        ScaleCutsceneAvatar(2);
+#else
+        ptr = (g_Dialogue.nextCharY + 1) & 3;
         if (!self->step_s) {
             prim = g_Dialogue.prim[ptr];
             prim->v0 += 2;
@@ -770,8 +827,6 @@ void EntityCutscene(Entity* self) {
             prim->y0 -= 2;
         }
         g_Dialogue.portraitAnimTimer++;
-#else
-        ScaleCutsceneAvatar(2);
 #endif
         if (g_Dialogue.portraitAnimTimer >= TIMER_DELAY) {
             self->step--;
@@ -905,17 +960,17 @@ void EntityCutscene(Entity* self) {
         break;
 
     case 7:
-#ifdef VERSION_PSP
+#ifndef VERSION_US
         DestroyEntity(self);
 #endif
         g_CastleFlags[IVE_BEEN_ROBBED] = 1;
         g_api.TimeAttackController(
             TIMEATTACK_EVENT_MEET_DEATH, TIMEATTACK_SET_RECORD);
-#ifndef VERSION_PSP
+#ifdef VERSION_US
         g_CutsceneHasControl = 0;
 #endif
         g_Settings.D_8003CB04 |= 4;
-#ifndef VERSION_PSP
+#ifdef VERSION_US
         DestroyEntity(self);
 #endif
         break;
