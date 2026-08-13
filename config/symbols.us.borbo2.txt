@@ -26,7 +26,6 @@ func_us_8019D260_from_rcen = 0x8019F190;
 EntityCerberusGateDebug = 0x8019F80C;
 CutsceneUnk1 = 0x8019FD70;
 SetCutsceneScript = 0x8019FDC4;
-CutsceneUnk3 = 0x8019FF88;
 CutsceneUnk4 = 0x8019FFE4;
 DrawCutsceneActorName = 0x801A009C;
 SetCutsceneEvents = 0x801A0220;

@@ -1,21 +1,10 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 // Note: SKULL_SPEED is actually inverse speed! It's frames per pose.
 static AnimateEntityFrame anim_hover[] = {
-    {SKULL_SPEED, 1},
-    {SKULL_SPEED, 2},
-    {SKULL_SPEED, 3},
-    {SKULL_SPEED, 4},
-    {SKULL_SPEED, 5},
-    {SKULL_SPEED, 6},
-    {SKULL_SPEED, 7},
-    {SKULL_SPEED, 8},
-    {SKULL_SPEED, 9},
-    {SKULL_SPEED, 10},
-    {SKULL_SPEED, 11},
-    {SKULL_SPEED, 12},
-    {SKULL_SPEED, 13},
-    {SKULL_SPEED, 14},
-    {SKULL_SPEED, 15},
-    {SKULL_SPEED, 16},
+    {SKULL_SPEED, 1},  {SKULL_SPEED, 2},  {SKULL_SPEED, 3},  {SKULL_SPEED, 4},
+    {SKULL_SPEED, 5},  {SKULL_SPEED, 6},  {SKULL_SPEED, 7},  {SKULL_SPEED, 8},
+    {SKULL_SPEED, 9},  {SKULL_SPEED, 10}, {SKULL_SPEED, 11}, {SKULL_SPEED, 12},
+    {SKULL_SPEED, 13}, {SKULL_SPEED, 14}, {SKULL_SPEED, 15}, {SKULL_SPEED, 16},
     POSE_LOOP(0),
 };
 
@@ -84,5 +73,4 @@ void EntityStoneSkull(Entity* self) {
     self->hitboxWidth = *ptr++;
     self->hitboxHeight = *ptr++;
 #endif
-
 }

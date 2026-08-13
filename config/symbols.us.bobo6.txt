@@ -7,7 +7,6 @@ RIC_hitboxOffY = 0x800762EA;
 RIC_facingLeft = 0x800762EC;
 RIC_palette = 0x800762EE;
 RIC_drawMode = 0x800762F0;
-RIC_drawFlags = 0x800762F1;
 RIC_zPriority = 0x800762FC;
 RIC_step = 0x80076304;
 RIC_anim = 0x80076324;
