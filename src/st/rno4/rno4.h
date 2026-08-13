@@ -95,8 +95,8 @@ typedef enum EntityID {
     E_BREAKABLE_WALL,            // EntityBreakableWall
     E_BREAKABLE_WALL_DEBRIS,     // EntityBreakableWallDebris
     E_JACKO_BONES,               // EntityJackOBones
-    E_JACKO_DEATH_PARTS,   // EntityJackOBonesDeathParts
-    E_JACKO_JACK,          // EntityJackOBonesJack
+    E_JACKO_DEATH_PARTS,         // EntityJackOBonesDeathParts
+    E_JACKO_JACK,                // EntityJackOBonesJack
     E_NOVA_SKELETON,             // EntityNovaSkeleton
     E_NOVA_LASER,                // EntityNovaLaser
     E_NOVA_LASER_PULSE,          // EntityNovaLaserPulse

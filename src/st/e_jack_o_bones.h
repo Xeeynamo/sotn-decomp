@@ -1,13 +1,19 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 extern EInit g_EInitJackOBones2;
 extern EInit g_EInitJackOBones3;
 extern EInit g_EInitJackOBones;
 
-static AnimateEntityFrame anim_walk_fwd[] = {{6, 1}, {4, 2}, {4, 3}, {6, 4}, {5, 5}, {5, 6}, POSE_LOOP(0)};
-static AnimateEntityFrame anim_walk_back[] = {{6, 1}, {5, 6}, {5, 5}, {6, 4}, {4, 3}, {4, 2}, POSE_LOOP(0)};
-static AnimateEntityFrame anim_throw[] = {{5, 1},  {5,  2},  {5, 7}, {6, 8}, {5, 9}, {5,   10},
-                          {5, 11}, {31, 12}, {4, 4}, {4, 5}, {4, 6}, POSE_END};
-static AnimateEntityFrame anim_jump_windup[] = {{1, 1}, {4, 13}, {4, 14}, {1, 1}, POSE_END};
-static AnimateEntityFrame anim_jump_landing[] = {{1, 1}, {4, 13}, {6, 14}, {4, 13}, {1, 1}, POSE_END};
+static AnimateEntityFrame anim_walk_fwd[] = {
+    {6, 1}, {4, 2}, {4, 3}, {6, 4}, {5, 5}, {5, 6}, POSE_LOOP(0)};
+static AnimateEntityFrame anim_walk_back[] = {
+    {6, 1}, {5, 6}, {5, 5}, {6, 4}, {4, 3}, {4, 2}, POSE_LOOP(0)};
+static AnimateEntityFrame anim_throw[] = {
+    {5, 1},  {5, 2},   {5, 7}, {6, 8}, {5, 9}, {5, 10},
+    {5, 11}, {31, 12}, {4, 4}, {4, 5}, {4, 6}, POSE_END};
+static AnimateEntityFrame anim_jump_windup[] = {
+    {1, 1}, {4, 13}, {4, 14}, {1, 1}, POSE_END};
+static AnimateEntityFrame anim_jump_landing[] = {
+    {1, 1}, {4, 13}, {6, 14}, {4, 13}, {1, 1}, POSE_END};
 
 static u16 death_parts_rotspeeds[] = {
     0x100, 0x80, 0x48, 0x20, 0x40, 0x10, 0x18, 0};
