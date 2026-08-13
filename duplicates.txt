@@ -5904,11 +5904,11 @@
 | 1.00 | true     | func_801A8E60                       | asm/us/st/st0/matchings/cutscene/func_801A8E60.s 
 | 0.93 | true     | func_us_801ABC44                    | asm/us/st/top/matchings/cutscene/func_us_801ABC44.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | CutsceneUnk3                        | asm/us/boss/bo2/matchings/e_cutscene_dialogue/CutsceneUnk3.s 
+| 1.00 | true     | func_us_801A5678                    | asm/us/boss/bo2/matchings/e_cutscene_dialogue/func_us_801A5678.s 
 | 1.00 | true     | func_us_801A47B4                    | asm/us/boss/bo5/matchings/e_cutscene_dialogue/func_us_801A47B4.s 
 | 1.00 | true     | func_us_8018B1DC                    | asm/us/boss/mar/matchings/cutscene/func_us_8018B1DC.s 
-| 1.00 | true     | CutsceneUnk3                        | asm/us/boss/rbo2/matchings/e_cutscene_dialogue/CutsceneUnk3.s 
-| 1.00 | true     | CutsceneUnk3                        | asm/us/boss/rbo6/matchings/e_cutscene_dialogue/CutsceneUnk3.s 
+| 1.00 | true     | func_us_8019FF88                    | asm/us/boss/rbo2/matchings/e_cutscene_dialogue/func_us_8019FF88.s 
+| 1.00 | true     | func_us_801A1DF4                    | asm/us/boss/rbo6/matchings/e_cutscene_dialogue/func_us_801A1DF4.s 
 | 1.00 | true     | func_8018E124                       | asm/us/st/cen/matchings/cutscene/func_8018E124.s 
 | 1.00 | true     | func_us_801C4160                    | asm/us/st/dai/matchings/e_cutscene_dialogue/func_us_801C4160.s 
 | 1.00 | true     | func_8019498C                       | asm/us/st/dre/matchings/e_cutscene_dialogue/func_8019498C.s 
@@ -8947,7 +8947,7 @@
 | 1.00 | true     | func_us_801C6450                    | asm/us/st/rno0/matchings/e_floor_trap/func_us_801C6450.s 
 | 1.00 | true     | func_us_801B7C8C                    | asm/us/st/rnz0/matchings/e_floor_trap/func_us_801B7C8C.s 
 -------------------------------------------------------------------------------
-| 1.00 | false    | EntityStoneSkull                    | asm/us/st/rno0/nonmatchings/e_stone_skull/EntityStoneSkull.s 
+| 1.00 | true     | func_us_801C7F24                    | asm/us/st/rno0/matchings/e_stone_skull/func_us_801C7F24.s 
 | 1.00 | false    | func_us_801C7F24_from_rno0          | asm/us/st/rno1/nonmatchings/e_stone_skull/func_us_801C7F24_from_rno0.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801C5850                    | asm/us/st/rno3/matchings/e_blue_venus_weed/func_us_801C5850.s 
