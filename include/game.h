@@ -463,6 +463,21 @@ typedef enum {
 // characters with accent characters for european languages. e.g. _SE("Eliminé
 // par Richter ")
 #define _SE(x) (x)
+
+// Decorator to re-encode wide characters with ./tools/sotn_str when building
+// the game. JP versions of SOTN use a novel wide encoding with the upper byte
+// used for dakuten and handakuten flags. These are emitted as `wchar_t` types
+// if that conversin is not necessary. e.g. _WC('ド')
+#define _WC(c) (L##c)
+
+// Decorator to re-encoding strings as wide-character arrays with
+// ./tools/sotn_str when building the game. JP/HD use a wide characters in
+// certain situations like cutscene actor names to add dakuten or Handakuten
+// diacritics. These are specified by flags in the upper byte of the half-word.
+// otherwise, these are given the same code points as characters using the _S
+// macro. These strings are "raw", meaning there is no NULL terminator
+// appended to these strings. e.g. _WS_RAW("アルカード")
+#define _WS_RAW(x) (x)
 #endif
 // same as above, but it processes a single character from CPP
 #define CH(x) ((x) - 0x20)
