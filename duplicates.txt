@@ -7777,6 +7777,9 @@
 | 1.00 | true     | func_us_801A9208                    | asm/us/boss/bo6/matchings/e_cutscene_actors/func_us_801A9208.s 
 | 0.90 | false    | func_us_801A9208_from_bo6           | asm/us/boss/rbo6/nonmatchings/unk_2362C/func_us_801A9208_from_bo6.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | RicResetPose                        | asm/us/boss/bo6/matchings/richter/RicResetPose.s 
+| 1.00 | true     | func_80159BC8                       | asm/us/ric/matchings/pl_steps/func_80159BC8.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | RicEntityPlayerBlinkWhite           | asm/us/boss/bo6/matchings/us_39144/RicEntityPlayerBlinkWhite.s 
 | 0.99 | true     | func_80162EF8                       | asm/us/ric/matchings/pl_blueprints/func_80162EF8.s 
 -------------------------------------------------------------------------------
@@ -8130,9 +8133,6 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801595D8                       | asm/us/ric/matchings/pl_steps/func_801595D8.s 
 | 1.00 | false    | RicStepFall                         | asm/us/boss/bo6/nonmatchings/richter/RicStepFall.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | func_80159BC8                       | asm/us/ric/matchings/pl_steps/func_80159BC8.s 
-| 1.00 | false    | RicResetPose                        | asm/us/boss/bo6/nonmatchings/richter/RicResetPose.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8015A9B0                       | asm/us/ric/matchings/pl_steps/func_8015A9B0.s 
 | 0.91 | false    | RicStepDead                         | asm/us/boss/bo6/nonmatchings/richter/RicStepDead.s 
