@@ -2335,11 +2335,11 @@
 | st0        | func_pspeu_09250500                |       37 |          2 |        |       |     |
 | top        | func_pspeu_09246EF8                |       37 |          2 |        |       |     |
 | wrp        | func_psp_092439F0                  |       37 |          2 |        |       |     |
-| bo2        | CutsceneUnk3                       |       37 |          3 |        |       |     |
-| bo5        | CutsceneUnk3                       |       37 |          3 |        |       |     |
-| mar        | CutsceneUnk3                       |       37 |          3 |        |       |     |
-| rbo2       | CutsceneUnk3                       |       37 |          3 |        |       |     |
-| rbo6       | CutsceneUnk3                       |       37 |          3 |        |       |     |
+| bo2        | func_pspeu_09249B40                |       37 |          3 |        |       |     |
+| bo5        | func_pspeu_0924D530                |       37 |          3 |        |       |     |
+| mar        | func_pspeu_09247388                |       37 |          3 |        |       |     |
+| rbo2       | func_pspeu_0924C3C0                |       37 |          3 |        |       |     |
+| rbo6       | func_pspeu_0924D368                |       37 |          3 |        |       |     |
 | dra        | func_psp_09101060                  |       37 |          3 |        |       |     |
 | dra        | DestroyEntitiesFromIndex           |       37 |          3 |        |       |     |
 | dra        | func_psp_0913DAA8                  |       37 |          3 |        |       |     |
@@ -2639,7 +2639,7 @@
 | top        | func_pspeu_09246CE0                |       39 |          2 |        |       |     |
 | wrp        | func_psp_09238598                  |       39 |          2 |        |       |     |
 | wrp        | func_psp_09238620                  |       39 |          2 |        |       |     |
-| bo6        | CutsceneUnk3                       |       39 |          3 |        |       |     |
+| bo6        | func_pspeu_09244F38                |       39 |          3 |        |       |     |
 | dra        | func_psp_0913DA28                  |       39 |          3 |        |       |     |
 | main       | _sceGuSetDebugFontCallback         |       39 |          3 |        |       |     |
 | main       | func_psp_0892D5F0                  |       39 |          3 |        |       |     |
@@ -3537,12 +3537,12 @@
 | rno1       | TryShoot                           |       51 |          9 |        |       |     |
 | rno3       | func_pspeu_0924EB18                |       51 |          9 |        |       |     |
 | rno4       | TryShoot                           |       51 |          9 |        |       |     |
-| bo2        | GetLang                            |       51 |         10 |        |       |     |
-| bo5        | GetLang                            |       51 |         10 |        |       |     |
-| bo6        | GetLang                            |       51 |         10 |        |       |     |
-| mar        | GetLang                            |       51 |         10 |        |       |     |
-| rbo2       | GetLang                            |       51 |         10 |        |       |     |
-| rbo6       | GetLang                            |       51 |         10 |        |       |     |
+| bo2        | func_pspeu_09249788                |       51 |         10 |        |       |     |
+| bo5        | func_pspeu_0924D178                |       51 |         10 |        |       |     |
+| bo6        | func_pspeu_09244B80                |       51 |         10 |        |       |     |
+| mar        | func_pspeu_09246FD0                |       51 |         10 |        |       |     |
+| rbo2       | func_pspeu_0924C008                |       51 |         10 |        |       |     |
+| rbo6       | func_pspeu_0924CFB0                |       51 |         10 |        |       |     |
 | dra        | func_psp_09103E68                  |       51 |         10 |        |       |     |
 | dra        | func_psp_091048B8                  |       51 |         10 |        |       |     |
 | dra        | func_psp_090F6368                  |       51 |         10 |        |       |     |
@@ -5281,7 +5281,7 @@
 | rno1       | EntityBladeSoldierDeathParts       |       90 |          9 |        |       |     |
 | rno3       | func_pspeu_0924F4F8                |       90 |          9 |        |       |     |
 | rno4       | EntityBladeSoldierDeathParts       |       90 |          9 |        |       |     |
-| bo5        | EntityStatue                       |       90 |         10 |        |       |     |
+| bo5        | func_pspeu_09250728                |       90 |         10 |        |       |     |
 | dai        | func_pspeu_09256DA0                |       90 |         10 |        |       |     |
 | main       | _getmodreent                       |       90 |         13 |        |       |     |
 | bo5        | func_us_801A4494                   |       90 |         16 |        |       |     |
@@ -7126,7 +7126,7 @@
 | maria      | func_pspeu_092B1930                |      169 |         26 |        |       |     |
 | cen        | func_pspeu_092411A0                |      169 |         26 |        |       |     |
 | dra        | func_psp_0911E800                  |      170 |         17 |        |       |     |
-| bo5        | EntityBlock                        |      170 |         18 |        |       |     |
+| bo5        | func_pspeu_092504B0                |      170 |         18 |        |       |     |
 | dai        | func_pspeu_09256B28                |      170 |         18 |        |       |     |
 | no1        | func_pspeu_0925C8C8                |      170 |         23 |        |       |     |
 | bo4        | func_pspeu_09252B48_from_rbo5      |      170 |         24 |        |       |     |
@@ -7439,7 +7439,7 @@
 | bo0        | UnkCollisionFunc2                  |      200 |         20 |        |       |     |
 | bo1        | UnkCollisionFunc2                  |      200 |         20 |        |       |     |
 | bo2        | UnkCollisionFunc2                  |      200 |         20 |        |       |     |
-| bo5        | UnkCollisionFunc2                  |      200 |         20 |        |       |     |
+| bo5        | func_pspeu_09244B20                |      200 |         20 |        |       |     |
 | rbo4       | UnkCollisionFunc2                  |      200 |         20 |        |       |     |
 | rbo7       | UnkCollisionFunc2                  |      200 |         20 |        |       |     |
 | are        | func_pspeu_092618D0                |      200 |         20 |        |       |     |
@@ -8261,14 +8261,14 @@
 | chi        | func_psp_09249750                  |      330 |         47 | Yes    |       |     |
 | lib        | func_psp_09251168                  |      330 |         47 | Yes    |       |     |
 | rchi       | func_pspeu_09248220                |      330 |         47 | Yes    |       |     |
-| rno0       | EntityThornweed                    |      330 |         47 | Yes    |       |     |
+| rno0       | func_pspeu_0925B408                |      330 |         47 | Yes    |       |     |
 | rbo6       | func_us_8019EADC                   |      330 |         59 |        |       |     |
 | dra        | func_psp_09102C20                  |      331 |         39 |        |       |     |
 | rbo4       | func_us_8019846C                   |      332 |         39 |        |       |     |
 | maria      | func_pspeu_092A6280                |      332 |         40 |        |       |     |
 | bo0        | func_pspeu_0924E3A8                |      332 |         41 |        |       |     |
 | bo3        | GetPlayerCollisionWith             |      332 |         41 |        |       |     |
-| bo5        | GetPlayerCollisionWith             |      332 |         41 |        |       |     |
+| bo5        | func_pspeu_09245450                |      332 |         41 |        |       |     |
 | mar        | GetPlayerCollisionWith             |      332 |         41 |        |       |     |
 | rbo1       | GetPlayerCollisionWith             |      332 |         41 |        |       |     |
 | rbo5       | GetPlayerCollisionWith             |      332 |         41 |        |       |     |
@@ -8759,7 +8759,7 @@
 | chi        | func_psp_0924AE40                  |      412 |         44 |        |       |     |
 | lib        | func_psp_09252858                  |      412 |         44 |        |       |     |
 | rchi       | func_pspeu_092498F0                |      412 |         44 |        |       |     |
-| rno0       | EntityCorpseweedProjectile         |      412 |         44 |        |       |     |
+| rno0       | func_pspeu_0925CAF8                |      412 |         44 |        |       |     |
 | cat        | func_pspeu_09254F50                |      413 |         43 |        |       |     |
 | bo1        | func_us_801A3480                   |      413 |         47 |        |       |     |
 | bo3        | func_us_801A5338                   |      413 |         55 |        |       |     |
@@ -9900,7 +9900,7 @@
 | cat        | func_pspeu_09258548                |     1267 |        134 | Yes    |       |     |
 | chi        | func_psp_09249BE0                  |     1267 |        134 | Yes    |       |     |
 | lib        | func_psp_092515F8                  |     1267 |        134 | Yes    |       |     |
-| rno0       | EntityCorpseweed                   |     1269 |        134 | Yes    |       |     |
+| rno0       | func_pspeu_0925B898                |     1269 |        134 | Yes    |       |     |
 | cen        | func_pspeu_0923B190                |     1269 |        203 | Yes    |       |     |
 | bo0        | EntitySealedDoor                   |     1278 |        113 | Yes    |       |     |
 | no2        | func_pspeu_0924AB98                |     1280 |        160 |        |       |     |
