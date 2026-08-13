@@ -19,7 +19,6 @@ func_us_8019D260_from_rcen = 0x8019D7C4;
 func_us_8019D330_from_rcen = 0x8019D894;
 CutsceneUnk1 = 0x801A1BE0;
 SetCutsceneScript = 0x801A1C30;
-CutsceneUnk3 = 0x801A1DF4;
 CutsceneUnk4 = 0x801A1E50;
 DrawCutsceneActorName = 0x801A1F08;
 SetCutsceneEvents = 0x801A208C;

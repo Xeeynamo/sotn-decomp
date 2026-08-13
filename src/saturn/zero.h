@@ -136,7 +136,7 @@ extern s32 g_PlayingXaBgmId;
 extern s8 DAT_060644C0;
 
 extern u16 DAT_0605cea2;
-extern u32 DAT_0605c658;
+extern u32 DAT_0605C658;
 void func_06030df0();
 void InitSystem();
 void func_060040D8();

@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rno0.h"
 
-INCLUDE_ASM("st/rno0/nonmatchings/e_thornweed_corpseweed", EntityThornweed);
-
-INCLUDE_ASM("st/rno0/nonmatchings/e_thornweed_corpseweed", EntityCorpseweed);
-
-INCLUDE_ASM("st/rno0/nonmatchings/e_thornweed_corpseweed", EntityCorpseweedProjectile);
+#define CORPSEWEED_TPAGE 0x14
+#define CORPSEWEED_PAL 0x219
+#define CORPSEWEED_PROJ_PAL 0x21C
+#include "../e_thornweed_corpseweed.h"
