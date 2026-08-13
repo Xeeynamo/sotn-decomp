@@ -1104,7 +1104,7 @@ void RicResetPose(void) {
     RIC.pose = 0;
     g_Ric.unk44 = 0;
     g_Ric.unk46 = 0;
-    RIC.drawFlags &= 0xFB;
+    RIC.drawFlags &= ~ENTITY_ROTATE;
 }
 
 void func_us_801B77D8(void) {
