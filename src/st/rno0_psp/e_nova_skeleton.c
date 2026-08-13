@@ -12,5 +12,3 @@ INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/e_nova_skeleton", EntityBladeSold
 INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/e_nova_skeleton", EntityNovaLaser);
 
 INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/e_nova_skeleton", EntityNovaLaserPulse);
-
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/e_nova_skeleton", EntityStoneSkull);
