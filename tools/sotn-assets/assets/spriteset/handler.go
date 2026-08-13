@@ -6,12 +6,17 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 )
+
+// HACK: only weapon spritesets are static. This is required for PC, as
+// two-handed weapons are both loaded at once, and symbols must not collide.
+var weaponAnimsetSymbol = regexp.MustCompile(`^w_\d{3}_\d+$`)
 
 type handler struct{}
 
@@ -58,7 +63,9 @@ func (h *handler) Build(e assets.BuildArgs) error {
 	sb := strings.Builder{}
 	sb.WriteString("// clang-format off\n")
 	if len(ss) > 0 {
-		BuildSpriteSet(&sb, ss, filepath.Base(e.Name))
+		mainSymbol := filepath.Base(e.Name)
+		isWeapon := weaponAnimsetSymbol.MatchString(mainSymbol)
+		BuildSpriteSet(&sb, ss, mainSymbol, isWeapon)
 	}
 	return util.WriteFile(out, []byte(sb.String()))
 }
