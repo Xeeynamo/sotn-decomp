@@ -1412,7 +1412,6 @@
 | zero/f_nonmat/f6010400.s     | func_06010400   |     1800 |        306 |       |     |
 | rstage15/f_nonmat/f60E2A90.s | func_060E2A90   |     1866 |        265 |       |     |
 | rstage16/f_nonmat/f60E09EC.s | func_060E09EC   |     1866 |        265 |       |     |
-| stage_02/f_nonmat/f60E7508.s | func_060E7508   |     1866 |        265 |       |     |
 | alucard/f_nonmat/f60C61E4.s  | func_060C61E4   |     1867 |        141 |       |     |
 | stage_16/f_nonmat/f60E1928.s | func_060E1928   |     1868 |        265 |       |     |
 | stage_15/f_nonmat/f60E49FC.s | func_060E49FC   |     1872 |        265 |       |     |
