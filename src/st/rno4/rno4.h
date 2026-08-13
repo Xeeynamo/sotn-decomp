@@ -99,7 +99,7 @@ typedef enum EntityID {
     E_JACKO_JACK,                // EntityJackOBonesJack
     E_NOVA_SKELETON,             // EntityNovaSkeleton
     E_NOVA_LASER,                // EntityNovaLaser
-    E_NOVA_LASER_PULSE,          // EntityNovaLaserPulse
+    E_NOVA_PULSE,          // EntityNovaLaserPulse
     E_BLADE_SOLDIER_DEATH_PARTS, // EntityBladeSoldierDeathParts
     E_IMP,                       // EntityImp
     E_IMP_SMOKE,                 // EntityImpSmoke

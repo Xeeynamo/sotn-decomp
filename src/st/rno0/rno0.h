@@ -62,8 +62,8 @@ enum EntityID {
     E_JACKO_JACK,                // EntityJackOBonesJack
     E_NOVA_SKELETON,             // EntityNovaSkeleton
     E_NOVA_LASER,                // EntityNovaLaser
-    E_NOVA_LASER_PULSE,          // EntityNovaLaserPulse
-    E_BLADE_SOLDIER_DEATH_PARTS, // EntityBladeSoldierDeathParts
+    E_NOVA_PULSE,                // EntityNovaLaserPulse
+    E_NOVA_DEATH_PARTS,          // EntityNovaSkeletonDeathParts
     E_HAMMER,                    // EntityHammer
     E_GURKHA_BODY_PARTS,         // EntityGurkhaBodyParts
     E_HAMMER_WEAPON,             // EntityHammerWeapon

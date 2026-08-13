@@ -49,7 +49,7 @@ void EntityJackOBonesJack(Entity* self);
 void EntityNovaSkeleton(Entity* self);
 void EntityNovaLaser(Entity* self);
 void EntityNovaLaserPulse(Entity* self);
-void EntityBladeSoldierDeathParts(Entity* self);
+void EntityNovaSkeletonDeathParts(Entity* self);
 void EntityHammer(Entity* self);
 void EntityGurkhaBodyParts(Entity* self);
 void EntityHammerWeapon(Entity* self);
@@ -130,7 +130,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityNovaSkeleton,
     EntityNovaLaser,
     EntityNovaLaserPulse,
-    EntityBladeSoldierDeathParts,
+    EntityNovaSkeletonDeathParts,
     EntityHammer,
     EntityGurkhaBodyParts,
     EntityHammerWeapon,
@@ -190,7 +190,7 @@ EInit g_EInitJackOBones = {ANIMSET_OVL(7), 1, 74, 528, 0x074};
 EInit g_EInitJackOBones2 = {ANIMSET_OVL(7), 0, 74, 528, 0x002};
 EInit g_EInitJackOBones3 = {ANIMSET_OVL(7), 21, 74, 528, 0x075};
 EInit g_EInitNovaSkeleton = {ANIMSET_OVL(8), 1, 72, 532, 0x07E};
-EInit D_us_80180B64 = {ANIMSET_OVL(8), 0, 72, 532, 0x07F};
+EInit g_EInitNovaSkeleton2 = {ANIMSET_OVL(8), 0, 72, 532, 0x07F};
 EInit g_EInitHammer = {ANIMSET_OVL(9), 2, 87, 547, 0x0BA};
 EInit D_us_80180B7C = {ANIMSET_OVL(9), 18, 87, 547, 0x0BB};
 EInit g_EInitGurkha = {ANIMSET_OVL(9), 2, 87, 544, 0x0BC};
