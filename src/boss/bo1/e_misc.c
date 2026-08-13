@@ -112,11 +112,147 @@ void EntityGreyPuffSpawner(
     }
 }
 
-INCLUDE_ASM("boss/bo1/nonmatchings/e_misc", EntityExplosionVariants);
+// NOTE: This entity data is slightly out of order.
+// Grey puff data comes before explosion variants data,
+// but explosion variant entity comes before grey puff entity.
 
-INCLUDE_ASM("boss/bo1/nonmatchings/e_misc", EntityGreyPuff);
+static s16 greyPuff_rot[] = {
+    0x030, 0x050, 0x080, 0x0B0, 0x0D0, 0x100, 0x100, 0x000,
+};
 
-INCLUDE_ASM("boss/bo1/nonmatchings/e_misc", EntityOlroxDrool);
+static s32 greyPuff_yVel[] = {
+    FIX(2.0 / 128),  FIX(18.0 / 128), FIX(30.0 / 128),
+    FIX(48.0 / 128), FIX(60.0 / 128), FIX(96.0 / 128),
+};
+
+static s32 explode_yVel[] = {
+    FIX(4.0 / 128),  FIX(20.0 / 128),  FIX(36.0 / 128),
+    FIX(56.0 / 128), FIX(112.0 / 128), FIX(144.0 / 128),
+};
+
+static u8 explode_startFrame[] = {1, 9, 21, 43};
+
+static u16 explode_lifetime[] = {16, 24, 42, 47};
+
+// Creates 4 different explosion animations for when objects or enemies are
+// destroyed or killed. The animations are more intense as self->params
+// increases (from 0 to 3).
+void EntityExplosionVariants(Entity* self) {
+    if (!self->step) {
+        self->velocityY = explode_yVel[self->ext.destructAnim.index];
+        self->flags =
+            FLAG_UNK_2000 | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_CAMERA_LOCKED;
+        self->palette = PAL_FLAG(PAL_UNK_195);
+        self->animSet = ANIMSET_DRA(2);
+        self->animCurFrame = explode_startFrame[self->params];
+        self->blendMode = BLEND_TRANSP;
+        self->step++;
+    } else {
+        self->posY.val -= self->velocityY;
+        ++self->poseTimer;
+        if ((self->poseTimer % 2) == 0) {
+            self->animCurFrame++;
+        }
+
+        if (self->poseTimer > explode_lifetime[self->params]) {
+            DestroyEntity(self);
+        }
+    }
+}
+
+// looks like a particle of dust fading away
+// params: Index of scaleX and velocityY to use
+void EntityGreyPuff(Entity* self) {
+    if (!self->step) {
+        self->flags =
+            FLAG_UNK_2000 | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_CAMERA_LOCKED;
+        self->palette = PAL_FLAG(PAL_UNK_195);
+        self->animSet = ANIMSET_DRA(5);
+        self->animCurFrame = 1;
+        self->blendMode = BLEND_TRANSP;
+        self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
+        self->scaleX = greyPuff_rot[self->params];
+        self->scaleY = self->scaleX;
+        self->velocityY = greyPuff_yVel[self->params];
+        self->step++;
+    } else {
+        self->posY.val -= self->velocityY;
+        self->poseTimer++;
+        if ((self->poseTimer % 2) == 0) {
+            self->animCurFrame++;
+        }
+        if (self->poseTimer > 36) {
+            DestroyEntity(self);
+        }
+    }
+}
+
+static s16 g_olroxDroolCollOffsets[] = {0x0000, 0x0000, 0x00FF, 0x0000};
+
+// Purpose is not 100% clear. Creates a falling blue droplet that sizzles after
+// hitting the ground. In existing overlays, this entity is not used. But looks
+// like Olrox's drool, so using that until we find any other uses.
+void EntityOlroxDrool(Entity* self) {
+    Primitive* prim;
+    s32 primIndex;
+    s32 i;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitParticle);
+        primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
+        if (primIndex == -1) {
+            return;
+        }
+        self->primIndex = primIndex;
+        self->flags |= FLAG_HAS_PRIMS;
+        self->hitboxState = 0;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.prim = prim;
+
+        for (i = 0; prim != NULL; i++, prim = prim->next) {
+            prim->x0 = prim->x1 = self->posX.i.hi;
+            prim->y0 = prim->y1 = self->posY.i.hi;
+            prim->r0 = 64;
+            prim->r1 = 0;
+            prim->g0 = 64;
+            prim->g1 = 0;
+            prim->b0 = 255;
+            prim->b1 = 16;
+            prim->priority = self->zPriority + 1;
+            prim->drawMode |= DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
+                              DRAW_UNK02 | DRAW_TRANSP;
+        }
+        break;
+
+    case 1:
+        prim = self->ext.prim;
+        if (CheckColliderOffsets(g_olroxDroolCollOffsets, 0)) {
+            prim->y1 += 2;
+            if (!self->step_s) {
+                // When hitting the ground, a sizzling effect is made
+                EntityExplosionVariantsSpawner(self, 1, 2, 0, 0, 3, 0);
+                self->step_s = 1;
+            }
+        } else {
+            self->velocityY += FIX(1.0 / 64);
+            self->posY.val += self->velocityY;
+            if ((prim->y0 - prim->y1) > 8) {
+                prim->y1 = prim->y0 - 8;
+            }
+        }
+
+        prim->x0 = self->posX.i.hi;
+        prim->x1 = self->posX.i.hi;
+        prim->y0 = self->posY.i.hi;
+
+        if (prim->y0 < prim->y1) {
+            g_api.FreePrimitives(self->primIndex);
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 bool UnkCollisionFunc5(s16* pointXY) {
     Collider collider;
@@ -351,7 +487,32 @@ void EntityIntenseExplosion(Entity* self) {
     }
 }
 
-INCLUDE_ASM("boss/bo1/nonmatchings/e_misc", InitializeUnkEntity);
+static u8 g_UnkEntityAnim[] = {2, 1, 2, 2, 2, 3, 2, 4, 2, 5, 4, 6, -1, 0};
+
+void InitializeUnkEntity(Entity* self) {
+    if (!self->step) {
+        InitializeEntity(g_EInitParticle);
+        self->zPriority += 16;
+        self->opacity = 0xF0;
+        self->scaleX = 0x1A0;
+        self->scaleY = 0x1A0;
+        self->animSet = ANIMSET_DRA(8);
+        self->animCurFrame = 1;
+
+        if (self->params) {
+            self->palette = self->params;
+        } else {
+            self->palette = PAL_FLAG(PAL_CC_FIRE_EFFECT);
+        }
+
+        self->step++;
+    } else {
+        MoveEntity();
+        if (!AnimateEntity(g_UnkEntityAnim, self)) {
+            DestroyEntity(self);
+        }
+    }
+}
 
 void MakeEntityFromId(u16 entityId, Entity* src, Entity* dst) {
     DestroyEntity(dst);
@@ -398,11 +559,288 @@ void MakeExplosions(void) {
     }
 }
 
-INCLUDE_ASM("boss/bo1/nonmatchings/e_misc", EntityBigRedFireball);
+extern AnimateEntityFrame g_bigRedFireballAnim[];
+void EntityBigRedFireball(Entity* self) {
+    s32 speedTemp;
 
-INCLUDE_ASM("boss/bo1/nonmatchings/e_misc", UnkRecursivePrimFunc1);
+    if (!self->step) {
+        InitializeEntity(g_EInitParticle);
+        self->animSet = ANIMSET_DRA(2);
+        self->palette = PAL_FLAG(PAL_UNK_1B6);
+        self->drawFlags |= (ENTITY_ROTATE + ENTITY_OPACITY);
+        self->blendMode |= (BLEND_TRANSP + BLEND_ADD);
+        self->opacity = 0x70;
+        self->zPriority = 192;
 
-INCLUDE_ASM("boss/bo1/nonmatchings/e_misc", UnkRecursivePrimFunc2);
+        switch (self->ext.bigredfireball.switch_control) {
+        case 1:
+            if (self->ext.bigredfireball.speed > 3) {
+                self->ext.bigredfireball.speed -= 3;
+                self->ext.bigredfireball.angle =
+                    self->ext.bigredfireball.angle - 0x800;
+            }
+            break;
+
+        case 2:
+            self->ext.bigredfireball.angle +=
+                self->ext.bigredfireball.speed * 192;
+            break;
+        }
+
+        self->ext.bigredfireball.angle &= 0xFFF;
+        self->rotate = self->ext.bigredfireball.angle;
+        speedTemp = self->ext.bigredfireball.speed * 320 / 24;
+        self->velocityX = speedTemp * rsin(self->ext.bigredfireball.angle);
+        self->velocityY = -(speedTemp * rcos(self->ext.bigredfireball.angle));
+    }
+
+    if (self->pose > 12) {
+        self->velocityX /= 4;
+        self->velocityX *= 3;
+        self->velocityY /= 4;
+        self->velocityY *= 3;
+    }
+
+    MoveEntity();
+
+    if (!AnimateEntity(g_bigRedFireballAnim, self)) {
+        DestroyEntity(self);
+    }
+}
+
+// clang-format off
+static s16 g_QuadIndices1[] = {
+    0, 1, 3, 4,
+    1, 2, 4, 5,
+    3, 4, 6, 7,
+    4, 5, 7, 8,
+};
+// clang-format on
+
+Primitive* UnkRecursivePrimFunc1(
+    SVECTOR* p0, SVECTOR* p1, SVECTOR* p2, SVECTOR* p3, Primitive* srcPrim,
+    s32 iterations, Primitive* dstPrim, u8* dataPtr) {
+    long flag, p;
+    s32 i;
+    Primitive* tempPrim;
+    s16* indices;
+    s32 rotTransResult;
+    SVECTOR* points;
+    uvPair* uv_values;
+
+    if (dstPrim == NULL) {
+        return NULL;
+    }
+    tempPrim = (Primitive*)dataPtr;
+    dataPtr += sizeof(Primitive);
+    points = (SVECTOR*)dataPtr;
+    dataPtr += sizeof(SVECTOR) * 9;
+    uv_values = (uvPair*)dataPtr;
+    dataPtr += sizeof(uvPair) * 10;
+
+    points[0] = *p0;
+    points[2] = *p1;
+    points[6] = *p2;
+    points[8] = *p3;
+
+    points[1].vx = (points[0].vx + points[2].vx + 1) >> 1;
+    points[1].vy = (points[0].vy + points[2].vy + 1) >> 1;
+    points[1].vz = (points[0].vz + points[2].vz + 1) >> 1;
+    points[7].vx = (points[6].vx + points[8].vx + 1) >> 1;
+    points[7].vy = (points[6].vy + points[8].vy + 1) >> 1;
+    points[7].vz = (points[6].vz + points[8].vz + 1) >> 1;
+    points[3].vx = (points[0].vx + points[6].vx + 1) >> 1;
+    points[3].vy = (points[0].vy + points[6].vy + 1) >> 1;
+    points[3].vz = (points[0].vz + points[6].vz + 1) >> 1;
+    points[5].vx = (points[2].vx + points[8].vx + 1) >> 1;
+    points[5].vy = (points[2].vy + points[8].vy + 1) >> 1;
+    points[5].vz = (points[2].vz + points[8].vz + 1) >> 1;
+    points[4].vx = (points[3].vx + points[5].vx + 1) >> 1;
+    points[4].vy = (points[3].vy + points[5].vy + 1) >> 1;
+    points[4].vz = (points[3].vz + points[5].vz + 1) >> 1;
+
+    uv_values[0] = *(uvPair*)&srcPrim->u0;
+    uv_values[2] = *(uvPair*)&srcPrim->u1;
+    uv_values[6] = *(uvPair*)&srcPrim->u2;
+    uv_values[8] = *(uvPair*)&srcPrim->u3;
+    uv_values[1].u = (uv_values[0].u + uv_values[2].u + 1) >> 1;
+    uv_values[1].v = (uv_values[0].v + uv_values[2].v + 1) >> 1;
+    uv_values[7].u = (uv_values[6].u + uv_values[8].u + 1) >> 1;
+    uv_values[7].v = (uv_values[6].v + uv_values[8].v + 1) >> 1;
+    uv_values[3].u = (uv_values[0].u + uv_values[6].u + 1) >> 1;
+    uv_values[3].v = (uv_values[0].v + uv_values[6].v + 1) >> 1;
+    uv_values[5].u = (uv_values[2].u + uv_values[8].u + 1) >> 1;
+    uv_values[5].v = (uv_values[2].v + uv_values[8].v + 1) >> 1;
+    uv_values[4].u = (uv_values[3].u + uv_values[5].u + 1) >> 1;
+    uv_values[4].v = (uv_values[3].v + uv_values[5].v + 1) >> 1;
+
+    *tempPrim = *srcPrim;
+    indices = g_QuadIndices1;
+    for (i = 0; i < 4; i++) {
+        s32 idx1 = *indices++;
+        s32 idx2 = *indices++;
+        s32 idx3 = *indices++;
+        s32 idx4 = *indices++;
+        rotTransResult = RotTransPers4(
+            &points[idx1], &points[idx2], &points[idx3], &points[idx4],
+            (long*)&tempPrim->x0, (long*)&tempPrim->x1, (long*)&tempPrim->x2,
+            (long*)&tempPrim->x3, &p, &flag);
+        *(uvPair*)&tempPrim->u0 = uv_values[idx1];
+        *(uvPair*)&tempPrim->u1 = uv_values[idx2];
+        *(uvPair*)&tempPrim->u2 = uv_values[idx3];
+        *(uvPair*)&tempPrim->u3 = uv_values[idx4];
+        if (iterations == 1) {
+            if (rotTransResult > 0) {
+                Primitive* origNext = dstPrim->next;
+                *dstPrim = *tempPrim;
+                dstPrim->next = origNext;
+                dstPrim = dstPrim->next;
+                if (dstPrim == NULL) {
+                    return NULL;
+                }
+            }
+        } else {
+            dstPrim = UnkRecursivePrimFunc1(
+                &points[idx1], &points[idx2], &points[idx3], &points[idx4],
+                tempPrim, iterations - 1, dstPrim, dataPtr);
+        }
+    }
+    return dstPrim;
+}
+
+// 0------1------2
+// |             |
+// |             |
+// 3      4      5
+// |             |
+// |             |
+// 6------7------8
+
+// clang-format off
+static s16 g_QuadIndices2[] = {
+    0, 1, 3, 4, //top left quad
+    1, 2, 4, 5, //top right quad
+    3, 4, 6, 7, //bottom left quad
+    4, 5, 7, 8, //bottom right quad
+};
+// clang-format on
+
+// dataPtr holds, in order:
+// A Primitive, an array of 9 CVECTORs, an array of 9 Point16s, an array of 10
+// uvPairs, and a pointer to another of dataPtr. Pointer type on dataPtr is
+// fake, but needed for Windows.
+
+// dataPtr gets filled up with scratch data used to split srcPrim into 4 smaller
+// quads
+
+Primitive* UnkRecursivePrimFunc2(
+    Primitive* srcPrim, s32 iterations, Primitive* dstPrim, u8* dataPtr) {
+    s32 i;
+    Primitive* tempPrim;
+    Point16* points;
+    CVECTOR* colors;
+    uvPair* uv_values;
+    s16* indices;
+
+    if (dstPrim == NULL) {
+        return NULL;
+    }
+    tempPrim = (Primitive*)dataPtr;
+    dataPtr += sizeof(Primitive);
+    colors = (CVECTOR*)dataPtr;
+    dataPtr += sizeof(CVECTOR) * 9;
+
+    points = (Point16*)dataPtr;
+    dataPtr += sizeof(Point16) * 9;
+    uv_values = (uvPair*)dataPtr;
+    dataPtr += sizeof(uvPair) * 10;
+
+    colors[0] = *(CVECTOR*)&srcPrim->r0;
+    colors[2] = *(CVECTOR*)&srcPrim->r1;
+    colors[6] = *(CVECTOR*)&srcPrim->r2;
+    colors[8] = *(CVECTOR*)&srcPrim->r3;
+    colors[1].r = ((colors[0].r + colors[2].r + 1) >> 1);
+    colors[1].g = ((colors[0].g + colors[2].g + 1) >> 1);
+    colors[1].b = ((colors[0].b + colors[2].b + 1) >> 1);
+    colors[7].r = ((colors[6].r + colors[8].r + 1) >> 1);
+    colors[7].g = ((colors[6].g + colors[8].g + 1) >> 1);
+    colors[7].b = ((colors[6].b + colors[8].b + 1) >> 1);
+    colors[3].r = ((colors[0].r + colors[6].r + 1) >> 1);
+    colors[3].g = ((colors[0].g + colors[6].g + 1) >> 1);
+    colors[3].b = ((colors[0].b + colors[6].b + 1) >> 1);
+    colors[5].r = ((colors[2].r + colors[8].r + 1) >> 1);
+    colors[5].g = ((colors[2].g + colors[8].g + 1) >> 1);
+    colors[5].b = ((colors[2].b + colors[8].b + 1) >> 1);
+    colors[4].r = ((colors[3].r + colors[5].r + 1) >> 1);
+    colors[4].g = ((colors[3].g + colors[5].g + 1) >> 1);
+    colors[4].b = ((colors[3].b + colors[5].b + 1) >> 1);
+
+    uv_values[0] = *(uvPair*)&srcPrim->u0;
+    uv_values[2] = *(uvPair*)&srcPrim->u1;
+    uv_values[6] = *(uvPair*)&srcPrim->u2;
+    uv_values[8] = *(uvPair*)&srcPrim->u3;
+    uv_values[1].u = (uv_values[0].u + uv_values[2].u + 1) >> 1;
+    uv_values[1].v = (uv_values[0].v + uv_values[2].v + 1) >> 1;
+    uv_values[7].u = (uv_values[6].u + uv_values[8].u + 1) >> 1;
+    uv_values[7].v = (uv_values[6].v + uv_values[8].v + 1) >> 1;
+    uv_values[3].u = (uv_values[0].u + uv_values[6].u + 1) >> 1;
+    uv_values[3].v = (uv_values[0].v + uv_values[6].v + 1) >> 1;
+    uv_values[5].u = (uv_values[2].u + uv_values[8].u + 1) >> 1;
+    uv_values[5].v = (uv_values[2].v + uv_values[8].v + 1) >> 1;
+    uv_values[4].u = (uv_values[3].u + uv_values[5].u + 1) >> 1;
+    uv_values[4].v = (uv_values[3].v + uv_values[5].v + 1) >> 1;
+
+    points[0] = *(Point16*)&srcPrim->x0;
+    points[2] = *(Point16*)&srcPrim->x1;
+    points[6] = *(Point16*)&srcPrim->x2;
+    points[8] = *(Point16*)&srcPrim->x3;
+    points[1].x = ((points[0].x + points[2].x + 1) >> 1);
+    points[1].y = ((points[0].y + points[2].y + 1) >> 1);
+    points[7].x = ((points[6].x + points[8].x + 1) >> 1);
+    points[7].y = ((points[6].y + points[8].y + 1) >> 1);
+    points[3].x = ((points[0].x + points[6].x + 1) >> 1);
+    points[3].y = ((points[0].y + points[6].y + 1) >> 1);
+    points[5].x = ((points[2].x + points[8].x + 1) >> 1);
+    points[5].y = ((points[2].y + points[8].y + 1) >> 1);
+    points[4].x = ((points[3].x + points[5].x + 1) >> 1);
+    points[4].y = ((points[3].y + points[5].y + 1) >> 1);
+
+    *tempPrim = *srcPrim;
+    indices = g_QuadIndices2;
+    for (i = 0; i < 4; i++) {
+        s32 idx1 = *indices++;
+        s32 idx2 = *indices++;
+        s32 idx3 = *indices++;
+        s32 idx4 = *indices++;
+        *(uvPair*)&tempPrim->u0 = uv_values[idx1];
+        *(uvPair*)&tempPrim->u1 = uv_values[idx2];
+        *(uvPair*)&tempPrim->u2 = uv_values[idx3];
+        *(uvPair*)&tempPrim->u3 = uv_values[idx4];
+        *(Point16*)&tempPrim->x0 = points[idx1];
+        *(Point16*)&tempPrim->x1 = points[idx2];
+        *(Point16*)&tempPrim->x2 = points[idx3];
+        *(Point16*)&tempPrim->x3 = points[idx4];
+        *(CVECTOR*)&tempPrim->r0 = colors[idx1];
+        *(CVECTOR*)&tempPrim->r1 = colors[idx2];
+        *(CVECTOR*)&tempPrim->r2 = colors[idx3];
+        *(CVECTOR*)&tempPrim->r3 = colors[idx4];
+
+        tempPrim->type = srcPrim->type;
+        if (iterations == 1) {
+            Primitive* origNext = dstPrim->next;
+            *dstPrim = *tempPrim;
+            dstPrim->next = origNext;
+            dstPrim = dstPrim->next;
+            if (dstPrim == NULL) {
+                return NULL;
+            }
+        } else {
+            dstPrim = UnkRecursivePrimFunc2(
+                tempPrim, iterations - 1, dstPrim, dataPtr);
+        }
+    }
+    return dstPrim;
+}
 
 void ClutLerp(RECT* rect, u16 palIdxA, u16 palIdxB, s32 steps, u16 offset) {
     u16 buf[COLORS_PER_PAL];
