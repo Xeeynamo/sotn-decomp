@@ -3159,7 +3159,7 @@
 | 1.00 | true     | SetSubStep                          | asm/us/st/rchi/matchings/st_common/SetSubStep.s 
 | 1.00 | true     | SetSubStep                          | asm/us/st/rdai/matchings/st_common/SetSubStep.s 
 | 1.00 | true     | func_us_801A6BD8                    | asm/us/st/rlib/matchings/st_common/func_us_801A6BD8.s 
-| 1.00 | true     | SetSubStep                          | asm/us/st/rno0/matchings/st_common/SetSubStep.s 
+| 1.00 | true     | func_us_801BB39C                    | asm/us/st/rno0/matchings/st_common/func_us_801BB39C.s 
 | 1.00 | true     | func_us_801AD064                    | asm/us/st/rno1/matchings/st_common/func_us_801AD064.s 
 | 1.00 | true     | SetSubStep                          | asm/us/st/rno2/matchings/st_common/SetSubStep.s 
 | 1.00 | true     | func_us_801B7F28                    | asm/us/st/rno3/matchings/st_common/func_us_801B7F28.s 
@@ -6066,15 +6066,6 @@
 | 1.00 | false    | func_801CD78C_801CEB40              | asm/us/st/rno0/nonmatchings/e_gorgon/func_801CD78C_801CEB40.s 
 | 1.00 | false    | func_801CD78C_801C9A60              | asm/us/st/rno0/nonmatchings/giantbro_helpers/func_801CD78C_801C9A60.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_801073C0                       | asm/us/dra/matchings/cd/func_801073C0.s 
-| 0.90 | true     | func_80131FA4                       | asm/us/dra/matchings/sound/func_80131FA4.s 
-| 0.90 | true     | _addque                             | asm/us/main/matchings/psxsdk/libgpu/sys/_addque.s 
-| 0.90 | true     | SsSepClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSepClose.s 
-| 0.90 | true     | SsSeqClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSeqClose.s 
-| 0.90 | true     | SsSeqStop                           | asm/us/main/matchings/psxsdk/libsnd/stop/SsSeqStop.s 
-| 0.90 | true     | func_801BA6A8                       | asm/us/st/sel/matchings/libpress/func_801BA6A8.s 
-| 1.00 | true     | func_801B9924                       | asm/us/st/sel/matchings/stream/func_801B9924.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | func_801D16B4                       | asm/us/st/no3/matchings/water_effects/func_801D16B4.s 
 | 1.00 | true     | func_us_801D6300                    | asm/us/st/no4/matchings/water_effects/func_us_801D6300.s 
 | 1.00 | true     | func_801C4DCC                       | asm/us/st/np3/matchings/water_effects/func_801C4DCC.s 
@@ -6132,6 +6123,14 @@
 | 1.00 | false    | polarPlacePartsWithAngvel           | asm/us/boss/rbo1/nonmatchings/unk_12274/polarPlacePartsWithAngvel.s 
 | 1.00 | false    | polarPlacePartsWithAngvel           | asm/us/boss/rbo2/nonmatchings/unk_1B284/polarPlacePartsWithAngvel.s 
 | 1.00 | false    | polarPlacePartsWithAngvel           | asm/us/st/rno0/nonmatchings/giantbro_helpers/polarPlacePartsWithAngvel.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | func_801073C0                       | asm/us/dra/matchings/cd/func_801073C0.s 
+| 0.90 | true     | func_80131FA4                       | asm/us/dra/matchings/sound/func_80131FA4.s 
+| 0.90 | true     | _addque                             | asm/us/main/matchings/psxsdk/libgpu/sys/_addque.s 
+| 0.90 | true     | SsSepClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSepClose.s 
+| 0.90 | true     | SsSeqClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSeqClose.s 
+| 0.90 | true     | SsSeqStop                           | asm/us/main/matchings/psxsdk/libsnd/stop/SsSeqStop.s 
+| 1.00 | true     | func_801B9924                       | asm/us/st/sel/matchings/stream/func_801B9924.s 
 -------------------------------------------------------------------------------
 | 0.92 | true     | DMACallback                         | asm/us/main/matchings/psxsdk/libetc/intr/DMACallback.s 
 | 0.92 | true     | InterruptCallback                   | asm/us/main/matchings/psxsdk/libetc/intr/InterruptCallback.s 
@@ -6447,17 +6446,17 @@
 | 1.00 | false    | DebugInputWait                      | asm/us/boss/bo6/nonmatchings/us_3E79C/DebugInputWait.s 
 | 1.00 | false    | RNO1_DebugInputWait                 | asm/us/st/rno1/nonmatchings/unk_26178/RNO1_DebugInputWait.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_800F6A48                       | asm/us/dra/matchings/menu/func_800F6A48.s 
-| 0.90 | true     | def_cbread                          | asm/us/main/matchings/psxsdk/libcd/event/def_cbread.s 
-| 0.90 | true     | def_cbready                         | asm/us/main/matchings/psxsdk/libcd/event/def_cbready.s 
-| 0.90 | true     | def_cbsync                          | asm/us/main/matchings/psxsdk/libcd/event/def_cbsync.s 
-| 0.90 | true     | SpuSetNoiseVoice                    | asm/us/main/matchings/psxsdk/libspu/s_snv/SpuSetNoiseVoice.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | CdReadCallback                      | asm/us/main/matchings/psxsdk/libcd/cdread/CdReadCallback.s 
 | 1.00 | true     | CdReadyCallback                     | asm/us/main/matchings/psxsdk/libcd/sys/CdReadyCallback.s 
 | 1.00 | true     | CdSetDebug                          | asm/us/main/matchings/psxsdk/libcd/sys/CdSetDebug.s 
 | 1.00 | true     | CdSyncCallback                      | asm/us/main/matchings/psxsdk/libcd/sys/CdSyncCallback.s 
 | 1.00 | true     | SetVideoMode                        | asm/us/main/matchings/psxsdk/libetc/vmode/SetVideoMode.s 
+-------------------------------------------------------------------------------
+| 0.90 | true     | def_cbread                          | asm/us/main/matchings/psxsdk/libcd/event/def_cbread.s 
+| 0.90 | true     | def_cbready                         | asm/us/main/matchings/psxsdk/libcd/event/def_cbready.s 
+| 0.90 | true     | def_cbsync                          | asm/us/main/matchings/psxsdk/libcd/event/def_cbsync.s 
+| 1.00 | true     | GsGetVcount                         | asm/us/main/matchings/psxsdk/libgs/gs_008/GsGetVcount.s 
+| 1.00 | true     | GsClearVcount                       | asm/us/main/matchings/psxsdk/libgs/gs_009/GsClearVcount.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_80173C64                       | asm/us/servant/tt_000/matchings/bat/func_80173C64.s 
 | 1.00 | true     | func_us_8017293C                    | asm/us/servant/tt_001/matchings/ghost/func_us_8017293C.s 
@@ -6549,23 +6548,23 @@
 | 0.96 | true     | func_801B65FC                       | asm/us/st/np3/matchings/e_explosion_puff_opaque/func_801B65FC.s 
 | 0.96 | true     | func_801B3C38                       | asm/us/st/nz0/matchings/e_explosion_puff_opaque/func_801B3C38.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_us_801D5748                    | asm/us/st/cat/matchings/en_thornweed_corpseweed/func_us_801D5748.s 
-| 1.00 | true     | func_801AA020                       | asm/us/st/chi/matchings/en_thornweed_corpseweed/func_801AA020.s 
-| 1.00 | true     | func_us_801CDB6C                    | asm/us/st/lib/matchings/en_thornweed_corpseweed/func_us_801CDB6C.s 
+| 1.00 | true     | func_us_801D5748                    | asm/us/st/cat/matchings/e_thornweed_corpseweed/func_us_801D5748.s 
+| 1.00 | true     | func_801AA020                       | asm/us/st/chi/matchings/e_thornweed_corpseweed/func_801AA020.s 
+| 1.00 | true     | func_us_801CDB6C                    | asm/us/st/lib/matchings/e_thornweed_corpseweed/func_us_801CDB6C.s 
 | 1.00 | true     | func_us_801A811C                    | asm/us/st/rchi/matchings/e_thornweed/func_us_801A811C.s 
-| 1.00 | false    | EntityThornweed                     | asm/us/st/rno0/nonmatchings/e_thornweed_corpseweed/EntityThornweed.s 
+| 1.00 | true     | func_us_801C69FC                    | asm/us/st/rno0/matchings/e_thornweed_corpseweed/func_us_801C69FC.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_us_801D5AB8                    | asm/us/st/cat/matchings/en_thornweed_corpseweed/func_us_801D5AB8.s 
-| 1.00 | true     | func_801AA390                       | asm/us/st/chi/matchings/en_thornweed_corpseweed/func_801AA390.s 
-| 1.00 | true     | func_us_801CDEDC                    | asm/us/st/lib/matchings/en_thornweed_corpseweed/func_us_801CDEDC.s 
+| 1.00 | true     | func_us_801D5AB8                    | asm/us/st/cat/matchings/e_thornweed_corpseweed/func_us_801D5AB8.s 
+| 1.00 | true     | func_801AA390                       | asm/us/st/chi/matchings/e_thornweed_corpseweed/func_801AA390.s 
+| 1.00 | true     | func_us_801CDEDC                    | asm/us/st/lib/matchings/e_thornweed_corpseweed/func_us_801CDEDC.s 
 | 1.00 | true     | func_us_801A848C                    | asm/us/st/rchi/matchings/e_thornweed/func_us_801A848C.s 
-| 1.00 | false    | EntityCorpseweed                    | asm/us/st/rno0/nonmatchings/e_thornweed_corpseweed/EntityCorpseweed.s 
+| 1.00 | true     | func_us_801C6D6C                    | asm/us/st/rno0/matchings/e_thornweed_corpseweed/func_us_801C6D6C.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_us_801D67E8                    | asm/us/st/cat/matchings/en_thornweed_corpseweed/func_us_801D67E8.s 
-| 1.00 | true     | func_801AB0C0                       | asm/us/st/chi/matchings/en_thornweed_corpseweed/func_801AB0C0.s 
-| 1.00 | true     | func_us_801CEC0C                    | asm/us/st/lib/matchings/en_thornweed_corpseweed/func_us_801CEC0C.s 
+| 1.00 | true     | func_us_801D67E8                    | asm/us/st/cat/matchings/e_thornweed_corpseweed/func_us_801D67E8.s 
+| 1.00 | true     | func_801AB0C0                       | asm/us/st/chi/matchings/e_thornweed_corpseweed/func_801AB0C0.s 
+| 1.00 | true     | func_us_801CEC0C                    | asm/us/st/lib/matchings/e_thornweed_corpseweed/func_us_801CEC0C.s 
 | 1.00 | true     | func_us_801A91B0                    | asm/us/st/rchi/matchings/e_thornweed/func_us_801A91B0.s 
-| 1.00 | false    | EntityCorpseweedProjectile          | asm/us/st/rno0/nonmatchings/e_thornweed_corpseweed/EntityCorpseweedProjectile.s 
+| 1.00 | true     | func_us_801C7A9C                    | asm/us/st/rno0/matchings/e_thornweed_corpseweed/func_us_801C7A9C.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801D745C                    | asm/us/st/dai/matchings/e_sealed_door/func_us_801D745C.s 
 | 1.00 | true     | func_us_801DD328                    | asm/us/st/no0/matchings/e_sealed_door/func_us_801DD328.s 
@@ -6675,7 +6674,7 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801B4148                    | asm/us/boss/bo0/matchings/no2_bg/func_us_801B4148.s 
 | 1.00 | true     | func_us_801B4148                    | asm/us/st/no2/matchings/33D8C/func_us_801B4148.s 
-| 1.00 | true     | func_us_801B4148_from_bo0           | asm/us/st/rcen/matchings/unk_1F0D8/func_us_801B4148_from_bo0.s 
+| 1.00 | true     | func_us_8019FC80                    | asm/us/st/rcen/matchings/unk_1F0D8/func_us_8019FC80.s 
 | 1.00 | false    | func_us_801B4148_from_bo0           | asm/us/st/rno2/nonmatchings/unk_322E4/func_us_801B4148_from_bo0.s 
 -------------------------------------------------------------------------------
 | 1.00 | false    | func_us_801B1C60                    | asm/us/boss/bo0/nonmatchings/313A8/func_us_801B1C60.s 
@@ -6777,6 +6776,11 @@
 | 0.91 | true     | DMA_memclr                          | asm/us/main/matchings/psxsdk/libetc/intr_dma/DMA_memclr.s 
 | 0.91 | true     | VSync_memclr                        | asm/us/main/matchings/psxsdk/libetc/intr_vb/VSync_memclr.s 
 | 1.00 | true     | func_8001510C                       | asm/us/main/matchings/psxsdk/libgpu/sys/func_8001510C.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
+| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
+| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
+| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801713C8                       | asm/us/servant/tt_000/matchings/bat/func_801713C8.s 
 | 1.00 | true     | func_us_801714F4                    | asm/us/servant/tt_001/matchings/ghost/func_us_801714F4.s 
@@ -7214,10 +7218,6 @@
 | 0.93 | true     | _SsContRpn1                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn1.s 
 | 0.93 | true     | _SsContRpn2                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn2.s 
 | 1.00 | true     | _SsSetProgramChange                 | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsSetProgramChange.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
-| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
-| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
 -------------------------------------------------------------------------------
 | 0.92 | true     | SsVabFakeHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabFakeHead.s 
 | 1.00 | true     | SsVabOpenHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabOpenHead.s 
@@ -7900,6 +7900,9 @@
 | 1.00 | true     | func_800F548C                       | asm/us/dra/matchings/menu/func_800F548C.s 
 | 0.94 | true     | func_801B1EF4                       | asm/us/st/sel/matchings/318CC/func_801B1EF4.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | func_800F6A48                       | asm/us/dra/matchings/menu/func_800F6A48.s 
+| 0.90 | true     | SpuSetNoiseVoice                    | asm/us/main/matchings/psxsdk/libspu/s_snv/SpuSetNoiseVoice.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | func_800F99B8                       | asm/us/dra/matchings/menu/func_800F99B8.s 
 | 0.95 | true     | func_801B2108                       | asm/us/st/sel/matchings/318CC/func_801B2108.s 
 -------------------------------------------------------------------------------
@@ -8002,14 +8005,8 @@
 | 1.00 | true     | get_ce                              | asm/us/main/matchings/psxsdk/libgpu/sys/get_ce.s 
 | 1.00 | true     | get_cs                              | asm/us/main/matchings/psxsdk/libgpu/sys/get_cs.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | GsGetVcount                         | asm/us/main/matchings/psxsdk/libgs/gs_008/GsGetVcount.s 
-| 1.00 | true     | GsClearVcount                       | asm/us/main/matchings/psxsdk/libgs/gs_009/GsClearVcount.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | _SsContModulation                   | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContModulation.s 
 | 1.00 | true     | _SsContPortaTime                    | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContPortaTime.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | SsSeqPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSeqPlay.s 
-| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | SsUtSetReverbDelay                  | asm/us/main/matchings/psxsdk/libsnd/ut_rdel/SsUtSetReverbDelay.s 
 | 1.00 | true     | SsUtSetReverbFeedback               | asm/us/main/matchings/psxsdk/libsnd/ut_rfb/SsUtSetReverbFeedback.s 
@@ -8040,6 +8037,9 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | SpuRead                             | asm/us/main/matchings/psxsdk/libspu/s_r/SpuRead.s 
 | 1.00 | true     | SpuWrite                            | asm/us/main/matchings/psxsdk/libspu/s_w/SpuWrite.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | SpuSetVoiceAttr                     | asm/us/main/matchings/psxsdk/libspu/s_sva/SpuSetVoiceAttr.s 
+| 0.90 | true     | func_801BA6A8                       | asm/us/st/sel/matchings/libpress/func_801BA6A8.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8016B97C                       | asm/us/ric/matchings/2F8E8/func_8016B97C.s 
 | 0.98 | false    | RicEntitySubwpnReboundStone         | asm/us/boss/bo6/nonmatchings/us_3E79C/RicEntitySubwpnReboundStone.s 
@@ -8360,7 +8360,7 @@
 | 0.98 | true     | func_us_801B23D8                    | asm/us/st/rcat/matchings/unk_323D8/func_us_801B23D8.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8018F8EC                       | asm/us/st/cen/matchings/e_chamber/func_8018F8EC.s 
-| 1.00 | true     | func_8018F8EC                       | asm/us/st/rcen/matchings/unk_1F0D8/func_8018F8EC.s 
+| 1.00 | true     | func_us_8019F0D8                    | asm/us/st/rcen/matchings/unk_1F0D8/func_us_8019F0D8.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8019040C                       | asm/us/st/cen/matchings/e_elevator/func_8019040C.s 
 | 1.00 | true     | func_us_801C1F98                    | asm/us/st/no0/matchings/e_elevator/func_us_801C1F98.s 
