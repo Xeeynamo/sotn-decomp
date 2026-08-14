@@ -8,7 +8,28 @@ import (
 	"hash/crc32"
 	"image/color"
 	"io"
+	"sync"
 )
+
+// Setting up a compressor has an allocation cost multiple times larger than a typical
+// asset (eg. palettes are generally < 1KB). Instead we can pool them so the cost is once per worker
+// rather than once per image.
+var zlibWriters = sync.Pool{}
+
+func acquireZlibWriter(w io.Writer) *zlib.Writer {
+	if zw, ok := zlibWriters.Get().(*zlib.Writer); ok {
+		zw.Reset(w)
+		return zw
+	}
+	// NewWriterLevel only fails on an out-of-range level, and BestSpeed is valid.
+	zw, _ := zlib.NewWriterLevel(w, zlib.BestSpeed)
+	return zw
+}
+
+func releaseZlibWriter(zw *zlib.Writer) {
+	// Reset on acquire, so a writer left in an error state is still reusable.
+	zlibWriters.Put(zw)
+}
 
 // Encode encodes a 4-bit or 8-bit indexed-color image whose pixels are in
 // row-major order in the 'data' slice (len(data) == width*height).
@@ -107,10 +128,8 @@ func Encode(w io.Writer, data []byte, width, height int, palette []color.RGBA) e
 	}
 
 	var idat bytes.Buffer
-	zw, err := zlib.NewWriterLevel(&idat, zlib.BestSpeed)
-	if err != nil {
-		return fmt.Errorf("%w", err)
-	}
+	zw := acquireZlibWriter(&idat)
+	defer releaseZlibWriter(zw)
 	if _, err := zw.Write(raw); err != nil {
 		_ = zw.Close()
 		return fmt.Errorf("%w", err)
