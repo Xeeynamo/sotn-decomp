@@ -734,6 +734,7 @@
 | nz0        | e_skeleton.rodata                  |       18 |          0 | Yes    |       |     |
 | nz1        | e_life_up.rodata                   |       18 |          0 | Yes    |       |     |
 | rcen       | e_shaft.rodata                     |       18 |          0 | Yes    |       |     |
+| rno0       | e_jack_o_bones.rodata              |       18 |          0 | Yes    |       |     |
 | rno0       | e_gurkha.rodata                    |       18 |          0 | Yes    |       |     |
 | rno1       | unk_10910.rodata                   |       18 |          0 | Yes    |       |     |
 | rno1       | unk_3CF8.rodata                    |       18 |          0 | Yes    |       |     |
@@ -3086,6 +3087,7 @@
 | dra        | 624DC.rodata                       |       44 |          0 | Yes    |       |     |
 | chi        | en_venus_weed.rodata               |       44 |          0 | Yes    |       |     |
 | rlib       | e_collect.rodata                   |       44 |          0 | Yes    |       |     |
+| rno0       | unk_62A8.rodata                    |       44 |          0 | Yes    |       |     |
 | rno1       | 383F8.rodata                       |       44 |          0 | Yes    |       |     |
 | rtop       | unk_D660.rodata                    |       44 |          0 | Yes    |       |     |
 | main       | sceGuLightSpot                     |       44 |          1 |        |       |     |
@@ -3728,7 +3730,6 @@
 | main       | 31178.rodata                       |       56 |          0 | Yes    |       |     |
 | cen        | e_maria.rodata                     |       56 |          0 | Yes    |       |     |
 | nz1        | e_karasuman.rodata                 |       56 |          0 | Yes    |       |     |
-| rno0       | unk_5610.rodata                    |       56 |          0 | Yes    |       |     |
 | dra        | func_psp_09141488                  |       56 |          2 |        |       |     |
 | main       | sceGupDepthOffset                  |       56 |          2 |        |       |     |
 | rbo1       | func_801CDD00                      |       56 |          4 |        |       |     |
@@ -3847,7 +3848,7 @@
 | dra        | func_psp_09114438                  |       59 |         10 |        |       |     |
 | dra        | func_psp_09140C28                  |       59 |         10 |        |       |     |
 | dra        | func_psp_090FF480                  |       59 |         10 |        |       |     |
-| rno0       | TryThrow                           |       59 |         10 |        |       |     |
+| rno0       | func_pspeu_0923CC90                |       59 |         10 |        |       |     |
 | rno1       | TryThrow                           |       59 |         10 |        |       |     |
 | rno3       | func_pspeu_0923DEB0                |       59 |         10 |        |       |     |
 | rno4       | TryThrow                           |       59 |         10 |        |       |     |
@@ -5277,7 +5278,7 @@
 | main       | LoadTPage                          |       90 |          8 |        |       |     |
 | are        | func_pspeu_09260F18                |       90 |          9 |        |       |     |
 | dai        | func_pspeu_0924FD18                |       90 |          9 |        |       |     |
-| rno0       | EntityBladeSoldierDeathParts       |       90 |          9 |        |       |     |
+| rno0       | EntityNovaSkeletonDeathParts       |       90 |          9 |        |       |     |
 | rno1       | EntityBladeSoldierDeathParts       |       90 |          9 |        |       |     |
 | rno3       | func_pspeu_0924F4F8                |       90 |          9 |        |       |     |
 | rno4       | EntityBladeSoldierDeathParts       |       90 |          9 |        |       |     |
@@ -5451,7 +5452,7 @@
 | rchi       | UpdateFallingPebble                |       93 |          8 |        |       |     |
 | main       | func_psp_08919A58                  |       93 |         10 |        |       |     |
 | main       | func_psp_089307D4                  |       93 |         10 |        |       |     |
-| rno0       | EntityJackOBonesDeathParts         |       93 |         10 |        |       |     |
+| rno0       | func_pspeu_0923D430                |       93 |         10 |        |       |     |
 | rno1       | EntityJackOBonesDeathParts         |       93 |         10 |        |       |     |
 | rno3       | func_pspeu_0923E650                |       93 |         10 |        |       |     |
 | rno4       | EntityJackOBonesDeathParts         |       93 |         10 |        |       |     |
@@ -7181,7 +7182,7 @@
 | no0        | func_pspeu_0923BB20                |      175 |         22 |        |       |     |
 | rcat       | func_pspeu_09250580                |      175 |         22 |        |       |     |
 | rno0       | func_pspeu_0923A348                |      175 |         22 |        |       |     |
-| rno0       | EntityStoneSkull                   |      175 |         22 |        |       |     |
+| rno0       | func_pspeu_092516C8                |      175 |         22 |        |       |     |
 | rno1       | func_us_801C7F24_from_rno0         |      175 |         22 |        |       |     |
 | no1        | func_pspeu_092606A8                |      175 |         24 |        |       |     |
 | dra        | func_psp_090EB5E0                  |      176 |         11 |        |       |     |
@@ -7835,7 +7836,7 @@
 | no3        | func_pspeu_0923D998                |      253 |         24 | Yes    |       |     |
 | bo4        | func_pspeu_09248FA8_from_rbo5      |      253 |         50 |        |       |     |
 | rbo5       | func_pspeu_09248FA8                |      253 |         50 |        |       |     |
-| rno0       | EntityJackOBonesJack               |      254 |         25 |        |       |     |
+| rno0       | func_pspeu_0923D580                |      254 |         25 |        |       |     |
 | rno1       | EntityJackOBonesJack               |      254 |         25 |        |       |     |
 | rno3       | func_pspeu_0923E7A0                |      254 |         25 |        |       |     |
 | rno4       | EntityJackOBonesJack               |      254 |         25 |        |       |     |
@@ -8993,7 +8994,7 @@
 | rcat       | func_pspeu_092484A0                |      496 |         70 | Yes    |       |     |
 | bo4        | func_pspeu_09245AD8_from_rbo5      |      497 |         51 |        |       |     |
 | rbo5       | func_pspeu_09245AD8                |      497 |         51 |        |       |     |
-| rno0       | EntityJackOBones                   |      497 |         74 | Yes    |       |     |
+| rno0       | func_pspeu_0923CD58                |      497 |         74 | Yes    |       |     |
 | rno1       | EntityJackOBones                   |      497 |         74 | Yes    |       |     |
 | rno3       | func_pspeu_0923DF78                |      497 |         74 | Yes    |       |     |
 | rno4       | EntityJackOBones                   |      497 |         74 | Yes    |       |     |
