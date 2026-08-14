@@ -4,7 +4,7 @@
 
 #include <stage.h>
 
-#define STAGE_IS_BO1
+#define BOSS_IS_BO1
 
 enum Palettes {
     PAL_NONE,
