@@ -1,28 +1,102 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "bo1.h"
 
-extern s16 D_us_80180D00[];
-extern u8 D_us_80180CE8[];
-extern AnimateEntityFrame D_us_80180DE0[];
-extern AnimateEntityFrame D_us_80180E10[];
-extern AnimateEntityFrame D_us_80180E18[];
-extern s16 D_us_80180DD0[];
-extern s16 D_pspeu_092680A8[][2];
-extern AnimateEntityFrame D_pspeu_092680F0[];
-extern s16 D_us_80180D34[][5];
-extern s32 D_us_80180CD8;
-extern s32 D_us_80180CE4;
+static s32 D_us_80180CD8 = 0;
+static s32 D_us_80180CDC = 0;
+static s32 D_us_80180CE0 = 0;
+static s32 D_us_80180CE4 = 0;
+static s16 D_us_80180CE8[] = {0, 18, 8, 0};
+static s16 sensors_unused_1[] = {0, 18, 0, 4};
+static s16 sensors_unused_2[] = {8, -4, -16, 0};
+static s16 D_us_80180D00[] = {
+    -1024, 1024, 2048, 0, -1536, -512, 512, 1536, 0, 0};
+static s32 D_us_80180D14[] = {3, 6, 1, 7, 2, 4, 0, 5};
+static s16 D_us_80180D34[9][5] = {
+    {65, 69, 67, 68, 66}, {79, 69, 81, 82, 80}, {72, 69, 74, 75, 73},
+    {86, 69, 88, 89, 87}, {69, 68, 70, 71, 0},  {90, 68, 91, 92, 0},
+    {83, 68, 84, 85, 0},  {76, 68, 77, 78, 0},  {61, 70, 63, 64, 62},
+};
+static s16 pad_D34 = 0;
+static s16 D_us_80180D90[] = {
+    0, -26, 0, 26, -24, 0, 24, 0, -16, -18, 16, -18, 16, 18, -16, 16,
+};
+static s16 D_us_80180DA0[] = {
+    0, -40, 0, 40, -40, 0, 40, 0, -30, -30, 30, -30, 30, 30, -30, 30,
+};
+static s16 D_us_80180DD0[] = {112, 96, 96, 96, 136, 136, 112, 112};
+static AnimateEntityFrame D_us_80180DE0[] = {
+    POSE(25, 0x69, 0), POSE(12, 0x6A, 0), POSE(13, 0x6B, 0),
+    POSE(8, 0x6C, 0),  POSE(25, 0x6D, 0), POSE(12, 0x6E, 0),
+    POSE(13, 0x6F, 0), POSE(8, 0x70, 0),  POSE_LOOP(0)};
+static AnimateEntityFrame D_us_80180DF4[] = {
+    POSE(6, 0x05, 0), POSE(6, 0x04, 0), POSE(6, 0x03, 0), POSE(6, 0x02, 0),
+    POSE(6, 0x03, 0), POSE(6, 0x04, 0), POSE(6, 0x05, 0), POSE(6, 0x06, 0),
+    POSE(6, 0x07, 0), POSE(6, 0x08, 0), POSE(6, 0x07, 0), POSE(6, 0x06, 0),
+    POSE_LOOP(0)};
+static AnimateEntityFrame D_us_80180E10[] = {
+    POSE(4, 0x3A, 0),
+    POSE(8, 0x3B, 0),
+    POSE(64, 0x3C, 0),
+    POSE_END,
+};
+static AnimateEntityFrame D_us_80180E18[] = {
+    POSE(8, 0x3C, 0),
+    POSE(8, 0x3B, 0),
+    POSE(4, 0x3A, 0),
+    POSE_END,
+};
+static AnimateEntityFrame D_us_80180E20[] = {
+    POSE(4, 0x5D, 0), POSE(4, 0x5E, 0), POSE(4, 0x5F, 0), POSE(4, 0x60, 0),
+    POSE_END};
+static AnimateEntityFrame D_us_80180E2C[] = {
+    POSE(4, 0x61, 0), POSE(4, 0x62, 0), POSE(4, 0x63, 0), POSE_END};
+
+#ifdef VERSION_PSP
+// PSP keeps these format strings in .data, between the pose and hitbox tables;
+// naming them pins that order, which anonymous literals would not.
+static char fmt_y[] = "y %x\n";
+static char fmt_charal[] = "charal %x\n";
+#define FMT_Y fmt_y
+#define FMT_CHARAL fmt_charal
+#else
+#define FMT_Y "y %x\n"
+#define FMT_CHARAL "charal %x\n"
+#endif
+
+// hitbox table, indexed through hitbox_lookup[animCurFrame]
+// {hitboxOffX, hitboxOffY, hitboxWidth, hitboxHeight}
+static s8 D_us_80180E34[][4] = {
+    {0, 0, 0, 0},       {0, 0, 24, 24},     {1, 29, 0, 0},
+    {1, -29, 0, 0},     {24, 1, 0, 0},      {-24, 1, 0, 0},
+    {20, 22, 0, 0},     {-20, 22, 0, 0},    {-20, -22, 0, 0},
+    {20, -21, 0, 0},    {0, 12, 32, 44},    {12, 12, 28, 44},
+    {-24, 8, 16, 40},   {1, -78, 31, 38},   {20, -80, 20, 32},
+    {-16, -68, 24, 36}, {-53, -53, 30, 34}, {-56, -70, 28, 20},
+    {-56, -44, 40, 20}, {-76, 0, 28, 32},   {-76, 16, 28, 24},
+    {-76, -16, 28, 24}, {-51, 46, 25, 34},  {-48, 72, 24, 24},
+    {-60, 40, 36, 24},  {0, 76, 40, 28},    {-16, 72, 32, 32},
+    {24, 80, 24, 24},   {47, 48, 28, 36},   {80, 0, 24, 32},
+    {51, -53, 24, 32},  {0, 2, 8, 16},      {0, 1, 5, 17},
+    {1, 0, 7, 16},      {0, 2, 4, 16},      {-4, 1, 8, 16},
+    {-3, 2, 6, 16},     {1, 0, 5, 18},      {-5, 2, 8, 16},
+    {0, 4, 8, 12},      {-2, -2, 16, 8}};
+
+static u8 hitbox_lookup[] = {
+    0,  1,  2,  2,  2,  2,  2,  2,  2,  3, 3,  3,  3,  3,  3,  3,  4,  4,  4,
+    4,  4,  4,  4,  5,  5,  5,  5,  5,  5, 5,  6,  6,  6,  6,  6,  6,  6,  7,
+    7,  7,  7,  7,  7,  7,  8,  8,  8,  8, 8,  8,  8,  9,  9,  9,  9,  9,  9,
+    9,  0,  0,  0,  10, 0,  11, 12, 13, 0, 14, 15, 16, 17, 18, 19, 0,  20, 21,
+    22, 23, 24, 25, 0,  26, 27, 28, 0,  0, 29, 0,  0,  0,  30, 0,  0,  0,  0,
+    0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 31, 32, 33, 34, 35, 36, 37, 38, 0,
+    0,  39, 0,  39, 0,  40, 0,  0,  0,  0, 0,  0,  0,  0,
+};
+
 extern EInit D_us_80180B1C;
 extern EInit D_us_80180B28;
 extern EInit D_us_80180B34;
 extern EInit D_us_80180B58;
 extern EInit D_us_80180B4C;
-extern s32 D_us_80180CE0;
 extern s32 D_us_80180CD4;
-extern s32 D_us_80180D14[];
-extern s32 D_us_80180CDC;
-extern s8 D_us_80180E34[];
-extern u8 D_us_80180ED8[];
 extern EInit g_EInitGranfaloon1;
 extern EInit g_EInitGranfaloon2;
 
@@ -111,7 +185,7 @@ void EntityGranfaloon(Entity* self) {
                 g_api.func_80102CD8(1);
             }
             y = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
-            FntPrint("y %x\n", y);
+            FntPrint(FMT_Y, y);
             if (y < 0x100) {
                 SetStep(4);
             }
@@ -384,7 +458,7 @@ void EntityGranfaloon(Entity* self) {
         }
         break;
     case 0xFF:
-        FntPrint("charal %x\n", self->animCurFrame);
+        FntPrint(FMT_CHARAL, self->animCurFrame);
         if (g_pads[1].pressed & PAD_SQUARE) {
             if (self->params) {
                 break;
@@ -403,8 +477,8 @@ void EntityGranfaloon(Entity* self) {
         } else {
             self->step_s = 0;
         }
-        hitbox = D_us_80180E34;
-        offsetX = D_us_80180ED8[self->animCurFrame];
+        hitbox = D_us_80180E34[0];
+        offsetX = hitbox_lookup[self->animCurFrame];
         hitbox += offsetX * 4;
         self->hitboxOffX = *hitbox++;
         self->hitboxOffY = *hitbox++;
@@ -467,8 +541,8 @@ void func_us_801A2774(Entity* self) {
         row = D_us_80180D34[self->params];
         self->animCurFrame = row[0];
         self->zPriority = row[1];
-        hitbox = D_us_80180E34;
-        hitboxIndex = D_us_80180ED8[self->animCurFrame];
+        hitbox = D_us_80180E34[0];
+        hitboxIndex = hitbox_lookup[self->animCurFrame];
         hitbox += hitboxIndex * 4;
         self->hitboxOffX = *hitbox++;
         self->hitboxOffY = *hitbox++;
@@ -657,7 +731,7 @@ void func_us_801A2D90(Entity* self) {
 
 INCLUDE_ASM("boss/bo1/nonmatchings/unk_21C80", func_us_801A2F2C);
 
-#ifdef VERSION_US
+#if defined(VERSION_US) && !defined(VERSION_PC)
 INCLUDE_ASM("boss/bo1/nonmatchings/unk_21C80", func_us_801A3480);
 #else
 #define STUFF() /* TODO please inline this */                                  \

@@ -68,7 +68,7 @@ void func_us_801BA164_from_cat(Entity* self) {
     case 0:
         InitializeEntity(g_EInitParticle);
         self->ext.et_801BA164.unk80 = 0x40;
-        primIndex = g_api_func_800EDB58(PRIM_TILE_ALT, 8);
+        primIndex = g_api.func_800EDB58(PRIM_TILE_ALT, 8);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
