@@ -5,14 +5,6 @@
 extern EInit g_EInitImp;
 extern u8 anim_imp[];
 
-#if defined(VERSION_PSP)
-extern Entity g_Entities_224[];
-#define IMP_ENTITY_POOL_START g_Entities_224
-#define IMP_ENTITY_POOL_END ((Entity*)&D_80097C98)
-#else
-#define IMP_ENTITY_POOL_START (&g_Entities[224])
-#define IMP_ENTITY_POOL_END (&g_Entities[256])
-#endif
 typedef enum {
     IMP_INIT,
     IMP_IDLE = 2,
@@ -299,7 +291,7 @@ void EntityImp(Entity* self) {
             self->posX.i.hi = other->posX.i.hi + self->ext.imp.jamOffsetX;
             self->posY.i.hi = other->posY.i.hi + self->ext.imp.jamOffsetY;
             if (!(g_Timer & 0xF)) {
-                other = AllocEntity(IMP_ENTITY_POOL_START, IMP_ENTITY_POOL_END);
+                other = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (other != NULL) {
                     CreateEntityFromCurrentEntity(E_IMP_SMOKE, other);
                 }
@@ -391,7 +383,7 @@ void EntityImp(Entity* self) {
             self->velocityY += FIX(0.03125);
             if (!--self->ext.imp.timer) {
                 PlaySfxPositional(SFX_EXPLODE_E);
-                other = AllocEntity(IMP_ENTITY_POOL_START, IMP_ENTITY_POOL_END);
+                other = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (other != NULL) {
                     CreateEntityFromEntity(E_EXPLOSION, self, other);
                     other->params = EXPLOSION_FIREBALL;
@@ -402,6 +394,3 @@ void EntityImp(Entity* self) {
         break;
     }
 }
-
-#undef IMP_ENTITY_POOL_END
-#undef IMP_ENTITY_POOL_START
