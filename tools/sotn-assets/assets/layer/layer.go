@@ -303,13 +303,28 @@ func buildGenericU16(fileName string, symbol string, outputDir string) error {
 	if err != nil {
 		return err
 	}
+	u16Count := len(data) / 2
 
 	var sb strings.Builder
 	sb.WriteString("// clang-format off\n")
+	sb.WriteString("#if defined(VERSION_PSP) || defined(VERSION_PC)\n")
 	sb.WriteString(fmt.Sprintf("u16 %s[] = {\n", symbol))
-	u16Data := (*[1 << 30]uint16)(unsafe.Pointer(&data[0]))[:len(data)/2]
-	util.WriteWordsAsHex(&sb, u16Data)
+	if u16Count > 0 {
+		u16Data := unsafe.Slice((*uint16)(unsafe.Pointer(&data[0])), u16Count)
+		util.WriteWordsAsHex(&sb, u16Data)
+	}
 	sb.WriteString("};\n")
+	sb.WriteString("#else\n")
+	sb.WriteString("__asm__(\n")
+	sb.WriteString("\".section .data\\n\"\n")
+	sb.WriteString("\".align 2\\n\"\n")
+	sb.WriteString(fmt.Sprintf("\".globl %s\\n\"\n", symbol))
+	sb.WriteString(fmt.Sprintf("\"%s:\\n\"\n", symbol))
+	sb.WriteString(fmt.Sprintf("\".incbin \\\"%s\\\", 0, %d\\n\"\n",
+		filepath.ToSlash(fileName), u16Count*2))
+	sb.WriteString(");\n")
+	sb.WriteString(fmt.Sprintf("extern u16 %s[];\n", symbol))
+	sb.WriteString("#endif\n")
 
 	return util.WriteFile(filepath.Join(outputDir, fmt.Sprintf("gen/%s.h", symbol)), []byte(sb.String()))
 }
