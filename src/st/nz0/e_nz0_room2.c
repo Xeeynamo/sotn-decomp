@@ -69,7 +69,7 @@ void EntityFloorButton(Entity* self) {
         }
         break;
     }
-    prim = self->ext.prim;
+    prim = self->ext.nz0311c0.prim;
     prim->x0 = self->posX.i.hi - 8;
     prim->y0 = self->posY.i.hi - 8;
 }
@@ -143,7 +143,7 @@ void EntityFloorSpikes(Entity* self) {
         PlaySfxPositional(SFX_MAGIC_SWITCH);
         self->ext.nz0311c0.unk88 = 0;
     }
-    prim = self->ext.prim;
+    prim = self->ext.nz0311c0.prim;
     prim->x0 = self->posX.i.hi - 16;
     prim->y0 = self->posY.i.hi - 16;
 }

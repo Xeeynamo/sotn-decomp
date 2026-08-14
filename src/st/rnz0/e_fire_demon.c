@@ -141,27 +141,27 @@ void ent21Helper(Primitive* prim) {
 // Wish we could make these into [][5] arrays but the zero padding
 // doesn't quite work the way we want.
 // clang-format off
-static u8 anim_fireball_1[] = {4,   0, 32,  31, 31, 
-                                2,  64, 32, 225, 16, 
-                                4,  32, 32, 225, 31, 
+static u8 anim_fireball_1[] = {4,   0, 32,  31, 31,
+                                2,  64, 32, 225, 16,
+                                4,  32, 32, 225, 31,
                                 2,  32, 32,  31, 16,  0};
-static u8 anim_fireball_2[] = {3,  64, 32,  15, 15, 
-                                3,  80, 32,  15, 15, 
-                                3,  80, 32, 241, 15, 
-                                3,  96, 32, 241, 15, 
+static u8 anim_fireball_2[] = {3,  64, 32,  15, 15,
+                                3,  80, 32,  15, 15,
+                                3,  80, 32, 241, 15,
+                                3,  96, 32, 241, 15,
                                 3,  96, 32,  15, 15, 0};
-static u8 anim_fireball_3[] = {2,   0, 32,  31, 15, 
-                                2,  96,  0,  31, 15, 
-                                2, 128,  0, 225, 15, 
-                                2,  64,  0,  31, 15, 
-                                2,  96,  0, 225, 15, 
-                                2,  32,  0,  31, 15,  
+static u8 anim_fireball_3[] = {2,   0, 32,  31, 15,
+                                2,  96,  0,  31, 15,
+                                2, 128,  0, 225, 15,
+                                2,  64,  0,  31, 15,
+                                2,  96,  0, 225, 15,
+                                2,  32,  0,  31, 15,
                                 2,  64,  0, 225, 15, 0xFF};
-static u8 anim_fireball_4[] = {2,  32,  0,  31, 15, 
-                                3,  64,  0, 225, 15, 
+static u8 anim_fireball_4[] = {2,  32,  0,  31, 15,
+                                3,  64,  0, 225, 15,
                                 3,  96,  0, 225, 15, 0};
-static u8 anim_fireball_5[] = {2,  64,  0, 225, 15, 
-                                2,  64,  0,  31, 15, 
+static u8 anim_fireball_5[] = {2,  64,  0, 225, 15,
+                                2,  64,  0,  31, 15,
                                 2,  96,  0, 225, 15, 0};
 // clang-format on
 
@@ -198,7 +198,7 @@ void EntityFireDemonFireball(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
-        self->ext.prim = prim;
+        self->ext.fireDemon.prim7C = prim;
         UnkPolyFunc2(prim);
         prim->tpage = 0x1A;
         prim->clut = 0x170;
@@ -236,7 +236,7 @@ void EntityFireDemonFireball(Entity* self) {
     case 1:
         MoveEntity();
         self->ext.fireDemon.timer++;
-        prim = self->ext.prim;
+        prim = self->ext.fireDemon.prim7C;
         if (!(self->ext.fireDemon.timer % 2)) {
             FD_NEXT->unk22 ^= 8;
         }
@@ -270,7 +270,7 @@ void EntityFireDemonFireball(Entity* self) {
         }
         break;
     case 2:
-        prim = self->ext.prim;
+        prim = self->ext.fireDemon.prim7C;
         prim->p2 = 0;
         prim->p1 = 0;
         FD_NEXT->unk18 = self->posX.i.hi;
@@ -299,7 +299,7 @@ void EntityFireDemonFireball(Entity* self) {
         self->step++;
         /* fallthrough */
     case 3:
-        prim = self->ext.prim;
+        prim = self->ext.fireDemon.prim7C;
         UnkPrimHelper(prim);
         UpdateAnimation(anim_fireball_3, prim);
         FD_NEXT->unk10 -= 0x3000;
@@ -319,7 +319,7 @@ void EntityFireDemonFireball(Entity* self) {
         }
         break;
     case 4:
-        prim = self->ext.prim;
+        prim = self->ext.fireDemon.prim7C;
         self->ext.fireDemon.unk9C.xVars[1] =
             (prim->x3 - self->posX.i.hi) - 0x10;
         prim->p1 = 0;
@@ -336,7 +336,7 @@ void EntityFireDemonFireball(Entity* self) {
         self->step++;
         break;
     case 5:
-        prim = self->ext.prim;
+        prim = self->ext.fireDemon.prim7C;
         UpdateAnimation(anim_fireball_4, prim);
         prim->y0 -= 12;
         prim->y1 += 3;
@@ -357,7 +357,7 @@ void EntityFireDemonFireball(Entity* self) {
         }
         break;
     case 6:
-        prim = self->ext.prim;
+        prim = self->ext.fireDemon.prim7C;
         FD_NEXT->unkE = prim->y0;
         FD_NEXT->unk14 = 0;
         prim->p1 = 2;
@@ -371,7 +371,7 @@ void EntityFireDemonFireball(Entity* self) {
         self->step++;
         break;
     case 7:
-        prim = self->ext.prim;
+        prim = self->ext.fireDemon.prim7C;
         UpdateAnimation(anim_fireball_5, prim);
         prim->y0 = FD_NEXT->unkE;
         LOW(FD_NEXT->unkC) += FD_NEXT->unk14;
@@ -392,12 +392,12 @@ void EntityFireDemonFireball(Entity* self) {
         }
         break;
     case 8:
-        prim = self->ext.prim;
+        prim = self->ext.fireDemon.prim7C;
         while (prim != NULL) {
             prim->drawMode = DRAW_HIDE;
             prim = prim->next;
         }
-        self->ext.prim = NULL;
+        self->ext.fireDemon.prim7C = NULL;
         self->ext.fireDemon.primA4 = NULL;
         self->ext.fireDemon.timer = 0x10;
         self->step++;
@@ -409,8 +409,8 @@ void EntityFireDemonFireball(Entity* self) {
         }
         break;
     }
-    if (self->ext.prim != NULL) {
-        prim = self->ext.prim;
+    if (self->ext.fireDemon.prim7C != NULL) {
+        prim = self->ext.fireDemon.prim7C;
         self->hitboxWidth = 12;
         self->hitboxHeight = (self->posY.i.hi - prim->y0) / 4;
         if (self->hitboxHeight & 0xF000) {
@@ -633,7 +633,7 @@ void EntityFireDemonPopoutEffect(Entity* self) {
             prim->x1 = (xVar + 0x60);
             prim->y0 = prim->y1 = prim->y2 - 0xA0;
             prim = prim->next;
-            self->ext.prim = prim;
+            self->ext.fireDemon.prim7C = prim;
             for (i = 0; i < 6; i++) {
                 UnkPolyFunc2(prim);
                 prim->type = PRIM_GT4;
@@ -683,7 +683,7 @@ void EntityFireDemonPopoutEffect(Entity* self) {
         self->ext.fireDemon.timer = 0;
         // fallthrough
     case 1:
-        prim = self->ext.prim;
+        prim = self->ext.fireDemon.prim7C;
         for (i = 0; i < 6; i++) {
             ent20Helper1(prim);
             prim = prim->next;
@@ -1017,7 +1017,7 @@ void EntityFireDemon(Entity* self) {
             prim->priority = 0xD6;
             prim->drawMode = DRAW_UNK_800;
             prim = prim->next;
-            self->ext.prim = prim;
+            self->ext.fireDemon.prim7C = prim;
             prim->type = PRIM_GT4;
             prim->tpage = 0x110;
 
@@ -1085,7 +1085,7 @@ void EntityFireDemon(Entity* self) {
             }
             break;
         case 4:
-            prim = self->ext.prim;
+            prim = self->ext.fireDemon.prim7C;
             prim->v2 = prim->v3--;
             prim->y2 = prim->y3--;
             if ((prim->v2) < (prim->v0)) {

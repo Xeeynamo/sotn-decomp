@@ -17,7 +17,7 @@ void func_pspeu_09254C28(void) {
 
     u8 u, v;
 
-    prim = g_CurrentEntity->ext.prim;
+    prim = g_CurrentEntity->ext.et_801B0930.prim7C;
     var_a1 = D_pspeu_0928F4A0;
     var_a3 = D_pspeu_0928F6E0;
 

@@ -52,7 +52,7 @@ void EntityRealOlroxDrool(Entity* self) {
             self->primIndex = primIndex;
             self->hitboxState = 0;
             prim = &g_PrimBuf[primIndex];
-            self->ext.prim = prim;
+            self->ext.olroxDrool.prim = prim;
             i = 0;
             while (prim != NULL) {
                 prim->x0 = prim->x1 = self->posX.i.hi;
@@ -76,7 +76,7 @@ void EntityRealOlroxDrool(Entity* self) {
         break;
 
     case 1:
-        prim = self->ext.prim;
+        prim = self->ext.olroxDrool.prim;
         offsetY = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
         if (offsetY > 0x1D0) {
             prim->y1 += 2;

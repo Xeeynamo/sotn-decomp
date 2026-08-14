@@ -36,7 +36,7 @@ static s32 VandalSwordDrawAlastor(s32 arg0, s32 arg1) {
     u8 temp_v0_8;
     u8 temp_v0_9;
 
-    prim = g_CurrentEntity->ext.prim;
+    prim = g_CurrentEntity->ext.vandalSword.prim7C;
     temp_s1 = &D_us_80182114[arg0];
     if (g_CurrentEntity->facingLeft) {
         prim->x0 = prim->x2 = g_CurrentEntity->posX.i.hi - temp_s1->unk6;
@@ -185,7 +185,7 @@ void EntityVandalSword(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
-        self->ext.prim = prim;
+        self->ext.vandalSword.prim7C = prim;
         prim->tpage = 0x14;
         prim->clut = 0x210;
         prim->priority = self->zPriority;
