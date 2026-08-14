@@ -372,7 +372,7 @@ set(SOURCE_FILES_STAGE_NO2
     src/st/no2/34DA4.c
     src/st/no2/372E8.c
     src/st/no2/37580.c
-    src/st/no2/4966C.c
+    src/st/no2/giantbro_helpers_2.c
     src/st/no2/blade.c
     src/st/no2/e_background_house.c
     src/st/no2/e_bloody_zombie.c
@@ -517,7 +517,7 @@ set(SOURCE_FILES_STAGE_NP3
     src/st/np3/popup.c
     src/st/np3/prim_helpers.c
     src/st/np3/bss.c
-    src/st/np3/4E04C.c
+    src/st/np3/giantbro_helpers_2.c
     src/st/np3/d_water_data.c
     src/st/np3/water_effects.c
     src/st/np3/entrance_weights.c
@@ -1097,7 +1097,7 @@ add_overlay(no3 ${SOURCE_FILES_STAGE_NO3})
 add_overlay(lib ${SOURCE_FILES_STAGE_LIB})
 add_overlay(mad ${SOURCE_FILES_STAGE_MAD})
 
-foreach(id 000 002 007 008 012 034 037 040 041 043 045 046 051 052)
+foreach(id 000 002 007 008 012 034 035 037 040 041 043 045 046 051 052)
     add_overlay(w0_${id} src/weapon/w_${id}.c)
     target_compile_definitions(w0_${id} PRIVATE WEAPON0)
     add_overlay(w1_${id} src/weapon/w_${id}.c)

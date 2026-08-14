@@ -156,7 +156,7 @@ void EntityDemonSwitchWall(Entity* self) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIdx;
             prim = &g_PrimBuf[primIdx];
-            self->ext.prim = prim;
+            self->ext.demonSwitchWall.prim = prim;
 
             while (prim != NULL) {
                 prim->drawMode = DRAW_HIDE;
@@ -187,7 +187,7 @@ void EntityDemonSwitchWall(Entity* self) {
         }
 
         // Generate a "falling pebble" particle
-        prim = self->ext.prim;
+        prim = self->ext.demonSwitchWall.prim;
         prim = FindFirstUnkPrim(prim);
         if (prim != NULL) {
             prim->p3 = 1;
@@ -203,7 +203,7 @@ void EntityDemonSwitchWall(Entity* self) {
         }
 
         // Update ALL "falling pebble" particles
-        prim = self->ext.prim;
+        prim = self->ext.demonSwitchWall.prim;
         while (prim != NULL) {
             if (prim->p3) {
                 UpdateFallingPebble(prim);
