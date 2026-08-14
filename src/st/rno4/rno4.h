@@ -72,7 +72,7 @@ typedef enum EntityID {
     E_UNK_3A,                    // func_us_801C8668
     E_UNK_3B,                    // Unused801C8704
     E_UNK_3C,                    // func_us_801C123C_from_no4
-    E_UNK_3D,                    // func_us_801D511C
+    E_SUBWPN_IN_CONT,                    // func_us_801D511C
     E_UNK_3E,                    // func_us_801D58FC
     E_UNK_3F,                    // func_us_801D5BA4
     E_UNK_40,                    // func_us_801D5E90

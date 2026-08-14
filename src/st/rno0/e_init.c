@@ -61,7 +61,7 @@ void EntitySubWeaponContainer(Entity* self);
 void EntitySubWpnContGlass(Entity* self);
 void func_801C7654(Entity* self);
 void func_801C77B8(Entity* self);
-void func_801C7884(Entity* self);
+void EntitySubwpnInContainer(Entity* self);
 void EntityGorgon(Entity* self);
 void func_us_801D068C(Entity* self);
 void func_us_801D0CFC(Entity* self);
@@ -142,7 +142,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntitySubWpnContGlass,
     func_801C7654,
     func_801C77B8,
-    func_801C7884,
+    EntitySubwpnInContainer,
     EntityGorgon,
     func_us_801D068C,
     func_us_801D0CFC,

@@ -44,7 +44,7 @@ void EntitySubWeaponContainer(Entity* self) {
 
     switch (self->step) {
     case SUBWPNCONT_INIT:
-        InitializeEntity(g_EInitSubwpnCloche); 
+        InitializeEntity(g_EInitSubwpnCloche);
         self->blendMode = BLEND_TRANSP;
         self->animCurFrame = 1;
         self->zPriority = 0x70;
@@ -56,7 +56,7 @@ void EntitySubWeaponContainer(Entity* self) {
         self->palette += self->params;
         newEntity = self + 1;
         CreateEntityFromEntity(
-            E_UNK_3D, self, newEntity); // Create SubWeapon
+            E_SUBWPN_IN_CONT, self, newEntity); // Create SubWeapon
         newEntity->posY.i.hi -= 72;
         newEntity->params = D_801825CC[self->params];
         newEntity->zPriority = self->zPriority - 2;
@@ -82,7 +82,7 @@ void EntitySubWeaponContainer(Entity* self) {
         if (!(g_Timer & 0xF)) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_UNK_3C, self, newEntity);
+                CreateEntityFromEntity(E_LIQUID_BUBBLES, self, newEntity);
                 rnd = (Random() & 0x18) - 12;
                 newEntity->posX.i.hi += rnd;
                 newEntity->posY.i.hi -= 30;
@@ -108,7 +108,7 @@ void EntitySubWeaponContainer(Entity* self) {
         for (i = 0; i < LEN(D_80182584); i++, glassPieceTBL++) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_SUB_WPN_CONT_GLASS, self, newEntity);
+                CreateEntityFromEntity(E_FALLING_GLASS, self, newEntity);
                 newEntity->posX.i.hi += glassPieceTBL->velX;
                 newEntity->posY.i.hi += glassPieceTBL->velY;
                 newEntity->ext.subwpnContGlass.velX = glassPieceTBL->velX;
@@ -122,7 +122,7 @@ void EntitySubWeaponContainer(Entity* self) {
             newEntity =
                 AllocEntity(&g_Entities[UNK_ENTITY_51], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_UNK_3B, self, newEntity);
+                CreateEntityFromEntity(E_FALLING_LIQUID, self, newEntity);
                 rndPosX = (Random() & 0x1F) - 16;
                 rndPosY = -(Random() & 0x3F) - 16;
                 newEntity->posX.i.hi += rndPosX;
@@ -267,8 +267,8 @@ void func_801C77B8(Entity* self) {
     }
 }
 
-void func_801C7884(Entity* self) {
-    Entity* tempEntity;
+void EntitySubwpnInContainer(Entity* self) {
+    Entity* parentContainer;
     s32 params = self->params;
 
     switch (self->step) {
@@ -312,11 +312,12 @@ void func_801C7884(Entity* self) {
         MoveEntity();
         AnimateEntity(g_SubweaponAnimPrizeDrop[params], self);
 #endif
+        // Handles floating up and down within the liquid
         self->velocityY = rsin(self->rotate) * 2;
         self->rotate += 0x20;
 
-        tempEntity = &self[-1];
-        if (tempEntity->step != 1) {
+        parentContainer = self - 1;
+        if (parentContainer->step != 1) {
             self->entityId = E_PRIZE_DROP;
             self->pfnUpdate = EntityPrizeDrop;
             self->poseTimer = 0;

@@ -1,6 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz0.h"
 
+extern EInit g_EInitSubwpnCloche;
+extern EInit g_EInitSubwpnClochePieces;
+extern EInit g_EInitParticle;
+extern EInit g_EInitObtainable;
+
 typedef struct SubWpnContDebris {
     s16 velX;
     s16 velY;
@@ -51,7 +56,7 @@ void EntitySubWeaponContainer(Entity* self) {
         self->palette += self->params;
         newEntity = self + 1;
         CreateEntityFromEntity(
-            E_func_801C7884, self, newEntity); // Create SubWeapon
+            E_SUBWPN_IN_CONT, self, newEntity); // Create SubWeapon
         newEntity->posY.i.hi -= 72;
         newEntity->params = D_801825CC[self->params];
         newEntity->zPriority = self->zPriority - 2;
@@ -262,8 +267,8 @@ void func_801C77B8(Entity* self) {
     }
 }
 
-void func_801C7884(Entity* self) {
-    Entity* tempEntity;
+void EntitySubwpnInContainer(Entity* self) {
+    Entity* parentContainer;
     s32 params = self->params;
 
     switch (self->step) {
@@ -307,11 +312,12 @@ void func_801C7884(Entity* self) {
         MoveEntity();
         AnimateEntity(g_SubweaponAnimPrizeDrop[params], self);
 #endif
+        // Handles floating up and down within the liquid
         self->velocityY = rsin(self->rotate) * 2;
         self->rotate += 0x20;
 
-        tempEntity = &self[-1];
-        if (tempEntity->step != 1) {
+        parentContainer = self - 1;
+        if (parentContainer->step != 1) {
             self->entityId = E_PRIZE_DROP;
             self->pfnUpdate = EntityPrizeDrop;
             self->poseTimer = 0;

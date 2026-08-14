@@ -74,7 +74,7 @@ typedef enum EntityID {
     /* 0x3A */ E_FALLING_GLASS,           // func_pspeu_09253A58
     /* 0x3B */ E_FALLING_LIQUID,          // func_pspeu_09253BE8
     /* 0x3C */ E_LIQUID_BUBBLES,          // func_pspeu_09253DC0
-    /* 0x3D */ E_func_801C7884,           // func_pspeu_09253EE0
+    /* 0x3D */ E_SUBWPN_IN_CONT,           // func_pspeu_09253EE0
     /* 0x3E */ E_BOSS_FIGHT_MANAGER,      // func_pspeu_09238700
     /* 0x3F */ E_BOSS_ROOM_BLOCK,         // func_pspeu_09238D50
     /* 0x40 */ E_SLOGRA,                  // func_pspeu_09259230

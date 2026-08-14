@@ -9,4 +9,4 @@ INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/e_subweapon_container", func_801C
 
 INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/e_subweapon_container", func_801C77B8);
 
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/e_subweapon_container", func_801C7884);
+INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/e_subweapon_container", EntitySubwpnInContainer);
