@@ -121,6 +121,7 @@ func TestStagesCompatibility(t *testing.T) {
 		"disks/us/ST/DAI/DAI.BIN",
 		"disks/us/ST/DRE/DRE.BIN",
 		"disks/us/ST/LIB/LIB.BIN",
+		"disks/us/ST/NO0/NO0.BIN",
 		"disks/us/ST/NO1/NO1.BIN",
 		"disks/us/ST/NO2/NO2.BIN",
 		"disks/us/ST/NO3/NO3.BIN",
@@ -167,7 +168,6 @@ func TestStagesCompatibility(t *testing.T) {
 	// A test failure here should be good news and it should be moved to the test above
 	for _, ovlPath := range []string{
 		"disks/us/ST/SEL/SEL.BIN",
-		"disks/us/ST/NO0/NO0.BIN",
 		"disks/us/BOSS/BO4/BO4.BIN",
 		"disks/us/BOSS/RBO5/RBO5.BIN",
 	} {

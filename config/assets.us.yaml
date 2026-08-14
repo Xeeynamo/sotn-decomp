@@ -594,7 +594,7 @@ files:
           - [0x90, paldef, palette_def]
           - [0x150, layers, layers]
           - [0x5B8, gfx_banks, graphics_banks]
-          - [0x778, skip] #- [0x778, layout, entity_layouts]
+          - [0x778, layout, entity_layouts]
           - [0x27E0, rooms, rooms]
           - [0x291C, skip]
           - [0x48A0, cmpgfx, stage_title_no0, 128, 128, 4]
