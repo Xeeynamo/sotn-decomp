@@ -622,6 +622,31 @@ fn preprocess_args(args: &[String]) -> Vec<String> {
     out
 }
 
+fn strip_dependency_args(args: &[String]) -> Vec<String> {
+    let mut out = Vec::new();
+    let mut skip_next = false;
+    for a in args {
+        if skip_next {
+            skip_next = false;
+            continue;
+        }
+        if matches!(a.as_str(), "-MD" | "-MMD") {
+            continue;
+        }
+        if matches!(a.as_str(), "-MF" | "-MT" | "-MQ") {
+            skip_next = true;
+            continue;
+        }
+        if (a.starts_with("-MF") || a.starts_with("-MT") || a.starts_with("-MQ"))
+            && a.len() > 3
+        {
+            continue;
+        }
+        out.push(a.clone());
+    }
+    out
+}
+
 fn cc_fail(msg: &str) -> ! {
     eprintln!("sotn_str cc: {}", msg);
     std::process::exit(1);
@@ -670,6 +695,7 @@ fn cc(cc_args: &[String]) -> io::Result<i32> {
 
     let mut compile_args: Vec<String> = args.to_vec();
     compile_args[input_index] = tmp.to_string_lossy().into_owned();
+    let compile_args = strip_dependency_args(&compile_args);
 
     let status = PCommand::new(compiler).args(&compile_args).status()?;
 
@@ -830,6 +856,22 @@ mod tests {
         let out = do_sub(line, false);
         let expected = r#""\xFF""#;
         assert_eq!(out, expected);
+    }
+
+    #[test]
+    fn test_strip_dependency_args() {
+        let args = [
+            "-c", "input.c", "-MD", "-MF", "object.d", "-MT", "object.o",
+            "-MQquoted.o", "-MMD", "-o", "object.o",
+        ]
+        .iter()
+        .map(|arg| arg.to_string())
+        .collect::<Vec<_>>();
+
+        assert_eq!(
+            strip_dependency_args(&args),
+            ["-c", "input.c", "-o", "object.o"]
+        );
     }
 
     #[test]

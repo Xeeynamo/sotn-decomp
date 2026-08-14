@@ -169,7 +169,11 @@ typedef enum {
 #define OTSIZE 0x200
 #define MAX_ENV_COUNT 0x10
 #define MAX_DRAW_MODES 0x400
+#ifdef VERSION_PC
+#define MAX_POLY_GT4_COUNT 0x1400
+#else
 #define MAX_POLY_GT4_COUNT 0x300
+#endif
 #define MAX_POLY_G4_COUNT 0x100
 #define MAX_POLY_GT3_COUNT 0x30
 #define MAX_LINE_G2_COUNT 0x100
@@ -649,6 +653,9 @@ typedef enum {
     STAGE_TE4 = 0x49,
     STAGE_TE5 = 0x4A,
     STAGE_TOP_ALT = 0x4B,
+#ifdef ENABLE_STAGE15
+    STAGE_SATURN_15 = 0x50,
+#endif
     STAGE_EU_WARNING = 0x70, // EU piracy legal message screen,
     STAGE_ENDING = 0xFE,
     STAGE_MEMORYCARD = 0xFF,
@@ -2127,6 +2134,10 @@ extern GAME_IMPORT s32 g_GameClearFlag;
 extern GAME_IMPORT s32 D_8003C0EC[4];
 extern GAME_IMPORT s32 D_8003C100;
 extern GAME_IMPORT u16 g_ClutIds[]; // array of palette VRAM offsets
+#ifdef VERSION_PC
+extern GAME_IMPORT bool (*g_PcStageLayerRenderer)(void);
+extern GAME_IMPORT bool (*g_PcGpuOtSubmitter)(OT_TYPE* ot);
+#endif
 extern GAME_IMPORT s32 g_CutsceneHasControl;
 extern GAME_IMPORT FgLayer D_8003C708;
 extern GAME_IMPORT s16 D_8003C710;
