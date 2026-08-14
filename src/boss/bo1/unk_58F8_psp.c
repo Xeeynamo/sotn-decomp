@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "../bo1/bo1.h"
+#include "bo1.h"
 
 u8 func_psp_0923C2F8(u8 arg0) {
     if (arg0 & 0x100) {

@@ -41,4 +41,3 @@ EntityBigRedFireball = 0x801AB05C;
 UnkRecursivePrimFunc1 = 0x801AB234;
 UnkRecursivePrimFunc2 = 0x801AB814;
 PlaySfxPositional = 0x801AC10C;
-g_bigRedFireballAnim = 0x80181950;

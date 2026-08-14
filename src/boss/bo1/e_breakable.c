@@ -19,6 +19,7 @@ static u16 g_eBreakableanimSets[] = {
 static u8 blend_modes[] = {BLEND_TRANSP | BLEND_ADD, BLEND_TRANSP | BLEND_ADD,
                            BLEND_TRANSP | BLEND_ADD, BLEND_TRANSP | BLEND_ADD};
 static u16 g_eBreakableZPriority[] = {0xA8, 0xA8, 0x60, 0x60};
+static u8 unused[] = {0, 0, 0, 0, 0, 0, 0, 0};
 
 void EntityBreakable(Entity* self) {
     u16 breakableType = self->params >> 12;
