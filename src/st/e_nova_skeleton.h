@@ -5,25 +5,26 @@ extern EInit g_EInitNovaSkeleton2;
 static s16 sensors1[] = {0, 20, 0, 4, 8, -4, -16, 0};
 static s16 sensors2[] = {0, 20, 12, 0};
 // animations
-static u8 anim_walk_fwd[] = {6, 1, 4, 2, 4, 3, 6, 4, 5, 5, 5, 6, 0};
-static u8 anim_walk_back[] = {6, 1, 5, 6, 5, 5, 6, 4, 4, 3, 4, 2, 0};
+static AnimateEntityFrame anim_walk_fwd[] = {{6, 1}, {4, 2}, {4, 3}, {6, 4}, {5, 5}, {5, 6}, POSE_LOOP(0)};
+static AnimateEntityFrame anim_walk_back[] = {{6, 1}, {5, 6}, {5, 5}, {6, 4}, {4, 3}, {4, 2}, POSE_LOOP(0)};
 // A short squatting animation. Perhaps a jump windup?
-static u8 anim_unused1[] = {1, 1, 4, 27, 4, 28, 1, 1, 255, 0};
+static AnimateEntityFrame anim_unused1[] = {{1, 1}, {4, 27}, {4, 28}, {1, 1}, POSE_END};
 // Slightly slower squat, note that the frames are all the same, just an extra
 // 4,27.
-static u8 anim_unused2[] = {1, 1, 4, 27, 4, 28, 4, 27, 1, 1, 255, 0};
-static u8 anim_idle[] = {4, 1, 5, 27, 15, 28, 6, 27, 6, 1, 0};
-static u8 anim_laser_charge[] = {
-    16, 1,  3,  2,  3,  7,  3,  8,  2,  9,  2,  10, 2,  11,  2,  10, 2,
-    11, 2,  12, 2,  11, 2,  12, 2,  13, 2,  12, 2,  13, 2,   14, 2,  13,
-    2,  14, 2,  13, 2,  14, 2,  15, 2,  16, 2,  15, 2,  16,  2,  15, 2,
-    16, 4,  20, 4,  19, 4,  18, 4,  17, 4,  18, 4,  19, 255, 0};
+static AnimateEntityFrame anim_unused2[] = {{1, 1}, {4, 27}, {4, 28}, {4, 27}, {1, 1}, POSE_END};
+static AnimateEntityFrame anim_idle[] = {{4, 1}, {5, 27}, {15, 28}, {6, 27}, {6, 1}, POSE_LOOP(0)};
+static AnimateEntityFrame anim_laser_charge[] = {
+    {16, 1},  {3,  2},  {3,  7},  {3,  8},  {2,  9},  {2,  10}, {2,  11},  {2,  10}, {2,
+    11}, {2,  12}, {2,  11}, {2,  12}, {2,  13}, {2,  12}, {2,  13}, {2,   14}, {2,  13},
+    {2,  14}, {2,  13}, {2,  14}, {2,  15}, {2,  16}, {2,  15}, {2,  16},  {2,  15}, {2,
+    16}, {4,  20}, {4,  19}, {4,  18}, {4,  17}, {4,  18}, {4,  19}, POSE_END};
 // Not the laser itself - just nova skeleton standing there, holding arms up
 // menacingly
-static u8 anim_laser_blast[] = {
-    2,  20, 96, 21, 1, 23, 1, 22, 1, 23, 1, 22, 1, 23, 2,   22,
-    2,  23, 2,  22, 2, 23, 3, 22, 3, 23, 3, 22, 4, 23, 5,   22,
-    26, 23, 3,  24, 3, 25, 3, 26, 4, 4,  4, 5,  4, 6,  255, 0};
+static AnimateEntityFrame anim_laser_blast[] = {
+    {2,  20}, {96, 21}, {1, 23}, {1, 22}, {1, 23}, {1, 22}, {1, 23}, {2,   22},
+    {2,  23}, {2,  22}, {2, 23}, {3, 22}, {3, 23}, {3, 22}, {4, 23}, {5,   22},
+    {26, 23}, {3,  24}, {3, 25}, {3, 26}, {4, 4},  {4, 5},  {4, 6},  POSE_END};
+
 // death_parts_rotspeeds
 static u16 death_parts_rotspeeds[] = {256, 128, 72, 32, 64, 16, 32, -32};
 // deathPartLife
