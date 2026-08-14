@@ -257,7 +257,7 @@
 | sel        | func_psp_09241C38                  |       11 |          1 |        |       |     |
 | cen        | jtbl_pspeu_09293FB0                |       12 |          0 | Yes    |       |     |
 | no3        | jtbl_pspeu_09298DF0                |       12 |          0 | Yes    |       |     |
-| np3        | jtbl_pspeu_09291B58                |       12 |          0 | Yes    |       |     |
+| np3_psp    | jtbl_pspeu_09291B58                |       12 |          0 | Yes    |       |     |
 | rnz0_psp   | jtbl_pspeu_09281B60                |       12 |          0 | Yes    |       |     |
 | top        | jtbl_pspeu_092769C8                |       12 |          0 | Yes    |       |     |
 | main       | func_psp_08910498                  |       12 |          1 |        |       |     |
@@ -325,7 +325,7 @@
 | cen        | jtbl_pspeu_09294088                |       14 |          0 | Yes    |       |     |
 | cen        | jtbl_pspeu_092940A8                |       14 |          0 | Yes    |       |     |
 | no2        | jtbl_pspeu_0928D418                |       14 |          0 | Yes    |       |     |
-| np3        | jtbl_pspeu_09291AF0                |       14 |          0 | Yes    |       |     |
+| np3_psp    | jtbl_pspeu_09291AF0                |       14 |          0 | Yes    |       |     |
 | rnz0_psp   | jtbl_pspeu_09281B40                |       14 |          0 | Yes    |       |     |
 | top        | jtbl_pspeu_092769E0                |       14 |          0 | Yes    |       |     |
 | main       | _getpid                            |       14 |          1 |        |       |     |
@@ -552,10 +552,10 @@
 | no4        | e_red_door.rodata                  |       16 |          0 | Yes    |       |     |
 | np3        | blade.rodata                       |       16 |          0 | Yes    |       |     |
 | np3        | e_red_door.rodata                  |       16 |          0 | Yes    |       |     |
-| np3        | jtbl_pspeu_09291AC8                |       16 |          0 | Yes    |       |     |
-| np3        | jtbl_pspeu_09291A40                |       16 |          0 | Yes    |       |     |
-| np3        | jtbl_pspeu_09291A68                |       16 |          0 | Yes    |       |     |
-| np3        | jtbl_pspeu_09291A00                |       16 |          0 | Yes    |       |     |
+| np3_psp    | jtbl_pspeu_09291AC8                |       16 |          0 | Yes    |       |     |
+| np3_psp    | jtbl_pspeu_09291A40                |       16 |          0 | Yes    |       |     |
+| np3_psp    | jtbl_pspeu_09291A68                |       16 |          0 | Yes    |       |     |
+| np3_psp    | jtbl_pspeu_09291A00                |       16 |          0 | Yes    |       |     |
 | nz0        | e_red_door.rodata                  |       16 |          0 | Yes    |       |     |
 | nz0        | e_sealed_door.rodata               |       16 |          0 | Yes    |       |     |
 | nz0        | e_stage_name.rodata                |       16 |          0 | Yes    |       |     |
@@ -734,8 +734,8 @@
 | nz0        | e_skeleton.rodata                  |       18 |          0 | Yes    |       |     |
 | nz1        | e_life_up.rodata                   |       18 |          0 | Yes    |       |     |
 | rcen       | e_shaft.rodata                     |       18 |          0 | Yes    |       |     |
-| rno0       | e_jack_o_bones.rodata              |       18 |          0 | Yes    |       |     |
 | rno0       | e_gurkha.rodata                    |       18 |          0 | Yes    |       |     |
+| rno0       | e_jack_o_bones.rodata              |       18 |          0 | Yes    |       |     |
 | rno1       | unk_10910.rodata                   |       18 |          0 | Yes    |       |     |
 | rno1       | unk_3CF8.rodata                    |       18 |          0 | Yes    |       |     |
 | rno2       | e_ctulhu.rodata                    |       18 |          0 | Yes    |       |     |
@@ -1294,7 +1294,7 @@
 | no1        | e_spear_guard.rodata               |       24 |          0 | Yes    |       |     |
 | no3        | e_warg.rodata                      |       24 |          0 | Yes    |       |     |
 | no4        | e_spear_guard.rodata               |       24 |          0 | Yes    |       |     |
-| np3        | jtbl_pspeu_09291B10                |       24 |          0 | Yes    |       |     |
+| np3_psp    | jtbl_pspeu_09291B10                |       24 |          0 | Yes    |       |     |
 | rdai       | func_us_80192d64_from_rbo3.rodata  |       24 |          0 | Yes    |       |     |
 | rno3       | e_fire_warg.rodata                 |       24 |          0 | Yes    |       |     |
 | st0        | 3AB08.rodata                       |       24 |          0 | Yes    |       |     |
@@ -1962,8 +1962,8 @@
 | rare       | func_pspeu_0924A760                |       31 |          3 |        |       |     |
 | rcat       | func_pspeu_09249870                |       31 |          3 |        |       |     |
 | rdai       | func_pspeu_0924E1C0                |       31 |          3 |        |       |     |
-| rno0       | SetEntityVelocityFromAngle         |       31 |          3 |        |       |     |
 | rno0       | func_801CE228                      |       31 |          3 |        |       |     |
+| rno0       | SetEntityVelocityFromAngle         |       31 |          3 |        |       |     |
 | rno0       | func_pspeu_0923F300                |       31 |          3 |        |       |     |
 | rno2       | SetEntityVelocityFromAngle         |       31 |          3 |        |       |     |
 | rnz1       | SetEntityVelocityFromAngle         |       31 |          3 |        |       |     |
