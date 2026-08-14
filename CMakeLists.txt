@@ -372,7 +372,7 @@ set(SOURCE_FILES_STAGE_NO2
     src/st/no2/34DA4.c
     src/st/no2/372E8.c
     src/st/no2/37580.c
-    src/st/no2/4966C.c
+    src/st/no2/giantbro_helpers_2.c
     src/st/no2/blade.c
     src/st/no2/e_background_house.c
     src/st/no2/e_bloody_zombie.c
@@ -517,7 +517,7 @@ set(SOURCE_FILES_STAGE_NP3
     src/st/np3/popup.c
     src/st/np3/prim_helpers.c
     src/st/np3/bss.c
-    src/st/np3/4E04C.c
+    src/st/np3/giantbro_helpers_2.c
     src/st/np3/d_water_data.c
     src/st/np3/water_effects.c
     src/st/np3/entrance_weights.c

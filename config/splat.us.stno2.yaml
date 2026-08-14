@@ -130,7 +130,7 @@ segments:
       - [0x47E38, c, popup]
       - [0x48168, c, e_valhalla_knight]
       - [0x48C78, c, giantbro_helpers]
-      - [0x4966C, c, 4966C]
+      - [0x4966C, c, giantbro_helpers_2]
       - [0x49AEC, c, hammer]
       - [0x4AD98, c, gurkha]
       - [0x4C020, c, blade]

@@ -1,6 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "no2.h"
-
 void func_801CE04C(Entity* self, Collider* col) {
     u16 var_s0 = 0;
     s16 x = self->posX.i.hi;
