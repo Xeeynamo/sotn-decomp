@@ -40,7 +40,6 @@ EntityJackOBonesJack = 0x801C87B0;
 TryShoot = 0x801C8A74;
 DrawLaserRing = 0x801C8B14;
 EntityNovaSkeleton = 0x801C8D44;
-EntityNovaSkeletonDeathParts = 0x801C922C;
 EntityNovaLaser = 0x801C9324;
 EntityNovaLaserPulse = 0x801C97D4;
 func_801CD658 = 0x801C992C;
