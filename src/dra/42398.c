@@ -944,7 +944,14 @@ loop_5:
         }
         PutDrawEnv(&g_CurrentBuffer->draw);
         PutDispEnv(&g_CurrentBuffer->disp);
+#ifdef VERSION_PC
+        if (g_PcGpuOtSubmitter == NULL ||
+            !g_PcGpuOtSubmitter(g_CurrentOT)) {
+            DrawOTag(g_CurrentOT);
+        }
+#else
         DrawOTag(g_CurrentOT);
+#endif
         func_800EA7CC();
         func_801361F8();
         if (func_80131F28() > 900) {

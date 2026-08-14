@@ -389,6 +389,11 @@ static bool isFirstBoot() {
 static void LoadStagePrg(const char* name) {
     char ovlName[16];
     unsigned i;
+#ifdef ENABLE_STAGE15
+    if (g_StageId == STAGE_SATURN_15) {
+        name = "stage15";
+    }
+#endif
     for (i = 0; name[i] && i < LEN(ovlName) - 1; i++) {
         ovlName[i] = (char)tolower((unsigned char)name[i]);
     }
@@ -402,6 +407,7 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
     char smolbuf[48];
     char buf[128];
     s32 fid;
+    bool absolutePath = false;
 
     SimFile sim = {0};
     switch (type) {
@@ -621,6 +627,13 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
         return 0;
     case SimFileType_StageChr:
         sim.kind = SIM_STAGE_CHR;
+#if defined(STAGE15_ASSET_DIR)
+        if (g_StageId == STAGE_SATURN_15) {
+            sim.path = STAGE15_ASSET_DIR "/F_STAGE15.BIN";
+            absolutePath = true;
+            break;
+        }
+#endif
         sim.path = smolbuf;
         snprintf(smolbuf, sizeof(smolbuf), "ST/%s/F_%s.BIN",
                  g_StagesLba[g_StageId].ovlName,
@@ -659,7 +672,11 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
         return -1;
     }
 
-    snprintf(buf, sizeof(buf), "disks/us/%s", sim.path);
+    if (absolutePath) {
+        snprintf(buf, sizeof(buf), "%s", sim.path);
+    } else {
+        snprintf(buf, sizeof(buf), "disks/us/%s", sim.path);
+    }
     DEBUGF("about to load %s", buf);
     if (!FileUseContent(LoadFilePc, buf, &sim)) {
         ERRORF("failed to load '%s'", buf);

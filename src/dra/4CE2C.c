@@ -51,6 +51,12 @@ void RenderTilemap(void) {
     u8 u, v;
 
 #ifdef VERSION_PC
+    if (g_PcStageLayerRenderer != NULL && g_PcStageLayerRenderer()) {
+        return;
+    }
+#endif
+
+#ifdef VERSION_PC
     SPRT_16 _sp16;
     TilemapRenderer _r;
     SPRT_16* sp16 = &_sp16;

@@ -1253,7 +1253,13 @@ void RunMainEngine(void) {
 #if defined(VERSION_PSP)
         D_psp_091CE578 = 1;
 #endif
+#if defined(VERSION_PC) && defined(ENABLE_STAGE15)
+        if (g_StageId != STAGE_SATURN_15) {
+            g_StageId = func_800F16D0();
+        }
+#else
         g_StageId = func_800F16D0();
+#endif
         DestroyEntitiesFromIndex(0);
         DestroyAllPrimitives();
         func_800EDAE4();
