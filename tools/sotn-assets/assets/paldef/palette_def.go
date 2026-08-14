@@ -61,7 +61,7 @@ func (h *handler) Build(e assets.BuildArgs) error {
 	declared := map[string]bool{}
 	for _, def := range doc.Defs {
 		for _, ref := range append(append([]paletteEntry{}, def.Data...), def.Entries...) {
-			sym := util.RemoveFileNameExt(ref.Name)
+			sym := util.RemoveFileNameExt(filepath.Base(ref.Name))
 			if !declared[sym] {
 				declared[sym] = true
 				content.WriteString(fmt.Sprintf("extern u16 %s[];\n", sym))
@@ -229,6 +229,11 @@ func readPaletteDefs(r io.ReadSeeker, baseAddr psx.Addr, start, end int) ([]pale
 		}
 		kind := int(op & 0xFFFF)
 		freq := int(op >> 16)
+		// PSP aligns every def to 8 bytes, pad with a zero after terminator
+		if op == 0 {
+			off += 4
+			continue
+		}
 		// a palette op has a small kind and frequency, anything else is a
 		// pointer and marks the beginning of the cluts[] array
 		if kind < palCopy || kind > palBulkCopy || freq > 0xFF {
@@ -382,7 +387,7 @@ func resolveSymbols(def *paletteDef, symbol func(psx.Addr) string, baseAddr psx.
 // symRef formats a reference to a palette symbol with an optional offset
 // expressed in u16 units
 func symRef(name string, offset int) string {
-	sym := util.RemoveFileNameExt(name)
+	sym := util.RemoveFileNameExt(filepath.Base(name))
 	if offset != 0 {
 		return fmt.Sprintf("(u16*)%s + 0x%X", sym, offset)
 	}

@@ -1,4 +1,7 @@
 spriteBanks = 0x8018002C;
+bo1_tilemap_0 = 0x80194C98;
+bo1_tilemap_1 = 0x80195498;
+bo1_tiledef_0 = 0x8019E0B8;
 cluts = 0x801806A4;
 rooms_layers = 0x80180704;
 gfxBanks = 0x80180818;

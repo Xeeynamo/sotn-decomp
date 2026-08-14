@@ -1492,6 +1492,59 @@ files:
     asset_path: assets/boss/bo1
     src_path: src/boss/bo1
     splat_config_path: config/splat.us.bobo1.yaml
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x2C, sprite_banks, sprite_banks]
+          - [0x8C, palette, pal_8C, 16]
+          - [0xAC, palette, pal_AC, 16]
+          - [0xCC, palette, pal_CC, 16]
+          - [0x12C, palette, pal_12C, 16]
+          - [0x18C, palette, pal_18C, 16]
+          - [0x1EC, palette, pal_1EC, 16]
+          - [0x24C, palette, pal_24C, 16]
+          - [0x26C, palette, pal_26C, 16]
+          - [0x2CC, palette, pal_2CC, 16]
+          - [0x2EC, palette, pal_2EC, 16]
+          - [0x30C, palette, pal_30C, 16]
+          - [0x32C, palette, pal_32C, 16]
+          - [0x34C, palette, pal_34C, 16]
+          - [0x38C, palette, pal_38C, 16]
+          - [0x3CC, palette, pal_3CC, 16]
+          - [0x3EC, palette, pal_3EC, 16]
+          - [0x40C, palette, pal_40C, 16]
+          - [0x4CC, palette, pal_4CC, 16]
+          - [0x58C, paldef, palette_def]
+          - [0x6D4, layers, layers]
+          - [0x70C, gfx_banks, graphics_banks]
+          - [0x850, layout, entity_layouts]
+          - [0x9F8, skip]
+          - [0x1B5C, rooms, rooms]
+          - [0x1B78, skip]
+          - [0x1D84, cmpgfx, gfx_1D84, 128, 128, 4]
+          - [0x2F38, cmpgfx, gfx_2F38, 128, 128, 4]
+          - [0x3BA4, cmpgfx, gfx_3BA4, 128, 128, 4]
+          - [0x4858, cmpgfx, gfx_4858, 128, 128, 4]
+          - [0x5844, cmpgfx, gfx_5844, 128, 128, 4]
+          - [0x6934, cmpgfx, gfx_6934, 128, 128, 4]
+          - [0x7704, cmpgfx, gfx_7704, 128, 128, 4]
+          - [0x872C, cmpgfx, gfx_872C, 128, 128, 4]
+          - [0x966C, cmpgfx, gfx_966C, 128, 128, 4]
+          - [0xA73C, cmpgfx, gfx_A73C, 128, 128, 4]
+          - [0xB4E8, cmpgfx, gfx_B4E8, 128, 128, 4]
+          - [0xC214, cmpgfx, gfx_C214, 128, 128, 4]
+          - [0xD264, cmpgfx, gfx_D264, 128, 128, 4]
+          - [0xE170, cmpgfx, gfx_E170, 128, 128, 4]
+          - [0xF658, cmpgfx, gfx_F658, 128, 128, 4]
+          - [0x108E0, cmpgfx, gfx_108E0, 128, 128, 4]
+          - [0x11A08, cmpgfx, gfx_11A08, 128, 128, 4]
+          - [0x12984, cmpgfx, gfx_12984, 128, 128, 4]
+          - [0x13330, cmpgfx, gfx_13330, 128, 128, 4]
+          - [0x14228, cmpgfx, gfx_14228, 128, 128, 4]
+          - [0x14918, palette, pal_14918, 16] # 0x200
+          - [0x149D8, palette, pal_149D8, 16] # 0x2E0
+          - [0x14BD8, skip]
   - target: disks/us/BOSS/BO2/BO2.BIN
     asset_path: assets/boss/bo2
     src_path: src/boss/bo2
