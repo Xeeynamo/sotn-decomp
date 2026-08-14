@@ -331,9 +331,9 @@ void EntityBlade(Entity* self) {
         self->facingLeft = self->params;
         self->hitboxWidth = 6;
         self->hitboxHeight = 6;
-                        #ifdef STAGE_IS_RNO0
+#ifdef STAGE_IS_RNO0
         self->zPriority += 8;
-        #endif
+#endif
         /* fallthrough */
     case 1:
         if (UnkCollisionFunc3(D_801833E4) & 1) {
