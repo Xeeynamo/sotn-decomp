@@ -75,6 +75,7 @@ segments:
       - [0x20F60, c, e_breakable]
       - [0x210A8, c, unk_210A8]
       - [0x217F8, c, unk_21C80]
+      - [0x250BC, c, unk_250BC_us]
       - [0x2518C, c, unk_2518C]
       - [0x255A0, c, st_update]
       - [0x259D4, c, collision]
