@@ -175,14 +175,20 @@ func readEntityLayout(r io.ReadSeeker, ovlName string, off, baseAddr psx.Addr, c
 		if err := hydrateYOrderFields(l, yLayouts); err != nil {
 			return layouts{}, nil, fmt.Errorf("unable to populate YOrder field: %w", err)
 		}
-		xMerged := datarange.MergeDataRanges(xRanges)
-		yMerged := yRanges[1]
-		return l, []datarange.DataRange{
-			datarange.MergeDataRanges([]datarange.DataRange{datarange.New(off, endOfArray), yRanges[0]}),
-			datarange.MergeDataRanges([]datarange.DataRange{xMerged, yMerged}),
-		}, nil
+		// Keep block ranges separate here. Info consolidates adjacent runs while
+		// leaving gaps unclaimed; Extract does not consume the ranges.
+		laydefRange, err := datarange.Merge([]datarange.DataRange{
+			datarange.New(off, endOfArray), yRanges[0]})
+		if err != nil {
+			return layouts{}, nil, err
+		}
+		layoutRanges := append(
+			[]datarange.DataRange{laydefRange}, xRanges...)
+		return l, append(layoutRanges, yRanges[1:]...), nil
 	} else {
-		return l, []datarange.DataRange{datarange.New(off, endOfArray), datarange.MergeDataRanges(xRanges)}, nil
+		return l, append(
+			[]datarange.DataRange{datarange.New(off, endOfArray)},
+			xRanges...), nil
 	}
 }
 

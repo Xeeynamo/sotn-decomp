@@ -162,29 +162,36 @@ pub fn parse_image_table(data: &[u8], table_offset: usize) -> Result<(Vec<RawRec
 }
 
 pub fn read_palette_banks(data: &[u8], offset: usize) -> Vec<Vec<[u8; 3]>> {
-    let bank_bytes = PALETTE_BANK_SIZE * 2;
     if offset.saturating_add(2) > data.len() {
         return Vec::new();
     }
     let count = bank_count(data, offset);
     let mut banks = Vec::with_capacity(count);
     for bank in 0..count {
-        let base = offset + 2 + bank * bank_bytes;
-        if base.saturating_add(bank_bytes) > data.len() {
+        let Some(bytes) = palette_bank(data, offset, bank) else {
             break;
-        }
+        };
         banks.push(
             (0..PALETTE_BANK_SIZE)
                 .map(|index| {
                     rgb555(u16::from_be_bytes([
-                        data[base + index * 2],
-                        data[base + index * 2 + 1],
+                        bytes[index * 2],
+                        bytes[index * 2 + 1],
                     ]))
                 })
                 .collect(),
         );
     }
     banks
+}
+
+pub fn palette_bank(data: &[u8], offset: usize, bank: usize) -> Option<&[u8]> {
+    if bank >= bank_count(data, offset) {
+        return None;
+    }
+    let bank_bytes = PALETTE_BANK_SIZE * 2;
+    let base = offset.checked_add(2 + bank.checked_mul(bank_bytes)?)?;
+    data.get(base..base + bank_bytes)
 }
 
 pub fn bank_count(data: &[u8], offset: usize) -> usize {
@@ -256,6 +263,15 @@ mod tests {
             (records[1].pixel_width(), records[1].pixel_height()),
             (4, 6)
         );
+    }
+
+    #[test]
+    fn a_raw_palette_bank_can_be_selected() {
+        let mut data = vec![0, 2];
+        data.extend(0u8..64);
+        assert_eq!(palette_bank(&data, 0, 0).unwrap(), &data[2..34]);
+        assert_eq!(palette_bank(&data, 0, 1).unwrap(), &data[34..66]);
+        assert!(palette_bank(&data, 0, 2).is_none());
     }
 
     #[test]
