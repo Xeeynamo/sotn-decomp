@@ -17,7 +17,7 @@ void func_us_801B053C(void) {
 
     u8 u, v;
 
-    prim = g_CurrentEntity->ext.prim;
+    prim = g_CurrentEntity->ext.et_801B0930.prim7C;
     var_a1 = D_us_80180DC4;
     var_a3 = D_us_80180FFC;
 
@@ -195,7 +195,7 @@ void func_us_801B0930(Entity* self) {
             prim->type = PRIM_ENV;
             prim->drawMode = DRAW_HIDE;
             prim = prim->next;
-            self->ext.prim = prim;
+            self->ext.et_801B0930.prim7C = prim;
             while (prim != NULL) {
                 prim->priority = 0xD0;
                 prim->drawMode = DRAW_HIDE;
@@ -291,7 +291,7 @@ void func_us_801B0930(Entity* self) {
         if (brightness > 0x80) {
             brightness = 0x80;
         }
-        prim = self->ext.prim;
+        prim = self->ext.et_801B0930.prim7C;
         x = 0x40;
         y = 0x70;
         pos = D_us_801CD6E4;

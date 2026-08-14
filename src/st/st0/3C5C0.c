@@ -161,7 +161,7 @@ void func_801BC5C0(Entity* self) {
 
         sp64 = sp38.vz >> 2;
         gte_ldtr(0, 0, sp38.vz);
-        prim = self->ext.prim;
+        prim = self->ext.et_801BC5C0.prim1;
 
         vectors = &D_80182568[0];
         for (i = 0; i < 20; i++) {

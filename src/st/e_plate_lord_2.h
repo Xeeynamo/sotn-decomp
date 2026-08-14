@@ -8,7 +8,7 @@ static void func_us_801D4E30(void) {
     Primitive* prim;
     s32 i;
 
-    prim = g_CurrentEntity->ext.prim;
+    prim = g_CurrentEntity->ext.plateLordUnknown.prim;
     for (i = 0; i < 10; i++) {
         prim->x0 = (prim->x0 + prim->x1) / 2;
         prim->y0 = (prim->y0 + prim->y2) / 2;
@@ -25,7 +25,7 @@ static void func_us_801D4E94(s32 arg0) {
 
     s32 posX = g_CurrentEntity->posX.val >> 8;
     s32 posY = g_CurrentEntity->posY.val >> 8;
-    Primitive* prim = g_CurrentEntity->ext.prim;
+    Primitive* prim = g_CurrentEntity->ext.plateLordUnknown.prim;
     for (i = 0; i < 0xA; i++) {
         xOffset = prim->x0 << 8;
         yOffset = prim->y0 << 8;
@@ -57,7 +57,7 @@ static void func_us_801D4FCC(void) {
 
     s32 posX = g_CurrentEntity->posX.i.hi;
     s32 posY = g_CurrentEntity->posY.i.hi;
-    Primitive* prim = g_CurrentEntity->ext.prim;
+    Primitive* prim = g_CurrentEntity->ext.plateLordUnknown.prim;
     s32 angle = g_CurrentEntity->ext.plateLordUnknown.unk84;
     s8 pad[40];
 
@@ -86,7 +86,7 @@ static void func_us_801D5074(s32 arg0) {
 
     posX = g_CurrentEntity->posX.val >> 8;
     posY = g_CurrentEntity->posY.val >> 8;
-    prim = g_CurrentEntity->ext.prim;
+    prim = g_CurrentEntity->ext.plateLordUnknown.prim;
     for (i = 0; i < 9; i++) {
         nextPrim = prim->next;
         s2 = nextPrim->x0 << 8;
@@ -134,7 +134,7 @@ static void func_us_801D51EC(void) {
     Primitive* prim;
     s32 i;
 
-    prim = g_CurrentEntity->ext.prim;
+    prim = g_CurrentEntity->ext.plateLordUnknown.prim;
     for (i = 0; i < 10; i++) {
         prim->x0 = prim->x2 = prim->x0 - 3;
         prim->x1 = prim->x3 = prim->x0 + 6;
@@ -146,7 +146,7 @@ static void func_us_801D51EC(void) {
 }
 
 static void func_us_801D5250(void) {
-    Primitive* prim = g_CurrentEntity->ext.prim;
+    Primitive* prim = g_CurrentEntity->ext.plateLordUnknown.prim;
     Collider collider;
     s32 i;
     s32 posX;
@@ -260,7 +260,7 @@ void func_us_801D542C(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
-        self->ext.prim = prim;
+        self->ext.plateLordUnknown.prim = prim;
 
         while (prim != NULL) {
             prim->tpage = 0x13;
@@ -521,7 +521,7 @@ void func_us_801D542C(Entity* self) {
         var_s6 = self->ext.plateLordUnknown.unk80;
         var_s3 = self->ext.plateLordUnknown.unk82;
         var_fp = self->ext.plateLordUnknown.unk8E;
-        prim = self->ext.prim;
+        prim = self->ext.plateLordUnknown.prim;
         for (i = 0; i < 0xA; i++) {
             switch (self->step) {
             case 9:

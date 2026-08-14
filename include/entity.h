@@ -1569,7 +1569,7 @@ typedef struct {
 } ET_801AF774;
 
 typedef struct {
-    s32 unk7C;
+    struct Primitive* prim;
     s16 timer;
     s16 unk82;
     s16 unk84;
@@ -1895,7 +1895,7 @@ typedef struct {
 // ====== CHI ENTITIES ======
 // CHI Room3, Top, Demon Switch Wall
 typedef struct {
-    /* 0x7C */ char pad_7C[0x4];
+    /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ s32 unk80;
 } ET_DemonSwitchWall;
 
@@ -1907,7 +1907,7 @@ typedef struct {
 
 // CHI Room3, Middle, Falling Stairs
 typedef struct {
-    /* 0x7C */ char pad_7C[0x4];
+    /* 0x7C */ struct Primitive* prim7C;
     /* 0x80 */ s32 primBatchCount;
     /* 0x84 */ s16 rotateAccel;
     /* 0x86 */ char pad_86[0x2];
@@ -1960,7 +1960,7 @@ typedef struct {
 
 // CHI Room 4, Venus Weed
 typedef struct {
-    /* 0x7C */ char pad_7C[0x4];
+    /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ Primitive* stemPrim;
     /* 0x84 */ s16 leavesWidth;
     /* 0x86 */ s16 leavesHeight;
@@ -2420,7 +2420,7 @@ typedef struct {
 } ET_FleaMan;
 
 typedef struct {
-    /* 0x7C */ s32 : 32;
+    /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ s16 timer;
     /* 0x82 */ s16 : 16;
     /* 0x84 */ u8 hopCount;
@@ -3885,15 +3885,14 @@ typedef struct {
 } ET_FlailGuardFlail;
 
 typedef struct {
-    /* 0x7C */ s16 : 16;
-    /* 0x7E */ s16 unk7E;
+    /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ f32 unk80;
     /* 0x84 */ s16 unk84;
     /* 0x86 */ s16 unk86;
 } ET_ClockTowerClouds;
 
 typedef struct {
-    /* 0x7C */ u32 : 32;
+    /* 0x7C */ struct Primitive* prim7C;
     /* 0x80 */ s16 timer;
     /* 0x82 */ u16 : 16;
     /* 0x84 */ u16 : 16;
@@ -3955,7 +3954,7 @@ typedef struct {
 } ET_FloorTrap;
 
 typedef struct {
-    /* 7C */ u32 : 32;
+    /* 7C */ struct Primitive* prim7C;
     /* 80 */ struct Primitive* prim80;
     /* 84 */ struct Primitive* prim84;
     /* 88 */ s16 timer;
@@ -4003,7 +4002,7 @@ typedef struct {
 } ET_801806B0;
 
 typedef struct {
-    /* 0x7C */ s32 : 32;
+    /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ s16 timer;
     /* 0x82 */ s16 unk82;
     /* 0x84 */ s16 unk84;
@@ -4033,7 +4032,7 @@ typedef struct {
 } ET_FakeRalph;
 
 typedef struct {
-    /* 0x7C */ s32 : 32;
+    /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ s16 timer;
     /* 0x82 */ s16 angle;
     /* 0x84 */ s16 red;
@@ -4132,7 +4131,7 @@ typedef struct {
 } ET_Dodo;
 
 typedef struct {
-    /* 0x7C */ u32 : 32;
+    /* 0x7C */ struct Primitive* prim7C;
     /* 0x80 */ Primitive* prim0;
     /* 0x84 */ Primitive* prim1;
     /* 0x88 */ Primitive* prim2;
@@ -4142,7 +4141,7 @@ typedef struct {
 } ET_801B0930;
 
 typedef struct {
-    /* 0x7C */ u32 : 32;
+    /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ s32 velocityX;
     /* 0x84 */ s32 velocityY;
     /* 0x88 */ u32 : 32;

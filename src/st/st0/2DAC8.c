@@ -708,7 +708,7 @@ void EntityDraculaFinalForm(Entity* self) {
             self->primIndex = primIndex;
             self->flags |= FLAG_HAS_PRIMS;
             prim = &g_PrimBuf[primIndex];
-            self->ext.prim = prim;
+            self->ext.dracFinalForm.prim = prim;
             prim->x0 = prim->x2 = 0;
             prim->x1 = prim->x3 = 0x100;
             prim->y0 = prim->y1 = 0;
@@ -721,7 +721,7 @@ void EntityDraculaFinalForm(Entity* self) {
             prim->drawMode = DRAW_TRANSP | 0x30;
             self->step_s++;
         case 6:
-            prim = self->ext.prim;
+            prim = self->ext.dracFinalForm.prim;
             prim->r0 += 0x18;
             prim->g0 = prim->b0 = prim->r0;
             LOW(prim->r1) = LOW(prim->r0);
