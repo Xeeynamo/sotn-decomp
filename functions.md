@@ -3535,7 +3535,7 @@
 | bo6        | func_pspeu_0925AA50                |       51 |          8 |        |       |     |
 | ric        | func_pspeu_092B0640                |       51 |          8 |        |       |     |
 | no1        | func_pspeu_0923D640                |       51 |          9 |        |       |     |
-| rno0       | TryShoot                           |       51 |          9 |        |       |     |
+| rno0       | func_pspeu_09250300                |       51 |          9 |        |       |     |
 | rno1       | TryShoot                           |       51 |          9 |        |       |     |
 | rno3       | func_pspeu_0924EB18                |       51 |          9 |        |       |     |
 | rno4       | TryShoot                           |       51 |          9 |        |       |     |
@@ -4116,7 +4116,7 @@
 | rchi       | func_pspeu_09248150                |       63 |          7 |        |       |     |
 | rdai       | func_pspeu_0924F090                |       63 |          7 |        |       |     |
 | rlib       | func_pspeu_09246688                |       63 |          7 |        |       |     |
-| rno0       | PrimDecreaseBrightness             |       63 |          7 |        |       |     |
+| rno0       | func_pspeu_09254848                |       63 |          7 |        |       |     |
 | rno1       | PrimDecreaseBrightness             |       63 |          7 |        |       |     |
 | rno2       | PrimDecreaseBrightness             |       63 |          7 |        |       |     |
 | rno3       | func_pspeu_09251CF8                |       63 |          7 |        |       |     |
@@ -5278,7 +5278,7 @@
 | main       | LoadTPage                          |       90 |          8 |        |       |     |
 | are        | func_pspeu_09260F18                |       90 |          9 |        |       |     |
 | dai        | func_pspeu_0924FD18                |       90 |          9 |        |       |     |
-| rno0       | EntityNovaSkeletonDeathParts       |       90 |          9 |        |       |     |
+| rno0       | func_pspeu_09250CE0                |       90 |          9 |        |       |     |
 | rno1       | EntityBladeSoldierDeathParts       |       90 |          9 |        |       |     |
 | rno3       | func_pspeu_0924F4F8                |       90 |          9 |        |       |     |
 | rno4       | EntityBladeSoldierDeathParts       |       90 |          9 |        |       |     |
@@ -6591,7 +6591,7 @@
 | rbo8       | func_pspeu_09240880                |      125 |         11 |        |       |     |
 | no0        | func_pspeu_0924B838                |      125 |         11 |        |       |     |
 | no3        | func_pspeu_09261B38                |      125 |         15 |        |       |     |
-| rno0       | EntityNovaLaserPulse               |      125 |         18 |        |       |     |
+| rno0       | func_pspeu_09251500                |      125 |         18 |        |       |     |
 | rno1       | EntityNovaLaserPulse               |      125 |         18 |        |       |     |
 | rno3       | func_pspeu_0924FD18                |      125 |         18 |        |       |     |
 | rno4       | EntityNovaLaserPulse               |      125 |         18 |        |       |     |
@@ -7370,7 +7370,7 @@
 | main       | func_psp_089201E8                  |      190 |         17 |        |       |     |
 | rnz1       | EntityGearVertical                 |      190 |         20 |        |       |     |
 | main       | func_psp_0893858C                  |      190 |         21 |        |       |     |
-| rno0       | DrawLaserRing                      |      190 |         21 |        |       |     |
+| rno0       | func_pspeu_092503B0                |      190 |         21 |        |       |     |
 | rno1       | DrawLaserRing                      |      190 |         21 |        |       |     |
 | rno3       | func_pspeu_0924EBC8                |      190 |         21 |        |       |     |
 | rno4       | DrawLaserRing                      |      190 |         21 |        |       |     |
@@ -8915,7 +8915,7 @@
 | rno0       | func_pspeu_0925DA60                |      464 |         60 |        |       |     |
 | bo4        | func_pspeu_09249910_from_rbo5      |      465 |         79 |        |       |     |
 | rbo5       | func_pspeu_09249910                |      465 |         79 |        |       |     |
-| rno0       | EntityNovaSkeleton                 |      466 |         69 | Yes    |       |     |
+| rno0       | func_pspeu_09250670                |      466 |         69 | Yes    |       |     |
 | rno1       | EntityNovaSkeleton                 |      466 |         69 | Yes    |       |     |
 | rno3       | func_pspeu_0924EE88                |      466 |         69 | Yes    |       |     |
 | rno4       | EntityNovaSkeleton                 |      466 |         69 | Yes    |       |     |
@@ -8932,7 +8932,7 @@
 | no0        | func_pspeu_0925B6A0                |      471 |         72 |        |       |     |
 |            | func_092ED010                      |      472 |         34 | Yes    |       |     |
 | dra        | func_psp_090E74E8                  |      473 |         40 |        |       |     |
-| rno0       | EntityNovaLaser                    |      473 |         49 |        |       |     |
+| rno0       | func_pspeu_09250E28                |      473 |         49 |        |       |     |
 | rno1       | EntityNovaLaser                    |      473 |         49 |        |       |     |
 | rno3       | func_pspeu_0924F640                |      473 |         49 |        |       |     |
 | rno4       | EntityNovaLaser                    |      473 |         49 |        |       |     |
