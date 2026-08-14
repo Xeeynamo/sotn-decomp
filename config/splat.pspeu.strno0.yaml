@@ -72,7 +72,7 @@ segments:
       - [0x1D368, c, rno0_psp/unk_1D368]
       - [0x1DD00, c, rno0/e_floor_trap]
       - [0x1E510, c, rno0/e_blade]
-      - [0x20358, c, rno0_psp/e_gurkha]
+      - [0x20358, c, rno0/e_gurkha]
       - [0x21DC8, c, rno0_psp/e_hammer]
       - [0x23758, c, rno0_psp/unk_23758]
       - [0x23D88, c, rno0/e_thornweed_corpseweed]
@@ -101,7 +101,8 @@ segments:
       - [0x28848, data]
       - [0x28B28, .data, rno0/e_floor_trap]
       - [0x28B48, .data, rno0/e_blade]
-      - [0x29210, data]
+      - [0x29210, .data, rno0/e_gurkha]
+      - [0x296D8, data]
       - [0x29C38, .data, rno0/e_thornweed_corpseweed]
       - [0x29D08, data]
       - [0x2F6B0, .data, rno0/e_init]
@@ -122,7 +123,7 @@ segments:
       - [0x5A640, .rodata, rno0_psp/unk_16708]
       - [0x5A658, .rodata, rno0/e_nova_skeleton]
       - [0x5A680, .rodata, rno0/e_blade]
-      - [0x5A698, .rodata, rno0_psp/e_gurkha]
+      - [0x5A698, .rodata, rno0/e_gurkha]
       - [0x5A6B8, .rodata, rno0/e_thornweed_corpseweed]
       - { start: 0x5A700, type: .bss, vram: 0x09291D80, name: rno0/create_entity }
       - { start: 0x5A700, type: bss, vram: 0x09291DA0, name: 5A700 }
