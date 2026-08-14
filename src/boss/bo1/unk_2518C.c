@@ -140,7 +140,8 @@ void func_us_801A518C(Entity* self) {
             self->velocityY = (rsin(angle) * 7) << 2;
             self->rotate += 0x400;
             self->blendMode = BLEND_ADD | BLEND_TRANSP;
-            self->drawFlags = ENTITY_OPACITY | ENTITY_ROTATE | ENTITY_SCALEY | ENTITY_SCALEX;
+            self->drawFlags =
+                ENTITY_OPACITY | ENTITY_ROTATE | ENTITY_SCALEY | ENTITY_SCALEX;
             self->scaleX = 0x20;
             self->scaleY = 0xC0;
             self->opacity = 0x80;

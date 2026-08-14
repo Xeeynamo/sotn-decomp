@@ -35,7 +35,7 @@ typedef enum EntityID {
     E_GREY_PUFF,          // EntityGreyPuff
     E_UNK_16,             // func_us_801BA388_from_cat
     E_UNK_17,             // func_us_801BA164_from_cat
-    E_UNK_18,             // func_us_801A1878
+    E_UNK_18,             // EntityGranfaloon
     E_UNK_19,             // func_us_801A2F2C
     E_UNK_1A,             // func_us_801A3480
     E_UNK_1B,             // func_us_801A38EC

@@ -82,6 +82,8 @@ segments:
       - [0x189F0, data]
       - [0x30938, .data, header]
       - [0x30968, data]
+      - [0x30AB8, .data, unk_21C80]
+      - [0x30AD0, data]
       - [0x30BF8, .data, e_lock_camera]
       - [0x30C70, .data, unk_210A8]
       - [0x30CD0, .data, unk_2518C]
