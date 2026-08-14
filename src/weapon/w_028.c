@@ -591,7 +591,7 @@ static void func_ptr_80170024(Entity* self) {
         self->ext.shield.unk86 = self->ext.shield.unk84;
         break;
     case 2:
-        self->ext.shield.unkAE = self->ext.shield.parent->ext.shield.unkAE;
+        self->ext.shield.equipId = self->ext.shield.parent->ext.shield.equipId;
         SetWeaponProperties(self, 0);
         if (!self->facingLeft) {
             self->hitboxWidth = (0x118 - self->posX.i.hi) / 2;
