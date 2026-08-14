@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include <game.h>
 #include <psyz/log.h>
 #include <psyz/video.h>
@@ -53,8 +54,7 @@ static bool CaptureFrame(const char* path) {
         ERRORF("failed to capture the rendered frame");
         return false;
     }
-    written =
-        stbi_write_png(path, width, height, 3, pixels, width * 3) != 0;
+    written = stbi_write_png(path, width, height, 3, pixels, width * 3) != 0;
     free(pixels);
     if (!written) {
         ERRORF("failed to write capture '%s'", path);
@@ -100,12 +100,11 @@ static void TransitionTest_OnFrame(void) {
     static const RoundTrip trips[] = {
         {13, 44, 44, 232, 128, true, false, false, "room 0/1 boundary",
          "room1"},
-        {21, 44, 44, 232, 128, true, false, false,
-         "ordinary-room chain", "room3"},
+        {21, 44, 44, 232, 128, true, false, false, "ordinary-room chain",
+         "room3"},
         {3, 45, 45, 24, 128, false, true, false, "bottom-left door",
          "bottom-left"},
-        {3, 44, 44, 24, 128, false, true, false, "top-left door",
-         "top-left"},
+        {3, 44, 44, 24, 128, false, true, false, "top-left door", "top-left"},
         {13, 45, 45, 232, 128, true, false, true, "save-room door",
          "save-room"},
     };
@@ -171,10 +170,8 @@ static void TransitionTest_OnFrame(void) {
                 room++;
             }
         }
-        if (!current || !target ||
-            current->left != homeRoom.left ||
-            current->top != homeRoom.top ||
-            current->right != homeRoom.right ||
+        if (!current || !target || current->left != homeRoom.left ||
+            current->top != homeRoom.top || current->right != homeRoom.right ||
             current->bottom != homeRoom.bottom) {
             FailTransitionTest("round trip did not begin in room 0");
             return;
@@ -198,8 +195,8 @@ static void TransitionTest_OnFrame(void) {
         startCastleY = (current->top << 8) + g_PlayerY;
         INFOF("testing Stage 15 %s round trip from castle=(%d,%d) "
               "to (%u,%u)-(%u,%u)",
-              trip->label, startCastleX, startCastleY,
-              target->left, target->top, target->right, target->bottom);
+              trip->label, startCastleX, startCastleY, target->left,
+              target->top, target->right, target->bottom);
         if (trip->useStockDoor) {
             waitFrames = 0;
             step = Transition_WaitForDoorReady;
@@ -214,8 +211,7 @@ static void TransitionTest_OnFrame(void) {
         for (Entity* entity = &g_Entities[STAGE_ENTITY_START];
              entity < &g_Entities[TOTAL_ENTITY_COUNT]; entity++) {
             if (entity->entityId == 5 && entity->step == 1 &&
-                entity->primIndex >= 0 &&
-                (entity->flags & FLAG_HAS_PRIMS)) {
+                entity->primIndex >= 0 && (entity->flags & FLAG_HAS_PRIMS)) {
                 door = entity;
                 break;
             }
@@ -225,8 +221,7 @@ static void TransitionTest_OnFrame(void) {
             g_Player.padSim = 0;
             g_Player.demo_timer = 1;
             waitFrames = 0;
-            INFOF("Stage 15 %s stock EntityRedDoor ready",
-                  trip->label);
+            INFOF("Stage 15 %s stock EntityRedDoor ready", trip->label);
             step = Transition_WalkOut;
             return;
         }
@@ -249,9 +244,9 @@ static void TransitionTest_OnFrame(void) {
             castleY = (g_Tilemap.top << 8) + g_PlayerY;
             INFOF("Stage 15 %s entered naturally at screen=(%d,%d), "
                   "room-local=(%d,%d), castle=(%d,%d), scroll=(%d,%d)",
-                  trip->label, PLAYER.posX.i.hi, PLAYER.posY.i.hi,
-                  g_PlayerX, g_PlayerY, castleX, castleY,
-                  g_Tilemap.scrollX.i.hi, g_Tilemap.scrollY.i.hi);
+                  trip->label, PLAYER.posX.i.hi, PLAYER.posY.i.hi, g_PlayerX,
+                  g_PlayerY, castleX, castleY, g_Tilemap.scrollX.i.hi,
+                  g_Tilemap.scrollY.i.hi);
             if ((trip->leaveRight && PLAYER.posX.i.hi >= 64) ||
                 (!trip->leaveRight && PLAYER.posX.i.hi <= 192)) {
                 FailTransitionTest("Alucard entered on the wrong side");
@@ -280,9 +275,9 @@ static void TransitionTest_OnFrame(void) {
         if (++waitFrames % 60 == 0) {
             INFOF("Stage 15 %s walking out: room=(%u,%u)-(%u,%u), "
                   "engine=%d player=(%d,%d) world=(%d,%d)",
-                  trip->label, g_Tilemap.left, g_Tilemap.top,
-                  g_Tilemap.right, g_Tilemap.bottom, g_GameEngineStep,
-                  PLAYER.posX.i.hi, PLAYER.posY.i.hi, g_PlayerX, g_PlayerY);
+                  trip->label, g_Tilemap.left, g_Tilemap.top, g_Tilemap.right,
+                  g_Tilemap.bottom, g_GameEngineStep, PLAYER.posX.i.hi,
+                  PLAYER.posY.i.hi, g_PlayerX, g_PlayerY);
         }
         if (waitFrames > 600) {
             FailTransitionTest("Alucard did not walk through the door");
@@ -290,8 +285,7 @@ static void TransitionTest_OnFrame(void) {
         return;
 
     case Transition_WaitForDestination:
-        if (g_StageId != stageId ||
-            g_Tilemap.left != destinationRoom.left ||
+        if (g_StageId != stageId || g_Tilemap.left != destinationRoom.left ||
             g_Tilemap.top != destinationRoom.top ||
             g_Tilemap.right != destinationRoom.right ||
             g_Tilemap.bottom != destinationRoom.bottom) {
@@ -309,8 +303,7 @@ static void TransitionTest_OnFrame(void) {
         if (++readyFrames < 30) {
             return;
         }
-        if (!((g_Player.colFloor[1].effects |
-               g_Player.colFloor[2].effects |
+        if (!((g_Player.colFloor[1].effects | g_Player.colFloor[2].effects |
                g_Player.colFloor[3].effects) &
               EFFECT_SOLID)) {
             FailTransitionTest(
@@ -319,8 +312,8 @@ static void TransitionTest_OnFrame(void) {
         }
         if (g_GameParams.capturePath) {
             char path[512];
-            snprintf(path, sizeof(path), "%s.%s.png",
-                     g_GameParams.capturePath, trip->captureSuffix);
+            snprintf(path, sizeof(path), "%s.%s.png", g_GameParams.capturePath,
+                     trip->captureSuffix);
             if (!CaptureFrame(path)) {
                 FailTransitionTest("could not capture special room");
                 return;
@@ -367,16 +360,14 @@ static void TransitionTest_OnFrame(void) {
     case Transition_WaitForSaveDrop:
         g_Player.padSim = 0;
         g_Player.demo_timer = 1;
-        if (((g_Player.colFloor[1].effects |
-              g_Player.colFloor[2].effects |
+        if (((g_Player.colFloor[1].effects | g_Player.colFloor[2].effects |
               g_Player.colFloor[3].effects) &
              EFFECT_SOLID) &&
             PLAYER.velocityY == 0) {
             INFOF("Stage 15 save-room center landed at worldY=%d "
                   "(ledge=%d, drop=%d)",
                   g_PlayerY, saveLedgeY, g_PlayerY - saveLedgeY);
-            if (g_PlayerY - saveLedgeY < 24 ||
-                g_PlayerY - saveLedgeY > 40) {
+            if (g_PlayerY - saveLedgeY < 24 || g_PlayerY - saveLedgeY > 40) {
                 FailTransitionTest(
                     "save-room center did not have the expected lower floor");
                 return;
@@ -463,8 +454,7 @@ static void TransitionTest_OnFrame(void) {
     case Transition_WalkSaveLeft:
         g_Player.padSim = PAD_LEFT;
         g_Player.demo_timer = 1;
-        if (PLAYER.posX.i.hi < 72 &&
-            g_PlayerY >= saveLedgeY + 24) {
+        if (PLAYER.posX.i.hi < 72 && g_PlayerY >= saveLedgeY + 24) {
             INFOF("Stage 15 save-room lower floor crossed in both directions");
             waitFrames = 0;
             step = Transition_JumpToSaveLedge;
@@ -498,8 +488,7 @@ static void TransitionTest_OnFrame(void) {
             FailTransitionTest("return walk changed stages");
             return;
         }
-        if (g_Tilemap.left == homeRoom.left &&
-            g_Tilemap.top == homeRoom.top &&
+        if (g_Tilemap.left == homeRoom.left && g_Tilemap.top == homeRoom.top &&
             g_Tilemap.right == homeRoom.right &&
             g_Tilemap.bottom == homeRoom.bottom) {
             castleX = (g_Tilemap.left << 8) + g_PlayerX;
@@ -507,10 +496,10 @@ static void TransitionTest_OnFrame(void) {
             INFOF("Stage 15 %s returned naturally at screen=(%d,%d), "
                   "room-local=(%d,%d), castle=(%d,%d), scroll=(%d,%d), "
                   "delta=(%d,%d)",
-                  trip->label, PLAYER.posX.i.hi, PLAYER.posY.i.hi,
-                  g_PlayerX, g_PlayerY, castleX, castleY,
-                  g_Tilemap.scrollX.i.hi, g_Tilemap.scrollY.i.hi,
-                  castleX - startCastleX, castleY - startCastleY);
+                  trip->label, PLAYER.posX.i.hi, PLAYER.posY.i.hi, g_PlayerX,
+                  g_PlayerY, castleX, castleY, g_Tilemap.scrollX.i.hi,
+                  g_Tilemap.scrollY.i.hi, castleX - startCastleX,
+                  castleY - startCastleY);
             if (abs(castleX - startCastleX) > 64 ||
                 abs(castleY - startCastleY) > 64) {
                 FailTransitionTest(
@@ -518,8 +507,7 @@ static void TransitionTest_OnFrame(void) {
                 return;
             }
             if ((!trip->leaveRight && g_PlayerX >= 64) ||
-                (trip->leaveRight &&
-                 g_PlayerX <= g_Tilemap.width - 64)) {
+                (trip->leaveRight && g_PlayerX <= g_Tilemap.width - 64)) {
                 FailTransitionTest(
                     "Alucard returned on the wrong side of room 0");
                 return;
@@ -556,10 +544,9 @@ static void TransitionTest_OnFrame(void) {
         if ((!trip->leaveRight &&
              abs(g_Tilemap.scrollX.i.hi - g_Tilemap.x) > 4) ||
             (trip->leaveRight &&
-             abs(g_Tilemap.scrollX.i.hi -
-                 (g_Tilemap.width - 256)) > 4) ||
-            abs(g_Tilemap.scrollY.i.hi -
-                (trip->row - homeRoom.top) * 256) > 4) {
+             abs(g_Tilemap.scrollX.i.hi - (g_Tilemap.width - 256)) > 4) ||
+            abs(g_Tilemap.scrollY.i.hi - (trip->row - homeRoom.top) * 256) >
+                4) {
             FailTransitionTest("room 0 camera returned to the wrong doorway");
             return;
         }

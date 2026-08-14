@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include <game.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -23,13 +24,8 @@ static RoomDef* s_TileLayers;
 static LayoutEntity* s_CurrentLayout;
 static size_t s_CurrentLayoutCount;
 static const u8 s_Stage15RoomBounds[7][4] = {
-    {4, 44, 12, 45},
-    {13, 44, 16, 44},
-    {21, 44, 21, 44},
-    {17, 44, 20, 44},
-    {3, 44, 3, 44},
-    {3, 45, 3, 45},
-    {13, 45, 13, 45},
+    {4, 44, 12, 45}, {13, 44, 16, 44}, {21, 44, 21, 44}, {17, 44, 20, 44},
+    {3, 44, 3, 44},  {3, 45, 3, 45},   {13, 45, 13, 45},
 };
 
 static void Noop(void) {}
@@ -51,15 +47,15 @@ static bool s_Stage15MasonryReady;
 static bool Stage15LoadMasonry(void) {
     s32 length;
 
-    length = FileReadToBuf(STAGE15_ASSET_DIR "/stage15_masonry.chars.bin",
-                           s_Stage15MasonryPixels, 0,
-                           sizeof(s_Stage15MasonryPixels));
+    length = FileReadToBuf(
+        STAGE15_ASSET_DIR "/stage15_masonry.chars.bin", s_Stage15MasonryPixels,
+        0, sizeof(s_Stage15MasonryPixels));
     if (length != sizeof(s_Stage15MasonryPixels)) {
         return false;
     }
-    length = FileReadToBuf(STAGE15_ASSET_DIR "/stage15_masonry.pal.bin",
-                           s_Stage15MasonryPalette, 0,
-                           sizeof(s_Stage15MasonryPalette));
+    length = FileReadToBuf(
+        STAGE15_ASSET_DIR "/stage15_masonry.pal.bin", s_Stage15MasonryPalette,
+        0, sizeof(s_Stage15MasonryPalette));
     return length == sizeof(s_Stage15MasonryPalette);
 }
 
@@ -73,12 +69,22 @@ static void Stage15ConfigureMusic(void) {
     u32 base = 0U - (u32)g_CurCdPos;
 
     Psyz_CdSetDiskPath(STAGE15_ASSET_DIR "/music/audio.cue");
-    *start = (XaMusicConfig){base, SATURN_XA_INTRO_VSYNC,
-                             SATURN_XA_FILE_NUMBER, SATURN_XA_CHANNEL,
-                             80, 0, 1};
-    *loop = (XaMusicConfig){base + SATURN_XA_LOOP_SECTOR,
-                            SATURN_XA_LOOP_VSYNC, SATURN_XA_FILE_NUMBER,
-                            SATURN_XA_CHANNEL, 80, 0, 0};
+    *start = (XaMusicConfig){
+        base,
+        SATURN_XA_INTRO_VSYNC,
+        SATURN_XA_FILE_NUMBER,
+        SATURN_XA_CHANNEL,
+        80,
+        0,
+        1};
+    *loop = (XaMusicConfig){
+        base + SATURN_XA_LOOP_SECTOR,
+        SATURN_XA_LOOP_VSYNC,
+        SATURN_XA_FILE_NUMBER,
+        SATURN_XA_CHANNEL,
+        80,
+        0,
+        0};
 }
 #endif
 
@@ -97,8 +103,7 @@ static void Stage15DrawEntityLabels(void) {
     s32 screenY;
     s32 tpage;
 
-    if (s_CurrentLayout == NULL ||
-        g_GpuUsage.drawModes >= MAX_DRAW_MODES) {
+    if (s_CurrentLayout == NULL || g_GpuUsage.drawModes >= MAX_DRAW_MODES) {
         return;
     }
 
@@ -110,8 +115,8 @@ static void Stage15DrawEntityLabels(void) {
         layout = &s_CurrentLayout[layoutIndex];
         screenX = layout->posX - g_Tilemap.scrollX.i.hi;
         screenY = layout->posY - g_Tilemap.scrollY.i.hi;
-        if (screenX < -32 || screenX >= DISP_STAGE_W + 32 ||
-            screenY < -16 || screenY >= DISP_STAGE_H + 16) {
+        if (screenX < -32 || screenX >= DISP_STAGE_W + 32 || screenY < -16 ||
+            screenY >= DISP_STAGE_H + 16) {
             continue;
         }
 
@@ -126,8 +131,8 @@ static void Stage15DrawEntityLabels(void) {
             SetTile(tile);
             SetSemiTrans(tile, false);
             setRGB0(tile, 0, 0, 0);
-            setXY0(tile, screenX + g_backbufferX + 3,
-                   screenY + g_backbufferY - 5);
+            setXY0(
+                tile, screenX + g_backbufferX + 3, screenY + g_backbufferY - 5);
             setWH(tile, labelLength * 8 + 2, 10);
             AddPrim(&g_CurrentBuffer->ot[0x1EF], tile);
 
@@ -135,8 +140,7 @@ static void Stage15DrawEntityLabels(void) {
             SetTile(tile);
             SetSemiTrans(tile, false);
             setRGB0(tile, 255, 64, 64);
-            setXY0(tile, screenX + g_backbufferX - 3,
-                   screenY + g_backbufferY);
+            setXY0(tile, screenX + g_backbufferX - 3, screenY + g_backbufferY);
             setWH(tile, 7, 1);
             AddPrim(&g_CurrentBuffer->ot[0x1F0], tile);
 
@@ -144,8 +148,7 @@ static void Stage15DrawEntityLabels(void) {
             SetTile(tile);
             SetSemiTrans(tile, false);
             setRGB0(tile, 255, 64, 64);
-            setXY0(tile, screenX + g_backbufferX,
-                   screenY + g_backbufferY - 3);
+            setXY0(tile, screenX + g_backbufferX, screenY + g_backbufferY - 3);
             setWH(tile, 1, 7);
             AddPrim(&g_CurrentBuffer->ot[0x1F0], tile);
         }
@@ -160,8 +163,7 @@ static void Stage15DrawEntityLabels(void) {
             SetSemiTrans(sprite, false);
             SetShadeTex(sprite, true);
             setRGB0(sprite, 128, 128, 128);
-            sprite->x0 =
-                screenX + 4 + (character - label) * 8 + g_backbufferX;
+            sprite->x0 = screenX + 4 + (character - label) * 8 + g_backbufferX;
             sprite->y0 = screenY - 4 + g_backbufferY;
             sprite->u0 = (characterIndex & 0xF) * 8;
             sprite->v0 = (characterIndex >> 4) * 8;
@@ -277,18 +279,15 @@ static bool Stage15LoadNativeLayer(s32 room, s32 layer) {
     s32 entryCount;
 
     snprintf(path, sizeof(path),
-             STAGE15_ASSET_DIR "/native_room%d_layer%d.chars.bin", room,
-             layer);
+             STAGE15_ASSET_DIR "/native_room%d_layer%d.chars.bin", room, layer);
     length = FileReadToBuf(path, native->chars, 0, sizeof(native->chars));
     if (length != sizeof(native->chars)) {
         return false;
     }
 
     snprintf(path, sizeof(path),
-             STAGE15_ASSET_DIR "/native_room%d_layer%d.pal.bin", room,
-             layer);
-    length =
-        FileReadToBuf(path, native->palettes, 0, sizeof(native->palettes));
+             STAGE15_ASSET_DIR "/native_room%d_layer%d.pal.bin", room, layer);
+    length = FileReadToBuf(path, native->palettes, 0, sizeof(native->palettes));
     if (length <= 0 || (length & 0x1)) {
         return false;
     }
@@ -307,8 +306,7 @@ static bool Stage15LoadNativeLayer(s32 room, s32 layer) {
             for (row = 0; row < 8 && !native->characterVisible[character];
                  row++) {
                 s32 offset =
-                    ((character >> 5) * 8 + row) * 128 +
-                    (character & 0x1F) * 4;
+                    ((character >> 5) * 8 + row) * 128 + (character & 0x1F) * 4;
                 for (byte = 0; byte < 4; byte++) {
                     if (pixels[offset + byte] != 0) {
                         native->characterVisible[character] = 1;
@@ -319,8 +317,7 @@ static bool Stage15LoadNativeLayer(s32 room, s32 layer) {
         }
     }
     snprintf(path, sizeof(path),
-             STAGE15_ASSET_DIR "/native_room%d_layer%d.map.bin", room,
-             layer);
+             STAGE15_ASSET_DIR "/native_room%d_layer%d.map.bin", room, layer);
     length = FileReadToBuf(path, native->map, 0, sizeof(native->map));
     if (length < 4 || (length & 0x1)) {
         return false;
@@ -353,9 +350,8 @@ static bool Stage15LoadNativeRoom(s32 room) {
 
     for (layer = 0; layer < STAGE15_NATIVE_LAYERS; layer++) {
         native = &s_NativeLayers[layer];
-        native->tpage =
-            LoadTPage(native->chars, 0, 0, 0x200 + layer * 0x40, 0,
-                      0x100, 0x100);
+        native->tpage = LoadTPage(
+            native->chars, 0, 0, 0x200 + layer * 0x40, 0, 0x100, 0x100);
     }
     for (layer = 0; layer < STAGE15_NATIVE_LAYERS; layer++) {
         native = &s_NativeLayers[layer];
@@ -374,9 +370,9 @@ static bool Stage15LoadNativeRoom(s32 room) {
     return true;
 }
 
-static void Stage15DrawNativeBlock(Stage15NativeLayer* native, s32 order,
-                                   s32 mapX, s32 mapY, s32 blockWidth,
-                                   s32 blockHeight, s32 x0, s32 y0, s32 x1) {
+static void Stage15DrawNativeBlock(
+    Stage15NativeLayer* native, s32 order, s32 mapX, s32 mapY, s32 blockWidth,
+    s32 blockHeight, s32 x0, s32 y0, s32 x1) {
     POLY_GT4* poly;
     u16 pnd;
     u16 character;
@@ -390,8 +386,7 @@ static void Stage15DrawNativeBlock(Stage15NativeLayer* native, s32 order,
     s32 dy;
 
     if (x1 <= 0 || x0 >= DISP_STAGE_W || y0 <= -blockHeight * 8 ||
-        y0 >= DISP_STAGE_H ||
-        g_GpuUsage.gt4 >= MAX_POLY_GT4_COUNT) {
+        y0 >= DISP_STAGE_H || g_GpuUsage.gt4 >= MAX_POLY_GT4_COUNT) {
         return;
     }
     pnd = native->map[2 + mapY * native->width + mapX];
@@ -496,10 +491,10 @@ static void Stage15DrawNativeLayer(s32 layer, s32 order, bool wrap) {
             {
                 const s32 blockWidth = 1;
                 const s32 blockHeight = 1;
-            x0 = (logicalX * 32) / 5 - scrollX;
-            x1 = ((logicalX + blockWidth) * 32) / 5 - scrollX;
-            Stage15DrawNativeBlock(native, order, mapX, mapY, blockWidth,
-                                   blockHeight, x0, y0, x1);
+                x0 = (logicalX * 32) / 5 - scrollX;
+                x1 = ((logicalX + blockWidth) * 32) / 5 - scrollX;
+                Stage15DrawNativeBlock(native, order, mapX, mapY, blockWidth,
+                                       blockHeight, x0, y0, x1);
             }
         }
     }
@@ -581,9 +576,7 @@ static void EntityStage15Backdrop(Entity* self) {
     bg->hideTimer = 1;
 }
 
-static void EntityStage15Dummy(Entity* self) {
-    (void)self;
-}
+static void EntityStage15Dummy(Entity* self) { (void)self; }
 
 static void EntityStage15Masonry(Entity* self) {
     static const s8 offsetsX[3] = {-14, 2, 18};
@@ -630,9 +623,7 @@ static void EntityStage15Masonry(Entity* self) {
     }
 }
 
-static void EntityStage15SpecialController(Entity* self) {
-    self->step = 1;
-}
+static void EntityStage15SpecialController(Entity* self) { self->step = 1; }
 
 static void Stage15SyncRoomEntities(void) {
     LayoutEntity* layout;
@@ -652,11 +643,10 @@ static void Stage15SyncRoomEntities(void) {
             continue;
         }
         entityId = layout->entityId & 0x3FF;
-        visible =
-            layout->posX >= g_Tilemap.scrollX.i.hi - 64 &&
-            layout->posX <= g_Tilemap.scrollX.i.hi + 320 &&
-            layout->posY >= g_Tilemap.scrollY.i.hi - 64 &&
-            layout->posY <= g_Tilemap.scrollY.i.hi + 288;
+        visible = layout->posX >= g_Tilemap.scrollX.i.hi - 64 &&
+                  layout->posX <= g_Tilemap.scrollX.i.hi + 320 &&
+                  layout->posY >= g_Tilemap.scrollY.i.hi - 64 &&
+                  layout->posY <= g_Tilemap.scrollY.i.hi + 288;
         entity = &g_Entities[index];
         if (!visible) {
             if (entity->pfnUpdate == EntityStage15Dummy ||
@@ -693,9 +683,8 @@ static void Stage15SyncRoomEntities(void) {
                  : 0);
         entity->posY.i.hi =
             (s16)layout->posY - g_Tilemap.scrollY.i.hi +
-            (entity->pfnUpdate == EntityRedDoor && entity->step != 0
-                 ? 0x1F
-                 : 0);
+            (entity->pfnUpdate == EntityRedDoor && entity->step != 0 ? 0x1F
+                                                                     : 0);
     }
 }
 
@@ -728,10 +717,9 @@ static void Stage15InitRoomEntities(s32 layoutId) {
             DestroyEntity(entity);
         }
     }
-    s_CurrentLayout =
-        layoutId >= 0 && layoutId < LEN(s_Stage15ObjLayouts)
-            ? s_Stage15ObjLayouts[layoutId]
-            : NULL;
+    s_CurrentLayout = layoutId >= 0 && layoutId < LEN(s_Stage15ObjLayouts)
+                          ? s_Stage15ObjLayouts[layoutId]
+                          : NULL;
     s_CurrentLayoutCount =
         layoutId >= 0 && layoutId < LEN(s_Stage15ObjLayoutCounts)
             ? s_Stage15ObjLayoutCounts[layoutId]
@@ -747,9 +735,7 @@ static void Stage15InitRoomEntities(s32 layoutId) {
 }
 #else
 static void Stage15Update(void) {}
-static void Stage15InitRoomEntities(s32 layoutId) {
-    (void)layoutId;
-}
+static void Stage15InitRoomEntities(s32 layoutId) { (void)layoutId; }
 #endif
 
 OVL_API void InitStage(Overlay* o) {
@@ -762,8 +748,8 @@ OVL_API void InitStage(Overlay* o) {
     Stage15ConfigureMusic();
     s_Stage15MasonryReady = Stage15LoadMasonry();
     if (s_Stage15MasonryReady) {
-        s_Stage15MasonryTpage = LoadTPage(
-            (u_long*)s_Stage15MasonryPixels, 0, 0, 0x2C0, 0, 24, 16);
+        s_Stage15MasonryTpage =
+            LoadTPage((u_long*)s_Stage15MasonryPixels, 0, 0, 0x2C0, 0, 24, 16);
         g_ClutIds[STAGE15_MASONRY_CLUT_SLOT] =
             LoadClut2((u_long*)s_Stage15MasonryPalette, 0x3F0, 0xF3);
     }
