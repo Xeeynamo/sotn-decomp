@@ -74,7 +74,7 @@ segments:
       - [0x1E510, c, rno0/e_blade]
       - [0x20358, c, rno0/e_gurkha]
       - [0x21DC8, c, rno0/e_hammer]
-      - [0x23758, c, rno0_psp/unk_23758]
+      - [0x23758, c, rno0/giantbro_helpers_2]
       - [0x23D88, c, rno0/e_thornweed_corpseweed]
       - [0x25A90, c, rno0_psp/st_init_psp]
       - [0x25E08, c, rno0/e_breakable]
