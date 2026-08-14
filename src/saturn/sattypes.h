@@ -211,6 +211,26 @@ typedef enum {
 } EntityFlag;
 
 typedef struct {
+    s16 type;
+    s16 priority;
+    u16 unk4;
+    s16 unk6;
+    s16 unk8;
+    s16 unkA;
+    s16 x0;
+    s16 y0;
+    s16 x1;
+    s16 y1;
+    s16 x2;
+    s16 y2;
+    s16 x3;
+    s16 y3;
+    s16 : 16;
+    u16 drawMode;
+    struct Primitive* next;
+} Primitive;
+
+typedef struct {
     u8 disableFlag;
     u8 resetFlag;
     u8 index;
@@ -297,30 +317,16 @@ typedef union {
     s32 s32[0xF];
 } ET_Placeholder;
 
-typedef struct UnkStruct_060e8350 {
-    /* 0x00 */ s32 unk0;
-    /* 0x04 */ s32 : 32;
-    /* 0x08 */ s32 : 32;
-    /* 0x0C */ s32 : 32;
-    /* 0x10 */ s32 : 32;
-    /* 0x14 */ s32 : 32;
-    /* 0x18 */ s16 unk18;
-    /* 0x1A */ s16 : 16;
-    /* 0x1C */ s16 : 16;
-    /* 0x1E */ s16 unk1E;
-    /* 0x20 */ struct UnkStruct_060e8350* next;
-} UnkStruct_060e8350; // size = 0x24
-
 typedef struct {
     s32 unk0;
     s32 unk4;
     s32 unk8;
     s32 unkC;
-    UnkStruct_060e8350* unk10;
-    s32 : 32;
-    s32 : 32;
+    Primitive* unk10;
+    Primitive* unk14;
+    Primitive* unk18;
     s16 unk1C;
-    s16 : 16;
+    s16 unk1E;
     s32 unk20;
     s32 unk24;
     s32 unk28;
@@ -395,7 +401,7 @@ typedef struct Entity {
     /* 0x74 */ u16 entityId;
     /* 0x76 */ char pad_76[0x2];
     /* 0x78 */ Ext ext;
-    /* 0xB4 */ struct UnkStruct_060e8350* unkB4;
+    /* 0xB4 */ Primitive* unkB4;
 } Entity; // size = 0xB8
 
 typedef struct SpritePart {
@@ -782,26 +788,6 @@ typedef struct {
     s32 : 32;
     s32 g_HealingMailTimer;
 } PlayerHud;
-
-typedef struct {
-    s16 type;
-    s16 priority;
-    u16 unk4;
-    s16 unk6;
-    s16 unk8;
-    s16 unkA;
-    s16 x0;
-    s16 y0;
-    s16 x1;
-    s16 y1;
-    s16 x2;
-    s16 y2;
-    s16 x3;
-    s16 y3;
-    s16 : 16;
-    u16 drawMode;
-    struct Primitive* next;
-} Primitive;
 
 typedef struct {
     /* 0x0 */ u16 pressed;
