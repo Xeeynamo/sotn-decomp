@@ -4222,7 +4222,7 @@ typedef union { // offset=0x7C
     ET_BibleBeam bibleBeam;
     ET_BibleSubwpn et_BibleSubwpn;
     ET_EquipItemDrop equipItemDrop;
-    ET_PersistentDrop heartDrop;
+    ET_PersistentDrop persistentDrop;
     ET_BloodDroplets bloodDroplets;
     ET_BloodSplatter bloodSplatter;
     ET_NumericDamage ndmg;
