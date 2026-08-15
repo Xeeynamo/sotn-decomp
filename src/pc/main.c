@@ -24,6 +24,16 @@ static const char* allowed_stages[] = {
     "te3",      "te4",      "te5",       "top_alt"};
 static const char* allowed_players[] = {"alu", "ric", "mar"};
 static const char* allowed_tests[] = {"sndlib"};
+#ifdef ENABLE_SATURN_STITCHES
+static const char* allowed_spawn_points[] = {
+    "",
+    "np3-stage15-door",
+    "reverse-trapdoor-underground",
+    "marble-soul",
+    "caverns-soul",
+    "reverse-marble-soul",
+    "reverse-caverns-soul"};
+#endif
 #define PARSE_PARAM(param, allowed) parseStrParam(param, allowed, LEN(allowed))
 static int parseIntParam(const char* param) {
     long i = strtol(param, NULL, 10);
@@ -65,6 +75,12 @@ static void printHelp(void) {
     printf("         sndlib      test sound library\n");
     printf("  --record <path>    record controller input to a file\n");
     printf("  --replay <path>    replay controller input from a file\n");
+#ifdef ENABLE_SATURN_STITCHES
+    printf("  --spawn-point <name>  start beside a Saturn graft:\n");
+    printf("         np3-stage15-door, reverse-trapdoor-underground,\n");
+    printf("         marble-soul, caverns-soul, reverse-marble-soul,\n");
+    printf("         reverse-caverns-soul\n");
+#endif
     printf("  --replay-and-exit  quit automatically once the replay or demo "
            "ends\n");
     printf("  --replay-fast      disable frame limit during replay or demo\n");
@@ -92,6 +108,7 @@ static bool parseArgs(
     outParams->scale = 1;
     outParams->recordPath = NULL;
     outParams->replayPath = NULL;
+    outParams->spawnPoint = PC_SPAWN_DEFAULT;
     outParams->exitAfterReplay = false;
     outParams->replayBoundlessFramerate = false;
 
@@ -139,6 +156,18 @@ static bool parseArgs(
             outParams->recordPath = argv[++i];
         } else if (strcmp(argv[i], "--replay") == 0 && i + 1 < argc) {
             outParams->replayPath = argv[++i];
+#ifdef ENABLE_SATURN_STITCHES
+        } else if (strcmp(argv[i], "--spawn-point") == 0 && i + 1 < argc) {
+            outParams->spawnPoint =
+                PARSE_PARAM(argv[++i], allowed_spawn_points);
+            if (outParams->spawnPoint <= PC_SPAWN_DEFAULT) {
+                printf(
+                    "spawn point '%s' is invalid or not recognized\n", argv[i]);
+                printAllowedParams(
+                    allowed_spawn_points, LEN(allowed_spawn_points));
+                return false;
+            }
+#endif
         } else if (strcmp(argv[i], "--replay-and-exit") == 0) {
             outParams->exitAfterReplay = true;
         } else if (strcmp(argv[i], "--replay-fast") == 0) {
@@ -157,6 +186,19 @@ int Main(int argc, char* argv[]) {
         printHelp();
         return -1;
     }
+#ifdef ENABLE_SATURN_STITCHES
+    if (params.spawnPoint != PC_SPAWN_DEFAULT && params.stage < 0) {
+        static const int spawnStages[] = {
+            [PC_SPAWN_NP3_STAGE15] = STAGE_NP3,
+            [PC_SPAWN_RNO3_RSTAGE15] = STAGE_RNO3,
+            [PC_SPAWN_NO0_STAGE16] = STAGE_NO0,
+            [PC_SPAWN_NO4_STAGE16] = STAGE_NO4,
+            [PC_SPAWN_RNO0_RSTAGE16] = STAGE_RNO0,
+            [PC_SPAWN_RNO4_RSTAGE16] = STAGE_RNO4,
+        };
+        params.stage = spawnStages[params.spawnPoint];
+    }
+#endif
     Psyz_VideoSetInternalResolution(params.scale);
     if (!InitGame(&params)) {
         return -1;

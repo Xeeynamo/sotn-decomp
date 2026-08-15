@@ -117,8 +117,10 @@ s32 func_800EDB58(u8 primType, s32 count);
 static void GameLoopCallback(void) { Replay_OnFrame(); }
 
 struct InitGameParams g_GameParams;
+s32 g_PcSpawnPoint;
 bool InitGame(struct InitGameParams* params) {
     g_GameParams = *params;
+    g_PcSpawnPoint = params->spawnPoint;
     Replay_Init(params);
     Psyz_SetVSyncCb(GameLoopCallback);
     if (params->diskPath) {

@@ -1971,6 +1971,7 @@ struct AssetGraft {
     region: TileRegion,
     shaft_top: Option<i16>,
     shaft_bottom: Option<i16>,
+    room_right_overrides: &'static [(usize, i16)],
     cd: Option<(i16, i16)>,
     trigger: (i16, i16, i16),
 }
@@ -2264,6 +2265,21 @@ fn write_stitched_rooms_and_layers(assets: &Path, config: AssetGraft) -> Result<
     let layers_path = json_path(assets, config.layers);
     let mut rooms: Vec<PsxRoom> = serde_json::from_slice(&std::fs::read(&rooms_path)?)?;
     let mut layers: Vec<PsxLayers> = serde_json::from_slice(&std::fs::read(&layers_path)?)?;
+    for &(room_index, right) in config.room_right_overrides {
+        let room = rooms.get_mut(room_index).ok_or_else(|| {
+            Error::Format(format!(
+                "{} room {} does not exist",
+                config.stage, room_index
+            ))
+        })?;
+        if right < room.left || right > room.right {
+            return Err(Error::Format(format!(
+                "{} room {} cannot change its right edge from {} to {}",
+                config.stage, room_index, room.right, right
+            )));
+        }
+        room.right = right;
+    }
     let room = rooms.get_mut(config.room).ok_or_else(|| {
         Error::Format(format!(
             "{} room {} does not exist",
@@ -2307,6 +2323,11 @@ fn write_stitched_rooms_and_layers(assets: &Path, config: AssetGraft) -> Result<
             layer.top = top;
             layer.bottom = top;
         }
+        cd_layer
+            .fg
+            .as_mut()
+            .expect("loading layer has a foreground")
+            .z_priority = config.trigger.2 as u16;
         let layer_id = layers.len() as i16;
         layers.push(cd_layer);
         let mut cd_room = rooms[loading_room].clone();
@@ -2510,6 +2531,7 @@ const NO4_CONFIG: RoomStitchConfig = RoomStitchConfig {
         region: NO4_SOURCE.region,
         shaft_top: None,
         shaft_bottom: None,
+        room_right_overrides: &[],
         cd: None,
         trigger: (36, 34, 134),
     },
@@ -2575,8 +2597,9 @@ const RNO4_CONFIG: RoomStitchConfig = RoomStitchConfig {
         region: RNO4_SOURCE.region,
         shaft_top: None,
         shaft_bottom: None,
-        cd: None,
-        trigger: (27, 29, 136),
+        room_right_overrides: &[],
+        cd: Some((27, 29)),
+        trigger: (28, 29, 136),
     },
 };
 
@@ -2660,8 +2683,9 @@ const NO0_CONFIG: RoomStitchConfig = RoomStitchConfig {
         region: NO0_SOURCE.region,
         shaft_top: None,
         shaft_bottom: None,
-        cd: None,
-        trigger: (27, 36, 133),
+        room_right_overrides: &[],
+        cd: Some((27, 36)),
+        trigger: (28, 36, 133),
     },
 };
 
@@ -2708,8 +2732,9 @@ const RNO0_CONFIG: RoomStitchConfig = RoomStitchConfig {
         region: RNO0_SOURCE.region,
         shaft_top: None,
         shaft_bottom: None,
-        cd: None,
-        trigger: (36, 27, 135),
+        room_right_overrides: &[],
+        cd: Some((36, 27)),
+        trigger: (35, 27, 135),
     },
 };
 
@@ -3006,6 +3031,7 @@ const NP3_CONFIG: ShaftStitchConfig = ShaftStitchConfig {
         },
         shaft_top: None,
         shaft_bottom: Some(44),
+        room_right_overrides: &[],
         cd: Some((3, 44)),
         trigger: (4, 44, 131),
     },
@@ -3041,6 +3067,7 @@ const RNO3_CONFIG: ShaftStitchConfig = ShaftStitchConfig {
         },
         shaft_top: Some(19),
         shaft_bottom: None,
+        room_right_overrides: &[(18, 58)],
         cd: Some((60, 19)),
         trigger: (59, 19, 132),
     },
@@ -3351,6 +3378,7 @@ mod tests {
                 },
                 shaft_top: None,
                 shaft_bottom: Some(44),
+                room_right_overrides: &[],
                 cd: Some((3, 44)),
                 trigger: (4, 44, 131),
             },
