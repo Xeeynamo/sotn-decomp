@@ -44,6 +44,13 @@ u8 cutscene_data_ferryman_left_ge[] = {
 u8 cutscene_data_ferryman_left_en[] = {
 #include "gen/cutscene_data_ferryman_left_en.h"
 };
+#elif defined(VERSION_PC)
+u8 cutscene_data_ferryman_left[] = {
+#include "gen/cutscene_data_ferryman_left_psx.h"
+};
+u8 cutscene_data_ferryman_right[] = {
+#include "gen/cutscene_data_ferryman_right_psx.h"
+};
 #else
 // The ferryman_right script starts one byte to the left of alignment, so having
 // it as a second variable results in a byte of padding that breaks the match.

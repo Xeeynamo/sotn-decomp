@@ -550,6 +550,101 @@ set(SOURCE_FILES_STAGE_NP3
     src/st/np3/hammer.c
 )
 
+set(SOURCE_FILES_STAGE_NO4
+    src/pc/stages/stage_no4.c
+    src/st/no4/header.c
+    src/st/no4/gen/e_laydef.c
+    src/st/no4/e_init.c
+    src/st/no4/background_block_init.c
+    src/st/no4/e_red_door_tiles.c
+    src/st/no4/e_lock_camera.c
+    src/st/no4/e_breakable.c
+    src/st/no4/first_c_file.c
+    src/st/no4/e_ferryman.c
+    src/st/no4/48248.c
+    src/st/no4/482B8.c
+    src/st/no4/e_secrets.c
+    src/st/no4/e_bat.c
+    src/st/no4/d_prize_drops.c
+    src/st/no4/e_killer_fish.c
+    src/st/no4/cutscene.c
+    src/st/no4/st_update.c
+    src/st/no4/collision.c
+    src/st/no4/create_entity.c
+    src/st/no4/e_red_door.c
+    src/st/no4/st_common.c
+    src/st/no4/e_collect.c
+    src/st/no4/e_misc.c
+    src/st/no4/e_stage_name.c
+    src/st/no4/e_particles.c
+    src/st/no4/e_room_fg.c
+    src/st/no4/e_room_bg.c
+    src/st/no4/popup.c
+    src/st/no4/e_toad.c
+    src/st/no4/e_frog.c
+    src/st/no4/e_fishhead.c
+    src/st/no4/e_frozen_shade.c
+    src/st/no4/e_spear_guard.c
+    src/st/no4/e_bone_archer.c
+    src/st/no4/e_skeleton_ape.c
+    src/st/no4/prim_helpers.c
+    src/st/no4/gen/rooms.c
+    src/st/no4/gen/e_layout.c
+    src/st/no4/cutscene_data.c
+    src/st/no4/stage_data.c
+    src/st/no4/gen/sprites.c
+)
+
+set(SOURCE_FILES_STAGE_NO0
+    src/pc/stages/stage_no0.c
+    src/st/no0/header.c
+    src/st/no0/gen/e_laydef.c
+    src/st/no0/e_init.c
+    src/st/no0/e_red_door_tiles.c
+    src/st/no0/e_room_bg.c
+    src/st/no0/e_lock_camera.c
+    src/st/no0/e_breakable.c
+    src/st/no0/e_elevator.c
+    src/st/no0/42A34.c
+    src/st/no0/e_explosion_puff_opaque.c
+    src/st/no0/d_prize_drops.c
+    src/st/no0/st_update.c
+    src/st/no0/collision.c
+    src/st/no0/create_entity.c
+    src/st/no0/e_red_door.c
+    src/st/no0/e_room_fg.c
+    src/st/no0/e_particles.c
+    src/st/no0/st_common.c
+    src/st/no0/e_collect.c
+    src/st/no0/e_misc.c
+    src/st/no0/4C750.c
+    src/st/no0/clock_room.c
+    src/st/no0/4E2E0.c
+    src/st/no0/e_stage_name.c
+    src/st/no0/e_diplocephalus.c
+    src/st/no0/e_diplocephalus_tail.c
+    src/st/no0/e_skelerang.c
+    src/st/no0/e_plate_lord.c
+    src/st/no0/e_plate_lord_2.c
+    src/st/no0/e_ghost.c
+    src/st/no0/e_marionette.c
+    src/st/no0/e_slinger.c
+    src/st/no0/e_stone_rose.c
+    src/st/no0/e_ctulhu.c
+    src/st/no0/ctulhu_shockwave_data.c
+    src/st/no0/e_axe_knight.c
+    src/st/no0/e_ouija_table.c
+    src/st/no0/e_flea_man.c
+    src/st/no0/e_skeleton.c
+    src/st/no0/e_sealed_door.c
+    src/st/no0/prim_helpers.c
+    src/st/no0/popup.c
+    src/st/no0/gen/rooms.c
+    src/st/no0/gen/e_layout.c
+    src/st/no0/stage_data.c
+    src/st/no0/gen/sprites.c
+)
+
 set(SOURCE_FILES_STAGE_CEN
     src/pc/stages/stage_cen.c
     src/st/cen/header.c
@@ -638,6 +733,33 @@ set(SOURCE_FILES_STAGE_NZ0
     src/st/nz0/prim_helpers.c
     src/st/nz0/e_life_up.c
 )
+
+set(SOURCE_FILES_STAGE_RNO0
+    src/pc/stages/stage_rno0.c
+    src/st/rno0/layers.c
+    src/st/rno0/palette_def.c
+    src/st/rno0/sprite_banks.c
+    src/st/rno0/graphics_banks.c
+    src/st/rno0/stage_data.c
+    src/st/rno0/tilemaps.c
+    src/st/rno0/gen/rooms.c
+    src/st/rno0/gen/sprites.c)
+
+set(SOURCE_FILES_STAGE_RNO4
+    src/pc/stages/stage_rno4.c
+    src/st/rno4/gen/rooms.c
+    src/st/rno4/stage_data.c)
+
+set(SOURCE_FILES_STAGE_RNO3
+    src/pc/stages/stage_rno3.c
+    src/st/rno3/layers.c
+    src/st/rno3/palette_def.c
+    src/st/rno3/sprite_banks.c
+    src/st/rno3/graphics_banks.c
+    src/st/rno3/stage_data.c
+    src/st/rno3/tilemaps.c
+    src/st/rno3/gen/us/rooms.c
+    src/st/rno3/gen/us/sprites.c)
 
 set(SOURCE_FILES_STAGE_WRP
     src/pc/stages/stage_wrp.c
@@ -1087,6 +1209,11 @@ add_overlay(no2 ${SOURCE_FILES_STAGE_NO2})
 add_overlay(chi ${SOURCE_FILES_STAGE_CHI})
 add_overlay(dai ${SOURCE_FILES_STAGE_DAI})
 add_overlay(np3 ${SOURCE_FILES_STAGE_NP3})
+add_overlay(no4 ${SOURCE_FILES_STAGE_NO4})
+add_overlay(no0 ${SOURCE_FILES_STAGE_NO0})
+add_overlay(rno0 ${SOURCE_FILES_STAGE_RNO0})
+add_overlay(rno4 ${SOURCE_FILES_STAGE_RNO4})
+add_overlay(rno3 ${SOURCE_FILES_STAGE_RNO3})
 add_overlay(cen ${SOURCE_FILES_STAGE_CEN})
 add_overlay(nz0 ${SOURCE_FILES_STAGE_NZ0})
 add_overlay(wrp ${SOURCE_FILES_STAGE_WRP})
