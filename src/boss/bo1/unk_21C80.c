@@ -4,7 +4,7 @@
 static s32 D_us_80180CD8 = 0;
 static s32 D_us_80180CDC = 0;
 static s32 D_us_80180CE0 = 0;
-static s32 D_us_80180CE4 = 0;
+static s32 D_us_80180CE4 = 0; // main boss status, 0x01:dead, 0x08:?
 static s16 D_us_80180CE8[] = {0, 18, 8, 0};
 static s16 sensors_unused_1[] = {0, 18, 0, 4};
 static s16 sensors_unused_2[] = {8, -4, -16, 0};
@@ -96,7 +96,7 @@ extern EInit D_us_80180B28;
 extern EInit D_us_80180B34;
 extern EInit D_us_80180B58;
 extern EInit D_us_80180B4C;
-extern s32 D_us_80180CD4;
+extern s32 D_us_80180CD4; // is Granfaloon spawned yet?
 extern EInit g_EInitGranfaloon1;
 extern EInit g_EInitGranfaloon2;
 
@@ -118,6 +118,20 @@ extern s32 E_ID(LIFE_UPSPAWN);
 #include "../../st/approach_s16.h"
 
 void EntityGranfaloon(Entity* self) {
+    // the actual entity is the core of Granfaloon, which internally spawns 9
+    // entities that will act like an armor.
+    typedef enum Step {
+        INIT,
+        UNUSED_1,
+        READY_TO_SPAWN,
+        SPAWN,
+        FLOAT_IDLE,
+        SCREAMS_IDLE,
+        UNK_6,
+        SHOOT_LASERS,
+        DEAD,
+        DEBUG = 255,
+    };
     Entity* ent;
     s32 i;
     s16 angle;
@@ -132,12 +146,12 @@ void EntityGranfaloon(Entity* self) {
     }
     if (self->flags & FLAG_DEAD) {
         if (self->step < 8) {
-            SetStep(8);
+            SetStep(DEAD);
         }
     }
 
     switch (self->step) {
-    case 0:
+    case INIT:
         InitializeEntity(g_EInitGranfaloon1);
         self->zPriority = 0x40;
         self->animCurFrame = 1;
@@ -161,16 +175,17 @@ void EntityGranfaloon(Entity* self) {
         }
         self->ext.et_801A1878.unk99 = 7;
         self->ext.et_801A1878.unk86 = 0;
-        SetStep(2);
-    case 2:
+        SetStep(READY_TO_SPAWN);
+    case READY_TO_SPAWN:
         if (GetDistanceToPlayerX() < 0x80) {
-            SetStep(3);
+            SetStep(SPAWN);
         }
         break;
-    case 3:
+    case SPAWN:
         switch (self->step_s) {
         case 0:
-            g_api.TimeAttackController(3, 2);
+            g_api.TimeAttackController(
+                TIMEATTACK_EVENT_GRANFALOON_DEFEAT, TIMEATTACK_SET_VISITED);
             D_us_80180CD4 = 1;
             D_us_80180CE4 |= 0x10;
             stopMusicFlag = 0;
@@ -179,6 +194,7 @@ void EntityGranfaloon(Entity* self) {
             self->velocityY = FIX(-1.0);
             self->step_s++;
         case 1:
+            // create particle effects when spawning
             MoveEntity();
             if (!(g_Timer & 0xF)) {
                 PlaySfxPositional(SFX_GRANFALOON_APPEAR);
@@ -187,7 +203,7 @@ void EntityGranfaloon(Entity* self) {
             y = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
             FntPrint(FMT_Y, y);
             if (y < 0x100) {
-                SetStep(4);
+                SetStep(FLOAT_IDLE);
             }
             if (y < 0x1C0) {
                 self->ext.et_801A1878.unk86 = 0x7F;
@@ -211,7 +227,7 @@ void EntityGranfaloon(Entity* self) {
             break;
         }
         break;
-    case 4:
+    case FLOAT_IDLE:
         if (!self->step_s) {
             self->ext.et_801A1878.unk99 = 0xF;
             self->ext.et_801A1878.unk86 = 0xFF;
@@ -232,7 +248,7 @@ void EntityGranfaloon(Entity* self) {
         self->velocityX = (rcos(angle) * 3) << 13 >> 12;
         self->velocityY = (rsin(angle) * 3) << 13 >> 12;
         if (!--self->ext.et_801A1878.timer) {
-            SetStep(5);
+            SetStep(SCREAMS_IDLE);
             if (D_us_80180CE0 > 2) {
                 ent = g_Entities;
                 x = ent->posX.i.hi - self->posX.i.hi;
@@ -244,15 +260,15 @@ void EntityGranfaloon(Entity* self) {
                 offsetX = D_us_80180D14[angle];
                 if (D_us_80180CD8 & (1 << offsetX)) {
                     self->ext.et_801A1878.partIndex = offsetX;
-                    SetStep(6);
+                    SetStep(UNK_6);
                 }
             }
         }
         if (D_us_80180CE0 > 8) {
-            SetStep(7);
+            SetStep(SHOOT_LASERS);
         }
         break;
-    case 5:
+    case SCREAMS_IDLE:
         switch (self->step_s) {
         case 0:
             self->ext.et_801A1878.timer = 0x40;
@@ -275,12 +291,12 @@ void EntityGranfaloon(Entity* self) {
             break;
         case 2:
             if (!--self->ext.et_801A1878.timer) {
-                SetStep(4);
+                SetStep(FLOAT_IDLE);
             }
             break;
         }
         break;
-    case 6:
+    case UNK_6:
         switch (self->step_s) {
         case 0:
             self->ext.et_801A1878.unk99 = 7;
@@ -310,15 +326,15 @@ void EntityGranfaloon(Entity* self) {
             self->velocityY -= self->velocityY >> 4;
             if (D_us_80180CDC == 0) {
                 self->ext.et_801A1878.activeParts = 0;
-                SetStep(4);
+                SetStep(FLOAT_IDLE);
                 if (D_us_80180CE0 > 8) {
-                    SetStep(7);
+                    SetStep(SHOOT_LASERS);
                 }
             }
             break;
         }
         break;
-    case 7:
+    case SHOOT_LASERS:
         if (!self->step_s) {
             self->ext.et_801A1878.timer = 0x80;
             self->ext.et_801A1878.activeParts = 0;
@@ -362,10 +378,10 @@ void EntityGranfaloon(Entity* self) {
             angle >>= 9;
             offsetX = D_us_80180D14[angle];
             self->ext.et_801A1878.partIndex = offsetX;
-            SetStep(6);
+            SetStep(UNK_6);
         }
         break;
-    case 8:
+    case DEAD:
         self->hitboxState = 0;
         switch (self->step_s) {
         case 0:
@@ -457,7 +473,7 @@ void EntityGranfaloon(Entity* self) {
             break;
         }
         break;
-    case 0xFF:
+    case DEBUG:
         FntPrint(FMT_CHARAL, self->animCurFrame);
         if (g_pads[1].pressed & PAD_SQUARE) {
             if (self->params) {
@@ -520,6 +536,12 @@ void EntityGranfaloon(Entity* self) {
 }
 
 void func_us_801A2774(Entity* self) {
+    typedef enum Step {
+        INIT,
+        WAIT_SPAWN,
+        IDLE,
+        DEAD,
+    };
     Entity* newEntity;
     s32 i;
     s32 posX;
@@ -533,10 +555,10 @@ void func_us_801A2774(Entity* self) {
         self->flags |= FLAG_DEAD;
     }
     if ((self->flags & FLAG_DEAD) && self->step < 3) {
-        SetStep(3);
+        SetStep(DEAD);
     }
     switch (self->step) {
-    case 0:
+    case INIT:
         InitializeEntity(g_EInitGranfaloon2);
         row = D_us_80180D34[self->params];
         self->animCurFrame = row[0];
@@ -556,14 +578,14 @@ void func_us_801A2774(Entity* self) {
                 newEntity->ext.et_801A2CC4.parent = self;
             }
         }
-    case 1:
+    case WAIT_SPAWN:
         self->hitboxState = 0;
         if (D_us_80180CD4) {
             self->hitboxState = 3;
             self->step++;
         }
         break;
-    case 2:
+    case IDLE:
         newEntity = self->ext.et_801A2CC4.parent;
         self->posX.i.hi = newEntity->posX.i.hi;
         self->posY.i.hi = newEntity->posY.i.hi;
@@ -593,7 +615,7 @@ void func_us_801A2774(Entity* self) {
             newEntity->params = self->params;
         }
         break;
-    case 3:
+    case DEAD:
         switch (self->step_s) {
         case 0:
             self->hitboxState = 0;

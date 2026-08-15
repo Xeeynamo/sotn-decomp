@@ -39,7 +39,7 @@ typedef enum EntityID {
     E_UNK_19,             // func_us_801A2F2C
     E_UNK_1A,             // func_us_801A3480
     E_UNK_1B,             // func_us_801A38EC
-    E_UNK_1C,             // func_us_801A2774
+    E_UNK_1C,             // func_us_801A2774, body parts?
     E_UNK_1D,             // func_us_801A2BC4
     E_UNK_1E,             // func_us_801A2CC4
     E_UNK_1F,             // func_us_801A2D90
@@ -47,7 +47,7 @@ typedef enum EntityID {
     E_UNK_21,             // func_us_801A45D0
     E_UNK_22,             // func_us_801A518C
     E_UNK_23,             // func_us_801A493C
-    E_UNK_24,             // func_us_801A4AF4
+    E_UNK_24,             // func_us_801A4AF4, lasers?
     E_LIFE_UPSPAWN,       // EntityLifeUpSpawn
     NUM_ENTITIES,
 };
