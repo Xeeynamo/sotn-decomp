@@ -1090,7 +1090,7 @@
 | cen        | func_pspeu_09251658                |       21 |          1 |        |       |     |
 | cen        | func_pspeu_09242D28                |       21 |          1 |        |       |     |
 | chi        | func_psp_09240110                  |       21 |          1 |        |       |     |
-| chi        | Random                             |       21 |          1 |        |       |     |
+| chi        | func_psp_0923E5B0                  |       21 |          1 |        |       |     |
 | chi        | func_psp_09247F98                  |       21 |          1 |        |       |     |
 | dai        | func_pspeu_0923E6E8                |       21 |          1 |        |       |     |
 | dai        | func_pspeu_0924E068                |       21 |          1 |        |       |     |
@@ -2401,7 +2401,7 @@
 | are        | func_pspeu_09261BB0                |       37 |          6 |        |       |     |
 | cat        | func_pspeu_09252A40                |       37 |          6 |        |       |     |
 | cen        | func_pspeu_0925F4B8                |       37 |          6 |        |       |     |
-| chi        | AllocEntity                        |       37 |          6 |        |       |     |
+| chi        | func_psp_09247CB8                  |       37 |          6 |        |       |     |
 | dai        | func_pspeu_0924DB08                |       37 |          6 |        |       |     |
 | dre        | func_pspeu_092439C8                |       37 |          6 |        |       |     |
 | lib        | func_psp_0924F548                  |       37 |          6 |        |       |     |
@@ -2566,8 +2566,8 @@
 | cat        | func_pspeu_09252BC0                |       39 |          2 |        |       |     |
 | cen        | func_pspeu_09254108                |       39 |          2 |        |       |     |
 | cen        | func_pspeu_09254190                |       39 |          2 |        |       |     |
-| chi        | CreateEntityFromCurrentEntity      |       39 |          2 |        |       |     |
-| chi        | CreateEntityFromEntity             |       39 |          2 |        |       |     |
+| chi        | func_psp_09238598                  |       39 |          2 |        |       |     |
+| chi        | func_psp_09238620                  |       39 |          2 |        |       |     |
 | dai        | func_pspeu_09238598                |       39 |          2 |        |       |     |
 | dai        | func_pspeu_09238620                |       39 |          2 |        |       |     |
 | dai        | func_pspeu_0924DC88                |       39 |          2 |        |       |     |
@@ -3247,7 +3247,7 @@
 | are        | func_pspeu_092611B0                |       46 |          5 |        |       |     |
 | cat        | func_pspeu_09252040                |       46 |          5 |        |       |     |
 | cen        | DestroyEntity                      |       46 |          5 |        |       |     |
-| chi        | DestroyEntity                      |       46 |          5 |        |       |     |
+| chi        | func_psp_092472B8                  |       46 |          5 |        |       |     |
 | dai        | func_pspeu_0924D108                |       46 |          5 |        |       |     |
 | dre        | func_pspeu_092435B8                |       46 |          5 |        |       |     |
 | lib        | func_psp_0924EB48                  |       46 |          5 |        |       |     |
@@ -5042,7 +5042,7 @@
 |            | func_092E7680                      |       80 |          8 |        |       |     |
 |            | func_092E7F80                      |       80 |          9 |        |       |     |
 | nz0        | func_pspeu_09253DC0                |       80 |          9 |        |       |     |
-| rno0       | EntityBubbles                      |       80 |          9 |        |       |     |
+| rno0       | func_pspeu_09252290                |       80 |          9 |        |       |     |
 | no4        | func_pspeu_09259648                |       80 |         10 |        |       |     |
 | rno2       | func_us_801C4EA8                   |       80 |         11 |        |       |     |
 | main       | func_psp_08911990                  |       81 |          4 |        |       |     |
@@ -6251,7 +6251,7 @@
 | main       | func_psp_0892667C                  |      111 |         15 |        |       |     |
 | main       | func_psp_08926808                  |      111 |         15 |        |       |     |
 | nz0        | func_pspeu_09253A58                |      111 |         15 |        |       |     |
-| rno0       | EntitySubWpnContGlass              |      111 |         15 |        |       |     |
+| rno0       | func_pspeu_09251F28                |      111 |         15 |        |       |     |
 | rtop       | EntityLionLamp                     |      111 |         17 |        |       |     |
 | top        | func_pspeu_0924BB48                |      111 |         17 |        |       |     |
 | main       | sceWaveInit                        |      111 |         19 |        |       |     |
@@ -6279,7 +6279,7 @@
 | are        | func_pspeu_09262220                |      112 |          2 |        |       |     |
 | cat        | func_pspeu_09252EF8                |      112 |          2 |        |       |     |
 | cen        | func_pspeu_0925F798                |      112 |          2 |        |       |     |
-| chi        | InitializeEntity                   |      112 |          2 |        |       |     |
+| chi        | func_psp_09247FD8                  |      112 |          2 |        |       |     |
 | dai        | func_pspeu_0924E0A8                |      112 |          2 |        |       |     |
 | dre        | func_pspeu_09243CE8                |      112 |          2 |        |       |     |
 | lib        | func_psp_0924FAD0                  |      112 |          2 |        |       |     |
@@ -6644,7 +6644,7 @@
 | no3        | func_pspeu_0924FFF0                |      127 |         17 |        |       |     |
 | np3        | EntityMermanSpawner                |      127 |         17 |        |       |     |
 | nz0        | func_pspeu_09253BE8                |      127 |         17 |        |       |     |
-| rno0       | EntityFallingLiquid                |      127 |         17 |        |       |     |
+| rno0       | func_pspeu_092520B8                |      127 |         17 |        |       |     |
 | dra        | func_psp_09142980                  |      127 |         18 |        |       |     |
 | main       | scalbn                             |      127 |         18 |        |       |     |
 | nz0        | func_pspeu_0923A9D0                |      127 |         19 |        |       |     |
@@ -6921,7 +6921,7 @@
 | are        | func_pspeu_0924B178                |      151 |         14 |        |       |     |
 | no0        | func_pspeu_092442C8                |      151 |         14 |        |       |     |
 | nz0        | func_pspeu_09253EE0                |      151 |         26 |        |       |     |
-| rno0       | EntitySubwpnInContainer            |      151 |         26 |        |       |     |
+| rno0       | func_pspeu_092523B0                |      151 |         26 |        |       |     |
 | bo6        | func_pspeu_09248D20                |      152 |         16 |        |       |     |
 | dai        | func_pspeu_092588C0                |      152 |         17 |        |       |     |
 | rdai       | func_pspeu_09253CB0                |      152 |         17 |        |       |     |
@@ -8645,7 +8645,7 @@
 | no1        | func_pspeu_092600C0                |      398 |         48 |        |       |     |
 | no4        | func_pspeu_09243478                |      399 |         56 | Yes    |       |     |
 | nz0        | func_pspeu_09253478                |      400 |         50 |        |       |     |
-| rno0       | EntitySubWeaponContainer           |      400 |         50 |        |       |     |
+| rno0       | func_pspeu_09251948                |      400 |         50 |        |       |     |
 |            | func_092ECC98                      |      401 |         36 |        |       |     |
 | no1        | func_pspeu_0923D048                |      402 |         51 |        |       |     |
 | main       | func_psp_08922C14                  |      405 |         36 |        |       |     |
@@ -9249,7 +9249,7 @@
 | bo7        | func_us_80195C50                   |      602 |         59 | Yes    |       |     |
 |            | func_092ED6F8                      |      603 |         72 |        |       |     |
 | bo0        | func_pspeu_092608C0                |      606 |         38 |        |       |     |
-| chi        | EntityBreakableWall                |      607 |         46 | Yes    |       |     |
+| chi        | func_psp_0924F6D0                  |      607 |         46 | Yes    |       |     |
 | main       | func_psp_08926A08                  |      607 |         92 | Yes    |       |     |
 | dra        | func_psp_090DDEE8                  |      609 |         40 |        |       |     |
 | ric        | func_pspeu_092CA460                |      609 |         45 |        |       |     |
