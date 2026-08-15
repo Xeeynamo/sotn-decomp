@@ -395,7 +395,34 @@ s32 func_pspeu_0923EE78(Entity* arg0, s16* arg1, Entity* arg2, s16* arg3) {
     return 0;
 }
 
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_62A8", func_pspeu_0923F088);
+s32 func_pspeu_0923F088(Entity* self, s32 arg1) {
+    Collider sp2C;
+    s32 var_s0;
+    s32 var_s1;
+    s32 var_s2;
+    s32 var_s3;
+
+    var_s3 = self->posX.i.hi;
+    if (arg1 ^ g_CurrentEntity->facingLeft) {
+        var_s3 += 0x38;
+    } else {
+        var_s3 -= 0x38;
+    }
+    var_s2 = self->posY.i.hi + 4;
+    var_s1 = 0;
+    for(var_s0 = 0; var_s0 < 2; var_s0++){
+        g_api.CheckCollision(var_s3, var_s2, &sp2C, 0);
+        if (var_s0 != 0) {
+            if (!(sp2C.effects & 1)) {
+                var_s1 |= 2;
+            }
+        } else if (sp2C.effects & 1) {
+            var_s1 |= 1;
+        }
+        var_s2 += 4;
+    }
+    return var_s1;
+}
 
 INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_62A8", func_pspeu_0923F198);
 
