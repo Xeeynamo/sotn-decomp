@@ -301,7 +301,54 @@ s32 func_pspeu_0923E920(Entity* arg0, s16* arg1, Entity* arg2, s16* arg3, u16* a
     return 0;
 }
 
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_62A8", func_pspeu_0923EBE8);
+s32 func_pspeu_0923EBE8(Entity* arg0, s16* arg1, Entity* arg2, s16* arg3) {
+    s32 temp_v1;
+    s32 var_s3;
+    s32 var_s2;
+    s32 var_s1;
+    s16 var_s0;
+
+    var_s3 = g_CurrentEntity->posX.i.hi;
+    var_s1 = var_s3 - arg2->posX.i.hi;
+    var_s2 = var_s3 - arg0->posX.i.hi;
+    if (g_CurrentEntity->facingLeft) {
+        var_s1 = -var_s1;
+        var_s2 = -var_s2;
+    }
+    if ((arg2->ext.ILLEGAL.s16[2]) && (var_s1 < -8) && (var_s2 > 8)) {
+        return 1;
+    }
+    switch (g_CurrentEntity->ext.ILLEGAL.u8[0x2E]) {                              /* irregular */
+    case 0:
+        if (var_s1 > -8) {
+            *arg3 -= 0x10;
+            var_s0 = *arg3 - 0x340;
+            StepTowards(arg3 + 1, var_s0 - 0x140, 0x40);
+            StepTowards(arg3 + 2, var_s0 + 0x140, 0x40);
+        } else {
+            g_CurrentEntity->ext.ILLEGAL.u8[0x2E] += 1;
+        }
+        break;
+    case 1:
+        if (var_s1 > -8) {
+            *arg3 -= 0x10;
+        } else {
+            var_s0 = *arg3 - 0x240;
+            StepTowards(arg3 + 1, var_s0 - 0x60, 0x20);
+            StepTowards(arg3 + 2, var_s0 + 0x60, 0x20);
+        }
+        break;
+    }
+    if (var_s2 < 8) {
+        *arg1 += 12;
+        var_s0 = *arg1 - 0x2C0;
+        StepTowards(arg1 + 1, var_s0 - 0x60, 0x14);
+        StepTowards(arg1 + 2, var_s0 + 0x60, 0x14);
+    } else {
+        arg1[2] += 12;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_62A8", func_pspeu_0923EE78);
 
