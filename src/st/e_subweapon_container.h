@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 extern EInit g_EInitSubwpnCloche;
 extern EInit g_EInitSubwpnClochePieces;
 extern EInit g_EInitParticle;
@@ -197,10 +198,11 @@ void EntitySubWpnContGlass(Entity* self) {
     }
 }
 
-// This is weird. It's 1 frame of pose 1, 4 frames of pose 1, 2 frames of pose 
-// 1, etc So it only shows pose 1. Which is a generic little flame particle. 
+// This is weird. It's 1 frame of pose 1, 4 frames of pose 1, 2 frames of pose
+// 1, etc So it only shows pose 1. Which is a generic little flame particle.
 // Look close at the broken liquid and it is in fact a fire.
-static AnimateEntityFrame fallingLiquidAnim[] = {{1, 1}, {4, 1}, {2, 1}, {5, 1}, {2, 1}, {3, 1}, POSE_LOOP(0)};
+static AnimateEntityFrame fallingLiquidAnim[] = {
+    {1, 1}, {4, 1}, {2, 1}, {5, 1}, {2, 1}, {3, 1}, POSE_LOOP(0)};
 static s32 bubbleRiseSpeeds[] = {FIX(-1), FIX(-1), FIX(-0.5), FIX(-0.25)};
 
 // falling liquid from subweapons container
