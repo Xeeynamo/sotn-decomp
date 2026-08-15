@@ -79,7 +79,45 @@ Primitive* func_pspeu_0923DD78(Pos* ent1, Pos* ent2, s16* arg2, Primitive* prim)
     return prim;
 }
 
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_62A8", func_pspeu_0923DF88);
+Primitive* func_pspeu_0923DF88(Pos* ent1, Pos* ent2, s16* arg2, Primitive* prim) {
+    Point16 sp2C;
+    Point16 sp28;
+    Pos sp20;
+    Pos sp18;
+    s32 angle;
+
+    angle = *arg2++;
+    func_pspeu_0923D928(ent1, 22, angle, &sp20);
+    sp2C.x = 8;
+    sp2C.y = 8;
+    sp28.x = 10;
+    sp28.y = 10;
+    func_us_801D2424(ent1, angle, &sp2C, &sp20, angle, &sp28, prim);
+    prim->drawMode = 2;
+    prim = prim->next;
+    func_pspeu_0923D928(&sp20, -5, angle, &sp20);
+    angle = *arg2++;
+    func_pspeu_0923D928(&sp20, 4, angle, &sp20);
+    func_pspeu_0923D928(&sp20, 12, angle, &sp18);
+    sp2C.x = 6;
+    sp2C.y = 6;
+    sp28.x = 6;
+    sp28.y = 6;
+    func_us_801D2424(&sp20, angle, &sp2C, &sp18, angle, &sp28, prim);
+    prim->drawMode = 2;
+    prim = prim->next;
+    angle = *arg2++;
+    func_pspeu_0923D928(&sp18, -3, angle, &sp18);
+    func_pspeu_0923D928(&sp18, 14, angle, ent2);
+    sp2C.x = 6;
+    sp2C.y = 6;
+    sp28.x = 10;
+    sp28.y = 8;
+    func_us_801D2424(&sp18, angle, &sp2C, ent2, angle, &sp28, prim);
+    prim->drawMode = 2;
+    prim = prim->next;
+    return prim;
+}
 
 INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_62A8", func_pspeu_0923E1A0);
 
@@ -207,7 +245,7 @@ void func_us_801D068C(Entity* self) {
         }
         prim = self->ext.prim;
         prim = func_pspeu_0923DD78((Pos*)other7, (Pos*)self, var_s4 + 2, prim);
-        func_pspeu_0923DF88(self, other6, var_s3, prim);
+        func_pspeu_0923DF88((Pos*)self, (Pos*)other6, var_s3, prim);
         func_pspeu_0923F198(3);
         if (sp68 != 0) {
             self->ext.ILLEGAL.u8[0x32] = 1;
@@ -249,7 +287,7 @@ void func_us_801D068C(Entity* self) {
             StepTowards(var_s3 + 2, -0x500, 0x38);
             prim = self->ext.prim;
             prim = (Primitive*)func_pspeu_0923DD78((Pos*)other7, (Pos*)self, var_s4 + 2, prim);
-            func_pspeu_0923DF88(self, other6, var_s3, prim);
+            func_pspeu_0923DF88((Pos*)self, (Pos*)other6, var_s3, prim);
             func_pspeu_0923F198(3);
             sp64 = self->posX.i.hi;
             sp60 = self->posY.i.hi + 0x18;
