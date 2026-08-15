@@ -457,7 +457,16 @@ void func_pspeu_0923F198(s32 count) {
     }
 }
 
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_62A8", func_pspeu_0923F300);
+void func_pspeu_0923F300(s32 newStep) {
+    Entity* ent;
+    s32 i;
+
+    for(ent = g_CurrentEntity, i = 0; i < 10; i++, ent++){
+        ent->step = newStep;
+        ent->step_s = 0;
+        ent->ext.ILLEGAL.u8[0x2E] = 0;
+    }
+}
 
 INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_62A8", EntityGorgon);
 
