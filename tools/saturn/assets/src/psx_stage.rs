@@ -33,11 +33,117 @@ pub enum ScaleModel {
 }
 
 #[derive(Clone, Copy, Debug, Serialize)]
-struct Bounds {
-    left: u8,
-    top: u8,
-    right: u8,
-    bottom: u8,
+pub struct Bounds {
+    pub left: u8,
+    pub top: u8,
+    pub right: u8,
+    pub bottom: u8,
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+#[serde(tag = "kind", rename_all = "kebab-case")]
+pub enum RoomKind {
+    Ordinary { layer: u8, layout: u8 },
+    Loading { destination: u8 },
+    Special { params: u8, room: u8 },
+}
+
+#[derive(Clone, Copy, Debug, Serialize)]
+pub struct RoomRecord {
+    #[serde(flatten)]
+    pub bounds: Bounds,
+    #[serde(flatten)]
+    pub kind: RoomKind,
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct EntityRecord {
+    pub x: u16,
+    pub y: u16,
+    pub entity_id: u16,
+    pub room_index: u16,
+    pub params: u16,
+}
+
+pub fn read_rooms(prg: &[u8]) -> Result<Vec<RoomRecord>> {
+    let address = be_u32(prg, 0x10, "room-header pointer")?;
+    let start = address
+        .checked_sub(STAGE_LOAD_ADDRESS)
+        .ok_or_else(|| Error::Format("room-header pointer precedes the overlay".to_string()))?
+        as usize;
+    let mut rooms = Vec::new();
+    for room in 0.. {
+        let at = start + room * 6;
+        let b = prg
+            .get(at..at + 6)
+            .ok_or_else(|| Error::Format("room-header table is truncated".to_string()))?;
+        if b[0] == 0x40 {
+            break;
+        }
+        let kind = match b[5] {
+            0x00 => RoomKind::Ordinary {
+                layer: b[4],
+                layout: b[4] + 1,
+            },
+            0xFF => RoomKind::Loading { destination: b[4] },
+            room => RoomKind::Special {
+                params: b[4],
+                room,
+            },
+        };
+        rooms.push(RoomRecord {
+            bounds: Bounds {
+                left: b[0],
+                top: b[1],
+                right: b[2],
+                bottom: b[3],
+            },
+            kind,
+        });
+    }
+    Ok(rooms)
+}
+
+pub fn read_layout_table(prg: &[u8]) -> Result<Vec<u32>> {
+    let start = be_u32(prg, 0x08, "entity-layout table pointer")?;
+    let end = be_u32(prg, 0x0C, "entity-layout table end")?;
+    if end <= start || (end - start) % 4 != 0 {
+        return Err(Error::Format(
+            "entity-layout table bounds are invalid".to_string(),
+        ));
+    }
+    let at = start
+        .checked_sub(STAGE_LOAD_ADDRESS)
+        .ok_or_else(|| Error::Format("entity-layout table precedes the overlay".to_string()))?
+        as usize;
+    (0..(end - start) as usize / 4)
+        .map(|entry| be_u32(prg, at + entry * 4, "entity-layout pointer"))
+        .collect()
+}
+
+pub fn read_entity_layout(prg: &[u8], address: u32) -> Result<Vec<EntityRecord>> {
+    let mut at = address
+        .checked_sub(STAGE_LOAD_ADDRESS)
+        .ok_or_else(|| Error::Format("entity layout precedes the overlay".to_string()))?
+        as usize;
+    let mut entities = Vec::new();
+    loop {
+        let entity = EntityRecord {
+            x: be_u16(prg, at, "entity x")?,
+            y: be_u16(prg, at + 2, "entity y")?,
+            entity_id: be_u16(prg, at + 4, "entity id")?,
+            room_index: be_u16(prg, at + 6, "entity room index")?,
+            params: be_u16(prg, at + 8, "entity params")?,
+        };
+        at += 10;
+        if entity.x == 0xFFFF && entity.y == 0xFFFF {
+            break;
+        }
+        if entity.x != 0xFFFE || entity.y != 0xFFFE {
+            entities.push(entity);
+        }
+    }
+    Ok(entities)
 }
 
 #[derive(Debug, Serialize)]
@@ -73,10 +179,11 @@ struct Report {
 }
 
 #[derive(Clone)]
-struct Raster {
-    width: usize,
-    height: usize,
-    pixels: Vec<Option<u16>>,
+pub struct Raster {
+    pub width: usize,
+    pub height: usize,
+    pub pixels: Vec<Option<u16>>,
+    pub indices: Vec<u8>,
 }
 
 #[derive(Clone)]
@@ -205,7 +312,7 @@ fn write_entity_layout(
     Ok(entities)
 }
 
-fn render_layer(
+pub fn render_layer(
     manifest: &Manifest,
     map_data: &[u8],
     room: usize,
@@ -218,9 +325,42 @@ fn render_layer(
     )?;
     let palette = decode_stream(map_data, stream(manifest, room, layer, Kind::Palette)?)?;
     let tilemap = decode_stream(map_data, stream(manifest, room, layer, Kind::Tilemap)?)?;
-    render_decoded_layer(&chars, &palette, &tilemap, scale_model, &format!(
-        "room {room} layer {layer}"
-    ))
+    render_decoded_layer(
+        &chars,
+        &palette,
+        &tilemap,
+        scale_model,
+        4,
+        &format!("room {room} layer {layer}"),
+    )
+}
+
+pub fn render_layer_raster_phase(
+    manifest: &Manifest,
+    map_data: &[u8],
+    room: usize,
+    layer: usize,
+    discarded_column: usize,
+) -> Result<Raster> {
+    if discarded_column >= 5 {
+        return Err(Error::Format(format!(
+            "raster discard column {discarded_column} is outside 0..5"
+        )));
+    }
+    let chars = decode_stream(
+        map_data,
+        stream(manifest, room, layer, Kind::Characters)?,
+    )?;
+    let palette = decode_stream(map_data, stream(manifest, room, layer, Kind::Palette)?)?;
+    let tilemap = decode_stream(map_data, stream(manifest, room, layer, Kind::Tilemap)?)?;
+    render_decoded_layer(
+        &chars,
+        &palette,
+        &tilemap,
+        ScaleModel::Raster,
+        discarded_column,
+        &format!("room {room} layer {layer}"),
+    )
 }
 
 fn render_decoded_layer(
@@ -228,6 +368,7 @@ fn render_decoded_layer(
     palette: &[u8],
     tilemap: &[u8],
     scale_model: ScaleModel,
+    discarded_column: usize,
     label: &str,
 ) -> Result<Raster> {
     let width = be_u16(&tilemap, 0, "tilemap width")? as usize;
@@ -236,6 +377,7 @@ fn render_decoded_layer(
         width: width * 8,
         height: height * 8,
         pixels: vec![None; width * height * 64],
+        indices: vec![0; width * height * 64],
     };
 
     for cell_y in 0..height {
@@ -271,6 +413,7 @@ fn render_decoded_layer(
                     )? & 0x7FFF;
                     let at = (cell_y * 8 + y) * source.width + cell_x * 8 + x;
                     source.pixels[at] = Some(colour);
+                    source.indices[at] = index;
                 }
             }
         }
@@ -281,13 +424,19 @@ fn render_decoded_layer(
         width: output_width,
         height: source.height,
         pixels: vec![None; output_width * source.height],
+        indices: vec![0; output_width * source.height],
     };
     for y in 0..output.height {
         match scale_model {
             ScaleModel::Raster => {
                 for x in 0..output.width {
+                    let group = x / 4;
+                    let within = x % 4;
+                    let source_within = within + usize::from(within >= discarded_column);
                     output.pixels[y * output.width + x] =
-                        source.pixels[y * source.width + x * 5 / 4];
+                        source.pixels[y * source.width + group * 5 + source_within];
+                    output.indices[y * output.width + x] =
+                        source.indices[y * source.width + group * 5 + source_within];
                 }
             }
             ScaleModel::TileGroups => {
@@ -299,6 +448,9 @@ fn render_decoded_layer(
                         for x in 0..width {
                             output.pixels[y * output.width + output_x + x] =
                                 source.pixels
+                                    [y * source.width + source_x + x * 8 / width];
+                            output.indices[y * output.width + output_x + x] =
+                                source.indices
                                     [y * source.width + source_x + x * 8 / width];
                         }
                         output_x += width;
@@ -1428,6 +1580,7 @@ pub fn convert(
                 &decoded.palette,
                 &decoded.tilemap,
                 scale_model,
+                4,
                 &format!("special room {id} plane {plane}"),
             )?;
             if (raster.width, raster.height) != (256, 256) {

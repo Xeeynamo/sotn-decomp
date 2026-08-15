@@ -17,6 +17,7 @@ pub mod seq;
 pub mod sheet;
 pub mod sprite;
 pub mod stage;
+pub mod stitch;
 pub mod tone;
 pub mod wav;
 pub mod weapon;
