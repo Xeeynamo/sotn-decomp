@@ -1,10 +1,4 @@
 func_us_8019D260_from_rcen = 0x801A50BC;
 Random = 0x801A55A0;
-CreateEntityFromCurrentEntity = 0x801A7C18;
 CreateEntityFromEntity = 0x801A7C8C;
-DestroyEntity = 0x801A89B8;
-AnimateEntity = 0x801A8AE8;
 AllocEntity = 0x801A9228;
-SetStep = 0x801A95F8;
-InitializeEntity = 0x801A96C8;
-PlaySfxPositional = 0x801AC10C;

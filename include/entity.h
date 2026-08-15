@@ -4205,6 +4205,25 @@ typedef struct {
     /* 0x9C */ struct Entity* parent;
 } ET_801A1878;
 
+// Granfaloon's laser beam (func_us_801A38EC)
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ u16 : 16;
+    /* 0x84 */ u32 : 32;
+    /* 0x88 */ s16 hitX;
+    /* 0x8A */ s16 hitY;
+    /* 0x8C */ u32 : 32;
+    /* 0x90 */ u32 : 32;
+    /* 0x94 */ u32 : 32;
+    /* 0x98 */ u32 : 32;
+    /* 0x9C */ struct Entity* parent;
+    /* 0xA0 */ u8 hasHit;
+    /* 0xA1 */ u8 : 8;
+    /* 0xA2 */ u16 : 16;
+    /* 0xA4 */ s32 length;
+} ET_GranfaloonLaser;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -4522,6 +4541,7 @@ typedef union { // offset=0x7C
     ET_801A2CC4 et_801A2CC4;
     ET_801A4AF4 et_801A4AF4;
     ET_801A1878 et_801A1878;
+    ET_GranfaloonLaser granfaloonLaser;
     ET_Coffin coffin;
     ET_Lava lava;
     ET_BladeMaster bladeMaster;

@@ -14,9 +14,6 @@ extern GAME_IMPORT PfnEntityUpdate* PfnEntityUpdates;
 extern GAME_IMPORT LayoutEntity** g_pStObjLayoutHorizontal;
 extern GAME_IMPORT LayoutEntity** g_pStObjLayoutVertical;
 
-// stubs for WIP entities
-void func_us_801A38EC(Entity* self) { DestroyEntity(self); }
-
 OVL_API void InitStage(Overlay* o) {
     memcpy(o, &g_BossOverlay, sizeof(AbbreviatedOverlay));
     PfnEntityUpdates = EntityUpdates;

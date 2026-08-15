@@ -114,6 +114,7 @@ extern s32 E_ID(UNK_22);
 extern s32 E_ID(UNK_1C);
 extern s32 E_ID(LASER);
 extern s32 E_ID(LIFE_UPSPAWN);
+extern s32 E_ID(UNK_23);
 #endif
 
 #include "../../st/approach_s16.h"
@@ -973,7 +974,253 @@ void func_us_801A3480(Entity* self) {
     }
 }
 
-INCLUDE_ASM("boss/bo1/nonmatchings/e_granfaloon", func_us_801A38EC);
+void func_us_801A38EC(Entity* self) {
+    Entity* ent;
+    Primitive* prim;
+    s16 angle;
+    s32 offX;
+    s32 offY;
+    s32 primIndex;
+    Collider collider;
+
+    if (D_us_80180CE4 & 1) {
+        DestroyEntity(self);
+        return;
+    }
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_80180B28);
+        self->drawFlags = ENTITY_ROTATE;
+        self->hitboxWidth = self->hitboxHeight = 8;
+        if (self->params) {
+            self->hitboxState = 0;
+            if (self->params & 0x100) {
+                self->step = 0x20;
+                self->hitboxState = 0;
+                return;
+            }
+            self->animCurFrame = 0x64;
+            self->step = 0x10;
+            return;
+        }
+        ent = AllocEntity(&g_Entities[208], &g_Entities[256]);
+        angle = self->rotate + 0x400;
+        if (ent != NULL) {
+            CreateEntityFromEntity(E_ID(UNK_1B), self, ent);
+            ent->params = 0x100;
+            ent->rotate = self->rotate;
+            ent->posX.i.hi += (rcos(angle) * 24) >> 12;
+            ent->posY.i.hi += (rsin(angle) * 24) >> 12;
+            ent->zPriority = self->zPriority;
+            ent->ext.granfaloonLaser.parent = self->ext.granfaloonLaser.parent;
+        }
+        self->posX.i.hi += (rcos(angle) * 36) >> 12;
+        self->posY.i.hi += (rsin(angle) * 36) >> 12;
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.granfaloonLaser.prim = prim;
+        prim->tpage = 0x12;
+        prim->clut = 0x200;
+        prim->u0 = prim->u2 = 0xB8;
+        prim->u1 = prim->u3 = 0xD0;
+        prim->v0 = prim->v1 = 0x42;
+        prim->v2 = prim->v3 = 0x46;
+        prim->priority = self->zPriority - 1;
+        prim->drawMode = DRAW_HIDE;
+    case 1:
+        ent = self->ext.granfaloonLaser.parent;
+        self->rotate = ent->rotate;
+        angle = self->rotate + 0x400;
+        self->posX.i.hi = ent->posX.i.hi;
+        self->posY.i.hi = ent->posY.i.hi;
+        self->posX.i.hi += (rcos(angle) * 36) >> 12;
+        self->posY.i.hi += (rsin(angle) * 36) >> 12;
+        if (!AnimateEntity(D_us_80180E2C, self)) {
+            SetStep(2);
+        }
+        break;
+    case 2:
+        ent = self->ext.granfaloonLaser.parent;
+        self->rotate = ent->rotate;
+        angle = self->rotate + 0x400;
+        self->posX.i.hi = ent->posX.i.hi;
+        self->posY.i.hi = ent->posY.i.hi;
+        self->posX.i.hi += (rcos(angle) * 36) >> 12;
+        self->posY.i.hi += (rsin(angle) * 36) >> 12;
+        ent = self + 1;
+        CreateEntityFromEntity(E_ID(UNK_1B), self, ent);
+        ent->params = 1;
+        ent->rotate = self->rotate;
+        ent->ext.granfaloonLaser.parent = self;
+        angle = self->rotate + 0x400;
+        self->posX.i.hi += (rcos(angle) * 40) >> 12;
+        self->posY.i.hi += (rsin(angle) * 40) >> 12;
+        self->ext.granfaloonLaser.length = FIX(0x4C);
+        self->animCurFrame = 0x66;
+        prim = self->ext.granfaloonLaser.prim;
+        prim->drawMode = DRAW_UNK02;
+        D_us_80180CDC = 1;
+        PlaySfxPositional(SFX_GRANFALOON_LASER_ATTACK);
+        self->step++;
+    case 3:
+        ent = self->ext.granfaloonLaser.parent;
+        self->ext.granfaloonLaser.length += FIX(8);
+        self->rotate = ent->rotate;
+        angle = self->rotate + 0x400;
+        self->posX.i.hi = ent->posX.i.hi;
+        self->posY.i.hi = ent->posY.i.hi;
+        self->posX.val +=
+            (self->ext.granfaloonLaser.length >> 12) * rcos(angle);
+        self->posY.val +=
+            (self->ext.granfaloonLaser.length >> 12) * rsin(angle);
+        if (!self->ext.granfaloonLaser.hasHit) {
+            offX = self->posX.i.hi;
+            offY = self->posY.i.hi;
+            g_api.CheckCollision(offX, offY, &collider, 0);
+            if (collider.effects & EFFECT_SOLID) {
+                self->ext.granfaloonLaser.hasHit = 1;
+                self->ext.granfaloonLaser.hitX = offX + g_Tilemap.scrollX.i.hi;
+                self->ext.granfaloonLaser.hitY = offY + g_Tilemap.scrollY.i.hi;
+                if (self->ext.granfaloonLaser.hitY > 0x1B0) {
+                    self->ext.granfaloonLaser.hitY = 0x1B0;
+                }
+            }
+        } else {
+            ent = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (ent != NULL) {
+                CreateEntityFromCurrentEntity(E_ID(UNK_22), ent);
+                ent->posX.i.hi =
+                    self->ext.granfaloonLaser.hitX - g_Tilemap.scrollX.i.hi;
+                ent->posY.i.hi =
+                    self->ext.granfaloonLaser.hitY - g_Tilemap.scrollY.i.hi;
+                ent->posX.i.hi += Random() & 0xF;
+                ent->posY.i.hi += Random() & 0xF;
+                ent->zPriority = 0x70;
+                ent->params = 2;
+            }
+        }
+        offX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
+        offY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
+        if (offX < -0x20 || offY < -0x20 || offX > 0x220 || offY > 0x220) {
+            self->step++;
+        }
+        angle = self->rotate + 0x400;
+        offX = -((rsin(angle) * 12) >> 12);
+        offY = (rcos(angle) * 12) >> 12;
+        prim = self->ext.granfaloonLaser.prim;
+        prim->x0 = self->posX.i.hi + offX;
+        prim->x1 = self->posX.i.hi - offX;
+        prim->y0 = self->posY.i.hi + offY;
+        prim->y1 = self->posY.i.hi - offY;
+        ent = self + 1;
+        prim->x2 = ent->posX.i.hi + offX;
+        prim->x3 = ent->posX.i.hi - offX;
+        prim->y2 = ent->posY.i.hi + offY;
+        prim->y3 = ent->posY.i.hi - offY;
+        break;
+    case 4:
+        self->drawFlags |= ENTITY_SCALEX;
+        self->scaleX = 0x100;
+        self->step++;
+    case 5:
+        ent = self->ext.granfaloonLaser.parent;
+        self->rotate = ent->rotate;
+        angle = self->rotate + 0x400;
+        self->posX.i.hi = ent->posX.i.hi;
+        self->posY.i.hi = ent->posY.i.hi;
+        self->posX.val +=
+            (self->ext.granfaloonLaser.length >> 12) * rcos(angle);
+        self->posY.val +=
+            (self->ext.granfaloonLaser.length >> 12) * rsin(angle);
+        self->scaleX -= 4;
+        if (!self->scaleX) {
+            D_us_80180CDC = 0;
+            DestroyEntity(self);
+            return;
+        }
+        angle = self->rotate + 0x400;
+        offX = -((rsin(angle) * 12) >> 12);
+        offY = (rcos(angle) * 12) >> 12;
+        offX = (offX * self->scaleX) >> 8;
+        offY = (offY * self->scaleX) >> 8;
+        prim = self->ext.granfaloonLaser.prim;
+        prim->x0 = self->posX.i.hi + offX;
+        prim->x1 = self->posX.i.hi - offX;
+        prim->y0 = self->posY.i.hi + offY;
+        prim->y1 = self->posY.i.hi - offY;
+        ent = self + 1;
+        prim->x2 = ent->posX.i.hi + offX;
+        prim->x3 = ent->posX.i.hi - offX;
+        prim->y2 = ent->posY.i.hi + offY;
+        prim->y3 = ent->posY.i.hi - offY;
+        break;
+    case 0x10:
+        ent = self->ext.granfaloonLaser.parent;
+        ent--;
+        self->rotate = ent->rotate;
+        angle = self->rotate + 0x400;
+        self->posX.i.hi = ent->posX.i.hi;
+        self->posY.i.hi = ent->posY.i.hi;
+        self->posX.i.hi += (rcos(angle) * 36) >> 12;
+        self->posY.i.hi += (rsin(angle) * 36) >> 12;
+        ent = self->ext.granfaloonLaser.parent;
+        self->drawFlags = ent->drawFlags;
+        self->scaleX = ent->scaleX;
+        if (ent->entityId != E_ID(UNK_1B)) {
+            DestroyEntity(self);
+            return;
+        }
+        self->ext.granfaloonLaser.timer++;
+        if (self->scaleX) {
+            break;
+        }
+        if (self->ext.granfaloonLaser.timer & 3) {
+            break;
+        }
+        ent = AllocEntity(&g_Entities[128], &g_Entities[192]);
+        if (ent != NULL) {
+            CreateEntityFromEntity(E_ID(UNK_23), self, ent);
+            ent->rotate = self->rotate + 0x400;
+        }
+        break;
+    case 0x20:
+        ent = self->ext.granfaloonLaser.parent;
+        self->rotate = ent->rotate;
+        angle = self->rotate + 0x400;
+        self->posX.i.hi = ent->posX.i.hi;
+        self->posY.i.hi = ent->posY.i.hi;
+        self->posX.i.hi += (rcos(angle) * 24) >> 12;
+        self->posY.i.hi += (rsin(angle) * 24) >> 12;
+        switch (self->step_s) {
+        case 0:
+            if (!AnimateEntity(D_us_80180E20, self)) {
+                self->ext.granfaloonLaser.timer = 0x40;
+                self->drawFlags |= ENTITY_SCALEX;
+                self->scaleX = 0x100;
+                self->step_s++;
+            }
+            break;
+        case 1:
+            if (g_Timer & 1) {
+                self->animCurFrame = 0;
+            } else {
+                self->animCurFrame = 0x60;
+            }
+            self->scaleX = (self->ext.granfaloonLaser.timer & 7) * 3 + 0x100;
+            if (!--self->ext.granfaloonLaser.timer) {
+                DestroyEntity(self);
+            }
+            break;
+        }
+        break;
+    }
+}
 
 void EntityZombieFalling(Entity* self) {
     Entity* newEntity;
