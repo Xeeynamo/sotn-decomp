@@ -270,7 +270,7 @@ void func_us_801D068C(Entity* self) {
     s32 sp64;
     s32 sp60;
     Collider sp3C;
-    Point16 sp38;
+    u16 sp38[2];
     s32 primIndex;
     Entity* other7;
     Entity* other6;
@@ -350,14 +350,14 @@ void func_us_801D068C(Entity* self) {
         }
         switch (self->step) {                          /* switch 2; irregular */
         case 17:                                    /* switch 2 */
-            sp38.x = 0xA;
-            sp38.y = 0x10;
-            sp68 = func_pspeu_0923E6D0(other7, var_s4, other6, var_s3, &sp38);
+            sp38[0] = 0xA;
+            sp38[1] = 0x10;
+            sp68 = func_pspeu_0923E6D0(other7, var_s4, other6, var_s3, sp38);
             break;
         case 16:                                    /* switch 2 */
-            sp38.x = 8;
-            sp38.y = 8;
-            sp68 = func_pspeu_0923E6D0(other7, var_s4, other6, var_s3, &sp38);
+            sp38[0] = 8;
+            sp38[1] = 8;
+            sp68 = func_pspeu_0923E6D0(other7, var_s4, other6, var_s3, sp38);
             break;
         case 18:                                    /* switch 2 */
             sp68 = func_pspeu_0923EBE8(other7, var_s4, other6, var_s3);
@@ -492,7 +492,7 @@ void func_us_801D0CFC(Entity* self) {
     s32 sp64;
     s32 sp60;
     Collider sp3C;
-    Point16 sp38;
+    u16 sp38[2];
     s32 primIndex;
     Entity* other7;
     s16* var_s6;
@@ -561,14 +561,14 @@ void func_us_801D0CFC(Entity* self) {
         }
         switch (self->step) {                          /* switch 2; irregular */
         case 17:                                    /* switch 2 */
-            sp38.x = 0xA;
-            sp38.y = 0x40;
-            sp68 = func_pspeu_0923E920(other3, var_s4, other7, var_s6, &sp38);
+            sp38[0] = 0xA;
+            sp38[1] = 0x40;
+            sp68 = func_pspeu_0923E920(other3, var_s4, other7, var_s6, sp38);
             break;
         case 16:                                    /* switch 2 */
-            sp38.x = 8;
-            sp38.y = 32;
-            sp68 = func_pspeu_0923E920(other3, var_s4, other7, var_s6, &sp38);
+            sp38[0] = 8;
+            sp38[1] = 32;
+            sp68 = func_pspeu_0923E920(other3, var_s4, other7, var_s6, sp38);
             break;
         case 18:                                    /* switch 2 */
             sp68 = func_pspeu_0923EE78(other3, var_s4, other7, var_s6);
