@@ -17,8 +17,9 @@ static s16 D_us_80180D34[9][5] = {
     {83, 68, 84, 85, 0},  {76, 68, 77, 78, 0},  {61, 70, 63, 64, 62},
 };
 static s16 pad_D34 = 0;
-static s16 D_us_80180D90[] = {
-    0, -26, 0, 26, -24, 0, 24, 0, -16, -18, 16, -18, 16, 18, -16, 16,
+static s16 D_us_80180D90[][2] = {
+    {0, -26},   {0, 26},   {-24, 0}, {24, 0},
+    {-16, -18}, {16, -18}, {16, 18}, {-16, 16},
 };
 static s16 D_us_80180DA0[] = {
     0, -40, 0, 40, -40, 0, 40, 0, -30, -30, 30, -30, 30, 30, -30, 30,
@@ -751,7 +752,122 @@ void func_us_801A2D90(Entity* self) {
     }
 }
 
-INCLUDE_ASM("boss/bo1/nonmatchings/e_granfaloon", func_us_801A2F2C);
+void func_us_801A2F2C(Entity* self) {
+    typedef enum Step {
+        INIT,
+        UNK_1,
+        UNK_2,
+        DEAD,
+    };
+    Entity* parent;
+    Entity* player;
+    s16 angle;
+    s32 index;
+
+    if ((D_us_80180CE4 & 1) && self->step < 2) {
+        SetStep(UNK_2);
+    }
+    switch (self->step) {
+    case INIT:
+        InitializeEntity(D_us_80180B1C);
+        self->drawFlags = ENTITY_OPACITY;
+        self->opacity = D_us_80180DD0[self->params];
+        self->rotate = 0;
+        self->drawFlags |= ENTITY_ROTATE;
+        parent = self + 1;
+        CreateEntityFromEntity(E_ID(UNK_1A), self, parent);
+        parent->zPriority = self->zPriority + 1;
+        parent->params = self->params;
+    case UNK_1:
+        index = self->params;
+        parent = self - 10 - index * 5;
+        self->posX.i.hi = parent->posX.i.hi + D_us_80180D90[index][0];
+        self->posY.i.hi = parent->posY.i.hi + D_us_80180D90[index][1];
+        self->ext.et_801A2CC4.unk84 =
+            parent->ext.et_801A2CC4.unk84 & (1 << index);
+        AnimateEntity(D_us_80180DF4, self);
+        self->animCurFrame += index * 7;
+        if (D_us_80180CD8 & (1 << index)) {
+            if (!self->ext.et_801A2CC4.unk84) {
+                self->drawFlags |= ENTITY_ROTATE;
+                angle = (rcos(self->ext.et_801A2CC4.unk82) * 128) >> 12;
+                func_801CDC80(&self->rotate, angle, 0x10);
+                self->ext.et_801A2CC4.unk82 += 0x30;
+            } else {
+                player = &PLAYER;
+                angle = GetAngleBetweenEntities(parent, player);
+                angle -= D_us_80180D00[index];
+                if (angle > 0x80) {
+                    angle = 0x80;
+                }
+                if (angle < -0x80) {
+                    angle = -0x80;
+                }
+                func_801CDC80(&self->rotate, angle, 2);
+            }
+        }
+        break;
+    case UNK_2:
+        index = self->params;
+        parent = self - 10 - index * 5;
+        self->posX.i.hi = parent->posX.i.hi + D_us_80180D90[index][0];
+        self->posY.i.hi = parent->posY.i.hi + D_us_80180D90[index][1];
+        angle = (rcos(self->ext.et_801A2CC4.unk82) * 160) >> 12;
+        func_801CDC80(&self->rotate, angle, 0x40);
+        self->ext.et_801A2CC4.unk82 += 0x70;
+        switch (self->step_s) {
+        case 0:
+            self->hitboxState = 0;
+            self->ext.et_801A2CC4.unk80 = self->params;
+            self->step_s++;
+            break;
+        case 1:
+            self->ext.et_801A2CC4.unk80++;
+            if (!(self->ext.et_801A2CC4.unk80 & 0xF)) {
+                PlaySfxPositional(SFX_B07_STOMP);
+                parent = AllocEntity(&g_Entities[64], &g_Entities[256]);
+                if (parent != NULL) {
+                    CreateEntityFromEntity(E_ID(UNK_22), self, parent);
+                    parent->params = 4;
+                    parent->rotate = D_us_80180D00[self->params];
+                    parent->zPriority = 0x70;
+                }
+            }
+            if (D_us_80180CE4 & 8) {
+                PlaySfxPositional(SFX_FIREBALL_SHOT_C);
+                self->step_s++;
+            }
+            break;
+        case 2:
+            self->animCurFrame = 0;
+            self->ext.et_801A2CC4.unk80++;
+            index = self->params;
+            parent = self - 10 - index * 5;
+            self->posX.i.hi = parent->posX.i.hi;
+            self->posY.i.hi = parent->posY.i.hi;
+            angle = D_us_80180D00[index] + parent->rotate;
+            self->posX.i.hi += (rcos(angle) * 24) >> 12;
+            self->posY.i.hi += (rsin(angle) * 24) >> 12;
+            if (!(self->ext.et_801A2CC4.unk80 & 3)) {
+                parent = AllocEntity(&g_Entities[64], &g_Entities[256]);
+                if (parent != NULL) {
+                    CreateEntityFromEntity(E_ID(UNK_22), self, parent);
+                    parent->params = 5;
+                    parent->rotate = angle + 0x200;
+                    parent->zPriority = 0x70;
+                }
+            }
+            if (D_us_80180CE4 & 4) {
+                self->step_s++;
+            }
+            break;
+        case DEAD:
+            DestroyEntity(self);
+            break;
+        }
+        break;
+    }
+}
 
 void func_us_801A3480(Entity* self) {
     Entity* parent;
