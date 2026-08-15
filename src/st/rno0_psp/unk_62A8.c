@@ -119,7 +119,33 @@ Primitive* func_pspeu_0923DF88(Pos* ent1, Pos* ent2, s16* arg2, Primitive* prim)
     return prim;
 }
 
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_62A8", func_pspeu_0923E1A0);
+Primitive* func_pspeu_0923E1A0(Pos* ent1, Pos* ent2, s16* arg2, Primitive* prim) {
+    Point16 sp2C;
+    Point16 sp28;
+    Pos sp10;
+    s32 angle;
+
+    angle = *arg2++;
+    func_pspeu_0923D928(ent1, 18, angle, &sp10);
+    sp2C.x = 5;
+    sp2C.y = 5;
+    sp28.x = 5;
+    sp28.y = 5;
+    func_us_801D2424(ent1, angle, &sp2C, &sp10, angle, &sp28, prim);
+    prim->drawMode = 2;
+    prim = prim->next;
+    func_pspeu_0923D928(&sp10, -4, angle, &sp10);
+    angle = *arg2++;
+    func_pspeu_0923D928(&sp10, 17, angle, ent2);
+    sp2C.x = 7;
+    sp2C.y = 9;
+    sp28.x = 6;
+    sp28.y = 10;
+    func_us_801D2424(&sp10, angle, &sp2C, ent2, angle, &sp28, prim);
+    prim->drawMode = 2;
+    prim = prim->next;
+    return prim;
+}
 
 INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_62A8", func_pspeu_0923E300);
 
