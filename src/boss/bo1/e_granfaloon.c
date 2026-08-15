@@ -751,10 +751,10 @@ void func_us_801A2D90(Entity* self) {
     }
 }
 
-INCLUDE_ASM("boss/bo1/nonmatchings/unk_21C80", func_us_801A2F2C);
+INCLUDE_ASM("boss/bo1/nonmatchings/e_granfaloon", func_us_801A2F2C);
 
 #if defined(VERSION_US) && !defined(VERSION_PC)
-INCLUDE_ASM("boss/bo1/nonmatchings/unk_21C80", func_us_801A3480);
+INCLUDE_ASM("boss/bo1/nonmatchings/e_granfaloon", func_us_801A3480);
 #else
 #define STUFF() /* TODO please inline this */                                  \
     self->rotate = angle - 0x400;                                              \
@@ -857,7 +857,7 @@ void func_us_801A3480(Entity* self) {
 }
 #endif
 
-INCLUDE_ASM("boss/bo1/nonmatchings/unk_21C80", func_us_801A38EC);
+INCLUDE_ASM("boss/bo1/nonmatchings/e_granfaloon", func_us_801A38EC);
 
 void func_us_801A4394(Entity* self) {
     Entity* newEntity;

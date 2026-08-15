@@ -909,7 +909,7 @@ SET(SOURCE_FILES_BOSS_BO1
     src/boss/bo1/st_common.c
     src/boss/bo1/st_update.c
     src/boss/bo1/unk_210A8.c
-    src/boss/bo1/unk_21C80.c
+    src/boss/bo1/e_granfaloon.c
     src/boss/bo1/unk_250BC_us.c
     src/boss/bo1/unk_2518C.c
 )
