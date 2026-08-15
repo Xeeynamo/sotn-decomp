@@ -42,10 +42,10 @@ static EInitUnk22 D_pspeu_092683B0[] = {
 };
 
 #ifdef VERSION_PSP
-extern s32 E_ID(UNK_22);
+extern s32 E_ID(EXPLOSION_FLAME);
 #endif
 
-void func_us_801A518C(Entity* self) {
+void EntityExplosionFlame(Entity* self) {
     s32 var_s3;
     EInitUnk22* initEntry;
     s16 angle;
@@ -56,7 +56,7 @@ void func_us_801A518C(Entity* self) {
         InitializeEntity(g_EInitParticle);
         var_s3 = self->params & 0xF;
         initEntry = &D_pspeu_092683B0[var_s3];
-        self->palette = initEntry->palette + 0x2E0;
+        self->palette = initEntry->palette + PAL_EXPLOSION_FLAME;
         self->blendMode = initEntry->blendMode;
         self->animSet = initEntry->animSet;
         self->unk5A = initEntry->unk5A;
@@ -173,7 +173,7 @@ void func_us_801A518C(Entity* self) {
         if (self->pose == 8 && !self->poseTimer) {
             newEntity = AllocEntity(&g_Entities[64], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_ID(UNK_22), self, newEntity);
+                CreateEntityFromEntity(E_ID(EXPLOSION_FLAME), self, newEntity);
                 newEntity->params = 6;
                 newEntity->scaleX = self->scaleX;
             }

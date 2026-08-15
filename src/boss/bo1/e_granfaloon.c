@@ -1,10 +1,18 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "bo1.h"
 
+enum {
+    BOSS_STATUS_DEFEATED = 0x01,
+    BOSS_UNK_2 = 0x02,
+    BOSS_STATUS_DEAD = 0x04,
+    BOSS_STATUS_DECAYING = 0x08,
+    BOSS_STATUS_SPAWNED = 0x10,
+};
+
 static s32 D_us_80180CD8 = 0;
 static s32 D_us_80180CDC = 0;
 static s32 D_us_80180CE0 = 0;
-static s32 D_us_80180CE4 = 0; // main boss status, 0x01:dead, 0x08:?
+static s32 boss_status = 0;
 static s16 D_us_80180CE8[] = {0, 18, 8, 0};
 static s16 sensors_unused_1[] = {0, 18, 0, 4};
 static s16 sensors_unused_2[] = {8, -4, -16, 0};
@@ -14,16 +22,12 @@ static s32 D_us_80180D14[] = {3, 6, 1, 7, 2, 4, 0, 5};
 static s16 D_us_80180D34[9][5] = {
     {65, 69, 67, 68, 66}, {79, 69, 81, 82, 80}, {72, 69, 74, 75, 73},
     {86, 69, 88, 89, 87}, {69, 68, 70, 71, 0},  {90, 68, 91, 92, 0},
-    {83, 68, 84, 85, 0},  {76, 68, 77, 78, 0},  {61, 70, 63, 64, 62},
-};
+    {83, 68, 84, 85, 0},  {76, 68, 77, 78, 0},  {61, 70, 63, 64, 62}};
 static s16 pad_D34 = 0;
-static s16 D_us_80180D90[][2] = {
-    {0, -26},   {0, 26},   {-24, 0}, {24, 0},
-    {-16, -18}, {16, -18}, {16, 18}, {-16, 16},
-};
+static s16 D_us_80180D90[][2] = {{0, -26},   {0, 26},   {-24, 0}, {24, 0},
+                                 {-16, -18}, {16, -18}, {16, 18}, {-16, 16}};
 static s16 D_us_80180DA0[] = {
-    0, -40, 0, 40, -40, 0, 40, 0, -30, -30, 30, -30, 30, 30, -30, 30,
-};
+    0, -40, 0, 40, -40, 0, 40, 0, -30, -30, 30, -30, 30, 30, -30, 30};
 static s16 D_us_80180DD0[] = {112, 96, 96, 96, 136, 136, 112, 112};
 static AnimateEntityFrame D_us_80180DE0[] = {
     POSE(25, 0x69, 0), POSE(12, 0x6A, 0), POSE(13, 0x6B, 0),
@@ -35,84 +39,39 @@ static AnimateEntityFrame D_us_80180DF4[] = {
     POSE(6, 0x07, 0), POSE(6, 0x08, 0), POSE(6, 0x07, 0), POSE(6, 0x06, 0),
     POSE_LOOP(0)};
 static AnimateEntityFrame D_us_80180E10[] = {
-    POSE(4, 0x3A, 0),
-    POSE(8, 0x3B, 0),
-    POSE(64, 0x3C, 0),
-    POSE_END,
-};
+    POSE(4, 0x3A, 0), POSE(8, 0x3B, 0), POSE(64, 0x3C, 0), POSE_END};
 static AnimateEntityFrame D_us_80180E18[] = {
-    POSE(8, 0x3C, 0),
-    POSE(8, 0x3B, 0),
-    POSE(4, 0x3A, 0),
-    POSE_END,
-};
+    POSE(8, 0x3C, 0), POSE(8, 0x3B, 0), POSE(4, 0x3A, 0), POSE_END};
 static AnimateEntityFrame D_us_80180E20[] = {
     POSE(4, 0x5D, 0), POSE(4, 0x5E, 0), POSE(4, 0x5F, 0), POSE(4, 0x60, 0),
     POSE_END};
 static AnimateEntityFrame D_us_80180E2C[] = {
     POSE(4, 0x61, 0), POSE(4, 0x62, 0), POSE(4, 0x63, 0), POSE_END};
 
-#ifdef VERSION_PSP
-// PSP keeps these format strings in .data, between the pose and hitbox tables;
-// naming them pins that order, which anonymous literals would not.
-static char fmt_y[] = "y %x\n";
-static char fmt_charal[] = "charal %x\n";
-#define FMT_Y fmt_y
-#define FMT_CHARAL fmt_charal
-#else
-#define FMT_Y "y %x\n"
-#define FMT_CHARAL "charal %x\n"
-#endif
+static s8 D_us_80180E34[41][4];
+static u8 hitbox_lookup[128];
 
-// hitbox table, indexed through hitbox_lookup[animCurFrame]
-// {hitboxOffX, hitboxOffY, hitboxWidth, hitboxHeight}
-static s8 D_us_80180E34[][4] = {
-    {0, 0, 0, 0},       {0, 0, 24, 24},     {1, 29, 0, 0},
-    {1, -29, 0, 0},     {24, 1, 0, 0},      {-24, 1, 0, 0},
-    {20, 22, 0, 0},     {-20, 22, 0, 0},    {-20, -22, 0, 0},
-    {20, -21, 0, 0},    {0, 12, 32, 44},    {12, 12, 28, 44},
-    {-24, 8, 16, 40},   {1, -78, 31, 38},   {20, -80, 20, 32},
-    {-16, -68, 24, 36}, {-53, -53, 30, 34}, {-56, -70, 28, 20},
-    {-56, -44, 40, 20}, {-76, 0, 28, 32},   {-76, 16, 28, 24},
-    {-76, -16, 28, 24}, {-51, 46, 25, 34},  {-48, 72, 24, 24},
-    {-60, 40, 36, 24},  {0, 76, 40, 28},    {-16, 72, 32, 32},
-    {24, 80, 24, 24},   {47, 48, 28, 36},   {80, 0, 24, 32},
-    {51, -53, 24, 32},  {0, 2, 8, 16},      {0, 1, 5, 17},
-    {1, 0, 7, 16},      {0, 2, 4, 16},      {-4, 1, 8, 16},
-    {-3, 2, 6, 16},     {1, 0, 5, 18},      {-5, 2, 8, 16},
-    {0, 4, 8, 12},      {-2, -2, 16, 8}};
-
-static u8 hitbox_lookup[] = {
-    0,  1,  2,  2,  2,  2,  2,  2,  2,  3, 3,  3,  3,  3,  3,  3,  4,  4,  4,
-    4,  4,  4,  4,  5,  5,  5,  5,  5,  5, 5,  6,  6,  6,  6,  6,  6,  6,  7,
-    7,  7,  7,  7,  7,  7,  8,  8,  8,  8, 8,  8,  8,  9,  9,  9,  9,  9,  9,
-    9,  0,  0,  0,  10, 0,  11, 12, 13, 0, 14, 15, 16, 17, 18, 19, 0,  20, 21,
-    22, 23, 24, 25, 0,  26, 27, 28, 0,  0, 29, 0,  0,  0,  30, 0,  0,  0,  0,
-    0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 31, 32, 33, 34, 35, 36, 37, 38, 0,
-    0,  39, 0,  39, 0,  40, 0,  0,  0,  0, 0,  0,  0,  0,
-};
-
-extern EInit D_us_80180B1C;
-extern EInit D_us_80180B28;
+extern EInit g_EInitTentacle;
+extern EInit g_EInitHomingLaser;
 extern EInit D_us_80180B34;
 extern EInit g_EInitGrafaloonZombie;
-extern EInit D_us_80180B4C;
-extern s32 D_us_80180CD4; // is Granfaloon spawned yet?
-extern EInit g_EInitGranfaloon1;
-extern EInit g_EInitGranfaloon2;
+extern EInit g_EInitShellDeadPiece;
+extern s32 is_boss_playing; // is Granfaloon spawned yet?
+extern EInit g_EInitGranfaloonCore;
+extern EInit g_EInitGranfaloonShell;
 
 #ifdef VERSION_PSP
-extern s32 E_ID(UNK_19);
-extern s32 E_ID(UNK_1A);
-extern s32 E_ID(UNK_1B);
-extern s32 E_ID(UNK_1D);
+extern s32 E_ID(GRANFALOON_TENTACLE);
+extern s32 E_ID(TENTACLE_HEAD);
+extern s32 E_ID(TENTACLE_LASER);
+extern s32 E_ID(BODY_PART_DEAD_PIECE);
 extern s32 E_ID(UNK_1E);
 extern s32 E_ID(UNK_1F);
 extern s32 E_ID(ZOMBIE_FALLING);
 extern s32 E_ID(ZOMBIE_ENEMY);
-extern s32 E_ID(UNK_22);
-extern s32 E_ID(UNK_1C);
-extern s32 E_ID(LASER);
+extern s32 E_ID(EXPLOSION_FLAME);
+extern s32 E_ID(BODY_PART_SHELL);
+extern s32 E_ID(HOMING_LASER);
 extern s32 E_ID(LIFE_UPSPAWN);
 extern s32 E_ID(UNK_23);
 #endif
@@ -154,24 +113,24 @@ void EntityGranfaloon(Entity* self) {
 
     switch (self->step) {
     case INIT:
-        InitializeEntity(g_EInitGranfaloon1);
+        InitializeEntity(g_EInitGranfaloonCore);
         self->zPriority = 0x40;
         self->animCurFrame = 1;
         self->hitboxState = 0;
-        D_us_80180CE4 = 0;
+        boss_status = 0;
         D_us_80180CD8 = 0;
         D_us_80180CE0 = 0;
         self->posX.i.hi = 0x100 - g_Tilemap.scrollX.i.hi;
         self->posY.i.hi = 0x240 - g_Tilemap.scrollY.i.hi;
         ent = self + 10;
         for (i = 0; i < 8; i++, ent += 5) {
-            CreateEntityFromEntity(E_ID(UNK_19), self, ent);
+            CreateEntityFromEntity(E_ID(GRANFALOON_TENTACLE), self, ent);
             ent->zPriority = self->zPriority + 1;
             ent->params = i;
         }
         ent = self + 1;
         for (i = 0; i < 9; i++, ent++) {
-            CreateEntityFromEntity(E_ID(UNK_1C), self, ent);
+            CreateEntityFromEntity(E_ID(BODY_PART_SHELL), self, ent);
             ent->ext.granfaloon.parent = self;
             ent->params = i;
         }
@@ -188,8 +147,8 @@ void EntityGranfaloon(Entity* self) {
         case 0:
             g_api.TimeAttackController(
                 TIMEATTACK_EVENT_GRANFALOON_DEFEAT, TIMEATTACK_SET_VISITED);
-            D_us_80180CD4 = 1;
-            D_us_80180CE4 |= 0x10;
+            is_boss_playing = 1;
+            boss_status |= BOSS_STATUS_SPAWNED;
             stopMusicFlag = 0;
             currentMusicId = MU_DEATH_BALLAD;
             g_api.PlaySfx(currentMusicId);
@@ -203,7 +162,7 @@ void EntityGranfaloon(Entity* self) {
                 g_api.func_80102CD8(1);
             }
             y = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
-            FntPrint(FMT_Y, y);
+            FntPrint("y %x\n", y);
             if (y < 0x100) {
                 SetStep(FLOAT_IDLE);
             }
@@ -352,7 +311,7 @@ void EntityGranfaloon(Entity* self) {
             for (i = 0; i < 4; i++) {
                 ent = AllocEntity(&g_Entities[144], &g_Entities[192]);
                 if (ent != NULL) {
-                    CreateEntityFromEntity(E_ID(LASER), self, ent);
+                    CreateEntityFromEntity(E_ID(HOMING_LASER), self, ent);
                     ent->rotate = angle;
                 }
                 angle += 0x200;
@@ -387,8 +346,9 @@ void EntityGranfaloon(Entity* self) {
         self->hitboxState = 0;
         switch (self->step_s) {
         case 0:
-            g_api.TimeAttackController(3, 1);
-            D_us_80180CE4 |= 1;
+            g_api.TimeAttackController(
+                TIMEATTACK_EVENT_GRANFALOON_DEFEAT, TIMEATTACK_SET_RECORD);
+            boss_status |= BOSS_STATUS_DEFEATED;
             g_api.PlaySfx(SET_UNK_92);
             currentMusicId = MU_RAINBOW_CEMETERY;
             self->velocityY = FIX(-0.75);
@@ -398,7 +358,7 @@ void EntityGranfaloon(Entity* self) {
             MoveEntity();
             self->velocityY += 0x400;
             if (self->velocityY > 0) {
-                D_us_80180CE4 |= 8;
+                boss_status |= BOSS_STATUS_DECAYING;
                 self->drawFlags = ENTITY_ROTATE;
                 self->ext.granfaloon.timer = 0x80;
                 self->drawFlags |= ENTITY_OPACITY;
@@ -417,7 +377,7 @@ void EntityGranfaloon(Entity* self) {
                 PlaySfxPositional(SFX_FIREBALL_SHOT_B);
             }
             if (!--self->ext.granfaloon.timer) {
-                D_us_80180CE4 |= 4;
+                boss_status |= BOSS_STATUS_DEAD;
                 self->step_s++;
             }
             break;
@@ -436,7 +396,7 @@ void EntityGranfaloon(Entity* self) {
             for (i = 0; i < 2; i++) {
                 ent = AllocEntity(&g_Entities[64], &g_Entities[256]);
                 if (ent != NULL) {
-                    CreateEntityFromEntity(E_ID(UNK_22), self, ent);
+                    CreateEntityFromEntity(E_ID(EXPLOSION_FLAME), self, ent);
                     ent->params = 6;
                     ent->scaleX = self->scaleX;
                     ent->zPriority = self->zPriority;
@@ -458,7 +418,7 @@ void EntityGranfaloon(Entity* self) {
                 ent->posX.i.hi = 0x100 - g_Tilemap.scrollX.i.hi;
                 ent->posY.i.hi = 0x150 - g_Tilemap.scrollY.i.hi;
                 ent->params = 1;
-                D_us_80180CD4 = 0;
+                is_boss_playing = 0;
                 stopMusicFlag = 1;
                 currentMusicId = MU_RAINBOW_CEMETERY;
                 self->step_s++;
@@ -476,7 +436,7 @@ void EntityGranfaloon(Entity* self) {
         }
         break;
     case DEBUG:
-        FntPrint(FMT_CHARAL, self->animCurFrame);
+        FntPrint("charal %x\n", self->animCurFrame);
         if (g_pads[1].pressed & PAD_SQUARE) {
             if (self->params) {
                 break;
@@ -537,7 +497,31 @@ void EntityGranfaloon(Entity* self) {
     }
 }
 
-void func_us_801A2774(Entity* self) {
+static s8 D_us_80180E34[][4] = {
+    {0, 0, 0, 0},       {0, 0, 24, 24},     {1, 29, 0, 0},
+    {1, -29, 0, 0},     {24, 1, 0, 0},      {-24, 1, 0, 0},
+    {20, 22, 0, 0},     {-20, 22, 0, 0},    {-20, -22, 0, 0},
+    {20, -21, 0, 0},    {0, 12, 32, 44},    {12, 12, 28, 44},
+    {-24, 8, 16, 40},   {1, -78, 31, 38},   {20, -80, 20, 32},
+    {-16, -68, 24, 36}, {-53, -53, 30, 34}, {-56, -70, 28, 20},
+    {-56, -44, 40, 20}, {-76, 0, 28, 32},   {-76, 16, 28, 24},
+    {-76, -16, 28, 24}, {-51, 46, 25, 34},  {-48, 72, 24, 24},
+    {-60, 40, 36, 24},  {0, 76, 40, 28},    {-16, 72, 32, 32},
+    {24, 80, 24, 24},   {47, 48, 28, 36},   {80, 0, 24, 32},
+    {51, -53, 24, 32},  {0, 2, 8, 16},      {0, 1, 5, 17},
+    {1, 0, 7, 16},      {0, 2, 4, 16},      {-4, 1, 8, 16},
+    {-3, 2, 6, 16},     {1, 0, 5, 18},      {-5, 2, 8, 16},
+    {0, 4, 8, 12},      {-2, -2, 16, 8}};
+static u8 hitbox_lookup[] = {
+    0,  1,  2,  2,  2,  2,  2,  2,  2,  3, 3,  3,  3,  3,  3,  3,  4,  4,  4,
+    4,  4,  4,  4,  5,  5,  5,  5,  5,  5, 5,  6,  6,  6,  6,  6,  6,  6,  7,
+    7,  7,  7,  7,  7,  7,  8,  8,  8,  8, 8,  8,  8,  9,  9,  9,  9,  9,  9,
+    9,  0,  0,  0,  10, 0,  11, 12, 13, 0, 14, 15, 16, 17, 18, 19, 0,  20, 21,
+    22, 23, 24, 25, 0,  26, 27, 28, 0,  0, 29, 0,  0,  0,  30, 0,  0,  0,  0,
+    0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 31, 32, 33, 34, 35, 36, 37, 38, 0,
+    0,  39, 0,  39, 0,  40, 0,  0,  0,  0, 0,  0,  0,  0,
+};
+void EntityBodyPartShell(Entity* self) {
     typedef enum Step {
         INIT,
         WAIT_SPAWN,
@@ -553,7 +537,7 @@ void func_us_801A2774(Entity* self) {
     s16 angle;
     s32 hitboxIndex;
 
-    if (D_us_80180CE4 & 1) {
+    if (boss_status & BOSS_STATUS_DEFEATED) {
         self->flags |= FLAG_DEAD;
     }
     if ((self->flags & FLAG_DEAD) && self->step < 3) {
@@ -561,7 +545,7 @@ void func_us_801A2774(Entity* self) {
     }
     switch (self->step) {
     case INIT:
-        InitializeEntity(g_EInitGranfaloon2);
+        InitializeEntity(g_EInitGranfaloonShell);
         row = D_us_80180D34[self->params];
         self->animCurFrame = row[0];
         self->zPriority = row[1];
@@ -582,7 +566,7 @@ void func_us_801A2774(Entity* self) {
         }
     case WAIT_SPAWN:
         self->hitboxState = 0;
-        if (D_us_80180CD4) {
+        if (is_boss_playing) {
             self->hitboxState = 3;
             self->step++;
         }
@@ -628,7 +612,8 @@ void func_us_801A2774(Entity* self) {
             for (i = 0; i < 2; i++) {
                 newEntity = AllocEntity(&g_Entities[192], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(E_ID(UNK_1D), self, newEntity);
+                    CreateEntityFromEntity(
+                        E_ID(BODY_PART_DEAD_PIECE), self, newEntity);
                     newEntity->params = self->params + (i << 8);
                     newEntity->zPriority = 0x48;
                 }
@@ -659,14 +644,14 @@ void func_us_801A2774(Entity* self) {
     }
 }
 
-void func_us_801A2BC4(Entity* self) {
+void EntityBodyPartDeadPiece(Entity* self) {
     s16 angle;
     s16* row;
     s32 index;
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180B4C);
+        InitializeEntity(g_EInitShellDeadPiece);
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
         index = self->params & 0xF;
         row = D_us_80180D34[index];
@@ -692,17 +677,16 @@ void func_us_801A2CC4(Entity* self) {
     s16* row;
     Entity* parent;
 
-    if (D_us_80180CE4 & 1) {
+    if (boss_status & BOSS_STATUS_DEFEATED) {
         DestroyEntity(self);
         return;
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180B4C);
+        InitializeEntity(g_EInitShellDeadPiece);
         self->zPriority = 0x3C;
         row = D_us_80180D34[self->params];
         self->animCurFrame = row[4];
-
     case 1:
         parent = self->ext.granfaloon.parent;
         self->posX.i.hi = parent->posX.i.hi;
@@ -721,7 +705,7 @@ void func_us_801A2D90(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180B4C);
+        InitializeEntity(g_EInitShellDeadPiece);
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
         var_s0 = Random() & 3;
         self->animCurFrame = var_s0 + 0x79;
@@ -738,7 +722,6 @@ void func_us_801A2D90(Entity* self) {
         self->posX.val += self->velocityX << 4;
         self->posY.val += self->velocityY << 4;
         self->ext.granfaloon.timer = (Random() & 0x1F) + 0x10;
-
     case 1:
         MoveEntity();
         self->rotate += 0x40;
@@ -753,11 +736,10 @@ void func_us_801A2D90(Entity* self) {
     }
 }
 
-void func_us_801A2F2C(Entity* self) {
+void EntityGranfaloonTentacle(Entity* self) {
     typedef enum Step {
         INIT,
         UNK_1,
-        UNK_2,
         DEAD,
     };
     Entity* parent;
@@ -765,18 +747,18 @@ void func_us_801A2F2C(Entity* self) {
     s16 angle;
     s32 index;
 
-    if ((D_us_80180CE4 & 1) && self->step < 2) {
-        SetStep(UNK_2);
+    if (boss_status & BOSS_STATUS_DEFEATED && self->step < DEAD) {
+        SetStep(DEAD);
     }
     switch (self->step) {
     case INIT:
-        InitializeEntity(D_us_80180B1C);
+        InitializeEntity(g_EInitTentacle);
         self->drawFlags = ENTITY_OPACITY;
         self->opacity = D_us_80180DD0[self->params];
         self->rotate = 0;
         self->drawFlags |= ENTITY_ROTATE;
         parent = self + 1;
-        CreateEntityFromEntity(E_ID(UNK_1A), self, parent);
+        CreateEntityFromEntity(E_ID(TENTACLE_HEAD), self, parent);
         parent->zPriority = self->zPriority + 1;
         parent->params = self->params;
     case UNK_1:
@@ -808,7 +790,7 @@ void func_us_801A2F2C(Entity* self) {
             }
         }
         break;
-    case UNK_2:
+    case DEAD:
         index = self->params;
         parent = self - 10 - index * 5;
         self->posX.i.hi = parent->posX.i.hi + D_us_80180D90[index][0];
@@ -828,13 +810,13 @@ void func_us_801A2F2C(Entity* self) {
                 PlaySfxPositional(SFX_B07_STOMP);
                 parent = AllocEntity(&g_Entities[64], &g_Entities[256]);
                 if (parent != NULL) {
-                    CreateEntityFromEntity(E_ID(UNK_22), self, parent);
+                    CreateEntityFromEntity(E_ID(EXPLOSION_FLAME), self, parent);
                     parent->params = 4;
                     parent->rotate = D_us_80180D00[self->params];
                     parent->zPriority = 0x70;
                 }
             }
-            if (D_us_80180CE4 & 8) {
+            if (boss_status & BOSS_STATUS_DECAYING) {
                 PlaySfxPositional(SFX_FIREBALL_SHOT_C);
                 self->step_s++;
             }
@@ -852,17 +834,17 @@ void func_us_801A2F2C(Entity* self) {
             if (!(self->ext.granfaloon.timer & 3)) {
                 parent = AllocEntity(&g_Entities[64], &g_Entities[256]);
                 if (parent != NULL) {
-                    CreateEntityFromEntity(E_ID(UNK_22), self, parent);
+                    CreateEntityFromEntity(E_ID(EXPLOSION_FLAME), self, parent);
                     parent->params = 5;
                     parent->rotate = angle + 0x200;
                     parent->zPriority = 0x70;
                 }
             }
-            if (D_us_80180CE4 & 4) {
+            if (boss_status & BOSS_STATUS_DEAD) {
                 self->step_s++;
             }
             break;
-        case DEAD:
+        case 3:
             DestroyEntity(self);
             break;
         }
@@ -870,23 +852,29 @@ void func_us_801A2F2C(Entity* self) {
     }
 }
 
-void func_us_801A3480(Entity* self) {
+void EntityTentacleHead(Entity* self) {
+    typedef enum Step {
+        INIT,
+        IDLE,
+        ATTACK,
+        DEAD,
+    };
     Entity* parent;
     s16 angle;
     s32 index;
 
-    if ((D_us_80180CE4 & 1) && self->step < 3) {
-        SetStep(3);
+    if (boss_status & BOSS_STATUS_DEFEATED && self->step < DEAD) {
+        SetStep(DEAD);
     }
     switch (self->step) {
-    case 0:
-        InitializeEntity(D_us_80180B1C);
+    case INIT:
+        InitializeEntity(g_EInitTentacle);
         self->animCurFrame = 0x3A;
         self->drawFlags = ENTITY_OPACITY;
         self->drawFlags |= ENTITY_ROTATE;
         self->opacity = D_us_80180DD0[self->params];
         self->rotate = D_us_80180D00[self->params] - 0x400;
-    case 1:
+    case IDLE:
         index = self->params;
         parent = self - 1;
         angle = D_us_80180D00[index] + parent->rotate;
@@ -896,10 +884,10 @@ void func_us_801A3480(Entity* self) {
         self->posX.i.hi += ((rcos(angle) * 40) >> 12);
         self->posY.i.hi += ((rsin(angle) * 40) >> 12);
         if (parent->ext.granfaloon.activeParts) {
-            SetStep(2);
+            SetStep(ATTACK);
         }
         break;
-    case 2:
+    case ATTACK:
         index = self->params;
         parent = self - 1;
         angle = D_us_80180D00[index] + parent->rotate;
@@ -916,7 +904,7 @@ void func_us_801A3480(Entity* self) {
             break;
         case 1:
             parent = self + 1;
-            CreateEntityFromEntity(E_ID(UNK_1B), self, parent);
+            CreateEntityFromEntity(E_ID(TENTACLE_LASER), self, parent);
             parent->rotate = self->rotate;
             parent->zPriority = self->zPriority + 1;
             parent->ext.granfaloon.parent = self;
@@ -925,18 +913,18 @@ void func_us_801A3480(Entity* self) {
 
         case 2:
             parent = self + 1;
-            if (parent->entityId != E_ID(UNK_1B)) {
+            if (parent->entityId != E_ID(TENTACLE_LASER)) {
                 self->step_s++;
             }
             break;
         case 3:
             if (!AnimateEntity(D_us_80180E18, self)) {
-                SetStep(1);
+                SetStep(IDLE);
             }
             break;
         }
         break;
-    case 3:
+    case DEAD:
         index = self->params;
         parent = self - 1;
         angle = D_us_80180D00[index] + parent->rotate;
@@ -956,12 +944,12 @@ void func_us_801A3480(Entity* self) {
             if (!(self->ext.granfaloon.timer & 7)) {
                 parent = AllocEntity(&g_Entities[64], &g_Entities[256]);
                 if (parent != NULL) {
-                    CreateEntityFromEntity(E_ID(UNK_22), self, parent);
+                    CreateEntityFromEntity(E_ID(EXPLOSION_FLAME), self, parent);
                     parent->params = 3;
                     parent->zPriority = 0x70;
                 }
             }
-            if (D_us_80180CE4 & 8) {
+            if (boss_status & BOSS_STATUS_DECAYING) {
                 self->step_s++;
             }
             break;
@@ -974,7 +962,7 @@ void func_us_801A3480(Entity* self) {
     }
 }
 
-void func_us_801A38EC(Entity* self) {
+void EntityTentacleLaser(Entity* self) {
     Entity* ent;
     Primitive* prim;
     s16 angle;
@@ -983,13 +971,13 @@ void func_us_801A38EC(Entity* self) {
     s32 primIndex;
     Collider collider;
 
-    if (D_us_80180CE4 & 1) {
+    if (boss_status & BOSS_STATUS_DEFEATED) {
         DestroyEntity(self);
         return;
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180B28);
+        InitializeEntity(g_EInitHomingLaser);
         self->drawFlags = ENTITY_ROTATE;
         self->hitboxWidth = self->hitboxHeight = 8;
         if (self->params) {
@@ -1006,7 +994,7 @@ void func_us_801A38EC(Entity* self) {
         ent = AllocEntity(&g_Entities[208], &g_Entities[256]);
         angle = self->rotate + 0x400;
         if (ent != NULL) {
-            CreateEntityFromEntity(E_ID(UNK_1B), self, ent);
+            CreateEntityFromEntity(E_ID(TENTACLE_LASER), self, ent);
             ent->params = 0x100;
             ent->rotate = self->rotate;
             ent->posX.i.hi += (rcos(angle) * 24) >> 12;
@@ -1026,7 +1014,7 @@ void func_us_801A38EC(Entity* self) {
         prim = &g_PrimBuf[primIndex];
         self->ext.granfaloon.prim = prim;
         prim->tpage = 0x12;
-        prim->clut = 0x200;
+        prim->clut = PAL_BASE;
         prim->u0 = prim->u2 = 0xB8;
         prim->u1 = prim->u3 = 0xD0;
         prim->v0 = prim->v1 = 0x42;
@@ -1054,7 +1042,7 @@ void func_us_801A38EC(Entity* self) {
         self->posX.i.hi += (rcos(angle) * 36) >> 12;
         self->posY.i.hi += (rsin(angle) * 36) >> 12;
         ent = self + 1;
-        CreateEntityFromEntity(E_ID(UNK_1B), self, ent);
+        CreateEntityFromEntity(E_ID(TENTACLE_LASER), self, ent);
         ent->params = 1;
         ent->rotate = self->rotate;
         ent->ext.granfaloon.parent = self;
@@ -1092,7 +1080,7 @@ void func_us_801A38EC(Entity* self) {
         } else {
             ent = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (ent != NULL) {
-                CreateEntityFromCurrentEntity(E_ID(UNK_22), ent);
+                CreateEntityFromCurrentEntity(E_ID(EXPLOSION_FLAME), ent);
                 ent->posX.i.hi =
                     self->ext.granfaloon.hitX - g_Tilemap.scrollX.i.hi;
                 ent->posY.i.hi =
@@ -1168,7 +1156,7 @@ void func_us_801A38EC(Entity* self) {
         ent = self->ext.granfaloon.parent;
         self->drawFlags = ent->drawFlags;
         self->scaleX = ent->scaleX;
-        if (ent->entityId != E_ID(UNK_1B)) {
+        if (ent->entityId != E_ID(TENTACLE_LASER)) {
             DestroyEntity(self);
             return;
         }
@@ -1224,7 +1212,7 @@ void EntityZombieFalling(Entity* self) {
     s32 frame;
     s32 posY;
 
-    if (D_us_80180CE4 & 1) {
+    if (boss_status & BOSS_STATUS_DEFEATED) {
         self->flags |= FLAG_DEAD;
     }
     switch (self->step) {
@@ -1262,7 +1250,7 @@ void EntityZombieFalling(Entity* self) {
         if (!(self->ext.granfaloon.timer & 7)) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_ID(UNK_22), self, newEntity);
+                CreateEntityFromEntity(E_ID(EXPLOSION_FLAME), self, newEntity);
                 newEntity->params = 0;
                 newEntity->zPriority = self->zPriority - 1;
                 newEntity->posY.i.hi += 0x14;
@@ -1287,7 +1275,7 @@ void EntityZombieEnemy(Entity* self) {
     s32 posX;
     s32 posY;
 
-    if (D_us_80180CE4 & 1) {
+    if (boss_status & BOSS_STATUS_DEFEATED) {
         self->flags |= FLAG_DEAD;
     }
     if ((self->flags & FLAG_DEAD) && self->step < 4) {
@@ -1343,7 +1331,8 @@ void EntityZombieEnemy(Entity* self) {
             if (!(self->ext.granfaloon.timer & 0xF)) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(E_ID(UNK_22), self, newEntity);
+                    CreateEntityFromEntity(
+                        E_ID(EXPLOSION_FLAME), self, newEntity);
                     newEntity->posY.i.hi += 0x18;
                     newEntity->zPriority = self->zPriority + 1;
                     newEntity->params = 1;
@@ -1359,7 +1348,8 @@ void EntityZombieEnemy(Entity* self) {
             if (!(self->ext.granfaloon.timer & 7)) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(E_ID(UNK_22), self, newEntity);
+                    CreateEntityFromEntity(
+                        E_ID(EXPLOSION_FLAME), self, newEntity);
                     newEntity->posY.i.hi += 0x18;
                     newEntity->zPriority = self->zPriority - 1;
                 }
@@ -1380,7 +1370,7 @@ void func_us_801A493C(Entity* self) {
     s32 posY;
     s16 angle;
 
-    if (D_us_80180CE4 & 1) {
+    if (boss_status & BOSS_STATUS_DEFEATED) {
         DestroyEntity(self);
         return;
     }
@@ -1404,7 +1394,8 @@ void func_us_801A493C(Entity* self) {
                 self->ext.granfaloon.hasHit = 1;
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    CreateEntityFromCurrentEntity(E_ID(UNK_22), newEntity);
+                    CreateEntityFromCurrentEntity(
+                        E_ID(EXPLOSION_FLAME), newEntity);
                     newEntity->posX.i.hi += Random() & 0xF;
                     newEntity->posY.i.hi += Random() & 0xF;
                     newEntity->zPriority = 0x70;
@@ -1419,7 +1410,7 @@ void func_us_801A493C(Entity* self) {
     }
 }
 
-void EntityGranfaloonLaser(Entity* self) {
+void EntityHomingLaser(Entity* self) {
     Primitive* prim;
     Point16* pt;
     s16 angle;
@@ -1431,13 +1422,13 @@ void EntityGranfaloonLaser(Entity* self) {
     s32 baseX;
     s32 baseY;
 
-    if (D_us_80180CE4 & 1) {
+    if (boss_status & BOSS_STATUS_DEFEATED) {
         DestroyEntity(self);
         return;
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180B28);
+        InitializeEntity(g_EInitHomingLaser);
         self->hitboxWidth = self->hitboxHeight = 4;
         self->zPriority = 0x38;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 13);
@@ -1450,7 +1441,7 @@ void EntityGranfaloonLaser(Entity* self) {
         prim = &g_PrimBuf[primIndex];
         self->ext.granfaloonLaser.prim = prim;
         prim->tpage = 0x14;
-        prim->clut = 0x200;
+        prim->clut = PAL_BASE;
         prim->u0 = prim->u2 = 0x38;
         prim->u1 = prim->u3 = 0x40;
         prim->v0 = prim->v1 = 0x28;
@@ -1464,7 +1455,7 @@ void EntityGranfaloonLaser(Entity* self) {
             DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
         for (i = 0; i < 0xB; i++) {
             prim->tpage = 0x14;
-            prim->clut = 0x200;
+            prim->clut = PAL_BASE;
             prim->u0 = prim->u2 = 0x38;
             prim->u1 = prim->u3 = 0x40;
             prim->v0 = prim->v1 = 0x50;
@@ -1479,7 +1470,7 @@ void EntityGranfaloonLaser(Entity* self) {
             prim = prim->next;
         }
         prim->tpage = 0x14;
-        prim->clut = 0x200;
+        prim->clut = PAL_BASE;
         prim->u0 = prim->u2 = 0x38;
         prim->u1 = prim->u3 = 0x40;
         prim->v0 = prim->v1 = 0x40;

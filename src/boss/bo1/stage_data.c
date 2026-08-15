@@ -61,11 +61,11 @@ u8 gfx_13330[] = {
 u8 gfx_14228[] = {
 #include "gen/gfx_14228.h"
 };
-u16 pal_14918[] = {
-#include "gen/pal_14918.h"
+u16 pal_granfaloon[] = {
+#include "gen/pal_granfaloon.h"
 };
-u16 pal_149D8[] = {
-#include "gen/pal_149D8.h"
+u16 pal_explosion_flame[] = {
+#include "gen/pal_explosion_flame.h"
 };
 u16 pal_14BD8[] = {
 #include "gen/pal_14BD8.h"

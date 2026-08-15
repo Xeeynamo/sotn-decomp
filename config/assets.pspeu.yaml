@@ -1105,8 +1105,8 @@ files:
           - [0x29610, cmpgfx, gfx_12984, 128, 128, 4]
           - [0x29FC0, cmpgfx, gfx_13330, 128, 128, 4]
           - [0x2AEB8, cmpgfx, gfx_14228, 128, 128, 4]
-          - [0x2B5A8, palette, pal_14918, 16]
-          - [0x2B668, palette, pal_149D8, 16]
+          - [0x2B5A8, palette, pal_granfaloon, 16]
+          - [0x2B668, palette, pal_explosion_flame, 16]
           - [0x2B868, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo2.bin
     asset_path: assets/boss/bo2
