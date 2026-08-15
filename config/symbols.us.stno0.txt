@@ -1,3 +1,2 @@
 entityLayoutHorizontal = 0x80180778;
 entityLayoutVertical = 0x8018084C;
-ctulhu_shockwave_uvs = 0x801C11B0;

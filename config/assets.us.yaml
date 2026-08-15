@@ -637,6 +637,8 @@ files:
           - [0x1783C, palette, e_skeleton_pal, 16]
           - [0x1785C, palette, e_door_pal, 16] # 0x244 palette appears unused in EInit
           - [0x1791C, skip]
+          - [0x411B0, spriteset, ctulhu_shockwave_uvs]
+          - [0x41368, skip]
   - target: disks/us/ST/NO1/NO1.BIN
     asset_path: assets/st/no1
     src_path: src/st/no1
@@ -1323,6 +1325,14 @@ files:
     asset_path: assets/st/rno4
     src_path: src/st/rno4
     splat_config_path: config/splat.us.strno4.yaml
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x134, layers, layers]
+          - [0x960, skip]
+          - [0x2C00, rooms, rooms]
+          - [0x2D58, skip]
   - target: disks/us/ST/RNZ0/RNZ0.BIN
     asset_path: assets/st/rnz0
     src_path: src/st/rnz0
