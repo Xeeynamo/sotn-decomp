@@ -705,8 +705,8 @@ e_subweapon_container:
   functions:
   - EntitySubWeaponContainer
   - EntitySubWpnContGlass
-  - func_801C7654
-  - func_801C77B8
+  - EntityFallingLiquid
+  - EntityBubbles
   - func_801C7884
 e_succubus:
   functions:

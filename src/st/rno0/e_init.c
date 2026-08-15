@@ -59,9 +59,9 @@ void EntityBlade(Entity* self);
 void EntityBladeWeapon(Entity* self);
 void EntitySubWeaponContainer(Entity* self);
 void EntitySubWpnContGlass(Entity* self);
-void func_801C7654(Entity* self);
-void func_801C77B8(Entity* self);
-void func_801C7884(Entity* self);
+void EntityFallingLiquid(Entity* self);
+void EntityBubbles(Entity* self);
+void EntitySubwpnInContainer(Entity* self);
 void EntityGorgon(Entity* self);
 void func_us_801D068C(Entity* self);
 void func_us_801D0CFC(Entity* self);
@@ -140,9 +140,9 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityBladeWeapon,
     EntitySubWeaponContainer,
     EntitySubWpnContGlass,
-    func_801C7654,
-    func_801C77B8,
-    func_801C7884,
+    EntityFallingLiquid,
+    EntityBubbles,
+    EntitySubwpnInContainer,
     EntityGorgon,
     func_us_801D068C,
     func_us_801D0CFC,
@@ -197,8 +197,8 @@ EInit g_EInitGurkha = {ANIMSET_OVL(9), 2, 87, 544, 0x0BC};
 EInit g_EInitGurkhaWeapon = {ANIMSET_OVL(9), 20, 87, 544, 0x0BD};
 EInit g_EInitBlade = {ANIMSET_OVL(9), 2, 87, 541, 0x0BE};
 EInit g_EInitBladeWeapon = {ANIMSET_OVL(9), 19, 87, 541, 0x0BF};
-EInit D_us_80180BB8 = {ANIMSET_OVL(10), 0, 76, 550, 0x005};
-EInit D_us_80180BC4 = {ANIMSET_OVL(10), 0, 76, 550, 0x002};
+EInit g_EInitSubwpnCloche = {ANIMSET_OVL(10), 0, 76, 550, 0x005};
+EInit g_EInitSubwpnClochePieces = {ANIMSET_OVL(10), 0, 76, 550, 0x002};
 EInit g_EInitGorgon = {ANIMSET_OVL(11), 0, 76, 560, 0x01F};
 EInit D_us_80180BDC = {ANIMSET_OVL(11), 0, 76, 560, 0x020};
 EInit D_us_80180BE8 = {ANIMSET_DRA(0), 0, 0, 0, 0x021};

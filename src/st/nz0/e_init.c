@@ -59,9 +59,9 @@ void EntityRelicContainer(Entity*);
 void EntityExplosionPuffOpaque(Entity*);
 void EntitySubWeaponContainer(Entity*);
 void EntitySubWpnContGlass(Entity*);
-void func_801C7654(Entity*);
-void func_801C77B8(Entity*);
-void func_801C7884(Entity*);
+void EntityFallingLiquid(Entity*);
+void EntityBubbles(Entity*);
+void EntitySubwpnInContainer(Entity*);
 void EntityBossFightManager(Entity*);
 void EntityBossRoomBlock(Entity*);
 void EntitySlogra(Entity*);
@@ -138,9 +138,9 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityExplosionPuffOpaque,
     EntitySubWeaponContainer,
     EntitySubWpnContGlass,
-    func_801C7654,
-    func_801C77B8,
-    func_801C7884,
+    EntityFallingLiquid,
+    EntityBubbles,
+    EntitySubwpnInContainer,
     EntityBossFightManager,
     EntityBossRoomBlock,
     EntitySlogra,

@@ -72,10 +72,10 @@ enum EntityID {
     E_BLADE,                 // EntityBlade
     E_BLADE_WEAPON,          // EntityBladeWeapon
     E_SUB_WEAPON_CONTAINER,  // EntitySubWeaponContainer
-    E_SUB_WPN_CONT_GLASS,    // EntitySubWpnContGlass
-    E_UNK_3B,                // func_801C7654
-    E_UNK_3C,                // func_801C77B8
-    E_UNK_3D,                // func_801C7884
+    E_FALLING_GLASS,         // EntitySubWpnContGlass
+    E_FALLING_LIQUID,        // EntityFallingLiquid
+    E_LIQUID_BUBBLES,        // EntityBubbles
+    E_SUBWPN_IN_CONT,        // EntitySubwpnInContainer
     E_GORGON,                // EntityGorgon
     E_UNK_3F,                // func_us_801D068C
     E_UNK_40,                // func_us_801D0CFC
