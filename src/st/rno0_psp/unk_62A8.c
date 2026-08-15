@@ -3,6 +3,7 @@
 
 extern EInit g_EInitGorgon;
 extern u8 D_pspeu_0925EEB0[];
+extern u8 D_pspeu_0925EEE0[];
 
 
 // These first two are copied from the Plate Lord?
@@ -147,7 +148,60 @@ Primitive* func_pspeu_0923E1A0(Pos* ent1, Pos* ent2, s16* arg2, Primitive* prim)
     return prim;
 }
 
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_62A8", func_pspeu_0923E300);
+Primitive* func_pspeu_0923E300(Pos* ent1, Pos* ent2, s16* arg2, Primitive* prim) {
+    Point16 sp2C;
+    Point16 sp28;
+    Pos sp20;
+    s32 var_s4;
+    s32 var_s3;
+    s32 var_s2;
+    s32 var_s1;
+    s32 var_s0;
+    
+    var_s0 = ent2->x.val - ent1->x.val;
+    if (g_CurrentEntity->facingLeft) {
+        var_s0 = -var_s0;
+    }
+    var_s1 = ent2->y.val - ent1->y.val;
+    *arg2 = ratan2(-var_s0, var_s1);
+    var_s4 = 0xE00;
+    var_s3 = 0x1100;
+    var_s0 /= 0x100;
+    var_s1 /= 0x100;
+    var_s2 = SquareRoot0((var_s0 * var_s0) + (var_s1 * var_s1));
+    if (var_s2 > 0x1F00) {
+        var_s2 = 0x1F00;
+    }
+    
+    var_s2 = (var_s2 * var_s4) / (var_s4 + var_s3);
+    var_s3 = (var_s4 * var_s4) - (var_s2 * var_s2);
+    var_s3 = SquareRoot0(var_s3);
+    *arg2 += ratan2(var_s3, var_s2);
+    func_pspeu_0923D928(ent1, 0x12, *arg2, &sp20);
+    sp2C.x = 5;
+    sp2C.y = 5;
+    sp28.x = 5;
+    sp28.y = 5;
+    func_us_801D2424(ent1, *arg2, &sp2C, &sp20, *arg2, &sp28, prim);
+    prim->drawMode = 2;
+    prim = prim->next;
+    func_pspeu_0923D928(&sp20, -4, *arg2, &sp20);
+    var_s0 = ent2->x.val - sp20.x.val;
+    if (g_CurrentEntity->facingLeft) {
+        var_s0 = -var_s0;
+    }
+    var_s1 = ent2->y.val - sp20.y.val;
+    arg2++;
+    *arg2 = ratan2(-var_s0, var_s1);
+    sp2C.x = 7;
+    sp2C.y = 9;
+    sp28.x = 6;
+    sp28.y = 0xA;
+    func_us_801D2424(&sp20, *arg2, &sp2C, ent2, *arg2, &sp28, prim);
+    prim->drawMode = 2;
+    prim = prim->next;
+    return prim;
+}
 
 INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_62A8", StepTowards);
 
@@ -389,7 +443,224 @@ void func_us_801D068C(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_62A8", func_us_801D0CFC);
+void func_us_801D0CFC(Entity* self) {
+    Point16 sp6C;
+    s32 sp68;
+    s32 sp64;
+    s32 sp60;
+    Collider sp3C;
+    Point16 sp38;
+    s32 primIndex;
+    Entity* other7;
+    s16* var_s6;
+    s32 var_s5;
+    s16* var_s4;
+    Entity* other3;
+    u8* var_s2;
+    Entity* other;
+    Primitive* prim;
+
+
+    self->animCurFrame = 13;
+    switch (self->step) {                              /* switch 1; irregular */
+    case 0:                                         /* switch 1 */
+        InitializeEntity(g_EInitGorgon);
+        self->animCurFrame = 13;
+        self->drawFlags = 4;
+        self->zPriority = 0x73;
+        other = self + 1;        
+        CreateEntityFromEntity(0x41U, self, other);
+        other->params = 0x10;
+        other = self + 2;
+        CreateEntityFromEntity(0x41U, self, other);
+        other->params = 0x11;
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags |= 0x800000;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.prim = prim;
+        var_s2 = D_pspeu_0925EEE0;
+        while(prim != NULL) {
+            prim->tpage = 0x13;
+            prim->clut = 0x232;
+            prim->u0 = *var_s2++;
+            prim->v0 = *var_s2++;
+            prim->u1 = *var_s2++;
+            prim->v1 = *var_s2++;
+            prim->u2 = *var_s2++;
+            prim->v2 = *var_s2++;
+            prim->u3 = *var_s2++;
+            prim->v3 = *var_s2++;
+            prim->drawMode = 8;
+            prim = prim->next;
+        }
+        self->ext.ILLEGAL.s16[2] = 0;
+        self->ext.ILLEGAL.s16[3] = 0x40;
+        self->step = 0x15;
+        break;
+    case 17:                                        /* switch 1 */
+    case 16:                                        /* switch 1 */
+    case 18:                                        /* switch 1 */
+        if (self->ext.ILLEGAL.u8[0x2C] == 0) {
+            other3 = self + 1;
+            var_s4 = &self->ext.ILLEGAL.s16[2];
+            other7 = self + 2;
+            var_s6 = &self->ext.ILLEGAL.s16[4];
+        } else {
+            other3 = self + 2;
+            var_s4 = &self->ext.ILLEGAL.s16[4];
+            other7 = self + 1;
+            var_s6 = &self->ext.ILLEGAL.s16[2];
+        }
+        switch (self->step) {                          /* switch 2; irregular */
+        case 17:                                    /* switch 2 */
+            sp38.x = 0xA;
+            sp38.y = 0x40;
+            sp68 = func_pspeu_0923E920(other3, var_s4, other7, var_s6, &sp38);
+            break;
+        case 16:                                    /* switch 2 */
+            sp38.x = 8;
+            sp38.y = 32;
+            sp68 = func_pspeu_0923E920(other3, var_s4, other7, var_s6, &sp38);
+            break;
+        case 18:                                    /* switch 2 */
+            sp68 = func_pspeu_0923EE78(other3, var_s4, other7, var_s6);
+            break;
+        }
+        prim = self->ext.prim;
+        prim = func_pspeu_0923E300((Pos*)self, (Pos*)other3, var_s4, prim);
+        func_pspeu_0923E1A0((Pos*)self, (Pos*)other7, var_s6, prim);
+        func_pspeu_0923F198(2);
+        if (sp68 != 0) {
+            self->ext.ILLEGAL.u8[0x32] = 1;
+            self->ext.ILLEGAL.u8[0x2C] ^= 1;
+            self->ext.ILLEGAL.u8[0x2E] = 0;
+        } else {
+            self->ext.ILLEGAL.u8[0x32] = 0;
+        }
+        self->rotate = self->ext.ILLEGAL.s16[2] / 2;
+        break;
+    case 20:
+    case 21:
+        self->ext.ILLEGAL.u8[0x2F] = 0;
+        if (self->ext.ILLEGAL.u8[0x2C] == 0) {
+            other3 = self + 1;
+            var_s4 = &self->ext.ILLEGAL.s16[2];
+            other7 = self + 2;
+            var_s6 = &self->ext.ILLEGAL.s16[4];
+        } else {
+            other3 = self + 2;
+            var_s4 = &self->ext.ILLEGAL.s16[4];
+            other7 = self + 1;
+            var_s6 = &self->ext.ILLEGAL.s16[2];
+        }
+        prim = self->ext.prim;
+        if (self->step == 21) {
+            prim = func_pspeu_0923E1A0((Pos*)self, (Pos*)other3, var_s4, prim);
+            func_pspeu_0923E1A0((Pos*)self, (Pos*)other7, var_s6, prim);
+        } else {
+            prim = func_pspeu_0923E300((Pos*)self, (Pos*)other3, var_s4, prim);
+            func_pspeu_0923E300((Pos*)self, (Pos*)other7, var_s6, prim);
+        }
+        func_pspeu_0923F198(2);
+        break;
+    case 19:                                        /* switch 1 */
+        if (!self->step_s) {
+            self->step_s += 1;
+        } else {
+            self->ext.ILLEGAL.u8[0x2F] = 1;
+            self->animCurFrame = 0;
+            for(prim = self->ext.prim; prim != NULL; prim = prim->next) {
+                prim->drawMode |= 8;
+            }
+        }
+        break;
+    case 22:                                        /* switch 1 */
+        switch (self->step_s) {                          /* switch 3; irregular */
+        case 0:                                     /* switch 3 */
+            other3 = self + 1;
+            var_s4 = &self->ext.ILLEGAL.s16[2];
+            prim = self->ext.prim;
+            for(var_s5 = 0; var_s5 < 2; var_s5++) {
+                if(other3->ext.ILLEGAL.s16[2]){
+                    prim = func_pspeu_0923E300((Pos*)self, (Pos*)other3, var_s4, prim);
+                } else {
+                    prim = func_pspeu_0923E1A0((Pos*)self, (Pos*)other3, var_s4, prim);
+                }
+                other3 = self + 2;
+                var_s4 = &self->ext.ILLEGAL.s16[4];
+            }
+            func_pspeu_0923F198(2);
+            sp64 = self->posX.i.hi;
+            sp60 = self->posY.i.hi + 0x18;
+            g_api.CheckCollision(sp64, sp60, &sp3C, 0);
+            if (sp3C.effects & 1) {
+                other = self - 3;
+                other->ext.ILLEGAL.u8[0x2F] = 1;
+                PlaySfxPositional(0x653);
+                self->step_s += 1;
+            }
+            break;
+        case 1:
+            other = self - 4;
+            if (other->ext.ILLEGAL.u8[0x30]) {
+                self->ext.ILLEGAL.u8[0x30] = 1;
+                self->step_s += 1;
+            }
+            break;
+        case 2:                                     /* switch 3 */
+            self->animCurFrame = 0;
+            other = AllocEntity(&g_Entities[0xE0], (Entity* ) &D_80097C98);
+            if (other != NULL) {
+                CreateEntityFromEntity(2U, self, other);
+                other->params = 3;
+                other->zPriority = self->zPriority;
+            }
+            self->ext.ILLEGAL.u8[0x2F] = 1;
+            self->step_s += 1;
+            break;
+        case 3:                                     /* switch 3 */
+            for(prim = self->ext.prim; prim != NULL; ) {
+                if (prim->drawMode & 8) {
+                    prim = prim->next;
+                } else {
+                    other = AllocEntity(&g_Entities[0xE0], (Entity* ) &D_80097C98);
+                    if (other != NULL) {
+                        CreateEntityFromCurrentEntity(2, other);
+                        other->posX.i.hi = prim->x0;
+                        other->posY.i.hi = prim->y0;
+                        other->params = 1;
+                    }
+                    prim->drawMode = 8;
+                    prim = prim->next;
+                }
+            }
+            if (prim == NULL) {
+                DestroyEntity(self);
+                return;
+            }
+        }
+        break;
+    }
+    other = self + 1;
+    other->facingLeft = self->facingLeft;
+    other = self + 2;
+    other->facingLeft = self->facingLeft;
+    other = self + 5;
+    other->facingLeft = self->facingLeft;
+    if (!self->ext.ILLEGAL.u8[0x2F]) {
+        other = self - 4;
+        other->posX.i.hi = self->posX.i.hi;
+        other->posY.i.hi = self->posY.i.hi;
+        other = self + 5;
+        other->posX.i.hi = self->posX.i.hi + 0;
+        other->posY.i.hi = self->posY.i.hi - 13;
+    }
+}
 
 INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_62A8", func_us_801D136C);
 
