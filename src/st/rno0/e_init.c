@@ -59,8 +59,8 @@ void EntityBlade(Entity* self);
 void EntityBladeWeapon(Entity* self);
 void EntitySubWeaponContainer(Entity* self);
 void EntitySubWpnContGlass(Entity* self);
-void func_801C7654(Entity* self);
-void func_801C77B8(Entity* self);
+void EntityFallingLiquid(Entity* self);
+void EntityBubbles(Entity* self);
 void EntitySubwpnInContainer(Entity* self);
 void EntityGorgon(Entity* self);
 void func_us_801D068C(Entity* self);
@@ -140,8 +140,8 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityBladeWeapon,
     EntitySubWeaponContainer,
     EntitySubWpnContGlass,
-    func_801C7654,
-    func_801C77B8,
+    EntityFallingLiquid,
+    EntityBubbles,
     EntitySubwpnInContainer,
     EntityGorgon,
     func_us_801D068C,
