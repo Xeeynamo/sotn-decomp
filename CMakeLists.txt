@@ -899,7 +899,7 @@ SET(SOURCE_FILES_BOSS_BO1
     src/boss/bo1/gen/e_laydef.c
     src/boss/bo1/gen/e_layout.c
     src/boss/bo1/gen/rooms.c
-    src/boss/bo1/gen/sprites.c
+    src/boss/bo1/gen/us/sprites.c
     src/boss/bo1/graphics_banks.c
     src/boss/bo1/header.c
     src/boss/bo1/layers.c

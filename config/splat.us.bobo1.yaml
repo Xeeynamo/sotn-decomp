@@ -67,7 +67,7 @@ segments:
       - [0x1B78, .data, e_life_up]
       - [0x1BCC, .data, gen/e_layout]
       - [0x1D84, .data, stage_data]
-      - [0x1E0C8, .data, gen/sprites]
+      - [0x1E0C8, .data, gen/us/sprites]
       - [0x20AA0, .rodata, unk_210A8]
       - [0x20ABC, .rodata, e_granfaloon]
       - [0x20B78, .rodata, e_explosion_flame]
