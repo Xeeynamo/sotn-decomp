@@ -67,11 +67,12 @@ u16 pal_14918[] = {
 u16 pal_149D8[] = {
 #include "gen/pal_149D8.h"
 };
+u16 pal_14BD8[] = {
+#include "gen/pal_14BD8.h"
+};
 
-// The tilemaps and tile definitions are only emitted as data on PSP/PC; on the
-// PSX they live in the raw data region at 0x14BD8.
-#if defined(VERSION_PSP) || defined(VERSION_PC)
 #include "gen/bo1_tilemap_0.h"
 #include "gen/bo1_tilemap_1.h"
+#include "gen/bo1_tiledef_unused.h"
+#include "gen/bo1_tiledef_unused_1.h"
 #include "gen/bo1_tiledef_0.h"
-#endif

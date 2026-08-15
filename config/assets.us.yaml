@@ -1544,7 +1544,11 @@ files:
           - [0x14228, cmpgfx, gfx_14228, 128, 128, 4]
           - [0x14918, palette, pal_14918, 16] # 0x200
           - [0x149D8, palette, pal_149D8, 16] # 0x2E0
-          - [0x14BD8, skip]
+          - [0x14BD8, palette, pal_14BD8, 16] # unused
+          - [0x14C98, skip] # the two tilemaps referenced by the layers
+          - [0x15C98, tiledef, unused] # 0x100 tiles per section
+          - [0x160A8, tiledef, unused_1] # 0x1000 tiles per section
+          - [0x1A0B8, skip] # the tile definition referenced by the layers
   - target: disks/us/BOSS/BO2/BO2.BIN
     asset_path: assets/boss/bo2
     src_path: src/boss/bo2
