@@ -13,7 +13,7 @@ s32 E_ID(EXPLOSION_VARIANTS);
 s32 E_ID(GREY_PUFF);
 s32 E_ID(UNK_16);
 s32 E_ID(UNK_17);
-s32 E_ID(UNK_18);
+s32 E_ID(GRANFALOON);
 s32 E_ID(UNK_19);
 s32 E_ID(UNK_1A);
 s32 E_ID(UNK_1B);
@@ -21,11 +21,11 @@ s32 E_ID(UNK_1C);
 s32 E_ID(UNK_1D);
 s32 E_ID(UNK_1E);
 s32 E_ID(UNK_1F);
-s32 E_ID(UNK_20);
-s32 E_ID(UNK_21);
+s32 E_ID(ZOMBIE_FALLING);
+s32 E_ID(ZOMBIE_ENEMY);
 s32 E_ID(UNK_22);
 s32 E_ID(UNK_23);
-s32 E_ID(UNK_24);
+s32 E_ID(LASER);
 s32 E_ID(LIFE_UPSPAWN);
 
 void InitEntityIds(void) {
@@ -36,7 +36,7 @@ void InitEntityIds(void) {
     SET_E_ID(GREY_PUFF);
     SET_E_ID(UNK_16);
     SET_E_ID(UNK_17);
-    SET_E_ID(UNK_18);
+    SET_E_ID(GRANFALOON);
     SET_E_ID(UNK_19);
     SET_E_ID(UNK_1A);
     SET_E_ID(UNK_1B);
@@ -44,11 +44,11 @@ void InitEntityIds(void) {
     SET_E_ID(UNK_1D);
     SET_E_ID(UNK_1E);
     SET_E_ID(UNK_1F);
-    SET_E_ID(UNK_20);
-    SET_E_ID(UNK_21);
+    SET_E_ID(ZOMBIE_FALLING);
+    SET_E_ID(ZOMBIE_ENEMY);
     SET_E_ID(UNK_22);
     SET_E_ID(UNK_23);
-    SET_E_ID(UNK_24);
+    SET_E_ID(LASER);
     SET_E_ID(LIFE_UPSPAWN);
 }
 

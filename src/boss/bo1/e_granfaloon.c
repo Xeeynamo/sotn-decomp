@@ -94,7 +94,7 @@ static u8 hitbox_lookup[] = {
 extern EInit D_us_80180B1C;
 extern EInit D_us_80180B28;
 extern EInit D_us_80180B34;
-extern EInit D_us_80180B58;
+extern EInit g_EInitGrafaloonZombie;
 extern EInit D_us_80180B4C;
 extern s32 D_us_80180CD4; // is Granfaloon spawned yet?
 extern EInit g_EInitGranfaloon1;
@@ -107,11 +107,11 @@ extern s32 E_ID(UNK_1B);
 extern s32 E_ID(UNK_1D);
 extern s32 E_ID(UNK_1E);
 extern s32 E_ID(UNK_1F);
-extern s32 E_ID(UNK_20);
-extern s32 E_ID(UNK_21);
+extern s32 E_ID(ZOMBIE_FALLING);
+extern s32 E_ID(ZOMBIE_ENEMY);
 extern s32 E_ID(UNK_22);
 extern s32 E_ID(UNK_1C);
-extern s32 E_ID(UNK_24);
+extern s32 E_ID(LASER);
 extern s32 E_ID(LIFE_UPSPAWN);
 #endif
 
@@ -350,7 +350,7 @@ void EntityGranfaloon(Entity* self) {
             for (i = 0; i < 4; i++) {
                 ent = AllocEntity(&g_Entities[144], &g_Entities[192]);
                 if (ent != NULL) {
-                    CreateEntityFromEntity(E_ID(UNK_24), self, ent);
+                    CreateEntityFromEntity(E_ID(LASER), self, ent);
                     ent->rotate = angle;
                 }
                 angle += 0x200;
@@ -605,9 +605,9 @@ void func_us_801A2774(Entity* self) {
         newEntity = AllocEntity(&g_Entities[144], &g_Entities[192]);
         if (newEntity != NULL) {
             if (Random() & 1) {
-                CreateEntityFromCurrentEntity(E_ID(UNK_20), newEntity);
+                CreateEntityFromCurrentEntity(E_ID(ZOMBIE_FALLING), newEntity);
             } else {
-                CreateEntityFromCurrentEntity(E_ID(UNK_21), newEntity);
+                CreateEntityFromCurrentEntity(E_ID(ZOMBIE_ENEMY), newEntity);
             }
             newEntity->zPriority = 0x4A;
             newEntity->posX.i.hi = posX;
@@ -859,7 +859,7 @@ void func_us_801A3480(Entity* self) {
 
 INCLUDE_ASM("boss/bo1/nonmatchings/e_granfaloon", func_us_801A38EC);
 
-void func_us_801A4394(Entity* self) {
+void EntityZombieFalling(Entity* self) {
     Entity* newEntity;
     s16 angle;
     s32 frame;
@@ -870,7 +870,7 @@ void func_us_801A4394(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180B58);
+        InitializeEntity(g_EInitGrafaloonZombie);
         if (self->params != 8) {
             angle = D_us_80180D00[self->params];
             angle += Random() - 0x80;
@@ -884,7 +884,6 @@ void func_us_801A4394(Entity* self) {
         self->facingLeft = Random() & 1;
         self->drawFlags = ENTITY_ROTATE;
         self->animCurFrame = (frame << 1) + 0x73;
-
     case 1:
         MoveEntity();
         self->velocityY += FIX(0.0625);
@@ -922,7 +921,7 @@ void func_us_801A4394(Entity* self) {
     }
 }
 
-void func_us_801A45D0(Entity* self) {
+void EntityZombieEnemy(Entity* self) {
     Collider collider;
     Entity* newEntity;
     s32 res;
@@ -937,7 +936,7 @@ void func_us_801A45D0(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180B58);
+        InitializeEntity(g_EInitGrafaloonZombie);
         self->animCurFrame = 0x69;
         self->hitboxWidth = 8;
         self->hitboxHeight = 0x12;
@@ -981,7 +980,6 @@ void func_us_801A45D0(Entity* self) {
             self->animCurFrame = 0x71;
             PlaySfxPositional(SFX_SMALL_FLAME_IGNITE);
             self->step_s++;
-
         case 1:
             if (!(self->ext.et_801A2CC4.unk80 & 0xF)) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -1076,17 +1074,17 @@ void func_us_801A4AF4(Entity* self) {
 
     if (D_us_80180CE4 & 1) {
         DestroyEntity(self);
-        goto end;
+        return;
     }
     switch (self->step) {
     case 0:
         InitializeEntity(D_us_80180B28);
         self->hitboxWidth = self->hitboxHeight = 4;
         self->zPriority = 0x38;
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 0xD);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 13);
         if (primIndex == -1) {
             DestroyEntity(self);
-            goto end;
+            return;
         }
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
@@ -1145,7 +1143,6 @@ void func_us_801A4AF4(Entity* self) {
         self->velocityY = rsin(angle) << 7;
         self->ext.et_801A4AF4.angle = angle;
         self->ext.et_801A4AF4.timer = 0xC;
-
     case 1:
         MoveEntity();
         player = &g_Entities[0];
@@ -1165,7 +1162,7 @@ void func_us_801A4AF4(Entity* self) {
         offY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
         if (offX < -0x40 || offY < -0x40 || offX > 0x240 || offY > 0x200) {
             DestroyEntity(self);
-            goto end;
+            return;
         }
         break;
     }
@@ -1195,7 +1192,7 @@ void func_us_801A4AF4(Entity* self) {
     prim->y1 = baseY - offY;
     prim->priority = self->zPriority;
     pt++;
-    for (i = 0; i < 0xB; i++) {
+    for (i = 0; i < 11; i++) {
         offX = pt->x - baseX;
         offY = pt->y - baseY;
         angle = ratan2(offY, offX);
@@ -1221,5 +1218,4 @@ void func_us_801A4AF4(Entity* self) {
     prim->x1 = prim->x3 = pt->x;
     prim->y1 = prim->y3 = pt->y;
     prim->priority = self->zPriority;
-end:;
 }

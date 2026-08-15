@@ -35,7 +35,7 @@ typedef enum EntityID {
     E_GREY_PUFF,          // EntityGreyPuff
     E_UNK_16,             // func_us_801BA388_from_cat
     E_UNK_17,             // func_us_801BA164_from_cat
-    E_UNK_18,             // EntityGranfaloon
+    E_GRANFALOON,         // EntityGranfaloon
     E_UNK_19,             // func_us_801A2F2C
     E_UNK_1A,             // func_us_801A3480
     E_UNK_1B,             // func_us_801A38EC
@@ -43,11 +43,11 @@ typedef enum EntityID {
     E_UNK_1D,             // func_us_801A2BC4
     E_UNK_1E,             // func_us_801A2CC4
     E_UNK_1F,             // func_us_801A2D90
-    E_UNK_20,             // func_us_801A4394
-    E_UNK_21,             // func_us_801A45D0
+    E_ZOMBIE_FALLING,     // EntityZombieFalling
+    E_ZOMBIE_ENEMY,       // EntityZombieEnemy
     E_UNK_22,             // func_us_801A518C
     E_UNK_23,             // func_us_801A493C
-    E_UNK_24,             // func_us_801A4AF4, lasers?
+    E_LASER,              // func_us_801A4AF4, lasers?
     E_LIFE_UPSPAWN,       // EntityLifeUpSpawn
     NUM_ENTITIES,
 };

@@ -32,8 +32,8 @@ void func_us_801A2774(Entity* self);
 void func_us_801A2BC4(Entity* self);
 void func_us_801A2CC4(Entity* self);
 void func_us_801A2D90(Entity* self);
-void func_us_801A4394(Entity* self);
-void func_us_801A45D0(Entity* self);
+void EntityZombieFalling(Entity* self);
+void EntityZombieEnemy(Entity* self);
 void func_us_801A518C(Entity* self);
 void func_us_801A493C(Entity* self);
 void func_us_801A4AF4(Entity* self);
@@ -71,8 +71,8 @@ PfnEntityUpdate EntityUpdates[] = {
     func_us_801A2BC4,
     func_us_801A2CC4,
     func_us_801A2D90,
-    func_us_801A4394,
-    func_us_801A45D0,
+    EntityZombieFalling,
+    EntityZombieEnemy,
     func_us_801A518C,
     func_us_801A493C,
     func_us_801A4AF4,
@@ -98,5 +98,5 @@ EInit D_us_80180B28 = {ANIMSET_OVL(3), 0, 72, 512, 0x12A};
 EInit D_us_80180B34 = {ANIMSET_DRA(0), 0, 0, 0, 0x12A};
 EInit g_EInitGranfaloon2 = {ANIMSET_OVL(3), 0, 72, 512, 0x128};
 EInit D_us_80180B4C = {ANIMSET_OVL(3), 0, 72, 512, 0x005};
-EInit D_us_80180B58 = {ANIMSET_OVL(3), 0, 72, 512, 0x129};
+EInit g_EInitGrafaloonZombie = {ANIMSET_OVL(3), 0, 72, 512, 0x129};
 // clang-format on
