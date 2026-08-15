@@ -1,7 +1,16 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "common.h"
+#include "../rno0/rno0.h"
 
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_62A8", func_pspeu_0923D928);
+// Very similar to a giantbro helper function
+static void func_pspeu_0923D928(Point32* src, s32 speed, s16 angle, Point32* dst) {
+    if (g_CurrentEntity->facingLeft) {
+        angle = -angle;
+    }
+    *dst = *src;
+
+    dst->x += -(speed * rsin(angle) * 16);
+    dst->y += speed * rcos(angle) * 16;
+}
 
 INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_62A8", func_us_801D2424);
 
