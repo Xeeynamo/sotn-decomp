@@ -1481,7 +1481,7 @@ void EntityHeartDrop(Entity* self) {
     PfnEntityUpdate update;
 
     if (!self->step) {
-        index = self->ext.heartDrop.unkB4 =
+        index = self->ext.persistentDrop.unkB4 =
             self->params + HEART_DROP_CASTLE_FLAG;
         value = g_CastleFlags[(index >> 3) + CASTLE_COLLECTIBLES_100] >>
                 (index & 7);
@@ -1500,7 +1500,7 @@ void EntityHeartDrop(Entity* self) {
         }
         self->params = index + 0x8000;
     } else {
-        index = self->ext.heartDrop.unkB4;
+        index = self->ext.persistentDrop.unkB4;
         if (self->step < 5) {
             if (self->hitFlags) {
                 g_CastleFlags[(index >> 3) + CASTLE_COLLECTIBLES_100] |=
