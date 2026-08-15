@@ -1,4 +1,0 @@
-func_us_8019D260_from_rcen = 0x801A50BC;
-Random = 0x801A55A0;
-CreateEntityFromEntity = 0x801A7C8C;
-AllocEntity = 0x801A9228;
