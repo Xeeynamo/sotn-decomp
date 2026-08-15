@@ -203,7 +203,7 @@ Primitive* func_pspeu_0923E300(Pos* ent1, Pos* ent2, s16* arg2, Primitive* prim)
     return prim;
 }
 
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_62A8", StepTowards);
+#include "../step_towards.h"
 
 INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_62A8", func_pspeu_0923E6D0);
 
