@@ -45,14 +45,14 @@ static u16 D_pspeu_09268330[2][4] = {
     {0x00DF, 0x00FF, 0x011F, 0x013F}, {0x02C0, 0x02E0, 0x0300, 0x0320}};
 static u16 D_pspeu_09268340[2][4] = {
     {0x051E, 0x001D, 0x001D, 0x001D}, {0x0025, 0x0000, 0x0000, 0x0000}};
-s32 D_us_80180CD4 = 0;
+s32 is_boss_playing = 0;
 static s32 D_us_801B2378;
 extern EInit g_EInitParticle;
-extern EInit D_us_80180AF8;
+extern EInit g_EInitBossDoor;
 
 #ifdef VERSION_PSP
 extern s32 E_ID(UNK_17);
-extern s32 E_ID(UNK_22);
+extern s32 E_ID(EXPLOSION_FLAME);
 #endif
 
 void func_us_801BA164_from_cat(Entity* self) {
@@ -68,7 +68,7 @@ void func_us_801BA164_from_cat(Entity* self) {
     case 0:
         InitializeEntity(g_EInitParticle);
         self->ext.et_801BA164.unk80 = 0x40;
-        primIndex = g_api_func_800EDB58(PRIM_TILE_ALT, 8);
+        primIndex = g_api.func_800EDB58(PRIM_TILE_ALT, 8);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
@@ -135,7 +135,7 @@ void func_us_801BA164_from_cat(Entity* self) {
     }
 }
 
-void func_us_801BA388_from_cat(Entity* self) {
+void EntityBossDoor(Entity* self) {
     Collider collider;
     s32 i;
     s32 tilePos;
@@ -145,7 +145,7 @@ void func_us_801BA388_from_cat(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180AF8);
+        InitializeEntity(g_EInitBossDoor);
         self->animCurFrame = self->params + 0x10;
         if (self->params) {
             self->posX.i.hi = 7 - g_Tilemap.scrollX.i.hi;
@@ -162,10 +162,10 @@ void func_us_801BA388_from_cat(Entity* self) {
             DestroyEntity(self);
             break;
         }
-        D_us_80180CD4 = 0;
+        is_boss_playing = 0;
         self->zPriority = 0x5F;
     case 1:
-        if (D_us_80180CD4) {
+        if (is_boss_playing) {
             self->step++;
         }
         break;
@@ -179,9 +179,9 @@ void func_us_801BA388_from_cat(Entity* self) {
             self->posY.i.hi += collider.unk18;
             self->velocityY = -self->velocityY;
             self->velocityY /= 4;
-            if (!(D_us_80180CD4 & 0x10)) {
+            if (!(is_boss_playing & 0x10)) {
                 PlaySfxPositional(SFX_EXPLODE_B);
-                D_us_80180CD4 |= 0x10;
+                is_boss_playing |= 0x10;
             }
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
@@ -232,7 +232,7 @@ void func_us_801BA388_from_cat(Entity* self) {
         self->step++;
         break;
     case 4:
-        if (!D_us_80180CD4) {
+        if (!is_boss_playing) {
             self->step++;
         }
         break;

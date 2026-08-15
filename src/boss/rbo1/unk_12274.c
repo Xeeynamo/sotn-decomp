@@ -33,6 +33,7 @@ INCLUDE_ASM("boss/rbo1/nonmatchings/unk_12274", func_801CE228);
 
 INCLUDE_ASM("boss/rbo1/nonmatchings/unk_12274", polarPlacePartsList);
 
+// decompiled in src/boss/bo1/e_explosion_flame.c
 INCLUDE_ASM("boss/rbo1/nonmatchings/unk_12274", func_us_8019D260_from_rcen);
 
 INCLUDE_ASM("boss/rbo1/nonmatchings/unk_12274", func_us_801947E4);
