@@ -60,7 +60,7 @@ struct Unk0605CD90 {
 
 void BuildSubDispTilemap(struct Unk0605CD90* param_1);
 s32 DAT_060086e4;
-s32 DecompressLzss(s32, s32, s32);
+s32 DecompressLZSS(u8*, u8*, u32);
 // func_060086E8
 void DmaScroll(s32* src, s32* dest, u32 cnt);
 
@@ -136,7 +136,7 @@ extern s32 g_PlayingXaBgmId;
 extern s8 DAT_060644C0;
 
 extern u16 DAT_0605cea2;
-extern u32 DAT_0605c658;
+extern u32 DAT_0605C658;
 void func_06030df0();
 void InitSystem();
 void func_060040D8();

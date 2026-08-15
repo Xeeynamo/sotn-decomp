@@ -574,7 +574,7 @@ void func_ptr_80170024(Entity* self) {
             self->ext.shield.unk9C = 0;
             self->rotate = 0x600;
         }
-        self->ext.shield.unkAE = self->ext.shield.parent->ext.shield.unkAE;
+        self->ext.shield.equipId = self->ext.shield.parent->ext.shield.equipId;
         SetWeaponProperties(self, 0);
         self->hitboxWidth = 0x10;
         self->hitboxHeight = 0x10;

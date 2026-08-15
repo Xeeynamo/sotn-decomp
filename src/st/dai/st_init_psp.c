@@ -4,14 +4,13 @@
 
 extern LayoutEntity* D_8D2E2B0;
 extern LayoutEntity* D_8D2E384;
+extern Overlay g_Overlay;
 
-extern Overlay OVL_EXPORT(Overlay);
-
-extern char OVL_EXPORT(cutscene_script_en)[];
-extern char OVL_EXPORT(cutscene_script_fr)[];
-extern char OVL_EXPORT(cutscene_script_sp)[];
-extern char OVL_EXPORT(cutscene_script_ge)[];
-extern char OVL_EXPORT(cutscene_script_it)[];
+extern char cutscene_script_en[];
+extern char cutscene_script_fr[];
+extern char cutscene_script_sp[];
+extern char cutscene_script_ge[];
+extern char cutscene_script_it[];
 
 s32 E_ID(BACKGROUND_BLOCK);
 s32 E_ID(LOCK_CAMERA);
@@ -71,8 +70,8 @@ s32 E_ID(CUTSCENE_MARIA);
 s32 E_ID(MIST_DOOR);
 
 // Used by dai/e_cutscene_dialogue/EntityCutsceneDialogue
-u8* OVL_EXPORT(cutscene_script);     // bss
-u8* OVL_EXPORT(cutscene_script_ptr); // bss
+u8* cutscene_script;     // bss
+u8* cutscene_script_ptr; // bss
 
 #include "../get_lang_at.h"
 
@@ -135,23 +134,19 @@ static void InitEntityIds(void) {
     SET_E_ID(MIST_DOOR);
 }
 
-void OVL_EXPORT(Load)(void) {
-    OVL_EXPORT(cutscene_script) = GetLangAt(
-        0, (u8*)OVL_EXPORT(cutscene_script_en),
-        (u8*)OVL_EXPORT(cutscene_script_fr),
-        (u8*)OVL_EXPORT(cutscene_script_sp),
-        (u8*)OVL_EXPORT(cutscene_script_ge),
-        (u8*)OVL_EXPORT(cutscene_script_it));
-    OVL_EXPORT(cutscene_script_ptr) = GetLangAt(
-        0, (u8*)OVL_EXPORT(cutscene_script_en),
-        (u8*)OVL_EXPORT(cutscene_script_fr),
-        (u8*)OVL_EXPORT(cutscene_script_sp),
-        (u8*)OVL_EXPORT(cutscene_script_ge),
-        (u8*)OVL_EXPORT(cutscene_script_it));
+void OvlLoad(void) {
+    cutscene_script = GetLangAt(
+        0, (u8*)cutscene_script_en, (u8*)cutscene_script_fr,
+        (u8*)cutscene_script_sp, (u8*)cutscene_script_ge,
+        (u8*)cutscene_script_it);
+    cutscene_script_ptr = GetLangAt(
+        0, (u8*)cutscene_script_en, (u8*)cutscene_script_fr,
+        (u8*)cutscene_script_sp, (u8*)cutscene_script_ge,
+        (u8*)cutscene_script_it);
     InitEntityIds();
     PfnEntityUpdates = EntityUpdates;
     g_pStObjLayoutHorizontal = &D_8D2E2B0;
     g_pStObjLayoutVertical = &D_8D2E384;
     func_psp_0892A018();
-    memcpy(&g_api.o, &OVL_EXPORT(Overlay), sizeof(Overlay));
+    memcpy(&g_api.o, &g_Overlay, sizeof(Overlay));
 }

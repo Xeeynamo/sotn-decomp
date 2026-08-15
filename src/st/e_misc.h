@@ -457,7 +457,6 @@ u8 UnkCollisionFunc4(u8 arg0) {
     bits_01 = (bits_45 + (bits_23 + (bits_01 + bits_67)));
     return bits_01;
 }
-
 #endif
 
 // params: (& 0xF0) Use an alternate set of hardcoded palette and drawMode
@@ -792,11 +791,12 @@ static s16 g_QuadIndices2[] = {
     1, 2, 4, 5, //top right quad
     3, 4, 6, 7, //bottom left quad
     4, 5, 7, 8, //bottom right quad
-#if (!defined(STAGE_IS_NZ0) && !defined(STAGE_IS_NO1) &&                        \
-    !defined(STAGE_IS_CHI) && STAGE != STAGE_ST0 && !defined(STAGE_IS_LIB) && !defined(STAGE_IS_CAT) && \
-    !defined(BOSS_IS_BO0) && !defined(STAGE_IS_RNO0) && !defined(STAGE_IS_RLIB)) || \
-    (defined(BOSS_IS_BO0) && !defined(VERSION_PSP)) || \
-    (defined(STAGE_IS_RLIB) && !defined(VERSION_PSP))
+#if !defined(STAGE_IS_NZ0) && !defined(STAGE_IS_NO1) &&                        \
+    !defined(STAGE_IS_CHI) && !defined(STAGE_IS_LIB) &&                        \
+    !defined(STAGE_IS_CAT) && !defined(STAGE_IS_RNO0) &&                       \
+    !defined(BOSS_IS_BO1) && STAGE != STAGE_ST0 &&                             \
+    (!defined(VERSION_PSP) ||                                                  \
+     (!defined(BOSS_IS_BO0) && !defined(STAGE_IS_RLIB)))
     0, 0,
 #endif
 #if defined(VERSION_BETA)
@@ -921,7 +921,6 @@ Primitive* UnkRecursivePrimFunc2(
     }
     return dstPrim;
 }
-
 #endif
 
 void ClutLerp(RECT* rect, u16 palIdxA, u16 palIdxB, s32 steps, u16 offset) {

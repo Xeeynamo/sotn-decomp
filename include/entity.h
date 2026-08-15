@@ -408,7 +408,7 @@ typedef struct PACKED {
 #endif
     /* 0xAC */ u8 anim;
     /* 0xAD */ u8 padAD;
-    /* 0xAE */ s16 unkAE;
+    /* 0xAE */ s16 equipId;
 } ET_Shield;
 
 typedef struct PACKED {
@@ -434,7 +434,7 @@ typedef struct PACKED {
     /* 0x9E */ byte pad[14];
     /* 0xAC */ u8 anim;
     /* 0xAD */ u8 padAD;
-    /* 0xAE */ s16 unkAE;
+    /* 0xAE */ s16 equipId;
 } ET_DarkShield;
 
 typedef struct {
@@ -464,7 +464,7 @@ typedef struct {
 #endif
     /* 0xAC */ u8 anim;
     /* 0xAD */ u8 unkAD;
-    /* 0xAE */ s16 unkAE;
+    /* 0xAE */ s16 equipId;
 } ET_MedusaShieldLaser;
 
 typedef struct PACKED {
@@ -517,7 +517,8 @@ typedef struct PACKED {
     s32 _align_anim[2];
 #endif
     /* 0xAC */ u8 anim;
-    /* 0xAE */ s16 unkAE;
+    /* 0xAD */ u8 padAD;
+    /* 0xAE */ s16 equipId;
 } ET_HeraldShieldSwirlEffect;
 
 typedef struct {
@@ -1569,7 +1570,7 @@ typedef struct {
 } ET_801AF774;
 
 typedef struct {
-    s32 unk7C;
+    struct Primitive* prim;
     s16 timer;
     s16 unk82;
     s16 unk84;
@@ -1895,7 +1896,7 @@ typedef struct {
 // ====== CHI ENTITIES ======
 // CHI Room3, Top, Demon Switch Wall
 typedef struct {
-    /* 0x7C */ char pad_7C[0x4];
+    /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ s32 unk80;
 } ET_DemonSwitchWall;
 
@@ -1907,7 +1908,7 @@ typedef struct {
 
 // CHI Room3, Middle, Falling Stairs
 typedef struct {
-    /* 0x7C */ char pad_7C[0x4];
+    /* 0x7C */ struct Primitive* prim7C;
     /* 0x80 */ s32 primBatchCount;
     /* 0x84 */ s16 rotateAccel;
     /* 0x86 */ char pad_86[0x2];
@@ -1943,22 +1944,13 @@ typedef struct {
     /* 0x80 */ s16 timer;
 } ET_GremlinFire;
 
-// CHI Room 4, Thornweed
 typedef struct {
-    /* 0x7C */ char pad_7C[0x4];
-    /* 0x80 */ s16 timer;
-    /* 0x82 */ char pad_82[0x4];
-    /* 0x86 */ u8 isCorpseweedSpawned;
-} ET_Thornweed;
-
-// CHI Room 4, Corpseweed
-typedef struct {
-    /* 0x7C */ char pad_7C[0x4];
+    /* 0x7C */ Primitive* prim;
     /* 0x80 */ s16 timer;
     /* 0x82 */ char pad_82[0x2];
     /* 0x84 */ u8 leavesDoneGrowing;
     /* 0x85 */ u8 stalkDoneGrowing;
-    /* 0x86 */ char pad_86[0x2];
+    /* 0x86 */ u8 isCorpseweedSpawned;
     /* 0x88 */ s16 bobbingLeavesXT;
     /* 0x8A */ s16 bobbingLeavesYT;
     /* 0x8C */ s16 bobbingStalkXT;
@@ -1969,7 +1961,7 @@ typedef struct {
 
 // CHI Room 4, Venus Weed
 typedef struct {
-    /* 0x7C */ char pad_7C[0x4];
+    /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ Primitive* stemPrim;
     /* 0x84 */ s16 leavesWidth;
     /* 0x86 */ s16 leavesHeight;
@@ -2429,7 +2421,7 @@ typedef struct {
 } ET_FleaMan;
 
 typedef struct {
-    /* 0x7C */ s32 : 32;
+    /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ s16 timer;
     /* 0x82 */ s16 : 16;
     /* 0x84 */ u8 hopCount;
@@ -2565,8 +2557,7 @@ typedef struct {
 } unk_PlatelordStruct; /* size = 0x14 */
 
 typedef struct {
-    /* 0x7C */ s16 : 16;
-    /* 0x7E */ s16 : 16;
+    /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ s16 unk80;
     /* 0x82 */ s16 unk82;
     /* 0x84 */ u8 unk84;
@@ -2579,8 +2570,7 @@ typedef struct {
 } ET_PlateLord;
 
 typedef struct {
-    /* 0x7C */ s16 : 16;
-    /* 0x7E */ s16 : 16;
+    /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ s16 unk80;
     /* 0x82 */ s16 unk82;
     /* 0x84 */ s16 unk84;
@@ -2622,19 +2612,18 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
-    /* 0x80 */ s16 unk80;
+    /* 0x80 */ s16 timer;
     /* 0x82 */ s16 : 16;
-    /* 0x84 */ u8 unk84;
-    /* 0x85 */ u8 unk85;
-    /* 0x86 */ u8 unk86;
+    /* 0x84 */ u8 facingLeft;
+    /* 0x85 */ u8 didShield;
+    /* 0x86 */ u8 fadeOutZ;
     /* 0x87 */ u8 : 8;
-    /* 0x88 */ s16 unk88;
-    /* 0x8A */ s16 unk8A;
-    /* 0x8C */ u8 unk8C;
-    /* 0x8D */ u8 unk8D;
-    /* 0x8E */ u8 unk8E;
-    /* 0x8F */ u8 unk8F;
-    /* 0x90 */ struct Primitive* unk90;
+    /* 0x88 */ s16 fadeOutY;
+    /* 0x8A */ s16 fadeOutY2;
+    /* 0x8C */ u8 timer2;
+    /* 0x8D */ u8 timer3;
+    /* 0x8E */ u16 : 16;
+    /* 0x90 */ struct Primitive* deathPrim;
 } ET_ArmorLord;
 
 typedef struct {
@@ -3687,6 +3676,38 @@ typedef struct {
 } ET_801BA164;
 
 typedef struct {
+    /* 0x7C */ s32 unk7C;
+    /* 0x80 */ void* anim;
+    /* 0x84 */ s32 unk84;
+    /* 0x88 */ s32 unk88;
+    /* 0x8C */ s32 unk8C;
+} ET_801A518C;
+
+typedef struct {
+    /* 0x7C */ s32 unk7C;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ u8 unk84;
+    /* 0x85 */ u8 unk85;
+    /* 0x86 */ u8 hitTimer;
+    /* 0x87 */ u8 unk87;
+    /* 0x88 */ s32 unk88;
+    /* 0x8C */ s32 unk8C;
+    /* 0x90 */ s32 unk90;
+    /* 0x94 */ s32 unk94;
+    /* 0x98 */ s32 unk98;
+    /* 0x9C */ struct Entity* parent;
+    /* 0xA0 */ u8 hasHit;
+} ET_801A2CC4;
+
+typedef struct {
+    /* 0x7C */ Primitive* prim;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 angle;
+    /* 0x84 */ Point16 trail[13];
+} ET_801A4AF4;
+
+typedef struct {
     /* 0x7C */ s32 : 32;
     /* 0x80 */ u8 playerOnLeft;
 } ET_Coffin;
@@ -3897,15 +3918,14 @@ typedef struct {
 } ET_FlailGuardFlail;
 
 typedef struct {
-    /* 0x7C */ s16 : 16;
-    /* 0x7E */ s16 unk7E;
+    /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ f32 unk80;
     /* 0x84 */ s16 unk84;
     /* 0x86 */ s16 unk86;
 } ET_ClockTowerClouds;
 
 typedef struct {
-    /* 0x7C */ u32 : 32;
+    /* 0x7C */ struct Primitive* prim7C;
     /* 0x80 */ s16 timer;
     /* 0x82 */ u16 : 16;
     /* 0x84 */ u16 : 16;
@@ -3967,7 +3987,7 @@ typedef struct {
 } ET_FloorTrap;
 
 typedef struct {
-    /* 7C */ u32 : 32;
+    /* 7C */ struct Primitive* prim7C;
     /* 80 */ struct Primitive* prim80;
     /* 84 */ struct Primitive* prim84;
     /* 88 */ s16 timer;
@@ -4015,7 +4035,7 @@ typedef struct {
 } ET_801806B0;
 
 typedef struct {
-    /* 0x7C */ s32 : 32;
+    /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ s16 timer;
     /* 0x82 */ s16 unk82;
     /* 0x84 */ s16 unk84;
@@ -4045,7 +4065,7 @@ typedef struct {
 } ET_FakeRalph;
 
 typedef struct {
-    /* 0x7C */ s32 : 32;
+    /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ s16 timer;
     /* 0x82 */ s16 angle;
     /* 0x84 */ s16 red;
@@ -4142,6 +4162,48 @@ typedef struct {
     /* 0x82 */ s16 : 16;
     /* 0x84 */ s16 doubleSpeed;
 } ET_Dodo;
+
+typedef struct {
+    /* 0x7C */ struct Primitive* prim7C;
+    /* 0x80 */ Primitive* prim0;
+    /* 0x84 */ Primitive* prim1;
+    /* 0x88 */ Primitive* prim2;
+    /* 0x8C */ s16 brightness;
+    /* 0x8E */ s16 timer0;
+    /* 0x90 */ s16 timer1;
+} ET_801B0930;
+
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s32 velocityX;
+    /* 0x84 */ s32 velocityY;
+    /* 0x88 */ u32 : 32;
+    /* 0x8C */ u32 : 32;
+    /* 0x90 */ u32 : 32;
+    /* 0x94 */ u32 : 32;
+    /* 0x98 */ u32 : 32;
+    /* 0x9C */ u32 : 32;
+    /* 0xA0 */ u32 : 32;
+    /* 0xA4 */ struct Entity* entity;
+} ET_OlroxDrool;
+
+typedef struct {
+    /* 0x7C */ u32 : 32;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 angle;
+    /* 0x84 */ u8 activeParts;
+    /* 0x85 */ u8 partIndex;
+    /* 0x86 */ u8 unk86;
+    /* 0x87 */ u8 unk87;
+    /* 0x88 */ u32 : 32;
+    /* 0x8C */ u32 : 32;
+    /* 0x90 */ u32 : 32;
+    /* 0x94 */ u32 : 32;
+    /* 0x98 */ u8 palIndex;
+    /* 0x99 */ u8 unk99;
+    /* 0x9A */ u16 : 16;
+    /* 0x9C */ struct Entity* parent;
+} ET_801A1878;
 
 typedef union { // offset=0x7C
     struct Primitive* prim;
@@ -4316,7 +4378,6 @@ typedef union { // offset=0x7C
     ET_SalemWitchTribolt salemWitchTribolt;
     ET_Gremlin gremlin;
     ET_GremlinFire gremlinFire;
-    ET_Thornweed thornweed;
     ET_Corpseweed corpseweed;
     ET_VenusWeed venusWeed;
     ET_VenusWeedFlower venusWeedFlower;
@@ -4457,6 +4518,10 @@ typedef union { // offset=0x7C
     ET_CloakedKnightSword cloakedKnightSword;
     ET_SpikeRoomSwitch spikeRoomSwitch;
     ET_801BA164 et_801BA164;
+    ET_801A518C et_801A518C;
+    ET_801A2CC4 et_801A2CC4;
+    ET_801A4AF4 et_801A4AF4;
+    ET_801A1878 et_801A1878;
     ET_Coffin coffin;
     ET_Lava lava;
     ET_BladeMaster bladeMaster;
@@ -4495,6 +4560,8 @@ typedef union { // offset=0x7C
     ET_Orobourous orob;
     ET_Dodo dodo;
     ET_B0_Unk b0Unk;
+    ET_801B0930 et_801B0930;
+    ET_OlroxDrool olroxDrool;
 } Ext;
 
 SYNC_FIELD(ET_Player, ET_Weapon, anim);
@@ -4556,5 +4623,10 @@ SYNC_FIELD(ET_Subweapon, ET_AguneaCrash, subweaponId);
 SYNC_FIELD(ET_Subweapon, ET_GiantSpinningCross, subweaponId);
 SYNC_FIELD(ET_Subweapon, ET_CrashCross, subweaponId);
 SYNC_FIELD(ET_Subweapon, ET_Whip, subweaponId);
+
+SYNC_FIELD(ET_Weapon, ET_Shield, equipId);
+SYNC_FIELD(ET_Weapon, ET_DarkShield, equipId);
+SYNC_FIELD(ET_Weapon, ET_MedusaShieldLaser, equipId);
+SYNC_FIELD(ET_Weapon, ET_HeraldShieldSwirlEffect, equipId);
 
 #endif // ENTITY_H

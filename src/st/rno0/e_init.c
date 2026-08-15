@@ -34,10 +34,10 @@ void EntityStoneDoor(Entity* self);
 void EntityClockRoomUnused(Entity* self);
 void EntityDummy(Entity* self);
 void EntityGuardian(Entity* self);
-void func_us_801D348C_from_are(Entity* self);
+void EntityGuardianSwordShadow(Entity* self);
 void EntityGuardianFireWave(Entity* self);
-void func_us_801D3700_from_are(Entity* self);
-void OVL_EXPORT(Unused801C2C50)(Entity* self);
+void EntityGuardianUnk2(Entity* self);
+void EntityGuardianUnused(Entity* self);
 void EntityFloorTrap(Entity* self);
 void EntityThornweed(Entity* self);
 void EntityCorpseweed(Entity* self);
@@ -49,7 +49,7 @@ void EntityJackOBonesJack(Entity* self);
 void EntityNovaSkeleton(Entity* self);
 void EntityNovaLaser(Entity* self);
 void EntityNovaLaserPulse(Entity* self);
-void EntityBladeSoldierDeathParts(Entity* self);
+void EntityNovaSkeletonDeathParts(Entity* self);
 void EntityHammer(Entity* self);
 void EntityGurkhaBodyParts(Entity* self);
 void EntityHammerWeapon(Entity* self);
@@ -115,10 +115,10 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityClockRoomUnused,
     EntityDummy,
     EntityGuardian,
-    func_us_801D348C_from_are,
+    EntityGuardianSwordShadow,
     EntityGuardianFireWave,
-    func_us_801D3700_from_are,
-    OVL_EXPORT(Unused801C2C50),
+    EntityGuardianUnk2,
+    EntityGuardianUnused,
     EntityFloorTrap,
     EntityThornweed,
     EntityCorpseweed,
@@ -130,7 +130,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityNovaSkeleton,
     EntityNovaLaser,
     EntityNovaLaserPulse,
-    EntityBladeSoldierDeathParts,
+    EntityNovaSkeletonDeathParts,
     EntityHammer,
     EntityGurkhaBodyParts,
     EntityHammerWeapon,
@@ -168,35 +168,35 @@ PfnEntityUpdate EntityUpdates[] = {
 EInit g_EInitBreakable = {ANIMSET_DRA(3), 0, 0, 0, 0x000};
 EInit g_EInitObtainable = {ANIMSET_DRA(3), 0, 0, 0, 0x001};
 EInit g_EInitParticle = {ANIMSET_DRA(3), 0, 0, 0, 0x002};
-EInit OVL_EXPORT(EInitSpawner) = {ANIMSET_DRA(0), 0, 0, 0, 0x004};
-EInit OVL_EXPORT(EInitInteractable) = {ANIMSET_DRA(0), 0, 0, 0, 0x005};
-EInit OVL_EXPORT(EInitUnkId13) = {ANIMSET_OVL(5), 0, 36, 0, 0x003};
-EInit OVL_EXPORT(EInitLockCamera) = {ANIMSET_DRA(2), 0, 72, 0, 0x05B};
+EInit g_EInitSpawner = {ANIMSET_DRA(0), 0, 0, 0, 0x004};
+EInit g_EInitInteractable = {ANIMSET_DRA(0), 0, 0, 0, 0x005};
+EInit g_EInitUnkIdVariant = {ANIMSET_OVL(5), 0, 36, 0, 0x003};
+EInit g_EInitLockCameraVariant = {ANIMSET_DRA(2), 0, 72, 0, 0x05B};
 EInit Unused_ShouldBeCommon = {ANIMSET_DRA(3), 0, 72, 0, 0x05C};
 EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0, 0, 0, 0x002};
 EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0, 0, 0, 0x001};
 EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
 EInit g_EInitGuardian = {ANIMSET_OVL(3), 1, 82, 518, 0x18C};
-EInit D_us_80180AD4 = {ANIMSET_OVL(3), 0, 82, 518, 0x18D};
-EInit D_us_80180AE0 = {ANIMSET_OVL(0), 0, 0, 0, 0x18E};
-EInit D_us_80180AEC = {ANIMSET_OVL(4), 0, 75, 578, 0x005};
+EInit g_EInitGuardianSwordShadow = {ANIMSET_OVL(3), 0, 82, 518, 0x18D};
+EInit g_EInitGuardianTemp = {ANIMSET_OVL(0), 0, 0, 0, 0x18E};
+EInit g_EInitFloorTrap = {ANIMSET_OVL(4), 0, 75, 578, 0x005};
 EInit g_EInitThornweed = {ANIMSET_OVL(5), 0, 80, 537, 0x09D};
 EInit g_EInitCorpseweedUnused = {ANIMSET_OVL(5), 0, 80, 537, 0x09E};
 EInit g_EInitCorpseweed = {ANIMSET_OVL(5), 0, 80, 537, 0x09F};
-EInit D_us_80180B1C = {ANIMSET_OVL(5), 0, 80, 537, 0x0A0};
+EInit g_EInitCorpseweedProjectile = {ANIMSET_OVL(5), 0, 80, 537, 0x0A0};
 EInit g_EInitStoneSkull = {ANIMSET_OVL(6), 0, 86, 527, 0x180};
 EInit g_EInitJackOBones = {ANIMSET_OVL(7), 1, 74, 528, 0x074};
-EInit D_us_80180B40 = {ANIMSET_OVL(7), 0, 74, 528, 0x002};
-EInit D_us_80180B4C = {ANIMSET_OVL(7), 21, 74, 528, 0x075};
+EInit g_EInitJackOBones2 = {ANIMSET_OVL(7), 0, 74, 528, 0x002};
+EInit g_EInitJackOBones3 = {ANIMSET_OVL(7), 21, 74, 528, 0x075};
 EInit g_EInitNovaSkeleton = {ANIMSET_OVL(8), 1, 72, 532, 0x07E};
-EInit D_us_80180B64 = {ANIMSET_OVL(8), 0, 72, 532, 0x07F};
+EInit g_EInitNovaSkeleton2 = {ANIMSET_OVL(8), 0, 72, 532, 0x07F};
 EInit g_EInitHammer = {ANIMSET_OVL(9), 2, 87, 547, 0x0BA};
-EInit D_us_80180B7C = {ANIMSET_OVL(9), 18, 87, 547, 0x0BB};
+EInit g_EInitHammerWeapon = {ANIMSET_OVL(9), 18, 87, 547, 0x0BB};
 EInit g_EInitGurkha = {ANIMSET_OVL(9), 2, 87, 544, 0x0BC};
-EInit D_us_80180B94 = {ANIMSET_OVL(9), 20, 87, 544, 0x0BD};
+EInit g_EInitGurkhaWeapon = {ANIMSET_OVL(9), 20, 87, 544, 0x0BD};
 EInit g_EInitBlade = {ANIMSET_OVL(9), 2, 87, 541, 0x0BE};
-EInit D_us_80180BAC = {ANIMSET_OVL(9), 19, 87, 541, 0x0BF};
+EInit g_EInitBladeWeapon = {ANIMSET_OVL(9), 19, 87, 541, 0x0BF};
 EInit D_us_80180BB8 = {ANIMSET_OVL(10), 0, 76, 550, 0x005};
 EInit D_us_80180BC4 = {ANIMSET_OVL(10), 0, 76, 550, 0x002};
 EInit g_EInitGorgon = {ANIMSET_OVL(11), 0, 76, 560, 0x01F};

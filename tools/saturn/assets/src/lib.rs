@@ -3,18 +3,24 @@ use std::fmt;
 pub mod adpcm;
 pub mod audio;
 pub mod bitmap;
+pub mod crt;
 pub mod familiar;
 pub mod font;
 pub mod image;
 pub mod lzss;
 pub mod map;
 pub mod map_render;
+pub mod midi;
 pub mod player;
+pub mod psx_stage;
+pub mod seq;
 pub mod sheet;
 pub mod sprite;
 pub mod stage;
+pub mod tone;
 pub mod wav;
 pub mod weapon;
+pub mod xa;
 
 pub type Result<T> = std::result::Result<T, Error>;
 

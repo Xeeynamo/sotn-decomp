@@ -3,8 +3,6 @@
 
 #define STAGE_IS_NZ0
 
-#define OVL_EXPORT(x) NZ0_##x
-
 enum Palettes {
     PAL_NONE,
     PAL_BREAKABLE = 0x219,

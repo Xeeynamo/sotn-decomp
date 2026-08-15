@@ -4,7 +4,6 @@
 
 #include <stage.h>
 
-#define OVL_EXPORT(x) RNO3_##x
 #define STAGE_IS_RNO3
 #define INVERTED_STAGE
 

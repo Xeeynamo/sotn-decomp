@@ -424,7 +424,7 @@ void EntityUnkId19(Entity* self) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            self->ext.prim = prim;
+            self->ext.et_801BE2C8.unk7C = prim;
             while (prim != NULL) {
                 prim->r0 = prim->g0 = prim->b0 = 8;
                 prim->priority = 0xD0;
@@ -450,7 +450,7 @@ void EntityUnkId19(Entity* self) {
 
         posX = self->posX.i.hi;
         posY = self->posY.i.hi - 0x28;
-        prim = self->ext.prim;
+        prim = self->ext.et_801BE2C8.unk7C;
         for (i = 0; i < 32; i++) {
             prim->x0 = posX - xOffset - 0x20 + i;
             prim->y0 = posY - 0x20 + i;
@@ -484,7 +484,7 @@ void EntityUnkId19(Entity* self) {
         break;
 
     case 4:
-        prim = self->ext.prim;
+        prim = self->ext.et_801BE2C8.unk7C;
         prim->type = PRIM_TILE;
         prim->r0 = prim->b0 = prim->g0 = 0xFF;
         prim->priority = 0x40;
@@ -522,7 +522,7 @@ void EntityUnkId19(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
-        self->ext.prim = prim;
+        self->ext.et_801BE2C8.unk7C = prim;
         moveY = self->posY.i.hi;
         moveX = self->posX.i.hi;
 
@@ -565,7 +565,7 @@ void EntityUnkId19(Entity* self) {
 
         D_us_801D3104 = (rcos(D_us_801D3108) >> 8) + 0xD0;
 
-        prim = self->ext.prim;
+        prim = self->ext.et_801BE2C8.unk7C;
 
         for (i = 0; i < 16; i++) {
             angle = D_us_801805EC[(i + 0) % 16];

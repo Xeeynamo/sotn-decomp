@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../stages/stage_loader.h"
 #include "../stages/overlay.h"
 #include "../boss/bo4/bo4.h"
 
@@ -24,7 +23,6 @@ SpriteParts* D_us_801B2068[1] = {0};
 SpriteParts* D_us_801B252C[1] = {0};
 
 OVL_API void InitStage(Overlay* o) {
-    LoadReset();
     memcpy(o, &g_BossOverlay, sizeof(AbbreviatedOverlay2));
     PfnEntityUpdates = EntityUpdates;
     g_pStObjLayoutHorizontal = entityLayoutHorizontal;

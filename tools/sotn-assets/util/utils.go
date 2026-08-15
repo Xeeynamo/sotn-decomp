@@ -1,6 +1,7 @@
 package util
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"image/color"
@@ -316,6 +317,16 @@ func CreateAtomicWriter(name string) (StringWriteCloser, error) {
 
 func (a AtomicWriter) Close() error {
 	a.f.Close()
+
+	same, err := sameFileContent(a.f.Name(), a.name)
+	if err != nil {
+		os.Remove(a.f.Name())
+		return fmt.Errorf("failed to compare temp file with destination %q: %v\n", a.name, err)
+	}
+	if same {
+		return os.Remove(a.f.Name())
+	}
+
 	if err := os.Rename(a.f.Name(), a.name); err != nil {
 		// in the common case, a.f will already be renamed
 		// in case it isn't remove the temp file
@@ -324,6 +335,58 @@ func (a AtomicWriter) Close() error {
 	}
 
 	return nil
+}
+
+// sameFileContent reports whether two files hold identical bytes. A missing
+// destination, which is the first-extraction case, is not an error and simply
+// counts as different.
+func sameFileContent(tempPath, destPath string) (bool, error) {
+	tempInfo, err := os.Stat(tempPath)
+	if err != nil {
+		return false, err
+	}
+	destInfo, err := os.Stat(destPath)
+	if err != nil {
+		if os.IsNotExist(err) {
+			return false, nil
+		}
+		return false, err
+	}
+	if !destInfo.Mode().IsRegular() || tempInfo.Size() != destInfo.Size() {
+		return false, nil
+	}
+
+	tempFile, err := os.Open(tempPath)
+	if err != nil {
+		return false, err
+	}
+	defer tempFile.Close()
+	destFile, err := os.Open(destPath)
+	if err != nil {
+		return false, err
+	}
+	defer destFile.Close()
+
+	const chunk = 64 * 1024
+	tempBuf := make([]byte, chunk)
+	destBuf := make([]byte, chunk)
+	for {
+		n, tempErr := io.ReadFull(tempFile, tempBuf)
+		m, destErr := io.ReadFull(destFile, destBuf)
+		if n != m || !bytes.Equal(tempBuf[:n], destBuf[:m]) {
+			return false, nil
+		}
+		if tempErr != nil || destErr != nil {
+			// Sizes matched up front, so both readers hit the end together.
+			if isEOF(tempErr) && isEOF(destErr) {
+				return true, nil
+			}
+			if tempErr != nil && !isEOF(tempErr) {
+				return false, tempErr
+			}
+			return false, destErr
+		}
+	}
 }
 
 func (a AtomicWriter) Write(p []byte) (int, error) {
@@ -336,4 +399,8 @@ func (a AtomicWriter) WriteString(s string) (int, error) {
 
 func (a AtomicWriter) Name() string {
 	return a.f.Name()
+}
+
+func isEOF(err error) bool {
+	return err == io.EOF || err == io.ErrUnexpectedEOF
 }

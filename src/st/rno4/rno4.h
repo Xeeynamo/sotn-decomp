@@ -10,7 +10,7 @@ enum Palettes {
     PAL_NONE,
 };
 
-enum Entities {
+typedef enum EntityID {
     E_NONE,
     E_BREAKABLE,                 // EntityBreakable
     E_EXPLOSION,                 // EntityExplosion
@@ -95,11 +95,11 @@ enum Entities {
     E_BREAKABLE_WALL,            // EntityBreakableWall
     E_BREAKABLE_WALL_DEBRIS,     // EntityBreakableWallDebris
     E_JACKO_BONES,               // EntityJackOBones
-    E_JACKO_BONES_DEATH_PARTS,   // EntityJackOBonesDeathParts
-    E_JACKO_BONES_JACK,          // EntityJackOBonesJack
+    E_JACKO_DEATH_PARTS,         // EntityJackOBonesDeathParts
+    E_JACKO_JACK,                // EntityJackOBonesJack
     E_NOVA_SKELETON,             // EntityNovaSkeleton
     E_NOVA_LASER,                // EntityNovaLaser
-    E_NOVA_LASER_PULSE,          // EntityNovaLaserPulse
+    E_NOVA_PULSE,                // EntityNovaLaserPulse
     E_BLADE_SOLDIER_DEATH_PARTS, // EntityBladeSoldierDeathParts
     E_IMP,                       // EntityImp
     E_IMP_SMOKE,                 // EntityImpSmoke

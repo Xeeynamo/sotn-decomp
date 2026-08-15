@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/deps"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 )
 
 // allVersions are built by `./sotn.sh build` with no arguments.
@@ -114,11 +115,7 @@ func genNinjaIfNeeded(versionStr string, versions []string) error {
 func copyBuildToExpectedFolder(version string) error {
 	buildPath := filepath.Join("build", version)
 	expectedPath := filepath.Join("expected", "build", version)
-	_ = os.RemoveAll(expectedPath)
-	if err := os.CopyFS(expectedPath, os.DirFS(buildPath)); err != nil {
-		return err
-	}
-	return nil
+	return util.MirrorDir(buildPath, expectedPath)
 }
 
 func parseBuildArgs(args []string) ([]string, error) {

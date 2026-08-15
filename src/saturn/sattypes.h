@@ -53,10 +53,13 @@ typedef enum {
 #define SET_KEY_ON_20_21 0xF00000A4
 #define SET_KEY_ON_22_23 0xF00000A8
 #define SFX_WEAPON_APPEAR 0x62F
+#define SFX_UI_CONFIRM 0x633
+#define SFX_SAVE_HEARTBEAT 0x64D
 #define SFX_BAT_SCREECH 0x64E
 #define SFX_HEART_PICKUP 0x67A
 #define SFX_UI_MOVE 0x67B
 #define SFX_UI_ALERT_TINK 0x6AD
+#define SFX_SAVE_COFFIN_SWISH 0x6E0
 #define SFX_UNUSED_712 0x712
 #define SFX_TOAD_CROAK 0x71A
 
@@ -208,6 +211,26 @@ typedef enum {
 } EntityFlag;
 
 typedef struct {
+    s16 type;
+    s16 priority;
+    u16 unk4;
+    s16 unk6;
+    s16 unk8;
+    s16 unkA;
+    s16 x0;
+    s16 y0;
+    s16 x1;
+    s16 y1;
+    s16 x2;
+    s16 y2;
+    s16 x3;
+    s16 y3;
+    s16 : 16;
+    u16 drawMode;
+    struct Primitive* next;
+} Primitive;
+
+typedef struct {
     u8 disableFlag;
     u8 resetFlag;
     u8 index;
@@ -282,16 +305,46 @@ typedef struct {
     /* 0xAA */ s16 cameraY;
     /* 0xAC */ s16 lastPlayerPosX;
     /* 0xAE */ s16 lastPlayerPosY;
+    /* 0xB0 */ struct SpriteParts* unkB0;
 } ET_Bat;
 
+typedef union {
+    u8 u8[0x3C];
+    s8 s8[0x3C];
+    u16 u16[0x1E];
+    s16 s16[0x1E];
+    u32 u32[0xF];
+    s32 s32[0xF];
+} ET_Placeholder;
+
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    s32 unkC;
+    Primitive* unk10;
+    Primitive* unk14;
+    Primitive* unk18;
+    s16 unk1C;
+    s16 unk1E;
+    s32 unk20;
+    s32 unk24;
+    s32 unk28;
+    s32 unk2C;
+    s32 unk30;
+    s32 unk34;
+    s32 unk38;
+} ET_SaveRoom;
+
 typedef union { // offset=0x78
-    u8 base[0x38];
+    ET_Placeholder ILLEGAL;
     ET_AfterImage afterImage; // g_Entities[1], not entityID 1
     ET_Factory factory;
     ET_ExplosionPuffOpaque opaquePuff;
     ET_Subweapon subweapon;
     ET_BatFamBlueTrail batFamBlueTrail;
     ET_Bat bat;
+    ET_SaveRoom save;
     struct {
         u8 pad[0x28];
         u16 unkA0;
@@ -308,8 +361,8 @@ typedef struct Entity {
     /* 0x16 */ s16 hitboxOffY;
     /* 0x18 */ u16 facingLeft;
     /* 0x1A */ u16 palette;
-    /* 0x1B */ u8 : 8;
-    /* 0x1C */ u8 unk1C;
+    /* 0x1C */ u8 : 8;
+    /* 0x1D */ u8 unk1D;
     /* 0x1E */ s16 rotate;
     /* 0x20 */ s16 : 16;
     /* 0x22 */ s16 : 16;
@@ -348,8 +401,7 @@ typedef struct Entity {
     /* 0x74 */ u16 entityId;
     /* 0x76 */ char pad_76[0x2];
     /* 0x78 */ Ext ext;
-    /* 0xB0 */ struct SpriteParts* pad_B0;
-    /* 0xB4 */ struct UnkStruct_060e8350* unkB4;
+    /* 0xB4 */ Primitive* unkB4;
 } Entity; // size = 0xB8
 
 typedef struct SpritePart {
@@ -646,22 +698,22 @@ typedef struct {
 } PlayerState;
 
 typedef struct {
-    s32 : 32;
+    s32 primIndex;
     s32 D_800973FC;
+    s32 pauseEnemies;
     s32 : 32;
     s32 : 32;
-    s32 : 32;
-    s32 : 32;
-    s32 : 32;
-    s32 : 32;
-    s32 : 32;
-    s32 : 32;
+    s32 unk14;
+    s32 BottomCornerTextTimer;
+    s32 BottomCornerTextPrims;
+    s32 unk20;
+    s32 unk24;
     s32 unk28;
-    s32 : 32;
+    s32 unk2C;
     u32 D_80097428[8];
-    s32 : 32;
-    s32 : 32;
-    s32 : 32;
+    s32 D_80097448;
+    s32 D_8009744C;
+    s32 D_80097450;
     s32 : 32;
     s32 : 32;
     s32 : 32;
@@ -736,26 +788,6 @@ typedef struct {
     s32 : 32;
     s32 g_HealingMailTimer;
 } PlayerHud;
-
-typedef struct {
-    s16 type;
-    s16 priority;
-    u16 unk4;
-    s16 unk6;
-    s16 unk8;
-    s16 unkA;
-    s16 x0;
-    s16 y0;
-    s16 x1;
-    s16 y1;
-    s16 x2;
-    s16 y2;
-    s16 x3;
-    s16 y3;
-    s16 : 16;
-    u16 drawMode;
-    struct Primitive* next;
-} Primitive;
 
 typedef struct {
     /* 0x0 */ u16 pressed;
@@ -887,6 +919,14 @@ typedef struct {
     u16 reloadStageId;
     u16 stageId;
 } RoomTeleport;
+
+typedef struct {
+    s32 x;
+    s32 y;
+    s32 stageId;
+    s32 eventId;
+    s32 castleFlag;
+} RoomBossTeleport;
 
 typedef enum {
     PLAYER_CHARACTER,

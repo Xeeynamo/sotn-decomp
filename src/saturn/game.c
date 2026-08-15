@@ -70,7 +70,7 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f6071C3C, func_06071C3C);
 extern s32 DAT_0605c120;
 extern s32 g_PlayerY;
 extern s32 D_80097C98;
-extern s32 DAT_0605c668;
+extern s32 DAT_0605C668;
 extern s32 DAT_0605cd54;
 extern s32 g_PlayerX;
 extern Unk0605cd70 DAT_0605cd70;
@@ -86,7 +86,7 @@ extern s32 D_801375A4;
 
 void InitRoomEntities(s32);
 void SetDefaultSCLPriority(s32);
-void FUN_0606d358(s32);
+void func_800F2404(s32);
 void SetCanRevealMap(void);
 void func_06009510(s32);
 
@@ -100,7 +100,7 @@ void InitRoom(void) {
     if (g_CurrentRoom.unk4 < 0x50) {
         D_8003C708.flags = 0;
     }
-    DAT_0605c668 = 1;
+    DAT_0605C668 = 1;
     DAT_0605ceb0 = 0;
     Scl_w_reg.win1_start[0] = 0;
     Scl_w_reg.win1_start[1] = 0;
@@ -121,7 +121,7 @@ void InitRoom(void) {
     PLAYER.posY.i.hi = D_801375BC.pos.y + g_Tilemap.scrollY.i.hi;
     DAT_060860bc = 0;
     DAT_060860c0 = 0;
-    FUN_0606d358(1);
+    func_800F2404(1);
     uVar9 = g_CurrentRoom.stageID & 0xDF;
     if ((uVar9 == 6 || uVar9 == 11 || uVar9 == 9 || uVar9 == 3) &&
         g_CurrentRoom.unkA != g_CurrentRoom.unk8) {

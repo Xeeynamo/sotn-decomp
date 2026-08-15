@@ -139,13 +139,8 @@ set(SOURCE_FILES_PC
     src/pc/pl_arc.c
     src/pc/pl_ric.c
     src/pc/servant_pc.c
-    src/pc/stages/stage_loader.c
     src/pc/stages/overlay.c
     src/pc/weapon_pc.c
-)
-
-set(SOURCE_FILES_3RD
-    src/pc/3rd/cJSON/cJSON.c
 )
 
 set(SOURCE_FILES_DRA
@@ -282,6 +277,65 @@ set(SOURCE_FILES_STAGE_SEL
     src/st/sel/cutscene_data.c
 )
 
+set(SOURCE_FILES_STAGE_ARE
+    src/pc/stages/stage_are.c
+    src/st/are/header.c
+    src/st/are/sprite_banks.c
+    src/st/are/palette_def.c
+    src/st/are/layers.c
+    src/st/are/graphics_banks.c
+    src/st/are/gen/e_laydef.c
+    src/st/are/e_init.c
+    src/st/are/background_block_init.c
+    src/st/are/e_red_door_tiles.c
+    src/st/are/d_prize_drops.c
+    src/st/are/gen/rooms.c
+    src/st/are/gen/e_layout.c
+    src/st/are/gfx_data.c
+    src/st/are/tilemaps.c
+    src/st/are/gen/us/sprites.c
+    src/st/are/e_room_bg.c
+    src/st/are/e_lock_camera.c
+    src/st/are/e_breakable.c
+    src/st/are/e_boss_torch.c
+    src/st/are/e_boss_doors.c
+    src/st/are/e_cavern_door.c
+    src/st/are/e_elevator.c
+    src/st/are/e_fountain_water.c
+    src/st/are/e_secrets.c
+    src/st/are/e_background_door_rubble.c
+    src/st/are/e_explosion_puff_opaque.c
+    src/st/are/st_update.c
+    src/st/are/st_collision.c
+    src/st/are/create_entity.c
+    src/st/are/e_red_door.c
+    src/st/are/st_common.c
+    src/st/are/e_collect.c
+    src/st/are/e_misc.c
+    src/st/are/e_stage_name.c
+    src/st/are/e_particles.c
+    src/st/are/e_room_fg.c
+    src/st/are/popup.c
+    src/st/are/e_blade_master.c
+    src/st/are/e_blade_soldier.c
+    src/st/are/e_bone_musket.c
+    src/st/are/e_owl_knight.c
+    src/st/are/e_valhalla_knight.c
+    src/st/are/e_blue_axe_knight.c
+    src/st/are/e_armor_lord.c
+    src/st/are/e_hunting_girl.c
+    src/st/are/e_paranthropus.c
+    src/st/are/e_flea_armor.c
+    src/st/are/e_flea_man.c
+    src/st/are/e_bone_scimitar.c
+    src/st/are/e_plate_lord.c
+    src/st/are/e_plate_lord_2.c
+    src/st/are/e_grave_keeper.c
+    src/st/are/e_mist_door.c
+    src/st/are/prim_helpers.c
+    src/st/are/bss.c
+)
+
 set(SOURCE_FILES_STAGE_NO2
     src/pc/stages/stage_no2.c
     src/st/no2/header.c
@@ -318,7 +372,7 @@ set(SOURCE_FILES_STAGE_NO2
     src/st/no2/34DA4.c
     src/st/no2/372E8.c
     src/st/no2/37580.c
-    src/st/no2/4966C.c
+    src/st/no2/giantbro_helpers_2.c
     src/st/no2/blade.c
     src/st/no2/e_background_house.c
     src/st/no2/e_bloody_zombie.c
@@ -359,7 +413,7 @@ set(SOURCE_FILES_STAGE_CHI
     src/st/chi/en_room_foreground.c
     src/st/chi/e_salem_witch.c
     src/st/chi/e_gremlin.c
-    src/st/chi/en_thornweed_corpseweed.c
+    src/st/chi/e_thornweed_corpseweed.c
     src/st/chi/en_venus_weed.c
     src/st/chi/gen/rooms.c
     src/st/chi/gen/e_layout.c
@@ -463,7 +517,7 @@ set(SOURCE_FILES_STAGE_NP3
     src/st/np3/popup.c
     src/st/np3/prim_helpers.c
     src/st/np3/bss.c
-    src/st/np3/4E04C.c
+    src/st/np3/giantbro_helpers_2.c
     src/st/np3/d_water_data.c
     src/st/np3/water_effects.c
     src/st/np3/entrance_weights.c
@@ -881,7 +935,7 @@ set(SOURCE_FILES_STAGE_LIB
     src/st/lib/popup.c
     src/st/lib/e_dhuron.c
     src/st/lib/e_ectoplasm.c
-    src/st/lib/en_thornweed_corpseweed.c
+    src/st/lib/e_thornweed_corpseweed.c
     src/st/lib/e_skeleton.c
     src/st/lib/e_mist_door.c
     src/st/lib/e_flea_armor.c
@@ -945,13 +999,11 @@ add_subdirectory(tools/psyz/psyz)
 
 add_executable(${PROJECT_NAME}
     ${SOURCE_FILES_PC}
-    ${SOURCE_FILES_3RD}
     ${SOURCE_FILES_CORE})
 
 target_include_directories(${PROJECT_NAME} PUBLIC
     include
     src/dra
-    src/pc/3rd
 )
 
 target_compile_definitions(${PROJECT_NAME} PUBLIC
@@ -1003,7 +1055,6 @@ function(add_overlay name)
     target_include_directories(${name} PRIVATE
         include
         src/dra
-        src/pc/3rd
         src/pc
     )
 
@@ -1031,6 +1082,7 @@ function(add_overlay name)
 endfunction()
 
 add_overlay(sel ${SOURCE_FILES_STAGE_SEL})
+add_overlay(are ${SOURCE_FILES_STAGE_ARE})
 add_overlay(no2 ${SOURCE_FILES_STAGE_NO2})
 add_overlay(chi ${SOURCE_FILES_STAGE_CHI})
 add_overlay(dai ${SOURCE_FILES_STAGE_DAI})
@@ -1045,7 +1097,7 @@ add_overlay(no3 ${SOURCE_FILES_STAGE_NO3})
 add_overlay(lib ${SOURCE_FILES_STAGE_LIB})
 add_overlay(mad ${SOURCE_FILES_STAGE_MAD})
 
-foreach(id 000 002 007 008 012 034 037 040 041 043 045 046 051 052)
+foreach(id 000 002 007 008 012 034 035 037 040 041 043 045 046 051 052)
     add_overlay(w0_${id} src/weapon/w_${id}.c)
     target_compile_definitions(w0_${id} PRIVATE WEAPON0)
     add_overlay(w1_${id} src/weapon/w_${id}.c)

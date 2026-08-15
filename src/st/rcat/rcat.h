@@ -4,7 +4,6 @@
 
 #include <stage.h>
 
-#define OVL_EXPORT(x) RCAT_##x
 #define STAGE_IS_RCAT
 #define INVERTED_STAGE
 
