@@ -424,7 +424,38 @@ s32 func_pspeu_0923F088(Entity* self, s32 arg1) {
     return var_s1;
 }
 
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_62A8", func_pspeu_0923F198);
+void func_pspeu_0923F198(s32 count) {
+    s32 i;
+    Primitive* prim;
+
+    prim = g_CurrentEntity->ext.prim;
+    for(i = 0; i < count; i++) {
+        if (g_CurrentEntity->ext.ILLEGAL.u8[0x2C] == 0) {
+            prim->clut = 0x232;
+            prim->priority = 0x72;
+        } else {
+            prim->clut = 0x233;
+            prim->priority = 0x6E;
+        }
+        if (g_CurrentEntity->palette & 0x8000) {
+            prim->clut = g_CurrentEntity->palette & 0xFFF;
+        }
+        prim = prim->next;
+    }
+    for(i = 0; i < count; i++) {
+        if (g_CurrentEntity->ext.ILLEGAL.u8[0x2C] == 0) {
+            prim->clut = 0x233;
+            prim->priority = 0x6E;
+        } else {
+            prim->clut = 0x232;
+            prim->priority = 0x72;
+        }
+        if (g_CurrentEntity->palette & 0x8000) {
+            prim->clut = g_CurrentEntity->palette & 0xFFF;
+        }
+        prim = prim->next;
+    }
+}
 
 INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_62A8", func_pspeu_0923F300);
 
