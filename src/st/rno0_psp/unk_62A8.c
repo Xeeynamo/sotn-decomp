@@ -205,7 +205,50 @@ Primitive* func_pspeu_0923E300(Pos* ent1, Pos* ent2, s16* arg2, Primitive* prim)
 
 #include "../step_towards.h"
 
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_62A8", func_pspeu_0923E6D0);
+s32 func_pspeu_0923E6D0(Entity* arg0, s16* arg1, Entity* arg2, s16* arg3, u16* arg4) {
+    s32 var_s2;
+    s32 var_s5;
+    s32 var_s4;
+    s32 var_s3;
+    s32 var_s1;
+    s16 var_s0;
+
+    
+    var_s2 = g_CurrentEntity->posX.i.hi;
+    if (g_CurrentEntity->facingLeft ) {
+        var_s2 = var_s2 - 2;
+    } else {
+        var_s2 = var_s2 + 2;
+    }
+    var_s4 = var_s2 - arg2->posX.i.hi;
+    var_s5 = var_s2 - arg0->posX.i.hi;
+    if (g_CurrentEntity->facingLeft) {
+        var_s4 = -var_s4;
+        var_s5 = -var_s5;
+    }
+    var_s3 = arg4[0];
+    var_s1 = arg4[1];
+    if (arg2->ext.ILLEGAL.s16[2] && (var_s3 < var_s4) && (var_s5 < -var_s3)) {
+        return 1;
+    }
+    if (var_s4 < var_s3) {
+        *arg3 += var_s1;
+        var_s0 = *arg3 - 0x300;
+    } else {
+        var_s0 = *arg3 - 0x240;
+    }
+    StepTowards(arg3 + 1, var_s0 - 0x100, var_s1);
+    StepTowards(arg3 + 2, var_s0 + 0x100, var_s1);
+    if (-var_s3 < var_s5) {
+        *arg1 -= var_s1;
+        var_s0 = *arg1 - 0x240;
+    } else {
+        var_s0 = *arg1 - 0x300;
+    }
+    StepTowards(arg1 + 1, var_s0 - 0x100, var_s1);
+    StepTowards(arg1 + 2, var_s0 + 0x100, var_s1);
+    return 0;
+}
 
 INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_62A8", func_pspeu_0923E920);
 
