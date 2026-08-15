@@ -1224,7 +1224,7 @@ add_overlay(no3 ${SOURCE_FILES_STAGE_NO3})
 add_overlay(lib ${SOURCE_FILES_STAGE_LIB})
 add_overlay(mad ${SOURCE_FILES_STAGE_MAD})
 
-foreach(id 000 002 007 008 012 034 035 037 040 041 043 045 046 051 052)
+foreach(id 000 002 007 008 012 034 035 037 040 041 043 045 046 050 051 052)
     add_overlay(w0_${id} src/weapon/w_${id}.c)
     target_compile_definitions(w0_${id} PRIVATE WEAPON0)
     add_overlay(w1_${id} src/weapon/w_${id}.c)
