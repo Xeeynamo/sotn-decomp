@@ -37,7 +37,7 @@ typedef struct {
     /* 0x7C */ u32 unk[14];
     /* 0xB4 */ u16 unkB4;
     /* 0xB6 */ s16 unkB6;
-} ET_HeartDrop;
+} ET_PersistentDrop;
 
 typedef struct {
     /* 0x7C */ u16 timer;
@@ -4231,7 +4231,7 @@ typedef union { // offset=0x7C
     ET_BibleBeam bibleBeam;
     ET_BibleSubwpn et_BibleSubwpn;
     ET_EquipItemDrop equipItemDrop;
-    ET_HeartDrop heartDrop;
+    ET_PersistentDrop heartDrop;
     ET_BloodDroplets bloodDroplets;
     ET_BloodSplatter bloodSplatter;
     ET_NumericDamage ndmg;
