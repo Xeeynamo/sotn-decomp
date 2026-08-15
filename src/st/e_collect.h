@@ -1474,11 +1474,12 @@ void EntityRelicOrb(Entity* self) {
 // defined in d_prize_drops.c
 extern u16 PrizeDrops[];
 
-// EntityHeartDrop: Handles persistent room item drops (hearts, relics, items, equipment).
-// Checks g_CastleFlags via HEART_DROP_CASTLE_FLAG to prevent re-spawning already collected items.
-// Looks up item ID in PrizeDrops[] and delegates entity update behavior to EntityPrizeDrop
-// or EntityEquipItemDrop depending on item index range (< 128 vs >= 128).
-// params: Local index of this drop
+// EntityHeartDrop: Handles persistent room item drops (hearts, relics, items,
+// equipment). Checks g_CastleFlags via HEART_DROP_CASTLE_FLAG to prevent
+// re-spawning already collected items. Looks up item ID in PrizeDrops[] and
+// delegates entity update behavior to EntityPrizeDrop or EntityEquipItemDrop
+// depending on item index range (< 128 vs >= 128). params: Local index of this
+// drop
 void EntityHeartDrop(Entity* self) {
     u16 index;
     u8 value;
