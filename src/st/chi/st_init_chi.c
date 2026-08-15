@@ -16,7 +16,7 @@ s32 E_ID(GREY_PUFF);
 s32 E_ID(ID_16);
 s32 E_ID(ID_17);
 s32 E_ID(ID_18);
-s32 E_ID(ID_19);
+s32 E_ID(BREAKABLE_WALL_DEBRIS);
 s32 E_ID(BREAKABLE_DEBRIS);
 s32 E_ID(ID_1B);
 s32 E_ID(ID_1C);
@@ -47,7 +47,7 @@ void InitEntityIds(void) {
     E_ID(ID_16) = 0x16;
     E_ID(ID_17) = 0x17;
     E_ID(ID_18) = 0x18;
-    E_ID(ID_19) = 0x19;
+    E_ID(BREAKABLE_WALL_DEBRIS) = 0x19;
     E_ID(BREAKABLE_DEBRIS) = 0x1A;
     E_ID(ID_1B) = 0x1B;
     E_ID(ID_1C) = 0x1C;
