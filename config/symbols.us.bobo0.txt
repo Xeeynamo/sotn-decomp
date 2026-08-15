@@ -84,7 +84,7 @@ EntityPrizeDrop = 0x801C0F14; // source=match
 EntityExplosion = 0x801C1788; // source=match
 EntityEquipItemDrop = 0x801C1928; // source=match
 EntityRelicOrb = 0x801C21C0; // source=match
-EntityHeartDrop = 0x801C2C90; // source=match
+EntityPersistentItemDrop = 0x801C2C90; // source=match
 EntityMessageBox = 0x801C2DAC; // source=match
 EntityUnkId13 = 0x801C33F8; // source=match
 EntityExplosionVariants = 0x801C3720; // source=match
