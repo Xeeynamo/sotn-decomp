@@ -12,7 +12,7 @@ enum Palettes {
     PAL_EXPLOSION_FLAME = 0x2E0,
 };
 
-typedef enum EntityID {
+enum EntityID {
     E_NONE,
     E_BREAKABLE,            // EntityBreakable
     E_EXPLOSION,            // EntityExplosion

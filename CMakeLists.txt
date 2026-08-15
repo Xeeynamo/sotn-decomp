@@ -878,11 +878,14 @@ set (SOURCE_FILES_STAGE_ST0
 SET(SOURCE_FILES_BOSS_BO1
     src/pc/bosses/boss_bo1.c
     src/boss/bo1/background_block_init.c
+    src/boss/bo1/bss.c
     src/boss/bo1/collision.c
     src/boss/bo1/create_entity.c
     src/boss/bo1/d_prize_drops.c
     src/boss/bo1/e_breakable.c
     src/boss/bo1/e_collect.c
+    src/boss/bo1/e_explosion_flame.c
+    src/boss/bo1/e_granfaloon.c
     src/boss/bo1/e_init.c
     src/boss/bo1/e_life_up.c
     src/boss/bo1/e_lock_camera.c
@@ -909,9 +912,6 @@ SET(SOURCE_FILES_BOSS_BO1
     src/boss/bo1/st_common.c
     src/boss/bo1/st_update.c
     src/boss/bo1/unk_210A8.c
-    src/boss/bo1/e_granfaloon.c
-    src/boss/bo1/unk_250BC_us.c
-    src/boss/bo1/unk_2518C.c
 )
 
 SET(SOURCE_FILES_BOSS_BO4

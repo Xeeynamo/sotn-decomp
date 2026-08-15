@@ -81,7 +81,7 @@ extern s32 E_ID(UNK_23);
 void EntityGranfaloon(Entity* self) {
     // the actual entity is the core of Granfaloon, which internally spawns 9
     // entities that will act like an armor.
-    typedef enum Step {
+    enum Step {
         INIT,
         UNUSED_1,
         READY_TO_SPAWN,
@@ -522,7 +522,7 @@ static u8 hitbox_lookup[] = {
     0,  39, 0,  39, 0,  40, 0,  0,  0,  0, 0,  0,  0,  0,
 };
 void EntityBodyPartShell(Entity* self) {
-    typedef enum Step {
+    enum Step {
         INIT,
         WAIT_SPAWN,
         IDLE,
@@ -737,7 +737,7 @@ void func_us_801A2D90(Entity* self) {
 }
 
 void EntityGranfaloonTentacle(Entity* self) {
-    typedef enum Step {
+    enum Step {
         INIT,
         UNK_1,
         DEAD,
@@ -853,7 +853,7 @@ void EntityGranfaloonTentacle(Entity* self) {
 }
 
 void EntityTentacleHead(Entity* self) {
-    typedef enum Step {
+    enum Step {
         INIT,
         IDLE,
         ATTACK,

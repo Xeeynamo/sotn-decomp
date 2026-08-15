@@ -67,12 +67,16 @@ u16 pal_granfaloon[] = {
 u16 pal_explosion_flame[] = {
 #include "gen/pal_explosion_flame.h"
 };
+#ifndef VERSION_PSP
 u16 pal_14BD8[] = {
 #include "gen/pal_14BD8.h"
 };
+#endif
 
+#ifndef VERSION_PSP
 #include "gen/bo1_tilemap_0.h"
 #include "gen/bo1_tilemap_1.h"
 #include "gen/bo1_tiledef_unused.h"
 #include "gen/bo1_tiledef_unused_1.h"
 #include "gen/bo1_tiledef_0.h"
+#endif
