@@ -36,7 +36,7 @@ void EntityZombieFalling(Entity* self);
 void EntityZombieEnemy(Entity* self);
 void func_us_801A518C(Entity* self);
 void func_us_801A493C(Entity* self);
-void func_us_801A4AF4(Entity* self);
+void EntityGranfaloonLaser(Entity* self);
 void EntityLifeUpSpawn(Entity* self);
 
 PfnEntityUpdate EntityUpdates[] = {
@@ -75,7 +75,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityZombieEnemy,
     func_us_801A518C,
     func_us_801A493C,
-    func_us_801A4AF4,
+    EntityGranfaloonLaser,
     EntityLifeUpSpawn,
 };
 

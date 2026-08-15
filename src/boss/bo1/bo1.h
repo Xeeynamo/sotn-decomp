@@ -47,7 +47,7 @@ typedef enum EntityID {
     E_ZOMBIE_ENEMY,       // EntityZombieEnemy
     E_UNK_22,             // func_us_801A518C
     E_UNK_23,             // func_us_801A493C
-    E_LASER,              // func_us_801A4AF4, lasers?
+    E_LASER,              // EntityGranfaloonLaser
     E_LIFE_UPSPAWN,       // EntityLifeUpSpawn
     NUM_ENTITIES,
 };

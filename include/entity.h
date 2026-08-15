@@ -3684,28 +3684,11 @@ typedef struct {
 } ET_801A518C;
 
 typedef struct {
-    /* 0x7C */ s32 unk7C;
-    /* 0x80 */ s16 unk80;
-    /* 0x82 */ s16 unk82;
-    /* 0x84 */ u8 unk84;
-    /* 0x85 */ u8 unk85;
-    /* 0x86 */ u8 hitTimer;
-    /* 0x87 */ u8 unk87;
-    /* 0x88 */ s32 unk88;
-    /* 0x8C */ s32 unk8C;
-    /* 0x90 */ s32 unk90;
-    /* 0x94 */ s32 unk94;
-    /* 0x98 */ s32 unk98;
-    /* 0x9C */ struct Entity* parent;
-    /* 0xA0 */ u8 hasHit;
-} ET_801A2CC4;
-
-typedef struct {
     /* 0x7C */ Primitive* prim;
     /* 0x80 */ s16 timer;
     /* 0x82 */ s16 angle;
     /* 0x84 */ Point16 trail[13];
-} ET_801A4AF4;
+} ET_GranfaloonLaser;
 
 typedef struct {
     /* 0x7C */ s32 : 32;
@@ -4188,41 +4171,27 @@ typedef struct {
 } ET_OlroxDrool;
 
 typedef struct {
-    /* 0x7C */ u32 : 32;
+    /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ s16 timer;
     /* 0x82 */ s16 angle;
     /* 0x84 */ u8 activeParts;
     /* 0x85 */ u8 partIndex;
-    /* 0x86 */ u8 unk86;
+    /* 0x86 */ u8 hitTimer;
     /* 0x87 */ u8 unk87;
-    /* 0x88 */ u32 : 32;
-    /* 0x8C */ u32 : 32;
-    /* 0x90 */ u32 : 32;
-    /* 0x94 */ u32 : 32;
-    /* 0x98 */ u8 palIndex;
-    /* 0x99 */ u8 unk99;
-    /* 0x9A */ u16 : 16;
-    /* 0x9C */ struct Entity* parent;
-} ET_801A1878;
-
-// Granfaloon's laser beam (func_us_801A38EC)
-typedef struct {
-    /* 0x7C */ struct Primitive* prim;
-    /* 0x80 */ s16 timer;
-    /* 0x82 */ u16 : 16;
-    /* 0x84 */ u32 : 32;
     /* 0x88 */ s16 hitX;
     /* 0x8A */ s16 hitY;
     /* 0x8C */ u32 : 32;
     /* 0x90 */ u32 : 32;
     /* 0x94 */ u32 : 32;
-    /* 0x98 */ u32 : 32;
+    /* 0x98 */ u8 palIndex;
+    /* 0x99 */ u8 palMask;
+    /* 0x9A */ u16 : 16;
     /* 0x9C */ struct Entity* parent;
     /* 0xA0 */ u8 hasHit;
     /* 0xA1 */ u8 : 8;
     /* 0xA2 */ u16 : 16;
     /* 0xA4 */ s32 length;
-} ET_GranfaloonLaser;
+} ET_Granfaloon;
 
 typedef union { // offset=0x7C
     struct Primitive* prim;
@@ -4538,10 +4507,8 @@ typedef union { // offset=0x7C
     ET_SpikeRoomSwitch spikeRoomSwitch;
     ET_801BA164 et_801BA164;
     ET_801A518C et_801A518C;
-    ET_801A2CC4 et_801A2CC4;
-    ET_801A4AF4 et_801A4AF4;
-    ET_801A1878 et_801A1878;
     ET_GranfaloonLaser granfaloonLaser;
+    ET_Granfaloon granfaloon;
     ET_Coffin coffin;
     ET_Lava lava;
     ET_BladeMaster bladeMaster;
