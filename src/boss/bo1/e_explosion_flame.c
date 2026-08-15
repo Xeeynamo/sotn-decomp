@@ -45,6 +45,28 @@ static EInitUnk22 D_pspeu_092683B0[] = {
 extern s32 E_ID(EXPLOSION_FLAME);
 #endif
 
+void func_us_8019D260_from_rcen(void) {
+    s16 temp_s3;
+    s32 i;
+    s8 temp_s4;
+    Entity* entity;
+
+    temp_s4 = Random() & 3;
+    temp_s3 = ((Random() & 0xF) << 8) - 0x800;
+    for (i = 0; i < 6; i++) {
+        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (entity != NULL) {
+            CreateEntityFromEntity(
+                E_ID(EXPLOSION_FLAME), g_CurrentEntity, entity);
+            entity->ext.et_801A518C.unk89 = 6 - i;
+            entity->ext.et_801A518C.unk88 = temp_s4;
+            entity->params = 2;
+            entity->ext.et_801A518C.unk84 = temp_s3;
+            entity->zPriority = g_CurrentEntity->zPriority + 1;
+        }
+    }
+}
+
 void EntityExplosionFlame(Entity* self) {
     s32 var_s3;
     EInitUnk22* initEntry;
@@ -60,7 +82,7 @@ void EntityExplosionFlame(Entity* self) {
         self->blendMode = initEntry->blendMode;
         self->animSet = initEntry->animSet;
         self->unk5A = initEntry->unk5A;
-        self->ext.et_801A518C.anim = initEntry->anim;
+        self->ext.et_801A518C.anim = (u8*)initEntry->anim;
         self->step = var_s3 + 1;
         if (self->params & 0xFF00) {
             self->zPriority = (self->params & 0xFF00) >> 8;

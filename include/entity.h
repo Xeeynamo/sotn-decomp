@@ -3677,9 +3677,12 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ s32 unk7C;
-    /* 0x80 */ void* anim;
-    /* 0x84 */ s32 unk84;
-    /* 0x88 */ s32 unk88;
+    /* 0x80 */ u8* anim;
+    /* 0x84 */ u16 unk84;
+    /* 0x84 */ u16 : 16;
+    /* 0x88 */ u8 unk88;
+    /* 0x89 */ s8 unk89;
+    /* 0x8A */ s16 : 16;
     /* 0x8C */ s32 unk8C;
 } ET_801A518C;
 
