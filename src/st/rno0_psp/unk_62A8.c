@@ -166,8 +166,8 @@ Primitive* func_pspeu_0923E300(Pos* ent1, Pos* ent2, s16* arg2, Primitive* prim)
     *arg2 = ratan2(-var_s0, var_s1);
     var_s4 = 0xE00;
     var_s3 = 0x1100;
-    var_s0 /= 0x100;
-    var_s1 /= 0x100;
+    var_s0 = var_s0 / 0x100;
+    var_s1 = var_s1 / 0x100;
     var_s2 = SquareRoot0((var_s0 * var_s0) + (var_s1 * var_s1));
     if (var_s2 > 0x1F00) {
         var_s2 = 0x1F00;
