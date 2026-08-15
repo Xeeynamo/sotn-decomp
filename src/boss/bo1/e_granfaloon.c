@@ -753,17 +753,6 @@ void func_us_801A2D90(Entity* self) {
 
 INCLUDE_ASM("boss/bo1/nonmatchings/e_granfaloon", func_us_801A2F2C);
 
-#if defined(VERSION_US) && !defined(VERSION_PC)
-INCLUDE_ASM("boss/bo1/nonmatchings/e_granfaloon", func_us_801A3480);
-#else
-#define STUFF() /* TODO please inline this */                                  \
-    self->rotate = angle - 0x400;                                              \
-    self->posX.i.hi = parent->posX.i.hi;                                       \
-    self->posY.i.hi = parent->posY.i.hi;                                       \
-    self->posX.i.hi += ((rcos(angle) * 40) >> 12);                             \
-    self->posY.i.hi += ((rsin(angle) * 40) >> 12);                             \
-    if (0) {                                                                   \
-    }
 void func_us_801A3480(Entity* self) {
     Entity* parent;
     s16 angle;
@@ -783,8 +772,12 @@ void func_us_801A3480(Entity* self) {
     case 1:
         index = self->params;
         parent = self - 1;
-        angle = parent->rotate + D_us_80180D00[index];
-        STUFF();
+        angle = D_us_80180D00[index] + parent->rotate;
+        self->rotate = angle - 0x400;
+        self->posX.i.hi = parent->posX.i.hi;
+        self->posY.i.hi = parent->posY.i.hi;
+        self->posX.i.hi += ((rcos(angle) * 40) >> 12);
+        self->posY.i.hi += ((rsin(angle) * 40) >> 12);
         if (parent->ext.et_801A2CC4.unk84) {
             SetStep(2);
         }
@@ -792,8 +785,12 @@ void func_us_801A3480(Entity* self) {
     case 2:
         index = self->params;
         parent = self - 1;
-        angle = parent->rotate + D_us_80180D00[index];
-        STUFF();
+        angle = D_us_80180D00[index] + parent->rotate;
+        self->rotate = angle - 0x400;
+        self->posX.i.hi = parent->posX.i.hi;
+        self->posY.i.hi = parent->posY.i.hi;
+        self->posX.i.hi += ((rcos(angle) * 40) >> 12);
+        self->posY.i.hi += ((rsin(angle) * 40) >> 12);
         switch (self->step_s) {
         case 0:
             if (!AnimateEntity(D_us_80180E10, self)) {
@@ -825,8 +822,12 @@ void func_us_801A3480(Entity* self) {
     case 3:
         index = self->params;
         parent = self - 1;
-        angle = parent->rotate + D_us_80180D00[index];
-        STUFF();
+        angle = D_us_80180D00[index] + parent->rotate;
+        self->rotate = angle - 0x400;
+        self->posX.i.hi = parent->posX.i.hi;
+        self->posY.i.hi = parent->posY.i.hi;
+        self->posX.i.hi += ((rcos(angle) * 40) >> 12);
+        self->posY.i.hi += ((rsin(angle) * 40) >> 12);
         switch (self->step_s) {
         case 0:
             self->hitboxState = 0;
@@ -855,7 +856,6 @@ void func_us_801A3480(Entity* self) {
         break;
     }
 }
-#endif
 
 INCLUDE_ASM("boss/bo1/nonmatchings/e_granfaloon", func_us_801A38EC);
 
