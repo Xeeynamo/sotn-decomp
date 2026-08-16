@@ -4208,7 +4208,17 @@ typedef struct {
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ s16 unk80;
-
+    /* 0x84 */ u32 : 32;
+    /* 0x88 */ u32 : 32;
+    /* 0x8C */ u32 : 32;
+    /* 0x90 */ u32 : 32;
+    /* 0x94 */ u32 : 32;
+    /* 0x98 */ u32 : 32;
+    /* 0x9C */ u32 : 32;
+    /* 0xA0 */ u32 : 32;
+    /* 0xA4 */ u32 : 32;
+    /* 0xA8 */ u16 : 16;
+    /* 0xAA */ u8 unkAA;
 } ET_Gorgon;
 
 typedef union { // offset=0x7C

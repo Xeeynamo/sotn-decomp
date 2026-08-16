@@ -280,16 +280,16 @@ s32 func_pspeu_0923E920(
     if ((arg2->ext.gorgon.unk80) && (var_s0 < var_s3) && (var_s2 < -var_s0)) {
         return 1;
     }
-    switch (g_CurrentEntity->ext.ILLEGAL.u8[0x2E]) { /* irregular */
+    switch (g_CurrentEntity->ext.gorgon.unkAA) { /* irregular */
     case 0:
         StepTowards(arg3 + 1, -0x240, var_s1);
         if (StepTowards(arg3, 0x1C0, var_s1) != 0) {
-            g_CurrentEntity->ext.ILLEGAL.u8[0x2E] += 1;
+            g_CurrentEntity->ext.gorgon.unkAA += 1;
         }
         break;
     case 1:
         if (StepTowards(arg3 + 1, *arg3, var_s1) != 0) {
-            g_CurrentEntity->ext.ILLEGAL.u8[0x2E] += 1;
+            g_CurrentEntity->ext.gorgon.unkAA += 1;
         }
         break;
     case 2:
@@ -322,7 +322,7 @@ s32 func_pspeu_0923EBE8(Entity* arg0, s16* arg1, Entity* arg2, s16* arg3) {
     if ((arg2->ext.gorgon.unk80) && (var_s1 < -8) && (var_s2 > 8)) {
         return 1;
     }
-    switch (g_CurrentEntity->ext.ILLEGAL.u8[0x2E]) { /* irregular */
+    switch (g_CurrentEntity->ext.gorgon.unkAA) { /* irregular */
     case 0:
         if (var_s1 > -8) {
             *arg3 -= 0x10;
@@ -330,7 +330,7 @@ s32 func_pspeu_0923EBE8(Entity* arg0, s16* arg1, Entity* arg2, s16* arg3) {
             StepTowards(arg3 + 1, var_s0 - 0x140, 0x40);
             StepTowards(arg3 + 2, var_s0 + 0x140, 0x40);
         } else {
-            g_CurrentEntity->ext.ILLEGAL.u8[0x2E] += 1;
+            g_CurrentEntity->ext.gorgon.unkAA += 1;
         }
         break;
     case 1:
@@ -374,16 +374,16 @@ s32 func_pspeu_0923EE78(Entity* arg0, s16* arg1, Entity* arg2, s16* arg3) {
     if (arg2->ext.gorgon.unk80 && (var_s0 < -8) && (var_s2 > 8)) {
         return 1;
     }
-    switch (g_CurrentEntity->ext.ILLEGAL.u8[0x2E]) { /* irregular */
+    switch (g_CurrentEntity->ext.gorgon.unkAA) { /* irregular */
     case 0:
         StepTowards(arg3 + 1, -0x280, 0x20);
         if (StepTowards(arg3, -0xC0, 0x18)) {
-            g_CurrentEntity->ext.ILLEGAL.u8[0x2E] += 1;
+            g_CurrentEntity->ext.gorgon.unkAA += 1;
         }
         break;
     case 1:
         if (StepTowards(arg3 + 1, *arg3, 0x20)) {
-            g_CurrentEntity->ext.ILLEGAL.u8[0x2E] += 1;
+            g_CurrentEntity->ext.gorgon.unkAA += 1;
         }
         break;
     case 2:
@@ -468,7 +468,7 @@ static void func_pspeu_0923F300(s32 newStep) {
     for (ent = g_CurrentEntity, i = 0; i < 10; i++, ent++) {
         ent->step = newStep;
         ent->step_s = 0;
-        ent->ext.ILLEGAL.u8[0x2E] = 0;
+        ent->ext.gorgon.unkAA = 0;
     }
 }
 
@@ -864,7 +864,7 @@ void func_us_801D068C(Entity* self) {
         func_pspeu_0923F198(3);
         if (sp68 != 0) {
             self->ext.ILLEGAL.u8[0x32] = 1;
-            self->ext.ILLEGAL.u8[0x2E] = 0;
+            self->ext.gorgon.unkAA = 0;
             self->ext.ILLEGAL.u8[0x2C] ^= 1;
         } else {
             self->ext.ILLEGAL.u8[0x32] = 0;
@@ -1075,7 +1075,7 @@ void func_us_801D0CFC(Entity* self) {
         if (sp68 != 0) {
             self->ext.ILLEGAL.u8[0x32] = 1;
             self->ext.ILLEGAL.u8[0x2C] ^= 1;
-            self->ext.ILLEGAL.u8[0x2E] = 0;
+            self->ext.gorgon.unkAA = 0;
         } else {
             self->ext.ILLEGAL.u8[0x32] = 0;
         }
