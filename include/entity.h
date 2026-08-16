@@ -4215,10 +4215,17 @@ typedef struct {
     /* 0x94 */ u32 : 32;
     /* 0x98 */ u32 : 32;
     /* 0x9C */ u32 : 32;
-    /* 0xA0 */ u32 : 32;
-    /* 0xA4 */ u32 : 32;
-    /* 0xA8 */ u16 : 16;
+    /* 0xA0 */ s16 unkA0;
+    /* 0xA3 */ u16 : 16;
+    /* 0xA4 */ s16 unkA4;
+    /* 0xA6 */ u16 : 16;
+    /* 0xA8 */ u8 unkA8;
+    /* 0xA9 */ u8 unkA9;
     /* 0xAA */ u8 unkAA;
+    /* 0xAB */ u8 unkAB;
+    /* 0xAC */ u8 unkAC;
+    /* 0xAD */ u8 unkAD;
+    /* 0xAE */ u8 unkAE;
 } ET_Gorgon;
 
 typedef union { // offset=0x7C
