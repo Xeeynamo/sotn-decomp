@@ -7668,7 +7668,7 @@
 | no3        | func_pspeu_09239298                |      229 |         25 |        |       |     |
 | no1        | func_pspeu_092635F0                |      229 |         26 |        |       |     |
 | dai        | func_pspeu_092531D8                |      229 |         33 |        |       |     |
-| rno4       | func_us_801C1C94_from_no4          |      230 |         22 |        |       |     |
+| rno4       | EntityBgColumnsParallax_from_no4   |      230 |         22 |        |       |     |
 | rbo6       | func_us_801A0860                   |      230 |         24 | Yes    |       |     |
 | rno4       | func_us_801C909C                   |      230 |         26 | Yes    |       |     |
 | lib        | func_psp_0925ED00                  |      231 |         11 |        |       |     |
