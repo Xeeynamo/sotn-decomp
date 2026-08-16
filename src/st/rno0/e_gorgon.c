@@ -1308,7 +1308,7 @@ void EntityGorgonFoot(Entity* self) {
             self->ext.gorgon.unkAD = 1;
         }
     } else {
-        self->rotate = -0x100;
+        self->rotate = ROT(-22.5);
         self->ext.gorgon.unk80 = 0;
         self->ext.gorgon.unkAD = 0;
     }
