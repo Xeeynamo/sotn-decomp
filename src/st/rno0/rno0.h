@@ -81,7 +81,7 @@ enum EntityID {
     E_GORGON_REAR,           // EntityGorgonRear
     E_GORGON_FOOT,           // EntityGorgonFoot
     E_GORGON_HEAD,           // EntityGorgonHead
-    E_UNK_43,                // func_us_801D2038
+    E_GORGON_SADDLE,         // EntityGorgonSaddle
     E_UNK_44,                // func_us_801D1BF0
     E_GORGON_ATTACK,         // EntityGorgonAttack
     E_GORGON_SNORT,          // EntityGorgonSnort

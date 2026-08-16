@@ -538,7 +538,7 @@ void EntityGorgon(Entity* self) {
         other_s1 = self + 7;
         CreateEntityFromEntity(E_GORGON_HEAD, self, other_s1);
         other_s1 = self + 9;
-        CreateEntityFromEntity(E_UNK_43, self, other_s1);
+        CreateEntityFromEntity(E_GORGON_SADDLE, self, other_s1);
         other_s1 = self + 8;
         CreateEntityFromEntity(E_UNK_44, self, other_s1);
         self->ext.gorgon.unkA4 = 2;
@@ -1647,7 +1647,7 @@ void func_us_801D1BF0(Entity* self) {
 
 // Uses the ext struct weird, I'm doing f32 casts for now until we understand
 // this whole gorgon file better.
-void func_us_801D2038(Entity* self) {
+void EntityGorgonSaddle(Entity* self) {
     Collider sp1C;
     s32 xVar, yVar;
     Entity* player;
