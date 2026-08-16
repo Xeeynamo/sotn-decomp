@@ -786,10 +786,10 @@ void func_us_801D068C(Entity* self) {
         self->hitboxOffX = -8;
         self->hitboxOffY = 8;
         other = self + 1;
-        CreateEntityFromEntity(E_UNK_41U, self, other);
+        CreateEntityFromEntity(E_UNK_41, self, other);
         other->params = 0;
         other = self + 2;
-        CreateEntityFromEntity(E_UNK_41U, self, other);
+        CreateEntityFromEntity(E_UNK_41, self, other);
         other->params = 1;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 6);
         if (primIndex == -1) {
@@ -1006,10 +1006,10 @@ void func_us_801D0CFC(Entity* self) {
         self->drawFlags = ENTITY_ROTATE;
         self->zPriority = 0x73;
         other = self + 1;
-        CreateEntityFromEntity(E_UNK_41U, self, other);
+        CreateEntityFromEntity(E_UNK_41, self, other);
         other->params = 0x10;
         other = self + 2;
-        CreateEntityFromEntity(E_UNK_41U, self, other);
+        CreateEntityFromEntity(E_UNK_41, self, other);
         other->params = 0x11;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
         if (primIndex == -1) {
@@ -1364,7 +1364,7 @@ void func_us_801D15C0(Entity* self) {
             if (!(g_Timer & 3)) {
                 other = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
                 if (other != NULL) {
-                    CreateEntityFromEntity(E_UNK_45U, self, other);
+                    CreateEntityFromEntity(E_UNK_45, self, other);
                     other->facingLeft = self->facingLeft;
                     if (self->facingLeft) {
                         other->posX.i.hi += 0xC;
@@ -1411,7 +1411,7 @@ void func_us_801D15C0(Entity* self) {
             other = AllocEntity(&g_Entities[0xE0], (Entity*)&D_80097C98);
             if (other != NULL) {
                 PlaySfxPositional(SFX_GORGON_SNORT);
-                CreateEntityFromEntity(E_UNK_46U, self, other);
+                CreateEntityFromEntity(E_UNK_46, self, other);
                 other->facingLeft = self->facingLeft;
                 if (self->facingLeft) {
                     other->posX.i.hi += 0x14;
@@ -1651,7 +1651,7 @@ void func_us_801D2038(Entity* self) {
         }
     default:
         self->animCurFrame = 0xC;
-        if (GetPlayerCollisionWith(self, 0x10U, 8U, 4U) != 0) {
+        if (GetPlayerCollisionWith(self, 0x10, 8, 4U) != 0) {
             xVar = (g_Tilemap.scrollX.val + self->posX.val) -
                    self->ext.ILLEGAL.u32[1];
             // unused but let's calculate it just for fun
