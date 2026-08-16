@@ -2441,6 +2441,9 @@ static char D_pspeu_0929D870[] =
     "\xB4\x24" _SE("Une chose est apparue\001près du pont en bois.");
 static char D_pspeu_0929D8A0[] =
     "\xB4\x24" _SE("Etwas ist bei der\001Holzbrücke erschienen.");
+#elif defined(VERSION_PC) // source is UTF-8, not Shift-JIS
+static char D_us_80181644[] =
+    "\xB8\x1ESomething appeared near\001to the wooden bridge\x81\x44";
 #else
 static char D_us_80181644[] =
     "\xB8\x1ESomething appeared near\001to the wooden bridge．";
