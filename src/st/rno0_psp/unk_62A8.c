@@ -2,8 +2,16 @@
 #include "../rno0/rno0.h"
 
 extern EInit g_EInitGorgon;
-extern u8 D_pspeu_0925EEB0[];
-extern u8 D_pspeu_0925EEE0[];
+static u8 D_pspeu_0925EEB0[][8] = {{121, 86, 127, 92, 111, 97, 123, 105}, 
+                                    {72, 95, 81, 88, 79, 103, 87, 96}, 
+                                    {85, 101, 95, 113, 70, 120, 84, 130}, 
+                                    {85, 101, 95, 113, 70, 120, 84, 130}, 
+                                    {72, 95, 81, 88, 79, 103, 87, 96}, 
+                                    {121, 86, 127, 92, 111, 97, 123, 105}};
+static u8 D_pspeu_0925EEE0[][8] = {{69, 64, 77, 72, 56, 79, 63, 87}, 
+                                    {88, 83, 103, 83, 88, 100, 103, 100}, 
+                                    {69, 64, 77, 72, 56, 79, 63, 87}, 
+                                    {88, 83, 103, 83, 88, 100, 103, 100}};
 
 // These first two are copied from the Plate Lord?
 static void func_pspeu_0923D928(Pos* src, s32 speed, s16 angle, Pos* dst) {
@@ -802,7 +810,7 @@ void func_us_801D068C(Entity* self) {
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
         self->ext.gorgon.prim = prim;
-        var_s2 = D_pspeu_0925EEB0;
+        var_s2 = (u8*)D_pspeu_0925EEB0;
         for (var_s5 = 0; var_s5 < 6; var_s5++) {
             prim->tpage = 0x13;
             prim->clut = 0x232;
@@ -1022,7 +1030,7 @@ void func_us_801D0CFC(Entity* self) {
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
         self->ext.gorgon.prim = prim;
-        var_s2 = D_pspeu_0925EEE0;
+        var_s2 = (u8*)D_pspeu_0925EEE0;
         while (prim != NULL) {
             prim->tpage = 0x13;
             prim->clut = 0x232;
