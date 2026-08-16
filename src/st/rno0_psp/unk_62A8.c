@@ -816,11 +816,11 @@ void func_us_801D068C(Entity* self) {
             prim = prim->next;
         }
         self->ext.gorgon.unk80 = 0x180;
-        self->ext.ILLEGAL.s16[3] = -0x80;
-        self->ext.ILLEGAL.s16[4] = 0x100;
-        self->ext.ILLEGAL.s16[5] = 0x180;
-        self->ext.ILLEGAL.s16[6] = -0x80U;
-        self->ext.ILLEGAL.s16[7] = 0x100;
+        self->ext.gorgon.unk82 = -0x80;
+        self->ext.gorgon.unk84 = 0x100;
+        self->ext.gorgon.unk86 = 0x180;
+        self->ext.gorgon.unk88 = -0x80U;
+        self->ext.gorgon.unk8A = 0x100;
         self->step = 0x15;
         break;
     case 17: /* switch 1 */
@@ -833,10 +833,10 @@ void func_us_801D068C(Entity* self) {
             other7 = self + 1;
             var_s4 = &self->ext.gorgon.unk80;
             other6 = self + 2;
-            var_s3 = &self->ext.ILLEGAL.s16[5];
+            var_s3 = &self->ext.gorgon.unk86;
         } else {
             other7 = self + 2;
-            var_s4 = &self->ext.ILLEGAL.s16[5];
+            var_s4 = &self->ext.gorgon.unk86;
             other6 = self + 1;
             var_s3 = &self->ext.gorgon.unk80;
         }
@@ -886,10 +886,10 @@ void func_us_801D068C(Entity* self) {
             other7 = self + 1;
             var_s4 = &self->ext.gorgon.unk80;
             other6 = self + 2;
-            var_s3 = &self->ext.ILLEGAL.s16[5];
+            var_s3 = &self->ext.gorgon.unk86;
         } else {
             other7 = self + 2;
-            var_s4 = &self->ext.ILLEGAL.s16[5];
+            var_s4 = &self->ext.gorgon.unk86;
             other6 = self + 1;
             var_s3 = &self->ext.gorgon.unk80;
         }
@@ -1036,7 +1036,7 @@ void func_us_801D0CFC(Entity* self) {
             prim = prim->next;
         }
         self->ext.gorgon.unk80 = 0;
-        self->ext.ILLEGAL.s16[3] = 0x40;
+        self->ext.gorgon.unk82 = 0x40;
         self->step = 0x15;
         break;
     case 17: /* switch 1 */
@@ -1046,10 +1046,10 @@ void func_us_801D0CFC(Entity* self) {
             other3 = self + 1;
             var_s4 = &self->ext.gorgon.unk80;
             other7 = self + 2;
-            var_s6 = &self->ext.ILLEGAL.s16[4];
+            var_s6 = &self->ext.gorgon.unk84;
         } else {
             other3 = self + 2;
-            var_s4 = &self->ext.ILLEGAL.s16[4];
+            var_s4 = &self->ext.gorgon.unk84;
             other7 = self + 1;
             var_s6 = &self->ext.gorgon.unk80;
         }
@@ -1088,10 +1088,10 @@ void func_us_801D0CFC(Entity* self) {
             other3 = self + 1;
             var_s4 = &self->ext.gorgon.unk80;
             other7 = self + 2;
-            var_s6 = &self->ext.ILLEGAL.s16[4];
+            var_s6 = &self->ext.gorgon.unk84;
         } else {
             other3 = self + 2;
-            var_s4 = &self->ext.ILLEGAL.s16[4];
+            var_s4 = &self->ext.gorgon.unk84;
             other7 = self + 1;
             var_s6 = &self->ext.gorgon.unk80;
         }
@@ -1131,7 +1131,7 @@ void func_us_801D0CFC(Entity* self) {
                         (Pos*)self, (Pos*)other3, var_s4, prim);
                 }
                 other3 = self + 2;
-                var_s4 = &self->ext.ILLEGAL.s16[4];
+                var_s4 = &self->ext.gorgon.unk84;
             }
             func_pspeu_0923F198(2);
             sp64 = self->posX.i.hi;
@@ -1355,7 +1355,7 @@ void func_us_801D15C0(Entity* self) {
             temp_s2 = temp_s2 + StepTowards(&self->rotate, 0x100, 0x30);
             if ((AnimateEntity(&D_pspeu_0925EF10, self) == 0) &&
                 (temp_s2 == 2)) {
-                self->ext.ILLEGAL.u16[0x14] = 0x40;
+                self->ext.gorgon.unkA4 = 0x40;
                 PlaySfxPositional(SFX_GORGON_ATTACK);
                 self->step_s += 1;
             }
