@@ -1621,6 +1621,8 @@ void func_us_801D1BF0(Entity* self) {
     }
 }
 
+// Uses the ext struct weird, I'm doing f32 casts for now until we understand
+// this whole gorgon file better.
 void func_us_801D2038(Entity* self) {
     Collider sp1C;
     s32 xVar, yVar;
@@ -1653,18 +1655,18 @@ void func_us_801D2038(Entity* self) {
         self->animCurFrame = 0xC;
         if (GetPlayerCollisionWith(self, 0x10, 8, 4U) != 0) {
             xVar = (g_Tilemap.scrollX.val + self->posX.val) -
-                   self->ext.ILLEGAL.u32[1];
+                   (*(f32*)&self->ext.gorgon.unk80).val;
             // unused but let's calculate it just for fun
             yVar = (g_Tilemap.scrollY.val + self->posY.val) -
-                   self->ext.ILLEGAL.u32[2];
+                   (*(f32*)&self->ext.gorgon.unk84).val;
             player = &PLAYER;
             player->posX.val += xVar;
             player->posY.i.hi += 1;
         }
         break;
     }
-    self->ext.ILLEGAL.u32[1] = g_Tilemap.scrollX.val + self->posX.val;
-    self->ext.ILLEGAL.u32[2] = g_Tilemap.scrollY.val + self->posY.val;
+    (*(f32*)&self->ext.gorgon.unk80).val = g_Tilemap.scrollX.val + self->posX.val;
+    (*(f32*)&self->ext.gorgon.unk84).val = g_Tilemap.scrollY.val + self->posY.val;
 }
 
 extern AnimateEntityFrame D_pspeu_0925EF40[];
