@@ -1655,6 +1655,23 @@ void func_us_801D2038(Entity* self) {
     self->ext.ILLEGAL.u32[2] = g_Tilemap.scrollY.val + self->posY.val;
 }
 
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_62A8", func_us_801D21C8);
+extern AnimateEntityFrame D_pspeu_0925EF40[];
+
+void func_us_801D21C8(Entity* self) {
+    switch (self->step) {                              /* irregular */
+    case 0:
+        InitializeEntity(g_EInitGorgon);
+        self->zPriority = 0x72;
+        self->palette = 0x8235;
+        self->velocityY = -0xC000;
+        break;
+    case 1:
+        MoveEntity();
+        if (AnimateEntity(D_pspeu_0925EF40, self) == 0) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_62A8", func_us_801D2264);
