@@ -540,7 +540,7 @@ void EntityGorgon(Entity* self) {
         other_s1 = self + 9;
         CreateEntityFromEntity(E_GORGON_SADDLE, self, other_s1);
         other_s1 = self + 8;
-        CreateEntityFromEntity(E_UNK_44, self, other_s1);
+        CreateEntityFromEntity(E_GORGON_TAIL, self, other_s1);
         self->ext.gorgon.unkA4 = 2;
         break;
     case 1:
@@ -1502,7 +1502,7 @@ void EntityGorgonHead(Entity* self) {
 // This has a bunch of weird manipulation of prim fields using the LOW and
 // similar macros. This indicates it may be yet another Primitive variant.
 // Worthy of further research.
-void func_us_801D1BF0(Entity* self) {
+void EntityGorgonTail(Entity* self) {
     s32 sp3C;
     s32 sp38;
     Entity* sp34;
