@@ -1245,7 +1245,7 @@ void EntityGorgonFoot(Entity* self) {
         self->animCurFrame = 16;
         if (self->params & 1) {
             self->zPriority = 0x6D;
-            self->palette = 0x8234;
+            self->palette = PAL_FLAG(0x234);
         } else {
             self->zPriority = 0x71;
         }
@@ -1489,7 +1489,7 @@ void EntityGorgonHead(Entity* self) {
         sp6C.y = 0xC;
         prim = self->ext.gorgon.prim;
         func_us_801D2424(&sp40, var_s3, &sp6C, &sp38, var_s3, &sp6C, prim);
-        if (self->palette & 0x8000) {
+        if (self->palette & PAL_UNK_FLAG) {
             prim->clut = self->palette & 0xFFF;
         } else {
             prim->clut = 0x232;
@@ -1632,7 +1632,7 @@ void func_us_801D1BF0(Entity* self) {
             prim->next->y1 = var_s4 & 0xFFFF;
             LOW(prim->next->x0) = var_s7;
             UnkPrimHelper(prim);
-            if (self->palette & 0x8000) {
+            if (self->palette & PAL_UNK_FLAG) {
                 prim->clut = self->palette & 0xFFF;
             } else {
                 prim->clut = 0x232;
@@ -1700,7 +1700,7 @@ void EntityGorgonSnort(Entity* self) {
     case 0:
         InitializeEntity(g_EInitGorgon);
         self->zPriority = 0x72;
-        self->palette = 0x8235;
+        self->palette = PAL_FLAG(0x235);
         self->velocityY = FIX(-0.75);
         break;
     case 1:
