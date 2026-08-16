@@ -76,7 +76,10 @@ void func_06066FE0(Primitive* prim0, Primitive* prim1, Primitive* prim2) {
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6067090, func_06067090);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60674B8, func_060674B8);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6067958, func_06067958);
+extern u8 DAT_0604E5E0[];
+extern void* memset(void* dest, int value, unsigned long size);
+
+void func_06067958(void) { memset(DAT_0604E5E0, 0, 0x1800); }
 
 extern u8 DAT_0604E5E0[];
 

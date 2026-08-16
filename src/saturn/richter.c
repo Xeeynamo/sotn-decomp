@@ -1800,7 +1800,40 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BCE64, func_060BCE64);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BD11C, func_060BD11C);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BD2AC, func_060BD2AC);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BD3D8, func_060BD3D8);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BD4EC, func_060BD4EC);
+extern s32 D_060CEE6C[];
+extern s32 D_060CEEDC[];
+s32 func_0606F21C(s32 eventId, s32 action);
+
+// SortTimeAttackEntries
+void func_060BD4EC(void) {
+    s32 i;
+    s32 isLooping;
+    s32 swapTime;
+    s32 swapName;
+
+    for (i = 0; i < 28; i++) {
+        D_060CEE6C[i] = func_0606F21C(i, 0);
+        if (D_060CEE6C[i] == 0) {
+            D_060CEE6C[i] = 1000000;
+        }
+        D_060CEEDC[i] = i;
+    }
+
+    do {
+        isLooping = false;
+        for (i = 0; i < 27; i++) {
+            if (D_060CEE6C[i] > D_060CEE6C[i + 1]) {
+                swapTime = D_060CEE6C[i];
+                D_060CEE6C[i] = D_060CEE6C[i + 1];
+                D_060CEE6C[i + 1] = swapTime;
+                swapName = D_060CEEDC[i];
+                D_060CEEDC[i] = D_060CEEDC[i + 1];
+                D_060CEEDC[i + 1] = swapName;
+                isLooping++;
+            }
+        }
+    } while (isLooping);
+}
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BD580, func_060BD580);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BD768, func_060BD768);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BDADC, func_060BDADC);

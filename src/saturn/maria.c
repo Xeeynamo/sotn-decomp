@@ -672,7 +672,40 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BDC7C, func_060BDC7C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BDDA0, func_060BDDA0);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BDED8, func_060BDED8);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE064, func_060BE064);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE258, func_060BE258);
+extern s32 DAT_060476a0;
+extern s32 DAT_060476a4;
+extern s32 d_060cd748;
+extern s32 d_060cd74c;
+extern s32 DAT_0605c6e4;
+
+typedef struct {
+    u16 unk_0000[0xC00];
+    u16 colors0[4];
+    u16 colors1[4];
+} SpGourTblData;
+
+extern SpGourTblData* SpGourTbl;
+
+void func_060BE258(void) {
+    s32* ptr;
+    u16* colors0;
+    u16* colors1;
+
+    ptr = func_060784A8();
+    func_060BE72C(ptr);
+    d_060cd748 = DAT_060476a0;
+    d_060cd74c = DAT_060476a4;
+    if (g_PlayableCharacter == 0) {
+        DAT_060476a0 = 0x252000;
+        DAT_060476a4 = 1;
+    }
+    colors0 = SpGourTbl->colors0;
+    colors0[0] = colors0[1] = 0xB18C;
+    colors0[2] = colors0[3] = 0xD294;
+    colors1 = SpGourTbl->colors1;
+    colors1[0] = colors1[1] = colors1[2] = colors1[3] = 0x9084;
+    DAT_0605c6e4 = 1;
+}
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE308, func_060BE308);
 
 s32 DAT_06086390;

@@ -139,7 +139,14 @@ INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60EDF48, func_060EDF48);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60EDF80, func_060EDF80);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60EE4B8, func_060EE4B8);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60EE5F4, func_060EE5F4);
-INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60EE644, func_060EE644);
+extern void func_06079BB4(Entity* self);
+extern void func_0600B004(SpriteObject* sprite, u32 imageIndex);
+extern u32 DAT_060FA59C[];
+
+void func_060EE644(Entity* self) {
+    func_06079BB4(self);
+    func_0600B004(self->unk0, DAT_060FA59C[self->animCurFrame]);
+}
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60EE67C, func_060EE67C);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60EE6C4, func_060EE6C4);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60EEE20, func_060EEE20);
