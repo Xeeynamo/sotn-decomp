@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "../rno0/rno0.h"
+#include "rno0.h"
 
 extern EInit g_EInitGorgon;
 extern EInit D_us_80180BDC;

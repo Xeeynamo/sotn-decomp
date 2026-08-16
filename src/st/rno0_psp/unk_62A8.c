@@ -23,10 +23,10 @@ static AnimateEntityFrame D_pspeu_0925EF20[] = {{1, 25}, {7, 24}, {7, 23}, {7, 1
 static AnimateEntityFrame D_pspeu_0925EF30[] = {{2, 11}, {2, 23}, {2, 24}, {2, 25}, {2, 24}, {2, 23}, {2, 11}, POSE_LOOP(0)};
 static AnimateEntityFrame D_pspeu_0925EF40[] = {{3, 26}, {2, 27}, {2, 28}, {3, 29}, {3, 30}, {4, 31}, {5, 32}, {4, 33}, {4, 34}, POSE_END};
 
+// This could be a file split issue
 #ifdef VERSION_US
-static s32 fakepad;
+static s32 fakepad = 0;
 #endif
-
 
 // These first two are copied from the Plate Lord?
 static void func_pspeu_0923D928(Pos* src, s32 speed, s16 angle, Pos* dst) {
@@ -504,6 +504,7 @@ void EntityGorgon(Entity* self) {
     s32 i;
     Entity* other_s0;
     Entity* other_s1;
+    s32 stackpad[6];
 
     if ((self->flags & FLAG_DEAD) && (self->step < 0x16)) {
         for (other_s0 = self, i = 0; i < 10; i++, other_s0++) {
@@ -781,11 +782,12 @@ void EntityGorgon(Entity* self) {
 }
 
 void func_us_801D068C(Entity* self) {
-    Point16 sp6C;
+    s16 sp6E;
     s32 sp68;
     s32 sp64;
     s32 sp60;
     Collider sp3C;
+    s32 stackpad[2];
     u16 sp38[2];
     s32 primIndex;
     Entity* other7;
@@ -987,12 +989,12 @@ void func_us_801D068C(Entity* self) {
     other->facingLeft = self->facingLeft;
     if (!self->ext.gorgon.unkAB) {
         if ((self->step == 0x10) || (self->step == 0x11)) {
-            sp6C.y = 0x360;
+            sp6E = 0x360;
         } else {
-            sp6C.y = 0x330;
+            sp6E = 0x330;
         }
         other = self + 3;
-        func_pspeu_0923D928((Pos*)self, 0x22, sp6C.y, (Pos*)other);
+        func_pspeu_0923D928((Pos*)self, 0x22, sp6E, (Pos*)other);
         other = self + 7;
         other->posX.i.hi = self->posX.i.hi;
         if (self->facingLeft) {
@@ -1005,7 +1007,6 @@ void func_us_801D068C(Entity* self) {
 }
 
 void func_us_801D0CFC(Entity* self) {
-    Point16 sp6C;
     s32 sp68;
     s32 sp64;
     s32 sp60;
@@ -1330,7 +1331,7 @@ void func_us_801D15C0(Entity* self) {
         self->hitboxHeight = 7;
         self->hitboxOffX = -3;
         self->drawFlags |= ENTITY_ROTATE;
-        primIndex = g_api_AllocPrimitives(PRIM_GT4, 1);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -1515,7 +1516,7 @@ void func_us_801D1BF0(Entity* self) {
         InitializeEntity(g_EInitGorgon);
         self->animCurFrame = 0x14;
         self->zPriority = 0x6F;
-        sp3C = g_api_AllocPrimitives(PRIM_GT4, 10);
+        sp3C = g_api.AllocPrimitives(PRIM_GT4, 10);
         if (sp3C == -1) {
             DestroyEntity(self);
             return;
