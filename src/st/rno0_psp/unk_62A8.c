@@ -1466,7 +1466,150 @@ void func_us_801D15C0(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_62A8", func_us_801D1BF0);
+// This has a bunch of weird manipulation of prim fields using the LOW and
+// similar macros. This indicates it may be yet another Primitive variant.
+// Worthy of further research.
+void func_us_801D1BF0(Entity* self) {
+    s32 sp3C;
+    s32 sp38;
+    Entity* sp34;
+    Primitive* prim;
+    s16 angle;
+    s32 temp_s2;
+    s32 temp_s1;
+    u32 var_s4;
+    s32 var_s5;
+    s32 var_s6;
+    s32 var_s7;
+    u32 var_s3;
+
+    switch (self->step) {                              /* irregular */
+    case 0:
+        InitializeEntity(g_EInitGorgon);
+        self->animCurFrame = 0x14;
+        self->zPriority = 0x6F;
+        sp3C = g_api_AllocPrimitives(PRIM_GT4, 10);
+        if (sp3C == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags |= 0x800000;
+        self->primIndex = sp3C;
+        prim = &g_PrimBuf[sp3C];
+        self->ext.prim = prim;
+        for(var_s6 = 0; var_s6 < 4; var_s6++){
+            UnkPolyFunc2(prim);
+            prim->tpage = 0x13;
+            prim->clut = 0x232;
+            prim->u0 = 0x1E;
+            prim->v0 = 0x52;
+            prim->u1 = 0x24;
+            prim->v1 = 0x4E;
+            prim->u2 = 0x22;
+            prim->v2 = 0x58;
+            prim->u3 = 0x28;
+            prim->v3 = 0x54;
+            LOH(prim->next->r2) = 6;
+            LOH(prim->next->b2) = 6;
+            prim->next->x1 = self->posX.i.hi;
+            prim->next->y0 = self->posY.i.hi;
+            prim->priority = 0x6F;
+            prim->drawMode = 2;
+            prim = prim->next;
+            prim = prim->next;
+        }
+        UnkPolyFunc2(prim);
+        prim->tpage = 0x13;
+        prim->clut = 0x232;
+        prim->u0 = 4;
+        prim->v0 = 0x2B;
+        prim->u1 = 0xB;
+        prim->v1 = 0x2B;
+        prim->u2 = 4;
+        prim->v2 = 0x34;
+        prim->u3 = 0xB;
+        prim->v3 = 0x34;
+        LOH(prim->next->r2) = 9;
+        LOH(prim->next->b2) = 10;
+        prim->next->x1 = self->posX.i.hi;
+        prim->next->y0 = self->posY.i.hi;
+        prim->priority = 0x6F;
+        prim->drawMode = 2;
+        // please konami, you're returning, there is no reason to increment the prim
+        prim = prim->next;
+        prim = prim->next;
+        return;
+    case 19:
+        if (!self->step_s) {
+            self->step_s += 1;
+            return;
+        }
+        self->animCurFrame = 0;
+        for(prim = self->ext.prim; prim != NULL; prim = prim->next) {
+            prim->drawMode |= 8;
+        }
+        return;
+    case 22:
+        sp34 = self - 8;
+        if (sp34->ext.ILLEGAL.u8[0x30]) {
+            sp34 = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (sp34 != NULL) {
+                CreateEntityFromEntity(2U, self, sp34);
+                sp34->params = 1;
+                sp34->zPriority = self->zPriority;
+            }
+            DestroyEntity(self);
+            return;
+        }
+    default:
+        if (!self->step_s) {
+            self->animCurFrame = 0x14;
+            self->step_s += 1;
+        }
+        var_s4 = self->posX.val;
+        if (self->facingLeft) {
+            var_s4 -= FIX(4);
+        } else {
+            var_s4 += FIX(4);
+        }
+        var_s7 = self->posY.val;
+        prim = self->ext.prim;
+        for(var_s6 = 0; var_s6 < 5; var_s6++){
+            var_s3 = prim->next->x1;
+            var_s3 <<= 0x10;
+            var_s3 += (u16)(prim->next->y1);
+            var_s5 = LOW(prim->next->x0);
+            var_s5 += FIX(1.5);
+            temp_s2 = var_s3 - var_s4;
+            temp_s1 = var_s5 - var_s7;
+            angle = ratan2(-temp_s2, temp_s1);
+            temp_s2 = temp_s2 >> 0x10;
+            temp_s1 = temp_s1 >> 0x10;
+            sp38 = (temp_s2 * temp_s2) + (temp_s1 * temp_s1);
+            if (sp38 > 0x10) {
+                temp_s2 = -(rsin(angle) * 4) << 4;
+                temp_s1 = rcos(angle) * 4 << 4;
+                var_s3 = var_s4 + temp_s2;
+                var_s5 = var_s7 + temp_s1;
+            }
+            var_s4 = var_s3;
+            var_s7 = var_s5;
+            prim->next->x1 = (var_s4 >> 0x10);
+            prim->next->y1 = var_s4 & 0xFFFF;
+            LOW(prim->next->x0) = var_s7;
+            UnkPrimHelper(prim);
+            if (self->palette & 0x8000) {
+                prim->clut = self->palette & 0xFFF;
+            } else {
+                prim->clut = 0x232;
+            }
+            prim->drawMode = 2;
+            prim = prim->next;
+            prim = prim->next;
+        }
+        return;
+    }
+}
 
 INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_62A8", func_us_801D2038);
 
