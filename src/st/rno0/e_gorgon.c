@@ -2,8 +2,8 @@
 #include "rno0.h"
 
 extern EInit g_EInitGorgon;
-extern EInit D_us_80180BDC;
-extern EInit D_us_80180BE8;
+extern EInit g_EInitGorgonHead;
+extern EInit g_EInitGorgonAttack;
 
 static u8 UV_data_1[][8] = {
     {121, 86, 127, 92, 111, 97, 123, 105},
@@ -1330,7 +1330,7 @@ void EntityGorgonHead(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180BDC);
+        InitializeEntity(g_EInitGorgonHead);
         self->animCurFrame = 11;
         self->zPriority = 0x70;
         self->hitboxWidth = 7;
@@ -1716,7 +1716,7 @@ void EntityGorgonAttack(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180BE8);
+        InitializeEntity(g_EInitGorgonAttack);
         self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
         self->scaleX = self->scaleY = 0;
         self->velocityX = FIX(-1.5);
