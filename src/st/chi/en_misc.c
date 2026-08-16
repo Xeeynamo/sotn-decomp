@@ -20,7 +20,7 @@ void EntityGreyPuff(Entity* self);
 // D_80181358: g_RelicOrbSparkleX
 // D_80181368: g_RelicOrbSparkleY
 // func_801A3F58: [E_RELIC_ORB] EntityRelicOrb
-// func_801A4A28: [E_HEART_DROP] EntityPersistentItemDrop
+// func_801A4A28: [E_PERSISTENT_ITEM_DROP] EntityPersistentItemDrop
 // func_801A4B50: [E_SAVE_GAME_POPUP] EntityMessageBox
 // func_801A50AC: CheckColliderOffsets
 // func_801A519C: [E_PARTICLE_TRAIL] EntityUnkId13 (EntityParticleTrail)

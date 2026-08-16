@@ -14,7 +14,7 @@ typedef enum EntityID {
     E_STAGE_NAME_POPUP,
     E_EQUIP_ITEM_DROP,
     E_RELIC_ORB,
-    E_HEART_DROP,
+    E_PERSISTENT_ITEM_DROP,
     E_ENEMY_BLOOD,
     E_MESSAGE_BOX,
     E_DUMMY_0F,

@@ -89,7 +89,8 @@ void EntityBreakable(Entity* self) {
             g_api.PlaySfx(SFX_GLASS_BREAK_E);
             tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_HEART_DROP, self, tempEntity);
+                CreateEntityFromEntity(
+                    E_PERSISTENT_ITEM_DROP, self, tempEntity);
                 tempEntity->params = self->params & 0x1FF;
             }
             PreventEntityFromRespawning(self);
@@ -100,7 +101,8 @@ void EntityBreakable(Entity* self) {
             g_api.PlaySfx(SFX_GLASS_BREAK_E);
             tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_HEART_DROP, self, tempEntity);
+                CreateEntityFromEntity(
+                    E_PERSISTENT_ITEM_DROP, self, tempEntity);
                 tempEntity->params = 0x29;
             }
             PreventEntityFromRespawning(self);

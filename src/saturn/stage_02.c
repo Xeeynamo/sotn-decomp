@@ -82,7 +82,7 @@ void EntityTableWithGlobe(Entity* self) {
         if (self->hitFlags != 0) {
             PlaySfxPositional(0x61D); // sotn-lint-ignore
             self->hitboxState = 0;
-            CreateEntityFromEntity(E_HEART_DROP, self, &self[1]);
+            CreateEntityFromEntity(E_PERSISTENT_ITEM_DROP, self, &self[1]);
             self[1].params = g_Stage02TableWithGlobeDropParams[self->params];
             SetStep(2);
         }
