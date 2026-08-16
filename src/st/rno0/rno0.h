@@ -77,14 +77,14 @@ enum EntityID {
     E_LIQUID_BUBBLES,        // EntityBubbles
     E_SUBWPN_IN_CONT,        // EntitySubwpnInContainer
     E_GORGON,                // EntityGorgon
-    E_UNK_3F,                // func_us_801D068C
-    E_UNK_40,                // func_us_801D0CFC
-    E_UNK_41,                // func_us_801D136C
-    E_UNK_42,                // func_us_801D15C0
+    E_GORGON_FRONT,          // EntityGorgonFront
+    E_GORGON_REAR,           // EntityGorgonRear
+    E_GORGON_FOOT,           // EntityGorgonFoot
+    E_GORGON_HEAD,           // EntityGorgonHead
     E_UNK_43,                // func_us_801D2038
     E_UNK_44,                // func_us_801D1BF0
     E_UNK_45,                // func_us_801D2264
-    E_UNK_46,                // func_us_801D21C8
+    E_GORGON_SNORT,          // EntityGorgonSnort
     E_ELEVATOR,              // EntityElevator
     E_ELEVATOR_PART,         // EntityElevatorPart
     E_PENDULUM,              // EntityPendulum

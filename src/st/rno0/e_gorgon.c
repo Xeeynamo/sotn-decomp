@@ -17,17 +17,17 @@ static u8 UV_data_2[][8] = {{69, 64, 77, 72, 56, 79, 63, 87},
                             {69, 64, 77, 72, 56, 79, 63, 87},
                             {88, 83, 103, 83, 88, 100, 103, 100}};
 
-static AnimateEntityFrame D_pspeu_0925EF00[] = {
+static AnimateEntityFrame anim_turnaround[] = {
     {3, 38}, {3, 37}, {3, 37}, {3, 38}, POSE_END};
 
-static AnimateEntityFrame D_pspeu_0925EF10[] = {
+static AnimateEntityFrame anim_mouthblast[] = {
     {7, 11}, {7, 23}, {7, 24}, {1, 25}, {1, 24}, {1, 25}, POSE_END};
-static AnimateEntityFrame D_pspeu_0925EF20[] = {
+static AnimateEntityFrame anim_end_mouthblast[] = {
     {1, 25}, {7, 24}, {7, 23}, {7, 11}, POSE_END};
-static AnimateEntityFrame D_pspeu_0925EF30[] = {
+static AnimateEntityFrame anim_head_dying[] = {
     {2, 11}, {2, 23}, {2, 24}, {2, 25},
     {2, 24}, {2, 23}, {2, 11}, POSE_LOOP(0)};
-static AnimateEntityFrame D_pspeu_0925EF40[] = {
+static AnimateEntityFrame anim_snortpuff[] = {
     {3, 26}, {2, 27}, {2, 28}, {3, 29}, {3, 30},
     {4, 31}, {5, 32}, {4, 33}, {4, 34}, POSE_END};
 
@@ -528,15 +528,15 @@ void EntityGorgon(Entity* self) {
         InitializeEntity(g_EInitGorgon);
         self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
         self->zPriority = 0x70;
-        self->animCurFrame = 0xA;
-        self->hitboxWidth = 0xC;
-        self->hitboxHeight = 0xC;
+        self->animCurFrame = 10;
+        self->hitboxWidth = 12;
+        self->hitboxHeight = 12;
         other_s1 = self + 1;
-        CreateEntityFromEntity(E_UNK_3F, self, other_s1);
+        CreateEntityFromEntity(E_GORGON_FRONT, self, other_s1);
         other_s1 = self + 4;
-        CreateEntityFromEntity(E_UNK_40, self, other_s1);
+        CreateEntityFromEntity(E_GORGON_REAR, self, other_s1);
         other_s1 = self + 7;
-        CreateEntityFromEntity(E_UNK_42, self, other_s1);
+        CreateEntityFromEntity(E_GORGON_HEAD, self, other_s1);
         other_s1 = self + 9;
         CreateEntityFromEntity(E_UNK_43, self, other_s1);
         other_s1 = self + 8;
@@ -654,7 +654,7 @@ void EntityGorgon(Entity* self) {
             self->step_s++;
             /* fallthrough */
         case 1:
-            if (AnimateEntity(&D_pspeu_0925EF00, self) == 0) {
+            if (AnimateEntity(anim_turnaround, self) == 0) {
                 self->step_s++;
             }
             if (((self->pose) == 2) && (!self->poseTimer)) {
@@ -667,7 +667,7 @@ void EntityGorgon(Entity* self) {
             }
             break;
         case 2:
-            self->animCurFrame = 0xA;
+            self->animCurFrame = 10;
             other_s1 = self + 1;
             if (other_s1->ext.gorgon.unkA8 == 0) {
                 other_s1 = other_s1 + 1;
@@ -789,7 +789,7 @@ void EntityGorgon(Entity* self) {
     }
 }
 
-void func_us_801D068C(Entity* self) {
+void EntityGorgonFront(Entity* self) {
     s16 sp6E;
     s32 sp68;
     s32 sp64;
@@ -815,14 +815,14 @@ void func_us_801D068C(Entity* self) {
         self->zPriority = 0x70;
         self->zPriority += ((self->params) * 4);
         self->hitboxWidth = 8;
-        self->hitboxHeight = 0xA;
+        self->hitboxHeight = 10;
         self->hitboxOffX = -8;
         self->hitboxOffY = 8;
         other = self + 1;
-        CreateEntityFromEntity(E_UNK_41, self, other);
+        CreateEntityFromEntity(E_GORGON_FOOT, self, other);
         other->params = 0;
         other = self + 2;
-        CreateEntityFromEntity(E_UNK_41, self, other);
+        CreateEntityFromEntity(E_GORGON_FOOT, self, other);
         other->params = 1;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 6);
         if (primIndex == -1) {
@@ -1013,7 +1013,7 @@ void func_us_801D068C(Entity* self) {
     }
 }
 
-void func_us_801D0CFC(Entity* self) {
+void EntityGorgonRear(Entity* self) {
     s32 sp68;
     s32 sp64;
     s32 sp60;
@@ -1037,10 +1037,10 @@ void func_us_801D0CFC(Entity* self) {
         self->drawFlags = ENTITY_ROTATE;
         self->zPriority = 0x73;
         other = self + 1;
-        CreateEntityFromEntity(E_UNK_41, self, other);
+        CreateEntityFromEntity(E_GORGON_FOOT, self, other);
         other->params = 0x10;
         other = self + 2;
-        CreateEntityFromEntity(E_UNK_41, self, other);
+        CreateEntityFromEntity(E_GORGON_FOOT, self, other);
         other->params = 0x11;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
         if (primIndex == -1) {
@@ -1233,7 +1233,7 @@ void func_us_801D0CFC(Entity* self) {
     }
 }
 
-void func_us_801D136C(Entity* self) {
+void EntityGorgonFoot(Entity* self) {
     Collider sp1C;
     Entity* other;
     s32 xVar, yVar;
@@ -1242,7 +1242,7 @@ void func_us_801D136C(Entity* self) {
     case 0:
         InitializeEntity(g_EInitGorgon);
         self->drawFlags = ENTITY_ROTATE;
-        self->animCurFrame = 0x10;
+        self->animCurFrame = 16;
         if (self->params & 1) {
             self->zPriority = 0x6D;
             self->palette = 0x8234;
@@ -1292,7 +1292,7 @@ void func_us_801D136C(Entity* self) {
             self->animCurFrame = 4;
         } else {
             self->zPriority = 0x71;
-            self->animCurFrame = 0x10;
+            self->animCurFrame = 16;
         }
         self->step_s += 1;
     }
@@ -1314,7 +1314,7 @@ void func_us_801D136C(Entity* self) {
     }
 }
 
-void func_us_801D15C0(Entity* self) {
+void EntityGorgonHead(Entity* self) {
     Point16 sp6C;
     Collider sp48;
     Pos sp40;
@@ -1331,7 +1331,7 @@ void func_us_801D15C0(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_us_80180BDC);
-        self->animCurFrame = 0xB;
+        self->animCurFrame = 11;
         self->zPriority = 0x70;
         self->hitboxWidth = 7;
         self->hitboxHeight = 7;
@@ -1378,7 +1378,7 @@ void func_us_801D15C0(Entity* self) {
         case 1:
             temp_s2 = StepTowards(&self->ext.gorgon.unk80, 0x500, 0x18);
             temp_s2 = temp_s2 + StepTowards(&self->rotate, 0x100, 0x30);
-            if ((AnimateEntity(&D_pspeu_0925EF10, self) == 0) &&
+            if ((AnimateEntity(anim_mouthblast, self) == 0) &&
                 (temp_s2 == 2)) {
                 self->ext.gorgon.unkA4 = 0x40;
                 PlaySfxPositional(SFX_GORGON_ATTACK);
@@ -1408,7 +1408,7 @@ void func_us_801D15C0(Entity* self) {
         case 3:
             temp_s2 = StepTowards(&self->ext.gorgon.unk80, 0x400, 0x10);
             temp_s2 = temp_s2 + StepTowards(&self->rotate, 0, 0x20);
-            if ((AnimateEntity(&D_pspeu_0925EF20, self) == 0) &&
+            if ((AnimateEntity(anim_end_mouthblast, self) == 0) &&
                 (temp_s2 == 2)) {
                 self->step = 0x15;
             }
@@ -1431,12 +1431,12 @@ void func_us_801D15C0(Entity* self) {
         }
     default:
         self->ext.gorgon.unkAB = 0;
-        self->animCurFrame = 0xB;
+        self->animCurFrame = 11;
         if (!(g_Timer & 0x7F)) {
             other = AllocEntity(&g_Entities[0xE0], &g_Entities[256]);
             if (other != NULL) {
                 PlaySfxPositional(SFX_GORGON_SNORT);
-                CreateEntityFromEntity(E_UNK_46, self, other);
+                CreateEntityFromEntity(E_GORGON_SNORT, self, other);
                 other->facingLeft = self->facingLeft;
                 if (self->facingLeft) {
                     other->posX.i.hi += 0x14;
@@ -1452,7 +1452,7 @@ void func_us_801D15C0(Entity* self) {
         case 0:
             StepTowards(&self->ext.gorgon.unk80, 0x400, 8);
             StepTowards(&self->rotate, 0x200, 0x10);
-            AnimateEntity(&D_pspeu_0925EF30, self);
+            AnimateEntity(anim_head_dying, self);
             xVar = self->posX.i.hi;
             yVar = self->posY.i.hi + 8;
             g_api.CheckCollision(xVar, yVar, &sp48, 0);
@@ -1520,7 +1520,7 @@ void func_us_801D1BF0(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitGorgon);
-        self->animCurFrame = 0x14;
+        self->animCurFrame = 20;
         self->zPriority = 0x6F;
         sp3C = g_api.AllocPrimitives(PRIM_GT4, 10);
         if (sp3C == -1) {
@@ -1696,7 +1696,7 @@ void func_us_801D2038(Entity* self) {
         g_Tilemap.scrollY.val + self->posY.val;
 }
 
-void func_us_801D21C8(Entity* self) {
+void EntityGorgonSnort(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitGorgon);
@@ -1706,7 +1706,7 @@ void func_us_801D21C8(Entity* self) {
         break;
     case 1:
         MoveEntity();
-        if (AnimateEntity(D_pspeu_0925EF40, self) == 0) {
+        if (AnimateEntity(anim_snortpuff, self) == 0) {
             DestroyEntity(self);
         }
         break;

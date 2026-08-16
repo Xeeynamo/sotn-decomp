@@ -63,14 +63,14 @@ void EntityFallingLiquid(Entity* self);
 void EntityBubbles(Entity* self);
 void EntitySubwpnInContainer(Entity* self);
 void EntityGorgon(Entity* self);
-void func_us_801D068C(Entity* self);
-void func_us_801D0CFC(Entity* self);
-void func_us_801D136C(Entity* self);
-void func_us_801D15C0(Entity* self);
+void EntityGorgonFront(Entity* self);
+void EntityGorgonRear(Entity* self);
+void EntityGorgonFoot(Entity* self);
+void EntityGorgonHead(Entity* self);
 void func_us_801D2038(Entity* self);
 void func_us_801D1BF0(Entity* self);
 void func_us_801D2264(Entity* self);
-void func_us_801D21C8(Entity* self);
+void EntityGorgonSnort(Entity* self);
 void EntityElevator(Entity* self);
 void EntityElevatorPart(Entity* self);
 void EntityPendulum(Entity* self);
@@ -144,14 +144,14 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityBubbles,
     EntitySubwpnInContainer,
     EntityGorgon,
-    func_us_801D068C,
-    func_us_801D0CFC,
-    func_us_801D136C,
-    func_us_801D15C0,
+    EntityGorgonFront,
+    EntityGorgonRear,
+    EntityGorgonFoot,
+    EntityGorgonHead,
     func_us_801D2038,
     func_us_801D1BF0,
     func_us_801D2264,
-    func_us_801D21C8,
+    EntityGorgonSnort,
     EntityElevator,
     EntityElevatorPart,
     EntityPendulum,
