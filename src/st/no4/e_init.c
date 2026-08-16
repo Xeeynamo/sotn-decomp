@@ -30,7 +30,7 @@ void EntityWaterDrop(Entity* self);
 void func_us_801C12B0(Entity* self);
 void func_us_801C15F8(Entity* self);
 void func_us_801C1844(Entity* self);
-void func_us_801C1C94(Entity* self);
+void EntityBgColumnsParallax(Entity* self);
 void func_us_801C1EE4(Entity* self);
 void func_us_801C21AC(Entity* self);
 void func_us_801C2474(Entity* self);
@@ -125,7 +125,7 @@ PfnEntityUpdate EntityUpdates[] = {
     /* 0x1C */ func_us_801C12B0,
     /* 0x1D */ func_us_801C15F8,
     /* 0x1E */ func_us_801C1844,
-    /* 0x1F */ func_us_801C1C94,
+    /* 0x1F */ EntityBgColumnsParallax,
     /* 0x20 */ func_us_801C1EE4,
     /* 0x21 */ func_us_801C21AC,
     /* 0x22 */ func_us_801C2474,

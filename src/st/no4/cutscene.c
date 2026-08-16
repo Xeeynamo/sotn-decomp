@@ -153,7 +153,12 @@ static bool dialogue_started;
 #define CUTSCENE_UNK1_NEXT_X 2
 #define CUTSCENE_UNK1_UNK17 8
 #define CUTSCENE_UNK4_HAS_ARGS
+#ifdef FIX_UB
+// NUM_CUTSCENE_PRIM on PS1 is actually too short
+#define NUM_CUTSCENE_PRIM 6
+#else
 #define NUM_CUTSCENE_PRIM 5
+#endif
 #define DRAW_NAME_ACTOR_INDEX 0
 #define DRAW_NAME_PRIM_Y0 30
 
@@ -502,13 +507,22 @@ void EntityCutscene(Entity* self) {
                             ptr = (u32)&D_894568C;
                             break;
                         }
+                        j = *g_Dialogue.scriptCur++;
+                        // j here is used as a parameter for LoadTPage in
+                        // other overlays, but is unused in no4
+                        LoadTPage((u_long*)ptr, 1, 0, 0, 256, 48, 72);
+#elif defined(VERSION_PC)
+                    j = *g_Dialogue.scriptCur++;
+                    // j here is used as a parameter for LoadTPage in
+                    // other overlays, but is unused in no4
+                    LoadTPage((u_long*)CS_PTR(ptr), 1, 0, 0, 256, 48, 72);
 #else
                     ptr += 0x100000;
+                    j = *g_Dialogue.scriptCur++;
+                    // j here is used as a parameter for LoadTPage in
+                    // other overlays, but is unused in no4
+                    LoadTPage((u_long*)ptr, 1, 0, 0, 256, 48, 72);
 #endif
-                        // j here is used as a parameter for LoadTPage in other
-                        // overlays, but is unused in no4
-                        j = *g_Dialogue.scriptCur++;
-                        LoadTPage((u_long*)ptr, 1, 0, 0, 256, 48, 72);
                     }
                     continue;
                 case CSOP_SCRIPT_UNKNOWN_20:
