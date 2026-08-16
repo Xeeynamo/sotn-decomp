@@ -166,7 +166,9 @@ if __name__ == "__main__":
             if not any(i.startswith("--settings") for i in sys.argv)
             else []
         )
-        decomp_permuter.src.objdump.MIPS_SETTINGS.executable = ["mipsel-linux-gnu-objdump"]
+        decomp_permuter.src.objdump.MIPS_SETTINGS.executable = [
+            "mipsel-linux-gnu-objdump"
+        ]
         decomp_permuter.src.objdump.MIPS_SETTINGS.arguments = [
             "-drz",
             "-m",
