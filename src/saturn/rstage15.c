@@ -62,7 +62,16 @@ void func_060E38B8(void) {
     g_Player.padSim = 0x1000;
     g_Player.demo_timer = 1;
 }
-INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E38D8, func_060E38D8);
+void func_060E38D8(Entity* self) {
+    Primitive* prim = self->ext.save.unk10;
+    s32 i;
+
+    for (i = 0; i < 9; i++) {
+        prim->x3 = 0;
+        prim->drawMode = DRAW_HIDE;
+        prim = prim->next;
+    }
+}
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E3904, func_060E3904);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E3D08, func_060E3D08);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E3D58, func_060E3D58);
