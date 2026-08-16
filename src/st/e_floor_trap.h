@@ -15,11 +15,6 @@ typedef enum {
 static AnimateEntityFrame anim[] = {
     {1, 3}, {1, 4}, {1, 5}, {1, 6}, {1, 7}, {1, 8}, POSE_LOOP(0)};
 
-// Needs more study - might not be part of this file. Probably stripped on PSP
-#ifdef STAGE_IS_RNZ0
-static u16 unused[] = {0, 40, 8, 0};
-#endif
-
 #define PARAMS_IS_WHEEL 0x100
 
 // Sliding spikes on the floor throughout the second castle
