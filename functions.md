@@ -1730,7 +1730,7 @@
 | rcen       | GetDistanceToPlayerY               |       28 |          2 |        |       |     |
 | rchi       | func_pspeu_09246C08                |       28 |          2 |        |       |     |
 | rno0       | GetDistanceToPlayerY               |       28 |          2 |        |       |     |
-| rno2       | GetDistanceToPlayerY               |       28 |          2 |        |       |     |
+| rno2       | func_pspeu_0924FA68                |       28 |          2 |        |       |     |
 | rnz0       | func_pspeu_09252C20                |       28 |          2 |        |       |     |
 | rnz1       | GetDistanceToPlayerY               |       28 |          2 |        |       |     |
 | rtop       | func_pspeu_09245CC0                |       28 |          2 |        |       |     |
@@ -5144,7 +5144,7 @@
 | rare       | func_pspeu_09237700                |       85 |          1 |        |       |     |
 | np3        | func_pspeu_09262658                |       85 |          7 |        |       |     |
 | no0        | func_pspeu_0925B0B0                |       85 |         10 |        |       |     |
-| rno2       | EntityCtulhuDeath                  |       85 |         10 |        |       |     |
+| rno2       | func_pspeu_09239C80                |       85 |         10 |        |       |     |
 | rnz0       | func_pspeu_09239C80                |       85 |         10 |        |       |     |
 | dra        | func_psp_090E83E8                  |       85 |         12 |        |       |     |
 | main       | func_psp_08935808                  |       85 |         12 |        |       |     |
@@ -7530,7 +7530,7 @@
 | rdai       | func_pspeu_09237700                |      211 |         19 |        |       |     |
 | dra        | func_psp_091012A8                  |      211 |         20 |        |       |     |
 | no0        | func_pspeu_0925A3B0                |      211 |         20 |        |       |     |
-| rno2       | EntityCtulhuFireball               |      211 |         20 |        |       |     |
+| rno2       | func_pspeu_09238F80                |      211 |         20 |        |       |     |
 | rnz0       | func_pspeu_09238F80                |      211 |         20 |        |       |     |
 | rare       | func_pspeu_0923D508                |      211 |         22 |        |       |     |
 | rare       | func_pspeu_0924D830                |      211 |         26 |        |       |     |
@@ -9325,7 +9325,7 @@
 | cen        | func_pspeu_0924E1B8                |      670 |         62 |        |       |     |
 | dra        | func_psp_0910D8F8                  |      672 |         81 |        |       |     |
 | no0        | func_pspeu_0925A6C8                |      674 |         61 |        |       |     |
-| rno2       | EntityCtulhuIceShockwave           |      674 |         61 |        |       |     |
+| rno2       | func_pspeu_09239298                |      674 |         61 |        |       |     |
 | rnz0       | func_pspeu_09239298                |      674 |         61 |        |       |     |
 | ric        | func_pspeu_092B7FF8                |      675 |         75 |        |       |     |
 | bo6        | MarEntityHitByLightning            |      676 |         63 |        |       |     |
@@ -10013,7 +10013,7 @@
 | no1        | func_pspeu_09255CB0                |     1646 |        130 | Yes    |       |     |
 | np3        | EntityMerman2                      |     1649 |        195 | Yes    |       |     |
 | no3        | func_pspeu_0924DB10                |     1668 |        195 | Yes    |       |     |
-| rno2       | EntityCtulhu                       |     1687 |        246 | Yes    |       |     |
+| rno2       | func_pspeu_09237700                |     1687 |        246 | Yes    |       |     |
 | rnz0       | func_pspeu_09237700                |     1687 |        246 | Yes    |       |     |
 | rare       | func_pspeu_0924BF58                |     1701 |        204 | Yes    |       |     |
 | no0        | func_pspeu_09258AF0                |     1712 |        247 | Yes    |       |     |
