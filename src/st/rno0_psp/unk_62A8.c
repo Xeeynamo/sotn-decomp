@@ -2,16 +2,27 @@
 #include "../rno0/rno0.h"
 
 extern EInit g_EInitGorgon;
-static u8 D_pspeu_0925EEB0[][8] = {{121, 86, 127, 92, 111, 97, 123, 105}, 
+extern EInit D_us_80180BDC;
+extern EInit D_us_80180BE8;
+
+static u8 UV_data_1[][8] = {{121, 86, 127, 92, 111, 97, 123, 105}, 
                                     {72, 95, 81, 88, 79, 103, 87, 96}, 
                                     {85, 101, 95, 113, 70, 120, 84, 130}, 
                                     {85, 101, 95, 113, 70, 120, 84, 130}, 
                                     {72, 95, 81, 88, 79, 103, 87, 96}, 
                                     {121, 86, 127, 92, 111, 97, 123, 105}};
-static u8 D_pspeu_0925EEE0[][8] = {{69, 64, 77, 72, 56, 79, 63, 87}, 
+static u8 UV_data_2[][8] = {{69, 64, 77, 72, 56, 79, 63, 87}, 
                                     {88, 83, 103, 83, 88, 100, 103, 100}, 
                                     {69, 64, 77, 72, 56, 79, 63, 87}, 
                                     {88, 83, 103, 83, 88, 100, 103, 100}};
+
+static AnimateEntityFrame D_pspeu_0925EF00[] = {{3, 38}, {3, 37}, {3, 37}, {3, 38}, POSE_END};
+
+static AnimateEntityFrame D_pspeu_0925EF10[] = {{7, 11}, {7, 23}, {7, 24}, {1, 25}, {1, 24}, {1, 25}, POSE_END};
+static AnimateEntityFrame D_pspeu_0925EF20[] = {{1, 25}, {7, 24}, {7, 23}, {7, 11}, POSE_END};
+static AnimateEntityFrame D_pspeu_0925EF30[] = {{2, 11}, {2, 23}, {2, 24}, {2, 25}, {2, 24}, {2, 23}, {2, 11}, POSE_LOOP(0)};
+static AnimateEntityFrame D_pspeu_0925EF40[] = {{3, 26}, {2, 27}, {2, 28}, {3, 29}, {3, 30}, {4, 31}, {5, 32}, {4, 33}, {4, 34}, POSE_END};
+
 
 // These first two are copied from the Plate Lord?
 static void func_pspeu_0923D928(Pos* src, s32 speed, s16 angle, Pos* dst) {
@@ -482,8 +493,6 @@ static void func_pspeu_0923F300(s32 newStep) {
     }
 }
 
-extern u8 D_pspeu_0925EF00;
-
 void EntityGorgon(Entity* self) {
     s32 var_s5;
     s32 var_s4;
@@ -810,7 +819,7 @@ void func_us_801D068C(Entity* self) {
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
         self->ext.gorgon.prim = prim;
-        var_s2 = (u8*)D_pspeu_0925EEB0;
+        var_s2 = (u8*)UV_data_1;
         for (var_s5 = 0; var_s5 < 6; var_s5++) {
             prim->tpage = 0x13;
             prim->clut = 0x232;
@@ -1030,7 +1039,7 @@ void func_us_801D0CFC(Entity* self) {
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
         self->ext.gorgon.prim = prim;
-        var_s2 = (u8*)D_pspeu_0925EEE0;
+        var_s2 = (u8*)UV_data_2;
         while (prim != NULL) {
             prim->tpage = 0x13;
             prim->clut = 0x232;
@@ -1293,12 +1302,6 @@ void func_us_801D136C(Entity* self) {
         self->ext.gorgon.unkAD = 0;
     }
 }
-
-extern EInit D_us_80180BDC;
-
-extern AnimateEntityFrame D_pspeu_0925EF10;
-extern AnimateEntityFrame D_pspeu_0925EF20;
-extern AnimateEntityFrame D_pspeu_0925EF30;
 
 void func_us_801D15C0(Entity* self) {
     Point16 sp6C;
@@ -1682,8 +1685,6 @@ void func_us_801D2038(Entity* self) {
         g_Tilemap.scrollY.val + self->posY.val;
 }
 
-extern AnimateEntityFrame D_pspeu_0925EF40[];
-
 void func_us_801D21C8(Entity* self) {
     switch (self->step) {
     case 0:
@@ -1700,8 +1701,6 @@ void func_us_801D21C8(Entity* self) {
         break;
     }
 }
-
-extern EInit D_us_80180BE8;
 
 void func_us_801D2264(Entity* self) {
     Primitive* prim;
