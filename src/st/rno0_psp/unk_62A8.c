@@ -231,7 +231,7 @@ s32 func_pspeu_0923E6D0(
     }
     var_s3 = arg4[0];
     var_s1 = arg4[1];
-    if (arg2->ext.ILLEGAL.s16[2] && (var_s3 < var_s4) && (var_s5 < -var_s3)) {
+    if (arg2->ext.gorgon.unk80 && (var_s3 < var_s4) && (var_s5 < -var_s3)) {
         return 1;
     }
     if (var_s4 < var_s3) {
@@ -277,7 +277,7 @@ s32 func_pspeu_0923E920(
             arg0->posX.i.hi -= (-(var_s0 + 6) - var_s2);
         }
     }
-    if ((arg2->ext.ILLEGAL.s16[2]) && (var_s0 < var_s3) && (var_s2 < -var_s0)) {
+    if ((arg2->ext.gorgon.unk80) && (var_s0 < var_s3) && (var_s2 < -var_s0)) {
         return 1;
     }
     switch (g_CurrentEntity->ext.ILLEGAL.u8[0x2E]) { /* irregular */
@@ -319,7 +319,7 @@ s32 func_pspeu_0923EBE8(Entity* arg0, s16* arg1, Entity* arg2, s16* arg3) {
         var_s1 = -var_s1;
         var_s2 = -var_s2;
     }
-    if ((arg2->ext.ILLEGAL.s16[2]) && (var_s1 < -8) && (var_s2 > 8)) {
+    if ((arg2->ext.gorgon.unk80) && (var_s1 < -8) && (var_s2 > 8)) {
         return 1;
     }
     switch (g_CurrentEntity->ext.ILLEGAL.u8[0x2E]) { /* irregular */
@@ -371,7 +371,7 @@ s32 func_pspeu_0923EE78(Entity* arg0, s16* arg1, Entity* arg2, s16* arg3) {
         var_s0 = -var_s0;
         var_s2 = -var_s2;
     }
-    if (arg2->ext.ILLEGAL.s16[2] && (var_s0 < -8) && (var_s2 > 8)) {
+    if (arg2->ext.gorgon.unk80 && (var_s0 < -8) && (var_s2 > 8)) {
         return 1;
     }
     switch (g_CurrentEntity->ext.ILLEGAL.u8[0x2E]) { /* irregular */
@@ -432,7 +432,7 @@ void func_pspeu_0923F198(s32 count) {
     s32 i;
     Primitive* prim;
 
-    prim = g_CurrentEntity->ext.prim;
+    prim = g_CurrentEntity->ext.gorgon.prim;
     for (i = 0; i < count; i++) {
         if (g_CurrentEntity->ext.ILLEGAL.u8[0x2C] == 0) {
             prim->clut = 0x232;
@@ -799,7 +799,7 @@ void func_us_801D068C(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
-        self->ext.prim = prim;
+        self->ext.gorgon.prim = prim;
         var_s2 = D_pspeu_0925EEB0;
         for (var_s5 = 0; var_s5 < 6; var_s5++) {
             prim->tpage = 0x13;
@@ -815,7 +815,7 @@ void func_us_801D068C(Entity* self) {
             prim->v3 = *var_s2++;
             prim = prim->next;
         }
-        self->ext.ILLEGAL.s16[2] = 0x180;
+        self->ext.gorgon.unk80 = 0x180;
         self->ext.ILLEGAL.s16[3] = -0x80;
         self->ext.ILLEGAL.s16[4] = 0x100;
         self->ext.ILLEGAL.s16[5] = 0x180;
@@ -831,14 +831,14 @@ void func_us_801D068C(Entity* self) {
         self->ext.ILLEGAL.u8[0x2F] = 0;
         if (self->ext.ILLEGAL.u8[0x2C] == 0) {
             other7 = self + 1;
-            var_s4 = &self->ext.ILLEGAL.s16[2];
+            var_s4 = &self->ext.gorgon.unk80;
             other6 = self + 2;
             var_s3 = &self->ext.ILLEGAL.s16[5];
         } else {
             other7 = self + 2;
             var_s4 = &self->ext.ILLEGAL.s16[5];
             other6 = self + 1;
-            var_s3 = &self->ext.ILLEGAL.s16[2];
+            var_s3 = &self->ext.gorgon.unk80;
         }
         switch (self->step) { /* switch 2; irregular */
         case 17:              /* switch 2 */
@@ -858,7 +858,7 @@ void func_us_801D068C(Entity* self) {
         case 21:
             break;
         }
-        prim = self->ext.prim;
+        prim = self->ext.gorgon.prim;
         prim = func_pspeu_0923DD78((Pos*)other7, (Pos*)self, var_s4 + 2, prim);
         func_pspeu_0923DF88((Pos*)self, (Pos*)other6, var_s3, prim);
         func_pspeu_0923F198(3);
@@ -875,7 +875,7 @@ void func_us_801D068C(Entity* self) {
             self->step_s += 1;
         } else {
             self->ext.ILLEGAL.u8[0x2F] = 1;
-            for (prim = self->ext.prim, self->animCurFrame = 0; prim != NULL;
+            for (prim = self->ext.gorgon.prim, self->animCurFrame = 0; prim != NULL;
                  prim = prim->next) {
                 prim->drawMode |= DRAW_HIDE;
             }
@@ -884,14 +884,14 @@ void func_us_801D068C(Entity* self) {
     case 22: /* switch 1 */
         if (self->ext.ILLEGAL.u8[0x2C] == 0) {
             other7 = self + 1;
-            var_s4 = &self->ext.ILLEGAL.s16[2];
+            var_s4 = &self->ext.gorgon.unk80;
             other6 = self + 2;
             var_s3 = &self->ext.ILLEGAL.s16[5];
         } else {
             other7 = self + 2;
             var_s4 = &self->ext.ILLEGAL.s16[5];
             other6 = self + 1;
-            var_s3 = &self->ext.ILLEGAL.s16[2];
+            var_s3 = &self->ext.gorgon.unk80;
         }
         switch (self->step_s) { /* switch 3; irregular */
         case 0:                 /* switch 3 */
@@ -901,7 +901,7 @@ void func_us_801D068C(Entity* self) {
             StepTowards(var_s3, 0x400, 0x50);
             StepTowards(var_s3 + 1, -0x300, 0x38);
             StepTowards(var_s3 + 2, -0x500, 0x38);
-            prim = self->ext.prim;
+            prim = self->ext.gorgon.prim;
             prim = (Primitive*)func_pspeu_0923DD78(
                 (Pos*)other7, (Pos*)self, var_s4 + 2, prim);
             func_pspeu_0923DF88((Pos*)self, (Pos*)other6, var_s3, prim);
@@ -933,7 +933,7 @@ void func_us_801D068C(Entity* self) {
             self->step_s += 1;
             break;
         case 3: /* switch 3 */
-            for (prim = self->ext.prim; prim != NULL;) {
+            for (prim = self->ext.gorgon.prim; prim != NULL;) {
                 if (prim->drawMode & DRAW_HIDE) {
                     prim = prim->next;
                 } else {
@@ -1019,7 +1019,7 @@ void func_us_801D0CFC(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
-        self->ext.prim = prim;
+        self->ext.gorgon.prim = prim;
         var_s2 = D_pspeu_0925EEE0;
         while (prim != NULL) {
             prim->tpage = 0x13;
@@ -1035,7 +1035,7 @@ void func_us_801D0CFC(Entity* self) {
             prim->drawMode = DRAW_HIDE;
             prim = prim->next;
         }
-        self->ext.ILLEGAL.s16[2] = 0;
+        self->ext.gorgon.unk80 = 0;
         self->ext.ILLEGAL.s16[3] = 0x40;
         self->step = 0x15;
         break;
@@ -1044,14 +1044,14 @@ void func_us_801D0CFC(Entity* self) {
     case 18: /* switch 1 */
         if (self->ext.ILLEGAL.u8[0x2C] == 0) {
             other3 = self + 1;
-            var_s4 = &self->ext.ILLEGAL.s16[2];
+            var_s4 = &self->ext.gorgon.unk80;
             other7 = self + 2;
             var_s6 = &self->ext.ILLEGAL.s16[4];
         } else {
             other3 = self + 2;
             var_s4 = &self->ext.ILLEGAL.s16[4];
             other7 = self + 1;
-            var_s6 = &self->ext.ILLEGAL.s16[2];
+            var_s6 = &self->ext.gorgon.unk80;
         }
         switch (self->step) { /* switch 2; irregular */
         case 17:              /* switch 2 */
@@ -1068,7 +1068,7 @@ void func_us_801D0CFC(Entity* self) {
             sp68 = func_pspeu_0923EE78(other3, var_s4, other7, var_s6);
             break;
         }
-        prim = self->ext.prim;
+        prim = self->ext.gorgon.prim;
         prim = func_pspeu_0923E300((Pos*)self, (Pos*)other3, var_s4, prim);
         func_pspeu_0923E1A0((Pos*)self, (Pos*)other7, var_s6, prim);
         func_pspeu_0923F198(2);
@@ -1079,23 +1079,23 @@ void func_us_801D0CFC(Entity* self) {
         } else {
             self->ext.ILLEGAL.u8[0x32] = 0;
         }
-        self->rotate = self->ext.ILLEGAL.s16[2] / 2;
+        self->rotate = self->ext.gorgon.unk80 / 2;
         break;
     case 20:
     case 21:
         self->ext.ILLEGAL.u8[0x2F] = 0;
         if (self->ext.ILLEGAL.u8[0x2C] == 0) {
             other3 = self + 1;
-            var_s4 = &self->ext.ILLEGAL.s16[2];
+            var_s4 = &self->ext.gorgon.unk80;
             other7 = self + 2;
             var_s6 = &self->ext.ILLEGAL.s16[4];
         } else {
             other3 = self + 2;
             var_s4 = &self->ext.ILLEGAL.s16[4];
             other7 = self + 1;
-            var_s6 = &self->ext.ILLEGAL.s16[2];
+            var_s6 = &self->ext.gorgon.unk80;
         }
-        prim = self->ext.prim;
+        prim = self->ext.gorgon.prim;
         if (self->step == 21) {
             prim = func_pspeu_0923E1A0((Pos*)self, (Pos*)other3, var_s4, prim);
             func_pspeu_0923E1A0((Pos*)self, (Pos*)other7, var_s6, prim);
@@ -1111,7 +1111,7 @@ void func_us_801D0CFC(Entity* self) {
         } else {
             self->ext.ILLEGAL.u8[0x2F] = 1;
             self->animCurFrame = 0;
-            for (prim = self->ext.prim; prim != NULL; prim = prim->next) {
+            for (prim = self->ext.gorgon.prim; prim != NULL; prim = prim->next) {
                 prim->drawMode |= DRAW_HIDE;
             }
         }
@@ -1120,10 +1120,10 @@ void func_us_801D0CFC(Entity* self) {
         switch (self->step_s) { /* switch 3; irregular */
         case 0:                 /* switch 3 */
             other3 = self + 1;
-            var_s4 = &self->ext.ILLEGAL.s16[2];
-            prim = self->ext.prim;
+            var_s4 = &self->ext.gorgon.unk80;
+            prim = self->ext.gorgon.prim;
             for (var_s5 = 0; var_s5 < 2; var_s5++) {
-                if (other3->ext.ILLEGAL.s16[2]) {
+                if (other3->ext.gorgon.unk80) {
                     prim = func_pspeu_0923E300(
                         (Pos*)self, (Pos*)other3, var_s4, prim);
                 } else {
@@ -1163,7 +1163,7 @@ void func_us_801D0CFC(Entity* self) {
             self->step_s += 1;
             break;
         case 3: /* switch 3 */
-            for (prim = self->ext.prim; prim != NULL;) {
+            for (prim = self->ext.gorgon.prim; prim != NULL;) {
                 if (prim->drawMode & DRAW_HIDE) {
                     prim = prim->next;
                 } else {
@@ -1320,7 +1320,7 @@ void func_us_801D15C0(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
-        self->ext.prim = prim;
+        self->ext.gorgon.prim = prim;
         prim->tpage = 0x13;
         prim->clut = 0x232;
         prim->u0 = prim->u1 = 0x80;
@@ -1337,7 +1337,7 @@ void func_us_801D15C0(Entity* self) {
         } else {
             self->ext.ILLEGAL.u8[0x2F] = 1;
             self->animCurFrame = 0;
-            prim = self->ext.prim;
+            prim = self->ext.gorgon.prim;
             prim->drawMode |= DRAW_HIDE;
         }
         break;
@@ -1458,12 +1458,12 @@ void func_us_801D15C0(Entity* self) {
         } else {
             sp40.x.i.hi -= 0x10;
         }
-        var_s3 = self->ext.ILLEGAL.s16[2];
+        var_s3 = self->ext.gorgon.unk80;
         func_pspeu_0923D928(&sp40, -0xC, var_s3, &sp40);
         func_pspeu_0923D928(&sp40, 0x18, var_s3, &sp38);
         sp6C.x = 0xC;
         sp6C.y = 0xC;
-        prim = self->ext.prim;
+        prim = self->ext.gorgon.prim;
         func_us_801D2424(&sp40, var_s3, &sp6C, &sp38, var_s3, &sp6C, prim);
         if (self->palette & 0x8000) {
             prim->clut = self->palette & 0xFFF;
@@ -1505,7 +1505,7 @@ void func_us_801D1BF0(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = sp3C;
         prim = &g_PrimBuf[sp3C];
-        self->ext.prim = prim;
+        self->ext.gorgon.prim = prim;
         for (var_s6 = 0; var_s6 < 4; var_s6++) {
             UnkPolyFunc2(prim);
             prim->tpage = 0x13;
@@ -1555,7 +1555,7 @@ void func_us_801D1BF0(Entity* self) {
             return;
         }
         self->animCurFrame = 0;
-        for (prim = self->ext.prim; prim != NULL; prim = prim->next) {
+        for (prim = self->ext.gorgon.prim; prim != NULL; prim = prim->next) {
             prim->drawMode |= DRAW_HIDE;
         }
         return;
@@ -1583,7 +1583,7 @@ void func_us_801D1BF0(Entity* self) {
             var_s4 += FIX(4);
         }
         var_s7 = self->posY.val;
-        prim = self->ext.prim;
+        prim = self->ext.gorgon.prim;
         for (var_s6 = 0; var_s6 < 5; var_s6++) {
             var_s3 = prim->next->x1;
             var_s3 <<= 0x10;
@@ -1709,7 +1709,7 @@ void func_us_801D2264(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = (s32)primIndex;
         prim = &g_PrimBuf[primIndex];
-        self->ext.prim = prim;
+        self->ext.gorgon.prim = prim;
         UnkPolyFunc2(prim);
         prim->tpage = 0x1A;
         prim->clut = 0x19C;
@@ -1728,7 +1728,7 @@ void func_us_801D2264(Entity* self) {
         prim->drawMode = DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
     case 1:
         MoveEntity();
-        prim = self->ext.prim;
+        prim = self->ext.gorgon.prim;
         prim->next->x1 = self->posX.i.hi;
         prim->next->y0 = self->posY.i.hi;
         prim->next->x2 += 0x60;

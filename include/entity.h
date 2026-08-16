@@ -4205,6 +4205,12 @@ typedef struct {
     /* 0x9C */ struct Entity* parent;
 } ET_801A1878;
 
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 unk80;
+
+} ET_Gorgon;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -4562,6 +4568,7 @@ typedef union { // offset=0x7C
     ET_B0_Unk b0Unk;
     ET_801B0930 et_801B0930;
     ET_OlroxDrool olroxDrool;
+    ET_Gorgon gorgon;
 } Ext;
 
 SYNC_FIELD(ET_Player, ET_Weapon, anim);
