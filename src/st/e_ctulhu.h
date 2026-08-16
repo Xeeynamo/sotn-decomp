@@ -621,11 +621,7 @@ void EntityCtulhuFireball(Entity* self) {
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
         self->ext.ctulhu.prim = prim;
-#ifdef STAGE_IS_NO0
-        prim->tpage = 0x14;
-#else
-        prim->tpage = 0x12;
-#endif
+        prim->tpage = CTULHU_TPAGE;
         prim->clut = g_EInitCtulhuFireball[3] + 1;
         prim->u0 = prim->u2 = 224;
         prim->u1 = prim->u3 = 255;
