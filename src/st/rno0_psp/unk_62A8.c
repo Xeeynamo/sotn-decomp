@@ -457,7 +457,7 @@ void func_pspeu_0923F198(s32 count) {
     }
 }
 
-void func_pspeu_0923F300(s32 newStep) {
+static void func_pspeu_0923F300(s32 newStep) {
     Entity* ent;
     s32 i;
 
@@ -468,7 +468,291 @@ void func_pspeu_0923F300(s32 newStep) {
     }
 }
 
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_62A8", EntityGorgon);
+extern u8 D_pspeu_0925EF00;
+
+void EntityGorgon(Entity* self) {
+    s32 var_s5;
+    s32 var_s4;
+    s32 var_s3;
+    s32 i;
+    Entity* other_s0;
+    Entity* other_s1;
+
+    if ((self->flags & 0x100) && (self->step < 0x16)) {
+        for(other_s0 = self, i = 0; i < 10; i++, other_s0++){
+            other_s0->hitboxState = 0;
+        }
+        if ((self->step) != 0x13) {
+            func_pspeu_0923F300(0x15);
+            self->step = 0x16;
+        }
+    }
+    switch (self->step) {                              /* switch 1; irregular */
+    case 0:                                         /* switch 1 */
+        InitializeEntity(g_EInitGorgon);
+        self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
+        self->zPriority = 0x70;
+        self->animCurFrame = 0xA;
+        self->hitboxWidth = 0xC;
+        self->hitboxHeight = 0xC;
+        other_s1 = self + 1;
+        CreateEntityFromEntity(0x3FU, self, other_s1);
+        other_s1 = self + 4;
+        CreateEntityFromEntity(0x40U, self, other_s1);
+        other_s1 = self + 7;
+        CreateEntityFromEntity(0x42U, self, other_s1);
+        other_s1 = self + 9;
+        CreateEntityFromEntity(0x43U, self, other_s1);
+        other_s1 = self + 8;
+        CreateEntityFromEntity(0x44U, self, other_s1);
+        self->ext.ILLEGAL.s16[0x14] = 2;
+        break;
+    case 1:                                         /* switch 1 */
+        if (!--self->ext.ILLEGAL.s16[0x14]) {
+            for(other_s0 = self, i = 0; i < 9; i++, other_s0++){
+                other_s0->parent = self;
+                other_s0->nextPart = other_s0 + 1;
+            }
+            other_s0->parent = self;
+            other_s0->nextPart = self;
+            self->parent = NULL;
+            func_pspeu_0923F300(0x10);
+        }
+        break;
+    case 17:                                        /* switch 1 */
+    case 16:                                        /* switch 1 */
+        if (!self->step_s) {
+            self->ext.ILLEGAL.s16[0x14] = 0x40;
+            self->step_s++;
+        }
+        other_s1 = self + 4;
+        if (other_s1->ext.ILLEGAL.u8[0x2C] == 0) {
+            other_s1 = other_s1 + 1;
+        } else {
+            other_s1 = other_s1 + 2;
+        }
+        var_s4 = func_pspeu_0923F088(other_s1, 0);
+        if (var_s4 != 0) {
+            if (self->ext.ILLEGAL.s16[0x14]) {
+                self->ext.ILLEGAL.u8[0x2D] = 0x13;
+                func_pspeu_0923F300(0x15);
+            }
+            self->ext.ILLEGAL.s16[0x14] = 0x20;
+        }
+        if (self->ext.ILLEGAL.s16[0x14]) {
+            self->ext.ILLEGAL.s16[0x14]--;
+            break;
+        } else if (GetDistanceToPlayerY() < 0x40) {
+            other_s0 = &PLAYER;
+            var_s3 = self->posX.i.hi - other_s0->posX.i.hi;
+            if (self->facingLeft) {
+                var_s3 = -var_s3;
+            }
+            if ((u16)var_s3 > 0xFFB0) {
+                var_s4 = 1;
+                self->ext.ILLEGAL.s16[0x14] = 0x10;
+            }
+            if ((var_s4 == 0) && (var_s3 > 0x60) && (self->step != 0x11)) {
+                func_pspeu_0923F300(0x11);
+            }
+            if (!self->ext.ILLEGAL.s16[0x12]) {
+                if (var_s3 < 0x50U) {
+                    self->ext.ILLEGAL.s16[0x12] = 0x80;
+                    SetStep(0x14U);
+                    break;
+                }
+            } else {
+                if (self->ext.ILLEGAL.s16[0x12] < 0) {
+                    self->ext.ILLEGAL.s16[0x12] = 0x80;
+                } else {
+                    self->ext.ILLEGAL.s16[0x12]--;
+                }
+            }
+        }
+        if (var_s4 != 0) {
+            self->ext.ILLEGAL.s16[0x14] = 0x20;
+            self->ext.ILLEGAL.u8[0x2D] = 0x13;
+            func_pspeu_0923F300(0x15);
+        }
+        if (self->hitParams) {
+            self->ext.ILLEGAL.s16[0x14] = 0x40;
+            func_pspeu_0923F300(0x12);
+        }
+        
+        break;
+    case 18:                                        /* switch 1 */
+        other_s1 = self + 1;
+        if (other_s1->ext.ILLEGAL.u8[0x2C] == 0) {
+            other_s1 = other_s1 + 1;
+        } else {
+            other_s1 = other_s1 + 2;
+        }
+        var_s4 = func_pspeu_0923F088(other_s1, 1);
+        if (!--self->ext.ILLEGAL.s16[0x14]) {
+            var_s4 = 1;
+        }
+        if (var_s4 != 0) {
+            self->ext.ILLEGAL.s16[0x14] = 0x18;
+            self->ext.ILLEGAL.u8[0x2D] = 0x10;
+            func_pspeu_0923F300(0x15);
+        }
+        break;
+    case 19:                                        /* switch 1 */
+        switch (self->step_s) {                          /* switch 2; irregular */
+        case 0:                                     /* switch 2 */
+            other_s1 = self + 1;
+            if (other_s1->ext.ILLEGAL.u8[0x2C] == 0) {
+                other_s1 = other_s1 + 1;
+            } else {
+                other_s1 = other_s1 + 2;
+            }
+            self->posY.i.hi = other_s1->posY.i.hi - 0x16;
+            if (self->facingLeft) {
+                self->posX.i.hi -= 0xC;
+            } else {
+                self->posX.i.hi += 0xC;
+            }
+            self->ext.ILLEGAL.u8[0x2F] = 1;
+            self->poseTimer = 0;
+            self->pose = 0;
+            self->step_s++;
+            /* fallthrough */
+        case 1:                                     /* switch 2 */
+            if (AnimateEntity(&D_pspeu_0925EF00, self) == 0) {
+                self->step_s++;
+            }
+            if (((self->pose) == 2) && (!self->poseTimer)) {
+                self->facingLeft ^= 1;
+                if (self->facingLeft) {
+                    self->posX.i.hi -= 0xC;
+                } else {
+                    self->posX.i.hi += 0xC;
+                }
+            }
+            break;
+        case 2:                                     /* switch 2 */
+            self->animCurFrame = 0xA;
+            other_s1 = self + 1;
+            if (other_s1->ext.ILLEGAL.u8[0x2C] == 0) {
+                other_s1 = other_s1 + 1;
+            } else {
+                other_s1 = other_s1 + 2;
+            }
+            other_s1->posX.i.hi = self->posX.i.hi;
+            self->ext.ILLEGAL.u8[0x2F] = 0;
+            self->ext.ILLEGAL.s16[0x14] = 0x20;
+            self->ext.ILLEGAL.u8[0x2D] = 0x10;
+            func_pspeu_0923F300(0x15);
+            break;
+        }
+        break;
+    case 20:                                        /* switch 1 */
+        switch (self->step_s) {                        /* switch 3; irregular */
+        case 0:                                     /* switch 3 */
+            other_s0 = self + 4;
+            if (other_s0->ext.ILLEGAL.u8[0x32]) {
+                other_s0->step = 0x14;
+                func_pspeu_0923F300(0x14);
+                self->step_s = 1;
+            }
+            break;
+        case 1:                                     /* switch 3 */
+            other_s0 = self + 7;
+            if (other_s0->step != 0x14) {
+                other_s0 = &PLAYER;
+                var_s3 = self->posX.i.hi - other_s0->posX.i.hi;
+                if (var_s3 < 0x50U) {
+                    func_pspeu_0923F300(0x14);
+                } else {
+                    func_pspeu_0923F300(0x10);
+                }
+            }
+            break;
+        }
+        break;
+    case 21:                                        /* switch 1 */
+        if (!--self->ext.ILLEGAL.s16[0x14]) {
+            if (self->ext.ILLEGAL.u8[0x2D]) {
+                func_pspeu_0923F300(self->ext.ILLEGAL.u8[0x2D]);
+            } else {
+                func_pspeu_0923F300(0x10);
+            }
+        }
+        break;
+    case 22:                                        /* switch 1 */
+        switch (self->step_s) {                        /* switch 4 */
+        case 0:                                     /* switch 4 */
+            other_s0 = self + 7;
+            other_s0->step = 0x16;
+            self->ext.ILLEGAL.s16[0x14] = 0x40;
+            self->step_s++;
+            /* fallthrough */
+        case 1:                                     /* switch 4 */
+            if (!(self->ext.ILLEGAL.s16[0x14] & 7)) {
+                PlaySfxPositional(0x655);
+                var_s3 = self->posX.i.hi;
+                var_s5 = self->posY.i.hi;
+                if (PLAYER.facingLeft) {
+                    var_s3 -= ((Random() & 0x3F) - 0x10);
+                } else {
+                    var_s3 += ((Random() & 0x3F) - 0x10);
+                }
+                var_s5 += ((Random() & 0x1F) - 0x10);
+                other_s1 = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                if (other_s1 != NULL) {
+                    CreateEntityFromCurrentEntity(2, other_s1);
+                    other_s1->params = 1;
+                    other_s1->zPriority = ((self->zPriority) + 2);
+                    other_s1->posX.i.hi = var_s3;
+                    other_s1->posY.i.hi = var_s5;
+                }
+            }
+            if (!--self->ext.ILLEGAL.s16[0x14]) {
+                func_pspeu_0923F300(0x16);
+                self->step_s = 2;
+            }
+            break;
+        case 2:                                     /* switch 4 */
+            other_s0 = self + 7;
+            if (!other_s0->entityId) {
+                self->step_s++;
+            }
+            break;
+        case 3:                                     /* switch 4 */
+            PlaySfxPositional(0x693);
+            self->ext.ILLEGAL.u8[0x30] = 1;
+            self->step_s++;
+            break;
+        case 4:                                     /* switch 4 */
+            other_s1 = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (other_s1 != NULL) {
+                CreateEntityFromEntity(2U, self, other_s1);
+                other_s1->params = 3;
+                other_s1->zPriority = self->zPriority;
+            }
+            self->ext.ILLEGAL.s16[0x14] = 8;
+            self->step_s++;
+            break;
+        case 5:                                     /* switch 4 */
+            if (!--self->ext.ILLEGAL.s16[0x14]) {
+                self->animCurFrame = 0;
+                for(other_s0 = self, i = 0; i < 9; i++, other_s0++){
+                    DestroyEntity(other_s0);
+                }
+            }
+            break;
+        }
+        break;
+    }
+    other_s1 = self + 1;
+    other_s1->facingLeft = self->facingLeft;
+    other_s1 = self + 4;
+    other_s1->facingLeft = self->facingLeft;
+    if (self->ext.ILLEGAL.u8[0x2F]) {
+        1;
+    }
+
+}
 
 void func_us_801D068C(Entity* self) {
     Point16 sp6C;
