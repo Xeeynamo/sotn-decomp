@@ -1679,19 +1679,19 @@ void func_us_801D2038(Entity* self) {
         self->animCurFrame = 0xC;
         if (GetPlayerCollisionWith(self, 0x10, 8, 4U) != 0) {
             xVar = (g_Tilemap.scrollX.val + self->posX.val) -
-                   (*(f32*)&self->ext.gorgon.unk80).val;
+                   F(self->ext.gorgon.unk80).val;
             // unused but let's calculate it just for fun
             yVar = (g_Tilemap.scrollY.val + self->posY.val) -
-                   (*(f32*)&self->ext.gorgon.unk84).val;
+                   F(self->ext.gorgon.unk84).val;
             player = &PLAYER;
             player->posX.val += xVar;
             player->posY.i.hi += 1;
         }
         break;
     }
-    (*(f32*)&self->ext.gorgon.unk80).val =
+    F(self->ext.gorgon.unk80).val =
         g_Tilemap.scrollX.val + self->posX.val;
-    (*(f32*)&self->ext.gorgon.unk84).val =
+    F(self->ext.gorgon.unk84).val =
         g_Tilemap.scrollY.val + self->posY.val;
 }
 
