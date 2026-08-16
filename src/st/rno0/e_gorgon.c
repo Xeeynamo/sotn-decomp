@@ -5,23 +5,31 @@ extern EInit g_EInitGorgon;
 extern EInit D_us_80180BDC;
 extern EInit D_us_80180BE8;
 
-static u8 UV_data_1[][8] = {{121, 86, 127, 92, 111, 97, 123, 105}, 
-                                    {72, 95, 81, 88, 79, 103, 87, 96}, 
-                                    {85, 101, 95, 113, 70, 120, 84, 130}, 
-                                    {85, 101, 95, 113, 70, 120, 84, 130}, 
-                                    {72, 95, 81, 88, 79, 103, 87, 96}, 
-                                    {121, 86, 127, 92, 111, 97, 123, 105}};
-static u8 UV_data_2[][8] = {{69, 64, 77, 72, 56, 79, 63, 87}, 
-                                    {88, 83, 103, 83, 88, 100, 103, 100}, 
-                                    {69, 64, 77, 72, 56, 79, 63, 87}, 
-                                    {88, 83, 103, 83, 88, 100, 103, 100}};
+static u8 UV_data_1[][8] = {
+    {121, 86, 127, 92, 111, 97, 123, 105},
+    {72, 95, 81, 88, 79, 103, 87, 96},
+    {85, 101, 95, 113, 70, 120, 84, 130},
+    {85, 101, 95, 113, 70, 120, 84, 130},
+    {72, 95, 81, 88, 79, 103, 87, 96},
+    {121, 86, 127, 92, 111, 97, 123, 105}};
+static u8 UV_data_2[][8] = {{69, 64, 77, 72, 56, 79, 63, 87},
+                            {88, 83, 103, 83, 88, 100, 103, 100},
+                            {69, 64, 77, 72, 56, 79, 63, 87},
+                            {88, 83, 103, 83, 88, 100, 103, 100}};
 
-static AnimateEntityFrame D_pspeu_0925EF00[] = {{3, 38}, {3, 37}, {3, 37}, {3, 38}, POSE_END};
+static AnimateEntityFrame D_pspeu_0925EF00[] = {
+    {3, 38}, {3, 37}, {3, 37}, {3, 38}, POSE_END};
 
-static AnimateEntityFrame D_pspeu_0925EF10[] = {{7, 11}, {7, 23}, {7, 24}, {1, 25}, {1, 24}, {1, 25}, POSE_END};
-static AnimateEntityFrame D_pspeu_0925EF20[] = {{1, 25}, {7, 24}, {7, 23}, {7, 11}, POSE_END};
-static AnimateEntityFrame D_pspeu_0925EF30[] = {{2, 11}, {2, 23}, {2, 24}, {2, 25}, {2, 24}, {2, 23}, {2, 11}, POSE_LOOP(0)};
-static AnimateEntityFrame D_pspeu_0925EF40[] = {{3, 26}, {2, 27}, {2, 28}, {3, 29}, {3, 30}, {4, 31}, {5, 32}, {4, 33}, {4, 34}, POSE_END};
+static AnimateEntityFrame D_pspeu_0925EF10[] = {
+    {7, 11}, {7, 23}, {7, 24}, {1, 25}, {1, 24}, {1, 25}, POSE_END};
+static AnimateEntityFrame D_pspeu_0925EF20[] = {
+    {1, 25}, {7, 24}, {7, 23}, {7, 11}, POSE_END};
+static AnimateEntityFrame D_pspeu_0925EF30[] = {
+    {2, 11}, {2, 23}, {2, 24}, {2, 25},
+    {2, 24}, {2, 23}, {2, 11}, POSE_LOOP(0)};
+static AnimateEntityFrame D_pspeu_0925EF40[] = {
+    {3, 26}, {2, 27}, {2, 28}, {3, 29}, {3, 30},
+    {4, 31}, {5, 32}, {4, 33}, {4, 34}, POSE_END};
 
 // This could be a file split issue
 #ifdef VERSION_US
@@ -962,8 +970,7 @@ void func_us_801D068C(Entity* self) {
                 if (prim->drawMode & DRAW_HIDE) {
                     prim = prim->next;
                 } else {
-                    other =
-                        AllocEntity(&g_Entities[0xE0], &g_Entities[256]);
+                    other = AllocEntity(&g_Entities[0xE0], &g_Entities[256]);
                     if (other != NULL) {
                         CreateEntityFromCurrentEntity(E_EXPLOSION, other);
                         other->posX.i.hi = prim->x0;
@@ -1192,8 +1199,7 @@ void func_us_801D0CFC(Entity* self) {
                 if (prim->drawMode & DRAW_HIDE) {
                     prim = prim->next;
                 } else {
-                    other =
-                        AllocEntity(&g_Entities[0xE0], &g_Entities[256]);
+                    other = AllocEntity(&g_Entities[0xE0], &g_Entities[256]);
                     if (other != NULL) {
                         CreateEntityFromCurrentEntity(E_EXPLOSION, other);
                         other->posX.i.hi = prim->x0;
