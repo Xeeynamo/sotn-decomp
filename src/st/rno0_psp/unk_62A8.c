@@ -23,6 +23,10 @@ static AnimateEntityFrame D_pspeu_0925EF20[] = {{1, 25}, {7, 24}, {7, 23}, {7, 1
 static AnimateEntityFrame D_pspeu_0925EF30[] = {{2, 11}, {2, 23}, {2, 24}, {2, 25}, {2, 24}, {2, 23}, {2, 11}, POSE_LOOP(0)};
 static AnimateEntityFrame D_pspeu_0925EF40[] = {{3, 26}, {2, 27}, {2, 28}, {3, 29}, {3, 30}, {4, 31}, {5, 32}, {4, 33}, {4, 34}, POSE_END};
 
+#ifdef VERSION_US
+static s32 fakepad;
+#endif
+
 
 // These first two are copied from the Plate Lord?
 static void func_pspeu_0923D928(Pos* src, s32 speed, s16 angle, Pos* dst) {
@@ -943,7 +947,7 @@ void func_us_801D068C(Entity* self) {
             break;
         case 2:
             self->animCurFrame = 0;
-            other = AllocEntity(&g_Entities[0xE0], (Entity*)&D_80097C98);
+            other = AllocEntity(&g_Entities[0xE0], &g_Entities[256]);
             if (other != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, other);
                 other->params = 3;
@@ -957,7 +961,7 @@ void func_us_801D068C(Entity* self) {
                     prim = prim->next;
                 } else {
                     other =
-                        AllocEntity(&g_Entities[0xE0], (Entity*)&D_80097C98);
+                        AllocEntity(&g_Entities[0xE0], &g_Entities[256]);
                     if (other != NULL) {
                         CreateEntityFromCurrentEntity(E_EXPLOSION, other);
                         other->posX.i.hi = prim->x0;
@@ -1173,7 +1177,7 @@ void func_us_801D0CFC(Entity* self) {
             break;
         case 2:
             self->animCurFrame = 0;
-            other = AllocEntity(&g_Entities[0xE0], (Entity*)&D_80097C98);
+            other = AllocEntity(&g_Entities[0xE0], &g_Entities[256]);
             if (other != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, other);
                 other->params = 3;
@@ -1188,7 +1192,7 @@ void func_us_801D0CFC(Entity* self) {
                     prim = prim->next;
                 } else {
                     other =
-                        AllocEntity(&g_Entities[0xE0], (Entity*)&D_80097C98);
+                        AllocEntity(&g_Entities[0xE0], &g_Entities[256]);
                     if (other != NULL) {
                         CreateEntityFromCurrentEntity(E_EXPLOSION, other);
                         other->posX.i.hi = prim->x0;
@@ -1422,7 +1426,7 @@ void func_us_801D15C0(Entity* self) {
         self->ext.gorgon.unkAB = 0;
         self->animCurFrame = 0xB;
         if (!(g_Timer & 0x7F)) {
-            other = AllocEntity(&g_Entities[0xE0], (Entity*)&D_80097C98);
+            other = AllocEntity(&g_Entities[0xE0], &g_Entities[256]);
             if (other != NULL) {
                 PlaySfxPositional(SFX_GORGON_SNORT);
                 CreateEntityFromEntity(E_UNK_46, self, other);
@@ -1452,7 +1456,7 @@ void func_us_801D15C0(Entity* self) {
             }
             break;
         case 1:
-            other = AllocEntity(&g_Entities[0xE0], (Entity*)&D_80097C98);
+            other = AllocEntity(&g_Entities[0xE0], &g_Entities[256]);
             if (other != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, other);
                 other->params = 3;
