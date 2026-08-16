@@ -35,7 +35,7 @@ static s32 E_ID(ID_1B);
 static s32 E_ID(ID_1C);
 static s32 E_ID(ID_1D);
 static s32 E_ID(ID_1E);
-static s32 E_ID(ID_1F);
+static s32 E_ID(BG_COLUMN_PARALLAX);
 static s32 E_ID(ID_20);
 static s32 E_ID(ID_21);
 static s32 E_ID(ID_22);
@@ -124,7 +124,7 @@ void InitEntityIds(void) {
     E_ID(ID_1C) = 0x1C;
     E_ID(ID_1D) = 0x1D;
     E_ID(ID_1E) = 0x1E;
-    E_ID(ID_1F) = 0x1F;
+    E_ID(BG_COLUMN_PARALLAX) = 0x1F;
     E_ID(ID_20) = 0x20;
     E_ID(ID_21) = 0x21;
     E_ID(ID_22) = 0x22;

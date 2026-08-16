@@ -476,21 +476,22 @@ void func_us_801C1844(Entity* self) {
     }
 }
 
-static s16 D_us_801814E4[] = {
-    0x022, 0x023, 0x003, 0x048, 0x022, 0x001, 0x070, 0x021,
-    0x002, 0x0CE, 0x024, 0x001, 0x122, 0x023, 0x003, 0x148,
-    0x022, 0x001, 0x170, 0x021, 0x002, 0x1CE, 0x024, 0x001,
+static s16 bg_columns_parallax_props[][3] = {
+    {0x022, 0x023, 0x003}, {0x048, 0x022, 0x001}, {0x070, 0x021, 0x002},
+    {0x0CE, 0x024, 0x001}, {0x122, 0x023, 0x003}, {0x148, 0x022, 0x001},
+    {0x170, 0x021, 0x002}, {0x1CE, 0x024, 0x001},
 };
 
-void func_us_801C1C94(Entity* self) {
+// background columns scrolling in parallax
+void EntityBgColumnsParallax(Entity* self) {
     s32 primIndex;
     s32 scrollY;
     s32 scrollX;
-    s32 var_s5;
+    s32 flipXY;
     s16* ptr;
-    s32 var_s3;
-    s32 var_s2;
-    s32 var_s1;
+    s32 posYBottom;
+    s32 posY;
+    s32 posX;
     Primitive* prim;
 
     if (!self->step) {
@@ -519,52 +520,52 @@ void func_us_801C1C94(Entity* self) {
     }
 
     prim = self->ext.et_801C12B0.prim;
-    ptr = D_us_801814E4;
+    ptr = (s16*)bg_columns_parallax_props;
     scrollX = g_Tilemap.scrollX.i.hi;
     scrollX /= 2;
     scrollX &= 0xFF;
     scrollY = g_Tilemap.scrollY.i.hi;
-
     if (scrollY < 0xB0) {
         scrollY /= 2;
+#ifdef FIX_UB
+        // the original while loop does not prevent the function to read
+        // outside the array boundaries
+        for (int i = 0; i < LEN(bg_columns_parallax_props); i++) {
+#else
         while (1) {
-            var_s1 = *ptr++;
-            var_s2 = *ptr++;
-            var_s5 = *ptr++;
-            var_s1 -= scrollX;
-            var_s2 -= scrollY;
-            var_s3 = var_s2 + 0x7E;
-            if (var_s1 < -0x14) {
+#endif
+            posX = *ptr++;
+            posY = *ptr++;
+            flipXY = *ptr++;
+            posX -= scrollX;
+            posY -= scrollY;
+            posYBottom = posY + 0x7E;
+            if (posX < -20) {
                 continue;
             }
-
-            if (var_s1 >= 0x100) {
+            if (posX >= STAGE_WIDTH) {
                 break;
             }
-
-            if (var_s3 >= 0 && var_s2 < 0xE0) {
-                if (var_s5 & 1) {
-                    prim->x0 = prim->x2 = var_s1 + 0x14;
-                    prim->x1 = prim->x3 = var_s1;
+            if (posYBottom >= 0 && posY < 0xE0) {
+                if (flipXY & 1) {
+                    prim->x0 = prim->x2 = posX + 0x14;
+                    prim->x1 = prim->x3 = posX;
                 } else {
-                    prim->x0 = prim->x2 = var_s1;
-                    prim->x1 = prim->x3 = var_s1 + 0x14;
+                    prim->x0 = prim->x2 = posX;
+                    prim->x1 = prim->x3 = posX + 0x14;
                 }
-
-                if (var_s5 & 2) {
-                    prim->y0 = prim->y1 = var_s2;
-                    prim->y2 = prim->y3 = var_s3;
+                if (flipXY & 2) {
+                    prim->y0 = prim->y1 = posY;
+                    prim->y2 = prim->y3 = posYBottom;
                 } else {
-                    prim->y0 = prim->y1 = var_s3;
-                    prim->y2 = prim->y3 = var_s2;
+                    prim->y0 = prim->y1 = posYBottom;
+                    prim->y2 = prim->y3 = posY;
                 }
-
                 prim->drawMode = DRAW_DEFAULT;
                 prim = prim->next;
             }
         }
     }
-
     while (prim != NULL) {
         prim->drawMode = DRAW_HIDE;
         prim = prim->next;
