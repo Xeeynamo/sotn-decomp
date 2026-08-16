@@ -69,7 +69,7 @@ void EntityGorgonFoot(Entity* self);
 void EntityGorgonHead(Entity* self);
 void func_us_801D2038(Entity* self);
 void func_us_801D1BF0(Entity* self);
-void func_us_801D2264(Entity* self);
+void EntityGorgonAttack(Entity* self);
 void EntityGorgonSnort(Entity* self);
 void EntityElevator(Entity* self);
 void EntityElevatorPart(Entity* self);
@@ -150,7 +150,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityGorgonHead,
     func_us_801D2038,
     func_us_801D1BF0,
-    func_us_801D2264,
+    EntityGorgonAttack,
     EntityGorgonSnort,
     EntityElevator,
     EntityElevatorPart,

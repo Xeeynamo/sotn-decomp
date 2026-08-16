@@ -83,7 +83,7 @@ enum EntityID {
     E_GORGON_HEAD,           // EntityGorgonHead
     E_UNK_43,                // func_us_801D2038
     E_UNK_44,                // func_us_801D1BF0
-    E_UNK_45,                // func_us_801D2264
+    E_GORGON_ATTACK,         // EntityGorgonAttack
     E_GORGON_SNORT,          // EntityGorgonSnort
     E_ELEVATOR,              // EntityElevator
     E_ELEVATOR_PART,         // EntityElevatorPart

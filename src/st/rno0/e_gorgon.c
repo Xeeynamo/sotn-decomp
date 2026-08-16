@@ -1388,7 +1388,7 @@ void EntityGorgonHead(Entity* self) {
             if (!(g_Timer & 3)) {
                 other = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
                 if (other != NULL) {
-                    CreateEntityFromEntity(E_UNK_45, self, other);
+                    CreateEntityFromEntity(E_GORGON_ATTACK, self, other);
                     other->facingLeft = self->facingLeft;
                     if (self->facingLeft) {
                         other->posX.i.hi += 0xC;
@@ -1710,7 +1710,7 @@ void EntityGorgonSnort(Entity* self) {
     }
 }
 
-void func_us_801D2264(Entity* self) {
+void EntityGorgonAttack(Entity* self) {
     Primitive* prim;
     s32 primIndex;
 
@@ -1733,6 +1733,9 @@ void func_us_801D2264(Entity* self) {
         prim = &g_PrimBuf[primIndex];
         self->ext.gorgon.prim = prim;
         UnkPolyFunc2(prim);
+        // This is the DRA tpage that includes "Now loading", numbers, and
+        // status texts like "Stone", "Guard", and "Critical".
+        // There is a circular blur at the listed UV coordinates
         prim->tpage = 0x1A;
         prim->clut = 0x19C;
 
