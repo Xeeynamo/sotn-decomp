@@ -280,7 +280,7 @@ static s32 func_pspeu_0923E920(
     if ((arg2->ext.gorgon.unk80) && (var_s0 < var_s3) && (var_s2 < -var_s0)) {
         return 1;
     }
-    switch (g_CurrentEntity->ext.gorgon.unkAA) { /* irregular */
+    switch (g_CurrentEntity->ext.gorgon.unkAA) {
     case 0:
         StepTowards(arg3 + 1, -0x240, var_s1);
         if (StepTowards(arg3, 0x1C0, var_s1) != 0) {
@@ -305,7 +305,8 @@ static s32 func_pspeu_0923E920(
     return 0;
 }
 
-static s32 func_pspeu_0923EBE8(Entity* arg0, s16* arg1, Entity* arg2, s16* arg3) {
+static s32 func_pspeu_0923EBE8(
+    Entity* arg0, s16* arg1, Entity* arg2, s16* arg3) {
     s32 temp_v1;
     s32 var_s3;
     s32 var_s2;
@@ -322,7 +323,7 @@ static s32 func_pspeu_0923EBE8(Entity* arg0, s16* arg1, Entity* arg2, s16* arg3)
     if ((arg2->ext.gorgon.unk80) && (var_s1 < -8) && (var_s2 > 8)) {
         return 1;
     }
-    switch (g_CurrentEntity->ext.gorgon.unkAA) { /* irregular */
+    switch (g_CurrentEntity->ext.gorgon.unkAA) {
     case 0:
         if (var_s1 > -8) {
             *arg3 -= 0x10;
@@ -354,7 +355,8 @@ static s32 func_pspeu_0923EBE8(Entity* arg0, s16* arg1, Entity* arg2, s16* arg3)
     return 0;
 }
 
-static s32 func_pspeu_0923EE78(Entity* arg0, s16* arg1, Entity* arg2, s16* arg3) {
+static s32 func_pspeu_0923EE78(
+    Entity* arg0, s16* arg1, Entity* arg2, s16* arg3) {
     s32 var_s2;
     s32 var_s1;
     s32 var_s0;
@@ -374,7 +376,7 @@ static s32 func_pspeu_0923EE78(Entity* arg0, s16* arg1, Entity* arg2, s16* arg3)
     if (arg2->ext.gorgon.unk80 && (var_s0 < -8) && (var_s2 > 8)) {
         return 1;
     }
-    switch (g_CurrentEntity->ext.gorgon.unkAA) { /* irregular */
+    switch (g_CurrentEntity->ext.gorgon.unkAA) {
     case 0:
         StepTowards(arg3 + 1, -0x280, 0x20);
         if (StepTowards(arg3, -0xC0, 0x18)) {
@@ -491,8 +493,8 @@ void EntityGorgon(Entity* self) {
             self->step = 0x16;
         }
     }
-    switch (self->step) { /* switch 1; irregular */
-    case 0:               /* switch 1 */
+    switch (self->step) {
+    case 0:
         InitializeEntity(g_EInitGorgon);
         self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
         self->zPriority = 0x70;
@@ -511,7 +513,7 @@ void EntityGorgon(Entity* self) {
         CreateEntityFromEntity(E_UNK_44, self, other_s1);
         self->ext.gorgon.unkA4 = 2;
         break;
-    case 1: /* switch 1 */
+    case 1:
         if (!--self->ext.gorgon.unkA4) {
             for (other_s0 = self, i = 0; i < 9; i++, other_s0++) {
                 other_s0->parent = self;
@@ -523,8 +525,8 @@ void EntityGorgon(Entity* self) {
             func_pspeu_0923F300(0x10);
         }
         break;
-    case 17: /* switch 1 */
-    case 16: /* switch 1 */
+    case 17:
+    case 16:
         if (!self->step_s) {
             self->ext.gorgon.unkA4 = 0x40;
             self->step_s++;
@@ -584,7 +586,7 @@ void EntityGorgon(Entity* self) {
         }
 
         break;
-    case 18: /* switch 1 */
+    case 18:
         other_s1 = self + 1;
         if (other_s1->ext.gorgon.unkA8 == 0) {
             other_s1 = other_s1 + 1;
@@ -601,9 +603,9 @@ void EntityGorgon(Entity* self) {
             func_pspeu_0923F300(0x15);
         }
         break;
-    case 19:                    /* switch 1 */
-        switch (self->step_s) { /* switch 2; irregular */
-        case 0:                 /* switch 2 */
+    case 19:
+        switch (self->step_s) {
+        case 0:
             other_s1 = self + 1;
             if (other_s1->ext.gorgon.unkA8 == 0) {
                 other_s1 = other_s1 + 1;
@@ -621,7 +623,7 @@ void EntityGorgon(Entity* self) {
             self->pose = 0;
             self->step_s++;
             /* fallthrough */
-        case 1: /* switch 2 */
+        case 1:
             if (AnimateEntity(&D_pspeu_0925EF00, self) == 0) {
                 self->step_s++;
             }
@@ -634,7 +636,7 @@ void EntityGorgon(Entity* self) {
                 }
             }
             break;
-        case 2: /* switch 2 */
+        case 2:
             self->animCurFrame = 0xA;
             other_s1 = self + 1;
             if (other_s1->ext.gorgon.unkA8 == 0) {
@@ -650,9 +652,9 @@ void EntityGorgon(Entity* self) {
             break;
         }
         break;
-    case 20:                    /* switch 1 */
-        switch (self->step_s) { /* switch 3; irregular */
-        case 0:                 /* switch 3 */
+    case 20:
+        switch (self->step_s) {
+        case 0:
             other_s0 = self + 4;
             if (other_s0->ext.gorgon.unkAE) {
                 other_s0->step = 0x14;
@@ -660,7 +662,7 @@ void EntityGorgon(Entity* self) {
                 self->step_s = 1;
             }
             break;
-        case 1: /* switch 3 */
+        case 1:
             other_s0 = self + 7;
             if (other_s0->step != 0x14) {
                 other_s0 = &PLAYER;
@@ -674,7 +676,7 @@ void EntityGorgon(Entity* self) {
             break;
         }
         break;
-    case 21: /* switch 1 */
+    case 21:
         if (!--self->ext.gorgon.unkA4) {
             if (self->ext.gorgon.unkA9) {
                 func_pspeu_0923F300(self->ext.gorgon.unkA9);
@@ -683,15 +685,15 @@ void EntityGorgon(Entity* self) {
             }
         }
         break;
-    case 22:                    /* switch 1 */
-        switch (self->step_s) { /* switch 4 */
-        case 0:                 /* switch 4 */
+    case 22:
+        switch (self->step_s) {
+        case 0:
             other_s0 = self + 7;
             other_s0->step = 0x16;
             self->ext.gorgon.unkA4 = 0x40;
             self->step_s++;
             /* fallthrough */
-        case 1: /* switch 4 */
+        case 1:
             if (!(self->ext.gorgon.unkA4 & 7)) {
                 PlaySfxPositional(SFX_EXPLODE_B);
                 var_s3 = self->posX.i.hi;
@@ -716,18 +718,18 @@ void EntityGorgon(Entity* self) {
                 self->step_s = 2;
             }
             break;
-        case 2: /* switch 4 */
+        case 2:
             other_s0 = self + 7;
             if (!other_s0->entityId) {
                 self->step_s++;
             }
             break;
-        case 3: /* switch 4 */
+        case 3:
             PlaySfxPositional(SFX_STUTTER_EXPLODE_LOW);
             self->ext.gorgon.unkAC = 1;
             self->step_s++;
             break;
-        case 4: /* switch 4 */
+        case 4:
             other_s1 = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (other_s1 != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, other_s1);
@@ -737,7 +739,7 @@ void EntityGorgon(Entity* self) {
             self->ext.gorgon.unkA4 = 8;
             self->step_s++;
             break;
-        case 5: /* switch 4 */
+        case 5:
             if (!--self->ext.gorgon.unkA4) {
                 self->animCurFrame = 0;
                 for (other_s0 = self, i = 0; i < 9; i++, other_s0++) {
@@ -775,8 +777,8 @@ void func_us_801D068C(Entity* self) {
     Primitive* prim;
 
     self->animCurFrame = 9;
-    switch (self->step) { /* switch 1; irregular */
-    case 0:               /* switch 1 */
+    switch (self->step) {
+    case 0:
         InitializeEntity(g_EInitGorgon);
         self->animCurFrame = 9;
         self->zPriority = 0x70;
@@ -823,11 +825,11 @@ void func_us_801D068C(Entity* self) {
         self->ext.gorgon.unk8A = 0x100;
         self->step = 0x15;
         break;
-    case 17: /* switch 1 */
-    case 16: /* switch 1 */
-    case 18: /* switch 1 */
-    case 21: /* switch 1 */
-    case 20: /* switch 1 */
+    case 17:
+    case 16:
+    case 18:
+    case 21:
+    case 20:
         self->ext.gorgon.unkAB = 0;
         if (self->ext.gorgon.unkA8 == 0) {
             other7 = self + 1;
@@ -840,18 +842,18 @@ void func_us_801D068C(Entity* self) {
             other6 = self + 1;
             var_s3 = &self->ext.gorgon.unk80;
         }
-        switch (self->step) { /* switch 2; irregular */
-        case 17:              /* switch 2 */
+        switch (self->step) {
+        case 17:
             sp38[0] = 0xA;
             sp38[1] = 0x10;
             sp68 = func_pspeu_0923E6D0(other7, var_s4, other6, var_s3, sp38);
             break;
-        case 16: /* switch 2 */
+        case 16:
             sp38[0] = 8;
             sp38[1] = 8;
             sp68 = func_pspeu_0923E6D0(other7, var_s4, other6, var_s3, sp38);
             break;
-        case 18: /* switch 2 */
+        case 18:
             sp68 = func_pspeu_0923EBE8(other7, var_s4, other6, var_s3);
             break;
         case 20:
@@ -870,18 +872,18 @@ void func_us_801D068C(Entity* self) {
             self->ext.gorgon.unkAE = 0;
         }
         break;
-    case 19: /* switch 1 */
+    case 19:
         if (!self->step_s) {
             self->step_s += 1;
         } else {
             self->ext.gorgon.unkAB = 1;
-            for (prim = self->ext.gorgon.prim, self->animCurFrame = 0; prim != NULL;
-                 prim = prim->next) {
+            for (prim = self->ext.gorgon.prim, self->animCurFrame = 0;
+                 prim != NULL; prim = prim->next) {
                 prim->drawMode |= DRAW_HIDE;
             }
         }
         break;
-    case 22: /* switch 1 */
+    case 22:
         if (self->ext.gorgon.unkA8 == 0) {
             other7 = self + 1;
             var_s4 = &self->ext.gorgon.unk80;
@@ -893,8 +895,8 @@ void func_us_801D068C(Entity* self) {
             other6 = self + 1;
             var_s3 = &self->ext.gorgon.unk80;
         }
-        switch (self->step_s) { /* switch 3; irregular */
-        case 0:                 /* switch 3 */
+        switch (self->step_s) {
+        case 0:
             self->ext.gorgon.unkAB = 0;
             StepTowards(var_s4 + 1, -0x600, 0x30);
             StepTowards(var_s4 + 2, -0x400, 0x30);
@@ -922,7 +924,7 @@ void func_us_801D068C(Entity* self) {
                 self->step_s += 1;
             }
             break;
-        case 2: /* switch 3 */
+        case 2:
             self->animCurFrame = 0;
             other = AllocEntity(&g_Entities[0xE0], (Entity*)&D_80097C98);
             if (other != NULL) {
@@ -932,7 +934,7 @@ void func_us_801D068C(Entity* self) {
             }
             self->step_s += 1;
             break;
-        case 3: /* switch 3 */
+        case 3:
             for (prim = self->ext.gorgon.prim; prim != NULL;) {
                 if (prim->drawMode & DRAW_HIDE) {
                     prim = prim->next;
@@ -999,8 +1001,8 @@ void func_us_801D0CFC(Entity* self) {
     Primitive* prim;
 
     self->animCurFrame = 13;
-    switch (self->step) { /* switch 1; irregular */
-    case 0:               /* switch 1 */
+    switch (self->step) {
+    case 0:
         InitializeEntity(g_EInitGorgon);
         self->animCurFrame = 13;
         self->drawFlags = ENTITY_ROTATE;
@@ -1039,9 +1041,9 @@ void func_us_801D0CFC(Entity* self) {
         self->ext.gorgon.unk82 = 0x40;
         self->step = 0x15;
         break;
-    case 17: /* switch 1 */
-    case 16: /* switch 1 */
-    case 18: /* switch 1 */
+    case 17:
+    case 16:
+    case 18:
         if (self->ext.gorgon.unkA8 == 0) {
             other3 = self + 1;
             var_s4 = &self->ext.gorgon.unk80;
@@ -1053,18 +1055,18 @@ void func_us_801D0CFC(Entity* self) {
             other7 = self + 1;
             var_s6 = &self->ext.gorgon.unk80;
         }
-        switch (self->step) { /* switch 2; irregular */
-        case 17:              /* switch 2 */
+        switch (self->step) {
+        case 17:
             sp38[0] = 0xA;
             sp38[1] = 0x40;
             sp68 = func_pspeu_0923E920(other3, var_s4, other7, var_s6, sp38);
             break;
-        case 16: /* switch 2 */
+        case 16:
             sp38[0] = 8;
             sp38[1] = 32;
             sp68 = func_pspeu_0923E920(other3, var_s4, other7, var_s6, sp38);
             break;
-        case 18: /* switch 2 */
+        case 18:
             sp68 = func_pspeu_0923EE78(other3, var_s4, other7, var_s6);
             break;
         }
@@ -1105,20 +1107,21 @@ void func_us_801D0CFC(Entity* self) {
         }
         func_pspeu_0923F198(2);
         break;
-    case 19: /* switch 1 */
+    case 19:
         if (!self->step_s) {
             self->step_s += 1;
         } else {
             self->ext.gorgon.unkAB = 1;
             self->animCurFrame = 0;
-            for (prim = self->ext.gorgon.prim; prim != NULL; prim = prim->next) {
+            for (prim = self->ext.gorgon.prim; prim != NULL;
+                 prim = prim->next) {
                 prim->drawMode |= DRAW_HIDE;
             }
         }
         break;
-    case 22:                    /* switch 1 */
-        switch (self->step_s) { /* switch 3; irregular */
-        case 0:                 /* switch 3 */
+    case 22:
+        switch (self->step_s) {
+        case 0:
             other3 = self + 1;
             var_s4 = &self->ext.gorgon.unk80;
             prim = self->ext.gorgon.prim;
@@ -1151,7 +1154,7 @@ void func_us_801D0CFC(Entity* self) {
                 self->step_s += 1;
             }
             break;
-        case 2: /* switch 3 */
+        case 2:
             self->animCurFrame = 0;
             other = AllocEntity(&g_Entities[0xE0], (Entity*)&D_80097C98);
             if (other != NULL) {
@@ -1162,7 +1165,7 @@ void func_us_801D0CFC(Entity* self) {
             self->ext.gorgon.unkAB = 1;
             self->step_s += 1;
             break;
-        case 3: /* switch 3 */
+        case 3:
             for (prim = self->ext.gorgon.prim; prim != NULL;) {
                 if (prim->drawMode & DRAW_HIDE) {
                     prim = prim->next;
@@ -1207,8 +1210,8 @@ void func_us_801D136C(Entity* self) {
     Entity* other;
     s32 xVar, yVar;
 
-    switch (self->step) { /* switch 1; irregular */
-    case 0:               /* switch 1 */
+    switch (self->step) {
+    case 0:
         InitializeEntity(g_EInitGorgon);
         self->drawFlags = ENTITY_ROTATE;
         self->animCurFrame = 0x10;
@@ -1221,23 +1224,23 @@ void func_us_801D136C(Entity* self) {
         self->hitboxWidth = 4;
         self->hitboxHeight = 6;
         return;
-    case 19: /* switch 1 */
+    case 19:
         if (!self->step_s) {
             self->step_s += 1;
             return;
         }
         self->animCurFrame = 0;
         return;
-    case 22:                    /* switch 1 */
-        switch (self->step_s) { /* switch 2; irregular */
-        case 1:                 /* switch 2 */
+    case 22:
+        switch (self->step_s) {
+        case 1:
             other = self - 1;
             if (other->ext.gorgon.unkAC) {
                 self->ext.gorgon.unkAC = 1;
                 self->step_s += 1;
             }
             break;
-        case 2: /* switch 2 */
+        case 2:
             other = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (other != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, other);
@@ -1251,7 +1254,7 @@ void func_us_801D136C(Entity* self) {
             self->animCurFrame = 0;
             self->step_s += 1;
             break;
-        case 3: /* switch 2 */
+        case 3:
             break;
         }
     }
@@ -1303,8 +1306,8 @@ void func_us_801D15C0(Entity* self) {
 
     s32 xVar, yVar;
 
-    switch (self->step) { /* switch 1; irregular */
-    case 0:               /* switch 1 */
+    switch (self->step) {
+    case 0:
         InitializeEntity(D_us_80180BDC);
         self->animCurFrame = 0xB;
         self->zPriority = 0x70;
@@ -1331,7 +1334,7 @@ void func_us_801D15C0(Entity* self) {
         prim->drawMode = DRAW_UNK02;
         self->ext.gorgon.unk80 = 0x400;
         break;
-    case 19: /* switch 1 */
+    case 19:
         if (!self->step_s) {
             self->step_s += 1;
         } else {
@@ -1341,16 +1344,16 @@ void func_us_801D15C0(Entity* self) {
             prim->drawMode |= DRAW_HIDE;
         }
         break;
-    case 20:                    /* switch 1 */
-        switch (self->step_s) { /* switch 2; irregular */
-        case 0:                 /* switch 2 */
+    case 20:
+        switch (self->step_s) {
+        case 0:
             temp_s2 = StepTowards(&self->ext.gorgon.unk80, 0x600, 0x10);
             temp_s2 += StepTowards(&self->rotate, 0x300, 0x20);
             if (temp_s2 == 2) {
                 self->step_s += 1;
             }
             break;
-        case 1: /* switch 2 */
+        case 1:
             temp_s2 = StepTowards(&self->ext.gorgon.unk80, 0x500, 0x18);
             temp_s2 = temp_s2 + StepTowards(&self->rotate, 0x100, 0x30);
             if ((AnimateEntity(&D_pspeu_0925EF10, self) == 0) &&
@@ -1360,7 +1363,7 @@ void func_us_801D15C0(Entity* self) {
                 self->step_s += 1;
             }
             break;
-        case 2: /* switch 2 */
+        case 2:
             if (!(g_Timer & 3)) {
                 other = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
                 if (other != NULL) {
@@ -1380,7 +1383,7 @@ void func_us_801D15C0(Entity* self) {
                 self->step_s += 1;
             }
             break;
-        case 3: /* switch 2 */
+        case 3:
             temp_s2 = StepTowards(&self->ext.gorgon.unk80, 0x400, 0x10);
             temp_s2 = temp_s2 + StepTowards(&self->rotate, 0, 0x20);
             if ((AnimateEntity(&D_pspeu_0925EF20, self) == 0) &&
@@ -1390,9 +1393,9 @@ void func_us_801D15C0(Entity* self) {
             break;
         }
         break;
-    case 17: /* switch 1 */
-    case 16: /* switch 1 */
-    case 18: /* switch 1 */
+    case 17:
+    case 16:
+    case 18:
         switch (self->step_s) {
         case 0:
             if (StepTowards(&self->ext.gorgon.unk80, 0x500, 8) != 0) {
@@ -1404,7 +1407,7 @@ void func_us_801D15C0(Entity* self) {
                 self->step_s = 0;
             }
         }
-    default: /* switch 1 */
+    default:
         self->ext.gorgon.unkAB = 0;
         self->animCurFrame = 0xB;
         if (!(g_Timer & 0x7F)) {
@@ -1422,9 +1425,9 @@ void func_us_801D15C0(Entity* self) {
             }
         }
         break;
-    case 22:                    /* switch 1 */
-        switch (self->step_s) { /* switch 3; irregular */
-        case 0:                 /* switch 3 */
+    case 22:
+        switch (self->step_s) {
+        case 0:
             StepTowards(&self->ext.gorgon.unk80, 0x400, 8);
             StepTowards(&self->rotate, 0x200, 0x10);
             AnimateEntity(&D_pspeu_0925EF30, self);
@@ -1437,7 +1440,7 @@ void func_us_801D15C0(Entity* self) {
                 self->step_s += 1;
             }
             break;
-        case 1: /* switch 3 */
+        case 1:
             other = AllocEntity(&g_Entities[0xE0], (Entity*)&D_80097C98);
             if (other != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, other);
@@ -1492,7 +1495,7 @@ void func_us_801D1BF0(Entity* self) {
     s32 var_s7;
     u32 var_s3;
 
-    switch (self->step) { /* irregular */
+    switch (self->step) {
     case 0:
         InitializeEntity(g_EInitGorgon);
         self->animCurFrame = 0x14;
@@ -1628,7 +1631,7 @@ void func_us_801D2038(Entity* self) {
     s32 xVar, yVar;
     Entity* player;
 
-    switch (self->step) { /* irregular */
+    switch (self->step) {
     case 0:
         InitializeEntity(g_EInitGorgon);
         self->animCurFrame = 0xC;
@@ -1665,14 +1668,16 @@ void func_us_801D2038(Entity* self) {
         }
         break;
     }
-    (*(f32*)&self->ext.gorgon.unk80).val = g_Tilemap.scrollX.val + self->posX.val;
-    (*(f32*)&self->ext.gorgon.unk84).val = g_Tilemap.scrollY.val + self->posY.val;
+    (*(f32*)&self->ext.gorgon.unk80).val =
+        g_Tilemap.scrollX.val + self->posX.val;
+    (*(f32*)&self->ext.gorgon.unk84).val =
+        g_Tilemap.scrollY.val + self->posY.val;
 }
 
 extern AnimateEntityFrame D_pspeu_0925EF40[];
 
 void func_us_801D21C8(Entity* self) {
-    switch (self->step) { /* irregular */
+    switch (self->step) {
     case 0:
         InitializeEntity(g_EInitGorgon);
         self->zPriority = 0x72;
@@ -1694,7 +1699,7 @@ void func_us_801D2264(Entity* self) {
     Primitive* prim;
     s32 primIndex;
 
-    switch (self->step) { /* irregular */
+    switch (self->step) {
     case 0:
         InitializeEntity(D_us_80180BE8);
         self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
