@@ -1689,10 +1689,8 @@ void func_us_801D2038(Entity* self) {
         }
         break;
     }
-    F(self->ext.gorgon.unk80).val =
-        g_Tilemap.scrollX.val + self->posX.val;
-    F(self->ext.gorgon.unk84).val =
-        g_Tilemap.scrollY.val + self->posY.val;
+    F(self->ext.gorgon.unk80).val = g_Tilemap.scrollX.val + self->posX.val;
+    F(self->ext.gorgon.unk84).val = g_Tilemap.scrollY.val + self->posY.val;
 }
 
 void EntityGorgonSnort(Entity* self) {
