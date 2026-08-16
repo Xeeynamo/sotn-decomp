@@ -95,7 +95,14 @@ void func_060E4368(s32 arg0, s32 arg1, s32 arg2) {
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E43A4, func_060E43A4);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E4474, func_060E4474);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E45E0, func_060E45E0);
-INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E4630, func_060E4630);
+extern void SyncSpriteObjectPos(Entity* self);
+extern void func_0600B004(SpriteObject* sprite, u32 imageIndex);
+extern u32 DAT_060EF1A8[];
+
+void func_060E4630(Entity* self) {
+    SyncSpriteObjectPos(self);
+    func_0600B004(self->unk0, DAT_060EF1A8[self->animCurFrame]);
+}
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E4668, func_060E4668);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E519C, func_060E519C);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E540C, func_060E540C);
