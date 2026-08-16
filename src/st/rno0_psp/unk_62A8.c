@@ -1276,7 +1276,195 @@ void func_us_801D136C(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_62A8", func_us_801D15C0);
+extern EInit D_us_80180BDC;
+
+extern AnimateEntityFrame D_pspeu_0925EF10;
+extern AnimateEntityFrame D_pspeu_0925EF20;
+extern AnimateEntityFrame D_pspeu_0925EF30;
+
+void func_us_801D15C0(Entity* self) {
+    Point16 sp6C;
+    Collider sp48;
+    Pos sp40;
+    Pos sp38;
+    Entity* other4;
+    Entity* other;
+    Primitive* prim;
+    s32 primIndex;
+    s16 var_s3;
+    s32 temp_s2;
+
+    s32 xVar, yVar;
+
+    switch (self->step) {                              /* switch 1; irregular */
+    case 0:                                         /* switch 1 */
+        InitializeEntity(D_us_80180BDC);
+        self->animCurFrame = 0xB;
+        self->zPriority = 0x70;
+        self->hitboxWidth = 7;
+        self->hitboxHeight = 7;
+        self->hitboxOffX = -3;
+        self->drawFlags |= 4;
+        primIndex = g_api_AllocPrimitives(PRIM_GT4, 1);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags |= 0x800000;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.prim = prim;
+        prim->tpage = 0x13;
+        prim->clut = 0x232;
+        prim->u0 = prim->u1 = 0x80;
+        prim->u2 = prim->u3 = 0x60;
+        prim->v0 = prim->v2 = 0x68;
+        prim->v1 = prim->v3 = 0x80;
+        prim->priority = 0x6F;
+        prim->drawMode = 2;
+        self->ext.ILLEGAL.u16[2] = 0x400;    
+        break;
+    case 19:                                        /* switch 1 */
+        if (!self->step_s) {
+            self->step_s += 1;
+        } else {
+            self->ext.ILLEGAL.u8[0x2F] = 1;
+            self->animCurFrame = 0;
+            prim = self->ext.prim;
+            prim->drawMode |= 8;
+        }
+        break;
+    case 20:                                        /* switch 1 */
+        switch (self->step_s) {                          /* switch 2; irregular */
+        case 0:                                     /* switch 2 */
+            temp_s2 = StepTowards((s16* ) &self->ext.ILLEGAL.u8[4], 0x600, 0x10);
+            temp_s2 += StepTowards(&self->rotate, 0x300, 0x20);
+            if (temp_s2 == 2) {
+                self->step_s += 1;
+            }
+            break;
+        case 1:                                     /* switch 2 */
+            temp_s2 = StepTowards((s16* ) &self->ext.ILLEGAL.u8[4], 0x500, 0x18);
+            temp_s2 = temp_s2 + StepTowards(&self->rotate, 0x100, 0x30);
+            if ((AnimateEntity(&D_pspeu_0925EF10, self) == 0) && (temp_s2 == 2)) {
+                self->ext.ILLEGAL.u16[0x14] = 0x40;
+                PlaySfxPositional(0x77B);
+                self->step_s += 1;
+            }
+            break;
+        case 2:                                     /* switch 2 */
+            if (!(g_Timer & 3)) {
+                other = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
+                if (other != NULL) {
+                    CreateEntityFromEntity(0x45U, self, other);
+                    other->facingLeft = self->facingLeft;
+                    if (self->facingLeft) {
+                        other->posX.i.hi += 0xC;
+                    } else {
+                        other->posX.i.hi -= 0xC;
+                    }
+                    other->posY.i.hi += 2;
+                }
+            }
+            if (!--self->ext.ILLEGAL.s16[0x14]) {
+                self->pose = 0;
+                self->poseTimer = 0;
+                self->step_s += 1;
+            }
+            break;
+        case 3:                                     /* switch 2 */
+            temp_s2 = StepTowards((s16* ) &self->ext.ILLEGAL.u8[4], 0x400, 0x10);
+            temp_s2 = temp_s2 + StepTowards(&self->rotate, 0, 0x20);
+            if ((AnimateEntity(&D_pspeu_0925EF20, self) == 0) && (temp_s2 == 2)) {
+                self->step = 0x15;
+            }
+            break;
+        }
+        break;
+    case 17:                                        /* switch 1 */
+    case 16:                                        /* switch 1 */
+    case 18:                                        /* switch 1 */
+        switch(self->step_s){
+            case 0:
+            if (StepTowards((s16* ) &self->ext.ILLEGAL.u8[4], 0x500, 8) != 0) {
+                self->step_s += 1;
+            }
+            break;
+            default:
+                if (StepTowards((s16* ) &self->ext.ILLEGAL.u8[4], 0x400, 8) != 0) {
+                self->step_s = 0;
+            }
+        }
+    default:                                        /* switch 1 */
+        self->ext.ILLEGAL.u8[0x2F] = 0;
+        self->animCurFrame = 0xB;
+        if (!(g_Timer & 0x7F)) {
+            other = AllocEntity(&g_Entities[0xE0], (Entity* ) &D_80097C98);
+            if (other != NULL) {
+                PlaySfxPositional(0x77A);
+                CreateEntityFromEntity(0x46U, self, other);
+                other->facingLeft = self->facingLeft;
+                if (self->facingLeft) {
+                    other->posX.i.hi += 0x14;
+                } else {
+                    other->posX.i.hi -= 0x14;
+                }
+                other->posY.i.hi += 0x14;
+            }
+        }
+        break;
+    case 22:                                        /* switch 1 */
+        switch (self->step_s) {                        /* switch 3; irregular */
+        case 0:                                     /* switch 3 */
+            StepTowards((s16* ) &self->ext.ILLEGAL.u8[4], 0x400, 8);
+            StepTowards(&self->rotate, 0x200, 0x10);
+            AnimateEntity(&D_pspeu_0925EF30, self);
+            xVar = self->posX.i.hi;
+            yVar = self->posY.i.hi + 8;
+            g_api.CheckCollision(xVar, yVar, &sp48, 0);
+            if (sp48.effects & 1) {
+                self->ext.ILLEGAL.u8[0x2F] = 1;
+                PlaySfxPositional(0x653);
+                self->step_s += 1;
+            }
+            break;
+        case 1:                                     /* switch 3 */
+            other = AllocEntity(&g_Entities[0xE0], (Entity* ) &D_80097C98);
+            if (other != NULL) {
+                CreateEntityFromEntity(2U, self, other);
+                other->params = 3;
+            }
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+    other4 = self - 7;
+    self->facingLeft = other4->facingLeft;
+    if (!self->ext.ILLEGAL.u8[0x2F]) {
+        sp40.x.val = other4->posX.val;
+        sp40.y.val = other4->posY.val;
+        if (self->facingLeft) {
+            sp40.x.i.hi += 0x10;
+        } else {
+            sp40.x.i.hi -= 0x10;
+        }
+        var_s3 = self->ext.ILLEGAL.s16[2];
+        func_pspeu_0923D928(&sp40, -0xC, var_s3, &sp40);
+        func_pspeu_0923D928(&sp40, 0x18, var_s3, &sp38);
+        sp6C.x = 0xC;
+        sp6C.y = 0xC;
+        prim = self->ext.prim;
+        func_us_801D2424(&sp40, var_s3, &sp6C, &sp38, var_s3, &sp6C, prim);
+        if (self->palette & 0x8000) {
+            prim->clut = self->palette & 0xFFF;
+        } else {
+            prim->clut = 0x232;
+        }
+        prim->drawMode = 2;
+        func_pspeu_0923D928(&sp40, 0x16, (var_s3 - 0x100), (Pos*)self);
+    }
+}
 
 INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_62A8", func_us_801D1BF0);
 
