@@ -1674,4 +1674,62 @@ void func_us_801D21C8(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_62A8", func_us_801D2264);
+extern EInit D_us_80180BE8;
+
+
+void func_us_801D2264(Entity* self) {
+    Primitive* prim;
+    s32 primIndex;
+
+    switch (self->step) {                              /* irregular */
+    case 0:
+        InitializeEntity(D_us_80180BE8);
+        self->drawFlags = 3;
+        self->scaleX = self->scaleY = 0;
+        self->velocityX = -0x18000;
+        if (self->facingLeft) {
+            self->velocityX = -self->velocityX;
+        }
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags |= 0x800000;
+        self->primIndex = (s32) primIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.prim = prim;
+        UnkPolyFunc2(prim);
+        prim->tpage = 0x1A;
+        prim->clut = 0x19C;
+        
+        prim->u0 = prim->u2 = 0xE0;
+        prim->u1 = prim->u3 = 0xFF;
+        prim->v0 = prim->v1 = 0x40;
+        prim->v2 = prim->v3 = 0x5F;
+        LOH(prim->next->r2) = 0x20;
+        LOH(prim->next->b2) = 0x20;
+        prim->next->b3 = 0xE0;
+        LOH(prim->next->u1) = 0;
+        prim->p3 |= 0x10;
+        prim->next->x2 = prim->next->y2 = 0x300;
+        prim->priority = self->zPriority;
+        prim->drawMode = 0x17;
+    case 1:
+        MoveEntity();
+        prim = self->ext.prim;
+        prim->next->x1 = self->posX.i.hi;
+        prim->next->y0 = self->posY.i.hi;
+        prim->next->x2 += 0x60;
+        prim->next->y2 = prim->next->x2;
+        prim->next->b3 -= 6;
+        LOH(prim->next->tpage) += 0x20;
+        if (prim->next->b3 < 0x40) {
+            prim->next->b3 = 0x40;
+        }
+        UnkPrimHelper(prim);
+        if (prim->next->x2 > 0xE00) {
+            DestroyEntity(self);
+        }
+    }
+}
