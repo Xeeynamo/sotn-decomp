@@ -85,7 +85,13 @@ void func_060E3D08(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E3D58, func_060E3D58);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E3F18, func_060E3F18);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E4064, func_060E4064);
-INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E4368, func_060E4368);
+extern void func_060E43A4(s32 arg0, s32 arg1);
+extern void func_060E4474(s32 arg0, s32 arg1, s32 arg2);
+
+void func_060E4368(s32 arg0, s32 arg1, s32 arg2) {
+    func_060E43A4(arg1, arg2);
+    func_060E4474(arg0, arg1, arg2);
+}
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E43A4, func_060E43A4);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E4474, func_060E4474);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E45E0, func_060E45E0);
