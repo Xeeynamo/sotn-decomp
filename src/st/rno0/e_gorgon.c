@@ -1378,8 +1378,7 @@ void EntityGorgonHead(Entity* self) {
         case 1:
             temp_s2 = StepTowards(&self->ext.gorgon.unk80, 0x500, 0x18);
             temp_s2 = temp_s2 + StepTowards(&self->rotate, 0x100, 0x30);
-            if ((AnimateEntity(anim_mouthblast, self) == 0) &&
-                (temp_s2 == 2)) {
+            if ((AnimateEntity(anim_mouthblast, self) == 0) && (temp_s2 == 2)) {
                 self->ext.gorgon.unkA4 = 0x40;
                 PlaySfxPositional(SFX_GORGON_ATTACK);
                 self->step_s += 1;
