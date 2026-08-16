@@ -17,7 +17,6 @@ static AnimationFrame anim3[] = {
 static AnimationFrame anim4[] = {{4, 10}, {4, 11}, {0, 0}};
 static s16 stone_rose_sway_table[] = {
     0, 2, 4, 6, 8, 6, 4, 2, 0, -2, -4, -6, -8, -6, -2};
-static s16 D_us_80182344[] = {0, 40, 8, 0}; // unused
 
 static Entity* spawnSeed(s32 params) {
     Entity* newEntity;

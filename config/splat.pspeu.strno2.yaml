@@ -44,7 +44,7 @@ segments:
     align: 128
     subalign: 8
     subsegments:
-      - [0x80, c, rno2_psp/e_ctulhu]
+      - [0x80, c, rno2/e_ctulhu]
       - [0x2730, c, rno2/create_entity]
       - [0x36D8, c, rno2_psp/e_bloody_zombie]
       - [0x3EF8, c, rno2/e_azaghal]
@@ -70,7 +70,8 @@ segments:
       - [0x1ED70, c, rno2_psp/unk_1ED70]
       - [0x20358, c, rno2/e_lock_camera]
       - [0x205B8, c, rno2_psp/e_spikes]
-      - [0x20F00, data]
+      - [0x20F00, .data, rno2/e_ctulhu]
+      - [0x21050, data]
       - [0x21090, .data, rno2/e_azaghal]
       - [0x21390, data, '21390']
       - [0x215D8, .data, rno2/st_update]
@@ -91,7 +92,7 @@ segments:
       - [0x4FBC8, data, 4FBC8]
       - [0x4FCB0, .data, rno2/e_lock_camera]
       - [0x4FD28, data, 4FD28]
-      - [0x4FD80, .rodata, rno2_psp/e_ctulhu]
+      - [0x4FD80, .rodata, rno2/e_ctulhu]
       - [0x4FDA0, .rodata, rno2/e_azaghal]
       - [0x4FDD8, .rodata, rno2_psp/unk_3EF8]
       - [0x4FE10, .rodata, rno2_psp/unk_A130]
