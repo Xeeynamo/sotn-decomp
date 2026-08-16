@@ -777,6 +777,7 @@ set(SOURCE_FILES_STAGE_NZ0
 
 set(SOURCE_FILES_STAGE_RNO0
     src/pc/stages/stage_rno0.c
+    src/st/rno0/create_entity.c
     src/st/rno0/e_misc.c
     src/st/rno0/layers.c
     src/st/rno0/palette_def.c
@@ -788,20 +789,28 @@ set(SOURCE_FILES_STAGE_RNO0
     src/st/rno0/e_red_door_tiles.c
     src/st/rno0/e_room_fg.c
     src/st/rno0/st_common.c
+    src/st/rno0/st_update.c
+    src/st/rno0/gen/e_laydef.c
+    src/st/rno0/gen/e_layout.c
     src/st/rno0/gen/rooms.c
     src/st/rno0/gen/us/sprites.c)
 
 set(SOURCE_FILES_STAGE_RNO4
     src/pc/stages/stage_rno4.c
+    src/st/rno4/create_entity.c
     src/st/rno4/e_red_door.c
     src/st/rno4/e_red_door_tiles.c
     src/st/rno4/e_room_fg.c
     src/st/rno4/st_common.c
+    src/st/rno4/st_update.c
+    src/st/rno4/gen/e_laydef.c
+    src/st/rno4/gen/e_layout.c
     src/st/rno4/gen/rooms.c
     src/st/rno4/stage_data.c)
 
 set(SOURCE_FILES_STAGE_RNO3
     src/pc/stages/stage_rno3.c
+    src/st/rno3/create_entity.c
     src/st/rno3/e_misc.c
     src/st/rno3/layers.c
     src/st/rno3/palette_def.c
@@ -813,6 +822,9 @@ set(SOURCE_FILES_STAGE_RNO3
     src/st/rno3/e_red_door_tiles.c
     src/st/rno3/e_room_fg.c
     src/st/rno3/st_common.c
+    src/st/rno3/st_update.c
+    src/st/rno3/gen/e_laydef.c
+    src/st/rno3/gen/e_layout.c
     src/st/rno3/gen/us/rooms.c
     src/st/rno3/gen/us/sprites.c)
 
@@ -1417,13 +1429,6 @@ if(ENABLE_SATURN_STITCHES)
         "${CMAKE_SOURCE_DIR}/disks/us/ST/RNO4/F_RNO4.BIN"
         ENABLE_STAGE16 rooms layers entity_layouts)
 
-    foreach(stage rno3 rno0 rno4)
-        target_sources(${stage} PRIVATE
-            src/st/${stage}/create_entity.c
-            src/st/${stage}/st_update.c
-            src/st/${stage}/e_red_door.c
-            src/st/${stage}/e_red_door_tiles.c)
-    endforeach()
     target_compile_definitions(${PROJECT_NAME} PRIVATE ENABLE_SATURN_STITCHES)
     target_compile_definitions(${PROJECT_NAME} PRIVATE
         PC_ASSET_OVERRIDE_DIR="${SATURN_STITCH_DIR}")

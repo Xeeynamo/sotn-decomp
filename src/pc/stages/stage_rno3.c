@@ -15,6 +15,9 @@ extern LayoutEntity* entityLayoutVertical[];
 
 EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, 0, 3};
 EInit g_EInitDamageNum;
+EInit g_EInitParticle;
+EInit g_EInitUnkId13;
+AnimateEntityFrame g_bigRedFireballAnim[1];
 static SpriteParts* s_SpriteBanks[] = {NULL};
 static u_long s_EmptyClut[] = {(u_long)-1};
 static u_long* s_Cluts[] = {s_EmptyClut};
