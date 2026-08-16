@@ -1611,7 +1611,49 @@ void func_us_801D1BF0(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_62A8", func_us_801D2038);
+void func_us_801D2038(Entity* self) {
+    Collider sp1C;
+    s32 xVar, yVar;
+    Entity* player;
+
+    switch (self->step) {                              /* irregular */
+    case 0:
+        InitializeEntity(g_EInitGorgon);
+        self->animCurFrame = 0xC;
+        self->zPriority = 0x73;
+        break;
+    case 19:
+        if (!self->step_s) {
+            self->step_s += 1;
+        } else {
+            self->animCurFrame = 0;
+        }
+        break;
+    case 22:
+        self->velocityY = 0x10000;
+        MoveEntity();
+        xVar = self->posX.i.hi;
+        yVar = self->posY.i.hi + 6;
+        g_api.CheckCollision(xVar, yVar, &sp1C, 0);
+        if (sp1C.effects & 1) {
+            DestroyEntity(self);
+            return;
+        }
+    default:
+        self->animCurFrame = 0xC;
+        if (GetPlayerCollisionWith(self, 0x10U, 8U, 4U) != 0) {
+            xVar = (g_Tilemap.scrollX.val + self->posX.val) - self->ext.ILLEGAL.u32[1];
+            // unused but let's calculate it just for fun
+            yVar = (g_Tilemap.scrollY.val + self->posY.val) - self->ext.ILLEGAL.u32[2];
+            player = &PLAYER;
+            player->posX.val += xVar;
+            player->posY.i.hi += 1;
+        }
+        break;
+    }
+    self->ext.ILLEGAL.u32[1] = g_Tilemap.scrollX.val + self->posX.val;
+    self->ext.ILLEGAL.u32[2] = g_Tilemap.scrollY.val + self->posY.val;
+}
 
 INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_62A8", func_us_801D21C8);
 
