@@ -39,7 +39,7 @@ static void func_us_801D2424(Pos* arg0, s16 arg1, Point16* arg2, Pos* arg3,
     prim->y3 += FLT_TO_I(arg5->y * rsin(arg4));
 }
 
-Primitive* func_pspeu_0923DD78(
+static Primitive* func_pspeu_0923DD78(
     Pos* ent1, Pos* ent2, s16* arg2, Primitive* prim) {
     Point16 sp2C;
     Point16 sp28;
@@ -80,7 +80,7 @@ Primitive* func_pspeu_0923DD78(
     return prim;
 }
 
-Primitive* func_pspeu_0923DF88(
+static Primitive* func_pspeu_0923DF88(
     Pos* ent1, Pos* ent2, s16* arg2, Primitive* prim) {
     Point16 sp2C;
     Point16 sp28;
@@ -121,7 +121,7 @@ Primitive* func_pspeu_0923DF88(
     return prim;
 }
 
-Primitive* func_pspeu_0923E1A0(
+static Primitive* func_pspeu_0923E1A0(
     Pos* ent1, Pos* ent2, s16* arg2, Primitive* prim) {
     Point16 sp2C;
     Point16 sp28;
@@ -150,7 +150,7 @@ Primitive* func_pspeu_0923E1A0(
     return prim;
 }
 
-Primitive* func_pspeu_0923E300(
+static Primitive* func_pspeu_0923E300(
     Pos* ent1, Pos* ent2, s16* arg2, Primitive* prim) {
     Point16 sp2C;
     Point16 sp28;
@@ -208,7 +208,7 @@ Primitive* func_pspeu_0923E300(
 
 #include "../step_towards.h"
 
-s32 func_pspeu_0923E6D0(
+static s32 func_pspeu_0923E6D0(
     Entity* arg0, s16* arg1, Entity* arg2, s16* arg3, u16* arg4) {
     s32 var_s2;
     s32 var_s5;
@@ -253,7 +253,7 @@ s32 func_pspeu_0923E6D0(
     return 0;
 }
 
-s32 func_pspeu_0923E920(
+static s32 func_pspeu_0923E920(
     Entity* arg0, s16* arg1, Entity* arg2, s16* arg3, u16* arg4) {
     s32 var_s4;
     s32 var_s3;
@@ -305,7 +305,7 @@ s32 func_pspeu_0923E920(
     return 0;
 }
 
-s32 func_pspeu_0923EBE8(Entity* arg0, s16* arg1, Entity* arg2, s16* arg3) {
+static s32 func_pspeu_0923EBE8(Entity* arg0, s16* arg1, Entity* arg2, s16* arg3) {
     s32 temp_v1;
     s32 var_s3;
     s32 var_s2;
@@ -354,7 +354,7 @@ s32 func_pspeu_0923EBE8(Entity* arg0, s16* arg1, Entity* arg2, s16* arg3) {
     return 0;
 }
 
-s32 func_pspeu_0923EE78(Entity* arg0, s16* arg1, Entity* arg2, s16* arg3) {
+static s32 func_pspeu_0923EE78(Entity* arg0, s16* arg1, Entity* arg2, s16* arg3) {
     s32 var_s2;
     s32 var_s1;
     s32 var_s0;
@@ -399,7 +399,7 @@ s32 func_pspeu_0923EE78(Entity* arg0, s16* arg1, Entity* arg2, s16* arg3) {
     return 0;
 }
 
-s32 func_pspeu_0923F088(Entity* self, s32 arg1) {
+static s32 func_pspeu_0923F088(Entity* self, s32 arg1) {
     Collider sp2C;
     s32 var_s0;
     s32 var_s1;
@@ -428,7 +428,7 @@ s32 func_pspeu_0923F088(Entity* self, s32 arg1) {
     return var_s1;
 }
 
-void func_pspeu_0923F198(s32 count) {
+static void func_pspeu_0923F198(s32 count) {
     s32 i;
     Primitive* prim;
 
