@@ -1195,7 +1195,86 @@ void func_us_801D0CFC(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_62A8", func_us_801D136C);
+void func_us_801D136C(Entity* self) {
+    Collider sp1C;
+    Entity* other;
+    s32 xVar, yVar;
+
+    switch (self->step) {                              /* switch 1; irregular */
+    case 0:                                         /* switch 1 */
+        InitializeEntity(g_EInitGorgon);
+        self->drawFlags = 4;
+        self->animCurFrame = 0x10;
+        if (self->params & 1) {
+            self->zPriority = 0x6D;
+            self->palette = 0x8234;
+        } else {
+            self->zPriority = 0x71;
+        }
+        self->hitboxWidth = 4;
+        self->hitboxHeight = 6;
+        return;
+    case 19:                                        /* switch 1 */
+        if (!self->step_s) {
+            self->step_s += 1;
+            return;
+        }
+        self->animCurFrame = 0;
+        return;
+    case 22:                                        /* switch 1 */
+        switch (self->step_s) {                          /* switch 2; irregular */
+        case 1:                                     /* switch 2 */
+            other = self - 1;
+            if (other->ext.ILLEGAL.u8[0x30]) {
+                self->ext.ILLEGAL.u8[0x30] = 1;
+                self->step_s += 1;
+            }
+            break;
+        case 2:                                     /* switch 2 */
+            other = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (other != NULL) {
+                CreateEntityFromEntity(2U, self, other);
+                other->params = 1;
+                if (self->params & 1) {
+                    other->zPriority = 0x75;
+                } else {
+                    other->zPriority = 0x71;
+                }
+            }
+            self->animCurFrame = 0;
+            self->step_s += 1;
+            break;
+        case 3:                                     /* switch 2 */
+            break;
+        }
+    }
+    if (!self->step_s) {
+        if (self->params & 1) {
+            self->zPriority = 0x6D;
+            self->animCurFrame = 4;
+        } else {
+            self->zPriority = 0x71;
+            self->animCurFrame = 0x10;
+        }
+        self->step_s += 1;
+    }
+    xVar = self->posX.i.hi;
+    yVar = self->posY.i.hi + 6;
+    g_api.CheckCollision(xVar, yVar, &sp1C, 0);
+    if (sp1C.effects & 1) {
+        self->posY.i.hi += sp1C.unk18;
+        self->rotate = 0;
+        self->ext.ILLEGAL.u16[2] = 1;
+        if (!self->ext.ILLEGAL.u8[0x31]) {
+            PlaySfxPositional(0x647);
+            self->ext.ILLEGAL.u8[0x31] = 1;
+        }
+    } else {
+        self->rotate = -0x100;
+        self->ext.ILLEGAL.u16[2] = 0;
+        self->ext.ILLEGAL.u8[0x31] = 0;
+    }
+}
 
 INCLUDE_ASM("st/rno0_psp/nonmatchings/rno0_psp/unk_62A8", func_us_801D15C0);
 
