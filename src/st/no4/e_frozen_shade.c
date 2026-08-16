@@ -680,11 +680,12 @@ void EntityFrozenShade(Entity* self) {
                 prim2->drawMode = DRAW_HIDE;
             }
 #else
-            prim2 = self->ext.frozenShade.unk90;
             if (tempVar < 0x30) {
+                prim2 = self->ext.frozenShade.unk90;
                 prim2->v2 = prim2->v3--;
                 prim2->y2 = prim2->y3--;
             } else if (tempVar == 0x30) {
+                prim2 = self->ext.frozenShade.unk90;
                 prim2->drawMode = DRAW_HIDE;
             }
 #endif
