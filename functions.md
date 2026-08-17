@@ -1964,9 +1964,9 @@
 | rare       | func_pspeu_0924A760                |       31 |          3 |        |       |     |
 | rcat       | func_pspeu_09249870                |       31 |          3 |        |       |     |
 | rdai       | func_pspeu_0924E1C0                |       31 |          3 |        |       |     |
+| rno0       | func_pspeu_0923F300                |       31 |          3 |        |       |     |
 | rno0       | func_pspeu_0925B088                |       31 |          3 |        |       |     |
 | rno0       | SetEntityVelocityFromAngle         |       31 |          3 |        |       |     |
-| rno0       | func_pspeu_0923F300                |       31 |          3 |        |       |     |
 | rno2       | SetEntityVelocityFromAngle         |       31 |          3 |        |       |     |
 | rnz1       | SetEntityVelocityFromAngle         |       31 |          3 |        |       |     |
 | rnz1       | func_801B2CF8                      |       31 |          3 |        |       |     |
@@ -3089,7 +3089,7 @@
 | dra        | 624DC.rodata                       |       44 |          0 | Yes    |       |     |
 | chi        | en_venus_weed.rodata               |       44 |          0 | Yes    |       |     |
 | rlib       | e_collect.rodata                   |       44 |          0 | Yes    |       |     |
-| rno0       | unk_62A8.rodata                    |       44 |          0 | Yes    |       |     |
+| rno0       | e_gorgon.rodata                    |       44 |          0 | Yes    |       |     |
 | rno1       | 383F8.rodata                       |       44 |          0 | Yes    |       |     |
 | rtop       | unk_D660.rodata                    |       44 |          0 | Yes    |       |     |
 | main       | sceGuLightSpot                     |       44 |          1 |        |       |     |
@@ -3637,7 +3637,7 @@
 | ric        | func_pspeu_092AF9D0                |       54 |          8 |        |       |     |
 | ric        | func_pspeu_092AF680                |       54 |          9 |        |       |     |
 | main       | __sigtramp_r                       |       54 |         10 |        |       |     |
-| rno0       | func_us_801D21C8                   |       54 |         10 |        |       |     |
+| rno0       | EntityGorgonSnort                  |       54 |         10 |        |       |     |
 | mar        | InitEntityIds                      |       55 |          1 |        |       |     |
 | rbo1       | InitEntityIds                      |       55 |          1 |        |       |     |
 | rbo3       | InitEntityIds                      |       55 |          1 |        |       |     |
@@ -3820,8 +3820,8 @@
 | no0        | func_pspeu_092401B0                |       58 |          4 |        |       |     |
 | no2        | func_pspeu_0924EAC8                |       58 |          4 |        |       |     |
 | np3        | func_pspeu_0925B488                |       58 |          4 |        |       |     |
-| rno0       | func_801CD78C                      |       58 |          4 |        |       |     |
 | rno0       | func_pspeu_0923D928                |       58 |          4 |        |       |     |
+| rno0       | func_801CD78C                      |       58 |          4 |        |       |     |
 | st0        | func_pspeu_0924BA38                |       58 |          4 |        |       |     |
 | main       | sceGuSetAllStatus                  |       58 |          5 |        |       |     |
 | dra        | func_psp_09136E18                  |       58 |          6 |        |       |     |
@@ -6776,7 +6776,7 @@
 | no0        | func_pspeu_09250D88                |      142 |          8 |        |       |     |
 | sel        | func_psp_09243968                  |      142 |         10 |        |       |     |
 | dra        | func_psp_090F1418                  |      142 |         13 |        |       |     |
-| rno0       | func_us_801D2038                   |      142 |         17 |        |       |     |
+| rno0       | EntityGorgonSaddle                 |      142 |         17 |        |       |     |
 | bo6        | func_pspeu_09261328                |      142 |         19 |        |       |     |
 | rbo6       | func_us_801A0710                   |      142 |         19 |        |       |     |
 | ric        | func_pspeu_092BA338                |      142 |         19 |        |       |     |
@@ -7298,7 +7298,7 @@
 | bo0        | func_pspeu_09251098                |      185 |          1 |        |       |     |
 | cat        | func_pspeu_0925D168                |      185 |         15 |        |       |     |
 | rcat       | func_pspeu_0924AF88                |      185 |         15 |        |       |     |
-| rno0       | func_us_801D2264                   |      185 |         16 |        |       |     |
+| rno0       | EntityGorgonAttack                 |      185 |         16 |        |       |     |
 | dra        | func_psp_09139428                  |      185 |         25 |        |       |     |
 | no4        | func_pspeu_0923D180                |      185 |         27 |        |       |     |
 | no4        | func_pspeu_09248D90                |      185 |         27 |        |       |     |
@@ -7706,7 +7706,7 @@
 | rno3       | func_pspeu_09253868                |      235 |         26 |        |       |     |
 | rbo2       | func_us_8019F260                   |      235 |         28 |        |       |     |
 | dra        | func_psp_09108988                  |      235 |         31 |        |       |     |
-| rno0       | func_us_801D136C                   |      235 |         31 |        |       |     |
+| rno0       | EntityGorgonFoot                   |      235 |         31 |        |       |     |
 | rlib       | func_us_801AF11C                   |      235 |         35 |        |       |     |
 | rnz0       | func_pspeu_092562F0                |      236 |         16 |        |       |     |
 | main       | func_psp_0891BCA0                  |      236 |         29 |        |       |     |
@@ -8592,7 +8592,7 @@
 | rcat       | func_pspeu_0923C8C8                |      376 |         47 |        |       |     |
 | rnz0       | func_pspeu_0924E280                |      377 |         33 | Yes    |       |     |
 | rtop       | EntityClockTower3D                 |      377 |         37 |        |       |     |
-| rno0       | func_us_801D1BF0                   |      377 |         38 |        |       |     |
+| rno0       | EntityGorgonTail                   |      377 |         38 |        |       |     |
 | maria      | func_pspeu_092AAC80                |      377 |         41 | Yes    |       |     |
 | cen        | func_pspeu_09239238                |      377 |         41 | Yes    |       |     |
 | bo4        | unk_107C8.rodata                   |      378 |          0 | Yes    |       |     |
@@ -9235,7 +9235,7 @@
 | dra        | func_psp_090EFA00                  |      584 |         77 | Yes    |       |     |
 | rno2       | func_us_801B5FB8_from_no2          |      587 |         63 | Yes    |       |     |
 | ric        | func_pspeu_092B1CD0                |      590 |         56 |        |       |     |
-| rno0       | func_us_801D15C0                   |      591 |         87 |        |       |     |
+| rno0       | EntityGorgonHead                   |      591 |         87 |        |       |     |
 | main       | func_psp_08921D44                  |      592 |         80 |        |       |     |
 | rnz1       | func_us_801BD398                   |      593 |         81 |        |       |     |
 |            | func_092EB1C0                      |      594 |         71 | Yes    |       |     |
@@ -9310,7 +9310,7 @@
 | cat        | func_pspeu_09241E58                |      657 |         69 | Yes    |       |     |
 | cat        | func_pspeu_0925EA40                |      658 |         41 |        |       |     |
 | rno1       | func_us_801A68AC                   |      658 |         50 |        |       |     |
-| rno0       | func_us_801D0CFC                   |      660 |         86 |        |       |     |
+| rno0       | EntityGorgonRear                   |      660 |         86 |        |       |     |
 | bo4        | MarEntityHitByLightning            |      661 |         61 |        |       |     |
 | rbo5       | MarEntityHitByLightning            |      661 |         61 |        |       |     |
 | dra        | func_psp_091203E0                  |      661 |         70 |        |       |     |
@@ -9331,7 +9331,7 @@
 | bo6        | MarEntityHitByLightning            |      676 |         63 |        |       |     |
 | rbo0       | func_pspeu_09240D90                |      677 |         86 | Yes    |       |     |
 | bo6        | func_pspeu_0925B680                |      677 |        122 |        |       |     |
-| rno0       | func_us_801D068C                   |      678 |         87 |        |       |     |
+| rno0       | EntityGorgonFront                  |      678 |         87 |        |       |     |
 | no3        | func_pspeu_0925B620                |      678 |         98 | Yes    |       |     |
 | np3        | EntityBoneScimitar                 |      678 |         98 | Yes    |       |     |
 | bo0        | EntityDamageDisplay                |      682 |         51 |        |       |     |
