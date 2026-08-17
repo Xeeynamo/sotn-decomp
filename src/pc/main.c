@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <game.h>
 #include "pc.h"
+#include "warp.h"
 #include <assert.h>
 #include <ctype.h>
 #include <limits.h>
@@ -186,19 +187,9 @@ int Main(int argc, char* argv[]) {
         printHelp();
         return -1;
     }
-#ifdef ENABLE_SATURN_STAGES
-    if (params.spawnPoint != PC_SPAWN_DEFAULT && params.stage < 0) {
-        static const int spawnStages[] = {
-            [PC_SPAWN_NP3_STAGE15] = STAGE_NP3,
-            [PC_SPAWN_RNO3_RSTAGE15] = STAGE_RNO3,
-            [PC_SPAWN_NO0_STAGE16] = STAGE_NO0,
-            [PC_SPAWN_NO4_STAGE16] = STAGE_NO4,
-            [PC_SPAWN_RNO0_RSTAGE16] = STAGE_RNO0,
-            [PC_SPAWN_RNO4_RSTAGE16] = STAGE_RNO4,
-        };
-        params.stage = spawnStages[params.spawnPoint];
+    if (params.stage < 0) {
+        params.stage = Warp_StageForSpawnPoint(params.spawnPoint);
     }
-#endif
     Psyz_VideoSetInternalResolution(params.scale);
     if (!InitGame(&params)) {
         return -1;

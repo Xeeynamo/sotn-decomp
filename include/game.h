@@ -654,26 +654,6 @@ typedef enum {
     STAGE_MEMORYCARD = 0xFF,
 } Stages;
 
-#if defined(VERSION_PC) && defined(ENABLE_SATURN_STAGES)
-#define NP3_STAGE15_SPAWN_TELEPORT 131
-#define RNO3_RSTAGE15_SPAWN_TELEPORT 132
-#define NO0_STAGE16_SPAWN_TELEPORT 133
-#define NO4_STAGE16_SPAWN_TELEPORT 134
-#define RNO0_RSTAGE16_SPAWN_TELEPORT 135
-#define RNO4_RSTAGE16_SPAWN_TELEPORT 136
-#endif
-
-#ifdef VERSION_PC
-#define PC_SPAWN_DEFAULT 0
-#define PC_SPAWN_NP3_STAGE15 1
-#define PC_SPAWN_RNO3_RSTAGE15 2
-#define PC_SPAWN_NO0_STAGE16 3
-#define PC_SPAWN_NO4_STAGE16 4
-#define PC_SPAWN_RNO0_RSTAGE16 5
-#define PC_SPAWN_RNO4_RSTAGE16 6
-extern GAME_IMPORT s32 g_PcSpawnPoint;
-#endif
-
 typedef enum {
     // Clean-up and reset all the gameplay related memory
     Play_Reset = 0,

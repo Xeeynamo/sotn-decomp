@@ -1637,12 +1637,6 @@ void HandleNowLoading(void) {
     case Play_WaitStagePrg:
         if (g_DemoMode == Demo_None) {
             InitStatsAndGear(0);
-#if defined(VERSION_PC) && defined(ENABLE_SATURN_STAGES)
-            if (g_PcSpawnPoint >= PC_SPAWN_RNO3_RSTAGE15 &&
-                (g_StageId & STAGE_INVERTEDCASTLE_FLAG)) {
-                CheckAndDoLevelUp();
-            }
-#endif
         }
         g_Servant = 0;
         g_ServantLoaded = 0;
@@ -1817,19 +1811,6 @@ void HandleNowLoading(void) {
                         .unk28;
             }
         }
-#if defined(VERSION_PC) && defined(ENABLE_SATURN_STAGES)
-        if (g_PcSpawnPoint != PC_SPAWN_DEFAULT) {
-            static const u8 spawnTeleports[] = {
-                [PC_SPAWN_NP3_STAGE15] = NP3_STAGE15_SPAWN_TELEPORT,
-                [PC_SPAWN_RNO3_RSTAGE15] = RNO3_RSTAGE15_SPAWN_TELEPORT,
-                [PC_SPAWN_NO0_STAGE16] = NO0_STAGE16_SPAWN_TELEPORT,
-                [PC_SPAWN_NO4_STAGE16] = NO4_STAGE16_SPAWN_TELEPORT,
-                [PC_SPAWN_RNO0_RSTAGE16] = RNO0_RSTAGE16_SPAWN_TELEPORT,
-                [PC_SPAWN_RNO4_RSTAGE16] = RNO4_RSTAGE16_SPAWN_TELEPORT,
-            };
-            D_8006C374 = spawnTeleports[g_PcSpawnPoint];
-        }
-#endif
         if (g_StageId == STAGE_NO3 && g_PlayableCharacter != PLAYER_ALUCARD) {
             D_8006C374 = 0x11;
             g_CastleFlags[PROLOGUE_COMPLETE] = 1;
