@@ -5674,7 +5674,7 @@
 | 0.96 | true     | func_80190D1C                       | asm/us/st/rwrp/matchings/e_misc/func_80190D1C.s 
 | 0.96 | true     | func_us_801B41E4                    | asm/us/st/top/matchings/e_collect/func_us_801B41E4.s 
 | 0.96 | true     | func_8018ED9C                       | asm/us/st/wrp/matchings/e_collect/func_8018ED9C.s 
-| 0.96 | false    | EntityHeartDrop                     | asm/us/st/rnz1/nonmatchings/e_collect/EntityHeartDrop.s 
+| 0.96 | false    | EntityPersistentItemDrop            | asm/us/st/rnz1/nonmatchings/e_collect/EntityPersistentItemDrop.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityBreakable                     | asm/us/boss/bo0/matchings/e_breakable/EntityBreakable.s 
 | 0.93 | true     | func_us_801A0F60                    | asm/us/boss/bo1/matchings/e_breakable/func_us_801A0F60.s 
@@ -5723,7 +5723,7 @@
 | 1.00 | true     | func_us_801C0DCC                    | asm/us/st/nz1/matchings/e_life_up/func_us_801C0DCC.s 
 | 1.00 | true     | func_us_801BE578                    | asm/us/st/rnz1/matchings/e_life_up/func_us_801BE578.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | EntityHeartDrop                     | asm/us/boss/bo0/matchings/e_collect/EntityHeartDrop.s 
+| 1.00 | true     | EntityPersistentItemDrop            | asm/us/boss/bo0/matchings/e_collect/EntityPersistentItemDrop.s 
 | 1.00 | true     | func_us_801AE4F0                    | asm/us/boss/bo1/matchings/e_collect/func_us_801AE4F0.s 
 | 1.00 | true     | func_us_801AE224                    | asm/us/boss/bo2/matchings/e_collect/func_us_801AE224.s 
 | 0.92 | true     | func_us_801AD2B8                    | asm/us/boss/bo3/matchings/e_collect/func_us_801AD2B8.s 
