@@ -1,7 +1,7 @@
 g_EInitSpawner = 0x80180A5C;
 g_EInitCommon = 0x80180AB0;
-g_EInitMedusaHead1 = 0x80180C00;
-g_EInitMedusaHead2 = 0x80180C0C;
+g_EInitMedusaHeadBlue = 0x80180C00;
+g_EInitMedusaHeadYellow = 0x80180C0C;
 Random = 0x801B7324;
 CreateEntityFromCurrentEntity = 0x801B999C;
 DestroyEntity = 0x801BA73C;
