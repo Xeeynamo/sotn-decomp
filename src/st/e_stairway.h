@@ -81,7 +81,7 @@ void EntityStairwayPiece(Entity* self) {
         newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
         if (newEntity != NULL) {
 #if defined(INVERTED_STAGE)
-            CreateEntityFromEntity(E_HEART_DROP, self, newEntity);
+            CreateEntityFromEntity(E_PERSISTENT_ITEM_DROP, self, newEntity);
             newEntity->params = self->params;
 #else
             CreateEntityFromEntity(E_EQUIP_ITEM_DROP, self, newEntity);

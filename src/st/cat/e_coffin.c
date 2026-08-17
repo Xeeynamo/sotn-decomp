@@ -97,7 +97,7 @@ void EntityCoffin(Entity* self) {
                         E_ID(BLOOD_SKELETON), coffinSpawnEntity);
                 } else {
                     CreateEntityFromCurrentEntity(
-                        E_HEART_DROP, coffinSpawnEntity);
+                        E_PERSISTENT_ITEM_DROP, coffinSpawnEntity);
                     coffinSpawnEntity->params = self->params;
                 }
             }

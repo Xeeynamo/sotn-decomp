@@ -29,6 +29,6 @@ INCLUDE_ASM("st/rnz1_psp/nonmatchings/rnz1_psp/e_collect", EntityEquipItemDrop);
 
 INCLUDE_ASM("st/rnz1_psp/nonmatchings/rnz1_psp/e_collect", EntityRelicOrb);
 
-INCLUDE_ASM("st/rnz1_psp/nonmatchings/rnz1_psp/e_collect", EntityHeartDrop);
+INCLUDE_ASM("st/rnz1_psp/nonmatchings/rnz1_psp/e_collect", EntityPersistentItemDrop);
 
 INCLUDE_ASM("st/rnz1_psp/nonmatchings/rnz1_psp/e_collect", EntityMessageBox);
