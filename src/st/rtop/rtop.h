@@ -61,8 +61,6 @@ extern EInit g_EInitDamageNum;
 extern EInit __unused__;
 extern EInit g_EInitRTOPCommon;
 extern EInit g_EInitTombstone;
-extern EInit g_EInitSkeletonPieces;
-extern EInit D_us_801805E4;
 extern EInit g_EInitSkullLord;
 extern EInit g_EInitSkullLordEffects;
 

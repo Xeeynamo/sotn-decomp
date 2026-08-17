@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rtop.h"
-extern EInit g_EInitSkeletonPieces;
+extern EInit g_EInitYorick;
 
 // Yorick
 static s16 D_us_80181468[] = {0, 20, 0, 4, 8, -4, -16, 0};
@@ -28,7 +28,7 @@ void EntityYorick(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitSkeletonPieces);
+        InitializeEntity(g_EInitYorick);
         self->animCurFrame = 0x18;
         self->hitboxOffX = -1;
         self->hitboxOffY = 2;
@@ -182,7 +182,7 @@ void EntityYorick(Entity* self) {
     }
 }
 
-extern EInit D_us_801805E4;
+extern EInit g_EInitYorickSkull;
 
 void EntityYorickSkull(Entity* self) {
     Entity* entity;
@@ -205,7 +205,7 @@ void EntityYorickSkull(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_801805E4);
+        InitializeEntity(g_EInitYorickSkull);
         self->drawFlags |= ENTITY_ROTATE;
         self->animCurFrame = 0x1E;
         break;
@@ -307,7 +307,7 @@ void EntitySkeletonPieces(Entity* self) { // From skeleton death explosion
         return;
     }
 
-    InitializeEntity(g_EInitSkeletonPieces);
+    InitializeEntity(g_EInitYorick);
     self->flags |=
         FLAG_DESTROY_IF_OUT_OF_CAMERA | FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
         FLAG_UNK_00200000 | FLAG_UNK_2000;
