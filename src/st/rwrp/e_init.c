@@ -14,7 +14,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityBreakable,       EntityExplosion,         EntityPrizeDrop,
     EntityDamageDisplay,   EntityRedDoor,           EntityIntenseExplosion,
     EntitySoulStealOrb,    EntityRoomForeground,    EntityStageNamePopup,
-    EntityEquipItemDrop,   EntityRelicOrb,          EntityHeartDrop,
+    EntityEquipItemDrop,   EntityRelicOrb,          EntityPersistentItemDrop,
     EntityEnemyBlood,      EntityMessageBox,        EntityDummy,
     EntityDummy,
     EntityBackgroundBlock, // unused

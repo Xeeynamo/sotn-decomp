@@ -208,7 +208,7 @@ e_collect:
   - Unreferenced_MAD_ST0_func
   - EntityEquipItemDrop
   - EntityRelicOrb
-  - EntityHeartDrop
+  - EntityPersistentItemDrop
   - EntityMessageBox
 e_ctulhu:
   functions:

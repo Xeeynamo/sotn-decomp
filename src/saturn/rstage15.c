@@ -62,17 +62,47 @@ void func_060E38B8(void) {
     g_Player.padSim = 0x1000;
     g_Player.demo_timer = 1;
 }
-INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E38D8, func_060E38D8);
+void func_060E38D8(Entity* self) {
+    Primitive* prim = self->ext.save.unk10;
+    s32 i;
+
+    for (i = 0; i < 9; i++) {
+        prim->x3 = 0;
+        prim->drawMode = DRAW_HIDE;
+        prim = prim->next;
+    }
+}
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E3904, func_060E3904);
-INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E3D08, func_060E3D08);
+extern void func_060E3D58(s32 arg0, s32 arg1);
+extern void func_060E3F18(s32 arg0, s32 arg1, s32 arg2);
+extern void func_060E4064(s32 arg0, s32 arg1, s32 arg2);
+
+void func_060E3D08(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    func_060E3D58(arg1, arg3);
+    func_060E3F18(arg1, arg2, arg3);
+    func_060E4064(arg0, arg1, arg3);
+}
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E3D58, func_060E3D58);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E3F18, func_060E3F18);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E4064, func_060E4064);
-INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E4368, func_060E4368);
+extern void func_060E43A4(s32 arg0, s32 arg1);
+extern void func_060E4474(s32 arg0, s32 arg1, s32 arg2);
+
+void func_060E4368(s32 arg0, s32 arg1, s32 arg2) {
+    func_060E43A4(arg1, arg2);
+    func_060E4474(arg0, arg1, arg2);
+}
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E43A4, func_060E43A4);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E4474, func_060E4474);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E45E0, func_060E45E0);
-INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E4630, func_060E4630);
+extern void SyncSpriteObjectPos(Entity* self);
+extern void func_0600B004(SpriteObject* sprite, u32 imageIndex);
+extern u32 DAT_060EF1A8[];
+
+void func_060E4630(Entity* self) {
+    SyncSpriteObjectPos(self);
+    func_0600B004(self->unk0, DAT_060EF1A8[self->animCurFrame]);
+}
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E4668, func_060E4668);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E519C, func_060E519C);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E540C, func_060E540C);

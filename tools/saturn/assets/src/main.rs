@@ -4,7 +4,8 @@
 
 use clap::{Parser, Subcommand, ValueEnum};
 use saturn_assets::{
-    audio, bitmap, crt, familiar, font, map, midi, player, psx_stage, seq, stage, weapon,
+    audio, bitmap, crt, familiar, font, map, midi, player, psx_stage, seq, stage, stitch,
+    weapon,
 };
 use std::path::PathBuf;
 use std::process::ExitCode;
@@ -147,6 +148,48 @@ enum MapCommand {
         output_dir: PathBuf,
         #[arg(long, value_enum, default_value_t = PsxScaleModel::Raster)]
         scale_model: PsxScaleModel,
+    },
+    StitchNp3 {
+        prg_path: PathBuf,
+        map_path: PathBuf,
+        assets: PathBuf,
+        tileset: PathBuf,
+        output: PathBuf,
+    },
+    StitchRno3 {
+        prg_path: PathBuf,
+        map_path: PathBuf,
+        assets: PathBuf,
+        tileset: PathBuf,
+        output: PathBuf,
+    },
+    StitchNo0 {
+        prg_path: PathBuf,
+        map_path: PathBuf,
+        assets: PathBuf,
+        tileset: PathBuf,
+        output: PathBuf,
+    },
+    StitchNo4 {
+        prg_path: PathBuf,
+        map_path: PathBuf,
+        assets: PathBuf,
+        tileset: PathBuf,
+        output: PathBuf,
+    },
+    StitchRno0 {
+        prg_path: PathBuf,
+        map_path: PathBuf,
+        assets: PathBuf,
+        tileset: PathBuf,
+        output: PathBuf,
+    },
+    StitchRno4 {
+        prg_path: PathBuf,
+        map_path: PathBuf,
+        assets: PathBuf,
+        tileset: PathBuf,
+        output: PathBuf,
     },
     Rebuild {
         manifest: PathBuf,
@@ -603,6 +646,48 @@ fn run(cli: Cli) -> saturn_assets::Result<()> {
             psx_stage::convert(&prg_path, &map_path, &output_dir, scale_model)?;
             println!("converted Stage 15 -> {}", output_dir.display());
         }
+        Command::Map(MapCommand::StitchNp3 {
+            prg_path,
+            map_path,
+            assets,
+            tileset,
+            output,
+        }) => stitch::stitch_np3(&prg_path, &map_path, &assets, &tileset, &output)?,
+        Command::Map(MapCommand::StitchRno3 {
+            prg_path,
+            map_path,
+            assets,
+            tileset,
+            output,
+        }) => stitch::stitch_rno3(&prg_path, &map_path, &assets, &tileset, &output)?,
+        Command::Map(MapCommand::StitchNo0 {
+            prg_path,
+            map_path,
+            assets,
+            tileset,
+            output,
+        }) => stitch::stitch_no0(&prg_path, &map_path, &assets, &tileset, &output)?,
+        Command::Map(MapCommand::StitchNo4 {
+            prg_path,
+            map_path,
+            assets,
+            tileset,
+            output,
+        }) => stitch::stitch_no4(&prg_path, &map_path, &assets, &tileset, &output)?,
+        Command::Map(MapCommand::StitchRno0 {
+            prg_path,
+            map_path,
+            assets,
+            tileset,
+            output,
+        }) => stitch::stitch_rno0(&prg_path, &map_path, &assets, &tileset, &output)?,
+        Command::Map(MapCommand::StitchRno4 {
+            prg_path,
+            map_path,
+            assets,
+            tileset,
+            output,
+        }) => stitch::stitch_rno4(&prg_path, &map_path, &assets, &tileset, &output)?,
         Command::Map(MapCommand::Rebuild {
             manifest,
             map_path,

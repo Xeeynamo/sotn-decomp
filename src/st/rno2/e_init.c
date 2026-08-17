@@ -12,7 +12,7 @@ void EntityRoomForeground(Entity* self);
 void EntityStageNamePopup(Entity* self);
 void EntityEquipItemDrop(Entity* self);
 void EntityRelicOrb(Entity* self);
-void EntityHeartDrop(Entity* self);
+void EntityPersistentItemDrop(Entity* self);
 void EntityEnemyBlood(Entity* self);
 void EntityMessageBox(Entity* self);
 void EntityDummy(Entity* self);
@@ -77,7 +77,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityStageNamePopup,
     EntityEquipItemDrop,
     EntityRelicOrb,
-    EntityHeartDrop,
+    EntityPersistentItemDrop,
     EntityEnemyBlood,
     EntityMessageBox,
     EntityDummy,
@@ -144,9 +144,11 @@ EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
 EInit D_us_801808BC = {ANIMSET_OVL(2), 11, 0, 0, 0x003};
 EInit D_us_801808C8 = {ANIMSET_OVL(3), 1, 73, 513, 0x003};
+
 EInit g_EInitCtulhu = {ANIMSET_OVL(4), 0, 72, 515, 0x0E9};
-EInit D_us_801808E0 = {ANIMSET_OVL(4), 0, 72, 515, 0x0EA};
-EInit D_us_801808EC = {ANIMSET_OVL(4), 44, 72, 515, 0x0EB};
+EInit g_EInitCtulhuFireball = {ANIMSET_OVL(4), 0, 72, 515, 0x0EA};
+EInit g_EInitCtulhuIceShockwave = {ANIMSET_OVL(4), 44, 72, 515, 0x0EB};
+
 EInit g_EInitMalachi = {ANIMSET_OVL(5), 0, 80, 520, 0x0EC};
 EInit D_us_80180904 = {ANIMSET_OVL(5), 0, 80, 520, 0x0ED};
 EInit D_us_80180910 = {ANIMSET_OVL(5), 0, 80, 520, 0x0EE};

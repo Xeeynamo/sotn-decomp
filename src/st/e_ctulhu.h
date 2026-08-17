@@ -19,6 +19,7 @@ typedef enum {
     CTULHU_DEBUG = 255
 } CtulhuSteps;
 
+static u16 sensors_unused[] = {0, 40, 8, 0};
 static u16 sensors_unk[] = {0, 72, 8, 0};
 static u16 sensors_ground[][2] = {{0, 40}, {0, 4}, {8, -4}, {-16, 0}};
 
@@ -620,11 +621,7 @@ void EntityCtulhuFireball(Entity* self) {
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
         self->ext.ctulhu.prim = prim;
-#ifdef STAGE_IS_RNZ0
-        prim->tpage = 0x12;
-#else
-        prim->tpage = 0x14;
-#endif
+        prim->tpage = CTULHU_TPAGE;
         prim->clut = g_EInitCtulhuFireball[3] + 1;
         prim->u0 = prim->u2 = 224;
         prim->u1 = prim->u3 = 255;
@@ -660,6 +657,7 @@ void EntityCtulhuFireball(Entity* self) {
     }
 }
 
+extern Primitive* FindFirstUnkPrim(Primitive* poly);
 void EntityCtulhuIceShockwave(Entity* self) {
     Primitive* prim;
     s16* ptr;

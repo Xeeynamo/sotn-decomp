@@ -62,7 +62,7 @@ EntityPrizeDrop = 0x0924B9E0; // source=match
 EntityExplosion = 0x0924C7F8; // source=match
 EntityEquipItemDrop = 0x0924CAF8; // source=match
 EntityRelicOrb = 0x0924D350; // source=match
-EntityHeartDrop = 0x0924E488; // source=match
+EntityPersistentItemDrop = 0x0924E488; // source=match
 EntityMessageBox = 0x0924E658; // source=match
 EntityUnkId13 = 0x0924EF18;
 EntityExplosionVariants = 0x0924F190;

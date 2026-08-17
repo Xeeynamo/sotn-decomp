@@ -400,13 +400,12 @@ def clean(config_files):
         )
         symbol_addrs_path = config["options"]["symbol_addrs_path"]
         if isinstance(symbol_addrs_path, str):
-            symbol_files = [
-                (Path(symbol_addrs_path),) if basename in symbol_addrs_path else ()
-            ]
-        else:
-            symbol_files = [
-                Path(path) for path in symbol_addrs_path if basename in path
-            ]
+            symbol_addrs_path = [symbol_addrs_path]
+        symbol_files = [
+            Path(path)
+            for path in symbol_addrs_path
+            if basename in path and not Path(path).name.startswith("undefined_syms.")
+        ]
         symbols_by_file = {file: get_symbols(file) for file in symbol_files}
 
         if not ld_script_path.exists():

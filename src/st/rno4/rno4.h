@@ -23,7 +23,7 @@ typedef enum EntityID {
     E_STAGE_NAME_POPUP,          // EntityStageNamePopup
     E_EQUIP_ITEM_DROP,           // EntityEquipItemDrop
     E_RELIC_ORB,                 // EntityRelicOrb
-    E_HEART_DROP,                // EntityHeartDrop
+    E_PERSISTENT_ITEM_DROP,      // EntityPersistentItemDrop
     E_ENEMY_BLOOD,               // EntityEnemyBlood
     E_DUMMY_E,                   // EntityDummy
     E_DUMMY_F,                   // EntityDummy
@@ -42,7 +42,7 @@ typedef enum EntityID {
     E_UNK_1C,                    // func_us_801C12B0_from_no4
     E_UNK_1D,                    // func_us_801C15F8_from_no4
     E_UNK_1E,                    // func_us_801C5364
-    E_UNK_1F,                    // func_us_801C1C94_from_no4
+    E_UNK_1F,                    // EntityBgColumnsParallax_from_no4
     E_UNK_20,                    // func_us_801C1EE4_from_no4
     E_UNK_21,                    // func_us_801C5C78
     E_UNK_22,                    // func_us_801C5EE4

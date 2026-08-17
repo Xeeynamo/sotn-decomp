@@ -82,7 +82,7 @@ void EntityTableWithGlobe(Entity* self) {
         if (self->hitFlags != 0) {
             PlaySfxPositional(0x61D); // sotn-lint-ignore
             self->hitboxState = 0;
-            CreateEntityFromEntity(E_HEART_DROP, self, &self[1]);
+            CreateEntityFromEntity(E_PERSISTENT_ITEM_DROP, self, &self[1]);
             self[1].params = g_Stage02TableWithGlobeDropParams[self->params];
             SetStep(2);
         }
@@ -174,7 +174,7 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E2420, func_060E2420);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E2898, func_060E2898);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E29A4, func_060E29A4);
 
-// EntityHeartDrop
+// EntityPersistentItemDrop
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E2A80, func_060E2A80);
 
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E32DC, func_060E32DC);

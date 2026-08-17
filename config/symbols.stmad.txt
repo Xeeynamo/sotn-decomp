@@ -1,3 +1,1 @@
-rooms_layers = 0x801801F8; // size:0x98
-entityLayoutHorizontal = 0x801802F4; // size:0xD4
-rooms = 0x80181130;
+

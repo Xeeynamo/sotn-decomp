@@ -1141,7 +1141,7 @@ def parse_entity_updates(data_file_text, ovl_name, entity_updates_symbol):
         "EntityStageNamePopup",
         "EntityEquipItemDrop",
         "EntityRelicOrb",
-        "EntityHeartDrop",
+        "EntityPersistentItemDrop",
         "EntityEnemyBlood",
         "EntityMessageBox",
         "EntityDummy",
