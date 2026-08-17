@@ -4196,6 +4196,32 @@ typedef struct {
     /* 0xA4 */ s32 length;
 } ET_Granfaloon;
 
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ s16 unk84;
+    /* 0x86 */ s16 unk86;
+    /* 0x88 */ s16 unk88;
+    /* 0x8A */ s16 unk8A;
+    /* 0x8C */ u32 : 32;
+    /* 0x90 */ u32 : 32;
+    /* 0x94 */ u32 : 32;
+    /* 0x98 */ u32 : 32;
+    /* 0x9C */ u32 : 32;
+    /* 0xA0 */ s16 unkA0;
+    /* 0xA3 */ u16 : 16;
+    /* 0xA4 */ s16 unkA4;
+    /* 0xA6 */ u16 : 16;
+    /* 0xA8 */ u8 unkA8;
+    /* 0xA9 */ u8 unkA9;
+    /* 0xAA */ u8 unkAA;
+    /* 0xAB */ u8 unkAB;
+    /* 0xAC */ u8 unkAC;
+    /* 0xAD */ u8 unkAD;
+    /* 0xAE */ u8 unkAE;
+} ET_Gorgon;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -4552,6 +4578,7 @@ typedef union { // offset=0x7C
     ET_B0_Unk b0Unk;
     ET_801B0930 et_801B0930;
     ET_OlroxDrool olroxDrool;
+    ET_Gorgon gorgon;
 } Ext;
 
 SYNC_FIELD(ET_Player, ET_Weapon, anim);
