@@ -89,7 +89,7 @@ u16 D_8018E354[] = {
 #include "gen/D_8018E354.h"
 };
 
-#ifdef ENABLE_SATURN_STITCHES
+#ifdef ENABLE_SATURN_STAGES
 #include <gen/no4_tilemap_0.h>
 #include <gen/no4_tilemap_1.h>
 #include <gen/no4_tilemap_2.h>

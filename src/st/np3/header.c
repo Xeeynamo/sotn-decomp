@@ -24,7 +24,7 @@ AbbreviatedOverlay g_Overlay = {
 
 #include "gen/sprite_banks.h"
 #include "gen/palette_def.h"
-#ifdef ENABLE_SATURN_STITCHES
+#ifdef ENABLE_SATURN_STAGES
 #include <gen/layers.h>
 #else
 #include "gen/layers.h"

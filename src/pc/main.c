@@ -24,7 +24,7 @@ static const char* allowed_stages[] = {
     "te3",      "te4",      "te5",       "top_alt"};
 static const char* allowed_players[] = {"alu", "ric", "mar"};
 static const char* allowed_tests[] = {"sndlib"};
-#ifdef ENABLE_SATURN_STITCHES
+#ifdef ENABLE_SATURN_STAGES
 static const char* allowed_spawn_points[] = {
     "",
     "np3-stage15-door",
@@ -75,7 +75,7 @@ static void printHelp(void) {
     printf("         sndlib      test sound library\n");
     printf("  --record <path>    record controller input to a file\n");
     printf("  --replay <path>    replay controller input from a file\n");
-#ifdef ENABLE_SATURN_STITCHES
+#ifdef ENABLE_SATURN_STAGES
     printf("  --spawn-point <name>  start beside a Saturn graft:\n");
     printf("         np3-stage15-door, reverse-trapdoor-underground,\n");
     printf("         marble-soul, caverns-soul, reverse-marble-soul,\n");
@@ -156,7 +156,7 @@ static bool parseArgs(
             outParams->recordPath = argv[++i];
         } else if (strcmp(argv[i], "--replay") == 0 && i + 1 < argc) {
             outParams->replayPath = argv[++i];
-#ifdef ENABLE_SATURN_STITCHES
+#ifdef ENABLE_SATURN_STAGES
         } else if (strcmp(argv[i], "--spawn-point") == 0 && i + 1 < argc) {
             outParams->spawnPoint =
                 PARSE_PARAM(argv[++i], allowed_spawn_points);
@@ -186,7 +186,7 @@ int Main(int argc, char* argv[]) {
         printHelp();
         return -1;
     }
-#ifdef ENABLE_SATURN_STITCHES
+#ifdef ENABLE_SATURN_STAGES
     if (params.spawnPoint != PC_SPAWN_DEFAULT && params.stage < 0) {
         static const int spawnStages[] = {
             [PC_SPAWN_NP3_STAGE15] = STAGE_NP3,

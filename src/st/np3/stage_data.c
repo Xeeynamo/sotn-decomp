@@ -152,7 +152,7 @@ u16 e_gurkha_p[] = {
 #include "gen/e_gurkha_p.h"
 };
 
-#ifdef ENABLE_SATURN_STITCHES
+#ifdef ENABLE_SATURN_STAGES
 #include <gen/np3_tilemap_0.h>
 #include <gen/np3_tilemap_1.h>
 #include <gen/np3_tilemap_2.h>

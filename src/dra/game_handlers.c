@@ -1637,7 +1637,7 @@ void HandleNowLoading(void) {
     case Play_WaitStagePrg:
         if (g_DemoMode == Demo_None) {
             InitStatsAndGear(0);
-#if defined(VERSION_PC) && defined(ENABLE_SATURN_STITCHES)
+#if defined(VERSION_PC) && defined(ENABLE_SATURN_STAGES)
             if (g_PcSpawnPoint >= PC_SPAWN_RNO3_RSTAGE15 &&
                 (g_StageId & STAGE_INVERTEDCASTLE_FLAG)) {
                 CheckAndDoLevelUp();
@@ -1817,7 +1817,7 @@ void HandleNowLoading(void) {
                         .unk28;
             }
         }
-#if defined(VERSION_PC) && defined(ENABLE_SATURN_STITCHES)
+#if defined(VERSION_PC) && defined(ENABLE_SATURN_STAGES)
         if (g_PcSpawnPoint != PC_SPAWN_DEFAULT) {
             static const u8 spawnTeleports[] = {
                 [PC_SPAWN_NP3_STAGE15] = NP3_STAGE15_SPAWN_TELEPORT,

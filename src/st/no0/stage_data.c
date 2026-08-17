@@ -157,7 +157,7 @@ u16 e_door_pal[] = {
 #include "gen/e_door_pal.h"
 };
 
-#ifdef ENABLE_SATURN_STITCHES
+#ifdef ENABLE_SATURN_STAGES
 #include <gen/no0_tilemap_0.h>
 #include <gen/no0_tilemap_1.h>
 #include <gen/no0_tilemap_2.h>

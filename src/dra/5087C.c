@@ -173,7 +173,7 @@ RoomTeleport D_800A245C[] = {
     {240, 132, 0x0000, 0x000D, STAGE_NZ1},
     {1264, 392, 0x0000, 0x0002, STAGE_LIB},
     {16, 132, 0x0000, 0x002D, STAGE_NZ1},
-#if defined(VERSION_PC) && defined(ENABLE_SATURN_STITCHES)
+#if defined(VERSION_PC) && defined(ENABLE_SATURN_STAGES)
     {192, 870, 0x0008, STAGE_NP3, STAGE_NP3},
     {96, 104, 0x0008, STAGE_RNO3, STAGE_RNO3},
     {1440, 688, 0x0000, STAGE_NO0, STAGE_NO0},
@@ -183,7 +183,7 @@ RoomTeleport D_800A245C[] = {
 #endif
 };
 
-#if defined(VERSION_PC) && defined(ENABLE_SATURN_STITCHES)
+#if defined(VERSION_PC) && defined(ENABLE_SATURN_STAGES)
 _Static_assert(
     NP3_STAGE15_SPAWN_TELEPORT == 131, "retail teleport count changed");
 _Static_assert(RNO4_RSTAGE16_SPAWN_TELEPORT == LEN(D_800A245C) - 1,

@@ -6,7 +6,7 @@ set(CMAKE_C_STANDARD 17)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-option(ENABLE_SATURN_STITCHES "Build the six Saturn-area connectors" OFF)
+option(ENABLE_SATURN_STAGES "Build the six Saturn-area connectors" OFF)
 
 if (WIN32)
     set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
@@ -71,7 +71,7 @@ add_custom_command(
     COMMENT "Building host sotn_str")
 add_custom_target(sotn_str_host DEPENDS "${SOTN_STR_BIN}")
 
-if(ENABLE_SATURN_STITCHES)
+if(ENABLE_SATURN_STAGES)
     find_program(GO_BIN go REQUIRED)
     file(GLOB_RECURSE SATURN_ASSETS_SOURCES CONFIGURE_DEPENDS
         "${CMAKE_SOURCE_DIR}/tools/saturn/assets/src/*.rs")
@@ -1332,10 +1332,10 @@ add_overlay(lib ${SOURCE_FILES_STAGE_LIB})
 add_overlay(mad ${SOURCE_FILES_STAGE_MAD})
 add_overlay(bo1 ${SOURCE_FILES_BOSS_BO1})
 
-if(ENABLE_SATURN_STITCHES)
+if(ENABLE_SATURN_STAGES)
     set(SATURN_STITCH_DIR "${CMAKE_BINARY_DIR}/saturn_stitches")
 
-    function(add_saturn_stitch stage command prg map assets tileset feature rooms layers layouts)
+    function(add_saturn_stitch stage command prg map assets tileset rooms layers layouts)
         set(output "${SATURN_STITCH_DIR}/${stage}.stamp")
         set(asset_dir "${SATURN_STITCH_DIR}/assets/${stage}")
         set(source_dir "${SATURN_STITCH_DIR}/src/${stage}")
@@ -1382,8 +1382,7 @@ if(ENABLE_SATURN_STITCHES)
         target_sources(${stage} PRIVATE ${packed_sources})
         target_include_directories(${stage} BEFORE PRIVATE
             "${source_dir}" "${CMAKE_SOURCE_DIR}/src/st/${stage}")
-        target_compile_definitions(
-            ${stage} PRIVATE ENABLE_SATURN_STITCHES "${feature}")
+        target_compile_definitions(${stage} PRIVATE ENABLE_SATURN_STAGES)
     endfunction()
 
     add_saturn_stitch(
@@ -1392,44 +1391,44 @@ if(ENABLE_SATURN_STITCHES)
         "${CMAKE_SOURCE_DIR}/disks/saturn/STAGE_01.MAP"
         "${CMAKE_SOURCE_DIR}/assets/st/np3"
         "${CMAKE_SOURCE_DIR}/disks/us/ST/NP3/F_NP3.BIN"
-        ENABLE_STAGE15 rooms layers us/entity_layouts)
+        rooms layers us/entity_layouts)
     add_saturn_stitch(
         rno3 stitch-rno3
         "${CMAKE_SOURCE_DIR}/disks/saturn/RSTAGE01.PRG"
         "${CMAKE_SOURCE_DIR}/disks/saturn/RSTAGE01.MAP"
         "${CMAKE_SOURCE_DIR}/assets/st/rno3"
         "${CMAKE_SOURCE_DIR}/disks/us/ST/RNO3/F_RNO3.BIN"
-        ENABLE_STAGE15 us/rooms us/layers entity_layouts)
+        us/rooms us/layers entity_layouts)
     add_saturn_stitch(
         no0 stitch-no0
         "${CMAKE_SOURCE_DIR}/disks/saturn/STAGE_03.PRG"
         "${CMAKE_SOURCE_DIR}/disks/saturn/STAGE_03.MAP"
         "${CMAKE_SOURCE_DIR}/assets/st/no0"
         "${CMAKE_SOURCE_DIR}/disks/us/ST/NO0/F_NO0.BIN"
-        ENABLE_STAGE16 rooms layers entity_layouts)
+        rooms layers entity_layouts)
     add_saturn_stitch(
         no4 stitch-no4
         "${CMAKE_SOURCE_DIR}/disks/saturn/STAGE_09.PRG"
         "${CMAKE_SOURCE_DIR}/disks/saturn/STAGE_9B.MAP"
         "${CMAKE_SOURCE_DIR}/assets/st/no4"
         "${CMAKE_SOURCE_DIR}/disks/us/ST/NO4/F_NO4.BIN"
-        ENABLE_STAGE16 rooms layers entity_layouts)
+        rooms layers entity_layouts)
     add_saturn_stitch(
         rno0 stitch-rno0
         "${CMAKE_SOURCE_DIR}/disks/saturn/RSTAGE03.PRG"
         "${CMAKE_SOURCE_DIR}/disks/saturn/RSTAGE03.MAP"
         "${CMAKE_SOURCE_DIR}/assets/st/rno0"
         "${CMAKE_SOURCE_DIR}/disks/us/ST/RNO0/F_RNO0.BIN"
-        ENABLE_STAGE16 rooms layers entity_layouts)
+        rooms layers entity_layouts)
     add_saturn_stitch(
         rno4 stitch-rno4
         "${CMAKE_SOURCE_DIR}/disks/saturn/RSTAGE09.PRG"
         "${CMAKE_SOURCE_DIR}/disks/saturn/RSTAGE9B.MAP"
         "${CMAKE_SOURCE_DIR}/assets/st/rno4"
         "${CMAKE_SOURCE_DIR}/disks/us/ST/RNO4/F_RNO4.BIN"
-        ENABLE_STAGE16 rooms layers entity_layouts)
+        rooms layers entity_layouts)
 
-    target_compile_definitions(${PROJECT_NAME} PRIVATE ENABLE_SATURN_STITCHES)
+    target_compile_definitions(${PROJECT_NAME} PRIVATE ENABLE_SATURN_STAGES)
     target_compile_definitions(${PROJECT_NAME} PRIVATE
         PC_ASSET_OVERRIDE_DIR="${SATURN_STITCH_DIR}")
 endif()

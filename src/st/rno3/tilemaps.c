@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stage.h>
 
-#ifdef ENABLE_SATURN_STITCHES
+#ifdef ENABLE_SATURN_STAGES
 #include <gen/rno3_tilemap_0.h>
 #include <gen/rno3_tilemap_1.h>
 #include <gen/rno3_tilemap_2.h>

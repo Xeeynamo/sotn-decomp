@@ -25,7 +25,6 @@ PfnEntityUpdate EntityUpdates[UINT8_MAX + 1];
 
 static void UnsupportedEntity(Entity* entity) { DestroyEntity(entity); }
 static void Noop(void) {}
-static void InitRoomEntitiesDummy(s32 layoutId) { (void)layoutId; }
 void EntityExplosion(Entity* entity) { UnsupportedEntity(entity); }
 void EntityPrizeDrop(Entity* entity) { UnsupportedEntity(entity); }
 void EntityEquipItemDrop(Entity* entity) { UnsupportedEntity(entity); }
@@ -41,21 +40,11 @@ OVL_API void InitStage(Overlay* o) {
     }
     EntityUpdates[E_RED_DOOR - 1] = EntityRedDoor;
     EntityUpdates[E_ROOM_FOREGROUND - 1] = EntityRoomForeground;
-#ifdef ENABLE_STAGE15
     o->Update = Update;
-#else
-    o->Update = Noop;
-#endif
     o->HitDetection = Noop;
-#ifdef ENABLE_STAGE15
     o->UpdateRoomPosition = UpdateRoomPosition;
     o->InitRoomEntities = InitRoomEntities;
     o->UpdateStageEntities = UpdateStageEntities;
-#else
-    o->UpdateRoomPosition = Noop;
-    o->InitRoomEntities = InitRoomEntitiesDummy;
-    o->UpdateStageEntities = Noop;
-#endif
     o->rooms = rooms;
     o->spriteBanks = s_SpriteBanks;
     o->cluts = s_Cluts;
