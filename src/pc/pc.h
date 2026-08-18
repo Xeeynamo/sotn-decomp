@@ -73,6 +73,7 @@ void Replay_Init(const struct InitGameParams* params);
 void Replay_Reset(void);
 void Replay_OnFrame(void);
 bool Replay_DidDrift(void);
+bool Replay_DemoAborted(void);
 
 bool FileOpenRead(
     bool (*cb)(const struct FileOpenRead*), const char* filename, void* param);
