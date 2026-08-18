@@ -56,20 +56,19 @@ extern SaturnStageFileRecord g_StageFileRecords[];
 extern s32 DAT_0605c108;
 extern s32 DAT_0605c10c;
 extern s32 DAT_06061dd0;
-extern u16 DAT_06065470;
 extern s32 DAT_0608609c;
 
 void ResetNewGameSettings(void);
 void ApplyJosephsCloakPalette(void);
 
 // func_0606EEF8
-void ResetPlayState(u16 param_1) {
+void ResetPlayState(u16 arg0) {
     u16 stageID;
 
     g_GameTimer = 0;
     memset(g_Entities, 0, sizeof(g_Entities));
     stageID = g_CurrentRoom.stageID;
-    if (param_1 == 0) {
+    if (arg0 == 0) {
         ResetNewGameSettings();
         DAT_0608609c = DAT_0605c10c;
     } else {
@@ -86,7 +85,7 @@ void ResetPlayState(u16 param_1) {
     SCL_SET_CCMD(1);
     SCL_SetColMixMode(6, 1);
     SCL_SET_SPCCEN(1);
-    DAT_06065470 &= 0xFFFB;
+    Scl_s_reg.dispenbl &= ~0x0004;
     SclProcess = 1;
     ApplyJosephsCloakPalette();
 }

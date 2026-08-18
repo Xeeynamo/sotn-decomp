@@ -244,7 +244,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
         self->velocityY = 0;
         DestroyEntityWeapon(1);
         g_api.PlaySfx(SFX_ANIME_SWORD_C);
-        g_unkGraphicsStruct.unk20 = 1;
+        g_unkGraphicsStruct.unk28 = 1;
         self->step++;
         break;
     case 1:
@@ -315,7 +315,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
         }
         break;
     case 6:
-        g_unkGraphicsStruct.unk20 = 0;
+        g_unkGraphicsStruct.unk28 = 0;
         DestroyEntity(self);
         return;
     }

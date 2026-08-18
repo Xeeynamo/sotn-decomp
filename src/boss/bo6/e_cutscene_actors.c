@@ -126,7 +126,7 @@ void func_us_801A9208(Entity* self) {
         break;
     case 2:
         if (g_CutsceneFlags & 0x100) {
-            g_unkGraphicsStruct.unk20 = 0;
+            g_unkGraphicsStruct.unk28 = 0;
             self->step++;
             self->ext.utimer.t = 0;
             prim = &g_PrimBuf[self->primIndex];

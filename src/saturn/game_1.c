@@ -26,7 +26,6 @@ static u16 LookupTblNoToVram(u16 arg0) {
     }
 }
 
-extern u16 DAT_0605aec0[][2];
 extern SaturnSpriteResource g_SaturnSharedSpriteBank12Resource;
 extern SaturnSpriteResource g_SaturnSharedSpriteBank13Resource;
 
