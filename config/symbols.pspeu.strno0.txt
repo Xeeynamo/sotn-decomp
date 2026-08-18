@@ -1,6 +1,6 @@
 CreateEntityFromCurrentEntity = 0x09238598;
 CreateEntityFromEntity = 0x09238620;
-RNO0_Unused801C2338 = 0x0923A5C0;
+EntityClockRoomUnused = 0x0923A5C0;
 EntityRedDoor = 0x0923B538;
 Random = 0x0923C758;
 func_psp_0923AD68 = 0x09245CC8;

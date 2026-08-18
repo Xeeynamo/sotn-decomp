@@ -46,7 +46,6 @@ segments:
     subsegments:
       - [0x80, c, rno0/create_entity]
       - [0x1028, c, rno0/e_clock_room]
-      - [0x2F40, c, rno0_psp/rno0_unused801c2338]
       - [0x2F50, c, rno0/e_stage_name]
       - [0x3DD0, c, rno0_psp/unk_3DD0]
       - [0x50D8, c, rno0/st_update]
