@@ -102,7 +102,7 @@ void HitDetection(void) {
     u16 miscVar1;
     u16 hitboxCheck2;
     s32 hitboxWidth;
-    s32 hitboxHeight;
+    s32 yCoord1;
     u32 hitboxCheck1;
     EnemyDef* enemyDef;
     u16 i;
