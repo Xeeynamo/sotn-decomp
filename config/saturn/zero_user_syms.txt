@@ -232,6 +232,7 @@ _SclRealSpColMix = 0x06048244;
 _SclRealBgColMix = 0x06048248;
 _SclRealColOffset = 0x0604824C;
 unitMatrix = 0x06048250;
+_DAT_060485C0 = 0x060485C0;
 _DAT_060485e0 = 0x060485E0;
 _g_PadsRepeatTimer = 0x060505E8;
 _d_060576AC = 0x060576AC;

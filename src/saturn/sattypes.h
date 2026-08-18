@@ -54,10 +54,12 @@ typedef enum {
 #define SET_KEY_ON_22_23 0xF00000A8
 #define SFX_WEAPON_APPEAR 0x62F
 #define SFX_UI_CONFIRM 0x633
+#define SFX_START_SLAM_B 0x63D
 #define SFX_SAVE_HEARTBEAT 0x64D
 #define SFX_BAT_SCREECH 0x64E
 #define SFX_HEART_PICKUP 0x67A
 #define SFX_UI_MOVE 0x67B
+#define SFX_UI_SUBWEAPON_TINK 0x6A4
 #define SFX_UI_ALERT_TINK 0x6AD
 #define SFX_SAVE_COFFIN_SWISH 0x6E0
 #define SFX_UNUSED_712 0x712
@@ -928,6 +930,12 @@ typedef struct {
     s32 castleFlag;
 } RoomBossTeleport;
 
+typedef struct {
+    s32 : 32;
+    s8 unk4;
+    s8 unk5;
+} UNK_060485C0;
+
 typedef enum {
     PLAYER_CHARACTER,
     E_AFTERIMAGE_1,
@@ -1092,6 +1100,7 @@ extern Pad g_pads[];
 extern Tilemap g_Tilemap;
 extern UNK_0605c680 DAT_0605c680;
 extern Primitive g_PrimBuf[];
+extern UNK_060485C0 DAT_060485C0;
 
 #define NUM_HORIZONTAL_SENSORS 4
 #define NUM_VERTICAL_SENSORS 7
