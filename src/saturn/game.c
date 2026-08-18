@@ -231,7 +231,7 @@ void InitRoom(void) {
     if ((g_CurrentRoom.unk6 == 0x50) || (g_CurrentRoom.unk6 == 0x60)) {
         if (g_unkGraphicsStruct.D_800973FC == 0) {
             PlaySfx(func_060727DC(g_PlayableCharacter, g_CurrentRoom.stageID,
-                                 g_CurrentRoom.unk4));
+                                  g_CurrentRoom.unk4));
         } else {
             currentMusicId = func_060727DC(
                 g_PlayableCharacter, g_CurrentRoom.stageID, g_CurrentRoom.unk4);

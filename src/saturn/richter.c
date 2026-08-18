@@ -982,7 +982,7 @@ s32 func_8015FDB0(RicPrimitive* prim, s16 posX, s16 posY) {
     prim->y1 = posY + offset;
 
     ptr = DAT_0605aec0[g_RichterSpritePackage3AllocationIndex +
-                           D_060BF1A4[frame]];
+                       D_060BF1A4[frame]];
     prim->uv0 = ptr[0];
     prim->uv1 = ptr[1];
 
