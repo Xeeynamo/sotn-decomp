@@ -233,7 +233,7 @@ typedef struct {
     s16 y2;
     s16 x3;
     s16 y3;
-    s16 : 16;
+    u16 unk1B;
     u16 drawMode;
     struct Primitive* next;
 } Primitive;
