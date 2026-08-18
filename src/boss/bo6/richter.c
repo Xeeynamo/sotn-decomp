@@ -1095,7 +1095,39 @@ INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepRun);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepJump);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepFall);
+extern u16 D_80076306;
+enum RicInputChecks {
+    CHECK_GROUND = 1,
+    CHECK_FALL = 4,
+    CHECK_FACING = 8,
+    CHECK_JUMP = 0x10,
+    CHECK_CRASH = 0x40,
+    CHECK_80 = 0x80,
+    CHECK_GRAVITY_HIT = 0x200,
+    CHECK_ATTACK = 0x1000,
+    CHECK_CROUCH = 0x2000,
+    CHECK_GRAVITY_FALL = 0x8000,
+    CHECK_GRAVITY_JUMP = 0x10000,
+    CHECK_GROUND_AFTER_HIT = 0x20000,
+    CHECK_SLIDE = 0x40000,
+};
+
+void RicStepFall(void) {
+    if (RicCheckInput(
+            CHECK_GROUND | CHECK_FACING | CHECK_ATTACK | CHECK_GRAVITY_FALL)) {
+        return;
+    }
+    DecelerateX(FIX(1. / 16));
+    if (D_80076306 == 0) {
+        if (g_Ric.timers[PL_T_5] && g_Ric.padTapped & PAD_CROSS) {
+            func_us_801B9E70();
+            return;
+        }
+        if (RicCheckFacing()) {
+            RicSetSpeedX(FIX(0.75));
+        }
+    }
+}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepCrouch);
 
