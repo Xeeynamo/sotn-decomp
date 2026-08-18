@@ -19,7 +19,56 @@ void func_0606C064(void) { func_0600654C(&DAT_0606C054, 0x00252000); }
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606C088, func_0606C088);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606C160, func_0606C160);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606C3E4, func_0606C3E4);
+
+extern u16 UNK_Invincibility0[];
+
+void func_0606C3E4(void) {
+    SpriteObject* sprite;
+    Entity* entity;
+    s16 iFramePalette;
+
+    for (entity = &g_Entities[0]; entity < &g_Entities[64]; entity++) {
+        if (entity->unk0 != NULL) {
+            entity->unk0->unk0C = entity->unk1D;
+            entity->unk0->unk0D = entity->opacity;
+        }
+    }
+    for (entity = &g_Entities[64]; entity < &g_Entities[256]; entity++) {
+        if (entity->pfnUpdate == NULL) {
+            continue;
+        }
+        if (entity->step) {
+            if ((entity->flags & FLAG_UNK_10000) == 0) {
+                continue;
+            }
+            if (entity->flags & 0xF) {
+                iFramePalette = entity->nFramesInvincibility << 1;
+                iFramePalette += entity->flags & 1;
+                if (entity->unk0 != NULL) {
+                    entity->unk0->clutBase = UNK_Invincibility0[iFramePalette];
+                }
+                entity->flags -= 1;
+                if ((entity->flags & 0xF) == 0) {
+                    if (entity->unk0 != NULL) {
+                        entity->unk0->clutBase = entity->hitEffect;
+                    }
+                    entity->hitEffect = 0;
+                }
+            }
+            sprite = entity->unk0;
+            if (sprite != NULL) {
+                sprite->unk0C = entity->unk1D;
+                sprite->unk0D = entity->opacity;
+                sprite->posX = entity->posX.val;
+                sprite->posY = entity->posY.val;
+            }
+        }
+        g_CurrentEntity = entity;
+        entity->pfnUpdate(entity);
+        entity->hitParams = 0;
+        entity->hitFlags = 0;
+    }
+}
 
 // func_0606C504
 void ScrollEntitiesWithCamera(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {

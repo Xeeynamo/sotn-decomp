@@ -416,7 +416,7 @@ typedef struct Entity {
     /* 0x62 */ u16 zPriority;
     /* 0x64 */ u16 unk68;
     /* 0x66 */ u16 hitEffect;
-    /* 0x68 */ char pad_68[1];
+    /* 0x68 */ u8 opacity;
     /* 0x69 */ u8 unk6D[11];
     /* 0x74 */ u16 entityId;
     /* 0x76 */ char pad_76[0x2];
