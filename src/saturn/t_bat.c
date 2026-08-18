@@ -973,12 +973,12 @@ void ProcessSfxState(Entity* entity) {
         entity->step++;
         break;
     case 3:
-        if (func_80131F68_2()) {
+        if (func_06012DFC()) {
             entity->step++;
         }
         break;
     case 4:
-        if (!func_80131F68_2()) {
+        if (!func_06012DFC()) {
             entity->step++;
         }
         break;

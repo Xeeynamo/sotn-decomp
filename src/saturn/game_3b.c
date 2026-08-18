@@ -523,7 +523,6 @@ void HitDetection(void) {
 
 extern u16 DAT_0605cea0;
 extern s32 DAT_0605c11a;
-extern Unk0605cd70 DAT_0605cd70;
 
 void ResetPlayState(u16);
 void func_06005208(s32);
@@ -563,7 +562,7 @@ void ModeGame(void) {
 }
 
 extern SaturnStageFileRecord g_StageFileRecords[];
-extern s32 DAT_0605c108;
+extern s32 D_8006C374;
 extern s32 DAT_0605c10c;
 extern s32 DAT_06061dd0;
 extern s32 DAT_0608609c;
@@ -584,10 +583,10 @@ void ResetPlayState(u16 arg0) {
     } else {
         DAT_0608609c = DAT_0605c10c;
     }
-    func_0600FEFC();
+    func_800F2120();
     func_800FDE00();
     if (DAT_06061dd0 == 0) {
-        DAT_0605c108 = g_StageFileRecords[stageID].unk14;
+        D_8006C374 = g_StageFileRecords[stageID].unk14;
     }
     g_CurrentRoom.unk2 = stageID;
     func_06032E88(1);
