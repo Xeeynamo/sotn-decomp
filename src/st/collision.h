@@ -201,18 +201,18 @@ void HitDetection(void) {
     Primitive* prim;
     Entity* entityHit;
     s32* spHitbox;
-    Entity* iterEnt;
     s32* spHitboxState;
     u16* dropTable;
     s16 x, y;
     u16 miscVar1;
     u16 hitboxCheck2;
     s32 hitboxWidth;
-    s32 yCoord1;
+    s32 hitboxHeight;
     u32 hitboxCheck1;
-    EnemyDef* enemyDef;
     u16 i;
+    Entity* iterEnt;
     Entity* entity;
+    EnemyDef* enemyDef;
     u8 miscVar2;
     u16 miscVar3;
     u8 uselessVar;
@@ -229,16 +229,16 @@ void HitDetection(void) {
             } else {
                 *spHitbox += entity->hitboxOffX;
             }
-            yCoord1 = entity->posY.i.hi + entity->hitboxOffY;
-            if ((*spHitbox < -32) || (*spHitbox > 288) || (yCoord1 < -32) ||
-                (yCoord1 > 256) || !entity->hitboxWidth ||
-                !entity->hitboxHeight) {
+            hitboxHeight = entity->posY.i.hi + entity->hitboxOffY;
+            if ((*spHitbox < -32) || (*spHitbox > 288) ||
+                (hitboxHeight < -32) || (hitboxHeight > 256) ||
+                !entity->hitboxWidth || !entity->hitboxHeight) {
                 *spHitboxState = 0;
                 spHitbox += 4;
             } else {
                 spHitbox++;
                 *spHitbox++ = entity->hitboxWidth;
-                *spHitbox++ = yCoord1;
+                *spHitbox++ = hitboxHeight;
                 *spHitbox++ = entity->hitboxHeight;
             }
         } else {
@@ -269,7 +269,7 @@ void HitDetection(void) {
         miscVar2 = 0;
         miscVar3 = (u16)(miscVar1 & 0x3E);
         hitboxWidth = entity->hitboxWidth - 1;
-        yCoord1 = entity->hitboxHeight - 1;
+        hitboxHeight = entity->hitboxHeight - 1;
         if (miscVar3) {
             spHitboxState = SPAD(1);
             spHitbox = SPAD(0x34);
@@ -288,7 +288,7 @@ void HitDetection(void) {
                     hitboxCheck1 *= 2;
                     if (hitboxCheck2 <= hitboxCheck1) {
                         hitboxCheck2 = (u16)*spHitbox++ - (u16)y;
-                        hitboxCheck1 = yCoord1 + *spHitbox++;
+                        hitboxCheck1 = hitboxHeight + *spHitbox++;
                         hitboxCheck2 += hitboxCheck1;
                         hitboxCheck1 *= 2;
                         if (hitboxCheck2 <= hitboxCheck1) {
@@ -349,7 +349,7 @@ void HitDetection(void) {
                 hitboxCheck1 *= 2;
                 if (hitboxCheck2 <= hitboxCheck1) {
                     hitboxCheck2 = (u16)*spHitbox++ - (u16)y;
-                    hitboxCheck1 = yCoord1 + *spHitbox++;
+                    hitboxCheck1 = hitboxHeight + *spHitbox++;
                     hitboxCheck2 += hitboxCheck1;
                     hitboxCheck1 *= 2;
                     if (hitboxCheck2 <= hitboxCheck1) {
@@ -374,7 +374,7 @@ void HitDetection(void) {
         if (!miscVar2) {
             continue;
         }
-        if (entity->parent) {
+        if (entity->parent != NULL) {
             entityHit = entity->parent;
             entityHit->hitParams = entity->hitParams;
             entityHit->hitFlags = entity->hitFlags;
@@ -513,9 +513,9 @@ void HitDetection(void) {
                     }
                 }
                 if (entityHit->hitPoints != 0x7FFE) {
-                    if (entityHit->hitPoints < (miscVar1 * 2)) {
+                    if (entityHit->hitPoints < miscVar1 * 2) {
                         entityHit->hitFlags |= 3;
-                    } else if (entityHit->hitPoints < (miscVar1 * 4)) {
+                    } else if (entityHit->hitPoints < miscVar1 * 4) {
                         entityHit->hitFlags |= 2;
                     } else {
                         entityHit->hitFlags |= 1;
@@ -544,7 +544,7 @@ void HitDetection(void) {
                 do {
                     otherEntity->unk6D[miscVar3] =
                         iterEnt->nFramesInvincibility;
-                    if (entityHit < otherEntity) {
+                    if (otherEntity > entityHit) {
                         otherEntity->unk6D[miscVar3]++;
                     }
                     if (!(entity->flags & FLAG_SUPPRESS_STUN)) {
@@ -631,7 +631,7 @@ void HitDetection(void) {
         otherEntity = entityHit;
         do {
             otherEntity->flags |=
-                (FLAG_UNK_100000 | FLAG_UNK_8000 | FLAG_UNK_4000 | FLAG_DEAD);
+                FLAG_UNK_100000 | FLAG_UNK_8000 | FLAG_UNK_4000 | FLAG_DEAD;
             otherEntity->flags &= ~FLAG_UNK_20000000;
             if (!otherEntity->hitEffect) {
                 otherEntity->hitEffect = otherEntity->palette;
@@ -663,13 +663,13 @@ void HitDetection(void) {
                 if (otherEntity->hitPoints == 0x7FFF) {
                     otherEntity->unk6D[miscVar3] =
                         iterEnt->nFramesInvincibility;
-                    if (entityHit < otherEntity) {
+                    if (otherEntity > entityHit) {
                         otherEntity->unk6D[miscVar3]++;
                     }
                 }
             } else {
                 otherEntity->unk6D[miscVar3] = iterEnt->nFramesInvincibility;
-                if (entityHit < otherEntity) {
+                if (otherEntity > entityHit) {
                     otherEntity->unk6D[miscVar3]++;
                 }
             }

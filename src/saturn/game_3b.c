@@ -12,8 +12,6 @@ void make_all(void);
 extern s32 DAT_060485e0[];
 extern s32 DAT_060486A0[];
 
-extern s16 DAT_0605aec0[][2];
-
 typedef struct {
     s32 : 32;
     s32 : 32;
@@ -63,7 +61,6 @@ void HitDetection(void) {
     Entity* entity;
     EnemyDef* enemyDef;
     u8 miscVar2;
-    u8 miscVar4;
     u16 miscVar3;
     u16* ptr;
 
@@ -125,7 +122,7 @@ void HitDetection(void) {
             for (iterEnt = &g_Entities[1]; iterEnt < &g_Entities[0x30];
                  iterEnt++) {
                 if ((*spHitboxState & miscVar3) &&
-                    (entity->unk6D[iterEnt->enemyId] == 0)) {
+                    !entity->unk6D[iterEnt->enemyId]) {
                     if (*spHitboxState & 0x80) {
                         entity->hitParams = iterEnt->hitEffect & 0x7F;
                         miscVar2 = 0xFF;
@@ -179,11 +176,12 @@ void HitDetection(void) {
                 }
             }
         }
+
         if ((miscVar1 & 1) && !miscVar2) {
             iterEnt = &g_Entities[0];
             spHitboxState = &DAT_060485e0[0];
             spHitbox = &DAT_060486A0[0];
-            if (entity->unk6D[iterEnt->enemyId] == 0 && (*spHitboxState & 1)) {
+            if (!entity->unk6D[iterEnt->enemyId] && (*spHitboxState & 1)) {
                 hitboxCheck2 = *spHitbox++ - x;
                 hitboxCheck1 = hitboxWidth + *spHitbox++;
                 hitboxCheck2 += hitboxCheck1;
@@ -195,7 +193,7 @@ void HitDetection(void) {
                     hitboxCheck1 *= 2;
                     if (hitboxCheck2 <= hitboxCheck1) {
                         if (entity->attack &&
-                            (iterEnt->hitPoints < entity->attack)) {
+                            iterEnt->hitPoints < entity->attack) {
                             iterEnt->unkB4 = entity;
                             if (miscVar1 & 8) {
                                 iterEnt->hitFlags = 3;
@@ -222,7 +220,7 @@ void HitDetection(void) {
         } else {
             entityHit = entity;
         }
-        if ((entityHit->flags & FLAG_DEAD) || (miscVar2 == 0)) {
+        if ((entityHit->flags & FLAG_DEAD) || !miscVar2) {
             continue;
         }
         hitboxCheck2 = iterEnt->hitEffect & 0x7F;
@@ -273,13 +271,13 @@ void HitDetection(void) {
                     prim = prim->next;
                 }
             }
-            if (iterEnt->attack && (entityHit->hitPoints != 0x7FFF)) {
+            if (iterEnt->attack && entityHit->hitPoints != 0x7FFF) {
                 miscVar1 = DealDamage(entity, iterEnt);
                 if (iterEnt->hitboxState == 4) {
                     miscVar1 = 0;
                 }
                 if ((g_Status.relics[0xB] & 2) &&
-                    ((entityHit->flags & FLAG_KEEP_ALIVE_OFFCAMERA) == 0) &&
+                    !(entityHit->flags & FLAG_KEEP_ALIVE_OFFCAMERA) &&
                     miscVar1) {
                     otherEntity =
                         AllocEntity(&g_Entities[0xE0], &g_Entities[0x100]);
@@ -312,14 +310,14 @@ void HitDetection(void) {
                     }
                 }
             } else {
-                miscVar1 = 0;
                 entityHit->hitFlags |= 0x20;
+                miscVar1 = 0;
             }
-            if (miscVar1 == 0) {
+            if (!miscVar1) {
                 goto unusual_spot;
             }
             if (miscVar1 & 0x8000) {
-                entityHit->hitPoints += miscVar1 & 0x3FFF;
+                entityHit->hitPoints += (miscVar1 & 0x3FFF);
                 miscVar3 = g_EnemyDefs[entityHit->enemyId].hitPoints;
                 if (entityHit->hitPoints > miscVar3) {
                     entityHit->hitPoints = miscVar3;
@@ -376,26 +374,28 @@ void HitDetection(void) {
                 }
             }
             if (entityHit->hitPoints > 0) {
-                miscVar3 = iterEnt->enemyId;
                 otherEntity = entityHit;
+                miscVar3 = iterEnt->enemyId;
                 do {
                     otherEntity->unk6D[miscVar3] =
                         iterEnt->nFramesInvincibility;
                     if (otherEntity > entityHit) {
                         otherEntity->unk6D[miscVar3]++;
                     }
-                    if ((entity->flags & FLAG_SUPPRESS_STUN) == 0) {
+                    if (!(entity->flags & FLAG_SUPPRESS_STUN)) {
                         otherEntity->stunFrames = iterEnt->stunFrames;
                     }
-                    if (((otherEntity->hitEffect == 0) &&
-                         ((otherEntity->flags & 0xF) == 0)) &&
-                        (otherEntity->unk0 != NULL)) {
-                        otherEntity->hitEffect = otherEntity->unk0->clutBase;
+                    if (!otherEntity->hitEffect &&
+                        !(otherEntity->flags & 0xF)) {
+                        if (otherEntity->unk0 != NULL) {
+                            otherEntity->hitEffect =
+                                otherEntity->unk0->clutBase;
+                        }
                     }
                     otherEntity->nFramesInvincibility = miscVar2;
                     otherEntity->flags |= 0xF;
                     otherEntity = otherEntity->nextPart;
-                } while ((otherEntity != NULL) && (otherEntity != entityHit));
+                } while (otherEntity != NULL && otherEntity != entityHit);
                 continue;
             }
         }
@@ -404,7 +404,7 @@ void HitDetection(void) {
         if ((entityHit->hitFlags & 0x80) == 0) {
             func_800FE044(enemyDef->exp, enemyDef->level);
             if ((entityHit->flags & FLAG_UNK_1000) &&
-                (g_Status.killCount < 999999)) {
+                g_Status.killCount < 999999) {
                 g_Status.killCount++;
             }
         }
@@ -416,7 +416,7 @@ void HitDetection(void) {
                 miscVar1 = 0;
                 otherEntity = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
                 if (otherEntity != NULL) {
-                    if (hitboxCheck2 == 0x5) {
+                    if (hitboxCheck2 == 5) {
                         dropTable = g_jewelSwordDropTable;
                         miscVar3 = rand() & 0xFFF;
                         while (true) {
@@ -430,7 +430,7 @@ void HitDetection(void) {
                         miscVar3 = func_800FF494(enemyDef);
                         if (miscVar3 & 0x40) {
                             miscVar3 = enemyDef->rareItemId;
-                            if ((miscVar3 == 0x17B) && (g_GameClearFlag == 0)) {
+                            if (miscVar3 == 0x17B && !g_GameClearFlag) {
                                 miscVar3 = 0x172;
                             } else {
                                 miscVar1 =
@@ -450,7 +450,7 @@ void HitDetection(void) {
                     }
                     otherEntity->ext.equipItemDrop.castleFlag = miscVar1;
                     otherEntity->params = miscVar3;
-                    otherEntity->velocityY = -0x38000;
+                    otherEntity->velocityY = FIX(-3.5);
                 }
             }
         }
@@ -465,7 +465,7 @@ void HitDetection(void) {
             otherEntity->nFramesInvincibility = miscVar2;
             otherEntity->flags |= 0xF;
             otherEntity = otherEntity->nextPart;
-        } while ((otherEntity != NULL) && (otherEntity != entityHit));
+        } while (otherEntity != NULL && otherEntity != entityHit);
         continue;
     unusual_spot:
         if ((entityHit->hitFlags & 0xF) == 0) {
@@ -478,8 +478,8 @@ void HitDetection(void) {
                 PlaySfx(SFX_METAL_CLANG_E);
             }
         }
-        miscVar3 = iterEnt->enemyId;
         otherEntity = entityHit;
+        miscVar3 = iterEnt->enemyId;
         do {
             if (entity->hitPoints == 0x7FFF) {
                 if (otherEntity->hitPoints == 0x7FFF) {
@@ -496,7 +496,7 @@ void HitDetection(void) {
                 }
             }
             otherEntity = otherEntity->nextPart;
-        } while ((otherEntity != NULL) && (otherEntity != entityHit));
+        } while (otherEntity != NULL && otherEntity != entityHit);
     }
     prim = &g_PrimBuf[g_unkGraphicsStruct.primIndex];
     while (prim != NULL) {
