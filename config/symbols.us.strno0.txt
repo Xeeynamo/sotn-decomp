@@ -1,18 +1,1 @@
-g_EInitSpawner = 0x80180A5C;
-g_EInitCommon = 0x80180AB0;
-g_EInitMedusaHeadBlue = 0x80180C00;
-g_EInitMedusaHeadYellow = 0x80180C0C;
-Random = 0x801B7324;
-CreateEntityFromCurrentEntity = 0x801B999C;
-DestroyEntity = 0x801BA73C;
-AnimateEntity = 0x801BA86C;
-GetSideToPlayer = 0x801BAAAC;
-MoveEntity = 0x801BAAF0;
-AllocEntity = 0x801BAFAC;
-EntityExplosionSpawn = 0x801BB3B8;
-InitializeEntity = 0x801BB44C;
-GetPlayerCollisionWith = 0x801BB7F0;
-EntityMedusaHeadSpawner = 0x801D24C8;
-EntityMedusaHeadYellow = 0x801D2694;
-EntityMedusaHeadBlue = 0x801D26B8;
-EntitySealedDoor = 0x801D2914;
+
