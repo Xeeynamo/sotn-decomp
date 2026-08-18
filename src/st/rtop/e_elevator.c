@@ -3,8 +3,7 @@
 
 extern EInit g_EInitRTOPCommon;
 
-// odd +1 reference to D_us_80180CC6
-static s16 D_us_801808C8[] = {-2, -1, -1, 0, 0, 1, 1, 2};
+static s16 y_offsets[] = {-2, -1, -1, 0, 0, 1, 1, 2};
 
 void EntityTriangleElevator(Entity* self) {
     Primitive* prim;
@@ -136,10 +135,9 @@ void EntityTriangleElevator(Entity* self) {
 
         if (self->ext.topElevator.unk80 & 0xF) {
             if (self->ext.topElevator.unk80 & 0xF0) {
-                offsetY =
-                    -D_us_801808C8[(self->ext.topElevator.unk80 & 0xF) - 1];
+                offsetY = -y_offsets[(self->ext.topElevator.unk80 & 0xF) - 1];
             } else {
-                offsetY = D_us_801808C8[self->ext.topElevator.unk80 - 1];
+                offsetY = y_offsets[self->ext.topElevator.unk80 - 1];
             }
             self->posY.i.hi += offsetY;
             if (collision & 4) {
@@ -179,11 +177,11 @@ void EntityTriangleElevator(Entity* self) {
     self->ext.topElevator.mapPos.y = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
 }
 
-static u8 D_us_801808D8[][3] = {
+static u8 clut_ids[][3] = {
     {153, 154, 155}, {156, 157, 158}, {159, 160, 161}, {162, 163, 164},
     {146, 147, 148}, {165, 166, 167}, {172, 173, 174}, {180, 181, 182}};
 // map pos y
-static s32 D_us_801B10D8;
+s32 D_us_801B10D8;
 
 // elevator
 void func_us_801A1940(Entity* self) {
@@ -217,7 +215,7 @@ void func_us_801A1940(Entity* self) {
         if (g_CastleFlags[TOP_LION_LIGHTS] & 1) {
             self->step = 2;
             self->step_s = 1;
-            var_a0 = D_us_801808D8;
+            var_a0 = clut_ids[0];
             for (i = 0; i < 8; i++) {
                 clutTarget = var_a0[0];
                 clutSource = var_a0[2];
@@ -265,10 +263,11 @@ void func_us_801A1940(Entity* self) {
         case 1:
             if (!--self->poseTimer) {
                 self->poseTimer = 6;
-                var_a0 = (u8*)D_us_801808D8;
+                var_a0 = clut_ids[0];
                 for (i = 0; i < 8; i++) {
                     clutTarget = var_a0[0];
-                    clutSource = var_a0[self->pose];
+                    clutSource = self->pose;
+                    clutSource = var_a0[clutSource];
                     g_ClutIds[clutTarget] = g_ClutIds[clutSource];
                     var_a0 += 3;
                 }
@@ -362,10 +361,9 @@ void func_us_801A1940(Entity* self) {
         collision = GetPlayerCollisionWith(self, 0x10, 7, flags);
         if (self->ext.topElevator.unk80 & 0xF) {
             if (self->ext.topElevator.unk80 & 0xF0) {
-                offsetY =
-                    -D_us_801808C8[(self->ext.topElevator.unk80 & 0xF) - 1];
+                offsetY = -y_offsets[(self->ext.topElevator.unk80 & 0xF) - 1];
             } else {
-                offsetY = D_us_801808C8[self->ext.topElevator.unk80 - 1];
+                offsetY = y_offsets[self->ext.topElevator.unk80 - 1];
             }
             self->posY.i.hi += offsetY;
             if (collision & 4) {
@@ -415,116 +413,3 @@ void func_us_801A1940(Entity* self) {
     prim->y0 = prim->y1 = self->posY.i.hi + 8;
     prim->y2 = prim->y3 = self->posY.i.hi + 24;
 }
-
-static u8 LionLampAnim[] = {3, 6, 3, 7, 3, 8, 3, 9, 3, 10, 0};
-
-void EntityLionLamp(Entity* self) {
-    switch (self->step) {
-    case 0:
-        InitializeEntity(g_EInitRTOPCommon);
-        self->zPriority = 0x58;
-        // fallthrough
-
-    case 1:
-        AnimateEntity(LionLampAnim, self);
-        if (g_Timer & 1) {
-            self->palette = 0;
-        } else {
-            self->palette = 1;
-        }
-        break;
-
-    case 0xFF:
-        FntPrint("charal %x\n", self->animCurFrame);
-        if (g_pads[1].pressed & PAD_SQUARE) {
-            if (self->params) {
-                return;
-            }
-            self->animCurFrame++;
-            self->params |= 1;
-        } else {
-            self->params = 0;
-        }
-
-        if (g_pads[1].pressed & PAD_CIRCLE) {
-            if (self->step_s == 0) {
-                self->animCurFrame--;
-                self->step_s |= 1;
-            }
-        } else {
-            self->step_s = 0;
-        }
-        break;
-    }
-}
-
-static u8 D_us_801808FC[] = {146, 149, 150, 151, 152, 165, 168, 169, 170, 171,
-                             172, 175, 176, 177, 178, 180, 183, 184, 185, 186};
-
-void func_us_801A21F8(Entity* self) {
-    u8* lookup;
-    s32 writeIndex;
-    s32 readIndex;
-    s32 offsetY;
-
-    switch (self->step) {
-    case 0:
-        InitializeEntity(g_EInitRTOPCommon);
-        self->animSet = 7;
-        self->animCurFrame = 3;
-        self->zPriority = 0x5C;
-        self->palette = PAL_FLAG(PAL_FILL_BLACK);
-        if (g_CastleFlags[TOP_LION_LIGHTS] & (1 << (self->params + 2))) {
-            self->step = 3;
-        }
-        break;
-
-    case 1:
-        if (g_CastleFlags[TOP_LION_LIGHTS]) {
-            offsetY = self->posY.i.hi + g_Tilemap.scrollY.i.hi + 0x20;
-            if (offsetY > D_us_801B10D8) {
-                g_CastleFlags[TOP_LION_LIGHTS] |= 1 << (self->params + 2);
-                SetStep(3);
-            }
-        }
-        break;
-
-    case 3:
-        self->animSet = PAL_FLAG(1);
-        self->animCurFrame = 0xB;
-        self->blendMode = BLEND_TRANSP | BLEND_ADD;
-        self->palette = 0;
-        self->zPriority = 0x70;
-        self->step++;
-        // fallthrough
-
-    case 4:
-        if (g_Timer & 2) {
-            self->palette = 0;
-        } else {
-            self->palette = 1;
-        }
-
-        if (!self->poseTimer) {
-            self->poseTimer = 4;
-            lookup = D_us_801808FC;
-            lookup += self->params * 5;
-
-            writeIndex = lookup[0];
-            // cursed composition!
-            readIndex = self->pose;
-            readIndex = lookup[readIndex];
-            g_ClutIds[writeIndex] = g_ClutIds[readIndex];
-            self->pose++;
-            if (self->pose > 3) {
-                self->pose = 0;
-            }
-        } else {
-            self->poseTimer--;
-        }
-        break;
-    }
-}
-
-// n.b.! unused
-#include "../e_trigger_before_castle_warp.h"
