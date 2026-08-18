@@ -66,7 +66,6 @@ segments:
       - [0x1A2C8, c, rno0/e_subweapon_container]
       - [0x1AF48, c, rno0_psp/st_common]
       - [0x1CA48, c, rno0/prim_helpers]
-      - [0x1D298, c, rno0_psp/unk_1D298]
       - [0x1D368, c, rno0/giantbro_helpers]
       - [0x1DD00, c, rno0/e_floor_trap]
       - [0x1E510, c, rno0/e_blade]
