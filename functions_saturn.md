@@ -1401,7 +1401,6 @@
 | alucard/f_nonmat/f60C61E4.s  | func_060C61E4   |     1867 |        141 |       |     |
 | stage_16/f_nonmat/f60E1928.s | func_060E1928   |     1868 |        265 |       |     |
 | stage_15/f_nonmat/f60E49FC.s | func_060E49FC   |     1872 |        265 |       |     |
-| game/f_nonmat/f606E0D0.s     | func_0606E0D0   |     1893 |        215 |       |     |
 | alucard/f_nonmat/f60BC01C.s  | func_060BC01C   |     1907 |        169 |       |     |
 | stage_16/f_nonmat/f60E55B0.s | func_060E55B0   |     1915 |        173 |       |     |
 | rstage15/f_nonmat/f60E6878.s | func_060E6878   |     2002 |        219 |       |     |
