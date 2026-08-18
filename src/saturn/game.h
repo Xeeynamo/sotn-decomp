@@ -8,6 +8,10 @@
 #define DAMAGE_FLAG_IMMUNE 0xC000
 
 #define E_EXPLOSION 2
+#define E_PRIZE_DROP 3
+#define E_SOUL_STEAL_ORB 7
+#define E_EQUIP_ITEM_DROP 10
+#define E_ENEMY_BLOOD 13
 
 extern EnemyDef g_EnemyDefs[];
 extern u32 g_RoomCount;

@@ -52,18 +52,24 @@ typedef enum {
 #define SET_UNK_80 0xF0000080
 #define SET_KEY_ON_20_21 0xF00000A4
 #define SET_KEY_ON_22_23 0xF00000A8
+#define SFX_METAL_CLANG_E 0x611
+#define SFX_WEAPON_STAB_A 0x62D
+#define SFX_WEAPON_STAB_B 0x62E
 #define SFX_WEAPON_APPEAR 0x62F
 #define SFX_UI_CONFIRM 0x633
 #define SFX_START_SLAM_B 0x63D
 #define SFX_SAVE_HEARTBEAT 0x64D
 #define SFX_BAT_SCREECH 0x64E
+#define SFX_WEAPON_HIT_A 0x678
 #define SFX_HEART_PICKUP 0x67A
 #define SFX_UI_MOVE 0x67B
 #define SFX_UI_SUBWEAPON_TINK 0x6A4
 #define SFX_UI_ALERT_TINK 0x6AD
 #define SFX_SAVE_COFFIN_SWISH 0x6E0
 #define SFX_UNUSED_712 0x712
+#define SFX_VALHALLA_KNIGHT_NEIGH 0x718
 #define SFX_TOAD_CROAK 0x71A
+#define SFX_MARIONETTE_YELL 0x726
 
 #define PLAYER g_Entities[PLAYER_CHARACTER]
 
@@ -310,6 +316,16 @@ typedef struct {
     /* 0xB0 */ struct SpriteParts* unkB0;
 } ET_Bat;
 
+typedef struct {
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 castleFlag;
+} ET_EquipItemDrop;
+
 typedef union {
     u8 u8[0x3C];
     s8 s8[0x3C];
@@ -344,6 +360,7 @@ typedef union { // offset=0x78
     ET_Factory factory;
     ET_ExplosionPuffOpaque opaquePuff;
     ET_Subweapon subweapon;
+    ET_EquipItemDrop equipItemDrop;
     ET_BatFamBlueTrail batFamBlueTrail;
     ET_Bat bat;
     ET_SaveRoom save;
@@ -359,7 +376,7 @@ typedef struct Entity {
     /* 0x08 */ SotnFixed32 posY;
     /* 0x0c */ s32 velocityX;
     /* 0x10 */ s32 velocityY;
-    /* 0x14 */ u16 hitboxOffX;
+    /* 0x14 */ s16 hitboxOffX;
     /* 0x16 */ s16 hitboxOffY;
     /* 0x18 */ u16 facingLeft;
     /* 0x1A */ u16 palette;
@@ -381,7 +398,7 @@ typedef struct Entity {
     /* 0x3C */ s16 hitPoints;
     /* 0x3E */ s16 attack;
     /* 0x40 */ s16 attackElement;
-    /* 0x42 */ s16 pad_42;
+    /* 0x42 */ u16 hitParams;
     /* 0x44 */ u8 hitboxWidth;
     /* 0x45 */ u8 hitboxHeight;
     /* 0x46 */ u8 hitFlags; // 1 = took hit
@@ -393,13 +410,14 @@ typedef struct Entity {
     /* 0x52 */ s16 animCurFrame;
     /* 0x54 */ s16 stunFrames;
     /* 0x56 */ s16 unk56;
-    /* 0x58 */ char pad_58[0x8];
+    /* 0x58 */ struct Entity* parent;
+    /* 0x5C */ struct Entity* nextPart;
     /* 0x60 */ s16 primIndex;
     /* 0x62 */ u16 zPriority;
     /* 0x64 */ u16 unk68;
     /* 0x66 */ u16 hitEffect;
     /* 0x68 */ char pad_68[1];
-    /* 0x69 */ char unk6D[11];
+    /* 0x69 */ u8 unk6D[11];
     /* 0x74 */ u16 entityId;
     /* 0x76 */ char pad_76[0x2];
     /* 0x78 */ Ext ext;
@@ -622,8 +640,8 @@ typedef struct {
     /* 0x10 */ u16 strengths;
     /* 0x12 */ u16 immunes;
     /* 0x14 */ u16 absorbs;
-    /* 0x16 */ s16 level;
-    /* 0x18 */ s16 exp;
+    /* 0x16 */ u16 level;
+    /* 0x18 */ u16 exp;
     /* 0x1A */ s16 rareItemId;
     /* 0x1C */ s16 uncommonItemId;
     /* 0x1E */ u16 rareItemDropRate;
@@ -1055,6 +1073,30 @@ typedef enum {
     PLAYER_STATUS_UNK80000000 = 0x80000000, // exclusive to Maria
 } PlayerStateStatus;
 
+typedef enum Elements {
+    ELEMENT_NONE = 0,
+    ELEMENT_UNK_1 = 0x1,
+    ELEMENT_UNK_2 = 0x2,
+    ELEMENT_UNK_4 = 0x4,
+    ELEMENT_UNK_8 = 0x8,
+    ELEMENT_UNK_10 = 0x10, // Possibly unresistable, used by e_spikes
+    ELEMENT_HIT = 0x20,
+    ELEMENT_CUT = 0x40,
+    ELEMENT_POISON = 0x80,
+    ELEMENT_CURSE = 0x100,
+    ELEMENT_STONE = 0x200,
+    ELEMENT_WATER = 0x400,
+    ELEMENT_DARK = 0x800,
+    ELEMENT_HOLY = 0x1000,
+    ELEMENT_ICE = 0x2000,
+    ELEMENT_THUNDER = 0x4000,
+    ELEMENT_FIRE = 0x8000,
+    ELEMENT_ALL = ELEMENT_FIRE | ELEMENT_THUNDER | ELEMENT_ICE | ELEMENT_HOLY |
+                  ELEMENT_DARK | ELEMENT_WATER | ELEMENT_STONE | ELEMENT_CURSE |
+                  ELEMENT_POISON | ELEMENT_CUT | ELEMENT_HIT,
+    ELEMENT_UNK_10000 = 0x10000,
+} Elements;
+
 u32 SquareRoot0(s32);
 s32 func_800F4D38(s32, s32);
 void func_800F4994(void);
@@ -1101,6 +1143,7 @@ extern Tilemap g_Tilemap;
 extern UNK_0605c680 DAT_0605c680;
 extern Primitive g_PrimBuf[];
 extern UNK_060485C0 DAT_060485C0;
+extern s32 g_GameClearFlag;
 extern u16 DAT_0605aec0[][2];
 
 #define NUM_HORIZONTAL_SENSORS 4

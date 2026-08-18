@@ -19,7 +19,7 @@ void DMA_ScuInit();
 void InitPrimBuf();
 
 extern s32 DAT_0601ac30[];
-extern s32 DAT_0601ac34[];
+extern s32 DAT_060645EC[];
 extern s32 DAT_0601ac38[];
 extern s32 DAT_060645e4[];
 extern s32 DAT_0601ac40[];

@@ -1826,7 +1826,6 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BDADC, func_060BDADC);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BDFD4, func_060BDFD4);
 extern u32* d_06086234;
 extern u32* d_06086250;
-extern s32 g_GameClearFlag;
 
 void func_060BE110(void) {
     if (d_06086234 == 0) {

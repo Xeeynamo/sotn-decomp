@@ -11,7 +11,6 @@ extern u16 D_8003C730;
 extern u8 g_CastleMap[];
 extern s32 D_801397FC;
 extern s32 D_80139008;
-extern s32 g_GameClearFlag;
 extern char* g_LuckCode;
 extern char* g_AxeArmorCode;
 extern char* g_GTIClubCode;
