@@ -84,6 +84,7 @@ static bool didDrift = false;
 static bool exitAfterReplay = false;
 static bool fastReplay = false;
 static bool watchingDemo = false;
+static bool demoAborted = false;
 
 static unsigned frameCount = 0;
 static long framCountFileOffset = 0;
@@ -441,6 +442,14 @@ static void ReplayFrame(void) {
 static void DemoFrame(void) {
     static bool demoStarted = false;
 
+    if (g_GameState == Game_GameOver) {
+        if (!demoAborted) {
+            demoAborted = true;
+            ERRORF("demo ended early: the player died during playback");
+        }
+        ReplayEnded();
+        return;
+    }
     if (g_DemoMode == Demo_PlaybackInit || g_DemoMode == Demo_Playback) {
         demoStarted = true;
         return;
@@ -608,3 +617,5 @@ void Replay_OnFrame(void) {
 }
 
 bool Replay_DidDrift(void) { return didDrift; }
+
+bool Replay_DemoAborted(void) { return demoAborted; }
