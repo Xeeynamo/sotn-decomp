@@ -176,7 +176,34 @@ INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AF4B8, func_060AF4B8);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AF550, func_060AF550);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AF654, func_060AF654);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AF7F0, func_060AF7F0);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AF8E0, func_060AF8E0);
+typedef enum {
+    TELEPORT_CHECK_NONE = 0,
+    TELEPORT_CHECK_TO_RTOP = 2,
+    TELEPORT_CHECK_TO_TOP = 4
+} TeleportCheck;
+
+extern s32 g_PlayerX;
+extern s32 g_PlayerY;
+
+// GetTeleportToOtherCastle
+TeleportCheck func_060AF8E0(void) {
+    if (PLAYER.step != Player_Stand || PLAYER.step_s != 1) {
+        return TELEPORT_CHECK_NONE;
+    }
+    if (g_CurrentRoom.stageID == STAGE_TOP) {
+        if (ABS((g_Tilemap.left << 8) + g_PlayerX - 8079) < 4 &&
+            ABS((g_Tilemap.top << 8) + g_PlayerY - 2127) < 4) {
+            return TELEPORT_CHECK_TO_RTOP;
+        }
+    }
+    if (g_CurrentRoom.stageID == (STAGE_TOP | STAGE_INVERTEDCASTLE_FLAG)) {
+        if (ABS((g_Tilemap.left << 8) + g_PlayerX - 8430) < 4 &&
+            ABS((g_Tilemap.top << 8) + g_PlayerY - 14407) < 4) {
+            return TELEPORT_CHECK_TO_TOP;
+        }
+    }
+    return TELEPORT_CHECK_NONE;
+}
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AF9D4, func_060AF9D4);
 // EntityAlucard
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AFA20, func_060AFA20);

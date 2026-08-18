@@ -3,7 +3,34 @@
 #include "sattypes.h"
 #include "richter.h"
 
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A5060, func_060A5060);
+typedef enum {
+    TELEPORT_CHECK_NONE = 0,
+    TELEPORT_CHECK_TO_RTOP = 2,
+    TELEPORT_CHECK_TO_TOP = 4
+} TeleportCheck;
+
+extern s32 g_PlayerX;
+extern s32 g_PlayerY;
+
+// GetTeleportToOtherCastle
+static TeleportCheck func_060A5060(void) {
+    if (PLAYER.step != PL_S_STAND || PLAYER.step_s != 1) {
+        return TELEPORT_CHECK_NONE;
+    }
+    if (g_CurrentRoom.stageID == STAGE_TOP) {
+        if (ABS((g_Tilemap.left << 8) + g_PlayerX - 8079) < 4 &&
+            ABS((g_Tilemap.top << 8) + g_PlayerY - 2127) < 4) {
+            return TELEPORT_CHECK_TO_RTOP;
+        }
+    }
+    if (g_CurrentRoom.stageID == (STAGE_TOP | STAGE_INVERTEDCASTLE_FLAG)) {
+        if (ABS((g_Tilemap.left << 8) + g_PlayerX - 8430) < 4 &&
+            ABS((g_Tilemap.top << 8) + g_PlayerY - 14407) < 4) {
+            return TELEPORT_CHECK_TO_TOP;
+        }
+    }
+    return TELEPORT_CHECK_NONE;
+}
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A5154, func_060A5154);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A5208, func_060A5208);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A54F0, func_060A54F0);
@@ -754,7 +781,45 @@ void func_060BE700(void) {
 
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE72C, func_060BE72C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE854, func_060BE854);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE994, func_060BE994);
+extern s16 g_ButtonMask[];
+
+bool func_060BE994(void) {
+    s32 buf[9];
+    s32 i;
+    s32 bitMask_Assigned;
+    s32* buttonConfig;
+
+    for (i = 0; i < 9; i++) {
+        buf[i] = 0;
+    }
+
+    buttonConfig = g_Settings.buttonConfig;
+    for (i = 0; i < 8; i++) {
+        buf[*buttonConfig++] = 1;
+    }
+
+    for (i = 0; i < 9; i++) {
+        if (buf[i] == 0) {
+            g_Settings.buttonConfig[8] = i;
+            break;
+        }
+    }
+
+    for (i = 0; i < 9; i++) {
+        g_Settings.buttonMask[i] = g_ButtonMask[g_Settings.buttonConfig[i]];
+    }
+
+    bitMask_Assigned = 0;
+    buttonConfig = g_Settings.buttonConfig;
+    for (i = 0; i < 9; i++) {
+        bitMask_Assigned |= 1 << *buttonConfig++;
+    }
+    if (bitMask_Assigned == 0xFF) {
+        return true;
+    } else {
+        return false;
+    }
+}
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BEA54, func_060BEA54);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BEB74, func_060BEB74);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BEE30, func_060BEE30);
