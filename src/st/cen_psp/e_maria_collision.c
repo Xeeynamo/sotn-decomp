@@ -225,7 +225,7 @@ void MarCheckFloor(void) {
     x = &MARIA.posX.i.hi;
     vramFlag = &g_Maria.vram_flag;
 
-    if (g_unkGraphicsStruct.unk18) {
+    if (g_unkGraphicsStruct.unk20) {
         *vramFlag = 1;
         return;
     }
@@ -388,7 +388,7 @@ void MarCheckCeiling(void) {
     x = &MARIA.posX.i.hi;
     vramFlag = &g_Maria.vram_flag;
 
-    if (g_unkGraphicsStruct.unk18) {
+    if (g_unkGraphicsStruct.unk20) {
         return;
     }
     for (; i < NUM_HORIZONTAL_SENSORS; i++) {
@@ -550,7 +550,7 @@ void MarCheckWallRight(void) {
     x = &MARIA.posX.i.hi;
     vramFlag = &g_Maria.vram_flag;
 
-    if (g_unkGraphicsStruct.unk18) {
+    if (g_unkGraphicsStruct.unk20) {
         return;
     }
     effects =
@@ -625,7 +625,7 @@ void MarCheckWallLeft(void) {
     x = &MARIA.posX.i.hi;
     vramFlag = &g_Maria.vram_flag;
 
-    if (g_unkGraphicsStruct.unk18) {
+    if (g_unkGraphicsStruct.unk20) {
         return;
     }
     effects =

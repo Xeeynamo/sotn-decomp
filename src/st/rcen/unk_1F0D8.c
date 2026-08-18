@@ -232,7 +232,7 @@ void func_us_8019F5F0(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         self->ext.utimer.t++;
         if (self->ext.utimer.t > 8) {
-            g_unkGraphicsStruct.unk20 = 0xFF;
+            g_unkGraphicsStruct.unk28 = 0xFF;
             self->step++;
             prim->drawMode = DRAW_HIDE;
         } else if (self->ext.utimer.t & 1) {
@@ -247,7 +247,7 @@ void func_us_8019F5F0(Entity* self) {
 
     case 2:
         if (g_CutsceneFlags & 0x100) {
-            g_unkGraphicsStruct.unk20 = 0;
+            g_unkGraphicsStruct.unk28 = 0;
             self->step++;
             self->ext.utimer.t = 0;
         }

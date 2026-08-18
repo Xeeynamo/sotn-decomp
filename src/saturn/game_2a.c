@@ -410,7 +410,6 @@ static void SetXY(Primitive* prim, s32 x, s32 y) {
 }
 
 extern SaturnSpriteResource g_SaturnSharedSpriteBank0Resource;
-extern u16 DAT_0605aec0[][2];
 extern SaturnSpriteResource* DAT_06086388;
 extern s16 g_AlternateStatusHudSpriteOffsets[][2];
 extern u8 DAT_06085d3c[];

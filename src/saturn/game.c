@@ -225,15 +225,15 @@ void InitRoom(void) {
     func_800F0CD8(0);
     func_800F0CD8(0);
     InitRoomEntities(g_CurrentRoom.unk4);
-    FUN_0606c160();
-    FUN_0606c160();
+    func_0606C160();
+    func_0606C160();
     DAT_0605cd70.unk0++;
     if ((g_CurrentRoom.unk6 == 0x50) || (g_CurrentRoom.unk6 == 0x60)) {
         if (g_unkGraphicsStruct.D_800973FC == 0) {
-            PlaySfx(FUN_060727dc(g_PlayableCharacter, g_CurrentRoom.stageID,
-                                 g_CurrentRoom.unk4));
+            PlaySfx(func_060727DC(g_PlayableCharacter, g_CurrentRoom.stageID,
+                                  g_CurrentRoom.unk4));
         } else {
-            currentMusicId = FUN_060727dc(
+            currentMusicId = func_060727DC(
                 g_PlayableCharacter, g_CurrentRoom.stageID, g_CurrentRoom.unk4);
             DAT_0605cd54 = 1;
         }
@@ -545,7 +545,6 @@ bool CheckIfAllButtonsAreAssigned(void) {
 
 void func_0600971C(void);
 extern s16 DAT_0605d772;
-extern u16 DAT_06065470;
 extern s16 DAT_060862a4;
 
 void func_06073280(void) {
@@ -554,7 +553,7 @@ void func_06073280(void) {
     }
     DAT_0605d772 = 8;
     func_060645B0();
-    DAT_06065470 |= DAT_060862a4;
+    Scl_s_reg.dispenbl |= DAT_060862a4;
     SclProcess = 1;
     func_0600971C();
 }
