@@ -387,7 +387,7 @@ void HitDetection(void) {
         hitboxCheck2 = iterEnt->hitEffect & 0x7F;
         if (hitboxCheck2 == 2 || (hitboxCheck2 == 6 && (miscVar1 & 0x20))) {
             otherEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
-            if (otherEntity) {
+            if (otherEntity != NULL) {
                 CreateEntityFromEntity(E_SOUL_STEAL_ORB, entity, otherEntity);
             }
         }
