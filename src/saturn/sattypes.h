@@ -1144,6 +1144,7 @@ extern UNK_0605c680 DAT_0605c680;
 extern Primitive g_PrimBuf[];
 extern UNK_060485C0 DAT_060485C0;
 extern s32 g_GameClearFlag;
+extern u16 DAT_0605aec0[][2];
 
 #define NUM_HORIZONTAL_SENSORS 4
 #define NUM_VERTICAL_SENSORS 7

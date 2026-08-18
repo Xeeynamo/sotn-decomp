@@ -1817,7 +1817,7 @@ void PlayerStepKill(DamageParam* damage, s16 arg_PlayerStep, s16 arg2) {
     nullifyVelY = false;
     PLAYER.drawFlags = DRAW_COLORS;
     plDraw = &g_PlayerDraw[0];
-    if ((g_unkGraphicsStruct.unk20 == 0xFFF) && (PLAYER.step_s)) {
+    if ((g_unkGraphicsStruct.unk28 == 0xFFF) && (PLAYER.step_s)) {
         SetPlayerStep(Player_Unk17);
         PLAYER.velocityX = PLAYER.velocityY = 0;
         return;
@@ -1999,7 +1999,7 @@ void PlayerStepUnk17(void) {
     PLAYER.velocityX = PLAYER.velocityY = 0;
     PLAYER.poseTimer = 4;
 
-    if (g_unkGraphicsStruct.unk20 == 0) {
+    if (g_unkGraphicsStruct.unk28 == 0) {
         if (g_Player.vram_flag & TOUCHING_GROUND) {
             func_8010E570(0);
         } else {
@@ -2123,7 +2123,7 @@ void PlayerStepKillWater(void) {
     var_s2 = false;
     PLAYER.drawFlags = ENTITY_ROTATE;
     plDraw = g_PlayerDraw;
-    if (g_unkGraphicsStruct.unk20 == 0xFFF && PLAYER.step_s) {
+    if (g_unkGraphicsStruct.unk28 == 0xFFF && PLAYER.step_s) {
         SetPlayerStep(Player_Unk17);
         PLAYER.velocityX = PLAYER.velocityY = 0;
         return;

@@ -167,8 +167,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6016644, func_06016644);
 void code2name(u32 code, u8* name);
 s32 func_06017F5C(u8*);
 
-// _PcmOpen
-void func_06016B44(s32 code) {
+void PcmOpen(s32 code) {
     u8 name[0x10];
     code2name(code, name);
     func_06017F5C(name);
@@ -177,28 +176,26 @@ void func_06016B44(s32 code) {
 int func_0601B8B4(int param_1, int param_2);
 int func_0601B75C(int param_1, int param_2, int param_3);
 
-// _PcmLseek
-void _func_06016B6C(u32 param_1, int param_2) {
-    int iVar1 = func_0601B8B4(param_1, param_2 + 1);
-    func_0601B75C(param_1, iVar1 - 1, 0);
+void PcmLseek(u32 arg0, s32 arg1) {
+    s32 iVar1 = func_0601B8B4(arg0, arg1 + 1);
+    func_0601B75C(arg0, iVar1 - 1, 0);
 }
 
-void func_06016B9C(s32 param_1, s32 param_2, s32 param_3) {
-    func_06017FA4(param_2, param_3, param_1);
+void func_06016B9C(s32 arg0, s32 arg1, s32 arg2) {
+    func_06017FA4(arg1, arg2, arg0);
 }
 
-void func_06016BBC(s32 param_1, s32 param_2, s32 param_3) {
-    func_06017FA4(param_2, param_3, param_1);
+void func_06016BBC(s32 arg0, s32 arg1, s32 arg2) {
+    func_06017FA4(arg1, arg2, arg0);
 }
 
 s32 d_060623B0[];
 
 void func_0601B724();
 
-// _PcmClose
-void func_06016BDC(s32 param_0, int param_1) {
+void PcmClose(s32 arg0, s32 arg1) {
     func_0601B724();
-    d_060623B0[param_1] = 0;
+    d_060623B0[arg1] = 0;
 }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6016C08, func_06016C08);

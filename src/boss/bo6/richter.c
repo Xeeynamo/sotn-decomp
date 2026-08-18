@@ -1035,7 +1035,7 @@ void func_us_801B6998(void) {
         if (++D_us_801D11C0 > 1) {
             if ((g_CastleFlags[SHAFT_ORB_DEFEATED] == 0) &&
                 (g_DemoMode == Demo_None)) {
-                g_unkGraphicsStruct.unk20 = 0xFF;
+                g_unkGraphicsStruct.unk28 = 0xFF;
             }
             D_us_80181278++;
         }

@@ -2528,7 +2528,7 @@ void EntitySummonSpirit(Entity* self) {
     case 0:
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                       FLAG_UNK_20000 | FLAG_UNK_10000;
-        g_unkGraphicsStruct.unk20 = 3;
+        g_unkGraphicsStruct.unk28 = 3;
         self->ext.summonspirit.spawnTimer = 10;
         func_80118C28(13);
         self->step++;
@@ -2621,7 +2621,7 @@ void EntitySummonSpirit(Entity* self) {
     case 3:
         self->ext.summonspirit.timer--;
         if (self->ext.summonspirit.timer < 0) {
-            g_unkGraphicsStruct.unk20 = 0;
+            g_unkGraphicsStruct.unk28 = 0;
             DestroyEntity(self);
             return;
         }

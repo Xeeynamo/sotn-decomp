@@ -21,15 +21,15 @@ static void CutsceneCameraPan(s16 arg0) {
     s16 target = arg0;
     s16 delta;
 
-    delta = target - g_unkGraphicsStruct.unkC;
+    delta = target - g_unkGraphicsStruct.unk14;
 
     if (delta > 1) { // pan left
         // Appears to be Alucard's X coordinates in screen space
-        g_unkGraphicsStruct.unkC++;
+        g_unkGraphicsStruct.unk14++;
     } else if (delta < -1) { // pan right
-        g_unkGraphicsStruct.unkC--;
+        g_unkGraphicsStruct.unk14--;
     } else {
-        g_unkGraphicsStruct.unkC = target;
+        g_unkGraphicsStruct.unk14 = target;
     }
 }
 
@@ -128,7 +128,7 @@ void EntityCSMoveAlucard(Entity* self) {
             posX = 352;
             self->step++;
         }
-        g_unkGraphicsStruct.unkC = posX - 256;
+        g_unkGraphicsStruct.unk14 = posX - 256;
         g_Player.demo_timer = 1;
         break;
 
@@ -157,7 +157,7 @@ void EntityCSMoveAlucard(Entity* self) {
 
     case 8:
         CutsceneCameraPan(0x80);
-        if (g_unkGraphicsStruct.unkC == 0x80) {
+        if (g_unkGraphicsStruct.unk14 == 0x80) {
             g_PauseAllowed = true;
             if (g_unkGraphicsStruct.pauseEnemies) {
                 g_unkGraphicsStruct.pauseEnemies = 0;
