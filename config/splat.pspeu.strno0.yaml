@@ -53,7 +53,6 @@ segments:
       - [0x62A8, c, rno0/e_gorgon]
       - [0xB398, c, rno0/e_guardian]
       - [0xE648, c, rno0/e_particles]
-      - [0xFBD8, c, rno0_psp/unk_FBD8]
       - [0xFCB0, c, rno0/e_collect]
       - [0x13E28, c, rno0_psp/unk_13E28]
       - [0x14530, c, rno0/collision]
