@@ -1095,7 +1095,6 @@ INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepRun);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepJump);
 
-extern u16 D_80076306;
 enum RicInputChecks {
     CHECK_GROUND = 1,
     CHECK_FALL = 4,
@@ -1118,7 +1117,7 @@ void RicStepFall(void) {
         return;
     }
     DecelerateX(FIX(1. / 16));
-    if (D_80076306 == 0) {
+    if (RIC.step_s == 0) {
         if (g_Ric.timers[PL_T_5] && g_Ric.padTapped & PAD_CROSS) {
             func_us_801B9E70();
             return;
