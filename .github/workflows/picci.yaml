@@ -74,6 +74,7 @@ jobs:
           cmake -B ${{github.workspace}}/pc $PC_FLAGS -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DENABLE_ASAN=OFF
           cmake --build ${{github.workspace}}/pc --config ${{ matrix.build_type }}
       - name: Test demo playback
+        timeout-minutes: 10
         env:
           SDL_VIDEODRIVER: "offscreen"
           SDL_AUDIODRIVER: dummy
@@ -121,6 +122,7 @@ jobs:
           cmake -B ${{github.workspace}}/pc -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DENABLE_ASAN=OFF
           cmake --build ${{github.workspace}}/pc --config ${{ matrix.build_type }}
       - name: Test demo playback
+        timeout-minutes: 10
         env:
           SDL_VIDEODRIVER: ""
           SDL_AUDIODRIVER: dummy
@@ -173,6 +175,7 @@ jobs:
         install_runtime: true
         install_lavapipe: true
     - name: Test demo playback
+      timeout-minutes: 10
       shell: bash
       env:
         SDL_VIDEODRIVER: offscreen
