@@ -9,7 +9,514 @@ void UpdateEquipStatBonuses(void);
 s32 CalcAttack(s32 equipId, s32 otherEquipId);
 void make_all(void);
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606E0D0, func_0606E0D0);
+extern s32 DAT_060485e0[];
+extern s32 DAT_060486A0[];
+
+extern s16 DAT_0605aec0[][2];
+
+typedef struct {
+    s32 : 32;
+    s32 : 32;
+    u16* unk8;
+} unkStruct0;
+
+extern unkStruct0* DAT_060645EC;
+
+extern u8 g_PrimitiveUvOffsetByType[6];
+extern u16 g_testCollEnemyLookup[];
+extern u8 g_testCollLuckCutoff[];
+extern u16 g_testCollElementLookup[];
+extern u8 g_testColliFrames[];
+extern u16 g_testCollPrizeTable[];
+extern u16 g_jewelSwordDropTable[];
+
+u16 Random(void);
+void FreePrimitives(s32);
+void func_06019074(const char*, s32);
+void CreateEntityFromEntity(s32, Entity*, Entity*);
+void PreventEntityFromRespawning(Entity*);
+
+static inline u16 LookupTblNoToVram(u16 arg0) {
+    if (arg0 & 0x4000) {
+        return func_06007CE0(arg0 & 0xFFF);
+    } else {
+        return SPR_2LookupTblNoToVram(arg0 & 0xFFF);
+    }
+}
+
+// SAT: func_0606E0D0
+void HitDetection(void) {
+    Entity* otherEntity;
+    Primitive* prim;
+    Entity* entityHit;
+    s32* spHitbox;
+    s32* spHitboxState;
+    u16* dropTable;
+    s16 x, y;
+    u16 miscVar1;
+    u16 hitboxCheck2;
+    s32 hitboxWidth;
+    s32 hitboxHeight;
+    u32 hitboxCheck1;
+    u16 i;
+    Entity* iterEnt;
+    Entity* entity;
+    EnemyDef* enemyDef;
+    u8 miscVar2;
+    u8 miscVar4;
+    u16 miscVar3;
+    u16* ptr;
+
+    spHitboxState = &DAT_060485e0[0];
+    spHitbox = &DAT_060486A0[0];
+    for (entity = &g_Entities[0]; entity < &g_Entities[0x30]; spHitboxState++,
+        entity++) {
+        *spHitboxState = entity->hitboxState;
+        if ((*spHitboxState != 0) && ((*spHitboxState & 0x80) == 0)) {
+            *spHitbox = entity->posX.i.hi;
+            if (entity->facingLeft) {
+                *spHitbox -= entity->hitboxOffX;
+            } else {
+                *spHitbox += entity->hitboxOffX;
+            }
+            hitboxHeight = entity->posY.i.hi + entity->hitboxOffY;
+            if ((*spHitbox < -0x20 || *spHitbox > 0x160) ||
+                (hitboxHeight < -0x20 || hitboxHeight > 0x100) ||
+                !entity->hitboxWidth || !entity->hitboxHeight) {
+                *spHitboxState = 0;
+            } else {
+                spHitbox++;
+                *spHitbox++ = entity->hitboxWidth;
+                *spHitbox++ = hitboxHeight;
+                *spHitbox++ = entity->hitboxHeight;
+                continue;
+            }
+        }
+        spHitbox += 4;
+    }
+    for (entity = &g_Entities[0x40]; entity < &g_Entities[0xC0]; entity++) {
+        miscVar1 = entity->hitboxState;
+        if (!miscVar1 || !entity->hitboxWidth || !entity->hitboxHeight ||
+            (entity->flags & FLAG_DEAD)) {
+            continue;
+        }
+        for (i = 0; i < 11; i++) {
+            if (entity->unk6D[i]) {
+                entity->unk6D[i]--;
+            }
+        }
+        x = entity->posX.i.hi;
+        if (entity->facingLeft) {
+            x -= entity->hitboxOffX;
+        } else {
+            x += entity->hitboxOffX;
+        }
+        y = entity->posY.i.hi + entity->hitboxOffY;
+        if (x <= -0x20 || x >= 0x160 || y <= -0x20 || y >= 0x100) {
+            continue;
+        }
+        miscVar2 = 0;
+        miscVar3 = miscVar1 & 0x3E;
+        hitboxWidth = entity->hitboxWidth - 1;
+        hitboxHeight = entity->hitboxHeight - 1;
+        if (miscVar3) {
+            spHitboxState = &DAT_060485e0[1];
+            spHitbox = &DAT_060486A0[4];
+            for (iterEnt = &g_Entities[1]; iterEnt < &g_Entities[0x30];
+                 iterEnt++) {
+                if ((*spHitboxState & miscVar3) &&
+                    (entity->unk6D[iterEnt->enemyId] == 0)) {
+                    if (*spHitboxState & 0x80) {
+                        entity->hitParams = iterEnt->hitEffect & 0x7F;
+                        miscVar2 = 0xFF;
+                        break;
+                    }
+                    hitboxCheck2 = *spHitbox++ - x;
+                    hitboxCheck1 = hitboxWidth + *spHitbox++;
+                    hitboxCheck2 += hitboxCheck1;
+                    hitboxCheck1 *= 2;
+                    if (hitboxCheck2 <= hitboxCheck1) {
+                        hitboxCheck2 = *spHitbox++ - y;
+                        hitboxCheck1 = hitboxHeight + *spHitbox++;
+                        hitboxCheck2 += hitboxCheck1;
+                        hitboxCheck1 *= 2;
+                        if (hitboxCheck2 <= hitboxCheck1) {
+                            i = iterEnt->hitEffect & 0x7F;
+                            if ((iterEnt->flags & entity->flags &
+                                 FLAG_UNK_100000) == 0) {
+                                iterEnt->unkB4 = entity;
+                                if (miscVar1 & 8) {
+                                    iterEnt->hitFlags = 3;
+                                } else {
+                                    iterEnt->hitFlags = 1;
+                                }
+                                if ((i == 3) &&
+                                    (entity->flags & FLAG_UNK_8000)) {
+                                    PlaySfx(SFX_METAL_CLANG_E);
+                                    iterEnt->hitFlags = 2;
+                                }
+                                if ((i == 4) &&
+                                    (entity->flags & FLAG_UNK_4000)) {
+                                    PlaySfx(SFX_METAL_CLANG_E);
+                                    iterEnt->hitFlags = 2;
+                                }
+                            }
+                            entity->hitParams = i;
+                            miscVar2 = 0xFF;
+                            break;
+                        } else {
+                            spHitboxState++;
+                            continue;
+                        }
+                    } else {
+                        spHitboxState++;
+                        spHitbox += 2;
+                        continue;
+                    }
+                } else {
+                    spHitboxState++;
+                    spHitbox += 4;
+                }
+            }
+        }
+        if ((miscVar1 & 1) && !miscVar2) {
+            iterEnt = &g_Entities[0];
+            spHitboxState = &DAT_060485e0[0];
+            spHitbox = &DAT_060486A0[0];
+            if (entity->unk6D[iterEnt->enemyId] == 0 && (*spHitboxState & 1)) {
+                hitboxCheck2 = *spHitbox++ - x;
+                hitboxCheck1 = hitboxWidth + *spHitbox++;
+                hitboxCheck2 += hitboxCheck1;
+                hitboxCheck1 *= 2;
+                if (hitboxCheck2 <= hitboxCheck1) {
+                    hitboxCheck2 = *spHitbox++ - y;
+                    hitboxCheck1 = hitboxHeight + *spHitbox++;
+                    hitboxCheck2 += hitboxCheck1;
+                    hitboxCheck1 *= 2;
+                    if (hitboxCheck2 <= hitboxCheck1) {
+                        if (entity->attack &&
+                            (iterEnt->hitPoints < entity->attack)) {
+                            iterEnt->unkB4 = entity;
+                            if (miscVar1 & 8) {
+                                iterEnt->hitFlags = 3;
+                            } else {
+                                iterEnt->hitFlags = 1;
+                            }
+                            iterEnt->hitParams = entity->attackElement;
+                            iterEnt->hitPoints = entity->attack;
+                        }
+                        entity->hitParams = iterEnt->hitEffect & 0x7F;
+                        miscVar2 = 0xFF;
+                        entity->hitFlags = 0x80;
+                    }
+                }
+            }
+        }
+        if (!miscVar2) {
+            continue;
+        }
+        if (entity->parent != NULL) {
+            entityHit = entity->parent;
+            entityHit->hitParams = entity->hitParams;
+            entityHit->hitFlags = entity->hitFlags;
+        } else {
+            entityHit = entity;
+        }
+        if ((entityHit->flags & FLAG_DEAD) || (miscVar2 == 0)) {
+            continue;
+        }
+        hitboxCheck2 = iterEnt->hitEffect & 0x7F;
+        if (hitboxCheck2 == 2 || (hitboxCheck2 == 6 && (miscVar1 & 0x20))) {
+            otherEntity = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
+            if (otherEntity != NULL) {
+                CreateEntityFromEntity(7, entity, otherEntity);
+            }
+        }
+        miscVar1 = g_testCollEnemyLookup[entityHit->enemyId];
+        if (miscVar1) {
+            miscVar1--;
+            miscVar3 = 1 << (miscVar1 & 7);
+            g_CastleFlags[(miscVar1 >> 3) + 0x190] |= miscVar3;
+        }
+        if ((g_Status.relics[0xF] & 2) &&
+            ((entityHit->flags & FLAG_NOT_AN_ENEMY) == 0)) {
+            if (g_unkGraphicsStruct.BottomCornerTextTimer != 0) {
+                FreePrimitives(g_unkGraphicsStruct.BottomCornerTextPrims);
+                g_unkGraphicsStruct.BottomCornerTextTimer = 0;
+            }
+            func_06019074(g_EnemyDefs[entityHit->enemyId].name, 0);
+            entityHit->flags |= FLAG_NOT_AN_ENEMY;
+        }
+        miscVar2 = 0;
+        if ((((entity->hitboxState & 8) == 0) ||
+             ((iterEnt->hitboxState & 4) == 0)) &&
+            (entityHit->hitPoints != 0)) {
+            if (iterEnt->attack) {
+                if ((iterEnt->hitboxState & 0x80) == 0) {
+                    spHitbox -= 4;
+                    x += *spHitbox++;
+                    spHitbox++;
+                    y += *spHitbox;
+                    x /= 2;
+                    y /= 2;
+                }
+                prim = &g_PrimBuf[g_unkGraphicsStruct.primIndex];
+                while (prim != NULL) {
+                    if (prim->drawMode == DRAW_HIDE) {
+                        prim->x0 = x - 13 + (Random() & 7) - 3;
+                        prim->y0 = y - 10 + (Random() & 7) - 3;
+                        prim->x3 = 0;
+                        prim->priority = 0x92;
+                        prim->drawMode = DRAW_UNK02;
+                        break;
+                    }
+                    prim = prim->next;
+                }
+            }
+            if (iterEnt->attack && (entityHit->hitPoints != 0x7FFF)) {
+                miscVar1 = DealDamage(entity, iterEnt);
+                if (iterEnt->hitboxState == 4) {
+                    miscVar1 = 0;
+                }
+                if ((g_Status.relics[0xB] & 2) &&
+                    ((entityHit->flags & FLAG_KEEP_ALIVE_OFFCAMERA) == 0) &&
+                    miscVar1) {
+                    otherEntity =
+                        AllocEntity(&g_Entities[0xE0], &g_Entities[0x100]);
+                    if (otherEntity != NULL) {
+                        DestroyEntity(otherEntity);
+                        otherEntity->entityId = 4;
+                        otherEntity->pfnUpdate =
+                            (*PfnEntityUpdates)[otherEntity->entityId - 1]
+                                ->func;
+                        otherEntity->posX.i.hi = x;
+                        otherEntity->posY.i.hi = y;
+                        otherEntity->params = miscVar1;
+                    }
+                }
+            } else {
+                miscVar1 = 0;
+            }
+            if (miscVar1 != 0xC000) {
+                if (miscVar1 & 0x8000) {
+                    miscVar2 = 9;
+                } else {
+                    miscVar3 = iterEnt->attackElement;
+                    if (miscVar3 & 0xFFC0) {
+                        for (i = 0; i < 10; i++) {
+                            if (miscVar3 & g_testCollElementLookup[i]) {
+                                miscVar2 = g_testColliFrames[i];
+                                break;
+                            }
+                        }
+                    }
+                }
+            } else {
+                miscVar1 = 0;
+                entityHit->hitFlags |= 0x20;
+            }
+            if (miscVar1 == 0) {
+                goto unusual_spot;
+            }
+            if (miscVar1 & 0x8000) {
+                entityHit->hitPoints += miscVar1 & 0x3FFF;
+                miscVar3 = g_EnemyDefs[entityHit->enemyId].hitPoints;
+                if (entityHit->hitPoints > miscVar3) {
+                    entityHit->hitPoints = miscVar3;
+                }
+            } else {
+                miscVar1 &= 0x3FFF;
+                if (entityHit->flags & FLAG_UNK_10) {
+                    if (g_PlayableCharacter == 1) {
+                        PlaySfx(SFX_VALHALLA_KNIGHT_NEIGH);
+                    } else if (g_PlayableCharacter == 2) {
+                        if (iterEnt->hitEffect & 0x80) {
+                            if (iterEnt->hitEffect & 0x100) {
+                                PlaySfx(SFX_WEAPON_STAB_A);
+                            } else {
+                                PlaySfx(SFX_WEAPON_STAB_B);
+                            }
+                        } else {
+                            if (iterEnt->hitEffect & 0x100) {
+                                PlaySfx(SFX_MARIONETTE_YELL);
+                            } else {
+                                PlaySfx(SFX_WEAPON_HIT_A);
+                            }
+                        }
+                    } else {
+                        if (iterEnt->hitEffect & 0x80) {
+                            PlaySfx(SFX_WEAPON_STAB_B);
+                        } else {
+                            PlaySfx(SFX_WEAPON_HIT_A);
+                        }
+                    }
+                }
+                if (entityHit->hitPoints != 0x7FFE) {
+                    if (entityHit->hitPoints < miscVar1 * 2) {
+                        entityHit->hitFlags |= 3;
+                    } else if (entityHit->hitPoints < miscVar1 * 4) {
+                        entityHit->hitFlags |= 2;
+                    } else {
+                        entityHit->hitFlags |= 1;
+                    }
+                    entityHit->hitPoints -= miscVar1;
+                }
+                if ((iterEnt->attackElement & ELEMENT_CUT) &&
+                    (entityHit->hitboxState & 0x10)) {
+                    otherEntity =
+                        AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
+                    if (otherEntity != NULL) {
+                        CreateEntityFromEntity(0xD, entity, otherEntity);
+                        if (x > entity->posX.i.hi) {
+                            otherEntity->params = 1;
+                        }
+                        otherEntity->posX.i.hi = x;
+                        otherEntity->posY.i.hi = y;
+                    }
+                }
+            }
+            if (entityHit->hitPoints > 0) {
+                miscVar3 = iterEnt->enemyId;
+                otherEntity = entityHit;
+                do {
+                    otherEntity->unk6D[miscVar3] =
+                        iterEnt->nFramesInvincibility;
+                    if (otherEntity > entityHit) {
+                        otherEntity->unk6D[miscVar3]++;
+                    }
+                    if ((entity->flags & FLAG_SUPPRESS_STUN) == 0) {
+                        otherEntity->stunFrames = iterEnt->stunFrames;
+                    }
+                    if (((otherEntity->hitEffect == 0) &&
+                         ((otherEntity->flags & 0xF) == 0)) &&
+                        (otherEntity->unk0 != NULL)) {
+                        otherEntity->hitEffect = otherEntity->unk0->clutBase;
+                    }
+                    otherEntity->nFramesInvincibility = miscVar2;
+                    otherEntity->flags |= 0xF;
+                    otherEntity = otherEntity->nextPart;
+                } while ((otherEntity != NULL) && (otherEntity != entityHit));
+                continue;
+            }
+        }
+        PreventEntityFromRespawning(entityHit);
+        enemyDef = &g_EnemyDefs[entityHit->enemyId];
+        if ((entityHit->hitFlags & 0x80) == 0) {
+            func_800FE044(enemyDef->exp, enemyDef->level);
+            if ((entityHit->flags & FLAG_UNK_1000) &&
+                (g_Status.killCount < 999999)) {
+                g_Status.killCount++;
+            }
+        }
+        miscVar3 = entityHit->flags & (FLAG_UNK_800 | FLAG_UNK_400);
+        otherEntity = entityHit;
+        if (miscVar3) {
+            if ((rand() & 0xFF) <
+                func_800FF460(g_testCollLuckCutoff[miscVar3 >> 0xA])) {
+                miscVar1 = 0;
+                otherEntity = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
+                if (otherEntity != NULL) {
+                    if (hitboxCheck2 == 0x5) {
+                        dropTable = g_jewelSwordDropTable;
+                        miscVar3 = rand() & 0xFFF;
+                        while (true) {
+                            if (*dropTable++ >= miscVar3) {
+                                miscVar3 = *dropTable;
+                                break;
+                            }
+                            dropTable++;
+                        }
+                    } else {
+                        miscVar3 = func_800FF494(enemyDef);
+                        if (miscVar3 & 0x40) {
+                            miscVar3 = enemyDef->rareItemId;
+                            if ((miscVar3 == 0x17B) && (g_GameClearFlag == 0)) {
+                                miscVar3 = 0x172;
+                            } else {
+                                miscVar1 =
+                                    g_testCollEnemyLookup[entityHit->enemyId];
+                            }
+                        } else if (miscVar3 & 0x20) {
+                            miscVar3 = enemyDef->uncommonItemId;
+                        } else {
+                            miscVar3 = g_testCollPrizeTable[miscVar3];
+                        }
+                    }
+                    if (miscVar3 >= 0x80) {
+                        miscVar3 -= 0x80;
+                        CreateEntityFromEntity(10, entity, otherEntity);
+                    } else {
+                        CreateEntityFromEntity(3, entity, otherEntity);
+                    }
+                    otherEntity->ext.equipItemDrop.castleFlag = miscVar1;
+                    otherEntity->params = miscVar3;
+                    otherEntity->velocityY = -0x38000;
+                }
+            }
+        }
+        otherEntity = entityHit;
+        do {
+            otherEntity->flags |=
+                FLAG_UNK_100000 | FLAG_UNK_8000 | FLAG_UNK_4000 | FLAG_DEAD;
+            otherEntity->flags &= ~FLAG_UNK_20000000;
+            if ((otherEntity->hitEffect == 0) && (otherEntity->unk0 != NULL)) {
+                otherEntity->hitEffect = otherEntity->unk0->clutBase;
+            }
+            otherEntity->nFramesInvincibility = miscVar2;
+            otherEntity->flags |= 0xF;
+            otherEntity = otherEntity->nextPart;
+        } while ((otherEntity != NULL) && (otherEntity != entityHit));
+        continue;
+    unusual_spot:
+        if ((entityHit->hitFlags & 0xF) == 0) {
+            entityHit->hitFlags |= 0x10;
+        }
+        if ((entityHit->flags & FLAG_UNK_10) && iterEnt->attack) {
+            if (iterEnt->hitEffect & 0x80) {
+                PlaySfx(SFX_METAL_CLANG_E);
+            } else {
+                PlaySfx(SFX_METAL_CLANG_E);
+            }
+        }
+        miscVar3 = iterEnt->enemyId;
+        otherEntity = entityHit;
+        do {
+            if (entity->hitPoints == 0x7FFF) {
+                if (otherEntity->hitPoints == 0x7FFF) {
+                    otherEntity->unk6D[miscVar3] =
+                        iterEnt->nFramesInvincibility;
+                    if (otherEntity > entityHit) {
+                        otherEntity->unk6D[miscVar3]++;
+                    }
+                }
+            } else {
+                otherEntity->unk6D[miscVar3] = iterEnt->nFramesInvincibility;
+                if (otherEntity > entityHit) {
+                    otherEntity->unk6D[miscVar3]++;
+                }
+            }
+            otherEntity = otherEntity->nextPart;
+        } while ((otherEntity != NULL) && (otherEntity != entityHit));
+    }
+    prim = &g_PrimBuf[g_unkGraphicsStruct.primIndex];
+    while (prim != NULL) {
+        if (prim->drawMode != DRAW_HIDE) {
+            miscVar2 = prim->x3;
+            ptr = DAT_0605aec0[DAT_060645EC->unk8[4] +
+                               g_PrimitiveUvOffsetByType[miscVar2]];
+            prim->unk8 = ptr[0];
+            prim->unkA = ptr[1];
+            prim->unk6 = LookupTblNoToVram(DAT_060645EC->unk8[5]);
+            miscVar2++;
+            if (miscVar2 > 6) {
+                prim->drawMode = DRAW_HIDE;
+            } else {
+                prim->x3 = miscVar2;
+            }
+        }
+        prim = prim->next;
+    }
+}
 
 extern u16 DAT_0605cea0;
 extern s32 DAT_0605c11a;
