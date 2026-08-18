@@ -196,7 +196,7 @@ block_25:
         PLAYER.posX.i.hi = g_unkGraphicsStruct.unk14;
     }
 
-    if (g_unkGraphicsStruct.unk24 != 0) {
+    if (g_unkGraphicsStruct.unk2C != 0) {
         if (g_PlayerY < g_Tilemap.y + 0x8C) {
             g_Tilemap.scrollY.i.hi = g_Tilemap.y + 4;
             PLAYER.posY.i.hi = g_PlayerY - g_Tilemap.scrollY.i.hi;
@@ -287,7 +287,7 @@ void func_800F2404(s32 arg0) {
         g_unkGraphicsStruct.pauseEnemies = 0;
         g_unkGraphicsStruct.unk20 = 0;
         g_unkGraphicsStruct.unk14 = 0xA0;
-        g_unkGraphicsStruct.unk24 = 0;
+        g_unkGraphicsStruct.unk2C = 0;
         if (g_unkGraphicsStruct.BottomCornerTextTimer != 0) {
             FreePrimitives(g_unkGraphicsStruct.BottomCornerTextPrims);
         }

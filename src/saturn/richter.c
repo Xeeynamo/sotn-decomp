@@ -918,7 +918,6 @@ void func_8015FA5C(s32 arg0) {
     D_80174FB8 = D_80154674[arg0][3];
 }
 
-// RicSetSubweaponParams
 extern s32 func_0606F328(s32 arg0);
 extern SubweaponDef ric_subweapons_def[];
 
@@ -944,7 +943,6 @@ void func_060ABA98(Entity* entity) {
 // func_8015FB84
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ABB78, func_060ABB78);
 
-// func_8015FDB0
 typedef struct {
     u8 pad[8];
     u16 uv0;
@@ -957,19 +955,13 @@ typedef struct {
     s16 y1;
 } RicPrimitive;
 
-typedef struct {
-    u16 uv0;
-    u16 uv1;
-} RicUvPair;
-
 extern u16 g_RichterSpritePackage3AllocationIndex;
 extern u8 D_060BF1A4[];
-extern RicUvPair DAT_0605aec0[];
 
 s32 func_8015FDB0(RicPrimitive* prim, s16 posX, s16 posY) {
     s16 offset;
     s16 xOffset;
-    RicUvPair* uvAnim;
+    u16* ptr;
     u16* frameWord = &prim->frame;
     u8 frame = ((u8*)frameWord)[1];
 
@@ -989,10 +981,10 @@ s32 func_8015FDB0(RicPrimitive* prim, s16 posX, s16 posY) {
     prim->x1 = posX + xOffset;
     prim->y1 = posY + offset;
 
-    uvAnim = &DAT_0605aec0[g_RichterSpritePackage3AllocationIndex +
+    ptr = DAT_0605aec0[g_RichterSpritePackage3AllocationIndex +
                            D_060BF1A4[frame]];
-    prim->uv0 = uvAnim->uv0;
-    prim->uv1 = uvAnim->uv1;
+    prim->uv0 = ptr[0];
+    prim->uv1 = ptr[1];
 
     prim->timer++;
     if (!(prim->timer & 1)) {
@@ -1000,6 +992,7 @@ s32 func_8015FDB0(RicPrimitive* prim, s16 posX, s16 posY) {
     }
     return 0;
 }
+
 const u16 pad_60ABCD4[] = {0xAAAA, 0xAAAB};
 
 // RicEntityHitByHoly
@@ -1013,9 +1006,6 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AC0E0, func_060AC0E0);
 
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AC2DC, func_060AC2DC);
 
-Entity* RicCreateEntFactoryFromEntity(
-    Entity* source, u32 factoryParams, s32 arg2);
-// RicCreateEntFactoryFromEntity
 Entity* RicCreateEntFactoryFromEntity(
     Entity* source, u32 factoryParams, s32 arg2) {
     Entity* entity;
@@ -1056,7 +1046,6 @@ found:
 // RicEntityFactory
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AC46C, func_060AC46C);
 
-// RicEntitySlideKick
 void RicEntitySlideKick(Entity* entity) {
     void RicSetSubweaponParams(Entity * entity);
 
@@ -1088,7 +1077,6 @@ void RicEntitySlideKick(Entity* entity) {
     }
 }
 
-// func_80160D2C
 // func_80160D2C
 void func_060AC908(Entity* entity) {
     if (PLAYER.step != PL_S_SLIDE_KICK) {
@@ -1125,7 +1113,6 @@ void func_060AC908(Entity* entity) {
     entity->hitFlags = 0;
 }
 
-// RicEntityBladeDash
 void RicEntityBladeDash(Entity* self) {
     void RicSetSubweaponParams(Entity * entity);
 
@@ -1151,7 +1138,6 @@ void RicEntityBladeDash(Entity* self) {
     }
 }
 
-// func_80160F0C
 void func_80160F0C(Entity* self) {
     void RicSetSubweaponParams(Entity * entity);
 

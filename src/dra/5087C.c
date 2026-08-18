@@ -339,7 +339,7 @@ s32 func_800F0CD8(s32 arg0) {
     s32 temp_a0;
     s16 temp_a2;
 
-    if (!g_unkGraphicsStruct.unk18) {
+    if (!g_unkGraphicsStruct.unk20) {
         if (D_80097C98 == 2) {
             ret = SetNextRoomToLoad(g_Tilemap.left + (PLAYER.posX.i.hi >> 8),
                                     g_Tilemap.top + (PLAYER.posY.i.hi >> 8));
@@ -390,7 +390,7 @@ s32 func_800F0CD8(s32 arg0) {
             goto block_25;
         }
     }
-    if (!g_unkGraphicsStruct.unk24) {
+    if (!g_unkGraphicsStruct.unk2C) {
         if (g_PlayerY < g_Tilemap.y + 4) {
             ret = SetNextRoomToLoad(
                 g_Tilemap.left + (g_PlayerX >> 8), g_Tilemap.top - 1);
@@ -427,30 +427,30 @@ s32 func_800F0CD8(s32 arg0) {
         }
     }
 block_25:
-    if (g_PlayerX < g_Tilemap.x + g_unkGraphicsStruct.unkC) {
+    if (g_PlayerX < g_Tilemap.x + g_unkGraphicsStruct.unk14) {
         if (arg0 && g_Tilemap.hSize != 1) {
-            if (g_Tilemap.x + g_unkGraphicsStruct.unkC <
+            if (g_Tilemap.x + g_unkGraphicsStruct.unk14 <
                 g_PlayerX + D_801375A4) {
                 PLAYER.posX.i.hi += g_PlayerX + D_801375A4 -
-                                    (g_Tilemap.x + g_unkGraphicsStruct.unkC);
+                                    (g_Tilemap.x + g_unkGraphicsStruct.unk14);
             }
         }
         g_Tilemap.scrollX.i.hi = g_Tilemap.x;
-    } else if (g_Tilemap.width + g_unkGraphicsStruct.unkC - 256 < g_PlayerX) {
+    } else if (g_Tilemap.width + g_unkGraphicsStruct.unk14 - 256 < g_PlayerX) {
         if (arg0 && g_Tilemap.hSize != 1) {
             if (g_PlayerX + D_801375A4 <
-                g_Tilemap.width + g_unkGraphicsStruct.unkC - 256) {
+                g_Tilemap.width + g_unkGraphicsStruct.unk14 - 256) {
                 PLAYER.posX.i.hi +=
                     g_PlayerX + D_801375A4 -
-                    (g_Tilemap.width + g_unkGraphicsStruct.unkC - 256);
+                    (g_Tilemap.width + g_unkGraphicsStruct.unk14 - 256);
             }
         }
         g_Tilemap.scrollX.i.hi = g_Tilemap.width - 256;
     } else {
-        g_Tilemap.scrollX.i.hi = g_PlayerX - g_unkGraphicsStruct.unkC;
-        PLAYER.posX.i.hi = g_unkGraphicsStruct.unkC;
+        g_Tilemap.scrollX.i.hi = g_PlayerX - g_unkGraphicsStruct.unk14;
+        PLAYER.posX.i.hi = g_unkGraphicsStruct.unk14;
     }
-    if (g_unkGraphicsStruct.unk1C != 0) {
+    if (g_unkGraphicsStruct.unk24 != 0) {
         if (g_PlayerY < g_Tilemap.y + 140) {
             g_Tilemap.scrollY.i.hi = g_Tilemap.y + 4;
             PLAYER.posY.i.hi = g_PlayerY - g_Tilemap.scrollY.i.hi;
@@ -1045,9 +1045,9 @@ void func_800F2404(s32 arg0) {
     g_CutsceneHasControl = 0;
 
     g_unkGraphicsStruct.pauseEnemies = 0;
-    g_unkGraphicsStruct.unk18 = 0;
-    g_unkGraphicsStruct.unk1C = 0;
-    g_unkGraphicsStruct.unkC = 0x80;
+    g_unkGraphicsStruct.unk20 = 0;
+    g_unkGraphicsStruct.unk24 = 0;
+    g_unkGraphicsStruct.unk14 = 0x80;
 
     if (g_unkGraphicsStruct.BottomCornerTextTimer != 0) {
         FreePrimitives(g_unkGraphicsStruct.BottomCornerTextPrims);
@@ -1060,8 +1060,8 @@ void func_800F2404(s32 arg0) {
         g_unkGraphicsStruct.D_80097428[i] = 0;
     }
 
-    g_unkGraphicsStruct.unk20 = 0;
-    g_unkGraphicsStruct.unk24 = 0;
+    g_unkGraphicsStruct.unk28 = 0;
+    g_unkGraphicsStruct.unk2C = 0;
     g_unkGraphicsStruct.D_80097448 = 0;
     g_unkGraphicsStruct.D_8009744C = 0;
     g_unkGraphicsStruct.D_80097450 = 0;
@@ -1490,8 +1490,8 @@ void RunMainEngine(void) {
         D_801375AC = g_Tilemap.scrollX.i.hi;
         D_801375B0 = g_Tilemap.scrollY.i.hi;
 
-        if (g_unkGraphicsStruct.unk20 != 0) {
-            func_8010E0D0(g_unkGraphicsStruct.unk20);
+        if (g_unkGraphicsStruct.unk28 != 0) {
+            func_8010E0D0(g_unkGraphicsStruct.unk28);
             PlaySfx(SET_PAUSE_SFX_SCRIPTS);
             g_GameEngineStep = Engine_5;
             return;
@@ -1908,19 +1908,19 @@ void RunMainEngine(void) {
         UpdateFade(true);
         break;
     case 0x5:
-        if (g_unkGraphicsStruct.unk20 != 0) {
+        if (g_unkGraphicsStruct.unk28 != 0) {
             if (g_StageId != STAGE_ST0) {
                 if (g_PlayableCharacter == PLAYER_ALUCARD) {
-                    if (g_unkGraphicsStruct.unk20 == 0xFFF) {
+                    if (g_unkGraphicsStruct.unk28 == 0xFFF) {
                         EntityAlucard();
                         func_8011A870();
                         g_api.o.UpdateStageEntities();
                         if (g_pads[1].pressed & PAD_DOWN) {
-                            g_unkGraphicsStruct.unk20 = 0;
+                            g_unkGraphicsStruct.unk28 = 0;
                         }
                     } else {
-                        if (g_unkGraphicsStruct.unk20 != 0xFF) {
-                            func_8010DF70(g_unkGraphicsStruct.unk20);
+                        if (g_unkGraphicsStruct.unk28 != 0xFF) {
+                            func_8010DF70(g_unkGraphicsStruct.unk28);
                             UpdatePlayerEntities();
                         }
                         g_api.o.UpdateStageEntities();
@@ -1930,7 +1930,7 @@ void RunMainEngine(void) {
                 } else if (g_PlayableCharacter == PLAYER_RICHTER) {
                     g_api.o.UpdateStageEntities();
                     func_80102D70();
-                } else if (g_unkGraphicsStruct.unk20 == 0x100) {
+                } else if (g_unkGraphicsStruct.unk28 == 0x100) {
                     RichterUpdater = g_PlOvl.D_8013C000;
                     RichterUpdater();
                     RichterUpdater = D_psp_08CE9C48;

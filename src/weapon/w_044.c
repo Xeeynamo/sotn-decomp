@@ -188,7 +188,7 @@ void EntityWeaponAttack(Entity* self) {
         self->ext.weapon.unk82 = 0x40;
         self->posY.i.hi = 64;
         g_api.PlaySfx(SFX_TRANSFORM_3X);
-        g_unkGraphicsStruct.unk20 = 2;
+        g_unkGraphicsStruct.unk28 = 2;
         self->step++;
         break;
     case 1:
@@ -276,7 +276,7 @@ void EntityWeaponAttack(Entity* self) {
         self->ext.weapon.unk90 -= 3;
         self->ext.weapon.unk94 += 6;
         if (self->ext.weapon.unk90 < 0) {
-            g_unkGraphicsStruct.unk20 = 0;
+            g_unkGraphicsStruct.unk28 = 0;
             self->ext.weapon.unk90 = 0;
             DestroyEntity(self);
             return;

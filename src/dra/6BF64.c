@@ -168,7 +168,7 @@ void CheckFloor(void) {
     s32* vram_ptr = &g_Player.vram_flag;
     s32 sp30;
 
-    if (g_unkGraphicsStruct.unk18) {
+    if (g_unkGraphicsStruct.unk20) {
         *vram_ptr = 1;
         return;
     }
@@ -341,7 +341,7 @@ void CheckCeiling(void) {
     s16* xPosPtr = &PLAYER.posX.i.hi;
     s32* vram_ptr = &g_Player.vram_flag;
 
-    if (g_unkGraphicsStruct.unk18) {
+    if (g_unkGraphicsStruct.unk20) {
         return;
     }
     for (; i < NUM_HORIZONTAL_SENSORS; i++) {
@@ -517,7 +517,7 @@ void CheckWallRight(void) {
         return;
     }
 
-    if (g_unkGraphicsStruct.unk18) {
+    if (g_unkGraphicsStruct.unk20) {
         return;
     }
     temp_s0 =
@@ -598,7 +598,7 @@ void CheckWallLeft(void) {
         return;
     }
 
-    if (g_unkGraphicsStruct.unk18) {
+    if (g_unkGraphicsStruct.unk20) {
         return;
     }
     temp_s0 =
