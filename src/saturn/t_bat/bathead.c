@@ -28,16 +28,27 @@ void unused_33B4(Entity* self);
 void func_060D0968(Entity* self);
 void unused_33C4(Entity* self);
 void unused_33CC(Entity* self);
+void UpdateBatBlueTrailEntities(Entity* self);
 void unused_3C0C(Entity* self);
 void unused_3C14(Entity* self);
 void unused_3C1C(Entity* self);
 void unused_3C24(Entity* self);
 
 BatServantDesc g_BatServantDesc = {
-    ServantInit,          UpdateServantDefault, UpdateBatAttackMode,
-    unused_339C,          unused_33A4,          unused_33AC,
-    unused_33B4,          func_060D0968,        unused_33C4,
-    unused_33CC,          func_060D0A64,        unused_3C0C,
-    unused_3C14,          unused_3C1C,          unused_3C24,
+    ServantInit,
+    UpdateServantDefault,
+    UpdateBatAttackMode,
+    unused_339C,
+    unused_33A4,
+    unused_33AC,
+    unused_33B4,
+    func_060D0968,
+    unused_33C4,
+    unused_33CC,
+    UpdateBatBlueTrailEntities,
+    unused_3C0C,
+    unused_3C14,
+    unused_3C1C,
+    unused_3C24,
     DestroyServantEntity,
 };

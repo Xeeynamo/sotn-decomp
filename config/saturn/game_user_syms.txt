@@ -50,6 +50,7 @@ _g_SpellDefs = 0x0607FD78;
 _g_RelicDefs = 0x06080088;
 _g_EnemyDefs = 0x06080288;
 _g_ExpNext = 0x06084518;
+_UNK_Invincibility0 = 0x060846A8;
 _g_RoomTeleports = 0x06084794;
 _g_JewelSwordAttackBonus = 0x060850EC;
 _g_testCollEnemyLookup = 0x060850F4;
