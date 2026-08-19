@@ -137,6 +137,12 @@ typedef struct Collider {
     /* 0x20 */ s32 unk20; // Bottom edge of queried tile collision
 } Collider;               /* size=0x24 */
 
+typedef struct {
+    /* 0x00 */ u16* flags;
+    /* 0x04 */ u8 pad04[0x14];
+    /* 0x18 */ u16 enabled;
+} StatusFlagContext;
+
 struct Entity;
 
 typedef void (*PfnEntityUpdate)(struct Entity*);
@@ -1152,6 +1158,8 @@ extern MenuNavigation g_MenuNavigation;
 extern PlayerHud g_PlayerHud;
 extern Pad g_pads[];
 extern Tilemap g_Tilemap;
+extern s32 g_PlayerX;
+extern s32 g_PlayerY;
 extern UNK_0605c680 DAT_0605c680;
 extern Primitive g_PrimBuf[];
 extern UNK_060485C0 DAT_060485C0;
