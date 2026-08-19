@@ -47,7 +47,7 @@
 #define PACKED __attribute__((packed))
 #define UNUSED __attribute__((unused))
 #else
-#define STATIC_ASSERT(x, ...)
+#define STATIC_ASSERT static_assert
 #define PACKED
 #define UNUSED
 #endif
