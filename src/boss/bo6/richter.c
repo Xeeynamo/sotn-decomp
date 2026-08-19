@@ -114,12 +114,9 @@ static void CheckBladeDashInput() {
     }
 }
 
-extern u16 RIC_step;
-extern s32 RIC_velocityY;
-
 void CheckHighJumpInput(void) {
-    if (RIC_step == 3 || RIC_step == 1 ||
-        (RIC_step == 5 && RIC_velocityY > FIX(1)) || RIC_step == 4) {
+    if (RIC.step == 3 || RIC.step == 1 ||
+        (RIC.step == 5 && RIC.velocityY > FIX(1)) || RIC.step == 4) {
         if (g_Ric.unk46 == 0 && g_Ric.padTapped & PAD_R2) {
             func_us_801BA050();
         }
