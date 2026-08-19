@@ -184,7 +184,6 @@ static u16 LookupTblNoToVram(u16 arg0) {
     }
 }
 
-extern u16 DAT_0605aec0[][2];
 extern SaturnSpriteResource g_SaturnSharedSpriteBank0Resource;
 
 void UpdatePrimitives(Entity* self, s32 frameIndex) {
@@ -974,12 +973,12 @@ void ProcessSfxState(Entity* entity) {
         entity->step++;
         break;
     case 3:
-        if (func_80131F68_2()) {
+        if (func_06012DFC()) {
             entity->step++;
         }
         break;
     case 4:
-        if (!func_80131F68_2()) {
+        if (!func_06012DFC()) {
             entity->step++;
         }
         break;

@@ -690,9 +690,9 @@ void UpdateServantUseLifeApple(Entity* self) {
         self->step++;
         // fallthrough
     case 3:
-        if (!g_unkGraphicsStruct.unk20) {
+        if (!g_unkGraphicsStruct.unk28) {
             g_Status.equipHandCount[ITEM_LIFE_APPLE]--;
-            g_unkGraphicsStruct.unk20 = 0xFFF;
+            g_unkGraphicsStruct.unk28 = 0xFFF;
             self->step++;
         }
         break;
@@ -784,7 +784,7 @@ void UpdateServantUseLifeApple(Entity* self) {
     case 10:
         self->ext.faerie.frameCounter++;
         if (self->ext.faerie.frameCounter > 90) {
-            g_unkGraphicsStruct.unk20 = 0;
+            g_unkGraphicsStruct.unk28 = 0;
             self->step++;
         }
         break;

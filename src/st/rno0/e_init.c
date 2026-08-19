@@ -203,6 +203,6 @@ EInit g_EInitGorgon = {ANIMSET_OVL(11), 0, 76, 560, 0x01F};
 EInit g_EInitGorgonHead = {ANIMSET_OVL(11), 0, 76, 560, 0x020};
 EInit g_EInitGorgonAttack = {ANIMSET_DRA(0), 0, 0, 0, 0x021};
 EInit g_EInitElevator = {ANIMSET_OVL(12), 1, 72, 576, 0x005};
-EInit g_EInitMedusaHead1 = {ANIMSET_OVL(13), 0, 95, 592, 0x12F};
-EInit g_EInitMedusaHead2 = {ANIMSET_OVL(13), 0, 95, 593, 0x130};
+EInit g_EInitMedusaHeadBlue = {ANIMSET_OVL(13), 0, 95, 592, 0x12F};
+EInit g_EInitMedusaHeadYellow = {ANIMSET_OVL(13), 0, 95, 593, 0x130};
 // clang-format on

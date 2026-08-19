@@ -753,7 +753,6 @@ void func_060BE3D4(void) {
 
 // same sequence of funcs as in richter
 
-s32 DAT_06086390;
 void func_060BE414(void) {
     s32* iVar2;
     DAT_06086390 = 0;
@@ -861,7 +860,6 @@ void func_060BF0F4(u32 param_1) {
 
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BF180, func_060BF180);
 
-Unk0605cd70 DAT_0605cd70;
 u32 D_06085534;
 u8 DAT_06057f68;
 
@@ -900,7 +898,6 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60C0920, func_060C0920);
 
 u32* d_06086234;
 u32* d_06086250;
-s32 g_GameClearFlag;
 
 void func_060C0A5C(void) {
     if (d_06086234 == 0) {

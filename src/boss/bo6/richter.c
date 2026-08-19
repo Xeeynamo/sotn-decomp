@@ -1035,7 +1035,7 @@ void func_us_801B6998(void) {
         if (++D_us_801D11C0 > 1) {
             if ((g_CastleFlags[SHAFT_ORB_DEFEATED] == 0) &&
                 (g_DemoMode == Demo_None)) {
-                g_unkGraphicsStruct.unk20 = 0xFF;
+                g_unkGraphicsStruct.unk28 = 0xFF;
             }
             D_us_80181278++;
         }
@@ -1130,7 +1130,12 @@ void RicStepHydrostorm(void) {
     }
 }
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepGenericSubwpnCrash);
+void RicStepGenericSubwpnCrash(void) {
+    if (g_Ric.unk4E != 0) {
+        RicSetStand(0);
+        g_Ric.unk46 = 0;
+    }
+}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepThrowDaggers);
 

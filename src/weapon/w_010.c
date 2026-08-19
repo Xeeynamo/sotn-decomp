@@ -327,7 +327,7 @@ void EntityWeaponShieldSpell(Entity* self) {
         SetSpeedX(FIX(-2));
         self->velocityY = 0;
         g_api.PlaySfx(SFX_ANIME_SWORD_C);
-        g_unkGraphicsStruct.unk20 = 1;
+        g_unkGraphicsStruct.unk28 = 1;
         self->step++;
         break;
     case 1:
@@ -400,7 +400,7 @@ void EntityWeaponShieldSpell(Entity* self) {
                 self, ((g_HandId + 1) << 0xE) + FACTORY(88, 0), 0);
             unusedEnt = g_api.CreateEntFactoryFromEntity(
                 self, ((g_HandId + 1) << 0xE) + FACTORY(88, 1), 0);
-            g_unkGraphicsStruct.unk20 = 0;
+            g_unkGraphicsStruct.unk28 = 0;
             self->step++;
         }
         break;

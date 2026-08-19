@@ -19,7 +19,7 @@ void func_0606C064(void) { func_0600654C(&DAT_0606C054, 0x00252000); }
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606C088, func_0606C088);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606C160, func_0606C160);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606C3E4, func_0606C3E4);
+INCLUDE_ASM("asm/saturn/game/f_nonmat", f606C3E4, UpdateStageEntities);
 
 // func_0606C504
 void ScrollEntitiesWithCamera(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
@@ -365,14 +365,13 @@ void func_0606D3FC(void) {
     }
 }
 
-extern s32 DAT_0605c108;
 extern s32 DAT_0606459c;
 
 // original name: PSX_TO_STAGE_NO_GET
 void func_0606D554(s32 arg0) {
     RoomTeleport* ptr;
 
-    ptr = &g_RoomTeleports[DAT_0605c108];
+    ptr = &g_RoomTeleports[D_8006C374];
 
     if (D_8003C730 == 0) {
         if (D_80097C98 == 4) {
@@ -406,7 +405,7 @@ void HandleRoomTransitionTrigger(void) {
     }
     switch (D_8003C708.unk2) {
     case 0:
-        ptr = &g_RoomTeleports[DAT_0605c108];
+        ptr = &g_RoomTeleports[D_8006C374];
         D_8003C708.unk4 = ptr->stageId;
         if (g_CurrentRoom.stageID & 0x20) {
             D_8003C708.unk4 ^= 0x20;

@@ -476,7 +476,7 @@ void RicUpdatePlayerEntities(void) {
     s32 j;
     Entity* entity;
 
-    isPrologueTimeStopped = g_unkGraphicsStruct.unk20;
+    isPrologueTimeStopped = g_unkGraphicsStruct.unk28;
     entity = g_CurrentEntity = &g_Entities[4];
     for (i = 4; i < STAGE_ENTITY_START; i++, g_CurrentEntity++, entity++) {
         if (entity->entityId != 0) {

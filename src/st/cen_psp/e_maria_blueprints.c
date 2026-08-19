@@ -270,7 +270,7 @@ void MarUpdatePlayerEntities(void) {
     Entity* entity;
     PfnEntityUpdate updateFn;
 
-    isPrologueTimeStopped = g_unkGraphicsStruct.unk20;
+    isPrologueTimeStopped = g_unkGraphicsStruct.unk28;
     entity = g_CurrentEntity = &g_Entities[STAGE_ENTITY_START + 4];
     for (i = (STAGE_ENTITY_START + 4); i < (STAGE_ENTITY_START * 2); i++,
         g_CurrentEntity++, entity++) {

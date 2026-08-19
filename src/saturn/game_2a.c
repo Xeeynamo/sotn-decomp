@@ -11,7 +11,6 @@ extern u16 D_8003C730;
 extern u8 g_CastleMap[];
 extern s32 D_801397FC;
 extern s32 D_80139008;
-extern s32 g_GameClearFlag;
 extern char* g_LuckCode;
 extern char* g_AxeArmorCode;
 extern char* g_GTIClubCode;
@@ -410,7 +409,6 @@ static void SetXY(Primitive* prim, s32 x, s32 y) {
 }
 
 extern SaturnSpriteResource g_SaturnSharedSpriteBank0Resource;
-extern u16 DAT_0605aec0[][2];
 extern SaturnSpriteResource* DAT_06086388;
 extern s16 g_AlternateStatusHudSpriteOffsets[][2];
 extern u8 DAT_06085d3c[];

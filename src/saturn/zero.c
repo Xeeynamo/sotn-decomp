@@ -43,7 +43,6 @@ void SCL_Vdp2Init();
 void SCL_DisplayFrame();
 extern s32 DAT_06057f34;
 extern u16 DAT_0605cea0;
-extern u16 DAT_0605cea2;
 extern s32 DAT_0605d7f0;
 extern s32 DAT_0605d7f8;
 
@@ -536,8 +535,6 @@ void func_06008464(void) {
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008488, func_06008488);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008524, func_06008524);
 
-extern Unk0605cd70 DAT_0605cd70;
-
 // Handles transfer of background tile graphics
 // func_06008588
 void TransferBgLayer(int param_1) {
@@ -640,7 +637,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008B20, func_06008B20);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008C2C, func_06008C2C);
 INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f6008D04, func_06008D04);
 INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f6008EE8, func_06008EE8);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008FF0, func_06008FF0);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008FF0, func_800EA5AC);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6009010, func_06009010);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6009058, func_06009058);
 
@@ -1336,7 +1333,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FC04, RevealMapCellAtPlayer);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FCF8, func_0600FCF8);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FE98, func_0600FE98);
 
-void func_0600FEFC() {}
+void func_800F2120(void) {}
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FF08, SetCanRevealMap);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FF64, func_0600FF64);

@@ -226,13 +226,6 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E6C0C, func_060E6C0C);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E7014, func_060E7014);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E73CC, func_060E73CC);
 
-typedef struct {
-    s32 : 32;
-    s8 unk4;
-    s8 unk5;
-} unkStruct;
-
-extern unkStruct DAT_060485C0;
 extern s32 DAT_0605C658;
 extern s32 DAT_0605C668;
 extern s8 DAT_0605DD60;

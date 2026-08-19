@@ -29,7 +29,7 @@ void func_800F2860(void) {
         D_801375C8++;
         break;
     case 2:
-        if (func_80131F68_1() == 0) {
+        if (func_06012DD0() == 0) {
             D_801375C8++;
         }
         break;
@@ -38,12 +38,12 @@ void func_800F2860(void) {
         D_801375C8++;
         break;
     case 4:
-        if (func_80131F68_1() != 0) {
+        if (func_06012DD0() != 0) {
             D_801375C8++;
         }
         break;
     case 5:
-        if (func_80131F68_1() == 0) {
+        if (func_06012DD0() == 0) {
             D_801375C8++;
         }
         break;
@@ -52,7 +52,7 @@ void func_800F2860(void) {
         D_801375C8 = 0;
         break;
     case 7:
-        if (func_80131F68_1() == 0) {
+        if (func_06012DD0() == 0) {
             D_801375C8--;
         }
         break;
@@ -63,26 +63,659 @@ void func_800F2860(void) {
     }
 }
 
-// RunMainEngine
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6070A60, RunMainEngine);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6071C3C, func_06071C3C);
-
-extern s32 DAT_0605c120;
+extern u16 DAT_0605becc;
+extern s32 D_8006C374;
+extern s16 DAT_0605c110;
+extern u16 D_8003C730;
 extern s32 g_PlayerY;
 extern s32 D_80097C98;
-extern s32 DAT_0605C668;
-extern s32 DAT_0605cd54;
+extern s32 DAT_0605c664;
+extern s32 DAT_0605C6D4;
+extern s32 stopMusicFlag;
 extern s32 g_PlayerX;
-extern Unk0605cd70 DAT_0605cd70;
+extern u16 DAT_0605cea2;
 extern s32 DAT_0605ceb0;
-extern s32 DAT_0605d7dc;
-extern s32 DAT_060860bc;
-extern s32 DAT_060860c0;
+extern u16 DAT_0605D744;
+extern s16 DAT_0605d772;
+extern s32 DAT_0605d7f0;
+extern s32 DAT_06085508;
+extern s32 DAT_0608550C;
+extern s32 DAT_06085520;
+extern u16 DAT_06085528;
+extern s32 DAT_0608552C;
+extern s32 DAT_06085530;
+extern u16 DAT_060860AC;
+extern s32 D_801375AC;
+extern s32 D_801375B0;
+extern s32 D_801375B4;
+extern s32 D_801375B8;
 extern s32 D_801375A8;
 extern s32 D_801375A0;
 extern RoomLoadDefHolder D_801375BC;
 extern s32 D_8013759C;
 extern s32 D_801375A4;
+extern s32 DAT_06086258;
+
+void func_06078120();
+void UpdateStageEntities();
+void func_0600E0D0(s16, s16, s16, s16);
+void func_80102D70();
+s32 func_800F0CD8(u16);
+void func_06005208(s32);
+void func_0606D554(s32);
+void StartColorOffsetFade(s32, s32);
+void func_0606C160();
+void func_06066854();
+void InitRoom();
+void func_0600A030();
+void ScrollEntitiesWithCamera(s32, s32, s32, s32);
+void func_06070988();
+void HitDetection();
+void func_06009CCC();
+void func_0600FC04();
+void func_06071C3C();
+
+static void func_800F223C(void) {
+    g_CurrentRoom.stageID ^= STAGE_INVERTEDCASTLE_FLAG;
+    func_800F2120();
+    g_CurrentRoom.stageID ^= STAGE_INVERTEDCASTLE_FLAG;
+}
+
+void RunMainEngine(void) {
+    s32 x, y;
+    s32 iVar9;
+
+    if (D_80097C98 != 0) {
+        DAT_0605d7f0 = 1;
+    }
+    switch (DAT_0605cd70.unk0) {
+    case 0:
+        if (func_06005328() == 0) {
+            func_06071C3C();
+            D_8003C730 = 0;
+            DAT_0605cd70.unk0 = 6;
+            DAT_0605cd70.unk8 = 0;
+            if (g_CurrentRoom.stageID == 0x43) {
+                DAT_06085508 = DAT_06085508 + 1 & 1;
+            }
+        }
+        break;
+    case 1:
+        if (stopMusicFlag != 0) {
+            currentMusicId = func_060727DC(
+                g_PlayableCharacter, g_CurrentRoom.stageID, g_CurrentRoom.unk4);
+            if (g_unkGraphicsStruct.D_800973FC != 1) {
+                PlaySfx(SET_STOP_MUSIC);
+                if (func_06012DD0()) {
+                    return;
+                }
+                PlaySfx(currentMusicId);
+                stopMusicFlag = 0;
+            }
+        }
+        InitRoom();
+        DAT_0605cd70.unk0 = 6;
+        DAT_0605cd70.unk8 = 0;
+        break;
+    case 6:
+        if (DAT_0605cd70.unk8 == 8) {
+            DAT_0605cd70.unk0 = 2;
+            DAT_0605cd70.unk8 = 0;
+            DAT_0608550C = 0;
+        } else {
+            DAT_0605cd70.unk8++;
+            if (D_80097C98 != 0) {
+                DAT_0605c110 = 1;
+            } else {
+                DAT_0605c110 = 0;
+            }
+            goto LAB_06070f5a;
+        }
+    case 2:
+        if (func_0607284C() == 0) {
+            switch (D_80097C98) {
+            case 3:
+            case 6:
+                StartColorOffsetFade(3, 0x3F);
+                g_Player.demo_timer = 4;
+                DAT_0605cd70.unk0 += 2;
+                break;
+            case 4:
+            case 5:
+                StartColorOffsetFade(3, 0x5A);
+                g_Player.demo_timer = 4;
+                DAT_0605cd70.unk0 += 2;
+                break;
+            case 1:
+            case 7:
+                StartColorOffsetFade(1, 8);
+                g_Player.demo_timer = 4;
+                DAT_0605cd70.unk0 += 2;
+                break;
+            case 0:
+                StartColorOffsetFade(1, 4);
+                DAT_0605cd70.unk0 += 2;
+                break;
+            case 2:
+            default:
+                g_Player.demo_timer = 4;
+                DAT_0605cd70.unk0 += 2;
+                break;
+            }
+            func_0600A030();
+        }
+        if (D_80097C98 != 0) {
+            goto LAB_06070f5a;
+        }
+        break;
+    case 3:
+        if (g_PlayableCharacter == 0) {
+            func_06064660(1);
+            if (DAT_0605cd70.unk8 == 0) {
+                DAT_0608550C = DAT_0605cd70.unk8;
+                DAT_0605cd70.unk8 = 1;
+            }
+            if (func_0607284C() != 0) {
+                return;
+            }
+        } else if (DAT_06086258 == 1) {
+            if (func_060743B8(DAT_0605cd70.unk8) != 0) {
+                return;
+            }
+            if (DAT_0605cd70.unk8 == 0) {
+                DAT_0605cd70.unk8 = 1;
+                return;
+            }
+        }
+        DAT_0605cd70.unk8 = 0;
+        StartColorOffsetFade(1, 8);
+        func_0600A030();
+        if ((g_PlayableCharacter != 0) && (DAT_06086258 == 1)) {
+            if (StatusPause(1) != 0) {
+                DAT_0605c664 = 0;
+                PlaySfx(SET_UNPAUSE_SFX_SCRIPTS);
+                PlaySfx(SET_KEY_ON_20_21);
+                PlaySfx(SET_KEY_ON_22_23);
+            }
+            DAT_06086258 = 0;
+            DAT_0605ceb0 = 1;
+        }
+    case 4:
+        if (DAT_0605becc == 0) {
+            DAT_0605cd70.unk0 = 5;
+            DAT_0605d7f0 = 0;
+            D_80097C98 = 0;
+            DAT_060860AC = 0;
+            DAT_0605ceb0 = 1;
+            if ((g_PlayableCharacter != 0) && (DAT_06086258 == 2)) {
+                DAT_0605cd70.unk0 = 0xA0;
+                DAT_06086258 = 0;
+            }
+        }
+        if ((DAT_0605cd70.unk4 == 4) && (DAT_0605cd70.unk0 == 3)) {
+            goto LAB_06070fd2;
+        }
+        if (D_80097C98 != 0) {
+            goto LAB_06070f5a;
+        }
+        break;
+    case 5:
+        if (DAT_0605cd70.unk0 == 5) {
+            DAT_0605c110 = 1;
+        }
+    LAB_06070f5a:
+        g_GameTimer++;
+        func_0600FC04();
+        func_06009CCC();
+        HitDetection();
+        g_Player.unk7C = D_8013759C = PLAYER.posX.i.hi;
+        g_Player.unk7E = D_801375A0 = PLAYER.posY.i.hi;
+        g_unkGraphicsStruct.shoveX.val = 0;
+        g_unkGraphicsStruct.shoveY.val = 0;
+        if (DAT_06085520 != 0) {
+            func_0600E0D0(D_801375B4, D_801375B8, D_801375A4, D_801375A8);
+            DAT_06085520 = 0;
+        }
+        func_06064604();
+        func_06064664();
+        func_06066854();
+    LAB_06070fd2:
+        func_0606C160();
+        if (DAT_0605cd70.unk0 == 3) {
+            DAT_0605cd70.unk0++;
+            return;
+        }
+        func_06078120();
+        if (DAT_0605cea2 == 5) {
+            if (D_80097C98 == 6) {
+                D_80097C98 = 0;
+            }
+            return;
+        }
+        func_06070988();
+        if (DAT_0605C6D4 == 3) {
+            DAT_0605C6D4 = 0;
+            D_80097C98 = 0x8000000;
+            return;
+        }
+        if (D_80097C98 & 0x80000000) {
+            PlaySfx(0xF0000008);
+            return;
+        }
+        if ((DAT_0605cd70.unk0 != 6) && (DAT_0605cd70.unk0 != 4) &&
+            (DAT_0605cd70.unk0 != 2)) {
+            if ((D_80097C98 == 4) || (D_80097C98 == 5) || (D_80097C98 == 6)) {
+                PlaySfx(0xF0000008);
+                func_800EA5AC(0xFFFF, 0xFF, 0xFF, 0xFF);
+            }
+            if (D_80097C98 == 4) {
+                func_800F223C();
+                g_CurrentRoom.stageID = 0x2B;
+                D_8006C374 = 0x43;
+                DAT_0605cd70.unk4 = -1;
+                DAT_0605cd70.unk0 = 0x84;
+                DAT_0605cd70.unk8 = 0;
+                return;
+            } else if (D_80097C98 == 5) {
+                func_800F223C();
+                g_CurrentRoom.stageID = 0xB;
+                D_8006C374 = 0x44;
+                DAT_0605cd70.unk4 = -1;
+                DAT_0605cd70.unk0 = 0x84;
+                DAT_0605cd70.unk8 = 0;
+                return;
+            } else if (D_80097C98 == 6) {
+                g_CurrentRoom.stageID = 0x40;
+                func_800F223C();
+                D_8006C374 = 0xA7;
+                DAT_0605cd70.unk4 = -1;
+                DAT_0605cd70.unk0 = 0x84;
+                DAT_0605cd70.unk8 = 0;
+                return;
+            } else if (D_80097C98 == 7) {
+                g_CurrentRoom.stageID = 9;
+                g_CurrentRoom.unk8 = 1;
+                func_800F223C();
+                D_8006C374 = 0x39;
+                DAT_0605cd70.unk4 = -1;
+                DAT_0605cd70.unk0 = 0x84;
+                DAT_0605cd70.unk8 = 0;
+                return;
+            } else if (D_80097C98 == 1) {
+                PLAYER.posX.i.hi += 0x140;
+            }
+        }
+
+        D_801375A4 = D_8013759C - PLAYER.posX.i.hi;
+        D_801375A8 = D_801375A0 - PLAYER.posY.i.hi;
+        g_PlayerX -= D_801375A4;
+        g_PlayerY -= D_801375A8;
+        D_8013759C = PLAYER.posX.val;
+        D_801375A0 = PLAYER.posY.val;
+        D_801375AC = g_Tilemap.scrollX.i.hi;
+        D_801375B0 = g_Tilemap.scrollY.i.hi;
+        func_80102D70();
+        if (g_unkGraphicsStruct.unk28 != 0) {
+            func_06064658(g_unkGraphicsStruct.unk28);
+            DAT_06085528 = DAT_0605cd70.unk0;
+            DAT_0605cd70.unk0 = 0x70;
+            PlaySfx(SET_PAUSE_SFX_SCRIPTS);
+        } else {
+            iVar9 = func_800F0CD8(DAT_0605c110);
+            if (iVar9 != 0) {
+                DAT_0605c110 = 0;
+                DAT_0605d7f0 = 1;
+                if (iVar9 > 1) {
+                    D_8006C374 = iVar9 - 2;
+                    DAT_0605cd70.unk4 = -1;
+                    DAT_0605cd70.unk0 = 0x88;
+                    DAT_0605cd70.unk8 = 0;
+                } else if (D_801375BC.def->tilesetId == 0xFF) {
+                    D_8006C374 = D_801375BC.def->tileLayoutId;
+                    DAT_0605cd70.unk4 = -1;
+                    DAT_0605cd70.unk0 = 0x84;
+                    DAT_0605cd70.unk8 = 0;
+                } else if (D_801375BC.def->tilesetId == 0xEE) {
+                    D_8006C374 = D_801375BC.def->tileLayoutId;
+                    DAT_0605cd70.unk0 = 0x85;
+                    DAT_0605cd70.unk8 = 0;
+                } else {
+                    DAT_060860AC = 1;
+                    DAT_0605cd70.unk0 = 0x81;
+                }
+                return;
+            }
+            D_801375B4 = D_801375AC - g_Tilemap.scrollX.i.hi;
+            D_801375B8 = D_801375B0 - g_Tilemap.scrollY.i.hi;
+            D_801375A4 = D_8013759C - PLAYER.posX.val;
+            D_801375A8 = D_801375A0 - PLAYER.posY.val;
+            x = PLAYER.posX.i.hi + g_Tilemap.scrollX.i.hi;
+            y = PLAYER.posY.i.hi + g_Tilemap.scrollY.i.hi;
+            if (x != DAT_0608552C || y != DAT_06085530) {
+                D_801375A4 -= g_unkGraphicsStruct.shoveX.val;
+                D_801375A8 -= g_unkGraphicsStruct.shoveY.val;
+                DAT_0608552C = x;
+                DAT_06085530 = y;
+            }
+            ScrollEntitiesWithCamera(
+                D_801375B4, D_801375B8, D_801375A4, D_801375A8);
+            D_801375A4 = D_801375A4 >> 16;
+            D_801375A8 = D_801375A8 >> 16;
+            DAT_06085520 = 1;
+            if (g_Player.status & PLAYER_STATUS_UNK80000) {
+                StartColorOffsetFade(2, 0x78);
+                PlaySfx(SET_UNK_80);
+                PlaySfx(SET_XA_PLAYBACK);
+                func_06005208(5);
+                return;
+            }
+            if (g_unkGraphicsStruct.D_800973FC != 0 && D_8006BB00 == 0) {
+                D_8006BB00 = 1;
+                MuteCd();
+            } else if (g_unkGraphicsStruct.D_800973FC == 0 && D_8006BB00 != 0) {
+                if (g_unkGraphicsStruct.pauseEnemies != 0) {
+                    stopMusicFlag = 0;
+                    D_8006BB00 = 0;
+                    UnMuteCd();
+                } else if (stopMusicFlag == 0) {
+                    D_8006BB00 = 0;
+                    if ((D_8003C708.flags & (FLAG_UNK_40 | FLAG_UNK_20)) != 0) {
+                        PlaySfx(SET_STOP_MUSIC);
+                    } else {
+                        UnMuteCd();
+                    }
+                } else {
+                    if ((D_8003C708.flags & (FLAG_UNK_40 | FLAG_UNK_20)) == 0) {
+                        UnMuteCd();
+                        PlaySfx(currentMusicId);
+                        if (currentMusicId != 0) {
+                            stopMusicFlag = 0;
+                        }
+                    }
+                    D_8006BB00 = 0;
+                }
+            }
+            if ((DAT_0605cd70.unk0 & 0x80) != 0) {
+                return;
+            }
+            if (DAT_0605becc != 0) {
+                return;
+            }
+            if (D_801375C8 != 0) {
+                return;
+            }
+            if (func_06079AF0() != 0) {
+                PlaySfx(SET_RELEASE_RATE_LOW_22_23);
+                PlaySfx(SET_RELEASE_RATE_LOW_20_21);
+                PlaySfx(SET_PAUSE_SFX_SCRIPTS);
+                DAT_0605c664 = 1;
+                DAT_060860AC = 4;
+                DAT_0605cd70.unk0 = 0xF0;
+                DAT_0605ceb0 = 0;
+            }
+        }
+        break;
+    case 0xF0:
+        if (CdSoundCommandQueueEmpty() != 0) {
+            if (func_80133950() != 0) {
+                DAT_0605cd70.unk0++;
+            }
+        }
+        break;
+    case 0xF1:
+        if (CdSoundCommandQueueEmpty() == 0) {
+            break;
+        }
+        DAT_0605cd70.unk0++;
+    case 0xF2:
+        PlaySfx(SET_UNK_10);
+        DAT_0605cd70.unk0++;
+        break;
+    case 0xF3:
+        if (func_80133950() != 0) {
+            stopMusicFlag = 1;
+            if (g_PlayableCharacter == 0) {
+                DAT_0605cd70.unk0++;
+                StartColorOffsetFade(0, 8);
+                DAT_0605cd70.unk0 = 0x83;
+            } else {
+                func_06064658(g_unkGraphicsStruct.unk28);
+                DAT_0605cd70.unk0 = 0xA0;
+            }
+        }
+        break;
+    case 0x81:
+        DAT_0605cd70.unk0 += 2;
+        if (D_80097C98 == 0) {
+            StartColorOffsetFade(0, 4);
+        }
+        break;
+    case 0x82:
+        DAT_0605cd70.unk0++;
+        StartColorOffsetFade(2, 8);
+        break;
+    case 0x83:
+        if (DAT_0605becc != 0) {
+            return;
+        }
+        if (DAT_060860AC == 2) {
+            if (D_801375BC.def->tilesetId != 0xEE) {
+                DAT_0605cd70.unk2 = -1;
+            }
+            DAT_060860AC = 1;
+        } else if (DAT_060860AC == 4) {
+            DAT_0605cd70.unk0 += 4;
+            if (g_PlayableCharacter != 0) {
+                goto line464;
+            } else {
+                goto switchD_06070ab8_caseD_87;
+            }
+        }
+        Scl_s_reg.dispenbl &= ~0x003F;
+        SclProcess = 1;
+    line464:
+        func_06005208(DAT_060860AC);
+        break;
+    case 0x84:
+        if (D_80097C98 != 0) {
+            func_0606C160();
+        }
+        switch (DAT_0605cd70.unk8) {
+        case 0:
+            DAT_0605cd70.unk8++;
+            if (D_80097C98 == 4 || D_80097C98 == 5) {
+                StartColorOffsetFade(2, 0x3F);
+            } else if (D_80097C98 == 6) {
+                StartColorOffsetFade(2, 0x30);
+            }
+        case 1:
+            if (func_0600FBBC() == 0) {
+                DAT_0605cd70.unk8++;
+            }
+            break;
+        case 2:
+            if (func_80133950() != 0) {
+                PlaySfx(SET_UNK_0B);
+                while (func_06013320() == 0) {
+                    func_06010400();
+                    SCL_DisplayFrame();
+                }
+                DAT_0605cd70.unk8++;
+            }
+            break;
+        case 3:
+            DAT_0605d772 = 4;
+            DAT_0605cd70.unk0 += 2;
+            break;
+        }
+        break;
+    case 0x85:
+        switch (DAT_0605cd70.unk8) {
+        case 0:
+            if (func_0600FBBC() == 0) {
+                DAT_0605cd70.unk8++;
+            }
+            break;
+        case 1:
+            if (func_80133950() != 0) {
+                PlaySfx(SET_UNK_0B);
+                while (func_06013320() == 0) {
+                    func_06010400();
+                    SCL_DisplayFrame();
+                }
+                DAT_0605d772 = 9;
+                stopMusicFlag = 1;
+                DAT_0605cd70.unk0++;
+            }
+            break;
+        }
+        break;
+    case 0x86:
+        DAT_0605cd70.unk0 = 0x90;
+        if (D_80097C98 == 0 && g_CurrentRoom.stageID != 0x38) {
+            StartColorOffsetFade(0, 4);
+        }
+        break;
+    case 0x90:
+        if (DAT_0605becc != 0) {
+            break;
+        }
+        DAT_0605cd70.unk0++;
+    case 0x91:
+        if (func_06005328() == 0) {
+            if ((D_801375BC.def->tilesetId != 0xEE) || (D_80097C98 != 0)) {
+                DAT_0605cd70.unk2 = -1;
+            }
+            func_06005208(1);
+        }
+        break;
+    case 0x87:
+    switchD_06070ab8_caseD_87:
+        if ((g_PlayableCharacter != 0) || func_80133950()) {
+            DAT_0605d772 = (y = 11, y);
+            func_06005328();
+            func_06005208(DAT_060860AC);
+        }
+        break;
+    case 0x88:
+        switch (DAT_0605cd70.unk8) {
+        case 0:
+            if (func_0600FBBC() == 0) {
+                DAT_0605cd70.unk8++;
+            }
+            break;
+        case 1:
+            if (func_80133950() != 0) {
+                PlaySfx(SET_UNK_0B);
+                while (func_06013320() == 0) {
+                    func_06010400();
+                    SCL_DisplayFrame();
+                }
+                DAT_0605d772 = 4;
+                stopMusicFlag = 0;
+                DAT_0605cd70.unk0 = 0x86;
+                func_0606D554(1);
+            }
+            break;
+        }
+        break;
+    case 0x70:
+        if (g_unkGraphicsStruct.unk28 != 0) {
+            if (g_CurrentRoom.stageID != 0x1F) {
+                if (g_PlayableCharacter == 0) {
+                    if (g_unkGraphicsStruct.unk28 == 0xFFF) {
+                        func_06064604();
+                        func_060645E8();
+                        UpdateStageEntities();
+                    } else if (g_unkGraphicsStruct.unk28 != 0xFF) {
+                        func_0606458C();
+                        func_06064664();
+                        UpdateStageEntities();
+                        func_80102D70();
+                    } else {
+                        UpdateStageEntities();
+                        func_80102D70();
+                    }
+                } else if (g_PlayableCharacter == 2) {
+                    func_0606458C();
+                    func_06064664();
+                    UpdateStageEntities();
+                    func_80102D70();
+                } else {
+                    UpdateStageEntities();
+                    func_80102D70();
+                }
+            } else {
+                D_8013759C = PLAYER.posX.i.hi;
+                D_801375A0 = PLAYER.posY.i.hi;
+                func_06064604();
+                func_06064664();
+                D_801375A4 = D_8013759C - PLAYER.posX.i.hi;
+                D_801375A8 = D_801375A0 - PLAYER.posY.i.hi;
+                g_PlayerX -= D_801375A4;
+                g_PlayerY -= D_801375A8;
+            }
+        } else {
+            func_8010E168(1, 0x30);
+            DAT_0605cd70.unk0 = DAT_06085528;
+            PlaySfx(SET_UNPAUSE_SFX_SCRIPTS);
+        }
+        if (DAT_0605cd70.unk0 == 3) {
+            if (g_PlayableCharacter == 0) {
+                DAT_0605cd70.unk0++;
+            } else {
+                DAT_0605cd70.unk0 = 0xA0;
+            }
+        }
+        func_06078120();
+        break;
+    case 0xA0:
+        if (g_PlayableCharacter == 0) {
+            DAT_0605cd70.unk0 = 5;
+        } else {
+            func_06078120();
+            if (g_pads[0].previous & PAD_START) {
+                if (StatusPause(1) != 0) {
+                    DAT_0605c664 = 0;
+                    PlaySfx(SET_UNPAUSE_SFX_SCRIPTS);
+                    PlaySfx(SET_KEY_ON_20_21);
+                    PlaySfx(SET_KEY_ON_22_23);
+                    DAT_0605cd70.unk0++;
+                    DAT_06086258 = 0;
+                }
+            } else {
+                if (((g_pads[0].previous & PAD_L1) && (DAT_0605D744 != 0)) &&
+                    (func_06076718() != 0)) {
+                    DAT_060860AC = 4;
+                    StartColorOffsetFade(0, 8);
+                    DAT_0605cd70.unk0 = 0x83;
+                    DAT_0605ceb0 = 0;
+                    func_0601AF5C();
+                }
+            }
+        }
+        break;
+    case 0xA1:
+        func_06078120();
+        if (func_060743B8(0) == 0) {
+            DAT_0605cd70.unk0++;
+        }
+        break;
+    case 0xA2:
+        func_06078120();
+        if (func_060743B8(1) == 0) {
+            DAT_0605cd70.unk0 = 5;
+            DAT_0605ceb0 = 1;
+        }
+        break;
+    }
+}
+
+INCLUDE_ASM("asm/saturn/game/f_nonmat", f6071C3C, func_06071C3C);
+
+extern s32 DAT_0605c120;
+extern s32 DAT_0605C668;
+extern s32 DAT_0605d7dc;
 
 void InitRoomEntities(s32);
 void SetDefaultSCLPriority(s32);
@@ -119,8 +752,8 @@ void InitRoom(void) {
     D_801375A0 = PLAYER.posY.val;
     PLAYER.posX.i.hi = D_801375BC.pos.x + g_Tilemap.scrollX.i.hi;
     PLAYER.posY.i.hi = D_801375BC.pos.y + g_Tilemap.scrollY.i.hi;
-    DAT_060860bc = 0;
-    DAT_060860c0 = 0;
+    D_801375B4 = 0;
+    D_801375B8 = 0;
     func_800F2404(1);
     uVar9 = g_CurrentRoom.stageID & 0xDF;
     if ((uVar9 == 6 || uVar9 == 11 || uVar9 == 9 || uVar9 == 3) &&
@@ -225,27 +858,27 @@ void InitRoom(void) {
     func_800F0CD8(0);
     func_800F0CD8(0);
     InitRoomEntities(g_CurrentRoom.unk4);
-    FUN_0606c160();
-    FUN_0606c160();
+    func_0606C160();
+    func_0606C160();
     DAT_0605cd70.unk0++;
     if ((g_CurrentRoom.unk6 == 0x50) || (g_CurrentRoom.unk6 == 0x60)) {
         if (g_unkGraphicsStruct.D_800973FC == 0) {
-            PlaySfx(FUN_060727dc(g_PlayableCharacter, g_CurrentRoom.stageID,
-                                 g_CurrentRoom.unk4));
+            PlaySfx(func_060727DC(g_PlayableCharacter, g_CurrentRoom.stageID,
+                                  g_CurrentRoom.unk4));
         } else {
-            currentMusicId = FUN_060727dc(
+            currentMusicId = func_060727DC(
                 g_PlayableCharacter, g_CurrentRoom.stageID, g_CurrentRoom.unk4);
-            DAT_0605cd54 = 1;
+            stopMusicFlag = 1;
         }
     }
     if ((g_CurrentRoom.unk4 == 0x50) || (g_CurrentRoom.unk4 == 0x60)) {
-        if (func_80131F68_2() != 0) {
+        if (func_06012DFC() != 0) {
             PlaySfx(SET_STOP_MUSIC);
         }
         if ((g_unkGraphicsStruct.D_800973FC != 0) && (D_8006BB00 != 0)) {
             if (g_CurrentRoom.unk4 == 0x50) {
                 PlaySfx(SET_STOP_MUSIC);
-                DAT_0605cd54 = 1;
+                stopMusicFlag = 1;
             }
         } else {
             PlaySfx(SET_UNK_80);
@@ -301,24 +934,18 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f6072BCC, func_06072BCC);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6072C04, func_06072C04);
 
 extern u8 DAT_06057f68;
-extern u16 DAT_0605becc;
-extern s16 DAT_0605c110;
-extern s32 DAT_0605c664;
 extern s32 DAT_0605c6e4;
-extern s32 DAT_0605d7f0;
 extern s32 D_06085534;
 extern s32 g_StatusWindowColorRed;
 extern s32 g_StatusWindowColorGreen;
 extern s32 g_StatusWindowColorBlue;
 extern s32 prevMusicId;
-extern s32 DAT_06086258;
 extern s32 DAT_06086270;
 extern s32 DAT_06086288;
 extern s32 DAT_0608629c;
 
 void func_06073280(void);
 void UpdateCapePalette(void);
-void func_06005208(s32);
 void StartColorOffsetFade(s32, s32);
 void CheckWeaponCombo(void);
 void make_all(void);
@@ -544,8 +1171,6 @@ bool CheckIfAllButtonsAreAssigned(void) {
 }
 
 void func_0600971C(void);
-extern s16 DAT_0605d772;
-extern u16 DAT_06065470;
 extern s16 DAT_060862a4;
 
 void func_06073280(void) {
@@ -554,7 +1179,7 @@ void func_06073280(void) {
     }
     DAT_0605d772 = 8;
     func_060645B0();
-    DAT_06065470 |= DAT_060862a4;
+    Scl_s_reg.dispenbl |= DAT_060862a4;
     SclProcess = 1;
     func_0600971C();
 }
