@@ -5,8 +5,6 @@
 
 void DestroyEntity(Entity* entity);
 
-void PlaySfx(s32 sfxId);
-
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606B6F8, LoadSubDisplayFiles);
 
 // _READ_SUB_OUT_MODE
@@ -74,7 +72,56 @@ void func_0606BEE4(void) {
 
 void func_0606C064(void) { ReadFileToAddr("GAMEOVER.MAP", 0x00252000); }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606C088, func_0606C088);
+extern s32 DAT_0605D770[];
+extern s32 DAT_060389F4[];
+
+s32 func_0606C088(u16 arg0) {
+    switch (DAT_0605D770[2]) {
+    case 0:
+        PlaySfx(g_StageFileRecords[arg0].unkC);
+        DAT_0605D770[2]++;
+        return 1;
+
+    case 1:
+        if (func_06012D88() != 0) {
+            return 1;
+        }
+        if (arg0 == 0x40) {
+            DAT_0605D770[2] = 2;
+            goto case2;
+        } else if (g_CurrentRoom.unk2 == 0x40) {
+            DAT_0605D770[2] = 3;
+            goto case3;
+        } else {
+            return 0;
+        }
+
+    case 2:
+    case2:
+        PlaySfx(0xF0000810);
+        DAT_0605D770[2] = 0x80;
+        return 1;
+
+    case 3:
+    case3:
+        if (g_Servant != 0x0) {
+            PlaySfx(DAT_060389F4[g_Servant]);
+            DAT_0605D770[2]++;
+            return 1;
+        }
+        break;
+
+    case 4:
+        if (func_06012D88() != 0) {
+            return 1;
+        }
+        break;
+    }
+    return 0;
+}
+
+void PlaySfx(s32 sfxId);
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606C160, func_0606C160);
 
 extern u16 UNK_Invincibility0[];
