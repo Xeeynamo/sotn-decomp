@@ -2,6 +2,8 @@
 #include "inc_asm.h"
 #include "sattypes.h"
 
+#include "rstage16.h"
+
 void DestroyEntity(void);
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60DC040, func_060DC040);
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60DC1A8, func_060DC1A8);

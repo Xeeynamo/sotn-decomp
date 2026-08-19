@@ -63,21 +63,9 @@ void func_800F2860(void) {
     }
 }
 
-extern u16 DAT_0605becc;
-extern s32 D_8006C374;
-extern s16 DAT_0605c110;
-extern u16 D_8003C730;
-extern s32 g_PlayerY;
-extern s32 D_80097C98;
-extern s32 DAT_0605c664;
 extern s32 DAT_0605C6D4;
 extern s32 stopMusicFlag;
-extern s32 g_PlayerX;
-extern u16 DAT_0605cea2;
-extern s32 DAT_0605ceb0;
 extern u16 DAT_0605D744;
-extern s16 DAT_0605d772;
-extern s32 DAT_0605d7f0;
 extern s32 DAT_06085508;
 extern s32 DAT_0608550C;
 extern s32 DAT_06085520;
@@ -89,21 +77,13 @@ extern s32 D_801375AC;
 extern s32 D_801375B0;
 extern s32 D_801375B4;
 extern s32 D_801375B8;
-extern s32 D_801375A8;
-extern s32 D_801375A0;
-extern RoomLoadDefHolder D_801375BC;
-extern s32 D_8013759C;
-extern s32 D_801375A4;
-extern s32 DAT_06086258;
 
 void func_06078120();
 void UpdateStageEntities();
 void func_0600E0D0(s16, s16, s16, s16);
 void func_80102D70();
 s32 func_800F0CD8(u16);
-void func_06005208(s32);
 void func_0606D554(s32);
-void StartColorOffsetFade(s32, s32);
 void func_0606C160();
 void func_06066854();
 void InitRoom();
@@ -714,14 +694,6 @@ void RunMainEngine(void) {
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6071C3C, func_06071C3C);
 
 extern s32 DAT_0605c120;
-extern s32 DAT_0605C668;
-extern s32 DAT_0605d7dc;
-
-void InitRoomEntities(s32);
-void SetDefaultSCLPriority(s32);
-void func_800F2404(s32);
-void SetCanRevealMap(void);
-void func_06009510(s32);
 
 // original name: INIT_ROOM
 void InitRoom(void) {
@@ -886,8 +858,6 @@ void InitRoom(void) {
     }
 }
 
-extern u8* DAT_060645b8;
-
 // original name: SET_DEFAULT_SCL_PRIORITY
 void SetDefaultSCLPriority(s32 arg0) {
     u8* ptr;
@@ -933,21 +903,9 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f6072BCC, func_06072BCC);
 // _GAMEOVER_FADEIN
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6072C04, func_06072C04);
 
-extern u8 DAT_06057f68;
-extern s32 DAT_0605c6e4;
 extern s32 D_06085534;
-extern s32 g_StatusWindowColorRed;
-extern s32 g_StatusWindowColorGreen;
-extern s32 g_StatusWindowColorBlue;
-extern s32 prevMusicId;
-extern s32 DAT_06086270;
-extern s32 DAT_06086288;
-extern s32 DAT_0608629c;
 
-void func_06073280(void);
 void UpdateCapePalette(void);
-void StartColorOffsetFade(s32, s32);
-void CheckWeaponCombo(void);
 void make_all(void);
 
 // original name: SUB_DISP
@@ -1130,8 +1088,6 @@ LAB_06072d9e:
     }
 }
 
-extern s16 g_ButtonMask[];
-
 bool CheckIfAllButtonsAreAssigned(void) {
     s32 buf[9];
     s32 i;
@@ -1170,9 +1126,6 @@ bool CheckIfAllButtonsAreAssigned(void) {
     }
 }
 
-void func_0600971C(void);
-extern s16 DAT_060862a4;
-
 void func_06073280(void) {
     if (g_PlayableCharacter == 0) {
         UpdateCapePalette();
@@ -1183,10 +1136,6 @@ void func_06073280(void) {
     SclProcess = 1;
     func_0600971C();
 }
-
-extern s16 DAT_06086220[];
-
-void SetVdp2DisplayMode(s32);
 
 // original name: INIT_SUB_GAMEN
 void func_060732E4(s32 arg0) {
@@ -1222,8 +1171,6 @@ void func_060732E4(s32 arg0) {
     }
     DAT_06057f68 = 1;
 }
-
-extern s32 g_MenuPageScrollActive;
 
 // original name: PSX_cursor_up_down
 void MenuHandleCursorInput(s32* nav, u8 nOptions, u32 type) {
@@ -1341,11 +1288,6 @@ bool func_800FB1EC(s32 arg0) {
     return false;
 }
 
-extern s32 g_NewPlayerStatsTotal[];
-extern s32 g_NewAttackRightHand;
-extern s32 g_NewAttackLeftHand;
-extern s32 g_NewDefenseEquip;
-
 // SAT: func_060735A4
 void func_800F7244(void) {
     s32 i;
@@ -1386,8 +1328,6 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f6073740, func_06073740);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6073770, func_06073770);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60737A0, func_060737A0);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6073E58, func_06073E58);
-
-extern s32 g_EquipOrderType;
 
 // original name: PSX_sort_item
 void func_800FBAC4(void) {
@@ -1445,7 +1385,6 @@ void func_800FAF44(bool isAccessory) {
     }
 }
 
-extern s32 DAT_06086210;
 void func_06074048(u8 param_1) {
     DAT_06086210 = 0;
     if (param_1 != 0) {
@@ -1475,8 +1414,6 @@ void ClearVdp2CharRamA1(void) {
         *char_ram++ = 0;
     }
 }
-
-extern u32 g_FontGlyphDataSizes[];
 
 // func_06074724
 u32* GetStageTextGlyphData(s32 arg0, u16 arg1) {
@@ -1615,10 +1552,6 @@ u32* GetEventTextGlyphData(s32 arg0, s32 arg1) {
     }
     return NULL;
 }
-
-extern u16 g_EquippedCapePalette[4];
-extern u16 D_800A37F4[][4];
-extern s32 g_CapePaletteDefs[];
 
 void UpdateCapePalette(void) {
     s32 clut;

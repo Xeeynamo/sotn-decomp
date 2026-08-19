@@ -1,33 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
 #include <saturn_sprite.h>
-
-extern SaturnSpriteImage AlucardImages[];
-extern SaturnSpriteImage AlucardSubImages[];
-extern SaturnSpriteImage AlucardFxImages[];
-extern SaturnSpriteImage AlucardFx2Images[];
-extern SaturnSpriteImage AlucardPkg3Images[];
-extern SaturnSpriteImage AlucardPkg4Images[];
-extern SaturnSpriteImage AlucardPkg5Images[];
-extern SaturnSpriteImage AlucardPkg6Images[];
-extern SaturnSpriteImage AlucardPkg7Images[];
-extern SaturnSpriteImage AlucardPkg8Images[];
-extern SaturnSpriteImage AlucardPkg9Images[];
-extern SaturnSpriteImage AlucardPkg10Images[];
-
-extern u16 g_AlucardPalettes[];
-extern u16 g_AlucardPaletteShades[];
-extern u16 AlucardSubPalette[];
-extern u16 AlucardFxPalette[];
-extern u16 AlucardFx2Palette[];
-extern u16 AlucardPkg3Palette[];
-extern u16 AlucardPkg4Palette[];
-extern u16 AlucardPkg5Palette[];
-extern u16 AlucardPkg6Palette[];
-extern u16 AlucardPkg7Palette[];
-extern u16 AlucardPkg8Palette[];
-extern u16 AlucardPkg9Palette[];
-extern u16 AlucardPkg10Palette[];
+#include "alucard.h"
 
 SaturnSpriteResource AlucardSpriteResources[13] = {
     {AlucardImages, g_AlucardPalettes, -1, 0xFFFF},

@@ -9,9 +9,6 @@ typedef enum {
     TELEPORT_CHECK_TO_TOP = 4
 } TeleportCheck;
 
-extern s32 g_PlayerX;
-extern s32 g_PlayerY;
-
 // GetTeleportToOtherCastle
 static TeleportCheck func_060A5060(void) {
     if (PLAYER.step != PL_S_STAND || PLAYER.step_s != 1) {
@@ -33,7 +30,6 @@ static TeleportCheck func_060A5060(void) {
 }
 
 // func_80156DE4
-extern s32 D_80154568[];
 static s16 func_80156DE4(void) {
     Collider collider;
     s32 yvar;
@@ -141,8 +137,6 @@ void RicStepWalk(void) {
     }
 }
 
-extern AnimationFrame ric_anim_stop_run[];
-
 // RicStepRun
 void RicStepRun(void) {
     if (g_Player.unk7A != 0) {
@@ -230,8 +224,6 @@ static void func_80159C04(void) {
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A7310, func_060A7310);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A7B78, func_060A7B78);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A7CF0, RicStepDead);
-extern u16 D_80155528[];
-extern u32 g_SubwpnCrashTimer;
 void RicStepStandInAir(void) {
     s16 palettes[] = {0, 20, 21, 22};
 
@@ -300,7 +292,6 @@ void RicStepHydrostorm(void) {
 }
 
 // RicStepGenericSubwpnCrash
-extern u32 g_SubwpnCrashTimer;
 void RicStepGenericSubwpnCrash(void) {
     if (g_Player.unk4E || ++g_SubwpnCrashTimer > 300) {
         g_SubwpnCrashTimer = 0;
@@ -315,7 +306,6 @@ void RicStepGenericSubwpnCrash(void) {
 }
 
 // RicStepThrowDaggers
-extern s32 throw_dagger_timer;
 void RicStepThrowDaggers(void) {
     if (PLAYER.step_s == 0) {
         throw_dagger_timer = 0x200;
@@ -346,7 +336,6 @@ void RicStepThrowDaggers(void) {
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A82F8, func_060A82F8);
 
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8664, func_060A8664);
-extern s32 g_PlayerX;
 static void func_8015BB80(void) {
     if (g_CurrentRoom.stageID == STAGE_TOP) {
         if (ABS((g_Tilemap.left << 8) + g_PlayerX) - 8079 > 0) {
@@ -389,8 +378,6 @@ void RicStepBladeDash(void) {
         }
     }
 }
-
-extern void func_060A6428(u16 arg0);
 
 // RicStepHighJump
 void func_060A8D64(void) {
@@ -468,8 +455,6 @@ void RicSetInit(s32 step_s) {
 
 // RicSetCrouch
 extern AnimationFrame ric_anim_crouch[];
-extern AnimationFrame ric_anim_crouch_from_stand2[];
-extern AnimationFrame ric_anim_crouch_from_stand[];
 extern AnimationFrame ric_anim_land_from_air_run[];
 void RicSetCrouch(s32 kind, s32 velocityX) {
     RicSetStep(PL_S_CROUCH);
@@ -499,8 +484,6 @@ void RicSetStand(s32 velocityX) {
     RicSetStep(PL_S_STAND);
     RicSetAnimation(ric_anim_stand);
 }
-
-void RicSetRun(void);
 
 extern AnimationFrame ric_anim_walk[];
 // func_060A8FD0
@@ -590,7 +573,6 @@ void RicSetJump(void) {
 }
 
 // RicSetHighJump
-extern AnimationFrame ric_anim_high_jump[];
 void RicSetHighJump(void) {
     RicSetStep(PL_S_HIGHJUMP);
     PLAYER.velocityX = 0;
@@ -652,7 +634,6 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A97B0, func_060A97B0);
 void RicSetDeadPrologue() { RicSetStep(PL_S_DEAD_PROLOGUE); }
 
 // RicSetSlide
-extern AnimationFrame D_80155750[];
 void RicSetSlide(void) {
     RicCheckFacing();
     RicSetStep(PL_S_SLIDE);
@@ -665,7 +646,6 @@ void RicSetSlide(void) {
     g_Player.timers[PL_T_12] = 4;
 }
 
-extern AnimationFrame D_8015577C[1];
 #define SFX_VO_RIC_ATTACK_B 0x711
 
 // PlaySfx needs to be undefined here to match
@@ -684,7 +664,6 @@ void RicSetSlideKick(void) {
 }
 
 // RicSetBladeDash
-extern AnimationFrame ric_anim_blade_dash[];
 void RicSetBladeDash(void) {
     RicSetStep(PL_S_BLADEDASH);
     RicSetAnimation(ric_anim_blade_dash);
@@ -831,10 +810,6 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA5C0, func_060AA5C0);
 // func_8015E484
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AAB80, func_060AAB80);
 
-extern Point32 g_RicSensorsCeiling[NUM_HORIZONTAL_SENSORS];
-extern Point32 g_RicSensorsFloor[NUM_HORIZONTAL_SENSORS];
-extern Point32 g_RicSensorsWall[NUM_VERTICAL_SENSORS * 2];
-
 void RicGetPlayerSensor(Collider* col) {
     col->unk14 = g_RicSensorsWall[0].x;
     col->unk1C = g_RicSensorsWall[0].y;
@@ -905,21 +880,12 @@ void func_8015F9F0(Entity* entity) {
     }
 }
 
-extern u8 D_80154674[][4];
-extern u8 D_80174FAC;
-extern u8 D_80174FB0;
-extern u8 D_80174FB4;
-extern u8 D_80174FB8;
-
 void func_8015FA5C(s32 arg0) {
     D_80174FAC = D_80154674[arg0][0];
     D_80174FB0 = D_80154674[arg0][1];
     D_80174FB4 = D_80154674[arg0][2];
     D_80174FB8 = D_80154674[arg0][3];
 }
-
-extern s32 func_0606F328(s32 arg0);
-extern SubweaponDef ric_subweapons_def[];
 
 // RicSetSubweaponParams
 void func_060ABA98(Entity* entity) {
@@ -954,9 +920,6 @@ typedef struct {
     s16 x1;
     s16 y1;
 } RicPrimitive;
-
-extern u16 g_RichterSpritePackage3AllocationIndex;
-extern u8 D_060BF1A4[];
 
 s32 func_8015FDB0(RicPrimitive* prim, s16 posX, s16 posY) {
     s16 offset;
@@ -1256,7 +1219,6 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B061C, func_060B061C);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B12CC, func_060B12CC);
 
 // func_80167964
-extern s16 D_80155D30[];
 void func_80167964(Entity* entity) {
     if (g_Player.unk46 == 0) {
         DestroyEntity(entity);
@@ -1577,11 +1539,6 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BA788, func_060BA788);
 
 // ===== all these functions below seems to be exclusive to Saturn
 
-void func_060BB330();
-
-extern u32 g_RichterCastleMapState;
-extern u8 g_RichterCastleMapBitmap[240][160];
-
 void func_060BACA4(void) {
     memset(&g_RichterCastleMapState, 0, 4);
     memcpy(0x002B2000, g_RichterCastleMapBitmap, 0x9600);
@@ -1603,12 +1560,7 @@ typedef struct {
     u16 colors1[4];
 } RicGouraudTable;
 
-extern s32 DAT_060476a0;
-extern s32 DAT_060476a4;
-extern s32 g_RichterSavedMapVramBase;
-extern s32 g_RichterSavedMapPlaneConfig;
 extern RicGouraudTable* SpGourTbl;
-extern s32 DAT_0605c6e4;
 s32* func_060784A8(void);
 
 void func_060BB90C(void) {
@@ -1637,9 +1589,6 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BB9BC, func_060BB9BC);
 s32 DAT_06086390;
 s32 DAT_060476a0;
 s32 DAT_060476a4;
-extern s32 g_RichterSavedMapVramBase;
-extern s32 g_RichterSavedMapPlaneConfig;
-void func_060BB9BC(s32*);
 
 void func_060BBA88(void) {
     s32* iVar2;
@@ -1676,7 +1625,6 @@ void func_060BBDB4(void) {
 
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BBDE0, func_060BBDE0);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BBF08, func_060BBF08);
-extern s16 g_ButtonMask[];
 
 // CheckIfAllButtonsAreAssigned
 bool func_060BC048(void) {
@@ -1719,7 +1667,6 @@ bool func_060BC048(void) {
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BC108, func_060BC108);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BC228, func_060BC228);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BC4E4, func_060BC4E4);
-extern s16 g_RichterMapRevealRowIndices[];
 
 void func_060BC7A8(u32 arg0) {
     s32 first;
@@ -1756,10 +1703,8 @@ void func_060BC7A8(u32 arg0) {
 }
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BC834, func_060BC834);
 
-extern u8 DAT_06057f68;
 extern u32 D_06085534;
 s32 func_060732E4(u16 arg0);
-void func_060BC834(void);
 
 void func_060BCA10(void) {
     if (DAT_0605cd70.unk8 != 0) {
@@ -1784,9 +1729,6 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BCE64, func_060BCE64);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BD11C, func_060BD11C);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BD2AC, func_060BD2AC);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BD3D8, func_060BD3D8);
-extern s32 D_060CEE6C[];
-extern s32 D_060CEEDC[];
-s32 func_0606F21C(s32 eventId, s32 action);
 
 // SortTimeAttackEntries
 void func_060BD4EC(void) {
@@ -1822,8 +1764,6 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BD580, func_060BD580);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BD768, func_060BD768);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BDADC, func_060BDADC);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BDFD4, func_060BDFD4);
-extern u32* d_06086234;
-extern u32* d_06086250;
 
 void func_060BE110(void) {
     if (d_06086234 == 0) {

@@ -3,6 +3,10 @@
 #include "inc_asm.h"
 #include "sattypes.h"
 
+extern s32 DAT_060645EC[];
+extern s32 DAT_060645e4[];
+extern s32 DAT_060645f8[];
+
 // _SET_STAGE_OVERLAYADDR
 void SetStageOverlayAddress() {
     PfnEntityUpdates[0] = g_StageOverlayData.entityEntries; // 0x60dc000

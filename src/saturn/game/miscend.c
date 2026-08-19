@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
 #include <saturn_sprite.h>
+#include "game.h"
 
 char* g_LuckCode = "X-X!V''Q";
 char* g_AxeArmorCode = "AXEARMOR";
@@ -60,40 +61,6 @@ SaturnSpriteImage g_StatusPortraitImages[17] = {
     {0, 0, 0x0728},
 };
 
-extern const char g_StatusMenuFamiliarList[];
-extern const char g_StatusMenuFamiliar[];
-extern const char g_StatusMenuOther[];
-extern const char g_StatusMenuCape[];
-extern const char g_StatusMenuArmor[];
-extern const char g_StatusMenuHelm[];
-extern const char g_StatusMenuHolder[];
-extern const char g_StatusMenuLeftHandWeapon[];
-extern const char g_StatusMenuRightHandWeapon[];
-extern const char g_StatusMenuMedicine[];
-extern const char g_StatusMenuShield[];
-extern const char g_StatusMenuProjectile[];
-extern const char g_StatusMenuBomb[];
-extern const char g_StatusMenuFood[];
-extern const char g_StatusMenuTwoHandedSword[];
-extern const char g_StatusMenuClub[];
-extern const char g_StatusMenuFist[];
-extern const char g_StatusMenuThrowingSword[];
-extern const char g_StatusMenuSword[];
-extern const char g_StatusMenuDagger[];
-extern const char g_StatusMenuSystem[];
-extern const char g_StatusMenuRelics[];
-extern const char g_StatusMenuSpecialMoves[];
-extern const char g_StatusMenuEquipment[];
-extern const char g_StatusMenuSpecialMoveList[];
-extern const char g_StatusMenuDefense[];
-extern const char g_StatusMenuAttack[];
-extern const char g_StatusMenuElapsedTime[];
-extern const char g_StatusMenuWindowColor[];
-extern const char g_StatusMenuCustomColor[];
-extern const char g_StatusMenuReversibleCloak[];
-extern const char g_StatusMenuButtonAssignment[];
-extern const char g_StatusMenuUnknown[];
-
 const char* g_StatusMenuLabelPointers[] = {
     g_StatusMenuAttack,
     g_StatusMenuDefense,
@@ -141,8 +108,6 @@ StatusFaceImageLayout g_StatusFaceImageLayouts[9] = {
     {0, 0, 0},  {0, 10, 15}, {0, 11, 16}, {0, 9, 14}, {0, 13, 18},
     {0, 7, 12}, {0, 8, 13},  {0, 12, 17}, {0, 0, 0},
 };
-
-void func_0607AC40(Entity* self);
 
 PfnEntityUpdate g_FallingPrimitiveUpdate = func_0607AC40;
 u32 g_FallingPrimitiveInitData = 0;

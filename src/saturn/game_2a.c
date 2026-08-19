@@ -7,16 +7,6 @@
 
 void UpdateCapePalette(void);
 
-extern u16 D_8003C730;
-extern u8 g_CastleMap[];
-extern s32 D_801397FC;
-extern s32 D_80139008;
-extern char* g_LuckCode;
-extern char* g_AxeArmorCode;
-extern char* g_GTIClubCode;
-
-extern s32 TimeAttackController(s32 eventId, s32 action);
-
 static void func_800FF708(s32 equipType, s32 arg1) {
     s32 rnd;
 
@@ -370,7 +360,6 @@ void InitStatsAndGear(s32 isDeathTakingItems) {
     return;
 }
 
-void func_06075838(void);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6075838, func_06075838);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6075D24, func_06075D24);
 
@@ -392,7 +381,6 @@ bool StatusPause(s32 arg0) {
 
 s32 func_06076718(void) { return g_PlayerHud.unk24 == 0x15; }
 
-void func_0607672C(void);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607672C, func_0607672C);
 
 static u16 LookupTblNoToVram(u16 arg0) {
@@ -408,10 +396,7 @@ static void SetXY(Primitive* prim, s32 x, s32 y) {
     prim->y0 = y;
 }
 
-extern SaturnSpriteResource g_SaturnSharedSpriteBank0Resource;
-extern SaturnSpriteResource* DAT_06086388;
 extern s16 g_AlternateStatusHudSpriteOffsets[][2];
-extern u8 DAT_06085d3c[];
 
 // func_06076A04
 void UpdateCompactStatusHud(void) {
@@ -635,13 +620,6 @@ void UpdateMpBarPrim(Primitive* prim) {
     prim->unk6 = LookupTblNoToVram(DAT_06086388->flags + 11);
     prim->unk6 = sVar6 + prim->unk6 & 0x8FFF | 0x4000;
 }
-
-extern SaturnSpriteResource g_SaturnSharedSpriteBank4Resource;
-extern u8 g_HudSpriteX[];
-extern u8 g_HudSpriteY[];
-extern u8 g_HudSpriteW[];
-extern u8 g_HudSpriteH[];
-extern u16 g_HudSpriteBlend[];
 
 // func_06077354
 // original name: set_heart_num

@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
 #include "shared_sprite_banks.h"
-
-void EntityWarpRedDoor(Entity* self);
+#include "warp.h"
 
 EntityEntry g_WarpRedDoorEntry = {
     &g_SaturnSharedSpriteBank3Resource,

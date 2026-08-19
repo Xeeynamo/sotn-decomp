@@ -1,22 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
+#include "warp.h"
 
 u16 g_WarpAlucardSubweaponIds[10] = {
     0, 14, 15, 17, 16, 19, 18, 20, 21, 22,
 };
 
 s16 g_WarpPrizeDropOffsets[4] = {-6, 4, 0, -8};
-
-extern char g_WarpGoldText1[];
-extern char g_WarpGoldText25[];
-extern char g_WarpGoldText50[];
-extern char g_WarpGoldText100[];
-extern char g_WarpGoldText250[];
-extern char g_WarpGoldText400[];
-extern char g_WarpGoldText700[];
-extern char g_WarpGoldText1000[];
-extern char g_WarpGoldText2000[];
-extern char g_WarpGoldText5000[];
 
 char* g_WarpGoldCollectTexts[10] = {
     g_WarpGoldText1,    g_WarpGoldText25,   g_WarpGoldText50,
