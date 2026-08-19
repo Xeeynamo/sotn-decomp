@@ -63,7 +63,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6012D30, func_06012D30);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6012D88, func_06012D88);
 
 // original name : xa_play_ck
-bool func_80131F68_1(void) {
+bool func_06012DD0(void) {
     bool ret;
 
     if (D_8013B61C == 9 || (D_8013B61C == 0 && g_PlayingXaBgmId == 0)) {
@@ -75,7 +75,7 @@ bool func_80131F68_1(void) {
 }
 
 // original name : vox_play_ck
-bool func_80131F68_2(void) {
+bool func_06012DFC(void) {
     if (g_PlayingXaBgmId != 0) {
         return 1;
     }

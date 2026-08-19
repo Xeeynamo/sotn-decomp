@@ -30,6 +30,7 @@ typedef enum {
     PAD_R1 = 0x0080,
     PAD_CROSS = 0x0100,
     PAD_SQUARE = 0x0400,
+    PAD_START = 0x0800,
     PAD_UP = 0x1000,
     PAD_DOWN = 0x2000,
     PAD_LEFT = 0x4000,
@@ -46,11 +47,14 @@ typedef enum {
 
 #define SET_STOP_MUSIC 0xF000000A
 #define SET_UNK_0B 0xF000000B
+#define SET_PAUSE_SFX_SCRIPTS 0xF000000E
 #define SET_UNPAUSE_SFX_SCRIPTS 0xF000000F
 #define SET_UNK_10 0xF0000010
 #define SET_XA_PLAYBACK 0xF0000011
 #define SET_UNK_80 0xF0000080
+#define SET_RELEASE_RATE_LOW_20_21 0xF00000A3
 #define SET_KEY_ON_20_21 0xF00000A4
+#define SET_RELEASE_RATE_LOW_22_23 0xF00000A7
 #define SET_KEY_ON_22_23 0xF00000A8
 #define SFX_METAL_CLANG_E 0x611
 #define SFX_WEAPON_STAB_A 0x62D
@@ -469,6 +473,7 @@ typedef struct {
 } GameApi;
 
 void (*func_06064580)();
+void (*func_0606458C)();
 void (*func_06064590)();
 void (*func_06064594)();
 void (*func_060645A0)();
@@ -477,9 +482,12 @@ void (*func_060645B0)();
 void (*func_060645B4)();
 void (*func_060645BC)();
 void (*func_060645C0)();
+void (*func_8010E168)(s32, s32);
 void (*func_060645E0)();
+void (*func_060645E8)();
 void (*func_060645FC)();
 void (*func_06064600)();
+void (*func_06064604)();
 void (*func_06064608)();
 void (*func_06064614)();
 void (*func_06064618)();
@@ -491,6 +499,9 @@ void (*func_06064638)();
 void (*func_0606463c)();
 void (*func_06064644)();
 void (*func_0606464C)();
+void (*func_06064658)(s32);
+void (*func_06064660)();
+void (*func_06064664)();
 void (*func_06064674)();
 void (*func_06064684)();
 void (*func_06064688)();
@@ -919,7 +930,8 @@ typedef struct {
 typedef struct {
     u16 unk0;
     u16 unk2;
-    u32 unk4;
+    u16 unk4;
+    u16 unk6;
     u32 unk8;
 } Unk0605cd70;
 
@@ -1145,6 +1157,7 @@ extern Primitive g_PrimBuf[];
 extern UNK_060485C0 DAT_060485C0;
 extern s32 g_GameClearFlag;
 extern u16 DAT_0605aec0[][2];
+extern Unk0605cd70 DAT_0605cd70;
 
 #define NUM_HORIZONTAL_SENSORS 4
 #define NUM_VERTICAL_SENSORS 7

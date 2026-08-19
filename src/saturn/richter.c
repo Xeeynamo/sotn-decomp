@@ -1649,7 +1649,6 @@ void func_060BBA88(void) {
     DAT_060476a4 = g_RichterSavedMapPlaneConfig;
 }
 
-s32 DAT_06086390;
 void func_060BBAC8(void) {
     s32* iVar2;
     DAT_06086390 = 0;
@@ -1757,7 +1756,6 @@ void func_060BC7A8(u32 arg0) {
 }
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BC834, func_060BC834);
 
-extern Unk0605cd70 DAT_0605cd70;
 extern u8 DAT_06057f68;
 extern u32 D_06085534;
 s32 func_060732E4(u16 arg0);
