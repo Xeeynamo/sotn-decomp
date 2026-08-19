@@ -907,6 +907,45 @@ files:
     asset_path: assets/st/rno0
     src_path: src/st/rno0
     splat_config_path: config/splat.pspeu.strno0.yaml
+    segments:
+      - start: 0x80
+        vram: 0x09237700
+        assets:
+          - [0x80, skip]
+          #- [0x2EF48, sprite_banks, sprite_banks]
+          - [0x2EFA8, skip]
+          - [0x2F400, paldef, palette_def]
+          - [0x2F4B0, skip]
+          - [0x2FC20, cmpgfx, D_80185F20, 128, 128, 4]
+          - [0x30B58, cmpgfx, D_80186E54, 128, 128, 4]
+          - [0x31BB8, cmpgfx, D_80187EB4, 128, 128, 4]
+          - [0x327C8, cmpgfx, D_80188AC4, 128, 128, 4]
+          - [0x33288, cmpgfx, D_80189580, 128, 128, 4]
+          - [0x33600, cmpgfx, D_801898F4, 128, 128, 4]
+          - [0x34390, cmpgfx, D_8018A680, 128, 128, 4]
+          - [0x350D0, cmpgfx, D_8018B3C0, 128, 128, 4]
+          - [0x35B00, cmpgfx, D_8018BDF0, 128, 128, 4]
+          - [0x368E8, cmpgfx, D_8018CBD8, 128, 128, 4]
+          - [0x37238, cmpgfx, D_8018D524, 128, 128, 4]
+          - [0x37998, cmpgfx, D_8018DC84, 128, 128, 4]
+          - [0x384F0, cmpgfx, D_8018E7D8, 128, 128, 4]
+          - [0x39160, cmpgfx, D_8018F444, 128, 128, 4]
+          - [0x39EC0, cmpgfx, D_801901A0, 128, 128, 4]
+          - [0x3A130, cmpgfx, D_80190410, 128, 128, 4]
+          - [0x3AA40, palette, D_80190D20, 16] # 0x2E0
+          - [0x3AD00, palette, D_80190FE0, 16] # 0x200
+          - [0x3AE80, palette, D_80191160, 16] # 0x240
+          - [0x3AFA0, palette, D_80191280, 16] # 0x210
+          - [0x3B020, palette, D_80191300, 16] # 0x242
+          - [0x3B040, palette, D_80191320, 16] # 0x219
+          - [0x3B080, palette, D_80191360, 16] # 0x20F
+          - [0x3B120, palette, D_80191400, 16] # 0x214
+          - [0x3B240, palette, D_80191520, 16] # 0x21D
+          - [0x3B380, palette, D_80191660, 16] # 0x226
+          - [0x3B4E0, palette, D_801917C0, 16] # 0x230
+          - [0x3B520, palette, D_80191800, 16] # 0x250
+          - [0x3B560, palette, D_80191840, 16] # 0x258
+          - [0x3B620, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rno1.bin
     asset_path: assets/st/rno1
     src_path: src/st/rno1

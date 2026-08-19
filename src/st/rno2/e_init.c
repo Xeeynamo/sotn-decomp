@@ -162,6 +162,6 @@ EInit g_EInitFlyingZombieHalf1 = {ANIMSET_OVL(7), 0, 75, 542, 0x00E};
 EInit g_EInitBloodyZombie = {ANIMSET_OVL(9), 1, 74, 726, 0x00D};
 EInit g_EInitAzaghal = {ANIMSET_OVL(0), 0, 0, 0, 0x0E0};
 EInit g_EInitGhostDancer = {ANIMSET_OVL(10), 0, 76, 558, 0x0D8};
-EInit g_EInitMedusaHead1 = {ANIMSET_OVL(13), 0, 95, 592, 0x12F};
-EInit g_EInitMedusaHead2 = {ANIMSET_OVL(13), 0, 95, 593, 0x130};
+EInit g_EInitMedusaHeadBlue = {ANIMSET_OVL(13), 0, 95, 592, 0x12F};
+EInit g_EInitMedusaHeadYellow = {ANIMSET_OVL(13), 0, 95, 593, 0x130};
 // clang-format on
