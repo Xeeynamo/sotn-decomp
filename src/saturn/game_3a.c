@@ -12,9 +12,67 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f606B6F8, LoadSubDisplayFiles);
 // _READ_SUB_OUT_MODE
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606B760, func_0606B760);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606BB4C, func_0606BB4C);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606BEE4, func_0606BEE4);
 
-void func_0606C064(void) { func_0600654C(&DAT_0606C054, 0x00252000); }
+extern char* g_StageAlternateMapNames[];
+
+void ResetSpriteVram();
+void func_0601AC48();
+void func_0600C114();
+void func_0600C2EC();
+void func_0600C00C();
+void func_0600C1A0();
+void func_0600BE18(s32);
+
+void func_0606BEE4(void) {
+    char* ptr;
+    u16 idx;
+
+    idx = g_CurrentRoom.unk8;
+    ResetSpriteVram();
+    func_0600BE18(g_PlayableCharacter);
+    func_0600C1A0();
+    func_0600C00C();
+    func_0600C2EC();
+    func_0600C114();
+    func_060645A4();
+    DAT_0605d7dc = 0x252000;
+    switch (g_CurrentRoom.stageID) {
+    case 0x6:
+        ptr = g_StageAlternateMapNames[idx + 0];
+        break;
+    case 0xB:
+        ptr = g_StageAlternateMapNames[idx + 2];
+        break;
+    case 0x9:
+        ptr = g_StageAlternateMapNames[idx + 4];
+        break;
+    case 0x3:
+        ptr = g_StageAlternateMapNames[idx + 7];
+        break;
+    case 0x26:
+        ptr = g_StageAlternateMapNames[idx + 9];
+        break;
+    case 0x2B:
+        ptr = g_StageAlternateMapNames[idx + 11];
+        break;
+    case 0x29:
+        ptr = g_StageAlternateMapNames[idx + 13];
+        break;
+    case 0x23:
+        ptr = g_StageAlternateMapNames[idx + 16];
+        break;
+    default:
+        ptr = NULL;
+        break;
+    }
+    DAT_0605d7dc += ReadFileToAddr(ptr, 0x252000);
+    if (DAT_0605d7dc & 1) {
+        DAT_0605d7dc++;
+    }
+    func_0601AC48();
+}
+
+void func_0606C064(void) { ReadFileToAddr("GAMEOVER.MAP", 0x00252000); }
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606C088, func_0606C088);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606C160, func_0606C160);

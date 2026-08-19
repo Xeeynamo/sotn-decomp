@@ -183,7 +183,6 @@ extern s32 D_8006C374;
 void func_060195F0(void);
 void func_0600FB34(void);
 extern s32 g_CutsceneHasControl;
-s32 func_0600654C(s32* param_1, s32 param_2);
 extern s32 DAT_06061dd0;
 extern s32 DAT_0605c10c;
 extern SaturnStageFileRecord g_StageFileRecords[];

@@ -797,7 +797,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600BFD8, func_0600BFD8);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600C00C, func_0600C00C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600C0C4, func_0600C0C4);
 
-void func_0600C0FC(void) { DAT_060645D0->unk0->unk8 = 0xc; }
+void func_0600C0FC(void) { DAT_060645D0->unk0->unk8 = 0xC; }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600C114, func_0600C114);
 
