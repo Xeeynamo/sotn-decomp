@@ -181,7 +181,6 @@ static u16 LookupTblNoToVram(u16 arg0) {
     }
 }
 
-
 void UpdatePrimitives(Entity* self, s32 frameIndex) {
     Primitive* prim;
     s32 x, y;

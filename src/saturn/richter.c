@@ -887,7 +887,6 @@ void func_8015FA5C(s32 arg0) {
     D_80174FB8 = D_80154674[arg0][3];
 }
 
-
 // RicSetSubweaponParams
 void func_060ABA98(Entity* entity) {
     SubweaponDef* subwpn =
@@ -921,7 +920,6 @@ typedef struct {
     s16 x1;
     s16 y1;
 } RicPrimitive;
-
 
 s32 func_8015FDB0(RicPrimitive* prim, s16 posX, s16 posY) {
     s16 offset;

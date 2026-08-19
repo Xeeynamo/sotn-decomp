@@ -224,7 +224,6 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E6C0C, func_060E6C0C);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E7014, func_060E7014);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E73CC, func_060E73CC);
 
-
 void PlaySfx(s32);
 void TekiInit(Entity*, s32);
 void DestroyEntity(Entity*);

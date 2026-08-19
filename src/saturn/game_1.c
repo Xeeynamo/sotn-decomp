@@ -26,7 +26,6 @@ static u16 LookupTblNoToVram(u16 arg0) {
     }
 }
 
-
 void func_06066B74(Primitive* prim0, Primitive* prim1, Primitive* prim2) {
     prim0->type = 0x1000;
     prim0->unk4 = 0x488;
