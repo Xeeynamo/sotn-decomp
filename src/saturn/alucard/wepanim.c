@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
-
-extern u16* g_AlucardEffectAnimTable[];
-extern s8 D_060B24B0[];
+#include "alucard.h"
 
 typedef struct {
     u16** frames;

@@ -1130,7 +1130,12 @@ void RicStepHydrostorm(void) {
     }
 }
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepGenericSubwpnCrash);
+void RicStepGenericSubwpnCrash(void) {
+    if (g_Ric.unk4E != 0) {
+        RicSetStand(0);
+        g_Ric.unk46 = 0;
+    }
+}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepThrowDaggers);
 

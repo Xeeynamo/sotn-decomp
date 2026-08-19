@@ -3,8 +3,6 @@
 #include "inc_asm.h"
 #include "sattypes.h"
 
-void StopPcm(s32 param);
-
 void func_06012030(void) {
     StopPcm(7);
     D_8013B61C = 0;
@@ -63,7 +61,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6012D30, func_06012D30);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6012D88, func_06012D88);
 
 // original name : xa_play_ck
-bool func_80131F68_1(void) {
+bool func_06012DD0(void) {
     bool ret;
 
     if (D_8013B61C == 9 || (D_8013B61C == 0 && g_PlayingXaBgmId == 0)) {
@@ -75,16 +73,12 @@ bool func_80131F68_1(void) {
 }
 
 // original name : vox_play_ck
-bool func_80131F68_2(void) {
+bool func_06012DFC(void) {
     if (g_PlayingXaBgmId != 0) {
         return 1;
     }
     return 0;
 }
-
-extern s32 DAT_06064250;
-extern u8 DAT_06064414;
-extern u8 DAT_0606423a;
 
 // SAT: 0x06012E18
 bool CdSoundCommandQueueEmpty(void) {
@@ -164,17 +158,11 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6015E68, func_06015E68);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6016614, func_06016614);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6016644, func_06016644);
 
-void code2name(u32 code, u8* name);
-s32 func_06017F5C(u8*);
-
 void PcmOpen(s32 code) {
     u8 name[0x10];
     code2name(code, name);
     func_06017F5C(name);
 }
-
-int func_0601B8B4(int param_1, int param_2);
-int func_0601B75C(int param_1, int param_2, int param_3);
 
 void PcmLseek(u32 arg0, s32 arg1) {
     s32 iVar1 = func_0601B8B4(arg0, arg1 + 1);
@@ -190,8 +178,6 @@ void func_06016BBC(s32 arg0, s32 arg1, s32 arg2) {
 }
 
 s32 d_060623B0[];
-
-void func_0601B724();
 
 void PcmClose(s32 arg0, s32 arg1) {
     func_0601B724();

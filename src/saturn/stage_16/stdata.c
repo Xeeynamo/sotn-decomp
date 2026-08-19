@@ -1,17 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
 #include <saturn_sprite.h>
+#include "stage_16.h"
 
 extern SaturnSpriteResource g_Stage16SpriteBank16;
-extern SaturnSpriteFrameHeader* g_Stage16SpriteBank16Frames[];
 extern SaturnSpriteResource g_Stage16SpriteBank19;
-
-void func_060DC040(Entity* self);
-void func_060DC418(Entity* self);
-void func_060DC4C0(Entity* self);
-void func_060DC60C(Entity* self);
-void func_060DC894(Entity* self);
-void func_060DC9E0(Entity* self);
 
 typedef struct {
     SaturnSpriteResource* resource;

@@ -6,6 +6,10 @@
 
 #define _SPR2_
 #include "lib/spr/spr.h"
+#include "game.h"
+
+extern s32* SpGourTbl;
+extern s32* DAT_0605c120[];
 
 // func_06004080
 void entrypoint(void) {
@@ -20,32 +24,11 @@ void entrypoint(void) {
     } while (true);
 }
 
-void func_0600456c();
-void SetVblank();
-void ReturnToGame();
-void func_06004f50();
-void func_06005310();
-void func_0600652C();
-void func_06007d54();
-void CloseSpriteList();
-void func_06008264();
-void TransferAllBgLayers();
-void UpdateScrollForRoom();
-void StartColorOffsetFade(s32, s32);
-void func_06009838();
-void func_0600d8bc();
 void MoviePRGClear();
 void func_06010400();
 void PlaySfx();
-void func_06012fb4();
-void SPR_WaitDrawEnd();
 void SCL_Vdp2Init();
 void SCL_DisplayFrame();
-extern s32 DAT_06057f34;
-extern u16 DAT_0605cea0;
-extern u16 DAT_0605cea2;
-extern s32 DAT_0605d7f0;
-extern s32 DAT_0605d7f8;
 
 void func_060040d8(void) {
     g_Timer++;
@@ -266,7 +249,6 @@ struct Unk0600654C {
     s32 unkc;
     s32 unk10;
 };
-s32 func_06006574(struct Unk0600654C*);
 // func_0600654C
 void ReadFileToAddr(s32 param_1, s32 param_2) {
     struct Unk0600654C unk;
@@ -300,8 +282,6 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006E14, func_06006E14);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006E4C, func_06006E4C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006E9C, func_06006E9C);
 
-s32 func_0602DCFC();
-
 // _IsCdOpened
 u32 func_06006ED4() { return (func_0602DCFC() >> 5) & 1; }
 
@@ -325,16 +305,11 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6007714, func_06007714);
 
 struct Unk0600654C prg_info;
 struct Unk0600654C chr_info;
-void func_0601AE2C(s32);
-void func_0600C0C4(s32);
-void func_0600C298(s32);
-s32 func_0601AE5C(s32, s32);
 
 char* WEAPON0_PRG;
 char* WEAPON0_CHR;
 char* WEAPON1_PRG;
 char* WEAPON1_CHR;
-extern s32 g_FileLoadEnabled;
 
 void func_06007824(int param_1, int param_2) {
     if ((g_FileLoadEnabled == 0) || (0x3f < param_2)) {
@@ -376,8 +351,6 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6007CA0, AllocGourTbl);
 // func_06007CE0
 u16 LocalLookupTblNoToVram(u16 arg0) { return arg0 * 0x10 + 0x400; }
 
-void SPR_2ClrAllChar(void);
-
 s16 d_0605BECA;
 s16 d_0605AEA8;
 s16 d_0605AEB0;
@@ -399,8 +372,6 @@ void ResetSpriteVram() {
 }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6007D54, func_06007D54);
-
-void SPR_2CloseCommand();
 
 s32 d_0605AEAC;
 s32 d_06038c5c;
@@ -426,18 +397,13 @@ void CloseSpriteList(void) {
 
     SPR_2CloseCommand();
 }
-void SPR_SetEraseData(
-    Uint16 eraseData, Uint16 leftX, Uint16 topY, Uint16 rightX, Uint16 botY);
 
-void SPR_2FrameEraseData(Uint16);
 // func_06007EB8
 void SetSpriteEraseData(s16 param_1) {
     SPR_2FrameEraseData(param_1);
     SPR_SetEraseData(
         param_1, d_0605AEA0[0], d_0605AEA0[1], d_0605AEA0[2], d_0605AEA0[3]);
 }
-
-void SetVdp2BackgroundColor();
 
 // func_06007F04
 void InitVdp2Display(void) {
@@ -535,8 +501,6 @@ void func_06008464(void) {
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008488, func_06008488);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008524, func_06008524);
-
-extern Unk0605cd70 DAT_0605cd70;
 
 // Handles transfer of background tile graphics
 // func_06008588
@@ -640,7 +604,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008B20, func_06008B20);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008C2C, func_06008C2C);
 INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f6008D04, func_06008D04);
 INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f6008EE8, func_06008EE8);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008FF0, func_06008FF0);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008FF0, func_800EA5AC);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6009010, func_06009010);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6009058, func_06009058);
 
@@ -746,19 +710,6 @@ void func_0600B234(void) {
 // _ClearOdma
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600B254, func_0600B254);
 
-extern SpriteObject g_SpriteObjectPool[SPRITE_OBJECT_MAX]; /* 0x0608AFF8 */
-extern SpritePart g_SpritePartPool[SPRITE_PART_MAX];       /* 0x0608D7F8 */
-
-extern SpriteObject* g_SpriteObjectFreeList; /* 0x06057798 */
-extern SpritePart* g_SpritePartFreeList;     /* 0x0605779C */
-extern SpriteObject* g_SpriteListHead;       /* 0x06057790 */
-extern SpriteObject* g_SpriteListTail;       /* 0x06057794 */
-extern s32 g_SpriteListCount;                /* 0x06038DB0 */
-extern s32 g_SpriteObjectsInUse;             /* 0x06038DB4 */
-extern s32 g_SpritePartsInUse;               /* 0x06038DB8 */
-
-SpriteObject* AllocSpriteObject(void);
-
 static inline SpritePart* AllocSpriteParts(s32 maxParts) {
     SpritePart* head;
     SpritePart* node;
@@ -831,10 +782,6 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600BD68, func_0600BD68);
 
 // _AllocGameSprite
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600BE18, func_0600BE18);
-
-void func_0600BEA8();
-void func_0600BF08();
-void func_0600C18C();
 
 void func_0600BE7C(void) {
     func_0600BEA8();
@@ -1309,8 +1256,6 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FA4C, func_0600FA4C);
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FACC, func_0600FACC);
 
-extern s32 DAT_06039128[];
-
 void func_0600FB0C(s32 arg0) {
     DAT_06057A10[0] = arg0;
     DAT_06057A10[1] = 0;
@@ -1324,8 +1269,6 @@ void func_0600FB34(void) {
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FB4C, func_0600FB4C);
 
-s32 func_0602A778(s32, s32, s32);
-
 // original name: TEST_TEST
 void func_0600FB9C(void) { func_0602A778(0x100, 32, 0); }
 
@@ -1336,7 +1279,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FC04, RevealMapCellAtPlayer);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FCF8, func_0600FCF8);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FE98, func_0600FE98);
 
-void func_0600FEFC() {}
+void func_800F2120(void) {}
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FF08, SetCanRevealMap);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FF64, func_0600FF64);
@@ -1405,10 +1348,6 @@ void SignalSlaveSh2(void) {
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011278, func_06011278);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011A6C, func_06011A6C);
-
-extern s32 DAT_06064230;
-extern s16 DAT_060643c4;
-extern u8 DAT_060644c4;
 
 s32 PlaySfxVolPan(s32 sfxId, s32 sfxVol, s16 sfxPan) {
     s32 ret = 0;

@@ -2,6 +2,8 @@
 #include "inc_asm.h"
 #include "sattypes.h"
 
+#include "rstage15.h"
+
 void DestroyEntity(void);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60DC040, func_060DC040);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60DC1A8, func_060DC1A8);
@@ -73,8 +75,6 @@ void func_060E38D8(Entity* self) {
     }
 }
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E3904, func_060E3904);
-extern void func_060E3D58(s32 arg0, s32 arg1);
-extern void func_060E3F18(s32 arg0, s32 arg1, s32 arg2);
 extern void func_060E4064(s32 arg0, s32 arg1, s32 arg2);
 
 void func_060E3D08(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
@@ -85,8 +85,6 @@ void func_060E3D08(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E3D58, func_060E3D58);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E3F18, func_060E3F18);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E4064, func_060E4064);
-extern void func_060E43A4(s32 arg0, s32 arg1);
-extern void func_060E4474(s32 arg0, s32 arg1, s32 arg2);
 
 void func_060E4368(s32 arg0, s32 arg1, s32 arg2) {
     func_060E43A4(arg1, arg2);
@@ -95,9 +93,7 @@ void func_060E4368(s32 arg0, s32 arg1, s32 arg2) {
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E43A4, func_060E43A4);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E4474, func_060E4474);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E45E0, func_060E45E0);
-extern void SyncSpriteObjectPos(Entity* self);
 extern void func_0600B004(SpriteObject* sprite, u32 imageIndex);
-extern u32 DAT_060EF1A8[];
 
 void func_060E4630(Entity* self) {
     SyncSpriteObjectPos(self);
@@ -118,7 +114,14 @@ INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E823C, func_060E823C);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E854C, func_060E854C);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E88A0, func_060E88A0);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E8A54, func_060E8A54);
-INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E8AA4, func_060E8AA4);
+extern void SyncSpriteObjectPos(Entity* self);
+extern void func_0600B004(SpriteObject* sprite, u32 imageIndex);
+extern u32 DAT_060F2670[];
+
+void func_060E8AA4(Entity* self) {
+    SyncSpriteObjectPos(self);
+    func_0600B004(self->unk0, DAT_060F2670[self->animCurFrame]);
+}
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E8ADC, func_060E8ADC);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E8EFC, func_060E8EFC);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E9104, func_060E9104);
@@ -126,10 +129,24 @@ INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E9284, func_060E9284);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E98F0, func_060E98F0);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E9D28, func_060E9D28);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60EA0B0, func_060EA0B0);
-INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60EA100, func_060EA100);
+extern void func_06079BB4(Entity* self);
+extern void func_0600B004(SpriteObject* sprite, u32 imageIndex);
+extern u32 DAT_060F2B4C[];
+
+void func_060EA100(Entity* self) {
+    func_06079BB4(self);
+    func_0600B004(self->unk0, DAT_060F2B4C[self->animCurFrame]);
+}
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60EA138, func_060EA138);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60EA578, func_060EA578);
-INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60EA5C8, func_060EA5C8);
+extern void func_06079BB4(Entity* self);
+extern void func_0600B004(SpriteObject* sprite, u32 imageIndex);
+extern u32 DAT_060F2D68[];
+
+void func_060EA5C8(Entity* self) {
+    func_06079BB4(self);
+    func_0600B004(self->unk0, DAT_060F2D68[self->animCurFrame]);
+}
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60EA600, func_060EA600);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60EAE6C, func_060EAE6C);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60EAFF8, func_060EAFF8);

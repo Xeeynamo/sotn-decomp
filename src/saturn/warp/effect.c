@@ -1,14 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
 #include "shared_sprite_banks.h"
-
-void EntityWarpExplosion(Entity* self);
-void EntityWarpIntenseExplosion(Entity* self);
-void EntityWarpUnkId13(Entity* self);
-void EntityWarpExplosionVariants(Entity* self);
-void EntityWarpGreyPuff(Entity* self);
-void EntityWarpSoulStealOrb(Entity* self);
-void EntityWarpEnemyBlood(Entity* self);
+#include "warp.h"
 
 u16 g_WarpEInitExplosion[5] = {1, 2, 4, 5, 1};
 

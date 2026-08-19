@@ -3,6 +3,8 @@
 #include "sattypes.h"
 #include "game.h"
 
+void DestroyEntity(Entity* entity);
+
 void PlaySfx(s32 sfxId);
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606B6F8, LoadSubDisplayFiles);
@@ -11,9 +13,6 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f606B6F8, LoadSubDisplayFiles);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606B760, func_0606B760);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606BB4C, func_0606BB4C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606BEE4, func_0606BEE4);
-
-extern s32 DAT_0606C054;
-s32 func_0600654C(s32* param_1, s32 param_2);
 
 void func_0606C064(void) { func_0600654C(&DAT_0606C054, 0x00252000); }
 
@@ -96,15 +95,6 @@ void ScrollEntitiesWithCamera(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606C594, func_0606C594);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606C774, func_0606C774);
-
-extern s32 D_80097C98;
-extern RoomLoadDefHolder D_801375BC;
-extern s32 D_801375A4;
-extern s32 g_PlayerX;
-extern s32 g_PlayerY;
-
-void func_0606D798(void);
-void func_0606D6DC(void);
 
 s32 func_800F0CD8(s32 arg0) {
     u32 dy;
@@ -290,8 +280,6 @@ block_25:
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D058, SetNextRoomToLoad);
 
-extern RoomBossTeleport g_RoomBossTeleports[];
-
 s32 FindBossTeleport(s32 chunkX, s32 chunkY) {
     RoomBossTeleport* ptr;
 
@@ -314,12 +302,6 @@ s32 FindBossTeleport(s32 chunkX, s32 chunkY) {
         }
     }
 }
-
-extern s32 DAT_0605c6e4;
-extern s32 g_CutsceneHasControl;
-
-void func_0600FB34(void);
-void func_060195F0(void);
 
 // SAT: func_0606D358
 void func_800F2404(s32 arg0) {
@@ -356,10 +338,6 @@ void func_800F2404(s32 arg0) {
         break;
     }
 }
-
-extern s32 D_8006C374;
-extern RoomTeleport g_RoomTeleports[];
-extern u16 D_8003C730;
 
 // original name: PSX_POSITION_GET
 void func_0606D3FC(void) {
@@ -414,14 +392,11 @@ void func_0606D3FC(void) {
     }
 }
 
-extern s32 DAT_0605c108;
-extern s32 DAT_0606459c;
-
 // original name: PSX_TO_STAGE_NO_GET
 void func_0606D554(s32 arg0) {
     RoomTeleport* ptr;
 
-    ptr = &g_RoomTeleports[DAT_0605c108];
+    ptr = &g_RoomTeleports[D_8006C374];
 
     if (D_8003C730 == 0) {
         if (D_80097C98 == 4) {
@@ -455,7 +430,7 @@ void HandleRoomTransitionTrigger(void) {
     }
     switch (D_8003C708.unk2) {
     case 0:
-        ptr = &g_RoomTeleports[DAT_0605c108];
+        ptr = &g_RoomTeleports[D_8006C374];
         D_8003C708.unk4 = ptr->stageId;
         if (g_CurrentRoom.stageID & 0x20) {
             D_8003C708.unk4 ^= 0x20;
@@ -568,8 +543,6 @@ static bool IsAlucart(void) {
     return false;
 }
 
-extern u8 DAT_06057f62;
-
 // func_0606D880
 void UpdateEquipStatBonuses(void) {
     s32* statsPtr;
@@ -656,8 +629,6 @@ void UpdateEquipStatBonuses(void) {
         }
     }
 }
-
-extern u8 g_JewelSwordAttackBonus[];
 
 s32 CalcAttack(s32 equipId, s32 otherEquipId) {
     s32 i;
@@ -837,8 +808,6 @@ void make_all(void) {
     make_att();
     CalcDefense();
 }
-
-extern s32 D_8013AEE4;
 
 void CheckWeaponCombo(void) {
     s32 i;

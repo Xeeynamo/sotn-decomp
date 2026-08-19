@@ -950,7 +950,7 @@ void func_800F2120(void) {
     }
 }
 
-void func_800F223C(void) {
+static void func_800F223C(void) {
     g_StageId ^= STAGE_INVERTEDCASTLE_FLAG;
     func_800F2120();
     g_StageId ^= STAGE_INVERTEDCASTLE_FLAG;

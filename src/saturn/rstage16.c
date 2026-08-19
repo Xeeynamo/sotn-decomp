@@ -2,6 +2,8 @@
 #include "inc_asm.h"
 #include "sattypes.h"
 
+#include "rstage16.h"
+
 void DestroyEntity(void);
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60DC040, func_060DC040);
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60DC1A8, func_060DC1A8);
@@ -37,13 +39,36 @@ void func_060E1814(void) {
     g_Player.padSim = 0x1000;
     g_Player.demo_timer = 1;
 }
-INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E1834, func_060E1834);
+void func_060E1834(Entity* self) {
+    Primitive* prim = self->ext.save.unk10;
+    s32 i;
+
+    for (i = 0; i < 9; i++) {
+        prim->x3 = 0;
+        prim->drawMode = DRAW_HIDE;
+        prim = prim->next;
+    }
+}
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E1860, func_060E1860);
-INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E1C64, func_060E1C64);
+extern void func_060E1CB4(s32 arg0, s32 arg1);
+extern void func_060E1E74(s32 arg0, s32 arg1, s32 arg2);
+extern void func_060E1FC0(s32 arg0, s32 arg1, s32 arg2);
+
+void func_060E1C64(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    func_060E1CB4(arg1, arg3);
+    func_060E1E74(arg1, arg2, arg3);
+    func_060E1FC0(arg0, arg1, arg3);
+}
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E1CB4, func_060E1CB4);
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E1E74, func_060E1E74);
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E1FC0, func_060E1FC0);
-INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E22C4, func_060E22C4);
+extern void func_060E2300(s32 arg0, s32 arg1);
+extern void func_060E23D0(s32 arg0, s32 arg1, s32 arg2);
+
+void func_060E22C4(s32 arg0, s32 arg1, s32 arg2) {
+    func_060E2300(arg1, arg2);
+    func_060E23D0(arg0, arg1, arg2);
+}
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E2300, func_060E2300);
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E23D0, func_060E23D0);
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E253C, func_060E253C);
@@ -55,12 +80,28 @@ INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E4664, func_060E4664);
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E4804, func_060E4804);
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E4AFC, func_060E4AFC);
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E4E50, func_060E4E50);
-INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E4EA4, func_060E4EA4);
+extern void func_06079BB4(Entity* self);
+extern void func_0600B004(SpriteObject* sprite, u32 imageIndex);
+extern u32 DAT_060EDDE4[];
+
+void func_060E4EA4(Entity* self) {
+    func_06079BB4(self);
+    func_0600B004(self->unk0, DAT_060EDDE4[self->animCurFrame]);
+}
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E4EDC, func_060E4EDC);
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E56DC, func_060E56DC);
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E5CB0, func_060E5CB0);
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E5E70, func_060E5E70);
-INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E5F0C, func_060E5F0C);
+extern void func_06079BB4(Entity* self);
+extern void func_0600B004(SpriteObject* sprite, u32 imageIndex);
+extern u32 DAT_060EEFD0[];
+
+void func_060E5F0C(Entity* self) {
+    func_06079BB4(self);
+    func_0600B004(self->unk0, DAT_060EEFD0[self->animCurFrame]);
+}
+
+const u32 DAT_060E5F44 = 0xAAAAAAAB;
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E5F48, func_060E5F48);
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E660C, func_060E660C);
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E6828, func_060E6828);

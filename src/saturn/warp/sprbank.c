@@ -2,9 +2,9 @@
 #include "sattypes.h"
 #include "shared_sprite_banks.h"
 #include <saturn_sprite.h>
+#include "warp.h"
 
 extern struct SpriteParts* g_EntitySpriteBank15[];
-extern struct SpriteParts* g_WarpSpriteBank16[];
 
 void* g_WarpSpriteBanks[18] = {
     &g_SaturnSharedSpriteBank0Resource,

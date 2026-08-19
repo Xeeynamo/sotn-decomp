@@ -2,18 +2,7 @@
 #include "sattypes.h"
 #include "shared_sprite_banks.h"
 #include <saturn_sprite.h>
-
-void func_060DE348(Entity* self);
-void func_060DE6CC(Entity* self);
-void func_060DE970(Entity* self);
-void func_060DEE20(Entity* self);
-void func_060DF264(Entity* self);
-void func_060DF3B8(Entity* self);
-void func_060DF52C(Entity* self);
-void func_060DF664(Entity* self);
-
-extern SaturnSpriteResource entityRedEyeBustData;
-extern SaturnSpriteResource g_Stage02SubweaponContainerResource;
+#include "stage_02.h"
 
 EntityEntry g_Stage02EntityEntry55 = {NULL, func_060DE348};
 u32 g_Stage02EntityEntryPadding2 = 0;

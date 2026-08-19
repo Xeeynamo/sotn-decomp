@@ -8,12 +8,9 @@
 #include <saturn_sprite.h>
 #include "lib/scl.h"
 
-void PlaySfx(s32 sfxId);
+#include "t_bat.h"
 
-extern SaturnSpriteImage g_BatTextureSlices[25];
-extern SaturnSpriteResource g_BatTextureResource;
-extern struct SpriteParts* g_ServantSpriteParts[]; // 0x060D19FC
-extern s32 g_CutsceneHasControl;
+void PlaySfx(s32 sfxId);
 
 static void SetEntityAnimation(Entity* entity, AnimationFrame* anim) {
     if (entity->anim != anim) {
@@ -184,8 +181,6 @@ static u16 LookupTblNoToVram(u16 arg0) {
         return SPR_2LookupTblNoToVram(arg0 & 0xFFF);
     }
 }
-
-extern SaturnSpriteResource g_SaturnSharedSpriteBank0Resource;
 
 void UpdatePrimitives(Entity* self, s32 frameIndex) {
     Primitive* prim;
@@ -1103,12 +1098,12 @@ void ProcessSfxState(Entity* entity) {
         entity->step++;
         break;
     case 3:
-        if (func_80131F68_2()) {
+        if (func_06012DFC()) {
             entity->step++;
         }
         break;
     case 4:
-        if (!func_80131F68_2()) {
+        if (!func_06012DFC()) {
             entity->step++;
         }
         break;

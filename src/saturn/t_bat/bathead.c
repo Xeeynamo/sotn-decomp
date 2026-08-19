@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
+#include "t_bat.h"
 
 typedef struct {
     void (*Init)(s32 mode);
@@ -20,9 +21,6 @@ typedef struct {
     PfnEntityUpdate Unk3C;
 } BatServantDesc;
 
-void ServantInit(s32 mode);
-void UpdateServantDefault(Entity* self);
-void UpdateBatAttackMode(Entity* self);
 void unused_339C(Entity* self);
 void unused_33A4(Entity* self);
 void unused_33AC(Entity* self);
@@ -35,7 +33,6 @@ void unused_3C0C(Entity* self);
 void unused_3C14(Entity* self);
 void unused_3C1C(Entity* self);
 void unused_3C24(Entity* self);
-void DestroyServantEntity(Entity* self);
 
 BatServantDesc g_BatServantDesc = {
     ServantInit,
