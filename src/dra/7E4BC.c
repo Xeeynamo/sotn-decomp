@@ -1496,7 +1496,7 @@ void EntityLevelUpAnimation(Entity* self) {
         break;
     case 1:
         if (++D_80138090 == 2) {
-            g_unkGraphicsStruct.unk20 = 3;
+            g_unkGraphicsStruct.unk28 = 3;
         }
         self->ext.factory.unk80 -= 8;
         self->ext.factory.unk82 -= 8;
@@ -1540,7 +1540,7 @@ void EntityLevelUpAnimation(Entity* self) {
             self->ext.factory.unk7E = 0;
         }
         if (self->ext.factory.unk80 > 0x200) {
-            g_unkGraphicsStruct.unk20 = 0;
+            g_unkGraphicsStruct.unk28 = 0;
             DestroyEntity(self);
             return;
         }

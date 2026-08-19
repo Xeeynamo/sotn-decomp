@@ -1510,7 +1510,6 @@ void InitScreenWaveEffect(void) {
 }
 
 extern s32 d_0605AEAC;
-extern u16 DAT_0605aec0[][2];
 extern s32 SpMstCmdPos;
 
 // func_0607BED0

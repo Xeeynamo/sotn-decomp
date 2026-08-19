@@ -835,7 +835,6 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60C0920, func_060C0920);
 
 u32* d_06086234;
 u32* d_06086250;
-s32 g_GameClearFlag;
 
 void func_060C0A5C(void) {
     if (d_06086234 == 0) {

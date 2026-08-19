@@ -324,7 +324,7 @@ void RicCheckFloor(void) {
     x = &PLAYER.posX.i.hi;
     vramFlag = &g_Player.vram_flag;
 
-    if (g_unkGraphicsStruct.unk18) {
+    if (g_unkGraphicsStruct.unk20) {
         *vramFlag = 1;
         return;
     }
@@ -485,7 +485,7 @@ void RicCheckCeiling(void) {
     x = &PLAYER.posX.i.hi;
     vramFlag = &g_Player.vram_flag;
 
-    if (g_unkGraphicsStruct.unk18) {
+    if (g_unkGraphicsStruct.unk20) {
         return;
     }
     for (; i < NUM_HORIZONTAL_SENSORS; i++) {
@@ -647,7 +647,7 @@ void RicCheckWallRight(void) {
     x = &PLAYER.posX.i.hi;
     vramFlag = &g_Player.vram_flag;
 
-    if (g_unkGraphicsStruct.unk18) {
+    if (g_unkGraphicsStruct.unk20) {
         return;
     }
     effects =
@@ -722,7 +722,7 @@ void RicCheckWallLeft(void) {
     x = &PLAYER.posX.i.hi;
     vramFlag = &g_Player.vram_flag;
 
-    if (g_unkGraphicsStruct.unk18) {
+    if (g_unkGraphicsStruct.unk20) {
         return;
     }
     effects =
