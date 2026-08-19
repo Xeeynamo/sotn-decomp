@@ -151,7 +151,9 @@ for export_target in ('zero', 'game'):
     )
 
 ninja.rule('cpp',
-           command='cpp $FLAGS $in > $out',
+           command='cpp -MD -MF $out.d -MT $out $FLAGS $in > $out',
+           depfile='$out.d',
+           deps='gcc',
            description='Running preprocessor on $out from $in')
 
 ninja.rule(

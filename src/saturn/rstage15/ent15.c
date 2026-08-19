@@ -1,10 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
 #include <saturn_sprite.h>
-
-extern SaturnSpriteResource g_EntitySpriteBank14;
-
-void func_060E2A90(Entity* self);
+#include "rstage15.h"
 
 typedef struct {
     s8 spriteOffsetX;

@@ -26,8 +26,6 @@ static u16 LookupTblNoToVram(u16 arg0) {
     }
 }
 
-extern SaturnSpriteResource g_SaturnSharedSpriteBank12Resource;
-extern SaturnSpriteResource g_SaturnSharedSpriteBank13Resource;
 
 void func_06066B74(Primitive* prim0, Primitive* prim1, Primitive* prim2) {
     prim0->type = 0x1000;
@@ -463,13 +461,7 @@ s32 func_060674B8(Entity* self, s32 arg1) {
     return 0;
 }
 
-extern u8 DAT_0604E5E0[];
-
-extern void* memset(void* dest, int value, unsigned long size);
-
 void func_06067958(void) { memset(DAT_0604E5E0, 0, 0x1800); }
-
-void func_0601960C(char*, u8*, s16*, s16*, s32);
 
 void func_0606797C(char* str, s16* arg1, s32 arg2) {
     s32 temp_r0;

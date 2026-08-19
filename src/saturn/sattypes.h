@@ -1118,54 +1118,13 @@ typedef enum Elements {
 u32 SquareRoot0(s32);
 s32 func_800F4D38(s32, s32);
 void func_800F4994(void);
-extern int rand(void);
 
 // Not 100% sure about address, gcc seems to added the offset within
 // the struct to the base address
-extern Equipment g_EquipDefs[];
 
-extern GameSettings g_Settings;
-extern GameApi g_api;
 extern Entity g_Entities[TOTAL_ENTITY_COUNT]; // 0x060997F8
-extern EntityEntry** PfnEntityUpdates[];
-extern Unk0605D750 g_CurrentRoom;
-extern SpellDef g_SpellDefs[];
-extern Accessory g_AccessoryDefs[];
-extern s32 D_80137960;
-extern s32 D_80137964;
-extern s32 D_80137968;
-extern s32 g_StatBuffTimers[];
-extern s32 D_8013B5E8;
-extern s32 D_801375CC;
-extern s32 D_801375D4;
-extern s32* D_801375D8;
-extern PlayerState g_Player;
-extern Entity* g_CurrentEntity;
-extern PlayerStatus g_Status;
-extern SubweaponDef g_SubwpnDefs[];
-extern unkGraphicsStruct g_unkGraphicsStruct;
-extern u32 g_GameTimer;
-extern u32 g_Timer;
-extern FgLayer D_8003C708;
-extern s32 D_801375C8;
-extern s32 D_8006BB00;
-extern s32 g_Servant;
-extern RelicDesc g_RelicDefs[];
-extern s32 currentMusicId;
-extern u8 g_CastleFlags[];
-extern s32 g_PlayableCharacter;
-extern MenuNavigation g_MenuNavigation;
-extern PlayerHud g_PlayerHud;
-extern Pad g_pads[];
-extern Tilemap g_Tilemap;
-extern s32 g_PlayerX;
-extern s32 g_PlayerY;
-extern UNK_0605c680 DAT_0605c680;
-extern Primitive g_PrimBuf[];
 extern UNK_060485C0 DAT_060485C0;
-extern s32 g_GameClearFlag;
 extern u16 DAT_0605aec0[][2];
-extern Unk0605cd70 DAT_0605cd70;
 
 #define NUM_HORIZONTAL_SENSORS 4
 #define NUM_VERTICAL_SENSORS 7

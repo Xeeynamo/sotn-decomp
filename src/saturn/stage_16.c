@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "inc_asm.h"
 #include "sattypes.h"
+
+#include "stage_16.h"
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60DC040, func_060DC040);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60DC1A8, func_060DC1A8);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60DC318, func_060DC318);

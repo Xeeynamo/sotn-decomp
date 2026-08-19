@@ -1,6 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+#ifndef SATURN_RICHTER_H
+#define SATURN_RICHTER_H
+
+// Overlays run on top of the resident zero and game modules.
+#include "game.h"
 #include "inc_asm.h"
 #include "sattypes.h"
+#include <saturn_player.h>
 
 enum RicBlueprints {
     BP_SKID_SMOKE,
@@ -151,3 +157,55 @@ AnimationFrame D_801554F0[];
 AnimationFrame D_8015550C[];
 AnimationFrame D_80155534[];
 extern s32 g_IsPrologueStage;
+
+/* Declarations moved here by tools/saturn/move_declarations.py */
+extern SaturnPlayerGraphicsRecord g_RichterPlayerGraphicsRecords[191];
+extern void* g_RichterSpriteBanks[17];
+void func_8015E484(void);
+Entity* RicCreateEntFactoryFromEntity(
+    Entity* source, u32 factoryParams, s32 arg2);
+void func_060AA4F4(void);
+void DisableAfterImage(s32 resetAnims, s32 arg1);
+void func_060AC2DC(void);
+s32 func_060B0610(void);
+void RicUpdatePlayerEntities(void);
+void RicMain(void);
+void RicInit(u16 params);
+extern s32 D_060CEEDC[];
+extern s32 D_060CEE6C[];
+void func_060BC834(void);
+extern s16 g_RichterMapRevealRowIndices[];
+void func_060BB9BC(s32*);
+extern s32 g_RichterSavedMapPlaneConfig;
+extern s32 g_RichterSavedMapVramBase;
+extern u8 g_RichterCastleMapBitmap[240][160];
+extern u32 g_RichterCastleMapState;
+void func_060BB330();
+extern s16 D_80155D30[];
+extern u8 D_060BF1A4[];
+extern u16 g_RichterSpritePackage3AllocationIndex;
+extern SubweaponDef ric_subweapons_def[];
+extern u8 D_80174FB8;
+extern u8 D_80174FB4;
+extern u8 D_80174FB0;
+extern u8 D_80174FAC;
+extern u8 D_80154674[][4];
+extern Point32 g_RicSensorsWall[NUM_VERTICAL_SENSORS * 2];
+extern Point32 g_RicSensorsFloor[NUM_HORIZONTAL_SENSORS];
+extern Point32 g_RicSensorsCeiling[NUM_HORIZONTAL_SENSORS];
+extern AnimationFrame ric_anim_blade_dash[];
+extern AnimationFrame D_8015577C[1];
+extern AnimationFrame D_80155750[];
+extern AnimationFrame ric_anim_high_jump[];
+void RicSetRun(void);
+extern AnimationFrame ric_anim_crouch_from_stand[];
+extern AnimationFrame ric_anim_crouch_from_stand2[];
+extern void func_060A6428(u16 arg0);
+extern s32 throw_dagger_timer;
+extern u32 g_SubwpnCrashTimer;
+extern u16 D_80155528[];
+extern AnimationFrame ric_anim_stop_run[];
+extern s32 D_80154568[];
+/* End moved declarations */
+
+#endif

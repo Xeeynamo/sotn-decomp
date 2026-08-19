@@ -5,8 +5,6 @@
 #include "lib/scl.h"
 
 void PlaySfx(s32 sfxId);
-void UpdateEquipStatBonuses(void);
-s32 CalcAttack(s32 equipId, s32 otherEquipId);
 void make_all(void);
 
 extern s32 DAT_060485e0[];
@@ -31,7 +29,9 @@ extern u16 g_jewelSwordDropTable[];
 u16 Random(void);
 void FreePrimitives(s32);
 void func_06019074(const char*, s32);
-void CreateEntityFromEntity(s32, Entity*, Entity*);
+// DestroyEntity is deliberately absent from game.h: overlays declare it with
+// conflicting signatures, and the prototype in scope here is what matches.
+void DestroyEntity(Entity* entity);
 void PreventEntityFromRespawning(Entity*);
 
 static inline u16 LookupTblNoToVram(u16 arg0) {
@@ -521,17 +521,6 @@ void HitDetection(void) {
     }
 }
 
-extern u16 DAT_0605cea0;
-extern s32 DAT_0605c11a;
-
-void ResetPlayState(u16);
-void func_06005208(s32);
-void UpdatePlayTimer(void);
-void RunMainEngine(void);
-void SubDisp(void);
-void func_060728B4(void);
-void CheckWeaponCombo(void);
-
 // original name: MODE_GAME
 void ModeGame(void) {
     switch (DAT_0605cea0) {
@@ -561,15 +550,6 @@ void ModeGame(void) {
     }
 }
 
-extern SaturnStageFileRecord g_StageFileRecords[];
-extern s32 D_8006C374;
-extern s32 DAT_0605c10c;
-extern s32 DAT_06061dd0;
-extern s32 DAT_0608609c;
-
-void ResetNewGameSettings(void);
-void ApplyJosephsCloakPalette(void);
-
 // func_0606EEF8
 void ResetPlayState(u16 arg0) {
     u16 stageID;
@@ -598,8 +578,6 @@ void ResetPlayState(u16 arg0) {
     SclProcess = 1;
     ApplyJosephsCloakPalette();
 }
-
-extern s16 g_ButtonMask[];
 
 // func_0606F01C
 void ResetNewGameSettings(void) {
@@ -992,9 +970,6 @@ s32 func_800FDE00(void) {
     D_80137968 = 0;
     return 0;
 }
-
-extern s32 g_LevelHPIncrease[];
-extern s32 g_ExpNext[];
 
 // original name: check_experience
 u32 CheckAndDoLevelUp(void) {

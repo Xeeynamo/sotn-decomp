@@ -1,20 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
-
-extern AnimationFrame g_MariaAnim_060C2E64[];
-extern AnimationFrame ric_anim_land_from_air_run[];
-extern AnimationFrame ric_anim_stand[];
-extern AnimationFrame ric_anim_stand_alt[];
-extern AnimationFrame g_MariaAnim_060C2E20[];
-extern AnimationFrame g_MariaAnim_060C31E8[];
-extern AnimationFrame g_MariaAnim_060C3438[];
-extern AnimationFrame g_MariaAnim_060C34D4[];
-extern AnimationFrame g_MariaAnim_060C34F8[];
-extern AnimationFrame g_MariaAnim_060C32F8[];
-extern AnimationFrame g_MariaAnim_060C3390[];
-extern AnimationFrame g_MariaAnim_060C33B0[];
-extern AnimationFrame g_MariaAnim_060C3284[];
-extern AnimationFrame ric_anim_walk[];
+#include "maria.h"
 
 u16 g_MariaLightningPalettes[] = {0x194, 0x199};
 

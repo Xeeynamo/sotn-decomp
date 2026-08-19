@@ -2,6 +2,8 @@
 #include "inc_asm.h"
 #include "sattypes.h"
 
+#include "alucard.h"
+
 // CheckMoveDirection
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A5060, func_060A5060);
 // func_8010FDF8 on PSX
@@ -167,7 +169,6 @@ INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AEFBC, func_060AEFBC);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AF050, func_060AF050);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AF124, func_060AF124);
 
-void func_060AF1BC(int);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AF1BC, func_060AF1BC);
 
 void func_060AF4A0(void) { func_060AF1BC(1); }

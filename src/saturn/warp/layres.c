@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "warp/warp.h"
+#include "warp.h"
 
 SaturnLayerMapOffsets g_WarpLayerMapOffsets[6] = {
     {{{0x00000, 0x01DF9, 0x01E5F}, {0, 0, 0}, {0x022B9, 0x04534, 0x0457C}}},
