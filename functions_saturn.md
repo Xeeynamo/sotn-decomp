@@ -1412,5 +1412,4 @@
 | stage_15/f_nonmat/f60EBC24.s | func_060EBC24   |     2165 |        236 |       |     |
 | rstage16/f_nonmat/f60E3608.s | func_060E3608   |     2295 |        251 |       |     |
 | stage_15/f_nonmat/f60E78B8.s | func_060E78B8   |     2459 |        259 |       |     |
-| game/f_nonmat/f6070A60.s     | func_06070A60   |     2480 |        328 |       |     |
 | alucard/f_nonmat/f60A6A94.s  | func_060A6A94   |     2650 |        230 |       |     |
