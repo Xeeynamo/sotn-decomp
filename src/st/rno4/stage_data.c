@@ -64,7 +64,7 @@
 #include "gen/rno4_tilemap_60.h"
 #include "gen/rno4_tilemap_61.h"
 
-#include "gen/rno4_tiledef_0.h"
-#include "gen/rno4_tiledef_1.h"
-#include "gen/rno4_tiledef_2.h"
+#include "gen/rno4_tiledef_rload.h"
+#include "gen/rno4_tiledef_rsave.h"
+#include "gen/rno4_tiledef_rno4.h"
 #include "gen/layers.h"

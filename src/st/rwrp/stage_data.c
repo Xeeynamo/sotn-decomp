@@ -17,5 +17,5 @@ u16 D_80181D08[] = {
 #include "gen/rwrp_tilemap_3.h"
 #include "gen/rwrp_tilemap_4.h"
 #include "gen/rwrp_tilemap_5.h"
-#include "gen/rwrp_tiledef_0.h"
-#include "gen/rwrp_tiledef_1.h"
+#include "gen/rwrp_tiledef_rload.h"
+#include "gen/rwrp_tiledef_rwrp.h"

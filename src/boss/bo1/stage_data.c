@@ -76,7 +76,7 @@ u16 pal_14BD8[] = {
 #ifndef VERSION_PSP
 #include "gen/bo1_tilemap_0.h"
 #include "gen/bo1_tilemap_1.h"
-#include "gen/bo1_tiledef_unused.h"
-#include "gen/bo1_tiledef_unused_1.h"
-#include "gen/bo1_tiledef_0.h"
+#include "gen/bo1_tiledef_load.h"
+#include "gen/bo1_tiledef_save.h"
+#include "gen/bo1_tiledef_bo1.h"
 #endif

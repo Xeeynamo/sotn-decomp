@@ -50,6 +50,12 @@
 #include "gen/rno0_tilemap_46.h"
 #include "gen/rno0_tilemap_47.h"
 #include "gen/rno0_tilemap_48.h"
-#include "gen/rno0_tiledef_0.h"
-#include "gen/rno0_tiledef_1.h"
-#include "gen/rno0_tiledef_2.h"
+
+#include "gen/rno0_tiledef_rload.h"
+#ifdef VERSION_PSP
+#include "gen/rno0_tiledef_rsave.h"
+#include "gen/rno0_tiledef_rno0.h"
+#else
+#include "gen/rno0_tiledef_rno0.h"
+#include "gen/rno0_tiledef_rsave.h"
+#endif

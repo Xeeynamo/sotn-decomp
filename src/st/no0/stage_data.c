@@ -207,6 +207,6 @@ u16 e_door_pal[] = {
 #include "gen/no0_tilemap_47.h"
 #include "gen/no0_tilemap_48.h"
 
-#include "gen/no0_tiledef_0.h"
-#include "gen/no0_tiledef_1.h"
-#include "gen/no0_tiledef_2.h"
+#include "gen/no0_tiledef_no0.h"
+#include "gen/no0_tiledef_load.h"
+#include "gen/no0_tiledef_save.h"

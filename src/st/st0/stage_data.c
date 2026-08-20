@@ -130,4 +130,4 @@ u16 D_8019B210[] = {
 #include "gen/st0_tilemap_2.h"
 #include "gen/st0_tilemap_3.h"
 #include "gen/st0_tilemap_4.h"
-#include "gen/st0_tiledef_0.h"
+#include "gen/st0_tiledef_st0.h"
