@@ -6,7 +6,6 @@
 #include "t_bat/batevent.h"
 #include "t_bat/batstat.h"
 #include <saturn_sprite.h>
-#include "lib/scl.h"
 
 #include "t_bat.h"
 

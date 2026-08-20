@@ -912,6 +912,13 @@ typedef struct {
 } Unk0605D750;
 
 typedef struct {
+    u16 unk0;
+    s16 : 16;
+    s32 : 32;
+    s32 unk8;
+} Unk0605D770;
+
+typedef struct {
     /* 0x0 */ s16 x;
     /* 0x2 */ s16 y;
 } Point16; // size = 0x4

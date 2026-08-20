@@ -29,6 +29,7 @@ void func_06010400();
 void PlaySfx();
 void SCL_Vdp2Init();
 void SCL_DisplayFrame();
+void StartColorOffsetFade(s32, s32);
 
 void func_060040d8(void) {
     g_Timer++;
@@ -356,7 +357,7 @@ s16 d_0605AEA8;
 s16 d_0605AEB0;
 s16 d_0605BEC8;
 s32 d_06038dbc;
-s32 d_0605BEC4;
+s32 DAT_0605BEC4;
 s32 d_060576AC;
 
 // func_06007CF8
@@ -367,7 +368,7 @@ void ResetSpriteVram() {
     d_0605AEB0 = 0;
     d_0605BEC8 = 0x304;
     d_060576AC = 0;
-    d_0605BEC4 = 0x00011180;
+    DAT_0605BEC4 = 0x00011180;
     d_06038dbc = 0;
 }
 

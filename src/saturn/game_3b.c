@@ -2,7 +2,6 @@
 #include "inc_asm.h"
 #include "sattypes.h"
 #include "game.h"
-#include "lib/scl.h"
 
 void PlaySfx(s32 sfxId);
 void make_all(void);

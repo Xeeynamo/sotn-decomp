@@ -2,7 +2,6 @@
 #include "inc_asm.h"
 #include "sattypes.h"
 #include "game.h"
-#include "lib/scl.h"
 
 void PlaySfx(s32 sfxId);
 
@@ -94,6 +93,7 @@ void HitDetection();
 void func_06009CCC();
 void func_0600FC04();
 void func_06071C3C();
+void StartColorOffsetFade(s32, s32);
 
 static void func_800F223C(void) {
     g_CurrentRoom.stageID ^= STAGE_INVERTEDCASTLE_FLAG;
@@ -732,7 +732,7 @@ void InitRoom(void) {
         g_CurrentRoom.unkA != g_CurrentRoom.unk8) {
         g_CurrentRoom.unkA = g_CurrentRoom.unk8;
     } else {
-        DAT_0605d7dc = DAT_0605c120;
+        DAT_0605D7DC = DAT_0605c120;
     }
     func_06009510(g_CurrentRoom.unk4);
     PLAYER.posX.i.hi = PLAYER.posX.i.hi % 0x140;

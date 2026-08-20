@@ -74,10 +74,10 @@ typedef enum {
 void func_0606F1C8(Entity* entity);
 void func_0606C594(void);
 void func_0606C774(void);
-void func_06074470(void);
+s32 func_06074470(void);
 void func_0606C064(void);
 void func_0606BEE4(void);
-void func_0606BB4C(void);
+s32 func_0606BB4C(void);
 void func_0606B760(void);
 void LoadSubDisplayFiles(void);
 void func_8011A9D8(void);

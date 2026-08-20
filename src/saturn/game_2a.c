@@ -2,7 +2,6 @@
 #include "inc_asm.h"
 #include "sattypes.h"
 #include "game.h"
-#include "lib/scl.h"
 #include <saturn_sprite.h>
 
 void UpdateCapePalette(void);
