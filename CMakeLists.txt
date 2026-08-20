@@ -1210,7 +1210,6 @@ else()
     target_link_options(${PROJECT_NAME} PRIVATE -rdynamic)
 endif()
 
-
 function(add_overlay name)
     add_library(${name} SHARED ${ARGN})
     set_target_properties(${name} PROPERTIES PREFIX "")
