@@ -81,7 +81,7 @@ segments:
       - [0x5638, .data, stage_data]
       - [0x11900, .data, tilemaps]
       - [0x30530, data] # Unreferenced sprite bank
-      - [0x307B4, .data, gen/sprites]
+      - [0x307B4, .data, gen/us/sprites]
       - [0x35B00, .rodata, e_red_door]
       - [0x35B18, .rodata, e_collect]
       - [0x35BEC, .rodata, e_clock_room]

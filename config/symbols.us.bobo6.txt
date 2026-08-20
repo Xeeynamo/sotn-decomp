@@ -47,7 +47,6 @@ RicStepHit = 0x801B7818;
 RicStepDead = 0x801B7E80;
 RicStepStandInAir = 0x801B8540;
 RicStepEnableFlameWhip = 0x801B85DC;
-RicStepGenericSubwpnCrash = 0x801B86B8;
 RicStepThrowDaggers = 0x801B86EC;
 RicStepSlide = 0x801B87B4;
 RicStepSlideKick = 0x801B8A88;

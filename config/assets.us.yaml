@@ -1233,7 +1233,7 @@ files:
       - start: 0
         vram: 0x80180000
         assets:
-          - [0x2C, sprite_banks, sprite_banks]
+          - [0x2C, sprite_banks, us/sprite_banks]
           - [0x8C, paldef, palette_def]
           - [0x134, layers, layers]
           - [0x59C, gfx_banks, graphics_banks]
