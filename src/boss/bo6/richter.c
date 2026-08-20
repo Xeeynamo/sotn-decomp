@@ -114,7 +114,14 @@ static void CheckBladeDashInput() {
     }
 }
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", CheckHighJumpInput);
+void CheckHighJumpInput(void) {
+    if (RIC.step == 3 || RIC.step == 1 ||
+        (RIC.step == 5 && RIC.velocityY > FIX(1)) || RIC.step == 4) {
+        if (g_Ric.unk46 == 0 && g_Ric.padTapped & PAD_R2) {
+            func_us_801BA050();
+        }
+    }
+}
 
 extern s32 D_us_80181210[];
 extern u16 D_us_80181250[];
