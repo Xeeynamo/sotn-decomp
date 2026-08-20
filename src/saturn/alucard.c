@@ -12,19 +12,19 @@ s32 func_060A5060(void) {
         return 0;
     }
 
-    if (g_Entities->facingLeft == 0) {
-        if (g_Player.padPressed & 0x4000) {
-            g_Entities->facingLeft = 1;
+    if (!PLAYER.facingLeft) {
+        if (g_Player.padPressed & PAD_LEFT) {
+            PLAYER.facingLeft = 1;
             g_Player.unk4C = 1;
             result = -1;
-        } else if (g_Player.padPressed & 0x8000) {
+        } else if (g_Player.padPressed & PAD_RIGHT) {
             result = 1;
         }
     } else {
-        if (g_Player.padPressed & 0x4000) {
+        if (g_Player.padPressed & PAD_LEFT) {
             result = 1;
-        } else if (g_Player.padPressed & 0x8000) {
-            g_Entities->facingLeft = 0;
+        } else if (g_Player.padPressed & PAD_RIGHT) {
+            PLAYER.facingLeft = 0;
             g_Player.unk4C = 1;
             result = -1;
         }
@@ -43,43 +43,43 @@ void SetPlayerStep(PlayerSteps step) {
 
 // SetSpeedX
 void func_060A5574(s32 param_1) {
-    if (g_Entities[0].facingLeft == 1) {
+    if (PLAYER.facingLeft == 1) {
         param_1 = -param_1;
     }
-    g_Entities[0].velocityX = param_1;
+    PLAYER.velocityX = param_1;
 }
 // func_8010E3B8 on PSX
 void func_060A5594(s32 param_1) {
-    if (g_Entities[0].entityRoomIndex == 1) {
+    if (PLAYER.entityRoomIndex == 1) {
         param_1 = -param_1;
     }
-    g_Entities[0].velocityX = param_1;
+    PLAYER.velocityX = param_1;
 }
 // DecelerateX (PLAYER-specialized Saturn version)
 void func_060A55B4(s32 arg0) {
-    if (g_Entities->velocityX < 0) {
-        g_Entities->velocityX += arg0;
-        if (g_Entities->velocityX > 0) {
-            g_Entities->velocityX = 0;
+    if (PLAYER.velocityX < 0) {
+        PLAYER.velocityX += arg0;
+        if (PLAYER.velocityX > 0) {
+            PLAYER.velocityX = 0;
         }
     } else {
-        g_Entities->velocityX -= arg0;
-        if (g_Entities->velocityX < 0) {
-            g_Entities->velocityX = 0;
+        PLAYER.velocityX -= arg0;
+        if (PLAYER.velocityX < 0) {
+            PLAYER.velocityX = 0;
         }
     }
 }
 // DecelerateY (PLAYER-specialized Saturn version)
 void func_060A55E4(s32 arg0) {
-    if (g_Entities->velocityY < 0) {
-        g_Entities->velocityY += arg0;
-        if (g_Entities->velocityY > 0) {
-            g_Entities->velocityY = 0;
+    if (PLAYER.velocityY < 0) {
+        PLAYER.velocityY += arg0;
+        if (PLAYER.velocityY > 0) {
+            PLAYER.velocityY = 0;
         }
     } else {
-        g_Entities->velocityY -= arg0;
-        if (g_Entities->velocityY < 0) {
-            g_Entities->velocityY = 0;
+        PLAYER.velocityY -= arg0;
+        if (PLAYER.velocityY < 0) {
+            PLAYER.velocityY = 0;
         }
     }
 }
@@ -157,12 +157,12 @@ INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A6248, func_060A6248);
 void func_060A62E4(void) {
     s32 velocityX;
 
-    g_Entities->step_s = 3;
+    PLAYER.step_s = 3;
     velocityX = 0x60000;
-    if (g_Entities->facingLeft == 1) {
+    if (PLAYER.facingLeft == 1) {
         velocityX = -velocityX;
     }
-    g_Entities->velocityX = velocityX;
+    PLAYER.velocityX = velocityX;
 }
 // CheckSubwpnChainLimit
 s32 func_060A6314(s16 subwpnId, s16 limit) {
@@ -251,8 +251,8 @@ s32 func_060A7E90(void) {
     s32 result;
     s32 speed = 0xC000;
 
-    x = g_Entities->posX.val;
-    y = g_Entities->posY.val;
+    x = PLAYER.posX.val;
+    y = PLAYER.posY.val;
 
     CheckCollision(x - 0x70000, y, &collider, 0);
     left = collider.effects & 0x10;
@@ -266,12 +266,12 @@ s32 func_060A7E90(void) {
         call_func(speed);
         result = 1;
     } else if (right) {
-        g_Entities->velocityX = -speed;
+        PLAYER.velocityX = -speed;
         result = 1;
     } else {
         result = 0;
         if (left) {
-            g_Entities->velocityX = speed;
+            PLAYER.velocityX = speed;
             result = 1;
         }
     }
@@ -290,21 +290,21 @@ void func_060A9D90(u16 arg0) {
     s32 xOffset;
 
     xOffset = 4;
-    if (g_Entities->facingLeft != 0) {
+    if (PLAYER.facingLeft) {
         xOffset = -4;
     }
-    g_Entities->posY.val -= 0x160000;
-    g_Entities->posX.i.hi += xOffset;
+    PLAYER.posY.val -= FIX(22);
+    PLAYER.posX.i.hi += xOffset;
     func_060BAF44(g_CurrentEntity, 0x10004U, 0);
-    g_Entities->posY.val += 0x160000;
-    g_Entities->posX.i.hi -= xOffset;
+    PLAYER.posY.val += FIX(22);
+    PLAYER.posX.i.hi -= xOffset;
     if (arg0 & 1) {
         func_0600FB0C(3);
         PlaySfx(0x644);
     }
     if (arg0 & 2) {
-        g_Entities->velocityX = 0;
-        g_Entities->velocityY = 0;
+        PLAYER.velocityX = 0;
+        PLAYER.velocityY = 0;
     }
 }
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A9E3C, func_060A9E3C);
@@ -339,8 +339,8 @@ void func_060AB44C(s32 kind, s16 invincibilityFrames) {
 }
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AB4A4, func_060AB4A4);
 void func_060AB558(void) {
-    g_Entities->velocityY = 0;
-    g_Entities->velocityX = 0;
+    PLAYER.velocityY = 0;
+    PLAYER.velocityX = 0;
     if ((g_Player.padSim >> 16) != 2) {
         func_060A580C(0);
     }
@@ -350,7 +350,7 @@ INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AB5E0, func_060AB5E0);
 s32 func_060AB78C(void) {
     register void (*set_player_step)(PlayerSteps);
 
-    if (g_Entities->step_s != 0) {
+    if (PLAYER.step_s != 0) {
         if (g_unkGraphicsStruct.D_8009744C == 0 &&
             (g_Player.padTapped & 0x40) == 0 && func_06070410(1, 1) >= 0) {
             if (func_0606FC60(8) != 0) {
@@ -373,14 +373,14 @@ s32 func_060AB78C(void) {
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AB814, func_060AB814);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60ABCF0, func_060ABCF0);
 void func_060ABFA4(void) {
-    if (g_Entities->step_s == 0) {
+    if (PLAYER.step_s == 0) {
         if (g_Entities[0x10].entityId == 0) {
             DAT_060CE494 = 0x10;
             func_060BAF44(g_CurrentEntity, 0x15003D, 0);
-            g_Entities->step_s++;
+            PLAYER.step_s++;
         }
     } else if (--DAT_060CE494 == 0) {
-        g_Entities->palette = 0;
+        PLAYER.palette = 0;
         func_060A580C(0);
     }
 }

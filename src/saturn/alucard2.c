@@ -165,8 +165,8 @@ s32 func_060B9610(s16 arg0, s16 arg1) {
     }
     DestroyEntity(found);
     found->entityId = 0x13;
-    found->posX.val = g_Entities->posX.val;
-    found->posY.val = g_Entities->posY.val;
+    found->posX.val = PLAYER.posX.val;
+    found->posY.val = PLAYER.posY.val;
     found->ext.ILLEGAL.u16[2] = arg0;
     found->ext.ILLEGAL.u16[3] = arg1;
     return 0;
@@ -278,8 +278,8 @@ void func_060C07F0(Entity* self) {
         self->step++;
     }
 
-    self->posX.i.hi = g_Entities->posX.i.hi;
-    self->posY.i.hi = g_Entities->posY.i.hi;
+    self->posX.i.hi = PLAYER.posX.i.hi;
+    self->posY.i.hi = PLAYER.posY.i.hi;
     self->hitboxWidth = self->hitboxHeight = 0x1C;
 
     if (func_0606FC60(9) == 0) {

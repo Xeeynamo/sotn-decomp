@@ -42,21 +42,21 @@ void func_060A6624(u16 arg0) {
     s32 xOffset;
 
     xOffset = 3;
-    if (g_Entities->facingLeft != 0) {
+    if (PLAYER.facingLeft) {
         xOffset = -3;
     }
-    g_Entities->posY.i.hi = g_Entities->posY.i.hi;
-    g_Entities->posX.i.hi += xOffset;
+    PLAYER.posY.i.hi = PLAYER.posY.i.hi;
+    PLAYER.posX.i.hi += xOffset;
     RicCreateEntFactoryFromEntity(g_CurrentEntity, 0x10004U, 0);
-    g_Entities->posY.i.hi = g_Entities->posY.i.hi;
-    g_Entities->posX.i.hi -= xOffset;
+    PLAYER.posY.i.hi = PLAYER.posY.i.hi;
+    PLAYER.posX.i.hi -= xOffset;
     if (arg0 & 1) {
         func_0600FB0C(3);
         PlaySfx(0x644);
     }
     if (arg0 & 2) {
-        g_Entities->velocityX = 0;
-        g_Entities->velocityY = 0;
+        PLAYER.velocityX = 0;
+        PLAYER.velocityY = 0;
     }
 }
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A66C8, func_060A66C8);
@@ -110,7 +110,7 @@ void func_060A70B4(void) {
     if (MariaCheckInput(CHECK_GROUND | CHECK_FACING | 0x20 | CHECK_ATTACK |
                         CHECK_GRAVITY_FALL) == 0) {
         MariaDecelerateX(FIX(0.078125));
-        if (g_Entities->step_s == 0) {
+        if (PLAYER.step_s == 0) {
             if ((g_Player.timers[MARIA_PL_T_5] != 0) &&
                 ((g_Player.padTapped & PAD_CROSS) != 0)) {
                 func_060A9474();
@@ -185,15 +185,15 @@ void func_060A9194(s32 arg0, s32 arg1) {
 
     RicSetStep(MARIA_PL_S_CROUCH);
     g_Player.unk44 = 0;
-    g_Entities->velocityX = arg1;
-    g_Entities->velocityY = 0;
+    PLAYER.velocityX = arg1;
+    PLAYER.velocityY = 0;
 
     if (arg0 == 1) {
-        g_Entities->step_s = 4;
+        PLAYER.step_s = 4;
     } else if (arg0 == 2) {
-        g_Entities->step_s = 1;
+        PLAYER.step_s = 1;
     } else if (arg0 == 3) {
-        g_Entities->step_s = 0;
+        PLAYER.step_s = 0;
         anim = ric_anim_land_from_air_run;
     }
 
@@ -561,14 +561,14 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60ACF8C, func_060ACF8C);
 void func_060AD048(Entity* arg0) {
     extern void MariaSetSubweaponParams();
 
-    if (g_Entities->step != 8) {
+    if (PLAYER.step != 8) {
         DestroyEntity(arg0);
         return;
     }
 
-    arg0->posX.i.hi = g_Entities->posX.i.hi;
-    arg0->posY.i.hi = g_Entities->posY.i.hi;
-    arg0->facingLeft = g_Entities->facingLeft;
+    arg0->posX.i.hi = PLAYER.posX.i.hi;
+    arg0->posY.i.hi = PLAYER.posY.i.hi;
+    arg0->facingLeft = PLAYER.facingLeft;
 
     if (arg0->step == 0) {
         arg0->flags = 0x04060000;

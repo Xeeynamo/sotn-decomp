@@ -49,7 +49,7 @@ INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E1928, func_060E1928);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E25F4, func_060E25F4);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E270C, func_060E270C);
 void func_060E2750(void) {
-    g_Player.padSim = 0x1000;
+    g_Player.padSim = PAD_UP;
     g_Player.demo_timer = 1;
 }
 void func_060E2770(Entity* self) {
