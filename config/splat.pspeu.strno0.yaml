@@ -108,7 +108,7 @@ segments:
       - [0x2EF48, .data, sprite_banks]
       - [0x2EFA8, data, layers]
       - [0x2F400, .data, palette_def]
-      - [0x2F4B0, data]
+      - [0x2F4B0, .data, graphics_banks]
       - [0x2F680, .data, e_red_door_tiles]
       - [0x2F6B0, .data, e_init]
       - [0x2FA30, data]
