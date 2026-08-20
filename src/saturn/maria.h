@@ -267,6 +267,8 @@ void func_060AC604(void);
 void func_060A5BE8(void);
 void func_060A5208(u16 params);
 extern AnimationFrame ric_anim_walk[];
+extern AnimationFrame ric_anim_crouch[];
+void func_060A9304(void);
 extern AnimationFrame g_MariaAnim_060C3284[];
 extern AnimationFrame g_MariaAnim_060C33B0[];
 extern AnimationFrame g_MariaAnim_060C3390[];

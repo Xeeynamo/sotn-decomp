@@ -2,11 +2,24 @@
 #include "inc_asm.h"
 #include "sattypes.h"
 
+#include "alucard.h"
+
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B24E0, func_060B24E0);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B25F4, func_060B25F4);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B2B30, func_060B2B30);
 // GetPlayerSensor
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B2DE4, func_060B2DE4);
+void func_060B2DE4(Collider* col) {
+    u32 mod = 0;
+
+    if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
+        mod += 0x20000;
+    }
+
+    col->unk14 = g_AlucardSensorsWall[0].x - mod;
+    col->unk1C = g_AlucardSensorsWall[0].y + mod;
+    col->unk18 = g_AlucardSensorsFloor[1].y - 0x10000;
+    col->unk20 = g_AlucardSensorsCeiling[1].y + 0x10000;
+}
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B2E40, func_060B2E40);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B3024, func_060B3024);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B349C, func_060B349C);
@@ -36,7 +49,17 @@ INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B6D94, func_060B6D94);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B7214, func_060B7214);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B761C, func_060B761C);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B7848, func_060B7848);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B7994, func_060B7994);
+void func_060B7994(void) {
+    s16 zero;
+    EntryS060CE980* entry;
+
+    zero = 0;
+    entry = DAT_060CE980;
+    do {
+        *entry->unk4 = zero;
+        entry++;
+    } while ((s32)entry <= (s32)DAT_060CEA70);
+}
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B79B8, func_060B79B8);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B7A6C, func_060B7A6C);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B7B0C, func_060B7B0C);
@@ -71,11 +94,86 @@ Entity* func_060B92F8(s16 start, s16 end) {
     return NULL;
 }
 // func_80118894 on PSX
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B9340, func_060B9340);
+void func_060B9340(Entity* entity) {
+    s32 i;
+    s32 search_value;
+
+    if (entity == &g_Entities[0x10]) {
+        if (!(entity->params & 0x8000)) {
+            entity->enemyId = 1;
+        } else {
+            entity->enemyId = 2;
+        }
+        return;
+    }
+
+    if (entity < &g_Entities[0x20]) {
+        for (search_value = 0;; search_value++) {
+            for (i = 3; i < 7; i++) {
+                if (DAT_060CE4F0[i] == search_value) {
+                    DAT_060CE4F0[i]++;
+                    entity->enemyId = i;
+                    return;
+                }
+            }
+        }
+    } else {
+        for (search_value = 0;; search_value++) {
+            for (i = 7; i < 11; i++) {
+                if (DAT_060CE4F0[i] == search_value) {
+                    DAT_060CE4F0[i]++;
+                    entity->enemyId = i;
+                    return;
+                }
+            }
+        }
+    }
+}
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B93C4, func_060B93C4);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B94F8, func_060B94F8);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B95C8, func_060B95C8);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B9610, func_060B9610);
+void func_060B95C8(s32 arg0) {
+    DAT_060CC9BC = DAT_060CC9BD[arg0].f0;
+    DAT_060CE51C = DAT_060CC9BD[arg0].f1;
+    DAT_060CE51D = DAT_060CC9BD[arg0].f2;
+    DAT_060CE51E = DAT_060CC9BD[arg0].f3;
+}
+s32 func_060B9610(s16 arg0, s16 arg1) {
+    void DestroyEntity(Entity*);
+    Entity* entity;
+    Entity* found;
+    s16 limit;
+    s16 index;
+
+    limit = 0x40;
+    entity = &g_Entities[0x38];
+    index = 0x38;
+    while (1) {
+        if (entity->entityId == 0) {
+            found = entity;
+            break;
+        }
+        index++;
+        entity++;
+        if (index >= limit) {
+            found = NULL;
+            break;
+        }
+    }
+
+    if (found == NULL) {
+        return -1;
+    }
+    DestroyEntity(found);
+    found->entityId = 0x13;
+    found->posX.val = g_Entities->posX.val;
+    found->posY.val = g_Entities->posY.val;
+    found->ext.ILLEGAL.u16[2] = arg0;
+    found->ext.ILLEGAL.u16[3] = arg1;
+    return 0;
+}
+
+const u16 DAT_060B9690 = 0xCCCC;
+const u16 DAT_060B9692 = 0xCCCD;
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B9694, func_060B9694);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B9DC0, func_060B9DC0);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BA4CC, func_060BA4CC);
@@ -98,7 +196,27 @@ INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BB8A8, func_060BB8A8);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BB968, func_060BB968);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BBD9C, func_060BBD9C);
 // func_8011BD48 on PSX
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BBF08, func_060BBF08);
+s32 func_060BBF08(Entity* arg0) {
+    Entity* entity;
+    s16 entityId;
+    s16 params;
+    s32 i;
+
+    entityId = arg0->entityId;
+    params = arg0->params;
+    i = 0x10;
+    entity = &g_Entities[0x10];
+
+    for (; i <= 0x3F; i++, entity++) {
+        if (entityId == entity->entityId && params == entity->params) {
+            if (entity != arg0) {
+                return 1;
+            }
+        }
+    }
+
+    return 0;
+}
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BBF5C, func_060BBF5C);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BC01C, func_060BC01C);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BCD98, func_060BCD98);
@@ -112,7 +230,9 @@ void DestroyEntity();
 
 void func_060BD6A8(void) { DestroyEntity(); }
 
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BD6C0, func_060BD6C0);
+void func_060BD6C0() {}
+
+const u16 DAT_060BD6CA = 0;
 
 void func_060BD6CC() {}
 
@@ -144,7 +264,30 @@ INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BFB2C, func_060BFB2C);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60C0014, func_060C0014);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60C01C0, func_060C01C0);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60C06A0, func_060C06A0);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60C07F0, func_060C07F0);
+void func_060C07F0(Entity* self) {
+    if (!(g_Player.status & 2)) {
+        DestroyEntity(self);
+        return;
+    }
+
+    if (self->step == 0) {
+        func_060BA9A0(self, 12);
+        self->enemyId = 4;
+        self->hitboxWidth = self->hitboxHeight = 8;
+        self->flags = 0x04020000;
+        self->step++;
+    }
+
+    self->posX.i.hi = g_Entities->posX.i.hi;
+    self->posY.i.hi = g_Entities->posY.i.hi;
+    self->hitboxWidth = self->hitboxHeight = 0x1C;
+
+    if (func_0606FC60(9) == 0) {
+        self->hitboxState = 0;
+    } else {
+        self->hitboxState = 2;
+    }
+}
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60C08A8, func_060C08A8);
 
 void func_060C0BE8() {}

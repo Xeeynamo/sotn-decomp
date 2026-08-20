@@ -893,7 +893,18 @@ void SetDefaultSCLPriority(s32 arg0) {
     SCL_SetColMixMode(6, 1);
 }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f60727DC, func_060727DC);
+u32 func_060727DC(s32 arg0, u16 arg1, u16 arg2) {
+    if ((arg1 == 0x41 && arg2 != 0x12) || arg1 == 7) {
+        if (arg0 == 1)
+            return 0xE000012A;
+        if (arg0 == 2)
+            return 0xE000012C;
+    }
+
+    if (arg1 == 0x43)
+        return DAT_06085508 + 0xE0000126;
+    return g_StageFileRecords[arg1].unk10;
+}
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607284C, func_0607284C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60728B4, func_060728B4);
 
@@ -1302,7 +1313,17 @@ void func_800F7244(void) {
 }
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607360C, func_0607360C);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607369C, func_0607369C);
+void func_0607369C(s32 arg0, s32 arg1) {
+    u8* order;
+    s32 slot;
+    u8 swap;
+
+    order = g_Status.equipHandOrder;
+    slot = D_801375D8[arg0];
+    swap = order[slot];
+    order[slot] = order[D_801375D8[arg1]];
+    order[D_801375D8[arg1]] = swap;
+}
 
 typedef struct EquipMenuHelper {
     s32 equipTypeFilter;
@@ -1321,13 +1342,59 @@ void func_800FB0FC(void) {
     func_800FAF44(helper->isAccessory);
 }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607371C, func_0607371C);
+void func_0607371C(void) {
+    if (g_MenuNavigation.cursorEquip > 1) {
+        func_06074048(1U);
+    } else {
+        func_06074048(1U);
+    }
+}
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6073740, func_06073740);
 
 // _goto_equip
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6073770, func_06073770);
+void func_06073770(void) {
+    if (((volatile MenuNavigation*)&g_MenuNavigation)->cursorEquip > 1) {
+        func_06074048(1);
+    } else {
+        func_06074048(1);
+    }
+    DAT_0605cd70.unk0 = 7;
+    DAT_0605cd70.unk8 = 1;
+}
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60737A0, func_060737A0);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6073E58, func_06073E58);
+void func_06073E58(s32 arg0) {
+    s32* var_r8;
+    s32 temp_r2;
+    s32 temp_r3;
+    volatile s32 stack_temp;
+
+    if (D_801375CC == 0) {
+        var_r8 = &g_MenuNavigation.cursorHandEquipType;
+    } else {
+        var_r8 = &g_MenuNavigation.cursorEquipType[D_801375D4];
+    }
+
+    temp_r3 = func_0606F378(D_801375CC);
+
+    if (arg0 != 0) {
+        if (g_pads->repeat & 8) {
+            temp_r2 = *var_r8;
+            if (temp_r2 > 9) {
+                *var_r8 = temp_r2 - 0xA;
+            } else {
+                *var_r8 = 0;
+            }
+        }
+
+        if (g_pads->repeat & 0x80) {
+            if (*var_r8 < temp_r3 - 0xA) {
+                *var_r8 += 0xA;
+            } else {
+                *var_r8 = temp_r3 - 1;
+            }
+        }
+    }
+}
 
 // original name: PSX_sort_item
 void func_800FBAC4(void) {
@@ -1395,14 +1462,84 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f6074068, func_06074068);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60740F8, func_060740F8);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6074278, SetVdp2DisplayMode);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60743B8, func_060743B8);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6074470, func_06074470);
+void func_06074470(void) {
+    SclConfig scfg;
+
+    func_060100B8();
+    ClearVdp2CharRamA1();
+    SCL_InitConfigTb(&scfg);
+    scfg.dispenbl = 1;
+    scfg.charsize = 0;
+    scfg.pnamesize = 1;
+    scfg.platesize = 0;
+    scfg.coltype = 0;
+    scfg.datatype = 0;
+    scfg.mapover = 0;
+    scfg.flip = 0;
+    scfg.patnamecontrl = 100;
+    scfg.plate_addr[0] = 0x25E58000;
+    scfg.plate_addr[1] = 0x25E58000;
+    scfg.plate_addr[2] = 0x25E58000;
+    scfg.plate_addr[3] = 0x25E58000;
+    SCL_SetConfig(4U, &scfg);
+}
 
 // _EVENT_SCL_TRANS
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f60744F8, func_060744F8);
+void func_060744F8(s32 arg0) {
+    s32 count;
+    s32 offset;
+    s32 limit;
+    u32* glyphData;
+    s32* source;
+    u32 size;
+
+    limit = arg0;
+    size = 0;
+    offset = 0;
+    if (DAT_0605cea2 == 5) {
+        glyphData = GetEventTextGlyphData(0, DAT_0605D7FC - 1);
+        if (glyphData == NULL) {
+            return;
+        }
+    } else {
+        glyphData = GetStageTextGlyphData(0, g_CurrentRoom.stageID);
+    }
+
+    if (limit) {
+        count = 0;
+        while (count < limit) {
+            count++;
+            offset += *glyphData++;
+            size = *glyphData;
+        }
+    } else {
+        size = *glyphData;
+    }
+
+    source = (s32*)(offset + 0x25E22000);
+    DMA_CpuMemCopy2((s32*)0x25E20000, source, size >> 1);
+    do {
+    } while (DMA_CpuResult() == 2);
+}
 
 // _SS_MOJI_SET
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60745A0, func_060745A0);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6074698, func_06074698);
+void func_06074698(void) {
+    double temp_ret;
+    double temp_ret_2;
+    s32 arg0;
+    s32 arg1;
+    s32 arg2;
+
+    func_06024444(4);
+    arg0 = DAT_0605D7F4;
+    temp_ret = func_06031F88(arg0);
+    arg1 = DAT_06074690.unk0;
+    arg2 = DAT_06074690.unk4;
+    temp_ret_2 = func_060319E8(temp_ret, arg1, arg2);
+    func_06024494(0, func_06032014(temp_ret_2), 0);
+    func_06024474();
+}
 
 // func_06074700
 void ClearVdp2CharRamA1(void) {

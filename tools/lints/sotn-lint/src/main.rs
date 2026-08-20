@@ -97,6 +97,8 @@ fn transform_file(
     (alterations, lint_passed)
 }
 
+const SKIPPED_DIRS: [&str; 2] = ["mednafen", "saturn"];
+
 fn process_directory(dir_path: &str) -> bool {
     let fixed_transformer = FixedTransformer;
     let relics_transformer = RelicsTransformer;
@@ -153,7 +155,8 @@ fn process_directory(dir_path: &str) -> bool {
 
                         lint_passed &= passed
                     } else if item_path.is_dir() {
-                        if item_path.file_name().unwrap() != "mednafen" {
+                        let name = item_path.file_name().unwrap().to_string_lossy();
+                        if !SKIPPED_DIRS.contains(&name.as_ref()) {
                             lint_passed &= process_directory(&item_path.to_string_lossy());
                         }
                     }

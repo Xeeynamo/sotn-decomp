@@ -38,7 +38,27 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A5884, func_060A5884);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A59A8, func_060A59A8);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A5AD4, func_060A5AD4);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A5BE8, func_060A5BE8);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A6624, func_060A6624);
+void func_060A6624(u16 arg0) {
+    s32 xOffset;
+
+    xOffset = 3;
+    if (g_Entities->facingLeft != 0) {
+        xOffset = -3;
+    }
+    g_Entities->posY.i.hi = g_Entities->posY.i.hi;
+    g_Entities->posX.i.hi += xOffset;
+    RicCreateEntFactoryFromEntity(g_CurrentEntity, 0x10004U, 0);
+    g_Entities->posY.i.hi = g_Entities->posY.i.hi;
+    g_Entities->posX.i.hi -= xOffset;
+    if (arg0 & 1) {
+        func_0600FB0C(3);
+        PlaySfx(0x644);
+    }
+    if (arg0 & 2) {
+        g_Entities->velocityX = 0;
+        g_Entities->velocityY = 0;
+    }
+}
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A66C8, func_060A66C8);
 
 enum MariaInputChecks {
@@ -86,7 +106,22 @@ void MariaStepWalk(void) {
 
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A6A94, func_060A6A94);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A6B90, func_060A6B90);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A70B4, func_060A70B4);
+void func_060A70B4(void) {
+    if (MariaCheckInput(CHECK_GROUND | CHECK_FACING | 0x20 | CHECK_ATTACK |
+                        CHECK_GRAVITY_FALL) == 0) {
+        MariaDecelerateX(FIX(0.078125));
+        if (g_Entities->step_s == 0) {
+            if ((g_Player.timers[MARIA_PL_T_5] != 0) &&
+                ((g_Player.padTapped & PAD_CROSS) != 0)) {
+                func_060A9474();
+                return;
+            }
+            if (MariaCheckFacing() != 0) {
+                MariaSetSpeedX(FIX(0.9375));
+            }
+        }
+    }
+}
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A714C, func_060A714C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A7508, func_060A7508);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A75AC, func_060A75AC);
@@ -145,7 +180,25 @@ void MariaSetInit(s32 step_s) {
     }
 }
 
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9194, func_060A9194);
+void func_060A9194(s32 arg0, s32 arg1) {
+    AnimationFrame* anim = ric_anim_crouch;
+
+    RicSetStep(MARIA_PL_S_CROUCH);
+    g_Player.unk44 = 0;
+    g_Entities->velocityX = arg1;
+    g_Entities->velocityY = 0;
+
+    if (arg0 == 1) {
+        g_Entities->step_s = 4;
+    } else if (arg0 == 2) {
+        g_Entities->step_s = 1;
+    } else if (arg0 == 3) {
+        g_Entities->step_s = 0;
+        anim = ric_anim_land_from_air_run;
+    }
+
+    RicSetAnimation(anim);
+}
 
 // func_060A9210
 // new alt animation
@@ -162,7 +215,22 @@ void RicSetStand(s32 velocityX) {
         RicSetAnimation(ric_anim_stand);
 }
 
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A926C, func_060A926C);
+void MariaSetWalk(s32 arg0) {
+    if (g_Player.timers[MARIA_PL_T_8] && !g_Player.unk7A) {
+        func_060A9304();
+        return;
+    }
+    g_Player.timers[MARIA_PL_T_CURSE] = 8;
+    if (g_Player.timers[MARIA_PL_T_CURSE]) {
+        g_Player.timers[MARIA_PL_T_8] = 12;
+    }
+    g_Player.timers[MARIA_PL_T_CURSE] = 12;
+    g_Player.unk44 = 0;
+    RicSetStep(MARIA_PL_S_WALK);
+    RicSetAnimation(ric_anim_walk);
+    MariaSetSpeedX(FIX(1.59375));
+    PLAYER.velocityY = 0;
+}
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9304, func_060A9304);
 
 // _RicSetFall
@@ -333,7 +401,39 @@ void RicSetInvincibilityFrames(s32 kind, s16 invincibilityFrames) {
 
 // DisableAfterImage
 
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA8AC, func_060AA8AC);
+void func_060AA8AC(s32 resetAnims, s32 arg1) {
+    Entity* entity;
+    Primitive* prim;
+    s32 i;
+
+    if (resetAnims != 0) {
+        g_Entities[1].ext.afterImage.resetFlag = 1;
+        entity = &g_Entities[1];
+        i = 0;
+        for (; i <= 2; i++) {
+            entity->animCurFrame = 0;
+            entity->unk0->flags = 0;
+            entity++;
+        }
+
+        prim = &g_PrimBuf[g_Entities[1].primIndex];
+        while (prim != NULL) {
+            prim->x1 = 0;
+            prim = prim->next;
+        }
+    }
+
+    g_Entities[1].ext.afterImage.disableFlag = 1;
+    g_Entities[1].ext.afterImage.index = 10;
+
+    if (arg1 != 0) {
+        if (arg1 <= 3) {
+            g_Player.timers[MARIA_PL_T_AFTERIMAGE_DISABLE] = 4;
+        } else {
+            g_Player.timers[MARIA_PL_T_AFTERIMAGE_DISABLE] = arg1;
+        }
+    }
+}
 
 // func_060AA948
 void func_8015CC28(void) {
@@ -458,7 +558,29 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AC9E0, func_060AC9E0);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60ACD98, func_060ACD98);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60ACE84, func_060ACE84);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60ACF8C, func_060ACF8C);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AD048, func_060AD048);
+void func_060AD048(Entity* arg0) {
+    extern void MariaSetSubweaponParams();
+
+    if (g_Entities->step != 8) {
+        DestroyEntity(arg0);
+        return;
+    }
+
+    arg0->posX.i.hi = g_Entities->posX.i.hi;
+    arg0->posY.i.hi = g_Entities->posY.i.hi;
+    arg0->facingLeft = g_Entities->facingLeft;
+
+    if (arg0->step == 0) {
+        arg0->flags = 0x04060000;
+        arg0->hitboxOffX = 7;
+        arg0->hitboxOffY = -0x1A;
+        arg0->hitboxWidth = 0xA;
+        arg0->hitboxHeight = 0xC;
+        arg0->ext.subweapon.subweaponId = 0x16;
+        MariaSetSubweaponParams(arg0);
+        arg0->step++;
+    }
+}
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AD0E8, func_060AD0E8);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AD248, func_060AD248);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AD3A8, func_060AD3A8);

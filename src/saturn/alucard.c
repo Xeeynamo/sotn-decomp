@@ -5,7 +5,33 @@
 #include "alucard.h"
 
 // CheckMoveDirection
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A5060, func_060A5060);
+s32 func_060A5060(void) {
+    s32 result = 0;
+
+    if (g_Player.unk44 & 2) {
+        return 0;
+    }
+
+    if (g_Entities->facingLeft == 0) {
+        if (g_Player.padPressed & 0x4000) {
+            g_Entities->facingLeft = 1;
+            g_Player.unk4C = 1;
+            result = -1;
+        } else if (g_Player.padPressed & 0x8000) {
+            result = 1;
+        }
+    } else {
+        if (g_Player.padPressed & 0x4000) {
+            result = 1;
+        } else if (g_Player.padPressed & 0x8000) {
+            g_Entities->facingLeft = 0;
+            g_Player.unk4C = 1;
+            result = -1;
+        }
+    }
+
+    return result;
+}
 // func_8010FDF8 on PSX
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A50E0, func_060A50E0);
 
@@ -30,15 +56,68 @@ void func_060A5594(s32 param_1) {
     g_Entities[0].velocityX = param_1;
 }
 // DecelerateX (PLAYER-specialized Saturn version)
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A55B4, func_060A55B4);
+void func_060A55B4(s32 arg0) {
+    if (g_Entities->velocityX < 0) {
+        g_Entities->velocityX += arg0;
+        if (g_Entities->velocityX > 0) {
+            g_Entities->velocityX = 0;
+        }
+    } else {
+        g_Entities->velocityX -= arg0;
+        if (g_Entities->velocityX < 0) {
+            g_Entities->velocityX = 0;
+        }
+    }
+}
 // DecelerateY (PLAYER-specialized Saturn version)
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A55E4, func_060A55E4);
+void func_060A55E4(s32 arg0) {
+    if (g_Entities->velocityY < 0) {
+        g_Entities->velocityY += arg0;
+        if (g_Entities->velocityY > 0) {
+            g_Entities->velocityY = 0;
+        }
+    } else {
+        g_Entities->velocityY -= arg0;
+        if (g_Entities->velocityY < 0) {
+            g_Entities->velocityY = 0;
+        }
+    }
+}
 // DecelerateX (g_CurrentEntity version)
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A5614, func_060A5614);
+void func_060A5614(s32 arg0) {
+    if (g_CurrentEntity->velocityX < 0) {
+        g_CurrentEntity->velocityX += arg0;
+        if (g_CurrentEntity->velocityX > 0) {
+            g_CurrentEntity->velocityX = 0;
+        }
+    } else {
+        g_CurrentEntity->velocityX -= arg0;
+        if (g_CurrentEntity->velocityX < 0) {
+            g_CurrentEntity->velocityX = 0;
+        }
+    }
+}
 // DecelerateY (g_CurrentEntity version)
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A5644, func_060A5644);
+void func_060A5644(s32 arg0) {
+    if (g_CurrentEntity->velocityY < 0) {
+        g_CurrentEntity->velocityY += arg0;
+        if (g_CurrentEntity->velocityY > 0) {
+            g_CurrentEntity->velocityY = 0;
+        }
+    } else {
+        g_CurrentEntity->velocityY -= arg0;
+        if (g_CurrentEntity->velocityY < 0) {
+            g_CurrentEntity->velocityY = 0;
+        }
+    }
+}
 // SetPlayerAnim
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A5674, func_060A5674);
+void func_060A5674(AnimationFrame* anim) {
+    g_Player.unk39D = (g_Player.unk39D & 0x9F) | 0x10;
+    g_Player.anim = anim;
+    g_Player.poseTimer = 0;
+    g_Player.pose = 0;
+}
 // func_8010DA2C on PSX
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A56AC, func_060A56AC);
 
@@ -75,11 +154,78 @@ INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A60EC, func_060A60EC);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A61B0, func_060A61B0);
 // PerformSwordBrothers
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A6248, func_060A6248);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A62E4, func_060A62E4);
+void func_060A62E4(void) {
+    s32 velocityX;
+
+    g_Entities->step_s = 3;
+    velocityX = 0x60000;
+    if (g_Entities->facingLeft == 1) {
+        velocityX = -velocityX;
+    }
+    g_Entities->velocityX = velocityX;
+}
 // CheckSubwpnChainLimit
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A6314, func_060A6314);
+s32 func_060A6314(s16 subwpnId, s16 limit) {
+    Entity* entity;
+    s32 i;
+    s32 nFound;
+    s32 nEmpty;
+
+    entity = &g_Entities[32];
+    for (i = 0, nFound = 0, nEmpty = 0; i < 16; i++, entity++) {
+        if (!entity->entityId) {
+            nEmpty++;
+        }
+        if (entity->ext.subweapon.subweaponId &&
+            entity->ext.subweapon.subweaponId == subwpnId) {
+            nFound++;
+        }
+        if (nFound >= limit) {
+            return -1;
+        }
+    }
+    if (nEmpty) {
+        return 0;
+    }
+    return -1;
+}
 // CheckChainLimit
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A637C, func_060A637C);
+s32 func_060A637C(s32 itemId, s32 handId) {
+    Entity* entity;
+    s32 existing_count;
+    s32 i;
+    s32 chainLimit;
+
+    chainLimit = DAT_0607C266[itemId * 0x34];
+    if (chainLimit & 0x80) {
+        if (!(g_Player.unk46 & 0x8000)) {
+            return 0;
+        }
+        return -1;
+    }
+
+    entity = &g_Entities[16];
+    for (i = 16, existing_count = 0; i < 64; i++, entity++) {
+        if (entity->ext.ILLEGAL.s16[0x19] != itemId) {
+            continue;
+        }
+
+        if (handId != 0) {
+            if (entity->params & 0x8000) {
+                existing_count++;
+            }
+        } else {
+            if (!(entity->params & 0x8000)) {
+                existing_count++;
+            }
+        }
+
+        if (!(existing_count < chainLimit)) {
+            return -1;
+        }
+    }
+    return 0;
+}
 // func_8010EB5C on PSX
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A6420, func_060A6420);
 // func_8010ED54 on PSX
@@ -94,9 +240,44 @@ INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A7D3C, func_060A7D3C);
 // func_8010DFF0 on PSX
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A7D68, func_060A7D68);
 // EnableAfterImage
-void func_060A7DD0() { g_Player.pad324[0x78] = 6; }
+void func_060A7DD0() { g_Player.unk39C = 6; }
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A7DE8, func_060A7DE8);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A7E90, func_060A7E90);
+s32 func_060A7E90(void) {
+    Collider collider;
+    s32 x;
+    s32 y;
+    s32 left;
+    s32 right;
+    s32 result;
+    s32 speed = 0xC000;
+
+    x = g_Entities->posX.val;
+    y = g_Entities->posY.val;
+
+    CheckCollision(x - 0x70000, y, &collider, 0);
+    left = collider.effects & 0x10;
+
+    CheckCollision(x + 0x70000, y, &collider, 0);
+    right = collider.effects & 0x10;
+
+    if (right & left) {
+        register void (*call_func)();
+        call_func = (void (*)())func_060A5574;
+        call_func(speed);
+        result = 1;
+    } else if (right) {
+        g_Entities->velocityX = -speed;
+        result = 1;
+    } else {
+        result = 0;
+        if (left) {
+            g_Entities->velocityX = speed;
+            result = 1;
+        }
+    }
+
+    return result;
+}
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A7F28, func_060A7F28);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A80E0, func_060A80E0);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A81DC, func_060A81DC);
@@ -105,9 +286,36 @@ INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A8DF4, func_060A8DF4);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A9658, func_060A9658);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A96A0, func_060A96A0);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A972C, func_060A972C);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A9D90, func_060A9D90);
+void func_060A9D90(u16 arg0) {
+    s32 xOffset;
+
+    xOffset = 4;
+    if (g_Entities->facingLeft != 0) {
+        xOffset = -4;
+    }
+    g_Entities->posY.val -= 0x160000;
+    g_Entities->posX.i.hi += xOffset;
+    func_060BAF44(g_CurrentEntity, 0x10004U, 0);
+    g_Entities->posY.val += 0x160000;
+    g_Entities->posX.i.hi -= xOffset;
+    if (arg0 & 1) {
+        func_0600FB0C(3);
+        PlaySfx(0x644);
+    }
+    if (arg0 & 2) {
+        g_Entities->velocityX = 0;
+        g_Entities->velocityY = 0;
+    }
+}
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A9E3C, func_060A9E3C);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AA0FC, func_060AA0FC);
+void func_060AA0FC(void) {
+    if (g_Player.timers[1] != 0) {
+        func_060BAF44(g_CurrentEntity, 0x17002CU, 0);
+    }
+    if (g_Player.timers[0] != 0) {
+        func_060BAF44(g_CurrentEntity, 0x16002CU, 0);
+    }
+}
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AA150, func_060AA150);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AA23C, func_060AA23C);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AADE4, func_060AADE4);
@@ -119,15 +327,63 @@ INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AB37C, func_060AB37C);
 // func_8010E0D0 on PSX
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AB3A8, func_060AB3A8);
 // func_8010E168 on PSX
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AB44C, func_060AB44C);
+void func_060AB44C(s32 kind, s16 invincibilityFrames) {
+    if (kind == 0) {
+        func_060BAF44(g_CurrentEntity, 0x15002CU, 0);
+        if (g_Player.timers[0xD] <= invincibilityFrames) {
+            g_Player.timers[0xD] = invincibilityFrames;
+        }
+    } else if (g_Player.timers[0xE] <= invincibilityFrames) {
+        g_Player.timers[0xE] = invincibilityFrames;
+    }
+}
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AB4A4, func_060AB4A4);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AB558, func_060AB558);
+void func_060AB558(void) {
+    g_Entities->velocityY = 0;
+    g_Entities->velocityX = 0;
+    if ((g_Player.padSim >> 16) != 2) {
+        func_060A580C(0);
+    }
+}
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AB590, func_060AB590);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AB5E0, func_060AB5E0);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AB78C, func_060AB78C);
+s32 func_060AB78C(void) {
+    register void (*set_player_step)(PlayerSteps);
+
+    if (g_Entities->step_s != 0) {
+        if (g_unkGraphicsStruct.D_8009744C == 0 &&
+            (g_Player.padTapped & 0x40) == 0 && func_06070410(1, 1) >= 0) {
+            if (func_0606FC60(8) != 0) {
+                return 0;
+            }
+            if (DAT_060CE490 != 0) {
+                DAT_060CE490--;
+            }
+            if (DAT_060CE490 != 0) {
+                return 0;
+            }
+        }
+        func_060A5060();
+        set_player_step = SetPlayerStep;
+        set_player_step(Player_UnmorphMist);
+        return 1;
+    }
+    return 0;
+}
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AB814, func_060AB814);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60ABCF0, func_060ABCF0);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60ABFA4, func_060ABFA4);
+void func_060ABFA4(void) {
+    if (g_Entities->step_s == 0) {
+        if (g_Entities[0x10].entityId == 0) {
+            DAT_060CE494 = 0x10;
+            func_060BAF44(g_CurrentEntity, 0x15003D, 0);
+            g_Entities->step_s++;
+        }
+    } else if (--DAT_060CE494 == 0) {
+        g_Entities->palette = 0;
+        func_060A580C(0);
+    }
+}
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AC018, func_060AC018);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AC0C8, func_060AC0C8);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AC20C, func_060AC20C);
@@ -165,7 +421,19 @@ INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AE8E4, func_060AE8E4);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AEAE8, func_060AEAE8);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AECC4, func_060AECC4);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AEEE4, func_060AEEE4);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AEFBC, func_060AEFBC);
+void func_060AEFBC(void) {
+    if (DAT_060C84F8 == 0) {
+        if (g_Status.mp == g_Status.mpMax && !(g_Player.status & 0x100000)) {
+            if (g_Player.demo_timer == 0) {
+                func_060BAF44(g_CurrentEntity, 0x28U, 0);
+                PlaySfx(0x67D);
+            }
+            DAT_060C84F8++;
+        }
+    } else if (g_Status.mp != g_Status.mpMax) {
+        DAT_060C84F8 = 0;
+    }
+}
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AF050, func_060AF050);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AF124, func_060AF124);
 
@@ -205,10 +473,29 @@ TeleportCheck func_060AF8E0(void) {
     }
     return TELEPORT_CHECK_NONE;
 }
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AF9D4, func_060AF9D4);
+s32 func_060AF9D4(void) {
+    u32 pressed;
+    s32 result;
+    u32 i;
+
+    pressed = g_pads->pressed;
+    result = pressed & 0x0000F800u;
+    for (i = 0; i < 8; i++) {
+        if (g_Settings.buttonMask[i] & pressed) {
+            result |= g_ButtonMask[i];
+        }
+    }
+    return result;
+}
 // EntityAlucard
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AFA20, func_060AFA20);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B0310, func_060B0310);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B0584, func_060B0584);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B0638, func_060B0638);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B071C, func_060B071C);
+void func_060B071C(void) {
+    if (g_pads->previous & 0x80) {
+        DAT_060CE4B0++;
+    } else if (g_pads->previous & 0x08) {
+        DAT_060CE4B0--;
+    }
+}

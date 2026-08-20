@@ -701,7 +701,15 @@ typedef struct {
     char pad0[0x320];
     u16 unk320;
     u16 unk322;
-    char pad324[0x8C];
+    char pad324[4];
+    /* 0x328 */ AnimationFrame* anim;
+    char pad32C[0x30];
+    /* 0x35C */ u16 poseTimer;
+    /* 0x35E */ u16 pose;
+    char pad360[0x3C];
+    /* 0x39C */ u8 unk39C;
+    /* 0x39D */ u8 unk39D;
+    char pad39E[0x12];
     /* 0x3B0 */ u32 padPressed;
     /* 0x3B4 */ u32 padTapped;
     /* 0x3B8 */ s32 : 32;
