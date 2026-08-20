@@ -175,7 +175,6 @@ extern RoomTeleport g_RoomTeleports[];
 extern RoomBossTeleport g_RoomBossTeleports[];
 void func_0606D6DC(void);
 void func_0606D798(void);
-extern s32 DAT_0606C054;
 extern s32 g_ExpNext[];
 extern s32 g_LevelHPIncrease[];
 void ApplyJosephsCloakPalette(void);

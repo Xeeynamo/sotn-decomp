@@ -17,6 +17,7 @@ _WEAPON1_CHR = 0x060071BC;
 _InitSpriteEngine = 0x06007968;
 _AllocSpriteCharVram = 0x06007A34;
 _AllocGourTbl = 0x06007CA0;
+_ResetSpriteVram = 0x06007CF8;
 _func_06007d54 = 0x06007D54;
 _CloseSpriteList = 0x06007E14;
 _ResetLayerColorCalc = 0x06008048;
