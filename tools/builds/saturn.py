@@ -151,7 +151,9 @@ for export_target in ('zero', 'game'):
     )
 
 ninja.rule('cpp',
-           command='cpp $FLAGS $in > $out',
+           command='cpp -MD -MF $out.d -MT $out $FLAGS $in > $out',
+           depfile='$out.d',
+           deps='gcc',
            description='Running preprocessor on $out from $in')
 
 ninja.rule(
@@ -1031,8 +1033,6 @@ def inherited_symbol_files(target):
 
 def target_alias_options(target):
     aliases = {
-        'game': {'_func_80131F68_1': 0x06012DD0},
-        't_bat': {'_func_80131F68_2': 0x06012DFC},
     }
     return ' '.join(
         f'--defsym {name}=0x{address:08X}'

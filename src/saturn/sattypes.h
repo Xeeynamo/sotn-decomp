@@ -30,6 +30,7 @@ typedef enum {
     PAD_R1 = 0x0080,
     PAD_CROSS = 0x0100,
     PAD_SQUARE = 0x0400,
+    PAD_START = 0x0800,
     PAD_UP = 0x1000,
     PAD_DOWN = 0x2000,
     PAD_LEFT = 0x4000,
@@ -46,11 +47,14 @@ typedef enum {
 
 #define SET_STOP_MUSIC 0xF000000A
 #define SET_UNK_0B 0xF000000B
+#define SET_PAUSE_SFX_SCRIPTS 0xF000000E
 #define SET_UNPAUSE_SFX_SCRIPTS 0xF000000F
 #define SET_UNK_10 0xF0000010
 #define SET_XA_PLAYBACK 0xF0000011
 #define SET_UNK_80 0xF0000080
+#define SET_RELEASE_RATE_LOW_20_21 0xF00000A3
 #define SET_KEY_ON_20_21 0xF00000A4
+#define SET_RELEASE_RATE_LOW_22_23 0xF00000A7
 #define SET_KEY_ON_22_23 0xF00000A8
 #define SFX_METAL_CLANG_E 0x611
 #define SFX_WEAPON_STAB_A 0x62D
@@ -132,6 +136,12 @@ typedef struct Collider {
     /* 0x1C */ s32 unk1C; // Right edge of queried tile collision
     /* 0x20 */ s32 unk20; // Bottom edge of queried tile collision
 } Collider;               /* size=0x24 */
+
+typedef struct {
+    /* 0x00 */ u16* flags;
+    /* 0x04 */ u8 pad04[0x14];
+    /* 0x18 */ u16 enabled;
+} StatusFlagContext;
 
 struct Entity;
 
@@ -233,7 +243,7 @@ typedef struct {
     s16 y2;
     s16 x3;
     s16 y3;
-    s16 : 16;
+    u16 unk1B;
     u16 drawMode;
     struct Primitive* next;
 } Primitive;
@@ -416,7 +426,7 @@ typedef struct Entity {
     /* 0x62 */ u16 zPriority;
     /* 0x64 */ u16 unk68;
     /* 0x66 */ u16 hitEffect;
-    /* 0x68 */ char pad_68[1];
+    /* 0x68 */ u8 opacity;
     /* 0x69 */ u8 unk6D[11];
     /* 0x74 */ u16 entityId;
     /* 0x76 */ char pad_76[0x2];
@@ -469,6 +479,7 @@ typedef struct {
 } GameApi;
 
 void (*func_06064580)();
+void (*func_0606458C)();
 void (*func_06064590)();
 void (*func_06064594)();
 void (*func_060645A0)();
@@ -477,9 +488,12 @@ void (*func_060645B0)();
 void (*func_060645B4)();
 void (*func_060645BC)();
 void (*func_060645C0)();
+void (*func_8010E168)(s32, s32);
 void (*func_060645E0)();
+void (*func_060645E8)();
 void (*func_060645FC)();
 void (*func_06064600)();
+void (*func_06064604)();
 void (*func_06064608)();
 void (*func_06064614)();
 void (*func_06064618)();
@@ -491,6 +505,9 @@ void (*func_06064638)();
 void (*func_0606463c)();
 void (*func_06064644)();
 void (*func_0606464C)();
+void (*func_06064658)(s32);
+void (*func_06064660)();
+void (*func_06064664)();
 void (*func_06064674)();
 void (*func_06064684)();
 void (*func_06064688)();
@@ -919,7 +936,8 @@ typedef struct {
 typedef struct {
     u16 unk0;
     u16 unk2;
-    u32 unk4;
+    u16 unk4;
+    u16 unk6;
     u32 unk8;
 } Unk0605cd70;
 
@@ -1100,50 +1118,12 @@ typedef enum Elements {
 u32 SquareRoot0(s32);
 s32 func_800F4D38(s32, s32);
 void func_800F4994(void);
-extern int rand(void);
 
 // Not 100% sure about address, gcc seems to added the offset within
 // the struct to the base address
-extern Equipment g_EquipDefs[];
 
-extern GameSettings g_Settings;
-extern GameApi g_api;
 extern Entity g_Entities[TOTAL_ENTITY_COUNT]; // 0x060997F8
-extern EntityEntry** PfnEntityUpdates[];
-extern Unk0605D750 g_CurrentRoom;
-extern SpellDef g_SpellDefs[];
-extern Accessory g_AccessoryDefs[];
-extern s32 D_80137960;
-extern s32 D_80137964;
-extern s32 D_80137968;
-extern s32 g_StatBuffTimers[];
-extern s32 D_8013B5E8;
-extern s32 D_801375CC;
-extern s32 D_801375D4;
-extern s32* D_801375D8;
-extern PlayerState g_Player;
-extern Entity* g_CurrentEntity;
-extern PlayerStatus g_Status;
-extern SubweaponDef g_SubwpnDefs[];
-extern unkGraphicsStruct g_unkGraphicsStruct;
-extern u32 g_GameTimer;
-extern u32 g_Timer;
-extern FgLayer D_8003C708;
-extern s32 D_801375C8;
-extern s32 D_8006BB00;
-extern s32 g_Servant;
-extern RelicDesc g_RelicDefs[];
-extern s32 currentMusicId;
-extern u8 g_CastleFlags[];
-extern s32 g_PlayableCharacter;
-extern MenuNavigation g_MenuNavigation;
-extern PlayerHud g_PlayerHud;
-extern Pad g_pads[];
-extern Tilemap g_Tilemap;
-extern UNK_0605c680 DAT_0605c680;
-extern Primitive g_PrimBuf[];
 extern UNK_060485C0 DAT_060485C0;
-extern s32 g_GameClearFlag;
 extern u16 DAT_0605aec0[][2];
 
 #define NUM_HORIZONTAL_SENSORS 4

@@ -1,10 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
 #include <saturn_sprite.h>
-
-void func_060DFAE4(Entity* self);
-
-extern SaturnSpriteResource g_Stage02ElevatorResource;
+#include "stage_02.h"
 
 u16 g_Stage02ElevatorMessage[12] = {
     0x780E, 0x9682, 0x9640, 0x82C5, 0x8E7B, 0x8FF9,

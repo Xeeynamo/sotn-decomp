@@ -3,6 +3,8 @@
 #include "sattypes.h"
 #include "game.h"
 
+void DestroyEntity(Entity* entity);
+
 void PlaySfx(s32 sfxId);
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606B6F8, LoadSubDisplayFiles);
@@ -12,14 +14,165 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f606B760, func_0606B760);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606BB4C, func_0606BB4C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606BEE4, func_0606BEE4);
 
-extern s32 DAT_0606C054;
-s32 func_0600654C(s32* param_1, s32 param_2);
-
 void func_0606C064(void) { func_0600654C(&DAT_0606C054, 0x00252000); }
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606C088, func_0606C088);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606C160, func_0606C160);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606C3E4, func_0606C3E4);
+
+extern u16 g_ItemIconSlots[];
+extern u16 UNK_Invincibility0[];
+
+void Update(void) {
+    s16 x, y;
+    Entity* entity;
+    SpriteObject* sprite;
+    s32 flags;
+    s16 iFramePalette;
+    s32 i;
+
+    s16 temp = (g_Tilemap.vSize << 8) - (g_Tilemap.scrollY.i.hi - 0x80);
+
+    for (entity = &g_Entities[0]; entity < &g_Entities[0x40]; entity++) {
+        if (entity->unk0 != NULL) {
+            entity->unk0->unk0C = entity->unk1D;
+            entity->unk0->unk0D = entity->opacity;
+        }
+    }
+    for (i = 0; i < 0x20; i++) {
+        if (g_ItemIconSlots[i]) {
+            g_ItemIconSlots[i]--;
+        }
+    }
+    if (g_unkGraphicsStruct.BottomCornerTextTimer != 0) {
+        if (!--g_unkGraphicsStruct.BottomCornerTextTimer) {
+            FreePrimitives(g_unkGraphicsStruct.BottomCornerTextPrims);
+        }
+    }
+    for (entity = &g_Entities[0x40]; entity < &g_Entities[0x100]; entity++) {
+        if (entity->pfnUpdate == NULL) {
+            continue;
+        }
+        if (entity->step) {
+            x = entity->posX.i.hi;
+            y = entity->posY.i.hi;
+            flags = entity->flags;
+            if (flags & FLAG_DESTROY_IF_OUT_OF_CAMERA) {
+                if (flags & FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA) {
+                    if (x < -0x50 || x > 0x190 || y < -0x40 || y > 0x130) {
+                        DestroyEntity(entity);
+                        continue;
+                    }
+                } else {
+                    if (x < -0xA0 || x > 0x1E0 || y < -0x80 || y > 0x170) {
+                        DestroyEntity(entity);
+                        continue;
+                    }
+                }
+            }
+            if (flags & FLAG_UNK_02000000) {
+                if (temp < y) {
+                    DestroyEntity(entity);
+                    continue;
+                }
+            }
+            if (flags & 0xF) {
+                iFramePalette = entity->nFramesInvincibility << 1;
+                iFramePalette += flags & 1;
+                if (entity->unk0 != NULL) {
+                    entity->unk0->clutBase = UNK_Invincibility0[iFramePalette];
+                }
+                entity->flags--;
+                if ((entity->flags & 0xF) == 0) {
+                    if (entity->unk0 != NULL) {
+                        entity->unk0->clutBase = entity->hitEffect;
+                    }
+                    entity->hitEffect = 0;
+                }
+            }
+            if (flags & FLAG_UNK_20000000) {
+                if (!(flags & FLAG_UNK_10000000)) {
+                    if (x < -0x50 || x > 0x190 || y < -0x40 || y > 0x130) {
+                        continue;
+                    }
+                }
+            }
+            sprite = entity->unk0;
+            if (sprite != NULL) {
+                sprite->unk0C = entity->unk1D;
+                sprite->unk0D = entity->opacity;
+                sprite->posX = entity->posX.val;
+                sprite->posY = entity->posY.val;
+            }
+            if (entity->stunFrames != 0) {
+                entity->stunFrames--;
+                if (!(flags & FLAG_UNK_100000)) {
+                    continue;
+                }
+            }
+            if (g_unkGraphicsStruct.D_800973FC) {
+                if (!(flags & (FLAG_UNK_2000 | FLAG_DEAD))) {
+                    if (!(flags & FLAG_UNK_200)) {
+                        continue;
+                    }
+                    if (g_GameTimer & 3) {
+                        continue;
+                    }
+                }
+            }
+        }
+        g_CurrentEntity = entity;
+        entity->pfnUpdate(entity);
+        entity->hitParams = 0;
+        entity->hitFlags = 0;
+    }
+}
+
+void UpdateStageEntities(void) {
+    SpriteObject* sprite;
+    Entity* entity;
+    s16 iFramePalette;
+
+    for (entity = &g_Entities[0]; entity < &g_Entities[64]; entity++) {
+        if (entity->unk0 != NULL) {
+            entity->unk0->unk0C = entity->unk1D;
+            entity->unk0->unk0D = entity->opacity;
+        }
+    }
+    for (entity = &g_Entities[64]; entity < &g_Entities[256]; entity++) {
+        if (entity->pfnUpdate == NULL) {
+            continue;
+        }
+        if (entity->step) {
+            if ((entity->flags & FLAG_UNK_10000) == 0) {
+                continue;
+            }
+            if (entity->flags & 0xF) {
+                iFramePalette = entity->nFramesInvincibility << 1;
+                iFramePalette += entity->flags & 1;
+                if (entity->unk0 != NULL) {
+                    entity->unk0->clutBase = UNK_Invincibility0[iFramePalette];
+                }
+                entity->flags -= 1;
+                if ((entity->flags & 0xF) == 0) {
+                    if (entity->unk0 != NULL) {
+                        entity->unk0->clutBase = entity->hitEffect;
+                    }
+                    entity->hitEffect = 0;
+                }
+            }
+            sprite = entity->unk0;
+            if (sprite != NULL) {
+                sprite->unk0C = entity->unk1D;
+                sprite->unk0D = entity->opacity;
+                sprite->posX = entity->posX.val;
+                sprite->posY = entity->posY.val;
+            }
+        }
+        g_CurrentEntity = entity;
+        entity->pfnUpdate(entity);
+        entity->hitParams = 0;
+        entity->hitFlags = 0;
+    }
+}
 
 // func_0606C504
 void ScrollEntitiesWithCamera(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
@@ -47,15 +200,6 @@ void ScrollEntitiesWithCamera(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606C594, func_0606C594);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606C774, func_0606C774);
-
-extern s32 D_80097C98;
-extern RoomLoadDefHolder D_801375BC;
-extern s32 D_801375A4;
-extern s32 g_PlayerX;
-extern s32 g_PlayerY;
-
-void func_0606D798(void);
-void func_0606D6DC(void);
 
 s32 func_800F0CD8(s32 arg0) {
     u32 dy;
@@ -241,8 +385,6 @@ block_25:
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D058, SetNextRoomToLoad);
 
-extern RoomBossTeleport g_RoomBossTeleports[];
-
 s32 FindBossTeleport(s32 chunkX, s32 chunkY) {
     RoomBossTeleport* ptr;
 
@@ -265,12 +407,6 @@ s32 FindBossTeleport(s32 chunkX, s32 chunkY) {
         }
     }
 }
-
-extern s32 DAT_0605c6e4;
-extern s32 g_CutsceneHasControl;
-
-void func_0600FB34(void);
-void func_060195F0(void);
 
 // SAT: func_0606D358
 void func_800F2404(s32 arg0) {
@@ -307,10 +443,6 @@ void func_800F2404(s32 arg0) {
         break;
     }
 }
-
-extern s32 D_8006C374;
-extern RoomTeleport g_RoomTeleports[];
-extern u16 D_8003C730;
 
 // original name: PSX_POSITION_GET
 void func_0606D3FC(void) {
@@ -365,14 +497,11 @@ void func_0606D3FC(void) {
     }
 }
 
-extern s32 DAT_0605c108;
-extern s32 DAT_0606459c;
-
 // original name: PSX_TO_STAGE_NO_GET
 void func_0606D554(s32 arg0) {
     RoomTeleport* ptr;
 
-    ptr = &g_RoomTeleports[DAT_0605c108];
+    ptr = &g_RoomTeleports[D_8006C374];
 
     if (D_8003C730 == 0) {
         if (D_80097C98 == 4) {
@@ -406,7 +535,7 @@ void HandleRoomTransitionTrigger(void) {
     }
     switch (D_8003C708.unk2) {
     case 0:
-        ptr = &g_RoomTeleports[DAT_0605c108];
+        ptr = &g_RoomTeleports[D_8006C374];
         D_8003C708.unk4 = ptr->stageId;
         if (g_CurrentRoom.stageID & 0x20) {
             D_8003C708.unk4 ^= 0x20;
@@ -519,8 +648,6 @@ static bool IsAlucart(void) {
     return false;
 }
 
-extern u8 DAT_06057f62;
-
 // func_0606D880
 void UpdateEquipStatBonuses(void) {
     s32* statsPtr;
@@ -607,8 +734,6 @@ void UpdateEquipStatBonuses(void) {
         }
     }
 }
-
-extern u8 g_JewelSwordAttackBonus[];
 
 s32 CalcAttack(s32 equipId, s32 otherEquipId) {
     s32 i;
@@ -788,8 +913,6 @@ void make_all(void) {
     make_att();
     CalcDefense();
 }
-
-extern s32 D_8013AEE4;
 
 void CheckWeaponCombo(void) {
     s32 i;

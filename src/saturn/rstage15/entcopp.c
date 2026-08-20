@@ -1,13 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
 #include <saturn_sprite.h>
-
-extern SaturnSpriteResource g_RStage15SpriteBank27;
-
-void func_060EA600(Entity* self);
-void func_060EAE6C(Entity* self);
-void func_060EAFF8(Entity* self);
-void func_060EB150(Entity* self);
+#include "rstage15.h"
 
 EntityEntry g_RStage15EntityCopperArmor = {
     &g_RStage15SpriteBank27, func_060EA600};

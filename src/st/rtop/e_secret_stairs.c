@@ -6,6 +6,8 @@ extern EInit g_EInitRTOPCommon;
 extern s32 E_ID(STAIR_SEGMENT);
 #endif
 
+static u16 unused[] = {0, 0};
+
 static Point16 D_us_8018080C[] = {
     {0x0580, 0x0330},
     {0x0598, 0x0348},

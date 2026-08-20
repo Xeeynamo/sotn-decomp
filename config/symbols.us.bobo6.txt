@@ -41,7 +41,6 @@ RicStepStand = 0x801B6BD8;
 RicStepWalk = 0x801B6E3C;
 RicStepRun = 0x801B6EA8;
 RicStepJump = 0x801B6F88;
-RicStepFall = 0x801B7444;
 RicStepCrouch = 0x801B74DC;
 RicResetPose = 0x801B779C;
 RicStepHit = 0x801B7818;
