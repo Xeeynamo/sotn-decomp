@@ -107,6 +107,7 @@ segments:
       - [0x29D08, .data, gen/psp/sprites]
       - [0x2EF48, .data, sprite_banks]
       - [0x2EFA8, data, layers]
+      - [0x2F2F8, data, rooms]
       - [0x2F400, .data, palette_def]
       - [0x2F4B0, data]
       - [0x2F680, .data, e_red_door_tiles]
