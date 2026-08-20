@@ -178,7 +178,7 @@ void RicStepFall(void) {
     RicDecelerateX(FIX(0.078125));
     switch (PLAYER.step_s) {
     case 0:
-        if (g_Player.timers[PL_T_5] && (g_Player.padTapped & 0x100)) {
+        if (g_Player.timers[PL_T_5] && (g_Player.padTapped & PAD_CROSS)) {
             RicSetJump();
         } else if (RicCheckFacing()) {
             RicSetSpeedX(FIX(0.9375));

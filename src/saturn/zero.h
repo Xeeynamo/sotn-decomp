@@ -290,6 +290,14 @@ void func_06004f50();
 void ReturnToGame();
 void SetVblank();
 void func_0600456c();
+void func_060100B8(void);
+extern s32 SpMstCmdPos;
+void func_06024444(s32 arg0);
+void func_06024474(void);
+void func_06024494(s32 arg0, s32 arg1, s32 arg2);
+double func_06031F88(s32 arg0);
+double func_060319E8(double arg0, s32 arg1, s32 arg2);
+s32 func_06032014(double arg0);
 /* End moved declarations */
 
 #endif

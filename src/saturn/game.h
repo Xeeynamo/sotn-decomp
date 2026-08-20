@@ -219,6 +219,19 @@ void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity);
 extern s32 DAT_06086390;
 extern SpritePart g_SpritePartPool[SPRITE_PART_MAX];       /* 0x0608D7F8 */
 extern SpriteObject g_SpriteObjectPool[SPRITE_OBJECT_MAX]; /* 0x0608AFF8 */
+s32 func_0606F378(s32 arg0);
+
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+} UnkStruct_06074690;
+
+extern volatile s32 DAT_0605D7F4;
+extern volatile UnkStruct_06074690 DAT_06074690;
+extern s32 DAT_0605D7FC;
+s32 func_0606FC60(s32 arg0);
+s32 func_06070410(s32 arg0, s32 arg1);
+bool StatusPause(s32 arg0);
 /* End moved declarations */
 
 #endif

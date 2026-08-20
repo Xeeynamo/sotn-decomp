@@ -650,10 +650,10 @@ void HandleRoomTransitionTrigger(void) {
         }
         if (D_8003C708.flags == FLAG_UNK_40) {
             g_Player.demo_timer = 0x18;
-            g_Player.padSim = 0x4000;
+            g_Player.padSim = PAD_LEFT;
         } else {
             g_Player.demo_timer = 0x18;
-            g_Player.padSim = 0x8000;
+            g_Player.padSim = PAD_RIGHT;
         }
         D_8003C708.unk2++;
         break;

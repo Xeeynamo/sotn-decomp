@@ -55,6 +55,45 @@ extern SaturnSpriteImage AlucardImages[];
 extern s8 D_060B24B0[];
 extern u16* g_AlucardEffectAnimTable[];
 void func_060AF1BC(int);
+void func_060A580C(s32 arg0);
+void func_0600FB0C(s32 arg0);
+void PlaySfx(s32 sfxId);
+s32 func_060AB78C(void);
+void func_060ABFA4(void);
+void func_060AEFBC(void);
+void func_060B071C(void);
+s32 func_060BA9A0(Entity* entity, s32 arg);
+
+typedef struct {
+    u32 unk0;
+    s16* unk4;
+    u32 unk8;
+    u32 unkC;
+} EntryS060CE980;
+
+typedef struct {
+    s8 f0;
+    s8 f1;
+    s8 f2;
+    s8 f3;
+} Rec060CC9BD;
+
+extern Point32 g_AlucardSensorsWall[];
+extern Point32 g_AlucardSensorsFloor[];
+extern Point32 g_AlucardSensorsCeiling[];
+extern EntryS060CE980 DAT_060CE980[];
+extern EntryS060CE980 DAT_060CEA70[];
+extern u8 DAT_0607C266[];
+extern s8 DAT_060CC9BC;
+extern Rec060CC9BD DAT_060CC9BD[];
+extern s32 DAT_060CE4F0[];
+extern s8 DAT_060CE51C;
+extern s8 DAT_060CE51D;
+extern s8 DAT_060CE51E;
+extern s32 DAT_060C84F8;
+extern s32 DAT_060CE490;
+extern s32 DAT_060CE494;
+extern s16 DAT_060CE4B0;
 /* End moved declarations */
 
 #endif

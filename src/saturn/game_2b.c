@@ -20,7 +20,15 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078604, func_06078604);
 
 // _disp_num_string
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078684, func_06078684);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078700, func_06078700);
+void func_06078700(u8* arg0, s8* arg1, s32 arg2) {
+    s16 sp[4];
+
+    sp[0] = arg2 * 0xC;
+    sp[1] = 0x10;
+    sp[2] = 0;
+    sp[3] = 0;
+    func_0601960C(arg1, arg0, sp, sp + 2, 0);
+}
 
 // func_06078748
 char* GetMenuItemName(s32 id) {
@@ -52,7 +60,43 @@ char* GetMenuItemName(s32 id) {
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60787C8, func_060787C8);
 
 // _SubDispSpecial
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078920, func_06078920);
+typedef struct Func06078920Dat {
+    Sint16 unk0;
+    Sint16 unk2;
+    Sint16 unk4;
+} Func06078920Dat;
+
+typedef struct Func06078920CmdView {
+    Uint16 control;
+    Uint16 link;
+    Uint16 drawMode;
+    Uint16 color;
+    Uint16 charAddr;
+    Uint16 charSize;
+    s32 unkC;
+} Func06078920CmdView;
+
+typedef union Func06078920Cmd {
+    SprSpCmd cmd;
+    Func06078920CmdView view;
+} Func06078920Cmd;
+
+extern Func06078920Dat DAT_0605AEC4;
+extern Func06078920Cmd DAT_06086108;
+
+void func_06078920(Sint32 arg0, Point16* arg1) {
+    DAT_06086108.view.control = 0x1000;
+    DAT_06086108.view.drawMode = 0x488;
+    DAT_06086108.view.charAddr = DAT_0605AEC4.unk0;
+    DAT_06086108.view.charSize = 0x910;
+    DAT_06086108.view.color = SPR_2LookupTblNoToVram(0x31);
+    DAT_06086108.view.charAddr = DAT_0605AEC4.unk4 + 0x480;
+    DAT_06086108.view.unkC = (arg1->x << 0x10) | (u16)arg1->y;
+    if (SpMstCmdPos <= 0x277) {
+        SPR_2Cmd(arg0, &DAT_06086108.cmd);
+        d_0605AEAC += 0x20;
+    }
+}
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60789C4, func_060789C4);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078B48, func_06078B48);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078E28, func_06078E28);
@@ -72,7 +116,22 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f607973C, func_0607973C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60797FC, func_060797FC);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079958, func_06079958);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079A2C, func_06079A2C);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079AF0, func_06079AF0);
+s32 func_06079AF0(void) {
+    if (!(g_Player.status & 0x40000) && (DAT_0605d7f0 == 0) &&
+        (0x800 & g_pads->previous)) {
+        if (DAT_0605C668 != 0 && DAT_0605ceb0 != 0) {
+            if (g_PlayableCharacter != 0) {
+                if (StatusPause(0) != 0) {
+                    return 2;
+                }
+                return 0;
+            }
+            return 1;
+        }
+        return 0;
+    }
+    return 0;
+}
 
 // original name: normal_move
 void NormalMove(Entity* entity) {
@@ -650,8 +709,23 @@ s32 GetDistanceToPlayerY(Entity* self) {
     return yDistance;
 }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AA40, func_0607AA40);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AA74, func_0607AA74);
+void func_0607AA40(Entity* self, s16 arg1, s8 arg2, s8 arg3) {
+    self->step = arg1;
+    self->ext.ILLEGAL.s8[8] = arg2;
+    self->ext.ILLEGAL.s8[9] = arg3;
+    self->ext.ILLEGAL.s8[0xA] = 0;
+    self->poseTimer = 0;
+    self->pose = 0;
+    self->step_s = 0;
+}
+void func_0607AA74(Entity* entity, s16 stepS, s8 arg2, s8 arg3) {
+    entity->step_s = stepS;
+    entity->ext.ILLEGAL.u8[8] = arg2;
+    entity->ext.ILLEGAL.u8[9] = arg3;
+    entity->ext.ILLEGAL.u8[10] = 0;
+    entity->poseTimer = 0;
+    entity->pose = 0;
+}
 
 // func_0607AAA4
 void FaceEntityAwayFromPlayer(Entity* entity) {
