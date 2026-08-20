@@ -104,7 +104,7 @@ s32 func_0606C088(u16 arg0) {
 
     case 3:
     case3:
-        if (g_Servant != 0x0) {
+        if (g_Servant != 0) {
             PlaySfx(DAT_060389F4[g_Servant]);
             DAT_0605D770[2]++;
             return 1;
