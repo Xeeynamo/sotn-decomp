@@ -878,7 +878,7 @@ void UpdateBatBlueTrailEntities(Entity* self) {
                 }
                 prim->y0 = positions[i].y - (offsets[i] * 22) / 0x100;
                 prim->y2 = positions[i].y + (offsets[i] * 8) / 0x100;
-                sVar6 = prim->unk1B;
+                sVar6 = prim->unk1C;
                 temp = &SpGourTbl[sVar6];
                 temp->entry[0] = temp->entry[1] = temp->entry[2] =
                     temp->entry[3] = RGB16_COLOR(fade[i], fade[i], 0x14);
@@ -914,7 +914,7 @@ void UpdateBatBlueTrailEntities(Entity* self) {
                 prim->y0 = prim->y1 =
                     positions[i].y - (offsets[i] * 22) / 0x100;
                 prim->y3 = prim->y2 = positions[i].y + (offsets[i] * 8) / 0x100;
-                sVar6 = prim->unk1B;
+                sVar6 = prim->unk1C;
                 temp = &SpGourTbl[sVar6];
                 temp->entry[0] = temp->entry[1] = temp->entry[2] =
                     temp->entry[3] = RGB16_COLOR(fade[i], fade[i], 0x1F);
