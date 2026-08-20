@@ -84,7 +84,7 @@ void func_0600E0D0(s16, s16, s16, s16);
 void func_80102D70();
 s32 func_800F0CD8(u16);
 void func_0606D554(s32);
-void func_0606C160();
+void Update();
 void func_06066854();
 void InitRoom();
 void func_0600A030();
@@ -260,7 +260,7 @@ void RunMainEngine(void) {
         func_06064664();
         func_06066854();
     LAB_06070fd2:
-        func_0606C160();
+        Update();
         if (DAT_0605cd70.unk0 == 3) {
             DAT_0605cd70.unk0++;
             return;
@@ -498,7 +498,7 @@ void RunMainEngine(void) {
         break;
     case 0x84:
         if (D_80097C98 != 0) {
-            func_0606C160();
+            Update();
         }
         switch (DAT_0605cd70.unk8) {
         case 0:
@@ -830,8 +830,8 @@ void InitRoom(void) {
     func_800F0CD8(0);
     func_800F0CD8(0);
     InitRoomEntities(g_CurrentRoom.unk4);
-    func_0606C160();
-    func_0606C160();
+    Update();
+    Update();
     DAT_0605cd70.unk0++;
     if ((g_CurrentRoom.unk6 == 0x50) || (g_CurrentRoom.unk6 == 0x60)) {
         if (g_unkGraphicsStruct.D_800973FC == 0) {
