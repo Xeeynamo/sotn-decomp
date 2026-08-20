@@ -743,7 +743,7 @@ set(SOURCE_FILES_STAGE_RNO0
     src/st/rno0/stage_data.c
     src/st/rno0/tilemaps.c
     src/st/rno0/gen/rooms.c
-    src/st/rno0/gen/sprites.c)
+    src/st/rno0/gen/us/sprites.c)
 
 set(SOURCE_FILES_STAGE_RNO4
     src/pc/stages/stage_rno4.c
