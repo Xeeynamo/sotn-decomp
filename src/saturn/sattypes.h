@@ -243,7 +243,7 @@ typedef struct {
     s16 y2;
     s16 x3;
     s16 y3;
-    u16 unk1B;
+    u16 unk1C;
     u16 drawMode;
     struct Primitive* next;
 } Primitive;
@@ -814,15 +814,15 @@ typedef struct {
 typedef struct {
     s32 displayHP;
     s32 primIndex1;
-    s32 : 32;
-    s32 : 32;
+    s32 primIndex2;
+    s32 unk0C;
+    u32 unk10;
+    s32 unk14;
     u32 : 32;
-    s32 : 32;
-    u32 : 32;
-    u32 : 32;
-    u32 : 32;
+    u32 unk1C;
+    u32 unk20;
     u32 unk24;
-    s32 : 32;
+    s32 unk28;
     s32 g_HealingMailTimer;
 } PlayerHud;
 
