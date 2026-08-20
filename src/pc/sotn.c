@@ -118,7 +118,6 @@ static void GameLoopCallback(void) { Replay_OnFrame(); }
 
 struct InitGameParams g_GameParams;
 bool InitGame(struct InitGameParams* params) {
-    Psyz_SetTitle("Castlevania: Symphony of the Night");
     g_GameParams = *params;
     Replay_Init(params);
     Psyz_SetVSyncCb(GameLoopCallback);
