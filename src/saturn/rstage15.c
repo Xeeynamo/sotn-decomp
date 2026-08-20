@@ -8,11 +8,40 @@ void DestroyEntity(void);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60DC040, func_060DC040);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60DC1A8, func_060DC1A8);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60DC2A4, func_060DC2A4);
-INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60DC3A4, func_060DC3A4);
+void func_060DC3A4(Entity* self) {
+    SpriteObject* sprite;
+    s32 frameOffset;
+
+    if (self->step == 0) {
+        TekiInit(self, 5);
+        self->step++;
+        sprite = CreateSpriteObject(
+            g_RStage15SpriteBank16.allocationIndex,
+            g_RStage15SpriteBank16.flags, g_RStage15SpriteBank16.images, 1);
+        self->unk0 = sprite;
+        self->animCurFrame = 0x2A;
+        frameOffset = 0x2A * sizeof(SaturnSpriteFrameHeader*);
+        func_0600AFA8(
+            sprite,
+            *(SaturnSpriteFrameHeader**)((u8*)g_RStage15SpriteBank16Frames +
+                                         frameOffset));
+        sprite->zPriority = 0x6A;
+        self->step = 0x100;
+        func_06079BB4(self);
+    }
+}
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60DC434, func_060DC434);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60DC580, func_060DC580);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60DCA30, func_060DCA30);
-INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60DCC10, func_060DCC10);
+void func_060DCC10(s32 unused, s16 amount) {
+    g_unkGraphicsStruct.D_80097448 = amount;
+    if (amount > 4) {
+        g_unkGraphicsStruct.D_8009744C = amount - 4;
+    } else {
+        g_unkGraphicsStruct.D_8009744C = 0;
+    }
+    g_unkGraphicsStruct.D_80097450 = amount;
+}
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60DCC44, func_060DCC44);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60DCCA4, func_060DCCA4);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60DCD58, func_060DCD58);

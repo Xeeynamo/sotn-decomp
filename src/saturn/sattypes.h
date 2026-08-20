@@ -380,6 +380,19 @@ typedef union { // offset=0x78
     } whip;
 } Ext;
 
+// Flags for entity->drawFlags
+typedef enum {
+    ENTITY_DEFAULT = 0x00, // use plain rendering, fastest drawing method
+    ENTITY_SCALEX = 0x01,  // use entity->scaleX
+    ENTITY_SCALEY = 0x02,  // use entity->scaleY
+    ENTITY_ROTATE = 0x04,  // use entity->rotate
+    ENTITY_OPACITY = 0x08, // use entity->opacity, enable texture shading
+    ENTITY_MASK_R = 0x10,  // set red to 128, must set ENTITY_OPACITY
+    ENTITY_MASK_G = 0x20,  // set green to 128, must set ENTITY_OPACITY
+    ENTITY_MASK_B = 0x40,  // set blue to 128, must set ENTITY_OPACITY
+    ENTITY_BLINK = 0x80,   // disable rendering on even/odd g_Timer
+} EntityDrawFlags;
+
 typedef struct Entity {
     /* 0x00 */ struct SpriteObject* unk0;
     /* 0x04 */ SotnFixed32 posX;
@@ -391,10 +404,10 @@ typedef struct Entity {
     /* 0x18 */ u16 facingLeft;
     /* 0x1A */ u16 palette;
     /* 0x1C */ u8 : 8;
-    /* 0x1D */ u8 unk1D;
-    /* 0x1E */ s16 rotate;
-    /* 0x20 */ s16 : 16;
-    /* 0x22 */ s16 : 16;
+    /* 0x1D */ u8 drawFlags; // refer to enum EntityDrawFlags
+    /* 0x1E */ s16 rotate;   // 0x1000: 360 degrees, enabled with ENTITY_ROTATE
+    /* 0x20 */ s16 scaleX;   // 0x100: 1.0, enabled with ENTITY_SCALEX
+    /* 0x22 */ s16 scaleY;   // 0x100: 1.0, enabled with ENTITY_SCALEY
     /* 0x24 */ s16 : 16;
     /* 0x26 */ s16 : 16;
     /* 0x28 */ PfnEntityUpdate pfnUpdate;
@@ -431,7 +444,8 @@ typedef struct Entity {
     /* 0x74 */ u16 entityId;
     /* 0x76 */ char pad_76[0x2];
     /* 0x78 */ Ext ext;
-    /* 0xB4 */ Primitive* unkB4;
+    // entity that last hit this one
+    /* 0xB4 */ struct Entity* unkB4;
 } Entity; // size = 0xB8
 
 typedef struct SpritePart {
@@ -572,17 +586,17 @@ typedef struct {
     /* 0x00 */ s16 attack;
     /* 0x02 */ s16 heartCost;
     /* 0x04 */ u16 attackElement;
-    /* 0x06 */ u8 unk6;
-    /* 0x07 */ u8 sp17;
-    /* 0x08 */ u16 sp18;
-    /* 0x0A */ u8 unkA;
-    /* 0x0B */ u8 unkB;
-    /* 0x0C */ u16 sp1C;
-    /* 0x0E */ u16 sp1E;
-    /* 0x10 */ u8 sp20;
+    /* 0x06 */ u8 chainLimit; // how many instances of subwpn can coexist
+    /* 0x07 */ u8 nFramesInvincibility;
+    /* 0x08 */ u16 stunFrames;
+    /* 0x0A */ u8 anim;
+    /* 0x0B */ u8 blueprintNum; // Blueprint for entity factory spawning subwpn
+    /* 0x0C */ u16 hitboxState;
+    /* 0x0E */ u16 hitEffect;
+    /* 0x10 */ u8 crashId; // the ID for the crash version of this subweapon
     /* 0x11 */ u8 unk11;
-    /* 0x12 */ u16 sp22; // entity->entityRoomIndex
-} SubweaponDef;          /* size=0x14 */
+    /* 0x12 */ u16 entityRoomIndex;
+} SubweaponDef; /* size=0x14 */
 
 typedef struct {
     /* 0x00 */ const char* name;
@@ -636,11 +650,11 @@ typedef struct {
     /* 0x04 */ const char* combo;
     /* 0x08 */ const char* description;
     /* 0x0C */ s8 mpUsage;
-    /* 0x0D */ s8 unk0D;
-    /* 0x0E */ s16 unk0E;
-    /* 0x10 */ s16 unk10;
-    /* 0x12 */ s16 unk12;
-    /* 0x14 */ s16 unk14;
+    /* 0x0D */ s8 nFramesInvincibility;
+    /* 0x0E */ s16 stunFrames;
+    /* 0x10 */ s16 hitboxState;
+    /* 0x12 */ s16 hitEffect;
+    /* 0x14 */ s16 entityRoomIndex;
     /* 0x16 */ u16 attackElement;
     /* 0x18 */ s16 attack;
     /* 0x1A */ u16 unk1A;
@@ -702,7 +716,7 @@ typedef struct {
     u16 unk320;
     u16 unk322;
     char pad324[4];
-    /* 0x328 */ AnimationFrame* anim;
+    /* 0x328 */ s32 anim; // index into the character's animation table
     char pad32C[0x30];
     /* 0x35C */ u16 poseTimer;
     /* 0x35E */ u16 pose;
@@ -1139,6 +1153,16 @@ void func_800F4994(void);
 
 extern Entity g_Entities[TOTAL_ENTITY_COUNT]; // 0x060997F8
 extern UNK_060485C0 DAT_060485C0;
+// One entry of the VRAM transfer queue at d_0605DB60.
+typedef struct {
+    /* 0x00 */ s32 unk0;
+    /* 0x04 */ s32 unk4;
+    /* 0x08 */ s16 unk8;
+    /* 0x0A */ s16 unkA;
+    /* 0x0C */ s16 unkC;
+    /* 0x0E */ s16 unkE;
+} Unk0605DB60; /* size = 0x10 */
+
 extern u16 DAT_0605aec0[][2];
 
 #define NUM_HORIZONTAL_SENSORS 4

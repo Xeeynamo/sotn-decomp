@@ -192,6 +192,13 @@ extern u32* d_06086250;
 extern u32* d_06086234;
 s32 func_0606F21C(s32 eventId, s32 action);
 extern s32 func_0606F328(s32 arg0);
+// GetSpellDef / func_800FE3C4
+s32 func_0606F59C(SpellDef* spell, s32 id);
+s32 func_0606FC80(SubweaponDef* subwpn, s16 subweaponId, s16 useHearts);
+// func_06078700 and GetMenuItemName
+void func_06078700(u8* dst, s8* text, s32 nChars);
+s8* func_06078748(s32 id);
+extern s8* DAT_06085DCC[];
 extern Primitive g_PrimBuf[];
 extern PlayerHud g_PlayerHud;
 extern RelicDesc g_RelicDefs[];

@@ -193,7 +193,7 @@ static void func_80159C04(void) {
     s16 var_s2;
     s16 var_s1;
 
-    entity = (Entity*)PLAYER.unkB4;
+    entity = PLAYER.unkB4;
     if (entity->facingLeft) {
         var_s3 = -entity->hitboxOffX;
     } else {
@@ -802,7 +802,26 @@ void func_8015CC28(void) {
                 g_Entities[E_AFTERIMAGE_1].ext.afterImage.timer = 0;
 }
 
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA4F4, func_060AA4F4);
+void func_060AA4F4(s32 spawnParticles) {
+    Entity* source;
+    Entity* factory;
+
+    if (spawnParticles == 1) {
+        source = &PLAYER;
+        factory = RicCreateEntFactoryFromEntity(
+            source, FACTORY(BP_CRASH_DAGGER, 0x47), 0);
+        if (factory != NULL) {
+            factory->flags |= FLAG_UNK_10000;
+        }
+        factory = RicCreateEntFactoryFromEntity(
+            source, FACTORY(BP_CRASH_DAGGER, 0x40), 0);
+        if (factory != NULL) {
+            factory->flags |= FLAG_UNK_10000;
+        }
+    }
+
+    DisableAfterImage(1, 1);
+}
 
 // RicCheckInput
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA5C0, func_060AA5C0);
@@ -897,11 +916,11 @@ void func_060ABA98(Entity* entity) {
         entity->attack = subwpn->attack;
     }
     entity->attackElement = subwpn->attackElement;
-    entity->hitboxState = subwpn->sp1C;
-    entity->nFramesInvincibility = subwpn->sp17;
-    entity->stunFrames = subwpn->sp18;
-    entity->hitEffect = subwpn->sp1E;
-    entity->entityRoomIndex = subwpn->sp22;
+    entity->hitboxState = subwpn->hitboxState;
+    entity->nFramesInvincibility = subwpn->nFramesInvincibility;
+    entity->stunFrames = subwpn->stunFrames;
+    entity->hitEffect = subwpn->hitEffect;
+    entity->entityRoomIndex = subwpn->entityRoomIndex;
     entity->attack = func_0606F328(entity->attack);
     func_8015F9F0(entity);
 }
@@ -967,7 +986,31 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ABF34, func_060ABF34);
 // RicUpdatePlayerEntities
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AC0E0, func_060AC0E0);
 
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AC2DC, func_060AC2DC);
+// Runs the update function of every non-player entity slot.
+void func_060AC2DC(void) {
+    Entity* entity;
+    s32 i;
+
+    if (PLAYER.unk0 != NULL) {
+        g_CurrentEntity = entity = &g_Entities[UNK_ENTITY_4];
+        i = UNK_ENTITY_4;
+        do {
+            if (!(entity->flags & FLAG_UNK_20000)) {
+                DestroyEntity(entity);
+            }
+            if ((entity->flags & FLAG_UNK_02000000) && (entity->step != 0)) {
+                entity->flags |= FLAG_UNK_00200000;
+                entity->pfnUpdate(entity);
+                entity->flags &= ~FLAG_UNK_00200000;
+            }
+            i++;
+            g_CurrentEntity++;
+            entity++;
+        } while (i <= 0x3F);
+        // prevent inline
+        ((s32(*)(s32, s32))DisableAfterImage)(1, 3);
+    }
+}
 
 Entity* RicCreateEntFactoryFromEntity(
     Entity* source, u32 factoryParams, s32 arg2) {
@@ -1584,7 +1627,33 @@ void func_060BB90C(void) {
     DAT_0605c6e4 = 1;
 }
 
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BB9BC, func_060BB9BC);
+void func_060BB9BC(s32* src) {
+    s32* dst;
+    Unk0605DB60* entry;
+    s32 i;
+
+    dst = (s32*)((DAT_0605aec0[0][0] * 8) + 0x25C00000);
+    DMA_CpuMemCopy2(dst, src, 0x8400);
+    while (DMA_CpuResult() == 2) {
+    }
+
+    entry = d_0605DB60;
+    for (i = 0; i <= 0x1F; i++) {
+        entry->unkC = entry->unk8;
+        entry->unkE = entry->unkA;
+        entry++;
+    }
+
+    dst = (s32*)((SPR_2LookupTblNoToVram(0x10) * 8) + 0x25C00000);
+    DMA_CpuMemCopy2(dst, src + 0x4200, 0x400);
+    while (DMA_CpuResult() == 2) {
+    }
+
+    dst = (s32*)0x25F00800;
+    DMA_CpuMemCopy2(dst, src + 0x4400, 0x200);
+    while (DMA_CpuResult() == 2) {
+    }
+}
 
 s32 DAT_06086390;
 s32 DAT_060476a0;
@@ -1606,7 +1675,32 @@ void func_060BBAC8(void) {
 }
 
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BBAF4, func_060BBAF4);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BBC00, func_060BBC00);
+void func_060BBC00(void) {
+    s32* base;
+    s32* dst;
+    u8* text;
+    s32 slot;
+    s32 i;
+
+    DAT_06086390 = 2;
+    base = func_060784A8();
+    base[0x4500] = -1;
+    memset(base + 0x4501, 0, 0xA000);
+
+    text = (u8*)(base + 0x4501);
+    for (i = 0; i <= 7; i++) {
+        func_06078700(text, func_06078748(i), 12);
+        text += 0x480;
+    }
+    func_06078700(text, DAT_06085DCC[2], 6);
+
+    // DAT_0605aec0[2][0]; the compiler reads it through an index register.
+    slot = 2;
+    dst = (s32*)((DAT_0605aec0[slot][0] * 8) + 0x25C00000);
+    DMA_CpuMemCopy2(dst, base + 0x4501, 0x1320);
+    while (DMA_CpuResult() == 2) {
+    }
+}
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BBCCC, func_060BBCCC);
 
 void func_060BBD88(void) {
@@ -1724,7 +1818,29 @@ after:
     func_060BC834();
 }
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BCA84, func_060BCA84);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BCDB8, func_060BCDB8);
+void func_060BCDB8(void) {
+    switch (DAT_0605cd70.unk8) {
+    case 0:
+        func_060732E4(DAT_0605cd70.unk0);
+        DAT_0605cd70.unk8++;
+        /* fall through */
+    case 1:
+        if (DAT_06057f68 == 0 && (g_pads->previous & PAD_CROSS)) {
+            D_06085534 = 6;
+            DAT_06057f68 = 4;
+        }
+        if (DAT_06057f68 == 3) {
+            DAT_06057f68 = 0;
+        }
+        if (DAT_06057f68 == 6) {
+            DAT_0605cd70.unk0 = 6;
+            DAT_0605cd70.unk8 = 0;
+            DAT_06065470 &= ~0x003F;
+            SclProcess = 1;
+        }
+        func_060BCA84();
+    }
+}
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BCE64, func_060BCE64);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BD11C, func_060BD11C);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BD2AC, func_060BD2AC);

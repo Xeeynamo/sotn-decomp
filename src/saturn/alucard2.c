@@ -4,6 +4,9 @@
 
 #include "alucard.h"
 
+// func_060BD6A8 and func_060BFADC call with no args
+void DestroyEntity();
+
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B24E0, func_060B24E0);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B25F4, func_060B25F4);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B2B30, func_060B2B30);
@@ -62,7 +65,45 @@ void func_060B7994(void) {
 }
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B79B8, func_060B79B8);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B7A6C, func_060B7A6C);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B7B0C, func_060B7B0C);
+// richter.c func_80159C04
+void func_060B7B0C(void) {
+    Entity* entity;
+    s16 attackerOffX;
+    s16 playerOffX;
+    s16 distance;
+
+    entity = PLAYER.unkB4;
+    if (entity->facingLeft) {
+        attackerOffX = -entity->hitboxOffX;
+    } else {
+        attackerOffX = entity->hitboxOffX;
+    }
+
+    if (PLAYER.facingLeft) {
+        playerOffX = -PLAYER.hitboxOffX;
+    } else {
+        playerOffX = PLAYER.hitboxOffX;
+    }
+
+    distance = playerOffX + PLAYER.posX.i.hi - entity->posX.i.hi - attackerOffX;
+    if (ABS(distance) < 16 && entity->velocityX != 0) {
+        if (entity->velocityX < 0) {
+            PLAYER.entityRoomIndex = 0;
+        } else {
+            PLAYER.entityRoomIndex = 1;
+        }
+        return;
+    }
+
+    if (distance < 0) {
+        PLAYER.entityRoomIndex = 0;
+    } else {
+        PLAYER.entityRoomIndex = 1;
+    }
+}
+
+const u16 DAT_060B7BB0 = 0xAAAA;
+const u16 DAT_060B7BB2 = 0xAAAB;
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B7BB4, func_060B7BB4);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B86F4, func_060B86F4);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B8B40, func_060B8B40);
@@ -138,7 +179,6 @@ void func_060B95C8(s32 arg0) {
     DAT_060CE51E = DAT_060CC9BD[arg0].f3;
 }
 s32 func_060B9610(s16 arg0, s16 arg1) {
-    void DestroyEntity(Entity*);
     Entity* entity;
     Entity* found;
     s16 limit;
@@ -179,7 +219,22 @@ INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B9DC0, func_060B9DC0);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BA4CC, func_060BA4CC);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BA604, func_060BA604);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BA6B8, func_060BA6B8);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BA90C, func_060BA90C);
+// SetSubweaponParams / richter.c func_060ABA98
+void func_060BA90C(Entity* entity) {
+    SubweaponDef subwpn;
+
+    func_0606FC80(&subwpn, entity->ext.bat.lastPlayerPosX, 0);
+    entity->attack = subwpn.attack;
+    entity->attackElement = subwpn.attackElement;
+    entity->hitboxState = subwpn.hitboxState;
+    entity->nFramesInvincibility = subwpn.nFramesInvincibility;
+    entity->stunFrames = subwpn.stunFrames;
+    entity->hitEffect = subwpn.hitEffect;
+    entity->entityRoomIndex = subwpn.entityRoomIndex;
+    entity->ext.bat.lastPlayerPosY = subwpn.crashId;
+    func_060B9340(entity);
+}
+
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BA9A0, func_060BA9A0);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BAA20, func_060BAA20);
 // UpdatePlayerEntities
@@ -192,7 +247,31 @@ INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BB070, func_060BB070);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BB4FC, func_060BB4FC);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BB678, func_060BB678);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BB7A8, func_060BB7A8);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BB8A8, func_060BB8A8);
+void func_060BB8A8(Entity* entity) {
+    SpellDef spell;
+
+    if (PLAYER.step != 0x25) {
+        DestroyEntity(entity);
+        return;
+    }
+
+    if (entity->step == 0) {
+        entity->flags = 0x00060000;
+        func_0606F59C(&spell, 5);
+        entity->attack = spell.attack;
+        entity->attackElement = spell.attackElement;
+        entity->hitboxState = spell.hitboxState;
+        entity->nFramesInvincibility = spell.nFramesInvincibility;
+        entity->stunFrames = spell.stunFrames;
+        entity->hitEffect = spell.hitEffect;
+        entity->entityRoomIndex = spell.entityRoomIndex;
+        func_060B9340(entity);
+        entity->step++;
+    }
+}
+
+const u16 DAT_060BB964 = 0x8888;
+const u16 DAT_060BB966 = 0x8889;
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BB968, func_060BB968);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BBD9C, func_060BBD9C);
 // func_8011BD48 on PSX
@@ -226,8 +305,6 @@ INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BD39C, func_060BD39C);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BD5A4, func_060BD5A4);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BD61C, func_060BD61C);
 
-void DestroyEntity();
-
 void func_060BD6A8(void) { DestroyEntity(); }
 
 void func_060BD6C0() {}
@@ -246,7 +323,22 @@ const u32 DAT_060be360 = 0xBA2E8BA3;
 
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BE364, func_060BE364);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BE620, func_060BE620);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BE7DC, func_060BE7DC);
+void func_060BE7DC(Primitive* src, Primitive* dst) {
+    dst->unk4 = src->unk4;
+    dst->unk6 = src->unk6;
+    dst->unk8 = src->unk8;
+    dst->unkA = src->unkA;
+    dst->priority = src->priority;
+    dst->x0 = src->x0;
+    dst->y0 = src->y0;
+    dst->x1 = src->x1;
+    dst->y1 = src->y1;
+    dst->x2 = src->x2;
+    dst->y2 = src->y2;
+    dst->x3 = src->x3;
+    dst->y3 = src->y3;
+    dst->drawMode = src->drawMode;
+}
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BE888, func_060BE888);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BEEF8, func_060BEEF8);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BF470, func_060BF470);

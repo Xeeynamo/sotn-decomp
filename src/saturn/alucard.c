@@ -112,7 +112,7 @@ void func_060A5644(s32 arg0) {
     }
 }
 // SetPlayerAnim
-void func_060A5674(AnimationFrame* anim) {
+void func_060A5674(s32 anim) {
     g_Player.unk39D = (g_Player.unk39D & 0x9F) | 0x10;
     g_Player.anim = anim;
     g_Player.poseTimer = 0;
@@ -139,7 +139,31 @@ INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A5B94, func_060A5B94);
 // func_8010E940 on PSX
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A5CD8, func_060A5CD8);
 // DoGravityJump
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A5D50, func_060A5D50);
+void func_060A5D50(void) {
+    // SetSpeedX
+    if (func_060A5060() != 0) {
+        func_060A5574(FIX(3.75));
+    } else {
+        PLAYER.velocityX = 0;
+    }
+
+    if (PLAYER.step == Player_Jump) {
+        g_Player.unk44 |= 1;
+    } else {
+        g_Player.unk44 = 0;
+    }
+
+    // creates the gravity boot beam
+    func_060BAF44(g_CurrentEntity, 2, 0);
+
+    SetPlayerStep(Player_HighJump);
+    PLAYER.velocityY = FIX(-12);
+
+    // SetPlayerAnim
+    func_060A5674(17);
+    g_Player.unk4A = 0;
+}
+
 // func_8010FD88 on PSX
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A5E14, func_060A5E14);
 // PerformDarkMetamorphosis
@@ -384,13 +408,77 @@ void func_060ABFA4(void) {
         func_060A580C(0);
     }
 }
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AC018, func_060AC018);
+// Nudges the player towards a fixed X position, one pixel per frame.
+void func_060AC018(void) {
+    s32 distance;
+
+    if (g_CurrentRoom.stageID == 0x0B) {
+        distance = (g_Tilemap.left << 8) + g_PlayerX;
+        if (distance < 0) {
+            distance = -distance;
+        }
+        if ((distance - 0x1F8F) > 0) {
+            PLAYER.posX.i.hi--;
+        }
+
+        distance = (g_Tilemap.left << 8) + g_PlayerX;
+        if (distance < 0) {
+            distance = -distance;
+        }
+        if ((distance - 0x1F8F) < 0) {
+            PLAYER.posX.i.hi++;
+        }
+    }
+
+    if (g_CurrentRoom.stageID == 0x2B) {
+        distance = (g_Tilemap.left << 8) + g_PlayerX;
+        if (distance < 0) {
+            distance = -distance;
+        }
+        if ((distance - 0x20EE) > 0) {
+            PLAYER.posX.i.hi--;
+        }
+
+        distance = (g_Tilemap.left << 8) + g_PlayerX;
+        if (distance < 0) {
+            distance = -distance;
+        }
+        if ((distance - 0x20EE) < 0) {
+            PLAYER.posX.i.hi++;
+        }
+    }
+}
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AC0C8, func_060AC0C8);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AC20C, func_060AC20C);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AC2F0, func_060AC2F0);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AC574, func_060AC574);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AC8F4, func_060AC8F4);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60ACACC, func_060ACACC);
+void func_060ACACC(void* unused, SpriteObject* sprite, s32 count) {
+    s32 i;
+
+    sprite->flags &= ~0x40;
+    if (PLAYER.drawFlags & ENTITY_ROTATE) {
+        sprite->flags |= 0x40;
+        sprite->rotate = PLAYER.rotate;
+    } else {
+        sprite->rotate = 0;
+    }
+
+    sprite->scaleX = sprite->scaleY = 0x40;
+    if (PLAYER.drawFlags & ENTITY_SCALEX) {
+        sprite->scaleX = (u32)PLAYER.scaleX >> 2;
+        sprite->flags |= 0x40;
+    }
+    if (PLAYER.drawFlags & ENTITY_SCALEY) {
+        sprite->scaleY = (u32)PLAYER.scaleY >> 2;
+        sprite->flags |= 0x40;
+    }
+
+    for (i = 0; i < count; i++) {
+        sprite->parts->attributes &= ~0x2000;
+        sprite++;
+    }
+}
 // PlayAnimation (Saturn player-specialized version)
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60ACB6C, func_060ACB6C);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60ACF00, func_060ACF00);
