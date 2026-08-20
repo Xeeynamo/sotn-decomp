@@ -917,6 +917,8 @@ files:
           - [0x2F400, paldef, palette_def]
           - [0x2F4B0, gfx_banks, graphics_banks]
           - [0x2F680, skip]
+          - [0x2FA30, rooms, rooms]
+          - [0x2FB70, skip]
           - [0x2FC20, cmpgfx, D_80185F20, 128, 128, 4]
           - [0x30B58, cmpgfx, D_80186E54, 128, 128, 4]
           - [0x31BB8, cmpgfx, D_80187EB4, 128, 128, 4]
