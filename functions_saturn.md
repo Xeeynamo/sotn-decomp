@@ -1343,7 +1343,6 @@
 | maria/f_nonmat/f60BC320.s    | func_060BC320   |     1246 |        162 |       |     |
 | alucard/f_nonmat/f60BDA44.s  | func_060BDA44   |     1254 |         97 |       |     |
 | alucard/f_nonmat/f60AFA20.s  | func_060AFA20   |     1256 |        165 |       |     |
-| game/f_nonmat/f6075D24.s     | func_06075D24   |     1334 |         90 |       |     |
 | alucard/f_nonmat/f60C75A8.s  | func_060C75A8   |     1337 |         63 |       |     |
 | richter/f_nonmat/f60A5AA0.s  | func_060A5AA0   |     1371 |        151 |       |     |
 | stage_02/f_nonmat/f60EA264.s | func_060EA264   |     1440 |        176 |       |     |
