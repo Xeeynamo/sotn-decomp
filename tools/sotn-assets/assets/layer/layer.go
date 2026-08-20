@@ -57,10 +57,10 @@ func (l *layerDef) tilemapFileSize() int {
 	return w * h * 512
 }
 
-func (l *layerDef) unpack(ovl string, addrPool map[psx.Addr]int) layerUnpacked {
+func (l *layerDef) unpack(ovl string, tilemapIndices map[psx.Addr]int, tiledefSuffixes map[psx.Addr]string) layerUnpacked {
 	return layerUnpacked{
-		Data:          tilemapFileName(ovl, addrPool[l.Data]),
-		Tiledef:       tiledefFileName(ovl, addrPool[l.Tiledef]),
+		Data:          tilemapFileName(ovl, tilemapIndices[l.Data]),
+		Tiledef:       tiledef.FileName(ovl, tiledefSuffixes[l.Tiledef]),
 		Left:          int((l.PackedInfo >> 0) & 0x3F),
 		Top:           int((l.PackedInfo >> 6) & 0x3F),
 		Right:         int((l.PackedInfo >> 12) & 0x3F),

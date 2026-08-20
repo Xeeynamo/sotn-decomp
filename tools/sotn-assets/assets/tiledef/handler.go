@@ -2,17 +2,20 @@ package tiledef
 
 import (
 	"bytes"
+	"crypto/sha1"
 	"encoding/binary"
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 	"io"
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 )
 
 type handler struct{}
@@ -41,6 +44,15 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 	if err != nil {
 		return err
 	}
+	// This handler takes its name from the asset config, unlike the tiledefs the
+	// layers own, which are named after their contents. Keep the two consistent:
+	// a tiledef holding one of the shared blobs must be called what the layers
+	// would have called it.
+	if name, found := WellKnownName(td); found && name != e.Name {
+		return fmt.Errorf(
+			"the tiledef at %s holds the %q tiledef, so it must be named %q and not %q",
+			e.RamBase.Sum(e.End-0x10), name, name, e.Name)
+	}
 	return Write(td, e.AssetDir, e.OvlName, e.Name)
 }
 
@@ -53,6 +65,28 @@ func (h *handler) Build(e assets.BuildArgs) error {
 
 func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
 	return assets.InfoResult{}, nil
+}
+
+// knownTiledefs SHA-1 of a known tiledef blob
+var knownTiledefs = map[string]string{
+	"d46c9e11c0d5e8c1d95a560a2d8737796dd6975c": "load",  // normal castle
+	"b38871142762c68b243eeec18f9cea9a4ff952e8": "rload", // inverted castle
+	"787498d74acd095ce6e286395dda5550d171550e": "save",  // normal castle
+	"892d288d9a66b0ef66efdef1548c38d6834dcfe0": "rsave", // inverted castle
+}
+
+func WellKnownName(td TileDef) (string, bool) {
+	name, found := knownTiledefs[Hash(td)]
+	return name, found
+}
+
+func Hash(td TileDef) string {
+	h := sha1.New()
+	h.Write(td.Tiles)
+	h.Write(td.Pages)
+	h.Write(td.Cluts)
+	h.Write(td.Cols)
+	return hex.EncodeToString(h.Sum(nil))
 }
 
 func Read(r io.ReadSeeker, off, baseAddr psx.Addr) (TileDef, datarange.DataRange, error) {
@@ -198,6 +232,10 @@ func Build(inFile, symbol, outDir string) error {
 	_, _ = f.WriteString("};\n")
 
 	return nil
+}
+
+func FileName(ovl string, suffix string) string {
+	return tiledefFileName(ovl, suffix)
 }
 
 func tiledefFileName(ovl string, suffix string) string {

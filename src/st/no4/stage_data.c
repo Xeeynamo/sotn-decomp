@@ -152,6 +152,6 @@ u16 D_8018E354[] = {
 #include "gen/no4_tilemap_60.h"
 #include "gen/no4_tilemap_61.h"
 
-#include "gen/no4_tiledef_0.h"
-#include "gen/no4_tiledef_1.h"
-#include "gen/no4_tiledef_2.h"
+#include "gen/no4_tiledef_load.h"
+#include "gen/no4_tiledef_save.h"
+#include "gen/no4_tiledef_no4.h"

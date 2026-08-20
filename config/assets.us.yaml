@@ -349,7 +349,7 @@ files:
           - [0x698C, palette, e_maria_cen_p, 16] # 0x210
           - [0x69AC, palette, e_elevator_cen_p, 16] # 0x223
           - [0x69EC, skip] # tile data
-          - [0x81EC, tiledef, unused]
+          - [0x81EC, tiledef, load]
           - [0x85FC, skip] # the other used tile definition
           - [0xC60C, skip] # sprites
   - target: disks/us/ST/CHI/CHI.BIN
@@ -496,7 +496,7 @@ files:
           - [0xB348, palette, pal_portrait_succubus, 16] # 0x218
           #- [0xB448, palette, pal_unused_B448, 16]
           - [0xB548, skip] # tile data
-          - [0xBD48, tiledef, unused]
+          - [0xBD48, tiledef, load]
           - [0xC158, skip] # the other used tile definition
           - [0x10168, skip] # sprites
   - target: disks/us/ST/LIB/LIB.BIN
@@ -580,7 +580,7 @@ files:
           - [0x1D14, cmpgfx, stage_title_mad_jp, 128, 128, 4] # unused
           - [0x2058, palette, pal_2058, 16] # 0x200
           - [0x2078, skip] # tile data
-          - [0x4A88, tiledef, unused]
+          - [0x4A88, tiledef, save]
           - [0x8A98, skip] # the other used tile definition
   - target: disks/us/ST/NO0/NO0.BIN
     asset_path: assets/st/no0
@@ -1546,8 +1546,8 @@ files:
           - [0x149D8, palette, pal_explosion_flame, 16] # 0x2E0
           - [0x14BD8, palette, pal_14BD8, 16] # unused
           - [0x14C98, skip] # the two tilemaps referenced by the layers
-          - [0x15C98, tiledef, unused] # 0x100 tiles per section
-          - [0x160A8, tiledef, unused_1] # 0x1000 tiles per section
+          - [0x15C98, tiledef, load] # 0x100 tiles per section
+          - [0x160A8, tiledef, save] # 0x1000 tiles per section
           - [0x1A0B8, skip] # the tile definition referenced by the layers
   - target: disks/us/BOSS/BO2/BO2.BIN
     asset_path: assets/boss/bo2

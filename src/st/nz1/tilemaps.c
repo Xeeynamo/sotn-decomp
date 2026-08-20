@@ -23,5 +23,5 @@
 #include "gen/nz1_tilemap_19.h"
 #include "gen/nz1_tilemap_20.h"
 #include "gen/nz1_tilemap_21.h"
-#include "gen/nz1_tiledef_0.h"
-#include "gen/nz1_tiledef_1.h"
+#include "gen/nz1_tiledef_load.h"
+#include "gen/nz1_tiledef_nz1.h"

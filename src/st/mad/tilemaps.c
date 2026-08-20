@@ -20,5 +20,5 @@
 #include "gen/mad_tilemap_16.h"
 #include "gen/mad_tilemap_17.h"
 #include "gen/mad_tilemap_18.h"
-#include "gen/mad_tiledef_0.h"
-#include "gen/mad_tiledef_unused.h"
+#include "gen/mad_tiledef_load.h"
+#include "gen/mad_tiledef_save.h"
