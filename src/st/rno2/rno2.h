@@ -12,6 +12,7 @@ enum Palettes {
     PAL_AZAGHAL_BODY_B = 0x221,
     PAL_AZAGHAL_COMBO_A = 0x222,
     PAL_AZAGHAL_COMBO_B = 0x223,
+    PAL_CTULHU_DEATH = 0x2EE,
 };
 
 typedef enum EntityID {
@@ -27,7 +28,7 @@ typedef enum EntityID {
     E_STAGE_NAME_POPUP,         // EntityStageNamePopup
     E_EQUIP_ITEM_DROP,          // EntityEquipItemDrop
     E_RELIC_ORB,                // EntityRelicOrb
-    E_HEART_DROP,               // EntityHeartDrop
+    E_PERSISTENT_ITEM_DROP,     // EntityPersistentItemDrop
     E_ENEMY_BLOOD,              // EntityEnemyBlood
     E_MESSAGE_BOX,              // EntityMessageBox
     E_DUMMY_F,                  // EntityDummy

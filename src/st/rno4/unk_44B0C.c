@@ -11,7 +11,7 @@ INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", func_us_801C15F8_from_no4);
 
 INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", func_us_801C5364);
 
-INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", func_us_801C1C94_from_no4);
+INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", EntityBgColumnsParallax_from_no4);
 
 INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", func_us_801C1EE4_from_no4);
 

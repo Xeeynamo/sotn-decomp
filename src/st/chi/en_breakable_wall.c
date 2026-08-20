@@ -7,6 +7,10 @@
 
 #include "chi.h"
 
+#ifdef VERSION_PSP
+extern s32 E_ID(BREAKABLE_WALL_DEBRIS);
+#endif
+
 // E_BREAKABLE_WALL_DEBRIS
 // params: animCurFrame to use
 //         (== 0xD) Different starting X velocity
@@ -70,7 +74,7 @@ void EntityBreakableWallDebris(Entity* self) {
                     entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (entity != NULL) {
                         CreateEntityFromEntity(
-                            E_BREAKABLE_WALL_DEBRIS, self, entity);
+                            E_ID(BREAKABLE_WALL_DEBRIS), self, entity);
                         entity->params = (Random() & 3) + 9;
                         entity->params |= 0x100;
                     }
@@ -99,7 +103,7 @@ void EntityBreakableWallDebris(Entity* self) {
 
 // clang-format off
 // D_801808CC
-static u16 BreakableWallTilesCollision[] = {
+static s16 BreakableWallTilesCollision[] = {
     0x0399, 0x039A, 0x0399, 0x039A, 0x039B, 0x039C, 0x039B, 0x039C,
     0x0399, 0x039A, 0x0399, 0x039A, 0x0106, 0x0108, 0x0106, 0x0108,
     0x010B, 0x010D, 0x010B, 0x010D, 0x0106, 0x0108, 0x0106, 0x0108,
@@ -151,7 +155,7 @@ void EntityBreakableWall(Entity* self) {
 
     switch (self->step) {
     case INIT:
-        InitializeEntity(&g_EInitSecret);
+        InitializeEntity(g_EInitSecret);
         self->animCurFrame = 2;
         self->animCurFrame = 0;
         self->hitPoints = 0x20;
@@ -170,7 +174,9 @@ void EntityBreakableWall(Entity* self) {
         // Update tilemap with appropriate collision
         tileIdx = 0x160;
         for (c = 0; c < WallWidthTiles; tileIdx++, c++) {
-            for (b = 0; b < WallHeightTiles; b++, pSrcTile++) {
+            // nb. identity cast here is weird, but required for PSP match
+            // along with the similar (Entity*) identity cast below.
+            for (b = 0; b < WallHeightTiles; b++, (s16*)pSrcTile++) {
                 *(&g_Tilemap.fg[tileIdx] + b * RoomWidthTiles) = *pSrcTile;
             }
         }
@@ -227,70 +233,73 @@ void EntityBreakableWall(Entity* self) {
 
         pSrcTile = BreakableRoomEntityData;
         entity = self + 1;
-        for (c = 0; c < 15; c++, entity++) {
+        // nb. identity cast here is weird, but required for PSP match
+        // along with the similar (s16*) identity cast above.
+        for (c = 0; c < 15; c++, (Entity*)entity++) {
             DestroyEntity(entity);
-            CreateEntityFromEntity(E_BREAKABLE_WALL_DEBRIS, self, entity);
+            CreateEntityFromEntity(E_ID(BREAKABLE_WALL_DEBRIS), self, entity);
 
             entity->params = *pSrcTile++;
             entity->posX.i.hi += *pSrcTile++;
             entity->posY.i.hi += *pSrcTile++;
             entity->rotate = *pSrcTile++;
         }
-        return;
+        break;
 
     case IDLE:
-        if (self->flags & FLAG_DEAD) {
-            g_api.PlaySfx(SFX_WALL_DEBRIS_B);
+        if (!(self->flags & FLAG_DEAD)) {
+            return;
+        }
+        g_api.PlaySfx(SFX_WALL_DEBRIS_B);
 
-            self->ext.breakableDebris.breakCount++;
+        self->ext.breakableDebris.breakCount++;
 
-            self->flags &= ~FLAG_DEAD;
-            self->hitPoints = 0x20;
-            self->hitboxWidth -= 8;
-            self->hitboxOffX -= 8;
+        self->flags &= ~FLAG_DEAD;
+        self->hitPoints = 0x20;
+        self->hitboxWidth -= 8;
+        self->hitboxOffX -= 8;
 
-            // Update collision via tilemap
-            pSrcTile = BreakableWallTilesCollision;
-            pSrcTile += 0x18 - self->ext.breakableDebris.breakCount * 4;
-            tileIdx = 0x163 - self->ext.breakableDebris.breakCount;
-            for (b = 0; b < WallHeightTiles; b++, pSrcTile++) {
-                *(&g_Tilemap.fg[tileIdx] + b * RoomWidthTiles) = *pSrcTile;
-            }
+        // Update collision via tilemap
+        pSrcTile = BreakableWallTilesCollision;
+        pSrcTile += 0x18 - self->ext.breakableDebris.breakCount * 4;
+        tileIdx = 0x163 - self->ext.breakableDebris.breakCount;
+        for (b = 0; b < WallHeightTiles; b++, pSrcTile++) {
+            *(&g_Tilemap.fg[tileIdx] + b * RoomWidthTiles) = *pSrcTile;
+        }
 
-            entity = self + 1;
-            entity += (self->ext.breakableDebris.breakCount - 1) * 5;
-            for (c = 0; c < 5; c++, entity++) {
-                entity->step++;
-            }
+        entity = self + 1;
+        entity += (self->ext.breakableDebris.breakCount - 1) * 5;
+        for (c = 0; c < 5; c++, entity++) {
+            entity->step++;
+        }
 
-            // Smoke
-            xPos = self->posX.i.hi + 0x20;
-            yPos = self->posY.i.hi;
-            xPos -= self->ext.breakableDebris.breakCount * 0xC;
+        // Smoke
+        xPos = self->posX.i.hi + 0x20;
+        yPos = self->posY.i.hi;
+        xPos -= self->ext.breakableDebris.breakCount * 0xC;
+        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (entity != NULL) {
+            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+            entity->posX.i.hi = xPos;
+            entity->posY.i.hi = yPos + 0x10;
+            entity->params = 0x13;
+            entity->params |= 0xC000;
+        }
+
+        // Rotating bricks?
+        for (c = 0; c < 3; c++) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, entity);
+                CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
                 entity->posX.i.hi = xPos;
-                entity->posY.i.hi = yPos + 0x10;
-                entity->params = 0x13;
+                entity->posY.i.hi = yPos + 0x20 - (Random() & 3) * 8;
+                entity->params = 0x10;
                 entity->params |= 0xC000;
             }
-
-            // Rotating bricks?
-            for (c = 0; c < 3; c++) {
-                entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-                if (entity != NULL) {
-                    CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
-                    entity->posX.i.hi = xPos;
-                    entity->posY.i.hi = yPos + 0x20 - (Random() & 3) * 8;
-                    entity->params = 0x10;
-                    entity->params |= 0xC000;
-                }
-            }
-            // Dynamically set Break_1, Break_2, or Break_3
-            self->step += self->ext.breakableDebris.breakCount;
         }
-        return;
+        // Dynamically set Break_1, Break_2, or Break_3
+        self->step += self->ext.breakableDebris.breakCount;
+        break;
 
     case BREAK_1: // Dynamically calculated, never set directly
         prim = self->ext.breakableDebris.prim;
@@ -298,7 +307,7 @@ void EntityBreakableWall(Entity* self) {
         prim->drawMode = DRAW_HIDE;
         self->ext.breakableDebris.resetTimer = ResetTime;
         self->step = WAIT_FOR_RESET;
-        return;
+        break;
 
     case BREAK_2: // Dynamically calculated, never set directly
         prim = self->ext.breakableDebris.prim;
@@ -306,14 +315,14 @@ void EntityBreakableWall(Entity* self) {
         prim->x1 = prim->x3 -= 0x10;
         entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
         if (entity != NULL) {
-            CreateEntityFromCurrentEntity(E_HEART_DROP, entity);
+            CreateEntityFromCurrentEntity(E_PERSISTENT_ITEM_DROP, entity);
             entity->posX.i.hi = 0x20 - g_Tilemap.scrollX.i.hi;
             entity->posY.i.hi = 0x188 - g_Tilemap.scrollY.i.hi;
             entity->params = 3;
         }
         self->ext.breakableDebris.resetTimer = ResetTime;
         self->step = WAIT_FOR_RESET;
-        return;
+        break;
 
     case BREAK_3: // Dynamically calculated, never set directly
         prim = self->ext.breakableDebris.prim;
@@ -325,12 +334,12 @@ void EntityBreakableWall(Entity* self) {
         // this case results in exploring the room to the left
         g_api.RevealSecretPassageAtPlayerPositionOnMap(CHI_SECRET_WALL_OPEN);
         DestroyEntity(self);
-        return;
+        break;
 
     case WAIT_FOR_RESET:
         if (!--self->ext.breakableDebris.resetTimer) {
             self->step = IDLE;
         }
-        return;
+        break;
     }
 }

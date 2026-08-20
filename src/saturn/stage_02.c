@@ -82,7 +82,7 @@ void EntityTableWithGlobe(Entity* self) {
         if (self->hitFlags != 0) {
             PlaySfxPositional(0x61D); // sotn-lint-ignore
             self->hitboxState = 0;
-            CreateEntityFromEntity(E_HEART_DROP, self, &self[1]);
+            CreateEntityFromEntity(E_PERSISTENT_ITEM_DROP, self, &self[1]);
             self[1].params = g_Stage02TableWithGlobeDropParams[self->params];
             SetStep(2);
         }
@@ -158,8 +158,6 @@ struct Unk {
     u32 unk_3c;
 };
 
-extern struct Unk DAT_060e2014; // 060F5044h
-
 // maybe func_801B797C?
 void func_060e1ff8(s32 param_1) {
     DAT_060e2014.unk_3c = param_1;
@@ -174,7 +172,7 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E2420, func_060E2420);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E2898, func_060E2898);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E29A4, func_060E29A4);
 
-// EntityHeartDrop
+// EntityPersistentItemDrop
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E2A80, func_060E2A80);
 
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E32DC, func_060E32DC);
@@ -226,31 +224,9 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E6C0C, func_060E6C0C);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E7014, func_060E7014);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E73CC, func_060E73CC);
 
-typedef struct {
-    s32 : 32;
-    s8 unk4;
-    s8 unk5;
-} unkStruct;
-
-extern unkStruct DAT_060485C0;
-extern s32 DAT_0605C658;
-extern s32 DAT_0605C668;
-extern s8 DAT_0605DD60;
-extern u16 DAT_0605DD94;
-extern s32 DAT_06061DE0[2];
-extern u16 DAT_06061DE8[2];
-extern s32 DAT_060F5088[2];
-extern s32 DAT_060F1D90;
-
-void func_060E8780(s32, s32, s32, s32);
-void func_060E8DE0(s32, s32, s32);
-void func_060e8330(void);
 void PlaySfx(s32);
-void func_060E837C(Entity*, s32);
 void TekiInit(Entity*, s32);
 void DestroyEntity(Entity*);
-void func_060E81D4(Entity*);
-void func_060E8350(Entity*);
 
 static inline SetGeomScreen(u32 h) { DAT_06061DE0[0] = DAT_06061DE0[1] = h; }
 
@@ -748,8 +724,6 @@ void func_060E8350(Entity* self) {
 
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E837C, func_060E837C);
 
-void func_060E87D0(s32, s32);
-void func_060E8990(s32, s32, s32);
 void func_060E8ADC(s32, s32, s32);
 
 void func_060E8780(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
@@ -761,9 +735,6 @@ void func_060E8780(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E87D0, func_060E87D0);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E8990, func_060E8990);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E8ADC, func_060E8ADC);
-
-void func_060E8E1C(s32, s32);
-void func_060E8EEC(s32, s32, s32);
 
 void func_060E8DE0(s32 arg0, s32 arg1, s32 arg2) {
     func_060E8E1C(arg1, arg2);

@@ -51,6 +51,6 @@ INCLUDE_RODATA("st/rnz1/nonmatchings/e_collect", D_us_801A6168);
 
 INCLUDE_ASM("st/rnz1/nonmatchings/e_collect", EntityRelicOrb);
 
-INCLUDE_ASM("st/rnz1/nonmatchings/e_collect", EntityHeartDrop);
+INCLUDE_ASM("st/rnz1/nonmatchings/e_collect", EntityPersistentItemDrop);
 
 INCLUDE_ASM("st/rnz1/nonmatchings/e_collect", EntityMessageBox);

@@ -778,7 +778,6 @@ void resetMapTileOnCastleBlueprint(s32, s32);
 void paintMapTileOnCastleBlueprint(s32, s32, s32);
 void RevealSecretPassageOnMap(s32, s32, s32);
 void func_800F2120(void);
-void func_800F223C(void);
 void func_800F4994(void);
 void CalcDefense(void);
 bool IsAlucart(void);

@@ -1,10 +1,12 @@
 package sotn
 
 import (
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
+	"fmt"
 	"strings"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestParseCEnum(t *testing.T) {
@@ -32,4 +34,18 @@ func TestParseCEnum(t *testing.T) {
 	assert.Equal(t, "E_MARIA", m[0x18])
 	assert.Equal(t, "E_COMMENT", m[123])
 	assert.Equal(t, "E_COMMENT_2", m[124])
+}
+
+func TestFetchEnumCachesFailures(t *testing.T) {
+	// Missing headers are cached to avoid re-spawning cpp on every lookup
+	// that ignores errors (eg. readEntityLayoutEntry)
+	_, err := FetchEnum("src/st/does-not-exist", "does-not-exist", "EntityID")
+	require.Error(t, err)
+
+	lock.RLock()
+	defer lock.RUnlock()
+	cacheKey := fmt.Sprintf("%s:src/st/does-not-exist/does-not-exist.h:EntityID", GetVersion())
+	cached, ok := enumCache[cacheKey]
+	require.True(t, ok, "failed lookup was not cached")
+	assert.Error(t, cached.err)
 }

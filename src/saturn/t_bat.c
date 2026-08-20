@@ -6,13 +6,11 @@
 #include "t_bat/batevent.h"
 #include "t_bat/batstat.h"
 #include <saturn_sprite.h>
+#include "lib/scl.h"
+
+#include "t_bat.h"
 
 void PlaySfx(s32 sfxId);
-
-extern SaturnSpriteImage g_BatTextureSlices[25];
-extern SaturnSpriteResource g_BatTextureResource;
-extern struct SpriteParts* g_ServantSpriteParts[]; // 0x060D19FC
-extern s32 g_CutsceneHasControl;
 
 static void SetEntityAnimation(Entity* entity, AnimationFrame* anim) {
     if (entity->anim != anim) {
@@ -183,9 +181,6 @@ static u16 LookupTblNoToVram(u16 arg0) {
         return SPR_2LookupTblNoToVram(arg0 & 0xFFF);
     }
 }
-
-extern u16 DAT_0605aec0[][2];
-extern SaturnSpriteResource g_SaturnSharedSpriteBank0Resource;
 
 void UpdatePrimitives(Entity* self, s32 frameIndex) {
     Primitive* prim;
@@ -811,8 +806,137 @@ void unused_33C4() {}
 
 void unused_33CC() {}
 
-// UpdateBatBlueTrailEntities
-INCLUDE_ASM("asm/saturn/t_bat/f_nonmat", f60D0A64, func_060D0A64);
+typedef struct {
+    u16 entry[4];
+} SprGourTbl;
+
+extern SprGourTbl* SpGourTbl;
+extern bool isAlive[16];
+extern Point16 positions[16];
+extern s16 facingLeft[16];
+extern s16 offsets[16];
+extern u8 fade[16];
+extern Primitive* prim;
+extern s32 idx;
+
+// SAT: func_060D0A64
+void UpdateBatBlueTrailEntities(Entity* self) {
+    s32 sVar6;
+    s32 isEntityAlive;
+    s32 i;
+    SprGourTbl* temp;
+    SaturnSpriteImage* image;
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = AllocPrimitives(0x8001, 0x10);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < 0x10; i++) {
+            image = &g_BatTextureResource.images[10];
+            prim->unk8 = DAT_0605aec0[g_BatTextureResource.allocationIndex][0] +
+                         image->characterOffsetUnits;
+            prim->unkA =
+                (image->storedWidth >> 2) << 8 | (image->storedHeight) << 1;
+            prim->unk6 = LookupTblNoToVram(g_BatTextureResource.flags + 2);
+            prim->unk4 |= 0x100;
+            prim->priority = self->zPriority;
+            prim->drawMode = DRAW_TPAGE | DRAW_HIDE | DRAW_COLORS | DRAW_TRANSP;
+            prim = prim->next;
+            isAlive[i] = 0;
+        }
+        idx = 0;
+        self->step++;
+        break;
+
+    case 1:
+        if (self->ext.batFamBlueTrail.parent->step != 3) {
+            self->step++;
+        }
+        positions[idx].x = self->ext.batFamBlueTrail.parent->posX.i.hi;
+        positions[idx].y = self->ext.batFamBlueTrail.parent->posY.i.hi;
+        facingLeft[idx] = self->ext.batFamBlueTrail.parent->facingLeft;
+        offsets[idx] = 0x100;
+        fade[idx] = 0x10;
+        isAlive[idx] = 1;
+
+        idx = ++idx >= 0x10 ? 0 : idx;
+
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < 0x10; i++) {
+            if (isAlive[i]) {
+                if (facingLeft[i]) {
+                    prim->x0 = positions[i].x + (offsets[i] * 9) / 0x100;
+                    prim->x2 = positions[i].x - (offsets[i] * 15) / 0x100;
+                } else {
+                    prim->x0 = positions[i].x - (offsets[i] * 9) / 0x100;
+                    prim->x2 = positions[i].x + (offsets[i] * 15) / 0x100;
+                }
+                prim->y0 = positions[i].y - (offsets[i] * 22) / 0x100;
+                prim->y2 = positions[i].y + (offsets[i] * 8) / 0x100;
+                sVar6 = prim->unk1B;
+                temp = &SpGourTbl[sVar6];
+                temp->entry[0] = temp->entry[1] = temp->entry[2] =
+                    temp->entry[3] = RGB16_COLOR(fade[i], fade[i], 0x14);
+                offsets[i] -= 8;
+                fade[i] -= 1;
+                if (fade[i] < 3) {
+                    prim->drawMode |= DRAW_HIDE;
+                    isAlive[i] = 0;
+                } else {
+                    prim->drawMode ^= DRAW_HIDE;
+                }
+            }
+            prim = prim->next;
+        }
+        break;
+
+    case 2:
+        isEntityAlive = false;
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < 0x10; i++) {
+            if (isAlive[i]) {
+                if (facingLeft[i]) {
+                    prim->x0 = prim->x3 =
+                        positions[i].x + (offsets[i] * 9) / 0x100;
+                    prim->x1 = prim->x2 =
+                        positions[i].x - (offsets[i] * 15) / 0x100;
+                } else {
+                    prim->x0 = prim->x3 =
+                        positions[i].x - (offsets[i] * 9) / 0x100;
+                    prim->x1 = prim->x2 =
+                        positions[i].x + (offsets[i] * 15) / 0x100;
+                }
+                prim->y0 = prim->y1 =
+                    positions[i].y - (offsets[i] * 22) / 0x100;
+                prim->y3 = prim->y2 = positions[i].y + (offsets[i] * 8) / 0x100;
+                sVar6 = prim->unk1B;
+                temp = &SpGourTbl[sVar6];
+                temp->entry[0] = temp->entry[1] = temp->entry[2] =
+                    temp->entry[3] = RGB16_COLOR(fade[i], fade[i], 0x1F);
+                offsets[i] -= 8;
+                fade[i] -= 1;
+                if (fade[i] < 11) {
+                    prim->drawMode |= DRAW_HIDE;
+                    isAlive[i] = 0;
+                } else {
+                    prim->drawMode ^= DRAW_HIDE;
+                }
+            }
+            isEntityAlive |= isAlive[i];
+            prim = prim->next;
+        }
+        if (!isEntityAlive) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+}
 
 void unused_3C0C() {}
 
@@ -974,12 +1098,12 @@ void ProcessSfxState(Entity* entity) {
         entity->step++;
         break;
     case 3:
-        if (func_80131F68_2()) {
+        if (func_06012DFC()) {
             entity->step++;
         }
         break;
     case 4:
-        if (!func_80131F68_2()) {
+        if (!func_06012DFC()) {
             entity->step++;
         }
         break;

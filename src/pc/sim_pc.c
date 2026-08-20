@@ -386,6 +386,12 @@ static bool isFirstBoot() {
     return g_StageId == STAGE_SEL && g_GameState == Game_Init;
 }
 
+static bool IsBossOvl(const char* ovlName) {
+    return (ovlName[0] == 'B' && ovlName[1] == 'O') ||
+           (ovlName[0] == 'R' && ovlName[1] == 'B' && ovlName[2] == 'O') ||
+           !strcmp(ovlName, "MAR");
+}
+
 static void LoadStagePrg(const char* name) {
     char ovlName[16];
     unsigned i;
@@ -555,14 +561,26 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
             return 0;
         } else {
             sim.path = smolbuf;
-            if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
-                snprintf(smolbuf, sizeof(smolbuf), "ST/%s/SD_Z%s.VH",
-                         g_StagesLba[g_StageId].ovlName,
-                         g_StagesLba[g_StageId].ovlName);
+            if (IsBossOvl(g_StagesLba[g_StageId].ovlName)) {
+                if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
+                    snprintf(smolbuf, sizeof(smolbuf), "BOSS/%s/SD_Z%s.VH",
+                             g_StagesLba[g_StageId].ovlName,
+                             g_StagesLba[g_StageId].ovlName);
+                } else {
+                    snprintf(smolbuf, sizeof(smolbuf), "BOSS/%s/SD_ZK%s.VH",
+                             g_StagesLba[g_StageId].ovlName,
+                             g_StagesLba[g_StageId].ovlName);
+                }
             } else {
-                snprintf(smolbuf, sizeof(smolbuf), "ST/%s/SD_ZK%s.VH",
-                         g_StagesLba[g_StageId].ovlName,
-                         g_StagesLba[g_StageId].ovlName);
+                if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
+                    snprintf(smolbuf, sizeof(smolbuf), "ST/%s/SD_Z%s.VH",
+                             g_StagesLba[g_StageId].ovlName,
+                             g_StagesLba[g_StageId].ovlName);
+                } else {
+                    snprintf(smolbuf, sizeof(smolbuf), "ST/%s/SD_ZK%s.VH",
+                             g_StagesLba[g_StageId].ovlName,
+                             g_StagesLba[g_StageId].ovlName);
+                }
             }
             sim.addr = aPbav_2;
             sim.path = smolbuf;
@@ -607,14 +625,26 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
             return 0;
         } else {
             sim.path = smolbuf;
-            if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
-                snprintf(smolbuf, sizeof(smolbuf), "ST/%s/SD_Z%s.VB",
-                         g_StagesLba[g_StageId].ovlName,
-                         g_StagesLba[g_StageId].ovlName);
+            if (IsBossOvl(g_StagesLba[g_StageId].ovlName)) {
+                if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
+                    snprintf(smolbuf, sizeof(smolbuf), "BOSS/%s/SD_Z%s.VB",
+                             g_StagesLba[g_StageId].ovlName,
+                             g_StagesLba[g_StageId].ovlName);
+                } else {
+                    snprintf(smolbuf, sizeof(smolbuf), "BOSS/%s/SD_ZK%s.VB",
+                             g_StagesLba[g_StageId].ovlName,
+                             g_StagesLba[g_StageId].ovlName);
+                }
             } else {
-                snprintf(smolbuf, sizeof(smolbuf), "ST/%s/SD_ZK%s.VB",
-                         g_StagesLba[g_StageId].ovlName,
-                         g_StagesLba[g_StageId].ovlName);
+                if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
+                    snprintf(smolbuf, sizeof(smolbuf), "ST/%s/SD_Z%s.VB",
+                             g_StagesLba[g_StageId].ovlName,
+                             g_StagesLba[g_StageId].ovlName);
+                } else {
+                    snprintf(smolbuf, sizeof(smolbuf), "ST/%s/SD_ZK%s.VB",
+                             g_StagesLba[g_StageId].ovlName,
+                             g_StagesLba[g_StageId].ovlName);
+                }
             }
             sim.path = sim.path;
             sim.addr = D_80280000;
@@ -635,9 +665,9 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
         }
 #endif
         sim.path = smolbuf;
-        snprintf(smolbuf, sizeof(smolbuf), "ST/%s/F_%s.BIN",
-                 g_StagesLba[g_StageId].ovlName,
-                 g_StagesLba[g_StageId].ovlName);
+        snprintf(smolbuf, sizeof(smolbuf), "ST/%s/%s.BIN",
+                 g_StagesLba[g_StageId].gfxName + 2,
+                 g_StagesLba[g_StageId].gfxName);
         break;
     case SimFileType_Weapon0Prg:
         HandleWeaponPrg(0, fileId);

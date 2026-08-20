@@ -87,6 +87,7 @@ s32 func_800FE044(s32 amount, s32 type);
 void AddToInventory(u16 itemId, s32 itemCategory);
 void InitStatsAndGear(bool isDeathTakingItems);
 s32 PlaySfxVolPan(s16 sfxId, u16 sfxVol, s16 sfxPan);
+s32 SetVolumeCommand22_23(s16 vol, s16 distance);
 u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
 void GetPlayerSensor(Collider* col);
 void RevealSecretPassageAtPlayerPositionOnMap(s32 arg0);
@@ -178,7 +179,7 @@ bool InitGame(struct InitGameParams* params) {
     api.relicDefs = g_RelicDefs;
     api.InitStatsAndGear = InitStatsAndGear;
     api.PlaySfxVolPan = PlaySfxVolPan;
-    api.SetVolumeCommand22_23 = NULL;
+    api.SetVolumeCommand22_23 = SetVolumeCommand22_23;
     api.MakeAll = NULL;
     api.CheckEquipmentItemCount = CheckEquipmentItemCount;
     api.GetPlayerSensor = GetPlayerSensor;

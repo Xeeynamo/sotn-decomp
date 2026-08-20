@@ -1,9 +1,36 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "inc_asm.h"
 #include "sattypes.h"
-#include "richter.h"
+#include "maria.h"
 
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A5060, func_060A5060);
+typedef enum {
+    TELEPORT_CHECK_NONE = 0,
+    TELEPORT_CHECK_TO_RTOP = 2,
+    TELEPORT_CHECK_TO_TOP = 4
+} TeleportCheck;
+
+extern s32 g_PlayerX;
+extern s32 g_PlayerY;
+
+// GetTeleportToOtherCastle
+static TeleportCheck func_060A5060(void) {
+    if (PLAYER.step != MARIA_PL_S_STAND || PLAYER.step_s != 1) {
+        return TELEPORT_CHECK_NONE;
+    }
+    if (g_CurrentRoom.stageID == STAGE_TOP) {
+        if (ABS((g_Tilemap.left << 8) + g_PlayerX - 8079) < 4 &&
+            ABS((g_Tilemap.top << 8) + g_PlayerY - 2127) < 4) {
+            return TELEPORT_CHECK_TO_RTOP;
+        }
+    }
+    if (g_CurrentRoom.stageID == (STAGE_TOP | STAGE_INVERTEDCASTLE_FLAG)) {
+        if (ABS((g_Tilemap.left << 8) + g_PlayerX - 8430) < 4 &&
+            ABS((g_Tilemap.top << 8) + g_PlayerY - 14407) < 4) {
+            return TELEPORT_CHECK_TO_TOP;
+        }
+    }
+    return TELEPORT_CHECK_NONE;
+}
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A5154, func_060A5154);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A5208, func_060A5208);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A54F0, func_060A54F0);
@@ -30,9 +57,6 @@ enum MariaInputChecks {
     CHECK_SLIDE = 0x40000,
     CHECK_UNK = 0x80000
 };
-
-extern int MariaCheckInput(s32 checks);
-extern s32 MariaCheckFacing(void);
 
 #define MariaSetSpeedX(speed)                                                  \
     do {                                                                       \
@@ -109,11 +133,9 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9064, func_060A9064);
 
 void func_060A9130(void) { RicSetStep(0xf0); }
 
-extern AnimationFrame D_80155950[];
-extern AnimationFrame D_8015591C[];
 // func_060A8EB8
 void MariaSetInit(s32 step_s) {
-    PLAYER.step = PL_S_INIT;
+    PLAYER.step = MARIA_PL_S_INIT;
     PLAYER.step_s = step_s;
     PLAYER.pose = PLAYER.poseTimer = 0;
     if (step_s & 1) {
@@ -126,15 +148,13 @@ void MariaSetInit(s32 step_s) {
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9194, func_060A9194);
 
 // func_060A9210
-extern AnimationFrame ric_anim_stand[];
-extern AnimationFrame ric_anim_stand_alt[];
 // new alt animation
 void RicSetStand(s32 velocityX) {
     PLAYER.velocityX = velocityX;
     PLAYER.velocityY = 0;
     g_Player.unk44 = 0;
 
-    RicSetStep(PL_S_STAND);
+    RicSetStep(MARIA_PL_S_STAND);
 
     if (g_Player.vram_flag & IN_AIR_OR_EDGE)
         RicSetAnimation(ric_anim_stand_alt);
@@ -185,8 +205,6 @@ s32 MariaCheckSubwpnChainLimit(s16 subwpnId, s16 limit) {
 }
 
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A973C, func_060A973C);
-
-extern u8 g_MariaInitialAfterimageTimers[];
 
 int func_060A9958(int param_1) {
     int iVar2;
@@ -303,12 +321,13 @@ int func_8015CAAC(s32 speed) {
 void RicSetInvincibilityFrames(s32 kind, s16 invincibilityFrames) {
     if (!kind) {
         RicCreateEntFactoryFromEntity(
-            g_CurrentEntity, FACTORY(BP_RIC_BLINK, 0x15), 0);
-        if (g_Player.timers[PL_T_INVINCIBLE_SCENE] <= invincibilityFrames) {
-            g_Player.timers[PL_T_INVINCIBLE_SCENE] = invincibilityFrames;
+            g_CurrentEntity, FACTORY(MARIA_BP_RIC_BLINK, 0x15), 0);
+        if (g_Player.timers[MARIA_PL_T_INVINCIBLE_SCENE] <=
+            invincibilityFrames) {
+            g_Player.timers[MARIA_PL_T_INVINCIBLE_SCENE] = invincibilityFrames;
         }
-    } else if (g_Player.timers[PL_T_INVINCIBLE] <= invincibilityFrames) {
-        g_Player.timers[PL_T_INVINCIBLE] = invincibilityFrames;
+    } else if (g_Player.timers[MARIA_PL_T_INVINCIBLE] <= invincibilityFrames) {
+        g_Player.timers[MARIA_PL_T_INVINCIBLE] = invincibilityFrames;
     }
 }
 
@@ -326,9 +345,6 @@ void func_8015CC28(void) {
 
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA974, func_060AA974);
 
-s32 func_060aa608(FrameProperty*, AnimationFrame**);
-extern FrameProperty g_MariaFrameProperties[];
-extern AnimationFrame* g_MariaAnimationGroups[];
 void func_060AA9EC(void) {
     g_CurrentEntity = &PLAYER;
     if (g_unkGraphicsStruct.unk28 == 4) {
@@ -351,10 +367,6 @@ s32 func_060AAA2C(void) {
 }
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AAA68, func_060AAA68);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AB088, func_060AB088);
-
-extern Point32 g_RicSensorsCeiling[NUM_HORIZONTAL_SENSORS];
-extern Point32 g_RicSensorsFloor[NUM_HORIZONTAL_SENSORS];
-extern Point32 g_RicSensorsWall[NUM_VERTICAL_SENSORS * 2];
 
 // func_060AB258
 void RicGetPlayerSensor(Collider* col) {
@@ -424,12 +436,6 @@ void func_8015F9F0(Entity* entity) {
         }
     }
 }
-
-extern u8 g_MariaBlueprintColors[][4];
-extern u8 g_MariaEmptyAnimMarker;
-extern u8 D_80174FB0;
-extern u8 D_80174FB4;
-extern u8 D_80174FB8;
 
 // func_060ABEF8
 void func_8015FA5C(s32 arg0) {
@@ -652,11 +658,6 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BD150, func_060BD150);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BD244, func_060BD244);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BD474, func_060BD474);
 
-void func_060BB330();
-
-extern u32 g_MariaCastleMapState;
-extern u8 g_MariaCastleMapBitmap[240][160];
-
 void func_060BD5F0(void) {
     memset(&g_MariaCastleMapState, 0, 4);
     memcpy(0x002B2000, g_MariaCastleMapBitmap, 0x9600);
@@ -672,15 +673,40 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BDC7C, func_060BDC7C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BDDA0, func_060BDDA0);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BDED8, func_060BDED8);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE064, func_060BE064);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE258, func_060BE258);
+
+typedef struct {
+    u16 unk_0000[0xC00];
+    u16 colors0[4];
+    u16 colors1[4];
+} SpGourTblData;
+
+extern SpGourTblData* SpGourTbl;
+
+void func_060BE258(void) {
+    s32* ptr;
+    u16* colors0;
+    u16* colors1;
+
+    ptr = func_060784A8();
+    func_060BE72C(ptr);
+    d_060cd748 = DAT_060476a0;
+    d_060cd74c = DAT_060476a4;
+    if (g_PlayableCharacter == 0) {
+        DAT_060476a0 = 0x252000;
+        DAT_060476a4 = 1;
+    }
+    colors0 = SpGourTbl->colors0;
+    colors0[0] = colors0[1] = 0xB18C;
+    colors0[2] = colors0[3] = 0xD294;
+    colors1 = SpGourTbl->colors1;
+    colors1[0] = colors1[1] = colors1[2] = colors1[3] = 0x9084;
+    DAT_0605c6e4 = 1;
+}
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE308, func_060BE308);
 
 s32 DAT_06086390;
 s32 DAT_060476a0;
 s32 DAT_060476a4;
-extern s32 g_MariaSavedMapVramBase;
-extern s32 g_MariaSavedMapPlaneConfig;
-void func_060BB9BC(s32*);
 s32* func_060784A8();
 
 void func_060BE3D4(void) {
@@ -693,7 +719,6 @@ void func_060BE3D4(void) {
 
 // same sequence of funcs as in richter
 
-s32 DAT_06086390;
 void func_060BE414(void) {
     s32* iVar2;
     DAT_06086390 = 0;
@@ -721,12 +746,49 @@ void func_060BE700(void) {
 
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE72C, func_060BE72C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE854, func_060BE854);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE994, func_060BE994);
+extern s16 g_ButtonMask[];
+
+bool func_060BE994(void) {
+    s32 buf[9];
+    s32 i;
+    s32 bitMask_Assigned;
+    s32* buttonConfig;
+
+    for (i = 0; i < 9; i++) {
+        buf[i] = 0;
+    }
+
+    buttonConfig = g_Settings.buttonConfig;
+    for (i = 0; i < 8; i++) {
+        buf[*buttonConfig++] = 1;
+    }
+
+    for (i = 0; i < 9; i++) {
+        if (buf[i] == 0) {
+            g_Settings.buttonConfig[8] = i;
+            break;
+        }
+    }
+
+    for (i = 0; i < 9; i++) {
+        g_Settings.buttonMask[i] = g_ButtonMask[g_Settings.buttonConfig[i]];
+    }
+
+    bitMask_Assigned = 0;
+    buttonConfig = g_Settings.buttonConfig;
+    for (i = 0; i < 9; i++) {
+        bitMask_Assigned |= 1 << *buttonConfig++;
+    }
+    if (bitMask_Assigned == 0xFF) {
+        return true;
+    } else {
+        return false;
+    }
+}
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BEA54, func_060BEA54);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BEB74, func_060BEB74);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BEE30, func_060BEE30);
 
-extern s16 g_MariaMapRevealRowIndices[7];
 void func_060BF0F4(u32 param_1) {
     int first;
     int cur;
@@ -763,12 +825,10 @@ void func_060BF0F4(u32 param_1) {
 
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BF180, func_060BF180);
 
-Unk0605cd70 DAT_0605cd70;
 u32 D_06085534;
 u8 DAT_06057f68;
 
 s32 func_060732E4(u16);
-void func_060BF180(void);
 
 void func_060BF35C(void) {
     if (DAT_0605cd70.unk8 != 0) {
@@ -802,7 +862,6 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60C0920, func_060C0920);
 
 u32* d_06086234;
 u32* d_06086250;
-s32 g_GameClearFlag;
 
 void func_060C0A5C(void) {
     if (d_06086234 == 0) {

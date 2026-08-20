@@ -12,7 +12,7 @@ void EntityRoomForeground(Entity* self);
 void EntityStageNamePopup(Entity* self);
 void EntityEquipItemDrop(Entity* self);
 void EntityRelicOrb(Entity* self);
-void EntityHeartDrop(Entity* self);
+void EntityPersistentItemDrop(Entity* self);
 void EntityEnemyBlood(Entity* self);
 void EntityMessageBox(Entity* self);
 void EntityDummy(Entity* self);
@@ -59,18 +59,18 @@ void EntityBlade(Entity* self);
 void EntityBladeWeapon(Entity* self);
 void EntitySubWeaponContainer(Entity* self);
 void EntitySubWpnContGlass(Entity* self);
-void func_801C7654(Entity* self);
-void func_801C77B8(Entity* self);
-void func_801C7884(Entity* self);
+void EntityFallingLiquid(Entity* self);
+void EntityBubbles(Entity* self);
+void EntitySubwpnInContainer(Entity* self);
 void EntityGorgon(Entity* self);
-void func_us_801D068C(Entity* self);
-void func_us_801D0CFC(Entity* self);
-void func_us_801D136C(Entity* self);
-void func_us_801D15C0(Entity* self);
-void func_us_801D2038(Entity* self);
-void func_us_801D1BF0(Entity* self);
-void func_us_801D2264(Entity* self);
-void func_us_801D21C8(Entity* self);
+void EntityGorgonFront(Entity* self);
+void EntityGorgonRear(Entity* self);
+void EntityGorgonFoot(Entity* self);
+void EntityGorgonHead(Entity* self);
+void EntityGorgonSaddle(Entity* self);
+void EntityGorgonTail(Entity* self);
+void EntityGorgonAttack(Entity* self);
+void EntityGorgonSnort(Entity* self);
 void EntityElevator(Entity* self);
 void EntityElevatorPart(Entity* self);
 void EntityPendulum(Entity* self);
@@ -93,7 +93,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityStageNamePopup,
     EntityEquipItemDrop,
     EntityRelicOrb,
-    EntityHeartDrop,
+    EntityPersistentItemDrop,
     EntityEnemyBlood,
     EntityMessageBox,
     EntityDummy,
@@ -140,18 +140,18 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityBladeWeapon,
     EntitySubWeaponContainer,
     EntitySubWpnContGlass,
-    func_801C7654,
-    func_801C77B8,
-    func_801C7884,
+    EntityFallingLiquid,
+    EntityBubbles,
+    EntitySubwpnInContainer,
     EntityGorgon,
-    func_us_801D068C,
-    func_us_801D0CFC,
-    func_us_801D136C,
-    func_us_801D15C0,
-    func_us_801D2038,
-    func_us_801D1BF0,
-    func_us_801D2264,
-    func_us_801D21C8,
+    EntityGorgonFront,
+    EntityGorgonRear,
+    EntityGorgonFoot,
+    EntityGorgonHead,
+    EntityGorgonSaddle,
+    EntityGorgonTail,
+    EntityGorgonAttack,
+    EntityGorgonSnort,
     EntityElevator,
     EntityElevatorPart,
     EntityPendulum,
@@ -192,17 +192,17 @@ EInit g_EInitJackOBones3 = {ANIMSET_OVL(7), 21, 74, 528, 0x075};
 EInit g_EInitNovaSkeleton = {ANIMSET_OVL(8), 1, 72, 532, 0x07E};
 EInit g_EInitNovaSkeleton2 = {ANIMSET_OVL(8), 0, 72, 532, 0x07F};
 EInit g_EInitHammer = {ANIMSET_OVL(9), 2, 87, 547, 0x0BA};
-EInit D_us_80180B7C = {ANIMSET_OVL(9), 18, 87, 547, 0x0BB};
+EInit g_EInitHammerWeapon = {ANIMSET_OVL(9), 18, 87, 547, 0x0BB};
 EInit g_EInitGurkha = {ANIMSET_OVL(9), 2, 87, 544, 0x0BC};
-EInit D_us_80180B94 = {ANIMSET_OVL(9), 20, 87, 544, 0x0BD};
+EInit g_EInitGurkhaWeapon = {ANIMSET_OVL(9), 20, 87, 544, 0x0BD};
 EInit g_EInitBlade = {ANIMSET_OVL(9), 2, 87, 541, 0x0BE};
-EInit D_us_80180BAC = {ANIMSET_OVL(9), 19, 87, 541, 0x0BF};
-EInit D_us_80180BB8 = {ANIMSET_OVL(10), 0, 76, 550, 0x005};
-EInit D_us_80180BC4 = {ANIMSET_OVL(10), 0, 76, 550, 0x002};
+EInit g_EInitBladeWeapon = {ANIMSET_OVL(9), 19, 87, 541, 0x0BF};
+EInit g_EInitSubwpnCloche = {ANIMSET_OVL(10), 0, 76, 550, 0x005};
+EInit g_EInitSubwpnClochePieces = {ANIMSET_OVL(10), 0, 76, 550, 0x002};
 EInit g_EInitGorgon = {ANIMSET_OVL(11), 0, 76, 560, 0x01F};
-EInit D_us_80180BDC = {ANIMSET_OVL(11), 0, 76, 560, 0x020};
-EInit D_us_80180BE8 = {ANIMSET_DRA(0), 0, 0, 0, 0x021};
+EInit g_EInitGorgonHead = {ANIMSET_OVL(11), 0, 76, 560, 0x020};
+EInit g_EInitGorgonAttack = {ANIMSET_DRA(0), 0, 0, 0, 0x021};
 EInit g_EInitElevator = {ANIMSET_OVL(12), 1, 72, 576, 0x005};
-EInit g_EInitMedusaHead1 = {ANIMSET_OVL(13), 0, 95, 592, 0x12F};
-EInit g_EInitMedusaHead2 = {ANIMSET_OVL(13), 0, 95, 593, 0x130};
+EInit g_EInitMedusaHeadBlue = {ANIMSET_OVL(13), 0, 95, 592, 0x12F};
+EInit g_EInitMedusaHeadYellow = {ANIMSET_OVL(13), 0, 95, 593, 0x130};
 // clang-format on

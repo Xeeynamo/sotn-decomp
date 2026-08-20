@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "inc_asm.h"
 #include "sattypes.h"
+
+#include "stage_16.h"
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60DC040, func_060DC040);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60DC1A8, func_060DC1A8);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60DC318, func_060DC318);
@@ -50,13 +52,36 @@ void func_060E2750(void) {
     g_Player.padSim = 0x1000;
     g_Player.demo_timer = 1;
 }
-INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E2770, func_060E2770);
+void func_060E2770(Entity* self) {
+    Primitive* prim = self->ext.save.unk10;
+    s32 i;
+
+    for (i = 0; i < 9; i++) {
+        prim->x3 = 0;
+        prim->drawMode = DRAW_HIDE;
+        prim = prim->next;
+    }
+}
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E279C, func_060E279C);
-INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E2BA0, func_060E2BA0);
+extern void func_060E2BF0(s32, s32);
+extern void func_060E2DB0(s32, s32, s32);
+extern void func_060E2EFC(s32, s32, s32);
+
+void func_060E2BA0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    func_060E2BF0(arg1, arg3);
+    func_060E2DB0(arg1, arg2, arg3);
+    func_060E2EFC(arg0, arg1, arg3);
+}
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E2BF0, func_060E2BF0);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E2DB0, func_060E2DB0);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E2EFC, func_060E2EFC);
-INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E3200, func_060E3200);
+extern void func_060E323C(s32 arg0, s32 arg1);
+extern void func_060E330C(s32 arg0, s32 arg1, s32 arg2);
+
+void func_060E3200(s32 arg0, s32 arg1, s32 arg2) {
+    func_060E323C(arg1, arg2);
+    func_060E330C(arg0, arg1, arg2);
+}
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E323C, func_060E323C);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E330C, func_060E330C);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E3478, func_060E3478);

@@ -186,7 +186,7 @@ void EntityFallingStairs(Entity* self) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIdx;
             prim = &g_PrimBuf[primIdx];
-            self->ext.prim = prim;
+            self->ext.fallingStairs.prim7C = prim;
 
             prim->x0 = self->posX.i.hi;
             prim->y0 = self->posY.i.hi - 0x18;
@@ -205,11 +205,11 @@ void EntityFallingStairs(Entity* self) {
             }
 
             // Show some dust particles
-            prim = self->ext.prim;
+            prim = self->ext.fallingStairs.prim7C;
             xPos = prim->x0;
             yPos = prim->y0;
             for (i = 0; i < 8; i++) {
-                prim = self->ext.prim;
+                prim = self->ext.fallingStairs.prim7C;
                 prim = prim->next;
                 prim = FindFirstUnkPrim(prim);
                 if (prim != NULL) {
@@ -220,7 +220,7 @@ void EntityFallingStairs(Entity* self) {
                 }
             }
         } else {
-            self->ext.prim = NULL;
+            self->ext.fallingStairs.prim7C = NULL;
         }
         self->step++;
         break;
@@ -232,14 +232,14 @@ void EntityFallingStairs(Entity* self) {
             self->rotate += 0x12;
             self->velocityY += FIX(0.25);
             scrolledY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
-            if (self->ext.prim != NULL) {
-                prim = self->ext.prim;
+            if (self->ext.fallingStairs.prim7C != NULL) {
+                prim = self->ext.fallingStairs.prim7C;
                 xPos = prim->x0;
                 yPos = prim->y0;
 
                 // Show some additional dust particles
                 for (i = 0; i < 3; i++) {
-                    prim = self->ext.prim;
+                    prim = self->ext.fallingStairs.prim7C;
                     prim = prim->next;
                     prim = FindFirstUnkPrim(prim);
                     if (prim != NULL) {
@@ -265,11 +265,11 @@ void EntityFallingStairs(Entity* self) {
                 }
 
                 // Show some dust particles
-                if (self->ext.prim != NULL) {
+                if (self->ext.fallingStairs.prim7C != NULL) {
                     xPos = self->posX.i.hi;
                     yPos = self->posY.i.hi;
                     for (i = 0; i < 8; i++) {
-                        prim = self->ext.prim;
+                        prim = self->ext.fallingStairs.prim7C;
                         prim = prim->next;
                         prim = FindFirstUnkPrim(prim);
                         if (prim != NULL) {
@@ -306,9 +306,9 @@ void EntityFallingStairs(Entity* self) {
                 }
 
                 // Show some dust particles
-                if (self->ext.prim != NULL) {
+                if (self->ext.fallingStairs.prim7C != NULL) {
                     for (i = 0; i < 8; i++) {
-                        prim = self->ext.prim;
+                        prim = self->ext.fallingStairs.prim7C;
                         prim = prim->next;
                         prim = FindFirstUnkPrim(prim);
                         if (prim != NULL) {
@@ -356,8 +356,8 @@ void EntityFallingStairs(Entity* self) {
         self->step++;
         break;
     }
-    if (self->ext.prim != NULL) {
-        prim = self->ext.prim;
+    if (self->ext.fallingStairs.prim7C != NULL) {
+        prim = self->ext.fallingStairs.prim7C;
         prim = prim->next;
 
         // Update dust particles
@@ -441,7 +441,7 @@ void EntityFallingStep(Entity* self) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIdx;
             prim = &g_PrimBuf[primIdx];
-            self->ext.prim = prim;
+            self->ext.fallingStairs.prim7C = prim;
 
             prim->x0 = self->posX.i.hi + 8;
             prim->y0 = self->posY.i.hi - 8;
@@ -461,7 +461,7 @@ void EntityFallingStep(Entity* self) {
             self->ext.fallingStairs.primBatchCount = 32;
         } else {
             self->ext.fallingStairs.primBatchCount = 0;
-            self->ext.prim = NULL;
+            self->ext.fallingStairs.prim7C = NULL;
         }
         self->step++;
         break;
@@ -508,12 +508,12 @@ void EntityFallingStep(Entity* self) {
         // Initialize a batch of 2 primitives
         if (self->ext.fallingStairs.primBatchCount != 0) {
             self->ext.fallingStairs.primBatchCount--;
-            prim = self->ext.prim;
+            prim = self->ext.fallingStairs.prim7C;
             posX = prim->x0;
             posY = prim->y0;
 
             for (i = 0; i < 2; i++) {
-                prim = self->ext.prim;
+                prim = self->ext.fallingStairs.prim7C;
                 prim = prim->next;
                 prim = FindFirstUnkPrim(prim);
                 if (prim != NULL) {
@@ -526,8 +526,8 @@ void EntityFallingStep(Entity* self) {
         }
     }
 
-    if (self->ext.prim != NULL) {
-        prim = self->ext.prim;
+    if (self->ext.fallingStairs.prim7C != NULL) {
+        prim = self->ext.fallingStairs.prim7C;
         prim = prim->next;
         while (prim != NULL) {
             if (prim->p3) {

@@ -28,18 +28,29 @@ typedef enum EntityID {
     /* 0x09 */ E_STAGE_NAME_POPUP,
     /* 0x0A */ E_EQUIP_ITEM_DROP,
     /* 0x0B */ E_RELIC_ORB,
-    /* 0x0C */ E_HEART_DROP,
+    /* 0x0C */ E_PERSISTENT_ITEM_DROP,
     /* 0x0D */ E_ENEMY_BLOOD,
     /* 0x0E */ E_MESSAGE_BOX,
     /* 0x0F */ E_DUMMY_0F,
     /* 0x10 */ E_DUMMY_10,
-    /* 0x11 */ E_ID_11 = 0x11,
-    /* 0x13 */ E_UNK_ID_13 = 0x13,
+    /* 0x11 */ E_ID_11,
+    /* 0x12 */ E_ID_12,
+    /* 0x13 */ E_UNK_ID_13,
     /* 0x14 */ E_EXPLOSION_VARIANTS,
     /* 0x15 */ E_GREY_PUFF,
-    /* 0x18 */ E_STAIR_SEGMENT = 0x18,
-    /* 0x1C */ E_BREAKABLE_DEBRIS = 0x1C,
-    /* 0x22 */ E_YORICK = 0x22,
+    /* 0x16 */ E_ID_16,
+    /* 0x17 */ E_ID_17,
+    /* 0x18 */ E_STAIR_SEGMENT,
+    /* 0x19 */ E_ID_19,
+    /* 0x1A */ E_ID_1A,
+    /* 0x1B */ E_ID_1B,
+    /* 0x1C */ E_BREAKABLE_DEBRIS,
+    /* 0x1D */ E_ID_1D,
+    /* 0x1E */ E_ID_1E,
+    /* 0x1F */ E_ID_1F,
+    /* 0x20 */ E_ID_20,
+    /* 0x21 */ E_ID_21,
+    /* 0x22 */ E_YORICK,
     /* 0x23 */ E_YORICK_SKULL,
     /* 0x24 */ E_SKELETON_PARTS,
     /* 0x25 */ E_TOMBSTONE,
@@ -61,8 +72,6 @@ extern EInit g_EInitDamageNum;
 extern EInit __unused__;
 extern EInit g_EInitRTOPCommon;
 extern EInit g_EInitTombstone;
-extern EInit g_EInitSkeletonPieces;
-extern EInit D_us_801805E4;
 extern EInit g_EInitSkullLord;
 extern EInit g_EInitSkullLordEffects;
 

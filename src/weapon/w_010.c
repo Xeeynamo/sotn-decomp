@@ -327,7 +327,7 @@ void EntityWeaponShieldSpell(Entity* self) {
         SetSpeedX(FIX(-2));
         self->velocityY = 0;
         g_api.PlaySfx(SFX_ANIME_SWORD_C);
-        g_unkGraphicsStruct.unk20 = 1;
+        g_unkGraphicsStruct.unk28 = 1;
         self->step++;
         break;
     case 1:
@@ -400,7 +400,7 @@ void EntityWeaponShieldSpell(Entity* self) {
                 self, ((g_HandId + 1) << 0xE) + FACTORY(88, 0), 0);
             unusedEnt = g_api.CreateEntFactoryFromEntity(
                 self, ((g_HandId + 1) << 0xE) + FACTORY(88, 1), 0);
-            g_unkGraphicsStruct.unk20 = 0;
+            g_unkGraphicsStruct.unk28 = 0;
             self->step++;
         }
         break;
@@ -574,7 +574,7 @@ void func_ptr_80170024(Entity* self) {
             self->ext.shield.unk9C = 0;
             self->rotate = 0x600;
         }
-        self->ext.shield.unkAE = self->ext.shield.parent->ext.shield.unkAE;
+        self->ext.shield.equipId = self->ext.shield.parent->ext.shield.equipId;
         SetWeaponProperties(self, 0);
         self->hitboxWidth = 0x10;
         self->hitboxHeight = 0x10;

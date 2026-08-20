@@ -306,7 +306,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
         self->velocityY = 0;
         DestroyEntityWeapon(1);
         g_api.PlaySfx(SFX_ANIME_SWORD_C);
-        g_unkGraphicsStruct.unk20 = 1;
+        g_unkGraphicsStruct.unk28 = 1;
         self->step++;
         break;
 
@@ -404,7 +404,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
             // This should spawn the rocks that rise in the background?
             unusedEnt = g_api.CreateEntFactoryFromEntity(
                 self, ((g_HandId + 1) << 0xE) + 96, 0);
-            g_unkGraphicsStruct.unk20 = 0;
+            g_unkGraphicsStruct.unk28 = 0;
             SetWeaponProperties(self, 0);
             self->hitboxWidth = self->hitboxHeight = 0x7F;
         }
@@ -584,7 +584,7 @@ static void func_ptr_80170024(Entity* self) {
         self->velocityY = -((self->ext.shield.unk9A * FIX(3.0 / 16)) + FIX(3));
         self->ext.weapon.accelerationY =
             -((self->ext.shield.unk9A << 8) + 0x900);
-        self->ext.shield.unkAE = self->ext.shield.parent->ext.shield.unkAE;
+        self->ext.shield.equipId = self->ext.shield.parent->ext.shield.equipId;
         SetWeaponProperties(self, 0);
         self->hitboxHeight = 0x40;
         self->hitboxWidth = 0x40;

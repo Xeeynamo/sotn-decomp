@@ -50,7 +50,7 @@ void EntityRelicContainer(Entity* self) {
             newEntity->params = D_80180F9C[self->params];
         } else {
             newEntity = self + 1;
-            CreateEntityFromEntity(E_HEART_DROP, self, newEntity);
+            CreateEntityFromEntity(E_PERSISTENT_ITEM_DROP, self, newEntity);
             newEntity->params = D_80180F9C[self->params];
         }
 
@@ -93,7 +93,7 @@ void EntityBlueFlameTable(Entity* self) {
         break;
     case 2:
         newEntity = &self[1];
-        CreateEntityFromEntity(E_HEART_DROP, self, newEntity);
+        CreateEntityFromEntity(E_PERSISTENT_ITEM_DROP, self, newEntity);
         newEntity->params = D_80180F9C[self->params];
         self->step++;
     case 3:

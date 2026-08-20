@@ -2,13 +2,7 @@
 #include "sattypes.h"
 #include <saturn_sprite.h>
 #include <saturn_sprite.h>
-
-void EntityTableWithGlobe(Entity* self);
-void func_060DDF64(Entity* self);
-void func_060DE178(Entity* self);
-
-extern SaturnSpriteResource g_Stage02TableWithGlobeResource;
-extern SaturnSpriteResource g_Stage02BlueFlameTableResource;
+#include "stage_02.h"
 
 u8 g_Stage02TableWithGlobeIdleAnim[8] = {2, 1, 2, 2, 0, 0, 0, 0};
 

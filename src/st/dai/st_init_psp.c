@@ -4,7 +4,6 @@
 
 extern LayoutEntity* D_8D2E2B0;
 extern LayoutEntity* D_8D2E384;
-
 extern Overlay g_Overlay;
 
 extern char cutscene_script_en[];

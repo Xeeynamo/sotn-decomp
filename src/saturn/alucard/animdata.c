@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
-
-extern const SaturnAnimationFrame g_AlucardAnimationData[];
+#include "alucard.h"
 
 // D_800B01B8 on PSX
 const SaturnAnimationFrame* g_AlucardAnimationTable[226] = {

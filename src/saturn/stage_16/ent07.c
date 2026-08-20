@@ -1,9 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
 #include "shared_sprite_banks.h"
-
-void func_060E0F20(Entity* self);
-void func_060E102C(Entity* self);
+#include "stage_16.h"
 
 EntityEntry g_Stage16EntityEntry14 = {
     &g_SaturnSharedSpriteBank8Resource, func_060E0F20};

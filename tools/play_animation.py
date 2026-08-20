@@ -62,6 +62,7 @@ def load_anims(src_file):
     loaded_anims = {}
     for i, line in enumerate(file_lines):
         if line.startswith("static u8") or line.startswith("static AnimateEntityFrame"):
+            print("Start of animation, line = ", line)
             # handle the potential of multi-line animations
             anim = ""
             line_idx = 0
@@ -69,7 +70,9 @@ def load_anims(src_file):
                 anim += file_lines[i + line_idx]
                 line_idx += 1
             # got full animation line. Get the name. Comes after "static, space, type, space"
-            namesearch = re.match(r"static\s+(\w+)\s+(\w+)\[\]\s*=", anim)
+            print("RE SEARCH:")
+            print(anim)
+            namesearch = re.match(r"static\s+(\w+)\s+(\w+)\[\].*=", anim)
             if namesearch:
                 anim_name = namesearch.group(2)
             print(anim_name)

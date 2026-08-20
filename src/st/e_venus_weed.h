@@ -358,7 +358,7 @@ void EntityVenusWeed(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIdx;
         prim = &g_PrimBuf[primIdx];
-        self->ext.prim = prim;
+        self->ext.venusWeed.prim = prim;
 
         // Leaves
         for (i = 0; i < 2; i++) {
@@ -437,7 +437,7 @@ void EntityVenusWeed(Entity* self) {
             }
 
             // Update prims to match
-            prim = self->ext.prim;
+            prim = self->ext.venusWeed.prim;
             x = self->posX.i.hi;
             y = self->posY.i.hi;
             y -= self->ext.venusWeed.leavesHeight;
@@ -547,7 +547,7 @@ void EntityVenusWeed(Entity* self) {
                 // Switch to next clut
                 self->palette += 1;
                 // For primitives too
-                prim = self->ext.prim;
+                prim = self->ext.venusWeed.prim;
                 while (prim != NULL) {
                     prim->clut += 1;
                     prim = prim->next;
@@ -563,7 +563,7 @@ void EntityVenusWeed(Entity* self) {
             self->ext.venusWeed.timer++;
             // Every other frame
             if (self->ext.venusWeed.timer & 1) {
-                prim = self->ext.prim;
+                prim = self->ext.venusWeed.prim;
                 x = self->posX.i.hi;
 
                 // Shrink leaves
@@ -628,7 +628,7 @@ void EntityVenusWeed(Entity* self) {
         self->rotate += WiggleLeavesSpeed;
         x = rcos(rot) * 3 >> 0xC;
         y = rsin(rot) * 3 >> 0xC;
-        prim = self->ext.prim;
+        prim = self->ext.venusWeed.prim;
 
         // Update leaves
         for (i = -1; i < 2; i += 2) {

@@ -1,6 +1,7 @@
 package deps
 
 import (
+	"bytes"
 	"fmt"
 	"os"
 	"os/exec"
@@ -109,23 +110,37 @@ func ensureSotnAssets() error {
 	if err != nil {
 		return fmt.Errorf("resolve own executable: %w", err)
 	}
-	selfInfo, err := os.Stat(self)
-	if err != nil {
-		return fmt.Errorf("stat own executable: %w", err)
-	}
-	if destInfo, err := os.Stat("bin/sotn-assets"); err == nil {
-		if selfInfo.ModTime().Equal(destInfo.ModTime()) {
-			return nil
-		}
-	}
-	if err := os.MkdirAll("bin", 0755); err != nil {
-		return err
-	}
 	src, err := os.ReadFile(self)
 	if err != nil {
 		return fmt.Errorf("read own executable: %w", err)
 	}
+	if same, err := sameContent("bin/sotn-assets", src); err != nil {
+		return err
+	} else if same {
+		return nil
+	}
+	if err := os.MkdirAll("bin", 0755); err != nil {
+		return err
+	}
 	return os.WriteFile("bin/sotn-assets", src, 0755)
+}
+
+func sameContent(path string, want []byte) (bool, error) {
+	info, err := os.Stat(path)
+	if err != nil {
+		if os.IsNotExist(err) {
+			return false, nil
+		}
+		return false, fmt.Errorf("stat %s: %w", path, err)
+	}
+	if !info.Mode().IsRegular() || info.Size() != int64(len(want)) {
+		return false, nil
+	}
+	got, err := os.ReadFile(path)
+	if err != nil {
+		return false, fmt.Errorf("read %s: %w", path, err)
+	}
+	return bytes.Equal(got, want), nil
 }
 
 func ensurePythonDeps() error {

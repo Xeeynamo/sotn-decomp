@@ -6,6 +6,8 @@
 #define _SPR2_
 #include "lib/spr/spr.h"
 
+void DestroyEntity(Entity* entity);
+
 void PlaySfx(s32 sfxId);
 
 extern s32 DAT_00292000;
@@ -19,8 +21,6 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078604, func_06078604);
 // _disp_num_string
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078684, func_06078684);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078700, func_06078700);
-
-extern s32 DAT_06086390;
 
 // func_06078748
 char* GetMenuItemName(s32 id) {
@@ -778,8 +778,6 @@ u8 GetPlayerFacing(void) { return PLAYER.facingLeft; }
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AC40, func_0607AC40);
 
-void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity);
-
 // func_0607AE48
 void DestroyEntityWithExplosion(Entity* self, u16 params) {
     Entity* entity;
@@ -812,8 +810,6 @@ Entity* FindFirstFreeEntity(s16 start, s16 end) {
     }
     return NULL;
 }
-
-extern s16 g_SineTable[];
 
 s32 GetSineScaled(u8 arg0, s16 arg1) {
     s32 sine = g_SineTable[arg0];
@@ -966,8 +962,6 @@ void TekiInit(Entity* entity, u16 enemyId) {
     entity->step_s = 0;
 }
 
-extern u32 g_randomNext;
-
 // SAT: func_0607B2F4
 s32 Random(void) {
     g_randomNext = (g_randomNext * 0x01010101) + 1;
@@ -991,7 +985,6 @@ void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity) {
 }
 
 void FreePrimitives(s32);
-void DestroySpriteObject(SpriteObject*);
 
 // func_0607B3D0
 void ChangeCurrentEntityType(u16 entityId) {
@@ -1140,9 +1133,6 @@ void PlaySfxPositional(s32 sfxId) {
         PlaySfxVolPan(sfxId, sfxVol, sfxPan);
     }
 }
-
-extern u16 DAT_0605cdb8;
-extern u8 DAT_0608FFF8[];
 
 void CheckCollision(s32 x, s32 y, Collider* res, u16 unk) {
     Collider col0;
@@ -1488,14 +1478,6 @@ void CheckCollision(s32 x, s32 y, Collider* res, u16 unk) {
     res->unkC = res->unkC * 5 / 4;
 }
 
-extern s32 DAT_06086128;
-extern s32 DAT_0608612c;
-extern s32 DAT_06086130;
-extern s32 DAT_06086134;
-
-void ResetLayerColorCalc();
-void func_0600C818();
-
 // func_0607BE38
 void InitScreenWaveEffect(void) {
     func_0600C818();
@@ -1509,8 +1491,6 @@ void InitScreenWaveEffect(void) {
     SCL_SET_S0CCRT(DAT_06086134);
 }
 
-extern s32 d_0605AEAC;
-extern u16 DAT_0605aec0[][2];
 extern s32 SpMstCmdPos;
 
 // func_0607BED0

@@ -1,21 +1,18 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
 #include "shared_sprite_banks.h"
+#include "rstage15.h"
 
 extern struct SpriteParts* g_EntitySpriteBank15[];
 extern u8 g_RStage15SpriteBank16[];
-extern u8 g_RStage15SpriteBank17[];
 extern u8 g_RStage15SpriteBank18[];
 extern u8 g_RStage15SpriteBank19[];
 extern u8 g_RStage15SpriteBank20[];
 extern u8 g_RStage15SpriteBank21[];
 extern u8 g_RStage15SpriteBank22[];
 extern u8 g_RStage15SpriteBank23[];
-extern u8 g_RStage15SpriteBankEfreet[];
 extern u8 g_RStage15SpriteBank25[];
 extern u8 g_RStage15SpriteBank26[];
-extern u8 g_RStage15SpriteBankCopperArmor[];
-extern u8 g_RStage15SpriteBankSkeletonGuardian[];
 
 void* g_RStage15SpriteBanks[] = {
     &g_SaturnSharedSpriteBank0Resource,

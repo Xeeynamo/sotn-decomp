@@ -907,6 +907,45 @@ files:
     asset_path: assets/st/rno0
     src_path: src/st/rno0
     splat_config_path: config/splat.pspeu.strno0.yaml
+    segments:
+      - start: 0x80
+        vram: 0x09237700
+        assets:
+          - [0x80, skip]
+          #- [0x2EF48, sprite_banks, sprite_banks]
+          - [0x2EFA8, skip]
+          - [0x2F400, paldef, palette_def]
+          - [0x2F4B0, skip]
+          - [0x2FC20, cmpgfx, D_80185F20, 128, 128, 4]
+          - [0x30B58, cmpgfx, D_80186E54, 128, 128, 4]
+          - [0x31BB8, cmpgfx, D_80187EB4, 128, 128, 4]
+          - [0x327C8, cmpgfx, D_80188AC4, 128, 128, 4]
+          - [0x33288, cmpgfx, D_80189580, 128, 128, 4]
+          - [0x33600, cmpgfx, D_801898F4, 128, 128, 4]
+          - [0x34390, cmpgfx, D_8018A680, 128, 128, 4]
+          - [0x350D0, cmpgfx, D_8018B3C0, 128, 128, 4]
+          - [0x35B00, cmpgfx, D_8018BDF0, 128, 128, 4]
+          - [0x368E8, cmpgfx, D_8018CBD8, 128, 128, 4]
+          - [0x37238, cmpgfx, D_8018D524, 128, 128, 4]
+          - [0x37998, cmpgfx, D_8018DC84, 128, 128, 4]
+          - [0x384F0, cmpgfx, D_8018E7D8, 128, 128, 4]
+          - [0x39160, cmpgfx, D_8018F444, 128, 128, 4]
+          - [0x39EC0, cmpgfx, D_801901A0, 128, 128, 4]
+          - [0x3A130, cmpgfx, D_80190410, 128, 128, 4]
+          - [0x3AA40, palette, D_80190D20, 16] # 0x2E0
+          - [0x3AD00, palette, D_80190FE0, 16] # 0x200
+          - [0x3AE80, palette, D_80191160, 16] # 0x240
+          - [0x3AFA0, palette, D_80191280, 16] # 0x210
+          - [0x3B020, palette, D_80191300, 16] # 0x242
+          - [0x3B040, palette, D_80191320, 16] # 0x219
+          - [0x3B080, palette, D_80191360, 16] # 0x20F
+          - [0x3B120, palette, D_80191400, 16] # 0x214
+          - [0x3B240, palette, D_80191520, 16] # 0x21D
+          - [0x3B380, palette, D_80191660, 16] # 0x226
+          - [0x3B4E0, palette, D_801917C0, 16] # 0x230
+          - [0x3B520, palette, D_80191800, 16] # 0x250
+          - [0x3B560, palette, D_80191840, 16] # 0x258
+          - [0x3B620, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rno1.bin
     asset_path: assets/st/rno1
     src_path: src/st/rno1
@@ -1056,6 +1095,58 @@ files:
     asset_path: assets/boss/bo1
     src_path: src/boss/bo1
     splat_config_path: config/splat.pspeu.bobo1.yaml
+    segments:
+      - start: 0x80
+        vram: 0x09237700
+        assets:
+          - [0x80, skip]
+          - [0x17F88, sprite_banks, psp/sprite_banks]
+          - [0x17FE8, skip]
+          - [0x18010, palette, pal_8C, 16]
+          - [0x18030, palette, pal_AC, 16]
+          - [0x18050, palette, pal_CC, 16]
+          - [0x180B0, palette, pal_12C, 16]
+          - [0x18110, palette, pal_18C, 16]
+          - [0x18170, palette, pal_1EC, 16]
+          - [0x181D0, palette, pal_24C, 16]
+          - [0x181F0, palette, pal_26C, 16]
+          - [0x18250, palette, pal_2CC, 16]
+          - [0x18270, palette, pal_2EC, 16]
+          - [0x18290, palette, pal_30C, 16]
+          - [0x182B0, palette, pal_32C, 16]
+          - [0x182D0, palette, pal_34C, 16]
+          - [0x18310, palette, pal_38C, 16]
+          - [0x18350, palette, pal_3CC, 16]
+          - [0x18370, palette, pal_3EC, 16]
+          - [0x18390, palette, pal_40C, 16]
+          - [0x18450, palette, pal_4CC, 16]
+          - [0x18510, paldef, palette_def]
+          - [0x18670, gfx_banks, graphics_banks]
+          - [0x18970, rooms, rooms]
+          - [0x18990, skip]
+          - [0x189F0, cmpgfx, gfx_1D84, 128, 128, 4]
+          - [0x19BA8, cmpgfx, gfx_2F38, 128, 128, 4]
+          - [0x1A818, cmpgfx, gfx_3BA4, 128, 128, 4]
+          - [0x1B4D0, cmpgfx, gfx_4858, 128, 128, 4]
+          - [0x1C4C0, cmpgfx, gfx_5844, 128, 128, 4]
+          - [0x1D5B0, cmpgfx, gfx_6934, 128, 128, 4]
+          - [0x1E380, cmpgfx, gfx_7704, 128, 128, 4]
+          - [0x1F3A8, cmpgfx, gfx_872C, 128, 128, 4]
+          - [0x202E8, cmpgfx, gfx_966C, 128, 128, 4]
+          - [0x213B8, cmpgfx, gfx_A73C, 128, 128, 4]
+          - [0x22168, cmpgfx, gfx_B4E8, 128, 128, 4]
+          - [0x22E98, cmpgfx, gfx_C214, 128, 128, 4]
+          - [0x23EE8, cmpgfx, gfx_D264, 128, 128, 4]
+          - [0x24DF8, cmpgfx, gfx_E170, 128, 128, 4]
+          - [0x262E0, cmpgfx, gfx_F658, 128, 128, 4]
+          - [0x27568, cmpgfx, gfx_108E0, 128, 128, 4]
+          - [0x28690, cmpgfx, gfx_11A08, 128, 128, 4]
+          - [0x29610, cmpgfx, gfx_12984, 128, 128, 4]
+          - [0x29FC0, cmpgfx, gfx_13330, 128, 128, 4]
+          - [0x2AEB8, cmpgfx, gfx_14228, 128, 128, 4]
+          - [0x2B5A8, palette, pal_granfaloon, 16]
+          - [0x2B668, palette, pal_explosion_flame, 16]
+          - [0x2B868, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo2.bin
     asset_path: assets/boss/bo2
     src_path: src/boss/bo2

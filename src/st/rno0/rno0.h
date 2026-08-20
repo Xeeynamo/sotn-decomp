@@ -26,7 +26,7 @@ enum EntityID {
     E_STAGE_NAME_POPUP,      // EntityStageNamePopup
     E_EQUIP_ITEM_DROP,       // EntityEquipItemDrop
     E_RELIC_ORB,             // EntityRelicOrb
-    E_HEART_DROP,            // EntityHeartDrop
+    E_PERSISTENT_ITEM_DROP,  // EntityPersistentItemDrop
     E_ENEMY_BLOOD,           // EntityEnemyBlood
     E_MESSAGE_BOX,           // EntityMessageBox
     E_DUMMY_F,               // EntityDummy
@@ -72,19 +72,19 @@ enum EntityID {
     E_BLADE,                 // EntityBlade
     E_BLADE_WEAPON,          // EntityBladeWeapon
     E_SUB_WEAPON_CONTAINER,  // EntitySubWeaponContainer
-    E_SUB_WPN_CONT_GLASS,    // EntitySubWpnContGlass
-    E_UNK_3B,                // func_801C7654
-    E_UNK_3C,                // func_801C77B8
-    E_UNK_3D,                // func_801C7884
+    E_FALLING_GLASS,         // EntitySubWpnContGlass
+    E_FALLING_LIQUID,        // EntityFallingLiquid
+    E_LIQUID_BUBBLES,        // EntityBubbles
+    E_SUBWPN_IN_CONT,        // EntitySubwpnInContainer
     E_GORGON,                // EntityGorgon
-    E_UNK_3F,                // func_us_801D068C
-    E_UNK_40,                // func_us_801D0CFC
-    E_UNK_41,                // func_us_801D136C
-    E_UNK_42,                // func_us_801D15C0
-    E_UNK_43,                // func_us_801D2038
-    E_UNK_44,                // func_us_801D1BF0
-    E_UNK_45,                // func_us_801D2264
-    E_UNK_46,                // func_us_801D21C8
+    E_GORGON_FRONT,          // EntityGorgonFront
+    E_GORGON_REAR,           // EntityGorgonRear
+    E_GORGON_FOOT,           // EntityGorgonFoot
+    E_GORGON_HEAD,           // EntityGorgonHead
+    E_GORGON_SADDLE,         // EntityGorgonSaddle
+    E_GORGON_TAIL,           // EntityGorgonTail
+    E_GORGON_ATTACK,         // EntityGorgonAttack
+    E_GORGON_SNORT,          // EntityGorgonSnort
     E_ELEVATOR,              // EntityElevator
     E_ELEVATOR_PART,         // EntityElevatorPart
     E_PENDULUM,              // EntityPendulum
