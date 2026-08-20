@@ -16,7 +16,6 @@ func ReadSpriteSet(r io.ReadSeeker, baseAddr, addr psx.Addr) (SpriteSet, dataran
 	if err := addr.MoveFile(r, baseAddr); err != nil {
 		return nil, datarange.DataRange{}, fmt.Errorf("invalid sprite offset: %w", err)
 	}
-
 	// the end of the Sprite array is the beginning of the earliest Sprite offset
 	boundaries := baseAddr.Boundaries()
 	earliestSpriteOff := boundaries.GameEnd
