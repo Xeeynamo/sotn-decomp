@@ -134,7 +134,7 @@ segments:
       - { start: 0x5A700, type: .bss, vram: 0x09291D80, name: create_entity }
       - { start: 0x5A700, type: bss, vram: 0x09291DA0, name: 5A700 }
       - [0x5A728, .bss, st_update]
-      - [0x5A768, bss, 5A768]
+      - [0x5A768, .bss, e_guardian]
       - [0x5A770, .bss, e_collect]
       - [0x5A790, .bss, e_sealed_door]
       - [0x5A798, .bss, gen/psp/sprites]
