@@ -311,13 +311,13 @@ char* WEAPON0_CHR;
 char* WEAPON1_PRG;
 char* WEAPON1_CHR;
 
-void func_06007824(int param_1, int param_2) {
-    if ((g_FileLoadEnabled == 0) || (0x3f < param_2)) {
-        func_0601AE5C(param_1, param_2);
+void func_06007824(s32 arg0, s32 arg1) {
+    if ((g_FileLoadEnabled == 0) || (0x3F < arg1)) {
+        func_0601AE5C(arg0, arg1);
     } else {
-        prg_info.unka = param_2 * 6;
-        chr_info.unka = param_2 * 8;
-        if (param_1 == 0) {
+        prg_info.unka = arg1 * 6;
+        chr_info.unka = arg1 * 8;
+        if (arg0 == 0) {
             prg_info.unk0 = &WEAPON0_PRG;
             prg_info.unk4 = 0x060D6000;
             chr_info.unk0 = &WEAPON0_CHR;
@@ -329,10 +329,10 @@ void func_06007824(int param_1, int param_2) {
             chr_info.unk4 = VRAM_ADDR + 0x21980;
         }
         func_06006574(&prg_info);
-        func_0601AE2C(param_1);
+        func_0601AE2C(arg0);
         func_06006574(&chr_info);
-        func_0600C298(param_1);
-        func_0600C0C4(param_1);
+        func_0600C298(arg0);
+        func_0600C0C4(arg0);
     }
 }
 

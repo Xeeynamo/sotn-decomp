@@ -336,6 +336,7 @@ _DAT_0605cea0 = 0x0605CEA0;
 _DAT_0605cea2 = 0x0605CEA2;
 _g_CastleMap = 0x0605CEC0;
 _DAT_0605d6c0 = 0x0605D6C0;
+_D_8003C744 = 0x0605D740;
 _g_CurrentRoom = 0x0605D750; /* size = 0x14 */
 _g_GameClearFlag = 0x0605D784;
 _g_MenuNavigation = 0x0605D790; /* size = 0x4C */

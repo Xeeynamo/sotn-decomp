@@ -1180,6 +1180,7 @@ target_compile_definitions(${PROJECT_NAME} PUBLIC
 target_include_directories(psyz PUBLIC tools/psyz/psyz/include)
 target_compile_definitions(psyz PRIVATE __psyz)
 psyz_strip_file_prefix(${PROJECT_NAME})
+psyz_title(${PROJECT_NAME} "Castlevania: Symphony of the Night")
 sotn_str_apply(${PROJECT_NAME})
 if (WIN32)
     target_link_libraries(${PROJECT_NAME} PRIVATE psyz)

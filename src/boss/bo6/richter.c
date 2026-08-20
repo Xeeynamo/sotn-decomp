@@ -114,7 +114,14 @@ static void CheckBladeDashInput() {
     }
 }
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", CheckHighJumpInput);
+void CheckHighJumpInput(void) {
+    if (RIC.step == 3 || RIC.step == 1 ||
+        (RIC.step == 5 && RIC.velocityY > FIX(1)) || RIC.step == 4) {
+        if (g_Ric.unk46 == 0 && g_Ric.padTapped & PAD_R2) {
+            func_us_801BA050();
+        }
+    }
+}
 
 extern s32 D_us_80181210[];
 extern u16 D_us_80181250[];
@@ -1095,7 +1102,22 @@ INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepRun);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepJump);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepFall);
+void RicStepFall(void) {
+    if (RicCheckInput(
+            CHECK_GROUND | CHECK_FACING | CHECK_ATTACK | CHECK_GRAVITY_FALL)) {
+        return;
+    }
+    DecelerateX(FIX(1. / 16));
+    if (RIC.step_s == 0) {
+        if (g_Ric.timers[PL_T_5] && g_Ric.padTapped & PAD_CROSS) {
+            func_us_801B9E70();
+            return;
+        }
+        if (RicCheckFacing()) {
+            RicSetSpeedX(FIX(0.75));
+        }
+    }
+}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepCrouch);
 
