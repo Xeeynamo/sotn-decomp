@@ -913,7 +913,7 @@ files:
         assets:
           - [0x80, skip]
           - [0x2EF48, sprite_banks, psp/sprite_banks]
-          - [0x2EFA8, layers, psp/layers]
+          - [0x2EFA8, skip] #- [0x2EFA8, layers, layers]
           - [0x2F400, paldef, palette_def]
           - [0x2F4B0, skip]
           - [0x2FC20, cmpgfx, D_80185F20, 128, 128, 4]
