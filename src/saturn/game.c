@@ -1462,7 +1462,7 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f6074068, func_06074068);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60740F8, func_060740F8);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6074278, SetVdp2DisplayMode);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60743B8, func_060743B8);
-void func_06074470(void) {
+s32 func_06074470(void) {
     SclConfig scfg;
 
     func_060100B8();
