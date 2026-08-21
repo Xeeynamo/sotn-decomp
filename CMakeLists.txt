@@ -1276,7 +1276,11 @@ else()
 endif()
 
 function(add_overlay name)
-    add_library(${name} SHARED ${ARGN})
+    set(_overlay_sources ${ARGN})
+    if (WIN32)
+        list(APPEND _overlay_sources src/pc/ovl_stubs.c)
+    endif()
+    add_library(${name} SHARED ${_overlay_sources})
     set_target_properties(${name} PROPERTIES PREFIX "")
 
     target_include_directories(${name} PRIVATE
