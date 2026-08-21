@@ -4,7 +4,6 @@
 #include "rstage15.h"
 
 extern struct SpriteParts* g_EntitySpriteBank15[];
-extern u8 g_RStage15SpriteBank16[];
 extern u8 g_RStage15SpriteBank18[];
 extern u8 g_RStage15SpriteBank19[];
 extern u8 g_RStage15SpriteBank20[];
@@ -31,7 +30,7 @@ void* g_RStage15SpriteBanks[] = {
     &g_SaturnSharedSpriteBank12Resource,
     &g_SaturnSharedSpriteBank14Resource,
     g_EntitySpriteBank15,
-    g_RStage15SpriteBank16,
+    &g_RStage15SpriteBank16,
     g_RStage15SpriteBank17,
     g_RStage15SpriteBank18,
     g_RStage15SpriteBank19,

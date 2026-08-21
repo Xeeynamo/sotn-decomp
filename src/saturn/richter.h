@@ -164,7 +164,10 @@ extern void* g_RichterSpriteBanks[17];
 void func_8015E484(void);
 Entity* RicCreateEntFactoryFromEntity(
     Entity* source, u32 factoryParams, s32 arg2);
-void func_060AA4F4(void);
+void func_060AA4F4(s32 spawnParticles);
+extern Unk0605DB60 d_0605DB60[];
+u16 SPR_2LookupTblNoToVram(u16 tableNo);
+void func_060BCA84(void);
 void DisableAfterImage(s32 resetAnims, s32 arg1);
 void func_060AC2DC(void);
 s32 func_060B0610(void);

@@ -307,6 +307,35 @@ s32 func_060aa608(FrameProperty*, AnimationFrame**);
 extern u8 g_MariaInitialAfterimageTimers[];
 extern AnimationFrame D_8015591C[];
 extern AnimationFrame D_80155950[];
+typedef struct {
+    /* 0x00 */ s16 attack;
+    /* 0x02 */ u8 hitboxWidth;
+    /* 0x03 */ u8 hitboxHeight;
+    /* 0x04 */ s8 hitboxOffX;
+    /* 0x05 */ s8 hitboxOffY;
+    /* 0x06 */ s16 attackElement;
+    /* 0x08 */ s16 hitboxState;
+    /* 0x0A */ u8 nFramesInvincibility;
+    /* 0x0B */ u8 stunFrames;
+    /* 0x0C */ s16 hitEffect;
+    /* 0x0E */ s16 entityRoomIndex;
+} MariaAttackDef; /* size = 0x10 */
+
+// PlaySfx, RicSetFall, RicSetStand, RicSetStep and RicSetAnimation
+// intentionally missing
+void func_060ABE94(Entity* entity);
+void func_060BF3D0(void);
+s32 func_060A9474(void);
+u16 SPR_2LookupTblNoToVram(u16 tableNo);
+extern Unk0605DB60 d_0605DB60[];
+extern s32 DAT_060D2918;
+extern s32 DAT_060D2A94[]; // fastest clear time per stage
+extern s32 DAT_060D2B04[]; // stage id, sorted alongside DAT_060D2A94
+extern AnimationFrame g_MariaAnimFall;
+// src/saturn/maria/enddata.c
+extern AnimationFrame g_MariaEntity060BD0D0Anim0[];
+extern AnimationFrame g_MariaEntity060BD0D0Anim1[];
+extern AnimationFrame g_MariaEntity060BD0D0Anim2[];
 extern s32 MariaCheckFacing(void);
 extern int MariaCheckInput(s32 checks);
 /* End moved declarations */

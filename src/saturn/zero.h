@@ -32,6 +32,7 @@ extern s16 DAT_0605AEA8;
 extern s16 DAT_06057A10[];
 extern s32 DAT_00252000;
 extern s32 DAT_00258000;
+extern u16 DAT_06065470;
 
 struct Unk060645D0_1 {
     struct Unk060645D0_2* unk0;

@@ -245,7 +245,7 @@ void Update(void) {
 
     for (entity = &g_Entities[0]; entity < &g_Entities[0x40]; entity++) {
         if (entity->unk0 != NULL) {
-            entity->unk0->unk0C = entity->unk1D;
+            entity->unk0->unk0C = entity->drawFlags;
             entity->unk0->unk0D = entity->opacity;
         }
     }
@@ -309,7 +309,7 @@ void Update(void) {
             }
             sprite = entity->unk0;
             if (sprite != NULL) {
-                sprite->unk0C = entity->unk1D;
+                sprite->unk0C = entity->drawFlags;
                 sprite->unk0D = entity->opacity;
                 sprite->posX = entity->posX.val;
                 sprite->posY = entity->posY.val;
@@ -345,7 +345,7 @@ void UpdateStageEntities(void) {
 
     for (entity = &g_Entities[0]; entity < &g_Entities[64]; entity++) {
         if (entity->unk0 != NULL) {
-            entity->unk0->unk0C = entity->unk1D;
+            entity->unk0->unk0C = entity->drawFlags;
             entity->unk0->unk0D = entity->opacity;
         }
     }
@@ -373,7 +373,7 @@ void UpdateStageEntities(void) {
             }
             sprite = entity->unk0;
             if (sprite != NULL) {
-                sprite->unk0C = entity->unk1D;
+                sprite->unk0C = entity->drawFlags;
                 sprite->unk0D = entity->opacity;
                 sprite->posX = entity->posX.val;
                 sprite->posY = entity->posY.val;

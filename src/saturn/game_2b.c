@@ -9,13 +9,66 @@ void DestroyEntity(Entity* entity);
 
 void PlaySfx(s32 sfxId);
 
+// _disp_char
+void func_06078550(s32 arg0, u8 code, Point16* pos, u8 rawCode);
+
 extern s32 DAT_00292000;
 
 s32* func_060784A8(void) { return &DAT_00292000; }
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60784B8, func_060784B8);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078550, func_06078550);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078604, func_06078604);
+
+// _disp_string
+void func_06078604(s32 arg0, s8* str, Point16* pos) {
+    Point16 point;
+    s32 x;
+    s32 y;
+    s32 drawX;
+    s32 drawY;
+    s32 count;
+    s8 byte;
+    u8 rawCode;
+    u8 code;
+    void (*drawChar)(s32, u8, Point16*, u8);
+
+    count = 0;
+    x = pos->x;
+    drawChar = func_06078550;
+    y = pos->y;
+
+loop:
+    drawX = x;
+    byte = *str++;
+    drawY = y;
+    rawCode = (u8)byte;
+    code = rawCode;
+
+    if (rawCode == 0xFF) {
+        byte = *str++;
+        code = (u8)byte;
+        if (code == 0) {
+            return;
+        }
+        if (code != rawCode) {
+            drawX -= 8;
+            drawY -= 8;
+            x = drawX;
+        }
+    }
+
+    if (code != 0) {
+        point.x = drawX;
+        point.y = drawY;
+        drawChar(arg0, code, &point, rawCode);
+        count++;
+    }
+
+    x += 8;
+    if (count <= 31) {
+        goto loop;
+    }
+}
 
 // _disp_num_string
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078684, func_06078684);
@@ -864,7 +917,7 @@ void DestroyEntityWithExplosion(Entity* self, u16 params) {
         CreateEntityFromEntity(E_EXPLOSION, self, entity);
         entity->params = params;
         self->animCurFrame = 0;
-        self->unk1D = 0;
+        self->drawFlags = 0;
         self->step = 0;
         self->step_s = 0;
     }
