@@ -1072,7 +1072,6 @@
 | rstage15/f_nonmat/f60E9D28.s | func_060E9D28   |      490 |         46 |       |     |
 | stage_02/f_nonmat/f60DE348.s | func_060DE348   |      491 |         48 |       |     |
 | maria/f_nonmat/f60A54F0.s    | func_060A54F0   |      494 |         46 |       |     |
-| game/f_nonmat/f606BB4C.s     | func_0606BB4C   |      494 |         55 |       |     |
 | stage_15/f_nonmat/f60E458C.s | func_060E458C   |      495 |         17 |       |     |
 | zero/f_nonmat/f6006720.s     | func_06006720   |      497 |         81 |       |     |
 | stage_02/f_nonmat/f60E0304.s | func_060E0304   |      503 |         49 |       |     |
