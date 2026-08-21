@@ -131,8 +131,7 @@ segments:
       - [0x5A680, .rodata, e_blade]
       - [0x5A698, .rodata, e_gurkha]
       - [0x5A6B8, .rodata, e_thornweed_corpseweed]
-      - { start: 0x5A700, type: .bss, vram: 0x09291D80, name: create_entity }
-      - { start: 0x5A700, type: bss, vram: 0x09291DA0, name: 5A700 }
+      - [0x5A700, .bss, create_entity]
       - [0x5A728, .bss, st_update]
       - [0x5A768, .bss, e_guardian]
       - [0x5A770, .bss, e_collect]

@@ -1,1 +1,0 @@
-g_Statues = 0x09291DA0;
