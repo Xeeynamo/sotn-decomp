@@ -2,7 +2,6 @@
 #include "inc_asm.h"
 #include "sattypes.h"
 #include "game.h"
-#include "lib/scl.h"
 #define _SPR2_
 #include "lib/spr/spr.h"
 

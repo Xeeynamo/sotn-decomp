@@ -9,17 +9,126 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f606B6F8, LoadSubDisplayFiles);
 
 // _READ_SUB_OUT_MODE
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606B760, func_0606B760);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606BB4C, func_0606BB4C);
 
+extern s32 DAT_0605BEC4;
+extern s32 DAT_060937F8;
+extern char DAT_0606BB34[];
+extern char DAT_0606BB40[];
+extern char DAT_0606B754[];
 extern char* g_StageAlternateMapNames[];
+extern Unk0605D770 DAT_0605D770;
 
-void ResetSpriteVram();
+void func_0600C00C();
 void func_0601AC48();
 void func_0600C114();
-void func_0600C2EC();
-void func_0600C00C();
-void func_0600C1A0();
+void SetStageOverlayAddress();
 void func_0600BE18(s32);
+void ResetSpriteVram();
+
+s32 func_0606BB4C(void) {
+    bool bVar1;
+    s32 iVar3;
+    char* ptr;
+
+    bVar1 = false;
+    if (D_80097C98 == 0) {
+        switch (DAT_0605D770.unk0) {
+        case 0:
+            func_06019FA0(1);
+            Scl_s_reg.dispenbl &= ~0x003F;
+            SclProcess = 1;
+            StartColorOffsetFade(1, 2);
+            bVar1 = true;
+            DAT_0605D770.unk0++;
+            break;
+        case 1:
+        case 2:
+            bVar1 = true;
+            DAT_0605D770.unk0++;
+        case 3:
+            func_06019FE4(1);
+        }
+    }
+    if (func_0606C088(g_CurrentRoom.stageID) || bVar1) {
+        return 1;
+    }
+    ResetSpriteVram();
+    func_0600BE18(g_PlayableCharacter);
+    func_0600C00C();
+    if (g_FileLoadEnabled != 0) {
+        ReadFileToAddr(
+            g_StageFileRecords[g_CurrentRoom.stageID].prg, &g_StageOverlayData);
+    }
+    SetStageOverlayAddress();
+    ReadFileToAddr(g_StageFileRecords[g_CurrentRoom.stageID].chr,
+                   DAT_0605BEC4 + 0x25C00000);
+    func_0600C114();
+    if (g_CurrentRoom.stageID == 0x40) {
+        ReadFileToAddr(DAT_0606B754, 0x262000);
+        g_CurrentRoom.unk8 = 0;
+    }
+    iVar3 = 0;
+    if ((g_CurrentRoom.stageID == 0x1A) || (g_CurrentRoom.stageID == 0x18) ||
+        (g_CurrentRoom.stageID == 0x39)) {
+        iVar3 = GetEnemyPlayerCharaAddr();
+    }
+    DAT_0605D7DC = iVar3 + 0x252000;
+    switch (g_CurrentRoom.stageID) {
+    case 0x6:
+        ptr = g_StageAlternateMapNames[g_CurrentRoom.unk8 + 0];
+        break;
+    case 0x26:
+        ptr = g_StageAlternateMapNames[g_CurrentRoom.unk8 + 9];
+        break;
+    case 0x9:
+        ptr = g_StageAlternateMapNames[g_CurrentRoom.unk8 + 4];
+        break;
+    case 0x29:
+        ptr = g_StageAlternateMapNames[g_CurrentRoom.unk8 + 13];
+        break;
+    case 0xB:
+        ptr = g_StageAlternateMapNames[g_CurrentRoom.unk8 + 2];
+        break;
+    case 0x2B:
+        ptr = g_StageAlternateMapNames[g_CurrentRoom.unk8 + 11];
+        break;
+    case 0x3:
+        ptr = g_StageAlternateMapNames[g_CurrentRoom.unk8 + 7];
+        break;
+    case 0x23:
+        ptr = g_StageAlternateMapNames[g_CurrentRoom.unk8 + 16];
+        break;
+    default:
+        ptr = g_StageFileRecords[g_CurrentRoom.stageID].map;
+        break;
+    }
+    DAT_0605D7DC += ReadFileToAddr(ptr, DAT_0605D7DC);
+    if (DAT_0605D7DC & 1) {
+        DAT_0605D7DC++;
+    }
+    func_0601AC48();
+    if (D_80097C98 == 4) {
+        ReadFileToAddr(DAT_0606BB34, &DAT_060937F8);
+    }
+    if (D_80097C98 == 5) {
+        ReadFileToAddr(DAT_0606BB40, &DAT_060937F8);
+    }
+    if ((D_80097C98 == 6) && (g_CurrentRoom.unk2 & 0x20)) {
+        ReadFileToAddr(DAT_0606BB40, &DAT_060937F8);
+    }
+    if (func_0600607C(g_CurrentRoom.stageID) != 0) {
+        ReadFileToAddr(func_06005E3C(0, g_CurrentRoom.stageID), 0x25E22000);
+        ReadFileToAddr(func_06005E3C(1, g_CurrentRoom.stageID), 0x25E60000);
+        func_06074470();
+    }
+    if (D_80097C98 == 0) {
+        StartColorOffsetFade(0, 2);
+    }
+    return 0;
+}
+
+void func_0600C2EC();
+void func_0600C1A0();
 
 void func_0606BEE4(void) {
     char* ptr;
@@ -33,7 +142,7 @@ void func_0606BEE4(void) {
     func_0600C2EC();
     func_0600C114();
     func_060645A4();
-    DAT_0605d7dc = 0x252000;
+    DAT_0605D7DC = 0x252000;
     switch (g_CurrentRoom.stageID) {
     case 0x6:
         ptr = g_StageAlternateMapNames[idx + 0];
@@ -63,23 +172,22 @@ void func_0606BEE4(void) {
         ptr = NULL;
         break;
     }
-    DAT_0605d7dc += ReadFileToAddr(ptr, 0x252000);
-    if (DAT_0605d7dc & 1) {
-        DAT_0605d7dc++;
+    DAT_0605D7DC += ReadFileToAddr(ptr, 0x252000);
+    if (DAT_0605D7DC & 1) {
+        DAT_0605D7DC++;
     }
     func_0601AC48();
 }
 
 void func_0606C064(void) { ReadFileToAddr("GAMEOVER.MAP", 0x00252000); }
 
-extern s32 DAT_0605D770[];
 extern s32 DAT_060389F4[];
 
 s32 func_0606C088(u16 arg0) {
-    switch (DAT_0605D770[2]) {
+    switch (DAT_0605D770.unk8) {
     case 0:
         PlaySfx(g_StageFileRecords[arg0].unkC);
-        DAT_0605D770[2]++;
+        DAT_0605D770.unk8++;
         return 1;
 
     case 1:
@@ -87,10 +195,10 @@ s32 func_0606C088(u16 arg0) {
             return 1;
         }
         if (arg0 == 0x40) {
-            DAT_0605D770[2] = 2;
+            DAT_0605D770.unk8 = 2;
             goto case2;
         } else if (g_CurrentRoom.unk2 == 0x40) {
-            DAT_0605D770[2] = 3;
+            DAT_0605D770.unk8 = 3;
             goto case3;
         } else {
             return 0;
@@ -99,14 +207,14 @@ s32 func_0606C088(u16 arg0) {
     case 2:
     case2:
         PlaySfx(0xF0000810);
-        DAT_0605D770[2] = 0x80;
+        DAT_0605D770.unk8 = 0x80;
         return 1;
 
     case 3:
     case3:
         if (g_Servant != 0) {
             PlaySfx(DAT_060389F4[g_Servant]);
-            DAT_0605D770[2]++;
+            DAT_0605D770.unk8++;
             return 1;
         }
         break;

@@ -142,10 +142,8 @@ void InitSystem();
 void func_060040D8();
 
 /* Declarations moved here by tools/saturn/move_declarations.py */
-extern u16 DAT_06065470;
 extern s16 DAT_0605d772;
 void func_0600971C(void);
-void StartColorOffsetFade(s32, s32);
 void func_06005208(s32);
 extern s32 DAT_0605d7f0;
 extern s32 DAT_0605c6e4;
@@ -156,7 +154,7 @@ extern u8 DAT_06057f68;
 extern u8* DAT_060645b8;
 void func_06009510(s32);
 void SetCanRevealMap(void);
-extern s32 DAT_0605d7dc;
+extern s32 DAT_0605D7DC;
 extern s32 DAT_0605ceb0;
 extern Unk0605cd70 DAT_0605cd70;
 extern s32 g_PlayerX;
