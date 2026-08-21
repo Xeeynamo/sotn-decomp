@@ -8,10 +8,7 @@ extern u8 g_RStage15SpriteBank18[];
 extern u8 g_RStage15SpriteBank19[];
 extern u8 g_RStage15SpriteBank20[];
 extern u8 g_RStage15SpriteBank21[];
-extern u8 g_RStage15SpriteBank22[];
 extern u8 g_RStage15SpriteBank23[];
-extern u8 g_RStage15SpriteBank25[];
-extern u8 g_RStage15SpriteBank26[];
 
 void* g_RStage15SpriteBanks[] = {
     &g_SaturnSharedSpriteBank0Resource,
@@ -36,11 +33,11 @@ void* g_RStage15SpriteBanks[] = {
     g_RStage15SpriteBank19,
     g_RStage15SpriteBank20,
     g_RStage15SpriteBank21,
-    g_RStage15SpriteBank22,
+    &g_RStage15SpriteBank22,
     g_RStage15SpriteBank23,
     g_RStage15SpriteBankEfreet,
-    g_RStage15SpriteBank25,
-    g_RStage15SpriteBank26,
+    &g_RStage15SpriteBank25,
+    &g_RStage15SpriteBank26,
     g_RStage15SpriteBankCopperArmor,
     g_RStage15SpriteBankSkeletonGuardian,
     NULL,

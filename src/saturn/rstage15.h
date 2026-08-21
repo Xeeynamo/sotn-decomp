@@ -197,6 +197,36 @@ extern void func_060E4474(s32 arg0, s32 arg1, s32 arg2);
 extern void func_060E43A4(s32 arg0, s32 arg1);
 extern void func_060E3F18(s32 arg0, s32 arg1, s32 arg2);
 extern void func_060E3D58(s32 arg0, s32 arg1);
+extern void func_060E4064(s32 arg0, s32 arg1, s32 arg2);
+void DestroyEntity();
+s32 AllocPrimitives(s32 type, s32 count);
+void MoveEntity(Entity* self);
+void SyncSpriteObjectPos(Entity* self);
+void SyncSpriteObjectPosUnchecked(Entity* self, s16* offset);
+void SetVdp2BackgroundColorRgb(s32 r, s32 g, s32 b);
+void PlaySfx(s32 sfxId);
+void SetStep(u8 step);
+void func_0600B004(SpriteObject* sprite, u32 imageIndex);
+void func_06079BB4(Entity* self);
+void func_060DDA34(Entity* self);
+void func_060DDB98(Entity* self);
+void func_060DDDB8(Entity* self);
+void func_060DDE68(Entity* self);
+void func_060DE064(Entity* self);
+void func_060DE144(Entity* self);
+extern SaturnSpriteResource g_RStage15SpriteBank22;
+extern SaturnSpriteResource g_RStage15SpriteBank25;
+extern SaturnSpriteResource g_RStage15SpriteBank26;
+extern s16 g_RStage15Entity15SpawnOffset[2];
+extern s16 DAT_060F1A26[2];
+extern s16 DAT_060F288E[2];
+extern s16 DAT_060F2C32[2];
+extern u32 DAT_060F2670[];
+extern u32 DAT_060F2B4C[];
+extern u32 DAT_060F2D68[];
+extern s16 DAT_060EE880[];
+extern u16 g_RStage15AlucardSubweaponIds[];
+extern s32 g_RStage15Entity08ModelVertices14[14][3];
 /* End moved declarations */
 
 #endif

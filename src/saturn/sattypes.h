@@ -746,7 +746,10 @@ typedef struct {
     /* 0x43A */ u16 unk4E;
     /* 0x43C */ u16 prev_step;
     /* 0x43E */ u16 prev_step_s;
-    char pad43C[0x1C];
+    char pad440[0x2];
+    /* 0x442 */ u16 healKind;   // 0 = none, 1 = potion, 2 = high potion
+    /* 0x444 */ u16 healAmount; // hit points restored by func_060B0638
+    char pad446[0x16];
     /* 0x45C */ u16 unk70;
     /* 0x45E */ u16 unk72;
     /* 0x460 */ u32 unk74;
@@ -914,13 +917,6 @@ typedef struct ServantEvent {
     /* 0x28 */ s32 params;    // parameters of the entity to spawn
     /* 0x2C */ u32 unk2C;
 } ServantEvent;
-
-typedef struct {
-    s32 unk0;
-    u8 pad[4];
-    u16 unk8;
-    u16 unk10;
-} Unk060ED26C;
 
 typedef struct {
     u16 stageID;

@@ -171,7 +171,59 @@ void func_060B9340(Entity* entity) {
     }
 }
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B93C4, func_060B93C4);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B94F8, func_060B94F8);
+s16 func_060B94F8(Entity* self, Entity* target, s16 targetOffscreenLeft) {
+    s16 selfY;
+    s16 targetY;
+    s16 targetX;
+    s32 angle;
+    s32 reason;
+
+    if (target != NULL) {
+        targetX = target->posX.i.hi;
+        targetY = target->posY.i.hi;
+    } else {
+        targetY = 0x70;
+        if (targetOffscreenLeft != 0) {
+            targetX = -0x30;
+        } else {
+            targetX = 0x170;
+        }
+    }
+
+    angle = ratan2(-(s16)(targetY - self->posY.i.hi),
+                   (s16)(targetX - self->posX.i.hi)) &
+            0xFFF;
+    reason = 0;
+
+    if (target != NULL) {
+        if (target->entityId == 0) {
+            reason = 0x1000;
+        }
+        if (target->hitboxState == 0) {
+            reason = 0x2000;
+        }
+        if (target->flags & 0x00200000) {
+            reason = 0x3000;
+        }
+    }
+
+    if (self->posX.i.hi > 0x160) {
+        reason = 0x4000;
+    }
+    if (self->posX.i.hi < -0x20) {
+        reason = 0x5000;
+    }
+
+    selfY = self->posY.i.hi;
+    if (selfY > 0xF0) {
+        reason = 0x6000;
+    }
+    if (selfY < 0) {
+        reason = 0x7000;
+    }
+
+    return angle - reason;
+}
 void func_060B95C8(s32 arg0) {
     DAT_060CC9BC = DAT_060CC9BD[arg0].f0;
     DAT_060CE51C = DAT_060CC9BD[arg0].f1;

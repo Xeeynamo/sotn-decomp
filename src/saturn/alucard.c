@@ -482,7 +482,42 @@ void func_060ACACC(void* unused, SpriteObject* sprite, s32 count) {
 // PlayAnimation (Saturn player-specialized version)
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60ACB6C, func_060ACB6C);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60ACF00, func_060ACF00);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AD44C, func_060AD44C);
+void func_060AD44C(s32 arg0, s32 arg1) {
+    s16 steps[6];
+    u16 index;
+    u16 buttons;
+
+    index = 0xFFFF;
+    buttons = g_Player.padTapped;
+    steps[0] = 7;
+    steps[1] = 5;
+    steps[2] = 0x18;
+    steps[3] = 0xE;
+    steps[4] = 9;
+    steps[5] = 0x19;
+
+    if (buttons & 0x40) {
+        index = 0;
+    } else if (buttons & 0x20) {
+        index = 1;
+    } else if (buttons & 0x10) {
+        index = 2;
+    }
+
+    if (index != 0xFFFF) {
+        if ((u16)steps[index] == g_Entities->step) {
+            index += 3;
+        }
+        g_Entities->step = steps[index];
+        g_Entities->step_s = 0;
+        g_Player.unk39C = 0xFF;
+        g_Entities->rotate = 0;
+    }
+
+    if ((u16)((s16)g_Entities->step - 0x18) > 1) {
+        func_060B7994();
+    }
+}
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AD524, func_060AD524);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AD714, func_060AD714);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60ADACC, func_060ADACC);
@@ -579,7 +614,31 @@ s32 func_060AF9D4(void) {
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AFA20, func_060AFA20);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B0310, func_060B0310);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B0584, func_060B0584);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B0638, func_060B0638);
+s32 func_060B9610(u16 arg0, s32 arg1);
+
+void func_060B0638(s32 arg0, s32 arg1, s32 arg2) {
+    if (g_Player.healKind != 0) {
+        g_Status.hp += g_Player.healAmount;
+        func_0606FFC8(arg0, arg1, arg2, 0x250);
+        func_060B9610(g_Player.healAmount, 1);
+
+        if (g_Player.healKind == 1) {
+            PlaySfx(0x68E);
+            if (!(g_Player.status & 0x80)) {
+                func_060BAF44(g_CurrentEntity, 0x44002C, 0);
+            }
+        }
+
+        if (g_Player.healKind == 2 && !(g_Player.status & 0x80)) {
+            func_060BAF44(g_CurrentEntity, 0x48002C, 0);
+        }
+
+        if (g_Status.hpMax < g_Status.hp) {
+            g_Status.hp = g_Status.hpMax;
+        }
+        g_Player.healKind = 0;
+    }
+}
 void func_060B071C(void) {
     if (g_pads->previous & 0x80) {
         DAT_060CE4B0++;

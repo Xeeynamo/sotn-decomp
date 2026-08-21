@@ -51,7 +51,41 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DD20C, func_060DD20C);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DD3E8, func_060DD3E8);
 
 // EntityCannonShot
-INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DD690, func_060DD690);
+void func_060DD690(Entity* self) {
+    Entity* newEntity;
+    SpriteObject* sprite;
+    s32 posX;
+
+    switch (self->step) {
+    case 0:
+        TekiInit(self, 5);
+        self->step++;
+        self->unk0 = CreateSpriteObject(
+            g_EntitySpriteBank01.allocationIndex, g_EntitySpriteBank01.flags,
+            g_EntitySpriteBank01.images, 1);
+        sprite = self->unk0;
+        func_0600AFA8(sprite, DAT_06045E14[1]);
+        sprite->zPriority = 0x6F;
+        self->velocityX = -0xA0000;
+        /* fall through */
+
+    case 1:
+        MoveEntity(self);
+        posX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
+        if (posX < 140) {
+            func_0600FB0C(1);
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (newEntity != NULL) {
+                CreateEntityFromEntity(2, self, newEntity);
+                newEntity->params = 3;
+            }
+            g_CastleFlags[0x83] = 1;
+            DestroyEntity(self);
+        }
+        break;
+    }
+    func_06079BB4(self);
+}
 
 // EntityCannonWall
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DD790, func_060DD790);
