@@ -23,33 +23,14 @@ on:
       - 'Makefile*'
   workflow_dispatch:
 
+env:
+  DEMOS: "0 3 6"
+
 jobs:
-  extract-assets:
+  build-linux:
     # Building and testing cannot work if the repository owner is not Xeeynamo
     # due to the missing secrets to clone the CI dependencies
     if: github.repository == 'Xeeynamo/sotn-decomp'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Clone main repo
-        uses: actions/checkout@v7
-        with:
-          ref: ${{ github.ref }}
-          submodules: false
-      - name: Get dependencies
-        uses: ./.github/actions/get-dependencies
-        with:
-          token: ${{ secrets.SOTN_DECOMP_DEPENDENCIES_TOKEN }}
-      - name: Extract game assets
-        run: |
-          make update-dependencies
-          make -j extract_assets
-      - name: Export assets
-        uses: actions/upload-artifact@v7
-        with:
-          name: assets
-          path: assets
-
-  build-linux:
     strategy:
       matrix:
         compiler: ["gcc"]
@@ -57,10 +38,9 @@ jobs:
         standard: ["c99"]
         arch: ["x86_64"]
     runs-on: ubuntu-24.04
-    needs: extract-assets
     steps:
       - name: Install requirements
-        run: sudo apt-get update && sudo apt-get install build-essential libsdl2-dev libxtst-dev
+        run: sudo apt-get update && sudo apt-get install build-essential libsdl2-dev libxtst-dev mesa-vulkan-drivers libvulkan1
       - name: Install multilib
         if: matrix.arch == 'i686'
         run: |
@@ -77,28 +57,42 @@ jobs:
           git submodule update --init tools/psyz
           cd tools/psyz
           git submodule update --init --recursive external/SDL
-      - name: Get assets
-        uses: actions/download-artifact@v8
+      - name: Get dependencies
+        uses: ./.github/actions/get-dependencies
         with:
-          name: assets
-          path: assets
-      - name: Build assets
-        run: make -j build_assets
+          token: ${{ secrets.SOTN_DECOMP_DEPENDENCIES_TOKEN }}
+      - name: Generate assets
+        run: |
+          make extract_assets
+          make build_assets
       - name: Build
         run: |
           if [[ "${{ matrix.arch }}" == "i686" ]]; then
             export PC_FLAGS="-DCMAKE_C_FLAGS=-m32 -DCMAKE_CXX_FLAGS=-m32"
           fi
           export CC=${{ matrix.compiler }}
-          cmake -B ${{github.workspace}}/pc $PC_FLAGS -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+          cmake -B ${{github.workspace}}/pc $PC_FLAGS -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DENABLE_ASAN=OFF
           cmake --build ${{github.workspace}}/pc --config ${{ matrix.build_type }}
+      - name: Test demo playback
+        timeout-minutes: 10
+        env:
+          SDL_VIDEODRIVER: "offscreen"
+          SDL_AUDIODRIVER: dummy
+        run: |
+          for demo in $DEMOS; do
+            echo "::group::demo $demo"
+            ${{github.workspace}}/pc/sotn --demo $demo --replay-fast --replay-and-exit
+            echo "::endgroup::"
+          done
 
   build-macos:
+    # Building and testing cannot work if the repository owner is not Xeeynamo
+    # due to the missing secrets to clone the CI dependencies
+    if: github.repository == 'Xeeynamo/sotn-decomp'
     strategy:
       matrix:
         build_type: ["RelWithDebInfo"]
     runs-on: macos-latest
-    needs: extract-assets
     steps:
       - name: Clone repo
         uses: actions/checkout@v7
@@ -115,24 +109,38 @@ jobs:
           go-version-file: 'go.work'
           cache: true
           cache-dependency-path: "**/*.sum"
-      - name: Get assets
-        uses: actions/download-artifact@v8
+      - name: Get dependencies
+        uses: ./.github/actions/get-dependencies
         with:
-          name: assets
-          path: assets
-      - name: Build assets
-        run: make -j build_assets
+          token: ${{ secrets.SOTN_DECOMP_DEPENDENCIES_TOKEN }}
+      - name: Generate assets
+        run: |
+          make extract_assets
+          make build_assets
       - name: Build
         run: |
-          cmake -B ${{github.workspace}}/pc -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+          cmake -B ${{github.workspace}}/pc -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DENABLE_ASAN=OFF
           cmake --build ${{github.workspace}}/pc --config ${{ matrix.build_type }}
+      - name: Test demo playback
+        timeout-minutes: 10
+        env:
+          SDL_VIDEODRIVER: ""
+          SDL_AUDIODRIVER: dummy
+        run: |
+          for demo in $DEMOS; do
+            echo "::group::demo $demo"
+            ${{github.workspace}}/pc/sotn --demo $demo --replay-fast --replay-and-exit
+            echo "::endgroup::"
+          done
 
   build-windows:
+    # Building and testing cannot work if the repository owner is not Xeeynamo
+    # due to the missing secrets to clone the CI dependencies
+    if: github.repository == 'Xeeynamo/sotn-decomp'
     strategy:
       matrix:
         build_type: ["RelWithDebInfo"]
     runs-on: windows-latest
-    needs: extract-assets
     steps:
     - name: Clone repo
       uses: actions/checkout@v7
@@ -144,20 +152,39 @@ jobs:
         git submodule update --init tools/psyz
         cd tools/psyz
         git submodule update --init --recursive external/SDL
-    - name: Get assets
-      uses: actions/download-artifact@v8
+    - name: Get dependencies
+      uses: ./.github/actions/get-dependencies
       with:
-        name: assets
-        path: assets
+        token: ${{ secrets.SOTN_DECOMP_DEPENDENCIES_TOKEN }}
     - uses: actions/setup-go@v7
       with:
         go-version: '^1.22.4'
-    - name: Build assets
+    - name: Generate assets
       run: |
         cd tools/sotn-assets; go install; cd -
         $SOTN_ASSETS = (Get-Command sotn-assets).Source
-        & make -j build_assets SOTNASSETS=$SOTN_ASSETS
+        make extract_assets
+        & make build_assets SOTNASSETS=$SOTN_ASSETS
     - name: Build
       run: |
         cmake -B ${{github.workspace}}/pc -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
         cmake --build ${{github.workspace}}/pc --config ${{ matrix.build_type }}
+    - name: Install Vulkan software rasterizer
+      uses: jakoch/install-vulkan-sdk-action@v1
+      with:
+        install_runtime: true
+        install_lavapipe: true
+    - name: Test demo playback
+      timeout-minutes: 10
+      shell: bash
+      env:
+        SDL_VIDEODRIVER: offscreen
+        SDL_GPU_DRIVER: vulkan
+        SDL_AUDIODRIVER: dummy
+      run: |
+        sotn_exe=$(find "${{github.workspace}}/pc" -maxdepth 2 -iname 'sotn.exe' -print -quit)
+        for demo in $DEMOS; do
+          echo "::group::demo $demo"
+          "$sotn_exe" --demo $demo --replay-fast --replay-and-exit
+          echo "::endgroup::"
+        done
