@@ -64,7 +64,7 @@ segments:
       - [0xFAE8, c, bo5_psp/st_init]
       - [0xFE10, c, bo5/e_breakable]
       - [0xFFD8, c, bo5_psp/unk_FE10]
-      - [0x14330, c, bo5_psp/e_room_fg_2]
+      - [0x14330, c, bo5/e_room_fg_2]
       - [0x149E8, c, bo5_psp/unk_149E8]
       - [0x15AF8, c, bo5_psp/e_cutscene_dialogue]
       - [0x18650, c, bo5_psp/unk_18650]
