@@ -1,2 +1,0 @@
-rooms_layers = 0x09266978;
-g_Statues = 0x09291DA0;

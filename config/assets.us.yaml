@@ -1273,6 +1273,8 @@ files:
           - [0x11800, palette, D_80191800, 16] # 0x250
           - [0x11840, palette, D_80191840, 16] # 0x258
           - [0x11900, skip]
+          - [0x30530, spriteset, unused_sprites]
+          - [0x307B4, skip]
   - target: disks/us/ST/RNO1/RNO1.BIN
     asset_path: assets/st/rno1
     src_path: src/st/rno1
