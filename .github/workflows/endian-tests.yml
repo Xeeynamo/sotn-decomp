@@ -1,0 +1,23 @@
+name: Endian tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  endian-matrix:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Install big-endian toolchains and emulators
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            gcc-powerpc-linux-gnu g++-powerpc-linux-gnu \
+            gcc-s390x-linux-gnu g++-s390x-linux-gnu \
+            qemu-user
+      - name: Run native, sanitized, optimized, and big-endian tests
+        run: tests/endian/run-matrix.sh

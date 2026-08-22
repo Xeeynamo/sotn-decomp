@@ -7,6 +7,15 @@ set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+include(CTest)
+option(SOTN_ENDIAN_TESTS_ONLY
+       "Configure only the dependency-light endian regression tests" OFF)
+
+if(SOTN_ENDIAN_TESTS_ONLY)
+    add_subdirectory(tests/endian)
+    return()
+endif()
+
 if (WIN32)
     set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 endif()
@@ -1336,3 +1345,7 @@ endforeach()
 add_overlay(tt_000 ${SOURCE_FILES_TT_000})
 add_overlay(tt_001 ${SOURCE_FILES_TT_001})
 add_overlay(tt_002 ${SOURCE_FILES_TT_002})
+
+if(BUILD_TESTING)
+    add_subdirectory(tests/endian)
+endif()

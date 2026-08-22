@@ -105,12 +105,18 @@
 // Converts a given value to a fixed-point value, where
 // 16 bits represents the integer part and 16 bits for fractional part
 #define FIX(x) ((s32)((x) * 65536.0))
+#if defined(_MIPSEL) || defined(__MWERKS__)
 // Get the integer part of such a fixed-point value
 #define FIX_TO_I(x) ((s32)((x) >> 16))
 // Convert an integer value to fixed-point
 #define I_TO_FIX(x) ((s32)((x) << 16))
 // Get the fractional part of such a fixed-point value
 #define FIX_FRAC(x) (*(s16*)&(x))
+#else
+#define FIX_TO_I(x) ((s32)(s16)((u32)(x) >> 16))
+#define I_TO_FIX(x) ((s32)((u32)(s32)(x) << 16))
+#define FIX_FRAC(x) (F(x).i.lo)
+#endif
 
 // The second argument to CreateEntFactoryFromEntity has weird bit packing,
 // this takes the 2 relevant inputs and packs them up.
