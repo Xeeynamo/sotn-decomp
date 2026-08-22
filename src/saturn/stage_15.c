@@ -6,35 +6,24 @@
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DC040, func_060DC040);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DC1A8, func_060DC1A8);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DC328, func_060DC328);
-typedef struct {
-    u32 unk0;
-    u32 unk4;
-    u16 unk8;
-    u16 unkA;
-} Stage15SpriteBank16;
-
-extern Stage15SpriteBank16 g_Stage15SpriteBank16;
+extern SaturnSpriteResource g_Stage15SpriteBank16;
 extern u32 g_Stage15SpriteBank16Frames[];
-extern void TekiInit(Entity* self, s32 arg);
-extern void func_0600AFA8(SpriteObject*, SaturnSpriteFrameHeader*);
+void TekiInit(Entity* self, s32 arg);
+void func_0600AFA8(SpriteObject* sprite, SaturnSpriteFrameHeader* frame);
 
 void func_060DC428(Entity* self) {
     SpriteObject* sprite;
-    register u32 frameOffset;
 
     if (self->step == 0) {
         TekiInit(self, 5);
         self->step++;
         sprite = CreateSpriteObject(
-            (u16)g_Stage15SpriteBank16.unk8, (u16)g_Stage15SpriteBank16.unkA,
-            g_Stage15SpriteBank16.unk0, 1);
+            g_Stage15SpriteBank16.allocationIndex, g_Stage15SpriteBank16.flags,
+            g_Stage15SpriteBank16.images, 1);
         self->unk0 = sprite;
         self->animCurFrame = 0x2A;
-        frameOffset = 0xA8;
-        func_0600AFA8(
-            sprite,
-            *(SaturnSpriteFrameHeader**)((u8*)g_Stage15SpriteBank16Frames +
-                                         frameOffset));
+        func_0600AFA8(sprite, (SaturnSpriteFrameHeader*)
+                                  g_Stage15SpriteBank16Frames[self->animCurFrame]);
         sprite->zPriority = 0x6A;
         self->step = 0x100;
         func_06079BB4(self);
@@ -71,12 +60,11 @@ INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DD698, func_060DD698);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DD898, func_060DD898);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DDA10, func_060DDA10);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DDB74, func_060DDB74);
-extern s32 AllocPrimitives();
-extern void TekiInit(Entity*, s32);
-extern void MoveEntity(Entity*);
-extern void func_060DDB74();
-extern void func_060DDA10();
-extern void DestroyEntity(Entity*);
+s32 AllocPrimitives(s32 type, s32 count);
+void MoveEntity(Entity* self);
+void DestroyEntity(Entity* self);
+void func_060DDB74(Entity* self);
+void func_060DDA10(Entity* self);
 
 void func_060DDCE8(Entity* self) {
     s32 primIndex;
@@ -87,57 +75,46 @@ void func_060DDCE8(Entity* self) {
         self->step++;
         primIndex = AllocPrimitives(0x8002, 1);
         if (primIndex == -1) {
-            ((void (*)(Entity*))DestroyEntity)(self);
+            DestroyEntity(self);
             return;
         }
-        self->flags |= 0x800000;
+        self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         func_060DDB74(self);
         break;
     case 1:
         MoveEntity(self);
-        self->velocityY += self->ext.ILLEGAL.u32[0];
+        self->velocityY += self->ext.glowParticle.gravity;
         break;
     }
 
     func_060DDA10(self);
-    if (self->ext.ILLEGAL.s16[8] <= 0x82) {
-        ((void (*)(Entity*))DestroyEntity)(self);
+    if (self->ext.glowParticle.unk88 <= 0x82) {
+        DestroyEntity(self);
     }
 }
-typedef struct {
-    u8 pad0[4];
-    s16 posX;
-    u8 pad6[2];
-    s16 posY;
-    u8 padA[0x56];
-    s16 primIndex;
-    u8 pad62[0x1E];
-    u8 unk80;
-    u8 unk81;
-    u8 unk82;
-} Func060DDD94Arg;
-
-void func_060DDD94(Func060DDD94Arg* arg0) {
+void func_060DDD94(Entity* self) {
     Primitive* prim;
     s16 x;
     s16 y;
 
-    x = arg0->posX;
-    y = arg0->posY;
-    prim = &g_PrimBuf[arg0->primIndex];
+    x = self->posX.i.hi;
+    y = self->posY.i.hi;
+    prim = &g_PrimBuf[self->primIndex];
 
     prim->x0 = prim->x3 = x;
     prim->x1 = prim->x2 = x + 1;
     prim->y0 = prim->y1 = y;
     prim->y2 = prim->y3 = y + 1;
 
-    if (arg0->unk82 > 7) {
-        arg0->unk80 -= 6;
-        arg0->unk81 -= 6;
-        arg0->unk82 -= 8;
-        prim->unk6 =
-            ((arg0->unk82 << 10) + (arg0->unk81 << 5) + arg0->unk80) - 0x8000;
+    if (self->ext.glowParticle.b > 7) {
+        self->ext.glowParticle.r -= 6;
+        self->ext.glowParticle.g -= 6;
+        self->ext.glowParticle.b -= 8;
+        prim->unk6 = ((self->ext.glowParticle.b << 10) +
+                      (self->ext.glowParticle.g << 5) +
+                      self->ext.glowParticle.r) -
+                     0x8000;
     }
 }
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DDE44, func_060DDE44);
@@ -150,7 +127,6 @@ INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DE464, func_060DE464);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DE500, func_060DE500);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DE58C, func_060DE58C);
 void SetVdp2BackgroundColorRgb(s32, s32, s32);
-void TekiInit(Entity*, s32);
 
 void func_060DE670(Entity* self) {
     if (DAT_0605cd70.unk0 == 3) {
@@ -175,7 +151,6 @@ INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DE964, func_060DE964);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DEC48, func_060DEC48);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DECE0, func_060DECE0);
 extern u32 g_Stage15Entity30SpawnPositions[];
-void TekiInit(Entity*, s32);
 
 void func_060DF160(Entity* self) {
     Entity* entity;
@@ -186,12 +161,12 @@ void func_060DF160(Entity* self) {
         self->step++;
         break;
     case 1:
-        self->ext.ILLEGAL.u32[0] =
+        self->ext.spawnerTimer.timer =
             g_Stage15Entity30SpawnPositions[self->params];
         self->step++;
         break;
     case 2:
-        if (--self->ext.ILLEGAL.u32[0] == 0) {
+        if (--self->ext.spawnerTimer.timer == 0) {
             entity = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
             if (entity != NULL) {
                 CreateEntityFromEntity(0x1F, self, entity);
@@ -205,38 +180,18 @@ INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DF204, func_060DF204);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DF354, func_060DF354);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DF62C, func_060DF62C);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DF77C, func_060DF77C);
-typedef struct Func060DF938Params {
-    Fixed32 unk0;
-    Fixed32 unk4;
-    Fixed32 unk8;
-    Fixed32 unkC;
-    Fixed32 unk10;
-    Fixed32 unk14;
-    Fixed32 unk18;
-    Fixed32 unk1C;
-    Fixed32 unk20;
-    Fixed32 unk24;
-    Fixed32 unk28;
-    Fixed32 unk2C;
-} Func060DF938Params;
-
-typedef struct Func060DF938State {
-    s32 unk0;
-    Func060DF938Params* unk4;
-} Func060DF938State;
-
-extern Func060DF938State DAT_06061DF0;
+extern MthMatrixTbl DAT_06061DF0;
 
 s32 func_060DF938(s32* arg0, XyInt* arg1) {
     Fixed32 point[3];
     Fixed32 value;
 
     value = *arg0;
-    point[0] = MTH_Mul(DAT_06061DF0.unk4->unk0, value);
-    point[1] = MTH_Mul(DAT_06061DF0.unk4->unk10, value);
-    point[2] =
-        (MTH_Mul(DAT_06061DF0.unk4->unk20, value) + DAT_06061DF0.unk4->unk2C) >>
-        8;
+    point[0] = MTH_Mul(DAT_06061DF0.current->val[0][0], value);
+    point[1] = MTH_Mul(DAT_06061DF0.current->val[1][0], value);
+    point[2] = (MTH_Mul(DAT_06061DF0.current->val[2][0], value) +
+                DAT_06061DF0.current->val[2][3]) >>
+               8;
     MTH_Pers2D((MthXyz*)point, (MthXy*)DAT_06061DE0, arg1);
     return point[2] << 8;
 }
@@ -246,52 +201,51 @@ INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DFA98, func_060DFA98);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DFB74, func_060DFB74);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DFC08, func_060DFC08);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DFCE8, func_060DFCE8);
-extern void PlaySfx(s32 sfxId);
-extern void SetStep(u8 step);
-extern void DestroyEntity(Entity* entity);
 extern s16 DAT_060F24D4[];
 extern u16 g_Stage15AlucardSubweaponIds[];
+void PlaySfx(s32 sfxId);
+void SetStep(u8 step);
 
-void func_060DFDF4(u16 arg0) {
-    Entity* entity;
-    Entity* entities;
-    u16 subWeaponId;
-    s16 subWeapon;
+void func_060DFDF4(u16 cardIndex) {
+    Entity* self;
+    Entity* player;
+    u16 params;
+    s16 subWeaponId;
     s8 timer;
     u8* timerPtr;
 
-    entity = g_CurrentEntity;
-    PlaySfx(0x067C);
-    subWeaponId = (u16)g_Status.subWeapon;
-    entities = g_Entities;
-    subWeapon = DAT_060F24D4[arg0];
-    g_Status.subWeapon = (u32)subWeapon;
+    self = g_CurrentEntity;
+    PlaySfx(0x67C);
+    params = g_Status.subWeapon;
+    player = g_Entities;
+    subWeaponId = DAT_060F24D4[cardIndex];
+    g_Status.subWeapon = subWeaponId;
 
-    if (subWeaponId == subWeapon) {
-        subWeaponId = 1;
-        timerPtr = entity->unk6D;
+    if (params == subWeaponId) {
+        params = 1;
+        timerPtr = self->unk6D;
         timer = 0x10;
     } else {
-        subWeaponId = g_Stage15AlucardSubweaponIds[subWeaponId];
-        timerPtr = entity->unk6D;
+        params = g_Stage15AlucardSubweaponIds[params];
+        timerPtr = self->unk6D;
         timer = 0x60;
     }
     *timerPtr = timer;
 
-    if (subWeaponId != 0) {
-        entity->params = subWeaponId;
-        entity->posY.i.hi = entities->posY.i.hi + 0x0C;
+    if (params != 0) {
+        self->params = params;
+        self->posY.i.hi = player->posY.i.hi + 0xC;
         SetStep(7);
-        entity->unk0->flags |= 8;
-        entity->ext.ILLEGAL.u16[7] = 5;
-        entity->velocityY = -0x28000;
-        if (entities->facingLeft != 1) {
-            entity->velocityX = -0x28000;
+        self->unk0->flags |= 8;
+        self->ext.subweaponCard.unk86 = 5;
+        self->velocityY = -FIX(2.5);
+        if (player->facingLeft != 1) {
+            self->velocityX = -FIX(2.5);
             return;
         }
-        entity->velocityX = 0x28000;
+        self->velocityX = FIX(2.5);
     } else {
-        DestroyEntity(entity);
+        DestroyEntity(self);
     }
 }
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DFED0, func_060DFED0);
@@ -306,33 +260,31 @@ INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E2868, func_060E2868);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E2F3C, func_060E2F3C);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E30A4, func_060E30A4);
 void func_060E320C(Entity* self) {
-    extern void TekiInit(Entity*, s32);
-    extern void DestroyEntity(Entity*);
     Entity* entity;
 
     switch (self->step) {
     case 0:
         TekiInit(self, 2);
         self->step++;
-        self->ext.ILLEGAL.u16[8] =
-            ((Entity*)self->ext.ILLEGAL.u32[1])->entityId;
+        self->ext.explosionEmitter.parentId =
+            self->ext.explosionEmitter.parent->entityId;
         /* fall through */
     case 1:
-        if (self->ext.ILLEGAL.u8[0]++ > 4U) {
+        if (self->ext.explosionEmitter.timer++ > 4U) {
             entity = AllocEntity(&g_Entities[0xE0], &g_Entities[0x100]);
             if (entity != NULL) {
-                CreateEntityFromEntity(2, self, entity);
-                entity->entityId = 2;
+                CreateEntityFromEntity(E_EXPLOSION, self, entity);
+                entity->entityId = E_EXPLOSION;
                 entity->pfnUpdate = func_060E2F3C;
                 entity->params = self->params;
             }
-            self->ext.ILLEGAL.u8[0] = 0;
+            self->ext.explosionEmitter.timer = 0;
         }
 
-        self->posX.i.hi = ((Entity*)self->ext.ILLEGAL.u32[1])->posX.i.hi;
-        self->posY.i.hi = ((Entity*)self->ext.ILLEGAL.u32[1])->posY.i.hi;
-        if (((Entity*)self->ext.ILLEGAL.u32[1])->entityId !=
-            self->ext.ILLEGAL.u16[8]) {
+        self->posX.i.hi = self->ext.explosionEmitter.parent->posX.i.hi;
+        self->posY.i.hi = self->ext.explosionEmitter.parent->posY.i.hi;
+        if (self->ext.explosionEmitter.parent->entityId !=
+            self->ext.explosionEmitter.parentId) {
             DestroyEntity(self);
         }
         break;
@@ -347,98 +299,62 @@ INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E3A80, func_060E3A80);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E3F58, func_060E3F58);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E4064, func_060E4064);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E458C, func_060E458C);
-typedef struct Func060E4918Primitive {
-    char pad0[0x0C];
-    s16 x0;
-    s16 y0;
-    s16 x1;
-    s16 y1;
-    s16 x2;
-    s16 y2;
-    s16 x3;
-    s16 y3;
-    s16 pad1C;
-    s16 unk1E;
-    struct Func060E4918Primitive* next;
-} Func060E4918Primitive;
-
-typedef struct {
-    char pad0[0x84];
-    Func060E4918Primitive* prim;
-} Func060E4918Entity;
-
 extern void rsincos(s16 angle, s32* sin, s32* cos);
 
-void func_060E4918(Func060E4918Entity* arg0, s32 arg1, s32 arg2) {
+void func_060E4918(Entity* self, s32 x, s32 y) {
     s32 sp0;
     s32 sp4;
     s32 temp_r7;
     s32 temp_r3;
-    Func060E4918Primitive* temp_r8;
-    Func060E4918Primitive* temp_r2;
+    Primitive* prim;
+    Primitive* next;
 
-    temp_r8 = arg0->prim;
-    temp_r2 = temp_r8->next;
-    temp_r2->x2 -= 0x80;
-    rsincos(temp_r2->x2, &sp0, &sp4);
+    prim = self->ext.primHolder.prim;
+    next = prim->next;
+    next->x2 -= 0x80;
+    rsincos(next->x2, &sp0, &sp4);
     sp0 *= 0x50;
     sp4 *= 0x50;
     temp_r7 = (sp0 - sp4) >> 0x10;
     temp_r3 = (sp0 + sp4) >> 0x10;
-    temp_r8->x0 = arg1 + temp_r7;
-    temp_r8->y0 = arg2 - temp_r3;
-    temp_r8->x1 = arg1 + temp_r3;
-    temp_r8->y1 = arg2 + temp_r7;
-    temp_r8->x2 = arg1 - temp_r7;
-    temp_r8->y2 = arg2 + temp_r3;
-    temp_r8->x3 = arg1 - temp_r3;
-    temp_r8->y3 = arg2 - temp_r7;
-    temp_r8->unk1E = 0;
+    prim->x0 = x + temp_r7;
+    prim->y0 = y - temp_r3;
+    prim->x1 = x + temp_r3;
+    prim->y1 = y + temp_r7;
+    prim->x2 = x - temp_r7;
+    prim->y2 = y + temp_r3;
+    prim->x3 = x - temp_r3;
+    prim->y3 = y - temp_r7;
+    prim->drawMode = 0;
 }
-typedef struct SubStruct060E49D4 {
-    char pad0[0x02];
-    s16 unk2;
-} SubStruct060E49D4;
 
-typedef struct MainStruct060E49D4 {
-    char pad0[0x1E];
-    s16 unk1E;
-    SubStruct060E49D4* unk20;
-} MainStruct060E49D4;
-
-typedef struct Arg0Struct060E49D4 {
-    char pad0[0x84];
-    MainStruct060E49D4* unk84;
-} Arg0Struct060E49D4;
-
-void func_060E49D4(Arg0Struct060E49D4* arg0, s32 arg1) {
-    MainStruct060E49D4* temp_r2;
-    s16* temp_r3;
+void func_060E49D4(Entity* self, s32 arg1) {
+    Primitive* prim;
+    s16* priority;
     s32 var_r1;
 
-    temp_r2 = arg0->unk84;
-    temp_r3 = &temp_r2->unk20->unk2;
-    var_r1 = *temp_r3 - arg1;
+    prim = self->ext.primHolder.prim;
+    priority = &prim->next->priority;
+    var_r1 = *priority - arg1;
     if (var_r1 < 0) {
-        temp_r2->unk1E = 8;
+        prim->drawMode = 8;
         var_r1 = 0;
     }
-    *temp_r3 = var_r1;
+    *priority = var_r1;
 }
 
 const u16 DAT_060E49FA = 0;
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E49FC, func_060E49FC);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E56C8, func_060E56C8);
-u16 func_060E57E0(s32 arg0, s32 arg1) {
-    u16 var_r0;
+u16 func_060E57E0(s32 minX, s32 maxX) {
+    u16 standing;
 
     g_Player.unk7A = 1;
-    if (((u16)(s16)g_Entities->step != 0) ||
-        (var_r0 = (u16)(s16)g_Entities->step_s, var_r0 != 1) ||
-        (g_Entities->posX.i.hi < arg0) || (g_Entities->posX.i.hi > arg1)) {
-        var_r0 = 0;
+    if (PLAYER.step != 0 || (standing = PLAYER.step_s) != 1 ||
+        PLAYER.posX.i.hi < minX || PLAYER.posX.i.hi > maxX) {
+        standing = 0;
     }
-    return var_r0;
+    return standing;
 }
 void func_060E5824(void) {
     g_Player.padSim = PAD_UP;
@@ -478,26 +394,24 @@ INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E6310, func_060E6310);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E63E0, func_060E63E0);
 extern u8 g_Stage15SpriteBank23Frames[];
 extern u8 g_Stage15SkeletonBeastAnimations[];
-extern u8 g_Stage15BoneScimitarGroundSensors[];
-extern void SyncSpriteObjectPosUnchecked(Entity* entity);
-
-typedef void (*SyncSpriteObjectPosUncheckedProc)(Entity*, void*);
+extern s16 g_Stage15BoneScimitarGroundSensors[];
+void SyncSpriteObjectPosUnchecked(Entity* self, s16* offset);
 
 void func_060E654C(Entity* self) {
     SaturnSpriteImage* images = g_Stage15SpriteBank23Images;
-    u8* spriteBank = g_Stage15SpriteBankSkeletonBeast;
+    SaturnSpriteResource* bank =
+        (SaturnSpriteResource*)g_Stage15SpriteBankSkeletonBeast;
 
-    self->unk0 = CreateSpriteObject(
-        *(u16*)(spriteBank + 8), *(u16*)(spriteBank + 10), images, 5);
+    self->unk0 =
+        CreateSpriteObject(bank->allocationIndex, bank->flags, images, 5);
 
-    *(u8**)((u8*)self + 0x78) = g_Stage15SpriteBank23Frames;
-    *(u8**)((u8*)self + 0x7C) = g_Stage15SkeletonBeastAnimations;
-    ((u8*)self)[0x80] = 0;
-    ((u8*)self)[0x81] = 0;
-    ((u8*)self)[0x82] = 0;
+    self->ext.spriteAnimEnemy.frames = g_Stage15SpriteBank23Frames;
+    self->ext.spriteAnimEnemy.animations = g_Stage15SkeletonBeastAnimations;
+    self->ext.spriteAnimEnemy.unk80 = 0;
+    self->ext.spriteAnimEnemy.unk81 = 0;
+    self->ext.spriteAnimEnemy.unk82 = 0;
 
-    ((SyncSpriteObjectPosUncheckedProc)SyncSpriteObjectPosUnchecked)(
-        self, g_Stage15BoneScimitarGroundSensors);
+    SyncSpriteObjectPosUnchecked(self, g_Stage15BoneScimitarGroundSensors);
     self->step++;
 }
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E65CC, func_060E65CC);
@@ -519,7 +433,7 @@ INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E7564, func_060E7564);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E7780, func_060E7780);
 void func_060E7888(u8 arg0) {
     g_CurrentEntity->velocityX = 0;
-    g_CurrentEntity->ext.ILLEGAL.u8[1] = 0;
+    g_CurrentEntity->ext.et_060E7888.unk79 = 0;
     g_CurrentEntity->pose = 0;
     g_CurrentEntity->poseTimer = 0;
     g_CurrentEntity->step = arg0;
@@ -541,65 +455,63 @@ void func_060E996C(Entity* self) {
     func_06079BB4(self);
     func_0600B004(self->unk0, DAT_060F7EFC[self->animCurFrame]);
 }
-extern s16 DAT_060F6D4C;
-extern s8 DAT_060F6D98;
+extern s16 DAT_060F6D4C[];
+extern s8 DAT_060F6D98[];
 
-s16 func_060E99A4(Entity* arg0) {
-    s16* var_r3;
-    s8* var_r7;
-    s16 var_r0;
+s16 func_060E99A4(Entity* self) {
+    s16* frames;
+    s8* hitbox;
+    s16 distance;
 
-    var_r3 = &DAT_060F6D4C;
-    var_r0 = g_Entities[0].posX.i.hi - arg0->posX.i.hi;
-    var_r7 = &DAT_060F6D98;
-    if (var_r0 > *var_r3) {
+    frames = DAT_060F6D4C;
+    distance = PLAYER.posX.i.hi - self->posX.i.hi;
+    hitbox = DAT_060F6D98;
+    if (distance > *frames) {
         do {
-            var_r3 += 2;
-            var_r7 += 4;
-        } while (var_r0 > *var_r3);
+            frames += 2;
+            hitbox += 4;
+        } while (distance > *frames);
     }
-    arg0->animCurFrame = *++var_r3;
-    arg0->hitboxOffX = var_r7[0];
-    arg0->hitboxOffY = var_r7[1];
-    arg0->hitboxWidth = var_r7[2];
-    arg0->hitboxHeight = var_r7[3];
-    if (var_r0 < 0) {
-        var_r0 = -var_r0;
+    self->animCurFrame = *++frames;
+    self->hitboxOffX = hitbox[0];
+    self->hitboxOffY = hitbox[1];
+    self->hitboxWidth = hitbox[2];
+    self->hitboxHeight = hitbox[3];
+    if (distance < 0) {
+        distance = -distance;
     }
-    return var_r0;
+    return distance;
 }
 extern Point16 DAT_060F6D78[];
 extern s32 rsin(s32);
 extern s32 rcos(s32);
 
-void func_060E9A14(Entity* arg0, Entity* arg1) {
+void func_060E9A14(Entity* self, Entity* parts) {
     s16* table0;
     Point16* table1;
-    s16* sp0;
-    s16 temp_r8;
-    s16 temp_r9;
-    s32 var_r10;
-    s32 var_r12;
-    Entity* var_r11;
+    s16* rotate;
+    s16 angle;
+    s16 distance;
+    s32 index;
+    s32 i;
+    Entity* part;
 
-    var_r11 = arg1;
-    var_r12 = 0;
-    sp0 = &arg0->rotate;
-    var_r10 = 0;
+    part = parts;
+    i = 0;
+    rotate = &self->rotate;
+    index = 0;
     do {
         table0 = (s16*)DAT_060F6D78;
         table1 = DAT_060F6D78;
-        temp_r9 = *(s16*)((char*)table0 + var_r10);
-        table1 = (Point16*)((char*)table1 + var_r10);
-        temp_r8 = table1->y;
-        var_r11->posX.val =
-            arg0->posX.val + temp_r9 * rsin(*sp0 + temp_r8) * 0x10;
-        var_r12 += 1;
-        var_r11->posY.val =
-            arg0->posY.val - temp_r9 * rcos(temp_r8 + *sp0) * 0x10;
-        var_r11 += 1;
-        var_r10 += 4;
-    } while (var_r12 <= 7);
+        distance = *(s16*)((char*)table0 + index);
+        table1 = (Point16*)((char*)table1 + index);
+        angle = table1->y;
+        part->posX.val = self->posX.val + distance * rsin(*rotate + angle) * 0x10;
+        i += 1;
+        part->posY.val = self->posY.val - distance * rcos(angle + *rotate) * 0x10;
+        part += 1;
+        index += 4;
+    } while (i <= 7);
 }
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E9AAC, func_060E9AAC);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E9AEC, func_060E9AEC);
@@ -646,11 +558,12 @@ INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60EB824, func_060EB824);
 void func_060EB9AC(Entity* self) {
     SpriteObject* sprite;
     SaturnSpriteImage* images;
-    u16* tree;
+    SaturnSpriteResource* bank;
 
     images = g_Stage15SpriteBank26Images;
-    tree = (u16*)g_Stage15SpriteBankHumanFaceTree;
-    sprite = CreateSpriteObject(tree[4], tree[5], images, 4);
+    bank = (SaturnSpriteResource*)g_Stage15SpriteBankHumanFaceTree;
+    sprite =
+        CreateSpriteObject(bank->allocationIndex, bank->flags, images, 4);
     self->unk0 = sprite;
     sprite->zPriority -= 8;
     self->posY.i.hi += 0x1E;
@@ -666,38 +579,35 @@ void func_060EBAF4(Entity* self) {
     func_06079BB4(self);
     func_0600B004(self->unk0, DAT_060F86CC[self->animCurFrame]);
 }
-extern Entity* AllocEntity(Entity*, Entity*);
-extern void CreateEntityFromCurrentEntity(u16, Entity*);
-extern void PlaySfx(s32);
-extern void SetStep(u8);
-extern void func_06079BCC(void);
+void CreateEntityFromCurrentEntity(u16 entityId, Entity* entity);
+void func_06079BCC(void);
 extern s16 DAT_060F8246;
 
-s32 func_060EBB2C(Entity* arg0, s16 arg1) {
+s32 func_060EBB2C(Entity* self, s16 arg1) {
     s32 result = 0;
-    s32 temp_r2;
-    Entity* temp_r0;
+    s32 splashY;
+    Entity* splash;
     volatile s32 stack_temp[9];
 
     func_06079BCC();
-    temp_r2 = (DAT_060F8246 - g_Tilemap.scrollY.i.hi) - arg1;
-    if (arg0->posY.i.hi >= temp_r2 && arg0->ext.ILLEGAL.s32[4] < temp_r2) {
-        if (arg0->ext.ILLEGAL.u8[0x24] == 0) {
-            temp_r0 = AllocEntity(&g_Entities[0xE0], &g_Entities[0x100]);
-            if (temp_r0 != NULL) {
-                CreateEntityFromCurrentEntity(0x18, temp_r0);
-                temp_r0->posY.i.hi = DAT_060F8246 - g_Tilemap.scrollY.i.hi;
-                temp_r0->velocityY = arg0->velocityY;
+    splashY = (DAT_060F8246 - g_Tilemap.scrollY.i.hi) - arg1;
+    if (self->posY.i.hi >= splashY && self->ext.et_060EBB2C.unk88 < splashY) {
+        if (self->ext.et_060EBB2C.unk9C == 0) {
+            splash = AllocEntity(&g_Entities[0xE0], &g_Entities[0x100]);
+            if (splash != NULL) {
+                CreateEntityFromCurrentEntity(0x18, splash);
+                splash->posY.i.hi = DAT_060F8246 - g_Tilemap.scrollY.i.hi;
+                splash->velocityY = self->velocityY;
             }
             PlaySfx(0x913);
-            arg0->ext.ILLEGAL.u8[0x24] = 1;
+            self->ext.et_060EBB2C.unk9C = 1;
         }
-        arg0->ext.ILLEGAL.u8[0x2A] = 0;
-        arg0->rotate &= 0x0FFF;
-        arg0->ext.ILLEGAL.u16[0xE] = 0;
+        self->ext.et_060EBB2C.unkA2 = 0;
+        self->rotate &= 0xFFF;
+        self->ext.et_060EBB2C.unk94 = 0;
         SetStep(8);
     }
-    func_06079BB4(arg0);
+    func_06079BB4(self);
     return result;
 }
 
@@ -722,41 +632,26 @@ void func_060ECD14(Entity* self) {
     func_06079BB4(self);
     func_0600B004(self->unk0, DAT_060F8B10[self->animCurFrame]);
 }
-typedef struct {
-    u8 pad[0x91];
-    u8 unk91;
-} Func060ECD4CUnk170;
-
-typedef struct {
-    u8 pad0[4];
+void func_060ECD4C(Entity* self) {
     s32 posX;
-    s32 posY;
-    u8 padC[0x0C];
-    u16 facingLeft;
-    u8 pad1A[0x156];
-    Func060ECD4CUnk170 unk170;
-} Func060ECD4CArg;
 
-void func_060ECD4C(Func060ECD4CArg* arg0) {
-    s32 var_r2;
-
-    if (((Func060ECD4CUnk170*)((u8*)arg0 + 0x170))->unk91 == 0) {
-        if (*(u16*)((u8*)arg0 + 0x18) == 0) {
-            arg0->posX -= 0x4000;
-            arg0->posY -= 0x6000;
+    if (self[2].ext.et_060ECD4C.unk91 == 0) {
+        if (self->facingLeft == 0) {
+            self->posX.val -= FIX(0.25);
+            self->posY.val -= FIX(0.375);
         } else {
-            arg0->posX += 0x4000;
-            arg0->posY -= 0x6000;
+            self->posX.val += FIX(0.25);
+            self->posY.val -= FIX(0.375);
         }
     } else {
-        var_r2 = arg0->posX;
-        if (*(u16*)((u8*)arg0 + 0x18) == 0) {
-            var_r2 += 0x4000;
+        posX = self->posX.val;
+        if (self->facingLeft == 0) {
+            posX += FIX(0.25);
         } else {
-            var_r2 -= 0x4000;
+            posX -= FIX(0.25);
         }
-        arg0->posX = var_r2;
-        arg0->posY += 0x6000;
+        self->posX.val = posX;
+        self->posY.val += FIX(0.375);
     }
 }
 
@@ -789,17 +684,14 @@ s32 GetSideToPlayer(Entity* self);
 void func_060EE67C(Entity* self) {
     self->facingLeft = (u8)((GetSideToPlayer(self) & 1) ^ 1);
     if (self->facingLeft == 0) {
-        (*(u16*)(*(u32*)self)) &= ~0x10;
+        self->unk0->flags &= ~0x10;
     } else {
-        (*(u16*)(*(u32*)self)) |= 0x10;
+        self->unk0->flags |= 0x10;
     }
 }
 
 const u16 DAT_060EE6C0[2] = {0xAAAA, 0xAAAB};
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60EE6C4, func_060EE6C4);
-extern void TekiInit(Entity*, s32);
-extern void DestroyEntity(Entity*);
-
 void func_060EEE20(Entity* self) {
     Entity* parent;
 
@@ -807,13 +699,13 @@ void func_060EEE20(Entity* self) {
     case 0:
         TekiInit(self, 0x23);
         self->step = 1;
-        self->ext.ILLEGAL.u16[4] = self->hitboxState;
+        self->ext.et_060EEE20.savedHitboxState = self->hitboxState;
         /* fall through */
     case 1:
-        parent = (Entity*)self->ext.ILLEGAL.u32[0];
+        parent = self->ext.et_060EEE20.parent;
         switch (parent->step) {
         case 4:
-            self->hitboxState = self->ext.ILLEGAL.u16[4];
+            self->hitboxState = self->ext.et_060EEE20.savedHitboxState;
             self->posX.i.hi = parent->posX.i.hi;
             self->posY.i.hi = parent->posY.i.hi - 5;
             self->facingLeft = parent->facingLeft;

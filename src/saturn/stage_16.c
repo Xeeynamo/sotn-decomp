@@ -6,17 +6,6 @@
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60DC040, func_060DC040);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60DC1A8, func_060DC1A8);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60DC318, func_060DC318);
-typedef struct {
-    s32 unk0;
-    s32 unk4;
-    u16 unk8;
-    u16 unkA;
-} Stage16SpriteBank;
-
-extern Stage16SpriteBank g_Stage16SpriteBank16;
-extern void TekiInit(Entity* self, s32 arg);
-extern void func_0600AFA8(SpriteObject* sprite, SaturnSpriteFrameHeader* frame);
-
 void func_060DC418(Entity* self) {
     SpriteObject* sprite;
 
@@ -24,8 +13,8 @@ void func_060DC418(Entity* self) {
         TekiInit(self, 5);
         self->step++;
         sprite = CreateSpriteObject(
-            g_Stage16SpriteBank16.unk8, g_Stage16SpriteBank16.unkA,
-            g_Stage16SpriteBank16.unk0, 1);
+            g_Stage16SpriteBank16.allocationIndex, g_Stage16SpriteBank16.flags,
+            g_Stage16SpriteBank16.images, 1);
         self->unk0 = sprite;
         if (self->params == 0) {
             self->animCurFrame = 10;
@@ -78,16 +67,15 @@ INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E1434, func_060E1434);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E17EC, func_060E17EC);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E1928, func_060E1928);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E25F4, func_060E25F4);
-u16 func_060E270C(s32 arg0, s32 arg1) {
-    u16 var_r0;
+u16 func_060E270C(s32 minX, s32 maxX) {
+    u16 standing;
 
     g_Player.unk7A = 1;
-    if (((u16)(s16)g_Entities->step != 0) ||
-        (var_r0 = (u16)(s16)g_Entities->step_s, var_r0 != 1) ||
-        (g_Entities->posX.i.hi < arg0) || (g_Entities->posX.i.hi > arg1)) {
-        var_r0 = 0;
+    if (PLAYER.step != 0 || (standing = PLAYER.step_s) != 1 ||
+        PLAYER.posX.i.hi < minX || PLAYER.posX.i.hi > maxX) {
+        standing = 0;
     }
-    return var_r0;
+    return standing;
 }
 void func_060E2750(void) {
     g_Player.padSim = PAD_UP;

@@ -168,29 +168,23 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DFAE4, func_060DFAE4);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E0304, func_060E0304);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E0684, func_060E0684);
 void func_060E08B0(s32 arg0) {
-    u8 temp;
     u8 value;
     s32 offset;
     s32 i;
     s32 limit;
-    u8* ptr;
-    u8* next_ptr;
+    u8* tiles;
+    u8* tilesOdd;
 
-    if (arg0 == 0)
-        temp = 3;
-    else
-        temp = 0;
-    value = temp;
-
-    offset = 0x0260;
+    value = arg0 == 0 ? 3 : 0;
+    offset = 0x260;
     i = 0;
     limit = 3;
-    ptr = DAT_0608FFF8;
-    next_ptr = ptr + 1;
+    tiles = DAT_0608FFF8;
+    tilesOdd = tiles + 1;
 
     for (; i <= limit; i++) {
-        ptr[offset] = value;
-        next_ptr[offset] = value;
+        tiles[offset] = value;
+        tilesOdd[offset] = value;
         offset += 0x10;
     }
 }
@@ -219,29 +213,23 @@ void func_060E08E4(s32 arg0, s32 arg1) {
 }
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E093C, func_060E093C);
 void func_060E0AF0(Entity* self) {
-    int value;
-    int stored;
-    u8* base;
-    int limit;
-    u8* next;
-    int offset;
-    int i;
+    u8 value;
+    s32 offset;
+    s32 i;
+    s32 limit;
+    u8* tiles;
+    u8* tilesOdd;
 
-    value = 0;
-    if (self == NULL) {
-        value = 3;
-    }
-    stored = value;
-
+    value = self == NULL ? 3 : 0;
     offset = 0x2E7;
     i = 0;
     limit = 1;
-    base = DAT_0608FFF8;
-    next = base + 1;
+    tiles = DAT_0608FFF8;
+    tilesOdd = tiles + 1;
 
     for (; i <= limit; i++) {
-        base[offset] = stored;
-        next[offset] = stored;
+        tiles[offset] = value;
+        tilesOdd[offset] = value;
         offset += 0x10;
     }
 }
@@ -277,21 +265,20 @@ void func_60E0F64() {}
 
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E0F70, func_060E0F70);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E1A00, func_060E1A00);
-void func_060E1C08(Entity* self) {
-    extern s32 DAT_060F50AC;
-    void FreePrimitives(s32);
-    void PlaySfx(s32);
-    void func_060100B8(void);
-    struct UnkView {
-        u8 pad[0x2C];
-        s32 unk_2c;
-        s32 unk_30;
-    };
-    union {
-        struct Unk* base;
-        struct UnkView* view;
-    } data;
+struct Unk {
+    /* 0x00 */ u8 pad0[0x2C];
+    /* 0x2C */ s32 primIndex2C;
+    /* 0x30 */ s32 primIndex30;
+    /* 0x34 */ u32 pad34;
+    /* 0x38 */ u16 unk_38;
+    /* 0x3A */ u16 unk_3a;
+    /* 0x3C */ u32 unk_3c;
+};
 
+extern s32 DAT_060F50AC;
+
+
+void func_060E1C08(Entity* self) {
     if (g_pads[0].previous == 0x0800) {
         DAT_060F50AC = 1;
 
@@ -300,14 +287,12 @@ void func_060E1C08(Entity* self) {
             self->flags ^= FLAG_HAS_PRIMS;
         }
 
-        data.base = &DAT_060e2014;
-
-        if (data.view->unk_30 != -1) {
-            FreePrimitives(data.view->unk_30);
+        if (DAT_060e2014.primIndex30 != -1) {
+            FreePrimitives(DAT_060e2014.primIndex30);
         }
 
-        if (data.view->unk_2c != -1) {
-            FreePrimitives(data.view->unk_2c);
+        if (DAT_060e2014.primIndex2C != -1) {
+            FreePrimitives(DAT_060e2014.primIndex2C);
         }
 
         PlaySfx(0xF0000090);
@@ -318,13 +303,6 @@ void func_060E1C08(Entity* self) {
 }
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E1CA8, func_060E1CA8);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E1D48, func_060E1D48);
-
-struct Unk {
-    u8 pad[0x38];
-    u16 unk_38;
-    u16 unk_3a;
-    u32 unk_3c;
-};
 
 // maybe func_801B797C?
 void func_060e1ff8(s32 param_1) {
@@ -338,52 +316,49 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E21B8, func_060E21B8);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E22FC, func_060E22FC);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E2420, func_060E2420);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E2898, func_060E2898);
-extern void PlaySfx(s32 sfxId);
-extern void SetStep(u8 step);
-extern void DestroyEntity(Entity* entity);
 extern s16 DAT_060F1AE8[];
 extern u16 g_Stage02AlucardSubweaponIds[];
 
-void func_060E29A4(u16 arg0) {
-    Entity* entity;
-    Entity* entities;
-    u16 subWeaponId;
-    s16 subWeapon;
+void func_060E29A4(u16 cardIndex) {
+    Entity* self;
+    Entity* player;
+    u16 params;
+    s16 subWeaponId;
     s8 timer;
     u8* timerPtr;
 
-    entity = g_CurrentEntity;
-    PlaySfx(0x067C);
-    subWeaponId = (u16)g_Status.subWeapon;
-    entities = g_Entities;
-    subWeapon = DAT_060F1AE8[arg0];
-    g_Status.subWeapon = (u32)subWeapon;
+    self = g_CurrentEntity;
+    PlaySfx(0x67C);
+    params = g_Status.subWeapon;
+    player = g_Entities;
+    subWeaponId = DAT_060F1AE8[cardIndex];
+    g_Status.subWeapon = subWeaponId;
 
-    if (subWeaponId == subWeapon) {
-        subWeaponId = 1;
-        timerPtr = entity->unk6D;
+    if (params == subWeaponId) {
+        params = 1;
+        timerPtr = self->unk6D;
         timer = 0x10;
     } else {
-        subWeaponId = g_Stage02AlucardSubweaponIds[subWeaponId];
-        timerPtr = entity->unk6D;
+        params = g_Stage02AlucardSubweaponIds[params];
+        timerPtr = self->unk6D;
         timer = 0x60;
     }
     *timerPtr = timer;
 
-    if (subWeaponId != 0) {
-        entity->params = subWeaponId;
-        entity->posY.i.hi = entities->posY.i.hi + 0x0C;
+    if (params != 0) {
+        self->params = params;
+        self->posY.i.hi = player->posY.i.hi + 0xC;
         SetStep(7);
-        entity->unk0->flags |= 8;
-        entity->ext.ILLEGAL.u16[7] = 5;
-        entity->velocityY = -0x28000;
-        if (entities->facingLeft != 1) {
-            entity->velocityX = -0x28000;
+        self->unk0->flags |= 8;
+        self->ext.subweaponCard.unk86 = 5;
+        self->velocityY = -FIX(2.5);
+        if (player->facingLeft != 1) {
+            self->velocityX = -FIX(2.5);
             return;
         }
-        entity->velocityX = 0x28000;
+        self->velocityX = FIX(2.5);
     } else {
-        DestroyEntity(entity);
+        DestroyEntity(self);
     }
 }
 
@@ -400,8 +375,8 @@ void func_060E42FC(Entity* self) {
     PfnEntityUpdate update;
 
     if (self->step == 0) {
-        self->ext.subweapon.unkB0 = self->params + 0x20;
-        item = self->ext.subweapon.unkB0;
+        self->ext.prizeDrop.itemFlagIndex = self->params + 0x20;
+        item = self->ext.prizeDrop.itemFlagIndex;
         if (((g_CastleFlags + 0x100)[item >> 3] >> (item & 7)) & 1) {
             DestroyEntity(self);
             return;
@@ -410,21 +385,21 @@ void func_060E42FC(Entity* self) {
         item -= 0x20;
         item = g_Stage02PrizeDrops[item];
         if (item < 0x80) {
-            self->unkB4 = func_060E2A80;
+            self->unkB4 = (Entity*)func_060E2A80;
         } else {
-            self->unkB4 = func_060E32DC;
+            self->unkB4 = (Entity*)func_060E32DC;
             item -= 0x80;
         }
         self->params = item + 0x8000;
     } else {
-        item = self->ext.subweapon.unkB0;
+        item = self->ext.prizeDrop.itemFlagIndex;
         if (self->step < 5 && self->hitFlags) {
             (g_CastleFlags + 0x100)[item >> 3] |= 1 << (item & 7);
             self->step = 5;
         }
     }
 
-    update = self->unkB4;
+    update = (PfnEntityUpdate)self->unkB4;
     update(self);
 }
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E43F4, func_060E43F4);
@@ -487,15 +462,6 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E5410, func_060E5410);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E5AE4, func_060E5AE4);
 
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E5C4C, func_060E5C4C);
-typedef struct {
-    u8 pad0[0x78];
-    u8 timer;
-    u8 pad78[3];
-    Entity* parent;
-    u8 pad80[8];
-    u16 parentId;
-} Func060E5DB4Entity;
-
 void func_060E5DB4(Entity* self) {
     Entity* entity;
 
@@ -503,10 +469,11 @@ void func_060E5DB4(Entity* self) {
     case 0:
         TekiInit(self, 2);
         self->step++;
-        ((Func060E5DB4Entity*)self)->parentId =
-            ((Func060E5DB4Entity*)self)->parent->entityId;
+        self->ext.explosionEmitter.parentId =
+            self->ext.explosionEmitter.parent->entityId;
+        /* fall through */
     case 1:
-        if (((Func060E5DB4Entity*)self)->timer++ > 4) {
+        if (self->ext.explosionEmitter.timer++ > 4) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
                 CreateEntityFromEntity(E_STAGE_EXPLOSION, self, entity);
@@ -514,12 +481,12 @@ void func_060E5DB4(Entity* self) {
                 entity->pfnUpdate = func_060E5AE4;
                 entity->params = self->params;
             }
-            ((Func060E5DB4Entity*)self)->timer = 0;
+            self->ext.explosionEmitter.timer = 0;
         }
-        self->posX.i.hi = ((Func060E5DB4Entity*)self)->parent->posX.i.hi;
-        self->posY.i.hi = ((Func060E5DB4Entity*)self)->parent->posY.i.hi;
-        if (((Func060E5DB4Entity*)self)->parent->entityId !=
-            ((Func060E5DB4Entity*)self)->parentId) {
+        self->posX.i.hi = self->ext.explosionEmitter.parent->posX.i.hi;
+        self->posY.i.hi = self->ext.explosionEmitter.parent->posY.i.hi;
+        if (self->ext.explosionEmitter.parent->entityId !=
+            self->ext.explosionEmitter.parentId) {
             DestroyEntity(self);
         }
         break;
@@ -1017,16 +984,15 @@ void func_060E7508(Entity* self) {
 }
 
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E81D4, func_060E81D4);
-u16 func_060E82EC(s32 arg0, s32 arg1) {
-    u16 var_r0;
+u16 func_060E82EC(s32 minX, s32 maxX) {
+    u16 standing;
 
     g_Player.unk7A = 1;
-    if (((u16)(s16)g_Entities->step != 0) ||
-        (var_r0 = (u16)(s16)g_Entities->step_s, var_r0 != 1) ||
-        (g_Entities->posX.i.hi < arg0) || (g_Entities->posX.i.hi > arg1)) {
-        var_r0 = 0;
+    if (PLAYER.step != 0 || (standing = PLAYER.step_s) != 1 ||
+        PLAYER.posX.i.hi < minX || PLAYER.posX.i.hi > maxX) {
+        standing = 0;
     }
-    return var_r0;
+    return standing;
 }
 
 // not seeing an obvious PSX equivalent
@@ -1067,11 +1033,11 @@ void func_060E8DE0(s32 arg0, s32 arg1, s32 arg2) {
 
 extern s32 DAT_060485e0[];
 extern s32 DAT_060F5098;
-extern s32* DAT_06061DF0[];
+extern MthMatrixTbl DAT_06061DF0;
 extern s32 g_Stage02Entity08ModelVertices14[];
 
-void SetCurrentMatrixBinAngle();
-void TransformAndProjectPoints();
+void SetCurrentMatrixBinAngle(s32 angle, s32* axis);
+void TransformAndProjectPoints(s32* src, s32* dst, s32 count);
 
 void func_060E8E1C(s32 arg0, s32 arg1) {
     s32* dst_base;
@@ -1103,29 +1069,23 @@ void func_060E8E1C(s32 arg0, s32 arg1) {
 
     SetCurrentMatrixBinAngle(DAT_060F5088, &DAT_060F5098);
 
-    DAT_06061DF0[1][0] = DAT_06061DF0[1][0] * 5 / 4;
-    DAT_06061DF0[1][1] = DAT_06061DF0[1][1] * 5 / 4;
-    DAT_06061DF0[1][2] = DAT_06061DF0[1][2] * 5 / 4;
+    DAT_06061DF0.current->val[0][0] = DAT_06061DF0.current->val[0][0] * 5 / 4;
+    DAT_06061DF0.current->val[0][1] = DAT_06061DF0.current->val[0][1] * 5 / 4;
+    DAT_06061DF0.current->val[0][2] = DAT_06061DF0.current->val[0][2] * 5 / 4;
 
     TransformAndProjectPoints(dst_base, dst_base + 0x102, 14);
 }
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E8EEC, func_060E8EEC);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E9058, func_060E9058);
-struct Stage02SpriteBank28Data {
-    u8 pad[7];
-    u16 unk8;
-    u16 unk10;
-};
-
-extern u16 DAT_060F212E;
-extern void SyncSpriteObjectPosUnchecked();
+extern s16 DAT_060F212E[];
 
 void func_060E9220(Entity* entity) {
-    entity->unk0 = CreateSpriteObject(
-        ((struct Stage02SpriteBank28Data*)g_Stage02SpriteBank28)->unk8,
-        ((struct Stage02SpriteBank28Data*)g_Stage02SpriteBank28)->unk10,
-        &g_Stage02Entity37SpriteParts0, 2);
-    SyncSpriteObjectPosUnchecked(entity, &DAT_060F212E);
+    struct SpriteParts* parts = &g_Stage02Entity37SpriteParts0;
+    SaturnSpriteResource* bank = (SaturnSpriteResource*)g_Stage02SpriteBank28;
+
+    entity->unk0 =
+        CreateSpriteObject(bank->allocationIndex, bank->flags, parts, 2);
+    SyncSpriteObjectPosUnchecked(entity, DAT_060F212E);
     entity->step = 1;
 }
 
@@ -1150,15 +1110,15 @@ const u16 pad_060e92d6 = 0xAAAB;
 // EntityBloodSkeleton
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E92D8, func_060E92D8);
 
-extern s32 g_Stage02BoneScimitarInitOffset;
-extern void SyncSpriteObjectPosUnchecked();
+extern s16 g_Stage02BoneScimitarInitOffset[];
 
 void func_060E9770(Entity* self) {
     struct SpriteParts* parts = &g_Stage02BoneScimitarSpriteParts0;
-    u16* bank = (u16*)g_Stage02SpriteBank29;
+    SaturnSpriteResource* bank = (SaturnSpriteResource*)g_Stage02SpriteBank29;
 
-    self->unk0 = CreateSpriteObject(bank[4], bank[5], parts, 5);
-    SyncSpriteObjectPosUnchecked(self, &g_Stage02BoneScimitarInitOffset);
+    self->unk0 =
+        CreateSpriteObject(bank->allocationIndex, bank->flags, parts, 5);
+    SyncSpriteObjectPosUnchecked(self, g_Stage02BoneScimitarInitOffset);
     self->step++;
 }
 
@@ -1228,26 +1188,22 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EB5C4, func_060EB5C4);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EB6E4, func_060EB6E4);
 extern u8 g_Stage02SkeletonFrames[];
 extern u8 DAT_060F4378[];
-extern s16 DAT_060F42C0;
-extern void SyncSpriteObjectPosUnchecked(Entity* entity);
-
-typedef void (*SyncSpriteObjectPosUncheckedProc)(Entity*, void*);
+extern s16 DAT_060F42C0[];
 
 void func_060EB8D0(Entity* self) {
-    struct SpriteParts* images = &g_Stage02SkeletonSpriteParts0;
-    u8* spriteBank = (u8*)g_Stage02SpriteBank32;
+    struct SpriteParts* parts = &g_Stage02SkeletonSpriteParts0;
+    SaturnSpriteResource* bank = (SaturnSpriteResource*)g_Stage02SpriteBank32;
 
-    self->unk0 = CreateSpriteObject(
-        *(u16*)(spriteBank + 8), *(u16*)(spriteBank + 10), images, 4);
+    self->unk0 =
+        CreateSpriteObject(bank->allocationIndex, bank->flags, parts, 4);
 
-    *(u8**)((u8*)self + 0x78) = g_Stage02SkeletonFrames;
-    *(u8**)((u8*)self + 0x7C) = DAT_060F4378;
-    ((u8*)self)[0x80] = 0;
-    ((u8*)self)[0x81] = 0;
-    ((u8*)self)[0x82] = 0;
+    self->ext.spriteAnimEnemy.frames = g_Stage02SkeletonFrames;
+    self->ext.spriteAnimEnemy.animations = DAT_060F4378;
+    self->ext.spriteAnimEnemy.unk80 = 0;
+    self->ext.spriteAnimEnemy.unk81 = 0;
+    self->ext.spriteAnimEnemy.unk82 = 0;
 
-    ((SyncSpriteObjectPosUncheckedProc)SyncSpriteObjectPosUnchecked)(
-        self, &DAT_060F42C0);
+    SyncSpriteObjectPosUnchecked(self, DAT_060F42C0);
     self->step++;
 }
 extern s16 DAT_060F42D0[];
