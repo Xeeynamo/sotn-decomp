@@ -38,11 +38,11 @@ void EntityBreakable(Entity* self) {
                 CreateEntityFromCurrentEntity(E_BREAKABLE_RELIC, entity);
                 entity->params = 0x100;
             }
-            g_api_PlaySfx(SFX_GLASS_BREAK_E);
+            g_api.PlaySfx(SFX_GLASS_BREAK_E);
             break;
 
         case 7:
-            g_api_PlaySfx(SFX_GLASS_BREAK_E);
+            g_api.PlaySfx(SFX_GLASS_BREAK_E);
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
                 CreateEntityFromEntity(E_PERSISTENT_ITEM_DROP, self, entity);
@@ -53,7 +53,7 @@ void EntityBreakable(Entity* self) {
             return;
 
         case 8:
-            g_api_PlaySfx(SFX_GLASS_BREAK_E);
+            g_api.PlaySfx(SFX_GLASS_BREAK_E);
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
                 CreateEntityFromEntity(E_PERSISTENT_ITEM_DROP, self, entity);
@@ -64,7 +64,7 @@ void EntityBreakable(Entity* self) {
             return;
 
         default:
-            g_api_PlaySfx(SFX_CANDLE_HIT);
+            g_api.PlaySfx(SFX_CANDLE_HIT);
             break;
         }
 
