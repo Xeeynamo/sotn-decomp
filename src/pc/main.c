@@ -9,19 +9,86 @@
 #include <string.h>
 
 static const char* allowed_stages[] = {
-    "no0",      "no1",      "lib",       "cat",      "no2",     "chi",
-    "dai",      "np3",      "cen",       "no4",      "are",     "top",
-    "nz0",      "nz1",      "wrp",       "no1_alt",  "no0_alt", "",
-    "dre",      "nz0_demo", "nz1_demo",  "lib_demo", "bo7",     "mar",
-    "bo6",      "bo5",      "bo4",       "bo3",      "bo2",     "bo1",
-    "bo0",      "st0",      "rno0",      "rno1",     "rlib",    "rcat",
-    "rno2",     "rchi",     "rdai",      "rno3",     "rcen",    "rno4",
-    "rare",     "rtop",     "rnz0",      "rnz1",     "rwrp",    "",
-    "",         "",         "",          "",         "",        "rnz1_demo",
-    "rbo8",     "rbo7",     "rbo6",      "rbo5",     "rbo4",    "rbo3",
-    "rbo2",     "rbo1",     "rbo0",      "",         "mad",     "no3",
-    "iwa_load", "iga_load", "hagi_load", "sel",      "te1",     "te2",
-    "te3",      "te4",      "te5",       "top_alt"};
+    "no0",
+    "no1",
+    "lib",
+    "cat",
+    "no2",
+    "chi",
+    "dai",
+    "np3",
+    "cen",
+    "no4",
+    "are",
+    "top",
+    "nz0",
+    "nz1",
+    "wrp",
+    "no1_alt",
+    "no0_alt",
+    "",
+    "dre",
+    "nz0_demo",
+    "nz1_demo",
+    "lib_demo",
+    "bo7",
+    "mar",
+    "bo6",
+    "bo5",
+    "bo4",
+    "bo3",
+    "bo2",
+    "bo1",
+    "bo0",
+    "st0",
+    "rno0",
+    "rno1",
+    "rlib",
+    "rcat",
+    "rno2",
+    "rchi",
+    "rdai",
+    "rno3",
+    "rcen",
+    "rno4",
+    "rare",
+    "rtop",
+    "rnz0",
+    "rnz1",
+    "rwrp",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "rnz1_demo",
+    "rbo8",
+    "rbo7",
+    "rbo6",
+    "rbo5",
+    "rbo4",
+    "rbo3",
+    "rbo2",
+    "rbo1",
+    "rbo0",
+    "",
+    "mad",
+    "no3",
+    "iwa_load",
+    "iga_load",
+    "hagi_load",
+    "sel",
+    "te1",
+    "te2",
+    "te3",
+    "te4",
+    "te5",
+    "top_alt",
+#ifdef ENABLE_STAGE15
+    [STAGE_SATURN_15] = "stage15",
+#endif
+};
 static const char* allowed_players[] = {"alu", "ric", "mar"};
 static const char* allowed_tests[] = {"sndlib"};
 #define PARSE_PARAM(param, allowed) parseStrParam(param, allowed, LEN(allowed))
@@ -42,7 +109,7 @@ static int parseStrParam(
         }
     } else {
         for (i = 0; i < n; i++) {
-            if (allowedValues[i][0] == '\0') {
+            if (allowedValues[i] == NULL || allowedValues[i][0] == '\0') {
                 continue;
             }
             if (!strcmp(param, allowedValues[i])) {
@@ -65,6 +132,10 @@ static void printHelp(void) {
     printf("         sndlib      test sound library\n");
     printf("  --record <path>    record controller input to a file\n");
     printf("  --replay <path>    replay controller input from a file\n");
+    printf(
+        "  --capture <path>   save a PNG after gameplay begins, then exit\n");
+    printf(
+        "  --transition-test  exercise an internal and exterior room edge\n");
     printf("  --replay-and-exit  quit automatically once the replay or demo "
            "ends\n");
     printf("  --replay-fast      disable frame limit during replay or demo\n");
@@ -72,14 +143,17 @@ static void printHelp(void) {
 }
 static void printAllowedParams(const char* allowedValues[], int n) {
     int i;
+    bool first = true;
+
     printf("allowed params are: ");
-    for (i = 0; i < n - 1; i++) {
-        if (allowedValues[i][0] == '\0') {
+    for (i = 0; i < n; i++) {
+        if (allowedValues[i] == NULL || allowedValues[i][0] == '\0') {
             continue;
         }
-        printf("%s, ", allowedValues[i]);
+        printf("%s%s", first ? "" : ", ", allowedValues[i]);
+        first = false;
     }
-    printf("%s\n", allowedValues[i - 1]);
+    printf("\n");
 }
 static bool parseArgs(
     struct InitGameParams* outParams, int argc, char* argv[]) {
@@ -92,6 +166,8 @@ static bool parseArgs(
     outParams->scale = 1;
     outParams->recordPath = NULL;
     outParams->replayPath = NULL;
+    outParams->capturePath = NULL;
+    outParams->transitionTest = false;
     outParams->exitAfterReplay = false;
     outParams->replayBoundlessFramerate = false;
 
@@ -139,6 +215,10 @@ static bool parseArgs(
             outParams->recordPath = argv[++i];
         } else if (strcmp(argv[i], "--replay") == 0 && i + 1 < argc) {
             outParams->replayPath = argv[++i];
+        } else if (strcmp(argv[i], "--capture") == 0 && i + 1 < argc) {
+            outParams->capturePath = argv[++i];
+        } else if (strcmp(argv[i], "--transition-test") == 0) {
+            outParams->transitionTest = true;
         } else if (strcmp(argv[i], "--replay-and-exit") == 0) {
             outParams->exitAfterReplay = true;
         } else if (strcmp(argv[i], "--replay-fast") == 0) {
@@ -163,6 +243,9 @@ int Main(int argc, char* argv[]) {
     }
     MainGame();
     ResetGame();
+    if (Capture_DidFail()) {
+        return -1;
+    }
     if (params.replayPath && Replay_DidDrift()) {
         return -1;
     }

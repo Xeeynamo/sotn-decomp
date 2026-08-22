@@ -114,7 +114,10 @@ void InitVbVh(void);
 
 s32 func_800EDB58(u8 primType, s32 count);
 
-static void GameLoopCallback(void) { Replay_OnFrame(); }
+static void GameLoopCallback(void) {
+    Replay_OnFrame();
+    Capture_OnFrame();
+}
 
 struct InitGameParams g_GameParams;
 bool InitGame(struct InitGameParams* params) {

@@ -338,7 +338,7 @@ void RenderEntities(void) {
         } else {
             for (r->index2 = 0; r->index2 < r->spriteSheetIdx; r->index2++,
                 animFrame += 11) {
-                if (g_GpuUsage.gt4 >= 0x300) {
+                if (g_GpuUsage.gt4 >= MAX_POLY_GT4_COUNT) {
                     break;
                 }
                 animFrameFlags = animFrame[0];
@@ -508,7 +508,7 @@ void RenderEntities(void) {
                 r->poly++;
                 g_GpuUsage.gt4++;
                 if (r->animSet == 0xF) {
-                    if (g_GpuUsage.gt4 >= 0x300) {
+                    if (g_GpuUsage.gt4 >= MAX_POLY_GT4_COUNT) {
                         break;
                     }
                     if (entity->facingLeft) {
@@ -834,7 +834,7 @@ void RenderEntitiesPSP(void) {
         } else {
             for (r->index2 = 0; r->index2 < r->spriteSheetIdx; r->index2++,
                 animFrame += 11) {
-                if (g_GpuUsage.gt4 >= 0x300) {
+                if (g_GpuUsage.gt4 >= MAX_POLY_GT4_COUNT) {
                     break;
                 }
                 animFrameFlags = animFrame[0];
@@ -1010,7 +1010,7 @@ void RenderEntitiesPSP(void) {
                 r->poly++;
                 g_GpuUsage.gt4++;
                 if (r->animSet == 0xF) {
-                    if (g_GpuUsage.gt4 >= 0x300) {
+                    if (g_GpuUsage.gt4 >= MAX_POLY_GT4_COUNT) {
                         break;
                     }
                     if (entity->facingLeft) {
