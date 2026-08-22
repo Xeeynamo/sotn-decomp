@@ -70,3 +70,4 @@ g_EInitScyllawyrm = 0x09252800;
 rooms = 0x09252810;
 g_BossOverlay = 0x09265CB0;
 BackgroundBlockInit = 0x09265E28;
+D_psp_E_UNK_43 = 0x09266688;

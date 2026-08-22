@@ -24,7 +24,7 @@ void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
 void func_us_801A3E04(Entity* self);
 void func_us_801A269C(Entity* self);
-void func_us_801A3818(Entity* self);
+void EntityMinotaurAttackHitbox(Entity* self);
 void EntityMinotaurFireball(Entity* self);
 void EntityMinotaurSpitLiquid(Entity* self);
 void func_us_801B385C(Entity* self);
@@ -67,7 +67,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityGreyPuff,
     func_us_801A3E04,
     func_us_801A269C,
-    func_us_801A3818,
+    EntityMinotaurAttackHitbox,
     EntityMinotaurFireball,
     EntityMinotaurSpitLiquid,
     func_us_801B385C,
@@ -100,11 +100,11 @@ EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
 EInit D_us_80180524 = {ANIMSET_OVL(1), 0, 0, 0, 0x005};
 EInit g_EInitMinotaurus = {ANIMSET_OVL(2), 1, 72, 512, 0x0CB};
-EInit D_us_8018053C = {ANIMSET_OVL(2), 1, 72, 512, 0x0CC};
-EInit D_us_80180548 = {ANIMSET_DRA(2), 1, 0, 0, 0x002};
-EInit D_us_80180554 = {ANIMSET_DRA(2), 1, 0, 0, 0x0CD};
+EInit g_EInitMinotaurAttackHitbox = {ANIMSET_OVL(2), 1, 72, 512, 0x0CC};
+EInit g_EInitMinotaurFireball = {ANIMSET_DRA(2), 1, 0, 0, 0x002};
+EInit g_EInitMinotaurSpitLiquid = {ANIMSET_DRA(2), 1, 0, 0, 0x0CD};
 EInit g_EInitWerewolfARE = {ANIMSET_OVL(3), 1, 84, 528, 0x0CE};
-EInit D_us_8018056C = {ANIMSET_OVL(3), 0, 84, 528, 0x0CF};
+EInit g_EInitWerewolfAttackHitbox = {ANIMSET_OVL(3), 0, 84, 528, 0x0CF};
 EInit D_us_80180578 = {ANIMSET_OVL(3), 57, 84, 528, 0x0D0};
 EInit D_us_80180584 = {ANIMSET_OVL(3), 0, 84, 528, 0x0D1};
 // clang-format on
