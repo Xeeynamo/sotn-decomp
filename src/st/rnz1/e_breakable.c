@@ -125,9 +125,9 @@ void EntityBreakable(Entity* self) {
             prim->v2 = prim->v3 = 160;
             // These are equivalent to the -23, but pspeu doesn't like
             // subtraction here
-            prim->x0 = prim->x2 = self->posX.i.hi + 23;
+            prim->x0 = prim->x2 = self->posX.i.hi - 0xFFE9;
             prim->x1 = prim->x3 = prim->x0 - 48;
-            prim->y0 = prim->y1 = self->posY.i.hi + 23;
+            prim->y0 = prim->y1 = self->posY.i.hi - 0xFFE9;
             prim->y2 = prim->y3 = prim->y0 - 32;
             prim->priority = self->zPriority;
             prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
@@ -203,6 +203,15 @@ void EntityBreakable(Entity* self) {
             g_api.PlaySfx(SFX_GLASS_BREAK_E);
             break;
         case URN:
+            g_api.PlaySfx(SFX_GLASS_BREAK_E);
+            entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            if (entity != NULL) {
+                CreateEntityFromEntity(E_PERSISTENT_ITEM_DROP, self, entity);
+                entity->params = 0;
+            }
+            PreventEntityFromRespawning(self);
+            DestroyEntity(self);
+            return;
         case JUG:
             g_api.PlaySfx(SFX_GLASS_BREAK_E);
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
