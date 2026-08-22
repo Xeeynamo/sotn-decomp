@@ -49,15 +49,15 @@ static s32 VandalSwordDrawAlastor(s32 arg0, s32 arg1) {
     prim->y2 = prim->y3 = prim->y0 + temp_s1->unk4;
 
     if (!(g_Timer & 3)) {
-        if (g_CurrentEntity->ext.ILLEGAL.u16[9] & 0x4000) {
-            g_CurrentEntity->ext.ILLEGAL.u16[9]--;
-            if ((g_CurrentEntity->ext.ILLEGAL.u16[9]) < 0x4000) {
-                g_CurrentEntity->ext.ILLEGAL.u16[9] = 0;
+        if (g_CurrentEntity->ext.vandalSword.alastorClutState & 0x4000) {
+            g_CurrentEntity->ext.vandalSword.alastorClutState--;
+            if ((g_CurrentEntity->ext.vandalSword.alastorClutState) < 0x4000) {
+                g_CurrentEntity->ext.vandalSword.alastorClutState = 0;
             }
         } else {
-            g_CurrentEntity->ext.ILLEGAL.u16[9]++;
-            if ((g_CurrentEntity->ext.ILLEGAL.u16[9]) > 15) {
-                g_CurrentEntity->ext.ILLEGAL.u16[9] = 0x400F;
+            g_CurrentEntity->ext.vandalSword.alastorClutState++;
+            if ((g_CurrentEntity->ext.vandalSword.alastorClutState) > 15) {
+                g_CurrentEntity->ext.vandalSword.alastorClutState = 0x400F;
             }
         }
     }
@@ -71,37 +71,39 @@ static s32 VandalSwordDrawAlastor(s32 arg0, s32 arg1) {
         prim->v2 = prim->v3 = temp_s1->unk1 + temp_s1->unk4;
         prim->priority = ((g_CurrentEntity->zPriority) + 1);
         prim->drawMode = DRAW_HIDE | DRAW_UNK02;
-        g_CurrentEntity->ext.ILLEGAL.u8[8] = 0x80;
+        g_CurrentEntity->ext.vandalSword.alastorBrightness = 0x80;
         break;
 
     case 1:
-        temp_s2 = ((g_CurrentEntity->ext.ILLEGAL.u8[8]) *
-                       abs(rsin(g_CurrentEntity->ext.ILLEGAL.s16[3])) >>
-                   0xC);
-        prim->clut = ((g_CurrentEntity->ext.ILLEGAL.u16[9] & 0xF) + 0x210);
+        temp_s2 =
+            ((g_CurrentEntity->ext.vandalSword.alastorBrightness) *
+                 abs(rsin(g_CurrentEntity->ext.vandalSword.alastorAngle)) >>
+             0xC);
+        prim->clut =
+            ((g_CurrentEntity->ext.vandalSword.alastorClutState & 0xF) + 0x210);
         prim->r0 = prim->g0 = prim->b0 = temp_s2;
         LOW(prim->r1) = LOW(prim->r0);
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
         prim->drawMode =
             DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
-        if ((g_CurrentEntity->ext.ILLEGAL.u8[8]) < 0x80) {
-            g_CurrentEntity->ext.ILLEGAL.u8[8] += 0x10;
+        if ((g_CurrentEntity->ext.vandalSword.alastorBrightness) < 0x80) {
+            g_CurrentEntity->ext.vandalSword.alastorBrightness += 0x10;
         }
         prim->y0 = prim->y1 +=
-            FLT_TO_I(rsin(g_CurrentEntity->ext.ILLEGAL.s16[3]) * 4);
+            FLT_TO_I(rsin(g_CurrentEntity->ext.vandalSword.alastorAngle) * 4);
         if (g_CurrentEntity->facingLeft) {
-            prim->x0 = prim->x2 +=
-                FLT_TO_I(rcos(g_CurrentEntity->ext.ILLEGAL.s16[3]) * 2);
-            prim->x1 = prim->x3 -=
-                FLT_TO_I(rcos(g_CurrentEntity->ext.ILLEGAL.s16[3]) * 2);
+            prim->x0 = prim->x2 += FLT_TO_I(
+                rcos(g_CurrentEntity->ext.vandalSword.alastorAngle) * 2);
+            prim->x1 = prim->x3 -= FLT_TO_I(
+                rcos(g_CurrentEntity->ext.vandalSword.alastorAngle) * 2);
         } else {
-            prim->x0 = prim->x2 +=
-                FLT_TO_I(rcos(g_CurrentEntity->ext.ILLEGAL.s16[3]) * 2);
-            prim->x1 = prim->x3 -=
-                FLT_TO_I(rcos(g_CurrentEntity->ext.ILLEGAL.s16[3]) * 2);
+            prim->x0 = prim->x2 += FLT_TO_I(
+                rcos(g_CurrentEntity->ext.vandalSword.alastorAngle) * 2);
+            prim->x1 = prim->x3 -= FLT_TO_I(
+                rcos(g_CurrentEntity->ext.vandalSword.alastorAngle) * 2);
         }
-        g_CurrentEntity->ext.ILLEGAL.s16[3] += 0x30;
+        g_CurrentEntity->ext.vandalSword.alastorAngle += 0x30;
         break;
 
     case 2:

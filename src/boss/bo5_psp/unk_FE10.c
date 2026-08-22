@@ -92,7 +92,7 @@ void func_us_801A3FD4(Entity* self) {
         self->hitboxState = 2;
         self->drawFlags |= ENTITY_ROTATE;
         self->rotate = ((Random() & 3) << 9) - 0x300;
-        self->ext.ILLEGAL.u8[1] = 1;
+        self->ext.et_801A3FD4.rotateDir = 1;
         return;
 
     case 1:
@@ -101,7 +101,7 @@ void func_us_801A3FD4(Entity* self) {
         }
 
     case 2:
-        if (!self->ext.ILLEGAL.u8[0]) {
+        if (!self->ext.et_801A3FD4.timer) {
             if (AnimateEntity(D_us_801809F0, self)) {
                 return;
             }
@@ -125,9 +125,9 @@ void func_us_801A3FD4(Entity* self) {
             PlaySfxPositional(SFX_NO1_BIRD_CYCLE);
             self->step++;
             return;
-        } else if (self->ext.ILLEGAL.u8[0]-- < 8) {
-            self->rotate += self->ext.ILLEGAL.u8[1] << 9;
-            self->ext.ILLEGAL.u8[1] = -self->ext.ILLEGAL.u8[1];
+        } else if (self->ext.et_801A3FD4.timer-- < 8) {
+            self->rotate += self->ext.et_801A3FD4.rotateDir << 9;
+            self->ext.et_801A3FD4.rotateDir = -self->ext.et_801A3FD4.rotateDir;
             return;
         }
         break;
