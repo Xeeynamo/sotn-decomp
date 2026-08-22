@@ -494,7 +494,7 @@
 | rno3       | func_pspeu_092454D8                |       15 |          2 |        |       |     |
 | rno4       | func_pspeu_09245310                |       15 |          2 |        |       |     |
 | rnz0       | func_pspeu_09246700                |       15 |          2 |        |       |     |
-| rnz1       | CollectDummy                       |       15 |          2 |        |       |     |
+| rnz1       | func_pspeu_092405A0                |       15 |          2 |        |       |     |
 | rtop       | func_pspeu_0923E8D8                |       15 |          2 |        |       |     |
 | rwrp       | func_pspeu_0923D130                |       15 |          2 |        |       |     |
 | st0        | func_pspeu_0924BD58                |       15 |          2 |        |       |     |
@@ -1000,7 +1000,7 @@
 | rno4       | func_pspeu_0924FA58                |       20 |          2 |        |       |     |
 | rnz0       | func_pspeu_09252D50                |       20 |          2 |        |       |     |
 | rnz0       | func_pspeu_092537E8                |       20 |          2 |        |       |     |
-| rnz1       | FallEntity                         |       20 |          2 |        |       |     |
+| rnz1       | func_pspeu_0924B7F0                |       20 |          2 |        |       |     |
 | rnz1       | func_pspeu_0924C4F0                |       20 |          2 |        |       |     |
 | rtop       | func_pspeu_09245DF0                |       20 |          2 |        |       |     |
 | rtop       | func_pspeu_09246888                |       20 |          2 |        |       |     |
@@ -1161,7 +1161,7 @@
 | rnz0       | func_pspeu_09242B10                |       21 |          1 |        |       |     |
 | rnz1       | SetSubStep                         |       21 |          1 |        |       |     |
 | rnz1       | Random                             |       21 |          1 |        |       |     |
-| rnz1       | func_psp_0923C390                  |       21 |          1 |        |       |     |
+| rnz1       | func_pspeu_0923F800                |       21 |          1 |        |       |     |
 | rtop       | func_pspeu_0923DB38                |       21 |          1 |        |       |     |
 | rtop       | func_pspeu_092466A0                |       21 |          1 |        |       |     |
 | rtop       | func_pspeu_0923BCA8                |       21 |          1 |        |       |     |
@@ -1676,7 +1676,7 @@
 | rno3       | func_pspeu_09245480                |       27 |          4 |        |       |     |
 | rno4       | func_pspeu_092452B8                |       27 |          4 |        |       |     |
 | rnz0       | func_pspeu_092466A8                |       27 |          4 |        |       |     |
-| rnz1       | CollectLifeVessel                  |       27 |          4 |        |       |     |
+| rnz1       | func_pspeu_09240548                |       27 |          4 |        |       |     |
 | rtop       | func_pspeu_0923E880                |       27 |          4 |        |       |     |
 | rwrp       | func_pspeu_0923D0D8                |       27 |          4 |        |       |     |
 | sel        | func_psp_09238E18                  |       27 |          4 |        |       |     |
@@ -3212,7 +3212,7 @@
 | rno3       | func_pspeu_09244F88                |       46 |          4 |        |       |     |
 | rno4       | func_pspeu_09244DC0                |       46 |          4 |        |       |     |
 | rnz0       | func_pspeu_092461B0                |       46 |          4 |        |       |     |
-| rnz1       | CollectHeart                       |       46 |          4 |        |       |     |
+| rnz1       | func_pspeu_09240050                |       46 |          4 |        |       |     |
 | rtop       | func_pspeu_0923E388                |       46 |          4 |        |       |     |
 | rwrp       | func_pspeu_0923CBE0                |       46 |          4 |        |       |     |
 | top        | func_pspeu_0923F010                |       46 |          4 |        |       |     |
@@ -3330,7 +3330,7 @@
 | rno3       | func_pspeu_092446A0                |       46 |          7 |        |       |     |
 | rno4       | func_psp_0923C2F8                  |       46 |          7 |        |       |     |
 | rnz0       | func_pspeu_092458C8                |       46 |          7 |        |       |     |
-| rnz1       | func_psp_0923C2F8                  |       46 |          7 |        |       |     |
+| rnz1       | func_pspeu_0923F768                |       46 |          7 |        |       |     |
 | rtop       | func_pspeu_0923DAA0                |       46 |          7 |        |       |     |
 | rwrp       | func_pspeu_0923C2F8                |       46 |          7 |        |       |     |
 | top        | func_pspeu_0923E728                |       46 |          7 |        |       |     |
@@ -3720,7 +3720,7 @@
 | rno3       | func_pspeu_092453C0                |       55 |          8 |        |       |     |
 | rno4       | func_pspeu_092451F8                |       55 |          8 |        |       |     |
 | rnz0       | func_pspeu_092465E8                |       55 |          8 |        |       |     |
-| rnz1       | CollectHeartVessel                 |       55 |          8 |        |       |     |
+| rnz1       | func_pspeu_09240488                |       55 |          8 |        |       |     |
 | rtop       | func_pspeu_0923E7C0                |       55 |          8 |        |       |     |
 | rwrp       | func_pspeu_0923D018                |       55 |          8 |        |       |     |
 | top        | func_pspeu_0923F448                |       55 |          8 |        |       |     |
@@ -4046,7 +4046,7 @@
 | rno4       | func_pspeu_09244B68                |       62 |          5 |        |       |     |
 | rno4       | EntityBackgroundBlock              |       62 |          5 |        |       |     |
 | rnz0       | func_pspeu_09245F58                |       62 |          5 |        |       |     |
-| rnz1       | PrizeDropFall                      |       62 |          5 |        |       |     |
+| rnz1       | func_pspeu_0923FDF8                |       62 |          5 |        |       |     |
 | rtop       | func_pspeu_0923E130                |       62 |          5 |        |       |     |
 | rwrp       | func_pspeu_0923C988                |       62 |          5 |        |       |     |
 | st0        | func_pspeu_0924B7E0                |       62 |          5 |        |       |     |
@@ -4607,7 +4607,7 @@
 | rno4       | ReplaceBreakableWithItemDrop       |       71 |          7 |        |       |     |
 | rnz0       | func_pspeu_09246250                |       71 |          7 |        |       |     |
 | rnz0       | func_pspeu_09253E88                |       71 |          7 |        |       |     |
-| rnz1       | CollectGold                        |       71 |          7 |        |       |     |
+| rnz1       | func_pspeu_092400F0                |       71 |          7 |        |       |     |
 | rnz1       | ReplaceBreakableWithItemDrop       |       71 |          7 |        |       |     |
 | rtop       | func_pspeu_0923E428                |       71 |          7 |        |       |     |
 | rtop       | func_pspeu_09246F28                |       71 |          7 |        |       |     |
@@ -6142,7 +6142,7 @@
 | rno3       | func_pspeu_09244E08                |      106 |         16 |        |       |     |
 | rno4       | func_pspeu_09244C40                |      106 |         16 |        |       |     |
 | rnz0       | func_pspeu_09246030                |      106 |         16 |        |       |     |
-| rnz1       | PrizeDropFall2                     |      106 |         16 |        |       |     |
+| rnz1       | func_pspeu_0923FED0                |      106 |         16 |        |       |     |
 | rtop       | func_pspeu_0923E208                |      106 |         16 |        |       |     |
 | rwrp       | func_pspeu_0923CA60                |      106 |         16 |        |       |     |
 | st0        | func_pspeu_0924B8B8                |      106 |         16 |        |       |     |
@@ -6219,7 +6219,7 @@
 | rno3       | func_pspeu_09246480                |      109 |          3 |        |       |     |
 | rno4       | func_pspeu_092462B8                |      109 |          3 |        |       |     |
 | rnz0       | func_pspeu_092476A8                |      109 |          3 |        |       |     |
-| rnz1       | BlinkItem                          |      109 |          3 |        |       |     |
+| rnz1       | func_pspeu_09241548                |      109 |          3 |        |       |     |
 | rtop       | func_pspeu_0923F880                |      109 |          3 |        |       |     |
 | rwrp       | func_pspeu_0923E0D8                |      109 |          3 |        |       |     |
 | top        | func_pspeu_09240508                |      109 |          3 |        |       |     |
@@ -6466,7 +6466,7 @@
 | rnz0       | func_pspeu_09253820                |      113 |         13 |        |       |     |
 | rnz1       | func_pspeu_09237820                |      113 |         13 |        |       |     |
 | rnz1       | func_pspeu_092379B8                |      113 |         13 |        |       |     |
-| rnz1       | CheckFieldCollision                |      113 |         13 |        |       |     |
+| rnz1       | func_pspeu_0924C528                |      113 |         13 |        |       |     |
 | rtop       | func_pspeu_09237820                |      113 |         13 |        |       |     |
 | rtop       | func_pspeu_092379B8                |      113 |         13 |        |       |     |
 | rtop       | func_pspeu_092468C0                |      113 |         13 |        |       |     |
@@ -6635,7 +6635,7 @@
 | rno3       | func_pspeu_09247FA8                |      127 |         11 |        |       |     |
 | rno4       | func_pspeu_09247DE0                |      127 |         11 |        |       |     |
 | rnz0       | func_pspeu_092491D0                |      127 |         11 |        |       |     |
-| rnz1       | EntityPersistentItemDrop           |      127 |         11 |        |       |     |
+| rnz1       | func_pspeu_09243070                |      127 |         11 |        |       |     |
 | rtop       | func_pspeu_092413A8                |      127 |         11 |        |       |     |
 | rwrp       | func_pspeu_0923FC00                |      127 |         11 |        |       |     |
 | top        | func_pspeu_09242030                |      127 |         11 |        |       |     |
@@ -7287,7 +7287,7 @@
 | rno3       | func_pspeu_09245128                |      184 |         20 |        |       |     |
 | rno4       | func_pspeu_09244F60                |      184 |         20 |        |       |     |
 | rnz0       | func_pspeu_09246350                |      184 |         20 |        |       |     |
-| rnz1       | CollectSubweapon                   |      184 |         20 |        |       |     |
+| rnz1       | func_pspeu_092401F0                |      184 |         20 |        |       |     |
 | rtop       | func_pspeu_0923E528                |      184 |         20 |        |       |     |
 | rwrp       | func_pspeu_0923CD80                |      184 |         20 |        |       |     |
 | top        | func_pspeu_0923F1B0                |      184 |         20 |        |       |     |
@@ -8695,7 +8695,7 @@
 | rno3       | func_pspeu_0924E408                |      406 |         25 |        |       |     |
 | rno4       | func_pspeu_0924D110                |      406 |         25 |        |       |     |
 | rnz0       | func_pspeu_09252210                |      406 |         25 |        |       |     |
-| rnz1       | BottomCornerText                   |      406 |         25 |        |       |     |
+| rnz1       | func_pspeu_0924ACB0                |      406 |         25 |        |       |     |
 | rtop       | func_pspeu_092445D0                |      406 |         25 |        |       |     |
 | rwrp       | func_pspeu_09242E28                |      406 |         25 |        |       |     |
 | st0        | func_pspeu_0924F680                |      406 |         25 |        |       |     |
@@ -8750,7 +8750,7 @@
 | rno3       | func_pspeu_09244778                |      409 |         53 |        |       |     |
 | rno4       | func_pspeu_092445B0                |      409 |         53 |        |       |     |
 | rnz0       | func_pspeu_092459A0                |      409 |         53 |        |       |     |
-| rnz1       | BlitChar                           |      409 |         53 |        |       |     |
+| rnz1       | func_pspeu_0923F840                |      409 |         53 |        |       |     |
 | rtop       | func_pspeu_0923DB78                |      409 |         53 |        |       |     |
 | rwrp       | func_pspeu_0923C3D0                |      409 |         53 |        |       |     |
 | top        | func_pspeu_0923E800                |      409 |         53 |        |       |     |
@@ -9072,7 +9072,7 @@
 | rno2       | func_pspeu_0924B9C0                |      511 |         41 |        |       |     |
 | rno3       | func_pspeu_09248178                |      511 |         41 |        |       |     |
 | rnz0       | func_pspeu_092493A0                |      511 |         41 |        |       |     |
-| rnz1       | EntityMessageBox                   |      511 |         41 |        |       |     |
+| rnz1       | func_pspeu_09243240                |      511 |         41 |        |       |     |
 | rtop       | func_pspeu_09241578                |      511 |         41 |        |       |     |
 | rwrp       | func_pspeu_0923FDD0                |      511 |         41 |        |       |     |
 | top        | func_pspeu_09242200                |      511 |         41 |        |       |     |
@@ -9168,7 +9168,7 @@
 | rtop       | func_pspeu_09248B88                |      567 |         36 |        |       |     |
 | top        | func_pspeu_09249B38                |      567 |         36 |        |       |     |
 | rnz0       | func_pspeu_09247840                |      568 |         67 | Yes    |       |     |
-| rnz1       | EntityEquipItemDrop                |      568 |         67 | Yes    |       |     |
+| rnz1       | func_pspeu_092416E0                |      568 |         67 | Yes    |       |     |
 | dra        | func_psp_09103318                  |      570 |         35 |        |       |     |
 | bo4        | MarCheckFloor                      |      572 |         55 |        |       |     |
 | rbo5       | MarCheckFloor                      |      572 |         55 |        |       |     |
@@ -9590,7 +9590,7 @@
 | are        | func_pspeu_0925E2B0                |      945 |        172 |        |       |     |
 | rno1       | func_us_801A700C                   |      948 |         61 |        |       |     |
 | rnz0       | func_pspeu_09246728                |      955 |        120 | Yes    |       |     |
-| rnz1       | EntityPrizeDrop                    |      955 |        120 | Yes    |       |     |
+| rnz1       | func_pspeu_092405C8                |      955 |        120 | Yes    |       |     |
 |            | func_092EA968                      |      963 |         44 |        |       |     |
 | main       | sce_stub                           |      964 |        191 |        |       |     |
 | lib        | func_psp_09239650                  |      965 |        124 | Yes    |       |     |
