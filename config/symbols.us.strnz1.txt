@@ -1,9 +1,6 @@
-spriteBanks = 0x80180040;
 cluts = 0x8018038C;
 rooms_layers = 0x80180518;
 gfxBanks = 0x801807E0;
-entityLayoutHorizontal = 0x80180840;
-entityLayoutVertical = 0x80180914;
 g_EInitBreakable = 0x80180B10;
 g_EInitObtainable = 0x80180B1C;
 g_EInitParticle = 0x80180B28;

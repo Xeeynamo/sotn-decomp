@@ -1393,6 +1393,15 @@ files:
     asset_path: assets/st/rnz1
     src_path: src/st/rnz1
     splat_config_path: config/splat.us.strnz1.yaml
+    segments:
+    - start: 0
+      vram: 0x80180000
+      assets:
+        - [0x40, sprite_banks, sprite_banks]
+        - [0xA0, skip] #paldef, palette_def]
+        - [0x840, layout, entity_layouts]
+        - [0x9E8, skip]
+
   - target: disks/us/ST/RTOP/RTOP.BIN
     asset_path: assets/st/rtop
     src_path: src/st/rtop
