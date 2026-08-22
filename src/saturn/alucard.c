@@ -505,16 +505,16 @@ void func_060AD44C(s32 arg0, s32 arg1) {
     }
 
     if (index != 0xFFFF) {
-        if ((u16)steps[index] == g_Entities->step) {
+        if ((u16)steps[index] == PLAYER.step) {
             index += 3;
         }
-        g_Entities->step = steps[index];
-        g_Entities->step_s = 0;
+        PLAYER.step = steps[index];
+        PLAYER.step_s = 0;
         g_Player.unk39C = 0xFF;
-        g_Entities->rotate = 0;
+        PLAYER.rotate = 0;
     }
 
-    if ((u16)((s16)g_Entities->step - 0x18) > 1) {
+    if ((u16)((s16)PLAYER.step - 0x18) > 1) {
         func_060B7994();
     }
 }

@@ -60,13 +60,13 @@ void func_060DC764(u16 cardIndex) {
         SetStep(7);
         self->unk0->flags |= 8;
         self->ext.ILLEGAL.u16[7] = 5;
-        self->velocityY = -0x28000;
+        self->velocityY = -FIX(2.5);
 
         if (player->facingLeft != 1) {
-            self->velocityX = -0x28000;
+            self->velocityX = -FIX(2.5);
             return;
         }
-        self->velocityX = 0x28000;
+        self->velocityX = FIX(2.5);
     } else {
         DestroyEntity(self);
     }
@@ -96,8 +96,8 @@ void func_060DFB7C(Entity* self) {
         if (self->ext.ILLEGAL.u8[0]++ > 4U) {
             particle = AllocEntity(&g_Entities[0xE0], &DAT_060A4FF8);
             if (particle != NULL) {
-                CreateEntityFromEntity(2, self, particle);
-                particle->entityId = 2;
+                CreateEntityFromEntity(E_EXPLOSION, self, particle);
+                particle->entityId = E_EXPLOSION;
                 particle->pfnUpdate = func_060DF8AC;
                 particle->params = self->params;
             }

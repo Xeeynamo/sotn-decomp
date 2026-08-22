@@ -66,7 +66,7 @@ void func_060DD690(Entity* self) {
         sprite = self->unk0;
         func_0600AFA8(sprite, DAT_06045E14[1]);
         sprite->zPriority = 0x6F;
-        self->velocityX = -0xA0000;
+        self->velocityX = -FIX(10);
         /* fall through */
 
     case 1:

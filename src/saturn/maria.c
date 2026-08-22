@@ -116,9 +116,9 @@ void func_060A6A94(void) {
     g_Player.timers[1] = 8;
 
     if (MariaCheckInput(0x8305C) == 0) {
-        MariaDecelerateX(0x2800);
+        MariaDecelerateX(FIX(0.15625));
         if (MariaCheckFacing() == 0) {
-            RicSetStand(g_Entities->velocityX >> 1);
+            RicSetStand(PLAYER.velocityX >> 1);
             if (g_Player.timers[0xB] == 0 && !(g_Player.vram_flag & 0xC)) {
                 if (g_Player.vram_flag & 0x20) {
                     RicSetAnimation(g_MariaAnimWalkStopFacingBitSet);
@@ -127,8 +127,8 @@ void func_060A6A94(void) {
                 }
                 RicCreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
             }
-        } else if (g_Entities->step_s == 0) {
-            velocityX = 0x2D000;
+        } else if (PLAYER.step_s == 0) {
+            velocityX = FIX(2.8125);
             if (g_CurrentEntity->facingLeft == 1) {
                 velocityX = -velocityX;
             }
@@ -1002,27 +1002,30 @@ Entity* func_060BC024(Entity* self) {
     entity = &g_Entities[0x40];
     count = 0;
     for (; entity != &g_Entities[0xC0]; entity++) {
-        if (entity->entityId != 0 && entity->hitboxState != 0) {
-            if (entity->posX.i.hi >= -0x10) {
-                if (entity->posX.i.hi <= 0x150) {
-                    if (entity->posY.i.hi <= 0xF0) {
-                        if (entity->posY.i.hi >= 0) {
-                            if (entity->hitPoints <= 0x6FFF) {
-                                if (entity->flags & 0x80000) {
-                                    count++;
-                                    last = entity;
-                                } else if (
-                                    (entity->posX.i.hi - self->posX.i.hi) *
-                                        direction >
-                                    0) {
-                                    entity->flags |= 0x80000;
-                                    return entity;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+        if (entity->entityId == 0 || entity->hitboxState == 0) {
+            continue;
+        }
+        if (entity->posX.i.hi < -0x10) {
+            continue;
+        }
+        if (entity->posX.i.hi > 0x150) {
+            continue;
+        }
+        if (entity->posY.i.hi > 0xF0) {
+            continue;
+        }
+        if (entity->posY.i.hi < 0) {
+            continue;
+        }
+        if (entity->hitPoints > 0x6FFF) {
+            continue;
+        }
+        if (entity->flags & 0x80000) {
+            count++;
+            last = entity;
+        } else if ((entity->posX.i.hi - self->posX.i.hi) * direction > 0) {
+            entity->flags |= 0x80000;
+            return entity;
         }
     }
 

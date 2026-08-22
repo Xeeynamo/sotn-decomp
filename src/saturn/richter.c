@@ -1191,7 +1191,7 @@ void func_060ADA34(Entity* self) {
             self->animSet = 2;
             self->anim = anim_80154E38;
             self->flags = 0x170000;
-            self->velocityY = (MTH_GetRand() & 0x3FFF) - 0x10000;
+            self->velocityY = (MTH_GetRand() & 0x3FFF) - FIX(1);
             self->step++;
         } else {
             DestroyEntity(self);
