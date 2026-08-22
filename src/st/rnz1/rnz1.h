@@ -5,9 +5,14 @@
 #include <stage.h>
 
 #define STAGE_IS_RNZ1
+#define INVERTED_STAGE
 
 enum Palettes {
     PAL_NONE,
+    PAL_BREAKABLE_DEBRIS = 0x226,
+    PAL_WALL_CANDELABRA_A = 0x228,
+    PAL_WALL_CANDELABRA_B = 0x229,
+    PAL_BREAKABLE = 0x22A,
 };
 
 typedef enum EntityID {
