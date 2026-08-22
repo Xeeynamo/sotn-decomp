@@ -291,6 +291,7 @@ typedef struct {
     /* 0xAC */ s32 : 32;
     /* 0xB0 */ s16 subweaponId;
     /* 0xB2 */ s16 unkB2;
+    u16 unkB0;
 } ET_Subweapon;
 
 typedef struct {
@@ -364,6 +365,13 @@ typedef struct {
     s32 unk38;
 } ET_SaveRoom;
 
+typedef struct {
+    /* 0x78 */ u8 pad0[0x0C];
+    /* 0x84 */ s16 unk84;
+    /* 0x86 */ u8 pad86[0x12];
+    /* 0x98 */ u8 unk98;
+} ET_BloodyZombie;
+
 typedef union { // offset=0x78
     ET_Placeholder ILLEGAL;
     ET_AfterImage afterImage; // g_Entities[1], not entityID 1
@@ -373,6 +381,7 @@ typedef union { // offset=0x78
     ET_EquipItemDrop equipItemDrop;
     ET_BatFamBlueTrail batFamBlueTrail;
     ET_Bat bat;
+    ET_BloodyZombie bloodyZombie;
     ET_SaveRoom save;
     struct {
         u8 pad[0x28];
