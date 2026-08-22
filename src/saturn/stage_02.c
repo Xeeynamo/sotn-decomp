@@ -167,11 +167,95 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DF798, func_060DF798);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DFAE4, func_060DFAE4);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E0304, func_060E0304);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E0684, func_060E0684);
-INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E08B0, func_060E08B0);
-INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E08E4, func_060E08E4);
+void func_060E08B0(s32 arg0) {
+    u8 value;
+    s32 offset;
+    s32 i;
+    s32 limit;
+    u8* tiles;
+    u8* tilesOdd;
+
+    value = arg0 == 0 ? 3 : 0;
+    offset = 0x260;
+    i = 0;
+    limit = 3;
+    tiles = DAT_0608FFF8;
+    tilesOdd = tiles + 1;
+
+    for (; i <= limit; i++) {
+        tiles[offset] = value;
+        tilesOdd[offset] = value;
+        offset += 0x10;
+    }
+}
+extern u16 g_Stage02PurpleBrickTilemap0[];
+extern u16 g_Stage02PurpleBrickTilemap1[];
+extern u16 g_Stage02PurpleBrickTilemap2[];
+
+void func_060E08E4(s32 arg0, s32 arg1) {
+    u16* tilemap;
+
+    switch (arg1) {
+    case 1:
+        tilemap = g_Stage02PurpleBrickTilemap0;
+        break;
+    case 2:
+        tilemap = g_Stage02PurpleBrickTilemap1;
+        break;
+    case 3:
+        tilemap = g_Stage02PurpleBrickTilemap2;
+        break;
+    default:
+        return;
+    }
+
+    func_060E9058(tilemap, 0, 0, 76);
+}
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E093C, func_060E093C);
-INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E0AF0, func_060E0AF0);
-INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E0B24, func_060E0B24);
+void func_060E0AF0(Entity* self) {
+    u8 value;
+    s32 offset;
+    s32 i;
+    s32 limit;
+    u8* tiles;
+    u8* tilesOdd;
+
+    value = self == NULL ? 3 : 0;
+    offset = 0x2E7;
+    i = 0;
+    limit = 1;
+    tiles = DAT_0608FFF8;
+    tilesOdd = tiles + 1;
+
+    for (; i <= limit; i++) {
+        tiles[offset] = value;
+        tilesOdd[offset] = value;
+        offset += 0x10;
+    }
+}
+extern u16 g_Stage02SecretWallTilemap0[];
+extern u16 g_Stage02SecretWallTilemap1[];
+extern u16 g_Stage02SecretWallTilemap2[];
+
+void func_060E0B24(s32 unused, s32 arg0) {
+    u16* tilemap;
+
+    switch (arg0) {
+    case 1:
+        tilemap = g_Stage02SecretWallTilemap0;
+        break;
+    case 2:
+        tilemap = g_Stage02SecretWallTilemap1;
+        break;
+    case 3:
+        tilemap = g_Stage02SecretWallTilemap2;
+        break;
+    default:
+        return;
+    }
+
+    func_060E9058(tilemap, 0, 17, 92);
+}
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E0B7C, func_060E0B7C);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E0DC8, func_060E0DC8);
 
@@ -181,16 +265,43 @@ void func_60E0F64() {}
 
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E0F70, func_060E0F70);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E1A00, func_060E1A00);
-INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E1C08, func_060E1C08);
+struct Unk {
+    /* 0x00 */ u8 pad0[0x2C];
+    /* 0x2C */ s32 primIndex2C;
+    /* 0x30 */ s32 primIndex30;
+    /* 0x34 */ u32 pad34;
+    /* 0x38 */ u16 unk_38;
+    /* 0x3A */ u16 unk_3a;
+    /* 0x3C */ u32 unk_3c;
+};
+
+extern s32 DAT_060F50AC;
+
+void func_060E1C08(Entity* self) {
+    if (g_pads[0].previous == 0x0800) {
+        DAT_060F50AC = 1;
+
+        if (self->flags & FLAG_HAS_PRIMS) {
+            FreePrimitives(self->primIndex);
+            self->flags ^= FLAG_HAS_PRIMS;
+        }
+
+        if (DAT_060e2014.primIndex30 != -1) {
+            FreePrimitives(DAT_060e2014.primIndex30);
+        }
+
+        if (DAT_060e2014.primIndex2C != -1) {
+            FreePrimitives(DAT_060e2014.primIndex2C);
+        }
+
+        PlaySfx(0xF0000090);
+        self->step = 1;
+        self->step_s = 0;
+        func_060100B8();
+    }
+}
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E1CA8, func_060E1CA8);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E1D48, func_060E1D48);
-
-struct Unk {
-    u8 pad[0x38];
-    u16 unk_38;
-    u16 unk_3a;
-    u32 unk_3c;
-};
 
 // maybe func_801B797C?
 void func_060e1ff8(s32 param_1) {
@@ -204,7 +315,51 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E21B8, func_060E21B8);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E22FC, func_060E22FC);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E2420, func_060E2420);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E2898, func_060E2898);
-INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E29A4, func_060E29A4);
+extern s16 DAT_060F1AE8[];
+extern u16 g_Stage02AlucardSubweaponIds[];
+
+void func_060E29A4(u16 cardIndex) {
+    Entity* self;
+    Entity* player;
+    u16 params;
+    s16 subWeaponId;
+    s8 timer;
+    u8* timerPtr;
+
+    self = g_CurrentEntity;
+    PlaySfx(0x67C);
+    params = g_Status.subWeapon;
+    player = g_Entities;
+    subWeaponId = DAT_060F1AE8[cardIndex];
+    g_Status.subWeapon = subWeaponId;
+
+    if (params == subWeaponId) {
+        params = 1;
+        timerPtr = self->unk6D;
+        timer = 0x10;
+    } else {
+        params = g_Stage02AlucardSubweaponIds[params];
+        timerPtr = self->unk6D;
+        timer = 0x60;
+    }
+    *timerPtr = timer;
+
+    if (params != 0) {
+        self->params = params;
+        self->posY.i.hi = player->posY.i.hi + 0xC;
+        SetStep(7);
+        self->unk0->flags |= 8;
+        self->ext.subweaponCard.unk86 = 5;
+        self->velocityY = -FIX(2.5);
+        if (player->facingLeft != 1) {
+            self->velocityX = -FIX(2.5);
+            return;
+        }
+        self->velocityX = FIX(2.5);
+    } else {
+        DestroyEntity(self);
+    }
+}
 
 // EntityPersistentItemDrop
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E2A80, func_060E2A80);
@@ -212,7 +367,40 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E2A80, func_060E2A80);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E32DC, func_060E32DC);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E37C8, func_060E37C8);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E3FBC, func_060E3FBC);
-INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E42FC, func_060E42FC);
+extern u16 g_Stage02PrizeDrops[];
+
+void func_060E42FC(Entity* self) {
+    u16 item;
+    PfnEntityUpdate update;
+
+    if (self->step == 0) {
+        self->ext.prizeDrop.itemFlagIndex = self->params + 0x20;
+        item = self->ext.prizeDrop.itemFlagIndex;
+        if (((g_CastleFlags + 0x100)[item >> 3] >> (item & 7)) & 1) {
+            DestroyEntity(self);
+            return;
+        }
+
+        item -= 0x20;
+        item = g_Stage02PrizeDrops[item];
+        if (item < 0x80) {
+            self->unkB4 = (Entity*)func_060E2A80;
+        } else {
+            self->unkB4 = (Entity*)func_060E32DC;
+            item -= 0x80;
+        }
+        self->params = item + 0x8000;
+    } else {
+        item = self->ext.prizeDrop.itemFlagIndex;
+        if (self->step < 5 && self->hitFlags) {
+            (g_CastleFlags + 0x100)[item >> 3] |= 1 << (item & 7);
+            self->step = 5;
+        }
+    }
+
+    update = (PfnEntityUpdate)self->unkB4;
+    update(self);
+}
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E43F4, func_060E43F4);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E4908, func_060E4908);
 
@@ -239,14 +427,72 @@ s32 func_801BBC3C(Entity* e) {
 }
 
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E4FD0, func_060E4FD0);
-INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E5388, func_060E5388);
+void func_060E5388(Entity* arg0) {
+    Tilemap* map;
+    u8* dest;
+    s16 scroll_y;
+    s32 index;
+    s32 i;
+    s32 offset;
+    s32 x;
+    s32 y;
+
+    map = &g_Tilemap;
+    i = 0;
+    dest = DAT_0608FFF8;
+    offset = -0x18;
+    do {
+        x = arg0->posX.i.hi;
+        y = arg0->posY.i.hi;
+        index = ((x + map->scrollX.i.hi) << 2) / 5;
+        scroll_y = map->scrollY.i.hi;
+        index =
+            (index >> 4) + (((y + offset + scroll_y) >> 4) * map->hSize * 0x10);
+        dest[index] = arg0->animCurFrame != 0 ? 3 : 0;
+        i += 1;
+        offset += 0x10;
+    } while (i <= 3);
+}
+
+const u16 pad_060E540C[] = {0xCCCC, 0xCCCD};
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E5410, func_060E5410);
 
 // EntityExplosion
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E5AE4, func_060E5AE4);
 
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E5C4C, func_060E5C4C);
-INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E5DB4, func_060E5DB4);
+void func_060E5DB4(Entity* self) {
+    Entity* entity;
+
+    switch (self->step) {
+    case 0:
+        TekiInit(self, 2);
+        self->step++;
+        self->ext.explosionEmitter.parentId =
+            self->ext.explosionEmitter.parent->entityId;
+        /* fall through */
+    case 1:
+        if (self->ext.explosionEmitter.timer++ > 4) {
+            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (entity != NULL) {
+                CreateEntityFromEntity(E_STAGE_EXPLOSION, self, entity);
+                entity->entityId = E_STAGE_EXPLOSION;
+                entity->pfnUpdate = func_060E5AE4;
+                entity->params = self->params;
+            }
+            self->ext.explosionEmitter.timer = 0;
+        }
+        self->posX.i.hi = self->ext.explosionEmitter.parent->posX.i.hi;
+        self->posY.i.hi = self->ext.explosionEmitter.parent->posY.i.hi;
+        if (self->ext.explosionEmitter.parent->entityId !=
+            self->ext.explosionEmitter.parentId) {
+            DestroyEntity(self);
+        }
+        break;
+    default:
+        return;
+    }
+}
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E5EA0, func_060E5EA0);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E600C, func_060E600C);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E6140, func_060E6140);
@@ -737,7 +983,16 @@ void func_060E7508(Entity* self) {
 }
 
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E81D4, func_060E81D4);
-INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E82EC, func_060E82EC);
+u16 func_060E82EC(s32 minX, s32 maxX) {
+    u16 standing;
+
+    g_Player.unk7A = 1;
+    if (PLAYER.step != 0 || (standing = PLAYER.step_s) != 1 ||
+        PLAYER.posX.i.hi < minX || PLAYER.posX.i.hi > maxX) {
+        standing = 0;
+    }
+    return standing;
+}
 
 // not seeing an obvious PSX equivalent
 void func_060e8330(void) {
@@ -775,10 +1030,63 @@ void func_060E8DE0(s32 arg0, s32 arg1, s32 arg2) {
     func_060E8EEC(arg0, arg1, arg2);
 }
 
-INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E8E1C, func_060E8E1C);
+extern s32 DAT_060485e0[];
+extern s32 DAT_060F5098;
+extern MthMatrixTbl DAT_06061DF0;
+extern s32 g_Stage02Entity08ModelVertices14[];
+
+void SetCurrentMatrixBinAngle(s32 angle, s32* axis);
+void TransformAndProjectPoints(s32* src, s32* dst, s32 count);
+
+void func_060E8E1C(s32 arg0, s32 arg1) {
+    s32* dst_base;
+    s32* dst;
+    s32* src;
+    s32* src1;
+    s32* dst1;
+    s32 i;
+    s32 limit;
+
+    dst_base = DAT_060485e0;
+    src = g_Stage02Entity08ModelVertices14;
+    dst = dst_base;
+    arg0 <<= 8;
+    i = 0;
+    limit = 13;
+    src1 = src + 1;
+    dst1 = dst_base + 1;
+
+    for (; i <= limit; i++) {
+        dst[0] = src[0] * arg0;
+        dst1[0] = src1[0] * arg0;
+        dst1[1] = src1[1] * arg0;
+        src += 3;
+        dst += 3;
+        src1 += 3;
+        dst1 += 3;
+    }
+
+    SetCurrentMatrixBinAngle(DAT_060F5088, &DAT_060F5098);
+
+    DAT_06061DF0.current->val[0][0] = DAT_06061DF0.current->val[0][0] * 5 / 4;
+    DAT_06061DF0.current->val[0][1] = DAT_06061DF0.current->val[0][1] * 5 / 4;
+    DAT_06061DF0.current->val[0][2] = DAT_06061DF0.current->val[0][2] * 5 / 4;
+
+    TransformAndProjectPoints(dst_base, dst_base + 0x102, 14);
+}
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E8EEC, func_060E8EEC);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E9058, func_060E9058);
-INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E9220, func_060E9220);
+extern s16 DAT_060F212E[];
+
+void func_060E9220(Entity* entity) {
+    struct SpriteParts* parts = &g_Stage02Entity37SpriteParts0;
+    SaturnSpriteResource* bank = (SaturnSpriteResource*)g_Stage02SpriteBank28;
+
+    entity->unk0 =
+        CreateSpriteObject(bank->allocationIndex, bank->flags, parts, 2);
+    SyncSpriteObjectPosUnchecked(entity, DAT_060F212E);
+    entity->step = 1;
+}
 
 void func_060E9270(Entity* self) {
     SyncSpriteObjectPos(self);
@@ -801,7 +1109,17 @@ const u16 pad_060e92d6 = 0xAAAB;
 // EntityBloodSkeleton
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E92D8, func_060E92D8);
 
-INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E9770, func_060E9770);
+extern s16 g_Stage02BoneScimitarInitOffset[];
+
+void func_060E9770(Entity* self) {
+    struct SpriteParts* parts = &g_Stage02BoneScimitarSpriteParts0;
+    SaturnSpriteResource* bank = (SaturnSpriteResource*)g_Stage02SpriteBank29;
+
+    self->unk0 =
+        CreateSpriteObject(bank->allocationIndex, bank->flags, parts, 5);
+    SyncSpriteObjectPosUnchecked(self, g_Stage02BoneScimitarInitOffset);
+    self->step++;
+}
 
 // seems to saturn-only. param_1 is probably a struct?
 void func_060e97c4(u16** param_1) {
@@ -867,8 +1185,53 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EAFAC, func_060EAFAC);
 
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EB5C4, func_060EB5C4);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EB6E4, func_060EB6E4);
-INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EB8D0, func_060EB8D0);
-INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EB950, func_060EB950);
+extern u8 g_Stage02SkeletonFrames[];
+extern u8 DAT_060F4378[];
+extern s16 DAT_060F42C0[];
+
+void func_060EB8D0(Entity* self) {
+    struct SpriteParts* parts = &g_Stage02SkeletonSpriteParts0;
+    SaturnSpriteResource* bank = (SaturnSpriteResource*)g_Stage02SpriteBank32;
+
+    self->unk0 =
+        CreateSpriteObject(bank->allocationIndex, bank->flags, parts, 4);
+
+    self->ext.spriteAnimEnemy.frames = g_Stage02SkeletonFrames;
+    self->ext.spriteAnimEnemy.animations = DAT_060F4378;
+    self->ext.spriteAnimEnemy.unk80 = 0;
+    self->ext.spriteAnimEnemy.unk81 = 0;
+    self->ext.spriteAnimEnemy.unk82 = 0;
+
+    SyncSpriteObjectPosUnchecked(self, DAT_060F42C0);
+    self->step++;
+}
+extern s16 DAT_060F42D0[];
+extern s16 DAT_060F42D8[];
+
+extern void func_06079BCC(Entity* self);
+extern s32 func_06079DEC(Entity* self, s16* sensors);
+extern s32 func_06079F60(Entity* self, s16* sensors, s16 count);
+extern void func_0607AA40(Entity* self, s32 arg1, s32 arg2, s32 arg3);
+
+void func_060EB950(Entity* self) {
+    u8 result;
+    u16 flags;
+
+    func_06079BCC(self);
+    result = func_06079DEC(self, DAT_060F42D0);
+    if (result == 0x60) {
+        self->posX.val -= self->velocityX;
+    }
+
+    flags = func_06079F60(self, DAT_060F42D8, 3);
+    if (result == 0x80 || (flags & 2)) {
+        func_0607AA40(self, 5, 4, 0);
+        self->ext.bloodyZombie.unk84 = 10;
+    } else if (--self->ext.bloodyZombie.unk98 == 0) {
+        func_0607AA40(self, 4, 3, 0);
+        self->ext.bloodyZombie.unk84 = 31;
+    }
+}
 
 // EntitySkeleton
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EB9EC, func_060EB9EC);

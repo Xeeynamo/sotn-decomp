@@ -6,7 +6,27 @@
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60DC040, func_060DC040);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60DC1A8, func_060DC1A8);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60DC318, func_060DC318);
-INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60DC418, func_060DC418);
+void func_060DC418(Entity* self) {
+    SpriteObject* sprite;
+
+    if (self->step == 0) {
+        TekiInit(self, 5);
+        self->step++;
+        sprite = CreateSpriteObject(
+            g_Stage16SpriteBank16.allocationIndex, g_Stage16SpriteBank16.flags,
+            g_Stage16SpriteBank16.images, 1);
+        self->unk0 = sprite;
+        if (self->params == 0) {
+            self->animCurFrame = 10;
+        } else {
+            self->animCurFrame = 5;
+        }
+        func_0600AFA8(sprite, g_Stage16SpriteBank16Frames[self->animCurFrame]);
+        sprite->zPriority = 0x6A;
+        self->step = 0x100;
+        func_06079BB4(self);
+    }
+}
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60DC4C0, func_060DC4C0);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60DC60C, func_060DC60C);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60DC734, func_060DC734);
@@ -47,7 +67,16 @@ INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E1434, func_060E1434);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E17EC, func_060E17EC);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E1928, func_060E1928);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E25F4, func_060E25F4);
-INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E270C, func_060E270C);
+u16 func_060E270C(s32 minX, s32 maxX) {
+    u16 standing;
+
+    g_Player.unk7A = 1;
+    if (PLAYER.step != 0 || (standing = PLAYER.step_s) != 1 ||
+        PLAYER.posX.i.hi < minX || PLAYER.posX.i.hi > maxX) {
+        standing = 0;
+    }
+    return standing;
+}
 void func_060E2750(void) {
     g_Player.padSim = PAD_UP;
     g_Player.demo_timer = 1;

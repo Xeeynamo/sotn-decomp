@@ -46,6 +46,9 @@ void InitializeEntity(u16 arg0[]);
 void PlaySfxPositional(s32 sfxId);
 void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity);
 void SetStep(u8 step);
+void PlaySfx(s32 sfxId);
+void FreePrimitives(s32 primIndex);
+void SyncSpriteObjectPosUnchecked(Entity* self, s16* offset);
 void DestroyEntity(Entity* entity);
 
 void func_0600AFA8(SpriteObject*, SaturnSpriteFrameHeader*);
