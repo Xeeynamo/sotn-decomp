@@ -32,9 +32,9 @@ extern EInit g_EInitBreakable;
 extern EInit g_EInitInteractable;
 extern EInit g_EInitParticle;
 
-static AnimateEntityFrame anim1[] = {
-    {4, 1}, {4, 2}, POSE_LOOP(0)};
-static AnimateEntityFrame anim2[] = {{4, 14}, {4, 15}, {4, 16}, {4, 17}, POSE_LOOP(0)};
+static AnimateEntityFrame anim1[] = {{4, 1}, {4, 2}, POSE_LOOP(0)};
+static AnimateEntityFrame anim2[] = {
+    {4, 14}, {4, 15}, {4, 16}, {4, 17}, POSE_LOOP(0)};
 static AnimateEntityFrame anim3[] = {
     {5, 1}, {5, 2}, {5, 3}, {5, 4}, POSE_LOOP(0)};
 static AnimateEntityFrame anim4[] = {
@@ -43,34 +43,34 @@ static AnimateEntityFrame anim5[] = {
     {5, 9}, {5, 10}, {5, 11}, {5, 12}, POSE_LOOP(0)};
 static AnimateEntityFrame anim6[] = {
     {5, 13}, {5, 14}, {5, 15}, {5, 16}, POSE_LOOP(0)};
-static AnimateEntityFrame anim7[] = {
-    {5, 17}, {5, 18}, {5, 19}, POSE_LOOP(0)};
+static AnimateEntityFrame anim7[] = {{5, 17}, {5, 18}, {5, 19}, POSE_LOOP(0)};
 static AnimateEntityFrame anim8[] = {{5, 23}, POSE_LOOP(0)};
 static AnimateEntityFrame anim9[] = {{5, 22}, POSE_LOOP(0)};
 static AnimateEntityFrame anim10[] = {
     {5, 20}, {-1, -1}, {5, 21}, {5, 21}, POSE_END};
 static AnimateEntityFrame* animations[] = {
-    anim1, // params 0x0000-0x0FFF
-    anim2,                   // params 0x1000-0x1FFF
-    anim3,        // params 0x2000-0x2FFF
-    anim4,       // params 0x3000-0x3FFF
-    anim5,       // params 0x4000-0x4FFF
-    anim6,                // params 0x5000-0x5FFF
-    anim7,        // params 0x6000-0x6FFF
-    anim8,                    // params 0x7000-0x7FFF
-    anim9,                    // params 0x8000-0x8FFF
-    anim10,                   // params 0x9000-0x9FFF
+    anim1,  // params 0x0000-0x0FFF
+    anim2,  // params 0x1000-0x1FFF
+    anim3,  // params 0x2000-0x2FFF
+    anim4,  // params 0x3000-0x3FFF
+    anim5,  // params 0x4000-0x4FFF
+    anim6,  // params 0x5000-0x5FFF
+    anim7,  // params 0x6000-0x6FFF
+    anim8,  // params 0x7000-0x7FFF
+    anim9,  // params 0x8000-0x8FFF
+    anim10, // params 0x9000-0x9FFF
 };
 static u8 hitbox_heights[] = {8, 8, 40, 24, 16, 16, 8, 8, 8, 8, 8, 0};
 static u8 explosion_types[] = {
     EXPLOSION_SMALL,          EXPLOSION_SMALL,
     EXPLOSION_SMALL_MULTIPLE, EXPLOSION_SMALL_MULTIPLE,
     EXPLOSION_SMALL_MULTIPLE, EXPLOSION_SMALL_MULTIPLE,
-    EXPLOSION_SMALL, EXPLOSION_SMALL_MULTIPLE,
+    EXPLOSION_SMALL,          EXPLOSION_SMALL_MULTIPLE,
     EXPLOSION_SMALL_MULTIPLE, EXPLOSION_SMALL_MULTIPLE};
 static u16 palettes[] = {
-    PAL_NULL,      PAL_BREAKABLE_DEBRIS,      PAL_BREAKABLE, PAL_BREAKABLE, PAL_BREAKABLE,
-    PAL_BREAKABLE, PAL_BREAKABLE, PAL_BREAKABLE, PAL_BREAKABLE, PAL_BREAKABLE};
+    PAL_NULL,      PAL_BREAKABLE_DEBRIS, PAL_BREAKABLE, PAL_BREAKABLE,
+    PAL_BREAKABLE, PAL_BREAKABLE,        PAL_BREAKABLE, PAL_BREAKABLE,
+    PAL_BREAKABLE, PAL_BREAKABLE};
 static u16 anim_sets[] = {
     ANIMSET_DRA(3),        ANIMSET_OVL(9),        OVL_BREAKABLE_ANIMSET,
     OVL_BREAKABLE_ANIMSET, OVL_BREAKABLE_ANIMSET, OVL_BREAKABLE_ANIMSET,
@@ -78,11 +78,16 @@ static u16 anim_sets[] = {
     OVL_BREAKABLE_ANIMSET};
 static u16 unk_5A[] = {0, 87, 91, 91, 91, 91, 91, 91, 91, 91};
 static u8 blend_modes[] = {
-    BLEND_SUB | BLEND_TRANSP | BLEND_ADD, BLEND_TRANSP | BLEND_ADD,
-    BLEND_TRANSP | BLEND_ADD, BLEND_TRANSP | BLEND_ADD,
-    BLEND_TRANSP | BLEND_ADD, BLEND_TRANSP | BLEND_ADD,
-    BLEND_TRANSP | BLEND_ADD, BLEND_TRANSP | BLEND_ADD,
-    BLEND_TRANSP | BLEND_ADD, BLEND_TRANSP | BLEND_ADD};
+    BLEND_SUB | BLEND_TRANSP | BLEND_ADD,
+    BLEND_TRANSP | BLEND_ADD,
+    BLEND_TRANSP | BLEND_ADD,
+    BLEND_TRANSP | BLEND_ADD,
+    BLEND_TRANSP | BLEND_ADD,
+    BLEND_TRANSP | BLEND_ADD,
+    BLEND_TRANSP | BLEND_ADD,
+    BLEND_TRANSP | BLEND_ADD,
+    BLEND_TRANSP | BLEND_ADD,
+    BLEND_TRANSP | BLEND_ADD};
 static u16 hitbox_offsets_y[] = {0, 0, -24, -16, 0, 0, 0, 0, 0, 0, 0, 0};
 
 // The first 5 elements are used with the tall candelabra and the last 5 are
@@ -114,7 +119,7 @@ void EntityBreakable(Entity* self) {
             self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
             if (self->primIndex == -1) {
                 DestroyEntity(self);
-                return; 
+                return;
             }
             self->flags |= FLAG_HAS_PRIMS;
             prim = &g_PrimBuf[self->primIndex];

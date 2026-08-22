@@ -9,5 +9,5 @@
     {ANIMSET_OVL(0xB), 0x0057, 0x0003, DRAW_TPAGE | DRAW_TPAGE2, puff_anim_two}
 #define PUFF_PARAMS_3                                                          \
     {ANIMSET_DRA(0xE), 0x0079, 0x0004, DRAW_TPAGE | DRAW_TPAGE2, puff_anim_one}
-    
+
 #include "../e_explosion_puff_opaque.h"
