@@ -57,14 +57,11 @@ Primitive* StainedGlassRecurseDepth(
 
 #ifdef VERSION_PSP
         gte_stsxy((long*)tempPrim + sizeof(uvPair) * 6);
-        gte_ldv0(&points[index0]);
-        gte_ldv1(&points[index1]);
-        gte_ldv2(&points[index2]);
 #else
         gte_stsxy((long*)&tempPrim->x3);
-        gte_ldv3(&points[index0], &points[index1], &points[index2]);
 #endif
 
+        gte_ldv3(&points[index0], &points[index1], &points[index2]);
         gte_rtpt();
         gte_stsxy3_gt3(tempPrim);
 

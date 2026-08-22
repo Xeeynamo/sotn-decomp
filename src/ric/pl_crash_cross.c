@@ -279,13 +279,7 @@ void RicEntityCrashCrossBeam(Entity* self) {
         psp_s7 = vectors_ptr[0];
         psp_s6 = vectors_ptr[1];
         psp_s4 = vectors_ptr[3];
-#if defined(VERSION_PSP)
-        gte_ldv0(psp_s7);
-        gte_ldv1(psp_s6);
-        gte_ldv2(psp_s4);
-#else
         gte_ldv3(psp_s7, psp_s6, psp_s4);
-#endif
         gte_rtpt();
         temp_a3 = vectors_ptr[2];
         prim->type = PRIM_GT4;
