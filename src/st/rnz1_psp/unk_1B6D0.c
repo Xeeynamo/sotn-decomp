@@ -4,9 +4,3 @@
 INCLUDE_ASM("st/rnz1_psp/nonmatchings/rnz1_psp/unk_1B6D0", EntityBossDoorTrigger);
 
 INCLUDE_ASM("st/rnz1_psp/nonmatchings/rnz1_psp/unk_1B6D0", EntityBossDoors);
-
-INCLUDE_ASM("st/rnz1_psp/nonmatchings/rnz1_psp/unk_1B6D0", EntityBreakable);
-
-INCLUDE_ASM("st/rnz1_psp/nonmatchings/rnz1_psp/unk_1B6D0", EntityBreakableDebris);
-
-INCLUDE_ASM("st/rnz1_psp/nonmatchings/rnz1_psp/unk_1B6D0", EntityWaterForeground);
