@@ -8,6 +8,7 @@ g_EInitSpawner = 0x80180B34;
 g_EInitInteractable = 0x80180B40;
 g_EInitUnkId13 = 0x80180B4C;
 g_EInitCommon = 0x80180B64;
+g_EInitEnvironment = 0x80180BA0;
 g_EInitDarkwingBat = 0x80180BB8;
 g_EInitCloakedknight = 0x80180BD0;
 g_EInitCloakedKnightAura = 0x80180BDC;
