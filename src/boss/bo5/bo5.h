@@ -7,7 +7,10 @@
 #define STAGE_IS_BO5
 
 enum Palettes {
-    PAL_NONE,
+    PAL_NONE = 0,
+    PAL_CASTLE_WALL_1 = 0x74,
+    PAL_BACKGROUND_SKY_LAND = 0xC5,
+    PAL_CASTLE_WALL_2 = 0xC8,
 };
 
 typedef enum EntityID {
