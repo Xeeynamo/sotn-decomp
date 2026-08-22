@@ -139,13 +139,7 @@ void EntityStainedGlass(Entity* self) {
                     (u8*)SP(0));
                 glassPrim->drawMode = DRAW_HIDE;
             }
-#ifdef VERSION_PSP
-            gte_ldv0(&glass_points_0);
-            gte_ldv1(&glass_points_1);
-            gte_ldv2(&glass_points_2);
-#else
             gte_ldv3(&glass_points_0, &glass_points_1, &glass_points_2);
-#endif
             gte_rtpt();
             gte_stsxy3_gt3(glassPrim);
             gte_ldv0(&glass_points_3);
@@ -194,13 +188,7 @@ void EntityStainedGlass(Entity* self) {
                 LOW(lightPrim->r2) = LOW(lightPrim->r0);
                 LOW(lightPrim->r3) = LOW(lightPrim->r0);
                 lightPrim->type = PRIM_GT4;
-#ifdef VERSION_PSP
-                gte_ldv0(&light_points_0);
-                gte_ldv1(&light_points_1);
-                gte_ldv2(&light_points_2);
-#else
                 gte_ldv3(&light_points_0, &light_points_1, &light_points_2);
-#endif
                 gte_rtpt();
                 gte_stsxy3_gt3(lightPrim);
                 gte_ldv0(&light_points_3);
@@ -438,16 +426,12 @@ void EntityStainedGlassBackground(Entity* self) {
                 prim->drawMode = DRAW_COLORS;
                 prim = prim->next;
             } else {
-#ifdef VERSION_PSP
-                gte_ldv0(&bg_points_0);
-                gte_ldv1(&bg_points_1);
-                gte_ldv2(&bg_points_2);
+                gte_ldv3(&bg_points_0, &bg_points_1, &bg_points_2);
                 gte_rtpt();
+#ifdef VERSION_PSP
                 gte_stsxy3(&rect2.w, &rect2.x, &rect1.w);
                 if (rect1.h >= 0) {
 #else
-                gte_ldv3(&bg_points_0, &bg_points_1, &bg_points_2);
-                gte_rtpt();
                 gte_stsxy3(&rect1.x, &rect1.w, &rect2.x);
                 if (rect2.y >= 0) {
 #endif
