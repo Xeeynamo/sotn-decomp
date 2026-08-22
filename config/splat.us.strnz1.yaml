@@ -80,7 +80,7 @@ segments:
       - [0x26290, .rodata, unk_3BE58]
       - [0x262A8, .rodata, prim_helpers]
       - [0x262B0, .rodata, e_life_up]
-      - [0x262CC, c, unk_262CC]
+      - [0x262CC, c, e_room_bg]
       - [0x263AC, c, e_lock_camera]
       - [0x26568, c, unk_26568]
       - [0x26D08, c, e_explosion_puff_opaque]

@@ -69,7 +69,7 @@ segments:
       - [0x1B398, c, rnz1_psp/st_init]
       - [0x1B6D0, c, rnz1_psp/unk_1B6D0]
       - [0x1CCB0, c, rnz1_psp/e_clouds]
-      - [0x1D200, c, rnz1/unk_262CC]
+      - [0x1D200, c, rnz1/e_room_bg]
       - [0x1D310, c, rnz1/e_lock_camera]
       - [0x1D570, c, rnz1_psp/e_explosion_puff_opaque]
       - [0x1DC68, c, rnz1_psp/e_spikes]
