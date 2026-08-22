@@ -55,7 +55,7 @@ s32 E_ID(BREAKABLE_DEBRIS);
 s32 E_ID(VALHALLA_KNIGHT);
 s32 E_ID(UNK_3F);
 s32 E_ID(UNK_40);
-s32 E_ID(UNK_41);
+s32 E_ID(BOMB_KNIGHT);
 s32 E_ID(UNK_42);
 s32 E_ID(UNK_43);
 s32 E_ID(UNK_44);
@@ -64,7 +64,7 @@ s32 E_ID(UNK_46);
 s32 E_ID(UNK_47);
 s32 E_ID(UNK_48);
 s32 E_ID(UNK_49);
-s32 E_ID(UNK_4A);
+s32 E_ID(CRUSHER);
 
 void InitEntityIds(void) {
     E_ID(BACKGROUND_BLOCK) = E_BACKGROUND_BLOCK;
@@ -115,7 +115,7 @@ void InitEntityIds(void) {
     E_ID(VALHALLA_KNIGHT) = E_VALHALLA_KNIGHT;
     E_ID(UNK_3F) = E_UNK_3F;
     E_ID(UNK_40) = E_UNK_40;
-    E_ID(UNK_41) = E_UNK_41;
+    E_ID(BOMB_KNIGHT) = E_BOMB_KNIGHT;
     E_ID(UNK_42) = E_UNK_42;
     E_ID(UNK_43) = E_UNK_43;
     E_ID(UNK_44) = E_UNK_44;
@@ -124,7 +124,7 @@ void InitEntityIds(void) {
     E_ID(UNK_47) = E_UNK_47;
     E_ID(UNK_48) = E_UNK_48;
     E_ID(UNK_49) = E_UNK_49;
-    E_ID(UNK_4A) = E_UNK_4A;
+    E_ID(CRUSHER) = E_CRUSHER;
 }
 
 void OvlLoad(void) {
