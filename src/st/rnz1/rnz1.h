@@ -13,6 +13,7 @@ enum Palettes {
     PAL_WALL_CANDELABRA_A = 0x228,
     PAL_WALL_CANDELABRA_B = 0x229,
     PAL_BREAKABLE = 0x22A,
+    PAL_PUFF_OPAQUE_OFFSET = 0x2E0,
 };
 
 typedef enum EntityID {
@@ -38,7 +39,7 @@ typedef enum EntityID {
     E_UNK_ID13,               // EntityUnkId13
     E_EXPLOSION_VARIANTS,     // EntityExplosionVariants
     E_GREY_PUFF,              // EntityGreyPuff
-    E_EXPLOSION_PUFF_OPAQUE,  // EntityExplosionPuffOpaque
+    E_EXPLODE_PUFF_OPAQUE,  // EntityExplosionPuffOpaque
     E_CLOUDS,                 // EntityClouds
     E_BACKGROUND_GEARS,       // EntityBackgroundGears
     E_GEAR_SIDEWAYS_LARGE,    // EntityGearSidewaysLarge
