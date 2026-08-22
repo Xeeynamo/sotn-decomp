@@ -9,6 +9,7 @@
 #include "sattypes.h"
 #include <saturn_player.h>
 #include <saturn_sprite.h>
+#include "shared_sprite_banks.h"
 
 enum MariaBlueprints {
     MARIA_BP_SKID_SMOKE,
@@ -338,6 +339,10 @@ extern AnimationFrame g_MariaEntity060BD0D0Anim1[];
 extern AnimationFrame g_MariaEntity060BD0D0Anim2[];
 extern s32 MariaCheckFacing(void);
 extern int MariaCheckInput(s32 checks);
+s32 func_060A926C();
+extern AnimationFrame g_MariaAnimWalkStopFacingBitSet[];
+extern AnimationFrame g_MariaAnimWalkStopFacingBitClear[];
+extern AnimationFrame DAT_060C2408;
 /* End moved declarations */
 
 #endif

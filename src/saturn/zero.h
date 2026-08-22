@@ -188,6 +188,8 @@ extern SaturnStageFileRecord g_StageFileRecords[];
 extern s32 DAT_0605c11a;
 extern u16 DAT_0605cea0;
 extern SaturnSpriteResource g_EntitySpriteBank14;
+extern SaturnSpriteResource g_EntitySpriteBank01;
+extern SaturnSpriteFrameHeader* DAT_06045E14[];
 extern EntityEntry g_EntityNoopEntry;
 extern SaturnSpriteFrameHeader* g_SaturnSharedOpaquePuffFrames1[15];
 extern SaturnSpriteFrameHeader* g_SaturnSharedOpaquePuffFrames0[14];

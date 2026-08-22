@@ -209,6 +209,7 @@ extern u32 g_SubwpnCrashTimer;
 extern u16 D_80155528[];
 extern AnimationFrame ric_anim_stop_run[];
 extern s32 D_80154568[];
+extern AnimationFrame anim_80154E38[];
 /* End moved declarations */
 
 #endif
