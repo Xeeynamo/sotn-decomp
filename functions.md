@@ -2179,7 +2179,7 @@
 | rno3       | func_pspeu_09255FB0                |       35 |          4 |        |       |     |
 | rno4       | RNO4_Load                          |       35 |          4 |        |       |     |
 | rnz0       | func_pspeu_09256B38                |       35 |          4 |        |       |     |
-| rnz1       | RNZ1_Load                          |       35 |          4 |        |       |     |
+| rnz1       | func_pspeu_09252CD8                |       35 |          4 |        |       |     |
 | rtop       | func_pspeu_09247898                |       35 |          4 |        |       |     |
 | rwrp       | func_pspeu_09244D08                |       35 |          4 |        |       |     |
 | st0        | func_pspeu_09246B10                |       35 |          4 |        |       |     |
@@ -4607,8 +4607,8 @@
 | rno4       | ReplaceBreakableWithItemDrop       |       71 |          7 |        |       |     |
 | rnz0       | func_pspeu_09246250                |       71 |          7 |        |       |     |
 | rnz0       | func_pspeu_09253E88                |       71 |          7 |        |       |     |
-| rnz1       | ReplaceBreakableWithItemDrop       |       71 |          7 |        |       |     |
 | rnz1       | CollectGold                        |       71 |          7 |        |       |     |
+| rnz1       | ReplaceBreakableWithItemDrop       |       71 |          7 |        |       |     |
 | rtop       | func_pspeu_0923E428                |       71 |          7 |        |       |     |
 | rtop       | func_pspeu_09246F28                |       71 |          7 |        |       |     |
 | rwrp       | func_pspeu_0923CC80                |       71 |          7 |        |       |     |
@@ -7223,7 +7223,7 @@
 | no0        | func_pspeu_0924C9B0                |      180 |         19 |        |       |     |
 | no0        | func_pspeu_0924F1F8                |      180 |         23 |        |       |     |
 | rbo0       | func_pspeu_0923FB08                |      180 |         26 |        |       |     |
-| rnz1       | InitEntityIds                      |      181 |          1 |        |       |     |
+| rnz1       | func_pspeu_09252A18                |      181 |          1 |        |       |     |
 | top        | func_pspeu_09248F70                |      181 |         17 | Yes    |       |     |
 | lib        | func_psp_09255D78                  |      181 |         19 |        |       |     |
 | mar        | EntityStoneDoor                    |      181 |         23 |        |       |     |
@@ -9168,6 +9168,7 @@
 | rtop       | func_pspeu_09248B88                |      567 |         36 |        |       |     |
 | top        | func_pspeu_09249B38                |      567 |         36 |        |       |     |
 | rnz0       | func_pspeu_09247840                |      568 |         67 | Yes    |       |     |
+| rnz1       | EntityEquipItemDrop                |      568 |         67 | Yes    |       |     |
 | dra        | func_psp_09103318                  |      570 |         35 |        |       |     |
 | bo4        | MarCheckFloor                      |      572 |         55 |        |       |     |
 | rbo5       | MarCheckFloor                      |      572 |         55 |        |       |     |
@@ -9227,7 +9228,6 @@
 | rno2       | func_pspeu_09249E60                |      583 |         67 | Yes    |       |     |
 | rno3       | func_pspeu_09246618                |      583 |         67 | Yes    |       |     |
 | rno4       | func_pspeu_09246450                |      583 |         67 | Yes    |       |     |
-| rnz1       | EntityEquipItemDrop                |      583 |         67 | Yes    |       |     |
 | rtop       | func_pspeu_0923FA18                |      583 |         67 | Yes    |       |     |
 | rwrp       | func_pspeu_0923E270                |      583 |         67 | Yes    |       |     |
 | top        | func_pspeu_092406A0                |      583 |         67 | Yes    |       |     |
@@ -9590,6 +9590,7 @@
 | are        | func_pspeu_0925E2B0                |      945 |        172 |        |       |     |
 | rno1       | func_us_801A700C                   |      948 |         61 |        |       |     |
 | rnz0       | func_pspeu_09246728                |      955 |        120 | Yes    |       |     |
+| rnz1       | EntityPrizeDrop                    |      955 |        120 | Yes    |       |     |
 |            | func_092EA968                      |      963 |         44 |        |       |     |
 | main       | sce_stub                           |      964 |        191 |        |       |     |
 | lib        | func_psp_09239650                  |      965 |        124 | Yes    |       |     |
@@ -9637,7 +9638,6 @@
 | rno2       | func_pspeu_09248D48                |      972 |        120 | Yes    |       |     |
 | rno3       | func_pspeu_09245500                |      972 |        120 | Yes    |       |     |
 | rno4       | func_pspeu_09245338                |      972 |        120 | Yes    |       |     |
-| rnz1       | EntityPrizeDrop                    |      972 |        120 | Yes    |       |     |
 | rtop       | func_pspeu_0923E900                |      972 |        120 | Yes    |       |     |
 | rwrp       | func_pspeu_0923D158                |      972 |        120 | Yes    |       |     |
 | top        | func_pspeu_0923F588                |      972 |        120 | Yes    |       |     |
@@ -9763,6 +9763,7 @@
 | st0        | func_pspeu_09244A80                |     1164 |         88 | Yes    |       |     |
 | np3        | EntityRelicOrb                     |     1166 |         87 | Yes    |       |     |
 | rnz0       | func_pspeu_09248098                |     1166 |         87 | Yes    |       |     |
+| rnz1       | EntityRelicOrb                     |     1166 |         87 | Yes    |       |     |
 | no3        | func_pspeu_092501C0                |     1166 |        174 | Yes    |       |     |
 | np3        | EntityMerman                       |     1166 |        174 | Yes    |       |     |
 | sel        | func_psp_09240B58                  |     1173 |        142 | Yes    |       |     |
@@ -9813,7 +9814,6 @@
 | rno2       | func_pspeu_0924A6B8                |     1185 |         87 | Yes    |       |     |
 | rno3       | func_pspeu_09246E70                |     1185 |         87 | Yes    |       |     |
 | rno4       | func_pspeu_09246CA8                |     1185 |         87 | Yes    |       |     |
-| rnz1       | EntityRelicOrb                     |     1185 |         87 | Yes    |       |     |
 | rtop       | func_pspeu_09240270                |     1185 |         87 | Yes    |       |     |
 | rwrp       | func_pspeu_0923EAC8                |     1185 |         87 | Yes    |       |     |
 | top        | func_pspeu_09240EF8                |     1185 |         87 | Yes    |       |     |
