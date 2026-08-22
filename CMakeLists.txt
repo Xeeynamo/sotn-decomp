@@ -6,6 +6,7 @@ set(CMAKE_C_STANDARD 17)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+option(ENABLE_SATURN_STAGES "Build the six Saturn-area connectors" OFF)
 
 if (WIN32)
     set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
@@ -70,6 +71,46 @@ add_custom_command(
     COMMENT "Building host sotn_str")
 add_custom_target(sotn_str_host DEPENDS "${SOTN_STR_BIN}")
 
+if(ENABLE_SATURN_STAGES)
+    find_program(GO_BIN go REQUIRED)
+    file(GLOB_RECURSE SATURN_ASSETS_SOURCES CONFIGURE_DEPENDS
+        "${CMAKE_SOURCE_DIR}/tools/saturn/assets/src/*.rs")
+    file(GLOB_RECURSE SOTN_ASSETS_SOURCES CONFIGURE_DEPENDS
+        "${CMAKE_SOURCE_DIR}/tools/sotn-assets/*.go")
+    list(APPEND SOTN_ASSETS_SOURCES
+        "${CMAKE_SOURCE_DIR}/tools/sotn-assets/go.mod"
+        "${CMAKE_SOURCE_DIR}/tools/sotn-assets/go.sum")
+    set(SATURN_ASSETS_TARGET_DIR
+        "${CMAKE_BINARY_DIR}/saturn_assets")
+    set(SATURN_ASSETS_BIN
+        "${SATURN_ASSETS_TARGET_DIR}/release/saturn-assets${CMAKE_EXECUTABLE_SUFFIX}")
+    add_custom_command(
+        OUTPUT "${SATURN_ASSETS_BIN}"
+        COMMAND ${CMAKE_COMMAND} -E env
+                "CARGO_TARGET_DIR=${SATURN_ASSETS_TARGET_DIR}"
+                "${CARGO_BIN}" build --release
+                --manifest-path
+                "${CMAKE_SOURCE_DIR}/tools/saturn/assets/Cargo.toml"
+        DEPENDS
+            "${CMAKE_SOURCE_DIR}/tools/saturn/assets/Cargo.toml"
+            "${CMAKE_SOURCE_DIR}/tools/saturn/assets/Cargo.lock"
+            ${SATURN_ASSETS_SOURCES}
+        VERBATIM
+        COMMENT "Building Rust Saturn asset tool")
+    set(SOTN_ASSETS_HOST_BIN
+        "${CMAKE_BINARY_DIR}/sotn_assets_host/sotn-assets${CMAKE_EXECUTABLE_SUFFIX}")
+    add_custom_command(
+        OUTPUT "${SOTN_ASSETS_HOST_BIN}"
+        COMMAND ${CMAKE_COMMAND} -E env
+                "GOCACHE=${CMAKE_BINARY_DIR}/sotn_assets_host/cache"
+                "${GO_BIN}" build -o "${SOTN_ASSETS_HOST_BIN}"
+                ./tools/sotn-assets
+        DEPENDS ${SOTN_ASSETS_SOURCES}
+        WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+        VERBATIM
+        COMMENT "Building host sotn-assets")
+endif()
+
 set(_sotn_str_args "${SOTN_STR_BIN};cc")
 
 # Allows to run the sotn_str pre-compiler only to selected targets
@@ -132,6 +173,7 @@ set(SOURCE_FILES_PC
     src/pc/stubs.c
     src/pc/sotn.c
     src/pc/replay.c
+    src/pc/warp.c
     src/pc/pc.c
     src/pc/cutscene_pc.c
     src/pc/io.c
@@ -736,28 +778,54 @@ set(SOURCE_FILES_STAGE_NZ0
 
 set(SOURCE_FILES_STAGE_RNO0
     src/pc/stages/stage_rno0.c
+    src/st/rno0/create_entity.c
+    src/st/rno0/e_misc.c
     src/st/rno0/layers.c
     src/st/rno0/palette_def.c
     src/st/rno0/sprite_banks.c
     src/st/rno0/graphics_banks.c
     src/st/rno0/stage_data.c
     src/st/rno0/tilemaps.c
+    src/st/rno0/e_red_door.c
+    src/st/rno0/e_red_door_tiles.c
+    src/st/rno0/e_room_fg.c
+    src/st/rno0/st_common.c
+    src/st/rno0/st_update.c
+    src/st/rno0/gen/e_laydef.c
+    src/st/rno0/gen/e_layout.c
     src/st/rno0/gen/rooms.c
     src/st/rno0/gen/us/sprites.c)
 
 set(SOURCE_FILES_STAGE_RNO4
     src/pc/stages/stage_rno4.c
+    src/st/rno4/create_entity.c
+    src/st/rno4/e_red_door.c
+    src/st/rno4/e_red_door_tiles.c
+    src/st/rno4/e_room_fg.c
+    src/st/rno4/st_common.c
+    src/st/rno4/st_update.c
+    src/st/rno4/gen/e_laydef.c
+    src/st/rno4/gen/e_layout.c
     src/st/rno4/gen/rooms.c
     src/st/rno4/stage_data.c)
 
 set(SOURCE_FILES_STAGE_RNO3
     src/pc/stages/stage_rno3.c
+    src/st/rno3/create_entity.c
+    src/st/rno3/e_misc.c
     src/st/rno3/layers.c
     src/st/rno3/palette_def.c
     src/st/rno3/sprite_banks.c
     src/st/rno3/graphics_banks.c
     src/st/rno3/stage_data.c
     src/st/rno3/tilemaps.c
+    src/st/rno3/e_red_door.c
+    src/st/rno3/e_red_door_tiles.c
+    src/st/rno3/e_room_fg.c
+    src/st/rno3/st_common.c
+    src/st/rno3/st_update.c
+    src/st/rno3/gen/e_laydef.c
+    src/st/rno3/gen/e_layout.c
     src/st/rno3/gen/us/rooms.c
     src/st/rno3/gen/us/sprites.c)
 
@@ -1264,6 +1332,107 @@ add_overlay(no3 ${SOURCE_FILES_STAGE_NO3})
 add_overlay(lib ${SOURCE_FILES_STAGE_LIB})
 add_overlay(mad ${SOURCE_FILES_STAGE_MAD})
 add_overlay(bo1 ${SOURCE_FILES_BOSS_BO1})
+
+if(ENABLE_SATURN_STAGES)
+    set(SATURN_STITCH_DIR "${CMAKE_BINARY_DIR}/saturn_stitches")
+
+    function(add_saturn_stitch stage command prg map assets tileset rooms layers layouts)
+        set(output "${SATURN_STITCH_DIR}/${stage}.stamp")
+        set(asset_dir "${SATURN_STITCH_DIR}/assets/${stage}")
+        set(source_dir "${SATURN_STITCH_DIR}/src/${stage}")
+        get_filename_component(layout_dir "${layouts}" DIRECTORY)
+        if(layout_dir STREQUAL "")
+            set(layout_gen_dir "${source_dir}/gen")
+        else()
+            set(layout_gen_dir "${source_dir}/gen/${layout_dir}")
+        endif()
+        set(packed_stamp "${source_dir}/packed.stamp")
+        set(packed_sources
+            "${source_dir}/gen/${rooms}.c"
+            "${layout_gen_dir}/e_laydef.c"
+            "${layout_gen_dir}/e_layout.c")
+        file(GLOB_RECURSE source_assets CONFIGURE_DEPENDS "${assets}/*")
+        file(GLOB entity_layout_assets CONFIGURE_DEPENDS
+            "${assets}/entity_layouts.json"
+            "${assets}/us/entity_layouts.json"
+            "${assets}/../entity_layouts.json")
+        add_custom_command(
+            OUTPUT "${output}"
+            COMMAND "${SATURN_ASSETS_BIN}" map "${command}"
+                    "${prg}" "${map}" "${assets}" "${tileset}" "${output}"
+            DEPENDS "${SATURN_ASSETS_BIN}" "${prg}" "${map}" "${tileset}"
+                    ${source_assets} ${entity_layout_assets}
+            VERBATIM
+            COMMENT "Generating ${stage} Saturn-to-PSX stitch")
+        add_custom_command(
+            OUTPUT "${packed_stamp}" ${packed_sources}
+            COMMAND "${SOTN_ASSETS_HOST_BIN}" pack-stage
+                    "${stage}" "${asset_dir}" "${source_dir}"
+                    "${rooms}" "${layers}" "${layouts}"
+            DEPENDS "${SOTN_ASSETS_HOST_BIN}" "${output}"
+            VERBATIM
+            COMMENT "Packing ${stage} stitched stage assets")
+        set_source_files_properties(${packed_sources} PROPERTIES GENERATED TRUE)
+        add_custom_target(${stage}_stitch DEPENDS "${output}" "${packed_stamp}")
+        add_dependencies(${stage} ${stage}_stitch)
+        add_dependencies(${PROJECT_NAME} ${stage}_stitch)
+        get_target_property(stage_sources ${stage} SOURCES)
+        list(FILTER stage_sources EXCLUDE REGEX
+            "/gen/(us/)?(rooms|e_laydef|e_layout)\\.c$")
+        set_property(TARGET ${stage} PROPERTY SOURCES "${stage_sources}")
+        target_sources(${stage} PRIVATE ${packed_sources})
+        target_include_directories(${stage} BEFORE PRIVATE
+            "${source_dir}" "${CMAKE_SOURCE_DIR}/src/st/${stage}")
+        target_compile_definitions(${stage} PRIVATE ENABLE_SATURN_STAGES)
+    endfunction()
+
+    add_saturn_stitch(
+        np3 stitch-np3
+        "${CMAKE_SOURCE_DIR}/disks/saturn/STAGE_01.PRG"
+        "${CMAKE_SOURCE_DIR}/disks/saturn/STAGE_01.MAP"
+        "${CMAKE_SOURCE_DIR}/assets/st/np3"
+        "${CMAKE_SOURCE_DIR}/disks/us/ST/NP3/F_NP3.BIN"
+        rooms layers us/entity_layouts)
+    add_saturn_stitch(
+        rno3 stitch-rno3
+        "${CMAKE_SOURCE_DIR}/disks/saturn/RSTAGE01.PRG"
+        "${CMAKE_SOURCE_DIR}/disks/saturn/RSTAGE01.MAP"
+        "${CMAKE_SOURCE_DIR}/assets/st/rno3"
+        "${CMAKE_SOURCE_DIR}/disks/us/ST/RNO3/F_RNO3.BIN"
+        us/rooms us/layers entity_layouts)
+    add_saturn_stitch(
+        no0 stitch-no0
+        "${CMAKE_SOURCE_DIR}/disks/saturn/STAGE_03.PRG"
+        "${CMAKE_SOURCE_DIR}/disks/saturn/STAGE_03.MAP"
+        "${CMAKE_SOURCE_DIR}/assets/st/no0"
+        "${CMAKE_SOURCE_DIR}/disks/us/ST/NO0/F_NO0.BIN"
+        rooms layers entity_layouts)
+    add_saturn_stitch(
+        no4 stitch-no4
+        "${CMAKE_SOURCE_DIR}/disks/saturn/STAGE_09.PRG"
+        "${CMAKE_SOURCE_DIR}/disks/saturn/STAGE_9B.MAP"
+        "${CMAKE_SOURCE_DIR}/assets/st/no4"
+        "${CMAKE_SOURCE_DIR}/disks/us/ST/NO4/F_NO4.BIN"
+        rooms layers entity_layouts)
+    add_saturn_stitch(
+        rno0 stitch-rno0
+        "${CMAKE_SOURCE_DIR}/disks/saturn/RSTAGE03.PRG"
+        "${CMAKE_SOURCE_DIR}/disks/saturn/RSTAGE03.MAP"
+        "${CMAKE_SOURCE_DIR}/assets/st/rno0"
+        "${CMAKE_SOURCE_DIR}/disks/us/ST/RNO0/F_RNO0.BIN"
+        rooms layers entity_layouts)
+    add_saturn_stitch(
+        rno4 stitch-rno4
+        "${CMAKE_SOURCE_DIR}/disks/saturn/RSTAGE09.PRG"
+        "${CMAKE_SOURCE_DIR}/disks/saturn/RSTAGE9B.MAP"
+        "${CMAKE_SOURCE_DIR}/assets/st/rno4"
+        "${CMAKE_SOURCE_DIR}/disks/us/ST/RNO4/F_RNO4.BIN"
+        rooms layers entity_layouts)
+
+    target_compile_definitions(${PROJECT_NAME} PRIVATE ENABLE_SATURN_STAGES)
+    target_compile_definitions(${PROJECT_NAME} PRIVATE
+        PC_ASSET_OVERRIDE_DIR="${SATURN_STITCH_DIR}")
+endif()
 
 foreach(id 000 002 007 008 012 034 035 037 040 041 043 045 046 050 051 052)
     add_overlay(w0_${id} src/weapon/w_${id}.c)
