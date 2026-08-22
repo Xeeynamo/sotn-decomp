@@ -34,11 +34,11 @@ typedef enum EntityID {
     E_EXPLOSION_VARIANTS,               // EntityExplosionVariants
     E_GREY_PUFF,                        // EntityGreyPuff
     E_UNK_16,                           // func_us_801A3E04
-    E_UNK_17,                           // func_us_801A269C
-    E_UNK_18,                           // func_us_801A3818
+    E_MINOTAUR,                         // func_us_801A269C
+    E_MINOTAUR_ATTACK_HITBOX,           // EntityMinotaurAttackHitbox
     E_MINOTAUR_FIREBALL,                // EntityMinotaurFireball
     E_MINOTAUR_SPIT_LIQUID,             // EntityMinotaurSpitLiquid
-    E_UNK_1B,                           // func_us_801B385C
+    E_WEREWOLF,                         // func_us_801B385C
     E_WEREWOLF_ATTACK_HITBOX,           // EntityWerewolfAttackHitbox
     E_UNK_1D,                           // func_us_801B503C
     E_WEREWOLF_SPIN_ATTACK_AFTER_IMAGE, // EntityWerewolfSpinAttackAfterImage

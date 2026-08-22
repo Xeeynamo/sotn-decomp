@@ -3836,6 +3836,7 @@ typedef struct {
     /* 0x8D */ u8 : 8;
     /* 0x8E */ u8 : 8;
     /* 0x8F */ u8 : 8;
+    /* 0x90 */ u8 axeThrown;
 } ET_Minotaur;
 
 typedef struct {

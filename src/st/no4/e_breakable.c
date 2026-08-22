@@ -46,77 +46,12 @@ static u16 hitbox_y_offsets[] = {0x0000, 0x0000, 0xFFE8, 0xFFF0, 0x0000,
                                  0x0000, 0x0000, 0x0000, 0x0000, 0x0000};
 
 #ifdef VERSION_PSP
-extern s32 D_psp_E_ID_35;
+extern s32 E_ID(ID_35);
 #endif
 
-void EntityBreakable(Entity* self) {
-    Entity* tempEntity;
-    u16 params;
+#define E_BREAKABLE_RELIC E_ID(ID_35)
 
-    params = self->params >> 0xC;
-    if (!self->step) {
-        InitializeEntity(g_EInitBreakable);
-        self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 0x14;
-        self->blendMode = blend_modes[params];
-        self->hitboxHeight = hitbox_heights[params];
-        self->animSet = anim_sets[params];
-        self->unk5A = unk5a_arr[params];
-        self->palette = palettes[params];
-        self->hitboxOffY = hitbox_y_offsets[params];
-    }
-    AnimateEntity(anims[params], self);
-    if (self->hitParams) {
-        tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-        if (tempEntity != NULL) {
-            CreateEntityFromCurrentEntity(E_EXPLOSION, tempEntity);
-            tempEntity->params = params_arr[params];
-        }
-        switch (params) {
-        case 2:
-        case 3:
-            break;
-
-        case 9:
-            tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
-            if (tempEntity != NULL) {
-                CreateEntityFromCurrentEntity(E_ID(ID_35), tempEntity);
-                tempEntity->params = 0x100;
-            }
-            g_api.PlaySfx(SFX_GLASS_BREAK_E);
-            break;
-
-        case 7:
-            g_api.PlaySfx(SFX_GLASS_BREAK_E);
-            tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
-            if (tempEntity != NULL) {
-                CreateEntityFromEntity(
-                    E_PERSISTENT_ITEM_DROP, self, tempEntity);
-                tempEntity->params = self->params & 0x1FF;
-            }
-            PreventEntityFromRespawning(self);
-            DestroyEntity(self);
-            return;
-
-        case 8:
-            g_api.PlaySfx(SFX_GLASS_BREAK_E);
-            tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
-            if (tempEntity != NULL) {
-                CreateEntityFromEntity(
-                    E_PERSISTENT_ITEM_DROP, self, tempEntity);
-                tempEntity->params = 0x29;
-            }
-            PreventEntityFromRespawning(self);
-            DestroyEntity(self);
-            return;
-
-        default:
-            g_api.PlaySfx(SFX_CANDLE_HIT);
-            break;
-        }
-
-        ReplaceBreakableWithItemDrop(self);
-    }
-}
+#include "../e_breakable_no4.h"
 
 void func_us_801C123C(Entity* self) {
     u32 pad[10];
