@@ -22,8 +22,9 @@ void func_060DC428(Entity* self) {
             g_Stage15SpriteBank16.images, 1);
         self->unk0 = sprite;
         self->animCurFrame = 0x2A;
-        func_0600AFA8(sprite, (SaturnSpriteFrameHeader*)
-                                  g_Stage15SpriteBank16Frames[self->animCurFrame]);
+        func_0600AFA8(sprite,
+                      (SaturnSpriteFrameHeader*)
+                          g_Stage15SpriteBank16Frames[self->animCurFrame]);
         sprite->zPriority = 0x6A;
         self->step = 0x100;
         func_06079BB4(self);
@@ -111,10 +112,10 @@ void func_060DDD94(Entity* self) {
         self->ext.glowParticle.r -= 6;
         self->ext.glowParticle.g -= 6;
         self->ext.glowParticle.b -= 8;
-        prim->unk6 = ((self->ext.glowParticle.b << 10) +
-                      (self->ext.glowParticle.g << 5) +
-                      self->ext.glowParticle.r) -
-                     0x8000;
+        prim->unk6 =
+            ((self->ext.glowParticle.b << 10) +
+             (self->ext.glowParticle.g << 5) + self->ext.glowParticle.r) -
+            0x8000;
     }
 }
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DDE44, func_060DDE44);
@@ -506,9 +507,11 @@ void func_060E9A14(Entity* self, Entity* parts) {
         distance = *(s16*)((char*)table0 + index);
         table1 = (Point16*)((char*)table1 + index);
         angle = table1->y;
-        part->posX.val = self->posX.val + distance * rsin(*rotate + angle) * 0x10;
+        part->posX.val =
+            self->posX.val + distance * rsin(*rotate + angle) * 0x10;
         i += 1;
-        part->posY.val = self->posY.val - distance * rcos(angle + *rotate) * 0x10;
+        part->posY.val =
+            self->posY.val - distance * rcos(angle + *rotate) * 0x10;
         part += 1;
         index += 4;
     } while (i <= 7);
@@ -562,8 +565,7 @@ void func_060EB9AC(Entity* self) {
 
     images = g_Stage15SpriteBank26Images;
     bank = (SaturnSpriteResource*)g_Stage15SpriteBankHumanFaceTree;
-    sprite =
-        CreateSpriteObject(bank->allocationIndex, bank->flags, images, 4);
+    sprite = CreateSpriteObject(bank->allocationIndex, bank->flags, images, 4);
     self->unk0 = sprite;
     sprite->zPriority -= 8;
     self->posY.i.hi += 0x1E;

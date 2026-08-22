@@ -277,7 +277,6 @@ struct Unk {
 
 extern s32 DAT_060F50AC;
 
-
 void func_060E1C08(Entity* self) {
     if (g_pads[0].previous == 0x0800) {
         DAT_060F50AC = 1;
