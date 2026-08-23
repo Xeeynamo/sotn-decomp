@@ -1204,7 +1204,7 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BD474, func_060BD474);
 
 void func_060BD5F0(void) {
     memset(&g_MariaCastleMapState, 0, 4);
-    memcpy(0x002B2000, g_MariaCastleMapBitmap, 0x9600);
+    memcpy(CASTLE_MAP_BITMAP, g_MariaCastleMapBitmap, CASTLE_MAP_BITMAP_SIZE);
 
     func_060BB330();
 }
@@ -1257,7 +1257,62 @@ void func_060BD9E8(u8 walls, u8* dst) {
 
 const u16 DAT_060BDACE = 0x0009;
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BDAD0, func_060BDAD0);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BDC7C, func_060BDC7C);
+void func_060BDC7C(void) {
+    u8* dst;
+    u8* revealDst;
+    s32 mapOffset;
+    s32 mapIndex;
+    s32 row;
+    s32 col;
+    s32 revealRow;
+    u32 revealCol;
+
+    dst = CASTLE_MAP_BITMAP;
+    mapOffset = 0;
+    if (g_CurrentRoom.stageID & 0x20) {
+        mapOffset = 0x0400;
+        revealDst = dst + 0x6970;
+        for (revealRow = 0; revealRow <= 3; revealRow++) {
+            for (revealCol = 0; revealCol <= 10; revealCol++) {
+                revealDst[revealCol] = g_MariaMapRevealPattern[revealCol];
+            }
+            revealDst += CASTLE_MAP_BITMAP_PITCH;
+        }
+    }
+
+    row = 0;
+    mapIndex = mapOffset;
+    for (; row <= 0x3F; row++) {
+        for (col = 0; col <= 0x0F; col++) {
+            func_060BD638(g_CastleMap[mapIndex++], dst);
+            dst += CASTLE_MAP_CELL_WIDTH;
+        }
+        dst += CASTLE_MAP_BITMAP_PITCH * 3;
+    }
+
+    func_060BDAD0();
+    dst = CASTLE_MAP_BITMAP;
+    row = 0;
+    mapIndex = mapOffset;
+    for (; row <= 0x3F; row++) {
+        for (col = 0; col <= 0x0F; col++) {
+            func_060BD9E8(g_CastleMap[mapIndex++], dst);
+            dst += CASTLE_MAP_CELL_WIDTH;
+        }
+        dst += CASTLE_MAP_BITMAP_PITCH * 3;
+    }
+
+    dst = CASTLE_MAP_BITMAP;
+    row = 0;
+    mapIndex = mapOffset;
+    for (; row <= 0x3F; row++) {
+        for (col = 0; col <= 0x0F; col++) {
+            func_060BD81C(g_CastleMap[mapIndex++], dst);
+            dst += CASTLE_MAP_CELL_WIDTH;
+        }
+        dst += CASTLE_MAP_BITMAP_PITCH * 3;
+    }
+}
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BDDA0, func_060BDDA0);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BDED8, func_060BDED8);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE064, func_060BE064);
@@ -1475,7 +1530,40 @@ bool func_060BE994(void) {
         return false;
     }
 }
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BEA54, func_060BEA54);
+void func_060BEA54(void) {
+    Point16* pos;
+    s32 i;
+    s32 value;
+    s32 buttonConfig;
+
+    pos = g_MariaMapUiPositionsA;
+    for (i = 0; i < 4; i++) {
+        func_06078684(0x1C0, g_Status.statsBase[i], pos++);
+        if (g_Status.statsEquip[i] != 0) {
+            if (g_Status.statsEquip[i] > 0) {
+                func_06078550(0x1C0, 0x0B, pos++);
+                value = g_Status.statsEquip[i];
+            } else {
+                func_06078550(0x1C0, 0x0D, pos++);
+                value = -g_Status.statsEquip[i];
+            }
+            func_06078684(0x1C0, value, pos++);
+        } else {
+            pos += 2;
+        }
+    }
+
+    pos = g_MariaMapUiPositionsB;
+    buttonConfig = g_Settings.buttonConfig[0];
+    func_06078550(0x1C0, g_MariaMapIconIndices[buttonConfig], pos++);
+    func_06078684(0x1C0, g_Status.attackHands[0], pos++);
+    buttonConfig = g_Settings.buttonConfig[2];
+    func_06078550(0x1C0, g_MariaMapIconIndices[buttonConfig], pos++);
+    func_06078684(0x1C0, g_Status.attackHands[1], pos++);
+    func_06078684(0x1C0, g_Status.defenseEquip, pos);
+}
+
+static const volatile u16 DAT_060BEB56 = 0x0009;
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BEB74, func_060BEB74);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BEE30, func_060BEE30);
 

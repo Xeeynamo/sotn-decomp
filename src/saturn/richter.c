@@ -1615,7 +1615,7 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BA788, func_060BA788);
 
 void func_060BACA4(void) {
     memset(&g_RichterCastleMapState, 0, 4);
-    memcpy(0x002B2000, g_RichterCastleMapBitmap, 0x9600);
+    memcpy(CASTLE_MAP_BITMAP, g_RichterCastleMapBitmap, CASTLE_MAP_BITMAP_SIZE);
 
     func_060BB330();
 }
@@ -1624,7 +1624,65 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BACEC, func_060BACEC);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BAED0, func_060BAED0);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BB09C, func_060BB09C);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BB184, func_060BB184);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BB330, func_060BB330);
+void func_060BB330(void) {
+    u8* dst;
+    u8* revealDst;
+    s32 mapOffset;
+    s32 mapIndex;
+    s32 row;
+    s32 col;
+    s32 revealRow;
+    u32 revealCol;
+
+    dst = CASTLE_MAP_BITMAP;
+    mapOffset = 0;
+
+    if (g_CurrentRoom.stageID & 0x20) {
+        mapOffset = 0x0400;
+        revealDst = dst + 0x6970;
+
+        for (revealRow = 0; revealRow <= 3; revealRow++) {
+            for (revealCol = 0; revealCol <= 10; revealCol++) {
+                revealDst[revealCol] = g_RichterMapRevealPattern[revealCol];
+            }
+            revealDst += CASTLE_MAP_BITMAP_PITCH;
+        }
+    }
+
+    row = 0;
+    mapIndex = mapOffset;
+    for (; row <= 0x3F; row++) {
+        for (col = 0; col <= 0x0F; col++) {
+            func_060BACEC(g_CastleMap[mapIndex++], dst);
+            dst += CASTLE_MAP_CELL_WIDTH;
+        }
+        dst += CASTLE_MAP_BITMAP_PITCH * 3;
+    }
+
+    func_060BB184();
+
+    dst = CASTLE_MAP_BITMAP;
+    row = 0;
+    mapIndex = mapOffset;
+    for (; row <= 0x3F; row++) {
+        for (col = 0; col <= 0x0F; col++) {
+            func_060BB09C(g_CastleMap[mapIndex++], dst);
+            dst += CASTLE_MAP_CELL_WIDTH;
+        }
+        dst += CASTLE_MAP_BITMAP_PITCH * 3;
+    }
+
+    dst = CASTLE_MAP_BITMAP;
+    row = 0;
+    mapIndex = mapOffset;
+    for (; row <= 0x3F; row++) {
+        for (col = 0; col <= 0x0F; col++) {
+            func_060BAED0(g_CastleMap[mapIndex++], dst);
+            dst += CASTLE_MAP_CELL_WIDTH;
+        }
+        dst += CASTLE_MAP_BITMAP_PITCH * 3;
+    }
+}
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BB454, func_060BB454);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BB58C, func_060BB58C);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BB718, func_060BB718);

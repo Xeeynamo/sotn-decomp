@@ -348,6 +348,22 @@ s32 func_060A926C();
 extern AnimationFrame g_MariaAnimWalkStopFacingBitSet[];
 extern AnimationFrame g_MariaAnimWalkStopFacingBitClear[];
 extern AnimationFrame DAT_060C2408;
+extern u8 g_MariaMapRevealPattern[11];
+extern u8 g_MariaMapIconIndices[8];
+extern Point16 g_MariaMapUiPositionsA[12];
+extern Point16 g_MariaMapUiPositionsB[5];
+extern Point16 g_MariaMapUiPositionsC[21];
+extern Point16 g_MariaMapUiPositionsD[14];
+extern Point16 g_MariaMapUiPositionsE[16];
+extern Point16 g_MariaMapUiPositionsF[11];
+void func_060BD638(u8 walls, u8* dst);
+void func_060BD81C(u8 walls, u8* dst);
+void func_060BD9E8(u8 walls, u8* dst);
+void func_060BDAD0(void);
+void func_060BDC7C(void);
+void func_060BEA54(void);
+void func_06078550(s32 arg0, u8 code, Point16* pos);
+void func_06078684(s32 arg0, s32 value, Point16* pos);
 /* End moved declarations */
 
 #endif
