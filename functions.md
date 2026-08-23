@@ -7886,7 +7886,7 @@
 | bo4        | func_pspeu_0924D108_from_rbo5      |      260 |         41 |        |       |     |
 | no4        | func_pspeu_09240CD0                |      261 |         21 |        |       |     |
 | rno4       | func_us_801C3CC4_from_no4          |      261 |         21 |        |       |     |
-| bo2        | func_us_801A3818                   |      261 |         33 |        |       |     |
+| bo2        | func_pspeu_09248F68                |      261 |         33 |        |       |     |
 | maria      | func_pspeu_092B28B0                |      261 |         51 |        |       |     |
 | cat        | func_pspeu_0924FC98                |      262 |         20 |        |       |     |
 | dai        | func_pspeu_09251A10                |      262 |         27 |        |       |     |
