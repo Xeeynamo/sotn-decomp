@@ -318,6 +318,8 @@ files:
             - [0x17338, palette, pal_246, 16] # 0x246
             - [0x17478, palette, pal_slime, 16] # 0x204
             - [0x174F8, skip]
+            - [0x2F528, spriteset, unused_sprites]
+            - [0x2FA64, skip]
   - target: disks/us/ST/CEN/CEN.BIN
     asset_path: assets/st/cen
     src_path: src/st/cen

@@ -233,11 +233,7 @@ void EntityDematerializeStageBg(Entity* self) {
             sp40->vy = unkStr->unk6;
             sp40->vz = 0;
             RotMatrixYXZ(sp40, m);
-#ifdef VERSION_PSP
-            SetRotMatrix(m);
-#else
             gte_SetRotMatrix(m);
-#endif
             vec->vx = unkStr->unkA;
             vec->vy = unkStr->unkE;
             vec->vz = unkStr->unk10;
