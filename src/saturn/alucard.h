@@ -8,6 +8,12 @@
 #include <saturn_sprite.h>
 #include "inc_asm.h"
 
+void func_0600A330(void);
+void* func_0600BD4C(SpriteObject* sprite);
+extern s16 DAT_060CE4B2;
+extern s16 DAT_060CE4B4;
+extern s16 DAT_060CE972;
+
 /* Declarations moved here by tools/saturn/move_declarations.py */
 extern const SaturnAnimationFrame g_AlucardAnimationData[];
 extern SaturnPlayerGraphicsRecord g_AlucardPlayerGraphicsRecords[];
@@ -55,6 +61,9 @@ extern SaturnSpriteImage AlucardImages[];
 extern s8 D_060B24B0[];
 extern u16* g_AlucardEffectAnimTable[];
 void func_060AF1BC(int);
+void SetPlayerStep(PlayerSteps step);
+void func_060A5574(s32 velocityX);
+void func_060A5674(s32 anim);
 void func_060A580C(s32 arg0);
 void func_0600FB0C(s32 arg0);
 void PlaySfx(s32 sfxId);
@@ -94,8 +103,10 @@ extern s8 DAT_060CE51C;
 extern s8 DAT_060CE51D;
 extern s8 DAT_060CE51E;
 extern s32 DAT_060C84F8;
+extern s32 DAT_060CC774;
 extern s32 DAT_060CE490;
 extern s32 DAT_060CE494;
+extern s32 DAT_060CE4B8;
 extern s16 DAT_060CE4B0;
 /* End moved declarations */
 

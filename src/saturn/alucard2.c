@@ -7,7 +7,47 @@
 // func_060BD6A8 and func_060BFADC call with no args
 void DestroyEntity();
 
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B24E0, func_060B24E0);
+s32 func_060B24E0(Entity* arg0, s32 arg1) {
+    s32 xOffset;
+    s32 yOffset;
+    s16 xDist;
+    s16 yDist;
+
+    if (arg1 == 0) {
+        if (arg0->velocityY < 0 || arg0->velocityY < FIX(2)) {
+            return 0;
+        }
+    }
+
+    if ((*(u8*)&arg0->params & 0x7F) == 6) {
+        if (PLAYER.animCurFrame != 0x7B && PLAYER.animCurFrame != 0x79) {
+            return 0;
+        }
+
+        if (((u32)(g_Player.anim - 0x19) <= 1U) &&
+            arg0->posY.i.hi <= PLAYER.posY.i.hi - 0x10 &&
+            arg0->posY.i.hi >= PLAYER.posY.i.hi - 0x18 &&
+            arg0->posX.i.hi <= PLAYER.posX.i.hi + 4 &&
+            arg0->posX.i.hi >= PLAYER.posX.i.hi - 4) {
+            g_Player.poseTimer = 3;
+            g_Player.pose = 8;
+            return 1;
+        }
+        return 0;
+    }
+
+    xOffset = (arg0->posX.i.hi - PLAYER.posX.i.hi) + PLAYER.hitboxOffX;
+    xDist = (s16)(xOffset < 0 ? -xOffset : xOffset);
+
+    yOffset = (arg0->posY.i.hi - PLAYER.posY.i.hi) + PLAYER.hitboxOffY;
+    yDist = (s16)(yOffset < 0 ? -yOffset : yOffset);
+
+    if (xDist <= arg0->hitboxWidth + PLAYER.hitboxWidth &&
+        yDist <= arg0->hitboxHeight + PLAYER.hitboxHeight) {
+        return 1;
+    }
+    return 0;
+}
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B25F4, func_060B25F4);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B2B30, func_060B2B30);
 // GetPlayerSensor
@@ -28,8 +68,53 @@ INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B3024, func_060B3024);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B349C, func_060B349C);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B38B4, func_060B38B4);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B3A90, func_060B3A90);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B3C70, func_060B3C70);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B3D28, func_060B3D28);
+s32 func_060B3C70(void) {
+    if (PLAYER.step_s == 0 || PLAYER.step_s == 8) {
+        return 0;
+    }
+
+    if ((g_unkGraphicsStruct.D_8009744C != 0 && func_0606FC60(0xE) == 0) ||
+        (g_Player.padTapped & 0x10) || func_06070410(2, 1) < 0) {
+        SetPlayerStep(0x19);
+        g_Player.timers[0x45] = 0;
+        g_Player.timers[0x46] = 0;
+        g_Player.pad0[0x39D] |= 2;
+        func_060BAF44(g_CurrentEntity, 0x0024007B, 0);
+        PLAYER.velocityY >>= 1;
+        return 1;
+    }
+
+    return 0;
+}
+
+static const volatile u16 DAT_060B3CFE = 0x0009;
+
+void func_060B3D28(void) {
+    PLAYER.step_s = 2;
+    if ((PLAYER.facingLeft == 1 && (g_Player.padPressed & PAD_RIGHT)) ||
+        (PLAYER.facingLeft == 0 && (g_Player.padPressed & PAD_LEFT))) {
+        func_060A5674(3);
+        DAT_060CC774 = 0;
+        DAT_060CE4B8 = 0;
+    } else if (DAT_060CE4B8 != 0) {
+        func_060A5674(4);
+        DAT_060CC774 = 2;
+        if (PLAYER.velocityX >= 0) {
+            if (PLAYER.velocityX < FIX(2.5)) {
+                goto apply_velocity;
+            }
+            return;
+        }
+        if (-PLAYER.velocityX < FIX(2.5)) {
+        apply_velocity:
+            func_060A5574(FIX(2.5));
+        }
+    } else {
+        func_060A5674(2);
+        DAT_060CC774 = 1;
+        DAT_060CE4B8 = 12;
+    }
+}
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B3DF8, func_060B3DF8);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B3F78, func_060B3F78);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B4024, func_060B4024);
@@ -259,8 +344,8 @@ s32 func_060B9610(s16 arg0, s16 arg1) {
     found->entityId = 0x13;
     found->posX.val = PLAYER.posX.val;
     found->posY.val = PLAYER.posY.val;
-    found->ext.ILLEGAL.u16[2] = arg0;
-    found->ext.ILLEGAL.u16[3] = arg1;
+    found->ext.hpNumMove.number = arg0;
+    found->ext.hpNumMove.type = arg1;
     return 0;
 }
 
@@ -288,7 +373,23 @@ void func_060BA90C(Entity* entity) {
 }
 
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BA9A0, func_060BA9A0);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BAA20, func_060BAA20);
+void func_060BAA20(Entity* arg0, s32 arg1, s32 arg2, FamiliarStats* arg3) {
+    SpellDef spell;
+
+    *arg3 = g_Status.statsFamiliars[g_Servant - 1];
+    if (arg2 != 0) {
+        func_0606F59C((SpellDef*)&spell, arg1);
+        arg0->attack = spell.attack;
+        arg0->attackElement = spell.attackElement;
+        arg0->hitboxState = spell.hitboxState;
+        arg0->nFramesInvincibility = spell.nFramesInvincibility;
+        arg0->stunFrames = spell.stunFrames;
+        arg0->hitEffect = spell.hitEffect;
+        arg0->entityRoomIndex = spell.entityRoomIndex;
+        arg0->attack = spell.attack * (arg3->level * 4 / 95 + 1);
+        func_060B9340(arg0);
+    }
+}
 // UpdatePlayerEntities
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BAB00, func_060BAB00);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BAD84, func_060BAD84);

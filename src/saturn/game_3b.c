@@ -643,8 +643,6 @@ void UpdatePlayTimer(void) {
     }
 }
 
-void TekiInit(Entity*, u16);
-
 void func_0606F1C8(Entity* entity) {
     u8 pad[4];
 

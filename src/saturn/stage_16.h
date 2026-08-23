@@ -9,6 +9,22 @@
 #include <saturn_sprite.h>
 #include "stage_data.h"
 
+extern s16 DAT_060EA4B0[];
+extern u16 DAT_060EA294[];
+extern s8 DAT_060485C4;
+void PlaySfx(s32 sfxId);
+void SetStep(u8 step);
+void DestroyEntity(Entity* entity);
+s32 func_0600D028(s8 arg0, s8 arg1);
+s8 func_0600D264(s8 arg0, s8 arg1);
+s8 func_0600D47C(s8 arg0, s8 arg1);
+s32 func_06030690(s8 arg0, s32 arg1, void* arg2);
+void func_060E2BF0(s32 arg0, s32 arg1);
+void func_060E2DB0(s32 arg0, s32 arg1, s32 arg2);
+void func_060E2EFC(s32 arg0, s32 arg1, s32 arg2);
+void func_060E323C(s32 scale, s32 unused);
+void func_060E330C(s32 arg0, s32 arg1, s32 arg2);
+
 /* Declarations moved here by tools/saturn/move_declarations.py */
 extern char g_Stage16ObtainedText[];
 void func_060DE814(Entity* self);
@@ -38,8 +54,6 @@ void func_060E73FC(Entity* self);
 void func_060E72FC(Entity* self);
 void func_060E6DDC(Entity* self);
 extern SaturnSpriteResource g_Stage16SpriteBank16;
-void TekiInit(Entity* self, s32 arg);
-void func_0600AFA8(SpriteObject* sprite, SaturnSpriteFrameHeader* frame);
 
 extern SaturnSpriteResource g_Stage16SpriteBank25;
 void func_060E6C88(Entity* self);
@@ -156,6 +170,13 @@ void func_060DC60C(Entity* self);
 void func_060DC4C0(Entity* self);
 void func_060DC418(Entity* self);
 void func_060DC040(Entity* self);
+extern s32 DAT_060485e0[];
+extern s32 DAT_060EF100;
+extern s32 DAT_060EF110;
+extern s32 g_Stage16Entity08ModelVertices14[14][3];
+extern MthMatrixTbl DAT_06061DF0;
+void SetCurrentMatrixBinAngle(s32* pos, s32* angle);
+void TransformAndProjectPoints(s32*, s32*, s32, MthMatrixTbl*);
 extern SaturnSpriteFrameHeader* g_Stage16SpriteBank16Frames[];
 extern LayoutEntity g_Stage16LayoutVertical02[];
 extern LayoutEntity g_Stage16LayoutVertical01[];

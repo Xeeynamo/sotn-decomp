@@ -8,6 +8,14 @@
 #include "shared_sprite_banks.h"
 #include <saturn_sprite.h>
 #include "stage_data.h"
+
+extern s16 DAT_06045FA8;
+extern s16 g_RStage15ExplosionVariantSizes[];
+extern s8 DAT_060485C4;
+s32 func_0600D028(s8 arg0, s8 arg1);
+s32 func_06030690(s8 arg0, s32 arg1, void* arg2);
+s8 func_0600D264(s8 arg0, s8 arg1);
+s8 func_0600D47C(s8 arg0, s8 arg1);
 #include "inc_asm.h"
 
 /* Declarations moved here by tools/saturn/move_declarations.py */
@@ -180,8 +188,6 @@ extern SaturnSpriteFrameHeader* g_RStage15SpriteBank20Frames[];
 extern SaturnSpriteFrameHeader* g_RStage15SpriteBank19Frames[];
 extern SaturnSpriteFrameHeader* g_RStage15SpriteBank16Frames[];
 extern SaturnSpriteResource g_RStage15SpriteBank16;
-void TekiInit(Entity* self, s32 arg);
-void func_0600AFA8(SpriteObject* sprite, SaturnSpriteFrameHeader* frame);
 extern LayoutEntity g_RStage15LayoutVertical04[];
 extern LayoutEntity g_RStage15LayoutVertical03[];
 extern LayoutEntity g_RStage15LayoutVertical02[];

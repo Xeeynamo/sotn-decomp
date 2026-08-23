@@ -189,24 +189,24 @@ void RicStepFall(void) {
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A6DFC, func_060A6DFC);
 static void func_80159C04(void) {
     Entity* entity;
-    s16 var_s3;
-    s16 var_s2;
-    s16 var_s1;
+    s16 attackerOffX;
+    s16 playerOffX;
+    s16 distance;
 
     entity = PLAYER.unkB4;
     if (entity->facingLeft) {
-        var_s3 = -entity->hitboxOffX;
+        attackerOffX = -entity->hitboxOffX;
     } else {
-        var_s3 = entity->hitboxOffX;
+        attackerOffX = entity->hitboxOffX;
     }
     if (PLAYER.facingLeft) {
-        var_s2 = -PLAYER.hitboxOffX;
+        playerOffX = -PLAYER.hitboxOffX;
     } else {
-        var_s2 = PLAYER.hitboxOffX;
+        playerOffX = PLAYER.hitboxOffX;
     }
 
-    var_s1 = PLAYER.posX.i.hi + var_s2 - entity->posX.i.hi - var_s3;
-    if (ABS(var_s1) < 16 && entity->velocityX != 0) {
+    distance = PLAYER.posX.i.hi + playerOffX - entity->posX.i.hi - attackerOffX;
+    if (ABS(distance) < 16 && entity->velocityX != 0) {
         if (entity->velocityX < 0) {
             PLAYER.entityRoomIndex = 0;
             return;
@@ -215,7 +215,7 @@ static void func_80159C04(void) {
             return;
         }
     }
-    if (var_s1 < 0) {
+    if (distance < 0) {
         PLAYER.entityRoomIndex = 0;
     } else {
         PLAYER.entityRoomIndex = 1;
@@ -1186,7 +1186,7 @@ void func_060ADA34(Entity* self) {
             g_EntitySpriteBank01.allocationIndex, g_EntitySpriteBank01.flags,
             g_EntitySpriteBank01.images, 5);
         if (self->unk0 != NULL) {
-            self->ext.ILLEGAL.u32[0xE] = (u32)DAT_06045E14;
+            self->ext.spriteEntity.frames = DAT_06045E14;
             self->unk0->zPriority = g_Entities->zPriority + 4;
             self->animSet = 2;
             self->anim = anim_80154E38;
@@ -1705,7 +1705,56 @@ void func_060BBAC8(void) {
     iVar2[0x4500] = 0xffffffff;
 }
 
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BBAF4, func_060BBAF4);
+void func_060BBAF4(void) {
+    s32* work;
+    u8* area;
+    u8* dst;
+    s32 i;
+    u32 clear_size;
+    u8* dma_base;
+    s32 dma_offset;
+    u16 dma_value;
+    s32* dma_dest;
+
+    DAT_06086390 = 1;
+    work = func_060784A8();
+    work[0x4500] = -1;
+
+    clear_size = 0xA000U;
+    area = (u8*)(work + 0x4501);
+    memset(area, 0, clear_size);
+    dst = area;
+
+    i = 0;
+    do {
+        func_06078700(dst, DAT_06085DE8[i], 4);
+        dst += 0x180;
+        i++;
+    } while (i <= 10);
+
+    i = 0;
+    do {
+        func_06078700(dst, DAT_06085E14[i], 4);
+        dst += 0x180;
+        i++;
+    } while (i <= 7);
+
+    i = 0;
+    do {
+        func_06078700(dst, DAT_06085DCC[i], 4);
+        dst += 0x180;
+        i++;
+    } while (i <= 1);
+
+    dma_base = (u8*)DAT_0605aec0;
+    dma_offset = 8;
+    dma_value = *(u16*)(dma_base + dma_offset);
+    dma_dest = (s32*)(0x25C00000U + dma_value * 8);
+    DMA_CpuMemCopy2(dma_dest, work + 0x4501, 0xFC0U);
+
+    do {
+    } while (DMA_CpuResult() == 2);
+}
 void func_060BBC00(void) {
     s32* base;
     s32* dst;

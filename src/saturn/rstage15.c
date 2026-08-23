@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "inc_asm.h"
 #include "sattypes.h"
+#include "rstage15.h"
 
 #include "rstage15.h"
 
@@ -88,12 +89,12 @@ void func_060DD988(Entity* self) {
         break;
     case 1:
         MoveEntity(self);
-        self->velocityY -= self->ext.ILLEGAL.u32[0];
+        self->velocityY -= self->ext.glowParticle.gravity;
         break;
     }
 
     func_060DDA34(self);
-    if (self->ext.ILLEGAL.s16[8] <= 0x82) {
+    if (self->ext.glowParticle.unk88 <= 0x82) {
         DestroyEntity(self);
     }
 }
@@ -117,12 +118,12 @@ void func_060DDD10(Entity* self) {
         break;
     case 1:
         MoveEntity(self);
-        self->velocityY -= self->ext.ILLEGAL.u32[0];
+        self->velocityY -= self->ext.glowParticle.gravity;
         break;
     }
 
     func_060DDDB8(self);
-    if (self->ext.ILLEGAL.u8[0xA] <= 7U) {
+    if (self->ext.glowParticle.b <= 7U) {
         DestroyEntity(self);
     }
 }
@@ -138,13 +139,13 @@ void func_060DDDB8(Entity* self) {
     prim->x1 = prim->x2 = x + 1;
     prim->y0 = prim->y1 = y;
     prim->y2 = prim->y3 = y + 1;
-    if (self->ext.ILLEGAL.u8[0xA] > 7) {
-        self->ext.ILLEGAL.u8[8] -= 6;
-        self->ext.ILLEGAL.u8[9] -= 6;
-        self->ext.ILLEGAL.u8[0xA] -= 8;
+    if (self->ext.glowParticle.b > 7) {
+        self->ext.glowParticle.r -= 6;
+        self->ext.glowParticle.g -= 6;
+        self->ext.glowParticle.b -= 8;
         prim->unk6 =
-            ((self->ext.ILLEGAL.u8[0xA] << 10) +
-             (self->ext.ILLEGAL.u8[9] << 5) + self->ext.ILLEGAL.u8[8]) -
+            ((self->ext.glowParticle.b << 10) +
+             (self->ext.glowParticle.g << 5) + self->ext.glowParticle.r) -
             0x8000;
     }
 }
@@ -164,8 +165,8 @@ void func_060DDFD4(Entity* self) {
             func_060DE144(self);
         }
     } else {
-        --self->ext.ILLEGAL.s16[0];
-        if (self->ext.ILLEGAL.s16[0] == 0) {
+        --self->ext.effectTimer.timer;
+        if (self->ext.effectTimer.timer == 0) {
             DestroyEntity(self);
         } else {
             func_060DE064(self);
@@ -226,7 +227,7 @@ void func_060DE808(u16 cardIndex) {
         self->posY.i.hi = player->posY.i.hi + 0x0C;
         SetStep(7);
         self->unk0->flags |= 8;
-        self->ext.ILLEGAL.u16[7] = 5;
+        self->ext.subweaponCard.unk86 = 5;
         self->velocityY = -0x28000;
 
         if (player->facingLeft != 1) {
@@ -256,11 +257,11 @@ void func_060E1C20(Entity* self) {
     case 0:
         TekiInit(self, 2);
         self->step++;
-        self->ext.ILLEGAL.u16[8] =
-            ((Entity*)self->ext.ILLEGAL.u32[1])->entityId;
+        self->ext.explosionEmitter.parentId =
+            self->ext.explosionEmitter.parent->entityId;
         /* fall through */
     case 1:
-        if (self->ext.ILLEGAL.u8[0]++ > 4U) {
+        if (self->ext.explosionEmitter.timer++ > 4U) {
             entity = AllocEntity(&g_Entities[0xE0], &g_Entities[0x100]);
             if (entity != NULL) {
                 CreateEntityFromEntity(2, self, entity);
@@ -268,13 +269,13 @@ void func_060E1C20(Entity* self) {
                 entity->pfnUpdate = func_060E1950;
                 entity->params = self->params;
             }
-            self->ext.ILLEGAL.u8[0] = 0;
+            self->ext.explosionEmitter.timer = 0;
         }
 
-        self->posX.i.hi = ((Entity*)self->ext.ILLEGAL.u32[1])->posX.i.hi;
-        self->posY.i.hi = ((Entity*)self->ext.ILLEGAL.u32[1])->posY.i.hi;
-        if (((Entity*)self->ext.ILLEGAL.u32[1])->entityId !=
-            self->ext.ILLEGAL.u16[8]) {
+        self->posX.i.hi = self->ext.explosionEmitter.parent->posX.i.hi;
+        self->posY.i.hi = self->ext.explosionEmitter.parent->posY.i.hi;
+        if (self->ext.explosionEmitter.parent->entityId !=
+            self->ext.explosionEmitter.parentId) {
             DestroyEntity(self);
         }
         break;
@@ -282,21 +283,120 @@ void func_060E1C20(Entity* self) {
 }
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E1D0C, func_060E1D0C);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E1E78, func_060E1E78);
-INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E1FAC, func_060E1FAC);
+void func_060E1FAC(
+    Entity* self, u8 count, u8 params, s16 x, s16 y, u8 variant, s16 xStep) {
+    s32 i;
+    s16 initialX;
+    s32 currentX;
+    s16 currentY;
+    s16* clut;
+    SaturnSpriteResource* resource;
+    Entity* entity;
+    SpriteObject* sprite;
+
+    i = 0;
+    initialX = x + self->posX.i.hi;
+    currentY = y + self->posY.i.hi;
+    if (i < count) {
+        resource = &g_EntitySpriteBank01;
+        currentX = initialX;
+        do {
+            entity = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
+            if (entity != NULL) {
+                entity->entityId = 19;
+                entity->pfnUpdate = func_060E1D0C;
+                entity->params = params;
+                entity->posX.i.hi = currentX;
+                entity->posY.i.hi = currentY;
+                entity->ext.destructAnim.index = variant + i;
+                entity->drawFlags = 3;
+                entity->scaleY = entity->scaleX =
+                    g_RStage15ExplosionVariantSizes[variant + i];
+                clut = &DAT_06045FA8;
+                sprite = CreateSpriteObject(
+                    (u16)*clut, (u16)(s16)resource->flags, resource->images, 5);
+                entity->unk0 = sprite;
+                if (self->unk0 != NULL) {
+                    sprite->zPriority = self->unk0->zPriority + 1;
+                }
+            }
+            currentX += xStep;
+            i++;
+        } while (i < count);
+    }
+}
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E20C8, func_060E20C8);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E21A8, func_060E21A8);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E2494, func_060E2494);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E296C, func_060E296C);
 void func_060E2A78(void) { DestroyEntity(); }
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E2A90, func_060E2A90);
-INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E375C, func_060E375C);
+void func_060E375C(Entity* self) {
+    unsigned int scratch[6];
+    Entity* base;
+    s32* statusp;
+    s32 state;
+    s32 index;
+    s32 result;
+    s8 value;
+
+    base = self;
+    statusp = &base->ext.save.unk4;
+    state = *statusp;
+    if (state != 10) {
+        if (state <= 10) {
+            return;
+        }
+        if (state == 30) {
+            goto state30;
+        }
+        return;
+    } else {
+        value = DAT_060485C4;
+        index = 1;
+        do {
+            result = func_0600D028(value, index);
+            if (result != 0 && result != 8) {
+                DAT_060485C0.unk5 = index;
+                DAT_060485C0.unk4 = value;
+                base->ext.save.unk4 = 30;
+                break;
+            }
+            index++;
+        } while (index <= 5);
+
+        if (index == 6) {
+            base->step = 1;
+            base->ext.save.unk4 = 41;
+        }
+        return;
+    }
+
+state30:
+    value = DAT_060485C0.unk4;
+    index = DAT_060485C0.unk5;
+    result = func_06030690(value, 70, scratch);
+    if (result == 2) {
+        *statusp = 43;
+    } else {
+        result = func_0600D028(value, index);
+        if (result == 5 && scratch[4] <= 0x4D) {
+            *statusp = 44;
+        } else if (func_0600D264(value, index) == 0 &&
+                   func_0600D264(value, index) == 0 &&
+                   func_0600D47C(value, index) == 0) {
+            base->ext.save.unk4 = 40;
+        } else {
+            base->ext.save.unk4 = 45;
+        }
+    }
+}
 u16 func_060E3874(s32 minX, s32 maxX) {
     u16 result;
 
     g_Player.unk7A = 1;
-    if ((u16)(s16)g_Entities->step != 0 ||
-        (result = (u16)(s16)g_Entities->step_s, result != 1) ||
-        g_Entities->posX.i.hi < minX || g_Entities->posX.i.hi > maxX) {
+    if (PLAYER.step != 0 || (result = PLAYER.step_s, result != 1) ||
+        PLAYER.posX.i.hi < minX || PLAYER.posX.i.hi > maxX) {
         result = 0;
     }
     return result;

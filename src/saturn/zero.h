@@ -261,6 +261,9 @@ extern SpriteObject* g_SpriteListTail;       /* 0x06057794 */
 extern SpriteObject* g_SpriteListHead;       /* 0x06057790 */
 extern SpritePart* g_SpritePartFreeList;     /* 0x0605779C */
 extern SpriteObject* g_SpriteObjectFreeList; /* 0x06057798 */
+extern SaturnSpriteResource g_EntitySpriteBank08;
+extern SaturnSpriteFrameHeader* DAT_06046CD0[];
+void func_0600AFA8(SpriteObject* sprite, SaturnSpriteFrameHeader* frame);
 void SetVdp2BackgroundColor();
 void SPR_2FrameEraseData(Uint16);
 void SPR_SetEraseData(

@@ -6,6 +6,14 @@
 #include "game.h"
 #include "sattypes.h"
 #include "stage_data.h"
+
+void CheckCollision(s32 x, s32 y, Collider* result, u16 flags);
+void MoveEntity(Entity* self);
+void func_06079BE4(Entity* self);
+s32 func_0600D028(s8 arg0, s8 arg1);
+s8 func_0600D264(s8 arg0, s8 arg1);
+s8 func_0600D47C(s8 arg0, s8 arg1);
+s32 func_06030690(s8 arg0, s32 arg1, void* arg2);
 #include "shared_sprite_banks.h"
 
 /* Declarations moved here by tools/saturn/move_declarations.py */
@@ -70,7 +78,7 @@ extern LayoutEntity g_RStage16LayoutHorizontal48[];
 extern LayoutEntity g_RStage16LayoutHorizontal49[];
 extern u8 g_RStage16SpriteBank23[];
 extern u8 g_RStage16SpriteBank22[];
-extern u8 g_RStage16SpriteBankGargoyle[];
+extern SaturnSpriteResource g_RStage16SpriteBankGargoyle[];
 extern SaturnSpriteResource g_RStage16SpriteBankWight;
 extern u8 g_RStage16SpriteBankWraith[];
 extern u8 g_RStage16SpriteBank18[];
@@ -85,11 +93,9 @@ extern LayoutEntity g_RStage16LayoutVertical50[];
 extern LayoutEntity g_RStage16LayoutVertical48[];
 extern LayoutEntity g_RStage16LayoutVertical49[];
 void DestroyEntity();
-void TekiInit(Entity* self, s32 arg);
 void PlaySfx(s32 sfxId);
 void SetStep(u8 step);
 void SyncSpriteObjectPosUnchecked(Entity* self, s16* offset);
-void func_0600AFA8(SpriteObject* sprite, SaturnSpriteFrameHeader* frame);
 void func_0600B004(SpriteObject* sprite, u32 imageIndex);
 void func_06079BB4(Entity* self);
 u8 func_06079DEC(void* self, void* sensors);
@@ -116,6 +122,8 @@ extern s16 DAT_060ED9FA[2];
 extern u32 DAT_060EDDE4[];
 extern SaturnSpriteImage DAT_060EDE4C[];
 extern u32 DAT_060EEFD0[];
+extern u8 DAT_060EF0C0[];
+extern s16 DAT_060EDEBC;
 extern u32 DAT_060EF2B4;
 extern u32 DAT_060EF2BC;
 /* End moved declarations */

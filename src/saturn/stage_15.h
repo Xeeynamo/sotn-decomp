@@ -8,8 +8,24 @@
 #include "shared_sprite_banks.h"
 #include <saturn_sprite.h>
 #include "stage_data.h"
+
+extern s16 DAT_060F2F04;
+extern u32 g_Stage15SpriteBank24Frames[];
+void SyncSpriteObjectPosUnchecked(Entity* self, s16* offset);
+void CheckCollision(s32 x, s32 y, Collider* result, u16 flags);
+void MoveEntity(Entity* self);
+void func_06079BE4(Entity* self);
+void func_06079BB4(Entity* self);
+void func_0600B004(SpriteObject* sprite, u32 imageIndex);
 #include "../shared_sprite_banks.h"
 #include "inc_asm.h"
+
+typedef struct {
+    s32 velocityY;
+    SotnFixed32 posY;
+} Stage15GouraudState;
+
+extern Stage15GouraudState* volatile SpGourTbl;
 
 /* Declarations moved here by tools/saturn/move_declarations.py */
 extern char g_Stage15ObtainedText[];
@@ -197,7 +213,7 @@ extern u8 g_Stage15SpriteBankVenusManTrap[];
 extern u8 g_Stage15SpriteBankWaterLeaper[];
 extern u8 g_Stage15SpriteBankHumanFaceTree[];
 extern u8 g_Stage15SpriteBankSkeletonBreeder[];
-extern u8 g_Stage15SpriteBankRedGargoyle[];
+extern SaturnSpriteResource g_Stage15SpriteBankRedGargoyle[];
 extern u8 g_Stage15SpriteBankSkeletonBeast[];
 extern u8 g_Stage15SpriteBank18[];
 extern u8 g_Stage15SpriteBank17[];
