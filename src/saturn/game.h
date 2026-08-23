@@ -20,6 +20,7 @@
 #define E_ENEMY_BLOOD 13
 
 extern EnemyDef g_EnemyDefs[];
+void TekiInit(Entity* entity, u16 enemyId);
 
 typedef enum {
     DAMAGEKIND_0,

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "inc_asm.h"
 #include "sattypes.h"
+#include "rstage16.h"
 
 #include "rstage16.h"
 
@@ -29,7 +30,56 @@ void func_060DC418(Entity* self) {
     }
 }
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60DC4C0, func_060DC4C0);
-INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60DC658, func_060DC658);
+void func_060DC658(u16 arg0) {
+    Entity* entity;
+    Entity* current;
+    Collider collider;
+
+    entity = g_CurrentEntity;
+    if (entity->velocityY < 0) {
+        CheckCollision(
+            entity->posX.val, entity->posY.val - FIX(7), &collider, 0);
+        if (collider.effects & 5) {
+            entity->velocityY = 0;
+        }
+    }
+
+    CheckCollision(entity->posX.val, entity->posY.val + FIX(8), &collider, 0);
+    if (arg0) {
+        if (!(collider.effects & 5)) {
+            MoveEntity(entity);
+            func_06079BE4(entity);
+            return;
+        }
+
+        entity->velocityX = 0;
+        entity->velocityY = 0;
+        if (collider.effects & 4) {
+            entity->posY.val += FIX(0.125);
+        } else {
+            entity->posY.val += collider.unk18;
+        }
+        entity->posY.i.hi++;
+        entity->posY.i.lo = 0;
+    } else if (!(collider.effects & 5)) {
+        MoveEntity(entity);
+        current = g_CurrentEntity;
+
+        if (current->velocityY >= 0) {
+            current->ext.equipItemDrop.fallSpeed +=
+                current->ext.equipItemDrop.gravity;
+            current->velocityX = current->ext.equipItemDrop.fallSpeed;
+            if (current->velocityX == FIX(1) || current->velocityX == FIX(-1)) {
+                current->ext.equipItemDrop.gravity =
+                    -current->ext.equipItemDrop.gravity;
+            }
+        }
+
+        if (current->velocityY < FIX(0.25)) {
+            current->velocityY += FIX(0.125);
+        }
+    }
+}
 void func_060DC764(u16 cardIndex) {
     Entity* self;
     Entity* player;
@@ -59,7 +109,7 @@ void func_060DC764(u16 cardIndex) {
         self->posY.i.hi = player->posY.i.hi + 0xC;
         SetStep(7);
         self->unk0->flags |= 8;
-        self->ext.ILLEGAL.u16[7] = 5;
+        self->ext.subweaponCard.unk86 = 5;
         self->velocityY = -FIX(2.5);
 
         if (player->facingLeft != 1) {
@@ -89,11 +139,11 @@ void func_060DFB7C(Entity* self) {
     case 0:
         TekiInit(self, 2);
         self->step++;
-        self->ext.ILLEGAL.u16[8] =
-            ((Entity*)self->ext.ILLEGAL.u32[1])->entityId;
+        self->ext.explosionEmitter.parentId =
+            self->ext.explosionEmitter.parent->entityId;
         /* fall through */
     case 1:
-        if (self->ext.ILLEGAL.u8[0]++ > 4U) {
+        if (self->ext.explosionEmitter.timer++ > 4U) {
             particle = AllocEntity(&g_Entities[0xE0], &DAT_060A4FF8);
             if (particle != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, particle);
@@ -101,12 +151,12 @@ void func_060DFB7C(Entity* self) {
                 particle->pfnUpdate = func_060DF8AC;
                 particle->params = self->params;
             }
-            self->ext.ILLEGAL.u8[0] = 0;
+            self->ext.explosionEmitter.timer = 0;
         }
-        self->posX.i.hi = ((Entity*)self->ext.ILLEGAL.u32[1])->posX.i.hi;
-        self->posY.i.hi = ((Entity*)self->ext.ILLEGAL.u32[1])->posY.i.hi;
-        if (((Entity*)self->ext.ILLEGAL.u32[1])->entityId !=
-            self->ext.ILLEGAL.u16[8]) {
+        self->posX.i.hi = self->ext.explosionEmitter.parent->posX.i.hi;
+        self->posY.i.hi = self->ext.explosionEmitter.parent->posY.i.hi;
+        if (self->ext.explosionEmitter.parent->entityId !=
+            self->ext.explosionEmitter.parentId) {
             DestroyEntity(self);
         }
         break;
@@ -121,14 +171,84 @@ INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E03F0, func_060E03F0);
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E08C8, func_060E08C8);
 void func_060E09D4(void) { DestroyEntity(); }
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E09EC, func_060E09EC);
-INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E16B8, func_060E16B8);
+void func_060E16B8(void* arg0) {
+    Entity* self;
+    s32* state_ptr;
+    u32 local[6];
+    s32 state;
+    s32 result;
+    s32 count;
+    s8 item;
+
+    self = arg0;
+    state_ptr = &self->ext.save.unk4;
+    state = *state_ptr;
+
+    if (state == 10)
+        goto L_case10;
+    if (state > 10) {
+        if (state == 30)
+            goto L_case30;
+    }
+    return;
+
+L_case10_success:
+    DAT_060485C0.unk5 = count;
+    DAT_060485C0.unk4 = item;
+    self->ext.save.unk4 = 30;
+    goto L_case10_after;
+
+L_case10:
+    item = DAT_060485C0.unk4;
+    count = 1;
+
+    for (;;) {
+        result = func_0600D028(item, count);
+        if (result == 0 || result == 8) {
+            count += 1;
+            if (count > 5)
+                break;
+        } else {
+            goto L_case10_success;
+        }
+    }
+
+L_case10_after:
+    if (count == 6) {
+        self->step = 1;
+        self->ext.save.unk4 = 41;
+    }
+    return;
+
+L_case30:
+    item = DAT_060485C0.unk4;
+    count = DAT_060485C0.unk5;
+
+    result = func_06030690(item, 70, local);
+    if (result == 2) {
+        self->ext.save.unk4 = 43;
+        return;
+    }
+
+    result = func_0600D028(item, count);
+    if (result == 5 && local[4] <= 0x4D) {
+        self->ext.save.unk4 = 44;
+        return;
+    }
+
+    if (func_0600D264(item, count) == 0 && func_0600D264(item, count) == 0 &&
+        func_0600D47C(item, count) == 0) {
+        self->ext.save.unk4 = 40;
+    } else {
+        self->ext.save.unk4 = 45;
+    }
+}
 u16 func_060E17D0(s32 minX, s32 maxX) {
     u16 result;
 
     g_Player.unk7A = 1;
-    if ((u16)(s16)g_Entities->step != 0 ||
-        (result = (u16)(s16)g_Entities->step_s, result != 1) ||
-        g_Entities->posX.i.hi < minX || g_Entities->posX.i.hi > maxX) {
+    if (PLAYER.step != 0 || (result = PLAYER.step_s, result != 1) ||
+        PLAYER.posX.i.hi < minX || PLAYER.posX.i.hi > maxX) {
         result = 0;
     }
     return result;
@@ -239,7 +359,36 @@ void func_060E5F0C(Entity* self) {
 const u32 DAT_060E5F44 = 0xAAAAAAAB;
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E5F48, func_060E5F48);
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E660C, func_060E660C);
-INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E6828, func_060E6828);
+void func_060E6828(Entity* self) {
+    if (self->step == 0) {
+        self->unk0 = CreateSpriteObject(
+            g_RStage16SpriteBankGargoyle[0].allocationIndex,
+            g_RStage16SpriteBankGargoyle[0].flags, DAT_060EF0C0, 1);
+        SyncSpriteObjectPosUnchecked(self, &DAT_060EDEBC);
+        self->step = 1;
+        TekiInit(self, 5);
+        self->ext.gargoyle.clutBase = self->unk0->clutBase;
+
+        switch (self->ext.gargoyle.variant) {
+        case 1:
+            self->animCurFrame = 1;
+            self->unk0->clutBase = self->ext.gargoyle.clutBase;
+            break;
+        case 2:
+            self->animCurFrame = 0x3A;
+            self->unk0->clutBase = self->ext.gargoyle.clutBase + 9;
+            break;
+        case 0:
+            self->animCurFrame = 0x3B;
+            self->unk0->clutBase = self->ext.gargoyle.clutBase + 0x12;
+            break;
+        }
+
+        self->unk0->zPriority -= 2;
+        func_06079BB4(self);
+        func_0600B004(self->unk0, DAT_060EEFD0[self->animCurFrame]);
+    }
+}
 void func_060E6930(Entity* self) {
     u8 sensorHit;
     u16 collision;

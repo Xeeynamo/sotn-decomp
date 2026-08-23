@@ -265,10 +265,10 @@ typedef struct {
 typedef struct {
     /* 0x7C */ u8 pad0[0x4];
     /* 0x80 */ u8* anim;
-    /* 0x84 */ s16 unk84;
+    /* 0x84 */ s16 angle;
     /* 0x86 */ u8 pad86[2];
-    /* 0x88 */ u8 unk88;
-    /* 0x89 */ u8 unk89;
+    /* 0x88 */ u8 puffStyle;
+    /* 0x89 */ u8 speed;
 } ET_ExplosionPuffOpaque;
 
 typedef struct {
@@ -329,8 +329,9 @@ typedef struct {
 typedef struct {
     s32 : 32;
     s32 : 32;
-    s32 : 32;
-    s32 : 32;
+    s32 fallSpeed;
+    s16 gravity;
+    s16 : 16;
     s32 : 32;
     s32 : 32;
     s32 castleFlag;
@@ -483,6 +484,58 @@ typedef struct {
     /* 0xB0 */ u16 itemFlagIndex;
 } ET_PrizeDrop;
 
+typedef struct {
+    /* 0x78 */ s16 variant;
+    /* 0x7A */ u8 : 8;
+    /* 0x7B */ u8 : 8;
+    /* 0x7C */ u8 padding[0x34];
+    /* 0xB0 */ u16 clutBase;
+} ET_Gargoyle;
+
+typedef struct {
+    /* 0x78 */ s32 : 32;
+    /* 0x7C */ s16 unk80;
+    /* 0x7E */ s16 : 16;
+    /* 0x80 */ u8 unk84;
+    /* 0x81 */ u8 unk85;
+    /* 0x82 */ u16 : 16;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ u8 index;
+} ET_DestructAnimation;
+
+typedef struct {
+    /* 0x78 */ u8 digits[4];
+    /* 0x7C */ s16 number;
+    /* 0x7E */ s16 type;
+    /* 0x80 */ s16 nDigits;
+    /* 0x82 */ u16 unk86;
+    /* 0x84 */ u16 unk88;
+    /* 0x86 */ u16 unk8A;
+    /* 0x88 */ s16 unk8C;
+    /* 0x8A */ s16 unk8E;
+    /* 0x8C */ s16 unk90;
+    /* 0x8E */ s16 unk92;
+    /* 0x90 */ s16 angleToMeter;
+    /* 0x92 */ s16 distToMeter;
+    /* 0x94 */ s16 unk98;
+} ET_HPNumberMove;
+
+typedef struct {
+    /* 0x78 */ u8 padding[0x32];
+    /* 0xAA */ s16 equipId;
+} ET_Weapon;
+
+typedef struct {
+    /* 0x78 */ u8 padding[0x38];
+    /* 0xB0 */ void* frames;
+} ET_SpriteEntity;
+
+typedef struct {
+    /* 0x78 */ s16 timer;
+} ET_EffectTimer;
+
 typedef union { // offset=0x78
     ET_Placeholder ILLEGAL;
     ET_AfterImage afterImage; // g_Entities[1], not entityID 1
@@ -504,6 +557,12 @@ typedef union { // offset=0x78
     ET_060E7888 et_060E7888;
     ET_060EBB2C et_060EBB2C;
     ET_PrizeDrop prizeDrop;
+    ET_Gargoyle gargoyle;
+    ET_DestructAnimation destructAnim;
+    ET_HPNumberMove hpNumMove;
+    ET_Weapon weapon;
+    ET_SpriteEntity spriteEntity;
+    ET_EffectTimer effectTimer;
     ET_SaveRoom save;
     struct {
         u8 pad[0x28];
@@ -534,13 +593,13 @@ typedef struct Entity {
     /* 0x16 */ s16 hitboxOffY;
     /* 0x18 */ u16 facingLeft;
     /* 0x1A */ u16 palette;
-    /* 0x1C */ u8 : 8;
+    /* 0x1C */ u8 unk1C;
     /* 0x1D */ u8 drawFlags; // refer to enum EntityDrawFlags
     /* 0x1E */ s16 rotate;   // 0x1000: 360 degrees, enabled with ENTITY_ROTATE
     /* 0x20 */ s16 scaleX;   // 0x100: 1.0, enabled with ENTITY_SCALEX
     /* 0x22 */ s16 scaleY;   // 0x100: 1.0, enabled with ENTITY_SCALEY
-    /* 0x24 */ s16 : 16;
-    /* 0x26 */ s16 : 16;
+    /* 0x24 */ s16 unk24;
+    /* 0x26 */ s16 unk26;
     /* 0x28 */ PfnEntityUpdate pfnUpdate;
     /* 0x2c */ u16 step;
     /* 0x2e */ u16 step_s;
@@ -854,7 +913,8 @@ typedef struct {
     char pad360[0x3C];
     /* 0x39C */ u8 unk39C;
     /* 0x39D */ u8 unk39D;
-    char pad39E[0x12];
+    /* 0x39E */ s8 unk39E;
+    char pad39F[0x11];
     /* 0x3B0 */ u32 padPressed;
     /* 0x3B4 */ u32 padTapped;
     /* 0x3B8 */ s32 : 32;
@@ -880,7 +940,9 @@ typedef struct {
     char pad440[0x2];
     /* 0x442 */ u16 healKind;   // 0 = none, 1 = potion, 2 = high potion
     /* 0x444 */ u16 healAmount; // hit points restored by func_060B0638
-    char pad446[0x16];
+    char pad446[0xC];
+    /* 0x452 */ s16 unk452;
+    char pad454[8];
     /* 0x45C */ u16 unk70;
     /* 0x45E */ u16 unk72;
     /* 0x460 */ u32 unk74;

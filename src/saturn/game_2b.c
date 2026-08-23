@@ -763,18 +763,18 @@ s32 GetDistanceToPlayerY(Entity* self) {
 
 void func_0607AA40(Entity* self, s16 arg1, s8 arg2, s8 arg3) {
     self->step = arg1;
-    self->ext.ILLEGAL.s8[8] = arg2;
-    self->ext.ILLEGAL.s8[9] = arg3;
-    self->ext.ILLEGAL.s8[0xA] = 0;
+    self->ext.spriteAnimEnemy.unk80 = arg2;
+    self->ext.spriteAnimEnemy.unk81 = arg3;
+    self->ext.spriteAnimEnemy.unk82 = 0;
     self->poseTimer = 0;
     self->pose = 0;
     self->step_s = 0;
 }
 void func_0607AA74(Entity* entity, s16 stepS, s8 arg2, s8 arg3) {
     entity->step_s = stepS;
-    entity->ext.ILLEGAL.u8[8] = arg2;
-    entity->ext.ILLEGAL.u8[9] = arg3;
-    entity->ext.ILLEGAL.u8[10] = 0;
+    entity->ext.spriteAnimEnemy.unk80 = arg2;
+    entity->ext.spriteAnimEnemy.unk81 = arg3;
+    entity->ext.spriteAnimEnemy.unk82 = 0;
     entity->poseTimer = 0;
     entity->pose = 0;
 }

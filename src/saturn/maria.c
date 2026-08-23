@@ -154,7 +154,41 @@ void func_060A70B4(void) {
     }
 }
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A714C, func_060A714C);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A7508, func_060A7508);
+void func_060A7508(void) {
+    Entity* entity;
+    s16 attackerOffX;
+    s16 playerOffX;
+    s16 distance;
+
+    entity = PLAYER.unkB4;
+    if (entity->facingLeft) {
+        attackerOffX = -entity->hitboxOffX;
+    } else {
+        attackerOffX = entity->hitboxOffX;
+    }
+
+    if (PLAYER.facingLeft) {
+        playerOffX = -PLAYER.hitboxOffX;
+    } else {
+        playerOffX = PLAYER.hitboxOffX;
+    }
+
+    distance = playerOffX + PLAYER.posX.i.hi - entity->posX.i.hi - attackerOffX;
+    if (ABS(distance) < 16 && entity->velocityX != 0) {
+        if (entity->velocityX < 0) {
+            PLAYER.entityRoomIndex = 0;
+        } else {
+            PLAYER.entityRoomIndex = 1;
+        }
+        return;
+    }
+
+    if (distance < 0) {
+        PLAYER.entityRoomIndex = 0;
+    } else {
+        PLAYER.entityRoomIndex = 1;
+    }
+}
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A75AC, func_060A75AC);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A7DF4, func_060A7DF4);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A7F70, func_060A7F70);
@@ -492,7 +526,58 @@ void RicSetAnimation(AnimationFrame* anim) {
     g_CurrentEntity->pose = 0;
 }
 
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA4FC, func_060AA4FC);
+void func_060AA4FC(Entity* arg0) {
+    s16** parts;
+    s16* frame;
+    s16* framePtr;
+    SpriteObject* sprite;
+    s32 count;
+    s32 posX;
+    s32 posY;
+
+    parts = (s16**)arg0->ext.bat.unkB0;
+    sprite = arg0->unk0;
+    if (parts != NULL && sprite != NULL) {
+        frame = parts[arg0->animCurFrame];
+        framePtr = frame;
+        sprite->flags =
+            (sprite->flags & ~0x3F08) | (*(volatile s16*)framePtr++ & 0x3F08);
+        sprite->slotAndStreamId = (sprite->slotAndStreamId & ~0x7F) |
+                                  (*(volatile s16*)framePtr & 0x7F);
+        func_0600B0B8(
+            sprite->parts, frame + 2,
+            ((u32) * (volatile u16*)&sprite->flags >> 8) & 0x3F, framePtr);
+        if (arg0 != g_Entities) {
+            posX = arg0->posX.val;
+            posY = arg0->posY.val;
+            sprite->posX = posX;
+            sprite->posY = posY;
+        }
+        if (arg0->facingLeft != 0) {
+            sprite->flags |= 0x10;
+        } else {
+            sprite->flags &= ~0x10;
+        }
+        count = 0;
+        if (arg0->drawFlags & 4) {
+            sprite->rotate = arg0->rotate & 0x0FFF;
+            count = 1;
+        }
+        if (arg0->drawFlags & 1) {
+            sprite->scaleX = arg0->scaleX >> 2;
+            count += 1;
+        }
+        if (arg0->drawFlags & 2) {
+            sprite->scaleY = arg0->scaleY >> 2;
+            count += 1;
+        }
+        if (count != 0) {
+            sprite->flags |= 0x40;
+        } else {
+            sprite->flags &= ~0x40;
+        }
+    }
+}
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AA608, func_060AA608);
 
 // func_060AA754
@@ -719,7 +804,26 @@ void func_8015FA5C(s32 arg0) {
     D_80174FB8 = g_MariaBlueprintColors[arg0][3];
 }
 
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60ABF40, func_060ABF40);
+void func_060ABF40(Entity* self) {
+    SubweaponDef* subweaponDef;
+
+    subweaponDef = &DAT_060C1B02[self->ext.subweapon.subweaponId];
+    if (g_Player.timers[13] != 0) {
+        self->attack = subweaponDef->attack * 2;
+    } else {
+        self->attack = subweaponDef->attack;
+    }
+    self->attackElement = subweaponDef->attackElement;
+    self->hitboxState = subweaponDef->hitboxState;
+    self->nFramesInvincibility = subweaponDef->nFramesInvincibility;
+    self->stunFrames = subweaponDef->stunFrames;
+    self->hitEffect = subweaponDef->hitEffect;
+    self->entityRoomIndex = subweaponDef->entityRoomIndex;
+    self->attack = func_0606F328(self->attack);
+    func_060ABE94(self);
+}
+
+static const volatile u16 DAT_060ABFDE = 0x0009;
 void func_060ABFF0(Entity* entity, MariaAttackDef* def) {
     entity->attack = def->attack;
     entity->hitboxWidth = def->hitboxWidth;
@@ -781,7 +885,7 @@ void func_060AE2C8(Entity* self) {
             g_EntitySpriteBank01.allocationIndex, g_EntitySpriteBank01.flags,
             g_EntitySpriteBank01.images, 5);
         if (self->unk0 != NULL) {
-            self->ext.ILLEGAL.u32[0xE] = (u32)DAT_06045E14;
+            self->ext.spriteEntity.frames = DAT_06045E14;
             self->unk0->zPriority = g_Entities->zPriority + 4;
             self->animSet = 2;
             self->anim = &DAT_060C2408;
@@ -1236,7 +1340,58 @@ void func_060BE414(void) {
     iVar2[0x4500] = 0xffffffff;
 }
 
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BE440, func_060BE440);
+void func_060BE440(void) {
+    s32* work;
+    u8* area;
+    u8* dst;
+    s32 i;
+    u32 clear_size;
+    u8* table_base;
+    s32 table_offset;
+    u32 dma_offset;
+
+    DAT_06086390 = 1;
+    work = func_060784A8();
+    work[0x4500] = -1;
+
+    clear_size = 0xA000U;
+    area = (u8*)(work + 0x4501);
+    memset(area, 0, clear_size);
+    dst = area;
+
+    i = 0;
+    do {
+        func_06078700(dst, DAT_06085DE8[i], 4);
+        dst += 0x180;
+        i++;
+    } while (i <= 10);
+
+    i = 0;
+    do {
+        func_06078700(dst, DAT_06085E14[i], 4);
+        dst += 0x180;
+        i++;
+    } while (i <= 7);
+
+    i = 0;
+    do {
+        func_06078700(dst, DAT_06085DCC[i], 4);
+        dst += 0x180;
+        i++;
+    } while (i <= 1);
+
+    table_base = (u8*)DAT_0605aec0;
+    table_offset = 8;
+    dma_offset = *(u16*)(table_base + table_offset);
+    dma_offset *= 8U;
+    dma_offset += 0x25C00000U;
+    DMA_CpuMemCopy2((s32*)dma_offset, work + 0x4501, 0xFC0U);
+
+    while (DMA_CpuResult() == 2) {
+    }
+}
+
+static const volatile u16 DAT_060BE512 = 0x0009;
 void func_060BE54C(void) {
     s32* base;
     s32* dst;

@@ -230,7 +230,7 @@ s32 func_060A637C(s32 itemId, s32 handId) {
 
     entity = &g_Entities[16];
     for (i = 16, existing_count = 0; i < 64; i++, entity++) {
-        if (entity->ext.ILLEGAL.s16[0x19] != itemId) {
+        if (entity->ext.weapon.equipId != itemId) {
             continue;
         }
 
@@ -565,7 +565,51 @@ INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AF1BC, func_060AF1BC);
 void func_060AF4A0(void) { func_060AF1BC(1); }
 
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AF4B8, func_060AF4B8);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AF550, func_060AF550);
+void func_060AF550(void) {
+    Entity* entity;
+    SpriteObject* sprite;
+    u16* addr2;
+    u16* addr4;
+    u16* addr6;
+
+    g_Player.unk452 = 0;
+    if (PLAYER.rotate == 0x800 && PLAYER.step == 8) {
+        PLAYER.drawFlags = (s8)PLAYER.drawFlags & 0xFB;
+        PLAYER.rotate = 0;
+        PLAYER.animCurFrame = 0x9D;
+        PLAYER.facingLeft = ((s16)PLAYER.facingLeft + 1) & 1;
+    }
+    if (g_Player.timers[11] != 0) {
+        g_Player.timers[11] = 0;
+        {
+            volatile SotnFixed32 auraColors[2] = {0, 0};
+
+            auraColors[0].val = 0xC210;
+            auraColors[1].val = 0x801F;
+            func_0600A330();
+            *(u8*)&g_Player.unk39E |= 0x80;
+            DAT_060CE4B2 = auraColors[0].i.lo;
+            DAT_060CE4B4 = 0x80;
+            DAT_060CE972 = 0;
+        }
+    }
+    entity = &PLAYER;
+    entity->unk1C = 0;
+    addr2 = (u16*)&entity->unk24;
+    addr4 = (u16*)&entity->unk26;
+    *addr4 = 0;
+    *addr2 = 0;
+    sprite = func_0600BD4C(entity->unk0);
+    addr2 = &sprite->slotAndStreamId;
+    addr4 = &sprite->charBase;
+    addr6 = &sprite->clutBase;
+    *addr6 = -0x3DF0;
+    *addr4 = -0x3DF0;
+    *addr2 = -0x3DF0;
+    sprite->flags = -0x3DF0;
+}
+
+const volatile u16 DAT_060AF62A = 0x0009;
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AF654, func_060AF654);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AF7F0, func_060AF7F0);
 typedef enum {

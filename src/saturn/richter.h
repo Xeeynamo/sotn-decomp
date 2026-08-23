@@ -8,6 +8,9 @@
 #include "sattypes.h"
 #include <saturn_player.h>
 
+extern s8* DAT_06085DE8[];
+extern s8* DAT_06085E14[];
+
 enum RicBlueprints {
     BP_SKID_SMOKE,
     BP_SMOKE_PUFF,

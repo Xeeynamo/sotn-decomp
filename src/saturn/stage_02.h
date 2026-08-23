@@ -51,9 +51,7 @@ void FreePrimitives(s32 primIndex);
 void SyncSpriteObjectPosUnchecked(Entity* self, s16* offset);
 void DestroyEntity(Entity* entity);
 
-void func_0600AFA8(SpriteObject*, SaturnSpriteFrameHeader*);
 void func_0600B004(SpriteObject*, s16*);
-void TekiInit(Entity*, s32);
 void MoveEntity(Entity*);
 void func_0600FB0C(s32);
 SpriteObject* CreateSpriteObject(

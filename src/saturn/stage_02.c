@@ -136,8 +136,8 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DE178, func_060DE178);
 // SAT func_060DE2B0
 void CreateExplosionPuff() {
     Entity* entity;
-    s8 temp_s4 = Random() & 3;
-    s16 temp_s3 = ((Random() & 0xF) << 8) - 0x800;
+    s8 rand3 = Random() & 3;
+    s16 initAngle = ((Random() & 0xF) << 8) - 0x800;
     s32 i;
 
     for (i = 0; i < 6; i++) {
@@ -145,9 +145,9 @@ void CreateExplosionPuff() {
         if (entity != NULL) {
             CreateEntityFromEntity(E_FIRE, g_CurrentEntity, entity);
             entity->params = 2;
-            entity->ext.opaquePuff.unk89 = 6 - i;
-            entity->ext.opaquePuff.unk84 = temp_s3;
-            entity->ext.opaquePuff.unk88 = temp_s4;
+            entity->ext.opaquePuff.speed = 6 - i;
+            entity->ext.opaquePuff.angle = initAngle;
+            entity->ext.opaquePuff.puffStyle = rand3;
         }
     }
 }
@@ -314,7 +314,64 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E2018, func_060E2018);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E21B8, func_060E21B8);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E22FC, func_060E22FC);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E2420, func_060E2420);
-INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E2898, func_060E2898);
+void CheckCollision(s32 x, s32 y, Collider* res, u16 unk);
+void func_06079BE4(Entity* self);
+
+void func_060E2898(u16 arg0) {
+    Entity* self = g_CurrentEntity;
+    Collider col;
+
+    if (self->velocityY < 0) {
+        CheckCollision(self->posX.val, self->posY.val - FIX(7), &col, 0);
+        if (col.effects & EFFECT_NOTHROUGH) {
+            self->velocityY = 0;
+        }
+    }
+
+    CheckCollision(self->posX.val, self->posY.val + FIX(8), &col, 0);
+
+    if (arg0 != 0) {
+        if (!(col.effects & EFFECT_NOTHROUGH)) {
+            MoveEntity(self);
+            func_06079BE4(self);
+            return;
+        }
+
+        self->velocityX = 0;
+        self->velocityY = 0;
+        if (col.effects & EFFECT_QUICKSAND) {
+            self->posY.val += FIX(0.125);
+        } else {
+            self->posY.val += col.unk18;
+        }
+        self->posY.i.hi++;
+        self->posY.i.lo = 0;
+    } else {
+        Entity* current;
+
+        if (col.effects & EFFECT_NOTHROUGH) {
+            return;
+        }
+
+        MoveEntity(self);
+        current = g_CurrentEntity;
+        if (current->velocityY >= 0) {
+            current->ext.equipItemDrop.fallSpeed +=
+                current->ext.equipItemDrop.gravity;
+            current->velocityX = current->ext.equipItemDrop.fallSpeed;
+            if (current->velocityX == FIX(1) || current->velocityX == FIX(-1)) {
+                current->ext.equipItemDrop.gravity =
+                    -current->ext.equipItemDrop.gravity;
+            }
+        }
+
+        if (current->velocityY < FIX(0.25)) {
+            current->velocityY += FIX(0.125);
+        }
+    }
+}
+
+const volatile u16 DAT_060E2982 = 9;
 extern s16 DAT_060F1AE8[];
 extern u16 g_Stage02AlucardSubweaponIds[];
 
@@ -499,13 +556,73 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E6140, func_060E6140);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E625C, func_060E625C);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E633C, func_060E633C);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E6628, func_060E6628);
-INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E6B00, func_060E6B00);
+void func_060E6B00(Entity* self) {
+    SpriteObject* sprite;
+    SaturnSpriteFrameHeader** frame;
+    s16 params;
+    u16 flags;
+    u32 spriteFlags;
+    s32 maxParts;
+    s32 offset;
+    s32 count;
+    s32 i;
+
+    if (self->step == 0) {
+        params = self->params;
+        spriteFlags = params & (s16)0xff00;
+        flags = params & 3;
+        if (flags & 2) {
+            maxParts = 18;
+        } else {
+            maxParts = 6;
+        }
+
+        sprite = CreateSpriteObject(
+            g_EntitySpriteBank08.allocationIndex, g_EntitySpriteBank08.flags,
+            g_EntitySpriteBank08.images, maxParts);
+        self->unk0 = sprite;
+        TekiInit(self, 3);
+        self->step++;
+        frame = DAT_06046CD0;
+        if (flags & 2) {
+            frame += 2;
+        } else {
+            frame += 1;
+        }
+        func_0600AFA8(sprite, *frame);
+
+        if (spriteFlags != 0) {
+            sprite->flags |= 0x30;
+        }
+        sprite->flags = (sprite->flags & 0xfff8) | 3;
+        sprite->posX = self->posX.val;
+        sprite->posY = self->posY.val;
+
+        offset = 0xb0;
+        if (flags & 1) {
+            offset = 0xbd;
+        }
+        flags &= 2;
+        count = 2;
+        if (flags != 0) {
+            count = 6;
+        }
+
+        for (i = 0; i < count; i++) {
+            DAT_0608FFF8[offset] = 3;
+            DAT_0608FFF8[offset + 1] = 3;
+            DAT_0608FFF8[offset + 2] = 3;
+            offset -= 0x10;
+        }
+    }
+}
+
+static const volatile u16 DAT_060E6BF2 = 0x0009;
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E6C0C, func_060E6C0C);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E7014, func_060E7014);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E73CC, func_060E73CC);
 
 void PlaySfx(s32);
-void TekiInit(Entity*, s32);
 void DestroyEntity(Entity*);
 
 static inline SetGeomScreen(u32 h) { DAT_06061DE0[0] = DAT_06061DE0[1] = h; }
