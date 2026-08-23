@@ -1179,7 +1179,38 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ACFA0, func_060ACFA0);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AD780, func_060AD780);
 
 // func_80161EF8
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ADA34, func_060ADA34);
+void func_060ADA34(Entity* self) {
+    switch (self->step) {
+    case 0:
+        self->unk0 = CreateSpriteObject(
+            g_EntitySpriteBank01.allocationIndex, g_EntitySpriteBank01.flags,
+            g_EntitySpriteBank01.images, 5);
+        if (self->unk0 != NULL) {
+            self->ext.ILLEGAL.u32[0xE] = (u32)DAT_06045E14;
+            self->unk0->zPriority = g_Entities->zPriority + 4;
+            self->animSet = 2;
+            self->anim = anim_80154E38;
+            self->flags = 0x170000;
+            self->velocityY = (MTH_GetRand() & 0x3FFF) - FIX(1);
+            self->step++;
+        } else {
+            DestroyEntity(self);
+        }
+        break;
+
+    case 1:
+        if (self->pose == 6) {
+            if (self->poseTimer == 1 && (MTH_GetRand() & 1)) {
+                RicCreateEntFactoryFromEntity(self, 4, 0);
+            }
+        }
+        self->posY.val += self->velocityY;
+        if (self->poseTimer < 0) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 // RicEntityApplyMariaPowerAnim
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ADB2C, func_060ADB2C);

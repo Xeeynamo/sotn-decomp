@@ -3593,7 +3593,6 @@ typedef struct {
     /* 0x84 */ s32 : 32;
     /* 0x88 */ s32 : 32;
     /* 0x8C */ struct Entity* parent;
-    /* 0x90 */ s16 unkTimer;
 } ET_ShaftOrb;
 
 typedef struct {
@@ -3913,12 +3912,14 @@ typedef struct {
 typedef struct {
     /* 0x7C */ struct Primitive* prim7C;
     /* 0x80 */ s16 timer;
-    /* 0x82 */ u16 : 16;
-    /* 0x84 */ u16 : 16;
+    /* 0x82 */ s16 alastorAngle;
+    /* 0x84 */ u8 alastorBrightness;
+    /* 0x85 */ u8 : 8;
     /* 0x86 */ u8 flag;
     /* 0x87 */ u8 : 8;
     /* 0x88 */ u32 : 32;
-    /* 0x8C */ u32 : 32;
+    /* 0x8C */ u16 : 16;
+    /* 0x8E */ u16 alastorClutState;
     /* 0x90 */ s16 angle;
     /* 0x92 */ s16 timer2;
     /* 0x94 */ u32 : 32;
@@ -4221,6 +4222,30 @@ typedef struct {
     /* 0xAD */ u8 unkAD;
     /* 0xAE */ u8 unkAE;
 } ET_Gorgon;
+
+// func_us_801A3FD4 (bo5, bo5_psp)
+typedef struct {
+    /* 0x7C */ u8 timer;
+    /* 0x7D */ u8 rotateDir;
+} ET_801A3FD4;
+
+// func_us_801C03E8 (bo6)
+typedef struct {
+    /* 0x7C */ s16 savedHitboxState;
+    /* 0x7E */ s16 showPrims;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s16 orbitAngle;
+    /* 0x86 */ s16 orbitAngleStep;
+    /* 0x88 */ s16 maxTurnRate;
+    /* 0x8A */ s16 moveAngle;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s16 hitTimer;
+} ET_801C03E8;
+
+typedef struct {
+    /* 0x7C */ s16 timer;
+    /* 0x7E */ s16 bobAngle;
+} ET_Shaft;
 
 typedef union { // offset=0x7C
     struct Primitive* prim;
@@ -4577,6 +4602,9 @@ typedef union { // offset=0x7C
     ET_Dodo dodo;
     ET_B0_Unk b0Unk;
     ET_801B0930 et_801B0930;
+    ET_801A3FD4 et_801A3FD4;
+    ET_801C03E8 et_801C03E8;
+    ET_Shaft shaft;
     ET_OlroxDrool olroxDrool;
     ET_Gorgon gorgon;
 } Ext;

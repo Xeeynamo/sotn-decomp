@@ -51,6 +51,8 @@ void DestroyEntity(Entity* entity);
 void func_0600AFA8(SpriteObject*, SaturnSpriteFrameHeader*);
 void func_0600B004(SpriteObject*, s16*);
 void TekiInit(Entity*, s32);
+void MoveEntity(Entity*);
+void func_0600FB0C(s32);
 SpriteObject* CreateSpriteObject(
     u16 charBase, u16 clutBase, SaturnSpriteImage* images, s32 maxParts);
 void SyncSpriteObjectPos(Entity*);
