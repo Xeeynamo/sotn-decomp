@@ -37,6 +37,10 @@ void func_060E7C60(Entity* self);
 void func_060E73FC(Entity* self);
 void func_060E72FC(Entity* self);
 void func_060E6DDC(Entity* self);
+extern SaturnSpriteResource g_Stage16SpriteBank16;
+void TekiInit(Entity* self, s32 arg);
+void func_0600AFA8(SpriteObject* sprite, SaturnSpriteFrameHeader* frame);
+
 extern SaturnSpriteResource g_Stage16SpriteBank25;
 void func_060E6C88(Entity* self);
 void func_060E6A6C(Entity* self);

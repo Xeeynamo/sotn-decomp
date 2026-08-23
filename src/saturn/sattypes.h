@@ -228,7 +228,7 @@ typedef enum {
     FLAG_DESTROY_IF_OUT_OF_CAMERA = 0x80000000,
 } EntityFlag;
 
-typedef struct {
+typedef struct Primitive {
     s16 type;
     s16 priority;
     u16 unk4;
@@ -364,6 +364,125 @@ typedef struct {
     s32 unk38;
 } ET_SaveRoom;
 
+typedef struct {
+    /* 0x78 */ s32 : 32;
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s16 unk84;
+    /* 0x86 */ s16 : 16;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ u8 unk98;
+} ET_BloodyZombie;
+
+typedef struct {
+    /* 0x78 */ u8 timer;
+    /* 0x79 */ u8 : 8;
+    /* 0x7A */ u16 : 16;
+    /* 0x7C */ struct Entity* parent;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ u16 parentId;
+} ET_ExplosionEmitter;
+
+typedef struct {
+    /* 0x78 */ s32 : 32;
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s16 : 16;
+    /* 0x86 */ u16 unk86;
+} ET_SubweaponCard;
+
+typedef struct {
+    /* 0x78 */ s32 timer;
+} ET_SpawnerTimer;
+
+typedef struct {
+    /* 0x78 */ s32 : 32;
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ Primitive* prim;
+} ET_PrimHolder;
+
+typedef struct {
+    /* 0x78 */ s32 : 32;
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ u8 : 8;
+    /* 0x91 */ u8 unk91;
+} ET_060ECD4C;
+
+typedef struct {
+    /* 0x78 */ struct Entity* parent;
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ u16 savedHitboxState;
+} ET_060EEE20;
+
+typedef struct {
+    /* 0x78 */ u8 : 8;
+    /* 0x79 */ u8 unk79;
+} ET_060E7888;
+
+typedef struct {
+    /* 0x78 */ s32 : 32;
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s32 unk88;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ u16 unk94;
+    /* 0x96 */ u16 : 16;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ u8 unk9C;
+    /* 0x9D */ u8 : 8;
+    /* 0x9E */ u16 : 16;
+    /* 0xA0 */ u16 : 16;
+    /* 0xA2 */ u8 unkA2;
+} ET_060EBB2C;
+
+typedef struct {
+    /* 0x78 */ s32 gravity;
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ u8 r;
+    /* 0x81 */ u8 g;
+    /* 0x82 */ u8 b;
+    /* 0x83 */ u8 : 8;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s16 unk88;
+} ET_GlowParticle;
+
+typedef struct {
+    /* 0x78 */ u8* frames;
+    /* 0x7C */ u8* animations;
+    /* 0x80 */ u8 unk80;
+    /* 0x81 */ u8 unk81;
+    /* 0x82 */ u8 unk82;
+} ET_SpriteAnimEnemy;
+
+typedef struct {
+    /* 0x78 */ s32 : 32;
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s32 : 32;
+    /* 0xA0 */ s32 : 32;
+    /* 0xA4 */ s32 : 32;
+    /* 0xA8 */ s32 : 32;
+    /* 0xAC */ s32 : 32;
+    /* 0xB0 */ u16 itemFlagIndex;
+} ET_PrizeDrop;
+
 typedef union { // offset=0x78
     ET_Placeholder ILLEGAL;
     ET_AfterImage afterImage; // g_Entities[1], not entityID 1
@@ -373,6 +492,18 @@ typedef union { // offset=0x78
     ET_EquipItemDrop equipItemDrop;
     ET_BatFamBlueTrail batFamBlueTrail;
     ET_Bat bat;
+    ET_BloodyZombie bloodyZombie;
+    ET_ExplosionEmitter explosionEmitter;
+    ET_SubweaponCard subweaponCard;
+    ET_SpriteAnimEnemy spriteAnimEnemy;
+    ET_GlowParticle glowParticle;
+    ET_SpawnerTimer spawnerTimer;
+    ET_PrimHolder primHolder;
+    ET_060ECD4C et_060ECD4C;
+    ET_060EEE20 et_060EEE20;
+    ET_060E7888 et_060E7888;
+    ET_060EBB2C et_060EBB2C;
+    ET_PrizeDrop prizeDrop;
     ET_SaveRoom save;
     struct {
         u8 pad[0x28];
