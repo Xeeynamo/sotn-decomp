@@ -857,7 +857,7 @@ void GetSpellDef(SpellDef* spell, s32 id) {
     *spell = g_SpellDefs[id];
     spell->attack += (g_Status.statsTotal[2] * 2 + (rand() % 12)) / 10;
     if (CheckEquipmentItemCount(0x15, 2) != 0) {
-        spell->attack = spell->attack + spell->attack / 2;
+        spell->attack += spell->attack / 2;
     }
 }
 
@@ -887,7 +887,7 @@ s16 GetStatusAilmentTimer(s32 statusAilment, s16 timer) {
         if (petrify_adjustment < 0) {
             petrify_adjustment = 0;
         }
-        if (4 < petrify_adjustment) {
+        if (petrify_adjustment > 4) {
             petrify_adjustment = 4;
         }
         ret -= petrify_adjustment;
@@ -945,6 +945,7 @@ bool ReduceWeapon(s32 hand) {
     }
     equippedItem = &g_Status.equipment[hand];
     isConsumable = g_EquipDefs[*equippedItem].isConsumable;
+
     if (CheckEquipmentItemCount(0x56, 4)) {
         return false;
     }
@@ -970,9 +971,9 @@ s32 func_800FDE00(void) {
 
 // original name: check_experience
 u32 CheckAndDoLevelUp(void) {
-    s32 statgain;
     s32 i;
     s32 statsGained;
+    s32 statgain;
     bool maxMp;
 
     if (D_80137960 != 0) {
@@ -1004,11 +1005,13 @@ u32 CheckAndDoLevelUp(void) {
         g_Status.hp += g_LevelHPIncrease[g_Status.level / 10];
         g_Status.hpMax += g_LevelHPIncrease[g_Status.level / 10];
         g_Status.heartsMax += 2;
-        statsGained = 0;
+
         CheckAndDoLevelUp();
+        statsGained = 0;
         for (i = 0; i < 4; i++) {
             statgain = rand() & 1;
             g_Status.statsBase[i] += statgain;
+
             if (g_Status.statsBase[i] > 99) {
                 g_Status.statsBase[i] = 99;
                 statgain = 0;
@@ -1029,13 +1032,11 @@ u32 CheckAndDoLevelUp(void) {
 
 // SAT: func_0606FA30
 s32 func_800FE044(s32 amount, s32 type) {
-    s32 iVar4;
-    u32 uVar8;
     s32 oldHeartMax;
-    u32 playerXPBoost;
-    s32 i;
-    s32 levelDiff;
     s32 activeFamiliar;
+    s32 levelDiff;
+    s32 i;
+    u32 playerXPBoost;
 
     if (type == 0x8000) {
         if (g_Status.hpMax == 9999) {
@@ -1114,10 +1115,12 @@ s32 func_800FE044(s32 amount, s32 type) {
     }
     activeFamiliar = g_Servant - 1;
     playerXPBoost = amount / g_Status.statsFamiliars[activeFamiliar].level;
-    for (i = 0; playerXPBoost > 0; i++) {
-        playerXPBoost = playerXPBoost / 2;
+    i = 0;
+    while (playerXPBoost != 0) {
+        i++;
+        playerXPBoost >>= 1;
     }
-    if (i < 1) {
+    if (i <= 0) {
         i = 1;
     }
     g_Status.statsFamiliars[activeFamiliar].exp += i;
@@ -1168,7 +1171,7 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
         }
         if (subweaponId == 4 || subweaponId == 12) {
             accessoryCount =
-                CheckEquipmentItemCount(0x3e, 4); // 3e instead of 3d
+                CheckEquipmentItemCount(0x3E, 4); // 3E instead of 3D
             if (accessoryCount == 1) {
                 subwpn->attack *= 2;
             }
@@ -1307,23 +1310,23 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount) {
     // have special behavior. Also, not possible to equip two. This may be
     // a new discovery of a property of the item. Worth further analysis.
 
-    itemCount = CheckEquipmentItemCount(0x1C, 1);
-    if ((itemCount != 0) &&
-        (damage->effects &
-         (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000 |
-          EFFECT_UNK_1000 | EFFECT_UNK_0800 | EFFECT_UNK_0100 |
-          EFFECT_SOLID_FROM_BELOW))) {
-        if (itemCount == 1) {
-            amount -= amount / 5;
-        }
-        if (itemCount == 2) {
-            amount -= amount / 3;
+    if (itemCount = CheckEquipmentItemCount(0x1C, 1)) {
+        if (damage->effects &
+            (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000 |
+             EFFECT_UNK_1000 | EFFECT_UNK_0800 | EFFECT_UNK_0100 |
+             EFFECT_SOLID_FROM_BELOW)) {
+            if (itemCount == 1) {
+                amount -= amount / 5;
+            }
+            if (itemCount == 2) {
+                amount -= amount / 3;
+            }
         }
     }
     if (g_Player.status & PLAYER_STATUS_STONE) {
         damage->damageTaken = g_Status.hpMax / 8;
         ret = 8;
-    } else if (damage->effects & EFFECT_UNK_0200) {
+    } else if (damage->effects & ELEMENT_STONE) {
         damage->damageTaken = amount - g_Status.defenseEquip * 2;
         if (damage->damageTaken <= 0) {
             damage->damageTaken = 0;
@@ -1346,8 +1349,7 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount) {
             damage->damageTaken *= 2;
         }
         // Check for player wearing a Talisman (chance to dodge attack)
-        itemCount = CheckEquipmentItemCount(0x55, 4);
-        if (itemCount != 0) {
+        if (itemCount = CheckEquipmentItemCount(0x55, 4)) {
             if (g_Status.statsTotal[3] * itemCount >= (rand() & 0x1FF)) {
                 return 2;
             }
@@ -1382,7 +1384,7 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount) {
     if (g_Status.hp <= damage->damageTaken) {
         g_Status.hp = 0;
         if (ret == 7) {
-            return 7;
+            return ret;
         }
         if (ret == 9) {
             ret = 6;

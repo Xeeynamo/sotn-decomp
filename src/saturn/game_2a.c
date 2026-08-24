@@ -359,8 +359,6 @@ void InitStatsAndGear(s32 isDeathTakingItems) {
     return;
 }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6075838, func_06075838);
-
 static u16 LookupTblNoToVram(u16 arg0) {
     if (arg0 & 0x4000) {
         return LocalLookupTblNoToVram(arg0 & 0xFFF);
@@ -381,8 +379,169 @@ typedef struct {
 extern SprGourTbl* SpGourTbl;
 extern u32 D_8003C744;
 extern s16 g_StatusHudPrimitiveLayout[];
-extern SaturnSpriteResource** DAT_060645EC;
+extern u16 DAT_0605AED8[][2];
 extern s16 g_StatusHudSpriteOffsets[][2];
+
+void func_06075838(void) {
+    s32 i;
+    Primitive* prim;
+    s16* temp2;
+
+    D_801397FC = 0;
+    D_80139008 = 0;
+    g_PlayerHud.unk28 = 0;
+    D_8003C744 = 0;
+    g_PlayerHud.unk0C = 0x190;
+    g_PlayerHud.unk10 = 0x190;
+    g_PlayerHud.unk14 = 0x40;
+    g_PlayerHud.unk18 = 0;
+    g_PlayerHud.unk20 = 0x64;
+    g_PlayerHud.unk1C = 0x64;
+    g_PlayerHud.unk24 = 0;
+    g_PlayerHud.primIndex1 = AllocPrimitives(0, 9);
+    prim = &g_PrimBuf[g_PlayerHud.primIndex1];
+    temp2 = g_StatusHudSpriteOffsets;
+    while (prim != NULL) {
+        u16* ptr;
+        ptr = DAT_0605aec0[DAT_06086388->allocationIndex + *temp2++];
+        prim->unk8 = ptr[0];
+        prim->unkA = ptr[1];
+        prim->unk6 =
+            LookupTblNoToVram(DAT_06086388->flags + *temp2++) & 0x8FFF | 0x4000;
+        prim = prim->next;
+    }
+    prim = &g_PrimBuf[g_PlayerHud.primIndex1];
+    temp2 = g_StatusHudPrimitiveLayout;
+    SetXY(prim, temp2[0], temp2[1]);
+    temp2 += 2;
+    prim->priority = 0x1BF;
+    prim->drawMode = DRAW_ABSPOS;
+    prim = prim->next;
+
+    prim->type = 0x1002;
+    prim->unk4 = 0x1488;
+    prim->x0 = prim->x1 = g_PlayerHud.unk14 + temp2[0];
+    prim->y2 = prim->y1 = temp2[1];
+    temp2 += 2;
+    prim->x2 = prim->x3 = prim->x1 + 0x27;
+    prim->y0 = prim->y3 = prim->y1 + 0x5F;
+    prim->priority = 0x1BF;
+    if (g_CurrentRoom.stageID == STAGE_ST0) {
+        prim->drawMode = DRAW_ABSPOS;
+    } else {
+        prim->drawMode = DRAW_HIDE | DRAW_ABSPOS;
+    }
+    prim = prim->next;
+
+    prim->type = 0x1001;
+    prim->unk4 = 0x1480;
+    SetXY(prim, temp2[0], temp2[1]);
+    temp2 += 2;
+    prim->y2 = prim->y0 - 0x20;
+    prim->x2 = prim->x0 + 0x8;
+    prim->priority = 0x1C0;
+    prim->drawMode = DRAW_ABSPOS;
+    prim = prim->next;
+
+    prim->type = 0x1001;
+    prim->unk4 = 0x1480;
+    SetXY(prim, temp2[0], temp2[1]);
+    temp2 += 2;
+    prim->y2 = prim->y0 - 0x20;
+    prim->x2 = prim->x0 + 0x8;
+    prim->priority = 0x1C0;
+    if (g_CurrentRoom.stageID == STAGE_ST0) {
+        prim->drawMode = DRAW_ABSPOS;
+    } else {
+        prim->drawMode = DRAW_HIDE | DRAW_ABSPOS;
+    }
+    prim->x3 = 0;
+    prim->y3 = 0x6;
+    prim = prim->next;
+
+    prim->type = 0x1001;
+    prim->unk4 = 0x1480;
+    SetXY(prim, temp2[0], temp2[1]);
+    temp2 += 2;
+    prim->y2 = prim->y0 - 0x20;
+    prim->x2 = prim->x0 + 0x8;
+    prim->priority = 0x1C0;
+    if (g_CurrentRoom.stageID == STAGE_ST0) {
+        prim->drawMode = DRAW_ABSPOS;
+    } else {
+        prim->drawMode = DRAW_HIDE | DRAW_ABSPOS;
+    }
+    prim = prim->next;
+
+    SetXY(prim, temp2[0], temp2[1]);
+    temp2 += 2;
+    prim->priority = 0x1C0;
+    prim->drawMode = DRAW_ABSPOS;
+    prim = prim->next;
+
+    SetXY(prim, temp2[0], temp2[1]);
+    temp2 += 2;
+    prim->priority = 0x1C0;
+    prim->drawMode = DRAW_ABSPOS;
+    prim = prim->next;
+
+    SetXY(prim, temp2[0], temp2[1]);
+    temp2 += 2;
+    prim->priority = 0x1C0;
+    prim->drawMode = DRAW_ABSPOS;
+    prim = prim->next;
+
+    SetXY(prim, temp2[0], temp2[1]);
+    temp2 += 2;
+    prim->priority = 0x1BF;
+    prim->drawMode = DRAW_ABSPOS;
+    for (prim = &g_PrimBuf[g_PlayerHud.primIndex1]; prim != NULL;
+         prim = prim->next) {
+        prim->unk4 &= 0xFFC7;
+    }
+    g_PlayerHud.primIndex2 = AllocPrimitives(2, 20);
+    prim = &g_PrimBuf[g_PlayerHud.primIndex2];
+    for (i = 0; prim != NULL; i++) {
+        SprGourTbl* temp;
+        u32 texOffset;
+        u16 idx;
+        u16* ptr2;
+        s16* x2p;
+        s16* x3p;
+        s16* y0p;
+        s16* y3p;
+
+        texOffset = i * 0xC0;
+        ptr2 = DAT_0605AED8[DAT_06086388->allocationIndex];
+        prim->unk8 = ptr2[0];
+        prim->unkA = ptr2[1];
+        prim->unk8 += (texOffset >> 4) & 0xFFFC;
+        prim->unkA = 0xC02;
+        prim->unk6 =
+            LookupTblNoToVram(DAT_06086388->flags + 2) & 0x8FFF | 0x4000;
+        prim->unk4 &= 0xFFC7;
+
+        x2p = &prim->x2;
+        x3p = &prim->x3;
+        prim->x0 = prim->x1 = (i * 2) + 0x110;
+        *x2p = *x3p = prim->x0 + 1;
+
+        y0p = &prim->y0;
+        y3p = &prim->y3;
+        prim->y1 = prim->y2 = 0x16;
+        *y0p = *y3p = 0x75;
+
+        prim->priority = 0x1BE;
+        prim->drawMode = DRAW_HIDE;
+        idx = prim->unk1C;
+        temp = &SpGourTbl[idx];
+        temp->entry[0] = (MTH_GetRand() & 0x3F) + 1;
+        temp->entry[1] = 0;
+        prim = prim->next;
+    }
+}
+
+extern SaturnSpriteResource** DAT_060645EC;
 extern u8 DAT_06085CE4[];
 
 void func_06075D24(void) {

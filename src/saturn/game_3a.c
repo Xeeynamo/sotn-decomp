@@ -1167,6 +1167,7 @@ void ServantWorkClear(void) {
     }
 }
 
+// original name: init_work_sub_out_p
 void init_work_sub_out_p(void) {
     s32 i;
     Entity* entity;
