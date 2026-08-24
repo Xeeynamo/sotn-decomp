@@ -5,6 +5,7 @@
 #include <string.h>
 #ifndef STAGE15_ROOM_TEST
 #include <psyz/cd.h>
+#include "pc.h"
 #include "music/xa_config.h"
 #endif
 #include "overlay.h"
@@ -15,7 +16,7 @@
 
 #include "stage15_data.h"
 
-static SpriteParts* s_SpriteBanks[] = {NULL};
+static SpriteParts* s_SpriteBanks[0x14];
 static u_long s_EmptyClut[] = {(u_long)-1};
 static u_long* s_Cluts[] = {s_EmptyClut};
 static GfxBank s_EmptyGfxBank = {.kind = GFX_BANK_NONE};
@@ -43,6 +44,7 @@ static u8 s_Stage15MasonryPixels[STAGE15_MASONRY_PIXEL_BYTES]
 static u16 s_Stage15MasonryPalette[STAGE15_MASONRY_PALETTE_WORDS];
 static u16 s_Stage15MasonryTpage;
 static bool s_Stage15MasonryReady;
+static bool s_Stage15MusicStarted;
 
 static bool Stage15LoadMasonry(void) {
     s32 length;
@@ -63,9 +65,14 @@ static bool Stage15LoadMasonry(void) {
 extern s32 g_CurCdPos;
 extern XaMusicConfig g_XaMusicConfigs[];
 
+enum {
+    STAGE15_MUSIC = 0x533,
+    STAGE15_MUSIC_LOOP_POINT,
+};
+
 static void Stage15ConfigureMusic(void) {
-    XaMusicConfig* start = &g_XaMusicConfigs[MU_STAGE15 - 0x300];
-    XaMusicConfig* loop = &g_XaMusicConfigs[MU_STAGE15_LOOP_POINT - 0x300];
+    XaMusicConfig* start = &g_XaMusicConfigs[STAGE15_MUSIC - 0x300];
+    XaMusicConfig* loop = &g_XaMusicConfigs[STAGE15_MUSIC_LOOP_POINT - 0x300];
     u32 base = 0U - (u32)g_CurCdPos;
 
     Psyz_CdSetDiskPath(STAGE15_ASSET_DIR "/music/audio.cue");
@@ -373,7 +380,7 @@ static bool Stage15LoadNativeRoom(s32 room) {
 static void Stage15DrawNativeBlock(
     Stage15NativeLayer* native, s32 order, s32 mapX, s32 mapY, s32 blockWidth,
     s32 blockHeight, s32 x0, s32 y0, s32 x1) {
-    POLY_GT4* poly;
+    POLY_FT4* poly;
     u16 pnd;
     u16 character;
     u16 palette;
@@ -422,14 +429,11 @@ static void Stage15DrawNativeBlock(
         v1 = v0 - (blockHeight * 8 - 1);
     }
 
-    poly = &g_CurrentBuffer->polyGT4[g_GpuUsage.gt4++];
-    setPolyGT4(poly);
+    poly = (POLY_FT4*)&g_CurrentBuffer->polyGT4[g_GpuUsage.gt4++];
+    setPolyFT4(poly);
     setShadeTex(poly, true);
     setSemiTrans(poly, false);
     setRGB0(poly, 0x80, 0x80, 0x80);
-    setRGB1(poly, 0x80, 0x80, 0x80);
-    setRGB2(poly, 0x80, 0x80, 0x80);
-    setRGB3(poly, 0x80, 0x80, 0x80);
     poly->x0 = poly->x2 = x0 + g_backbufferX;
     poly->x1 = poly->x3 = x1 + g_backbufferX;
     poly->y0 = poly->y1 = y0 + g_backbufferY;
@@ -501,23 +505,24 @@ static void Stage15DrawNativeLayer(s32 layer, s32 order, bool wrap) {
 }
 
 static void Stage15DrawBackScreen(void) {
-    POLY_G4* poly;
+    enum {
+        BACKDROP_PRIORITY = 0x10,
+        BACKDROP_RED = 0x31,
+        BACKDROP_GREEN = 0x00,
+        BACKDROP_BLUE = 0x29,
+    };
+    TILE* tile;
 
-    if (g_GpuUsage.g4 >= MAX_POLY_G4_COUNT) {
+    if (g_GpuUsage.tile >= MAX_TILE_COUNT) {
         return;
     }
-    poly = &g_CurrentBuffer->polyG4[g_GpuUsage.g4++];
-    setPolyG4(poly);
-    setSemiTrans(poly, false);
-    setRGB0(poly, 0x31, 0x00, 0x29);
-    setRGB1(poly, 0x31, 0x00, 0x29);
-    setRGB2(poly, 0x31, 0x00, 0x29);
-    setRGB3(poly, 0x31, 0x00, 0x29);
-    poly->x0 = poly->x2 = g_backbufferX;
-    poly->x1 = poly->x3 = DISP_STAGE_W + g_backbufferX;
-    poly->y0 = poly->y1 = g_backbufferY;
-    poly->y2 = poly->y3 = DISP_STAGE_H + g_backbufferY;
-    AddPrim(&g_CurrentBuffer->ot[0x10], poly);
+    tile = &g_CurrentBuffer->tiles[g_GpuUsage.tile++];
+    SetTile(tile);
+    SetSemiTrans(tile, false);
+    setRGB0(tile, BACKDROP_RED, BACKDROP_GREEN, BACKDROP_BLUE);
+    setXY0(tile, g_backbufferX, g_backbufferY);
+    setWH(tile, DISP_STAGE_W, DISP_STAGE_H);
+    AddPrim(&g_CurrentBuffer->ot[BACKDROP_PRIORITY], tile);
 }
 
 static bool Stage15RenderNativeLayers(void) {
@@ -691,6 +696,10 @@ static void Stage15SyncRoomEntities(void) {
 static void Stage15Update(void) {
     Entity* entity;
 
+    if (!s_Stage15MusicStarted) {
+        s_Stage15MusicStarted = true;
+        g_api.PlaySfx(STAGE15_MUSIC);
+    }
     Stage15SyncRoomEntities();
     for (entity = &g_Entities[STAGE_ENTITY_START];
          entity < &g_Entities[TOTAL_ENTITY_COUNT]; entity++) {
@@ -738,14 +747,30 @@ static void Stage15Update(void) {}
 static void Stage15InitRoomEntities(s32 layoutId) { (void)layoutId; }
 #endif
 
+Overlay g_Overlay = {
+    .Update = Stage15Update,
+    .HitDetection = Noop,
+    .UpdateRoomPosition = Noop,
+    .InitRoomEntities = Stage15InitRoomEntities,
+    .rooms = s_Stage15Rooms,
+    .spriteBanks = s_SpriteBanks,
+    .cluts = s_Cluts,
+    .objLayoutHorizontal = s_Stage15ObjLayouts,
+    .tileLayers = s_Stage15TileLayers,
+    .gfxBanks = s_GfxBanks,
+    .UpdateStageEntities = Noop,
+};
+
 OVL_API void InitStage(Overlay* o) {
-    memset(o, 0, sizeof(*o));
     s_CurrentLayout = NULL;
     s_CurrentLayoutCount = 0;
+    s_TileLayers = g_Overlay.tileLayers;
 #ifndef STAGE15_ROOM_TEST
-    g_PcStageLayerRenderer = NULL;
-    g_PcGpuOtSubmitter = NULL;
+    if (!PcLoadStageChr(STAGE15_ASSET_DIR "/F_STAGE15.BIN")) {
+        ERRORF("could not load Stage 15 graphics");
+    }
     Stage15ConfigureMusic();
+    s_Stage15MusicStarted = false;
     s_Stage15MasonryReady = Stage15LoadMasonry();
     if (s_Stage15MasonryReady) {
         s_Stage15MasonryTpage =
@@ -755,17 +780,7 @@ OVL_API void InitStage(Overlay* o) {
     }
 #endif
 
-    o->Update = Stage15Update;
-    o->HitDetection = Noop;
-    o->UpdateRoomPosition = Noop;
-    o->InitRoomEntities = Stage15InitRoomEntities;
-    o->rooms = s_Stage15Rooms;
-    o->spriteBanks = s_SpriteBanks;
-    o->cluts = s_Cluts;
-    o->objLayoutHorizontal = s_Stage15ObjLayouts;
-    s_TileLayers = o->tileLayers = s_Stage15TileLayers;
-    o->gfxBanks = s_GfxBanks;
-    o->UpdateStageEntities = Noop;
+    memcpy(o, &g_Overlay, sizeof(Overlay));
 #ifdef STAGE15_NATIVE_8X8
     s_NativeRoom = -1;
     s_NativeReady = false;

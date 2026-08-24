@@ -1,8 +1,8 @@
 // use std::env;
-use std::fs::File;
-use std::io::{self, Read, BufReader};
 use std::collections::HashMap;
+use std::fs::File;
 use std::io::BufRead;
+use std::io::{self, BufReader, Read};
 // use std::io::Seek;
 
 #[allow(dead_code)]
@@ -54,22 +54,23 @@ fn dakuten(chr: char, prev: char) -> Option<char> {
 
 const TABLE: [char; 256] = [
     //0      1      2      3      4      5      6      7      8      9      A      B      C      D      E      F
-    ' ',    '!',   '\'',  '#',   '$',   '%',   '&',   '\'',   '(',   ')',   '男',  '+',   ',',   '-',   '.',   '/',
-    '0',    '1',   '2',   '3',   '4',   '5',   '6',   '7',   '8',   '9',   ':',   '人',  '手',  '=',   '玉',  '?',
-    '石',   'A',   'B',   'C',   'D',   'E',   'F',   'G',   'H',   'I',   'J',   'K',   'L',   'M',   'N',   'O',
-    'P',    'Q',   'R',   'S',   'T',   'U',   'V',   'W',   'X',   'Y',   'Z',   '[',   '剣',  ']',   '盾',  '_',
-    '書',   'a',   'b',   'c',   'd',   'e',   'f',   'g',   'h',   'i',   'j',   'k',   'l',   'm',   'n',   'o',
-    'p',    'q',   'r',   's',   't',   'u',   'v',   'w',   'x',   'y',   'z',   '炎',  '氷',  '雷',  '~',   '女',
-    '力',   '。',   '「',  '」',  '、',  '・',  'ヲ',  'ァ',  'ィ',   'ゥ',  'ェ',  'ォ',  'ャ',  'ュ',  'ョ',  'ッ',
-    'ー',   'ア',   'イ',  'ウ',  'エ',  'オ',  'カ',  'キ',  'ク',   'ケ',  'コ',  'サ',  'シ',  'ス',  'セ',  'ソ',
-    'タ',   'チ',   'ツ',  'テ',  'ト',  'ナ',  'ニ',  'ヌ',  'ネ',   'ノ',  'ハ',  'ヒ',  'フ',  'ヘ',  'ホ',  'マ',
-    'ミ',   'ム',   'メ',  'モ',  'ヤ',  'ユ',  'ヨ',  'ラ',  'リ',   'ル',  'レ',  'ロ',  'ワ',  'ン',  'ﾞ',   'ﾟ', // dakuten and handakuten are lower in the graphic than seen here and get shifted by the code upwards when printing
-    '子',   '悪',   '魔',  '人',  '妖',  '精',  'を',  'ぁ',  'ぃ',   'ぅ',  'ぇ',  'ぉ',  'ゃ',  'ゅ',  'ょ',  'っ',
-    '金',   'あ',   'い',  'う',  'え',  'お',  'か',  'き',  'く',   'け',  'こ',  'さ',  'し',  'す',  'せ',  'そ',
-    'た',   'ち',   'つ',  'て',  'と',  'な',  'に',  'ぬ',  'ね',   'の',  'は',  'ひ',  'ふ',  'へ',  'ほ',  'ま',
-    'み',   'む',   'め',  'も',  'や',  'ゆ',  'よ',  'ら',  'り',   'る',  'れ',  'ろ',  'わ',  'ん',  '指',  '輪',
-    '←',    '↖',   '↑',   '↗',  '→',   '↘',  '↓',  '↙',  '○',    '×',   '□',   '△',  '名',  '刀',  '聖',  '血',
-    '✈',   '★',   '☀',   '☁',  '☃',   '♂',   '♀',  '©',   '®',   '§',    '¶', '∑', '大',  '光',  '邪',  '月'
+    ' ', '!', '\'', '#', '$', '%', '&', '\'', '(', ')', '男', '+', ',', '-', '.', '/', '0', '1',
+    '2', '3', '4', '5', '6', '7', '8', '9', ':', '人', '手', '=', '玉', '?', '石', 'A', 'B', 'C',
+    'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
+    'W', 'X', 'Y', 'Z', '[', '剣', ']', '盾', '_', '書', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
+    'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '炎',
+    '氷', '雷', '~', '女', '力', '。', '「', '」', '、', '・', 'ヲ', 'ァ', 'ィ', 'ゥ', 'ェ', 'ォ',
+    'ャ', 'ュ', 'ョ', 'ッ', 'ー', 'ア', 'イ', 'ウ', 'エ', 'オ', 'カ', 'キ', 'ク', 'ケ', 'コ', 'サ',
+    'シ', 'ス', 'セ', 'ソ', 'タ', 'チ', 'ツ', 'テ', 'ト', 'ナ', 'ニ', 'ヌ', 'ネ', 'ノ', 'ハ', 'ヒ',
+    'フ', 'ヘ', 'ホ', 'マ', 'ミ', 'ム', 'メ', 'モ', 'ヤ', 'ユ', 'ヨ', 'ラ', 'リ', 'ル', 'レ', 'ロ',
+    'ワ', 'ン', 'ﾞ',
+    'ﾟ', // dakuten and handakuten are lower in the graphic than seen here and get shifted by the code upwards when printing
+    '子', '悪', '魔', '人', '妖', '精', 'を', 'ぁ', 'ぃ', 'ぅ', 'ぇ', 'ぉ', 'ゃ', 'ゅ', 'ょ', 'っ',
+    '金', 'あ', 'い', 'う', 'え', 'お', 'か', 'き', 'く', 'け', 'こ', 'さ', 'し', 'す', 'せ', 'そ',
+    'た', 'ち', 'つ', 'て', 'と', 'な', 'に', 'ぬ', 'ね', 'の', 'は', 'ひ', 'ふ', 'へ', 'ほ', 'ま',
+    'み', 'む', 'め', 'も', 'や', 'ゆ', 'よ', 'ら', 'り', 'る', 'れ', 'ろ', 'わ', 'ん', '指', '輪',
+    '←', '↖', '↑', '↗', '→', '↘', '↓', '↙', '○', '×', '□', '△', '名', '刀', '聖', '血', '✈', '★',
+    '☀', '☁', '☃', '♂', '♀', '©', '®', '§', '¶', '∑', '大', '光', '邪', '月',
 ];
 
 // const TABLE_PSP: [char; 256] = [
@@ -94,24 +95,24 @@ const TABLE: [char; 256] = [
 
 const TABLE_PSP: [char; 256] = [
     //0      1      2      3      4      5      6      7      8      9      A      B      C      D      E      F
-    ' ',    '!',   '\'',  '#',   '$',   '%',   '&',   '\'',   '(',   ')',   '男',  '+',   ',',   '-',   '.',   '/',
-    '0',    '1',   '2',   '3',   '4',   '5',   '6',   '7',   '8',   '9',   ':',   '人',  '手',  '=',   '玉',  '?',
-    '石',   'A',   'B',   'C',   'D',   'E',   'F',   'G',   'H',   'I',   'J',   'K',   'L',   'M',   'N',   'O',
-    'P',    'Q',   'R',   'S',   'T',   'U',   'V',   'W',   'X',   'Y',   'Z',   '[',   '剣',  ']',   '盾',  '_',
-    '書',   'a',   'b',   'c',   'd',   'e',   'f',   'g',   'h',   'i',   'j',   'k',   'l',   'm',   'n',   'o',
-    'p',    'q',   'r',   's',   't',   'u',   'v',   'w',   'x',   'y',   'z',   '炎',  '氷',  '雷',  '~',   '女',
-    '力',   '。',   '「',  '」',  '、',  '・',  'ヲ',  'ァ',  'ィ',   'ゥ',  'ェ',  'ォ',  'ャ',  'ュ',  'ョ',  'ッ',
-    'ー',   'ア',   'イ',  'ウ',  'エ',  'オ',  'カ',  'キ',  'ク',   'ケ',  'コ',  'サ',  'シ',  'ス',  'セ',  'ソ',
-    'タ',   'チ',   'ツ',  'テ',  'ト',  'ナ',  'Ä',  'ヌ',  'ネ',   'ノ',  'ハ',  'ヒ',  'フ',  'ヘ',  'ホ',  'マ',
-    'ミ',   'ム',   'Ó',  'モ',  'Ö',  'ユ',  'ヨ',  'ラ',  'リ',   'ß',  'à',  'á',  'â',  'ä',  'ﾞ',   'è', // dakuten and handakuten are lower in the graphic than seen here and get shifted by the code upwards when printing
-    'é',    'ê',   '魔',  'ì',  'í',  'î',  'を',  'ñ',  'ぃ',   'ó',  'ô',  'ö',  'ù',  'ú',  'ょ',  'ü',
-    '金',   'œ',   'い',  'う',  'え',  'º',  'か',  'き',  'く',   'け',  'こ',  'さ',  'し',  'す',  'せ',  'そ',
-    'た',   'ち',   'つ',  'て',  'と',  'な',  'に',  'ぬ',  'ね',   'の',  'は',  'ひ',  'ふ',  'へ',  'ほ',  'ま',
-    'み',   'む',   'め',  'も',  'や',  'ゆ',  'よ',  'ら',  'り',   'る',  'れ',  'ろ',  'わ',  'ん',  '指',  '輪',
-    '←',    '↖',   '↑',   '↗',  '→',   '↘',  '↓',  '↙',  '○',    '×',   '□',   '△',  '名',  '刀',  '聖',  '血',
-    '✈',   '★',   '☀',   '☁',  '☃',   '♂',   '♀',  '©',   '®',   '§',    '¶', '∑', '大',  '光',  '邪',  '月'
+    ' ', '!', '\'', '#', '$', '%', '&', '\'', '(', ')', '男', '+', ',', '-', '.', '/', '0', '1',
+    '2', '3', '4', '5', '6', '7', '8', '9', ':', '人', '手', '=', '玉', '?', '石', 'A', 'B', 'C',
+    'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
+    'W', 'X', 'Y', 'Z', '[', '剣', ']', '盾', '_', '書', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
+    'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '炎',
+    '氷', '雷', '~', '女', '力', '。', '「', '」', '、', '・', 'ヲ', 'ァ', 'ィ', 'ゥ', 'ェ', 'ォ',
+    'ャ', 'ュ', 'ョ', 'ッ', 'ー', 'ア', 'イ', 'ウ', 'エ', 'オ', 'カ', 'キ', 'ク', 'ケ', 'コ', 'サ',
+    'シ', 'ス', 'セ', 'ソ', 'タ', 'チ', 'ツ', 'テ', 'ト', 'ナ', 'Ä', 'ヌ', 'ネ', 'ノ', 'ハ', 'ヒ',
+    'フ', 'ヘ', 'ホ', 'マ', 'ミ', 'ム', 'Ó', 'モ', 'Ö', 'ユ', 'ヨ', 'ラ', 'リ', 'ß', 'à', 'á', 'â',
+    'ä', 'ﾞ',
+    'è', // dakuten and handakuten are lower in the graphic than seen here and get shifted by the code upwards when printing
+    'é', 'ê', '魔', 'ì', 'í', 'î', 'を', 'ñ', 'ぃ', 'ó', 'ô', 'ö', 'ù', 'ú', 'ょ', 'ü', '金', 'œ',
+    'い', 'う', 'え', 'º', 'か', 'き', 'く', 'け', 'こ', 'さ', 'し', 'す', 'せ', 'そ', 'た', 'ち',
+    'つ', 'て', 'と', 'な', 'に', 'ぬ', 'ね', 'の', 'は', 'ひ', 'ふ', 'へ', 'ほ', 'ま', 'み', 'む',
+    'め', 'も', 'や', 'ゆ', 'よ', 'ら', 'り', 'る', 'れ', 'ろ', 'わ', 'ん', '指', '輪', '←', '↖',
+    '↑', '↗', '→', '↘', '↓', '↙', '○', '×', '□', '△', '名', '刀', '聖', '血', '✈', '★', '☀', '☁',
+    '☃', '♂', '♀', '©', '®', '§', '¶', '∑', '大', '光', '邪', '月',
 ];
-
 
 #[allow(dead_code)]
 #[allow(unused_assignments)]
@@ -170,13 +171,14 @@ fn utf8_to_byte_literals(input_str: &str) -> String {
             bytes.push(0xFF);
             bytes.push(0xFF);
         } else {
-            if let Some(index) = table_index(&char){
+            if let Some(index) = table_index(&char) {
                 bytes.push(index as u8);
             }
         }
     }
     bytes.push(0xFF);
-    let out = bytes.iter()
+    let out = bytes
+        .iter()
         .map(|&val| format!("\\x{:02X}", val))
         .collect::<String>();
     let out2 = format!("\"{}\"", out);
@@ -192,35 +194,31 @@ fn utf8_to_byte_literals_psp(input_str: &str) -> String {
             bytes.push(0xFF);
             bytes.push(0xFF);
         } else {
-            if let Some(index) = table_psp_index(&char){
+            if let Some(index) = table_psp_index(&char) {
                 bytes.push(index as u8);
             }
         }
     }
     bytes.push(0xFF);
-    let out = bytes.iter()
+    let out = bytes
+        .iter()
         .map(|&val| format!("\\x{:02X}", val))
         .collect::<String>();
     let out2 = format!("\"{}\"", out);
     out2
 }
 
-
 fn has_dakuten(utf8_char: &char) -> bool {
     let dakuten_chars = [
-        'が', 'ぎ', 'ぐ', 'げ', 'ご', 'ざ', 'じ', 'ず', 'ぜ', 'ぞ',
-        'だ', 'ぢ', 'づ', 'で', 'ど', 'ば', 'び', 'ぶ', 'べ', 'ぼ', 
-        'ガ', 'ギ', 'グ', 'ゲ', 'ゴ', 'ザ', 'ジ', 'ズ', 'ゼ', 'ゾ', 
-        'ダ', 'ヂ', 'ヅ', 'デ', 'ド', 'バ', 'ビ', 'ブ', 'ベ', 'ボ', 
-        'ヴ',
+        'が', 'ぎ', 'ぐ', 'げ', 'ご', 'ざ', 'じ', 'ず', 'ぜ', 'ぞ', 'だ', 'ぢ', 'づ', 'で', 'ど',
+        'ば', 'び', 'ぶ', 'べ', 'ぼ', 'ガ', 'ギ', 'グ', 'ゲ', 'ゴ', 'ザ', 'ジ', 'ズ', 'ゼ', 'ゾ',
+        'ダ', 'ヂ', 'ヅ', 'デ', 'ド', 'バ', 'ビ', 'ブ', 'ベ', 'ボ', 'ヴ',
     ];
     dakuten_chars.contains(&utf8_char)
 }
 
 fn has_handakuten(utf8_char: &char) -> bool {
-    let handakuten_chars = [
-        'ぱ', 'ぴ', 'ぷ', 'ぺ', 'ぽ', 'パ', 'ピ', 'プ', 'ペ', 'ポ',
-    ];
+    let handakuten_chars = ['ぱ', 'ぴ', 'ぷ', 'ぺ', 'ぽ', 'パ', 'ピ', 'プ', 'ペ', 'ポ'];
     handakuten_chars.contains(&utf8_char)
 }
 
@@ -236,19 +234,62 @@ fn dakuten_to_bytes(input_chr: &char) -> Vec<u8> {
 
 fn remove_dakuten_handakuten(utf8_char: &char) -> char {
     let table: HashMap<char, char> = [
-        ('が', 'か'), ('ぎ', 'き'), ('ぐ', 'く'), ('げ', 'け'), ('ご', 'こ'),
-        ('ざ', 'さ'), ('じ', 'し'), ('ず', 'す'), ('ぜ', 'せ'), ('ぞ', 'そ'),
-        ('だ', 'た'), ('ぢ', 'ち'), ('づ', 'つ'), ('で', 'て'), ('ど', 'と'),
-        ('ば', 'は'), ('び', 'ひ'), ('ぶ', 'ふ'), ('べ', 'へ'), ('ぼ', 'ほ'),
-        ('ぱ', 'は'), ('ぴ', 'ひ'), ('ぷ', 'ふ'), ('ぺ', 'へ'), ('ぽ', 'ほ'),
-        ('ガ', 'カ'), ('ギ', 'キ'), ('グ', 'ク'), ('ゲ', 'ケ'), ('ゴ', 'コ'),
-        ('ザ', 'サ'), ('ジ', 'シ'), ('ズ', 'ス'), ('ゼ', 'セ'), ('ゾ', 'ソ'),
-        ('ダ', 'タ'), ('ヂ', 'チ'), ('ヅ', 'ツ'), ('デ', 'テ'), ('ド', 'ト'),
-        ('バ', 'ハ'), ('ビ', 'ヒ'), ('ブ', 'フ'), ('ベ', 'ヘ'), ('ボ', 'ホ'),
-        ('パ', 'ハ'), ('ピ', 'ヒ'), ('プ', 'フ'), ('ペ', 'ヘ'), ('ポ', 'ホ'),
-        ('ヴ', 'ウ')
-    ].iter().cloned().collect();
-    
+        ('が', 'か'),
+        ('ぎ', 'き'),
+        ('ぐ', 'く'),
+        ('げ', 'け'),
+        ('ご', 'こ'),
+        ('ざ', 'さ'),
+        ('じ', 'し'),
+        ('ず', 'す'),
+        ('ぜ', 'せ'),
+        ('ぞ', 'そ'),
+        ('だ', 'た'),
+        ('ぢ', 'ち'),
+        ('づ', 'つ'),
+        ('で', 'て'),
+        ('ど', 'と'),
+        ('ば', 'は'),
+        ('び', 'ひ'),
+        ('ぶ', 'ふ'),
+        ('べ', 'へ'),
+        ('ぼ', 'ほ'),
+        ('ぱ', 'は'),
+        ('ぴ', 'ひ'),
+        ('ぷ', 'ふ'),
+        ('ぺ', 'へ'),
+        ('ぽ', 'ほ'),
+        ('ガ', 'カ'),
+        ('ギ', 'キ'),
+        ('グ', 'ク'),
+        ('ゲ', 'ケ'),
+        ('ゴ', 'コ'),
+        ('ザ', 'サ'),
+        ('ジ', 'シ'),
+        ('ズ', 'ス'),
+        ('ゼ', 'セ'),
+        ('ゾ', 'ソ'),
+        ('ダ', 'タ'),
+        ('ヂ', 'チ'),
+        ('ヅ', 'ツ'),
+        ('デ', 'テ'),
+        ('ド', 'ト'),
+        ('バ', 'ハ'),
+        ('ビ', 'ヒ'),
+        ('ブ', 'フ'),
+        ('ベ', 'ヘ'),
+        ('ボ', 'ホ'),
+        ('パ', 'ハ'),
+        ('ピ', 'ヒ'),
+        ('プ', 'フ'),
+        ('ペ', 'ヘ'),
+        ('ポ', 'ホ'),
+        ('ヴ', 'ウ'),
+    ]
+    .iter()
+    .cloned()
+    .collect();
+
     *table.get(utf8_char).unwrap_or(utf8_char)
 }
 
@@ -315,11 +356,14 @@ fn process_macro(line: &str, macro_name: &str, transform: impl Fn(&str) -> Strin
     let mut last_end = 0;
     while let Some((start, end, content)) = find_macro_content(&line, macro_name, last_end) {
         if start > end {
-            panic!("Invalid range: start index {} cannot be greater than end index {}", start, end);
+            panic!(
+                "Invalid range: start index {} cannot be greater than end index {}",
+                start, end
+            );
         }
- 
+
         // Append the portion before the macro
-        result.push_str(&line[last_end..start-macro_name.len()-1]);
+        result.push_str(&line[last_end..start - macro_name.len() - 1]);
 
         let processed_content = transform(&content.replace(r#"\\"#, "\""));
 
@@ -335,7 +379,11 @@ fn process_macro(line: &str, macro_name: &str, transform: impl Fn(&str) -> Strin
     result
 }
 
-fn find_macro_content(line: &str, macro_name: &str, last_end: usize) -> Option<(usize, usize, String)> {
+fn find_macro_content(
+    line: &str,
+    macro_name: &str,
+    last_end: usize,
+) -> Option<(usize, usize, String)> {
     let start_pattern = format!("{}(", macro_name);
     if let Some(start) = line[last_end..].find(&start_pattern) {
         let start_idx = start + last_end + start_pattern.len();
@@ -353,20 +401,21 @@ fn find_macro_content(line: &str, macro_name: &str, last_end: usize) -> Option<(
                 }
                 _ => {}
             }
-            end_idx += line[end_idx..].chars().next().unwrap_or_default().len_utf8();
+            end_idx += line[end_idx..]
+                .chars()
+                .next()
+                .unwrap_or_default()
+                .len_utf8();
         }
     }
     None
 }
 
 fn process_s_macro(line: &str, psp: bool) -> String {
-    if psp
-    {
+    if psp {
         process_macro(line, "_S", utf8_to_byte_literals_psp)
-    }
-    else {
+    } else {
         process_macro(line, "_S", utf8_to_byte_literals)
-
     }
 }
 
@@ -381,8 +430,6 @@ fn process_s2_hd_macro(line: &str) -> String {
 fn process_se_macro(line: &str) -> String {
     process_macro(line, "_SE", s3_utf8_to_byte_literals)
 }
-
-
 
 fn do_sub(line: &str, psp: bool) -> String {
     let mut processed = process_s_macro(line, psp);
@@ -406,7 +453,7 @@ fn process(filename: Option<String>, psp: bool) -> io::Result<()> {
         output.push_str(&do_sub(&line, psp));
         line.clear();
     }
-    
+
     print!("{}", output);
 
     Ok(())
@@ -417,9 +464,12 @@ use lazy_static::lazy_static;
 lazy_static! {
     static ref ALT_UTF8_TO_INDEX: HashMap<char, usize> = {
         let values = "ＡＴＤＥＦ".chars().collect::<Vec<char>>();
-        values.into_iter().enumerate().map(|(index, value)| (value, index)).collect::<HashMap<char, usize>>()
+        values
+            .into_iter()
+            .enumerate()
+            .map(|(index, value)| (value, index))
+            .collect::<HashMap<char, usize>>()
     };
-
     static ref ALT_HD_UTF8_TO_INDEX: HashMap<char, usize> = {
         let values = [
             "装備技システム短剣必殺使攻撃力防",
@@ -427,7 +477,11 @@ lazy_static! {
             "投射薬ん右左武兜鎧マントその他い",
         ]
         .concat();
-        values.chars().enumerate().map(|(index, value)| (value, index)).collect::<HashMap<char, usize>>()
+        values
+            .chars()
+            .enumerate()
+            .map(|(index, value)| (value, index))
+            .collect::<HashMap<char, usize>>()
     };
     static ref UTF8_TO_INDEX: HashMap<char, usize> = {
         let mut map = HashMap::new();
@@ -500,14 +554,15 @@ fn alt_utf8_to_index(c: &char) -> Option<usize> {
 fn alt_utf8_to_byte_literals(input_str: &str) -> String {
     let mut bytes = Vec::new();
     for char in input_str.chars() {
-        if let Some(index) =alt_utf8_to_index(&char) {
+        if let Some(index) = alt_utf8_to_index(&char) {
             bytes.push(index as u8);
         }
     }
     bytes.push(0xFF);
-    let output = bytes.iter()
-    .map(|&c| format!("\\x{:02X}", c))
-    .collect::<String>();
+    let output = bytes
+        .iter()
+        .map(|&c| format!("\\x{:02X}", c))
+        .collect::<String>();
     let out2 = format!("\"{}\"", output);
     out2
 }
@@ -519,11 +574,12 @@ fn alt_hd_utf8_to_byte_literals(input_str: &str) -> String {
             bytes.push(index as u8);
         }
     }
-    
+
     bytes.push(0xFF);
-    let output = bytes.iter()
-    .map(|&c| format!("\\x{:02X}", c))
-    .collect::<String>();
+    let output = bytes
+        .iter()
+        .map(|&c| format!("\\x{:02X}", c))
+        .collect::<String>();
     let out2 = format!("\"{}\"", output);
     out2
 }
@@ -536,7 +592,7 @@ fn s3_utf8_to_byte_literals(input_str: &str) -> String {
     out
 }
 
-use clap::{Arg};
+use clap::Arg;
 
 // fn main() {
 //     let args: Vec<String> = env::args().collect();
@@ -622,6 +678,9 @@ fn preprocess_args(args: &[String]) -> Vec<String> {
     out
 }
 
+// the original source already wrote the deps file
+// if we use -MD on the temp file it will force a full rebuild
+// every time
 fn strip_dependency_args(args: &[String]) -> Vec<String> {
     let mut out = Vec::new();
     let mut skip_next = false;
@@ -637,9 +696,7 @@ fn strip_dependency_args(args: &[String]) -> Vec<String> {
             skip_next = true;
             continue;
         }
-        if (a.starts_with("-MF") || a.starts_with("-MT") || a.starts_with("-MQ"))
-            && a.len() > 3
-        {
+        if (a.starts_with("-MF") || a.starts_with("-MT") || a.starts_with("-MQ")) && a.len() > 3 {
             continue;
         }
         out.push(a.clone());
@@ -696,7 +753,6 @@ fn cc(cc_args: &[String]) -> io::Result<i32> {
     let mut compile_args: Vec<String> = args.to_vec();
     compile_args[input_index] = tmp.to_string_lossy().into_owned();
     let compile_args = strip_dependency_args(&compile_args);
-
     let status = PCommand::new(compiler).args(&compile_args).status()?;
 
     let _ = std::fs::remove_file(&tmp);
@@ -736,19 +792,15 @@ fn main() {
                         .short('p')
                         .long("psp")
                         .help("PSP")
-                        .action(ArgAction::SetTrue)
-                )
+                        .action(ArgAction::SetTrue),
+                ),
         )
         .subcommand(
             Command::new("cc")
                 .about("use for C_COMPILER_LAUNCHER, re-encodes _S() strings on the fly")
                 .trailing_var_arg(true)
                 .allow_hyphen_values(true)
-                .arg(
-                    Arg::new("args")
-                        .action(ArgAction::Append)
-                        .num_args(0..)
-                )
+                .arg(Arg::new("args").action(ArgAction::Append).num_args(0..)),
         )
         .get_matches();
 
@@ -758,20 +810,13 @@ fn main() {
         //     // let offset = sub_m.value_of("offset").unwrap();
         // }
         Some(("process", sub_m)) => {
-            if sub_m.contains_id("filename") && sub_m.contains_id("psp")
-            {
-                let filename = sub_m
-                .get_one::<String>("filename")
-                .expect("is present");
+            if sub_m.contains_id("filename") && sub_m.contains_id("psp") {
+                let filename = sub_m.get_one::<String>("filename").expect("is present");
                 let _ = process(Some(filename.to_string()), true);
-            }
-            else if sub_m.contains_id("filename") {
-                let filename = sub_m
-                .get_one::<String>("filename")
-                .expect("is present");
+            } else if sub_m.contains_id("filename") {
+                let filename = sub_m.get_one::<String>("filename").expect("is present");
                 let _ = process(Some(filename.to_string()), false);
-            }
-            else {
+            } else {
                 let _ = process(None, false);
             }
         }
@@ -804,13 +849,27 @@ mod tests {
     }
 
     #[test]
-    fn test_utf8_to_byte_literals_escaped()
-    {
-        assert_eq!(utf8_to_byte_literals_escaped("すで"), "\"\"\\xBD\\xC3\\xFF\\x9E\\xFF\"\"");
-        assert_eq!(utf8_to_byte_literals_escaped("あかつきの剣"), "\"\"\\xB1\\xB6\\xC2\\xB7\\xC9\\x3C\\xFF\"\"");
-        assert_eq!(utf8_to_byte_literals_escaped("聖なるめがね"), "\"\"\\xEE\\xC5\\xD9\\xD2\\xB6\\xFF\\x9E\\xC8\\xFF\"\"");
-        assert_eq!(utf8_to_byte_literals_escaped("バルザイのえん月刀"), "\"\"\\x8A\\xFF\\x9E\\x99\\x7B\\xFF\\x9E\\x72\\xC9\\xB4\\xDD\\xFF\\xFF\\xED\\xFF\"\"");
-        assert_eq!(utf8_to_byte_literals_escaped("Str. potion"), "\"\"\\x33\\x54\\x52\\x0E\\x00\\x50\\x4F\\x54\\x49\\x4F\\x4E\\xFF\"\"");
+    fn test_utf8_to_byte_literals_escaped() {
+        assert_eq!(
+            utf8_to_byte_literals_escaped("すで"),
+            "\"\"\\xBD\\xC3\\xFF\\x9E\\xFF\"\""
+        );
+        assert_eq!(
+            utf8_to_byte_literals_escaped("あかつきの剣"),
+            "\"\"\\xB1\\xB6\\xC2\\xB7\\xC9\\x3C\\xFF\"\""
+        );
+        assert_eq!(
+            utf8_to_byte_literals_escaped("聖なるめがね"),
+            "\"\"\\xEE\\xC5\\xD9\\xD2\\xB6\\xFF\\x9E\\xC8\\xFF\"\""
+        );
+        assert_eq!(
+            utf8_to_byte_literals_escaped("バルザイのえん月刀"),
+            "\"\"\\x8A\\xFF\\x9E\\x99\\x7B\\xFF\\x9E\\x72\\xC9\\xB4\\xDD\\xFF\\xFF\\xED\\xFF\"\""
+        );
+        assert_eq!(
+            utf8_to_byte_literals_escaped("Str. potion"),
+            "\"\"\\x33\\x54\\x52\\x0E\\x00\\x50\\x4F\\x54\\x49\\x4F\\x4E\\xFF\"\""
+        );
     }
 
     #[test]
@@ -861,8 +920,17 @@ mod tests {
     #[test]
     fn test_strip_dependency_args() {
         let args = [
-            "-c", "input.c", "-MD", "-MF", "object.d", "-MT", "object.o",
-            "-MQquoted.o", "-MMD", "-o", "object.o",
+            "-c",
+            "input.c",
+            "-MD",
+            "-MF",
+            "object.d",
+            "-MT",
+            "object.o",
+            "-MQquoted.o",
+            "-MMD",
+            "-o",
+            "object.o",
         ]
         .iter()
         .map(|arg| arg.to_string())
@@ -875,8 +943,7 @@ mod tests {
     }
 
     #[test]
-    fn more_do_sub()
-    {
+    fn more_do_sub() {
         let line = r#"{_S("たび人ぼう"), "旅人の基本装備である帽子", 0, 3, 0, 0, 1, 0, 0, 0x0000, 0x0000, 0x0000, 168, 168, 0, 0},"#;
         let out = do_sub(line, false);
         let expected = r#"{"\xC0\xCB\xFF\x9E\xA3\xCE\xFF\x9E\xB3\xFF", "旅人の基本装備である帽子", 0, 3, 0, 0, 1, 0, 0, 0x0000, 0x0000, 0x0000, 168, 168, 0, 0},"#;
@@ -887,12 +954,12 @@ mod tests {
         let expected = r#"/* 0x18C */ {"\x27\x55\x41\x52\x44\x49\x41\x4E\xFF", 500, 50, 33, 34, 35, 0x0000, 0x0040, 0xE000, 0x0800, 60, 1500, 321, 255, 2, 1, 6, 24, 0x08403410},"#;
         assert_eq!(out, expected);
 
-let line = r#"const char* g_goldCollectTexts[] = {
+        let line = r#"const char* g_goldCollectTexts[] = {
     _S("$1"),   _S("$25"),  _S("$50"),   _S("$100"),  _S("$250"),
     _S("$400"), _S("$700"), _S("$1000"), _S("$2000"), _S("$5000"),
 };"#;
 
-let expected = r#"const char* g_goldCollectTexts[] = {
+        let expected = r#"const char* g_goldCollectTexts[] = {
     "\x04\x11\xFF",   "\x04\x12\x15\xFF",  "\x04\x15\x10\xFF",   "\x04\x11\x10\x10\xFF",  "\x04\x12\x15\x10\xFF",
     "\x04\x14\x10\x10\xFF", "\x04\x17\x10\x10\xFF", "\x04\x11\x10\x10\x10\xFF", "\x04\x12\x10\x10\x10\xFF", "\x04\x15\x10\x10\x10\xFF",
 };"#;
@@ -917,8 +984,7 @@ let expected = r#"const char* g_goldCollectTexts[] = {
     }
 
     #[test]
-    fn psp()
-    {
+    fn psp() {
         let line = r#"_S("Grand cœur")"#;
         let out = do_sub(line, true);
         let expected = r#""\x27\x52\x41\x4E\x44\x00\x43\xB1\x55\x52\xFF""#;

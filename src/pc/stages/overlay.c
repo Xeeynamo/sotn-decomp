@@ -134,6 +134,7 @@ bool LoadStageOverlay(const char* name, Overlay* o) {
     PfnInitStage entrypoint;
 
     if (CurrentStageOverlay) {
+        g_PcStageLayerRenderer = NULL;
         OvlClose(CurrentStageOverlay);
         CurrentStageOverlay = NULL;
     }

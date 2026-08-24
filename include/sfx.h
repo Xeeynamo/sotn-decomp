@@ -157,11 +157,6 @@ enum {
     /* us:0x33F, jp:0x33C */ MU_NOCTURNE,
     /* us:0x340, jp:0x33D */ MU_MOONLIGHT_NOCTURNE,
 
-#if defined(VERSION_PC) && defined(ENABLE_STAGE15)
-    MU_STAGE15 = 0x533,
-    MU_STAGE15_LOOP_POINT,
-#endif
-
 #if defined(VERSION_US)
     // Japanese intro
     /* us:0x341           */ JP_VO_NARRATOR_KATSUTE, // "Katsute ..."

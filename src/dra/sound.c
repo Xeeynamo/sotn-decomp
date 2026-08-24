@@ -1254,7 +1254,7 @@ void ExecSoundCommands(void) {
             continue;
         }
 
-#if defined(VERSION_PC) && defined(ENABLE_STAGE15)
+#if defined(VERSION_PC)
         if (id > 0x300 && id < 0x535) {
 #elif defined(VERSION_HD)
         if (id > 0x300 && id < 0x531) {

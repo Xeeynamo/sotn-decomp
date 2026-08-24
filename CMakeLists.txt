@@ -22,6 +22,27 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
+set(SOTN_RUNTIME_DATA_DIR "${CMAKE_BINARY_DIR}/data")
+set(SOTN_US_DISK_DIR "${CMAKE_SOURCE_DIR}/disks/us")
+file(GLOB_RECURSE SOTN_US_DISK_FILES CONFIGURE_DEPENDS
+    LIST_DIRECTORIES false
+    "${SOTN_US_DISK_DIR}/*")
+set(SOTN_RUNTIME_DATA_FILES)
+foreach(source_file IN LISTS SOTN_US_DISK_FILES)
+    file(RELATIVE_PATH relative_file "${SOTN_US_DISK_DIR}" "${source_file}")
+    set(runtime_file "${SOTN_RUNTIME_DATA_DIR}/${relative_file}")
+    get_filename_component(runtime_directory "${runtime_file}" DIRECTORY)
+    file(MAKE_DIRECTORY "${runtime_directory}")
+    add_custom_command(
+        OUTPUT "${runtime_file}"
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                "${source_file}" "${runtime_file}"
+        DEPENDS "${source_file}"
+        VERBATIM)
+    list(APPEND SOTN_RUNTIME_DATA_FILES "${runtime_file}")
+endforeach()
+add_custom_target(sotn_runtime_data ALL DEPENDS ${SOTN_RUNTIME_DATA_FILES})
+
 if (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang|AppleClang")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address")
@@ -132,7 +153,6 @@ set(SOURCE_FILES_PC
     src/pc/stubs.c
     src/pc/sotn.c
     src/pc/replay.c
-    src/pc/capture.c
     src/pc/pc.c
     src/pc/cutscene_pc.c
     src/pc/io.c
@@ -822,10 +842,6 @@ set(SOURCE_FILES_STAGE_RNO3
     src/st/rno3/gen/us/rooms.c
     src/st/rno3/gen/us/sprites.c)
 
-set(SOURCE_FILES_STAGE_SATURN15
-    src/pc/stages/stage_saturn15.c
-)
-
 set(SOURCE_FILES_STAGE_WRP
     src/pc/stages/stage_wrp.c
     src/st/wrp/header.c
@@ -1226,6 +1242,7 @@ add_subdirectory(tools/psyz/psyz)
 add_executable(${PROJECT_NAME}
     ${SOURCE_FILES_PC}
     ${SOURCE_FILES_CORE})
+add_dependencies(${PROJECT_NAME} sotn_runtime_data)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
     include
@@ -1240,6 +1257,7 @@ target_compile_definitions(${PROJECT_NAME} PUBLIC
     HARD_LINK
     _internal_version_us
     __psyz
+    SOTN_DATA_DIR="${SOTN_RUNTIME_DATA_DIR}"
 )
 
 target_include_directories(psyz PUBLIC tools/psyz/psyz/include)
@@ -1342,101 +1360,6 @@ add_overlay(tt_000 ${SOURCE_FILES_TT_000})
 add_overlay(tt_001 ${SOURCE_FILES_TT_001})
 add_overlay(tt_002 ${SOURCE_FILES_TT_002})
 
-enable_testing()
-
 if(ENABLE_STAGE15)
-    add_overlay(stage15 ${SOURCE_FILES_STAGE_SATURN15})
-
-    find_program(STAGE15_CARGO_BIN cargo)
-    if(NOT STAGE15_CARGO_BIN)
-        message(FATAL_ERROR "cargo is required to convert Saturn Stage 15")
-    endif()
-    file(GLOB_RECURSE STAGE15_CONVERTER_SOURCES CONFIGURE_DEPENDS
-        "${CMAKE_SOURCE_DIR}/tools/saturn/assets/src/*.rs")
-    set(STAGE15_ASSET_DIR "${CMAKE_BINARY_DIR}/stage15_assets")
-    set(STAGE15_SCALE_MODEL "raster" CACHE STRING
-        "Stage 15 horizontal conversion model (raster or tile-groups)")
-    set_property(CACHE STAGE15_SCALE_MODEL PROPERTY STRINGS raster tile-groups)
-    option(STAGE15_ENTITY_LABELS
-        "Draw Stage 15 entity IDs and params at their world positions" OFF)
-    add_custom_command(
-        OUTPUT "${STAGE15_ASSET_DIR}/conversion-report.json"
-               "${STAGE15_ASSET_DIR}/stage15_data.h"
-               "${STAGE15_ASSET_DIR}/stage15_masonry.chars.bin"
-               "${STAGE15_ASSET_DIR}/stage15_masonry.pal.bin"
-               "${STAGE15_ASSET_DIR}/music/audio.xa"
-               "${STAGE15_ASSET_DIR}/music/audio.cue"
-               "${STAGE15_ASSET_DIR}/music/xa_config.h"
-               "${STAGE15_ASSET_DIR}/music/xa_manifest.json"
-        COMMAND ${STAGE15_CARGO_BIN} run --release
-                --manifest-path "${CMAKE_SOURCE_DIR}/tools/saturn/assets/Cargo.toml"
-                -- map convert-psx
-                "${CMAKE_SOURCE_DIR}/disks/saturn/STAGE_15.PRG"
-                "${CMAKE_SOURCE_DIR}/disks/saturn/STAGE_15.MAP"
-                "${STAGE15_ASSET_DIR}"
-                --scale-model "${STAGE15_SCALE_MODEL}"
-        COMMAND ${STAGE15_CARGO_BIN} run --release
-                --manifest-path "${CMAKE_SOURCE_DIR}/tools/saturn/assets/Cargo.toml"
-                -- audio export-xa
-                "${CMAKE_SOURCE_DIR}/disks/saturn/SD/SD25.PCM"
-                "${STAGE15_ASSET_DIR}/music"
-                --file-number 25
-                --channel 0
-        DEPENDS
-            ${STAGE15_CONVERTER_SOURCES}
-            "${CMAKE_SOURCE_DIR}/tools/saturn/assets/Cargo.toml"
-            "${CMAKE_SOURCE_DIR}/disks/saturn/STAGE_15.PRG"
-            "${CMAKE_SOURCE_DIR}/disks/saturn/STAGE_15.MAP"
-            "${CMAKE_SOURCE_DIR}/disks/saturn/STAGE_15.CHR"
-            "${CMAKE_SOURCE_DIR}/disks/saturn/SD/SD25.PCM"
-            "${CMAKE_SOURCE_DIR}/disks/saturn/0.BIN"
-            "${CMAKE_SOURCE_DIR}/disks/saturn/GAME.PRG"
-            "${CMAKE_SOURCE_DIR}/disks/saturn/LOAD.MAP"
-        VERBATIM
-        COMMENT "Converting Saturn Stage 15 for its PC overlay slot"
-    )
-    add_custom_target(stage15_pc_assets ALL
-        DEPENDS "${STAGE15_ASSET_DIR}/conversion-report.json"
-                "${STAGE15_ASSET_DIR}/stage15_data.h"
-                "${STAGE15_ASSET_DIR}/stage15_masonry.chars.bin"
-                "${STAGE15_ASSET_DIR}/stage15_masonry.pal.bin"
-                "${STAGE15_ASSET_DIR}/music/audio.xa"
-                "${STAGE15_ASSET_DIR}/music/audio.cue"
-                "${STAGE15_ASSET_DIR}/music/xa_config.h"
-                "${STAGE15_ASSET_DIR}/music/xa_manifest.json")
-    add_dependencies(${PROJECT_NAME} stage15_pc_assets)
-    add_dependencies(stage15 stage15_pc_assets)
-    target_compile_definitions(${PROJECT_NAME} PRIVATE
-        ENABLE_STAGE15
-        STAGE15_ASSET_DIR="${STAGE15_ASSET_DIR}")
-    target_compile_definitions(stage15 PRIVATE
-        ENABLE_STAGE15
-        STAGE15_ASSET_DIR="${STAGE15_ASSET_DIR}"
-        STAGE15_NATIVE_8X8)
-    target_include_directories(stage15 PRIVATE "${STAGE15_ASSET_DIR}")
-    if(STAGE15_ENTITY_LABELS)
-        target_compile_definitions(stage15 PRIVATE STAGE15_ENTITY_LABELS)
-    endif()
-
-    add_executable(stage15_room_test
-        src/pc/tests/stage15_room_test.c
-        src/pc/stages/stage_saturn15.c
-        src/pc/io.c)
-    target_include_directories(stage15_room_test PRIVATE
-        include
-        src/dra
-        src/pc
-        "${STAGE15_ASSET_DIR}"
-        tools/psyz/psyz/include)
-    target_compile_definitions(stage15_room_test PRIVATE
-        VERSION_PC
-        NON_MATCHING
-        HARD_LINK
-        _internal_version_us
-        __psyz
-        NO_LOGS
-        STAGE15_ROOM_TEST
-        STAGE15_ASSET_DIR="${STAGE15_ASSET_DIR}")
-    add_dependencies(stage15_room_test stage15_pc_assets)
-    add_test(NAME stage15_rooms COMMAND stage15_room_test)
+    include(cmake/stage15.cmake)
 endif()

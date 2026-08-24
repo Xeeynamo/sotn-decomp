@@ -582,12 +582,7 @@ extern u16 g_JosephsCloakColors[4];
 extern GfxBank** g_GfxSharedBank[];
 extern s16** D_800A3B70[18];
 extern u_long* D_800A3BB8[];
-#if defined(VERSION_PC) && defined(ENABLE_STAGE15)
-#define NUM_STAGES 81
-#else
-#define NUM_STAGES 80
-#endif
-extern Lba g_StagesLba[NUM_STAGES];
+extern Lba g_StagesLba[];
 
 extern SubweaponDef g_SubwpnDefs[13];
 // These are different on PSP since they have text that needs translating.
