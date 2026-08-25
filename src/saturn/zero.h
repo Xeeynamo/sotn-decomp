@@ -29,22 +29,22 @@ extern s32 DAT_0601ac38[];
 extern s32 DAT_0601ac40[];
 extern s32 DAT_0605D910[];
 extern s16 DAT_0605AEA8;
-extern s16 DAT_06057A10[];
+struct ShakeState {
+    s16 id;
+    s16 index;
+    s16* offsets;
+    s16 offset;
+};
+extern struct ShakeState DAT_06057A10;
 extern s32 DAT_00252000;
 extern s32 DAT_00258000;
 extern u16 DAT_06065470;
 
-struct Unk060645D0_1 {
-    struct Unk060645D0_2* unk0;
-};
-struct Unk060645D0_2 {
-    u8 pad[0x8];
-    s16 unk8;
-};
-extern struct Unk060645D0_1* DAT_060645D0;
+extern SaturnSpriteResource** DAT_060645D0;
 
 extern u8 SYS_buf_060485E0[];
-struct Unk0605d6c0* DAT_0605d6c0[];
+extern Unk0605DB60 d_0605DB60[32];
+extern struct BgTransfer DAT_0605d6c0[8];
 void func_0600871C(s32, UNK_0605c680*, s32);
 
 struct Unk0605CD90 {
@@ -67,19 +67,7 @@ s32 DecompressLZSS(u8*, u8*, u32);
 // func_060086E8
 void DmaScroll(s32* src, s32* dest, u32 cnt);
 
-struct Unk0605d6c0 {
-    u32 tileFlags;
-    u32 src;
-    u32 dest;
-    u32 cnt;
-    u8 unk[0x20];
-    s32 unk30;
-    u32 unk34;
-    u32 unk38;
-    u32 unk3c;
-};
-
-struct Unk0605d6c0Entry {
+struct BgTransfer {
     u32 tileFlags;
     u32 src;
     u32 dest;
@@ -98,6 +86,25 @@ extern s32 DAT_06039214;
 void ClearDebugPrintTilemap();
 
 #define SH2_REG_M_FRT_IC 0x21000000
+
+#define BCD_TO_DEC(x) ((((u8)(x) >> 4) * 10) + ((x) & 0x0F))
+
+#define SMPC_SF (*(volatile s8*)0x20100063)
+#define SMPC_COMREG (*(volatile s8*)0x2010001F)
+#define SMPC_SNDON 0x19
+#define SMPC_SNDOFF 0x1A
+
+#define SMPC_ISSUE(cmd)                                                        \
+    do {                                                                       \
+        do {                                                                   \
+        } while (SMPC_SF & 1);                                                 \
+        SMPC_SF = 1;                                                           \
+        SMPC_COMREG = (cmd);                                                   \
+        if (SMPC_SF & 1) {                                                     \
+            do {                                                               \
+            } while (SMPC_SF & 1);                                             \
+        }                                                                      \
+    } while (0)
 
 extern s32 DAT_060645d0;
 extern void* g_BatResourceDescriptorList;
@@ -118,16 +125,6 @@ extern s32 DAT_060476a0;
 extern s32 DAT_06064354;
 extern s32 DAT_060644AC;
 
-struct Unk0600E050 {
-    u8 pad[0x4];
-    s16 unk4;
-    s16 pad6;
-    s16 unk8;
-    u8 pada[2];
-    s16 unkc;
-    s16 unke;
-};
-
 void func_0601B600();
 extern s32 DAT_06038a44;
 
@@ -146,6 +143,10 @@ extern s8 DAT_060644C0;
 extern u16 DAT_0605cea2;
 extern u32 DAT_0605C658;
 void func_06030df0();
+void InitBackupRam(void);
+s32 func_06030690(s8 arg0, s32 arg1, void* arg2);
+extern s8 DAT_0605DD61;
+extern s16 DAT_0605DD90;
 void InitSystem();
 void func_060040D8();
 
@@ -246,6 +247,15 @@ extern u8 DAT_0606423a;
 extern u8 DAT_06064414;
 extern s32 DAT_06064250;
 void StopPcm(s32 param);
+void func_06011F40(s32 param);
+s32 func_0601BDD0(s32);
+extern s32 DAT_060641F4;
+extern s32 DAT_06062258;
+extern s32 DAT_06062268;
+extern s32 DAT_06062290[];
+extern s32 DAT_06063BD4;
+extern s32 DAT_06063C1C;
+extern s32 DAT_06063EB4;
 extern s32 d_0605AEAC;
 void func_0600C818();
 void ResetLayerColorCalc();
@@ -388,6 +398,70 @@ void func_060082C8(void);
 void func_06009D30(void);
 void func_0600B234(void);
 void func_0600DAB4(void);
+extern void SPR_2OpenCommand(Uint16);
+extern s32 DAT_0600E23C;
+extern s32 DAT_0605BEC0;
+extern s32 DAT_060576B0[];
+extern s32 DAT_06057770;
+extern void func_06008AB4(void);
+extern void func_06008B20(void);
+extern void func_06008C2C(void);
+extern void SCL_SetColOffset(
+    Uint32 OffsetReg, Uint32 Surfaces, Sint16 red, Sint16 green, Sint16 blue);
+extern void (*DAT_06064624)(s32);
+extern void (*DAT_0606461C)(s32);
+void SCL_SetDisplayMode(u8, u8, u8);
+void SCL_SetCycleTable(u16*);
+extern u16 DAT_06038D70[];
+extern void SCL_Open(Uint32 sclnum);
+extern void SCL_MoveTo(Fixed32 x, Fixed32 y, Fixed32 z);
+extern void SCL_Close(void);
+extern int func_06009D60(u32);
+extern u8 DAT_060577A0[];
+void rsincos(s16 angle, s32* sinOut, s32* cosOut);
+void func_0600BF38();
+void func_0600BF8C();
+void func_0600BFD8();
+void func_0600AB60(void);
+extern SaturnSpriteResource** DAT_06064650;
+extern s16 DAT_06038FD4;
+extern s16 func_0600AE30(s32, SaturnSpriteImage*, s32);
+extern SaturnSpriteResource** DAT_060645D4;
+extern SaturnSpriteResource** DAT_06064670;
+s16 func_0600AEE4(u16*);
+extern s32* func_0600CB04(s32, s32);
+extern void func_0600C880(s32, s32, s32);
+struct Unk06057F60 {
+    s8 unk0;
+    s8 unk1;
+    s8 unk2;
+    s8 unk3;
+    s8 unk4;
+    s8 unk5;
+    s8 unk6;
+};
+extern struct Unk06057F60 DAT_06057F60;
+extern s32 func_06030968(void*, s32, s32, void*);
+extern s32 SYS_state_060485C4;
+extern s32 Crc32(s32, s32*);
+extern Primitive DAT_060867F8[];
+extern s32 DAT_06061DD4;
+extern MthMatrixTbl DAT_06061DF0;
+extern Point16 DAT_06057A08;
+extern Point16 DAT_06057A0C;
+bool CdSoundCommandQueueEmpty(void);
+extern void MarkRoomVisited(s32, s32, s32, Tilemap*);
+extern Entity DAT_060997F8[];
+struct Unk060643E0 {
+    u8 unk00[0x1C];
+    s32 unk1C;
+};
+extern struct Unk060643E0 DAT_060643E0;
+extern s16 DAT_0606436E;
+extern s32 DAT_060644B0;
+extern s32 func_06011B28(s32);
+extern s32 func_06018B8C(s32, u8, s32);
+extern s32 func_06018C00(s32, s32, u8);
 /* End moved declarations */
 
 #endif

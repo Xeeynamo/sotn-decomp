@@ -1263,29 +1263,12 @@ void SetLifeNum(Primitive* prim) {
     prim->y0 = g_HudSpriteY[6];
 }
 
-typedef struct {
-    s32 : 32;
-    s32 : 32;
-    s32 : 32;
-    s32 : 32;
-    s32 : 32;
-    s32 : 32;
-    s32 : 32;
-    s32 : 32;
-    s32 : 32;
-    s32 : 32;
-    s32 : 32;
-    SaturnSpriteResource* unk2C;
-} Unk06064650;
-
-extern Unk06064650* DAT_06064650;
-
 // original name: status_disp_init
 void StatusDispInit(void) {
     Primitive* prim;
     s32 i;
 
-    DAT_06086388 = DAT_06064650->unk2C;
+    DAT_06086388 = DAT_06064650[11];
     D_8013B5E8 = 0;
     g_PlayerHud.displayHP = g_Status.hp;
     g_PlayerHud.g_HealingMailTimer = 0;
