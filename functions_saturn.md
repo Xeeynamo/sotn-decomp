@@ -1009,7 +1009,6 @@
 | richter/f_nonmat/f60B3454.s  | func_060B3454   |      677 |         60 |       |     |
 | zero/f_nonmat/f601701C.s     | func_0601701C   |      677 |         71 |       |     |
 | alucard/f_nonmat/f60BFB2C.s  | func_060BFB2C   |      678 |         44 |       |     |
-| game/f_nonmat/f6075838.s     | func_06075838   |      681 |         23 |       |     |
 | stage_02/f_nonmat/f60EB9EC.s | func_060EB9EC   |      681 |         79 |       |     |
 | warp/f_nonmat/f60DD894.s     | func_060DD894   |      683 |         65 |       |     |
 | stage_02/f_nonmat/f60E32DC.s | func_060E32DC   |      690 |         65 |       |     |
