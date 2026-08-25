@@ -536,6 +536,51 @@ typedef struct {
     /* 0x78 */ s16 timer;
 } ET_EffectTimer;
 
+typedef struct {
+    /* 0x78 */ s32 : 32;
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 swayVelocity;
+    /* 0x84 */ s16 swayStep;
+} ET_060DCE50;
+
+typedef struct {
+    /* 0x78 */ s32 : 32;
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ u16 : 16;
+    /* 0x86 */ u16 timer;
+} ET_060DCF5C;
+
+typedef struct {
+    /* 0x78 */ u8 pad78[0x38];
+    /* 0xB0 */ s16 savedParams;
+} ET_060DE8B4;
+
+typedef struct {
+    /* 0x78 */ u8 timer;
+    /* 0x79 */ u8 : 8;
+    /* 0x7A */ u16 : 16;
+    /* 0x7C */ struct Entity* target;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ u16 targetEntityId;
+} ET_060E0364;
+
+typedef struct {
+    /* 0x78 */ u8 timer;
+    /* 0x79 */ u8 : 8;
+    /* 0x7A */ u16 : 16;
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ u8 stepIndex;
+} ET_060E401C;
+
+typedef struct {
+    /* 0x78 */ s32 : 32;
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ u8 facingLatch;
+} ET_060E411C;
+
 typedef union { // offset=0x78
     ET_Placeholder ILLEGAL;
     ET_AfterImage afterImage; // g_Entities[1], not entityID 1
@@ -568,6 +613,12 @@ typedef union { // offset=0x78
         u8 pad[0x28];
         u16 unkA0;
     } whip;
+    ET_060DCE50 et_060DCE50;
+    ET_060DCF5C et_060DCF5C;
+    ET_060DE8B4 et_060DE8B4;
+    ET_060E0364 et_060E0364;
+    ET_060E401C et_060E401C;
+    ET_060E411C et_060E411C;
 } Ext;
 
 // Flags for entity->drawFlags
@@ -1054,10 +1105,10 @@ typedef struct {
 typedef struct {
     SotnFixed32 scrollX;
     SotnFixed32 scrollY;
-    s32 : 32;
+    s32 unk8;
     s32 hSize;
     s32 vSize;
-    s32 : 32;
+    s32 unk14;
     s32 left;
     s32 top;
     s32 right;
@@ -1133,6 +1184,11 @@ typedef struct {
     /* 0x0 */ s16 x;
     /* 0x2 */ s16 y;
 } Point16; // size = 0x4
+
+#define CASTLE_MAP_BITMAP ((u8*)0x002B2000)
+#define CASTLE_MAP_BITMAP_PITCH 0xA0
+#define CASTLE_MAP_BITMAP_SIZE 0x9600
+#define CASTLE_MAP_CELL_WIDTH 0x0A
 
 typedef struct {
     /* 0x0 */ s32 x;

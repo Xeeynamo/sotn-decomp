@@ -162,17 +162,175 @@ void func_060040d8(void) {
 }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60044D0, InitSystem);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600456C, func_0600456C);
+void func_0600456C(void) {
+    func_06004878();
+    func_060046E8();
+    func_060047E8();
+    func_06007F6C();
+
+    Scl_w_reg.win0_start[0] = 0;
+    Scl_w_reg.win0_start[1] = 0xC;
+    Scl_w_reg.win0_end[0] = 0x280;
+    Scl_w_reg.win0_end[1] = 0xF0;
+    Scl_w_reg.wincontrl[0] = 0x383;
+    Scl_w_reg.wincontrl[1] = 0x8383;
+    Scl_w_reg.wincontrl[2] = 0x83;
+
+    SclProcess = 1;
+    func_06009D30();
+    DAT_0605D770.unk0 = 0;
+    SCL_DisplayFrame();
+}
 
 // _RESET_SYSTEM
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600460C, func_0600460C);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60046E8, func_060046E8);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60047E8, func_060047E8);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004878, func_06004878);
+void func_0600460C(void) {
+    CSH_Init(0);
+    CSH_AllClr();
+    func_06004A10();
+    InitSpriteEngine(0);
+    func_0600B234();
+    func_0600DAB4();
+    InitVdp2Display();
+    func_06007F6C();
+
+    Scl_w_reg.win0_start[0] = 0;
+    Scl_w_reg.win0_start[1] = 0xC;
+    Scl_w_reg.win0_end[0] = 0x280;
+    Scl_w_reg.win0_end[1] = 0xF0;
+    Scl_w_reg.wincontrl[0] = 0x383;
+    Scl_w_reg.wincontrl[1] = 0x8383;
+    Scl_w_reg.wincontrl[2] = 0x83;
+    SclProcess = 1;
+
+    func_06009D30();
+    func_0601B600();
+    func_06006470();
+    func_060082C8();
+    InitDebugPrint();
+}
+void func_060046E8(void) {
+    Unk0605cd70* state;
+    struct Unk0605d6c0Entry* entries;
+    u32 i;
+
+    DAT_06057F40 = 0;
+    D_8003C730 = 0;
+    g_Timer = 0;
+    DAT_0605c10c = 0;
+    g_GameTimer = 0;
+
+    state = (Unk0605cd70*)&DAT_0605cea0;
+    state->unk0 = 0;
+    state->unk2 = 0;
+    state->unk4 = 0xFFFF;
+    state->unk8 = 0;
+
+    DAT_0605cd70.unk0 = 0;
+    DAT_0605cd70.unk2 = 0;
+    DAT_0605cd70.unk4 = 0xFFFF;
+    DAT_0605cd70.unk8 = 0;
+
+    DAT_0605c680.unk0 = 0;
+    DAT_0605c680.unk8 = 0;
+    DAT_0605c680.unk4 = 0;
+    DAT_0605c680.unk10 = 0;
+    DAT_0605c680.unkC = 0;
+    DAT_0605c680.unk18 = 0;
+    DAT_0605c680.g_ScrollDeltaX = 0;
+    DAT_0605c680.unk20 = 0;
+    DAT_0605c680.g_ScrollDeltaY = 0;
+    DAT_0605c680.unk2C = 0;
+    DAT_0605c680.unk24 = 0;
+    DAT_0605c680.unk30 = 0;
+    DAT_0605c680.unk28 = 0;
+    DAT_0605c680.unk3C = 0;
+    DAT_0605c680.unk34 = 0;
+    DAT_0605c680.unk40 = 0;
+    DAT_0605c680.unk38 = 0;
+
+    func_0600FB34();
+
+    entries = (struct Unk0605d6c0Entry*)DAT_0605d6c0;
+    for (i = 0; i < 8; i++) {
+        entries[i].tileFlags = 0;
+        entries[i].src = 0;
+        entries[i].dest = 0;
+        entries[i].cnt = 0;
+    }
+
+    g_CurrentRoom.stageID = 0;
+    g_CurrentRoom.unk2 = 0;
+    g_CurrentRoom.unk4 = 0;
+    g_CurrentRoom.unk6 = 0;
+    DAT_0605d7f0 = 0;
+    g_Status.timerHours = 0;
+    g_Status.timerMinutes = 0;
+    g_Status.timerSeconds = 1;
+}
+void func_060047E8(void) {
+    DAT_0605C118 = 0;
+    g_Settings.D_8003CB00 = 0;
+    g_Settings.D_8003CB04 = 0;
+    DAT_0605CE90 = 0;
+    DAT_0605C6D4 = 0;
+    g_CutsceneHasControl = 0;
+    DAT_0605c6e4 = 0;
+    DAT_0605c664 = 0;
+    D_80097C98 = 0;
+    D_8006C374 = 0;
+    g_Tilemap.scrollX.val = 0;
+    g_Tilemap.scrollY.val = 0;
+    g_Tilemap.unk8 = 0;
+    g_Tilemap.vSize = 0;
+    g_Tilemap.hSize = 0;
+    g_Tilemap.unk14 = 0;
+    g_Tilemap.bottom = 0;
+    g_Tilemap.right = 0;
+    g_Tilemap.top = 0;
+    g_Tilemap.left = 0;
+    g_Tilemap.height = 0;
+    g_Tilemap.width = 0;
+    g_Tilemap.y = 0;
+    g_Tilemap.x = 0;
+    DAT_0605C6DC = 0;
+    currentMusicId = 0;
+}
+void func_06004878(void) {
+    do {
+    } while (func_0602BB98(0, 0, 0, 0, 0) == 1);
+
+    do {
+        DAT_060505E0 = (DAT_06065D32 != 0) ? &DAT_06065D40 : NULL;
+    } while (DAT_060505E0 == NULL);
+
+    DAT_0605D764 = ((DAT_060505E0->unk4 >> 9) ^ 1) & 1;
+    if (DAT_0605D764 != 0) {
+        ((s32(*)(s32))PlaySfx)(0xF0000006);
+    } else {
+        ((s32(*)(s32))PlaySfx)(0xF0000005);
+    }
+    SCL_DisplayFrame();
+    SCL_DisplayFrame();
+    SCL_DisplayFrame();
+    func_06004A10();
+}
+
+const u16 DAT_06004924[] = {
+    0x2F86, 0x2F96, 0x2FE6, 0x4F22, 0x6EF3, 0xE900, 0xD82A,
+};
 INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f6004932, func_06004932);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004A10, func_06004A10);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004B20, func_06004B20);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004C14, func_06004C14);
+void func_06004C14(void) {
+    s16 previous;
+    s16 pressed;
+
+    previous = g_pads[0].pressed;
+    g_pads[0].tapped = previous;
+    pressed = ~DAT_060505F8->buttons;
+    g_pads[0].pressed = pressed;
+    g_pads[0].previous = pressed & (previous ^ pressed);
+}
 
 s32 g_PadsRepeatTimer[];
 
@@ -207,7 +365,50 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004E94, func_06004E94);
 // RETURN_TO_GAME
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004EF0, func_06004EF0);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004F50, func_06004F50);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6005208, func_06005208);
+void func_06005208(s32 arg) {
+    u16 mode = arg;
+    Unk0605cd70* state = &DAT_0605cd70;
+
+    state->unk4 = state->unk2;
+    state->unk2 = mode;
+    state->unk0 = 0;
+    state->unk8 = 0;
+    DAT_0605c110 = 0;
+
+    if (mode == 5) {
+        DAT_06065470 &= 0xfffe;
+        SclProcess = 1;
+        DAT_0605d772 = 5;
+    } else {
+        DAT_0605C100 = 0;
+        DAT_0605CD80 = 0;
+        DAT_0605CD5C = 0;
+        DAT_0605C65C = 0;
+        ResetLayerColorCalc();
+
+        switch (mode) {
+        case 1:
+            if ((g_CurrentRoom.stageID & 0xdf) == 0x0d) {
+                func_06009F10();
+            }
+            if (state->unk4 == 4) {
+                state->unk0 += 3;
+            } else {
+                DAT_0606465C();
+                if (state->unk4 == 1) {
+                    state->unk0 += 1;
+                }
+                SetVdp2BackgroundColor();
+            }
+            break;
+
+        case 4:
+            SetVdp2BackgroundColor();
+            DAT_06057f68 = 0;
+            break;
+        }
+    }
+}
 
 void func_06005310(void) { func_06006FA8(); }
 
@@ -217,8 +418,48 @@ void func_0600544C(void) {}
 const char* logo = "LOGO.PRG";
 const char* kcen = "KCEN.MAP";
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6005470, func_06005470);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6005508, func_06005508);
+void func_06005470(void) {
+    s32 end;
+
+    ReadFileToAddr("LOGO.PRG", (s32)&DAT_060a5000);
+    if (g_FileLoadEnabled != 0) {
+        func_0601B184();
+    }
+    DAT_0605D7DC = (s32)&DAT_00252000;
+    end = DAT_0605D7DC + ReadFileToAddr("KCEN.MAP", (s32)&DAT_00252000);
+    DAT_0605D7DC = end;
+    if (end & 1) {
+        DAT_0605D7DC = end + 1;
+    }
+}
+
+const char* title_p = "TITLE.PRG";
+const u16 title_p_len = 0x0009;
+const char* title_c = "TITLE.CHR";
+const u16 title_c_len = 0x0009;
+const char* ascii_f = "ASCII.FON";
+const u16 ascii_f_len = 0x0009;
+const char* title_m = "TITLE.MAP";
+const u16 title_m_len = 0x0009;
+void func_06005508(void) {
+    s32 end;
+
+    ReadFileToAddr((char*)&DAT_060054D8, (s32)&DAT_060a5000);
+    if (g_FileLoadEnabled != 0) {
+        func_0601AEF4();
+    }
+    ReadFileToAddr((char*)&DAT_060054E4, 0x25C13980);
+    ReadFileToAddr((char*)&DAT_060054F0, (s32)&DAT_00252000);
+    func_060100DC();
+
+    DAT_0605D7DC = 0x00256000;
+    end = DAT_0605D7DC + ReadFileToAddr((char*)&DAT_060054FC, 0x00256000);
+    DAT_0605D7DC = end;
+    if (end & 1) {
+        DAT_0605D7DC = end + 1;
+    }
+    *DAT_0605c120 = (s32*)DAT_0605D7DC;
+}
 
 // _READ_LOAD_MODE
 s32 func_060055A4(void) { return 0; }
@@ -226,16 +467,85 @@ const char* rload_map = "RLOAD.MAP";
 const char* load_map = "LOAD.MAP";
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60055C8, func_060055C8);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600583C, func_0600583C);
+void func_0600583C(void) {
+    s32 end;
+
+    ReadFileToAddr((char*)&DAT_06005810, (s32)&DAT_060a5000);
+    if (g_FileLoadEnabled != 0) {
+        func_0601AF2C();
+    }
+    ReadFileToAddr((char*)&DAT_0600581C, 0x25C13980);
+    DAT_0605D7DC = 0x254000;
+    end = DAT_0605D7DC + ReadFileToAddr((char*)&DAT_0600582C, 0x254000);
+    DAT_0605D7DC = end;
+    if (end & 1) {
+        DAT_0605D7DC = end + 1;
+    }
+}
+
+const u16 DAT_060058B4[14] = {
+    0x5354, 0x4146, 0x462E, 0x5052, 0x4700, 0x0009, 0x5354,
+    0x4146, 0x524F, 0x4C4C, 0x2E4D, 0x4150, 0x0000, 0x0009,
+};
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60058D0, func_060058D0);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6005944, func_06005944);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60059F4, func_060059F4);
+void func_060059F4(void) {
+    ReadFileToAddr((char*)&DAT_060059DC, (s32)&g_StageOverlayData);
+    if (g_FileLoadEnabled != 0) {
+        func_0601B19C();
+    }
+    ReadFileToAddr((char*)&DAT_060059E8, 0x25C2A980);
+    if (DAT_0605D7FC != 4 && DAT_0605D7FC != 6) {
+        ReadFileToAddr(DAT_06038A14[DAT_0605D7FC - 1][0], 0x25E22000);
+        ReadFileToAddr(DAT_06038A14[DAT_0605D7FC - 1][1], 0x25E60000);
+    }
+    DAT_060645C4();
+}
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6005A90, func_06005A90);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6005E3C, func_06005E3C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600607C, func_0600607C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006170, func_06006170);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60062F8, func_060062F8);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006470, func_06006470);
+s32 func_06006470(void) {
+    s32 result;
+    s32 index;
+    s32 success;
+
+    result = 1;
+    index = 0;
+    success = 1;
+
+    do {
+        switch (index) {
+        case 0:
+            DAT_06038a44 = index;
+            DAT_06050668 = index;
+            index = 1;
+        case 1:
+            result = func_06006170();
+            break;
+        case 2:
+            result = func_060062F8(0, &DAT_0605AE80);
+            break;
+        }
+
+        if (result == 1) {
+            DAT_06050668 = 0;
+            index += 1;
+        } else if (result == 0) {
+            success = 0;
+            break;
+        }
+    } while (index <= 2);
+
+    if (success == 0) {
+        DAT_0600026C();
+    }
+
+    DAT_0605AE8C = &DAT_0605064C;
+    *(char*)((char*)&DAT_0605064C - 0x40) = 0;
+    return success;
+}
 
 void func_0600652C(void) {
     func_0601B600();
@@ -251,13 +561,13 @@ struct Unk0600654C {
     s32 unk10;
 };
 // func_0600654C
-void ReadFileToAddr(s32 param_1, s32 param_2) {
+s32 ReadFileToAddr(char* path, s32 addr) {
     struct Unk0600654C unk;
-    unk.unk0 = param_1;
-    unk.unk4 = param_2;
+    unk.unk0 = (s32)path;
+    unk.unk4 = addr;
     unk.unk8 = -1;
     unk.unka = 0;
-    func_06006574(&unk);
+    return func_06006574(&unk);
 }
 
 // _FileReadSetAdrEx
@@ -280,13 +590,59 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006720, func_06006720);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006A7C, func_06006A7C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006C00, func_06006C00);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006E14, func_06006E14);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006E4C, func_06006E4C);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006E9C, func_06006E9C);
+void func_06006E4C(s8* path, s8* dst) {
+    s32 lastSlash;
+    s32 i;
+
+    lastSlash = -1;
+    i = 0;
+    do {
+        if (path[i] == '\\') {
+            lastSlash = i;
+        } else if (path[i] == 0) {
+            break;
+        }
+        i++;
+    } while (i <= 0x3E);
+
+    lastSlash++;
+    for (i = 0; i < lastSlash; i++) {
+        dst[i] = path[i];
+    }
+    dst[lastSlash] = 0;
+}
+
+const u16 DAT_06006E9A = 0x0009;
+s32 func_06006E9C(s32* arg0, s32 arg1) {
+    s32 stride;
+    s32 base;
+
+    func_0601B910(arg1, &stride, arg0, &base);
+    return (stride * (*arg0 - 1)) + base;
+}
 
 // _IsCdOpened
 u32 func_06006ED4() { return (func_0602DCFC() >> 5) & 1; }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006EF8, func_06006EF8);
+s32 func_06006EF8(void) {
+    s32 stat[4];
+    s32* status;
+    s32 retries;
+    s32 result;
+    char* data;
+
+    result = 1;
+    data = (char*)&stat[1];
+    status = stat;
+    retries = 0x10;
+    while (func_0602D754(&stat[1]) == -8 && retries > 0) {
+    }
+    status[0] = data[0] & 0x0F;
+    if ((u32)(stat[0] - 1) <= 1U) {
+        result = 0;
+    }
+    return result;
+}
 
 bool func_06006F50(void) { return 1; }
 
@@ -296,10 +652,29 @@ bool CdSeek(void) { return 1; }
 // func_06006F68
 bool GetFileReadStat(void) { return 0; }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006F74, func_06006F74);
+s32 func_06006F74(void) { return 1; }
+
+const u16 DAT_06006F7E = 0x0000;
+const u16 DAT_06006F80 = 0x0000;
+const u16 DAT_06006F82 = 0x0009;
+const char weapon0_prg[] = "WEAPON0.PRG";
+const char weapon0_chr[] = "WEAPON0.CHR";
+const char dummy_dat[] = "DUMMY.DAT";
+const u16 DAT_06006FA6 = 0x0009;
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006FA8, func_06006FA8);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60071C8, func_060071C8);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60076D0, func_060076D0);
+extern s32 DAT_060645AC;
+
+s32 func_060076D0(s32 arg0) {
+    s32 result;
+
+    if (g_Status.equipment[4] == 0x19) {
+        result = DAT_060645AC + 0x2D4C;
+    } else {
+        result = DAT_060645AC + (g_Status.equipment[arg0] * 0x34);
+    }
+    return result;
+}
 
 // _CD_READ_OUT
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6007714, func_06007714);
@@ -337,14 +712,116 @@ void func_06007824(s32 arg0, s32 arg1) {
     }
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60078EC, func_060078EC);
+extern struct Unk0600654C DAT_06038B6C;
+extern struct Unk0600654C DAT_06038BAC;
+
+extern s32 DAT_06038C24[][2];
+void SetServantResourceList(void);
+void func_0600C254(void);
+void func_0600C0FC(void);
+
+void func_060078EC(s32 arg0) {
+    if (g_FileLoadEnabled != 0) {
+        DAT_06038B6C.unk0 = DAT_06038C24[arg0][0];
+        func_06006574(&DAT_06038B6C);
+        SetServantResourceList();
+        DAT_06038BAC.unk0 = DAT_06038C24[arg0][1];
+        DAT_06038BAC.unk4 = 0x25C25980;
+        func_06006574(&DAT_06038BAC);
+        func_0600C254();
+        func_0600C0FC();
+    }
+}
 
 // _InitVdp1
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6007968, InitSpriteEngine);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6007A34, AllocSpriteCharVram);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6007B34, func_06007B34);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6007B8C, func_06007B8C);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6007BE0, func_06007BE0);
+u16 func_06007B34(SprLookupTbl* tbl) {
+    Uint16* entry;
+    s32 i;
+    u16 tblNo;
+    s32 last;
+    s32 flags;
+
+    tblNo = d_0605AEA8;
+    if (tblNo <= 0x1FFU) {
+        if (tbl != NULL) {
+            entry = tbl->entry;
+            i = 0;
+            last = 0xF;
+            flags = ~0x7FFF;
+            do {
+                *entry |= flags;
+                i += 1;
+                entry++;
+            } while (i <= last);
+            SPR_2SetLookupTbl(tblNo, tbl);
+        }
+        d_0605AEA8 += 1;
+    }
+    return tblNo;
+}
+
+s32 func_06007B8C(s16* colors) {
+    u32 charNo;
+    s16* dest;
+    s32 i;
+
+    charNo = (u16)d_0605AEB0;
+    if (charNo <= 0x3E) {
+        if (colors != NULL) {
+            dest = (s16*)(SCL_COLRAM_ADDR + 0x800 + charNo * 0x20);
+
+            for (i = 0; i <= 0xF; i++) {
+                *dest++ = *colors++ & 0x7FFF;
+            }
+        }
+        d_0605AEB0++;
+    }
+    return charNo | 0x4000;
+}
+
+u16 LocalLookupTblNoToVram(u16 arg0);
+
+u16 func_06007BE0(s16* colors, s32 arg1) {
+    u16 tblNo;
+    u16 index;
+    u16 limit;
+    u16 mask;
+    u16 vram;
+    s16* dst;
+    SprLookupTbl lookupTbl;
+
+    tblNo = d_0605AEA8;
+    if (tblNo > 0x1FFU) {
+        return tblNo;
+    }
+    if ((u16)d_0605AEB0 > 0x3EU) {
+        return 0x4000 | d_0605AEB0;
+    }
+    if (colors != NULL) {
+        dst = (s16*)(SCL_COLRAM_ADDR + 0x800 + ((u16)d_0605AEB0 << 5));
+        index = 0;
+        limit = 0xF;
+        mask = 0x7FFF;
+        do {
+            *dst++ = *colors++ & mask;
+            index++;
+        } while (index <= limit);
+
+        vram = LocalLookupTblNoToVram(d_0605AEB0);
+        index = 0;
+        do {
+            lookupTbl.entry[index] = vram + index;
+            index++;
+        } while (index <= 0xFU);
+
+        SPR_2SetLookupTbl(d_0605AEA8, &lookupTbl);
+    }
+    d_0605AEA8 += 1;
+    d_0605AEB0 += 1;
+    return tblNo;
+}
 
 // _SprSetGourTbl
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6007CA0, AllocGourTbl);
@@ -446,7 +923,17 @@ void func_06007F6C(void) {
 }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008048, ResetLayerColorCalc);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60080EC, func_060080EC);
+extern s16 DAT_0606570C;
+
+void func_060080EC(s32 arg0) {
+    if (arg0 == 1) {
+        SclPriBuffDirty.SclOtherPri = 1;
+        DAT_0606570C &= ~0x100;
+    } else {
+        SclPriBuffDirty.SclOtherPri = 1;
+        DAT_0606570C = (DAT_0606570C & ~0x100) | 0x100;
+    }
+}
 
 // SetVdp2BackgroundColor
 void SetVdp2BackgroundColor(void) {
@@ -455,7 +942,12 @@ void SetVdp2BackgroundColor(void) {
     SCL_SetBack(SCL_VDP2_VRAM + 0x7FE20, 1, local_c);
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600815C, func_0600815C);
+void func_0600815C(u8 r, u8 g, u8 b) {
+    Uint16 color;
+
+    color = ((b << 0xA) + (g << 5) + r) - 0x8000;
+    SCL_SetBack(SCL_VDP2_VRAM + 0x7FE20, 1, &color);
+}
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600819C, BlankScreen);
 
 // func_0600824C
@@ -465,7 +957,12 @@ void InitScuDma(void) {
 }
 
 // _VDP1_TRANS
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008264, func_06008264);
+void func_06008264(void) {
+    FlushVramTransfers();
+    func_06008488();
+    func_060082E8();
+    func_06008464();
+}
 
 // func_06008298
 void TransferAllBgLayers(void) {
