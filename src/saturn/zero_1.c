@@ -10,7 +10,16 @@ void func_06012030(void) {
 
 // _KeyOffVox
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6012054, func_06012054);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60120A0, func_060120A0);
+extern s32 DAT_06062280;
+extern s32 func_0601BDD0(s32);
+
+void func_060120A0(void) {
+    StopPcm(6);
+    if (DAT_06062280 != 0) {
+        func_0601BDD0(DAT_06062280);
+    }
+    g_PlayingXaBgmId = 0;
+}
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60120D8, func_060120D8);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6012108, func_06012108);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6012154, func_06012154);

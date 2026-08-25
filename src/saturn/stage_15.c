@@ -451,7 +451,6 @@ void func_060E3F58(Entity* self) {
 }
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E4064, func_060E4064);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E458C, func_060E458C);
-extern void rsincos(s16 angle, s32* sin, s32* cos);
 
 void func_060E4918(Entity* self, s32 x, s32 y) {
     s32 sin;
