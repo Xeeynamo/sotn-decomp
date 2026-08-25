@@ -213,6 +213,18 @@ extern u16 D_80155528[];
 extern AnimationFrame ric_anim_stop_run[];
 extern s32 D_80154568[];
 extern AnimationFrame anim_80154E38[];
+extern u8 g_RichterMapRevealPattern[11];
+extern u8 g_RichterMapIconIndices[8];
+extern Point16 g_RichterMapUiPositionsA[12];
+extern Point16 g_RichterMapUiPositionsB[5];
+extern Point16 g_RichterMapUiPositionsC[21];
+extern Point16 g_RichterMapUiPositionsD[14];
+extern Point16 g_RichterMapUiPositionsE[16];
+extern Point16 g_RichterMapUiPositionsF[11];
+void func_060BACEC(u8 walls, u8* dst);
+void func_060BAED0(u8 walls, u8* dst);
+void func_060BB09C(u8 walls, u8* dst);
+void func_060BB184(void);
 /* End moved declarations */
 
 #endif

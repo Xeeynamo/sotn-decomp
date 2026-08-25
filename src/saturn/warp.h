@@ -104,6 +104,22 @@ void EntityWarpStageNamePopup(Entity* self);
 void EntityWarpDummy(Entity* self);
 void EntityWarpRedDoor(Entity* self);
 extern char g_WarpObtainedText[];
+extern s16 DAT_060E2218[];
+extern u16 DAT_060E1FFC[];
+void CheckCollision(s32 x, s32 y, Collider* res, u16 unk);
+void MoveEntity(Entity* self);
+void PlaySfx(s32 sfxId);
+void SetStep(u8 step);
+void DestroyEntity(Entity* entity);
+void func_06079BE4(Entity* self);
+void func_060DCE50(u16 arg0);
+void func_060DCF5C(u16 arg0);
+extern u8 DAT_0605CB50[];
+extern u8 DAT_0608FFF8[];
+extern Tilemap g_Tilemap;
+void func_060DE8B4(Entity* self);
+void func_060DF938(Entity* self);
+void func_060E0364(Entity* self);
 /* End moved declarations */
 
 #endif

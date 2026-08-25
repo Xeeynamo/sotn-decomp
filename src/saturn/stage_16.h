@@ -186,6 +186,22 @@ extern LayoutEntity g_Stage16LayoutVertical51[];
 extern LayoutEntity g_Stage16LayoutVertical50[];
 extern LayoutEntity g_Stage16LayoutVertical48[];
 extern LayoutEntity g_Stage16LayoutVertical49[];
+extern u8 g_Stage16Entity20Steps[8];
+extern u8 g_Stage16Entity20StepDelays[4];
+extern u8* DAT_060EB46C[];
+extern u16 DAT_060EB38C[];
+extern s32 DAT_060EB394[];
+extern s16 DAT_060EB47C[];
+extern s16 DAT_060EC690[];
+extern SaturnSpriteFrameHeader* g_Stage16SpriteBank21Frames[];
+extern SaturnSpriteFrameHeader* g_Stage16SpriteBank22Frames[];
+extern u8* g_Stage16SkeletonBeastAnimations[];
+s32 func_06079DEC(Entity* self, s16* sensors);
+void SyncSpriteObjectPosUnchecked(Entity* self, s16* offset);
+void func_060E401C(Entity* self);
+void func_060E411C(Entity* self, u8 arg1);
+void func_060E4C74(Entity* self);
+s32 func_060E6DB8(Entity* self, Entity* other);
 /* End moved declarations */
 
 #endif

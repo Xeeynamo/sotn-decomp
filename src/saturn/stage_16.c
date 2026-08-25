@@ -364,9 +364,22 @@ INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E3478, func_060E3478);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E34CC, func_060E34CC);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E3D00, func_060E3D00);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E3FC8, func_060E3FC8);
-INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E401C, func_060E401C);
+void func_060E401C(Entity* self) {
+    if (g_Player.status & 0x1C00) {
+        if ((s16)GetDistanceToPlayerX(self) > 0x48 && (Random() & 1)) {
+            SetStep(9);
+        }
+    } else if (--self->ext.et_060E401C.timer == 0) {
+        SetStep(g_Stage16Entity20Steps[self->ext.et_060E401C.stepIndex++ & 7]);
+        self->ext.et_060E401C.timer = g_Stage16Entity20StepDelays[Random() & 3];
+        if (self->params != 0 && (s16)GetDistanceToPlayerX(self) > 0x50 &&
+            (Random() & 1)) {
+            SetStep(11);
+        }
+        self->velocityX = 0;
+    }
+}
 s32 GetDistanceToPlayerY(Entity* self);
-void SetStep(u8 step);
 
 void func_060E40F4(Entity* self) {
     s16 dist = GetDistanceToPlayerY(self);
@@ -375,27 +388,113 @@ void func_060E40F4(Entity* self) {
         SetStep(3);
     }
 }
-INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E411C, func_060E411C);
+void func_060E411C(Entity* self, u8 arg1) {
+    s32 velocityX;
+
+    if ((AnimateEntityWithSpriteData(
+             self, DAT_060EB46C[arg1], g_Stage16SpriteBank21Frames) &
+         0x80) &&
+        self->step == 7) {
+        if (self->pose != 3) {
+            if (self->ext.et_060E411C.facingLatch != self->facingLeft) {
+                self->velocityX = -self->velocityX;
+            }
+            self->ext.et_060E411C.facingLatch = self->facingLeft;
+        }
+    }
+
+    velocityX = self->velocityX;
+    if (self->pose >= DAT_060EB38C[arg1]) {
+        if (velocityX != 0) {
+            if (self->ext.et_060E411C.facingLatch != 0) {
+                velocityX += DAT_060EB394[arg1];
+            } else {
+                velocityX -= DAT_060EB394[arg1];
+            }
+        }
+    } else if (self->ext.et_060E411C.facingLatch != 0) {
+        velocityX -= DAT_060EB394[arg1];
+    } else {
+        velocityX += DAT_060EB394[arg1];
+    }
+
+    self->velocityX = velocityX;
+    if ((func_06079DEC(self, DAT_060EB47C) & 0x60) == 0x60) {
+        self->posX.val -= velocityX;
+    }
+}
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E4210, func_060E4210);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E49F0, func_060E49F0);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E4AEC, func_060E4AEC);
-INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E4C74, func_060E4C74);
+void func_060E4C74(Entity* self) {
+    SaturnSpriteImage* images = g_Stage16SpriteBank22Images;
+    SaturnSpriteResource* bank =
+        (SaturnSpriteResource*)g_Stage16SpriteBankSkeletonBeast;
+
+    self->unk0 =
+        CreateSpriteObject(bank->allocationIndex, bank->flags, images, 5);
+
+    self->ext.spriteAnimEnemy.frames = g_Stage16SpriteBank22Frames;
+    self->ext.spriteAnimEnemy.animations = g_Stage16SkeletonBeastAnimations;
+    self->ext.spriteAnimEnemy.unk80 = 0;
+    self->ext.spriteAnimEnemy.unk81 = 0;
+    self->ext.spriteAnimEnemy.unk82 = 0;
+
+    SyncSpriteObjectPosUnchecked(self, DAT_060EC690);
+    self->step++;
+}
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E4CF4, func_060E4CF4);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E5258, func_060E5258);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E53E0, func_060E53E0);
-INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E558C, func_060E558C);
+void func_060E558C(Entity* entity, s16 step) {
+    entity->pose = 0;
+    entity->poseTimer = 0;
+    entity->step = step;
+    entity->step_s = 0;
+}
+
+const u16 DAT_060E55AC = 0x8888;
+const u16 DAT_060E55AE = 0x8889;
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E55B0, func_060E55B0);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E636C, func_060E636C);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E63A8, func_060E63A8);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E6A6C, func_060E6A6C);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E6C88, func_060E6C88);
-INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E6D90, func_060E6D90);
-INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E6DB8, func_060E6DB8);
+void func_060E6D90(Entity* entity, s16 step) {
+    entity->velocityX = 0;
+    entity->velocityY = 0;
+    entity->pose = 0;
+    entity->poseTimer = 0;
+    entity->step = step;
+    entity->step_s = 0;
+}
+s32 func_060E6DB8(Entity* self, Entity* other) {
+    s32 result;
+
+    result = 0;
+    if (self->posX.val > other->posX.val) {
+        result = 1;
+    }
+    if (self->posY.val > other->posY.val) {
+        result |= 2;
+    }
+    return result;
+}
+
+const u16 DAT_060E6DD8 = 0x8888;
+const u16 DAT_060E6DDA = 0x8889;
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E6DDC, func_060E6DDC);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E72FC, func_060E72FC);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E73FC, func_060E73FC);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E7C60, func_060E7C60);
-INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E7EA8, func_060E7EA8);
+void func_060E7EA8(Entity* entity, s16 step) {
+    entity->velocityX = 0;
+    entity->velocityY = 0;
+    entity->pose = 0;
+    entity->poseTimer = 0;
+    entity->step = step;
+    entity->step_s = 0;
+}
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E7ED0, func_060E7ED0);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E7FC4, func_060E7FC4);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E86BC, func_060E86BC);

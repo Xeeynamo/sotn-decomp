@@ -79,6 +79,13 @@ struct Unk0605d6c0 {
     u32 unk3c;
 };
 
+struct Unk0605d6c0Entry {
+    u32 tileFlags;
+    u32 src;
+    u32 dest;
+    u32 cnt;
+};
+
 struct Unk0605CD90 DAT_0605CD90[];
 
 #define DMA_SRC_ADDR 0x002E0000
@@ -302,6 +309,85 @@ void func_06024494(s32 arg0, s32 arg1, s32 arg2);
 double func_06031F88(s32 arg0);
 double func_060319E8(double arg0, s32 arg1, s32 arg2);
 s32 func_06032014(double arg0);
+void CSH_Init(Uint16 sw);
+s32 ReadFileToAddr(char* path, s32 addr);
+extern s16 d_0605AEA8;
+extern s16 d_0605AEB0;
+extern s32 DAT_060645AC;
+void FlushVramTransfers(void);
+void func_06008464(void);
+void func_06008488(void);
+s32 func_0602D754(void*);
+void func_0601B910(s32, s32*, s32*, s32*);
+extern s32 DAT_06050668;
+extern s32 DAT_0605AE80;
+extern s32* DAT_0605AE8C;
+extern s32 DAT_0605064C;
+extern void (*DAT_0600026C)(void);
+s32 func_06006170(void);
+s32 func_060062F8(s32, s32*);
+extern s32 DAT_0605C100;
+extern s32 DAT_0605CD80;
+extern s32 DAT_0605CD5C;
+extern s32 DAT_0605C65C;
+extern void (*DAT_0606465C)(void);
+extern void (*DAT_060645C4)(void);
+extern s32* DAT_060a5000;
+extern s32 DAT_00252000;
+extern s32 g_FileLoadEnabled;
+extern s32 DAT_060054D8;
+extern s32 DAT_060054E4;
+extern s32 DAT_060054F0;
+extern s32 DAT_060054FC;
+extern s32 DAT_06005810;
+extern s32 DAT_0600581C;
+extern s32 DAT_0600582C;
+extern s32 DAT_060059DC;
+extern s32 DAT_060059E8;
+extern char* DAT_06038A14[][2];
+void func_06009F10(void);
+void func_060100DC(void);
+void func_0601AEF4(void);
+void func_0601AF2C(void);
+void func_0601B184(void);
+void func_0601B19C(void);
+void CSH_AllClr(void);
+void InitSpriteEngine(s32 arg0);
+void InitVdp2Display(void);
+void InitDebugPrint(void);
+extern u8 DAT_06057F40;
+extern s32 DAT_0605C118;
+extern s32 DAT_0605CE90;
+extern s32 DAT_0605C6D4;
+extern s16 DAT_0605C6DC;
+extern Unk0605D770 DAT_0605D770;
+extern s32 DAT_0605D764;
+struct Unk060505E0 {
+    s32 unk0;
+    s32 unk4;
+};
+extern struct Unk060505E0* DAT_060505E0;
+extern struct Unk060505E0 DAT_06065D40;
+extern volatile u8 DAT_06065D32;
+struct Unk060505F8 {
+    u16 idSize;
+    u16 buttons;
+};
+extern struct Unk060505F8* DAT_060505F8;
+s32 func_0602BB98(s32, s32, s32, s32, s32);
+void func_06004A10(void);
+void func_0600456C(void);
+void func_0600460C(void);
+void func_060046E8(void);
+void func_060047E8(void);
+void func_06004878(void);
+void func_06004C14(void);
+s32 func_06006470(void);
+void func_06007F6C(void);
+void func_060082C8(void);
+void func_06009D30(void);
+void func_0600B234(void);
+void func_0600DAB4(void);
 /* End moved declarations */
 
 #endif
