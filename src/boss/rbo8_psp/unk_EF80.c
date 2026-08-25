@@ -111,7 +111,8 @@ void func_us_80198210(Entity* self) {
         MoveEntity();
         self->velocityX -= self->velocityX / 0x10;
         self->velocityY -= self->velocityY / 0x10;
-        if (abs(self->velocityX) < 0x4000 && abs(self->velocityY) < 0x4000) {
+        if (abs(self->velocityX) < FIX(0.25) &&
+            abs(self->velocityY) < FIX(0.25)) {
             self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
             self->scaleX = self->scaleY = 0x100;
             self->hitboxState = 0;
@@ -186,7 +187,7 @@ void EntityMinotaurSpitLiquid(Entity* self) {
             self->rotate = -self->rotate;
         }
         self->facingLeft = 0;
-        self->rotate += 0x100 - Random() * 2;
+        self->rotate += ROT(22.5) - Random() * 2;
 
         angle = self->rotate;
         self->velocityX = rsin(angle) * 0x28;
@@ -224,7 +225,7 @@ void func_us_8019943C(Entity* self) {
             self->rotate = -self->rotate;
         }
         self->facingLeft = 0;
-        self->rotate += 0x100 - Random() * 2;
+        self->rotate += ROT(22.5) - Random() * 2;
 
         angle = self->rotate;
         self->velocityX = rsin(angle) * 0x20;
