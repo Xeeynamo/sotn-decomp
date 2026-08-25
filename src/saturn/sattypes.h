@@ -1087,7 +1087,7 @@ typedef struct {
     s32 unk0C;
     u32 unk10;
     s32 unk14;
-    u32 : 32;
+    u32 unk18;
     u32 unk1C;
     u32 unk20;
     u32 unk24;
@@ -1391,7 +1391,6 @@ typedef enum Elements {
 
 u32 SquareRoot0(s32);
 s32 func_800F4D38(s32, s32);
-void func_800F4994(void);
 
 // Not 100% sure about address, gcc seems to added the offset within
 // the struct to the base address

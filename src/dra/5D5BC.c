@@ -191,7 +191,7 @@ void AddToInventory(u16 id, EquipKind kind) {
     }
 
     count[id]++;
-    if (emptySlot < existingItemSlot) {
+    if (existingItemSlot > emptySlot) {
         order[existingItemSlot] = order[emptySlot];
         order[emptySlot] = id;
     }
@@ -546,7 +546,7 @@ void GetEquipProperties(s32 handId, Equipment* res, s32 equipId) {
     }
 
     res->criticalRate = criticalRate;
-    func_800F4994();
+    UpdateEquipStatBonuses();
     itemCategory = g_EquipDefs[equipId].itemCategory;
     if (itemCategory == ITEM_FOOD || itemCategory == ITEM_MEDICINE) {
         return;
