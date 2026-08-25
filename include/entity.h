@@ -4248,6 +4248,28 @@ typedef struct {
     /* 0x7E */ s16 bobAngle;
 } ET_Shaft;
 
+// func_us_801980E4 (rbo8, rbo8_psp)
+typedef struct {
+    /* 0x7C */ u32 : 32;
+    /* 0x80 */ u32 : 32;
+    /* 0x84 */ u32 : 32;
+    /* 0x88 */ u32 : 32;
+    /* 0x8C */ u32 : 32;
+    /* 0x90 */ u32 : 32;
+    /* 0x94 */ u32 : 32;
+    /* 0x98 */ u32 : 32;
+    /* 0x9C */ u32 : 32;
+    /* 0xA0 */ struct Entity* source;
+} ET_801980E4;
+
+// func_us_8019921C (rbo8, rbo8_psp)
+typedef struct {
+    /* 0x7C */ u32 : 32;
+    /* 0x80 */ u32 : 32;
+    /* 0x84 */ s16 : 16;
+    /* 0x86 */ u16 hitFloor;
+} ET_8019921C;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -4606,6 +4628,8 @@ typedef union { // offset=0x7C
     ET_801A3FD4 et_801A3FD4;
     ET_801C03E8 et_801C03E8;
     ET_Shaft shaft;
+    ET_801980E4 et_801980E4;
+    ET_8019921C et_8019921C;
     ET_OlroxDrool olroxDrool;
     ET_Gorgon gorgon;
 } Ext;
