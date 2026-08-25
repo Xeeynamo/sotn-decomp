@@ -3061,7 +3061,7 @@
 | no4        | func_pspeu_09238490                |       43 |          4 |        |       |     |
 | rno4       | func_us_801C123C_from_no4          |       43 |          4 |        |       |     |
 | sel        | func_psp_09243EE8                  |       43 |          4 |        |       |     |
-| rbo8       | func_pspeu_09246250                |       43 |          5 |        |       |     |
+| rbo8       | func_us_801955F8                   |       43 |          5 |        |       |     |
 | dra        | func_psp_090FCE58                  |       43 |          5 |        |       |     |
 | dra        | func_psp_09124FB8                  |       43 |          5 |        |       |     |
 | main       | func_psp_08933BA0                  |       43 |          5 |        |       |     |
@@ -3508,7 +3508,7 @@
 | maria      | func_pspeu_092AEBD8                |       50 |         13 |        |       |     |
 | ric        | func_pspeu_092A7340                |       50 |         13 |        |       |     |
 | cen        | func_pspeu_0923EA08                |       50 |         13 |        |       |     |
-| rbo8       | func_pspeu_092461A0                |       51 |          3 |        |       |     |
+| rbo8       | func_us_801955A0                   |       51 |          3 |        |       |     |
 | main       | func_psp_0890F250                  |       51 |          3 |        |       |     |
 | bo0        | func_pspeu_0925F0A8                |       51 |          4 |        |       |     |
 | bo0        | func_pspeu_09267E48                |       51 |          4 |        |       |     |
@@ -3996,7 +3996,7 @@
 | rbo5       | EntityBackgroundBlock              |       62 |          5 |        |       |     |
 | rbo6       | func_pspeu_0923C988                |       62 |          5 |        |       |     |
 | rbo7       | func_pspeu_0923D608                |       62 |          5 |        |       |     |
-| rbo7       | EntityBackgroundBlock              |       62 |          5 |        |       |     |
+| rbo7       | func_pspeu_09248B80                |       62 |          5 |        |       |     |
 | rbo8       | func_pspeu_0923D608                |       62 |          5 |        |       |     |
 | rbo8       | EntityBackgroundBlock              |       62 |          5 |        |       |     |
 | dra        | func_psp_09118330                  |       62 |          5 |        |       |     |
@@ -5219,7 +5219,7 @@
 | dai        | func_pspeu_0924FE60                |       89 |          7 |        |       |     |
 | dra        | func_psp_09100458                  |       89 |          8 |        |       |     |
 | cat        | func_pspeu_0923BA88                |       89 |          8 |        |       |     |
-| rbo7       | EntityCtulhuDeath                  |       89 |         10 |        |       |     |
+| rbo7       | func_pspeu_09248A40                |       89 |         10 |        |       |     |
 | dra        | func_psp_090FF608                  |       89 |         10 |        |       |     |
 | bo0        | func_pspeu_09237C48                |       89 |         11 |        |       |     |
 |            | func_pspeu_09237C48                |       89 |         11 |        |       |     |
@@ -5448,7 +5448,7 @@
 | are        | func_pspeu_09261060                |       93 |          7 |        |       |     |
 | bo0        | func_pspeu_0925E340                |       93 |          8 |        |       |     |
 | bo7        | UpdateFallingPebble                |       93 |          8 |        |       |     |
-| rbo7       | EntityHarpyKick                    |       93 |          8 |        |       |     |
+| rbo7       | func_pspeu_09248498                |       93 |          8 |        |       |     |
 |            | func_092E7C68                      |       93 |          8 |        |       |     |
 | chi        | func_psp_0924EAC0                  |       93 |          8 |        |       |     |
 | rchi       | UpdateFallingPebble                |       93 |          8 |        |       |     |
@@ -6607,7 +6607,7 @@
 | no1        | func_pspeu_09252A90                |      126 |         18 |        |       |     |
 | bo6        | func_pspeu_0925A028                |      126 |         21 |        |       |     |
 | dra        | func_psp_09104648                  |      127 |          9 |        |       |     |
-| rbo8       | func_pspeu_09246708                |      127 |         10 |        |       |     |
+| rbo8       | func_us_80195938                   |      127 |         10 |        |       |     |
 | bo3        | func_pspeu_09240880                |      127 |         11 |        |       |     |
 | are        | func_pspeu_09252BD8                |      127 |         11 |        |       |     |
 | cat        | func_pspeu_09248058                |      127 |         11 |        |       |     |
@@ -7585,7 +7585,7 @@
 | rcat       | func_pspeu_09247310                |      218 |         23 |        |       |     |
 | rcen       | func_pspeu_0924E288                |      218 |         24 |        |       |     |
 | rbo3       | func_us_80192B38_from_rbo3         |      218 |         25 | Yes    |       |     |
-| rbo7       | func_us_80192B38_from_rbo3         |      218 |         25 | Yes    |       |     |
+| rbo7       | func_pspeu_09245DB8                |      218 |         25 | Yes    |       |     |
 | rbo7       | func_us_80195A8C                   |      218 |         30 |        |       |     |
 | no3        | func_pspeu_09261818                |      218 |         39 |        |       |     |
 | np3        | EntityZombie                       |      218 |         39 |        |       |     |
@@ -8080,7 +8080,7 @@
 | no3        | func_pspeu_0923BCE0                |      288 |         30 |        |       |     |
 | np3        | EntityMermanRockRightSide          |      288 |         30 |        |       |     |
 | rno3       | func_pspeu_092542C8                |      288 |         30 |        |       |     |
-| rbo8       | func_pspeu_09246948                |      288 |         57 |        |       |     |
+| rbo8       | func_us_80195AD8                   |      288 |         57 |        |       |     |
 | lib        | func_psp_09238EC8                  |      290 |         42 |        |       |     |
 | bo0        | func_pspeu_09265368                |      291 |         20 |        |       |     |
 | nz1        | func_pspeu_0925B930                |      291 |         26 |        |       |     |
