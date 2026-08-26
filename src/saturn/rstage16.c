@@ -350,7 +350,32 @@ void func_060E4EA4(Entity* self) {
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E4EDC, func_060E4EDC);
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E56DC, func_060E56DC);
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E5CB0, func_060E5CB0);
-INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E5E70, func_060E5E70);
+void func_060E5E70(Entity* entity) {
+    SpriteObject* (*createSpriteObject)(u16, u16, SaturnSpriteImage*, s32);
+    void (*syncSpriteObjectPos)(Entity*, s16*);
+    u16* bank;
+    s32 maxParts;
+
+    switch (entity->step) {
+    case 0:
+        bank = &g_RStage16SpriteBankWight.flags;
+        createSpriteObject = CreateSpriteObject;
+        maxParts = 5;
+        entity->unk0 =
+            createSpriteObject(bank[-1], bank[0], DAT_060EDE4C, maxParts);
+        syncSpriteObjectPos = SyncSpriteObjectPosUnchecked;
+        syncSpriteObjectPos(entity, DAT_060EDA60);
+        TekiInit(entity, 2);
+        entity->step = 1;
+        entity->hitboxState = 0;
+    case 1:
+        if (AnimateEntityWithSpriteData(entity, DAT_060EDA34, DAT_060EDDE4) ==
+            0) {
+            DestroyEntity(entity);
+        }
+        break;
+    }
+}
 void func_060E5F0C(Entity* self) {
     func_06079BB4(self);
     func_0600B004(self->unk0, DAT_060EEFD0[self->animCurFrame]);

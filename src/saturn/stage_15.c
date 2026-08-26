@@ -118,7 +118,33 @@ void func_060DDD94(Entity* self) {
     }
 }
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DDE44, func_060DDE44);
-INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DDFB0, func_060DDFB0);
+void func_060DDFB0(Entity* self) {
+    s32 primIndex;
+
+    switch (self->step) {
+    case 0:
+        TekiInit(self, 3);
+        self->step++;
+        primIndex = AllocPrimitives(3, 1);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags |= 0x800000;
+        self->primIndex = primIndex;
+        func_060DDE44(self);
+        break;
+    case 1:
+        MoveEntity(self);
+        self->velocityY += self->ext.et_060DDFB0.gravity;
+        break;
+    }
+
+    func_060DDD94(self);
+    if (self->ext.et_060DDFB0.unk82 <= 7) {
+        DestroyEntity(self);
+    }
+}
 void func_060DE058(Entity* self) {
     Primitive* prim;
     char* base;
@@ -165,7 +191,25 @@ void func_060DE058(Entity* self) {
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DE140, func_060DE140);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DE264, func_060DE264);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DE2F4, func_060DE2F4);
-INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DE464, func_060DE464);
+void func_060DE464(Entity* self) {
+    switch (self->step) {
+    case 0:
+        TekiInit(self, 5);
+        self->step++;
+        self->primIndex = AllocPrimitives(0, 5);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+        } else {
+            self->flags |= 0x800000;
+            func_060DE500(self);
+            self->ext.et_060DE40C.path = &DAT_060F2044[self->params * 0x10];
+        }
+        return;
+    case 1:
+        func_060DE58C(self);
+        return;
+    }
+}
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DE500, func_060DE500);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DE58C, func_060DE58C);
 void SetVdp2BackgroundColorRgb(s32, s32, s32);
@@ -235,11 +279,99 @@ s32 func_060DF938(s32* arg0, XyInt* arg1) {
     MTH_Pers2D((MthXyz*)point, (MthXy*)DAT_06061DE0, arg1);
     return point[2] << 8;
 }
-INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DF9B0, func_060DF9B0);
-INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DFA1C, func_060DFA1C);
-INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DFA98, func_060DFA98);
+void func_060DF9B0(s32* arg0, XyInt* arg1) {
+    s32 point[3];
+
+    point[0] = arg0[0] + DAT_06061DF0.current->val[0][3];
+    point[1] = arg0[1] + DAT_06061DF0.current->val[1][3];
+    point[2] = (arg0[2] + DAT_06061DF0.current->val[2][3]) >> 8;
+    MTH_Pers2D((MthXyz*)point, (MthXy*)DAT_06061DE0, arg1);
+    arg1->x += DAT_06061DE8[0];
+    arg1->y += DAT_06061DE8[1];
+}
+void func_060DFA1C(MthXyz* angles, MthXyz* translation) {
+    s32 angle;
+
+    MTH_ClearMatrix(&DAT_06061DF0);
+    DAT_06061DF0.current->val[0][3] = translation->x;
+    DAT_06061DF0.current->val[1][3] = translation->y;
+    DAT_06061DF0.current->val[2][3] = translation->z;
+
+    angle = angles->x & 0x0FFF;
+    if (angle != 0) {
+        func_060DFA98(&DAT_06061DF0, angle);
+    }
+
+    angle = angles->y & 0x0FFF;
+    if (angle != 0) {
+        func_060DFB74(&DAT_06061DF0, angle);
+    }
+
+    angle = angles->z & 0x0FFF;
+    if (angle != 0) {
+        func_060DFC08(&DAT_06061DF0, angle);
+    }
+}
+void func_060DFA98(MthMatrixTbl* unused, s32 angle) {
+    Fixed32 sine;
+    Fixed32 cosine;
+    Fixed32 y;
+    Fixed32 z;
+
+    rsincos(angle, &sine, &cosine);
+    sine *= 0x10;
+    cosine *= 0x10;
+
+    y = DAT_06061DF0.current->val[0][1];
+    z = DAT_06061DF0.current->val[0][2];
+    DAT_06061DF0.current->val[0][1] = MTH_Mul(y, cosine) + MTH_Mul(z, sine);
+    y = MTH_Mul(y, sine);
+    DAT_06061DF0.current->val[0][2] = MTH_Mul(z, cosine) - y;
+
+    y = DAT_06061DF0.current->val[1][1];
+    z = DAT_06061DF0.current->val[1][2];
+    DAT_06061DF0.current->val[1][1] = MTH_Mul(y, cosine) + MTH_Mul(z, sine);
+    y = MTH_Mul(y, sine);
+    DAT_06061DF0.current->val[1][2] = MTH_Mul(z, cosine) - y;
+
+    y = DAT_06061DF0.current->val[2][1];
+    z = DAT_06061DF0.current->val[2][2];
+    DAT_06061DF0.current->val[2][1] = MTH_Mul(y, cosine) + MTH_Mul(z, sine);
+    y = MTH_Mul(y, sine);
+    DAT_06061DF0.current->val[2][2] = MTH_Mul(z, cosine) - y;
+}
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DFB74, func_060DFB74);
-INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DFC08, func_060DFC08);
+
+void func_060DFC08(MthMatrixTbl* unused, s32 angle) {
+    Fixed32 sine;
+    Fixed32 cosine;
+    Fixed32 x;
+    Fixed32 y;
+
+    rsincos(angle, &sine, &cosine);
+    sine *= 0x10;
+    cosine *= 0x10;
+
+    x = DAT_06061DF0.current->val[0][0];
+    y = DAT_06061DF0.current->val[0][1];
+    DAT_06061DF0.current->val[0][0] = MTH_Mul(x, cosine) + MTH_Mul(y, sine);
+
+    x = DAT_06061DF0.current->val[1][0];
+    y = DAT_06061DF0.current->val[1][1];
+    DAT_06061DF0.current->val[1][0] = MTH_Mul(x, cosine) + MTH_Mul(y, sine);
+
+    x = DAT_06061DF0.current->val[2][0];
+    y = DAT_06061DF0.current->val[2][1];
+    DAT_06061DF0.current->val[2][0] = MTH_Mul(x, cosine) + MTH_Mul(y, sine);
+}
+
+const u16 DAT_060DFC9C[38] = {
+    0x0415, 0x1010, 0x10FF, 0x0000, 0x0412, 0x1010, 0x10FF, 0x0000,
+    0x0411, 0x1010, 0x10FF, 0x0000, 0x0417, 0x1010, 0xFF00, 0x0009,
+    0x0414, 0x1010, 0xFF00, 0x0009, 0x0412, 0x1510, 0xFF00, 0x0009,
+    0x0411, 0x1010, 0xFF00, 0x0009, 0x0415, 0x10FF, 0x0000, 0x0009,
+    0x0412, 0x15FF, 0x0000, 0x0009, 0x0411, 0xFF00,
+};
 void func_060DFCE8(u16 arg0) {
     Collider collider;
     Entity* self = g_CurrentEntity;
@@ -290,7 +422,6 @@ void func_060DFCE8(u16 arg0) {
     }
 }
 
-const volatile u16 DAT_060DFDD2 = 0x0009;
 extern s16 DAT_060F24D4[];
 extern u16 g_Stage15AlucardSubweaponIds[];
 void PlaySfx(s32 sfxId);
@@ -541,7 +672,43 @@ void func_060E62D4(s32 arg0, s32 arg1, s32 arg2) {
     func_060E6310(arg1, arg2);
     func_060E63E0(arg0, arg1, arg2);
 }
-INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E6310, func_060E6310);
+void func_060E6310(s32 scale, s32 unused) {
+    s32* dst_base;
+    s32* dst;
+    s32* dst1;
+    s32* src;
+    s32* src1;
+    s32 factor;
+    s32 i;
+    s32 limit;
+
+    dst_base = DAT_060485e0;
+    src = g_Stage15Entity08ModelVertices14[0];
+    dst = dst_base;
+    factor = scale << 8;
+    i = 0;
+    limit = 13;
+    src1 = src + 1;
+    dst1 = dst_base + 1;
+
+    for (; i <= limit; i++) {
+        dst[0] = src[0] * factor;
+        dst1[0] = src1[0] * factor;
+        dst1[1] = src1[1] * factor;
+        src += 3;
+        dst += 3;
+        src1 += 3;
+        dst1 += 3;
+    }
+
+    SetCurrentMatrixBinAngle(&DAT_060FB0D0, &DAT_060FB0E0);
+
+    DAT_06061DF0.current->val[0][0] = DAT_06061DF0.current->val[0][0] * 5 / 4;
+    DAT_06061DF0.current->val[0][1] = DAT_06061DF0.current->val[0][1] * 5 / 4;
+    DAT_06061DF0.current->val[0][2] = DAT_06061DF0.current->val[0][2] * 5 / 4;
+
+    TransformAndProjectPoints(dst_base, dst_base + 0x102, 14, &DAT_06061DF0);
+}
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E63E0, func_060E63E0);
 extern u8 g_Stage15SpriteBank23Frames[];
 extern u8 g_Stage15SkeletonBeastAnimations[];
@@ -550,8 +717,7 @@ void SyncSpriteObjectPosUnchecked(Entity* self, s16* offset);
 
 void func_060E654C(Entity* self) {
     SaturnSpriteImage* images = g_Stage15SpriteBank23Images;
-    SaturnSpriteResource* bank =
-        (SaturnSpriteResource*)g_Stage15SpriteBankSkeletonBeast;
+    SaturnSpriteResource* bank = &g_Stage15SpriteBankSkeletonBeast;
 
     self->unk0 =
         CreateSpriteObject(bank->allocationIndex, bank->flags, images, 5);
@@ -626,7 +792,14 @@ INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E8FD4, func_060E8FD4);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E9144, func_060E9144);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E94A0, func_060E94A0);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E95E8, func_060E95E8);
-INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E991C, func_060E991C);
+void func_060E991C(Entity* entity) {
+    entity->unk0 = CreateSpriteObject(
+        g_Stage15SpriteBankHumanFaceTree.allocationIndex,
+        g_Stage15SpriteBankHumanFaceTree.flags, g_Stage15SpriteBank26Images, 5);
+    SyncSpriteObjectPosUnchecked(
+        entity, g_Stage15SpriteBank25PackedSpriteParts);
+    entity->step = 1;
+}
 extern u32 DAT_060F7EFC[];
 
 void func_060E996C(Entity* self) {
@@ -695,8 +868,6 @@ void func_060E9A14(Entity* self, Entity* parts) {
 }
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E9AAC, func_060E9AAC);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E9AEC, func_060E9AEC);
-extern u8 DAT_060FB0EC[];
-
 void func_060E9CA0(void) {
     u8 values[8];
     s32 i;
@@ -726,9 +897,55 @@ void func_060E9CA0(void) {
         } while (i != 8);
     }
 }
-INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E9D38, func_060E9D38);
+void func_060E9D38(Entity* self) {
+    if (self->ext.et_060E9D38.nextSlot == 0 &&
+        self->ext.et_060E9D38.running == 0) {
+        u8 values[8];
+        s32 i;
+        s32 init_index;
+        u8 random_value;
+        s32 index;
+
+        i = 0;
+        for (init_index = 0; init_index <= 7; init_index++) {
+            values[init_index] = init_index;
+        }
+        while (i != 8) {
+            random_value = Random();
+            index = (u8)(random_value % (8 - i));
+            DAT_060FB0EC[i] = values[index];
+            while (index <= 7) {
+                values[index] = values[index + 1];
+                index++;
+            }
+            i++;
+        }
+        self->ext.et_060E9D38.running = 1;
+        self->ext.et_060E9D38.delay = 0;
+    }
+    if (self->ext.et_060E9D38.running != 0) {
+        self->ext.et_060E9D38.delay++;
+        if (self->ext.et_060E9D38.delay == 0x20) {
+            s32 offset =
+                DAT_060FB0EC[self->ext.et_060E9D38.nextSlot] * sizeof(Entity) +
+                2 * sizeof(Entity);
+
+            ((Entity*)((u8*)self + offset))->step = 3;
+            self->ext.et_060E9D38.delay = 0;
+            self->ext.et_060E9D38.nextSlot++;
+            if (self->ext.et_060E9D38.nextSlot == 8) {
+                self->ext.et_060E9D38.running = 0;
+            }
+        }
+    }
+}
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E9E44, func_060E9E44);
-INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60EAA68, func_060EAA68);
+void func_060EAA68(Entity* entity) {
+    entity->unk0 = CreateSpriteObject(
+        g_Stage15SpriteBankHumanFaceTree.allocationIndex,
+        g_Stage15SpriteBankHumanFaceTree.flags, g_Stage15SpriteBank26Images, 2);
+    entity->step = 1;
+}
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60EAAA8, func_060EAAA8);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60EACDC, func_060EACDC);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60EB2B8, func_060EB2B8);
@@ -741,7 +958,7 @@ void func_060EB9AC(Entity* self) {
     SaturnSpriteResource* bank;
 
     images = g_Stage15SpriteBank26Images;
-    bank = (SaturnSpriteResource*)g_Stage15SpriteBankHumanFaceTree;
+    bank = &g_Stage15SpriteBankHumanFaceTree;
     sprite = CreateSpriteObject(bank->allocationIndex, bank->flags, images, 4);
     self->unk0 = sprite;
     sprite->zPriority -= 8;
@@ -749,7 +966,14 @@ void func_060EB9AC(Entity* self) {
     self->step = 1;
 }
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60EBA00, func_060EBA00);
-INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60EBA98, func_060EBA98);
+void func_060EBA98(Entity* entity) {
+    entity->unk0 = CreateSpriteObject(
+        g_Stage15SpriteBankWaterLeaper.allocationIndex,
+        g_Stage15SpriteBankWaterLeaper.flags, g_Stage15SpriteBank27Images, 5);
+    SyncSpriteObjectPosUnchecked(entity, g_Stage15WaterLeaperInitOffset);
+    entity->unk0->flags |= 0x40;
+    entity->step++;
+}
 extern u32 DAT_060F86CC[];
 
 void func_060EBAF4(Entity* self) {
@@ -830,8 +1054,13 @@ void func_060ECD4C(Entity* self) {
     }
 }
 
-const u16 DAT_060ECDBA = 0x0009;
-INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60ECDBC, func_060ECDBC);
+void func_060ECDBC(Entity* entity) {
+    entity->unk0 = CreateSpriteObject(
+        g_Stage15SpriteBankVenusManTrap.allocationIndex,
+        g_Stage15SpriteBankVenusManTrap.flags, g_Stage15SpriteBank28Images, 2);
+    SyncSpriteObjectPosUnchecked(entity, DAT_060F87AC);
+    entity->step = 1;
+}
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60ECE0C, func_060ECE0C);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60ED1C0, func_060ED1C0);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60ED848, func_060ED848);
@@ -845,7 +1074,13 @@ void func_060EDF48(Entity* self) {
 }
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60EDF80, func_060EDF80);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60EE4B8, func_060EE4B8);
-INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60EE5F4, func_060EE5F4);
+void func_060EE5F4(Entity* entity) {
+    entity->unk0 = CreateSpriteObject(
+        g_Stage15SpriteBankGardener.allocationIndex,
+        g_Stage15SpriteBankGardener.flags, g_Stage15SpriteBank30Images, 11);
+    SyncSpriteObjectPosUnchecked(entity, DAT_060F96D4);
+    entity->step = 1;
+}
 void func_060EE644(Entity* self) {
     func_06079BB4(self);
     func_0600B004(self->unk0, DAT_060FA59C[self->animCurFrame]);

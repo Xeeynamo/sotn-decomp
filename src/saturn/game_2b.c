@@ -125,7 +125,9 @@ typedef struct Func06078920CmdView {
     Uint16 color;
     Uint16 charAddr;
     Uint16 charSize;
-    s32 unkC;
+    s32 pos[4];
+    Uint16 grshAddr;
+    Uint16 dummy;
 } Func06078920CmdView;
 
 typedef union Func06078920Cmd {
@@ -143,7 +145,7 @@ void func_06078920(Sint32 arg0, Point16* arg1) {
     DAT_06086108.view.charSize = 0x910;
     DAT_06086108.view.color = SPR_2LookupTblNoToVram(0x31);
     DAT_06086108.view.charAddr = DAT_0605AEC4.unk4 + 0x480;
-    DAT_06086108.view.unkC = (arg1->x << 0x10) | (u16)arg1->y;
+    DAT_06086108.view.pos[0] = (arg1->x << 0x10) | (u16)arg1->y;
     if (SpMstCmdPos <= 0x277) {
         SPR_2Cmd(arg0, &DAT_06086108.cmd);
         d_0605AEAC += 0x20;
@@ -152,7 +154,23 @@ void func_06078920(Sint32 arg0, Point16* arg1) {
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60789C4, func_060789C4);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078B48, func_06078B48);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078E28, func_06078E28);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078F58, func_06078F58);
+void func_06078F58(s32 arg0, s32 arg1, Point16* arg2) {
+    s32 charBase;
+
+    DAT_06086108.view.control = 0x1000;
+    DAT_06086108.view.drawMode = 0x0488;
+    DAT_06086108.view.charAddr = DAT_0605AEC4.unk0;
+    DAT_06086108.view.charSize = 0x0610;
+    DAT_06086108.view.color = SPR_2LookupTblNoToVram(0x31);
+    charBase = DAT_0605AEC4.unk4;
+    DAT_06086108.view.charAddr = (arg1 + 0x0B) * 0x30 + charBase;
+    DAT_06086108.view.pos[0] = (arg2->x << 16) | (u16)arg2->y;
+
+    if (SpMstCmdPos <= 0x277) {
+        SPR_2Cmd(arg0, &DAT_06086108.cmd);
+        d_0605AEAC += 0x20;
+    }
+}
 
 // _SubDispSortKind
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079008, func_06079008);
@@ -164,7 +182,45 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f60792B8, func_060792B8);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079424, func_06079424);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079580, func_06079580);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079670, func_06079670);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607973C, func_0607973C);
+void func_0607973C(Sint32 arg0, Sint16* arg1) {
+    Func06078920Cmd* cmd;
+    Sint16 left;
+    Sint16 top;
+    s32 right;
+    Sint16 bottom;
+    s32 leftWord;
+    s32 shade;
+
+    shade = g_Timer;
+    left = *arg1++;
+    top = *arg1;
+    cmd = &DAT_06086108;
+
+    if (shade & 0x10) {
+        shade = (shade & 0x0F) * 2 + 0x60;
+    } else {
+        shade = -(shade & 0x0F) + 0x7F;
+    }
+    shade /= 8;
+
+    right = left + 0x6F;
+    bottom = top + 0x0C;
+
+    cmd->view.control = 0x1004;
+    cmd->view.drawMode = 0x04C0;
+    cmd->view.color = (shade << 5) + shade - 0x8000;
+
+    leftWord = left << 16;
+    cmd->view.pos[0] = leftWord | (u16)top;
+    cmd->view.pos[1] = (u16)top | (right << 16);
+    cmd->view.pos[2] = (right << 16) | (u16)bottom;
+    cmd->view.pos[3] = leftWord | (u16)bottom;
+
+    if (SpMstCmdPos <= 0x277) {
+        SPR_2Cmd(arg0, &cmd->cmd);
+        d_0605AEAC += 0x20;
+    }
+}
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60797FC, func_060797FC);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079958, func_06079958);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079A2C, func_06079A2C);
