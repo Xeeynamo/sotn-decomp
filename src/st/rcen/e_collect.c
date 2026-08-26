@@ -7,6 +7,9 @@
 #define GOLD_COLLECT_TEXT                                                      \
     _S("$1"), _S("$25"), _S("$50"), _S("$100"), _S("$250"), _S("$400"),        \
         _S("$700"), _S("$1000"), _S("$2000"), _S("$5000"),
+#else
+#define STAGE_PRIZE_DROPS g_RcenShaftFlags
+extern u16 g_RcenShaftFlags[];
 #endif
 
 #include "../e_collect.h"

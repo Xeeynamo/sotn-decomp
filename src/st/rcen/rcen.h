@@ -57,4 +57,12 @@ enum EntityID {
     NUM_ENTITIES,
 };
 
+extern EInit D_us_80180570;
+extern EInit D_us_80180588;
+extern EInit D_us_80180594;
+extern u8 D_us_801807D0[];
+extern u8 D_us_80180800[];
+extern u8 D_us_80180874[];
+extern u8 D_us_80180890[];
+
 #endif // RCEN_H

@@ -33,7 +33,7 @@ void EntityBreakable(Entity* self) {
     }
 }
 
-INCLUDE_ASM("boss/rbo8/nonmatchings/unk_1546C", func_us_801955A0);
+#include "func_us_801955a0.h"
 
 INCLUDE_ASM("boss/rbo8/nonmatchings/unk_1546C", func_us_801955F8);
 

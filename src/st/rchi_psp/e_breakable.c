@@ -3,6 +3,8 @@
 
 /* Codebase-wide PSP comparison found no other e_breakable functions with
  * RCHI's 206/356-instruction sizes. */
-INCLUDE_ASM("st/rchi_psp/nonmatchings/rchi_psp/e_breakable", EntityBreakable);
+extern s32 E_ID(BACKGROUND_BLOCK);
+extern s32 E_ID(BREAKABLE_DEBRIS);
+#include "../e_rchi_breakable.h"
 
 INCLUDE_ASM("st/rchi_psp/nonmatchings/rchi_psp/e_breakable", EntityBreakableDebris);

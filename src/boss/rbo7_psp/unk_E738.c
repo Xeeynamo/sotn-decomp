@@ -84,7 +84,7 @@ void func_us_80192B38_from_rbo3(Entity* self) {
     }
 }
 
-INCLUDE_ASM("boss/rbo7_psp/nonmatchings/rbo7_psp/unk_E738", EntityBreakable);
+#include "../../st/e_breakable.h"
 
 INCLUDE_ASM("boss/rbo7_psp/nonmatchings/rbo7_psp/unk_E738", func_us_801940B4);
 
