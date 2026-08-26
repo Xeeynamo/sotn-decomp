@@ -82,6 +82,7 @@ segments:
       - [0x1F530, c, rnz1_psp/unk_1F530]
       - [0x1FB60, c, rnz1/e_gear_large]
       - [0x1FE68, c, rnz1_psp/unk_1FE68]
+      - [0x202B8, c, rnz1_psp/unk_202B8]
       - [0x20580, data]
       - [0x20958, .data, rnz1/e_life_up]
       - [0x209A8, .data, rnz1/e_red_door]
