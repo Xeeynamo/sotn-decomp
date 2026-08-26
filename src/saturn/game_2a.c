@@ -1031,13 +1031,14 @@ void SetYH(Primitive* prim, s32 y, s32 h) {
     prim->y2 = prim->y3 = y + h - 1;
 }
 
+static void SetUnk(Primitive* prim, u16* arg1) {
+    prim->unk8 = arg1[0];
+    prim->unkA = arg1[1];
+}
+
 // func_060771D4
 void SetHudPrimSprite(Primitive* prim, s32 arg1) {
-    u16* ptr;
-
-    ptr = DAT_0605aec0[DAT_06086388->allocationIndex + arg1];
-    prim->unk8 = ptr[0];
-    prim->unkA = ptr[1];
+    SetUnk(prim, DAT_0605aec0[DAT_06086388->allocationIndex + arg1]);
     prim->unk6 =
         LookupTblNoToVram(DAT_06086388->flags + arg1) & 0x8FFF | 0x4000;
 }
@@ -1070,7 +1071,6 @@ void UpdateMpBarPrim(Primitive* prim) {
     prim->unk6 = sVar6 + prim->unk6 & 0x8FFF | 0x4000;
 }
 
-// func_06077354
 // original name: set_heart_num
 void SetHeartsNum(Primitive* prim) {
     u32 digit;
@@ -1078,7 +1078,6 @@ void SetHeartsNum(Primitive* prim) {
     s32 leading_zeros;
     u32 uVar13;
     SubweaponDef subwpn;
-    u16* ptr;
     u32 hearts;
 
     i = 10;
@@ -1109,9 +1108,7 @@ void SetHeartsNum(Primitive* prim) {
         digit = 10;
     }
     digit += g_SaturnSharedSpriteBank4Resource.allocationIndex + 3;
-    ptr = DAT_0605aec0[digit];
-    prim->unk8 = ptr[0];
-    prim->unkA = ptr[1];
+    SetUnk(prim, DAT_0605aec0[digit]);
     prim->unk6 = LookupTblNoToVram(uVar13) & 0x8FFF | 0x4000;
     if (leading_zeros != 0) {
         leading_zeros--;
@@ -1129,9 +1126,7 @@ void SetHeartsNum(Primitive* prim) {
         digit = 10;
     }
     digit += g_SaturnSharedSpriteBank4Resource.allocationIndex + 3;
-    ptr = DAT_0605aec0[digit];
-    prim->unk8 = ptr[0];
-    prim->unkA = ptr[1];
+    SetUnk(prim, DAT_0605aec0[digit]);
     prim->unk6 = LookupTblNoToVram(uVar13) & 0x8FFF | 0x4000;
     if (leading_zeros != 0) {
         leading_zeros--;
@@ -1149,9 +1144,7 @@ void SetHeartsNum(Primitive* prim) {
         digit = 10;
     }
     digit += g_SaturnSharedSpriteBank4Resource.allocationIndex + 3;
-    ptr = DAT_0605aec0[digit];
-    prim->unk8 = ptr[0];
-    prim->unkA = ptr[1];
+    SetUnk(prim, DAT_0605aec0[digit]);
     prim->unk6 = LookupTblNoToVram(uVar13) & 0x8FFF | 0x4000;
     if (leading_zeros != 0) {
         prim->drawMode |= DRAW_HIDE;
@@ -1167,9 +1160,7 @@ void SetHeartsNum(Primitive* prim) {
         digit = 10;
     }
     digit += g_SaturnSharedSpriteBank4Resource.allocationIndex + 3;
-    ptr = DAT_0605aec0[digit];
-    prim->unk8 = ptr[0];
-    prim->unkA = ptr[1];
+    SetUnk(prim, DAT_0605aec0[digit]);
     prim->unk6 = LookupTblNoToVram(uVar13) & 0x8FFF | 0x4000;
     SetXW(prim, g_HudSpriteX[i], g_HudSpriteW[i]);
 }
@@ -1181,7 +1172,6 @@ void SetLifeNum(Primitive* prim) {
     s32 leading_zeros;
     u32 displayHP;
     u32 uVar11;
-    u16* ptr;
 
     displayHP = g_PlayerHud.displayHP;
     if (displayHP >= 1000) {
@@ -1206,9 +1196,7 @@ void SetLifeNum(Primitive* prim) {
     }
     digit = (displayHP / 1000) % 10;
     digit += DAT_06086388->allocationIndex + 10;
-    ptr = DAT_0605aec0[digit];
-    prim->unk8 = ptr[0];
-    prim->unkA = ptr[1];
+    SetUnk(prim, DAT_0605aec0[digit]);
     prim->unk6 = LookupTblNoToVram(uVar11) & 0x8FFF | 0x4000;
     if (leading_zeros != 0) {
         leading_zeros--;
@@ -1223,9 +1211,7 @@ void SetLifeNum(Primitive* prim) {
     prim = prim->next;
     digit = (displayHP / 100) % 10;
     digit += DAT_06086388->allocationIndex + 10;
-    ptr = DAT_0605aec0[digit];
-    prim->unk8 = ptr[0];
-    prim->unkA = ptr[1];
+    SetUnk(prim, DAT_0605aec0[digit]);
     prim->unk6 = LookupTblNoToVram(uVar11) & 0x8FFF | 0x4000;
     if (leading_zeros != 0) {
         leading_zeros--;
@@ -1240,9 +1226,7 @@ void SetLifeNum(Primitive* prim) {
     prim = prim->next;
     digit = (displayHP / 10) % 10;
     digit += DAT_06086388->allocationIndex + 10;
-    ptr = DAT_0605aec0[digit];
-    prim->unk8 = ptr[0];
-    prim->unkA = ptr[1];
+    SetUnk(prim, DAT_0605aec0[digit]);
     prim->unk6 = LookupTblNoToVram(uVar11) & 0x8FFF | 0x4000;
     if (leading_zeros != 0) {
         prim->drawMode |= DRAW_HIDE;
@@ -1255,9 +1239,7 @@ void SetLifeNum(Primitive* prim) {
     prim = prim->next;
     digit = displayHP % 10;
     digit += DAT_06086388->allocationIndex + 10;
-    ptr = DAT_0605aec0[digit];
-    prim->unk8 = ptr[0];
-    prim->unkA = ptr[1];
+    SetUnk(prim, DAT_0605aec0[digit]);
     prim->unk6 = LookupTblNoToVram(uVar11) & 0x8FFF | 0x4000;
     prim->x0 = x;
     prim->y0 = g_HudSpriteY[6];
@@ -1309,5 +1291,59 @@ void StatusDispInit(void) {
     }
 }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6077D88, func_06077D88);
+extern u16 g_HudAnimationClutOffsets[];
+extern u8 g_HudAnimationTextureOffsets[];
+
+void func_06077D88(Primitive* prim) {
+    u8 local_38[10] = {0, 5, 7, 0, 6, 1, 3, 9, 4, 2};
+    u8 local_2C[10] = {0, 0x40, 0x42, 0x3B, 0x41, 0x3C, 0x3E, 0x44, 0x3F, 0x3D};
+    u8 local_20[10] = {0, 6, 6, 7, 8, 6, 6, 8, 6, 6};
+
+    s32 sub = g_Status.subWeapon;
+    SaturnSpriteFrame1* frame = (SaturnSpriteFrame1*)
+        g_SaturnSharedBreakableFrames[local_38[sub] + 0xB4];
+    SaturnSpriteImage* image =
+        &g_SaturnSharedSpriteBank0Resource.images[frame->parts[0].imageIndex];
+    SaturnSpritePart* part = &frame->parts[0];
+
+    SetUnk(
+        prim, DAT_0605aec0[g_SaturnSharedSpriteBank0Resource.allocationIndex +
+                           part->imageIndex]);
+    prim->unk6 =
+        LookupTblNoToVram(DAT_06086388->flags + local_20[sub]) & 0x8FFF |
+        0x4000;
+    prim->x0 = (g_HudSpriteX[0] + part->offsetX) - image->storedWidth;
+    prim->y0 = (g_HudSpriteY[0] + part->offsetY) - image->storedHeight;
+    prim = prim->next;
+
+    if (prim->y3 != 0) {
+        if (prim->y3 > 1) {
+            prim->y3--;
+        } else {
+            prim->x3++;
+            if (prim->x3 == prim->x2) {
+                prim->x3 = prim->y3 = 0;
+            }
+        }
+    } else {
+        prim->x2 = ((MTH_GetRand() & 0x3) + 1) * 0x10;
+        prim->y3 = (MTH_GetRand() & 0x3F) * 6 + 0xC8;
+    }
+    sub = prim->x3 & 0xF;
+    SetUnk(prim, DAT_0605aec0[DAT_06086388->allocationIndex +
+                              g_HudAnimationTextureOffsets[sub]]);
+    prim->unk6 = LookupTblNoToVram(
+                     DAT_06086388->flags + g_HudAnimationClutOffsets[sub]) &
+                     0x8FFF |
+                 0x4000;
+    prim->x0 = g_HudSpriteX[1];
+    prim->y0 = g_HudSpriteY[1];
+    prim = prim->next;
+
+    SetUnk(prim, DAT_0605aec0[DAT_06086388->allocationIndex + 2]);
+    prim->unk6 = LookupTblNoToVram(DAT_06086388->flags + 8) & 0x8FFF | 0x4000;
+    prim->x0 = g_HudSpriteX[2];
+    prim->y0 = g_HudSpriteY[2];
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078120, func_06078120);

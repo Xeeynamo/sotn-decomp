@@ -12,7 +12,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60304CC, func_060304CC); // postProc
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6030518, func_06030518);
 // return_dfunc
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6030554, func_06030554);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6030580, func_06030580); // dummy_func
+void func_06030580(void) {}
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f603058C, func_0603058C); // isConSeri
 
 // _BUP_SelPart
