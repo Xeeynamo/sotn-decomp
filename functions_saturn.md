@@ -792,7 +792,6 @@
 | richter/f_nonmat/f60AE1B4.s  | func_060AE1B4   |      477 |         28 |       |     |
 | richter/f_nonmat/f60A82F8.s  | func_060A82F8   |      477 |         52 |       |     |
 | maria/f_nonmat/f60B868C.s    | func_060B868C   |      478 |         44 |       |     |
-| game/f_nonmat/f6077D88.s     | func_06077D88   |      481 |         16 |       |     |
 | maria/f_nonmat/f60C00B4.s    | func_060C00B4   |      481 |         40 |       |     |
 | richter/f_nonmat/f60BD768.s  | func_060BD768   |      481 |         40 |       |     |
 | maria/f_nonmat/f60A66C8.s    | func_060A66C8   |      483 |         81 |       |     |
