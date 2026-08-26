@@ -1,13 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "sattypes.h"
+#include "zero/fontmap.h"
 
 s32 DAT_060476a0 = 0;
 s32 DAT_060476a4 = 0;
-
-typedef struct {
-    u16 shiftJis;
-    u16 characterOffset;
-} SaturnFontGlyphMapping;
 
 SaturnFontGlyphMapping g_SaturnFontGlyphMappings[92] = {
     {0x815B, 0x1820}, /* ー */
