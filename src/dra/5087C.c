@@ -601,7 +601,7 @@ s32 func_800F16D0(void) {
     if (D_8003C730 != 0)
         return g_StageId;
     else if (D_80097C98 == 4)
-        return STAGE_TOP | STAGE_INVERTEDCASTLE_FLAG;
+        return STAGE_RTOP;
     else if (D_80097C98 == 5)
         return STAGE_TOP;
     else if (D_80097C98 == 6)

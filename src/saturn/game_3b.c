@@ -1412,6 +1412,7 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount) {
     return ret;
 }
 
+// SAT: func_060703DC
 void DecrementStatBuffTimers(void) {
     s32 i;
     for (i = 0; i < 16; i++) {

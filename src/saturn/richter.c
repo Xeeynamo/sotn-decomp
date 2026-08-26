@@ -20,7 +20,7 @@ static TeleportCheck func_060A5060(void) {
             return TELEPORT_CHECK_TO_RTOP;
         }
     }
-    if (g_CurrentRoom.stageID == (STAGE_TOP | STAGE_INVERTEDCASTLE_FLAG)) {
+    if (g_CurrentRoom.stageID == STAGE_RTOP) {
         if (ABS((g_Tilemap.left << 8) + g_PlayerX - 8430) < 4 &&
             ABS((g_Tilemap.top << 8) + g_PlayerY - 14407) < 4) {
             return TELEPORT_CHECK_TO_TOP;
@@ -345,7 +345,7 @@ static void func_8015BB80(void) {
             PLAYER.posX.i.hi++;
         }
     }
-    if (g_CurrentRoom.stageID == (STAGE_TOP | STAGE_INVERTEDCASTLE_FLAG)) {
+    if (g_CurrentRoom.stageID == STAGE_RTOP) {
         if (ABS((g_Tilemap.left << 8) + g_PlayerX) - 8430 > 0) {
             PLAYER.posX.i.hi--;
         }

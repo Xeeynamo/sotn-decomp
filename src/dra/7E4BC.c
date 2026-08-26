@@ -1162,18 +1162,18 @@ void EntityPlayerPinkEffect(Entity* self) {
                 PlaySfx(SFX_MAGIC_WEAPON_APPEAR_A);
                 break;
             case 0x84: // Potion most likely.
-                g_Player.unk56 = 1;
-                g_Player.unk58 =
+                g_Player.healKind = 1;
+                g_Player.healAmount =
                     GetStatusAilmentTimer(STATUS_AILMENT_UNK04, 0x32);
                 break;
             case 0x85: // High Potion most likely.
-                g_Player.unk56 = 1;
-                g_Player.unk58 =
+                g_Player.healKind = 1;
+                g_Player.healAmount =
                     GetStatusAilmentTimer(STATUS_AILMENT_UNK05, 0x64);
                 break;
             case 0x86: // Elixir
-                g_Player.unk56 = 1;
-                g_Player.unk58 = g_Status.hpMax;
+                g_Player.healKind = 1;
+                g_Player.healAmount = g_Status.hpMax;
                 break;
             case 0x87: // Mana Prism
                 PlaySfx(SFX_MAGIC_WEAPON_APPEAR_A);

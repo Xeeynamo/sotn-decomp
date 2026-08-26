@@ -444,7 +444,6 @@ extern struct Unk06057F60 DAT_06057F60;
 extern s32 func_06030968(void*, s32, s32, void*);
 extern s32 SYS_state_060485C4;
 extern s32 Crc32(s32, s32*);
-extern Primitive DAT_060867F8[];
 extern s32 DAT_06061DD4;
 extern MthMatrixTbl DAT_06061DF0;
 extern Point16 DAT_06057A08;

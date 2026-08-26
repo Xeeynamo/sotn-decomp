@@ -412,7 +412,7 @@ void func_060ABFA4(void) {
 void func_060AC018(void) {
     s32 distance;
 
-    if (g_CurrentRoom.stageID == 0x0B) {
+    if (g_CurrentRoom.stageID == STAGE_TOP) {
         distance = (g_Tilemap.left << 8) + g_PlayerX;
         if (distance < 0) {
             distance = -distance;
@@ -430,7 +430,7 @@ void func_060AC018(void) {
         }
     }
 
-    if (g_CurrentRoom.stageID == 0x2B) {
+    if (g_CurrentRoom.stageID == STAGE_RTOP) {
         distance = (g_Tilemap.left << 8) + g_PlayerX;
         if (distance < 0) {
             distance = -distance;
@@ -632,7 +632,7 @@ TeleportCheck func_060AF8E0(void) {
             return TELEPORT_CHECK_TO_RTOP;
         }
     }
-    if (g_CurrentRoom.stageID == (STAGE_TOP | STAGE_INVERTEDCASTLE_FLAG)) {
+    if (g_CurrentRoom.stageID == STAGE_RTOP) {
         if (ABS((g_Tilemap.left << 8) + g_PlayerX - 8430) < 4 &&
             ABS((g_Tilemap.top << 8) + g_PlayerY - 14407) < 4) {
             return TELEPORT_CHECK_TO_TOP;

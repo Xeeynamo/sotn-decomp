@@ -1991,8 +1991,8 @@ typedef struct {
     /* 0x3A0 80072F70 */ u16 prev_step;
     /* 0x3A2 80072F72 */ u16 prev_step_s;
     /* 0x3A4 80072F74 */ u16 unk54;
-    /* 0x3A6 80072F76 */ u16 unk56;
-    /* 0x3A8 80072F78 */ u16 unk58;
+    /* 0x3A6 80072F76 */ u16 healKind;
+    /* 0x3A8 80072F78 */ u16 healAmount;
     /* 0x3AA 80072F7A */ u16 damageTaken;
     /* 0x3AC 80072F7C */ u16
         unk5C; // ALU: hellfire spell state, RIC: isPrologue
