@@ -769,8 +769,8 @@
 |            | func_pspeu_092F3498                |       18 |          2 |        |       |     |
 | main       | DisableAutoPowerOff                |       18 |          3 |        |       |     |
 | main       | SquareRoot12                       |       18 |          3 |        |       |     |
-| main       | func_psp_0892C4F8                  |       18 |          3 |        |       |     |
 | main       | SpuSetKey                          |       18 |          3 |        |       |     |
+| main       | func_psp_0892C4F8                  |       18 |          3 |        |       |     |
 | main       | func_psp_0892D818                  |       18 |          3 |        |       |     |
 | main       | gte_ldv3c                          |       18 |          4 |        |       |     |
 | main       | func_psp_0892BF14                  |       18 |          4 |        |       |     |
