@@ -57,7 +57,7 @@ segments:
       - [0xB7A0, c, rbo6/popup]
       - [0xBD98, c, rbo6/e_room_fg]
       - [0xBEB0, c, rbo6/st_common]
-      - [0xC9D8, c, rbo6_psp/prim_helpers]
+      - [0xC9D8, c, rbo6/prim_helpers]
       - [0xD118, c, rbo6_psp/st_init]
       - [0xD4E8, c, rbo6_psp/unk_D4E8]
       - [0x15930, c, rbo6_psp/e_cutscene_dialogue]

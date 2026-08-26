@@ -72,6 +72,6 @@ INCLUDE_ASM("boss/bo3_psp/nonmatchings/bo3_psp/unk_EB90", func_us_801A1BE8);
 
 INCLUDE_ASM("boss/bo3_psp/nonmatchings/bo3_psp/unk_EB90", EntitySplashWater);
 
-INCLUDE_ASM("boss/bo3_psp/nonmatchings/bo3_psp/unk_EB90", EntityWaterDrop);
+#include "../../st/entity_water_drop.h"
 
 INCLUDE_ASM("boss/bo3_psp/nonmatchings/bo3_psp/unk_EB90", EntityBackgroundBlock);

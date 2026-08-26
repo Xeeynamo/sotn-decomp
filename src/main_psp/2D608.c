@@ -650,7 +650,11 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/2D608", SsUtKeyOnV);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/2D608", SsUtSetVVol);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/2D608", SpuSetKey);
+void SpuSetKey(long on_off, unsigned long voice_bit) {
+    if (on_off == 0 && voice_bit != 0) {
+        func_psp_0892CA28(&D_psp_08DADCC4);
+    }
+}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/2D608", SpuSetVoiceAttr);
 

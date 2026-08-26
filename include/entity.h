@@ -3682,7 +3682,8 @@ typedef struct {
     /* 0x88 */ u8 unk88;
     /* 0x89 */ s8 unk89;
     /* 0x8A */ s16 : 16;
-    /* 0x8C */ s32 unk8C;
+    /* 0x8C */ s32 acceleration;
+    /* 0x90 */ s32 accelerationY;
 } ET_801A518C;
 
 typedef struct {
