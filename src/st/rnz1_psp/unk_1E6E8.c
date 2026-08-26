@@ -8,9 +8,3 @@ INCLUDE_ASM("st/rnz1_psp/nonmatchings/rnz1_psp/unk_1E6E8", EntityBreakableWallPa
 INCLUDE_ASM("st/rnz1_psp/nonmatchings/rnz1_psp/unk_1E6E8", EntitySecretWallDebris);
 
 INCLUDE_ASM("st/rnz1_psp/nonmatchings/rnz1_psp/unk_1E6E8", func_us_801A8F7C);
-
-INCLUDE_ASM("st/rnz1_psp/nonmatchings/rnz1_psp/unk_1E6E8", EntityGearHorizontal);
-
-INCLUDE_ASM("st/rnz1_psp/nonmatchings/rnz1_psp/unk_1E6E8", EntityWallGear);
-
-INCLUDE_ASM("st/rnz1_psp/nonmatchings/rnz1_psp/unk_1E6E8", EntitySecretAreaDoor);
