@@ -78,6 +78,8 @@ segments:
       - [0x1D570, c, rnz1/e_explosion_puff_opaque]
       - [0x1DC68, c, rnz1_psp/e_spikes]
       - [0x1E6E8, c, rnz1_psp/unk_1E6E8]
+      - [0x1FB60, c, rnz1_psp/unk_1FB60]
+      - [0x1FE68, c, rnz1_psp/unk_1FE68]
       - [0x20580, data]
       - [0x20958, .data, rnz1/e_life_up]
       - [0x209A8, .data, rnz1/e_red_door]
