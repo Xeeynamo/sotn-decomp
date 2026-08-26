@@ -88,7 +88,7 @@ segments:
       - [0x26D08, c, e_explosion_puff_opaque]
       - [0x27254, c, e_clouds]
       - [0x276A8, c, e_bg_gears]
-      - [0x278B8, c, unk_278B8]
+      - [0x278B8, c, e_gear_large]
       - [0x27B30, c, unk_27B30]
       - [0x291A0, c, e_spikes]
       - [0x29914, c, unk_29914]
