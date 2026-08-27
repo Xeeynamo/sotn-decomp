@@ -190,7 +190,6 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079424, func_06079424);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079580, func_06079580);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079670, func_06079670);
 
-
 typedef struct Func06078920CmdView {
     Uint16 control;
     Uint16 link;
