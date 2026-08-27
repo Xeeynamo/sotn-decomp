@@ -635,7 +635,6 @@
 | rstage15/f_nonmat/f60E7C3C.s | func_060E7C3C   |      294 |         22 |       |     |
 | richter/f_nonmat/f60A8664.s  | func_060A8664   |      296 |         38 |       |     |
 | alucard/f_nonmat/f60BD6D8.s  | func_060BD6D8   |      297 |         15 |       |     |
-| game/f_nonmat/f6078120.s     | func_06078120   |      300 |         34 |       |     |
 | stage_02/f_nonmat/f60E0684.s | func_060E0684   |      304 |         34 |       |     |
 | alucard/f_nonmat/f60AB0E8.s  | func_060AB0E8   |      305 |         40 |       |     |
 | stage_15/f_nonmat/f60EAAA8.s | func_060EAAA8   |      306 |         21 |       |     |
