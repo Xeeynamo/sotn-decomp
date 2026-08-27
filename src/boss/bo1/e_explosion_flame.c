@@ -186,11 +186,11 @@ void EntityExplosionFlame(Entity* self) {
             self->facingLeft = (Random() & 1);
             self->velocityX = (Random() << 8) - 0x8000;
             self->velocityY = 0xFFFD8000;
-            self->ext.et_801A518C.unk8C = -(Random() << 4) - 0x1000;
+            self->ext.et_801A518C.acceleration = -(Random() << 4) - 0x1000;
             self->step_s++;
         }
         MoveEntity();
-        self->velocityY += (s32)self->ext.et_801A518C.unk8C;
+        self->velocityY += (s32)self->ext.et_801A518C.acceleration;
         self->opacity -= 1;
         if (self->pose == 8 && !self->poseTimer) {
             newEntity = AllocEntity(&g_Entities[64], &g_Entities[256]);

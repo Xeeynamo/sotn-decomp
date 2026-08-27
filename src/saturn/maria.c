@@ -23,7 +23,7 @@ static TeleportCheck func_060A5060(void) {
             return TELEPORT_CHECK_TO_RTOP;
         }
     }
-    if (g_CurrentRoom.stageID == (STAGE_TOP | STAGE_INVERTEDCASTLE_FLAG)) {
+    if (g_CurrentRoom.stageID == STAGE_RTOP) {
         if (ABS((g_Tilemap.left << 8) + g_PlayerX - 8430) < 4 &&
             ABS((g_Tilemap.top << 8) + g_PlayerY - 14407) < 4) {
             return TELEPORT_CHECK_TO_TOP;
@@ -304,7 +304,7 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A8860, func_060A8860);
 void func_060A8A38(void) {
     s32 distance;
 
-    if (g_CurrentRoom.stageID == 0x0B) {
+    if (g_CurrentRoom.stageID == STAGE_TOP) {
         distance = (g_Tilemap.left << 8) + g_PlayerX;
         if (distance < 0) {
             distance = -distance;
@@ -322,7 +322,7 @@ void func_060A8A38(void) {
         }
     }
 
-    if (g_CurrentRoom.stageID == 0x2B) {
+    if (g_CurrentRoom.stageID == STAGE_RTOP) {
         distance = (g_Tilemap.left << 8) + g_PlayerX;
         if (distance < 0) {
             distance = -distance;

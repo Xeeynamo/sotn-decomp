@@ -687,7 +687,7 @@ void func_06075D24(void) {
         } else {
             prim->drawMode |= DRAW_HIDE;
         }
-        if (g_CurrentRoom.stageID == 0x1F) {
+        if (g_CurrentRoom.stageID == STAGE_ST0) {
             if (prim->y3-- == 0) {
                 prim->x3++;
                 if (prim->x3 == 9) {
@@ -1346,4 +1346,81 @@ void func_06077D88(Primitive* prim) {
     prim->y0 = g_HudSpriteY[2];
 }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078120, func_06078120);
+void func_06078120(void) {
+    s32 hpdiff;
+    Primitive* prim;
+
+    if ((g_CurrentRoom.stageID == 0x1F) || (g_PlayableCharacter == 1)) {
+        func_06075D24();
+    } else if (g_PlayableCharacter == 2) {
+        UpdateCompactStatusHud();
+    } else {
+        prim = &g_PrimBuf[g_PlayerHud.primIndex1];
+        if (g_Status.subWeapon != 0) {
+            prim->drawMode &= ~DRAW_HIDE;
+            func_06077D88(prim);
+            prim = prim->next;
+            prim->drawMode &= ~DRAW_HIDE;
+            prim = prim->next;
+            prim->drawMode &= ~DRAW_HIDE;
+            prim = prim->next;
+        } else {
+            prim = prim->next;
+            prim = prim->next;
+            prim = prim->next;
+        }
+        UpdateMpBarPrim(prim);
+        prim = prim->next;
+        prim = prim->next;
+        prim = prim->next;
+        if ((g_Status.D_80097BF8 & 1) == 0) {
+            if ((g_GameTimer & 0x3F) == 0) {
+                g_Status.mp++;
+            }
+            if ((CheckEquipmentItemCount(0x4E, 4) != 0) &&
+                (g_GameTimer & 0x3F) == 0x1F) {
+                g_Status.mp++;
+            }
+            if (g_Status.mp > g_Status.mpMax) {
+                g_Status.mp = g_Status.mpMax;
+            }
+        }
+        if ((CheckEquipmentItemCount(0x11, 2) != 0) &&
+            (g_Player.status & PLAYER_STATUS_UNK4000000) &&
+            !(g_Player.status & PLAYER_STATUS_TRANSFORM)) {
+            g_PlayerHud.g_HealingMailTimer++;
+            if (g_PlayerHud.g_HealingMailTimer >= 0x80) {
+                g_Player.healKind = 2;
+                g_Player.healAmount = 1;
+                g_PlayerHud.g_HealingMailTimer = 0;
+            }
+        } else {
+            g_PlayerHud.g_HealingMailTimer = 0;
+        }
+        DecrementStatBuffTimers();
+        if (D_8013B5E8 == 0) {
+            hpdiff = g_Status.hp - g_PlayerHud.displayHP;
+            if (hpdiff > 0) {
+                if (hpdiff > 10) {
+                    g_PlayerHud.displayHP += hpdiff / 10;
+                } else {
+                    g_PlayerHud.displayHP++;
+                }
+            }
+            if (hpdiff < 0) {
+                if (hpdiff < -10) {
+                    g_PlayerHud.displayHP += hpdiff / 10;
+                } else {
+                    g_PlayerHud.displayHP--;
+                }
+            }
+        } else {
+            D_8013B5E8--;
+        }
+        SetLifeNum(prim);
+        for (hpdiff = 0; hpdiff < 4; hpdiff++) {
+            prim = prim->next;
+        }
+        SetHeartsNum(prim);
+    }
+}

@@ -460,6 +460,7 @@ _SclSpPriNum = 0x06065D18;
 _SclCsx = 0x06065D20;
 _SclCsy = 0x06065D28;
 _DAT_06066000 = 0x06066000;
+_g_PrimBuf = 0x060867F8;
 _g_SpriteObjectPool = 0x0608AFF8;
 _g_SpritePartPool = 0x0608D7F8;
 _DAT_060a5000 = 0x060A5000;
