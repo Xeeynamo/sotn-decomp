@@ -100,7 +100,7 @@ void EntityFlailGuard(Entity* self) {
                 entity->params = i;
                 entity->step = 5;
                 entity->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
-                                 FLAG_UNK_00200000 | FLAG_ROOM_EXIT00;
+                                 FLAG_UNK_00200000 | FLAG_UNK_2000;
                 if ((GetSideToPlayer() & 1) ^ 1) {
                     entity->velocityX = -D_us_80182160[i].x;
                 } else {
@@ -125,7 +125,7 @@ void EntityFlailGuard(Entity* self) {
         self->hitboxState = 0;
         self->animCurFrame = self->params + 8;
         self->flags |=
-            FLAG_DESTROY_IF_OUT_OF_CAMERA | FLAG_UNK_00200000 | FLAG_ROOM_EXIT00;
+            FLAG_DESTROY_IF_OUT_OF_CAMERA | FLAG_UNK_00200000 | FLAG_UNK_2000;
         self->step = 6;
         break;
 

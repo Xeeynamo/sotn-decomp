@@ -861,7 +861,7 @@ void EntityKarasumanRavenAbsorb(Entity* self) {
         self->drawFlags = ENTITY_ROTATE;
         self->hitboxState = 0;
 
-        self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA | FLAG_ROOM_EXIT00;
+        self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA | FLAG_UNK_2000;
         if (self->params) {
             self->animCurFrame = 0;
             self->step = 4;

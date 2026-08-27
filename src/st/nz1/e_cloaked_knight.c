@@ -239,7 +239,7 @@ void EntityCloakedKnight(Entity* self) {
             entity->params = EXPLOSION_SMALL_MULTIPLE;
         }
         entity = self + 2;
-        entity->flags |= FLAG_ROOM_EXIT00;
+        entity->flags |= FLAG_UNK_2000;
         DestroyEntity(self);
         return;
 
@@ -285,7 +285,7 @@ void EntityCloakedKnightCloak(Entity* self) {
     case 0:
         InitializeEntity(g_EInitCloakedKnight);
         self->hitboxState = 0;
-        self->flags |= FLAG_UNK_00200000 | FLAG_ROOM_EXIT00;
+        self->flags |= FLAG_UNK_00200000 | FLAG_UNK_2000;
         self->drawFlags = ENTITY_ROTATE;
         // fallthrough
 
@@ -319,7 +319,7 @@ void EntityCloakedKnightAura(Entity* self) {
     if (!self->step) {
         InitializeEntity(g_EInitCloakedKnightAura);
         self->hitboxState = 0;
-        self->flags |= FLAG_UNK_00200000 | FLAG_ROOM_EXIT00;
+        self->flags |= FLAG_UNK_00200000 | FLAG_UNK_2000;
         self->animCurFrame = 1;
         self->palette += 1; // n.b.! increment operator doesn't work
         self->drawFlags |= ENTITY_OPACITY | ENTITY_SCALEY | ENTITY_SCALEX;
@@ -377,7 +377,7 @@ void EntityCloakedKnightSword(Entity* self) {
             CreateEntityFromCurrentEntity(E_CLOAKED_KNIGHT_SWORD, entity);
             entity->params = 1;
         } else {
-            self->flags |= FLAG_ROOM_EXIT00;
+            self->flags |= FLAG_UNK_2000;
             self->animCurFrame = 0;
             self->step = 8;
         }

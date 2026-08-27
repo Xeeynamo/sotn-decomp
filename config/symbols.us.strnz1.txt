@@ -26,6 +26,7 @@ EntitySecretAreaDoor = 0x801A8380;
 EntityBreakableWall = 0x801A8668;
 EntityBreakableWallPartial = 0x801A89F0;
 EntitySecretWallDebris = 0x801A8CE0;
+EntityRoomExit = 0x801A8F7C;
 EntityWaterForeground = 0x801A9074;
 EntitySpikesDust = 0x801A91A0;
 EntitySpikesParts = 0x801A9254;
