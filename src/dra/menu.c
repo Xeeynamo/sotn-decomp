@@ -5,9 +5,9 @@
 #include "servant.h" // for InitializeMode enum
 
 #if defined(VERSION_US)
-#define ShowText(str, y) func_800F99B8(str, y, false);
+    #define ShowText(str, y) func_800F99B8(str, y, false);
 #elif defined(VERSION_HD)
-#define ShowText(str, y) func_800F98AC(str, y);
+    #define ShowText(str, y) func_800F98AC(str, y);
 #endif
 
 u16* func_80106A28(u32 arg0, u16 kind);
@@ -70,26 +70,26 @@ const char* D_800A2D48[] = {
 };
 
 #ifndef SOTN_STR
-// Similar to `_S`, a second lookup table is used for some menus based on BIOS
-// fonts in a custom table. This is only relevant to the strings below.
-// e.g. "\x02\x03\x04\xFF" -> _S2("ＤＥＦ")
-#define _S2(x) (x)
+    // Similar to `_S`, a second lookup table is used for some menus based on
+    // BIOS fonts in a custom table. This is only relevant to the strings below.
+    // e.g. "\x02\x03\x04\xFF" -> _S2("ＤＥＦ")
+    #define _S2(x) (x)
 
-// Like `_S2`, but uses a lookup table unique to the HD version of the game
-#define _S2_HD(x) (x)
+    // Like `_S2`, but uses a lookup table unique to the HD version of the game
+    #define _S2_HD(x) (x)
 #endif
 
 #if defined(VERSION_US)
 static const char* D_800A2D64 = "ＡＴＤＥＦ";
 
 static const char* D_800A2D68[] = {
-#if !defined(VERSION_PC)
+    #if !defined(VERSION_PC)
     _S2("ＡＴＴ"),
     _S2("ＤＥＦ"),
-#else // TODO cheap fix as func_800F66BC does not support unicode
+    #else // TODO cheap fix as func_800F66BC does not support unicode
     "\x00\x01\x01\xFF",
     "\x02\x03\x04\xFF",
-#endif
+    #endif
 };
 #elif defined(VERSION_HD)
 static const char* D_800A2D10 = "装備技システム短剣必殺使攻撃力防";
@@ -730,11 +730,11 @@ void DrawRelicsMenu(MenuContext* ctx) {
             relic += 2;
         }
 
-// Declare this as the var to use for the two comparisons later
-#define INDEXER var_s3
+    // Declare this as the var to use for the two comparisons later
+    #define INDEXER var_s3
 #else
     for (i = 0; i < 30; i++, relic++) {
-#define INDEXER i
+    #define INDEXER i
 #endif
         spriteX = (i & 1) * 0xB0;
         spriteY = (INDEXER / 2) * 0x13 + 0x22 + ctx_h;
@@ -1108,17 +1108,17 @@ void MenuButtonConfigDraw(MenuContext* ctx) {
     const s32 startX = 0xC0;
     const s32 W = 0x54;
     s32 cursorX = 0x98;
-#define XVAR x
+    #define XVAR x
 #elif defined(VERSION_PSP)
     const s32 startX = 0xCC;
     const s32 W = 0x54;
     s32 cursorX = 0xA4;
-#define XVAR x
+    #define XVAR x
 #elif defined(VERSION_HD)
     const s32 startX = 0x80;
     const s32 W = 0x28;
     s32 cursorX = 0x80;
-#define XVAR cursorX
+    #define XVAR cursorX
 #endif
 
     for (i = 0, x = startX; i < 7; i++) {
@@ -2318,10 +2318,10 @@ void func_800F99B8(const char* str, u32 y, bool arg2) {
         y &= ~0x200;
     }
     y = func_800F548C(y);
-#ifdef VERSION_PC
+    #ifdef VERSION_PC
     NOT_IMPLEMENTED;
     return;
-#endif
+    #endif
     while (*str != 0) {
         var_s2 = 0;
         ch = *str++;
@@ -2457,13 +2457,13 @@ void func_800F9E18(s32 arg0) {
         DrawSync(0);
     }
 
-#if defined(VERSION_PSP)
+    #if defined(VERSION_PSP)
     D_psp_0914A388[3] = GetLang(
         NULL, D_psp_0914A0D0, D_psp_09149E90, D_psp_0914A248, D_psp_09149FB0);
     if (D_psp_0914A388[3] != NULL) {
         func_psp_091040A0(D_psp_0914A388);
     }
-#endif
+    #endif
 
     for (i = nHalfScreenSize; i < nItems; i++, nHalfScreenSize++) {
         strcpy(buffer, g_RelicDefs[i * ItemsPerRow + 0].name);
@@ -3100,20 +3100,20 @@ MenuContextInit g_MenuInit[NUM_MENU] = {
 };
 
 #if defined(VERSION_US)
-#define PAD_MENU_SELECT_ALT (PAD_CROSS)
-#define PAD_MENU_SELECT (PAD_MENU_SELECT_ALT)
-#define PAD_MENU_BACK (PAD_TRIANGLE)
-#define PAD_MENU_SORT (PAD_SQUARE)
+    #define PAD_MENU_SELECT_ALT (PAD_CROSS)
+    #define PAD_MENU_SELECT (PAD_MENU_SELECT_ALT)
+    #define PAD_MENU_BACK (PAD_TRIANGLE)
+    #define PAD_MENU_SORT (PAD_SQUARE)
 #elif defined(VERSION_PSP)
-#define PAD_MENU_SELECT_ALT (g_ConfirmButton)
-#define PAD_MENU_SELECT (PAD_MENU_SELECT_ALT | PAD_SQUARE)
-#define PAD_MENU_BACK (g_CancelButton)
-#define PAD_MENU_SORT (PAD_TRIANGLE)
+    #define PAD_MENU_SELECT_ALT (g_ConfirmButton)
+    #define PAD_MENU_SELECT (PAD_MENU_SELECT_ALT | PAD_SQUARE)
+    #define PAD_MENU_BACK (g_CancelButton)
+    #define PAD_MENU_SORT (PAD_TRIANGLE)
 #elif defined(VERSION_HD)
-#define PAD_MENU_SELECT_ALT (PAD_CIRCLE)
-#define PAD_MENU_SELECT (PAD_MENU_SELECT_ALT | PAD_SQUARE)
-#define PAD_MENU_BACK (PAD_CROSS)
-#define PAD_MENU_SORT (PAD_TRIANGLE)
+    #define PAD_MENU_SELECT_ALT (PAD_CIRCLE)
+    #define PAD_MENU_SELECT (PAD_MENU_SELECT_ALT | PAD_SQUARE)
+    #define PAD_MENU_BACK (PAD_CROSS)
+    #define PAD_MENU_SORT (PAD_TRIANGLE)
 #endif
 #define PAD_MENU_BACK_ALT (PAD_MENU_BACK | PAD_MENU_SELECT)
 

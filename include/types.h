@@ -15,34 +15,35 @@ typedef unsigned short u_short;
 typedef unsigned long u_long;
 typedef unsigned int size_t;
 
-#define INT32_MAX (0x7FFFFFFF)
-#define INT16_MAX (0x7FFF)
+    #define INT32_MAX (0x7FFFFFFF)
+    #define INT16_MAX (0x7FFF)
 #else
 
-#include <stdint.h>
-#include <sys/types.h>
+    #include <stdint.h>
+    #include <sys/types.h>
 typedef unsigned char u_char;
 typedef unsigned short u_short;
 
-#if defined(_MSC_VER)
-// On MSC targeting x86_64, u_long is 32-bit and not 64-bit. To keep u_long
-// as 64-bit, we need to explicitly define u_long before other headers
-#ifdef _M_X64
+    #if defined(_MSC_VER)
+        // On MSC targeting x86_64, u_long is 32-bit and not 64-bit. To keep
+        // u_long as 64-bit, we need to explicitly define u_long before other
+        // headers
+        #ifdef _M_X64
 typedef unsigned long long u_long;
-#else
+        #else
 typedef unsigned long u_long;
-#endif
+        #endif
 
-#elif defined(__APPLE__)
-#include <limits.h>
-#include <sys/syslimits.h>
+    #elif defined(__APPLE__)
+        #include <limits.h>
+        #include <sys/syslimits.h>
 
-#elif defined(__linux__)
-#include <limits.h>
-#include <linux/limits.h>
+    #elif defined(__linux__)
+        #include <limits.h>
+        #include <linux/limits.h>
 typedef unsigned long u_long;
 
-#endif // compiler specifics
+    #endif // compiler specifics
 
 #endif // types declaration
 
@@ -59,16 +60,16 @@ typedef unsigned short ushort;
 typedef unsigned int uint;
 
 #ifdef VERSION_PC
-#include <stdbool.h>
+    #include <stdbool.h>
 #else
-#ifndef __cplusplus
+    #ifndef __cplusplus
 enum { false, true };
 typedef signed int bool;
-#endif
+    #endif
 #endif
 
 #ifndef NULL
-#define NULL (0)
+    #define NULL (0)
 #endif
 
 #define S32_MAX INT32_MAX

@@ -2,17 +2,17 @@
 #include "sfx.h"
 
 #ifdef INVERTED_STAGE
-#define TILE_POS_1 0xAC
-#define TILE_POS_2 0xA2
-#define ANIMSET 2
-#define YSHIFT_UP +=
-#define YSHIFT_DOWN -=
+    #define TILE_POS_1 0xAC
+    #define TILE_POS_2 0xA2
+    #define ANIMSET 2
+    #define YSHIFT_UP +=
+    #define YSHIFT_DOWN -=
 #else
-#define TILE_POS_1 2
-#define TILE_POS_2 12
-#define ANIMSET 1
-#define YSHIFT_UP -=
-#define YSHIFT_DOWN +=
+    #define TILE_POS_1 2
+    #define TILE_POS_2 12
+    #define ANIMSET 1
+    #define YSHIFT_UP -=
+    #define YSHIFT_DOWN +=
 #endif
 
 void EntityClockHands(Entity* self) {
@@ -308,9 +308,9 @@ extern u16 g_StoneDoorTiles[];
 
 static void UpdateStoneDoorTiles(bool doorState) {
 #ifdef INVERTED_STAGE
-#define TILE_START 0x24
+    #define TILE_START 0x24
 #else
-#define TILE_START 0xC4
+    #define TILE_START 0xC4
 #endif
     s32 tilePos;
     s16 i, j;
@@ -332,9 +332,9 @@ static void UpdateStoneDoorTiles(bool doorState) {
 extern s16 stone_door_pos_x[];
 
 #ifdef INVERTED_STAGE
-#define DOOR_OPEN RCEN_OPEN
+    #define DOOR_OPEN RCEN_OPEN
 #else
-#define DOOR_OPEN CEN_OPEN
+    #define DOOR_OPEN CEN_OPEN
 #endif
 
 // Stone doors on the floor leading to CEN Entity ID 0x1B

@@ -1220,7 +1220,7 @@ void DopplegangerStepStone(s32 arg0) {
 }
 
 #ifndef VERSION_PC
-#include "../../get_free_entity.h"
+    #include "../../get_free_entity.h"
 #endif
 
 // this is the same as unionD_800ACFB4 in DRA

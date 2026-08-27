@@ -2,7 +2,7 @@
 #include <game.h>
 
 #ifndef PRIM_HELPER_ROT
-#define PRIM_HELPER_ROT {0, 0, 0}
+    #define PRIM_HELPER_ROT {0, 0, 0}
 #endif
 
 void UnkPrimHelper(Primitive* prim) {

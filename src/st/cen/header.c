@@ -46,9 +46,9 @@ Overlay g_Overlay = {
 };
 
 #ifndef VERSION_PSP
-#include "gen/sprite_banks.h"
-#include "gen/palette_def.h"
-#include "gen/layers.h"
-#include "gen/graphics_banks.h"
+    #include "gen/sprite_banks.h"
+    #include "gen/palette_def.h"
+    #include "gen/layers.h"
+    #include "gen/graphics_banks.h"
 STATIC_PAD_BSS(96);
 #endif

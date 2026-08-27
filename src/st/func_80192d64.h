@@ -7,17 +7,17 @@ extern s32 E_ID(UNK_2C);
 #endif
 
 #ifndef RBO3_DOOR_INIT
-#define RBO3_DOOR_INIT g_Rbo3DoorInit
+    #define RBO3_DOOR_INIT g_Rbo3DoorInit
 #endif
 #ifndef RBO3_DOOR_FLAG
-#define RBO3_DOOR_FLAG g_Rbo3DoorFlag
+    #define RBO3_DOOR_FLAG g_Rbo3DoorFlag
 #endif
 #ifndef RBO3_DOOR_CHILD_ID
-#if defined(VERSION_PSP)
-#define RBO3_DOOR_CHILD_ID E_ID(UNK_2C)
-#else
-#define RBO3_DOOR_CHILD_ID E_UNK_2C
-#endif
+    #if defined(VERSION_PSP)
+        #define RBO3_DOOR_CHILD_ID E_ID(UNK_2C)
+    #else
+        #define RBO3_DOOR_CHILD_ID E_UNK_2C
+    #endif
 #endif
 
 void EntityRbo3Door(Entity* self) {

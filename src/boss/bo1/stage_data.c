@@ -69,14 +69,14 @@ u16 pal_explosion_flame[] = {
 };
 #ifndef VERSION_PSP
 u16 pal_14BD8[] = {
-#include "gen/pal_14BD8.h"
+    #include "gen/pal_14BD8.h"
 };
 #endif
 
 #ifndef VERSION_PSP
-#include "gen/bo1_tilemap_0.h"
-#include "gen/bo1_tilemap_1.h"
-#include "gen/bo1_tiledef_load.h"
-#include "gen/bo1_tiledef_save.h"
-#include "gen/bo1_tiledef_bo1.h"
+    #include "gen/bo1_tilemap_0.h"
+    #include "gen/bo1_tilemap_1.h"
+    #include "gen/bo1_tiledef_load.h"
+    #include "gen/bo1_tiledef_save.h"
+    #include "gen/bo1_tiledef_bo1.h"
 #endif

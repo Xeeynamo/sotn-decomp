@@ -4,13 +4,13 @@
 extern EInit g_EInitInteractable;
 
 #if defined(INVERTED_STAGE)
-#define TILE_WIDTH 0x25
-#define PARAM_OFFSET 0x40
-#define SIGN -
+    #define TILE_WIDTH 0x25
+    #define PARAM_OFFSET 0x40
+    #define SIGN -
 #else
-#define TILE_WIDTH 0x26
-#define PARAM_OFFSET 0
-#define SIGN +
+    #define TILE_WIDTH 0x26
+    #define PARAM_OFFSET 0
+    #define SIGN +
 #endif
 
 static u8 transWaterCluts[] = {

@@ -2,7 +2,7 @@
 #include <stage.h>
 
 #ifdef VERSION_US
-#include "../../st/e_stage_name_us.h"
+    #include "../../st/e_stage_name_us.h"
 #else
-#include "../../st/e_stage_name_jp.h"
+    #include "../../st/e_stage_name_jp.h"
 #endif

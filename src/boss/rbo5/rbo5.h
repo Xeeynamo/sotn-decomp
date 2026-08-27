@@ -7,7 +7,7 @@
 #define STAGE_IS_RBO5
 
 #ifndef VERSION_PSP
-#include "../doppleganger.h"
+    #include "../doppleganger.h"
 
 extern EInit g_EInitParticle;
 extern EInit g_EInitLockCamera;

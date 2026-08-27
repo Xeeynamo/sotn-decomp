@@ -145,11 +145,11 @@ void EntityRedDoor(Entity* self) {
             break;
         }
 #else
-#ifdef STAGE_IS_NZ1
+    #ifdef STAGE_IS_NZ1
         if (!self->params && D_us_80181134) {
             break;
         }
-#endif
+    #endif
         if (((PLAYER.facingLeft != GetSideToPlayer()) & 1) ^ 1) {
             break;
         }

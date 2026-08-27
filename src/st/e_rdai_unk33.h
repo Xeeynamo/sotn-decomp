@@ -11,10 +11,10 @@ extern char g_RdaiUnk33DebugText[];
 
 #define RDAI_UNK33_DEATH_STARTED(self) (((u8*)&(self)->ext)[8])
 #if defined(VERSION_PSP)
-#define RDAI_UNK33_PAD_PRESSED g_pads[1].pressed
+    #define RDAI_UNK33_PAD_PRESSED g_pads[1].pressed
 #else
 extern u16 g_pads_1_pressed;
-#define RDAI_UNK33_PAD_PRESSED g_pads_1_pressed
+    #define RDAI_UNK33_PAD_PRESSED g_pads_1_pressed
 #endif
 
 void EntityRdaiUnk33(Entity* self) {

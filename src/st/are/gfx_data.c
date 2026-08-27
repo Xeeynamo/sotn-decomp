@@ -15,7 +15,7 @@ u8 gfx_cavern_door[] = {
 
 #ifndef VERSION_HD
 u8 gfx_stage_name_en[] = {
-#include "gen/gfx_stage_name_en.h"
+    #include "gen/gfx_stage_name_en.h"
 };
 #endif
 

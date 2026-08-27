@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 #if defined(INVERTED_STAGE)
-#define HEARTROOM_EINIT D_us_80180A34
+    #define HEARTROOM_EINIT D_us_80180A34
 #else
-#define HEARTROOM_EINIT g_EInitStInteractable
+    #define HEARTROOM_EINIT g_EInitStInteractable
 #endif
 
 extern EInit HEARTROOM_EINIT;

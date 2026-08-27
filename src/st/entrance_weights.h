@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 #if defined(INVERTED_STAGE)
-#define WEIGHTS_INIT D_us_80180A40
+    #define WEIGHTS_INIT D_us_80180A40
 #else
-#define WEIGHTS_INIT g_EInitStInteractable
+    #define WEIGHTS_INIT g_EInitStInteractable
 #endif
 
 extern EInit WEIGHTS_INIT;

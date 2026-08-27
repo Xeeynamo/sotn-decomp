@@ -6,17 +6,17 @@
 extern EInit g_EInitInteractable;
 
 #if !defined(INVERTED_STAGE)
-#define UP +
-#define DOWN -
-#define POSX_3D 0x700
-#define POSY_3D 0x3C0
-#define ROTZ_3D 0
+    #define UP +
+    #define DOWN -
+    #define POSX_3D 0x700
+    #define POSY_3D 0x3C0
+    #define ROTZ_3D 0
 #else
-#define UP -
-#define DOWN +
-#define POSX_3D 0x100
-#define POSY_3D 0x440
-#define ROTZ_3D 0x800
+    #define UP -
+    #define DOWN +
+    #define POSX_3D 0x100
+    #define POSY_3D 0x440
+    #define ROTZ_3D 0x800
 #endif
 
 static ClockTowerData s_RoofTextureData[] = {

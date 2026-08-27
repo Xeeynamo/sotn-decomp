@@ -2,7 +2,7 @@
 #include "ric.h"
 
 #ifdef VERSION_PSP
-#include "gen/spritebank3.h"
+    #include "gen/spritebank3.h"
 #endif
 
 #include "gen/spritebank0.h"
@@ -10,5 +10,5 @@
 #include "gen/spritebank2.h"
 
 #ifndef VERSION_PSP
-#include "gen/spritebank3.h"
+    #include "gen/spritebank3.h"
 #endif

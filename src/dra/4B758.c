@@ -650,17 +650,17 @@ void RenderEntitiesPSP(void) {
     u8 uvBottom;
     POLY_GT4* poly;
     EntitiesRenderer* r;
-#ifdef VERSION_PC
+    #ifdef VERSION_PC
     POLY_GT4 _poly;
     poly = &_poly;
     setPolyGT4(poly);
     EntitiesRenderer _r;
     r = &_r;
-#else
+    #else
     poly = (POLY_GT4*)SPAD(0);
     setPolyGT4(poly);
     r = (EntitiesRenderer*)SP(sizeof(POLY_GT4));
-#endif
+    #endif
 
     r->poly = &g_CurrentBuffer->polyGT4[g_GpuUsage.gt4];
     r->ot = g_CurrentBuffer->ot;

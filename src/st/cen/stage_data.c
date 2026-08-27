@@ -11,15 +11,15 @@ u8 stage_placeholder_cen[] = {
 #if defined(VERSION_HD)
 // most likely the cutscene data is mis-extracted
 u8 cutscene_cen_alucard[] = {
-#include "gen/D_80181F60.h"
+    #include "gen/D_80181F60.h"
 };
 
 #else
 u8 cutscene_cen_alucard[] = {
-#include "gen/cutscene_alucard.h"
+    #include "gen/cutscene_alucard.h"
 };
 u8 cutscene_cen_maria[] = {
-#include "gen/cutscene_maria.h"
+    #include "gen/cutscene_maria.h"
 };
 
 #endif

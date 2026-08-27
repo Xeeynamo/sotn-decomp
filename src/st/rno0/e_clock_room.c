@@ -67,16 +67,16 @@ extern s32 D_91FC3F8;
 extern s32 D_91FC400;
 extern s32 D_91FC408;
 extern s32 D_91FC410;
-#define timer_frames D_91FC3F8
-#define timer_seconds D_91FC400
-#define timer_minutes D_91FC408
-#define timer_hours D_91FC410
+    #define timer_frames D_91FC3F8
+    #define timer_seconds D_91FC400
+    #define timer_minutes D_91FC408
+    #define timer_hours D_91FC410
 void UpdateClockHands(Entity* self) {
 #else
-#define timer_frames status->timerFrames
-#define timer_seconds status->timerSeconds
-#define timer_minutes status->timerMinutes
-#define timer_hours status->timerHours
+    #define timer_frames status->timerFrames
+    #define timer_seconds status->timerSeconds
+    #define timer_minutes status->timerMinutes
+    #define timer_hours status->timerHours
 void UpdateClockHands(Entity* self, PlayerStatus* status) {
 #endif
     // self + 5 is the minute hand
@@ -86,9 +86,9 @@ void UpdateClockHands(Entity* self, PlayerStatus* status) {
     // self + 6 is the hour hand
     self += 1;
 #if defined(VERSION_US) && defined(INVERTED_STAGE)
-#define HOURS (timer_hours)
+    #define HOURS (timer_hours)
 #else
-#define HOURS (timer_hours % 12)
+    #define HOURS (timer_hours % 12)
 #endif
     self->ext.clockRoom.hand = (HOURS * 300) + (timer_minutes * 5);
 }
@@ -277,9 +277,9 @@ void EntityClockRoomController(Entity* self) {
         if (!g_CastleFlags[RCEN_OPEN]) {
             entity = &PLAYER;
 #if defined(VERSION_US) && defined(INVERTED_STAGE)
-#define XLIM 0x60
+    #define XLIM 0x60
 #else
-#define XLIM 0x50
+    #define XLIM 0x50
 #endif
             if (entity->posX.i.hi >= XLIM && entity->posX.i.hi <= 0xA0) {
                 for (posX = 0, i = RELIC_HEART_OF_VLAD; i <= RELIC_EYE_OF_VLAD;

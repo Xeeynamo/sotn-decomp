@@ -7,7 +7,7 @@
 // location in RAM to trigger the entity's state machine.
 
 #ifndef BUTTON_SYMBOL
-#define BUTTON_SYMBOL PAD_CIRCLE
+    #define BUTTON_SYMBOL PAD_CIRCLE
 #endif
 
 /**

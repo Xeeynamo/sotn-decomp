@@ -4,10 +4,10 @@
 #include "lba.h"
 
 #if defined(VERSION_US)
-#define PAD_RESETCOMBO ((PAD_START) | (PAD_SELECT))
+    #define PAD_RESETCOMBO ((PAD_START) | (PAD_SELECT))
 #elif defined(VERSION_HD)
-#define PAD_RESETCOMBO                                                         \
-    ((PAD_START) | (PAD_SELECT) | (PAD_L2) | (PAD_R2) | (PAD_L1) | (PAD_R1))
+    #define PAD_RESETCOMBO                                                     \
+        ((PAD_START) | (PAD_SELECT) | (PAD_L2) | (PAD_R2) | (PAD_L1) | (PAD_R1))
 #endif
 
 extern void* g_ApiInit[sizeof(GameApi) / sizeof(void*)];
@@ -758,13 +758,13 @@ void func_800E38CC(void) {
 }
 
 #if defined(VERSION_PC)
-#define IS_QUIT_REQUESTED                                                      \
-    (g_IsQuitRequested || (g_TimedExit && g_Timer >= g_TimeLimit))
+    #define IS_QUIT_REQUESTED                                                  \
+        (g_IsQuitRequested || (g_TimedExit && g_Timer >= g_TimeLimit))
 extern bool g_IsQuitRequested;
 extern bool g_TimedExit;
 extern int g_TimeLimit;
 #else
-#define IS_QUIT_REQUESTED (false)
+    #define IS_QUIT_REQUESTED (false)
 #endif
 
 void MainGame(void) {

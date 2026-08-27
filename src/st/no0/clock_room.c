@@ -105,16 +105,16 @@ void UpdateClockHands(Entity* self, PlayerStatus* status) {
 
 void EntityClockRoomController(Entity* self) {
 #ifdef VERSION_PSP
-#define timer_frames D_91FC3F8
-#define timer_seconds D_91FC400
-#define timer_minutes D_91FC408
-#define timer_hours D_91FC410
+    #define timer_frames D_91FC3F8
+    #define timer_seconds D_91FC400
+    #define timer_minutes D_91FC408
+    #define timer_hours D_91FC410
 #else
     PlayerStatus* status = &g_Status;
-#define timer_frames status->timerFrames
-#define timer_seconds status->timerSeconds
-#define timer_minutes status->timerMinutes
-#define timer_hours status->timerHours
+    #define timer_frames status->timerFrames
+    #define timer_seconds status->timerSeconds
+    #define timer_minutes status->timerMinutes
+    #define timer_hours status->timerHours
 #endif
     Primitive* prim;
     Entity* entity;

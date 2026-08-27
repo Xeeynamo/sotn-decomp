@@ -30,13 +30,13 @@ enum SpikesPointDirections {
 };
 
 #ifndef SPIKES_ELEMENT
-#define SPIKES_ELEMENT ELEMENT_CUT | ELEMENT_UNK_10
+    #define SPIKES_ELEMENT ELEMENT_CUT | ELEMENT_UNK_10
 #endif
 
 #ifdef STAGE_IS_NZ1
-#define START_COUNT 1
+    #define START_COUNT 1
 #else
-#define START_COUNT 0
+    #define START_COUNT 0
 #endif
 
 extern EInit g_EInitParticle;
@@ -222,10 +222,10 @@ static void SpikesApplyDamage(u32 tileIdx) {
 
 #ifdef HAS_ORIENTATIONS
     spikesDamage = &g_CurrentEntity[1];
-#ifdef DAMAGE_ENT_ON_HIT
+    #ifdef DAMAGE_ENT_ON_HIT
     spikesDamage->posX.i.hi = tilePosX;
     spikesDamage->posY.i.hi = tilePosY;
-#endif
+    #endif
 #endif
 
 #ifdef DAMAGE_ENT_ON_HIT

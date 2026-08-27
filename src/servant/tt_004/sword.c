@@ -15,9 +15,9 @@ typedef struct {
 } SwordUnkStruct;
 
 #ifdef VERSION_PSP
-#define sp2 ((SwordUnkStruct*)SP(0x24))
+    #define sp2 ((SwordUnkStruct*)SP(0x24))
 #else
-#define sp2 ((SwordUnkStruct*)SP(0x20))
+    #define sp2 ((SwordUnkStruct*)SP(0x20))
 #endif
 
 static FamiliarStats s_SwordStats;
@@ -38,7 +38,7 @@ static s32 D_us_80178B88;
 
 // DATA
 #ifdef VERSION_PSP
-#include "sword_data.h"
+    #include "sword_data.h"
 #endif
 static VECTOR g_TransferVector = {0, 0, 6500};
 static SVECTOR g_RotationAngle = {0};
@@ -77,7 +77,7 @@ static s32 D_us_80170218 = 30;
 static s32 D_us_8017021C = 60;
 static s32 D_us_80170220 = 15;
 #ifndef VERSION_PSP
-#include "sword_data.h"
+    #include "sword_data.h"
 #endif
 
 // sets up familiar entity id "state" during initialization
@@ -289,7 +289,7 @@ void func_us_80172940(Entity* self) {
 
 static s32 Max3(s32 arg0, s32 arg1, s32 arg2) {
 #ifdef VERSION_PSP
-#define abs labs
+    #define abs labs
 #endif
     s32 var_s2 = abs(arg0);
     s32 var_s1 = abs(arg1);
@@ -307,13 +307,13 @@ static s32 Max3(s32 arg0, s32 arg1, s32 arg2) {
 #endif
     }
 #ifdef VERSION_PSP
-#undef abs
+    #undef abs
 #endif
 }
 
 static s32 Min3(s32 arg0, s32 arg1, s32 arg2) {
 #ifdef VERSION_PSP
-#define abs labs
+    #define abs labs
 #endif
     s32 var_s2 = abs(arg0);
     s32 var_s1 = abs(arg1);
@@ -331,7 +331,7 @@ static s32 Min3(s32 arg0, s32 arg1, s32 arg2) {
 #endif
     }
 #ifdef VERSION_PSP
-#undef abs
+    #undef abs
 #endif
 }
 
@@ -1840,9 +1840,9 @@ void func_us_80176674(Entity* self) {
     case 2:
         pauseAllowed = false;
 #ifdef VERSION_PSP
-#define params 0x4F9
+    #define params 0x4F9
 #else
-#define params 0x4FB
+    #define params 0x4FB
 #endif
         if (s_SwordStats.unk8 == 1) {
             CreateEventEntity(self, SWORD_UNK_DD, params);

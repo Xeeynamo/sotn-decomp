@@ -5,9 +5,9 @@ extern unsigned char* maria_sprites[];
 void MarMain(void);
 #ifdef MARIA_SFX_DEBUG
 void MarSoundTest(void);
-#define MARIA_MAIN MarSoundTest
+    #define MARIA_MAIN MarSoundTest
 #else
-#define MARIA_MAIN MarMain
+    #define MARIA_MAIN MarMain
 #endif
 void MarInit(u16 initParam);
 void MarUpdatePlayerEntities(void);

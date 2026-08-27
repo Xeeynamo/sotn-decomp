@@ -1413,13 +1413,13 @@ void func_psp_090F5B10(void) {
 }
 
 #if defined(VERSION_PC)
-#define IS_QUIT_REQUESTED                                                      \
-    (g_IsQuitRequested || (g_TimedExit && g_Timer >= g_TimeLimit))
+    #define IS_QUIT_REQUESTED                                                  \
+        (g_IsQuitRequested || (g_TimedExit && g_Timer >= g_TimeLimit))
 extern bool g_IsQuitRequested;
 extern bool g_TimedExit;
 extern int g_TimeLimit;
 #else
-#define IS_QUIT_REQUESTED (false)
+    #define IS_QUIT_REQUESTED (false)
 #endif
 
 void MainGame(void) {

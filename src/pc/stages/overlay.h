@@ -7,9 +7,9 @@
 #include <weapon.h>
 
 #if defined(_WIN32)
-#define OVL_API __declspec(dllexport)
+    #define OVL_API __declspec(dllexport)
 #else
-#define OVL_API
+    #define OVL_API
 #endif
 
 // public signature for the overlay entrypoint

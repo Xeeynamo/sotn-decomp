@@ -39,8 +39,8 @@ typedef enum EntityID {
 
 #ifdef VERSION_PSP
 extern s32 D_pspeu_0927BAF8;
-#undef E_ID
-#define E_ID(ID_17) D_pspeu_0927BAF8
+    #undef E_ID
+    #define E_ID(ID_17) D_pspeu_0927BAF8
 #endif
 
 // same as `RicSteps`, but like Doppleganger, offset by 1

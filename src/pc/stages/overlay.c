@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #if !defined(_WIN32) && !defined(__APPLE__)
-#include <unistd.h>
+    #include <unistd.h>
 #endif
 #include <game.h>
 #include <stdio.h>
@@ -15,7 +15,7 @@ __declspec(dllimport) int __stdcall FreeLibrary(void* hLibModule);
 __declspec(dllimport) unsigned long __stdcall GetModuleFileNameA(
     void* hModule, char* lpFilename, unsigned long nSize);
 
-#define OVL_EXT ".dll"
+    #define OVL_EXT ".dll"
 typedef void* OvlHandle;
 
 static OvlHandle OvlOpen(const char* path) { return LoadLibraryA(path); }
@@ -31,10 +31,10 @@ static bool GetExePath(char* buf, size_t size) {
     return len != 0 && len < size;
 }
 #elif defined(__APPLE__)
-#include <dlfcn.h>
-#include <mach-o/dyld.h>
+    #include <dlfcn.h>
+    #include <mach-o/dyld.h>
 
-#define OVL_EXT ".dylib"
+    #define OVL_EXT ".dylib"
 typedef void* OvlHandle;
 
 static OvlHandle OvlOpen(const char* path) {
@@ -48,9 +48,9 @@ static bool GetExePath(char* buf, size_t size) {
     return _NSGetExecutablePath(buf, &len) == 0;
 }
 #else
-#include <dlfcn.h>
+    #include <dlfcn.h>
 
-#define OVL_EXT ".so"
+    #define OVL_EXT ".so"
 typedef void* OvlHandle;
 
 static OvlHandle OvlOpen(const char* path) {

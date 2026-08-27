@@ -55,14 +55,14 @@ enum ActorNameIndices {
 
 #if defined(VERSION_PC)
 u8* CutsceneAddrToPc(u32 psxAddr);
-#define CS_NEXT(ptr) (u16*)CutsceneAddrToPc(ptr)
-#define CS_PTR(ptr) CutsceneAddrToPc((u32)(ptr) + 0x100000)
+    #define CS_NEXT(ptr) (u16*)CutsceneAddrToPc(ptr)
+    #define CS_PTR(ptr) CutsceneAddrToPc((u32)(ptr) + 0x100000)
 #elif defined(VERSION_PSP)
-#define CS_NEXT(ptr) (u8*)(ptr)
-#define CS_PTR(ptr) (u8*)(ptr)
+    #define CS_NEXT(ptr) (u8*)(ptr)
+    #define CS_PTR(ptr) (u8*)(ptr)
 #else
-#define CS_NEXT(ptr) (u16*)(ptr)
-#define CS_PTR(ptr) ((u8*)ptr + 0x100000)
+    #define CS_NEXT(ptr) (u16*)(ptr)
+    #define CS_PTR(ptr) ((u8*)ptr + 0x100000)
 #endif
 
 #define script_half(x) (((x) & 0xFF0) >> 4), ((x) & 0xFF)
@@ -93,11 +93,11 @@ u8* CutsceneAddrToPc(u32 psxAddr);
 #define SCRIPT_UNKNOWN_23() CSOP_SCRIPT_UNKNOWN_23
 #define WAIT_FOR_FLAG_RESET(x) CSOP_WAIT_FOR_FLAG_RESET, x
 #if defined(VERSION_PSP) || defined(VERSION_HD)
-#define CS_LINE_SPACING 16
-#define CS_LINE_MAX 3
+    #define CS_LINE_SPACING 16
+    #define CS_LINE_MAX 3
 #else
-#define CS_LINE_SPACING 12
-#define CS_LINE_MAX 4
+    #define CS_LINE_SPACING 12
+    #define CS_LINE_MAX 4
 #endif
 #define ASCII_SPACE 32
 

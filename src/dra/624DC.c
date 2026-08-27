@@ -160,9 +160,9 @@ void SetFadeMode(FadeModes fadeMode) {
 }
 
 #ifdef VERSION_PSP
-#define IFSTATEMENT prim1->y1-- == 0
+    #define IFSTATEMENT prim1->y1-- == 0
 #else
-#define IFSTATEMENT --prim1->y1 == -1
+    #define IFSTATEMENT --prim1->y1 == -1
 #endif
 
 void UpdateFade(bool skipFollowup) {

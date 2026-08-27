@@ -8,9 +8,9 @@
 #include <stdlib.h>
 #include <string.h>
 #if defined(_WIN32)
-#include <direct.h>
+    #include <direct.h>
 #else
-#include <sys/stat.h>
+    #include <sys/stat.h>
 #endif
 
 #define PAD_BUF_LEN 16

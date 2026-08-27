@@ -3,9 +3,9 @@
 extern EInit g_EInitStInteractable;
 
 #if defined(INVERTED_STAGE)
-#define FLIP(x) (0x100 - x)
+    #define FLIP(x) (0x100 - x)
 #else
-#define FLIP(x) (x)
+    #define FLIP(x) (x)
 #endif
 
 static u8 thunder_anim[] = {4, 23, 3, 24, 2, 25, 2, 26, 255, 0, 0, 0};

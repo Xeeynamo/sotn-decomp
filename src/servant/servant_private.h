@@ -4,16 +4,16 @@
 #include <servant.h>
 
 #ifndef VERSION_PSP
-#define STATIC static
+    #define STATIC static
 #else
-#define STATIC
+    #define STATIC
 #endif
 
 #ifndef VERSION_PSP
-#define pauseAllowed g_PauseAllowed
+    #define pauseAllowed g_PauseAllowed
 #else
 extern s32 D_psp_091CE578;
-#define pauseAllowed D_psp_091CE578
+    #define pauseAllowed D_psp_091CE578
 #endif
 
 // all of the shared functions need to be marked static for PC build due to name

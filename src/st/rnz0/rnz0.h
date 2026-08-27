@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #ifndef RNZ0_H
-#define RNZ0_H
+    #define RNZ0_H
 
-#include <stage.h>
+    #include <stage.h>
 
-#define STAGE_IS_RNZ0
+    #define STAGE_IS_RNZ0
 
 enum Palettes {
     PAL_NONE,

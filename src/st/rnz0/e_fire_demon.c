@@ -483,8 +483,8 @@ void ent20Helper2(Primitive* prim) {
 #ifdef VERSION_PSP
     u16 sp10[2];
     s16 sp14[2];
-#define VAR(x) (x)
-#define X1(x) (x)
+    #define VAR(x) (x)
+    #define X1(x) (x)
 #else
     typedef struct {
         s16 sp10[2];
@@ -493,8 +493,8 @@ void ent20Helper2(Primitive* prim) {
     stupid dumb;
     u16* new_var;
     int a, b;
-#define VAR(x) (dumb.x)
-#define X1(x) LOHU(x)
+    #define VAR(x) (dumb.x)
+    #define X1(x) LOHU(x)
 #endif
     switch (prim->g3) {
     case 0:
@@ -737,9 +737,9 @@ typedef enum {
 
 // PSP uses 15E for everything. US has a mix of 15E and 15F.
 #ifdef VERSION_PSP
-#define SECONDARY_PAL PAL_FIREDEMON_15E
+    #define SECONDARY_PAL PAL_FIREDEMON_15E
 #else
-#define SECONDARY_PAL PAL_FIREDEMON_15F
+    #define SECONDARY_PAL PAL_FIREDEMON_15F
 #endif
 
 void EntityFireDemon(Entity* self) {

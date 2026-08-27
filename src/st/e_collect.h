@@ -13,7 +13,7 @@ extern EInit g_EInitObtainable;
 extern EInit g_EInitParticle;
 
 #if defined(VERSION_PSP)
-#include "blit_char_psp.h"
+    #include "blit_char_psp.h"
 #endif
 
 #if STAGE == STAGE_ST0
@@ -158,12 +158,12 @@ AnimateEntityFrame* g_MariaSubweaponAnimPrizeDrop[] = {
     D_80180C94,     D_80180C94,     D_80180C94,     D_80180DD0,
 };
 
-#if STAGE != STAGE_ST0
+    #if STAGE != STAGE_ST0
 const char* g_goldCollectTexts[] = {GOLD_COLLECT_TEXT};
 static u32 c_GoldPrizes[] = {1, 25, 50, 100, 250, 400, 700, 1000, 2000, 5000};
-#else
+    #else
 static u32 c_GoldPrizes[] = {1, 5, 10, 20, 40, 70, 100, 200, 400, 1000};
-#endif
+    #endif
 
 #endif
 
@@ -236,7 +236,7 @@ static void CollectHeart(u16 heartIdx) {
     s8 heartPrizes[2] = {0x01, 0x05};
     s8 mad_unknown[2] = {0x01, 0x02};
 #else
-#define heartPrizes c_HeartPrizes
+    #define heartPrizes c_HeartPrizes
 #endif
 
     g_api.PlaySfx(SFX_HEART_PICKUP);
@@ -312,18 +312,18 @@ void UnusedDestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
 #endif
 
 #if defined(VERSION_PSP) && (STAGE != STAGE_ST0)
-#include "collect_subweapon_psp.h"
+    #include "collect_subweapon_psp.h"
 #else
-#include "collect_subweapon.h"
+    #include "collect_subweapon.h"
 #endif
 
 #if STAGE != STAGE_ST0
 void CollectHeartVessel(void) {
-#ifdef VERSION_BETA
+    #ifdef VERSION_BETA
     if (0) { // MAD doesn't need to test character, is always alucard
-#else
+    #else
     if (g_PlayableCharacter != PLAYER_ALUCARD) {
-#endif
+    #endif
         g_api.PlaySfx(SFX_HEART_PICKUP);
         g_Status.hearts += HEART_VESSEL_RICHTER;
 
@@ -959,18 +959,18 @@ void EntityEquipItemDrop(Entity* self) {
 
 #if !(defined VERSION_BETA || STAGE == STAGE_ST0 || defined(VERSION_PSP) ||    \
       defined(VERSION_HD))
-#include "blit_char.h"
+    #include "blit_char.h"
 #endif
 
 #if defined(VERSION_PSP) && STAGE != STAGE_ST0
 extern char* obtainedStr; // BSS
 #else
 const char* g_RelicOrbTexts[] = {
-#if !defined(VERSION_US) || STAGE == STAGE_ST0
+    #if !defined(VERSION_US) || STAGE == STAGE_ST0
     "を入手した"
-#else
+    #else
     "Obtained ",
-#endif
+    #endif
 };
 #endif
 
@@ -1026,9 +1026,9 @@ void EntityRelicOrb(Entity* self) {
 // The unk7C variable matches different other variables
 // in different versions. We use this as a hack to match everywhere.
 #if STAGE == STAGE_ST0
-#define orbUnk7C isObtainedTextStored
+    #define orbUnk7C isObtainedTextStored
 #else
-#define orbUnk7C var_s2
+    #define orbUnk7C var_s2
 #endif
 
 #if !defined(VERSION_US) || STAGE == STAGE_ST0
@@ -1076,9 +1076,9 @@ void EntityRelicOrb(Entity* self) {
                             g_api.equipDefs[relicId].iconPalette, iconSlot);
 #else
         self->ext.relicOrb.iconSlot = iconSlot;
-#if !defined(VERSION_BETA)
+    #if !defined(VERSION_BETA)
         g_ItemIconSlots[iconSlot] = 0x10;
-#endif
+    #endif
         g_api.LoadEquipIcon(g_api.relicDefs[relicId].icon,
                             g_api.relicDefs[relicId].iconPalette, iconSlot);
 #endif
@@ -1134,12 +1134,12 @@ void EntityRelicOrb(Entity* self) {
     case 5:
 #if STAGE != STAGE_ST0
         g_api.func_800FE044(relicId, 0x2000);
-#if !defined(VERSION_BETA)
+    #if !defined(VERSION_BETA)
         msg = g_api.relicDefs[relicId].name;
         if (relicId >= RELIC_SWORD_CARD && relicId < RELIC_FAERIE_CARD) {
             g_Status.relics[relicId] ^= RELIC_FLAG_ACTIVE;
         }
-#endif
+    #endif
         self->flags |= FLAG_UNK_10000;
 #else
         g_api.PlaySfx(SFX_UNK_618);
@@ -1518,7 +1518,7 @@ void EntityPersistentItemDrop(Entity* self) {
     update(self);
 }
 
-#if !defined(VERSION_BETA)
+    #if !defined(VERSION_BETA)
 // params: message box duration, in frames
 // ext.messageBox.label: box size and text to render
 void EntityMessageBox(Entity* self) {
@@ -1620,7 +1620,7 @@ void EntityMessageBox(Entity* self) {
         self->step++;
         break;
     case 2:
-#if defined(VERSION_US)
+        #if defined(VERSION_US)
         dstPix = g_Pix[0];
         chPix = dstPix;
         str = self->ext.messageBox.label;
@@ -1647,13 +1647,13 @@ void EntityMessageBox(Entity* self) {
         }
         LoadTPage((u_long*)dstPix, 0, 0, VramX, VramY,
                   self->ext.messageBox.width, self->ext.messageBox.height);
-#elif defined(VERSION_PSP)
+        #elif defined(VERSION_PSP)
         nCh = 0;
         x = VramX;
         y = VramY;
         str = self->ext.messageBox.label;
         BlitChar(str, 0, 0, 0x180);
-#elif defined(VERSION_HD)
+        #elif defined(VERSION_HD)
         nCh = 0;
         x = VramX;
         y = VramY;
@@ -1681,7 +1681,7 @@ void EntityMessageBox(Entity* self) {
                 }
             }
         }
-#endif
+        #endif
         self->ext.messageBox.duration = 0;
         self->step++;
         break;
@@ -1718,6 +1718,6 @@ void EntityMessageBox(Entity* self) {
         break;
     }
 }
-#endif
+    #endif
 
 #endif

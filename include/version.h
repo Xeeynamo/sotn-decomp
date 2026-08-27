@@ -13,46 +13,47 @@
 #define VERSION_H
 
 #if defined(_internal_version_us)
-#define VERSION_US
-#define VERSION_TOKEN us
+    #define VERSION_US
+    #define VERSION_TOKEN us
 #elif defined(_internal_version_hd)
-#define VERSION_HD
-#define VERSION_TOKEN hd
+    #define VERSION_HD
+    #define VERSION_TOKEN hd
 #elif defined(_internal_version_pspeu)
-#define VERSION_PSP
-// use this to flag code as only non-psp due to deadstripping.
-// will make it easier to restore stripped code if we ever work out a
-// solution for doing proper deadstripping like the original.
-#define PSP_DEADSTRIP
-#define VERSION_TOKEN psp
-#define NOP                                                                    \
-    static asm nop_##line##() { nop }
+    #define VERSION_PSP
+    // use this to flag code as only non-psp due to deadstripping.
+    // will make it easier to restore stripped code if we ever work out a
+    // solution for doing proper deadstripping like the original.
+    #define PSP_DEADSTRIP
+    #define VERSION_TOKEN psp
+    #define NOP                                                                \
+        static asm nop_##line##() { nop }
 #elif defined(_internal_version_beta)
-#define VERSION_BETA
-#define VERSION_TOKEN beta
+    #define VERSION_BETA
+    #define VERSION_TOKEN beta
 #else
-#warning "Version not specified. Falling back to the US version."
-#define VERSION_US
-#define VERSION_TOKEN us
+    #warning "Version not specified. Falling back to the US version."
+    #define VERSION_US
+    #define VERSION_TOKEN us
 #endif
 
 #ifdef VERSION_PC
 
-// Macro to fix Undefined Behaviors found across the original codebase.
-// These are community, unofficial fixes brought for making the code portable
-// on different platforms, and to fix bugs in the original game release that
-// are unrelated to gameplay mechanics or glitch exploitation. This includes:
-//   * Array access beyond its intended boundaries
-//   * Access to uninitialized or unrelated portion of memory
-//   * Missing return statements
-//   * Mismatching function signatures to their original intended type
-//   * Data overflow
-//   * Unintended graphical glitches
-// What this macro must NOT be use for:
-//   * Gameplay behavior or mechanics, even when they result to an exploit
-//   * Enhancements and beautifiers
-//   * Extend behavior or fix a dormant mechanic
-#define FIX_UB
+    // Macro to fix Undefined Behaviors found across the original codebase.
+    // These are community, unofficial fixes brought for making the code
+    // portable on different platforms, and to fix bugs in the original game
+    // release that are unrelated to gameplay mechanics or glitch exploitation.
+    // This includes:
+    //   * Array access beyond its intended boundaries
+    //   * Access to uninitialized or unrelated portion of memory
+    //   * Missing return statements
+    //   * Mismatching function signatures to their original intended type
+    //   * Data overflow
+    //   * Unintended graphical glitches
+    // What this macro must NOT be use for:
+    //   * Gameplay behavior or mechanics, even when they result to an exploit
+    //   * Enhancements and beautifiers
+    //   * Extend behavior or fix a dormant mechanic
+    #define FIX_UB
 
 #endif
 

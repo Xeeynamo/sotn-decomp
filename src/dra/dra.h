@@ -14,9 +14,9 @@
 
 #define SFX_START (0x600)
 #ifdef VERSION_PSP
-#define SFX_LAST (0x90B)
+    #define SFX_LAST (0x90B)
 #else
-#define SFX_LAST (0x8E0)
+    #define SFX_LAST (0x8E0)
 #endif
 #define MAX_SND_COUNT (0x100)
 
@@ -623,9 +623,9 @@ extern Point16 g_SensorsWall[];
 
 #if !defined(VERSION_US)
 extern s32 D_800ACEDC_hd;
-#define TRANSFORM_LOCKOUT_TIMER D_800ACEDC_hd
+    #define TRANSFORM_LOCKOUT_TIMER D_800ACEDC_hd
 #else
-#define TRANSFORM_LOCKOUT_TIMER g_Player.unk20
+    #define TRANSFORM_LOCKOUT_TIMER g_Player.unk20
 #endif
 extern s16 D_800ACF7C[4];
 extern s16 g_SfxPainGrunts[8]; // Alucard's random pain sfx table

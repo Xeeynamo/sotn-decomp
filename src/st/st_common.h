@@ -482,11 +482,11 @@ void SetSubStep(u8 step_s) {
 void EntityExplosionSpawn(u16 params, u16 arg1) {
 #if STAGE != STAGE_ST0
     if (arg1) {
-#if defined VERSION_BETA
+    #if defined VERSION_BETA
         g_api.PlaySfx(arg1);
-#else
+    #else
         PlaySfxPositional(arg1);
-#endif
+    #endif
     }
 #endif
     if (params == 0xFF) {

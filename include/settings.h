@@ -9,10 +9,10 @@
 #define USE_CD_SPEED_DOUBLE 0
 
 #if USE_MICRO_OPTIMIZATIONS == 0
-// use the slower memcpy from the PSX SDK
-#define MEMCPY memcpy
+    // use the slower memcpy from the PSX SDK
+    #define MEMCPY memcpy
 #else
-// use a much faster memcpy
-#define MEMCPY fast_memcpy
+    // use a much faster memcpy
+    #define MEMCPY fast_memcpy
 // TODO not sure where to store the new fast_memcpy
 #endif

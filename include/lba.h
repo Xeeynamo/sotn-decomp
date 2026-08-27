@@ -3,10 +3,10 @@
 #define LBA_H
 
 #ifdef VERSION_US
-#include "lba_us.h"
+    #include "lba_us.h"
 
 #elif defined(VERSION_HD) || defined(VERSION_PSP)
-#include "lba_hd.h"
+    #include "lba_hd.h"
 
 #endif
 

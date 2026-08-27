@@ -28,9 +28,9 @@ extern EInit g_EInitFlailGuard;
 
 // similar to the checks in `create_entities.h` but inverted.
 #ifdef VERSION_PSP
-#define DECREMENT_AND_CHECK(x) !(x)--
+    #define DECREMENT_AND_CHECK(x) !(x)--
 #else
-#define DECREMENT_AND_CHECK(x) --(x) == (u8) - 1
+    #define DECREMENT_AND_CHECK(x) --(x) == (u8) - 1
 #endif
 
 void EntityFlailGuard(Entity* self) {

@@ -5,7 +5,7 @@
 #include <weapon.h>
 
 #if !defined(WEAPON0) && !defined(WEAPON1)
-#define WEAPON0 // forces WEAPON0 for the time being
+    #define WEAPON0 // forces WEAPON0 for the time being
 #endif
 
 // Used in weapon/w_046, weapon/w_053, weapon/w_056
@@ -43,12 +43,12 @@ typedef struct {
 } FireShieldDragon;
 
 #if defined(WEAPON0)
-#define HAND_ID 0
+    #define HAND_ID 0
 #elif defined(WEAPON1)
-#define HAND_ID 1
+    #define HAND_ID 1
 #else
-#warning "WEAPON0 or WEAPON1 not specified. Falling back to WEAPON0."
-#define HAND_ID 0
+    #warning "WEAPON0 or WEAPON1 not specified. Falling back to WEAPON0."
+    #define HAND_ID 0
 #endif
 
 // Weapon Factories all encode `g_HandId` at the top of the params
@@ -66,25 +66,25 @@ typedef struct {
 // exported
 static void EntityWeaponAttack(Entity* self);
 static void LoadWeaponPalette(s32 clutIndex);
-#ifndef FUNC_04_VOID
+    #ifndef FUNC_04_VOID
 static s32 func_ptr_80170004(Entity* self);
-#else
+    #else
 static void func_ptr_80170004(Entity* self);
-#endif
+    #endif
 static void func_ptr_80170008(Entity* self);
-#ifdef FUNC_0C_S32
+    #ifdef FUNC_0C_S32
 static s32 func_ptr_8017000C(Entity* self);
-#else
+    #else
 static void func_ptr_8017000C(Entity* self);
-#endif
+    #endif
 static s32 func_ptr_80170010(Entity* self);
 static s32 func_ptr_80170014(Entity* self);
 static int GetWeaponId(void);
-#ifdef SHIELDSPELL_S32
+    #ifdef SHIELDSPELL_S32
 static s32 EntityWeaponShieldSpell(Entity* self);
-#else
+    #else
 static void EntityWeaponShieldSpell(Entity* self);
-#endif
+    #endif
 static void func_ptr_80170024(Entity* self);
 static void func_ptr_80170028(Entity* self);
 static void WeaponUnused2C(void);
@@ -112,8 +112,8 @@ static Weapon header = {
 #endif // !VERSION_PSP
 
 #ifdef VERSION_PC
-#include "../pc/stages/overlay.h"
-#include <string.h>
+    #include "../pc/stages/overlay.h"
+    #include <string.h>
 
 OVL_API void InitWeapon(Weapon* o) { memcpy(o, &header, sizeof(Weapon)); }
 #endif

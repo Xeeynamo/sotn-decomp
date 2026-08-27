@@ -5,19 +5,19 @@ extern s32 E_ID(FALLING_ROCK);
 #endif
 
 #if defined(INVERTED_STAGE)
-#define CASTLE_FLAG INV_DEATH_STAIRWAY_BROKEN
-#define XPOS 104
-#define YPOS 56
-#define TILE1 0x126
-#define TILE2 0xC6
-#define ROCK_EINIT D_us_80180A34
+    #define CASTLE_FLAG INV_DEATH_STAIRWAY_BROKEN
+    #define XPOS 104
+    #define YPOS 56
+    #define TILE1 0x126
+    #define TILE2 0xC6
+    #define ROCK_EINIT D_us_80180A34
 #else
-#define CASTLE_FLAG DEATH_STAIRWAY_BROKEN
-#define XPOS 1432
-#define YPOS 200
-#define TILE1 0x4D9
-#define TILE2 0x539
-#define ROCK_EINIT g_EInitStInteractable
+    #define CASTLE_FLAG DEATH_STAIRWAY_BROKEN
+    #define XPOS 1432
+    #define YPOS 200
+    #define TILE1 0x4D9
+    #define TILE2 0x539
+    #define ROCK_EINIT g_EInitStInteractable
 #endif
 
 extern EInit ROCK_EINIT;

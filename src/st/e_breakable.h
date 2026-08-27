@@ -3,7 +3,7 @@
 #include <sfx.h>
 
 #ifndef SFX_BREAKABLE_HIT
-#define SFX_BREAKABLE_HIT SFX_CANDLE_HIT
+    #define SFX_BREAKABLE_HIT SFX_CANDLE_HIT
 #endif
 
 extern EInit g_EInitBreakable;

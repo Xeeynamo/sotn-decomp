@@ -27,13 +27,13 @@ typedef struct {
 #define N_WEAPON_PAL 24
 
 #ifdef FIX_UB
-// LoadWeaponPalette reads a predetermined amount of bytes from the weapon
-// palette, often going out of the array boundaries. This is not a problem on
-// PSX, but on any other platform we need to force each weapon palette to be
-// `N_ARRAY_PAL` long to account for the extra data read.
-#define N_ARRAY_PAL N_WEAPON_PAL
+    // LoadWeaponPalette reads a predetermined amount of bytes from the weapon
+    // palette, often going out of the array boundaries. This is not a problem
+    // on PSX, but on any other platform we need to force each weapon palette to
+    // be `N_ARRAY_PAL` long to account for the extra data read.
+    #define N_ARRAY_PAL N_WEAPON_PAL
 #else
-#define N_ARRAY_PAL
+    #define N_ARRAY_PAL
 #endif
 
 #endif

@@ -2,11 +2,11 @@
 #include "sfx.h"
 
 #ifndef SEALED_DOOR_PALETTE
-#define SEALED_DOOR_PALETTE 0x233
+    #define SEALED_DOOR_PALETTE 0x233
 #endif
 
 #ifndef SEALED_DOOR_CLUT
-#define SEALED_DOOR_CLUT SEALED_DOOR_PALETTE - 1
+    #define SEALED_DOOR_CLUT SEALED_DOOR_PALETTE - 1
 #endif
 
 extern EInit g_EInitCommon;
@@ -35,13 +35,13 @@ static char sealed_door_DE[] = "\x98\x10Magisch versiegelt.";
 
 static char* sealed_door_label;
 
-#include "../get_lang.h"
+    #include "../get_lang.h"
 #else
 static char sealed_door_label[] = "\x7C\x0EMagically sealed．";
-// NZ0 has an extra .word in data vs NO0
-#if defined(STAGE_IS_NZ0)
+    // NZ0 has an extra .word in data vs NO0
+    #if defined(STAGE_IS_NZ0)
 STATIC_PAD_DATA(4);
-#endif
+    #endif
 #endif
 
 static bool SealedDoorIsNearPlayer(Entity* self) {

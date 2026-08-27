@@ -5,11 +5,11 @@
 
 // This is an unused image that says "Golem Maker". Likely stripped on PSP.
 u8 gfx_stage_name_jp_sm[] = {
-#include "gen/gfx_stage_name_jp_sm.h"
+    #include "gen/gfx_stage_name_jp_sm.h"
 };
 
 u8 gfx_stage_name_jp_lg[] = {
-#include "gen/gfx_stage_name_jp_lg.h"
+    #include "gen/gfx_stage_name_jp_lg.h"
 };
 
 #endif

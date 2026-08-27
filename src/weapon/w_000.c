@@ -22,11 +22,11 @@ static s32 g_HandId = HAND_ID;
 #define path(hand, n) inner_path(hand, n)
 
 #ifdef VERSION_PSP
-#include path(HAND_ID, w_000_1.h)
-#include path(HAND_ID, w_000_2.h)
+    #include path(HAND_ID, w_000_1.h)
+    #include path(HAND_ID, w_000_2.h)
 #else
-#include "gen/w_000_1.h"
-#include "gen/w_000_2.h"
+    #include "gen/w_000_1.h"
+    #include "gen/w_000_2.h"
 #endif
 #define g_Animset w_000_1
 #define g_Animset2 w_000_2
@@ -309,14 +309,14 @@ static void WeaponUnused38(void) {}
 static void WeaponUnused3C(void) {}
 
 #ifdef VERSION_PSP
-// TODO: this should be WEAPON0_PTR
-#ifdef WEAPON0
+    // TODO: this should be WEAPON0_PTR
+    #ifdef WEAPON0
 extern void D_8017A000[];
-#define WEAPON_PTR D_8017A000
-#else
+        #define WEAPON_PTR D_8017A000
+    #else
 extern void D_8017D000[];
-#define WEAPON_PTR D_8017D000
-#endif
+        #define WEAPON_PTR D_8017D000
+    #endif
 extern Weapon w0_000_Overlay;
 
 void w0_000_Load(void) { memcpy(&WEAPON_PTR, &w0_000_Overlay, sizeof(Weapon)); }

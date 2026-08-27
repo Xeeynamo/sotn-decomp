@@ -181,9 +181,9 @@ typedef struct {
 
 void RenderPrimitives(void) {
 #ifdef VERSION_PSP
-#define RECT_LOC 0x12C
+    #define RECT_LOC 0x12C
 #else
-#define RECT_LOC 0x128
+    #define RECT_LOC 0x128
 #endif
 
 #ifdef VERSION_PC

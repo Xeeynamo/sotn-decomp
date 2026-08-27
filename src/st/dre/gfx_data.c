@@ -55,7 +55,7 @@ u8 gfx_portrait_succubus[] = {
 
 #ifdef VERSION_US
 u8 gfx_stage_name_en[] = {
-#include "gen/gfx_stage_name_en.h"
+    #include "gen/gfx_stage_name_en.h"
 };
 #endif
 

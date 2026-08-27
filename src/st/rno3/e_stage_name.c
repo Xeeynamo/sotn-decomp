@@ -2,9 +2,9 @@
 #include "rno3.h"
 
 #ifdef VERSION_US
-#include "../e_stage_name_us.h"
+    #include "../e_stage_name_us.h"
 #endif
 
 #ifdef VERSION_PSP
-#include "../e_stage_name_jp.h"
+    #include "../e_stage_name_jp.h"
 #endif

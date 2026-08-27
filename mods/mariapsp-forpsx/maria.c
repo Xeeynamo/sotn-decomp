@@ -2,17 +2,17 @@
 #include <maria.h>
 #ifdef MARIA_SFX_DEBUG
 
-#define MARIA_SFX_FIRST SFX_VO_MAR_8E6
-#define MARIA_SFX_LAST SFX_VO_MAR_DEATH
-#define MARIA_PSX_SFX_FIRST SFX_VO_RIC_ATTACK_A
-#define SFX_DATA_FIRST 0x600
+    #define MARIA_SFX_FIRST SFX_VO_MAR_8E6
+    #define MARIA_SFX_LAST SFX_VO_MAR_DEATH
+    #define MARIA_PSX_SFX_FIRST SFX_VO_RIC_ATTACK_A
+    #define SFX_DATA_FIRST 0x600
 extern Unkstruct_800BF554 g_SfxData[];
 void MarPlaySfx(s32 sfx);
 
-#define MARIA_SFX_COUNT 16
-#define MARIA_SFX_MENU_PRIMS 176
-#define MARIA_SFX_MENU_X 8
-#define MARIA_SFX_MENU_Y 48
+    #define MARIA_SFX_COUNT 16
+    #define MARIA_SFX_MENU_PRIMS 176
+    #define MARIA_SFX_MENU_X 8
+    #define MARIA_SFX_MENU_Y 48
 
 static s32 s_MariaSfxIndex;
 static s16 s_MariaSfxMenuPrimIndex = -1;

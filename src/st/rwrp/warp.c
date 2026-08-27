@@ -6,13 +6,13 @@
 
 #if defined(VERSION_US) || defined(VERSION_HD)
 s16 GetDistanceToPlayerX();
-#define ImplicitGetDistanceToPlayerX ((int (*)())GetDistanceToPlayerX)
+    #define ImplicitGetDistanceToPlayerX ((int (*)())GetDistanceToPlayerX)
 #elif defined(VERSION_PSP)
 int GetDistanceToPlayerX();
-#define ImplicitGetDistanceToPlayerX GetDistanceToPlayerX
+    #define ImplicitGetDistanceToPlayerX GetDistanceToPlayerX
 #else
 s16 GetDistanceToPlayerX();
-#define ImplicitGetDistanceToPlayerX GetDistanceToPlayerX
+    #define ImplicitGetDistanceToPlayerX GetDistanceToPlayerX
 #endif
 
 static u32 bg_color_angle[] = {

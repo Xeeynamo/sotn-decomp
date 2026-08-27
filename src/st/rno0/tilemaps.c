@@ -53,9 +53,9 @@
 
 #include "gen/rno0_tiledef_rload.h"
 #ifdef VERSION_PSP
-#include "gen/rno0_tiledef_rsave.h"
-#include "gen/rno0_tiledef_rno0.h"
+    #include "gen/rno0_tiledef_rsave.h"
+    #include "gen/rno0_tiledef_rno0.h"
 #else
-#include "gen/rno0_tiledef_rno0.h"
-#include "gen/rno0_tiledef_rsave.h"
+    #include "gen/rno0_tiledef_rno0.h"
+    #include "gen/rno0_tiledef_rsave.h"
 #endif

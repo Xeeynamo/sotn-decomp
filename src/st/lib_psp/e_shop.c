@@ -18,11 +18,11 @@ extern u32 g_CutsceneFlags;
 extern s32 g_IsCutsceneDone;
 
 #ifdef VERSION_PSP
-#define BUTTON_CONFIRM g_ConfirmButton
-#define BUTTON_CANCEL g_CancelButton
+    #define BUTTON_CONFIRM g_ConfirmButton
+    #define BUTTON_CANCEL g_CancelButton
 #else
-#define BUTTON_CONFIRM PAD_CROSS
-#define BUTTON_CANCEL PAD_TRIANGLE
+    #define BUTTON_CONFIRM PAD_CROSS
+    #define BUTTON_CANCEL PAD_TRIANGLE
 #endif
 
 // An inventory item consists of a category, which affects

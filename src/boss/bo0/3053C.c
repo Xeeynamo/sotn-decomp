@@ -112,9 +112,9 @@ void func_us_801B088C(void) {
 
 #ifdef VERSION_PSP
 extern s32 D_pspeu_09290458;
-#define E_ID_UNK33 D_pspeu_09290458
+    #define E_ID_UNK33 D_pspeu_09290458
 #else
-#define E_ID_UNK33 0x33
+    #define E_ID_UNK33 0x33
 #endif
 
 extern s16 D_us_8018117C[];
