@@ -9,69 +9,90 @@ void DestroyEntity(Entity* entity);
 
 void PlaySfx(s32 sfxId);
 
-// _disp_char
-void func_06078550(s32 arg0, u8 code, Point16* pos, u8 rawCode);
-
 extern s32 DAT_00292000;
 
 s32* func_060784A8(void) { return &DAT_00292000; }
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60784B8, func_060784B8);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078550, func_06078550);
 
-// _disp_string
-void func_06078604(s32 arg0, s8* str, Point16* pos) {
-    Point16 point;
-    s32 x;
-    s32 y;
-    s32 drawX;
-    s32 drawY;
-    s32 count;
-    s8 byte;
-    u8 rawCode;
-    u8 code;
-    void (*drawChar)(s32, u8, Point16*, u8);
+extern SaturnSpriteResource** DAT_060645EC;
+extern SprSpCmd DAT_06086108;
 
-    count = 0;
-    x = pos->x;
-    drawChar = func_06078550;
-    y = pos->y;
+// original name: disp_char
+void func_06078550(s32 arg0, u8 ch, Point16* pos);
+void func_06078550_noInline(s32 arg0, u8 ch, Point16* pos) {
+    SprSpCmd* ptr = &DAT_06086108;
+    SaturnSpriteResource* iVar5 = DAT_060645EC[13];
 
-loop:
-    drawX = x;
-    byte = *str++;
-    drawY = y;
-    rawCode = (u8)byte;
-    code = rawCode;
-
-    if (rawCode == 0xFF) {
-        byte = *str++;
-        code = (u8)byte;
-        if (code == 0) {
-            return;
-        }
-        if (code != rawCode) {
-            drawX -= 8;
-            drawY -= 8;
-            x = drawX;
-        }
-    }
-
-    if (code != 0) {
-        point.x = drawX;
-        point.y = drawY;
-        drawChar(arg0, code, &point, rawCode);
-        count++;
-    }
-
-    x += 8;
-    if (count <= 31) {
-        goto loop;
+    ptr->control = 0x1000;
+    ptr->drawMode = 0x488;
+    ptr->charSize = 0x108;
+    ptr->color = SPR_2LookupTblNoToVram(0x30);
+    ptr->charAddr = DAT_0605aec0[iVar5->allocationIndex][0] + ch * 4;
+    *((s32*)&ptr->ax) = (pos->x << 0x10) | (pos->y & 0xFFFF);
+    if (SpMstCmdPos < 0x278) {
+        SPR_2Cmd(arg0, ptr);
+        d_0605AEAC += 0x20;
     }
 }
 
-// _disp_num_string
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078684, func_06078684);
+// original name: disp_string
+void func_06078604(s32 arg0, u8* str, Point16* pos) {
+    Point16 point;
+    s32 x, y;
+    s32 drawX, drawY;
+    s32 count;
+    u8 ch;
+
+    count = 0;
+    x = pos->x;
+    y = pos->y;
+
+    while (count < 0x20) {
+        drawX = x;
+        drawY = y;
+        ch = *str++;
+
+        if (ch == 0xFF) {
+            ch = *str++;
+            if (ch == 0) {
+                break;
+            }
+            if (ch != 0xFF) {
+                drawX -= 8;
+                drawY -= 8;
+                x -= 8;
+            }
+        }
+
+        if (ch != 0) {
+            point.x = drawX;
+            point.y = drawY;
+            func_06078550(arg0, ch, &point);
+            count++;
+        }
+
+        x += 8;
+    }
+}
+
+// original name: disp_num_string
+void func_06078684(s32 arg0, s32 num, Point16* pos) {
+    s32 count = 0;
+    Point16 point = *pos;
+
+    while (count < 10) {
+        u8 ch = num % 10;
+        point.x -= 7;
+        func_06078550(arg0, ch + 0x10, &point);
+        num /= 10;
+        if (num == 0) {
+            break;
+        }
+        count++;
+    }
+}
+
 void func_06078700(u8* arg0, s8* arg1, s32 arg2) {
     s16 sp[4];
 
@@ -111,44 +132,23 @@ char* GetMenuItemName(s32 id) {
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60787C8, func_060787C8);
 
-// _SubDispSpecial
-typedef struct Func06078920Dat {
-    Sint16 unk0;
-    Sint16 unk2;
-    Sint16 unk4;
-} Func06078920Dat;
-
-typedef struct Func06078920CmdView {
-    Uint16 control;
-    Uint16 link;
-    Uint16 drawMode;
-    Uint16 color;
-    Uint16 charAddr;
-    Uint16 charSize;
-    s32 unkC;
-} Func06078920CmdView;
-
-typedef union Func06078920Cmd {
-    SprSpCmd cmd;
-    Func06078920CmdView view;
-} Func06078920Cmd;
-
-extern Func06078920Dat DAT_0605AEC4;
-extern Func06078920Cmd DAT_06086108;
-
-void func_06078920(Sint32 arg0, Point16* arg1) {
-    DAT_06086108.view.control = 0x1000;
-    DAT_06086108.view.drawMode = 0x488;
-    DAT_06086108.view.charAddr = DAT_0605AEC4.unk0;
-    DAT_06086108.view.charSize = 0x910;
-    DAT_06086108.view.color = SPR_2LookupTblNoToVram(0x31);
-    DAT_06086108.view.charAddr = DAT_0605AEC4.unk4 + 0x480;
-    DAT_06086108.view.unkC = (arg1->x << 0x10) | (u16)arg1->y;
+// original name: SubDispSpecial
+void func_06078920(s32 arg0, Point16* arg1) {
+    u16* ptr;
+    DAT_06086108.control = 0x1000;
+    DAT_06086108.drawMode = 0x488;
+    DAT_06086108.charAddr = DAT_0605aec0[1][0];
+    ptr = DAT_0605aec0[1];
+    DAT_06086108.charSize = 0x910;
+    DAT_06086108.color = SPR_2LookupTblNoToVram(0x31);
+    DAT_06086108.charAddr = ptr[2] + 0x480;
+    *((s32*)&DAT_06086108.ax) = (arg1->x << 0x10) | (arg1->y & 0xFFFF);
     if (SpMstCmdPos <= 0x277) {
-        SPR_2Cmd(arg0, &DAT_06086108.cmd);
+        SPR_2Cmd(arg0, &DAT_06086108);
         d_0605AEAC += 0x20;
     }
 }
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60789C4, func_060789C4);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078B48, func_06078B48);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078E28, func_06078E28);
@@ -168,19 +168,19 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f607973C, func_0607973C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60797FC, func_060797FC);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079958, func_06079958);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079A2C, func_06079A2C);
+
 s32 func_06079AF0(void) {
-    if (!(g_Player.status & 0x40000) && (DAT_0605d7f0 == 0) &&
-        (0x800 & g_pads->previous)) {
-        if (DAT_0605C668 != 0 && DAT_0605ceb0 != 0) {
-            if (g_PlayableCharacter != 0) {
-                if (StatusPause(0) != 0) {
-                    return 2;
-                }
-                return 0;
-            }
+    if ((g_Player.status & PLAYER_STATUS_DEAD) || (DAT_0605d7f0 != 0) ||
+        !(g_pads[0].previous & PAD_START)) {
+        return 0;
+    }
+    if (DAT_0605C668 != 0 && DAT_0605ceb0 != 0) {
+        if (g_PlayableCharacter == 0) {
             return 1;
         }
-        return 0;
+        if (StatusPause(0) != 0) {
+            return 2;
+        }
     }
     return 0;
 }
@@ -761,8 +761,8 @@ s32 GetDistanceToPlayerY(Entity* self) {
     return yDistance;
 }
 
-void func_0607AA40(Entity* self, s16 arg1, s8 arg2, s8 arg3) {
-    self->step = arg1;
+void func_0607AA40(Entity* self, s16 stepS, s8 arg2, s8 arg3) {
+    self->step = stepS;
     self->ext.spriteAnimEnemy.unk80 = arg2;
     self->ext.spriteAnimEnemy.unk81 = arg3;
     self->ext.spriteAnimEnemy.unk82 = 0;
@@ -770,13 +770,14 @@ void func_0607AA40(Entity* self, s16 arg1, s8 arg2, s8 arg3) {
     self->pose = 0;
     self->step_s = 0;
 }
-void func_0607AA74(Entity* entity, s16 stepS, s8 arg2, s8 arg3) {
-    entity->step_s = stepS;
-    entity->ext.spriteAnimEnemy.unk80 = arg2;
-    entity->ext.spriteAnimEnemy.unk81 = arg3;
-    entity->ext.spriteAnimEnemy.unk82 = 0;
-    entity->poseTimer = 0;
-    entity->pose = 0;
+
+void func_0607AA74(Entity* self, s16 stepS, s8 arg2, s8 arg3) {
+    self->step_s = stepS;
+    self->ext.spriteAnimEnemy.unk80 = arg2;
+    self->ext.spriteAnimEnemy.unk81 = arg3;
+    self->ext.spriteAnimEnemy.unk82 = 0;
+    self->poseTimer = 0;
+    self->pose = 0;
 }
 
 // func_0607AAA4
@@ -1616,8 +1617,6 @@ void InitScreenWaveEffect(void) {
     DAT_06086134 = 0x1F;
     SCL_SET_S0CCRT(DAT_06086134);
 }
-
-extern s32 SpMstCmdPos;
 
 // func_0607BED0
 void DrawScreenWaveEffect(void) {

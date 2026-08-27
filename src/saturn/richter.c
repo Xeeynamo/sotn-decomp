@@ -1963,7 +1963,7 @@ void func_060BCDB8(void) {
         DAT_0605cd70.unk8++;
         /* fall through */
     case 1:
-        if (DAT_06057f68 == 0 && (g_pads->previous & PAD_CROSS)) {
+        if (DAT_06057f68 == 0 && (g_pads[0].previous & PAD_CROSS)) {
             D_06085534 = 6;
             DAT_06057f68 = 4;
         }
