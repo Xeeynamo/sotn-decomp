@@ -4,6 +4,10 @@
 extern EInit g_EInitInteractable;
 extern EInit g_EInitEnvironment;
 
+#ifdef VERSION_PSP
+extern s32 E_ID(SECRET_WALL_DEBRIS);
+#endif
+
 static s16 D_us_80180FF8[] = {
     0x30C, 0x30D, 0x30E, 0x30F, 0x30E, 0x30F, 0x316, 0x317, 0x30C, 0x545, 0x54C,
     0x54D, 0x554, 0x555, 0x55C, 0x55D, 0x546, 0x547, 0x54E, 0x54F, 0x556, 0x557,
@@ -280,7 +284,7 @@ void EntitySecretWallDebris(Entity* self) {
 void EntityRoomExit(Entity* self) {
     switch (self->step) {
     case 0:
-        InitializeEntity(&g_EInitInteractable);
+        InitializeEntity(g_EInitInteractable);
         self->hitboxWidth = 0x10;
         self->hitboxHeight = 0x20;
         self->hitboxState = 1;
