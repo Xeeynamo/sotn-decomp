@@ -290,8 +290,8 @@ void EntityRoomExit(Entity* self) {
         self->hitboxState = 1;
         /* fallthrough */
     case 1:
-        if ((g_PlayerX > g_Tilemap.width - 0x100) && 
-            (GetDistanceToPlayerX() < (self->hitboxWidth)) && 
+        if ((g_PlayerX > g_Tilemap.width - 0x100) &&
+            (GetDistanceToPlayerX() < (self->hitboxWidth)) &&
             (GetDistanceToPlayerY() < (self->hitboxHeight))) {
             g_Tilemap.width -= 0x100;
             g_Tilemap.right -= 1;
