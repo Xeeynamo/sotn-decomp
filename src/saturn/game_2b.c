@@ -132,33 +132,6 @@ char* GetMenuItemName(s32 id) {
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60787C8, func_060787C8);
 
-// _SubDispSpecial
-typedef struct Func06078920Dat {
-    Sint16 unk0;
-    Sint16 unk2;
-    Sint16 unk4;
-} Func06078920Dat;
-
-typedef struct Func06078920CmdView {
-    Uint16 control;
-    Uint16 link;
-    Uint16 drawMode;
-    Uint16 color;
-    Uint16 charAddr;
-    Uint16 charSize;
-    s32 pos[4];
-    Uint16 grshAddr;
-    Uint16 dummy;
-} Func06078920CmdView;
-
-typedef union Func06078920Cmd {
-    SprSpCmd cmd;
-    Func06078920CmdView view;
-} Func06078920Cmd;
-
-extern Func06078920Dat DAT_0605AEC4;
-extern Func06078920Cmd DAT_06086108;
-
 // original name: SubDispSpecial
 void func_06078920(s32 arg0, Point16* arg1) {
     u16* ptr;
@@ -179,20 +152,29 @@ void func_06078920(s32 arg0, Point16* arg1) {
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60789C4, func_060789C4);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078B48, func_06078B48);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078E28, func_06078E28);
+
+typedef struct Func06078920Dat {
+    Sint16 unk0;
+    Sint16 unk2;
+    Sint16 unk4;
+} Func06078920Dat;
+
+extern Func06078920Dat DAT_0605AEC4;
+
 void func_06078F58(s32 arg0, s32 arg1, Point16* arg2) {
     s32 charBase;
 
-    DAT_06086108.view.control = 0x1000;
-    DAT_06086108.view.drawMode = 0x0488;
-    DAT_06086108.view.charAddr = DAT_0605AEC4.unk0;
-    DAT_06086108.view.charSize = 0x0610;
-    DAT_06086108.view.color = SPR_2LookupTblNoToVram(0x31);
+    DAT_06086108.control = 0x1000;
+    DAT_06086108.drawMode = 0x0488;
+    DAT_06086108.charAddr = DAT_0605AEC4.unk0;
+    DAT_06086108.charSize = 0x0610;
+    DAT_06086108.color = SPR_2LookupTblNoToVram(0x31);
     charBase = DAT_0605AEC4.unk4;
-    DAT_06086108.view.charAddr = (arg1 + 0x0B) * 0x30 + charBase;
-    DAT_06086108.view.pos[0] = (arg2->x << 16) | (u16)arg2->y;
+    DAT_06086108.charAddr = (arg1 + 0x0B) * 0x30 + charBase;
+    *((s32*)&DAT_06086108.ax) = (arg2->x << 16) | (u16)arg2->y;
 
     if (SpMstCmdPos <= 0x277) {
-        SPR_2Cmd(arg0, &DAT_06086108.cmd);
+        SPR_2Cmd(arg0, &DAT_06086108);
         d_0605AEAC += 0x20;
     }
 }
@@ -207,6 +189,25 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f60792B8, func_060792B8);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079424, func_06079424);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079580, func_06079580);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079670, func_06079670);
+
+
+typedef struct Func06078920CmdView {
+    Uint16 control;
+    Uint16 link;
+    Uint16 drawMode;
+    Uint16 color;
+    Uint16 charAddr;
+    Uint16 charSize;
+    s32 pos[4];
+    Uint16 grshAddr;
+    Uint16 dummy;
+} Func06078920CmdView;
+
+typedef union Func06078920Cmd {
+    SprSpCmd cmd;
+    Func06078920CmdView view;
+} Func06078920Cmd;
+
 void func_0607973C(Sint32 arg0, Sint16* arg1) {
     Func06078920Cmd* cmd;
     Sint16 left;
@@ -246,6 +247,7 @@ void func_0607973C(Sint32 arg0, Sint16* arg1) {
         d_0605AEAC += 0x20;
     }
 }
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60797FC, func_060797FC);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079958, func_06079958);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079A2C, func_06079A2C);
