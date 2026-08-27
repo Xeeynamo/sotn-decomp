@@ -1,8 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "nz1.h"
+#include "rnz1.h"
 
 extern EInit g_EInitInteractable;
 extern EInit g_EInitEnvironment;
+
+#ifdef VERSION_PSP
+extern s32 E_ID(SECRET_WALL_DEBRIS);
+#endif
 
 static s16 D_us_80180FF8[] = {
     0x30C, 0x30D, 0x30E, 0x30F, 0x30E, 0x30F, 0x316, 0x317, 0x30C, 0x545, 0x54C,
@@ -39,9 +43,9 @@ void EntityBreakableWall(Entity* self) {
         self->hitboxHeight = 0x20;
         self->hitboxState = 2;
         if (!self->params) {
-            castleFlag = NZ1_LOWER_WALL_OPEN;
+            castleFlag = RNZ1_LOWER_WALL_OPEN;
         } else {
-            castleFlag = NZ1_UPPER_WALL_OPEN;
+            castleFlag = RNZ1_UPPER_WALL_OPEN;
         }
         if (g_CastleFlags[castleFlag]) {
             i = 0x18;
@@ -50,18 +54,18 @@ void EntityBreakableWall(Entity* self) {
         }
         if (!self->params) {
             ptr = &D_us_80180FF8[i];
-            tileIdx = 0x9A0;
+            tileIdx = 0x45F;
         } else {
             ptr = &D_us_80181038[i];
-            tileIdx = 0x6E;
+            tileIdx = 0x391;
         }
         for (i = 0; i < 4; i++, ptr += 2) {
             *(&g_Tilemap.fg[tileIdx] + 0) = ptr[0];
-            *(&g_Tilemap.fg[tileIdx] + 1) = ptr[1];
+            *(&g_Tilemap.fg[tileIdx] - 1) = ptr[1];
             if (!self->params) {
-                tileIdx += 0x70;
+                tileIdx -= 0x70;
             } else {
-                tileIdx += 0x10;
+                tileIdx -= 0x10;
             }
         }
         if (g_CastleFlags[castleFlag]) {
@@ -71,7 +75,7 @@ void EntityBreakableWall(Entity* self) {
         /* fallthrough */
     case 1:
         if (self->hitFlags) {
-            PlaySfxPositional(SFX_WALL_DEBRIS_B);
+            g_api.PlaySfx(SFX_WALL_DEBRIS_B);
             self->step++;
         }
         break;
@@ -80,18 +84,18 @@ void EntityBreakableWall(Entity* self) {
         self->ext.breakable.breakCount++;
         if (!self->params) {
             ptr = &D_us_80180FF8[self->ext.breakable.breakCount * 8];
-            tileIdx = 0x9A0;
+            tileIdx = 0x45F;
         } else {
             ptr = &D_us_80181038[self->ext.breakable.breakCount * 8];
-            tileIdx = 0x6E;
+            tileIdx = 0x391;
         }
         for (i = 0; i < 4; i++, ptr += 2) {
             *(&g_Tilemap.fg[tileIdx] + 0) = ptr[0];
-            *(&g_Tilemap.fg[tileIdx] + 1) = ptr[1];
+            *(&g_Tilemap.fg[tileIdx] - 1) = ptr[1];
             if (!self->params) {
-                tileIdx += 0x70;
+                tileIdx -= 0x70;
             } else {
-                tileIdx += 0x10;
+                tileIdx -= 0x10;
             }
         }
         tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -103,13 +107,13 @@ void EntityBreakableWall(Entity* self) {
         self->step++;
         if (self->ext.breakable.breakCount == 3) {
             if (!self->params) {
-                g_CastleFlags[NZ1_LOWER_WALL_OPEN] = 1;
+                g_CastleFlags[RNZ1_LOWER_WALL_OPEN] = 1;
                 g_api.RevealSecretPassageAtPlayerPositionOnMap(
-                    NZ1_LOWER_WALL_OPEN);
+                    RNZ1_LOWER_WALL_OPEN);
             } else {
-                g_CastleFlags[NZ1_UPPER_WALL_OPEN] = 1;
+                g_CastleFlags[RNZ1_UPPER_WALL_OPEN] = 1;
                 g_api.RevealSecretPassageAtPlayerPositionOnMap(
-                    NZ1_UPPER_WALL_OPEN);
+                    RNZ1_UPPER_WALL_OPEN);
             }
             for (i = 0; i < 8; i++) {
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -118,7 +122,7 @@ void EntityBreakableWall(Entity* self) {
                         E_ID(SECRET_WALL_DEBRIS), self, tempEntity);
                     tempEntity->posX.i.hi += (Random() & 0xF);
                     tempEntity->posY.i.hi += (Random() & 0x3F) - 0x20;
-                    tempEntity->params = self->params;
+                    tempEntity->params = self->params ^ 1;
                 }
             }
             DestroyEntity(self);
@@ -142,17 +146,17 @@ void EntityBreakableWallPartial(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitInteractable);
-        if (g_CastleFlags[NZ1_STATUE_ROOM_BREAKABLE_WALLS] &
+        if (g_CastleFlags[RNZ1_STATUE_ROOM_BREAKABLE_WALLS] &
             (1 << self->params)) {
             tileX = self->posX.i.hi;
-            tileY = self->posY.i.hi - 0x10;
+            tileY = self->posY.i.hi + 0x10;
             tileX += g_Tilemap.scrollX.i.hi;
             tileY += g_Tilemap.scrollY.i.hi;
             for (i = 0; i < 3; i++) {
                 tileIdx =
                     (tileX >> 4) + ((tileY >> 4) * g_Tilemap.hSize * 0x10);
                 g_Tilemap.fg[tileIdx] = D_us_80181078[i + 3];
-                tileY += 0x10;
+                tileY -= 0x10;
             }
             self->step = 0x10;
             return;
@@ -164,20 +168,19 @@ void EntityBreakableWallPartial(Entity* self) {
         /* fallthrough */
     case 1:
         if (self->hitFlags) {
-            PlaySfxPositional(SFX_WALL_DEBRIS_B);
             self->step++;
         }
         break;
 
     case 2:
         tileX = self->posX.i.hi;
-        tileY = self->posY.i.hi - 0x10;
+        tileY = self->posY.i.hi + 0x10;
         tileX += g_Tilemap.scrollX.i.hi;
         tileY += g_Tilemap.scrollY.i.hi;
         for (i = 0; i < 3; i++) {
             tileIdx = (tileX >> 4) + ((tileY >> 4) * g_Tilemap.hSize * 0x10);
             g_Tilemap.fg[tileIdx] = D_us_80181078[i + 3];
-            tileY += 0x10;
+            tileY -= 0x10;
         }
         self->hitboxState = 0;
         tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -194,7 +197,7 @@ void EntityBreakableWallPartial(Entity* self) {
                 tempEntity->params = 1;
             }
         }
-        g_CastleFlags[NZ1_STATUE_ROOM_BREAKABLE_WALLS] |= (1 << self->params);
+        g_CastleFlags[RNZ1_STATUE_ROOM_BREAKABLE_WALLS] |= (1 << self->params);
         tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
         if (tempEntity != NULL) {
             CreateEntityFromEntity(E_EQUIP_ITEM_DROP, self, tempEntity);
@@ -250,6 +253,7 @@ void EntitySecretWallDebris(Entity* self) {
         }
         self->posY.i.hi += collider.unk18;
         if (!(self->params & 0x10)) {
+            g_api.PlaySfx(SFX_WALL_DEBRIS_B);
             for (i = 0; i < 2; i++) {
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
@@ -258,12 +262,10 @@ void EntitySecretWallDebris(Entity* self) {
                     tempEntity->params = 0x10;
                 }
             }
-            PlaySfxPositional(SFX_WALL_DEBRIS_B);
             DestroyEntity(self);
             return;
         }
         if (self->velocityY < FIX(0.5)) {
-            PlaySfxPositional(SFX_EXPLODE_FAST_B);
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
                 CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, tempEntity);
@@ -280,37 +282,20 @@ void EntitySecretWallDebris(Entity* self) {
 // This is the entity that transitions the player out of the large secret area
 // behind the breakable wall and the left side of the room with the pendulums
 void EntityRoomExit(Entity* self) {
-    Entity* player;
-
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitInteractable);
-        self->hitboxWidth = 16;
-        self->hitboxHeight = 32;
+        self->hitboxWidth = 0x10;
+        self->hitboxHeight = 0x20;
         self->hitboxState = 1;
-        // fallthrough
-
+        /* fallthrough */
     case 1:
-        if (g_PlayerX < 256 && GetDistanceToPlayerX() < self->hitboxWidth &&
-            GetDistanceToPlayerY() < self->hitboxHeight) {
-            g_Tilemap.x = 256;
-            g_Tilemap.left++;
-            g_PlayerX -= 256;
-            self->step = 16;
+        if ((g_PlayerX > g_Tilemap.width - 0x100) &&
+            (GetDistanceToPlayerX() < (self->hitboxWidth)) &&
+            (GetDistanceToPlayerY() < (self->hitboxHeight))) {
+            g_Tilemap.width -= 0x100;
+            g_Tilemap.right -= 1;
+            self->step = 0x10;
         }
-        break;
-    case 2:
-        if (!self->hitFlags) {
-            self->step--;
-        }
-        player = &PLAYER;
-        if (player->posX.i.hi < self->posX.i.hi) {
-            g_Tilemap.x = 256;
-            g_PlayerX = DISP_ALL_H;
-            g_Tilemap.left++;
-            PLAYER.posX.i.hi = 112;
-            PLAYER.zPriority = 0x5F;
-        }
-        break;
     }
 }
