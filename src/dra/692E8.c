@@ -668,11 +668,11 @@ void EntityAlucard() {
     func_8010A234(0);
     func_8010A3F0();
     func_80109990();
-    if (g_Player.unk56) {
-        g_Status.hp += g_Player.unk58;
+    if (g_Player.healKind) {
+        g_Status.hp += g_Player.healAmount;
         func_800FE8F0();
-        CreateHPNumMove(g_Player.unk58, 1);
-        if (g_Player.unk56 == 1) {
+        CreateHPNumMove(g_Player.healAmount, 1);
+        if (g_Player.healKind == 1) {
             PlaySfx(SFX_HEALTH_PICKUP);
             if (!(g_Player.status & PLAYER_STATUS_STONE)) {
                 CreateEntFactoryFromEntity(
@@ -681,14 +681,15 @@ void EntityAlucard() {
                     g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x44), 0);
             }
         }
-        if ((g_Player.unk56 == 2) && !(g_Player.status & PLAYER_STATUS_STONE)) {
+        if ((g_Player.healKind == 2) &&
+            !(g_Player.status & PLAYER_STATUS_STONE)) {
             CreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x48), 0);
         }
         if (g_Status.hpMax < g_Status.hp) {
             g_Status.hp = g_Status.hpMax;
         }
-        g_Player.unk56 = 0;
+        g_Player.healKind = 0;
     }
     i = CheckAndDoLevelUp();
     if (i != 0) {

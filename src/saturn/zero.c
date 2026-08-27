@@ -1979,7 +1979,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600DB38, func_0600DB38);
 void func_0600DCA4(s32 arg0) {
     Primitive* prim;
 
-    prim = &DAT_060867F8[arg0];
+    prim = &g_PrimBuf[arg0];
     if (prim->next != NULL) {
         do {
             prim->drawMode = 0xFFFF;
