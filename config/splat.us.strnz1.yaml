@@ -98,6 +98,7 @@ segments:
       - [0x27E60, c, e_gear_small]
       - [0x281C8, c, e_gear_puzzle]
       - [0x28668, c, unk_28668]
+      - [0x29074, c, unk_29074]
       - [0x291A0, c, e_spikes]
       - [0x29914, c, unk_29914]
       - [0x2CEA0, c, st_update]
