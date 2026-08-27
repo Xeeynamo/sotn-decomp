@@ -2291,7 +2291,7 @@ void func_0600E0D0(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
     u16 mode;
     void (**dispatch)(Primitive*, s16, s16);
 
-    prim = DAT_060867F8;
+    prim = g_PrimBuf;
     i = 0;
     dispatch = DAT_0603908C;
     drawMode = (s16*)&prim->drawMode;

@@ -461,7 +461,6 @@ s32 func_06030768(s32 arg0, void* arg1, void* arg2);
 s8 func_06030898(s32 arg0, void* arg1, void* arg2);
 s8 func_060307C4(s32 arg0, void* arg1);
 extern s32 Crc32(s32, s32*);
-extern Primitive DAT_060867F8[];
 extern void (*DAT_0603908C[])(Primitive* prim, s16 x, s16 y);
 extern s32 DAT_06061DD4;
 extern MthMatrixTbl DAT_06061DF0;
