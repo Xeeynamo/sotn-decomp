@@ -664,7 +664,7 @@ s32 func_06014CB8(s32 arg0) {
     if (temp_r0 == 0)
         return -1;
     *d_060623B0 &= ~2;
-    DAT_0601C01C(DAT_06062290[arg0], 0);
+    func_0601C01C(DAT_06062290[arg0], 0);
     return 0;
 }
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6014D44, func_06014D44);

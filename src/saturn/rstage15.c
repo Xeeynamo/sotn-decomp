@@ -63,7 +63,6 @@ void func_060DCC44(s32 poseFlags, s16* height, u16* offsetY) {
     }
 }
 
-const u16 DAT_060DCCA2 = 0x0009;
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60DCCA4, func_060DCCA4);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60DCD58, func_060DCD58);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60DCF08, func_060DCF08);
@@ -176,7 +175,27 @@ void func_060DDFD4(Entity* self) {
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60DE064, func_060DE064);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60DE144, func_060DE144);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60DE268, func_060DE268);
-INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60DE40C, func_060DE40C);
+void func_060DE40C(Entity* self) {
+    switch (self->step) {
+    case 0:
+        TekiInit(self, 5);
+        self->step++;
+        self->primIndex = AllocPrimitives(0, 5);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+        } else {
+            self->flags |= 0x800000;
+            func_060DE4CC(self);
+            self->ext.et_060DE40C.path = &DAT_060EE52C[self->params * 0x10];
+            self->ext.et_060DE40C.spanX = g_Tilemap.hSize * 0x140;
+            self->ext.et_060DE40C.spanY = g_Tilemap.vSize << 8;
+        }
+        return;
+    case 1:
+        func_060DE560(self);
+        return;
+    }
+}
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60DE4CC, func_060DE4CC);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60DE560, func_060DE560);
 void func_060DE654(Entity* self) {
@@ -228,13 +247,13 @@ void func_060DE808(u16 cardIndex) {
         SetStep(7);
         self->unk0->flags |= 8;
         self->ext.subweaponCard.unk86 = 5;
-        self->velocityY = -0x28000;
+        self->velocityY = FIX(-2.5);
 
         if (player->facingLeft != 1) {
-            self->velocityX = -0x28000;
+            self->velocityX = FIX(-2.5);
             return;
         }
-        self->velocityX = 0x28000;
+        self->velocityX = FIX(2.5);
     } else {
         DestroyEntity(self);
     }

@@ -233,6 +233,9 @@ extern u32 DAT_060F2D68[];
 extern s16 DAT_060EE880[];
 extern u16 g_RStage15AlucardSubweaponIds[];
 extern s32 g_RStage15Entity08ModelVertices14[14][3];
+void func_060DE4CC(Entity* self);
+void func_060DE560(Entity* self);
+extern u8 DAT_060EE52C[];
 /* End moved declarations */
 
 #endif
