@@ -10,6 +10,19 @@
 
 void func_0600A330(void);
 void* func_0600BD4C(SpriteObject* sprite);
+typedef s32 (*Callback)();
+
+// D_800ACF4C on PSX
+typedef struct {
+    u8 unk0;
+    u8 pad1[3];
+    s32 unk4;
+} AlucardStateInitData;
+
+extern AlucardStateInitData g_AlucardStateInitData[];
+extern Callback DAT_060D6018;
+extern Callback DAT_060D9018;
+void func_0600A31C(void);
 extern s16 DAT_060CE4B2;
 extern s16 DAT_060CE4B4;
 extern s16 DAT_060CE972;
@@ -23,7 +36,7 @@ void func_060AF4A0(void);
 void func_060B9340(Entity* entity);
 void func_060B2E40(void);
 Entity* func_060BAF44(Entity* source, u32 factoryParams, s32 arg2);
-void func_060AB3A8(void);
+void func_060AB3A8(s32 arg);
 void func_060ADD74(void);
 void func_060AB44C(s32 kind, s16 invincibilityFrames);
 void func_060A7D68(s32 resetAnims, s32 arg1);
@@ -62,24 +75,38 @@ extern s8 D_060B24B0[];
 extern u16* g_AlucardEffectAnimTable[];
 void func_060AF1BC(int);
 void SetPlayerStep(PlayerSteps step);
+void CheckCollision(s32 x, s32 y, Collider* res, u16 unk);
+s32 func_060A5060(void);
+s32 func_060A50E0(s32 arg0);
+void func_060A55B4(s32 arg0);
+void func_060A59E0(s32 arg0);
+void func_060A5AF0(void);
+void func_060A5B94(s32 arg0);
+void SetPlayerStepNoInline(PlayerSteps step) __asm__("_func_060A5558");
+void SetSpeedXNoInline(s32 velocityX) __asm__("_func_060A5574");
+void func_060A56E4NoInline(s32 arg0, s32 arg1) __asm__("_func_060A56E4");
+void func_060A5674NoInline(s32 anim) __asm__("_func_060A5674");
 void func_060A5574(s32 velocityX);
 void func_060A5674(s32 anim);
 void func_060A580C(s32 arg0);
 void func_0600FB0C(s32 arg0);
 void PlaySfx(s32 sfxId);
+void DestroyEntity();
+void func_060B95C8(s32 arg0);
 s32 func_060AB78C(void);
 void func_060ABFA4(void);
 void func_060AEFBC(void);
 void func_060B071C(void);
 s32 func_060BA9A0(Entity* entity, s32 arg);
 void func_060B7994(void);
+void func_060B7A6C(void);
 long ratan2(long dx, long dy);
 s32 func_0606FFC8(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 
 typedef struct {
     u32 unk0;
     s16* unk4;
-    u32 unk8;
+    AnimationFrame* unk8;
     u32 unkC;
 } EntryS060CE980;
 
@@ -95,6 +122,8 @@ extern Point32 g_AlucardSensorsFloor[];
 extern Point32 g_AlucardSensorsCeiling[];
 extern EntryS060CE980 DAT_060CE980[];
 extern EntryS060CE980 DAT_060CEA70[];
+extern EntryS060CE980 DAT_060CEA80[];
+extern AnimationFrame AlucardFrames[];
 extern u8 DAT_0607C266[];
 extern s8 DAT_060CC9BC;
 extern Rec060CC9BD DAT_060CC9BD[];
@@ -107,6 +136,11 @@ extern s32 DAT_060CC774;
 extern s32 DAT_060CE490;
 extern s32 DAT_060CE494;
 extern s32 DAT_060CE4B8;
+extern s32 DAT_060CE4BC;
+extern s32 DAT_060CE4C0;
+extern s16 DAT_060CC98E[];
+s32 func_0607003C(void* arg0, s32 arg1, s32 arg2, s32 arg3);
+void func_060B8B40(void* arg0, s16 arg1, s16 arg2);
 extern s16 DAT_060CE4B0;
 /* End moved declarations */
 

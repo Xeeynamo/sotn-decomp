@@ -39,7 +39,7 @@ void func_060DCE50(u16 arg0) {
         self->velocityX = 0;
         self->velocityY = 0;
         if (collider.effects & 4) {
-            self->posY.val += 0x2000;
+            self->posY.val += FIX(0.125);
         } else {
             self->posY.val += collider.unk18;
         }
@@ -59,7 +59,7 @@ void func_060DCE50(u16 arg0) {
             }
         }
         if (entity->velocityY <= 0x3FFF) {
-            entity->velocityY += 0x2000;
+            entity->velocityY += FIX(0.125);
         }
     }
 }
@@ -91,12 +91,12 @@ void func_060DCF5C(u16 arg0) {
         sprite = entity->unk0;
         sprite->flags |= 8;
         entity->ext.et_060DCF5C.timer = 5;
-        entity->velocityY = -0x28000;
+        entity->velocityY = FIX(-2.5);
         if (player->facingLeft != 1) {
-            entity->velocityX = -0x28000;
+            entity->velocityX = FIX(-2.5);
             return;
         }
-        entity->velocityX = 0x28000;
+        entity->velocityX = FIX(2.5);
     } else {
         DestroyEntity(entity);
     }

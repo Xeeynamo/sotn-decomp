@@ -360,7 +360,14 @@ void func_060E323C(s32 scale, s32 unused) {
         base, (s32*)((char*)base + 0x408), 0xE, &DAT_06061DF0);
 }
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E330C, func_060E330C);
-INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E3478, func_060E3478);
+void func_060E3478(Entity* entity) {
+    entity->unk0 = CreateSpriteObject(
+        g_Stage16SpriteBank20.allocationIndex, g_Stage16SpriteBank20.flags,
+        g_Stage16SpriteBank20Images, 6);
+    SyncSpriteObjectPosUnchecked(entity, g_Stage16Entity15CollisionSensors[0]);
+    entity->step++;
+}
+
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E34CC, func_060E34CC);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E3D00, func_060E3D00);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E3FC8, func_060E3FC8);
@@ -424,7 +431,39 @@ void func_060E411C(Entity* self, u8 arg1) {
     }
 }
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E4210, func_060E4210);
-INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E49F0, func_060E49F0);
+void func_060E49F0(Entity* self) {
+    Entity* parent;
+    u16 index;
+
+    if (self->step == 0) {
+        TekiInit(self, 5);
+        self->hitboxState = 1;
+        self->step++;
+    }
+    if (!(self->hitFlags & 0x80) && self->hitFlags != 0) {
+        PlaySfxPositional(0x611);
+    }
+
+    parent = self - 1;
+    index = parent->animCurFrame - 3;
+    if (index > 42) {
+        index = 0;
+    }
+
+    self->hitboxOffX = g_Stage16Entity25PositionOffsets[index][0];
+    self->hitboxOffY = g_Stage16Entity25PositionOffsets[index][1];
+    self->hitboxWidth = g_Stage16Entity25HitboxSizes[index][0];
+    self->hitboxHeight = g_Stage16Entity25HitboxSizes[index][1];
+    self->hitboxWidth = (self->hitboxWidth * 3) >> 1;
+
+    self->facingLeft = parent->facingLeft;
+    self->posX.i.hi = parent->posX.i.hi;
+    self->posY.i.hi = parent->posY.i.hi;
+
+    if (parent->entityId != 0x1A) {
+        DestroyEntity(self);
+    }
+}
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E4AEC, func_060E4AEC);
 void func_060E4C74(Entity* self) {
     SaturnSpriteImage* images = g_Stage16SpriteBank22Images;
@@ -459,7 +498,40 @@ INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E55B0, func_060E55B0);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E636C, func_060E636C);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E63A8, func_060E63A8);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E6A6C, func_060E6A6C);
-INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E6C88, func_060E6C88);
+void func_060E6C88(Entity* self) {
+    if (self->step == 0) {
+        SaturnSpriteImage* images = g_Stage16SpriteBank24Images;
+        SaturnSpriteResource* bank =
+            (SaturnSpriteResource*)g_Stage16SpriteBankGargoyle;
+
+        self->unk0 =
+            CreateSpriteObject(bank->allocationIndex, bank->flags, images, 1);
+        SyncSpriteObjectPosUnchecked(self, DAT_060ECF1C);
+        self->step = 1;
+        TekiInit(self, 5);
+        self->ext.gargoyle.clutBase = self->unk0->clutBase;
+
+        switch (self->ext.gargoyle.variant) {
+        case 1:
+            self->animCurFrame = 1;
+            self->unk0->clutBase = self->ext.gargoyle.clutBase;
+            break;
+        case 2:
+            self->animCurFrame = 0x3A;
+            self->unk0->clutBase = self->ext.gargoyle.clutBase + 9;
+            break;
+        case 0:
+            self->animCurFrame = 0x3B;
+            self->unk0->clutBase = self->ext.gargoyle.clutBase + 0x12;
+            break;
+        }
+
+        self->unk0->zPriority -= 2;
+        func_06079BB4(self);
+        func_0600B004(
+            self->unk0, g_Stage16SpriteBank24Frames[self->animCurFrame]);
+    }
+}
 void func_060E6D90(Entity* entity, s16 step) {
     entity->velocityX = 0;
     entity->velocityY = 0;
@@ -484,7 +556,39 @@ s32 func_060E6DB8(Entity* self, Entity* other) {
 const u16 DAT_060E6DD8 = 0x8888;
 const u16 DAT_060E6DDA = 0x8889;
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E6DDC, func_060E6DDC);
-INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E72FC, func_060E72FC);
+void func_060E72FC(Entity* self) {
+    Entity* parent = self - 1;
+    s8* hitbox;
+
+    switch (self->step) {
+    case 0:
+        TekiInit(self, 0x1A6);
+        self->step++;
+    case 1:
+        if ((u16)(parent->animCurFrame - 0x14) <= 0xAU) {
+            hitbox = DAT_060EE27C[parent->animCurFrame];
+            self->hitboxWidth = hitbox[0];
+            self->hitboxHeight = hitbox[1];
+            self->hitboxOffX = hitbox[2];
+            self->hitboxOffY = hitbox[3];
+        } else {
+            self->hitboxWidth = 0;
+            self->hitboxHeight = 0;
+            self->hitboxOffX = 0;
+            self->hitboxOffY = 0;
+        }
+        self->facingLeft = parent->facingLeft;
+        self->hitboxState = parent->hitboxState;
+        self->posX.i.hi = parent->posX.i.hi;
+        self->posY.i.hi = parent->posY.i.hi;
+        if (parent->entityId != 0x24) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
+
+const u16 pad_060E73F4[] = {0x8888, 0x8889, 0xCCCC, 0xCCCD};
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E73FC, func_060E73FC);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E7C60, func_060E7C60);
 void func_060E7EA8(Entity* entity, s16 step) {
@@ -495,7 +599,35 @@ void func_060E7EA8(Entity* entity, s16 step) {
     entity->step = step;
     entity->step_s = 0;
 }
-INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E7ED0, func_060E7ED0);
+void func_060E7ED0(Entity* self) {
+    Entity* child = self + 1;
+    s32 offset;
+
+    if (self->step == 0) {
+        TekiInit(self, 5);
+        self->ext.et_060E7ED0.timer = 1000;
+        self->ext.et_060E7ED0.spawnCount = 0;
+        self->step++;
+    }
+
+    if (child->entityId != 0x29) {
+        self->ext.et_060E7ED0.timer++;
+        if (self->ext.et_060E7ED0.timer > 300) {
+            self->ext.et_060E7ED0.spawnCount++;
+            if (self->ext.et_060E7ED0.spawnCount <= 16) {
+                CreateEntityFromEntity(0x29, self, child);
+                child->facingLeft = (GetSideToPlayer(self) & 1) ^ 1;
+                self->ext.et_060E7ED0.timer = 0;
+                child->posX.i.hi += (offset = (Random() & 0xF) + 0xFFF8);
+                child->posY.i.hi += (offset = (Random() & 0xF) + 0xFFF8);
+                child->params = self->ext.et_060E7ED0.spawnCount;
+            }
+        }
+    }
+}
+
+const u16 pad_060E7FC0 = 0xAAAA;
+const u16 pad_060E7FC2 = 0xAAAB;
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E7FC4, func_060E7FC4);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E86BC, func_060E86BC);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E887C, func_060E887C);

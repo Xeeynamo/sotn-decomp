@@ -202,6 +202,17 @@ void func_060E401C(Entity* self);
 void func_060E411C(Entity* self, u8 arg1);
 void func_060E4C74(Entity* self);
 s32 func_060E6DB8(Entity* self, Entity* other);
+extern SaturnSpriteResource g_Stage16SpriteBank20;
+extern s16 g_Stage16Entity15CollisionSensors[][2];
+extern s16 g_Stage16Entity25PositionOffsets[][2];
+extern s16 g_Stage16Entity25HitboxSizes[][2];
+void PlaySfxPositional(s32 sfxId);
+extern s16 DAT_060ECF1C[];
+extern u32 g_Stage16SpriteBank24Frames[];
+void func_0600B004(SpriteObject* sprite, u32 imageIndex);
+extern s8 DAT_060EE27C[][4];
+s32 GetSideToPlayer(Entity* self);
+s16 Random(void);
 /* End moved declarations */
 
 #endif

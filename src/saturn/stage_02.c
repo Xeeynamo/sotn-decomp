@@ -617,7 +617,6 @@ void func_060E6B00(Entity* self) {
     }
 }
 
-static const volatile u16 DAT_060E6BF2 = 0x0009;
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E6C0C, func_060E6C0C);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E7014, func_060E7014);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E73CC, func_060E73CC);
@@ -1355,7 +1354,17 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EB9EC, func_060EB9EC);
 
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EBEB0, func_060EBEB0);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EC030, func_060EC030);
-INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EC1F0, func_060EC1F0);
+extern s16 DAT_060F47E4[];
+
+void func_060EC1F0(Entity* entity) {
+    struct SpriteParts* parts = &g_Stage02SpittleBoneSpriteParts0;
+    SaturnSpriteResource* bank = (SaturnSpriteResource*)g_Stage02SpriteBank33;
+
+    entity->unk0 =
+        CreateSpriteObject(bank->allocationIndex, bank->flags, parts, 5);
+    SyncSpriteObjectPosUnchecked(entity, DAT_060F47E4);
+    entity->step = 1;
+}
 
 void func_060EC240(Entity* self) {
     SyncSpriteObjectPos(self);

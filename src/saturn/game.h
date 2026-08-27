@@ -237,6 +237,12 @@ typedef struct {
 extern volatile s32 DAT_0605D7F4;
 extern volatile UnkStruct_06074690 DAT_06074690;
 extern s32 DAT_0605D7FC;
+extern s32 DAT_06086298;
+void func_06009DB0(void);
+typedef struct {
+    u16 x;
+    u16 y;
+} Point16u;
 s32 func_0606FC60(s32 arg0);
 s32 func_06070410(s32 arg0, s32 arg1);
 bool StatusPause(s32 arg0);
