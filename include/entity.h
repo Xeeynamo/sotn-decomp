@@ -4249,6 +4249,20 @@ typedef struct {
     /* 0x7E */ s16 bobAngle;
 } ET_Shaft;
 
+// func_us_8019C4EC and func_us_8019C610 (rcen, rcen_psp)
+typedef struct {
+    /* 0x7C */ u32 : 32;
+    /* 0x80 */ s16 : 16;
+    /* 0x82 */ s16 angle;
+    /* 0x84 */ u32 : 32;
+    /* 0x88 */ u32 : 32;
+    /* 0x8C */ u32 : 32;
+    /* 0x90 */ u32 : 32;
+    /* 0x94 */ u32 : 32;
+    /* 0x98 */ u32 : 32;
+    /* 0x9C */ struct Entity* parent;
+} ET_RcenShaftProjectile;
+
 // func_us_801980E4 (rbo8, rbo8_psp)
 typedef struct {
     /* 0x7C */ u32 : 32;
@@ -4629,6 +4643,7 @@ typedef union { // offset=0x7C
     ET_801A3FD4 et_801A3FD4;
     ET_801C03E8 et_801C03E8;
     ET_Shaft shaft;
+    ET_RcenShaftProjectile rcenShaftProjectile;
     ET_801980E4 et_801980E4;
     ET_8019921C et_8019921C;
     ET_OlroxDrool olroxDrool;

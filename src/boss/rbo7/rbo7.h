@@ -45,4 +45,11 @@ typedef enum EntityID {
     NUM_ENTITIES,
 };
 
+extern EInit g_EInitBreakable;
+extern AnimationFrame* g_eBreakableAnimations[];
+extern u8 g_eBreakableExplosionTypes[];
+extern u8 blend_modes[];
+extern u8 g_eBreakableHitboxes[];
+extern u16 g_eBreakableanimSets[];
+
 #endif // RBO7_H
