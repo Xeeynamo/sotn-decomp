@@ -119,12 +119,21 @@ void func_060A5674(s32 anim) {
     g_Player.pose = 0;
 }
 // func_8010DA2C on PSX
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A56AC, func_060A56AC);
+void func_060A56AC(AnimationFrame* frames) {
+    g_Player.animFrames = frames;
+    g_Player.unk394 = g_Player.unk395 = g_Player.unk396 = 0;
+}
 
 void func_060A56D8() {}
 
 // func_8010E470 on PSX
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A56E4, func_060A56E4);
+void func_060A56E4(s32 arg0, s32 arg1) {
+    g_Entities->velocityX = arg1;
+    g_Entities->velocityY = 0;
+    g_Entities->step = 2;
+    g_Entities->step_s = g_AlucardStateInitData[arg0].unk0;
+    func_060A5674(g_AlucardStateInitData[arg0].unk4);
+}
 // CheckPlayerStuck
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A5738, func_060A5738);
 // func_8010E570 on PSX
@@ -137,7 +146,15 @@ INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A5AF0, func_060A5AF0);
 // func_8010E83C on PSX
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A5B94, func_060A5B94);
 // func_8010E940 on PSX
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A5CD8, func_060A5CD8);
+void func_060A5CD8(void) {
+    g_Player.unk44 |= 0x21;
+    func_060A5674(0x22);
+    g_Entities->step_s = 0;
+    g_Entities->velocityY = FIX(-4.25);
+    if (g_Player.unk72 != 0) {
+        g_Entities->velocityY = 0;
+    }
+}
 // DoGravityJump
 void func_060A5D50(void) {
     // SetSpeedX
@@ -165,24 +182,80 @@ void func_060A5D50(void) {
 }
 
 // func_8010FD88 on PSX
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A5E14, func_060A5E14);
+void func_060A5E14(void) {
+    s32 velocityX;
+
+    g_Entities->step = 0;
+    g_Entities->step_s = 3;
+
+    velocityX = FIX(-4.375);
+    if (g_Entities->facingLeft == 1) {
+        velocityX = -velocityX;
+    }
+    g_Entities->velocityX = velocityX;
+    g_Entities->velocityY = 0;
+
+    func_060A5674(0xBC);
+    func_060BAF44(g_CurrentEntity, 0, 0);
+    g_Player.unk46 = 0;
+    PlaySfx(0x617);
+}
+// func_8010E3E0 on PSX
+static void DestroyPlayerSpellEntity(void) {
+    u16* unk48 = &g_Player.unk48;
+
+    if (*unk48 != 0) {
+        register void (*destroyEntity)(Entity*);
+
+        destroyEntity = DestroyEntity;
+        destroyEntity(&g_Entities[0x10]);
+        *unk48 = 0;
+    }
+}
+
 // PerformDarkMetamorphosis
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A5EA8, func_060A5EA8);
 // PerformSummonSpirit
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A5F9C, func_060A5F9C);
+void func_060A5F9C(void) {
+    PLAYER.velocityX = PLAYER.velocityY = 0;
+    SetPlayerStep(Player_SpellSummonSpirit);
+    DestroyPlayerSpellEntity();
+    // FACTORY(BP_SUMMON_SPIRIT, 0)
+    func_060BAF44(g_CurrentEntity, 0x75, 0);
+    func_060A5674(0xC1);
+    PlaySfx(0x070B);
+    func_060A56AC(NULL);
+    g_Player.timers[0xC] = 4;
+}
 // PerformHellfire
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A605C, func_060A605C);
 // PerformTetraSpirit
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A60EC, func_060A60EC);
 // PerformSoulSteal
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A61B0, func_060A61B0);
+void func_060A61B0(void) {
+    PLAYER.velocityX = PLAYER.velocityY = 0;
+    SetPlayerStep(Player_SpellSoulSteal);
+    DestroyPlayerSpellEntity();
+    func_060A5674(0xC2);
+    PlaySfx(0x5C0);
+    func_060B95C8(0xC);
+    g_Player.timers[0xC] = 4;
+}
 // PerformSwordBrothers
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A6248, func_060A6248);
+void func_060A6248(void) {
+    func_060A5574(0);
+    SetPlayerStep(Player_SpellSwordBrothers);
+    DestroyPlayerSpellEntity();
+    func_060A5674(0xC1);
+    // FACTORY(BP_RIPPLE_OUTLINE, 23)
+    func_060BAF44(g_CurrentEntity, 0x00170028, 0);
+    g_Player.timers[0xC] = 4;
+}
 void func_060A62E4(void) {
     s32 velocityX;
 
     PLAYER.step_s = 3;
-    velocityX = 0x60000;
+    velocityX = FIX(6);
     if (PLAYER.facingLeft == 1) {
         velocityX = -velocityX;
     }
@@ -253,7 +326,14 @@ s32 func_060A637C(s32 itemId, s32 handId) {
 // func_8010EB5C on PSX
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A6420, func_060A6420);
 // func_8010ED54 on PSX
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A6618, func_060A6618);
+void func_060A6618(u8 arg0) {
+    PLAYER.velocityY = 0;
+    PLAYER.velocityX = 0;
+    SetPlayerStep(Player_SwordWarp);
+    func_060A5674(arg0);
+    func_060BAF44(g_CurrentEntity, 0x14003D, 0);
+    g_Player.unk48 = 0;
+}
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A6688, func_060A6688);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A66FC, func_060A66FC);
 // func_8010EDB8 on PSX
@@ -262,10 +342,40 @@ INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A6A94, func_060A6A94);
 // func_8010FAF4 on PSX
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A7D3C, func_060A7D3C);
 // func_8010DFF0 on PSX
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A7D68, func_060A7D68);
+void func_060A7D68(s32 resetAnims, s32 arg1) {
+    u16 i;
+
+    g_Player.unk39C = -1;
+    if (DAT_060CEA80[0].unk8 == AlucardFrames) {
+        for (i = 0; i <= 5; i++) {
+            *DAT_060CEA80[i].unk4 = 0;
+        }
+    }
+    if (arg1 != 0) {
+        if (arg1 <= 7) {
+            g_Player.timers[15] = 8;
+            return;
+        }
+        g_Player.timers[15] = (s16)arg1;
+    }
+}
 // EnableAfterImage
 void func_060A7DD0() { g_Player.unk39C = 6; }
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A7DE8, func_060A7DE8);
+s8 func_060A7DE8(void) {
+    if (PLAYER.step_s != 0) {
+        if (g_unkGraphicsStruct.D_8009744C != 0 ||
+            (g_Player.padTapped & 0x20) != 0 || func_06070410(0, 1) < 0) {
+            SetPlayerStepNoInline(Player_UnmorphBat);
+            g_Player.unk452 = 0;
+            g_Player.unk454 = 0;
+            func_060BAF44(g_CurrentEntity, 0x0021007B, 0);
+            g_Player.unk39D |= 2;
+            PLAYER.velocityY >>= 1;
+            return 1;
+        }
+    }
+    return 0;
+}
 s32 func_060A7E90(void) {
     Collider collider;
     s32 x;
@@ -303,12 +413,116 @@ s32 func_060A7E90(void) {
     return result;
 }
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A7F28, func_060A7F28);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A80E0, func_060A80E0);
+
+s32 func_060A80E0(void) {
+    Collider collider;
+    s32 speed = 0xC000;
+    s32 x;
+    s32 y;
+    s32 left;
+    s32 right;
+    s32 result;
+
+    x = PLAYER.posX.val;
+    y = PLAYER.posY.val;
+
+    CheckCollision(x - 0x70000, y, &collider, 0);
+    left = collider.effects & 0x10;
+
+    CheckCollision(x + 0x70000, y, &collider, 0);
+    right = collider.effects & 0x10;
+
+    if (right & left) {
+        register void (*call_func)(s32);
+
+        call_func = func_060A5574;
+        call_func(speed);
+        result = 1;
+    } else if (right) {
+        PLAYER.velocityX = -speed;
+        result = 1;
+    } else if (left) {
+        PLAYER.velocityX = speed;
+        result = 1;
+    } else {
+        result = 0;
+    }
+
+    if (g_Entities[16].step == 5) {
+        if (result == 0) {
+            DestroyEntity(&g_Entities[16]);
+            g_Player.unk39D &= 0xFD;
+            return 1;
+        }
+    } else if (g_Entities[16].step <= 2 && g_Entities[16].step != 0) {
+        g_Player.unk46 = 0;
+        g_Entities[16].step = 3;
+    }
+
+    return 0;
+}
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A81DC, func_060A81DC);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A8D78, func_060A8D78);
+
+// PlayerStepFall on PSX
+void func_060A8D78(void) {
+    void (*fn)(s32);
+    s32 arg;
+
+    if (g_Player.timers[5] != 0) {
+        arg = 1;
+        if (g_Player.padTapped & PAD_CROSS) {
+            fn = func_060A5B94;
+            goto call;
+        }
+    }
+    if (func_060A50E0(0x9029) == 0) {
+        arg = FIX(0.078125);
+        fn = func_060A55B4;
+        fn(arg);
+        if (func_060A5060() != 0) {
+            arg = FIX(0.9375);
+            fn = func_060A5574;
+        call:
+            fn(arg);
+        }
+    }
+}
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A8DF4, func_060A8DF4);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A9658, func_060A9658);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A96A0, func_060A96A0);
+void func_060A9658(void) {
+    if (func_060A50E0(0x4301C) == 0) {
+        SetSpeedXNoInline(FIX(1.875));
+        if (func_060A5060() == 0) {
+            func_060A580C(0);
+        }
+    }
+}
+void func_060A96A0(void) {
+    void (*fn)(s32);
+    s32 arg;
+
+    if (g_Player.unk7A != 0) {
+        fn = func_060A59E0;
+        arg = 0;
+        goto call;
+    }
+    g_Player.unk3E8 = 8;
+    if (func_060A50E0(0x4301C) == 0) {
+        arg = FIX(0.15625);
+        fn = func_060A55B4;
+        fn(arg);
+        if (func_060A5060() == 0) {
+            arg = 0;
+            fn = func_060A580C;
+            goto call;
+        }
+        if (PLAYER.step_s == 0) {
+            arg = 0x2D000;
+            fn = func_060A5574;
+        call:
+            fn(arg);
+        }
+    }
+}
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A972C, func_060A972C);
 void func_060A9D90(u16 arg0) {
     s32 xOffset;
@@ -343,13 +557,49 @@ void func_060AA0FC(void) {
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AA150, func_060AA150);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AA23C, func_060AA23C);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AADE4, func_060AADE4);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AB090, func_060AB090);
+void func_060AB090(void) {
+    if (g_Player.unk39D & 0x20) {
+        func_060A580C(0);
+    }
+}
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AB0BC, func_060AB0BC);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AB0E8, func_060AB0E8);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AB308, func_060AB308);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AB37C, func_060AB37C);
+void func_060AB308(void) {
+    PlayerState* player = &g_Player;
+
+    if (player->poseTimer == 7 && player->pose == 1) {
+        func_060BAF44(g_CurrentEntity, 0x160028, 0);
+        PlaySfx(0x67D);
+        func_060BAF44(g_CurrentEntity, 0x70, 0);
+    }
+    if (player->unk39D & 0x20) {
+        func_060A580C(0);
+    }
+}
+void func_060AB37C(void) {
+    if (g_Player.unk39D & 0x20) {
+        func_060A56E4NoInline(0, 0);
+    }
+}
 // func_8010E0D0 on PSX
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AB3A8, func_060AB3A8);
+void func_060AB3A8(s32 arg) {
+    if (arg == 1) {
+        Entity* entities = g_Entities;
+        Entity* entity;
+
+        entity = func_060BAF44(entities, 0x47002C, 0);
+        if (entity != NULL) {
+            entity->flags |= 0x10000;
+        }
+
+        entity = func_060BAF44(entities, 0x40002C, 0);
+        if (entity != NULL) {
+            entity->flags |= 0x10000;
+        }
+    }
+
+    func_060A7D68(1, 1);
+}
 // func_8010E168 on PSX
 void func_060AB44C(s32 kind, s16 invincibilityFrames) {
     if (kind == 0) {
@@ -361,7 +611,27 @@ void func_060AB44C(s32 kind, s16 invincibilityFrames) {
         g_Player.timers[0xE] = invincibilityFrames;
     }
 }
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AB4A4, func_060AB4A4);
+void func_060AB4A4(void) {
+    switch (PLAYER.step_s) {
+    case 0:
+        func_060B7A6C();
+        g_Player.unk42C = 0x46;
+        g_Player.timers[2] = 6;
+        PLAYER.velocityX = 0;
+        PLAYER.velocityY = 0;
+        func_060A5674NoInline(0x29);
+        func_060BAF44(g_CurrentEntity, 0, 0);
+        func_060BAF44(g_CurrentEntity, 0x0058002C, 0);
+        PLAYER.step_s++;
+        break;
+    case 1:
+        if (g_Player.unk39D & 0x40) {
+            PlaySfx(0x5C3);
+            func_060A580C(0);
+        }
+        break;
+    }
+}
 void func_060AB558(void) {
     PLAYER.velocityY = 0;
     PLAYER.velocityX = 0;
@@ -369,7 +639,16 @@ void func_060AB558(void) {
         func_060A580C(0);
     }
 }
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AB590, func_060AB590);
+void func_060AB590(void) {
+    PLAYER.velocityY = 0;
+    PLAYER.velocityX = 0;
+    if ((g_Player.padSim >> 16) != 2) {
+        SetPlayerStepNoInline(Player_AxearmorStand);
+        PLAYER.velocityY = 0;
+        PLAYER.velocityX = 0;
+        func_060A5674NoInline(0xD2);
+    }
+}
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AB5E0, func_060AB5E0);
 s32 func_060AB78C(void) {
     register void (*set_player_step)(PlayerSteps);
@@ -609,9 +888,42 @@ void func_060AF550(void) {
     sprite->flags = -0x3DF0;
 }
 
-const volatile u16 DAT_060AF62A = 0x0009;
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AF654, func_060AF654);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AF7F0, func_060AF7F0);
+void func_060AF7F0(void) {
+    if (g_Status.equipment[0] == 0x8F &&
+        g_Status.equipment[1] == g_Status.equipment[0]) {
+        Callback callback;
+        s32 result;
+
+        callback = DAT_060D6018;
+        result = callback();
+        if (result == 0x38) {
+            callback = DAT_060D9018;
+            result = callback();
+            if (result == 0x38) {
+                if (g_Player.timers[0xB] == 0) {
+                    struct {
+                        s32 unk0;
+                        s32 unk4;
+                    } sp = {0, 0};
+
+                    sp.unk0 = 0xC210;
+                    sp.unk4 = 0x801F;
+                    func_0600A31C();
+                    *(s8*)&g_Player.unk39E |= 0x80;
+                    DAT_060CE4B2 = ((s16*)&sp)[3];
+                    DAT_060CE4B4 = 0x80;
+                    DAT_060CE972 = 0;
+                }
+                g_Player.timers[0xB] = 0x20;
+                if (g_Player.unk3FC != 0 && g_Status.D_80097C40 <= -2U) {
+                    g_Status.D_80097C40 += 1;
+                }
+            }
+        }
+    }
+    g_Player.unk3FC = 0;
+}
 typedef enum {
     TELEPORT_CHECK_NONE = 0,
     TELEPORT_CHECK_TO_RTOP = 2,
@@ -645,7 +957,7 @@ s32 func_060AF9D4(void) {
     s32 result;
     u32 i;
 
-    pressed = g_pads->pressed;
+    pressed = g_pads[0].pressed;
     result = pressed & 0x0000F800u;
     for (i = 0; i < 8; i++) {
         if (g_Settings.buttonMask[i] & pressed) {
@@ -684,9 +996,9 @@ void func_060B0638(s32 arg0, s32 arg1, s32 arg2) {
     }
 }
 void func_060B071C(void) {
-    if (g_pads->previous & 0x80) {
+    if (g_pads[0].previous & PAD_R1) {
         DAT_060CE4B0++;
-    } else if (g_pads->previous & 0x08) {
+    } else if (g_pads[0].previous & PAD_L1) {
         DAT_060CE4B0--;
     }
 }

@@ -1301,7 +1301,8 @@ files:
           - [0x794, skip]
           - [0x2B20, rooms, us/rooms]
           - [0x2C24, skip]
-          - [0x39BC, cmpgfx, golem_maker, 128, 128, 4]
+          - [0x39BC, cmpgfx, stage_title_rno3_jp, 128, 128, 4] # unused
+          - [0x3D00, cmpgfx, stage_placeholder_rno3, 128, 128, 4] # unused
           - [0x42A4, cmpgfx, e_fire_warg, 128, 128, 4]
           - [0x5430, cmpgfx, e_fire_warg2, 128, 128, 4]
           - [0x6510, cmpgfx, e_fire_warg3, 128, 128, 4]

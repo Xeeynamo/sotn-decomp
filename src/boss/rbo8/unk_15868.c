@@ -35,7 +35,9 @@ static void func_801D0B40(void) {
     ent->ext.GH_Props.rotate = parent->ext.GH_Props.rotate + 0x180;
 }
 
-INCLUDE_ASM("boss/rbo8/nonmatchings/unk_15868", func_us_80195AD8);
+extern s32 abs(s32 value);
+
+#include "func_us_80195ad8.h"
 
 INCLUDE_ASM("boss/rbo8/nonmatchings/unk_15868", func_us_80195D80);
 

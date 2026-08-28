@@ -539,6 +539,44 @@ typedef struct {
 
 typedef struct {
     /* 0x78 */ s32 : 32;
+    /* 0x7C */ s16 timer;
+} ET_060BD150;
+
+typedef struct {
+    /* 0x78 */ s32 gravity;
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ u16 : 16;
+    /* 0x82 */ u8 unk82;
+} ET_060DDFB0;
+
+typedef struct {
+    /* 0x78 */ s32 : 32;
+    /* 0x7C */ u8* path;
+    /* 0x80 */ u32 spanX;
+    /* 0x84 */ u32 spanY;
+} ET_060DE40C;
+
+typedef struct {
+    /* 0x78 */ u8 pad78[0xC];
+    /* 0x84 */ s16 nextSlot;
+    /* 0x86 */ s16 running;
+    /* 0x88 */ s16 delay;
+} ET_060E9D38;
+
+typedef struct {
+    /* 0x78 */ u8 pad78[0xC];
+    /* 0x84 */ s16 spawnCount;
+    /* 0x86 */ u8 pad86[0x16];
+    /* 0x9C */ s16 timer;
+} ET_060E7ED0;
+
+typedef struct {
+    /* 0x78 */ u8 pad78[0x2A];
+    /* 0xA2 */ s16 angleIndex;
+} ET_060EB7EC;
+
+typedef struct {
+    /* 0x78 */ s32 : 32;
     /* 0x7C */ s32 : 32;
     /* 0x80 */ s32 swayVelocity;
     /* 0x84 */ s16 swayStep;
@@ -614,9 +652,15 @@ typedef union { // offset=0x78
         u8 pad[0x28];
         u16 unkA0;
     } whip;
+    ET_060BD150 et_060BD150;
     ET_060DCE50 et_060DCE50;
     ET_060DCF5C et_060DCF5C;
+    ET_060DDFB0 et_060DDFB0;
+    ET_060DE40C et_060DE40C;
     ET_060DE8B4 et_060DE8B4;
+    ET_060E7ED0 et_060E7ED0;
+    ET_060E9D38 et_060E9D38;
+    ET_060EB7EC et_060EB7EC;
     ET_060E0364 et_060E0364;
     ET_060E401C et_060E401C;
     ET_060E411C et_060E411C;
@@ -962,7 +1006,12 @@ typedef struct {
     char pad32C[0x30];
     /* 0x35C */ u16 poseTimer;
     /* 0x35E */ u16 pose;
-    char pad360[0x3C];
+    /* 0x360 */ AnimationFrame* animFrames;
+    char pad364[0x30];
+    /* 0x394 */ u8 unk394;
+    /* 0x395 */ u8 unk395;
+    /* 0x396 */ u16 unk396;
+    char pad398[4];
     /* 0x39C */ u8 unk39C;
     /* 0x39D */ u8 unk39D;
     /* 0x39E */ s8 unk39E;
@@ -974,12 +1023,14 @@ typedef struct {
     /* 0x3C0 */ s32 : 32;
     /* 0x3C4 */ s32 demo_timer;
     /* 0x3C8 */ s16 timers[16]; // the array is bigger than PSX
-    char pad3E8[4];
+    u16 unk3E8;
+    char pad3EA[2];
     /* 0x3EC */ s32 vram_flag;
     char pad2[8];
     /* 0x3F8 */ u32 status;
     /* 0x3FC */ u32 unk3FC;
-    char pad400[0x2E];
+    char pad400[0x2C];
+    u16 unk42C;
     /* 0x42E */ u16 high_jump_timer;
     /* 0x430 */ u16 unk44;
     /* 0x432 */ u16 unk46;
@@ -994,7 +1045,8 @@ typedef struct {
     /* 0x444 */ u16 healAmount; // hit points restored by func_060B0638
     char pad446[0xC];
     /* 0x452 */ s16 unk452;
-    char pad454[8];
+    u16 unk454;
+    char pad456[6];
     /* 0x45C */ u16 unk70;
     /* 0x45E */ u16 unk72;
     /* 0x460 */ u32 unk74;
@@ -1003,6 +1055,9 @@ typedef struct {
     /* 0x468 */ u16 unk7C;
     /* 0x46A */ u16 unk7E;
 } PlayerState;
+
+#define SH2_GET_SR(dst) __asm__ volatile("stc\tsr, %0" : "=r"(dst))
+#define SH2_SET_SR(src) __asm__ volatile("ldc\t%0, sr" : : "r"(src))
 
 typedef struct {
     s32 primIndex;

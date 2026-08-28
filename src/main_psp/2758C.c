@@ -9,13 +9,30 @@
 #include <psxsdk/libgpu.h>
 
 extern s32 D_psp_08C63B24;
+extern bool D_psp_08C62A70;
+extern s32 D_psp_08C62A6C;
+extern s32 D_psp_08C62A68;
+extern char D_psp_08C63124[];
 extern u8 g_BmpCastleMap[0x8000];
 extern u16 g_Clut[3][0x1000];
 extern u16 D_psp_08C63324[];
 
 void InitVCount(void);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/2758C", FntPrint);
+int FntPrint(const char* id, ...) {
+    char* args;
+
+    if (D_psp_08C62A70) {
+        args = (char*)__builtin_next_arg(id) -
+               (__builtin_args_info(2) >= 8 ? 0
+                                            : (8 - __builtin_args_info(2)) * 4);
+        func_psp_0890E970(D_psp_08C63124, id, args);
+        sceGuDebugPrint(
+            D_psp_08C62A68 + 0x20, D_psp_08C62A6C, -1, D_psp_08C63124);
+        D_psp_08C62A6C += 8;
+    }
+    return 0;
+}
 
 void func_psp_08925F7C(s32 x, s32 y0, s32 w, s32 h) {
     RECT rect;

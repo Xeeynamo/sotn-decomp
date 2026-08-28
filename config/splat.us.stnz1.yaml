@@ -127,7 +127,6 @@ segments:
       - [0x288E4, c, e_gear_puzzle]
       - [0x28D6C, c, e_pendulum]
       - [0x29154, c, e_secrets]
-      - [0x29A5C, c, e_room_exit]
       - [0x29BEC, c, e_water_fg]
       - [0x29D18, c, e_spikes]
       - [0x2A48C, c, e_boss_doors]

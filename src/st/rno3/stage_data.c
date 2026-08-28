@@ -3,9 +3,13 @@
 
 #ifndef VERSION_PSP
 
-// This is an unused image that says "Golem Maker". Likely stripped on PSP.
-u8 golem_maker[] = {
-#include "gen/golem_maker.h"
+// Two unused images that say "Golem Maker". Likely stripped on PSP.
+u8 stage_title_rno3_jp[] = {
+#include "gen/stage_title_rno3_jp.h"
+};
+
+u8 stage_placeholder_rno3[] = {
+#include "gen/stage_placeholder_rno3.h"
 };
 
 #endif

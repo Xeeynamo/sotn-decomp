@@ -38,8 +38,8 @@ typedef enum EntityID {
     E_SLOGRA_SPEAR_PROJECTILE, // EntitySlograSpearProjectile
     E_GAIBON,                  // EntityGaibon
     E_GAIBON_LEG,              // EntityGaibonLeg
-    E_SMALL_GAIBON_PROJECTILE, // EntitySmallGaibonProjectile
-    E_LARGE_GAIBON_PROJECTILE, // EntityLargeGaibonProjectile
+    E_GAIBON_SMALL_FIREBALL,   // EntitySmallGaibonProjectile
+    E_GAIBON_BIG_FIREBALL,     // EntityLargeGaibonProjectile
     E_BREAKABLE_DEBRIS,        // EntityBreakableDebris
     E_DEMON_SWITCH_WALL,       // EntityDemonSwitchWall
     E_DEMON_SWITCH,            // EntityDemonSwitch
@@ -51,5 +51,15 @@ typedef enum EntityID {
     E_BAT,                     // EntityBat
     NUM_ENTITIES,
 };
+
+extern EInit g_EInitBreakable;
+extern EInit g_EInitGaibon;
+extern EInit D_us_80180648;
+extern AnimateEntityFrame* g_RchiBreakableAnimations[];
+extern u8 g_RchiBreakableHitboxHeights[];
+extern u8 g_RchiBreakableExplosionTypes[];
+extern u16 g_RchiBreakableAnimSets[];
+extern u8 g_RchiBreakableBlendModes[];
+extern s16 g_RchiBreakableDebrisOffsets[];
 
 #endif // RCHI_H

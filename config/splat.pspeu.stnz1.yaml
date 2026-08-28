@@ -82,7 +82,6 @@ segments:
       - [0x218F8, c, nz1/e_explosion_puff_opaque]
       - [0x21FF0, c, nz1/e_spikes]
       - [0x22A70, c, nz1/e_secrets]
-      - [0x23670, c, nz1/e_room_exit]
       - [0x23828, c, nz1/e_gear_horizontal]
       - [0x23958, c, nz1/e_gear_puzzle]
       - [0x23FA8, c, nz1/e_gear_large]

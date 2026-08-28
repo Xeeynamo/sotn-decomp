@@ -25,6 +25,7 @@ _UpdateCompactStatusHud = 0x06076A04;
 _SetHudPrimSprite = 0x060771D4;
 _UpdateMpBarPrim = 0x06077260;
 _SetHeartsNum = 0x06077354;
+_func_06078550 = 0x06078550;
 _MoveEntity = 0x06079B9C;
 _GetDistanceToPlayerX = 0x0607A9F8;
 _GetDistanceToPlayerY = 0x0607AA1C;

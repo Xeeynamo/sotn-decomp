@@ -330,6 +330,9 @@ typedef struct {
 // PlaySfx, RicSetFall, RicSetStand, RicSetStep and RicSetAnimation
 // intentionally missing
 void func_060ABE94(Entity* entity);
+void func_060ABFF0(Entity* entity, MariaAttackDef* def);
+s32 func_060ABFF0NoInline(Entity* entity, MariaAttackDef* def) __asm__(
+    "_func_060ABFF0");
 void func_060BF3D0(void);
 s32 func_060A9474(void);
 u16 SPR_2LookupTblNoToVram(u16 tableNo);
@@ -337,7 +340,18 @@ extern Unk0605DB60 d_0605DB60[];
 extern s32 DAT_060D2918;
 extern s32 DAT_060D2A94[]; // fastest clear time per stage
 extern s32 DAT_060D2B04[]; // stage id, sorted alongside DAT_060D2A94
+extern SaturnSpriteResource g_EntitySpriteBank09;
+extern s16 DAT_06046C02;
+extern u8 g_Stage02OpaquePuffFrameData1;
+extern MariaAttackDef g_MariaEntity87CombatConfig;
+extern AnimationFrame g_MariaEntity87Anim0;
+extern MariaAttackDef g_MariaEntity060BCFF4CombatConfig;
+extern MariaAttackDef g_MariaEntity060BD150CombatConfig;
+s32 func_060AAA2C(void);
+s32 func_060AAA2CNoInline(void) __asm__("_func_060AAA2C");
 extern AnimationFrame g_MariaAnimFall;
+extern AnimationFrame g_MariaAnim_060C2ADC;
+extern AnimationFrame g_MariaAnim_060C2B18;
 // src/saturn/maria/enddata.c
 extern AnimationFrame g_MariaEntity060BD0D0Anim0[];
 extern AnimationFrame g_MariaEntity060BD0D0Anim1[];

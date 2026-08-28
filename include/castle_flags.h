@@ -117,8 +117,8 @@ typedef enum {
     /* 00100000 */ // BOTTOM_WALL_BROKEN  // Short room
     /* 00010000 */ // RIGHT_WALL_BROKEN   // Short room
 
-    /* 0xA9 */ RNZ1_UPPER_WALL_OPEN = 169, // Upper right wall of the long room
-    /* 0xAA */ RNZ1_LOWER_WALL_OPEN = 170, // Bottom of the right gear room
+    /* 0xA9 */ RNZ1_LOWER_WALL_OPEN = 169, // Upper right wall of the long room
+    /* 0xAA */ RNZ1_UPPER_WALL_OPEN = 170, // Bottom of the right gear room
     /* 0xAB */ RNZ1_STATUE_ROOM_BREAKABLE_WALLS = 171,
     /* 10000000 */ // SECRET_WALL_BROKEN  // Long room
     /* 01000000 */ // RIGHT_WALL_BROKEN   // Short room

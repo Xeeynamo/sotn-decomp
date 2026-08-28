@@ -49,7 +49,7 @@ typedef enum EntityID {
     E_WALL_GEAR,              // EntityWallGear
     E_BREAKABLE_WALL,         // EntityBreakableWall
     E_SECRET_WALL_DEBRIS,     // EntitySecretWallDebris
-    E_UNK_20,                 // func_us_801A8F7C
+    E_ROOM_EXIT,              // EntityRoomExit
     E_BREAKABLE_WALL_PARTIAL, // EntityBreakableWallPartial
     E_SECRET_AREA_DOOR,       // EntitySecretAreaDoor
     E_WATER_FOREGROUND,       // EntityWaterForeground

@@ -35,7 +35,7 @@ void EntityBreakable(Entity* self) {
     }
 }
 
-INCLUDE_ASM("boss/rbo8_psp/nonmatchings/rbo8_psp/unk_E650", func_us_801955A0);
+#include "../rbo8/func_us_801955a0.h"
 
 INCLUDE_ASM("boss/rbo8_psp/nonmatchings/rbo8_psp/unk_E650", func_us_801955F8);
 

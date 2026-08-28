@@ -407,7 +407,7 @@ void func_060A8D64(void) {
             PLAYER.step_s = 2;
         } else if (g_Player.high_jump_timer > 0x1C) {
             PLAYER.step_s = 1;
-            PLAYER.velocityY = -0x60000;
+            PLAYER.velocityY = FIX(-6);
         }
         break;
     case 1:
@@ -416,8 +416,8 @@ void func_060A8D64(void) {
             func_060A6428(3);
             g_Player.high_jump_timer = 0;
         } else {
-            PLAYER.velocityY += 0x6000;
-            if (PLAYER.velocityY > 0x8000) {
+            PLAYER.velocityY += FIX(0.375);
+            if (PLAYER.velocityY > FIX(0.5)) {
                 loadAnim = true;
             }
         }
@@ -1527,8 +1527,6 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B940C, func_060B940C);
 // ===== pl_subweapon_holywater.c
 void RicEntityNotImplemented3() {}
 
-const u16 pad_60B9666 = 0x0009; // nop
-
 // RicEntitySubwpnHolyWaterBreakGlass
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B9668, func_060B9668);
 
@@ -1832,14 +1830,37 @@ void func_060BBC00(void) {
     }
     func_06078700(text, DAT_06085DCC[2], 6);
 
-    // DAT_0605aec0[2][0]; the compiler reads it through an index register.
     slot = 2;
     dst = (s32*)((DAT_0605aec0[slot][0] * 8) + 0x25C00000);
     DMA_CpuMemCopy2(dst, base + 0x4501, 0x1320);
     while (DMA_CpuResult() == 2) {
     }
 }
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BBCCC, func_060BBCCC);
+
+void func_060BBCCC(void) {
+    s32* base;
+    s32* dst;
+    u8* text;
+    s32 slot;
+    s32 i;
+
+    DAT_06086390 = 3;
+    base = func_060784A8();
+    base[0x4500] = -1;
+    memset(base + 0x4501, 0, 0xA000);
+
+    text = (u8*)(base + 0x4501);
+    for (i = 0; i <= 0x1F; i++) {
+        func_06078700(text, func_06078748(i), 12);
+        text += 0x480;
+    }
+
+    slot = 2;
+    dst = (s32*)((DAT_0605aec0[slot][0] * 8) + 0x25C00000);
+    DMA_CpuMemCopy2(dst, base + 0x4501, 0x4800);
+    while (DMA_CpuResult() == 2) {
+    }
+}
 
 void func_060BBD88(void) {
     int* iVar2;
@@ -1963,7 +1984,7 @@ void func_060BCDB8(void) {
         DAT_0605cd70.unk8++;
         /* fall through */
     case 1:
-        if (DAT_06057f68 == 0 && (g_pads->previous & PAD_CROSS)) {
+        if (DAT_06057f68 == 0 && (g_pads[0].previous & PAD_CROSS)) {
             D_06085534 = 6;
             DAT_06057f68 = 4;
         }
