@@ -3,9 +3,9 @@
 
 INCLUDE_ASM("st/rlib/nonmatchings/unk_2DBE8", func_us_801ADBE8);
 
-INCLUDE_ASM("st/rlib/nonmatchings/unk_2DBE8", EntityHarpyKick);
+#include "e_rlib_harpy_kick.h"
 
-INCLUDE_ASM("st/rlib/nonmatchings/unk_2DBE8", func_us_801AE414);
+#include "func_us_801ae414.h"
 
 INCLUDE_ASM("st/rlib/nonmatchings/unk_2DBE8", func_us_801AE4B4);
 
@@ -13,9 +13,9 @@ INCLUDE_ASM("st/rlib/nonmatchings/unk_2DBE8", func_us_801AE534);
 
 INCLUDE_ASM("st/rlib/nonmatchings/unk_2DBE8", func_us_801AED4C);
 
-INCLUDE_ASM("st/rlib/nonmatchings/unk_2DBE8", func_us_801AEFE0);
+#include "func_us_801aefe0.h"
 
-INCLUDE_ASM("st/rlib/nonmatchings/unk_2DBE8", func_us_801D8D44_from_no4);
+#include "func_us_801d8d44.h"
 
 INCLUDE_ASM("st/rlib/nonmatchings/unk_2DBE8", func_us_801AF11C);
 
@@ -25,4 +25,4 @@ INCLUDE_ASM("st/rlib/nonmatchings/unk_2DBE8", func_us_801AF448);
 
 INCLUDE_ASM("st/rlib/nonmatchings/unk_2DBE8", func_us_801AF9E8);
 
-INCLUDE_ASM("st/rlib/nonmatchings/unk_2DBE8", func_us_801AFC88);
+#include "func_us_801afc88.h"

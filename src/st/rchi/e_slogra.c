@@ -3,6 +3,4 @@
 
 INCLUDE_ASM("st/rchi/nonmatchings/e_slogra", EntitySlogra);
 
-INCLUDE_ASM("st/rchi/nonmatchings/e_slogra", EntitySlograSpear);
-
-INCLUDE_ASM("st/rchi/nonmatchings/e_slogra", EntitySlograSpearProjectile);
+#include "e_rchi_slogra_spear.h"

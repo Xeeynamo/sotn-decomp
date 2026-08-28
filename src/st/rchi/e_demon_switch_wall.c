@@ -2,10 +2,10 @@
 #include "rchi.h"
 
 /*
- * RCHI differs throughout these CHI-derived functions (branch layout,
- * constants, and wall control flow), so the CHI source is not byte-identical.
+ * EntityDemonSwitchWall differs from the CHI original in branch layout,
+ * constants and wall control flow, so it cannot share the CHI source.
  */
-INCLUDE_ASM("st/rchi/nonmatchings/e_demon_switch_wall", UpdateFallingPebble);
+#include "../e_falling_pebble.h"
 
 extern void (*g_api_RevealSecretPassageAtPlayerPositionOnMap)(s32);
 #include "e_rchi_demon_switch.h"

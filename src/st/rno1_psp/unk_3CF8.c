@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../rno1/rno1.h"
 
-INCLUDE_ASM("st/rno1_psp/nonmatchings/rno1_psp/unk_3CF8", TryThrow);
+#include "../rno1/e_rno1_try_throw.h"
 
 INCLUDE_ASM("st/rno1_psp/nonmatchings/rno1_psp/unk_3CF8", EntityJackOBones);
 
-INCLUDE_ASM("st/rno1_psp/nonmatchings/rno1_psp/unk_3CF8", EntityJackOBonesDeathParts);
+#include "../rno1/e_rno1_jacko_death_parts.h"
 
 INCLUDE_ASM("st/rno1_psp/nonmatchings/rno1_psp/unk_3CF8", EntityJackOBonesJack);
 

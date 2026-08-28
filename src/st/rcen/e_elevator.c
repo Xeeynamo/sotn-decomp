@@ -8,4 +8,4 @@ INCLUDE_ASM("st/rcen/nonmatchings/e_elevator", func_801904B8);
 
 INCLUDE_ASM("st/rcen/nonmatchings/e_elevator", func_us_8019FE9C);
 
-INCLUDE_ASM("st/rcen/nonmatchings/e_elevator", EntityUnkId1B);
+#include "e_elevator_switch.h"

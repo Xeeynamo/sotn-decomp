@@ -5,4 +5,4 @@ INCLUDE_ASM("st/rno1_psp/nonmatchings/rno1_psp/unk_13F88", func_us_801B9028_from
 
 INCLUDE_ASM("st/rno1_psp/nonmatchings/rno1_psp/unk_13F88", func_us_801B8F50_from_no1);
 
-INCLUDE_ASM("st/rno1_psp/nonmatchings/rno1_psp/unk_13F88", EntityBackgroundBlock);
+#include "../rno1/e_rno1_background_block.h"

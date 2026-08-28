@@ -6,6 +6,4 @@
  * variant. Split the helpers only when that data can retain original order. */
 INCLUDE_ASM("st/rchi_psp/nonmatchings/rchi_psp/e_slogra", EntitySlogra);
 
-INCLUDE_ASM("st/rchi_psp/nonmatchings/rchi_psp/e_slogra", EntitySlograSpear);
-
-INCLUDE_ASM("st/rchi_psp/nonmatchings/rchi_psp/e_slogra", EntitySlograSpearProjectile);
+#include "../rchi/e_rchi_slogra_spear.h"

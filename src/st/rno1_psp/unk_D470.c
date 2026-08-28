@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../rno1/rno1.h"
 
-INCLUDE_ASM("st/rno1_psp/nonmatchings/rno1_psp/unk_D470", TryShoot);
+#include "../rno1/e_rno1_try_shoot.h"
 
 INCLUDE_ASM("st/rno1_psp/nonmatchings/rno1_psp/unk_D470", DrawLaserRing);
 
 INCLUDE_ASM("st/rno1_psp/nonmatchings/rno1_psp/unk_D470", EntityNovaSkeleton);
 
-INCLUDE_ASM("st/rno1_psp/nonmatchings/rno1_psp/unk_D470", EntityBladeSoldierDeathParts);
+#include "../rno1/e_rno1_blade_soldier_death_parts.h"
 
 INCLUDE_ASM("st/rno1_psp/nonmatchings/rno1_psp/unk_D470", EntityNovaLaser);
 

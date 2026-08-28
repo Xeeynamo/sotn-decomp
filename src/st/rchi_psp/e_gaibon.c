@@ -8,6 +8,6 @@ INCLUDE_ASM("st/rchi_psp/nonmatchings/rchi_psp/e_gaibon", EntityGaibon);
 
 #include "../rchi/e_rchi_gaibon_leg.h"
 
-INCLUDE_ASM("st/rchi_psp/nonmatchings/rchi_psp/e_gaibon", EntitySmallGaibonProjectile);
+#include "../rchi/e_rchi_gaibon_small_projectile.h"
 
 INCLUDE_ASM("st/rchi_psp/nonmatchings/rchi_psp/e_gaibon", EntityLargeGaibonProjectile);
