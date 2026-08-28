@@ -38,8 +38,8 @@ typedef enum EntityID {
     E_SLOGRA_SPEAR_PROJECTILE, // EntitySlograSpearProjectile
     E_GAIBON,                  // EntityGaibon
     E_GAIBON_LEG,              // EntityGaibonLeg
-    E_SMALL_GAIBON_PROJECTILE, // EntitySmallGaibonProjectile
-    E_LARGE_GAIBON_PROJECTILE, // EntityLargeGaibonProjectile
+    E_GAIBON_SMALL_FIREBALL,   // EntitySmallGaibonProjectile
+    E_GAIBON_BIG_FIREBALL,     // EntityLargeGaibonProjectile
     E_BREAKABLE_DEBRIS,        // EntityBreakableDebris
     E_DEMON_SWITCH_WALL,       // EntityDemonSwitchWall
     E_DEMON_SWITCH,            // EntityDemonSwitch

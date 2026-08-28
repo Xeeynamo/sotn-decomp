@@ -3,7 +3,7 @@ void func_us_801955A0(Entity* self, Collider* collider) {
     s16 result;
     u16 hitFloor = false;
 
-    result = HIH(g_Tilemap.scrollY) + HIH(self->posY) + collider->unk18;
+    result = g_Tilemap.scrollY.i.hi + self->posY.i.hi + collider->unk18;
     if (result >= 0x1C0) {
         result = 0x1C0 - result;
         hitFloor = true;

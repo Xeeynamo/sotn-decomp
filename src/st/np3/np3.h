@@ -130,7 +130,7 @@ extern EInit g_EInitSlograSpearNP3;
 extern EInit g_EInitSlograProjectileNP3;
 extern EInit g_EInitGaibonNP3;
 extern EInit g_EInitGaibonProjectileNP3;
-extern EInit g_EInitGaibonLargeProjectileNP3;
+extern EInit g_EInitGaibonLargeProjectile;
 extern EInit g_EInitHammer;
 extern EInit g_EInitHammerWeapon;
 extern EInit g_EInitGurkha;
