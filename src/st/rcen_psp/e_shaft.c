@@ -28,20 +28,20 @@ s16 func_us_8019A98C(s16 arg0, s16 arg1, s16 arg2) {
     return arg2;
 }
 
-#include "../func_us_8019aa04.h"
+#include "../rcen/func_us_8019aa04.h"
 
 INCLUDE_ASM("st/rcen_psp/nonmatchings/rcen_psp/e_shaft", EntityShaft);
 
-#include "../func_us_8019b5a4.h"
+#include "../rcen/func_us_8019b5a4.h"
 
 INCLUDE_ASM("st/rcen_psp/nonmatchings/rcen_psp/e_shaft", func_us_8019B6D4);
 INCLUDE_ASM("st/rcen_psp/nonmatchings/rcen_psp/e_shaft", func_us_8019B8A8);
 
-#include "../func_us_8019c4ec.h"
-#include "../func_us_8019c610.h"
+#include "../rcen/func_us_8019c4ec.h"
+#include "../rcen/func_us_8019c610.h"
 
 INCLUDE_ASM("st/rcen_psp/nonmatchings/rcen_psp/e_shaft", func_us_8019C7B8);
 
-#include "../func_us_8019cda0.h"
+#include "../rcen/func_us_8019cda0.h"
 
 INCLUDE_ASM("st/rcen_psp/nonmatchings/rcen_psp/e_shaft", func_us_8019CDF8);

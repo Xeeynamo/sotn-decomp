@@ -8,6 +8,6 @@
 INCLUDE_ASM("st/rchi/nonmatchings/e_demon_switch_wall", UpdateFallingPebble);
 
 extern void (*g_api_RevealSecretPassageAtPlayerPositionOnMap)(s32);
-#include "../e_rchi_demon_switch.h"
+#include "e_rchi_demon_switch.h"
 
 INCLUDE_ASM("st/rchi/nonmatchings/e_demon_switch_wall", EntityDemonSwitchWall);

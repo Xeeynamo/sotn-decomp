@@ -4,6 +4,6 @@
 /* RCHI's PSP wall functions are 244/556 instructions; TOP's only comparable
  * PSP wall implementation is 246 instructions and is not a duplicate. */
 extern s32 E_ID(BREAKABLE_WALL_DEBRIS);
-#include "../e_rchi_breakable_wall_debris.h"
+#include "../rchi/e_rchi_breakable_wall_debris.h"
 
 INCLUDE_ASM("st/rchi_psp/nonmatchings/rchi_psp/e_breakable_wall", EntityBreakableWall);

@@ -3,7 +3,7 @@
 
 INCLUDE_ASM("st/rchi/nonmatchings/e_gaibon", EntityGaibon);
 
-#include "../e_rchi_gaibon_leg.h"
+#include "e_rchi_gaibon_leg.h"
 
 INCLUDE_ASM("st/rchi/nonmatchings/e_gaibon", EntitySmallGaibonProjectile);
 

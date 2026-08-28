@@ -5,6 +5,6 @@
  * RCHI's 206/356-instruction sizes. */
 extern s32 E_ID(BACKGROUND_BLOCK);
 extern s32 E_ID(BREAKABLE_DEBRIS);
-#include "../e_rchi_breakable.h"
+#include "../rchi/e_rchi_breakable.h"
 
 INCLUDE_ASM("st/rchi_psp/nonmatchings/rchi_psp/e_breakable", EntityBreakableDebris);
