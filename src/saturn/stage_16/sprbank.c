@@ -5,7 +5,6 @@
 
 extern struct SpriteParts* g_EntitySpriteBank15[];
 extern u8 g_Stage16SpriteBank19[];
-extern u8 g_Stage16SpriteBank20[];
 extern u8 g_Stage16SpriteBank21[];
 
 void* g_Stage16SpriteBanks[] = {
@@ -29,7 +28,7 @@ void* g_Stage16SpriteBanks[] = {
     g_Stage16SpriteBank17,
     g_Stage16SpriteBank18,
     g_Stage16SpriteBank19,
-    g_Stage16SpriteBank20,
+    &g_Stage16SpriteBank20,
     g_Stage16SpriteBank21,
     g_Stage16SpriteBankSkeletonBeast,
     g_Stage16SpriteBankSpecter,

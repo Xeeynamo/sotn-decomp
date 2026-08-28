@@ -909,7 +909,17 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f607284C, func_0607284C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60728B4, func_060728B4);
 
 // _INIT_GAME_OVER
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6072BCC, func_06072BCC);
+void func_06072BCC(void) {
+    DAT_0605cd70.unk8 = 0;
+    DAT_0605c680.unk4 = 0;
+    DAT_0605c680.unk8 = 0;
+    DAT_0605c680.unkC = 0x80000;
+    DAT_0605c680.unk10 = 0x80000;
+    func_06009DB0();
+}
+
+const u16 DAT_06072C00 = 0xAAAA;
+const u16 DAT_06072C02 = 0xAAAB;
 
 // _GAMEOVER_FADEIN
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6072C04, func_06072C04);
@@ -1349,7 +1359,11 @@ void func_0607371C(void) {
         func_06074048(1U);
     }
 }
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6073740, func_06073740);
+void func_06073740(u8 param_1) {
+    DAT_06086298 = 0;
+    func_06074048(param_1);
+    DAT_0605cd70.unk8 = DAT_0605cd70.unk8 + 1;
+}
 
 // _goto_equip
 void func_06073770(void) {
@@ -1377,7 +1391,7 @@ void func_06073E58(s32 arg0) {
     temp_r3 = func_0606F378(D_801375CC);
 
     if (arg0 != 0) {
-        if (g_pads->repeat & 8) {
+        if (g_pads[0].repeat & PAD_L1) {
             temp_r2 = *var_r8;
             if (temp_r2 > 9) {
                 *var_r8 = temp_r2 - 0xA;
@@ -1386,7 +1400,7 @@ void func_06073E58(s32 arg0) {
             }
         }
 
-        if (g_pads->repeat & 0x80) {
+        if (g_pads[0].repeat & PAD_R1) {
             if (*var_r8 < temp_r3 - 0xA) {
                 *var_r8 += 0xA;
             } else {
@@ -1523,7 +1537,59 @@ void func_060744F8(s32 arg0) {
 }
 
 // _SS_MOJI_SET
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f60745A0, func_060745A0);
+void func_060745A0(Point16u* arg0, u16 arg1, s32 arg2) {
+    u16* dst;
+    u16* src;
+    u16* dstRow;
+    u16* srcRow;
+    u32* glyphData;
+    s32 i;
+    s32 x;
+    s32 low;
+    s32 adjusted;
+
+    dst = (u16*)0x25E58000;
+    src = (u16*)0x25E60000;
+
+    if (DAT_0605cea2 == 5) {
+        glyphData = GetEventTextGlyphData(1, DAT_0605D7FC - 1);
+        if (glyphData == NULL) {
+            return;
+        }
+    } else {
+        glyphData = GetStageTextGlyphData(1, g_CurrentRoom.stageID);
+    }
+
+    if (arg1 != 0) {
+        for (i = 0; i < arg1; i++) {
+            src += *glyphData++ >> 1;
+        }
+    }
+
+    x = arg0->x >> 3;
+    dstRow = dst + (arg0->y >> 3) * 64;
+    dst = dstRow + x;
+
+    adjusted = arg2;
+    if (adjusted < 0) {
+        adjusted += 0x1F;
+    }
+    srcRow = src + (adjusted >> 5) * 128;
+    low = (arg2 & 0x1F) * 2;
+    src = srcRow + low;
+
+    dstRow[x] = srcRow[low];
+    src++;
+    dst++;
+    *dst = *src;
+    src += 63;
+    dst += 63;
+    *dst = *src++;
+    dst++;
+    *dst = *src;
+}
+
+const u16 rodata_06074690[4] = {0x40F0, 0, 0, 0};
 void func_06074698(void) {
     double temp_ret;
     double temp_ret_2;

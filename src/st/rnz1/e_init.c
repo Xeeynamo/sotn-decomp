@@ -32,7 +32,7 @@ void EntityGearSidewaysSmall(Entity* self);
 void EntityWallGear(Entity* self);
 void EntityBreakableWall(Entity* self);
 void EntitySecretWallDebris(Entity* self);
-void func_us_801A8F7C(Entity* self);
+void EntityRoomExit(Entity* self);
 void EntityBreakableWallPartial(Entity* self);
 void EntitySecretAreaDoor(Entity* self);
 void EntityWaterForeground(Entity* self);
@@ -108,7 +108,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityWallGear,
     EntityBreakableWall,
     EntitySecretWallDebris,
-    func_us_801A8F7C,
+    EntityRoomExit,
     EntityBreakableWallPartial,
     EntitySecretAreaDoor,
     EntityWaterForeground,

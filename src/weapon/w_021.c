@@ -278,9 +278,9 @@ static void EntityWeaponAttack(Entity* self) {
                 g_Player.demo_timer = 20;   // stun player for 20 frames
                 return;
             }
-            if (g_Player.unk56 == 0) {
-                g_Player.unk56 = 1;
-                g_Player.unk58 = self->attack;
+            if (g_Player.healKind == 0) {
+                g_Player.healKind = 1;
+                g_Player.healAmount = self->attack;
                 DestroyEntity(self);
                 return;
             }
@@ -362,9 +362,9 @@ static void EntityWeaponAttack(Entity* self) {
                 g_Player.demo_timer = 20;
                 return;
             }
-            if (g_Player.unk56 == 0) {
-                g_Player.unk56 = 1;
-                g_Player.unk58 = self->attack;
+            if (g_Player.healKind == 0) {
+                g_Player.healKind = 1;
+                g_Player.healAmount = self->attack;
                 DestroyEntity(self);
                 return;
             }
@@ -382,9 +382,9 @@ static void EntityWeaponAttack(Entity* self) {
         return;
     case 3:
         if (--self->ext.food.timer == 0) {
-            if (g_Player.unk56 == 0) {
-                g_Player.unk56 = 1;
-                g_Player.unk58 = self->attack;
+            if (g_Player.healKind == 0) {
+                g_Player.healKind = 1;
+                g_Player.healAmount = self->attack;
                 DestroyEntity(self);
                 return;
             }

@@ -23,7 +23,7 @@ static TeleportCheck func_060A5060(void) {
             return TELEPORT_CHECK_TO_RTOP;
         }
     }
-    if (g_CurrentRoom.stageID == (STAGE_TOP | STAGE_INVERTEDCASTLE_FLAG)) {
+    if (g_CurrentRoom.stageID == STAGE_RTOP) {
         if (ABS((g_Tilemap.left << 8) + g_PlayerX - 8430) < 4 &&
             ABS((g_Tilemap.top << 8) + g_PlayerY - 14407) < 4) {
             return TELEPORT_CHECK_TO_TOP;
@@ -304,7 +304,7 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A8860, func_060A8860);
 void func_060A8A38(void) {
     s32 distance;
 
-    if (g_CurrentRoom.stageID == 0x0B) {
+    if (g_CurrentRoom.stageID == STAGE_TOP) {
         distance = (g_Tilemap.left << 8) + g_PlayerX;
         if (distance < 0) {
             distance = -distance;
@@ -322,7 +322,7 @@ void func_060A8A38(void) {
         }
     }
 
-    if (g_CurrentRoom.stageID == 0x2B) {
+    if (g_CurrentRoom.stageID == STAGE_RTOP) {
         distance = (g_Tilemap.left << 8) + g_PlayerX;
         if (distance < 0) {
             distance = -distance;
@@ -343,7 +343,7 @@ void func_060A8A38(void) {
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A8AE8, func_060A8AE8);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A8C14, func_060A8C14);
 void func_060A8E34(void) {
-    MariaDecelerateX(0x2400);
+    MariaDecelerateX(FIX(0.140625));
 
     if (g_Entities->poseTimer < 0 ||
         (g_Entities->velocityX >= 0 ? g_Entities->velocityX <= 0x7FFF
@@ -370,7 +370,6 @@ void func_060A8E34(void) {
     }
 }
 
-static const volatile u16 DAT_060A8EFE = 0x0009;
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A8F2C, func_060A8F2C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9064, func_060A9064);
 
@@ -442,8 +441,70 @@ void MariaSetWalk(s32 arg0) {
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9304, func_060A9304);
 
 // _RicSetFall
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A939C, func_060A939C);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9474, func_060A9474);
+
+void func_060A939C(void) {
+    if (g_Player.prev_step != 0x19 && g_Player.prev_step != 0x17) {
+        g_Entities->velocityX = 0;
+    }
+    if (g_Player.prev_step != 1 && g_Player.prev_step != 0x19) {
+        RicSetAnimation(&g_MariaAnimFall);
+    }
+    if (g_Player.prev_step == 0x19) {
+        g_Player.unk44 = 0x10;
+    }
+    RicSetStep(3);
+    g_Entities->velocityY = FIX(2);
+    g_Player.timers[5] = 8;
+    g_Player.timers[6] = 8;
+    g_Player.timers[1] = 0;
+    g_Player.timers[8] = 0;
+    if (g_Player.prev_step == 0x17) {
+        g_Player.timers[6] = 0;
+        g_Player.timers[5] = 0;
+        g_Entities->pose = 2;
+        g_Entities->poseTimer = 0x10;
+        g_Entities->velocityX /= 2;
+    }
+}
+void RicSetFall(void);
+
+s32 func_060A9474(void) {
+    PlayerState* player = &g_Player;
+    s32 facing;
+    s32 velocityX;
+
+    if (player->unk72 != 0) {
+        RicSetFall();
+        return;
+    }
+
+    facing = MariaCheckFacing();
+    if (facing != 0 || g_Entities->step == 0x17) {
+        RicSetAnimation(&g_MariaAnim_060C2ADC);
+        if (g_Entities->step == 0x19) {
+            velocityX = FIX(2.8125);
+            if (g_CurrentEntity->facingLeft == 1) {
+                velocityX = -velocityX;
+            }
+            g_CurrentEntity->velocityX = velocityX;
+            player->unk44 = 0x10;
+        } else {
+            velocityX = FIX(1.59375);
+            if (g_CurrentEntity->facingLeft == 1) {
+                velocityX = -velocityX;
+            }
+            g_CurrentEntity->velocityX = velocityX;
+            player->unk44 = 0;
+        }
+    } else {
+        RicSetAnimation(&g_MariaAnim_060C2B18);
+        g_Entities->velocityX = facing;
+        player->unk44 = 4;
+    }
+
+    RicSetStep(4);
+    g_Entities->velocityY = FIX(-4);
+}
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A955C, func_060A955C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9608, func_060A9608);
 
@@ -823,7 +884,6 @@ void func_060ABF40(Entity* self) {
     func_060ABE94(self);
 }
 
-static const volatile u16 DAT_060ABFDE = 0x0009;
 void func_060ABFF0(Entity* entity, MariaAttackDef* def) {
     entity->attack = def->attack;
     entity->hitboxWidth = def->hitboxWidth;
@@ -890,7 +950,7 @@ void func_060AE2C8(Entity* self) {
             self->animSet = 2;
             self->anim = &DAT_060C2408;
             self->flags = 0x00170000;
-            self->velocityY = (MTH_GetRand() & 0x3FFF) - 0x10000;
+            self->velocityY = (MTH_GetRand() & 0x3FFF) - FIX(1);
             self->step++;
         } else {
             DestroyEntity(self);
@@ -958,7 +1018,36 @@ const u16 pad_60B09C8 = 0;
 
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B09CC, func_060B09CC);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B1474, func_060B1474);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B18C8, func_060B18C8);
+void func_060B18C8(Entity* entity) {
+    SpriteObject* sprite;
+
+    if (entity->step == 0) {
+        sprite = CreateSpriteObject(
+            g_EntitySpriteBank09.allocationIndex, (u16)(DAT_06046C02 + 0x1C),
+            g_EntitySpriteBank09.images, 1);
+        entity->unk0 = sprite;
+        if (sprite != NULL) {
+            entity->ext.spriteEntity.frames = &g_Stage02OpaquePuffFrameData1;
+            entity->unk0->zPriority = PLAYER.zPriority + 2;
+            entity->anim = &g_MariaEntity87Anim0;
+            entity->flags = 0x08100000;
+            entity->posY.i.hi -= 6;
+            entity->velocityY = FIX(-0.5);
+            func_060ABFF0NoInline(entity, &g_MariaEntity87CombatConfig);
+            PlaySfx(0x65C);
+            entity->step++;
+        } else {
+            DestroyEntity(entity);
+            return;
+        }
+    } else {
+        if (entity->poseTimer < 0) {
+            DestroyEntity(entity);
+            return;
+        }
+        entity->posY.val += entity->velocityY;
+    }
+}
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B199C, func_060B199C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B1A58, func_060B1A58);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B1E78, func_060B1E78);
@@ -1174,7 +1263,35 @@ u16 func_060BC23C(Entity* self) {
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BC320, func_060BC320);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BCBD8, func_060BCBD8);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BCCE8, func_060BCCE8);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BCFF4, func_060BCFF4);
+void func_060BCFF4(Entity* arg0) {
+    switch (arg0->step) {
+    case 0:
+        func_060ABFF0NoInline(arg0, &g_MariaEntity060BCFF4CombatConfig);
+        arg0->flags = 0x04020000;
+        arg0->step++;
+        break;
+    case 1:
+        if (g_Entities->poseTimer < 0) {
+            g_Player.timers[0xD] = 0x7D0;
+            arg0->step++;
+        }
+        break;
+    default:
+        if (g_Player.timers[0xD] == 0) {
+            DestroyEntity(arg0);
+            return;
+        }
+        break;
+    }
+
+    arg0->posX.i.hi = g_Entities->posX.i.hi;
+    arg0->posY.i.hi = g_Entities->posY.i.hi;
+    arg0->facingLeft = g_Entities->facingLeft;
+    arg0->hitboxOffX = g_Entities->hitboxOffX;
+    arg0->hitboxOffY = g_Entities->hitboxOffY;
+    arg0->hitboxWidth = g_Entities->hitboxWidth;
+    arg0->hitboxHeight = g_Entities->hitboxHeight;
+}
 typedef struct {
     /* 0x00 */ AnimationFrame* anims[4];
     /* 0x10 */ u16 spriteIds[8];
@@ -1198,7 +1315,43 @@ void func_060BD0D0(Entity* self) {
 
     DestroyEntity(g_CurrentEntity);
 }
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BD150, func_060BD150);
+void func_060BD150(Entity* self) {
+    switch (self->step) {
+    case 0:
+        self->flags = 0x60000;
+        func_060ABFF0NoInline(self, &g_MariaEntity060BD150CombatConfig);
+        self->ext.et_060BD150.timer = 300;
+        RicCreateEntFactoryFromEntity(self, 100, 0);
+        self->step++;
+        break;
+
+    case 1:
+        if (func_060AAA2CNoInline() != 3) {
+            self->step++;
+        }
+        break;
+
+    case 2:
+        if (--self->ext.et_060BD150.timer < 0) {
+            RicCreateEntFactoryFromEntity(self, 0x10064, 0);
+            self->step++;
+        }
+        break;
+
+    default:
+        DestroyEntity(self);
+        return;
+    }
+
+    if (self->hitFlags) {
+        RicCreateEntFactoryFromEntity(self, 100, 0);
+        self->hitFlags = 0;
+    }
+
+    self->posX.i.hi = g_Entities->posX.i.hi;
+    self->posY.i.hi = g_Entities->posY.i.hi;
+    self->facingLeft = g_Entities->facingLeft;
+}
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BD244, func_060BD244);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BD474, func_060BD474);
 
@@ -1255,7 +1408,6 @@ void func_060BD9E8(u8 walls, u8* dst) {
     }
 }
 
-const u16 DAT_060BDACE = 0x0009;
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BDAD0, func_060BDAD0);
 void func_060BDC7C(void) {
     u8* dst;
@@ -1446,7 +1598,6 @@ void func_060BE440(void) {
     }
 }
 
-static const volatile u16 DAT_060BE512 = 0x0009;
 void func_060BE54C(void) {
     s32* base;
     s32* dst;
@@ -1466,7 +1617,6 @@ void func_060BE54C(void) {
     }
     func_06078700(text, DAT_06085DCC[2], 6);
 
-    // DAT_0605aec0[2][0]; the compiler reads it through an index register.
     slot = 2;
     dst = (s32*)((DAT_0605aec0[slot][0] * 8) + 0x25C00000);
     DMA_CpuMemCopy2(dst, base + 0x4501, 0x1320);
@@ -1563,7 +1713,6 @@ void func_060BEA54(void) {
     func_06078684(0x1C0, g_Status.defenseEquip, pos);
 }
 
-static const volatile u16 DAT_060BEB56 = 0x0009;
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BEB74, func_060BEB74);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60BEE30, func_060BEE30);
 
@@ -1634,7 +1783,7 @@ void func_060BF704(void) {
         DAT_0605cd70.unk8++;
         /* fall through */
     case 1:
-        if (DAT_06057f68 == 0 && (g_pads->previous & PAD_CROSS)) {
+        if (DAT_06057f68 == 0 && (g_pads[0].previous & PAD_CROSS)) {
             D_06085534 = 6;
             DAT_06057f68 = 4;
         }

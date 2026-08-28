@@ -1,6 +1,7 @@
 # usage
 # python3 ./tools/build/gen.py && ninja
 import base64
+import json
 import pathlib
 from dataclasses import dataclass
 import ninja_syntax
@@ -793,14 +794,18 @@ def add_splat_config(nw: ninja_syntax.Writer, ver: str, file_name: str):
 
 
 def add_dirt(nw: ninja_syntax.Writer, ver: str):
-    if ver != "us":
+    config = f"config/dirt.{ver}.json"
+    if not os.path.exists(config):
         return
-    dirt = build_path(ver, "dra.dirt.done")
+    with open(config) as f:
+        patches = json.load(f)
+    if not patches:
+        return
     nw.build(
         rule="dirt",
-        outputs=dirt,
-        inputs=f"config/dirt.{ver}.json",
-        implicit=build_path(ver, "DRA.BIN"),
+        outputs=build_path(ver, "dirt.done"),
+        inputs=config,
+        implicit=sorted({patch["name"] for patch in patches}),
     )
 
 

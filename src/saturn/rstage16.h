@@ -126,6 +126,12 @@ extern u8 DAT_060EF0C0[];
 extern s16 DAT_060EDEBC;
 extern u32 DAT_060EF2B4;
 extern u32 DAT_060EF2BC;
+extern u8 DAT_060EDA34[];
+extern s16 DAT_060EDA60[];
+s32 AnimateEntityWithSpriteData(
+    Entity* entity, const u8 frames[], const u32 spriteFrames[]);
+SpriteObject* CreateSpriteObject(
+    u16 charBase, u16 clutBase, SaturnSpriteImage* images, s32 maxParts);
 /* End moved declarations */
 
 #endif

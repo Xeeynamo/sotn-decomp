@@ -2022,7 +2022,7 @@ static void func_80115C50(void) {
             PLAYER.posX.i.hi++;
         }
     }
-    if (g_StageId == (STAGE_TOP | STAGE_INVERTEDCASTLE_FLAG)) {
+    if (g_StageId == STAGE_RTOP) {
         if (abs((g_Tilemap.left << 8) + g_PlayerX) - 8384 > 0) {
             PLAYER.posX.i.hi--;
         }

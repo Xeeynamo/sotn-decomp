@@ -57,10 +57,10 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601BEE8, func_0601BEE8);
 
 // _GFS_NwExecServer
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601BFA8, func_0601BFA8);
-INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f601C03A, func_0601C03A);
-INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f601C09E, func_0601C09E);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601C01C, func_0601C01C);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601C080, func_0601C080);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601C0EC, func_0601C0EC);
-INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f601C16E, func_0601C16E);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601C150, func_0601C150);
 
 // _GFS_SetTrFunc
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601C1BC, func_0601C1BC);

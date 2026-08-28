@@ -789,7 +789,7 @@ void func_0606D6DC(void) {
             }
             break;
         }
-    } else if (g_CurrentRoom.stageID == 0x2B && g_CurrentRoom.unk8 != 0) {
+    } else if (g_CurrentRoom.stageID == STAGE_RTOP && g_CurrentRoom.unk8 != 0) {
         switch (g_CurrentRoom.unk4) {
         case 1:
             if (g_CurrentRoom.unk6 == 0 || g_CurrentRoom.unk6 == 2 ||
