@@ -1391,7 +1391,7 @@ void func_06073E58(s32 arg0) {
     temp_r3 = func_0606F378(D_801375CC);
 
     if (arg0 != 0) {
-        if (g_pads->repeat & 8) {
+        if (g_pads[0].repeat & PAD_L1) {
             temp_r2 = *var_r8;
             if (temp_r2 > 9) {
                 *var_r8 = temp_r2 - 0xA;
@@ -1400,7 +1400,7 @@ void func_06073E58(s32 arg0) {
             }
         }
 
-        if (g_pads->repeat & 0x80) {
+        if (g_pads[0].repeat & PAD_R1) {
             if (*var_r8 < temp_r3 - 0xA) {
                 *var_r8 += 0xA;
             } else {

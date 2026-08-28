@@ -957,7 +957,7 @@ s32 func_060AF9D4(void) {
     s32 result;
     u32 i;
 
-    pressed = g_pads->pressed;
+    pressed = g_pads[0].pressed;
     result = pressed & 0x0000F800u;
     for (i = 0; i < 8; i++) {
         if (g_Settings.buttonMask[i] & pressed) {
@@ -996,9 +996,9 @@ void func_060B0638(s32 arg0, s32 arg1, s32 arg2) {
     }
 }
 void func_060B071C(void) {
-    if (g_pads->previous & 0x80) {
+    if (g_pads[0].previous & PAD_R1) {
         DAT_060CE4B0++;
-    } else if (g_pads->previous & 0x08) {
+    } else if (g_pads[0].previous & PAD_L1) {
         DAT_060CE4B0--;
     }
 }

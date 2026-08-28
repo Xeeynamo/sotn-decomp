@@ -953,7 +953,6 @@ void func_06007D54(void) {
     d_0605AEAC = (s32)&DAT_06050684[SpMstCmdPos];
 }
 
-s32 d_0605AEAC;
 s32 d_06038c5c;
 s32 d_06038c5c;
 s32 d_0605BEBE;
@@ -2763,8 +2762,8 @@ void func_0600FB34(void) {
 
 s32 func_0600FB4C(void) {
     if (((DAT_0605d772 & 0xffff) == 0) &&
-        ((g_pads->pressed & 0x0700) == 0x0700)) {
-        if ((0x0800 & g_pads->previous) && (DAT_0605C658 != 0)) {
+        ((g_pads[0].pressed & 0x0700) == 0x0700)) {
+        if ((g_pads[0].previous & PAD_START) && (DAT_0605C658 != 0)) {
             return 1;
         }
     }
