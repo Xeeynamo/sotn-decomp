@@ -1244,9 +1244,9 @@
 | no2        | func_pspeu_0924AA78               |       22 |          3 |        |       |     |
 | np3        | EntityOwlTarget                   |       22 |          3 |        |       |     |
 | dra        | func_psp_090F54E0                 |       22 |          4 |        |       |     |
+| main       | SpuSetVoiceAttr                   |       22 |          4 |        |       |     |
 | main       | DecodeSpecification               |       22 |          4 |        |       |     |
 | main       | func_psp_0892A3D4                 |       22 |          4 |        |       |     |
-| main       | SpuSetVoiceAttr                   |       22 |          4 |        |       |     |
 | maria      | func_pspeu_092A9250               |       22 |          4 |        |       |     |
 | cen        | func_pspeu_09245230               |       22 |          4 |        |       |     |
 | no0        | D_pspeu_092A1B10                  |       23 |          0 |        |       |     |
@@ -1539,8 +1539,8 @@
 | dra        | func_psp_090FA740                 |       26 |          2 |        |       |     |
 | main       | func_psp_089178A8                 |       26 |          2 |        |       |     |
 | main       | func_psp_0891FD20                 |       26 |          2 |        |       |     |
-| main       | srand                             |       26 |          2 |        |       |     |
 | main       | SpuGetAllKeysStatus               |       26 |          2 |        |       |     |
+| main       | srand                             |       26 |          2 |        |       |     |
 | maria      | func_pspeu_092B3630               |       26 |          2 |        |       |     |
 | ric        | func_pspeu_092B1038               |       26 |          2 |        |       |     |
 | cen        | func_pspeu_09242F00               |       26 |          2 |        |       |     |
@@ -2135,8 +2135,8 @@
 | dra        | func_psp_091408E8                 |       35 |          2 |        |       |     |
 | main       | sceGuDisable                      |       35 |          2 |        |       |     |
 | main       | func_psp_089104B4                 |       35 |          2 |        |       |     |
-| main       | func_psp_08936844                 |       35 |          2 |        |       |     |
 | main       | SsUtSetVVol                       |       35 |          2 |        |       |     |
+| main       | func_psp_08936844                 |       35 |          2 |        |       |     |
 |            | func_092EF908                     |       35 |          2 |        |       |     |
 | dra        | func_psp_091324E0                 |       35 |          3 |        |       |     |
 | dra        | func_psp_090F1EC8                 |       35 |          3 |        |       |     |
