@@ -460,7 +460,7 @@ typedef struct {
 } ET_GlowParticle;
 
 typedef struct {
-    /* 0x78 */ u8* frames;
+    /* 0x78 */ void* frames;
     /* 0x7C */ u8* animations;
     /* 0x80 */ u8 unk80;
     /* 0x81 */ u8 unk81;
@@ -1453,6 +1453,7 @@ s32 func_800F4D38(s32, s32);
 
 extern Entity g_Entities[TOTAL_ENTITY_COUNT]; // 0x060997F8
 extern UNK_060485C0 DAT_060485C0;
+extern s8 DAT_060485C4;
 // One entry of the VRAM transfer queue at d_0605DB60.
 typedef struct {
     /* 0x00 */ s32 unk0;

@@ -2,8 +2,6 @@
 #include "inc_asm.h"
 #include "sattypes.h"
 #include "stage_15.h"
-
-#include "stage_15.h"
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DC040, func_060DC040);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DC1A8, func_060DC1A8);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DC328, func_060DC328);
@@ -189,7 +187,30 @@ void func_060DE058(Entity* self) {
     }
 }
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DE140, func_060DE140);
-INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DE264, func_060DE264);
+
+void func_060DE264(Entity* self) {
+    s32 primIndex;
+
+    if (self->step == 0) {
+        TekiInit(self, 3);
+        self->step++;
+        primIndex = AllocPrimitives(3, 0x21);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+        } else {
+            self->flags |= 0x800000;
+            self->primIndex = primIndex;
+            func_060DE140(self);
+        }
+    } else {
+        --self->ext.effectTimer.timer;
+        if (self->ext.effectTimer.timer == 0) {
+            DestroyEntity(self);
+        } else {
+            func_060DE058(self);
+        }
+    }
+}
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DE2F4, func_060DE2F4);
 void func_060DE464(Entity* self) {
     switch (self->step) {
@@ -224,7 +245,6 @@ void func_060DE670(Entity* self) {
         SetVdp2BackgroundColorRgb(6, 0, 5);
     }
 }
-extern u32 g_Stage15SpriteBank16Frames[];
 
 void func_060DE6CC(Entity* self) {
     func_06079BB4(self);
@@ -474,9 +494,28 @@ INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E072C, func_060E072C);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E140C, func_060E140C);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E174C, func_060E174C);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E1D60, func_060E1D60);
-INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E23D0, func_060E23D0);
+s32 func_060E23D0(Entity* entity) {
+    Entity* player = &g_Entities[0];
+    s16 distance;
+
+    distance = (s16)(player->posX.i.hi - entity->posX.i.hi);
+    distance = ABS(distance);
+    if (distance > 22) {
+        return 0;
+    }
+
+    distance = (s16)(player->posY.i.hi - entity->posY.i.hi);
+    distance = ABS(distance);
+    if (distance > 32) {
+        return 0;
+    }
+
+    return 1;
+}
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E2428, func_060E2428);
-INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E27E0, func_060E27E0);
+#include "set_entity_collision_tiles.h"
+
+const u16 DAT_060E2864[2] = {0xCCCC, 0xCCCD};
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E2868, func_060E2868);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E2F3C, func_060E2F3C);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E30A4, func_060E30A4);
@@ -513,7 +552,8 @@ void func_060E320C(Entity* self) {
 }
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E32F8, func_060E32F8);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E3464, func_060E3464);
-INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E3598, func_060E3598);
+#define SPAWN_DESTRUCT_ANIM_ID 19
+#include "spawn_destruct_anim.h"
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E36B4, func_060E36B4);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E3794, func_060E3794);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60E3A80, func_060E3A80);

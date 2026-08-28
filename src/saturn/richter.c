@@ -90,7 +90,27 @@ INCLUDE_ASM_NO_ALIGN("asm/saturn/richter/f_nonmat", f60A5AA0, func_060A5AA0);
 // ===== pl_steps.c
 
 // func_80158B04
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A6428, func_060A6428);
+void func_060A6428(u16 arg0) {
+    s32 xOffset;
+
+    xOffset = 3;
+    if (PLAYER.facingLeft) {
+        xOffset = -3;
+    }
+    PLAYER.posY.i.hi = PLAYER.posY.i.hi;
+    PLAYER.posX.i.hi += xOffset;
+    RicCreateEntFactoryFromEntity(g_CurrentEntity, 0x10004U, 0);
+    PLAYER.posY.i.hi = PLAYER.posY.i.hi;
+    PLAYER.posX.i.hi -= xOffset;
+    if (arg0 & 1) {
+        func_0600FB0C(3);
+        PlaySfx(0x644);
+    }
+    if (arg0 & 2) {
+        PLAYER.velocityX = 0;
+        PLAYER.velocityY = 0;
+    }
+}
 
 // RicStepStand
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A64CC, func_060A64CC);
@@ -694,7 +714,8 @@ void RicSetAnimation(AnimationFrame* anim) {
     g_CurrentEntity->pose = 0;
 }
 
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA088, func_060AA088);
+#include "update_entity_sprite.h"
+
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA194, func_060AA194);
 
 void RicDecelerateX(s32 speed) {
@@ -1620,7 +1641,51 @@ void func_060BACA4(void) {
 
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BACEC, func_060BACEC);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BAED0, func_060BAED0);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BB09C, func_060BB09C);
+void func_060BB09C(u8 walls, u8* dst) {
+    u8* p;
+    s32 i;
+
+    if (walls & 0x40) {
+        p = dst;
+        for (i = 0; i < 5; i++) {
+            *p++ |= 0x88;
+            *p++ |= 0x88;
+            *p |= 0x88;
+            p += CASTLE_MAP_BITMAP_PITCH - 2;
+        }
+    }
+    if (walls & 0x10) {
+        p = dst + 2;
+        for (i = 0; i < 5; i++) {
+            *p++ |= 0x08;
+            *p++ |= 0x88;
+            *p++ |= 0x88;
+            *p |= 0x80;
+            p += CASTLE_MAP_BITMAP_PITCH - 3;
+        }
+    }
+    if (walls & 4) {
+        p = dst + 5;
+        for (i = 0; i < 5; i++) {
+            *p++ |= 0x88;
+            *p++ |= 0x88;
+            *p |= 0x88;
+            p += CASTLE_MAP_BITMAP_PITCH - 2;
+        }
+    }
+    if (walls & 1) {
+        p = dst + 7;
+        for (i = 0; i < 5; i++) {
+            *p++ |= 0x08;
+            *p++ |= 0x88;
+            *p++ |= 0x88;
+            *p |= 0x80;
+            p += CASTLE_MAP_BITMAP_PITCH - 3;
+        }
+    }
+}
+
+const u16 DAT_060BB182 = 0x0009;
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BB184, func_060BB184);
 void func_060BB330(void) {
     u8* dst;
@@ -1917,7 +1982,38 @@ bool func_060BC048(void) {
         return false;
     }
 }
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BC108, func_060BC108);
+void func_060BC108(void) {
+    Point16* pos;
+    s32 i;
+    s32 value;
+    s32 buttonConfig;
+
+    pos = g_RichterMapUiPositionsA;
+    for (i = 0; i < 4; i++) {
+        func_06078684(0x1C0, g_Status.statsBase[i], pos++);
+        if (g_Status.statsEquip[i] != 0) {
+            if (g_Status.statsEquip[i] > 0) {
+                func_06078550(0x1C0, 0x0B, pos++);
+                value = g_Status.statsEquip[i];
+            } else {
+                func_06078550(0x1C0, 0x0D, pos++);
+                value = -g_Status.statsEquip[i];
+            }
+            func_06078684(0x1C0, value, pos++);
+        } else {
+            pos += 2;
+        }
+    }
+
+    pos = g_RichterMapUiPositionsB;
+    buttonConfig = g_Settings.buttonConfig[0];
+    func_06078550(0x1C0, g_RichterMapIconIndices[buttonConfig], pos++);
+    func_06078684(0x1C0, g_Status.attackHands[0], pos++);
+    buttonConfig = g_Settings.buttonConfig[2];
+    func_06078550(0x1C0, g_RichterMapIconIndices[buttonConfig], pos++);
+    func_06078684(0x1C0, g_Status.attackHands[1], pos++);
+    func_06078684(0x1C0, g_Status.defenseEquip, pos);
+}
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BC228, func_060BC228);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BC4E4, func_060BC4E4);
 
