@@ -76,13 +76,8 @@ void EntityHarpyKick(Entity* self) {
         self->posX.val = harpy->posX.val;
         self->posY.val = harpy->posY.val;
         animFrame = harpy->animCurFrame;
-#ifdef VERSION_PSP
         hitbox = g_HarpyKickHitboxes;
         animFrame = g_HarpyKickHitboxIdx[animFrame];
-#else
-        animFrame = g_HarpyKickHitboxIdx[animFrame];
-        hitbox = g_HarpyKickHitboxes;
-#endif
         hitbox += animFrame * 4;
         self->hitboxOffX = *hitbox++;
         self->hitboxOffY = *hitbox++;
