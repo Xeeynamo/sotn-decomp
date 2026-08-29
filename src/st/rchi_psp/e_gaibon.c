@@ -6,7 +6,7 @@
  * projectile still differ, and all four functions share stage-owned data. */
 INCLUDE_ASM("st/rchi_psp/nonmatchings/rchi_psp/e_gaibon", EntityGaibon);
 
-INCLUDE_ASM("st/rchi_psp/nonmatchings/rchi_psp/e_gaibon", EntityGaibonLeg);
+#include "../rchi/e_rchi_gaibon_leg.h"
 
 INCLUDE_ASM("st/rchi_psp/nonmatchings/rchi_psp/e_gaibon", EntitySmallGaibonProjectile);
 

@@ -1,12 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rbo7.h"
 
-extern AnimationFrame* g_eBreakableAnimations[];
-extern u8 g_eBreakableExplosionTypes[];
-extern u8 blend_modes[];
-extern u8 g_eBreakableHitboxes[];
-extern u16 g_eBreakableanimSets[];
-
 #include "../../st/e_breakable.h"
 
 INCLUDE_ASM("boss/rbo7/nonmatchings/unk_138A0", func_us_801BAB18_from_bo0);
