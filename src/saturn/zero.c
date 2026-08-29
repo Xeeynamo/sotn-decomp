@@ -659,7 +659,26 @@ void ReadFileToAddrAsync(u32 param_1, u32 param_2, u32 param_3, u32 param_4) {
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006720, func_06006720);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006A7C, func_06006A7C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006C00, func_06006C00);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006E14, func_06006E14);
+s8* func_06006E14(s8* path) {
+    s32 lastSlash;
+    s32 i;
+
+    lastSlash = -1;
+    i = 0;
+    do {
+        if (path[i] == '\\') {
+            lastSlash = i;
+        } else if (path[i] == 0) {
+            break;
+        }
+        i++;
+    } while (i <= 0x3E);
+
+    lastSlash++;
+    return path + lastSlash;
+}
+
+const u16 DAT_06006E4A = 0x0009;
 void func_06006E4C(s8* path, s8* dst) {
     s32 lastSlash;
     s32 i;
@@ -1567,7 +1586,23 @@ void func_0600AFA8(SpriteObject* sprite, SaturnSpriteFrameHeader* frame) {
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600B004, func_0600B004);
 
 // _SetParts
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600B084, func_0600B084);
+void func_0600B084(SpritePart* part, SaturnSpritePart* src, s32 count) {
+    s32 i;
+    u16* in;
+    u16* out;
+    u16 attributes;
+
+    for (i = 0; i < count; i++, src++) {
+        in = (u16*)src;
+        out = (u16*)part;
+        attributes = *in++;
+        *out++ = attributes;
+        *out++ = *in++;
+        *out++ = *in++;
+        *out = *in;
+        part = part->next;
+    }
+}
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600B0B8, func_0600B0B8);
 
 void func_0600B104(u16* param_1, int param_2, int param_3)
@@ -2206,7 +2241,37 @@ s32 func_0600DCF0(Primitive* prim) {
     return visible;
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600DD38, func_0600DD38);
+s32 func_0600DD38(Primitive* prim) {
+    s32 visible;
+    s16* x;
+    s32 i;
+    s32 lastCorner;
+    u16 maxX;
+    u16 maxY;
+    s16* y;
+    s16 py;
+
+    visible = 0;
+    x = &prim->x0;
+    i = 0;
+    lastCorner = 1;
+    maxX = 0x17F;
+    maxY = 0x12F;
+    y = &prim->y0;
+
+    for (; i <= lastCorner; i++, lastCorner = 1, x += 4) {
+        py = *y;
+        y += 4;
+        if ((u16)(*x + 0x20) <= maxX && (u16)(py + 0x20) <= maxY) {
+            visible = lastCorner;
+            break;
+        }
+    }
+
+    return visible;
+}
+
+const u16 DAT_0600DD82 = 0x0009;
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600DD84, func_0600DD84);
 s32 func_0600DDD4(Primitive* prim) {
     s32 visible;
@@ -2803,7 +2868,15 @@ void func_0600FF64(s16 arg0) {
         DestroyEntity(entity);
     }
 }
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FFB8, func_0600FFB8);
+void func_0600FFB8(Entity* self) {
+    if (self->unk0 != NULL) {
+        DestroySpriteObject(self->unk0);
+    }
+    if (self->flags & 0x800000) {
+        FreePrimitives(self->primIndex);
+    }
+    memset(self, 0, sizeof(Entity));
+}
 
 // func_06010008
 void InitDebugPrint(void) {
@@ -2865,7 +2938,22 @@ void SignalSlaveSh2(void) {
 }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011278, func_06011278);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011A6C, func_06011A6C);
+void func_06011A6C(s32 arg0) {
+    s32 i;
+
+    i = 0;
+    for (;;) {
+        if (DAT_06064250[i] != 0) {
+            if (i != 0x1E) {
+                i++;
+                continue;
+            }
+        }
+        break;
+    }
+    DAT_06064250[i] = arg0;
+    DAT_06064250[i + 1] = 0;
+}
 
 s32 PlaySfxVolPan(s32 sfxId, s32 sfxVol, s16 sfxPan) {
     s32 ret = 0;

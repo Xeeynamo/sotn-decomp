@@ -10,10 +10,6 @@
 void CheckCollision(s32 x, s32 y, Collider* result, u16 flags);
 void MoveEntity(Entity* self);
 void func_06079BE4(Entity* self);
-s32 func_0600D028(s8 arg0, s8 arg1);
-s8 func_0600D264(s8 arg0, s8 arg1);
-s8 func_0600D47C(s8 arg0, s8 arg1);
-s32 func_06030690(s8 arg0, s32 arg1, void* arg2);
 #include "shared_sprite_banks.h"
 
 /* Declarations moved here by tools/saturn/move_declarations.py */
@@ -133,5 +129,8 @@ s32 AnimateEntityWithSpriteData(
 SpriteObject* CreateSpriteObject(
     u16 charBase, u16 clutBase, SaturnSpriteImage* images, s32 maxParts);
 /* End moved declarations */
+
+void EntityDestructAnim(Entity* self);
+extern s16 g_ExplosionVariantSizes[];
 
 #endif

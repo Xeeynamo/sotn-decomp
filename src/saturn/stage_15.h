@@ -35,7 +35,7 @@ void func_060E0C18(Entity* self);
 void func_060E072C(Entity* self);
 void func_060DFED0(Entity* self);
 void func_060E3464(Entity* self);
-void func_060E32F8(Entity* self);
+void EntityDestructAnim(Entity* self);
 void func_060E320C(Entity* self);
 void func_060E30A4(Entity* self);
 void func_060E2F3C(Entity* self);
@@ -273,5 +273,8 @@ extern s8 DAT_060FB0EC[];
 s16 Random(void);
 extern s16 DAT_060F6E1A[];
 /* End moved declarations */
+
+extern s16 g_ExplosionVariantSizes[];
+void func_060DE140(Entity* self);
 
 #endif

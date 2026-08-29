@@ -9,13 +9,14 @@
 #include <saturn_sprite.h>
 #include "stage_data.h"
 
-extern s16 DAT_06045FA8;
-extern s16 g_RStage15ExplosionVariantSizes[];
-extern s8 DAT_060485C4;
-s32 func_0600D028(s8 arg0, s8 arg1);
-s32 func_06030690(s8 arg0, s32 arg1, void* arg2);
-s8 func_0600D264(s8 arg0, s8 arg1);
-s8 func_0600D47C(s8 arg0, s8 arg1);
+extern s16 g_ExplosionVariantSizes[];
+typedef struct {
+    s32 velocityY;
+    SotnFixed32 posY;
+} Stage15GouraudState;
+
+extern Stage15GouraudState* volatile SpGourTbl;
+
 #include "inc_asm.h"
 
 /* Declarations moved here by tools/saturn/move_declarations.py */
@@ -26,13 +27,13 @@ void func_060DF62C(Entity* self);
 void func_060DF140(Entity* self);
 void func_060DE8E4(Entity* self);
 void func_060E1E78(Entity* self);
-void func_060E1D0C(Entity* self);
+void EntityDestructAnim(Entity* self);
 void func_060E1C20(Entity* self);
 void func_060E1AB8(Entity* self);
 void func_060E1950(Entity* self);
 void func_060E2494(Entity* self);
 void func_060E21A8(Entity* self);
-void func_060E296C(Entity* self);
+void InitSolidProp(Entity* self);
 void func_060E127C(Entity* self);
 void func_060E0774(Entity* self);
 void func_060E2A90(Entity* self);
@@ -207,6 +208,8 @@ extern void func_060E4064(s32 arg0, s32 arg1, s32 arg2);
 void DestroyEntity();
 s32 AllocPrimitives(s32 type, s32 count);
 void MoveEntity(Entity* self);
+void CheckCollision(s32 x, s32 y, Collider* result, u16 flags);
+void func_06079BE4(Entity* self);
 void SyncSpriteObjectPos(Entity* self);
 void SyncSpriteObjectPosUnchecked(Entity* self, s16* offset);
 void SetVdp2BackgroundColorRgb(s32 r, s32 g, s32 b);

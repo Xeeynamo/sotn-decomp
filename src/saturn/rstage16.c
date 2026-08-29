@@ -128,7 +128,9 @@ INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60DE0BC, func_060DE0BC);
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60DE6D0, func_060DE6D0);
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60DED40, func_060DED40);
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60DED98, func_060DED98);
-INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60DF150, func_060DF150);
+#include "set_entity_collision_tiles.h"
+
+const u32 DAT_060DF1D4 = 0xCCCCCCCD;
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60DF1D8, func_060DF1D8);
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60DF8AC, func_060DF8AC);
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60DFA14, func_060DFA14);
@@ -164,7 +166,8 @@ void func_060DFB7C(Entity* self) {
 }
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60DFC68, func_060DFC68);
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60DFDD4, func_060DFDD4);
-INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60DFF08, func_060DFF08);
+#define SPAWN_DESTRUCT_ANIM_ID 19
+#include "spawn_destruct_anim.h"
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E0024, func_060E0024);
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E0104, func_060E0104);
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E03F0, func_060E03F0);
