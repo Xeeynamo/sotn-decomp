@@ -142,7 +142,19 @@ s32 func_060122C0(u32 arg0) {
 }
 
 // _BgmPauseFadeIn
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6012358, func_06012358);
+void func_06012358(u32 fadeDuration) {
+    if (DAT_06064400 != 0) {
+        DAT_06062258 = 0;
+        PlaySfx(DAT_06064320);
+        DAT_06064400 = 0;
+    }
+    DAT_06062388 = (DAT_060641EC / fadeDuration) >> 1;
+    if (DAT_06062388 == 0) {
+        DAT_06062388 = 1;
+    }
+    DAT_0606422C = 0;
+    func_06012554();
+}
 
 s32 func_060123D4(s32 arg0) {
     s32 result;

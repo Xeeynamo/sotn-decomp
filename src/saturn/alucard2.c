@@ -166,7 +166,7 @@ s32 func_060B79B8(s16 arg0) {
     s32 result;
 
     result = func_0607003C(sp, 2, arg0 / 2, 1);
-    func_060B9610(sp[2], 0);
+    func_060B9610Internal(sp[2], 0);
     if (result == 4) {
         s16 step = g_Entities->step;
         s16 step_s = g_Entities->step_s;
@@ -182,7 +182,24 @@ s32 func_060B79B8(s16 arg0) {
     PlaySfx(DAT_060CC98E[MTH_GetRand() & 1]);
     return 0;
 }
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B7A6C, func_060B7A6C);
+void func_060B7A6C(void) {
+    g_Player.anim = g_Player.pose = g_Player.poseTimer = 0;
+    g_Entities->pose = g_Entities->poseTimer = 0;
+    g_Entities->animSet = 1;
+    g_Entities->entityId = 0;
+    g_Entities->unk1C = 0;
+    g_Player.unk44 = 0;
+    g_Player.unk46 = 0;
+    g_Entities->drawFlags &= 0xF3;
+    g_Entities->rotate = 0;
+    {
+        volatile u8* player_unk39d = &g_Player.unk39D;
+        *player_unk39d &= 0xFC;
+    }
+    if (g_Entities[0x10].entityId == 0x22) {
+        func_060A7D3C();
+    }
+}
 // richter.c func_80159C04
 void func_060B7B0C(void) {
     Entity* entity;
@@ -400,7 +417,43 @@ const u16 DAT_060B9692 = 0xCCCD;
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B9694, func_060B9694);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B9DC0, func_060B9DC0);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BA4CC, func_060BA4CC);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BA604, func_060BA604);
+s32 func_060BA604(Primitive* prim, s16 posX, s16 posY) {
+    s16 offset;
+    s16 xOffset;
+    u16* texture;
+    u16* frameWord = (u16*)&prim->x1;
+    u8 frame = ((u8*)frameWord)[1];
+
+    if (frame >= 3) {
+        offset = 4;
+    } else {
+        offset = 6;
+    }
+
+    if (frame == 6) {
+        return -1;
+    }
+
+    xOffset = offset | 1;
+    prim->x0 = posX - xOffset;
+    prim->y0 = posY - offset;
+    prim->x2 = posX + xOffset;
+    prim->y2 = posY + offset;
+
+    texture = DAT_0605aec0[(u16)DAT_060CBE3C +
+                           g_AlucardFactoryAnimationLookup[frame]];
+    prim->unk8 = texture[0];
+    prim->unkA = texture[1];
+
+    prim->y1++;
+    if (!(prim->y1 & 1)) {
+        (*frameWord)++;
+    }
+    return 0;
+}
+
+const u16 DAT_060BA6B4 = 0xAAAA;
+const u16 DAT_060BA6B6 = 0xAAAB;
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BA6B8, func_060BA6B8);
 // SetSubweaponParams / richter.c func_060ABA98
 void func_060BA90C(Entity* entity) {
@@ -535,7 +588,33 @@ INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BCD98, func_060BCD98);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BD214, func_060BD214);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BD2B0, func_060BD2B0);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BD39C, func_060BD39C);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BD5A4, func_060BD5A4);
+void func_060BD5A4(void) {
+    SaturnSpriteResource* resource;
+    u16* flags;
+    u8* destination;
+    AlucardSubPaletteData* palette;
+    s32 tableNo;
+    s32 nextTableNo;
+
+    if (g_Entities->animSet == 13 || g_Entities->animSet <= 13 ||
+        g_Entities->animSet != 15) {
+        destination = &DAT_060C8574;
+        tableNo = (u16)DAT_060CBE02;
+    } else {
+        flags = &AlucardSpriteResources[2].flags;
+        tableNo = *flags;
+        nextTableNo = tableNo + 1;
+        resource =
+            (SaturnSpriteResource*)((u8*)flags - (sizeof(SaturnSpriteResource) -
+                                                  sizeof(resource->flags)));
+        palette = (AlucardSubPaletteData*)resource->palettes;
+        destination = (u8*)palette->colors[0];
+        LookupTblNoToVramAddr((u16)nextTableNo, (u8*)palette->colors[1]);
+    }
+
+    LookupTblNoToVramAddr((u16)tableNo, destination);
+    g_Player.unk452 = 3;
+}
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BD61C, func_060BD61C);
 
 void func_060BD6A8(void) { DestroyEntity(); }
@@ -631,7 +710,31 @@ INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60C1C60, func_060C1C60);
 // CheckHolyWaterCollision
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60C2264, func_060C2264);
 // func_80125B6C on PSX
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60C2338, func_060C2338);
+s32 func_060C2338(s32 y, s32 x) {
+    Collider collider;
+    s32 xShift;
+
+    if (g_CurrentEntity->velocityX == 0) {
+        return 0;
+    }
+
+    ((s32(*)(s32, s32, Collider*, u16))CheckCollision)(
+        g_CurrentEntity->posX.val + x, g_CurrentEntity->posY.val + y, &collider,
+        0);
+
+    if (g_CurrentEntity->velocityX > 0) {
+        xShift = collider.unk14;
+    } else {
+        xShift = collider.unk1C;
+    }
+
+    if (collider.effects & EFFECT_UNK_0002) {
+        g_CurrentEntity->posX.val += xShift;
+        g_CurrentEntity->posX.i.lo = 0;
+        return 2;
+    }
+    return 0;
+}
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60C239C, func_060C239C);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60C262C, func_060C262C);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60C293C, func_060C293C);

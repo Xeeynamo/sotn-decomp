@@ -378,6 +378,14 @@ void func_060BDC7C(void);
 void func_060BEA54(void);
 void func_06078550(s32 arg0, u8 code, Point16* pos);
 void func_06078684(s32 arg0, s32 value, Point16* pos);
+extern s32 g_MariaCollisionProbeYOffsets[];
+extern AnimationFrame ric_anim_run[];
+extern AnimationFrame g_MariaAnim_060C2E4C;
+extern AnimationFrame g_MariaAnim_060C2F8C[];
+extern SubweaponDef g_MariaSubweaponDefs[];
+extern u8 g_MariaPrimitiveSizeIndices[];
+extern s16 DAT_060C6D7C;
+s32 func_060AA948(void);
 /* End moved declarations */
 
 #endif
