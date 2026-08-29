@@ -80,7 +80,6 @@ EntitySpikesDamage = 0x09255CE0;
 EntityBreakableWall = 0x09255D68;
 EntityBreakableWallPartial = 0x09256208;
 EntitySecretWallDebris = 0x092565E0;
-EntityRoomExit = 0x09256970;
 spriteBanks = 0x0925E6C8;
 rooms_layers = 0x0925E898;
 cluts = 0x0925EC08;

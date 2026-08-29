@@ -114,9 +114,60 @@ void EntityGreyPuffSpawner(
     }
 }
 
-INCLUDE_ASM("st/rno1/nonmatchings/e_misc", EntityExplosionVariants);
+extern s32 D_us_80181784[];
+extern u8 D_us_8018179C[];
+extern u16 D_us_801817A0[];
 
-INCLUDE_ASM("st/rno1/nonmatchings/e_misc", EntityGreyPuff);
+void EntityExplosionVariants(Entity* self) {
+    if (!self->step) {
+        self->velocityY = D_us_80181784[self->ext.destructAnim.index];
+        self->flags =
+            FLAG_UNK_2000 | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_CAMERA_LOCKED;
+        self->palette = PAL_FLAG(PAL_UNK_195);
+        self->animSet = ANIMSET_DRA(2);
+        self->animCurFrame = D_us_8018179C[self->params];
+        self->blendMode = BLEND_TRANSP;
+        self->step++;
+    } else {
+        self->posY.val -= self->velocityY;
+        ++self->poseTimer;
+        if ((self->poseTimer % 2) == 0) {
+            self->animCurFrame++;
+        }
+
+        if (self->poseTimer > D_us_801817A0[self->params]) {
+            DestroyEntity(self);
+        }
+    }
+}
+
+extern u16 D_us_8018175C[];
+extern s32 D_us_8018176C[];
+
+void EntityGreyPuff(Entity* self) {
+    if (!self->step) {
+        self->flags =
+            FLAG_UNK_2000 | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_CAMERA_LOCKED;
+        self->palette = PAL_FLAG(PAL_UNK_195);
+        self->animSet = ANIMSET_DRA(5);
+        self->animCurFrame = 1;
+        self->blendMode = BLEND_TRANSP;
+        self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
+        self->scaleX = D_us_8018175C[self->params];
+        self->scaleY = self->scaleX;
+        self->velocityY = D_us_8018176C[self->params];
+        self->step++;
+    } else {
+        self->posY.val -= self->velocityY;
+        self->poseTimer++;
+        if ((self->poseTimer % 2) == 0) {
+            self->animCurFrame++;
+        }
+        if (self->poseTimer > 36) {
+            DestroyEntity(self);
+        }
+    }
+}
 
 INCLUDE_ASM("st/rno1/nonmatchings/e_misc", EntityOlroxDrool);
 

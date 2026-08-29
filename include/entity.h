@@ -4285,9 +4285,30 @@ typedef struct {
     /* 0x86 */ u16 hitFloor;
 } ET_8019921C;
 
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ s8 : 8;
+    /* 0x85 */ u8 mode;
+} ET_RdaiArcher;
+
+typedef struct {
+    /* 0x7C */ u32 unk7C[8];
+    /* 0x9C */ s32 accelY;
+} ET_801AE414;
+
+typedef struct {
+    /* 0x7C */ u32 unk7C[8];
+    /* 0x9C */ struct Entity* parent;
+} ET_801AEFE0;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
+    ET_RdaiArcher rdaiArcher;
+    ET_801AE414 et_801AE414;
+    ET_801AEFE0 et_801AEFE0;
     ET_TimerOnly timer;
     ET_UTimerOnly utimer;
     ET_EntFactory factory;
