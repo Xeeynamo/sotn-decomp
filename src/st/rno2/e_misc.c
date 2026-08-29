@@ -114,9 +114,60 @@ void EntityGreyPuffSpawner(
     }
 }
 
-INCLUDE_ASM("st/rno2/nonmatchings/e_misc", EntityExplosionVariants);
+extern s32 D_us_801818D8[];
+extern u8 D_us_801818F0[];
+extern u16 D_us_801818F4[];
 
-INCLUDE_ASM("st/rno2/nonmatchings/e_misc", EntityGreyPuff);
+void EntityExplosionVariants(Entity* self) {
+    if (!self->step) {
+        self->velocityY = D_us_801818D8[self->ext.destructAnim.index];
+        self->flags =
+            FLAG_UNK_2000 | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_CAMERA_LOCKED;
+        self->palette = PAL_FLAG(PAL_UNK_195);
+        self->animSet = ANIMSET_DRA(2);
+        self->animCurFrame = D_us_801818F0[self->params];
+        self->blendMode = BLEND_TRANSP;
+        self->step++;
+    } else {
+        self->posY.val -= self->velocityY;
+        ++self->poseTimer;
+        if ((self->poseTimer % 2) == 0) {
+            self->animCurFrame++;
+        }
+
+        if (self->poseTimer > D_us_801818F4[self->params]) {
+            DestroyEntity(self);
+        }
+    }
+}
+
+extern u16 D_us_801818B0[];
+extern s32 D_us_801818C0[];
+
+void EntityGreyPuff(Entity* self) {
+    if (!self->step) {
+        self->flags =
+            FLAG_UNK_2000 | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_CAMERA_LOCKED;
+        self->palette = PAL_FLAG(PAL_UNK_195);
+        self->animSet = ANIMSET_DRA(5);
+        self->animCurFrame = 1;
+        self->blendMode = BLEND_TRANSP;
+        self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
+        self->scaleX = D_us_801818B0[self->params];
+        self->scaleY = self->scaleX;
+        self->velocityY = D_us_801818C0[self->params];
+        self->step++;
+    } else {
+        self->posY.val -= self->velocityY;
+        self->poseTimer++;
+        if ((self->poseTimer % 2) == 0) {
+            self->animCurFrame++;
+        }
+        if (self->poseTimer > 36) {
+            DestroyEntity(self);
+        }
+    }
+}
 
 INCLUDE_ASM("st/rno2/nonmatchings/e_misc", EntityOlroxDrool);
 
@@ -376,13 +427,13 @@ void MakeEntityFromId(u16 entityId, Entity* src, Entity* dst) {
 }
 
 void MakeExplosions(void) {
-    u8 temp_s4;
-    s16 temp_s3;
+    u8 params;
+    s16 angle;
     Entity* entity;
     s32 i;
 
-    temp_s4 = Random() & 3;
-    temp_s3 = ((Random() & 0xF) << 8) - 0x800;
+    params = Random() & 3;
+    angle = ((Random() & 0xF) << 8) - 0x800;
 
     for (i = 0; i < 6; i++) {
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -394,8 +445,8 @@ void MakeExplosions(void) {
 #endif
             // EntityExplosion does not seem to use these values.
             entity->ext.destructAnim.unk85 = 6 - i;
-            entity->ext.destructAnim.unk80 = temp_s3;
-            entity->ext.destructAnim.unk84 = temp_s4;
+            entity->ext.destructAnim.unk80 = angle;
+            entity->ext.destructAnim.unk84 = params;
         }
     }
 }

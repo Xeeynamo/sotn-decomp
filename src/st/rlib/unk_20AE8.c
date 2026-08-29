@@ -156,7 +156,7 @@ void func_us_801AF538_from_lib(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitInteractable);
-        primIndex = (s16)g_api_AllocPrimitives(PRIM_GT4, 4);
+        primIndex = g_api_AllocPrimitives(PRIM_GT4, 4);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
@@ -192,7 +192,7 @@ void func_us_801AF538_from_lib(Entity* self) {
         SetTransMatrix(&geometry.matrix);
         RotTransPers(&D_us_80180924, &geometry.screenX, &geometry.screenY,
                      &geometry.screenZ);
-        x = (s16)(u16)geometry.screenX;
+        x = (s16)geometry.screenX;
 #else
         matrixPtr = &geometry.matrix;
         RotMatrix(&D_us_8018092C, matrixPtr);
@@ -270,7 +270,7 @@ void func_us_801AF7B8_from_lib(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitInteractable);
-        primIndex = (s16)g_api_func_800EDB58(0x11, 0xA);
+        primIndex = g_api_func_800EDB58(0x11, 0xA);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
@@ -319,7 +319,7 @@ void func_us_801AF7B8_from_lib(Entity* self) {
         SetRotMatrix(&matrix);
         SetTransMatrix(&matrix);
         RotTransPers(&D_us_80180934, &sxy, &sz, &flag);
-        x = (s16)(u16)sxy;
+        x = (s16)sxy;
 
         if (x > 0) {
             while (x >= -0x3F) {
@@ -359,6 +359,106 @@ void func_us_801AF7B8_from_lib(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rlib/nonmatchings/unk_20AE8", func_us_801AFA80_from_lib);
+void func_us_801AFA80_from_lib(Entity* self) {
+    extern u16 g_EInitInteractable[];
+    extern Point16 D_us_801809CC[];
+    extern SVECTOR D_us_80180944;
+    extern SVECTOR D_us_801809DC;
+    extern u8* D_us_801809BC[];
+
+    long p, flag;
+    u8 pad[4];
+    long sxy;
+    VECTOR trans;
+    MATRIX m;
+    Primitive* prim;
+    s32 primIndex;
+    s32 i, j;
+    u8* ptr;
+    s16 posX, posY;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitInteractable);
+        self->posX.i.hi =
+            D_us_801809CC[self->params].x - g_Tilemap.scrollX.i.hi;
+        self->posY.i.hi =
+            D_us_801809CC[self->params].y - g_Tilemap.scrollY.i.hi;
+        primIndex = g_api.func_800EDB58(PRIM_GT4, 0x10);
+        if (primIndex != -1) {
+            self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIndex;
+            prim = &g_PrimBuf[primIndex];
+            self->ext.prim = prim;
+            for (i = 0; prim != NULL; i++) {
+                prim->tpage = 0xF;
+                prim->clut = 0x2F;
+                if (i % 2) {
+                    prim->u0 = prim->u2 = 0x88;
+                    prim->u1 = prim->u3 = 0xFE;
+                } else {
+                    prim->u0 = prim->u2 = 0xFE;
+                    prim->u1 = prim->u3 = 0x88;
+                }
+                prim->v0 = prim->v1 = 0xFE;
+                prim->v2 = prim->v3 = 0x80;
+                prim->priority = 0x20;
+                prim->drawMode = DRAW_UNK02;
+                prim = prim->next;
+            }
+        } else {
+            DestroyEntity(self);
+            return;
+        }
+        g_GpuBuffers[0].draw.r0 = 0x40;
+        g_GpuBuffers[0].draw.g0 = 0x38;
+        g_GpuBuffers[0].draw.b0 = 0x28;
+        g_GpuBuffers[1].draw.r0 = 0x40;
+        g_GpuBuffers[1].draw.g0 = 0x38;
+        g_GpuBuffers[1].draw.b0 = 0x28;
+
+    case 1:
+        SetGeomScreen(0x400);
+        SetGeomOffset(0x80, 0x80);
+        RotMatrix(&D_us_801809DC, &m);
+        trans.vx = self->posX.i.hi - 0x80;
+        trans.vy = self->posY.i.hi - 0x80;
+        trans.vz = 0x400;
+        TransMatrix(&m, &trans);
+        SetRotMatrix(&m);
+        SetTransMatrix(&m);
+        RotTransPers(&D_us_80180944, &sxy, &p, &flag);
+        posX = sxy & 0xFFFF;
+        posY = sxy >> 0x10;
+        prim = self->ext.prim;
+        ptr = D_us_801809BC[self->params];
+        for (i = 0; i < 4; i++) {
+            for (j = 0; j < 4; j++) {
+                prim->drawMode = DRAW_DITHERING | DRAW_COLORS;
+                prim->x0 = prim->x2 = posX + (j * 0x78) - 0xF0;
+                if (prim->x0 > 0x100) {
+                    prim->drawMode = DRAW_HIDE;
+                }
+                prim->x1 = prim->x3 = posX + (j * 0x78) - 0x78;
+                if (prim->x1 < 0) {
+                    prim->drawMode = DRAW_HIDE;
+                }
+                prim->y0 = prim->y1 = posY + (i * 0x80) - 0x100;
+                if (prim->y0 > 0x100) {
+                    prim->drawMode = DRAW_HIDE;
+                }
+                prim->y2 = prim->y3 = posY + (i * 0x80) - 0x80;
+                if (prim->y2 < 0) {
+                    prim->drawMode = DRAW_HIDE;
+                }
+                PGREY(prim, 0) = *(ptr + i * 5 + j + 0);
+                PGREY(prim, 1) = *(ptr + i * 5 + j + 1);
+                PGREY(prim, 2) = *(ptr + (i + 1) * 5 + j + 0);
+                PGREY(prim, 3) = *(ptr + (i + 1) * 5 + j + 1);
+                prim = prim->next;
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("st/rlib/nonmatchings/unk_20AE8", func_us_801AE8E8_from_lib);

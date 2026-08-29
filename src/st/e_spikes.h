@@ -33,6 +33,10 @@ enum SpikesPointDirections {
 #define SPIKES_ELEMENT ELEMENT_CUT | ELEMENT_UNK_10
 #endif
 
+#ifndef SPIKES_PARTS_INITIAL_VELOCITY_Y
+#define SPIKES_PARTS_INITIAL_VELOCITY_Y FIX(0.75)
+#endif
+
 #ifdef STAGE_IS_NZ1
 #define START_COUNT 1
 #else
@@ -123,7 +127,7 @@ void EntitySpikesParts(Entity* self) {
             self->velocityY -= FIX(2.5);
         }
 #else
-        self->velocityY += FIX(0.75);
+        self->velocityY += SPIKES_PARTS_INITIAL_VELOCITY_Y;
 #endif
         self->velocityX += ((Random() & 3) << 13) - FIX(0.1875);
         self->velocityY += ((Random() & 3) << 13) - FIX(0.1875);
