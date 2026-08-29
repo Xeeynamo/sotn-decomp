@@ -10,7 +10,15 @@ void func_06012030(void) {
 }
 
 // _KeyOffVox
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6012054, func_06012054);
+void func_06012054(void) {
+    StopPcm(6);
+    if (DAT_06062280 != 0) {
+        func_0601BDD0(DAT_06062280);
+        PcmClose(DAT_06062280, 1);
+        DAT_06062280 = 0;
+    }
+    g_PlayingXaBgmId = 0;
+}
 
 void func_060120A0(void) {
     StopPcm(6);
@@ -446,7 +454,7 @@ bool func_06012DFC(void) {
 bool CdSoundCommandQueueEmpty(void) {
     bool ret;
 
-    if (DAT_06064250 != 0 || DAT_06064414 != DAT_0606423a) {
+    if (DAT_06064250[0] != 0 || DAT_06064414 != DAT_0606423a) {
         ret = 0;
     } else {
         ret = 1;
@@ -601,7 +609,24 @@ void func_060145AC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     DAT_06063C30[arg3].unk4 = 0;
     DAT_06063C30[arg3].unk0 = 1;
 }
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60145F8, func_060145F8);
+void func_060145F8(s32 arg0, s32 arg1, s32 arg2, s16 arg3, s32 arg4, s32 arg5) {
+    SoundRequest* request;
+
+    if (UNCACHED_SOUND_REQUESTS[arg5].unk0 != 0) {
+        do {
+        } while (UNCACHED_SOUND_REQUESTS[arg5].unk0 != 0);
+    }
+
+    request = &DAT_06063C30[arg5];
+    request->unk8 = arg0;
+    request->unkC = arg1;
+    request->unk10 = arg2;
+    request->unk14 = 0;
+    request->unk24 = arg3;
+    request->unk1C = arg4;
+    request->unk4 = 1;
+    DAT_06063C30[arg5].unk0 = 1;
+}
 void func_06014658(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     SoundRequest* request;
 
@@ -619,7 +644,23 @@ void func_06014658(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     DAT_06063C30[arg3].unk0 = 1;
 }
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60146A4, func_060146A4);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6014724, func_06014724);
+void func_06014724(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+    s32 savedArg3;
+
+    savedArg3 = arg3;
+
+    while (UNCACHED_SOUND_REQUESTS[arg4].unk0 != 0) {
+    }
+
+    DAT_06063C30[arg4].unk8 = arg0;
+    DAT_06063C30[arg4].unkC = arg1;
+    DAT_06063C30[arg4].unk10 = arg2;
+    arg3 = 1;
+    DAT_06063C30[arg4].unk14 = arg3;
+    DAT_06063C30[arg4].unk18 = savedArg3;
+    DAT_06063C30[arg4].unk4 = 2;
+    DAT_06063C30[arg4].unk0 = arg3;
+}
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601476C, func_0601476C);
 
 // _RestartBgmStream

@@ -15,10 +15,6 @@ extern s8 DAT_060485C4;
 void PlaySfx(s32 sfxId);
 void SetStep(u8 step);
 void DestroyEntity(Entity* entity);
-s32 func_0600D028(s8 arg0, s8 arg1);
-s8 func_0600D264(s8 arg0, s8 arg1);
-s8 func_0600D47C(s8 arg0, s8 arg1);
-s32 func_06030690(s8 arg0, s32 arg1, void* arg2);
 void func_060E2BF0(s32 arg0, s32 arg1);
 void func_060E2DB0(s32 arg0, s32 arg1, s32 arg2);
 void func_060E2EFC(s32 arg0, s32 arg1, s32 arg2);
@@ -33,7 +29,7 @@ void func_060DDBE0(Entity* self);
 void func_060DD6F4(Entity* self);
 void func_060DCE98(Entity* self);
 void func_060E042C(Entity* self);
-void func_060E02C0(Entity* self);
+void EntityDestructAnim(Entity* self);
 void func_060E01D4(Entity* self);
 void func_060E006C(Entity* self);
 void func_060DFF04(Entity* self);
@@ -214,5 +210,7 @@ extern s8 DAT_060EE27C[][4];
 s32 GetSideToPlayer(Entity* self);
 s16 Random(void);
 /* End moved declarations */
+
+extern s16 g_ExplosionVariantSizes[];
 
 #endif

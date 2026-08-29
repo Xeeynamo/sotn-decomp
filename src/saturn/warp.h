@@ -33,7 +33,7 @@ extern char g_WarpGoldText1[];
 void EntityWarpEnemyBlood(Entity* self);
 void EntityWarpSoulStealOrb(Entity* self);
 void EntityWarpGreyPuff(Entity* self);
-void EntityWarpExplosionVariants(Entity* self);
+void EntityDestructAnim(Entity* self);
 void EntityWarpUnkId13(Entity* self);
 void EntityWarpIntenseExplosion(Entity* self);
 void EntityWarpExplosion(Entity* self);
@@ -101,7 +101,7 @@ extern struct SpriteParts* g_WarpSpriteBank16[];
 void func_060DCAFC(Entity* self);
 void func_060DC040(Entity* self);
 void EntityWarpStageNamePopup(Entity* self);
-void EntityWarpDummy(Entity* self);
+void InitSolidProp(Entity* self);
 void EntityWarpRedDoor(Entity* self);
 extern char g_WarpObtainedText[];
 extern s16 DAT_060E2218[];
@@ -121,5 +121,7 @@ void func_060DE8B4(Entity* self);
 void func_060DF938(Entity* self);
 void func_060E0364(Entity* self);
 /* End moved declarations */
+
+extern s16 g_ExplosionVariantSizes[];
 
 #endif

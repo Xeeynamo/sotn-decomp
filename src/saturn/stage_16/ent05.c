@@ -9,7 +9,7 @@ EntityEntry g_Stage16EntityEntry05 = {
     &g_SaturnSharedSpriteBank5Resource, func_060E006C};
 EntityEntry g_Stage16EntityEntry18 = {NULL, func_060E01D4};
 EntityEntry g_Stage16EntityEntry19 = {
-    &g_SaturnSharedSpriteBank1Resource, func_060E02C0};
+    &g_SaturnSharedSpriteBank1Resource, EntityDestructAnim};
 EntityEntry g_Stage16GreyPuffEntityEntry = {
     &g_SaturnSharedSpriteBank5Resource, func_060E042C};
 
@@ -29,6 +29,6 @@ s16 g_Stage16GreyPuffRotations[7] = {
     0x0C, 0x14, 0x20, 0x2C, 0x34, 0x40, 0x40,
 };
 
-s16 g_Stage16ExplosionVariantSizes[7] = {
+s16 g_ExplosionVariantSizes[7] = {
     0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70,
 };

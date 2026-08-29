@@ -230,7 +230,16 @@ void func_060A5F9C(void) {
 // PerformHellfire
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A605C, func_060A605C);
 // PerformTetraSpirit
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A60EC, func_060A60EC);
+void func_060A60EC(void) {
+    PLAYER.velocityX = PLAYER.velocityY = 0;
+    SetPlayerStep(Player_SpellTetraSpirit);
+    DestroyPlayerSpellEntity();
+    func_060BAF44(g_CurrentEntity, 0x10075U, 0);
+    func_060A5674(0xC1);
+    PlaySfx(0x070B);
+    func_060A56AC(NULL);
+    g_Player.timers[0xC] = 4;
+}
 // PerformSoulSteal
 void func_060A61B0(void) {
     PLAYER.velocityX = PLAYER.velocityY = 0;
@@ -562,7 +571,11 @@ void func_060AB090(void) {
         func_060A580C(0);
     }
 }
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AB0BC, func_060AB0BC);
+void func_060AB0BC(void) {
+    if (g_Player.unk39D & 0x20) {
+        func_060A56E4NoInline(0, 0);
+    }
+}
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AB0E8, func_060AB0E8);
 void func_060AB308(void) {
     PlayerState* player = &g_Player;

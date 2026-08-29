@@ -27,6 +27,7 @@ segments:
         file: rstage15
         end: 0x10EFC
         function_ranges:
+          - [0xF4CC, 0xF550]
           - [0xF550, 0x10170]
       - start: 0x10EFC
         type: .data

@@ -90,32 +90,7 @@ INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60DE714, func_060DE714);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60DED28, func_060DED28);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60DF398, func_060DF398);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60DF3F0, func_060DF3F0);
-void func_060DF7A8(Entity* arg0) {
-    Tilemap* map;
-    u8* dest;
-    s16 scroll_y;
-    s32 index;
-    s32 i;
-    s32 offset;
-    s32 x;
-    s32 y;
-
-    map = &g_Tilemap;
-    i = 0;
-    dest = DAT_0608FFF8;
-    offset = -0x18;
-    do {
-        x = arg0->posX.i.hi;
-        y = arg0->posY.i.hi;
-        index = ((x + map->scrollX.i.hi) << 2) / 5;
-        scroll_y = map->scrollY.i.hi;
-        index =
-            (index >> 4) + (((y + offset + scroll_y) >> 4) * map->hSize * 0x10);
-        dest[index] = arg0->animCurFrame != 0 ? 3 : 0;
-        i += 1;
-        offset += 0x10;
-    } while (i <= 3);
-}
+#include "set_entity_collision_tiles.h"
 
 const u16 pad_060DF82C[] = {0xCCCC, 0xCCCD};
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60DF830, func_060DF830);
@@ -154,7 +129,8 @@ void func_060E01D4(Entity* self) {
 }
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E02C0, func_060E02C0);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E042C, func_060E042C);
-INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E0560, func_060E0560);
+#define SPAWN_DESTRUCT_ANIM_ID 19
+#include "spawn_destruct_anim.h"
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E067C, func_060E067C);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E075C, func_060E075C);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E0A48, func_060E0A48);
@@ -495,7 +471,13 @@ void func_060E558C(Entity* entity, s16 step) {
 const u16 DAT_060E55AC = 0x8888;
 const u16 DAT_060E55AE = 0x8889;
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E55B0, func_060E55B0);
-INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E636C, func_060E636C);
+void func_060E636C(Entity* self) {
+    func_06079BB4(self);
+    func_0600B004(self->unk0, g_Stage16SpriteBank24Frames[self->animCurFrame]);
+}
+
+const u16 pad_060E63A4 = 0xAAAA;
+const u16 pad_060E63A6 = 0xAAAB;
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E63A8, func_060E63A8);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E6A6C, func_060E6A6C);
 void func_060E6C88(Entity* self) {
