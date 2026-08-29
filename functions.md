@@ -4804,7 +4804,7 @@
 | np3        | func_pspeu_09261630               |       76 |          8 |        |       |     |
 | rno0       | func_pspeu_0925B300               |       76 |          8 |        |       |     |
 | bo7        | EntityDemonSwitch                 |       76 |          9 |        |       |     |
-| rnz1       | EntityRoomExit                    |       76 |         10 |        |       |     |
+| rnz1       | func_pspeu_09256970               |       76 |         10 |        |       |     |
 | ric        | func_pspeu_092A9560               |       76 |         11 |        |       |     |
 | dra        | func_psp_09136F30                 |       76 |         13 |        |       |     |
 | main       | func_psp_0892CB40                 |       76 |         14 |        |       |     |
