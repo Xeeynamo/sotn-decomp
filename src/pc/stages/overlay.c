@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "overlay.h"
-#include "../warp.h"
+#include "../spawn_point.h"
 
 #if defined(_WIN32)
 __declspec(dllimport) void* __stdcall LoadLibraryA(const char* lpLibFileName);
@@ -145,7 +145,7 @@ bool LoadStageOverlay(const char* name, Overlay* o) {
     }
     CurrentStageOverlay = handle;
     entrypoint(o);
-    Warp_HookOverlay(o);
+    SpawnPoint_HookOverlay(o);
     return true;
 }
 

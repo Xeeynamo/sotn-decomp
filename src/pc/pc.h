@@ -38,7 +38,7 @@ struct InitGameParams {
     int scale;
     const char* recordPath;
     const char* replayPath;
-    int spawnPoint;
+    const char* spawnPoint;
     bool exitAfterReplay;
     bool replayBoundlessFramerate;
 };
