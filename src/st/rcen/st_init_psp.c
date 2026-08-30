@@ -11,35 +11,35 @@ extern LayoutEntity* D_8D2DFC4;
 extern Overlay g_Overlay;
 
 static u8 cutscene_script_pre_fight_it[] = {
-#include "gen/cutscene_script_pre_fight_it.h"
+#include <gen/cutscene_script_pre_fight_it.h>
 };
 static u8 cutscene_script_pre_fight_sp[] = {
-#include "gen/cutscene_script_pre_fight_sp.h"
+#include <gen/cutscene_script_pre_fight_sp.h>
 };
 static u8 cutscene_script_pre_fight_fr[] = {
-#include "gen/cutscene_script_pre_fight_fr.h"
+#include <gen/cutscene_script_pre_fight_fr.h>
 };
 static u8 cutscene_script_pre_fight_ge[] = {
-#include "gen/cutscene_script_pre_fight_ge.h"
+#include <gen/cutscene_script_pre_fight_ge.h>
 };
 static u8 cutscene_script_pre_fight_en[] = {
-#include "gen/cutscene_script_pre_fight_en.h"
+#include <gen/cutscene_script_pre_fight_en.h>
 };
 
 static u8 cutscene_script_post_fight_it[] = {
-#include "gen/cutscene_script_post_fight_it.h"
+#include <gen/cutscene_script_post_fight_it.h>
 };
 static u8 cutscene_script_post_fight_sp[] = {
-#include "gen/cutscene_script_post_fight_sp.h"
+#include <gen/cutscene_script_post_fight_sp.h>
 };
 static u8 cutscene_script_post_fight_fr[] = {
-#include "gen/cutscene_script_post_fight_fr.h"
+#include <gen/cutscene_script_post_fight_fr.h>
 };
 static u8 cutscene_script_post_fight_ge[] = {
-#include "gen/cutscene_script_post_fight_ge.h"
+#include <gen/cutscene_script_post_fight_ge.h>
 };
 static u8 cutscene_script_post_fight_en[] = {
-#include "gen/cutscene_script_post_fight_en.h"
+#include <gen/cutscene_script_post_fight_en.h>
 };
 
 s32 E_ID(BACKGROUND_BLOCK);

@@ -9,46 +9,46 @@ extern LayoutEntity* D_8D2E454;
 extern Overlay g_Overlay;
 
 static u8 cutscene_script_post_fight_it[] = {
-#include "gen/cutscene_script_post_fight_it.h"
-#include "gen/cutscene_data_post_fight_it.h"
+#include <gen/cutscene_script_post_fight_it.h>
+#include <gen/cutscene_data_post_fight_it.h>
 };
 
 static u8 cutscene_script_post_fight_sp[] = {
-#include "gen/cutscene_script_post_fight_sp.h"
-#include "gen/cutscene_data_post_fight_sp.h"
+#include <gen/cutscene_script_post_fight_sp.h>
+#include <gen/cutscene_data_post_fight_sp.h>
 };
 static u8 cutscene_script_post_fight_fr[] = {
-#include "gen/cutscene_script_post_fight_fr.h"
-#include "gen/cutscene_data_post_fight_fr.h"
+#include <gen/cutscene_script_post_fight_fr.h>
+#include <gen/cutscene_data_post_fight_fr.h>
 };
 static u8 cutscene_script_post_fight_ge[] = {
-#include "gen/cutscene_script_post_fight_ge.h"
-#include "gen/cutscene_data_post_fight_ge.h"
+#include <gen/cutscene_script_post_fight_ge.h>
+#include <gen/cutscene_data_post_fight_ge.h>
 };
 static u8 cutscene_script_post_fight_en[] = {
-#include "gen/cutscene_script_post_fight_en.h"
-#include "gen/cutscene_data_post_fight_en.h"
+#include <gen/cutscene_script_post_fight_en.h>
+#include <gen/cutscene_data_post_fight_en.h>
 };
 
 static u8 cutscene_script_talk_it[] = {
-#include "gen/cutscene_script_talk_it.h"
-#include "gen/cutscene_data_talk_it.h"
+#include <gen/cutscene_script_talk_it.h>
+#include <gen/cutscene_data_talk_it.h>
 };
 static u8 cutscene_script_talk_sp[] = {
-#include "gen/cutscene_script_talk_sp.h"
-#include "gen/cutscene_data_talk_sp.h"
+#include <gen/cutscene_script_talk_sp.h>
+#include <gen/cutscene_data_talk_sp.h>
 };
 static u8 cutscene_script_talk_fr[] = {
-#include "gen/cutscene_script_talk_fr.h"
-#include "gen/cutscene_data_talk_fr.h"
+#include <gen/cutscene_script_talk_fr.h>
+#include <gen/cutscene_data_talk_fr.h>
 };
 static u8 cutscene_script_talk_ge[] = {
-#include "gen/cutscene_script_talk_ge.h"
-#include "gen/cutscene_data_talk_ge.h"
+#include <gen/cutscene_script_talk_ge.h>
+#include <gen/cutscene_data_talk_ge.h>
 };
 static u8 cutscene_script_talk_en[] = {
-#include "gen/cutscene_script_talk_en.h"
-#include "gen/cutscene_data_talk_en.h"
+#include <gen/cutscene_script_talk_en.h>
+#include <gen/cutscene_data_talk_en.h>
 };
 
 s32 richter_sprites = 0x08D30C20;

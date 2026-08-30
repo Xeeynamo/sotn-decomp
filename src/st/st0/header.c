@@ -25,7 +25,7 @@ Overlay g_Overlay = {
     .StageEndCutScene = PrologueScroll,
 };
 
-#include "gen/sprite_banks.h"
-#include "gen/palette_def.h"
-#include "gen/layers.h"
-#include "gen/graphics_banks.h"
+#include <gen/sprite_banks.h>
+#include <gen/palette_def.h>
+#include <gen/layers.h>
+#include <gen/graphics_banks.h>
