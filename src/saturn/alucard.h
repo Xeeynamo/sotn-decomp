@@ -19,6 +19,11 @@ typedef struct {
     s32 unk4;
 } AlucardStateInitData;
 
+typedef struct {
+    u16 countAndFlags;
+    u16 colors[3][16];
+} AlucardSubPaletteData;
+
 extern AlucardStateInitData g_AlucardStateInitData[];
 extern Callback DAT_060D6018;
 extern Callback DAT_060D9018;
@@ -26,6 +31,16 @@ void func_0600A31C(void);
 extern s16 DAT_060CE4B2;
 extern s16 DAT_060CE4B4;
 extern s16 DAT_060CE972;
+extern s32 DAT_060C85C4[];
+extern s16 DAT_060CBE3C;
+extern u8 g_AlucardFactoryAnimationLookup[];
+extern u8 DAT_060C8574;
+extern s16 DAT_060CBE02;
+extern SaturnSpriteResource AlucardSpriteResources[13];
+void LookupTblNoToVramAddr(u16 tableNo, u8* destination);
+s32 func_060B9610(s16 arg0, s16 arg1);
+s32 func_060B9610Healing(u16 amount, s32 kind) __asm__("_func_060B9610");
+s32 func_060B9610Internal(s32 amount, s32 kind) __asm__("_func_060B9610");
 
 /* Declarations moved here by tools/saturn/move_declarations.py */
 extern const SaturnAnimationFrame g_AlucardAnimationData[];
@@ -56,7 +71,7 @@ extern u16 AlucardPkg4Palette[];
 extern u16 AlucardPkg3Palette[];
 extern u16 AlucardFx2Palette[];
 extern u16 AlucardFxPalette[];
-extern u16 AlucardSubPalette[];
+extern AlucardSubPaletteData AlucardSubPalette;
 extern u16 g_AlucardPaletteShades[];
 extern u16 g_AlucardPalettes[];
 extern SaturnSpriteImage AlucardPkg10Images[];
