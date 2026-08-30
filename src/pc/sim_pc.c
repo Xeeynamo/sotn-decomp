@@ -386,13 +386,54 @@ static bool isFirstBoot() {
     return g_StageId == STAGE_SEL && g_GameState == Game_Init;
 }
 
+typedef struct {
+    const char* name;
+    s32 stageId;
+} StageNameAlias;
+
+static s32 FindStageIdByName(const char* name) {
+    static const StageNameAlias aliases[] = {
+        {"no1_alt", STAGE_NO1_ALT},     {"no0_alt", STAGE_NO0_ALT},
+        {"nz0_demo", STAGE_NZ0_DEMO},   {"nz1_demo", STAGE_NZ1_DEMO},
+        {"lib_demo", STAGE_LIB_DEMO},   {"rnz1_demo", STAGE_RNZ1_DEMO},
+        {"iwa_load", STAGE_IWA_LOAD},   {"iga_load", STAGE_IGA_LOAD},
+        {"hagi_load", STAGE_HAGI_LOAD}, {"top_alt", STAGE_TOP_ALT},
+    };
+    char upperName[16];
+    s32 i;
+
+    for (i = 0; i < LEN(aliases); i++) {
+        if (!strcmp(name, aliases[i].name)) {
+            return aliases[i].stageId;
+        }
+    }
+    for (i = 0; name[i] != '\0' && i < LEN(upperName) - 1; i++) {
+        upperName[i] = (char)toupper((unsigned char)name[i]);
+    }
+    upperName[i] = '\0';
+    for (i = 0; i <= STAGE_TOP_ALT; i++) {
+        if (!strcmp(upperName, g_StagesLba[i].ovlName)) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+static bool StageOwnsAssets(void) {
+    if (g_GameParams.stageName == NULL) {
+        return false;
+    }
+    return g_GameParams.stageOwnsAssets ||
+           FindStageIdByName(g_GameParams.stageName) < 0;
+}
+
 static bool IsBossOvl(const char* ovlName) {
     return (ovlName[0] == 'B' && ovlName[1] == 'O') ||
            (ovlName[0] == 'R' && ovlName[1] == 'B' && ovlName[2] == 'O') ||
            !strcmp(ovlName, "MAR");
 }
 
-static void LoadStagePrg(const char* name) {
+static bool LoadStagePrg(const char* name) {
     char ovlName[16];
     unsigned i;
     for (i = 0; name[i] && i < LEN(ovlName) - 1; i++) {
@@ -401,12 +442,19 @@ static void LoadStagePrg(const char* name) {
     ovlName[i] = '\0';
     if (!LoadStageOverlay(ovlName, &g_api.o)) {
         ERRORF("stage '%s' was not loaded", ovlName);
+        return false;
     }
+    return true;
+}
+
+bool PcLoadStageChr(const char* path) {
+    SimFile sim = {.kind = SIM_STAGE_CHR};
+    return FileUseContent(LoadFilePc, path, &sim);
 }
 
 s32 LoadFileSim(s32 fileId, SimFileType type) {
     char smolbuf[48];
-    char buf[128];
+    char buf[512];
     s32 fid;
 
     SimFile sim = {0};
@@ -459,30 +507,30 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
         // gof.bin, gob.bin, c_gof.bin, c_gob.bin are packed back-to-back
         // inside a single combined BIN/F_GO.BIN on disk
         case 8: // game over bitmap foreground
-            if (FileReadToBuf(
-                    "disks/us/BIN/F_GO.BIN", D_80280000, 0x00000, 0x8000) < 0) {
+            if (FileReadToBuf(SOTN_DATA_DIR "/BIN/F_GO.BIN", D_80280000,
+                              0x00000, 0x8000) < 0) {
                 return -1;
             }
             LoadImage(&g_Vram.D_800ACDD0, D_80280000);
             return 0;
         case 9: // game over bitmap background
-            if (FileReadToBuf("disks/us/BIN/F_GO.BIN", D_80280000, 0x08000,
-                              0x10000) < 0) {
+            if (FileReadToBuf(SOTN_DATA_DIR "/BIN/F_GO.BIN", D_80280000,
+                              0x08000, 0x10000) < 0) {
                 return -1;
             }
             LoadImage(&g_Vram.D_800ACDD8, D_80280000);
             return 0;
         case 10: // game over palette foreground
-            if (FileReadToBuf(
-                    "disks/us/BIN/F_GO.BIN", D_80280000, 0x18000, 0x2000) < 0) {
+            if (FileReadToBuf(SOTN_DATA_DIR "/BIN/F_GO.BIN", D_80280000,
+                              0x18000, 0x2000) < 0) {
                 return -1;
             }
             LoadImage(&g_Vram.D_800ACDB8, D_80280000);
             StoreImage(&g_Vram.D_800ACDB8, g_Clut[2]);
             return 0;
         case 11: // game over palette background
-            if (FileReadToBuf(
-                    "disks/us/BIN/F_GO.BIN", D_80280000, 0x1A000, 0x2000) < 0) {
+            if (FileReadToBuf(SOTN_DATA_DIR "/BIN/F_GO.BIN", D_80280000,
+                              0x1A000, 0x2000) < 0) {
                 return -1;
             }
             LoadImage(&g_Vram.D_800ACDA8, D_80280000);
@@ -512,15 +560,30 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
                 DemoInit(2);
                 SetGameState(Game_NowLoading);
                 g_GameStep = 1;
-            } else if (g_GameParams.stage >= 0) {
-                g_StageId = g_GameParams.stage;
+            } else if (
+                g_GameParams.stageName != NULL || g_GameParams.stage >= 0) {
+                if (g_GameParams.stageName != NULL && g_GameParams.stage < 0) {
+                    g_GameParams.stage =
+                        FindStageIdByName(g_GameParams.stageName);
+                    if (g_GameParams.stage < 0) {
+                        // user stage
+                        g_GameParams.stage = 0x51;
+                        g_GameParams.stageOwnsAssets = true;
+                    }
+                }
+                g_StageId = (Stages)g_GameParams.stage;
                 SetGameState(Game_NowLoading);
                 g_GameStep = 1;
             }
         }
-        LoadStagePrg(g_StagesLba[g_StageId].ovlName);
-        return 0;
+        if (g_GameParams.stageName != NULL && g_StageId == g_GameParams.stage) {
+            return LoadStagePrg(g_GameParams.stageName) ? 0 : -1;
+        }
+        return LoadStagePrg(g_StagesLba[g_StageId].ovlName) ? 0 : -1;
     case SimFileType_Vh:
+        if (!(fileId & 0x8000) && StageOwnsAssets()) {
+            return 0;
+        }
         g_SimFile = &sim;
         if (fileId & 0x8000) {
             u16 actualFileId = fileId & 0x7FFF;
@@ -532,7 +595,7 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
             sim.size = D_800A036C[actualFileId].size;
             sim.addr = D_800A036C[actualFileId].addr;
             sim.kind = SIM_VH;
-            snprintf(buf, sizeof(buf), "disks/us/%s", sim.path);
+            snprintf(buf, sizeof(buf), SOTN_DATA_DIR "/%s", sim.path);
             if (FileReadToBuf(buf, sim.addr, 0, sim.size) < 0) {
                 return -1;
             }
@@ -596,6 +659,9 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
         SsVabClose(g_SimVabId);
         break;
     case SimFileType_Vb:
+        if (!(fileId & 0x8000) && StageOwnsAssets()) {
+            return 0;
+        }
         g_SimFile = &sim;
         if (fileId & 0x8000) {
             u16 actualFileId = fileId & 0x7FFF;
@@ -607,7 +673,7 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
             sim.size = D_800A036C[actualFileId].size;
             sim.addr = D_800A036C[actualFileId].addr;
             sim.kind = SIM_VB;
-            snprintf(buf, sizeof(buf), "disks/us/%s", sim.path);
+            snprintf(buf, sizeof(buf), SOTN_DATA_DIR "/%s", sim.path);
             if (FileReadToBuf(buf, sim.addr, 0, sim.size) < 0) {
                 return -1;
             }
@@ -650,6 +716,9 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
         LoadFileSimToMem(SIM_SEQ);
         return 0;
     case SimFileType_StageChr:
+        if (StageOwnsAssets()) {
+            return 0;
+        }
         sim.kind = SIM_STAGE_CHR;
         sim.path = smolbuf;
         snprintf(smolbuf, sizeof(smolbuf), "ST/%s/%s.BIN",
@@ -677,7 +746,7 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
     case SimFileType_Monster:
         static const int MonsterChrLen = 0x5800;
         D_800A04EC = 0;
-        if (FileReadToBuf("disks/us/BIN/MONSTER.BIN", SIM_PTR,
+        if (FileReadToBuf(SOTN_DATA_DIR "/BIN/MONSTER.BIN", SIM_PTR,
                           fileId * MonsterChrLen, MonsterChrLen) < 0) {
             return -1;
         }
@@ -689,7 +758,7 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
         return -1;
     }
 
-    snprintf(buf, sizeof(buf), "disks/us/%s", sim.path);
+    snprintf(buf, sizeof(buf), SOTN_DATA_DIR "/%s", sim.path);
     DEBUGF("about to load %s", buf);
     if (!FileUseContent(LoadFilePc, buf, &sim)) {
         ERRORF("failed to load '%s'", buf);

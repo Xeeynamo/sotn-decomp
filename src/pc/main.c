@@ -8,26 +8,22 @@
 #include <stdlib.h>
 #include <string.h>
 
-static const char* allowed_stages[] = {
-    "no0",      "no1",      "lib",       "cat",      "no2",     "chi",
-    "dai",      "np3",      "cen",       "no4",      "are",     "top",
-    "nz0",      "nz1",      "wrp",       "no1_alt",  "no0_alt", "",
-    "dre",      "nz0_demo", "nz1_demo",  "lib_demo", "bo7",     "mar",
-    "bo6",      "bo5",      "bo4",       "bo3",      "bo2",     "bo1",
-    "bo0",      "st0",      "rno0",      "rno1",     "rlib",    "rcat",
-    "rno2",     "rchi",     "rdai",      "rno3",     "rcen",    "rno4",
-    "rare",     "rtop",     "rnz0",      "rnz1",     "rwrp",    "",
-    "",         "",         "",          "",         "",        "rnz1_demo",
-    "rbo8",     "rbo7",     "rbo6",      "rbo5",     "rbo4",    "rbo3",
-    "rbo2",     "rbo1",     "rbo0",      "",         "mad",     "no3",
-    "iwa_load", "iga_load", "hagi_load", "sel",      "te1",     "te2",
-    "te3",      "te4",      "te5",       "top_alt"};
+enum CustomStageId {
+    STAGE_ID_SATURN_15 = 0x4C,
+    STAGE_ID_SATURN_16 = 0x4D,
+    STAGE_ID_REVERSE_SATURN_15 = 0x6C,
+    STAGE_ID_REVERSE_SATURN_16 = 0x6D,
+    STAGE_ID_USER_MOD_FIRST = 0x51,
+};
+
 static const char* allowed_players[] = {"alu", "ric", "mar"};
 static const char* allowed_tests[] = {"sndlib"};
 #define PARSE_PARAM(param, allowed) parseStrParam(param, allowed, LEN(allowed))
 static int parseIntParam(const char* param) {
-    long i = strtol(param, NULL, 10);
-    if (i != LONG_MIN && i != LONG_MAX && i >= 0) {
+    char* end;
+    long i = strtol(param, &end, 10);
+    if (end != param && *end == '\0' && i != LONG_MIN && i != LONG_MAX &&
+        i >= 0) {
         return (int)i;
     }
     return -1;
@@ -42,7 +38,7 @@ static int parseStrParam(
         }
     } else {
         for (i = 0; i < n; i++) {
-            if (allowedValues[i][0] == '\0') {
+            if (allowedValues[i] == NULL || allowedValues[i][0] == '\0') {
                 continue;
             }
             if (!strcmp(param, allowedValues[i])) {
@@ -72,14 +68,17 @@ static void printHelp(void) {
 }
 static void printAllowedParams(const char* allowedValues[], int n) {
     int i;
+    bool first = true;
+
     printf("allowed params are: ");
-    for (i = 0; i < n - 1; i++) {
-        if (allowedValues[i][0] == '\0') {
+    for (i = 0; i < n; i++) {
+        if (allowedValues[i] == NULL || allowedValues[i][0] == '\0') {
             continue;
         }
-        printf("%s, ", allowedValues[i]);
+        printf("%s%s", first ? "" : ", ", allowedValues[i]);
+        first = false;
     }
-    printf("%s\n", allowedValues[i - 1]);
+    printf("\n");
 }
 static bool parseArgs(
     struct InitGameParams* outParams, int argc, char* argv[]) {
@@ -87,6 +86,8 @@ static bool parseArgs(
     outParams->diskPath = NULL;
     outParams->testMode = NO_TEST;
     outParams->stage = -1;
+    outParams->stageName = NULL;
+    outParams->stageOwnsAssets = false;
     outParams->player = -1;
     outParams->demo = -1;
     outParams->scale = 1;
@@ -103,11 +104,14 @@ static bool parseArgs(
         if (strcmp(argv[i], "--disk") == 0 && i + 1 < argc) {
             outParams->diskPath = argv[++i];
         } else if (strcmp(argv[i], "--stage") == 0 && i + 1 < argc) {
-            outParams->stage = PARSE_PARAM(argv[++i], allowed_stages);
+            const char* stage = argv[++i];
+            outParams->stage = parseIntParam(stage);
             if (outParams->stage < 0) {
-                printf("stage '%s' is invalid or not recognized\n", argv[i]);
-                printAllowedParams(allowed_stages, LEN(allowed_stages));
-                return false;
+                outParams->stageName = stage;
+                if (!strcmp(stage, "stage15")) {
+                    outParams->stage = STAGE_ID_SATURN_15;
+                    outParams->stageOwnsAssets = true;
+                }
             }
         } else if (strcmp(argv[i], "--player") == 0 && i + 1 < argc) {
             outParams->player = PARSE_PARAM(argv[++i], allowed_players);

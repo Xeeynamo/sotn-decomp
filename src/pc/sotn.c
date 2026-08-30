@@ -114,7 +114,15 @@ void InitVbVh(void);
 
 s32 func_800EDB58(u8 primType, s32 count);
 
-static void GameLoopCallback(void) { Replay_OnFrame(); }
+static void GameLoopCallback(void) {
+    if (g_GameParams.stageOwnsAssets && g_GameState == Game_Play &&
+        g_GameStep == Play_Init && g_GameEngineStep == Engine_Init &&
+        D_8003C730 == 0) {
+        // load state after Play_Reset initialization
+        D_8003C730 = 3;
+    }
+    Replay_OnFrame();
+}
 
 struct InitGameParams g_GameParams;
 bool InitGame(struct InitGameParams* params) {

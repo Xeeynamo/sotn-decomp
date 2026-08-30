@@ -6,6 +6,7 @@ set(CMAKE_C_STANDARD 17)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+option(ENABLE_STAGE15 "Build the Saturn Stage 15 PC port" OFF)
 
 if (WIN32)
     set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
@@ -21,8 +22,28 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
+set(SOTN_RUNTIME_DATA_DIR "${CMAKE_BINARY_DIR}/data")
+set(SOTN_US_DISK_DIR "${CMAKE_SOURCE_DIR}/disks/us")
+file(GLOB_RECURSE SOTN_US_DISK_FILES CONFIGURE_DEPENDS
+    LIST_DIRECTORIES false
+    "${SOTN_US_DISK_DIR}/*")
+set(SOTN_RUNTIME_DATA_FILES)
+foreach(source_file IN LISTS SOTN_US_DISK_FILES)
+    file(RELATIVE_PATH relative_file "${SOTN_US_DISK_DIR}" "${source_file}")
+    set(runtime_file "${SOTN_RUNTIME_DATA_DIR}/${relative_file}")
+    get_filename_component(runtime_directory "${runtime_file}" DIRECTORY)
+    file(MAKE_DIRECTORY "${runtime_directory}")
+    add_custom_command(
+        OUTPUT "${runtime_file}"
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                "${source_file}" "${runtime_file}"
+        DEPENDS "${source_file}"
+        VERBATIM)
+    list(APPEND SOTN_RUNTIME_DATA_FILES "${runtime_file}")
+endforeach()
+add_custom_target(sotn_runtime_data ALL DEPENDS ${SOTN_RUNTIME_DATA_FILES})
+
 if (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang|AppleClang")
-    set(CMAKE_BUILD_TYPE Debug)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address")
     set(CMAKE_LINKER_FLAGS "${CMAKE_LINKER_FLAGS} -fsanitize=address")
@@ -1221,6 +1242,7 @@ add_subdirectory(tools/psyz/psyz)
 add_executable(${PROJECT_NAME}
     ${SOURCE_FILES_PC}
     ${SOURCE_FILES_CORE})
+add_dependencies(${PROJECT_NAME} sotn_runtime_data)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
     include
@@ -1235,6 +1257,7 @@ target_compile_definitions(${PROJECT_NAME} PUBLIC
     HARD_LINK
     _internal_version_us
     __psyz
+    SOTN_DATA_DIR="${SOTN_RUNTIME_DATA_DIR}"
 )
 
 target_include_directories(psyz PUBLIC tools/psyz/psyz/include)
@@ -1336,3 +1359,7 @@ endforeach()
 add_overlay(tt_000 ${SOURCE_FILES_TT_000})
 add_overlay(tt_001 ${SOURCE_FILES_TT_001})
 add_overlay(tt_002 ${SOURCE_FILES_TT_002})
+
+if(ENABLE_STAGE15)
+    include(cmake/stage15.cmake)
+endif()
