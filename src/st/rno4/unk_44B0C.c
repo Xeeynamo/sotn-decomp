@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rno4.h"
 
+#ifndef VERSION_PC
 INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", EntityBreakable);
 
 INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", func_us_801C123C_from_no4);
@@ -286,9 +287,38 @@ void EntityIntenseExplosion(Entity* self) {
         DestroyEntity(self);
     }
 }
+#endif
 
-INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", PlaySfxPositional);
+void PlaySfxPositional(s16 sfxId) {
+    s32 posX, posY;
+    s16 sfxPan;
+    s16 sfxVol;
 
+    posX = g_CurrentEntity->posX.i.hi - 128;
+    sfxPan = (abs(posX) - 32) >> 5;
+    if (sfxPan > 8) {
+        sfxPan = 8;
+    } else if (sfxPan < 0) {
+        sfxPan = 0;
+    }
+    if (posX < 0) {
+        sfxPan = -sfxPan;
+    }
+    sfxVol = abs(posX) - 96;
+    posY = abs(g_CurrentEntity->posY.i.hi - 128) - 112;
+    if (posY > 0) {
+        sfxVol += posY;
+    }
+    if (sfxVol < 0) {
+        sfxVol = 0;
+    }
+    sfxVol = 127 - (sfxVol >> 1);
+    if (sfxVol > 0) {
+        g_api.PlaySfxVolPan(sfxId, sfxVol, sfxPan);
+    }
+}
+
+#ifndef VERSION_PC
 void EntityBreakableCrystalFloor(Entity* self) {
     extern s16 g_BreakableCrystalFloorTiles[];
     Entity* newEntity;
@@ -371,3 +401,4 @@ void EntityBreakableCrystalFloor(Entity* self) {
 }
 
 INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", EntityBreakableWall);
+#endif
