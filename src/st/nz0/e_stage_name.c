@@ -33,19 +33,19 @@ static MATRIX color_matrix = {{{FLT(0.0), FLT(-0.5), FLT(0.5)},
                                {FLT(0.0), FLT(0.5), FLT(0.5)}}};
 
 static u8 stage_name_en[] = {
-#include "gen/stage_name_en.h"
+#include <gen/stage_name_en.h>
 };
 static u8 stage_name_it[] = {
-#include "gen/stage_name_it.h"
+#include <gen/stage_name_it.h>
 };
 static u8 stage_name_sp[] = {
-#include "gen/stage_name_sp.h"
+#include <gen/stage_name_sp.h>
 };
 static u8 stage_name_ge[] = {
-#include "gen/stage_name_ge.h"
+#include <gen/stage_name_ge.h>
 };
 static u8 stage_name_fr[] = {
-#include "gen/stage_name_fr.h"
+#include <gen/stage_name_fr.h>
 };
 
 static u_long* gfxBank[] = {

@@ -3,30 +3,30 @@
 
 #ifndef HARD_LINK
 u8 gfx_portrait_alucard[] = {
-#include "gen/gfx_portrait_alucard.h"
+#include <gen/gfx_portrait_alucard.h>
 };
 
 u8 gfx_portrait_maria[] = {
-#include "gen/gfx_portrait_maria.h"
+#include <gen/gfx_portrait_maria.h>
 };
 
 u8 gfx_portrait_richter[] = {
-#include "gen/gfx_portrait_richter.h"
+#include <gen/gfx_portrait_richter.h>
 };
 #endif
 
 u8 D_80192228[] = {
-#include "gen/D_80192228.h"
+#include <gen/D_80192228.h>
 };
 
 u8 D_80193358[] = {
-#include "gen/D_80193358.h"
+#include <gen/D_80193358.h>
 };
 
 u8 D_80194018[] = {
-#include "gen/D_80194018.h"
+#include <gen/D_80194018.h>
 };
 
 u8 D_80195274[] = {
-#include "gen/D_80195274.h"
+#include <gen/D_80195274.h>
 };

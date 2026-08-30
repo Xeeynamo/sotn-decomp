@@ -616,12 +616,12 @@ def add_splat_config(nw: ninja_syntax.Writer, ver: str, file_name: str):
     # hands are built from the same src/weapon/w_XXX.c, so give each hand its
     # own object subdirectory and tell the source which hand it is compiling.
     obj_subdir = ""
-    cpp_flags = ""
+    cpp_flags = f"-I{src_path}"
     if is_psp(ver) and is_weapon(ovl_name):
         hand_id = ovl_name[1]
         weapon_id = ovl_name[3:]
         obj_subdir = f"weapon{hand_id}"
-        cpp_flags = f"-DW_{weapon_id} -DWEAPON{hand_id}"
+        cpp_flags += f" -DW_{weapon_id} -DWEAPON{hand_id}"
 
     objs = []
     if ovl_name == "main" and platform != "psp":

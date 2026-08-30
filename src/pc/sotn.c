@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "pc.h"
+#include "spawn_point.h"
 #include "dra.h"
 #include "stage.h"
 #include "dra_bss.h"
@@ -114,12 +115,16 @@ void InitVbVh(void);
 
 s32 func_800EDB58(u8 primType, s32 count);
 
-static void GameLoopCallback(void) { Replay_OnFrame(); }
+static void GameLoopCallback(void) {
+    Replay_OnFrame();
+    SpawnPoint_OnFrame();
+}
 
 struct InitGameParams g_GameParams;
 bool InitGame(struct InitGameParams* params) {
     g_GameParams = *params;
     Replay_Init(params);
+    SpawnPoint_Init(params);
     Psyz_SetVSyncCb(GameLoopCallback);
     if (params->diskPath) {
         if (Psyz_CdSetDiskPath(params->diskPath) < 0) {
