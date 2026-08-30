@@ -822,6 +822,7 @@ set(SOURCE_FILES_STAGE_RNO4
     src/st/rno4/e_room_fg.c
     src/st/rno4/st_common.c
     src/st/rno4/st_update.c
+    src/st/rno4/unk_44B0C.c
     src/st/rno4/gen/rooms.c
     src/st/rno4/stage_data.c)
 
