@@ -147,7 +147,7 @@ void EntityBossDoors(Entity* self) {
                 g_api.PlaySfx(SFX_STONE_MOVE_B);
                 self->step++;
             #ifdef VERSION_PSP
-                doorTilemap = D_pspeu_092637C8;
+                doorTilemap = D_us_8018113C;
                 if (self->params) {
                     tileIndex = 0x9E;
                 } else {
