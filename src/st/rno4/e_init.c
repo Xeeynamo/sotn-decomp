@@ -221,13 +221,13 @@ EInit D_us_80180BCC = {ANIMSET_OVL(5), 36, 76, 552, 0x0A6};
 EInit D_us_80180BD8 = {ANIMSET_OVL(5), 0, 76, 552, 0x002};
 EInit D_us_80180BE4 = {ANIMSET_OVL(5), 65, 76, 552, 0x0A8};
 EInit g_EInitJackOBones = {ANIMSET_OVL(10), 1, 82, 528, 0x074};
-EInit D_us_80180BFC = {ANIMSET_OVL(10), 0, 82, 528, 0x002};
+EInit g_EInitJackOBones2 = {ANIMSET_OVL(10), 0, 82, 528, 0x002};
 EInit D_us_80180C08 = {ANIMSET_OVL(10), 21, 82, 528, 0x075};
 EInit g_EInitNovaSkeleton = {ANIMSET_OVL(11), 1, 72, 532, 0x07E};
 EInit D_us_80180C20 = {ANIMSET_OVL(11), 0, 72, 532, 0x07F};
 EInit g_EInitImp = {ANIMSET_OVL(12), 1, 79, 640, 0x11C};
-EInit D_us_80180C38 = {ANIMSET_OVL(12), 1, 79, 640, 0x002};
-EInit g_EInitBalloonpod = {ANIMSET_OVL(12), 19, 79, 640, 0x11D};
-EInit D_us_80180C50 = {ANIMSET_OVL(12), 42, 79, 640, 0x11E};
+EInit g_EInitImpSmoke = {ANIMSET_OVL(12), 1, 79, 640, 0x002};
+EInit g_EInitRdaiUnk33 = {ANIMSET_OVL(12), 19, 79, 640, 0x11D};
+EInit g_EInitImpDeathParticle = {ANIMSET_OVL(12), 42, 79, 640, 0x11E};
 EInit g_EInitKillerFish = {ANIMSET_OVL(13), 1, 83, 616, 0x15E};
 // clang-format on

@@ -68,7 +68,7 @@ segments:
       - [0x1BDA8, c, rno4/e_lock_camera]
       - [0x1C008, c, rno4_psp/e_killer_fish]
       - [0x1C5C0, c, rno4_psp/unk_1C5C0]
-      - [0x1CCF0, c, rno4_psp/e_breakable_wall]
+      - [0x1CCF0, c, rno4/e_breakable_wall]
       - [0x1CF10, c, rno4_psp/unk_1CF10]
       - [0x22680, data]
       - [0x22D50, .data, rno4/st_update]
