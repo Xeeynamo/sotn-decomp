@@ -116,5 +116,6 @@ extern EInit g_EInitInteractable;
 extern EInit g_EInitCommon;
 extern EInit g_EInitNovaSkeleton;
 extern EInit D_us_80180C20;
+extern EInit g_EInitKillerFish;
 
 #endif // RNO4_H
