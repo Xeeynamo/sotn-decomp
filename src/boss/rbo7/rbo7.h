@@ -35,7 +35,7 @@ typedef enum EntityID {
     E_GREY_PUFF,            // EntityGreyPuff
     E_UNK_16,               // func_us_801BAB18_from_bo0
     E_UNK_17,               // func_us_80192B38_from_rbo3
-    E_LIFE_UPSPAWN,         // EntityLifeUpSpawn
+    E_LIFE_UP_SPAWN,         // EntityLifeUpSpawn
     E_UNK_19,               // func_us_801940B4
     E_UNK_1A,               // func_us_801957C0
     E_HARPY_KICK,           // EntityHarpyKick

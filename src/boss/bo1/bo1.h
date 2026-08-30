@@ -50,7 +50,7 @@ enum EntityID {
     E_EXPLOSION_FLAME,      // EntityExplosionFlame
     E_UNK_23,               // func_us_801A493C
     E_HOMING_LASER,         // EntityHomingLaser
-    E_LIFE_UPSPAWN,         // EntityLifeUpSpawn
+    E_LIFE_UP_SPAWN,         // EntityLifeUpSpawn
     NUM_ENTITIES,
 };
 

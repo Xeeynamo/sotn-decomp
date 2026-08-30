@@ -71,7 +71,7 @@ typedef enum EntityID {
     E_UNK_32,                 // func_us_801AB04C
     E_BOSS_DOOR_TRIGGER,      // EntityBossDoorTrigger
     E_BOSS_DOORS,             // EntityBossDoors
-    E_LIFE_UPSPAWN,           // EntityLifeUpSpawn
+    E_LIFE_UP_SPAWN,           // EntityLifeUpSpawn
     E_CLOAKED_KNIGHT,         // EntityCloakedKnight
     E_CLOAKED_KNIGHT_CLOAK,   // EntityCloakedKnightCloak
     E_CLOAKED_KNIGHT_SWORD,   // EntityCloakedKnightSword

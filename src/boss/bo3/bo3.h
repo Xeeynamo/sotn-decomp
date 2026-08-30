@@ -75,7 +75,7 @@ typedef enum EntityID {
     E_UNK_3D,                // func_us_801A5F0C
     E_UNK_3E,                // func_us_801A1BE8
     E_BREAKABLE_WALL_DEBRIS, // EntityBreakableWallDebris
-    E_LIFE_UPSPAWN,          // EntityLifeUpSpawn
+    E_LIFE_UP_SPAWN,          // EntityLifeUpSpawn
     E_UNK_41,                // func_us_801A6370
     E_UNK_42,                // func_us_801A6568
     E_UNK_43,                // func_us_801C123C_from_no4

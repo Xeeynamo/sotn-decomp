@@ -30,7 +30,3 @@ INCLUDE_ASM("st/rnz1/nonmatchings/unk_2B148", func_us_801ABDC8);
 INCLUDE_RODATA("st/rnz1/nonmatchings/unk_2B148", D_us_801A6050);
 
 INCLUDE_ASM("st/rnz1/nonmatchings/unk_2B148", func_us_801ABDE4);
-
-INCLUDE_ASM("st/rnz1/nonmatchings/unk_2B148", EntityBossDoorTrigger);
-
-INCLUDE_ASM("st/rnz1/nonmatchings/unk_2B148", EntityBossDoors);

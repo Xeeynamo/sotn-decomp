@@ -26,7 +26,7 @@ s32 E_ID(ZOMBIE_ENEMY);
 s32 E_ID(EXPLOSION_FLAME);
 s32 E_ID(UNK_23);
 s32 E_ID(HOMING_LASER);
-s32 E_ID(LIFE_UPSPAWN);
+s32 E_ID(LIFE_UP_SPAWN);
 
 void InitEntityIds(void) {
     SET_E_ID(BACKGROUND_BLOCK);
@@ -49,7 +49,7 @@ void InitEntityIds(void) {
     SET_E_ID(EXPLOSION_FLAME);
     SET_E_ID(UNK_23);
     SET_E_ID(HOMING_LASER);
-    SET_E_ID(LIFE_UPSPAWN);
+    SET_E_ID(LIFE_UP_SPAWN);
 }
 
 void OvlLoad(void) {
