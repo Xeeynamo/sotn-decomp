@@ -260,9 +260,7 @@ void func_060DEC48(void) {
 
     randomFlags = 3 & Random();
     randomAngle = ((Random() & 0xF) << 8) - 0x800;
-    count = 0;
-
-    do {
+    for (count = 0; count <= 5; count++) {
         entity = AllocEntity(&g_Entities[0xE0], &DAT_060A4FF8);
         if (entity != NULL) {
             CreateEntityFromEntity(0x46U, g_CurrentEntity, entity);
@@ -271,8 +269,7 @@ void func_060DEC48(void) {
             entity->ext.et_060DEC48.angle = randomAngle;
             entity->ext.et_060DEC48.flags = randomFlags;
         }
-        count += 1;
-    } while (count <= 5);
+    }
 }
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DECE0, func_060DECE0);
 extern u32 g_Stage15Entity30SpawnPositions[];
