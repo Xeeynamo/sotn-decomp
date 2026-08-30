@@ -21,6 +21,29 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
+set(SOTN_RUNTIME_DATA_DIR "${CMAKE_BINARY_DIR}/data")
+set(SOTN_RUNTIME_OVERRIDE_DIR "" CACHE PATH
+    "Optional directory containing PC runtime asset overrides")
+set(SOTN_US_DISK_DIR "${CMAKE_SOURCE_DIR}/disks/us")
+file(GLOB_RECURSE SOTN_US_DISK_FILES CONFIGURE_DEPENDS
+    LIST_DIRECTORIES false
+    "${SOTN_US_DISK_DIR}/*")
+set(SOTN_RUNTIME_DATA_FILES)
+foreach(source_file IN LISTS SOTN_US_DISK_FILES)
+    file(RELATIVE_PATH relative_file "${SOTN_US_DISK_DIR}" "${source_file}")
+    set(runtime_file "${SOTN_RUNTIME_DATA_DIR}/${relative_file}")
+    get_filename_component(runtime_directory "${runtime_file}" DIRECTORY)
+    add_custom_command(
+        OUTPUT "${runtime_file}"
+        COMMAND ${CMAKE_COMMAND} -E make_directory "${runtime_directory}"
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                "${source_file}" "${runtime_file}"
+        DEPENDS "${source_file}"
+        VERBATIM)
+    list(APPEND SOTN_RUNTIME_DATA_FILES "${runtime_file}")
+endforeach()
+add_custom_target(sotn_runtime_data DEPENDS ${SOTN_RUNTIME_DATA_FILES})
+
 if (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang|AppleClang")
     set(CMAKE_BUILD_TYPE Debug)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address")
@@ -1221,6 +1244,7 @@ add_subdirectory(tools/psyz/psyz)
 add_executable(${PROJECT_NAME}
     ${SOURCE_FILES_PC}
     ${SOURCE_FILES_CORE})
+add_dependencies(${PROJECT_NAME} sotn_runtime_data)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
     include
@@ -1235,7 +1259,13 @@ target_compile_definitions(${PROJECT_NAME} PUBLIC
     HARD_LINK
     _internal_version_us
     __psyz
+    SOTN_RUNTIME_DATA_DIR="${SOTN_RUNTIME_DATA_DIR}"
 )
+
+if(SOTN_RUNTIME_OVERRIDE_DIR)
+    target_compile_definitions(${PROJECT_NAME} PRIVATE
+        SOTN_RUNTIME_OVERRIDE_DIR="${SOTN_RUNTIME_OVERRIDE_DIR}")
+endif()
 
 target_include_directories(psyz PUBLIC tools/psyz/psyz/include)
 target_compile_definitions(psyz PRIVATE __psyz)

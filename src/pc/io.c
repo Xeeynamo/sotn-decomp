@@ -3,6 +3,20 @@
 #include <stdlib.h>
 #include "pc.h"
 
+static FILE* OpenRuntimeFile(
+    const char* path, char* resolved, size_t resolvedSize) {
+#ifdef SOTN_RUNTIME_OVERRIDE_DIR
+    snprintf(
+        resolved, resolvedSize, "%s/%s", SOTN_RUNTIME_OVERRIDE_DIR, path);
+    FILE* file = fopen(resolved, "rb");
+    if (file != NULL) {
+        return file;
+    }
+#endif
+    snprintf(resolved, resolvedSize, "%s/%s", SOTN_RUNTIME_DATA_DIR, path);
+    return fopen(resolved, "rb");
+}
+
 struct FileAsStringCbParams {
     bool (*callback)(const struct FileAsString*);
     void* param;
@@ -72,10 +86,11 @@ static bool _FileUseContentCb(const struct FileOpenRead* f) {
 // true if successful.
 bool FileOpenRead(
     bool (*cb)(const struct FileOpenRead*), const char* filename, void* param) {
-    INFOF("open '%s'", filename);
-    FILE* f = fopen(filename, "rb");
+    char resolved[1024];
+    FILE* f = OpenRuntimeFile(filename, resolved, sizeof(resolved));
+    INFOF("open '%s'", resolved);
     if (f == NULL) {
-        ERRORF("unable to open '%s'", filename);
+        ERRORF("unable to open '%s'", resolved);
         return false;
     }
     fseek(f, 0, SEEK_END);
@@ -83,7 +98,7 @@ bool FileOpenRead(
     fseek(f, 0, SEEK_SET);
 
     struct FileOpenRead s = {
-        .filename = filename,
+        .filename = resolved,
         .file = f,
         .length = len,
         .param = param,
@@ -96,10 +111,11 @@ bool FileOpenRead(
 // Read the content of a binary file into the specified buffer by maxlen bytes.
 // The number of read bytes is returned; a negative value represents a failure.
 int FileReadToBuf(const char* filename, void* dst, int offset, size_t maxlen) {
-    INFOF("open '%s'", filename);
-    FILE* f = fopen(filename, "rb");
+    char resolved[1024];
+    FILE* f = OpenRuntimeFile(filename, resolved, sizeof(resolved));
+    INFOF("open '%s'", resolved);
     if (f == NULL) {
-        ERRORF("unable to open '%s'", filename);
+        ERRORF("unable to open '%s'", resolved);
         return -1;
     }
     fseek(f, offset, SEEK_SET);
