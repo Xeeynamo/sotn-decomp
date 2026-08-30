@@ -183,6 +183,8 @@ s32 func_060B79B8(s16 arg0) {
     return 0;
 }
 void func_060B7A6C(void) {
+    u8* playerFlags;
+
     g_Player.anim = g_Player.pose = g_Player.poseTimer = 0;
     g_Entities->pose = g_Entities->poseTimer = 0;
     g_Entities->animSet = 1;
@@ -192,10 +194,8 @@ void func_060B7A6C(void) {
     g_Player.unk46 = 0;
     g_Entities->drawFlags &= 0xF3;
     g_Entities->rotate = 0;
-    {
-        volatile u8* player_unk39d = &g_Player.unk39D;
-        *player_unk39d &= 0xFC;
-    }
+    playerFlags = &g_Player.unk39D;
+    *playerFlags &= 0xFC;
     if (g_Entities[0x10].entityId == 0x22) {
         func_060A7D3C();
     }
