@@ -6,7 +6,7 @@
 SaturnSpriteResource AlucardSpriteResources[13] = {
     {AlucardImages, g_AlucardPalettes, -1, 0xFFFF},
     {AlucardImages, g_AlucardPaletteShades, -1, 0xFFFF},
-    {AlucardSubImages, AlucardSubPalette, -1, 0xFFFF},
+    {AlucardSubImages, (u16*)&AlucardSubPalette, -1, 0xFFFF},
     {AlucardFxImages, AlucardFxPalette, -1, 0xFFFF},
     {AlucardFx2Images, AlucardFx2Palette, -1, 0xFFFF},
     {AlucardPkg3Images, AlucardPkg3Palette, -1, 0xFFFF},

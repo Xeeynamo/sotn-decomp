@@ -252,7 +252,25 @@ void func_060DE6CC(Entity* self) {
 }
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DE704, func_060DE704);
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DE964, func_060DE964);
-INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DEC48, func_060DEC48);
+void func_060DEC48(void) {
+    Entity* entity;
+    s16 randomAngle;
+    s32 count;
+    s8 randomFlags;
+
+    randomFlags = 3 & Random();
+    randomAngle = ((Random() & 0xF) << 8) - 0x800;
+    for (count = 0; count <= 5; count++) {
+        entity = AllocEntity(&g_Entities[0xE0], &DAT_060A4FF8);
+        if (entity != NULL) {
+            CreateEntityFromEntity(0x46U, g_CurrentEntity, entity);
+            entity->params = 2;
+            entity->ext.et_060DEC48.delay = 6 - count;
+            entity->ext.et_060DEC48.angle = randomAngle;
+            entity->ext.et_060DEC48.flags = randomFlags;
+        }
+    }
+}
 INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DECE0, func_060DECE0);
 extern u32 g_Stage15Entity30SpawnPositions[];
 
@@ -360,7 +378,40 @@ void func_060DFA98(MthMatrixTbl* unused, s32 angle) {
     y = MTH_Mul(y, sine);
     DAT_06061DF0.current->val[2][2] = MTH_Mul(z, cosine) - y;
 }
-INCLUDE_ASM("asm/saturn/stage_15/f_nonmat", f60DFB74, func_060DFB74);
+void func_060DFB74(MthMatrixTbl* unused, s32 angle) {
+    Fixed32 sine;
+    Fixed32 cosine;
+    Fixed32 x;
+    Fixed32 z;
+
+    rsincos(angle, &sine, &cosine);
+    sine *= 0x10;
+    cosine *= 0x10;
+
+    z = DAT_06061DF0.current->val[0][2];
+    x = DAT_06061DF0.current->val[0][0];
+    {
+        Fixed32 product;
+        product = MTH_Mul(z, sine);
+        DAT_06061DF0.current->val[0][0] = MTH_Mul(x, cosine) - product;
+    }
+
+    z = DAT_06061DF0.current->val[1][2];
+    x = DAT_06061DF0.current->val[1][0];
+    {
+        Fixed32 product;
+        product = MTH_Mul(z, sine);
+        DAT_06061DF0.current->val[1][0] = MTH_Mul(x, cosine) - product;
+    }
+
+    z = DAT_06061DF0.current->val[2][2];
+    x = DAT_06061DF0.current->val[2][0];
+    {
+        Fixed32 product;
+        product = MTH_Mul(z, sine);
+        DAT_06061DF0.current->val[2][0] = MTH_Mul(x, cosine) - product;
+    }
+}
 
 void func_060DFC08(MthMatrixTbl* unused, s32 angle) {
     Fixed32 sine;

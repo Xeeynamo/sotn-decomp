@@ -2,6 +2,7 @@
 #include "inc_asm.h"
 #include "sattypes.h"
 #include "game.h"
+#include "game_2b.h"
 #define _SPR2_
 #include "lib/spr/spr.h"
 
@@ -13,7 +14,24 @@ extern s32 DAT_00292000;
 
 s32* func_060784A8(void) { return &DAT_00292000; }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f60784B8, func_060784B8);
+void func_060784B8(SprSpCmd* command, s32 portraitIndex, s32 colorTableIndex) {
+    SaturnSpriteImage* image;
+    u16 tableNo;
+
+    image = &g_StatusPortraitImages[portraitIndex];
+    command->control = 0x1000;
+    command->drawMode = 0x0488;
+    tableNo = colorTableIndex + 0x30;
+    if (tableNo & 0x4000) {
+        command->color = func_06007CE0(tableNo & 0x0FFF);
+    } else {
+        command->color = SPR_2LookupTblNoToVram(tableNo & 0x0FFF);
+    }
+    command->charAddr = DAT_0605AEE8;
+    command->charAddr += image->characterOffsetUnits;
+    command->charSize =
+        ((image->storedWidth >> 2) << 8) | (image->storedHeight << 1);
+}
 
 extern SaturnSpriteResource** DAT_060645EC;
 extern SprSpCmd DAT_06086108;

@@ -19,6 +19,13 @@ void DMA_ScuInit();
 // void SPR_2SetGourTbl(u16 arg0);
 
 void InitPrimBuf();
+void func_06004D84(void);
+void func_06004DE8(void);
+void func_06004E50(void);
+void func_06004E94(void);
+void INT_SetScuFunc(u32 vector, void (*handler)(void));
+extern void (*DAT_06000344)(u32 clearMask, u32 setMask);
+extern s32 DAT_06064320;
 
 // DAT_0605c120, DAT_060645EC, DAT_060645e4, DAT_060645f8 and SpGourTbl
 // are deliberately absent: zero and its dependents access them at
