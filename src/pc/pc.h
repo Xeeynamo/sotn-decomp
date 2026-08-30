@@ -33,6 +33,7 @@ struct InitGameParams {
     const char* diskPath;
     enum TestMode testMode;
     int stage;
+    const char* stageName;
     int player;
     int demo;
     int scale;
