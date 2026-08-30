@@ -21,26 +21,9 @@ void func_us_801B9028_from_no1(Entity* self) {
         break;
 
     case 2:
-        FntPrint(&D_us_801A5C70, self->animCurFrame);
-        if (g_pads[1].pressed & PAD_SQUARE) {
-            if (self->params) {
-                return;
-            }
-            self->animCurFrame++;
-            self->params |= 1;
-        } else {
-            self->params = 0;
-        }
-        if (g_pads[1].pressed & PAD_CIRCLE) {
-            if (self->step_s) {
-                return;
-            }
-            self->animCurFrame--;
-            self->step_s |= 1;
-        } else {
-            self->step_s = 0;
-        }
-        break;
+#define PAD2_ANIM_DEBUG_PRINT() FntPrint(&D_us_801A5C70, self->animCurFrame)
+#define PAD2_ANIM_DEBUG_ABORT return
+#include "../pad2_anim_debug.h"
     }
 }
 
@@ -58,7 +41,7 @@ void func_us_801B8F50_from_no1(Entity* self) {
         break;
 
     case 1:
-        if (g_CastleFlags[0x10]) {
+        if (g_CastleFlags[NO1_ELEVATOR_ACTIVATED]) {
             self->step += 1;
         }
         break;
@@ -104,7 +87,7 @@ void EntityBackgroundBlock(Entity* self) {
         }
 
         if (self->params == 6) {
-            primIndex = g_api_AllocPrimitives(PRIM_TILE, 1);
+            primIndex = g_api.AllocPrimitives(PRIM_TILE, 1);
             if (primIndex == -1) {
                 DestroyEntity(self);
                 return;

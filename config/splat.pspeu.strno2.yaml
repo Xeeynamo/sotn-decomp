@@ -71,7 +71,7 @@ segments:
       - [0x20358, c, rno2/e_lock_camera]
       - [0x205B8, c, rno2/e_spikes]
       - [0x20F00, .data, rno2/e_ctulhu]
-      - [0x21050, data]
+      - [0x21050, .data, rno2_psp/e_bloody_zombie]
       - [0x21090, .data, rno2/e_azaghal]
       - [0x21390, data, '21390']
       - [0x215D8, .data, rno2/st_update]

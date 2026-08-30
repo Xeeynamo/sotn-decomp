@@ -156,7 +156,7 @@ void func_us_801AF538_from_lib(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitInteractable);
-        primIndex = g_api_AllocPrimitives(PRIM_GT4, 4);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;

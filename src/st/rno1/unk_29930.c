@@ -21,26 +21,9 @@ void func_us_801B9028_from_no1(Entity* self) {
         break;
 
     case 2:
-        FntPrint(&D_us_801A5C70, self->animCurFrame);
-        if (g_pads[1].pressed & PAD_SQUARE) {
-            if (self->params) {
-                return;
-            }
-            self->animCurFrame++;
-            self->params |= 1;
-        } else {
-            self->params = 0;
-        }
-        if (g_pads[1].pressed & PAD_CIRCLE) {
-            if (self->step_s) {
-                return;
-            }
-            self->animCurFrame--;
-            self->step_s |= 1;
-        } else {
-            self->step_s = 0;
-        }
-        break;
+#define PAD2_ANIM_DEBUG_PRINT() FntPrint(&D_us_801A5C70, self->animCurFrame)
+#define PAD2_ANIM_DEBUG_ABORT return
+#include "../pad2_anim_debug.h"
     }
 }
 
@@ -78,7 +61,7 @@ void func_us_80198A18_from_rbo4(Entity* self) {
         InitializeEntity(&D_us_80180778);
         self->drawFlags |= ENTITY_ROTATE;
         if ((self->params & 0xF) % 2) {
-            self->rotate = -0x400;
+            self->rotate = ROT(-90);
         } else {
             self->rotate = 0;
         }

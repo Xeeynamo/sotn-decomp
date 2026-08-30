@@ -23,7 +23,7 @@ void EntityKarasumanFeatherAttack(Entity* self) {
         self->rotate = angle;
         angle = self->rotate;
         if (!self->facingLeft) {
-            angle = 0x800 - angle;
+            angle = ROT(180) - angle;
         }
 
         self->velocityX = rcos(angle) * 0x60;
