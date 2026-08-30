@@ -3,7 +3,19 @@
 
 INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1A988", EntityBreakable);
 
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1A988", func_us_801C123C_from_no4);
+void func_us_801C123C_from_no4(Entity* self) {
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitInteractable);
+        self->animSet = ANIMSET_OVL(9);
+        self->unk5A = 0x5B;
+        self->palette = 0x25D;
+        self->animCurFrame = 0x15;
+        self->zPriority = 0x6A;
+        self->step = 0x100;
+        break;
+    }
+}
 
 extern s32 g_ExplosionVariantVelocity[];
 extern u8 g_ExplosionVariantFrames[];
@@ -93,7 +105,35 @@ void EntityIntenseExplosion(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1A988", PlaySfxPositional);
+void PlaySfxPositional(s16 sfxId) {
+    s32 posX;
+    s32 posY;
+    s16 sfxPan;
+    s16 sfxVol;
+
+    posX = g_CurrentEntity->posX.i.hi - 128;
+    sfxPan = (abs(posX) - 32) >> 5;
+    if (sfxPan > 8) {
+        sfxPan = 8;
+    } else if (sfxPan < 0) {
+        sfxPan = 0;
+    }
+    if (posX < 0) {
+        sfxPan = -sfxPan;
+    }
+    sfxVol = abs(posX) - 96;
+    posY = abs(g_CurrentEntity->posY.i.hi - 128) - 112;
+    if (posY > 0) {
+        sfxVol += posY;
+    }
+    if (sfxVol < 0) {
+        sfxVol = 0;
+    }
+    sfxVol = 127 - (sfxVol >> 1);
+    if (sfxVol > 0) {
+        g_api.PlaySfxVolPan(sfxId, sfxVol, sfxPan);
+    }
+}
 
 INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1A988", func_pspeu_09246618_from_bo3);
 

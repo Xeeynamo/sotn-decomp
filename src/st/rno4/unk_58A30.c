@@ -7,21 +7,115 @@ INCLUDE_ASM("st/rno4/nonmatchings/unk_58A30", func_us_801BC650_from_rnz1);
 
 INCLUDE_ASM("st/rno4/nonmatchings/unk_58A30", func_us_801BCA5C_from_rnz1);
 
-INCLUDE_ASM("st/rno4/nonmatchings/unk_58A30", func_us_801BCB9C_from_rnz1);
+void func_us_801BCB9C_from_rnz1(Entity* self) {
+    Collider collider;
+    Entity* entity;
+    s32 i;
+    s32 x;
+    s32 y;
 
-INCLUDE_ASM("st/rno4/nonmatchings/unk_58A30", func_us_801BCD80_from_rnz1);
+    if (self->flags & FLAG_DEAD) {
+        if (self->step != 2) {
+            self->hitboxState = 0;
+            PlaySfxPositional(SFX_WALL_DEBRIS_A);
+            SetStep(2);
+        }
+    }
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitRockKnightProjectile);
+        if (self->params == 0) {
+            self->velocityX = FIX(1.0);
+        } else {
+            self->velocityX = FIX(2.0);
+        }
+        self->velocityY = FIX(-2.0);
+        if (!self->facingLeft) {
+            self->velocityX = -self->velocityX;
+        }
+
+    case 1:
+        MoveEntity();
+        self->velocityY += FIX(0.125);
+        x = self->posX.i.hi;
+        y = self->posY.i.hi + 8;
+        g_api_CheckCollision(x, y, &collider, 0);
+        if (collider.effects & EFFECT_SOLID) {
+            PlaySfxPositional(SFX_WALL_DEBRIS_A);
+            self->hitboxState = 0;
+            SetStep(2);
+        }
+        break;
+
+    case 2:
+        if (AnimateEntity(g_RockKnightProjectileBreakAnim, self) == 0) {
+            for (i = 0; i < 7; i++) {
+                entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                if (entity != NULL) {
+                    CreateEntityFromEntity(E_UNK_4D, self, entity);
+                    entity->params = Random() & 7;
+                }
+            }
+            self->pfnUpdate = EntityExplosion;
+            self->step = 0;
+            self->params = 0x13;
+            self->pose = 0;
+            self->poseTimer = 0;
+        }
+        break;
+    }
+}
+
+void func_us_801BCD80_from_rnz1(Entity* self) {
+#ifdef VERSION_PSP
+    s32 temp_s1;
+    s16 temp_s0;
+#else
+    s16 temp_s0;
+    s32 temp_s1;
+#endif
+
+#ifdef VERSION_PSP
+    if (!self->step) {
+#else
+    if (self->step == 0) {
+#endif
+        InitializeEntity(g_EInitRockKnightDebris);
+        self->animCurFrame = self->params + 0x48;
+        temp_s1 = (Random() & 0x1F) + 0x10;
+        temp_s0 = (Random() * 6) + 0x900;
+        self->velocityX = temp_s1 * rcos((s32)temp_s0);
+        self->velocityY = temp_s1 * rsin((s32)temp_s0);
+    }
+    MoveEntity();
+    self->velocityY += FIX(0.125);
+}
 
 INCLUDE_ASM("st/rno4/nonmatchings/unk_58A30", func_us_801BCE4C_from_rnz1);
 
 INCLUDE_ASM("st/rno4/nonmatchings/unk_58A30", func_us_801BCFC8_from_rnz1);
 
-INCLUDE_ASM("st/rno4/nonmatchings/unk_58A30", TryThrow);
+void TryThrow(void) {
+    s32 collisionResult;
+    u16 collisionFlags;
+
+    collisionResult = UnkCollisionFunc2(g_JackOBonesSensors2);
+    collisionFlags = UnkCollisionFunc(g_JackOBonesSensors3, 3);
+    if (collisionResult == 0x80 || (collisionFlags & 2)) {
+        SetStep(5);
+        return;
+    }
+    if (!g_CurrentEntity->ext.jackoBones.throwTimer) {
+        SetStep(4);
+        return;
+    }
+    g_CurrentEntity->ext.jackoBones.throwTimer--;
+}
 
 INCLUDE_ASM("st/rno4/nonmatchings/unk_58A30", EntityJackOBones);
 
 void EntityJackOBonesDeathParts(Entity* self) {
-    extern EInit g_EInitJackOBones2;
-    extern u16 g_JackOBonesDeathPartsRotSpeeds[];
     if (self->step) {
         if (--self->ext.jackoBones.deathPartLife) {
             self->rotate += g_JackOBonesDeathPartsRotSpeeds[self->params];
@@ -48,7 +142,19 @@ void EntityJackOBonesDeathParts(Entity* self) {
 
 INCLUDE_ASM("st/rno4/nonmatchings/unk_58A30", EntityJackOBonesJack);
 
-INCLUDE_ASM("st/rno4/nonmatchings/unk_58A30", TryShoot);
+void TryShoot(void) {
+    UnkCollisionFunc2(g_NovaSkeletonShootSensors);
+
+    if (!g_CurrentEntity->ext.nova.cooldown) {
+        if (GetDistanceToPlayerX() < 0x80) {
+            if (g_CurrentEntity->facingLeft != (GetSideToPlayer() & 1)) {
+                SetStep(6);
+            }
+        }
+    } else {
+        g_CurrentEntity->ext.nova.cooldown--;
+    }
+}
 
 INCLUDE_ASM("st/rno4/nonmatchings/unk_58A30", DrawLaserRing);
 
@@ -263,7 +369,7 @@ void EntityNovaLaser(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180C20);
+        InitializeEntity(g_EInitNovaLaser);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 3);
         if (primIndex == -1) {
             DestroyEntity(self);

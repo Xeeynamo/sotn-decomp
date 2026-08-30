@@ -4,11 +4,131 @@
 #ifndef VERSION_PC
 INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", EntityBreakable);
 
-INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", func_us_801C123C_from_no4);
+void func_us_801C123C_from_no4(Entity* self) {
+#ifndef VERSION_PSP
+    s32 pad[10];
+    (void)pad;
+#endif
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitInteractable);
+        self->animSet = ANIMSET_OVL(9);
+        self->unk5A = 0x5B;
+        self->palette = 0x25D;
+        self->animCurFrame = 0x15;
+        self->zPriority = 0x6A;
+        self->step = 0x100;
+        break;
+    }
+}
 
 INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", func_us_801C12B0_from_no4);
 
-INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", func_us_801C15F8_from_no4);
+extern s16 g_BackgroundTileRects[];
+
+void func_us_801C15F8_from_no4(Entity* self) {
+    s32 scrollX;
+    s32 scrollY;
+    s16* ptr;
+    s32 var_s5;
+    s32 var_s4;
+    s32 var_s3;
+    s32 var_s2;
+    s32 var_s1;
+    Primitive* prim;
+    s32 primIndex;
+    s32 xOffset;
+    s32 yOffset;
+    s32 i;
+
+    if (self->step) {
+    } else {
+        InitializeEntity(g_EInitInteractable);
+        self->animSet = 0;
+        self->ext.et_801C12B0.unk80 = 4;
+        primIndex = g_api.AllocPrimitives(PRIM_TILE, 16);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.et_801C12B0.prim = prim;
+        while (prim != NULL) {
+            prim->r0 = 0x10;
+            prim->g0 = 8;
+            prim->b0 = 0x18;
+            prim->priority = 0x9D;
+            prim = prim->next;
+        }
+    }
+
+    prim = self->ext.et_801C12B0.prim;
+    ptr = &g_BackgroundTileRects[(self->params & 0xFF) * 4];
+    i = (self->params >> 8) & 0xFF;
+    scrollX = g_Tilemap.scrollX.i.hi - 0x10;
+    scrollY = g_Tilemap.scrollY.i.hi - 0x10;
+    xOffset = scrollX + 0x120;
+    yOffset = scrollY + 0x100;
+
+    for (; i > 0; i--) {
+        var_s3 = *ptr++;
+        var_s2 = var_s3 + *ptr++;
+        if (scrollX >= var_s2 || xOffset < var_s3) {
+            ptr += 2;
+            continue;
+        }
+
+        var_s4 = *ptr++;
+        var_s5 = *ptr++;
+        if (var_s4 > scrollY && yOffset >= var_s5) {
+            if (var_s3 < scrollX) {
+                var_s3 = scrollX;
+            }
+            if (xOffset < var_s2) {
+                var_s2 = xOffset;
+            }
+
+            var_s2 -= var_s3;
+            var_s3 -= scrollX + 0x10;
+
+            if (var_s5 < scrollY) {
+                var_s5 = scrollY;
+            }
+            if (yOffset < var_s4) {
+                var_s4 = yOffset;
+            }
+
+            var_s4 -= var_s5;
+            var_s5 -= scrollY + 0x10;
+            if (var_s4 >= 0x100) {
+                var_s4 = 0xFF;
+            }
+
+            do {
+                var_s1 = var_s2;
+                if (var_s1 >= 0x100) {
+                    var_s1 = 0xFF;
+                }
+                prim->u0 = var_s1;
+                prim->v0 = var_s4;
+                prim->x0 = var_s3;
+                prim->y0 = var_s5;
+                var_s3 += var_s1;
+                var_s2 -= var_s1;
+                prim->drawMode = DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
+                prim = prim->next;
+            } while (var_s2 != 0);
+        }
+    }
+
+    while (prim != NULL) {
+        prim->drawMode = DRAW_HIDE;
+        prim = prim->next;
+    }
+}
 
 INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", func_us_801C5364);
 
@@ -28,9 +148,171 @@ INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", func_us_801C2E60_from_no4);
 
 INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", func_us_801C3160_from_no4);
 
-INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", func_us_801C34EC_from_no4);
+void func_us_801C34EC_from_no4(Entity* self) {
+    extern s16 g_BackgroundParticleParams[];
+    s32 scrollX;
+    s16 xOffset;
+    s16 randX;
+    s16 randY;
+    s16 tpage;
+    s32 yOffset;
+    s32 scrollY;
+    s16* ptr;
+    s32 primIndex;
+    Primitive* prim;
 
-INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", func_us_801C37C8_from_no4);
+    if (!self->step) {
+        InitializeEntity(g_EInitInteractable);
+        self->animSet = 0;
+        primIndex = g_api.AllocPrimitives(PRIM_TILE, 0x40);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.et_801C12B0.prim = prim;
+        while (prim != NULL) {
+            prim->priority = 0x9B;
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+        }
+    }
+
+    ptr = &g_BackgroundParticleParams[self->params * 5];
+    xOffset = *ptr++;
+    randX = *ptr++;
+    yOffset = *ptr++;
+    randY = *ptr++;
+    tpage = *ptr;
+
+    prim = self->ext.et_801C12B0.prim;
+    scrollX = g_Tilemap.scrollX.i.hi;
+    scrollY = g_Tilemap.scrollY.i.hi;
+    self->ext.et_801C12B0.unk80++;
+
+    if (scrollY < 0xF0) {
+        yOffset -= scrollY;
+        while (prim != NULL) {
+            if (prim->drawMode == DRAW_HIDE) {
+                prim->r0 = prim->b0 = prim->g0 = 0x80;
+                prim->y0 = yOffset + (rand() % randY);
+                prim->x0 = (xOffset - scrollX) + (rand() % randX);
+                prim->x1 = 0;
+                LOH(prim->r1) = 0;
+                prim->u0 = prim->v0 = 2;
+                LOW(prim->u1) = 0;
+                prim->tpage = tpage;
+                prim->drawMode = DRAW_UNK02;
+                break;
+            }
+            prim = prim->next;
+        }
+    }
+
+    prim = self->ext.et_801C12B0.prim;
+    while (prim != NULL) {
+        if (prim->drawMode != DRAW_HIDE) {
+            LOH(prim->b1) = prim->x0;
+            LOW(prim->r1) += LOW(prim->u1);
+            prim->x0 = LOH(prim->b1);
+            prim->r0 -= 8;
+            prim->b0 = prim->g0 = prim->r0;
+            if (prim->r0 < 8) {
+                prim->drawMode = DRAW_HIDE;
+            }
+        }
+        prim = prim->next;
+    }
+}
+
+void func_us_801C37C8_from_no4(Entity* self) {
+    extern s16 g_BackgroundBlockX0;
+    extern s16 g_BackgroundBlockX1;
+    extern s16 g_BackgroundBlockX2;
+    extern s16 g_BackgroundBlockX3;
+    extern s16 g_BackgroundBlockX4;
+    extern s16 g_BackgroundBlockX5;
+    Primitive* prim;
+    s32 scrollX;
+    s32 scrollY;
+    s32 xOffset;
+    s32 primIndex;
+    s32 clut;
+    s32 randomValue;
+    s32 clutValue;
+
+    if (!self->step) {
+        InitializeEntity(g_EInitInteractable);
+        self->animSet = 0;
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->ext.et_801C12B0.clut = 0;
+        self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.et_801C12B0.prim = prim;
+        prim->tpage = 0xF;
+        prim->v0 = prim->v1 = 0x7F;
+        prim->v2 = prim->v3 = 1;
+        prim->priority = 0x9C;
+        prim->drawMode = DRAW_HIDE;
+    }
+
+    randomValue = rand() & 0x1F;
+    scrollX = randomValue - 0x10;
+    g_BackgroundBlockX0 = randomValue + 0xB20;
+    g_BackgroundBlockX1 = 0x180 - scrollX;
+    g_BackgroundBlockX2 = randomValue + 0x3C;
+    g_BackgroundBlockX3 = randomValue + 0x7B0;
+    g_BackgroundBlockX4 = 0x70 - scrollX;
+    g_BackgroundBlockX5 = randomValue + 0x2A0;
+
+    clutValue = *((volatile u32*)&self->ext.et_801C12B0.clut) + 1;
+    *((volatile u32*)&self->ext.et_801C12B0.clut) = clutValue;
+    if (clutValue >= 0xE) {
+        *((volatile u32*)&self->ext.et_801C12B0.clut) = 0;
+    }
+
+    clut = self->ext.et_801C12B0.clut + 0xA0;
+    prim = self->ext.et_801C12B0.prim;
+    scrollX = g_Tilemap.scrollX.i.hi;
+    scrollY = g_Tilemap.scrollY.i.hi;
+
+    if (scrollX < 0x898) {
+        xOffset = 0x828 - scrollX;
+        if (xOffset < 0x100) {
+            prim->u0 = prim->u2 = 0x11;
+            prim->u1 = prim->u3 = 0x80;
+        } else {
+            prim->drawMode = DRAW_HIDE;
+            return;
+        }
+    } else if (scrollX < 0xAE8) {
+        xOffset = 0xA78 - scrollX;
+        if (xOffset < 0x100) {
+            prim->u0 = prim->u2 = 0x80;
+            prim->u1 = prim->u3 = 0x11;
+        } else {
+            prim->drawMode = DRAW_HIDE;
+            return;
+        }
+    } else {
+        prim->drawMode = DRAW_HIDE;
+        return;
+    }
+
+    prim->clut = clut;
+    prim->x0 = prim->x2 = xOffset;
+    prim->x1 = prim->x3 = xOffset + 0x6F;
+    prim->y0 = prim->y1 = 0xD1 - scrollY;
+    prim->y2 = prim->y3 = prim->y0 + 0x7F;
+    prim->drawMode = DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
+}
 
 INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", func_us_801C3A04_from_no4);
 
@@ -173,7 +455,20 @@ INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", func_us_801C8668);
 
 void RNO4_Unused801C8704(void) {}
 
-INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", func_us_801C870C);
+void func_us_801C870C(Entity* self) {
+    s16 i;
+    u16* tilemap;
+
+    if (!self->params) {
+        tilemap = &g_Tilemap.fg[0x143];
+    } else {
+        tilemap = &g_Tilemap.fg[0x53];
+    }
+
+    for (i = 0; i < 10; i++) {
+        *tilemap++ = 0;
+    }
+}
 
 void RNO4_Unused801C8768(void) {}
 
@@ -185,7 +480,21 @@ void RNO4_Unused801C8BD4(void) {}
 
 void RNO4_Unused801C8BDC(void) {}
 
-INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", LoadFerrymanGateTiles);
+void LoadFerrymanGateTiles(void) {
+    extern u16 g_FerrymanGateTiles[];
+    u16* tileData;
+    Tilemap* tilemap = &g_Tilemap;
+    s16 tileIndex = 0xF89;
+    s32 i;
+    tileData = g_FerrymanGateTiles;
+
+    for (i = 0; i < 7; i++) {
+        tilemap->fg[tileIndex] = *tileData++;
+        tileIndex++;
+        tilemap->fg[tileIndex] = *tileData++;
+        tileIndex += 0xCF;
+    }
+}
 
 void func_us_801C8C54(Entity* self) {
     LoadFerrymanGateTiles();
@@ -196,7 +505,36 @@ INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", func_us_801A071C_from_bo3);
 
 INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", func_us_801A07CC_from_bo3);
 
-INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", func_us_801C5518_from_no4);
+void func_us_801C5518_from_no4(Entity* self) {
+    extern s16 g_PlayerVelocityTriggerBounds[];
+    Entity* player;
+    u16 diff;
+    s16* dataPtr;
+
+    player = &PLAYER;
+
+    if (!self->step) {
+        InitializeEntity(g_EInitInteractable);
+        self->animSet = 0;
+    }
+
+    dataPtr = &g_PlayerVelocityTriggerBounds[self->params * 4];
+
+    diff = player->posX.i.hi + g_Tilemap.scrollX.i.hi - *dataPtr++;
+    if (diff > *dataPtr++) {
+        return;
+    }
+    diff = player->posY.i.hi + g_Tilemap.scrollY.i.hi - *dataPtr++;
+    if (diff > *dataPtr++) {
+        return;
+    }
+    if (player->velocityY < 0) {
+        player->velocityY *= 7;
+        player->velocityY /= 8;
+    } else if (player->velocityY > 0) {
+        player->nFramesInvincibility = 1;
+    }
+}
 
 INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", func_us_801C9048);
 

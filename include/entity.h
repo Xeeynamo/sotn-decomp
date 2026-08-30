@@ -1945,6 +1945,13 @@ typedef struct {
 } ET_GremlinFire;
 
 typedef struct {
+    /* 0x7C */ char pad_7C[0x6];
+    /* 0x82 */ s16 initialOpacity;
+    /* 0x84 */ char pad_84[0x8];
+    /* 0x8C */ struct Entity* linkedEntity;
+} ET_DarkOctopus;
+
+typedef struct {
     /* 0x7C */ Primitive* prim;
     /* 0x80 */ s16 timer;
     /* 0x82 */ char pad_82[0x2];
@@ -4499,6 +4506,7 @@ typedef union { // offset=0x7C
     ET_SalemWitchTribolt salemWitchTribolt;
     ET_Gremlin gremlin;
     ET_GremlinFire gremlinFire;
+    ET_DarkOctopus darkOctopus;
     ET_Corpseweed corpseweed;
     ET_VenusWeed venusWeed;
     ET_VenusWeedFlower venusWeedFlower;

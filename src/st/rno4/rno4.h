@@ -115,7 +115,28 @@ extern EInit g_EInitParticle;
 extern EInit g_EInitInteractable;
 extern EInit g_EInitCommon;
 extern EInit g_EInitNovaSkeleton;
-extern EInit D_us_80180C20;
+extern EInit g_EInitNovaLaser;
 extern EInit g_EInitKillerFish;
+extern EInit g_EInitDarkOctopus;
+extern EInit g_EInitBlueVenusWeedTendril;
+extern EInit g_EInitBlueVenusWeedDart;
+extern EInit g_EInitRockKnightDebris;
+extern EInit g_EInitRockKnightProjectile;
+extern EInit g_EInitJackOBones2;
+
+extern s16* g_VenusWeedSpriteParts[];
+extern Point16 g_VenusWeedTendrilPhysicsSensors[];
+extern Point16 g_VenusWeedTendrilWalkSensors[];
+extern AnimationFrame g_VenusWeedTendrilBounceAnim[];
+extern AnimationFrame g_VenusWeedTendrilRecoverAnim[];
+extern AnimationFrame g_VenusWeedTendrilChargeAnim[];
+extern AnimationFrame g_VenusWeedTendrilLaunchAnim[];
+extern u8 g_VenusWeedTendrilHitboxIndices[];
+extern u8 g_DarkOctopusAnim[];
+extern u8 g_RockKnightProjectileBreakAnim[];
+extern u8 g_JackOBonesSensors2[];
+extern u8 g_JackOBonesSensors3[];
+extern u16 g_JackOBonesDeathPartsRotSpeeds[];
+extern u8 g_NovaSkeletonShootSensors[];
 
 #endif // RNO4_H

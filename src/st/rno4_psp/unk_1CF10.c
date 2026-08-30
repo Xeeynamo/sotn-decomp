@@ -11,13 +11,133 @@ INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", RNO4_Unused801C8BD4);
 
 INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", RNO4_Unused801C8BDC);
 
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", LoadFerrymanGateTiles);
+void LoadFerrymanGateTiles(void) {
+    extern u16 g_FerrymanGateTiles[];
+    u16* tileData;
+    Tilemap* tilemap = &g_Tilemap;
+    s16 tileIndex = 0xF89;
+    s32 i;
+    tileData = g_FerrymanGateTiles;
 
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", func_us_801C8C54);
+    for (i = 0; i < 7; i++) {
+        tilemap->fg[tileIndex] = *tileData++;
+        tileIndex++;
+        tilemap->fg[tileIndex] = *tileData++;
+        tileIndex += 0xCF;
+    }
+}
+
+void func_us_801C8C54(Entity* self) {
+    LoadFerrymanGateTiles();
+    DestroyEntity(self);
+}
 
 INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", func_us_801C12B0_from_no4);
 
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", func_us_801C15F8_from_no4);
+extern s16 g_BackgroundTileRects[];
+
+void func_us_801C15F8_from_no4(Entity* self) {
+    s32 scrollX;
+    s32 scrollY;
+    s16* ptr;
+    s32 var_s5;
+    s32 var_s4;
+    s32 var_s3;
+    s32 var_s2;
+    s32 var_s1;
+    Primitive* prim;
+    s32 primIndex;
+    s32 xOffset;
+    s32 yOffset;
+    s32 i;
+
+    if (self->step) {
+    } else {
+        InitializeEntity(g_EInitInteractable);
+        self->animSet = 0;
+        self->ext.et_801C12B0.unk80 = 4;
+        primIndex = g_api.AllocPrimitives(PRIM_TILE, 16);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.et_801C12B0.prim = prim;
+        while (prim != NULL) {
+            prim->r0 = 0x10;
+            prim->g0 = 8;
+            prim->b0 = 0x18;
+            prim->priority = 0x9D;
+            prim = prim->next;
+        }
+    }
+
+    prim = self->ext.et_801C12B0.prim;
+    ptr = &g_BackgroundTileRects[(self->params & 0xFF) * 4];
+    i = (self->params >> 8) & 0xFF;
+    scrollX = g_Tilemap.scrollX.i.hi - 0x10;
+    scrollY = g_Tilemap.scrollY.i.hi - 0x10;
+    xOffset = scrollX + 0x120;
+    yOffset = scrollY + 0x100;
+
+    for (; i > 0; i--) {
+        var_s3 = *ptr++;
+        var_s2 = var_s3 + *ptr++;
+        if (scrollX >= var_s2 || xOffset < var_s3) {
+            ptr += 2;
+            continue;
+        }
+
+        var_s4 = *ptr++;
+        var_s5 = *ptr++;
+        if (var_s4 > scrollY && yOffset >= var_s5) {
+            if (var_s3 < scrollX) {
+                var_s3 = scrollX;
+            }
+            if (xOffset < var_s2) {
+                var_s2 = xOffset;
+            }
+
+            var_s2 -= var_s3;
+            var_s3 -= scrollX + 0x10;
+
+            if (var_s5 < scrollY) {
+                var_s5 = scrollY;
+            }
+            if (yOffset < var_s4) {
+                var_s4 = yOffset;
+            }
+
+            var_s4 -= var_s5;
+            var_s5 -= scrollY + 0x10;
+            if (var_s4 >= 0x100) {
+                var_s4 = 0xFF;
+            }
+
+            do {
+                var_s1 = var_s2;
+                if (var_s1 >= 0x100) {
+                    var_s1 = 0xFF;
+                }
+                prim->u0 = var_s1;
+                prim->v0 = var_s4;
+                prim->x0 = var_s3;
+                prim->y0 = var_s5;
+                var_s3 += var_s1;
+                var_s2 -= var_s1;
+                prim->drawMode = DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
+                prim = prim->next;
+            } while (var_s2 != 0);
+        }
+    }
+
+    while (prim != NULL) {
+        prim->drawMode = DRAW_HIDE;
+        prim = prim->next;
+    }
+}
 
 INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", func_us_801C5364);
 
@@ -80,11 +200,7 @@ void EntityFloatingIcePlatform(Entity* self) {
     self->posY.i.hi =
         self->ext.floatingIcePlatform.baseY - g_Tilemap.scrollY.i.hi +
         self->ext.floatingIcePlatform.bobOffset;
-#ifdef VERSION_PSP
     collision = GetPlayerCollisionWith(self, hitboxPtr[0], hitboxPtr[1], 4);
-#else
-    collision = GetPlayerCollisionWith(self, *hitboxPtr++, *hitboxPtr, 4);
-#endif
     self->posY.i.hi = prevPosY;
     self->ext.floatingIcePlatform.previousBobOffset =
         self->ext.floatingIcePlatform.bobOffset;
@@ -136,4 +252,17 @@ INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", func_us_801C8668);
 
 INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", RNO4_Unused801C8704);
 
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", func_us_801C870C);
+void func_us_801C870C(Entity* self) {
+    s16 i;
+    u16* tilemap;
+
+    if (!self->params) {
+        tilemap = &g_Tilemap.fg[0x143];
+    } else {
+        tilemap = &g_Tilemap.fg[0x53];
+    }
+
+    for (i = 0; i < 10; i++) {
+        *tilemap++ = 0;
+    }
+}

@@ -1,7 +1,20 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../rno4/rno4.h"
 
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_161A0", TryShoot);
+void TryShoot(void) {
+    s32 collisionResult;
+
+    collisionResult = UnkCollisionFunc2(g_NovaSkeletonShootSensors);
+    if (!g_CurrentEntity->ext.nova.cooldown) {
+        if (GetDistanceToPlayerX() < 0x80) {
+            if ((GetSideToPlayer() & 1) ^ g_CurrentEntity->facingLeft) {
+                SetStep(6);
+            }
+        }
+    } else {
+        g_CurrentEntity->ext.nova.cooldown--;
+    }
+}
 
 INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_161A0", DrawLaserRing);
 
@@ -49,7 +62,7 @@ void EntityNovaLaser(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180C20);
+        InitializeEntity(g_EInitNovaLaser);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 3);
         if (primIndex == -1) {
             DestroyEntity(self);
