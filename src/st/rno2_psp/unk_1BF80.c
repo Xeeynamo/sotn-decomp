@@ -3,10 +3,6 @@
 
 INCLUDE_ASM("st/rno2_psp/nonmatchings/rno2_psp/unk_1BF80", EntityBreakable);
 
-extern u16 g_EInitInteractable;
-extern u16 g_EInitParticle;
-extern Entity g_Entities[256];
-
 void EntityBreakableDebris(Entity* self) {
     Collider collider;
     Entity* explosion;
@@ -17,8 +13,8 @@ void EntityBreakableDebris(Entity* self) {
     switch (self->step) {
     case 0:
         if (self->params & 0x100) {
-            InitializeEntity(&g_EInitInteractable);
-            self->animSet = -0x7FF7;
+            InitializeEntity(g_EInitInteractable);
+            self->animSet = ANIMSET_OVL(9);
             self->unk5A = 0x5B;
             self->palette = 0x226;
             self->animCurFrame = 0x15;
@@ -27,7 +23,7 @@ void EntityBreakableDebris(Entity* self) {
             return;
         }
 
-        InitializeEntity(&g_EInitParticle);
+        InitializeEntity(g_EInitParticle);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
         if (primIndex == -1) {
             DestroyEntity(self);
