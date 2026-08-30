@@ -96,4 +96,7 @@ typedef enum EntityID {
     NUM_ENTITIES,
 };
 
+extern s32 g_BossDoorsLocked;
+extern s32 g_BossFlag;
+
 #endif // RNZ1_H

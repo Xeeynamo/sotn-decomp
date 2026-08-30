@@ -61,6 +61,8 @@ segments:
       - [0x105C, data]
       - [0x1090, .data, e_spikes]
       - [0x10AC, data]
+      - [0x1304, .data, unk_2C7CC]
+      - [0x130C, data]
       - [0x132C, .data, st_update]
       - [0x1378, data]
       - [0x1378, .data, collision]
