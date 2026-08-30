@@ -62,8 +62,7 @@ void EntityJackOBonesDeathParts(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rno1_psp/nonmatchings/rno1_psp/unk_3CF8", EntityJackOBonesJack);
+INCLUDE_ASM(
+    "st/rno1_psp/nonmatchings/rno1_psp/unk_3CF8", EntityJackOBonesJack);
 
-INCLUDE_ASM("st/rno1_psp/nonmatchings/rno1_psp/unk_3CF8", func_psp_0923AD68);
-
-INCLUDE_ASM("st/rno1_psp/nonmatchings/rno1_psp/unk_3CF8", func_psp_0923B2F0);
+#include "../e_particles_maria.h"

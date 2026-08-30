@@ -1,9 +1,57 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../rno1/rno1.h"
 
-INCLUDE_ASM("st/rno1_psp/nonmatchings/rno1_psp/unk_13F88", func_us_801B9028_from_no1);
+void func_us_801B9028_from_no1(Entity* self) {
+    extern u16 D_us_8018076C[];
+    extern u16 D_us_80180D44[];
+    extern u16 D_us_80180D58[];
+    extern char D_us_801A5C70;
 
-INCLUDE_ASM("st/rno1_psp/nonmatchings/rno1_psp/unk_13F88", func_us_801B8F50_from_no1);
+    switch (self->step) {
+    case 0: {
+        InitializeEntity(D_us_8018076C);
+        self->animCurFrame = self->params + 1;
+        self->zPriority = D_us_80180D44[self->params];
+        self->drawFlags = ENTITY_OPACITY;
+        self->opacity = D_us_80180D58[self->params];
+        break;
+    }
+
+    case 1:
+        break;
+
+    case 2:
+#define PAD2_ANIM_DEBUG_PRINT() FntPrint(&D_us_801A5C70, self->animCurFrame)
+#define PAD2_ANIM_DEBUG_ABORT return
+#include "../pad2_anim_debug.h"
+    }
+}
+
+void func_us_801B8F50_from_no1(Entity* self) {
+    extern u16 D_us_8018073C;
+    extern u8 D_us_80180BF8[];
+    extern void* D_us_80180C04[];
+    void* anim;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(&D_us_8018073C);
+        self->animCurFrame = D_us_80180BF8[self->params];
+        self->zPriority = 0x6A;
+        break;
+
+    case 1:
+        if (g_CastleFlags[NO1_ELEVATOR_ACTIVATED]) {
+            self->step += 1;
+        }
+        break;
+
+    case 2:
+        anim = D_us_80180C04[self->params];
+        AnimateEntity(anim, self);
+        break;
+    }
+}
 
 typedef struct {
     /* 0x00 */ u16 animSet;
@@ -39,7 +87,7 @@ void EntityBackgroundBlock(Entity* self) {
         }
 
         if (self->params == 6) {
-            primIndex = (s16)g_api_AllocPrimitives(PRIM_TILE, 1);
+            primIndex = g_api.AllocPrimitives(PRIM_TILE, 1);
             if (primIndex == -1) {
                 DestroyEntity(self);
                 return;
