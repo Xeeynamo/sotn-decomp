@@ -3,6 +3,18 @@
 #include <stdlib.h>
 #include "pc.h"
 
+static FILE* OpenFileRead(const char* filename, char* resolved, size_t size) {
+#ifdef PC_ASSET_OVERRIDE_DIR
+    snprintf(resolved, size, "%s/%s", PC_ASSET_OVERRIDE_DIR, filename);
+    FILE* file = fopen(resolved, "rb");
+    if (file != NULL) {
+        return file;
+    }
+#endif
+    snprintf(resolved, size, "%s", filename);
+    return fopen(filename, "rb");
+}
+
 struct FileAsStringCbParams {
     bool (*callback)(const struct FileAsString*);
     void* param;
@@ -72,8 +84,9 @@ static bool _FileUseContentCb(const struct FileOpenRead* f) {
 // true if successful.
 bool FileOpenRead(
     bool (*cb)(const struct FileOpenRead*), const char* filename, void* param) {
-    INFOF("open '%s'", filename);
-    FILE* f = fopen(filename, "rb");
+    char resolved[1024];
+    FILE* f = OpenFileRead(filename, resolved, sizeof(resolved));
+    INFOF("open '%s'", resolved);
     if (f == NULL) {
         ERRORF("unable to open '%s'", filename);
         return false;
@@ -83,7 +96,7 @@ bool FileOpenRead(
     fseek(f, 0, SEEK_SET);
 
     struct FileOpenRead s = {
-        .filename = filename,
+        .filename = resolved,
         .file = f,
         .length = len,
         .param = param,
@@ -96,8 +109,9 @@ bool FileOpenRead(
 // Read the content of a binary file into the specified buffer by maxlen bytes.
 // The number of read bytes is returned; a negative value represents a failure.
 int FileReadToBuf(const char* filename, void* dst, int offset, size_t maxlen) {
-    INFOF("open '%s'", filename);
-    FILE* f = fopen(filename, "rb");
+    char resolved[1024];
+    FILE* f = OpenFileRead(filename, resolved, sizeof(resolved));
+    INFOF("open '%s'", resolved);
     if (f == NULL) {
         ERRORF("unable to open '%s'", filename);
         return -1;

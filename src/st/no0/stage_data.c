@@ -157,6 +157,61 @@ u16 e_door_pal[] = {
 #include "gen/e_door_pal.h"
 };
 
+#ifdef ENABLE_SATURN_STAGES
+#include <gen/no0_tilemap_0.h>
+#include <gen/no0_tilemap_1.h>
+#include <gen/no0_tilemap_2.h>
+#include <gen/no0_tilemap_3.h>
+#include <gen/no0_tilemap_4.h>
+#include <gen/no0_tilemap_5.h>
+#include <gen/no0_tilemap_6.h>
+#include <gen/no0_tilemap_7.h>
+#include <gen/no0_tilemap_8.h>
+#include <gen/no0_tilemap_9.h>
+#include <gen/no0_tilemap_10.h>
+#include <gen/no0_tilemap_11.h>
+#include <gen/no0_tilemap_12.h>
+#include <gen/no0_tilemap_13.h>
+#include <gen/no0_tilemap_14.h>
+#include <gen/no0_tilemap_15.h>
+#include <gen/no0_tilemap_16.h>
+#include <gen/no0_tilemap_17.h>
+#include <gen/no0_tilemap_18.h>
+#include <gen/no0_tilemap_19.h>
+#include <gen/no0_tilemap_20.h>
+#include <gen/no0_tilemap_21.h>
+#include <gen/no0_tilemap_22.h>
+#include <gen/no0_tilemap_23.h>
+#include <gen/no0_tilemap_24.h>
+#include <gen/no0_tilemap_25.h>
+#include <gen/no0_tilemap_26.h>
+#include <gen/no0_tilemap_27.h>
+#include <gen/no0_tilemap_28.h>
+#include <gen/no0_tilemap_29.h>
+#include <gen/no0_tilemap_30.h>
+#include <gen/no0_tilemap_31.h>
+#include <gen/no0_tilemap_32.h>
+#include <gen/no0_tilemap_33.h>
+#include <gen/no0_tilemap_34.h>
+#include <gen/no0_tilemap_35.h>
+#include <gen/no0_tilemap_36.h>
+#include <gen/no0_tilemap_37.h>
+#include <gen/no0_tilemap_38.h>
+#include <gen/no0_tilemap_39.h>
+#include <gen/no0_tilemap_40.h>
+#include <gen/no0_tilemap_41.h>
+#include <gen/no0_tilemap_42.h>
+#include <gen/no0_tilemap_43.h>
+#include <gen/no0_tilemap_44.h>
+#include <gen/no0_tilemap_45.h>
+#include <gen/no0_tilemap_46.h>
+#include <gen/no0_tilemap_47.h>
+#include <gen/no0_tilemap_48.h>
+
+#include <gen/no0_tiledef_no0.h>
+#include <gen/no0_tiledef_load.h>
+#include <gen/no0_tiledef_save.h>
+#else
 #include "gen/no0_tilemap_0.h"
 #include "gen/no0_tilemap_1.h"
 #include "gen/no0_tilemap_2.h"
@@ -210,3 +265,4 @@ u16 e_door_pal[] = {
 #include "gen/no0_tiledef_no0.h"
 #include "gen/no0_tiledef_load.h"
 #include "gen/no0_tiledef_save.h"
+#endif

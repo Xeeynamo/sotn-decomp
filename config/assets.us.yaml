@@ -1335,6 +1335,7 @@ files:
         vram: 0x80180000
         assets:
           - [0x134, layers, layers]
+          - [0x7B8, layout, entity_layouts]
           - [0x960, skip]
           - [0x2C00, rooms, rooms]
           - [0x2D58, skip]

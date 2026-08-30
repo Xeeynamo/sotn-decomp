@@ -3,15 +3,16 @@ package layout
 import (
 	"bytes"
 	"fmt"
+	"io"
+	"path/filepath"
+	"strings"
+
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/gfxbanks"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
-	"io"
-	"path/filepath"
-	"strings"
 )
 
 const entryCount = 53 // the number seems to be fixed
@@ -42,7 +43,22 @@ func (h *handler) Build(e assets.BuildArgs) error {
 	if e.Name != "entity_layouts" {
 		subDir = strings.TrimSuffix(e.Name, "/entity_layouts")
 	}
-	return buildEntityLayouts(assetPath(e.AssetDir, e.Name), e.SrcDir, subDir, e.OvlName)
+	ovlHeader := fmt.Sprintf("\"../%s.h\"", e.OvlName)
+	if subDir != "" {
+		ovlHeader = fmt.Sprintf("\"../../%s.h\"", e.OvlName)
+	}
+	return buildEntityLayouts(
+		assetPath(e.AssetDir, e.Name), e.SrcDir, subDir, ovlHeader)
+}
+
+func BuildWithOverlayHeader(e assets.BuildArgs) error {
+	subDir := ""
+	if e.Name != "entity_layouts" {
+		subDir = strings.TrimSuffix(e.Name, "/entity_layouts")
+	}
+	return buildEntityLayouts(
+		assetPath(e.AssetDir, e.Name), e.SrcDir, subDir,
+		fmt.Sprintf("<%s.h>", e.OvlName))
 }
 
 func assetPath(dir, name string) string {

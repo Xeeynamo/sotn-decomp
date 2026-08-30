@@ -30,7 +30,7 @@ fn rno3_room_1_has_at_least_99_percent_colour_ssim_with_saturn_room_17() {
         &root.join("assets/st/rno3"),
         &output.parent().unwrap().join("assets/rno3"),
         "us",
-        &[1],
+        &[1, 18],
     );
     assert!(output.with_file_name("rno3-stitch-saturn.png").exists());
     assert!(output.with_file_name("rno3-stitch-pc.png").exists());
