@@ -54,7 +54,6 @@ INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", EntityWaterBox);
 INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", func_us_801C81C8);
 
 void EntityFloatingIcePlatform(Entity* self) {
-    extern u16 g_EInitCommon[];
     extern u16 g_FloatingIcePlatformHitbox[];
     u16* hitboxPtr;
     u16 collision;

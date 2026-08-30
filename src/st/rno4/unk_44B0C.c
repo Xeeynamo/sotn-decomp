@@ -42,11 +42,9 @@ INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", func_us_801C4228_from_no4);
 void EntityWaterBox(Entity* self) {
     Entity* player;
     u16 collision;
-    extern u16 g_EInitInteractable;
-
     if (!self->step) {
-        InitializeEntity(&g_EInitInteractable);
-        self->animSet = -0x7FFF;
+        InitializeEntity(g_EInitInteractable);
+        self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 6;
         if (g_CastleFlags[NO4_WATER_BLOCKED]) {
             self->posX.i.hi = 0x720 - g_Tilemap.scrollX.i.hi;
@@ -92,7 +90,6 @@ void EntityWaterBox(Entity* self) {
 INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", func_us_801C81C8);
 
 void EntityFloatingIcePlatform(Entity* self) {
-    extern u16 g_EInitCommon[];
     extern u16 g_FloatingIcePlatformHitbox[];
     u16* hitboxPtr;
     u16 collision;
@@ -260,11 +257,9 @@ void EntityGreyPuff(Entity* self) {
     }
 }
 
-extern u16 g_EInitParticle;
-
 void EntityIntenseExplosion(Entity* self) {
     if (!self->step) {
-        InitializeEntity(&g_EInitParticle);
+        InitializeEntity(g_EInitParticle);
         self->palette = 0x8170;
         self->animSet = 5;
         self->animCurFrame = 1;
@@ -295,7 +290,6 @@ void EntityIntenseExplosion(Entity* self) {
 INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", PlaySfxPositional);
 
 void EntityBreakableCrystalFloor(Entity* self) {
-    extern EInit g_EInitInteractable;
     extern s16 g_BreakableCrystalFloorTiles[];
     Entity* newEntity;
     s16* tileLayoutPtr;

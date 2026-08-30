@@ -55,7 +55,6 @@ INCLUDE_ASM("st/rno4/nonmatchings/unk_58A30", DrawLaserRing);
 INCLUDE_RODATA("st/rno4/nonmatchings/unk_58A30", D_us_801C4800);
 
 void EntityNovaSkeleton(Entity* self) {
-    extern u16 g_EInitNovaSkeleton;
     extern u8 g_NovaSkeletonSensors[];
     extern u8 g_NovaSkeletonAnimWalkLeft[];
     extern u8 g_NovaSkeletonAnimWalkRight[];
@@ -80,7 +79,7 @@ void EntityNovaSkeleton(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(&g_EInitNovaSkeleton);
+        InitializeEntity(g_EInitNovaSkeleton);
         self->ext.nova.cooldown = 0x50;
 #if defined(VERSION_PSP)
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
@@ -223,7 +222,6 @@ void EntityNovaSkeleton(Entity* self) {
 }
 
 void EntityBladeSoldierDeathParts(Entity* self) {
-    extern EInit g_EInitNovaSkeleton;
     extern u16 g_BladeSoldierDeathPartsRotSpeeds[];
     if (self->step) {
         if (--self->ext.bladeSoldierDeathParts.lifetime) {
@@ -250,10 +248,8 @@ void EntityBladeSoldierDeathParts(Entity* self) {
     }
 }
 
-extern u16 D_us_80180C20;
 extern Entity g_Entities_224;
 extern u8 g_NovaLaserPrimData[];
-extern Entity g_Entities[];
 
 void EntityNovaLaser(Entity* self) {
     s32 centerX;
@@ -267,7 +263,7 @@ void EntityNovaLaser(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_us_80180C20);
+        InitializeEntity(D_us_80180C20);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 3);
         if (primIndex == -1) {
             DestroyEntity(self);

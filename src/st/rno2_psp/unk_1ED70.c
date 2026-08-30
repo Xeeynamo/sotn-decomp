@@ -240,7 +240,6 @@ void func_us_801B3F30_from_bo0(Entity* self) {
     s32 i;
     s32 j;
 
-    extern EInit g_EInitCommon;
     extern s32 g_Unk17ClutIds[];
     extern u16 g_Unk17PaletteAnim[];
 
@@ -278,7 +277,7 @@ void func_us_801B3F30_from_bo0(Entity* self) {
                         (color & ~0x1F) + colorLo;
                 }
             }
-            LoadClut((void*)&(g_Clut[0][0x400]), 0x200, 0xF4);
+            LoadClut((u_long*)&g_Clut[0][0x400], 0x200, 0xF4);
             self->ext.et_801B3F30.unk80 = 0x10;
         }
         break;
@@ -312,8 +311,6 @@ INCLUDE_ASM("st/rno2_psp/nonmatchings/rno2_psp/unk_1ED70", func_us_801B4210_from
 
 void EntityBackgroundBlock(Entity* self) {
     extern ObjInit2 BackgroundBlockInit[];
-    extern EInit g_EInitCommon;
-
     ObjInit2* objInit = &BackgroundBlockInit[self->params];
     if (!self->step) {
         InitializeEntity(g_EInitCommon);

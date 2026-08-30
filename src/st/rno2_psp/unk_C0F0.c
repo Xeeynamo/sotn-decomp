@@ -8,7 +8,6 @@ INCLUDE_ASM("st/rno2_psp/nonmatchings/rno2_psp/unk_C0F0", func_us_801C4960);
 INCLUDE_ASM("st/rno2_psp/nonmatchings/rno2_psp/unk_C0F0", func_us_801C4C0C);
 
 void func_us_801C4EA8(Entity* self) {
-    extern u16 g_EInitParticle;
     extern u8 g_Unk2EAnim;
 #ifdef VERSION_PSP
     s16 angle;
@@ -18,7 +17,7 @@ void func_us_801C4EA8(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(&g_EInitParticle);
+        InitializeEntity(g_EInitParticle);
 #ifndef VERSION_PSP
         angle = self->rotate;
 #endif
@@ -51,7 +50,6 @@ INCLUDE_ASM("st/rno2_psp/nonmatchings/rno2_psp/unk_C0F0", EntityFlyingZombie2);
 INCLUDE_ASM("st/rno2_psp/nonmatchings/rno2_psp/unk_C0F0", EntityFlyingZombie1);
 
 void func_psp_0923AD68(Entity* self) {
-    extern u16 g_EInitObtainable[];
     extern u16 D_pspeu_09258E80[];
     extern u8 D_pspeu_09258EF0[];
     extern s16 D_pspeu_09258E90[];
@@ -146,7 +144,6 @@ void func_psp_0923AD68(Entity* self) {
     }
 }
 
-extern EInit g_EInitObtainable;
 extern AnimateEntityFrame D_pspeu_09258EF0[];
 extern s16 D_pspeu_09258E90[];
 

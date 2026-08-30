@@ -110,4 +110,11 @@ typedef enum EntityID {
     NUM_ENTITIES,
 };
 
+extern EInit g_EInitObtainable;
+extern EInit g_EInitParticle;
+extern EInit g_EInitInteractable;
+extern EInit g_EInitCommon;
+extern EInit g_EInitNovaSkeleton;
+extern EInit D_us_80180C20;
+
 #endif // RNO4_H

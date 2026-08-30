@@ -61,11 +61,9 @@ void EntityGreyPuff(Entity* self) {
     }
 }
 
-extern u16 g_EInitParticle;
-
 void EntityIntenseExplosion(Entity* self) {
     if (!self->step) {
-        InitializeEntity(&g_EInitParticle);
+        InitializeEntity(g_EInitParticle);
         self->palette = 0x8170;
         self->animSet = 5;
         self->animCurFrame = 1;
@@ -108,7 +106,6 @@ INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1A988", func_pspeu_09252F98);
 INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1A988", func_us_801C909C);
 
 extern ObjInit2 BackgroundBlockInit[];
-extern EInit g_EInitCommon;
 
 void EntityBackgroundBlock(Entity* self) {
     ObjInit2* objInit = &BackgroundBlockInit[self->params];

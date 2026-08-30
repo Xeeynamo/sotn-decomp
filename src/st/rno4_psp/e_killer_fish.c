@@ -3,12 +3,11 @@
 
 INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/e_killer_fish", EntityKillerFish);
 
-extern u16 g_EInitParticle;
 extern AnimationFrame g_KillerFishDeathPuffAnim;
 
 void EntityKillerFishDeathPuff(Entity* self) {
     if (!self->step) {
-        InitializeEntity(&g_EInitParticle);
+        InitializeEntity(g_EInitParticle);
 #ifdef VERSION_PSP
         self->pose = 0;
         self->poseTimer = 0;

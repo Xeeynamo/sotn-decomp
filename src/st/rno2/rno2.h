@@ -86,4 +86,9 @@ typedef enum EntityID {
 
 Primitive* FindFirstUnkPrim2(Primitive* prim, u8 index);
 
+extern EInit g_EInitObtainable;
+extern EInit g_EInitParticle;
+extern EInit g_EInitInteractable;
+extern EInit g_EInitCommon;
+
 #endif // RNO2_H

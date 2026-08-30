@@ -3,10 +3,6 @@
 
 INCLUDE_ASM("st/rno2/nonmatchings/unk_322E4", EntityBreakable);
 
-extern u16 g_EInitInteractable;
-extern u16 g_EInitParticle;
-extern Entity g_Entities[256];
-
 void EntityBreakableDebris(Entity* self) {
     Collider collider;
     Entity* explosion;
@@ -17,8 +13,8 @@ void EntityBreakableDebris(Entity* self) {
     switch (self->step) {
     case 0:
         if (self->params & 0x100) {
-            InitializeEntity(&g_EInitInteractable);
-            self->animSet = -0x7FF7;
+            InitializeEntity(g_EInitInteractable);
+            self->animSet = ANIMSET_OVL(9);
             self->unk5A = 0x5B;
             self->palette = 0x226;
             self->animCurFrame = 0x15;
@@ -27,7 +23,7 @@ void EntityBreakableDebris(Entity* self) {
             return;
         }
 
-        InitializeEntity(&g_EInitParticle);
+        InitializeEntity(g_EInitParticle);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -150,7 +146,6 @@ void func_us_801B3F30_from_bo0(Entity* self) {
     s32 i;
     s32 j;
 
-    extern EInit g_EInitCommon;
     extern s32 g_Unk17ClutIds[];
     extern u16 g_Unk17PaletteAnim[];
 
@@ -188,7 +183,7 @@ void func_us_801B3F30_from_bo0(Entity* self) {
                         (color & ~0x1F) + colorLo;
                 }
             }
-            LoadClut((void*)&(g_Clut[0][0x400]), 0x200, 0xF4);
+            LoadClut((u_long*)&g_Clut[0][0x400], 0x200, 0xF4);
             self->ext.et_801B3F30.unk80 = 0x10;
         }
         break;
@@ -204,12 +199,10 @@ void func_us_801B3F30_from_bo0(Entity* self) {
     self->palette = g_Unk17PaletteAnim[self->ext.et_801B3F30.unk7E];
 }
 
-extern u16 g_EInitCommon;
-
 void func_us_801B4148_from_bo0(Entity* self) {
     if (self->step == 0) {
-        InitializeEntity(&g_EInitCommon);
-        self->animSet = -0x7FFE;
+        InitializeEntity(g_EInitCommon);
+        self->animSet = ANIMSET_OVL(2);
         self->animCurFrame = 1;
         self->zPriority = 0xA0;
     }
@@ -227,10 +220,8 @@ void func_us_801B41A4_from_bo0(Entity* self) {
     g_GpuBuffers[1].draw.b0 = 0x28;
 }
 
-extern u16 g_EInitCommon;
 extern u8 g_Unk1AAnimIdle;
 extern u8 g_Unk1AAnimDestroyed;
-extern Entity g_Entities[];
 
 void func_us_801B4210_from_bo0(Entity* self) {
     Entity* entity;
@@ -243,8 +234,8 @@ void func_us_801B4210_from_bo0(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(&g_EInitCommon);
-        self->animSet = -0x7FFE;
+        InitializeEntity(g_EInitCommon);
+        self->animSet = ANIMSET_OVL(2);
         self->zPriority = 0x80;
         break;
     case 1:

@@ -8,7 +8,6 @@ INCLUDE_ASM("st/rno2/nonmatchings/unk_439A4", func_us_801C4960);
 INCLUDE_ASM("st/rno2/nonmatchings/unk_439A4", func_us_801C4C0C);
 
 void func_us_801C4EA8(Entity* self) {
-    extern u16 g_EInitParticle;
     extern u8 g_Unk2EAnim;
 #ifdef VERSION_PSP
     s16 angle;
@@ -18,7 +17,7 @@ void func_us_801C4EA8(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(&g_EInitParticle);
+        InitializeEntity(g_EInitParticle);
 #ifndef VERSION_PSP
         angle = self->rotate;
 #endif

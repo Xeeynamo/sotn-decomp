@@ -1,9 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rno4.h"
 
-extern EInit g_EInitParticle;
 extern Entity g_Entities_224;
-extern Entity g_Entities[];
 
 void EntityBreakableWallDebris(Entity* self) {
     Collider collider;
@@ -17,7 +15,7 @@ void EntityBreakableWallDebris(Entity* self) {
     case 0:
         InitializeEntity(g_EInitParticle);
         self->drawFlags = ENTITY_ROTATE;
-        self->animSet = -0x7FFF;
+        self->animSet = ANIMSET_OVL(1);
         if (Random() & 1) {
             self->animCurFrame = 0x26;
         } else {

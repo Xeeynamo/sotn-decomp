@@ -2,7 +2,6 @@
 #include "../rno4/rno4.h"
 
 void EntityBreakableCrystalFloor(Entity* self) {
-    extern EInit g_EInitInteractable;
     extern s16 g_BreakableCrystalFloorTiles[];
     Entity* newEntity;
     s16* tileLayoutPtr;
