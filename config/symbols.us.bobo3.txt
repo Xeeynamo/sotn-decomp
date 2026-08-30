@@ -14,7 +14,6 @@ g_EInitScyllawyrm = 0x80180600;
 BackgroundBlockInit = 0x8018061C;
 rooms = 0x80181C14;
 func_us_801C123C_from_no4 = 0x8019D160;
-func_us_801C12B0_from_no4 = 0x8019D1D4;
 func_us_801C15F8_from_no4 = 0x8019D51C;
 func_us_801C1844_from_no4 = 0x8019D768;
 EntityBgColumnsParallax_from_no4 = 0x8019DBB8;

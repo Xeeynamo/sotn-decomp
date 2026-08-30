@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "common.h"
 
 INCLUDE_ASM("st/rnz1_psp/nonmatchings/rnz1_psp/unk_19150", func_801CDC80);

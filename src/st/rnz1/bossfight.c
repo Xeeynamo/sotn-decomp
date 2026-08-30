@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rnz1.h"
 
 extern EInit g_EInitInteractable;
@@ -46,7 +47,7 @@ void EntityBossFightManager(Entity* self) {
     case 1:
         entity = &PLAYER;
         scrollX = entity->posX.i.hi + g_Tilemap.scrollX.i.hi;
-        if(scrollX > 0x30 && scrollX < 0xd0){
+        if (scrollX > 0x30 && scrollX < 0xd0) {
             g_BossFlag |= 1;
             g_api.TimeAttackController(
                 TIMEATTACK_EVENT_DARKWING_BAT_DEFEAT, TIMEATTACK_SET_VISITED);
@@ -144,20 +145,20 @@ void EntityBossDoors(Entity* self) {
 
     case 1:
         if (g_bossDoorsLocked) {
-                g_api.PlaySfx(SFX_STONE_MOVE_B);
-                self->step++;
-            #ifdef VERSION_PSP
-                doorTilemap = D_us_8018113C;
-                if (self->params) {
-                    tileIndex = 0x9E;
-                } else {
-                    tileIndex = 0x91;
-                    doorTilemap += 4;
-                }
-                for (i = 0; i < 4; i++, doorTilemap++, tileIndex -= 16) {
-                    g_Tilemap.fg[tileIndex] = *doorTilemap;
-                }
-            #endif
+            g_api.PlaySfx(SFX_STONE_MOVE_B);
+            self->step++;
+#ifdef VERSION_PSP
+            doorTilemap = D_us_8018113C;
+            if (self->params) {
+                tileIndex = 0x9E;
+            } else {
+                tileIndex = 0x91;
+                doorTilemap += 4;
+            }
+            for (i = 0; i < 4; i++, doorTilemap++, tileIndex -= 16) {
+                g_Tilemap.fg[tileIndex] = *doorTilemap;
+            }
+#endif
         }
         break;
 
