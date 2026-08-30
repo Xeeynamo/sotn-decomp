@@ -4723,8 +4723,8 @@
 | rlib       | func_pspeu_09245A68               |       73 |          7 |        |       |     |
 | rno0       | func_pspeu_092533E0               |       73 |          7 |        |       |     |
 | rno1       | LimitAngleChange                  |       73 |          7 |        |       |     |
-| rno2       | LimitAngleChange                  |       73 |          7 |        |       |     |
 | rno2       | Entity3DHouseSpawner              |       73 |          7 |        |       |     |
+| rno2       | LimitAngleChange                  |       73 |          7 |        |       |     |
 | rno3       | func_pspeu_09257B40               |       73 |          7 |        |       |     |
 | rno3       | func_pspeu_09250A20               |       73 |          7 |        |       |     |
 | rno4       | LimitAngleChange                  |       73 |          7 |        |       |     |
