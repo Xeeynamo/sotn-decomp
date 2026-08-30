@@ -1,10 +1,5 @@
 g_WaterSounds = 0x80180EE4;
 g_WaterXTbl = 0x80180EE8;
 PrizeDrops = 0x80181928;
-g_KillerFishAnimIdle = 0x80181974;
-g_KillerFishAnimSwim = 0x80181980;
-g_KillerFishAnimRotate = 0x80181994;
-g_KillerFishDeathPuffPositions = 0x801819A0;
-g_KillerFishDeathPuffAnim = 0x801819B4;
 cutscene_data_ferryman_right = 0x801853B7; // used:true
 D_801B0934 = 0x801C0D3C;
