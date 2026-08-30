@@ -51,7 +51,7 @@ void EntityFrozenShadeCrystal(Entity* self);
 void func_us_801ABDE4(Entity* self);
 void func_us_801AAF00(Entity* self);
 void func_us_801AB04C(Entity* self);
-void EntityBossDoorTrigger(Entity* self);
+void EntityBossFightManager(Entity* self);
 void EntityBossDoors(Entity* self);
 void EntityLifeUpSpawn(Entity* self);
 void EntityCloakedKnight(Entity* self);
@@ -127,7 +127,7 @@ PfnEntityUpdate EntityUpdates[] = {
     func_us_801ABDE4,
     func_us_801AAF00,
     func_us_801AB04C,
-    EntityBossDoorTrigger,
+    EntityBossFightManager,
     EntityBossDoors,
     EntityLifeUpSpawn,
     EntityCloakedKnight,

@@ -108,7 +108,7 @@ enum EntityID {
     E_FLEA_ARMOR_ATTACK_HITBOX, // EntityFleaArmorAttackHitbox
     E_FLEA_MAN,                 // EntityFleaMan
     E_BREAKABLE_DEBRIS,         // EntityBreakableDebris
-    E_BOSS_DOOR_TRIGGER,        // EntityBossDoorTrigger
+    E_BOSS_DOOR_TRIGGER,        // EntityBossFightManager
     E_BOSS_DOORS,               // EntityBossDoors
     E_KARASUMAN,                // EntityKarasuman
     E_KARASUMAN_FEATHER_ATTACK, // EntityKarasumanFeatherAttack

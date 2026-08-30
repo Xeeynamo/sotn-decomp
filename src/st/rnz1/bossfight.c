@@ -1,39 +1,55 @@
-// SPDX-License-Identifier: AGPL-3.0-or-later
-#include "nz1.h"
+#include "rnz1.h"
 
 extern EInit g_EInitInteractable;
 extern EInit g_EInitEnvironment;
 
-s32 D_us_80181134 = 0;
-s32 D_us_80181138 = 0;
+#if defined(VERSION_PSP)
+extern s32 E_ID(FROZEN_SHADE_CRYSTAL);
+extern s32 E_ID(UNK_2E);
+extern s32 E_ID(BOSS_DOORS);
+extern s32 E_ID(LIFE_UP_SPAWN);
+#endif
 
-void EntityBossDoorTrigger(Entity* self) {
+s32 g_bossDoorsLocked = 0;
+s32 g_BossFlag = 0;
+
+void EntityBossFightManager(Entity* self) {
     Entity* entity;
-    s32 timeAttackResult;
+    bool bosses_defeated;
     s32 scrollX;
 
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitInteractable);
-        timeAttackResult = g_api.TimeAttackController(
-            TIMEATTACK_EVENT_KARASUMAN_DEFEAT, TIMEATTACK_GET_RECORD);
-        if (timeAttackResult) {
-            DestroyEntity(self);
+        bosses_defeated = g_api.TimeAttackController(
+            TIMEATTACK_EVENT_DARKWING_BAT_DEFEAT, TIMEATTACK_GET_RECORD);
+        if (bosses_defeated) {
+            self->entityId = E_RELIC_ORB;
+            self->pfnUpdate = EntityRelicOrb;
+            self->poseTimer = 0;
+            self->pose = 0;
+            self->unk6D[0] = 0x10;
+            self->params = RELIC_RING_OF_VLAD;
+            self->step = 0;
             return;
         }
-        entity = &g_Entities[80];
-        CreateEntityFromCurrentEntity(E_ID(KARASUMAN), entity);
+        entity = &g_Entities[79];
+        CreateEntityFromCurrentEntity(E_ID(FROZEN_SHADE_CRYSTAL), entity);
         entity->posX.i.hi = 128 - g_Tilemap.scrollX.i.hi;
-        entity->posY.i.hi = 176 - g_Tilemap.scrollY.i.hi;
+        entity->posY.i.hi = 120 - g_Tilemap.scrollY.i.hi;
+        entity = &g_Entities[80];
+        CreateEntityFromCurrentEntity(E_ID(UNK_2E), entity);
+        entity->posX.i.hi = 128 - g_Tilemap.scrollX.i.hi;
+        entity->posY.i.hi = 120 - g_Tilemap.scrollY.i.hi;
         // fallthrough
 
     case 1:
         entity = &PLAYER;
         scrollX = entity->posX.i.hi + g_Tilemap.scrollX.i.hi;
-        if (!g_Player.demo_timer) {
-            D_us_80181138 |= 1;
+        if(scrollX > 0x30 && scrollX < 0xd0){
+            g_BossFlag |= 1;
             g_api.TimeAttackController(
-                TIMEATTACK_EVENT_KARASUMAN_DEFEAT, TIMEATTACK_SET_VISITED);
+                TIMEATTACK_EVENT_DARKWING_BAT_DEFEAT, TIMEATTACK_SET_VISITED);
             self->step++;
         }
         break;
@@ -49,7 +65,7 @@ void EntityBossDoorTrigger(Entity* self) {
         entity->posX.i.hi = 264 - g_Tilemap.scrollX.i.hi;
         entity->posY.i.hi = 128 - g_Tilemap.scrollY.i.hi;
         entity->params = 1;
-        D_us_80181134 = 1;
+        g_bossDoorsLocked = 1;
         self->step++;
         // fallthrough
 
@@ -70,27 +86,25 @@ void EntityBossDoorTrigger(Entity* self) {
         }
         // fallthrough
     case 5:
-        if (D_us_80181138 & 2) {
+        if (g_BossFlag & 2) {
             g_api.TimeAttackController(
-                TIMEATTACK_EVENT_KARASUMAN_DEFEAT, TIMEATTACK_SET_RECORD);
-            if (g_api.func_80131F68() != false) {
-                g_api.PlaySfx(SET_UNK_90);
-            }
-            currentMusicId = MU_THE_TRAGIC_PRINCE;
+                TIMEATTACK_EVENT_DARKWING_BAT_DEFEAT, TIMEATTACK_SET_RECORD);
+            g_api.PlaySfx(SET_UNK_90);
+            currentMusicId = MU_FINAL_TOCATTA;
             self->step++;
         }
         break;
     case 6:
-        if (D_us_80181138 & 4) {
+        if (g_BossFlag & 4) {
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
                 CreateEntityFromEntity(E_ID(LIFE_UP_SPAWN), self, entity);
                 entity->posX.i.hi = 128;
                 entity->posY.i.hi = 128;
-                entity->params = 7;
-                D_us_80181134 = 0;
+                entity->params = 0x14;
+                g_bossDoorsLocked = 0;
                 stopMusicFlag = true;
-                currentMusicId = MU_THE_TRAGIC_PRINCE;
+                currentMusicId = MU_FINAL_TOCATTA;
                 self->step++;
             }
         }
@@ -129,8 +143,21 @@ void EntityBossDoors(Entity* self) {
         break;
 
     case 1:
-        if (D_us_80181134) {
-            self->step++;
+        if (g_bossDoorsLocked) {
+                g_api.PlaySfx(SFX_STONE_MOVE_B);
+                self->step++;
+            #ifdef VERSION_PSP
+                doorTilemap = D_pspeu_092637C8;
+                if (self->params) {
+                    tileIndex = 0x9E;
+                } else {
+                    tileIndex = 0x91;
+                    doorTilemap += 4;
+                }
+                for (i = 0; i < 4; i++, doorTilemap++, tileIndex -= 16) {
+                    g_Tilemap.fg[tileIndex] = *doorTilemap;
+                }
+            #endif
         }
         break;
 
@@ -150,9 +177,6 @@ void EntityBossDoors(Entity* self) {
             entity->posY.i.hi += 32;
             entity->posX.i.hi -= (Random() & 7);
         }
-        if (!(g_Timer & 0xF)) {
-            g_api.PlaySfx(SFX_STONE_MOVE_B);
-        }
         offsetX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
         if (self->params) {
             if (offsetX < 238) {
@@ -166,33 +190,35 @@ void EntityBossDoors(Entity* self) {
     case 3:
         doorTilemap = D_us_8018113C;
         if (self->params) {
-            tileIndex = 0x6E;
-            doorTilemap += 4;
+            tileIndex = 0x9E;
         } else {
-            tileIndex = 0x61;
+            tileIndex = 0x91;
+            doorTilemap += 4;
         }
-        for (i = 0; i < 4; i++, doorTilemap++, tileIndex += 16) {
+        for (i = 0; i < 4; i++, doorTilemap++, tileIndex -= 16) {
             g_Tilemap.fg[tileIndex] = *doorTilemap;
         }
         self->step++;
         // fallthrough
 
     case 4:
-        if (!D_us_80181134) {
+        GetPlayerCollisionWith(self, 8, 32, 5);
+        if (!g_bossDoorsLocked) {
 #ifdef VERSION_PSP
             doorTilemap = D_pspeu_092637C8;
 #else
             doorTilemap = D_us_8018113C;
 #endif
             if (self->params) {
-                tileIndex = 0x6E;
-                doorTilemap += 4;
+                tileIndex = 0x9E;
             } else {
-                tileIndex = 0x61;
+                tileIndex = 0x91;
+                doorTilemap += 4;
             }
-            for (i = 0; i < 4; i++, tileIndex += 16) {
+            for (i = 0; i < 4; i++, tileIndex -= 16) {
                 g_Tilemap.fg[tileIndex] = 0;
             }
+            g_api.PlaySfx(SFX_STONE_MOVE_B);
             self->step++;
         }
         break;
@@ -221,24 +247,4 @@ void EntityBossDoors(Entity* self) {
         }
         break;
     }
-}
-
-static s32 BossDoorHelper(Entity* self) UNUSED {
-    s32 offsetY;
-
-    MoveEntity();
-    g_CurrentEntity->velocityY += FIX(0.25);
-    offsetY =
-        g_CurrentEntity->posY.i.hi + self->posX.i.hi + g_Tilemap.scrollY.i.hi;
-
-    offsetY = 208 - offsetY; // critical, all in one line breaks regalloc
-
-    if (offsetY <= 0) {
-        g_CurrentEntity->posY.i.hi += offsetY;
-        g_CurrentEntity->velocityX = 0;
-        g_CurrentEntity->velocityY = 0;
-        return 1;
-    }
-
-    return 0;
 }
