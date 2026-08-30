@@ -118,4 +118,133 @@ void EntityBossDoorTrigger(Entity* self) {
         break;
     }
 }
-INCLUDE_ASM("st/rnz1/nonmatchings/unk_2C7CC", EntityBossDoors);
+
+static s16 D_us_8018113C[] = {
+    0x56A, 0x56B, 0x570, 0x571, 0x572, 0x573, 0x574, 0x577,
+};
+
+// n.b.! this is included in `us` but unused. PSP fixes this.
+static s16 D_pspeu_092637C8[] = {
+    0x135, 0x138, 0x142, 0x138, 0x13A, 0x13D, 0x10A, 0xE1,
+};
+
+void EntityBossDoors(Entity* self) {
+    s16* doorTilemap;
+    Entity* entity;
+    s32 offsetX;
+    s32 tileIndex;
+    s32 i;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitEnvironment);
+        self->animCurFrame = 7;
+        self->zPriority = 0x78;
+        break;
+
+    case 1:
+        if (g_BossDoorsLocked) {
+                g_api.PlaySfx(SFX_STONE_MOVE_B);
+                self->step++;
+            #ifdef VERSION_PSP
+                doorTilemap = D_pspeu_092637C8;
+                if (self->params) {
+                    tileIndex = 0x9E;
+                } else {
+                    tileIndex = 0x91;
+                    doorTilemap += 4;
+                }
+                for (i = 0; i < 4; i++, doorTilemap++, tileIndex -= 16) {
+                    g_Tilemap.fg[tileIndex] = *doorTilemap;
+                }
+            #endif
+        }
+        break;
+
+    case 2:
+        GetPlayerCollisionWith(self, 8, 32, 5);
+        if (self->params) {
+            self->velocityX = FIX(-0.5);
+        } else {
+            self->velocityX = FIX(0.5);
+        }
+
+        MoveEntity();
+        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (entity != NULL) {
+            CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
+            entity->params = 0x10;
+            entity->posY.i.hi += 32;
+            entity->posX.i.hi -= (Random() & 7);
+        }
+        offsetX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
+        if (self->params) {
+            if (offsetX < 238) {
+                self->step++;
+            }
+        } else if (offsetX > 18) {
+            self->step++;
+        }
+        break;
+
+    case 3:
+        doorTilemap = D_us_8018113C;
+        if (self->params) {
+            tileIndex = 0x9E;
+        } else {
+            tileIndex = 0x91;
+            doorTilemap += 4;
+        }
+        for (i = 0; i < 4; i++, doorTilemap++, tileIndex -= 16) {
+            g_Tilemap.fg[tileIndex] = *doorTilemap;
+        }
+        self->step++;
+        // fallthrough
+
+    case 4:
+        GetPlayerCollisionWith(self, 8, 32, 5);
+        if (!g_BossDoorsLocked) {
+#ifdef VERSION_PSP
+            doorTilemap = D_pspeu_092637C8;
+#else
+            doorTilemap = D_us_8018113C;
+#endif
+            if (self->params) {
+                tileIndex = 0x9E;
+            } else {
+                tileIndex = 0x91;
+                doorTilemap += 4;
+            }
+            for (i = 0; i < 4; i++, tileIndex -= 16) {
+                g_Tilemap.fg[tileIndex] = 0;
+            }
+            g_api.PlaySfx(SFX_STONE_MOVE_B);
+            self->step++;
+        }
+        break;
+
+    case 5:
+        if (self->params) {
+            self->velocityX = FIX(0.75);
+        } else {
+            self->velocityX = FIX(-0.75);
+        }
+        MoveEntity();
+        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (entity != NULL) {
+            CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
+            entity->params = 0x10;
+            entity->posY.i.hi += 32;
+            entity->posX.i.hi -= (Random() & 7);
+        }
+        offsetX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
+        if (self->params) {
+            if (offsetX > 264) {
+                DestroyEntity(self);
+            }
+        } else if (offsetX > 7) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
