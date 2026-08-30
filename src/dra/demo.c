@@ -224,8 +224,8 @@ void DemoOpenFile(s32 arg0) {
 
 #ifdef VERSION_PC
     memset(DEMO_KEY_PTR, 0, DEMO_MAX_LEN);
-    FileReadToBuf("BIN/DEMOKEY.BIN", DEMO_KEY_PTR,
-                  g_DemoKeyIdx * DEMO_MAX_LEN, DEMO_MAX_LEN);
+    FileReadToBuf("BIN/DEMOKEY.BIN", DEMO_KEY_PTR, g_DemoKeyIdx * DEMO_MAX_LEN,
+                  DEMO_MAX_LEN);
     return;
 #endif
     if (arg0 == 0) {

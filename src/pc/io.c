@@ -6,8 +6,7 @@
 static FILE* OpenRuntimeFile(
     const char* path, char* resolved, size_t resolvedSize) {
 #ifdef SOTN_RUNTIME_OVERRIDE_DIR
-    snprintf(
-        resolved, resolvedSize, "%s/%s", SOTN_RUNTIME_OVERRIDE_DIR, path);
+    snprintf(resolved, resolvedSize, "%s/%s", SOTN_RUNTIME_OVERRIDE_DIR, path);
     FILE* file = fopen(resolved, "rb");
     if (file != NULL) {
         return file;
