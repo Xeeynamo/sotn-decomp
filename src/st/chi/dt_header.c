@@ -29,7 +29,7 @@ Overlay g_Overlay = {
 };
 
 // D_80180040: spriteBanks
-#include "gen/sprite_banks.h"
+#include <gen/sprite_banks.h>
 
 // Palette Data -- These addresses are to the binary data
 extern u16* bn_pal_unused_0[0x30]; // Unused (US)
@@ -58,7 +58,7 @@ u_long* cluts[] = {
 
 // D_801800E8: layers
 // D_80180218: rooms_layers
-#include "gen/layers.h"
+#include <gen/layers.h>
 
 // Gfx Bank Data -- These addresses are to the binary data
 extern u8 bn_gfx_stage_name_jp_sm[];
@@ -74,4 +74,4 @@ extern u8 bn_gfx_venus_weed_1[];
 extern u8 bn_gfx_venus_weed_2[];
 extern u8 bn_gfx_stage_name_en[];
 
-#include "gen/graphics_banks.h"
+#include <gen/graphics_banks.h>

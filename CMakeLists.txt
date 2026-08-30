@@ -1304,6 +1304,7 @@ function(add_overlay name)
         include
         src/dra
         src/pc
+        src/st/${name}
     )
 
     target_compile_definitions(${name} PRIVATE
