@@ -1113,8 +1113,8 @@ void RicStepWalk(void) {
 extern AnimationFrame D_us_80181F24[];
 
 void RicStepRun(void) {
-    g_Ric.timers[8] = 8;
-    g_Ric.timers[1] = 8;
+    g_Ric.timers[PL_T_8] = 8;
+    g_Ric.timers[PL_T_CURSE] = 8;
     if (RicCheckInput(0x305C) == 0) {
         DecelerateX(FIX(0.125));
         if (RicCheckFacing() == 0) {
