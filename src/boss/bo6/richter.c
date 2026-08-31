@@ -1119,7 +1119,7 @@ void RicStepRun(void) {
         DecelerateX(FIX(0.125));
         if (RicCheckFacing() == 0) {
             RicSetStand(0);
-            if (g_Ric.timers[0xB] == 0) {
+            if (g_Ric.timers[PL_T_RUN] == 0) {
                 if (!(g_Ric.vram_flag & (TOUCHING_L_WALL | TOUCHING_R_WALL))) {
                     RicSetAnimation(&D_us_80181F24);
                     RicCreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
