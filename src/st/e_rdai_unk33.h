@@ -9,7 +9,10 @@ extern u8 g_RdaiUnk33Anim5[];
 extern char g_RdaiUnk33DebugText[];
 #endif
 
-#define RDAI_UNK33_DEATH_STARTED(self) (((u8*)&(self)->ext)[8])
+#ifndef RDAI_UNK33_DEATH_PARTICLE
+#define RDAI_UNK33_DEATH_PARTICLE E_UNK_34
+#define RDAI_UNK33_LOCAL_DEATH_PARTICLE
+#endif
 #if defined(VERSION_PSP)
 #define RDAI_UNK33_PAD_PRESSED g_pads[1].pressed
 #else
@@ -21,14 +24,14 @@ void EntityRdaiUnk33(Entity* self) {
     Entity* entity;
     s32 i;
 
-    if ((self->flags & FLAG_DEAD) && !RDAI_UNK33_DEATH_STARTED(self)) {
+    if ((self->flags & FLAG_DEAD) && !self->ext.rdaiUnk33.deathStarted) {
         PlaySfxPositional(SFX_EXPLODE_B);
         if (self->params) {
             SetStep(5);
         } else {
             SetStep(3);
         }
-        RDAI_UNK33_DEATH_STARTED(self) = 1;
+        self->ext.rdaiUnk33.deathStarted = 1;
     }
 
     switch (self->step) {
@@ -51,7 +54,8 @@ void EntityRdaiUnk33(Entity* self) {
             for (i = 0; i < 16; i++) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_UNK_34, self, entity);
+                    CreateEntityFromEntity(
+                        RDAI_UNK33_DEATH_PARTICLE, self, entity);
                 }
             }
             DestroyEntity(self);
@@ -67,7 +71,8 @@ void EntityRdaiUnk33(Entity* self) {
             for (i = 0; i < 16; i++) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_UNK_34, self, entity);
+                    CreateEntityFromEntity(
+                        RDAI_UNK33_DEATH_PARTICLE, self, entity);
                 }
             }
             DestroyEntity(self);
@@ -102,5 +107,8 @@ void EntityRdaiUnk33(Entity* self) {
     }
 }
 
-#undef RDAI_UNK33_DEATH_STARTED
 #undef RDAI_UNK33_PAD_PRESSED
+#ifdef RDAI_UNK33_LOCAL_DEATH_PARTICLE
+#undef RDAI_UNK33_DEATH_PARTICLE
+#undef RDAI_UNK33_LOCAL_DEATH_PARTICLE
+#endif

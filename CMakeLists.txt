@@ -132,6 +132,7 @@ set(SOURCE_FILES_PC
     src/pc/stubs.c
     src/pc/sotn.c
     src/pc/replay.c
+    src/pc/spawn_point.c
     src/pc/pc.c
     src/pc/cutscene_pc.c
     src/pc/io.c
@@ -796,28 +797,53 @@ set(SOURCE_FILES_STAGE_NZ0
 
 set(SOURCE_FILES_STAGE_RNO0
     src/pc/stages/stage_rno0.c
+    src/st/rno0/create_entity.c
+    src/st/rno0/e_misc.c
     src/st/rno0/layers.c
     src/st/rno0/palette_def.c
     src/st/rno0/sprite_banks.c
     src/st/rno0/graphics_banks.c
     src/st/rno0/stage_data.c
     src/st/rno0/tilemaps.c
+    src/st/rno0/e_red_door.c
+    src/st/rno0/e_red_door_tiles.c
+    src/st/rno0/e_room_fg.c
+    src/st/rno0/st_common.c
+    src/st/rno0/st_update.c
+    src/st/rno0/gen/e_laydef.c
+    src/st/rno0/gen/e_layout.c
     src/st/rno0/gen/rooms.c
     src/st/rno0/gen/us/sprites.c)
 
 set(SOURCE_FILES_STAGE_RNO4
     src/pc/stages/stage_rno4.c
+    src/st/rno4/create_entity.c
+    src/st/rno4/e_red_door.c
+    src/st/rno4/e_red_door_tiles.c
+    src/st/rno4/e_room_fg.c
+    src/st/rno4/st_common.c
+    src/st/rno4/st_update.c
+    src/st/rno4/unk_44B0C.c
     src/st/rno4/gen/rooms.c
     src/st/rno4/stage_data.c)
 
 set(SOURCE_FILES_STAGE_RNO3
     src/pc/stages/stage_rno3.c
+    src/st/rno3/create_entity.c
+    src/st/rno3/e_misc.c
     src/st/rno3/layers.c
     src/st/rno3/palette_def.c
     src/st/rno3/sprite_banks.c
     src/st/rno3/graphics_banks.c
     src/st/rno3/stage_data.c
     src/st/rno3/tilemaps.c
+    src/st/rno3/e_red_door.c
+    src/st/rno3/e_red_door_tiles.c
+    src/st/rno3/e_room_fg.c
+    src/st/rno3/st_common.c
+    src/st/rno3/st_update.c
+    src/st/rno3/gen/e_laydef.c
+    src/st/rno3/gen/e_layout.c
     src/st/rno3/gen/us/rooms.c
     src/st/rno3/gen/us/sprites.c)
 
@@ -1278,6 +1304,7 @@ function(add_overlay name)
         include
         src/dra
         src/pc
+        src/st/${name}
     )
 
     target_compile_definitions(${name} PRIVATE
