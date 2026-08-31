@@ -47,7 +47,7 @@ typedef enum EntityID {
     E_MINOTAUR_DEATH_PUFF,              // EntityMinotaurDeathPuff
     E_BOSS_TORCH,                       // EntityBossTorch
     E_BOSS_DOORS,                       // EntityBossDoors
-    E_LIFE_UPSPAWN,                     // EntityLifeUpSpawn
+    E_LIFE_UP_SPAWN,                    // EntityLifeUpSpawn
     E_CUTSCENE_DIALOGUE,                // EntityCutsceneDialogue
     E_UNK_26,                           // func_us_801A6EF8
     E_UNK_27,                           // func_us_801A7340

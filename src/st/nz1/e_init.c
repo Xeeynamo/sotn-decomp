@@ -77,7 +77,7 @@ void EntityFleaArmor(Entity* self);
 void EntityFleaArmorAttackHitbox(Entity* self);
 void EntityFleaMan(Entity* self);
 void EntityBreakableDebris(Entity* self);
-void EntityBossDoorTrigger(Entity* self);
+void EntityBossFightManager(Entity* self);
 void EntityBossDoors(Entity* self);
 void EntityKarasuman(Entity* self);
 void EntityKarasumanFeatherAttack(Entity* self);
@@ -167,7 +167,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityFleaArmorAttackHitbox,
     EntityFleaMan,
     EntityBreakableDebris,
-    EntityBossDoorTrigger,
+    EntityBossFightManager,
     EntityBossDoors,
     EntityKarasuman,
     EntityKarasumanFeatherAttack,

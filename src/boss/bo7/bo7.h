@@ -44,7 +44,7 @@ typedef enum EntityID {
     E_UNK_1E,                // func_us_80195AF0
     E_UNK_1F,                // func_us_80195C50
     E_UNK_20,                // func_us_801963D8
-    E_LIFE_UPSPAWN,          // EntityLifeUpSpawn
+    E_LIFE_UP_SPAWN,         // EntityLifeUpSpawn
     NUM_ENTITIES,
 };
 
