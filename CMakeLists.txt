@@ -21,11 +21,15 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
+option(ENABLE_ASAN "Enable AddressSanitizer" ON)
+
 if (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang|AppleClang")
     set(CMAKE_BUILD_TYPE Debug)
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address")
-    set(CMAKE_LINKER_FLAGS "${CMAKE_LINKER_FLAGS} -fsanitize=address")
+    if (ENABLE_ASAN)
+        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address")
+        set(CMAKE_LINKER_FLAGS "${CMAKE_LINKER_FLAGS} -fsanitize=address")
+    endif()
 
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-implicit-function-declaration")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-incompatible-pointer-types")
@@ -1282,6 +1286,7 @@ if (WIN32)
                     -DDUMPBIN=${_msvc_bindir}/dumpbin.exe
                     -DOUT=${_sotn_def}
                     "-DINPUTS=$<TARGET_FILE:psyz>$<SEMICOLON>$<JOIN:$<TARGET_OBJECTS:${PROJECT_NAME}>,$<SEMICOLON>>"
+                    "-DNODATA_SYMBOLS=g_saveIconPal"
                     -P ${CMAKE_SOURCE_DIR}/cmake/gen_export_def.cmake
             VERBATIM
             COMMENT "Generating export .def for overlay symbol resolution")
@@ -1297,7 +1302,11 @@ else()
 endif()
 
 function(add_overlay name)
-    add_library(${name} SHARED ${ARGN})
+    set(_overlay_sources ${ARGN})
+    if (WIN32)
+        list(APPEND _overlay_sources src/pc/ovl_stubs.c)
+    endif()
+    add_library(${name} SHARED ${_overlay_sources})
     set_target_properties(${name} PROPERTIES PREFIX "")
 
     target_include_directories(${name} PRIVATE
