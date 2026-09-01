@@ -142,7 +142,7 @@ EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0, 0, 0, 0x002};
 EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0, 0, 0, 0x001};
 EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
-EInit D_us_801808BC = {ANIMSET_OVL(2), 11, 0, 0, 0x003};
+EInit g_EInitEnvironment = {ANIMSET_OVL(2), 11, 0, 0, 0x003};
 EInit D_us_801808C8 = {ANIMSET_OVL(3), 1, 73, 513, 0x003};
 
 EInit g_EInitCtulhu = {ANIMSET_OVL(4), 0, 72, 515, 0x0E9};

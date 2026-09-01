@@ -3,5 +3,5 @@
 
 // unused, identical to stage_title_wrp_jp
 u8 stage_title_mad_jp[] = {
-#include "gen/stage_title_mad_jp.h"
+#include <gen/stage_title_mad_jp.h>
 };

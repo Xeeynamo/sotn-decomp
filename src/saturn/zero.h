@@ -19,6 +19,13 @@ void DMA_ScuInit();
 // void SPR_2SetGourTbl(u16 arg0);
 
 void InitPrimBuf();
+void func_06004D84(void);
+void func_06004DE8(void);
+void func_06004E50(void);
+void func_06004E94(void);
+void INT_SetScuFunc(u32 vector, void (*handler)(void));
+extern void (*DAT_06000344)(u32 clearMask, u32 setMask);
+extern s32 DAT_06064320;
 
 // DAT_0605c120, DAT_060645EC, DAT_060645e4, DAT_060645f8 and SpGourTbl
 // are deliberately absent: zero and its dependents access them at
@@ -145,6 +152,9 @@ extern u32 DAT_0605C658;
 void func_06030df0();
 void InitBackupRam(void);
 s32 func_06030690(s8 arg0, s32 arg1, void* arg2);
+s32 func_0600D028(s32 arg0, s8 arg1);
+s8 func_0600D264(s8 arg0, s8 arg1);
+s8 func_0600D47C(s32 arg0, s8 arg1);
 extern s8 DAT_0605DD61;
 extern s16 DAT_0605DD90;
 void InitSystem();
@@ -201,6 +211,7 @@ extern u16 DAT_0605cea0;
 extern SaturnSpriteResource g_EntitySpriteBank14;
 extern SaturnSpriteResource g_EntitySpriteBank01;
 extern SaturnSpriteFrameHeader* DAT_06045E14[];
+extern s16 DAT_06045FA8;
 extern EntityEntry g_EntityNoopEntry;
 extern SaturnSpriteFrameHeader* g_SaturnSharedOpaquePuffFrames1[15];
 extern SaturnSpriteFrameHeader* g_SaturnSharedOpaquePuffFrames0[14];
@@ -248,7 +259,7 @@ s32 func_06017F5C(u8*);
 void code2name(u32 code, u8* name);
 extern u8 DAT_0606423a;
 extern u8 DAT_06064414;
-extern s32 DAT_06064250;
+extern s32 DAT_06064250[];
 void StopPcm(s32 param);
 void func_06011F40(s32 param);
 s32 func_0601BDD0(s32);

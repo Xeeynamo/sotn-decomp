@@ -373,7 +373,45 @@ void InitializePads(void) {
 }
 
 // SET_VBLANK
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004D00, func_06004D00);
+void func_06004D00(s32 useAlternateHandlers) {
+    s32 vector;
+    s32 scuMask;
+    void (*handler)(void);
+    u32 savedSr;
+    s16 srMask;
+    u32 interruptMask;
+    void (*setScuHandler)(u32, void (*)(void));
+    void (**changeScuMask)(u32, u32);
+
+    SH2_GET_SR(savedSr);
+    savedSr |= 0xF0;
+    SH2_SET_SR(savedSr);
+    if (useAlternateHandlers == 0) {
+        changeScuMask = &DAT_06000344;
+        scuMask = 7;
+        (*changeScuMask)(-1, scuMask);
+        handler = func_06004D84;
+        setScuHandler = INT_SetScuFunc;
+        setScuHandler(0x40, handler);
+        setScuHandler(0x41, func_06004DE8);
+        handler = NULL;
+        vector = 0x42;
+    } else {
+        changeScuMask = &DAT_06000344;
+        scuMask = 3;
+        (*changeScuMask)(-1, scuMask);
+        handler = func_06004E50;
+        setScuHandler = INT_SetScuFunc;
+        setScuHandler(0x40, handler);
+        handler = func_06004E94;
+        vector = 0x41;
+    }
+    setScuHandler(vector, handler);
+    (*changeScuMask)(-4, 0);
+    SH2_GET_SR(interruptMask);
+    srMask = ~0xF0;
+    SH2_SET_SR(srMask & interruptMask);
+}
 void func_06004D84(void) {
     u32 sr;
     u32 imask;
@@ -659,7 +697,26 @@ void ReadFileToAddrAsync(u32 param_1, u32 param_2, u32 param_3, u32 param_4) {
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006720, func_06006720);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006A7C, func_06006A7C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006C00, func_06006C00);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006E14, func_06006E14);
+s8* func_06006E14(s8* path) {
+    s32 lastSlash;
+    s32 i;
+
+    lastSlash = -1;
+    i = 0;
+    do {
+        if (path[i] == '\\') {
+            lastSlash = i;
+        } else if (path[i] == 0) {
+            break;
+        }
+        i++;
+    } while (i <= 0x3E);
+
+    lastSlash++;
+    return path + lastSlash;
+}
+
+const u16 DAT_06006E4A = 0x0009;
 void func_06006E4C(s8* path, s8* dst) {
     s32 lastSlash;
     s32 i;
@@ -1567,7 +1624,23 @@ void func_0600AFA8(SpriteObject* sprite, SaturnSpriteFrameHeader* frame) {
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600B004, func_0600B004);
 
 // _SetParts
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600B084, func_0600B084);
+void func_0600B084(SpritePart* part, SaturnSpritePart* src, s32 count) {
+    s32 i;
+    u16* in;
+    u16* out;
+    u16 attributes;
+
+    for (i = 0; i < count; i++, src++) {
+        in = (u16*)src;
+        out = (u16*)part;
+        attributes = *in++;
+        *out++ = attributes;
+        *out++ = *in++;
+        *out++ = *in++;
+        *out = *in;
+        part = part->next;
+    }
+}
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600B0B8, func_0600B0B8);
 
 void func_0600B104(u16* param_1, int param_2, int param_3)
@@ -1866,7 +1939,34 @@ void func_0600C0C4(int param_1) {
 
 void func_0600C0FC(void) { DAT_060645D0[0]->allocationIndex = 0xC; }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600C114, func_0600C114);
+extern SaturnSpriteResource** DAT_060645EC;
+
+void func_0600C114(void) {
+    SaturnSpriteResource* resource;
+    SaturnSpriteImage* image;
+    s32 mode;
+    s32 resourceIndex;
+
+    d_0605BECA = DAT_06038FD4;
+    resource = *DAT_060645EC;
+    resourceIndex = 0;
+    if (resource != NULL) {
+        do {
+            if (resource->palettes != NULL) {
+                image = resource->images;
+                if (image != NULL) {
+                    mode = 8;
+                    if (resource->flags & 0x4000) {
+                        mode = 0;
+                    }
+                    resource->allocationIndex = func_0600AE30(0, image, mode);
+                }
+            }
+            resourceIndex++;
+            resource = DAT_060645EC[resourceIndex];
+        } while (resource != NULL);
+    }
+}
 
 void func_0600C18C(void) {
     d_0605AEA8 = 0x10;
@@ -1981,7 +2081,22 @@ void func_0600C518(s32* charSrc, s32* palSrc, s32 charRows, s32 palRows) {
         } while (DMA_CpuResult() == 2);
     }
 }
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600C628, func_0600C628);
+void func_0600C628(s32* source, s32 rowCount) {
+    s32 row;
+    s32* destination;
+
+    rowCount = (rowCount + 0xB) / 12;
+    destination = func_0600CB04(0x140, 0x87);
+    row = 0;
+    while (row < rowCount) {
+        DMA_CpuMemCopy2(destination, source, 0xC0U);
+        while (DMA_CpuResult() == 2) {
+        }
+        row++;
+        destination += 0x100;
+        source += 0x60;
+    }
+}
 
 void func_0600C6AC(s32 arg0, s32 arg1) {
     func_0600C880(0x13B00, arg1, 0x240);
@@ -2206,7 +2321,37 @@ s32 func_0600DCF0(Primitive* prim) {
     return visible;
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600DD38, func_0600DD38);
+s32 func_0600DD38(Primitive* prim) {
+    s32 visible;
+    s16* x;
+    s32 i;
+    s32 lastCorner;
+    u16 maxX;
+    u16 maxY;
+    s16* y;
+    s16 py;
+
+    visible = 0;
+    x = &prim->x0;
+    i = 0;
+    lastCorner = 1;
+    maxX = 0x17F;
+    maxY = 0x12F;
+    y = &prim->y0;
+
+    for (; i <= lastCorner; i++, lastCorner = 1, x += 4) {
+        py = *y;
+        y += 4;
+        if ((u16)(*x + 0x20) <= maxX && (u16)(py + 0x20) <= maxY) {
+            visible = lastCorner;
+            break;
+        }
+    }
+
+    return visible;
+}
+
+const u16 DAT_0600DD82 = 0x0009;
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600DD84, func_0600DD84);
 s32 func_0600DDD4(Primitive* prim) {
     s32 visible;
@@ -2803,7 +2948,15 @@ void func_0600FF64(s16 arg0) {
         DestroyEntity(entity);
     }
 }
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FFB8, func_0600FFB8);
+void func_0600FFB8(Entity* self) {
+    if (self->unk0 != NULL) {
+        DestroySpriteObject(self->unk0);
+    }
+    if (self->flags & 0x800000) {
+        FreePrimitives(self->primIndex);
+    }
+    memset(self, 0, sizeof(Entity));
+}
 
 // func_06010008
 void InitDebugPrint(void) {
@@ -2865,7 +3018,22 @@ void SignalSlaveSh2(void) {
 }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011278, func_06011278);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011A6C, func_06011A6C);
+void func_06011A6C(s32 arg0) {
+    s32 i;
+
+    i = 0;
+    for (;;) {
+        if (DAT_06064250[i] != 0) {
+            if (i != 0x1E) {
+                i++;
+                continue;
+            }
+        }
+        break;
+    }
+    DAT_06064250[i] = arg0;
+    DAT_06064250[i + 1] = 0;
+}
 
 s32 PlaySfxVolPan(s32 sfxId, s32 sfxVol, s16 sfxPan) {
     s32 ret = 0;

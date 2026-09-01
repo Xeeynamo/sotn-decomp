@@ -484,32 +484,7 @@ s32 func_801BBC3C(Entity* e) {
 }
 
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E4FD0, func_060E4FD0);
-void func_060E5388(Entity* arg0) {
-    Tilemap* map;
-    u8* dest;
-    s16 scroll_y;
-    s32 index;
-    s32 i;
-    s32 offset;
-    s32 x;
-    s32 y;
-
-    map = &g_Tilemap;
-    i = 0;
-    dest = DAT_0608FFF8;
-    offset = -0x18;
-    do {
-        x = arg0->posX.i.hi;
-        y = arg0->posY.i.hi;
-        index = ((x + map->scrollX.i.hi) << 2) / 5;
-        scroll_y = map->scrollY.i.hi;
-        index =
-            (index >> 4) + (((y + offset + scroll_y) >> 4) * map->hSize * 0x10);
-        dest[index] = arg0->animCurFrame != 0 ? 3 : 0;
-        i += 1;
-        offset += 0x10;
-    } while (i <= 3);
-}
+#include "set_entity_collision_tiles.h"
 
 const u16 pad_060E540C[] = {0xCCCC, 0xCCCD};
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E5410, func_060E5410);
@@ -552,7 +527,8 @@ void func_060E5DB4(Entity* self) {
 }
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E5EA0, func_060E5EA0);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E600C, func_060E600C);
-INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E6140, func_060E6140);
+#define SPAWN_DESTRUCT_ANIM_ID 20
+#include "spawn_destruct_anim.h"
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E625C, func_060E625C);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E633C, func_060E633C);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E6628, func_060E6628);
@@ -1095,10 +1071,10 @@ void func_060E7508(Entity* self) {
             PlaySfx(SFX_SAVE_COFFIN_SWISH);
         }
     }
-    func_060E81D4(self);
+    SaveDeviceProbe(self);
 }
 
-INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E81D4, func_060E81D4);
+#include "save_device_probe.h"
 u16 func_060E82EC(s32 minX, s32 maxX) {
     u16 standing;
 
@@ -1294,17 +1270,28 @@ void EntityAxeKnightRotateAxe(Entity* self) {
 
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EACC0, func_060EACC0);
 
-INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EAF2C, func_060EAF2C);
+void func_060EAF2C(Entity* self) {
+    struct SpriteParts* parts = &g_Stage02BloodyZombieSpriteParts0;
+    SaturnSpriteResource* bank = (SaturnSpriteResource*)g_Stage02SpriteBank31;
+
+    self->unk0 =
+        CreateSpriteObject(bank->allocationIndex, bank->flags, parts, 7);
+
+    self->ext.spriteAnimEnemy.frames = g_Stage02BloodyZombieFrames;
+    self->ext.spriteAnimEnemy.animations = DAT_060F3960;
+    self->ext.spriteAnimEnemy.unk80 = 0;
+    self->ext.spriteAnimEnemy.unk81 = 0;
+    self->ext.spriteAnimEnemy.unk82 = 0;
+
+    SyncSpriteObjectPosUnchecked(self, DAT_060F3824);
+    self->step++;
+}
 
 // EntityBloodyZombie
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EAFAC, func_060EAFAC);
 
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EB5C4, func_060EB5C4);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EB6E4, func_060EB6E4);
-extern u8 g_Stage02SkeletonFrames[];
-extern u8 DAT_060F4378[];
-extern s16 DAT_060F42C0[];
-
 void func_060EB8D0(Entity* self) {
     struct SpriteParts* parts = &g_Stage02SkeletonSpriteParts0;
     SaturnSpriteResource* bank = (SaturnSpriteResource*)g_Stage02SpriteBank32;

@@ -3,6 +3,6 @@
 #include <cutscene.h>
 
 u8 cutscene_data[] = {
-#include "gen/cutscene_data.h"
-#include "gen/cutscene_events.h"
+#include <gen/cutscene_data.h>
+#include <gen/cutscene_events.h>
 };

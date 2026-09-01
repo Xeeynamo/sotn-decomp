@@ -2,7 +2,7 @@
 #include "../rbo7/rbo7.h"
 
 #ifdef VERSION_PSP
-extern s32 E_ID(LIFE_UPSPAWN);
+extern s32 E_ID(LIFE_UP_SPAWN);
 extern s32 E_ID(UNK_19);
 #endif
 
@@ -64,7 +64,7 @@ void func_us_80192B38_from_rbo3(Entity* self) {
         if (entity == NULL) {
             break;
         }
-        CreateEntityFromEntity(E_ID(LIFE_UPSPAWN), self, entity);
+        CreateEntityFromEntity(E_ID(LIFE_UP_SPAWN), self, entity);
         entity->posX.i.hi = x;
         entity->posY.i.hi = y;
         entity->params = 0x13;

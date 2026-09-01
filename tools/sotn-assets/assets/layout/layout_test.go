@@ -3,6 +3,10 @@ package layout
 import (
 	"bytes"
 	"encoding/binary"
+	"encoding/json"
+	"os"
+	"path/filepath"
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -11,6 +15,41 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 )
+
+func TestBuildSelectsHeaderForOutputLocation(t *testing.T) {
+	assetDir := t.TempDir()
+	data, err := json.Marshal(layouts{
+		Entities: [][]layoutEntry{{
+			{X: -2, Y: -2, ID: "E_NONE"},
+			{X: -1, Y: -1, ID: "E_NONE"},
+		}},
+		Indices: []int{0},
+	})
+	require.NoError(t, err)
+	require.NoError(t, os.MkdirAll(filepath.Join(assetDir, "us"), 0o755))
+	require.NoError(t, os.WriteFile(
+		filepath.Join(assetDir, "us", "entity_layouts.json"), data, 0o644))
+
+	args := assets.BuildArgs{
+		AssetDir: assetDir,
+		Name:     "us/entity_layouts",
+		OvlName:  "np3",
+	}
+
+	args.SrcDir = t.TempDir()
+	require.NoError(t, Handler.Build(args))
+	generated, err := os.ReadFile(
+		filepath.Join(args.SrcDir, "gen", "us", "e_layout.c"))
+	require.NoError(t, err)
+	assert.True(t, strings.HasPrefix(string(generated), "#include \"../../np3.h\"\n"))
+
+	args.SrcDir = t.TempDir()
+	require.NoError(t, BuildWithOverlayHeader(args))
+	generated, err = os.ReadFile(
+		filepath.Join(args.SrcDir, "gen", "us", "e_layout.c"))
+	require.NoError(t, err)
+	assert.True(t, strings.HasPrefix(string(generated), "#include <np3.h>\n"))
+}
 
 func TestExtractPropagatesLayoutReadError(t *testing.T) {
 	base := psx.Addr(0x80180000)

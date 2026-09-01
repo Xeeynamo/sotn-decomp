@@ -4093,6 +4093,26 @@ typedef struct {
 } ET_PlatformUnk;
 
 typedef struct {
+    /* 0x7C */ u16 bobOffset;
+    /* 0x7E */ s16 baseY;
+    /* 0x80 */ u16 previousBobOffset;
+} ET_FloatingIcePlatform;
+
+typedef struct {
+    /* 0x7C */ u32 : 32;
+    /* 0x80 */ u8 : 8;
+    /* 0x81 */ u8 : 8;
+    /* 0x82 */ u8 : 8;
+    /* 0x83 */ u8 lifetime;
+} ET_BladeSoldierDeathParts;
+
+typedef struct {
+    /* 0x7C */ u32 : 32;
+    /* 0x80 */ u32 : 32;
+    /* 0x84 */ u8 deathStarted;
+} ET_RdaiUnk33;
+
+typedef struct {
     /* 0x7C */ u8 throwTimer;
     /* 0x7D */ s16 : 16;
     /* 0x80 */ u8 movingLeft;
@@ -4285,9 +4305,30 @@ typedef struct {
     /* 0x86 */ u16 hitFloor;
 } ET_8019921C;
 
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ s8 : 8;
+    /* 0x85 */ u8 mode;
+} ET_RdaiArcher;
+
+typedef struct {
+    /* 0x7C */ u32 unk7C[8];
+    /* 0x9C */ s32 accelY;
+} ET_801AE414;
+
+typedef struct {
+    /* 0x7C */ u32 unk7C[8];
+    /* 0x9C */ struct Entity* parent;
+} ET_801AEFE0;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
+    ET_RdaiArcher rdaiArcher;
+    ET_801AE414 et_801AE414;
+    ET_801AEFE0 et_801AEFE0;
     ET_TimerOnly timer;
     ET_UTimerOnly utimer;
     ET_EntFactory factory;
@@ -4634,6 +4675,9 @@ typedef union { // offset=0x7C
     ET_DeathFlames deathFlames;
     ET_FrozenHalf frozenHalf;
     ET_PlatformUnk platformUnk;
+    ET_FloatingIcePlatform floatingIcePlatform;
+    ET_BladeSoldierDeathParts bladeSoldierDeathParts;
+    ET_RdaiUnk33 rdaiUnk33;
     ET_JackOBones jackoBones;
     ET_NovaSkeleton nova;
     ET_Orobourous orob;

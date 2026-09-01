@@ -105,11 +105,12 @@ void func_060E0364(Entity* self) {
 }
 INCLUDE_ASM("asm/saturn/warp/f_nonmat", f60E0450, func_060E0450);
 INCLUDE_ASM("asm/saturn/warp/f_nonmat", f60E05BC, func_060E05BC);
-INCLUDE_ASM("asm/saturn/warp/f_nonmat", f60E06F0, func_060E06F0);
+#define SPAWN_DESTRUCT_ANIM_ID 20
+#include "../spawn_destruct_anim.h"
 INCLUDE_ASM("asm/saturn/warp/f_nonmat", f60E080C, func_060E080C);
 INCLUDE_ASM("asm/saturn/warp/f_nonmat", f60E08EC, func_060E08EC);
 INCLUDE_ASM("asm/saturn/warp/f_nonmat", f60E0BD8, func_060E0BD8);
-INCLUDE_ASM("asm/saturn/warp/f_nonmat", f60E10B0, func_060E10B0);
+#include "../init_solid_prop.h"
 void func_060E11BC(Entity* self) { DestroyEntity(self); }
 
 const u8 pad_060E11D4[] = {

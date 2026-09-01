@@ -172,7 +172,49 @@ void func_060DDFD4(Entity* self) {
         }
     }
 }
-INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60DE064, func_060DE064);
+void func_060DE064(Entity* self) {
+    Primitive* prim;
+    char* base;
+    Stage15GouraudState* state;
+    s16* topLeftY;
+    s16* topRightY;
+    s16* bottomLeftY;
+    s32 offset;
+    u16 shade;
+    s16 y;
+
+    prim = &g_PrimBuf[self->primIndex];
+    if (prim != NULL) {
+        do {
+            offset = (u16)prim->unk1C * sizeof(Stage15GouraudState);
+            base = (char*)SpGourTbl;
+            state = (Stage15GouraudState*)(base + offset);
+            prim->unk8--;
+            if (prim->unk8 < 0) {
+                prim->drawMode |= 8;
+            }
+            state->posY.i.hi = prim->y0;
+            state->posY.val += state->velocityY;
+            if (state->velocityY < FIX(-0.5)) {
+                if (prim->unkA > 3) {
+                    prim->unkA -= 4;
+                }
+                shade = prim->unkA / 8;
+                prim->unk6 =
+                    ((shade << 8) << 2) + (shade << 5) + shade - 0x8000;
+            } else {
+                state->velocityY += FIX(-0.21875);
+            }
+            topLeftY = &prim->y0;
+            topRightY = &prim->y1;
+            y = state->posY.i.hi;
+            *topLeftY = *topRightY = y;
+            bottomLeftY = &prim->y2;
+            *bottomLeftY = prim->y3 = y;
+            prim = prim->next;
+        } while (prim != NULL);
+    }
+}
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60DE144, func_060DE144);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60DE268, func_060DE268);
 void func_060DE40C(Entity* self) {
@@ -216,7 +258,56 @@ const u16 DAT_060DE6B0[] = {
     0x0411, 0x1010, 0xFF00, 0x0009, 0x0415, 0x10FF, 0x0000, 0x0009,
     0x0412, 0x15FF, 0x0000, 0x0009, 0x0411, 0xFF00,
 };
-INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60DE6FC, func_060DE6FC);
+void func_060DE6FC(u16 arg0) {
+    Entity* entity;
+    Entity* current;
+    Collider collider;
+
+    entity = g_CurrentEntity;
+    if (entity->velocityY < 0) {
+        CheckCollision(
+            entity->posX.val, entity->posY.val - FIX(7), &collider, 0);
+        if (collider.effects & 5) {
+            entity->velocityY = 0;
+        }
+    }
+
+    CheckCollision(entity->posX.val, entity->posY.val + FIX(8), &collider, 0);
+    if (arg0) {
+        if (!(collider.effects & 5)) {
+            MoveEntity(entity);
+            func_06079BE4(entity);
+            return;
+        }
+
+        entity->velocityX = 0;
+        entity->velocityY = 0;
+        if (collider.effects & 4) {
+            entity->posY.val += FIX(0.125);
+        } else {
+            entity->posY.val += collider.unk18;
+        }
+        entity->posY.i.hi++;
+        entity->posY.i.lo = 0;
+    } else if (!(collider.effects & 5)) {
+        MoveEntity(entity);
+        current = g_CurrentEntity;
+
+        if (current->velocityY >= 0) {
+            current->ext.equipItemDrop.fallSpeed +=
+                current->ext.equipItemDrop.gravity;
+            current->velocityX = current->ext.equipItemDrop.fallSpeed;
+            if (current->velocityX == FIX(1) || current->velocityX == FIX(-1)) {
+                current->ext.equipItemDrop.gravity =
+                    -current->ext.equipItemDrop.gravity;
+            }
+        }
+
+        if (current->velocityY < FIX(0.25)) {
+            current->velocityY += FIX(0.125);
+        }
+    }
+}
 void func_060DE808(u16 cardIndex) {
     Entity* self;
     Entity* player;
@@ -265,7 +356,9 @@ INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E0160, func_060E0160);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E0774, func_060E0774);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E0DE4, func_060E0DE4);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E0E3C, func_060E0E3C);
-INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E11F4, func_060E11F4);
+#include "set_entity_collision_tiles.h"
+
+const u16 DAT_060E1278[] = {0xCCCC, 0xCCCD};
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E127C, func_060E127C);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E1950, func_060E1950);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E1AB8, func_060E1AB8);
@@ -302,114 +395,15 @@ void func_060E1C20(Entity* self) {
 }
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E1D0C, func_060E1D0C);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E1E78, func_060E1E78);
-void func_060E1FAC(
-    Entity* self, u8 count, u8 params, s16 x, s16 y, u8 variant, s16 xStep) {
-    s32 i;
-    s16 initialX;
-    s32 currentX;
-    s16 currentY;
-    s16* clut;
-    SaturnSpriteResource* resource;
-    Entity* entity;
-    SpriteObject* sprite;
-
-    i = 0;
-    initialX = x + self->posX.i.hi;
-    currentY = y + self->posY.i.hi;
-    if (i < count) {
-        resource = &g_EntitySpriteBank01;
-        currentX = initialX;
-        do {
-            entity = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
-            if (entity != NULL) {
-                entity->entityId = 19;
-                entity->pfnUpdate = func_060E1D0C;
-                entity->params = params;
-                entity->posX.i.hi = currentX;
-                entity->posY.i.hi = currentY;
-                entity->ext.destructAnim.index = variant + i;
-                entity->drawFlags = 3;
-                entity->scaleY = entity->scaleX =
-                    g_RStage15ExplosionVariantSizes[variant + i];
-                clut = &DAT_06045FA8;
-                sprite = CreateSpriteObject(
-                    (u16)*clut, (u16)(s16)resource->flags, resource->images, 5);
-                entity->unk0 = sprite;
-                if (self->unk0 != NULL) {
-                    sprite->zPriority = self->unk0->zPriority + 1;
-                }
-            }
-            currentX += xStep;
-            i++;
-        } while (i < count);
-    }
-}
+#define SPAWN_DESTRUCT_ANIM_ID 19
+#include "spawn_destruct_anim.h"
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E20C8, func_060E20C8);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E21A8, func_060E21A8);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E2494, func_060E2494);
-INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E296C, func_060E296C);
+#include "init_solid_prop.h"
 void func_060E2A78(void) { DestroyEntity(); }
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60E2A90, func_060E2A90);
-void func_060E375C(Entity* self) {
-    unsigned int scratch[6];
-    Entity* base;
-    s32* statusp;
-    s32 state;
-    s32 index;
-    s32 result;
-    s8 value;
-
-    base = self;
-    statusp = &base->ext.save.unk4;
-    state = *statusp;
-    if (state != 10) {
-        if (state <= 10) {
-            return;
-        }
-        if (state == 30) {
-            goto state30;
-        }
-        return;
-    } else {
-        value = DAT_060485C4;
-        index = 1;
-        do {
-            result = func_0600D028(value, index);
-            if (result != 0 && result != 8) {
-                DAT_060485C0.unk5 = index;
-                DAT_060485C0.unk4 = value;
-                base->ext.save.unk4 = 30;
-                break;
-            }
-            index++;
-        } while (index <= 5);
-
-        if (index == 6) {
-            base->step = 1;
-            base->ext.save.unk4 = 41;
-        }
-        return;
-    }
-
-state30:
-    value = DAT_060485C0.unk4;
-    index = DAT_060485C0.unk5;
-    result = func_06030690(value, 70, scratch);
-    if (result == 2) {
-        *statusp = 43;
-    } else {
-        result = func_0600D028(value, index);
-        if (result == 5 && scratch[4] <= 0x4D) {
-            *statusp = 44;
-        } else if (func_0600D264(value, index) == 0 &&
-                   func_0600D264(value, index) == 0 &&
-                   func_0600D47C(value, index) == 0) {
-            base->ext.save.unk4 = 40;
-        } else {
-            base->ext.save.unk4 = 45;
-        }
-    }
-}
+#include "save_device_probe.h"
 u16 func_060E3874(s32 minX, s32 maxX) {
     u16 result;
 
@@ -566,7 +560,17 @@ INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60EA600, func_060EA600);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60EAE6C, func_060EAE6C);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60EAFF8, func_060EAFF8);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60EB150, func_060EB150);
-INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60EB4A4, func_060EB4A4);
+void func_060EB4A4(Entity* entity, s16 step) {
+    entity->velocityX = 0;
+    entity->velocityY = 0;
+    entity->pose = 0;
+    entity->poseTimer = 0;
+    entity->step = step;
+    entity->step_s = 0;
+}
+
+const u16 DAT_060EB4CA = 0x0009;
+INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60EB4CC, func_060EB4CC);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60EB550, func_060EB550);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60EC174, func_060EC174);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60EC274, func_060EC274);

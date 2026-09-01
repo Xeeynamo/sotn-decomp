@@ -3,7 +3,7 @@
 
 INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_BB68", EntityImp);
 
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_BB68", EntityImpSmoke);
+#include "../e_imp_smoke.h"
 
 INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_BB68", func_psp_0923C2F8);
 

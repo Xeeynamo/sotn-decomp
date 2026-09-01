@@ -22,5 +22,5 @@ AbbreviatedOverlay g_Overlay = {
     .UpdateStageEntities = UpdateStageEntities,
 };
 
-#include "gen/sprite_banks.h"
+#include <gen/sprite_banks.h>
 // #include "gen/graphics_banks.h"

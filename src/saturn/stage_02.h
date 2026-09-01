@@ -120,7 +120,7 @@ void func_060E37C8(Entity* self);
 void func_060E32DC(Entity* self);
 void func_060E2A80(Entity* self);
 void func_060E600C(Entity* self);
-void func_060E5EA0(Entity* self);
+void EntityDestructAnim(Entity* self);
 void func_060E5DB4(Entity* self);
 void func_060E5C4C(Entity* self);
 void func_060E5AE4(Entity* self);
@@ -245,7 +245,7 @@ void func_060E8E1C(s32, s32);
 void func_060E8990(s32, s32, s32);
 void func_060E87D0(s32, s32);
 void func_060E8350(Entity*);
-void func_060E81D4(Entity*);
+void SaveDeviceProbe(Entity*);
 void func_060E837C(Entity*, s32);
 void func_060e8330(void);
 void func_060E8DE0(s32, s32, s32);
@@ -263,5 +263,13 @@ extern LayoutEntity* g_Stage02LayoutHorizontal[];
 extern void* g_Stage02SpriteBanks[];
 extern EntityEntry* g_Stage02EntityUpdates[78];
 /* End moved declarations */
+
+extern s16 g_ExplosionVariantSizes[];
+extern s16* g_Stage02BloodyZombieFrames[];
+extern u8 DAT_060F3960[];
+extern s16 DAT_060F3824[];
+extern s16* g_Stage02SkeletonFrames[];
+extern u8 DAT_060F4378[];
+extern s16 DAT_060F42C0[];
 
 #endif

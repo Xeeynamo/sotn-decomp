@@ -2,10 +2,10 @@
 #include "lib.h"
 
 u16 pal_08C[] = {
-#include "gen/pal_08C.h"
+#include <gen/pal_08C.h>
 };
 u16 pal_0AC[] = {
-#include "gen/pal_0AC.h"
+#include <gen/pal_0AC.h>
 };
 
-#include "gen/palette_def.h"
+#include <gen/palette_def.h>

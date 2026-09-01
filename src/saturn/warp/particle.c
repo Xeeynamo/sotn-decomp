@@ -25,7 +25,7 @@ u16 g_WarpSoulStealOrbAngles[8] = {
 
 EntityEntry g_WarpDummyEntry = {
     &g_SaturnSharedSpriteBank8Resource,
-    EntityWarpDummy,
+    InitSolidProp,
 };
 
 EntityEntry g_WarpStageNamePopupEntry = {

@@ -62,4 +62,11 @@ typedef enum EntityID {
     NUM_ENTITIES,
 };
 
+#ifdef VERSION_PSP
+extern s32 E_ID(UNK_29);
+extern s32 E_ID(UNK_2E);
+#endif
+
+extern EInit g_EInitObtainable;
+
 #endif // RNO1_H

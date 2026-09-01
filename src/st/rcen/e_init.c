@@ -104,5 +104,5 @@ EInit D_us_8018057C = {ANIMSET_OVL(3), 0, 72, 512, 0x160};
 EInit D_us_80180588 = {ANIMSET_DRA(14), 0, 121, 736, 0x161};
 EInit D_us_80180594 = {ANIMSET_DRA(0), 0, 0, 0, 0x162};
 
-EInit D_us_801805A0 = {ANIMSET_OVL(12), 1, 72, 576, 0x005};
+EInit g_EInitElevator = {ANIMSET_OVL(12), 1, 72, 576, 0x005};
 // clang-format on

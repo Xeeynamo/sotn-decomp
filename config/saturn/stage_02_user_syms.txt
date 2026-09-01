@@ -100,3 +100,7 @@ _g_Stage02VerticalLayout49 = 0x060EF81C;
 _g_Stage02VerticalLayout50 = 0x060EF8A8;
 _g_Stage02VerticalLayout51 = 0x060EF8EE;
 _g_Stage02VerticalLayout52 = 0x060EF90C;
+_SetEntityCollisionTiles = 0x060E5388;
+_SaveDeviceProbe = 0x060E81D4;
+_SpawnDestructAnim = 0x060E6140;
+_EntityDestructAnim = 0x060E5EA0;
