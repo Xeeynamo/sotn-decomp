@@ -670,12 +670,12 @@ void func_ptr_80170008(Entity* self) {
         posY = self->posY.i.hi;
 
         g_api.CheckCollision(posX, (s16)(posY + 10), &collider, 0);
-        if (collider.effects & EFFECT_UNK_0002) {
+        if (collider.effects & EFFECT_SIDE) {
             self->ext.weapon_030.unk7E = 0x18;
             self->step = 7;
         }
         g_api.CheckCollision(posX, (s16)(posY - 6), &collider, 0);
-        if (collider.effects & EFFECT_UNK_0002) {
+        if (collider.effects & EFFECT_SIDE) {
             self->ext.weapon_030.unk7E = 0x18;
             self->step = 7;
         }

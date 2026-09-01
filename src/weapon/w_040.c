@@ -151,7 +151,7 @@ static void EntityWeaponAttack(Entity* self) {
         }
         g_api.CheckCollision(
             (s16)(xMod + self->posX.i.hi), self->posY.i.hi, &col, 0);
-        if (col.effects & EFFECT_UNK_0002) {
+        if (col.effects & EFFECT_SIDE) {
             if (xMod < 0) {
                 self->posX.i.hi += col.unkC;
             } else {

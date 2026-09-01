@@ -1889,7 +1889,7 @@ void EntitySmokePuff(Entity* self) {
         if (paramsHi == 4) {
             for (i = paramsLo * 2; i < LEN(D_us_8018180C); i++) {
                 if (g_Dop.colWall[D_us_8018180C[i]].effects &
-                    (EFFECT_UNK_0002 | EFFECT_SOLID)) {
+                    EFFECT_FULL_SOLID) {
                     break;
                 }
             }
@@ -1910,7 +1910,7 @@ void EntitySmokePuff(Entity* self) {
         if (paramsHi == 8) {
             for (i = paramsLo * 2; i < LEN(D_us_8018181C); i++) {
                 if (g_Dop.colWall[D_us_8018181C[i]].effects &
-                    (EFFECT_UNK_0002 | EFFECT_SOLID)) {
+                    EFFECT_FULL_SOLID) {
                     break;
                 }
             }
@@ -5129,10 +5129,10 @@ void EntitySubwpnReboundStone(Entity* self) {
             collX = FIX_TO_I(currX);
             collY = FIX_TO_I(currY + deltaY);
             g_api.CheckCollision(collX, collY, &collider, 0);
-            colliderFlags = collider.effects &
-                            (EFFECT_UNK_8000 | EFFECT_UNK_4000 |
-                             EFFECT_UNK_2000 | EFFECT_UNK_1000 |
-                             EFFECT_UNK_0800 | EFFECT_UNK_0002 | EFFECT_SOLID);
+            colliderFlags =
+                collider.effects &
+                (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000 |
+                 EFFECT_UNK_1000 | EFFECT_UNK_0800 | EFFECT_FULL_SOLID);
             if (colliderFlags & EFFECT_SOLID) {
                 colliderFlags &=
                     EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000 |
@@ -5194,10 +5194,10 @@ void EntitySubwpnReboundStone(Entity* self) {
             collY = FIX_TO_I(currY);
             collX = FIX_TO_I(currX + deltaX);
             g_api.CheckCollision(collX, collY, &collider, 0);
-            colliderFlags = collider.effects &
-                            (EFFECT_UNK_8000 | EFFECT_UNK_4000 |
-                             EFFECT_UNK_2000 | EFFECT_UNK_1000 |
-                             EFFECT_UNK_0800 | EFFECT_UNK_0002 | EFFECT_SOLID);
+            colliderFlags =
+                collider.effects &
+                (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000 |
+                 EFFECT_UNK_1000 | EFFECT_UNK_0800 | EFFECT_FULL_SOLID);
             if (colliderFlags & EFFECT_SOLID) {
                 colliderFlags &=
                     EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000 |
@@ -5472,7 +5472,7 @@ void EntitySubwpnKnife(Entity* self) {
             }
             g_api.CheckCollision(
                 self->posX.i.hi + xCol, self->posY.i.hi, &collider, 0);
-            if (collider.effects & (EFFECT_SOLID | EFFECT_UNK_0002) ||
+            if (collider.effects & EFFECT_FULL_SOLID ||
                 (self->flags & FLAG_DEAD)) {
                 self->ext.timer.t = 64;
                 self->velocityX = -(self->velocityX >> 3);
@@ -5482,7 +5482,7 @@ void EntitySubwpnKnife(Entity* self) {
                 CreateEntFactoryFromEntity(
                     self, FACTORY(BP_REBOUND_STONE_HIT, 0), 0);
                 self->posX.i.hi -= xCol;
-                if (collider.effects & (EFFECT_SOLID | EFFECT_UNK_0002)) {
+                if (collider.effects & EFFECT_FULL_SOLID) {
                     // n.b.! this is the same sound effect as the other side
                     //       of the branch. this only effects PSP
                     g_api.PlaySfx(SFX_UI_SUBWEAPON_TINK);

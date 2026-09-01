@@ -167,7 +167,7 @@ static int func_pspeu_092A6958(s32 x, s32 y, s32 horizPixelCount) {
     Collider col;
 
     g_api.CheckCollision(x, y, &col, 0);
-    while (col.effects & EFFECT_UNK_0002) {
+    while (col.effects & EFFECT_SIDE) {
         if (horizPixelCount-- < 0) {
             return -1;
         }
@@ -212,7 +212,7 @@ static int CheckFieldCollisionForCat(
             entity->posX.i.hi = sp3C + (x < 0 ? -var_s1 : var_s1);
             entity->posY.i.hi = var_s8 + (y * var_s1) / var_s3;
             g_api.CheckCollision(entity->posX.i.hi, entity->posY.i.hi, col, 0);
-            if (col->effects & (EFFECT_SOLID | EFFECT_UNK_0002)) {
+            if (col->effects & EFFECT_FULL_SOLID) {
                 if (var_s2 == 0) {
                     col->effects = EFFECT_SOLID;
                 }
@@ -221,8 +221,8 @@ static int CheckFieldCollisionForCat(
                 if (var_s1 && y > 0) {
                     g_api.CheckCollision(
                         entity->posX.i.hi, entity->posY.i.hi + 1, col, 0);
-                    if (col->effects & (EFFECT_SOLID | EFFECT_UNK_0002)) {
-                        col->effects = EFFECT_UNK_0002;
+                    if (col->effects & EFFECT_FULL_SOLID) {
+                        col->effects = EFFECT_SIDE;
                     } else {
                         col->effects = EFFECT_SOLID;
                     }
@@ -240,17 +240,17 @@ static int CheckFieldCollisionForCat(
             entity->posX.i.hi = sp3C + (x * var_s0) / var_s2;
             entity->posY.i.hi = var_s8 + (y < 0 ? -var_s0 : var_s0);
             g_api.CheckCollision(entity->posX.i.hi, entity->posY.i.hi, col, 0);
-            if (col->effects & (EFFECT_SOLID | EFFECT_UNK_0002)) {
+            if (col->effects & EFFECT_FULL_SOLID) {
                 if (var_s3 == 0) {
-                    col->effects = EFFECT_UNK_0002;
+                    col->effects = EFFECT_SIDE;
                 }
                 entity->posX.i.hi = var_s7;
                 entity->posY.i.hi = var_s6;
                 if (var_s0 && y > 0) {
                     g_api.CheckCollision(
                         entity->posX.i.hi, entity->posY.i.hi + 1, col, 0);
-                    if (col->effects & (EFFECT_SOLID | EFFECT_UNK_0002)) {
-                        col->effects = EFFECT_UNK_0002;
+                    if (col->effects & EFFECT_FULL_SOLID) {
+                        col->effects = EFFECT_SIDE;
                     } else {
                         col->effects = EFFECT_SOLID;
                     }
@@ -327,7 +327,7 @@ void EntityMariaCatAttack(Entity* self) {
             self->ext.mariaCat.timer = 0;
         } else {
             g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi + 1, &col, 0);
-            if (!(col.effects & EFFECT_UNK_0002)) {
+            if (!(col.effects & EFFECT_SIDE)) {
                 self->velocityY = FIX(-8.0);
                 self->step = 2;
                 self->ext.mariaCat.timer = 0;
@@ -349,7 +349,7 @@ void EntityMariaCatAttack(Entity* self) {
         CheckFieldCollisionForCat(
             self, self->facingLeft ? -self->velocityX : self->velocityX,
             self->velocityY, &col);
-        if (col.effects & EFFECT_UNK_0002) {
+        if (col.effects & EFFECT_SIDE) {
             newY = func_pspeu_092A6958(
                 self->posX.i.hi, self->posY.i.hi, self->velocityY >> 16);
             if (newY != -1) {

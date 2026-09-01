@@ -319,7 +319,7 @@ static void EntityWeaponAttack(Entity* self) {
         }
         g_api.CheckCollision(
             (s16)(xShift + self->posX.i.hi), self->posY.i.hi, &sp10, 0);
-        if (sp10.effects & EFFECT_UNK_0002) {
+        if (sp10.effects & EFFECT_SIDE) {
             if (xShift < 0) {
                 self->posX.i.hi += sp10.unkC;
             } else {
@@ -490,7 +490,7 @@ s32 func_ptr_80170004(Entity* self) {
         xVar = self->posX.i.hi + xShift;
         yVar = self->posY.i.hi + yShift;
         g_api.CheckCollision(xVar, yVar, &sp10, 0);
-        if (sp10.effects & EFFECT_UNK_0002) {
+        if (sp10.effects & EFFECT_SIDE) {
             if (xShift < 0) {
                 self->posX.i.hi += sp10.unkC;
             } else {

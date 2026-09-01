@@ -728,7 +728,7 @@ s32 func_060C2338(s32 y, s32 x) {
         xShift = collider.unk1C;
     }
 
-    if (collider.effects & EFFECT_UNK_0002) {
+    if (collider.effects & EFFECT_SIDE) {
         g_CurrentEntity->posX.val += xShift;
         g_CurrentEntity->posX.i.lo = 0;
         return 2;

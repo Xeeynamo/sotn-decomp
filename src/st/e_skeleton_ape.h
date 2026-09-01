@@ -322,7 +322,7 @@ void EntitySkeletonApeBarrel(Entity* self) {
                 x -= 16;
             }
             g_api.CheckCollision(x, y, &collider, 0);
-            if (collider.effects & EFFECT_UNK_0002) {
+            if (collider.effects & EFFECT_SIDE) {
                 SetStep(4);
             }
         }
@@ -416,7 +416,7 @@ void EntityThrownBarrel(Entity* self) {
             x -= 16;
         }
         g_api.CheckCollision(x, y, &collider, 0);
-        if (collider.effects & EFFECT_UNK_0002) {
+        if (collider.effects & EFFECT_SIDE) {
             EntityExplosionSpawn(0, SFX_EXPLODE_B);
         } else if (!--self->ext.skeletonApeBarrel.unk7C) {
             EntityExplosionSpawn(0, SFX_EXPLODE_B);

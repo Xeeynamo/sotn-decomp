@@ -158,16 +158,16 @@ bool func_80111DE8(bool mistReset) {
     }
     filtered_effects =
         collider1.effects & (EFFECT_UNK_8000 | EFFECT_UNK_4000 |
-                             EFFECT_UNK_0800 | EFFECT_UNK_0002 | EFFECT_SOLID);
+                             EFFECT_UNK_0800 | EFFECT_FULL_SOLID);
     if (filtered_effects == EFFECT_UNK_8000 + EFFECT_UNK_4000 + EFFECT_SOLID ||
-        filtered_effects == EFFECT_UNK_8000 + EFFECT_UNK_4000 +
-                                EFFECT_UNK_0002 + EFFECT_SOLID ||
+        filtered_effects ==
+            EFFECT_UNK_8000 + EFFECT_UNK_4000 + EFFECT_SIDE + EFFECT_SOLID ||
         filtered_effects == EFFECT_UNK_4000 + EFFECT_UNK_0800 + EFFECT_SOLID ||
-        filtered_effects == EFFECT_UNK_4000 + EFFECT_UNK_0800 +
-                                EFFECT_UNK_0002 + EFFECT_SOLID ||
-        filtered_effects == EFFECT_UNK_8000 + EFFECT_UNK_0002 + EFFECT_SOLID ||
-        filtered_effects == EFFECT_UNK_0800 + EFFECT_UNK_0002 + EFFECT_SOLID ||
-        filtered_effects == EFFECT_UNK_0002 + EFFECT_SOLID) {
+        filtered_effects ==
+            EFFECT_UNK_4000 + EFFECT_UNK_0800 + EFFECT_SIDE + EFFECT_SOLID ||
+        filtered_effects == EFFECT_UNK_8000 + EFFECT_SIDE + EFFECT_SOLID ||
+        filtered_effects == EFFECT_UNK_0800 + EFFECT_SIDE + EFFECT_SOLID ||
+        filtered_effects == EFFECT_SIDE + EFFECT_SOLID) {
         // This "plus 16, minus 8" is a random guess. The effect is just +8.
         // We can use any pair that comes out to 8, but the compiler comes
         // out wrong if we don't split it into two. So "+10-2" works equally
@@ -192,16 +192,16 @@ bool func_80111DE8(bool mistReset) {
     }
     filtered_effects =
         collider1.effects & (EFFECT_UNK_8000 | EFFECT_UNK_4000 |
-                             EFFECT_UNK_0800 | EFFECT_UNK_0002 | EFFECT_SOLID);
+                             EFFECT_UNK_0800 | EFFECT_FULL_SOLID);
     if (filtered_effects == EFFECT_UNK_8000 + EFFECT_SOLID ||
-        filtered_effects == EFFECT_UNK_8000 + EFFECT_UNK_0002 + EFFECT_SOLID ||
+        filtered_effects == EFFECT_UNK_8000 + EFFECT_SIDE + EFFECT_SOLID ||
         filtered_effects == EFFECT_UNK_0800 + EFFECT_SOLID ||
-        filtered_effects == EFFECT_UNK_0800 + EFFECT_UNK_0002 + EFFECT_SOLID ||
-        filtered_effects == EFFECT_UNK_8000 + EFFECT_UNK_4000 +
-                                EFFECT_UNK_0002 + EFFECT_SOLID ||
-        filtered_effects == EFFECT_UNK_4000 + EFFECT_UNK_0800 +
-                                EFFECT_UNK_0002 + EFFECT_SOLID ||
-        filtered_effects == EFFECT_UNK_0002 + EFFECT_SOLID) {
+        filtered_effects == EFFECT_UNK_0800 + EFFECT_SIDE + EFFECT_SOLID ||
+        filtered_effects ==
+            EFFECT_UNK_8000 + EFFECT_UNK_4000 + EFFECT_SIDE + EFFECT_SOLID ||
+        filtered_effects ==
+            EFFECT_UNK_4000 + EFFECT_UNK_0800 + EFFECT_SIDE + EFFECT_SOLID ||
+        filtered_effects == EFFECT_SIDE + EFFECT_SOLID) {
         // See above comment regarding values combining to 8.
         xPos = (PLAYER.posX.i.hi - 9) + collider1.unkC + 1;
         yPos = PLAYER.posY.i.hi + floorY - 1;
@@ -1504,14 +1504,14 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
         if ((g_StageId != STAGE_BO6) && (g_StageId != STAGE_RBO6) &&
             (g_StageId != STAGE_DRE)) {
             for (i = 2; i < NUM_VERTICAL_SENSORS; i++) {
-                if (g_Player.colWall[i].effects & EFFECT_UNK_0002) {
+                if (g_Player.colWall[i].effects & EFFECT_SIDE) {
                     break;
                 }
             }
             if (i == NUM_VERTICAL_SENSORS) {
                 for (i = NUM_VERTICAL_SENSORS + 2; i < NUM_VERTICAL_SENSORS * 2;
                      i++) {
-                    if (g_Player.colWall[i].effects & EFFECT_UNK_0002) {
+                    if (g_Player.colWall[i].effects & EFFECT_SIDE) {
                         break;
                     }
                 }

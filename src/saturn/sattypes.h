@@ -1366,11 +1366,11 @@ typedef enum {
 typedef enum {
     EFFECT_NONE = 0,
     EFFECT_SOLID = 1 << 0,
-    EFFECT_UNK_0002 = 1 << 1,
-    EFFECT_QUICKSAND = 1 << 2,
+    EFFECT_SIDE = 1 << 1,
+    EFFECT_SINK = 1 << 2,
     EFFECT_WATER = 1 << 3,
     EFFECT_MIST_ONLY = 1 << 4,
-    EFFECT_UNK_0020 = 1 << 5,
+    EFFECT_HURT = 1 << 5,
     // Used when you jump from below to a platform. You can drop below.
     EFFECT_SOLID_FROM_ABOVE = 1 << 6,
     // Doesn't collide when falling on it but you cannot go back up.
@@ -1385,8 +1385,8 @@ typedef enum {
     EFFECT_UNK_8000 = 1 << 15,
 
     // Aggregate helpers below:
-    EFFECT_NOTHROUGH = EFFECT_SOLID | EFFECT_QUICKSAND,
-    EFFECT_NOTHROUGH_PLUS = EFFECT_SOLID | EFFECT_UNK_0002 | EFFECT_QUICKSAND,
+    EFFECT_NOTHROUGH = EFFECT_SOLID | EFFECT_SINK,
+    EFFECT_NOTHROUGH_PLUS = EFFECT_FULL_SOLID | EFFECT_SINK,
     // Should be renamed once we know what 8000 and 4000 are
     EFFECT_UNK_C000 = EFFECT_UNK_8000 | EFFECT_UNK_4000
 } ColliderEffectFlags;

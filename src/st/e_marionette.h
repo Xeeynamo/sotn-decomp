@@ -104,7 +104,7 @@ static u8 func_us_801D6254(s16 arg0[]) {
     for (i = 0; i < 5; i++, posY2 += 5) {
         posX = g_CurrentEntity->posX.i.hi + xDir;
         g_api.CheckCollision(posX, posY2, &collider, 0);
-        if ((collider.effects & (EFFECT_SOLID | EFFECT_UNK_0002)) &&
+        if ((collider.effects & EFFECT_FULL_SOLID) &&
             !(collider.effects & EFFECT_UNK_8000)) {
             ret |= 4;
             if (g_CurrentEntity->velocityX > 0) {
