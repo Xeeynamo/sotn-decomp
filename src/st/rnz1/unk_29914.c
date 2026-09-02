@@ -477,7 +477,11 @@ void func_us_801A9DB8(Entity* self) {
                 xVar = other->posX.i.hi - xVar;
                 yVar = other->posY.i.hi - yVar;
                 if ((abs(xVar) < 0x10) && (abs(yVar) < 0x10) &&
-                    !(g_Player.status & (PLAYER_STATUS_AXEARMOR | PLAYER_STATUS_DEAD | PLAYER_STATUS_UNK10000 | PLAYER_STATUS_INVINCIBLE | PLAYER_STATUS_STONE | PLAYER_STATUS_CROUCH | PLAYER_STATUS_MIST_FORM))) {
+                    !(g_Player.status &
+                      (PLAYER_STATUS_AXEARMOR | PLAYER_STATUS_DEAD |
+                       PLAYER_STATUS_UNK10000 | PLAYER_STATUS_INVINCIBLE |
+                       PLAYER_STATUS_STONE | PLAYER_STATUS_CROUCH |
+                       PLAYER_STATUS_MIST_FORM))) {
                     g_Player.unk60 = 1;
                     g_Player.unk64 = g_api.enemyDefs[276].attack;
                     g_Player.unk62 = 0;
