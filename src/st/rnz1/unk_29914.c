@@ -712,4 +712,28 @@ void func_us_801AAF00(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rnz1/nonmatchings/unk_29914", func_us_801AB04C);
+static AnimateEntityFrame anim_last[] = {{3, 1}, {3, 2}, {3, 3}, {3, 4}, {3, 5}, {3, 6}, {3, 7}, {3, 8}, {3, 9}, {3, 10}, {3, 11}, {3, 12}, {3, 13}, POSE_END};
+
+void func_us_801AB04C(Entity* self) {
+    switch (self->step) {                              /* irregular */
+    case 0:
+        InitializeEntity(g_EInitParticle);
+        self->animSet = 0xE;
+        self->unk5A = 0x79;
+        self->drawFlags = 8;
+        self->blendMode = 0x30;
+        self->palette = 0x2E4;
+        self->facingLeft = Random() & 1;
+        self->velocityX = (Random() << 8) - 0x8000;
+        self->velocityY = -0x20000;
+        self->ext.ILLEGAL.u32[8] = -(Random() * 0x10) - 0x100;
+        /* fallthrough */
+    case 1:
+        MoveEntity();
+        self->velocityY += self->ext.ILLEGAL.u32[8];
+        self->opacity -= 4;
+        if (AnimateEntity(anim_last, self) == 0) {
+            DestroyEntity(self);
+        }
+    }
+}
