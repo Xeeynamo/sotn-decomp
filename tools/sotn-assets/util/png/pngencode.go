@@ -59,12 +59,16 @@ func Encode(w io.Writer, data []byte, width, height int, palette []color.RGBA) e
 			return fmt.Errorf("data length (%d) < width*height (%d)", len(data), width*height/2)
 		}
 		// convert 4-bit nibbles to 8-bit data
-		convert := make([]byte, len(data)*2)
-		for i := 0; i < len(data); i++ {
-			convert[i*2+0] = data[i] & 15
-			convert[i*2+1] = data[i] >> 4
+		// But don't do it if the PNG we're encoding is a full 8 bit palette.
+		// Detect that by checking if we just have a 1x16 image.
+		if !(width == 16 && height == 1) {
+			convert := make([]byte, len(data)*2)
+			for i := 0; i < len(data); i++ {
+				convert[i*2+0] = data[i] & 15
+				convert[i*2+1] = data[i] >> 4
+			}
+			data = convert
 		}
-		data = convert
 	} else {
 		if len(data) < width*height {
 			return fmt.Errorf("data length (%d) < width*height (%d)", len(data), width*height)

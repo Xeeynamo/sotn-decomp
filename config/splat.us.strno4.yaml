@@ -49,6 +49,7 @@ segments:
       - [0xD50, data]
       - [0x1620, .data, d_prize_drops]
       - [0x1640, data]
+      - [0x172C, .data, e_killer_fish]
       - [0x1788, .data, st_update]
       - [0x17D4, data]
       - [0x17D4, .data, collision]

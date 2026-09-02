@@ -9,6 +9,7 @@
 
 enum Palettes {
     PAL_NONE,
+    PAL_SPIKES_DUST = 0x161,
     PAL_BREAKABLE_DEBRIS = 0x226,
     PAL_WALL_CANDELABRA_A = 0x228,
     PAL_WALL_CANDELABRA_B = 0x229,
@@ -68,9 +69,9 @@ typedef enum EntityID {
     E_UNK_30,                 // func_us_801ABDE4
     E_UNK_31,                 // func_us_801AAF00
     E_UNK_32,                 // func_us_801AB04C
-    E_BOSS_DOOR_TRIGGER,      // EntityBossDoorTrigger
+    E_BOSS_DOOR_TRIGGER,      // EntityBossFightManager
     E_BOSS_DOORS,             // EntityBossDoors
-    E_LIFE_UPSPAWN,           // EntityLifeUpSpawn
+    E_LIFE_UP_SPAWN,          // EntityLifeUpSpawn
     E_CLOAKED_KNIGHT,         // EntityCloakedKnight
     E_CLOAKED_KNIGHT_CLOAK,   // EntityCloakedKnightCloak
     E_CLOAKED_KNIGHT_SWORD,   // EntityCloakedKnightSword
@@ -94,5 +95,7 @@ typedef enum EntityID {
     E_CRUSHER,                // func_us_801BD324
     NUM_ENTITIES,
 };
+
+extern s32 g_BossFlag;
 
 #endif // RNZ1_H

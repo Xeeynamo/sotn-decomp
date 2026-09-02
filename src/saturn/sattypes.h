@@ -596,6 +596,14 @@ typedef struct {
 } ET_060DE8B4;
 
 typedef struct {
+    /* 0x78 */ u8 pad78[8];
+    /* 0x80 */ s16 angle;
+    /* 0x82 */ u16 : 16;
+    /* 0x84 */ u8 flags;
+    /* 0x85 */ u8 delay;
+} ET_060DEC48;
+
+typedef struct {
     /* 0x78 */ u8 timer;
     /* 0x79 */ u8 : 8;
     /* 0x7A */ u16 : 16;
@@ -658,6 +666,7 @@ typedef union { // offset=0x78
     ET_060DDFB0 et_060DDFB0;
     ET_060DE40C et_060DE40C;
     ET_060DE8B4 et_060DE8B4;
+    ET_060DEC48 et_060DEC48;
     ET_060E7ED0 et_060E7ED0;
     ET_060E9D38 et_060E9D38;
     ET_060EB7EC et_060EB7EC;

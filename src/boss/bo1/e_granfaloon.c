@@ -72,7 +72,7 @@ extern s32 E_ID(ZOMBIE_ENEMY);
 extern s32 E_ID(EXPLOSION_FLAME);
 extern s32 E_ID(BODY_PART_SHELL);
 extern s32 E_ID(HOMING_LASER);
-extern s32 E_ID(LIFE_UPSPAWN);
+extern s32 E_ID(LIFE_UP_SPAWN);
 extern s32 E_ID(UNK_23);
 #endif
 
@@ -414,7 +414,7 @@ void EntityGranfaloon(Entity* self) {
         case 5:
             ent = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (ent != NULL) {
-                CreateEntityFromEntity(E_ID(LIFE_UPSPAWN), self, ent);
+                CreateEntityFromEntity(E_ID(LIFE_UP_SPAWN), self, ent);
                 ent->posX.i.hi = 0x100 - g_Tilemap.scrollX.i.hi;
                 ent->posY.i.hi = 0x150 - g_Tilemap.scrollY.i.hi;
                 ent->params = 1;

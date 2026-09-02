@@ -4093,6 +4093,26 @@ typedef struct {
 } ET_PlatformUnk;
 
 typedef struct {
+    /* 0x7C */ u16 bobOffset;
+    /* 0x7E */ s16 baseY;
+    /* 0x80 */ u16 previousBobOffset;
+} ET_FloatingIcePlatform;
+
+typedef struct {
+    /* 0x7C */ u32 : 32;
+    /* 0x80 */ u8 : 8;
+    /* 0x81 */ u8 : 8;
+    /* 0x82 */ u8 : 8;
+    /* 0x83 */ u8 lifetime;
+} ET_BladeSoldierDeathParts;
+
+typedef struct {
+    /* 0x7C */ u32 : 32;
+    /* 0x80 */ u32 : 32;
+    /* 0x84 */ u8 deathStarted;
+} ET_RdaiUnk33;
+
+typedef struct {
     /* 0x7C */ u8 throwTimer;
     /* 0x7D */ s16 : 16;
     /* 0x80 */ u8 movingLeft;
@@ -4661,6 +4681,9 @@ typedef union { // offset=0x7C
     ET_DeathFlames deathFlames;
     ET_FrozenHalf frozenHalf;
     ET_PlatformUnk platformUnk;
+    ET_FloatingIcePlatform floatingIcePlatform;
+    ET_BladeSoldierDeathParts bladeSoldierDeathParts;
+    ET_RdaiUnk33 rdaiUnk33;
     ET_JackOBones jackoBones;
     ET_NovaSkeleton nova;
     ET_Orobourous orob;

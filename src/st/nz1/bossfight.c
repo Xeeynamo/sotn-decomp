@@ -4,20 +4,20 @@
 extern EInit g_EInitInteractable;
 extern EInit g_EInitEnvironment;
 
-s32 D_us_80181134 = 0;
-s32 D_us_80181138 = 0;
+s32 g_bossDoorsLocked = 0;
+s32 g_BossFlag = 0;
 
-void EntityBossDoorTrigger(Entity* self) {
+void EntityBossFightManager(Entity* self) {
     Entity* entity;
-    s32 timeAttackResult;
+    bool bosses_defeated;
     s32 scrollX;
 
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitInteractable);
-        timeAttackResult = g_api.TimeAttackController(
+        bosses_defeated = g_api.TimeAttackController(
             TIMEATTACK_EVENT_KARASUMAN_DEFEAT, TIMEATTACK_GET_RECORD);
-        if (timeAttackResult) {
+        if (bosses_defeated) {
             DestroyEntity(self);
             return;
         }
@@ -31,7 +31,7 @@ void EntityBossDoorTrigger(Entity* self) {
         entity = &PLAYER;
         scrollX = entity->posX.i.hi + g_Tilemap.scrollX.i.hi;
         if (!g_Player.demo_timer) {
-            D_us_80181138 |= 1;
+            g_BossFlag |= 1;
             g_api.TimeAttackController(
                 TIMEATTACK_EVENT_KARASUMAN_DEFEAT, TIMEATTACK_SET_VISITED);
             self->step++;
@@ -49,7 +49,7 @@ void EntityBossDoorTrigger(Entity* self) {
         entity->posX.i.hi = 264 - g_Tilemap.scrollX.i.hi;
         entity->posY.i.hi = 128 - g_Tilemap.scrollY.i.hi;
         entity->params = 1;
-        D_us_80181134 = 1;
+        g_bossDoorsLocked = 1;
         self->step++;
         // fallthrough
 
@@ -70,7 +70,7 @@ void EntityBossDoorTrigger(Entity* self) {
         }
         // fallthrough
     case 5:
-        if (D_us_80181138 & 2) {
+        if (g_BossFlag & 2) {
             g_api.TimeAttackController(
                 TIMEATTACK_EVENT_KARASUMAN_DEFEAT, TIMEATTACK_SET_RECORD);
             if (g_api.func_80131F68() != false) {
@@ -81,14 +81,14 @@ void EntityBossDoorTrigger(Entity* self) {
         }
         break;
     case 6:
-        if (D_us_80181138 & 4) {
+        if (g_BossFlag & 4) {
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
                 CreateEntityFromEntity(E_ID(LIFE_UP_SPAWN), self, entity);
                 entity->posX.i.hi = 128;
                 entity->posY.i.hi = 128;
                 entity->params = 7;
-                D_us_80181134 = 0;
+                g_bossDoorsLocked = 0;
                 stopMusicFlag = true;
                 currentMusicId = MU_THE_TRAGIC_PRINCE;
                 self->step++;
@@ -129,7 +129,7 @@ void EntityBossDoors(Entity* self) {
         break;
 
     case 1:
-        if (D_us_80181134) {
+        if (g_bossDoorsLocked) {
             self->step++;
         }
         break;
@@ -178,7 +178,7 @@ void EntityBossDoors(Entity* self) {
         // fallthrough
 
     case 4:
-        if (!D_us_80181134) {
+        if (!g_bossDoorsLocked) {
 #ifdef VERSION_PSP
             doorTilemap = D_pspeu_092637C8;
 #else

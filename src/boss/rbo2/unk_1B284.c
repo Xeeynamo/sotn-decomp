@@ -120,7 +120,7 @@ void func_us_8019F4AC(Entity* self) {
         posY = 0x80 - g_Tilemap.scrollY.i.hi;
         entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_LIFE_UPSPAWN, self, entity);
+            CreateEntityFromEntity(E_LIFE_UP_SPAWN, self, entity);
             entity->posX.i.hi = posX;
             entity->posY.i.hi = posY;
             entity->params = 0x15;

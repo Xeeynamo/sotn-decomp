@@ -850,7 +850,25 @@ void func_060AEFBC(void) {
     }
 }
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AF050, func_060AF050);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AF124, func_060AF124);
+void func_060AF124(s32 arg0) {
+    SotnFixed32 auraColors[2] = {0, 0};
+
+    auraColors[0].val = 0xC210;
+    auraColors[1].val = 0x801F;
+    if (arg0 != 0) {
+        func_0600A31C();
+    } else {
+        func_0600A330();
+    }
+    g_Player.unk39E |= 0x80;
+    DAT_060CE4B2 = auraColors[arg0 & 1].i.lo;
+    DAT_060CE4B4 = 0x80;
+    DAT_060CE972 = 0;
+}
+
+const u16 DAT_060AF1AC[] = {
+    0xC210, 0xA108, 0xFFFF, 0xF39C, 0xA94A, 0x9084, 0xE318, 0xA94A,
+};
 
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AF1BC, func_060AF1BC);
 
@@ -982,14 +1000,47 @@ s32 func_060AF9D4(void) {
 // EntityAlucard
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AFA20, func_060AFA20);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B0310, func_060B0310);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60B0584, func_060B0584);
-s32 func_060B9610(u16 arg0, s32 arg1);
+s16 func_060B0584(void) {
+    Collider collider;
+    s32 yvar;
+    s32 collisions;
+    s32 i;
+    s32 xCenter;
+    s32 xRight;
+    s32 xLeft;
+    s32 filter;
 
+    filter = EFFECT_SOLID_FROM_ABOVE | EFFECT_SOLID;
+    xCenter = PLAYER.posX.val;
+    xRight = PLAYER.posX.val + FIX(4);
+    xLeft = PLAYER.posX.val - FIX(4);
+
+    for (i = 0; i < 4; i++) {
+        yvar = PLAYER.posY.val + DAT_060C85C4[i];
+        collisions = 0;
+        CheckCollision(xCenter, yvar, &collider, 0);
+        if ((collider.effects & filter) == EFFECT_SOLID) {
+            collisions++;
+        }
+        CheckCollision(xRight, yvar, &collider, 0);
+        if ((collider.effects & filter) == EFFECT_SOLID) {
+            collisions++;
+        }
+        CheckCollision(xLeft, yvar, &collider, 0);
+        if ((collider.effects & filter) == EFFECT_SOLID) {
+            collisions++;
+        }
+        if (collisions != 0) {
+            return i + 1;
+        }
+    }
+    return 0;
+}
 void func_060B0638(s32 arg0, s32 arg1, s32 arg2) {
     if (g_Player.healKind != 0) {
         g_Status.hp += g_Player.healAmount;
         func_0606FFC8(arg0, arg1, arg2, 0x250);
-        func_060B9610(g_Player.healAmount, 1);
+        func_060B9610Healing(g_Player.healAmount, 1);
 
         if (g_Player.healKind == 1) {
             PlaySfx(0x68E);

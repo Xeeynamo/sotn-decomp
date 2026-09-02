@@ -31,7 +31,46 @@ static TeleportCheck func_060A5060(void) {
     }
     return TELEPORT_CHECK_NONE;
 }
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A5154, func_060A5154);
+s16 func_060A5154(void) {
+    Collider collider;
+    s32 yvar;
+    s32 collisions;
+    s32 i;
+    s32 xCenter;
+    s32 xRight;
+    s32 xLeft;
+    s32 filter;
+
+    filter = EFFECT_SOLID_FROM_ABOVE | EFFECT_SOLID;
+    xCenter = PLAYER.posX.val;
+    xRight = PLAYER.posX.val + FIX(4);
+    xLeft = PLAYER.posX.val - FIX(4);
+
+    for (i = 0; i < 3; i++) {
+        yvar = PLAYER.posY.val + g_MariaCollisionProbeYOffsets[i];
+        collisions = 0;
+        CheckCollision(xCenter, yvar, &collider, 0);
+        if ((collider.effects & filter) == EFFECT_SOLID) {
+            collisions++;
+        }
+
+        CheckCollision(xRight, yvar, &collider, 0);
+        if ((collider.effects & filter) == EFFECT_SOLID) {
+            collisions++;
+        }
+
+        CheckCollision(xLeft, yvar, &collider, 0);
+        if ((collider.effects & filter) == EFFECT_SOLID) {
+            collisions++;
+        }
+
+        if (collisions != 0) {
+            return i + 1;
+        }
+    }
+
+    return 0;
+}
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A5208, func_060A5208);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A54F0, func_060A54F0);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A5884, func_060A5884);
@@ -491,7 +530,21 @@ void MariaSetWalk(s32 arg0) {
     MariaSetSpeedX(FIX(1.59375));
     PLAYER.velocityY = 0;
 }
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9304, func_060A9304);
+void func_060A9304(void) {
+    if (g_Player.unk7A) {
+        MariaSetWalk(0);
+        return;
+    }
+
+    g_Player.unk44 = 0;
+    RicSetStep(MARIA_PL_S_RUN);
+    RicSetAnimation(ric_anim_run);
+    MariaSetSpeedX(FIX(2.8125));
+    g_Player.timers[MARIA_PL_T_RUN] = 40;
+    PLAYER.velocityY = 0;
+    RicCreateEntFactoryFromEntity(
+        g_CurrentEntity, FACTORY(MARIA_BP_SMOKE_PUFF, 5), 0);
+}
 
 // _RicSetFall
 
@@ -620,8 +673,30 @@ s32 func_060A9CE8(void) {
 
 void func_060A9CF8(void) { RicSetStep(0x16); }
 
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9D10, func_060A9D10);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9DA4, func_060A9DA4);
+void func_060A9D10(void) {
+    MariaCheckFacing();
+    RicSetStep(MARIA_PL_S_SLIDE);
+    RicSetAnimation(&g_MariaAnim_060C2E4C);
+    g_CurrentEntity->velocityY = 0;
+    MariaSetSpeedX(FIX(6.625));
+    func_060AA948();
+    RicCreateEntFactoryFromEntity(g_CurrentEntity, MARIA_BP_25, 0);
+    RicCreateEntFactoryFromEntity(g_CurrentEntity, MARIA_BP_SKID_SMOKE, 0);
+    PlaySfx(0x617);
+    g_Player.timers[MARIA_PL_T_12] = 4;
+}
+void func_060A9DA4(void) {
+    g_Player.unk44 = 0;
+    RicSetStep(MARIA_PL_S_SLIDE_KICK);
+    RicSetAnimation(&g_MariaAnim_060C2F8C);
+    g_CurrentEntity->velocityY = FIX(-2);
+    MariaSetSpeedX(FIX(6.625));
+    func_060AA948();
+    RicCreateEntFactoryFromEntity(g_CurrentEntity, MARIA_BP_25, 0);
+    PlaySfx(0x71D);
+    g_Player.timers[MARIA_PL_T_12] = 4;
+    RicCreateEntFactoryFromEntity(g_CurrentEntity, MARIA_BP_31, 0);
+}
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9E40, func_060A9E40);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9EC4, func_060A9EC4);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60A9F84, func_060A9F84);
@@ -902,8 +977,66 @@ void func_060ABFF0(Entity* entity, MariaAttackDef* def) {
     entity->attack = func_0606F328(entity->attack);
     func_060ABE94(entity);
 }
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AC09C, func_060AC09C);
-INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AC148, func_060AC148);
+s32 func_060AC09C(
+    SubweaponDef* actualSubweapon, s32 isItemCrash, s32 useHearts) {
+    SubweaponDef* subweapon;
+
+    if (isItemCrash == 0) {
+        *actualSubweapon = g_MariaSubweaponDefs[g_Status.subWeapon];
+        if (g_Status.hearts >= actualSubweapon->heartCost) {
+            if (useHearts != 0) {
+                g_Status.hearts -= actualSubweapon->heartCost;
+            }
+            return g_Status.subWeapon;
+        }
+    } else {
+        subweapon = &g_MariaSubweaponDefs[g_Status.subWeapon];
+        *actualSubweapon = g_MariaSubweaponDefs[subweapon->crashId];
+        if (g_Status.hearts >= actualSubweapon->heartCost) {
+            if (useHearts != 0) {
+                g_Status.hearts -= actualSubweapon->heartCost;
+            }
+            return g_Status.subWeapon;
+        }
+    }
+    return -1;
+}
+s32 func_060AC148(Primitive* prim, s16 posX, s16 posY) {
+    s16 offset;
+    s16 xOffset;
+    u16* texture;
+    u16* frameWord = (u16*)&prim->x1;
+    u8 frame = ((u8*)frameWord)[1];
+
+    if (frame >= 3) {
+        offset = 4;
+    } else {
+        offset = 6;
+    }
+
+    if (frame == 6) {
+        return -1;
+    }
+
+    xOffset = offset | 1;
+    prim->x0 = posX - xOffset;
+    prim->y0 = posY - offset;
+    prim->x2 = posX + xOffset;
+    prim->y2 = posY + offset;
+
+    texture =
+        DAT_0605aec0[(u16)DAT_060C6D7C + g_MariaPrimitiveSizeIndices[frame]];
+    prim->unk8 = texture[0];
+    prim->unkA = texture[1];
+
+    prim->y1++;
+    if (!(prim->y1 & 1)) {
+        (*frameWord)++;
+    }
+    return 0;
+}
+
+const u16 pad_060AC1F8[] = {0xAAAA, 0xAAAB};
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AC1FC, func_060AC1FC);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AC458, func_060AC458);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60AC604, func_060AC604);

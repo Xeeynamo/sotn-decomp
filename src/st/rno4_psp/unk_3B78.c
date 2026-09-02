@@ -3,7 +3,7 @@
 
 INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_3B78", EntityRdaiUnk33);
 
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_3B78", EntityImpDeathParticle);
+#include "../e_imp_death_particle.h"
 
 INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_3B78", func_us_801BBE58_from_rnz1);
 

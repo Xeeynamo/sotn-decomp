@@ -35,7 +35,7 @@ void EntityBackgroundBlock(Entity* self) {
         }
 
         if (self->params == 6) {
-            primIndex = (s16)g_api_AllocPrimitives(PRIM_TILE, 1);
+            primIndex = g_api.AllocPrimitives(PRIM_TILE, 1);
             if (primIndex == -1) {
                 DestroyEntity(self);
                 return;
