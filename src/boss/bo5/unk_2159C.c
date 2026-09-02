@@ -5,7 +5,13 @@ INCLUDE_ASM("boss/bo5/nonmatchings/unk_2159C", EntityRbo3Door);
 
 #include "../../st/e_background_sky_land.h"
 
-INCLUDE_ASM("boss/bo5/nonmatchings/unk_2159C", func_us_801A19CC);
+void func_us_801A19CC(s32 arg0) {
+    g_CurrentEntity->poseTimer = 0;
+    g_CurrentEntity->pose = 0;
+    g_CurrentEntity->ext.et_801A19CC.unk7D = 0;
+    g_CurrentEntity->step = arg0 & 0xFF;
+    g_CurrentEntity->step_s = 0;
+}
 
 INCLUDE_ASM("boss/bo5/nonmatchings/unk_2159C", func_us_801A19FC);
 

@@ -4297,6 +4297,12 @@ typedef struct {
     /* 0xA0 */ struct Entity* source;
 } ET_801980E4;
 
+// func_us_801A19CC (bo5)
+typedef struct {
+    /* 0x7C */ u8 unk7C;
+    /* 0x7D */ u8 unk7D;
+} ET_801A19CC;
+
 // func_us_8019921C (rbo8, rbo8_psp)
 typedef struct {
     /* 0x7C */ u32 : 32;
@@ -4689,6 +4695,7 @@ typedef union { // offset=0x7C
     ET_Shaft shaft;
     ET_RcenShaftProjectile rcenShaftProjectile;
     ET_801980E4 et_801980E4;
+    ET_801A19CC et_801A19CC;
     ET_8019921C et_8019921C;
     ET_OlroxDrool olroxDrool;
     ET_Gorgon gorgon;
