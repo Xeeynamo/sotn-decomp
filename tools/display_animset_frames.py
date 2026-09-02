@@ -57,8 +57,8 @@ def show_animset(ovl_name, anim_num, arg_palette, view_w, view_h, unk5A, dump_fi
     # Now we have an array that tells us the name of all the frames.
     # Start GUI code.
     fig, ax = plt.subplots()
-    ax.set_xlim(-32, 32)
-    ax.set_ylim(-32, 32)
+    ax.set_xlim(-view_w, view_w)
+    ax.set_ylim(-view_h, view_h)
     plt.subplots_adjust(bottom=0.15)
 
     class ControllableShower(AnimationShower):

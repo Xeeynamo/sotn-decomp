@@ -65,7 +65,7 @@ typedef enum EntityID {
     E_SPIKES_DUST,            // EntitySpikesDust
     E_SPIKES_DAMAGE,          // EntitySpikesDamage
     E_UNK_2E,                 // func_us_801A9DB8
-    E_FROZEN_SHADE_CRYSTAL,   // EntityFrozenShadeCrystal
+    E_DARKWING_PERCH,         // EntityDarkwingBatPerch
     E_UNK_30,                 // func_us_801ABDE4
     E_UNK_31,                 // func_us_801AAF00
     E_UNK_32,                 // func_us_801AB04C

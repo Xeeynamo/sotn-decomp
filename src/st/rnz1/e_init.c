@@ -47,7 +47,7 @@ void EntitySpikesParts(Entity* self);
 void EntitySpikesDust(Entity* self);
 void EntitySpikesDamage(Entity* self);
 void func_us_801A9DB8(Entity* self);
-void EntityFrozenShadeCrystal(Entity* self);
+void EntityDarkwingBatPerch(Entity* self);
 void func_us_801ABDE4(Entity* self);
 void func_us_801AAF00(Entity* self);
 void func_us_801AB04C(Entity* self);
@@ -123,7 +123,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntitySpikesDust,
     EntitySpikesDamage,
     func_us_801A9DB8,
-    EntityFrozenShadeCrystal,
+    EntityDarkwingBatPerch,
     func_us_801ABDE4,
     func_us_801AAF00,
     func_us_801AB04C,

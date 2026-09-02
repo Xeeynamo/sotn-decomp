@@ -5,7 +5,7 @@ extern EInit g_EInitInteractable;
 extern EInit g_EInitEnvironment;
 
 #if defined(VERSION_PSP)
-extern s32 E_ID(FROZEN_SHADE_CRYSTAL);
+extern s32 E_ID(DARKWING_PERCH);
 extern s32 E_ID(UNK_2E);
 extern s32 E_ID(BOSS_DOORS);
 extern s32 E_ID(LIFE_UP_SPAWN);
@@ -35,7 +35,7 @@ void EntityBossFightManager(Entity* self) {
             return;
         }
         entity = &g_Entities[79];
-        CreateEntityFromCurrentEntity(E_ID(FROZEN_SHADE_CRYSTAL), entity);
+        CreateEntityFromCurrentEntity(E_ID(DARKWING_PERCH), entity);
         entity->posX.i.hi = 128 - g_Tilemap.scrollX.i.hi;
         entity->posY.i.hi = 120 - g_Tilemap.scrollY.i.hi;
         entity = &g_Entities[80];

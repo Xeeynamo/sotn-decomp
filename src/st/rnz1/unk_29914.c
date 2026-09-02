@@ -658,7 +658,18 @@ void func_us_801A9DB8(Entity* self) {
     self->hitboxHeight = *ptr_s3++;
 }
 
-INCLUDE_ASM("st/rnz1/nonmatchings/unk_29914", EntityFrozenShadeCrystal);
+extern EInit D_us_80180BC4;
+// When you first walk into the room, Darkwing Bat is hanging from a golden
+// perch at the top of the screen. It sticks out, compared to the large
+// structure in the center. When DB is idle before the fight, the perch is
+// part of its sprite, but once the fight starts, we create a static entity
+// that sits there to keep showing the perch.
+void EntityDarkwingBatPerch(Entity* self) {
+    if (!self->step) {
+        InitializeEntity(D_us_80180BC4);
+        self->animCurFrame = 6;
+    }
+}
 
 INCLUDE_ASM("st/rnz1/nonmatchings/unk_29914", func_us_801AAF00);
 
