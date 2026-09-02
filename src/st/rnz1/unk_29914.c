@@ -1,7 +1,21 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rnz1.h"
 
-INCLUDE_ASM("st/rnz1/nonmatchings/unk_29914", func_801CDC80);
+// Move a rotation angle toward the target, but only by an
+// amount "increment". Return true if we reached the target.
+static bool func_801CDC80(s16* rot, s16 target, s16 increment) {
+    if (abs(*rot - target) < increment) {
+        *rot = target;
+        return 1;
+    }
+    if (*rot > target) {
+        *rot -= increment;
+    }
+    if (*rot < target) {
+        *rot += increment;
+    }
+    return 0;
+}
 
 static s32 func_pspeu_092508B8(s32 arg0) {
 #ifdef VERSION_PSP
@@ -118,11 +132,11 @@ static AnimateEntityFrame D_pspeu_09259138[] = {{2, 16}, {2, 15}, {2, 14}, POSE_
 static AnimateEntityFrame D_pspeu_09259140[] = {{2, 9}, {2, 22}, {2, 21}, {2, 20}, POSE_END};
 static AnimateEntityFrame D_pspeu_09259150[] = {{7, 20}, {5, 21}, {1, 22}, {1, 23}, {1, 24}, {1, 25}, {5, 26}, {7, 27}, {5, 26}, {5, 25}, {5, 24}, {5, 23}, {5, 22}, {5, 21}, POSE_LOOP(0)};
 static AnimateEntityFrame D_pspeu_09259170[] = {{4, 29}, {4, 30}, {4, 31}, {4, 32}, {4, 33}, {4, 34}, {4, 35}, {4, 36}, POSE_LOOP(0)};
-static AnimateEntityFrame D_pspeu_09259188[] = {{1, 20}, {1, 21}, {1, 22}, {1, 23}, {1, 24}, {1, 25}, {2, 26}, {8, 27}, POSE_END}; //1120
-static AnimateEntityFrame D_pspeu_092591A0[] = {{6, 28}, {5, 44}, {6, 45}, {6, 44}, POSE_LOOP(0)}; //1134
+static AnimateEntityFrame D_pspeu_09259188[] = {{1, 20}, {1, 21}, {1, 22}, {1, 23}, {1, 24}, {1, 25}, {2, 26}, {8, 27}, POSE_END};
+static AnimateEntityFrame D_pspeu_092591A0[] = {{6, 28}, {5, 44}, {6, 45}, {6, 44}, POSE_LOOP(0)};
 static AnimateEntityFrame D_pspeu_092591B0[] = {{2, 27}, {2, 26}, {1, 25}, {1, 24}, {1, 23}, {1, 22}, {1, 21}, {1, 20}, POSE_END};
 static AnimateEntityFrame anim_unused[] = {{6, 41}, {6, 42}, {5, 43}, {6, 42}, POSE_LOOP(0)};
-static AnimateEntityFrame D_pspeu_092591C8[] = {{2, 37}, {10, 38}, {16, 39}, POSE_END}; //1160
+static AnimateEntityFrame D_pspeu_092591C8[] = {{2, 37}, {10, 38}, {16, 39}, POSE_END};
 
 static s8 D_pspeu_092591D0[] = {0, 0, 0, 0, 4, -12, 4, 28, 4, -8, 4, 32, 4, -4, 4, 28, 4, -12, 20, 12, 8, -12, 16, 12, 4, -4, 20, 4, 0, -4, 16, 4, -8, -60, 16, 4, -8, 52, 16, 4, 12, 0, 28, 8, 12, -4, 36, 4, 8, -4, 40, 4, 4, 4, 12, 12, 4, 0, 12, 8, 0, 0, 8, 16, -4, 4, 12, 12, 0, 4, 8, 12, 4, 4, 20, 12, 12, 0, 20, 8, 0, 0, 24, 8, 4, 8, 28, 8, 0, 8, 24, 8, 8, 8, 24, 8};
 static u8 D_pspeu_09259230[] = {0, 1, 2, 2, 1, 2, 0, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 12, 12, 12, 13, 14, 14, 14, 15, 13, 13, 16, 17, 18, 19, 20, 18, 21, 22, 22, 23, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0};
