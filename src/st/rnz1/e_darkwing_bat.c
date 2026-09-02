@@ -752,7 +752,7 @@ static AnimateEntityFrame anim_last[] = {
     {3, 8}, {3, 9}, {3, 10}, {3, 11}, {3, 12}, {3, 13}, POSE_END};
 
 void func_us_801AB04C(Entity* self) {
-    switch (self->step) { /* irregular */
+    switch (self->step) {
     case 0:
         InitializeEntity(g_EInitParticle);
         self->animSet = 0xE;
