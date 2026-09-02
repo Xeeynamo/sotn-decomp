@@ -671,6 +671,45 @@ void EntityDarkwingBatPerch(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rnz1/nonmatchings/unk_29914", func_us_801AAF00);
+extern EInit g_EInitParticle;
+
+void func_us_801AAF00(Entity* self) {
+    s32 yShift;
+    
+    if (!self->step) {
+        InitializeEntity(g_EInitParticle);
+        self->drawFlags = 7;
+        self->palette = 0x8170;
+        self->animSet = 5;
+        self->animCurFrame = 1;
+        self->palette = 0x8195;
+        self->blendMode = 0x10;
+        self->zPriority += 8;
+        yShift = (0x100 - self->scaleY) >> 4;
+        self->posY.i.hi += yShift;
+        // This looks more like an if-else but psp doesn't match that
+        if (self->facingLeft) {
+            self->velocityX = 0x40000;
+            return;
+        }
+        self->velocityX = -0x40000;
+        return;
+    }
+    self->poseTimer += 1;
+    MoveEntity();
+    if (self->facingLeft) {
+        self->velocityX -= 0x2000;
+    } else {
+        self->velocityX += 0x2000;
+    }
+    self->velocityY = -0x18000;
+    self->rotate -= 0x40;
+    if (!(self->poseTimer & 1)) {
+        self->animCurFrame += 1;
+    }
+    if (self->poseTimer > 36) {
+        DestroyEntity(self);
+    }
+}
 
 INCLUDE_ASM("st/rnz1/nonmatchings/unk_29914", func_us_801AB04C);
