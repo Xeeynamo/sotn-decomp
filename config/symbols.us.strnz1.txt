@@ -16,6 +16,7 @@ BackgroundBlockInit = 0x80180C9C;
 g_BossFlag = 0x80181308;
 rooms = 0x801824C4;
 func_801CDC80 = 0x801A9914;
+func_pspeu_092508B8 = 0x801A9994;
 EntityFrozenShadeCrystal = 0x801AAEB4;
 func_801B2CF8 = 0x801AB148;
 Random = 0x801ACEA0;
