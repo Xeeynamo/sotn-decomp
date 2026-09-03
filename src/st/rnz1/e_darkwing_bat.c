@@ -103,7 +103,8 @@ static s32 WindAttackHelper(s32 arg0) {
         if (!(Random() & 7) && (arg0 || !(g_Timer & 7))) {
             other = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (other != NULL) {
-                CreateEntityFromEntity(E_ID(DARKWING_WIND_DUST), g_CurrentEntity, other);
+                CreateEntityFromEntity(
+                    E_ID(DARKWING_WIND_DUST), g_CurrentEntity, other);
                 other->posY.i.hi = 200; // Dust spawns on the ground
                 if (g_CurrentEntity->facingLeft) {
                     other->posX.i.hi += (i * 8);
@@ -118,11 +119,11 @@ static s32 WindAttackHelper(s32 arg0) {
     FntPrint("damage:%x\n", g_CurrentEntity->ext.darkwing.damage);
     if ((g_Player.unk60) == 2) {
         other = &PLAYER;
-        other->velocityY -= FIX(1.0/8);
+        other->velocityY -= FIX(1.0 / 8);
         if (g_CurrentEntity->facingLeft) {
-            other->velocityX += FIX(1.0/8);
+            other->velocityX += FIX(1.0 / 8);
         } else {
-            other->velocityX -= FIX(1.0/8);
+            other->velocityX -= FIX(1.0 / 8);
         }
         var_s5 = g_Player.vram_flag & ~TOUCHING_GROUND;
 #ifdef VERSION_PSP
