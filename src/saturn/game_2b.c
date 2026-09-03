@@ -203,35 +203,17 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079424, func_06079424);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079580, func_06079580);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079670, func_06079670);
 
-typedef struct Func06078920CmdView {
-    Uint16 control;
-    Uint16 link;
-    Uint16 drawMode;
-    Uint16 color;
-    Uint16 charAddr;
-    Uint16 charSize;
-    s32 pos[4];
-    Uint16 grshAddr;
-    Uint16 dummy;
-} Func06078920CmdView;
-
-typedef union Func06078920Cmd {
-    SprSpCmd cmd;
-    Func06078920CmdView view;
-} Func06078920Cmd;
-
-void func_0607973C(Sint32 arg0, Sint16* arg1) {
-    Func06078920Cmd* cmd;
-    Sint16 left;
-    Sint16 top;
-    s32 right;
-    Sint16 bottom;
-    s32 leftWord;
+void func_0607973C(s32 arg0, Point16* pos) {
+    SprSpCmd* cmd;
+    s16 top;
+    s16 left;
+    s16 right;
+    s16 bottom;
     s32 shade;
 
     shade = g_Timer;
-    left = *arg1++;
-    top = *arg1;
+    left = pos->x;
+    top = pos->y;
     cmd = &DAT_06086108;
 
     if (shade & 0x10) {
@@ -242,20 +224,19 @@ void func_0607973C(Sint32 arg0, Sint16* arg1) {
     shade /= 8;
 
     right = left + 0x6F;
-    bottom = top + 0x0C;
+    bottom = top + 0xC;
 
-    cmd->view.control = 0x1004;
-    cmd->view.drawMode = 0x04C0;
-    cmd->view.color = (shade << 5) + shade - 0x8000;
+    cmd->control = 0x1004;
+    cmd->drawMode = 0x4C0;
+    cmd->color = RGB16_COLOR(shade, shade, 0);
 
-    leftWord = left << 16;
-    cmd->view.pos[0] = leftWord | (u16)top;
-    cmd->view.pos[1] = (u16)top | (right << 16);
-    cmd->view.pos[2] = (right << 16) | (u16)bottom;
-    cmd->view.pos[3] = leftWord | (u16)bottom;
+    *((s32*)&cmd->ax) = (left << 0x10) | ((u16)top);
+    *((s32*)&cmd->bx) = (right << 0x10) | ((u16)top);
+    *((s32*)&cmd->cx) = (right << 0x10) | ((u16)bottom);
+    *((s32*)&cmd->dx) = (left << 0x10) | ((u16)bottom);
 
     if (SpMstCmdPos <= 0x277) {
-        SPR_2Cmd(arg0, &cmd->cmd);
+        SPR_2Cmd(arg0, cmd);
         d_0605AEAC += 0x20;
     }
 }
