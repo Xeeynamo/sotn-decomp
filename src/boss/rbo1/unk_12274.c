@@ -37,7 +37,3 @@ INCLUDE_ASM("boss/rbo1/nonmatchings/unk_12274", polarPlacePartsList);
 INCLUDE_ASM("boss/rbo1/nonmatchings/unk_12274", func_us_8019D260_from_rcen);
 
 INCLUDE_ASM("boss/rbo1/nonmatchings/unk_12274", func_us_801947E4);
-
-INCLUDE_ASM("boss/rbo1/nonmatchings/unk_12274", func_us_80194C50);
-
-INCLUDE_ASM("boss/rbo1/nonmatchings/unk_12274", EntityBossRoomBlock);
