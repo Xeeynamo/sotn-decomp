@@ -1,6 +1,59 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rnz1.h"
 
+#ifdef VERSION_PSP
+extern s32 E_ID(UNK_30);
+extern s32 E_ID(UNK_31);
+extern s32 E_ID(UNK_32);
+#endif
+
+static AnimateEntityFrame D_pspeu_09259100[] = {
+    {16, 1}, {8, 2}, {8, 3}, {8, 4}, {24, 5}, POSE_END};
+static AnimateEntityFrame D_pspeu_09259110[] = {
+    {2, 14}, {2, 8}, {2, 9}, {2, 10}, {15, 11}, POSE_END};
+static AnimateEntityFrame D_pspeu_09259120[] = {
+    {3, 14}, {3, 15}, {8, 19}, POSE_END};
+static AnimateEntityFrame D_pspeu_09259128[] = {
+    {3, 16}, {3, 17}, {3, 18}, {3, 19}, POSE_LOOP(0)};
+static AnimateEntityFrame D_pspeu_09259138[] = {
+    {2, 16}, {2, 15}, {2, 14}, POSE_END};
+static AnimateEntityFrame D_pspeu_09259140[] = {
+    {2, 9}, {2, 22}, {2, 21}, {2, 20}, POSE_END};
+static AnimateEntityFrame D_pspeu_09259150[] = {
+    {7, 20}, {5, 21}, {1, 22}, {1, 23}, {1, 24}, {1, 25}, {5, 26},     {7, 27},
+    {5, 26}, {5, 25}, {5, 24}, {5, 23}, {5, 22}, {5, 21}, POSE_LOOP(0)};
+static AnimateEntityFrame D_pspeu_09259170[] = {
+    {4, 29}, {4, 30}, {4, 31}, {4, 32},     {4, 33},
+    {4, 34}, {4, 35}, {4, 36}, POSE_LOOP(0)};
+static AnimateEntityFrame D_pspeu_09259188[] = {
+    {1, 20}, {1, 21}, {1, 22}, {1, 23}, {1, 24},
+    {1, 25}, {2, 26}, {8, 27}, POSE_END};
+static AnimateEntityFrame D_pspeu_092591A0[] = {
+    {6, 28}, {5, 44}, {6, 45}, {6, 44}, POSE_LOOP(0)};
+static AnimateEntityFrame D_pspeu_092591B0[] = {
+    {2, 27}, {2, 26}, {1, 25}, {1, 24}, {1, 23},
+    {1, 22}, {1, 21}, {1, 20}, POSE_END};
+static AnimateEntityFrame anim_unused[] = {
+    {6, 41}, {6, 42}, {5, 43}, {6, 42}, POSE_LOOP(0)};
+static AnimateEntityFrame D_pspeu_092591C8[] = {
+    {2, 37}, {10, 38}, {16, 39}, POSE_END};
+
+static s8 D_pspeu_092591D0[] = {
+    0,  0,   0,  0,  4,  -12, 4,  28, 4,  -8, 4,  32, 4,  -4, 4,  28,
+    4,  -12, 20, 12, 8,  -12, 16, 12, 4,  -4, 20, 4,  0,  -4, 16, 4,
+    -8, -60, 16, 4,  -8, 52,  16, 4,  12, 0,  28, 8,  12, -4, 36, 4,
+    8,  -4,  40, 4,  4,  4,   12, 12, 4,  0,  12, 8,  0,  0,  8,  16,
+    -4, 4,   12, 12, 0,  4,   8,  12, 4,  4,  20, 12, 12, 0,  20, 8,
+    0,  0,   24, 8,  4,  8,   28, 8,  0,  8,  24, 8,  8,  8,  24, 8};
+static u8 D_pspeu_09259230[] = {
+    0,  1,  2,  2,  1,  2,  0,  3,  4,  5,  6,  7,  8,  9,  10, 11,
+    12, 12, 12, 12, 13, 14, 14, 14, 15, 13, 13, 16, 17, 18, 19, 20,
+    18, 21, 22, 22, 23, 7,  7,  7,  0,  0,  0,  0,  0,  0,  0,  0};
+static s16 D_pspeu_09259260[] = {0, -72, -96, -96};
+static u8 D_pspeu_09259268[] = {5, 7, 6, 6};
+extern s32 g_BossFlag;
+extern EInit g_EInitDarkwingBat;
+
 // Move a rotation angle toward the target, but only by an
 // amount "increment". Return true if we reached the target.
 static bool func_801CDC80(s16* rot, s16 target, s16 increment) {
@@ -126,53 +179,6 @@ static s32 func_pspeu_092508B8(s32 arg0) {
     }
     return 0;
 }
-
-static AnimateEntityFrame D_pspeu_09259100[] = {
-    {16, 1}, {8, 2}, {8, 3}, {8, 4}, {24, 5}, POSE_END};
-static AnimateEntityFrame D_pspeu_09259110[] = {
-    {2, 14}, {2, 8}, {2, 9}, {2, 10}, {15, 11}, POSE_END};
-static AnimateEntityFrame D_pspeu_09259120[] = {
-    {3, 14}, {3, 15}, {8, 19}, POSE_END};
-static AnimateEntityFrame D_pspeu_09259128[] = {
-    {3, 16}, {3, 17}, {3, 18}, {3, 19}, POSE_LOOP(0)};
-static AnimateEntityFrame D_pspeu_09259138[] = {
-    {2, 16}, {2, 15}, {2, 14}, POSE_END};
-static AnimateEntityFrame D_pspeu_09259140[] = {
-    {2, 9}, {2, 22}, {2, 21}, {2, 20}, POSE_END};
-static AnimateEntityFrame D_pspeu_09259150[] = {
-    {7, 20}, {5, 21}, {1, 22}, {1, 23}, {1, 24}, {1, 25}, {5, 26},     {7, 27},
-    {5, 26}, {5, 25}, {5, 24}, {5, 23}, {5, 22}, {5, 21}, POSE_LOOP(0)};
-static AnimateEntityFrame D_pspeu_09259170[] = {
-    {4, 29}, {4, 30}, {4, 31}, {4, 32},     {4, 33},
-    {4, 34}, {4, 35}, {4, 36}, POSE_LOOP(0)};
-static AnimateEntityFrame D_pspeu_09259188[] = {
-    {1, 20}, {1, 21}, {1, 22}, {1, 23}, {1, 24},
-    {1, 25}, {2, 26}, {8, 27}, POSE_END};
-static AnimateEntityFrame D_pspeu_092591A0[] = {
-    {6, 28}, {5, 44}, {6, 45}, {6, 44}, POSE_LOOP(0)};
-static AnimateEntityFrame D_pspeu_092591B0[] = {
-    {2, 27}, {2, 26}, {1, 25}, {1, 24}, {1, 23},
-    {1, 22}, {1, 21}, {1, 20}, POSE_END};
-static AnimateEntityFrame anim_unused[] = {
-    {6, 41}, {6, 42}, {5, 43}, {6, 42}, POSE_LOOP(0)};
-static AnimateEntityFrame D_pspeu_092591C8[] = {
-    {2, 37}, {10, 38}, {16, 39}, POSE_END};
-
-static s8 D_pspeu_092591D0[] = {
-    0,  0,   0,  0,  4,  -12, 4,  28, 4,  -8, 4,  32, 4,  -4, 4,  28,
-    4,  -12, 20, 12, 8,  -12, 16, 12, 4,  -4, 20, 4,  0,  -4, 16, 4,
-    -8, -60, 16, 4,  -8, 52,  16, 4,  12, 0,  28, 8,  12, -4, 36, 4,
-    8,  -4,  40, 4,  4,  4,   12, 12, 4,  0,  12, 8,  0,  0,  8,  16,
-    -4, 4,   12, 12, 0,  4,   8,  12, 4,  4,  20, 12, 12, 0,  20, 8,
-    0,  0,   24, 8,  4,  8,   28, 8,  0,  8,  24, 8,  8,  8,  24, 8};
-static u8 D_pspeu_09259230[] = {
-    0,  1,  2,  2,  1,  2,  0,  3,  4,  5,  6,  7,  8,  9,  10, 11,
-    12, 12, 12, 12, 13, 14, 14, 14, 15, 13, 13, 16, 17, 18, 19, 20,
-    18, 21, 22, 22, 23, 7,  7,  7,  0,  0,  0,  0,  0,  0,  0,  0};
-static s16 D_pspeu_09259260[] = {0, -72, -96, -96};
-static u8 D_pspeu_09259268[] = {5, 7, 6, 6};
-extern s32 g_BossFlag;
-extern EInit g_EInitDarkwingBat;
 
 void func_us_801A9DB8(Entity* self) {
     s32 var_s4;
@@ -394,7 +400,8 @@ void func_us_801A9DB8(Entity* self) {
             }
             break;
         case 3: /* switch 5 */
-            if (!AnimateEntity(D_pspeu_09259150, self)) {
+            var_s4 = AnimateEntity(D_pspeu_09259150, self);
+            if (!var_s4) {
                 self->ext.ILLEGAL.u8[0xC] += 1;
             }
             if ((!self->poseTimer) && (self->pose == 3)) {
@@ -408,7 +415,8 @@ void func_us_801A9DB8(Entity* self) {
                 self->ext.ILLEGAL.s16[2]--;
                 var_s4 = 0;
             }
-            if (func_pspeu_092508B8(var_s4)) {
+            var_s4 = func_pspeu_092508B8(var_s4);
+            if (var_s4) {
                 self->ext.ILLEGAL.s16[2] = 0x40;
             }
             if ((self->ext.ILLEGAL.u8[0xC]) > 3) {
