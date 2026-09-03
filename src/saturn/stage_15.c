@@ -261,7 +261,7 @@ void func_060DEC48(void) {
     randomFlags = 3 & Random();
     randomAngle = ((Random() & 0xF) << 8) - 0x800;
     for (count = 0; count <= 5; count++) {
-        entity = AllocEntity(&g_Entities[0xE0], &DAT_060A4FF8);
+        entity = AllocEntity(&g_Entities[0xE0], &g_Entities[0x100]);
         if (entity != NULL) {
             CreateEntityFromEntity(0x46U, g_CurrentEntity, entity);
             entity->params = 2;
