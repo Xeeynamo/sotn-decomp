@@ -1080,7 +1080,7 @@ void DestroyEntityWithExplosion(Entity* self, u16 params) {
         CreateEntityFromEntity(E_EXPLOSION, self, entity);
         entity->params = params;
         self->animCurFrame = 0;
-        self->drawFlags = 0;
+        self->drawFlags = ENTITY_DEFAULT;
         self->step = 0;
         self->step_s = 0;
     }

@@ -14,7 +14,7 @@
 extern SubweaponDef DAT_060C1B02[];
 extern s8* DAT_06085DE8[];
 extern s8* DAT_06085E14[];
-void func_0600B0B8(SpritePart* part, void* arg1, s32 arg2, void* arg3);
+void func_0600B0B8(SpritePart* part, void* arg1, s32 arg2);
 
 enum MariaBlueprints {
     MARIA_BP_SKID_SMOKE,
