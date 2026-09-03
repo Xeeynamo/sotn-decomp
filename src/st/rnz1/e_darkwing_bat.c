@@ -192,8 +192,8 @@ void func_us_801A9DB8(Entity* self) {
     if ((self->flags & FLAG_DEAD) && (self->step != 9)) {
         SetStep(9);
     }
-    switch (self->step) { /* switch 1; irregular */
-    case 0x0:             /* switch 1 */
+    switch (self->step) {
+    case 0x0:
         InitializeEntity(g_EInitDarkwingBat);
         self->zPriority = (g_unkGraphicsStruct.g_zEntityCenter + 4);
         self->hitboxState = 0;
@@ -202,14 +202,14 @@ void func_us_801A9DB8(Entity* self) {
         other->zPriority = ((self->zPriority) + 1);
         SetStep(2U);
         break;
-    case 0x2: /* switch 1 */
+    case 0x2:
         if (g_BossFlag & 1) {
             SetStep(3);
         }
         break;
-    case 0x3:                   /* switch 1 */
-        switch (self->step_s) { /* switch 2; irregular */
-        case 0:                 /* switch 2 */
+    case 0x3:
+        switch (self->step_s) {
+        case 0:
             if (!AnimateEntity(D_pspeu_09259100, self)) {
                 self->velocityY = FIX(3.0);
                 self->drawFlags |= ENTITY_ROTATE;
@@ -218,7 +218,7 @@ void func_us_801A9DB8(Entity* self) {
                 self->step_s++;
             }
             break;
-        case 1: /* switch 2 */
+        case 1:
             MoveEntity();
             self->velocityY -= self->velocityY / 16;
             if (self->facingLeft) {
@@ -234,7 +234,7 @@ void func_us_801A9DB8(Entity* self) {
                 SetSubStep(2);
             }
             break;
-        case 2: /* switch 2 */
+        case 2:
             MoveEntity();
             if (!AnimateEntity(D_pspeu_09259110, self)) {
                 self->hitboxState = 3;
@@ -244,9 +244,9 @@ void func_us_801A9DB8(Entity* self) {
             break;
         }
         break;
-    case 0x4:                   /* switch 1 */
-        switch (self->step_s) { /* switch 3; irregular */
-        case 0:                 /* switch 3 */
+    case 0x4:
+        switch (self->step_s) {
+        case 0:
             self->animCurFrame = 0x25;
             self->ext.ILLEGAL.u8[8] = 1;
             self->ext.ILLEGAL.u8[9] = 0;
@@ -257,7 +257,7 @@ void func_us_801A9DB8(Entity* self) {
             self->ext.ILLEGAL.u8[0xD] = Random() & 3;
             self->step_s++;
             /* fallthrough */
-        case 1: /* switch 3 */
+        case 1:
             MoveEntity();
             if (self->hitFlags & 3) {
                 self->ext.ILLEGAL.u8[0xE] = 1;
@@ -318,22 +318,22 @@ void func_us_801A9DB8(Entity* self) {
             break;
         }
         break;
-    case 0x5:                   /* switch 1 */
-        switch (self->step_s) { /* switch 4; irregular */
-        case 0:                 /* switch 4 */
+    case 0x5:
+        switch (self->step_s) {
+        case 0:
             self->ext.ILLEGAL.u8[8] = 0;
             self->velocityX = 0;
             self->velocityY = 0;
             self->step_s++;
             /* fallthrough */
-        case 1: /* switch 4 */
+        case 1:
             if (!AnimateEntity(D_pspeu_09259120, self)) {
                 self->attack = g_api.enemyDefs[274].attack;
                 self->ext.ILLEGAL.s16[2] = 0;
                 SetSubStep(2);
             }
             break;
-        case 2: /* switch 4 */
+        case 2:
             if (self->facingLeft) {
                 self->velocityX = FIX(3.5);
             } else {
@@ -369,7 +369,7 @@ void func_us_801A9DB8(Entity* self) {
                 SetSubStep(3);
             }
             break;
-        case 3: /* switch 4 */
+        case 3:
             if (!AnimateEntity(D_pspeu_09259138, self)) {
                 self->ext.ILLEGAL.u8[9] = 1;
                 SetStep(4U);
@@ -377,21 +377,21 @@ void func_us_801A9DB8(Entity* self) {
             break;
         }
         break;
-    case 0x6:                   /* switch 1 */
-        switch (self->step_s) { /* switch 5; irregular */
-        case 0:                 /* switch 5 */
+    case 0x6:
+        switch (self->step_s) {
+        case 0:
             self->ext.ILLEGAL.u8[9] = 1;
             self->ext.ILLEGAL.u8[8] = 1;
             self->ext.ILLEGAL.s16[2] = 0x20;
             self->step_s++;
             /* fallthrough */
-        case 1: /* switch 5 */
+        case 1:
             if (!--self->ext.ILLEGAL.s16[2]) {
                 self->ext.ILLEGAL.u8[8] = 0;
                 self->velocityX = 0;
                 self->velocityY = 0;
                 self->step_s++;
-            case 2: /* switch 5 */
+            case 2:
                 if (!AnimateEntity(D_pspeu_09259140, self)) {
                     self->ext.ILLEGAL.u8[0xC] = 0;
                     self->ext.ILLEGAL.s16[2] = 0;
@@ -399,7 +399,7 @@ void func_us_801A9DB8(Entity* self) {
                 }
             }
             break;
-        case 3: /* switch 5 */
+        case 3:
             var_s4 = AnimateEntity(D_pspeu_09259150, self);
             if (!var_s4) {
                 self->ext.ILLEGAL.u8[0xC] += 1;
@@ -424,7 +424,7 @@ void func_us_801A9DB8(Entity* self) {
                 self->step_s++;
             }
             break;
-        case 4: /* switch 5 */
+        case 4:
             func_pspeu_092508B8(0);
             if (!--self->ext.ILLEGAL.s16[2]) {
                 self->ext.ILLEGAL.u8[9] = 1;
@@ -433,8 +433,8 @@ void func_us_801A9DB8(Entity* self) {
             break;
         }
         break;
-    case 0x7:                   /* switch 1 */
-        switch (self->step_s) { /* switch 6 */
+    case 0x7:
+        switch (self->step_s) {
         case 0:
             self->ext.ILLEGAL.u8[9] = 1;
             self->ext.ILLEGAL.s16[2] = 0x20;
@@ -559,9 +559,9 @@ void func_us_801A9DB8(Entity* self) {
             break;
         }
         break;
-    case 0x8:                   /* switch 1 */
-        switch (self->step_s) { /* switch 7; irregular */
-        case 0:                 /* switch 7 */
+    case 0x8:
+        switch (self->step_s) {
+        case 0:
             self->ext.ILLEGAL.u8[8] = 0;
             self->ext.ILLEGAL.u8[0xB] = 1;
             self->animCurFrame = 0x25;
@@ -579,7 +579,7 @@ void func_us_801A9DB8(Entity* self) {
             self->ext.ILLEGAL.s16[2] = 0x18;
             self->step_s++;
             /* fallthrough */
-        case 1: /* switch 7 */
+        case 1:
             if (!--self->ext.ILLEGAL.s16[2]) {
                 self->ext.ILLEGAL.s16[2] = 0x18;
                 self->ext.ILLEGAL.u8[0xC] += 1;
@@ -597,7 +597,7 @@ void func_us_801A9DB8(Entity* self) {
                 self->step_s++;
             }
             break;
-        case 2: /* switch 7 */
+        case 2:
             self->animCurFrame = 0x25;
             self->ext.ILLEGAL.u8[8] = 1;
             self->ext.ILLEGAL.u8[9] = 1;
@@ -614,7 +614,7 @@ void func_us_801A9DB8(Entity* self) {
             self->ext.ILLEGAL.s16[2] = 0x80;
             self->step_s++;
             /* fallthrough */
-        case 3: /* switch 7 */
+        case 3:
             MoveEntity();
             if (!--self->ext.ILLEGAL.s16[2]) {
                 self->rotate = 0;
@@ -624,9 +624,9 @@ void func_us_801A9DB8(Entity* self) {
             break;
         }
         break;
-    case 0x9:                   /* switch 1 */
-        switch (self->step_s) { /* switch 8 */
-        case 0:                 /* switch 8 */
+    case 0x9:
+        switch (self->step_s) {
+        case 0:
             g_BossFlag |= 2;
 #ifdef VERSION_US
             self->flags |= FLAG_UNK_00200000;
@@ -646,13 +646,13 @@ void func_us_801A9DB8(Entity* self) {
             }
             self->step_s++;
             /* fallthrough */
-        case 1: /* switch 8 */
+        case 1:
             MoveEntity();
             if (!AnimateEntity(D_pspeu_092591C8, self)) {
                 SetSubStep(2);
             }
             break;
-        case 2: /* switch 8 */
+        case 2:
             MoveEntity();
             self->velocityY += FIX(0.0625);
             if (self->posY.i.hi > 0xC8) {
@@ -661,7 +661,7 @@ void func_us_801A9DB8(Entity* self) {
                 self->step_s++;
             }
             break;
-        case 3: /* switch 8 */
+        case 3:
             other = self + 1;
             if (!other->entityId) {
                 self->step_s++;
@@ -669,7 +669,7 @@ void func_us_801A9DB8(Entity* self) {
                 g_api.PlaySfx(SFX_FIREBALL_SHOT_A);
             }
             break;
-        case 4: /* switch 8 */
+        case 4:
             other = AllocEntity(&g_Entities[64], &g_Entities[256]);
             if (other != NULL) {
                 CreateEntityFromEntity(E_ID(UNK_32), self, other);
@@ -690,7 +690,7 @@ void func_us_801A9DB8(Entity* self) {
             break;
         }
         break;
-    case 0xFF: /* switch 1 */
+    case 0xFF:
 #include "../pad2_anim_debug.h"
     }
     ptr_s3 = &D_pspeu_092591D0[0];
