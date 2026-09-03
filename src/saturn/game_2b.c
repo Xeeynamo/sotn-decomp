@@ -812,7 +812,23 @@ u8 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
 }
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607A88C, func_0607A88C);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607A994, func_0607A994);
+
+void func_0600B0B8(SpritePart* part, void* arg1, s32 arg2);
+
+void func_0607A994(Entity* self) {
+    s16** frames;
+    s16* frame;
+    SpriteObject* sprite;
+
+    frames = self->ext.spriteAnimEnemy.frames;
+
+    frame = frames[self->ext.spriteAnimEnemy.unk83];
+    sprite = self->unk0;
+
+    sprite->flags = sprite->flags & ~0x3F08 | frame[0] & 0x3F08;
+    sprite->slotAndStreamId = sprite->slotAndStreamId & ~0x7F | frame[1] & 0x7F;
+    func_0600B0B8(sprite->parts, &frame[2], (sprite->flags & 0x3F00) >> 8);
+}
 
 // SAT func_0607A9F8
 // Original name: _hkyori_search
