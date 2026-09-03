@@ -115,7 +115,7 @@ static s32 WindAttackHelper(s32 arg0) {
             }
         }
     }
-    FntPrint("damage:%x\n", g_CurrentEntity->ext.ILLEGAL.u8[0xF]);
+    FntPrint("damage:%x\n", g_CurrentEntity->ext.darkwing.unk8B);
     if ((g_Player.unk60) == 2) {
         other = &PLAYER;
         other->velocityY -= 0x2000;
@@ -148,7 +148,7 @@ static s32 WindAttackHelper(s32 arg0) {
         if (other->velocityY > FIX(-4)) {
             return 1;
         }
-        var_s2 = g_CurrentEntity->ext.ILLEGAL.u8[0xF];
+        var_s2 = g_CurrentEntity->ext.darkwing.unk8B;
         g_Player.unk64 = (g_api.enemyDefs[275].attack / var_s2);
         g_Player.unk60 = 4;
         if (var_s2 > 2) {
@@ -193,7 +193,7 @@ static s32 WindAttackHelper(s32 arg0) {
         if (var_s2 <= 0) {
             var_s2 = 1;
         }
-        g_CurrentEntity->ext.ILLEGAL.u8[0xF] = var_s2;
+        g_CurrentEntity->ext.darkwing.unk8B = var_s2;
         return 1;
     }
     return 0;
@@ -257,7 +257,7 @@ void EntityDarkwingBat(Entity* self) {
             MoveEntity();
             if (!AnimateEntity(anim_flapping, self)) {
                 self->hitboxState = 3;
-                self->ext.ILLEGAL.u8[9] = 1;
+                self->ext.darkwing.unk85 = 1;
                 SetStep(DB_FLYING);
             }
             break;
@@ -267,23 +267,23 @@ void EntityDarkwingBat(Entity* self) {
         switch (self->step_s) {
         case 0:
             self->animCurFrame = 0x25;
-            self->ext.ILLEGAL.u8[8] = 1;
-            self->ext.ILLEGAL.u8[9] = 0;
-            self->ext.ILLEGAL.u8[0xA] = 0;
-            self->ext.ILLEGAL.u8[0xE] = 0;
-            self->ext.ILLEGAL.s16[2] = 0xE0;
+            self->ext.darkwing.unk84 = 1;
+            self->ext.darkwing.unk85 = 0;
+            self->ext.darkwing.unk86 = 0;
+            self->ext.darkwing.unk8A = 0;
+            self->ext.darkwing.unk80 = 0xE0;
             self->velocityY = FIX(1.0);
-            self->ext.ILLEGAL.u8[0xD] = Random() & 3;
+            self->ext.darkwing.unk89 = Random() & 3;
             self->step_s++;
             /* fallthrough */
         case 1:
             MoveEntity();
             if (self->hitFlags & 3) {
-                self->ext.ILLEGAL.u8[0xE] = 1;
+                self->ext.darkwing.unk8A = 1;
             }
-            if ((self->ext.ILLEGAL.u8[0xE]) &&
+            if ((self->ext.darkwing.unk8A) &&
                 !(AnimateEntity(anim_body_idle, self))) {
-                self->ext.ILLEGAL.u8[0xE] = 0;
+                self->ext.darkwing.unk8A = 0;
                 self->pose = 0;
                 self->poseTimer = 0;
                 self->animCurFrame = 0x25;
@@ -301,7 +301,7 @@ void EntityDarkwingBat(Entity* self) {
             }
             other = &PLAYER;
             yVar = other->posY.i.hi - self->posY.i.hi;
-            yVar += yOffsets[self->ext.ILLEGAL.u8[0xD]];
+            yVar += yOffsets[self->ext.darkwing.unk89];
             if (yVar < -8) {
                 self->velocityY -= 0x600;
                 if (self->velocityY <= FIX(-5.0 / 8)) {
@@ -321,10 +321,10 @@ void EntityDarkwingBat(Entity* self) {
             if (xVar > 0x60) {
                 self->facingLeft ^= 1;
             }
-            if (self->ext.ILLEGAL.s16[2]) {
-                self->ext.ILLEGAL.s16[2]--;
+            if (self->ext.darkwing.unk80) {
+                self->ext.darkwing.unk80--;
             } else if (xVar > -0x58U) {
-                SetStep(stepOptions[self->ext.ILLEGAL.u8[0xD]]);
+                SetStep(stepOptions[self->ext.darkwing.unk89]);
                 break;
             }
             if (self->facingLeft) {
@@ -340,7 +340,7 @@ void EntityDarkwingBat(Entity* self) {
     case DB_TORPEDO:
         switch (self->step_s) {
         case 0:
-            self->ext.ILLEGAL.u8[8] = 0;
+            self->ext.darkwing.unk84 = 0;
             self->velocityX = 0;
             self->velocityY = 0;
             self->step_s++;
@@ -348,7 +348,7 @@ void EntityDarkwingBat(Entity* self) {
         case 1:
             if (!AnimateEntity(anim_torpedo_twist, self)) {
                 self->attack = g_api.enemyDefs[274].attack;
-                self->ext.ILLEGAL.s16[2] = 0;
+                self->ext.darkwing.unk80 = 0;
                 SetSubStep(2);
             }
             break;
@@ -361,17 +361,17 @@ void EntityDarkwingBat(Entity* self) {
             if (!(g_Timer & 3)) {
                 PlaySfxPositional(SFX_UNK_RNZ1_SWISH_823);
             }
-            if (self->ext.ILLEGAL.s16[2]) {
-                if (!--self->ext.ILLEGAL.s16[2]) {
+            if (self->ext.darkwing.unk80) {
+                if (!--self->ext.darkwing.unk80) {
                     self->pose = 0;
                     self->poseTimer = 0;
                 }
             } else if (self->hitFlags & 3) {
-                self->ext.ILLEGAL.s16[2] = 0x20;
+                self->ext.darkwing.unk80 = 0x20;
                 self->pose = 0;
                 self->poseTimer = 0;
             }
-            if (self->ext.ILLEGAL.s16[2]) {
+            if (self->ext.darkwing.unk80) {
                 self->velocityX /= 4;
                 AnimateEntity(anim_spinning_halfopen, self);
             } else {
@@ -390,7 +390,7 @@ void EntityDarkwingBat(Entity* self) {
             break;
         case 3:
             if (!AnimateEntity(anim_torpedo_crush, self)) {
-                self->ext.ILLEGAL.u8[9] = 1;
+                self->ext.darkwing.unk85 = 1;
                 SetStep(DB_FLYING);
             }
             break;
@@ -399,21 +399,21 @@ void EntityDarkwingBat(Entity* self) {
     case DB_WIND_ATTACK:
         switch (self->step_s) {
         case 0:
-            self->ext.ILLEGAL.u8[9] = 1;
-            self->ext.ILLEGAL.u8[8] = 1;
-            self->ext.ILLEGAL.s16[2] = 0x20;
+            self->ext.darkwing.unk85 = 1;
+            self->ext.darkwing.unk84 = 1;
+            self->ext.darkwing.unk80 = 0x20;
             self->step_s++;
             /* fallthrough */
         case 1:
-            if (!--self->ext.ILLEGAL.s16[2]) {
-                self->ext.ILLEGAL.u8[8] = 0;
+            if (!--self->ext.darkwing.unk80) {
+                self->ext.darkwing.unk84 = 0;
                 self->velocityX = 0;
                 self->velocityY = 0;
                 self->step_s++;
             case 2:
                 if (!AnimateEntity(anim_prepare_wind_attack, self)) {
-                    self->ext.ILLEGAL.u8[0xC] = 0;
-                    self->ext.ILLEGAL.s16[2] = 0;
+                    self->ext.darkwing.unk88 = 0;
+                    self->ext.darkwing.unk80 = 0;
                     SetSubStep(3);
                 }
             }
@@ -421,7 +421,7 @@ void EntityDarkwingBat(Entity* self) {
         case 3:
             var_s4 = AnimateEntity(anim_wind_attack, self);
             if (!var_s4) {
-                self->ext.ILLEGAL.u8[0xC] += 1;
+                self->ext.darkwing.unk88 += 1;
             }
             if ((!self->poseTimer) && (self->pose == 3)) {
                 PlaySfxPositional(SFX_UNK_RNZ1_WIND_824);
@@ -430,23 +430,23 @@ void EntityDarkwingBat(Entity* self) {
             if ((self->pose > 3) && (self->pose < 8)) {
                 var_s4 = 1;
             }
-            if (self->ext.ILLEGAL.s16[2]) {
-                self->ext.ILLEGAL.s16[2]--;
+            if (self->ext.darkwing.unk80) {
+                self->ext.darkwing.unk80--;
                 var_s4 = 0;
             }
             var_s4 = WindAttackHelper(var_s4);
             if (var_s4) {
-                self->ext.ILLEGAL.s16[2] = 0x40;
+                self->ext.darkwing.unk80 = 0x40;
             }
-            if ((self->ext.ILLEGAL.u8[0xC]) > 3) {
-                self->ext.ILLEGAL.s16[2] = 8;
+            if ((self->ext.darkwing.unk88) > 3) {
+                self->ext.darkwing.unk80 = 8;
                 self->step_s++;
             }
             break;
         case 4:
             WindAttackHelper(0);
-            if (!--self->ext.ILLEGAL.s16[2]) {
-                self->ext.ILLEGAL.u8[9] = 1;
+            if (!--self->ext.darkwing.unk80) {
+                self->ext.darkwing.unk85 = 1;
                 SetStep(DB_FLYING);
             }
             break;
@@ -455,13 +455,13 @@ void EntityDarkwingBat(Entity* self) {
     case DB_HUG_ATTACK:
         switch (self->step_s) {
         case 0:
-            self->ext.ILLEGAL.u8[9] = 1;
-            self->ext.ILLEGAL.s16[2] = 0x20;
+            self->ext.darkwing.unk85 = 1;
+            self->ext.darkwing.unk80 = 0x20;
             self->step_s++;
             /* fallthrough */
         case 1:
-            if (!--self->ext.ILLEGAL.s16[2]) {
-                self->ext.ILLEGAL.u8[8] = 0;
+            if (!--self->ext.darkwing.unk80) {
+                self->ext.darkwing.unk84 = 0;
                 self->animCurFrame = 0xB;
                 other = &PLAYER;
                 xVar = other->posX.i.hi - self->posX.i.hi;
@@ -527,22 +527,22 @@ void EntityDarkwingBat(Entity* self) {
             yVar = other->posY.i.hi - 0x24;
             self->posX.i.hi = xVar;
             self->posY.i.hi = yVar;
-            self->ext.ILLEGAL.u8[0xC] = 0;
+            self->ext.darkwing.unk88 = 0;
             self->step_s++;
             break;
         case 5:
             if (!AnimateEntity(anim_hugging, self)) {
-                self->ext.ILLEGAL.u8[0xC] += 1;
+                self->ext.darkwing.unk88 += 1;
                 g_Player.unk64 = g_api.enemyDefs[276].attack;
                 g_Player.unk60 = 3;
             }
-            self->ext.ILLEGAL.s16[2]++;
-            if (self->ext.ILLEGAL.s16[2] & 1) {
+            self->ext.darkwing.unk80++;
+            if (self->ext.darkwing.unk80 & 1) {
                 self->posY.i.hi += 1;
             } else {
                 self->posY.i.hi -= 1;
             }
-            if ((self->ext.ILLEGAL.u8[0xC]) > 3) {
+            if ((self->ext.darkwing.unk88) > 3) {
                 g_Player.unk60 = 0;
                 SetSubStep(6);
             }
@@ -554,9 +554,9 @@ void EntityDarkwingBat(Entity* self) {
             break;
         case 7:
             self->animCurFrame = 0x25;
-            self->ext.ILLEGAL.u8[8] = 1;
-            self->ext.ILLEGAL.u8[9] = 1;
-            self->ext.ILLEGAL.u8[0xA] = 1;
+            self->ext.darkwing.unk84 = 1;
+            self->ext.darkwing.unk85 = 1;
+            self->ext.darkwing.unk86 = 1;
             self->drawFlags = ENTITY_ROTATE;
             self->rotate = 0x180;
             if (self->facingLeft) {
@@ -565,12 +565,12 @@ void EntityDarkwingBat(Entity* self) {
                 self->velocityX = FIX(0.1875);
             }
             self->velocityY = FIX(-0.4375);
-            self->ext.ILLEGAL.s16[2] = 0xC0;
+            self->ext.darkwing.unk80 = 0xC0;
             self->step_s++;
             /* fallthrough */
         case 8:
             MoveEntity();
-            if (!--self->ext.ILLEGAL.s16[2]) {
+            if (!--self->ext.darkwing.unk80) {
                 self->rotate = 0;
                 self->drawFlags = ENTITY_DEFAULT;
                 SetStep(DB_FLYING);
@@ -583,8 +583,8 @@ void EntityDarkwingBat(Entity* self) {
     case DB_8:
         switch (self->step_s) {
         case 0:
-            self->ext.ILLEGAL.u8[8] = 0;
-            self->ext.ILLEGAL.u8[0xB] = 1;
+            self->ext.darkwing.unk84 = 0;
+            self->ext.darkwing.unk87 = 1;
             self->animCurFrame = 0x25;
             other = &PLAYER;
             xVar = other->posX.i.hi;
@@ -596,33 +596,33 @@ void EntityDarkwingBat(Entity* self) {
             yVar = other->posY.i.hi - 0x30;
             self->posX.i.hi = xVar;
             self->posY.i.hi = yVar;
-            self->ext.ILLEGAL.u8[0xC] = 0;
-            self->ext.ILLEGAL.s16[2] = 0x18;
+            self->ext.darkwing.unk88 = 0;
+            self->ext.darkwing.unk80 = 0x18;
             self->step_s++;
             /* fallthrough */
         case 1:
-            if (!--self->ext.ILLEGAL.s16[2]) {
-                self->ext.ILLEGAL.s16[2] = 0x18;
-                self->ext.ILLEGAL.u8[0xC] += 1;
+            if (!--self->ext.darkwing.unk80) {
+                self->ext.darkwing.unk80 = 0x18;
+                self->ext.darkwing.unk88 += 1;
                 g_Player.unk64 = g_api.enemyDefs[276].attack;
                 g_Player.unk60 = 3;
             }
-            if (self->ext.ILLEGAL.s16[2] & 1) {
+            if (self->ext.darkwing.unk80 & 1) {
                 self->posY.i.hi += 1;
             } else {
                 self->posY.i.hi -= 1;
             }
-            if ((self->ext.ILLEGAL.u8[0xC]) > 3) {
+            if ((self->ext.darkwing.unk88) > 3) {
                 g_Player.unk60 = 0;
                 self->step_s++;
             }
             break;
         case 2:
             self->animCurFrame = 0x25;
-            self->ext.ILLEGAL.u8[8] = 1;
-            self->ext.ILLEGAL.u8[9] = 1;
-            self->ext.ILLEGAL.u8[0xA] = 1;
-            self->ext.ILLEGAL.u8[0xB] = 0;
+            self->ext.darkwing.unk84 = 1;
+            self->ext.darkwing.unk85 = 1;
+            self->ext.darkwing.unk86 = 1;
+            self->ext.darkwing.unk87 = 0;
             self->drawFlags = ENTITY_ROTATE;
             self->rotate = 0x180;
             if (self->facingLeft) {
@@ -631,12 +631,12 @@ void EntityDarkwingBat(Entity* self) {
                 self->velocityX = FIX(0.1875);
             }
             self->velocityY = FIX(-0.4375);
-            self->ext.ILLEGAL.s16[2] = 0x80;
+            self->ext.darkwing.unk80 = 0x80;
             self->step_s++;
             /* fallthrough */
         case 3:
             MoveEntity();
-            if (!--self->ext.ILLEGAL.s16[2]) {
+            if (!--self->ext.darkwing.unk80) {
                 self->rotate = 0;
                 self->drawFlags = ENTITY_DEFAULT;
                 SetStep(DB_FLYING);
@@ -655,10 +655,10 @@ void EntityDarkwingBat(Entity* self) {
             self->animCurFrame = 0x25;
             self->rotate = 0;
             self->drawFlags = ENTITY_DEFAULT;
-            self->ext.ILLEGAL.u8[8] = 1;
-            self->ext.ILLEGAL.u8[9] = 1;
-            self->ext.ILLEGAL.u8[0xA] = 0;
-            self->ext.ILLEGAL.u8[0xB] = 0;
+            self->ext.darkwing.unk84 = 1;
+            self->ext.darkwing.unk85 = 1;
+            self->ext.darkwing.unk86 = 0;
+            self->ext.darkwing.unk87 = 0;
             self->velocityX = 0;
             self->velocityY = FIX(-0.5);
             if (g_Player.unk60) {
@@ -685,7 +685,7 @@ void EntityDarkwingBat(Entity* self) {
             other = self + 1;
             if (!other->entityId) {
                 self->step_s++;
-                self->ext.ILLEGAL.s16[2] = 0x100;
+                self->ext.darkwing.unk80 = 0x100;
                 g_api.PlaySfx(SFX_FIREBALL_SHOT_A);
             }
             break;
@@ -697,10 +697,10 @@ void EntityDarkwingBat(Entity* self) {
                 other->posY.i.hi += 8;
                 other->zPriority = ((self->zPriority) + 1);
             }
-            if (!(self->ext.ILLEGAL.s16[2] & 7)) {
+            if (!(self->ext.darkwing.unk80 & 7)) {
                 PlaySfxPositional(SFX_FIREBALL_SHOT_B);
             }
-            if (!--self->ext.ILLEGAL.s16[2]) {
+            if (!--self->ext.darkwing.unk80) {
                 self->animCurFrame = 0;
                 g_BossFlag |= 4;
                 self->step_s++;
@@ -791,11 +791,11 @@ void EntityFadingFireball(Entity* self) {
         self->facingLeft = Random() & 1;
         self->velocityX = (Random() << 8) - 0x8000;
         self->velocityY = FIX(-2.0);
-        self->ext.ILLEGAL.u32[8] = -(Random() * 0x10) - 0x100;
+        self->ext.darkwing.unk9C = -(Random() * 0x10) - 0x100;
         /* fallthrough */
     case 1:
         MoveEntity();
-        self->velocityY += self->ext.ILLEGAL.u32[8];
+        self->velocityY += self->ext.darkwing.unk9C;
         self->opacity -= 4;
         if (AnimateEntity(anim_fireball, self) == 0) {
             DestroyEntity(self);
