@@ -4325,21 +4325,21 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ u32 : 32;
-    /* 0x80 */ s16 unk80;
+    /* 0x80 */ s16 timer;
     /* 0x82 */ u16 : 16;
     /* 0x84 */ u8 unk84;
     /* 0x85 */ u8 unk85;
     /* 0x86 */ u8 unk86;
     /* 0x87 */ u8 unk87;
-    /* 0x88 */ u8 unk88;
-    /* 0x89 */ u8 unk89;
-    /* 0x8A */ u8 unk8A;
-    /* 0x8B */ u8 unk8B;
+    /* 0x88 */ u8 attackCycles;
+    /* 0x89 */ u8 randTo3;
+    /* 0x8A */ u8 wasHit;
+    /* 0x8B */ u8 damage;
     /* 0x8C */ u32 : 32;
     /* 0x90 */ u32 : 32;
     /* 0x94 */ u32 : 32;
     /* 0x98 */ u32 : 32;
-    /* 0x9C */ u32 unk9C;
+    /* 0x9C */ u32 fireballAccel;
 
 } ET_DarkwingBat;
 

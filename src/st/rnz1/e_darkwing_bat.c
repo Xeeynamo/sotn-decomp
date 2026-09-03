@@ -3,7 +3,7 @@
 
 #ifdef VERSION_PSP
 extern s32 E_ID(UNK_30);
-extern s32 E_ID(UNK_31);
+extern s32 E_ID(DARKWING_WIND_DUST);
 extern s32 E_ID(FADING_FIREBALL);
 #endif
 
@@ -97,32 +97,32 @@ static s32 WindAttackHelper(s32 arg0) {
     s32 var_s5;
     s32 xVar, yVar;
     s32 var_s2;
-    s32 var_s1;
+    s32 i;
 
-    for (var_s1 = 0; var_s1 < 0x10; var_s1++) {
+    for (i = 0; i < 0x10; i++) {
         if (!(Random() & 7) && (arg0 || !(g_Timer & 7))) {
             other = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (other != NULL) {
-                CreateEntityFromEntity(E_ID(UNK_31), g_CurrentEntity, other);
-                other->posY.i.hi = 0xC8;
+                CreateEntityFromEntity(E_ID(DARKWING_WIND_DUST), g_CurrentEntity, other);
+                other->posY.i.hi = 200; // Dust spawns on the ground
                 if (g_CurrentEntity->facingLeft) {
-                    other->posX.i.hi += (var_s1 * 8);
+                    other->posX.i.hi += (i * 8);
                 } else {
-                    other->posX.i.hi -= (var_s1 * 8);
+                    other->posX.i.hi -= (i * 8);
                 }
-                other->scaleX = other->scaleY = 0x140 - (var_s1 * 8);
+                other->scaleX = other->scaleY = 320 - (i * 8);
                 other->facingLeft = g_CurrentEntity->facingLeft;
             }
         }
     }
-    FntPrint("damage:%x\n", g_CurrentEntity->ext.darkwing.unk8B);
+    FntPrint("damage:%x\n", g_CurrentEntity->ext.darkwing.damage);
     if ((g_Player.unk60) == 2) {
         other = &PLAYER;
-        other->velocityY -= 0x2000;
+        other->velocityY -= FIX(1.0/8);
         if (g_CurrentEntity->facingLeft) {
-            other->velocityX += 0x2000;
+            other->velocityX += FIX(1.0/8);
         } else {
-            other->velocityX -= 0x2000;
+            other->velocityX -= FIX(1.0/8);
         }
         var_s5 = g_Player.vram_flag & ~TOUCHING_GROUND;
 #ifdef VERSION_PSP
@@ -148,7 +148,7 @@ static s32 WindAttackHelper(s32 arg0) {
         if (other->velocityY > FIX(-4)) {
             return 1;
         }
-        var_s2 = g_CurrentEntity->ext.darkwing.unk8B;
+        var_s2 = g_CurrentEntity->ext.darkwing.damage;
         g_Player.unk64 = (g_api.enemyDefs[275].attack / var_s2);
         g_Player.unk60 = 4;
         if (var_s2 > 2) {
@@ -189,11 +189,11 @@ static s32 WindAttackHelper(s32 arg0) {
         g_Player.unk64 = 0;
         g_Player.unk62 = 0;
         var_s2 = GetDistanceToPlayerX();
-        var_s2 = (var_s2 - 0x30) / 24;
+        var_s2 = (var_s2 - 48) / 24;
         if (var_s2 <= 0) {
             var_s2 = 1;
         }
-        g_CurrentEntity->ext.darkwing.unk8B = var_s2;
+        g_CurrentEntity->ext.darkwing.damage = var_s2;
         return 1;
     }
     return 0;
@@ -245,7 +245,7 @@ void EntityDarkwingBat(Entity* self) {
             } else {
                 self->velocityX -= FIX(0.0625);
             }
-            if (WakeupRotateHelper(&self->rotate, 0x400, 0x20)) {
+            if (WakeupRotateHelper(&self->rotate, ROT(90), 0x20)) {
                 self->velocityY = 0;
                 self->drawFlags = ENTITY_DEFAULT;
                 self->rotate = 0;
@@ -270,20 +270,20 @@ void EntityDarkwingBat(Entity* self) {
             self->ext.darkwing.unk84 = 1;
             self->ext.darkwing.unk85 = 0;
             self->ext.darkwing.unk86 = 0;
-            self->ext.darkwing.unk8A = 0;
-            self->ext.darkwing.unk80 = 0xE0;
+            self->ext.darkwing.wasHit = 0;
+            self->ext.darkwing.timer = 0xE0;
             self->velocityY = FIX(1.0);
-            self->ext.darkwing.unk89 = Random() & 3;
+            self->ext.darkwing.randTo3 = Random() & 3;
             self->step_s++;
             /* fallthrough */
         case 1:
             MoveEntity();
             if (self->hitFlags & 3) {
-                self->ext.darkwing.unk8A = 1;
+                self->ext.darkwing.wasHit = 1;
             }
-            if ((self->ext.darkwing.unk8A) &&
+            if ((self->ext.darkwing.wasHit) &&
                 !(AnimateEntity(anim_body_idle, self))) {
-                self->ext.darkwing.unk8A = 0;
+                self->ext.darkwing.wasHit = 0;
                 self->pose = 0;
                 self->poseTimer = 0;
                 self->animCurFrame = 0x25;
@@ -301,7 +301,7 @@ void EntityDarkwingBat(Entity* self) {
             }
             other = &PLAYER;
             yVar = other->posY.i.hi - self->posY.i.hi;
-            yVar += yOffsets[self->ext.darkwing.unk89];
+            yVar += yOffsets[self->ext.darkwing.randTo3];
             if (yVar < -8) {
                 self->velocityY -= 0x600;
                 if (self->velocityY <= FIX(-5.0 / 8)) {
@@ -321,10 +321,10 @@ void EntityDarkwingBat(Entity* self) {
             if (xVar > 0x60) {
                 self->facingLeft ^= 1;
             }
-            if (self->ext.darkwing.unk80) {
-                self->ext.darkwing.unk80--;
+            if (self->ext.darkwing.timer) {
+                self->ext.darkwing.timer--;
             } else if (xVar > -0x58U) {
-                SetStep(stepOptions[self->ext.darkwing.unk89]);
+                SetStep(stepOptions[self->ext.darkwing.randTo3]);
                 break;
             }
             if (self->facingLeft) {
@@ -348,7 +348,7 @@ void EntityDarkwingBat(Entity* self) {
         case 1:
             if (!AnimateEntity(anim_torpedo_twist, self)) {
                 self->attack = g_api.enemyDefs[274].attack;
-                self->ext.darkwing.unk80 = 0;
+                self->ext.darkwing.timer = 0;
                 SetSubStep(2);
             }
             break;
@@ -361,17 +361,17 @@ void EntityDarkwingBat(Entity* self) {
             if (!(g_Timer & 3)) {
                 PlaySfxPositional(SFX_UNK_RNZ1_SWISH_823);
             }
-            if (self->ext.darkwing.unk80) {
-                if (!--self->ext.darkwing.unk80) {
+            if (self->ext.darkwing.timer) {
+                if (!--self->ext.darkwing.timer) {
                     self->pose = 0;
                     self->poseTimer = 0;
                 }
             } else if (self->hitFlags & 3) {
-                self->ext.darkwing.unk80 = 0x20;
+                self->ext.darkwing.timer = 0x20;
                 self->pose = 0;
                 self->poseTimer = 0;
             }
-            if (self->ext.darkwing.unk80) {
+            if (self->ext.darkwing.timer) {
                 self->velocityX /= 4;
                 AnimateEntity(anim_spinning_halfopen, self);
             } else {
@@ -401,19 +401,19 @@ void EntityDarkwingBat(Entity* self) {
         case 0:
             self->ext.darkwing.unk85 = 1;
             self->ext.darkwing.unk84 = 1;
-            self->ext.darkwing.unk80 = 0x20;
+            self->ext.darkwing.timer = 0x20;
             self->step_s++;
             /* fallthrough */
         case 1:
-            if (!--self->ext.darkwing.unk80) {
+            if (!--self->ext.darkwing.timer) {
                 self->ext.darkwing.unk84 = 0;
                 self->velocityX = 0;
                 self->velocityY = 0;
                 self->step_s++;
             case 2:
                 if (!AnimateEntity(anim_prepare_wind_attack, self)) {
-                    self->ext.darkwing.unk88 = 0;
-                    self->ext.darkwing.unk80 = 0;
+                    self->ext.darkwing.attackCycles = 0;
+                    self->ext.darkwing.timer = 0;
                     SetSubStep(3);
                 }
             }
@@ -421,7 +421,7 @@ void EntityDarkwingBat(Entity* self) {
         case 3:
             var_s4 = AnimateEntity(anim_wind_attack, self);
             if (!var_s4) {
-                self->ext.darkwing.unk88 += 1;
+                self->ext.darkwing.attackCycles += 1;
             }
             if ((!self->poseTimer) && (self->pose == 3)) {
                 PlaySfxPositional(SFX_UNK_RNZ1_WIND_824);
@@ -430,22 +430,22 @@ void EntityDarkwingBat(Entity* self) {
             if ((self->pose > 3) && (self->pose < 8)) {
                 var_s4 = 1;
             }
-            if (self->ext.darkwing.unk80) {
-                self->ext.darkwing.unk80--;
+            if (self->ext.darkwing.timer) {
+                self->ext.darkwing.timer--;
                 var_s4 = 0;
             }
             var_s4 = WindAttackHelper(var_s4);
             if (var_s4) {
-                self->ext.darkwing.unk80 = 0x40;
+                self->ext.darkwing.timer = 0x40;
             }
-            if ((self->ext.darkwing.unk88) > 3) {
-                self->ext.darkwing.unk80 = 8;
+            if ((self->ext.darkwing.attackCycles) > 3) {
+                self->ext.darkwing.timer = 8;
                 self->step_s++;
             }
             break;
         case 4:
             WindAttackHelper(0);
-            if (!--self->ext.darkwing.unk80) {
+            if (!--self->ext.darkwing.timer) {
                 self->ext.darkwing.unk85 = 1;
                 SetStep(DB_FLYING);
             }
@@ -456,11 +456,11 @@ void EntityDarkwingBat(Entity* self) {
         switch (self->step_s) {
         case 0:
             self->ext.darkwing.unk85 = 1;
-            self->ext.darkwing.unk80 = 0x20;
+            self->ext.darkwing.timer = 0x20;
             self->step_s++;
             /* fallthrough */
         case 1:
-            if (!--self->ext.darkwing.unk80) {
+            if (!--self->ext.darkwing.timer) {
                 self->ext.darkwing.unk84 = 0;
                 self->animCurFrame = 0xB;
                 other = &PLAYER;
@@ -527,22 +527,22 @@ void EntityDarkwingBat(Entity* self) {
             yVar = other->posY.i.hi - 0x24;
             self->posX.i.hi = xVar;
             self->posY.i.hi = yVar;
-            self->ext.darkwing.unk88 = 0;
+            self->ext.darkwing.attackCycles = 0;
             self->step_s++;
             break;
         case 5:
             if (!AnimateEntity(anim_hugging, self)) {
-                self->ext.darkwing.unk88 += 1;
+                self->ext.darkwing.attackCycles += 1;
                 g_Player.unk64 = g_api.enemyDefs[276].attack;
                 g_Player.unk60 = 3;
             }
-            self->ext.darkwing.unk80++;
-            if (self->ext.darkwing.unk80 & 1) {
+            self->ext.darkwing.timer++;
+            if (self->ext.darkwing.timer & 1) {
                 self->posY.i.hi += 1;
             } else {
                 self->posY.i.hi -= 1;
             }
-            if ((self->ext.darkwing.unk88) > 3) {
+            if ((self->ext.darkwing.attackCycles) > 3) {
                 g_Player.unk60 = 0;
                 SetSubStep(6);
             }
@@ -565,12 +565,12 @@ void EntityDarkwingBat(Entity* self) {
                 self->velocityX = FIX(0.1875);
             }
             self->velocityY = FIX(-0.4375);
-            self->ext.darkwing.unk80 = 0xC0;
+            self->ext.darkwing.timer = 0xC0;
             self->step_s++;
             /* fallthrough */
         case 8:
             MoveEntity();
-            if (!--self->ext.darkwing.unk80) {
+            if (!--self->ext.darkwing.timer) {
                 self->rotate = 0;
                 self->drawFlags = ENTITY_DEFAULT;
                 SetStep(DB_FLYING);
@@ -596,23 +596,23 @@ void EntityDarkwingBat(Entity* self) {
             yVar = other->posY.i.hi - 0x30;
             self->posX.i.hi = xVar;
             self->posY.i.hi = yVar;
-            self->ext.darkwing.unk88 = 0;
-            self->ext.darkwing.unk80 = 0x18;
+            self->ext.darkwing.attackCycles = 0;
+            self->ext.darkwing.timer = 0x18;
             self->step_s++;
             /* fallthrough */
         case 1:
-            if (!--self->ext.darkwing.unk80) {
-                self->ext.darkwing.unk80 = 0x18;
-                self->ext.darkwing.unk88 += 1;
+            if (!--self->ext.darkwing.timer) {
+                self->ext.darkwing.timer = 0x18;
+                self->ext.darkwing.attackCycles += 1;
                 g_Player.unk64 = g_api.enemyDefs[276].attack;
                 g_Player.unk60 = 3;
             }
-            if (self->ext.darkwing.unk80 & 1) {
+            if (self->ext.darkwing.timer & 1) {
                 self->posY.i.hi += 1;
             } else {
                 self->posY.i.hi -= 1;
             }
-            if ((self->ext.darkwing.unk88) > 3) {
+            if ((self->ext.darkwing.attackCycles) > 3) {
                 g_Player.unk60 = 0;
                 self->step_s++;
             }
@@ -631,12 +631,12 @@ void EntityDarkwingBat(Entity* self) {
                 self->velocityX = FIX(0.1875);
             }
             self->velocityY = FIX(-0.4375);
-            self->ext.darkwing.unk80 = 0x80;
+            self->ext.darkwing.timer = 0x80;
             self->step_s++;
             /* fallthrough */
         case 3:
             MoveEntity();
-            if (!--self->ext.darkwing.unk80) {
+            if (!--self->ext.darkwing.timer) {
                 self->rotate = 0;
                 self->drawFlags = ENTITY_DEFAULT;
                 SetStep(DB_FLYING);
@@ -685,7 +685,7 @@ void EntityDarkwingBat(Entity* self) {
             other = self + 1;
             if (!other->entityId) {
                 self->step_s++;
-                self->ext.darkwing.unk80 = 0x100;
+                self->ext.darkwing.timer = 0x100;
                 g_api.PlaySfx(SFX_FIREBALL_SHOT_A);
             }
             break;
@@ -697,10 +697,10 @@ void EntityDarkwingBat(Entity* self) {
                 other->posY.i.hi += 8;
                 other->zPriority = ((self->zPriority) + 1);
             }
-            if (!(self->ext.darkwing.unk80 & 7)) {
+            if (!(self->ext.darkwing.timer & 7)) {
                 PlaySfxPositional(SFX_FIREBALL_SHOT_B);
             }
-            if (!--self->ext.darkwing.unk80) {
+            if (!--self->ext.darkwing.timer) {
                 self->animCurFrame = 0;
                 g_BossFlag |= 4;
                 self->step_s++;
@@ -736,7 +736,8 @@ void EntityDarkwingBatPerch(Entity* self) {
 
 extern EInit g_EInitParticle;
 
-void func_us_801AAF00(Entity* self) {
+// The many little puffs of dust that come from the ground during wind attack
+void EntityDarkwingWindDust(Entity* self) {
     s32 yShift;
 
     if (!self->step) {
@@ -791,11 +792,11 @@ void EntityFadingFireball(Entity* self) {
         self->facingLeft = Random() & 1;
         self->velocityX = (Random() << 8) - 0x8000;
         self->velocityY = FIX(-2.0);
-        self->ext.darkwing.unk9C = -(Random() * 0x10) - 0x100;
+        self->ext.darkwing.fireballAccel = -(Random() * 0x10) - 0x100;
         /* fallthrough */
     case 1:
         MoveEntity();
-        self->velocityY += self->ext.darkwing.unk9C;
+        self->velocityY += self->ext.darkwing.fireballAccel;
         self->opacity -= 4;
         if (AnimateEntity(anim_fireball, self) == 0) {
             DestroyEntity(self);

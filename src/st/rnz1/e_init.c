@@ -49,7 +49,7 @@ void EntitySpikesDamage(Entity* self);
 void EntityDarkwingBat(Entity* self);
 void EntityDarkwingBatPerch(Entity* self);
 void func_us_801ABDE4(Entity* self);
-void func_us_801AAF00(Entity* self);
+void EntityDarkwingWindDust(Entity* self);
 void EntityFadingFireball(Entity* self);
 void EntityBossFightManager(Entity* self);
 void EntityBossDoors(Entity* self);
@@ -125,7 +125,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityDarkwingBat,
     EntityDarkwingBatPerch,
     func_us_801ABDE4,
-    func_us_801AAF00,
+    EntityDarkwingWindDust,
     EntityFadingFireball,
     EntityBossFightManager,
     EntityBossDoors,
