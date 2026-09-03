@@ -4,59 +4,78 @@
 #ifdef VERSION_PSP
 extern s32 E_ID(UNK_30);
 extern s32 E_ID(UNK_31);
-extern s32 E_ID(UNK_32);
+extern s32 E_ID(FADING_FIREBALL);
 #endif
 
-static AnimateEntityFrame D_pspeu_09259100[] = {
+typedef enum {
+    DB_INIT,
+    DB_UNUSED,
+    DB_IDLE,
+    DB_WAKEUP,
+    DB_FLYING,
+    DB_TORPEDO,
+    DB_WIND_ATTACK,
+    DB_HUG_ATTACK,
+    DB_8,
+    DB_DEAD
+} DB_steps;
+
+static AnimateEntityFrame anim_breathing[] = {
     {16, 1}, {8, 2}, {8, 3}, {8, 4}, {24, 5}, POSE_END};
-static AnimateEntityFrame D_pspeu_09259110[] = {
+static AnimateEntityFrame anim_flapping[] = {
     {2, 14}, {2, 8}, {2, 9}, {2, 10}, {15, 11}, POSE_END};
-static AnimateEntityFrame D_pspeu_09259120[] = {
+static AnimateEntityFrame anim_torpedo_twist[] = {
     {3, 14}, {3, 15}, {8, 19}, POSE_END};
-static AnimateEntityFrame D_pspeu_09259128[] = {
+static AnimateEntityFrame anim_torpedo_twirl[] = {
     {3, 16}, {3, 17}, {3, 18}, {3, 19}, POSE_LOOP(0)};
-static AnimateEntityFrame D_pspeu_09259138[] = {
+static AnimateEntityFrame anim_torpedo_crush[] = {
     {2, 16}, {2, 15}, {2, 14}, POSE_END};
-static AnimateEntityFrame D_pspeu_09259140[] = {
+static AnimateEntityFrame anim_prepare_wind_attack[] = {
     {2, 9}, {2, 22}, {2, 21}, {2, 20}, POSE_END};
-static AnimateEntityFrame D_pspeu_09259150[] = {
+static AnimateEntityFrame anim_wind_attack[] = {
     {7, 20}, {5, 21}, {1, 22}, {1, 23}, {1, 24}, {1, 25}, {5, 26},     {7, 27},
     {5, 26}, {5, 25}, {5, 24}, {5, 23}, {5, 22}, {5, 21}, POSE_LOOP(0)};
-static AnimateEntityFrame D_pspeu_09259170[] = {
+static AnimateEntityFrame anim_spinning_halfopen[] = {
     {4, 29}, {4, 30}, {4, 31}, {4, 32},     {4, 33},
     {4, 34}, {4, 35}, {4, 36}, POSE_LOOP(0)};
-static AnimateEntityFrame D_pspeu_09259188[] = {
+// Grab alucard
+static AnimateEntityFrame anim_hug[] = {
     {1, 20}, {1, 21}, {1, 22}, {1, 23}, {1, 24},
     {1, 25}, {2, 26}, {8, 27}, POSE_END};
-static AnimateEntityFrame D_pspeu_092591A0[] = {
+// Alucard is being held, wings bulge to show him within
+static AnimateEntityFrame anim_hugging[] = {
     {6, 28}, {5, 44}, {6, 45}, {6, 44}, POSE_LOOP(0)};
-static AnimateEntityFrame D_pspeu_092591B0[] = {
+// No more hug
+static AnimateEntityFrame anim_hug_release[] = {
     {2, 27}, {2, 26}, {1, 25}, {1, 24}, {1, 23},
     {1, 22}, {1, 21}, {1, 20}, POSE_END};
+// Appears to show the hugging animation (with Alucard's bulge) but wings
+// are pointed straight down - hug as we know it is sideways
 static AnimateEntityFrame anim_unused[] = {
     {6, 41}, {6, 42}, {5, 43}, {6, 42}, POSE_LOOP(0)};
-static AnimateEntityFrame D_pspeu_092591C8[] = {
+static AnimateEntityFrame anim_body_idle[] = {
     {2, 37}, {10, 38}, {16, 39}, POSE_END};
 
-static s8 D_pspeu_092591D0[] = {
+static s8 hitboxes[] = {
     0,  0,   0,  0,  4,  -12, 4,  28, 4,  -8, 4,  32, 4,  -4, 4,  28,
     4,  -12, 20, 12, 8,  -12, 16, 12, 4,  -4, 20, 4,  0,  -4, 16, 4,
     -8, -60, 16, 4,  -8, 52,  16, 4,  12, 0,  28, 8,  12, -4, 36, 4,
     8,  -4,  40, 4,  4,  4,   12, 12, 4,  0,  12, 8,  0,  0,  8,  16,
     -4, 4,   12, 12, 0,  4,   8,  12, 4,  4,  20, 12, 12, 0,  20, 8,
     0,  0,   24, 8,  4,  8,   28, 8,  0,  8,  24, 8,  8,  8,  24, 8};
-static u8 D_pspeu_09259230[] = {
+static u8 hitboxOffsets[] = {
     0,  1,  2,  2,  1,  2,  0,  3,  4,  5,  6,  7,  8,  9,  10, 11,
     12, 12, 12, 12, 13, 14, 14, 14, 15, 13, 13, 16, 17, 18, 19, 20,
     18, 21, 22, 22, 23, 7,  7,  7,  0,  0,  0,  0,  0,  0,  0,  0};
-static s16 D_pspeu_09259260[] = {0, -72, -96, -96};
-static u8 D_pspeu_09259268[] = {5, 7, 6, 6};
+static s16 yOffsets[] = {0, -72, -96, -96};
+static u8 stepOptions[] = {
+    DB_TORPEDO, DB_HUG_ATTACK, DB_WIND_ATTACK, DB_WIND_ATTACK};
 extern s32 g_BossFlag;
 extern EInit g_EInitDarkwingBat;
 
 // Move a rotation angle toward the target, but only by an
 // amount "increment". Return true if we reached the target.
-static bool func_801CDC80(s16* rot, s16 target, s16 increment) {
+static bool WakeupRotateHelper(s16* rot, s16 target, s16 increment) {
     if (abs(*rot - target) < increment) {
         *rot = target;
         return 1;
@@ -70,7 +89,7 @@ static bool func_801CDC80(s16* rot, s16 target, s16 increment) {
     return 0;
 }
 
-static s32 func_pspeu_092508B8(s32 arg0) {
+static s32 WindAttackHelper(s32 arg0) {
 #ifdef VERSION_PSP
     Collider sp2C;
 #endif
@@ -180,7 +199,7 @@ static s32 func_pspeu_092508B8(s32 arg0) {
     return 0;
 }
 
-void func_us_801A9DB8(Entity* self) {
+void EntityDarkwingBat(Entity* self) {
     s32 var_s4;
     Entity* other;
     s16 angle;
@@ -189,28 +208,28 @@ void func_us_801A9DB8(Entity* self) {
     s32 xVar;
     s32 yVar;
 
-    if ((self->flags & FLAG_DEAD) && (self->step != 9)) {
-        SetStep(9);
+    if ((self->flags & FLAG_DEAD) && (self->step != DB_DEAD)) {
+        SetStep(DB_DEAD);
     }
     switch (self->step) {
-    case 0x0:
+    case DB_INIT:
         InitializeEntity(g_EInitDarkwingBat);
         self->zPriority = (g_unkGraphicsStruct.g_zEntityCenter + 4);
         self->hitboxState = 0;
         other = self + 1;
         CreateEntityFromEntity(E_ID(UNK_30), self, other);
         other->zPriority = ((self->zPriority) + 1);
-        SetStep(2U);
+        SetStep(DB_IDLE);
         break;
-    case 0x2:
+    case DB_IDLE:
         if (g_BossFlag & 1) {
-            SetStep(3);
+            SetStep(DB_WAKEUP);
         }
         break;
-    case 0x3:
+    case DB_WAKEUP:
         switch (self->step_s) {
         case 0:
-            if (!AnimateEntity(D_pspeu_09259100, self)) {
+            if (!AnimateEntity(anim_breathing, self)) {
                 self->velocityY = FIX(3.0);
                 self->drawFlags |= ENTITY_ROTATE;
                 self->rotate = 0;
@@ -226,7 +245,7 @@ void func_us_801A9DB8(Entity* self) {
             } else {
                 self->velocityX -= FIX(0.0625);
             }
-            if (func_801CDC80(&self->rotate, 0x400, 0x20)) {
+            if (WakeupRotateHelper(&self->rotate, 0x400, 0x20)) {
                 self->velocityY = 0;
                 self->drawFlags = ENTITY_DEFAULT;
                 self->rotate = 0;
@@ -236,15 +255,15 @@ void func_us_801A9DB8(Entity* self) {
             break;
         case 2:
             MoveEntity();
-            if (!AnimateEntity(D_pspeu_09259110, self)) {
+            if (!AnimateEntity(anim_flapping, self)) {
                 self->hitboxState = 3;
                 self->ext.ILLEGAL.u8[9] = 1;
-                SetStep(4);
+                SetStep(DB_FLYING);
             }
             break;
         }
         break;
-    case 0x4:
+    case DB_FLYING:
         switch (self->step_s) {
         case 0:
             self->animCurFrame = 0x25;
@@ -263,7 +282,7 @@ void func_us_801A9DB8(Entity* self) {
                 self->ext.ILLEGAL.u8[0xE] = 1;
             }
             if ((self->ext.ILLEGAL.u8[0xE]) &&
-                !(AnimateEntity(D_pspeu_092591C8, self))) {
+                !(AnimateEntity(anim_body_idle, self))) {
                 self->ext.ILLEGAL.u8[0xE] = 0;
                 self->pose = 0;
                 self->poseTimer = 0;
@@ -282,7 +301,7 @@ void func_us_801A9DB8(Entity* self) {
             }
             other = &PLAYER;
             yVar = other->posY.i.hi - self->posY.i.hi;
-            yVar += D_pspeu_09259260[self->ext.ILLEGAL.u8[0xD]];
+            yVar += yOffsets[self->ext.ILLEGAL.u8[0xD]];
             if (yVar < -8) {
                 self->velocityY -= 0x600;
                 if (self->velocityY <= FIX(-5.0 / 8)) {
@@ -305,7 +324,7 @@ void func_us_801A9DB8(Entity* self) {
             if (self->ext.ILLEGAL.s16[2]) {
                 self->ext.ILLEGAL.s16[2]--;
             } else if (xVar > -0x58U) {
-                SetStep(D_pspeu_09259268[self->ext.ILLEGAL.u8[0xD]]);
+                SetStep(stepOptions[self->ext.ILLEGAL.u8[0xD]]);
                 break;
             }
             if (self->facingLeft) {
@@ -318,7 +337,7 @@ void func_us_801A9DB8(Entity* self) {
             break;
         }
         break;
-    case 0x5:
+    case DB_TORPEDO:
         switch (self->step_s) {
         case 0:
             self->ext.ILLEGAL.u8[8] = 0;
@@ -327,7 +346,7 @@ void func_us_801A9DB8(Entity* self) {
             self->step_s++;
             /* fallthrough */
         case 1:
-            if (!AnimateEntity(D_pspeu_09259120, self)) {
+            if (!AnimateEntity(anim_torpedo_twist, self)) {
                 self->attack = g_api.enemyDefs[274].attack;
                 self->ext.ILLEGAL.s16[2] = 0;
                 SetSubStep(2);
@@ -354,9 +373,9 @@ void func_us_801A9DB8(Entity* self) {
             }
             if (self->ext.ILLEGAL.s16[2]) {
                 self->velocityX /= 4;
-                AnimateEntity(D_pspeu_09259170, self);
+                AnimateEntity(anim_spinning_halfopen, self);
             } else {
-                AnimateEntity(D_pspeu_09259128, self);
+                AnimateEntity(anim_torpedo_twirl, self);
             }
             MoveEntity();
             other = &PLAYER;
@@ -370,14 +389,14 @@ void func_us_801A9DB8(Entity* self) {
             }
             break;
         case 3:
-            if (!AnimateEntity(D_pspeu_09259138, self)) {
+            if (!AnimateEntity(anim_torpedo_crush, self)) {
                 self->ext.ILLEGAL.u8[9] = 1;
-                SetStep(4U);
+                SetStep(DB_FLYING);
             }
             break;
         }
         break;
-    case 0x6:
+    case DB_WIND_ATTACK:
         switch (self->step_s) {
         case 0:
             self->ext.ILLEGAL.u8[9] = 1;
@@ -392,7 +411,7 @@ void func_us_801A9DB8(Entity* self) {
                 self->velocityY = 0;
                 self->step_s++;
             case 2:
-                if (!AnimateEntity(D_pspeu_09259140, self)) {
+                if (!AnimateEntity(anim_prepare_wind_attack, self)) {
                     self->ext.ILLEGAL.u8[0xC] = 0;
                     self->ext.ILLEGAL.s16[2] = 0;
                     SetSubStep(3);
@@ -400,7 +419,7 @@ void func_us_801A9DB8(Entity* self) {
             }
             break;
         case 3:
-            var_s4 = AnimateEntity(D_pspeu_09259150, self);
+            var_s4 = AnimateEntity(anim_wind_attack, self);
             if (!var_s4) {
                 self->ext.ILLEGAL.u8[0xC] += 1;
             }
@@ -415,7 +434,7 @@ void func_us_801A9DB8(Entity* self) {
                 self->ext.ILLEGAL.s16[2]--;
                 var_s4 = 0;
             }
-            var_s4 = func_pspeu_092508B8(var_s4);
+            var_s4 = WindAttackHelper(var_s4);
             if (var_s4) {
                 self->ext.ILLEGAL.s16[2] = 0x40;
             }
@@ -425,15 +444,15 @@ void func_us_801A9DB8(Entity* self) {
             }
             break;
         case 4:
-            func_pspeu_092508B8(0);
+            WindAttackHelper(0);
             if (!--self->ext.ILLEGAL.s16[2]) {
                 self->ext.ILLEGAL.u8[9] = 1;
-                SetStep(4);
+                SetStep(DB_FLYING);
             }
             break;
         }
         break;
-    case 0x7:
+    case DB_HUG_ATTACK:
         switch (self->step_s) {
         case 0:
             self->ext.ILLEGAL.u8[9] = 1;
@@ -470,7 +489,7 @@ void func_us_801A9DB8(Entity* self) {
             }
             break;
         case 3:
-            if (!AnimateEntity(D_pspeu_09259188, self)) {
+            if (!AnimateEntity(anim_hug, self)) {
                 SetSubStep(6);
             }
             if ((self->pose) == 8) {
@@ -512,7 +531,7 @@ void func_us_801A9DB8(Entity* self) {
             self->step_s++;
             break;
         case 5:
-            if (!AnimateEntity(D_pspeu_092591A0, self)) {
+            if (!AnimateEntity(anim_hugging, self)) {
                 self->ext.ILLEGAL.u8[0xC] += 1;
                 g_Player.unk64 = g_api.enemyDefs[276].attack;
                 g_Player.unk60 = 3;
@@ -529,7 +548,7 @@ void func_us_801A9DB8(Entity* self) {
             }
             break;
         case 6:
-            if (!AnimateEntity(D_pspeu_092591B0, self)) {
+            if (!AnimateEntity(anim_hug_release, self)) {
                 self->step_s++;
             }
             break;
@@ -554,12 +573,14 @@ void func_us_801A9DB8(Entity* self) {
             if (!--self->ext.ILLEGAL.s16[2]) {
                 self->rotate = 0;
                 self->drawFlags = ENTITY_DEFAULT;
-                SetStep(4U);
+                SetStep(DB_FLYING);
             }
             break;
         }
         break;
-    case 0x8:
+    // This step is possibly unreachable? Not certain. Could be related to
+    // the unused animation.
+    case DB_8:
         switch (self->step_s) {
         case 0:
             self->ext.ILLEGAL.u8[8] = 0;
@@ -584,7 +605,6 @@ void func_us_801A9DB8(Entity* self) {
                 self->ext.ILLEGAL.s16[2] = 0x18;
                 self->ext.ILLEGAL.u8[0xC] += 1;
                 g_Player.unk64 = g_api.enemyDefs[276].attack;
-                ;
                 g_Player.unk60 = 3;
             }
             if (self->ext.ILLEGAL.s16[2] & 1) {
@@ -619,12 +639,12 @@ void func_us_801A9DB8(Entity* self) {
             if (!--self->ext.ILLEGAL.s16[2]) {
                 self->rotate = 0;
                 self->drawFlags = ENTITY_DEFAULT;
-                SetStep(4U);
+                SetStep(DB_FLYING);
             }
             break;
         }
         break;
-    case 0x9:
+    case DB_DEAD:
         switch (self->step_s) {
         case 0:
             g_BossFlag |= 2;
@@ -648,7 +668,7 @@ void func_us_801A9DB8(Entity* self) {
             /* fallthrough */
         case 1:
             MoveEntity();
-            if (!AnimateEntity(D_pspeu_092591C8, self)) {
+            if (!AnimateEntity(anim_body_idle, self)) {
                 SetSubStep(2);
             }
             break;
@@ -672,7 +692,7 @@ void func_us_801A9DB8(Entity* self) {
         case 4:
             other = AllocEntity(&g_Entities[64], &g_Entities[256]);
             if (other != NULL) {
-                CreateEntityFromEntity(E_ID(UNK_32), self, other);
+                CreateEntityFromEntity(E_ID(FADING_FIREBALL), self, other);
                 other->posX.i.hi += ((Random() & 0x3F) - 0x20);
                 other->posY.i.hi += 8;
                 other->zPriority = ((self->zPriority) + 1);
@@ -693,8 +713,8 @@ void func_us_801A9DB8(Entity* self) {
     case 0xFF:
 #include "../pad2_anim_debug.h"
     }
-    ptr_s3 = &D_pspeu_092591D0[0];
-    ptr_s3 += D_pspeu_09259230[self->animCurFrame] * 4;
+    ptr_s3 = &hitboxes[0];
+    ptr_s3 += hitboxOffsets[self->animCurFrame] * 4;
     self->hitboxOffX = *ptr_s3++;
     self->hitboxOffY = *ptr_s3++;
     self->hitboxWidth = *ptr_s3++;
@@ -755,11 +775,11 @@ void func_us_801AAF00(Entity* self) {
     }
 }
 
-static AnimateEntityFrame anim_last[] = {
+static AnimateEntityFrame anim_fireball[] = {
     {3, 1}, {3, 2}, {3, 3},  {3, 4},  {3, 5},  {3, 6},  {3, 7},
     {3, 8}, {3, 9}, {3, 10}, {3, 11}, {3, 12}, {3, 13}, POSE_END};
 
-void func_us_801AB04C(Entity* self) {
+void EntityFadingFireball(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitParticle);
@@ -777,7 +797,7 @@ void func_us_801AB04C(Entity* self) {
         MoveEntity();
         self->velocityY += self->ext.ILLEGAL.u32[8];
         self->opacity -= 4;
-        if (AnimateEntity(anim_last, self) == 0) {
+        if (AnimateEntity(anim_fireball, self) == 0) {
             DestroyEntity(self);
         }
     }
