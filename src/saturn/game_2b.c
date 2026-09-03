@@ -38,6 +38,7 @@ extern SprSpCmd DAT_06086108;
 
 // original name: disp_char
 void func_06078550(s32 arg0, u8 ch, Point16* pos);
+
 void func_06078550_noInline(s32 arg0, u8 ch, Point16* pos) {
     SprSpCmd* ptr = &DAT_06086108;
     SaturnSpriteResource* iVar5 = DAT_060645EC[13];
@@ -171,24 +172,18 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f60789C4, func_060789C4);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078B48, func_06078B48);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078E28, func_06078E28);
 
-typedef struct Func06078920Dat {
-    Sint16 unk0;
-    Sint16 unk2;
-    Sint16 unk4;
-} Func06078920Dat;
-
-extern Func06078920Dat DAT_0605AEC4;
-
 void func_06078F58(s32 arg0, s32 arg1, Point16* arg2) {
     s32 charBase;
+    u16* ptr;
 
     DAT_06086108.control = 0x1000;
     DAT_06086108.drawMode = 0x0488;
-    DAT_06086108.charAddr = DAT_0605AEC4.unk0;
+    DAT_06086108.charAddr = DAT_0605aec0[1][0];
     DAT_06086108.charSize = 0x0610;
     DAT_06086108.color = SPR_2LookupTblNoToVram(0x31);
-    charBase = DAT_0605AEC4.unk4;
-    DAT_06086108.charAddr = (arg1 + 0x0B) * 0x30 + charBase;
+    ptr = DAT_0605aec0[1];
+    charBase = ptr[2];
+    DAT_06086108.charAddr = (arg1 + 0x0B) * 0x30 + ptr[2];
     *((s32*)&DAT_06086108.ax) = (arg2->x << 16) | (u16)arg2->y;
 
     if (SpMstCmdPos <= 0x277) {
@@ -1003,7 +998,74 @@ bool HantenDir1(Entity* entity) {
 // func_0607AC2C
 u8 GetPlayerFacing(void) { return PLAYER.facingLeft; }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AC40, func_0607AC40);
+extern SprGourTbl* SpGourTbl;
+extern s16 g_olroxDroolInitData[];
+extern s16 g_olroxDroolCollOffsets[];
+
+void SyncSpriteObjectPosUnchecked(Entity* entity, s16* offset);
+
+static void unkFunc(Entity* entity, s16* offset) {
+    SyncSpriteObjectPosUnchecked(entity, offset);
+}
+
+// func_0607AC40
+void EntityOlroxDrool(Entity* self) {
+    s32 primIndex;
+    s32 idx;
+    SprGourTbl* temp;
+    Primitive* prim;
+    s16 x, y;
+
+    switch (self->step) {
+    case 0:
+        unkFunc(self, g_olroxDroolInitData);
+        TekiInit(self, 2);
+        primIndex = AllocPrimitives(0x8005, 1);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->primIndex = primIndex;
+        self->flags |= FLAG_HAS_PRIMS;
+        self->hitboxState = 0;
+        prim = &g_PrimBuf[primIndex];
+        self->unkB4 = prim;
+        prim->x0 = prim->x1 = self->posX.i.hi;
+        prim->y0 = prim->y1 = self->posY.i.hi;
+        idx = prim->unk1C;
+        temp = &SpGourTbl[idx];
+        temp->entry[0] = RGB16_COLOR(8, 8, 31);
+        temp->entry[1] = RGB16_COLOR(0, 0, 2);
+        prim->unk6 = 0xC210;
+        prim->priority = 0x80;
+        prim->drawMode = 0x37;
+        self->step = 1;
+        break;
+
+    case 1:
+        prim = self->unkB4;
+        if (CheckColliderOffsets(self, g_olroxDroolCollOffsets, 0)) {
+            prim->y1 += 2;
+            if (self->step_s == 0) {
+                self->step_s = 1;
+            }
+        } else {
+            self->velocityY += 0x1800;
+            self->posY.val += self->velocityY;
+            if (prim->y0 - prim->y1 > 8) {
+                prim->y1 = prim->y0 - 8;
+            }
+        }
+        prim->x0 = self->posX.i.hi;
+        prim->x1 = self->posX.i.hi;
+        prim->y0 = self->posY.i.hi;
+        if (prim->y0 < prim->y1) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+}
 
 // func_0607AE48
 void DestroyEntityWithExplosion(Entity* self, u16 params) {
@@ -1270,7 +1332,7 @@ void ReplaceBreakableWithItemDrop(Entity* self) {
 }
 
 // func_0607B604
-void SyncSpriteObjectPosUnchecked(Entity* entity) {
+void SyncSpriteObjectPosUnchecked(Entity* entity, s16* offset) {
     SpriteObject* temp = entity->unk0;
 
     temp->posX = entity->posX.val;

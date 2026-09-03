@@ -128,7 +128,7 @@ void func_060DDFB0(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags |= 0x800000;
+        self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         func_060DDE44(self);
         break;
@@ -198,7 +198,7 @@ void func_060DE264(Entity* self) {
         if (primIndex == -1) {
             DestroyEntity(self);
         } else {
-            self->flags |= 0x800000;
+            self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             func_060DE140(self);
         }
@@ -221,7 +221,7 @@ void func_060DE464(Entity* self) {
         if (self->primIndex == -1) {
             DestroyEntity(self);
         } else {
-            self->flags |= 0x800000;
+            self->flags |= FLAG_HAS_PRIMS;
             func_060DE500(self);
             self->ext.et_060DE40C.path = &DAT_060F2044[self->params * 0x10];
         }

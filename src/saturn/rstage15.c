@@ -82,7 +82,7 @@ void func_060DD988(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags |= 0x800000;
+        self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         func_060DDB98(self);
         break;
@@ -111,7 +111,7 @@ void func_060DDD10(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags |= 0x800000;
+        self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         func_060DDE68(self);
         break;
@@ -159,7 +159,7 @@ void func_060DDFD4(Entity* self) {
         if (primIndex == -1) {
             DestroyEntity(self);
         } else {
-            self->flags |= 0x800000;
+            self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             func_060DE144(self);
         }
@@ -226,7 +226,7 @@ void func_060DE40C(Entity* self) {
         if (self->primIndex == -1) {
             DestroyEntity(self);
         } else {
-            self->flags |= 0x800000;
+            self->flags |= FLAG_HAS_PRIMS;
             func_060DE4CC(self);
             self->ext.et_060DE40C.path = &DAT_060EE52C[self->params * 0x10];
             self->ext.et_060DE40C.spanX = g_Tilemap.hSize * 0x140;
