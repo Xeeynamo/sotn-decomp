@@ -5913,11 +5913,11 @@
 | 1.00 | true     | func_us_801BDE3C                    | asm/us/st/nz1/matchings/e_vandal_sword/func_us_801BDE3C.s 
 | 1.00 | true     | func_us_801BF7B0                    | asm/us/st/rdai/matchings/unk_3F6B4/func_us_801BF7B0.s 
 | 1.00 | true     | func_us_801C9F54                    | asm/us/st/rno0/matchings/giantbro_helpers/func_us_801C9F54.s 
+| 1.00 | true     | func_801CDC80                       | asm/us/st/rnz1/matchings/e_darkwing_bat/func_801CDC80.s 
 | 1.00 | false    | func_us_801B15BC                    | asm/us/boss/bo0/nonmatchings/313A8/func_us_801B15BC.s 
 | 1.00 | false    | func_801CDC80                       | asm/us/boss/rbo2/nonmatchings/unk_1B284/func_801CDC80.s 
 | 1.00 | false    | func_us_801AE4B4                    | asm/us/st/rlib/nonmatchings/unk_2DBE8/func_us_801AE4B4.s 
 | 1.00 | false    | func_us_801AF3C8                    | asm/us/st/rlib/nonmatchings/unk_2DBE8/func_us_801AF3C8.s 
-| 1.00 | false    | func_801CDC80                       | asm/us/st/rnz1/nonmatchings/unk_29914/func_801CDC80.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801A5678                    | asm/us/boss/bo2/matchings/e_cutscene_dialogue/func_us_801A5678.s 
 | 1.00 | true     | func_us_801A47B4                    | asm/us/boss/bo5/matchings/e_cutscene_dialogue/func_us_801A47B4.s 
@@ -6447,17 +6447,17 @@
 | 1.00 | false    | DebugInputWait                      | asm/us/boss/bo6/nonmatchings/us_3E79C/DebugInputWait.s 
 | 1.00 | false    | RNO1_DebugInputWait                 | asm/us/st/rno1/nonmatchings/unk_26178/RNO1_DebugInputWait.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_800F6A48                       | asm/us/dra/matchings/menu/func_800F6A48.s 
-| 0.90 | true     | def_cbread                          | asm/us/main/matchings/psxsdk/libcd/event/def_cbread.s 
-| 0.90 | true     | def_cbready                         | asm/us/main/matchings/psxsdk/libcd/event/def_cbready.s 
-| 0.90 | true     | def_cbsync                          | asm/us/main/matchings/psxsdk/libcd/event/def_cbsync.s 
-| 0.90 | true     | SpuSetNoiseVoice                    | asm/us/main/matchings/psxsdk/libspu/s_snv/SpuSetNoiseVoice.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | CdReadCallback                      | asm/us/main/matchings/psxsdk/libcd/cdread/CdReadCallback.s 
 | 1.00 | true     | CdReadyCallback                     | asm/us/main/matchings/psxsdk/libcd/sys/CdReadyCallback.s 
 | 1.00 | true     | CdSetDebug                          | asm/us/main/matchings/psxsdk/libcd/sys/CdSetDebug.s 
 | 1.00 | true     | CdSyncCallback                      | asm/us/main/matchings/psxsdk/libcd/sys/CdSyncCallback.s 
 | 1.00 | true     | SetVideoMode                        | asm/us/main/matchings/psxsdk/libetc/vmode/SetVideoMode.s 
+-------------------------------------------------------------------------------
+| 0.90 | true     | def_cbread                          | asm/us/main/matchings/psxsdk/libcd/event/def_cbread.s 
+| 0.90 | true     | def_cbready                         | asm/us/main/matchings/psxsdk/libcd/event/def_cbready.s 
+| 0.90 | true     | def_cbsync                          | asm/us/main/matchings/psxsdk/libcd/event/def_cbsync.s 
+| 1.00 | true     | GsGetVcount                         | asm/us/main/matchings/psxsdk/libgs/gs_008/GsGetVcount.s 
+| 1.00 | true     | GsClearVcount                       | asm/us/main/matchings/psxsdk/libgs/gs_009/GsClearVcount.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_80173C64                       | asm/us/servant/tt_000/matchings/bat/func_80173C64.s 
 | 1.00 | true     | func_us_8017293C                    | asm/us/servant/tt_001/matchings/ghost/func_us_8017293C.s 
@@ -7928,6 +7928,9 @@
 | 1.00 | true     | func_800F548C                       | asm/us/dra/matchings/menu/func_800F548C.s 
 | 0.94 | true     | func_801B1EF4                       | asm/us/st/sel/matchings/318CC/func_801B1EF4.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | func_800F6A48                       | asm/us/dra/matchings/menu/func_800F6A48.s 
+| 0.90 | true     | SpuSetNoiseVoice                    | asm/us/main/matchings/psxsdk/libspu/s_snv/SpuSetNoiseVoice.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | func_800F99B8                       | asm/us/dra/matchings/menu/func_800F99B8.s 
 | 0.95 | true     | func_801B2108                       | asm/us/st/sel/matchings/318CC/func_801B2108.s 
 -------------------------------------------------------------------------------
@@ -8029,9 +8032,6 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | get_ce                              | asm/us/main/matchings/psxsdk/libgpu/sys/get_ce.s 
 | 1.00 | true     | get_cs                              | asm/us/main/matchings/psxsdk/libgpu/sys/get_cs.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | GsGetVcount                         | asm/us/main/matchings/psxsdk/libgs/gs_008/GsGetVcount.s 
-| 1.00 | true     | GsClearVcount                       | asm/us/main/matchings/psxsdk/libgs/gs_009/GsClearVcount.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | _SsContModulation                   | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContModulation.s 
 | 1.00 | true     | _SsContPortaTime                    | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContPortaTime.s 
@@ -8718,7 +8718,7 @@
 | 1.00 | false    | LoadFerrymanGateTiles               | asm/us/st/rno4/nonmatchings/unk_44B0C/LoadFerrymanGateTiles.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801DB194                    | asm/us/st/no4/matchings/e_frozen_shade/func_us_801DB194.s 
-| 0.90 | false    | EntityFrozenShadeCrystal            | asm/us/st/rnz1/nonmatchings/unk_29914/EntityFrozenShadeCrystal.s 
+| 0.90 | true     | EntityDarkwingBatPerch              | asm/us/st/rnz1/matchings/e_darkwing_bat/EntityDarkwingBatPerch.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801C9130                    | asm/us/st/no4/matchings/e_killer_fish/func_us_801C9130.s 
 | 1.00 | true     | EntityKillerFish                    | asm/us/st/rno4/matchings/e_killer_fish/EntityKillerFish.s 
