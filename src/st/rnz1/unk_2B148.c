@@ -34,7 +34,8 @@ typedef struct{
     s32 unk24;
     s32 unk28;
     u8 unk2C;
-    s16 : 16;
+    u8 step;
+    u8 substep;
     s16 unk30;
     s16 unk32;
 } batWingStruct;
@@ -183,7 +184,88 @@ Primitive* func_us_801AB380(batWingStruct* arg0, Primitive* prim, SVECTOR** arg2
     return prim;
 }
 
-INCLUDE_ASM("st/rnz1/nonmatchings/unk_2B148", func_us_801AB768);
+void func_us_801AB768(batWingStruct* arg0) {
+    switch (arg0->step) {
+    case 0:
+        if (arg0->unkE < 0x200) {
+            arg0->unkE += 0x10;
+        }
+        if (arg0->unk24 > -0x100) {
+            arg0->unk24 -= 0x18;
+        }
+        switch (arg0->substep) {
+        case 0:
+            if (arg0->unk8 > -0x3000) {
+                arg0->unk0 = arg0->unk0 - 0x80;
+            }
+            if (arg0->unk10 < 0) {
+                arg0->unk0 = arg0->unk0 + 0x60;
+                if (arg0->unk1C > -0x4000) {
+                    arg0->unk14 -= 0x200;
+                }
+            }
+            if (arg0->unk10 < FIX(-1.5)) {
+                arg0->unk0 = 0;
+                arg0->substep++;
+            }
+            break;
+        case 1:
+            if (arg0->unk1C > -0x4000) {
+                arg0->unk14 -= 0x180;
+            }
+            if ((arg0->unk28 - arg0->unk10) <= FIX(-1)) {
+                arg0->unk14 = 0;
+                arg0->substep = 0;
+                arg0->step = 1;
+                break;
+            }
+            break;
+        }
+        break;
+    case 1:
+        if (arg0->unkE > -0x20) {
+            arg0->unkE -= 0x10;
+        }
+        if (arg0->unk24 < 0x20) {
+            arg0->unk24 += 0x28;
+        }
+        switch (arg0->substep) {
+        case 0:
+            if (arg0->unk8 < 0x4000) {
+                arg0->unk0 += 0x60;
+            }
+            if ((arg0->unk28 - arg0->unk10) < FIX(-0.5)) {
+                arg0->unk14 += 0x180;
+                break;
+            }
+            PlaySfxPositional(0x822);
+                arg0->substep++;
+            break;
+        case 1:
+            if (arg0->unk8 < 0x4000) {
+                arg0->unk0 += 0x60;
+            }
+            if (arg0->unk10 > FIX(1.5)) {
+                arg0->unk0 = 0;
+                arg0->substep++;
+                break;
+            }
+            break;
+        case 2:
+            if (arg0->unk1C < 0x4000) {
+                arg0->unk14 += 0xE0;
+            }
+            if ((arg0->unk28 - arg0->unk10) >= FIX(1.75)) {
+                arg0->unk14 = 0;
+                arg0->substep = 0;
+                arg0->step = 0;
+            }
+            break;
+        }
+        break;
+    }
+}
+
 
 INCLUDE_ASM("st/rnz1/nonmatchings/unk_2B148", func_us_801ABA38);
 
