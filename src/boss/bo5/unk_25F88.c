@@ -5,7 +5,12 @@ INCLUDE_ASM("boss/bo5/nonmatchings/unk_25F88", func_us_801A5F88);
 
 INCLUDE_ASM("boss/bo5/nonmatchings/unk_25F88", func_us_801A62B4);
 
-INCLUDE_ASM("boss/bo5/nonmatchings/unk_25F88", func_us_801A666C);
+void func_us_801A666C(Primitive* prim, s16 arg1) {
+    prim->x0 = prim->x2 -= arg1;
+    prim->x1 = prim->x3 += arg1;
+    prim->y0 = prim->y1 -= arg1;
+    prim->y2 = prim->y3 += arg1;
+}
 
 INCLUDE_ASM("boss/bo5/nonmatchings/unk_25F88", func_us_801A66B0);
 
