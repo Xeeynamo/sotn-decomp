@@ -290,12 +290,12 @@ void EntityDarkwingBat(Entity* self) {
                 self->animCurFrame = 0x25;
             }
             if (self->facingLeft) {
-                self->velocityX += 0xC00;
+                self->velocityX += FIX(3.0 / 64);
                 if (self->velocityX >= FIX(1.25)) {
                     self->velocityX = FIX(1.25);
                 }
             } else {
-                self->velocityX -= 0xC00;
+                self->velocityX -= FIX(3.0 / 64);
                 if (self->velocityX <= FIX(-1.25)) {
                     self->velocityX = FIX(-1.25);
                 }
@@ -304,13 +304,13 @@ void EntityDarkwingBat(Entity* self) {
             yVar = other->posY.i.hi - self->posY.i.hi;
             yVar += yOffsets[self->ext.darkwing.randTo3];
             if (yVar < -8) {
-                self->velocityY -= 0x600;
+                self->velocityY -= FIX(3.0 / 128);
                 if (self->velocityY <= FIX(-5.0 / 8)) {
                     self->velocityY = FIX(-0.625);
                 }
             }
             if (yVar > 8) {
-                self->velocityY += 0xC00;
+                self->velocityY += FIX(3.0 / 64);
                 if (self->velocityY >= FIX(0.625)) {
                     self->velocityY = FIX(0.625);
                 }
@@ -468,8 +468,8 @@ void EntityDarkwingBat(Entity* self) {
                 xVar = other->posX.i.hi - self->posX.i.hi;
                 yVar = other->posY.i.hi - self->posY.i.hi;
                 angle = ratan2(yVar, xVar);
-                self->velocityX = (rcos(angle) * 0x28000) >> 0xC;
-                self->velocityY = (rsin(angle) * 0x28000) >> 0xC;
+                self->velocityX = (rcos(angle) * FIX(2.5)) >> 0xC;
+                self->velocityY = (rsin(angle) * FIX(2.5)) >> 0xC;
                 xVar = self->velocityX;
                 if (self->facingLeft) {
                     xVar = -xVar;
@@ -559,6 +559,7 @@ void EntityDarkwingBat(Entity* self) {
             self->ext.darkwing.unk85 = 1;
             self->ext.darkwing.unk86 = 1;
             self->drawFlags = ENTITY_ROTATE;
+            // Strange value, potentially a mistake that should be 180 degrees
             self->rotate = 0x180;
             if (self->facingLeft) {
                 self->velocityX = FIX(-0.1875);
@@ -744,10 +745,10 @@ void EntityDarkwingWindDust(Entity* self) {
     if (!self->step) {
         InitializeEntity(g_EInitParticle);
         self->drawFlags = ENTITY_ROTATE | ENTITY_SCALEY | ENTITY_SCALEX;
-        self->palette = 0x8170;
+        self->palette = PAL_FLAG(0x170);
         self->animSet = 5;
         self->animCurFrame = 1;
-        self->palette = 0x8195;
+        self->palette = PAL_FLAG(0x195);
         self->blendMode = BLEND_TRANSP;
         self->zPriority += 8;
         yShift = (0x100 - self->scaleY) >> 4;
@@ -791,7 +792,7 @@ void EntityFadingFireball(Entity* self) {
         self->blendMode = BLEND_ADD | BLEND_TRANSP;
         self->palette = 0x2E4;
         self->facingLeft = Random() & 1;
-        self->velocityX = (Random() << 8) - 0x8000;
+        self->velocityX = (Random() << 8) - FIX(0.5);
         self->velocityY = FIX(-2.0);
         self->ext.darkwing.fireballAccel = -(Random() * 0x10) - 0x100;
         /* fallthrough */
