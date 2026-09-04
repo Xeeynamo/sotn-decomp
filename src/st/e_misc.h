@@ -186,7 +186,7 @@ void EntityGreyPuff(Entity* self) {
     }
 }
 
-static s16 g_olroxDroolCollOffsets[] = {0x0000, 0x0000, 0x00FF, 0x0000};
+static s16 g_olroxDroolCollOffsets[] = {0x00, 0x00, 0xFF};
 
 // Purpose is not 100% clear. Creates a falling blue droplet that sizzles after
 // hitting the ground. In existing overlays, this entity is not used. But looks

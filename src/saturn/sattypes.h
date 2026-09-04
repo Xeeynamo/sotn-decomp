@@ -465,6 +465,12 @@ typedef struct {
     /* 0x80 */ u8 unk80;
     /* 0x81 */ u8 unk81;
     /* 0x82 */ u8 unk82;
+    /* 0x83 */ u8 unk83;
+    /* 0x84 */ u8 : 8;
+    /* 0x85 */ u8 : 8;
+    /* 0x86 */ u8 : 8;
+    /* 0x87 */ u8 : 8;
+    /* 0x88 */ u8 unk88;
 } ET_SpriteAnimEnemy;
 
 typedef struct {

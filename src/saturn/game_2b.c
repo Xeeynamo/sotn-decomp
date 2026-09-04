@@ -2,7 +2,7 @@
 #include "inc_asm.h"
 #include "sattypes.h"
 #include "game.h"
-#include "game_2b.h"
+#include <saturn_sprite.h>
 #define _SPR2_
 #include "lib/spr/spr.h"
 
@@ -14,19 +14,26 @@ extern s32 DAT_00292000;
 
 s32* func_060784A8(void) { return &DAT_00292000; }
 
+u16 LocalLookupTblNoToVram(u16 tableNo);
+
+static u16 LookupTblNoToVram(u16 arg0) {
+    if (arg0 & 0x4000) {
+        return LocalLookupTblNoToVram(arg0 & 0xFFF);
+    } else {
+        return SPR_2LookupTblNoToVram(arg0 & 0xFFF);
+    }
+}
+
+extern SaturnSpriteImage g_StatusPortraitImages[17];
+extern s16 DAT_0605AEE8;
+
 void func_060784B8(SprSpCmd* command, s32 portraitIndex, s32 colorTableIndex) {
     SaturnSpriteImage* image;
-    u16 tableNo;
 
     image = &g_StatusPortraitImages[portraitIndex];
     command->control = 0x1000;
     command->drawMode = 0x0488;
-    tableNo = colorTableIndex + 0x30;
-    if (tableNo & 0x4000) {
-        command->color = func_06007CE0(tableNo & 0x0FFF);
-    } else {
-        command->color = SPR_2LookupTblNoToVram(tableNo & 0x0FFF);
-    }
+    command->color = LookupTblNoToVram(colorTableIndex + 0x30);
     command->charAddr = DAT_0605AEE8;
     command->charAddr += image->characterOffsetUnits;
     command->charSize =
@@ -38,6 +45,7 @@ extern SprSpCmd DAT_06086108;
 
 // original name: disp_char
 void func_06078550(s32 arg0, u8 ch, Point16* pos);
+
 void func_06078550_noInline(s32 arg0, u8 ch, Point16* pos) {
     SprSpCmd* ptr = &DAT_06086108;
     SaturnSpriteResource* iVar5 = DAT_060645EC[13];
@@ -171,24 +179,18 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f60789C4, func_060789C4);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078B48, func_06078B48);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078E28, func_06078E28);
 
-typedef struct Func06078920Dat {
-    Sint16 unk0;
-    Sint16 unk2;
-    Sint16 unk4;
-} Func06078920Dat;
-
-extern Func06078920Dat DAT_0605AEC4;
-
 void func_06078F58(s32 arg0, s32 arg1, Point16* arg2) {
     s32 charBase;
+    u16* ptr;
 
     DAT_06086108.control = 0x1000;
     DAT_06086108.drawMode = 0x0488;
-    DAT_06086108.charAddr = DAT_0605AEC4.unk0;
+    DAT_06086108.charAddr = DAT_0605aec0[1][0];
     DAT_06086108.charSize = 0x0610;
     DAT_06086108.color = SPR_2LookupTblNoToVram(0x31);
-    charBase = DAT_0605AEC4.unk4;
-    DAT_06086108.charAddr = (arg1 + 0x0B) * 0x30 + charBase;
+    ptr = DAT_0605aec0[1];
+    charBase = ptr[2];
+    DAT_06086108.charAddr = (arg1 + 0x0B) * 0x30 + ptr[2];
     *((s32*)&DAT_06086108.ax) = (arg2->x << 16) | (u16)arg2->y;
 
     if (SpMstCmdPos <= 0x277) {
@@ -208,35 +210,17 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079424, func_06079424);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079580, func_06079580);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079670, func_06079670);
 
-typedef struct Func06078920CmdView {
-    Uint16 control;
-    Uint16 link;
-    Uint16 drawMode;
-    Uint16 color;
-    Uint16 charAddr;
-    Uint16 charSize;
-    s32 pos[4];
-    Uint16 grshAddr;
-    Uint16 dummy;
-} Func06078920CmdView;
-
-typedef union Func06078920Cmd {
-    SprSpCmd cmd;
-    Func06078920CmdView view;
-} Func06078920Cmd;
-
-void func_0607973C(Sint32 arg0, Sint16* arg1) {
-    Func06078920Cmd* cmd;
-    Sint16 left;
-    Sint16 top;
-    s32 right;
-    Sint16 bottom;
-    s32 leftWord;
+void func_0607973C(s32 arg0, Point16* pos) {
+    SprSpCmd* cmd;
+    s16 top;
+    s16 left;
+    s16 right;
+    s16 bottom;
     s32 shade;
 
     shade = g_Timer;
-    left = *arg1++;
-    top = *arg1;
+    left = pos->x;
+    top = pos->y;
     cmd = &DAT_06086108;
 
     if (shade & 0x10) {
@@ -247,20 +231,19 @@ void func_0607973C(Sint32 arg0, Sint16* arg1) {
     shade /= 8;
 
     right = left + 0x6F;
-    bottom = top + 0x0C;
+    bottom = top + 0xC;
 
-    cmd->view.control = 0x1004;
-    cmd->view.drawMode = 0x04C0;
-    cmd->view.color = (shade << 5) + shade - 0x8000;
+    cmd->control = 0x1004;
+    cmd->drawMode = 0x4C0;
+    cmd->color = RGB16_COLOR(shade, shade, 0);
 
-    leftWord = left << 16;
-    cmd->view.pos[0] = leftWord | (u16)top;
-    cmd->view.pos[1] = (u16)top | (right << 16);
-    cmd->view.pos[2] = (right << 16) | (u16)bottom;
-    cmd->view.pos[3] = leftWord | (u16)bottom;
+    *((s32*)&cmd->ax) = (left << 0x10) | ((u16)top);
+    *((s32*)&cmd->bx) = (right << 0x10) | ((u16)top);
+    *((s32*)&cmd->cx) = (right << 0x10) | ((u16)bottom);
+    *((s32*)&cmd->dx) = (left << 0x10) | ((u16)bottom);
 
     if (SpMstCmdPos <= 0x277) {
-        SPR_2Cmd(arg0, &cmd->cmd);
+        SPR_2Cmd(arg0, cmd);
         d_0605AEAC += 0x20;
     }
 }
@@ -836,7 +819,23 @@ u8 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
 }
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607A88C, func_0607A88C);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607A994, func_0607A994);
+
+void func_0600B0B8(SpritePart* part, void* arg1, s32 arg2);
+
+void func_0607A994(Entity* self) {
+    s16** frames;
+    s16* frame;
+    SpriteObject* sprite;
+
+    frames = self->ext.spriteAnimEnemy.frames;
+
+    frame = frames[self->ext.spriteAnimEnemy.unk83];
+    sprite = self->unk0;
+
+    sprite->flags = sprite->flags & ~0x3F08 | frame[0] & 0x3F08;
+    sprite->slotAndStreamId = sprite->slotAndStreamId & ~0x7F | frame[1] & 0x7F;
+    func_0600B0B8(sprite->parts, &frame[2], (sprite->flags & 0x3F00) >> 8);
+}
 
 // SAT func_0607A9F8
 // Original name: _hkyori_search
@@ -1003,7 +1002,74 @@ bool HantenDir1(Entity* entity) {
 // func_0607AC2C
 u8 GetPlayerFacing(void) { return PLAYER.facingLeft; }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AC40, func_0607AC40);
+extern SprGourTbl* SpGourTbl;
+extern s16 g_olroxDroolInitData[];
+extern s16 g_olroxDroolCollOffsets[];
+
+void SyncSpriteObjectPosUnchecked(Entity* entity, s16* offset);
+
+static void unkFunc(Entity* entity, s16* offset) {
+    SyncSpriteObjectPosUnchecked(entity, offset);
+}
+
+// func_0607AC40
+void EntityOlroxDrool(Entity* self) {
+    s32 primIndex;
+    s32 idx;
+    SprGourTbl* temp;
+    Primitive* prim;
+    s16 x, y;
+
+    switch (self->step) {
+    case 0:
+        unkFunc(self, g_olroxDroolInitData);
+        TekiInit(self, 2);
+        primIndex = AllocPrimitives(0x8005, 1);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->primIndex = primIndex;
+        self->flags |= FLAG_HAS_PRIMS;
+        self->hitboxState = 0;
+        prim = &g_PrimBuf[primIndex];
+        self->unkB4 = prim;
+        prim->x0 = prim->x1 = self->posX.i.hi;
+        prim->y0 = prim->y1 = self->posY.i.hi;
+        idx = prim->unk1C;
+        temp = &SpGourTbl[idx];
+        temp->entry[0] = RGB16_COLOR(8, 8, 31);
+        temp->entry[1] = RGB16_COLOR(0, 0, 2);
+        prim->unk6 = 0xC210;
+        prim->priority = 0x80;
+        prim->drawMode = 0x37;
+        self->step = 1;
+        break;
+
+    case 1:
+        prim = self->unkB4;
+        if (CheckColliderOffsets(self, g_olroxDroolCollOffsets, 0)) {
+            prim->y1 += 2;
+            if (self->step_s == 0) {
+                self->step_s = 1;
+            }
+        } else {
+            self->velocityY += 0x1800;
+            self->posY.val += self->velocityY;
+            if (prim->y0 - prim->y1 > 8) {
+                prim->y1 = prim->y0 - 8;
+            }
+        }
+        prim->x0 = self->posX.i.hi;
+        prim->x1 = self->posX.i.hi;
+        prim->y0 = self->posY.i.hi;
+        if (prim->y0 < prim->y1) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+}
 
 // func_0607AE48
 void DestroyEntityWithExplosion(Entity* self, u16 params) {
@@ -1018,7 +1084,7 @@ void DestroyEntityWithExplosion(Entity* self, u16 params) {
         CreateEntityFromEntity(E_EXPLOSION, self, entity);
         entity->params = params;
         self->animCurFrame = 0;
-        self->drawFlags = 0;
+        self->drawFlags = ENTITY_DEFAULT;
         self->step = 0;
         self->step_s = 0;
     }
@@ -1270,7 +1336,7 @@ void ReplaceBreakableWithItemDrop(Entity* self) {
 }
 
 // func_0607B604
-void SyncSpriteObjectPosUnchecked(Entity* entity) {
+void SyncSpriteObjectPosUnchecked(Entity* entity, s16* offset) {
     SpriteObject* temp = entity->unk0;
 
     temp->posX = entity->posX.val;

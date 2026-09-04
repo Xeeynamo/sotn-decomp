@@ -880,7 +880,7 @@ void UpdateBatBlueTrailEntities(Entity* self) {
                 sVar6 = prim->unk1C;
                 temp = &SpGourTbl[sVar6];
                 temp->entry[0] = temp->entry[1] = temp->entry[2] =
-                    temp->entry[3] = RGB16_COLOR(fade[i], fade[i], 0x14);
+                    temp->entry[3] = RGB16_COLOR(fade[i], fade[i], 20);
                 offsets[i] -= 8;
                 fade[i] -= 1;
                 if (fade[i] < 3) {
@@ -916,7 +916,7 @@ void UpdateBatBlueTrailEntities(Entity* self) {
                 sVar6 = prim->unk1C;
                 temp = &SpGourTbl[sVar6];
                 temp->entry[0] = temp->entry[1] = temp->entry[2] =
-                    temp->entry[3] = RGB16_COLOR(fade[i], fade[i], 0x1F);
+                    temp->entry[3] = RGB16_COLOR(fade[i], fade[i], 31);
                 offsets[i] -= 8;
                 fade[i] -= 1;
                 if (fade[i] < 11) {
