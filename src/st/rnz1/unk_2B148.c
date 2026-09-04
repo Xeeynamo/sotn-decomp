@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rnz1.h"
 
-void func_801B2CF8(s32* arg0) {
+static void func_801B2CF8(s32* arg0) {
     s32* ptr = arg0;
     s32 bound = 13;
     s32 i;
@@ -11,7 +11,7 @@ void func_801B2CF8(s32* arg0) {
     }
 }
 
-void func_us_801AB16C(s32* arg0, s32* arg1) {
+static void func_us_801AB16C(s32* arg0, s32* arg1) {
     s32 bound = 13;
     s32 i;
 
@@ -40,7 +40,7 @@ typedef struct{
     s16 unk32;
 } batWingStruct;
 
-void func_us_801AB198(batWingStruct* arg0) {
+static void func_us_801AB198(batWingStruct* arg0) {
     s32 var_s2;
     s32 var_s1;
     s32 var_s0;
@@ -75,7 +75,7 @@ void func_us_801AB198(batWingStruct* arg0) {
     }
 }
 
-Primitive* func_us_801AB380(batWingStruct* arg0, Primitive* prim, SVECTOR** arg2) {
+static Primitive* func_us_801AB380(batWingStruct* arg0, Primitive* prim, SVECTOR** arg2) {
     s16 transX;
     s16 transY;
     long spA8;
@@ -184,7 +184,7 @@ Primitive* func_us_801AB380(batWingStruct* arg0, Primitive* prim, SVECTOR** arg2
     return prim;
 }
 
-void func_us_801AB768(batWingStruct* arg0) {
+static void func_us_801AB768(batWingStruct* arg0) {
     switch (arg0->step) {
     case 0:
         if (arg0->unkE < 0x200) {
@@ -266,7 +266,7 @@ void func_us_801AB768(batWingStruct* arg0) {
     }
 }
 
-void func_us_801ABA38(batWingStruct* arg0) {
+static void func_us_801ABA38(batWingStruct* arg0) {
     s32 var_s2;
     s16 var_s1;
     s16 var_s0;
@@ -299,7 +299,7 @@ void func_us_801ABA38(batWingStruct* arg0) {
     }
 }
 
-void func_us_801ABB58(batWingStruct* arg0) {
+static void func_us_801ABB58(batWingStruct* arg0) {
     s16 temp;
 
     switch (arg0->step) {
@@ -367,8 +367,11 @@ void func_us_801ABB58(batWingStruct* arg0) {
     }
 }
 
-void RNZ1_Unused801ABDC0(void) {}
+static void RNZ1_Unused801ABDC0(void) {}
 
-INCLUDE_ASM("st/rnz1/nonmatchings/unk_2B148", func_us_801ABDC8);
+static void func_us_801ABDC8(batWingStruct* arg0) {
+    arg0->unk0 -= 0x400;
+    arg0->unk14 -= 0x400;
+}
 
 INCLUDE_ASM("st/rnz1/nonmatchings/unk_2B148", func_us_801ABDE4);
