@@ -299,7 +299,73 @@ void func_us_801ABA38(batWingStruct* arg0) {
     }
 }
 
-INCLUDE_ASM("st/rnz1/nonmatchings/unk_2B148", func_us_801ABB58);
+void func_us_801ABB58(batWingStruct* arg0) {
+    s16 temp;
+
+    switch (arg0->step) {
+    case 0:
+        temp = 0x140 - arg0->unkE;
+        arg0->unkE += temp / 8;
+        temp = 0x100 - arg0->unk24;
+        arg0->unk24 += temp / 8;
+        switch (arg0->substep) {
+        case 0:
+            if (arg0->unk8 > FIX(-0.5)) {
+                arg0->unk0 = arg0->unk0 - 0x180;
+            }
+            if (arg0->unk10 < FIX(-2)) {
+                arg0->unk0 = 0;
+                arg0->substep += 1;
+                arg0->unk14 = -0x2000;
+                break;
+            }
+            break;
+        case 1:
+            if (arg0->unk1C > FIX(-0.5)) {
+                arg0->unk14 -= 0x100;
+            }
+            if (arg0->unk28 < 0) {
+                arg0->unk14 = 0;
+                arg0->substep = 0;
+                arg0->step = 1;
+                break;
+            }
+            break;
+        }
+        break;
+    case 1:
+        temp = 0x100 - arg0->unkE;
+        arg0->unkE += temp / 8;
+        temp = 0x180 - arg0->unk24;
+        arg0->unk24 += temp / 8;
+        switch (arg0->substep) {
+        case 0:
+            if (arg0->unk8 < FIX(0.5)) {
+                arg0->unk0 += 0xC0;
+            }
+            if (arg0->unk1C < FIX(0.5)) {
+                arg0->unk14 += 0xC0;
+            }
+            if (arg0->unk10 > FIX(1.5)) {
+                arg0->unk0 = 0;
+                arg0->substep += 1;
+                break;
+            }
+            break;
+        case 1:
+            if (arg0->unk1C < FIX(0.5)) {
+                arg0->unk14 += 0xC0;
+            }
+            if ((arg0->unk28 - arg0->unk10) >= FIX(2)) {
+                arg0->unk14 = 0;
+                arg0->substep = 0;
+                arg0->step = 0;
+            }
+            break;
+        }
+        break;
+    }
+}
 
 void RNZ1_Unused801ABDC0(void) {}
 
