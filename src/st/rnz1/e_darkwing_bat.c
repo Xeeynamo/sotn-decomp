@@ -78,7 +78,7 @@ extern EInit g_EInitDarkwingBat;
 static bool WakeupRotateHelper(s16* rot, s16 target, s16 increment) {
     if (abs(*rot - target) < increment) {
         *rot = target;
-        return 1;
+        return true;
     }
     if (*rot > target) {
         *rot -= increment;
@@ -86,7 +86,7 @@ static bool WakeupRotateHelper(s16* rot, s16 target, s16 increment) {
     if (*rot < target) {
         *rot += increment;
     }
-    return 0;
+    return false;
 }
 
 static s32 WindAttackHelper(s32 arg0) {
