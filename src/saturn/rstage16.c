@@ -146,7 +146,7 @@ void func_060DFB7C(Entity* self) {
         /* fall through */
     case 1:
         if (self->ext.explosionEmitter.timer++ > 4U) {
-            particle = AllocEntity(&g_Entities[0xE0], &DAT_060A4FF8);
+            particle = AllocEntity(&g_Entities[0xE0], &g_Entities[0x100]);
             if (particle != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, particle);
                 particle->entityId = E_EXPLOSION;

@@ -10,7 +10,6 @@
 #include "stage_data.h"
 
 extern s16 DAT_060F2F04;
-extern Entity DAT_060A4FF8;
 extern u32 g_Stage15SpriteBank24Frames[];
 void SyncSpriteObjectPosUnchecked(Entity* self, s16* offset);
 void CheckCollision(s32 x, s32 y, Collider* result, u16 flags);

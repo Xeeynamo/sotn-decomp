@@ -106,7 +106,6 @@ void SetCurrentMatrixBinAngle(s32* pos, s32* angle);
 void TransformAndProjectPoints(
     s32* src, s32* dst, s32 count, MthMatrixTbl* matrixTbl);
 extern MthMatrixTbl DAT_06061DF0;
-extern Entity DAT_060A4FF8;
 extern s32 DAT_060485e0[];
 extern s32 DAT_060EA000[];
 extern s32 DAT_060EFCC0[];

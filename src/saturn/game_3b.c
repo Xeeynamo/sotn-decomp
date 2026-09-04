@@ -33,9 +33,9 @@ void func_06019074(const char*, s32);
 void DestroyEntity(Entity* entity);
 void PreventEntityFromRespawning(Entity*);
 
-static inline u16 LookupTblNoToVram(u16 arg0) {
+static u16 LookupTblNoToVram(u16 arg0) {
     if (arg0 & 0x4000) {
-        return func_06007CE0(arg0 & 0xFFF);
+        return LocalLookupTblNoToVram(arg0 & 0xFFF);
     } else {
         return SPR_2LookupTblNoToVram(arg0 & 0xFFF);
     }

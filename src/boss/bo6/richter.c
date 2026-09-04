@@ -1096,9 +1096,42 @@ void EntityRichter(Entity* self) {
 
 INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepStand);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepWalk);
+void RicStepWalk(void) {
+    if (RicCheckInput(CHECK_FALL | CHECK_FACING | CHECK_JUMP | CHECK_CRASH |
+                      CHECK_ATTACK | CHECK_CROUCH) == 0) {
+        DecelerateX(FIX(0.125));
+        if (RicCheckFacing() == 0) {
+            RicSetStand(0);
+            return;
+        }
+        if (RIC.step_s == 0) {
+            RicSetSpeedX(FIX(1.25));
+        }
+    }
+}
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepRun);
+extern AnimationFrame D_us_80181F24[];
+
+void RicStepRun(void) {
+    g_Ric.timers[PL_T_8] = 8;
+    g_Ric.timers[PL_T_CURSE] = 8;
+    if (RicCheckInput(0x305C) == 0) {
+        DecelerateX(FIX(0.125));
+        if (RicCheckFacing() == 0) {
+            RicSetStand(0);
+            if (g_Ric.timers[PL_T_RUN] == 0) {
+                if (!(g_Ric.vram_flag & (TOUCHING_L_WALL | TOUCHING_R_WALL))) {
+                    RicSetAnimation(&D_us_80181F24);
+                    RicCreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
+                }
+            } else {
+                RIC.velocityX = 0;
+            }
+        } else if (RIC.step_s == 0) {
+            RicSetSpeedX(FIX(2.25));
+        }
+    }
+}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepJump);
 

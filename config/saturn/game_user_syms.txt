@@ -30,6 +30,7 @@ _MoveEntity = 0x06079B9C;
 _GetDistanceToPlayerX = 0x0607A9F8;
 _GetDistanceToPlayerY = 0x0607AA1C;
 _GetSideToPlayer = 0x0607AAF4;
+_EntityOlroxDrool = 0x0607AC40;
 _AllocEntity = 0x0607B184;
 _PreventEntityFromRespawning = 0x0607B1C8;
 _SetStep = 0x0607B218;
