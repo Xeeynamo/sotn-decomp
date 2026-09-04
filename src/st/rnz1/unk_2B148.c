@@ -33,6 +33,10 @@ typedef struct{
     s32 unk20;
     s32 unk24;
     s32 unk28;
+    u8 unk2C;
+    s16 : 16;
+    s16 unk30;
+    s16 unk32;
 } batWingStruct;
 
 void func_us_801AB198(batWingStruct* arg0) {
@@ -70,8 +74,114 @@ void func_us_801AB198(batWingStruct* arg0) {
     }
 }
 
+Primitive* func_us_801AB380(batWingStruct* arg0, Primitive* prim, SVECTOR** arg2) {
+    s16 transX;
+    s16 transY;
+    long spA8;
+    long spA4;
+    long spA0;
+    long sp9C;
+    long sp98;
+    SVECTOR rotVec;
+    VECTOR transVec;
+    MATRIX sp60;
+    MATRIX m;
+    Primitive* prevPrim;
+    s16 xOffset;
+    s16 yOffset;
+    s16 transZ;
+    s16 rotX;
+    s16 rotY;
+    s16 rotZ;
+    s32 i;
+    s32 zOffset;
+    s32 stackpad1[8];
+    SVECTOR sp38 = {0};
+    s32 stackpad2[2];
+    Entity* other;
 
-INCLUDE_ASM("st/rnz1/nonmatchings/unk_2B148", func_us_801AB380);
+    rotVec.vx = g_CurrentEntity->ext.ILLEGAL.s16[4];
+    rotVec.vy = g_CurrentEntity->ext.ILLEGAL.s16[5];
+    rotVec.vz = g_CurrentEntity->ext.ILLEGAL.s16[6];
+    RotMatrix(&sp38, &m);
+    RotMatrixY(rotVec.vy, &m);
+    RotMatrixX(rotVec.vx, &m);
+    RotMatrixZ(rotVec.vz, &m);
+    other = g_CurrentEntity - 1;
+    if (other->facingLeft) {
+        RotMatrixY(0x800, &m);
+    }
+    xOffset = arg0->unk30;
+    yOffset = arg0->unk32;
+    transX = 0;
+    transY = 0;
+    transZ = g_CurrentEntity->ext.ILLEGAL.s16[7];
+    rotX = arg0->unkC;
+    rotY = arg0->unkE;
+    rotZ = arg0->unk10 / 0x100;
+    SetGeomScreen(0x180);
+    for(i = 0; i < 2; i += 1) {
+        rotVec.vx = rotX;
+        rotVec.vy = rotY;
+        if (arg0->unk2C) {
+            rotVec.vy = -rotVec.vy;
+        }
+        rotVec.vz = rotZ;
+        if (arg0->unk2C) {
+            rotVec.vz = -rotVec.vz;
+        }
+        RotMatrix(&sp38, &sp60);
+        RotMatrixY(rotVec.vy, &sp60);
+        RotMatrixZ(rotVec.vz, &sp60);
+        RotMatrixX(rotVec.vx, &sp60);
+        SetMulMatrix(&m, &sp60);
+        transVec.vx = transX;
+        transVec.vy = transY;
+        transVec.vz = transZ;
+        TransMatrix(&sp60, &transVec);
+        SetTransMatrix(&sp60);
+        SetGeomOffset(xOffset, yOffset);
+        zOffset = RotTransPers(*arg2, &spA8, &sp9C, &sp98);
+        arg2++;
+        zOffset = zOffset + RotTransPers(*arg2, &spA4, &sp9C, &sp98);
+        arg2++;
+        zOffset /= 2;
+        
+        rotVec.vx = rotX;
+        rotVec.vy = 0;
+        rotVec.vz = rotZ;
+        if (arg0->unk2C) {
+            rotVec.vz = -rotVec.vz;
+        }
+        RotMatrix(&sp38, &sp60);
+        RotMatrixY(rotVec.vy, &sp60);
+        RotMatrixZ(rotVec.vz, &sp60);
+        RotMatrixX(rotVec.vx, &sp60);
+        SetMulMatrix(&m, &sp60);
+        RotTransPers(*arg2, &spA0, &sp9C, &sp98);
+        arg2++;
+        if (i == 0) {
+            xOffset = prim->x1 = (u16)spA8;
+            yOffset = prim->y1 = spA8 >> 0x10;
+            LOW(prim->x0) = spA4;
+            LOW(prim->x2) = spA0;
+            transZ = zOffset * 4;
+            rotX = arg0->unk20;
+            rotY = arg0->unk24;
+            rotZ = arg0->unk28 / 0x100;
+        } else {
+            LOW(prim->x1) = spA8;
+            prim->x0 = prevPrim->x1;
+            prim->y0 = prevPrim->y1;
+            LOW(prim->x3) = spA4;
+            LOW(prevPrim->x3) = LOW(prim->x2) = spA0;
+        }
+        prim->priority = ((g_CurrentEntity->zPriority + g_CurrentEntity->ext.ILLEGAL.s16[7] / 4) - zOffset);
+        prevPrim = prim;
+        prim = prim->next;
+    }
+    return prim;
+}
 
 INCLUDE_ASM("st/rnz1/nonmatchings/unk_2B148", func_us_801AB768);
 
@@ -82,7 +192,5 @@ INCLUDE_ASM("st/rnz1/nonmatchings/unk_2B148", func_us_801ABB58);
 void RNZ1_Unused801ABDC0(void) {}
 
 INCLUDE_ASM("st/rnz1/nonmatchings/unk_2B148", func_us_801ABDC8);
-
-INCLUDE_RODATA("st/rnz1/nonmatchings/unk_2B148", D_us_801A6050);
 
 INCLUDE_ASM("st/rnz1/nonmatchings/unk_2B148", func_us_801ABDE4);

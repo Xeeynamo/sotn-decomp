@@ -96,7 +96,7 @@ segments:
       - [0x262B0, .rodata, e_life_up]
       - [0x262CC, c, e_room_bg]
       - [0x263AC, c, e_lock_camera]
-      - [0x26568, c, e_breakable]
+      - [0x26568, c, e_breakable] 
       - [0x26D08, c, e_explosion_puff_opaque]
       - [0x27254, c, e_clouds]
       - [0x276A8, c, e_bg_gears]
