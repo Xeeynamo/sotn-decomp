@@ -266,8 +266,38 @@ void func_us_801AB768(batWingStruct* arg0) {
     }
 }
 
+void func_us_801ABA38(batWingStruct* arg0) {
+    s32 var_s2;
+    s16 var_s1;
+    s16 var_s0;
 
-INCLUDE_ASM("st/rnz1/nonmatchings/unk_2B148", func_us_801ABA38);
+    var_s1 = 0;
+    var_s0 = 0;
+    var_s2 = 0;
+    switch (arg0->step) {
+    case 3:
+        var_s1 += 0x80;
+        var_s0 += 0xC0;
+        /* fallthrough */
+    case 1:
+        var_s0 -= 0xC0;
+        /* fallthrough */
+    case 2:
+    case 0:
+        var_s1 += (-0x80 - arg0->unkE);
+        arg0->unkE += var_s1 / 16;
+        var_s2 = (FIX(-0.5) - arg0->unk10);
+        arg0->unk0 = var_s2 / 16;
+        var_s0 += (0x40 - arg0->unk24);
+        arg0->unk24 += var_s0/ 16;
+        var_s2 = (FIX(-1) - arg0->unk28);
+        arg0->unk14 = var_s2 / 32;
+        if (abs(var_s1 + var_s0) < 0x20) {
+            arg0->step += 1;
+            arg0->step &= 3;
+        }
+    }
+}
 
 INCLUDE_ASM("st/rnz1/nonmatchings/unk_2B148", func_us_801ABB58);
 
