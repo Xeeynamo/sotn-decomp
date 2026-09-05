@@ -386,13 +386,46 @@ static bool isFirstBoot() {
     return g_StageId == STAGE_SEL && g_GameState == Game_Init;
 }
 
+typedef struct {
+    const char* name;
+    s32 stageId;
+} StageNameAlias;
+
+static s32 FindStageIdByName(const char* name) {
+    static const StageNameAlias aliases[] = {
+        {"no1_alt", STAGE_NO1_ALT},     {"no0_alt", STAGE_NO0_ALT},
+        {"nz0_demo", STAGE_NZ0_DEMO},   {"nz1_demo", STAGE_NZ1_DEMO},
+        {"lib_demo", STAGE_LIB_DEMO},   {"rnz1_demo", STAGE_RNZ1_DEMO},
+        {"iwa_load", STAGE_IWA_LOAD},   {"iga_load", STAGE_IGA_LOAD},
+        {"hagi_load", STAGE_HAGI_LOAD}, {"top_alt", STAGE_TOP_ALT},
+    };
+    char upperName[16];
+    s32 i;
+
+    for (i = 0; i < LEN(aliases); i++) {
+        if (!strcmp(name, aliases[i].name)) {
+            return aliases[i].stageId;
+        }
+    }
+    for (i = 0; name[i] != '\0' && i < LEN(upperName) - 1; i++) {
+        upperName[i] = (char)toupper((unsigned char)name[i]);
+    }
+    upperName[i] = '\0';
+    for (i = 0; i <= STAGE_TOP_ALT; i++) {
+        if (!strcmp(upperName, g_StagesLba[i].ovlName)) {
+            return i;
+        }
+    }
+    return -1;
+}
+
 static bool IsBossOvl(const char* ovlName) {
     return (ovlName[0] == 'B' && ovlName[1] == 'O') ||
            (ovlName[0] == 'R' && ovlName[1] == 'B' && ovlName[2] == 'O') ||
            !strcmp(ovlName, "MAR");
 }
 
-static void LoadStagePrg(const char* name) {
+static bool LoadStagePrg(const char* name) {
     char ovlName[16];
     unsigned i;
     for (i = 0; name[i] && i < LEN(ovlName) - 1; i++) {
@@ -401,7 +434,9 @@ static void LoadStagePrg(const char* name) {
     ovlName[i] = '\0';
     if (!LoadStageOverlay(ovlName, &g_api.o)) {
         ERRORF("stage '%s' was not loaded", ovlName);
+        return false;
     }
+    return true;
 }
 
 s32 LoadFileSim(s32 fileId, SimFileType type) {
@@ -512,14 +547,26 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
                 DemoInit(2);
                 SetGameState(Game_NowLoading);
                 g_GameStep = 1;
-            } else if (g_GameParams.stage >= 0) {
+            } else if (
+                g_GameParams.stageName != NULL || g_GameParams.stage >= 0) {
+                if (g_GameParams.stageName != NULL && g_GameParams.stage < 0) {
+                    g_GameParams.stage =
+                        FindStageIdByName(g_GameParams.stageName);
+                    if (g_GameParams.stage < 0) {
+                        g_GameParams.stage = g_StageId;
+                    }
+                }
                 g_StageId = g_GameParams.stage;
                 SetGameState(Game_NowLoading);
                 g_GameStep = 1;
             }
         }
-        LoadStagePrg(g_StagesLba[g_StageId].ovlName);
-        return 0;
+        if (g_GameParams.stageName != NULL &&
+            FindStageIdByName(g_GameParams.stageName) < 0 &&
+            g_StageId == g_GameParams.stage) {
+            return LoadStagePrg(g_GameParams.stageName) ? 0 : -1;
+        }
+        return LoadStagePrg(g_StagesLba[g_StageId].ovlName) ? 0 : -1;
     case SimFileType_Vh:
         g_SimFile = &sim;
         if (fileId & 0x8000) {
