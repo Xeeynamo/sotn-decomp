@@ -374,4 +374,332 @@ static void func_us_801ABDC8(batWingStruct* arg0) {
     arg0->unk14 -= 0x400;
 }
 
-INCLUDE_ASM("st/rnz1/nonmatchings/unk_2B148", func_us_801ABDE4);
+typedef struct{
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    s16 unkC;
+    s16 unkE;
+    s32 unk10;
+    s32 unk14;
+    s32 unk18;
+    s32 unk1C;
+    s32 unk20;
+    s32 unk24;
+    s32 unk28;
+    u8 unk2C;
+    u8 step;
+    u8 substep;
+    s16 unk30;
+    s16 unk32;
+} batWingStruct;
+
+extern EInit D_us_80180BC4;
+
+extern batWingStruct* D_us_801BEE9C[2];
+extern batWingStruct* D_us_801BEEA4;
+
+extern SVECTOR* D_us_80181260;
+extern SVECTOR* D_us_801812B8;
+extern AnimateEntityFrame D_us_801812F8[];
+extern batWingStruct D_us_801BEE34;
+extern batWingStruct D_us_801BEE68;
+
+void func_us_801ABDE4(Entity* self) {
+    Entity* other;
+    Primitive* prim;
+    s32 primIndex;
+    s32 i;
+    s32 clip;
+    bool should_destroy;
+    Primitive* prim2;
+
+    D_us_801BEE9C[0] = &D_us_801BEE34;
+    D_us_801BEE9C[1] = &D_us_801BEE68;
+    FntPrint("wing step %x\n", self->step);
+    FntPrint("wing step_s %x\n", self->step_s);
+    other = self - 1;
+    if ((other->flags & 0x100) && (self->step != 5)) {
+        for(i = 0; i < 2; i++) {
+            D_us_801BEEA4 = D_us_801BEE9C[i];
+            D_us_801BEEA4->step = 0;
+            D_us_801BEEA4->substep = 0;
+        }
+        SetStep(5);
+    }
+    switch (self->step) {                              /* switch 1 */
+    case 0:                                         /* switch 1 */
+        InitializeEntity(D_us_80180BC4);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 10);
+        if (primIndex != -1) {
+            self->flags |= 0x800000;
+            self->primIndex = primIndex;
+            prim = &g_PrimBuf[primIndex];
+            self->ext.prim = prim;
+            for(i = 0; i < 4; i++) {
+                prim->tpage = 0x13;
+                prim->clut = 0x200;
+                if (i % 2) {
+                    prim->u0 = 0x80;
+                    prim->u1 = 0x80;
+                    prim->u2 = 0xF0;
+                    prim->u3 = 0xF0;
+                    prim->v1 = 0x48;
+                    prim->v3 = 0x48;
+                    prim->v0 = 0x20;
+                    prim->v2 = 0x10;
+                } else {
+                    prim->u0 = 0x80;
+                    prim->u1 = 0x80;
+                    prim->u2 = 0xF0;
+                    prim->u3 = 0xF0;
+                    prim->v1 = 0x20;
+                    prim->v3 = 0x10;
+                    prim->v0 = 4;
+                    prim->v2 = 4;
+                }
+                prim->r0 = prim->g0 = prim->b0 = 0x80;
+                LOW(prim->r1) = LOW(prim->r0);
+                LOW(prim->r2) = LOW(prim->r0);
+                LOW(prim->r3) = LOW(prim->r0);
+                prim->priority = self->zPriority;
+                prim->drawMode = 2;
+                prim = prim->next;
+            }
+            self->ext.ILLEGAL.u32[1] = (u32) prim;
+            for(i = 0; i < 4; i++) {
+                prim->tpage = 0x12;
+                prim->clut = 0x200;
+                if (i % 2) {
+                    prim->u0 = 0x80;
+                    prim->u1 = 0x80;
+                    prim->u2 = 0xF0;
+                    prim->u3 = 0xF0;
+                    prim->v1 = 0;
+                    prim->v3 = 0;
+                    prim->v0 = 0x24;
+                    prim->v2 = 0x34;
+                } else {
+                    prim->u0 = 0x80;
+                    prim->u1 = 0x80;
+                    prim->u2 = 0xF0;
+                    prim->u3 = 0xF0;
+                    prim->v1 = 0x24;
+                    prim->v3 = 0x34;
+                    prim->v0 = 0x44;
+                    prim->v2 = 0x44;
+                }                
+                prim->r0 = prim->g0 = prim->b0 = 0x40;
+                LOW(prim->r1) = LOW(prim->r0);
+                LOW(prim->r2) = LOW(prim->r0);
+                LOW(prim->r3) = LOW(prim->r0);
+                prim->priority = self->zPriority;
+                prim->drawMode = 2;
+                prim = prim->next;
+            } 
+        }    else {
+            DestroyEntity(self);
+            return;
+        }
+            self->pose = 0;
+            self->poseTimer = 0;
+        case 1:                                     /* switch 1 */
+            self->ext.ILLEGAL.s16[4] = -0x100;
+            self->ext.ILLEGAL.s16[5] = 0x400;
+            self->ext.ILLEGAL.s16[6] = 0;
+            self->ext.ILLEGAL.s16[7] = 0x260;
+            for(i = 0; i < 2; i++) {
+                D_us_801BEEA4 = D_us_801BEE9C[i];
+                func_801B2CF8(D_us_801BEEA4);
+                D_us_801BEEA4->unk24 = -0x80;
+                D_us_801BEEA4->unk2C = i;
+            }
+            self->ext.ILLEGAL.s16[8] = 0x200;
+            self->step_s = 0;
+            self->step = 2;
+            self->step = 3;
+        break;
+    case 2:                                         /* switch 1 */
+        for(i = 0; i < 2; i++) {
+            D_us_801BEEA4 = D_us_801BEE9C[i];
+            func_us_801AB768(D_us_801BEEA4);
+        }
+        other = self - 1;
+        if (other->ext.ILLEGAL.u8[9]) {
+            for(i = 0; i < 2; i++) {
+                D_us_801BEEA4 = D_us_801BEE9C[i];
+                D_us_801BEEA4->step = 0;
+                D_us_801BEEA4->substep = 0;
+            }
+            SetStep(3);
+        }
+        break;
+    case 3:                                         /* switch 1 */
+        switch (self->step_s) {                          /* switch 2; irregular */
+        case 0:                                     /* switch 2 */
+            self->ext.ILLEGAL.s16[0x10] = 0x38;
+            other = self - 1;
+            if (!other->ext.ILLEGAL.u8[9]) {
+                self->step_s++;
+            }
+            /* fallthrough */
+        case 1:                                     /* switch 2 */
+            for(i = 0; i < 2; i++) {
+                D_us_801BEEA4 = D_us_801BEE9C[i];
+                func_us_801ABA38(D_us_801BEEA4);
+            }
+            if (!--self->ext.ILLEGAL.s16[0x10]) {
+            for(i = 0; i < 2; i++) {
+                    D_us_801BEEA4 = D_us_801BEE9C[i];
+                    D_us_801BEEA4->step = 0;
+                    D_us_801BEEA4->substep = 0;
+                }
+                SetStep(2);
+            }
+            other = self - 1;
+            if (other->ext.ILLEGAL.u8[0xA]) {
+                for(i = 0; i < 2; i++) {
+                    D_us_801BEEA4 = D_us_801BEE9C[i];
+                    D_us_801BEEA4->step = 0;
+                    D_us_801BEEA4->substep = 0;
+                }
+                SetStep(4);
+            }
+            break;
+        }
+        break;
+    case 4:                                         /* switch 1 */
+        for(i = 0; i < 2; i++) {
+            D_us_801BEEA4 = D_us_801BEE9C[i];
+            func_us_801ABB58(D_us_801BEEA4);
+        }
+        other = self - 1;
+        if (!other->ext.ILLEGAL.u8[0xA]) {
+            for(i = 0; i < 2; i++) {
+                D_us_801BEEA4 = D_us_801BEE9C[i];
+                D_us_801BEEA4->step = 0;
+                D_us_801BEEA4->substep = 0;
+            }
+            SetStep(3);
+        }
+        break;
+    case 5:                                         /* switch 1 */
+        switch (self->step_s) {                         /* switch 3; irregular */
+        case 0:                                     /* switch 3 */
+            self->ext.ILLEGAL.s16[4] = 0;
+            D_us_801BEE34.unk0 = 0;
+            D_us_801BEE34.unk14 = 0;
+            D_us_801BEE68.unk0 = 0;
+            D_us_801BEE68.unk14 = 0;
+            self->step_s++;
+            /* fallthrough */
+        case 1:                                     /* switch 3 */
+            for(i = 0; i < 2; i++) {
+                D_us_801BEEA4 = D_us_801BEE9C[i];
+                func_us_801ABDC8(D_us_801BEEA4);
+            }
+            other = self - 1;
+            if (other->posY.i.hi > 0xB0) {
+                D_us_801BEE34.unk0 = 0;
+                D_us_801BEE34.unk14 = 0;
+                D_us_801BEE68.unk0 = 0;
+                D_us_801BEE68.unk14 = 0;
+                self->step_s++;
+                PlaySfxPositional(0x820);
+            }
+            break;
+        case 2:                                     /* switch 3 */
+            should_destroy = true;
+            for(i = 0; i < 2; i++) {
+                D_us_801BEEA4 = D_us_801BEE9C[i];
+                // Well now we're treating BF80 as if its next pointer is an integer
+                // That is extremely unusual.
+                D_us_801BEEA4->unk0 += 0x40;
+                D_us_801BEEA4->unk14 += 0x40;
+                if (D_us_801BEEA4->unk10 > 0) {
+                    D_us_801BEEA4->unk10 = 0;
+                    D_us_801BEEA4->unk0 = 0;
+                } else {
+                    should_destroy = false;
+                }
+                if (D_us_801BEEA4->unk28 > 0) {
+                    D_us_801BEEA4->unk28 = 0;
+                    D_us_801BEEA4->unk14 = 0;
+                } else {
+                    should_destroy = false;
+                }
+            }
+            if (should_destroy) {
+                DestroyEntity(self);
+                return;
+            }
+            break;
+        }
+        break;
+    }
+    other = self - 1;
+    self->facingLeft = other->facingLeft;
+    self->posX.i.hi = other->posX.i.hi;
+    self->posY.i.hi = other->posY.i.hi;
+    if (other->ext.ILLEGAL.u8[0xB]) {
+        AnimateEntity(D_us_801812F8, self);
+    } else {
+        self->animCurFrame = 0;
+    }
+    if (!other->ext.ILLEGAL.u8[8]) {
+        for(prim = &g_PrimBuf[self->primIndex]; prim != NULL; prim = prim->next) {
+            prim->drawMode = 8;
+        }
+        return;
+    }
+    self->ext.ILLEGAL.s16[6] = other->rotate;
+    if (other->rotate) {
+        if (other->facingLeft) {
+            self->posX.i.hi += ((rcos(other->rotate) * 0x18) >> 0xC);
+        } else {
+            self->posX.i.hi += -((rcos(other->rotate) * 0x18) >> 0xC);
+        }
+        self->posY.i.hi += -((rsin(other->rotate) * 0x18) >> 0xC);
+    } else if (other->facingLeft) {
+        self->posX.i.hi += 0x18;
+    } else {
+        self->posX.i.hi -= 0x18;
+    }
+    for(i = 0; i < 2; i++) {
+        D_us_801BEEA4 = D_us_801BEE9C[i];
+        D_us_801BEEA4->unk30 = self->posX.i.hi;
+        D_us_801BEEA4->unk32 = self->posY.i.hi;
+        func_us_801AB198(D_us_801BEEA4);
+    }
+    prim = self->ext.prim;
+    D_us_801BEEA4 = D_us_801BEE9C[0];
+    prim = func_us_801AB380(D_us_801BEEA4, prim, &D_us_80181260);
+    D_us_801BEEA4 = D_us_801BEE9C[1];
+    prim = func_us_801AB380(D_us_801BEEA4, prim, &D_us_801812B8);
+    prim = self->ext.prim;
+    prim2 = (Primitive*)self->ext.ILLEGAL.u32[1];
+    for(i = 0; i < 4; i++) {
+        if (!(i % 2)) {
+            clip = NormalClip(LOW(prim->x0), LOW(prim->x1), LOW(prim->x2));
+        } else {
+            clip = NormalClip(LOW(prim->x0), LOW(prim->x1), LOW(prim->x3));
+        }
+        if (i > 1) {
+            clip = -clip;
+        }
+        if (clip > 0) {
+            prim->drawMode = 8;
+            prim2->drawMode = 2;
+            LOW(prim2->x0) = LOW(prim->x0);
+            LOW(prim2->x1) = LOW(prim->x1);
+            LOW(prim2->x2) = LOW(prim->x2);
+            LOW(prim2->x3) = LOW(prim->x3);
+            prim2->priority = prim->priority;
+        } else {
+            prim->drawMode = 2;
+            prim2->drawMode = 8;
+        }
+        prim = prim->next;
+        prim2 = prim2->next;
+    }
+}
