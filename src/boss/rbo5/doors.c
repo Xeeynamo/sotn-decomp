@@ -222,7 +222,7 @@ void EntityUnkId17(Entity* self) {
         self->scaleX = D_us_801805D8[self->params & 0xF];
         self->scaleY = self->scaleX;
         if ((self->params & 0xF) % 2) {
-            self->rotate = -0x400;
+            self->rotate = ROT(-90);
         } else {
             self->rotate = 0;
         }
@@ -360,7 +360,7 @@ void EntityUnkId1C(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(EInitUnk17);
-        self->rotate = -0x400;
+        self->rotate = ROT(-90);
         self->drawFlags |= ENTITY_ROTATE;
         if (self->params & 1) {
             self->animCurFrame = 0x64;

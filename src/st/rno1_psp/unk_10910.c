@@ -60,7 +60,7 @@ void func_us_80198A18_from_rbo4(Entity* self) {
         InitializeEntity(&D_us_80180778);
         self->drawFlags |= ENTITY_ROTATE;
         if ((self->params & 0xF) % 2) {
-            self->rotate = -0x400;
+            self->rotate = ROT(-90);
         } else {
             self->rotate = 0;
         }

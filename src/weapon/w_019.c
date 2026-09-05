@@ -96,7 +96,7 @@ void EntityWeaponAttack(Entity* self) {
     case 3:
         self->scaleX += 0x10;
         self->scaleY = self->scaleX;
-        self->rotate += 0x40;
+        self->rotate += ROT(5.625);
         if (self->opacity >= 5) {
             self->opacity += 0xFE;
         }

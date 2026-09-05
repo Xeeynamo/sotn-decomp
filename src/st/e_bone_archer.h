@@ -431,9 +431,9 @@ void EntityBoneArcherArrow(Entity* self) {
         MoveEntity();
         self->velocityY += FIX(0.125);
         if (self->params == 1) {
-            self->rotate -= 0x20;
+            self->rotate -= ROT(2.8125);
         } else {
-            self->rotate += 0x20;
+            self->rotate += ROT(2.8125);
         }
         break;
     }

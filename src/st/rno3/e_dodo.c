@@ -101,9 +101,9 @@ void EntityDodoBird(Entity* self) {
             self->velocityX = rsin(self->ext.dodo.timer) * 0x10;
             self->ext.dodo.timer += 0x20;
             if (self->velocityX > 0) {
-                self->rotate -= 0x40;
+                self->rotate -= ROT(5.625);
             } else {
-                self->rotate += 0x40;
+                self->rotate += ROT(5.625);
             }
         }
         break;
@@ -117,7 +117,7 @@ void EntityDodoBird(Entity* self) {
             /* fallthrough */
         case 1:
             AnimateEntity(dodo_freakout, self);
-            self->rotate -= 0x80;
+            self->rotate -= ROT(11.25);
             // Every 4 frames, spawn 5 more feathers.
             // Timer starts at 16, so this will hit 4 times.
             // Total of 20 feathers.

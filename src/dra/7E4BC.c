@@ -796,15 +796,15 @@ void EntityHitByIce(Entity* self) {
         }
         if (PLAYER.velocityY != 0) {
             if (PLAYER.facingLeft) {
-                self->rotate = 0x100;
+                self->rotate = ROT(22.5);
             } else {
-                self->rotate = -0x100;
+                self->rotate = ROT(-22.5);
             }
         } else {
             if (PLAYER.velocityX > 0) {
-                self->rotate = 0x80;
+                self->rotate = ROT(11.25);
             } else {
-                self->rotate = 0xF80;
+                self->rotate = ROT(348.75);
             }
         }
         PlaySfx(SFX_MAGIC_SWITCH);

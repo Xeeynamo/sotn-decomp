@@ -63,7 +63,7 @@ void EntityBreakableNZ0(Entity* self) {
         self->animSet = g_eBreakableanimSets[breakableType];
         if (!breakableType) {
             self->drawFlags = ENTITY_ROTATE;
-            self->rotate = 0x800;
+            self->rotate = ROT(180);
         }
         if (breakableType == 2) {
             self->unk5A = 0x4B;

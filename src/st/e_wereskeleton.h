@@ -299,7 +299,7 @@ void EntityWereskeleton(Entity* self) {
     case 13:
         MoveEntity();
         self->velocityY += FIX(0.25);
-        self->rotate += 0x80;
+        self->rotate += ROT(11.25);
         if (self->ext.wereskeleton.unk7C++ > 4) {
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {

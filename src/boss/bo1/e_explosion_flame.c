@@ -146,7 +146,7 @@ void EntityExplosionFlame(Entity* self) {
             angle = self->rotate;
             self->velocityX = rcos(angle) << 4;
             self->velocityY = rsin(angle) << 4;
-            self->rotate -= 0x400;
+            self->rotate -= ROT(90);
             self->step_s++;
         }
         MoveEntity();
@@ -160,7 +160,7 @@ void EntityExplosionFlame(Entity* self) {
             angle = self->rotate;
             self->velocityX = (rcos(angle) * 7) << 2;
             self->velocityY = (rsin(angle) * 7) << 2;
-            self->rotate += 0x400;
+            self->rotate += ROT(90);
             self->blendMode = BLEND_ADD | BLEND_TRANSP;
             self->drawFlags =
                 ENTITY_OPACITY | ENTITY_ROTATE | ENTITY_SCALEY | ENTITY_SCALEX;

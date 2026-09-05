@@ -942,7 +942,7 @@ s32 func_ptr_80170010(Entity* self) {
                 self->ext.weapon.vol = 0x7F;
             }
         }
-        self->rotate += 0x100;
+        self->rotate += ROT(22.5);
         self->scaleX += 2;
         if (self->scaleX > 0x100) {
             self->scaleX = 0x100;
@@ -962,7 +962,7 @@ s32 func_ptr_80170010(Entity* self) {
     case 2:
         self->posX.val += self->velocityX;
         if (!(g_GameTimer & 3)) {
-            self->rotate += 0x400;
+            self->rotate += ROT(90);
         }
         if (!(g_GameTimer & 1) && (rand() & 1)) {
             g_api.CreateEntFactoryFromEntity(self, FACTORY(0x24, 1), 0);

@@ -152,13 +152,13 @@ void EntitySubwpnKnife(Entity* self) {
             angle2 = 0xD2;
             angle3 = 0x800 + 0xD2;
             angle4 = -0xD2;
-            self->rotate -= 0x80;
+            self->rotate -= ROT(11.25);
         } else {
             angle2 = 0x800 - 0xD2;
             angle1 = 0xD2;
             angle4 = 0x800 + 0xD2;
             angle3 = -0xD2;
-            self->rotate += 0x80;
+            self->rotate += ROT(11.25);
         }
         angle1 += self->rotate;
         angle2 += self->rotate;
@@ -1307,7 +1307,7 @@ void EntityHellfireBigFireball(Entity* entity) {
     case 1:
         if (entity->pose >= 23) {
             if (!(g_GameTimer & 3)) {
-                entity->rotate += 0x400;
+                entity->rotate += ROT(90);
             }
             if (entity->velocityX < 0) {
                 entity->velocityX -= FIX(0.09375);

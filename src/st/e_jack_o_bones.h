@@ -272,7 +272,7 @@ void EntityJackOBonesJack(Entity* self) {
     }
     MoveEntity();
     self->velocityY += FIX(0.1875);
-    self->rotate -= 0x40;
+    self->rotate -= ROT(5.625);
     xVar = self->posX.i.hi;
     yVar = self->posY.i.hi + 5;
     g_api.CheckCollision(xVar, yVar, &sp10, 0);

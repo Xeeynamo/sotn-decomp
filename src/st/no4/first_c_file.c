@@ -2259,9 +2259,9 @@ void func_us_801C5020(Entity* self) {
     }
 
     if (self->params) {
-        self->rotate += 0x20;
+        self->rotate += ROT(2.8125);
     } else {
-        self->rotate -= 0x20;
+        self->rotate -= ROT(2.8125);
     }
 
     self->posY.val += FIX(0.5);

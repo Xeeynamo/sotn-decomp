@@ -3308,15 +3308,15 @@ void EntityHitByIce(Entity* self) {
         }
         if (DOPPLEGANGER.velocityY != 0) {
             if (DOPPLEGANGER.facingLeft) {
-                self->rotate = 0x100;
+                self->rotate = ROT(22.5);
             } else {
-                self->rotate = -0x100;
+                self->rotate = ROT(-22.5);
             }
         } else {
             if (DOPPLEGANGER.velocityX > 0) {
-                self->rotate = 0x80;
+                self->rotate = ROT(11.25);
             } else {
-                self->rotate = 0xF80;
+                self->rotate = ROT(348.75);
             }
         }
         self->step++;
@@ -4737,13 +4737,13 @@ void EntitySubwpnKnife(Entity* self) {
             angle2 = 0xD2;
             angle3 = 0x800 + 0xD2;
             angle4 = -0xD2;
-            self->rotate -= 0x80;
+            self->rotate -= ROT(11.25);
         } else {
             angle2 = 0x800 - 0xD2;
             angle1 = 0xD2;
             angle4 = 0x800 + 0xD2;
             angle3 = -0xD2;
-            self->rotate += 0x80;
+            self->rotate += ROT(11.25);
         }
         angle1 += self->rotate;
         angle2 += self->rotate;

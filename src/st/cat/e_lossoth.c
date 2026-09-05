@@ -584,7 +584,7 @@ void EntityLossothFireball(Entity* self) {
     case 1:
         MoveEntity();
         self->velocityY += FIX(0.125);
-        self->rotate -= 0xC0;
+        self->rotate -= ROT(16.875);
         if (!(g_Timer & 3)) {
             // Spawn embers as the fireballs move
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
