@@ -936,61 +936,6 @@
 | 1.00 | false    | EntityOlroxDrool                    | asm/us/st/rno1/nonmatchings/e_misc/EntityOlroxDrool.s 
 | 1.00 | false    | EntityOlroxDrool                    | asm/us/st/rno2/nonmatchings/e_misc/EntityOlroxDrool.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_us_801BA030                    | asm/us/boss/bo0/matchings/3A030/func_us_801BA030.s 
-| 1.00 | true     | PlaySfxPositional                   | asm/us/boss/bo0/matchings/e_misc/PlaySfxPositional.s 
-| 1.00 | true     | func_us_801AC10C                    | asm/us/boss/bo1/matchings/e_misc/func_us_801AC10C.s 
-| 1.00 | true     | PlaySfxPositional                   | asm/us/boss/bo2/matchings/e_misc/PlaySfxPositional.s 
-| 1.00 | true     | PlaySfxPositional                   | asm/us/boss/bo3/matchings/e_misc/PlaySfxPositional.s 
-| 1.00 | true     | func_us_801BFE8C                    | asm/us/boss/bo4/matchings/e_misc/func_us_801BFE8C.s 
-| 1.00 | true     | PlaySfxPositional                   | asm/us/boss/bo5/matchings/e_misc/PlaySfxPositional.s 
-| 1.00 | true     | func_us_801B3024                    | asm/us/boss/bo6/matchings/e_misc/func_us_801B3024.s 
-| 1.00 | true     | PlaySfxPositional                   | asm/us/boss/bo7/matchings/e_misc/PlaySfxPositional.s 
-| 1.00 | true     | func_us_80196440                    | asm/us/boss/mar/matchings/e_misc/func_us_80196440.s 
-| 1.00 | true     | func_us_801A3534                    | asm/us/boss/rbo0/matchings/e_misc/func_us_801A3534.s 
-| 1.00 | true     | PlaySfxPositional                   | asm/us/boss/rbo1/matchings/e_misc/PlaySfxPositional.s 
-| 1.00 | true     | PlaySfxPositional                   | asm/us/boss/rbo2/matchings/e_misc/PlaySfxPositional.s 
-| 1.00 | true     | func_us_8019C668                    | asm/us/boss/rbo3/matchings/e_misc/func_us_8019C668.s 
-| 1.00 | true     | PlaySfxPositional                   | asm/us/boss/rbo4/matchings/e_misc/PlaySfxPositional.s 
-| 1.00 | true     | func_us_801BEDC0                    | asm/us/boss/rbo5/matchings/e_misc/func_us_801BEDC0.s 
-| 1.00 | true     | PlaySfxPositional                   | asm/us/boss/rbo6/matchings/e_misc/PlaySfxPositional.s 
-| 1.00 | true     | PlaySfxPositional                   | asm/us/boss/rbo7/matchings/e_misc/PlaySfxPositional.s 
-| 1.00 | true     | func_us_801A3268                    | asm/us/boss/rbo8/matchings/e_misc/func_us_801A3268.s 
-| 1.00 | true     | func_us_801C1BB0                    | asm/us/st/are/matchings/e_misc/func_us_801C1BB0.s 
-| 1.00 | true     | func_us_801C2210                    | asm/us/st/cat/matchings/e_misc/func_us_801C2210.s 
-| 1.00 | true     | func_8019A328                       | asm/us/st/cen/matchings/e_misc/func_8019A328.s 
-| 1.00 | true     | func_801A7350                       | asm/us/st/chi/matchings/en_misc/func_801A7350.s 
-| 1.00 | true     | func_us_801CF464                    | asm/us/st/dai/matchings/e_misc/func_us_801CF464.s 
-| 1.00 | true     | func_801A046C                       | asm/us/st/dre/matchings/e_misc/func_801A046C.s 
-| 1.00 | true     | func_us_801C5D88                    | asm/us/st/lib/matchings/e_misc/func_us_801C5D88.s 
-| 1.00 | true     | func_80197A9C                       | asm/us/st/mad/matchings/e_misc/func_80197A9C.s 
-| 1.00 | true     | func_us_801CC658                    | asm/us/st/no0/matchings/e_misc/func_us_801CC658.s 
-| 1.00 | true     | func_us_801CA21C                    | asm/us/st/no1/matchings/e_misc/func_us_801CA21C.s 
-| 1.00 | true     | func_us_801C1BF0                    | asm/us/st/no2/matchings/e_misc/func_us_801C1BF0.s 
-| 1.00 | true     | func_801CAD28                       | asm/us/st/no3/matchings/e_misc/func_801CAD28.s 
-| 1.00 | true     | func_us_801D3ACC                    | asm/us/st/no4/matchings/e_misc/func_us_801D3ACC.s 
-| 1.00 | true     | func_801C2598                       | asm/us/st/np3/matchings/e_misc/func_801C2598.s 
-| 1.00 | true     | func_801C29B0                       | asm/us/st/nz0/matchings/e_misc/func_801C29B0.s 
-| 1.00 | true     | func_us_801B5BE0                    | asm/us/st/nz1/matchings/e_misc/func_us_801B5BE0.s 
-| 1.00 | true     | func_us_801B001C                    | asm/us/st/rare/matchings/e_misc/func_us_801B001C.s 
-| 1.00 | true     | func_us_801BD42C                    | asm/us/st/rcat/matchings/e_misc/func_us_801BD42C.s 
-| 1.00 | true     | PlaySfxPositional                   | asm/us/st/rcen/matchings/e_misc/PlaySfxPositional.s 
-| 1.00 | true     | func_us_8019AA04                    | asm/us/st/rcen/matchings/e_shaft/func_us_8019AA04.s 
-| 1.00 | true     | PlaySfxPositional                   | asm/us/st/rchi/matchings/e_misc/PlaySfxPositional.s 
-| 1.00 | true     | PlaySfxPositional                   | asm/us/st/rdai/matchings/e_misc/PlaySfxPositional.s 
-| 1.00 | true     | PlaySfxPositional                   | asm/us/st/rlib/matchings/e_misc/PlaySfxPositional.s 
-| 1.00 | true     | func_us_801C0800                    | asm/us/st/rno0/matchings/e_misc/func_us_801C0800.s 
-| 1.00 | true     | PlaySfxPositional                   | asm/us/st/rno1/matchings/e_misc/PlaySfxPositional.s 
-| 1.00 | true     | PlaySfxPositional                   | asm/us/st/rno2/matchings/e_misc/PlaySfxPositional.s 
-| 1.00 | true     | func_us_801BD38C                    | asm/us/st/rno3/matchings/e_misc/func_us_801BD38C.s 
-| 1.00 | true     | PlaySfxPositional                   | asm/us/st/rno4/matchings/unk_44B0C/PlaySfxPositional.s 
-| 1.00 | true     | func_us_801B60E0                    | asm/us/st/rnz0/matchings/e_misc/func_us_801B60E0.s 
-| 1.00 | true     | PlaySfxPositional                   | asm/us/st/rnz1/matchings/e_misc/PlaySfxPositional.s 
-| 1.00 | true     | func_us_801AB9D0                    | asm/us/st/rtop/matchings/e_misc/func_us_801AB9D0.s 
-| 1.00 | true     | func_80193644                       | asm/us/st/rwrp/matchings/e_misc/func_80193644.s 
-| 1.00 | true     | func_801B9DB0                       | asm/us/st/st0/matchings/e_misc/func_801B9DB0.s 
-| 1.00 | true     | func_us_801B6B0C                    | asm/us/st/top/matchings/e_misc/func_us_801B6B0C.s 
-| 1.00 | true     | func_801916C4                       | asm/us/st/wrp/matchings/e_misc/func_801916C4.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801C0EEC                    | asm/us/boss/bo0/matchings/e_collect/func_us_801C0EEC.s 
 | 1.00 | true     | func_us_801AC74C                    | asm/us/boss/bo1/matchings/e_collect/func_us_801AC74C.s 
 | 1.00 | true     | func_us_801AC480                    | asm/us/boss/bo2/matchings/e_collect/func_us_801AC480.s 
@@ -1045,6 +990,61 @@
 | 1.00 | true     | func_801B6314                       | asm/us/st/st0/matchings/e_collect/func_801B6314.s 
 | 1.00 | true     | func_us_801B2440                    | asm/us/st/top/matchings/e_collect/func_us_801B2440.s 
 | 1.00 | true     | func_8018CFF8                       | asm/us/st/wrp/matchings/e_collect/func_8018CFF8.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | PlaySfxPositional                   | asm/us/boss/bo0/matchings/e_misc/PlaySfxPositional.s 
+| 1.00 | true     | func_us_801BA030                    | asm/us/boss/bo0/matchings/e_olrox_drool/func_us_801BA030.s 
+| 1.00 | true     | func_us_801AC10C                    | asm/us/boss/bo1/matchings/e_misc/func_us_801AC10C.s 
+| 1.00 | true     | PlaySfxPositional                   | asm/us/boss/bo2/matchings/e_misc/PlaySfxPositional.s 
+| 1.00 | true     | PlaySfxPositional                   | asm/us/boss/bo3/matchings/e_misc/PlaySfxPositional.s 
+| 1.00 | true     | func_us_801BFE8C                    | asm/us/boss/bo4/matchings/e_misc/func_us_801BFE8C.s 
+| 1.00 | true     | PlaySfxPositional                   | asm/us/boss/bo5/matchings/e_misc/PlaySfxPositional.s 
+| 1.00 | true     | func_us_801B3024                    | asm/us/boss/bo6/matchings/e_misc/func_us_801B3024.s 
+| 1.00 | true     | PlaySfxPositional                   | asm/us/boss/bo7/matchings/e_misc/PlaySfxPositional.s 
+| 1.00 | true     | func_us_80196440                    | asm/us/boss/mar/matchings/e_misc/func_us_80196440.s 
+| 1.00 | true     | func_us_801A3534                    | asm/us/boss/rbo0/matchings/e_misc/func_us_801A3534.s 
+| 1.00 | true     | PlaySfxPositional                   | asm/us/boss/rbo1/matchings/e_misc/PlaySfxPositional.s 
+| 1.00 | true     | PlaySfxPositional                   | asm/us/boss/rbo2/matchings/e_misc/PlaySfxPositional.s 
+| 1.00 | true     | func_us_8019C668                    | asm/us/boss/rbo3/matchings/e_misc/func_us_8019C668.s 
+| 1.00 | true     | PlaySfxPositional                   | asm/us/boss/rbo4/matchings/e_misc/PlaySfxPositional.s 
+| 1.00 | true     | func_us_801BEDC0                    | asm/us/boss/rbo5/matchings/e_misc/func_us_801BEDC0.s 
+| 1.00 | true     | PlaySfxPositional                   | asm/us/boss/rbo6/matchings/e_misc/PlaySfxPositional.s 
+| 1.00 | true     | PlaySfxPositional                   | asm/us/boss/rbo7/matchings/e_misc/PlaySfxPositional.s 
+| 1.00 | true     | func_us_801A3268                    | asm/us/boss/rbo8/matchings/e_misc/func_us_801A3268.s 
+| 1.00 | true     | func_us_801C1BB0                    | asm/us/st/are/matchings/e_misc/func_us_801C1BB0.s 
+| 1.00 | true     | func_us_801C2210                    | asm/us/st/cat/matchings/e_misc/func_us_801C2210.s 
+| 1.00 | true     | func_8019A328                       | asm/us/st/cen/matchings/e_misc/func_8019A328.s 
+| 1.00 | true     | func_801A7350                       | asm/us/st/chi/matchings/en_misc/func_801A7350.s 
+| 1.00 | true     | func_us_801CF464                    | asm/us/st/dai/matchings/e_misc/func_us_801CF464.s 
+| 1.00 | true     | func_801A046C                       | asm/us/st/dre/matchings/e_misc/func_801A046C.s 
+| 1.00 | true     | func_us_801C5D88                    | asm/us/st/lib/matchings/e_misc/func_us_801C5D88.s 
+| 1.00 | true     | func_80197A9C                       | asm/us/st/mad/matchings/e_misc/func_80197A9C.s 
+| 1.00 | true     | func_us_801CC658                    | asm/us/st/no0/matchings/e_misc/func_us_801CC658.s 
+| 1.00 | true     | func_us_801CA21C                    | asm/us/st/no1/matchings/e_misc/func_us_801CA21C.s 
+| 1.00 | true     | func_us_801C1BF0                    | asm/us/st/no2/matchings/e_misc/func_us_801C1BF0.s 
+| 1.00 | true     | func_801CAD28                       | asm/us/st/no3/matchings/e_misc/func_801CAD28.s 
+| 1.00 | true     | func_us_801D3ACC                    | asm/us/st/no4/matchings/e_misc/func_us_801D3ACC.s 
+| 1.00 | true     | func_801C2598                       | asm/us/st/np3/matchings/e_misc/func_801C2598.s 
+| 1.00 | true     | func_801C29B0                       | asm/us/st/nz0/matchings/e_misc/func_801C29B0.s 
+| 1.00 | true     | func_us_801B5BE0                    | asm/us/st/nz1/matchings/e_misc/func_us_801B5BE0.s 
+| 1.00 | true     | func_us_801B001C                    | asm/us/st/rare/matchings/e_misc/func_us_801B001C.s 
+| 1.00 | true     | func_us_801BD42C                    | asm/us/st/rcat/matchings/e_misc/func_us_801BD42C.s 
+| 1.00 | true     | PlaySfxPositional                   | asm/us/st/rcen/matchings/e_misc/PlaySfxPositional.s 
+| 1.00 | true     | func_us_8019AA04                    | asm/us/st/rcen/matchings/e_shaft/func_us_8019AA04.s 
+| 1.00 | true     | PlaySfxPositional                   | asm/us/st/rchi/matchings/e_misc/PlaySfxPositional.s 
+| 1.00 | true     | PlaySfxPositional                   | asm/us/st/rdai/matchings/e_misc/PlaySfxPositional.s 
+| 1.00 | true     | PlaySfxPositional                   | asm/us/st/rlib/matchings/e_misc/PlaySfxPositional.s 
+| 1.00 | true     | func_us_801C0800                    | asm/us/st/rno0/matchings/e_misc/func_us_801C0800.s 
+| 1.00 | true     | PlaySfxPositional                   | asm/us/st/rno1/matchings/e_misc/PlaySfxPositional.s 
+| 1.00 | true     | PlaySfxPositional                   | asm/us/st/rno2/matchings/e_misc/PlaySfxPositional.s 
+| 1.00 | true     | func_us_801BD38C                    | asm/us/st/rno3/matchings/e_misc/func_us_801BD38C.s 
+| 1.00 | true     | PlaySfxPositional                   | asm/us/st/rno4/matchings/unk_44B0C/PlaySfxPositional.s 
+| 1.00 | true     | func_us_801B60E0                    | asm/us/st/rnz0/matchings/e_misc/func_us_801B60E0.s 
+| 1.00 | true     | PlaySfxPositional                   | asm/us/st/rnz1/matchings/e_misc/PlaySfxPositional.s 
+| 1.00 | true     | func_us_801AB9D0                    | asm/us/st/rtop/matchings/e_misc/func_us_801AB9D0.s 
+| 1.00 | true     | func_80193644                       | asm/us/st/rwrp/matchings/e_misc/func_80193644.s 
+| 1.00 | true     | func_801B9DB0                       | asm/us/st/st0/matchings/e_misc/func_801B9DB0.s 
+| 1.00 | true     | func_us_801B6B0C                    | asm/us/st/top/matchings/e_misc/func_us_801B6B0C.s 
+| 1.00 | true     | func_801916C4                       | asm/us/st/wrp/matchings/e_misc/func_801916C4.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801C0024                    | asm/us/boss/bo0/matchings/st_common/func_us_801C0024.s 
 | 1.00 | true     | func_us_801A94E8                    | asm/us/boss/bo1/matchings/st_common/func_us_801A94E8.s 
@@ -6447,17 +6447,17 @@
 | 1.00 | false    | DebugInputWait                      | asm/us/boss/bo6/nonmatchings/us_3E79C/DebugInputWait.s 
 | 1.00 | false    | RNO1_DebugInputWait                 | asm/us/st/rno1/nonmatchings/unk_26178/RNO1_DebugInputWait.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | func_800F6A48                       | asm/us/dra/matchings/menu/func_800F6A48.s 
+| 0.90 | true     | def_cbread                          | asm/us/main/matchings/psxsdk/libcd/event/def_cbread.s 
+| 0.90 | true     | def_cbready                         | asm/us/main/matchings/psxsdk/libcd/event/def_cbready.s 
+| 0.90 | true     | def_cbsync                          | asm/us/main/matchings/psxsdk/libcd/event/def_cbsync.s 
+| 0.90 | true     | SpuSetNoiseVoice                    | asm/us/main/matchings/psxsdk/libspu/s_snv/SpuSetNoiseVoice.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | CdReadCallback                      | asm/us/main/matchings/psxsdk/libcd/cdread/CdReadCallback.s 
 | 1.00 | true     | CdReadyCallback                     | asm/us/main/matchings/psxsdk/libcd/sys/CdReadyCallback.s 
 | 1.00 | true     | CdSetDebug                          | asm/us/main/matchings/psxsdk/libcd/sys/CdSetDebug.s 
 | 1.00 | true     | CdSyncCallback                      | asm/us/main/matchings/psxsdk/libcd/sys/CdSyncCallback.s 
 | 1.00 | true     | SetVideoMode                        | asm/us/main/matchings/psxsdk/libetc/vmode/SetVideoMode.s 
--------------------------------------------------------------------------------
-| 0.90 | true     | def_cbread                          | asm/us/main/matchings/psxsdk/libcd/event/def_cbread.s 
-| 0.90 | true     | def_cbready                         | asm/us/main/matchings/psxsdk/libcd/event/def_cbready.s 
-| 0.90 | true     | def_cbsync                          | asm/us/main/matchings/psxsdk/libcd/event/def_cbsync.s 
-| 1.00 | true     | GsGetVcount                         | asm/us/main/matchings/psxsdk/libgs/gs_008/GsGetVcount.s 
-| 1.00 | true     | GsClearVcount                       | asm/us/main/matchings/psxsdk/libgs/gs_009/GsClearVcount.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_80173C64                       | asm/us/servant/tt_000/matchings/bat/func_80173C64.s 
 | 1.00 | true     | func_us_8017293C                    | asm/us/servant/tt_001/matchings/ghost/func_us_8017293C.s 
@@ -7928,9 +7928,6 @@
 | 1.00 | true     | func_800F548C                       | asm/us/dra/matchings/menu/func_800F548C.s 
 | 0.94 | true     | func_801B1EF4                       | asm/us/st/sel/matchings/318CC/func_801B1EF4.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_800F6A48                       | asm/us/dra/matchings/menu/func_800F6A48.s 
-| 0.90 | true     | SpuSetNoiseVoice                    | asm/us/main/matchings/psxsdk/libspu/s_snv/SpuSetNoiseVoice.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | func_800F99B8                       | asm/us/dra/matchings/menu/func_800F99B8.s 
 | 0.95 | true     | func_801B2108                       | asm/us/st/sel/matchings/318CC/func_801B2108.s 
 -------------------------------------------------------------------------------
@@ -8032,6 +8029,9 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | get_ce                              | asm/us/main/matchings/psxsdk/libgpu/sys/get_ce.s 
 | 1.00 | true     | get_cs                              | asm/us/main/matchings/psxsdk/libgpu/sys/get_cs.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | GsGetVcount                         | asm/us/main/matchings/psxsdk/libgs/gs_008/GsGetVcount.s 
+| 1.00 | true     | GsClearVcount                       | asm/us/main/matchings/psxsdk/libgs/gs_009/GsClearVcount.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | _SsContModulation                   | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContModulation.s 
 | 1.00 | true     | _SsContPortaTime                    | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContPortaTime.s 
