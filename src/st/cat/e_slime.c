@@ -477,7 +477,7 @@ u8 func_us_801D3A50(Primitive* prim) {
     x = prim->x3;
     y = prim->y3;
     g_api.CheckCollision(x, y, &collider, 0);
-    if (collider.effects & (EFFECT_UNK_0002 | EFFECT_SOLID)) {
+    if (collider.effects & EFFECT_BLOCK) {
 #ifdef VERSION_PSP
         tileCollision.top = -collider.unk18 * 0x10;
         tileCollision.bottom = (collider.unk20 * 0x10) + 1;
@@ -536,7 +536,7 @@ void func_us_801D3C1C(Primitive* prim) {
     x = prim->x3;
     y = prim->y3;
     g_api.CheckCollision(x, y, &collider, 0);
-    if (collider.effects & (EFFECT_UNK_0002 | EFFECT_SOLID)) {
+    if (collider.effects & EFFECT_BLOCK) {
         switch (p2) {
         case 0:
             prim->y3 += collider.unk18;

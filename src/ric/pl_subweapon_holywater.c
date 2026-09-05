@@ -275,7 +275,7 @@ s32 func_8016840C(s16 y, s16 x) {
     } else {
         xShift = collider.unk1C;
     }
-    if (collider.effects & EFFECT_UNK_0002) {
+    if (collider.effects & EFFECT_SIDE) {
         g_CurrentEntity->posX.i.hi += xShift;
         g_CurrentEntity->posX.i.lo = 0;
         return 2;

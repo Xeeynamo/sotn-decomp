@@ -223,7 +223,7 @@ u8 UnkCollisionFunc4(u8 arg0) {
             posX = g_CurrentEntity->posX.i.hi;
             posY = g_CurrentEntity->posY.i.hi - 4;
             g_api.CheckCollision(posX, posY, &collider, 0);
-            if (collider.effects & EFFECT_UNK_0002) {
+            if (collider.effects & EFFECT_SIDE) {
                 bits_67 = 0x40;
                 if (g_CurrentEntity->velocityX > 0) {
                     bits_01 = 2;
@@ -259,7 +259,7 @@ u8 UnkCollisionFunc4(u8 arg0) {
             posX = g_CurrentEntity->posX.i.hi;
             posY = g_CurrentEntity->posY.i.hi + 4;
             g_api.CheckCollision(posX, posY, &collider, 0);
-            if (collider.effects & EFFECT_UNK_0002) {
+            if (collider.effects & EFFECT_SIDE) {
                 bits_67 = 0x40;
                 if (g_CurrentEntity->velocityX > 0) {
                     bits_01 = 2;
