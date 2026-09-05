@@ -157,17 +157,15 @@ bool func_80111DE8(bool mistReset) {
         collider1.effects = EFFECT_NONE;
     }
     filtered_effects =
-        collider1.effects & (EFFECT_UNK_8000 | EFFECT_UNK_4000 |
-                             EFFECT_UNK_0800 | EFFECT_BLOCK);
+        collider1.effects &
+        (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0800 | EFFECT_BLOCK);
     if (filtered_effects == EFFECT_UNK_8000 + EFFECT_UNK_4000 + EFFECT_SOLID ||
-        filtered_effects ==
-            EFFECT_UNK_8000 + EFFECT_UNK_4000 + EFFECT_SIDE + EFFECT_SOLID ||
+        filtered_effects == EFFECT_UNK_8000 + EFFECT_UNK_4000 + EFFECT_BLOCK ||
         filtered_effects == EFFECT_UNK_4000 + EFFECT_UNK_0800 + EFFECT_SOLID ||
-        filtered_effects ==
-            EFFECT_UNK_4000 + EFFECT_UNK_0800 + EFFECT_SIDE + EFFECT_SOLID ||
-        filtered_effects == EFFECT_UNK_8000 + EFFECT_SIDE + EFFECT_SOLID ||
-        filtered_effects == EFFECT_UNK_0800 + EFFECT_SIDE + EFFECT_SOLID ||
-        filtered_effects == EFFECT_SIDE + EFFECT_SOLID) {
+        filtered_effects == EFFECT_UNK_4000 + EFFECT_UNK_0800 + EFFECT_BLOCK ||
+        filtered_effects == EFFECT_UNK_8000 + EFFECT_BLOCK ||
+        filtered_effects == EFFECT_UNK_0800 + EFFECT_BLOCK ||
+        filtered_effects == EFFECT_BLOCK) {
         // This "plus 16, minus 8" is a random guess. The effect is just +8.
         // We can use any pair that comes out to 8, but the compiler comes
         // out wrong if we don't split it into two. So "+10-2" works equally
@@ -191,17 +189,15 @@ bool func_80111DE8(bool mistReset) {
         collider1.effects = EFFECT_NONE;
     }
     filtered_effects =
-        collider1.effects & (EFFECT_UNK_8000 | EFFECT_UNK_4000 |
-                             EFFECT_UNK_0800 | EFFECT_BLOCK);
+        collider1.effects &
+        (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0800 | EFFECT_BLOCK);
     if (filtered_effects == EFFECT_UNK_8000 + EFFECT_SOLID ||
-        filtered_effects == EFFECT_UNK_8000 + EFFECT_SIDE + EFFECT_SOLID ||
+        filtered_effects == EFFECT_UNK_8000 + EFFECT_BLOCK ||
         filtered_effects == EFFECT_UNK_0800 + EFFECT_SOLID ||
-        filtered_effects == EFFECT_UNK_0800 + EFFECT_SIDE + EFFECT_SOLID ||
-        filtered_effects ==
-            EFFECT_UNK_8000 + EFFECT_UNK_4000 + EFFECT_SIDE + EFFECT_SOLID ||
-        filtered_effects ==
-            EFFECT_UNK_4000 + EFFECT_UNK_0800 + EFFECT_SIDE + EFFECT_SOLID ||
-        filtered_effects == EFFECT_SIDE + EFFECT_SOLID) {
+        filtered_effects == EFFECT_UNK_0800 + EFFECT_BLOCK ||
+        filtered_effects == EFFECT_UNK_8000 + EFFECT_UNK_4000 + EFFECT_BLOCK ||
+        filtered_effects == EFFECT_UNK_4000 + EFFECT_UNK_0800 + EFFECT_BLOCK ||
+        filtered_effects == EFFECT_BLOCK) {
         // See above comment regarding values combining to 8.
         xPos = (PLAYER.posX.i.hi - 9) + collider1.unkC + 1;
         yPos = PLAYER.posY.i.hi + floorY - 1;
