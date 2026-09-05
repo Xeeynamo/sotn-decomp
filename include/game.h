@@ -2127,6 +2127,9 @@ extern GAME_IMPORT s32 g_GameClearFlag;
 extern GAME_IMPORT s32 D_8003C0EC[4];
 extern GAME_IMPORT s32 D_8003C100;
 extern GAME_IMPORT u16 g_ClutIds[]; // array of palette VRAM offsets
+#ifdef VERSION_PC
+extern GAME_IMPORT bool (*g_PcStageLayerRenderer)(void);
+#endif
 extern GAME_IMPORT s32 g_CutsceneHasControl;
 extern GAME_IMPORT FgLayer D_8003C708;
 extern GAME_IMPORT s16 D_8003C710;
