@@ -30,8 +30,7 @@ void HandleServantChr() {
         return;
     }
     char smolbuf[48];
-    snprintf(smolbuf, sizeof(smolbuf), "disks/us/SERVANT/FT_00%d.BIN",
-             g_Servant - 1);
+    snprintf(smolbuf, sizeof(smolbuf), "SERVANT/FT_00%d.BIN", g_Servant - 1);
     u8 temp[0x6000];
     FileReadToBuf(smolbuf, &temp, 0, 0x6000);
     LoadTPage(&temp, 0, 0, 0x2C0, 0x100, 0x100, 0x80);

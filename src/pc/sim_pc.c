@@ -459,30 +459,30 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
         // gof.bin, gob.bin, c_gof.bin, c_gob.bin are packed back-to-back
         // inside a single combined BIN/F_GO.BIN on disk
         case 8: // game over bitmap foreground
-            if (FileReadToBuf(
-                    "disks/us/BIN/F_GO.BIN", D_80280000, 0x00000, 0x8000) < 0) {
+            if (FileReadToBuf("BIN/F_GO.BIN", D_80280000, 0x00000, 0x8000) <
+                0) {
                 return -1;
             }
             LoadImage(&g_Vram.D_800ACDD0, D_80280000);
             return 0;
         case 9: // game over bitmap background
-            if (FileReadToBuf("disks/us/BIN/F_GO.BIN", D_80280000, 0x08000,
-                              0x10000) < 0) {
+            if (FileReadToBuf("BIN/F_GO.BIN", D_80280000, 0x08000, 0x10000) <
+                0) {
                 return -1;
             }
             LoadImage(&g_Vram.D_800ACDD8, D_80280000);
             return 0;
         case 10: // game over palette foreground
-            if (FileReadToBuf(
-                    "disks/us/BIN/F_GO.BIN", D_80280000, 0x18000, 0x2000) < 0) {
+            if (FileReadToBuf("BIN/F_GO.BIN", D_80280000, 0x18000, 0x2000) <
+                0) {
                 return -1;
             }
             LoadImage(&g_Vram.D_800ACDB8, D_80280000);
             StoreImage(&g_Vram.D_800ACDB8, g_Clut[2]);
             return 0;
         case 11: // game over palette background
-            if (FileReadToBuf(
-                    "disks/us/BIN/F_GO.BIN", D_80280000, 0x1A000, 0x2000) < 0) {
+            if (FileReadToBuf("BIN/F_GO.BIN", D_80280000, 0x1A000, 0x2000) <
+                0) {
                 return -1;
             }
             LoadImage(&g_Vram.D_800ACDA8, D_80280000);
@@ -532,7 +532,7 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
             sim.size = D_800A036C[actualFileId].size;
             sim.addr = D_800A036C[actualFileId].addr;
             sim.kind = SIM_VH;
-            snprintf(buf, sizeof(buf), "disks/us/%s", sim.path);
+            snprintf(buf, sizeof(buf), "%s", sim.path);
             if (FileReadToBuf(buf, sim.addr, 0, sim.size) < 0) {
                 return -1;
             }
@@ -607,7 +607,7 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
             sim.size = D_800A036C[actualFileId].size;
             sim.addr = D_800A036C[actualFileId].addr;
             sim.kind = SIM_VB;
-            snprintf(buf, sizeof(buf), "disks/us/%s", sim.path);
+            snprintf(buf, sizeof(buf), "%s", sim.path);
             if (FileReadToBuf(buf, sim.addr, 0, sim.size) < 0) {
                 return -1;
             }
@@ -677,8 +677,8 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
     case SimFileType_Monster:
         static const int MonsterChrLen = 0x5800;
         D_800A04EC = 0;
-        if (FileReadToBuf("disks/us/BIN/MONSTER.BIN", SIM_PTR,
-                          fileId * MonsterChrLen, MonsterChrLen) < 0) {
+        if (FileReadToBuf("BIN/MONSTER.BIN", SIM_PTR, fileId * MonsterChrLen,
+                          MonsterChrLen) < 0) {
             return -1;
         }
         LoadFileSimToMem(SIM_MONSTER);
@@ -689,7 +689,7 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
         return -1;
     }
 
-    snprintf(buf, sizeof(buf), "disks/us/%s", sim.path);
+    snprintf(buf, sizeof(buf), "%s", sim.path);
     DEBUGF("about to load %s", buf);
     if (!FileUseContent(LoadFilePc, buf, &sim)) {
         ERRORF("failed to load '%s'", buf);

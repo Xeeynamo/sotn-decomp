@@ -67,7 +67,7 @@ void HandleWeaponChr(unsigned handId, unsigned weaponId) {
     const int EntryLen = 0x3000 + PixLen;
     char path[32];
 
-    snprintf(path, sizeof(path), "disks/us/BIN/WEAPON%d.BIN", handId);
+    snprintf(path, sizeof(path), "BIN/WEAPON%d.BIN", handId);
     switch (handId) {
     case 0:
         FileReadToBuf(path, g_Pix[0], weaponId * EntryLen, PixLen);
