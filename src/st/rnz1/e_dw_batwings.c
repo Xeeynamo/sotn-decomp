@@ -424,7 +424,7 @@ static batWingStruct wing2;
 static batWingStruct wing1;
 #endif
 
-void func_us_801ABDE4(Entity* self) {
+void EntityDarkwingBatWings(Entity* self) {
     Entity* other;
     Primitive* prim;
     s32 primIndex;

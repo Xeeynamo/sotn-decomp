@@ -2,7 +2,7 @@
 #include "rnz1.h"
 
 #ifdef VERSION_PSP
-extern s32 E_ID(UNK_30);
+extern s32 E_ID(BAT_WINGS);
 extern s32 E_ID(DARKWING_WIND_DUST);
 extern s32 E_ID(FADING_FIREBALL);
 #endif
@@ -218,7 +218,7 @@ void EntityDarkwingBat(Entity* self) {
         self->zPriority = (g_unkGraphicsStruct.g_zEntityCenter + 4);
         self->hitboxState = 0;
         other = self + 1;
-        CreateEntityFromEntity(E_ID(UNK_30), self, other);
+        CreateEntityFromEntity(E_ID(BAT_WINGS), self, other);
         other->zPriority = ((self->zPriority) + 1);
         SetStep(DB_IDLE);
         break;
