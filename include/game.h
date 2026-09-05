@@ -1743,7 +1743,7 @@ typedef struct {
     /* 8003C8A0 */ int (*CalcDealDamageMaria)(s32 baseAttack);
     /* 8003C8A4 */ bool (*CalcPlayerDamageMaria)(DamageParam* damageParam);
     /* 8003C8A8 */ u16* (*func_psp_0913FA28)(u32 ch, u16 kind);
-    /* 8003C8AC */ u16 (*func_psp_0913F960)(char*, u8* ch);
+    /* 8003C8AC */ u16 (*func_psp_0913F960)(const char*, u8* ch);
     /* 8003C8B4 */ void* unused13C;
 } GameApi; /* size=0x140 */
 

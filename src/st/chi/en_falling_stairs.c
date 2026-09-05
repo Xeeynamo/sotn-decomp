@@ -84,7 +84,7 @@ void EntityFallingStairs(Entity* self) {
     const u32 TriggerBoxH = 0x40;
     const s32 RightSideHitHeight = 0x29F;
 
-    typedef enum Step {
+    enum Step {
         INIT = 0,
         WAIT_FOR_TRIGGER = 1,
         BREAK_AWAY = 2,
@@ -92,7 +92,7 @@ void EntityFallingStairs(Entity* self) {
         LAND = 4,
     };
 
-    typedef enum Falling_SubStep {
+    enum Falling_SubStep {
         ROTATE_CLOCKWISE = 0,
         ROTATE_COUNTER_CLOCKWISE = 1,
     };
@@ -388,7 +388,7 @@ void EntityFallingStep(Entity* self) {
     const u32 TriggerBoxW = 0x18;
     const u32 TriggerBoxH = 0x40;
 
-    typedef enum Step {
+    enum Step {
         INIT = 0,
         WAIT_FOR_TRIGGER = 1,
         BREAK_AWAY = 2,
