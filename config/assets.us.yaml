@@ -1646,7 +1646,13 @@ files:
     src_path: src/servant/tt_004
     splat_config_path: config/splat.us.tt_004.yaml
   - target: disks/us/SERVANT/TT_005.BIN
+    asset_path: assets/servant/tt_005
+    src_path: src/servant/tt_005
+    splat_config_path: config/splat.us.tt_005.yaml
   - target: disks/us/SERVANT/TT_006.BIN
+    asset_path: assets/servant/tt_006
+    src_path: src/servant/tt_006
+    splat_config_path: config/splat.us.tt_006.yaml
   - target: disks/us/BIN/WEAPON0.BIN
     asset_path: assets/weapon
     src_path: src/weapon
