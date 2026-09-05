@@ -379,7 +379,7 @@ static void func_us_801ABDC8(batWingStruct* arg0) {
     arg0->unk14 -= 0x400;
 }
 
-extern EInit D_us_80180BC4;
+extern EInit g_EInitDarkwingBat2;
 static SVECTOR vec1 = {56, 0, 0};
 static SVECTOR vec2 = {4, 0, 0};
 static SVECTOR vec3 = {56, 0, 128};
@@ -448,7 +448,7 @@ void EntityDarkwingBatWings(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180BC4);
+        InitializeEntity(g_EInitDarkwingBat2);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 10);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;

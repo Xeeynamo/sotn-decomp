@@ -723,7 +723,7 @@ void EntityDarkwingBat(Entity* self) {
     self->hitboxHeight = *ptr_s3++;
 }
 
-extern EInit D_us_80180BC4;
+extern EInit g_EInitDarkwingBat2;
 // When you first walk into the room, Darkwing Bat is hanging from a golden
 // perch at the top of the screen. It sticks out, compared to the large
 // structure in the center. When DB is idle before the fight, the perch is
@@ -731,7 +731,7 @@ extern EInit D_us_80180BC4;
 // that sits there to keep showing the perch.
 void EntityDarkwingBatPerch(Entity* self) {
     if (!self->step) {
-        InitializeEntity(D_us_80180BC4);
+        InitializeEntity(g_EInitDarkwingBat2);
         self->animCurFrame = 6;
     }
 }
