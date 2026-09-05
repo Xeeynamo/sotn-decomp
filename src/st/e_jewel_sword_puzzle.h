@@ -358,7 +358,7 @@ void EntityFallingRock2(Entity* self) {
     case 1:
         MoveEntity();
         self->velocityY += FIX(0.25);
-        self->rotate -= 0x20;
+        self->rotate -= ROT(2.8125);
         collX = self->posX.i.hi;
         collY = self->posY.i.hi;
         collY += rockYOffsets[animFrame];

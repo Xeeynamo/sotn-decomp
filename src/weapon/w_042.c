@@ -251,7 +251,7 @@ static void func_ptr_80170008(Entity* self) {
         self->step++;
         break;
     case 1:
-        self->rotate -= 0x60;
+        self->rotate -= ROT(8.4375);
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         self->velocityY += FIX(0.15625);

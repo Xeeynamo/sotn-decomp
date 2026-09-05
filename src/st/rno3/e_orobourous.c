@@ -95,7 +95,7 @@ void EntityOrobourous(Entity* self) {
             self->facingLeft = self->ext.orob.movingLeft;
         }
         if (self->rotate) {
-            self->rotate -= 0x10;
+            self->rotate -= ROT(1.40625);
         }
         xVar = self->posX.i.hi;
         yVar = self->posY.i.hi + 12;
@@ -125,7 +125,7 @@ void EntityOrobourous(Entity* self) {
                 self->poseTimer = 0;
                 self->pose = 0;
             } else {
-                self->rotate = 0x200;
+                self->rotate = ROT(45);
             }
             if (self->ext.orob.movingLeft) {
                 self->velocityX = FIX(1.5);
@@ -429,8 +429,8 @@ void EntityOrobRider(Entity* self) {
         }
         if (other->velocityY > 0) {
             self->animCurFrame = 13;
-            if (self->rotate > -0x240) {
-                self->rotate -= 0x18;
+            if (self->rotate > ROT(-50.625)) {
+                self->rotate -= ROT(2.109375);
             }
         } else {
             self->animCurFrame = 0;

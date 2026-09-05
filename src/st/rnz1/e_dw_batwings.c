@@ -113,7 +113,7 @@ static Primitive* func_us_801AB380(
     RotMatrixZ(rotVec.vz, &m);
     mainBat = g_CurrentEntity - 1;
     if (mainBat->facingLeft) {
-        RotMatrixY(0x800, &m);
+        RotMatrixY(ROT(180), &m);
     }
     xOffset = arg0->unk30;
     yOffset = arg0->unk32;

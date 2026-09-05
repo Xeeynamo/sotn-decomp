@@ -238,9 +238,9 @@ void EntityBreakableWallDebris(Entity* self) {
         // fallthrough
     case 1:
         MoveEntity();
-        self->rotate += 0x20;
+        self->rotate += ROT(2.8125);
         if (self->params) {
-            self->rotate += 0x20;
+            self->rotate += ROT(2.8125);
         }
         self->velocityY += FIX(0.125);
         posX = self->posX.i.hi;

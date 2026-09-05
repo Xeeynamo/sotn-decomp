@@ -205,7 +205,7 @@ void EntityFallingRock(Entity* self) {
     case 1:
         MoveEntity();
         self->velocityY += FIX(0.125);
-        self->rotate -= 0x20;
+        self->rotate -= ROT(2.8125);
         x = self->posX.i.hi;
         y = self->posY.i.hi + 8;
         g_api.CheckCollision(x, y, &collider, 0);

@@ -39,7 +39,7 @@ void EntityTombstone(Entity* self) {
         } else if (GetDistanceToPlayerX() < 0x40) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->ext.tombstone.timer = 0x18;
-            self->rotate = 0xFC0;
+            self->rotate = ROT(354.375);
             PlaySfxPositional(SFX_TOMBSTONE_MOVE);
             SetStep(3);
         }
@@ -57,10 +57,10 @@ void EntityTombstone(Entity* self) {
                 self->step_s++;
                 return;
             } else if (self->ext.tombstone.timer & 4) {
-                self->rotate += 0x20;
+                self->rotate += ROT(2.8125);
                 return;
             } else {
-                self->rotate -= 0x20;
+                self->rotate -= ROT(2.8125);
                 return;
             }
             return;

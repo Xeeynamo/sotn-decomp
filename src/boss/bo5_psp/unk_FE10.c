@@ -49,9 +49,9 @@ void func_us_801A3E78(Entity* self) {
         }
         self->velocityY -= FIX(0.0625);
         if (self->params) {
-            self->rotate -= 0x40;
+            self->rotate -= ROT(5.625);
         } else {
-            self->rotate += 0x40;
+            self->rotate += ROT(5.625);
         }
         self->scaleX -= 0xA;
         self->opacity -= 6;

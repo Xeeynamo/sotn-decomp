@@ -67,7 +67,7 @@ void EntityMinotaurAttackHitbox(Entity* self) {
             /* fall through */
         case 1:
             MoveEntity();
-            self->rotate += 0x100;
+            self->rotate += ROT(22.5);
             self->velocityY += FIX(0.0625);
             if (!(g_Timer & 0xF)) {
                 PlaySfxPositional(SFX_ARROW_SHOT_A);
@@ -96,7 +96,7 @@ void EntityMinotaurAttackHitbox(Entity* self) {
             /* fall through */
         case 1:
             MoveEntity();
-            self->rotate += 0x100;
+            self->rotate += ROT(22.5);
             self->velocityY += FIX(0.25);
             parent = self - 1;
             delta = parent->posY.i.hi - self->posY.i.hi;

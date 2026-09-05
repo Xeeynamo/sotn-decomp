@@ -353,7 +353,7 @@ void EntityDeath(Entity* self) {
         if (AnimateEntity(deathAnim14, self) == 0) {
             SetStep(2);
             self->drawFlags = ENTITY_ROTATE;
-            self->rotate = 0x1000;
+            self->rotate = ROT(360);
             self->posY.i.hi += 16;
             self->animCurFrame = 0x3A;
             self->ext.death.posX = self->posX.i.hi;
@@ -362,7 +362,7 @@ void EntityDeath(Entity* self) {
         break;
 
     case 2:
-        self->rotate -= 0x40;
+        self->rotate -= ROT(5.625);
         if (!self->rotate) {
             SetStep(3);
             self->drawFlags = ENTITY_DEFAULT;

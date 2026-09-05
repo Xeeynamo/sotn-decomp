@@ -1107,7 +1107,7 @@ void EntityDraculaGlass(Entity* entity) {
         }
     case 1:
         MoveEntity();
-        entity->rotate += 0x20;
+        entity->rotate += ROT(2.8125);
         entity->velocityY += FIX(0.125);
         if (entity->posY.i.hi > 204) {
             g_api.PlaySfx(SFX_DRA_GLASS_BREAK); // "What is a man?!"

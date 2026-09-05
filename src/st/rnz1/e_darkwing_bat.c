@@ -560,7 +560,7 @@ void EntityDarkwingBat(Entity* self) {
             self->ext.darkwing.unk86 = 1;
             self->drawFlags = ENTITY_ROTATE;
             // Strange value, potentially a mistake that should be 180 degrees
-            self->rotate = 0x180;
+            self->rotate = ROT(33.75);
             if (self->facingLeft) {
                 self->velocityX = FIX(-0.1875);
             } else {
@@ -626,7 +626,7 @@ void EntityDarkwingBat(Entity* self) {
             self->ext.darkwing.unk86 = 1;
             self->ext.darkwing.unk87 = 0;
             self->drawFlags = ENTITY_ROTATE;
-            self->rotate = 0x180;
+            self->rotate = ROT(33.75);
             if (self->facingLeft) {
                 self->velocityX = FIX(-0.1875);
             } else {
@@ -769,7 +769,7 @@ void EntityDarkwingWindDust(Entity* self) {
         self->velocityX += FIX(0.125);
     }
     self->velocityY = FIX(-1.5);
-    self->rotate -= 0x40;
+    self->rotate -= ROT(5.625);
     if (!(self->poseTimer & 1)) {
         self->animCurFrame += 1;
     }

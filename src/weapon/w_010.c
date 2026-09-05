@@ -163,7 +163,7 @@ static void EntityWeaponAttack(Entity* self) {
         self->posY.val += self->velocityY;
         self->posX.val += self->velocityX;
         self->velocityY += FIX(20.0 / 128);
-        self->rotate += 0x80;
+        self->rotate += ROT(11.25);
         if (--self->ext.timer.t < 0x10) {
             self->drawFlags |= ENTITY_BLINK;
         }
@@ -568,11 +568,11 @@ void func_ptr_80170024(Entity* self) {
         if (!((self->facingLeft ^ upperParams) & 1)) {
             self->ext.shield.unk9E = -0x100;
             self->ext.shield.unk9C = 0x800;
-            self->rotate = 0x200;
+            self->rotate = ROT(45);
         } else {
             self->ext.shield.unk9E = 0x100;
             self->ext.shield.unk9C = 0;
-            self->rotate = 0x600;
+            self->rotate = ROT(135);
         }
         self->ext.shield.equipId = self->ext.shield.parent->ext.shield.equipId;
         SetWeaponProperties(self, 0);

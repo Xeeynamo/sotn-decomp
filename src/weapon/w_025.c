@@ -140,7 +140,7 @@ static void EntityWeaponAttack(Entity* self) {
         self->posY.val += self->velocityY;
         self->posX.val += self->velocityX;
         self->velocityY += FIX(20.0 / 128);
-        self->rotate += 0x80;
+        self->rotate += ROT(11.25);
         if (--self->ext.timer.t < 0x10) {
             self->drawFlags |= ENTITY_BLINK;
         }
