@@ -229,7 +229,7 @@ void EntityFallingStairs(Entity* self) {
         switch (self->step_s) {
         case ROTATE_CLOCKWISE:
             MoveEntity();
-            self->rotate += 0x12;
+            self->rotate += ROT(1.58203125);
             self->velocityY += FIX(0.25);
             scrolledY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
             if (self->ext.fallingStairs.prim7C != NULL) {
@@ -468,7 +468,7 @@ void EntityFallingStep(Entity* self) {
 
     case FALLING:
         MoveEntity();
-        self->rotate -= 0x20;
+        self->rotate -= ROT(2.8125);
         self->velocityY += FIX(0.25);
         posX = self->posX.i.hi;
         posY = self->posY.i.hi + 9;

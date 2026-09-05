@@ -325,9 +325,9 @@ void EntityFerrymanController(Entity* self) {
                     tempEntity->params = 0;
                 }
                 self->ext.ferrymanBoat.splashTimer = 3;
-                self->rotate += 0x30;
+                self->rotate += ROT(4.21875);
                 self->step_s++;
-            } else if (self->rotate > -0x400) {
+            } else if (self->rotate > ROT(-90)) {
                 self->rotate -= 8;
             }
             break;
@@ -357,7 +357,7 @@ void EntityFerrymanController(Entity* self) {
                 self->velocityY -= FIX(0.625);
                 self->step_s++;
             }
-            self->rotate += 0x30;
+            self->rotate += ROT(4.21875);
             break;
         case 2:
             self->velocityY -= FIX(0.625);
@@ -692,7 +692,7 @@ void EntityBoatElevatorChains(Entity* self) {
                 prim = prim->next;
                 i++;
             }
-            self->rotate = 0x200;
+            self->rotate = ROT(45);
         } else {
             self->step = 0;
             return;
@@ -702,10 +702,10 @@ void EntityBoatElevatorChains(Entity* self) {
     if (self->ext.boatElevator_child.unk7C) {
         if (self->ext.boatElevator_child.unk7C < 0) {
             self->ext.boatElevator_child.unk7E++;
-            self->rotate += 0x10;
+            self->rotate += ROT(1.40625);
         } else {
             self->ext.boatElevator_child.unk7E--;
-            self->rotate -= 0x10;
+            self->rotate -= ROT(1.40625);
         }
     }
     self->ext.boatElevator_child.unk7E &= 0xF;

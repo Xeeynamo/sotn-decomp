@@ -54,7 +54,7 @@ void EntitySlograSpear(Entity* self) {
         case 1:
             MoveEntity();
             self->velocityY += FIX(0.15625);
-            self->rotate += 0x80;
+            self->rotate += ROT(11.25);
             if (!(self->rotate & 0xFFF)) {
                 PlaySfxPositional(SFX_ARROW_SHOT_A);
             }

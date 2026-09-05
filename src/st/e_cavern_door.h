@@ -25,7 +25,7 @@ void EntityCavernDoorLever(Entity* self) {
         InitializeEntity(CAVERN_DOOR_EINIT);
         self->animCurFrame = 18;
         self->drawFlags |= ENTITY_ROTATE;
-        self->rotate = -0x200;
+        self->rotate = ROT(-45);
         platform = self + 1;
         CreateEntityFromEntity(E_ID(CAVERN_DOOR_PLATFORM), self, platform);
         if (g_CastleFlags[NO4_TO_NP3_SHORTCUT]) {

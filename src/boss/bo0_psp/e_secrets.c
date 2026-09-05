@@ -437,7 +437,7 @@ void func_pspeu_092509C0(Entity* self) {
         InitializeEntity(g_EInitEnvironment);
         self->animCurFrame = 0;
         self->drawFlags |= ENTITY_ROTATE;
-        self->rotate = 0xC00;
+        self->rotate = ROT(270);
         if (g_CastleFlags[NO2_SECRET_CEILING_OPEN]) {
             for (i = 0; i < 8; i++) {
                 tileIdx = D_us_80180E14[i];

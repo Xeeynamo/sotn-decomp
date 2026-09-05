@@ -378,7 +378,7 @@ void EntityImp(Entity* self) {
             /* fallthrough */
         case 1:
             AnimateEntity(&anim_imp, self);
-            self->rotate += 0x40;
+            self->rotate += ROT(5.625);
             MoveEntity();
             self->velocityY += FIX(0.03125);
             if (!--self->ext.imp.timer) {

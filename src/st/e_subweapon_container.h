@@ -183,15 +183,15 @@ void EntitySubWpnContGlass(Entity* self) {
         self->velocityY += FIX(0.125);
         if (self->velocityX != 0) {
             if (self->facingLeft) {
-                self->rotate += 0x10;
+                self->rotate += ROT(1.40625);
             } else {
-                self->rotate -= 0x10;
+                self->rotate -= ROT(1.40625);
             }
         } else {
             if (self->facingLeft) {
-                self->rotate -= 0x10;
+                self->rotate -= ROT(1.40625);
             } else {
-                self->rotate += 0x10;
+                self->rotate += ROT(1.40625);
             }
         }
         break;
@@ -316,7 +316,7 @@ void EntitySubwpnInContainer(Entity* self) {
 #endif
         // Handles floating up and down within the liquid
         self->velocityY = rsin(self->rotate) * 2;
-        self->rotate += 0x20;
+        self->rotate += ROT(2.8125);
 
         parentContainer = self - 1;
         // Once the parent is broken (no longer idle) this entity becomes

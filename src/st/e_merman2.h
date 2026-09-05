@@ -242,7 +242,7 @@ void EntityMerman2(Entity* self) {
             if (self->velocityY > ~0xBFFF) {
                 prim->drawMode = DRAW_HIDE;
                 self->animCurFrame = 18;
-                self->rotate -= 0x80;
+                self->rotate -= ROT(11.25);
                 self->hitboxHeight = 8;
             } else {
                 // These should probably be written some other way
@@ -457,8 +457,8 @@ void EntityMerman2(Entity* self) {
                 self->velocityX = 0;
             }
             MoveEntity();
-            self->rotate += 0xC0;
-            if (self->rotate > 0x1000) {
+            self->rotate += ROT(16.875);
+            if (self->rotate > ROT(360)) {
                 self->posY.i.hi -= 10;
                 self->drawFlags &=
                     ENTITY_BLINK | ENTITY_MASK_B | ENTITY_MASK_G |

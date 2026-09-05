@@ -19,6 +19,7 @@ mod linter;
 mod player_status;
 mod primitive_type;
 mod relics;
+mod rot;
 mod sfx;
 mod vram_flag;
 
@@ -39,6 +40,7 @@ use player_status::PlayerStatusTransformer;
 use primitive_type::PrimitiveTypeTransformer;
 use rayon::prelude::*;
 use relics::RelicsTransformer;
+use rot::RotationTransformer;
 use sfx::SfxLineTransformer;
 use vram_flag::PlayerVramFlagTransformer;
 
@@ -102,6 +104,7 @@ const SKIPPED_DIRS: [&str; 2] = ["mednafen", "saturn"];
 fn process_directory(dir_path: &str) -> bool {
     let fixed_transformer = FixedTransformer;
     let relics_transformer = RelicsTransformer;
+    let rotation_transformer = RotationTransformer;
     let draw_mode_transformer = DrawModeTransformer::new();
     let blend_mode_transformer = BlendModeTransformer::new();
     let flags_transformer = FlagsTransformer::new();
@@ -114,6 +117,7 @@ fn process_directory(dir_path: &str) -> bool {
     let transformers: Vec<Box<dyn LineTransformer>> = vec![
         Box::new(fixed_transformer),
         Box::new(relics_transformer),
+        Box::new(rotation_transformer),
         Box::new(ColliderEffectsTransformer::new()),
         Box::new(draw_mode_transformer),
         Box::new(blend_mode_transformer),
@@ -134,6 +138,10 @@ fn process_directory(dir_path: &str) -> bool {
         Box::new(RegexLinter::new(
             "CreateEntity With Int",
             r"Create[^(]*Entity[^(]*\((?:(?:0x[0-9A-F]+)|(?:[0-9]+)),",
+        )),
+        Box::new(RegexLinter::new(
+            "ILLEGAL Entity Extension",
+            r"ext\.ILLEGAL",
         )),
     ];
 

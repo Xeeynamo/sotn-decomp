@@ -320,18 +320,18 @@ void EntityWeaponAttack(Entity* self) {
     sine = 0x80;
     lastBlockYShift = 0x68;
     if (doLastblock) {
-        prim->x0 = +(((rcos(0x600) >> 8) * self->scaleX) >> 8) + sine;
+        prim->x0 = +(((rcos(ROT(135)) >> 8) * self->scaleX) >> 8) + sine;
         prim->y0 =
-            -(((rsin(0x600) >> 8) * self->scaleX) >> 8) + lastBlockYShift;
-        prim->x1 = +(((rcos(0x200) >> 8) * self->scaleX) >> 8) + sine;
+            -(((rsin(ROT(135)) >> 8) * self->scaleX) >> 8) + lastBlockYShift;
+        prim->x1 = +(((rcos(ROT(45)) >> 8) * self->scaleX) >> 8) + sine;
         prim->y1 =
-            -(((rsin(0x200) >> 8) * self->scaleX) >> 8) + lastBlockYShift;
-        prim->x2 = +(((rcos(0xA00) >> 8) * self->scaleX) >> 8) + sine;
+            -(((rsin(ROT(45)) >> 8) * self->scaleX) >> 8) + lastBlockYShift;
+        prim->x2 = +(((rcos(ROT(225)) >> 8) * self->scaleX) >> 8) + sine;
         prim->y2 =
-            -(((rsin(0xA00) >> 8) * self->scaleX) >> 8) + lastBlockYShift;
-        prim->x3 = +(((rcos(0xE00) >> 8) * self->scaleX) >> 8) + sine;
+            -(((rsin(ROT(225)) >> 8) * self->scaleX) >> 8) + lastBlockYShift;
+        prim->x3 = +(((rcos(ROT(315)) >> 8) * self->scaleX) >> 8) + sine;
         prim->y3 =
-            -(((rsin(0xE00) >> 8) * self->scaleX) >> 8) + lastBlockYShift;
+            -(((rsin(ROT(315)) >> 8) * self->scaleX) >> 8) + lastBlockYShift;
         prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
             prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 =
                 self->scaleY;

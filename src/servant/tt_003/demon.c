@@ -443,11 +443,11 @@ void func_us_80173D14(Entity* self) {
         }
         self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
         if (self->facingLeft) {
-            s = rsin(0xE00);
-            c = rcos(0xE00);
+            s = rsin(ROT(315));
+            c = rcos(ROT(315));
         } else {
-            s = rsin(0xA00);
-            c = rcos(0xA00);
+            s = rsin(ROT(225));
+            c = rcos(ROT(225));
         }
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 3; i++) {

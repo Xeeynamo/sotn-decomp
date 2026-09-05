@@ -149,11 +149,11 @@ void RicEntityCrashHydroStorm(Entity* self) {
             // both rcos and rsin could be pre-calcualted values
             // PSP and PSX are logically equivalent
 #if defined(VERSION_PSP)
-            line->velocityX.val = (rcos(0xB80) * 16) * 12;
+            line->velocityX.val = (rcos(ROT(258.75)) * 16) * 12;
 #else
-            line->velocityX.val = -(rcos(0xB80) * -16) * 12;
+            line->velocityX.val = -(rcos(ROT(258.75)) * -16) * 12;
 #endif
-            line->velocityY.val = -(rsin(0xB80) * 16) * 12;
+            line->velocityY.val = -(rsin(ROT(258.75)) * 16) * 12;
             line->timer = 0;
             line->delay = (rand() & 0xF) + 12;
             if (rand() & 1) {
