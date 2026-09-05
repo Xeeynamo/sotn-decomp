@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "bo0.h"
 
-void func_us_801BA030(s16 sfxId) {
+static void func_us_801BA030(s16 sfxId) {
     s32 yOffset;
     s16 vol;
     s16 pan;
@@ -82,7 +82,7 @@ void EntityRealOlroxDrool(Entity* self) {
             prim->y1 += 2;
             if (!self->step_s) {
                 func_us_801BA030(SFX_AXE_KNIGHT_WEAPON_BREAK);
-                EntityExplosionVariantsSpawner(self, 1U, 2U, 0, 0, 3U, 0);
+                EntityExplosionVariantsSpawner(self, 1, 2, 0, 0, 3, 0);
                 self->step_s = 1;
             }
         } else {
@@ -100,7 +100,7 @@ void EntityRealOlroxDrool(Entity* self) {
                 self->posX.i.hi = entity->posX.i.hi;
                 self->posY.i.hi = entity->posY.i.hi;
                 params = self->params;
-                rotate = entity->rotate - 0x180;
+                rotate = entity->rotate - ROT(33.75);
                 if (entity->facingLeft) {
                     self->posX.i.hi += FLT_TO_I(params * rcos(rotate));
                 } else {
@@ -128,5 +128,115 @@ void EntityRealOlroxDrool(Entity* self) {
     }
 }
 
-// same as us/func_us_801BA4AC
-INCLUDE_ASM("boss/bo0_psp/nonmatchings/bo0_psp/3A030", func_pspeu_09258B10);
+Primitive* FindFirstUnkPrim(Primitive* prim);
+Primitive* FindFirstUnkPrim2(Primitive* prim, int);
+
+void func_us_801BA4AC(Entity* self) {
+    Primitive* prim;
+    s32 primIndex;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitInteractable);
+        self->animSet = 0;
+        primIndex = g_api.func_800EDB58(PRIM_GT4, 0x80);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.olroxDrool.prim = prim;
+        while (prim != NULL) {
+            prim->priority = 0xB0;
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+        }
+        // fallthrough
+
+    case 1:
+        prim = self->ext.olroxDrool.prim;
+        prim = FindFirstUnkPrim(prim);
+        if (prim != NULL) {
+            prim->type = PRIM_LINE_G2;
+            prim->r0 = 0x60;
+            prim->g0 = 0x60;
+            prim->b0 = 0x40;
+            prim->r1 = 0;
+            prim->g1 = 0;
+            prim->b1 = 0;
+            prim->x0 = prim->x1 = Random() & 0xFF;
+            prim->y0 = 0xF0;
+            prim->y1 = (Random() & 0x1F) + 0x120;
+            prim->y2 = (Random() & 0xF) + 0xC;
+            prim->p3 = 4;
+            prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
+        }
+        if (!(g_Timer & 3)) {
+            prim = self->ext.olroxDrool.prim;
+            prim = FindFirstUnkPrim2(prim, 2);
+            if (prim != NULL) {
+                UnkPolyFunc2(prim);
+                prim->next->x1 = Random() & 0xFF;
+                prim->next->y0 = 0x1D0 - g_Tilemap.scrollY.i.hi;
+            }
+        }
+    case 2:
+        prim = self->ext.olroxDrool.prim;
+        while (prim != NULL) {
+            if (prim->p3 == 4) {
+                prim->y0 -= prim->y2;
+                prim->y1 -= prim->y2;
+                if (prim->y1 < 0) {
+                    prim->drawMode = DRAW_HIDE;
+                    prim->p3 = 0;
+                }
+            }
+            if (prim->p3 & 8) {
+                func_us_801B8B64(prim);
+            }
+            prim = prim->next;
+        }
+        break;
+    }
+}
+
+void func_us_801BA724(Entity* self) UNUSED {
+    DRAWENV draw;
+    s16 primIndex;
+    Primitive* prim;
+    s16 tpage;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitInteractable);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.olroxDrool.prim = prim;
+        // fallthrough
+    case 1:
+        draw = g_CurrentBuffer->draw;
+        if (draw.ofs[0]) {
+            tpage = 0x104;
+        } else {
+            tpage = 0x100;
+        }
+
+        // n.b.! if this doesn't enter with `self->step == 0`
+        // `prim` will be uninitialized.
+        prim->tpage = tpage;
+        prim->u1 = prim->u3 = 0xFF;
+        prim->u0 = prim->u2 = 0;
+        prim->v0 = prim->v1 = 0;
+        prim->v2 = prim->v3 = 0xF0;
+
+        break;
+    }
+}

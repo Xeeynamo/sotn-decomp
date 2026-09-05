@@ -41,9 +41,9 @@ typedef enum EntityID {
     E_SPIKES,               // EntitySpikes
     E_SPIKES_PARTS,         // EntitySpikesParts
     E_SPIKES_DUST,          // EntitySpikesDust
-    E_UNK_24,               // func_us_801ABFE0/func_pspeu_0924FDC0
-    E_UNK_25,               // func_us_801AC894/func_pspeu_092509C0
-    E_UNK_26,               // func_us_801AC54C/func_pspeu_09250568
+    E_UNK_24,               // func_us_801ABFE0
+    E_UNK_25,               // func_us_801AC894
+    E_UNK_26,               // func_us_801AC54C
     E_UNK_27,               // func_pspeu_0923CB80
     E_BIG_RED_FIREBALL,     // EntityBigRedFireball
     E_PRISONER,             // EntityPrisoner
@@ -55,19 +55,19 @@ typedef enum EntityID {
     E_UNK_2F,           // func_us_801AF604/func_pspeu_0925C580
     E_UNK_30,           // func_us_801AF31C/func_pspeu_0925C178
     E_UNK_31,           // func_us_801AE858/func_pspeu_0925B1B0
-    E_UNK_32,           // func_us_801B0930/func_pspeu_09255288
+    E_UNK_32,           // func_us_801B0930
     E_UNK_33,           // func_us_801B365C/func_pspeu_092611E8
     E_UNK_34,           // func_us_801B5470/func_pspeu_09264380
     E_UNK_35,           // func_us_801B551C/func_pspeu_09264460
     E_UNK_36,           // func_us_801B619C/func_pspeu_092657B8
     E_UNK_37,           // func_us_801B6CA4/func_pspeu_092667C8
     E_UNK_38,           // func_us_801B76E4/func_pspeu_09267730
-    E_UNK_39,           // func_us_801B8D8C/func_pspeu_09256A10
-    E_UNK_3A,           // func_us_801B9BEC/func_pspeu_09257F58
+    E_LASER_ATTACK,     // EntityLaserAttack
+    E_FIREBALL_ATTACK,  // EntityFireballAttack
     E_UNK_3B,           // func_us_801B7BAC/func_pspeu_09267E48
     E_UNK_3C,           // func_us_801B7CC8/func_pspeu_09267FC0
     E_OLROX_DROOL,      // EntityRealOlroxDrool
-    E_UNK_3E,           // func_us_801BA4AC/func_pspeu_09258B10
+    E_UNK_3E,           // func_us_801BA4AC
     E_LIFE_UP_SPAWN,    // EntityLifeUpSpawn
     E_OWL_KNIGHT,       // EntityOwlKnight
     E_OWL,              // EntityOwl
@@ -76,7 +76,7 @@ typedef enum EntityID {
     E_BLOODY_ZOMBIE,    // EntityBloodyZombie
     E_BLOOD_DRIPS,      // EntityBloodDrips
     E_BLOOD_SPLATTER,   // EntityBloodSplatter
-    E_UNK_47,           // func_us_801B72E8
+    E_LASER_EXPLOSION,  // EntityLaserExplosion
     E_SPIKES_DAMAGE,    // EntitySpikesDamage
     E_BOSS_DOORS,       // EntityBossDoors
     E_UNK_4A,           // func_pspeu_09251648
@@ -105,4 +105,6 @@ extern s32 E_ID(SPIKES_DAMAGE);
 extern s32 E_ID(PRISONER);
 extern s32 E_ID(3D_BACKGROUND_HOUSE);
 extern s32 E_ID(BOSS_DOORS);
+extern s32 E_ID(LASER_EXPLOSION);
+extern s32 E_ID(UNK_33);
 #endif
