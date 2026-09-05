@@ -402,10 +402,11 @@ static s32 unused[] = {0x10000000, 0, 0x4000800, 0, 0x0800, 0x10000000, 0, 0, 0,
 
 static AnimateEntityFrame anim[] = {{6, 41}, {6, 42}, {5, 43}, {6, 42}, POSE_LOOP(0)};
 
-extern batWingStruct D_us_801BEE34;
-extern batWingStruct D_us_801BEE68;
-extern batWingStruct* D_us_801BEE9C[2];
-extern batWingStruct* D_us_801BEEA4;
+// BSS vars
+static batWingStruct D_us_801BEE34;
+static batWingStruct D_us_801BEE68;
+static batWingStruct* D_us_801BEE9C[2];
+static batWingStruct* D_us_801BEEA4;
 
 void func_us_801ABDE4(Entity* self) {
     Entity* other;
