@@ -547,7 +547,7 @@ void func_8010A234(s32 arg0) {
         }
 #if defined(VERSION_PSP)
         for (i = 0, ent = &g_Entities[0]; i < TOTAL_ENTITY_COUNT; i++, ent++) {
-            if (ent->palette == 0x110 && ent->unk5A == 100) {
+            if (ent->palette == PAL_UNK_110 && ent->unk5A == 100) {
                 ent->animSet = 0;
             }
         }

@@ -745,10 +745,10 @@ void EntityDarkwingWindDust(Entity* self) {
     if (!self->step) {
         InitializeEntity(g_EInitParticle);
         self->drawFlags = ENTITY_ROTATE | ENTITY_SCALEY | ENTITY_SCALEX;
-        self->palette = PAL_FLAG(0x170);
+        self->palette = PAL_FLAG(PAL_UNK_170);
         self->animSet = 5;
         self->animCurFrame = 1;
-        self->palette = PAL_FLAG(0x195);
+        self->palette = PAL_FLAG(PAL_UNK_195);
         self->blendMode = BLEND_TRANSP;
         self->zPriority += 8;
         yShift = (0x100 - self->scaleY) >> 4;

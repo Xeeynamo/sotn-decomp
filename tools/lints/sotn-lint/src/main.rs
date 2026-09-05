@@ -16,6 +16,8 @@ mod flags;
 mod item_drops;
 mod line_transformer;
 mod linter;
+mod palette_flag;
+mod palette_indices;
 mod player_status;
 mod primitive_type;
 mod relics;
@@ -35,6 +37,8 @@ use linter::EntityRangeLinter;
 use linter::Linter;
 use linter::LocalExternLinter;
 use linter::RegexLinter;
+use palette_flag::PaletteFlagTransformer;
+use palette_indices::PaletteIndicesTransformer;
 use player_status::PlayerStatusTransformer;
 use primitive_type::PrimitiveTypeTransformer;
 use rayon::prelude::*;
@@ -125,6 +129,9 @@ fn process_directory(dir_path: &str) -> bool {
         Box::new(vram_flag_transformer),
         Box::new(SfxLineTransformer::new()),
         Box::new(ItemDropsTransformer::new()),
+        // PAL_FLAG must wrap the value before PaletteIndices can name it
+        Box::new(PaletteFlagTransformer),
+        Box::new(PaletteIndicesTransformer::new()),
     ];
 
     let linters: Vec<Box<dyn Linter>> = vec![

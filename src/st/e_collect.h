@@ -393,7 +393,7 @@ void EntityPrizeDrop(Entity* self) {
         self->step = 5;
     }
 #if STAGE == STAGE_ST0
-    self->palette = 0x100;
+    self->palette = PAL_ALUCARD;
 #else
     self->palette = 0;
 #endif

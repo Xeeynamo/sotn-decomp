@@ -332,7 +332,7 @@ void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index) {
 #ifdef VERSION_PSP
         x = index & 0xF;
         y = index / 16;
-        if (palette < 0x100) {
+        if (palette < PAL_ALUCARD) {
             ptr = &g_PalEquipIcon[palette * 0x10];
         } else {
             ptr = &D_psp_091654C0[(palette - 0x100) * 0x10];

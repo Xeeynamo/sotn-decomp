@@ -305,7 +305,7 @@ static void EntityWeaponAttack(Entity* self) {
     switch (self->step) {
     case 0:
         self->animSet = 10;
-        self->palette = 0x110;
+        self->palette = PAL_UNK_110;
         self->unk5A = 100;
         if (g_HandId) {
             self->palette += 0x18;
@@ -368,7 +368,7 @@ s32 func_ptr_80170004(Entity* self) {
     switch (self->step) {
     case 0:
         self->animSet = 10;
-        self->palette = 0x110;
+        self->palette = PAL_UNK_110;
         self->unk5A = 100;
         if (g_HandId) {
             self->palette += 0x18;

@@ -33,7 +33,7 @@ void func_us_8019D330_from_rcen(Entity* self) {
         if (!(self->params & 0xF0)) {
             return;
         }
-        self->palette = 0x819F;
+        self->palette = PAL_FLAG(PAL_UNK_19F);
         self->blendMode = BLEND_TRANSP;
         self->facingLeft = 1;
         return;

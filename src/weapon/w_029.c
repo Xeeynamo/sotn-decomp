@@ -209,13 +209,13 @@ static void EntityWeaponShieldSpell(Entity* self) {
         SetSpriteBank1(g_Animset);
         if (g_HandId != 0) {
             self->animSet = ANIMSET_OVL(18);
-            self->ext.weapon.childPalette = 0x128;
+            self->ext.weapon.childPalette = PAL_UNK_128;
             self->unk5A = 0x66;
             self->ext.shield.unk7C = 0;
             self->ext.shield.unk7D = 0x80;
         } else {
             self->animSet = ANIMSET_OVL(16);
-            self->ext.weapon.childPalette = 0x110;
+            self->ext.weapon.childPalette = PAL_UNK_110;
             self->unk5A = 0x64;
             self->ext.shield.unk7C = 0x80;
             self->ext.shield.unk7D = 0;
@@ -380,10 +380,10 @@ static void func_ptr_80170024(Entity* self) {
             return;
         }
         if (g_HandId != 0) {
-            self->ext.weapon.childPalette = 0x128;
+            self->ext.weapon.childPalette = PAL_UNK_128;
             self->ext.shield.unk7D = 0x80;
         } else {
-            self->ext.weapon.childPalette = 0x110;
+            self->ext.weapon.childPalette = PAL_UNK_110;
             self->ext.shield.unk7D = 0;
         }
         self->flags |= FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;

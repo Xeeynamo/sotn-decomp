@@ -75,7 +75,7 @@ void func_us_80198A18_from_rbo4(Entity* self) {
         return;
 
     case 1:
-        self->palette = 0x804F;
+        self->palette = PAL_FLAG(0x4F);
         return;
     }
 }
@@ -161,7 +161,7 @@ void func_us_801BEE00_from_no1(Entity* self) {
         InitializeEntity(g_EInitParticle);
         self->animSet = 8;
         self->animCurFrame = 1;
-        self->palette = 0x8004;
+        self->palette = PAL_FLAG(0x4);
         return;
 
     case 1:
