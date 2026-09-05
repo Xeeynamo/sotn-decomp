@@ -199,7 +199,7 @@ void func_us_801B5FB8(Entity* self) {
         self->zPriority = 0xA8;
         self->hitboxState = 2;
 #ifndef BOSS_IS_BO0
-        self->hitPoints = 0x7FFF;
+        self->hitPoints = INT16_MAX;
 #else
         self->hitPoints = 16;
 #endif
