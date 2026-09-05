@@ -25,21 +25,11 @@ segments:
       - start: 0x40
         type: c
         file: game_0
-        end: 0x8D3
-      - start: 0x8D4
-        type: c
-        file: game_0
         end: 0x92B
       - start: 0x92C
         type: .data
         file: game/savemsg
       - start: 0xB30
-        type: c
-        file: game_1
-        function_ranges:
-          - [0x197C, 0x19F6]
-        end: 0x1A03
-      - start: 0x1A04
         type: c
         file: game_1
         end: 0x1A3B

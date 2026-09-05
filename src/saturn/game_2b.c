@@ -2,9 +2,11 @@
 #include "inc_asm.h"
 #include "sattypes.h"
 #include "game.h"
-#include "lib/scl.h"
+#include <saturn_sprite.h>
 #define _SPR2_
 #include "lib/spr/spr.h"
+
+void DestroyEntity(Entity* entity);
 
 void PlaySfx(s32 sfxId);
 
@@ -12,15 +14,120 @@ extern s32 DAT_00292000;
 
 s32* func_060784A8(void) { return &DAT_00292000; }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f60784B8, func_060784B8);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078550, func_06078550);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078604, func_06078604);
+u16 LocalLookupTblNoToVram(u16 tableNo);
 
-// _disp_num_string
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078684, func_06078684);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078700, func_06078700);
+static u16 LookupTblNoToVram(u16 arg0) {
+    if (arg0 & 0x4000) {
+        return LocalLookupTblNoToVram(arg0 & 0xFFF);
+    } else {
+        return SPR_2LookupTblNoToVram(arg0 & 0xFFF);
+    }
+}
 
-extern s32 DAT_06086390;
+extern SaturnSpriteImage g_StatusPortraitImages[17];
+extern s16 DAT_0605AEE8;
+
+void func_060784B8(SprSpCmd* command, s32 portraitIndex, s32 colorTableIndex) {
+    SaturnSpriteImage* image;
+
+    image = &g_StatusPortraitImages[portraitIndex];
+    command->control = 0x1000;
+    command->drawMode = 0x0488;
+    command->color = LookupTblNoToVram(colorTableIndex + 0x30);
+    command->charAddr = DAT_0605AEE8;
+    command->charAddr += image->characterOffsetUnits;
+    command->charSize =
+        ((image->storedWidth >> 2) << 8) | (image->storedHeight << 1);
+}
+
+extern SaturnSpriteResource** DAT_060645EC;
+extern SprSpCmd DAT_06086108;
+
+// original name: disp_char
+void func_06078550(s32 arg0, u8 ch, Point16* pos);
+
+void func_06078550_noInline(s32 arg0, u8 ch, Point16* pos) {
+    SprSpCmd* ptr = &DAT_06086108;
+    SaturnSpriteResource* iVar5 = DAT_060645EC[13];
+
+    ptr->control = 0x1000;
+    ptr->drawMode = 0x488;
+    ptr->charSize = 0x108;
+    ptr->color = SPR_2LookupTblNoToVram(0x30);
+    ptr->charAddr = DAT_0605aec0[iVar5->allocationIndex][0] + ch * 4;
+    *((s32*)&ptr->ax) = (pos->x << 0x10) | (pos->y & 0xFFFF);
+    if (SpMstCmdPos < 0x278) {
+        SPR_2Cmd(arg0, ptr);
+        d_0605AEAC += 0x20;
+    }
+}
+
+// original name: disp_string
+void func_06078604(s32 arg0, u8* str, Point16* pos) {
+    Point16 point;
+    s32 x, y;
+    s32 drawX, drawY;
+    s32 count;
+    u8 ch;
+
+    count = 0;
+    x = pos->x;
+    y = pos->y;
+
+    while (count < 0x20) {
+        drawX = x;
+        drawY = y;
+        ch = *str++;
+
+        if (ch == 0xFF) {
+            ch = *str++;
+            if (ch == 0) {
+                break;
+            }
+            if (ch != 0xFF) {
+                drawX -= 8;
+                drawY -= 8;
+                x -= 8;
+            }
+        }
+
+        if (ch != 0) {
+            point.x = drawX;
+            point.y = drawY;
+            func_06078550(arg0, ch, &point);
+            count++;
+        }
+
+        x += 8;
+    }
+}
+
+// original name: disp_num_string
+void func_06078684(s32 arg0, s32 num, Point16* pos) {
+    s32 count = 0;
+    Point16 point = *pos;
+
+    while (count < 10) {
+        u8 ch = num % 10;
+        point.x -= 7;
+        func_06078550(arg0, ch + 0x10, &point);
+        num /= 10;
+        if (num == 0) {
+            break;
+        }
+        count++;
+    }
+}
+
+void func_06078700(u8* arg0, s8* arg1, s32 arg2) {
+    s16 sp[4];
+
+    sp[0] = arg2 * 0xC;
+    sp[1] = 0x10;
+    sp[2] = 0;
+    sp[3] = 0;
+    func_0601960C(arg1, arg0, sp, sp + 2, 0);
+}
 
 // func_06078748
 char* GetMenuItemName(s32 id) {
@@ -51,12 +158,46 @@ char* GetMenuItemName(s32 id) {
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60787C8, func_060787C8);
 
-// _SubDispSpecial
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078920, func_06078920);
+// original name: SubDispSpecial
+void func_06078920(s32 arg0, Point16* arg1) {
+    u16* ptr;
+    DAT_06086108.control = 0x1000;
+    DAT_06086108.drawMode = 0x488;
+    DAT_06086108.charAddr = DAT_0605aec0[1][0];
+    ptr = DAT_0605aec0[1];
+    DAT_06086108.charSize = 0x910;
+    DAT_06086108.color = SPR_2LookupTblNoToVram(0x31);
+    DAT_06086108.charAddr = ptr[2] + 0x480;
+    *((s32*)&DAT_06086108.ax) = (arg1->x << 0x10) | (arg1->y & 0xFFFF);
+    if (SpMstCmdPos <= 0x277) {
+        SPR_2Cmd(arg0, &DAT_06086108);
+        d_0605AEAC += 0x20;
+    }
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60789C4, func_060789C4);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078B48, func_06078B48);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078E28, func_06078E28);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078F58, func_06078F58);
+
+void func_06078F58(s32 arg0, s32 arg1, Point16* arg2) {
+    s32 charBase;
+    u16* ptr;
+
+    DAT_06086108.control = 0x1000;
+    DAT_06086108.drawMode = 0x0488;
+    DAT_06086108.charAddr = DAT_0605aec0[1][0];
+    DAT_06086108.charSize = 0x0610;
+    DAT_06086108.color = SPR_2LookupTblNoToVram(0x31);
+    ptr = DAT_0605aec0[1];
+    charBase = ptr[2];
+    DAT_06086108.charAddr = (arg1 + 0x0B) * 0x30 + ptr[2];
+    *((s32*)&DAT_06086108.ax) = (arg2->x << 16) | (u16)arg2->y;
+
+    if (SpMstCmdPos <= 0x277) {
+        SPR_2Cmd(arg0, &DAT_06086108);
+        d_0605AEAC += 0x20;
+    }
+}
 
 // _SubDispSortKind
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079008, func_06079008);
@@ -68,11 +209,64 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f60792B8, func_060792B8);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079424, func_06079424);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079580, func_06079580);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079670, func_06079670);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607973C, func_0607973C);
+
+void func_0607973C(s32 arg0, Point16* pos) {
+    SprSpCmd* cmd;
+    s16 top;
+    s16 left;
+    s16 right;
+    s16 bottom;
+    s32 shade;
+
+    shade = g_Timer;
+    left = pos->x;
+    top = pos->y;
+    cmd = &DAT_06086108;
+
+    if (shade & 0x10) {
+        shade = (shade & 0x0F) * 2 + 0x60;
+    } else {
+        shade = -(shade & 0x0F) + 0x7F;
+    }
+    shade /= 8;
+
+    right = left + 0x6F;
+    bottom = top + 0xC;
+
+    cmd->control = 0x1004;
+    cmd->drawMode = 0x4C0;
+    cmd->color = RGB16_COLOR(shade, shade, 0);
+
+    *((s32*)&cmd->ax) = (left << 0x10) | ((u16)top);
+    *((s32*)&cmd->bx) = (right << 0x10) | ((u16)top);
+    *((s32*)&cmd->cx) = (right << 0x10) | ((u16)bottom);
+    *((s32*)&cmd->dx) = (left << 0x10) | ((u16)bottom);
+
+    if (SpMstCmdPos <= 0x277) {
+        SPR_2Cmd(arg0, cmd);
+        d_0605AEAC += 0x20;
+    }
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60797FC, func_060797FC);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079958, func_06079958);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079A2C, func_06079A2C);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079AF0, func_06079AF0);
+
+s32 func_06079AF0(void) {
+    if ((g_Player.status & PLAYER_STATUS_DEAD) || (DAT_0605d7f0 != 0) ||
+        !(g_pads[0].previous & PAD_START)) {
+        return 0;
+    }
+    if (DAT_0605C668 != 0 && DAT_0605ceb0 != 0) {
+        if (g_PlayableCharacter == 0) {
+            return 1;
+        }
+        if (StatusPause(0) != 0) {
+            return 2;
+        }
+    }
+    return 0;
+}
 
 // original name: normal_move
 void NormalMove(Entity* entity) {
@@ -625,7 +819,23 @@ u8 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
 }
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607A88C, func_0607A88C);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607A994, func_0607A994);
+
+void func_0600B0B8(SpritePart* part, void* arg1, s32 arg2);
+
+void func_0607A994(Entity* self) {
+    s16** frames;
+    s16* frame;
+    SpriteObject* sprite;
+
+    frames = self->ext.spriteAnimEnemy.frames;
+
+    frame = frames[self->ext.spriteAnimEnemy.unk83];
+    sprite = self->unk0;
+
+    sprite->flags = sprite->flags & ~0x3F08 | frame[0] & 0x3F08;
+    sprite->slotAndStreamId = sprite->slotAndStreamId & ~0x7F | frame[1] & 0x7F;
+    func_0600B0B8(sprite->parts, &frame[2], (sprite->flags & 0x3F00) >> 8);
+}
 
 // SAT func_0607A9F8
 // Original name: _hkyori_search
@@ -650,8 +860,24 @@ s32 GetDistanceToPlayerY(Entity* self) {
     return yDistance;
 }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AA40, func_0607AA40);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AA74, func_0607AA74);
+void func_0607AA40(Entity* self, s16 stepS, s8 arg2, s8 arg3) {
+    self->step = stepS;
+    self->ext.spriteAnimEnemy.unk80 = arg2;
+    self->ext.spriteAnimEnemy.unk81 = arg3;
+    self->ext.spriteAnimEnemy.unk82 = 0;
+    self->poseTimer = 0;
+    self->pose = 0;
+    self->step_s = 0;
+}
+
+void func_0607AA74(Entity* self, s16 stepS, s8 arg2, s8 arg3) {
+    self->step_s = stepS;
+    self->ext.spriteAnimEnemy.unk80 = arg2;
+    self->ext.spriteAnimEnemy.unk81 = arg3;
+    self->ext.spriteAnimEnemy.unk82 = 0;
+    self->poseTimer = 0;
+    self->pose = 0;
+}
 
 // func_0607AAA4
 void FaceEntityAwayFromPlayer(Entity* entity) {
@@ -776,9 +1002,74 @@ bool HantenDir1(Entity* entity) {
 // func_0607AC2C
 u8 GetPlayerFacing(void) { return PLAYER.facingLeft; }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AC40, func_0607AC40);
+extern SprGourTbl* SpGourTbl;
+extern s16 g_olroxDroolInitData[];
+extern s16 g_olroxDroolCollOffsets[];
 
-void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity);
+void SyncSpriteObjectPosUnchecked(Entity* entity, s16* offset);
+
+static void unkFunc(Entity* entity, s16* offset) {
+    SyncSpriteObjectPosUnchecked(entity, offset);
+}
+
+// func_0607AC40
+void EntityOlroxDrool(Entity* self) {
+    s32 primIndex;
+    s32 idx;
+    SprGourTbl* temp;
+    Primitive* prim;
+    s16 x, y;
+
+    switch (self->step) {
+    case 0:
+        unkFunc(self, g_olroxDroolInitData);
+        TekiInit(self, 2);
+        primIndex = AllocPrimitives(0x8005, 1);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->primIndex = primIndex;
+        self->flags |= FLAG_HAS_PRIMS;
+        self->hitboxState = 0;
+        prim = &g_PrimBuf[primIndex];
+        self->unkB4 = prim;
+        prim->x0 = prim->x1 = self->posX.i.hi;
+        prim->y0 = prim->y1 = self->posY.i.hi;
+        idx = prim->unk1C;
+        temp = &SpGourTbl[idx];
+        temp->entry[0] = RGB16_COLOR(8, 8, 31);
+        temp->entry[1] = RGB16_COLOR(0, 0, 2);
+        prim->unk6 = 0xC210;
+        prim->priority = 0x80;
+        prim->drawMode = 0x37;
+        self->step = 1;
+        break;
+
+    case 1:
+        prim = self->unkB4;
+        if (CheckColliderOffsets(self, g_olroxDroolCollOffsets, 0)) {
+            prim->y1 += 2;
+            if (self->step_s == 0) {
+                self->step_s = 1;
+            }
+        } else {
+            self->velocityY += 0x1800;
+            self->posY.val += self->velocityY;
+            if (prim->y0 - prim->y1 > 8) {
+                prim->y1 = prim->y0 - 8;
+            }
+        }
+        prim->x0 = self->posX.i.hi;
+        prim->x1 = self->posX.i.hi;
+        prim->y0 = self->posY.i.hi;
+        if (prim->y0 < prim->y1) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+}
 
 // func_0607AE48
 void DestroyEntityWithExplosion(Entity* self, u16 params) {
@@ -793,7 +1084,7 @@ void DestroyEntityWithExplosion(Entity* self, u16 params) {
         CreateEntityFromEntity(E_EXPLOSION, self, entity);
         entity->params = params;
         self->animCurFrame = 0;
-        self->unk1C = 0;
+        self->drawFlags = ENTITY_DEFAULT;
         self->step = 0;
         self->step_s = 0;
     }
@@ -812,8 +1103,6 @@ Entity* FindFirstFreeEntity(s16 start, s16 end) {
     }
     return NULL;
 }
-
-extern s16 g_SineTable[];
 
 s32 GetSineScaled(u8 arg0, s16 arg1) {
     s32 sine = g_SineTable[arg0];
@@ -966,8 +1255,6 @@ void TekiInit(Entity* entity, u16 enemyId) {
     entity->step_s = 0;
 }
 
-extern u32 g_randomNext;
-
 // SAT: func_0607B2F4
 s32 Random(void) {
     g_randomNext = (g_randomNext * 0x01010101) + 1;
@@ -991,7 +1278,6 @@ void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity) {
 }
 
 void FreePrimitives(s32);
-void DestroySpriteObject(SpriteObject*);
 
 // func_0607B3D0
 void ChangeCurrentEntityType(u16 entityId) {
@@ -1050,7 +1336,7 @@ void ReplaceBreakableWithItemDrop(Entity* self) {
 }
 
 // func_0607B604
-void SyncSpriteObjectPosUnchecked(Entity* entity) {
+void SyncSpriteObjectPosUnchecked(Entity* entity, s16* offset) {
     SpriteObject* temp = entity->unk0;
 
     temp->posX = entity->posX.val;
@@ -1140,9 +1426,6 @@ void PlaySfxPositional(s32 sfxId) {
         PlaySfxVolPan(sfxId, sfxVol, sfxPan);
     }
 }
-
-extern u16 DAT_0605cdb8;
-extern u8 DAT_0608FFF8[];
 
 void CheckCollision(s32 x, s32 y, Collider* res, u16 unk) {
     Collider col0;
@@ -1488,14 +1771,6 @@ void CheckCollision(s32 x, s32 y, Collider* res, u16 unk) {
     res->unkC = res->unkC * 5 / 4;
 }
 
-extern s32 DAT_06086128;
-extern s32 DAT_0608612c;
-extern s32 DAT_06086130;
-extern s32 DAT_06086134;
-
-void ResetLayerColorCalc();
-void func_0600C818();
-
 // func_0607BE38
 void InitScreenWaveEffect(void) {
     func_0600C818();
@@ -1508,10 +1783,6 @@ void InitScreenWaveEffect(void) {
     DAT_06086134 = 0x1F;
     SCL_SET_S0CCRT(DAT_06086134);
 }
-
-extern s32 d_0605AEAC;
-extern u16 DAT_0605aec0[][2];
-extern s32 SpMstCmdPos;
 
 // func_0607BED0
 void DrawScreenWaveEffect(void) {

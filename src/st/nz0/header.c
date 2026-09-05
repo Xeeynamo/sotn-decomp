@@ -11,7 +11,7 @@ extern RoomDef rooms_layers[];
 extern GfxBank* gfxBanks[];
 void UpdateStageEntities(void);
 
-AbbreviatedOverlay OVL_EXPORT(Overlay) = {
+AbbreviatedOverlay g_Overlay = {
     .Update = Update,
     .HitDetection = HitDetection,
     .UpdateRoomPosition = UpdateRoomPosition,
@@ -38,7 +38,7 @@ extern u_long** gfxBanks[];
 extern RoomDef rooms_layers[];
 extern RoomHeader rooms[];
 
-AbbreviatedOverlay OVL_EXPORT(Overlay) = {
+AbbreviatedOverlay g_Overlay = {
     .Update = Update,
     .HitDetection = HitDetection,
     .UpdateRoomPosition = UpdateRoomPosition,
@@ -52,8 +52,8 @@ AbbreviatedOverlay OVL_EXPORT(Overlay) = {
     .UpdateStageEntities = UpdateStageEntities,
 };
 
-#include "gen/sprite_banks.h"
-#include "gen/palette_def.h"
-#include "gen/layers.h"
-#include "gen/graphics_banks.h"
+#include <gen/sprite_banks.h>
+#include <gen/palette_def.h>
+#include <gen/layers.h>
+#include <gen/graphics_banks.h>
 #endif

@@ -51,19 +51,19 @@ static AnimateEntityFrame unused_anim[] = {1, 12, POSE_END};
 
 // Pans the camera until Alucard's screen X coordinate matches the target value
 static void CutsceneCameraPan(s16 target) {
-    s16 delta = target - g_unkGraphicsStruct.unkC;
+    s16 delta = target - g_unkGraphicsStruct.unk14;
 
     if (delta > 1) { // pan left
         // Appears to be Alucard's X coordinates in screen space
-        g_unkGraphicsStruct.unkC++;
+        g_unkGraphicsStruct.unk14++;
     } else if (delta < -1) { // pan right
-        g_unkGraphicsStruct.unkC--;
+        g_unkGraphicsStruct.unk14--;
     } else {
-        g_unkGraphicsStruct.unkC = target;
+        g_unkGraphicsStruct.unk14 = target;
     }
 }
 
-void OVL_EXPORT(EntityCutsceneStage)(Entity* self) {
+void EntityCutsceneStage(Entity* self) {
     Tilemap* gTilemapPtr;
     Entity* player;
     s16 posScrollX;
@@ -132,7 +132,7 @@ void OVL_EXPORT(EntityCutsceneStage)(Entity* self) {
     case CUTSCENE_PAN_RIGHT:
         // Pans camera right to recenter on Alucard
         CutsceneCameraPan(128);
-        if ((g_unkGraphicsStruct.unkC == 128) &&
+        if ((g_unkGraphicsStruct.unk14 == 128) &&
             (g_CutsceneFlags & DAI_CUTSCENE_CUTSCENE_CONCLUDED)) {
             g_PauseAllowed = true;
             if (g_unkGraphicsStruct.pauseEnemies) {
@@ -145,7 +145,7 @@ void OVL_EXPORT(EntityCutsceneStage)(Entity* self) {
     }
 }
 
-void OVL_EXPORT(EntityCutsceneMaria)(Entity* self) {
+void EntityCutsceneMaria(Entity* self) {
     Tilemap* gTilemapPtr;
     Entity* player;
     s16 posScrollX, posScrollY;

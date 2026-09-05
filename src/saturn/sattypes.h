@@ -30,6 +30,7 @@ typedef enum {
     PAD_R1 = 0x0080,
     PAD_CROSS = 0x0100,
     PAD_SQUARE = 0x0400,
+    PAD_START = 0x0800,
     PAD_UP = 0x1000,
     PAD_DOWN = 0x2000,
     PAD_LEFT = 0x4000,
@@ -40,25 +41,40 @@ typedef enum {
 #define STAGE_INVERTEDCASTLE_FLAG 0x20
 #define STAGE_ST0 0x1F
 #define STAGE_TOP 0x0B
+#define STAGE_RTOP (STAGE_TOP | STAGE_INVERTEDCASTLE_FLAG)
 #define TOTAL_ENTITY_COUNT 256
 #define STAGE_ENTITY_START 64
 #define FACTORY(id, param) ((id) + (param << 16))
 
 #define SET_STOP_MUSIC 0xF000000A
 #define SET_UNK_0B 0xF000000B
+#define SET_PAUSE_SFX_SCRIPTS 0xF000000E
 #define SET_UNPAUSE_SFX_SCRIPTS 0xF000000F
 #define SET_UNK_10 0xF0000010
 #define SET_XA_PLAYBACK 0xF0000011
 #define SET_UNK_80 0xF0000080
+#define SET_RELEASE_RATE_LOW_20_21 0xF00000A3
 #define SET_KEY_ON_20_21 0xF00000A4
+#define SET_RELEASE_RATE_LOW_22_23 0xF00000A7
 #define SET_KEY_ON_22_23 0xF00000A8
+#define SFX_METAL_CLANG_E 0x611
+#define SFX_WEAPON_STAB_A 0x62D
+#define SFX_WEAPON_STAB_B 0x62E
 #define SFX_WEAPON_APPEAR 0x62F
+#define SFX_UI_CONFIRM 0x633
+#define SFX_START_SLAM_B 0x63D
+#define SFX_SAVE_HEARTBEAT 0x64D
 #define SFX_BAT_SCREECH 0x64E
+#define SFX_WEAPON_HIT_A 0x678
 #define SFX_HEART_PICKUP 0x67A
 #define SFX_UI_MOVE 0x67B
+#define SFX_UI_SUBWEAPON_TINK 0x6A4
 #define SFX_UI_ALERT_TINK 0x6AD
+#define SFX_SAVE_COFFIN_SWISH 0x6E0
 #define SFX_UNUSED_712 0x712
+#define SFX_VALHALLA_KNIGHT_NEIGH 0x718
 #define SFX_TOAD_CROAK 0x71A
+#define SFX_MARIONETTE_YELL 0x726
 
 #define PLAYER g_Entities[PLAYER_CHARACTER]
 
@@ -121,6 +137,12 @@ typedef struct Collider {
     /* 0x1C */ s32 unk1C; // Right edge of queried tile collision
     /* 0x20 */ s32 unk20; // Bottom edge of queried tile collision
 } Collider;               /* size=0x24 */
+
+typedef struct {
+    /* 0x00 */ u16* flags;
+    /* 0x04 */ u8 pad04[0x14];
+    /* 0x18 */ u16 enabled;
+} StatusFlagContext;
 
 struct Entity;
 
@@ -207,6 +229,26 @@ typedef enum {
     FLAG_DESTROY_IF_OUT_OF_CAMERA = 0x80000000,
 } EntityFlag;
 
+typedef struct Primitive {
+    s16 type;
+    s16 priority;
+    u16 unk4;
+    s16 unk6;
+    s16 unk8;
+    s16 unkA;
+    s16 x0;
+    s16 y0;
+    s16 x1;
+    s16 y1;
+    s16 x2;
+    s16 y2;
+    s16 x3;
+    s16 y3;
+    u16 unk1C;
+    u16 drawMode;
+    struct Primitive* next;
+} Primitive;
+
 typedef struct {
     u8 disableFlag;
     u8 resetFlag;
@@ -224,10 +266,10 @@ typedef struct {
 typedef struct {
     /* 0x7C */ u8 pad0[0x4];
     /* 0x80 */ u8* anim;
-    /* 0x84 */ s16 unk84;
+    /* 0x84 */ s16 angle;
     /* 0x86 */ u8 pad86[2];
-    /* 0x88 */ u8 unk88;
-    /* 0x89 */ u8 unk89;
+    /* 0x88 */ u8 puffStyle;
+    /* 0x89 */ u8 speed;
 } ET_ExplosionPuffOpaque;
 
 typedef struct {
@@ -282,21 +324,375 @@ typedef struct {
     /* 0xAA */ s16 cameraY;
     /* 0xAC */ s16 lastPlayerPosX;
     /* 0xAE */ s16 lastPlayerPosY;
+    /* 0xB0 */ struct SpriteParts* unkB0;
 } ET_Bat;
 
+typedef struct {
+    s32 : 32;
+    s32 : 32;
+    s32 fallSpeed;
+    s16 gravity;
+    s16 : 16;
+    s32 : 32;
+    s32 : 32;
+    s32 castleFlag;
+} ET_EquipItemDrop;
+
+typedef union {
+    u8 u8[0x3C];
+    s8 s8[0x3C];
+    u16 u16[0x1E];
+    s16 s16[0x1E];
+    u32 u32[0xF];
+    s32 s32[0xF];
+} ET_Placeholder;
+
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    s32 unkC;
+    Primitive* unk10;
+    Primitive* unk14;
+    Primitive* unk18;
+    s16 unk1C;
+    s16 unk1E;
+    s32 unk20;
+    s32 unk24;
+    s32 unk28;
+    s32 unk2C;
+    s32 unk30;
+    s32 unk34;
+    s32 unk38;
+} ET_SaveRoom;
+
+typedef struct {
+    /* 0x78 */ s32 : 32;
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s16 unk84;
+    /* 0x86 */ s16 : 16;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ u8 unk98;
+} ET_BloodyZombie;
+
+typedef struct {
+    /* 0x78 */ u8 timer;
+    /* 0x79 */ u8 : 8;
+    /* 0x7A */ u16 : 16;
+    /* 0x7C */ struct Entity* parent;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ u16 parentId;
+} ET_ExplosionEmitter;
+
+typedef struct {
+    /* 0x78 */ s32 : 32;
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s16 : 16;
+    /* 0x86 */ u16 unk86;
+} ET_SubweaponCard;
+
+typedef struct {
+    /* 0x78 */ s32 timer;
+} ET_SpawnerTimer;
+
+typedef struct {
+    /* 0x78 */ s32 : 32;
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ Primitive* prim;
+} ET_PrimHolder;
+
+typedef struct {
+    /* 0x78 */ s32 : 32;
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ u8 : 8;
+    /* 0x91 */ u8 unk91;
+} ET_060ECD4C;
+
+typedef struct {
+    /* 0x78 */ struct Entity* parent;
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ u16 savedHitboxState;
+} ET_060EEE20;
+
+typedef struct {
+    /* 0x78 */ u8 : 8;
+    /* 0x79 */ u8 unk79;
+} ET_060E7888;
+
+typedef struct {
+    /* 0x78 */ s32 : 32;
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s32 unk88;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ u16 unk94;
+    /* 0x96 */ u16 : 16;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ u8 unk9C;
+    /* 0x9D */ u8 : 8;
+    /* 0x9E */ u16 : 16;
+    /* 0xA0 */ u16 : 16;
+    /* 0xA2 */ u8 unkA2;
+} ET_060EBB2C;
+
+typedef struct {
+    /* 0x78 */ s32 gravity;
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ u8 r;
+    /* 0x81 */ u8 g;
+    /* 0x82 */ u8 b;
+    /* 0x83 */ u8 : 8;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s16 unk88;
+} ET_GlowParticle;
+
+typedef struct {
+    /* 0x78 */ void* frames;
+    /* 0x7C */ u8* animations;
+    /* 0x80 */ u8 unk80;
+    /* 0x81 */ u8 unk81;
+    /* 0x82 */ u8 unk82;
+    /* 0x83 */ u8 unk83;
+    /* 0x84 */ u8 : 8;
+    /* 0x85 */ u8 : 8;
+    /* 0x86 */ u8 : 8;
+    /* 0x87 */ u8 : 8;
+    /* 0x88 */ u8 unk88;
+} ET_SpriteAnimEnemy;
+
+typedef struct {
+    /* 0x78 */ s32 : 32;
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s32 : 32;
+    /* 0xA0 */ s32 : 32;
+    /* 0xA4 */ s32 : 32;
+    /* 0xA8 */ s32 : 32;
+    /* 0xAC */ s32 : 32;
+    /* 0xB0 */ u16 itemFlagIndex;
+} ET_PrizeDrop;
+
+typedef struct {
+    /* 0x78 */ s16 variant;
+    /* 0x7A */ u8 : 8;
+    /* 0x7B */ u8 : 8;
+    /* 0x7C */ u8 padding[0x34];
+    /* 0xB0 */ u16 clutBase;
+} ET_Gargoyle;
+
+typedef struct {
+    /* 0x78 */ s32 : 32;
+    /* 0x7C */ s16 unk80;
+    /* 0x7E */ s16 : 16;
+    /* 0x80 */ u8 unk84;
+    /* 0x81 */ u8 unk85;
+    /* 0x82 */ u16 : 16;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ u8 index;
+} ET_DestructAnimation;
+
+typedef struct {
+    /* 0x78 */ u8 digits[4];
+    /* 0x7C */ s16 number;
+    /* 0x7E */ s16 type;
+    /* 0x80 */ s16 nDigits;
+    /* 0x82 */ u16 unk86;
+    /* 0x84 */ u16 unk88;
+    /* 0x86 */ u16 unk8A;
+    /* 0x88 */ s16 unk8C;
+    /* 0x8A */ s16 unk8E;
+    /* 0x8C */ s16 unk90;
+    /* 0x8E */ s16 unk92;
+    /* 0x90 */ s16 angleToMeter;
+    /* 0x92 */ s16 distToMeter;
+    /* 0x94 */ s16 unk98;
+} ET_HPNumberMove;
+
+typedef struct {
+    /* 0x78 */ u8 padding[0x32];
+    /* 0xAA */ s16 equipId;
+} ET_Weapon;
+
+typedef struct {
+    /* 0x78 */ u8 padding[0x38];
+    /* 0xB0 */ void* frames;
+} ET_SpriteEntity;
+
+typedef struct {
+    /* 0x78 */ s16 timer;
+} ET_EffectTimer;
+
+typedef struct {
+    /* 0x78 */ s32 : 32;
+    /* 0x7C */ s16 timer;
+} ET_060BD150;
+
+typedef struct {
+    /* 0x78 */ s32 gravity;
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ u16 : 16;
+    /* 0x82 */ u8 unk82;
+} ET_060DDFB0;
+
+typedef struct {
+    /* 0x78 */ s32 : 32;
+    /* 0x7C */ u8* path;
+    /* 0x80 */ u32 spanX;
+    /* 0x84 */ u32 spanY;
+} ET_060DE40C;
+
+typedef struct {
+    /* 0x78 */ u8 pad78[0xC];
+    /* 0x84 */ s16 nextSlot;
+    /* 0x86 */ s16 running;
+    /* 0x88 */ s16 delay;
+} ET_060E9D38;
+
+typedef struct {
+    /* 0x78 */ u8 pad78[0xC];
+    /* 0x84 */ s16 spawnCount;
+    /* 0x86 */ u8 pad86[0x16];
+    /* 0x9C */ s16 timer;
+} ET_060E7ED0;
+
+typedef struct {
+    /* 0x78 */ u8 pad78[0x2A];
+    /* 0xA2 */ s16 angleIndex;
+} ET_060EB7EC;
+
+typedef struct {
+    /* 0x78 */ s32 : 32;
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 swayVelocity;
+    /* 0x84 */ s16 swayStep;
+} ET_060DCE50;
+
+typedef struct {
+    /* 0x78 */ s32 : 32;
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ u16 : 16;
+    /* 0x86 */ u16 timer;
+} ET_060DCF5C;
+
+typedef struct {
+    /* 0x78 */ u8 pad78[0x38];
+    /* 0xB0 */ s16 savedParams;
+} ET_060DE8B4;
+
+typedef struct {
+    /* 0x78 */ u8 pad78[8];
+    /* 0x80 */ s16 angle;
+    /* 0x82 */ u16 : 16;
+    /* 0x84 */ u8 flags;
+    /* 0x85 */ u8 delay;
+} ET_060DEC48;
+
+typedef struct {
+    /* 0x78 */ u8 timer;
+    /* 0x79 */ u8 : 8;
+    /* 0x7A */ u16 : 16;
+    /* 0x7C */ struct Entity* target;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ u16 targetEntityId;
+} ET_060E0364;
+
+typedef struct {
+    /* 0x78 */ u8 timer;
+    /* 0x79 */ u8 : 8;
+    /* 0x7A */ u16 : 16;
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ u8 stepIndex;
+} ET_060E401C;
+
+typedef struct {
+    /* 0x78 */ s32 : 32;
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ u8 facingLatch;
+} ET_060E411C;
+
 typedef union { // offset=0x78
-    u8 base[0x38];
+    ET_Placeholder ILLEGAL;
     ET_AfterImage afterImage; // g_Entities[1], not entityID 1
     ET_Factory factory;
     ET_ExplosionPuffOpaque opaquePuff;
     ET_Subweapon subweapon;
+    ET_EquipItemDrop equipItemDrop;
     ET_BatFamBlueTrail batFamBlueTrail;
     ET_Bat bat;
+    ET_BloodyZombie bloodyZombie;
+    ET_ExplosionEmitter explosionEmitter;
+    ET_SubweaponCard subweaponCard;
+    ET_SpriteAnimEnemy spriteAnimEnemy;
+    ET_GlowParticle glowParticle;
+    ET_SpawnerTimer spawnerTimer;
+    ET_PrimHolder primHolder;
+    ET_060ECD4C et_060ECD4C;
+    ET_060EEE20 et_060EEE20;
+    ET_060E7888 et_060E7888;
+    ET_060EBB2C et_060EBB2C;
+    ET_PrizeDrop prizeDrop;
+    ET_Gargoyle gargoyle;
+    ET_DestructAnimation destructAnim;
+    ET_HPNumberMove hpNumMove;
+    ET_Weapon weapon;
+    ET_SpriteEntity spriteEntity;
+    ET_EffectTimer effectTimer;
+    ET_SaveRoom save;
     struct {
         u8 pad[0x28];
         u16 unkA0;
     } whip;
+    ET_060BD150 et_060BD150;
+    ET_060DCE50 et_060DCE50;
+    ET_060DCF5C et_060DCF5C;
+    ET_060DDFB0 et_060DDFB0;
+    ET_060DE40C et_060DE40C;
+    ET_060DE8B4 et_060DE8B4;
+    ET_060DEC48 et_060DEC48;
+    ET_060E7ED0 et_060E7ED0;
+    ET_060E9D38 et_060E9D38;
+    ET_060EB7EC et_060EB7EC;
+    ET_060E0364 et_060E0364;
+    ET_060E401C et_060E401C;
+    ET_060E411C et_060E411C;
 } Ext;
+
+// Flags for entity->drawFlags
+typedef enum {
+    ENTITY_DEFAULT = 0x00, // use plain rendering, fastest drawing method
+    ENTITY_SCALEX = 0x01,  // use entity->scaleX
+    ENTITY_SCALEY = 0x02,  // use entity->scaleY
+    ENTITY_ROTATE = 0x04,  // use entity->rotate
+    ENTITY_OPACITY = 0x08, // use entity->opacity, enable texture shading
+    ENTITY_MASK_R = 0x10,  // set red to 128, must set ENTITY_OPACITY
+    ENTITY_MASK_G = 0x20,  // set green to 128, must set ENTITY_OPACITY
+    ENTITY_MASK_B = 0x40,  // set blue to 128, must set ENTITY_OPACITY
+    ENTITY_BLINK = 0x80,   // disable rendering on even/odd g_Timer
+} EntityDrawFlags;
 
 typedef struct Entity {
     /* 0x00 */ struct SpriteObject* unk0;
@@ -304,17 +700,17 @@ typedef struct Entity {
     /* 0x08 */ SotnFixed32 posY;
     /* 0x0c */ s32 velocityX;
     /* 0x10 */ s32 velocityY;
-    /* 0x14 */ u16 hitboxOffX;
+    /* 0x14 */ s16 hitboxOffX;
     /* 0x16 */ s16 hitboxOffY;
     /* 0x18 */ u16 facingLeft;
     /* 0x1A */ u16 palette;
-    /* 0x1B */ u8 : 8;
     /* 0x1C */ u8 unk1C;
-    /* 0x1E */ s16 rotate;
-    /* 0x20 */ s16 : 16;
-    /* 0x22 */ s16 : 16;
-    /* 0x24 */ s16 : 16;
-    /* 0x26 */ s16 : 16;
+    /* 0x1D */ u8 drawFlags; // refer to enum EntityDrawFlags
+    /* 0x1E */ s16 rotate;   // 0x1000: 360 degrees, enabled with ENTITY_ROTATE
+    /* 0x20 */ s16 scaleX;   // 0x100: 1.0, enabled with ENTITY_SCALEX
+    /* 0x22 */ s16 scaleY;   // 0x100: 1.0, enabled with ENTITY_SCALEY
+    /* 0x24 */ s16 unk24;
+    /* 0x26 */ s16 unk26;
     /* 0x28 */ PfnEntityUpdate pfnUpdate;
     /* 0x2c */ u16 step;
     /* 0x2e */ u16 step_s;
@@ -326,7 +722,7 @@ typedef struct Entity {
     /* 0x3C */ s16 hitPoints;
     /* 0x3E */ s16 attack;
     /* 0x40 */ s16 attackElement;
-    /* 0x42 */ s16 pad_42;
+    /* 0x42 */ u16 hitParams;
     /* 0x44 */ u8 hitboxWidth;
     /* 0x45 */ u8 hitboxHeight;
     /* 0x46 */ u8 hitFlags; // 1 = took hit
@@ -338,18 +734,19 @@ typedef struct Entity {
     /* 0x52 */ s16 animCurFrame;
     /* 0x54 */ s16 stunFrames;
     /* 0x56 */ s16 unk56;
-    /* 0x58 */ char pad_58[0x8];
+    /* 0x58 */ struct Entity* parent;
+    /* 0x5C */ struct Entity* nextPart;
     /* 0x60 */ s16 primIndex;
     /* 0x62 */ u16 zPriority;
     /* 0x64 */ u16 unk68;
     /* 0x66 */ u16 hitEffect;
-    /* 0x68 */ char pad_68[1];
-    /* 0x69 */ char unk6D[11];
+    /* 0x68 */ u8 opacity;
+    /* 0x69 */ u8 unk6D[11];
     /* 0x74 */ u16 entityId;
     /* 0x76 */ char pad_76[0x2];
     /* 0x78 */ Ext ext;
-    /* 0xB0 */ struct SpriteParts* pad_B0;
-    /* 0xB4 */ struct UnkStruct_060e8350* unkB4;
+    // entity that last hit this one
+    /* 0xB4 */ struct Entity* unkB4;
 } Entity; // size = 0xB8
 
 typedef struct SpritePart {
@@ -397,6 +794,7 @@ typedef struct {
 } GameApi;
 
 void (*func_06064580)();
+void (*func_0606458C)();
 void (*func_06064590)();
 void (*func_06064594)();
 void (*func_060645A0)();
@@ -405,9 +803,12 @@ void (*func_060645B0)();
 void (*func_060645B4)();
 void (*func_060645BC)();
 void (*func_060645C0)();
+void (*func_8010E168)(s32, s32);
 void (*func_060645E0)();
+void (*func_060645E8)();
 void (*func_060645FC)();
 void (*func_06064600)();
+void (*func_06064604)();
 void (*func_06064608)();
 void (*func_06064614)();
 void (*func_06064618)();
@@ -419,6 +820,9 @@ void (*func_06064638)();
 void (*func_0606463c)();
 void (*func_06064644)();
 void (*func_0606464C)();
+void (*func_06064658)(s32);
+void (*func_06064660)();
+void (*func_06064664)();
 void (*func_06064674)();
 void (*func_06064684)();
 void (*func_06064688)();
@@ -483,17 +887,17 @@ typedef struct {
     /* 0x00 */ s16 attack;
     /* 0x02 */ s16 heartCost;
     /* 0x04 */ u16 attackElement;
-    /* 0x06 */ u8 unk6;
-    /* 0x07 */ u8 sp17;
-    /* 0x08 */ u16 sp18;
-    /* 0x0A */ u8 unkA;
-    /* 0x0B */ u8 unkB;
-    /* 0x0C */ u16 sp1C;
-    /* 0x0E */ u16 sp1E;
-    /* 0x10 */ u8 sp20;
+    /* 0x06 */ u8 chainLimit; // how many instances of subwpn can coexist
+    /* 0x07 */ u8 nFramesInvincibility;
+    /* 0x08 */ u16 stunFrames;
+    /* 0x0A */ u8 anim;
+    /* 0x0B */ u8 blueprintNum; // Blueprint for entity factory spawning subwpn
+    /* 0x0C */ u16 hitboxState;
+    /* 0x0E */ u16 hitEffect;
+    /* 0x10 */ u8 crashId; // the ID for the crash version of this subweapon
     /* 0x11 */ u8 unk11;
-    /* 0x12 */ u16 sp22; // entity->entityRoomIndex
-} SubweaponDef;          /* size=0x14 */
+    /* 0x12 */ u16 entityRoomIndex;
+} SubweaponDef; /* size=0x14 */
 
 typedef struct {
     /* 0x00 */ const char* name;
@@ -547,11 +951,11 @@ typedef struct {
     /* 0x04 */ const char* combo;
     /* 0x08 */ const char* description;
     /* 0x0C */ s8 mpUsage;
-    /* 0x0D */ s8 unk0D;
-    /* 0x0E */ s16 unk0E;
-    /* 0x10 */ s16 unk10;
-    /* 0x12 */ s16 unk12;
-    /* 0x14 */ s16 unk14;
+    /* 0x0D */ s8 nFramesInvincibility;
+    /* 0x0E */ s16 stunFrames;
+    /* 0x10 */ s16 hitboxState;
+    /* 0x12 */ s16 hitEffect;
+    /* 0x14 */ s16 entityRoomIndex;
     /* 0x16 */ u16 attackElement;
     /* 0x18 */ s16 attack;
     /* 0x1A */ u16 unk1A;
@@ -568,8 +972,8 @@ typedef struct {
     /* 0x10 */ u16 strengths;
     /* 0x12 */ u16 immunes;
     /* 0x14 */ u16 absorbs;
-    /* 0x16 */ s16 level;
-    /* 0x18 */ s16 exp;
+    /* 0x16 */ u16 level;
+    /* 0x18 */ u16 exp;
     /* 0x1A */ s16 rareItemId;
     /* 0x1C */ s16 uncommonItemId;
     /* 0x1E */ u16 rareItemDropRate;
@@ -612,7 +1016,21 @@ typedef struct {
     char pad0[0x320];
     u16 unk320;
     u16 unk322;
-    char pad324[0x8C];
+    char pad324[4];
+    /* 0x328 */ s32 anim; // index into the character's animation table
+    char pad32C[0x30];
+    /* 0x35C */ u16 poseTimer;
+    /* 0x35E */ u16 pose;
+    /* 0x360 */ AnimationFrame* animFrames;
+    char pad364[0x30];
+    /* 0x394 */ u8 unk394;
+    /* 0x395 */ u8 unk395;
+    /* 0x396 */ u16 unk396;
+    char pad398[4];
+    /* 0x39C */ u8 unk39C;
+    /* 0x39D */ u8 unk39D;
+    /* 0x39E */ s8 unk39E;
+    char pad39F[0x11];
     /* 0x3B0 */ u32 padPressed;
     /* 0x3B4 */ u32 padTapped;
     /* 0x3B8 */ s32 : 32;
@@ -620,12 +1038,14 @@ typedef struct {
     /* 0x3C0 */ s32 : 32;
     /* 0x3C4 */ s32 demo_timer;
     /* 0x3C8 */ s16 timers[16]; // the array is bigger than PSX
-    char pad3E8[4];
+    u16 unk3E8;
+    char pad3EA[2];
     /* 0x3EC */ s32 vram_flag;
     char pad2[8];
     /* 0x3F8 */ u32 status;
     /* 0x3FC */ u32 unk3FC;
-    char pad400[0x2E];
+    char pad400[0x2C];
+    u16 unk42C;
     /* 0x42E */ u16 high_jump_timer;
     /* 0x430 */ u16 unk44;
     /* 0x432 */ u16 unk46;
@@ -635,7 +1055,13 @@ typedef struct {
     /* 0x43A */ u16 unk4E;
     /* 0x43C */ u16 prev_step;
     /* 0x43E */ u16 prev_step_s;
-    char pad43C[0x1C];
+    char pad440[0x2];
+    /* 0x442 */ u16 healKind;   // 0 = none, 1 = potion, 2 = high potion
+    /* 0x444 */ u16 healAmount; // hit points restored by func_060B0638
+    char pad446[0xC];
+    /* 0x452 */ s16 unk452;
+    u16 unk454;
+    char pad456[6];
     /* 0x45C */ u16 unk70;
     /* 0x45E */ u16 unk72;
     /* 0x460 */ u32 unk74;
@@ -645,23 +1071,26 @@ typedef struct {
     /* 0x46A */ u16 unk7E;
 } PlayerState;
 
+#define SH2_GET_SR(dst) __asm__ volatile("stc\tsr, %0" : "=r"(dst))
+#define SH2_SET_SR(src) __asm__ volatile("ldc\t%0, sr" : : "r"(src))
+
 typedef struct {
-    s32 : 32;
+    s32 primIndex;
     s32 D_800973FC;
+    s32 pauseEnemies;
     s32 : 32;
     s32 : 32;
-    s32 : 32;
-    s32 : 32;
-    s32 : 32;
-    s32 : 32;
-    s32 : 32;
-    s32 : 32;
+    s32 unk14;
+    s32 BottomCornerTextTimer;
+    s32 BottomCornerTextPrims;
+    s32 unk20;
+    s32 unk24;
     s32 unk28;
-    s32 : 32;
+    s32 unk2C;
     u32 D_80097428[8];
-    s32 : 32;
-    s32 : 32;
-    s32 : 32;
+    s32 D_80097448;
+    s32 D_8009744C;
+    s32 D_80097450;
     s32 : 32;
     s32 : 32;
     s32 : 32;
@@ -725,37 +1154,17 @@ typedef struct {
 typedef struct {
     s32 displayHP;
     s32 primIndex1;
-    s32 : 32;
-    s32 : 32;
-    u32 : 32;
-    s32 : 32;
-    u32 : 32;
-    u32 : 32;
-    u32 : 32;
+    s32 primIndex2;
+    s32 unk0C;
+    u32 unk10;
+    s32 unk14;
+    u32 unk18;
+    u32 unk1C;
+    u32 unk20;
     u32 unk24;
-    s32 : 32;
+    s32 unk28;
     s32 g_HealingMailTimer;
 } PlayerHud;
-
-typedef struct {
-    s16 type;
-    s16 priority;
-    u16 unk4;
-    s16 unk6;
-    s16 unk8;
-    s16 unkA;
-    s16 x0;
-    s16 y0;
-    s16 x1;
-    s16 y1;
-    s16 x2;
-    s16 y2;
-    s16 x3;
-    s16 y3;
-    s16 : 16;
-    u16 drawMode;
-    struct Primitive* next;
-} Primitive;
 
 typedef struct {
     /* 0x0 */ u16 pressed;
@@ -767,10 +1176,10 @@ typedef struct {
 typedef struct {
     SotnFixed32 scrollX;
     SotnFixed32 scrollY;
-    s32 : 32;
+    s32 unk8;
     s32 hSize;
     s32 vSize;
-    s32 : 32;
+    s32 unk14;
     s32 left;
     s32 top;
     s32 right;
@@ -825,13 +1234,6 @@ typedef struct ServantEvent {
 } ServantEvent;
 
 typedef struct {
-    s32 unk0;
-    u8 pad[4];
-    u16 unk8;
-    u16 unk10;
-} Unk060ED26C;
-
-typedef struct {
     u16 stageID;
     u16 unk2;
     u16 unk4;
@@ -843,9 +1245,21 @@ typedef struct {
 } Unk0605D750;
 
 typedef struct {
+    u16 unk0;
+    s16 : 16;
+    s32 : 32;
+    s32 unk8;
+} Unk0605D770;
+
+typedef struct {
     /* 0x0 */ s16 x;
     /* 0x2 */ s16 y;
 } Point16; // size = 0x4
+
+#define CASTLE_MAP_BITMAP ((u8*)0x002B2000)
+#define CASTLE_MAP_BITMAP_PITCH 0xA0
+#define CASTLE_MAP_BITMAP_SIZE 0x9600
+#define CASTLE_MAP_CELL_WIDTH 0x0A
 
 typedef struct {
     /* 0x0 */ s32 x;
@@ -867,7 +1281,8 @@ typedef struct {
 typedef struct {
     u16 unk0;
     u16 unk2;
-    u32 unk4;
+    u16 unk4;
+    u16 unk6;
     u32 unk8;
 } Unk0605cd70;
 
@@ -887,6 +1302,20 @@ typedef struct {
     u16 reloadStageId;
     u16 stageId;
 } RoomTeleport;
+
+typedef struct {
+    s32 x;
+    s32 y;
+    s32 stageId;
+    s32 eventId;
+    s32 castleFlag;
+} RoomBossTeleport;
+
+typedef struct {
+    s32 : 32;
+    s8 unk4;
+    s8 unk5;
+} UNK_060485C0;
 
 typedef enum {
     PLAYER_CHARACTER,
@@ -1007,51 +1436,50 @@ typedef enum {
     PLAYER_STATUS_UNK80000000 = 0x80000000, // exclusive to Maria
 } PlayerStateStatus;
 
+typedef enum Elements {
+    ELEMENT_NONE = 0,
+    ELEMENT_UNK_1 = 0x1,
+    ELEMENT_UNK_2 = 0x2,
+    ELEMENT_UNK_4 = 0x4,
+    ELEMENT_UNK_8 = 0x8,
+    ELEMENT_UNK_10 = 0x10, // Possibly unresistable, used by e_spikes
+    ELEMENT_HIT = 0x20,
+    ELEMENT_CUT = 0x40,
+    ELEMENT_POISON = 0x80,
+    ELEMENT_CURSE = 0x100,
+    ELEMENT_STONE = 0x200,
+    ELEMENT_WATER = 0x400,
+    ELEMENT_DARK = 0x800,
+    ELEMENT_HOLY = 0x1000,
+    ELEMENT_ICE = 0x2000,
+    ELEMENT_THUNDER = 0x4000,
+    ELEMENT_FIRE = 0x8000,
+    ELEMENT_ALL = ELEMENT_FIRE | ELEMENT_THUNDER | ELEMENT_ICE | ELEMENT_HOLY |
+                  ELEMENT_DARK | ELEMENT_WATER | ELEMENT_STONE | ELEMENT_CURSE |
+                  ELEMENT_POISON | ELEMENT_CUT | ELEMENT_HIT,
+    ELEMENT_UNK_10000 = 0x10000,
+} Elements;
+
 u32 SquareRoot0(s32);
 s32 func_800F4D38(s32, s32);
-void func_800F4994(void);
-extern int rand(void);
 
 // Not 100% sure about address, gcc seems to added the offset within
 // the struct to the base address
-extern Equipment g_EquipDefs[];
 
-extern GameSettings g_Settings;
-extern GameApi g_api;
 extern Entity g_Entities[TOTAL_ENTITY_COUNT]; // 0x060997F8
-extern EntityEntry** PfnEntityUpdates[];
-extern Unk0605D750 g_CurrentRoom;
-extern SpellDef g_SpellDefs[];
-extern Accessory g_AccessoryDefs[];
-extern s32 D_80137960;
-extern s32 D_80137964;
-extern s32 D_80137968;
-extern s32 g_StatBuffTimers[];
-extern s32 D_8013B5E8;
-extern s32 D_801375CC;
-extern s32 D_801375D4;
-extern s32* D_801375D8;
-extern PlayerState g_Player;
-extern Entity* g_CurrentEntity;
-extern PlayerStatus g_Status;
-extern SubweaponDef g_SubwpnDefs[];
-extern unkGraphicsStruct g_unkGraphicsStruct;
-extern u32 g_GameTimer;
-extern u32 g_Timer;
-extern FgLayer D_8003C708;
-extern s32 D_801375C8;
-extern s32 D_8006BB00;
-extern s32 g_Servant;
-extern RelicDesc g_RelicDefs[];
-extern s32 currentMusicId;
-extern u8 g_CastleFlags[];
-extern s32 g_PlayableCharacter;
-extern MenuNavigation g_MenuNavigation;
-extern PlayerHud g_PlayerHud;
-extern Pad g_pads[];
-extern Tilemap g_Tilemap;
-extern UNK_0605c680 DAT_0605c680;
-extern Primitive g_PrimBuf[];
+extern UNK_060485C0 DAT_060485C0;
+extern s8 DAT_060485C4;
+// One entry of the VRAM transfer queue at d_0605DB60.
+typedef struct {
+    /* 0x00 */ s32 unk0;
+    /* 0x04 */ s32 unk4;
+    /* 0x08 */ s16 unk8;
+    /* 0x0A */ s16 unkA;
+    /* 0x0C */ s16 unkC;
+    /* 0x0E */ s16 unkE;
+} Unk0605DB60; /* size = 0x10 */
+
+extern u16 DAT_0605aec0[][2];
 
 #define NUM_HORIZONTAL_SENSORS 4
 #define NUM_VERTICAL_SENSORS 7

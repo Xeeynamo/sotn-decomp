@@ -692,8 +692,8 @@ void EntityMariaTurtleCrash(Entity* self) {
 
         if (g_Maria.unk2C == 0) {
             g_api.PlaySfx(SFX_HEALTH_PICKUP);
-            g_Maria.unk56 = 1;
-            g_Maria.unk58 = g_Maria.unk24;
+            g_Maria.healKind = 1;
+            g_Maria.healAmount = g_Maria.unk24;
             self->step = 7;
             self->ext.mariaTurtleCrash.timer3 = 0;
             break;

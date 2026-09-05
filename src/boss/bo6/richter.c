@@ -114,7 +114,14 @@ static void CheckBladeDashInput() {
     }
 }
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", CheckHighJumpInput);
+void CheckHighJumpInput(void) {
+    if (RIC.step == 3 || RIC.step == 1 ||
+        (RIC.step == 5 && RIC.velocityY > FIX(1)) || RIC.step == 4) {
+        if (g_Ric.unk46 == 0 && g_Ric.padTapped & PAD_R2) {
+            func_us_801BA050();
+        }
+    }
+}
 
 extern s32 D_us_80181210[];
 extern u16 D_us_80181250[];
@@ -1035,7 +1042,7 @@ void func_us_801B6998(void) {
         if (++D_us_801D11C0 > 1) {
             if ((g_CastleFlags[SHAFT_ORB_DEFEATED] == 0) &&
                 (g_DemoMode == Demo_None)) {
-                g_unkGraphicsStruct.unk20 = 0xFF;
+                g_unkGraphicsStruct.unk28 = 0xFF;
             }
             D_us_80181278++;
         }
@@ -1089,17 +1096,71 @@ void EntityRichter(Entity* self) {
 
 INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepStand);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepWalk);
+void RicStepWalk(void) {
+    if (RicCheckInput(CHECK_FALL | CHECK_FACING | CHECK_JUMP | CHECK_CRASH |
+                      CHECK_ATTACK | CHECK_CROUCH) == 0) {
+        DecelerateX(FIX(0.125));
+        if (RicCheckFacing() == 0) {
+            RicSetStand(0);
+            return;
+        }
+        if (RIC.step_s == 0) {
+            RicSetSpeedX(FIX(1.25));
+        }
+    }
+}
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepRun);
+extern AnimationFrame D_us_80181F24[];
+
+void RicStepRun(void) {
+    g_Ric.timers[PL_T_8] = 8;
+    g_Ric.timers[PL_T_CURSE] = 8;
+    if (RicCheckInput(0x305C) == 0) {
+        DecelerateX(FIX(0.125));
+        if (RicCheckFacing() == 0) {
+            RicSetStand(0);
+            if (g_Ric.timers[PL_T_RUN] == 0) {
+                if (!(g_Ric.vram_flag & (TOUCHING_L_WALL | TOUCHING_R_WALL))) {
+                    RicSetAnimation(&D_us_80181F24);
+                    RicCreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
+                }
+            } else {
+                RIC.velocityX = 0;
+            }
+        } else if (RIC.step_s == 0) {
+            RicSetSpeedX(FIX(2.25));
+        }
+    }
+}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepJump);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepFall);
+void RicStepFall(void) {
+    if (RicCheckInput(
+            CHECK_GROUND | CHECK_FACING | CHECK_ATTACK | CHECK_GRAVITY_FALL)) {
+        return;
+    }
+    DecelerateX(FIX(1. / 16));
+    if (RIC.step_s == 0) {
+        if (g_Ric.timers[PL_T_5] && g_Ric.padTapped & PAD_CROSS) {
+            func_us_801B9E70();
+            return;
+        }
+        if (RicCheckFacing()) {
+            RicSetSpeedX(FIX(0.75));
+        }
+    }
+}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepCrouch);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicResetPose);
+void RicResetPose(void) {
+    RIC.poseTimer = 0;
+    RIC.pose = 0;
+    g_Ric.unk44 = 0;
+    g_Ric.unk46 = 0;
+    RIC.drawFlags &= ~ENTITY_ROTATE;
+}
 
 void func_us_801B77D8(void) {
     if ((RIC.posX.i.hi - PLAYER.posX.i.hi) <= 0) {
@@ -1124,7 +1185,12 @@ void RicStepHydrostorm(void) {
     }
 }
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepGenericSubwpnCrash);
+void RicStepGenericSubwpnCrash(void) {
+    if (g_Ric.unk4E != 0) {
+        RicSetStand(0);
+        g_Ric.unk46 = 0;
+    }
+}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepThrowDaggers);
 

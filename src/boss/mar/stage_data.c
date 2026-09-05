@@ -26,4 +26,4 @@ u16 D_801852E0[] = {
 
 #include "gen/mar_tilemap_0.h"
 #include "gen/mar_tilemap_1.h"
-#include "gen/mar_tiledef_0.h"
+#include "gen/mar_tiledef_mar.h"

@@ -47,6 +47,8 @@ segments:
       - [0x9D4, data]
       - [0xAE4, .data, d_prize_drops]
       - [0xB04, data]
+      - [0xC9C, .data, unk_26178]
+      - [0xD2C, data]
       - [0xDEC, .data, st_update]
       - [0xE38, data]
       - [0xE38, .data, collision]

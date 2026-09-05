@@ -597,15 +597,15 @@ void MarMain(void) {
                         return;
                     }
 
-                    if (g_Maria.unk56) {
+                    if (g_Maria.healKind) {
                         // this block is exclusive to Maria
-                        g_Status.hp += g_Maria.unk58;
+                        g_Status.hp += g_Maria.healAmount;
                         func_800FE8F0();
-                        func_pspeu_092BEAB0(g_Maria.unk58);
+                        func_pspeu_092BEAB0(g_Maria.healAmount);
                         if (g_Status.hpMax < g_Status.hp) {
                             g_Status.hp = g_Status.hpMax;
                         }
-                        g_Maria.unk56 = 0;
+                        g_Maria.healKind = 0;
                     }
 
                     if (!(g_Maria.timers[PL_T_INVINCIBLE_SCENE] |

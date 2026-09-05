@@ -25,8 +25,8 @@ e_armor_lord_guardian:
   - func_us_801D1A9C
   - func_us_801D1DAC
   - EntityArmorLord
-  - func_us_801D348C
-  - func_us_801D3700
+  - EntityArmorLordSwordShadow
+  - EntityArmorLordUnk2
 e_axe_knight:
   functions:
   - AxeKnightUnkFunc1
@@ -208,7 +208,7 @@ e_collect:
   - Unreferenced_MAD_ST0_func
   - EntityEquipItemDrop
   - EntityRelicOrb
-  - EntityHeartDrop
+  - EntityPersistentItemDrop
   - EntityMessageBox
 e_ctulhu:
   functions:
@@ -705,8 +705,8 @@ e_subweapon_container:
   functions:
   - EntitySubWeaponContainer
   - EntitySubWpnContGlass
-  - func_801C7654
-  - func_801C77B8
+  - EntityFallingLiquid
+  - EntityBubbles
   - func_801C7884
 e_succubus:
   functions:

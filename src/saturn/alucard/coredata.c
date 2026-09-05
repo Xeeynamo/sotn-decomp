@@ -1,12 +1,14 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
+#include "alucard.h"
 
 u16 D_060C84B8[4] = {0, 0, 0, 0};
 
-// D_800ACF4C on PSX
-u16 g_AlucardStateInitData[] = {
-    0x0000, 0x0000, 0x0000, 0x000F, 0x0400, 0x0000, 0x0000, 0x00C4,
-    0x0100, 0x0000, 0x0000, 0x000E, 0x0300, 0x0000, 0x0000, 0x00C6,
+AlucardStateInitData g_AlucardStateInitData[] = {
+    {0x00, {0, 0, 0}, 0x0F},
+    {0x04, {0, 0, 0}, 0xC4},
+    {0x01, {0, 0, 0}, 0x0E},
+    {0x03, {0, 0, 0}, 0xC6},
 };
 
 u16 D_060C84E0[2] = {0, 0};

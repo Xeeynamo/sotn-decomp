@@ -1,7 +1,7 @@
 # Author: bismurphy
 
 # Renders the animations declared in a .c file (or .h file). Requires that:
-# 1. There exists a u8 array in the specified file, which...
+# 1. There exists a AnimateEntityFrame array in the specified file, which...
 # 2. Has been fully declared as static, with all values pulled into the function as .data and ...
 # 3. Is called in an entity updating function. Further...
 # 4. The function be decompiled, and ...
@@ -55,13 +55,14 @@ def load_array_from_file(filelines, arrayname):
     exit()
 
 
-# Get every array of u8's and return as a Python dictionary
+# Get every array of AnimateEntityFrame's and return as a Python dictionary
 def load_anims(src_file):
     with open(src_file) as f:
         file_lines = f.read().split("\n")
     loaded_anims = {}
     for i, line in enumerate(file_lines):
-        if line.startswith("static u8") or line.startswith("static AnimateEntityFrame"):
+        if line.startswith("static AnimateEntityFrame"):
+            print("Start of animation, line = ", line)
             # handle the potential of multi-line animations
             anim = ""
             line_idx = 0
@@ -69,7 +70,9 @@ def load_anims(src_file):
                 anim += file_lines[i + line_idx]
                 line_idx += 1
             # got full animation line. Get the name. Comes after "static, space, type, space"
-            namesearch = re.match(r"static\s+(\w+)\s+(\w+)\[\]\s*=", anim)
+            print("RE SEARCH:")
+            print(anim)
+            namesearch = re.match(r"static\s+(\w+)\s+(\w+)\[\].*=", anim)
             if namesearch:
                 anim_name = namesearch.group(2)
             print(anim_name)
@@ -77,7 +80,7 @@ def load_anims(src_file):
             anim = anim.replace(" ", "")
             # Now use regex to find data up to the semicolon
             anim_data = re.findall(r"(?<={)[^;]*", anim)[0]
-            # flatten 2d arrays (such as AnimateEntityFrame)
+            # flatten 2d AnimateEntityFrame array
             anim_data = anim_data.replace("{", "")
             anim_data = anim_data.replace("}", "")
             # expand POSE_LOOP macro
@@ -100,7 +103,7 @@ def get_initializer_for_ent(anim_name, src_file, overlay):
     with open(src_file) as f:
         filelines = f.readlines()
     for i, line in enumerate(filelines):
-        if anim_name in line and "static u8" not in line:
+        if anim_name in line and "static AnimationFrame" not in line:
             # Now we've found a line where it's used. Search backward for
             # a call to InitializeEntity.
             print(f"Anim used in line {i}:")
@@ -201,7 +204,9 @@ class AnimationShower:
             print("I don't know what this is yet, need new program logic")
             exit()
         # Now skip to line 984. We're going to make an image from the individual images.
-        overall_image = Image.new("RGBA", (256, 256))
+        view_w = 256
+        view_h = 256
+        overall_image = Image.new("RGBA", (view_w, view_h))
         for i in range(spriteSheetIdx):
             print_debug(frame_params)
             frameFlags = frame_params[0]  # line 989
@@ -241,6 +246,9 @@ class AnimationShower:
             if frameFlags & 2:
                 frameFlags -= 2
                 image = np.flip(image, 1)
+            if frameFlags & 1:
+                frameFlags -= 1
+                image = np.flip(image, 0)
             if frameFlags & 8:
                 frameFlags -= 8
                 height -= 1
@@ -248,17 +256,18 @@ class AnimationShower:
                     frameFlags -= 1
                     yPivot += 1
             if frameFlags != 0:
-                print_debug(f"Ignoring frameFlags {frameFlags}")
+                print_debug(f"Ignoring frameFlags {frameFlags = :X}")
             pil_image = Image.fromarray(image)
-            view_w = 256
-            view_h = 256
             print_debug(f"image all good, now pasting at {xpivot}, {ypivot}")
+            image_layer = Image.new("RGBA", (view_w, view_h))
             # pass pil_image twice to get transparency
-            overall_image.paste(
+            image_layer.paste(
                 pil_image,
                 (view_w // 2 + xpivot, view_h // 2 + ypivot),
                 pil_image,
             )
+            # now pull them together
+            overall_image = Image.alpha_composite(image_layer, overall_image)
             frame_params = frame_params[11:]
         return overall_image
 

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <game.h>
 #include "pc.h"
+#include "spawn_point.h"
 #include <assert.h>
 #include <ctype.h>
 #include <limits.h>
@@ -65,6 +66,7 @@ static void printHelp(void) {
     printf("         sndlib      test sound library\n");
     printf("  --record <path>    record controller input to a file\n");
     printf("  --replay <path>    replay controller input from a file\n");
+    printf("  --spawn-point <name>  start at a named spawn point\n");
     printf("  --replay-and-exit  quit automatically once the replay or demo "
            "ends\n");
     printf("  --replay-fast      disable frame limit during replay or demo\n");
@@ -92,6 +94,7 @@ static bool parseArgs(
     outParams->scale = 1;
     outParams->recordPath = NULL;
     outParams->replayPath = NULL;
+    outParams->spawnPoint = NULL;
     outParams->exitAfterReplay = false;
     outParams->replayBoundlessFramerate = false;
 
@@ -139,6 +142,13 @@ static bool parseArgs(
             outParams->recordPath = argv[++i];
         } else if (strcmp(argv[i], "--replay") == 0 && i + 1 < argc) {
             outParams->replayPath = argv[++i];
+        } else if (strcmp(argv[i], "--spawn-point") == 0 && i + 1 < argc) {
+            outParams->spawnPoint = argv[++i];
+            if (SpawnPoint_StageForName(outParams->spawnPoint) < 0) {
+                printf(
+                    "spawn point '%s' is invalid or not recognized\n", argv[i]);
+                return false;
+            }
         } else if (strcmp(argv[i], "--replay-and-exit") == 0) {
             outParams->exitAfterReplay = true;
         } else if (strcmp(argv[i], "--replay-fast") == 0) {
@@ -156,6 +166,9 @@ int Main(int argc, char* argv[]) {
     if (!parseArgs(&params, argc, argv)) {
         printHelp();
         return -1;
+    }
+    if (params.stage < 0 && params.spawnPoint != NULL) {
+        params.stage = SpawnPoint_StageForName(params.spawnPoint);
     }
     Psyz_VideoSetInternalResolution(params.scale);
     if (!InitGame(&params)) {

@@ -7,12 +7,12 @@ extern u_long* cluts[];
 extern LayoutEntity* entityLayoutHorizontal[];
 extern RoomDef rooms_layers[];
 extern u_long** gfxBanks[];
-void OVL_EXPORT(HitDetection)();
+void HitDetection();
 void PrologueScroll();
 
-Overlay OVL_EXPORT(Overlay) = {
+Overlay g_Overlay = {
     .Update = Update,
-    .HitDetection = OVL_EXPORT(HitDetection),
+    .HitDetection = HitDetection,
     .UpdateRoomPosition = UpdateRoomPosition,
     .InitRoomEntities = InitRoomEntities,
     .rooms = rooms,
@@ -25,7 +25,7 @@ Overlay OVL_EXPORT(Overlay) = {
     .StageEndCutScene = PrologueScroll,
 };
 
-#include "gen/sprite_banks.h"
-#include "gen/palette_def.h"
-#include "gen/layers.h"
-#include "gen/graphics_banks.h"
+#include <gen/sprite_banks.h>
+#include <gen/palette_def.h>
+#include <gen/layers.h>
+#include <gen/graphics_banks.h>

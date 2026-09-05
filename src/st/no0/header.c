@@ -8,7 +8,7 @@ extern u_long* cluts[];
 extern RoomDef rooms_layers[];
 extern u_long** gfxBanks[];
 
-AbbreviatedOverlay OVL_EXPORT(Overlay) = {
+AbbreviatedOverlay g_Overlay = {
     .Update = Update,
     .HitDetection = HitDetection,
     .UpdateRoomPosition = UpdateRoomPosition,
@@ -23,8 +23,8 @@ AbbreviatedOverlay OVL_EXPORT(Overlay) = {
 };
 
 #ifdef VERSION_US
-#include "gen/sprite_banks.h"
-#include "gen/palette_def.h"
-#include "gen/layers.h"
-#include "gen/graphics_banks.h"
+#include <gen/sprite_banks.h>
+#include <gen/palette_def.h>
+#include <gen/layers.h>
+#include <gen/graphics_banks.h>
 #endif

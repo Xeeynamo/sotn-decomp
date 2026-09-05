@@ -6,4 +6,4 @@
 #define CORPSEWEED_PROJ_PAL 0x20E
 #define g_EInitCorpseweedProjectile D_us_80180678
 #define CORPSEWEED_NO_ATTACK_SFX
-#include "../en_thornweed_corpseweed.h"
+#include "../e_thornweed_corpseweed.h"

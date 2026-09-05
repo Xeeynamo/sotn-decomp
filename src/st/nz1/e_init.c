@@ -12,7 +12,7 @@ void EntityRoomForeground(Entity* self);
 void EntityStageNamePopup(Entity* self);
 void EntityEquipItemDrop(Entity* self);
 void EntityRelicOrb(Entity* self);
-void EntityHeartDrop(Entity* self);
+void EntityPersistentItemDrop(Entity* self);
 void EntityEnemyBlood(Entity* self);
 void EntityMessageBox(Entity* self);
 void EntityDummy(Entity* self);
@@ -77,7 +77,7 @@ void EntityFleaArmor(Entity* self);
 void EntityFleaArmorAttackHitbox(Entity* self);
 void EntityFleaMan(Entity* self);
 void EntityBreakableDebris(Entity* self);
-void EntityBossDoorTrigger(Entity* self);
+void EntityBossFightManager(Entity* self);
 void EntityBossDoors(Entity* self);
 void EntityKarasuman(Entity* self);
 void EntityKarasumanFeatherAttack(Entity* self);
@@ -102,7 +102,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityStageNamePopup,
     EntityEquipItemDrop,
     EntityRelicOrb,
-    EntityHeartDrop,
+    EntityPersistentItemDrop,
     EntityEnemyBlood,
     EntityMessageBox,
     EntityDummy,
@@ -167,7 +167,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityFleaArmorAttackHitbox,
     EntityFleaMan,
     EntityBreakableDebris,
-    EntityBossDoorTrigger,
+    EntityBossFightManager,
     EntityBossDoors,
     EntityKarasuman,
     EntityKarasumanFeatherAttack,

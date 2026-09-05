@@ -1162,18 +1162,18 @@ void EntityPlayerPinkEffect(Entity* self) {
                 PlaySfx(SFX_MAGIC_WEAPON_APPEAR_A);
                 break;
             case 0x84: // Potion most likely.
-                g_Player.unk56 = 1;
-                g_Player.unk58 =
+                g_Player.healKind = 1;
+                g_Player.healAmount =
                     GetStatusAilmentTimer(STATUS_AILMENT_UNK04, 0x32);
                 break;
             case 0x85: // High Potion most likely.
-                g_Player.unk56 = 1;
-                g_Player.unk58 =
+                g_Player.healKind = 1;
+                g_Player.healAmount =
                     GetStatusAilmentTimer(STATUS_AILMENT_UNK05, 0x64);
                 break;
             case 0x86: // Elixir
-                g_Player.unk56 = 1;
-                g_Player.unk58 = g_Status.hpMax;
+                g_Player.healKind = 1;
+                g_Player.healAmount = g_Status.hpMax;
                 break;
             case 0x87: // Mana Prism
                 PlaySfx(SFX_MAGIC_WEAPON_APPEAR_A);
@@ -1496,7 +1496,7 @@ void EntityLevelUpAnimation(Entity* self) {
         break;
     case 1:
         if (++D_80138090 == 2) {
-            g_unkGraphicsStruct.unk20 = 3;
+            g_unkGraphicsStruct.unk28 = 3;
         }
         self->ext.factory.unk80 -= 8;
         self->ext.factory.unk82 -= 8;
@@ -1540,7 +1540,7 @@ void EntityLevelUpAnimation(Entity* self) {
             self->ext.factory.unk7E = 0;
         }
         if (self->ext.factory.unk80 > 0x200) {
-            g_unkGraphicsStruct.unk20 = 0;
+            g_unkGraphicsStruct.unk28 = 0;
             DestroyEntity(self);
             return;
         }

@@ -1991,8 +1991,8 @@ typedef struct {
     /* 0x3A0 80072F70 */ u16 prev_step;
     /* 0x3A2 80072F72 */ u16 prev_step_s;
     /* 0x3A4 80072F74 */ u16 unk54;
-    /* 0x3A6 80072F76 */ u16 unk56;
-    /* 0x3A8 80072F78 */ u16 unk58;
+    /* 0x3A6 80072F76 */ u16 healKind;
+    /* 0x3A8 80072F78 */ u16 healAmount;
     /* 0x3AA 80072F7A */ u16 damageTaken;
     /* 0x3AC 80072F7C */ u16
         unk5C; // ALU: hellfire spell state, RIC: isPrologue
@@ -2057,15 +2057,15 @@ typedef struct {
     /* 0x800973F8 */ s32 primIndex;
     /* 0x800973FC */ s32 D_800973FC;
     /* 0x80097400 */ bool pauseEnemies; // True for Stopwatch and cutscenes
-    /* 0x80097404 */ s32 unk4;
+    /* 0x80097404 */ s32 : 32;
     /* 0x80097408 */ s32 g_zEntityCenter;
-    /* 0x8009740C */ s32 unkC;
+    /* 0x8009740C */ s32 unk14;
     /* 0x80097410 */ s32 BottomCornerTextTimer;
     /* 0x80097414 */ s32 BottomCornerTextPrims;
-    /* 0x80097418 */ s32 unk18;
-    /* 0x8009741C */ s32 unk1C;
-    /* 0x80097420 */ s32 unk20;
-    /* 0x80097424 */ s32 unk24;
+    /* 0x80097418 */ s32 unk20;
+    /* 0x8009741C */ s32 unk24;
+    /* 0x80097420 */ s32 unk28;
+    /* 0x80097424 */ s32 unk2C;
 
     // size must be 8 for the loop in RunMainEngine, while
     // PreventEntityFromRespawning suggests it has a size of 32

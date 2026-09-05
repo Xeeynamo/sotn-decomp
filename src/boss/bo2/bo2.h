@@ -10,7 +10,7 @@ enum Palettes {
     PAL_NONE,
 };
 
-enum Entities {
+typedef enum EntityID {
     E_NONE,
     E_BREAKABLE,                        // EntityBreakable
     E_EXPLOSION,                        // EntityExplosion
@@ -23,7 +23,7 @@ enum Entities {
     E_STAGE_NAME_POPUP,                 // EntityStageNamePopup
     E_EQUIP_ITEM_DROP,                  // EntityEquipItemDrop
     E_RELIC_ORB,                        // EntityRelicOrb
-    E_HEART_DROP,                       // EntityHeartDrop
+    E_PERSISTENT_ITEM_DROP,             // EntityPersistentItemDrop
     E_ENEMY_BLOOD,                      // EntityEnemyBlood
     E_MESSAGE_BOX,                      // EntityMessageBox
     E_DUMMY_F,                          // EntityDummy
@@ -34,11 +34,11 @@ enum Entities {
     E_EXPLOSION_VARIANTS,               // EntityExplosionVariants
     E_GREY_PUFF,                        // EntityGreyPuff
     E_UNK_16,                           // func_us_801A3E04
-    E_UNK_17,                           // func_us_801A269C
-    E_UNK_18,                           // func_us_801A3818
+    E_MINOTAUR,                         // func_us_801A269C
+    E_MINOTAUR_ATTACK_HITBOX,           // EntityMinotaurAttackHitbox
     E_MINOTAUR_FIREBALL,                // EntityMinotaurFireball
     E_MINOTAUR_SPIT_LIQUID,             // EntityMinotaurSpitLiquid
-    E_UNK_1B,                           // func_us_801B385C
+    E_WEREWOLF,                         // func_us_801B385C
     E_WEREWOLF_ATTACK_HITBOX,           // EntityWerewolfAttackHitbox
     E_UNK_1D,                           // func_us_801B503C
     E_WEREWOLF_SPIN_ATTACK_AFTER_IMAGE, // EntityWerewolfSpinAttackAfterImage
@@ -47,7 +47,7 @@ enum Entities {
     E_MINOTAUR_DEATH_PUFF,              // EntityMinotaurDeathPuff
     E_BOSS_TORCH,                       // EntityBossTorch
     E_BOSS_DOORS,                       // EntityBossDoors
-    E_LIFE_UPSPAWN,                     // EntityLifeUpSpawn
+    E_LIFE_UP_SPAWN,                    // EntityLifeUpSpawn
     E_CUTSCENE_DIALOGUE,                // EntityCutsceneDialogue
     E_UNK_26,                           // func_us_801A6EF8
     E_UNK_27,                           // func_us_801A7340

@@ -10,7 +10,7 @@ enum Palettes {
     PAL_NONE,
 };
 
-enum Entities {
+typedef enum EntityID {
     E_NONE,
     E_BREAKABLE,             // EntityBreakable
     E_EXPLOSION,             // EntityExplosion
@@ -23,7 +23,7 @@ enum Entities {
     E_STAGE_NAME_POPUP,      // EntityStageNamePopup
     E_EQUIP_ITEM_DROP,       // EntityEquipItemDrop
     E_RELIC_ORB,             // EntityRelicOrb
-    E_HEART_DROP,            // EntityHeartDrop
+    E_PERSISTENT_ITEM_DROP,  // EntityPersistentItemDrop
     E_ENEMY_BLOOD,           // EntityEnemyBlood
     E_MESSAGE_BOX,           // EntityMessageBox
     E_DUMMY_F,               // EntityDummy
@@ -44,7 +44,7 @@ enum Entities {
     E_UNK_1E,                // func_us_80195AF0
     E_UNK_1F,                // func_us_80195C50
     E_UNK_20,                // func_us_801963D8
-    E_LIFE_UPSPAWN,          // EntityLifeUpSpawn
+    E_LIFE_UP_SPAWN,         // EntityLifeUpSpawn
     NUM_ENTITIES,
 };
 

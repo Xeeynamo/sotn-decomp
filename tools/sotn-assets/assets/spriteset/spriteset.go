@@ -16,7 +16,6 @@ func ReadSpriteSet(r io.ReadSeeker, baseAddr, addr psx.Addr) (SpriteSet, dataran
 	if err := addr.MoveFile(r, baseAddr); err != nil {
 		return nil, datarange.DataRange{}, fmt.Errorf("invalid sprite offset: %w", err)
 	}
-
 	// the end of the Sprite array is the beginning of the earliest Sprite offset
 	boundaries := baseAddr.Boundaries()
 	earliestSpriteOff := boundaries.GameEnd
@@ -68,7 +67,7 @@ func ReadSpriteSet(r io.ReadSeeker, baseAddr, addr psx.Addr) (SpriteSet, dataran
 	return bank, merged, nil
 }
 
-func BuildSpriteSet(sb *strings.Builder, set SpriteSet, mainSymbol string) {
+func BuildSpriteSet(sb *strings.Builder, set SpriteSet, mainSymbol string, isStatic bool) {
 	var symbols []string
 	for i, spriteGroup := range set {
 		if spriteGroup != nil {
@@ -90,7 +89,11 @@ func BuildSpriteSet(sb *strings.Builder, set SpriteSet, mainSymbol string) {
 			symbols = append(symbols, "")
 		}
 	}
-	sb.WriteString(fmt.Sprintf("s16* %s[] = {\n", mainSymbol))
+	if isStatic {
+		sb.WriteString(fmt.Sprintf("static s16* %s[] = {\n", mainSymbol))
+	} else {
+		sb.WriteString(fmt.Sprintf("s16* %s[] = {\n", mainSymbol))
+	}
 	for _, symbol := range symbols {
 		if len(symbol) > 0 {
 			sb.WriteString(fmt.Sprintf("    %s,\n", symbol))

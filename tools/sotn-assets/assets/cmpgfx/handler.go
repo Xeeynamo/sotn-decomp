@@ -66,10 +66,7 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 			cmp = cmp[:len(cmp)-4]
 		}
 	}
-	if err := util.WriteFile(assetPathAsRAW(e.AssetDir, e.Name), cmp); err != nil {
-		return fmt.Errorf("error writing file: %v", err)
-	}
-	fout, err := util.CreateAtomicWriter(assetPathAsPNG(e.AssetDir, e.Name))
+	fout, err := util.CreateAtomicWriter(assetPath(e.AssetDir, e.Name))
 	if err != nil {
 		return fmt.Errorf("error creating file: %v", err)
 	}
@@ -81,14 +78,19 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 }
 
 func (h *handler) Build(e assets.BuildArgs) error {
-	inFileName := assetPathAsRAW(e.AssetDir, e.Name)
-	data, err := os.ReadFile(inFileName)
+	inFileName := assetPath(e.AssetDir, e.Name)
+	f, err := os.Open(inFileName)
 	if err != nil {
 		return fmt.Errorf("failed to read file: %w", err)
 	}
+	defer f.Close()
+	bitmap, _, err := png.Decode(f)
+	if err != nil {
+		return fmt.Errorf("png decode %s: %w", inFileName, err)
+	}
 	sb := strings.Builder{}
 	sb.WriteString("// clang-format off\n")
-	util.WriteBytesAsHex(&sb, data)
+	util.WriteBytesAsHex(&sb, sotn.Deflate(bitmap))
 	return util.WriteFile(sourcePath(e.SrcDir, e.Name), []byte(sb.String()))
 }
 
@@ -96,12 +98,8 @@ func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
 	return assets.InfoResult{}, nil
 }
 
-func assetPathAsPNG(dir, name string) string {
+func assetPath(dir, name string) string {
 	return filepath.Join(dir, fmt.Sprintf("%s.png", name))
-}
-
-func assetPathAsRAW(dir, name string) string {
-	return filepath.Join(dir, fmt.Sprintf("%s.cmp", name))
 }
 
 func sourcePath(dir, name string) string {

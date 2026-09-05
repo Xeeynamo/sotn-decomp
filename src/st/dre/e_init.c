@@ -12,7 +12,7 @@ void EntityRoomForeground(Entity*);
 void EntityStageNamePopup(Entity*);
 void EntityEquipItemDrop(Entity*);
 void EntityRelicOrb(Entity*);
-void EntityHeartDrop(Entity*);
+void EntityPersistentItemDrop(Entity*);
 void EntityEnemyBlood(Entity*);
 void EntityMessageBox(Entity*);
 void EntityDummy(Entity*);
@@ -32,7 +32,7 @@ void EntitySuccubusClone(Entity*);
 void EntityPinkBallProjectile(Entity*);
 void EntitySuccubusWingSpike(Entity*);
 void EntitySuccubusWingSpikeTip(Entity*);
-void OVL_EXPORT(EntityCutsceneDialogue)(Entity*);
+void EntityCutsceneDialogue(Entity*);
 void EntityCSMoveAlucard(Entity*);
 void EntityFadeToWhite1(Entity*);
 void EntityUnkId23(Entity*);
@@ -50,7 +50,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityStageNamePopup,
     EntityEquipItemDrop,
     EntityRelicOrb,
-    EntityHeartDrop,
+    EntityPersistentItemDrop,
     EntityEnemyBlood,
     EntityMessageBox,
     EntityDummy,
@@ -70,7 +70,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityPinkBallProjectile,
     EntitySuccubusWingSpike,
     EntitySuccubusWingSpikeTip,
-    OVL_EXPORT(EntityCutsceneDialogue),
+    EntityCutsceneDialogue,
     EntityCSMoveAlucard,
     EntityFadeToWhite1,
     EntityUnkId23,

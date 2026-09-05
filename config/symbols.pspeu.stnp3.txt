@@ -62,7 +62,7 @@ EntityPrizeDrop = 0x0924B9E0; // source=match
 EntityExplosion = 0x0924C7F8; // source=match
 EntityEquipItemDrop = 0x0924CAF8; // source=match
 EntityRelicOrb = 0x0924D350; // source=match
-EntityHeartDrop = 0x0924E488; // source=match
+EntityPersistentItemDrop = 0x0924E488; // source=match
 EntityMessageBox = 0x0924E658; // source=match
 EntityUnkId13 = 0x0924EF18;
 EntityExplosionVariants = 0x0924F190;
@@ -137,7 +137,7 @@ g_EInitSlograSpearNP3 = 0x0926B368;
 g_EInitSlograProjectileNP3 = 0x0926B378;
 g_EInitGaibonNP3 = 0x0926B388;
 g_EInitGaibonProjectileNP3 = 0x0926B398;
-g_EInitGaibonLargeProjectileNP3 = 0x0926B3A8;
+g_EInitGaibonLargeProjectile = 0x0926B3A8;
 g_EInitHammer = 0x0926B3B8;
 g_EInitHammerWeapon = 0x0926B3C8;
 g_EInitGurkha = 0x0926B3D8;
@@ -146,4 +146,4 @@ g_EInitBlade = 0x0926B3F8;
 g_EInitBladeWeapon = 0x0926B408;
 g_RedDoorTiles = 0x0926B418;
 rooms = 0x0926B438;
-NP3_Overlay = 0x0928E820;
+g_Overlay = 0x0928E820;

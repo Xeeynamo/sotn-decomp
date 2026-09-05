@@ -1,24 +1,15 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
 #include "shared_sprite_banks.h"
+#include "stage_15.h"
 
 extern struct SpriteParts* g_EntitySpriteBank15[];
 extern u8 g_Stage15SpriteBank16[];
-extern u8 g_Stage15SpriteBank17[];
-extern u8 g_Stage15SpriteBank18[];
 extern u8 g_Stage15SpriteBank19[];
 extern u8 g_Stage15SpriteBank20[];
 extern u8 g_Stage15SpriteBank21[];
 extern u8 g_Stage15SpriteBank22[];
-extern u8 g_Stage15SpriteBankSkeletonBeast[];
-extern u8 g_Stage15SpriteBankRedGargoyle[];
-extern u8 g_Stage15SpriteBankSkeletonBreeder[];
-extern u8 g_Stage15SpriteBankHumanFaceTree[];
-extern u8 g_Stage15SpriteBankWaterLeaper[];
-extern u8 g_Stage15SpriteBankVenusManTrap[];
 extern u8 g_Stage15SpriteBank29[];
-extern u8 g_Stage15SpriteBankGardener[];
-extern u8 g_Stage15SpriteBankSkeletonLeader[];
 extern u8 g_Stage15SpriteBank32[];
 
 void* g_Stage15SpriteBanks[] = {
@@ -45,14 +36,14 @@ void* g_Stage15SpriteBanks[] = {
     g_Stage15SpriteBank20,
     g_Stage15SpriteBank21,
     g_Stage15SpriteBank22,
-    g_Stage15SpriteBankSkeletonBeast,
+    &g_Stage15SpriteBankSkeletonBeast,
     g_Stage15SpriteBankRedGargoyle,
     g_Stage15SpriteBankSkeletonBreeder,
-    g_Stage15SpriteBankHumanFaceTree,
-    g_Stage15SpriteBankWaterLeaper,
-    g_Stage15SpriteBankVenusManTrap,
+    &g_Stage15SpriteBankHumanFaceTree,
+    &g_Stage15SpriteBankWaterLeaper,
+    &g_Stage15SpriteBankVenusManTrap,
     g_Stage15SpriteBank29,
-    g_Stage15SpriteBankGardener,
+    &g_Stage15SpriteBankGardener,
     g_Stage15SpriteBankSkeletonLeader,
     g_Stage15SpriteBank32,
     NULL,

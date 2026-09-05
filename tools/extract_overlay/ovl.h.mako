@@ -4,7 +4,6 @@
 
 #include <stage.h>
 
-#define OVL_EXPORT(x) ${ovl_name.upper()}_##x
 #define STAGE_IS_${ovl_name.upper()}
 
 enum Palettes {

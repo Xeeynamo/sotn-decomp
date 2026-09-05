@@ -19,6 +19,7 @@ typedef enum {
     CTULHU_DEBUG = 255
 } CtulhuSteps;
 
+static u16 sensors_unused[] = {0, 40, 8, 0};
 static u16 sensors_unk[] = {0, 72, 8, 0};
 static u16 sensors_ground[][2] = {{0, 40}, {0, 4}, {8, -4}, {-16, 0}};
 
@@ -378,7 +379,7 @@ void EntityCtulhu(Entity* self) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            self->ext.prim = prim;
+            self->ext.ctulhu.prim = prim;
             dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
             if (dr_env == NULL) {
                 DestroyEntity(self);
@@ -491,7 +492,7 @@ void EntityCtulhu(Entity* self) {
             break;
         case 1:
             self->animCurFrame = 0;
-            prim = self->ext.prim;
+            prim = self->ext.ctulhu.prim;
             prim->type = PRIM_ENV;
 
             dr_env = PRIM_DR_ENV(prim);
@@ -619,12 +620,8 @@ void EntityCtulhuFireball(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
-        self->ext.prim = prim;
-#ifdef STAGE_IS_RNZ0
-        prim->tpage = 0x12;
-#else
-        prim->tpage = 0x14;
-#endif
+        self->ext.ctulhu.prim = prim;
+        prim->tpage = CTULHU_TPAGE;
         prim->clut = g_EInitCtulhuFireball[3] + 1;
         prim->u0 = prim->u2 = 224;
         prim->u1 = prim->u3 = 255;
@@ -637,7 +634,7 @@ void EntityCtulhuFireball(Entity* self) {
 
     AnimateEntity(anim_fireball, self);
     MoveEntity();
-    prim = self->ext.prim;
+    prim = self->ext.ctulhu.prim;
     prim->x0 = prim->x2 = self->posX.i.hi - 24;
     prim->x1 = prim->x3 = self->posX.i.hi + 24;
     prim->y0 = prim->y1 = self->posY.i.hi - 24;
@@ -660,6 +657,7 @@ void EntityCtulhuFireball(Entity* self) {
     }
 }
 
+extern Primitive* FindFirstUnkPrim(Primitive* poly);
 void EntityCtulhuIceShockwave(Entity* self) {
     Primitive* prim;
     s16* ptr;
@@ -689,7 +687,7 @@ void EntityCtulhuIceShockwave(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
-        self->ext.prim = prim;
+        self->ext.ctulhu.prim = prim;
         while (prim != NULL) {
             prim->p3 = 0;
             prim->priority = self->zPriority - 1;
@@ -712,7 +710,7 @@ void EntityCtulhuIceShockwave(Entity* self) {
         }
 
         if (self->ext.ctulhu.shockwavePrim == NULL) {
-            prim = self->ext.prim;
+            prim = self->ext.ctulhu.prim;
             prim = FindFirstUnkPrim(prim);
             self->ext.ctulhu.shockwavePrim = prim;
 
@@ -750,7 +748,7 @@ void EntityCtulhuIceShockwave(Entity* self) {
 
         if (!self->ext.ctulhu.timer) {
             self->ext.ctulhu.timer = 2;
-            prim = self->ext.prim;
+            prim = self->ext.ctulhu.prim;
             prim = FindFirstUnkPrim(prim);
             if (prim != NULL) {
                 prim->p3 = 4;
@@ -798,7 +796,7 @@ void EntityCtulhuIceShockwave(Entity* self) {
         break;
     }
 
-    prim = self->ext.prim;
+    prim = self->ext.ctulhu.prim;
     while (prim != NULL) {
         if (!(prim->drawMode & DRAW_HIDE)) {
             if (prim->p3 == 2) {

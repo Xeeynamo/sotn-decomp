@@ -129,3 +129,6 @@ _g_Stage15LayoutVertical01 = 0x060F1788;
 _g_Stage15LayoutVertical02 = 0x060F19B8;
 _g_Stage15LayoutVertical03 = 0x060F1AA8;
 _g_Stage15LayoutVertical04 = 0x060F1AF8;
+_SetEntityCollisionTiles = 0x060E27E0;
+_SpawnDestructAnim = 0x060E3598;
+_EntityDestructAnim = 0x060E32F8;

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
 #include <saturn_sprite.h>
+#include "game.h"
 
 char* g_LuckCode = "X-X!V''Q";
 char* g_AxeArmorCode = "AXEARMOR";
@@ -8,12 +9,7 @@ char* g_GTIClubCode = "GTI-CLUB";
 
 __asm__(".text\n.align 2\n.data");
 
-typedef struct {
-    u16 frameOffset;
-    u16 paletteOffset;
-} StatusHudSpriteOffset;
-
-StatusHudSpriteOffset g_StatusHudSpriteOffsets[9] = {
+s16 g_StatusHudSpriteOffsets[9][2] = {
     {5, 1}, {6, 2}, {26, 5}, {26, 5}, {26, 5}, {7, 0}, {7, 0}, {7, 0}, {0, 0},
 };
 
@@ -22,12 +18,12 @@ u16 g_StatusHudPrimitiveLayout[18] = {
     0x0072, 0x0012, 0x001D, 0x001B, 0x001D, 0x0014, 0x0029, 0x0028, 0x0016,
 };
 
-u8 DAT_06085ce4[22] = {
+u8 DAT_06085CE4[22] = {
     0x14, 0x29, 0x14, 0x2D, 0x12, 0x24, 0x14, 0x25, 0x11, 0x28, 0x14,
     0x25, 0x14, 0x25, 0x19, 0x2E, 0x13, 0x2A, 0x11, 0x25, 0x14, 0x29,
 };
 
-StatusHudSpriteOffset g_AlternateStatusHudSpriteOffsets[8] = {
+s16 g_AlternateStatusHudSpriteOffsets[8][2] = {
     {5, 1}, {17, 0}, {17, 10}, {6, 0}, {6, 0}, {6, 0}, {6, 0}, {0, 0},
 };
 
@@ -59,40 +55,6 @@ SaturnSpriteImage g_StatusPortraitImages[17] = {
     {16, 20, 0x0618}, {16, 16, 0x0668}, {16, 16, 0x06A8}, {16, 16, 0x06E8},
     {0, 0, 0x0728},
 };
-
-extern const char g_StatusMenuFamiliarList[];
-extern const char g_StatusMenuFamiliar[];
-extern const char g_StatusMenuOther[];
-extern const char g_StatusMenuCape[];
-extern const char g_StatusMenuArmor[];
-extern const char g_StatusMenuHelm[];
-extern const char g_StatusMenuHolder[];
-extern const char g_StatusMenuLeftHandWeapon[];
-extern const char g_StatusMenuRightHandWeapon[];
-extern const char g_StatusMenuMedicine[];
-extern const char g_StatusMenuShield[];
-extern const char g_StatusMenuProjectile[];
-extern const char g_StatusMenuBomb[];
-extern const char g_StatusMenuFood[];
-extern const char g_StatusMenuTwoHandedSword[];
-extern const char g_StatusMenuClub[];
-extern const char g_StatusMenuFist[];
-extern const char g_StatusMenuThrowingSword[];
-extern const char g_StatusMenuSword[];
-extern const char g_StatusMenuDagger[];
-extern const char g_StatusMenuSystem[];
-extern const char g_StatusMenuRelics[];
-extern const char g_StatusMenuSpecialMoves[];
-extern const char g_StatusMenuEquipment[];
-extern const char g_StatusMenuSpecialMoveList[];
-extern const char g_StatusMenuDefense[];
-extern const char g_StatusMenuAttack[];
-extern const char g_StatusMenuElapsedTime[];
-extern const char g_StatusMenuWindowColor[];
-extern const char g_StatusMenuCustomColor[];
-extern const char g_StatusMenuReversibleCloak[];
-extern const char g_StatusMenuButtonAssignment[];
-extern const char g_StatusMenuUnknown[];
 
 const char* g_StatusMenuLabelPointers[] = {
     g_StatusMenuAttack,
@@ -142,8 +104,6 @@ StatusFaceImageLayout g_StatusFaceImageLayouts[9] = {
     {0, 7, 12}, {0, 8, 13},  {0, 12, 17}, {0, 0, 0},
 };
 
-void func_0607AC40(Entity* self);
-
-PfnEntityUpdate g_FallingPrimitiveUpdate = func_0607AC40;
-u32 g_FallingPrimitiveInitData = 0;
-s16 g_FallingPrimitiveCollisionSensors[] = {0, 0, 0xFF};
+PfnEntityUpdate g_olroxDroolUpdate = EntityOlroxDrool;
+u32 g_olroxDroolInitData = 0;
+s16 g_olroxDroolCollOffsets[] = {0x00, 0x00, 0xFF};

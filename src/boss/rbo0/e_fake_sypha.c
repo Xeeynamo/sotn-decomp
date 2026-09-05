@@ -748,7 +748,7 @@ void EntityHolyLightning(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
-        self->ext.prim = prim;
+        self->ext.sypha.prim = prim;
         for (i = 0; i < 13; i++) {
             prim->tpage = 0x1A;
             prim->clut = self->palette;
@@ -814,10 +814,10 @@ void EntityHolyLightning(Entity* self) {
     var_s1->x = self->posX.i.hi;
     var_s1->y = self->posY.i.hi;
     var_s1 = (Point16*)&self->ext.sypha.red;
-    prim = self->ext.prim;
+    prim = self->ext.sypha.prim;
     posX = var_s1->x;
     posY = var_s1->y;
-    prim = self->ext.prim;
+    prim = self->ext.sypha.prim;
     offsetX = var_s1[1].x - posX;
     offsetY = var_s1[1].y - posY;
     angle = ratan2(offsetY, offsetX);
@@ -863,7 +863,7 @@ void EntityHolyLightning(Entity* self) {
         prim->drawMode = DRAW_HIDE;
         prim = prim->next;
     }
-    prim = self->ext.prim;
+    prim = self->ext.sypha.prim;
     while (prim != NULL) {
         if (g_Timer & 1) {
             prim->u0 = prim->u2 = 0xC0;
@@ -923,7 +923,7 @@ void EntitySummonAttack(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
-        self->ext.prim = prim;
+        self->ext.sypha.prim = prim;
         posX = self->posX.i.hi - 0x10;
         posY = 0xE0 - g_Tilemap.scrollY.i.hi;
         while (prim != NULL) {
@@ -949,7 +949,7 @@ void EntitySummonAttack(Entity* self) {
             self->step_s++;
             // fallthrough
         case 1:
-            prim = self->ext.prim;
+            prim = self->ext.sypha.prim;
             brightness = 0;
             while (prim != NULL) {
                 prim->y0 = prim->y1 -= 4;
@@ -960,7 +960,7 @@ void EntitySummonAttack(Entity* self) {
                 self->step_s++;
             }
 
-            prim = self->ext.prim;
+            prim = self->ext.sypha.prim;
             while (prim != NULL) {
                 if (Random() & 1) {
                     prim->y0 = prim->y1 += 4;
@@ -970,7 +970,7 @@ void EntitySummonAttack(Entity* self) {
                 prim = prim->next;
             }
 
-            prim = self->ext.prim;
+            prim = self->ext.sypha.prim;
             red = self->ext.sypha.red += 0x70;
             green = self->ext.sypha.green += 0x40;
             blue = self->ext.sypha.blue += 0x10;
@@ -995,7 +995,7 @@ void EntitySummonAttack(Entity* self) {
             self->step_s++;
             // fallthrough
         case 3:
-            prim = self->ext.prim;
+            prim = self->ext.sypha.prim;
             while (prim != NULL) {
                 if (Random() & 1) {
                     prim->y0 = prim->y1 += 4;
@@ -1008,7 +1008,7 @@ void EntitySummonAttack(Entity* self) {
             if (!--self->ext.sypha.timer) {
                 self->step_s++;
             }
-            prim = self->ext.prim;
+            prim = self->ext.sypha.prim;
             red = self->ext.sypha.red += 0x70;
             green = self->ext.sypha.green += 0x40;
             blue = self->ext.sypha.blue += 0x10;
@@ -1026,7 +1026,7 @@ void EntitySummonAttack(Entity* self) {
             }
             break;
         case 4:
-            prim = self->ext.prim;
+            prim = self->ext.sypha.prim;
             brightness = 0;
             while (prim != NULL) {
                 brightness = PrimDecreaseBrightness(prim, 10);

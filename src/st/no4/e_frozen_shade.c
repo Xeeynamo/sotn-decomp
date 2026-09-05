@@ -670,7 +670,8 @@ void EntityFrozenShade(Entity* self) {
         case 2:
             tempVar = self->ext.frozenShade.unk84;
             var_s4 = 0;
-#ifdef VERSION_PSP
+#if defined(VERSION_PSP) || defined(FIX_UB)
+            // on PS1, prim2 was unassigned at tempVar > 0x30.
             prim2 = self->ext.frozenShade.unk90;
             if (tempVar < 0x30) {
                 prim2->v2 = prim2->v3--;

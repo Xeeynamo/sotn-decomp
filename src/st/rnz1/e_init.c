@@ -12,7 +12,7 @@ void EntityRoomForeground(Entity* self);
 void EntityStageNamePopup(Entity* self);
 void EntityEquipItemDrop(Entity* self);
 void EntityRelicOrb(Entity* self);
-void EntityHeartDrop(Entity* self);
+void EntityPersistentItemDrop(Entity* self);
 void EntityEnemyBlood(Entity* self);
 void EntityMessageBox(Entity* self);
 void EntityDummy(Entity* self);
@@ -32,7 +32,7 @@ void EntityGearSidewaysSmall(Entity* self);
 void EntityWallGear(Entity* self);
 void EntityBreakableWall(Entity* self);
 void EntitySecretWallDebris(Entity* self);
-void func_us_801A8F7C(Entity* self);
+void EntityRoomExit(Entity* self);
 void EntityBreakableWallPartial(Entity* self);
 void EntitySecretAreaDoor(Entity* self);
 void EntityWaterForeground(Entity* self);
@@ -46,12 +46,12 @@ void EntitySpikes(Entity* self);
 void EntitySpikesParts(Entity* self);
 void EntitySpikesDust(Entity* self);
 void EntitySpikesDamage(Entity* self);
-void func_us_801A9DB8(Entity* self);
-void EntityFrozenShadeCrystal(Entity* self);
+void EntityDarkwingBat(Entity* self);
+void EntityDarkwingBatPerch(Entity* self);
 void func_us_801ABDE4(Entity* self);
-void func_us_801AAF00(Entity* self);
-void func_us_801AB04C(Entity* self);
-void EntityBossDoorTrigger(Entity* self);
+void EntityDarkwingWindDust(Entity* self);
+void EntityFadingFireball(Entity* self);
+void EntityBossFightManager(Entity* self);
 void EntityBossDoors(Entity* self);
 void EntityLifeUpSpawn(Entity* self);
 void EntityCloakedKnight(Entity* self);
@@ -88,7 +88,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityStageNamePopup,
     EntityEquipItemDrop,
     EntityRelicOrb,
-    EntityHeartDrop,
+    EntityPersistentItemDrop,
     EntityEnemyBlood,
     EntityMessageBox,
     EntityDummy,
@@ -108,7 +108,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityWallGear,
     EntityBreakableWall,
     EntitySecretWallDebris,
-    func_us_801A8F7C,
+    EntityRoomExit,
     EntityBreakableWallPartial,
     EntitySecretAreaDoor,
     EntityWaterForeground,
@@ -122,12 +122,12 @@ PfnEntityUpdate EntityUpdates[] = {
     EntitySpikesParts,
     EntitySpikesDust,
     EntitySpikesDamage,
-    func_us_801A9DB8,
-    EntityFrozenShadeCrystal,
+    EntityDarkwingBat,
+    EntityDarkwingBatPerch,
     func_us_801ABDE4,
-    func_us_801AAF00,
-    func_us_801AB04C,
-    EntityBossDoorTrigger,
+    EntityDarkwingWindDust,
+    EntityFadingFireball,
+    EntityBossFightManager,
     EntityBossDoors,
     EntityLifeUpSpawn,
     EntityCloakedKnight,
@@ -167,15 +167,15 @@ EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
 EInit g_EInitUnused80180B7C = {ANIMSET_OVL(1), 0, 0, 0, 0x003};
 EInit g_EInitPlateLord = {ANIMSET_OVL(11), 1, 72, 538, 0x061};
 EInit g_EInitUnused80180B94 = {ANIMSET_OVL(11), 22, 72, 538, 0x062};
-EInit D_us_80180BA0 = {ANIMSET_OVL(1), 0, 0, 0, 0x005};
+EInit g_EInitEnvironment = {ANIMSET_OVL(1), 0, 0, 0, 0x005};
 EInit g_EInitUnused80180BAC = {ANIMSET_OVL(3), 0, 0, 0, 0x005};
 EInit g_EInitDarkwingBat = {ANIMSET_OVL(5), 1, 72, 512, 0x111};
 EInit D_us_80180BC4 = {ANIMSET_OVL(5), 0, 72, 512, 0x005};
 EInit g_EInitCloakedknight = {ANIMSET_OVL(6), 1, 72, 528, 0x10F};
 EInit g_EInitCloakedKnightAura = {ANIMSET_OVL(6), 1, 72, 528, 0x002};
 EInit D_us_80180BE8 = {ANIMSET_OVL(6), 1, 72, 528, 0x110};
-EInit g_EInitMedusaHead1 = {ANIMSET_OVL(7), 0, 73, 533, 0x12F};
-EInit g_EInitMedusaHead2 = {ANIMSET_OVL(7), 0, 73, 534, 0x130};
+EInit g_EInitMedusaHeadBlue = {ANIMSET_OVL(7), 0, 73, 533, 0x12F};
+EInit g_EInitMedusaHeadYellow = {ANIMSET_OVL(7), 0, 73, 534, 0x130};
 EInit g_EInitValhallaKnight = {ANIMSET_OVL(8), 1, 76, 562, 0x085};
 EInit D_us_80180C18 = {ANIMSET_OVL(8), 1, 76, 562, 0x003};
 EInit D_us_80180C24 = {ANIMSET_OVL(0), 0, 0, 0, 0x086};

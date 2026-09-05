@@ -21,10 +21,9 @@ EntityPrizeDrop = 0x09241E40;
 EntityExplosion = 0x09242C58;
 EntityEquipItemDrop = 0x09242F58;
 EntityRelicOrb = 0x092437B0;
-EntityHeartDrop = 0x092448E8;
+EntityPersistentItemDrop = 0x092448E8;
 EntityMessageBox = 0x09244AB0;
 EntityUnkId13 = 0x09245370;
-EntityExplosionVariantsSpawner = 0x092454B8;
 EntityExplosionVariants = 0x09245768;
 EntityGreyPuff = 0x092458E0;
 EntityIntenseExplosion = 0x09245A60;
@@ -55,16 +54,13 @@ SetStep = 0x0924DFA8;
 SetSubStep = 0x0924DFF8;
 InitializeEntity = 0x0924E038;
 EntityDummy = 0x0924E1E0;
-GetPlayerCollisionWith = 0x0924E3A8;
 UnkPrimHelper = 0x0924E978; // end st_common
 FindFirstUnkPrim = 0x0924F0F8;
 FindFirstUnkPrim2 = 0x0924F148;
 UnkPolyFunc2 = 0x0924F308;
 UnkPolyFunc0 = 0x0924F370;
-InitEntityIds = 0x09251098; // source=match
-BO0_Load = 0x09251368;
 EntityBreakable = 0x092513E0;
-func_psp_0923D390 = 0x09251648;
+EntitySealedDoor = 0x09251648;
 Entity3DHouseSpawner = 0x09253380; // source=match
 Entity3DBackgroundHouse = 0x09253480; // source=match
 EntityChair = 0x09253978;
@@ -75,11 +71,15 @@ func_us_801B4148 = 0x09254868; // source=match
 func_us_801B41A4 = 0x092548D0; // source=match
 func_us_801B4210 = 0x09254958; // source=match
 EntityBackgroundBlock = 0x09254B48;
+EntityRealOlroxDrool = 0x09258688;
+func_us_801AD338 = 0x09258F58;
 EntityOlroxAfterImage = 0x0925D268;
+func_us_801B001C = 0x0925D328;
 func_psp_09239568 = 0x0925E0C8;
 func_us_801B163C = 0x0925E1B0;
 EntityPrisoner = 0x09268E80;
 EntityLockCamera = 0x09269500;
+EntityBossDoors = 0x09269760;
 func_us_801B72E8 = 0x09269E10; // source=match
 EntitySpikesDust = 0x0926A1B0;
 EntitySpikesParts = 0x0926A288; // source=match
@@ -112,13 +112,31 @@ g_EInitOwlKnightSword = 0x09275F10;
 g_EInitOwl = 0x09275F20;
 g_EInitBloodyZombie = 0x09275F30;
 g_EInitOlroxAfterImage = 0x09275F40;
+g_EInitBossDoors = 0x09275FD0;
 rooms = 0x09275FE0;
-BO0_Overlay = 0x0928F1C8;
+g_Overlay = 0x0928F1C8;
 BackgroundBlockInit = 0x0928F488;
-D_psp_E_UNK_49 = 0x092903A8;
-D_psp_E_SPIKES_DAMAGE = 0x092903B0;
-D_psp_E_PRISONER = 0x092904A8;
-D_psp_E_SPIKES_DUST = 0x092904D8;
-D_psp_E_SPIKES_PARTS = 0x092904E0;
-D_psp_E_3D_BACKGROUND_HOUSE = 0x09290500;
+D_psp_E_UNK_47 = 0x092903B8;
+D_psp_E_LIFE_UP_SPAWN = 0x092903F8;
+D_psp_E_UNK_3E = 0x09290400;
+D_psp_E_OLROX_DROOL = 0x09290408;
+D_psp_E_UNK_3C = 0x09290410;
+D_psp_E_UNK_3B = 0x09290418;
+D_psp_E_UNK_3A = 0x09290420;
+D_psp_E_UNK_39 = 0x09290428;
+D_psp_E_UNK_38 = 0x09290430;
+D_psp_E_UNK_37 = 0x09290438;
+D_psp_E_UNK_36 = 0x09290440;
+D_psp_E_UNK_35 = 0x09290448;
+D_psp_E_UNK_34 = 0x09290450;
+D_psp_E_UNK_33 = 0x09290458;
+D_psp_E_UNK_32 = 0x09290460;
+D_psp_E_UNK_31 = 0x09290468;
+D_psp_E_UNK_30 = 0x09290470;
+D_psp_E_UNK_2F = 0x09290478;
+D_psp_E_UNK_2E = 0x09290480;
+D_psp_E_UNK_2D = 0x09290488;
+D_psp_E_OLROX_AFTER_IMAGE = 0x09290490;
+D_psp_E_ID_2A = 0x092904A0;
 PrizeDrops = 0x09290578;
+D_us_80181190 = 0x092907A0;

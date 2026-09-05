@@ -1163,7 +1163,7 @@ void RicStepDeadPrologue(void) {
     switch (PLAYER.step_s) {
     case 0:
         g_CurrentEntity->flags |= FLAG_UNK_10000;
-        g_unkGraphicsStruct.unk20 = 4;
+        g_unkGraphicsStruct.unk28 = 4;
         RicDecelerateX(FIX(0.125));
         if (PLAYER.velocityX == 0) {
             RicSetAnimation(D_80155748);
@@ -1267,7 +1267,7 @@ void RicStepDeadPrologue(void) {
     case 7:
         if (PLAYER.poseTimer < 0) {
             g_CurrentEntity->flags &= ~FLAG_UNK_10000;
-            g_unkGraphicsStruct.unk20 = 0;
+            g_unkGraphicsStruct.unk28 = 0;
             RicSetFall();
             RicSetAnimation(D_801558DC);
             g_Player.timers[PL_T_INVINCIBLE_SCENE] = 4;
@@ -1358,7 +1358,7 @@ static void func_8015BB80(void) {
             PLAYER.posX.i.hi++;
         }
     }
-    if (g_StageId == (STAGE_TOP | STAGE_INVERTEDCASTLE_FLAG)) {
+    if (g_StageId == STAGE_RTOP) {
         if (abs((g_Tilemap.left << 8) + g_PlayerX) - 8384 > 0) {
             PLAYER.posX.i.hi--;
         }

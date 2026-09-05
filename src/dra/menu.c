@@ -173,7 +173,7 @@ bool IsAlucart(void) {
     return false;
 }
 
-void func_800F4994(void) {
+void UpdateEquipStatBonuses(void) {
     s32* statsPtr;
     s32 correctStonesEquipped;
     s32 hourOfDay;
@@ -419,7 +419,7 @@ void CalcDefense(void) {
 }
 
 void make_all(void) {
-    func_800F4994();
+    UpdateEquipStatBonuses();
     make_att();
     CalcDefense();
 }

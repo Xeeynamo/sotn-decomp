@@ -3,10 +3,7 @@
 #include "sattypes.h"
 #include "game.h"
 
-extern u16* g_LayoutObjHorizontal;
-extern u16* g_LayoutObjVertical;
-extern u8 g_LayoutObjPosHorizontal;
-extern u8 g_LayoutObjPosVertical;
+void DestroyEntity(Entity* entity);
 
 static void CreateEntityFromLayout(Entity* entity, LayoutEntity* initDesc) {
     s32 entityId;

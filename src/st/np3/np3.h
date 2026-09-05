@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "stage.h"
 
-#define OVL_EXPORT(x) NP3_##x
 #define STAGE_IS_NP3
 
 enum Palettes {
@@ -25,7 +24,7 @@ typedef enum EntityID {
     /* 0x09 */ E_STAGE_NAME_POPUP,
     /* 0x0A */ E_EQUIP_ITEM_DROP,
     /* 0x0B */ E_RELIC_ORB,
-    /* 0x0C */ E_HEART_DROP,
+    /* 0x0C */ E_PERSISTENT_ITEM_DROP,
     /* 0x0D */ E_ENEMY_BLOOD,
     /* 0x0E */ E_MESSAGE_BOX,
     /* 0x0F */ E_DUMMY_0F,
@@ -131,7 +130,7 @@ extern EInit g_EInitSlograSpearNP3;
 extern EInit g_EInitSlograProjectileNP3;
 extern EInit g_EInitGaibonNP3;
 extern EInit g_EInitGaibonProjectileNP3;
-extern EInit g_EInitGaibonLargeProjectileNP3;
+extern EInit g_EInitGaibonLargeProjectile;
 extern EInit g_EInitHammer;
 extern EInit g_EInitHammerWeapon;
 extern EInit g_EInitGurkha;

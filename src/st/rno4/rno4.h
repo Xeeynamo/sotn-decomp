@@ -10,7 +10,7 @@ enum Palettes {
     PAL_NONE,
 };
 
-enum Entities {
+typedef enum EntityID {
     E_NONE,
     E_BREAKABLE,                 // EntityBreakable
     E_EXPLOSION,                 // EntityExplosion
@@ -23,7 +23,7 @@ enum Entities {
     E_STAGE_NAME_POPUP,          // EntityStageNamePopup
     E_EQUIP_ITEM_DROP,           // EntityEquipItemDrop
     E_RELIC_ORB,                 // EntityRelicOrb
-    E_HEART_DROP,                // EntityHeartDrop
+    E_PERSISTENT_ITEM_DROP,      // EntityPersistentItemDrop
     E_ENEMY_BLOOD,               // EntityEnemyBlood
     E_DUMMY_E,                   // EntityDummy
     E_DUMMY_F,                   // EntityDummy
@@ -42,7 +42,7 @@ enum Entities {
     E_UNK_1C,                    // func_us_801C12B0_from_no4
     E_UNK_1D,                    // func_us_801C15F8_from_no4
     E_UNK_1E,                    // func_us_801C5364
-    E_UNK_1F,                    // func_us_801C1C94_from_no4
+    E_UNK_1F,                    // EntityBgColumnsParallax_from_no4
     E_UNK_20,                    // func_us_801C1EE4_from_no4
     E_UNK_21,                    // func_us_801C5C78
     E_UNK_22,                    // func_us_801C5EE4
@@ -72,7 +72,7 @@ enum Entities {
     E_UNK_3A,                    // func_us_801C8668
     E_UNK_3B,                    // Unused801C8704
     E_UNK_3C,                    // func_us_801C123C_from_no4
-    E_UNK_3D,                    // func_us_801D511C
+    E_SUBWPN_IN_CONT,            // func_us_801D511C
     E_UNK_3E,                    // func_us_801D58FC
     E_UNK_3F,                    // func_us_801D5BA4
     E_UNK_40,                    // func_us_801D5E90
@@ -95,11 +95,11 @@ enum Entities {
     E_BREAKABLE_WALL,            // EntityBreakableWall
     E_BREAKABLE_WALL_DEBRIS,     // EntityBreakableWallDebris
     E_JACKO_BONES,               // EntityJackOBones
-    E_JACKO_BONES_DEATH_PARTS,   // EntityJackOBonesDeathParts
-    E_JACKO_BONES_JACK,          // EntityJackOBonesJack
+    E_JACKO_DEATH_PARTS,         // EntityJackOBonesDeathParts
+    E_JACKO_JACK,                // EntityJackOBonesJack
     E_NOVA_SKELETON,             // EntityNovaSkeleton
     E_NOVA_LASER,                // EntityNovaLaser
-    E_NOVA_LASER_PULSE,          // EntityNovaLaserPulse
+    E_NOVA_PULSE,                // EntityNovaLaserPulse
     E_BLADE_SOLDIER_DEATH_PARTS, // EntityBladeSoldierDeathParts
     E_IMP,                       // EntityImp
     E_IMP_SMOKE,                 // EntityImpSmoke
@@ -109,5 +109,13 @@ enum Entities {
     E_KILLER_FISH_DEATH_PUFF,    // EntityKillerFishDeathPuff
     NUM_ENTITIES,
 };
+
+extern EInit g_EInitObtainable;
+extern EInit g_EInitParticle;
+extern EInit g_EInitInteractable;
+extern EInit g_EInitCommon;
+extern EInit g_EInitNovaSkeleton;
+extern EInit D_us_80180C20;
+extern EInit g_EInitKillerFish;
 
 #endif // RNO4_H

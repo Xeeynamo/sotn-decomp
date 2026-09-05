@@ -318,6 +318,8 @@ files:
             - [0x17338, palette, pal_246, 16] # 0x246
             - [0x17478, palette, pal_slime, 16] # 0x204
             - [0x174F8, skip]
+            - [0x2F528, spriteset, unused_sprites]
+            - [0x2FA64, skip]
   - target: disks/us/ST/CEN/CEN.BIN
     asset_path: assets/st/cen
     src_path: src/st/cen
@@ -349,7 +351,7 @@ files:
           - [0x698C, palette, e_maria_cen_p, 16] # 0x210
           - [0x69AC, palette, e_elevator_cen_p, 16] # 0x223
           - [0x69EC, skip] # tile data
-          - [0x81EC, tiledef, unused]
+          - [0x81EC, tiledef, load]
           - [0x85FC, skip] # the other used tile definition
           - [0xC60C, skip] # sprites
   - target: disks/us/ST/CHI/CHI.BIN
@@ -496,7 +498,7 @@ files:
           - [0xB348, palette, pal_portrait_succubus, 16] # 0x218
           #- [0xB448, palette, pal_unused_B448, 16]
           - [0xB548, skip] # tile data
-          - [0xBD48, tiledef, unused]
+          - [0xBD48, tiledef, load]
           - [0xC158, skip] # the other used tile definition
           - [0x10168, skip] # sprites
   - target: disks/us/ST/LIB/LIB.BIN
@@ -580,7 +582,7 @@ files:
           - [0x1D14, cmpgfx, stage_title_mad_jp, 128, 128, 4] # unused
           - [0x2058, palette, pal_2058, 16] # 0x200
           - [0x2078, skip] # tile data
-          - [0x4A88, tiledef, unused]
+          - [0x4A88, tiledef, save]
           - [0x8A98, skip] # the other used tile definition
   - target: disks/us/ST/NO0/NO0.BIN
     asset_path: assets/st/no0
@@ -594,7 +596,7 @@ files:
           - [0x90, paldef, palette_def]
           - [0x150, layers, layers]
           - [0x5B8, gfx_banks, graphics_banks]
-          - [0x778, skip] #- [0x778, layout, entity_layouts]
+          - [0x778, layout, entity_layouts]
           - [0x27E0, rooms, rooms]
           - [0x291C, skip]
           - [0x48A0, cmpgfx, stage_title_no0, 128, 128, 4]
@@ -637,6 +639,8 @@ files:
           - [0x1783C, palette, e_skeleton_pal, 16]
           - [0x1785C, palette, e_door_pal, 16] # 0x244 palette appears unused in EInit
           - [0x1791C, skip]
+          - [0x411B0, spriteset, ctulhu_shockwave_uvs]
+          - [0x41368, skip]
   - target: disks/us/ST/NO1/NO1.BIN
     asset_path: assets/st/no1
     src_path: src/st/no1
@@ -1231,7 +1235,7 @@ files:
       - start: 0
         vram: 0x80180000
         assets:
-          - [0x2C, sprite_banks, sprite_banks]
+          - [0x2C, sprite_banks, us/sprite_banks]
           - [0x8C, paldef, palette_def]
           - [0x134, layers, layers]
           - [0x59C, gfx_banks, graphics_banks]
@@ -1271,6 +1275,8 @@ files:
           - [0x11800, palette, D_80191800, 16] # 0x250
           - [0x11840, palette, D_80191840, 16] # 0x258
           - [0x11900, skip]
+          - [0x30530, spriteset, unused_sprites]
+          - [0x307B4, skip]
   - target: disks/us/ST/RNO1/RNO1.BIN
     asset_path: assets/st/rno1
     src_path: src/st/rno1
@@ -1295,7 +1301,8 @@ files:
           - [0x794, skip]
           - [0x2B20, rooms, us/rooms]
           - [0x2C24, skip]
-          - [0x39BC, cmpgfx, golem_maker, 128, 128, 4]
+          - [0x39BC, cmpgfx, stage_title_rno3_jp, 128, 128, 4] # unused
+          - [0x3D00, cmpgfx, stage_placeholder_rno3, 128, 128, 4] # unused
           - [0x42A4, cmpgfx, e_fire_warg, 128, 128, 4]
           - [0x5430, cmpgfx, e_fire_warg2, 128, 128, 4]
           - [0x6510, cmpgfx, e_fire_warg3, 128, 128, 4]
@@ -1323,6 +1330,14 @@ files:
     asset_path: assets/st/rno4
     src_path: src/st/rno4
     splat_config_path: config/splat.us.strno4.yaml
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x134, layers, layers]
+          - [0x960, skip]
+          - [0x2C00, rooms, rooms]
+          - [0x2D58, skip]
   - target: disks/us/ST/RNZ0/RNZ0.BIN
     asset_path: assets/st/rnz0
     src_path: src/st/rnz0
@@ -1381,6 +1396,15 @@ files:
     asset_path: assets/st/rnz1
     src_path: src/st/rnz1
     splat_config_path: config/splat.us.strnz1.yaml
+    segments:
+    - start: 0
+      vram: 0x80180000
+      assets:
+        - [0x40, sprite_banks, sprite_banks]
+        - [0xA0, skip] #paldef, palette_def]
+        - [0x840, layout, entity_layouts]
+        - [0x9E8, skip]
+
   - target: disks/us/ST/RTOP/RTOP.BIN
     asset_path: assets/st/rtop
     src_path: src/st/rtop
@@ -1482,6 +1506,63 @@ files:
     asset_path: assets/boss/bo1
     src_path: src/boss/bo1
     splat_config_path: config/splat.us.bobo1.yaml
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x2C, sprite_banks, us/sprite_banks]
+          - [0x8C, palette, pal_8C, 16]
+          - [0xAC, palette, pal_AC, 16]
+          - [0xCC, palette, pal_CC, 16]
+          - [0x12C, palette, pal_12C, 16]
+          - [0x18C, palette, pal_18C, 16]
+          - [0x1EC, palette, pal_1EC, 16]
+          - [0x24C, palette, pal_24C, 16]
+          - [0x26C, palette, pal_26C, 16]
+          - [0x2CC, palette, pal_2CC, 16]
+          - [0x2EC, palette, pal_2EC, 16]
+          - [0x30C, palette, pal_30C, 16]
+          - [0x32C, palette, pal_32C, 16]
+          - [0x34C, palette, pal_34C, 16]
+          - [0x38C, palette, pal_38C, 16]
+          - [0x3CC, palette, pal_3CC, 16]
+          - [0x3EC, palette, pal_3EC, 16]
+          - [0x40C, palette, pal_40C, 16]
+          - [0x4CC, palette, pal_4CC, 16]
+          - [0x58C, paldef, palette_def]
+          - [0x6D4, layers, layers]
+          - [0x70C, gfx_banks, graphics_banks]
+          - [0x850, layout, entity_layouts]
+          - [0x9F8, skip]
+          - [0x1B5C, rooms, rooms]
+          - [0x1B78, skip]
+          - [0x1D84, cmpgfx, gfx_1D84, 128, 128, 4, 0x14938]
+          - [0x2F38, cmpgfx, gfx_2F38, 128, 128, 4, 0x14918]
+          - [0x3BA4, cmpgfx, gfx_3BA4, 128, 128, 4, 0x14938]
+          - [0x4858, cmpgfx, gfx_4858, 128, 128, 4, 0x14938]
+          - [0x5844, cmpgfx, gfx_5844, 128, 128, 4, 0x14938]
+          - [0x6934, cmpgfx, gfx_6934, 128, 128, 4, 0x14938]
+          - [0x7704, cmpgfx, gfx_7704, 128, 128, 4, 0x14938]
+          - [0x872C, cmpgfx, gfx_872C, 128, 128, 4, 0x14938]
+          - [0x966C, cmpgfx, gfx_966C, 128, 128, 4, 0x14938]
+          - [0xA73C, cmpgfx, gfx_A73C, 128, 128, 4, 0x14938]
+          - [0xB4E8, cmpgfx, gfx_B4E8, 128, 128, 4, 0x14938]
+          - [0xC214, cmpgfx, gfx_C214, 128, 128, 4, 0x14938]
+          - [0xD264, cmpgfx, gfx_D264, 128, 128, 4, 0x14938]
+          - [0xE170, cmpgfx, gfx_E170, 128, 128, 4, 0x14938]
+          - [0xF658, cmpgfx, gfx_F658, 128, 128, 4, 0x14938]
+          - [0x108E0, cmpgfx, gfx_108E0, 128, 128, 4, 0x14938]
+          - [0x11A08, cmpgfx, gfx_11A08, 128, 128, 4, 0x149D8]
+          - [0x12984, cmpgfx, gfx_12984, 128, 128, 4, 0x149D8]
+          - [0x13330, cmpgfx, gfx_13330, 128, 128, 4, 0x149D8]
+          - [0x14228, cmpgfx, gfx_14228, 128, 128, 4, 0x149D8]
+          - [0x14918, palette, pal_granfaloon, 16] # 0x200
+          - [0x149D8, palette, pal_explosion_flame, 16] # 0x2E0
+          - [0x14BD8, palette, pal_14BD8, 16] # unused
+          - [0x14C98, skip] # the two tilemaps referenced by the layers
+          - [0x15C98, tiledef, load] # 0x100 tiles per section
+          - [0x160A8, tiledef, save] # 0x1000 tiles per section
+          - [0x1A0B8, skip] # the tile definition referenced by the layers
   - target: disks/us/BOSS/BO2/BO2.BIN
     asset_path: assets/boss/bo2
     src_path: src/boss/bo2

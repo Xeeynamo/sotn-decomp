@@ -1472,16 +1472,24 @@ void EntityRelicOrb(Entity* self) {
 
 #if STAGE != STAGE_ST0
 // defined in d_prize_drops.c
+#ifndef STAGE_PRIZE_DROPS
 extern u16 PrizeDrops[];
+#define STAGE_PRIZE_DROPS PrizeDrops
+#endif
 
-// params: Local index of this drop
-void EntityHeartDrop(Entity* self) {
+// EntityPersistentItemDrop: Handles persistent room item drops (hearts, relics,
+// items, equipment). Checks g_CastleFlags via HEART_DROP_CASTLE_FLAG to prevent
+// re-spawning already collected items. Looks up item ID in PrizeDrops[] and
+// delegates entity update behavior to EntityPrizeDrop or EntityEquipItemDrop
+// depending on item index range (< 128 vs >= 128). params: Local index of this
+// drop
+void EntityPersistentItemDrop(Entity* self) {
     u16 index;
     u8 value;
     PfnEntityUpdate update;
 
     if (!self->step) {
-        index = self->ext.heartDrop.unkB4 =
+        index = self->ext.persistentDrop.unkB4 =
             self->params + HEART_DROP_CASTLE_FLAG;
         value = g_CastleFlags[(index >> 3) + CASTLE_COLLECTIBLES_100] >>
                 (index & 7);
@@ -1491,7 +1499,7 @@ void EntityHeartDrop(Entity* self) {
         }
 
         index -= HEART_DROP_CASTLE_FLAG;
-        index = PrizeDrops[index];
+        index = STAGE_PRIZE_DROPS[index];
         if (index < 128) {
             self->unkB8 = (Entity*)EntityPrizeDrop;
         } else {
@@ -1500,7 +1508,7 @@ void EntityHeartDrop(Entity* self) {
         }
         self->params = index + 0x8000;
     } else {
-        index = self->ext.heartDrop.unkB4;
+        index = self->ext.persistentDrop.unkB4;
         if (self->step < 5) {
             if (self->hitFlags) {
                 g_CastleFlags[(index >> 3) + CASTLE_COLLECTIBLES_100] |=

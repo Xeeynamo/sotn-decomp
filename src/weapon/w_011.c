@@ -264,7 +264,7 @@ void EntityWeaponShieldSpell(Entity* self) {
         self->velocityY = 0;
         DestroyEntityWeapon(1);
         g_api.PlaySfx(SFX_ANIME_SWORD_C);
-        g_unkGraphicsStruct.unk20 = 1;
+        g_unkGraphicsStruct.unk28 = 1;
         self->step++;
         break;
     case 1:
@@ -348,7 +348,7 @@ void EntityWeaponShieldSpell(Entity* self) {
             // Blueprint 88 is weapon function 9, func_ptr_80170024
             unusedEnt = g_api.CreateEntFactoryFromEntity(
                 self, ((g_HandId + 1) << 0xE) + 88, 0);
-            g_unkGraphicsStruct.unk20 = 0;
+            g_unkGraphicsStruct.unk28 = 0;
             self->step++;
         }
         break;
@@ -458,7 +458,8 @@ static void func_ptr_80170024(Entity* self) {
         } else {
             self->anim = D_51000_8017ABCC;
             self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
-            self->ext.shield.unkAE = self->ext.shield.parent->ext.shield.unkAE;
+            self->ext.shield.equipId =
+                self->ext.shield.parent->ext.shield.equipId;
             SetWeaponProperties(self, 0);
             self->hitboxWidth = 8;
             self->hitboxHeight = 20;

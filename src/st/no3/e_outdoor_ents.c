@@ -18,7 +18,7 @@ void EntityPushAlucard(Entity* self) {
         g_Player.padSim = 0;
         g_Player.demo_timer = 255;
         player->posX.i.hi = 0;
-        g_unkGraphicsStruct.unkC = 0;
+        g_unkGraphicsStruct.unk14 = 0;
         player->animCurFrame = 0;
         g_PauseAllowed = false;
         break;
@@ -40,8 +40,8 @@ void EntityPushAlucard(Entity* self) {
     // Give him a fake speed boost then return to center screen position
     case 2:
         player->posX.val += FIX(8.5);
-        g_unkGraphicsStruct.unkC += 4;
-        if (g_unkGraphicsStruct.unkC == 192) {
+        g_unkGraphicsStruct.unk14 += 4;
+        if (g_unkGraphicsStruct.unk14 == 192) {
             self->step++;
             self->ext.alucardController.unk80 = FIX(4.5);
         }
@@ -50,8 +50,8 @@ void EntityPushAlucard(Entity* self) {
         break;
 
     case 3:
-        if (g_unkGraphicsStruct.unkC > 128) {
-            g_unkGraphicsStruct.unkC -= 1;
+        if (g_unkGraphicsStruct.unk14 > 128) {
+            g_unkGraphicsStruct.unk14 -= 1;
             self->ext.alucardController.unk80 = FIX(3.5);
         } else {
             self->ext.alucardController.unk80 = FIX(4.5);

@@ -9,9 +9,6 @@ typedef enum {
     TELEPORT_CHECK_TO_TOP = 4
 } TeleportCheck;
 
-extern s32 g_PlayerX;
-extern s32 g_PlayerY;
-
 // GetTeleportToOtherCastle
 static TeleportCheck func_060A5060(void) {
     if (PLAYER.step != PL_S_STAND || PLAYER.step_s != 1) {
@@ -23,7 +20,7 @@ static TeleportCheck func_060A5060(void) {
             return TELEPORT_CHECK_TO_RTOP;
         }
     }
-    if (g_CurrentRoom.stageID == (STAGE_TOP | STAGE_INVERTEDCASTLE_FLAG)) {
+    if (g_CurrentRoom.stageID == STAGE_RTOP) {
         if (ABS((g_Tilemap.left << 8) + g_PlayerX - 8430) < 4 &&
             ABS((g_Tilemap.top << 8) + g_PlayerY - 14407) < 4) {
             return TELEPORT_CHECK_TO_TOP;
@@ -33,7 +30,6 @@ static TeleportCheck func_060A5060(void) {
 }
 
 // func_80156DE4
-extern s32 D_80154568[];
 static s16 func_80156DE4(void) {
     Collider collider;
     s32 yvar;
@@ -94,7 +90,27 @@ INCLUDE_ASM_NO_ALIGN("asm/saturn/richter/f_nonmat", f60A5AA0, func_060A5AA0);
 // ===== pl_steps.c
 
 // func_80158B04
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A6428, func_060A6428);
+void func_060A6428(u16 arg0) {
+    s32 xOffset;
+
+    xOffset = 3;
+    if (PLAYER.facingLeft) {
+        xOffset = -3;
+    }
+    PLAYER.posY.i.hi = PLAYER.posY.i.hi;
+    PLAYER.posX.i.hi += xOffset;
+    RicCreateEntFactoryFromEntity(g_CurrentEntity, 0x10004U, 0);
+    PLAYER.posY.i.hi = PLAYER.posY.i.hi;
+    PLAYER.posX.i.hi -= xOffset;
+    if (arg0 & 1) {
+        func_0600FB0C(3);
+        PlaySfx(0x644);
+    }
+    if (arg0 & 2) {
+        PLAYER.velocityX = 0;
+        PLAYER.velocityY = 0;
+    }
+}
 
 // RicStepStand
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A64CC, func_060A64CC);
@@ -141,8 +157,6 @@ void RicStepWalk(void) {
     }
 }
 
-extern AnimationFrame ric_anim_stop_run[];
-
 // RicStepRun
 void RicStepRun(void) {
     if (g_Player.unk7A != 0) {
@@ -184,7 +198,7 @@ void RicStepFall(void) {
     RicDecelerateX(FIX(0.078125));
     switch (PLAYER.step_s) {
     case 0:
-        if (g_Player.timers[PL_T_5] && (g_Player.padTapped & 0x100)) {
+        if (g_Player.timers[PL_T_5] && (g_Player.padTapped & PAD_CROSS)) {
             RicSetJump();
         } else if (RicCheckFacing()) {
             RicSetSpeedX(FIX(0.9375));
@@ -195,24 +209,24 @@ void RicStepFall(void) {
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A6DFC, func_060A6DFC);
 static void func_80159C04(void) {
     Entity* entity;
-    s16 var_s3;
-    s16 var_s2;
-    s16 var_s1;
+    s16 attackerOffX;
+    s16 playerOffX;
+    s16 distance;
 
-    entity = (Entity*)PLAYER.unkB4;
+    entity = PLAYER.unkB4;
     if (entity->facingLeft) {
-        var_s3 = -entity->hitboxOffX;
+        attackerOffX = -entity->hitboxOffX;
     } else {
-        var_s3 = entity->hitboxOffX;
+        attackerOffX = entity->hitboxOffX;
     }
     if (PLAYER.facingLeft) {
-        var_s2 = -PLAYER.hitboxOffX;
+        playerOffX = -PLAYER.hitboxOffX;
     } else {
-        var_s2 = PLAYER.hitboxOffX;
+        playerOffX = PLAYER.hitboxOffX;
     }
 
-    var_s1 = PLAYER.posX.i.hi + var_s2 - entity->posX.i.hi - var_s3;
-    if (ABS(var_s1) < 16 && entity->velocityX != 0) {
+    distance = PLAYER.posX.i.hi + playerOffX - entity->posX.i.hi - attackerOffX;
+    if (ABS(distance) < 16 && entity->velocityX != 0) {
         if (entity->velocityX < 0) {
             PLAYER.entityRoomIndex = 0;
             return;
@@ -221,7 +235,7 @@ static void func_80159C04(void) {
             return;
         }
     }
-    if (var_s1 < 0) {
+    if (distance < 0) {
         PLAYER.entityRoomIndex = 0;
     } else {
         PLAYER.entityRoomIndex = 1;
@@ -230,8 +244,6 @@ static void func_80159C04(void) {
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A7310, func_060A7310);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A7B78, func_060A7B78);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A7CF0, RicStepDead);
-extern u16 D_80155528[];
-extern u32 g_SubwpnCrashTimer;
 void RicStepStandInAir(void) {
     s16 palettes[] = {0, 20, 21, 22};
 
@@ -300,7 +312,6 @@ void RicStepHydrostorm(void) {
 }
 
 // RicStepGenericSubwpnCrash
-extern u32 g_SubwpnCrashTimer;
 void RicStepGenericSubwpnCrash(void) {
     if (g_Player.unk4E || ++g_SubwpnCrashTimer > 300) {
         g_SubwpnCrashTimer = 0;
@@ -315,7 +326,6 @@ void RicStepGenericSubwpnCrash(void) {
 }
 
 // RicStepThrowDaggers
-extern s32 throw_dagger_timer;
 void RicStepThrowDaggers(void) {
     if (PLAYER.step_s == 0) {
         throw_dagger_timer = 0x200;
@@ -346,7 +356,6 @@ void RicStepThrowDaggers(void) {
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A82F8, func_060A82F8);
 
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8664, func_060A8664);
-extern s32 g_PlayerX;
 static void func_8015BB80(void) {
     if (g_CurrentRoom.stageID == STAGE_TOP) {
         if (ABS((g_Tilemap.left << 8) + g_PlayerX) - 8079 > 0) {
@@ -356,7 +365,7 @@ static void func_8015BB80(void) {
             PLAYER.posX.i.hi++;
         }
     }
-    if (g_CurrentRoom.stageID == (STAGE_TOP | STAGE_INVERTEDCASTLE_FLAG)) {
+    if (g_CurrentRoom.stageID == STAGE_RTOP) {
         if (ABS((g_Tilemap.left << 8) + g_PlayerX) - 8430 > 0) {
             PLAYER.posX.i.hi--;
         }
@@ -390,8 +399,6 @@ void RicStepBladeDash(void) {
     }
 }
 
-extern void func_060A6428(u16 arg0);
-
 // RicStepHighJump
 void func_060A8D64(void) {
     bool loadAnim;
@@ -420,7 +427,7 @@ void func_060A8D64(void) {
             PLAYER.step_s = 2;
         } else if (g_Player.high_jump_timer > 0x1C) {
             PLAYER.step_s = 1;
-            PLAYER.velocityY = -0x60000;
+            PLAYER.velocityY = FIX(-6);
         }
         break;
     case 1:
@@ -429,8 +436,8 @@ void func_060A8D64(void) {
             func_060A6428(3);
             g_Player.high_jump_timer = 0;
         } else {
-            PLAYER.velocityY += 0x6000;
-            if (PLAYER.velocityY > 0x8000) {
+            PLAYER.velocityY += FIX(0.375);
+            if (PLAYER.velocityY > FIX(0.5)) {
                 loadAnim = true;
             }
         }
@@ -468,8 +475,6 @@ void RicSetInit(s32 step_s) {
 
 // RicSetCrouch
 extern AnimationFrame ric_anim_crouch[];
-extern AnimationFrame ric_anim_crouch_from_stand2[];
-extern AnimationFrame ric_anim_crouch_from_stand[];
 extern AnimationFrame ric_anim_land_from_air_run[];
 void RicSetCrouch(s32 kind, s32 velocityX) {
     RicSetStep(PL_S_CROUCH);
@@ -499,8 +504,6 @@ void RicSetStand(s32 velocityX) {
     RicSetStep(PL_S_STAND);
     RicSetAnimation(ric_anim_stand);
 }
-
-void RicSetRun(void);
 
 extern AnimationFrame ric_anim_walk[];
 // func_060A8FD0
@@ -590,7 +593,6 @@ void RicSetJump(void) {
 }
 
 // RicSetHighJump
-extern AnimationFrame ric_anim_high_jump[];
 void RicSetHighJump(void) {
     RicSetStep(PL_S_HIGHJUMP);
     PLAYER.velocityX = 0;
@@ -652,7 +654,6 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A97B0, func_060A97B0);
 void RicSetDeadPrologue() { RicSetStep(PL_S_DEAD_PROLOGUE); }
 
 // RicSetSlide
-extern AnimationFrame D_80155750[];
 void RicSetSlide(void) {
     RicCheckFacing();
     RicSetStep(PL_S_SLIDE);
@@ -665,7 +666,6 @@ void RicSetSlide(void) {
     g_Player.timers[PL_T_12] = 4;
 }
 
-extern AnimationFrame D_8015577C[1];
 #define SFX_VO_RIC_ATTACK_B 0x711
 
 // PlaySfx needs to be undefined here to match
@@ -684,7 +684,6 @@ void RicSetSlideKick(void) {
 }
 
 // RicSetBladeDash
-extern AnimationFrame ric_anim_blade_dash[];
 void RicSetBladeDash(void) {
     RicSetStep(PL_S_BLADEDASH);
     RicSetAnimation(ric_anim_blade_dash);
@@ -715,7 +714,8 @@ void RicSetAnimation(AnimationFrame* anim) {
     g_CurrentEntity->pose = 0;
 }
 
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA088, func_060AA088);
+#include "update_entity_sprite.h"
+
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA194, func_060AA194);
 
 void RicDecelerateX(s32 speed) {
@@ -823,17 +823,32 @@ void func_8015CC28(void) {
                 g_Entities[E_AFTERIMAGE_1].ext.afterImage.timer = 0;
 }
 
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA4F4, func_060AA4F4);
+void func_060AA4F4(s32 spawnParticles) {
+    Entity* source;
+    Entity* factory;
+
+    if (spawnParticles == 1) {
+        source = &PLAYER;
+        factory = RicCreateEntFactoryFromEntity(
+            source, FACTORY(BP_CRASH_DAGGER, 0x47), 0);
+        if (factory != NULL) {
+            factory->flags |= FLAG_UNK_10000;
+        }
+        factory = RicCreateEntFactoryFromEntity(
+            source, FACTORY(BP_CRASH_DAGGER, 0x40), 0);
+        if (factory != NULL) {
+            factory->flags |= FLAG_UNK_10000;
+        }
+    }
+
+    DisableAfterImage(1, 1);
+}
 
 // RicCheckInput
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA5C0, func_060AA5C0);
 
 // func_8015E484
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AAB80, func_060AAB80);
-
-extern Point32 g_RicSensorsCeiling[NUM_HORIZONTAL_SENSORS];
-extern Point32 g_RicSensorsFloor[NUM_HORIZONTAL_SENSORS];
-extern Point32 g_RicSensorsWall[NUM_VERTICAL_SENSORS * 2];
 
 void RicGetPlayerSensor(Collider* col) {
     col->unk14 = g_RicSensorsWall[0].x;
@@ -905,22 +920,12 @@ void func_8015F9F0(Entity* entity) {
     }
 }
 
-extern u8 D_80154674[][4];
-extern u8 D_80174FAC;
-extern u8 D_80174FB0;
-extern u8 D_80174FB4;
-extern u8 D_80174FB8;
-
 void func_8015FA5C(s32 arg0) {
     D_80174FAC = D_80154674[arg0][0];
     D_80174FB0 = D_80154674[arg0][1];
     D_80174FB4 = D_80154674[arg0][2];
     D_80174FB8 = D_80154674[arg0][3];
 }
-
-// RicSetSubweaponParams
-extern s32 func_0606F328(s32 arg0);
-extern SubweaponDef ric_subweapons_def[];
 
 // RicSetSubweaponParams
 void func_060ABA98(Entity* entity) {
@@ -932,11 +937,11 @@ void func_060ABA98(Entity* entity) {
         entity->attack = subwpn->attack;
     }
     entity->attackElement = subwpn->attackElement;
-    entity->hitboxState = subwpn->sp1C;
-    entity->nFramesInvincibility = subwpn->sp17;
-    entity->stunFrames = subwpn->sp18;
-    entity->hitEffect = subwpn->sp1E;
-    entity->entityRoomIndex = subwpn->sp22;
+    entity->hitboxState = subwpn->hitboxState;
+    entity->nFramesInvincibility = subwpn->nFramesInvincibility;
+    entity->stunFrames = subwpn->stunFrames;
+    entity->hitEffect = subwpn->hitEffect;
+    entity->entityRoomIndex = subwpn->entityRoomIndex;
     entity->attack = func_0606F328(entity->attack);
     func_8015F9F0(entity);
 }
@@ -944,7 +949,6 @@ void func_060ABA98(Entity* entity) {
 // func_8015FB84
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ABB78, func_060ABB78);
 
-// func_8015FDB0
 typedef struct {
     u8 pad[8];
     u16 uv0;
@@ -957,19 +961,10 @@ typedef struct {
     s16 y1;
 } RicPrimitive;
 
-typedef struct {
-    u16 uv0;
-    u16 uv1;
-} RicUvPair;
-
-extern u16 g_RichterSpritePackage3AllocationIndex;
-extern u8 D_060BF1A4[];
-extern RicUvPair DAT_0605aec0[];
-
 s32 func_8015FDB0(RicPrimitive* prim, s16 posX, s16 posY) {
     s16 offset;
     s16 xOffset;
-    RicUvPair* uvAnim;
+    u16* ptr;
     u16* frameWord = &prim->frame;
     u8 frame = ((u8*)frameWord)[1];
 
@@ -989,10 +984,10 @@ s32 func_8015FDB0(RicPrimitive* prim, s16 posX, s16 posY) {
     prim->x1 = posX + xOffset;
     prim->y1 = posY + offset;
 
-    uvAnim = &DAT_0605aec0[g_RichterSpritePackage3AllocationIndex +
-                           D_060BF1A4[frame]];
-    prim->uv0 = uvAnim->uv0;
-    prim->uv1 = uvAnim->uv1;
+    ptr = DAT_0605aec0[g_RichterSpritePackage3AllocationIndex +
+                       D_060BF1A4[frame]];
+    prim->uv0 = ptr[0];
+    prim->uv1 = ptr[1];
 
     prim->timer++;
     if (!(prim->timer & 1)) {
@@ -1000,6 +995,7 @@ s32 func_8015FDB0(RicPrimitive* prim, s16 posX, s16 posY) {
     }
     return 0;
 }
+
 const u16 pad_60ABCD4[] = {0xAAAA, 0xAAAB};
 
 // RicEntityHitByHoly
@@ -1011,11 +1007,32 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ABF34, func_060ABF34);
 // RicUpdatePlayerEntities
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AC0E0, func_060AC0E0);
 
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AC2DC, func_060AC2DC);
+// Runs the update function of every non-player entity slot.
+void func_060AC2DC(void) {
+    Entity* entity;
+    s32 i;
 
-Entity* RicCreateEntFactoryFromEntity(
-    Entity* source, u32 factoryParams, s32 arg2);
-// RicCreateEntFactoryFromEntity
+    if (PLAYER.unk0 != NULL) {
+        g_CurrentEntity = entity = &g_Entities[UNK_ENTITY_4];
+        i = UNK_ENTITY_4;
+        do {
+            if (!(entity->flags & FLAG_UNK_20000)) {
+                DestroyEntity(entity);
+            }
+            if ((entity->flags & FLAG_UNK_02000000) && (entity->step != 0)) {
+                entity->flags |= FLAG_UNK_00200000;
+                entity->pfnUpdate(entity);
+                entity->flags &= ~FLAG_UNK_00200000;
+            }
+            i++;
+            g_CurrentEntity++;
+            entity++;
+        } while (i <= 0x3F);
+        // prevent inline
+        ((s32(*)(s32, s32))DisableAfterImage)(1, 3);
+    }
+}
+
 Entity* RicCreateEntFactoryFromEntity(
     Entity* source, u32 factoryParams, s32 arg2) {
     Entity* entity;
@@ -1056,7 +1073,6 @@ found:
 // RicEntityFactory
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AC46C, func_060AC46C);
 
-// RicEntitySlideKick
 void RicEntitySlideKick(Entity* entity) {
     void RicSetSubweaponParams(Entity * entity);
 
@@ -1088,7 +1104,6 @@ void RicEntitySlideKick(Entity* entity) {
     }
 }
 
-// func_80160D2C
 // func_80160D2C
 void func_060AC908(Entity* entity) {
     if (PLAYER.step != PL_S_SLIDE_KICK) {
@@ -1125,7 +1140,6 @@ void func_060AC908(Entity* entity) {
     entity->hitFlags = 0;
 }
 
-// RicEntityBladeDash
 void RicEntityBladeDash(Entity* self) {
     void RicSetSubweaponParams(Entity * entity);
 
@@ -1151,7 +1165,6 @@ void RicEntityBladeDash(Entity* self) {
     }
 }
 
-// func_80160F0C
 void func_80160F0C(Entity* self) {
     void RicSetSubweaponParams(Entity * entity);
 
@@ -1187,7 +1200,38 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ACFA0, func_060ACFA0);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AD780, func_060AD780);
 
 // func_80161EF8
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ADA34, func_060ADA34);
+void func_060ADA34(Entity* self) {
+    switch (self->step) {
+    case 0:
+        self->unk0 = CreateSpriteObject(
+            g_EntitySpriteBank01.allocationIndex, g_EntitySpriteBank01.flags,
+            g_EntitySpriteBank01.images, 5);
+        if (self->unk0 != NULL) {
+            self->ext.spriteEntity.frames = DAT_06045E14;
+            self->unk0->zPriority = g_Entities->zPriority + 4;
+            self->animSet = 2;
+            self->anim = anim_80154E38;
+            self->flags = 0x170000;
+            self->velocityY = (MTH_GetRand() & 0x3FFF) - FIX(1);
+            self->step++;
+        } else {
+            DestroyEntity(self);
+        }
+        break;
+
+    case 1:
+        if (self->pose == 6) {
+            if (self->poseTimer == 1 && (MTH_GetRand() & 1)) {
+                RicCreateEntFactoryFromEntity(self, 4, 0);
+            }
+        }
+        self->posY.val += self->velocityY;
+        if (self->poseTimer < 0) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 // RicEntityApplyMariaPowerAnim
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ADB2C, func_060ADB2C);
@@ -1270,7 +1314,6 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B061C, func_060B061C);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B12CC, func_060B12CC);
 
 // func_80167964
-extern s16 D_80155D30[];
 void func_80167964(Entity* entity) {
     if (g_Player.unk46 == 0) {
         DestroyEntity(entity);
@@ -1505,8 +1548,6 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B940C, func_060B940C);
 // ===== pl_subweapon_holywater.c
 void RicEntityNotImplemented3() {}
 
-const u16 pad_60B9666 = 0x0009; // nop
-
 // RicEntitySubwpnHolyWaterBreakGlass
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B9668, func_060B9668);
 
@@ -1591,23 +1632,120 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BA788, func_060BA788);
 
 // ===== all these functions below seems to be exclusive to Saturn
 
-void func_060BB330();
-
-extern u32 g_RichterCastleMapState;
-extern u8 g_RichterCastleMapBitmap[240][160];
-
 void func_060BACA4(void) {
     memset(&g_RichterCastleMapState, 0, 4);
-    memcpy(0x002B2000, g_RichterCastleMapBitmap, 0x9600);
+    memcpy(CASTLE_MAP_BITMAP, g_RichterCastleMapBitmap, CASTLE_MAP_BITMAP_SIZE);
 
     func_060BB330();
 }
 
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BACEC, func_060BACEC);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BAED0, func_060BAED0);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BB09C, func_060BB09C);
+void func_060BB09C(u8 walls, u8* dst) {
+    u8* p;
+    s32 i;
+
+    if (walls & 0x40) {
+        p = dst;
+        for (i = 0; i < 5; i++) {
+            *p++ |= 0x88;
+            *p++ |= 0x88;
+            *p |= 0x88;
+            p += CASTLE_MAP_BITMAP_PITCH - 2;
+        }
+    }
+    if (walls & 0x10) {
+        p = dst + 2;
+        for (i = 0; i < 5; i++) {
+            *p++ |= 0x08;
+            *p++ |= 0x88;
+            *p++ |= 0x88;
+            *p |= 0x80;
+            p += CASTLE_MAP_BITMAP_PITCH - 3;
+        }
+    }
+    if (walls & 4) {
+        p = dst + 5;
+        for (i = 0; i < 5; i++) {
+            *p++ |= 0x88;
+            *p++ |= 0x88;
+            *p |= 0x88;
+            p += CASTLE_MAP_BITMAP_PITCH - 2;
+        }
+    }
+    if (walls & 1) {
+        p = dst + 7;
+        for (i = 0; i < 5; i++) {
+            *p++ |= 0x08;
+            *p++ |= 0x88;
+            *p++ |= 0x88;
+            *p |= 0x80;
+            p += CASTLE_MAP_BITMAP_PITCH - 3;
+        }
+    }
+}
+
+const u16 DAT_060BB182 = 0x0009;
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BB184, func_060BB184);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BB330, func_060BB330);
+void func_060BB330(void) {
+    u8* dst;
+    u8* revealDst;
+    s32 mapOffset;
+    s32 mapIndex;
+    s32 row;
+    s32 col;
+    s32 revealRow;
+    u32 revealCol;
+
+    dst = CASTLE_MAP_BITMAP;
+    mapOffset = 0;
+
+    if (g_CurrentRoom.stageID & 0x20) {
+        mapOffset = 0x0400;
+        revealDst = dst + 0x6970;
+
+        for (revealRow = 0; revealRow <= 3; revealRow++) {
+            for (revealCol = 0; revealCol <= 10; revealCol++) {
+                revealDst[revealCol] = g_RichterMapRevealPattern[revealCol];
+            }
+            revealDst += CASTLE_MAP_BITMAP_PITCH;
+        }
+    }
+
+    row = 0;
+    mapIndex = mapOffset;
+    for (; row <= 0x3F; row++) {
+        for (col = 0; col <= 0x0F; col++) {
+            func_060BACEC(g_CastleMap[mapIndex++], dst);
+            dst += CASTLE_MAP_CELL_WIDTH;
+        }
+        dst += CASTLE_MAP_BITMAP_PITCH * 3;
+    }
+
+    func_060BB184();
+
+    dst = CASTLE_MAP_BITMAP;
+    row = 0;
+    mapIndex = mapOffset;
+    for (; row <= 0x3F; row++) {
+        for (col = 0; col <= 0x0F; col++) {
+            func_060BB09C(g_CastleMap[mapIndex++], dst);
+            dst += CASTLE_MAP_CELL_WIDTH;
+        }
+        dst += CASTLE_MAP_BITMAP_PITCH * 3;
+    }
+
+    dst = CASTLE_MAP_BITMAP;
+    row = 0;
+    mapIndex = mapOffset;
+    for (; row <= 0x3F; row++) {
+        for (col = 0; col <= 0x0F; col++) {
+            func_060BAED0(g_CastleMap[mapIndex++], dst);
+            dst += CASTLE_MAP_CELL_WIDTH;
+        }
+        dst += CASTLE_MAP_BITMAP_PITCH * 3;
+    }
+}
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BB454, func_060BB454);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BB58C, func_060BB58C);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BB718, func_060BB718);
@@ -1617,12 +1755,7 @@ typedef struct {
     u16 colors1[4];
 } RicGouraudTable;
 
-extern s32 DAT_060476a0;
-extern s32 DAT_060476a4;
-extern s32 g_RichterSavedMapVramBase;
-extern s32 g_RichterSavedMapPlaneConfig;
 extern RicGouraudTable* SpGourTbl;
-extern s32 DAT_0605c6e4;
 s32* func_060784A8(void);
 
 void func_060BB90C(void) {
@@ -1646,14 +1779,37 @@ void func_060BB90C(void) {
     DAT_0605c6e4 = 1;
 }
 
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BB9BC, func_060BB9BC);
+void func_060BB9BC(s32* src) {
+    s32* dst;
+    Unk0605DB60* entry;
+    s32 i;
+
+    dst = (s32*)((DAT_0605aec0[0][0] * 8) + 0x25C00000);
+    DMA_CpuMemCopy2(dst, src, 0x8400);
+    while (DMA_CpuResult() == 2) {
+    }
+
+    entry = d_0605DB60;
+    for (i = 0; i <= 0x1F; i++) {
+        entry->unkC = entry->unk8;
+        entry->unkE = entry->unkA;
+        entry++;
+    }
+
+    dst = (s32*)((SPR_2LookupTblNoToVram(0x10) * 8) + 0x25C00000);
+    DMA_CpuMemCopy2(dst, src + 0x4200, 0x400);
+    while (DMA_CpuResult() == 2) {
+    }
+
+    dst = (s32*)0x25F00800;
+    DMA_CpuMemCopy2(dst, src + 0x4400, 0x200);
+    while (DMA_CpuResult() == 2) {
+    }
+}
 
 s32 DAT_06086390;
 s32 DAT_060476a0;
 s32 DAT_060476a4;
-extern s32 g_RichterSavedMapVramBase;
-extern s32 g_RichterSavedMapPlaneConfig;
-void func_060BB9BC(s32*);
 
 void func_060BBA88(void) {
     s32* iVar2;
@@ -1663,7 +1819,6 @@ void func_060BBA88(void) {
     DAT_060476a4 = g_RichterSavedMapPlaneConfig;
 }
 
-s32 DAT_06086390;
 void func_060BBAC8(void) {
     s32* iVar2;
     DAT_06086390 = 0;
@@ -1671,9 +1826,106 @@ void func_060BBAC8(void) {
     iVar2[0x4500] = 0xffffffff;
 }
 
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BBAF4, func_060BBAF4);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BBC00, func_060BBC00);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BBCCC, func_060BBCCC);
+void func_060BBAF4(void) {
+    s32* work;
+    u8* area;
+    u8* dst;
+    s32 i;
+    u32 clear_size;
+    u8* dma_base;
+    s32 dma_offset;
+    u16 dma_value;
+    s32* dma_dest;
+
+    DAT_06086390 = 1;
+    work = func_060784A8();
+    work[0x4500] = -1;
+
+    clear_size = 0xA000U;
+    area = (u8*)(work + 0x4501);
+    memset(area, 0, clear_size);
+    dst = area;
+
+    i = 0;
+    do {
+        func_06078700(dst, DAT_06085DE8[i], 4);
+        dst += 0x180;
+        i++;
+    } while (i <= 10);
+
+    i = 0;
+    do {
+        func_06078700(dst, DAT_06085E14[i], 4);
+        dst += 0x180;
+        i++;
+    } while (i <= 7);
+
+    i = 0;
+    do {
+        func_06078700(dst, DAT_06085DCC[i], 4);
+        dst += 0x180;
+        i++;
+    } while (i <= 1);
+
+    dma_base = (u8*)DAT_0605aec0;
+    dma_offset = 8;
+    dma_value = *(u16*)(dma_base + dma_offset);
+    dma_dest = (s32*)(0x25C00000U + dma_value * 8);
+    DMA_CpuMemCopy2(dma_dest, work + 0x4501, 0xFC0U);
+
+    do {
+    } while (DMA_CpuResult() == 2);
+}
+void func_060BBC00(void) {
+    s32* base;
+    s32* dst;
+    u8* text;
+    s32 slot;
+    s32 i;
+
+    DAT_06086390 = 2;
+    base = func_060784A8();
+    base[0x4500] = -1;
+    memset(base + 0x4501, 0, 0xA000);
+
+    text = (u8*)(base + 0x4501);
+    for (i = 0; i <= 7; i++) {
+        func_06078700(text, func_06078748(i), 12);
+        text += 0x480;
+    }
+    func_06078700(text, DAT_06085DCC[2], 6);
+
+    slot = 2;
+    dst = (s32*)((DAT_0605aec0[slot][0] * 8) + 0x25C00000);
+    DMA_CpuMemCopy2(dst, base + 0x4501, 0x1320);
+    while (DMA_CpuResult() == 2) {
+    }
+}
+
+void func_060BBCCC(void) {
+    s32* base;
+    s32* dst;
+    u8* text;
+    s32 slot;
+    s32 i;
+
+    DAT_06086390 = 3;
+    base = func_060784A8();
+    base[0x4500] = -1;
+    memset(base + 0x4501, 0, 0xA000);
+
+    text = (u8*)(base + 0x4501);
+    for (i = 0; i <= 0x1F; i++) {
+        func_06078700(text, func_06078748(i), 12);
+        text += 0x480;
+    }
+
+    slot = 2;
+    dst = (s32*)((DAT_0605aec0[slot][0] * 8) + 0x25C00000);
+    DMA_CpuMemCopy2(dst, base + 0x4501, 0x4800);
+    while (DMA_CpuResult() == 2) {
+    }
+}
 
 void func_060BBD88(void) {
     int* iVar2;
@@ -1691,7 +1943,6 @@ void func_060BBDB4(void) {
 
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BBDE0, func_060BBDE0);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BBF08, func_060BBF08);
-extern s16 g_ButtonMask[];
 
 // CheckIfAllButtonsAreAssigned
 bool func_060BC048(void) {
@@ -1731,10 +1982,40 @@ bool func_060BC048(void) {
         return false;
     }
 }
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BC108, func_060BC108);
+void func_060BC108(void) {
+    Point16* pos;
+    s32 i;
+    s32 value;
+    s32 buttonConfig;
+
+    pos = g_RichterMapUiPositionsA;
+    for (i = 0; i < 4; i++) {
+        func_06078684(0x1C0, g_Status.statsBase[i], pos++);
+        if (g_Status.statsEquip[i] != 0) {
+            if (g_Status.statsEquip[i] > 0) {
+                func_06078550(0x1C0, 0x0B, pos++);
+                value = g_Status.statsEquip[i];
+            } else {
+                func_06078550(0x1C0, 0x0D, pos++);
+                value = -g_Status.statsEquip[i];
+            }
+            func_06078684(0x1C0, value, pos++);
+        } else {
+            pos += 2;
+        }
+    }
+
+    pos = g_RichterMapUiPositionsB;
+    buttonConfig = g_Settings.buttonConfig[0];
+    func_06078550(0x1C0, g_RichterMapIconIndices[buttonConfig], pos++);
+    func_06078684(0x1C0, g_Status.attackHands[0], pos++);
+    buttonConfig = g_Settings.buttonConfig[2];
+    func_06078550(0x1C0, g_RichterMapIconIndices[buttonConfig], pos++);
+    func_06078684(0x1C0, g_Status.attackHands[1], pos++);
+    func_06078684(0x1C0, g_Status.defenseEquip, pos);
+}
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BC228, func_060BC228);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BC4E4, func_060BC4E4);
-extern s16 g_RichterMapRevealRowIndices[];
 
 void func_060BC7A8(u32 arg0) {
     s32 first;
@@ -1771,11 +2052,8 @@ void func_060BC7A8(u32 arg0) {
 }
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BC834, func_060BC834);
 
-extern Unk0605cd70 DAT_0605cd70;
-extern u8 DAT_06057f68;
 extern u32 D_06085534;
 s32 func_060732E4(u16 arg0);
-void func_060BC834(void);
 
 void func_060BCA10(void) {
     if (DAT_0605cd70.unk8 != 0) {
@@ -1795,19 +2073,68 @@ after:
     func_060BC834();
 }
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BCA84, func_060BCA84);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BCDB8, func_060BCDB8);
+void func_060BCDB8(void) {
+    switch (DAT_0605cd70.unk8) {
+    case 0:
+        func_060732E4(DAT_0605cd70.unk0);
+        DAT_0605cd70.unk8++;
+        /* fall through */
+    case 1:
+        if (DAT_06057f68 == 0 && (g_pads[0].previous & PAD_CROSS)) {
+            D_06085534 = 6;
+            DAT_06057f68 = 4;
+        }
+        if (DAT_06057f68 == 3) {
+            DAT_06057f68 = 0;
+        }
+        if (DAT_06057f68 == 6) {
+            DAT_0605cd70.unk0 = 6;
+            DAT_0605cd70.unk8 = 0;
+            DAT_06065470 &= ~0x003F;
+            SclProcess = 1;
+        }
+        func_060BCA84();
+    }
+}
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BCE64, func_060BCE64);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BD11C, func_060BD11C);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BD2AC, func_060BD2AC);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BD3D8, func_060BD3D8);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BD4EC, func_060BD4EC);
+
+// SortTimeAttackEntries
+void func_060BD4EC(void) {
+    s32 i;
+    s32 isLooping;
+    s32 swapTime;
+    s32 swapName;
+
+    for (i = 0; i < 28; i++) {
+        D_060CEE6C[i] = func_0606F21C(i, 0);
+        if (D_060CEE6C[i] == 0) {
+            D_060CEE6C[i] = 1000000;
+        }
+        D_060CEEDC[i] = i;
+    }
+
+    do {
+        isLooping = false;
+        for (i = 0; i < 27; i++) {
+            if (D_060CEE6C[i] > D_060CEE6C[i + 1]) {
+                swapTime = D_060CEE6C[i];
+                D_060CEE6C[i] = D_060CEE6C[i + 1];
+                D_060CEE6C[i + 1] = swapTime;
+                swapName = D_060CEEDC[i];
+                D_060CEEDC[i] = D_060CEEDC[i + 1];
+                D_060CEEDC[i + 1] = swapName;
+                isLooping++;
+            }
+        }
+    } while (isLooping);
+}
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BD580, func_060BD580);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BD768, func_060BD768);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BDADC, func_060BDADC);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BDFD4, func_060BDFD4);
-extern u32* d_06086234;
-extern u32* d_06086250;
-extern s32 g_GameClearFlag;
 
 void func_060BE110(void) {
     if (d_06086234 == 0) {

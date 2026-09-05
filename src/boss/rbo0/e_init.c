@@ -12,7 +12,7 @@ void EntityRoomForeground(Entity* self);
 void EntityStageNamePopup(Entity* self);
 void EntityEquipItemDrop(Entity* self);
 void EntityRelicOrb(Entity* self);
-void EntityHeartDrop(Entity* self);
+void EntityPersistentItemDrop(Entity* self);
 void EntityEnemyBlood(Entity* self);
 void EntityMessageBox(Entity* self);
 void EntityDummy(Entity* self);
@@ -26,7 +26,7 @@ void EntityBossTorch(Entity* self);
 void EntityBossDoors(Entity* self);
 void EntityLifeUpSpawn(Entity* self);
 void EntityCoffin(Entity* self);
-void OVL_EXPORT(EntityBoss)(Entity* self);
+void EntityBoss(Entity* self);
 void EntityFakeRalph(Entity* self);
 void EntityFakeGrant(Entity* self);
 void EntityFakeSypha(Entity* self);
@@ -58,7 +58,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityStageNamePopup,
     EntityEquipItemDrop,
     EntityRelicOrb,
-    EntityHeartDrop,
+    EntityPersistentItemDrop,
     EntityEnemyBlood,
     EntityMessageBox,
     EntityDummy,
@@ -72,7 +72,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityBossDoors,
     EntityLifeUpSpawn,
     EntityCoffin,
-    OVL_EXPORT(EntityBoss),
+    EntityBoss,
     EntityFakeRalph,
     EntityFakeGrant,
     EntityFakeSypha,

@@ -3,11 +3,10 @@
 #define DAI_H
 
 #include "stage.h"
-#define OVL_EXPORT(x) DAI_##x
 #define STAGE_IS_DAI
 
 // Used for cluts and in g_EInits
-enum OVL_EXPORT(Palette) {
+enum Palette {
     PAL_NONE = 0,
     PAL_STAINED_GLASS = 0xE,
     PAL_STAINED_GLASS_BG = 0xF,
@@ -62,7 +61,7 @@ enum EntityID {
     E_STAGE_NAME_POPUP,          // EntityStageNamePopup,
     E_EQUIP_ITEM_DROP,           // EntityEquipItemDrop,
     E_RELIC_ORB,                 // EntityRelicOrb,
-    E_HEART_DROP,                // EntityHeartDrop,
+    E_PERSISTENT_ITEM_DROP,      // EntityPersistentItemDrop,
     E_ENEMY_BLOOD,               // EntityEnemyBlood,
     E_MESSAGE_BOX,               // EntityMessageBox,
     E_DUMMY_F,                   // EntityDummy,
