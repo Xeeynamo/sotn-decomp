@@ -384,9 +384,23 @@ static SVECTOR vec6 = {0, 0, 0};
 static SVECTOR vec7 = {88, 0, 128};
 static SVECTOR vec8 = {0, 0, 128};
 
-static SVECTOR* D_us_80181260[] = {&vec1, &vec2, &vec4, &vec5, &vec7, &vec8};
-extern SVECTOR* D_us_801812B8;
-extern AnimateEntityFrame D_us_801812F8[];
+static SVECTOR* positive_vecs[] = {&vec1, &vec2, &vec4, &vec5, &vec7, &vec8};
+// All the same vectors but with the X coordinate negated
+static SVECTOR vecn1 = {-56, 0, 0};
+static SVECTOR vecn2 = {-4, 0, 0};
+static SVECTOR vecn3 = {-56, 0, 128};
+static SVECTOR vecn4 = {-4, 0, 128};
+static SVECTOR vecn5 = {-88, 0, 0};
+static SVECTOR vecn6 = {-0, 0, 0};
+static SVECTOR vecn7 = {-88, 0, 128};
+static SVECTOR vecn8 = {-0, 0, 128};
+static SVECTOR* negative_vecs[] = {&vecn1, &vecn2, &vecn4, &vecn5, &vecn7, &vecn8};
+
+// Probably not actually s32, but with it being unused, hard to know.
+// Doesn't really match any common data we run into.
+static s32 unused[] = {0x10000000, 0, 0x4000800, 0, 0x0800, 0x10000000, 0, 0, 0, 0};
+
+static AnimateEntityFrame anim[] = {{6, 41}, {6, 42}, {5, 43}, {6, 42}, POSE_LOOP(0)};
 
 extern batWingStruct D_us_801BEE34;
 extern batWingStruct D_us_801BEE68;
@@ -630,7 +644,7 @@ void func_us_801ABDE4(Entity* self) {
     self->posX.i.hi = other->posX.i.hi;
     self->posY.i.hi = other->posY.i.hi;
     if (other->ext.ILLEGAL.u8[0xB]) {
-        AnimateEntity(D_us_801812F8, self);
+        AnimateEntity(anim, self);
     } else {
         self->animCurFrame = 0;
     }
@@ -661,9 +675,9 @@ void func_us_801ABDE4(Entity* self) {
     }
     prim = self->ext.prim;
     D_us_801BEEA4 = D_us_801BEE9C[0];
-    prim = func_us_801AB380(D_us_801BEEA4, prim, &D_us_80181260);
+    prim = func_us_801AB380(D_us_801BEEA4, prim, positive_vecs);
     D_us_801BEEA4 = D_us_801BEE9C[1];
-    prim = func_us_801AB380(D_us_801BEEA4, prim, &D_us_801812B8);
+    prim = func_us_801AB380(D_us_801BEEA4, prim, negative_vecs);
     prim = self->ext.prim;
     prim2 = (Primitive*)self->ext.ILLEGAL.u32[1];
     for(i = 0; i < 4; i++) {
