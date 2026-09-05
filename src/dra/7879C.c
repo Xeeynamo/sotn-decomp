@@ -2189,8 +2189,7 @@ void EntitySmokePuff(Entity* self) {
         }
         if (paramsHi == 4) {
             for (i = paramsLo * 2; i < LEN(D_800AD5E0); i++) {
-                if (g_Player.colWall[D_800AD5E0[i]].effects &
-                    EFFECT_BLOCK) {
+                if (g_Player.colWall[D_800AD5E0[i]].effects & EFFECT_BLOCK) {
                     break;
                 }
             }
@@ -2208,8 +2207,7 @@ void EntitySmokePuff(Entity* self) {
         }
         if (paramsHi == 8) {
             for (i = paramsLo * 2; i < LEN(D_800AD5F0); i++) {
-                if (g_Player.colWall[D_800AD5F0[i]].effects &
-                    EFFECT_BLOCK) {
+                if (g_Player.colWall[D_800AD5F0[i]].effects & EFFECT_BLOCK) {
                     break;
                 }
             }
