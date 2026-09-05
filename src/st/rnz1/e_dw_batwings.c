@@ -372,7 +372,7 @@ static void func_us_801ABB58(batWingStruct* arg0) {
     }
 }
 
-static void RNZ1_Unused801ABDC0(void) {}
+static void emptyFunction(void) {}
 
 static void func_us_801ABDC8(batWingStruct* arg0) {
     arg0->unk0 -= 0x400;
