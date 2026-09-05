@@ -1163,7 +1163,7 @@ void func_8012F894(Entity* self) {
                     continue;
                 }
                 if ((collider2.effects &
-                     (EFFECT_UNK_8000 | EFFECT_FULL_SOLID)) !=
+                     (EFFECT_UNK_8000 | EFFECT_BLOCK)) !=
                     (EFFECT_UNK_8000 | EFFECT_SOLID)) {
                     continue;
                 }

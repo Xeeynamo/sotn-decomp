@@ -53,7 +53,7 @@ static void CheckFloor(void) {
             g_api.CheckCollision(posX, posY, &collider, 0);
             if ((g_Dop.status & PLAYER_STATUS_MIST_FORM) &&
                 (collider.effects & EFFECT_MIST_ONLY)) {
-                collider.effects &= ~EFFECT_FULL_SOLID;
+                collider.effects &= ~EFFECT_BLOCK;
             }
             maskedEffects = collider.effects;
             if (!(maskedEffects & EFFECT_SOLID)) {
@@ -69,7 +69,7 @@ static void CheckFloor(void) {
                 }
                 continue;
             }
-            if ((maskedEffects & (EFFECT_UNK_8000 | EFFECT_FULL_SOLID)) ==
+            if ((maskedEffects & (EFFECT_UNK_8000 | EFFECT_BLOCK)) ==
                 (EFFECT_UNK_8000 | EFFECT_SOLID)) {
                 if (i < 2) {
                     *vram_flag_p |=
@@ -191,7 +191,7 @@ static void CheckCeiling(void) {
 
         if ((g_Dop.status & PLAYER_STATUS_MIST_FORM) &&
             (collider.effects & EFFECT_MIST_ONLY)) {
-            collider.effects &= ~EFFECT_FULL_SOLID;
+            collider.effects &= ~EFFECT_BLOCK;
         }
 
         effects = g_Dop.colCeiling[i].effects &
@@ -210,7 +210,7 @@ static void CheckCeiling(void) {
             g_api.CheckCollision(posX, posY, &collider, 0);
             if ((g_Dop.status & PLAYER_STATUS_MIST_FORM) &&
                 (collider.effects & EFFECT_MIST_ONLY)) {
-                collider.effects &= ~EFFECT_FULL_SOLID;
+                collider.effects &= ~EFFECT_BLOCK;
             }
 
             maskedEffects = collider.effects;
@@ -229,7 +229,7 @@ static void CheckCeiling(void) {
                 }
                 continue;
             }
-            if ((maskedEffects & (EFFECT_UNK_0800 | EFFECT_FULL_SOLID)) ==
+            if ((maskedEffects & (EFFECT_UNK_0800 | EFFECT_BLOCK)) ==
                 (EFFECT_UNK_0800 | EFFECT_SOLID)) {
                 if (i < 2) {
                     *vram_flag_p |= 0x802 | ((maskedEffects >> 4) & 0x700);
@@ -344,12 +344,11 @@ static void CheckWallRight(void) {
     dopX = &DOPPLEGANGER.posX.i.hi;
 
     pVramFlag = &g_Dop.vram_flag;
-    effects =
-        g_Dop.unk04 & (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0800 |
-                       EFFECT_UNK_0400 | EFFECT_FULL_SOLID);
-    if (effects == (EFFECT_UNK_8000 | EFFECT_FULL_SOLID) ||
-        effects == (EFFECT_UNK_0800 | EFFECT_FULL_SOLID) ||
-        effects == (EFFECT_UNK_8000 | EFFECT_UNK_0800 | EFFECT_FULL_SOLID)) {
+    effects = g_Dop.unk04 & (EFFECT_UNK_8000 | EFFECT_UNK_4000 |
+                             EFFECT_UNK_0800 | EFFECT_UNK_0400 | EFFECT_BLOCK);
+    if (effects == (EFFECT_UNK_8000 | EFFECT_BLOCK) ||
+        effects == (EFFECT_UNK_0800 | EFFECT_BLOCK) ||
+        effects == (EFFECT_UNK_8000 | EFFECT_UNK_0800 | EFFECT_BLOCK)) {
         *pVramFlag |= 4;
         return;
     }
@@ -357,16 +356,16 @@ static void CheckWallRight(void) {
     for (i = 0; i < 7; i++) {
         effects = g_Dop.colWall[i].effects &
                   (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0800 |
-                   EFFECT_FULL_SOLID);
+                   EFFECT_BLOCK);
         if ((effects == (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_SOLID)) ||
             (effects == (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_SIDE |
                          EFFECT_SOLID)) ||
             (effects == (EFFECT_UNK_4000 | EFFECT_UNK_0800 | EFFECT_SOLID)) ||
             (effects == (EFFECT_UNK_4000 | EFFECT_UNK_0800 | EFFECT_SIDE |
                          EFFECT_SOLID)) ||
-            (effects == (EFFECT_UNK_8000 | EFFECT_FULL_SOLID)) ||
-            (effects == (EFFECT_UNK_0800 | EFFECT_FULL_SOLID)) ||
-            (effects == EFFECT_FULL_SOLID)) {
+            (effects == (EFFECT_UNK_8000 | EFFECT_BLOCK)) ||
+            (effects == (EFFECT_UNK_0800 | EFFECT_BLOCK)) ||
+            (effects == EFFECT_BLOCK)) {
 
             offsetX = *dopX + g_DopSensorsWall[i].x + g_Dop.colWall[i].unk4 - 1;
             offsetY = *dopY + g_DopSensorsWall[i].y;
@@ -419,11 +418,11 @@ static void CheckWallLeft(void) {
     pVramFlag = &g_Dop.vram_flag;
     effects =
         g_Dop.unk04 & (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0800 |
-                       EFFECT_UNK_0800 | EFFECT_UNK_0400 | EFFECT_FULL_SOLID);
-    if (effects == (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_FULL_SOLID) ||
-        effects == (EFFECT_UNK_0800 | EFFECT_UNK_0400 | EFFECT_FULL_SOLID) ||
+                       EFFECT_UNK_0800 | EFFECT_UNK_0400 | EFFECT_BLOCK);
+    if (effects == (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_BLOCK) ||
+        effects == (EFFECT_UNK_0800 | EFFECT_UNK_0400 | EFFECT_BLOCK) ||
         effects == (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0800 |
-                    EFFECT_UNK_0400 | EFFECT_FULL_SOLID)) {
+                    EFFECT_UNK_0400 | EFFECT_BLOCK)) {
         *pVramFlag |= 8;
         return;
     }
@@ -431,16 +430,16 @@ static void CheckWallLeft(void) {
     for (i = 7; i < 14; i++) {
         effects = g_Dop.colWall[i].effects &
                   (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0800 |
-                   EFFECT_FULL_SOLID);
+                   EFFECT_BLOCK);
         if (effects == (EFFECT_UNK_8000 | EFFECT_SOLID) ||
-            effects == (EFFECT_UNK_8000 | EFFECT_FULL_SOLID) ||
+            effects == (EFFECT_UNK_8000 | EFFECT_BLOCK) ||
             effects == (EFFECT_UNK_0800 | EFFECT_SOLID) ||
-            effects == (EFFECT_UNK_0800 | EFFECT_FULL_SOLID) ||
+            effects == (EFFECT_UNK_0800 | EFFECT_BLOCK) ||
             effects == (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_SIDE |
                         EFFECT_SOLID) ||
             effects == (EFFECT_UNK_4000 | EFFECT_UNK_0800 | EFFECT_SIDE |
                         EFFECT_SOLID) ||
-            effects == EFFECT_FULL_SOLID) {
+            effects == EFFECT_BLOCK) {
 
             offsetX = *dopX + g_DopSensorsWall[i].x + g_Dop.colWall[i].unkC + 1;
             offsetY = *dopY + g_DopSensorsWall[i].y;

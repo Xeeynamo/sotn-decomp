@@ -1482,9 +1482,9 @@ typedef enum {
     EFFECT_UNK_8000 = 1 << 15, // slope related
 
     // Aggregate helpers below:
-    EFFECT_FULL_SOLID = EFFECT_SOLID | EFFECT_SIDE,
+    EFFECT_BLOCK = EFFECT_SOLID | EFFECT_SIDE,
     EFFECT_NOTHROUGH = EFFECT_SOLID | EFFECT_SINK,
-    EFFECT_NOTHROUGH_PLUS = EFFECT_FULL_SOLID | EFFECT_SINK,
+    EFFECT_NOTHROUGH_PLUS = EFFECT_BLOCK | EFFECT_SINK,
     // Should be renamed once we know what 8000 and 4000 are
     EFFECT_UNK_C000 = EFFECT_UNK_8000 | EFFECT_UNK_4000
 } ColliderEffectFlags;

@@ -364,7 +364,7 @@ void RicCheckFloor(void) {
                 }
                 continue;
             }
-            if ((effects & (EFFECT_UNK_8000 | EFFECT_FULL_SOLID)) ==
+            if ((effects & (EFFECT_UNK_8000 | EFFECT_BLOCK)) ==
                 (EFFECT_UNK_8000 | EFFECT_SOLID)) {
                 if (i < 2) {
                     *vramFlag |= (effects & (EFFECT_UNK_4000 | EFFECT_UNK_2000 |
@@ -521,7 +521,7 @@ void RicCheckCeiling(void) {
                 }
                 continue;
             }
-            if ((effects & (EFFECT_UNK_0800 | EFFECT_FULL_SOLID)) ==
+            if ((effects & (EFFECT_UNK_0800 | EFFECT_BLOCK)) ==
                 (EFFECT_UNK_0800 | EFFECT_SOLID)) {
                 if (i < 2) {
                     *vramFlag |=
@@ -650,10 +650,10 @@ void RicCheckWallRight(void) {
     }
     effects =
         g_Player.unk04 & (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0800 |
-                          EFFECT_UNK_0400 | EFFECT_FULL_SOLID);
-    if ((effects == (EFFECT_UNK_8000 | EFFECT_FULL_SOLID)) ||
-        (effects == (EFFECT_UNK_0800 | EFFECT_FULL_SOLID)) ||
-        (effects == (EFFECT_UNK_8000 | EFFECT_UNK_0800 | EFFECT_FULL_SOLID))) {
+                          EFFECT_UNK_0400 | EFFECT_BLOCK);
+    if ((effects == (EFFECT_UNK_8000 | EFFECT_BLOCK)) ||
+        (effects == (EFFECT_UNK_0800 | EFFECT_BLOCK)) ||
+        (effects == (EFFECT_UNK_8000 | EFFECT_UNK_0800 | EFFECT_BLOCK))) {
         *vramFlag |= 4;
         return;
     }
@@ -661,15 +661,15 @@ void RicCheckWallRight(void) {
     for (i = 0; i < NUM_VERTICAL_SENSORS; i++) {
         effects = g_Player.colWall[i].effects &
                   (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0800 |
-                   EFFECT_FULL_SOLID);
+                   EFFECT_BLOCK);
         if (effects == (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_SOLID) ||
             effects == (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_SIDE |
                         EFFECT_SOLID) ||
             effects == (EFFECT_UNK_4000 | EFFECT_UNK_0800 | EFFECT_SOLID) ||
             effects == (EFFECT_UNK_4000 | EFFECT_UNK_0800 | EFFECT_SIDE |
                         EFFECT_SOLID) ||
-            effects == (EFFECT_UNK_8000 | EFFECT_FULL_SOLID) ||
-            effects == EFFECT_FULL_SOLID) {
+            effects == (EFFECT_UNK_8000 | EFFECT_BLOCK) ||
+            effects == EFFECT_BLOCK) {
             xCheck = *x + g_RicSensorsWall[i].x + g_Player.colWall[i].unk4 - 1;
             yCheck = *y + g_RicSensorsWall[i].y;
             g_api.CheckCollision(xCheck, yCheck, &col, 0);
@@ -724,27 +724,27 @@ void RicCheckWallLeft(void) {
     }
     effects =
         g_Player.unk04 & (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0800 |
-                          EFFECT_UNK_0400 | EFFECT_FULL_SOLID);
-    if ((effects == (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_FULL_SOLID)) ||
-        (effects == (EFFECT_UNK_0800 | EFFECT_UNK_0400 | EFFECT_FULL_SOLID)) ||
+                          EFFECT_UNK_0400 | EFFECT_BLOCK);
+    if ((effects == (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_BLOCK)) ||
+        (effects == (EFFECT_UNK_0800 | EFFECT_UNK_0400 | EFFECT_BLOCK)) ||
         (effects == (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0800 |
-                     EFFECT_UNK_0400 | EFFECT_FULL_SOLID))) {
+                     EFFECT_UNK_0400 | EFFECT_BLOCK))) {
         *vramFlag |= 8;
         return;
     }
     for (i = NUM_VERTICAL_SENSORS; i < NUM_VERTICAL_SENSORS * 2; i++) {
         effects = g_Player.colWall[i].effects &
                   (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0800 |
-                   EFFECT_FULL_SOLID);
+                   EFFECT_BLOCK);
         if ((effects == (EFFECT_UNK_8000 | EFFECT_SOLID)) ||
-            (effects == (EFFECT_UNK_8000 | EFFECT_FULL_SOLID)) ||
+            (effects == (EFFECT_UNK_8000 | EFFECT_BLOCK)) ||
             (effects == (EFFECT_UNK_0800 | EFFECT_SOLID)) ||
-            (effects == (EFFECT_UNK_0800 | EFFECT_FULL_SOLID)) ||
+            (effects == (EFFECT_UNK_0800 | EFFECT_BLOCK)) ||
             (effects == (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_SIDE |
                          EFFECT_SOLID)) ||
             (effects == (EFFECT_UNK_4000 | EFFECT_UNK_0800 | EFFECT_SIDE |
                          EFFECT_SOLID)) ||
-            (effects == EFFECT_FULL_SOLID)) {
+            (effects == EFFECT_BLOCK)) {
             xCheck = *x + g_RicSensorsWall[i].x + g_Player.colWall[i].unkC + 1;
             yCheck = *y + g_RicSensorsWall[i].y;
             g_api.CheckCollision(xCheck, yCheck, &col, 0);

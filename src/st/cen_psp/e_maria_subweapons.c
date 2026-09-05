@@ -60,7 +60,7 @@ static s32 CheckFieldCollisionForCat(
             self->posX.i.hi = origPosX + var_s5;
             self->posY.i.hi = origPosY + ((y * i) / var_s3);
             g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi, collider, 0);
-            if (collider->effects & EFFECT_FULL_SOLID) {
+            if (collider->effects & EFFECT_BLOCK) {
                 if (var_s2 == 0) {
                     collider->effects = EFFECT_SOLID;
                 }
@@ -69,7 +69,7 @@ static s32 CheckFieldCollisionForCat(
                 if (i != 0 && y > 0) {
                     g_api.CheckCollision(
                         self->posX.i.hi, self->posY.i.hi + 1, collider, 0);
-                    if (collider->effects & EFFECT_FULL_SOLID) {
+                    if (collider->effects & EFFECT_BLOCK) {
                         collider->effects = EFFECT_SIDE;
                     } else {
                         collider->effects = EFFECT_SOLID;
@@ -94,7 +94,7 @@ static s32 CheckFieldCollisionForCat(
             }
             self->posY.i.hi = origPosY + var_s4;
             g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi, collider, 0);
-            if (collider->effects & EFFECT_FULL_SOLID) {
+            if (collider->effects & EFFECT_BLOCK) {
                 if (var_s3 == 0) {
                     collider->effects = EFFECT_SIDE;
                 }
@@ -103,7 +103,7 @@ static s32 CheckFieldCollisionForCat(
                 if (j != 0 && y > 0) {
                     g_api.CheckCollision(
                         self->posX.i.hi, self->posY.i.hi + 1, collider, 0);
-                    if (collider->effects & EFFECT_FULL_SOLID) {
+                    if (collider->effects & EFFECT_BLOCK) {
                         collider->effects = EFFECT_SIDE;
                     } else {
                         collider->effects = EFFECT_SOLID;

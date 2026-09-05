@@ -84,7 +84,7 @@ void RicEntitySubwpnReboundStone(Entity* self) {
                 colliderFlags =
                     collider.effects &
                     (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000 |
-                     EFFECT_UNK_1000 | EFFECT_UNK_0800 | EFFECT_FULL_SOLID);
+                     EFFECT_UNK_1000 | EFFECT_UNK_0800 | EFFECT_BLOCK);
                 if (colliderFlags & EFFECT_SOLID) {
                     colliderFlags &= 0xFF00;
                     if (deltaY > 0) {
@@ -152,7 +152,7 @@ void RicEntitySubwpnReboundStone(Entity* self) {
                 colliderFlags =
                     collider.effects &
                     (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000 |
-                     EFFECT_UNK_1000 | EFFECT_UNK_0800 | EFFECT_FULL_SOLID);
+                     EFFECT_UNK_1000 | EFFECT_UNK_0800 | EFFECT_BLOCK);
                 if (colliderFlags & EFFECT_SOLID) {
                     colliderFlags &= 0xFF00;
                     // Cases when traveling right

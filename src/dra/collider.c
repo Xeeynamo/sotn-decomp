@@ -51,7 +51,7 @@ void CheckCollision(s32 x, s32 y, Collider* res, s32 unk) {
     res->unk8 = res->unk18 = -(posY & 0xF);
     res->unk10 = res->unk20 = res->unk18 + 0xF;
     if ((colType & 0x80) == 0) {
-        res->effects = colType & 3;
+        res->effects = colType & EFFECT_BLOCK;
         return;
     }
 
@@ -69,9 +69,9 @@ void CheckCollision(s32 x, s32 y, Collider* res, s32 unk) {
                 if (col0.effects & EFFECT_SOLID) {
                     res->unk18 += col0.unk18 - 1;
                 }
-                res->effects = col0.effects |= EFFECT_FULL_SOLID;
+                res->effects = col0.effects |= EFFECT_BLOCK;
             } else {
-                res->effects = EFFECT_UNK_8000 | EFFECT_FULL_SOLID;
+                res->effects = EFFECT_UNK_8000 | EFFECT_BLOCK;
             }
         } else {
             res->effects = EFFECT_SOLID;
@@ -165,9 +165,9 @@ void CheckCollision(s32 x, s32 y, Collider* res, s32 unk) {
                 if (col1.effects & EFFECT_SOLID) {
                     res->unk20 += col1.unk20 + 1;
                 }
-                res->effects = col1.effects |= EFFECT_FULL_SOLID;
+                res->effects = col1.effects |= EFFECT_BLOCK;
             } else {
-                res->effects = EFFECT_UNK_0800 | EFFECT_FULL_SOLID;
+                res->effects = EFFECT_UNK_0800 | EFFECT_BLOCK;
             }
         } else {
             res->effects = EFFECT_SOLID;
@@ -253,14 +253,14 @@ void CheckCollision(s32 x, s32 y, Collider* res, s32 unk) {
 
     case 0x7F:
         if (res->unk20 < 8) {
-            res->effects = EFFECT_FULL_SOLID;
+            res->effects = EFFECT_BLOCK;
             res->unk18 += 8;
         }
         break;
 
     case 0x7E:
         if (res->unk20 >= 8) {
-            res->effects = EFFECT_FULL_SOLID;
+            res->effects = EFFECT_BLOCK;
             res->unk20 -= 8;
         }
         break;
@@ -298,7 +298,7 @@ void CheckCollision(s32 x, s32 y, Collider* res, s32 unk) {
         break;
 
     case 0x78:
-        res->effects = EFFECT_MIST_ONLY | EFFECT_FULL_SOLID;
+        res->effects = EFFECT_MIST_ONLY | EFFECT_BLOCK;
         break;
 
     case 0x77:
@@ -314,7 +314,7 @@ void CheckCollision(s32 x, s32 y, Collider* res, s32 unk) {
     case 0x70:
     case 0x6F:
     case 0x6E:
-        res->effects = EFFECT_FULL_SOLID;
+        res->effects = EFFECT_BLOCK;
         break;
 
     case COLLISION_TYPE_WATER:

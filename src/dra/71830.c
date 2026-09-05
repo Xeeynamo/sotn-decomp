@@ -158,7 +158,7 @@ bool func_80111DE8(bool mistReset) {
     }
     filtered_effects =
         collider1.effects & (EFFECT_UNK_8000 | EFFECT_UNK_4000 |
-                             EFFECT_UNK_0800 | EFFECT_FULL_SOLID);
+                             EFFECT_UNK_0800 | EFFECT_BLOCK);
     if (filtered_effects == EFFECT_UNK_8000 + EFFECT_UNK_4000 + EFFECT_SOLID ||
         filtered_effects ==
             EFFECT_UNK_8000 + EFFECT_UNK_4000 + EFFECT_SIDE + EFFECT_SOLID ||
@@ -192,7 +192,7 @@ bool func_80111DE8(bool mistReset) {
     }
     filtered_effects =
         collider1.effects & (EFFECT_UNK_8000 | EFFECT_UNK_4000 |
-                             EFFECT_UNK_0800 | EFFECT_FULL_SOLID);
+                             EFFECT_UNK_0800 | EFFECT_BLOCK);
     if (filtered_effects == EFFECT_UNK_8000 + EFFECT_SOLID ||
         filtered_effects == EFFECT_UNK_8000 + EFFECT_SIDE + EFFECT_SOLID ||
         filtered_effects == EFFECT_UNK_0800 + EFFECT_SOLID ||

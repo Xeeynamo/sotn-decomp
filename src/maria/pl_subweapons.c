@@ -212,7 +212,7 @@ static int CheckFieldCollisionForCat(
             entity->posX.i.hi = sp3C + (x < 0 ? -var_s1 : var_s1);
             entity->posY.i.hi = var_s8 + (y * var_s1) / var_s3;
             g_api.CheckCollision(entity->posX.i.hi, entity->posY.i.hi, col, 0);
-            if (col->effects & EFFECT_FULL_SOLID) {
+            if (col->effects & EFFECT_BLOCK) {
                 if (var_s2 == 0) {
                     col->effects = EFFECT_SOLID;
                 }
@@ -221,7 +221,7 @@ static int CheckFieldCollisionForCat(
                 if (var_s1 && y > 0) {
                     g_api.CheckCollision(
                         entity->posX.i.hi, entity->posY.i.hi + 1, col, 0);
-                    if (col->effects & EFFECT_FULL_SOLID) {
+                    if (col->effects & EFFECT_BLOCK) {
                         col->effects = EFFECT_SIDE;
                     } else {
                         col->effects = EFFECT_SOLID;
@@ -240,7 +240,7 @@ static int CheckFieldCollisionForCat(
             entity->posX.i.hi = sp3C + (x * var_s0) / var_s2;
             entity->posY.i.hi = var_s8 + (y < 0 ? -var_s0 : var_s0);
             g_api.CheckCollision(entity->posX.i.hi, entity->posY.i.hi, col, 0);
-            if (col->effects & EFFECT_FULL_SOLID) {
+            if (col->effects & EFFECT_BLOCK) {
                 if (var_s3 == 0) {
                     col->effects = EFFECT_SIDE;
                 }
@@ -249,7 +249,7 @@ static int CheckFieldCollisionForCat(
                 if (var_s0 && y > 0) {
                     g_api.CheckCollision(
                         entity->posX.i.hi, entity->posY.i.hi + 1, col, 0);
-                    if (col->effects & EFFECT_FULL_SOLID) {
+                    if (col->effects & EFFECT_BLOCK) {
                         col->effects = EFFECT_SIDE;
                     } else {
                         col->effects = EFFECT_SOLID;

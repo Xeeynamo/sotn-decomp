@@ -635,7 +635,7 @@ void MarEntitySmokePuff(Entity* self) {
         if (paramsHi == 4) {
             for (i = paramsLo * 2; i < LEN(sensors1_80154CE4); i++) {
                 if (g_Maria.colWall[sensors1_80154CE4[i]].effects &
-                    EFFECT_FULL_SOLID) {
+                    EFFECT_BLOCK) {
                     break;
                 }
             }
@@ -656,7 +656,7 @@ void MarEntitySmokePuff(Entity* self) {
         if (paramsHi == 8) {
             for (i = paramsLo * 2; i < LEN(sensors2_80154CF4); i++) {
                 if (g_Maria.colWall[sensors2_80154CF4[i]].effects &
-                    EFFECT_FULL_SOLID) {
+                    EFFECT_BLOCK) {
                     break;
                 }
             }

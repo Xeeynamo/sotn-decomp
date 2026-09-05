@@ -1842,8 +1842,7 @@ void EntitySmokePuff(Entity* self) {
         }
         if (paramsHi == 4) {
             for (i = paramsLo * 2; i < LEN(D_us_80181898); i++) {
-                if (g_Dop.colWall[D_us_80181898[i]].effects &
-                    EFFECT_FULL_SOLID) {
+                if (g_Dop.colWall[D_us_80181898[i]].effects & EFFECT_BLOCK) {
                     break;
                 }
             }
@@ -1863,8 +1862,7 @@ void EntitySmokePuff(Entity* self) {
         }
         if (paramsHi == 8) {
             for (i = paramsLo * 2; i < LEN(D_us_801818A8); i++) {
-                if (g_Dop.colWall[D_us_801818A8[i]].effects &
-                    EFFECT_FULL_SOLID) {
+                if (g_Dop.colWall[D_us_801818A8[i]].effects & EFFECT_BLOCK) {
                     break;
                 }
             }
@@ -4318,7 +4316,7 @@ void EntitySubwpnReboundStone(Entity* self) {
             colliderFlags =
                 collider.effects &
                 (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000 |
-                 EFFECT_UNK_1000 | EFFECT_UNK_0800 | EFFECT_FULL_SOLID);
+                 EFFECT_UNK_1000 | EFFECT_UNK_0800 | EFFECT_BLOCK);
             if (colliderFlags & EFFECT_SOLID) {
                 colliderFlags &=
                     EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000 |
@@ -4383,7 +4381,7 @@ void EntitySubwpnReboundStone(Entity* self) {
             colliderFlags =
                 collider.effects &
                 (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000 |
-                 EFFECT_UNK_1000 | EFFECT_UNK_0800 | EFFECT_FULL_SOLID);
+                 EFFECT_UNK_1000 | EFFECT_UNK_0800 | EFFECT_BLOCK);
             if (colliderFlags & EFFECT_SOLID) {
                 colliderFlags &=
                     EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000 |
@@ -4658,8 +4656,7 @@ void EntitySubwpnKnife(Entity* self) {
             }
             g_api.CheckCollision(
                 self->posX.i.hi + xCol, self->posY.i.hi, &collider, 0);
-            if (collider.effects & EFFECT_FULL_SOLID ||
-                (self->flags & FLAG_DEAD)) {
+            if (collider.effects & EFFECT_BLOCK || (self->flags & FLAG_DEAD)) {
                 self->ext.timer.t = 64;
                 self->velocityX = -(self->velocityX >> 3);
                 self->velocityY = FIX(-2.5);
@@ -4668,7 +4665,7 @@ void EntitySubwpnKnife(Entity* self) {
                 CreateEntFactoryFromEntity(
                     self, FACTORY(BP_REBOUND_STONE_HIT, 0), 0);
                 self->posX.i.hi -= xCol;
-                if (collider.effects & EFFECT_FULL_SOLID) {
+                if (collider.effects & EFFECT_BLOCK) {
                     g_api.PlaySfx(SFX_UI_SUBWEAPON_TINK);
                 } else {
                     g_api.PlaySfx(SFX_DOP_SUBWEAPON_TINK);
