@@ -4346,8 +4346,21 @@ typedef struct {
     /* 0x94 */ u32 : 32;
     /* 0x98 */ u32 : 32;
     /* 0x9C */ u32 fireballAccel;
-
 } ET_DarkwingBat;
+
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ struct Primitive* prim2;
+    /* 0x84 */ s16 rotX;
+    /* 0x86 */ s16 rotY;
+    /* 0x88 */ s16 rotZ;
+    /* 0x8A */ s16 transZ;
+    /* 0x8C */ s16 unused;
+    /* 0x90 */ s32 : 32;
+    /* 0x90 */ s32 : 32;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s16 timer;
+} ET_DarkwingBatWings;
 
 typedef union { // offset=0x7C
     struct Primitive* prim;
@@ -4720,6 +4733,7 @@ typedef union { // offset=0x7C
     ET_OlroxDrool olroxDrool;
     ET_Gorgon gorgon;
     ET_DarkwingBat darkwing;
+    ET_DarkwingBatWings batwing;
 } Ext;
 
 SYNC_FIELD(ET_Player, ET_Weapon, anim);

@@ -102,24 +102,24 @@ static Primitive* func_us_801AB380(
     s32 stackpad1[8];
     SVECTOR sp38 = {0};
     s32 stackpad2[2];
-    Entity* other;
+    Entity* mainBat;
 
-    rotVec.vx = g_CurrentEntity->ext.ILLEGAL.s16[4];
-    rotVec.vy = g_CurrentEntity->ext.ILLEGAL.s16[5];
-    rotVec.vz = g_CurrentEntity->ext.ILLEGAL.s16[6];
+    rotVec.vx = g_CurrentEntity->ext.batwing.rotX;
+    rotVec.vy = g_CurrentEntity->ext.batwing.rotY;
+    rotVec.vz = g_CurrentEntity->ext.batwing.rotZ;
     RotMatrix(&sp38, &m);
     RotMatrixY(rotVec.vy, &m);
     RotMatrixX(rotVec.vx, &m);
     RotMatrixZ(rotVec.vz, &m);
-    other = g_CurrentEntity - 1;
-    if (other->facingLeft) {
+    mainBat = g_CurrentEntity - 1;
+    if (mainBat->facingLeft) {
         RotMatrixY(0x800, &m);
     }
     xOffset = arg0->unk30;
     yOffset = arg0->unk32;
     transX = 0;
     transY = 0;
-    transZ = g_CurrentEntity->ext.ILLEGAL.s16[7];
+    transZ = g_CurrentEntity->ext.batwing.transZ;
     rotX = arg0->unkC;
     rotY = arg0->unkE;
     rotZ = arg0->unk10 / 0x100;
@@ -181,7 +181,7 @@ static Primitive* func_us_801AB380(
             LOW(prevPrim->x3) = LOW(prim->x2) = spA0;
         }
         prim->priority = ((g_CurrentEntity->zPriority +
-                           g_CurrentEntity->ext.ILLEGAL.s16[7] / 4) -
+                           g_CurrentEntity->ext.batwing.transZ / 4) -
                           zOffset);
         prevPrim = prim;
         prim = prim->next;
@@ -425,7 +425,7 @@ static batWingStruct wing1;
 #endif
 
 void EntityDarkwingBatWings(Entity* self) {
-    Entity* other;
+    Entity* mainBat;
     Primitive* prim;
     s32 primIndex;
     s32 i;
@@ -437,8 +437,8 @@ void EntityDarkwingBatWings(Entity* self) {
     wingPtrs[1] = &wing2;
     FntPrint("wing step %x\n", self->step);
     FntPrint("wing step_s %x\n", self->step_s);
-    other = self - 1;
-    if ((other->flags & FLAG_DEAD) && (self->step != 5)) {
+    mainBat = self - 1;
+    if ((mainBat->flags & FLAG_DEAD) && (self->step != 5)) {
         for (i = 0; i < 2; i++) {
             currWing = wingPtrs[i];
             currWing->step = 0;
@@ -454,7 +454,7 @@ void EntityDarkwingBatWings(Entity* self) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            self->ext.prim = prim;
+            self->ext.batwing.prim = prim;
             for (i = 0; i < 4; i++) {
                 prim->tpage = 0x13;
                 prim->clut = 0x200;
@@ -485,7 +485,7 @@ void EntityDarkwingBatWings(Entity* self) {
                 prim->drawMode = DRAW_UNK02;
                 prim = prim->next;
             }
-            self->ext.ILLEGAL.u32[1] = (u32)prim;
+            self->ext.batwing.prim2 = prim;
             for (i = 0; i < 4; i++) {
                 prim->tpage = 0x12;
                 prim->clut = 0x200;
@@ -523,17 +523,17 @@ void EntityDarkwingBatWings(Entity* self) {
         self->pose = 0;
         self->poseTimer = 0;
     case 1:
-        self->ext.ILLEGAL.s16[4] = -0x100;
-        self->ext.ILLEGAL.s16[5] = 0x400;
-        self->ext.ILLEGAL.s16[6] = 0;
-        self->ext.ILLEGAL.s16[7] = 0x260;
+        self->ext.batwing.rotX = -0x100;
+        self->ext.batwing.rotY = 0x400;
+        self->ext.batwing.rotZ = 0;
+        self->ext.batwing.transZ = 0x260;
         for (i = 0; i < 2; i++) {
             currWing = wingPtrs[i];
             WipeBatwing(currWing);
             currWing->unk24 = -0x80;
             currWing->unk2C = i;
         }
-        self->ext.ILLEGAL.s16[8] = 0x200;
+        self->ext.batwing.unused = 0x200;
         self->step_s = 0;
         self->step = 2;
         self->step = 3;
@@ -543,8 +543,8 @@ void EntityDarkwingBatWings(Entity* self) {
             currWing = wingPtrs[i];
             func_us_801AB768(currWing);
         }
-        other = self - 1;
-        if (other->ext.ILLEGAL.u8[9]) {
+        mainBat = self - 1;
+        if (mainBat->ext.darkwing.unk85) {
             for (i = 0; i < 2; i++) {
                 currWing = wingPtrs[i];
                 currWing->step = 0;
@@ -556,9 +556,9 @@ void EntityDarkwingBatWings(Entity* self) {
     case 3:
         switch (self->step_s) {
         case 0:
-            self->ext.ILLEGAL.s16[0x10] = 0x38;
-            other = self - 1;
-            if (!other->ext.ILLEGAL.u8[9]) {
+            self->ext.batwing.timer = 0x38;
+            mainBat = self - 1;
+            if (!mainBat->ext.darkwing.unk85) {
                 self->step_s++;
             }
             /* fallthrough */
@@ -567,7 +567,7 @@ void EntityDarkwingBatWings(Entity* self) {
                 currWing = wingPtrs[i];
                 func_us_801ABA38(currWing);
             }
-            if (!--self->ext.ILLEGAL.s16[0x10]) {
+            if (!--self->ext.batwing.timer) {
                 for (i = 0; i < 2; i++) {
                     currWing = wingPtrs[i];
                     currWing->step = 0;
@@ -575,8 +575,8 @@ void EntityDarkwingBatWings(Entity* self) {
                 }
                 SetStep(2);
             }
-            other = self - 1;
-            if (other->ext.ILLEGAL.u8[0xA]) {
+            mainBat = self - 1;
+            if (mainBat->ext.darkwing.unk86) {
                 for (i = 0; i < 2; i++) {
                     currWing = wingPtrs[i];
                     currWing->step = 0;
@@ -592,8 +592,8 @@ void EntityDarkwingBatWings(Entity* self) {
             currWing = wingPtrs[i];
             func_us_801ABB58(currWing);
         }
-        other = self - 1;
-        if (!other->ext.ILLEGAL.u8[0xA]) {
+        mainBat = self - 1;
+        if (!mainBat->ext.darkwing.unk86) {
             for (i = 0; i < 2; i++) {
                 currWing = wingPtrs[i];
                 currWing->step = 0;
@@ -605,7 +605,7 @@ void EntityDarkwingBatWings(Entity* self) {
     case 5:
         switch (self->step_s) {
         case 0:
-            self->ext.ILLEGAL.s16[4] = 0;
+            self->ext.batwing.rotX = 0;
             wing1.unk0 = 0;
             wing1.unk14 = 0;
             wing2.unk0 = 0;
@@ -617,8 +617,8 @@ void EntityDarkwingBatWings(Entity* self) {
                 currWing = wingPtrs[i];
                 func_us_801ABDC8(currWing);
             }
-            other = self - 1;
-            if (other->posY.i.hi > 0xB0) {
+            mainBat = self - 1;
+            if (mainBat->posY.i.hi > 0xB0) {
                 wing1.unk0 = 0;
                 wing1.unk14 = 0;
                 wing2.unk0 = 0;
@@ -656,31 +656,31 @@ void EntityDarkwingBatWings(Entity* self) {
         }
         break;
     }
-    other = self - 1;
-    self->facingLeft = other->facingLeft;
-    self->posX.i.hi = other->posX.i.hi;
-    self->posY.i.hi = other->posY.i.hi;
-    if (other->ext.ILLEGAL.u8[0xB]) {
+    mainBat = self - 1;
+    self->facingLeft = mainBat->facingLeft;
+    self->posX.i.hi = mainBat->posX.i.hi;
+    self->posY.i.hi = mainBat->posY.i.hi;
+    if (mainBat->ext.darkwing.unk87) {
         AnimateEntity(anim, self);
     } else {
         self->animCurFrame = 0;
     }
-    if (!other->ext.ILLEGAL.u8[8]) {
+    if (!mainBat->ext.darkwing.unk84) {
         for (prim = &g_PrimBuf[self->primIndex]; prim != NULL;
              prim = prim->next) {
             prim->drawMode = DRAW_HIDE;
         }
         return;
     }
-    self->ext.ILLEGAL.s16[6] = other->rotate;
-    if (other->rotate) {
-        if (other->facingLeft) {
-            self->posX.i.hi += ((rcos(other->rotate) * 0x18) >> 0xC);
+    self->ext.batwing.rotZ = mainBat->rotate;
+    if (mainBat->rotate) {
+        if (mainBat->facingLeft) {
+            self->posX.i.hi += ((rcos(mainBat->rotate) * 0x18) >> 0xC);
         } else {
-            self->posX.i.hi += -((rcos(other->rotate) * 0x18) >> 0xC);
+            self->posX.i.hi += -((rcos(mainBat->rotate) * 0x18) >> 0xC);
         }
-        self->posY.i.hi += -((rsin(other->rotate) * 0x18) >> 0xC);
-    } else if (other->facingLeft) {
+        self->posY.i.hi += -((rsin(mainBat->rotate) * 0x18) >> 0xC);
+    } else if (mainBat->facingLeft) {
         self->posX.i.hi += 0x18;
     } else {
         self->posX.i.hi -= 0x18;
@@ -691,13 +691,13 @@ void EntityDarkwingBatWings(Entity* self) {
         currWing->unk32 = self->posY.i.hi;
         func_us_801AB198(currWing);
     }
-    prim = self->ext.prim;
+    prim = self->ext.batwing.prim;
     currWing = wingPtrs[0];
     prim = func_us_801AB380(currWing, prim, positive_vecs);
     currWing = wingPtrs[1];
     prim = func_us_801AB380(currWing, prim, negative_vecs);
-    prim = self->ext.prim;
-    prim2 = (Primitive*)self->ext.ILLEGAL.u32[1];
+    prim = self->ext.batwing.prim;
+    prim2 = self->ext.batwing.prim2;
     for (i = 0; i < 4; i++) {
 #define LONG(x) (*(long*)&(x))
 
