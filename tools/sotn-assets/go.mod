@@ -9,6 +9,7 @@ require (
 	github.com/xeeynamo/gobindiff v0.0.0-20250712184023-3a24b474b3bf
 	golang.org/x/exp v0.0.0-20250620022241-b7579e27df2b
 	golang.org/x/sync v0.15.0
+	golang.org/x/text v0.21.0
 )
 
 require (
@@ -23,6 +24,5 @@ require (
 	github.com/spf13/pflag v1.0.9 // indirect
 	golang.org/x/sys v0.29.0 // indirect
 	golang.org/x/term v0.28.0 // indirect
-	golang.org/x/text v0.21.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
