@@ -199,7 +199,7 @@ void func_us_801ABFE0(Entity* self) {
         self->zPriority = 0xA8;
         self->hitboxState = 2;
 #ifndef BOSS_IS_BO0
-        self->hitPoints = 0x7FFF;
+        self->hitPoints = INT16_MAX;
 #else
         self->hitPoints = 16;
 #endif
@@ -487,7 +487,7 @@ void func_us_801AC894(Entity* self) {
         InitializeEntity(g_EInitEnvironment);
         self->animCurFrame = 0;
         self->drawFlags |= ENTITY_ROTATE;
-        self->rotate = 0xC00;
+        self->rotate = ROT(270.0);
         if (g_CastleFlags[NO2_SECRET_CEILING_OPEN]) {
             for (i = 0; i < 8; i++) {
                 tileIdx = D_us_80180E14[i];

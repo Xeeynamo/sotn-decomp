@@ -4330,6 +4330,29 @@ typedef struct {
 } ET_801AEFE0;
 
 typedef struct {
+    /* 0x7C */ Primitive* prim1;
+    /* 0x80 */ Primitive* prim2;
+    /* 0x84 */ Primitive* prim3;
+    /* 0x88 */ Primitive* prim4;
+    /* 0x8C */ Primitive* prim5;
+    /* 0x90 */ Primitive* prim6;
+    /* 0x94 */ u32 : 32;
+    /* 0x98 */ s16 hitboxOffX;
+    /* 0x9A */ u16 : 16;
+    /* 0x9C */ s16 timer9C;
+    /* 0x9E */ s16 timer9E;
+    /* 0xA0 */ s16 timer;
+    /* 0xA2 */ u16 : 16;
+    /* 0xA4 */ struct Entity* next;
+    /* 0xA8 */ u8 : 8;
+    /* 0xA9 */ u8 unkA9;
+    /* 0xAA */ u8 : 8;
+    /* 0xAB */ u8 : 8;
+    /* 0xAC */ u8 : 8;
+    /* 0xAD */ u8 scaleIndex;
+} ET_OlroxLaser;
+
+typedef struct {
     /* 0x7C */ u32 : 32;
     /* 0x80 */ s16 timer;
     /* 0x82 */ u16 : 16;
@@ -4731,6 +4754,7 @@ typedef union { // offset=0x7C
     ET_801A19CC et_801A19CC;
     ET_8019921C et_8019921C;
     ET_OlroxDrool olroxDrool;
+    ET_OlroxLaser olroxLaser;
     ET_Gorgon gorgon;
     ET_DarkwingBat darkwing;
     ET_DarkwingBatWings batwing;
