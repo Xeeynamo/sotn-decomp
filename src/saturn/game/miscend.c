@@ -104,6 +104,6 @@ StatusFaceImageLayout g_StatusFaceImageLayouts[9] = {
     {0, 7, 12}, {0, 8, 13},  {0, 12, 17}, {0, 0, 0},
 };
 
-PfnEntityUpdate g_FallingPrimitiveUpdate = func_0607AC40;
-u32 g_FallingPrimitiveInitData = 0;
-s16 g_FallingPrimitiveCollisionSensors[] = {0, 0, 0xFF};
+PfnEntityUpdate g_olroxDroolUpdate = EntityOlroxDrool;
+u32 g_olroxDroolInitData = 0;
+s16 g_olroxDroolCollOffsets[] = {0x00, 0x00, 0xFF};

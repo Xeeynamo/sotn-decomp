@@ -4352,6 +4352,25 @@ typedef struct {
     /* 0xAD */ u8 scaleIndex;
 } ET_OlroxLaser;
 
+typedef struct {
+    /* 0x7C */ u32 : 32;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ u16 : 16;
+    /* 0x84 */ u8 unk84;
+    /* 0x85 */ u8 unk85;
+    /* 0x86 */ u8 unk86;
+    /* 0x87 */ u8 unk87;
+    /* 0x88 */ u8 attackCycles;
+    /* 0x89 */ u8 randTo3;
+    /* 0x8A */ u8 wasHit;
+    /* 0x8B */ u8 damage;
+    /* 0x8C */ u32 : 32;
+    /* 0x90 */ u32 : 32;
+    /* 0x94 */ u32 : 32;
+    /* 0x98 */ u32 : 32;
+    /* 0x9C */ u32 fireballAccel;
+} ET_DarkwingBat;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -4723,6 +4742,7 @@ typedef union { // offset=0x7C
     ET_OlroxDrool olroxDrool;
     ET_OlroxLaser olroxLaser;
     ET_Gorgon gorgon;
+    ET_DarkwingBat darkwing;
 } Ext;
 
 SYNC_FIELD(ET_Player, ET_Weapon, anim);

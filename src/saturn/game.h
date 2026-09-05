@@ -83,7 +83,7 @@ void func_0606B760(void);
 void LoadSubDisplayFiles(void);
 void func_8011A9D8(void);
 void ModeGame(void);
-void func_0607AC40(Entity* self);
+void EntityOlroxDrool(Entity* self);
 extern const char g_StatusMenuUnknown[];
 extern const char g_StatusMenuButtonAssignment[];
 extern const char g_StatusMenuReversibleCloak[];

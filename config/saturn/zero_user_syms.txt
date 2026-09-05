@@ -391,7 +391,6 @@ _Sp2OpenFlag = 0x06064708;
 _SpGourTblMax = 0x0606470C;
 _SpLCoordX = 0x06064714;
 _SpMstDrawPrtyBlk = 0x06064718;
-_DAT_0606471C = 0x0606471C;
 _SpGourTbl = 0x0606471C;
 _SpLookupTblR = 0x06064720;
 _SpCmdTbl = 0x06064724;

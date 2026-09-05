@@ -8,7 +8,7 @@
 #include "sattypes.h"
 #include <saturn_player.h>
 
-void func_0600B0B8(SpritePart* part, void* arg1, s32 arg2, void* arg3);
+void func_0600B0B8(SpritePart* part, void* arg1, s32 arg2);
 
 extern s8* DAT_06085DE8[];
 extern s8* DAT_06085E14[];
