@@ -374,36 +374,24 @@ static void func_us_801ABDC8(batWingStruct* arg0) {
     arg0->unk14 -= 0x400;
 }
 
-typedef struct{
-    s32 unk0;
-    s32 unk4;
-    s32 unk8;
-    s16 unkC;
-    s16 unkE;
-    s32 unk10;
-    s32 unk14;
-    s32 unk18;
-    s32 unk1C;
-    s32 unk20;
-    s32 unk24;
-    s32 unk28;
-    u8 unk2C;
-    u8 step;
-    u8 substep;
-    s16 unk30;
-    s16 unk32;
-} batWingStruct;
-
 extern EInit D_us_80180BC4;
+static SVECTOR vec1 = {56, 0, 0};
+static SVECTOR vec2 = {4, 0, 0};
+static SVECTOR vec3 = {56, 0, 128};
+static SVECTOR vec4 = {4, 0, 128};
+static SVECTOR vec5 = {88, 0, 0};
+static SVECTOR vec6 = {0, 0, 0};
+static SVECTOR vec7 = {88, 0, 128};
+static SVECTOR vec8 = {0, 0, 128};
 
-extern batWingStruct* D_us_801BEE9C[2];
-extern batWingStruct* D_us_801BEEA4;
-
-extern SVECTOR* D_us_80181260;
+static SVECTOR* D_us_80181260[] = {&vec1, &vec2, &vec4, &vec5, &vec7, &vec8};
 extern SVECTOR* D_us_801812B8;
 extern AnimateEntityFrame D_us_801812F8[];
+
 extern batWingStruct D_us_801BEE34;
 extern batWingStruct D_us_801BEE68;
+extern batWingStruct* D_us_801BEE9C[2];
+extern batWingStruct* D_us_801BEEA4;
 
 void func_us_801ABDE4(Entity* self) {
     Entity* other;
