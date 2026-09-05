@@ -1,25 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rnz1.h"
 
-static void func_801B2CF8(s32* arg0) {
-    s32* ptr = arg0;
-    s32 bound = 13;
-    s32 i;
-
-    for(i = 0; i < bound; i++) {
-        *ptr++ = 0;
-    }
-}
-
-static void func_us_801AB16C(s32* arg0, s32* arg1) {
-    s32 bound = 13;
-    s32 i;
-
-    for(i = 0; i < bound; i++) {
-        *arg1++ = *arg0++;
-    }
-}
-
 typedef struct{
     s32 unk0;
     s32 unk4;
@@ -39,6 +20,25 @@ typedef struct{
     s16 unk30;
     s16 unk32;
 } batWingStruct;
+
+static void func_801B2CF8(batWingStruct* arg0) {
+    s32* ptr = (s32*)arg0;
+    s32 bound = 13;
+    s32 i;
+
+    for(i = 0; i < bound; i++) {
+        *ptr++ = 0;
+    }
+}
+
+static void func_us_801AB16C(s32* arg0, s32* arg1) {
+    s32 bound = 13;
+    s32 i;
+
+    for(i = 0; i < bound; i++) {
+        *arg1++ = *arg0++;
+    }
+}
 
 static void func_us_801AB198(batWingStruct* arg0) {
     s32 var_s2;
@@ -402,11 +402,19 @@ static s32 unused[] = {0x10000000, 0, 0x4000800, 0, 0x0800, 0x10000000, 0, 0, 0,
 
 static AnimateEntityFrame anim[] = {{6, 41}, {6, 42}, {5, 43}, {6, 42}, POSE_LOOP(0)};
 
-// BSS vars
+// BSS vars, not sure why order is reversed.
+// Likely something we could remove ifdef on, just don't know how
+#ifdef VERSION_US
 static batWingStruct D_us_801BEE34;
 static batWingStruct D_us_801BEE68;
 static batWingStruct* D_us_801BEE9C[2];
 static batWingStruct* D_us_801BEEA4;
+#else
+static batWingStruct* D_us_801BEEA4;
+static batWingStruct* D_us_801BEE9C[2];
+static batWingStruct D_us_801BEE68;
+static batWingStruct D_us_801BEE34;
+#endif
 
 void func_us_801ABDE4(Entity* self) {
     Entity* other;
@@ -430,8 +438,8 @@ void func_us_801ABDE4(Entity* self) {
         }
         SetStep(5);
     }
-    switch (self->step) {                              /* switch 1 */
-    case 0:                                         /* switch 1 */
+    switch (self->step) {
+    case 0:           
         InitializeEntity(D_us_80180BC4);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 10);
         if (primIndex != -1) {
@@ -506,7 +514,7 @@ void func_us_801ABDE4(Entity* self) {
         }
             self->pose = 0;
             self->poseTimer = 0;
-        case 1:                                     /* switch 1 */
+        case 1:       
             self->ext.ILLEGAL.s16[4] = -0x100;
             self->ext.ILLEGAL.s16[5] = 0x400;
             self->ext.ILLEGAL.s16[6] = 0;
@@ -522,7 +530,7 @@ void func_us_801ABDE4(Entity* self) {
             self->step = 2;
             self->step = 3;
         break;
-    case 2:                                         /* switch 1 */
+    case 2:           
         for(i = 0; i < 2; i++) {
             D_us_801BEEA4 = D_us_801BEE9C[i];
             func_us_801AB768(D_us_801BEEA4);
@@ -537,16 +545,16 @@ void func_us_801ABDE4(Entity* self) {
             SetStep(3);
         }
         break;
-    case 3:                                         /* switch 1 */
-        switch (self->step_s) {                          /* switch 2; irregular */
-        case 0:                                     /* switch 2 */
+    case 3:           
+        switch (self->step_s) {
+        case 0:
             self->ext.ILLEGAL.s16[0x10] = 0x38;
             other = self - 1;
             if (!other->ext.ILLEGAL.u8[9]) {
                 self->step_s++;
             }
             /* fallthrough */
-        case 1:                                     /* switch 2 */
+        case 1:
             for(i = 0; i < 2; i++) {
                 D_us_801BEEA4 = D_us_801BEE9C[i];
                 func_us_801ABA38(D_us_801BEEA4);
@@ -571,7 +579,7 @@ void func_us_801ABDE4(Entity* self) {
             break;
         }
         break;
-    case 4:                                         /* switch 1 */
+    case 4:           
         for(i = 0; i < 2; i++) {
             D_us_801BEEA4 = D_us_801BEE9C[i];
             func_us_801ABB58(D_us_801BEEA4);
@@ -586,9 +594,9 @@ void func_us_801ABDE4(Entity* self) {
             SetStep(3);
         }
         break;
-    case 5:                                         /* switch 1 */
-        switch (self->step_s) {                         /* switch 3; irregular */
-        case 0:                                     /* switch 3 */
+    case 5:           
+        switch (self->step_s) {                         
+        case 0:                                     
             self->ext.ILLEGAL.s16[4] = 0;
             D_us_801BEE34.unk0 = 0;
             D_us_801BEE34.unk14 = 0;
@@ -596,7 +604,7 @@ void func_us_801ABDE4(Entity* self) {
             D_us_801BEE68.unk14 = 0;
             self->step_s++;
             /* fallthrough */
-        case 1:                                     /* switch 3 */
+        case 1:                                     
             for(i = 0; i < 2; i++) {
                 D_us_801BEEA4 = D_us_801BEE9C[i];
                 func_us_801ABDC8(D_us_801BEEA4);
@@ -611,7 +619,7 @@ void func_us_801ABDE4(Entity* self) {
                 PlaySfxPositional(0x820);
             }
             break;
-        case 2:                                     /* switch 3 */
+        case 2:                                     
             should_destroy = true;
             for(i = 0; i < 2; i++) {
                 D_us_801BEEA4 = D_us_801BEE9C[i];
