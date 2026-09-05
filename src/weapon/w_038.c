@@ -32,7 +32,7 @@ static void EntityWeaponAttack(Entity* self) {
     if (self->step == 0) {
         SetSpriteBank1(g_Animset);
         self->animSet = ANIMSET_OVL(0x10);
-        self->palette = 0x110;
+        self->palette = PAL_UNK_110;
         self->unk5A = 0x64;
 
         if (g_HandId != 0) {

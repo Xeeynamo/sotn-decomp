@@ -13,7 +13,7 @@ void EntityBreakableWallDebris(Entity* self) {
         InitializeEntity(g_EInitParticle);
         self->drawFlags = ENTITY_ROTATE;
         self->animSet = ANIMSET_OVL(1);
-        self->palette = 0x800B;
+        self->palette = PAL_FLAG(0xB);
         if (Random() & 1) {
             self->animCurFrame = 0x26;
         } else {

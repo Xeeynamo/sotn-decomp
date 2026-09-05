@@ -57,11 +57,11 @@ static void EntityWeaponAttack(Entity* self) {
     SetSpriteBank1(w_045_1);
     if (g_HandId != 0) {
         g_CurrentEntity->animSet = ANIMSET_OVL(0x12);
-        g_CurrentEntity->palette = 0x128;
+        g_CurrentEntity->palette = PAL_UNK_128;
         g_CurrentEntity->unk5A = 0x66;
     } else {
         g_CurrentEntity->animSet = ANIMSET_OVL(0x10);
-        g_CurrentEntity->palette = 0x110;
+        g_CurrentEntity->palette = PAL_UNK_110;
         g_CurrentEntity->unk5A = 0x64;
     }
 
@@ -85,11 +85,11 @@ static s32 func_ptr_80170004(Entity* self) {
     SetSpriteBank1(w_045_1);
     if (g_HandId != 0) {
         g_CurrentEntity->animSet = ANIMSET_OVL(0x12);
-        g_CurrentEntity->palette = 0x128;
+        g_CurrentEntity->palette = PAL_UNK_128;
         g_CurrentEntity->unk5A = 0x66;
     } else {
         g_CurrentEntity->animSet = ANIMSET_OVL(0x10);
-        g_CurrentEntity->palette = 0x110;
+        g_CurrentEntity->palette = PAL_UNK_110;
         g_CurrentEntity->unk5A = 0x64;
     }
     DecelerateX(FIX(0.125));
@@ -160,11 +160,11 @@ static void func_ptr_80170008(Entity* self) {
     SetSpriteBank1(w_045_1);
     if (g_HandId != 0) {
         g_CurrentEntity->animSet = ANIMSET_OVL(0x12);
-        g_CurrentEntity->palette = 0x128;
+        g_CurrentEntity->palette = PAL_UNK_128;
         g_CurrentEntity->unk5A = 0x66;
     } else {
         g_CurrentEntity->animSet = ANIMSET_OVL(0x10);
-        g_CurrentEntity->palette = 0x110;
+        g_CurrentEntity->palette = PAL_UNK_110;
         g_CurrentEntity->unk5A = 0x64;
     }
     SetSpeedX(FIX(2.5));
@@ -217,11 +217,11 @@ static s32 func_ptr_8017000C(Entity* self) {
     SetSpriteBank1(w_045_1);
     if (g_HandId != 0) {
         g_CurrentEntity->animSet = ANIMSET_OVL(0x12);
-        g_CurrentEntity->palette = 0x128;
+        g_CurrentEntity->palette = PAL_UNK_128;
         g_CurrentEntity->unk5A = 0x66;
     } else {
         g_CurrentEntity->animSet = ANIMSET_OVL(0x10);
-        g_CurrentEntity->palette = 0x110;
+        g_CurrentEntity->palette = PAL_UNK_110;
         g_CurrentEntity->unk5A = 0x64;
     }
 
@@ -282,11 +282,11 @@ static s32 func_ptr_80170010(Entity* self) {
     SetSpriteBank1(w_045_1);
     if (g_HandId != 0) {
         g_CurrentEntity->animSet = ANIMSET_OVL(0x12);
-        g_CurrentEntity->palette = 0x128;
+        g_CurrentEntity->palette = PAL_UNK_128;
         g_CurrentEntity->unk5A = 0x66;
     } else {
         g_CurrentEntity->animSet = ANIMSET_OVL(0x10);
-        g_CurrentEntity->palette = 0x110;
+        g_CurrentEntity->palette = PAL_UNK_110;
         g_CurrentEntity->unk5A = 0x64;
     }
     PLAYER.drawFlags = ENTITY_ROTATE;

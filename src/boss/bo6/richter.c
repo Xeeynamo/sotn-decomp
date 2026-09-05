@@ -30,7 +30,7 @@ void func_us_801B4BD0(void) {
                 FLAG_SUPPRESS_STUN | FLAG_UNK_2000;
     RIC.facingLeft = 0;
     RIC.unk5A = 8;
-    RIC.palette = 0x8220;
+    RIC.palette = PAL_FLAG(0x220);
     RIC.scaleX = RIC.scaleY = 0x100;
     RIC.rotPivotY = 0x18;
     RIC.blendMode = BLEND_NO;

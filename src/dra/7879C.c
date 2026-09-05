@@ -2383,7 +2383,8 @@ void EntityPlayerBlinkWhite(Entity* self) {
         g_Player.unk6C = 0;
         goto block_231;
     }
-    if (((PLAYER.step == Player_SpellHellfire) && (PLAYER.palette == 0x810D)) ||
+    if (((PLAYER.step == Player_SpellHellfire) &&
+         (PLAYER.palette == PAL_FLAG(PAL_PLAYER_HIDDEN))) ||
         (!PLAYER.animSet) || !(PLAYER.animCurFrame & 0x7FFF)) {
         goto block_229;
     }
@@ -3021,7 +3022,8 @@ void EntityPlayerOutline(Entity* self) {
     if ((g_Player.status & (PLAYER_STATUS_AXEARMOR | PLAYER_STATUS_DEAD |
                             PLAYER_STATUS_STONE | PLAYER_STATUS_TRANSFORM)) ||
         !(PLAYER.animCurFrame & 0x7FFF) || (!PLAYER.animSet) ||
-        ((PLAYER.step == Player_SpellHellfire) && (PLAYER.palette == 0x810D))) {
+        ((PLAYER.step == Player_SpellHellfire) &&
+         (PLAYER.palette == PAL_FLAG(PAL_PLAYER_HIDDEN)))) {
         DestroyEntity(self);
         return;
     }

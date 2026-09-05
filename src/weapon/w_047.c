@@ -31,7 +31,7 @@ void EntityWeaponAttack(Entity* self) {
         SetSpriteBank1(g_Animset);
         self->animSet = ANIMSET_OVL(0x10);
         self->unk5A = 0x65;
-        self->palette = 0x110;
+        self->palette = PAL_UNK_110;
         self->ext.weapon_047.unk88 = 0;
         if (g_HandId != 0) {
             self->palette += 0x18;
@@ -303,7 +303,7 @@ s32 func_ptr_80170004(Entity* self) {
             SetSpriteBank2(g_Animset2);
             self->animSet = ANIMSET_OVL(0x11);
             self->unk5A = 0x64;
-            self->palette = 0x111;
+            self->palette = PAL_UNK_111;
             if (g_HandId != 0) {
                 self->palette = 0x129;
                 self->unk5A += 2;

@@ -33,7 +33,7 @@ void EntityDeathFlames(Entity* self) {
             self->zPriority = (self->params & 0xFF00) >> 8;
         }
         if (self->params & 0xF0) {
-            self->palette = PAL_FLAG(0x19F);
+            self->palette = PAL_FLAG(PAL_UNK_19F);
             self->blendMode = BLEND_TRANSP;
             self->facingLeft = true;
         }

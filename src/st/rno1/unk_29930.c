@@ -76,7 +76,7 @@ void func_us_80198A18_from_rbo4(Entity* self) {
         return;
 
     case 1:
-        self->palette = 0x804F;
+        self->palette = PAL_FLAG(0x4F);
         return;
     }
 }
