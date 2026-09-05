@@ -2,7 +2,7 @@
 #include "rnz1.h"
 
 #ifdef VERSION_PSP
-extern s32 E_ID(UNK_30);
+extern s32 E_ID(BAT_WINGS);
 extern s32 E_ID(DARKWING_WIND_DUST);
 extern s32 E_ID(FADING_FIREBALL);
 #endif
@@ -218,7 +218,7 @@ void EntityDarkwingBat(Entity* self) {
         self->zPriority = (g_unkGraphicsStruct.g_zEntityCenter + 4);
         self->hitboxState = 0;
         other = self + 1;
-        CreateEntityFromEntity(E_ID(UNK_30), self, other);
+        CreateEntityFromEntity(E_ID(BAT_WINGS), self, other);
         other->zPriority = ((self->zPriority) + 1);
         SetStep(DB_IDLE);
         break;
@@ -723,7 +723,7 @@ void EntityDarkwingBat(Entity* self) {
     self->hitboxHeight = *ptr_s3++;
 }
 
-extern EInit D_us_80180BC4;
+extern EInit g_EInitDarkwingBat2;
 // When you first walk into the room, Darkwing Bat is hanging from a golden
 // perch at the top of the screen. It sticks out, compared to the large
 // structure in the center. When DB is idle before the fight, the perch is
@@ -731,7 +731,7 @@ extern EInit D_us_80180BC4;
 // that sits there to keep showing the perch.
 void EntityDarkwingBatPerch(Entity* self) {
     if (!self->step) {
-        InitializeEntity(D_us_80180BC4);
+        InitializeEntity(g_EInitDarkwingBat2);
         self->animCurFrame = 6;
     }
 }

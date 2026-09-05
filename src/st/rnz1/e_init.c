@@ -48,7 +48,7 @@ void EntitySpikesDust(Entity* self);
 void EntitySpikesDamage(Entity* self);
 void EntityDarkwingBat(Entity* self);
 void EntityDarkwingBatPerch(Entity* self);
-void func_us_801ABDE4(Entity* self);
+void EntityDarkwingBatWings(Entity* self);
 void EntityDarkwingWindDust(Entity* self);
 void EntityFadingFireball(Entity* self);
 void EntityBossFightManager(Entity* self);
@@ -124,7 +124,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntitySpikesDamage,
     EntityDarkwingBat,
     EntityDarkwingBatPerch,
-    func_us_801ABDE4,
+    EntityDarkwingBatWings,
     EntityDarkwingWindDust,
     EntityFadingFireball,
     EntityBossFightManager,
@@ -170,7 +170,7 @@ EInit g_EInitUnused80180B94 = {ANIMSET_OVL(11), 22, 72, 538, 0x062};
 EInit g_EInitEnvironment = {ANIMSET_OVL(1), 0, 0, 0, 0x005};
 EInit g_EInitUnused80180BAC = {ANIMSET_OVL(3), 0, 0, 0, 0x005};
 EInit g_EInitDarkwingBat = {ANIMSET_OVL(5), 1, 72, 512, 0x111};
-EInit D_us_80180BC4 = {ANIMSET_OVL(5), 0, 72, 512, 0x005};
+EInit g_EInitDarkwingBat2 = {ANIMSET_OVL(5), 0, 72, 512, 0x005};
 EInit g_EInitCloakedknight = {ANIMSET_OVL(6), 1, 72, 528, 0x10F};
 EInit g_EInitCloakedKnightAura = {ANIMSET_OVL(6), 1, 72, 528, 0x002};
 EInit D_us_80180BE8 = {ANIMSET_OVL(6), 1, 72, 528, 0x110};
