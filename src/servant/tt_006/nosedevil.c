@@ -6,8 +6,7 @@ INCLUDE_ASM("servant/tt_006/nonmatchings/nosedevil", FindValidTarget);
 
 INCLUDE_ASM("servant/tt_006/nonmatchings/nosedevil", CheckEntityValid);
 
-void unused_2DBC(void) {
-}
+void unused_2DBC(void) {}
 
 INCLUDE_ASM("servant/tt_006/nonmatchings/nosedevil", ExecuteAbilityInitialize);
 
@@ -29,11 +28,9 @@ INCLUDE_ASM("servant/tt_006/nonmatchings/nosedevil", UpdateServantBasicAttack);
 
 INCLUDE_ASM("servant/tt_006/nonmatchings/nosedevil", UpdateServantSpecialAttack);
 
-void unused_5800(void) {
-}
+void unused_5800(void) {}
 
-void unused_5808(void) {
-}
+void unused_5808(void) {}
 
 INCLUDE_ASM("servant/tt_006/nonmatchings/nosedevil", UpdateServantPressSwitch);
 

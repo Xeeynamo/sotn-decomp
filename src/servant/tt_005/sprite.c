@@ -2,8 +2,7 @@
 
 INCLUDE_ASM("servant/tt_005/nonmatchings/sprite", SetAnimationFrame);
 
-void unused_39C8(void) {
-}
+void unused_39C8(void) {}
 
 INCLUDE_ASM("servant/tt_005/nonmatchings/sprite", ExecuteAbilityInitialize);
 
