@@ -23,7 +23,7 @@ typedef struct {
 
 static void func_801B2CF8(batWingStruct* arg0) {
     s32* ptr = (s32*)arg0;
-    s32 bound = 13;
+    s32 bound = sizeof(batWingStruct) / sizeof(s32);
     s32 i;
 
     for (i = 0; i < bound; i++) {
@@ -32,7 +32,7 @@ static void func_801B2CF8(batWingStruct* arg0) {
 }
 
 static void func_us_801AB16C(s32* arg0, s32* arg1) {
-    s32 bound = 13;
+    s32 bound = sizeof(batWingStruct) / sizeof(s32);
     s32 i;
 
     for (i = 0; i < bound; i++) {
@@ -699,10 +699,12 @@ void func_us_801ABDE4(Entity* self) {
     prim = self->ext.prim;
     prim2 = (Primitive*)self->ext.ILLEGAL.u32[1];
     for (i = 0; i < 4; i++) {
+#define LONG(x) (*(long*)&(x))
+
         if (!(i % 2)) {
-            clip = NormalClip(LOW(prim->x0), LOW(prim->x1), LOW(prim->x2));
+            clip = NormalClip(LONG(prim->x0), LONG(prim->x1), LONG(prim->x2));
         } else {
-            clip = NormalClip(LOW(prim->x0), LOW(prim->x1), LOW(prim->x3));
+            clip = NormalClip(LONG(prim->x0), LONG(prim->x1), LONG(prim->x3));
         }
         if (i > 1) {
             clip = -clip;

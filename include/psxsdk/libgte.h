@@ -56,11 +56,7 @@ long RotAverageNclip4(
     long* otz,  // Pointer to OTZ value (output)
     long* flag  // Pointer to flag (output)
 );
-// Darkwing Bat Wings does not match if PSP has this forward declared.
-#ifndef VERSION_PSP
 long NormalClip(long sxy0, long sxy1, long sxy2);
-#endif
-
 void NormalColorCol(SVECTOR* v0, // Pointer to normal vector (input)
                     CVECTOR* v1, // Pointer to primary color vector (input)
                     CVECTOR* v2  // Pointer to color vector (output)
