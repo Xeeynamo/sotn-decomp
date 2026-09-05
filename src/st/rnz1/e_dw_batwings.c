@@ -21,7 +21,7 @@ typedef struct {
     s16 unk32;
 } batWingStruct;
 
-static void func_801B2CF8(batWingStruct* arg0) {
+static void WipeBatwing(batWingStruct* arg0) {
     s32* ptr = (s32*)arg0;
     s32 bound = sizeof(batWingStruct) / sizeof(s32);
     s32 i;
@@ -31,7 +31,7 @@ static void func_801B2CF8(batWingStruct* arg0) {
     }
 }
 
-static void func_us_801AB16C(s32* arg0, s32* arg1) {
+static void UnusedCopyBatwing(s32* arg0, s32* arg1) {
     s32 bound = sizeof(batWingStruct) / sizeof(s32);
     s32 i;
 
@@ -413,15 +413,15 @@ static AnimateEntityFrame anim[] = {
 // BSS vars, not sure why order is reversed.
 // Likely something we could remove ifdef on, just don't know how
 #ifdef VERSION_US
-static batWingStruct D_us_801BEE34;
-static batWingStruct D_us_801BEE68;
-static batWingStruct* D_us_801BEE9C[2];
-static batWingStruct* D_us_801BEEA4;
+static batWingStruct wing1;
+static batWingStruct wing2;
+static batWingStruct* wingPtrs[2];
+static batWingStruct* currWing;
 #else
-static batWingStruct* D_us_801BEEA4;
-static batWingStruct* D_us_801BEE9C[2];
-static batWingStruct D_us_801BEE68;
-static batWingStruct D_us_801BEE34;
+static batWingStruct* currWing;
+static batWingStruct* wingPtrs[2];
+static batWingStruct wing2;
+static batWingStruct wing1;
 #endif
 
 void func_us_801ABDE4(Entity* self) {
@@ -433,16 +433,16 @@ void func_us_801ABDE4(Entity* self) {
     bool should_destroy;
     Primitive* prim2;
 
-    D_us_801BEE9C[0] = &D_us_801BEE34;
-    D_us_801BEE9C[1] = &D_us_801BEE68;
+    wingPtrs[0] = &wing1;
+    wingPtrs[1] = &wing2;
     FntPrint("wing step %x\n", self->step);
     FntPrint("wing step_s %x\n", self->step_s);
     other = self - 1;
     if ((other->flags & FLAG_DEAD) && (self->step != 5)) {
         for (i = 0; i < 2; i++) {
-            D_us_801BEEA4 = D_us_801BEE9C[i];
-            D_us_801BEEA4->step = 0;
-            D_us_801BEEA4->substep = 0;
+            currWing = wingPtrs[i];
+            currWing->step = 0;
+            currWing->substep = 0;
         }
         SetStep(5);
     }
@@ -528,10 +528,10 @@ void func_us_801ABDE4(Entity* self) {
         self->ext.ILLEGAL.s16[6] = 0;
         self->ext.ILLEGAL.s16[7] = 0x260;
         for (i = 0; i < 2; i++) {
-            D_us_801BEEA4 = D_us_801BEE9C[i];
-            func_801B2CF8(D_us_801BEEA4);
-            D_us_801BEEA4->unk24 = -0x80;
-            D_us_801BEEA4->unk2C = i;
+            currWing = wingPtrs[i];
+            WipeBatwing(currWing);
+            currWing->unk24 = -0x80;
+            currWing->unk2C = i;
         }
         self->ext.ILLEGAL.s16[8] = 0x200;
         self->step_s = 0;
@@ -540,15 +540,15 @@ void func_us_801ABDE4(Entity* self) {
         break;
     case 2:
         for (i = 0; i < 2; i++) {
-            D_us_801BEEA4 = D_us_801BEE9C[i];
-            func_us_801AB768(D_us_801BEEA4);
+            currWing = wingPtrs[i];
+            func_us_801AB768(currWing);
         }
         other = self - 1;
         if (other->ext.ILLEGAL.u8[9]) {
             for (i = 0; i < 2; i++) {
-                D_us_801BEEA4 = D_us_801BEE9C[i];
-                D_us_801BEEA4->step = 0;
-                D_us_801BEEA4->substep = 0;
+                currWing = wingPtrs[i];
+                currWing->step = 0;
+                currWing->substep = 0;
             }
             SetStep(3);
         }
@@ -564,23 +564,23 @@ void func_us_801ABDE4(Entity* self) {
             /* fallthrough */
         case 1:
             for (i = 0; i < 2; i++) {
-                D_us_801BEEA4 = D_us_801BEE9C[i];
-                func_us_801ABA38(D_us_801BEEA4);
+                currWing = wingPtrs[i];
+                func_us_801ABA38(currWing);
             }
             if (!--self->ext.ILLEGAL.s16[0x10]) {
                 for (i = 0; i < 2; i++) {
-                    D_us_801BEEA4 = D_us_801BEE9C[i];
-                    D_us_801BEEA4->step = 0;
-                    D_us_801BEEA4->substep = 0;
+                    currWing = wingPtrs[i];
+                    currWing->step = 0;
+                    currWing->substep = 0;
                 }
                 SetStep(2);
             }
             other = self - 1;
             if (other->ext.ILLEGAL.u8[0xA]) {
                 for (i = 0; i < 2; i++) {
-                    D_us_801BEEA4 = D_us_801BEE9C[i];
-                    D_us_801BEEA4->step = 0;
-                    D_us_801BEEA4->substep = 0;
+                    currWing = wingPtrs[i];
+                    currWing->step = 0;
+                    currWing->substep = 0;
                 }
                 SetStep(4);
             }
@@ -589,15 +589,15 @@ void func_us_801ABDE4(Entity* self) {
         break;
     case 4:
         for (i = 0; i < 2; i++) {
-            D_us_801BEEA4 = D_us_801BEE9C[i];
-            func_us_801ABB58(D_us_801BEEA4);
+            currWing = wingPtrs[i];
+            func_us_801ABB58(currWing);
         }
         other = self - 1;
         if (!other->ext.ILLEGAL.u8[0xA]) {
             for (i = 0; i < 2; i++) {
-                D_us_801BEEA4 = D_us_801BEE9C[i];
-                D_us_801BEEA4->step = 0;
-                D_us_801BEEA4->substep = 0;
+                currWing = wingPtrs[i];
+                currWing->step = 0;
+                currWing->substep = 0;
             }
             SetStep(3);
         }
@@ -606,23 +606,23 @@ void func_us_801ABDE4(Entity* self) {
         switch (self->step_s) {
         case 0:
             self->ext.ILLEGAL.s16[4] = 0;
-            D_us_801BEE34.unk0 = 0;
-            D_us_801BEE34.unk14 = 0;
-            D_us_801BEE68.unk0 = 0;
-            D_us_801BEE68.unk14 = 0;
+            wing1.unk0 = 0;
+            wing1.unk14 = 0;
+            wing2.unk0 = 0;
+            wing2.unk14 = 0;
             self->step_s++;
             /* fallthrough */
         case 1:
             for (i = 0; i < 2; i++) {
-                D_us_801BEEA4 = D_us_801BEE9C[i];
-                func_us_801ABDC8(D_us_801BEEA4);
+                currWing = wingPtrs[i];
+                func_us_801ABDC8(currWing);
             }
             other = self - 1;
             if (other->posY.i.hi > 0xB0) {
-                D_us_801BEE34.unk0 = 0;
-                D_us_801BEE34.unk14 = 0;
-                D_us_801BEE68.unk0 = 0;
-                D_us_801BEE68.unk14 = 0;
+                wing1.unk0 = 0;
+                wing1.unk14 = 0;
+                wing2.unk0 = 0;
+                wing2.unk14 = 0;
                 self->step_s++;
                 PlaySfxPositional(SFX_UNK_RNZ1_DEBRIS_820);
             }
@@ -630,20 +630,20 @@ void func_us_801ABDE4(Entity* self) {
         case 2:
             should_destroy = true;
             for (i = 0; i < 2; i++) {
-                D_us_801BEEA4 = D_us_801BEE9C[i];
+                currWing = wingPtrs[i];
                 // Well now we're treating BF80 as if its next pointer is an
                 // integer That is extremely unusual.
-                D_us_801BEEA4->unk0 += 0x40;
-                D_us_801BEEA4->unk14 += 0x40;
-                if (D_us_801BEEA4->unk10 > 0) {
-                    D_us_801BEEA4->unk10 = 0;
-                    D_us_801BEEA4->unk0 = 0;
+                currWing->unk0 += 0x40;
+                currWing->unk14 += 0x40;
+                if (currWing->unk10 > 0) {
+                    currWing->unk10 = 0;
+                    currWing->unk0 = 0;
                 } else {
                     should_destroy = false;
                 }
-                if (D_us_801BEEA4->unk28 > 0) {
-                    D_us_801BEEA4->unk28 = 0;
-                    D_us_801BEEA4->unk14 = 0;
+                if (currWing->unk28 > 0) {
+                    currWing->unk28 = 0;
+                    currWing->unk14 = 0;
                 } else {
                     should_destroy = false;
                 }
@@ -686,16 +686,16 @@ void func_us_801ABDE4(Entity* self) {
         self->posX.i.hi -= 0x18;
     }
     for (i = 0; i < 2; i++) {
-        D_us_801BEEA4 = D_us_801BEE9C[i];
-        D_us_801BEEA4->unk30 = self->posX.i.hi;
-        D_us_801BEEA4->unk32 = self->posY.i.hi;
-        func_us_801AB198(D_us_801BEEA4);
+        currWing = wingPtrs[i];
+        currWing->unk30 = self->posX.i.hi;
+        currWing->unk32 = self->posY.i.hi;
+        func_us_801AB198(currWing);
     }
     prim = self->ext.prim;
-    D_us_801BEEA4 = D_us_801BEE9C[0];
-    prim = func_us_801AB380(D_us_801BEEA4, prim, positive_vecs);
-    D_us_801BEEA4 = D_us_801BEE9C[1];
-    prim = func_us_801AB380(D_us_801BEEA4, prim, negative_vecs);
+    currWing = wingPtrs[0];
+    prim = func_us_801AB380(currWing, prim, positive_vecs);
+    currWing = wingPtrs[1];
+    prim = func_us_801AB380(currWing, prim, negative_vecs);
     prim = self->ext.prim;
     prim2 = (Primitive*)self->ext.ILLEGAL.u32[1];
     for (i = 0; i < 4; i++) {
