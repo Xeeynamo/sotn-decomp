@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rnz1.h"
 
-typedef struct{
+typedef struct {
     s32 unk0;
     s32 unk4;
     s32 unk8;
@@ -26,7 +26,7 @@ static void func_801B2CF8(batWingStruct* arg0) {
     s32 bound = 13;
     s32 i;
 
-    for(i = 0; i < bound; i++) {
+    for (i = 0; i < bound; i++) {
         *ptr++ = 0;
     }
 }
@@ -35,7 +35,7 @@ static void func_us_801AB16C(s32* arg0, s32* arg1) {
     s32 bound = 13;
     s32 i;
 
-    for(i = 0; i < bound; i++) {
+    for (i = 0; i < bound; i++) {
         *arg1++ = *arg0++;
     }
 }
@@ -47,7 +47,9 @@ static void func_us_801AB198(batWingStruct* arg0) {
 
     var_s2 = arg0->unk8 * 0x50 / 0x100;
     var_s1 = arg0->unk0;
-    arg0->unk4 = (var_s2 * rcos(arg0->unkE) / 0x1000) + (((arg0->unk18 * rcos(arg0->unk28 / 0x100)) / 0x1000) * 0x3E) / 0x100;
+    arg0->unk4 =
+        (var_s2 * rcos(arg0->unkE) / 0x1000) +
+        (((arg0->unk18 * rcos(arg0->unk28 / 0x100)) / 0x1000) * 0x3E) / 0x100;
     var_s0 = var_s1 - arg0->unk4;
     arg0->unk8 += var_s0;
     arg0->unk10 += arg0->unk8;
@@ -75,7 +77,8 @@ static void func_us_801AB198(batWingStruct* arg0) {
     }
 }
 
-static Primitive* func_us_801AB380(batWingStruct* arg0, Primitive* prim, SVECTOR** arg2) {
+static Primitive* func_us_801AB380(
+    batWingStruct* arg0, Primitive* prim, SVECTOR** arg2) {
     s16 transX;
     s16 transY;
     long spA8;
@@ -121,7 +124,7 @@ static Primitive* func_us_801AB380(batWingStruct* arg0, Primitive* prim, SVECTOR
     rotY = arg0->unkE;
     rotZ = arg0->unk10 / 0x100;
     SetGeomScreen(0x180);
-    for(i = 0; i < 2; i += 1) {
+    for (i = 0; i < 2; i += 1) {
         rotVec.vx = rotX;
         rotVec.vy = rotY;
         if (arg0->unk2C) {
@@ -147,7 +150,7 @@ static Primitive* func_us_801AB380(batWingStruct* arg0, Primitive* prim, SVECTOR
         zOffset = zOffset + RotTransPers(*arg2, &spA4, &sp9C, &sp98);
         arg2++;
         zOffset /= 2;
-        
+
         rotVec.vx = rotX;
         rotVec.vy = 0;
         rotVec.vz = rotZ;
@@ -177,7 +180,9 @@ static Primitive* func_us_801AB380(batWingStruct* arg0, Primitive* prim, SVECTOR
             LOW(prim->x3) = spA4;
             LOW(prevPrim->x3) = LOW(prim->x2) = spA0;
         }
-        prim->priority = ((g_CurrentEntity->zPriority + g_CurrentEntity->ext.ILLEGAL.s16[7] / 4) - zOffset);
+        prim->priority = ((g_CurrentEntity->zPriority +
+                           g_CurrentEntity->ext.ILLEGAL.s16[7] / 4) -
+                          zOffset);
         prevPrim = prim;
         prim = prim->next;
     }
@@ -238,8 +243,8 @@ static void func_us_801AB768(batWingStruct* arg0) {
                 arg0->unk14 += 0x180;
                 break;
             }
-            PlaySfxPositional(0x822);
-                arg0->substep++;
+            PlaySfxPositional(SFX_UNK_RNZ1_EXPLODE_822);
+            arg0->substep++;
             break;
         case 1:
             if (arg0->unk8 < 0x4000) {
@@ -289,7 +294,7 @@ static void func_us_801ABA38(batWingStruct* arg0) {
         var_s2 = (FIX(-0.5) - arg0->unk10);
         arg0->unk0 = var_s2 / 16;
         var_s0 += (0x40 - arg0->unk24);
-        arg0->unk24 += var_s0/ 16;
+        arg0->unk24 += var_s0 / 16;
         var_s2 = (FIX(-1) - arg0->unk28);
         arg0->unk14 = var_s2 / 32;
         if (abs(var_s1 + var_s0) < 0x20) {
@@ -394,13 +399,16 @@ static SVECTOR vecn5 = {-88, 0, 0};
 static SVECTOR vecn6 = {-0, 0, 0};
 static SVECTOR vecn7 = {-88, 0, 128};
 static SVECTOR vecn8 = {-0, 0, 128};
-static SVECTOR* negative_vecs[] = {&vecn1, &vecn2, &vecn4, &vecn5, &vecn7, &vecn8};
+static SVECTOR* negative_vecs[] = {
+    &vecn1, &vecn2, &vecn4, &vecn5, &vecn7, &vecn8};
 
 // Probably not actually s32, but with it being unused, hard to know.
 // Doesn't really match any common data we run into.
-static s32 unused[] = {0x10000000, 0, 0x4000800, 0, 0x0800, 0x10000000, 0, 0, 0, 0};
+static s32 unused[] = {
+    0x10000000, 0, 0x4000800, 0, 0x0800, 0x10000000, 0, 0, 0, 0};
 
-static AnimateEntityFrame anim[] = {{6, 41}, {6, 42}, {5, 43}, {6, 42}, POSE_LOOP(0)};
+static AnimateEntityFrame anim[] = {
+    {6, 41}, {6, 42}, {5, 43}, {6, 42}, POSE_LOOP(0)};
 
 // BSS vars, not sure why order is reversed.
 // Likely something we could remove ifdef on, just don't know how
@@ -430,8 +438,8 @@ void func_us_801ABDE4(Entity* self) {
     FntPrint("wing step %x\n", self->step);
     FntPrint("wing step_s %x\n", self->step_s);
     other = self - 1;
-    if ((other->flags & 0x100) && (self->step != 5)) {
-        for(i = 0; i < 2; i++) {
+    if ((other->flags & FLAG_DEAD) && (self->step != 5)) {
+        for (i = 0; i < 2; i++) {
             D_us_801BEEA4 = D_us_801BEE9C[i];
             D_us_801BEEA4->step = 0;
             D_us_801BEEA4->substep = 0;
@@ -439,15 +447,15 @@ void func_us_801ABDE4(Entity* self) {
         SetStep(5);
     }
     switch (self->step) {
-    case 0:           
+    case 0:
         InitializeEntity(D_us_80180BC4);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 10);
         if (primIndex != -1) {
-            self->flags |= 0x800000;
+            self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
             self->ext.prim = prim;
-            for(i = 0; i < 4; i++) {
+            for (i = 0; i < 4; i++) {
                 prim->tpage = 0x13;
                 prim->clut = 0x200;
                 if (i % 2) {
@@ -474,11 +482,11 @@ void func_us_801ABDE4(Entity* self) {
                 LOW(prim->r2) = LOW(prim->r0);
                 LOW(prim->r3) = LOW(prim->r0);
                 prim->priority = self->zPriority;
-                prim->drawMode = 2;
+                prim->drawMode = DRAW_UNK02;
                 prim = prim->next;
             }
-            self->ext.ILLEGAL.u32[1] = (u32) prim;
-            for(i = 0; i < 4; i++) {
+            self->ext.ILLEGAL.u32[1] = (u32)prim;
+            for (i = 0; i < 4; i++) {
                 prim->tpage = 0x12;
                 prim->clut = 0x200;
                 if (i % 2) {
@@ -499,45 +507,45 @@ void func_us_801ABDE4(Entity* self) {
                     prim->v3 = 0x34;
                     prim->v0 = 0x44;
                     prim->v2 = 0x44;
-                }                
+                }
                 prim->r0 = prim->g0 = prim->b0 = 0x40;
                 LOW(prim->r1) = LOW(prim->r0);
                 LOW(prim->r2) = LOW(prim->r0);
                 LOW(prim->r3) = LOW(prim->r0);
                 prim->priority = self->zPriority;
-                prim->drawMode = 2;
+                prim->drawMode = DRAW_UNK02;
                 prim = prim->next;
-            } 
-        }    else {
+            }
+        } else {
             DestroyEntity(self);
             return;
         }
-            self->pose = 0;
-            self->poseTimer = 0;
-        case 1:       
-            self->ext.ILLEGAL.s16[4] = -0x100;
-            self->ext.ILLEGAL.s16[5] = 0x400;
-            self->ext.ILLEGAL.s16[6] = 0;
-            self->ext.ILLEGAL.s16[7] = 0x260;
-            for(i = 0; i < 2; i++) {
-                D_us_801BEEA4 = D_us_801BEE9C[i];
-                func_801B2CF8(D_us_801BEEA4);
-                D_us_801BEEA4->unk24 = -0x80;
-                D_us_801BEEA4->unk2C = i;
-            }
-            self->ext.ILLEGAL.s16[8] = 0x200;
-            self->step_s = 0;
-            self->step = 2;
-            self->step = 3;
+        self->pose = 0;
+        self->poseTimer = 0;
+    case 1:
+        self->ext.ILLEGAL.s16[4] = -0x100;
+        self->ext.ILLEGAL.s16[5] = 0x400;
+        self->ext.ILLEGAL.s16[6] = 0;
+        self->ext.ILLEGAL.s16[7] = 0x260;
+        for (i = 0; i < 2; i++) {
+            D_us_801BEEA4 = D_us_801BEE9C[i];
+            func_801B2CF8(D_us_801BEEA4);
+            D_us_801BEEA4->unk24 = -0x80;
+            D_us_801BEEA4->unk2C = i;
+        }
+        self->ext.ILLEGAL.s16[8] = 0x200;
+        self->step_s = 0;
+        self->step = 2;
+        self->step = 3;
         break;
-    case 2:           
-        for(i = 0; i < 2; i++) {
+    case 2:
+        for (i = 0; i < 2; i++) {
             D_us_801BEEA4 = D_us_801BEE9C[i];
             func_us_801AB768(D_us_801BEEA4);
         }
         other = self - 1;
         if (other->ext.ILLEGAL.u8[9]) {
-            for(i = 0; i < 2; i++) {
+            for (i = 0; i < 2; i++) {
                 D_us_801BEEA4 = D_us_801BEE9C[i];
                 D_us_801BEEA4->step = 0;
                 D_us_801BEEA4->substep = 0;
@@ -545,7 +553,7 @@ void func_us_801ABDE4(Entity* self) {
             SetStep(3);
         }
         break;
-    case 3:           
+    case 3:
         switch (self->step_s) {
         case 0:
             self->ext.ILLEGAL.s16[0x10] = 0x38;
@@ -555,12 +563,12 @@ void func_us_801ABDE4(Entity* self) {
             }
             /* fallthrough */
         case 1:
-            for(i = 0; i < 2; i++) {
+            for (i = 0; i < 2; i++) {
                 D_us_801BEEA4 = D_us_801BEE9C[i];
                 func_us_801ABA38(D_us_801BEEA4);
             }
             if (!--self->ext.ILLEGAL.s16[0x10]) {
-            for(i = 0; i < 2; i++) {
+                for (i = 0; i < 2; i++) {
                     D_us_801BEEA4 = D_us_801BEE9C[i];
                     D_us_801BEEA4->step = 0;
                     D_us_801BEEA4->substep = 0;
@@ -569,7 +577,7 @@ void func_us_801ABDE4(Entity* self) {
             }
             other = self - 1;
             if (other->ext.ILLEGAL.u8[0xA]) {
-                for(i = 0; i < 2; i++) {
+                for (i = 0; i < 2; i++) {
                     D_us_801BEEA4 = D_us_801BEE9C[i];
                     D_us_801BEEA4->step = 0;
                     D_us_801BEEA4->substep = 0;
@@ -579,14 +587,14 @@ void func_us_801ABDE4(Entity* self) {
             break;
         }
         break;
-    case 4:           
-        for(i = 0; i < 2; i++) {
+    case 4:
+        for (i = 0; i < 2; i++) {
             D_us_801BEEA4 = D_us_801BEE9C[i];
             func_us_801ABB58(D_us_801BEEA4);
         }
         other = self - 1;
         if (!other->ext.ILLEGAL.u8[0xA]) {
-            for(i = 0; i < 2; i++) {
+            for (i = 0; i < 2; i++) {
                 D_us_801BEEA4 = D_us_801BEE9C[i];
                 D_us_801BEEA4->step = 0;
                 D_us_801BEEA4->substep = 0;
@@ -594,9 +602,9 @@ void func_us_801ABDE4(Entity* self) {
             SetStep(3);
         }
         break;
-    case 5:           
-        switch (self->step_s) {                         
-        case 0:                                     
+    case 5:
+        switch (self->step_s) {
+        case 0:
             self->ext.ILLEGAL.s16[4] = 0;
             D_us_801BEE34.unk0 = 0;
             D_us_801BEE34.unk14 = 0;
@@ -604,8 +612,8 @@ void func_us_801ABDE4(Entity* self) {
             D_us_801BEE68.unk14 = 0;
             self->step_s++;
             /* fallthrough */
-        case 1:                                     
-            for(i = 0; i < 2; i++) {
+        case 1:
+            for (i = 0; i < 2; i++) {
                 D_us_801BEEA4 = D_us_801BEE9C[i];
                 func_us_801ABDC8(D_us_801BEEA4);
             }
@@ -616,15 +624,15 @@ void func_us_801ABDE4(Entity* self) {
                 D_us_801BEE68.unk0 = 0;
                 D_us_801BEE68.unk14 = 0;
                 self->step_s++;
-                PlaySfxPositional(0x820);
+                PlaySfxPositional(SFX_UNK_RNZ1_DEBRIS_820);
             }
             break;
-        case 2:                                     
+        case 2:
             should_destroy = true;
-            for(i = 0; i < 2; i++) {
+            for (i = 0; i < 2; i++) {
                 D_us_801BEEA4 = D_us_801BEE9C[i];
-                // Well now we're treating BF80 as if its next pointer is an integer
-                // That is extremely unusual.
+                // Well now we're treating BF80 as if its next pointer is an
+                // integer That is extremely unusual.
                 D_us_801BEEA4->unk0 += 0x40;
                 D_us_801BEEA4->unk14 += 0x40;
                 if (D_us_801BEEA4->unk10 > 0) {
@@ -658,8 +666,9 @@ void func_us_801ABDE4(Entity* self) {
         self->animCurFrame = 0;
     }
     if (!other->ext.ILLEGAL.u8[8]) {
-        for(prim = &g_PrimBuf[self->primIndex]; prim != NULL; prim = prim->next) {
-            prim->drawMode = 8;
+        for (prim = &g_PrimBuf[self->primIndex]; prim != NULL;
+             prim = prim->next) {
+            prim->drawMode = DRAW_HIDE;
         }
         return;
     }
@@ -676,7 +685,7 @@ void func_us_801ABDE4(Entity* self) {
     } else {
         self->posX.i.hi -= 0x18;
     }
-    for(i = 0; i < 2; i++) {
+    for (i = 0; i < 2; i++) {
         D_us_801BEEA4 = D_us_801BEE9C[i];
         D_us_801BEEA4->unk30 = self->posX.i.hi;
         D_us_801BEEA4->unk32 = self->posY.i.hi;
@@ -689,7 +698,7 @@ void func_us_801ABDE4(Entity* self) {
     prim = func_us_801AB380(D_us_801BEEA4, prim, negative_vecs);
     prim = self->ext.prim;
     prim2 = (Primitive*)self->ext.ILLEGAL.u32[1];
-    for(i = 0; i < 4; i++) {
+    for (i = 0; i < 4; i++) {
         if (!(i % 2)) {
             clip = NormalClip(LOW(prim->x0), LOW(prim->x1), LOW(prim->x2));
         } else {
@@ -699,16 +708,16 @@ void func_us_801ABDE4(Entity* self) {
             clip = -clip;
         }
         if (clip > 0) {
-            prim->drawMode = 8;
-            prim2->drawMode = 2;
+            prim->drawMode = DRAW_HIDE;
+            prim2->drawMode = DRAW_UNK02;
             LOW(prim2->x0) = LOW(prim->x0);
             LOW(prim2->x1) = LOW(prim->x1);
             LOW(prim2->x2) = LOW(prim->x2);
             LOW(prim2->x3) = LOW(prim->x3);
             prim2->priority = prim->priority;
         } else {
-            prim->drawMode = 2;
-            prim2->drawMode = 8;
+            prim->drawMode = DRAW_UNK02;
+            prim2->drawMode = DRAW_HIDE;
         }
         prim = prim->next;
         prim2 = prim2->next;
