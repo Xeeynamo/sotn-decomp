@@ -6,8 +6,3 @@ INCLUDE_ASM("st/rnz1_psp/nonmatchings/rnz1_psp/e_valhalla_knight", EntityValhall
 INCLUDE_ASM("st/rnz1_psp/nonmatchings/rnz1_psp/e_valhalla_knight", func_us_801C8954);
 
 INCLUDE_ASM("st/rnz1_psp/nonmatchings/rnz1_psp/e_valhalla_knight", func_us_801C8AAC);
-
-INCLUDE_ASM("st/rnz1_psp/nonmatchings/rnz1_psp/e_valhalla_knight", func_psp_0923AD68);
-
-INCLUDE_ASM("st/rnz1_psp/nonmatchings/rnz1_psp/e_valhalla_knight", func_psp_0923B2F0);
-
