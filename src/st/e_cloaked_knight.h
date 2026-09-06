@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 static AnimateEntityFrame anim_cloak[] = {
     {.duration = 4, .pose = 3},
     {.duration = 4, .pose = 4},
@@ -5,6 +6,11 @@ static AnimateEntityFrame anim_cloak[] = {
     {.duration = 4, .pose = 6},
     POSE_LOOP(0),
 };
+
+// This could be a splat issue. Bytes at 1F30 in RNZ1 are weird.
+#ifdef INVERTED_STAGE
+static s32 datapad = 0;
+#endif
 
 #include "../step_towards.h"
 

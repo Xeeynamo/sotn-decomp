@@ -75,7 +75,6 @@ func_us_801B41A4 = 0x092548D0; // source=match
 func_us_801B4210 = 0x09254958; // source=match
 EntityBackgroundBlock = 0x09254B48;
 func_us_801B0930 = 0x09255288;
-func_us_801B8B64 = 0x09256708;
 EntityLaserAttack = 0x09256A10;
 EntityFireballAttack = 0x09257F58;
 EntityRealOlroxDrool = 0x09258688;
