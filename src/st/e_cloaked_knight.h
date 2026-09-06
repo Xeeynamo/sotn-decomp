@@ -126,16 +126,9 @@ void EntityCloakedKnight(Entity* self) {
                 distance = -distance;
             }
             StepTowards(&self->ext.cloakedKnight.unk9E, distance, 4);
-#ifdef VERSION_PSP
-            angle = self->hitFlags & 3;
-            if (angle) {
-                SetStep(5);
-            }
-#else
             if (self->hitFlags & 3) {
                 SetStep(5);
             }
-#endif
             break;
         }
         break;
@@ -261,7 +254,8 @@ void EntityCloakedKnight(Entity* self) {
         posY = self->posY.val;
         posX += scale * rcos(angle) * 16;
         posY += scale * rsin(angle) * 16;
-        StepTowards(&entity->rotate, (angle - FIX(1.0 / 64.0)) & 0xFFF, 0x10);
+        angle = (angle - FIX(1.0 / 64.0)) & 0xFFF;
+        StepTowards(&entity->rotate, angle, 0x10);
         pos = &entity->ext.cloakedKnightSword.targetPos;
         pos->x.val = posX;
         pos->y.val = posY;
