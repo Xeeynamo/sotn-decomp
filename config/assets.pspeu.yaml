@@ -1243,7 +1243,13 @@ files:
     src_path: src/servant/tt_004
     splat_config_path: config/splat.pspeu.tt_004.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/tt_005.bin
+    asset_path: assets/servant/tt_005
+    src_path: src/servant/tt_005
+    splat_config_path: config/splat.pspeu.tt_005.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/tt_006.bin
+    asset_path: assets/servant/tt_006
+    src_path: src/servant/tt_006
+    splat_config_path: config/splat.pspeu.tt_006.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_000.bin
     asset_path: assets/weapon
     src_path: src/weapon
