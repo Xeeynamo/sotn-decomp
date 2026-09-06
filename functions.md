@@ -6700,7 +6700,7 @@
 | are        | func_pspeu_0924D918               |      129 |         11 |        |       |     |
 | no2        | func_pspeu_0923DCC0               |      129 |         11 |        |       |     |
 | rnz0       | func_pspeu_0923E448               |      129 |         11 |        |       |     |
-| rnz1       | func_us_801C8954_from_are         |      129 |         11 |        |       |     |
+| rnz1       | func_us_801C8954                  |      129 |         11 |        |       |     |
 | no3        | func_pspeu_0925C158               |      129 |         12 |        |       |     |
 | no4        | func_pspeu_09252930               |      129 |         12 |        |       |     |
 | np3        | func_pspeu_092526F0               |      129 |         12 |        |       |     |
@@ -7026,7 +7026,7 @@
 | nz0        | func_pspeu_09243AD0               |      158 |         12 |        |       |     |
 | are        | func_pspeu_0924DAF0               |      158 |         15 |        |       |     |
 | no2        | func_pspeu_0923DE98               |      158 |         15 |        |       |     |
-| rnz1       | func_us_801C8AAC_from_are         |      158 |         15 |        |       |     |
+| rnz1       | func_us_801C8AAC                  |      158 |         15 |        |       |     |
 | rbo3       | func_pspeu_09248188               |      158 |         16 |        |       |     |
 | chi        | func_psp_0923A268                 |      158 |         24 |        |       |     |
 | rnz0       | func_pspeu_0923C958               |      158 |         24 |        |       |     |
@@ -7539,7 +7539,7 @@
 | dra        | func_psp_0911B928                 |      206 |         24 |        |       |     |
 | bo4        | func_pspeu_09248898_from_rbo5     |      206 |         40 |        |       |     |
 | rbo5       | func_pspeu_09248898               |      206 |         40 |        |       |     |
-| bo0        | func_us_801B8B64                  |      207 |         17 |        |       |     |
+| bo0        | func_pspeu_09256708               |      207 |         17 |        |       |     |
 | nz1        | func_pspeu_0925B628               |      207 |         18 |        |       |     |
 | rnz1       | func_pspeu_092571E0               |      207 |         18 |        |       |     |
 | rnz1       | func_pspeu_0924E848               |      208 |         15 |        |       |     |
