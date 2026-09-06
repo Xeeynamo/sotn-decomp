@@ -115,7 +115,6 @@ segments:
       - [0x2D2D4, c, collision]
       - [0x2EA90, c, create_entity]
       - [0x2F608, c, e_red_door]
-      - [0x2F680, c, e_red_door]
       - [0x302B8, c, st_common]
       - [0x31768, c, e_collect]
       - [0x340D8, c, e_misc]
