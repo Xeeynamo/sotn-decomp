@@ -34,7 +34,7 @@ void EntityFireDemonFlames(Entity* self) {
                       FLAG_UNK_00200000 | FLAG_UNK_2000;
         self->blendMode = BLEND_ADD | BLEND_TRANSP;
         if (self->params & 0x10) {
-            self->palette = PAL_FLAG(0x195);
+            self->palette = PAL_FLAG(PAL_UNK_195);
             self->blendMode = BLEND_TRANSP;
         }
         if (self->params & 0x20) {

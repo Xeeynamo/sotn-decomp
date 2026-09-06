@@ -474,7 +474,7 @@ static s32 func_ptr_80170014(Entity* self) {
         }
         SetSpriteBank2(g_Animset2);
         self->animSet = ANIMSET_OVL(17);
-        self->palette = 0x111;
+        self->palette = PAL_UNK_111;
         self->unk5A = 101;
         if (g_HandId != 0) {
             self->animSet += 2;

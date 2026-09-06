@@ -261,12 +261,12 @@ void EntityGreyPuff(Entity* self) {
 void EntityIntenseExplosion(Entity* self) {
     if (!self->step) {
         InitializeEntity(g_EInitParticle);
-        self->palette = 0x8170;
+        self->palette = PAL_FLAG(PAL_UNK_170);
         self->animSet = 5;
         self->animCurFrame = 1;
         self->blendMode = BLEND_ADD | BLEND_TRANSP;
         if (self->params & 0xF0) {
-            self->palette = 0x8195;
+            self->palette = PAL_FLAG(PAL_UNK_195);
             self->blendMode = BLEND_TRANSP;
         }
         if (self->params & 0xFF00) {

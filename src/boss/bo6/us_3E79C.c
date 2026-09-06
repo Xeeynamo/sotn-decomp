@@ -116,7 +116,7 @@ void func_us_801C03E8(Entity* self) {
         self->animSet = ANIMSET_OVL(5);
         self->animCurFrame = 0;
         self->unk5A = 0x48;
-        self->palette = 0x8252;
+        self->palette = PAL_FLAG(0x252);
         self->ext.et_801C03E8.savedHitboxState = self->hitboxState;
         self->anim = D_us_80181E78;
         self->zPriority = RIC.zPriority + 4;
@@ -180,9 +180,9 @@ void func_us_801C03E8(Entity* self) {
         break;
     case 10:
         if (g_Timer & 1) {
-            self->palette = 0x815F;
+            self->palette = PAL_FLAG(PAL_FILL_WHITE);
         } else {
-            self->palette = 0x8168;
+            self->palette = PAL_FLAG(PAL_CC_GREEN_EFFECT_A);
         }
 
         self->poseTimer++;
@@ -202,11 +202,11 @@ void func_us_801C03E8(Entity* self) {
     }
 
     if (g_api.CheckEquipmentItemCount(0x22U, 1U) != 0) {
-        palette = 0x8252;
+        palette = PAL_FLAG(0x252);
         self->hitboxState = self->ext.et_801C03E8.savedHitboxState;
         self->ext.et_801C03E8.showPrims = 1;
     } else {
-        palette = 0x810D;
+        palette = PAL_FLAG(PAL_PLAYER_HIDDEN);
         self->hitboxState = 0;
         self->ext.et_801C03E8.showPrims = 0;
     }
@@ -962,9 +962,9 @@ void RicEntitySubwpnCross(Entity* self) {
     }
     // Applies a flickering effect
     if ((g_GameTimer >> 1) & 1) {
-        self->palette = PAL_FLAG(0x1B0);
+        self->palette = PAL_FLAG(PAL_UNK_1B0);
     } else {
-        self->palette = PAL_FLAG(0x1B1);
+        self->palette = PAL_FLAG(PAL_UNK_1B1);
     }
     psp_s1 = (s16*)self->ext.crossBoomerang.unk84;
     psp_s1 = &psp_s1[self->ext.crossBoomerang.unk80 * 2];
@@ -1246,7 +1246,7 @@ void RicEntityVibhutiCrashCloud(Entity* self) {
         self->flags |= FLAG_UNK_20000000;
         self->unk5A = 0x64;
         self->animSet = 0xE;
-        self->palette = PAL_FLAG(0x19E);
+        self->palette = PAL_FLAG(PAL_UNK_19E);
         self->anim = D_us_801829D4;
         self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->drawFlags = ENTITY_OPACITY;

@@ -68,9 +68,9 @@ void func_us_801980E4(Entity* self) {
         /* fall through */
     case 1:
         if (g_Timer & 1) {
-            self->palette = 0x8206;
+            self->palette = PAL_FLAG(0x206);
         } else {
-            self->palette = 0x8207;
+            self->palette = PAL_FLAG(0x207);
         }
         source = self->ext.et_801980E4.source;
         self->facingLeft = source->facingLeft;

@@ -410,7 +410,7 @@ void func_801B1F4C(s32 arg0) {
     LoadTPage((u_long*)pix, 0, 0, 0x180, arg0, 0x100, 0x10);
 }
 
-void func_801B1FD8(char* str, s32 y) {
+void func_801B1FD8(const char* str, s32 y) {
     const int W = 12;
     const int H = 16;
     const int LEN = W * H / 2;

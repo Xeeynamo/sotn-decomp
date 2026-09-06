@@ -140,7 +140,7 @@ void EntityMinotaurSpitLiquid(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitMinotaurSpitLiquid);
-        self->palette = PAL_FLAG(0x16B);
+        self->palette = PAL_FLAG(PAL_CC_TURQUOISE_EFFECT);
         if (self->facingLeft) {
             self->rotate = -self->rotate;
         }

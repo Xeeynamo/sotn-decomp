@@ -18,7 +18,7 @@ void func_us_801B2864(Entity* self) {
     case 0:
         InitializeEntity(&g_EInitInteractable);
         self->flags |= FLAG_UNK_10000;
-        self->palette = 0x19E;
+        self->palette = PAL_UNK_19E;
         self->palette = 0x2E2;
         self->palette = 0x2E5;
         self->animSet = 0xE;

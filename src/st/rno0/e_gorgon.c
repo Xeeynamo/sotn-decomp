@@ -474,7 +474,7 @@ static void func_pspeu_0923F198(s32 count) {
             prim->clut = 0x233;
             prim->priority = 0x6E;
         }
-        if (g_CurrentEntity->palette & 0x8000) {
+        if (g_CurrentEntity->palette & PAL_UNK_FLAG) {
             prim->clut = g_CurrentEntity->palette & 0xFFF;
         }
         prim = prim->next;
@@ -487,7 +487,7 @@ static void func_pspeu_0923F198(s32 count) {
             prim->clut = 0x232;
             prim->priority = 0x72;
         }
-        if (g_CurrentEntity->palette & 0x8000) {
+        if (g_CurrentEntity->palette & PAL_UNK_FLAG) {
             prim->clut = g_CurrentEntity->palette & 0xFFF;
         }
         prim = prim->next;

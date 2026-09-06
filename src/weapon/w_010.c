@@ -90,11 +90,11 @@ static void EntityWeaponAttack(Entity* self) {
         SetSpriteBank1(g_Animset);
         if (g_HandId != 0) {
             self->animSet = ANIMSET_OVL(0x12);
-            self->palette = 0x128;
+            self->palette = PAL_UNK_128;
             self->unk5A = 0x66;
         } else {
             self->animSet = ANIMSET_OVL(0x10);
-            self->palette = 0x110;
+            self->palette = PAL_UNK_110;
             self->unk5A = 0x64;
         }
         self->flags = FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
@@ -244,15 +244,15 @@ void EntityWeaponShieldSpell(Entity* self) {
         SetSpriteBank1(g_Animset);
         if (g_HandId != 0) {
             self->animSet = ANIMSET_OVL(0x12);
-            self->palette = 0x128;
+            self->palette = PAL_UNK_128;
             self->ext.shield.childPalette = 0x129;
             self->unk5A = 0x66;
             self->ext.shield.unk7C = 0;
             self->ext.shield.unk7D = 0x80;
         } else {
             self->animSet = ANIMSET_OVL(0x10);
-            self->palette = 0x110;
-            self->ext.shield.childPalette = 0x111;
+            self->palette = PAL_UNK_110;
+            self->ext.shield.childPalette = PAL_UNK_111;
             self->unk5A = 0x64;
             self->ext.shield.unk7C = 0x80;
             self->ext.shield.unk7D = 0;
