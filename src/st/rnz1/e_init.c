@@ -63,8 +63,8 @@ void EntityMedusaHeadBlue(Entity* self);
 void EntityMedusaHeadYellow(Entity* self);
 void EntityBreakableDebris(Entity* self);
 void EntityValhallaKnight(Entity* self);
-void func_us_801C8954_from_are(Entity* self);
-void func_us_801C8AAC_from_are(Entity* self);
+void func_us_801C8954(Entity* self);
+void func_us_801C8AAC(Entity* self);
 void func_us_801BBE58(Entity* self);
 void func_us_801BC650(Entity* self);
 void func_us_801BCE4C(Entity* self);
@@ -139,8 +139,8 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityMedusaHeadYellow,
     EntityBreakableDebris,
     EntityValhallaKnight,
-    func_us_801C8954_from_are,
-    func_us_801C8AAC_from_are,
+    func_us_801C8954,
+    func_us_801C8AAC,
     func_us_801BBE58,
     func_us_801BC650,
     func_us_801BCE4C,
@@ -171,15 +171,15 @@ EInit g_EInitEnvironment = {ANIMSET_OVL(1), 0, 0, 0, 0x005};
 EInit g_EInitUnused80180BAC = {ANIMSET_OVL(3), 0, 0, 0, 0x005};
 EInit g_EInitDarkwingBat = {ANIMSET_OVL(5), 1, 72, 512, 0x111};
 EInit g_EInitDarkwingBat2 = {ANIMSET_OVL(5), 0, 72, 512, 0x005};
-EInit g_EInitCloakedknight = {ANIMSET_OVL(6), 1, 72, 528, 0x10F};
+EInit g_EInitCloakedKnight = {ANIMSET_OVL(6), 1, 72, 528, 0x10F};
 EInit g_EInitCloakedKnightAura = {ANIMSET_OVL(6), 1, 72, 528, 0x002};
-EInit D_us_80180BE8 = {ANIMSET_OVL(6), 1, 72, 528, 0x110};
+EInit g_EInitCloakedKnightSword = {ANIMSET_OVL(6), 1, 72, 528, 0x110};
 EInit g_EInitMedusaHeadBlue = {ANIMSET_OVL(7), 0, 73, 533, 0x12F};
 EInit g_EInitMedusaHeadYellow = {ANIMSET_OVL(7), 0, 73, 534, 0x130};
 EInit g_EInitValhallaKnight = {ANIMSET_OVL(8), 1, 76, 562, 0x085};
-EInit D_us_80180C18 = {ANIMSET_OVL(8), 1, 76, 562, 0x003};
-EInit D_us_80180C24 = {ANIMSET_OVL(0), 0, 0, 0, 0x086};
-EInit D_us_80180C30 = {ANIMSET_OVL(0), 0, 0, 0, 0x087};
+EInit g_EInitValhallaKnightUnk1 = {ANIMSET_OVL(8), 1, 76, 562, 0x003};
+EInit g_EInitValhallaKnightUnk2 = {ANIMSET_OVL(0), 0, 0, 0, 0x086};
+EInit g_EInitValhallaKnightUnk3 = {ANIMSET_OVL(0), 0, 0, 0, 0x087};
 EInit g_EInitBombKnight = {ANIMSET_OVL(11), 1, 72, 566, 0x0A5};
 EInit D_us_80180C48 = {ANIMSET_OVL(11), 36, 72, 566, 0x0A6};
 EInit D_us_80180C54 = {ANIMSET_OVL(11), 0, 72, 566, 0x002};

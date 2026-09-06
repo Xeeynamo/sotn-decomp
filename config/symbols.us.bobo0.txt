@@ -116,8 +116,4 @@ EntityLifeUpSpawn = 0x801CB9A0; // source=match
 EntitySoulStealOrb = 0x801CC254; // source=match
 EntityEnemyBlood = 0x801CC5E8; // source=match
 EntityRoomForeground = 0x801CCA98; // source=match
-UnkPrimHelper = 0x801CCEB4; // source=match
-FindFirstUnkPrim = 0x801CD3EC; // source=match
 FindFirstUnkPrim2 = 0x801CD41C; // source=match
-UnkPolyFunc2 = 0x801CD600; // source=match
-UnkPolyFunc0 = 0x801CD654; // source=match
