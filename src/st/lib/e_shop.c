@@ -881,7 +881,7 @@ void* func_us_801B0C40(u8* pix, const char* str, s32 x, s32 y, s32 size) {
         while (*str >= 8) {
             s_8 = 0;
 #ifdef VERSION_PSP
-            ch = g_api.func_psp_0913F960((char*)str, &sp3f);
+            ch = g_api.func_psp_0913F960(str, &sp3f);
 #else
             ch = *str;
 #endif
@@ -1233,7 +1233,7 @@ void func_us_801B15C0(Entity* self) {
     s16 tempVar;
     s32 i;
     u16 tempVar2;
-    char* ptr;
+    const char* ptr;
     s16 pad;
 
     switch (self->step) {
@@ -4773,7 +4773,7 @@ void func_us_801B8234(Entity* self) {
     u16 enemyId;
     u16 pads;
     u8* pix;
-    char* s3;
+    const char* s3;
     EnemyDef* enemyDef;
     s32 pad[12];
 

@@ -2487,7 +2487,13 @@ void func_800F9E18(s32 arg0) {
 #elif defined(VERSION_HD)
 void func_800F9E18(s32 arg0) {
     const int ItemsPerRow = 2;
-    char buffer[2][0x14];
+#ifdef FIX_UB
+    // Space character used in the strcpy is 1 byte on SHIFT-JIS, but two chars
+    // on UTF-8. The buffer size needs to be bigger to avoid overflows.
+    char buffer[2][40];
+#else
+    char buffer[2][20];
+#endif
     s32 nItems = (arg0 * 5) + 5;
     s32 i;
 
@@ -2505,7 +2511,13 @@ void func_800F9E18(s32 arg0) {
 #endif
 
 void func_800F9F40(void) {
+#ifdef FIX_UB
+    // Space character used in the strcpy is 1 byte on SHIFT-JIS, but two chars
+    // on UTF-8. The buffer size needs to be bigger to avoid overflows.
+    char buffer[64];
+#else
     char buffer[38];
+#endif
     u8 spellId;
     s32 i;
 

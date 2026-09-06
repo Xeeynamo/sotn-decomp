@@ -1533,7 +1533,7 @@ void EntityMessageBox(Entity* self) {
 
     Primitive* prim;
     s32 i;
-    char* str;
+    const char* str;
     s32 primIndex;
     u16 xOffset;
     u8* chPix;
