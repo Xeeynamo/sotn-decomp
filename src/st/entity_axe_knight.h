@@ -481,9 +481,9 @@ void EntityAxeKnight(Entity* self) {
 
 void EntityAxeKnightRotateAxe(void) {
     if (g_CurrentEntity->params) {
-        g_CurrentEntity->rotate += 0x80;
+        g_CurrentEntity->rotate += ROT(11.25);
     } else {
-        g_CurrentEntity->rotate -= 0x80;
+        g_CurrentEntity->rotate -= ROT(11.25);
     }
 
     g_CurrentEntity->rotate &= 0xFFF;

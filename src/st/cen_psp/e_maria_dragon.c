@@ -249,15 +249,15 @@ void EntityMariaDragonCrash(Entity* self) {
             angle = NormalizeAngle(
                 ratan2(y - self->posY.i.hi, x - self->posX.i.hi));
             if (self->rotate < angle) {
-                if (angle - self->rotate < 0x800) {
-                    self->rotate += 0x40;
+                if (angle - self->rotate < ROT(180)) {
+                    self->rotate += ROT(5.625);
                 } else {
-                    self->rotate -= 0x40;
+                    self->rotate -= ROT(5.625);
                 }
             } else if (self->rotate - angle < 0x800) {
-                self->rotate -= 0x40;
+                self->rotate -= ROT(5.625);
             } else {
-                self->rotate += 0x40;
+                self->rotate += ROT(5.625);
             }
             SetGeomOffset(0, 0);
             func_psp_089285A0(self->rotate, &m);

@@ -839,7 +839,7 @@ void EntityDraculaMegaFireball(Entity* self) {
             self->drawFlags |= ENTITY_ROTATE | ENTITY_SCALEY | ENTITY_SCALEX;
             self->scaleX = self->scaleY = 0x80;
             angle = self->rotate;
-            self->rotate = 0x1C0;
+            self->rotate = ROT(39.375);
             self->rotate -= angle;
             if (self->facingLeft) {
                 self->velocityX = rcos(angle) * 0x60;

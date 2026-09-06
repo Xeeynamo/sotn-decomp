@@ -383,7 +383,7 @@ void func_us_801B9BE4(Entity* self) {
             if (!--self->ext.et_801B9BE4.unk80) {
                 self->step_s--;
             }
-            if (self->rotate >= 0x20) {
+            if (self->rotate >= ROT(2.8125)) {
                 self->hitboxState = 0;
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
@@ -401,7 +401,7 @@ void func_us_801B9BE4(Entity* self) {
         break;
 
     case 2:
-        self->rotate = 0x20;
+        self->rotate = ROT(2.8125);
         xOffset = FLT_TO_I(rsin(self->rotate) * 18);
         yOffset = -FLT_TO_I(rcos(self->rotate) * 18);
         tempEntity = self - 1;

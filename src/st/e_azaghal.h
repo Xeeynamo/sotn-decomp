@@ -359,7 +359,7 @@ static void func_us_801B33F4(void) {
     RotMatrix(&sVec, &matrix);
 
     if (g_CurrentEntity->facingLeft) {
-        RotMatrixY(0x800, &matrix);
+        RotMatrixY(ROT(180), &matrix);
     }
 
     vector.vx = 0;

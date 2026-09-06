@@ -638,7 +638,7 @@ void EntityGurkhaWeapon(Entity* self) {
 
     case 3:
         MoveEntity();
-        self->rotate -= 0x100;
+        self->rotate -= ROT(22.5);
         self->ext.GH_Props.rotate = self->rotate;
         self->ext.GH_Props.rotVel = -0xC0;
         angle = self->rotate;

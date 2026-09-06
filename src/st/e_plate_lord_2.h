@@ -546,7 +546,7 @@ void func_us_801D542C(Entity* self) {
             RotMatrixX(rotB.vx, &m);
             RotMatrixZ(self->ext.plateLordUnknown.unk8C, &m);
             if (!self->facingLeft) {
-                RotMatrixY(0x800, &m);
+                RotMatrixY(ROT(180), &m);
             }
             trans.vx = 0;
             trans.vy = 0;

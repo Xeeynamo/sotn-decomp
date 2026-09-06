@@ -369,7 +369,7 @@ void EntityGranfaloon(Entity* self) {
         case 2:
             MoveEntity();
             self->velocityY = FIX(0.5);
-            self->rotate -= 0x40;
+            self->rotate -= ROT(5.625);
             if (!(self->ext.granfaloon.timer & 3)) {
                 self->opacity -= 1;
             }
@@ -724,7 +724,7 @@ void func_us_801A2D90(Entity* self) {
         self->ext.granfaloon.timer = (Random() & 0x1F) + 0x10;
     case 1:
         MoveEntity();
-        self->rotate += 0x40;
+        self->rotate += ROT(5.625);
         if (self->velocityY < FIX(3.0)) {
             self->velocityY += 0x1400;
         }
@@ -1234,7 +1234,7 @@ void EntityZombieFalling(Entity* self) {
     case 1:
         MoveEntity();
         self->velocityY += FIX(0.0625);
-        self->rotate += 0x18;
+        self->rotate += ROT(2.109375);
         if (self->flags & FLAG_DEAD) {
             self->velocityY = 0;
             self->hitboxState = 0;

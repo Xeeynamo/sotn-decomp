@@ -203,7 +203,7 @@ static s32 func_ptr_80170004(Entity* self) {
         self->step++;
         break;
     case 1:
-        self->rotate += 0x200;
+        self->rotate += ROT(45);
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         self->velocityX += self->ext.sword.unk7C;
@@ -216,7 +216,7 @@ static s32 func_ptr_80170004(Entity* self) {
         }
         break;
     case 2:
-        self->rotate += 0x200;
+        self->rotate += ROT(45);
         var_s1 = self->ext.sword.unk84;
         self->ext.sword.unk84 += 0x10;
         xDist = abs((PLAYER.posX.i.hi + PLAYER.hitboxOffX) - self->posX.i.hi);

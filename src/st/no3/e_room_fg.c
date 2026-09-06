@@ -32,7 +32,7 @@ void EntityRoomForeground(Entity* self) {
         }
         if (self->params > 4) {
             self->drawFlags |= ENTITY_ROTATE;
-            self->rotate = 0x800;
+            self->rotate = ROT(180);
         }
     }
     AnimateEntity(objInit->animFrames, self);

@@ -663,7 +663,7 @@ void EntityMariaTurtleCrash(Entity* self) {
             self->drawFlags |= ENTITY_SCALEX | ENTITY_SCALEY | ENTITY_ROTATE;
             self->scaleX -= 0x20;
             self->scaleY -= 0x20;
-            self->rotate += 0xF78;
+            self->rotate += ROT(348.046875);
             break;
         }
 

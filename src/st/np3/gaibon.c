@@ -713,7 +713,7 @@ void EntitySmallGaibonProjectile(Entity* self) {
         self->scaleX = 0xC0;
         self->velocityX = (rcos(self->rotate) * FIX(2.5)) >> 0xC;
         self->velocityY = (rsin(self->rotate) * FIX(2.5)) >> 0xC;
-        self->rotate -= 0x400;
+        self->rotate -= ROT(90);
         self->palette = PAL_FLAG(PAL_UNK_1B6);
 
     case 1:

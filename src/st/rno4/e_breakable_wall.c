@@ -28,9 +28,9 @@ void EntityBreakableWallDebris(Entity* self) {
     case 1:
         MoveEntity();
 #ifdef VERSION_PSP
-        self->rotate += 0x20;
+        self->rotate += ROT(2.8125);
         if (self->params) {
-            self->rotate += 0x20;
+            self->rotate += ROT(2.8125);
         }
 #else
         {

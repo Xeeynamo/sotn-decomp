@@ -434,7 +434,7 @@ void EntityWarpSmallRocks(Entity* entity) {
         }
         break;
     case 4:
-        angle = entity->rotate += 0x20;
+        angle = entity->rotate += ROT(2.8125);
         entity->velocityY = rsin(angle) * 4;
         if (D_80180648 == 0) {
             entity->ext.warpRoom.unk88 = 0x10;
