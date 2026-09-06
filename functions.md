@@ -583,9 +583,9 @@
 | rnz0       | e_red_door.rodata                 |       16 |          0 | Yes    |       |     |
 | rnz0       | e_sealed_door.rodata              |       16 |          0 | Yes    |       |     |
 | rnz0_psp   | jtbl_pspeu_09281B78               |       16 |          0 | Yes    |       |     |
+| rnz1       | e_dw_batwings.rodata              |       16 |          0 | Yes    |       |     |
 | rnz1       | e_red_door.rodata                 |       16 |          0 | Yes    |       |     |
 | rnz1       | e_valhalla_knight.rodata          |       16 |          0 | Yes    |       |     |
-| rnz1       | unk_17168.rodata                  |       16 |          0 | Yes    |       |     |
 | rtop       | e_red_door.rodata                 |       16 |          0 | Yes    |       |     |
 | rwrp       | e_red_door.rodata                 |       16 |          0 | Yes    |       |     |
 | st0        | e_red_door.rodata                 |       16 |          0 | Yes    |       |     |
@@ -1970,8 +1970,8 @@
 | rno0       | func_pspeu_0925B088               |       31 |          3 |        |       |     |
 | rno0       | func_pspeu_09253088               |       31 |          3 |        |       |     |
 | rno2       | SetEntityVelocityFromAngle        |       31 |          3 |        |       |     |
-| rnz1       | func_pspeu_0924BE80               |       31 |          3 |        |       |     |
 | rnz1       | func_801B2CF8                     |       31 |          3 |        |       |     |
+| rnz1       | func_pspeu_0924BE80               |       31 |          3 |        |       |     |
 | sel        | func_psp_092409C8                 |       31 |          3 |        |       |     |
 | st0        | func_pspeu_09242F00               |       31 |          3 |        |       |     |
 | top        | func_pspeu_0923A690               |       31 |          3 |        |       |     |
@@ -9693,7 +9693,7 @@
 | wrp        | func_psp_092386A8                 |      989 |         83 |        |       |     |
 | no3        | func_pspeu_092412B8               |      990 |        134 | Yes    |       |     |
 | rnz0       | func_pspeu_0923D3F8               |      993 |         81 | Yes    |       |     |
-| rnz1       | func_us_801ABDE4                  |      995 |        115 | Yes    |       |     |
+| rnz1       | EntityDarkwingBatWings            |      995 |        115 | Yes    |       |     |
 | cat        | func_pspeu_09243078               |      997 |        101 |        |       |     |
 | no0        | func_pspeu_09251740               |      999 |         98 | Yes    |       |     |
 | rcen       | EntityShaft                       |      999 |        127 |        |       |     |
