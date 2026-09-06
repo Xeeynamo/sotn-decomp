@@ -102,7 +102,7 @@ void EntityValhallaKnight(Entity* self) {
         } else {
             posX = posX - self->ext.valhallaKnight.unk84;
         }
-#ifdef STAGE_IS_ARE
+#if defined(STAGE_IS_ARE) || defined(STAGE_IS_RNZ1)
         if (posX > 0x70) {
 #else
         if (posX > 0x60) {
@@ -167,7 +167,7 @@ void EntityValhallaKnight(Entity* self) {
             } else {
                 posX = posX - self->ext.valhallaKnight.unk84;
             }
-#ifdef STAGE_IS_ARE
+#if defined(STAGE_IS_ARE) || defined(STAGE_IS_RNZ1)
             if (posX > 0x70) {
 #else
             if (posX > 0x60) {

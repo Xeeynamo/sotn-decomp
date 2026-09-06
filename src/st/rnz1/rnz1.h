@@ -81,8 +81,8 @@ typedef enum EntityID {
     E_MEDUSA_HEAD_YELLOW,     // EntityMedusaHeadYellow
     E_BREAKABLE_DEBRIS,       // EntityBreakableDebris
     E_VALHALLA_KNIGHT,        // EntityValhallaKnight
-    E_UNK_3F,                 // func_us_801C8954_from_are
-    E_UNK_40,                 // func_us_801C8AAC_from_are
+    E_VALHALLA_KNIGHT_UNK1,   // func_us_801C8954
+    E_VALHALLA_KNIGHT_UNK2,   // func_us_801C8AAC
     E_BOMB_KNIGHT,            // func_us_801BBE58
     E_UNK_42,                 // func_us_801BC650
     E_UNK_43,                 // func_us_801BCE4C
