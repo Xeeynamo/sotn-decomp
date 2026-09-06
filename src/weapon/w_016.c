@@ -356,7 +356,7 @@ static s32 func_ptr_80170014(Entity* self) {
         collX = xShift + self->posX.i.hi;
         collY = self->posY.i.hi;
         g_api.CheckCollision(collX, collY, &collider, 0);
-        if (collider.effects & EFFECT_UNK_0002) {
+        if (collider.effects & EFFECT_SIDE) {
             g_api.PlaySfx(SFX_EXPLODE_B);
             g_api.func_80102CD8(4);
             if (xShift < 0) {
@@ -465,7 +465,7 @@ static s32 func_ptr_80170014(Entity* self) {
                 collX = xShift + self->posX.i.hi;
                 collY = self->posY.i.hi;
                 g_api.CheckCollision(collX, collY, &collider, 0);
-                if (collider.effects & EFFECT_UNK_0002) {
+                if (collider.effects & EFFECT_SIDE) {
                     if (self->velocityX != 0) {
                         g_api.PlaySfx(SFX_EXPLODE_B);
                         g_api.func_80102CD8(1);

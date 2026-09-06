@@ -147,7 +147,7 @@ void EntitySpikesParts(Entity* self) {
                 self->velocityY = -self->velocityY / 2;
                 self->ext.spikes.rotate *= 4;
             }
-            if (collider.effects & EFFECT_UNK_0002) {
+            if (collider.effects & EFFECT_SIDE) {
                 self->velocityX = -self->velocityX;
             }
             if (abs(self->velocityY) < FIX(0.1875)) {

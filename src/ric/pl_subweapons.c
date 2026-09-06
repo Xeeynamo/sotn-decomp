@@ -523,8 +523,7 @@ void RicEntitySubwpnKnife(Entity* self) {
             }
             g_api.CheckCollision(
                 self->posX.i.hi + xCol, self->posY.i.hi, &collider, 0);
-            if ((self->hitFlags == 2) ||
-                (collider.effects & (EFFECT_SOLID | EFFECT_UNK_0002))) {
+            if ((self->hitFlags == 2) || (collider.effects & EFFECT_BLOCK)) {
                 self->ext.subweapon.timer = 64;
                 self->velocityX = -(self->velocityX >> 3);
                 self->velocityY = FIX(-2.5);

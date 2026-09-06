@@ -215,7 +215,7 @@ static void PrizeDropFall2(u16 arg0) {
         g_CurrentEntity->velocityX = 0;
         g_CurrentEntity->velocityY = 0;
 
-        if (collider.effects & EFFECT_QUICKSAND) {
+        if (collider.effects & EFFECT_SINK) {
             g_CurrentEntity->posY.val += FIX(0.125);
             return;
         }

@@ -345,7 +345,7 @@ s32 UnkCollisionFunc3(Entity* entity, s16* sensors) {
                     return 1;
                 }
             } else if ((col.effects & EFFECT_NOTHROUGH) && i != 1) {
-                if (col.effects & EFFECT_QUICKSAND) {
+                if (col.effects & EFFECT_SINK) {
                     entity->flags &= ~FLAG_UNK_10000000;
                     return 4;
                 }
@@ -393,8 +393,8 @@ s32 UnkCollisionFunc2(Entity* entity, s16* posX) {
         y -= 7;
         CheckCollision(x * 0x10000, y * 0x10000, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
-            if ((collider.effects & (EFFECT_UNK_8000 | EFFECT_UNK_0002)) ==
-                EFFECT_UNK_0002) {
+            if ((collider.effects & (EFFECT_UNK_8000 | EFFECT_SIDE)) ==
+                EFFECT_SIDE) {
                 entity->posX.val -= entity->velocityX;
                 entity->velocityX = 0;
                 SyncSpriteObjectPos(entity);
@@ -446,7 +446,7 @@ s32 UnkCollisionFunc(Entity* entity, s16* hitSensors, s16 sensorCount) {
 
             y += *hitSensors++;
             CheckCollision(x * 0x10000, y * 0x10000, &collider, 0);
-            if (collider.effects & EFFECT_UNK_0002) {
+            if (collider.effects & EFFECT_SIDE) {
                 if (!(collider.effects & EFFECT_UNK_8000) || (i != 0)) {
                     SyncSpriteObjectPos(entity);
                     return 2;
@@ -478,7 +478,7 @@ void CheckFieldCollision(Entity* entity, s16* hitSensors, s16 sensorCount) {
             }
             y += *hitSensors++;
             CheckCollision(x * 0x10000, y * 0x10000, &col, 0);
-            if (col.effects & EFFECT_UNK_0002) {
+            if (col.effects & EFFECT_SIDE) {
                 if (!(col.effects & EFFECT_UNK_8000) || (i != 0)) {
                     if (velocityX < 0) {
                         entity->posX.i.hi += col.unk1C / 0x10000;
@@ -570,7 +570,7 @@ u8 UnkCollisionFunc4(Entity* entity, u8 arg1) {
             posX = entity->posX.i.hi;
             posY = entity->posY.i.hi - 4;
             CheckCollision(posX * 0x10000, posY * 0x10000, &collider, 0);
-            if (collider.effects & EFFECT_UNK_0002) {
+            if (collider.effects & EFFECT_SIDE) {
                 bits_67 = 0x40;
                 if (entity->velocityX > 0) {
                     bits_01 = 2;
@@ -605,7 +605,7 @@ u8 UnkCollisionFunc4(Entity* entity, u8 arg1) {
             posX = entity->posX.i.hi;
             posY = entity->posY.i.hi + 4;
             CheckCollision(posX * 0x10000, posY * 0x10000, &collider, 0);
-            if (collider.effects & EFFECT_UNK_0002) {
+            if (collider.effects & EFFECT_SIDE) {
                 bits_67 = 0x40;
                 if (entity->velocityX > 0) {
                     bits_01 = 2;
@@ -1479,11 +1479,9 @@ void CheckCollision(s32 x, s32 y, Collider* res, u16 unk) {
                     if (col0.effects & EFFECT_SOLID) {
                         res->unk18 += col0.unk18 - 0x10000;
                     }
-                    res->effects = col0.effects |=
-                        EFFECT_UNK_0002 | EFFECT_SOLID;
+                    res->effects = col0.effects |= EFFECT_BLOCK;
                 } else {
-                    res->effects =
-                        EFFECT_UNK_8000 | EFFECT_UNK_0002 | EFFECT_SOLID;
+                    res->effects = EFFECT_UNK_8000 | EFFECT_BLOCK;
                 }
             } else {
                 res->effects = EFFECT_SOLID;
@@ -1579,11 +1577,9 @@ void CheckCollision(s32 x, s32 y, Collider* res, u16 unk) {
                     if (col1.effects & EFFECT_SOLID) {
                         res->unk20 += col1.unk20 + 0x10000;
                     }
-                    res->effects = col1.effects |=
-                        EFFECT_UNK_0002 | EFFECT_SOLID;
+                    res->effects = col1.effects |= EFFECT_BLOCK;
                 } else {
-                    res->effects =
-                        EFFECT_UNK_0800 | EFFECT_UNK_0002 | EFFECT_SOLID;
+                    res->effects = EFFECT_UNK_0800 | EFFECT_BLOCK;
                 }
             } else {
                 res->effects = EFFECT_SOLID;
@@ -1671,14 +1667,14 @@ void CheckCollision(s32 x, s32 y, Collider* res, u16 unk) {
 
         case 0x7F:
             if (res->unk20 < 0x80000) {
-                res->effects = EFFECT_UNK_0002 | EFFECT_SOLID;
+                res->effects = EFFECT_BLOCK;
                 res->unk18 += 0x80000;
             }
             break;
 
         case 0x7E:
             if (res->unk20 >= 0x80000) {
-                res->effects = EFFECT_UNK_0002 | EFFECT_SOLID;
+                res->effects = EFFECT_BLOCK;
                 res->unk20 -= 0x80000;
             }
             break;
@@ -1705,14 +1701,14 @@ void CheckCollision(s32 x, s32 y, Collider* res, u16 unk) {
             break;
 
         case 0x78:
-            res->effects = EFFECT_MIST_ONLY | EFFECT_UNK_0002 | EFFECT_SOLID;
+            res->effects = EFFECT_MIST_ONLY | EFFECT_BLOCK;
             break;
 
         case 0x74:
         case 0x75:
         case 0x76:
         case 0x77:
-            res->effects = EFFECT_UNK_0020;
+            res->effects = EFFECT_HURT;
             break;
 
         case 0x6E:
@@ -1721,7 +1717,7 @@ void CheckCollision(s32 x, s32 y, Collider* res, u16 unk) {
         case 0x71:
         case 0x72:
         case 0x73:
-            res->effects = EFFECT_UNK_0002 | EFFECT_SOLID;
+            res->effects = EFFECT_BLOCK;
             break;
 
         case 0x6D:

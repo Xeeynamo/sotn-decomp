@@ -339,7 +339,7 @@ void func_060E2898(u16 arg0) {
 
         self->velocityX = 0;
         self->velocityY = 0;
-        if (col.effects & EFFECT_QUICKSAND) {
+        if (col.effects & EFFECT_SINK) {
             self->posY.val += FIX(0.125);
         } else {
             self->posY.val += col.unk18;

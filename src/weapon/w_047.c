@@ -111,7 +111,7 @@ void EntityWeaponAttack(Entity* self) {
         xVar = self->posX.i.hi + offsetX;
         yVar = self->posY.i.hi + offsetY;
         g_api.CheckCollision(xVar, yVar, &collider, 0);
-        if (collider.effects & EFFECT_UNK_0002) {
+        if (collider.effects & EFFECT_SIDE) {
             if (offsetX < 0) {
                 self->posX.i.hi += collider.unkC;
             } else {

@@ -1325,7 +1325,7 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B85C8, func_060B85C8);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B868C, func_060B868C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B89F0, func_060B89F0);
 
-#define EFFECT_UNK_0002 1 << 1
+#define EFFECT_SIDE 1 << 1
 
 // func_060B8AC4
 s32 func_8016840C(s32 y, s32 x) {
@@ -1341,7 +1341,7 @@ s32 func_8016840C(s32 y, s32 x) {
     } else {
         xShift = collider.unk1C;
     }
-    if (collider.effects & EFFECT_UNK_0002) {
+    if (collider.effects & EFFECT_SIDE) {
         g_CurrentEntity->posX.val += xShift;
         return 2;
     }

@@ -265,7 +265,7 @@ void func_ptr_8017000C(Entity* self) {
         x = self->posX.i.hi + xOffset;
         y = self->posY.i.hi + yOffset;
         g_api.CheckCollision(x, y, &collider, 0);
-        if (collider.effects & EFFECT_UNK_0002) {
+        if (collider.effects & EFFECT_SIDE) {
             if (xOffset < 0) {
                 self->posX.i.hi += collider.unkC;
             } else {

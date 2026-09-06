@@ -1596,7 +1596,7 @@ s32 RicCheckHolyWaterCollision(s32 baseY, s32 baseX) {
     return 0;
 }
 
-#define EFFECT_UNK_0002 1 << 1
+#define EFFECT_SIDE 1 << 1
 
 // SAT func_060B9E40
 // Equivalent to DRA func_80125B6C
@@ -1613,7 +1613,7 @@ s32 func_8016840C(s32 y, s32 x) {
     } else {
         xShift = collider.unk1C;
     }
-    if (collider.effects & EFFECT_UNK_0002) {
+    if (collider.effects & EFFECT_SIDE) {
         g_CurrentEntity->posX.val += xShift;
         return 2;
     }
