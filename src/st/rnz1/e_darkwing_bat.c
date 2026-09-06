@@ -130,13 +130,13 @@ static s32 WindAttackHelper(s32 arg0) {
         xVar = other->posX.i.hi;
         yVar = F(other->posY).i.hi + F(other->velocityY).i.hi;
         g_api.CheckCollision(xVar, yVar, &sp2C, 0);
-        if (sp2C.effects & (EFFECT_UNK_0002 | EFFECT_SOLID)) {
+        if (sp2C.effects & (EFFECT_SIDE | EFFECT_SOLID)) {
             var_s5 = 1;
         }
         xVar = F(other->posX).i.hi + F(other->velocityX).i.hi;
         yVar = other->posY.i.hi;
         g_api.CheckCollision(xVar, yVar, &sp2C, 0);
-        if (sp2C.effects & (EFFECT_UNK_0002 | EFFECT_SOLID)) {
+        if (sp2C.effects & (EFFECT_SIDE | EFFECT_SOLID)) {
             var_s5 = 1;
         }
         if (var_s5 == 0) {
