@@ -457,7 +457,23 @@ void func_us_801BCB9C(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rnz1/nonmatchings/unk_3BE58", func_us_801BCD80);
+extern EInit D_us_80180C54;
+
+void func_us_801BCD80(Entity* self) {
+    s32 speed;
+    s16 angle;
+
+    if (!self->step) {
+        InitializeEntity(D_us_80180C54);
+        self->animCurFrame = self->params + 72;
+        speed = (Random() & 0x1F) + 0x10;
+        angle = (Random() * 6) + 0x900;
+        self->velocityX = speed * rcos(angle);
+        self->velocityY = speed * rsin(angle);
+    }
+    MoveEntity();
+    self->velocityY += 0x2000;
+}
 
 INCLUDE_ASM("st/rnz1/nonmatchings/unk_3BE58", func_us_801BCE4C);
 
