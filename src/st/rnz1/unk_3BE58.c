@@ -357,7 +357,48 @@ void func_us_801BC650(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rnz1/nonmatchings/unk_3BE58", func_us_801BCA5C);
+extern s8 D_us_80182484;
+extern u8 D_us_8018249C[];
+
+void func_us_801BCA5C(Entity* self) {
+    s32 animFrame;
+    s8* xyPtr;
+    Entity* other;
+    
+
+    switch (self->step) {                              /* irregular */
+    case 0:
+        InitializeEntity(&g_EInitBombKnight);
+        /* fallthrough */
+    case 1:
+        AnimateEntity(D_us_801821C4, self);
+        other = (Entity*)self->ext.ILLEGAL.u32[3];
+        self->facingLeft = other->facingLeft;
+        self->posX.i.hi = other->posX.i.hi;
+        self->posY.i.hi = other->posY.i.hi;
+        animFrame = other->animCurFrame;
+        if (animFrame == 0x24) {
+            self->posY.i.hi -= 8;
+            return;
+        }
+        
+        xyPtr = &D_us_80182484;
+        animFrame = D_us_8018249C[animFrame];
+        if (animFrame == 0) {
+            self->animCurFrame = 0;
+        }
+        xyPtr += animFrame * 2;
+        if (other->facingLeft) {
+            self->posX.i.hi -= *xyPtr++;
+        } else {
+            self->posX.i.hi += *xyPtr++;
+        }
+        self->posY.i.hi += *xyPtr++;
+        if (other->entityId != 0x41) {
+            DestroyEntity(self);
+        }
+    }
+}
 
 INCLUDE_ASM("st/rnz1/nonmatchings/unk_3BE58", func_us_801BCB9C);
 
