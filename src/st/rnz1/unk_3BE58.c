@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rnz1.h"
 
-/* 
+/*
 
 ***************************
 
@@ -67,15 +67,9 @@ typedef enum {
     ANIM_GUARD
 } animIdx;
 static AnimateEntityFrame* animations[] = {
-    anim_idle_holding_bomb,
-    anim_turnaround_bomb,
-    anim_fastthrow_bomb,
-    anim_throw_bomb,
-    anim_flinch_bomb,
-    anim_idle_holding_rock,
-    anim_turnaround_rock,
-    anim_fastthrow_rock,
-    anim_throw_rock,
+    anim_idle_holding_bomb, anim_turnaround_bomb, anim_fastthrow_bomb,
+    anim_throw_bomb,        anim_flinch_bomb,     anim_idle_holding_rock,
+    anim_turnaround_rock,   anim_fastthrow_rock,  anim_throw_rock,
     anim_flinch_rock};
 static s8 D_pspeu_09257D78[] = {
     0, 0, 0, 0, 1, 6, 15, 29, 1, 5, 15, 29, 1, 4, 15, 29};
@@ -182,7 +176,7 @@ void EntityBombKnight(Entity* self) {
             other = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (other != NULL) {
                 CreateEntityFromCurrentEntity(E_FUSE_SPARKS, other);
-                other->ext.ILLEGAL.u32[3] = (u32)self;
+                other->ext.bombKnight.fuseParent = self;
                 other->zPriority = ((self->zPriority) + 1);
             }
         }
@@ -200,10 +194,10 @@ void EntityBombKnight(Entity* self) {
         break;
     case KNIGHT_IDLE:
         if (!self->step_s) {
-            self->ext.ILLEGAL.s16[3] =
-                D_pspeu_09257EB0[self->ext.ILLEGAL.u8[9]];
-            self->ext.ILLEGAL.u8[9]++;
-            self->ext.ILLEGAL.u8[9] &= 7;
+            self->ext.bombKnight.throwTimer =
+                D_pspeu_09257EB0[self->ext.bombKnight.timerCycler];
+            self->ext.bombKnight.timerCycler++;
+            self->ext.bombKnight.timerCycler &= 7;
             self->step_s++;
         }
         AnimateEntity(animBlock[ANIM_IDLE], self);
@@ -211,7 +205,7 @@ void EntityBombKnight(Entity* self) {
             SetStep(KNIGHT_TURNAROUND);
         } else {
             UnkCollisionFunc2(&D_pspeu_09257C10);
-            if ((self->facingLeft ^ (self->ext.ILLEGAL.u8[8])) != 0) {
+            if ((self->facingLeft ^ (self->ext.bombKnight.playerClose)) != 0) {
                 self->velocityX = FIX(0.375);
             } else {
                 self->velocityX = FIX(-0.375);
@@ -219,14 +213,14 @@ void EntityBombKnight(Entity* self) {
             if (self->params & 0x100) {
                 self->velocityX = 0;
             }
-            if (self->ext.ILLEGAL.s16[3]) {
-                self->ext.ILLEGAL.s16[3]--;
+            if (self->ext.bombKnight.throwTimer) {
+                self->ext.bombKnight.throwTimer--;
             }
             if (GetDistanceToPlayerX() < 0x40) {
-                self->ext.ILLEGAL.u8[8] = 1;
+                self->ext.bombKnight.playerClose = 1;
             } else if (GetDistanceToPlayerX() > 0x70) {
-                self->ext.ILLEGAL.u8[8] = 0;
-            } else if (!self->ext.ILLEGAL.s16[3]) {
+                self->ext.bombKnight.playerClose = 0;
+            } else if (!self->ext.bombKnight.throwTimer) {
                 if (rock_knight_mode == 0) {
                     PlaySfxPositional(SFX_UNK_RNO4_75C);
                 }
@@ -361,14 +355,14 @@ void EntityThrownBomb(Entity* self) {
     s32 collX, collY;
     s32 var_s1;
 
-    switch (self->step) { 
-    case 0:               
+    switch (self->step) {
+    case 0:
         InitializeEntity(D_us_80180C48);
         self->animCurFrame = 0x24;
         other = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (other != NULL) {
             CreateEntityFromCurrentEntity(E_FUSE_SPARKS, other);
-            other->ext.ILLEGAL.u32[3] = (u32)self;
+            other->ext.bombKnight.fuseParent = self;
             other->zPriority = ((self->zPriority) + 1);
         }
         if (self->params == 0) {
@@ -381,7 +375,7 @@ void EntityThrownBomb(Entity* self) {
             self->velocityX = -self->velocityX;
         }
         return;
-    case 1: 
+    case 1:
         MoveEntity();
         self->velocityY += FIX(0.125);
         self->rotate += ROT(11.25);
@@ -408,6 +402,9 @@ void EntityThrownBomb(Entity* self) {
             other = AllocEntity(&g_Entities[0x20], &g_Entities[0x2F]);
             if (other != NULL) {
                 DestroyEntity(other);
+                // This is a really weird thing to do.
+                // We copy ourself into an other, set it as a death parts,
+                // and then destroy our self.
                 *other = *self;
                 other->entityId = E_DEATH_PARTS;
                 other->drawFlags |= ENTITY_ROTATE;
@@ -416,7 +413,7 @@ void EntityThrownBomb(Entity* self) {
                 other->nFramesInvincibility = 0x10;
                 other->stunFrames = 4;
                 other->hitEffect = 1;
-                other->ext.ILLEGAL.u16[0x1B] = 0;
+                other->ext.bombKnight.unkB2_WTF = 0;
                 other->flags =
                     FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA;
                 g_api.func_80118894(other);
@@ -428,7 +425,7 @@ void EntityThrownBomb(Entity* self) {
             return;
         }
         break;
-    case 2:                     
+    case 2:
         switch (self->step_s) { /* switch 2*/
         case 0:                 /* switch 2 */
             self->animSet = -0x7FF4;
@@ -484,7 +481,7 @@ void EntityBombFuseSparks(Entity* self) {
         /* fallthrough */
     case 1:
         AnimateEntity(anim_bomb_fuse_sparks, self);
-        other = (Entity*)self->ext.ILLEGAL.u32[3];
+        other = self->ext.bombKnight.fuseParent;
         self->facingLeft = other->facingLeft;
         self->posX.i.hi = other->posX.i.hi;
         self->posY.i.hi = other->posY.i.hi;

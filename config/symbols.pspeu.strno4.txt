@@ -12,7 +12,6 @@ func_us_801BCA5C_from_rnz1 = 0x0923C7E8;
 func_us_801BCB9C_from_rnz1 = 0x0923C988;
 func_us_801BCD80_from_rnz1 = 0x0923CC00;
 func_us_801BCE4C_from_rnz1 = 0x0923CCE8;
-func_us_801BCFC8_from_rnz1 = 0x0923CF00;
 StepTowards = 0x0923D090;
 func_us_801D5E90 = 0x0923D2A0;
 func_us_801D68E0 = 0x0923E200;

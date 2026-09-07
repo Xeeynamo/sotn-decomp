@@ -4387,7 +4387,22 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ s32 : 32;
-    /* 0x7C */ s16 deathPartLife;
+    /* 0x80 */ s16 deathPartLife;
+    /* 0x82 */ s16 throwTimer;
+    /* 0x84 */ u8 playerClose;
+    /* 0x85 */ u8 timerCycler;
+    /* 0x88 */ struct Entity* fuseParent;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s32 : 32;
+    /* 0xA0 */ s32 : 32;
+    /* 0xA4 */ s32 : 32;
+    /* 0xA8 */ s32 : 32;
+    /* 0xAC */ s32 : 32;
+    /* 0xB0 */ s16 : 16;
+    /* 0xB2 */ s16 unkB2_WTF;
 } ET_BombKnight;
 
 typedef union { // offset=0x7C
