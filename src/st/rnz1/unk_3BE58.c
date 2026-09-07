@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rnz1.h"
 
-extern s16 D_pspeu_09257C00[] = {0, 37, 0, 4, 8, -4, -16, 0};
-extern s16 D_pspeu_09257C10[] = {0, 37, 8, 0};
+static s16 D_pspeu_09257C00[] = {0, 37, 0, 4, 8, -4, -16, 0};
+static s16 D_pspeu_09257C10[] = {0, 37, 8, 0};
 static s16 unused_sensors[] = {0, 8, 0, 4, 4, -4, -8, 0};
 static AnimateEntityFrame anim1[] = {{14, 1}, {14, 2}, {11, 3}, {10, 2}, POSE_LOOP(0)};
 static AnimateEntityFrame anim2[] = {{16, 1}, {8, 2}, {30, 1}, {4, 4}, {3, 5}, {2, 6}, {2, 7}, {2, 8}, {1, 9}, {1, 8}, {3, 10}, {33, 8}, {6, 7}, {5, 6}, {5, 17}, {4, 18}, {4, 19}, {3, 20}, {14, 21}, {6, 24}, {6, 22}, {6, 23}, {4, 1}, {6, 2}, {8, 1}, POSE_END};
@@ -18,10 +18,10 @@ static AnimateEntityFrame anim10[] = {{8, 54}, {8, 55}, {19, 56}, {5, 55}, POSE_
 static AnimateEntityFrame anim11[] = {{5, 41}, {3, 44}, {2, 45}, {2, 46}, {1, 47}, {7, 46}, {6, 57}, {5, 58}, {4, 59}, {4, 60}, {3, 61}, {10, 64}, {8, 62}, {6, 63}, {3, 41}, {6, 42}, {4, 41}, POSE_END};
 static AnimateEntityFrame D_us_8018224C[] = {{1, 69}, {1, 70}, {1, 71}, POSE_END};
 
-extern AnimateEntityFrame* D_pspeu_09257D50[] = {anim1, anim3, anim5, anim2, anim4, anim7, anim9, anim11, anim8, anim10};
-extern s8 D_pspeu_09257D78[] = {0, 0, 0, 0, 1, 6, 15, 29, 1, 5, 15, 29, 1, 4, 15, 29};
+static AnimateEntityFrame* D_pspeu_09257D50[] = {anim1, anim3, anim5, anim2, anim4, anim7, anim9, anim11, anim8, anim10};
+static s8 D_pspeu_09257D78[] = {0, 0, 0, 0, 1, 6, 15, 29, 1, 5, 15, 29, 1, 4, 15, 29};
 static s8 D_us_8018228C[] = {0, 7, 15, 29, -5, 10, 13, 26, -10, 10, 14, 26, -11, 10, 14, 26, 0, 5, 12, 31, 0, 6, 14, 30, -1, 6, 14, 30, -5, 9, 12, 26, -1, 7, 14, 28, 1, 5, 14, 30};
-extern u8 D_us_801822B4[] = {0, 1, 2, 3, 4, 5, 5, 5, 6, 7, 6, 8, 8, 8, 9, 9, 10, 11, 11, 12, 13, 13, 13, 13, 13};
+static u8 D_us_801822B4[] = {0, 1, 2, 3, 4, 5, 5, 5, 6, 7, 6, 8, 8, 8, 9, 9, 10, 11, 11, 12, 13, 13, 13, 13, 13};
 static s8 D_us_801822D0[] = {0, 0, 0, 0, 17, -26, 4, 11, 16, -27, 4, 11, 15, -28, 4, 11, 13, -31, 4, 12, -3, -20, 8, 7, -79, -91, 0, 0, 9, 24, 4, 11, 8, 24, 4, 11, 15, -29, 4, 11, 18, -28, 4, 11, 17, -27, 4, 11, 13, -32, 4, 12, -84, -89, 0, 0, -87, -89, 0, 0, -92, -94, 0, 0, -90, -87, 0, 0, -85, -87, 0, 0, -88, -88, 0, 0, -87, -88, 0, 0, -83, -88, 0, 0, -83, -90, 0, 0, -87, -90, 0, 0, -91, -90, 0, 0, 16, -31, 7, 15, 15, -32, 7, 15, 14, -33, 7, 15, 10, -36, 7, 15, 8, 22, 4, 9, -14, -26, 7, 15, -14, -36, 7, 15, -16, -31, 7, 15, 14, -34, 7, 15};
 static s8 D_us_80182354[] = {16, -33, 7, 15, 18, -4, 6, 9, 12, -39, 7, 15};
 static u8 D_us_80182360[] = {0, 1, 2, 3, 4, 5, 6, 6, 7, 8, 7, 6, 6, 6, 9, 10, 11, 6, 6, 6, 6, 6, 6, 12, 6};
@@ -29,14 +29,15 @@ static u8 D_us_8018237C[] = {24, 25, 26, 27, 5, 6, 6, 7, 28, 7, 29, 30, 31, 32, 
 
 static AnimateEntityFrame D_us_80182394[] = {{4, 1}, {4, 2}, {4, 3}, {4, 4}, {4, 5}, {4, 6}, {2, 7}, {2, 8}, POSE_END};
 
-extern s32 D_pspeu_09257EB0[] = {32, 0, 0, 128, 64, 0, 0, 0};
+static s32 D_pspeu_09257EB0[] = {32, 0, 0, 128, 64, 0, 0, 0};
 static Point16 D_us_801823C8[] = {{12, 8}, {-12, 8}, {0, -2}};
 typedef struct{
-    u32 unk0;
-    u32 unk4;
-    u32 unk8;
-    s16 unkC;
-    s16 unkE;
+    s16 x;
+    s16 y;
+    s32 velX;
+    s32 velY;
+    s16 rotSpeed;
+    s16 lifetime;
 } unk_bombknight;
 extern unk_bombknight D_us_801823D4[];
 
@@ -44,7 +45,7 @@ extern EInit g_EInitBombKnight;
 extern EInit g_EInitRockKnight;
 
 void func_us_801BBE58(Entity* self) {
-    Point16* deathOffset;
+    unk_bombknight* deathOffset;
     Entity* other;
     s32 rock_knight_mode;
     s32 i;
@@ -202,7 +203,7 @@ void func_us_801BBE58(Entity* self) {
         break;
     case 0x8:
         deathOffset = &D_us_801823D4;
-        for(i = 0; i < 11; i++, deathOffset += 4) {
+        for(i = 0; i < 11; i++, deathOffset++) {
             other = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (other != NULL) {
                 CreateEntityFromEntity(0x43, self, other);
@@ -504,18 +505,18 @@ void func_us_801BCE4C(Entity* self) {
         temp_s0 = &D_us_801823D4;
         temp_s0 += self->params;
         if (self->facingLeft) {
-            self->velocityX -= temp_s0->unk4;
+            self->velocityX -= temp_s0->velX;
         } else {
-            self->velocityX += temp_s0->unk4;
+            self->velocityX += temp_s0->velX;
         }
-        self->velocityY += temp_s0->unk8;
-        self->ext.ILLEGAL.s16[2] = temp_s0->unkE;
+        self->velocityY += temp_s0->velY;
+        self->ext.ILLEGAL.s16[2] = temp_s0->lifetime;
     }
     MoveEntity();
     self->velocityY += 0x2800;
     temp_s0 = &D_us_801823D4;
     temp_s0 += self->params;
-    self->rotate += temp_s0->unkC;
+    self->rotate += temp_s0->rotSpeed;
     if (!--self->ext.ILLEGAL.s16[2]) {
         if (Random() & 1) {
             PlaySfxPositional(0x657);
