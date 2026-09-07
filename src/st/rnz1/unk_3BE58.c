@@ -38,8 +38,8 @@ typedef struct{
     s32 velY;
     s16 rotSpeed;
     s16 lifetime;
-} unk_bombknight;
-extern unk_bombknight D_us_801823D4[] = {
+} deathParts;
+static deathParts D_us_801823D4[] = {
     {0,    -4,  FIX(1.0/8),          FIX(-0.5),  32, 34},
     {0,   -24,           0,         FIX(-1.75), 128, 32},
     {0,     0,           0,         FIX(-0.25),   0, 28},
@@ -52,14 +52,17 @@ extern unk_bombknight D_us_801823D4[] = {
     {-12,  28, FIX(-1.0/8),        FIX(-7.0/8), -32, 16},
     {12,   28,  FIX(1.0/8),        FIX(-3.0/4),  16, 18},
 };
-extern s8 D_us_80182484;
-extern u8 D_us_8018249C[];
+static s8 D_us_80182484[] = {0, 0, 19, -41, 18, -43, 19, -45, 15, -49, -79, -91, -13, -37, -17, -49, -20, -43, 17, -46, 20, -45, 16, -50};
+static u8 D_us_8018249C[] = {0, 1, 2, 3, 4, 0, 0, 0, 0, 0, 0, 6, 7, 8, 9, 10, 10, 0, 0, 0, 0, 0, 0, 11};
 
 extern EInit g_EInitBombKnight;
 extern EInit g_EInitRockKnight;
+extern EInit D_us_80180C48;
+extern EInit D_us_80180C54;
+extern EInit D_us_80180C60;
 
 void func_us_801BBE58(Entity* self) {
-    unk_bombknight* deathOffset;
+    deathParts* deathOffset;
     Entity* other;
     s32 rock_knight_mode;
     s32 i;
@@ -260,7 +263,6 @@ void func_us_801BBE58(Entity* self) {
     self->hitboxHeight = *hitbox++;
 }
 
-extern EInit D_us_80180C48;
 
 void func_us_801BC650(Entity* self) {
     Collider sp2C;
@@ -420,8 +422,6 @@ void func_us_801BCA5C(Entity* self) {
     }
 }
 
-extern EInit D_us_80180C60;
-
 void func_us_801BCB9C(Entity* self) {
     Collider sp2C;
     Entity* other;
@@ -477,8 +477,6 @@ void func_us_801BCB9C(Entity* self) {
     }
 }
 
-extern EInit D_us_80180C54;
-
 void func_us_801BCD80(Entity* self) {
     s32 speed;
     s16 angle;
@@ -498,7 +496,7 @@ void func_us_801BCD80(Entity* self) {
 void func_us_801BCE4C(Entity* self) {
     s32 var_a0;
     u16 temp_v1;
-    unk_bombknight* temp_s0;
+    deathParts* temp_s0;
 
     if (!self->step) {
         InitializeEntity(D_us_80180C54);
