@@ -72,8 +72,7 @@ static AnimateEntityFrame* animations[] = {
     anim_turnaround_rock,   anim_fastthrow_rock,  anim_throw_rock,
     anim_flinch_rock};
 static s8 hitboxes[] = {
-    0, 0, 0, 0, 1, 6, 15, 29, 1, 5, 15, 29, 1, 4, 15, 29};
-static s8 unused_unk1[] = {
+    0, 0, 0, 0, 1, 6, 15, 29, 1, 5, 15, 29, 1, 4, 15, 29,
     0,  7,  15, 29, -5, 10, 13, 26, -10, 10, 14, 26, -11, 10,
     14, 26, 0,  5,  12, 31, 0,  6,  14,  30, -1, 6,  14,  30,
     -5, 9,  12, 26, -1, 7,  14, 28, 1,   5,  14, 30};
@@ -88,8 +87,7 @@ static s8 armHitboxes[] = {
     0,   -87, -88, 0,   0,   -83, -88, 0,   0,   -83, -90, 0,   0,   -87, -90,
     0,   0,   -91, -90, 0,   0,   16,  -31, 7,   15,  15,  -32, 7,   15,  14,
     -33, 7,   15,  10,  -36, 7,   15,  8,   22,  4,   9,   -14, -26, 7,   15,
-    -14, -36, 7,   15,  -16, -31, 7,   15,  14,  -34, 7,   15};
-static s8 unused_unk2[] = {16, -33, 7, 15, 18, -4, 6, 9, 12, -39, 7, 15};
+    -14, -36, 7,   15,  -16, -31, 7,   15,  14,  -34, 7,   15, 16, -33, 7, 15, 18, -4, 6, 9, 12, -39, 7, 15};
 static u8 bombArmHitboxOffsets[] = {0, 1, 2,  3,  4, 5, 6, 6, 7, 8, 7,  6, 6,
                              6, 9, 10, 11, 6, 6, 6, 6, 6, 6, 12, 6};
 static u8 rockArmHitboxOffsets[] = {24, 25, 26, 27, 5, 6, 6, 7, 28, 7,  29, 30,
@@ -103,8 +101,8 @@ static Point16 explosionOffsets[] = {{12, 8}, {-12, 8}, {0, -2}};
 typedef struct {
     s16 x;
     s16 y;
-    s32 velX;
-    s32 velY;
+    u32 velX;
+    u32 velY;
     s16 rotSpeed;
     s16 lifetime;
 } deathParts;
@@ -125,7 +123,12 @@ static s8 fuseSparksXY[] = {
     0,   0,   19,  -41, 18,  -43, 19, -45, 15, -49, -79, -91,
     -13, -37, -17, -49, -20, -43, 17, -46, 20, -45, 16,  -50};
 static u8 fuseFrameMap[] = {
-    0, 1, 2, 3, 4, 0, 0, 0, 0, 0, 0, 6, 7, 8, 9, 10, 10, 0, 0, 0, 0, 0, 0, 11};
+    0, 1, 2, 3, 4, 0, 0, 0, 0, 0, 0, 6, 7, 8, 9, 10, 10, 0, 0, 0, 0, 0, 0, 11,
+    #ifdef VERSION_PSP
+    0 // PSP has at leats one extra zero, padded to 8. 
+    // Then the charal for the pad2 anim debug.
+    #endif
+};
 
 extern EInit g_EInitBombKnight;
 extern EInit g_EInitRockKnight;
@@ -304,7 +307,7 @@ void EntityBombKnight(Entity* self) {
         }
         break;
     case KNIGHT_DEAD:
-        deathOffset = &deathPartsData;
+        deathOffset = deathPartsData;
         for (i = 0; i < 11; i++, deathOffset++) {
             other = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (other != NULL) {
@@ -374,7 +377,7 @@ void EntityThrownBomb(Entity* self) {
         if (!self->facingLeft) {
             self->velocityX = -self->velocityX;
         }
-        return;
+        break;
     case 1:
         MoveEntity();
         self->velocityY += FIX(0.125);
@@ -393,7 +396,6 @@ void EntityThrownBomb(Entity* self) {
         if ((self->hitboxState) == 2) {
             if (self->hitFlags) {
                 SetStep(2);
-                return;
             }
         } else if (self->hitFlags & 3) {
             self->hitFlags = 0;
@@ -422,7 +424,6 @@ void EntityThrownBomb(Entity* self) {
             }
         } else if (self->hitFlags) {
             SetStep(2);
-            return;
         }
         break;
     case 2:
@@ -491,7 +492,7 @@ void EntityBombFuseSparks(Entity* self) {
             return;
         }
 
-        xyPtr = &fuseSparksXY;
+        xyPtr = &fuseSparksXY[0];
         animFrame = fuseFrameMap[animFrame];
         if (animFrame == 0) {
             self->animCurFrame = 0;
@@ -544,7 +545,7 @@ void EntityThrownRock(Entity* self) {
             self->hitboxState = 0;
             SetStep(2);
         }
-        return;
+        break;
     case 2:
         if (AnimateEntity(&anim_rock_shatter, self) == 0) {
             for (var_s1 = 0; var_s1 < 7; var_s1++) {
@@ -598,7 +599,7 @@ void EntityKnightDeathParts(Entity* self) {
         } else {
             self->velocityX = FIX(-1.0);
         }
-        temp_s0 = &deathPartsData;
+        temp_s0 = &deathPartsData[0];
         temp_s0 += self->params;
         if (self->facingLeft) {
             self->velocityX -= temp_s0->velX;
@@ -610,7 +611,7 @@ void EntityKnightDeathParts(Entity* self) {
     }
     MoveEntity();
     self->velocityY += FIX(0.15625);
-    temp_s0 = &deathPartsData;
+    temp_s0 = &deathPartsData[0];
     temp_s0 += self->params;
     self->rotate += temp_s0->rotSpeed;
     if (!--self->ext.bombKnight.deathPartLife) {
@@ -633,7 +634,9 @@ void EntityBombKnightArm(Entity* self) {
 
     if (!self->step) {
         InitializeEntity(g_EInitBombKnight);
+#ifdef VERSION_US
         self->flags |= FLAG_UNK_00200000 | FLAG_UNK_2000;
+#endif
         self->animSet = 0;
         self->animCurFrame = 0;
         self->parent = self - 1;

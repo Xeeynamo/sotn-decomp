@@ -45,7 +45,7 @@ segments:
     subalign: 8
     subsegments:
       - [0x80, c, rnz1/create_entity]
-      - [0x1028, c, rnz1_psp/unk_1028]
+      - [0x1028, c, rnz1/e_bomb_knight]
       - [0x28B8, c, rnz1/e_life_up]
       - [0x3538, c, rnz1_psp/e_stage_name]
       - [0x43B8, c, rnz1/e_red_door]
@@ -83,7 +83,7 @@ segments:
       - [0x1FB60, c, rnz1/e_gear_large]
       - [0x1FE68, c, rnz1/e_gear_small]
       - [0x202B8, c, rnz1/e_gear_vertical]
-      - [0x20580, data]
+      - [0x20580, .data, rnz1/e_bomb_knight]
       - [0x20958, .data, rnz1/e_life_up]
       - [0x209A8, .data, rnz1/e_red_door]
       - [0x209C0, .data, rnz1/st_update]
