@@ -1,6 +1,6 @@
 CreateEntityFromCurrentEntity = 0x09238598;
 CreateEntityFromEntity = 0x09238620;
-func_us_801BBE58 = 0x092386A8;
+EntityBombKnight = 0x092386A8;
 func_us_801BC650 = 0x09239160;
 func_us_801BCA5C = 0x09239690;
 func_us_801BCB9C = 0x09239830;

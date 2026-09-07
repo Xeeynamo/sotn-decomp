@@ -83,7 +83,7 @@ typedef enum EntityID {
     E_VALHALLA_KNIGHT,        // EntityValhallaKnight
     E_VALHALLA_KNIGHT_UNK1,   // func_us_801C8954
     E_VALHALLA_KNIGHT_UNK2,   // func_us_801C8AAC
-    E_BOMB_KNIGHT,            // func_us_801BBE58
+    E_BOMB_KNIGHT,            // EntityBombKnight
     E_UNK_42,                 // func_us_801BC650
     E_UNK_43,                 // func_us_801BCE4C
     E_UNK_44,                 // func_us_801BCA5C

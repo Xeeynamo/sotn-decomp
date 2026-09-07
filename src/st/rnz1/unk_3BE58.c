@@ -4,21 +4,29 @@
 static s16 D_pspeu_09257C00[] = {0, 37, 0, 4, 8, -4, -16, 0};
 static s16 D_pspeu_09257C10[] = {0, 37, 8, 0};
 static s16 unused_sensors[] = {0, 8, 0, 4, 4, -4, -8, 0};
-static AnimateEntityFrame anim1[] = {{14, 1}, {14, 2}, {11, 3}, {10, 2}, POSE_LOOP(0)};
-static AnimateEntityFrame anim2[] = {{16, 1}, {8, 2}, {30, 1}, {4, 4}, {3, 5}, {2, 6}, {2, 7}, {2, 8}, {1, 9}, {1, 8}, {3, 10}, {33, 8}, {6, 7}, {5, 6}, {5, 17}, {4, 18}, {4, 19}, {3, 20}, {14, 21}, {6, 24}, {6, 22}, {6, 23}, {4, 1}, {6, 2}, {8, 1}, POSE_END};
-static AnimateEntityFrame anim3[] = {{8, 1}, {5, 11}, {9, 12}, {8, 13}, POSE_END};
+static AnimateEntityFrame anim_idle_holding_bomb[] = {{14, 1}, {14, 2}, {11, 3}, {10, 2}, POSE_LOOP(0)};
+// Throw bomb and grab a new one from hammerspace
+static AnimateEntityFrame anim_throw_bomb[] = {{16, 1}, {8, 2}, {30, 1}, {4, 4}, {3, 5}, {2, 6}, {2, 7}, {2, 8}, {1, 9}, {1, 8}, {3, 10}, {33, 8}, {6, 7}, {5, 6}, {5, 17}, {4, 18}, {4, 19}, {3, 20}, {14, 21}, {6, 24}, {6, 22}, {6, 23}, {4, 1}, {6, 2}, {8, 1}, POSE_END};
+static AnimateEntityFrame anim_turnaround_bomb[] = {{8, 1}, {5, 11}, {9, 12}, {8, 13}, POSE_END};
+// Take non-bomb hand and slide across body
 static AnimateEntityFrame anim4[] = {{8, 14}, {8, 15}, {19, 16}, {5, 15}, POSE_END};
-static AnimateEntityFrame anim5[] = {{5, 1}, {3, 4}, {2, 5}, {2, 6}, {1, 7}, {7, 6}, {6, 17}, {5, 18}, {4, 19}, {2, 20}, {3, 21}, {8, 24}, {7, 22}, {7, 23}, {3, 1}, {6, 2}, {8, 1}, POSE_END};
-static AnimateEntityFrame D_us_801821C4[] = {{4, 37}, {4, 38}, {4, 39}, {4, 40}, POSE_LOOP(0)};
+static AnimateEntityFrame anim_fastthrow_bomb[] = {{5, 1}, {3, 4}, {2, 5}, {2, 6}, {1, 7}, {7, 6}, {6, 17}, {5, 18}, {4, 19}, {2, 20}, {3, 21}, {8, 24}, {7, 22}, {7, 23}, {3, 1}, {6, 2}, {8, 1}, POSE_END};
+static AnimateEntityFrame anim_bomb_fuse_sparks[] = {{4, 37}, {4, 38}, {4, 39}, {4, 40}, POSE_LOOP(0)};
 
 static AnimateEntityFrame anim7[] = {{14, 41}, {14, 42}, {11, 43}, {10, 42}, POSE_LOOP(0)};
 static AnimateEntityFrame anim8[] = {{14, 41}, {8, 42}, {26, 41}, {3, 44}, {2, 45}, {2, 46}, {2, 47}, {2, 48}, {1, 49}, {1, 48}, {3, 50}, {33, 48}, {6, 47}, {5, 46}, {5, 57}, {4, 58}, {4, 59}, {3, 60}, {6, 61}, {10, 64}, {8, 62}, {6, 63}, {3, 41}, {6, 42}, {4, 41}, POSE_END};
 static AnimateEntityFrame anim9[] = {{8, 41}, {5, 51}, {9, 52}, {8, 53}, POSE_END};
 static AnimateEntityFrame anim10[] = {{8, 54}, {8, 55}, {19, 56}, {5, 55}, POSE_END};
 static AnimateEntityFrame anim11[] = {{5, 41}, {3, 44}, {2, 45}, {2, 46}, {1, 47}, {7, 46}, {6, 57}, {5, 58}, {4, 59}, {4, 60}, {3, 61}, {10, 64}, {8, 62}, {6, 63}, {3, 41}, {6, 42}, {4, 41}, POSE_END};
-static AnimateEntityFrame D_us_8018224C[] = {{1, 69}, {1, 70}, {1, 71}, POSE_END};
-
-static AnimateEntityFrame* D_pspeu_09257D50[] = {anim1, anim3, anim5, anim2, anim4, anim7, anim9, anim11, anim8, anim10};
+static AnimateEntityFrame anim_rock_shatter[] = {{1, 69}, {1, 70}, {1, 71}, POSE_END};
+typedef enum {
+    ANIM_IDLE,
+    ANIM_TURNAROUND,
+    ANIM_FAST_THROW,
+    ANIM_THROW,
+    ANIM_GUARD
+} animIdx;
+ static AnimateEntityFrame* animations[] = {anim_idle_holding_bomb, anim_turnaround_bomb, anim_fastthrow_bomb, anim_throw_bomb, anim4, anim7, anim9, anim11, anim8, anim10};
 static s8 D_pspeu_09257D78[] = {0, 0, 0, 0, 1, 6, 15, 29, 1, 5, 15, 29, 1, 4, 15, 29};
 static s8 D_us_8018228C[] = {0, 7, 15, 29, -5, 10, 13, 26, -10, 10, 14, 26, -11, 10, 14, 26, 0, 5, 12, 31, 0, 6, 14, 30, -1, 6, 14, 30, -5, 9, 12, 26, -1, 7, 14, 28, 1, 5, 14, 30};
 static u8 D_us_801822B4[] = {0, 1, 2, 3, 4, 5, 5, 5, 6, 7, 6, 8, 8, 8, 9, 9, 10, 11, 11, 12, 13, 13, 13, 13, 13};
@@ -27,7 +35,7 @@ static s8 D_us_80182354[] = {16, -33, 7, 15, 18, -4, 6, 9, 12, -39, 7, 15};
 static u8 D_us_80182360[] = {0, 1, 2, 3, 4, 5, 6, 6, 7, 8, 7, 6, 6, 6, 9, 10, 11, 6, 6, 6, 6, 6, 6, 12, 6};
 static u8 D_us_8018237C[] = {24, 25, 26, 27, 5, 6, 6, 7, 28, 7, 29, 30, 31, 32, 33, 25, 6, 6, 6, 6, 6, 34, 35, 6};
 
-static AnimateEntityFrame D_us_80182394[] = {{4, 1}, {4, 2}, {4, 3}, {4, 4}, {4, 5}, {4, 6}, {2, 7}, {2, 8}, POSE_END};
+static AnimateEntityFrame anim_another_bomb_throw[] = {{4, 1}, {4, 2}, {4, 3}, {4, 4}, {4, 5}, {4, 6}, {2, 7}, {2, 8}, POSE_END};
 
 static s32 D_pspeu_09257EB0[] = {32, 0, 0, 128, 64, 0, 0, 0};
 static Point16 D_us_801823C8[] = {{12, 8}, {-12, 8}, {0, -2}};
@@ -61,7 +69,7 @@ extern EInit D_us_80180C48;
 extern EInit D_us_80180C54;
 extern EInit D_us_80180C60;
 
-void func_us_801BBE58(Entity* self) {
+void EntityBombKnight(Entity* self) {
     deathParts* deathOffset;
     Entity* other;
     s32 rock_knight_mode;
@@ -75,7 +83,7 @@ void func_us_801BBE58(Entity* self) {
         SetStep(8);
     }
     rock_knight_mode = self->params & 1;
-    animBlock = D_pspeu_09257D50 + (rock_knight_mode * 5);
+    animBlock = animations + (rock_knight_mode * 5);
     switch (self->step) {                              /* irregular */
     case 0x0:
         if (!self->params) {
@@ -115,7 +123,7 @@ void func_us_801BBE58(Entity* self) {
             self->ext.ILLEGAL.u8[9] &= 7;
             self->step_s++;
         }
-        AnimateEntity(animBlock[0], self);
+        AnimateEntity(animBlock[ANIM_IDLE], self);
         if (self->facingLeft != ((GetSideToPlayer() & 1) ^ 1)) {
             SetStep(4);
         } else {
@@ -151,14 +159,14 @@ void func_us_801BBE58(Entity* self) {
         }
         break;
     case 0x4:
-        if (AnimateEntity(animBlock[1], self) == 0) {
+        if (AnimateEntity(animBlock[ANIM_TURNAROUND], self) == 0) {
             self->facingLeft ^= 1;
             self->animCurFrame = 1;
             SetStep(3);
         }
         break;
     case 0x5:
-        if (AnimateEntity(animBlock[2], self) == 0) {
+        if (AnimateEntity(animBlock[ANIM_FAST_THROW], self) == 0) {
             SetStep(3);
         }
         if ((!self->poseTimer) && ((self->pose) == 3)) {
@@ -183,7 +191,7 @@ void func_us_801BBE58(Entity* self) {
         }
         break;
     case 0x6:
-        if (AnimateEntity(animBlock[3], self) == 0) {
+        if (AnimateEntity(animBlock[ANIM_THROW], self) == 0) {
             SetStep(3);
         }
         if ((!self->poseTimer) && ((self->pose) == 4)) {
@@ -208,7 +216,7 @@ void func_us_801BBE58(Entity* self) {
         }
         break;
     case 0x7:
-        if (AnimateEntity(animBlock[4], self) == 0) {
+        if (AnimateEntity(animBlock[ANIM_GUARD], self) == 0) {
             SetStep(3);
         }
         UnkCollisionFunc2(&D_pspeu_09257C10);
@@ -373,7 +381,7 @@ void func_us_801BC650(Entity* self) {
             if (self->pose > 5) {
                 self->hitboxState = 0;
             }
-            if (AnimateEntity(D_us_80182394, self) == 0) {
+            if (AnimateEntity(anim_another_bomb_throw, self) == 0) {
                 DestroyEntity(self);
             }
             break;
@@ -390,10 +398,10 @@ void func_us_801BCA5C(Entity* self) {
 
     switch (self->step) {                              /* irregular */
     case 0:
-        InitializeEntity(&g_EInitBombKnight);
+        InitializeEntity(g_EInitBombKnight);
         /* fallthrough */
     case 1:
-        AnimateEntity(D_us_801821C4, self);
+        AnimateEntity(anim_bomb_fuse_sparks, self);
         other = (Entity*)self->ext.ILLEGAL.u32[3];
         self->facingLeft = other->facingLeft;
         self->posX.i.hi = other->posX.i.hi;
@@ -435,7 +443,7 @@ void func_us_801BCB9C(Entity* self) {
     }
     switch (self->step) {                              /* irregular */
     case 0:
-        InitializeEntity(&D_us_80180C60);
+        InitializeEntity(D_us_80180C60);
         if (self->params == 0) {
             self->velocityX = 0x10000;
         } else {
@@ -459,7 +467,7 @@ void func_us_801BCB9C(Entity* self) {
         }
         return;
     case 2:
-        if (AnimateEntity(&D_us_8018224C, self) == 0) {
+        if (AnimateEntity(&anim_rock_shatter, self) == 0) {
             for(var_s1 = 0; var_s1 < 7; var_s1++) {
                 other = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (other != NULL) {
@@ -545,7 +553,7 @@ void func_us_801BCFC8(Entity* self) {
     s8* hitbox;
 
     if (!self->step) {
-        InitializeEntity(&g_EInitBombKnight);
+        InitializeEntity(g_EInitBombKnight);
         self->flags |= 0x202000;
         self->animSet = 0;
         self->animCurFrame = 0;

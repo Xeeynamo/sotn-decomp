@@ -65,7 +65,7 @@ void EntityBreakableDebris(Entity* self);
 void EntityValhallaKnight(Entity* self);
 void func_us_801C8954(Entity* self);
 void func_us_801C8AAC(Entity* self);
-void func_us_801BBE58(Entity* self);
+void EntityBombKnight(Entity* self);
 void func_us_801BC650(Entity* self);
 void func_us_801BCE4C(Entity* self);
 void func_us_801BCA5C(Entity* self);
@@ -141,7 +141,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityValhallaKnight,
     func_us_801C8954,
     func_us_801C8AAC,
-    func_us_801BBE58,
+    EntityBombKnight,
     func_us_801BC650,
     func_us_801BCE4C,
     func_us_801BCA5C,
