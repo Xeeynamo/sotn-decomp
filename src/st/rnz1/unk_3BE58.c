@@ -400,7 +400,62 @@ void func_us_801BCA5C(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rnz1/nonmatchings/unk_3BE58", func_us_801BCB9C);
+extern EInit D_us_80180C60;
+
+void func_us_801BCB9C(Entity* self) {
+    Collider sp2C;
+    Entity* other;
+    s32 collX, collY;
+    s32 var_s1;
+
+    if ((self->flags & 0x100) && (self->step != 2)) {
+        self->hitboxState = 0;
+        PlaySfxPositional(0x643);
+        SetStep(2);
+    }
+    switch (self->step) {                              /* irregular */
+    case 0:
+        InitializeEntity(&D_us_80180C60);
+        if (self->params == 0) {
+            self->velocityX = 0x10000;
+        } else {
+            self->velocityX = 0x20000;
+        }
+        self->velocityY = -0x20000;
+        if (!self->facingLeft) {
+            self->velocityX = -self->velocityX;
+        }
+        /* fallthrough */
+    case 1:
+        MoveEntity();
+        self->velocityY += 0x2000;
+        collX = self->posX.i.hi;
+        collY = self->posY.i.hi + 8;
+        g_api.CheckCollision(collX, collY, &sp2C, 0);
+        if (sp2C.effects & 1) {
+            PlaySfxPositional(0x643);
+            self->hitboxState = 0;
+            SetStep(2);
+        }
+        return;
+    case 2:
+        if (AnimateEntity(&D_us_8018224C, self) == 0) {
+            for(var_s1 = 0; var_s1 < 7; var_s1++) {
+                other = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                if (other != NULL) {
+                    CreateEntityFromEntity(0x46, self, other);
+                    other->params = Random() & 7;
+                }
+            }
+            self->pfnUpdate = EntityExplosion;
+            self->step = 0;
+            self->params = 0x13;
+            self->pose = 0;
+            self->poseTimer = 0;
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("st/rnz1/nonmatchings/unk_3BE58", func_us_801BCD80);
 
