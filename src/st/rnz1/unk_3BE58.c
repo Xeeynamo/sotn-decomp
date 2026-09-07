@@ -39,7 +39,21 @@ typedef struct{
     s16 rotSpeed;
     s16 lifetime;
 } unk_bombknight;
-extern unk_bombknight D_us_801823D4[];
+extern unk_bombknight D_us_801823D4[] = {
+    {0,    -4,  FIX(1.0/8),          FIX(-0.5),  32, 34},
+    {0,   -24,           0,         FIX(-1.75), 128, 32},
+    {0,     0,           0,         FIX(-0.25),   0, 28},
+    {-8,  -20,   FIX(-0.5),         FIX(-1.25),  96, 28},
+    {8,   -22,    FIX(0.5), FIX(-(1 + 7.0/16)), -96, 30},
+    {-4,    8,  FIX(-0.25),          FIX(-0.5), -64, 20},
+    {4,     8,   FIX(0.25),        FIX(-3.0/8),  48, 22},
+    {-16, -12, FIX(-5.0/8),            FIX(-1),  96, 24},
+    {16,   -4,  FIX(5.0/8), FIX(- (1 + 1.0/8)), -96, 26},
+    {-12,  28, FIX(-1.0/8),        FIX(-7.0/8), -32, 16},
+    {12,   28,  FIX(1.0/8),        FIX(-3.0/4),  16, 18},
+};
+extern s8 D_us_80182484;
+extern u8 D_us_8018249C[];
 
 extern EInit g_EInitBombKnight;
 extern EInit g_EInitRockKnight;
@@ -365,9 +379,6 @@ void func_us_801BC650(Entity* self) {
         break;
     }
 }
-
-extern s8 D_us_80182484;
-extern u8 D_us_8018249C[];
 
 void func_us_801BCA5C(Entity* self) {
     s32 animFrame;
