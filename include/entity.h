@@ -4385,6 +4385,11 @@ typedef struct {
     /* 0x94 */ s16 timer;
 } ET_DarkwingBatWings;
 
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x7C */ s16 deathPartLife;
+} ET_BombKnight;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -4758,6 +4763,7 @@ typedef union { // offset=0x7C
     ET_Gorgon gorgon;
     ET_DarkwingBat darkwing;
     ET_DarkwingBatWings batwing;
+    ET_BombKnight bombKnight;
 } Ext;
 
 SYNC_FIELD(ET_Player, ET_Weapon, anim);

@@ -33,7 +33,7 @@ static AnimateEntityFrame anim_throw_bomb[] = {
 static AnimateEntityFrame anim_turnaround_bomb[] = {
     {8, 1}, {5, 11}, {9, 12}, {8, 13}, POSE_END};
 // Take non-bomb hand and slide across body
-static AnimateEntityFrame anim4[] = {
+static AnimateEntityFrame anim_flinch_bomb[] = {
     {8, 14}, {8, 15}, {19, 16}, {5, 15}, POSE_END};
 static AnimateEntityFrame anim_fastthrow_bomb[] = {
     {5, 1},  {3, 4},  {2, 5},  {2, 6},  {1, 7},  {7, 6},
@@ -42,18 +42,18 @@ static AnimateEntityFrame anim_fastthrow_bomb[] = {
 static AnimateEntityFrame anim_bomb_fuse_sparks[] = {
     {4, 37}, {4, 38}, {4, 39}, {4, 40}, POSE_LOOP(0)};
 
-static AnimateEntityFrame anim7[] = {
+static AnimateEntityFrame anim_idle_holding_rock[] = {
     {14, 41}, {14, 42}, {11, 43}, {10, 42}, POSE_LOOP(0)};
-static AnimateEntityFrame anim8[] = {
+static AnimateEntityFrame anim_throw_rock[] = {
     {14, 41}, {8, 42}, {26, 41}, {3, 44}, {2, 45},  {2, 46},  {2, 47},
     {2, 48},  {1, 49}, {1, 48},  {3, 50}, {33, 48}, {6, 47},  {5, 46},
     {5, 57},  {4, 58}, {4, 59},  {3, 60}, {6, 61},  {10, 64}, {8, 62},
     {6, 63},  {3, 41}, {6, 42},  {4, 41}, POSE_END};
-static AnimateEntityFrame anim9[] = {
+static AnimateEntityFrame anim_turnaround_rock[] = {
     {8, 41}, {5, 51}, {9, 52}, {8, 53}, POSE_END};
-static AnimateEntityFrame anim10[] = {
+static AnimateEntityFrame anim_flinch_rock[] = {
     {8, 54}, {8, 55}, {19, 56}, {5, 55}, POSE_END};
-static AnimateEntityFrame anim11[] = {
+static AnimateEntityFrame anim_fastthrow_rock[] = {
     {5, 41}, {3, 44}, {2, 45}, {2, 46}, {1, 47}, {7, 46},
     {6, 57}, {5, 58}, {4, 59}, {4, 60}, {3, 61}, {10, 64},
     {8, 62}, {6, 63}, {3, 41}, {6, 42}, {4, 41}, POSE_END};
@@ -71,12 +71,12 @@ static AnimateEntityFrame* animations[] = {
     anim_turnaround_bomb,
     anim_fastthrow_bomb,
     anim_throw_bomb,
-    anim4,
-    anim7,
-    anim9,
-    anim11,
-    anim8,
-    anim10};
+    anim_flinch_bomb,
+    anim_idle_holding_rock,
+    anim_turnaround_rock,
+    anim_fastthrow_rock,
+    anim_throw_rock,
+    anim_flinch_rock};
 static s8 D_pspeu_09257D78[] = {
     0, 0, 0, 0, 1, 6, 15, 29, 1, 5, 15, 29, 1, 4, 15, 29};
 static s8 D_us_8018228C[] = {
@@ -139,6 +139,18 @@ extern EInit D_us_80180C48;
 extern EInit D_us_80180C54;
 extern EInit D_us_80180C60;
 
+typedef enum {
+    KNIGHT_INIT,
+    KNIGHT_COLLCHECK,
+    KNIGHT_WAIT,
+    KNIGHT_IDLE,
+    KNIGHT_TURNAROUND,
+    KNIGHT_CLOSETHROW,
+    KNIGHT_FARTHROW,
+    KNIGHT_HIT,
+    KNIGHT_DEAD
+} BombKnightSteps;
+
 void EntityBombKnight(Entity* self) {
     deathParts* deathOffset;
     Entity* other;
@@ -150,12 +162,12 @@ void EntityBombKnight(Entity* self) {
 
     if ((self->flags & FLAG_DEAD) && (self->step < 8)) {
         PlaySfxPositional(SFX_ROCK_KNIGHT_DEATH);
-        SetStep(8);
+        SetStep(KNIGHT_DEAD);
     }
     rock_knight_mode = self->params & 1;
     animBlock = animations + (rock_knight_mode * 5);
     switch (self->step) { /* irregular */
-    case 0:
+    case KNIGHT_INIT:
         if (!self->params) {
             InitializeEntity(g_EInitBombKnight);
             self->animCurFrame = 1; // bomb knight holding bomb
@@ -175,18 +187,18 @@ void EntityBombKnight(Entity* self) {
             }
         }
         break;
-    case 1:
+    case KNIGHT_COLLCHECK:
         if (UnkCollisionFunc3(&D_pspeu_09257C00) & 1) {
-            SetStep(2);
+            SetStep(KNIGHT_WAIT);
         }
         break;
-    case 2:
+    case KNIGHT_WAIT:
         if (GetDistanceToPlayerX() < 0x80) {
             self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
-            SetStep(3);
+            SetStep(KNIGHT_IDLE);
         }
         break;
-    case 3:
+    case KNIGHT_IDLE:
         if (!self->step_s) {
             self->ext.ILLEGAL.s16[3] =
                 D_pspeu_09257EB0[self->ext.ILLEGAL.u8[9]];
@@ -196,7 +208,7 @@ void EntityBombKnight(Entity* self) {
         }
         AnimateEntity(animBlock[ANIM_IDLE], self);
         if (self->facingLeft != ((GetSideToPlayer() & 1) ^ 1)) {
-            SetStep(4);
+            SetStep(KNIGHT_TURNAROUND);
         } else {
             UnkCollisionFunc2(&D_pspeu_09257C10);
             if ((self->facingLeft ^ (self->ext.ILLEGAL.u8[8])) != 0) {
@@ -219,26 +231,26 @@ void EntityBombKnight(Entity* self) {
                     PlaySfxPositional(SFX_UNK_RNO4_75C);
                 }
                 if (GetDistanceToPlayerX() < 0x50) {
-                    SetStep(5);
+                    SetStep(KNIGHT_CLOSETHROW);
                 } else {
-                    SetStep(6);
+                    SetStep(KNIGHT_FARTHROW);
                 }
             }
             if (self->hitFlags & 3) {
-                SetStep(7);
+                SetStep(KNIGHT_HIT);
             }
         }
         break;
-    case 4:
+    case KNIGHT_TURNAROUND:
         if (AnimateEntity(animBlock[ANIM_TURNAROUND], self) == 0) {
             self->facingLeft ^= 1;
             self->animCurFrame = 1;
-            SetStep(3);
+            SetStep(KNIGHT_IDLE);
         }
         break;
-    case 5:
+    case KNIGHT_CLOSETHROW:
         if (AnimateEntity(animBlock[ANIM_FAST_THROW], self) == 0) {
-            SetStep(3);
+            SetStep(KNIGHT_IDLE);
         }
         if ((!self->poseTimer) && ((self->pose) == 3)) {
             other = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
@@ -261,7 +273,7 @@ void EntityBombKnight(Entity* self) {
             }
         }
         break;
-    case 6:
+    case KNIGHT_FARTHROW:
         if (AnimateEntity(animBlock[ANIM_THROW], self) == 0) {
             SetStep(3);
         }
@@ -286,7 +298,7 @@ void EntityBombKnight(Entity* self) {
             }
         }
         break;
-    case 7:
+    case KNIGHT_HIT:
         if (AnimateEntity(animBlock[ANIM_GUARD], self) == 0) {
             SetStep(3);
         }
@@ -297,7 +309,7 @@ void EntityBombKnight(Entity* self) {
             self->velocityX = FIX(0.1875);
         }
         break;
-    case 8:
+    case KNIGHT_DEAD:
         deathOffset = &D_us_801823D4;
         for (i = 0; i < 11; i++, deathOffset++) {
             other = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -597,14 +609,14 @@ void EntityKnightDeathParts(Entity* self) {
             self->velocityX += temp_s0->velX;
         }
         self->velocityY += temp_s0->velY;
-        self->ext.ILLEGAL.s16[2] = temp_s0->lifetime;
+        self->ext.bombKnight.deathPartLife = temp_s0->lifetime;
     }
     MoveEntity();
     self->velocityY += FIX(0.15625);
     temp_s0 = &D_us_801823D4;
     temp_s0 += self->params;
     self->rotate += temp_s0->rotSpeed;
-    if (!--self->ext.ILLEGAL.s16[2]) {
+    if (!--self->ext.bombKnight.deathPartLife) {
         if (Random() & 1) {
             PlaySfxPositional(SFX_EXPLODE_D);
         } else {
