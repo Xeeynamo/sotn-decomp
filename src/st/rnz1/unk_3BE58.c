@@ -25,7 +25,8 @@ extern u8 D_us_801822B4[] = {0, 1, 2, 3, 4, 5, 5, 5, 6, 7, 6, 8, 8, 8, 9, 9, 10,
 static s8 D_us_801822D0[] = {0, 0, 0, 0, 17, -26, 4, 11, 16, -27, 4, 11, 15, -28, 4, 11, 13, -31, 4, 12, -3, -20, 8, 7, -79, -91, 0, 0, 9, 24, 4, 11, 8, 24, 4, 11, 15, -29, 4, 11, 18, -28, 4, 11, 17, -27, 4, 11, 13, -32, 4, 12, -84, -89, 0, 0, -87, -89, 0, 0, -92, -94, 0, 0, -90, -87, 0, 0, -85, -87, 0, 0, -88, -88, 0, 0, -87, -88, 0, 0, -83, -88, 0, 0, -83, -90, 0, 0, -87, -90, 0, 0, -91, -90, 0, 0, 16, -31, 7, 15, 15, -32, 7, 15, 14, -33, 7, 15, 10, -36, 7, 15, 8, 22, 4, 9, -14, -26, 7, 15, -14, -36, 7, 15, -16, -31, 7, 15, 14, -34, 7, 15};
 static s8 D_us_80182354[] = {16, -33, 7, 15, 18, -4, 6, 9, 12, -39, 7, 15};
 static u8 D_us_80182360[] = {0, 1, 2, 3, 4, 5, 6, 6, 7, 8, 7, 6, 6, 6, 9, 10, 11, 6, 6, 6, 6, 6, 6, 12, 6};
-static u8 D_pspeu_09257E80[] = {24, 25, 26, 27, 5, 6, 6, 7, 28, 7, 29, 30, 31, 32, 33, 25, 6, 6, 6, 6, 6, 34, 35, 6};
+static u8 D_us_8018237C[] = {24, 25, 26, 27, 5, 6, 6, 7, 28, 7, 29, 30, 31, 32, 33, 25, 6, 6, 6, 6, 6, 34, 35, 6};
+
 static AnimateEntityFrame D_us_80182394[] = {{4, 1}, {4, 2}, {4, 3}, {4, 4}, {4, 5}, {4, 6}, {2, 7}, {2, 8}, POSE_END};
 
 extern s32 D_pspeu_09257EB0[] = {32, 0, 0, 128, 64, 0, 0, 0};
@@ -528,4 +529,35 @@ void func_us_801BCE4C(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rnz1/nonmatchings/unk_3BE58", func_us_801BCFC8);
+void func_us_801BCFC8(Entity* self) {
+    Entity* other;
+    s32 offsetX;
+    s8* hitbox;
+
+    if (!self->step) {
+        InitializeEntity(&g_EInitBombKnight);
+        self->flags |= 0x202000;
+        self->animSet = 0;
+        self->animCurFrame = 0;
+        self->parent = self - 1;
+        self->nextPart = self - 1;
+    }
+    other = self - 1;
+    self->facingLeft = other->facingLeft;
+    self->posX.i.hi = other->posX.i.hi;
+    self->posY.i.hi = other->posY.i.hi;
+    hitbox = D_us_801822D0;
+    if (self->params) {
+        offsetX = D_us_8018237C[other->animCurFrame - 40];
+    } else {
+        offsetX = D_us_80182360[other->animCurFrame];
+    }
+    hitbox += offsetX * 4;
+    self->hitboxOffX = *hitbox++;
+    self->hitboxOffY = *hitbox++;
+    self->hitboxWidth = *hitbox++;
+    self->hitboxHeight = *hitbox++;
+    if (other->entityId != 0x41) {
+        DestroyEntity(self);
+    }
+}
