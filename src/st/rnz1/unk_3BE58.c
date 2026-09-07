@@ -19,8 +19,8 @@ This file contains both the Rock and Bomb entities, always.
 
 */
 
-static s16 D_pspeu_09257C00[] = {0, 37, 0, 4, 8, -4, -16, 0};
-static s16 D_pspeu_09257C10[] = {0, 37, 8, 0};
+static s16 sensors1[] = {0, 37, 0, 4, 8, -4, -16, 0};
+static s16 sensors2[] = {0, 37, 8, 0};
 static s16 unused_sensors[] = {0, 8, 0, 4, 4, -4, -8, 0};
 static AnimateEntityFrame anim_idle_holding_bomb[] = {
     {14, 1}, {14, 2}, {11, 3}, {10, 2}, POSE_LOOP(0)};
@@ -71,15 +71,15 @@ static AnimateEntityFrame* animations[] = {
     anim_throw_bomb,        anim_flinch_bomb,     anim_idle_holding_rock,
     anim_turnaround_rock,   anim_fastthrow_rock,  anim_throw_rock,
     anim_flinch_rock};
-static s8 D_pspeu_09257D78[] = {
+static s8 hitboxes[] = {
     0, 0, 0, 0, 1, 6, 15, 29, 1, 5, 15, 29, 1, 4, 15, 29};
-static s8 D_us_8018228C[] = {
+static s8 unused_unk1[] = {
     0,  7,  15, 29, -5, 10, 13, 26, -10, 10, 14, 26, -11, 10,
     14, 26, 0,  5,  12, 31, 0,  6,  14,  30, -1, 6,  14,  30,
     -5, 9,  12, 26, -1, 7,  14, 28, 1,   5,  14, 30};
-static u8 D_us_801822B4[] = {0, 1, 2, 3,  4,  5,  5,  5,  6,  7,  6,  8, 8,
+static u8 hitboxOffsets[] = {0, 1, 2, 3,  4,  5,  5,  5,  6,  7,  6,  8, 8,
                              8, 9, 9, 10, 11, 11, 12, 13, 13, 13, 13, 13};
-static s8 D_us_801822D0[] = {
+static s8 armHitboxes[] = {
     0,   0,   0,   0,   17,  -26, 4,   11,  16,  -27, 4,   11,  15,  -28, 4,
     11,  13,  -31, 4,   12,  -3,  -20, 8,   7,   -79, -91, 0,   0,   9,   24,
     4,   11,  8,   24,  4,   11,  15,  -29, 4,   11,  18,  -28, 4,   11,  17,
@@ -89,17 +89,17 @@ static s8 D_us_801822D0[] = {
     0,   0,   -91, -90, 0,   0,   16,  -31, 7,   15,  15,  -32, 7,   15,  14,
     -33, 7,   15,  10,  -36, 7,   15,  8,   22,  4,   9,   -14, -26, 7,   15,
     -14, -36, 7,   15,  -16, -31, 7,   15,  14,  -34, 7,   15};
-static s8 D_us_80182354[] = {16, -33, 7, 15, 18, -4, 6, 9, 12, -39, 7, 15};
-static u8 D_us_80182360[] = {0, 1, 2,  3,  4, 5, 6, 6, 7, 8, 7,  6, 6,
+static s8 unused_unk2[] = {16, -33, 7, 15, 18, -4, 6, 9, 12, -39, 7, 15};
+static u8 bombArmHitboxOffsets[] = {0, 1, 2,  3,  4, 5, 6, 6, 7, 8, 7,  6, 6,
                              6, 9, 10, 11, 6, 6, 6, 6, 6, 6, 12, 6};
-static u8 D_us_8018237C[] = {24, 25, 26, 27, 5, 6, 6, 7, 28, 7,  29, 30,
+static u8 rockArmHitboxOffsets[] = {24, 25, 26, 27, 5, 6, 6, 7, 28, 7,  29, 30,
                              31, 32, 33, 25, 6, 6, 6, 6, 6,  34, 35, 6};
 
 static AnimateEntityFrame anim_another_bomb_throw[] = {
     {4, 1}, {4, 2}, {4, 3}, {4, 4}, {4, 5}, {4, 6}, {2, 7}, {2, 8}, POSE_END};
 
-static s32 D_pspeu_09257EB0[] = {32, 0, 0, 128, 64, 0, 0, 0};
-static Point16 D_us_801823C8[] = {{12, 8}, {-12, 8}, {0, -2}};
+static s32 throwTimers[] = {32, 0, 0, 128, 64, 0, 0, 0};
+static Point16 explosionOffsets[] = {{12, 8}, {-12, 8}, {0, -2}};
 typedef struct {
     s16 x;
     s16 y;
@@ -108,7 +108,7 @@ typedef struct {
     s16 rotSpeed;
     s16 lifetime;
 } deathParts;
-static deathParts D_us_801823D4[] = {
+static deathParts deathPartsData[] = {
     {0, -4, FIX(1.0 / 8), FIX(-0.5), 32, 34},
     {0, -24, 0, FIX(-1.75), 128, 32},
     {0, 0, 0, FIX(-0.25), 0, 28},
@@ -121,17 +121,17 @@ static deathParts D_us_801823D4[] = {
     {-12, 28, FIX(-1.0 / 8), FIX(-7.0 / 8), -32, 16},
     {12, 28, FIX(1.0 / 8), FIX(-3.0 / 4), 16, 18},
 };
-static s8 D_us_80182484[] = {
+static s8 fuseSparksXY[] = {
     0,   0,   19,  -41, 18,  -43, 19, -45, 15, -49, -79, -91,
     -13, -37, -17, -49, -20, -43, 17, -46, 20, -45, 16,  -50};
-static u8 D_us_8018249C[] = {
+static u8 fuseFrameMap[] = {
     0, 1, 2, 3, 4, 0, 0, 0, 0, 0, 0, 6, 7, 8, 9, 10, 10, 0, 0, 0, 0, 0, 0, 11};
 
 extern EInit g_EInitBombKnight;
 extern EInit g_EInitRockKnight;
-extern EInit D_us_80180C48;
-extern EInit D_us_80180C54;
-extern EInit D_us_80180C60;
+extern EInit g_EInitBomb;
+extern EInit g_EInitKnightDebris;
+extern EInit g_EInitRock;
 
 typedef enum {
     KNIGHT_INIT,
@@ -182,7 +182,7 @@ void EntityBombKnight(Entity* self) {
         }
         break;
     case KNIGHT_COLLCHECK:
-        if (UnkCollisionFunc3(&D_pspeu_09257C00) & 1) {
+        if (UnkCollisionFunc3(sensors1) & 1) {
             SetStep(KNIGHT_WAIT);
         }
         break;
@@ -195,7 +195,7 @@ void EntityBombKnight(Entity* self) {
     case KNIGHT_IDLE:
         if (!self->step_s) {
             self->ext.bombKnight.throwTimer =
-                D_pspeu_09257EB0[self->ext.bombKnight.timerCycler];
+                throwTimers[self->ext.bombKnight.timerCycler];
             self->ext.bombKnight.timerCycler++;
             self->ext.bombKnight.timerCycler &= 7;
             self->step_s++;
@@ -204,7 +204,7 @@ void EntityBombKnight(Entity* self) {
         if (self->facingLeft != ((GetSideToPlayer() & 1) ^ 1)) {
             SetStep(KNIGHT_TURNAROUND);
         } else {
-            UnkCollisionFunc2(&D_pspeu_09257C10);
+            UnkCollisionFunc2(sensors2);
             if ((self->facingLeft ^ (self->ext.bombKnight.playerClose)) != 0) {
                 self->velocityX = FIX(0.375);
             } else {
@@ -296,7 +296,7 @@ void EntityBombKnight(Entity* self) {
         if (AnimateEntity(animBlock[ANIM_GUARD], self) == 0) {
             SetStep(3);
         }
-        UnkCollisionFunc2(&D_pspeu_09257C10);
+        UnkCollisionFunc2(&sensors2);
         if (self->facingLeft) {
             self->velocityX = FIX(-0.1875);
         } else {
@@ -304,7 +304,7 @@ void EntityBombKnight(Entity* self) {
         }
         break;
     case KNIGHT_DEAD:
-        deathOffset = &D_us_801823D4;
+        deathOffset = &deathPartsData;
         for (i = 0; i < 11; i++, deathOffset++) {
             other = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (other != NULL) {
@@ -335,11 +335,11 @@ void EntityBombKnight(Entity* self) {
 #include "../pad2_anim_debug.h"
         break;
     }
-    hitbox = &D_pspeu_09257D78[0];
+    hitbox = &hitboxes[0];
     if (rock_knight_mode != 0) {
-        offsetX = D_us_801822B4[self->animCurFrame - 40];
+        offsetX = hitboxOffsets[self->animCurFrame - 40];
     } else {
-        offsetX = D_us_801822B4[self->animCurFrame];
+        offsetX = hitboxOffsets[self->animCurFrame];
     }
     hitbox += offsetX * 4;
     self->hitboxOffX = *hitbox++;
@@ -357,7 +357,7 @@ void EntityThrownBomb(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180C48);
+        InitializeEntity(g_EInitBomb);
         self->animCurFrame = 0x24;
         other = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (other != NULL) {
@@ -450,8 +450,8 @@ void EntityThrownBomb(Entity* self) {
                 if (other != NULL) {
                     CreateEntityFromEntity(E_EXPLOSION, self, other);
                     other->params = 1;
-                    other->posX.i.hi += D_us_801823C8[var_s1].x;
-                    other->posY.i.hi += D_us_801823C8[var_s1].y;
+                    other->posX.i.hi += explosionOffsets[var_s1].x;
+                    other->posY.i.hi += explosionOffsets[var_s1].y;
                 }
             }
             PlaySfxPositional(SFX_FM_EXPLODE_B);
@@ -491,8 +491,8 @@ void EntityBombFuseSparks(Entity* self) {
             return;
         }
 
-        xyPtr = &D_us_80182484;
-        animFrame = D_us_8018249C[animFrame];
+        xyPtr = &fuseSparksXY;
+        animFrame = fuseFrameMap[animFrame];
         if (animFrame == 0) {
             self->animCurFrame = 0;
         }
@@ -522,7 +522,7 @@ void EntityThrownRock(Entity* self) {
     }
     switch (self->step) { /* irregular */
     case 0:
-        InitializeEntity(D_us_80180C60);
+        InitializeEntity(g_EInitRock);
         if (self->params == 0) {
             self->velocityX = FIX(1.0);
         } else {
@@ -569,7 +569,7 @@ void EntityRockPiece(Entity* self) {
     s16 angle;
 
     if (!self->step) {
-        InitializeEntity(D_us_80180C54);
+        InitializeEntity(g_EInitKnightDebris);
         self->animCurFrame = self->params + 72;
         speed = (Random() & 0x1F) + 0x10;
         angle = (Random() * 6) + 0x900;
@@ -586,7 +586,7 @@ void EntityKnightDeathParts(Entity* self) {
     deathParts* temp_s0;
 
     if (!self->step) {
-        InitializeEntity(D_us_80180C54);
+        InitializeEntity(g_EInitKnightDebris);
         if (self->params & 0x100) {
             self->palette += 2;
             self->params &= 0xFF;
@@ -598,7 +598,7 @@ void EntityKnightDeathParts(Entity* self) {
         } else {
             self->velocityX = FIX(-1.0);
         }
-        temp_s0 = &D_us_801823D4;
+        temp_s0 = &deathPartsData;
         temp_s0 += self->params;
         if (self->facingLeft) {
             self->velocityX -= temp_s0->velX;
@@ -610,7 +610,7 @@ void EntityKnightDeathParts(Entity* self) {
     }
     MoveEntity();
     self->velocityY += FIX(0.15625);
-    temp_s0 = &D_us_801823D4;
+    temp_s0 = &deathPartsData;
     temp_s0 += self->params;
     self->rotate += temp_s0->rotSpeed;
     if (!--self->ext.bombKnight.deathPartLife) {
@@ -643,11 +643,11 @@ void EntityBombKnightArm(Entity* self) {
     self->facingLeft = other->facingLeft;
     self->posX.i.hi = other->posX.i.hi;
     self->posY.i.hi = other->posY.i.hi;
-    hitbox = D_us_801822D0;
+    hitbox = armHitboxes;
     if (self->params) {
-        offsetX = D_us_8018237C[other->animCurFrame - 40];
+        offsetX = rockArmHitboxOffsets[other->animCurFrame - 40];
     } else {
-        offsetX = D_us_80182360[other->animCurFrame];
+        offsetX = bombArmHitboxOffsets[other->animCurFrame];
     }
     hitbox += offsetX * 4;
     self->hitboxOffX = *hitbox++;

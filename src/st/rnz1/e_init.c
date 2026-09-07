@@ -181,9 +181,9 @@ EInit g_EInitValhallaKnightUnk1 = {ANIMSET_OVL(8), 1, 76, 562, 0x003};
 EInit g_EInitValhallaKnightUnk2 = {ANIMSET_OVL(0), 0, 0, 0, 0x086};
 EInit g_EInitValhallaKnightUnk3 = {ANIMSET_OVL(0), 0, 0, 0, 0x087};
 EInit g_EInitBombKnight = {ANIMSET_OVL(11), 1, 72, 566, 0x0A5};
-EInit D_us_80180C48 = {ANIMSET_OVL(11), 36, 72, 566, 0x0A6};
-EInit D_us_80180C54 = {ANIMSET_OVL(11), 0, 72, 566, 0x002};
-EInit D_us_80180C60 = {ANIMSET_OVL(11), 65, 72, 566, 0x0A8};
+EInit g_EInitBomb = {ANIMSET_OVL(11), 36, 72, 566, 0x0A6};
+EInit g_EInitKnightDebris = {ANIMSET_OVL(11), 0, 72, 566, 0x002};
+EInit g_EInitRock = {ANIMSET_OVL(11), 65, 72, 566, 0x0A8};
 EInit g_EInitRockKnight = {ANIMSET_OVL(11), 1, 72, 566, 0x0A7};
 EInit D_us_80180C78 = {ANIMSET_OVL(13), 1, 81, 572, 0x005};
 // clang-format on
