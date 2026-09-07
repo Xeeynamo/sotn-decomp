@@ -29,7 +29,7 @@ static u8 D_pspeu_09257E80[] = {24, 25, 26, 27, 5, 6, 6, 7, 28, 7, 29, 30, 31, 3
 static AnimateEntityFrame D_us_80182394[] = {{4, 1}, {4, 2}, {4, 3}, {4, 4}, {4, 5}, {4, 6}, {2, 7}, {2, 8}, POSE_END};
 
 extern s32 D_pspeu_09257EB0[] = {32, 0, 0, 128, 64, 0, 0, 0};
-static s16 D_us_801823C8[] = {12, 8, -12, 8, 0, -2};
+static Point16 D_us_801823C8[] = {{12, 8}, {-12, 8}, {0, -2}};
 extern s16 D_us_801823D4[];
 
 extern EInit g_EInitBombKnight;
@@ -237,7 +237,125 @@ void func_us_801BBE58(Entity* self) {
     self->hitboxHeight = *hitbox++;
 }
 
-INCLUDE_ASM("st/rnz1/nonmatchings/unk_3BE58", func_us_801BC650);
+extern EInit D_us_80180C48;
+
+void func_us_801BC650(Entity* self) {
+    Collider sp2C;
+    Entity* other;
+
+    s32 collX, collY;
+    s32 var_s1;
+
+    switch (self->step) {                              /* switch 1; irregular */
+    case 0:                                         /* switch 1 */
+        InitializeEntity(D_us_80180C48);
+        self->animCurFrame = 0x24;
+        other = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (other != NULL) {
+            CreateEntityFromCurrentEntity(0x44, other);
+            other->ext.ILLEGAL.u32[3] = (u32) self;
+            other->zPriority = ((self->zPriority) + 1);
+        }
+        if (self->params == 0) {
+            self->velocityX = 0x10000;
+        } else {
+            self->velocityX = 0x20000;
+        }
+        self->velocityY = -0x20000;
+        if (!self->facingLeft) {
+            self->velocityX = -self->velocityX;
+        }
+        return;
+    case 1:                                         /* switch 1 */
+        MoveEntity();
+        self->velocityY += 0x2000;
+        self->rotate += 0x80;
+        if (g_Timer & 2) {
+            self->palette = 0x236;
+        } else {
+            self->palette = 0x8166;
+        }
+        collX = self->posX.i.hi;
+        collY = self->posY.i.hi + 4;
+        g_api.CheckCollision(collX, collY, &sp2C, 0);
+        if (sp2C.effects & 1) {
+            SetStep(2);
+        }
+        if ((self->hitboxState) == 2) {
+            if (self->hitFlags) {
+                SetStep(2);
+                return;
+            }
+        } else if (self->hitFlags & 3) {
+            self->hitFlags = 0;
+            self->velocityX = -self->velocityX;
+            self->velocityY += 0xFFFE0000;
+            other = AllocEntity(&g_Entities[0x20], &g_Entities[0x2F]);
+            if (other != NULL) {
+                DestroyEntity(other);
+                *other = *self;
+                other->entityId = 0x43;
+                other->drawFlags |= 4;
+                other->hitboxState = 2;
+                other->attackElement = 0x8000;
+                other->nFramesInvincibility = 0x10;
+                other->stunFrames = 4;
+                other->hitEffect = 1;
+                other->ext.ILLEGAL.u16[0x1B] = 0;
+                other->flags = 0x0C000000;
+                g_api.func_80118894(other);
+                DestroyEntity(self);
+                return;
+            }
+        } else if (self->hitFlags) {
+            SetStep(2);
+            return;
+        }
+        break;
+    case 2:                                         /* switch 1 */
+        switch (self->step_s) {                        /* switch 2; irregular */
+        case 0:                                     /* switch 2 */
+            self->animSet = -0x7FF4;
+            self->palette = 0x23A;
+            if ((self->hitboxState) == 2) {
+                self->palette = 0x23B;
+            } else {
+                self->hitboxState = 1;
+            }
+            self->unk5A = 0x4A;
+            self->animCurFrame = 1;
+            self->blendMode = 0x30;
+            // please konami what are you doing, other doesn't even exist yet
+            #ifdef VERSION_US
+            other->drawFlags = 0;
+            #else
+            self->drawFlags = 0;
+            #endif
+            self->hitboxWidth = self->hitboxHeight = 20;
+            for(var_s1 = 0; var_s1 < 3; var_s1++) {
+                other = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                if (other != NULL) {
+                    CreateEntityFromEntity(2, self, other);
+                    other->params = 1;
+                    other->posX.i.hi += D_us_801823C8[var_s1].x;
+                    other->posY.i.hi += D_us_801823C8[var_s1].y;
+                }
+            }
+            PlaySfxPositional(0x65B);
+            self->step_s += 1;
+            /* fallthrough */
+        case 1:                                     /* switch 2 */
+            if (self->pose > 5) {
+                self->hitboxState = 0;
+            }
+            if (AnimateEntity(D_us_80182394, self) == 0) {
+                DestroyEntity(self);
+            }
+            break;
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("st/rnz1/nonmatchings/unk_3BE58", func_us_801BCA5C);
 
