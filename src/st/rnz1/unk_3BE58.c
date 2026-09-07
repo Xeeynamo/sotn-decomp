@@ -221,26 +221,8 @@ void func_us_801BBE58(Entity* self) {
         DestroyEntity(self);
         return;
     case 0xFF:
-        FntPrint("charal %x\n", self->animCurFrame);
-        if (g_pads[1].pressed & PAD_SQUARE) {
-    if (self->params) {
+        #include "../pad2_anim_debug.h"
         break;
-    }
-    self->animCurFrame++;
-    self->params |= 1;
-    } else {
-        self->params = 0;
-    }
-    if (g_pads[1].pressed & PAD_CIRCLE) {
-        if (self->step_s) {
-            break;
-        }
-        self->animCurFrame--;
-        self->step_s |= 1;
-    } else {
-        self->step_s = 0;
-    }
-    break;
     }
     hitbox = &D_pspeu_09257D78[0];
     if (rock_knight_mode != 0) {
