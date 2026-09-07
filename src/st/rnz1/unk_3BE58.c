@@ -30,7 +30,14 @@ static AnimateEntityFrame D_us_80182394[] = {{4, 1}, {4, 2}, {4, 3}, {4, 4}, {4,
 
 extern s32 D_pspeu_09257EB0[] = {32, 0, 0, 128, 64, 0, 0, 0};
 static Point16 D_us_801823C8[] = {{12, 8}, {-12, 8}, {0, -2}};
-extern s16 D_us_801823D4[];
+typedef struct{
+    u32 unk0;
+    u32 unk4;
+    u32 unk8;
+    s16 unkC;
+    s16 unkE;
+} unk_bombknight;
+extern unk_bombknight D_us_801823D4[];
 
 extern EInit g_EInitBombKnight;
 extern EInit g_EInitRockKnight;
@@ -475,6 +482,50 @@ void func_us_801BCD80(Entity* self) {
     self->velocityY += 0x2000;
 }
 
-INCLUDE_ASM("st/rnz1/nonmatchings/unk_3BE58", func_us_801BCE4C);
+void func_us_801BCE4C(Entity* self) {
+    s32 var_a0;
+    u16 temp_v1;
+    unk_bombknight* temp_s0;
+
+    if (!self->step) {
+        InitializeEntity(D_us_80180C54);
+        if (self->params & 0x100) {
+            self->palette += 2;
+            self->params &= 0xFF;
+        }
+        self->animCurFrame = self->params + 0x19;
+        self->drawFlags = 4;
+        if (GetSideToPlayer() & 1) {
+            self->velocityX = 0x10000;
+        } else {
+            self->velocityX = -0x10000;
+        }
+        temp_s0 = &D_us_801823D4;
+        temp_s0 += self->params;
+        if (self->facingLeft) {
+            self->velocityX -= temp_s0->unk4;
+        } else {
+            self->velocityX += temp_s0->unk4;
+        }
+        self->velocityY += temp_s0->unk8;
+        self->ext.ILLEGAL.s16[2] = temp_s0->unkE;
+    }
+    MoveEntity();
+    self->velocityY += 0x2800;
+    temp_s0 = &D_us_801823D4;
+    temp_s0 += self->params;
+    self->rotate += temp_s0->unkC;
+    if (!--self->ext.ILLEGAL.s16[2]) {
+        if (Random() & 1) {
+            PlaySfxPositional(0x657);
+        } else {
+            PlaySfxPositional(0x65B);
+        }
+        self->step = 0;
+        self->pfnUpdate = EntityExplosion;
+        self->params = 1;
+        self->drawFlags = 0;
+    }
+}
 
 INCLUDE_ASM("st/rnz1/nonmatchings/unk_3BE58", func_us_801BCFC8);
