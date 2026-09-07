@@ -7,7 +7,6 @@ EntityVenusWeedTendril = 0x0923A418;
 EntityVenusWeedDart = 0x0923A9F8;
 EntityVenusWeedSpike = 0x0923AF38;
 EntityRdaiUnk33 = 0x0923B1F8;
-func_us_801BBE58_from_rnz1 = 0x0923B800;
 func_us_801BC650_from_rnz1 = 0x0923C2B8;
 func_us_801BCA5C_from_rnz1 = 0x0923C7E8;
 func_us_801BCB9C_from_rnz1 = 0x0923C988;
