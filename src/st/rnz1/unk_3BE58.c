@@ -1,6 +1,24 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rnz1.h"
 
+/* 
+
+***************************
+
+BIG NOTE:
+
+The Rock Knight and Bomb Knight are exactly the same enemy.
+Not a reskin, not a copy paste, but the same dude.
+Create the entity with params of 0 or 1 to control it.
+Every Rock Knight contains everything for a Bomb Knight,
+and every Bomb Knight contains everything for a Rock Knight.
+This file contains both the Rock and Bomb entities, always.
+
+***************************
+
+
+*/
+
 static s16 D_pspeu_09257C00[] = {0, 37, 0, 4, 8, -4, -16, 0};
 static s16 D_pspeu_09257C10[] = {0, 37, 8, 0};
 static s16 unused_sensors[] = {0, 8, 0, 4, 4, -4, -8, 0};
@@ -137,7 +155,7 @@ void EntityBombKnight(Entity* self) {
     rock_knight_mode = self->params & 1;
     animBlock = animations + (rock_knight_mode * 5);
     switch (self->step) { /* irregular */
-    case 0x0:
+    case 0:
         if (!self->params) {
             InitializeEntity(g_EInitBombKnight);
             self->animCurFrame = 1; // bomb knight holding bomb
@@ -146,29 +164,29 @@ void EntityBombKnight(Entity* self) {
             self->animCurFrame = 0x29; // rock knight holding rock
         }
         other = self + 1;
-        CreateEntityFromCurrentEntity(E_UNK_47, other);
+        CreateEntityFromCurrentEntity(E_BOMB_KNIGHT_ARM, other);
         other->params = self->params;
         if (rock_knight_mode == 0) {
             other = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (other != NULL) {
-                CreateEntityFromCurrentEntity(E_UNK_44, other);
+                CreateEntityFromCurrentEntity(E_FUSE_SPARKS, other);
                 other->ext.ILLEGAL.u32[3] = (u32)self;
                 other->zPriority = ((self->zPriority) + 1);
             }
         }
         break;
-    case 0x1:
+    case 1:
         if (UnkCollisionFunc3(&D_pspeu_09257C00) & 1) {
             SetStep(2);
         }
         break;
-    case 0x2:
+    case 2:
         if (GetDistanceToPlayerX() < 0x80) {
             self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
             SetStep(3);
         }
         break;
-    case 0x3:
+    case 3:
         if (!self->step_s) {
             self->ext.ILLEGAL.s16[3] =
                 D_pspeu_09257EB0[self->ext.ILLEGAL.u8[9]];
@@ -211,14 +229,14 @@ void EntityBombKnight(Entity* self) {
             }
         }
         break;
-    case 0x4:
+    case 4:
         if (AnimateEntity(animBlock[ANIM_TURNAROUND], self) == 0) {
             self->facingLeft ^= 1;
             self->animCurFrame = 1;
             SetStep(3);
         }
         break;
-    case 0x5:
+    case 5:
         if (AnimateEntity(animBlock[ANIM_FAST_THROW], self) == 0) {
             SetStep(3);
         }
@@ -226,10 +244,10 @@ void EntityBombKnight(Entity* self) {
             other = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
             if (other != NULL) {
                 if (rock_knight_mode != 0) {
-                    CreateEntityFromEntity(E_UNK_45, self, other);
+                    CreateEntityFromEntity(E_THROWN_ROCK, self, other);
                     PlaySfxPositional(SFX_ROCK_KNIGHT_ATTACK);
                 } else {
-                    CreateEntityFromEntity(E_UNK_42, self, other);
+                    CreateEntityFromEntity(E_THROWN_BOMB, self, other);
                     PlaySfxPositional(SFX_ROCK_KNIGHT_PAIN);
                 }
                 if (self->facingLeft) {
@@ -243,7 +261,7 @@ void EntityBombKnight(Entity* self) {
             }
         }
         break;
-    case 0x6:
+    case 6:
         if (AnimateEntity(animBlock[ANIM_THROW], self) == 0) {
             SetStep(3);
         }
@@ -251,10 +269,10 @@ void EntityBombKnight(Entity* self) {
             other = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
             if (other != NULL) {
                 if (rock_knight_mode != 0) {
-                    CreateEntityFromEntity(E_UNK_45, self, other);
+                    CreateEntityFromEntity(E_THROWN_ROCK, self, other);
                     PlaySfxPositional(SFX_ROCK_KNIGHT_ATTACK);
                 } else {
-                    CreateEntityFromEntity(E_UNK_42, self, other);
+                    CreateEntityFromEntity(E_THROWN_BOMB, self, other);
                     PlaySfxPositional(SFX_ROCK_KNIGHT_PAIN);
                 }
                 if (self->facingLeft) {
@@ -268,7 +286,7 @@ void EntityBombKnight(Entity* self) {
             }
         }
         break;
-    case 0x7:
+    case 7:
         if (AnimateEntity(animBlock[ANIM_GUARD], self) == 0) {
             SetStep(3);
         }
@@ -279,12 +297,12 @@ void EntityBombKnight(Entity* self) {
             self->velocityX = FIX(0.1875);
         }
         break;
-    case 0x8:
+    case 8:
         deathOffset = &D_us_801823D4;
         for (i = 0; i < 11; i++, deathOffset++) {
             other = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (other != NULL) {
-                CreateEntityFromEntity(E_UNK_43, self, other);
+                CreateEntityFromEntity(E_DEATH_PARTS, self, other);
                 other->params = i;
                 if (rock_knight_mode != 0) {
                     other->params |= 0x100;
@@ -307,7 +325,7 @@ void EntityBombKnight(Entity* self) {
         PlaySfxPositional(SFX_FM_EXPLODE_B);
         DestroyEntity(self);
         return;
-    case 0xFF:
+    case 255:
 #include "../pad2_anim_debug.h"
         break;
     }
@@ -324,20 +342,20 @@ void EntityBombKnight(Entity* self) {
     self->hitboxHeight = *hitbox++;
 }
 
-void func_us_801BC650(Entity* self) {
+void EntityThrownBomb(Entity* self) {
     Collider sp2C;
     Entity* other;
 
     s32 collX, collY;
     s32 var_s1;
 
-    switch (self->step) { /* switch 1; irregular */
-    case 0:               /* switch 1 */
+    switch (self->step) { 
+    case 0:               
         InitializeEntity(D_us_80180C48);
         self->animCurFrame = 0x24;
         other = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (other != NULL) {
-            CreateEntityFromCurrentEntity(E_UNK_44, other);
+            CreateEntityFromCurrentEntity(E_FUSE_SPARKS, other);
             other->ext.ILLEGAL.u32[3] = (u32)self;
             other->zPriority = ((self->zPriority) + 1);
         }
@@ -351,7 +369,7 @@ void func_us_801BC650(Entity* self) {
             self->velocityX = -self->velocityX;
         }
         return;
-    case 1: /* switch 1 */
+    case 1: 
         MoveEntity();
         self->velocityY += FIX(0.125);
         self->rotate += ROT(11.25);
@@ -379,7 +397,7 @@ void func_us_801BC650(Entity* self) {
             if (other != NULL) {
                 DestroyEntity(other);
                 *other = *self;
-                other->entityId = 0x43;
+                other->entityId = E_DEATH_PARTS;
                 other->drawFlags |= ENTITY_ROTATE;
                 other->hitboxState = 2;
                 other->attackElement = ELEMENT_FIRE;
@@ -398,8 +416,8 @@ void func_us_801BC650(Entity* self) {
             return;
         }
         break;
-    case 2:                     /* switch 1 */
-        switch (self->step_s) { /* switch 2; irregular */
+    case 2:                     
+        switch (self->step_s) { /* switch 2*/
         case 0:                 /* switch 2 */
             self->animSet = -0x7FF4;
             self->palette = 0x23A;
@@ -443,7 +461,7 @@ void func_us_801BC650(Entity* self) {
     }
 }
 
-void func_us_801BCA5C(Entity* self) {
+void EntityBombFuseSparks(Entity* self) {
     s32 animFrame;
     s8* xyPtr;
     Entity* other;
@@ -482,7 +500,7 @@ void func_us_801BCA5C(Entity* self) {
     }
 }
 
-void func_us_801BCB9C(Entity* self) {
+void EntityThrownRock(Entity* self) {
     Collider sp2C;
     Entity* other;
     s32 collX, collY;
@@ -523,7 +541,7 @@ void func_us_801BCB9C(Entity* self) {
             for (var_s1 = 0; var_s1 < 7; var_s1++) {
                 other = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (other != NULL) {
-                    CreateEntityFromEntity(E_UNK_46, self, other);
+                    CreateEntityFromEntity(E_ROCK_PIECE, self, other);
                     other->params = Random() & 7;
                 }
             }
@@ -537,7 +555,7 @@ void func_us_801BCB9C(Entity* self) {
     }
 }
 
-void func_us_801BCD80(Entity* self) {
+void EntityRockPiece(Entity* self) {
     s32 speed;
     s16 angle;
 
@@ -553,7 +571,7 @@ void func_us_801BCD80(Entity* self) {
     self->velocityY += FIX(0.125);
 }
 
-void func_us_801BCE4C(Entity* self) {
+void EntityKnightDeathParts(Entity* self) {
     s32 var_a0;
     u16 temp_v1;
     deathParts* temp_s0;
@@ -599,7 +617,7 @@ void func_us_801BCE4C(Entity* self) {
     }
 }
 
-void func_us_801BCFC8(Entity* self) {
+void EntityBombKnightArm(Entity* self) {
     Entity* other;
     s32 offsetX;
     s8* hitbox;
@@ -627,7 +645,7 @@ void func_us_801BCFC8(Entity* self) {
     self->hitboxOffY = *hitbox++;
     self->hitboxWidth = *hitbox++;
     self->hitboxHeight = *hitbox++;
-    if (other->entityId != 0x41) {
+    if (other->entityId != E_BOMB_KNIGHT) {
         DestroyEntity(self);
     }
 }

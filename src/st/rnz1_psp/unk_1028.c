@@ -3,14 +3,14 @@
 
 INCLUDE_ASM("st/rnz1_psp/nonmatchings/rnz1_psp/unk_1028", EntityBombKnight);
 
-INCLUDE_ASM("st/rnz1_psp/nonmatchings/rnz1_psp/unk_1028", func_us_801BC650);
+INCLUDE_ASM("st/rnz1_psp/nonmatchings/rnz1_psp/unk_1028", EntityThrownBomb);
 
-INCLUDE_ASM("st/rnz1_psp/nonmatchings/rnz1_psp/unk_1028", func_us_801BCA5C);
+INCLUDE_ASM("st/rnz1_psp/nonmatchings/rnz1_psp/unk_1028", EntityBombFuseSparks);
 
-INCLUDE_ASM("st/rnz1_psp/nonmatchings/rnz1_psp/unk_1028", func_us_801BCB9C);
+INCLUDE_ASM("st/rnz1_psp/nonmatchings/rnz1_psp/unk_1028", EntityThrownRock);
 
-INCLUDE_ASM("st/rnz1_psp/nonmatchings/rnz1_psp/unk_1028", func_us_801BCD80);
+INCLUDE_ASM("st/rnz1_psp/nonmatchings/rnz1_psp/unk_1028", EntityRockPiece);
 
-INCLUDE_ASM("st/rnz1_psp/nonmatchings/rnz1_psp/unk_1028", func_us_801BCE4C);
+INCLUDE_ASM("st/rnz1_psp/nonmatchings/rnz1_psp/unk_1028", EntityKnightDeathParts);
 
-INCLUDE_ASM("st/rnz1_psp/nonmatchings/rnz1_psp/unk_1028", func_us_801BCFC8);
+INCLUDE_ASM("st/rnz1_psp/nonmatchings/rnz1_psp/unk_1028", EntityBombKnightArm);

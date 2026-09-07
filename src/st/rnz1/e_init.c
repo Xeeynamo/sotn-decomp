@@ -66,12 +66,12 @@ void EntityValhallaKnight(Entity* self);
 void func_us_801C8954(Entity* self);
 void func_us_801C8AAC(Entity* self);
 void EntityBombKnight(Entity* self);
-void func_us_801BC650(Entity* self);
-void func_us_801BCE4C(Entity* self);
-void func_us_801BCA5C(Entity* self);
-void func_us_801BCB9C(Entity* self);
-void func_us_801BCD80(Entity* self);
-void func_us_801BCFC8(Entity* self);
+void EntityThrownBomb(Entity* self);
+void EntityKnightDeathParts(Entity* self);
+void EntityBombFuseSparks(Entity* self);
+void EntityThrownRock(Entity* self);
+void EntityRockPiece(Entity* self);
+void EntityBombKnightArm(Entity* self);
 void func_us_801BD398(Entity* self);
 void func_us_801BDA24(Entity* self);
 void func_us_801BD324(Entity* self);
@@ -142,12 +142,12 @@ PfnEntityUpdate EntityUpdates[] = {
     func_us_801C8954,
     func_us_801C8AAC,
     EntityBombKnight,
-    func_us_801BC650,
-    func_us_801BCE4C,
-    func_us_801BCA5C,
-    func_us_801BCB9C,
-    func_us_801BCD80,
-    func_us_801BCFC8,
+    EntityThrownBomb,
+    EntityKnightDeathParts,
+    EntityBombFuseSparks,
+    EntityThrownRock,
+    EntityRockPiece,
+    EntityBombKnightArm,
     func_us_801BD398,
     func_us_801BDA24,
     func_us_801BD324,
