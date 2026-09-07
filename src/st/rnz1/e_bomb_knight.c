@@ -72,26 +72,25 @@ static AnimateEntityFrame* animations[] = {
     anim_turnaround_rock,   anim_fastthrow_rock,  anim_throw_rock,
     anim_flinch_rock};
 static s8 hitboxes[] = {
-    0, 0, 0, 0, 1, 6, 15, 29, 1, 5, 15, 29, 1, 4, 15, 29,
-    0,  7,  15, 29, -5, 10, 13, 26, -10, 10, 14, 26, -11, 10,
-    14, 26, 0,  5,  12, 31, 0,  6,  14,  30, -1, 6,  14,  30,
-    -5, 9,  12, 26, -1, 7,  14, 28, 1,   5,  14, 30};
+    0,  0,  0,  0,  1,  6,   15, 29, 1,  5,   15, 29, 1,  4,  15, 29, 0,  7, 15,
+    29, -5, 10, 13, 26, -10, 10, 14, 26, -11, 10, 14, 26, 0,  5,  12, 31, 0, 6,
+    14, 30, -1, 6,  14, 30,  -5, 9,  12, 26,  -1, 7,  14, 28, 1,  5,  14, 30};
 static u8 hitboxOffsets[] = {0, 1, 2, 3,  4,  5,  5,  5,  6,  7,  6,  8, 8,
                              8, 9, 9, 10, 11, 11, 12, 13, 13, 13, 13, 13};
 static s8 armHitboxes[] = {
-    0,   0,   0,   0,   17,  -26, 4,   11,  16,  -27, 4,   11,  15,  -28, 4,
-    11,  13,  -31, 4,   12,  -3,  -20, 8,   7,   -79, -91, 0,   0,   9,   24,
-    4,   11,  8,   24,  4,   11,  15,  -29, 4,   11,  18,  -28, 4,   11,  17,
-    -27, 4,   11,  13,  -32, 4,   12,  -84, -89, 0,   0,   -87, -89, 0,   0,
-    -92, -94, 0,   0,   -90, -87, 0,   0,   -85, -87, 0,   0,   -88, -88, 0,
-    0,   -87, -88, 0,   0,   -83, -88, 0,   0,   -83, -90, 0,   0,   -87, -90,
-    0,   0,   -91, -90, 0,   0,   16,  -31, 7,   15,  15,  -32, 7,   15,  14,
-    -33, 7,   15,  10,  -36, 7,   15,  8,   22,  4,   9,   -14, -26, 7,   15,
-    -14, -36, 7,   15,  -16, -31, 7,   15,  14,  -34, 7,   15, 16, -33, 7, 15, 18, -4, 6, 9, 12, -39, 7, 15};
+    0,   0,   0, 0,  17,  -26, 4, 11, 16,  -27, 4, 11, 15,  -28, 4, 11,
+    13,  -31, 4, 12, -3,  -20, 8, 7,  -79, -91, 0, 0,  9,   24,  4, 11,
+    8,   24,  4, 11, 15,  -29, 4, 11, 18,  -28, 4, 11, 17,  -27, 4, 11,
+    13,  -32, 4, 12, -84, -89, 0, 0,  -87, -89, 0, 0,  -92, -94, 0, 0,
+    -90, -87, 0, 0,  -85, -87, 0, 0,  -88, -88, 0, 0,  -87, -88, 0, 0,
+    -83, -88, 0, 0,  -83, -90, 0, 0,  -87, -90, 0, 0,  -91, -90, 0, 0,
+    16,  -31, 7, 15, 15,  -32, 7, 15, 14,  -33, 7, 15, 10,  -36, 7, 15,
+    8,   22,  4, 9,  -14, -26, 7, 15, -14, -36, 7, 15, -16, -31, 7, 15,
+    14,  -34, 7, 15, 16,  -33, 7, 15, 18,  -4,  6, 9,  12,  -39, 7, 15};
 static u8 bombArmHitboxOffsets[] = {0, 1, 2,  3,  4, 5, 6, 6, 7, 8, 7,  6, 6,
-                             6, 9, 10, 11, 6, 6, 6, 6, 6, 6, 12, 6};
+                                    6, 9, 10, 11, 6, 6, 6, 6, 6, 6, 12, 6};
 static u8 rockArmHitboxOffsets[] = {24, 25, 26, 27, 5, 6, 6, 7, 28, 7,  29, 30,
-                             31, 32, 33, 25, 6, 6, 6, 6, 6,  34, 35, 6};
+                                    31, 32, 33, 25, 6, 6, 6, 6, 6,  34, 35, 6};
 
 static AnimateEntityFrame anim_another_bomb_throw[] = {
     {4, 1}, {4, 2}, {4, 3}, {4, 4}, {4, 5}, {4, 6}, {2, 7}, {2, 8}, POSE_END};
@@ -124,10 +123,10 @@ static s8 fuseSparksXY[] = {
     -13, -37, -17, -49, -20, -43, 17, -46, 20, -45, 16,  -50};
 static u8 fuseFrameMap[] = {
     0, 1, 2, 3, 4, 0, 0, 0, 0, 0, 0, 6, 7, 8, 9, 10, 10, 0, 0, 0, 0, 0, 0, 11,
-    #ifdef VERSION_PSP
-    0 // PSP has at leats one extra zero, padded to 8. 
-    // Then the charal for the pad2 anim debug.
-    #endif
+#ifdef VERSION_PSP
+    0 // PSP has at leats one extra zero, padded to 8.
+// Then the charal for the pad2 anim debug.
+#endif
 };
 
 extern EInit g_EInitBombKnight;
@@ -170,7 +169,7 @@ void EntityBombKnight(Entity* self) {
             self->animCurFrame = 1; // bomb knight holding bomb
         } else {
             InitializeEntity(g_EInitRockKnight);
-            self->animCurFrame = 0x29; // rock knight holding rock
+            self->animCurFrame = 41; // rock knight holding rock
         }
         other = self + 1;
         CreateEntityFromCurrentEntity(E_BOMB_KNIGHT_ARM, other);
@@ -250,7 +249,7 @@ void EntityBombKnight(Entity* self) {
             SetStep(KNIGHT_IDLE);
         }
         if ((!self->poseTimer) && ((self->pose) == 3)) {
-            other = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
+            other = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (other != NULL) {
                 if (rock_knight_mode != 0) {
                     CreateEntityFromEntity(E_THROWN_ROCK, self, other);
@@ -264,7 +263,7 @@ void EntityBombKnight(Entity* self) {
                 } else {
                     other->posX.i.hi += 8;
                 }
-                other->posY.i.hi -= 0x28;
+                other->posY.i.hi -= 40;
                 other->facingLeft = self->facingLeft;
                 other->params = 0;
             }
@@ -275,7 +274,7 @@ void EntityBombKnight(Entity* self) {
             SetStep(3);
         }
         if ((!self->poseTimer) && ((self->pose) == 4)) {
-            other = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
+            other = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (other != NULL) {
                 if (rock_knight_mode != 0) {
                     CreateEntityFromEntity(E_THROWN_ROCK, self, other);
@@ -289,7 +288,7 @@ void EntityBombKnight(Entity* self) {
                 } else {
                     other->posX.i.hi += 8;
                 }
-                other->posY.i.hi -= 0x28;
+                other->posY.i.hi -= 40;
                 other->facingLeft = self->facingLeft;
                 other->params = 1;
             }
@@ -299,7 +298,7 @@ void EntityBombKnight(Entity* self) {
         if (AnimateEntity(animBlock[ANIM_GUARD], self) == 0) {
             SetStep(3);
         }
-        UnkCollisionFunc2(&sensors2);
+        UnkCollisionFunc2(sensors2);
         if (self->facingLeft) {
             self->velocityX = FIX(-0.1875);
         } else {
@@ -352,16 +351,16 @@ void EntityBombKnight(Entity* self) {
 }
 
 void EntityThrownBomb(Entity* self) {
-    Collider sp2C;
+    Collider coll;
     Entity* other;
 
     s32 collX, collY;
-    s32 var_s1;
+    s32 i;
 
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitBomb);
-        self->animCurFrame = 0x24;
+        self->animCurFrame = 36;
         other = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (other != NULL) {
             CreateEntityFromCurrentEntity(E_FUSE_SPARKS, other);
@@ -389,8 +388,8 @@ void EntityThrownBomb(Entity* self) {
         }
         collX = self->posX.i.hi;
         collY = self->posY.i.hi + 4;
-        g_api.CheckCollision(collX, collY, &sp2C, 0);
-        if (sp2C.effects & EFFECT_SOLID) {
+        g_api.CheckCollision(collX, collY, &coll, 0);
+        if (coll.effects & EFFECT_SOLID) {
             SetStep(2);
         }
         if ((self->hitboxState) == 2) {
@@ -400,7 +399,7 @@ void EntityThrownBomb(Entity* self) {
         } else if (self->hitFlags & 3) {
             self->hitFlags = 0;
             self->velocityX = -self->velocityX;
-            self->velocityY += 0xFFFE0000;
+            self->velocityY += FIX(-2);
             other = AllocEntity(&g_Entities[0x20], &g_Entities[0x2F]);
             if (other != NULL) {
                 DestroyEntity(other);
@@ -429,7 +428,7 @@ void EntityThrownBomb(Entity* self) {
     case 2:
         switch (self->step_s) { /* switch 2*/
         case 0:                 /* switch 2 */
-            self->animSet = -0x7FF4;
+            self->animSet = ANIMSET_OVL(12);
             self->palette = 0x23A;
             if ((self->hitboxState) == 2) {
                 self->palette = 0x23B;
@@ -446,13 +445,13 @@ void EntityThrownBomb(Entity* self) {
             self->drawFlags = ENTITY_DEFAULT;
 #endif
             self->hitboxWidth = self->hitboxHeight = 20;
-            for (var_s1 = 0; var_s1 < 3; var_s1++) {
+            for (i = 0; i < 3; i++) {
                 other = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (other != NULL) {
                     CreateEntityFromEntity(E_EXPLOSION, self, other);
                     other->params = 1;
-                    other->posX.i.hi += explosionOffsets[var_s1].x;
-                    other->posY.i.hi += explosionOffsets[var_s1].y;
+                    other->posX.i.hi += explosionOffsets[i].x;
+                    other->posY.i.hi += explosionOffsets[i].y;
                 }
             }
             PlaySfxPositional(SFX_FM_EXPLODE_B);
@@ -471,10 +470,11 @@ void EntityThrownBomb(Entity* self) {
     }
 }
 
+// Only when bomb is held, not when thrown
 void EntityBombFuseSparks(Entity* self) {
     s32 animFrame;
     s8* xyPtr;
-    Entity* other;
+    Entity* knight;
 
     switch (self->step) { /* irregular */
     case 0:
@@ -482,12 +482,12 @@ void EntityBombFuseSparks(Entity* self) {
         /* fallthrough */
     case 1:
         AnimateEntity(anim_bomb_fuse_sparks, self);
-        other = self->ext.bombKnight.fuseParent;
-        self->facingLeft = other->facingLeft;
-        self->posX.i.hi = other->posX.i.hi;
-        self->posY.i.hi = other->posY.i.hi;
-        animFrame = other->animCurFrame;
-        if (animFrame == 0x24) {
+        knight = self->ext.bombKnight.fuseParent;
+        self->facingLeft = knight->facingLeft;
+        self->posX.i.hi = knight->posX.i.hi;
+        self->posY.i.hi = knight->posY.i.hi;
+        animFrame = knight->animCurFrame;
+        if (animFrame == 36) {
             self->posY.i.hi -= 8;
             return;
         }
@@ -498,23 +498,23 @@ void EntityBombFuseSparks(Entity* self) {
             self->animCurFrame = 0;
         }
         xyPtr += animFrame * 2;
-        if (other->facingLeft) {
+        if (knight->facingLeft) {
             self->posX.i.hi -= *xyPtr++;
         } else {
             self->posX.i.hi += *xyPtr++;
         }
         self->posY.i.hi += *xyPtr++;
-        if (other->entityId != 0x41) {
+        if (knight->entityId != E_BOMB_KNIGHT) {
             DestroyEntity(self);
         }
     }
 }
 
 void EntityThrownRock(Entity* self) {
-    Collider sp2C;
-    Entity* other;
+    Collider coll;
+    Entity* fragment;
     s32 collX, collY;
-    s32 var_s1;
+    s32 i;
 
     if ((self->flags & FLAG_DEAD) && (self->step != 2)) {
         self->hitboxState = 0;
@@ -539,8 +539,8 @@ void EntityThrownRock(Entity* self) {
         self->velocityY += FIX(0.125);
         collX = self->posX.i.hi;
         collY = self->posY.i.hi + 8;
-        g_api.CheckCollision(collX, collY, &sp2C, 0);
-        if (sp2C.effects & EFFECT_SOLID) {
+        g_api.CheckCollision(collX, collY, &coll, 0);
+        if (coll.effects & EFFECT_SOLID) {
             PlaySfxPositional(SFX_WALL_DEBRIS_A);
             self->hitboxState = 0;
             SetStep(2);
@@ -548,11 +548,11 @@ void EntityThrownRock(Entity* self) {
         break;
     case 2:
         if (AnimateEntity(&anim_rock_shatter, self) == 0) {
-            for (var_s1 = 0; var_s1 < 7; var_s1++) {
-                other = AllocEntity(&g_Entities[224], &g_Entities[256]);
-                if (other != NULL) {
-                    CreateEntityFromEntity(E_ROCK_PIECE, self, other);
-                    other->params = Random() & 7;
+            for (i = 0; i < 7; i++) {
+                fragment = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                if (fragment != NULL) {
+                    CreateEntityFromEntity(E_ROCK_PIECE, self, fragment);
+                    fragment->params = Random() & 7;
                 }
             }
             self->pfnUpdate = EntityExplosion;
@@ -573,7 +573,7 @@ void EntityRockPiece(Entity* self) {
         InitializeEntity(g_EInitKnightDebris);
         self->animCurFrame = self->params + 72;
         speed = (Random() & 0x1F) + 0x10;
-        angle = (Random() * 6) + 0x900;
+        angle = (Random() * 6) + ROT(202.5);
         self->velocityX = speed * rcos(angle);
         self->velocityY = speed * rsin(angle);
     }
@@ -582,8 +582,6 @@ void EntityRockPiece(Entity* self) {
 }
 
 void EntityKnightDeathParts(Entity* self) {
-    s32 var_a0;
-    u16 temp_v1;
     deathParts* temp_s0;
 
     if (!self->step) {
