@@ -15,7 +15,19 @@ void func_us_801A19CC(s32 arg0) {
 
 INCLUDE_ASM("boss/bo5/nonmatchings/unk_2159C", func_us_801A19FC);
 
-INCLUDE_ASM("boss/bo5/nonmatchings/unk_2159C", func_us_801A1BA0);
+bool CheckHippogryphFloorCollision(s16* sensors) {
+    if (UnkCollisionFunc3(sensors) & 1) {
+        return true;
+    } else {
+        if (g_CurrentEntity->posY.i.hi + g_Tilemap.scrollY.i.hi >= 184) {
+            g_CurrentEntity->posY.i.hi = 183 - g_Tilemap.scrollY.i.hi;
+            g_CurrentEntity->velocityX = 0;
+            g_CurrentEntity->velocityY = 0;
+            return true;
+        }
+        return false;
+    }
+}
 
 INCLUDE_ASM("boss/bo5/nonmatchings/unk_2159C", func_us_801A1C14);
 
@@ -148,6 +160,16 @@ void func_us_801A3FD4(Entity* self) {
 
 INCLUDE_ASM("boss/bo5/nonmatchings/unk_2159C", func_us_801A425C);
 
-INCLUDE_ASM("boss/bo5/nonmatchings/unk_2159C", func_us_801A4430);
+extern EInit D_us_801804F0;
+
+void EntityStaticHitbox(Entity* self) {
+    if (!self->step) {
+        InitializeEntity(D_us_801804F0);
+        self->hitboxWidth = 24;
+        self->hitboxHeight = 4;
+        self->hitboxOffX = -48;
+        self->hitboxOffY = -2;
+    }
+}
 
 INCLUDE_ASM("boss/bo5/nonmatchings/unk_2159C", func_us_801A4494);
