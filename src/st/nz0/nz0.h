@@ -3,8 +3,6 @@
 
 #define STAGE_IS_NZ0
 
-#define OVL_EXPORT(x) NZ0_##x
-
 enum Palettes {
     PAL_NONE,
     PAL_BREAKABLE = 0x219,
@@ -27,7 +25,7 @@ typedef enum EntityID {
     /* 0x09 */ E_STAGE_NAME_POPUP,
     /* 0x0A */ E_EQUIP_ITEM_DROP,
     /* 0x0B */ E_RELIC_ORB,
-    /* 0x0C */ E_HEART_DROP,
+    /* 0x0C */ E_PERSISTENT_ITEM_DROP,
     /* 0x0D */ E_ENEMY_BLOOD,
     /* 0x0E */ E_MESSAGE_BOX,
     /* 0x0F */ E_DUMMY_0F,
@@ -76,7 +74,7 @@ typedef enum EntityID {
     /* 0x3A */ E_FALLING_GLASS,           // func_pspeu_09253A58
     /* 0x3B */ E_FALLING_LIQUID,          // func_pspeu_09253BE8
     /* 0x3C */ E_LIQUID_BUBBLES,          // func_pspeu_09253DC0
-    /* 0x3D */ E_func_801C7884,           // func_pspeu_09253EE0
+    /* 0x3D */ E_SUBWPN_IN_CONT,          // func_pspeu_09253EE0
     /* 0x3E */ E_BOSS_FIGHT_MANAGER,      // func_pspeu_09238700
     /* 0x3F */ E_BOSS_ROOM_BLOCK,         // func_pspeu_09238D50
     /* 0x40 */ E_SLOGRA,                  // func_pspeu_09259230

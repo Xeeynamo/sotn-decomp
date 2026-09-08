@@ -620,7 +620,7 @@ void MarStepHit(s32 damageEffect, u32 damageKind, s16 step, s16 step_s) {
         if (g_StageId != STAGE_BO6 && g_StageId != STAGE_RBO6 &&
             g_StageId != STAGE_DRE) {
             for (i = 2; i < NUM_VERTICAL_SENSORS; i++) {
-                if (g_Maria.colWall[i].effects & EFFECT_UNK_0002) {
+                if (g_Maria.colWall[i].effects & EFFECT_SIDE) {
                     break;
                 }
             }
@@ -628,7 +628,7 @@ void MarStepHit(s32 damageEffect, u32 damageKind, s16 step, s16 step_s) {
             if (i == NUM_VERTICAL_SENSORS) {
                 for (i = NUM_VERTICAL_SENSORS + 2; i < NUM_VERTICAL_SENSORS * 2;
                      i++) {
-                    if (g_Maria.colWall[i].effects & EFFECT_UNK_0002) {
+                    if (g_Maria.colWall[i].effects & EFFECT_SIDE) {
                         break;
                     }
                 }

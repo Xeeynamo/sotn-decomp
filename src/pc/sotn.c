@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "pc.h"
+#include "spawn_point.h"
 #include "dra.h"
 #include "stage.h"
 #include "dra_bss.h"
@@ -87,6 +88,7 @@ s32 func_800FE044(s32 amount, s32 type);
 void AddToInventory(u16 itemId, s32 itemCategory);
 void InitStatsAndGear(bool isDeathTakingItems);
 s32 PlaySfxVolPan(s16 sfxId, u16 sfxVol, s16 sfxPan);
+s32 SetVolumeCommand22_23(s16 vol, s16 distance);
 u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
 void GetPlayerSensor(Collider* col);
 void RevealSecretPassageAtPlayerPositionOnMap(s32 arg0);
@@ -113,13 +115,16 @@ void InitVbVh(void);
 
 s32 func_800EDB58(u8 primType, s32 count);
 
-static void GameLoopCallback(void) { Replay_OnFrame(); }
+static void GameLoopCallback(void) {
+    Replay_OnFrame();
+    SpawnPoint_OnFrame();
+}
 
 struct InitGameParams g_GameParams;
 bool InitGame(struct InitGameParams* params) {
-    Psyz_SetTitle("Castlevania: Symphony of the Night");
     g_GameParams = *params;
     Replay_Init(params);
+    SpawnPoint_Init(params);
     Psyz_SetVSyncCb(GameLoopCallback);
     if (params->diskPath) {
         if (Psyz_CdSetDiskPath(params->diskPath) < 0) {
@@ -175,7 +180,7 @@ bool InitGame(struct InitGameParams* params) {
     api.relicDefs = g_RelicDefs;
     api.InitStatsAndGear = InitStatsAndGear;
     api.PlaySfxVolPan = PlaySfxVolPan;
-    api.SetVolumeCommand22_23 = NULL;
+    api.SetVolumeCommand22_23 = SetVolumeCommand22_23;
     api.MakeAll = NULL;
     api.CheckEquipmentItemCount = CheckEquipmentItemCount;
     api.GetPlayerSensor = GetPlayerSensor;

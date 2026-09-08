@@ -8,38 +8,38 @@
 extern LayoutEntity* D_8D2DEF0;
 extern LayoutEntity* D_8D2DFC4;
 
-extern Overlay OVL_EXPORT(Overlay);
+extern Overlay g_Overlay;
 
 static u8 cutscene_script_pre_fight_it[] = {
-#include "gen/cutscene_script_pre_fight_it.h"
+#include <gen/cutscene_script_pre_fight_it.h>
 };
 static u8 cutscene_script_pre_fight_sp[] = {
-#include "gen/cutscene_script_pre_fight_sp.h"
+#include <gen/cutscene_script_pre_fight_sp.h>
 };
 static u8 cutscene_script_pre_fight_fr[] = {
-#include "gen/cutscene_script_pre_fight_fr.h"
+#include <gen/cutscene_script_pre_fight_fr.h>
 };
 static u8 cutscene_script_pre_fight_ge[] = {
-#include "gen/cutscene_script_pre_fight_ge.h"
+#include <gen/cutscene_script_pre_fight_ge.h>
 };
 static u8 cutscene_script_pre_fight_en[] = {
-#include "gen/cutscene_script_pre_fight_en.h"
+#include <gen/cutscene_script_pre_fight_en.h>
 };
 
 static u8 cutscene_script_post_fight_it[] = {
-#include "gen/cutscene_script_post_fight_it.h"
+#include <gen/cutscene_script_post_fight_it.h>
 };
 static u8 cutscene_script_post_fight_sp[] = {
-#include "gen/cutscene_script_post_fight_sp.h"
+#include <gen/cutscene_script_post_fight_sp.h>
 };
 static u8 cutscene_script_post_fight_fr[] = {
-#include "gen/cutscene_script_post_fight_fr.h"
+#include <gen/cutscene_script_post_fight_fr.h>
 };
 static u8 cutscene_script_post_fight_ge[] = {
-#include "gen/cutscene_script_post_fight_ge.h"
+#include <gen/cutscene_script_post_fight_ge.h>
 };
 static u8 cutscene_script_post_fight_en[] = {
-#include "gen/cutscene_script_post_fight_en.h"
+#include <gen/cutscene_script_post_fight_en.h>
 };
 
 s32 E_ID(BACKGROUND_BLOCK);
@@ -67,7 +67,7 @@ s32 E_ID(UNK_26);
 s32 E_ID(UNK_27);
 s32 E_ID(UNK_28);
 
-u8* OVL_EXPORT(cutscene_script);
+u8* cutscene_script;
 u8* pre_fight_script_ptr1;
 u8* pre_fight_script_ptr2;
 u8* post_fight_script_ptr1;
@@ -102,8 +102,8 @@ static void InitEntityIds(void) {
     SET_E_ID(UNK_28);
 }
 
-void OVL_EXPORT(Load)(void) {
-    OVL_EXPORT(cutscene_script) = GetLangAt(
+void OvlLoad(void) {
+    cutscene_script = GetLangAt(
         4, (u8*)cutscene_script_pre_fight_en, (u8*)cutscene_script_pre_fight_fr,
         (u8*)cutscene_script_pre_fight_sp, (u8*)cutscene_script_pre_fight_ge,
         (u8*)cutscene_script_pre_fight_it);
@@ -129,5 +129,5 @@ void OVL_EXPORT(Load)(void) {
     g_pStObjLayoutHorizontal = &D_8D2DEF0;
     g_pStObjLayoutVertical = &D_8D2DFC4;
     func_892A018();
-    memcpy(&g_api.o, &OVL_EXPORT(Overlay), sizeof(Overlay));
+    memcpy(&g_api.o, &g_Overlay, sizeof(Overlay));
 }

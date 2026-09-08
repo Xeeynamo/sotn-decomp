@@ -1,4 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+
+extern EInit g_EInitHammer;
+extern EInit g_EInitGurkha;
+extern EInit g_EInitBlade;
+extern EInit g_EInitHammerWeapon;
+
 typedef enum {
     HAMMER_STEP_0,
     HAMMER_STEP_1,
@@ -355,6 +361,9 @@ void EntityHammer(Entity* self) {
         self->animCurFrame = 3;
         self->hitboxWidth = 6;
         self->hitboxHeight = 6;
+#ifdef STAGE_IS_RNO0
+        self->zPriority += 8;
+#endif
         /* fallthrough */
     case HAMMER_STEP_1:
         if (UnkCollisionFunc3(sensors1) & 1) {

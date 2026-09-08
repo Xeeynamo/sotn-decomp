@@ -10,7 +10,7 @@ pub struct ColliderEffectsTransformer {
 lazy_static! {
     static ref COLLIDER_EFFECTS: [(u16, &'static str); 16] = [
         (1 << 0, "EFFECT_SOLID"),
-        (1 << 1, "EFFECT_UNK_0002"),
+        (1 << 1, "EFFECT_SIDE"),
         (1 << 2, "EFFECT_QUICKSAND"),
         (1 << 3, "EFFECT_WATER"),
         (1 << 4, "EFFECT_MIST_ONLY"),

@@ -45,10 +45,10 @@ void EntityImpDeathParticle(Entity* self) {
             self->velocityY += FIX(0.03125);
         }
 #if defined(VERSION_PSP)
-        angle = self->rotate += 0x80;
+        angle = self->rotate += ROT(11.25);
         self->velocityX = (rcos(angle) << 15) >> 12;
 #else
-        self->rotate += 0x80;
+        self->rotate += ROT(11.25);
         self->velocityX = (rcos(self->rotate) << 15) >> 12;
 #endif
         break;

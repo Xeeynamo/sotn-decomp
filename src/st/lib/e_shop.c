@@ -848,7 +848,7 @@ static u16 D_us_80181510[] = {
 static u16 D_us_8018151C[] = {0, 1, 2, 5, 6};
 
 #ifdef VERSION_PSP
-extern u8* OVL_EXPORT(cutscene_data_offset_four);
+extern u8* cutscene_data_offset_four;
 #else
 extern u8 D_us_80183F64;
 #endif
@@ -881,7 +881,7 @@ void* func_us_801B0C40(u8* pix, const char* str, s32 x, s32 y, s32 size) {
         while (*str >= 8) {
             s_8 = 0;
 #ifdef VERSION_PSP
-            ch = g_api.func_psp_0913F960((char*)str, &sp3f);
+            ch = g_api.func_psp_0913F960(str, &sp3f);
 #else
             ch = *str;
 #endif
@@ -1233,7 +1233,7 @@ void func_us_801B15C0(Entity* self) {
     s16 tempVar;
     s32 i;
     u16 tempVar2;
-    char* ptr;
+    const char* ptr;
     s16 pad;
 
     switch (self->step) {
@@ -1535,7 +1535,7 @@ void func_us_801B15C0(Entity* self) {
         switch (self->step_s) {
         case 0:
 #ifdef VERSION_PSP
-            *OVL_EXPORT(cutscene_data_offset_four) = 0;
+            *cutscene_data_offset_four = 0;
 #else
             D_us_80183F64 = 0;
 #endif
@@ -3661,14 +3661,14 @@ void func_us_801B5F18(Entity* self) {
     CreateEntityFromCurrentEntity(E_ID(ID_25), tempEntity);
     self->step++;
 #ifdef VERSION_PSP
-    *OVL_EXPORT(cutscene_data_offset_four) = 0;
+    *cutscene_data_offset_four = 0;
 #else
     D_us_80183F64 = 0;
 #endif
     if (D_8003C730 == 2) {
         D_8003C730 = 0;
 #ifdef VERSION_PSP
-        *OVL_EXPORT(cutscene_data_offset_four) = 1;
+        *cutscene_data_offset_four = 1;
 #else
         D_us_80183F64 = 1;
 #endif
@@ -4773,7 +4773,7 @@ void func_us_801B8234(Entity* self) {
     u16 enemyId;
     u16 pads;
     u8* pix;
-    char* s3;
+    const char* s3;
     EnemyDef* enemyDef;
     s32 pad[12];
 

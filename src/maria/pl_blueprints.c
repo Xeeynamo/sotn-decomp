@@ -280,7 +280,7 @@ void MarUpdatePlayerEntities(void) {
     s32 j;
     Entity* entity;
 
-    isPrologueTimeStopped = g_unkGraphicsStruct.unk20;
+    isPrologueTimeStopped = g_unkGraphicsStruct.unk28;
     entity = g_CurrentEntity = &g_Entities[4];
     for (i = 4; i < STAGE_ENTITY_START; i++, g_CurrentEntity++, entity++) {
         if (entity->entityId != 0) {
@@ -642,7 +642,7 @@ void MarEntitySmokePuff(Entity* self) {
         if (paramsHi == 4) {
             for (i = paramsLo * 2; i < LEN(sensors1_80154CE4); i++) {
                 if (g_Player.colWall[sensors1_80154CE4[i]].effects &
-                    (EFFECT_UNK_0002 | EFFECT_SOLID)) {
+                    EFFECT_BLOCK) {
                     break;
                 }
             }
@@ -663,7 +663,7 @@ void MarEntitySmokePuff(Entity* self) {
         if (paramsHi == 8) {
             for (i = paramsLo * 2; i < LEN(sensors2_80154CF4); i++) {
                 if (g_Player.colWall[sensors2_80154CF4[i]].effects &
-                    (EFFECT_UNK_0002 | EFFECT_SOLID)) {
+                    EFFECT_BLOCK) {
                     break;
                 }
             }
@@ -1146,21 +1146,21 @@ void MarEntityApplyMariaPowerAnim(Entity* self) {
     }
     prim = &g_PrimBuf[self->primIndex];
     prim->x0 =
-        posX + (((rcos(0x600) >> 4) * self->ext.ricMariaPower.size) >> 8);
+        posX + (((rcos(ROT(135)) >> 4) * self->ext.ricMariaPower.size) >> 8);
     prim->y0 =
-        posY - (((rsin(0x600) >> 4) * self->ext.ricMariaPower.size) >> 8);
+        posY - (((rsin(ROT(135)) >> 4) * self->ext.ricMariaPower.size) >> 8);
     prim->x1 =
-        posX + (((rcos(0x200) >> 4) * self->ext.ricMariaPower.size) >> 8);
+        posX + (((rcos(ROT(45)) >> 4) * self->ext.ricMariaPower.size) >> 8);
     prim->y1 =
-        posY - (((rsin(0x200) >> 4) * self->ext.ricMariaPower.size) >> 8);
+        posY - (((rsin(ROT(45)) >> 4) * self->ext.ricMariaPower.size) >> 8);
     prim->x2 =
-        posX + (((rcos(0xA00) >> 4) * self->ext.ricMariaPower.size) >> 8);
+        posX + (((rcos(ROT(225)) >> 4) * self->ext.ricMariaPower.size) >> 8);
     prim->y2 =
-        posY - (((rsin(0xA00) >> 4) * self->ext.ricMariaPower.size) >> 8);
+        posY - (((rsin(ROT(225)) >> 4) * self->ext.ricMariaPower.size) >> 8);
     prim->x3 =
-        posX + (((rcos(0xE00) >> 4) * self->ext.ricMariaPower.size) >> 8);
+        posX + (((rcos(ROT(315)) >> 4) * self->ext.ricMariaPower.size) >> 8);
     prim->y3 =
-        posY - (((rsin(0xE00) >> 4) * self->ext.ricMariaPower.size) >> 8);
+        posY - (((rsin(ROT(315)) >> 4) * self->ext.ricMariaPower.size) >> 8);
 }
 
 void func_maria_801623E0(Entity* self) {
@@ -2087,22 +2087,22 @@ void MarEntityHitByIce(Entity* self) {
         }
         if (PLAYER.velocityY != 0) {
             if (PLAYER.facingLeft) {
-                self->rotate = 0x100;
+                self->rotate = ROT(22.5);
             } else {
-                self->rotate = -0x100;
+                self->rotate = ROT(-22.5);
             }
         } else {
             if (PLAYER.velocityX > 0) {
-                self->rotate = 0x80;
+                self->rotate = ROT(11.25);
             } else {
-                self->rotate = 0xF80;
+                self->rotate = ROT(348.75);
             }
         }
         if (PLAYER.step == PL_S_DEAD) {
             if (PLAYER.facingLeft) {
-                self->rotate = 0x180;
+                self->rotate = ROT(33.75);
             } else {
-                self->rotate = -0x180;
+                self->rotate = ROT(-33.75);
             }
             self->ext.hitbyice.unk80 = 1;
             self->ext.hitbyice.unk82 = 0x3C;
@@ -2117,23 +2117,23 @@ void MarEntityHitByIce(Entity* self) {
         if (PLAYER.step == PL_S_DEAD) {
             if ((PLAYER.animCurFrame & 0x7FFF) == 0x21) {
                 if (PLAYER.facingLeft) {
-                    self->rotate = 0x280;
+                    self->rotate = ROT(56.25);
                 } else {
-                    self->rotate = -0x280;
+                    self->rotate = ROT(-56.25);
                 }
             }
             if ((PLAYER.animCurFrame & 0x7FFF) == 0x22) {
                 if (PLAYER.facingLeft) {
-                    self->rotate = 0x380;
+                    self->rotate = ROT(78.75);
                 } else {
-                    self->rotate = -0x380;
+                    self->rotate = ROT(-78.75);
                 }
             }
             if ((PLAYER.animCurFrame & 0x7FFF) == 0x20) {
                 if (PLAYER.facingLeft) {
-                    self->rotate = 0x180;
+                    self->rotate = ROT(33.75);
                 } else {
-                    self->rotate = -0x180;
+                    self->rotate = ROT(-33.75);
                 }
             }
         }

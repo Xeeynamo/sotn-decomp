@@ -19,7 +19,7 @@ void EntityGearVertical(Entity* self) {
         InitializeEntity(g_EInitEnvironment);
         self->zPriority = 0x6C;
         self->drawFlags = ENTITY_ROTATE;
-        self->rotate = 0x400;
+        self->rotate = ROT(90);
         // fallthrough
 
     case 1:

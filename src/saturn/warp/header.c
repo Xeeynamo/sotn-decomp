@@ -1,17 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
-#include "warp/warp.h"
-
-extern EntityEntry* g_WarpEntityUpdates[];
-extern void* g_WarpSpriteBanks[18];
-extern LayoutEntity* g_WarpLayoutHorizontal[53];
-extern LayoutEntity* g_WarpLayoutVertical[53];
-extern WarpRoomTable g_WarpRooms;
-extern SaturnLayerCompressedSizes g_WarpLayerCompressedSizes[6];
-extern SaturnLayerMapOffsets g_WarpLayerMapOffsets[6];
-extern WarpLayerProperties g_WarpLayerProperties;
-extern SaturnRoomGraphics g_WarpRoomGraphics[6];
-extern SaturnRoomPriorities g_WarpRoomPriorities[32];
+#include "warp.h"
 
 typedef struct {
     SaturnStageDataTables tables;

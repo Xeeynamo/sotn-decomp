@@ -1310,7 +1310,7 @@ void DrawHudSubweapon() {
         }
         if ((CheckEquipmentItemCount(ITEM_MYSTIC_PENDANT, EQUIP_ACCESSORY) !=
              0) &&
-            ((g_GameTimer & 0x3F) == 0x1F)) {
+            (g_GameTimer & 0x3F) == 0x1F) {
             g_Status.mp++;
         }
         if (g_Status.mp > g_Status.mpMax) {
@@ -1323,8 +1323,8 @@ void DrawHudSubweapon() {
         !(g_Player.status & PLAYER_STATUS_TRANSFORM)) {
         g_PlayerHud.g_HealingMailTimer++;
         if (g_PlayerHud.g_HealingMailTimer >= 128) {
-            g_Player.unk56 = 2;
-            g_Player.unk58 = 1;
+            g_Player.healKind = 2;
+            g_Player.healAmount = 1;
             g_PlayerHud.g_HealingMailTimer = 0;
         }
     } else {
@@ -1350,14 +1350,14 @@ void DrawHudSubweapon() {
         hpdiff = g_Status.hp - g_PlayerHud.displayHP;
         if (hpdiff > 0) {
             if (hpdiff > 10) {
-                g_PlayerHud.displayHP += (hpdiff) / 10;
+                g_PlayerHud.displayHP += hpdiff / 10;
             } else {
                 g_PlayerHud.displayHP++;
             }
         }
         if (hpdiff < 0) {
             if (hpdiff < -10) {
-                g_PlayerHud.displayHP += (hpdiff) / 10;
+                g_PlayerHud.displayHP += hpdiff / 10;
             } else {
                 g_PlayerHud.displayHP--;
             }

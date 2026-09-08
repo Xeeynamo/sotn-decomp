@@ -43,7 +43,7 @@ void CreateExplosionPuff() {
 
 void EntityExplosionPuffOpaque(Entity* self) {
     EntityConfig* obj;
-#if defined(STAGE_IS_NZ1) || defined(STAGE_IS_RLIB)
+#if defined(STAGE_IS_NZ1) || defined(STAGE_IS_RNZ1) || defined(STAGE_IS_RLIB)
     s16 rotate;
 #endif
     s32 params;
@@ -73,14 +73,14 @@ void EntityExplosionPuffOpaque(Entity* self) {
         break;
 
     case 1:
-#if defined(STAGE_IS_ARE) || defined(STAGE_IS_NZ1)
+#if defined(STAGE_IS_ARE) || defined(STAGE_IS_NZ1) || defined(STAGE_IS_RNZ1)
         if (!self->step_s) {
             self->velocityY = FIX(-0.875);
             self->step_s++;
         }
 #endif
         MoveEntity();
-#if defined(STAGE_IS_ARE) || defined(STAGE_IS_NZ1)
+#if defined(STAGE_IS_ARE) || defined(STAGE_IS_NZ1) || defined(STAGE_IS_RNZ1)
 #elif defined(STAGE_IS_NZ0) || defined(STAGE_IS_RLIB)
         self->velocityY = FIX(-1);
 #else
@@ -152,7 +152,7 @@ void EntityExplosionPuffOpaque(Entity* self) {
         break;
 
     case 4:
-#ifdef STAGE_IS_NZ1
+#if defined(STAGE_IS_NZ1) || defined(STAGE_IS_RNZ1)
         if (!self->step_s) {
             self->drawFlags = ENTITY_OPACITY;
             self->drawFlags |= ENTITY_ROTATE;

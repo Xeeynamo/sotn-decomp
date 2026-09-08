@@ -17,11 +17,11 @@ else:
 %>
 % if ovl_type == "stage" or ovl_type == "boss":
 // common
-extern RoomHeader OVL_EXPORT(rooms)[];
-extern SpriteParts* OVL_EXPORT(spriteBanks)[];
-extern u_long* OVL_EXPORT(cluts)[];
-extern RoomDef OVL_EXPORT(rooms_layers)[];
-extern GfxBank* OVL_EXPORT(gfxBanks)[];
+extern RoomHeader rooms[];
+extern SpriteParts* spriteBanks[];
+extern u_long* cluts[];
+extern RoomDef rooms_layers[];
+extern GfxBank* gfxBanks[];
 void UpdateStageEntities(void);
 % for header_sym in set(header_syms):
 % if header_sym not in common_syms:
@@ -30,7 +30,7 @@ u8* ${header_sym}[];
 %endif
 %endfor
 
-${header_type} OVL_EXPORT(Overlay) = {
+${header_type} g_Overlay = {
     .Update = ${header_syms[0]},
     .HitDetection = ${header_syms[1]},
     .UpdateRoomPosition = ${header_syms[2]},

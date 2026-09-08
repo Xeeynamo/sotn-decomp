@@ -1,29 +1,81 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+
+// It turns out that the Armor Lord and Guardian enemies share the
+// vast majority of their code. Armor Lord was decompiled first.
+// Simply #define GUARDIAN prior to #include on this file and it will
+// load up as a Guardian instead of Armor Lord.
+
 extern EInit g_EInitInteractable;
 extern EInit g_EInitArmorLord;
-extern EInit D_us_80180AE8;
-extern EInit D_us_80180AF4;
+extern EInit g_EInitArmorLordSwordShadow;
+extern EInit g_EInitArmorLordTemp;
 
+// The Armor Lord in the Outer Wall has perma-death.
 #ifdef STAGE_IS_NO1
-static s32 D_us_80182D4C = 0;
+static s32 hasBeenKilled = false;
 #endif
-static u8 D_us_80182D50[] = {5, 4, 6, 6, 5, 4, 6, 5};
-static s16 D_us_80182D58[] = {0, 40, 0, 4, 8, -4, -16, 0};
-static s16 D_us_80182D68[] = {0, 40, 8, 0};
-static s16 D_us_80182D70[] = {32, 24, 48, 40};
+
+typedef enum {
+    AL_INIT,
+    AL_1,
+    AL_WAIT_PLAYER_CLOSE,
+    AL_WALK,
+    AL_FIREBALLS,
+    AL_SWORD_HIGH,
+    AL_FIREWAVE_ATTACK,
+    AL_SHIELD,
+    AL_DIE,
+    AL_FADEAWAY
+} ArmorLordSteps;
+
+static u8 randomSteps[] = {
+    AL_SWORD_HIGH, AL_FIREBALLS, AL_FIREWAVE_ATTACK, AL_FIREWAVE_ATTACK,
+    AL_SWORD_HIGH, AL_FIREBALLS, AL_FIREWAVE_ATTACK, AL_SWORD_HIGH};
+static s16 sensors1[] = {0, 40, 0, 4, 8, -4, -16, 0};
+static s16 sensors2[] = {0, 40, 8, 0};
+static s16 attackTimers[] =
+#ifdef GUARDIAN
+    {16, 8, 32, 24};
+#else
+    {32, 24, 48, 40};
+#endif
 
 // animations
-static u8 anim0[] = {16, 1, 24, 2, 16, 1, 24, 3, 0, 0};
-static u8 anim1[] = {32, 1, 8, 4,  70, 5,  6, 6,  6, 7,  6,  8,
-                     2,  9, 2, 10, 2,  11, 1, 12, 1, 13, -1, 0};
-static u8 anim2[] = {1, 12, 1, 13, 0, 0};
-static u8 anim3[] = {8, 14, 8, 15, 16, 1, -1, 0};
-static u8 anim4[] = {40, 1,  8, 4,  2,  17, 72, 16, 1, 17, 1, 18,
-                     1,  19, 1, 20, 33, 21, 6,  22, 6, 15, 0, 0};
-static u8 anim5[] = {32, 1, 6,  15, 6,  23, 6,  24, 40, 25, 1, 26, 1,
-                     27, 1, 28, 1,  29, 64, 16, 6,  17, 32, 4, 0,  0};
-static u8 anim6[] = {8, 1, 6, 4, 97, 30, 4, 4, -1, 0};
-static u8 anim7[] = {24, 34, 24, 35, -1, 0};
+// Animation to take a single step
+static AnimateEntityFrame anim_walk_cycle[] = {
+    {16, 1}, {24, 2}, {16, 1}, {24, 3}, POSE_LOOP(0)};
+// Windup for the attack with 3 fireballs repeatedly blasting out end of sword
+static AnimateEntityFrame anim_charge_fireball[] =
+#ifdef GUARDIAN
+    {{4, 1}, {8, 4},  {38, 5}, {6, 6},  {6, 7},  {6, 8},
+     {2, 9}, {2, 10}, {2, 11}, {1, 12}, {1, 13}, POSE_END};
+#else
+    {{32, 1}, {8, 4},  {70, 5}, {6, 6},  {6, 7},  {6, 8},
+     {2, 9},  {2, 10}, {2, 11}, {1, 12}, {1, 13}, POSE_END};
+#endif
+// Rapidly twitching while fireballs float in the air in front of him
+static AnimateEntityFrame anim_fireball[] = {{1, 12}, {1, 13}, POSE_LOOP(0)};
+// Goes from kneeling pose back to standing
+static AnimateEntityFrame anim_end_fireball[] = {
+    {8, 14}, {8, 15}, {16, 1}, POSE_END};
+#ifdef GUARDIAN
+static AnimateEntityFrame anim_overhead_slice[] = {
+    {4, 1},  {8, 4},  {2, 17},  {40, 16}, {1, 17}, {1, 18},
+    {1, 19}, {1, 20}, {33, 21}, {6, 22},  {6, 15}, POSE_END};
+static AnimateEntityFrame anim_launch_flametrail[] = {
+    {4, 1},  {6, 15}, {6, 23},  {6, 24}, {24, 25}, {1, 26}, {1, 27},
+    {1, 28}, {1, 29}, {32, 16}, {6, 17}, {8, 4},   POSE_END};
+#else
+static AnimateEntityFrame anim_overhead_slice[] = {
+    {40, 1}, {8, 4},  {2, 17},  {72, 16}, {1, 17}, {1, 18},
+    {1, 19}, {1, 20}, {33, 21}, {6, 22},  {6, 15}, POSE_LOOP(0)};
+static AnimateEntityFrame anim_launch_flametrail[] = {
+    {32, 1}, {6, 15}, {6, 23},  {6, 24}, {40, 25}, {1, 26},     {1, 27},
+    {1, 28}, {1, 29}, {64, 16}, {6, 17}, {32, 4},  POSE_LOOP(0)};
+#endif
+static AnimateEntityFrame anim_create_shield[] = {
+    {8, 1}, {6, 4}, {97, 30}, {4, 4}, POSE_END};
+static AnimateEntityFrame anim_death[] = {{24, 34}, {24, 35}, POSE_END};
 
 static MATRIX armorLordColorMatrix = {{{FLT(0.0), FLT(0.0), FLT(1.0)},
                                        {FLT(0.0), FLT(0.0), FLT(0.5)},
@@ -46,10 +98,15 @@ static u16 hitboxOffXYs[][2] = {
     {-23, 5},  {-36, 6},  {-45, 6},  {-45, 6},   {-36, 6}, {-22, -6},
     {54, 6},   {39, -13}, {21, -35}, {-18, -34}, {-38, 5}, {-36, 30},
     {-29, 19}, {-14, 21}, {-20, 29}, {-7, 27},   {-36, 7}, {-11, -6},
-    {21, -3},  {47, 3},   {-22, -4}};
+    {21, -3},  {47, 3},   {-22, -4},
+// This could be an error in the splat or something
+#ifdef GUARDIAN
+    {0, 0}
+#endif
+};
 
 // Armor Lord fire wave helper
-static void func_us_801D1184(Primitive* prim) {
+static void FireWavePrimHelper1(Primitive* prim) {
     switch (prim->next->u2) {
     case 0:
         prim->tpage = 0x1A;
@@ -109,7 +166,7 @@ static void func_us_801D1184(Primitive* prim) {
 
 extern Primitive* FindFirstUnkPrim2(Primitive* prim, u8 index);
 // Armor Lord
-static void func_us_801D1388(Primitive* prim) {
+static void FireWavePrimHelper2(Primitive* prim) {
     Collider collider;
     Primitive* otherPrim;
     Entity* tempEntity;
@@ -247,7 +304,7 @@ void EntityArmorLordFireWave(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitInteractable);
-        self->ext.armorLord.unk80 = 0;
+        self->ext.armorLord.timer = 0;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x1A);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
@@ -284,14 +341,14 @@ void EntityArmorLordFireWave(Entity* self) {
         while (prim != NULL) {
             if (prim->p3 & 8) {
                 if (prim->next->g3) {
-                    func_us_801D1184(prim);
+                    FireWavePrimHelper1(prim);
                 } else {
-                    func_us_801D1388(prim);
+                    FireWavePrimHelper2(prim);
                 }
             }
             prim = prim->next;
         }
-        if (self->ext.armorLord.unk80++ > 0x100) {
+        if (self->ext.armorLord.timer++ > 0x100) {
             DestroyEntity(self);
             return;
         }
@@ -300,7 +357,7 @@ void EntityArmorLordFireWave(Entity* self) {
 
 void EntityArmorLordUnused(Entity* self) {}
 
-static void func_us_801D1A9C(void) {
+static void ArmorLordShieldHelper(void) {
     Primitive* prim;
     s32 primIndex;
 
@@ -341,7 +398,7 @@ static void func_us_801D1A9C(void) {
             break;
         }
         g_CurrentEntity->hitboxState = 1;
-        g_CurrentEntity->ext.armorLord.unk8C = 0;
+        g_CurrentEntity->ext.armorLord.timer2 = 0;
         PlaySfxPositional(SFX_MAGIC_NOISE_SWEEP);
         g_CurrentEntity->step_s++;
         break;
@@ -351,8 +408,8 @@ static void func_us_801D1A9C(void) {
         LOH(prim->next->r2)++;
         LOH(prim->next->b2) += 8;
         UnkPrimHelper(prim);
-        if (g_CurrentEntity->ext.armorLord.unk8C++ > 8) {
-            g_CurrentEntity->ext.armorLord.unk8C = 0;
+        if (g_CurrentEntity->ext.armorLord.timer2++ > 8) {
+            g_CurrentEntity->ext.armorLord.timer2 = 0;
             g_CurrentEntity->step_s++;
         }
         break;
@@ -364,7 +421,7 @@ static void func_us_801D1A9C(void) {
         prim = g_CurrentEntity->ext.armorLord.prim;
         prim->next->b3 -= 8;
         UnkPrimHelper(prim);
-        if (g_CurrentEntity->ext.armorLord.unk8C++ > 15) {
+        if (g_CurrentEntity->ext.armorLord.timer2++ > 15) {
             primIndex = g_CurrentEntity->primIndex;
             g_api.FreePrimitives(primIndex);
             g_CurrentEntity->flags &= ~FLAG_HAS_PRIMS;
@@ -373,7 +430,7 @@ static void func_us_801D1A9C(void) {
     }
 }
 
-static s32 func_us_801D1DAC(void) {
+static s32 FadeArmorLordDeath(void) {
     long unusedA, unusedB;
     SVECTOR rotA, rotB, rotC;
     VECTOR trans;
@@ -392,7 +449,7 @@ static s32 func_us_801D1DAC(void) {
 
     switch (g_CurrentEntity->step_s) {
     case 0:
-        g_CurrentEntity->ext.armorLord.unk8D = 0;
+        g_CurrentEntity->ext.armorLord.timer3 = 0;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0xE);
         if (primIndex != -1) {
             g_CurrentEntity->flags |= FLAG_HAS_PRIMS;
@@ -460,7 +517,7 @@ static s32 func_us_801D1DAC(void) {
                 prim->priority = g_CurrentEntity->zPriority + 1;
                 prim = prim->next;
             }
-            g_CurrentEntity->ext.armorLord.unk90 = prim;
+            g_CurrentEntity->ext.armorLord.deathPrim = prim;
             while (prim != NULL) {
                 prim->tpage = 0x14;
                 prim->clut = PAL_ARMOR_LORD_UNK;
@@ -485,10 +542,10 @@ static s32 func_us_801D1DAC(void) {
             return 1;
         }
 
-        g_CurrentEntity->ext.armorLord.unk86 = 0x20;
-        g_CurrentEntity->ext.armorLord.unk8A = 0;
-        g_CurrentEntity->ext.armorLord.unk88 = 0;
-        g_CurrentEntity->ext.armorLord.unk8C = 0;
+        g_CurrentEntity->ext.armorLord.fadeOutZ = 0x20;
+        g_CurrentEntity->ext.armorLord.fadeOutY2 = 0;
+        g_CurrentEntity->ext.armorLord.fadeOutY = 0;
+        g_CurrentEntity->ext.armorLord.timer2 = 0;
         g_CurrentEntity->drawFlags |= ENTITY_OPACITY;
         g_CurrentEntity->opacity = 0x80;
         g_CurrentEntity->step_s++;
@@ -505,7 +562,7 @@ static s32 func_us_801D1DAC(void) {
         if (!g_CurrentEntity->opacity) {
             g_CurrentEntity->animCurFrame = 0;
             prim->drawMode = DRAW_COLORS | DRAW_UNK02;
-            g_CurrentEntity->ext.armorLord.unk8D += 1;
+            g_CurrentEntity->ext.armorLord.timer3 += 1;
             PlaySfxPositional(SFX_FIREBALL_SHOT_A);
             g_CurrentEntity->step_s++;
         }
@@ -555,8 +612,8 @@ static s32 func_us_801D1DAC(void) {
             prim->x2 = prim->x0;
             prim->y1 -= 3;
             prim->y3 -= 1;
-            g_CurrentEntity->ext.armorLord.unk8C += 1;
-            if (g_CurrentEntity->ext.armorLord.unk8C > 5) {
+            g_CurrentEntity->ext.armorLord.timer2 += 1;
+            if (g_CurrentEntity->ext.armorLord.timer2 > 5) {
                 g_CurrentEntity->step_s++;
             }
         }
@@ -608,9 +665,9 @@ static s32 func_us_801D1DAC(void) {
             prim->x2 = prim->x0;
             prim->x1--;
             prim->x3 = prim->x1;
-            g_CurrentEntity->ext.armorLord.unk8C++;
-            if (g_CurrentEntity->ext.armorLord.unk8C > 0x14) {
-                g_CurrentEntity->ext.armorLord.unk8D = 2;
+            g_CurrentEntity->ext.armorLord.timer2++;
+            if (g_CurrentEntity->ext.armorLord.timer2 > 0x14) {
+                g_CurrentEntity->ext.armorLord.timer3 = 2;
                 g_CurrentEntity->step_s++;
             }
         }
@@ -638,8 +695,8 @@ static s32 func_us_801D1DAC(void) {
             prim->u3 = prim->u1;
             prim->x1--;
             prim->x3 = prim->x1;
-            g_CurrentEntity->ext.armorLord.unk8C++;
-            if (g_CurrentEntity->ext.armorLord.unk8C > 0x18) {
+            g_CurrentEntity->ext.armorLord.timer2++;
+            if (g_CurrentEntity->ext.armorLord.timer2 > 0x18) {
                 g_CurrentEntity->step_s++;
             }
         }
@@ -656,18 +713,18 @@ static s32 func_us_801D1DAC(void) {
             prim->b0 -= 2;
             prim = prim->next;
         }
-        if (g_CurrentEntity->ext.armorLord.unk8C++ > 0x40) {
+        if (g_CurrentEntity->ext.armorLord.timer2++ > 0x40) {
             return 1;
         }
         break;
     }
 
-    if (g_CurrentEntity->ext.armorLord.unk8D) {
-        prim = g_CurrentEntity->ext.armorLord.unk90;
+    if (g_CurrentEntity->ext.armorLord.timer3) {
+        prim = g_CurrentEntity->ext.armorLord.deathPrim;
         prim2 = prim;
-        unused = g_CurrentEntity->ext.armorLord.unk8A;
+        unused = g_CurrentEntity->ext.armorLord.fadeOutY2;
         for (i = 0; i < 8; i++) {
-            if (g_CurrentEntity->ext.armorLord.unk88 < 0x5C) {
+            if (g_CurrentEntity->ext.armorLord.fadeOutY < 0x5C) {
                 prim->v2++;
                 prim->v3 = prim->v2;
             }
@@ -680,7 +737,7 @@ static s32 func_us_801D1DAC(void) {
             }
             SetGeomScreen(0x400);
             rotC.vx = 0;
-            rotC.vy = (i * 512) + g_CurrentEntity->ext.armorLord.unk8A;
+            rotC.vy = (i * 512) + g_CurrentEntity->ext.armorLord.fadeOutY2;
             rotC.vz = 0;
             RotMatrix(&armorLordRotVec, &m);
             RotMatrixY(rotC.vy, &m);
@@ -707,10 +764,10 @@ static s32 func_us_801D1DAC(void) {
             SetGeomOffset(posX, posY);
             rotA.vx = 0;
             rotA.vy = 0;
-            rotA.vz = -g_CurrentEntity->ext.armorLord.unk86;
+            rotA.vz = -g_CurrentEntity->ext.armorLord.fadeOutZ;
             rotB.vx = 0;
-            rotB.vy = -g_CurrentEntity->ext.armorLord.unk88;
-            rotB.vz = -g_CurrentEntity->ext.armorLord.unk86;
+            rotB.vy = -g_CurrentEntity->ext.armorLord.fadeOutY;
+            rotB.vz = -g_CurrentEntity->ext.armorLord.fadeOutZ;
             prim->x0 = prim2->x1;
             prim->y0 = prim2->y1;
             prim->x2 = prim2->x3;
@@ -732,7 +789,7 @@ static s32 func_us_801D1DAC(void) {
             prim2 = prim;
             prim = prim->next;
         }
-        prim = g_CurrentEntity->ext.armorLord.unk90;
+        prim = g_CurrentEntity->ext.armorLord.deathPrim;
         prim->x0 = prim2->x1;
         prim->y0 = prim2->y1;
         prim->x2 = prim2->x3;
@@ -743,19 +800,19 @@ static s32 func_us_801D1DAC(void) {
         prim->r2 = prim2->r3;
         prim->g2 = prim2->g3;
         prim->b2 = prim2->b3;
-        g_CurrentEntity->ext.armorLord.unk8A += 4;
-        if (g_CurrentEntity->ext.armorLord.unk88 < 0x68) {
-            g_CurrentEntity->ext.armorLord.unk88 += 2;
+        g_CurrentEntity->ext.armorLord.fadeOutY2 += 4;
+        if (g_CurrentEntity->ext.armorLord.fadeOutY < 0x68) {
+            g_CurrentEntity->ext.armorLord.fadeOutY += 2;
         } else if (g_Timer % 4 == 0) {
-            g_CurrentEntity->ext.armorLord.unk86 -= 1;
-            if (g_CurrentEntity->ext.armorLord.unk86 == 0x19) {
+            g_CurrentEntity->ext.armorLord.fadeOutZ -= 1;
+            if (g_CurrentEntity->ext.armorLord.fadeOutZ == 0x19) {
                 g_CurrentEntity->step_s++;
             }
         }
-        if (g_CurrentEntity->ext.armorLord.unk8D == 2) {
-            g_CurrentEntity->ext.armorLord.unk88 += 8;
+        if (g_CurrentEntity->ext.armorLord.timer3 == 2) {
+            g_CurrentEntity->ext.armorLord.fadeOutY += 8;
         }
-        if (!g_CurrentEntity->ext.armorLord.unk86) {
+        if (!g_CurrentEntity->ext.armorLord.fadeOutZ) {
             primIndex = g_CurrentEntity->primIndex;
             g_api.FreePrimitives(primIndex);
             primIndex = g_api.AllocPrimitives(PRIM_TILE, 0x14);
@@ -778,8 +835,8 @@ static s32 func_us_801D1DAC(void) {
                     prim = prim->next;
                 }
             }
-            g_CurrentEntity->ext.armorLord.unk8D = 0;
-            g_CurrentEntity->ext.armorLord.unk8C = 0;
+            g_CurrentEntity->ext.armorLord.timer3 = 0;
+            g_CurrentEntity->ext.armorLord.timer2 = 0;
             g_CurrentEntity->step_s++;
         }
     }
@@ -787,12 +844,14 @@ static s32 func_us_801D1DAC(void) {
 }
 
 void EntityArmorLord(Entity* self) {
+    Entity* player;
+    u32 tempSide;
     Entity* tempEntity;
     s16 xDistance;
     s32 posX;
     s32 primIndex;
 
-    if ((self->flags & FLAG_DEAD) && (self->step < 8)) {
+    if ((self->flags & FLAG_DEAD) && (self->step < AL_DIE)) {
         tempEntity = self + 1;
         DestroyEntity(tempEntity);
         PlaySfxPositional(SFX_ARMOR_LORD_DEATH);
@@ -805,106 +864,146 @@ void EntityArmorLord(Entity* self) {
         self->zPriority -= 4;
         self->hitboxState = 0;
 #ifdef STAGE_IS_NO1
-        D_us_80182D4C = 1;
+        hasBeenKilled = true;
 #endif
-        SetStep(8);
+        SetStep(AL_DIE);
     }
     switch (self->step) {
-    case 0:
+    case AL_INIT:
 #ifdef STAGE_IS_NO1
-        if (D_us_80182D4C != 0) {
+        if (hasBeenKilled != false) {
             DestroyEntity(self);
             return;
         }
 #endif
         InitializeEntity(g_EInitArmorLord);
         tempEntity = self + 1;
-        CreateEntityFromEntity(E_ARMOR_LORD_UNK1, self, tempEntity);
+        CreateEntityFromEntity(E_ARMOR_LORD_SWORD_SHADOW, self, tempEntity);
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         break;
-
-    case 1:
-        if (UnkCollisionFunc3(D_us_80182D58) & 1) {
-            SetStep(2);
+    // Probably something about spawning in and making sure it's on solid
+    // ground?
+    case AL_1:
+        if (UnkCollisionFunc3(sensors1) & 1) {
+            SetStep(AL_WAIT_PLAYER_CLOSE);
         }
         break;
-
-    case 2:
+    case AL_WAIT_PLAYER_CLOSE:
+#ifdef GUARDIAN
+        if (GetDistanceToPlayerX() < 0xC0) {
+#else
         if (GetDistanceToPlayerX() < 0xA0) {
-            SetStep(3);
+#endif
+            SetStep(AL_WALK);
         }
         break;
-
-    case 3:
+    case AL_WALK:
         if (!self->step_s) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-            self->ext.armorLord.unk84 = self->facingLeft;
-            self->ext.armorLord.unk80 = D_us_80182D70[Random() & 3];
+            self->ext.armorLord.facingLeft = self->facingLeft;
+            self->ext.armorLord.timer = attackTimers[Random() & 3];
             self->step_s++;
         }
-        if (!AnimateEntity(anim0, self)) {
+        if (!AnimateEntity(anim_walk_cycle, self)) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
-        UnkCollisionFunc2(D_us_80182D68);
-        if (self->ext.armorLord.unk84) {
+        UnkCollisionFunc2(sensors2);
+        if (self->ext.armorLord.facingLeft) {
             self->velocityX = FIX(0.25);
         } else {
             self->velocityX = FIX(-0.25);
         }
         xDistance = GetDistanceToPlayerX();
+#ifdef GUARDIAN
+        if (xDistance < 0x40) {
+#else
         if (xDistance < 0x50) {
-            self->ext.armorLord.unk84 = self->facingLeft ^ 1;
+#endif
+            self->ext.armorLord.facingLeft = self->facingLeft ^ 1;
         }
         if (xDistance > 0x70) {
-            self->ext.armorLord.unk84 = self->facingLeft;
+            self->ext.armorLord.facingLeft = self->facingLeft;
         }
-        if (!--self->ext.armorLord.unk80) {
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-            SetStep(D_us_80182D50[Random() & 7]);
-        }
-        if (g_Player.status & PLAYER_STATUS_UNK400) {
-            if (!self->ext.armorLord.unk85 && (Random() & 1)) {
+#ifdef GUARDIAN
+        tempSide = (GetSideToPlayer() & 1) ^ 1;
+        if ((self->facingLeft == tempSide) &&
+            g_Player.status & (PLAYER_STATUS_SPELLCAST | PLAYER_STATUS_SUBWPN |
+                               PLAYER_STATUS_UNK400)) {
+            if (!self->ext.armorLord.didShield) {
                 self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-                SetStep(7);
+                SetStep(AL_SHIELD);
             }
-            self->ext.armorLord.unk85 = 1;
+            self->ext.armorLord.didShield = true;
         } else {
-            self->ext.armorLord.unk85 = 0;
+            self->ext.armorLord.didShield = false;
+        }
+#endif
+        if (!--self->ext.armorLord.timer) {
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+            SetStep(randomSteps[Random() & 7]);
+#ifdef GUARDIAN
+            player = &PLAYER;
+            if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
+                SetStep(AL_SWORD_HIGH);
+            }
+            if (g_Player.status & PLAYER_STATUS_UNK2000) {
+                SetStep(AL_FIREWAVE_ATTACK);
+            }
+            if (g_Player.status & PLAYER_STATUS_CROUCH) {
+                SetStep(AL_FIREWAVE_ATTACK);
+            }
+            if (g_Player.status & PLAYER_STATUS_UNK400) {
+                SetStep(AL_FIREBALLS);
+            }
+        }
+        break;
+#else
+        }
+#endif
+        // Guardian has a `break` statement so never touches this!
+        if (g_Player.status & PLAYER_STATUS_UNK400) {
+            if (!self->ext.armorLord.didShield && (Random() & 1)) {
+                self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+                SetStep(AL_SHIELD);
+            }
+            self->ext.armorLord.didShield = true;
+        } else {
+            self->ext.armorLord.didShield = false;
         }
         break;
 
-    case 4:
+    case AL_FIREBALLS:
         switch (self->step_s) {
         case 0:
-            if (!AnimateEntity(anim1, self)) {
+            if (!AnimateEntity(anim_charge_fireball, self)) {
                 self->pose = 0;
                 self->poseTimer = 0;
                 self->step_s++;
-                self->ext.armorLord.unk80 = 0x80;
+                self->ext.armorLord.timer = 0x80;
             }
             break;
 
         case 1:
-            AnimateEntity(anim2, self);
-            if (!--self->ext.armorLord.unk80) {
+            AnimateEntity(anim_fireball, self);
+            if (!--self->ext.armorLord.timer) {
                 self->pose = 0;
                 self->poseTimer = 0;
                 self->step_s++;
             }
-            if (self->ext.armorLord.unk80 % 7 == 0) {
+            if (self->ext.armorLord.timer % 7 == 0) {
                 PlaySfxPositional(SFX_WEAPON_SWISH_A);
             }
             break;
 
         case 2:
-            if (!AnimateEntity(anim3, self)) {
-                SetStep(3);
+            if (!AnimateEntity(anim_end_fireball, self)) {
+                SetStep(AL_WALK);
             }
             break;
         }
         break;
-
-    case 5:
+    // Attack where he swings his head in an arc high over his head
+    case AL_SWORD_HIGH:
         if (!self->step_s) {
             self->velocityX = 0;
             self->velocityY = 0;
@@ -915,6 +1014,7 @@ void EntityArmorLord(Entity* self) {
             PlaySfxPositional(SFX_ARMOR_LORD_ATTACK);
             g_api.func_80102CD8(4);
         }
+        // This is the part where he slides sideways as the swing happens
         if (!self->poseTimer && self->pose == 5) {
             if (self->facingLeft) {
                 self->velocityX = FIX(4.0);
@@ -922,14 +1022,14 @@ void EntityArmorLord(Entity* self) {
                 self->velocityX = FIX(-4.0);
             }
         }
-        UnkCollisionFunc2(D_us_80182D68);
+        UnkCollisionFunc2(sensors2);
         self->velocityX -= self->velocityX / 8;
-        if (!AnimateEntity(anim4, self)) {
-            SetStep(3);
+        if (!AnimateEntity(anim_overhead_slice, self)) {
+            SetStep(AL_WALK);
         }
         break;
 
-    case 6:
+    case AL_FIREWAVE_ATTACK:
         if (self->pose > 5 && !self->step_s) {
             PlaySfxPositional(SFX_FIREBALL_SHOT_A);
             PlaySfxPositional(SFX_ARMOR_LORD_FIRE_ATTACK);
@@ -943,27 +1043,27 @@ void EntityArmorLord(Entity* self) {
             }
             self->step_s++;
         }
-        if (!AnimateEntity(anim5, self)) {
-            SetStep(3);
+        if (!AnimateEntity(anim_launch_flametrail, self)) {
+            SetStep(AL_WALK);
         }
         break;
 
-    case 7:
-        if (!AnimateEntity(anim6, self)) {
+    case AL_SHIELD:
+        if (!AnimateEntity(anim_create_shield, self)) {
             self->hitboxState = 3;
             self->step_s = 3;
         }
         if (self->pose > 1) {
-            func_us_801D1A9C();
+            ArmorLordShieldHelper();
             if ((self->flags & FLAG_HAS_PRIMS) == 0) {
-                SetStep(3);
+                SetStep(AL_WALK);
             }
         }
         break;
 
-    case 8:
-        if (!AnimateEntity(anim7, self)) {
-            SetStep(9);
+    case AL_DIE:
+        if (!AnimateEntity(anim_death, self)) {
+            SetStep(AL_FADEAWAY);
         }
         if (g_Timer % 8 == 0) {
             PlaySfxPositional(SFX_EXPLODE_FAST_B);
@@ -976,8 +1076,8 @@ void EntityArmorLord(Entity* self) {
         }
         break;
 
-    case 9:
-        if (func_us_801D1DAC()) {
+    case AL_FADEAWAY:
+        if (FadeArmorLordDeath()) {
             DestroyEntity(self);
             return;
         }
@@ -1016,8 +1116,9 @@ void EntityArmorLord(Entity* self) {
 #endif
 }
 
-// Some kind of helper for the Armor Lord
-void func_us_801D348C(Entity* self) {
+// Faint blue effect when Armor Lord swings his sword.
+// Animframe 0x20 is a horizontal slice, 0x21 is vertical
+void EntityArmorLordSwordShadow(Entity* self) {
     Entity* parent;
     u8 animCurFrame;
 
@@ -1029,7 +1130,7 @@ void func_us_801D348C(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180AE8);
+        InitializeEntity(g_EInitArmorLordSwordShadow);
         self->blendMode |= BLEND_TRANSP | BLEND_ADD;
         self->drawFlags |= ENTITY_OPACITY;
         self->animCurFrame = 0;
@@ -1051,10 +1152,10 @@ void func_us_801D348C(Entity* self) {
             self->scaleX = 0x1B8;
             self->scaleY = 0x1B8;
         }
-        self->ext.armorLord.unk80 = 3;
+        self->ext.armorLord.timer = 3;
         break;
     case 2:
-        if (!--self->ext.armorLord.unk80) {
+        if (!--self->ext.armorLord.timer) {
             self->animCurFrame = 0;
         } else {
             self->opacity -= 0x20;
@@ -1064,7 +1165,7 @@ void func_us_801D348C(Entity* self) {
         }
         break;
     case 3:
-        if (!--self->ext.armorLord.unk80) {
+        if (!--self->ext.armorLord.timer) {
             self->animCurFrame = 0;
         } else {
             self->opacity -= 0x20;
@@ -1099,7 +1200,7 @@ void func_us_801D348C(Entity* self) {
 }
 
 // Another wave attack helper
-void func_us_801D3700(Entity* self) {
+void EntityArmorLordUnk2(Entity* self) {
     Primitive* prim;
     s32 height;
     s32 offsetY;
@@ -1107,7 +1208,7 @@ void func_us_801D3700(Entity* self) {
     if (!self->step) {
         height = self->hitboxHeight;
         offsetY = self->hitboxOffY;
-        InitializeEntity(D_us_80180AF4);
+        InitializeEntity(g_EInitArmorLordTemp);
         self->hitboxWidth = 8;
         self->hitboxOffX = 8;
         self->hitboxHeight = height;

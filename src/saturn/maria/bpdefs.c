@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
+#include "maria.h"
 
 u8 g_MariaEmptyAnimMarker = 0;
 
@@ -57,88 +58,9 @@ AnimationFrame g_MariaAnimSmokeDark[] = {
 
 u16 g_MariaBlueprintAuxPadding = 0;
 
-extern void func_060B099C(Entity*);
-extern void func_060AC9E0(Entity*);
-extern void func_060AD3A8(Entity*);
-extern void func_060B7A48(Entity*);
-extern void func_060B7E08(Entity*);
-extern void func_060AD7D8(Entity*);
-extern void func_060B7F50(Entity*);
-extern void func_060B8B24(Entity*);
-extern void func_060B9048(Entity*);
-extern void func_060AE014(Entity*);
-extern void func_060B868C(Entity*);
-extern void func_060B72B4(Entity*);
-extern void func_060AE2C8(Entity*);
 extern void func_060B82AC(Entity*);
-extern void func_060B776C(Entity*);
-extern void func_060AE3C0(Entity*);
-extern void func_060ACD98(Entity*);
-extern void func_060ACF8C(Entity*);
-extern void func_060AE730(Entity*);
-extern void func_060AE8D8(Entity*);
-extern void func_060AD048(Entity*);
-extern void func_060AEB18(Entity*);
-extern void func_060B805C(Entity*);
-extern void func_060AEFB4(Entity*);
-extern void func_060AF17C(Entity*);
-extern void func_060B82B8(Entity*);
-extern void func_060B668C(Entity*);
-extern void func_060B6C94(Entity*);
-extern void func_060B626C(Entity*);
-extern void func_060ACE84(Entity*);
-extern void func_060AF444(Entity*);
-extern void func_060AFBA4(Entity*);
-extern void func_060B09CC(Entity*);
-extern void func_060B1474(Entity*);
-extern void func_060B1A58(Entity*);
-extern void func_060B1E78(Entity*);
-extern void func_060B2604(Entity*);
-extern void func_060B2474(Entity*);
-extern void func_060B2FC8(Entity*);
-extern void func_060B29D4(Entity*);
-extern void func_060B2E7C(Entity*);
 extern void func_060B3678(Entity*);
-extern void func_060B30BC(Entity*);
-extern void func_060B5E28(Entity*);
-extern void func_060B5C3C(Entity*);
-extern void func_060B4CF4(Entity*);
-extern void func_060B4B80(Entity*);
-extern void func_060B44E8(Entity*);
-extern void func_060B3684(Entity*);
-extern void func_060B46BC(Entity*);
-extern void func_060B46A0(Entity*);
-extern void MariaEntityCrashReboundStoneParticles(Entity*);
-extern void func_060AC458(Entity*);
-extern void func_060AC1FC(Entity*);
-extern void func_060B382C(Entity*);
-extern void MariaEntityStopwatchCrashLightning(Entity*);
-extern void func_060B0474(Entity*);
 extern void func_060B09B4(Entity*);
-extern void func_060B85C8(Entity*);
-extern void func_060B9404(Entity*);
-extern void func_060AD0E8(Entity*);
-extern void func_060AD248(Entity*);
-extern void func_060B96C0(Entity*);
-extern void func_060BADA8(Entity*);
-extern void func_060BAFF0(Entity*);
-extern void func_060BB4AC(Entity*);
-extern void func_060BBEF8(Entity*);
-extern void func_060BC320(Entity*);
-extern void func_060BB334(Entity*);
-extern void func_060BB868(Entity*);
-extern void func_060BB724(Entity*);
-extern void func_060BCBD8(Entity*);
-extern void func_060B9B88(Entity*);
-extern void func_060B9D88(Entity*);
-extern void func_060B99A8(Entity*);
-extern void func_060BD0D0(Entity*);
-extern void func_060B18C8(Entity*);
-extern void func_060BD150(Entity*);
-extern void func_060BD244(Entity*);
-extern void func_060BCCE8(Entity*);
-extern void func_060BCFF4(Entity*);
-extern void func_060BD474(Entity*);
 
 PfnEntityUpdate g_MariaEntityUpdates[] = {
     func_060B099C,                         // 0

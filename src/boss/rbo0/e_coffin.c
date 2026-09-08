@@ -259,13 +259,13 @@ void EntityCoffin(Entity* self) {
         InitializeEntity(g_EInitInteractable);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 8);
         if (primIndex == -1) {
-            self->ext.prim = NULL;
+            self->ext.bossCoffin.prim = NULL;
             return;
         }
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
-        self->ext.prim = prim;
+        self->ext.bossCoffin.prim = prim;
 
         var_a1 = D_us_801819BC;
         for (i = 0; i < 7; i++, var_a1 += 4) {
@@ -340,7 +340,7 @@ void EntityCoffin(Entity* self) {
         break;
     }
 
-    if (self->ext.prim != NULL) {
+    if (self->ext.bossCoffin.prim != NULL) {
         spTransMatrix = (MATRIX*)SPAD(4);
         spRotVector = (SVECTOR*)SPAD(2);
         spVector = (VECTOR*)SPAD(10);
@@ -362,7 +362,7 @@ void EntityCoffin(Entity* self) {
         if (self->ext.bossCoffin.unk82) {
             var_s3 = D_us_80181B38;
         }
-        prim = self->ext.prim;
+        prim = self->ext.bossCoffin.prim;
         spDummyMatrix = (MATRIX*)SPAD(0);
         spVector2 = (VECTOR*)SPAD(1);
 

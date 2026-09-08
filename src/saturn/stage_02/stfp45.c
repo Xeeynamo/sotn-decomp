@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
-
-extern s16 g_Stage02SkeletonFrameData[367];
+#include "stage_02.h"
 
 s16* g_Stage02SkeletonFrames[31] = {
     &g_Stage02SkeletonFrameData[0],   &g_Stage02SkeletonFrameData[2],

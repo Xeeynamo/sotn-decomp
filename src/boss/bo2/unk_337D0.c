@@ -5,11 +5,11 @@ INCLUDE_ASM("boss/bo2/nonmatchings/unk_337D0", func_us_801B37D0);
 
 INCLUDE_ASM("boss/bo2/nonmatchings/unk_337D0", func_us_801B385C);
 
-INCLUDE_ASM("boss/bo2/nonmatchings/unk_337D0", EntityWerewolfAttackHitbox);
+#include "e_werewolf_attack_hitbox.h"
 
 INCLUDE_ASM("boss/bo2/nonmatchings/unk_337D0", func_us_801B503C);
 
-INCLUDE_ASM("boss/bo2/nonmatchings/unk_337D0", EntityWerewolfSpinAttackAfterImage);
+#include "e_werewolf_after_image.h"
 
 INCLUDE_ASM("boss/bo2/nonmatchings/unk_337D0", func_us_801B52FC);
 

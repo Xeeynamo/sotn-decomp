@@ -1,24 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
 #include <saturn_player.h>
-
-void func_060ADF3C(u16 params);
-void func_060AFA20(void);
-void func_060BAB00(void);
-void func_060BAD84(void);
-void func_060BAE70(void);
-void func_060B2DE4(Collider* collider);
-void func_060A7D68(s32 resetAnims, s32 arg1);
-void func_060AB44C(s32 kind, s16 invincibilityFrames);
-void func_060ADD74(void);
-void func_060AB3A8(void);
-Entity* func_060BAF44(Entity* source, u32 factoryParams, s32 arg2);
-void func_060B2E40(void);
-void func_060B9340(Entity* entity);
-void func_060AF4A0(void);
-void func_060AF654(void);
-extern u8 AlucardSpriteResourceTable[];
-extern SaturnPlayerGraphicsRecord g_AlucardPlayerGraphicsRecords[];
+#include "alucard.h"
 
 SaturnPlayerOvl ALUCARD_player = {
     func_060ADF3C,

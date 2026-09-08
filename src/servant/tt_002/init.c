@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "faerie.h"
 
-void OVL_EXPORT(ServantInit)(InitializeMode mode);
-void OVL_EXPORT(UpdateServantDefault)(Entity* self);
+void ServantInit(InitializeMode mode);
+void UpdateServantDefault(Entity* self);
 void UpdateServantUseLifeApple(Entity* self);
 void UpdateServantUseHammer(Entity* self);
 void UpdateServantUseUncurse(Entity* self);
@@ -19,14 +19,22 @@ void UpdateServantSfxPassthrough(Entity* self);
 void UpdateSubEntityUseItem(Entity* self);
 
 ServantDesc faerie_ServantDesc = {
-    OVL_EXPORT(ServantInit),         OVL_EXPORT(UpdateServantDefault),
-    UpdateServantUseLifeApple,       UpdateServantUseHammer,
-    UpdateServantUseUncurse,         UpdateServantUseAntivenom,
-    UpdateServantUseElementalResist, UpdateServantUsePotion,
-    UpdateServantAdditionalInit,     UpdateSubEntityWings,
-    UpdateServantSitOnShoulder,      UpdateServantOfferHint,
-    UpdateEntitySetRoomSpecialState, UpdateSubEntityUseLifeApple,
-    UpdateServantSfxPassthrough,     UpdateSubEntityUseItem,
+    ServantInit,
+    UpdateServantDefault,
+    UpdateServantUseLifeApple,
+    UpdateServantUseHammer,
+    UpdateServantUseUncurse,
+    UpdateServantUseAntivenom,
+    UpdateServantUseElementalResist,
+    UpdateServantUsePotion,
+    UpdateServantAdditionalInit,
+    UpdateSubEntityWings,
+    UpdateServantSitOnShoulder,
+    UpdateServantOfferHint,
+    UpdateEntitySetRoomSpecialState,
+    UpdateSubEntityUseLifeApple,
+    UpdateServantSfxPassthrough,
+    UpdateSubEntityUseItem,
 };
 
 #ifdef VERSION_PSP

@@ -1,14 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
 #include "shared_sprite_banks.h"
-
-void func_060E2A80(Entity* self);
-void func_060E32DC(Entity* self);
-void func_060E37C8(Entity* self);
-void func_060E42FC(Entity* self);
-void func_060E43F4(Entity* self);
-
-extern char g_Stage02ObtainedText[];
+#include "stage_02.h"
 
 typedef struct {
     s8 values[2];

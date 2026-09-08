@@ -568,15 +568,15 @@ void MarMain(void) {
             if (g_DebugPlayer && MarDebug()) {
                 return;
             }
-            if (g_Player.unk56) {
+            if (g_Player.healKind) {
                 // this block is exclusive to Maria
-                g_Status.hp += g_Player.unk58;
+                g_Status.hp += g_Player.healAmount;
                 func_800FE8F0();
-                func_pspeu_092BEAB0(g_Player.unk58);
+                func_pspeu_092BEAB0(g_Player.healAmount);
                 if (g_Status.hpMax < g_Status.hp) {
                     g_Status.hp = g_Status.hpMax;
                 }
-                g_Player.unk56 = 0;
+                g_Player.healKind = 0;
             }
             if (!(g_Player.timers[PL_T_INVINCIBLE_SCENE] |
                   g_Player.timers[PL_T_INVINCIBLE]) &&

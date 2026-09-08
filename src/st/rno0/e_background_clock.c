@@ -2,7 +2,7 @@
 #include "rno0.h"
 
 extern EInit g_EInitCommon;
-extern EInit RNO0_EInitSpawner;
+extern EInit g_EInitSpawner;
 
 void EntityPendulum(Entity* self) {
     s16 angle;
@@ -31,7 +31,7 @@ void EntityClockTickSound(Entity* self) {
     s16 distance;
 
     if (!self->step) {
-        InitializeEntity(RNO0_EInitSpawner);
+        InitializeEntity(g_EInitSpawner);
     }
     if ((g_Timer % 60) == 0) {
         switch (self->params) {

@@ -12,7 +12,7 @@ void EntityRoomForeground(Entity* self);
 void EntityStageNamePopup(Entity* self);
 void EntityEquipItemDrop(Entity* self);
 void EntityRelicOrb(Entity* self);
-void EntityHeartDrop(Entity* self);
+void EntityPersistentItemDrop(Entity* self);
 void EntityEnemyBlood(Entity* self);
 void EntityMessageBox(Entity* self);
 void EntityDummy(Entity* self);
@@ -51,7 +51,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityStageNamePopup,
     EntityEquipItemDrop,
     EntityRelicOrb,
-    EntityHeartDrop,
+    EntityPersistentItemDrop,
     EntityEnemyBlood,
     EntityMessageBox,
     EntityDummy,
@@ -91,11 +91,11 @@ EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0, 0, 0, 0x001};
 EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
 EInit g_EInitSlogra = {ANIMSET_OVL(3), 0, 72, 512, 0x0F3};
-EInit D_us_80180600 = {ANIMSET_OVL(3), 0, 72, 512, 0x0F4};
-EInit D_us_8018060C = {ANIMSET_OVL(3), 0, 72, 512, 0x0F5};
+EInit g_EInitSlograSpear = {ANIMSET_OVL(3), 0, 72, 512, 0x0F4};
+EInit g_EInitSlograProjectile = {ANIMSET_OVL(3), 0, 72, 512, 0x0F5};
 EInit g_EInitGaibon = {ANIMSET_OVL(4), 0, 76, 515, 0x0FE};
-EInit D_us_80180624 = {ANIMSET_DRA(0), 0, 0, 0, 0x0FF};
-EInit D_us_80180630 = {ANIMSET_DRA(0), 0, 0, 0, 0x100};
+EInit g_EInitGaibonProjectile = {ANIMSET_DRA(0), 0, 0, 0, 0x0FF};
+EInit g_EInitGaibonLargeProjectile = {ANIMSET_DRA(0), 0, 0, 0, 0x100};
 EInit D_us_8018063C = {ANIMSET_OVL(1), 0, 0, 0, 0x005};
 EInit D_us_80180648 = {ANIMSET_OVL(2), 0, 0, 0, 0x005};
 EInit g_EInitThornweed = {ANIMSET_OVL(5), 0, 76, 523, 0x09D};

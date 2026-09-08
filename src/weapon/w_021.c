@@ -225,7 +225,7 @@ static void EntityWeaponAttack(Entity* self) {
     case 0:
         SetSpriteBank1(g_Animset);
         self->animSet = ANIMSET_OVL(0x10);
-        self->palette = 0x110;
+        self->palette = PAL_UNK_110;
         self->unk5A = 100;
         if (g_HandId != 0) {
             self->palette += 0x18;
@@ -278,9 +278,9 @@ static void EntityWeaponAttack(Entity* self) {
                 g_Player.demo_timer = 20;   // stun player for 20 frames
                 return;
             }
-            if (g_Player.unk56 == 0) {
-                g_Player.unk56 = 1;
-                g_Player.unk58 = self->attack;
+            if (g_Player.healKind == 0) {
+                g_Player.healKind = 1;
+                g_Player.healAmount = self->attack;
                 DestroyEntity(self);
                 return;
             }
@@ -319,7 +319,7 @@ static void EntityWeaponAttack(Entity* self) {
         }
         g_api.CheckCollision(
             (s16)(xShift + self->posX.i.hi), self->posY.i.hi, &sp10, 0);
-        if (sp10.effects & EFFECT_UNK_0002) {
+        if (sp10.effects & EFFECT_SIDE) {
             if (xShift < 0) {
                 self->posX.i.hi += sp10.unkC;
             } else {
@@ -362,9 +362,9 @@ static void EntityWeaponAttack(Entity* self) {
                 g_Player.demo_timer = 20;
                 return;
             }
-            if (g_Player.unk56 == 0) {
-                g_Player.unk56 = 1;
-                g_Player.unk58 = self->attack;
+            if (g_Player.healKind == 0) {
+                g_Player.healKind = 1;
+                g_Player.healAmount = self->attack;
                 DestroyEntity(self);
                 return;
             }
@@ -382,9 +382,9 @@ static void EntityWeaponAttack(Entity* self) {
         return;
     case 3:
         if (--self->ext.food.timer == 0) {
-            if (g_Player.unk56 == 0) {
-                g_Player.unk56 = 1;
-                g_Player.unk58 = self->attack;
+            if (g_Player.healKind == 0) {
+                g_Player.healKind = 1;
+                g_Player.healAmount = self->attack;
                 DestroyEntity(self);
                 return;
             }
@@ -436,7 +436,7 @@ s32 func_ptr_80170004(Entity* self) {
     case 0:
         SetSpriteBank1(g_Animset);
         self->animSet = ANIMSET_OVL(0x10);
-        self->palette = 0x110;
+        self->palette = PAL_UNK_110;
         self->unk5A = 0x64;
         if (g_HandId != 0) {
             self->palette += 0x18;
@@ -490,7 +490,7 @@ s32 func_ptr_80170004(Entity* self) {
         xVar = self->posX.i.hi + xShift;
         yVar = self->posY.i.hi + yShift;
         g_api.CheckCollision(xVar, yVar, &sp10, 0);
-        if (sp10.effects & EFFECT_UNK_0002) {
+        if (sp10.effects & EFFECT_SIDE) {
             if (xShift < 0) {
                 self->posX.i.hi += sp10.unkC;
             } else {

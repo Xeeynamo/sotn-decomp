@@ -51,7 +51,7 @@ void EntityRelicContainer(Entity* self) {
     case 2:
 
         newEntity = self + 1;
-        CreateEntityFromEntity(E_HEART_DROP, self, newEntity);
+        CreateEntityFromEntity(E_PERSISTENT_ITEM_DROP, self, newEntity);
         newEntity->params = self->params;
 
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -93,7 +93,7 @@ void EntityBlueFlameTable(Entity* self) {
         break;
     case 2:
         newEntity = &self[1];
-        CreateEntityFromEntity(E_HEART_DROP, self, newEntity);
+        CreateEntityFromEntity(E_PERSISTENT_ITEM_DROP, self, newEntity);
         newEntity->params = self->params;
         self->step++;
     case 3:

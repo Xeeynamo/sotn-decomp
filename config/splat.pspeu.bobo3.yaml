@@ -80,6 +80,8 @@ segments:
       - [0x18228, data, '18228']
       - [0x1AF60, .data, bo3/e_init]
       - [0x1B190, data]
+      - [0x1B1C0, .data, bo3_psp/unk_EB90]
+      - [0x1B2E0, data]
       - [0x2E630, .data, bo3/header]
       - [0x2E660, .data, bo3/d_prize_drops]
       - [0x2E6B0, data, 2E6B0]

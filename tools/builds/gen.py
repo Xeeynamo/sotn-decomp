@@ -1,6 +1,7 @@
 # usage
 # python3 ./tools/build/gen.py && ninja
 import base64
+import json
 import pathlib
 from dataclasses import dataclass
 import ninja_syntax
@@ -615,12 +616,12 @@ def add_splat_config(nw: ninja_syntax.Writer, ver: str, file_name: str):
     # hands are built from the same src/weapon/w_XXX.c, so give each hand its
     # own object subdirectory and tell the source which hand it is compiling.
     obj_subdir = ""
-    cpp_flags = ""
+    cpp_flags = f"-I{src_path}"
     if is_psp(ver) and is_weapon(ovl_name):
         hand_id = ovl_name[1]
         weapon_id = ovl_name[3:]
         obj_subdir = f"weapon{hand_id}"
-        cpp_flags = f"-DW_{weapon_id} -DWEAPON{hand_id}"
+        cpp_flags += f" -DW_{weapon_id} -DWEAPON{hand_id}"
 
     objs = []
     if ovl_name == "main" and platform != "psp":
@@ -793,14 +794,18 @@ def add_splat_config(nw: ninja_syntax.Writer, ver: str, file_name: str):
 
 
 def add_dirt(nw: ninja_syntax.Writer, ver: str):
-    if ver != "us":
+    config = f"config/dirt.{ver}.json"
+    if not os.path.exists(config):
         return
-    dirt = build_path(ver, "dra.dirt.done")
+    with open(config) as f:
+        patches = json.load(f)
+    if not patches:
+        return
     nw.build(
         rule="dirt",
-        outputs=dirt,
-        inputs=f"config/dirt.{ver}.json",
-        implicit=build_path(ver, "DRA.BIN"),
+        outputs=build_path(ver, "dirt.done"),
+        inputs=config,
+        implicit=sorted({patch["name"] for patch in patches}),
     )
 
 

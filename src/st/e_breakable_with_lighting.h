@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-enum OVL_EXPORT(BreakableDebrisSteps) {
+enum BreakableDebrisSteps {
     INIT,
     UPDATE,
 };

@@ -175,7 +175,7 @@ RoomTeleport D_800A245C[] = {
     {16, 132, 0x0000, 0x002D, STAGE_NZ1},
 };
 
-RoomBossTeleport D_800A297C[] = {
+RoomBossTeleport g_RoomBossTeleports[] = {
     {0x20, 0x1A, STAGE_NO0, TIMEATTACK_EVENT_FIRST_MARIA_MEET, 0x64},
     {0x00, 0x01, STAGE_DRE, 0xFF, 0x3C},
     {0x01, 0x01, STAGE_DRE, 0xFF, 0x3C},
@@ -209,24 +209,23 @@ RoomBossTeleport D_800A297C[] = {
     {0x80, 0x00, 0x00, 0x00, 0x00},
 };
 
-s32 func_800F087C(u32 chunkX, u32 chunkY) {
-    RoomBossTeleport* phi_s1;
+s32 FindBossTeleport(u32 chunkX, u32 chunkY) {
+    RoomBossTeleport* ptr;
 
-    for (phi_s1 = &D_800A297C[0]; true; phi_s1++) {
-        if (phi_s1->x == 0x80) {
+    for (ptr = &g_RoomBossTeleports[0]; true; ptr++) {
+        if (ptr->x == 0x80) {
             return 0;
         }
         // All must match, otherwise we jump out.
-        if (phi_s1->x != chunkX || phi_s1->y != chunkY ||
-            phi_s1->stageId != g_StageId) {
+        if (ptr->x != chunkX || ptr->y != chunkY || ptr->stageId != g_StageId) {
             continue;
         }
 
-        if (phi_s1->eventId == TIMEATTACK_EVENT_INVALID) {
-            return phi_s1->unk10 + 2;
+        if (ptr->eventId == TIMEATTACK_EVENT_INVALID) {
+            return ptr->unk10 + 2;
         }
-        if (TimeAttackController(phi_s1->eventId, TIMEATTACK_GET_RECORD) == 0) {
-            return phi_s1->unk10 + 2;
+        if (TimeAttackController(ptr->eventId, TIMEATTACK_GET_RECORD) == 0) {
+            return ptr->unk10 + 2;
         }
     }
 }
@@ -291,7 +290,7 @@ s32 SetNextRoomToLoad(u32 x, u32 y) {
     if (g_Player.status & PLAYER_STATUS_DEAD) {
         return 0;
     }
-    res = func_800F087C(x, y);
+    res = FindBossTeleport(x, y);
     if (res) {
         return res;
     }
@@ -340,7 +339,7 @@ s32 func_800F0CD8(s32 arg0) {
     s32 temp_a0;
     s16 temp_a2;
 
-    if (!g_unkGraphicsStruct.unk18) {
+    if (!g_unkGraphicsStruct.unk20) {
         if (D_80097C98 == 2) {
             ret = SetNextRoomToLoad(g_Tilemap.left + (PLAYER.posX.i.hi >> 8),
                                     g_Tilemap.top + (PLAYER.posY.i.hi >> 8));
@@ -391,7 +390,7 @@ s32 func_800F0CD8(s32 arg0) {
             goto block_25;
         }
     }
-    if (!g_unkGraphicsStruct.unk24) {
+    if (!g_unkGraphicsStruct.unk2C) {
         if (g_PlayerY < g_Tilemap.y + 4) {
             ret = SetNextRoomToLoad(
                 g_Tilemap.left + (g_PlayerX >> 8), g_Tilemap.top - 1);
@@ -428,30 +427,30 @@ s32 func_800F0CD8(s32 arg0) {
         }
     }
 block_25:
-    if (g_PlayerX < g_Tilemap.x + g_unkGraphicsStruct.unkC) {
+    if (g_PlayerX < g_Tilemap.x + g_unkGraphicsStruct.unk14) {
         if (arg0 && g_Tilemap.hSize != 1) {
-            if (g_Tilemap.x + g_unkGraphicsStruct.unkC <
+            if (g_Tilemap.x + g_unkGraphicsStruct.unk14 <
                 g_PlayerX + D_801375A4) {
                 PLAYER.posX.i.hi += g_PlayerX + D_801375A4 -
-                                    (g_Tilemap.x + g_unkGraphicsStruct.unkC);
+                                    (g_Tilemap.x + g_unkGraphicsStruct.unk14);
             }
         }
         g_Tilemap.scrollX.i.hi = g_Tilemap.x;
-    } else if (g_Tilemap.width + g_unkGraphicsStruct.unkC - 256 < g_PlayerX) {
+    } else if (g_Tilemap.width + g_unkGraphicsStruct.unk14 - 256 < g_PlayerX) {
         if (arg0 && g_Tilemap.hSize != 1) {
             if (g_PlayerX + D_801375A4 <
-                g_Tilemap.width + g_unkGraphicsStruct.unkC - 256) {
+                g_Tilemap.width + g_unkGraphicsStruct.unk14 - 256) {
                 PLAYER.posX.i.hi +=
                     g_PlayerX + D_801375A4 -
-                    (g_Tilemap.width + g_unkGraphicsStruct.unkC - 256);
+                    (g_Tilemap.width + g_unkGraphicsStruct.unk14 - 256);
             }
         }
         g_Tilemap.scrollX.i.hi = g_Tilemap.width - 256;
     } else {
-        g_Tilemap.scrollX.i.hi = g_PlayerX - g_unkGraphicsStruct.unkC;
-        PLAYER.posX.i.hi = g_unkGraphicsStruct.unkC;
+        g_Tilemap.scrollX.i.hi = g_PlayerX - g_unkGraphicsStruct.unk14;
+        PLAYER.posX.i.hi = g_unkGraphicsStruct.unk14;
     }
-    if (g_unkGraphicsStruct.unk1C != 0) {
+    if (g_unkGraphicsStruct.unk24 != 0) {
         if (g_PlayerY < g_Tilemap.y + 140) {
             g_Tilemap.scrollY.i.hi = g_Tilemap.y + 4;
             PLAYER.posY.i.hi = g_PlayerY - g_Tilemap.scrollY.i.hi;
@@ -534,6 +533,7 @@ void func_800F1424(void) {
     }
 }
 
+// original name: PSX_POSITION_GET
 void func_800F14CC(void) {
     RoomTeleport* temp_a2;
     s32 temp_a1;
@@ -601,7 +601,7 @@ s32 func_800F16D0(void) {
     if (D_8003C730 != 0)
         return g_StageId;
     else if (D_80097C98 == 4)
-        return STAGE_TOP | STAGE_INVERTEDCASTLE_FLAG;
+        return STAGE_RTOP;
     else if (D_80097C98 == 5)
         return STAGE_TOP;
     else if (D_80097C98 == 6)
@@ -833,8 +833,8 @@ u8 D_800A2BC0[] = {
     12, 34, WALL_BOTTOM, NZ0_SECRET_FLOOR_OPEN,   RNZ0_SECRET_CEILING_OPEN,
     32, 40, WALL_RIGHT,  CHI_DEMON_SWITCH,        RCHI_DEMON_SWITCH,
     37, 41, WALL_LEFT,   CHI_SECRET_WALL_OPEN,    RCHI_SECRET_WALL_OPEN,
-    43, 11, WALL_LEFT,   NZ1_LOWER_WALL_OPEN,     RNZ1_UPPER_WALL_OPEN,
-    50, 11, WALL_RIGHT,  NZ1_UPPER_WALL_OPEN,     RNZ1_LOWER_WALL_OPEN,
+    43, 11, WALL_LEFT,   NZ1_LOWER_WALL_OPEN,     RNZ1_LOWER_WALL_OPEN,
+    50, 11, WALL_RIGHT,  NZ1_UPPER_WALL_OPEN,     RNZ1_UPPER_WALL_OPEN,
     11, 41, WALL_LEFT,   JEWEL_SWORD_ROOM_OPEN,   JEWEL_ROOM_OPEN,
     21, 22, WALL_BOTTOM, ARE_ELEVATOR_ACTIVATED,  RARE_ELEVATOR_ACTIVATED,
     20, 21, WALL_TOP,    ARE_SECRET_CEILING_OPEN, RARE_SECRET_FLOOR_OPEN,
@@ -950,7 +950,7 @@ void func_800F2120(void) {
     }
 }
 
-void func_800F223C(void) {
+static void func_800F223C(void) {
     g_StageId ^= STAGE_INVERTEDCASTLE_FLAG;
     func_800F2120();
     g_StageId ^= STAGE_INVERTEDCASTLE_FLAG;
@@ -1045,9 +1045,9 @@ void func_800F2404(s32 arg0) {
     g_CutsceneHasControl = 0;
 
     g_unkGraphicsStruct.pauseEnemies = 0;
-    g_unkGraphicsStruct.unk18 = 0;
-    g_unkGraphicsStruct.unk1C = 0;
-    g_unkGraphicsStruct.unkC = 0x80;
+    g_unkGraphicsStruct.unk20 = 0;
+    g_unkGraphicsStruct.unk24 = 0;
+    g_unkGraphicsStruct.unk14 = 0x80;
 
     if (g_unkGraphicsStruct.BottomCornerTextTimer != 0) {
         FreePrimitives(g_unkGraphicsStruct.BottomCornerTextPrims);
@@ -1060,8 +1060,8 @@ void func_800F2404(s32 arg0) {
         g_unkGraphicsStruct.D_80097428[i] = 0;
     }
 
-    g_unkGraphicsStruct.unk20 = 0;
-    g_unkGraphicsStruct.unk24 = 0;
+    g_unkGraphicsStruct.unk28 = 0;
+    g_unkGraphicsStruct.unk2C = 0;
     g_unkGraphicsStruct.D_80097448 = 0;
     g_unkGraphicsStruct.D_8009744C = 0;
     g_unkGraphicsStruct.D_80097450 = 0;
@@ -1069,8 +1069,7 @@ void func_800F2404(s32 arg0) {
 }
 
 void func_800F24F4(void) {
-    s32 x;
-    s32 y;
+    s32 x, y;
     s32 var_a0;
 
     x = g_Tilemap.left + (g_PlayerX >> 8);
@@ -1491,8 +1490,8 @@ void RunMainEngine(void) {
         D_801375AC = g_Tilemap.scrollX.i.hi;
         D_801375B0 = g_Tilemap.scrollY.i.hi;
 
-        if (g_unkGraphicsStruct.unk20 != 0) {
-            func_8010E0D0(g_unkGraphicsStruct.unk20);
+        if (g_unkGraphicsStruct.unk28 != 0) {
+            func_8010E0D0(g_unkGraphicsStruct.unk28);
             PlaySfx(SET_PAUSE_SFX_SCRIPTS);
             g_GameEngineStep = Engine_5;
             return;
@@ -1909,19 +1908,19 @@ void RunMainEngine(void) {
         UpdateFade(true);
         break;
     case 0x5:
-        if (g_unkGraphicsStruct.unk20 != 0) {
+        if (g_unkGraphicsStruct.unk28 != 0) {
             if (g_StageId != STAGE_ST0) {
                 if (g_PlayableCharacter == PLAYER_ALUCARD) {
-                    if (g_unkGraphicsStruct.unk20 == 0xFFF) {
+                    if (g_unkGraphicsStruct.unk28 == 0xFFF) {
                         EntityAlucard();
                         func_8011A870();
                         g_api.o.UpdateStageEntities();
                         if (g_pads[1].pressed & PAD_DOWN) {
-                            g_unkGraphicsStruct.unk20 = 0;
+                            g_unkGraphicsStruct.unk28 = 0;
                         }
                     } else {
-                        if (g_unkGraphicsStruct.unk20 != 0xFF) {
-                            func_8010DF70(g_unkGraphicsStruct.unk20);
+                        if (g_unkGraphicsStruct.unk28 != 0xFF) {
+                            func_8010DF70(g_unkGraphicsStruct.unk28);
                             UpdatePlayerEntities();
                         }
                         g_api.o.UpdateStageEntities();
@@ -1931,7 +1930,7 @@ void RunMainEngine(void) {
                 } else if (g_PlayableCharacter == PLAYER_RICHTER) {
                     g_api.o.UpdateStageEntities();
                     func_80102D70();
-                } else if (g_unkGraphicsStruct.unk20 == 0x100) {
+                } else if (g_unkGraphicsStruct.unk28 == 0x100) {
                     RichterUpdater = g_PlOvl.D_8013C000;
                     RichterUpdater();
                     RichterUpdater = D_psp_08CE9C48;

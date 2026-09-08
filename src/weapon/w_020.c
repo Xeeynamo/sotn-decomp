@@ -68,7 +68,7 @@ static void EntityWeaponAttack(Entity* self) {
         prim->drawMode = DRAW_HIDE;
         SetSpriteBank1(g_Animset);
         self->animSet = ANIMSET_OVL(0x10);
-        self->palette = 0x110;
+        self->palette = PAL_UNK_110;
         self->unk5A = 0x64;
         if (g_HandId != 0) {
             self->animSet += 2;
@@ -110,7 +110,7 @@ static void EntityWeaponAttack(Entity* self) {
         xVar = self->posX.i.hi + xOffset;
         yVar = self->posY.i.hi + yOffset;
         g_api.CheckCollision(xVar, yVar, &sp10, 0);
-        if (sp10.effects & EFFECT_UNK_0002) {
+        if (sp10.effects & EFFECT_SIDE) {
             if (xOffset < 0) {
                 self->posX.i.hi += sp10.unkC;
             } else {

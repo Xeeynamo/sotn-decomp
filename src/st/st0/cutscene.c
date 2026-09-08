@@ -136,7 +136,7 @@ s32 g_SkipCutscene;
 s32 g_IsCutsceneDone;
 // Not truely a global, but is named for alignment with us, which is a global
 static Dialogue g_Dialogue;
-static u8* OVL_EXPORT(cutscene_script);
+static u8* cutscene_script;
 static u8 buffer_2;
 static u8 buffer_1[32];
 static u8 cutsceneUnk3Unknown[896];
@@ -180,7 +180,7 @@ extern u32 g_CutsceneFlags;  // defined in 2A218
 extern s32 g_IsCutsceneDone; // defined in 2A218
 
 // extern data
-extern u8 OVL_EXPORT(cutscene_script)[];
+extern u8 cutscene_script[];
 
 #include "../cutscene_unk1.h"
 
@@ -291,11 +291,11 @@ void EntityCutscene(Entity* self) {
     switch (self->step) {
     case DIALOGUE_INIT:
 #ifdef VERSION_PSP
-        OVL_EXPORT(cutscene_script) = GetLangAt(
+        cutscene_script = GetLangAt(
             0, &cutscene_script_en, &cutscene_script_fr, &cutscene_script_sp,
             &cutscene_script_ge, &cutscene_script_it);
 #endif
-        if (SetCutsceneScript(OVL_EXPORT(cutscene_script))) {
+        if (SetCutsceneScript(cutscene_script)) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = g_Dialogue.primIndex[2];
             g_CutsceneFlags = CUTSCENE_FLAG_NONE;
@@ -512,7 +512,7 @@ void EntityCutscene(Entity* self) {
                     ptr <<= 4;
                     ptr |= *g_Dialogue.scriptCur++;
 #ifdef VERSION_PSP
-                    ptr += (u32)OVL_EXPORT(cutscene_script);
+                    ptr += (u32)cutscene_script;
 #endif
                     SetCutsceneEvents((u8*)ptr);
                     continue;

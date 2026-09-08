@@ -1,12 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
 #include "shared_sprite_banks.h"
-
-void func_060E2F3C(Entity* self);
-void func_060E30A4(Entity* self);
-void func_060E320C(Entity* self);
-void func_060E32F8(Entity* self);
-void func_060E3464(Entity* self);
+#include "stage_15.h"
 
 EntityEntry g_Stage15EntityEntry01 = {
     &g_SaturnSharedSpriteBank1Resource, func_060E2F3C};
@@ -14,7 +9,7 @@ EntityEntry g_Stage15EntityEntry05 = {
     &g_SaturnSharedSpriteBank5Resource, func_060E30A4};
 EntityEntry g_Stage15EntityEntry18 = {NULL, func_060E320C};
 EntityEntry g_Stage15EntityEntry19 = {
-    &g_SaturnSharedSpriteBank1Resource, func_060E32F8};
+    &g_SaturnSharedSpriteBank1Resource, EntityDestructAnim};
 EntityEntry g_Stage15GreyPuffEntityEntry = {
     &g_SaturnSharedSpriteBank5Resource, func_060E3464};
 
@@ -34,6 +29,6 @@ s16 g_Stage15GreyPuffRotations[7] = {
     0x0C, 0x14, 0x20, 0x2C, 0x34, 0x40, 0x40,
 };
 
-s16 g_Stage15ExplosionVariantSizes[7] = {
+s16 g_ExplosionVariantSizes[7] = {
     0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70,
 };

@@ -7,11 +7,9 @@
 
 #include "stage.h"
 
-#define OVL_EXPORT(x) CAT_##x
-
 #include "../pfn_entity_update.h"
 
-enum OVL_EXPORT(Palette) {
+enum Palette {
     PAL_NONE = 0,
     PAL_BREAKABLE_WALL_DEBRIS_MAIN = 0x05C,
     PAL_LIGHT_SWITCH_HIDDEN = 0x094,
@@ -50,7 +48,7 @@ enum EntityID {
     E_STAGE_NAME_POPUP,                 // EntityStageNamePopup
     E_EQUIP_ITEM_DROP,                  // EntityEquipItemDrop
     E_RELIC_ORB,                        // EntityRelicOrb
-    E_HEART_DROP,                       // EntityHeartDrop
+    E_PERSISTENT_ITEM_DROP,             // EntityPersistentItemDrop
     E_ENEMY_BLOOD,                      // EntityEnemyBlood
     E_MESSAGE_BOX,                      // EntityMessageBox
     E_DUMMY_F,                          // EntityDummy

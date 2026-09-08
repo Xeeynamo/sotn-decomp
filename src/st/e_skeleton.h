@@ -271,7 +271,7 @@ void EntitySkeletonThrownBone(Entity* self) { // Bone Projectile from Skeleton
             return;
         }
 
-        self->rotate += 0x80;
+        self->rotate += ROT(11.25);
         self->velocityY += 0x2400;
         MoveEntity();
 

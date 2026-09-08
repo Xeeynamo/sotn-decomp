@@ -209,6 +209,12 @@ void EntityToad(Entity* self) {
         break;
     case 6:
         index = self->animCurFrame - 9;
+#ifdef FIX_UB
+        // The tongue entity is spawned with step=6 and animCurFrame=0, but
+        // AnimateEntity() only starts on the 9-15 frame range once the parent
+        // reaches step 4/stepm_s 2. Avoid reading hitbox with a negative index.
+        index = CLAMP_MIN(index, 0);
+#endif
         self->hitboxOffX = tongueHitbox[index][0];
         self->hitboxWidth = tongueHitbox[index][1];
         break;

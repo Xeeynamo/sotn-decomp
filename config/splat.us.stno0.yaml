@@ -40,7 +40,7 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, .data, header]
-      - [0x778, data] # e_laydef
+      - [0x778, data]
       - [0x920, .data, e_init]
       - [0xC5C, .data, e_red_door_tiles]
       - [0xC8C, .data, e_room_bg]
@@ -70,7 +70,7 @@ segments:
       - [0x1FE8, .data, e_marionette]
       - [0x2194, .data, e_slinger]
       - [0x2268, .data, e_stone_rose]
-      - [0x234C, .data, e_ctulhu]
+      - [0x2344, .data, e_ctulhu]
       - [0x2478, .data, e_axe_knight]
       - [0x25CC, .data, e_ouija_table]
       - [0x2618, .data, e_flea_man]
@@ -80,7 +80,7 @@ segments:
       - [0x291C, data]
       - [0x48A0, .data, stage_data]
       - [0x3654C, .data, gen/sprites]
-      - [0x411B0, data]
+      - [0x411B0, .data, ctulhu_shockwave_data]
       - [0x41368, .rodata, e_explosion_puff_opaque]
       - [0x4137C, .rodata, e_red_door]
       - [0x41394, .rodata, e_collect]

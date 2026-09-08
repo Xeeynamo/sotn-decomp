@@ -3,13 +3,14 @@ package layer
 import (
 	"bytes"
 	"fmt"
+	"path/filepath"
+	"sort"
+
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/tiledef"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
-	"path/filepath"
-	"strconv"
 )
 
 type handler struct{}
@@ -49,15 +50,17 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 			tiledefAddrs[layerData.bg.Tiledef] = struct{}{}
 		}
 	}
-	addrPool := util.MergeMaps(util.SortedIndexMap(tileMaps), util.SortedIndexMap(tileDefs))
+	tilemapIndices := util.SortedIndexMap(tileMaps)
+	tiledefSuffixes := tiledefNames(tileDefs, e.OvlName)
+
 	roomLayers := make([]map[string]layerUnpacked, len(l))
 	for i, layerData := range l {
 		roomLayers[i] = make(map[string]layerUnpacked)
 		if layerData.fg != nil {
-			roomLayers[i]["fg"] = layerData.fg.unpack(e.OvlName, addrPool)
+			roomLayers[i]["fg"] = layerData.fg.unpack(e.OvlName, tilemapIndices, tiledefSuffixes)
 		}
 		if layerData.bg != nil {
-			roomLayers[i]["bg"] = layerData.bg.unpack(e.OvlName, addrPool)
+			roomLayers[i]["bg"] = layerData.bg.unpack(e.OvlName, tilemapIndices, tiledefSuffixes)
 		}
 	}
 	if err := util.WriteJsonFile(assetPath(e.AssetDir, e.Name), roomLayers); err != nil {
@@ -66,19 +69,42 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 
 	tilesDir := filepath.Dir(filepath.Join(e.AssetDir, e.Name))
 	for offset, data := range tileMaps {
-		fileName := filepath.Join(tilesDir, tilemapFileName(e.OvlName, addrPool[offset]))
+		fileName := filepath.Join(tilesDir, tilemapFileName(e.OvlName, tilemapIndices[offset]))
 		if err := util.WriteFile(fileName, data); err != nil {
 			return fmt.Errorf("unable to create %q: %w", fileName, err)
 		}
 	}
 
 	for offset, td := range tileDefs {
-		i := addrPool[offset]
-		if err := tiledef.Write(td, tilesDir, e.OvlName, strconv.Itoa(i)); err != nil {
+		if err := tiledef.Write(td, tilesDir, e.OvlName, tiledefSuffixes[offset]); err != nil {
 			return err
 		}
 	}
 	return nil
+}
+
+func tiledefNames(tileDefs map[psx.Addr]tiledef.TileDef, ovlName string) map[psx.Addr]string {
+	addrs := make([]psx.Addr, 0, len(tileDefs))
+	for addr := range tileDefs {
+		addrs = append(addrs, addr)
+	}
+	sort.Slice(addrs, func(i, j int) bool { return addrs[i] < addrs[j] })
+
+	names := make(map[psx.Addr]string, len(tileDefs))
+	nth := 0
+	for _, addr := range addrs {
+		if name, found := tiledef.WellKnownName(tileDefs[addr]); found {
+			names[addr] = name
+			continue
+		}
+		if nth == 0 {
+			names[addr] = ovlName
+		} else {
+			names[addr] = fmt.Sprintf("%s_%d", ovlName, nth)
+		}
+		nth++
+	}
+	return names
 }
 
 func (h *handler) Build(e assets.BuildArgs) error {
@@ -146,25 +172,6 @@ func tilemapFileName(ovl string, n int) string {
 	return fmt.Sprintf("%s_tilemap_%d.bin", ovl, n)
 }
 
-func tiledefFileName(ovl string, n int) string {
-	return fmt.Sprintf("%s_tiledef_%d.json", ovl, n)
-}
-
-func tiledefIndicesFileName(ovl string, n int) string {
-	return fmt.Sprintf("%s_tiledef_%d_tiles.bin", ovl, n)
-}
-
-func tiledefPagesFileName(ovl string, n int) string {
-	return fmt.Sprintf("%s_tiledef_%d_pages.bin", ovl, n)
-}
-
-func tiledefClutsFileName(ovl string, n int) string {
-	return fmt.Sprintf("%s_tiledef_%d_cluts.bin", ovl, n)
-}
-
-func tiledefCollisionsFileName(ovl string, n int) string {
-	return fmt.Sprintf("%s_tiledef_%d_cols.bin", ovl, n)
-}
 func assetPath(dir, name string) string {
 	return filepath.Join(dir, fmt.Sprintf("%s.json", name))
 }

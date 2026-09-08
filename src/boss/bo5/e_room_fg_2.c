@@ -1,8 +1,54 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "bo5.h"
 
-INCLUDE_ASM("boss/bo5/nonmatchings/e_room_fg_2", EntityCastleWall1);
+#include "../../st/e_castle_walls.h"
 
-INCLUDE_ASM("boss/bo5/nonmatchings/e_room_fg_2", EntityCastleWall2);
+void EntityStaircase(Entity* self) {
+    Primitive* prim;
+    s32 primIndex;
+    s32 offsetY;
+    Entity* playerPtr;
 
-INCLUDE_ASM("boss/bo5/nonmatchings/e_room_fg_2", EntityStaircase);
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitInteractable);
+        primIndex = g_api.AllocPrimitives(PRIM_G4, 1);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.prim = prim;
+        prim->r0 = 64;
+        prim->g0 = 56;
+        prim->b0 = 48;
+        LOW(prim->r1) = LOW(prim->r0);
+        LOW(prim->r2) = LOW(prim->r0);
+        LOW(prim->r3) = LOW(prim->r0);
+        prim->x0 = 104;
+        prim->y0 = 232;
+        prim->x1 = 256;
+        prim->y1 = 112;
+        prim->x2 = prim->x3 = 256;
+        prim->y2 = prim->y3 = 240;
+        prim->priority = 94;
+        prim->drawMode = DRAW_DEFAULT;
+    case 1:
+        g_GpuBuffers[0].draw.r0 = 16;
+        g_GpuBuffers[0].draw.g0 = 8;
+        g_GpuBuffers[0].draw.b0 = 56;
+        g_GpuBuffers[1].draw.r0 = 16;
+        g_GpuBuffers[1].draw.g0 = 8;
+        g_GpuBuffers[1].draw.b0 = 56;
+        playerPtr = &PLAYER;
+        offsetY = 128 - playerPtr->posY.i.hi;
+        if (offsetY < 0) {
+            offsetY = 0;
+        }
+        prim = self->ext.prim;
+        prim->y1 = 112 - offsetY;
+        break;
+    }
+}

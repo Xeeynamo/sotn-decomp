@@ -120,6 +120,9 @@ void EntityMedusaHeadBlue(Entity* self) {
     }
 
     self->posY.i.hi = player->posY.i.hi - 0;
+#ifdef STAGE_IS_RNZ1
+    self->posY.i.hi = (Random() & 0x7F) + 0x40;
+#endif
     side = 0;
     if (player->posX.i.hi < 0x50) {
         side = 1;
@@ -130,6 +133,9 @@ void EntityMedusaHeadBlue(Entity* self) {
             side = ((player->facingLeft + 1) & 1);
         }
     }
+#ifdef STAGE_IS_RNZ1
+    side = Random() & 1;
+#endif
     self->posX.i.hi = medusaHeadInitParams[side].posX;
     self->velocityX = medusaHeadInitParams[side].velocityX;
     self->facingLeft = medusaHeadInitParams[side].facingLeft;

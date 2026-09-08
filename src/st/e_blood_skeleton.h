@@ -122,9 +122,9 @@ void EntityBloodSkeleton(Entity* self) {
             if ((g_Timer % 3) == 0) {
                 self->ext.bloodSkeleton.timer++;
                 if (self->ext.bloodSkeleton.timer % 2) {
-                    self->rotate = 0x10;
+                    self->rotate = ROT(1.40625);
                 } else {
-                    self->rotate = -0x10;
+                    self->rotate = ROT(-1.40625);
                 }
             }
 

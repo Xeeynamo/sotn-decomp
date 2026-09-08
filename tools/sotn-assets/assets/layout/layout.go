@@ -175,83 +175,90 @@ func readEntityLayout(r io.ReadSeeker, ovlName string, off, baseAddr psx.Addr, c
 		if err := hydrateYOrderFields(l, yLayouts); err != nil {
 			return layouts{}, nil, fmt.Errorf("unable to populate YOrder field: %w", err)
 		}
-		xMerged := datarange.MergeDataRanges(xRanges)
-		yMerged := yRanges[1]
-		return l, []datarange.DataRange{
-			datarange.MergeDataRanges([]datarange.DataRange{datarange.New(off, endOfArray), yRanges[0]}),
-			datarange.MergeDataRanges([]datarange.DataRange{xMerged, yMerged}),
-		}, nil
+		// Keep block ranges separate here. Info consolidates adjacent runs while
+		// leaving gaps unclaimed; Extract does not consume the ranges.
+		laydefRange, err := datarange.Merge([]datarange.DataRange{
+			datarange.New(off, endOfArray), yRanges[0]})
+		if err != nil {
+			return layouts{}, nil, err
+		}
+		layoutRanges := append(
+			[]datarange.DataRange{laydefRange}, xRanges...)
+		return l, append(layoutRanges, yRanges[1:]...), nil
 	} else {
-		return l, []datarange.DataRange{datarange.New(off, endOfArray), datarange.MergeDataRanges(xRanges)}, nil
+		return l, append(
+			[]datarange.DataRange{datarange.New(off, endOfArray)},
+			xRanges...), nil
 	}
 }
 
-func buildEntityLayouts(fileName, outputDir, subDir string, ovlName string) error {
-	makeSortedBanks := func(banks [][]layoutEntry, sortByX bool) [][]layoutEntry {
-		var toSort []layoutEntry
-		var less func(i, j int) bool
-		if sortByX {
-			less = func(i, j int) bool {
-				return toSort[i].X < toSort[j].X
+func makeSortedBanks(banks [][]layoutEntry, sortByX bool) [][]layoutEntry {
+	var toSort []layoutEntry
+	var less func(i, j int) bool
+	if sortByX {
+		less = func(i, j int) bool { return toSort[i].X < toSort[j].X }
+	} else {
+		less = func(i, j int) bool {
+			if toSort[i].Y != toSort[j].Y {
+				return toSort[i].Y < toSort[j].Y
 			}
-		} else {
-			less = func(i, j int) bool {
-				if toSort[i].Y < toSort[j].Y {
-					return true
-				}
-				if toSort[i].Y > toSort[j].Y {
-					return false
-				}
-				if toSort[i].YOrder != nil && toSort[j].YOrder != nil {
-					return *toSort[i].YOrder < *toSort[j].YOrder
-				}
-				return i < j
+			if toSort[i].YOrder != nil && toSort[j].YOrder != nil {
+				return *toSort[i].YOrder < *toSort[j].YOrder
 			}
+			return i < j
 		}
-		sorting := make([][]layoutEntry, len(banks))
-		for i, entries := range banks {
-			sorting[i] = make([]layoutEntry, len(entries)-2)
-			if len(sorting[i]) > 0 { // do not sort if the list is empty
-				copy(sorting[i], entries[1:len(entries)-1]) // do not sort the -2 and -1 entries
-				toSort = sorting[i]
-				sort.SliceStable(toSort, less)
-			}
+	}
+	sorting := make([][]layoutEntry, len(banks))
+	for i, entries := range banks {
+		sorting[i] = make([]layoutEntry, len(entries)-2)
+		if len(sorting[i]) > 0 {
+			copy(sorting[i], entries[1:len(entries)-1])
+			toSort = sorting[i]
+			sort.SliceStable(toSort, less)
+		}
+		sorting[i] = append([]layoutEntry{entries[0]}, sorting[i]...)
+		sorting[i] = append(sorting[i], entries[len(entries)-1])
+	}
+	return sorting
+}
 
-			// put back the -2 and -1
-			sorting[i] = append([]layoutEntry{entries[0]}, sorting[i]...)
-			sorting[i] = append(sorting[i], entries[len(entries)-1])
-		}
-		return sorting
+func writeBankEntries(sb *strings.Builder, entries []layoutEntry) error {
+	if len(entries) < 2 || entries[0].X != -2 || entries[0].Y != -2 {
+		return fmt.Errorf("layout entity bank needs an X:-2 and Y:-2 entry at the beginning")
 	}
-	writeLayoutEntries := func(sb *strings.Builder, el layouts, sortByX bool) error {
-		banks := makeSortedBanks(el.Entities, sortByX)
-		nWritten := 0
-		for i, entries := range banks {
-			// do a sanity check on the entries as we do not want to build something that will cause the game to crash
-			if entries[0].X != -2 || entries[0].Y != -2 {
-				return fmt.Errorf("layout entity bank %d needs to have a X:-2 and Y:-2 entry at the beginning", i)
-			}
-			lastEntry := entries[len(entries)-1]
-			if lastEntry.X != -1 || lastEntry.Y != -1 {
-				return fmt.Errorf("layout entity bank %d needs to have a X:-1 and Y:-1 entry at the end", i)
-			}
-			roomNum := indexOf(el.Indices, i)
-			if roomNum < 0 {
-				sb.WriteString(fmt.Sprintf("// Offset %d, No Room Found\n", nWritten))
-			} else {
-				sb.WriteString(fmt.Sprintf("// Offset %d, Room 0x%02X\n", nWritten, roomNum)) //label each block with offsets
-			}
-			for _, e := range entries {
-				sb.WriteString(fmt.Sprintf("    0x%04X, 0x%04X, %s | 0x%04X, 0x%04X, 0x%04X,\n",
-					uint16(e.X), uint16(e.Y), e.ID, int(e.Flags)<<8, int(e.Slot)|(int(e.SpawnID)<<8), e.Params))
-			}
-			nWritten += len(entries)
-		}
-		if !sortByX && nWritten%2 != 0 {
-			sb.WriteString("    0, // padding\n")
-		}
-		return nil
+	lastEntry := entries[len(entries)-1]
+	if lastEntry.X != -1 || lastEntry.Y != -1 {
+		return fmt.Errorf("layout entity bank needs an X:-1 and Y:-1 entry at the end")
 	}
+	for _, e := range entries {
+		sb.WriteString(fmt.Sprintf("    0x%04X, 0x%04X, %s | 0x%04X, 0x%04X, 0x%04X,\n",
+			uint16(e.X), uint16(e.Y), e.ID, int(e.Flags)<<8, int(e.Slot)|(int(e.SpawnID)<<8), e.Params))
+	}
+	return nil
+}
+
+func writeLayoutEntries(sb *strings.Builder, el layouts, sortByX bool) error {
+	banks := makeSortedBanks(el.Entities, sortByX)
+	nWritten := 0
+	for i, entries := range banks {
+		roomNum := indexOf(el.Indices, i)
+		if roomNum < 0 {
+			sb.WriteString(fmt.Sprintf("// Offset %d, No Room Found\n", nWritten))
+		} else {
+			sb.WriteString(fmt.Sprintf("// Offset %d, Room 0x%02X\n", nWritten, roomNum))
+		}
+		if err := writeBankEntries(sb, entries); err != nil {
+			return fmt.Errorf("layout entity bank %d: %w", i, err)
+		}
+		nWritten += len(entries)
+	}
+	if !sortByX && nWritten%2 != 0 {
+		sb.WriteString("    0, // padding\n")
+	}
+	return nil
+}
+
+func buildEntityLayouts(fileName, outputDir, subDir, ovlHeader string) error {
 
 	data, err := os.ReadFile(fileName)
 	if err != nil {
@@ -274,12 +281,6 @@ func buildEntityLayouts(fileName, outputDir, subDir string, ovlName string) erro
 		offsetCur += len(el.Entities[i]) * 5
 	}
 
-	ovlHeaderLoc := fmt.Sprintf("../%s.h", ovlName)
-	if subDir != "" {
-		// Look back further if in version specific subdirectory
-		ovlHeaderLoc = "../" + ovlHeaderLoc
-	}
-
 	laydefFile := strings.Builder{}
 	laydefFile.WriteString("#include <stage.h>\n\n")
 	laydefFile.WriteString("#include \"common.h\"\n\n")
@@ -298,7 +299,7 @@ func buildEntityLayouts(fileName, outputDir, subDir string, ovlName string) erro
 	laydefFile.WriteString(fmt.Sprintf("};\n"))
 
 	layoutFile := strings.Builder{}
-	layoutFile.WriteString(fmt.Sprintf("#include \"%s\"\n\n", ovlHeaderLoc))
+	layoutFile.WriteString(fmt.Sprintf("#include %s\n\n", ovlHeader))
 	layoutFile.WriteString("// clang-format off\n")
 	layoutFile.WriteString(fmt.Sprintf("u16 %s_x[] = {\n", symbolName))
 	if err := writeLayoutEntries(&layoutFile, el, true); err != nil {

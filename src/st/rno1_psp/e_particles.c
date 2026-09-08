@@ -107,12 +107,12 @@ void EntityEnemyBlood(Entity* self) {
                 }
 
                 if (self->hitFlags) {
-                    if (!g_Player.unk56) {
-                        g_Player.unk56 = 1;
-                        g_Player.unk58 = 8;
+                    if (!g_Player.healKind) {
+                        g_Player.healKind = 1;
+                        g_Player.healAmount = 8;
                         if (g_api.CheckEquipmentItemCount(
                                 ITEM_BLOODSTONE, EQUIP_ACCESSORY)) {
-                            g_Player.unk58 *= 2;
+                            g_Player.healAmount *= 2;
                         }
                     }
                     g_Player.unk10++;

@@ -31,7 +31,7 @@ void BoxPuzzleFloorButton(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
-        self->ext.prim = prim;
+        self->ext.nz0311c0.prim = prim;
         prim->type = PRIM_SPRT;
         prim->tpage = 0xF;
         prim->clut = 9;
@@ -68,7 +68,7 @@ void BoxPuzzleFloorButton(Entity* self) {
         }
         break;
     }
-    prim = self->ext.prim;
+    prim = self->ext.nz0311c0.prim;
     prim->x0 = self->posX.i.hi - 8;
     prim->y0 = self->posY.i.hi - 8;
 }
@@ -97,7 +97,7 @@ void BoxPuzzleSpikes(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
-        self->ext.prim = prim;
+        self->ext.nz0311c0.prim = prim;
         prim->type = PRIM_SPRT;
         prim->tpage = 0xF;
         prim->clut = 9;
@@ -139,7 +139,7 @@ void BoxPuzzleSpikes(Entity* self) {
         }
     }
 
-    prim = self->ext.prim;
+    prim = self->ext.nz0311c0.prim;
     prim->x0 = self->posX.i.hi - 16;
     prim->y0 = self->posY.i.hi - 16;
     temp = 480 - (g_Tilemap.scrollY.i.hi + self->posY.i.hi);
@@ -169,7 +169,7 @@ void EntityMovableBox(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
-        self->ext.prim = prim;
+        self->ext.nz0311c0.prim = prim;
         prim->type = PRIM_SPRT;
         prim->tpage = 0xF;
         prim->clut = 9;
@@ -219,7 +219,7 @@ void EntityMovableBox(Entity* self) {
         }
         break;
     }
-    prim = self->ext.prim;
+    prim = self->ext.nz0311c0.prim;
     prim->x0 = self->posX.i.hi - 16;
     prim->y0 = self->posY.i.hi - 16;
 }

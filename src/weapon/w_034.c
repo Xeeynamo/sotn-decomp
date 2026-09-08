@@ -114,7 +114,7 @@ static void EntityWeaponAttack(Entity* self) {
     if (self->step == 0) {
         SetSpriteBank1(g_Animset);
         self->animSet = ANIMSET_OVL(16);
-        self->palette = 0x110;
+        self->palette = PAL_UNK_110;
         self->unk5A = 0x64;
         if (g_HandId != 0) {
             self->animSet += 2;
@@ -161,7 +161,7 @@ static s32 func_ptr_80170004(Entity* self) {
         SetSpriteBank1(g_Animset);
         self->animSet = ANIMSET_OVL(0x10);
         self->unk5A = 0x64;
-        self->palette = 0x110;
+        self->palette = PAL_UNK_110;
         if (g_HandId != 0) {
             self->unk5A = 0x66;
             self->animSet += 2;
@@ -203,7 +203,7 @@ static s32 func_ptr_80170004(Entity* self) {
         self->step++;
         break;
     case 1:
-        self->rotate += 0x200;
+        self->rotate += ROT(45);
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         self->velocityX += self->ext.sword.unk7C;
@@ -216,7 +216,7 @@ static s32 func_ptr_80170004(Entity* self) {
         }
         break;
     case 2:
-        self->rotate += 0x200;
+        self->rotate += ROT(45);
         var_s1 = self->ext.sword.unk84;
         self->ext.sword.unk84 += 0x10;
         xDist = abs((PLAYER.posX.i.hi + PLAYER.hitboxOffX) - self->posX.i.hi);

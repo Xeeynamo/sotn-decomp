@@ -66,7 +66,7 @@ void EntityCandleTable(Entity* self) {
         newEntity = self + 1;
         // I believe this entity to be the stone mask that drops from the candle
         // 0xC is used for other things as well, so I kept the name for now
-        CreateEntityFromEntity(E_HEART_DROP, self, newEntity);
+        CreateEntityFromEntity(E_PERSISTENT_ITEM_DROP, self, newEntity);
         newEntity->params = 1;
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {

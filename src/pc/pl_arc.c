@@ -5,12 +5,31 @@
 #include <stdlib.h>
 #include <string.h>
 
+static const int BaseAddr = 0x8013C000;
 u8* g_PlOvlSpritesheet[256];
+u8** g_PlOvlAluBatSpritesheet[1];
+static u8* g_batSpritesheetData[256];
 static u8* sprite_data = NULL;
 
-void InitPlayerArc(const struct FileUseContent* file) {
-    int i;
+// Reads a table of PSX pointers starting at byte offset `tableOffset` and
+// rebases each one into `sprite_data`, stopping at the first invalid entry.
+static void ParseSpritesheetTable(
+    size_t tableOffset, u32 fileLength, u8** dst, int dstLen) {
+    u32* ptr = (u32*)(sprite_data + tableOffset);
+    for (int i = 0; i < dstLen; i++) {
+        u32 psxPtr = *ptr++;
+        if (psxPtr < BaseAddr) { // validate PTR correctness
+            break;
+        }
+        size_t dataPos = psxPtr - BaseAddr;
+        if (dataPos >= fileLength) { // validate data correctness
+            break;
+        }
+        dst[i] = sprite_data + dataPos;
+    }
+}
 
+void InitPlayerArc(const struct FileUseContent* file) {
     if (sprite_data) {
         free(sprite_data);
     }
@@ -21,21 +40,16 @@ void InitPlayerArc(const struct FileUseContent* file) {
 
     // clean-up previously allocated data, only useful for memory sanity checks
     memset(g_PlOvlSpritesheet, 0, sizeof(g_PlOvlSpritesheet));
+    memset(g_batSpritesheetData, 0, sizeof(g_batSpritesheetData));
 
-    const u32 BaseAddr = 0x8013C000;
-    u32* ptr = (u32*)sprite_data + 8;
-    for (i = 0; i < LEN(g_PlOvlSpritesheet); i++) {
-        u32 psxPtr = *ptr++;
-        // assume PSX ptr to not be in an unexptected range
-        if (psxPtr < BaseAddr) {
-            break;
-        }
-
-        size_t dataPos = psxPtr - BaseAddr;
-        if (dataPos >= file->length) {
-            break;
-        }
-
-        g_PlOvlSpritesheet[i] = sprite_data + dataPos;
+    u32* header = (u32*)sprite_data;
+    u32 batTablePtr = header[1];
+    if (batTablePtr >= BaseAddr && batTablePtr - BaseAddr < file->length) {
+        ParseSpritesheetTable(batTablePtr - BaseAddr, file->length,
+                              g_batSpritesheetData, LEN(g_batSpritesheetData));
     }
+    g_PlOvlAluBatSpritesheet[0] = g_batSpritesheetData;
+
+    ParseSpritesheetTable(8 * sizeof(u32), file->length, g_PlOvlSpritesheet,
+                          LEN(g_PlOvlSpritesheet));
 }

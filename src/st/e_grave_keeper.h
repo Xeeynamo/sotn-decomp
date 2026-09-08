@@ -35,7 +35,7 @@ static s16 hitbox_data[][4] = {
     // anim frame 10
     {-18, 16, 8, 4}};
 
-typedef enum GraveKeeperStep {
+typedef enum {
     GRAVE_KEEPER_INIT = 0,
     GRAVE_KEEPER_CHECK_SENSORS = 1,
     GRAVE_KEEPER_WAIT_FOR_AGGRO = 2,
@@ -50,7 +50,7 @@ typedef enum GraveKeeperStep {
     GRAVE_KEEPER_GROUND_KICK = 11,
     GRAVE_KEEPER_DEATH = 12,
     GRAVE_KEEPER_DUCK = 13
-};
+} GraveKeeperStep;
 
 // Spawns dust at the Grave Keeper's feet in various scenarios
 // such as standing up from idle, dashing, and landing after jumping

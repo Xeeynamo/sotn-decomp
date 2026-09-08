@@ -319,7 +319,7 @@ void EntitySnowflakes(Entity* self) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            self->ext.prim = prim;
+            self->ext.lava.prim = prim;
             while (prim != NULL) {
                 self->ext.lava.emberPrim = prim;
                 prim = prim->next;
@@ -332,7 +332,7 @@ void EntitySnowflakes(Entity* self) {
     case 1:
         // Spawn the snowflakes at various random positions
         if (!(g_Timer % 7)) {
-            prim = self->ext.prim;
+            prim = self->ext.lava.prim;
             prim = FindFirstUnkPrim(prim);
 #ifdef VERSION_PSP
             if (prim != NULL) {
@@ -354,7 +354,7 @@ void EntitySnowflakes(Entity* self) {
         }
 
         // Snowflakes rise up and change colour and eventually melt to nothing
-        prim = self->ext.prim;
+        prim = self->ext.lava.prim;
         while (prim != NULL) {
             if (prim->p3) {
                 FadeOutSnowflake(prim);

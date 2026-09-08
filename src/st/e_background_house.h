@@ -7,6 +7,14 @@ extern s32 E_ID(3D_BACKGROUND_HOUSE);
 
 extern EInit g_EInitInteractable;
 
+#if defined(STAGE_IS_RNO2)
+#define BG_HOUSE_GEOM_Y 0x30
+#define BG_HOUSE_ROT_Z ROT(180)
+#else
+#define BG_HOUSE_GEOM_Y 0xC0
+#define BG_HOUSE_ROT_Z 0
+#endif
+
 static SVECTOR v0 = {-0x3C, -0x9B, -0x78};
 static SVECTOR v1 = {0x3C, -0x9B, -0x78};
 static SVECTOR v2 = {-0x3C, 0x00, -0x78};
@@ -26,23 +34,39 @@ static SVECTOR v15 = {0x3C, -0x9B, -0x3C};
 static SVECTOR v16 = {-0x3C, -0x9B, 0x3C};
 static SVECTOR v17 = {-0x3C, -0x9B, 0x00};
 static SVECTOR v18 = {-0x3C, -0x9B, -0x3C};
-static SVECTOR* vertices[] = {
+static SVECTOR* backgroundHouseVertices[] = {
     &v0,  &v1,  &v2,  &v3,  &v4,  &v5,  &v6,  &v7,  &v8,  &v9,
     &v10, &v11, &v12, &v13, &v14, &v15, &v16, &v17, &v18,
 };
-static u8 facadeIndices[] = {0, 1, 2, 3, 8, 4, 5, 6, 7, 9};
-static u8 sideIndices[] = {1, 4, 3, 6, 5, 0, 7, 2};
-static u8 roofIndices[] = {
+static u8 backgroundHouseFacadeIndices[] = {0, 1, 2, 3, 8, 4, 5, 6, 7, 9};
+static u8 backgroundHouseSideIndices[] = {1, 4, 3, 6, 5, 0, 7, 2};
+static u8 backgroundHouseRoofIndices[] = {
     8, 9, 1, 4, 8, 10, 1, 13, 10, 11, 13, 14, 11, 12, 14, 15, 12, 9, 15, 4,
     9, 8, 5, 0, 9, 12, 5, 18, 12, 11, 18, 17, 11, 10, 17, 16, 10, 8, 16, 0,
 };
 // clang-format off
-#if defined(STAGE_IS_NO2)
-static s16 D_us_80180CD8[] = {
+#if defined(STAGE_IS_NO2) || defined(STAGE_IS_RNO2)
+static s16 backgroundHouseModelData[] = {
     0x000, 0x100, 0x046, 0x070, 0x090, 0x045, 0x080,
     0x400, 0x300, 0x04F, 0x0F0, 0x080, 0x04E, 0x070,
 };
-static s16 D_us_80180CF4[] = {
+#if defined(STAGE_IS_RNO2)
+static s16 backgroundHouseSpawns[] = {
+    0x5A0, 0x020, 0,
+    0x4C0, 0x020, 0,
+    0x380, 0x020, 0,
+    0x280, 0x020, 0,
+    0x140, 0x020, 0,
+    0x060, 0x020, 0,
+    0x500, 0x020, 1,
+    0x400, 0x020, 1,
+    0x300, 0x020, 1,
+    0x200, 0x020, 1,
+    0x100, 0x020, 1,
+    -1,
+};
+#else
+static s16 backgroundHouseSpawns[] = {
     0x060, 0x3E0, 0,
     0x140, 0x3E0, 0,
     0x280, 0x3E0, 0,
@@ -56,12 +80,13 @@ static s16 D_us_80180CF4[] = {
     0x500, 0x3E0, 1,
     -1,
 };
+#endif
 #elif defined(STAGE_IS_DRE)
-static s16 D_us_80180CD8[] = {
+static s16 backgroundHouseModelData[] = {
     0x000, 0x100, 0x004, 0x070, 0x090, 0x003, 0x080,
     0x400, 0x300, 0x004, 0x0F0, 0x080, 0x003, 0x070,
 };
-static s16 D_us_80180CF4[] = {
+static s16 backgroundHouseSpawns[] = {
     0x020, 0x0E0, 0,
     0x0F0, 0x0E0, 0,
     0x1C0, 0x0E0, 0,
@@ -72,7 +97,7 @@ static s16 D_us_80180CF4[] = {
 #endif
 // clang-format on
 
-static Primitive* DrawFacade(Primitive* prim, u8* indices, u16* arg2) {
+static Primitive* DrawFacade(Primitive* prim, u8* indices, u16* renderData) {
     s32 p0;
     s32 p1;
     s32 p2;
@@ -91,7 +116,7 @@ static Primitive* DrawFacade(Primitive* prim, u8* indices, u16* arg2) {
     p4 = *SPAD(indices[4]);
 
     prim->tpage = 0xF;
-    prim->clut = arg2[0];
+    prim->clut = renderData[0];
     prim->u0 = prim->u2 = 4;
     prim->u1 = prim->u3 = 0x7C;
     prim->v0 = prim->v1 = 3;
@@ -102,14 +127,14 @@ static Primitive* DrawFacade(Primitive* prim, u8* indices, u16* arg2) {
     LOW(prim->x3) = p3;
     prim->drawMode = DRAW_UNK02;
     prim->drawMode |= DRAW_COLORS;
-    prim->r0 = prim->g0 = prim->b0 = arg2[1];
+    prim->r0 = prim->g0 = prim->b0 = renderData[1];
     LOW(prim->r1) = LOW(prim->r0);
     LOW(prim->r2) = LOW(prim->r0);
     LOW(prim->r3) = LOW(prim->r0);
     prim = prim->next;
 
     prim->tpage = 0xF;
-    prim->clut = arg2[0];
+    prim->clut = renderData[0];
     prim->u0 = 0xFE;
     prim->u1 = 0xC2;
     prim->u2 = 0xC2;
@@ -127,7 +152,7 @@ static Primitive* DrawFacade(Primitive* prim, u8* indices, u16* arg2) {
 
     prim->drawMode = DRAW_UNK02;
     prim->drawMode |= DRAW_COLORS;
-    prim->r0 = prim->g0 = prim->b0 = arg2[1];
+    prim->r0 = prim->g0 = prim->b0 = renderData[1];
     LOW(prim->r1) = LOW(prim->r0);
     LOW(prim->r2) = LOW(prim->r0);
     LOW(prim->r3) = LOW(prim->r0);
@@ -135,7 +160,7 @@ static Primitive* DrawFacade(Primitive* prim, u8* indices, u16* arg2) {
     return prim;
 }
 
-static Primitive* DrawSides(Primitive* prim, u8* indices, u16* arg2) {
+static Primitive* DrawSides(Primitive* prim, u8* indices, u16* renderData) {
     s32 p0;
     s32 p1;
     s32 p2;
@@ -156,7 +181,7 @@ static Primitive* DrawSides(Primitive* prim, u8* indices, u16* arg2) {
     p3 = *SPAD(indices[3]);
 
     prim->tpage = 0xF;
-    prim->clut = arg2[0];
+    prim->clut = renderData[0];
     prim->u0 = prim->u2 = 4;
     prim->u1 = prim->u3 = 0x7C;
     prim->v0 = prim->v1 = 3;
@@ -173,14 +198,14 @@ static Primitive* DrawSides(Primitive* prim, u8* indices, u16* arg2) {
     prim->y3 = avg4;
     prim->drawMode = DRAW_UNK02;
     prim->drawMode |= DRAW_COLORS;
-    prim->r0 = prim->g0 = prim->b0 = arg2[2];
+    prim->r0 = prim->g0 = prim->b0 = renderData[2];
     LOW(prim->r1) = LOW(prim->r0);
     LOW(prim->r2) = LOW(prim->r0);
     LOW(prim->r3) = LOW(prim->r0);
     prim = prim->next;
 
     prim->tpage = 0xF;
-    prim->clut = arg2[0];
+    prim->clut = renderData[0];
     prim->u0 = prim->u2 = 4;
     prim->u1 = prim->u3 = 0x7C;
     prim->v0 = prim->v1 = 3;
@@ -193,7 +218,7 @@ static Primitive* DrawSides(Primitive* prim, u8* indices, u16* arg2) {
     prim->y2 = avg4;
     prim->drawMode = DRAW_UNK02;
     prim->drawMode |= DRAW_COLORS;
-    prim->r0 = prim->g0 = prim->b0 = arg2[2];
+    prim->r0 = prim->g0 = prim->b0 = renderData[2];
     LOW(prim->r1) = LOW(prim->r0);
     LOW(prim->r2) = LOW(prim->r0);
     LOW(prim->r3) = LOW(prim->r0);
@@ -201,7 +226,7 @@ static Primitive* DrawSides(Primitive* prim, u8* indices, u16* arg2) {
     return prim;
 }
 
-static Primitive* DrawRoof(Primitive* prim, u8* indices, u16* arg2) {
+static Primitive* DrawRoof(Primitive* prim, u8* indices, u16* renderData) {
     s32 p0;
     s32 p1;
     s32 p2;
@@ -218,7 +243,7 @@ static Primitive* DrawRoof(Primitive* prim, u8* indices, u16* arg2) {
     indices += 4;
     for (i = 0; i < 4; i++) {
         prim->tpage = 0xF;
-        prim->clut = arg2[0];
+        prim->clut = renderData[0];
         prim->u0 = prim->u2 = 0x82;
         prim->u1 = prim->u3 = 0xBE;
         prim->v0 = prim->v1 = 0x6C;
@@ -230,7 +255,7 @@ static Primitive* DrawRoof(Primitive* prim, u8* indices, u16* arg2) {
         indices += 4;
         prim->drawMode = DRAW_UNK02;
         prim->drawMode |= DRAW_COLORS;
-        prim->r0 = prim->g0 = prim->b0 = arg2[1];
+        prim->r0 = prim->g0 = prim->b0 = renderData[1];
         LOW(prim->r1) = LOW(prim->r0);
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
@@ -244,7 +269,7 @@ void Entity3DHouseSpawner(Entity* self) {
     s16* ptr;
 
     if (!self->step) {
-        ptr = D_us_80180CF4;
+        ptr = backgroundHouseSpawns;
         while (*ptr != -1) {
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity == NULL) {
@@ -314,22 +339,22 @@ void Entity3DBackgroundHouse(Entity* self) {
         }
         prim = self->ext.bghouse.prim;
         SetGeomScreen(0x400);
-        SetGeomOffset(128, 192);
+        SetGeomOffset(0x80, BG_HOUSE_GEOM_Y);
         // this is a 7-by-X array, so params picks a set of 7 values
-        modelData = D_us_80180CD8;
+        modelData = backgroundHouseModelData;
         // Params is 0 or 1. 0 if house is straight, 1 if rotated 90 degree.
         modelData += self->params * 7;
         rot.vx = 0;
         rot.vy = *modelData++;
-        rot.vz = 0;
+        rot.vz = BG_HOUSE_ROT_Z;
         RotMatrix(&rot, &m);
         trans.vx = self->posX.i.hi - 0x80;
-        trans.vy = self->posY.i.hi - 0xC0;
+        trans.vy = self->posY.i.hi - BG_HOUSE_GEOM_Y;
         trans.vz = *modelData++ + 0x400;
         TransMatrix(&m, &trans);
         SetRotMatrix(&m);
         SetTransMatrix(&m);
-        vPtr = vertices;
+        vPtr = backgroundHouseVertices;
         scratchpad = SPAD(0);
         for (i = 0; i < 6; i++) {
             RotTransPers3(vPtr[0], vPtr[1], vPtr[2], &scratchpad[0],
@@ -339,18 +364,18 @@ void Entity3DBackgroundHouse(Entity* self) {
         }
         RotTransPers(vPtr[0], (long*)scratchpad, &p, &flag);
         prim = self->ext.bghouse.prim;
-        iPtr = facadeIndices;
+        iPtr = backgroundHouseFacadeIndices;
         for (i = 0; i < 2; i++) {
             prim = DrawFacade(prim, iPtr, (u16*)modelData);
             iPtr += 5;
         }
-        iPtr = sideIndices;
+        iPtr = backgroundHouseSideIndices;
         for (i = 0; i < 2; i++) {
             prim = DrawSides(prim, iPtr, (u16*)modelData);
             iPtr += 4;
         }
         modelData += 3;
-        iPtr = roofIndices;
+        iPtr = backgroundHouseRoofIndices;
         for (i = 0; i < 2; i++) {
             prim = DrawRoof(prim, iPtr, (u16*)modelData);
             iPtr += 20;
@@ -362,3 +387,6 @@ void Entity3DBackgroundHouse(Entity* self) {
         break;
     }
 }
+
+#undef BG_HOUSE_GEOM_Y
+#undef BG_HOUSE_ROT_Z

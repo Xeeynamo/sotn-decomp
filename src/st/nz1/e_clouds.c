@@ -37,7 +37,7 @@ void EntityClouds(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
-        self->ext.prim = prim;
+        self->ext.clockTowerClouds.prim = prim;
         i = 0;
         while (prim != NULL) {
             i &= 3;
@@ -85,7 +85,7 @@ void EntityClouds(Entity* self) {
         }
         var_v1[0][0] = 0x7FFF;
 
-        prim = self->ext.prim;
+        prim = self->ext.clockTowerClouds.prim;
 
         var_v1 = (CloudData*)SP(0);
 

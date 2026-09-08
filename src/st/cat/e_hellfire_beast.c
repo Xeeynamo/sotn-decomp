@@ -880,7 +880,8 @@ void EntityHellfireBeastFlamePillarAnimation(Entity* self) {
         DestroyEntity(self);
     }
 
-#ifdef VERSION_PSP
+#if defined(VERSION_PSP) || defined(FIX_UB)
+    // Non-PSX versions fix a null pointer here
     if (self->ext.hellfireBeastThorsHammer.entity != NULL &&
         !self->ext.hellfireBeastThorsHammer.entity->entityId) {
 #else

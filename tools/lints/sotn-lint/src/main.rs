@@ -16,9 +16,12 @@ mod flags;
 mod item_drops;
 mod line_transformer;
 mod linter;
+mod palette_flag;
+mod palette_indices;
 mod player_status;
 mod primitive_type;
 mod relics;
+mod rot;
 mod sfx;
 mod vram_flag;
 
@@ -35,10 +38,13 @@ use linter::EntityRangeLinter;
 use linter::Linter;
 use linter::LocalExternLinter;
 use linter::RegexLinter;
+use palette_flag::PaletteFlagTransformer;
+use palette_indices::PaletteIndicesTransformer;
 use player_status::PlayerStatusTransformer;
 use primitive_type::PrimitiveTypeTransformer;
 use rayon::prelude::*;
 use relics::RelicsTransformer;
+use rot::RotationTransformer;
 use sfx::SfxLineTransformer;
 use vram_flag::PlayerVramFlagTransformer;
 
@@ -97,9 +103,12 @@ fn transform_file(
     (alterations, lint_passed)
 }
 
+const SKIPPED_DIRS: [&str; 2] = ["mednafen", "saturn"];
+
 fn process_directory(dir_path: &str) -> bool {
     let fixed_transformer = FixedTransformer;
     let relics_transformer = RelicsTransformer;
+    let rotation_transformer = RotationTransformer;
     let draw_mode_transformer = DrawModeTransformer::new();
     let blend_mode_transformer = BlendModeTransformer::new();
     let flags_transformer = FlagsTransformer::new();
@@ -112,6 +121,7 @@ fn process_directory(dir_path: &str) -> bool {
     let transformers: Vec<Box<dyn LineTransformer>> = vec![
         Box::new(fixed_transformer),
         Box::new(relics_transformer),
+        Box::new(rotation_transformer),
         Box::new(ColliderEffectsTransformer::new()),
         Box::new(draw_mode_transformer),
         Box::new(blend_mode_transformer),
@@ -123,6 +133,9 @@ fn process_directory(dir_path: &str) -> bool {
         Box::new(vram_flag_transformer),
         Box::new(SfxLineTransformer::new()),
         Box::new(ItemDropsTransformer::new()),
+        // PAL_FLAG must wrap the value before PaletteIndices can name it
+        Box::new(PaletteFlagTransformer),
+        Box::new(PaletteIndicesTransformer::new()),
     ];
 
     let linters: Vec<Box<dyn Linter>> = vec![
@@ -132,6 +145,10 @@ fn process_directory(dir_path: &str) -> bool {
         Box::new(RegexLinter::new(
             "CreateEntity With Int",
             r"Create[^(]*Entity[^(]*\((?:(?:0x[0-9A-F]+)|(?:[0-9]+)),",
+        )),
+        Box::new(RegexLinter::new(
+            "ILLEGAL Entity Extension",
+            r"ext\.ILLEGAL",
         )),
     ];
 
@@ -153,7 +170,8 @@ fn process_directory(dir_path: &str) -> bool {
 
                         lint_passed &= passed
                     } else if item_path.is_dir() {
-                        if item_path.file_name().unwrap() != "mednafen" {
+                        let name = item_path.file_name().unwrap().to_string_lossy();
+                        if !SKIPPED_DIRS.contains(&name.as_ref()) {
                             lint_passed &= process_directory(&item_path.to_string_lossy());
                         }
                     }

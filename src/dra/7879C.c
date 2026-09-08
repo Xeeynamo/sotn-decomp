@@ -1633,7 +1633,7 @@ void UpdatePlayerEntities(void) {
     s32 i2;
     s32 enemy;
 
-    temp_s2 = g_unkGraphicsStruct.unk20;
+    temp_s2 = g_unkGraphicsStruct.unk28;
     entity = g_CurrentEntity = &g_Entities[4];
     for (i = 4; i < 64; i++, g_CurrentEntity++, entity++) {
         if (i == 16 && entity->entityId == E_NONE) {
@@ -2189,8 +2189,7 @@ void EntitySmokePuff(Entity* self) {
         }
         if (paramsHi == 4) {
             for (i = paramsLo * 2; i < LEN(D_800AD5E0); i++) {
-                if (g_Player.colWall[D_800AD5E0[i]].effects &
-                    (EFFECT_UNK_0002 | EFFECT_SOLID)) {
+                if (g_Player.colWall[D_800AD5E0[i]].effects & EFFECT_BLOCK) {
                     break;
                 }
             }
@@ -2208,8 +2207,7 @@ void EntitySmokePuff(Entity* self) {
         }
         if (paramsHi == 8) {
             for (i = paramsLo * 2; i < LEN(D_800AD5F0); i++) {
-                if (g_Player.colWall[D_800AD5F0[i]].effects &
-                    (EFFECT_UNK_0002 | EFFECT_SOLID)) {
+                if (g_Player.colWall[D_800AD5F0[i]].effects & EFFECT_BLOCK) {
                     break;
                 }
             }
@@ -2383,7 +2381,8 @@ void EntityPlayerBlinkWhite(Entity* self) {
         g_Player.unk6C = 0;
         goto block_231;
     }
-    if (((PLAYER.step == Player_SpellHellfire) && (PLAYER.palette == 0x810D)) ||
+    if (((PLAYER.step == Player_SpellHellfire) &&
+         (PLAYER.palette == PAL_FLAG(PAL_PLAYER_HIDDEN))) ||
         (!PLAYER.animSet) || !(PLAYER.animCurFrame & 0x7FFF)) {
         goto block_229;
     }
@@ -3021,7 +3020,8 @@ void EntityPlayerOutline(Entity* self) {
     if ((g_Player.status & (PLAYER_STATUS_AXEARMOR | PLAYER_STATUS_DEAD |
                             PLAYER_STATUS_STONE | PLAYER_STATUS_TRANSFORM)) ||
         !(PLAYER.animCurFrame & 0x7FFF) || (!PLAYER.animSet) ||
-        ((PLAYER.step == Player_SpellHellfire) && (PLAYER.palette == 0x810D))) {
+        ((PLAYER.step == Player_SpellHellfire) &&
+         (PLAYER.palette == PAL_FLAG(PAL_PLAYER_HIDDEN)))) {
         DestroyEntity(self);
         return;
     }

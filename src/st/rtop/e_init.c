@@ -12,7 +12,7 @@ void EntityRoomForeground(Entity*);
 void EntityStageNamePopup(Entity*);
 void EntityEquipItemDrop(Entity*);
 void EntityRelicOrb(Entity*);
-void EntityHeartDrop(Entity*);
+void EntityPersistentItemDrop(Entity*);
 void EntityEnemyBlood(Entity*);
 void EntityMessageBox(Entity*);
 void EntityDummy(Entity*);
@@ -54,7 +54,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityStageNamePopup,
     EntityEquipItemDrop,
     EntityRelicOrb,
-    EntityHeartDrop,
+    EntityPersistentItemDrop,
     EntityEnemyBlood,
     EntityMessageBox,
     EntityDummy,
@@ -93,7 +93,7 @@ EInit g_EInitBreakable = {ANIMSET_OVL(1), 0, 0, 0x0, 0};
 static EInit __unused__ = {ANIMSET_OVL(1), 0, 0, 0x0, 3};
 EInit g_EInitRTOPCommon = {ANIMSET_OVL(2), 0, 0, 0x0, 5};
 EInit g_EInitTombstone = {ANIMSET_OVL(5), 21, 0x4D, 0x208, 0x71};
-EInit g_EInitSkeletonPieces = {ANIMSET_OVL(6), 1, 0x56, 0x20A, 0x78};
-EInit D_us_801805E4 = {ANIMSET_OVL(6), 0x1E, 0x56, 0x20A, 0x79};
+EInit g_EInitYorick = {ANIMSET_OVL(6), 1, 0x56, 0x20A, 0x78};
+EInit g_EInitYorickSkull = {ANIMSET_OVL(6), 0x1E, 0x56, 0x20A, 0x79};
 EInit g_EInitSkullLord = {ANIMSET_OVL(7), 1, 0x48, 0x20B, 0x105};
 EInit g_EInitSkullLordEffects = {ANIMSET_OVL(7), 1, 0x48, 0x20B, 0x5};

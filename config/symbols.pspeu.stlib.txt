@@ -8,4 +8,4 @@ g_TileLayers = 0x09275B58;
 g_Cluts = 0x09275CD8;
 g_EntityGfxs = 0x09275EB8;
 g_Rooms = 0x092762A8;
-LIB_Overlay = 0x09298108;
+g_Overlay = 0x09298108;

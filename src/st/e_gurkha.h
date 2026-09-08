@@ -1,5 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+extern EInit g_EInitGurkha;
+extern EInit g_EInitGurkhaWeapon;
+
 // clang-format off
 static u16 D_80182EF4[] = {0, 9, 0, 4, 4, -4, -8, 0};
 static giantBroBodyPartsInit D_80182F04[] = {
@@ -226,6 +229,9 @@ void EntityGurkha(Entity* self) {
         self->facingLeft = self->params;
         self->hitboxWidth = 6;
         self->hitboxHeight = 6;
+#ifdef STAGE_IS_RNO0
+        self->zPriority += 8;
+#endif
         /* fallthrough */
     case 1:
         if (UnkCollisionFunc3(D_80182EF4) & 1) {
@@ -632,7 +638,7 @@ void EntityGurkhaWeapon(Entity* self) {
 
     case 3:
         MoveEntity();
-        self->rotate -= 0x100;
+        self->rotate -= ROT(22.5);
         self->ext.GH_Props.rotate = self->rotate;
         self->ext.GH_Props.rotVel = -0xC0;
         angle = self->rotate;

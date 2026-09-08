@@ -135,7 +135,7 @@ void EntityCutscene(Entity* self) {
     u32 ptr;
     switch (self->step) {
     case 0:
-        if (SetCutsceneScript(OVL_EXPORT(cutscene_endings))) {
+        if (SetCutsceneScript(cutscene_endings)) {
             self->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
             self->primIndex = g_Dialogue.primIndex[2];
             D_801BC3E8 = 0;
@@ -613,7 +613,7 @@ s32 func_801B79D4(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        if (func_801B76F0(OVL_EXPORT(credits))) {
+        if (func_801B76F0(cutscene_credits)) {
             entity->flags |= FLAG_HAS_PRIMS;
             entity->primIndex = (s32)g_Dialogue.prim[1];
             entity->step++;

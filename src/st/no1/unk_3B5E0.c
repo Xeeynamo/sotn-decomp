@@ -798,7 +798,7 @@ void func_us_801BCB34(Entity* self) {
         if (AnimateEntity(D_us_80181550, self) == 0) {
             PlaySfxPositional(SFX_ELEVATOR_START);
             if (!self->ext.et_801BBD90.unk94) {
-                g_unkGraphicsStruct.unk1C |= 1;
+                g_unkGraphicsStruct.unk24 |= 1;
             }
             self->ext.et_801BBD90.unk88 = 0x18;
             self->step_s = 0;
@@ -1035,7 +1035,7 @@ void func_us_801BCB34(Entity* self) {
             if (!self->ext.et_801BBD90.unk94) {
                 player->posY.i.hi = self->posY.i.hi - 8;
             }
-            g_unkGraphicsStruct.unk1C &= ~1;
+            g_unkGraphicsStruct.unk24 &= ~1;
             self->velocityY = 0;
             self->step_s++;
             break;

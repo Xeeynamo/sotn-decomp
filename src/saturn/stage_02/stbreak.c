@@ -2,11 +2,7 @@
 #include "sattypes.h"
 #include "shared_sprite_banks.h"
 #include <saturn_sprite.h>
-
-extern SaturnSpriteResource g_Stage02TableWithGlobeResource;
-extern SaturnSpriteResource entityRedEyeBustData;
-extern SaturnSpriteFrameHeader* entityRedEyeBustData2[22];
-extern SaturnSpriteFrameHeader* g_Stage02TableWithGlobeFrames[19];
+#include "stage_02.h"
 
 u8 g_Stage02BreakableAnimType0[8] = {4, 1, 4, 2, 0, 0};
 u8 g_Stage02BreakableAnimType1[12] = {4, 4, 4, 5, 4, 6, 4, 5, 0, 0};

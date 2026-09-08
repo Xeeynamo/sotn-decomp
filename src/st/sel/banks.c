@@ -29,7 +29,7 @@ extern u16 D_801807E4[0x10];
 extern u16 D_80180804[0x10];
 
 static u16 D_801805FC[] = {
-#include "gen/D_801805FC.h"
+#include <gen/D_801805FC.h>
 };
 
 static u_long* D_8018061C[] = {

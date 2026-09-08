@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "warp/warp.h"
+#include "warp.h"
 
 #define WARP_LOOKUP_ROW {7, 4, 2, 3, 4, 1, 2, 3, 4, 6, 7, 0}
 

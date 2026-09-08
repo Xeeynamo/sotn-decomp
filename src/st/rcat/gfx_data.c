@@ -4,77 +4,77 @@
 #ifdef VERSION_US
 
 u8 gfx_alucard_sleep[] = {
-#include "gen/gfx_alucard_sleep.h"
+#include <gen/gfx_alucard_sleep.h>
 };
 
 u8 gfx_stage_name_jp_sm[] = {
-#include "gen/gfx_stage_name_jp_sm.h"
+#include <gen/gfx_stage_name_jp_sm.h>
 };
 
 u8 gfx_stage_name_jp_lg[] = {
-#include "gen/gfx_stage_name_jp_lg.h"
+#include <gen/gfx_stage_name_jp_lg.h>
 };
 
 #endif
 
 u8 gfx_unk_5084[] = {
-#include "gen/gfx_unk_5084.h"
+#include <gen/gfx_unk_5084.h>
 };
 
 u8 gfx_unk_69B0[] = {
-#include "gen/gfx_unk_69B0.h"
+#include <gen/gfx_unk_69B0.h>
 };
 
 u8 gfx_unk_8934[] = {
-#include "gen/gfx_unk_8934.h"
+#include <gen/gfx_unk_8934.h>
 };
 
 #ifdef VERSION_US
 
 u8 gfx_unk_925C[] = {
-#include "gen/gfx_unk_925C.h"
+#include <gen/gfx_unk_925C.h>
 };
 
 #endif
 
 u8 gfx_salome_1[] = {
-#include "gen/gfx_salome_1.h"
+#include <gen/gfx_salome_1.h>
 };
 
 u8 gfx_salome_2[] = {
-#include "gen/gfx_salome_2.h"
+#include <gen/gfx_salome_2.h>
 };
 
 u8 gfx_frozen_half_1[] = {
-#include "gen/gfx_frozen_half_1.h"
+#include <gen/gfx_frozen_half_1.h>
 };
 
 u8 gfx_frozen_half_2[] = {
-#include "gen/gfx_frozen_half_2.h"
+#include <gen/gfx_frozen_half_2.h>
 };
 
 u8 gfx_frozen_half_3[] = {
-#include "gen/gfx_frozen_half_3.h"
+#include <gen/gfx_frozen_half_3.h>
 };
 
 u8 gfx_unk_EC48[] = {
-#include "gen/gfx_unk_EC48.h"
+#include <gen/gfx_unk_EC48.h>
 };
 
 u8 gfx_breakable[] = {
-#include "gen/gfx_breakable.h"
+#include <gen/gfx_breakable.h>
 };
 
 u8 gfx_blood_skeleton[] = {
-#include "gen/gfx_blood_skeleton.h"
+#include <gen/gfx_blood_skeleton.h>
 };
 
 u8 gfx_bat[] = {
-#include "gen/gfx_bat.h"
+#include <gen/gfx_bat.h>
 };
 
 u8 gfx_skeleton[] = {
-#include "gen/gfx_skeleton.h"
+#include <gen/gfx_skeleton.h>
 };
 
 // Palettes

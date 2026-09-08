@@ -13,4 +13,4 @@ u16 D_us_801AC360[] = {
 
 #include "gen/rbo5_tilemap_0.h"
 #include "gen/rbo5_tilemap_1.h"
-#include "gen/rbo5_tiledef_0.h"
+#include "gen/rbo5_tiledef_rbo5.h"

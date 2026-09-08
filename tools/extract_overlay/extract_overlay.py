@@ -659,13 +659,11 @@ def create_ovl_include(entity_updates, ovl_name, ovl_type, ovl_include_path):
         for i, func in enumerate([symbol.name for symbol in entity_updates]):
             if func == "EntityDummy":
                 entity_funcs.append((func, f"E_DUMMY_{i+1:X}"))
-            elif func.startswith("Entity") or func.startswith("OVL_EXPORT(Entity"):
+            elif func.startswith("Entity"):
                 entity_funcs.append(
                     (
                         func,
-                        camel_case_pattern.sub(
-                            r"\1_\2", func.replace("OVL_EXPORT(", "").replace(")", "")
-                        )
+                        camel_case_pattern.sub(r"\1_\2", func)
                         .upper()
                         .replace("ENTITY", "E"),
                     )
@@ -830,27 +828,30 @@ def parse_psp_ovl_load(ovl_name, path_prefix, asm_path):
 
 
 def create_header_c(header_items, ovl_name, ovl_type, version, header_path):
-    header_syms = [
-        (
-            f"{symbol.name.replace(f'{ovl_name.upper()}_', 'OVL_EXPORT(')})"
-            if f"{ovl_name.upper()}_" in symbol.name
-            else "NULL" if not symbol.address else symbol.name
-        )
-        for symbol in header_items
-    ]
+    def strip_prefix(symbol):
+        prefix = f"{ovl_name.upper()}_"
+        if not symbol.address:
+            return "NULL"
+        if symbol.name == f"{prefix}Overlay":
+            return "g_Overlay"
+        if symbol.name.startswith(prefix):
+            return symbol.name[len(prefix) :]
+        return symbol.name
+
+    header_syms = [strip_prefix(symbol) for symbol in header_items]
     common_syms = [
         "NULL",
         "Update",
         "HitDetection",
         "UpdateRoomPosition",
         "InitRoomEntities",
-        "OVL_EXPORT(rooms)",
-        "OVL_EXPORT(spriteBanks)",
-        "OVL_EXPORT(cluts)",
-        "OVL_EXPORT(pStObjLayoutHorizontal)",
+        "rooms",
+        "spriteBanks",
+        "cluts",
+        "pStObjLayoutHorizontal",
         "g_pStObjLayoutHorizontal",
-        "OVL_EXPORT(rooms_layers)",
-        "OVL_EXPORT(gfxBanks)",
+        "rooms_layers",
+        "gfxBanks",
         "UpdateStageEntities",
     ]
     template = Template((Path(__file__).parent / "header.c.mako").read_text())
@@ -876,10 +877,11 @@ def create_header_c(header_items, ovl_name, ovl_type, version, header_path):
 
 def create_e_init_c(entity_updates, e_inits, ovl_name, e_init_c_path):
     if entity_updates:
+        prefix = f"{ovl_name.upper()}_"
         entity_funcs = [
             (
-                f"{symbol.name.replace(f'{ovl_name.upper()}_','OVL_EXPORT(')})"
-                if f"{ovl_name.upper()}_" in symbol.name
+                symbol.name[len(prefix) :]
+                if symbol.name.startswith(prefix)
                 else symbol.name
             )
             for symbol in entity_updates
@@ -1139,7 +1141,7 @@ def parse_entity_updates(data_file_text, ovl_name, entity_updates_symbol):
         "EntityStageNamePopup",
         "EntityEquipItemDrop",
         "EntityRelicOrb",
-        "EntityHeartDrop",
+        "EntityPersistentItemDrop",
         "EntityEnemyBlood",
         "EntityMessageBox",
         "EntityDummy",
@@ -1237,7 +1239,7 @@ def cross_reference_e_init_c(
         file_text = ref_e_init_path.read_text()
         e_init_pattern = re.compile(
             r"""
-        \nEInit\s+(?P<name>(?:OVL_EXPORT\()?\w+\)?)\s*=\s*\{(?:\s*|\n?)
+        \nEInit\s+(?P<name>\w+)\s*=\s*\{(?:\s*|\n?)
         (?P<animSet>(?:ANIMSET_(?:OVL|DRA)\()?(?:0x)?[0-9A-Fa-f]{1,4}\)?)\s*
         ,\s*(?P<animCurFrame>(?:0x)?[0-9A-Fa-f]{1,4})\s*
         ,\s*(?P<unk5A>(?:0x)?[0-9A-Fa-f]{1,4})\s*
@@ -1251,7 +1253,7 @@ def cross_reference_e_init_c(
             entity_updates_start = file_text.find("EntityUpdates")
             entity_updates_end = file_text.find("};", entity_updates_start)
             ref_entity_updates = [
-                item.strip().replace("OVL_EXPORT(", f"{ovl_name.upper()}_").rstrip(",)")
+                item.strip().rstrip(",)")
                 for item in file_text[
                     entity_updates_start:entity_updates_end
                 ].splitlines()[1:]
@@ -1270,11 +1272,7 @@ def cross_reference_e_init_c(
             e_init_idx = file_text.find("EInit")
             while e_init_idx != -1:
                 if e_init := e_init_pattern.match(file_text[e_init_idx - 1 :]):
-                    name = (
-                        e_init.group("name")
-                        .replace("OVL_EXPORT(", f"{ovl_name.upper()}_")
-                        .rstrip(")")
-                    )
+                    name = e_init.group("name")
                     animSet = e_init.group("animSet")
                     animCurFrame = e_init.group("animCurFrame")
                     animCurFrame = int(animCurFrame, 16 if "0x" in animCurFrame else 10)
@@ -1952,11 +1950,20 @@ def extract(args, version):
     with sotn_utils.Spinner(message=f"cleaning up {ovl_config.name}.h") as spinner:
         # just in case any function got renamed after the files were created
         ovl_header_text = ovl_include_path.read_text()
+
+        def _strip_ovl_prefix(m):
+            name = m.group(1)
+            if name == "Overlay":
+                return "g_Overlay"
+            if name == "Load":
+                return "OvlLoad"
+            return name
+
         ovl_header_text = re.sub(
-            rf"{ovl_config.name.upper()}_(\w\w+)\b", r"OVL_EXPORT(\1)", ovl_header_text
+            rf"{ovl_config.name.upper()}_(\w\w+)\b", _strip_ovl_prefix, ovl_header_text
         )
         entity_enum_pattern = re.compile(
-            r"\s+(?P<e_id>E_[A-Z0-9_]+),\s+//\s+(?:OVL_EXPORT\()?(?P<func>Entity\w+)\)?\b"
+            r"\s+(?P<e_id>E_[A-Z0-9_]+),\s+//\s+(?P<func>Entity\w+)\b"
         )
         camel_case_pattern = re.compile(r"([A-Za-z])([A-Z][a-z])")
         ovl_header_lines = [
@@ -1994,7 +2001,7 @@ def extract(args, version):
         e_init_c_path.write_text(
             re.sub(
                 rf"{ovl_config.name.upper()}_(\w+)\b",
-                r"OVL_EXPORT(\1)",
+                _strip_ovl_prefix,
                 e_init_c_path.read_text(),
             )
         )

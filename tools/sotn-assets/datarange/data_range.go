@@ -77,33 +77,39 @@ func Merge(ranges []DataRange) (DataRange, error) {
 	}, nil
 }
 
-func ConsolidateDataRanges(ranges []DataRange) []DataRange {
-	if len(ranges) == 0 {
-		return []DataRange{}
+// ConsolidateDataRanges collapses adjacent ranges while preserving gaps.
+// Overlapping ranges are rejected instead of being silently combined.
+func ConsolidateDataRanges(ranges []DataRange) ([]DataRange, error) {
+	sorted := make([]DataRange, 0, len(ranges))
+	for _, dataRange := range ranges {
+		if !dataRange.Empty() {
+			sorted = append(sorted, dataRange)
+		}
+	}
+	if len(sorted) == 0 {
+		return []DataRange{}, nil
 	}
 
-	sort.Slice(ranges, func(i, j int) bool {
-		return ranges[i].begin < ranges[j].begin
+	sort.Slice(sorted, func(i, j int) bool {
+		return sorted[i].begin < sorted[j].begin
 	})
 
-	for ranges[0].Empty() {
-		ranges = ranges[1:]
-	}
-
-	consolidated := []DataRange{}
-	first := 0
-	for i := 0; i < len(ranges)-1; i++ {
-		if ranges[i].end != ranges[i+1].begin {
-			consolidated = append(consolidated, DataRange{
-				begin: ranges[first].begin,
-				end:   ranges[i].end,
-			})
-			first = i + 1
+	var consolidated []DataRange
+	begin := sorted[0].begin
+	for i := 0; i < len(sorted)-1; i++ {
+		switch {
+		case sorted[i].end > sorted[i+1].begin:
+			return nil, fmt.Errorf(
+				"overlap between data detected: %s > %s",
+				sorted[i].end,
+				sorted[i+1].begin)
+		case sorted[i].end < sorted[i+1].begin:
+			consolidated = append(
+				consolidated, New(begin, sorted[i].end))
+			begin = sorted[i+1].begin
 		}
 	}
 
-	return append(consolidated, DataRange{
-		begin: ranges[first].begin,
-		end:   ranges[len(ranges)-1].end,
-	})
+	return append(
+		consolidated, New(begin, sorted[len(sorted)-1].end)), nil
 }

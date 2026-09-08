@@ -206,7 +206,7 @@ void EntityRedDoor(Entity* self) {
             g_Tilemap.x = 0x98;
             PLAYER.zPriority = 0x5C;
         }
-        g_unkGraphicsStruct.unk18 = 1;
+        g_unkGraphicsStruct.unk20 = 1;
         break;
     case 3:
         if (g_Player.demo_timer >= 4) {
@@ -222,10 +222,10 @@ void EntityRedDoor(Entity* self) {
             g_Tilemap.left++;
             g_PlayerX -= 0x100;
             g_Tilemap.x = 0x100;
-            g_unkGraphicsStruct.unk18 = 0;
+            g_unkGraphicsStruct.unk20 = 0;
         }
         if (PLAYER.posX.i.hi < 0 || PLAYER.posX.i.hi > 0x100) {
-            g_unkGraphicsStruct.unk18 = 0;
+            g_unkGraphicsStruct.unk20 = 0;
         }
         break;
     case 4:
@@ -272,7 +272,7 @@ void EntityRedDoor(Entity* self) {
             }
             self->animCurFrame = 1;
             self->step = 1;
-            g_unkGraphicsStruct.unk18 = 0;
+            g_unkGraphicsStruct.unk20 = 0;
         }
         break;
     }

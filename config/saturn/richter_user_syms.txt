@@ -196,3 +196,4 @@ _func_060BB90C = 0x060BB90C;
 _g_RicComboButtons = 0x060CF058;
 _ric_anim_stop_run = 0x060BFC30;
 _ric_subweapons_def = 0x060BEF36;
+_UpdateEntitySprite = 0x060AA088;

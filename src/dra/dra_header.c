@@ -66,7 +66,7 @@ void DebugInputWait(const char* msg);
 s32 func_psp_091007E0(s32 baseAttack);
 bool CalcPlayerDamageMaria(DamageParam* damageParam);
 u16* func_psp_0913FA28(u32 ch, u16 kind);
-u16 func_psp_0913F960(char* str, u8* type);
+u16 func_psp_0913F960(const char* str, u8* type);
 #endif
 
 #ifndef VERSION_PSP

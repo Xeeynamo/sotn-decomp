@@ -1,17 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
 #include "stage_data.h"
-
-extern EntityEntry* g_RStage15EntityUpdates[];
-extern void* g_RStage15SpriteBanks[];
-extern LayoutEntity* g_RStage15LayoutHorizontal[];
-extern LayoutEntity* g_RStage15LayoutVertical[];
-extern SaturnRoomHeader g_RStage15Rooms[];
-extern SaturnLayerCompressedSizes g_RStage15LayerCompressedSizes[];
-extern SaturnLayerMapOffsets g_RStage15LayerMapOffsets[];
-extern SaturnRoomLayerSetup g_RStage15LayerSetup[];
-extern SaturnRoomGraphics g_RStage15RoomGraphics[];
-extern SaturnRoomPriorities g_RStage15RoomPriorities[];
+#include "rstage15.h"
 
 SaturnStageDataTables g_RStage15Data = {
     g_RStage15EntityUpdates,

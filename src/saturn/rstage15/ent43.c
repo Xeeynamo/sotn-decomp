@@ -1,15 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
 #include <saturn_sprite.h>
+#include "rstage15.h"
 
 extern SaturnSpriteResource g_RStage15SpriteBank25;
 
 void func_060E8ADC(Entity* self);
-void func_060E8EFC(Entity* self);
-void func_060E9104(Entity* self);
-void func_060E9284(Entity* self);
-void func_060E98F0(Entity* self);
-void func_060E9D28(Entity* self);
 
 EntityEntry g_RStage15EntityEntry43 = {&g_RStage15SpriteBank25, func_060E8ADC};
 s16 g_RStage15Entity43InitOffset[2] = {0, 0};

@@ -44,7 +44,7 @@ void EntityBackgroundVortex(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
-        self->ext.prim = prim;
+        self->ext.bgVortex.prim = prim;
         while (prim != NULL) {
             prim->drawMode = DRAW_HIDE;
             prim = prim->next;
@@ -88,7 +88,7 @@ void EntityBackgroundVortex(Entity* self) {
         func_psp_0891CB80(0x180, 0x100, 0x40, 0x40, 0x180, 0x80, 0);
         func_psp_0891CB80(0x180, 0x100, 0x40, 0x40, 0x180, 0xC0, 0);
 #endif
-        prim = self->ext.prim;
+        prim = self->ext.bgVortex.prim;
         while (prim != NULL) {
 #ifdef VERSION_PSP
             prim->clut = PAL_UNK_19E;
@@ -107,7 +107,7 @@ void EntityBackgroundVortex(Entity* self) {
             prim->drawMode = DRAW_DEFAULT;
             prim = prim->next;
         }
-        prim = self->ext.prim;
+        prim = self->ext.bgVortex.prim;
         draw_env = g_CurrentBuffer->draw;
 
         dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
@@ -167,7 +167,7 @@ void EntityBackgroundVortex(Entity* self) {
                 ((rsin(self->ext.bgVortex.unkAA) * 24) >> 0xC) + 0xD0;
             break;
         }
-        prim = self->ext.prim;
+        prim = self->ext.bgVortex.prim;
         prim = prim->next;
         prim = prim->next;
         leftV = prim->v0;
@@ -216,7 +216,7 @@ void EntityBackgroundVortex(Entity* self) {
             scratchColor->r = scratchColor->g = (D_801C23C8[i] / 2) / var_s2;
             scratchColor->cd = 4;
         }
-        prim = self->ext.prim;
+        prim = self->ext.bgVortex.prim;
         prim = prim->next;
         prim = prim->next;
         unused_Cvector.r = 0x80;

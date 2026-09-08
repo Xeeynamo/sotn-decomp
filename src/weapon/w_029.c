@@ -209,13 +209,13 @@ static void EntityWeaponShieldSpell(Entity* self) {
         SetSpriteBank1(g_Animset);
         if (g_HandId != 0) {
             self->animSet = ANIMSET_OVL(18);
-            self->ext.weapon.childPalette = 0x128;
+            self->ext.weapon.childPalette = PAL_UNK_128;
             self->unk5A = 0x66;
             self->ext.shield.unk7C = 0;
             self->ext.shield.unk7D = 0x80;
         } else {
             self->animSet = ANIMSET_OVL(16);
-            self->ext.weapon.childPalette = 0x110;
+            self->ext.weapon.childPalette = PAL_UNK_110;
             self->unk5A = 0x64;
             self->ext.shield.unk7C = 0x80;
             self->ext.shield.unk7D = 0;
@@ -247,7 +247,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
         self->velocityY = 0;
         DestroyEntityWeapon(1);
         g_api.PlaySfx(SFX_ANIME_SWORD_C);
-        g_unkGraphicsStruct.unk20 = 1;
+        g_unkGraphicsStruct.unk28 = 1;
         self->step++;
         break;
 
@@ -315,7 +315,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
             g_api.CreateEntFactoryFromEntity(
                 self, ((g_HandId + 1) << 14) + 102, 0);
             self->ext.weapon.unk80 = 0x18;
-            g_unkGraphicsStruct.unk20 = 0;
+            g_unkGraphicsStruct.unk28 = 0;
             self->step++;
         }
         break;
@@ -380,10 +380,10 @@ static void func_ptr_80170024(Entity* self) {
             return;
         }
         if (g_HandId != 0) {
-            self->ext.weapon.childPalette = 0x128;
+            self->ext.weapon.childPalette = PAL_UNK_128;
             self->ext.shield.unk7D = 0x80;
         } else {
-            self->ext.weapon.childPalette = 0x110;
+            self->ext.weapon.childPalette = PAL_UNK_110;
             self->ext.shield.unk7D = 0;
         }
         self->flags |= FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;

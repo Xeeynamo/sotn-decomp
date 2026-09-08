@@ -73,7 +73,7 @@ segments:
       - [0x16EC, .data, e_gremlin]       # EntityGremlin
       - [0x1704, .data, e_gremlin]       # EntityGremlinEffect
       - [0x1724, .data, e_gremlin]       # EntityGremlinFire
-      - [0x173C, .data, en_thornweed_corpseweed]
+      - [0x173C, .data, e_thornweed_corpseweed]
       - [0x17F4, .data, en_venus_weed]
       - [0x195C, .data, gen/rooms]
       - [0x19F8, .data, gen/e_layout] # layout entities data
@@ -94,8 +94,8 @@ segments:
       - [0x1B290, .rodata, e_salem_witch]            # jtbl_8019B290 [EntitySalemWitch]
       - [0x1B2A8, .rodata, e_salem_witch]            # jtbl_8019B2A8 [EntitySalemWitchTribolt]
       - [0x1B2BC, .rodata, e_gremlin]                # EntityGremlin debug string
-      - [0x1B2C8, .rodata, en_thornweed_corpseweed]   # jtbl_8019B2C8 [EntityThornweed]
-      - [0x1B2E8, .rodata, en_thornweed_corpseweed]   # jtbl_8019B2E8 [EntityCorpseweed]
+      - [0x1B2C8, .rodata, e_thornweed_corpseweed]   # jtbl_8019B2C8 [EntityThornweed]
+      - [0x1B2E8, .rodata, e_thornweed_corpseweed]   # jtbl_8019B2E8 [EntityCorpseweed]
       - [0x1B304, .rodata, en_venus_weed]             # jtbl_8019B304 [EntityVenusWeed]
       - [0x1B32C, .rodata, en_venus_weed]             # jtbl_8019B32C [EntityVenusWeed]
       - [0x1B344, .rodata, en_venus_weed]             # jtbl_8019B344 [EntityVenusWeedFlower]
@@ -124,7 +124,7 @@ segments:
       - [0x27D78, c, en_popup]
       - [0x2813C, c, e_salem_witch]
       - [0x297C8, c, e_gremlin]
-      - [0x2A020, c, en_thornweed_corpseweed]
+      - [0x2A020, c, e_thornweed_corpseweed]
       - [0x2B548, c, en_venus_weed]
       - [0x2D0EC, c, en_stage_name]
       - [0x2DF40, c, ut_prim_helpers]

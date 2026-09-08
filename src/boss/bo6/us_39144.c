@@ -67,7 +67,7 @@ void func_us_801B9340(void) {
         func_us_801B9ACC(0xFFFF1000);
         RIC.anim = D_us_8018221C;
         g_api.PlaySfx(SFX_BOSS_RIC_DEATH);
-        g_Ric.damagePalette = 0x8166;
+        g_Ric.damagePalette = PAL_FLAG(PAL_CC_RED_EFFECT_A);
         g_Ric.timers[2] = 8;
         RicCreateEntFactoryFromEntity(
             g_CurrentEntity, FACTORY(E_ID_21, 0x58), 0);
@@ -609,7 +609,7 @@ void func_us_801BD0B8(Entity* self) {
             } else {
                 self->animSet = ANIMSET_DRA(5);
                 self->anim = D_us_801818A8;
-                self->palette = PAL_FLAG(0x170);
+                self->palette = PAL_FLAG(PAL_UNK_170);
             }
         }
         self->flags = FLAG_UNK_20000000 | FLAG_POS_CAMERA_LOCKED;

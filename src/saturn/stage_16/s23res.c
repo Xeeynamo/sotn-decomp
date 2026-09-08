@@ -1,9 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
 #include <saturn_sprite.h>
-
-extern SaturnSpriteImage g_Stage16SpriteBank23Images[];
-extern u16 g_Stage16SpriteBank23Palette[];
+#include "stage_16.h"
 
 SaturnSpriteResource g_Stage16SpriteBank23 = {
     g_Stage16SpriteBank23Images,

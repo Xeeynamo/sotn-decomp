@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <game.h>
 
+#ifndef PRIM_HELPER_ROT
+#define PRIM_HELPER_ROT {0, 0, 0}
+#endif
+
 void UnkPrimHelper(Primitive* prim) {
     SVECTOR sp10; // FAKE, not really an svector
     SVECTOR stackpad;
@@ -11,7 +15,7 @@ void UnkPrimHelper(Primitive* prim) {
     SVECTOR sp48;
     SVECTOR sp50;
     MATRIX m;
-    SVECTOR rot = {0, 0, 0};
+    SVECTOR rot = PRIM_HELPER_ROT;
     u8 temp_v1_2;
     u16 temp;
 

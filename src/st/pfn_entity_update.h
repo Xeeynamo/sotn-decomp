@@ -1,8 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-// NOTE: include this AFTER the stage entity is included
-// this is to ensure OVL_EXPORT is defined
-
 extern PfnEntityUpdate EntityUpdates[];
 
 #if defined(VERSION_PSP) || defined(VERSION_PC)

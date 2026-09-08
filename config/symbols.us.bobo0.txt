@@ -1,4 +1,4 @@
-BO0_Overlay = 0x80180000;
+g_Overlay = 0x80180000;
 spriteBanks = 0x8018002C;
 cluts = 0x801800F4;
 rooms_layers = 0x80180118;
@@ -26,8 +26,13 @@ g_EInitOwlKnightSword = 0x801806A8;
 g_EInitOwl = 0x801806B4;
 g_EInitBloodyZombie = 0x801806C0;
 g_EInitOlroxAfterImage = 0x801806CC;
+g_EInitLaserAttack = 0x80180720;
+g_EInitFireballAttack = 0x8018072C;
+g_EInitBossDoors = 0x80180738;
 BackgroundBlockInit = 0x80180748;
 g_RedDoorTiles = 0x8018075C;
+g_animFireballAttack1 = 0x801812E4;
+g_animFireballAttack2 = 0x801812F8;
 PrizeDrops = 0x80181444;
 rooms = 0x80182614;
 sprites_bo0_8 = 0x801A1D74;
@@ -48,7 +53,12 @@ EntitySpikes = 0x801AB778; // source=match
 EntitySpikesDamage = 0x801AB970; // source=match
 EntityPrisoner = 0x801ACDC8;
 EntityOlroxAfterImage = 0x801AFF78;
+EntityLaserAttack = 0x801B8D8C;
+EntityFireballAttack = 0x801B9BEC;
+EntityRealOlroxDrool = 0x801BA128;
 func_us_801B72E8 = 0x801BA880; // source=match
+EntityBossDoors = 0x801BAB18;
+EntitySealedDoor = 0x801BB08C;
 EntityChair = 0x801BBD84;
 Random = 0x801BC0DC; // source=match
 Update = 0x801BC10C; // source=match
@@ -76,15 +86,13 @@ SetStep = 0x801C0134; // source=match
 SetSubStep = 0x801C0154; // source=match
 InitializeEntity = 0x801C0204; // source=match
 EntityDummy = 0x801C0300; // source=match
-GetPlayerCollisionWith = 0x801C05A8; // source=match
 EntityPrizeDrop = 0x801C0F14; // source=match
 EntityExplosion = 0x801C1788; // source=match
 EntityEquipItemDrop = 0x801C1928; // source=match
 EntityRelicOrb = 0x801C21C0; // source=match
-EntityHeartDrop = 0x801C2C90; // source=match
+EntityPersistentItemDrop = 0x801C2C90; // source=match
 EntityMessageBox = 0x801C2DAC; // source=match
 EntityUnkId13 = 0x801C33F8; // source=match
-EntityExplosionVariantsSpawner = 0x801C3508; // source=match
 EntityExplosionVariants = 0x801C3720; // source=match
 EntityGreyPuff = 0x801C3810; // source=match
 EntityIntenseExplosion = 0x801C41B0; // source=match
@@ -108,8 +116,4 @@ EntityLifeUpSpawn = 0x801CB9A0; // source=match
 EntitySoulStealOrb = 0x801CC254; // source=match
 EntityEnemyBlood = 0x801CC5E8; // source=match
 EntityRoomForeground = 0x801CCA98; // source=match
-UnkPrimHelper = 0x801CCEB4; // source=match
-FindFirstUnkPrim = 0x801CD3EC; // source=match
 FindFirstUnkPrim2 = 0x801CD41C; // source=match
-UnkPolyFunc2 = 0x801CD600; // source=match
-UnkPolyFunc0 = 0x801CD654; // source=match

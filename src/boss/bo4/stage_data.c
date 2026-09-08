@@ -12,4 +12,4 @@ u16 D_us_801AC288[] = {
 };
 
 #include "gen/bo4_tilemap_0.h"
-#include "gen/bo4_tiledef_0.h"
+#include "gen/bo4_tiledef_bo4.h"

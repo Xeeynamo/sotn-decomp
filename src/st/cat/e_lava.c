@@ -1,8 +1,14 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "cat.h"
 
-static u8 lava_priorities[] = {0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0};
-static s16 lava_tpages[] = {2, 8, -4, 0, -3, -10, 4, 12, 0, 7, 1, -8};
+static u8 lava_priorities[] = {0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0};
+static s16 lava_tpages[] = {
+    2, 8, -4, 0, -3, -10, 4, 12, 0, 7, 1, -8,
+// Loop iterator can index off the end of this array
+#ifdef FIX_UB
+    0,
+#endif
+};
 static SVECTOR lava_vec = {.vx = 0, .vy = 0, .vz = -512, .pad = 0};
 static SVECTOR unused = {.vx = 0, .vy = 0, .vz = -512, .pad = 0};
 
@@ -308,7 +314,7 @@ void EntityLavaEmbers(Entity* self) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            self->ext.prim = prim;
+            self->ext.lava.prim = prim;
             while (prim != NULL) {
                 self->ext.lava.emberPrim = prim;
                 prim = prim->next;
@@ -321,9 +327,10 @@ void EntityLavaEmbers(Entity* self) {
     case 1:
         // Spawn the embers at various random positions
         if (!(g_Timer % 7)) {
-            prim = self->ext.prim;
+            prim = self->ext.lava.prim;
             prim = FindFirstUnkPrim(prim);
-#ifdef VERSION_PSP
+#if defined(VERSION_PSP) || defined(FIX_UB)
+            // Non-PSX versions fix a null pointer here
             if (prim != NULL) {
 #else
             if (1) {
@@ -343,7 +350,7 @@ void EntityLavaEmbers(Entity* self) {
         }
 
         // Embers rise up and change colour and eventually burn out to nothing
-        prim = self->ext.prim;
+        prim = self->ext.lava.prim;
         while (prim != NULL) {
             if (prim->p3) {
                 FadeOutEmber(prim);

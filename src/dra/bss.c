@@ -169,7 +169,7 @@ u16 g_SfxScriptVolumeCopy[NUM_CH];
 s8* g_CurrentSfxScriptCopy[NUM_CH];
 u8 g_SeqIsPlaying;
 STATIC_PAD_BSS(3);
-#ifdef BUG_UB
+#ifdef FIX_UB
 SpuVoiceAttr D_801390C8_;
 SpuVoiceAttr* D_801390C8 = &D_801390C8_;
 SpuVoiceAttr D_801390CC_;

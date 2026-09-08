@@ -161,7 +161,7 @@ void func_801BC5C0(Entity* self) {
 
         sp64 = sp38.vz >> 2;
         gte_ldtr(0, 0, sp38.vz);
-        prim = self->ext.prim;
+        prim = self->ext.et_801BC5C0.prim1;
 
         vectors = &D_80182568[0];
         for (i = 0; i < 20; i++) {
@@ -253,7 +253,6 @@ void func_801BC5C0(Entity* self) {
                     RotMatrixX(vec->vx, m);
                     RotMatrixY(vec->vy, m);
                     RotMatrixZ(vec->vz, m);
-                    SetRotMatrix(m);
 #else
                     // This seems to be creating an identity matrix?
                     // First we zero it out, then we write the proper diagonal
@@ -282,8 +281,8 @@ void func_801BC5C0(Entity* self) {
                     gte_lcir();
                     gte_stclmv(&m->m[0][2]);
 
-                    gte_SetRotMatrix(m);
 #endif
+                    gte_SetRotMatrix(m);
                     gte_ldv01c(sp4c);
                     gte_rtpt();
                     gte_stsxy01c(&var_s3[j * 2]);

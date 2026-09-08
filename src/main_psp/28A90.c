@@ -310,7 +310,7 @@ MATRIX* MulMatrix2(MATRIX* m0, MATRIX* m1) {
     return m1;
 }
 
-MATRIX* func_psp_08928428(MATRIX* m0, MATRIX* m1) {
+MATRIX* SetMulMatrix(MATRIX* m0, MATRIX* m1) {
     MATRIX temp;
 
     temp.m = m0->m;

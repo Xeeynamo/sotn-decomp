@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <game.h>
-#include "../../maria/maria.h"
+#include "../maria/maria.h"
 
 // To use Maria as a playable character, add -DUSE_PLAYER_MARIA=1 in cmake
 

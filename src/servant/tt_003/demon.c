@@ -443,11 +443,11 @@ void func_us_80173D14(Entity* self) {
         }
         self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
         if (self->facingLeft) {
-            s = rsin(0xE00);
-            c = rcos(0xE00);
+            s = rsin(ROT(315));
+            c = rcos(ROT(315));
         } else {
-            s = rsin(0xA00);
-            c = rcos(0xA00);
+            s = rsin(ROT(225));
+            c = rcos(ROT(225));
         }
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 3; i++) {
@@ -533,7 +533,7 @@ void func_us_80173D14(Entity* self) {
     prim->y2 = prim->y3 = posY + (0x100 - self->ext.factory.unk7E) * 32 / 256;
 }
 
-void OVL_EXPORT(ServantInit)(InitializeMode mode) {
+void ServantInit(InitializeMode mode) {
     u16* src;
     u16* dst;
     RECT rect;
@@ -628,7 +628,7 @@ void OVL_EXPORT(ServantInit)(InitializeMode mode) {
     g_api.GetServantStats(entity, 0, 0, &s_DemonStats);
 }
 
-void OVL_EXPORT(UpdateServantDefault)(Entity* self) {
+void UpdateServantDefault(Entity* self) {
     static s32 targetX;
     static s32 targetY;
     static s16 dx0;

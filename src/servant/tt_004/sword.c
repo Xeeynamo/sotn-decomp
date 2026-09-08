@@ -662,7 +662,7 @@ void CheckSwordLevel(Entity* self) {
     }
 }
 
-void OVL_EXPORT(ServantInit)(InitializeMode mode) {
+void ServantInit(InitializeMode mode) {
     Entity* self;
     s32 i, j;
     u16* dst;
@@ -764,7 +764,7 @@ void OVL_EXPORT(ServantInit)(InitializeMode mode) {
     D_us_80178B78 = false;
 }
 
-void OVL_EXPORT(UpdateServantDefault)(Entity* self) {
+void UpdateServantDefault(Entity* self) {
     static s32 D_us_80178544;
     static s32 D_us_80178548; // x
     static s32 D_us_8017854C; // y

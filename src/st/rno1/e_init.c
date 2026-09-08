@@ -12,7 +12,7 @@ void EntityRoomForeground(Entity* self);
 void EntityStageNamePopup(Entity* self);
 void EntityEquipItemDrop(Entity* self);
 void EntityRelicOrb(Entity* self);
-void EntityHeartDrop(Entity* self);
+void EntityPersistentItemDrop(Entity* self);
 void EntityEnemyBlood(Entity* self);
 void EntityMessageBox(Entity* self);
 void EntityDummy(Entity* self);
@@ -61,7 +61,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityStageNamePopup,
     EntityEquipItemDrop,
     EntityRelicOrb,
-    EntityHeartDrop,
+    EntityPersistentItemDrop,
     EntityEnemyBlood,
     EntityMessageBox,
     EntityDummy,
@@ -112,7 +112,7 @@ EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
 EInit g_EInitParanthropus = {ANIMSET_OVL(3), 1, 76, 512, 0x0D3};
 EInit g_EInitParanthropusBoneHitbox = {ANIMSET_OVL(0), 0, 0, 0, 0x0D4};
-EInit D_us_801806E8 = {ANIMSET_OVL(3), 54, 76, 512, 0x0D5};
+EInit g_EInitParanthropusThrownBone = {ANIMSET_OVL(3), 54, 76, 512, 0x0D5};
 EInit g_EInitStoneSkull = {ANIMSET_OVL(4), 0, 78, 515, 0x180};
 EInit g_EInitJackOBones = {ANIMSET_OVL(5), 1, 74, 524, 0x074};
 EInit D_us_8018070C = {ANIMSET_OVL(5), 0, 74, 524, 0x002};

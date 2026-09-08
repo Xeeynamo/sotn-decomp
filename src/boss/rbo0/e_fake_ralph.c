@@ -952,7 +952,7 @@ void EntityBoneCrossAfterImage(Entity* self) {
         self->opacity = 0x60;
         self->blendMode = BLEND_ADD | BLEND_TRANSP;
         if (self->animCurFrame == 0x5F) {
-            self->palette = PAL_FLAG(0x15D);
+            self->palette = PAL_FLAG(PAL_FILL_RED);
         }
     case 1:
         self->opacity -= 8;

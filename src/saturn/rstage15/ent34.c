@@ -1,18 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
 #include <saturn_sprite.h>
-
-extern SaturnSpriteResource g_RStage15SpriteBank24;
-
-void func_060E6878(Entity* self);
-void func_060E76C4(Entity* self);
-void func_060E78B4(Entity* self);
-void func_060E7AC4(Entity* self);
-void func_060E7C3C(Entity* self);
-void func_060E7E60(Entity* self);
-void func_060E823C(Entity* self);
-void func_060E854C(Entity* self);
-void func_060E88A0(Entity* self);
+#include "rstage15.h"
 
 typedef struct {
     u8 hitboxWidth;
