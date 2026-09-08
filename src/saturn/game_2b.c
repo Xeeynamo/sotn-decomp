@@ -218,15 +218,14 @@ void func_0607973C(s32 arg0, Point16* pos) {
     s16 bottom;
     s32 shade;
 
-    shade = g_Timer;
     left = pos->x;
     top = pos->y;
     cmd = &DAT_06086108;
 
-    if (shade & 0x10) {
-        shade = (shade & 0x0F) * 2 + 0x60;
+    if (g_Timer & 0x10) {
+        shade = (g_Timer % 0x10) * 2 + 0x60;
     } else {
-        shade = -(shade & 0x0F) + 0x7F;
+        shade = 0x7F - (g_Timer % 0x10);
     }
     shade /= 8;
 
@@ -250,7 +249,46 @@ void func_0607973C(s32 arg0, Point16* pos) {
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60797FC, func_060797FC);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079958, func_06079958);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079A2C, func_06079A2C);
+
+void func_06079A2C(s32 arg0, s32 arg1, Point16* pos) {
+    SprSpCmd* cmd;
+    s32 shade;
+
+    s16 top;
+    s16 left;
+    s16 right;
+    s16 bottom;
+
+    left = pos->x;
+    top = pos->y;
+    cmd = &DAT_06086108;
+
+    if (arg1) {
+        shade = 0x80;
+    } else {
+        if (g_Timer & 0x20) {
+            shade = (g_Timer % 0x20) + 0x40;
+        } else {
+            shade = 0x5F - (g_Timer % 0x20);
+        }
+    }
+    shade /= 8;
+
+    right = left + 0x6F;
+    bottom = top + 0xC;
+
+    cmd->control = 0x1004;
+    cmd->drawMode = 0x4C0;
+    cmd->color = RGB16_COLOR(shade, 0, 0);
+    *((s32*)&cmd->ax) = (left << 0x10) | ((u16)top);
+    *((s32*)&cmd->bx) = (right << 0x10) | ((u16)top);
+    *((s32*)&cmd->cx) = (right << 0x10) | ((u16)bottom);
+    *((s32*)&cmd->dx) = (left << 0x10) | ((u16)bottom);
+    if (SpMstCmdPos < 0x278) {
+        SPR_2Cmd(arg0, cmd);
+        d_0605AEAC += 0x20;
+    }
+}
 
 s32 func_06079AF0(void) {
     if ((g_Player.status & PLAYER_STATUS_DEAD) || (DAT_0605d7f0 != 0) ||
