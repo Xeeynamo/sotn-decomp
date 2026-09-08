@@ -4,7 +4,6 @@
 
 #include <stage.h>
 
-#define OVL_EXPORT(x) RNO3_##x
 #define STAGE_IS_RNO3
 #define INVERTED_STAGE
 
@@ -25,7 +24,7 @@ typedef enum EntityID {
     /* 0x09 */ E_STAGE_NAME_POPUP,       // EntityStageNamePopup
     /* 0x0A */ E_EQUIP_ITEM_DROP,        // EntityEquipItemDrop
     /* 0x0B */ E_RELIC_ORB,              // EntityRelicOrb
-    /* 0x0C */ E_HEART_DROP,             // EntityHeartDrop
+    /* 0x0C */ E_PERSISTENT_ITEM_DROP,   // EntityPersistentItemDrop
     /* 0x0D */ E_ENEMY_BLOOD,            // EntityEnemyBlood
     /* 0x0E */ E_MESSAGE_BOX,            // EntityMessageBox
     /* 0x0F */ E_DUMMY_F,                // EntityDummy

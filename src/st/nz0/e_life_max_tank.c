@@ -38,7 +38,7 @@ void EntityLifeMaxTank(Entity* self) {
     case 2:
         if (AnimateEntity(D_80180F30, self) == 0) {
             newEntity = &self[1];
-            CreateEntityFromEntity(E_HEART_DROP, self, newEntity);
+            CreateEntityFromEntity(E_PERSISTENT_ITEM_DROP, self, newEntity);
             newEntity->params = D_80180F4C[self->params];
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {

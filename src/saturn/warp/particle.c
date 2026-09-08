@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
 #include "shared_sprite_banks.h"
+#include "warp.h"
 
 typedef struct {
     s16 x;
@@ -8,9 +9,6 @@ typedef struct {
     s16 width;
     s16 height;
 } WarpSoulStealOrbSpriteRect;
-
-void EntityWarpDummy(Entity* self);
-void EntityWarpStageNamePopup(Entity* self);
 
 u8 g_WarpSoulStealOrbAnim[] = {
     4, 2, 3, 3, 3, 4, 3, 5, 3, 6, 3, 3, 0, 0,
@@ -27,7 +25,7 @@ u16 g_WarpSoulStealOrbAngles[8] = {
 
 EntityEntry g_WarpDummyEntry = {
     &g_SaturnSharedSpriteBank8Resource,
-    EntityWarpDummy,
+    InitSolidProp,
 };
 
 EntityEntry g_WarpStageNamePopupEntry = {

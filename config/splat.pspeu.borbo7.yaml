@@ -91,6 +91,8 @@ segments:
       - [0x1E0E8, bss, 1E0E8]
       - [0x1E0E8, .bss, rbo7/e_collect]
       - [0x1E108, bss, 1E108]
+      - [0x1E118, .bss, rbo7_psp/st_init]
+      - [0x1E188, bss, 1E188]
       - [0x1E1A0, .bss, rbo7/e_lock_camera]
       - [0x1E1A8, bss, 1E1A8]
   - [0x1E200]

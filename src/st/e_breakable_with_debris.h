@@ -116,7 +116,7 @@ void EntityBreakable(Entity* self) {
 #if defined(STAGE_IS_TOP) || defined(STAGE_IS_RTOP)
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_HEART_DROP, self, entity);
+                CreateEntityFromEntity(E_PERSISTENT_ITEM_DROP, self, entity);
                 entity->params = self->params & 0x1FF;
             }
             PreventEntityFromRespawning(self);
@@ -128,7 +128,7 @@ void EntityBreakable(Entity* self) {
             g_api.PlaySfx(SFX_GLASS_BREAK_E);
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_HEART_DROP, self, entity);
+                CreateEntityFromEntity(E_PERSISTENT_ITEM_DROP, self, entity);
                 entity->params = self->params & 0x1FF;
             }
             PreventEntityFromRespawning(self);
@@ -138,7 +138,7 @@ void EntityBreakable(Entity* self) {
             g_api.PlaySfx(SFX_GLASS_BREAK_E);
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_HEART_DROP, self, entity);
+                CreateEntityFromEntity(E_PERSISTENT_ITEM_DROP, self, entity);
 #ifdef STAGE_IS_NO1
                 entity->params = 3; // item drop index
 #else

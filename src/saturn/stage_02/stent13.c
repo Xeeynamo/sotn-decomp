@@ -1,11 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
-
-void func_060EAFAC(Entity* self);
-void func_060EB5C4(Entity* self);
-void func_060EB6E4(Entity* self);
-
-extern struct SpriteParts* g_Stage02SpriteBank31[];
+#include "stage_02.h"
 
 EntityEntry g_Stage02EntityEntry42 = {g_Stage02SpriteBank31, func_060EAFAC};
 EntityEntry g_Stage02EntityEntry44 = {g_Stage02SpriteBank31, func_060EB5C4};

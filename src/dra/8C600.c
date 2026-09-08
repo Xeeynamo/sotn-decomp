@@ -379,7 +379,7 @@ void func_8012D28C(bool exitEarly) {
     // Start a routine where we look through this array for a value.
     bitNotFound = 0;
     for (i = 3; i < NUM_VERTICAL_SENSORS; i++) {
-        if (g_Player.colWall[i].effects & EFFECT_UNK_0002) {
+        if (g_Player.colWall[i].effects & EFFECT_SIDE) {
             break;
         }
     }
@@ -387,7 +387,7 @@ void func_8012D28C(bool exitEarly) {
     // and keep searching.
     if (i == 7) {
         for (i = NUM_VERTICAL_SENSORS + 3; i < NUM_VERTICAL_SENSORS * 2; i++) {
-            if (g_Player.colWall[i].effects & EFFECT_UNK_0002) {
+            if (g_Player.colWall[i].effects & EFFECT_SIDE) {
                 break;
             }
         }

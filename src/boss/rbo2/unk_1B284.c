@@ -44,13 +44,14 @@ INCLUDE_ASM("boss/rbo2/nonmatchings/unk_1B284", func_801CE228);
 
 INCLUDE_ASM("boss/rbo2/nonmatchings/unk_1B284", polarPlacePartsList);
 
+// decompiled in src/boss/bo1/e_explosion_flame.c
 INCLUDE_ASM("boss/rbo2/nonmatchings/unk_1B284", func_us_8019D260_from_rcen);
 
 INCLUDE_ASM("boss/rbo2/nonmatchings/unk_1B284", func_us_8019F260);
 
 extern EInit g_EInitInteractable;
 extern s32 D_us_80180B5C;
-extern u32 D_us_801AE900;
+extern u32 g_CutsceneFlags;
 
 void func_us_8019F4AC(Entity* self) {
     Entity* entity;
@@ -79,7 +80,7 @@ void func_us_8019F4AC(Entity* self) {
             if ((posX - 0x81) >= 0xFF) {
                 break;
             }
-        } else if (!(D_us_801AE900 & 2)) {
+        } else if (!(g_CutsceneFlags & 2)) {
             break;
         }
         g_api.TimeAttackController(
@@ -119,7 +120,7 @@ void func_us_8019F4AC(Entity* self) {
         posY = 0x80 - g_Tilemap.scrollY.i.hi;
         entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_LIFE_UPSPAWN, self, entity);
+            CreateEntityFromEntity(E_LIFE_UP_SPAWN, self, entity);
             entity->posX.i.hi = posX;
             entity->posY.i.hi = posY;
             entity->params = 0x15;

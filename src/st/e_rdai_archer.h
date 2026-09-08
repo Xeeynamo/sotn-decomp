@@ -3,15 +3,10 @@
 extern EInit g_EInitArcher;
 extern s16 g_RdaiArcherOffsets[][2];
 
-#define RDAI_ARCHER_TIMER(self) (*(s16*)((u8*)&(self)->ext + 4))
-#define RDAI_ARCHER_MODE(self) (*((u8*)&(self)->ext + 9))
-
 void func_us_801BFE6C(Entity* self) {
     Entity* entity;
     s32 i;
     s32 animIndex;
-    s32 playerX;
-    s32 playerY;
     s16 angle;
     s32 deltaX;
     s32 deltaY;
@@ -61,8 +56,8 @@ void func_us_801BFE6C(Entity* self) {
 
     case 1:
         if (!self->step_s) {
-            RDAI_ARCHER_TIMER(self) = 0x80;
-            RDAI_ARCHER_MODE(self) = 0;
+            self->ext.rdaiArcher.timer = 0x80;
+            self->ext.rdaiArcher.mode = 0;
             self->step_s++;
         }
         entity = &PLAYER;
@@ -76,7 +71,7 @@ void func_us_801BFE6C(Entity* self) {
             angle = -0x200;
         }
         func_801CDC80(&self->rotate, angle, 8);
-        if (!--RDAI_ARCHER_TIMER(self)) {
+        if (!--self->ext.rdaiArcher.timer) {
             SetStep(2);
         }
         break;
@@ -84,8 +79,8 @@ void func_us_801BFE6C(Entity* self) {
     case 2:
         switch (self->step_s) {
         case 0:
-            RDAI_ARCHER_TIMER(self) = 0x60;
-            RDAI_ARCHER_MODE(self) = 1;
+            self->ext.rdaiArcher.timer = 0x60;
+            self->ext.rdaiArcher.mode = 1;
             self->step_s++;
             // fallthrough
         case 1:
@@ -100,24 +95,24 @@ void func_us_801BFE6C(Entity* self) {
                 angle = -0x200;
             }
             func_801CDC80(&self->rotate, angle, 8);
-            if (!--RDAI_ARCHER_TIMER(self)) {
+            if (!--self->ext.rdaiArcher.timer) {
                 PlaySfxPositional(SFX_ARROW_SHOT_D);
-                RDAI_ARCHER_MODE(self) = 2;
-                RDAI_ARCHER_TIMER(self) = 0x30;
+                self->ext.rdaiArcher.mode = 2;
+                self->ext.rdaiArcher.timer = 0x30;
                 self->step_s++;
             }
             break;
 
         case 2:
-            if (!--RDAI_ARCHER_TIMER(self)) {
-                RDAI_ARCHER_MODE(self) = 3;
-                RDAI_ARCHER_TIMER(self) = 0x80;
+            if (!--self->ext.rdaiArcher.timer) {
+                self->ext.rdaiArcher.mode = 3;
+                self->ext.rdaiArcher.timer = 0x80;
                 self->step_s++;
             }
             break;
 
         case 3:
-            if (!--RDAI_ARCHER_TIMER(self)) {
+            if (!--self->ext.rdaiArcher.timer) {
                 SetStep(1);
             }
             break;
@@ -136,6 +131,3 @@ void func_us_801BFE6C(Entity* self) {
         break;
     }
 }
-
-#undef RDAI_ARCHER_TIMER
-#undef RDAI_ARCHER_MODE

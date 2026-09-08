@@ -154,7 +154,7 @@ func buildSprites(jsonFileName, name, outputDir, ovlName string) error {
 		}
 		symbol := fmt.Sprintf("sprites_%s_%d", ovlName, i)
 		sbHeader.WriteString(fmt.Sprintf("extern s16* %s[];\n", symbol))
-		spriteset.BuildSpriteSet(&sbData, ss, symbol)
+		spriteset.BuildSpriteSet(&sbData, ss, symbol, false)
 		symbols = append(symbols, symbol)
 	}
 

@@ -14,7 +14,7 @@
 // PSP:func_psp_0924B458:Match
 // PSP:https://decomp.me/scratch/IWYbc
 void EntityCerberusGateDebug(Entity* self) {
-    typedef enum Step {
+    enum Step {
         INIT = 0,
         WAIT_FOR_INPUT = 1,
         DROP = 2,
@@ -55,7 +55,7 @@ void EntityCerberusGateDebug(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIdx;
         prim = &g_PrimBuf[primIdx];
-        self->ext.prim = prim;
+        self->ext.debugCerberusGate.prim = prim;
 
         prim->tpage = 0xF;
         prim->clut = 0x1B;
@@ -150,7 +150,7 @@ void EntityCerberusGateDebug(Entity* self) {
 
         if (!(g_Timer & 7)) {
             if (g_Timer % 2) {
-                prim = self->ext.prim;
+                prim = self->ext.debugCerberusGate.prim;
                 prim = prim->next;
                 prim = FindFirstUnkPrim(prim);
                 if (prim != NULL) {
@@ -181,7 +181,7 @@ void EntityCerberusGateDebug(Entity* self) {
         }
         /* fallthrough */
     case WAIT_TO_DESTROY:
-        prim = self->ext.prim;
+        prim = self->ext.debugCerberusGate.prim;
         while (prim != NULL) {
             if (prim->p3) {
                 prim->y0 += 2;

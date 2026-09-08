@@ -1,15 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
 #include <saturn_sprite.h>
-
-extern SaturnSpriteResource g_Stage15SpriteBank26;
-
-void func_060E9E44(Entity* self);
-void func_060EAAA8(Entity* self);
-void func_060EACDC(Entity* self);
-void func_060EB2B8(Entity* self);
-void func_060EB824(Entity* self);
-void func_060EBA00(Entity* self);
+#include "stage_15.h"
 
 EntityEntry g_Stage15EntityHumanFaceTree = {
     &g_Stage15SpriteBank26, func_060E9E44};

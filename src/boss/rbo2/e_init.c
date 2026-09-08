@@ -12,7 +12,7 @@ void EntityRoomForeground(Entity* self);
 void EntityStageNamePopup(Entity* self);
 void EntityEquipItemDrop(Entity* self);
 void EntityRelicOrb(Entity* self);
-void EntityHeartDrop(Entity* self);
+void EntityPersistentItemDrop(Entity* self);
 void EntityEnemyBlood(Entity* self);
 void EntityMessageBox(Entity* self);
 void EntityDummy(Entity* self);
@@ -35,46 +35,22 @@ void func_us_8019F260(Entity* self);
 void func_us_8019F4AC(Entity* self);
 void EntityCerberusGateDebug(Entity* self);
 void EntityLifeUpSpawn(Entity* self);
-void RBO2_EntityCutsceneDialogue(Entity* self);
+void EntityCutsceneDialogue(Entity* self);
 void func_us_801A17C8(Entity* self);
 
 PfnEntityUpdate EntityUpdates[] = {
-    EntityBreakable,
-    EntityExplosion,
-    EntityPrizeDrop,
-    EntityDamageDisplay,
-    EntityRedDoor,
-    EntityIntenseExplosion,
-    EntitySoulStealOrb,
-    EntityRoomForeground,
-    EntityStageNamePopup,
-    EntityEquipItemDrop,
-    EntityRelicOrb,
-    EntityHeartDrop,
-    EntityEnemyBlood,
-    EntityMessageBox,
-    EntityDummy,
-    EntityDummy,
-    EntityBackgroundBlock,
-    EntityLockCamera,
-    EntityUnkId13,
-    EntityExplosionVariants,
-    EntityGreyPuff,
-    func_us_8019B52C,
-    func_us_8019C718,
-    func_us_8019C924,
-    func_us_8019D4CC,
-    func_us_8019D950,
-    func_us_8019DA04,
-    func_us_8019E558,
-    func_us_8019E920,
-    func_us_8019ECCC,
-    func_us_8019F260,
-    func_us_8019F4AC,
-    EntityCerberusGateDebug,
-    EntityLifeUpSpawn,
-    RBO2_EntityCutsceneDialogue,
-    func_us_801A17C8,
+    EntityBreakable,     EntityExplosion,         EntityPrizeDrop,
+    EntityDamageDisplay, EntityRedDoor,           EntityIntenseExplosion,
+    EntitySoulStealOrb,  EntityRoomForeground,    EntityStageNamePopup,
+    EntityEquipItemDrop, EntityRelicOrb,          EntityPersistentItemDrop,
+    EntityEnemyBlood,    EntityMessageBox,        EntityDummy,
+    EntityDummy,         EntityBackgroundBlock,   EntityLockCamera,
+    EntityUnkId13,       EntityExplosionVariants, EntityGreyPuff,
+    func_us_8019B52C,    func_us_8019C718,        func_us_8019C924,
+    func_us_8019D4CC,    func_us_8019D950,        func_us_8019DA04,
+    func_us_8019E558,    func_us_8019E920,        func_us_8019ECCC,
+    func_us_8019F260,    func_us_8019F4AC,        EntityCerberusGateDebug,
+    EntityLifeUpSpawn,   EntityCutsceneDialogue,  func_us_801A17C8,
 };
 
 // clang-format off

@@ -47,7 +47,7 @@ void EntityBlock(Entity* self) {
         if (!(g_Timer & 7)) {
             g_api.PlaySfx(SFX_WALL_DEBRIS_B);
         }
-        if (!(collision & (EFFECT_UNK_0020 | EFFECT_SOLID_FROM_ABOVE))) {
+        if (!(collision & (EFFECT_HURT | EFFECT_SOLID_FROM_ABOVE))) {
             self->step++;
         }
         break;

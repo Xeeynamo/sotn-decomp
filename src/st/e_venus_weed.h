@@ -168,7 +168,7 @@ static Primitive* SetupPrimsForEntitySpriteParts(
     return prim;
 }
 
-typedef enum VenusWeedStep {
+enum VenusWeedStep {
     VENUS_WEED_INIT,
     VENUS_WEED_DROP_TO_GROUND,
     VENUS_WEED_THORNWEED_DISGUISE,
@@ -178,7 +178,7 @@ typedef enum VenusWeedStep {
     VENUS_WEED_DEATH = 8,
 };
 
-typedef enum VenusWeedTendrilStep {
+enum VenusWeedTendrilStep {
     VENUS_WEED_TENDRIL_INIT,
     VENUS_WEED_TENDRIL_DROP_TO_GROUND,
     VENUS_WEED_TENDRIL_MOVE_TO_RANDOM_POSITION,
@@ -188,7 +188,7 @@ typedef enum VenusWeedTendrilStep {
     VENUS_WEED_TENDRIL_DEATH = 8,
 };
 
-typedef enum VenusWeedTendrilAttack_Substep {
+enum VenusWeedTendrilAttack_Substep {
     VENUS_WEED_TENDRIL_ATTACK_INIT,
 #if !defined(BLUE)
     VENUS_WEED_TENDRIL_ATTACK_DELAY,
@@ -312,7 +312,7 @@ void EntityVenusWeed(Entity* self) {
     const int AttackDuration = 0x30;
     const int DeathFinalClut = DEATH_CLUT;
 
-    typedef enum Grow_Substep {
+    enum Grow_Substep {
         GROW_LEAVES = 0,
         GROW_STEM = 1,
         GROW_FLOWER = 2,
@@ -320,7 +320,7 @@ void EntityVenusWeed(Entity* self) {
         GROW_DONE = 4,
     };
 
-    typedef enum Death_Substep {
+    enum Death_Substep {
         DEATH_INIT = 0,
         DEATH_COLOR_CYCLE = 1,
         DEATH_SHRINK = 2,
@@ -358,7 +358,7 @@ void EntityVenusWeed(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIdx;
         prim = &g_PrimBuf[primIdx];
-        self->ext.prim = prim;
+        self->ext.venusWeed.prim = prim;
 
         // Leaves
         for (i = 0; i < 2; i++) {
@@ -437,7 +437,7 @@ void EntityVenusWeed(Entity* self) {
             }
 
             // Update prims to match
-            prim = self->ext.prim;
+            prim = self->ext.venusWeed.prim;
             x = self->posX.i.hi;
             y = self->posY.i.hi;
             y -= self->ext.venusWeed.leavesHeight;
@@ -547,7 +547,7 @@ void EntityVenusWeed(Entity* self) {
                 // Switch to next clut
                 self->palette += 1;
                 // For primitives too
-                prim = self->ext.prim;
+                prim = self->ext.venusWeed.prim;
                 while (prim != NULL) {
                     prim->clut += 1;
                     prim = prim->next;
@@ -563,7 +563,7 @@ void EntityVenusWeed(Entity* self) {
             self->ext.venusWeed.timer++;
             // Every other frame
             if (self->ext.venusWeed.timer & 1) {
-                prim = self->ext.prim;
+                prim = self->ext.venusWeed.prim;
                 x = self->posX.i.hi;
 
                 // Shrink leaves
@@ -628,7 +628,7 @@ void EntityVenusWeed(Entity* self) {
         self->rotate += WiggleLeavesSpeed;
         x = rcos(rot) * 3 >> 0xC;
         y = rsin(rot) * 3 >> 0xC;
-        prim = self->ext.prim;
+        prim = self->ext.venusWeed.prim;
 
         // Update leaves
         for (i = -1; i < 2; i += 2) {
@@ -676,7 +676,7 @@ void EntityVenusWeedFlower(Entity* self) {
     const int DartsAngleDelta = 0x60;
     const int DartsCount = 5;
 
-    typedef enum Step {
+    enum Step {
         INIT,
         GROW,
         REVEAL,
@@ -686,7 +686,7 @@ void EntityVenusWeedFlower(Entity* self) {
         DEATH = 8,
     };
 
-    typedef enum Spikes_Substep {
+    enum Spikes_Substep {
         SPIKES_INIT,
 #if defined(BLUE)
         SPIKES_1,
@@ -698,7 +698,7 @@ void EntityVenusWeedFlower(Entity* self) {
         SPIKES_RESET_TO_IDLE,
     };
 
-    typedef enum Darts_Substep {
+    enum Darts_Substep {
         DARTS_INIT,
         DARTS_DELAY,
         DARTS_CHARGE,
@@ -1225,7 +1225,7 @@ void EntityVenusWeedDart(Entity* self) {
     const int ClutIdxPlayerHit = 0x00;
     const int ClutIdxMax = 0x30;
 
-    typedef enum Step {
+    enum Step {
         INIT = 0,
         FLY = 1,
         DECAY = 2,
@@ -1341,7 +1341,7 @@ void EntityVenusWeedDart(Entity* self) {
 void EntityVenusWeedSpike(Entity* self) {
     const int SpikeParts = 5;
 
-    typedef enum Step {
+    enum Step {
         INIT = 0,
         EXTEND = 1,
     };

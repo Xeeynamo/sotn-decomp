@@ -14,6 +14,8 @@ typedef unsigned char u_char;
 typedef unsigned short u_short;
 typedef unsigned long u_long;
 typedef unsigned int size_t;
+typedef long intptr_t;
+typedef unsigned long uintptr_t;
 
 #define INT32_MAX (0x7FFFFFFF)
 #define INT16_MAX (0x7FFF)

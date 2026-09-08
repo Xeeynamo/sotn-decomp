@@ -66,7 +66,7 @@ void EntityWeaponAttack(Entity* self) {
         DestroyEntityWeapon(true);
         self->hitboxHeight = 4;
         self->hitboxWidth = 4;
-        self->rotate = -0x700;
+        self->rotate = ROT(-157.5);
         self->drawFlags |= ENTITY_ROTATE;
 
         prim = &g_PrimBuf[self->primIndex];
@@ -112,7 +112,7 @@ void EntityWeaponAttack(Entity* self) {
         self->step++;
         break;
     case 1:
-        self->rotate += 0x70;
+        self->rotate += ROT(9.84375);
         if (self->rotate > 0) {
             self->rotate = 0;
         }

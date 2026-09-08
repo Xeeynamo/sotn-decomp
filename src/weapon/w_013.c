@@ -83,10 +83,10 @@ static void EntityWeaponAttack(Entity* self) {
         SetSpriteBank1(g_Animset);
         self->animSet = ANIMSET_OVL(0x10);
         self->unk5A = 0x64;
-        self->palette = 0x110;
+        self->palette = PAL_UNK_110;
         if (g_HandId != 0) {
             self->animSet += 2;
-            self->palette = 0x128;
+            self->palette = PAL_UNK_128;
             self->unk5A = 0x66;
         }
         self->animCurFrame = 6;
@@ -132,7 +132,7 @@ static void EntityWeaponAttack(Entity* self) {
         self->hitboxWidth = 12;
         self->hitboxHeight = 12;
         self->drawFlags |= DRAW_COLORS;
-        self->rotate -= 0x80;
+        self->rotate -= ROT(11.25);
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         self->velocityY += FIX(1.0 / 16);
@@ -159,7 +159,7 @@ static void EntityWeaponAttack(Entity* self) {
         self->ext.heavenSword.unk7E++;
         return;
     case 3:
-        self->rotate -= 0x80;
+        self->rotate -= ROT(11.25);
         var_s1 = self->ext.heavenSword.unk84;
         self->ext.heavenSword.unk84 += 0x20;
         xVar = abs((PLAYER.posX.i.hi + PLAYER.hitboxOffX) - self->posX.i.hi);
@@ -252,10 +252,10 @@ static void func_ptr_80170008(Entity* self) {
         SetSpriteBank1(g_Animset);
         self->animSet = ANIMSET_OVL(0x10);
         self->unk5A = 0x64;
-        self->palette = 0x110;
+        self->palette = PAL_UNK_110;
         if (g_HandId != 0) {
             self->animSet += 2;
-            self->palette = 0x128;
+            self->palette = PAL_UNK_128;
             self->unk5A = 0x66;
         }
         self->animCurFrame = 6;
@@ -291,7 +291,7 @@ static void func_ptr_80170008(Entity* self) {
         self->step++;
         return;
     case 1:
-        self->rotate += 0x100;
+        self->rotate += ROT(22.5);
         angle = self->ext.heavenSword.angle;
         self->ext.heavenSword.angle += -0x20;
         self->ext.heavenSword2.unk84 += 0x10;

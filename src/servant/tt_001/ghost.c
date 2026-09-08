@@ -223,7 +223,7 @@ Entity* CreateChildEntity(Entity* parent, s32 entityType) {
     return entity;
 }
 
-void OVL_EXPORT(ServantInit)(InitializeMode mode) {
+void ServantInit(InitializeMode mode) {
     RECT rect;
     u16* dst;
     u16* src;
@@ -306,7 +306,7 @@ void OVL_EXPORT(ServantInit)(InitializeMode mode) {
     }
 }
 
-void OVL_EXPORT(UpdateServantDefault)(Entity* self) {
+void UpdateServantDefault(Entity* self) {
     static s16 targetX;
     STATIC_PAD_BSS(2);
     static s16 targetY;

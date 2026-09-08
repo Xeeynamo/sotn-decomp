@@ -443,7 +443,7 @@ void CheckForValidAbility(Entity* self) {
     }
 }
 
-void OVL_EXPORT(ServantInit)(InitializeMode mode) {
+void ServantInit(InitializeMode mode) {
     u16* src;
     u16* dst;
     RECT rect;
@@ -545,7 +545,7 @@ void OVL_EXPORT(ServantInit)(InitializeMode mode) {
     g_api.GetServantStats(entity, 0, 0, &s_FaerieStats);
 }
 
-void OVL_EXPORT(UpdateServantDefault)(Entity* self) {
+void UpdateServantDefault(Entity* self) {
     g_api.GetServantStats(self, 0, 0, &s_FaerieStats);
 
     if (D_us_80179320) {
@@ -690,9 +690,9 @@ void UpdateServantUseLifeApple(Entity* self) {
         self->step++;
         // fallthrough
     case 3:
-        if (!g_unkGraphicsStruct.unk20) {
+        if (!g_unkGraphicsStruct.unk28) {
             g_Status.equipHandCount[ITEM_LIFE_APPLE]--;
-            g_unkGraphicsStruct.unk20 = 0xFFF;
+            g_unkGraphicsStruct.unk28 = 0xFFF;
             self->step++;
         }
         break;
@@ -784,7 +784,7 @@ void UpdateServantUseLifeApple(Entity* self) {
     case 10:
         self->ext.faerie.frameCounter++;
         if (self->ext.faerie.frameCounter > 90) {
-            g_unkGraphicsStruct.unk20 = 0;
+            g_unkGraphicsStruct.unk28 = 0;
             self->step++;
         }
         break;

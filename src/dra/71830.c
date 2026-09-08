@@ -157,17 +157,15 @@ bool func_80111DE8(bool mistReset) {
         collider1.effects = EFFECT_NONE;
     }
     filtered_effects =
-        collider1.effects & (EFFECT_UNK_8000 | EFFECT_UNK_4000 |
-                             EFFECT_UNK_0800 | EFFECT_UNK_0002 | EFFECT_SOLID);
+        collider1.effects &
+        (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0800 | EFFECT_BLOCK);
     if (filtered_effects == EFFECT_UNK_8000 + EFFECT_UNK_4000 + EFFECT_SOLID ||
-        filtered_effects == EFFECT_UNK_8000 + EFFECT_UNK_4000 +
-                                EFFECT_UNK_0002 + EFFECT_SOLID ||
+        filtered_effects == EFFECT_UNK_8000 + EFFECT_UNK_4000 + EFFECT_BLOCK ||
         filtered_effects == EFFECT_UNK_4000 + EFFECT_UNK_0800 + EFFECT_SOLID ||
-        filtered_effects == EFFECT_UNK_4000 + EFFECT_UNK_0800 +
-                                EFFECT_UNK_0002 + EFFECT_SOLID ||
-        filtered_effects == EFFECT_UNK_8000 + EFFECT_UNK_0002 + EFFECT_SOLID ||
-        filtered_effects == EFFECT_UNK_0800 + EFFECT_UNK_0002 + EFFECT_SOLID ||
-        filtered_effects == EFFECT_UNK_0002 + EFFECT_SOLID) {
+        filtered_effects == EFFECT_UNK_4000 + EFFECT_UNK_0800 + EFFECT_BLOCK ||
+        filtered_effects == EFFECT_UNK_8000 + EFFECT_BLOCK ||
+        filtered_effects == EFFECT_UNK_0800 + EFFECT_BLOCK ||
+        filtered_effects == EFFECT_BLOCK) {
         // This "plus 16, minus 8" is a random guess. The effect is just +8.
         // We can use any pair that comes out to 8, but the compiler comes
         // out wrong if we don't split it into two. So "+10-2" works equally
@@ -191,17 +189,15 @@ bool func_80111DE8(bool mistReset) {
         collider1.effects = EFFECT_NONE;
     }
     filtered_effects =
-        collider1.effects & (EFFECT_UNK_8000 | EFFECT_UNK_4000 |
-                             EFFECT_UNK_0800 | EFFECT_UNK_0002 | EFFECT_SOLID);
+        collider1.effects &
+        (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0800 | EFFECT_BLOCK);
     if (filtered_effects == EFFECT_UNK_8000 + EFFECT_SOLID ||
-        filtered_effects == EFFECT_UNK_8000 + EFFECT_UNK_0002 + EFFECT_SOLID ||
+        filtered_effects == EFFECT_UNK_8000 + EFFECT_BLOCK ||
         filtered_effects == EFFECT_UNK_0800 + EFFECT_SOLID ||
-        filtered_effects == EFFECT_UNK_0800 + EFFECT_UNK_0002 + EFFECT_SOLID ||
-        filtered_effects == EFFECT_UNK_8000 + EFFECT_UNK_4000 +
-                                EFFECT_UNK_0002 + EFFECT_SOLID ||
-        filtered_effects == EFFECT_UNK_4000 + EFFECT_UNK_0800 +
-                                EFFECT_UNK_0002 + EFFECT_SOLID ||
-        filtered_effects == EFFECT_UNK_0002 + EFFECT_SOLID) {
+        filtered_effects == EFFECT_UNK_0800 + EFFECT_BLOCK ||
+        filtered_effects == EFFECT_UNK_8000 + EFFECT_UNK_4000 + EFFECT_BLOCK ||
+        filtered_effects == EFFECT_UNK_4000 + EFFECT_UNK_0800 + EFFECT_BLOCK ||
+        filtered_effects == EFFECT_BLOCK) {
         // See above comment regarding values combining to 8.
         xPos = (PLAYER.posX.i.hi - 9) + collider1.unkC + 1;
         yPos = PLAYER.posY.i.hi + floorY - 1;
@@ -1504,14 +1500,14 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
         if ((g_StageId != STAGE_BO6) && (g_StageId != STAGE_RBO6) &&
             (g_StageId != STAGE_DRE)) {
             for (i = 2; i < NUM_VERTICAL_SENSORS; i++) {
-                if (g_Player.colWall[i].effects & EFFECT_UNK_0002) {
+                if (g_Player.colWall[i].effects & EFFECT_SIDE) {
                     break;
                 }
             }
             if (i == NUM_VERTICAL_SENSORS) {
                 for (i = NUM_VERTICAL_SENSORS + 2; i < NUM_VERTICAL_SENSORS * 2;
                      i++) {
-                    if (g_Player.colWall[i].effects & EFFECT_UNK_0002) {
+                    if (g_Player.colWall[i].effects & EFFECT_SIDE) {
                         break;
                     }
                 }
@@ -1817,7 +1813,7 @@ void PlayerStepKill(DamageParam* damage, s16 arg_PlayerStep, s16 arg2) {
     nullifyVelY = false;
     PLAYER.drawFlags = DRAW_COLORS;
     plDraw = &g_PlayerDraw[0];
-    if ((g_unkGraphicsStruct.unk20 == 0xFFF) && (PLAYER.step_s)) {
+    if ((g_unkGraphicsStruct.unk28 == 0xFFF) && (PLAYER.step_s)) {
         SetPlayerStep(Player_Unk17);
         PLAYER.velocityX = PLAYER.velocityY = 0;
         return;
@@ -1999,7 +1995,7 @@ void PlayerStepUnk17(void) {
     PLAYER.velocityX = PLAYER.velocityY = 0;
     PLAYER.poseTimer = 4;
 
-    if (g_unkGraphicsStruct.unk20 == 0) {
+    if (g_unkGraphicsStruct.unk28 == 0) {
         if (g_Player.vram_flag & TOUCHING_GROUND) {
             func_8010E570(0);
         } else {
@@ -2022,7 +2018,7 @@ static void func_80115C50(void) {
             PLAYER.posX.i.hi++;
         }
     }
-    if (g_StageId == (STAGE_TOP | STAGE_INVERTEDCASTLE_FLAG)) {
+    if (g_StageId == STAGE_RTOP) {
         if (abs((g_Tilemap.left << 8) + g_PlayerX) - 8384 > 0) {
             PLAYER.posX.i.hi--;
         }
@@ -2123,7 +2119,7 @@ void PlayerStepKillWater(void) {
     var_s2 = false;
     PLAYER.drawFlags = ENTITY_ROTATE;
     plDraw = g_PlayerDraw;
-    if (g_unkGraphicsStruct.unk20 == 0xFFF && PLAYER.step_s) {
+    if (g_unkGraphicsStruct.unk28 == 0xFFF && PLAYER.step_s) {
         SetPlayerStep(Player_Unk17);
         PLAYER.velocityX = PLAYER.velocityY = 0;
         return;

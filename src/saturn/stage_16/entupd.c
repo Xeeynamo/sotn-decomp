@@ -1,50 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
-
-extern EntityEntry g_EntityNoopEntry;
-extern EntityEntry g_Stage16EntityEntry00;
-extern EntityEntry g_Stage16EntityEntry17;
-extern EntityEntry g_Stage16EntityEntry16;
-extern EntityEntry g_Stage16EntityEntry20;
-extern EntityEntry g_Stage16EntityEntry21;
-extern EntityEntry g_Stage16EntityEntry22;
-extern EntityEntry g_Stage16EntityEntry02;
-extern EntityEntry g_Stage16EntityEntry09;
-extern EntityEntry g_Stage16EntityEntry10;
-extern EntityEntry g_Stage16EntityEntry11;
-extern EntityEntry g_Stage16EntityEntry13;
-extern EntityEntry g_Stage16EntityEntry04;
-extern EntityEntry g_Stage16EntityEntry03;
-extern EntityEntry g_Stage16EntityEntry01;
-extern EntityEntry g_Stage16EntityEntry05;
-extern EntityEntry g_Stage16EntityEntry18;
-extern EntityEntry g_Stage16EntityEntry19;
-extern EntityEntry g_Stage16EntityEntry06;
-extern EntityEntry g_Stage16EntityEntry12;
-extern EntityEntry g_Stage16EntityEntry14;
-extern EntityEntry g_Stage16EntityEntry08;
-extern EntityEntry g_Stage16EntityEntry15;
-extern EntityEntry g_Stage16EntityEntry23;
-extern EntityEntry g_Stage16EntityEntry24;
-extern EntityEntry g_Stage16EntityEntry25;
-extern EntityEntry g_Stage16EntityEntry26;
-extern EntityEntry g_Stage16EntityEntry27;
-extern EntityEntry g_Stage16EntitySkeletonBeast;
-extern EntityEntry g_Stage16EntityEntry30;
-extern EntityEntry g_Stage16EntityEntry29;
-extern EntityEntry g_Stage16EntitySpecter;
-extern EntityEntry g_Stage16EntityGargoyle;
-extern EntityEntry g_Stage16EntityEntry33;
-extern EntityEntry g_Stage16EntityEntry34;
-extern EntityEntry g_Stage16EntitySkeletonBreeder;
-extern EntityEntry g_Stage16EntityEntry36;
-extern EntityEntry g_Stage16EntityEntry37;
-extern EntityEntry g_Stage16EntityEntry38;
-extern EntityEntry g_Stage16EntityWillOWisp;
-extern EntityEntry g_Stage16EntityEntry40;
-extern EntityEntry g_Stage16EntityEntry41;
-extern EntityEntry g_Stage16EntityEntry42;
-extern EntityEntry g_Stage16EntityEntry43;
+#include "stage_16.h"
 
 EntityEntry* g_Stage16EntityUpdates[] = {
     &g_Stage16EntityEntry00,

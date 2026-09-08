@@ -167,7 +167,7 @@ static int func_pspeu_092A6958(s32 x, s32 y, s32 horizPixelCount) {
     Collider col;
 
     g_api.CheckCollision(x, y, &col, 0);
-    while (col.effects & EFFECT_UNK_0002) {
+    while (col.effects & EFFECT_SIDE) {
         if (horizPixelCount-- < 0) {
             return -1;
         }
@@ -212,7 +212,7 @@ static int CheckFieldCollisionForCat(
             entity->posX.i.hi = sp3C + (x < 0 ? -var_s1 : var_s1);
             entity->posY.i.hi = var_s8 + (y * var_s1) / var_s3;
             g_api.CheckCollision(entity->posX.i.hi, entity->posY.i.hi, col, 0);
-            if (col->effects & (EFFECT_SOLID | EFFECT_UNK_0002)) {
+            if (col->effects & EFFECT_BLOCK) {
                 if (var_s2 == 0) {
                     col->effects = EFFECT_SOLID;
                 }
@@ -221,8 +221,8 @@ static int CheckFieldCollisionForCat(
                 if (var_s1 && y > 0) {
                     g_api.CheckCollision(
                         entity->posX.i.hi, entity->posY.i.hi + 1, col, 0);
-                    if (col->effects & (EFFECT_SOLID | EFFECT_UNK_0002)) {
-                        col->effects = EFFECT_UNK_0002;
+                    if (col->effects & EFFECT_BLOCK) {
+                        col->effects = EFFECT_SIDE;
                     } else {
                         col->effects = EFFECT_SOLID;
                     }
@@ -240,17 +240,17 @@ static int CheckFieldCollisionForCat(
             entity->posX.i.hi = sp3C + (x * var_s0) / var_s2;
             entity->posY.i.hi = var_s8 + (y < 0 ? -var_s0 : var_s0);
             g_api.CheckCollision(entity->posX.i.hi, entity->posY.i.hi, col, 0);
-            if (col->effects & (EFFECT_SOLID | EFFECT_UNK_0002)) {
+            if (col->effects & EFFECT_BLOCK) {
                 if (var_s3 == 0) {
-                    col->effects = EFFECT_UNK_0002;
+                    col->effects = EFFECT_SIDE;
                 }
                 entity->posX.i.hi = var_s7;
                 entity->posY.i.hi = var_s6;
                 if (var_s0 && y > 0) {
                     g_api.CheckCollision(
                         entity->posX.i.hi, entity->posY.i.hi + 1, col, 0);
-                    if (col->effects & (EFFECT_SOLID | EFFECT_UNK_0002)) {
-                        col->effects = EFFECT_UNK_0002;
+                    if (col->effects & EFFECT_BLOCK) {
+                        col->effects = EFFECT_SIDE;
                     } else {
                         col->effects = EFFECT_SOLID;
                     }
@@ -327,7 +327,7 @@ void EntityMariaCatAttack(Entity* self) {
             self->ext.mariaCat.timer = 0;
         } else {
             g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi + 1, &col, 0);
-            if (!(col.effects & EFFECT_UNK_0002)) {
+            if (!(col.effects & EFFECT_SIDE)) {
                 self->velocityY = FIX(-8.0);
                 self->step = 2;
                 self->ext.mariaCat.timer = 0;
@@ -349,7 +349,7 @@ void EntityMariaCatAttack(Entity* self) {
         CheckFieldCollisionForCat(
             self, self->facingLeft ? -self->velocityX : self->velocityX,
             self->velocityY, &col);
-        if (col.effects & EFFECT_UNK_0002) {
+        if (col.effects & EFFECT_SIDE) {
             newY = func_pspeu_092A6958(
                 self->posX.i.hi, self->posY.i.hi, self->velocityY >> 16);
             if (newY != -1) {
@@ -764,15 +764,15 @@ void EntityMariaDragonCrash(Entity* self) {
             angle = NormalizeAngle(
                 ratan2(y - self->posY.i.hi, x - self->posX.i.hi));
             if (self->rotate < angle) {
-                if (angle - self->rotate < 0x800) {
-                    self->rotate += 0x40;
+                if (angle - self->rotate < ROT(180)) {
+                    self->rotate += ROT(5.625);
                 } else {
-                    self->rotate -= 0x40;
+                    self->rotate -= ROT(5.625);
                 }
             } else if (self->rotate - angle < 0x800) {
-                self->rotate -= 0x40;
+                self->rotate -= ROT(5.625);
             } else {
-                self->rotate += 0x40;
+                self->rotate += ROT(5.625);
             }
             SetGeomOffset(0, 0);
             func_psp_089285A0(self->rotate, &m);
@@ -1672,7 +1672,7 @@ void EntityMariaTurtleCrash(Entity* self) {
             self->drawFlags |= ENTITY_SCALEX | ENTITY_SCALEY | ENTITY_ROTATE;
             self->scaleX -= 0x20;
             self->scaleY -= 0x20;
-            self->rotate += 0xF78;
+            self->rotate += ROT(348.046875);
             return;
         }
         self->ext.mariaTurtleCrash.timer2 = 0x80;
@@ -1699,8 +1699,8 @@ void EntityMariaTurtleCrash(Entity* self) {
         }
         if (g_Player.unk2C == 0) {
             g_api.PlaySfx(SFX_HEALTH_PICKUP);
-            g_Player.unk56 = 1;
-            g_Player.unk58 = g_Player.unk24;
+            g_Player.healKind = 1;
+            g_Player.healAmount = g_Player.unk24;
             self->step = 7;
             self->ext.mariaTurtleCrash.timer3 = 0;
             return;

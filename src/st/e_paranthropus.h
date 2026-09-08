@@ -125,8 +125,14 @@ static Point16 dive_hitbox_dimensions[] = {
 };
 
 static s16 walk_posX_offsets[] = {0, 6, 5, 2, 0};
-static s16 swing_bone_posX_offsets[] = {0, 6, 5, 2, 0, 0, 0, 4, 0, 0};
-static s16 thrown_bone_posX_offsets[] = {0, 6, 5, 2, 0, 0, 4, 0, 0};
+static s16 swing_bone_posX_offsets[] = {
+    0, 6, 5, 2, 0, 0, 0, 4, 0, 0,
+#ifdef FIX_UB
+    // Animation frame can index off the end of this array
+    0
+#endif
+};
+static s16 thrown_bone_posX_offsets[] = {0, 6, 5, 2, 0, 0, 4, 0, 0, 0};
 
 // Indexed off Paranthropus animCurFrame
 static Point16 bone_hitbox_offsets[] = {

@@ -271,9 +271,9 @@ void LoadPendingGfx(void) {
         case GFX_BANK_8BPP:
         case GFX_BANK_16BPP:
             gfxEntry = gfxLoad->next;
-            while ((u32)gfxEntry->xy != -1) {
-                xy = (u32)gfxEntry->xy;
-                wh = (u32)gfxEntry->wh;
+            while (LOWU(gfxEntry->xy) != -1) {
+                xy = LOWU(gfxEntry->xy);
+                wh = LOWU(gfxEntry->wh);
                 src = (u8*)gfxEntry->data;
                 LoadTPage((u_long*)src, gfxLoad->kind - 1, 0, xy >> 0x10,
                           (u16)xy, wh >> 0x10, (u16)wh);
@@ -286,8 +286,8 @@ void LoadPendingGfx(void) {
             gfxEntry = gfxLoad->next;
             for (; j < 4; j++) {
                 dst = g_Pix[j];
-                xy = (u32)gfxEntry->xy;
-                wh = (u32)gfxEntry->wh;
+                xy = LOWU(gfxEntry->xy);
+                wh = LOWU(gfxEntry->wh);
                 cmp = (u8*)gfxEntry->data;
                 over = DecompressData(dst, cmp);
                 if (over) {
@@ -297,7 +297,7 @@ void LoadPendingGfx(void) {
                 LoadTPage((u_long*)dst, 0, 0, xy >> 0x10, (u16)xy, wh >> 0x10,
                           (u16)wh);
                 gfxLoad->next = ++gfxEntry;
-                if ((u32)gfxEntry->xy == -1) {
+                if (LOWU(gfxEntry->xy) == -1) {
                     gfxLoad->kind = GFX_BANK_NONE;
                     break;
                 }
@@ -332,7 +332,7 @@ void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index) {
 #ifdef VERSION_PSP
         x = index & 0xF;
         y = index / 16;
-        if (palette < 0x100) {
+        if (palette < PAL_ALUCARD) {
             ptr = &g_PalEquipIcon[palette * 0x10];
         } else {
             ptr = &D_psp_091654C0[(palette - 0x100) * 0x10];

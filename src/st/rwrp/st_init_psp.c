@@ -4,7 +4,7 @@
 
 extern LayoutEntity* D_8D2DE7C;
 extern LayoutEntity* D_8D2DF50;
-extern Overlay OVL_EXPORT(Overlay);
+extern Overlay g_Overlay;
 
 s32 E_ID(E_BACKGROUND_BLOCK);
 s32 E_ID(E_LOCK_CAMERA);
@@ -24,11 +24,11 @@ void InitEntityIds(void) {
     E_ID(SMALL_ROCKS) = E_SMALL_ROCKS;
 }
 
-void OVL_EXPORT(Load)(void) {
+void OvlLoad(void) {
     InitEntityIds();
     PfnEntityUpdates = EntityUpdates;
     g_pStObjLayoutHorizontal = &D_8D2DE7C;
     g_pStObjLayoutVertical = &D_8D2DF50;
     func_psp_0892A018();
-    memcpy(&g_api.o, &OVL_EXPORT(Overlay), sizeof(Overlay));
+    memcpy(&g_api.o, &g_Overlay, sizeof(Overlay));
 }

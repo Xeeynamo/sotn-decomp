@@ -2,35 +2,19 @@
 #include "sattypes.h"
 #include <saturn_sprite.h>
 #include "../shared_sprite_banks.h"
+#include "stage_15.h"
+
+// g_Stage15SpriteBank16Frames is deliberately absent from stage_15.h:
+// stage_15.c accesses it at a different type, and a shared declaration
+// changes codegen.
+extern SaturnSpriteFrameHeader* g_Stage15SpriteBank16Frames[];
 
 extern SaturnSpriteResource g_Stage15SpriteBank16;
-extern SaturnSpriteFrameHeader* g_Stage15SpriteBank16Frames[];
 extern SaturnSpriteResource g_Stage15SpriteBank19;
 extern SaturnSpriteResource g_Stage15SpriteBank20;
-extern SaturnSpriteFrameHeader* g_Stage15SpriteBank20Frames[];
 extern SaturnSpriteResource g_Stage15SpriteBank21;
-extern SaturnSpriteFrameHeader* g_Stage15SpriteBank21Frames[];
 extern SaturnSpriteResource g_Stage15SpriteBank22;
 extern SaturnSpriteResource g_Stage15SpriteBank32;
-
-void func_060DC040(Entity* self);
-void func_060DC428(Entity* self);
-void func_060DC4B8(Entity* self);
-void func_060DC838(Entity* self);
-void func_060DD37C(Entity* self);
-void func_060DD898(Entity* self);
-void func_060DDCE8(Entity* self);
-void func_060DDFB0(Entity* self);
-void func_060DE264(Entity* self);
-void func_060DE2F4(Entity* self);
-void func_060DE464(Entity* self);
-void func_060DE670(Entity* self);
-void func_060DE704(Entity* self);
-void func_060DE964(Entity* self);
-void func_060DECE0(Entity* self);
-void func_060DF160(Entity* self);
-void func_060DF204(Entity* self);
-void func_060DF354(Entity* self);
 
 typedef struct {
     SaturnSpriteResource* resource;

@@ -9,7 +9,7 @@ extern RoomDef rooms_layers[];
 extern GfxBank* gfxBanks[];
 void UpdateStageEntities(void);
 
-Overlay OVL_EXPORT(Overlay) = {
+Overlay g_Overlay = {
     .Update = Update,
     .HitDetection = HitDetection,
     .UpdateRoomPosition = UpdateRoomPosition,

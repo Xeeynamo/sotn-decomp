@@ -1,16 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
+#include "game.h"
 
-void ModeGame(void);
-void func_8011A9D8(void);
-void LoadSubDisplayFiles(void);
-void func_0606B760(void);
-void func_0606BB4C(void);
-void func_0606BEE4(void);
-void func_0606C064(void);
-void func_06074470(void);
-void func_0606C774(void);
-void func_0606C594(void);
 void InitStatsAndGear(void);
 
 typedef struct {

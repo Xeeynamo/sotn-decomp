@@ -700,14 +700,14 @@ void RicStepHit(s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
             if ((g_StageId != STAGE_BO6) && (g_StageId != STAGE_RBO6) &&
                 (g_StageId != STAGE_DRE)) {
                 for (i = 2; i < NUM_VERTICAL_SENSORS; i++) {
-                    if (g_Player.colWall[i].effects & EFFECT_UNK_0002) {
+                    if (g_Player.colWall[i].effects & EFFECT_SIDE) {
                         break;
                     }
                 }
                 if (i == NUM_VERTICAL_SENSORS) {
                     for (i = NUM_VERTICAL_SENSORS + 2;
                          i < NUM_VERTICAL_SENSORS * 2; i++) {
-                        if (g_Player.colWall[i].effects & EFFECT_UNK_0002) {
+                        if (g_Player.colWall[i].effects & EFFECT_SIDE) {
                             break;
                         }
                     }
@@ -1163,7 +1163,7 @@ void RicStepDeadPrologue(void) {
     switch (PLAYER.step_s) {
     case 0:
         g_CurrentEntity->flags |= FLAG_UNK_10000;
-        g_unkGraphicsStruct.unk20 = 4;
+        g_unkGraphicsStruct.unk28 = 4;
         RicDecelerateX(FIX(0.125));
         if (PLAYER.velocityX == 0) {
             RicSetAnimation(D_80155748);
@@ -1267,7 +1267,7 @@ void RicStepDeadPrologue(void) {
     case 7:
         if (PLAYER.poseTimer < 0) {
             g_CurrentEntity->flags &= ~FLAG_UNK_10000;
-            g_unkGraphicsStruct.unk20 = 0;
+            g_unkGraphicsStruct.unk28 = 0;
             RicSetFall();
             RicSetAnimation(D_801558DC);
             g_Player.timers[PL_T_INVINCIBLE_SCENE] = 4;
@@ -1358,7 +1358,7 @@ static void func_8015BB80(void) {
             PLAYER.posX.i.hi++;
         }
     }
-    if (g_StageId == (STAGE_TOP | STAGE_INVERTEDCASTLE_FLAG)) {
+    if (g_StageId == STAGE_RTOP) {
         if (abs((g_Tilemap.left << 8) + g_PlayerX) - 8384 > 0) {
             PLAYER.posX.i.hi--;
         }

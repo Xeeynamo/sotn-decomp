@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+#if !(defined(VERSION_PSP) && defined(STAGE_IS_RNO2))
 typedef enum {
     BLOODY_ZOMBIE_INIT,
     BLOODY_ZOMBIE_WALK,
@@ -31,6 +32,8 @@ static u8 anim_die[] = {
     0x02, 0x1F, 0x02, 0x1E, 0x02, 0x1F, 0x02, 0x1E, 0xFF, 0x00};
 static u8 anim_chase[] = {0x02, 0x02, 0x06, 0x03, 0x04, 0x02, 0x04, 0x01,
                           0x06, 0x04, 0x04, 0x01, 0x02, 0x02, 0x00, 0x00};
+#endif
+
 // Use python3 tools/display_texture.py LIVE 0x1A 0x1B7 --whole
 // and look at the row of fire-looking images in the row with top at 0x20
 // Disable format to keep these as 5-grouped arrays. p2, x, y, w, h.
@@ -203,6 +206,7 @@ void EntityBloodSplatter(Entity* self) {
     }
 }
 
+#if !(defined(VERSION_PSP) && defined(STAGE_IS_RNO2))
 static void func_801C53AC(Primitive* prim) {
     switch (prim->next->u2) {
     case 0:
@@ -486,6 +490,7 @@ void EntityBloodyZombie(Entity* self) {
         self->hitboxOffY = 4;
     }
 }
+#endif
 
 void EntityBloodDrips(Entity* self) { // BloodDrips
     Primitive* prim;

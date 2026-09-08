@@ -2,8 +2,6 @@
 #include "common.h"
 #include "servant.h"
 
-#define OVL_EXPORT(x) TT_000_##x
-
 typedef struct {
     s32 delayFrames;
     s32 angleStep;

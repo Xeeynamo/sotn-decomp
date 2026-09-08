@@ -13,8 +13,6 @@
 
 #include "stage.h"
 
-#define OVL_EXPORT(x) MAD_##x
-
 // This is 0xA9 in all other overlays, there may be an underlying reason.
 // For now it's just an overriding define.
 #define NUM_HAND_ITEMS 0xAD
@@ -32,7 +30,7 @@ typedef enum {
     E_STAGE_NAME_POPUP,
     E_EQUIP_ITEM_DROP,
     E_RELIC_ORB,
-    E_HEART_DROP,
+    E_PERSISTENT_ITEM_DROP,
     E_ENEMY_BLOOD,
     E_DUMMY_0E,
     E_DUMMY_0F,

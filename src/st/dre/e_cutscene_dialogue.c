@@ -42,12 +42,12 @@ enum DialogueSubsteps {
 #endif
 
 #ifdef VERSION_PSP
-extern u8* OVL_EXPORT(cutscene_script); // Defined by st_init
-extern u8* D_pspeu_092600B8;            // Defined by st_init
-extern u8* D_pspeu_092600B0;            // Defined by st_init
-extern u8* D_pspeu_092600A8;            // Defined by st_init
+extern u8* cutscene_script;  // Defined by st_init
+extern u8* D_pspeu_092600B8; // Defined by st_init
+extern u8* D_pspeu_092600B0; // Defined by st_init
+extern u8* D_pspeu_092600A8; // Defined by st_init
 #else
-extern u8 OVL_EXPORT(cutscene_script)[];
+extern u8 cutscene_script[];
 #endif
 
 extern PfnEntityUpdate EntityUpdates[]; // Defined by e_init
@@ -206,11 +206,12 @@ void SetCutsceneEvents(u8* ptr) {
     g_Dialogue.hasEvents = 1;
 }
 
+#define CUTSCENE_WAIT_FOR_FLAG_REWIND
 #include "../cutscene_events.h"
 #include "../cutscene_skip.h"
 #include "../cutscene_scale_avatar.h"
 
-void OVL_EXPORT(EntityCutsceneDialogue)(Entity* self) {
+void EntityCutsceneDialogue(Entity* self) {
     Primitive* prim;
     s32 primIndex;
     s32 i, j;
@@ -258,10 +259,10 @@ void OVL_EXPORT(EntityCutsceneDialogue)(Entity* self) {
             ptr = SetCutsceneScript(D_pspeu_092600B0);
             D_pspeu_09261388 = (u8*)D_pspeu_092600A8;
 #else
-            ptr = SetCutsceneScript(OVL_EXPORT(cutscene_script) + 0x49D);
+            ptr = SetCutsceneScript(cutscene_script + 0x49D);
 #endif
         } else {
-            ptr = SetCutsceneScript(OVL_EXPORT(cutscene_script));
+            ptr = SetCutsceneScript(cutscene_script);
 #ifdef VERSION_PSP
             D_pspeu_09261388 = (u8*)D_pspeu_092600B8;
 #endif

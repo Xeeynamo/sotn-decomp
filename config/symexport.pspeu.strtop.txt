@@ -1,16 +1,2 @@
 EXTERN(_binary_assets_st_rtop_mwo_header_bin_start);
-EXTERN(RTOP_Load);
-g_EInitSpawner = 0x0924ED00;
-g_EInitBreakable = 0x0924ECD0;
-g_EInitObtainable = 0x0924ECE0;
-g_EInitParticle = 0x0924ECF0;
-g_EInitInteractable = 0x0924ED10;
-g_EInitUnkId13 = 0x0924ED20;
-g_EInitLockCamera = 0x0924ED30;
-g_EInitCommon = 0x0924ED40;
-g_EInitDamageNum = 0x0924ED50;
-g_EInitSkullLordEffects = 0x0924EDB0;
-g_RedDoorTiles = 0x0924EBF8;
-g_DemoMode = 0x091FC420;
-D_pspeu_0924F088 = 0x0924F088;
-D_psp_E_BREAKABLE_DEBRIS = 0x09267CF8;
+EXTERN(OvlLoad);

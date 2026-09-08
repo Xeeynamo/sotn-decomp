@@ -567,32 +567,66 @@ use clap::{Arg};
 // }
 use clap::{ArgAction, Command};
 
-/// Parses a GCC/Clang-style compile command line to find:
-/// - index of the source file argument
-/// - presence for -o <output> arg
-/// - presence for -c arg
-fn parse_command(args: &[String]) -> (Option<usize>, bool, bool) {
-    let mut input_index = None;
-    let mut output_present = false;
-    let mut is_compile = false;
+/// Describes a parsed GCC/Clang-style compile command line.
+#[derive(Default)]
+struct CcCommand {
+    /// index of the source file argument
+    input_index: Option<usize>,
+    /// value of the -o <output> arg
+    output: Option<String>,
+    /// whether -c was passed
+    is_compile: bool,
+}
+
+/// Parses a GCC/Clang-style compile command line.
+fn parse_command(args: &[String]) -> CcCommand {
+    let mut cmd = CcCommand::default();
 
     let mut i = 0;
     while i < args.len() {
         let a = &args[i];
         if a == "-c" {
-            is_compile = true;
+            cmd.is_compile = true;
         } else if a == "-o" {
-            output_present = true;
+            cmd.output = args.get(i + 1).cloned();
             i += 1; // skip the output path
         } else if a.starts_with("-o") && a.len() > 2 {
-            output_present = true;
+            cmd.output = Some(a[2..].to_string());
+        } else if a == "-MF" {
+            i += 1; // skip the depfile path
         } else if a.ends_with(".c") {
-            input_index = Some(i);
+            cmd.input_index = Some(i);
         }
         i += 1;
     }
 
-    (input_index, output_present, is_compile)
+    cmd
+}
+
+/// Strips the dependency-generation flags from a compile command line, so the
+/// encoded temporary file does not overwrite the depfile written against the
+/// original source.
+fn strip_dep_args(args: &[String]) -> Vec<String> {
+    let mut out = Vec::new();
+    let mut skip_next = false;
+    for a in args {
+        if skip_next {
+            skip_next = false;
+            continue;
+        }
+        if a == "-MD" || a == "-MMD" {
+            continue;
+        }
+        if a == "-MF" || a == "-MT" || a == "-MQ" {
+            skip_next = true;
+            continue;
+        }
+        if (a.starts_with("-MF") || a.starts_with("-MT") || a.starts_with("-MQ")) && a.len() > 3 {
+            continue;
+        }
+        out.push(a.clone());
+    }
+    out
 }
 
 /// Builds the argument list for the preprocessing pass:
@@ -639,13 +673,15 @@ fn cc(cc_args: &[String]) -> io::Result<i32> {
     let compiler = &cc_args[0];
     let args = &cc_args[1..];
 
-    let (input_index, output_present, is_compile) = parse_command(args);
+    let cmd = parse_command(args);
 
-    if !is_compile || input_index.is_none() || !output_present {
-        let status = PCommand::new(compiler).args(args).status()?;
-        return Ok(status.code().unwrap_or(1));
-    }
-    let input_index = input_index.unwrap();
+    let (input_index, output) = match (cmd.input_index, cmd.output.as_ref()) {
+        (Some(i), Some(o)) if cmd.is_compile => (i, o),
+        _ => {
+            let status = PCommand::new(compiler).args(args).status()?;
+            return Ok(status.code().unwrap_or(1));
+        }
+    };
 
     let pp_args = preprocess_args(args);
     let pp_output = PCommand::new(compiler)
@@ -662,31 +698,32 @@ fn cc(cc_args: &[String]) -> io::Result<i32> {
         encoded.push_str(&do_sub(line, false));
     }
 
-    let tmp = tempfile_path();
+    let tmp = encoded_source_path(output);
+    if let Some(parent) = tmp.parent() {
+        std::fs::create_dir_all(parent)?;
+    }
     {
         let mut f = File::create(&tmp)?;
         f.write_all(encoded.as_bytes())?;
     }
 
-    let mut compile_args: Vec<String> = args.to_vec();
-    compile_args[input_index] = tmp.to_string_lossy().into_owned();
+    let mut compile_args = strip_dep_args(args);
+    let original_input = &args[input_index];
+    for a in compile_args.iter_mut() {
+        if a == original_input {
+            *a = tmp.to_string_lossy().into_owned();
+            break;
+        }
+    }
 
     let status = PCommand::new(compiler).args(&compile_args).status()?;
-
-    let _ = std::fs::remove_file(&tmp);
 
     Ok(status.code().unwrap_or(1))
 }
 
-fn tempfile_path() -> std::path::PathBuf {
-    use std::time::{SystemTime, UNIX_EPOCH};
-    let nanos = SystemTime::now()
-        .duration_since(UNIX_EPOCH)
-        .unwrap()
-        .as_nanos();
-    let mut dir = std::env::temp_dir();
-    dir.push(format!("sotn_str_cc_{}_{}.c", std::process::id(), nanos));
-    dir
+/// Path of the encoded source for a given object file: `<output>.sotn_str.c`.
+fn encoded_source_path(output: &str) -> std::path::PathBuf {
+    std::path::PathBuf::from(format!("{}.sotn_str.c", output))
 }
 
 fn main() {

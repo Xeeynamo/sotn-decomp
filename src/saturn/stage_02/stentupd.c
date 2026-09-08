@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
+#include "stage_02.h"
 
 #define STAGE_02_ENTRY(id) extern EntityEntry g_Stage02EntityEntry##id
 
-extern EntityEntry g_EntityNoopEntry;
 STAGE_02_ENTRY(00);
 STAGE_02_ENTRY(01);
 STAGE_02_ENTRY(02);

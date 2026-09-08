@@ -4,7 +4,7 @@
 extern EInit g_EInitCommon;
 
 #ifdef STAGE_IS_NZ1
-extern s32 D_us_80181134;
+extern s32 g_bossDoorsLocked;
 #endif
 
 extern u16 g_RedDoorTiles[2][8];
@@ -146,7 +146,7 @@ void EntityRedDoor(Entity* self) {
         }
 #else
 #ifdef STAGE_IS_NZ1
-        if (!self->params && D_us_80181134) {
+        if (!self->params && g_bossDoorsLocked) {
             break;
         }
 #endif

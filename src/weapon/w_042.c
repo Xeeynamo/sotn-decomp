@@ -74,7 +74,7 @@ static void EntityWeaponAttack(Entity* self) {
     case 0:
         SetSpriteBank1(g_Animset);
         self->animSet = ANIMSET_OVL(16);
-        self->palette = 0x110;
+        self->palette = PAL_UNK_110;
         self->unk5A = 0x64;
         if (g_HandId != 0) {
             self->palette += 0x18;
@@ -120,7 +120,7 @@ static void EntityWeaponAttack(Entity* self) {
         }
         g_api.CheckCollision(
             (s16)(xMod + self->posX.i.hi), self->posY.i.hi, &col, 0);
-        if (col.effects & EFFECT_UNK_0002) {
+        if (col.effects & EFFECT_SIDE) {
             if (xMod < 0) {
                 self->posX.i.hi += col.unkC;
             } else {
@@ -251,7 +251,7 @@ static void func_ptr_80170008(Entity* self) {
         self->step++;
         break;
     case 1:
-        self->rotate -= 0x60;
+        self->rotate -= ROT(8.4375);
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         self->velocityY += FIX(0.15625);

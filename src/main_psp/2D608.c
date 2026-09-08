@@ -644,14 +644,41 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/2D608", func_psp_0892EBE8);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/2D608", func_psp_0892EC7C);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/2D608", SpuGetAllKeysStatus);
+void SpuGetAllKeysStatus(s8* status) {
+    s32 keys;
+    s32 voice;
+
+    keys = D_psp_08DADCC4.unk8;
+    for (voice = 0; voice < 0x18; voice++) {
+        if (keys & (1 << voice)) {
+            status[voice] = 1;
+        } else {
+            status[voice] = 0;
+        }
+    }
+}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/2D608", SsUtKeyOnV);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/2D608", SsUtSetVVol);
+s16 SsUtSetVVol(s16 voice, s16 voll, s16 volr) {
+    voll = (voll << 12) / 0x7F;
+    volr = (volr << 12) / 0x7F;
+    func_psp_0892C524(&D_psp_08DADCC4, voice, voll, volr);
+    return 0;
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/2D608", SpuSetKey);
+void SpuSetKey(long on_off, unsigned long voice_bit) {
+    if (on_off == 0 && voice_bit != 0) {
+        func_psp_0892CA28(&D_psp_08DADCC4);
+    }
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/2D608", SpuSetVoiceAttr);
+void SpuSetVoiceAttr(s32* arg) {
+    if (arg[0] == 0) {
+        func_psp_0892CA90(&D_psp_08DADCC4, arg[0]);
+    } else {
+        func_psp_0892CA28(&D_psp_08DADCC4, arg[0]);
+    }
+}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/2D608", func_psp_0892F83C);

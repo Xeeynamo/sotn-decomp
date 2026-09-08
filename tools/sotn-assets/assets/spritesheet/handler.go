@@ -165,7 +165,7 @@ func (h *handler) Build(e assets.BuildArgs) error {
 		}
 		bitmap, meta, err := png.Decode(bytes.NewReader(pngData))
 		if err != nil {
-			return fmt.Errorf("png decode: %w", entry.Name, err)
+			return fmt.Errorf("png decode %s: %w", entry.Name, err)
 		}
 		if meta.NumPaletteColors == 0 {
 			return fmt.Errorf("image %s is not paletted", entry.Name)

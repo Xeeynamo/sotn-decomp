@@ -1,12 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
 #include <saturn_sprite.h>
-
-extern SaturnSpriteResource g_Stage16SpriteBank24;
-
-void func_060E63A8(Entity* self);
-void func_060E6A6C(Entity* self);
-void func_060E6C88(Entity* self);
+#include "stage_16.h"
 
 EntityEntry g_Stage16EntityGargoyle = {&g_Stage16SpriteBank24, func_060E63A8};
 

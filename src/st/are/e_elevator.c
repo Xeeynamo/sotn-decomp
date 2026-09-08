@@ -107,13 +107,13 @@ void EntityElevator(Entity* self) {
         break;
     case 1:
         if (playerCollision) {
-            if (g_pads->pressed & PAD_UP) {
+            if (g_pads[0].pressed & PAD_UP) {
                 elevator_position--;
                 if (elevator_position < TOP) {
                     elevator_position = TOP;
                 }
             }
-            if (g_pads->pressed & PAD_DOWN) {
+            if (g_pads[0].pressed & PAD_DOWN) {
                 elevator_position++;
                 if (elevator_position > BOTTOM) {
                     elevator_position = BOTTOM;

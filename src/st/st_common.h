@@ -213,7 +213,7 @@ s32 UnkCollisionFunc3(s16* sensors) {
                 }
             }
             if (col.effects & EFFECT_NOTHROUGH && i != 1) {
-                if (col.effects & EFFECT_QUICKSAND) {
+                if (col.effects & EFFECT_SINK) {
                     g_CurrentEntity->flags &= ~FLAG_UNK_10000000;
                     return 4;
                 }
@@ -321,7 +321,7 @@ s32 UnkCollisionFunc2(s16* posX) {
         g_api.CheckCollision(x, y, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
             if (collider.effects & EFFECT_UNK_8000 ||
-                !(collider.effects & EFFECT_UNK_0002)) {
+                !(collider.effects & EFFECT_SIDE)) {
                 return 0x61;
             }
             g_CurrentEntity->posX.val -= g_CurrentEntity->velocityX;
@@ -557,7 +557,7 @@ s32 UnkCollisionFunc(s16* hitSensors, s16 sensorCount) {
 
             y += *hitSensors++;
             g_api.CheckCollision(x, y, &collider, 0);
-            if (collider.effects & EFFECT_UNK_0002 &&
+            if (collider.effects & EFFECT_SIDE &&
                 ((!(collider.effects & EFFECT_UNK_8000)) || i)) {
                 return 2;
             }
@@ -591,7 +591,7 @@ void CheckFieldCollision(s16* hitSensors, s16 sensorCount) {
 
         y += *hitSensors++;
         g_api.CheckCollision(x, y, &collider, 0);
-        if (collider.effects & EFFECT_UNK_0002 &&
+        if (collider.effects & EFFECT_SIDE &&
             (!(collider.effects & EFFECT_UNK_8000) || i)) {
             if (velocityX < 0) {
                 g_CurrentEntity->posX.i.hi += collider.unk1C;

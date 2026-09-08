@@ -11,7 +11,7 @@ extern GfxBank* gfxBanks[];
 void UpdateStageEntities(void);
 extern u8* richter_sprites[RIC_SPRITE_COUNT];
 
-AbbreviatedOverlay2 OVL_EXPORT(Overlay) = {
+AbbreviatedOverlay2 g_Overlay = {
     .Update = Update,
     .HitDetection = HitDetection,
     .UpdateRoomPosition = UpdateRoomPosition,

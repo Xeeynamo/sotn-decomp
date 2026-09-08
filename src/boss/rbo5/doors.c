@@ -222,7 +222,7 @@ void EntityUnkId17(Entity* self) {
         self->scaleX = D_us_801805D8[self->params & 0xF];
         self->scaleY = self->scaleX;
         if ((self->params & 0xF) % 2) {
-            self->rotate = -0x400;
+            self->rotate = ROT(-90);
         } else {
             self->rotate = 0;
         }
@@ -360,7 +360,7 @@ void EntityUnkId1C(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(EInitUnk17);
-        self->rotate = -0x400;
+        self->rotate = ROT(-90);
         self->drawFlags |= ENTITY_ROTATE;
         if (self->params & 1) {
             self->animCurFrame = 0x64;
@@ -440,7 +440,7 @@ void EntityUnkId19(Entity* self) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            self->ext.prim = prim;
+            self->ext.et_801BE2C8.unk7C = prim;
             while (prim != NULL) {
                 prim->r0 = prim->g0 = prim->b0 = 8;
                 prim->priority = 0xD0;
@@ -466,7 +466,7 @@ void EntityUnkId19(Entity* self) {
 
         posX = self->posX.i.hi;
         posY = self->posY.i.hi - 0x28;
-        prim = self->ext.prim;
+        prim = self->ext.et_801BE2C8.unk7C;
         for (i = 0; i < 32; i++) {
             prim->x0 = posX - xOffset - 0x20 + i;
             prim->y0 = posY - 0x20 + i;
@@ -500,7 +500,7 @@ void EntityUnkId19(Entity* self) {
         break;
 
     case 4:
-        prim = self->ext.prim;
+        prim = self->ext.et_801BE2C8.unk7C;
         prim->type = PRIM_TILE;
         prim->r0 = prim->b0 = prim->g0 = 0xFF;
         prim->priority = 0x40;
@@ -538,7 +538,7 @@ void EntityUnkId19(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
-        self->ext.prim = prim;
+        self->ext.et_801BE2C8.unk7C = prim;
         moveY = self->posY.i.hi;
         moveX = self->posX.i.hi;
 
@@ -581,7 +581,7 @@ void EntityUnkId19(Entity* self) {
 
         D_us_801D26D4 = (rcos(D_us_801D26D8) >> 8) + 0xD0;
 
-        prim = self->ext.prim;
+        prim = self->ext.et_801BE2C8.unk7C;
 
         for (i = 0; i < 16; i++) {
             angle = D_us_80180604[(i + 0) % 16];

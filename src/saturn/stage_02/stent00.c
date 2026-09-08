@@ -1,23 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
 #include <saturn_sprite.h>
-
-void func_060DC040(Entity* self);
-void EntityRedEyeBust(Entity* self);
-void func_060DC4EC(Entity* self);
-void func_060DC510(Entity* self);
-void func_060DC7B4(Entity* self);
-void func_060DCA54(Entity* self);
-void func_060DCCD4(Entity* self);
-void func_060DCFA4(Entity* self);
-void func_060DD20C(Entity* self);
-void func_060DD3E8(Entity* self);
-void func_060DD690(Entity* self);
-void func_060DD790(Entity* self);
-void func_060DD8D8(Entity* self);
-void func_060DDB80(Entity* self);
-
-extern SaturnSpriteResource entityRedEyeBustData;
+#include "stage_02.h"
 
 EntityEntry g_Stage02EntityEntry00 = {NULL, func_060DC040};
 EntityEntry g_Stage02EntityEntry34 = {&entityRedEyeBustData, EntityRedEyeBust};

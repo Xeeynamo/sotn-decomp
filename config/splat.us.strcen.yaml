@@ -47,7 +47,8 @@ segments:
       - [0x62C, .data, e_breakable]
       - [0x68C, data] # prize_drops
       - [0x94C, .data, cutscene]
-      - [0x9FC, data]
+      - [0x9FC, .data, unk_1F0D8]
+      - [0xA3C, data]
       - [0xA6C, .data, st_update]
       - [0xAB8, .data, collision]
       - [0xE78, .data, e_red_door]

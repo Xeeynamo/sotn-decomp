@@ -339,7 +339,7 @@ static s32 func_ptr_80170004(Entity* self) {
         self->animCurFrame = 3;
         self->facingLeft = PLAYER.facingLeft;
         self->zPriority = PLAYER.zPriority - 2;
-        self->palette = 0x100;
+        self->palette = PAL_ALUCARD;
         self->flags =
             FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000;
         SetSpeedX(((rand() & FIX(0.25) - 1) * 2) | FIX(4.5));

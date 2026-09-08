@@ -13,6 +13,11 @@ func Extract(f iso9660.File, basePath string) error {
 		if err := os.Mkdir(basePath, 0744); err != nil {
 			return err
 		}
+
+	}
+	t := f.RecordingDateTime.ToTime()
+	if err := os.Chtimes(basePath, t, t); err != nil {
+		fmt.Fprintf(os.Stderr, "Warning: Could not restore timestamp to %s: %v\n", basePath, err)
 	}
 
 	children, err := f.GetChildren()
@@ -34,7 +39,14 @@ func Extract(f iso9660.File, basePath string) error {
 			if err != nil {
 				return err
 			}
-			defer f.Close()
+			defer func() {
+				f.Close()
+
+				t := child.RecordingDateTime.ToTime()
+				if err := os.Chtimes(outFilePath, t, t); err != nil {
+					fmt.Fprintf(os.Stderr, "Warning: Could not restore timestamp to %s: %v\n", outFilePath, err)
+				}
+			}()
 
 			if err := child.ReadToFile(f); err != nil {
 				return err

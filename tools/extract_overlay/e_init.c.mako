@@ -5,7 +5,7 @@
 void ${function}(Entity* self);
 % endfor
 
-PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
+PfnEntityUpdate EntityUpdates[] = {
 % for function in entity_funcs:
     ${function},
 % endfor

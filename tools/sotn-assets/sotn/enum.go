@@ -3,12 +3,13 @@ package sotn
 import (
 	"bufio"
 	"fmt"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 	"io"
 	"os/exec"
 	"regexp"
 	"strings"
 	"sync"
+
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 )
 
 func removeComments(line string) string {
@@ -85,8 +86,13 @@ func ParseCEnum(r io.Reader, name string, min int) (map[int]string, error) {
 	return enumMap, nil
 }
 
+type enumResult struct {
+	parsed map[int]string
+	err    error
+}
+
 // Cache keyed by: version:file:enum
-var enumCache = make(map[string]map[int]string)
+var enumCache = make(map[string]enumResult)
 var lock = sync.RWMutex{}
 
 // Read an enum from a header file after prepreprocessing
@@ -96,15 +102,27 @@ func FetchEnumWithMin(srcDir, ovlName, enumName string, min int) (map[int]string
 	cacheKey := fmt.Sprintf("%s:%s:%s", version, header, enumName)
 
 	lock.RLock()
-	parsed, ok := enumCache[cacheKey]
+	cached, ok := enumCache[cacheKey]
 	lock.RUnlock()
 	if ok {
-		return parsed, nil
+		return cached.parsed, cached.err
 	}
 
+	// Failures are cached alongside successes: this greatly improves
+	// performance on sotn-assets info calls by avoiding re-spawn of cpp
+	// on every lookup.
+	result := fetchEnumUncached(header, enumName, min)
+	lock.Lock()
+	enumCache[cacheKey] = result
+	lock.Unlock()
+
+	return result.parsed, result.err
+}
+
+func fetchEnumUncached(header, enumName string, min int) enumResult {
 	cpp, err := exec.LookPath("cpp")
 	if err != nil {
-		return nil, fmt.Errorf("failed to find `cpp': %w", err)
+		return enumResult{nil, fmt.Errorf("failed to find `cpp': %w", err)}
 	}
 
 	cmd := exec.Command(cpp,
@@ -119,19 +137,11 @@ func FetchEnumWithMin(srcDir, ovlName, enumName string, min int) (map[int]string
 	o, err := cmd.Output()
 
 	if err != nil {
-		return nil, fmt.Errorf("failed preprocess header: %s %s: %w", cmd.Path, cmd.Args, err)
+		return enumResult{nil, fmt.Errorf("failed preprocess header: %s %s: %w", cmd.Path, cmd.Args, err)}
 	}
 
-	r := strings.NewReader(string(o))
-	parsed, err = ParseCEnum(r, enumName, min)
-
-	if err == nil {
-		lock.Lock()
-		enumCache[cacheKey] = parsed
-		lock.Unlock()
-	}
-
-	return parsed, err
+	parsed, err := ParseCEnum(strings.NewReader(string(o)), enumName, min)
+	return enumResult{parsed, err}
 }
 
 func FetchEnum(srcDir, ovlName, enumName string) (map[int]string, error) {

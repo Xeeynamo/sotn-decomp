@@ -6,49 +6,49 @@
 extern LayoutEntity* D_8D2E380;
 extern LayoutEntity* D_8D2E454;
 
-extern Overlay OVL_EXPORT(Overlay);
+extern Overlay g_Overlay;
 
 static u8 cutscene_script_post_fight_it[] = {
-#include "gen/cutscene_script_post_fight_it.h"
-#include "gen/cutscene_data_post_fight_it.h"
+#include <gen/cutscene_script_post_fight_it.h>
+#include <gen/cutscene_data_post_fight_it.h>
 };
 
 static u8 cutscene_script_post_fight_sp[] = {
-#include "gen/cutscene_script_post_fight_sp.h"
-#include "gen/cutscene_data_post_fight_sp.h"
+#include <gen/cutscene_script_post_fight_sp.h>
+#include <gen/cutscene_data_post_fight_sp.h>
 };
 static u8 cutscene_script_post_fight_fr[] = {
-#include "gen/cutscene_script_post_fight_fr.h"
-#include "gen/cutscene_data_post_fight_fr.h"
+#include <gen/cutscene_script_post_fight_fr.h>
+#include <gen/cutscene_data_post_fight_fr.h>
 };
 static u8 cutscene_script_post_fight_ge[] = {
-#include "gen/cutscene_script_post_fight_ge.h"
-#include "gen/cutscene_data_post_fight_ge.h"
+#include <gen/cutscene_script_post_fight_ge.h>
+#include <gen/cutscene_data_post_fight_ge.h>
 };
 static u8 cutscene_script_post_fight_en[] = {
-#include "gen/cutscene_script_post_fight_en.h"
-#include "gen/cutscene_data_post_fight_en.h"
+#include <gen/cutscene_script_post_fight_en.h>
+#include <gen/cutscene_data_post_fight_en.h>
 };
 
 static u8 cutscene_script_talk_it[] = {
-#include "gen/cutscene_script_talk_it.h"
-#include "gen/cutscene_data_talk_it.h"
+#include <gen/cutscene_script_talk_it.h>
+#include <gen/cutscene_data_talk_it.h>
 };
 static u8 cutscene_script_talk_sp[] = {
-#include "gen/cutscene_script_talk_sp.h"
-#include "gen/cutscene_data_talk_sp.h"
+#include <gen/cutscene_script_talk_sp.h>
+#include <gen/cutscene_data_talk_sp.h>
 };
 static u8 cutscene_script_talk_fr[] = {
-#include "gen/cutscene_script_talk_fr.h"
-#include "gen/cutscene_data_talk_fr.h"
+#include <gen/cutscene_script_talk_fr.h>
+#include <gen/cutscene_data_talk_fr.h>
 };
 static u8 cutscene_script_talk_ge[] = {
-#include "gen/cutscene_script_talk_ge.h"
-#include "gen/cutscene_data_talk_ge.h"
+#include <gen/cutscene_script_talk_ge.h>
+#include <gen/cutscene_data_talk_ge.h>
 };
 static u8 cutscene_script_talk_en[] = {
-#include "gen/cutscene_script_talk_en.h"
-#include "gen/cutscene_data_talk_en.h"
+#include <gen/cutscene_script_talk_en.h>
+#include <gen/cutscene_data_talk_en.h>
 };
 
 s32 richter_sprites = 0x08D30C20;
@@ -119,7 +119,7 @@ static void InitEntityIds(void) {
     SET_E_ID(UNK_ENTITY);
 }
 
-void OVL_EXPORT(Load)(void) {
+void OvlLoad(void) {
     post_fight_script_ptr1 = GetLangAt(
         0, (u8*)cutscene_script_post_fight_en,
         (u8*)cutscene_script_post_fight_fr, (u8*)cutscene_script_post_fight_sp,
@@ -147,5 +147,5 @@ void OVL_EXPORT(Load)(void) {
     g_pStObjLayoutVertical = &D_8D2E454;
     func_psp_0892A018();
     func_psp_08929FA8(richter_sprites, 0xC5);
-    memcpy(&g_api.o, &OVL_EXPORT(Overlay), sizeof(Overlay));
+    memcpy(&g_api.o, &g_Overlay, sizeof(Overlay));
 }

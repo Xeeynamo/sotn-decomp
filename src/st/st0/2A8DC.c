@@ -85,7 +85,7 @@ void EntitySecretButton(Entity* self) {
 
         case 1:
             MoveEntity();
-            self->rotate += 0x40;
+            self->rotate += ROT(5.625);
             if (UnkCollisionFunc3(D_801808F8) & 1) {
                 self->step_s++;
                 break;
@@ -186,7 +186,7 @@ void EntitySecretStairs(Entity* self) {
             break;
         }
         self->drawFlags |= ENTITY_ROTATE;
-        self->rotate = -0x200;
+        self->rotate = ROT(-45);
         break;
 
     case 1:
@@ -197,7 +197,7 @@ void EntitySecretStairs(Entity* self) {
         break;
 
     case 2:
-        self->rotate += 0x10;
+        self->rotate += ROT(1.40625);
         if (!self->rotate) {
             self->drawFlags = ENTITY_DEFAULT;
             self->step++;

@@ -6,7 +6,7 @@
 extern LayoutEntity* D_8D2E4B0;
 extern LayoutEntity* D_8D2E584;
 
-extern Overlay OVL_EXPORT(Overlay);
+extern Overlay g_Overlay;
 
 // Imported in cutscene_data.c
 extern char cutscene_data_ferryman_right_it[];
@@ -35,7 +35,7 @@ static s32 E_ID(ID_1B);
 static s32 E_ID(ID_1C);
 static s32 E_ID(ID_1D);
 static s32 E_ID(ID_1E);
-static s32 E_ID(ID_1F);
+static s32 E_ID(BG_COLUMN_PARALLAX);
 static s32 E_ID(ID_20);
 static s32 E_ID(ID_21);
 static s32 E_ID(ID_22);
@@ -124,7 +124,7 @@ void InitEntityIds(void) {
     E_ID(ID_1C) = 0x1C;
     E_ID(ID_1D) = 0x1D;
     E_ID(ID_1E) = 0x1E;
-    E_ID(ID_1F) = 0x1F;
+    E_ID(BG_COLUMN_PARALLAX) = 0x1F;
     E_ID(ID_20) = 0x20;
     E_ID(ID_21) = 0x21;
     E_ID(ID_22) = 0x22;
@@ -192,7 +192,7 @@ void InitEntityIds(void) {
     E_ID(ID_60) = 0x60;
 }
 
-void OVL_EXPORT(Load)(void) {
+void OvlLoad(void) {
     cutscene_data_ferryman_right = GetLangAt(
         NULL, (u8*)cutscene_data_ferryman_right_en,
         (u8*)cutscene_data_ferryman_right_fr,
@@ -226,5 +226,5 @@ void OVL_EXPORT(Load)(void) {
     g_pStObjLayoutHorizontal = &D_8D2E4B0;
     g_pStObjLayoutVertical = &D_8D2E584;
     func_psp_0892A018();
-    memcpy(&g_api.o, &OVL_EXPORT(Overlay), sizeof(Overlay));
+    memcpy(&g_api.o, &g_Overlay, sizeof(Overlay));
 }

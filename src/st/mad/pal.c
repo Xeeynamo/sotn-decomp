@@ -2,5 +2,5 @@
 #include "mad.h"
 
 u16 pal_2058[] = {
-#include "gen/pal_2058.h"
+#include <gen/pal_2058.h>
 };

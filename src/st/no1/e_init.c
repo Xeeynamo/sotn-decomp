@@ -12,7 +12,7 @@ void EntityRoomForeground(Entity* self);
 void EntityStageNamePopup(Entity* self);
 void EntityEquipItemDrop(Entity* self);
 void EntityRelicOrb(Entity* self);
-void EntityHeartDrop(Entity* self);
+void EntityPersistentItemDrop(Entity* self);
 void EntityEnemyBlood(Entity* self);
 void EntityMessageBox(Entity* self);
 void EntityDummy(Entity* self);
@@ -75,9 +75,9 @@ void func_us_801CF298(Entity* self);
 void EntitySwordLord(Entity* self);
 void EntitySwordLordAttack(Entity* self);
 void EntityArmorLord(Entity* self);
-void func_us_801D348C(Entity* self);
+void EntityArmorLordSwordShadow(Entity* self);
 void EntityArmorLordFireWave(Entity* self);
-void func_us_801D3700(Entity* self);
+void EntityArmorLordUnk2(Entity* self);
 void EntityArmorLordUnused(Entity* self);
 void EntitySpearGuard(Entity* self);
 void EntitySpearGuardBlock(Entity* self);
@@ -110,7 +110,7 @@ PfnEntityUpdate EntityUpdates[] = {
     /* 0x09 */ EntityStageNamePopup,
     /* 0x0A */ EntityEquipItemDrop,
     /* 0x0B */ EntityRelicOrb,
-    /* 0x0C */ EntityHeartDrop,
+    /* 0x0C */ EntityPersistentItemDrop,
     /* 0x0D */ EntityEnemyBlood,
     /* 0x0E */ EntityMessageBox,
     /* 0x0F */ EntityDummy,
@@ -173,9 +173,9 @@ PfnEntityUpdate EntityUpdates[] = {
     /* 0x48 */ EntitySwordLord,
     /* 0x49 */ EntitySwordLordAttack,
     /* 0x4A */ EntityArmorLord,
-    /* 0x4B */ func_us_801D348C,
+    /* 0x4B */ EntityArmorLordSwordShadow,
     /* 0x4C */ EntityArmorLordFireWave,
-    /* 0x4D */ func_us_801D3700,
+    /* 0x4D */ EntityArmorLordUnk2,
     /* 0x4E */ EntityArmorLordUnused,
     /* 0x4F */ EntitySpearGuard,
     /* 0x50 */ EntitySpearGuardBlock,
@@ -233,8 +233,9 @@ EInit g_EInitSwordLordAttack = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x00A};
 EInit g_EInitBoneArcher = {ANIMSET_OVL(0x07), 0x01, 0x4B, 0x215, 0x06C};
 EInit g_EInitBoneArcherArrow = {ANIMSET_OVL(0x07), 0x00, 0x4B, 0x215, 0x06D};
 EInit g_EInitArmorLord = {ANIMSET_OVL(0x0B), 0x01, 0x52, 0x21C, 0x022};
-EInit D_us_80180AE8 = {ANIMSET_OVL(0x0B), 0x00, 0x52, 0x21C, 0x023};
-EInit D_us_80180AF4 = {ANIMSET_OVL(0x00), 0x00, 0x00, 0x000, 0x024};
+EInit g_EInitArmorLordSwordShadow = {
+    ANIMSET_OVL(0x0B), 0x00, 0x52, 0x21C, 0x023};
+EInit g_EInitArmorLordTemp = {ANIMSET_OVL(0x00), 0x00, 0x00, 0x000, 0x024};
 EInit g_EInitSpearGuard = {ANIMSET_OVL(0x0C), 0x01, 0x53, 0x222, 0x05D};
 EInit g_EInitThrownSpear = {ANIMSET_OVL(0x0C), 0x00, 0x53, 0x222, 0x060};
 EInit D_us_80180B18 = {ANIMSET_OVL(0x0D), 0x01, 0x50, 0x228, 0x0B1};

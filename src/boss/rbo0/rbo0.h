@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stage.h>
 
-#define OVL_EXPORT(x) RBO0_##x
 #define INVERTED_STAGE
 
 enum Palettes {
@@ -10,7 +9,7 @@ enum Palettes {
     PAL_TORCH_B = 0x5B,
 };
 
-enum OVL_EXPORT(Entities) {
+typedef enum EntityID {
     E_NONE,
     E_UNK_BREAKABLE,          // EntityUnkBreakable
     E_EXPLOSION,              // EntityExplosion
@@ -23,7 +22,7 @@ enum OVL_EXPORT(Entities) {
     E_STAGE_NAME_POPUP,       // EntityStageNamePopup
     E_EQUIP_ITEM_DROP,        // EntityEquipItemDrop
     E_RELIC_ORB,              // EntityRelicOrb
-    E_HEART_DROP,             // EntityHeartDrop
+    E_PERSISTENT_ITEM_DROP,   // EntityPersistentItemDrop
     E_ENEMY_BLOOD,            // EntityEnemyBlood
     E_MESSAGE_BOX,            // EntityMessageBox
     E_DUMMY_F,                // EntityDummy
@@ -37,7 +36,7 @@ enum OVL_EXPORT(Entities) {
     E_BOSS_DOORS,             // EntityBossDoors
     E_LIFE_UP_SPAWN,          // EntityLifeUpSpawn
     E_COFFIN,                 // EntityCoffin
-    E_UNK_1A,                 // OVL_EXPORT(EntityBoss)
+    E_UNK_1A,                 // EntityBoss
     E_FAKE_RALPH,             // EntityFakeRalph
     E_FAKE_GRANT,             // EntityFakeGrant
     E_FAKE_SYPHA,             // EntityFakeSypha

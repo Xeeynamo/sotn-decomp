@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "warp/warp.h"
+#include "warp.h"
 
 WarpRoomTable g_WarpRooms = {
     {

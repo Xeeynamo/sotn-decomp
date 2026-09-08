@@ -502,6 +502,6 @@ void EntityHarpyFeather(Entity* self) {
         self->velocityY = speed * rsin(angle);
     }
     MoveEntity();
-    self->rotate += 0x20;
+    self->rotate += ROT(2.8125);
     self->velocityY += FIX(1.0 / 8);
 }

@@ -3,12 +3,10 @@
 
 #define STAGE_IS_NO1
 
-#define OVL_EXPORT(x) NO1_##x
-
 void EntityExplosionVariants(Entity* entity);
 void EntityGreyPuff(Entity* entity);
 
-enum OVL_EXPORT(Palette) {
+enum Palette {
     PAL_NONE = 0,
     PAL_ARMOR_LORD_UNK = 0x220,
     PAL_BREAKABLE = 0x22D,
@@ -28,7 +26,7 @@ typedef enum EntityID {
     /* 0x09 */ E_STAGE_NAME_POPUP,
     /* 0x0A */ E_EQUIP_ITEM_DROP,
     /* 0x0B */ E_RELIC_ORB,
-    /* 0x0C */ E_HEART_DROP,
+    /* 0x0C */ E_PERSISTENT_ITEM_DROP,
     /* 0x0D */ E_ENEMY_BLOOD,
     /* 0x0E */ E_MESSAGE_BOX,
     /* 0x0F */ E_DUMMY_0F,
@@ -91,7 +89,7 @@ typedef enum EntityID {
     /* 0x48 */ E_SWORD_LORD,
     /* 0x49 */ E_SWORD_LORD_ATTACK,
     /* 0x4A */ E_ARMOR_LORD,
-    /* 0x4B */ E_ARMOR_LORD_UNK1,
+    /* 0x4B */ E_ARMOR_LORD_SWORD_SHADOW,
     /* 0x4C */ E_ARMOR_LORD_FIRE_WAVE,
     /* 0x4D */ E_ARMOR_LORD_UNK2,
     /* 0x4E */ E_ID_4E,

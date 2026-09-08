@@ -5,7 +5,7 @@
 // end of the Marble Gallery.
 
 extern EInit g_EInitCommon;
-extern EInit RNO0_EInitSpawner;
+extern EInit g_EInitSpawner;
 
 void EntityBackgroundPillar(Entity* self);
 
@@ -18,7 +18,7 @@ void EntityCorridorDecorator(Entity* self) {
     if (self->step) {
         return;
     }
-    InitializeEntity(RNO0_EInitSpawner);
+    InitializeEntity(g_EInitSpawner);
 
     // This loop creates a mottled dark green and white background
     // which is in the farthest back layer (priority 0).

@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stage.h>
 
-#define OVL_EXPORT(x) WRP_##x
-
 typedef enum EntityID {
     E_NONE,
     E_BREAKABLE,
@@ -16,7 +14,7 @@ typedef enum EntityID {
     E_STAGE_NAME_POPUP,
     E_EQUIP_ITEM_DROP,
     E_RELIC_ORB,
-    E_HEART_DROP,
+    E_PERSISTENT_ITEM_DROP,
     E_ENEMY_BLOOD,
     E_MESSAGE_BOX,
     E_DUMMY_0F,

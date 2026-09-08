@@ -265,7 +265,7 @@ void func_ptr_8017000C(Entity* self) {
         x = self->posX.i.hi + xOffset;
         y = self->posY.i.hi + yOffset;
         g_api.CheckCollision(x, y, &collider, 0);
-        if (collider.effects & EFFECT_UNK_0002) {
+        if (collider.effects & EFFECT_SIDE) {
             if (xOffset < 0) {
                 self->posX.i.hi += collider.unkC;
             } else {
@@ -474,7 +474,7 @@ static s32 func_ptr_80170014(Entity* self) {
         }
         SetSpriteBank2(g_Animset2);
         self->animSet = ANIMSET_OVL(17);
-        self->palette = 0x111;
+        self->palette = PAL_UNK_111;
         self->unk5A = 101;
         if (g_HandId != 0) {
             self->animSet += 2;

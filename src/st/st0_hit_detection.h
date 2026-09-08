@@ -101,7 +101,7 @@ static u16 g_eDamageDisplayClut[] = {
 // Warning: This is different from HitDetection in other overlays.
 // Some of the logic is removed since it doesn't apply in prologue.
 // Attempting to de-duplicate this would involve a lot of #ifdef.
-void OVL_EXPORT(HitDetection)(void) {
+void HitDetection(void) {
     Entity* otherEntity;
     Primitive* prim;
     Entity* entityHit;

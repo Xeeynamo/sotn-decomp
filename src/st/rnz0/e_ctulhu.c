@@ -4,5 +4,5 @@
 #define ctulhu_shockwave_uvs sprites_rnz0_13
 
 #define DISABLE_TRIPLE_FIREBALL
-
+#define CTULHU_TPAGE 0x12
 #include "../e_ctulhu.h"

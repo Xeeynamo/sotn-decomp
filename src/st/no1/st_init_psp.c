@@ -5,7 +5,7 @@
 extern LayoutEntity* D_8D2E258;
 extern LayoutEntity* D_8D2E32C;
 
-extern Overlay OVL_EXPORT(Overlay);
+extern Overlay g_Overlay;
 
 s32 E_ID(ID_11);
 s32 E_ID(ID_12);
@@ -144,7 +144,7 @@ void InitEntityIds(void) {
     E_ID(SWORD_LORD) = E_SWORD_LORD;
     E_ID(SWORD_LORD_ATTACK) = E_SWORD_LORD_ATTACK;
     E_ID(ARMOR_LORD) = E_ARMOR_LORD;
-    E_ID(ARMOR_LORD_UNK1) = E_ARMOR_LORD_UNK1;
+    E_ID(ARMOR_LORD_UNK1) = E_ARMOR_LORD_SWORD_SHADOW;
     E_ID(ARMOR_LORD_FIRE_WAVE) = E_ARMOR_LORD_FIRE_WAVE;
     E_ID(ARMOR_LORD_UNK2) = E_ARMOR_LORD_UNK2;
     E_ID(ID_4E) = E_ID_4E;
@@ -165,11 +165,11 @@ void InitEntityIds(void) {
     E_ID(MIST_DOOR) = E_MIST_DOOR;
 }
 
-void OVL_EXPORT(Load)(void) {
+void OvlLoad(void) {
     InitEntityIds();
     PfnEntityUpdates = EntityUpdates;
     g_pStObjLayoutHorizontal = &D_8D2E258;
     g_pStObjLayoutVertical = &D_8D2E32C;
     func_892A018();
-    memcpy(&g_api.o, &OVL_EXPORT(Overlay), sizeof(Overlay));
+    memcpy(&g_api.o, &g_Overlay, sizeof(Overlay));
 }

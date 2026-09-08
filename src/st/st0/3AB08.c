@@ -545,12 +545,12 @@ void EntityCutscenePhotograph(Entity* self) {
 
 #ifdef VERSION_PSP
         func_psp_0891B0DC(0x300, 0);
-        prim = self->ext.prim;
+        prim = self->ext.cutscenePhoto.prim;
         prim->tpage = 0;
         self->step = 2;
         break;
     case 2:
-        prim = self->ext.prim;
+        prim = self->ext.cutscenePhoto.prim;
         if (prim->tpage == 0) {
             prim->tpage = 0x10C;
             prim->u0 = prim->u2 = 0;
@@ -569,7 +569,7 @@ void EntityCutscenePhotograph(Entity* self) {
             prim->drawMode = DRAW_DITHERING | DRAW_COLORS;
         }
 
-        prim = self->ext.prim;
+        prim = self->ext.cutscenePhoto.prim;
         drawEnv = g_CurrentBuffer->draw;
         prim->tpage = 0x10C;
         dualFlag = 1;

@@ -45,7 +45,7 @@ static void EntityWeaponAttack(Entity* self) {
 
     if (self->step == 0) {
         self->animSet = 10;
-        self->palette = 0x110;
+        self->palette = PAL_UNK_110;
         self->unk5A = 0x64;
         if (g_HandId != 0) {
             self->palette += 0x18;
@@ -670,12 +670,12 @@ void func_ptr_80170008(Entity* self) {
         posY = self->posY.i.hi;
 
         g_api.CheckCollision(posX, (s16)(posY + 10), &collider, 0);
-        if (collider.effects & EFFECT_UNK_0002) {
+        if (collider.effects & EFFECT_SIDE) {
             self->ext.weapon_030.unk7E = 0x18;
             self->step = 7;
         }
         g_api.CheckCollision(posX, (s16)(posY - 6), &collider, 0);
-        if (collider.effects & EFFECT_UNK_0002) {
+        if (collider.effects & EFFECT_SIDE) {
             self->ext.weapon_030.unk7E = 0x18;
             self->step = 7;
         }
@@ -794,7 +794,7 @@ void func_ptr_8017000C(Entity* self) {
     maskedParams = (self->params >> 8) & 0x7F;
     switch (self->step) {
     case 0:
-        self->palette = 0x110;
+        self->palette = PAL_UNK_110;
         self->unk5A = 0x64;
         if (g_HandId != 0) {
             self->palette += 0x18;
@@ -942,7 +942,7 @@ s32 func_ptr_80170010(Entity* self) {
                 self->ext.weapon.vol = 0x7F;
             }
         }
-        self->rotate += 0x100;
+        self->rotate += ROT(22.5);
         self->scaleX += 2;
         if (self->scaleX > 0x100) {
             self->scaleX = 0x100;
@@ -962,7 +962,7 @@ s32 func_ptr_80170010(Entity* self) {
     case 2:
         self->posX.val += self->velocityX;
         if (!(g_GameTimer & 3)) {
-            self->rotate += 0x400;
+            self->rotate += ROT(90);
         }
         if (!(g_GameTimer & 1) && (rand() & 1)) {
             g_api.CreateEntFactoryFromEntity(self, FACTORY(0x24, 1), 0);

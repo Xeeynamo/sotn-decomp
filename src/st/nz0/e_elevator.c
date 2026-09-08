@@ -29,7 +29,7 @@ void func_801B6DE4(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
-        self->ext.prim = prim;
+        self->ext.elevator.prim = prim;
 
         prim->type = PRIM_SPRT;
         prim->tpage = 0xF;
@@ -65,7 +65,7 @@ void func_801B6DE4(Entity* self) {
         }
         break;
     }
-    prim = self->ext.prim;
+    prim = self->ext.elevator.prim;
     prim->x0 = self->posX.i.hi - 8;
     prim->y0 = self->posY.i.hi - 8;
 }
@@ -201,7 +201,7 @@ void EntityElevator(Entity* self) {
         }
         break;
     }
-    prim = self->ext.prim;
+    prim = self->ext.elevator.prim;
     prim->x0 = self->posX.i.hi - 16;
     prim->y0 = self->posY.i.hi;
 

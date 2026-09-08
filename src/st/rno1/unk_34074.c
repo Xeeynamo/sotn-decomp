@@ -1,12 +1,132 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rno1.h"
 
-INCLUDE_ASM("st/rno1/nonmatchings/unk_34074", ParanthropusSetStep);
+extern EInit g_EInitParanthropusThrownBone;
+extern EInit g_EInitParanthropusBoneHitbox;
+extern EInit g_EInitInteractable;
+
+extern Point16 bone_hitbox_offsets[];
+extern Size16 bone_hitbox_dimensions[];
+extern Point16 skull_positions[];
+
+enum ParanthropusStep {
+    INIT = 0,
+    FALL_TO_GROUND = 1,
+    DIVE_RECOVERY = 2,
+    WALK = 3,
+    THROW_BONE = 4,
+    SWING_BONE = 5,
+    DIVE = 6,
+    DEATH = 7,
+    DEATH_EFFECTS = 8,
+    DEATH_PARTS_VACUUM = 9,
+    DEATH_SKULL_REMAINS = 11
+};
+
+void ParanthropusSetStep(u16 step) {
+    g_CurrentEntity->pose = 0;
+    g_CurrentEntity->poseTimer = 0;
+    g_CurrentEntity->ext.paranthropus.unk7C = 0;
+    g_CurrentEntity->ext.paranthropus.unk7E = false;
+    g_CurrentEntity->step = step;
+}
 
 INCLUDE_ASM("st/rno1/nonmatchings/unk_34074", EntityParanthropus);
 
-INCLUDE_ASM("st/rno1/nonmatchings/unk_34074", EntityParanthropusThrownBone);
+void EntityParanthropusThrownBone(Entity* self) {
+    if (self->flags & FLAG_DEAD) {
+        DestroyEntity(self);
+        return;
+    }
 
-INCLUDE_ASM("st/rno1/nonmatchings/unk_34074", EntityParanthropusBoneHitbox);
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitParanthropusThrownBone);
+        self->drawFlags |= ENTITY_ROTATE;
+        if (self->facingLeft) {
+            self->velocityX = FIX(2.0);
+        } else {
+            self->velocityX = FIX(-2.0);
+        }
+        self->velocityY = FIX(-6.0);
+        break;
+    case 1:
+        MoveEntity();
+        self->rotate -= ROT(22.5);
+        self->velocityY += FIX(0.25);
+        break;
+    }
+}
 
-INCLUDE_ASM("st/rno1/nonmatchings/unk_34074", EntityParanthropusSkull);
+void EntityParanthropusBoneHitbox(Entity* self) {
+    Entity* paranthropus;
+    u8 paranthropusAnimCurFrame;
+
+    if (!self->step) {
+        InitializeEntity(g_EInitParanthropusBoneHitbox);
+    }
+
+    paranthropus = self - 1;
+
+    paranthropusAnimCurFrame = paranthropus->animCurFrame;
+    if (paranthropusAnimCurFrame > 0x1D) {
+        paranthropusAnimCurFrame = 0;
+    }
+
+    self->hitboxOffX = bone_hitbox_offsets[paranthropusAnimCurFrame].x;
+    self->hitboxOffY = bone_hitbox_offsets[paranthropusAnimCurFrame].y;
+    self->hitboxWidth =
+        bone_hitbox_dimensions[paranthropusAnimCurFrame].width / 2;
+    self->hitboxHeight =
+        bone_hitbox_dimensions[paranthropusAnimCurFrame].height / 2;
+    self->facingLeft = paranthropus->facingLeft;
+    self->hitboxState = paranthropus->hitboxState;
+    self->posX.i.hi = paranthropus->posX.i.hi;
+    self->posY.i.hi = paranthropus->posY.i.hi;
+
+    if (paranthropus->entityId != E_PARANTHROPUS) {
+        DestroyEntity(self);
+    }
+}
+
+void EntityParanthropusSkull(Entity* self) {
+    u8 i;
+    Entity* entity;
+
+    if (!self->step) {
+        InitializeEntity(g_EInitInteractable);
+        self->attack = 0;
+        self->attackElement = ELEMENT_NONE;
+    }
+
+    // Main Paranthropus entity
+    entity = self - 2;
+    i = entity->animCurFrame;
+    if (i >= 0x21) {
+        i = 0;
+    }
+
+    if (entity->facingLeft) {
+        self->posX.i.hi = (self - 2)->posX.i.hi - skull_positions[i].x;
+    } else {
+        self->posX.i.hi = (self - 2)->posX.i.hi + skull_positions[i].x;
+    }
+    self->posY.i.hi = (self - 2)->posY.i.hi + skull_positions[i].y;
+
+    // Player can stand on top of the skull as a platform
+#ifdef VERSION_US
+    i = 0;
+#endif
+    if (entity->step < DEATH) {
+        i = GetPlayerCollisionWith(self, 8, 10, 4);
+    }
+
+    entity = &PLAYER;
+    if (i) {
+        entity->posY.val += FIX(2.0);
+    }
+
+    if ((self - 2)->entityId != E_PARANTHROPUS) {
+        DestroyEntity(self);
+    }
+}

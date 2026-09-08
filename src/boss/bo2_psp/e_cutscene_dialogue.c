@@ -1,14 +1,28 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../bo2/bo2.h"
+#include <cutscene.h>
 
-INCLUDE_ASM("boss/bo2_psp/nonmatchings/bo2_psp/e_cutscene_dialogue", GetLang);
+#define CUTSCENE_UNK1_NEXT_X 0
+#define CUTSCENE_UNK1_UNK17 2
 
-INCLUDE_ASM("boss/bo2_psp/nonmatchings/bo2_psp/e_cutscene_dialogue", DrawCutsceneActorName);
+extern Dialogue g_Dialogue;
 
-INCLUDE_ASM("boss/bo2_psp/nonmatchings/bo2_psp/e_cutscene_dialogue", CutsceneUnk3);
+#include "../../get_lang.h"
 
-INCLUDE_ASM("boss/bo2_psp/nonmatchings/bo2_psp/e_cutscene_dialogue", CutsceneUnk4);
+#include "../../st/cutscene_actor_name.h"
 
-INCLUDE_ASM("boss/bo2_psp/nonmatchings/bo2_psp/e_cutscene_dialogue", CutsceneUnk1);
+#include "../../st/cutscene_unk3.h"
 
-INCLUDE_ASM("boss/bo2_psp/nonmatchings/bo2_psp/e_cutscene_dialogue", SetCutsceneScript);
+#include "../../st/cutscene_unk4.h"
+
+#include "../../st/cutscene_unk1.h"
+
+#include "../../st/set_cutscene_script.h"
+
+INCLUDE_ASM("boss/bo2_psp/nonmatchings/bo2_psp/e_cutscene_dialogue", SetCutsceneEvents);
+
+INCLUDE_ASM("boss/bo2_psp/nonmatchings/bo2_psp/e_cutscene_dialogue", RunCutsceneEvents);
+
+INCLUDE_ASM("boss/bo2_psp/nonmatchings/bo2_psp/e_cutscene_dialogue", CutsceneSkip);
+
+INCLUDE_ASM("boss/bo2_psp/nonmatchings/bo2_psp/e_cutscene_dialogue", EntityCutsceneDialogue);

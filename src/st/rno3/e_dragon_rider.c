@@ -79,7 +79,7 @@ void EntityDragonRider(Entity* self) {
             self->facingLeft = self->ext.orob.movingLeft;
         }
         if (self->rotate) {
-            self->rotate -= 0x10;
+            self->rotate -= ROT(1.40625);
         }
         xVar = self->posX.i.hi;
         yVar = self->posY.i.hi + 12;
@@ -109,7 +109,7 @@ void EntityDragonRider(Entity* self) {
                 self->poseTimer = 0;
                 self->pose = 0;
             } else {
-                self->rotate = 0x200;
+                self->rotate = ROT(45);
             }
             if (self->ext.orob.movingLeft) {
                 self->velocityX = FIX(1.5);

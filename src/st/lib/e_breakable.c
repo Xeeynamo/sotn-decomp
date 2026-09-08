@@ -3,7 +3,7 @@
 
 #define BREAKABLE_ANIMSET ANIMSET_OVL(12)
 
-enum OVL_EXPORT(BreakableTypes) {
+enum BreakableTypes {
     HANGING_LAMP_FLAME,
     HANGING_LAMP_FLAME_,
     HANGING_LAMP_LONG,
@@ -16,7 +16,7 @@ enum OVL_EXPORT(BreakableTypes) {
     BUST,
 };
 
-enum OVL_EXPORT(BreakableDebrisSteps) {
+enum BreakableDebrisSteps {
     INIT,
     UPDATE,
     DEBRIS_NOP = 256,
@@ -125,7 +125,7 @@ void EntityBreakable(Entity* self) {
             g_api.PlaySfx(SFX_GLASS_BREAK_E);
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_HEART_DROP, self, entity);
+                CreateEntityFromEntity(E_PERSISTENT_ITEM_DROP, self, entity);
                 entity->params = self->params & 0x1FF;
             }
             PreventEntityFromRespawning(self);
@@ -135,7 +135,7 @@ void EntityBreakable(Entity* self) {
             g_api.PlaySfx(SFX_GLASS_BREAK_E);
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_HEART_DROP, self, entity);
+                CreateEntityFromEntity(E_PERSISTENT_ITEM_DROP, self, entity);
                 entity->params = self->params & 0x1FF;
             }
             PreventEntityFromRespawning(self);
@@ -145,7 +145,7 @@ void EntityBreakable(Entity* self) {
             g_api.PlaySfx(SFX_GLASS_BREAK_E);
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_HEART_DROP, self, entity);
+                CreateEntityFromEntity(E_PERSISTENT_ITEM_DROP, self, entity);
                 entity->params = 3;
             }
             PreventEntityFromRespawning(self);

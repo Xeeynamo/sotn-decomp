@@ -1,2 +1,2 @@
 EXTERN(_binary_assets_boss_bo1_mwo_header_bin_start);
-EXTERN(BO1_Load);
+EXTERN(OvlLoad);

@@ -6,7 +6,7 @@
 extern LayoutEntity* D_pspeu_09266B68;
 extern LayoutEntity* D_pspeu_09266C40;
 
-extern Overlay OVL_EXPORT(Overlay);
+extern Overlay g_Overlay;
 
 static u8 cutscene_script_prefight_it[] = {
 #include "../cen/gen/cutscene_script_prefight_it.h"
@@ -115,7 +115,7 @@ static void InitEntityIds(void) {
     SET_E_ID(BREAKABLE_DEBRIS);
 }
 
-void OVL_EXPORT(Load)(void) {
+void OvlLoad(void) {
     pre_fight_script_ptr1 = GetLangAt(
         0, (u8*)cutscene_script_prefight_en, (u8*)cutscene_script_prefight_fr,
         (u8*)cutscene_script_prefight_sp, (u8*)cutscene_script_prefight_ge,
@@ -154,5 +154,5 @@ void OVL_EXPORT(Load)(void) {
     PfnEntityUpdates = EntityUpdates;
     g_pStObjLayoutHorizontal = &D_pspeu_09266B68;
     g_pStObjLayoutVertical = &D_pspeu_09266C40;
-    memcpy(&g_api.o, &OVL_EXPORT(Overlay), sizeof(Overlay));
+    memcpy(&g_api.o, &g_Overlay, sizeof(Overlay));
 }

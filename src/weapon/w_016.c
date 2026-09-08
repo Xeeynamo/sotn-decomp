@@ -168,7 +168,7 @@ void func_ptr_80170008(Entity* self) {
         self->ext.weapon_016.unk80 = 0x48;
         self->ext.weapon_016.unk7E = 0xA;
         self->ext.weapon_016.unk84 = 0;
-        self->rotate = 0x400;
+        self->rotate = ROT(90);
         SetWeaponProperties(self, 0);
         DestroyEntityWeapon(true);
         self->hitboxHeight = 0xC;
@@ -182,7 +182,7 @@ void func_ptr_80170008(Entity* self) {
         break;
     case 1:
         self->ext.weapon_016.unk7C += self->ext.weapon_016.unk7E;
-        self->rotate -= 0x100;
+        self->rotate -= ROT(22.5);
         angle = self->ext.weapon_016.unk7C;
         self->velocityX = rcos(angle) * self->ext.weapon_016.unk80;
         self->velocityY = -rsin(angle) * self->ext.weapon_016.unk80;
@@ -356,7 +356,7 @@ static s32 func_ptr_80170014(Entity* self) {
         collX = xShift + self->posX.i.hi;
         collY = self->posY.i.hi;
         g_api.CheckCollision(collX, collY, &collider, 0);
-        if (collider.effects & EFFECT_UNK_0002) {
+        if (collider.effects & EFFECT_SIDE) {
             g_api.PlaySfx(SFX_EXPLODE_B);
             g_api.func_80102CD8(4);
             if (xShift < 0) {
@@ -465,7 +465,7 @@ static s32 func_ptr_80170014(Entity* self) {
                 collX = xShift + self->posX.i.hi;
                 collY = self->posY.i.hi;
                 g_api.CheckCollision(collX, collY, &collider, 0);
-                if (collider.effects & EFFECT_UNK_0002) {
+                if (collider.effects & EFFECT_SIDE) {
                     if (self->velocityX != 0) {
                         g_api.PlaySfx(SFX_EXPLODE_B);
                         g_api.func_80102CD8(1);

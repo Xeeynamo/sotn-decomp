@@ -200,7 +200,7 @@ void EntityPlateLord(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
-        self->ext.prim = prim;
+        self->ext.plateLord.prim = prim;
 
         prim->clut = PAL_PLATE_LORD_UNK2;
         prim->priority = 0xAF;
@@ -235,7 +235,7 @@ void EntityPlateLord(Entity* self) {
         prim->v2 = prim->v3 = 0x59;
         prim = prim->next;
 
-        prim = self->ext.prim;
+        prim = self->ext.plateLord.prim;
         while (prim != NULL) {
             prim->tpage = 0x13;
             prim->drawMode = DRAW_UNK02;
@@ -943,7 +943,7 @@ void EntityPlateLord(Entity* self) {
             func_us_801D27C4(unkStructB, false);
             break;
         case 4:
-            prim = self->ext.prim;
+            prim = self->ext.plateLord.prim;
             while (prim != NULL) {
                 prim->drawMode = DRAW_HIDE;
                 prim = prim->next;
@@ -982,7 +982,7 @@ void EntityPlateLord(Entity* self) {
         }
         break;
     }
-    prim = self->ext.prim;
+    prim = self->ext.plateLord.prim;
     unkStructC = &self->ext.plateLord.unk88;
     for (i = 0; i < 2; i++, unkStructC++) {
         part = unkStructC->unk0;
@@ -1098,7 +1098,7 @@ void func_us_801D44A0(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
-        self->ext.prim = prim;
+        self->ext.plateLord.prim = prim;
         prim->type = PRIM_GT4;
         prim->tpage = 0x13;
         prim->clut = PAL_PLATE_LORD_UNK2;
@@ -1203,7 +1203,7 @@ void func_us_801D44A0(Entity* self) {
     RotTransPers(&sp6B, &sp70, &unusedA, &unusedB);
     sp28.x.i.hi = sp70 & 0xFFFF;
     sp28.y.i.hi = sp70 >> 0x10;
-    prim = self->ext.prim;
+    prim = self->ext.plateLord.prim;
     func_us_801D2424(&sp20, rot.vz, 4, &sp28, rot.vz, 4, prim);
     if (self->palette & PAL_UNK_FLAG) {
         prim->clut = self->palette & 0xFFF;

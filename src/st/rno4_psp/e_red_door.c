@@ -1,6 +1,25 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../rno4/rno4.h"
 
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/e_red_door", EntityIsNearPlayer);
+static bool EntityIsNearPlayer(Entity* self) {
+    s16 distanceX;
+    s16 diffX;
+    s16 distanceY;
+    s16 diffY;
+
+    diffX = PLAYER.posX.i.hi - self->posX.i.hi;
+    distanceX = abs(diffX);
+    if (distanceX > 16) {
+        return false;
+    }
+
+    diffY = PLAYER.posY.i.hi - self->posY.i.hi;
+    distanceY = abs(diffY);
+    if (distanceY > 32) {
+        return false;
+    }
+
+    return true;
+}
 
 INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/e_red_door", EntityRedDoor);

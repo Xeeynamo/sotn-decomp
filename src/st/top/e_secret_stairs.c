@@ -100,7 +100,7 @@ void EntityStairSwitch(Entity* self) {
 
         case 1:
             MoveEntity();
-            self->rotate += 0x40;
+            self->rotate += ROT(5.625);
             if (UnkCollisionFunc3(D_us_80180CAC) & 1) {
                 self->step_s++;
             } else {

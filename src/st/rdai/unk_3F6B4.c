@@ -10,8 +10,7 @@ INCLUDE_ASM("st/rdai/nonmatchings/unk_3F6B4", func_us_801BF830);
 // Child parts share one implementation; only the fixed EInit address is local.
 #include "../e_rdai_unk1f.h"
 
-// These functions do not match from portable C under the PSX compiler.
-INCLUDE_ASM("st/rdai/nonmatchings/unk_3F6B4", func_us_801BFE6C);
+#include "../e_rdai_archer.h"
 
 INCLUDE_ASM("st/rdai/nonmatchings/unk_3F6B4", func_us_801C0240);
 

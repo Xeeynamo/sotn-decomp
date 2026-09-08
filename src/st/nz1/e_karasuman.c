@@ -2,7 +2,7 @@
 #include "nz1.h"
 
 extern EInit g_EInitKarasuman;
-extern s32 D_us_80181138;
+extern s32 g_BossFlag;
 
 static s16 D_us_8018115C[] = {
     0, 32, 0, 4, 4, -4, -8, 0,
@@ -159,7 +159,7 @@ void EntityKarasuman(Entity* self) {
         switch (self->step_s) {
         case 0:
             AnimateEntity(D_us_80181174, self);
-            if (D_us_80181138 & 1) {
+            if (g_BossFlag & 1) {
                 SetSubStep(1);
             }
             break;
@@ -462,7 +462,7 @@ void EntityKarasuman(Entity* self) {
     case 16:
         switch (self->step_s) {
         case 0:
-            D_us_80181138 |= 2;
+            g_BossFlag |= 2;
             self->hitboxState = 0;
             for (i = 0; i < 32; i++) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[256]);
@@ -540,7 +540,7 @@ void EntityKarasuman(Entity* self) {
 
             if (!--self->ext.karasuman.timer) {
                 self->animCurFrame = 0;
-                D_us_80181138 |= 4;
+                g_BossFlag |= 4;
                 self->step++;
             }
             break;
@@ -626,7 +626,7 @@ void EntityKarasumanOrbAttack(Entity* self) {
     s16 angleBetweenEntities;
 
 #ifndef VERSION_PSP
-    if (D_us_80181138 & 2) {
+    if (g_BossFlag & 2) {
         DestroyEntity(self);
         return;
     }

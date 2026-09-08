@@ -2,6 +2,7 @@
 #include "sattypes.h"
 #include "shared_sprite_banks.h"
 #include <saturn_sprite.h>
+#include "stage_02.h"
 
 #define DECLARE_SPRITE_BANK(index)                                             \
     extern struct SpriteParts* g_Stage02SpriteBank##index[]
@@ -13,18 +14,6 @@ DECLARE_SPRITE_BANK(31);
 DECLARE_SPRITE_BANK(32);
 DECLARE_SPRITE_BANK(33);
 
-extern SaturnSpriteResource entityRedEyeBustData;
-extern SaturnSpriteResource g_Stage02TableWithGlobeResource;
-extern SaturnSpriteResource g_Stage02LifeMaxTankResource;
-extern SaturnSpriteResource g_Stage02BlueFlameTableResource;
-extern SaturnSpriteResource g_Stage02SubweaponContainerResource;
-extern SaturnSpriteResource g_Stage02SubweaponContainerPaletteResource;
-extern SaturnSpriteResource g_Stage02ElevatorResource;
-extern SaturnSpriteResource g_Stage02ElevatorPaletteResource;
-extern SaturnSpriteResource g_Stage02Entity74Resource0;
-extern SaturnSpriteResource g_Stage02Entity74Resource1;
-extern SaturnSpriteResource g_Stage02MariaNpcResource;
-extern SaturnSpriteResource g_Stage02SpriteBank17Resource;
 extern struct SpriteParts* g_EntitySpriteBank15[];
 
 void* g_Stage02SpriteBanks[35] = {

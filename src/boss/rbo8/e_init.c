@@ -12,7 +12,7 @@ void EntityRoomForeground(Entity* self);
 void EntityStageNamePopup(Entity* self);
 void EntityEquipItemDrop(Entity* self);
 void EntityRelicOrb(Entity* self);
-void EntityHeartDrop(Entity* self);
+void EntityPersistentItemDrop(Entity* self);
 void EntityEnemyBlood(Entity* self);
 void EntityMessageBox(Entity* self);
 void EntityDummy(Entity* self);
@@ -41,7 +41,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityBreakable,     EntityExplosion,         EntityPrizeDrop,
     EntityDamageDisplay, EntityRedDoor,           EntityIntenseExplosion,
     EntitySoulStealOrb,  EntityRoomForeground,    EntityStageNamePopup,
-    EntityEquipItemDrop, EntityRelicOrb,          EntityHeartDrop,
+    EntityEquipItemDrop, EntityRelicOrb,          EntityPersistentItemDrop,
     EntityEnemyBlood,    EntityMessageBox,        EntityDummy,
     EntityDummy,         EntityBackgroundBlock,   EntityLockCamera,
     EntityUnkId13,       EntityExplosionVariants, EntityGreyPuff,

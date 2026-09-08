@@ -1,12 +1,29 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rbo2.h"
+#include <cutscene.h>
 
-INCLUDE_ASM("boss/rbo2/nonmatchings/e_cutscene_dialogue", CutsceneUnk1);
+extern Dialogue g_Dialogue;
+extern const char* actor_names[];
 
-INCLUDE_ASM("boss/rbo2/nonmatchings/e_cutscene_dialogue", SetCutsceneScript);
+#include "../../st/cutscene_unk1.h"
 
-INCLUDE_ASM("boss/rbo2/nonmatchings/e_cutscene_dialogue", CutsceneUnk3);
+#include "../../st/set_cutscene_script.h"
 
-INCLUDE_ASM("boss/rbo2/nonmatchings/e_cutscene_dialogue", CutsceneUnk4);
+#include "../../st/cutscene_unk3.h"
 
-INCLUDE_ASM("boss/rbo2/nonmatchings/e_cutscene_dialogue", DrawCutsceneActorName);
+#include "../../st/cutscene_unk4.h"
+
+#include "../../st/cutscene_actor_name.h"
+
+#include "../../st/set_cutscene_events.h"
+
+#define CUTSCENE_TILEMAP_SCROLL
+#include "../../st/cutscene_events.h"
+
+#include "../../st/cutscene_scale_avatar.h"
+
+INCLUDE_RODATA("boss/rbo2/nonmatchings/e_cutscene_dialogue", D_us_8019AE04);
+
+INCLUDE_RODATA("boss/rbo2/nonmatchings/e_cutscene_dialogue", D_us_8019AE0C);
+
+INCLUDE_ASM("boss/rbo2/nonmatchings/e_cutscene_dialogue", EntityCutsceneDialogue);

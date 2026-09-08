@@ -1,17 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
 #include <saturn_sprite.h>
-
-extern SaturnSpriteResource g_Stage15SpriteBank25;
-
-void func_060E78B8(Entity* self);
-void func_060E8A7C(Entity* self);
-void func_060E8BBC(Entity* self);
-void func_060E8D50(Entity* self);
-void func_060E8FD4(Entity* self);
-void func_060E9144(Entity* self);
-void func_060E94A0(Entity* self);
-void func_060E95E8(Entity* self);
+#include "stage_15.h"
 
 EntityEntry g_Stage15EntitySkeletonBreeder = {
     &g_Stage15SpriteBank25, func_060E78B8};

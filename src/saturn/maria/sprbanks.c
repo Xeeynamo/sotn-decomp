@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
 #include <saturn_sprite.h>
+#include "maria.h"
 
-extern SaturnSpriteResource g_MariaSpriteResources[13];
 extern struct SpriteParts* g_EntitySpriteBank15[];
 
 void* g_MariaSpriteBanks[18] = {

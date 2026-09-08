@@ -10,14 +10,22 @@
 #define BUTTON_SYMBOL PAD_CIRCLE
 #endif
 
+#ifndef PAD2_ANIM_DEBUG_PRINT
+#define PAD2_ANIM_DEBUG_PRINT() FntPrint("charal %x\n", self->animCurFrame)
+#endif
+
+#ifndef PAD2_ANIM_DEBUG_ABORT
+#define PAD2_ANIM_DEBUG_ABORT break
+#endif
+
 /**
  * Debug: Press SQUARE / CIRCLE on the second controller
  * to advance/rewind current animation frame
  */
-FntPrint("charal %x\n", self->animCurFrame);
+PAD2_ANIM_DEBUG_PRINT();
 if (g_pads[1].pressed & PAD_SQUARE) {
     if (self->params) {
-        break;
+        PAD2_ANIM_DEBUG_ABORT;
     }
     self->animCurFrame++;
     self->params |= 1;
@@ -26,7 +34,7 @@ if (g_pads[1].pressed & PAD_SQUARE) {
 }
 if (g_pads[1].pressed & BUTTON_SYMBOL) {
     if (self->step_s) {
-        break;
+        PAD2_ANIM_DEBUG_ABORT;
     }
     self->animCurFrame--;
     self->step_s |= 1;
@@ -34,3 +42,6 @@ if (g_pads[1].pressed & BUTTON_SYMBOL) {
     self->step_s = 0;
 }
 break;
+
+#undef PAD2_ANIM_DEBUG_PRINT
+#undef PAD2_ANIM_DEBUG_ABORT

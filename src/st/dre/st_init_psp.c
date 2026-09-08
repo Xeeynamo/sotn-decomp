@@ -5,7 +5,7 @@
 extern LayoutEntity* D_8D2DE60;
 extern LayoutEntity* D_8D2DF34;
 
-extern Overlay OVL_EXPORT(Overlay);
+extern Overlay g_Overlay;
 
 extern char cutscene_script_pre_fight_it[];
 extern char cutscene_script_pre_fight_sp[];
@@ -40,7 +40,7 @@ s32 E_ID(FADE_TO_WHITE1);
 s32 E_ID(UNK_ID23);
 s32 E_ID(FADE_TO_WHITE2);
 
-u8* OVL_EXPORT(cutscene_script);
+u8* cutscene_script;
 u8* D_pspeu_092600B8;
 u8* D_pspeu_092600B0;
 u8* D_pspeu_092600A8;
@@ -72,8 +72,8 @@ void InitEntityIds(void) {
     SET_E_ID(FADE_TO_WHITE2);
 }
 
-void OVL_EXPORT(Load)(void) {
-    OVL_EXPORT(cutscene_script) = GetLangAt(
+void OvlLoad(void) {
+    cutscene_script = GetLangAt(
         4, (u8*)cutscene_script_pre_fight_en, (u8*)cutscene_script_pre_fight_fr,
         (u8*)cutscene_script_pre_fight_sp, (u8*)cutscene_script_pre_fight_ge,
         (u8*)cutscene_script_pre_fight_it);
@@ -103,5 +103,5 @@ void OVL_EXPORT(Load)(void) {
     g_pStObjLayoutHorizontal = &D_8D2DE60;
     g_pStObjLayoutVertical = &D_8D2DF34;
     func_psp_0892A018();
-    memcpy(&g_api.o, &OVL_EXPORT(Overlay), sizeof(Overlay));
+    memcpy(&g_api.o, &g_Overlay, sizeof(Overlay));
 }

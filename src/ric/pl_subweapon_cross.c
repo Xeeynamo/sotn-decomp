@@ -229,7 +229,7 @@ void RicEntitySubwpnCross(Entity* self) {
         self->zPriority = PLAYER.zPriority;
         RicSetSpeedX(FIX(3.5625));
         self->drawFlags = ENTITY_ROTATE;
-        self->rotate = 0xC00;
+        self->rotate = ROT(270);
         self->ext.crossBoomerang.subweaponId = PL_W_CROSS;
         RicSetSubweaponParams(self);
         self->hitboxWidth = 8;
@@ -246,7 +246,7 @@ void RicEntitySubwpnCross(Entity* self) {
         // First phase. We spin at 0x80 angle units per frame.
         // Velocity gets decremented by 1/16 per frame until we slow
         // down to less than 0.75.
-        self->rotate -= 0x80;
+        self->rotate -= ROT(11.25);
         self->posX.val += self->velocityX;
         if (self->facingLeft) {
             xAccel = FIX(-1.0 / 16);
@@ -261,7 +261,7 @@ void RicEntitySubwpnCross(Entity* self) {
     case 3:
         // Second phase. Once we are slow, we spin twice as fast, and then
         // wait until our speed gets higher once again (turned around).
-        self->rotate -= 0x100;
+        self->rotate -= ROT(22.5);
         self->posX.val += self->velocityX;
         if (self->facingLeft) {
             xAccel = FIX(-1.0 / 16);
@@ -306,7 +306,7 @@ void RicEntitySubwpnCross(Entity* self) {
             return;
         }
         // Otherwise, we keep trucking. spin at the slower rate again.
-        self->rotate -= 0x80;
+        self->rotate -= ROT(11.25);
         self->posX.val += self->velocityX;
         break;
     case 7:
@@ -424,18 +424,18 @@ void RicEntitySubwpnCrossTrail(Entity* self) {
         self->facingLeft = PLAYER.facingLeft;
         self->zPriority = PLAYER.zPriority;
         self->drawFlags = ENTITY_ROTATE;
-        self->rotate = 0xC00;
+        self->rotate = ROT(270);
         self->step++;
         break;
     case 1:
-        self->rotate -= 0x80;
+        self->rotate -= ROT(11.25);
         if (self->ext.crossBoomerang.parent->step == 7) {
             self->step++;
             self->ext.crossBoomerang.timer = (self->params + 1) * 4;
         }
         break;
     case 2:
-        self->rotate -= 0x80;
+        self->rotate -= ROT(11.25);
         if (--self->ext.crossBoomerang.timer == 0) {
             DestroyEntity(self);
             return;

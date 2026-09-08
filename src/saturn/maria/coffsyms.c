@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
+#include "maria.h"
 
 typedef struct {
     u8 name[8];
@@ -1971,26 +1972,6 @@ SaturnCoffSymbolRecord g_MariaCoffSymbolRecords[326] = {
      0x00,
      0x00},
 };
-
-void func_060BDED8(void);
-void func_060BD5F0(void);
-void func_060BE064(void);
-void func_060BE258(void);
-void func_060BE414(void);
-void func_060BE440(void);
-void func_060BE54C(void);
-void func_060BE618(void);
-void func_060BE6D4(void);
-void func_060BE700(void);
-void func_060BEE30(void);
-void func_060BF35C(void);
-void func_060BF704(void);
-void func_060C0AE4(void);
-void func_060BF7B0(void);
-void func_060C0428(void);
-void func_060BFD24(void);
-void func_060C00B4(void);
-void func_060BE3D4(void);
 
 void (*g_MariaMapMenuFunctions[19])(void) = {
     func_060BDED8, func_060BD5F0, func_060BE064, func_060BE258, func_060BE414,

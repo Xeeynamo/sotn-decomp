@@ -153,6 +153,15 @@ func main() {
 		},
 	})
 	rootCmd.AddCommand(&cobra.Command{
+		Use:          "pack-stage <stage> <asset-dir> <source-dir> <rooms> <layers> <layouts>",
+		Short:        "Pack a generated stage asset tree into C sources",
+		SilenceUsage: true,
+		Args:         cobra.ExactArgs(6),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return packStageAssets(args[0], args[1], args[2], args[3], args[4], args[5])
+		},
+	})
+	rootCmd.AddCommand(&cobra.Command{
 		Use:          "info <stage_ovl.bin>",
 		Short:        "Attempt to parse and print the asset configuration for a given stage overlay",
 		SilenceUsage: true,

@@ -264,7 +264,7 @@ void func_pspeu_09249898(Entity* self) {
         InitializeEntity(g_EInitInteractable);
         break;
     case 1:
-        if (player->step < 2 && g_pads->tapped & PAD_UP && offsetX < 0x28 &&
+        if (player->step < 2 && g_pads[0].tapped & PAD_UP && offsetX < 0x28 &&
             offsetX > -0x28) {
             g_CutsceneFlags |= 1;
             g_PauseAllowed = false;

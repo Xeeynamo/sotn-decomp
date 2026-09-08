@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sattypes.h"
-
-extern AnimationFrame ric_anim_stand[];
+#include "maria.h"
 
 AnimationFrame* D_8015538C[] = {ric_anim_stand, ric_anim_stand};
 

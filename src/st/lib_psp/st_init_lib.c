@@ -6,7 +6,7 @@
 extern LayoutEntity* D_8D2E160;
 extern LayoutEntity* D_8D2E234;
 
-extern Overlay OVL_EXPORT(Overlay);
+extern Overlay g_Overlay;
 
 extern char cutscene_data_it[];
 extern char cutscene_data_sp[];
@@ -83,7 +83,7 @@ s32 E_ID(ID_4F);
 u8* cutscene_data_offset_eight;
 u8* cutscene_data;
 u8* cutscene_data_offset_zero;
-u8* OVL_EXPORT(cutscene_data_offset_four);
+u8* cutscene_data_offset_four;
 
 void InitEntityIds(void) {
     E_ID(ID_11) = 0x11;
@@ -151,7 +151,7 @@ void InitEntityIds(void) {
     E_ID(ID_4F) = 0x4F;
 }
 
-void OVL_EXPORT(Load)(void) {
+void OvlLoad(void) {
     cutscene_data_offset_eight = GetLangAt(
         8, (u8*)cutscene_data_en, (u8*)cutscene_data_fr, (u8*)cutscene_data_sp,
         (u8*)cutscene_data_ge, (u8*)cutscene_data_it);
@@ -164,7 +164,7 @@ void OVL_EXPORT(Load)(void) {
         0, (u8*)cutscene_data_en, (u8*)cutscene_data_fr, (u8*)cutscene_data_sp,
         (u8*)cutscene_data_ge, (u8*)cutscene_data_it);
 
-    OVL_EXPORT(cutscene_data_offset_four) = GetLangAt(
+    cutscene_data_offset_four = GetLangAt(
         4, (u8*)cutscene_data_en, (u8*)cutscene_data_fr, (u8*)cutscene_data_sp,
         (u8*)cutscene_data_ge, (u8*)cutscene_data_it);
 
@@ -173,5 +173,5 @@ void OVL_EXPORT(Load)(void) {
     g_pStObjLayoutHorizontal = &D_8D2E160;
     g_pStObjLayoutVertical = &D_8D2E234;
     func_psp_0892A018();
-    memcpy(&g_api.o, &OVL_EXPORT(Overlay), sizeof(Overlay));
+    memcpy(&g_api.o, &g_Overlay, sizeof(Overlay));
 }

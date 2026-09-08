@@ -708,7 +708,7 @@ void EntityDraculaFinalForm(Entity* self) {
             self->primIndex = primIndex;
             self->flags |= FLAG_HAS_PRIMS;
             prim = &g_PrimBuf[primIndex];
-            self->ext.prim = prim;
+            self->ext.dracFinalForm.prim = prim;
             prim->x0 = prim->x2 = 0;
             prim->x1 = prim->x3 = 0x100;
             prim->y0 = prim->y1 = 0;
@@ -721,7 +721,7 @@ void EntityDraculaFinalForm(Entity* self) {
             prim->drawMode = DRAW_TRANSP | 0x30;
             self->step_s++;
         case 6:
-            prim = self->ext.prim;
+            prim = self->ext.dracFinalForm.prim;
             prim->r0 += 0x18;
             prim->g0 = prim->b0 = prim->r0;
             LOW(prim->r1) = LOW(prim->r0);
@@ -839,7 +839,7 @@ void EntityDraculaMegaFireball(Entity* self) {
             self->drawFlags |= ENTITY_ROTATE | ENTITY_SCALEY | ENTITY_SCALEX;
             self->scaleX = self->scaleY = 0x80;
             angle = self->rotate;
-            self->rotate = 0x1C0;
+            self->rotate = ROT(39.375);
             self->rotate -= angle;
             if (self->facingLeft) {
                 self->velocityX = rcos(angle) * 0x60;

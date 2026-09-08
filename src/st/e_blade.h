@@ -2,6 +2,9 @@
 
 // The enemy called "Blade", his helper functions, and his swords
 
+extern EInit g_EInitBlade;
+extern EInit g_EInitBladeWeapon;
+
 static void func_801D0A00(s16* arg0) {
     Entity* ent;
 
@@ -328,6 +331,9 @@ void EntityBlade(Entity* self) {
         self->facingLeft = self->params;
         self->hitboxWidth = 6;
         self->hitboxHeight = 6;
+#ifdef STAGE_IS_RNO0
+        self->zPriority += 8;
+#endif
         /* fallthrough */
     case 1:
         if (UnkCollisionFunc3(D_801833E4) & 1) {

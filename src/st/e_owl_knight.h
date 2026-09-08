@@ -1052,6 +1052,11 @@ void EntityOwlKnight(Entity* self) {
     }
     hitboxPtr = D_us_80181E08;
     index = self->animCurFrame - 0xF;
+#ifdef FIX_UB
+    // self->animCurFrame can reset to 0 here, leading to index being -15
+    // and indexing out of bounds
+    index = CLAMP_MIN(index, 0);
+#endif
     index = D_us_80181E28[index] - 7;
     if (index < 0) {
         index = 0;

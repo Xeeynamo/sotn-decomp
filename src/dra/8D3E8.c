@@ -1162,8 +1162,7 @@ void func_8012F894(Entity* self) {
                     var_s1++;
                     continue;
                 }
-                if ((collider2.effects &
-                     (EFFECT_UNK_8000 | EFFECT_UNK_0002 | EFFECT_SOLID)) !=
+                if ((collider2.effects & (EFFECT_UNK_8000 | EFFECT_BLOCK)) !=
                     (EFFECT_UNK_8000 | EFFECT_SOLID)) {
                     continue;
                 }
@@ -1344,7 +1343,7 @@ void func_80130264(Entity* self) {
     switch (PLAYER.step_s) {
     case 1:
         if (D_800B0914 == 1) {
-            self->rotate -= 0x180;
+            self->rotate -= ROT(33.75);
         }
         break;
     case 2:
@@ -1452,7 +1451,7 @@ void func_80130618(Entity* self) {
     switch (PLAYER.step_s) {
     case 1:
         if (D_800B0914 == 1) {
-            self->rotate -= 0x100;
+            self->rotate -= ROT(22.5);
             self->posY.i.hi += 8;
         }
         if (D_80138430 < 0x601) {
@@ -1507,7 +1506,7 @@ void func_80130618(Entity* self) {
     case 4:
         if (D_800B0914 == 0) {
             self->posY.i.hi++;
-            self->rotate -= 0x180;
+            self->rotate -= ROT(33.75);
         }
         break;
     case 5:
