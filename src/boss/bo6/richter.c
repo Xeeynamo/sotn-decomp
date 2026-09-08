@@ -1174,7 +1174,22 @@ INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepHit);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepDead);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepStandInAir);
+extern AnimationFrame D_us_801820B0[];
+
+void RicStepStandInAir(void) {
+    if (RIC.step_s == 0) {
+        RIC.velocityY += FIX(0.21875);
+        if (RIC.velocityY > 0) {
+            RIC.velocityY = 0;
+            RIC.step_s = 1;
+        }
+    } else if (g_Ric.unk4E != 0) {
+        g_Ric.unk46 = 0;
+        RicSetStep(PL_S_JUMP);
+        RicSetAnimation(D_us_801820B0);
+        g_Ric.unk44 = 0;
+    }
+}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/richter", RicStepEnableFlameWhip);
 
