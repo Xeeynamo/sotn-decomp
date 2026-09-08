@@ -4187,7 +4187,7 @@
 | np3        | func_pspeu_0923FE90               |       64 |          8 |        |       |     |
 | nz0        | func_pspeu_0923ABA0               |       64 |          8 |        |       |     |
 | rno4       | func_us_801BCD80_from_rnz1        |       64 |          8 |        |       |     |
-| rnz1       | func_us_801BCD80                  |       64 |          8 |        |       |     |
+| rnz1       | EntityRockPiece                   |       64 |          8 |        |       |     |
 | main       | func_psp_0890C1FC                 |       64 |          9 |        |       |     |
 | main       | _exit                             |       64 |         15 |        |       |     |
 | main       | func_psp_08919928                 |       64 |         15 |        |       |     |
@@ -6261,7 +6261,7 @@
 | no0        | func_pspeu_0925E290               |      109 |          5 |        |       |     |
 | main       | func_psp_08933A10                 |      109 |          7 |        |       |     |
 | rno4       | func_us_801BCFC8_from_rnz1        |      109 |          7 |        |       |     |
-| rnz1       | func_us_801BCFC8                  |      109 |          7 |        |       |     |
+| rnz1       | EntityBombKnightArm               |      109 |          7 |        |       |     |
 | lib        | func_psp_0923D8A0                 |      109 |          9 |        |       |     |
 | rcen       | func_pspeu_09244F30               |      109 |          9 |        |       |     |
 | rdai       | func_pspeu_092510D8               |      109 |          9 |        |       |     |
@@ -6541,7 +6541,7 @@
 | dra        | func_psp_091374D0                 |      115 |         27 |        |       |     |
 |            | func_092EE6D8                     |      116 |         11 |        |       |     |
 | rno4       | func_us_801BCA5C_from_rnz1        |      116 |         13 |        |       |     |
-| rnz1       | func_us_801BCA5C                  |      116 |         13 |        |       |     |
+| rnz1       | EntityBombFuseSparks              |      116 |         13 |        |       |     |
 | dra        | func_psp_09103128                 |      116 |         14 |        |       |     |
 | main       | func_psp_089392C8                 |      116 |         14 |        |       |     |
 | bo4        | func_pspeu_0924CA58_from_rbo5     |      116 |         18 |        |       |     |
@@ -6874,7 +6874,7 @@
 | rno3       | func_pspeu_09255190               |      147 |         19 |        |       |     |
 | rnz0       | func_pspeu_0923CEE0               |      148 |         12 |        |       |     |
 | rno4       | func_us_801BCE4C_from_rnz1        |      148 |         16 |        |       |     |
-| rnz1       | func_us_801BCE4C                  |      148 |         16 |        |       |     |
+| rnz1       | EntityKnightDeathParts            |      148 |         16 |        |       |     |
 |            | func_pspeu_09247A70               |      148 |         17 |        |       |     |
 | rnz0       | func_pspeu_0924DBD0               |      148 |         17 |        |       |     |
 | rno0       | func_pspeu_0923EE78               |      148 |         22 |        |       |     |
@@ -7200,7 +7200,7 @@
 | st0        | func_pspeu_09247DF8               |      173 |         13 |        |       |     |
 | bo6        | func_pspeu_09248660               |      173 |         27 |        |       |     |
 | rno4       | func_us_801BCB9C_from_rnz1        |      173 |         27 |        |       |     |
-| rnz1       | func_us_801BCB9C                  |      173 |         27 |        |       |     |
+| rnz1       | EntityThrownRock                  |      173 |         27 |        |       |     |
 | rbo8       | func_us_80198964                  |      173 |         28 |        |       |     |
 | main       | __PopStackFrame                   |      174 |         15 |        |       |     |
 | are        | func_pspeu_0923C568               |      174 |         16 |        |       |     |
@@ -8491,7 +8491,7 @@
 |            | func_092EBA40                     |      358 |         42 |        |       |     |
 | tt_006     | func_pspeu_092EBA40               |      358 |         42 |        |       |     |
 | rno4       | func_us_801BC650_from_rnz1        |      358 |         49 |        |       |     |
-| rnz1       | func_us_801BC650                  |      358 |         49 |        |       |     |
+| rnz1       | EntityThrownBomb                  |      358 |         49 |        |       |     |
 | lib        | func_psp_092576C8                 |      359 |         33 |        |       |     |
 | rnz0       | func_pspeu_0924F3D8               |      359 |         33 |        |       |     |
 | bo6        | func_pspeu_09267520               |      360 |         37 |        |       |     |
@@ -9509,7 +9509,7 @@
 | lib        | func_psp_092663F8                 |      739 |         81 | Yes    |       |     |
 | cat        | func_pspeu_0925BE88               |      741 |         71 |        |       |     |
 | rno4       | func_us_801BBE58_from_rnz1        |      741 |        129 |        |       |     |
-| rnz1       | func_us_801BBE58                  |      741 |        129 |        |       |     |
+| rnz1       | EntityBombKnight                  |      741 |        129 |        |       |     |
 | rno0       | func_pspeu_09244D88               |      741 |        134 | Yes    |       |     |
 | bo6        | func_pspeu_09260020               |      742 |         48 | Yes    |       |     |
 | ric        | func_pspeu_092B7530               |      742 |         48 | Yes    |       |     |
