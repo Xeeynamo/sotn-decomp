@@ -856,7 +856,46 @@ u8 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
     return 0;
 }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607A88C, func_0607A88C);
+void func_0607A88C(Entity* self) {
+
+    typedef struct {
+        u8 unk0;
+        u8 unk1;
+    } unkStruct;
+
+    u8** animations;
+    unkStruct* pcVar2;
+    s16* frame;
+    s16** frames;
+    SpriteObject* sprite;
+    unkStruct local_14;
+
+    self->poseTimer = self->ext.spriteAnimEnemy.unk82;
+    self->pose = self->ext.spriteAnimEnemy.unk81;
+    self->ext.spriteAnimEnemy.unk88 = 0;
+    if (self->ext.spriteAnimEnemy.unk82 == 0) {
+        animations = self->ext.spriteAnimEnemy.animations;
+        pcVar2 = animations[self->ext.spriteAnimEnemy.unk80];
+        local_14 = pcVar2[self->ext.spriteAnimEnemy.unk81];
+        if (local_14.unk0 == 0xFF) {
+            local_14 = pcVar2[0];
+            self->ext.spriteAnimEnemy.unk81 = 0;
+            self->ext.spriteAnimEnemy.unk88 = 1;
+        }
+        self->ext.spriteAnimEnemy.unk82 = local_14.unk0;
+        sprite = self->unk0;
+        frames = self->ext.spriteAnimEnemy.frames;
+        frame = frames[local_14.unk1];
+        self->animCurFrame = local_14.unk1;
+        sprite->flags = sprite->flags & ~0x3F08 | frame[0] & 0x3F08;
+        sprite->slotAndStreamId =
+            sprite->slotAndStreamId & ~0x7F | frame[1] & 0x7F;
+        func_0600B0B8(
+            sprite->parts, &frame[2], (sprite->flags & 0x3F00) >> 0x8);
+        self->ext.spriteAnimEnemy.unk81++;
+    }
+    self->ext.spriteAnimEnemy.unk82--;
+}
 
 void func_0600B0B8(SpritePart* part, void* arg1, s32 arg2);
 
