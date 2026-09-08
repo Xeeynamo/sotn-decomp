@@ -856,6 +856,8 @@ u8 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
     return 0;
 }
 
+void func_0600B0B8(SpritePart* part, void* arg1, s32 arg2);
+
 void func_0607A88C(Entity* self) {
 
     typedef struct {
@@ -896,8 +898,6 @@ void func_0607A88C(Entity* self) {
     }
     self->ext.spriteAnimEnemy.unk82--;
 }
-
-void func_0600B0B8(SpritePart* part, void* arg1, s32 arg2);
 
 void func_0607A994(Entity* self) {
     s16** frames;
