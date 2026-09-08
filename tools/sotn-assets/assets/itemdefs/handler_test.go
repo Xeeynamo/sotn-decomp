@@ -4,6 +4,7 @@ import (
 	"encoding/binary"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 
 	"github.com/goccy/go-yaml"
@@ -316,28 +317,55 @@ func TestBuildRejectsWrongEntryCount(t *testing.T) {
 	require.NoError(t, os.WriteFile(
 		assetPath(assetDir, name), serialized, 0o644))
 
-	err = Handler.Build(assets.BuildArgs{
+	err = Equipment.Build(assets.BuildArgs{
 		AssetDir: assetDir,
 		SrcDir:   srcDir,
 		Name:     name,
-		Args:     []string{"equipment"},
 	})
 	require.ErrorContains(t, err, "got 216 entries, expected 217")
 }
 
-func TestParseKind(t *testing.T) {
-	kind, err := parseKind([]string{"equipment"})
-	require.NoError(t, err)
-	require.Equal(t, kindEquipment, kind)
+func TestHandlers(t *testing.T) {
+	t.Setenv("VERSION", "us")
+	// Extract reads the game's enum declarations relative to the repository root.
+	t.Chdir("../../../..")
+	for _, tc := range []struct {
+		handler assets.Handler
+		name    string
+		data    []byte
+		count   int
+		stride  int
+	}{
+		{Equipment, "equipment", syntheticEquipmentData(), equipmentCount, equipmentStride},
+		{Accessories, "accessories", syntheticAccessoryData(), accessoryCount, accessoryStride},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			require.Equal(t, tc.name, tc.handler.Name())
+			dir := t.TempDir()
+			extract := assets.ExtractArgs{
+				Data: tc.data, End: tc.count * tc.stride,
+				RamBase: psx.Addr(0x800A0000), Version: sotn.Version("us"),
+				AssetDir: dir, Name: tc.name,
+			}
+			require.NoError(t, tc.handler.Extract(extract))
+			build := assets.BuildArgs{AssetDir: dir, SrcDir: dir, Name: tc.name}
+			require.NoError(t, tc.handler.Build(build))
+			generated, err := os.ReadFile(sourcePath(dir, tc.name))
+			require.NoError(t, err)
+			require.Equal(t, tc.count, strings.Count(string(generated), "/* 0x"))
+			info, err := tc.handler.Info(assets.InfoArgs{})
+			require.NoError(t, err)
+			require.Empty(t, info)
 
-	kind, err = parseKind([]string{"accessory"})
-	require.NoError(t, err)
-	require.Equal(t, kindAccessory, kind)
-
-	_, err = parseKind(nil)
-	require.ErrorContains(t, err, "exactly one")
-	_, err = parseKind([]string{"unknown"})
-	require.ErrorContains(t, err, "unsupported")
+			extract.Args = []string{"equipment"}
+			require.ErrorContains(t, tc.handler.Extract(extract), "takes no arguments")
+			build.Args = []string{"accessory"}
+			require.ErrorContains(t, tc.handler.Build(build), "takes no arguments")
+			build.Args = nil
+			require.NoError(t, os.WriteFile(assetPath(dir, tc.name), []byte("[]\n"), 0o644))
+			require.ErrorContains(t, tc.handler.Build(build), "got 0 entries")
+		})
+	}
 }
 
 func TestFormattingAndFallbacks(t *testing.T) {

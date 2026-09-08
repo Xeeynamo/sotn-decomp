@@ -24,13 +24,6 @@ const (
 	accessoryCount        = 90
 )
 
-type itemKind int
-
-const (
-	kindEquipment itemKind = iota
-	kindAccessory
-)
-
 type equipmentRawEntry struct {
 	NameAddr                 uint32
 	DescriptionAddr          uint32
@@ -128,43 +121,29 @@ type enumFields struct {
 	categories map[int]string
 }
 
-type handler struct{}
+type equipmentHandler struct{}
+type accessoriesHandler struct{}
 
-var Handler = &handler{}
+var Equipment = &equipmentHandler{}
+var Accessories = &accessoriesHandler{}
 
-func (h *handler) Name() string { return "itemdefs" }
+func (h *equipmentHandler) Name() string   { return "equipment" }
+func (h *accessoriesHandler) Name() string { return "accessories" }
 
-func (h *handler) Extract(e assets.ExtractArgs) error {
-	kind, err := parseKind(e.Args)
+func (h *equipmentHandler) Extract(e assets.ExtractArgs) error {
+	if len(e.Args) != 0 {
+		return fmt.Errorf("equipment takes no arguments")
+	}
+	elements, err := fetchEnumFields("Elements")
 	if err != nil {
 		return err
 	}
-	fields, err := fetchEnumFields(kind)
+	categories, err := fetchEnumFields("ItemCategory")
 	if err != nil {
 		return err
 	}
-
-	var entries any
-	switch kind {
-	case kindEquipment:
-		entries, err = parseEquipment(
-			e.Data,
-			e.Start,
-			e.End,
-			e.RamBase,
-			e.Version.GetPlatform(),
-			fields,
-		)
-	case kindAccessory:
-		entries, err = parseAccessories(
-			e.Data,
-			e.Start,
-			e.End,
-			e.RamBase,
-			e.Version.GetPlatform(),
-			fields,
-		)
-	}
+	entries, err := parseEquipment(e.Data, e.Start, e.End, e.RamBase,
+		e.Version.GetPlatform(), enumFields{elements: elements, categories: categories})
 	if err != nil {
 		return fmt.Errorf("parse error: %w", err)
 	}
@@ -176,53 +155,82 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 	return util.WriteFile(assetPath(e.AssetDir, e.Name), asYAML)
 }
 
-func (h *handler) Build(e assets.BuildArgs) error {
-	kind, err := parseKind(e.Args)
+func (h *accessoriesHandler) Extract(e assets.ExtractArgs) error {
+	if len(e.Args) != 0 {
+		return fmt.Errorf("accessories takes no arguments")
+	}
+	elements, err := fetchEnumFields("Elements")
 	if err != nil {
 		return err
 	}
+	entries, err := parseAccessories(e.Data, e.Start, e.End, e.RamBase,
+		e.Version.GetPlatform(), enumFields{elements: elements})
+	if err != nil {
+		return fmt.Errorf("parse error: %w", err)
+	}
+	asYAML, err := yaml.Marshal(entries)
+	if err != nil {
+		return fmt.Errorf("yaml error: %w", err)
+	}
+	return util.WriteFile(assetPath(e.AssetDir, e.Name), asYAML)
+}
 
+func (h *equipmentHandler) Build(e assets.BuildArgs) error {
+	if len(e.Args) != 0 {
+		return fmt.Errorf("equipment takes no arguments")
+	}
 	inFileName := assetPath(e.AssetDir, e.Name)
 	data, err := os.ReadFile(inFileName)
 	if err != nil {
 		return fmt.Errorf("failed to read file: %w", err)
 	}
 
-	var generated string
-	switch kind {
-	case kindEquipment:
-		var serialized []equipmentModel
-		if err := yaml.Unmarshal(data, &serialized); err != nil {
-			return fmt.Errorf("failed to parse %s: %w", inFileName, err)
-		}
-		if len(serialized) != equipmentCount {
-			return fmt.Errorf(
-				"invalid equipment definitions in %s: got %d entries, expected %d",
-				inFileName, len(serialized), equipmentCount)
-		}
-		generated, err = buildEquipment(serialized)
-		if err != nil {
-			return fmt.Errorf("build equipment definitions: %w", err)
-		}
-	case kindAccessory:
-		var serialized []accessoryModel
-		if err := yaml.Unmarshal(data, &serialized); err != nil {
-			return fmt.Errorf("failed to parse %s: %w", inFileName, err)
-		}
-		if len(serialized) != accessoryCount {
-			return fmt.Errorf(
-				"invalid accessory definitions in %s: got %d entries, expected %d",
-				inFileName, len(serialized), accessoryCount)
-		}
-		generated, err = buildAccessories(serialized)
-		if err != nil {
-			return fmt.Errorf("build accessory definitions: %w", err)
-		}
+	var serialized []equipmentModel
+	if err := yaml.Unmarshal(data, &serialized); err != nil {
+		return fmt.Errorf("failed to parse %s: %w", inFileName, err)
+	}
+	if len(serialized) != equipmentCount {
+		return fmt.Errorf(
+			"invalid equipment definitions in %s: got %d entries, expected %d",
+			inFileName, len(serialized), equipmentCount)
+	}
+	generated, err := buildEquipment(serialized)
+	if err != nil {
+		return fmt.Errorf("build equipment definitions: %w", err)
 	}
 	return util.WriteFile(sourcePath(e.SrcDir, e.Name), []byte(generated))
 }
 
-func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
+func (h *accessoriesHandler) Build(e assets.BuildArgs) error {
+	if len(e.Args) != 0 {
+		return fmt.Errorf("accessories takes no arguments")
+	}
+	inFileName := assetPath(e.AssetDir, e.Name)
+	data, err := os.ReadFile(inFileName)
+	if err != nil {
+		return fmt.Errorf("failed to read file: %w", err)
+	}
+	var serialized []accessoryModel
+	if err := yaml.Unmarshal(data, &serialized); err != nil {
+		return fmt.Errorf("failed to parse %s: %w", inFileName, err)
+	}
+	if len(serialized) != accessoryCount {
+		return fmt.Errorf(
+			"invalid accessory definitions in %s: got %d entries, expected %d",
+			inFileName, len(serialized), accessoryCount)
+	}
+	generated, err := buildAccessories(serialized)
+	if err != nil {
+		return fmt.Errorf("build accessory definitions: %w", err)
+	}
+	return util.WriteFile(sourcePath(e.SrcDir, e.Name), []byte(generated))
+}
+
+func (h *equipmentHandler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
+	return assets.InfoResult{}, nil
+}
+
+func (h *accessoriesHandler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
 	return assets.InfoResult{}, nil
 }
 
@@ -234,43 +242,13 @@ func sourcePath(dir, name string) string {
 	return filepath.Join(dir, fmt.Sprintf("gen/%s.h", name))
 }
 
-func parseKind(args []string) (itemKind, error) {
-	if len(args) != 1 {
-		return 0, fmt.Errorf(
-			"itemdefs requires exactly one mode argument, got %d", len(args))
-	}
-	switch args[0] {
-	case "equipment":
-		return kindEquipment, nil
-	case "accessory":
-		return kindAccessory, nil
-	default:
-		return 0, fmt.Errorf(
-			"unsupported itemdefs mode %q; expected equipment or accessory",
-			args[0])
-	}
-}
-
-func fetchEnumFields(kind itemKind) (enumFields, error) {
-	var fields enumFields
-	var err error
-	switch kind {
-	case kindEquipment:
-		fields.categories, err =
-			sotn.FetchEnum("include", "game", "ItemCategory")
-		if err != nil {
-			return fields, fmt.Errorf("fetch enum ItemCategory: %w", err)
-		}
-		if len(fields.categories) == 0 {
-			return fields, fmt.Errorf("enum ItemCategory has no fields")
-		}
-	}
-	fields.elements, err = sotn.FetchEnum("include", "game", "Elements")
+func fetchEnumFields(name string) (map[int]string, error) {
+	fields, err := sotn.FetchEnum("include", "game", name)
 	if err != nil {
-		return fields, fmt.Errorf("fetch enum Elements: %w", err)
+		return nil, fmt.Errorf("fetch enum %s: %w", name, err)
 	}
-	if len(fields.elements) == 0 {
-		return fields, fmt.Errorf("enum Elements has no fields")
+	if len(fields) == 0 {
+		return nil, fmt.Errorf("enum %s has no fields", name)
 	}
 	return fields, nil
 }
