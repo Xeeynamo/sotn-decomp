@@ -65,13 +65,13 @@ void EntityBreakableDebris(Entity* self);
 void EntityValhallaKnight(Entity* self);
 void func_us_801C8954(Entity* self);
 void func_us_801C8AAC(Entity* self);
-void func_us_801BBE58(Entity* self);
-void func_us_801BC650(Entity* self);
-void func_us_801BCE4C(Entity* self);
-void func_us_801BCA5C(Entity* self);
-void func_us_801BCB9C(Entity* self);
-void func_us_801BCD80(Entity* self);
-void func_us_801BCFC8(Entity* self);
+void EntityBombKnight(Entity* self);
+void EntityThrownBomb(Entity* self);
+void EntityKnightDeathParts(Entity* self);
+void EntityBombFuseSparks(Entity* self);
+void EntityThrownRock(Entity* self);
+void EntityRockPiece(Entity* self);
+void EntityBombKnightArm(Entity* self);
 void func_us_801BD398(Entity* self);
 void func_us_801BDA24(Entity* self);
 void func_us_801BD324(Entity* self);
@@ -141,13 +141,13 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityValhallaKnight,
     func_us_801C8954,
     func_us_801C8AAC,
-    func_us_801BBE58,
-    func_us_801BC650,
-    func_us_801BCE4C,
-    func_us_801BCA5C,
-    func_us_801BCB9C,
-    func_us_801BCD80,
-    func_us_801BCFC8,
+    EntityBombKnight,
+    EntityThrownBomb,
+    EntityKnightDeathParts,
+    EntityBombFuseSparks,
+    EntityThrownRock,
+    EntityRockPiece,
+    EntityBombKnightArm,
     func_us_801BD398,
     func_us_801BDA24,
     func_us_801BD324,
@@ -181,9 +181,9 @@ EInit g_EInitValhallaKnightUnk1 = {ANIMSET_OVL(8), 1, 76, 562, 0x003};
 EInit g_EInitValhallaKnightUnk2 = {ANIMSET_OVL(0), 0, 0, 0, 0x086};
 EInit g_EInitValhallaKnightUnk3 = {ANIMSET_OVL(0), 0, 0, 0, 0x087};
 EInit g_EInitBombKnight = {ANIMSET_OVL(11), 1, 72, 566, 0x0A5};
-EInit D_us_80180C48 = {ANIMSET_OVL(11), 36, 72, 566, 0x0A6};
-EInit D_us_80180C54 = {ANIMSET_OVL(11), 0, 72, 566, 0x002};
-EInit D_us_80180C60 = {ANIMSET_OVL(11), 65, 72, 566, 0x0A8};
+EInit g_EInitBomb = {ANIMSET_OVL(11), 36, 72, 566, 0x0A6};
+EInit g_EInitKnightDebris = {ANIMSET_OVL(11), 0, 72, 566, 0x002};
+EInit g_EInitRock = {ANIMSET_OVL(11), 65, 72, 566, 0x0A8};
 EInit g_EInitRockKnight = {ANIMSET_OVL(11), 1, 72, 566, 0x0A7};
 EInit D_us_80180C78 = {ANIMSET_OVL(13), 1, 81, 572, 0x005};
 // clang-format on
