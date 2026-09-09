@@ -97,37 +97,45 @@ void EntityCrusher(Entity* self) {
     }
 }
 
+typedef enum{
+    CRUSHER_INIT,
+    CRUSHER_TOP_STUTTER,
+    CRUSHER_FALL,
+    CRUSHER_GRIND_FLOOR,
+    CRUSHER_RAISE
+} CrusherSteps;
+
 void EntityCrusherHead(Entity* self) {
     Collider sp3C;
     bool hitPlayer;
     s32 primIndex;
     s32 xVar;
-    s32 playerY;
+    s32 anchorY;
     s32 i;
     Entity* other;
     s32 yVar;
     Primitive* prim;
 
     if (!self->params) {
-        xVar = 0x18;
+        xVar = 24;
     } else {
-        xVar = 0x32;
+        xVar = 50;
     }
     hitPlayer = GetPlayerCollisionWith(self, xVar, 0x10, 4);
-    switch (self->step) { /* irregular */
-    case 0x0:
+    switch (self->step) {
+    case CRUSHER_INIT:
         InitializeEntity(g_EInitCrusher);
         if (!self->params) {
             self->animCurFrame = 3;
             self->hitboxState = 1;
-            self->hitboxWidth = 0x14;
+            self->hitboxWidth = 20;
             self->hitboxHeight = 4;
             self->hitboxOffY = 0x10;
-            self->attackElement = 0x50;
-            self->attack = 0xF;
+            self->attackElement = ELEMENT_CUT | ELEMENT_UNK_10;
+            self->attack = 15;
         } else {
             self->animCurFrame = 6;
-            self->hitboxOffY = 0x1A;
+            self->hitboxOffY = 26;
             other = self + 1;
             for (i = 0; i < 3; i++, other++) {
                 CreateEntityFromEntity(E_CRUSHER_SPINNING_TEETH, self, other);
@@ -148,12 +156,12 @@ void EntityCrusherHead(Entity* self) {
             prim->clut = 0x232;
             prim->u0 = prim->u2 = 0xE0;
             prim->u1 = prim->u3 = 0xF0;
-            prim->priority = ((self->zPriority) - 1);
+            prim->priority = (self->zPriority - 1);
             prim->drawMode = DRAW_HIDE;
             prim = prim->next;
         }
         break;
-    case 0x1:
+    case CRUSHER_TOP_STUTTER:
         if (!self->step_s) {
             self->ext.ILLEGAL.s16[2] = 0x20;
             self->step_s++;
@@ -164,10 +172,10 @@ void EntityCrusherHead(Entity* self) {
             self->posY.i.hi++;
         }
         if (!--self->ext.ILLEGAL.s16[2]) {
-            SetStep(2);
+            SetStep(CRUSHER_FALL);
         }
         break;
-    case 0x2:
+    case CRUSHER_FALL:
         if (!self->step_s) {
             self->velocityY = FIX(0.5);
             self->step_s++;
@@ -182,21 +190,21 @@ void EntityCrusherHead(Entity* self) {
         xVar = self->posX.i.hi;
         yVar = self->posY.i.hi;
         if (!self->params) {
-            yVar += 0x10;
+            yVar += 16;
         } else {
-            yVar += 0x1C;
+            yVar += 28;
         }
         g_api.CheckCollision(xVar, yVar, &sp3C, 0);
         if (sp3C.effects & EFFECT_SOLID) {
             PlaySfxPositional(SFX_START_SLAM_B);
             self->posY.i.hi += sp3C.unk18;
-            SetStep(3);
+            SetStep(CRUSHER_GRIND_FLOOR);
             if (self->params) {
                 g_api.func_80102CD8(1);
             }
         }
         break;
-    case 0x3:
+    case CRUSHER_GRIND_FLOOR:
         if (!self->step_s) {
             if (!self->params) {
                 self->ext.ILLEGAL.s16[2] = 0x20;
@@ -205,37 +213,38 @@ void EntityCrusherHead(Entity* self) {
             }
             self->step_s++;
         }
-        self->ext.ILLEGAL.u8[0xC] = 1;
-        if ((self->params) && !(self->ext.ILLEGAL.s16[2] & 3)) {
+        self->ext.ILLEGAL.u8[12] = 1;
+        if (self->params && !(self->ext.ILLEGAL.s16[2] & 3)) {
             PlaySfxPositional(SFX_EXPLODE_FAST_A);
         }
         if (!--self->ext.ILLEGAL.s16[2]) {
-            self->ext.ILLEGAL.u8[0xC] = 0;
-            SetStep(4);
+            self->ext.ILLEGAL.u8[12] = 0;
+            SetStep(CRUSHER_RAISE);
         }
         break;
-    case 0x4:
+    case CRUSHER_RAISE:
         if (!self->step_s) {
             self->velocityY = FIX(-0.5);
             self->step_s++;
         }
         other = self - 1;
-        playerY = other->posY.i.hi + 0x20;
-        if ((g_Timer % 12U) == 0) {
+        anchorY = other->posY.i.hi + 0x20;
+        if ((g_Timer % 12) == 0) {
             PlaySfxPositional(SFX_METAL_RATTLE_B);
         }
         MoveEntity();
-        if (self->posY.i.hi < playerY) {
+        // If we have moved above the "anchor" at the top of the chain,
+        if (self->posY.i.hi < anchorY) {
             self->velocityY = 0;
-            self->posY.i.hi = playerY;
-            SetStep(1);
+            self->posY.i.hi = anchorY;
+            SetStep(CRUSHER_TOP_STUTTER);
         }
-        if ((hitPlayer) && (g_Player.vram_flag & TOUCHING_CEILING)) {
+        if (hitPlayer && (g_Player.vram_flag & TOUCHING_CEILING)) {
             self->velocityY = 0;
-            SetStep(2);
+            SetStep(CRUSHER_FALL);
         }
         break;
-    case 0xFF:
+    case 255:
 #include "../pad2_anim_debug.h"
     }
     if (hitPlayer) {
@@ -248,9 +257,9 @@ void EntityCrusherHead(Entity* self) {
     yVar = self->posY.i.hi - 0x10;
     prim = self->ext.prim;
     other = self - 1;
-    playerY = other->posY.i.hi;
+    anchorY = other->posY.i.hi;
     while (prim != NULL) {
-        yVar = UpdateCrusherChain(prim, yVar, playerY);
+        yVar = UpdateCrusherChain(prim, yVar, anchorY);
         prim = prim->next;
         if (yVar == 0) {
             break;
@@ -265,7 +274,7 @@ void EntityCrusherHead(Entity* self) {
     self->ext.ILLEGAL.s16[4] = (self->posY.i.hi + g_Tilemap.scrollY.i.hi);
     if (!self->params) {
         if (self->hitFlags) {
-            self->ext.ILLEGAL.s32[4] = 0x37;
+            self->ext.ILLEGAL.s32[4] = 55;
         }
         if (self->ext.ILLEGAL.s32[4] != 0) {
             self->ext.ILLEGAL.s32[4]--;
@@ -284,11 +293,11 @@ void EntityCrusherSpinningTeeth(Entity* self) {
         InitializeEntity(g_EInitCrusher);
         self->hitboxState = 1;
         self->hitboxOffY = 7;
-        self->hitboxWidth = 0xD;
+        self->hitboxWidth = 13;
         self->hitboxHeight = 5;
         self->attackElement = 0x50;
-        self->attack = 0xF;
-        primIndex = g_api.AllocPrimitives(PRIM_TILE_ALT, 0x20);
+        self->attack = 15;
+        primIndex = g_api.AllocPrimitives(PRIM_TILE_ALT, 32);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -309,14 +318,14 @@ void EntityCrusherSpinningTeeth(Entity* self) {
         other = self - self->params - 1;
         self->posX.i.hi = other->posX.i.hi;
         self->posY.i.hi = other->posY.i.hi + 0x12;
-        self->posX.i.hi += (((self->params) * 0x24) - 0x24);
+        self->posX.i.hi += ((self->params * 36) - 36);
         if (other->ext.ILLEGAL.u8[12]) {
             if (g_Timer & 1) {
                 other = AllocEntity(&g_Entities[224], &g_Entities[240]);
                 if (other != NULL) {
                     CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, other);
                     other->params = 0x10;
-                    other->zPriority = ((self->zPriority) + 1);
+                    other->zPriority = (self->zPriority + 1);
                     other->posY.i.hi += 12;
                     other->posX.i.hi += ((Random() & 0x1F) - 0x10);
                 }
@@ -345,6 +354,6 @@ void EntityCrusherSpinningTeeth(Entity* self) {
     }
     prim->p3 = 2;
     prim->x0 = prim->y0 = -0x10;
-    prim->priority = ((self->zPriority) + 2);
+    prim->priority = (self->zPriority + 2);
     prim->drawMode = DRAW_UNK02;
 }
