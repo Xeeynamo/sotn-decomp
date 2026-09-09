@@ -5,8 +5,8 @@ INCLUDE_ASM("st/rnz1_psp/nonmatchings/rnz1_psp/unk_15D98", func_pspeu_0924D418);
 
 INCLUDE_ASM("st/rnz1_psp/nonmatchings/rnz1_psp/unk_15D98", func_pspeu_0924D580);
 
-INCLUDE_ASM("st/rnz1_psp/nonmatchings/rnz1_psp/unk_15D98", func_us_801BD324);
+INCLUDE_ASM("st/rnz1_psp/nonmatchings/rnz1_psp/unk_15D98", EntityCrusher);
 
-INCLUDE_ASM("st/rnz1_psp/nonmatchings/rnz1_psp/unk_15D98", func_us_801BD398);
+INCLUDE_ASM("st/rnz1_psp/nonmatchings/rnz1_psp/unk_15D98", EntityCrusherHead);
 
-INCLUDE_ASM("st/rnz1_psp/nonmatchings/rnz1_psp/unk_15D98", func_us_801BDA24);
+INCLUDE_ASM("st/rnz1_psp/nonmatchings/rnz1_psp/unk_15D98", EntityCrusherSpinningTeeth);

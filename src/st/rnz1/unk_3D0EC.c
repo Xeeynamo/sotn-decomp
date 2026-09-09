@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rnz1.h"
 
-static AnimateEntityFrame D_us_801824B8[] = {{7, 7}, {7, 8}, {7, 9}, {7, 10}, POSE_LOOP(0)};
+static AnimateEntityFrame animCrusherTeeth[] = {
+    {7, 7}, {7, 8}, {7, 9}, {7, 10}, POSE_LOOP(0)};
 
-s16 func_us_801BD0EC(Primitive* prim, s32 arg1, s32 arg2) {
-    prim->drawMode = 2;    
+s16 UpdateCrusherChain(Primitive* prim, s32 arg1, s32 arg2) {
+    prim->drawMode = DRAW_UNK02;
     prim->x0 = prim->x2 = g_CurrentEntity->posX.i.hi - 8;
     prim->x1 = prim->x3 = g_CurrentEntity->posX.i.hi + 8;
     prim->v2 = prim->v3 = 0x70;
@@ -22,7 +23,6 @@ s16 func_us_801BD0EC(Primitive* prim, s32 arg1, s32 arg2) {
     return arg1;
 }
 
-
 // NOTE: This function contains an ugly ifdef! It is seen in several other files
 // including a few different e_secrets, and e_discus_lord. Search for:
 // (prim->x0 << 0x10) + (u16)prim->x1; and you will find those others.
@@ -38,7 +38,7 @@ void func_us_801BD184(Primitive* prim) {
         prim->r0 = 0x80;
         prim->g0 = 0x80;
         prim->b0 = 0xC0;
-        prim->drawMode = 2;
+        prim->drawMode = DRAW_UNK02;
         prim->x1 = 0;
         prim->y1 = 0;
         prim->y0 = g_CurrentEntity->posY.i.hi + 0xC;
@@ -51,17 +51,17 @@ void func_us_801BD184(Primitive* prim) {
         /* fallthrough */
     case 1:
 #ifdef VERSION_US
-    x = (prim->x0 << 0x10) + (u16)prim->x1;
+        x = (prim->x0 << 0x10) + (u16)prim->x1;
 #else
-    x = (prim->x0 << 0x10) + prim->x1;
+        x = (prim->x0 << 0x10) + prim->x1;
 #endif
         x += LOW(prim->x2);
         prim->x0 = HIHU(x);
         prim->x1 = LOHU(x);
 #ifdef VERSION_US
-    y = (prim->y0 << 0x10) + (u16)prim->y1;
+        y = (prim->y0 << 0x10) + (u16)prim->y1;
 #else
-    y = (prim->y0 << 0x10) + prim->y1;
+        y = (prim->y0 << 0x10) + prim->y1;
 #endif
         y += LOW(prim->x3);
         prim->y0 = HIH(y);
@@ -78,27 +78,26 @@ void func_us_801BD184(Primitive* prim) {
     }
 }
 
-
 // Grindy crushy platform things.
 // params 0 = one-wide, params 1 = three-wide
-extern EInit D_us_80180C78;
+extern EInit g_EInitCrusher;
 
-void func_us_801BD324(Entity* self) {
+void EntityCrusher(Entity* self) {
     Entity* crusherHead;
 
     switch (self->step) {
-        case 0:
-        InitializeEntity(D_us_80180C78);
+    case 0:
+        InitializeEntity(g_EInitCrusher);
         self->hitboxState = 0;
         self->animCurFrame = 1;
         crusherHead = self + 1;
-        CreateEntityFromEntity(0x48, self, crusherHead);
+        CreateEntityFromEntity(E_CRUSHER_HEAD, self, crusherHead);
         crusherHead->posY.i.hi += 0x20;
         crusherHead->params = self->params;
     }
 }
 
-void func_us_801BD398(Entity* self) {
+void EntityCrusherHead(Entity* self) {
     Collider sp3C;
     bool hitPlayer;
     s32 primIndex;
@@ -115,9 +114,9 @@ void func_us_801BD398(Entity* self) {
         xVar = 0x32;
     }
     hitPlayer = GetPlayerCollisionWith(self, xVar, 0x10, 4);
-    switch (self->step) {                              /* irregular */
+    switch (self->step) { /* irregular */
     case 0x0:
-        InitializeEntity(D_us_80180C78);
+        InitializeEntity(g_EInitCrusher);
         if (!self->params) {
             self->animCurFrame = 3;
             self->hitboxState = 1;
@@ -130,8 +129,8 @@ void func_us_801BD398(Entity* self) {
             self->animCurFrame = 6;
             self->hitboxOffY = 0x1A;
             other = self + 1;
-            for(i = 0; i < 3; i++, other++) {
-                CreateEntityFromEntity(0x49, self, other);
+            for (i = 0; i < 3; i++, other++) {
+                CreateEntityFromEntity(E_CRUSHER_SPINNING_TEETH, self, other);
                 other->params = i;
             }
         }
@@ -140,7 +139,7 @@ void func_us_801BD398(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags |= 0x800000;
+        self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
         self->ext.prim = prim;
@@ -150,7 +149,7 @@ void func_us_801BD398(Entity* self) {
             prim->u0 = prim->u2 = 0xE0;
             prim->u1 = prim->u3 = 0xF0;
             prim->priority = ((self->zPriority) - 1);
-            prim->drawMode = 8;
+            prim->drawMode = DRAW_HIDE;
             prim = prim->next;
         }
         break;
@@ -170,15 +169,15 @@ void func_us_801BD398(Entity* self) {
         break;
     case 0x2:
         if (!self->step_s) {
-            self->velocityY = 0x8000;
+            self->velocityY = FIX(0.5);
             self->step_s++;
         }
         if (!(g_Timer & 7)) {
-            PlaySfxPositional(0x6DC);
+            PlaySfxPositional(SFX_METAL_RATTLE_C);
         }
         MoveEntity();
         if (self->params) {
-            self->velocityY += 0x4000;
+            self->velocityY += FIX(0.25);
         }
         xVar = self->posX.i.hi;
         yVar = self->posY.i.hi;
@@ -188,8 +187,8 @@ void func_us_801BD398(Entity* self) {
             yVar += 0x1C;
         }
         g_api.CheckCollision(xVar, yVar, &sp3C, 0);
-        if (sp3C.effects & 1) {
-            PlaySfxPositional(0x63D);
+        if (sp3C.effects & EFFECT_SOLID) {
+            PlaySfxPositional(SFX_START_SLAM_B);
             self->posY.i.hi += sp3C.unk18;
             SetStep(3);
             if (self->params) {
@@ -208,7 +207,7 @@ void func_us_801BD398(Entity* self) {
         }
         self->ext.ILLEGAL.u8[0xC] = 1;
         if ((self->params) && !(self->ext.ILLEGAL.s16[2] & 3)) {
-            PlaySfxPositional(0x652);
+            PlaySfxPositional(SFX_EXPLODE_FAST_A);
         }
         if (!--self->ext.ILLEGAL.s16[2]) {
             self->ext.ILLEGAL.u8[0xC] = 0;
@@ -217,13 +216,13 @@ void func_us_801BD398(Entity* self) {
         break;
     case 0x4:
         if (!self->step_s) {
-            self->velocityY = -0x8000;
+            self->velocityY = FIX(-0.5);
             self->step_s++;
         }
         other = self - 1;
         playerY = other->posY.i.hi + 0x20;
         if ((g_Timer % 12U) == 0) {
-            PlaySfxPositional(0x6DB);
+            PlaySfxPositional(SFX_METAL_RATTLE_B);
         }
         MoveEntity();
         if (self->posY.i.hi < playerY) {
@@ -231,7 +230,7 @@ void func_us_801BD398(Entity* self) {
             self->posY.i.hi = playerY;
             SetStep(1);
         }
-        if ((hitPlayer) && (g_Player.vram_flag & 2)) {
+        if ((hitPlayer) && (g_Player.vram_flag & TOUCHING_CEILING)) {
             self->velocityY = 0;
             SetStep(2);
         }
@@ -251,18 +250,18 @@ void func_us_801BD398(Entity* self) {
     other = self - 1;
     playerY = other->posY.i.hi;
     while (prim != NULL) {
-        yVar = func_us_801BD0EC(prim, yVar, playerY);
+        yVar = UpdateCrusherChain(prim, yVar, playerY);
         prim = prim->next;
         if (yVar == 0) {
             break;
         }
     }
-    
+
     while (prim != NULL) {
-        prim->drawMode = 8;
+        prim->drawMode = DRAW_HIDE;
         prim = prim->next;
     }
-    
+
     self->ext.ILLEGAL.s16[4] = (self->posY.i.hi + g_Tilemap.scrollY.i.hi);
     if (!self->params) {
         if (self->hitFlags) {
@@ -271,18 +270,18 @@ void func_us_801BD398(Entity* self) {
         if (self->ext.ILLEGAL.s32[4] != 0) {
             self->ext.ILLEGAL.s32[4]--;
         }
-        self->palette = (D_us_80180C78[3] + (self->ext.ILLEGAL.s32[4] >> 3));
+        self->palette = (g_EInitCrusher[3] + (self->ext.ILLEGAL.s32[4] >> 3));
     }
 }
 
-void func_us_801BDA24(Entity* self) {
+void EntityCrusherSpinningTeeth(Entity* self) {
     Entity* other;
     Primitive* prim;
     s32 primIndex;
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180C78);
+        InitializeEntity(g_EInitCrusher);
         self->hitboxState = 1;
         self->hitboxOffY = 7;
         self->hitboxWidth = 0xD;
@@ -294,19 +293,19 @@ void func_us_801BDA24(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags |= 0x800000;
+        self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
-        for(self->ext.prim = prim; prim != NULL; prim = prim->next) {
+        for (self->ext.prim = prim; prim != NULL; prim = prim->next) {
             prim->u0 = prim->v0 = 1;
             prim->r0 = 0x40;
             prim->g0 = 0x40;
             prim->b0 = 0x40;
             prim->priority = self->zPriority + 2;
-            prim->drawMode = 8;
+            prim->drawMode = DRAW_HIDE;
         }
     case 1:
-        AnimateEntity(D_us_801824B8, self);
+        AnimateEntity(animCrusherTeeth, self);
         other = self - self->params - 1;
         self->posX.i.hi = other->posX.i.hi;
         self->posY.i.hi = other->posY.i.hi + 0x12;
@@ -315,7 +314,7 @@ void func_us_801BDA24(Entity* self) {
             if (g_Timer & 1) {
                 other = AllocEntity(&g_Entities[224], &g_Entities[240]);
                 if (other != NULL) {
-                    CreateEntityFromEntity(6, self, other);
+                    CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, other);
                     other->params = 0x10;
                     other->zPriority = ((self->zPriority) + 1);
                     other->posY.i.hi += 12;
@@ -338,8 +337,8 @@ void func_us_801BDA24(Entity* self) {
     if (self->ext.ILLEGAL.s32[4] != 0) {
         self->ext.ILLEGAL.s32[4] -= 1;
     }
-    self->palette = (D_us_80180C78[3] + (self->ext.ILLEGAL.s32[4] >> 3));
-    for(prim = self->ext.prim; prim->next != NULL; prim = prim->next) {
+    self->palette = (g_EInitCrusher[3] + (self->ext.ILLEGAL.s32[4] >> 3));
+    for (prim = self->ext.prim; prim->next != NULL; prim = prim->next) {
         if (prim->p3 & 2) {
             func_us_801BD184(prim);
         }
@@ -347,5 +346,5 @@ void func_us_801BDA24(Entity* self) {
     prim->p3 = 2;
     prim->x0 = prim->y0 = -0x10;
     prim->priority = ((self->zPriority) + 2);
-    prim->drawMode = 2;
+    prim->drawMode = DRAW_UNK02;
 }
