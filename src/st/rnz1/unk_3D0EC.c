@@ -20,7 +20,62 @@ s16 func_us_801BD0EC(Primitive* prim, s32 arg1, s32 arg2) {
     return arg1;
 }
 
-INCLUDE_ASM("st/rnz1/nonmatchings/unk_3D0EC", func_us_801BD184);
+
+// NOTE: This function contains an ugly ifdef! It is seen in several other files
+// including a few different e_secrets, and e_discus_lord. Search for:
+// (prim->x0 << 0x10) + (u16)prim->x1; and you will find those others.
+// This likely signals something we are doing wrongly! Maybe a weird union?
+void func_us_801BD184(Primitive* prim) {
+    u32 x;
+    u32 y;
+    s32 length;
+    s16 angle;
+
+    switch (prim->p1) {
+    case 0:
+        prim->r0 = 0x80;
+        prim->g0 = 0x80;
+        prim->b0 = 0xC0;
+        prim->drawMode = 2;
+        prim->x1 = 0;
+        prim->y1 = 0;
+        prim->y0 = g_CurrentEntity->posY.i.hi + 0xC;
+        length = (Random() & 0x1F) + 0x20;
+        angle = (Random() * 6) + 0x900;
+        LOW(prim->x2) = length * rcos(angle);
+        LOW(prim->x3) = length * rsin(angle);
+        prim->p1 = 1;
+        prim->r3 = 0x10;
+        /* fallthrough */
+    case 1:
+#ifdef VERSION_US
+    x = (prim->x0 << 0x10) + (u16)prim->x1;
+#else
+    x = (prim->x0 << 0x10) + prim->x1;
+#endif
+        x += LOW(prim->x2);
+        prim->x0 = HIHU(x);
+        prim->x1 = LOHU(x);
+#ifdef VERSION_US
+    y = (prim->y0 << 0x10) + (u16)prim->y1;
+#else
+    y = (prim->y0 << 0x10) + prim->y1;
+#endif
+        y += LOW(prim->x3);
+        prim->y0 = HIH(y);
+        prim->y1 = LOH(y);
+        LOW(prim->x3) += 0x2000;
+        prim->r0 -= 5;
+        prim->g0 -= 5;
+        prim->b0 -= 9;
+        prim->r3 -= 1;
+        if (!prim->r3) {
+            prim->drawMode = DRAW_HIDE;
+            prim->p3 = 0;
+        }
+    }
+}
+
 
 // Grindy crushy platform things.
 // params 0 = one-wide, params 1 = three-wide
