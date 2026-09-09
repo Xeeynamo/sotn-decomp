@@ -284,6 +284,8 @@ void EntityCrusherHead(Entity* self) {
     }
 }
 
+Primitive* FindFirstUnkPrim(Primitive* prim);
+
 void EntityCrusherSpinningTeeth(Entity* self) {
     Entity* other;
     Primitive* prim;
