@@ -121,9 +121,8 @@ static deathParts deathPartsData[] = {
 static s8 fuseSparksXY[] = {
     0,   0,   19,  -41, 18,  -43, 19, -45, 15, -49, -79, -91,
     -13, -37, -17, -49, -20, -43, 17, -46, 20, -45, 16,  -50};
-static u8 fuseFrameMap[] = {
-    0, 1, 2, 3, 4, 0, 0, 0, 0, 0, 0, 6, 7, 8, 9, 10, 10, 0, 0, 0, 0, 0, 0, 11, 0
-};
+static u8 fuseFrameMap[] = {0, 1, 2,  3,  4, 0, 0, 0, 0, 0, 0,  6, 7,
+                            8, 9, 10, 10, 0, 0, 0, 0, 0, 0, 11, 0};
 
 extern EInit g_EInitBombKnight;
 extern EInit g_EInitRockKnight;
