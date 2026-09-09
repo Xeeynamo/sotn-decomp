@@ -77,7 +77,6 @@ segments:
       - [0x1F34, .data, e_medusa_head]
       - [0x1FAC, .data, e_valhalla_knight]
       - [0x2120, .data, e_bomb_knight]
-      - [0x24B4, data]
       - [0x24B8, .data, e_crusher]
       - [0x24C4, data]
       - [0x2550, .data, e_life_up]
