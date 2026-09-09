@@ -97,7 +97,7 @@ void EntityCrusher(Entity* self) {
     }
 }
 
-typedef enum{
+typedef enum {
     CRUSHER_INIT,
     CRUSHER_TOP_STUTTER,
     CRUSHER_FALL,
@@ -150,7 +150,7 @@ void EntityCrusherHead(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
-        self->ext.prim = prim;
+        self->ext.crusher.prim = prim;
         while (prim != NULL) {
             prim->tpage = 0x14;
             prim->clut = 0x232;
@@ -163,15 +163,15 @@ void EntityCrusherHead(Entity* self) {
         break;
     case CRUSHER_TOP_STUTTER:
         if (!self->step_s) {
-            self->ext.ILLEGAL.s16[2] = 0x20;
+            self->ext.crusher.timer = 0x20;
             self->step_s++;
         }
-        if (self->ext.ILLEGAL.s16[2] & 1) {
+        if (self->ext.crusher.timer & 1) {
             self->posY.i.hi--;
         } else {
             self->posY.i.hi++;
         }
-        if (!--self->ext.ILLEGAL.s16[2]) {
+        if (!--self->ext.crusher.timer) {
             SetStep(CRUSHER_FALL);
         }
         break;
@@ -207,18 +207,18 @@ void EntityCrusherHead(Entity* self) {
     case CRUSHER_GRIND_FLOOR:
         if (!self->step_s) {
             if (!self->params) {
-                self->ext.ILLEGAL.s16[2] = 0x20;
+                self->ext.crusher.timer = 0x20;
             } else {
-                self->ext.ILLEGAL.s16[2] = 0x40;
+                self->ext.crusher.timer = 0x40;
             }
             self->step_s++;
         }
-        self->ext.ILLEGAL.u8[12] = 1;
-        if (self->params && !(self->ext.ILLEGAL.s16[2] & 3)) {
+        self->ext.crusher.floorGrinding = true;
+        if (self->params && !(self->ext.crusher.timer & 3)) {
             PlaySfxPositional(SFX_EXPLODE_FAST_A);
         }
-        if (!--self->ext.ILLEGAL.s16[2]) {
-            self->ext.ILLEGAL.u8[12] = 0;
+        if (!--self->ext.crusher.timer) {
+            self->ext.crusher.floorGrinding = false;
             SetStep(CRUSHER_RAISE);
         }
         break;
@@ -250,12 +250,12 @@ void EntityCrusherHead(Entity* self) {
     if (hitPlayer) {
         other = &PLAYER;
         yVar = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
-        yVar -= self->ext.ILLEGAL.s16[4];
+        yVar -= self->ext.crusher.yOff;
         other->posY.i.hi += yVar;
         g_api.func_8010DFF0(0, 1);
     }
     yVar = self->posY.i.hi - 0x10;
-    prim = self->ext.prim;
+    prim = self->ext.crusher.prim;
     other = self - 1;
     anchorY = other->posY.i.hi;
     while (prim != NULL) {
@@ -271,15 +271,16 @@ void EntityCrusherHead(Entity* self) {
         prim = prim->next;
     }
 
-    self->ext.ILLEGAL.s16[4] = (self->posY.i.hi + g_Tilemap.scrollY.i.hi);
+    self->ext.crusher.yOff = (self->posY.i.hi + g_Tilemap.scrollY.i.hi);
     if (!self->params) {
         if (self->hitFlags) {
-            self->ext.ILLEGAL.s32[4] = 55;
+            self->ext.crusher.bloodyTimer = 55;
         }
-        if (self->ext.ILLEGAL.s32[4] != 0) {
-            self->ext.ILLEGAL.s32[4]--;
+        if (self->ext.crusher.bloodyTimer) {
+            self->ext.crusher.bloodyTimer--;
         }
-        self->palette = (g_EInitCrusher[3] + (self->ext.ILLEGAL.s32[4] >> 3));
+        self->palette =
+            (g_EInitCrusher[3] + (self->ext.crusher.bloodyTimer >> 3));
     }
 }
 
@@ -305,7 +306,7 @@ void EntityCrusherSpinningTeeth(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
-        for (self->ext.prim = prim; prim != NULL; prim = prim->next) {
+        for (self->ext.crusher.prim = prim; prim != NULL; prim = prim->next) {
             prim->u0 = prim->v0 = 1;
             prim->r0 = 0x40;
             prim->g0 = 0x40;
@@ -319,7 +320,7 @@ void EntityCrusherSpinningTeeth(Entity* self) {
         self->posX.i.hi = other->posX.i.hi;
         self->posY.i.hi = other->posY.i.hi + 0x12;
         self->posX.i.hi += ((self->params * 36) - 36);
-        if (other->ext.ILLEGAL.u8[12]) {
+        if (other->ext.crusher.floorGrinding) {
             if (g_Timer & 1) {
                 other = AllocEntity(&g_Entities[224], &g_Entities[240]);
                 if (other != NULL) {
@@ -330,7 +331,7 @@ void EntityCrusherSpinningTeeth(Entity* self) {
                     other->posX.i.hi += ((Random() & 0x1F) - 0x10);
                 }
             }
-            prim = self->ext.prim;
+            prim = self->ext.crusher.prim;
             prim = FindFirstUnkPrim(prim);
             if (prim != NULL) {
                 prim->p1 = 0;
@@ -341,13 +342,13 @@ void EntityCrusherSpinningTeeth(Entity* self) {
         }
     }
     if (self->hitFlags) {
-        self->ext.ILLEGAL.s32[4] = 0x37;
+        self->ext.crusher.bloodyTimer = 55;
     }
-    if (self->ext.ILLEGAL.s32[4] != 0) {
-        self->ext.ILLEGAL.s32[4] -= 1;
+    if (self->ext.crusher.bloodyTimer) {
+        self->ext.crusher.bloodyTimer -= 1;
     }
-    self->palette = (g_EInitCrusher[3] + (self->ext.ILLEGAL.s32[4] >> 3));
-    for (prim = self->ext.prim; prim->next != NULL; prim = prim->next) {
+    self->palette = (g_EInitCrusher[3] + (self->ext.crusher.bloodyTimer >> 3));
+    for (prim = self->ext.crusher.prim; prim->next != NULL; prim = prim->next) {
         if (prim->p3 & 2) {
             func_us_801BD184(prim);
         }
