@@ -296,4 +296,81 @@ void func_us_801BD398(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rnz1/nonmatchings/unk_3D0EC", func_us_801BDA24);
+extern AnimateEntityFrame D_us_801824B8[];
+extern u16 D_us_80180C7E;
+extern EInit D_us_80180C78;
+
+void func_us_801BDA24(Entity* self) {
+    Entity* other;
+    Primitive* prim;
+    s32 primIndex;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_80180C78);
+        self->hitboxState = 1;
+        self->hitboxOffY = 7;
+        self->hitboxWidth = 0xD;
+        self->hitboxHeight = 5;
+        self->attackElement = 0x50;
+        self->attack = 0xF;
+        primIndex = g_api.AllocPrimitives(PRIM_TILE_ALT, 0x20);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags |= 0x800000;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+        for(self->ext.prim = prim; prim != NULL; prim = prim->next) {
+            prim->u0 = prim->v0 = 1;
+            prim->r0 = 0x40;
+            prim->g0 = 0x40;
+            prim->b0 = 0x40;
+            prim->priority = self->zPriority + 2;
+            prim->drawMode = 8;
+        }
+    case 1:
+        AnimateEntity(D_us_801824B8, self);
+        other = self - self->params - 1;
+        self->posX.i.hi = other->posX.i.hi;
+        self->posY.i.hi = other->posY.i.hi + 0x12;
+        self->posX.i.hi += (((self->params) * 0x24) - 0x24);
+        if (other->ext.ILLEGAL.u8[12]) {
+            if (g_Timer & 1) {
+                other = AllocEntity(&g_Entities[224], &g_Entities[240]);
+                if (other != NULL) {
+                    CreateEntityFromEntity(6, self, other);
+                    other->params = 0x10;
+                    other->zPriority = ((self->zPriority) + 1);
+                    other->posY.i.hi += 12;
+                    other->posX.i.hi += ((Random() & 0x1F) - 0x10);
+                }
+            }
+            prim = self->ext.prim;
+            prim = FindFirstUnkPrim(prim);
+            if (prim != NULL) {
+                prim->p1 = 0;
+                prim->y0 = self->posY.i.hi + 12;
+                prim->x0 = (self->posX.i.hi + (Random() & 0x1F)) - 0x10;
+                prim->p3 = 2;
+            }
+        }
+    }
+    if (self->hitFlags) {
+        self->ext.ILLEGAL.s32[4] = 0x37;
+    }
+    if (self->ext.ILLEGAL.s32[4] != 0) {
+        self->ext.ILLEGAL.s32[4] -= 1;
+    }
+    self->palette = (D_us_80180C7E + (self->ext.ILLEGAL.s32[4] >> 3));
+    for(prim = self->ext.prim; prim->next != NULL; prim = prim->next) {
+        if (prim->p3 & 2) {
+            func_us_801BD184(prim);
+        }
+    }
+    prim->p3 = 2;
+    prim->x0 = prim->y0 = -0x10;
+    prim->priority = ((self->zPriority) + 2);
+    prim->drawMode = 2;
+}
