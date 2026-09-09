@@ -162,7 +162,7 @@ INCLUDE_ASM("boss/bo5/nonmatchings/unk_2159C", func_us_801A425C);
 
 extern EInit D_us_801804F0;
 
-void EntityStaticHitbox(Entity* self) {
+void EntityFireDamageHitbox(Entity* self) {
     if (!self->step) {
         InitializeEntity(D_us_801804F0);
         self->hitboxWidth = 24;

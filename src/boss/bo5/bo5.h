@@ -50,7 +50,7 @@ typedef enum EntityID {
     E_RBO3DOOR,                 // EntityRbo3Door
     E_UNK_22,                   // func_us_801A1C14
     E_UNK_23,                   // func_us_801A425C
-    E_UNK_24,                   // EntityStaticHitbox
+    E_UNK_24,                   // EntityFireDamageHitbox
     E_UNK_25,                   // func_us_801A3FD4
     E_UNK_26,                   // func_us_801A3E78
     E_UNK_27,                   // func_us_801A3B88

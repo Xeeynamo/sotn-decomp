@@ -142,4 +142,4 @@ void func_us_801A3FD4(Entity* self) {
 
 INCLUDE_ASM("boss/bo5_psp/nonmatchings/bo5_psp/unk_FE10", func_us_801A425C);
 
-INCLUDE_ASM("boss/bo5_psp/nonmatchings/bo5_psp/unk_FE10", EntityStaticHitbox);
+INCLUDE_ASM("boss/bo5_psp/nonmatchings/bo5_psp/unk_FE10", EntityFireDamageHitbox);
