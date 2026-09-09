@@ -189,6 +189,7 @@ Entity* FindValidTarget(Entity* self) {
         if (entity->hitPoints >= 0x7000) {
             continue;
         }
+
         if (entity->flags & FLAG_UNK_80000) {
             if (entity->hitPoints >=
                 g_BatAbilityStats[s_BatStats.level / 10].minimumEnemyHp) {
@@ -200,6 +201,7 @@ Entity* FindValidTarget(Entity* self) {
             return entity;
         }
     }
+
     if (found > 0) {
         foundIndex = s_LastTargetedEntityIndex % EntitySearchCount;
         for (i = 0; i < EntitySearchCount; i++) {
@@ -212,6 +214,7 @@ Entity* FindValidTarget(Entity* self) {
             foundIndex = (foundIndex + 1) % EntitySearchCount;
         }
     }
+
     return NULL;
 }
 
@@ -477,6 +480,7 @@ void SwitchModeInitialize(Entity* self) {
             }
             self->ext.bat.cameraX = g_Tilemap.scrollX.i.hi;
             self->ext.bat.cameraY = g_Tilemap.scrollY.i.hi;
+
             for (i = 0; i < 16; i++) {
                 if (PLAYER.facingLeft) {
                     s_BatPathingPoints[self->ext.bat.batIndex][i].x =
@@ -891,13 +895,13 @@ void UpdateBatAttackMode(Entity* self) {
     UpdateAnim(NULL, g_BatAnimationFrames);
 }
 
-void unused_339C() {}
+void unused_339C(void) {}
 
-void unused_33A4() {}
+void unused_33A4(void) {}
 
-void unused_33AC() {}
+void unused_33AC(void) {}
 
-void unused_33B4() {}
+void unused_33B4(void) {}
 
 // SAT: func_060D0968
 void func_060D0968(void) {
@@ -920,9 +924,9 @@ void func_060D0968(void) {
     }
 }
 
-void unused_33C4() {}
+void unused_33C4(void) {}
 
-void unused_33CC() {}
+void unused_33CC(void) {}
 
 typedef struct {
     u16 entry[4];
@@ -1041,6 +1045,7 @@ void UpdateBatBlueTrailEntities(Entity* self) {
             isEntityAlive |= isAlive[i];
             prim = prim->next;
         }
+
         if (!isEntityAlive) {
             DestroyEntity(self);
             return;
@@ -1049,13 +1054,13 @@ void UpdateBatBlueTrailEntities(Entity* self) {
     }
 }
 
-void unused_3C0C() {}
+void unused_3C0C(void) {}
 
-void unused_3C14() {}
+void unused_3C14(void) {}
 
-void unused_3C1C() {}
+void unused_3C1C(void) {}
 
-void unused_3C24() {}
+void unused_3C24(void) {}
 
 #include "servant/shared_events.h"
 
