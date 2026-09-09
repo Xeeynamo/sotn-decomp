@@ -38,3 +38,4 @@ GetPlayerCollisionWith = 0x80199610;
 ReplaceBreakableWithItemDrop = 0x80199954;
 EntityExplosion = 0x8019A7F0;
 PlaySfxPositional = 0x8019E614;
+bossFlags = 0x801A1F1C;
