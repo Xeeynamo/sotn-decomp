@@ -1533,6 +1533,7 @@ void func_0600A240(s32 param_1) {
 void func_0600A264(u16 arg0, s32 arg1, s32 arg2) {
     QueueVramTransfer(DAT_0605aec0[arg0][0] * 8 + 0x25C00000, arg2, arg1);
 }
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A29C, LookupTblNoToVramAddr);
 
 // func_0600A304
