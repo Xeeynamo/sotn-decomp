@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rnz1.h"
 
+static AnimateEntityFrame D_us_801824B8[] = {{7, 7}, {7, 8}, {7, 9}, {7, 10}, POSE_LOOP(0)};
+
 s16 func_us_801BD0EC(Primitive* prim, s32 arg1, s32 arg2) {
     prim->drawMode = 2;    
     prim->x0 = prim->x2 = g_CurrentEntity->posX.i.hi - 8;
@@ -95,10 +97,6 @@ void func_us_801BD324(Entity* self) {
         crusherHead->params = self->params;
     }
 }
-
-extern u16 D_us_80180C7E;
-extern EInit D_us_80180C78;
-
 
 void func_us_801BD398(Entity* self) {
     Collider sp3C;
@@ -239,26 +237,7 @@ void func_us_801BD398(Entity* self) {
         }
         break;
     case 0xFF:
-        FntPrint("charal %x\n", self->animCurFrame);
-        if (g_pads[1].pressed & PAD_SQUARE) {
-            if (self->params) {
-                break;
-            }
-            self->animCurFrame++;
-            self->params |= 1;
-        } else {
-            self->params = 0;
-        }
-        if (g_pads[1].pressed & PAD_CIRCLE) {
-            if (self->step_s) {
-                break;
-            }
-            self->animCurFrame--;
-            self->step_s |= 1;
-        } else {
-            self->step_s = 0;
-        }
-        break;
+#include "../pad2_anim_debug.h"
     }
     if (hitPlayer) {
         other = &PLAYER;
@@ -292,13 +271,9 @@ void func_us_801BD398(Entity* self) {
         if (self->ext.ILLEGAL.s32[4] != 0) {
             self->ext.ILLEGAL.s32[4]--;
         }
-        self->palette = ((D_us_80180C7E) + (self->ext.ILLEGAL.s32[4] >> 3));
+        self->palette = (D_us_80180C78[3] + (self->ext.ILLEGAL.s32[4] >> 3));
     }
 }
-
-extern AnimateEntityFrame D_us_801824B8[];
-extern u16 D_us_80180C7E;
-extern EInit D_us_80180C78;
 
 void func_us_801BDA24(Entity* self) {
     Entity* other;
@@ -363,7 +338,7 @@ void func_us_801BDA24(Entity* self) {
     if (self->ext.ILLEGAL.s32[4] != 0) {
         self->ext.ILLEGAL.s32[4] -= 1;
     }
-    self->palette = (D_us_80180C7E + (self->ext.ILLEGAL.s32[4] >> 3));
+    self->palette = (D_us_80180C78[3] + (self->ext.ILLEGAL.s32[4] >> 3));
     for(prim = self->ext.prim; prim->next != NULL; prim = prim->next) {
         if (prim->p3 & 2) {
             func_us_801BD184(prim);

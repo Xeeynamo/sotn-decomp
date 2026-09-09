@@ -78,6 +78,8 @@ segments:
       - [0x1FAC, .data, e_valhalla_knight]
       - [0x2120, .data, e_bomb_knight]
       - [0x24B4, data]
+      - [0x24B8, .data, unk_3D0EC]
+      - [0x24C4, data]
       - [0x2550, .data, e_life_up]
       - [0x25A4, .data, gen/e_layout]
       - [0x3674, data]
