@@ -79,7 +79,22 @@ void func_us_801BD184(Primitive* prim) {
 
 // Grindy crushy platform things.
 // params 0 = one-wide, params 1 = three-wide
-INCLUDE_ASM("st/rnz1/nonmatchings/unk_3D0EC", func_us_801BD324);
+extern EInit D_us_80180C78;
+
+void func_us_801BD324(Entity* self) {
+    Entity* crusherHead;
+
+    switch (self->step) {
+        case 0:
+        InitializeEntity(D_us_80180C78);
+        self->hitboxState = 0;
+        self->animCurFrame = 1;
+        crusherHead = self + 1;
+        CreateEntityFromEntity(0x48, self, crusherHead);
+        crusherHead->posY.i.hi += 0x20;
+        crusherHead->params = self->params;
+    }
+}
 
 extern u16 D_us_80180C7E;
 extern EInit D_us_80180C78;
