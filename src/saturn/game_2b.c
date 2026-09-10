@@ -27,17 +27,17 @@ static u16 LookupTblNoToVram(u16 arg0) {
 extern SaturnSpriteImage g_StatusPortraitImages[17];
 extern s16 DAT_0605AEE8;
 
-void func_060784B8(SprSpCmd* command, s32 portraitIndex, s32 colorTableIndex) {
+void func_060784B8(SprSpCmd* cmd, s32 portraitIndex, s32 colorTableIndex) {
     SaturnSpriteImage* image;
 
     image = &g_StatusPortraitImages[portraitIndex];
-    command->control = 0x1000;
-    command->drawMode = 0x0488;
-    command->color = LookupTblNoToVram(colorTableIndex + 0x30);
-    command->charAddr = DAT_0605AEE8;
-    command->charAddr += image->characterOffsetUnits;
-    command->charSize =
-        ((image->storedWidth >> 2) << 8) | (image->storedHeight << 1);
+    cmd->control = 0x1000;
+    cmd->drawMode = 0x488;
+    cmd->color = LookupTblNoToVram(colorTableIndex + 0x30);
+    cmd->charAddr = DAT_0605AEE8;
+    cmd->charAddr += image->characterOffsetUnits;
+    cmd->charSize =
+        ((image->storedWidth / 4) << 8) | (image->storedHeight << 1);
 }
 
 extern SaturnSpriteResource** DAT_060645EC;
@@ -53,7 +53,7 @@ void func_06078550_noInline(s32 arg0, u8 ch, Point16* pos) {
     cmd->control = 0x1000;
     cmd->drawMode = 0x488;
     cmd->charSize = 0x108;
-    cmd->color = SPR_2LookupTblNoToVram(0x30);
+    cmd->color = LookupTblNoToVram(0x30);
     cmd->charAddr = DAT_0605aec0[iVar5->allocationIndex][0] + ch * 4;
     LOW(cmd->ax) = (pos->x << 0x10) | (pos->y & 0xFFFF);
     if (SpMstCmdPos < 0x278) {
@@ -170,7 +170,7 @@ void func_06078920(s32 arg0, Point16* pos) {
     cmd->charAddr = DAT_0605aec0[1][0];
     ptr = DAT_0605aec0[1];
     cmd->charSize = 0x910;
-    cmd->color = SPR_2LookupTblNoToVram(0x31);
+    cmd->color = LookupTblNoToVram(0x31);
     cmd->charAddr = ptr[2] + 0x480;
     LOW(cmd->ax) = (pos->x << 0x10) | (pos->y & 0xFFFF);
     if (SpMstCmdPos < 0x278) {
@@ -191,7 +191,7 @@ void func_060789C4(s32 arg0, s32 arg1, Point16* pos) {
         cmd->drawMode = 0x488;
         cmd->charAddr = DAT_0605aec0[1][0];
         cmd->charSize = 0x1210;
-        cmd->color = SPR_2LookupTblNoToVram(0x31);
+        cmd->color = LookupTblNoToVram(0x31);
         ptr = DAT_0605aec0[1];
         charBase = ptr[2];
         cmd->charAddr = arg1 * 0x90 + ptr[2];
@@ -216,13 +216,13 @@ void func_06078F58(s32 arg0, s32 arg1, Point16* pos) {
     cmd = &DAT_06086108;
 
     cmd->control = 0x1000;
-    cmd->drawMode = 0x0488;
+    cmd->drawMode = 0x488;
     cmd->charAddr = DAT_0605aec0[1][0];
-    cmd->charSize = 0x0610;
-    cmd->color = SPR_2LookupTblNoToVram(0x31);
+    cmd->charSize = 0x610;
+    cmd->color = LookupTblNoToVram(0x31);
     ptr = DAT_0605aec0[1];
     charBase = ptr[2];
-    cmd->charAddr = (arg1 + 0x0B) * 0x30 + ptr[2];
+    cmd->charAddr = (arg1 + 0xB) * 0x30 + ptr[2];
     LOW(cmd->ax) = (pos->x << 0x10) | (u16)pos->y;
 
     if (SpMstCmdPos < 0x278) {
@@ -235,10 +235,66 @@ void func_06078F58(s32 arg0, s32 arg1, Point16* pos) {
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079008, func_06079008);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60790B4, func_060790B4);
 
-// _SubDispFace
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079208, func_06079208);
+// original name: SubDispFace
+void func_06079208(s32 arg0, Point16* pos) {
+    SprSpCmd* cmd;
+    SaturnSpriteImage* image;
+
+    cmd = &DAT_06086108;
+    image = &g_StatusPortraitImages[0];
+
+    cmd->control = 0x1000;
+    cmd->drawMode = 0x4A0;
+    cmd->color = LookupTblNoToVram(0x4000);
+    cmd->charAddr = DAT_0605AEE8;
+    cmd->charAddr += image->characterOffsetUnits;
+    cmd->charSize =
+        ((image->storedWidth / 4) << 8) | (image->storedHeight << 1);
+    LOW(cmd->ax) = (pos->x << 0x10) | ((u16)pos->y);
+    if (SpMstCmdPos < 0x278) {
+        SPR_2Cmd(arg0, cmd);
+        d_0605AEAC += 0x20;
+    }
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60792B8, func_060792B8);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079424, func_06079424);
+
+extern s32 DAT_06085E54;
+
+void func_06079424(s32 arg0, s32 arg1, s32 arg2, Point16* pos) {
+    SprSpCmd* cmd;
+    s32 iVar7;
+    s32 iVar8;
+
+    cmd = &DAT_06086108;
+
+    iVar8 = arg1 ? 1 : 2;
+
+    if (arg2) {
+        DAT_06085E54++;
+        if (DAT_06085E54 > 0x47) {
+            DAT_06085E54 = 0x0;
+        }
+        if (DAT_06085E54 < 0x24) {
+            iVar7 = DAT_06085E54 / 6 + 2;
+        } else {
+            iVar7 = 8 - ((DAT_06085E54 - 0x24) / 6);
+        }
+    } else {
+        iVar7 = 2;
+    }
+    func_060784B8(cmd, iVar8, iVar7);
+    if (!arg2) {
+        cmd->drawMode |= 4;
+        cmd->grshAddr = SPR_2GourTblNoToVram(0x301);
+    }
+    LOW(cmd->ax) = (pos->x << 0x10) | (pos->y & 0xFFFF);
+    if (SpMstCmdPos < 0x278) {
+        SPR_2Cmd(arg0, cmd);
+        d_0605AEAC += 0x20;
+    }
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079580, func_06079580);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079670, func_06079670);
 
