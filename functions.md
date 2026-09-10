@@ -1167,9 +1167,9 @@
 | rnz0       | func_pspeu_09245960               |       21 |          1 |        |       |     |
 | rnz0       | func_pspeu_09253600               |       21 |          1 |        |       |     |
 | rnz0       | func_pspeu_09242B10               |       21 |          1 |        |       |     |
+| rnz1       | func_pspeu_0923F800               |       21 |          1 |        |       |     |
 | rnz1       | func_pspeu_0924C238               |       21 |          1 |        |       |     |
 | rnz1       | Random                            |       21 |          1 |        |       |     |
-| rnz1       | func_pspeu_0923F800               |       21 |          1 |        |       |     |
 | rtop       | func_pspeu_0923DB38               |       21 |          1 |        |       |     |
 | rtop       | func_pspeu_092466A0               |       21 |          1 |        |       |     |
 | rtop       | func_pspeu_0923BCA8               |       21 |          1 |        |       |     |
