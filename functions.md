@@ -2129,7 +2129,7 @@
 | rtop       | func_pspeu_09245C50               |       34 |          2 |        |       |     |
 | rwrp       | func_pspeu_092437C8               |       34 |          2 |        |       |     |
 | top        | func_pspeu_092463F0               |       34 |          2 |        |       |     |
-| bo5        | func_us_801A4430                  |       34 |          3 |        |       |     |
+| bo5        | EntityFireDamageHitbox            |       34 |          3 |        |       |     |
 | main       | sceSasSetSimpleADSR               |       34 |          3 |        |       |     |
 | dra        | func_psp_09101F60                 |       34 |          4 |        |       |     |
 | dra        | func_psp_090F1B60                 |       34 |          4 |        |       |     |
