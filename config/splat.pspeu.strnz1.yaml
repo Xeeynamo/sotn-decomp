@@ -47,7 +47,7 @@ segments:
       - [0x80, c, rnz1/create_entity]
       - [0x1028, c, rnz1/e_bomb_knight]
       - [0x28B8, c, rnz1/e_life_up]
-      - [0x3538, c, rnz1_psp/e_stage_name]
+      - [0x3538, c, rnz1/e_stage_name]
       - [0x43B8, c, rnz1/e_red_door]
       - [0x44A0, c, rnz1/e_red_door]
       - [0x56C0, c, rnz1/st_update]
