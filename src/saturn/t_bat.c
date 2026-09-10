@@ -1,15 +1,134 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "inc_asm.h"
-#include "sattypes.h"
-#include "t_bat/batanim.h"
 #include "t_bat/batbss.h"
-#include "t_bat/batevent.h"
-#include "t_bat/batstat.h"
-#include <saturn_sprite.h>
 
 #include "t_bat.h"
 
-void PlaySfx(s32 sfxId);
+typedef struct {
+    u16 flags;
+    u16 reserved;
+    u16 variant;
+    u16 size;
+    s16 xOffset;
+    u16 frameIndex;
+} SpriteParts;
+
+u32 g_BatSpriteResourceHeader[2] = {0x104C4100, 0xE44B4100};
+
+u32 g_BatEmptySpritePart = 0;
+
+SpriteParts g_BatSpriteParts[34] = {
+    {0x100, 0, 0x000, 6, -4, 0},  {0x100, 0, 0x100, 6, -4, 0},
+    {0x100, 0, 0x000, 6, -4, 1},  {0x100, 0, 0x100, 6, -4, 1},
+    {0x100, 0, 0x000, 2, -4, 2},  {0x100, 0, 0x100, 2, -4, 2},
+    {0x100, 0, 0x000, 1, -4, 3},  {0x100, 0, 0x100, 1, -4, 3},
+    {0x100, 0, 0x000, 2, 1, 4},   {0x100, 0, 0x100, 2, 1, 4},
+    {0x100, 0, 0x000, 3, 1, 5},   {0x100, 0, 0x100, 3, 1, 5},
+    {0x100, 0, 0x000, 3, 0, 6},   {0x100, 0, 0x100, 3, 0, 6},
+    {0x100, 0, 0x000, 3, 0, 7},   {0x100, 0, 0x100, 3, 0, 7},
+    {0x100, 0, 0x000, 3, -1, 8},  {0x100, 0, 0x100, 3, -1, 8},
+    {0x100, 0, 0x000, 3, -1, 9},  {0x100, 0, 0x100, 3, -1, 9},
+    {0x100, 0, 0x200, 3, -7, 10}, {0x100, 0, 0x200, 3, -5, 11},
+    {0x100, 0, 0x200, 3, -1, 12}, {0x100, 0, 0x200, 3, 5, 13},
+    {0x100, 0, 0x200, 3, 7, 14},  {0x100, 0, 0x200, 3, 9, 15},
+    {0x100, 0, 0x200, 3, 8, 16},  {0x100, 0, 0x200, 3, 7, 17},
+    {0x100, 0, 0x200, 3, 5, 18},  {0x100, 0, 0x200, 3, 1, 19},
+    {0x100, 0, 0x200, 1, 0, 20},  {0x100, 0, 0x200, 0, 0, 21},
+    {0x100, 0, 0x300, 3, 0, 22},  {0x100, 0, 0x300, 1, 0, 23},
+};
+
+SpriteParts* g_ServantSpriteParts[35] = {
+    (SpriteParts*)&g_BatEmptySpritePart,
+    &g_BatSpriteParts[0],
+    &g_BatSpriteParts[1],
+    &g_BatSpriteParts[2],
+    &g_BatSpriteParts[3],
+    &g_BatSpriteParts[4],
+    &g_BatSpriteParts[5],
+    &g_BatSpriteParts[6],
+    &g_BatSpriteParts[7],
+    &g_BatSpriteParts[8],
+    &g_BatSpriteParts[9],
+    &g_BatSpriteParts[10],
+    &g_BatSpriteParts[11],
+    &g_BatSpriteParts[12],
+    &g_BatSpriteParts[13],
+    &g_BatSpriteParts[14],
+    &g_BatSpriteParts[15],
+    &g_BatSpriteParts[16],
+    &g_BatSpriteParts[17],
+    &g_BatSpriteParts[18],
+    &g_BatSpriteParts[19],
+    &g_BatSpriteParts[20],
+    &g_BatSpriteParts[21],
+    &g_BatSpriteParts[22],
+    &g_BatSpriteParts[23],
+    &g_BatSpriteParts[24],
+    &g_BatSpriteParts[25],
+    &g_BatSpriteParts[26],
+    &g_BatSpriteParts[27],
+    &g_BatSpriteParts[28],
+    &g_BatSpriteParts[29],
+    &g_BatSpriteParts[30],
+    &g_BatSpriteParts[31],
+    &g_BatSpriteParts[32],
+    &g_BatSpriteParts[33],
+};
+
+#include "t_bat/gen/batgfx.h"
+
+AnimationFrame g_DefaultBatAnimationFrame[] = {
+    {4, 0x415}, {1, 0x416}, {1, 0x417}, {1, 0x41E}, {1, 0x418},
+    {1, 0x419}, {4, 0x41A}, {2, 0x41B}, {2, 0x41C}, {2, 0x41D},
+    {1, 0x41E}, {2, 0x417}, {2, 0x416}, {0, 0x000},
+};
+
+AnimationFrame g_BatAlternateAnimationFrame[] = {
+    {5, 0x41F}, {5, 0x420},  {5, 0x41F}, {5, 0x420}, {5, 0x41F},
+    {5, 0x420}, {4, 0x41F},  {4, 0x420}, {3, 0x41F}, {3, 0x420},
+    {2, 0x41F}, {16, 0x420}, {0, 0x000},
+};
+
+AnimationFrame g_BatFarFromTargetAnimationFrame[] = {
+    {1, 0x415}, {1, 0x416}, {1, 0x417}, {1, 0x41E}, {1, 0x418},
+    {1, 0x419}, {1, 0x41A}, {1, 0x41B}, {1, 0x41C}, {1, 0x41D},
+    {1, 0x41E}, {1, 0x417}, {1, 0x416}, {0, 0x000},
+};
+
+AnimationFrame g_BatCloseToTargetAnimationFrame[] = {
+    {1, 0x415}, {1, 0x416}, {1, 0x417}, {1, 0x41E},  {1, 0x418}, {1, 0x419},
+    {1, 0x41A}, {1, 0x41B}, {1, 0x41C}, {1, 0x41D},  {1, 0x41E}, {1, 0x417},
+    {1, 0x416}, {1, 0x415}, {1, 0x416}, {1, 0x417},  {1, 0x41E}, {1, 0x418},
+    {1, 0x419}, {2, 0x41A}, {2, 0x41B}, {2, 0x41C},  {2, 0x41D}, {2, 0x41E},
+    {2, 0x417}, {2, 0x416}, {2, 0x415}, {2, 0x416},  {2, 0x417}, {2, 0x41E},
+    {2, 0x418}, {2, 0x419}, {3, 0x41A}, {3, 0x41B},  {3, 0x41C}, {3, 0x41D},
+    {3, 0x41E}, {3, 0x417}, {3, 0x416}, {-2, 0x000},
+};
+
+AnimationFrame g_BatHighVelocityAnimationFrame[] = {{1, 0x415}, {-1, 0x000}};
+
+AnimationFrame* g_BatAnimationFrames[] = {
+    g_DefaultBatAnimationFrame,       g_BatAlternateAnimationFrame,
+    g_BatFarFromTargetAnimationFrame, g_BatCloseToTargetAnimationFrame,
+    g_BatHighVelocityAnimationFrame,
+};
+
+BatSpriteData g_BatSpriteData[] = {
+    {-4, -4, 8, 8, 0x144, 0x78, 8, 0, 16, 8},
+    {-4, -4, 8, 8, 0x144, 0x78, 120, 8, 128, 16},
+    {-4, -4, 8, 8, 0x144, 0x78, 228, 135, 236, 143},
+    {-4, -4, 8, 8, 0x144, 0x78, 80, 0, 88, 8},
+};
+
+BatAbilityValues g_BatAbilityStats[] = {
+    {90, 64, 0, 128, 1}, {90, 96, 0, 128, 1}, {60, 128, 1, 96, 1},
+    {60, 160, 1, 96, 0}, {60, 192, 2, 64, 0}, {60, 224, 2, 64, 0},
+    {45, 256, 2, 32, 0}, {45, 288, 3, 32, 0}, {30, 320, 3, 16, 0},
+    {30, 352, 3, 16, 0},
+};
+
+s32 s_IsServantDestroyed = 0;
+u32 s_LastTargetedEntityIndex = 0;
 
 static void SetEntityAnimation(Entity* entity, AnimationFrame* anim) {
     if (entity->anim != anim) {
@@ -70,6 +189,7 @@ Entity* FindValidTarget(Entity* self) {
         if (entity->hitPoints >= 0x7000) {
             continue;
         }
+
         if (entity->flags & FLAG_UNK_80000) {
             if (entity->hitPoints >=
                 g_BatAbilityStats[s_BatStats.level / 10].minimumEnemyHp) {
@@ -81,6 +201,7 @@ Entity* FindValidTarget(Entity* self) {
             return entity;
         }
     }
+
     if (found > 0) {
         foundIndex = s_LastTargetedEntityIndex % EntitySearchCount;
         for (i = 0; i < EntitySearchCount; i++) {
@@ -93,6 +214,7 @@ Entity* FindValidTarget(Entity* self) {
             foundIndex = (foundIndex + 1) % EntitySearchCount;
         }
     }
+
     return NULL;
 }
 
@@ -358,6 +480,7 @@ void SwitchModeInitialize(Entity* self) {
             }
             self->ext.bat.cameraX = g_Tilemap.scrollX.i.hi;
             self->ext.bat.cameraY = g_Tilemap.scrollY.i.hi;
+
             for (i = 0; i < 16; i++) {
                 if (PLAYER.facingLeft) {
                     s_BatPathingPoints[self->ext.bat.batIndex][i].x =
@@ -772,13 +895,13 @@ void UpdateBatAttackMode(Entity* self) {
     UpdateAnim(NULL, g_BatAnimationFrames);
 }
 
-void unused_339C() {}
+void unused_339C(void) {}
 
-void unused_33A4() {}
+void unused_33A4(void) {}
 
-void unused_33AC() {}
+void unused_33AC(void) {}
 
-void unused_33B4() {}
+void unused_33B4(void) {}
 
 // SAT: func_060D0968
 void func_060D0968(void) {
@@ -801,22 +924,15 @@ void func_060D0968(void) {
     }
 }
 
-void unused_33C4() {}
+void unused_33C4(void) {}
 
-void unused_33CC() {}
+void unused_33CC(void) {}
 
 typedef struct {
     u16 entry[4];
 } SprGourTbl;
 
 extern SprGourTbl* SpGourTbl;
-extern bool isAlive[16];
-extern Point16 positions[16];
-extern s16 facingLeft[16];
-extern s16 offsets[16];
-extern u8 fade[16];
-extern Primitive* prim;
-extern s32 idx;
 
 // SAT: func_060D0A64
 void UpdateBatBlueTrailEntities(Entity* self) {
@@ -929,6 +1045,7 @@ void UpdateBatBlueTrailEntities(Entity* self) {
             isEntityAlive |= isAlive[i];
             prim = prim->next;
         }
+
         if (!isEntityAlive) {
             DestroyEntity(self);
             return;
@@ -937,13 +1054,19 @@ void UpdateBatBlueTrailEntities(Entity* self) {
     }
 }
 
-void unused_3C0C() {}
+void unused_3C0C(void) {}
 
-void unused_3C14() {}
+void unused_3C14(void) {}
 
-void unused_3C1C() {}
+void unused_3C1C(void) {}
 
-void unused_3C24() {}
+void unused_3C24(void) {}
+
+#include "servant/shared_events.h"
+
+s32 g_PlaySfxStep = 99;
+s16 g_EntityRanges[] = {5, 7, 32, 63};
+ServantEvent* g_EventQueue = g_Events;
 
 // SAT: func_060D1040
 void DestroyServantEntity(Entity* entity) {
