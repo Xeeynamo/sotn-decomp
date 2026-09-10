@@ -385,7 +385,7 @@ def add_srcs(srcs, output_dir, args):
         flags = '-lang-c -I./src/saturn -I./src/saturn/lib -undef -D__GNUC__=2 -D__GNUC_MINOR__=7 -D__sh__ -D__sh__ -D__sh2__' + extra_cpp_defs
 
         implicit = []
-        if src == 'src/saturn/t_bat/batgfx.c':
+        if src == 'src/saturn/t_bat.c':
             implicit.append('src/saturn/t_bat/gen/batgfx.h')
         if src in ('src/saturn/maria/castmap.c', 'src/saturn/ric/castmap.c'):
             implicit.append(os.path.join(os.path.dirname(src), 'gen', 'castmap.h'))
@@ -869,12 +869,6 @@ snd_srcs = [
     'src/saturn/t_bat.c',
     'src/saturn/t_bat/bathead.c',
     'src/saturn/t_bat/batmeta.c',
-    'src/saturn/t_bat/sprdata.c',
-    'src/saturn/t_bat/sprbank.c',
-    'src/saturn/t_bat/batgfx.c',
-    'src/saturn/t_bat/batanim.c',
-    'src/saturn/t_bat/batstat.c',
-    'src/saturn/t_bat/batevent.c',
     'src/saturn/t_bat/batbss.c',
     'src/saturn/warp.c',
     'src/saturn/warp/obtain.c',
@@ -1474,12 +1468,6 @@ multi_objs = {
     'build/saturn/t_bat.o' : [
         'build/saturn/t_bat/bathead.o',
         'build/saturn/t_bat/batmeta.o',
-        'build/saturn/t_bat/sprdata.o',
-        'build/saturn/t_bat/sprbank.o',
-        'build/saturn/t_bat/batgfx.o',
-        'build/saturn/t_bat/batanim.o',
-        'build/saturn/t_bat/batstat.o',
-        'build/saturn/t_bat/batevent.o',
         'build/saturn/t_bat/batbss.o',
     ],
     'build/saturn/richter.o' : [
