@@ -1111,8 +1111,8 @@ typedef struct {
 typedef struct {
     const char* name;
     const char* description;
-    u16 unk08;
-    u16 unk0A;
+    u16 icon;
+    u16 palette;
     s32 unk0C;
 } RelicDesc;
 

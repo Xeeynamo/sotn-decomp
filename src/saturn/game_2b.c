@@ -159,7 +159,7 @@ char* GetMenuItemName(s32 id) {
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60787C8, func_060787C8);
 
 // original name: SubDispSpecial
-void func_06078920(s32 arg0, Point16* arg1) {
+void func_06078920(s32 arg0, Point16* pos) {
     u16* ptr;
     DAT_06086108.control = 0x1000;
     DAT_06086108.drawMode = 0x488;
@@ -168,7 +168,7 @@ void func_06078920(s32 arg0, Point16* arg1) {
     DAT_06086108.charSize = 0x910;
     DAT_06086108.color = SPR_2LookupTblNoToVram(0x31);
     DAT_06086108.charAddr = ptr[2] + 0x480;
-    *((s32*)&DAT_06086108.ax) = (arg1->x << 0x10) | (arg1->y & 0xFFFF);
+    *((s32*)&DAT_06086108.ax) = (pos->x << 0x10) | (pos->y & 0xFFFF);
     if (SpMstCmdPos <= 0x277) {
         SPR_2Cmd(arg0, &DAT_06086108);
         d_0605AEAC += 0x20;

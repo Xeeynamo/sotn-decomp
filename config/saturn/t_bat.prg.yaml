@@ -32,27 +32,7 @@ segments:
         end: 0x2857
       - start: 0x2858
         type: .data
-        file: t_bat/sprdata
-        end: 0x29FC
-      - start: 0x29FC
-        type: .data
-        file: t_bat/sprbank
-        end: 0x2A88
-      - start: 0x2A88
-        type: .data
-        file: t_bat/batgfx
-        end: 0x2B84
-      - start: 0x2B84
-        type: .data
-        file: t_bat/batanim
-        end: 0x2CE4
-      - start: 0x2CE4
-        type: .data
-        file: t_bat/batstat
-        end: 0x2DFC
-      - start: 0x2DFC
-        type: .data
-        file: t_bat/batevent
+        file: t_bat
         end: 0x3744
       - start: 0x3744
         type: .bss

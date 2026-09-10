@@ -90,9 +90,9 @@ typedef enum EntityID {
     E_THROWN_ROCK,            // EntityThrownRock
     E_ROCK_PIECE,             // EntityRockPiece
     E_BOMB_KNIGHT_ARM,        // EntityBombKnightArm
-    E_UNK_48,                 // func_us_801BD398
-    E_UNK_49,                 // func_us_801BDA24
-    E_CRUSHER,                // func_us_801BD324
+    E_CRUSHER_HEAD,           // EntityCrusherHead
+    E_CRUSHER_SPINNING_TEETH, // EntityCrusherSpinningTeeth
+    E_CRUSHER,                // EntityCrusher
     NUM_ENTITIES,
 };
 

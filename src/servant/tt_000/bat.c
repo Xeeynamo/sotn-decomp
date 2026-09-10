@@ -24,7 +24,7 @@ AnimationFrame g_DefaultBatAnimationFrame[] = {
     {1, 0x41E}, {2, 0x417}, {2, 0x416}, {0, 0x000},
 };
 
-AnimationFrame D_801704E0[] = {
+AnimationFrame g_BatAlternateAnimationFrame[] = {
     {5, 0x41F}, {5, 0x420},  {5, 0x41F}, {5, 0x420}, {5, 0x41F},
     {5, 0x420}, {4, 0x41F},  {4, 0x420}, {3, 0x41F}, {3, 0x420},
     {2, 0x41F}, {16, 0x420}, {0, 0x000},
@@ -49,7 +49,7 @@ AnimationFrame g_BatCloseToTargetAnimationFrame[] = {
 AnimationFrame g_BatHighVelocityAnimationFrame[] = {{1, 0x415}, {-1, 0x000}};
 
 AnimationFrame* g_BatAnimationFrames[] = {
-    g_DefaultBatAnimationFrame,       D_801704E0,
+    g_DefaultBatAnimationFrame,       g_BatAlternateAnimationFrame,
     g_BatFarFromTargetAnimationFrame, g_BatCloseToTargetAnimationFrame,
     g_BatHighVelocityAnimationFrame,
 };

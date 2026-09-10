@@ -16,4 +16,4 @@ INCLUDE_ASM("boss/bo5/nonmatchings/unk_25F88", func_us_801A66B0);
 
 void func_801B1D68(Entity* self) { func_us_801A66B0(self, 0); }
 
-INCLUDE_ASM("boss/bo5/nonmatchings/unk_25F88", BO5_RicSetDeadPrologue);
+void BO5_RicSetDeadPrologue(Entity* self) { func_us_801A66B0(self, 1); }
