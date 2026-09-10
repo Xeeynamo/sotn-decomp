@@ -4405,6 +4405,16 @@ typedef struct {
     /* 0xB2 */ s16 unkB2_WTF;
 } ET_BombKnight;
 
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ s16 yOff;
+    /* 0x86 */ s16 : 16;
+    /* 0x88 */ u8 floorGrinding;
+    /* 0x8C */ s32 bloodyTimer;
+} ET_Crusher;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -4779,6 +4789,7 @@ typedef union { // offset=0x7C
     ET_DarkwingBat darkwing;
     ET_DarkwingBatWings batwing;
     ET_BombKnight bombKnight;
+    ET_Crusher crusher;
 } Ext;
 
 SYNC_FIELD(ET_Player, ET_Weapon, anim);

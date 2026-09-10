@@ -72,9 +72,9 @@ void EntityBombFuseSparks(Entity* self);
 void EntityThrownRock(Entity* self);
 void EntityRockPiece(Entity* self);
 void EntityBombKnightArm(Entity* self);
-void func_us_801BD398(Entity* self);
-void func_us_801BDA24(Entity* self);
-void func_us_801BD324(Entity* self);
+void EntityCrusherHead(Entity* self);
+void EntityCrusherSpinningTeeth(Entity* self);
+void EntityCrusher(Entity* self);
 
 PfnEntityUpdate EntityUpdates[] = {
     EntityBreakable,
@@ -148,9 +148,9 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityThrownRock,
     EntityRockPiece,
     EntityBombKnightArm,
-    func_us_801BD398,
-    func_us_801BDA24,
-    func_us_801BD324,
+    EntityCrusherHead,
+    EntityCrusherSpinningTeeth,
+    EntityCrusher,
 };
 
 // clang-format off
@@ -185,5 +185,5 @@ EInit g_EInitBomb = {ANIMSET_OVL(11), 36, 72, 566, 0x0A6};
 EInit g_EInitKnightDebris = {ANIMSET_OVL(11), 0, 72, 566, 0x002};
 EInit g_EInitRock = {ANIMSET_OVL(11), 65, 72, 566, 0x0A8};
 EInit g_EInitRockKnight = {ANIMSET_OVL(11), 1, 72, 566, 0x0A7};
-EInit D_us_80180C78 = {ANIMSET_OVL(13), 1, 81, 572, 0x005};
+EInit g_EInitCrusher = {ANIMSET_OVL(13), 1, 81, 572, 0x005};
 // clang-format on
