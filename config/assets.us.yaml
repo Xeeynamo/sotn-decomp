@@ -1406,6 +1406,8 @@ files:
         - [0x590, gfx_banks, graphics_banks]
         - [0x840, layout, entity_layouts]
         - [0x9E8, skip]
+        - [0x24C4, rooms, rooms]
+        - [0x2550, skip]
         - [0x3F5C, cmpgfx, D_80183F5C, 128, 128, 4]
         - [0x58A8, cmpgfx, D_801858A8, 128, 128, 4]
         - [0x64E4, cmpgfx, D_801864E4, 128, 128, 4]
