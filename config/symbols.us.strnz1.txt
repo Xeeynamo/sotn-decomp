@@ -1,16 +1,1 @@
 cluts = 0x8018038C;
-rooms_layers = 0x80180518;
-gfxBanks = 0x801807E0;
-BackgroundBlockInit = 0x80180C9C;
-rooms = 0x801824C4;
-Random = 0x801ACEA0;
-CreateEntityFromEntity = 0x801AF58C;
-DestroyEntity = 0x801B02B8;
-AnimateEntity = 0x801B03E8;
-MoveEntity = 0x801B066C;
-AllocEntity = 0x801B0B28;
-SetStep = 0x801B0EF8;
-InitializeEntity = 0x801B0FC8;
-GetPlayerCollisionWith = 0x801B136C;
-PlaySfxPositional = 0x801B637C;
-FindFirstUnkPrim = 0x801BE280;

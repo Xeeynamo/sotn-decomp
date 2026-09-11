@@ -28,7 +28,6 @@ RunCutsceneEvents = 0x801A4A78;
 ScaleCutsceneAvatar = 0x801A4D3C;
 EntityCutscene = 0x801A4E40;
 CutsceneCameraPan = 0x801A5F28;
-BO5_RicSetDeadPrologue = 0x801A6B94;
 Random = 0x801A6BB4;
 CreateEntityFromCurrentEntity = 0x801A922C;
 CreateEntityFromEntity = 0x801A92A0;
