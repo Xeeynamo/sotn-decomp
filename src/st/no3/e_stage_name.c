@@ -5,8 +5,6 @@
 
 #ifdef VERSION_US
 #include "../e_stage_name_us.h"
-#endif
-
-#ifdef VERSION_PSP
+#else
 #include "../e_stage_name_jp.h"
 #endif

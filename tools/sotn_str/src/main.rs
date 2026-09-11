@@ -205,6 +205,53 @@ fn utf8_to_byte_literals_psp(input_str: &str) -> String {
     out2
 }
 
+fn encode_wide_char(c: char) -> u16 {
+    if has_dakuten(&c) {
+        let no_dakuten = remove_dakuten_handakuten(&c);
+        let no_dakuten_bytes = table_index(&no_dakuten).unwrap() as u16;
+
+        0x8000 | no_dakuten_bytes
+    } else if has_handakuten(&c) {
+        panic!("unimplemented")
+    } else {
+        table_index(&c).unwrap() as u16
+    }
+}
+
+/// Replaces UTF-8 strings with a separated wchar_t/u16 comma
+/// separated list.
+fn wide_raw(input_str: &str) -> String {
+    if !input_str.starts_with("\"") {
+        panic!("String does not start with `\"': {input_str}");
+    } else if !input_str.ends_with("\"") {
+        panic!("String does not end with `\"': {input_str}");
+    }
+    let raw_str = &input_str[1..input_str.len()-1];
+    raw_str.chars()
+        .map(encode_wide_char)
+        .map(|val| format!("0x{:02X}", val))
+        .collect::<Vec<String>>()
+        .join(", ")
+}
+
+/// Replaces UTF-8 chars with SOTN encodded wchar_t/u16 in hex format
+fn wide_char(input_char: &str) -> String {
+    if !input_char.starts_with("'") {
+        panic!("Char does not start with `\'': {input_char}");
+    } else if !input_char.ends_with("'") {
+        panic!("Char does not end with `\'': {input_char}");
+    }
+    let raw_char = &input_char[1..input_char.len()-1];
+
+    let mut chars = raw_char.chars();
+    let value = chars.map(encode_wide_char)
+        .map(|val| format!("0x{:X}", val))
+        .next()
+        .expect("One character");
+
+    value
+}
+
 
 fn has_dakuten(utf8_char: &char) -> bool {
     let dakuten_chars = [
@@ -370,6 +417,14 @@ fn process_s_macro(line: &str, psp: bool) -> String {
     }
 }
 
+fn process_ws_macro(line: &str) -> String {
+    process_macro(line, "_WS_RAW", wide_raw)
+}
+
+fn process_wc_macro(line: &str) -> String {
+    process_macro(line, "_WC", wide_char)
+}
+
 fn process_s2_macro(line: &str) -> String {
     process_macro(line, "_S2", alt_utf8_to_byte_literals)
 }
@@ -389,6 +444,8 @@ fn do_sub(line: &str, psp: bool) -> String {
     processed = process_s2_macro(&processed);
     processed = process_s2_hd_macro(&processed);
     processed = process_se_macro(&processed);
+    processed = process_ws_macro(&processed);
+    processed = process_wc_macro(&processed);
     processed
 }
 
@@ -922,6 +979,24 @@ let expected = r#"const char* g_goldCollectTexts[] = {
         let line = r#"_SE("Cadáveres frescos."),"#;
         let out = do_sub(line, true);
         let expected = r#""Cadﾌveres frescos.","#;
+        assert_eq!(out, expected);
+    }
+
+    #[test]
+    fn ws() {
+        let line = r#"_WS_RAW("アルカード")"#;
+        let out = do_sub(line, false);
+        let expected = r#"0x71, 0x99, 0x76, 0x70, 0x8084"#;
+
+        assert_eq!(out, expected);
+    }
+
+    #[test]
+    fn wc() {
+        let line = r#"_WC('ア'), _WC('ル'), _WC('カ'), _WC('ー'), _WC('ド')"#;
+        let out = do_sub(line, false);
+        let expected = r#"0x71, 0x99, 0x76, 0x70, 0x8084"#;
+
         assert_eq!(out, expected);
     }
 }

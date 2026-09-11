@@ -1,0 +1,234 @@
+spriteBanks = 0x8018002C;
+cluts = 0x801801C0;
+rooms_layers = 0x801804C4;
+gfxBanks = 0x8018072C;
+entityLayoutHorizontal = 0x8018077C;
+entityLayoutVertical = 0x80180850;
+g_EInitBreakable = 0x80180AAC;
+g_EInitObtainable = 0x80180AB8;
+g_EInitParticle = 0x80180AC4;
+g_EInitSpawner = 0x80180AD0;
+g_EInitInteractable = 0x80180ADC;
+g_EInitUnkId13 = 0x80180AE8;
+g_EInitLockCamera = 0x80180AF4;
+g_EInitCommon = 0x80180B00;
+g_EInitDamageNum = 0x80180B0C;
+g_EInitStInteractable = 0x80180B18;
+g_EInitFireWarg1 = 0x80180B24;
+g_EInitFireWarg2 = 0x80180B30;
+g_EInitFireWarg3 = 0x80180B3C;
+g_EInitWaterObject = 0x80180B48;
+g_EInitWaterSplash = 0x80180B54;
+g_EInitMerman = 0x80180B60;
+g_EInitMermanFireball = 0x80180B6C;
+g_EInitBoneScimitar = 0x80180B78;
+g_EInitScimitarParts = 0x80180B84;
+g_EInitBat = 0x80180B90;
+g_EInitWarg = 0x80180B9C;
+g_EInitZombie = 0x80180BA8;
+g_WaterXTbl = 0x801813AC;
+D_80181A28 = 0x80181A28;
+D_80181A2C = 0x80181A2C;
+D_80181A30 = 0x80181A30;
+D_80181A34 = 0x80181A34;
+D_80181A38 = 0x80181A38;
+actor_names = 0x80181ACC;
+actor_prims = 0x80181AE0;
+actor_name_len = 0x80181AE4;
+g_bigRedFireballAnim = 0x80182530;
+rooms = 0x80183CDC;
+cutscene_data = 0x80184CE0;
+EntityBackgroundBlock = 0x801B77A4; // source=duplicate
+EntityLockCamera = 0x801B7878; // source=duplicate
+EntityBreakable = 0x801B7A34; // source=duplicate
+EntityUnkId16 = 0x801B7B68; // source=duplicate
+EntityBackgroundLightning = 0x801B7C1C;
+EntityShuttingWindow = 0x801B8224; // source=duplicate
+EntityCastleDoor = 0x801B8534;
+EntityBackgroundBushes = 0x801B8A44; // source=duplicate
+EntityBackgroundTrees = 0x801B8EA0; // source=duplicate
+EntityTransparentWater = 0x801B9168; // source=duplicate
+DoorCascadePhysics = 0x801B94C0; // source=duplicate
+EntityCavernDoorLever = 0x801B9620; // source=duplicate
+EntityCavernDoorPlatform = 0x801B97A0;
+UpdateWeightChains = 0x801B9C14; // source=duplicate
+EntityWeightsSwitch = 0x801B9CB8; // source=duplicate
+EntityPathBlockSmallWeight = 0x801B9DE0;
+EntityPathBlockTallWeight = 0x801BA070; // source=duplicate
+EntityTrapDoor = 0x801BA318; // source=duplicate
+EntityMermanRockLeftSide = 0x801BA490; // source=duplicate
+EntityMermanRockRightSide = 0x801BA838;
+EntityJewelSwordDoor = 0x801BABB8; // source=duplicate
+EntityFallingRock2 = 0x801BAD3C; // source=duplicate
+EntityStairwayPiece = 0x801BAEC0; // source=duplicate
+EntityFallingRock = 0x801BB38C; // source=duplicate
+EntityDeathSkySwirl = 0x801BBB5C;
+EntityLightningThunder = 0x801BBD90; // source=duplicate
+EntityLightningCloud = 0x801BBE40; // source=duplicate
+EntityHeartRoomSwitch = 0x801BBF08;
+EntityHeartRoomGoldDoor = 0x801BC02C; // source=duplicate
+EntityTilemapShufflerUnused = 0x801BC3CC; // source=duplicate
+EntityPushAlucard = 0x801BC4BC;
+EntityCastleDoorTransition = 0x801BC750;
+EntityForegroundTree = 0x801BC90C;
+EntityFoliageMaker = 0x801BCC1C;
+EntityBackgroundPineTrees = 0x801BCDD8;
+EntityDistantTreeMaker = 0x801BD534;
+EntityCastleBridge = 0x801BD6EC;
+EntityDistantBackgroundTrees = 0x801BDE80;
+EntityBackgroundCastleWall = 0x801BE050;
+EntityFlyingOwlAndLeaves = 0x801BE104;
+EntityFallingLeaf = 0x801BE414;
+CutsceneUnk1 = 0x801BE514; // source=duplicate
+SetCutsceneScript = 0x801BE568; // source=duplicate
+CutsceneUnk3 = 0x801BE71C; // source=duplicate
+CutsceneUnk4 = 0x801BE770;
+DrawCutsceneActorName = 0x801BE818;
+SetCutsceneEvents = 0x801BE9DC; // source=duplicate
+RunCutsceneEvents = 0x801BEA08; // source=duplicate
+CutsceneSkip = 0x801BECB4; // source=duplicate
+EntityCutscene = 0x801BED94;
+EntityDeathCutsceneManager = 0x801BFE78;
+EntityDeathStolenItem = 0x801C0294;
+EntityDeath = 0x801C0794;
+EntityDeathScythe = 0x801C10FC;
+EntityDeathScytheShadow = 0x801C1240;
+CreateExplosionPuff = 0x801C1350; // source=duplicate
+EntityExplosionPuffOpaque = 0x801C1410; // source=duplicate
+Random = 0x801C17A4; // source=duplicate
+Update = 0x801C17D4; // source=duplicate
+UpdateStageEntities = 0x801C1AD0; // source=duplicate
+EntityDamageDisplay = 0x801C2CF0; // source=duplicate
+func_80189DD8 = 0x801C3394; // source=duplicate
+func_80189FB4 = 0x801C3458; // source=duplicate
+func_8018A380 = 0x801C3688; // source=duplicate
+func_8018A3CC = 0x801C36D4; // source=duplicate
+func_8018A424 = 0x801C372C; // source=duplicate
+func_8018A520 = 0x801C3828; // source=duplicate
+InitRoomEntities = 0x801C3BF0;
+UpdateRoomPosition = 0x801C3D68;
+CreateEntityFromCurrentEntity = 0x801C3E1C; // source=duplicate
+CreateEntityFromEntity = 0x801C3E90; // source=duplicate
+EntityIsNearPlayer = 0x801C3F0C; // source=duplicate
+EntityRedDoor = 0x801C3F84; // source=duplicate
+DestroyEntity = 0x801C4BBC; // source=duplicate
+func_8018B66C = 0x801C4C28; // source=duplicate
+PreventEntityFromRespawning = 0x801C4CA4; // source=duplicate
+AnimateEntity = 0x801C4CEC; // source=duplicate
+func_8018B7E8 = 0x801C4DA4; // source=duplicate
+GetDistanceToPlayerX = 0x801C4EBC; // source=duplicate
+GetDistanceToPlayerY = 0x801C4EF8; // source=duplicate
+GetSideToPlayer = 0x801C4F2C; // source=duplicate
+MoveEntity = 0x801C4F70; // source=duplicate
+FallEntity = 0x801C4FA0; // source=duplicate
+UnkCollisionFunc3 = 0x801C4FCC; // source=duplicate
+UnkCollisionFunc2 = 0x801C5244; // source=duplicate
+AllocEntity = 0x801C542C; // source=duplicate
+func_8018BED0 = 0x801C548C; // source=duplicate
+func_8018BEFC = 0x801C54B8; // source=duplicate
+func_8018BF18 = 0x801C54D4; // source=duplicate
+func_8018BF84 = 0x801C5540; // source=duplicate
+func_8018BFBC = 0x801C5578; // source=duplicate
+func_8018C198 = 0x801C55C0; // source=duplicate
+func_8018C04C = 0x801C5608; // source=duplicate
+UnkEntityFunc0 = 0x801C5660; // source=duplicate
+func_8018C130 = 0x801C56EC; // source=duplicate
+GetAngleBetweenEntities = 0x801C571C; // source=duplicate
+LimitAngleChange = 0x801C579C; // source=duplicate
+SetStep = 0x801C57FC; // source=duplicate
+SetSubStep = 0x801C581C; // source=duplicate
+EntityExplosionSpawn = 0x801C5838; // source=duplicate
+InitializeEntity = 0x801C58CC; // source=duplicate
+EntityDummy = 0x801C59C8; // source=duplicate
+UnkCollisionFunc = 0x801C59F0; // source=duplicate
+CheckFieldCollision = 0x801C5B18; // source=duplicate
+GetPlayerCollisionWith = 0x801C5C70; // source=duplicate
+ReplaceBreakableWithItemDrop = 0x801C5FB4; // source=duplicate
+func_8018CAB0 = 0x801C606C; // source=duplicate
+func_8018CB34 = 0x801C60F0; // source=duplicate
+func_8018CC90 = 0x801C624C; // source=duplicate
+func_8018CD10 = 0x801C62CC; // source=duplicate
+func_8018CDEC = 0x801C63A8; // source=duplicate
+func_8018CF04 = 0x801C64C0; // source=duplicate
+func_8018CFA8 = 0x801C6564; // source=duplicate
+func_8018CFF8 = 0x801C65B4; // source=duplicate
+EntityPrizeDrop = 0x801C65DC; // source=duplicate
+EntityExplosion = 0x801C6E50; // source=duplicate
+func_8018D990 = 0x801C6F4C; // source=duplicate
+EntityEquipItemDrop = 0x801C6FF0; // source=duplicate
+EntityRelicOrb = 0x801C75DC; // source=duplicate
+EntityHeartDrop = 0x801C8100; // source=duplicate
+EntityMessageBox = 0x801C8228;
+CheckColliderOffsets = 0x801C87A8; // source=duplicate
+EntityUnkId13 = 0x801C8898; // source=duplicate
+EntityExplosionVariantsSpawner = 0x801C89A8; // source=duplicate
+EntityGreyPuffSpawner = 0x801C8AD8; // source=duplicate
+EntityExplosionVariants = 0x801C8BC0; // source=duplicate
+EntityGreyPuff = 0x801C8CB0; // source=duplicate
+func_8018FA1C = 0x801C8DA4; // source=duplicate
+UnkCollisionFunc5 = 0x801C8FD4; // source=duplicate
+func_8018FD48 = 0x801C90D0; // source=duplicate
+EntityIntenseExplosion = 0x801C9650; // source=duplicate
+func_801903C8 = 0x801C9750; // source=duplicate
+MakeEntityFromId = 0x801C981C; // source=duplicate
+EntityBigRedFireball = 0x801C999C; // source=duplicate
+func_801907EC = 0x801C9B74; // source=duplicate
+func_80190DCC = 0x801CA154; // source=duplicate
+ClutLerp = 0x801CA854; // source=duplicate
+PlaySfxPositional = 0x801CAA4C; // source=duplicate
+EntityStageNamePopup = 0x801CAB44;
+EntitySoulStealOrb = 0x801CB26C; // source=duplicate
+EntityEnemyBlood = 0x801CB600; // source=duplicate
+EntityRoomForeground = 0x801CBAB0; // source=duplicate
+EntityFireWarg = 0x801CBF6C;
+EntityUnkId30 = 0x801CD370;
+EntityUnkId31 = 0x801CD500;
+EntityExplosion3 = 0x801CD8E4;
+EntityFireWargWaveAttack = 0x801CDF7C;
+EntityUnkId2F = 0x801CE350;
+EntityFireWargDeathBeams = 0x801CE578;
+func_801CF438 = 0x801CEA28;
+func_801CF58C = 0x801CEB7C;
+func_801CF5E0 = 0x801CEBD0;
+func_801CF6D8 = 0x801CECC8;
+EntityWarg = 0x801CED30;
+EntityUnkId4B = 0x801CFA94;
+EntityWargExplosionPuffTransparent = 0x801CFC14;
+BottomCornerText = 0x801CFCEC;
+func_801C4144 = 0x801D00C4; // source=duplicate
+EntityAlucardWaterEffect = 0x801D01CC; // source=duplicate
+EntitySplashWater = 0x801D0D4C; // source=duplicate
+EntitySurfacingWater = 0x801D1658; // source=duplicate
+EntitySideWaterSplash = 0x801D1B44; // source=duplicate
+EntitySmallWaterDrop = 0x801D1ED8; // source=duplicate
+EntityWaterDrop = 0x801D2134; // source=duplicate
+CheckMermanEnteringWater = 0x801D23D8; // source=duplicate
+EntityMerman2 = 0x801D24E4; // source=duplicate
+EntityMermanFireSpit = 0x801D35D0; // source=duplicate
+EntityMediumWaterSplash = 0x801D3800; // source=duplicate
+EntityMermanWaterSplash = 0x801D38D4; // source=duplicate
+EntityMerman2JumpAir = 0x801D3D00; // source=duplicate
+EntityHighWaterSplash = 0x801D3D98; // source=duplicate
+EntityDeadMerman = 0x801D3F90; // source=duplicate
+EntityMermanSpawner = 0x801D405C; // source=duplicate
+EntityMerman = 0x801D41B8; // source=duplicate
+EntityMermanFireball = 0x801D4D70; // source=duplicate
+EntityMermanJumpAir = 0x801D4ED4; // source=duplicate
+EntityMermanExplosion = 0x801D4F6C; // source=duplicate
+EntityBoneScimitar = 0x801D5144; // source=duplicate
+EntityBoneScimitarParts = 0x801D57F4; // source=duplicate
+EntityBat = 0x801D58FC; // source=duplicate
+EntityZombie = 0x801D5B48; // source=duplicate
+EntityZombieSpawner = 0x801D5DA8; // source=duplicate
+UnkPrimHelper = 0x801D5F18; // source=duplicate
+FindFirstUnkPrim = 0x801D6450; // source=duplicate
+UnkPolyFunc2 = 0x801D6664; // source=duplicate
+PrimDecreaseBrightness = 0x801D66E4; // source=duplicate
+g_LayoutObjHorizontal = 0x801D67A8;
+g_LayoutObjVertical = 0x801D67AC;
+msgBoxTpage = 0x801D67B8;
+g_SkipCutscene = 0x801D73B8;
+g_Dialogue = 0x801D73BC; // size:0x40
+g_CutsceneFlags = 0x801D7464;
+g_IsCutsceneDone = 0x801D7468;
+g_ItemIconSlots = 0x801D746C;

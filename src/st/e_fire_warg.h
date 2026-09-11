@@ -242,7 +242,11 @@ void EntityFireWarg(Entity* self) {
             self->params = 0;
             self->flags &= ~(FLAG_NOT_AN_ENEMY | FLAG_DEAD);
             part->flags &= ~(FLAG_NOT_AN_ENEMY | FLAG_DEAD);
+#ifdef VERSION_HD
+            self->flags |= FLAG_SUPPRESS_STUN;
+#else
             self->flags |= FLAG_SUPPRESS_STUN | FLAG_UNK_400;
+#endif
             part->flags |= FLAG_SUPPRESS_STUN;
             self->enemyId = part->enemyId = 0x94;
             part->flags = self->flags;
