@@ -9,7 +9,7 @@
 // providing one shared scratchpad buffer for the whole translation unit.
 #define SP_LEN 0x400
 #define SP(x) (&g_Scratchpad[x])
-extern u8 g_Scratchpad[SP_LEN];
+extern GAME_IMPORT u8 g_Scratchpad[SP_LEN];
 #else
 #if defined(VERSION_PSP)
 #define SCRATCH_PAD 0x00010000
