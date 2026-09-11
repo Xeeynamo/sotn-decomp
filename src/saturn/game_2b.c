@@ -260,6 +260,7 @@ void func_06079208(s32 arg0, Point16* pos) {
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60792B8, func_060792B8);
 
 extern s32 DAT_06085E54;
+extern u16 DAT_06085E58[][2];
 
 void func_06079424(s32 arg0, s32 arg1, s32 arg2, Point16* pos) {
     SprSpCmd* cmd;
@@ -295,7 +296,18 @@ void func_06079424(s32 arg0, s32 arg1, s32 arg2, Point16* pos) {
     }
 }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079580, func_06079580);
+void func_06079580(s32 arg0, s32 arg1, Point16* pos) {
+    SprSpCmd* cmd = &DAT_06086108;
+
+    func_060784B8(cmd, DAT_06085E58[arg1][0], DAT_06085E58[arg1][1]);
+
+    LOW(cmd->ax) = (pos->x << 0x10) | (pos->y & 0xFFFF);
+    if (SpMstCmdPos < 0x278) {
+        SPR_2Cmd(arg0, cmd);
+        d_0605AEAC += 0x20;
+    }
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079670, func_06079670);
 
 void func_0607973C(s32 arg0, Point16* pos) {
