@@ -1,12 +1,14 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stage.h>
 
+#ifndef VERSION_PSP
 u8 unused_cmpgfx1[] = {
 #include <gen/unused_cmpgfx1.h>
 };
 u8 unused_cmpgfx2[] = {
 #include <gen/unused_cmpgfx2.h>
 };
+#endif
 u8 D_80183F5C[] = {
 #include "gen/D_80183F5C.h"
 };
