@@ -43,7 +43,7 @@ segments:
       - [0x40, .data, sprite_banks]
       - [0xA0, data]
       - [0x398, .data, layers]
-      - [0x590, data]
+      - [0x590, .data, graphics_banks] # GfxBanks
       - [0x840, .data, gen/e_laydef]
       - [0x9E8, .data, e_init]
       - [0xC84, data]
@@ -84,6 +84,8 @@ segments:
       - [0x2550, .data, e_life_up]
       - [0x25A4, .data, gen/e_layout]
       - [0x3674, data]
+      - [0x3F5C, .data, stage_data]
+      - [0x12884, data]
       - [0x13084, .data, tilemaps]
       - [0x204A4, .data, gen/sprites]
       - [0x25F90, .rodata, e_breakable]
