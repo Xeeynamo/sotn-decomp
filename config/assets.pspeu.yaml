@@ -1063,7 +1063,8 @@ files:
       vram: 0x09237700
       assets:
       - [0x27048, sprite_banks, psp/sprite_banks]
-      - [0x270A8, skip]
+      - [0x270A8, layers, layers]
+      - [0x27290, skip]
 
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rtop.bin
     asset_path: assets/st/rtop
