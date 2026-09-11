@@ -1064,7 +1064,8 @@ files:
       assets:
       - [0x27048, sprite_banks, psp/sprite_banks]
       - [0x270A8, layers, layers]
-      - [0x27290, skip]
+      - [0x27290, skip] #paldef, palette_def]
+      - [0x27598, skip]
 
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rtop.bin
     asset_path: assets/st/rtop
