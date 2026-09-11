@@ -40,7 +40,7 @@ segments:
     subsegments:
       - [0x0, .data, header]
       - [0x40, .data, sprite_banks]
-      - [0xA0, data, palette_def] # Issue #2401
+      - [0xA0, data, palette_def] # Issue #3667
       - [0x360, .data, layers]
       - [0x5A4, .data, graphics_banks] # GfxBanks
       - [0x820, .data, gen/e_laydef] # layout entries header

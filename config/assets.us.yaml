@@ -967,7 +967,7 @@ files:
         vram: 0x80180000
         assets:
           - [0x40, sprite_banks, sprite_banks]
-          #- [0xA0, paldef, palette_def] Issue #2401
+          # - [0xA0, paldef, palette_def] Issue #3667
           - [0xA0, skip]
           - [0x360, layers, layers]
           - [0x558, gfx_banks, graphics_banks]
@@ -1402,6 +1402,8 @@ files:
       assets:
         - [0x40, sprite_banks, sprite_banks]
         - [0xA0, skip] #paldef, palette_def]
+        - [0x398, layers, layers]
+        - [0x590, skip]
         - [0x840, layout, entity_layouts]
         - [0x9E8, skip]
 
