@@ -774,19 +774,11 @@ void func_060ACACC(void* unused, SpriteObject* sprite, s32 count) {
 // PlayAnimation (Saturn player-specialized version)
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60ACB6C, func_060ACB6C);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60ACF00, func_060ACF00);
-void func_060AD44C(s32 arg0, s32 arg1) {
-    s16 steps[6];
-    u16 index;
-    u16 buttons;
 
-    index = 0xFFFF;
-    buttons = g_Player.padTapped;
-    steps[0] = 7;
-    steps[1] = 5;
-    steps[2] = 0x18;
-    steps[3] = 0xE;
-    steps[4] = 9;
-    steps[5] = 0x19;
+void func_060AD44C(s32 arg0, s32 arg1) {
+    u16 index = 0xFFFF;
+    u16 buttons = g_Player.padTapped;
+    u16 steps[6] = {7, 5, 24, 14, 9, 25};
 
     if (buttons & 0x40) {
         index = 0;
@@ -797,7 +789,7 @@ void func_060AD44C(s32 arg0, s32 arg1) {
     }
 
     if (index != 0xFFFF) {
-        if ((u16)steps[index] == PLAYER.step) {
+        if (steps[index] == PLAYER.step) {
             index += 3;
         }
         PLAYER.step = steps[index];
@@ -806,10 +798,11 @@ void func_060AD44C(s32 arg0, s32 arg1) {
         PLAYER.rotate = 0;
     }
 
-    if ((u16)((s16)PLAYER.step - 0x18) > 1) {
+    if (PLAYER.step != 0x18 && PLAYER.step != 0x19) {
         func_060B7994();
     }
 }
+
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AD524, func_060AD524);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AD714, func_060AD714);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60ADACC, func_060ADACC);
