@@ -65,7 +65,6 @@ segments:
       - [0x1220, .data, e_dw_batwings]
       - [0x1304, .data, bossfight]
       - [0x132C, .data, st_update]
-      - [0x1378, data]
       - [0x1378, .data, collision]
       - [0x1738, .data, e_red_door]
       - [0x1750, .data, st_common]
