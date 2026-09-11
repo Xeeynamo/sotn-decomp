@@ -1078,6 +1078,39 @@ files:
     asset_path: assets/st/rnz1
     src_path: src/st/rnz1
     splat_config_path: config/splat.pspeu.strnz1.yaml
+    segments:
+    - start: 0x80
+      vram: 0x09237700
+      assets:
+      - [0x27048, sprite_banks, psp/sprite_banks]
+      - [0x270A8, layers, layers]
+      - [0x27290, skip] #paldef, palette_def]
+      - [0x27598, gfx_banks, graphics_banks]
+      - [0x27868, skip]
+      - [0x27B60, rooms, rooms]
+      - [0x27BF0, skip]
+      - [0x27D60, cmpgfx, D_80183F5C, 128, 128, 4]
+      - [0x296B0, cmpgfx, D_801858A8, 128, 128, 4]
+      - [0x2A2F0, cmpgfx, D_801864E4, 128, 128, 4]
+      - [0x2B170, cmpgfx, D_80187360, 128, 128, 4]
+      - [0x2BC00, cmpgfx, D_80187DF0, 128, 128, 4]
+      - [0x2C568, cmpgfx, D_80188754, 128, 128, 4]
+      - [0x2CF50, cmpgfx, D_80189138, 128, 128, 4]
+      - [0x2DDC0, cmpgfx, D_80189FA4, 128, 128, 4]
+      - [0x2E540, cmpgfx, D_8018A724, 128, 128, 4]
+      - [0x2ED80, cmpgfx, D_8018AF60, 128, 128, 4]
+      - [0x2F648, cmpgfx, D_8018B828, 128, 128, 4]
+      - [0x2FC10, cmpgfx, D_8018BDF0, 128, 128, 4]
+      - [0x2FE80, cmpgfx, D_8018C060, 128, 128, 4]
+      - [0x30838, cmpgfx, D_8018CA14, 128, 128, 4]
+      - [0x31688, cmpgfx, D_8018D864, 128, 128, 4]
+      - [0x32870, cmpgfx, D_8018EA48, 128, 128, 4]
+      - [0x33670, cmpgfx, D_8018F844, 128, 128, 4]
+      - [0x343A0, cmpgfx, D_80190570, 128, 128, 4]
+      - [0x34BA8, cmpgfx, D_80190D74, 128, 128, 4]
+      - [0x35A50, cmpgfx, D_80191C18, 128, 128, 4]
+      - [0x35C08, cmpgfx, D_80191DCC, 128, 128, 4]
+      - [0x366C0, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rtop.bin
     asset_path: assets/st/rtop
     src_path: src/st/rtop
