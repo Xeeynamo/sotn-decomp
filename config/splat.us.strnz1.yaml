@@ -84,7 +84,7 @@ segments:
       - [0x3674, .data, stage_data]
       - [0x12884, data]
       - [0x13084, .data, tilemaps]
-      - [0x204A4, .data, gen/sprites]
+      - [0x204A4, .data, gen/us/sprites]
       - [0x25F90, .rodata, e_breakable]
       - [0x25FB4, .rodata, e_explosion_puff_opaque]
       - [0x25FC8, .rodata, e_clouds]

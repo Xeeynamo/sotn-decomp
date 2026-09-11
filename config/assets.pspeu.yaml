@@ -1058,6 +1058,13 @@ files:
     asset_path: assets/st/rnz1
     src_path: src/st/rnz1
     splat_config_path: config/splat.pspeu.strnz1.yaml
+    segments:
+    - start: 0x80
+      vram: 0x09237700
+      assets:
+      - [0x27048, sprite_banks, psp/sprite_banks]
+      - [0x270A8, skip]
+
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rtop.bin
     asset_path: assets/st/rtop
     src_path: src/st/rtop
