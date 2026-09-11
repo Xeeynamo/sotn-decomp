@@ -107,7 +107,7 @@ segments:
       - [0x27598, .data, graphics_banks]
       - [0x27868, .data, e_red_door_tiles]
       - [0x27888, .data, e_init]
-      - [0x27B60, data]
+      - [0x27B60, .data, gen/rooms]
       - [0x27BF0, .data, bossfight]
       - [0x27C10, .data, e_breakable]
       - [0x27D60, .data, stage_data]

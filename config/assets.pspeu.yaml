@@ -1067,6 +1067,8 @@ files:
       - [0x27290, skip] #paldef, palette_def]
       - [0x27598, gfx_banks, graphics_banks]
       - [0x27868, skip]
+      - [0x27B60, rooms, rooms]
+      - [0x27BF0, skip]
       - [0x27D60, cmpgfx, D_80183F5C, 128, 128, 4]
       - [0x296B0, cmpgfx, D_801858A8, 128, 128, 4]
       - [0x2A2F0, cmpgfx, D_801864E4, 128, 128, 4]
