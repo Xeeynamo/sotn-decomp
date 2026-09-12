@@ -1489,7 +1489,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
             CreateCeilingHitEffect(1);
             PLAYER.velocityX /= 2;
             PLAYER.velocityY = 0;
-            g_Player.timers[8] = 24;
+            g_Player.timers[ALU_T_8] = 24;
             PLAYER.step_s = 5;
             if (g_Player.prev_step_s == 0xF &&
                 (func_80113D7C(g_Player.damageTaken) != 0)) {
@@ -1540,8 +1540,8 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
             }
         }
 
-        if (PLAYER.step_s == 0xF) {
-            g_Player.timers[8] = 8;
+        if (PLAYER.step_s == 15) {
+            g_Player.timers[ALU_T_8] = 8;
             SetPlayerAnim(0x3F);
             PlaySfx(SFX_WALL_DEBRIS_B);
             PLAYER.velocityY = FIX(-2.5);
@@ -1567,7 +1567,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_31, 8), 0);
         break;
     case 3:
-        if (!g_Player.timers[8]) {
+        if (!g_Player.timers[ALU_T_8]) {
             SetSpeedX(FIX(0.75));
             if (func_8010FDF8(0x20280) != 0) {
                 return;

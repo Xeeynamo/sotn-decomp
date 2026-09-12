@@ -294,13 +294,11 @@ some sort of error. But we do find that #1 and #3 are both used in the retail
 game, so it's not clear what the deal is there.
 */
 
-
-
 static struct {
-    u16 type; // Index used to select one of 7 shakes (index 0-6)
-    s16 i; // Current step that we are on within the current shake
+    u16 type;     // Index used to select one of 7 shakes (index 0-6)
+    s16 i;        // Current step that we are on within the current shake
     s16* pattern; // The array describing the sequence of shake steps
-    s16 amount; // How much we are moving during the current shake step
+    s16 amount;   // How much we are moving during the current shake step
 } shakeRequest;
 
 #define COORD_TERMINATOR 0x7FFF
