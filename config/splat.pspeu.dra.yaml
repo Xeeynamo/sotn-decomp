@@ -74,7 +74,7 @@ segments:
       - [0x45688, c, dra/8A0A4]
       - [0x47EA8, c, dra/7879C]
       - [0x507F0, c, dra/7E4BC]
-      - [0x59E20, c, dra/8C600]
+      - [0x59E20, c, dra/wolfForm]
       - [0x60C28, c, dra_psp/cd]
       - [0x60C90, c, dra_psp/memcard]
       - [0x61B78, c, dra/pads]
@@ -115,7 +115,7 @@ segments:
       - [0xA6C38, .data, dra/7879C]
       - [0xA72E4, .data, dra/7E4BC]
       - [0xA79D0, .data, dra/d_DBD4]
-      - [0xA8120, .data, dra/8C600]
+      - [0xA8120, .data, dra/wolfForm]
       - [0xA8888, .data, dra_psp/cd]
       - [0xA88D8, .data, dra/d_CD80]
       - [0xA8948, .data, dra_psp/memcard]
@@ -143,7 +143,7 @@ segments:
       - [0xEE8B8, .rodata, dra/8A0A4]
       - [0xEE8D8, .rodata, dra/7879C]
       - [0xEEB28, .rodata, dra/7E4BC]
-      - [0xEEC30, .rodata, dra/8C600]
+      - [0xEEC30, .rodata, dra/wolfForm]
       - [0xEED48, .rodata, dra_psp/63C08]
       - {start: 0xEED80, type: .bss, vram: 0x091CB700, name: dra_psp/3250}
       - {start: 0xEED80, type: .bss, vram: 0x091CD700, name: dra/62DEC}

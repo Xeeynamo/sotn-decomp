@@ -294,7 +294,7 @@ void func_8012CFF0(void) {
     D_800B0914 = 0;
 }
 
-void func_8012D024(void) {
+void WolfStepS_1(void) {
     DecelerateX(FIX(1.0 / 8));
     if (g_Player.padTapped & PAD_CROSS) {
         func_8012CCE4();
@@ -331,7 +331,7 @@ void func_8012D024(void) {
     }
 }
 
-void func_8012D178(void) {
+void WolfStepS_7(void) {
     if (g_Player.padTapped & PAD_CROSS) {
         func_8012CCE4();
     } else if (!(g_Player.vram_flag & TOUCHING_GROUND)) {
@@ -442,7 +442,7 @@ static u16* D_800B09F8[] = {
     D_800B09A8, D_800B0990, D_800B09E4, D_800B0990, D_800B0944,
 };
 
-void func_8012D3E8(void) {
+void WolfStepS_2(void) {
     byte pad[0x28];
     s32 directionsPressed =
         g_Player.padPressed & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT);
@@ -628,7 +628,7 @@ void func_8012D3E8(void) {
     }
 }
 
-void func_8012DBBC(void) {
+void WolfStepS_5(void) {
     s32 vel_boost;
 
     if (g_Player.timers[5] && (g_Player.padTapped & PAD_CROSS)) {
@@ -698,7 +698,7 @@ void func_8012DBBC(void) {
     }
 }
 
-void func_8012DF04(void) {
+void WolfStepS_6(void) {
     s32 velocityBoost;
 
     if (g_Player.timers[5] && (g_Player.padTapped & PAD_CROSS)) {
@@ -730,7 +730,7 @@ void func_8012DF04(void) {
     }
 }
 
-void func_8012E040(void) {
+void WolfStepS_4(void) {
     s32 var_s0 = true;
     s32 vel_boost;
     s16 xOffset;
@@ -861,7 +861,7 @@ void func_8012E040(void) {
     }
 }
 
-void func_8012E550(void) {
+void WolfStepS_3(void) {
     s32 i;
     s16 playerFrame = PLAYER.pose;
     bool pressingDown = g_Player.padPressed & PAD_DOWN;
@@ -933,7 +933,7 @@ void func_8012E550(void) {
     }
 }
 
-void func_8012E7A4(void) {
+void WolfStepS_0(void) {
     s32 i, j; // Not nested, just two iterators for two loops
     Entity* entity;
 #if defined(VERSION_US)
@@ -997,7 +997,7 @@ void func_8012E7A4(void) {
 #endif
 }
 
-void func_8012E9C0(void) {
+void WolfStepS_8(void) {
     s32 i;
 
     PLAYER.palette = PAL_FLAG(PAL_PLAYER_HIDDEN);
@@ -1086,7 +1086,7 @@ void PlayerStepUnmorphWolf(void) {
     }
 }
 
-void func_8012ED30(void) {
+void WolfStepS_9(void) {
     if (g_Player.padTapped & PAD_CROSS) {
         func_8012CCE4();
         D_80138440 = 0x10;
@@ -1162,34 +1162,34 @@ void PlayerStepMorphWolf(void) {
     D_800B0920 = 14;
     switch (PLAYER.step_s) {
     case 0:
-        func_8012E7A4();
+        WolfStepS_0();
         break;
     case 1:
-        func_8012D024();
+        WolfStepS_1();
         break;
     case 2:
-        func_8012D3E8();
+        WolfStepS_2();
         break;
     case 3:
-        func_8012E550();
+        WolfStepS_3();
         break;
     case 4:
-        func_8012E040();
+        WolfStepS_4();
         break;
     case 5:
-        func_8012DBBC();
+        WolfStepS_5();
         break;
     case 7:
-        func_8012D178();
+        WolfStepS_7();
         break;
     case 6:
-        func_8012DF04();
+        WolfStepS_6();
         break;
     case 8:
-        func_8012E9C0();
+        WolfStepS_8();
         break;
     case 9:
-        func_8012ED30();
+        WolfStepS_9();
     }
     D_80138438 = g_Player.unk04;
     for (i = 0; i < 8; i++) {
@@ -2275,7 +2275,7 @@ void func_80130E94(Entity* self) {
 }
 
 // Entity #60. This is created manually at g_Entities[30].
-// Creation is in func_8012E7A4.
+// Creation is in WolfStepS_0.
 void func_8013136C(Entity* self) {
     if (!(g_Player.status & PLAYER_STATUS_WOLF_FORM)) {
         DestroyEntity(self);
