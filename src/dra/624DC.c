@@ -273,72 +273,79 @@ void UpdateFade(bool skipFollowup) {
 }
 
 static struct {
-    u16 start;
-    s16 current;
-    s16* coords;
-    s16 unk8;
-} D_801379AC;
+    u16 type; // Index used to select one of 7 shakes (index 0-6)
+    s16 i; // Current step that we are on within the current shake
+    s16* pattern; // The array describing the sequence of shake steps
+    s16 amount; // How much we are moving during the current shake step
+} shakeRequest;
 
 #define COORD_TERMINATOR 0x7FFF
 
-static s16 D_800A3134[] = {
+// These program different shake patterns of how much the camera is offset
+// The patterns simply wiggle back and forth with decreasing amplitude.
+static s16 shake_small[] = {
     3, -3, 2, -2, 1, -1, COORD_TERMINATOR,
 };
-static s16 D_800A3144[] = {
+static s16 shake_medium[] = {
     3, -3, 3, -3, 2, -2, 2, -2, 1, -1, 1, -1, COORD_TERMINATOR,
 };
-static s16 D_800A3160[] = {
-    +6, -6, +6, -6, +5,
-    -5, +5, -5, +4, -4,
-    +4, -4, +3, -3, +3,
-    -3, +2, -2, +2, -2,
-    +1, -1, +1, -1, COORD_TERMINATOR,
+static s16 shake_heavy[] = {
+    6,  -6, 6,  -6, 5,
+    -5, 5,  -5, 4,  -4,
+    4,  -4, 3,  -3, 3,
+    -3, 2,  -2, 2,  -2,
+    1,  -1, 1,  -1, COORD_TERMINATOR,
 };
-static s16* D_800A3194[] = {
-    D_800A3134, D_800A3134, D_800A3144, D_800A3134,
-    D_800A3144, D_800A3144, D_800A3160,
+static s16* shake_patterns[] = {
+    shake_small,  // SHAKE_NONE
+    shake_small,  // SHAKE_Y_SMALL
+    shake_medium, // SHAKE_X_MEDIUM
+    shake_small,  // SHAKE_Y_SMALL2
+    shake_medium, // SHAKE_Y_MEDIUM
+    shake_medium, // SHAKE_5_NULL
+    shake_heavy,  // SHAKE_Y_HEAVY
 };
 
-void func_80102CD8(s32 start) {
-    D_801379AC.start = start;
-    D_801379AC.current = 0;
-    D_801379AC.coords = D_800A3194[start];
+void func_80102CD8(s32 type) {
+    shakeRequest.type = type;
+    shakeRequest.i = 0;
+    shakeRequest.pattern = shake_patterns[type];
 }
 
 void func_80102D08(void) {
-    D_801379AC.unk8 = D_801379AC.coords[D_801379AC.current];
-    D_801379AC.current++;
-    if (D_801379AC.coords[D_801379AC.current] == COORD_TERMINATOR) {
-        D_801379AC.start = 0;
-        D_801379AC.unk8 = 0;
+    shakeRequest.amount = shakeRequest.pattern[shakeRequest.i];
+    shakeRequest.i++;
+    if (shakeRequest.pattern[shakeRequest.i] == COORD_TERMINATOR) {
+        shakeRequest.type = SHAKE_NONE;
+        shakeRequest.amount = 0;
     }
 }
 
 void func_80102D70(void) {
-    switch (D_801379AC.start) {
-    case 0:
+    switch (shakeRequest.type) {
+    case SHAKE_NONE:
         break;
-    case 1:
+    case SHAKE_Y_SMALL:
         func_80102D08();
-        g_cameraOffsetY = D_801379AC.unk8;
+        g_cameraOffsetY = shakeRequest.amount;
         break;
-    case 2:
+    case SHAKE_X_MEDIUM:
         func_80102D08();
-        g_cameraOffsetX = D_801379AC.unk8;
+        g_cameraOffsetX = shakeRequest.amount;
         break;
-    case 3:
+    case SHAKE_Y_SMALL2:
         func_80102D08();
-        g_cameraOffsetY = D_801379AC.unk8;
+        g_cameraOffsetY = shakeRequest.amount;
         break;
-    case 4:
+    case SHAKE_Y_MEDIUM:
         func_80102D08();
-        g_cameraOffsetY = D_801379AC.unk8;
+        g_cameraOffsetY = shakeRequest.amount;
         break;
-    case 5:
+    case SHAKE_5_NULL:
         break;
-    case 6:
+    case SHAKE_Y_HEAVY:
         func_80102D08();
-        g_cameraOffsetY = D_801379AC.unk8;
+        g_cameraOffsetY = shakeRequest.amount;
         break;
     }
 }

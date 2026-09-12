@@ -1630,6 +1630,16 @@ typedef struct {
     u32 unkC;
 } DamageParam;
 
+typedef enum {
+    SHAKE_NONE,
+    SHAKE_Y_SMALL,
+    SHAKE_X_MEDIUM,
+    SHAKE_Y_SMALL2,
+    SHAKE_Y_MEDIUM,
+    SHAKE_5_NULL,
+    SHAKE_Y_HEAVY
+} cameraShakeTypes;
+
 typedef struct {
     /* 8003C774 */ Overlay o;
     /* 8003C7B4 */ void (*FreePrimitives)(s32);
