@@ -725,7 +725,7 @@ void EntityDracula(Entity* self) {
                 self->step_s++;
             }
             if (!self->poseTimer && self->pose == 5) {
-                g_api.ShakeCamera(2);
+                g_api.ShakeCamera(SHAKE_X_MEDIUM);
             }
             break;
 

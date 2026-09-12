@@ -1012,7 +1012,7 @@ void EntityArmorLord(Entity* self) {
         if (!self->poseTimer && self->animCurFrame == 0x14) {
             PlaySfxPositional(SFX_WHIP_TWIRL_SWISH);
             PlaySfxPositional(SFX_ARMOR_LORD_ATTACK);
-            g_api.ShakeCamera(4);
+            g_api.ShakeCamera(SHAKE_Y_MEDIUM);
         }
         // This is the part where he slides sideways as the swing happens
         if (!self->poseTimer && self->pose == 5) {

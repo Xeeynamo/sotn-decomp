@@ -338,7 +338,7 @@ void EntityDraculaFinalForm(Entity* self) {
             }
             if (func_801ADAC8(0x4C) != 0) {
                 g_api.PlaySfx(SFX_START_SLAM_B);
-                g_api.ShakeCamera(1);
+                g_api.ShakeCamera(SHAKE_Y_SMALL);
                 self->step_s++;
             }
             break;
@@ -480,7 +480,7 @@ void EntityDraculaFinalForm(Entity* self) {
             }
             if (func_801ADAC8(0x4C) != 0) {
                 g_api.PlaySfx(SFX_START_SLAM_B);
-                g_api.ShakeCamera(1);
+                g_api.ShakeCamera(SHAKE_Y_SMALL);
                 self->step_s++;
             }
             break;
@@ -675,7 +675,7 @@ void EntityDraculaFinalForm(Entity* self) {
                     self->step_s++;
                     break;
                 }
-                g_api.ShakeCamera(1);
+                g_api.ShakeCamera(SHAKE_Y_SMALL);
                 D_80181148--;
                 if (D_80181148 == 0) {
                     D_80181148 = 0x800;

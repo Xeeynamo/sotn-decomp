@@ -71,7 +71,7 @@ void EntityWeaponAttack(Entity* self) {
             self->poseTimer = 0;
             self->ext.weapon.lifetime = 71;
             g_api.func_80118C28(5);
-            g_api.ShakeCamera(3);
+            g_api.ShakeCamera(SHAKE_Y_SMALL2);
             g_api.PlaySfx(SFX_TELEPORT_BANG_A);
             self->step++;
         }

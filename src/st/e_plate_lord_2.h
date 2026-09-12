@@ -318,7 +318,7 @@ void func_us_801D542C(Entity* self) {
             }
             self->ext.plateLordUnknown.unk9C = 0;
             PlaySfxPositional(SFX_PLATE_LORD_BALL_IMPACT);
-            g_api.ShakeCamera(1);
+            g_api.ShakeCamera(SHAKE_Y_SMALL);
             self->step = 0xD;
         } else {
             if (self->facingLeft) {

@@ -418,7 +418,7 @@ void EntityDiplocephalusTail(Entity* self) {
                 part->params = 3;
                 part->zPriority = self->zPriority + 9;
             }
-            g_api.ShakeCamera(1);
+            g_api.ShakeCamera(SHAKE_Y_SMALL);
             EntityExplosionSpawn(0, 0);
         }
         break;

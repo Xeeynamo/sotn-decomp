@@ -1030,7 +1030,7 @@ void CreateCeilingHitEffect(u16 arg0) {
     PLAYER.posX.i.hi -= move;
 
     if (arg0 & 1) {
-        ShakeCamera(3);
+        ShakeCamera(SHAKE_Y_SMALL2);
         PlaySfx(SFX_WALL_DEBRIS_B);
     }
     if (arg0 & 2) {
@@ -1530,7 +1530,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
                 PLAYER.posY.i.hi -= 0x15;
                 PLAYER.posX.i.hi -= var_s2;
                 PlaySfx(SFX_WALL_DEBRIS_B);
-                ShakeCamera(2);
+                ShakeCamera(SHAKE_X_MEDIUM);
                 PLAYER.step_s = 1;
                 if (g_Player.prev_step_s == 0xF &&
                     (func_80113D7C(g_Player.damageTaken) != 0)) {
@@ -1545,7 +1545,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
             SetPlayerAnim(0x3F);
             PlaySfx(SFX_WALL_DEBRIS_B);
             PLAYER.velocityY = FIX(-2.5);
-            ShakeCamera(2);
+            ShakeCamera(SHAKE_X_MEDIUM);
             PLAYER.step_s = 3;
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_31, 8), 0);
             if (func_80113D7C(g_Player.damageTaken) != 0) {
@@ -1680,7 +1680,7 @@ void PlayerStepStoned(s32 arg0) {
         if (func_8010FDF8(0x20280) != 0) {
             PLAYER.step = Player_StatusStone;
             PLAYER.velocityX = PLAYER.velocityY = 0;
-            ShakeCamera(1);
+            ShakeCamera(SHAKE_Y_SMALL);
             PlaySfx(SFX_WALL_DEBRIS_B);
             CreateEntFactoryFromEntity(g_CurrentEntity, BP_39, 0);
 
@@ -1721,7 +1721,7 @@ void PlayerStepStoned(s32 arg0) {
         }
 
         if (!(g_Player.unk04 & 1)) {
-            ShakeCamera(1);
+            ShakeCamera(SHAKE_Y_SMALL);
             PlaySfx(SFX_WALL_DEBRIS_B);
         }
 
@@ -2754,7 +2754,7 @@ void ControlBatForm(void) {
             PLAYER.facingLeft && (g_Player.vram_flag & TOUCHING_L_WALL)) {
             g_Player.padTapped = PAD_R1;
             BatFormFinished();
-            ShakeCamera(2);
+            ShakeCamera(SHAKE_X_MEDIUM);
             PlaySfx(SFX_WALL_DEBRIS_B);
             PLAYER.velocityX = 0;
             g_Player.demo_timer = 32;

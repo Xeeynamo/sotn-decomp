@@ -776,7 +776,7 @@ void EntityWhiteDragon(Entity* self) {
             }
             DestroyEntity(self);
             g_api.PlaySfx(SFX_FIREBALL_SHOT_A);
-            g_api.ShakeCamera(1);
+            g_api.ShakeCamera(SHAKE_Y_SMALL);
         }
         break;
     }

@@ -367,7 +367,7 @@ void func_8012D28C(bool exitEarly) {
     bool bitNotFound;
     s32 i;
 
-    ShakeCamera(2);
+    ShakeCamera(SHAKE_X_MEDIUM);
     PlaySfx(SFX_WALL_DEBRIS_B);
     PLAYER.velocityX = 0;
     g_Player.demo_timer = 32;
@@ -778,7 +778,7 @@ void WolfStepS_4(void) {
             PLAYER.posY.i.hi -= 0;
             PLAYER.posX.i.hi -= xOffset;
 
-            ShakeCamera(3);
+            ShakeCamera(SHAKE_Y_SMALL2);
             PlaySfx(SFX_WALL_DEBRIS_B);
             PLAYER.velocityX = 0;
             PLAYER.velocityY = 0;
