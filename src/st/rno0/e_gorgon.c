@@ -943,7 +943,7 @@ void EntityGorgonFront(Entity* self) {
             sp60 = self->posY.i.hi + 0x18;
             g_api.CheckCollision(sp64, sp60, &sp3C, 0);
             if (sp3C.effects & EFFECT_SOLID) {
-                g_api.func_80102CD8(1);
+                g_api.ShakeCamera(1);
                 PlaySfxPositional(SFX_EXPLODE_A);
                 self->step_s += 1;
             }

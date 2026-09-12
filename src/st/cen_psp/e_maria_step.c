@@ -25,7 +25,7 @@ static void func_80158B04(u16 arg0) {
     MARIA.posX.i.hi -= xMod;
 
     if (arg0 & 1) {
-        g_api.func_80102CD8(3);
+        g_api.ShakeCamera(3);
         g_api.PlaySfx(SFX_WALL_DEBRIS_B);
     }
 
@@ -649,7 +649,7 @@ void MarStepHit(s32 damageEffect, u32 damageKind, s16 step, s16 step_s) {
                 MARIA.posY.i.hi -= 20;
                 MARIA.posX.i.hi -= posX;
                 g_api.PlaySfx(SFX_WALL_DEBRIS_B);
-                g_api.func_80102CD8(2);
+                g_api.ShakeCamera(2);
                 MARIA.step_s = 1;
                 damageParam.effects = EFFECT_NONE;
                 damageParam.damageKind = DAMAGEKIND_1;
@@ -668,7 +668,7 @@ void MarStepHit(s32 damageEffect, u32 damageKind, s16 step, s16 step_s) {
         mar_hit_stun_timer = 8;
         g_api.PlaySfx(SFX_WALL_DEBRIS_B);
         MARIA.velocityY = FIX(-2.5);
-        g_api.func_80102CD8(2);
+        g_api.ShakeCamera(2);
         MARIA.step_s = 3;
         MarCreateEntFactoryFromEntity(
             g_CurrentEntity, FACTORY(BP_SKID_SMOKE_2, 8), 0);

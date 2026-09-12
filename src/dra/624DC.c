@@ -272,6 +272,30 @@ void UpdateFade(bool skipFollowup) {
     }
 }
 
+/* BEGIN CAMERA SHAKE HANDLING SYSTEM
+These functions manipulate g_cameraOffsetX and g_cameraOffsetY to make the
+camera shake. This often happens when big things hit the ground, or similar.
+A function makes a call to g_api.ShakeCamera which registers a request and
+saves it into the shakeRequest. There is only one shakeRequest, so it is
+possible for it to be overwritten if that function is called multiple times.
+When called, it saves the request "type", an instance of the enum that I am
+calling "cameraShakeTypes". This controls two things. 1) it selects a pattern
+from shake_patterns and 2) it selects a step in UpdateCameraShake to process the
+pattern.
+Every frame, the game calls UpdateCameraShake in the main loop. That function
+checks if there is an active request. If there is, it processes the request.
+It steps through the individual steps in the chosen shake_pattern, and moves
+the camera by the prescribed number of pixels. The camera movement direction
+(X or Y) is hard-coded into the steps of UpdateCameraShake. The combination of
+patterns and X/Y values was used to determine the names for cameraShakeTypes.
+You will notice that types #1 and #3 both choose the shake_small pattern, and
+both choose the Y axis. In fact, only #2 selects the X axis. This feels like
+some sort of error. But we do find that #1 and #3 are both used in the retail
+game, so it's not clear what the deal is there.
+*/
+
+
+
 static struct {
     u16 type; // Index used to select one of 7 shakes (index 0-6)
     s16 i; // Current step that we are on within the current shake
@@ -306,13 +330,13 @@ static s16* shake_patterns[] = {
     shake_heavy,  // SHAKE_Y_HEAVY
 };
 
-void func_80102CD8(s32 type) {
+void ShakeCamera(cameraShakeTypes type) {
     shakeRequest.type = type;
     shakeRequest.i = 0;
     shakeRequest.pattern = shake_patterns[type];
 }
 
-void func_80102D08(void) {
+void StepShakeRequest(void) {
     shakeRequest.amount = shakeRequest.pattern[shakeRequest.i];
     shakeRequest.i++;
     if (shakeRequest.pattern[shakeRequest.i] == COORD_TERMINATOR) {
@@ -321,30 +345,30 @@ void func_80102D08(void) {
     }
 }
 
-void func_80102D70(void) {
+void UpdateCameraShake(void) {
     switch (shakeRequest.type) {
     case SHAKE_NONE:
         break;
     case SHAKE_Y_SMALL:
-        func_80102D08();
+        StepShakeRequest();
         g_cameraOffsetY = shakeRequest.amount;
         break;
     case SHAKE_X_MEDIUM:
-        func_80102D08();
+        StepShakeRequest();
         g_cameraOffsetX = shakeRequest.amount;
         break;
     case SHAKE_Y_SMALL2:
-        func_80102D08();
+        StepShakeRequest();
         g_cameraOffsetY = shakeRequest.amount;
         break;
     case SHAKE_Y_MEDIUM:
-        func_80102D08();
+        StepShakeRequest();
         g_cameraOffsetY = shakeRequest.amount;
         break;
     case SHAKE_5_NULL:
         break;
     case SHAKE_Y_HEAVY:
-        func_80102D08();
+        StepShakeRequest();
         g_cameraOffsetY = shakeRequest.amount;
         break;
     }

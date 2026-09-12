@@ -170,7 +170,7 @@ void EntityFallingStairs(Entity* self) {
             g_Tilemap.fg[*pDstTileIdx] = 0;
         }
 
-        g_api.func_80102CD8(1); // Not sure what this does.
+        g_api.ShakeCamera(1); // Not sure what this does.
                                 // Removal doesn't make an obvious difference
         g_api.PlaySfx(SFX_WALL_DEBRIS_B);
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -293,7 +293,7 @@ void EntityFallingStairs(Entity* self) {
             if (self->rotate < 0) {
                 self->rotate = 0; // Don't over-rotate
                 g_api.PlaySfx(SFX_EXPLODE_B);
-                g_api.func_80102CD8(1);
+                g_api.ShakeCamera(1);
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
 
                 // Spawn a dust cloud

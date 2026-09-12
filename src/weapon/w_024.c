@@ -329,7 +329,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
     case 2:
         if (--self->ext.shield.unk80 == 0) {
             self->ext.shield.unk80 = 0x10;
-            g_api.func_80102CD8(4);
+            g_api.ShakeCamera(4);
             self->step += 1;
         }
         break;

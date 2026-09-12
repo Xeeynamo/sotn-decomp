@@ -389,7 +389,7 @@ void func_us_801B9BE4(Entity* self) {
                 if (tempEntity != NULL) {
                     CreateEntityFromEntity(E_ID(ID_5E), self, tempEntity);
                 }
-                g_api.func_80102CD8(1);
+                g_api.ShakeCamera(1);
                 g_api.func_800EA5E4(ANIMSET_OVL(3));
                 g_api.PlaySfx(SFX_WEAPON_APPEAR);
                 g_api.PlaySfxVolPan(SFX_ELEVATOR_GEARS_LOOP, 0x7F, 0);
@@ -461,7 +461,7 @@ void func_us_801BA034(Entity* self) {
             self->posY.i.hi++;
         }
         if (self->posY.i.hi > 0xC2) {
-            g_api.func_80102CD8(1);
+            g_api.ShakeCamera(1);
             g_CastleFlags[NO1_UNKNOWN_FLAG] = 1;
             self->step++;
         }

@@ -295,7 +295,7 @@ void func_ptr_8017000C(Entity* self) {
         if (collider.effects & EFFECT_SOLID) {
             e = g_api.CreateEntFactoryFromEntity(self, WFACTORY(76, 0), 0);
             e = g_api.CreateEntFactoryFromEntity(self, WFACTORY(78, 16), 0);
-            g_api.func_80102CD8(3);
+            g_api.ShakeCamera(3);
             self->step++;
             self->velocityY = FIX(-6);
             self->ext.weapon.lifetime = 16;

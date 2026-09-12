@@ -577,7 +577,7 @@ void EntityHammer(Entity* self) {
             if (self->ext.GH_Props.unkB0[0] == 6 &&
                 !self->ext.GH_Props.unkB4[0]) {
                 PlaySfxPositional(SFX_FM_EXPLODE_D);
-                g_api.func_80102CD8(1);
+                g_api.ShakeCamera(1);
             }
             if (!self->ext.GH_Props.unkB0[0] && !self->ext.GH_Props.unkB4[0]) {
                 self->ext.GH_Props.unk84 ^= 1;

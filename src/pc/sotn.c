@@ -56,7 +56,7 @@ extern u16 g_PalEquipIcon[320 * 16];
 // list of exposed API
 void FreePrimitives(s32 index);
 s32 AllocPrimitives(u8 primType, s32 count);
-void func_80102CD8(s32 start);
+void ShakeCamera(cameraShakeTypes);
 void SetSpeedX(s32 speed);
 Entity* GetFreeEntity(s16 start, s16 end);
 void GetEquipProperties(s32 handId, Equipment* res, s32 equipId);
@@ -141,7 +141,7 @@ bool InitGame(struct InitGameParams* params) {
     api.FreePrimitives = FreePrimitives;
     api.AllocPrimitives = AllocPrimitives;
     api.CheckCollision = CheckCollision;
-    api.func_80102CD8 = func_80102CD8;
+    api.ShakeCamera = ShakeCamera;
     api.UpdateAnim = UpdateAnim;
     api.SetSpeedX = SetSpeedX;
     api.GetFreeEntity = GetFreeEntity;

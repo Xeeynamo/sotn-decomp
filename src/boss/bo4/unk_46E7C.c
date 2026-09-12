@@ -28,7 +28,7 @@ void func_us_801C6E7C(s32 arg0) {
     DOPPLEGANGER.posX.i.hi = DOPPLEGANGER.posX.i.hi - move;
 
     if (arg0 & 1) {
-        g_api.func_80102CD8(3);
+        g_api.ShakeCamera(3);
         g_api.PlaySfx(SFX_WALL_DEBRIS_B);
     }
     if (arg0 & 2) {
@@ -737,7 +737,7 @@ void ControlBatForm(void) {
             DOPPLEGANGER.facingLeft && (g_Dop.vram_flag & TOUCHING_L_WALL)) {
             g_Dop.padTapped = PAD_R1;
             BatFormFinished();
-            g_api.func_80102CD8(2);
+            g_api.ShakeCamera(2);
             g_api.PlaySfx(SFX_WALL_DEBRIS_B);
             DOPPLEGANGER.velocityX = 0;
             g_Dop.demo_timer = 32;
@@ -1147,7 +1147,7 @@ void DopplegangerStepStone(s32 arg0) {
         if (func_us_801C6040(0x20280) != 0) {
             DOPPLEGANGER.step = Dop_StatusStone;
             DOPPLEGANGER.velocityX = DOPPLEGANGER.velocityY = 0;
-            g_api.func_80102CD8(1);
+            g_api.ShakeCamera(1);
             g_api.PlaySfx(SFX_WALL_DEBRIS_B);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(39, 0), 0);
             if (g_Dop.unk6A == 0) {

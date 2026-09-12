@@ -80,7 +80,7 @@ extern s32 D_801375B8;
 void func_06078120();
 void UpdateStageEntities();
 void func_0600E0D0(s16, s16, s16, s16);
-void func_80102D70();
+void UpdateCameraShake();
 s32 func_800F0CD8(u16);
 void func_0606D554(s32);
 void Update();
@@ -334,7 +334,7 @@ void RunMainEngine(void) {
         D_801375A0 = PLAYER.posY.val;
         D_801375AC = g_Tilemap.scrollX.i.hi;
         D_801375B0 = g_Tilemap.scrollY.i.hi;
-        func_80102D70();
+        UpdateCameraShake();
         if (g_unkGraphicsStruct.unk28 != 0) {
             func_06064658(g_unkGraphicsStruct.unk28);
             DAT_06085528 = DAT_0605cd70.unk0;
@@ -611,19 +611,19 @@ void RunMainEngine(void) {
                         func_0606458C();
                         func_06064664();
                         UpdateStageEntities();
-                        func_80102D70();
+                        UpdateCameraShake();
                     } else {
                         UpdateStageEntities();
-                        func_80102D70();
+                        UpdateCameraShake();
                     }
                 } else if (g_PlayableCharacter == 2) {
                     func_0606458C();
                     func_06064664();
                     UpdateStageEntities();
-                    func_80102D70();
+                    UpdateCameraShake();
                 } else {
                     UpdateStageEntities();
-                    func_80102D70();
+                    UpdateCameraShake();
                 }
             } else {
                 D_8013759C = PLAYER.posX.i.hi;

@@ -873,7 +873,7 @@ void UpdateServantUseHammer(Entity* self) {
             g_api.CreateEntFactoryFromEntity(self, FACTORY(0x37, 3), 0);
             CreateEventEntity_Local(self, FAERIE_SUBENTITY_ITEM, 1);
             g_api.PlaySfx(SFX_LEVER_METAL_BANG);
-            g_api.func_80102CD8(4);
+            g_api.ShakeCamera(4);
             self->ext.faerie.frameCounter = 0;
             self->step++;
         }

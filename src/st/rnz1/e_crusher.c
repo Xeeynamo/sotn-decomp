@@ -200,7 +200,7 @@ void EntityCrusherHead(Entity* self) {
             self->posY.i.hi += sp3C.unk18;
             SetStep(CRUSHER_GRIND_FLOOR);
             if (self->params) {
-                g_api.func_80102CD8(1);
+                g_api.ShakeCamera(1);
             }
         }
         break;

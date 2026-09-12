@@ -428,7 +428,7 @@ void EntityParanthropus(Entity* self) {
                 EntityExplosionVariantsSpawner(self, 4, 3, -0x18, 0x1B, 0, -4);
                 EntityExplosionVariantsSpawner(self, 5, 3, -0x20, 0x1B, 0, -4);
             }
-            g_api.func_80102CD8(1);
+            g_api.ShakeCamera(1);
             PlaySfxPositional(SFX_EXPLODE_D);
             ParanthropusSetStep(DIVE_RECOVERY);
         } else {

@@ -186,7 +186,7 @@ void EntityWeaponAttack(Entity* self) {
 
         g_api.func_80118C28(4);
         g_api.PlaySfx(SFX_PENTAGRAM_ATTACK);
-        g_api.func_80102CD8(3);
+        g_api.ShakeCamera(3);
         SetWeaponProperties(self, 0);
         self->ext.weapon.lifetime = 24;
 

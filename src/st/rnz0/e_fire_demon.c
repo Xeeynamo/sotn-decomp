@@ -331,7 +331,7 @@ void EntityFireDemonFireball(Entity* self) {
         self->ext.fireDemon.unkA0 = true;
         prim->p1 = 2;
         prim->p2 = 0;
-        g_api.func_80102CD8(1);
+        g_api.ShakeCamera(1);
         PlaySfxPositional(SFX_FIREBALL_SHOT_B);
         self->step++;
         break;
