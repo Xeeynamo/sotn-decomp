@@ -1273,7 +1273,7 @@ void RunMainEngine(void) {
         if (g_StageId == STAGE_MAD) {
             g_api.o.StageEndCutScene();
         }
-        g_backbufferX = 0;
+        g_cameraOffsetX = 0;
         g_backbufferY = 0;
         func_800F14CC();
         LoadRoomLayer(D_801375BC.def->tileLayoutId);

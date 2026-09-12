@@ -69,7 +69,7 @@ void RenderTilemap(void) {
     r->rect.w = 255;
     r->rect.h = 255;
     setSprt16(sp16);
-    r->x = g_backbufferX;
+    r->x = g_cameraOffsetX;
     r->y = g_backbufferY;
     if (t->hideTimer > 0) {
         t->hideTimer--;

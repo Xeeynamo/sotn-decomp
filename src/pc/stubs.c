@@ -45,7 +45,7 @@ s32 D_800973EC;
 s32 D_8003C73C;
 s32 g_MapCursorTimer;
 s32 g_PlayableCharacter;
-s32 g_backbufferX;
+s32 g_cameraOffsetX;
 s32 g_backbufferY;
 u32 g_Timer;
 s32 D_80097904;

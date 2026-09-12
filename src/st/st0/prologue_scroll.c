@@ -40,7 +40,7 @@ STATIC_PAD_BSS(2);
 static void SetGameState(GameState gameState) {
     g_GameState = gameState;
     g_GameStep = 0;
-    g_backbufferX = 0;
+    g_cameraOffsetX = 0;
     g_backbufferY = 0;
 }
 

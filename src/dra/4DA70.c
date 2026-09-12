@@ -290,7 +290,7 @@ void RenderPrimitives(void) {
                         primbuf->tile.x0 = prim->x0;
                         primbuf->tile.y0 = prim->y0;
                     } else {
-                        primbuf->tile.x0 = prim->x0 + g_backbufferX;
+                        primbuf->tile.x0 = prim->x0 + g_cameraOffsetX;
                         primbuf->tile.y0 = prim->y0 + g_backbufferY;
                     }
                     primbuf->tile.w = prim->u0;
@@ -338,9 +338,9 @@ void RenderPrimitives(void) {
                         primbuf->g2.x1 = prim->x1;
                         primbuf->g2.y1 = prim->y1;
                     } else {
-                        primbuf->g2.x0 = prim->x0 + g_backbufferX;
+                        primbuf->g2.x0 = prim->x0 + g_cameraOffsetX;
                         primbuf->g2.y0 = prim->y0 + g_backbufferY;
-                        primbuf->g2.x1 = prim->x1 + g_backbufferX;
+                        primbuf->g2.x1 = prim->x1 + g_cameraOffsetX;
                         primbuf->g2.y1 = prim->y1 + g_backbufferY;
                     }
                     *r->g2 = primbuf->g2;
@@ -396,13 +396,13 @@ void RenderPrimitives(void) {
                         primbuf->g4.x3 = prim->x3;
                         primbuf->g4.y3 = prim->y3;
                     } else {
-                        primbuf->g4.x0 = prim->x0 + g_backbufferX;
+                        primbuf->g4.x0 = prim->x0 + g_cameraOffsetX;
                         primbuf->g4.y0 = prim->y0 + g_backbufferY;
-                        primbuf->g4.x1 = prim->x1 + g_backbufferX;
+                        primbuf->g4.x1 = prim->x1 + g_cameraOffsetX;
                         primbuf->g4.y1 = prim->y1 + g_backbufferY;
-                        primbuf->g4.x2 = prim->x2 + g_backbufferX;
+                        primbuf->g4.x2 = prim->x2 + g_cameraOffsetX;
                         primbuf->g4.y2 = prim->y2 + g_backbufferY;
-                        primbuf->g4.x3 = prim->x3 + g_backbufferX;
+                        primbuf->g4.x3 = prim->x3 + g_cameraOffsetX;
                         primbuf->g4.y3 = prim->y3 + g_backbufferY;
                     }
                     *r->g4 = primbuf->g4;
@@ -457,13 +457,13 @@ void RenderPrimitives(void) {
                         primbuf->gt4.x3 = prim->x3;
                         primbuf->gt4.y3 = prim->y3;
                     } else {
-                        primbuf->gt4.x0 = prim->x0 + g_backbufferX;
+                        primbuf->gt4.x0 = prim->x0 + g_cameraOffsetX;
                         primbuf->gt4.y0 = prim->y0 + g_backbufferY;
-                        primbuf->gt4.x1 = prim->x1 + g_backbufferX;
+                        primbuf->gt4.x1 = prim->x1 + g_cameraOffsetX;
                         primbuf->gt4.y1 = prim->y1 + g_backbufferY;
-                        primbuf->gt4.x2 = prim->x2 + g_backbufferX;
+                        primbuf->gt4.x2 = prim->x2 + g_cameraOffsetX;
                         primbuf->gt4.y2 = prim->y2 + g_backbufferY;
-                        primbuf->gt4.x3 = prim->x3 + g_backbufferX;
+                        primbuf->gt4.x3 = prim->x3 + g_cameraOffsetX;
                         primbuf->gt4.y3 = prim->y3 + g_backbufferY;
                     }
                     primbuf->gt4.u0 = prim->u0;
@@ -522,11 +522,11 @@ void RenderPrimitives(void) {
                         primbuf->gt3.x2 = prim->x2;
                         primbuf->gt3.y2 = prim->y2;
                     } else {
-                        primbuf->gt3.x0 = prim->x0 + g_backbufferX;
+                        primbuf->gt3.x0 = prim->x0 + g_cameraOffsetX;
                         primbuf->gt3.y0 = prim->y0 + g_backbufferY;
-                        primbuf->gt3.x1 = prim->x1 + g_backbufferX;
+                        primbuf->gt3.x1 = prim->x1 + g_cameraOffsetX;
                         primbuf->gt3.y1 = prim->y1 + g_backbufferY;
-                        primbuf->gt3.x2 = prim->x2 + g_backbufferX;
+                        primbuf->gt3.x2 = prim->x2 + g_cameraOffsetX;
                         primbuf->gt3.y2 = prim->y2 + g_backbufferY;
                     }
                     primbuf->gt3.u0 = prim->u0;
@@ -575,7 +575,7 @@ void RenderPrimitives(void) {
                         primbuf->sprt.x0 = prim->x0;
                         primbuf->sprt.y0 = prim->y0;
                     } else {
-                        primbuf->sprt.x0 = prim->x0 + g_backbufferX;
+                        primbuf->sprt.x0 = prim->x0 + g_cameraOffsetX;
                         primbuf->sprt.y0 = prim->y0 + g_backbufferY;
                     }
                     primbuf->sprt.u0 = prim->u0;

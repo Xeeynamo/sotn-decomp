@@ -27,7 +27,7 @@ static u8 D_8018046C[] = {
 void SetGameState(GameState gameState) {
     g_GameState = gameState;
     g_GameStep = 0;
-    g_backbufferX = 0;
+    g_cameraOffsetX = 0;
     g_backbufferY = 0;
 }
 #endif

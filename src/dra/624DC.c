@@ -324,7 +324,7 @@ void func_80102D70(void) {
         break;
     case 2:
         func_80102D08();
-        g_backbufferX = D_801379AC.unk8;
+        g_cameraOffsetX = D_801379AC.unk8;
         break;
     case 3:
         func_80102D08();
