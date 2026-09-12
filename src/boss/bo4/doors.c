@@ -172,10 +172,14 @@ void EntityUnkId18(Entity* self) {
 }
 
 extern EInit EInitUnk17;
-static u8 D_us_801805CC[] = {1, 0x62, 0x1, 0x63, 0};
-static u8 D_us_801805D4[] = {1, 0x64, 0x1, 0x65, 0};
-static u8 D_us_801805DC[] = {2, 0x62, 0x2, 0x63, 0};
-static u8 D_us_801805E4[] = {2, 0x64, 0x2, 0x65, 0};
+static AnimateEntityFrame D_us_801805CC[] = {
+    POSE(1, 0x62, 0), POSE(1, 0x63, 0), POSE_LOOP(0)};
+static AnimateEntityFrame D_us_801805D4[] = {
+    POSE(1, 0x64, 0), POSE(1, 0x65, 0), POSE_LOOP(0)};
+static AnimateEntityFrame D_us_801805DC[] = {
+    POSE(2, 0x62, 0), POSE(2, 0x63, 0), POSE_LOOP(0)};
+static AnimateEntityFrame D_us_801805E4[] = {
+    POSE(2, 0x64, 0), POSE(2, 0x65, 0), POSE_LOOP(0)};
 void EntityUnkId17(Entity* self) {
     s32 flag;
     s32 primIndex;
@@ -384,7 +388,6 @@ static s32 D_us_801805EC[] = {
 static s32 D_us_801D3104; // WarpBackgroundAmplitiude
 static s32 D_us_801D3108; // same as WarpBackgroundPhase
 static s32 D_us_801D310C; // same as WarpBackgroundBrightness
-
 void EntityUnkId19(Entity* self) {
     Primitive* prim;
     Primitive* lastPrim;
