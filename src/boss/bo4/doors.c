@@ -4,6 +4,19 @@
 s32 D_us_801805A0 = 0;
 s32 g_stone_flag = 0;
 
+#ifdef VERSION_PSP
+extern s32 E_ID(ID_16);
+extern s32 E_ID(ID_17);
+extern s32 E_ID(ID_19);
+extern s32 E_ID(ID_1A);
+extern s32 E_ID(ID_1C);
+extern s32 E_ID(ID_1D);
+#endif
+
+static s16 D_us_801805A8[] = {0x80, 0x80, 0x100, 0x300, 0x500, 0x700};
+static s16 D_us_801805B4[] = {0xC, 0xC, 0x12, 0x16, 0x20, 0x26};
+static s16 D_us_801805C0[] = {0x100, 0x100, 0xF8, 0xF2, 0xEE, 0xEC};
+
 extern s32 D_us_801D4DF0;
 extern s32 D_us_801D4DF4;
 extern EInit g_EInitInteractable;
@@ -49,16 +62,12 @@ void EntityUnkId18(Entity* self) {
 #ifdef VERSION_PSP
                 g_Player.padSim = PAD_NONE;
 #else
-                g_Player.padSim = PAD_L1;
+                g_Player.padSim = PAD_MIST;
 #endif
             } else if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
-#ifdef VERSION_PSP
-                g_Player.padSim = PAD_L1;
-#else
-                g_Player.padSim = PAD_R2;
-#endif
+                g_Player.padSim = PAD_WOLF;
             } else if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
-                g_Player.padSim = PAD_R1;
+                g_Player.padSim = PAD_BAT;
             } else {
                 g_Player.demo_timer = 0x240;
                 g_Player.padSim = 0;
@@ -162,22 +171,11 @@ void EntityUnkId18(Entity* self) {
     D_us_801D4DF4 = self->posY.i.hi;
 }
 
-// hit during enter sequence
 extern EInit EInitUnk17;
-static s16 D_us_801805A8[] = {
-    0x80, 0x80, 0x100, 0x300, 0x500, 0x700,
-};
-static s16 D_us_801805B4[] = {
-    0xC, 0xC, 0x12, 0x16, 0x20, 0x26,
-};
-static s16 D_us_801805C0[] = {
-    0x100, 0x100, 0xF8, 0xF2, 0xEE, 0xEC,
-};
 static u8 D_us_801805CC[] = {1, 0x62, 0x1, 0x63, 0};
 static u8 D_us_801805D4[] = {1, 0x64, 0x1, 0x65, 0};
 static u8 D_us_801805DC[] = {2, 0x62, 0x2, 0x63, 0};
 static u8 D_us_801805E4[] = {2, 0x64, 0x2, 0x65, 0};
-
 void EntityUnkId17(Entity* self) {
     s32 flag;
     s32 primIndex;
@@ -233,7 +231,6 @@ void EntityUnkId17(Entity* self) {
             self->step++;
         }
         break;
-
     case 2:
         flag = self->params & 0xFF;
         if (flag != 1) {
@@ -247,12 +244,11 @@ void EntityUnkId17(Entity* self) {
             if ((g_Timer & 0xF) == 0) {
                 g_api.PlaySfx(SFX_STONE_MOVE_B);
             }
-            if (!--self->ext.et_801BDA0C.unk9C) {
+            if (--self->ext.et_801BDA0C.unk9C == 0) {
                 self->step++;
             }
         }
         break;
-
     case 3:
         if (g_Timer % 2 == 0) {
             self->palette++;
@@ -266,7 +262,6 @@ void EntityUnkId17(Entity* self) {
             }
         }
         break;
-
     case 4:
         magnitude = self->ext.et_801BDA0C.unk80 / FIX(1);
         xOffset = (rcos(self->rotate - 0x400) * magnitude) >> 0xC;
@@ -300,7 +295,6 @@ void EntityUnkId17(Entity* self) {
             tempEntity->opacity++;
         }
         break;
-
     case 5:
         tempEntity = self + 2;
         if (tempEntity->opacity < 0x80) {
@@ -368,10 +362,8 @@ void EntityUnkId1C(Entity* self) {
 
         if (!(g_Timer & 0xF)) {
             g_api.PlaySfx(SFX_STONE_MOVE_B);
-            return;
         }
         break;
-
     case 2:
         self->posX.i.hi = DISP_STAGE_W - g_Tilemap.scrollX.i.hi;
         if (self->params & 1) {
@@ -497,7 +489,7 @@ void EntityUnkId19(Entity* self) {
 
         prim = self->ext.et_801BE2C8.unk80;
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
-        CreateEntityFromEntity(E_ID_16, self, &DOPPLEGANGER);
+        CreateEntityFromEntity(E_ID(ID_16), self, &DOPPLEGANGER);
         g_api.TimeAttackController(
             TIMEATTACK_EVENT_DOPPLEGANGER_10_DEFEAT, TIMEATTACK_SET_VISITED);
         (self + 1)->ext.et_801BE2C8.unk84 = 1;
@@ -597,15 +589,10 @@ void EntityUnkId19(Entity* self) {
     }
 }
 
-static u16 D_us_8018062C[] = {
-    0x0000, 0x0600, 0x0E00, 0x0100, 0x0800, 0x0A00, 0x0200, 0x0400, 0x0C00, 0,
-};
-static s16 D_us_80180640[] = {
-    4, 8, 13, -24, -20, -12, 21, -12, 2, 0,
-};
-static s16 D_us_80180654[] = {
-    20, 8, 12, 13, 16, 6, 12, 16, 8, 4,
-};
+static s16 D_us_8018062C[] = {
+    0x000, 0x600, 0xE00, 0x100, 0x800, 0xA00, 0x200, 0x400, 0xC00, 0x000};
+static s16 D_us_80180640[] = {4, 8, 13, -24, -20, -12, 21, -12, 2, 0};
+static s16 D_us_80180654[] = {20, 8, 12, 13, 16, 6, 12, 16, 8, 4};
 
 // hit during enter sequence
 // similar to `NO1`'s `func_us_801BE2C8`.
@@ -776,11 +763,10 @@ void EntityUnkId1A(Entity* self) {
         }
         if (g_Player.demo_timer == 0) {
             g_api.FreePrimitives(self->primIndex);
+            self->flags &= ~FLAG_HAS_PRIMS;
             stopMusicFlag = true;
             currentMusicId = MU_FESTIVAL_OF_SERVANTS;
             self->step = 4;
-            self->flags &= ~FLAG_HAS_PRIMS;
-            return;
         }
         break;
     case 4:

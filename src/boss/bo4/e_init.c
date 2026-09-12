@@ -48,7 +48,7 @@ EInit g_EInitBreakable = {ANIMSET_DRA(3), 0, 0x00, 0x000, 0};
 
 #include "../../st/e_init_common.h"
 
-EInit EInitUnk16 = {ANIMSET_DRA(0), 0, 0, 0, 0xFD};
+EInit g_EInitDoppleganger10 = {ANIMSET_DRA(0), 0, 0, 0, 0xFD};
 EInit EInitReboundStone = {ANIMSET_DRA(0), 0, 0, 0, 0x101};
 EInit EInitSubwpnKnife = {ANIMSET_DRA(0), 0, 0, 0, 0x12B};
 EInit D_us_80180434 = {ANIMSET_DRA(0), 0, 0, 0, 0x102};
