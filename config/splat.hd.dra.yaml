@@ -78,9 +78,7 @@ segments:
       - [0x106EE, .data, 84B88]
       - [0x1085C, .data, 8BEF8]
       - [0x108E4, .data, d_10798]
-      - [0x109E8, .data, 8D3E8] # D_800B0924 to D_800B09F8
-      # - [0x10B00, .data, 8D3E8] # D_800B0A3C to D_800B0AEC
-      # - [0x10BF8, .data, 8D3E8] # D_800B0CB4 and D_800B0F94
+      - [0x109E8, .data, 8C600]
       - [0x11140, .data, sound] # aPbav
       # - [0x14140, .data, sound] # aPbav_0
       # - [0x16140, .data, sound] # aPbav_2
@@ -132,7 +130,7 @@ segments:
       - [0x41BD0, .rodata, 7E4BC]
       - [0x41D50, .rodata, 84B88]
       - [0x41DAC, .rodata, 8A0A4]
-      - [0x41DCC, .rodata, 8D3E8]
+      - [0x41DCC, .rodata, 8C600]
       - [0x41F50, .rodata, sound]
       - [0x422B4, c, 42398]
       - [0x44890, c, game_handlers]
@@ -170,7 +168,6 @@ segments:
       - [0x8A528, c, 8A0A4]
       - [0x8BB50, c, 8BEF8]
       - [0x8C28C, c, 8C600]
-      - [0x8D050, c, 8D3E8]
       - [0x91A98, c, sound]
       - [0x95E88, .bss, 42398]
       - [0x95FE8, .bss, game_handlers]
