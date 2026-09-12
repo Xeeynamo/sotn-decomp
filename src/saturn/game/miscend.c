@@ -93,15 +93,10 @@ const char* g_StatusMenuLabelPointers[] = {
     g_StatusMenuElapsedTime,
 };
 
-typedef struct {
-    u8 widthCode;
-    u8 height;
-    u16 coordinateOffset;
-} StatusFaceImageLayout;
+s32 DAT_06085E54 = 0;
 
-StatusFaceImageLayout g_StatusFaceImageLayouts[9] = {
-    {0, 0, 0},  {0, 10, 15}, {0, 11, 16}, {0, 9, 14}, {0, 13, 18},
-    {0, 7, 12}, {0, 8, 13},  {0, 12, 17}, {0, 0, 0},
+u16 DAT_06085E58[][2] = {
+    {10, 15}, {11, 16}, {9, 14}, {13, 18}, {7, 12}, {8, 13}, {12, 17}, {0, 0},
 };
 
 PfnEntityUpdate g_olroxDroolUpdate = EntityOlroxDrool;

@@ -1,10 +1,13 @@
 package sotn
 
 import (
+	"bytes"
 	"fmt"
 	"strings"
 
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
+	"golang.org/x/text/encoding/japanese"
+	"golang.org/x/text/transform"
 )
 
 var psxFontTable = []rune(strings.Join([]string{
@@ -153,6 +156,107 @@ func EncodeString(value string, platform Platform) ([]byte, error) {
 		encoded = append(encoded, index)
 	}
 	return append(encoded, 0xFF), nil
+}
+
+// DecodeMenuDescription decodes the Shift-JIS-compatible C string at addr.
+// PSP European descriptions replace selected accented characters with
+// half-width katakana bytes; those substitutions are reversed for editing.
+func DecodeMenuDescription(
+	data []byte,
+	addr, ramBase psx.Addr,
+	platform Platform,
+) (string, error) {
+	if platform != PlatformPSX && platform != PlatformPSP {
+		return "", fmt.Errorf(
+			"unsupported menu-description platform %q", platform)
+	}
+	if addr < ramBase {
+		return "", fmt.Errorf("pointer %s precedes RAM base %s", addr, ramBase)
+	}
+	offset := addr.Real(ramBase)
+	if offset >= len(data) {
+		return "", fmt.Errorf(
+			"pointer %s resolves outside %#x-byte input", addr, len(data))
+	}
+
+	end := offset
+	for end < len(data) && data[end] != 0 && data[end] != 0xFF {
+		end++
+	}
+	if end == len(data) {
+		return "", fmt.Errorf("unterminated menu description at %s", addr)
+	}
+	raw := data[offset:end]
+	decoded, _, err := transform.Bytes(japanese.ShiftJIS.NewDecoder(), raw)
+	if err != nil {
+		return "", fmt.Errorf(
+			"decode Shift-JIS menu description at %s: %w", addr, err)
+	}
+	value := string(decoded)
+	if platform == PlatformPSP {
+		value = restoreEuropeanDescription(value)
+	}
+
+	roundTrip, err := EncodeMenuDescription(value, platform)
+	if err != nil {
+		return "", fmt.Errorf(
+			"validate menu description at %s: %w", addr, err)
+	}
+	if !bytes.Equal(roundTrip, raw) {
+		return "", fmt.Errorf(
+			"menu description at %s does not round-trip through Shift-JIS",
+			addr)
+	}
+	return value, nil
+}
+
+// EncodeMenuDescription encodes editable menu text to the bytes used by a C
+// string literal. The returned bytes do not include a trailing NUL.
+func EncodeMenuDescription(value string, platform Platform) ([]byte, error) {
+	if platform != PlatformPSX && platform != PlatformPSP {
+		return nil, fmt.Errorf(
+			"unsupported menu-description platform %q", platform)
+	}
+	if platform == PlatformPSP {
+		value = substituteEuropeanDescription(value)
+	}
+	encoded, _, err := transform.Bytes(
+		japanese.ShiftJIS.NewEncoder(), []byte(value))
+	if err != nil {
+		return nil, fmt.Errorf("encode Shift-JIS menu description: %w", err)
+	}
+	return encoded, nil
+}
+
+var europeanDescriptionSubstitutions = map[rune]rune{
+	'ù': '\uFF66', 'û': '\uFF67', 'ü': '\uFF68', 'Œ': '\uFF69', 'œ': '\uFF6A',
+	'¡': '\uFF72', '¿': '\uFF73', 'À': '\uFF74', 'Ä': '\uFF77', 'Ç': '\uFF78',
+	'È': '\uFF79', 'Ö': '\uFF85', 'ß': '\uFF8A', 'à': '\uFF8B', 'á': '\uFF8C',
+	'â': '\uFF8D', 'ä': '\uFF8E', 'ç': '\uFF8F', 'è': '\uFF90', 'é': '\uFF91',
+	'ê': '\uFF92', 'ì': '\uFF94', 'í': '\uFF95', 'î': '\uFF96', 'ñ': '\uFF98',
+	'ò': '\uFF99', 'ó': '\uFF9A', 'ô': '\uFF9B', 'ö': '\uFF9C', 'ú': '\uFF9D',
+}
+
+func substituteEuropeanDescription(value string) string {
+	return strings.Map(func(r rune) rune {
+		if replacement, ok := europeanDescriptionSubstitutions[r]; ok {
+			return replacement
+		}
+		return r
+	}, value)
+}
+
+func restoreEuropeanDescription(value string) string {
+	reversed := make(map[rune]rune, len(europeanDescriptionSubstitutions))
+	for original, replacement := range europeanDescriptionSubstitutions {
+		reversed[replacement] = original
+	}
+	return strings.Map(func(r rune) rune {
+		if original, ok := reversed[r]; ok {
+			return original
+		}
+		return r
+	}, value)
 }
 
 func fontTable(platform Platform) ([]rune, error) {

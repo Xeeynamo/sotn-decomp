@@ -1,5 +1,1 @@
 cluts = 0x8018038C;
-rooms_layers = 0x80180518;
-gfxBanks = 0x801807E0;
-BackgroundBlockInit = 0x80180C9C;
-rooms = 0x801824C4;

@@ -987,7 +987,7 @@ void func_06007D54(void) {
 
     sp.cmd.control = 0x1009;
     sp.raw.dummy[5] = DAT_0605BEC0;
-    if (SpMstCmdPos <= 0x277) {
+    if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(0, &sp.cmd);
         d_0605AEAC += 0x20;
     }
@@ -995,14 +995,14 @@ void func_06007D54(void) {
     sp.cmd.control = 0x1008;
     sp.raw.dummy[3] = ((s32*)d_0605AEA0)[0];
     sp.raw.dummy[5] = ((s32*)d_0605AEA0)[1];
-    if (SpMstCmdPos <= 0x277) {
+    if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(0, &sp.cmd);
         d_0605AEAC += 0x20;
     }
 
     sp.cmd.control = 0x100A;
     sp.raw.dummy[3] = DAT_0600E23C;
-    if (SpMstCmdPos <= 0x277) {
+    if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(0, &sp.cmd);
         d_0605AEAC += 0x20;
     }
