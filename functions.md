@@ -2806,7 +2806,7 @@
 |            | func_pspeu_092444B0               |       41 |          3 |        |       |     |
 | bo2        | GetSideToPlayer                   |       41 |          3 |        |       |     |
 | bo3        | func_pspeu_092444B8               |       41 |          3 |        |       |     |
-| bo4        | GetSideToPlayer                   |       41 |          3 |        |       |     |
+| bo4        | func_pspeu_09244358               |       41 |          3 |        |       |     |
 | bo5        | GetSideToPlayer                   |       41 |          3 |        |       |     |
 | bo6        | GetSideToPlayer                   |       41 |          3 |        |       |     |
 | bo7        | GetSideToPlayer                   |       41 |          3 |        |       |     |
@@ -3155,7 +3155,7 @@
 | rno2       | func_pspeu_092584E8               |       45 |          5 |        |       |     |
 | rnz1       | func_pspeu_0924D7C8               |       45 |          5 |        |       |     |
 | sel        | func_psp_0923BB88                 |       45 |          5 |        |       |     |
-| bo4        | BO4_Load                          |       45 |          6 |        |       |     |
+| bo4        | func_pspeu_092478E8               |       45 |          6 |        |       |     |
 | rbo5       | RBO5_Load                         |       45 |          6 |        |       |     |
 | dra        | func_psp_09117A90                 |       45 |          6 |        |       |     |
 | dra        | func_psp_090F5440                 |       45 |          6 |        |       |     |
@@ -3357,7 +3357,7 @@
 | main       | func_psp_08930290                 |       46 |          9 |        |       |     |
 | main       | strcmp                            |       46 |          9 |        |       |     |
 | main       | func_psp_08912820                 |       46 |         11 |        |       |     |
-| bo4        | InitEntityIds                     |       47 |          1 |        |       |     |
+| bo4        | func_pspeu_09247840               |       47 |          1 |        |       |     |
 | dra        | func_psp_090EDBA0                 |       47 |          1 |        |       |     |
 | main       | sceGuViewport                     |       47 |          1 |        |       |     |
 | cen        | func_pspeu_092608E0               |       47 |          1 |        |       |     |
@@ -4285,7 +4285,7 @@
 |            | func_pspeu_0923A1A8               |       66 |          7 |        |       |     |
 | bo2        | func_pspeu_0923A1A8               |       66 |          7 |        |       |     |
 | bo3        | func_pspeu_0923A1A8               |       66 |          7 |        |       |     |
-| bo4        | EntityIsNearPlayer                |       66 |          7 |        |       |     |
+| bo4        | func_pspeu_0923A1A8               |       66 |          7 |        |       |     |
 | bo5        | func_pspeu_0923A1A8               |       66 |          7 |        |       |     |
 | bo6        | func_pspeu_09239528               |       66 |          7 |        |       |     |
 | bo7        | func_pspeu_0923A1A8               |       66 |          7 |        |       |     |
@@ -4900,7 +4900,7 @@
 |            | func_pspeu_09244098               |       77 |          6 |        |       |     |
 | bo2        | func_pspeu_09244098               |       77 |          6 |        |       |     |
 | bo3        | func_pspeu_092440A0               |       77 |          6 |        |       |     |
-| bo4        | EntityRoomForeground              |       77 |          6 |        |       |     |
+| bo4        | func_pspeu_09243F40               |       77 |          6 |        |       |     |
 | bo5        | func_pspeu_092442E8               |       77 |          6 |        |       |     |
 | bo6        | EntityRoomForeground              |       77 |          6 |        |       |     |
 | bo7        | func_pspeu_09244098               |       77 |          6 |        |       |     |
@@ -5095,7 +5095,7 @@
 | main       | func_psp_0892D030                 |       81 |         13 |        |       |     |
 | ric        | 319C4.rodata                      |       82 |          0 | Yes    |       |     |
 | top        | cutscene.rodata                   |       82 |          0 | Yes    |       |     |
-| rcen       | func_801904B8                     |       82 |          2 |        |       |     |
+| rcen       | func_pspeu_09245250               |       82 |          2 |        |       |     |
 | main       | func_psp_0891B2CC                 |       82 |          4 |        |       |     |
 | main       | func_psp_089254D8                 |       82 |          5 |        |       |     |
 | rbo1       | func_801CDF1C                     |       82 |          6 |        |       |     |
@@ -7091,7 +7091,7 @@
 |            | func_pspeu_0924ABF0               |      165 |         18 |        |       |     |
 | bo2        | func_pspeu_0924CD20               |      165 |         18 |        |       |     |
 | bo3        | func_pspeu_092496B0               |      165 |         18 |        |       |     |
-| bo4        | EntityLockCamera                  |      165 |         18 |        |       |     |
+| bo4        | func_pspeu_09247BE8               |      165 |         18 |        |       |     |
 | bo5        | func_pspeu_0924FDB0               |      165 |         18 |        |       |     |
 | bo6        | EntityLockCamera                  |      165 |         18 |        |       |     |
 | bo7        | func_pspeu_09248668               |      165 |         18 |        |       |     |
@@ -8936,7 +8936,7 @@
 | dra        | func_psp_09121970                 |      443 |         38 |        |       |     |
 | ric        | func_pspeu_092B4758               |      445 |         51 |        |       |     |
 | ric        | func_pspeu_092A9840               |      445 |         51 | Yes    |       |     |
-| rcen       | func_us_8019FE9C                  |      446 |         55 |        |       |     |
+| rcen       | func_pspeu_09245380               |      446 |         55 |        |       |     |
 |            | func_092EAE98                     |      446 |         58 | Yes    |       |     |
 | tt_006     | func_pspeu_092EAE98               |      446 |         58 | Yes    |       |     |
 |            | func_092E7DB8                     |      448 |         26 |        |       |     |
@@ -9925,7 +9925,7 @@
 |            | func_pspeu_0923A290               |     1247 |        112 | Yes    |       |     |
 | bo2        | func_pspeu_0923A290               |     1247 |        112 | Yes    |       |     |
 | bo3        | func_pspeu_0923A290               |     1247 |        112 | Yes    |       |     |
-| bo4        | EntityRedDoor                     |     1247 |        112 | Yes    |       |     |
+| bo4        | func_pspeu_0923A290               |     1247 |        112 | Yes    |       |     |
 | bo5        | func_pspeu_0923A290               |     1247 |        112 | Yes    |       |     |
 | bo6        | EntityRedDoor                     |     1247 |        112 | Yes    |       |     |
 | bo7        | func_pspeu_0923A290               |     1247 |        112 | Yes    |       |     |
