@@ -170,9 +170,7 @@ void EntityFallingStairs(Entity* self) {
             g_Tilemap.fg[*pDstTileIdx] = 0;
         }
 
-        g_api.ShakeCamera(
-            SHAKE_Y_SMALL); // Not sure what this does.
-                            // Removal doesn't make an obvious difference
+        g_api.ShakeCamera(SHAKE_Y_SMALL);
         g_api.PlaySfx(SFX_WALL_DEBRIS_B);
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
 
