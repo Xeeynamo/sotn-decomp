@@ -5,13 +5,6 @@
 #define FADE_DONE (-1)
 
 typedef struct {
-    u16 start;
-    s16 current;
-    s16* coords;
-    s16 unk8;
-} Unkstruct_80102CD8;
-
-typedef struct {
     s32 fadePrim; // four square on top of everything to make the fade working
     s32 mapPrim;  // map texture when pressing the SELECT button
     s32 step;
@@ -20,7 +13,6 @@ typedef struct {
 
 // BSS
 static FadeProps fade;
-static Unkstruct_80102CD8 D_801379AC;
 
 #define COORD_TERMINATOR 0x7FFF
 
@@ -299,6 +291,13 @@ void UpdateFade(bool skipFollowup) {
         }
     }
 }
+
+static struct {
+    u16 start;
+    s16 current;
+    s16* coords;
+    s16 unk8;
+} D_801379AC;
 
 void func_80102CD8(s32 start) {
     D_801379AC.start = start;
