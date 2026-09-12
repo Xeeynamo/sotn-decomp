@@ -21,10 +21,12 @@ typedef enum EntityID {
     /* 0x0C */ E_PERSISTENT_ITEM_DROP,
     /* 0x0D */ E_ENEMY_BLOOD,
     /* 0x0E */ E_MESSAGE_BOX,
-    /* 0x0F */ E_ID_13,
+    /* 0x0F */ E_ID_0F,
     /* 0x10 */ E_ID_10,
-
-    /* 0x14 */ E_EXPLOSION_VARIANTS = 0x14,
+    /* 0x11 */ E_BACKGROUND_BLOCK,
+    /* 0x12 */ E_LOCK_CAMERA,
+    /* 0x13 */ E_ID_13,
+    /* 0x14 */ E_EXPLOSION_VARIANTS,
     /* 0x15 */ E_GREY_PUFF,
     /* 0x16 */ E_ID_16,
     /* 0x17 */ E_ID_17,
@@ -36,12 +38,12 @@ typedef enum EntityID {
     /* 0x1D */ E_ID_1D,
     /* 0x1E */ E_ID_1E,
     /* 0x1F */ E_ID_1F,
-
-    /* 0x20 */ E_ID_20 = 0x20,
+    /* 0x20 */ E_ID_20,
     /* 0x21 */ E_ID_21,
-    /* 0x22 */ E_MIST = 0x22,
+    /* 0x22 */ E_MIST,
     /* 0x23 */ E_ID_23,
     /* 0x24 */ E_ID_24,
+
     /* 0x2F */ E_ID_2F = 0x2F,
 
     /* 0x36 */ E_ID_36 = 0x36,

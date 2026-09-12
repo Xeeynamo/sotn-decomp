@@ -825,7 +825,7 @@ static void DopplegangerThinking(void) {
     }
 }
 
-extern EInit EInitUnk16;
+extern EInit g_EInitDoppleganger10;
 
 void EntityUnkId16(Entity* self) {
     s32 i;
@@ -834,7 +834,7 @@ void EntityUnkId16(Entity* self) {
 
     g_Dop.unk6A = DOPPLEGANGER.hitPoints;
     if (self->step == 0) {
-        InitializeEntity(EInitUnk16);
+        InitializeEntity(g_EInitDoppleganger10);
         func_us_801C1A38();
 
         entity = &g_Entities[STAGE_ENTITY_START + 4];

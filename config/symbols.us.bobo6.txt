@@ -43,7 +43,6 @@ RicStepCrouch = 0x801B74DC;
 RicResetPose = 0x801B779C;
 RicStepHit = 0x801B7818;
 RicStepDead = 0x801B7E80;
-RicStepStandInAir = 0x801B8540;
 RicStepEnableFlameWhip = 0x801B85DC;
 RicStepThrowDaggers = 0x801B86EC;
 RicStepSlide = 0x801B87B4;
