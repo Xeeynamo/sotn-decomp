@@ -14,26 +14,6 @@ typedef struct {
 // BSS
 static FadeProps fade;
 
-#define COORD_TERMINATOR 0x7FFF
-
-static s16 D_800A3134[] = {
-    3, -3, 2, -2, 1, -1, COORD_TERMINATOR,
-};
-static s16 D_800A3144[] = {
-    3, -3, 3, -3, 2, -2, 2, -2, 1, -1, 1, -1, COORD_TERMINATOR,
-};
-static s16 D_800A3160[] = {
-    +6, -6, +6, -6, +5,
-    -5, +5, -5, +4, -4,
-    +4, -4, +3, -3, +3,
-    -3, +2, -2, +2, -2,
-    +1, -1, +1, -1, COORD_TERMINATOR,
-};
-static s16* D_800A3194[] = {
-    D_800A3134, D_800A3134, D_800A3144, D_800A3134,
-    D_800A3144, D_800A3144, D_800A3160,
-};
-
 void InitFade(void) {
     Primitive* prim;
     s32 x;
@@ -299,6 +279,26 @@ static struct {
     s16 unk8;
 } D_801379AC;
 
+#define COORD_TERMINATOR 0x7FFF
+
+static s16 D_800A3134[] = {
+    3, -3, 2, -2, 1, -1, COORD_TERMINATOR,
+};
+static s16 D_800A3144[] = {
+    3, -3, 3, -3, 2, -2, 2, -2, 1, -1, 1, -1, COORD_TERMINATOR,
+};
+static s16 D_800A3160[] = {
+    +6, -6, +6, -6, +5,
+    -5, +5, -5, +4, -4,
+    +4, -4, +3, -3, +3,
+    -3, +2, -2, +2, -2,
+    +1, -1, +1, -1, COORD_TERMINATOR,
+};
+static s16* D_800A3194[] = {
+    D_800A3134, D_800A3134, D_800A3144, D_800A3134,
+    D_800A3144, D_800A3144, D_800A3160,
+};
+
 void func_80102CD8(s32 start) {
     D_801379AC.start = start;
     D_801379AC.current = 0;
@@ -320,7 +320,7 @@ void func_80102D70(void) {
         break;
     case 1:
         func_80102D08();
-        g_backbufferY = D_801379AC.unk8;
+        g_cameraOffsetY = D_801379AC.unk8;
         break;
     case 2:
         func_80102D08();
@@ -328,17 +328,17 @@ void func_80102D70(void) {
         break;
     case 3:
         func_80102D08();
-        g_backbufferY = D_801379AC.unk8;
+        g_cameraOffsetY = D_801379AC.unk8;
         break;
     case 4:
         func_80102D08();
-        g_backbufferY = D_801379AC.unk8;
+        g_cameraOffsetY = D_801379AC.unk8;
         break;
     case 5:
         break;
     case 6:
         func_80102D08();
-        g_backbufferY = D_801379AC.unk8;
+        g_cameraOffsetY = D_801379AC.unk8;
         break;
     }
 }

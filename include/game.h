@@ -2133,7 +2133,7 @@ extern GAME_IMPORT Point32 D_8006C38C;
 extern GAME_IMPORT u32 g_CdStep; // CdStep
 extern GAME_IMPORT s32 D_8006C3AC;
 extern GAME_IMPORT s32 g_cameraOffsetX;
-extern GAME_IMPORT s32 g_backbufferY;
+extern GAME_IMPORT s32 g_cameraOffsetY;
 extern GAME_IMPORT s32 g_IsUsingCd;
 extern GAME_IMPORT Entity* g_CurrentEntity;
 extern GAME_IMPORT Unkstruct_8006C3C4 D_8006C3C4[32];
