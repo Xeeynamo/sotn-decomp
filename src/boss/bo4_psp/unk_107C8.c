@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../bo4/bo4.h"
 
-INCLUDE_ASM("boss/bo4_psp/nonmatchings/bo4_psp/unk_107C8", func_us_801C0B9C_from_no1);
+INCLUDE_ASM("boss/bo4_psp/nonmatchings/bo4_psp/unk_107C8", EntityUnkId1B);
 
 INCLUDE_ASM("boss/bo4_psp/nonmatchings/bo4_psp/unk_107C8", MarGetFreeEntity);
 
@@ -59,7 +59,7 @@ INCLUDE_ASM("boss/bo4_psp/nonmatchings/bo4_psp/unk_107C8", func_pspeu_09246210_f
 
 INCLUDE_ASM("boss/bo4_psp/nonmatchings/bo4_psp/unk_107C8", func_pspeu_09254448);
 
-INCLUDE_ASM("boss/bo4_psp/nonmatchings/bo4_psp/unk_107C8", func_pspeu_09255070);
+INCLUDE_ASM("boss/bo4_psp/nonmatchings/bo4_psp/unk_107C8", EntityUnkId16);
 
 INCLUDE_ASM("boss/bo4_psp/nonmatchings/bo4_psp/unk_107C8", func_pspeu_09248828_from_rbo5);
 
