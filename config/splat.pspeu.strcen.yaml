@@ -58,7 +58,7 @@ segments:
       - [0xCF80, c, rcen/prim_helpers]
       - [0xD6C0, c, rcen/st_init_psp]
       - [0xDA50, c, rcen/e_breakable]
-      - [0xDBD0, c, rcen_psp/e_elevator]
+      - [0xDBD0, c, rcen/e_elevator]
       - [0xE520, c, rcen/cutscene]
       - [0x11188, c, rcen/e_room_bg]
       - [0x11298, c, rcen_psp/unk_2BD24]
@@ -80,7 +80,7 @@ segments:
       - [0x1C420, .data, rcen/e_breakable]
       - [0x1C470, data]
       - [0x314C8, .data, rcen/header]
-      - [0x31508, data, rcen_psp/e_elevator]
+      - [0x31508, .data, rcen/e_elevator]
       - [0x31538, .data, rcen/cutscene]
       - [0x31900, data] # background_block_init
       - [0x31A10, .data, rcen/e_lock_camera]
