@@ -74,7 +74,6 @@
 | alucard/f_nonmat/f60AF4B8.s  | func_060AF4B8   |       89 |          7 |       |     |
 | maria/f_nonmat/f60BABE0.s    | func_060BABE0   |       89 |         15 |       |     |
 | zero/f_nonmat/f6009F84.s     | func_06009F84   |       93 |          4 |       |     |
-| game/f_nonmat/f6079008.s     | func_06079008   |       94 |          3 |       |     |
 | alucard/f_nonmat/f60A5938.s  | func_060A5938   |       94 |          5 |       |     |
 | zero/f_nonmat/f6008374.s     | func_06008374   |       94 |         11 |       |     |
 | zero/f_nonmat/f6008048.s     | func_06008048   |       95 |          4 |       |     |
