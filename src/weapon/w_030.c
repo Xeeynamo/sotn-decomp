@@ -521,7 +521,7 @@ void func_ptr_80170008(Entity* self) {
         if (a0 == 1) {
             self->ext.weapon_030.unkA4 = 3;
         }
-        g_api.func_80102CD8(4);
+        g_api.ShakeCamera(SHAKE_Y_MEDIUM);
         g_api.PlaySfx(SFX_EXPLODE_A);
         self->step++;
         break;

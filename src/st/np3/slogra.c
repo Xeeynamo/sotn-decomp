@@ -361,7 +361,7 @@ void EntitySlogra(Entity* self) {
             AnimateEntity(animation, self);
 
             if (UnkCollisionFunc3(sensors1) & 1) {
-                g_api.func_80102CD8(1);
+                g_api.ShakeCamera(SHAKE_Y_SMALL);
                 self->ext.GS_Props.timer = 16;
                 self->step_s++;
             }

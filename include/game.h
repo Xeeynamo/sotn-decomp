@@ -1630,12 +1630,22 @@ typedef struct {
     u32 unkC;
 } DamageParam;
 
+typedef enum {
+    SHAKE_NONE,
+    SHAKE_Y_SMALL,
+    SHAKE_X_MEDIUM,
+    SHAKE_Y_SMALL2,
+    SHAKE_Y_MEDIUM,
+    SHAKE_5_NULL,
+    SHAKE_Y_HEAVY
+} cameraShakeTypes;
+
 typedef struct {
     /* 8003C774 */ Overlay o;
     /* 8003C7B4 */ void (*FreePrimitives)(s32);
     /* 8003C7B8 */ s16 (*AllocPrimitives)(PrimitiveType type, s32 count);
     /* 8003C7BC */ void (*CheckCollision)(s32 x, s32 y, Collider* res, s32 unk);
-    /* 8003C7C0 */ void (*func_80102CD8)(s32 arg0);
+    /* 8003C7C0 */ void (*ShakeCamera)(cameraShakeTypes arg0);
     /* 8003C7C4 */ u32 (*UpdateAnim)(
         FrameProperty* frameProps, AnimationFrame** anims);
     /* 8003C7C8 */ void (*SetSpeedX)(s32 value);
@@ -1756,7 +1766,7 @@ extern GAME_IMPORT u8* g_PlOvlSpritesheet[];
 extern void (*g_api_FreePrimitives)(s32);
 extern s16 (*g_api_AllocPrimitives)(PrimitiveType type, s32 count);
 extern void (*g_api_CheckCollision)(s32 x, s32 y, Collider* res, s32 unk);
-extern void (*g_api_func_80102CD8)(s32 arg0);
+extern void (*g_api_ShakeCamera)(s32 arg0);
 extern void (*g_api_UpdateAnim)(
     FrameProperty* frameProps, AnimationFrame** anims);
 extern void (*g_api_SetSpeedX)(s32 value);
@@ -2132,8 +2142,8 @@ extern GAME_IMPORT Point32 D_8006C384;
 extern GAME_IMPORT Point32 D_8006C38C;
 extern GAME_IMPORT u32 g_CdStep; // CdStep
 extern GAME_IMPORT s32 D_8006C3AC;
-extern GAME_IMPORT s32 g_backbufferX;
-extern GAME_IMPORT s32 g_backbufferY;
+extern GAME_IMPORT s32 g_cameraOffsetX;
+extern GAME_IMPORT s32 g_cameraOffsetY;
 extern GAME_IMPORT s32 g_IsUsingCd;
 extern GAME_IMPORT Entity* g_CurrentEntity;
 extern GAME_IMPORT Unkstruct_8006C3C4 D_8006C3C4[32];

@@ -389,22 +389,22 @@ void EntityStoneDoor(Entity* self) {
             }
 #endif
 #ifndef STAGE_IS_MAR
-            g_backbufferY = 1;
+            g_cameraOffsetY = 1;
 #else
             if (self->ext.stoneDoor.unk80 % 2) {
-                g_backbufferY = 1;
+                g_cameraOffsetY = 1;
             } else {
-                g_backbufferY = 0;
+                g_cameraOffsetY = 0;
             }
 #endif
         } else {
-            g_backbufferY = 0;
+            g_cameraOffsetY = 0;
         }
 
         if (self->ext.stoneDoor.unk80 > 96) {
             UpdateStoneDoorTiles(false);
             self->step--;
-            g_backbufferY = 0;
+            g_cameraOffsetY = 0;
         }
         break;
     }

@@ -151,7 +151,7 @@ void EntityWeaponAttack(Entity* self) {
         if (--self->ext.weapon_047.unk7C == 0) {
             self->ext.weapon_047.unk7C = 0x28;
             if (self->flags & FLAG_HAS_PRIMS) {
-                g_api.func_80102CD8(6);
+                g_api.ShakeCamera(SHAKE_Y_HEAVY);
                 self->step++;
 
                 prim = &g_PrimBuf[self->primIndex];

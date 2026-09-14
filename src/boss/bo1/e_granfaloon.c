@@ -159,7 +159,7 @@ void EntityGranfaloon(Entity* self) {
             MoveEntity();
             if (!(g_Timer & 0xF)) {
                 PlaySfxPositional(SFX_GRANFALOON_APPEAR);
-                g_api.func_80102CD8(1);
+                g_api.ShakeCamera(SHAKE_Y_SMALL);
             }
             y = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
             FntPrint("y %x\n", y);
