@@ -295,14 +295,16 @@ s32 func_060A6314(s16 subwpnId, s16 limit) {
     }
     return -1;
 }
+
 // CheckChainLimit
 s32 func_060A637C(s32 itemId, s32 handId) {
     Entity* entity;
     s32 existing_count;
     s32 i;
     s32 chainLimit;
+    Equipment* eDef = &g_EquipDefs[itemId];
 
-    chainLimit = DAT_0607C266[itemId * 0x34];
+    chainLimit = eDef->chainLimit;
     if (chainLimit & 0x80) {
         if (!(g_Player.unk46 & 0x8000)) {
             return 0;
@@ -332,8 +334,10 @@ s32 func_060A637C(s32 itemId, s32 handId) {
     }
     return 0;
 }
+
 // func_8010EB5C on PSX
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A6420, func_060A6420);
+
 // func_8010ED54 on PSX
 void func_060A6618(u8 arg0) {
     PLAYER.velocityY = 0;
@@ -343,6 +347,7 @@ void func_060A6618(u8 arg0) {
     func_060BAF44(g_CurrentEntity, 0x14003D, 0);
     g_Player.unk48 = 0;
 }
+
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A6688, func_060A6688);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A66FC, func_060A66FC);
 // func_8010EDB8 on PSX

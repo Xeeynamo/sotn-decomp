@@ -139,7 +139,6 @@ extern EntryS060CE980 DAT_060CE980[];
 extern EntryS060CE980 DAT_060CEA70[];
 extern EntryS060CE980 DAT_060CEA80[];
 extern AnimationFrame AlucardFrames[];
-extern u8 DAT_0607C266[];
 extern s8 DAT_060CC9BC;
 extern Rec060CC9BD DAT_060CC9BD[];
 extern s32 DAT_060CE4F0[];
