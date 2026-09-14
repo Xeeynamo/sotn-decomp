@@ -378,7 +378,7 @@ void EntityLaserAttack(Entity* self) {
         if (prim->y0 >= prim->y2) {
             prim->drawMode = DRAW_HIDE | DRAW_UNK02;
             g_api.func_800EA5AC(1U, 0xD0U, 0xC0U, 0xC0U);
-            g_api.func_80102CD8(1);
+            g_api.ShakeCamera(SHAKE_Y_SMALL);
             g_api.PlaySfx(SFX_FIREBALL_SHOT_A);
             self->step++;
         }

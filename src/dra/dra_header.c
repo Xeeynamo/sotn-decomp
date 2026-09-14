@@ -9,7 +9,7 @@ extern RelicDesc g_RelicDefs[];
 void FreePrimitives(s32 primitiveIndex);
 s16 AllocPrimitives(PrimitiveType primType, s32 count);
 void CheckCollision(s32 x, s32 y, Collider* res, s32 unk);
-void func_80102CD8(s32 start);
+void ShakeCamera(cameraShakeTypes type);
 u32 UpdateAnim(FrameProperty* frameProps, AnimationFrame** anims);
 void SetSpeedX(s32 speed);
 Entity* GetFreeEntity(s16 start, s16 end);
@@ -80,7 +80,7 @@ GameApi g_ApiInit = {
     FreePrimitives,
     AllocPrimitives,
     CheckCollision,
-    func_80102CD8,
+    ShakeCamera,
     UpdateAnim,
     SetSpeedX,
     GetFreeEntity,

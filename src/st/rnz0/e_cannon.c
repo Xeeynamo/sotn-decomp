@@ -156,7 +156,7 @@ void EntityCannonShot(Entity* self) {
         MoveEntity();
         distance = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
         if (distance < 112) {
-            g_api.func_80102CD8(1);
+            g_api.ShakeCamera(SHAKE_Y_SMALL);
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, newEntity);

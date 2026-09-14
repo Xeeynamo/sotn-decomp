@@ -180,8 +180,8 @@ void RenderEntities(void) {
             continue;
         }
         r->flipX = entity->facingLeft << 1;
-        r->x = entity->posX.i.hi + g_backbufferX;
-        r->y = entity->posY.i.hi + g_backbufferY;
+        r->x = entity->posX.i.hi + g_cameraOffsetX;
+        r->y = entity->posY.i.hi + g_cameraOffsetY;
         if (r->x < -512 || r->x > 512 || r->y < -512 || r->y > 512) {
             continue;
         }
@@ -676,8 +676,8 @@ void RenderEntitiesPSP(void) {
             continue;
         }
         r->flipX = entity->facingLeft << 1;
-        r->x = entity->posX.i.hi + g_backbufferX;
-        r->y = entity->posY.i.hi + g_backbufferY;
+        r->x = entity->posX.i.hi + g_cameraOffsetX;
+        r->y = entity->posY.i.hi + g_cameraOffsetY;
         if (r->x < -512 || r->x > 512 || r->y < -512 || r->y > 512) {
             continue;
         }

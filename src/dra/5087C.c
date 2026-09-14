@@ -1273,8 +1273,8 @@ void RunMainEngine(void) {
         if (g_StageId == STAGE_MAD) {
             g_api.o.StageEndCutScene();
         }
-        g_backbufferX = 0;
-        g_backbufferY = 0;
+        g_cameraOffsetX = 0;
+        g_cameraOffsetY = 0;
         func_800F14CC();
         LoadRoomLayer(D_801375BC.def->tileLayoutId);
         if (D_8003C708.flags & FLAG_UNK_20) {
@@ -1587,7 +1587,7 @@ void RunMainEngine(void) {
                 }
             }
         }
-        func_80102D70();
+        UpdateCameraShake();
         UpdateFade(false);
         DrawHudSubweapon();
         func_800E414C();
@@ -1702,7 +1702,7 @@ void RunMainEngine(void) {
             g_GameEngineStep = Engine_Normal;
         }
         g_api.o.UpdateStageEntities();
-        func_80102D70();
+        UpdateCameraShake();
         UpdateFade(true);
         break;
     case Engine_3:
@@ -1924,23 +1924,23 @@ void RunMainEngine(void) {
                             UpdatePlayerEntities();
                         }
                         g_api.o.UpdateStageEntities();
-                        func_80102D70();
+                        UpdateCameraShake();
                     }
 #if defined(VERSION_PSP)
                 } else if (g_PlayableCharacter == PLAYER_RICHTER) {
                     g_api.o.UpdateStageEntities();
-                    func_80102D70();
+                    UpdateCameraShake();
                 } else if (g_unkGraphicsStruct.unk28 == 0x100) {
                     RichterUpdater = g_PlOvl.D_8013C000;
                     RichterUpdater();
                     RichterUpdater = D_psp_08CE9C48;
                     RichterUpdater();
                     g_api.o.UpdateStageEntities();
-                    func_80102D70();
+                    UpdateCameraShake();
 #endif
                 } else {
                     g_api.o.UpdateStageEntities();
-                    func_80102D70();
+                    UpdateCameraShake();
                 }
             } else {
                 D_8013759C = PLAYER.posX.i.hi;

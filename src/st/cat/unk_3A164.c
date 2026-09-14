@@ -129,7 +129,7 @@ void func_us_801BA388(Entity* self) {
             self->velocityY /= 4;
             if (!(D_us_80181680 & 0x10)) {
                 D_us_80181680 |= 0x10;
-                g_api.func_80102CD8(1);
+                g_api.ShakeCamera(SHAKE_Y_SMALL);
             }
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {

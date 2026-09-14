@@ -811,7 +811,7 @@ s32 HandleDamage(DamageParam*, s32, s32 amount, s32);
 s32 HandleTransformationMP(TransformationForm, CallMode);
 void ClearStatBuff(s32 arg0);
 s32 func_801025F4(void);
-void func_80102CD8(s32);
+void ShakeCamera(cameraShakeTypes);
 Entity* GetFreeEntity(s16 start, s16 end);
 Entity* GetFreeEntityReverse(s16 start, s16 end);
 void DestroyEntitiesFromIndex(s16 startIndex);

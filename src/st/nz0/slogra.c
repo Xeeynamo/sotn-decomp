@@ -412,7 +412,7 @@ void EntitySlogra(Entity* self) {
             if (posY > 416) {
                 self->posY.i.hi = 416 - g_Tilemap.scrollY.i.hi;
                 PlaySfxPositional(SFX_DOOR_CLOSE_A); // Slogra Floor Stomp
-                g_api.func_80102CD8(1);
+                g_api.ShakeCamera(SHAKE_Y_SMALL);
                 self->ext.GS_Props.timer = 16;
                 self->step_s++;
             }

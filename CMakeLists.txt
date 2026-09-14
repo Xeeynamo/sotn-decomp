@@ -204,8 +204,7 @@ set(SOURCE_FILES_DRA
     src/dra/84B88.c
     src/dra/8A0A4.c
     src/dra/8BEF8.c
-    src/dra/8C600.c
-    src/dra/8D3E8.c
+    src/dra/wolfForm.c
     src/dra/sound.c
     src/dra/sound_data.c
     src/dra/d_2217C.c

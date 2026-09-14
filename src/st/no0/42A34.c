@@ -109,12 +109,12 @@ void func_us_801C2CD8(Entity* self) {
     case 2:
         var = self->ext.timer.t++;
         if (var & 1) {
-            g_backbufferY = 1;
+            g_cameraOffsetY = 1;
         } else {
-            g_backbufferY = -1;
+            g_cameraOffsetY = -1;
         }
         if (var > 64) {
-            g_backbufferY = 0;
+            g_cameraOffsetY = 0;
             self->step++;
         }
         break;

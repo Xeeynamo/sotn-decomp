@@ -46,8 +46,8 @@ void DrawEntitiesHitbox(s32 drawMode) {
             break;
         }
 
-        x = entity->posX.i.hi + g_backbufferX;
-        y = entity->posY.i.hi + g_backbufferY;
+        x = entity->posX.i.hi + g_cameraOffsetX;
+        y = entity->posY.i.hi + g_cameraOffsetY;
         if (entity->facingLeft) {
             x -= entity->hitboxOffX;
         } else {
@@ -80,8 +80,8 @@ void DrawEntitiesHitbox(s32 drawMode) {
             break;
         }
 
-        x = entity->posX.i.hi + g_backbufferX;
-        y = entity->posY.i.hi + g_backbufferY;
+        x = entity->posX.i.hi + g_cameraOffsetX;
+        y = entity->posY.i.hi + g_cameraOffsetY;
         if (entity->facingLeft) {
             x -= entity->hitboxOffX;
         } else {
