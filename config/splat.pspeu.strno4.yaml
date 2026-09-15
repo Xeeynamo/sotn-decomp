@@ -49,7 +49,6 @@ segments:
       - [0x3B78, c, rno4_psp/unk_3B78]
       - [0x7280, c, rno4/e_stage_name]
       - [0x8100, c, rno4_psp/e_red_door]
-      - [0x81E8, c, rno4_psp/e_red_door]
       - [0x9408, c, rno4/st_update]
       - [0x9940, c, rno4_psp/unk_9940]
       - [0xAFF0, c, rno4_psp/e_particles]
