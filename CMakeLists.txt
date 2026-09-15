@@ -836,6 +836,7 @@ set(SOURCE_FILES_STAGE_RNO0
 set(SOURCE_FILES_STAGE_RNO4
     src/pc/stages/stage_rno4.c
     src/st/rno4/create_entity.c
+    src/st/rno4/layers.c
     src/st/rno4/e_red_door.c
     src/st/rno4/e_red_door_tiles.c
     src/st/rno4/e_room_fg.c
