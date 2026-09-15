@@ -7,16 +7,15 @@
 
 void func_06019074(s8* arg0, u8 arg1) {
     BottomCornerText text;
-    s32 prims;
 
     func_06019560(arg0, text.data, &text.unk40, &text.primitiveCount);
-    prims = AllocPrimitives(0, text.primitiveCount + 4);
-    g_unkGraphicsStruct.BottomCornerTextPrims = prims;
-    if (prims != -1) {
+    g_unkGraphicsStruct.BottomCornerTextPrims = AllocPrimitives(0, text.primitiveCount + 4);
+    if (g_unkGraphicsStruct.BottomCornerTextPrims != -1) {
         func_060190D8(text.unk40, text.data, arg1);
         g_unkGraphicsStruct.BottomCornerTextTimer = 0x130;
     }
 }
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60190D8, func_060190D8);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6019560, func_06019560);
 
@@ -27,6 +26,7 @@ void func_060195F0(void) {
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601960C, func_0601960C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601972C, func_0601972C);
+
 u16 func_060198F4(u16 arg0) {
     SaturnFontGlyphMapping* glyph;
     u16* mapped;
@@ -49,6 +49,7 @@ u16 func_060198F4(u16 arg0) {
     }
     return result;
 }
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601992C, func_0601992C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60199F8, func_060199F8);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6019A7C, func_06019A7C);
