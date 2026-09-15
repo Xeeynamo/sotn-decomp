@@ -819,15 +819,13 @@ void func_06006E4C(s8* path, s8* dst) {
     s32 i;
 
     lastSlash = -1;
-    i = 0;
-    do {
+    for (i = 0; i < 0x3F; i++) {
         if (path[i] == '\\') {
             lastSlash = i;
         } else if (path[i] == 0) {
             break;
         }
-        i++;
-    } while (i <= 0x3E);
+    }
 
     lastSlash++;
     for (i = 0; i < lastSlash; i++) {
@@ -1056,38 +1054,33 @@ void ResetSpriteVram() {
     d_06038dbc = 0;
 }
 
-typedef union {
-    SprSpCmd cmd;
-    SprSpCmdR raw;
-} SprCmdBuf;
-
 extern u16 d_0605AEA0[4];
 extern SprSpCmd DAT_06050684[];
 
 void func_06007D54(void) {
-    SprCmdBuf sp;
+    SprSpCmd cmd;
 
     SPR_2OpenCommand(1);
 
-    sp.cmd.control = 0x1009;
-    sp.raw.dummy[5] = DAT_0605BEC0;
+    cmd.control = 0x1009;
+    LOW(cmd.cx) = DAT_0605BEC0;
     if (SpMstCmdPos < 0x278) {
-        SPR_2Cmd(0, &sp.cmd);
+        SPR_2Cmd(0, &cmd);
         d_0605AEAC += 0x20;
     }
 
-    sp.cmd.control = 0x1008;
-    sp.raw.dummy[3] = ((s32*)d_0605AEA0)[0];
-    sp.raw.dummy[5] = ((s32*)d_0605AEA0)[1];
+    cmd.control = 0x1008;
+    LOW(cmd.ax) = ((s32*)d_0605AEA0)[0];
+    LOW(cmd.cx) = ((s32*)d_0605AEA0)[1];
     if (SpMstCmdPos < 0x278) {
-        SPR_2Cmd(0, &sp.cmd);
+        SPR_2Cmd(0, &cmd);
         d_0605AEAC += 0x20;
     }
 
-    sp.cmd.control = 0x100A;
-    sp.raw.dummy[3] = DAT_0600E23C;
+    cmd.control = 0x100A;
+    LOW(cmd.ax) = DAT_0600E23C;
     if (SpMstCmdPos < 0x278) {
-        SPR_2Cmd(0, &sp.cmd);
+        SPR_2Cmd(0, &cmd);
         d_0605AEAC += 0x20;
     }
 
