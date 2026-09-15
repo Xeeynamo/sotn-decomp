@@ -89,7 +89,6 @@ SetSubStep = 0x801CE25C;
 InitializeEntity = 0x801CE30C;
 UnkCollisionFunc = 0x801CE430;
 CheckFieldCollision = 0x801CE558;
-GetPlayerCollisionWith = 0x801CE6B0;
 ReplaceBreakableWithItemDrop = 0x801CE9F4;
 EntityExplosion = 0x801CF890;
 func_pspeu_0924B480 = 0x801D2ED0;
