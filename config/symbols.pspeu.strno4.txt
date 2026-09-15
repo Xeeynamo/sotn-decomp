@@ -178,7 +178,6 @@ g_ExplosionVariantFrames = 0x0929B008;
 g_ExplosionVariantDurations = 0x0929B010;
 g_WaterSounds = 0x0929B058;
 g_WaterXTbl = 0x0929B060;
-BackgroundBlockInit = 0x0929B268;
 g_BreakableCrystalFloorTiles = 0x0929B378;
 g_FloatingIcePlatformHitbox = 0x0929B940;
 D_psp_E_KILLER_FISH_DEATH_PUFF = 0x0929BC38;

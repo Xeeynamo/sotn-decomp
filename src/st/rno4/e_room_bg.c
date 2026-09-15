@@ -24,5 +24,4 @@ ObjInit2 BackgroundBlockInit[] = {
      .animFrames = AnimFrames_80180CF8},
 };
 
-
 #include "../e_room_bg.h"

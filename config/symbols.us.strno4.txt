@@ -11,7 +11,6 @@ g_EInitBombKnight = 0x80180BB4;
 g_EInitRockKnight = 0x80180BC0;
 g_EInitJackOBones = 0x80180BF0;
 g_EInitImp = 0x80180C2C;
-BackgroundBlockInit = 0x80180C78;
 g_FloatingIcePlatformHitbox = 0x801814DC;
 g_GreyPuffScale = 0x80181670;
 g_GreyPuffVelocity = 0x80181680;
