@@ -327,7 +327,7 @@ void func_06004A10(void) {
 
     i = 0;
     ptr = &DAT_06057F50;
-    for (; i <= 9; i++) {
+    for (; i < 10; i++) {
         *ptr++ = 0;
     }
 
