@@ -1339,9 +1339,8 @@ files:
         assets:
           - [0x40, sprite_banks, sprite_banks]
           - [0xA0, paldef, palette_def]
-          - [0x124, skip]
-          - [0x134, layers, layers]
-          - [0x960, skip]
+          - [0x124, layers, layers]
+          - [0x664, skip]
           - [0x2C00, rooms, rooms]
           - [0x2D58, skip]
           - [0x10AE4, palette, D_80190AE4, 16]
