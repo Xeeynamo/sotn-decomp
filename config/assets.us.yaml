@@ -1338,10 +1338,23 @@ files:
         vram: 0x80180000
         assets:
           - [0x40, sprite_banks, sprite_banks]
+          - [0xA0, paldef, palette_def]
+          - [0x124, skip]
           - [0x134, layers, layers]
           - [0x960, skip]
           - [0x2C00, rooms, rooms]
           - [0x2D58, skip]
+          - [0x10AE4, palette, D_80190AE4, 16]
+          - [0x10DA4, palette, D_80190DA4, 16]
+          - [0x10E84, palette, D_80190E84, 16]
+          - [0x113C4, palette, D_801913C4, 16]
+          - [0x118E4, palette, D_801918E4, 16]
+          - [0x119A4, palette, D_801919A4, 16]
+          - [0x11AA4, palette, D_80191AA4, 16]
+          - [0x11AE4, palette, D_80191AE4, 16]
+          - [0x11B84, palette, D_80191B84, 16]
+          - [0x11BE4, palette, D_80191BE4, 16]
+          - [0x11C24, skip]
   - target: disks/us/ST/RNZ0/RNZ0.BIN
     asset_path: assets/st/rnz0
     src_path: src/st/rnz0
