@@ -78,7 +78,7 @@ segments:
       - [0x446E8, .rodata, e_blue_venus_weed]
       - [0x447D8, .rodata, unk_58A30]
       - [0x44880, .rodata, prim_helpers]
-      - [0x44888, c, unk_44888]
+      - [0x44888, c, e_room_bg]
       - [0x44950, c, e_lock_camera]
       - [0x44B0C, c, unk_44B0C]
       - [0x49C54, c, e_breakable_wall]
