@@ -1262,8 +1262,8 @@ void func_06008488(void) {
     Unk0605DB60* entry;
     s32 i;
 
-    chars = (u16*)(VRAM_ADDR + ((u16)DAT_0605aec0[0][0] * 8));
-    palettes = (u16*)(VRAM_ADDR + (SPR_2LookupTblNoToVram(0x10) * 8));
+    chars = (u16*)(VRAM_ADDR + DAT_0605aec0[0][0] * 8);
+    palettes = (u16*)(VRAM_ADDR + SPR_2LookupTblNoToVram(0x10) * 8);
     entry = d_0605DB60;
     for (i = 0; i < 0x20;) {
         if (entry->unk0 != NULL) {
