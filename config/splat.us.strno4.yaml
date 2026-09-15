@@ -40,11 +40,14 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, .data, header]
-      - [0x40, data]
+      - [0x40, .data, sprite_banks]
+      - [0xA0, .data, palette_def]
+      - [0x124, .data, layers]
+      - [0x664, .data, graphics_banks] # GfxBanks
+      - [0x7B8, .data, gen/e_laydef] # layout entries header
       - [0x960, .data, e_init]
-      - [0xC68, data]
+      - [0xC68, .data, e_room_bg]
       - [0xCA0, .data, e_red_door_tiles]
-      - [0xCC0, data]
       - [0xCD0, .data, e_lock_camera]
       - [0xD50, data]
       - [0x1620, .data, d_prize_drops]
@@ -60,6 +63,11 @@ segments:
       - [0x2104, .data, e_particles]
       - [0x2184, .data, e_room_fg]
       - [0x2210, data]
+      - [0x2D54, .data, gen/e_layout] # layout entries data
+      - [0x4BF4, data]
+      - [0x54DC, .data, stage_data]
+      - [0x11C24, .data, tilemaps]
+      - [0x3D254, .data, gen/sprites]
       - [0x44474, .rodata, unk_44B0C]
       - [0x444D8, .rodata, e_killer_fish]
       - [0x444EC, .rodata, e_red_door]
@@ -69,7 +77,7 @@ segments:
       - [0x446E8, .rodata, e_blue_venus_weed]
       - [0x447D8, .rodata, unk_58A30]
       - [0x44880, .rodata, prim_helpers]
-      - [0x44888, c, unk_44888]
+      - [0x44888, c, e_room_bg]
       - [0x44950, c, e_lock_camera]
       - [0x44B0C, c, unk_44B0C]
       - [0x49C54, c, e_breakable_wall]
@@ -78,7 +86,6 @@ segments:
       - [0x4A618, c, collision]
       - [0x4BDD4, c, create_entity]
       - [0x4C94C, c, e_red_door]
-      - [0x4C9C4, c, e_red_door]
       - [0x4D5FC, c, st_common]
       - [0x4EAAC, c, e_collect]
       - [0x5141C, c, e_stage_name]
