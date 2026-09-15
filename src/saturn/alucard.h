@@ -27,7 +27,7 @@ typedef struct {
 extern AlucardStateInitData g_AlucardStateInitData[];
 extern Callback DAT_060D6018;
 extern Callback DAT_060D9018;
-void func_0600A31C(void);
+void SetPlTransNonSeparateAura(void);
 extern s16 DAT_060CE4B2;
 extern s16 DAT_060CE4B4;
 extern s16 DAT_060CE972;
@@ -139,7 +139,6 @@ extern EntryS060CE980 DAT_060CE980[];
 extern EntryS060CE980 DAT_060CEA70[];
 extern EntryS060CE980 DAT_060CEA80[];
 extern AnimationFrame AlucardFrames[];
-extern u8 DAT_0607C266[];
 extern s8 DAT_060CC9BC;
 extern Rec060CC9BD DAT_060CC9BD[];
 extern s32 DAT_060CE4F0[];

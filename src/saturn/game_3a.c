@@ -22,7 +22,7 @@ void func_0600C00C();
 void func_0601AC48();
 void func_0600C114();
 void SetStageOverlayAddress();
-void func_0600BE18(s32);
+void AllocGameSprite(s32);
 void ResetSpriteVram();
 
 s32 func_0606BB4C(void) {
@@ -53,7 +53,7 @@ s32 func_0606BB4C(void) {
         return 1;
     }
     ResetSpriteVram();
-    func_0600BE18(g_PlayableCharacter);
+    AllocGameSprite(g_PlayableCharacter);
     func_0600C00C();
     if (g_FileLoadEnabled != 0) {
         ReadFileToAddr(
@@ -136,7 +136,7 @@ void func_0606BEE4(void) {
 
     idx = g_CurrentRoom.unk8;
     ResetSpriteVram();
-    func_0600BE18(g_PlayableCharacter);
+    AllocGameSprite(g_PlayableCharacter);
     func_0600C1A0();
     func_0600C00C();
     func_0600C2EC();

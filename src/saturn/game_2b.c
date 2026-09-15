@@ -231,8 +231,28 @@ void func_06078F58(s32 arg0, s32 arg1, Point16* pos) {
     }
 }
 
-// _SubDispSortKind
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079008, func_06079008);
+// original name: SubDispSortKind
+void func_06079008(s32 arg0, s32 arg1, Point16* pos) {
+    SprSpCmd* cmd;
+    u16* ptr;
+    s32 charBase;
+
+    cmd = &DAT_06086108;
+    cmd->control = 0x1000;
+    cmd->drawMode = 0x488;
+    cmd->charAddr = DAT_0605aec0[1][0];
+    cmd->charSize = 0x610;
+    cmd->color = LookupTblNoToVram(0x31);
+    ptr = DAT_0605aec0[1];
+    charBase = ptr[2];
+    cmd->charAddr = arg1 * 0x30 + ptr[2];
+    LOW(cmd->ax) = (pos->x << 0x10) | (pos->y & 0xFFFF);
+    if (SpMstCmdPos < 0x278) {
+        SPR_2Cmd(arg0, cmd);
+        d_0605AEAC += 0x20;
+    }
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60790B4, func_060790B4);
 
 // original name: SubDispFace

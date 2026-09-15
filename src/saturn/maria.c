@@ -1325,8 +1325,6 @@ INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B85C8, func_060B85C8);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B868C, func_060B868C);
 INCLUDE_ASM("asm/saturn/maria/f_nonmat", f60B89F0, func_060B89F0);
 
-#define EFFECT_SIDE 1 << 1
-
 // func_060B8AC4
 s32 func_8016840C(s32 y, s32 x) {
     Collider collider;
@@ -1783,7 +1781,6 @@ void func_060BE440(void) {
     dma_offset *= 8U;
     dma_offset += 0x25C00000U;
     DMA_CpuMemCopy2((s32*)dma_offset, work + 0x4501, 0xFC0U);
-
     while (DMA_CpuResult() == 2) {
     }
 }
@@ -2006,7 +2003,7 @@ void func_060BF704(void) {
         if (DAT_06057f68 == 6) {
             DAT_0605cd70.unk0 = 6;
             DAT_0605cd70.unk8 = 0;
-            DAT_06065470 &= ~0x003F;
+            Scl_s_reg.dispenbl &= ~0x003F;
             SclProcess = 1;
         }
         func_060BF3D0();
