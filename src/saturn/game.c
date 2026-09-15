@@ -1476,10 +1476,11 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f6074068, func_06074068);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60740F8, func_060740F8);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6074278, SetVdp2DisplayMode);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60743B8, func_060743B8);
+
 s32 func_06074470(void) {
     SclConfig scfg;
 
-    func_060100B8();
+    ClearDebugPrintTilemap();
     ClearVdp2CharRamA1();
     SCL_InitConfigTb(&scfg);
     scfg.dispenbl = 1;
@@ -1498,7 +1499,7 @@ s32 func_06074470(void) {
     SCL_SetConfig(4U, &scfg);
 }
 
-// _EVENT_SCL_TRANS
+// original name: EVENT_SCL_TRANS
 void func_060744F8(s32 arg0) {
     s32 count;
     s32 offset;
@@ -1532,8 +1533,8 @@ void func_060744F8(s32 arg0) {
 
     source = (s32*)(offset + 0x25E22000);
     DMA_CpuMemCopy2((s32*)0x25E20000, source, size >> 1);
-    do {
-    } while (DMA_CpuResult() == 2);
+    while (DMA_CpuResult() == 2) {
+    }
 }
 
 // _SS_MOJI_SET

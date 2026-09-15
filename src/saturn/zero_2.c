@@ -53,15 +53,16 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601992C, func_0601992C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60199F8, func_060199F8);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6019A7C, func_06019A7C);
 
-// _INIT_NOW_LOADING
-void func_06019FA0(s32 param_1) {
-    func_0600C6E4(param_1);
+// original name: INIT_NOW_LOADING
+void func_06019FA0(s32 arg0) {
+    func_0600C6E4(arg0);
     SetVdp2BackgroundColorRgb(0, 0, 0);
-    if (param_1 == 0) {
-        DAT_06057C90 = param_1;
+    if (arg0 == 0) {
+        DAT_06057C90 = arg0;
         func_06019A7C(&DAT_06057C90, 80, 112, 0);
     }
 }
+
 void func_06019FE4(s32 arg0) {
     if (arg0 == 0) {
         func_06019A7C(&DAT_06057C90, 80, 112, 0);
@@ -69,4 +70,5 @@ void func_06019FE4(s32 arg0) {
         func_0601A020();
     }
 }
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601A020, func_0601A020);

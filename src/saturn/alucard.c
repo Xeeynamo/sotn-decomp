@@ -854,7 +854,7 @@ void func_060AF124(s32 arg0) {
     auraColors[0].val = 0xC210;
     auraColors[1].val = 0x801F;
     if (arg0 != 0) {
-        func_0600A31C();
+        SetPlTransNonSeparateAura();
     } else {
         func_0600A330();
     }
@@ -938,7 +938,7 @@ void func_060AF7F0(void) {
 
                     sp.unk0 = 0xC210;
                     sp.unk4 = 0x801F;
-                    func_0600A31C();
+                    SetPlTransNonSeparateAura();
                     *(s8*)&g_Player.unk39E |= 0x80;
                     DAT_060CE4B2 = ((s16*)&sp)[3];
                     DAT_060CE4B4 = 0x80;

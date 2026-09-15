@@ -44,7 +44,6 @@ struct ShakeState {
 extern struct ShakeState DAT_06057A10;
 extern s32 DAT_00252000;
 extern s32 DAT_00258000;
-extern u16 DAT_06065470;
 
 extern SaturnSpriteResource** DAT_060645D0;
 
@@ -70,8 +69,7 @@ struct Unk0605CD90 {
 void BuildSubDispTilemap(struct Unk0605CD90* param_1);
 s32 DAT_060086e4;
 s32 DecompressLZSS(u8*, u8*, u32);
-// func_060086E8
-void DmaScroll(s32* src, s32* dest, u32 cnt);
+void DmaScroll(u16* src, u16* dest, u32 cnt);
 
 struct BgTransfer {
     u32 tileFlags;
@@ -160,7 +158,7 @@ void InitSystem();
 void func_060040D8();
 
 /* Declarations moved here by tools/saturn/move_declarations.py */
-extern s16 DAT_0605d772;
+extern u16 DAT_0605d772;
 extern s16 DAT_0605AEA2;
 extern s16 DAT_0605BEC2;
 extern s32 DAT_0605CD5C;
@@ -324,7 +322,7 @@ void func_06004f50();
 void ReturnToGame();
 void SetVblank();
 void func_0600456c();
-void func_060100B8(void);
+void ClearDebugPrintTilemap(void);
 extern s32 SpMstCmdPos;
 void func_06024444(s32 arg0);
 void func_06024474(void);
@@ -354,10 +352,6 @@ extern s32 DAT_0605CD80;
 extern s32 DAT_0605C65C;
 extern void (*DAT_0606465C)(void);
 extern void (*DAT_060645C4)(void);
-extern s32 DAT_060054FC;
-extern s32 DAT_06005810;
-extern s32 DAT_0600581C;
-extern s32 DAT_0600582C;
 extern char* DAT_06038A14[][2];
 void func_06009F10(void);
 void func_060100DC(void);
@@ -441,7 +435,7 @@ extern s16 func_0600AE30(s32, SaturnSpriteImage*, s32);
 extern SaturnSpriteResource** DAT_060645D4;
 extern SaturnSpriteResource** DAT_06064670;
 s16 func_0600AEE4(u16*);
-extern s32* func_0600CB04(s32, s32);
+extern u16* func_0600CB04(s32, s32);
 extern s32 func_0600C880(s32, s32, s32);
 struct Unk06057F60 {
     s8 unk0;
@@ -471,8 +465,6 @@ extern MthMatrixTbl DAT_06061DF0;
 extern Point16 DAT_06057A08;
 extern Point16 DAT_06057A0C;
 bool CdSoundCommandQueueEmpty(void);
-extern void MarkRoomVisited(s32, s32, s32, Tilemap*);
-extern Entity DAT_060997F8[];
 struct Unk060643E0 {
     u8 unk00[0x1C];
     s32 unk1C;

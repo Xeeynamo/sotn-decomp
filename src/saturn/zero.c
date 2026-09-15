@@ -183,7 +183,7 @@ void func_0600456C(void) {
     SCL_DisplayFrame();
 }
 
-// _RESET_SYSTEM
+// original name: RESET_SYSTEM
 void func_0600460C(void) {
     CSH_Init(0);
     CSH_AllClr();
@@ -439,7 +439,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004DE8, func_06004DE8);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004E50, func_06004E50);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004E94, func_06004E94);
 
-// RETURN_TO_GAME
+// _RETURN_TO_GAME
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004EF0, func_06004EF0);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004F50, func_06004F50);
 
@@ -454,7 +454,7 @@ void func_06005208(s32 arg) {
     DAT_0605c110 = 0;
 
     if (mode == 5) {
-        DAT_06065470 &= 0xFFFE;
+        Scl_s_reg.dispenbl &= 0xFFFE;
         SclProcess = 1;
         DAT_0605d772 = 5;
     } else {
@@ -495,17 +495,14 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6005328, func_06005328);
 void func_0600544C(void) {}
 
 void func_06005470(void) {
-    s32 end;
-
     ReadFileToAddr("LOGO.PRG", (s32)&DAT_060a5000);
     if (g_FileLoadEnabled != 0) {
         func_0601B184();
     }
-    DAT_0605D7DC = (s32)&DAT_00252000;
-    end = DAT_0605D7DC + ReadFileToAddr("KCEN.MAP", (s32)&DAT_00252000);
-    DAT_0605D7DC = end;
-    if (end & 1) {
-        DAT_0605D7DC = end + 1;
+    DAT_0605D7DC = 0x00252000;
+    DAT_0605D7DC += ReadFileToAddr("KCEN.MAP", DAT_0605D7DC);
+    if (DAT_0605D7DC & 1) {
+        DAT_0605D7DC++;
     }
 }
 
@@ -515,7 +512,7 @@ void func_06005508(void) {
         func_0601AEF4();
     }
     ReadFileToAddr("TITLE.CHR", 0x25C13980);
-    ReadFileToAddr("ASCII.FON", (s32)&DAT_00252000);
+    ReadFileToAddr("ASCII.FON", 0x00252000);
     func_060100DC();
 
     DAT_0605D7DC = 0x00256000;
@@ -529,19 +526,126 @@ void func_06005508(void) {
 // original name: READ_LOAD_MODE
 s32 func_060055A4(void) { return 0; }
 
-const char* rload_map = "RLOAD.MAP";
-const char* load_map = "LOAD.MAP";
+extern s32 DAT_060937F8;
+void ResetSpriteVram(void);
+void AllocGameSprite(s32);
+void func_06019FA0(s32);
+void func_06019FE4(s32);
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60055C8, func_060055C8);
+s32 func_060055C8(void) {
+    s32 iVar4;
+
+    if (DAT_0605D770.unk0 == 0x0) {
+        func_06019FA0(0);
+    } else {
+        func_06019FE4(0);
+    }
+
+    if (DAT_06038a44) {
+        return 1;
+    }
+
+    DAT_06038a44 = 1;
+    switch (DAT_0605D770.unk0) {
+    case 0:
+        ResetSpriteVram();
+        AllocGameSprite(g_PlayableCharacter);
+        Scl_s_reg.dispenbl &= 0xFFC0;
+        SclProcess = 1;
+        ((s32(*)(s32, s32))StartColorOffsetFade)(1, 2);
+        DAT_0605D770.unk0++;
+
+    case 1:
+        DAT_0605D770.unk0++;
+
+    case 2:
+        DAT_0605D770.unk8 = 1;
+        break;
+
+    case 3:
+        DAT_0605D770.unk8 = 2;
+        break;
+
+    case 4:
+        DAT_0605D770.unk8 = 3;
+        if (g_PlayableCharacter == 1 || g_PlayableCharacter == 2) {
+            DAT_0605D770.unk0 += 6;
+        }
+        break;
+
+    case 5:
+        DAT_0605D770.unk8 = 4;
+        break;
+
+    case 6:
+        DAT_0605D770.unk8 = 5;
+        break;
+
+    case 7:
+        DAT_0605D770.unk8 = 6;
+        break;
+
+    case 8:
+        DAT_0605D770.unk8 = 7;
+        if (g_Servant < 1) {
+            DAT_0605D770.unk0 += 2;
+        }
+        break;
+
+    case 9:
+        DAT_0605D770.unk8 = 11;
+        break;
+
+    case 10:
+        DAT_0605D770.unk8 = 12;
+        break;
+
+    case 11:
+        DAT_0605D770.unk8 = 8;
+        break;
+
+    case 12:
+        DAT_0605D770.unk8 = 9;
+        break;
+
+    case 13:
+        if (func_0600607C(g_CurrentRoom.stageID) != 0) {
+            ReadFileToAddr(func_06005E3C(0, g_CurrentRoom.stageID), 0x25E22000);
+            ReadFileToAddr(func_06005E3C(1, g_CurrentRoom.stageID), 0x25E60000);
+            DAT_060645C4();
+        }
+
+        if (g_CurrentRoom.stageID & 0x20) {
+            ReadFileToAddr("RLOAD.MAP", &DAT_060937F8);
+        } else {
+            ReadFileToAddr("LOAD.MAP", &DAT_060937F8);
+        }
+
+        iVar4 = 0;
+        if (g_CurrentRoom.stageID == 0x1A || g_CurrentRoom.stageID == 0x18 ||
+            g_CurrentRoom.stageID == 0x39) {
+            iVar4 = GetEnemyPlayerCharaAddr();
+        }
+        DAT_0605D7DC = iVar4 + 0x00252000;
+        DAT_0605D770.unk8 = 10;
+        break;
+
+    case 14:
+        DAT_06038a44 = 0;
+        return 0;
+    }
+    DAT_0605D770.unk0++;
+    return 1;
+}
 
 void func_0600583C(void) {
-    ReadFileToAddr((char*)&DAT_06005810, (s32)&DAT_060a5000);
+    ReadFileToAddr("OPEN.PRG", (s32)&DAT_060a5000);
     if (g_FileLoadEnabled != 0) {
         func_0601AF2C();
     }
-    ReadFileToAddr((char*)&DAT_0600581C, 0x25C13980);
+    ReadFileToAddr("OPENNING.CHR", 0x25C13980);
     DAT_0605D7DC = 0x254000;
-    DAT_0605D7DC += ReadFileToAddr((char*)&DAT_0600582C, DAT_0605D7DC);
+    DAT_0605D7DC += ReadFileToAddr("OPENNING.MAP", DAT_0605D7DC);
     if (DAT_0605D7DC & 1) {
         DAT_0605D7DC++;
     }
@@ -984,6 +1088,7 @@ s32 d_06038c5c;
 s32 d_06038c5c;
 s32 d_0605BEBE;
 u16 d_0605AEA0[4];
+
 // func_06007E14
 void CloseSpriteList(void) {
     SprSpCmd cmd;
@@ -1064,7 +1169,6 @@ void func_060080EC(s32 arg0) {
     }
 }
 
-// SetVdp2BackgroundColor
 void SetVdp2BackgroundColor(void) {
     s16 local_c[2];
     local_c[0] = 0;
@@ -1075,13 +1179,11 @@ void func_0600815C(u8 r, u8 g, u8 b) {
     u16 color = RGB16_COLOR(r, g, b);
     SCL_SetBack(SCL_VDP2_VRAM + 0x7FE20, 1, &color);
 }
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600819C, BlankScreen);
 
 // func_0600824C
-void InitScuDma(void) {
-    // sega library func
-    DMA_ScuInit();
-}
+void InitScuDma(void) { DMA_ScuInit(); }
 
 // original name: VDP1_TRANS
 void func_06008264(void) {
@@ -1117,6 +1219,7 @@ void func_060082E8(void) {
     }
     DAT_06057770 = 0;
 }
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600831C, QueueVramTransfer);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008374, FlushVramTransfers);
 
@@ -1151,31 +1254,32 @@ void func_06008464(void) {
 }
 
 void func_06008488(void) {
-    s32* chars;
-    s32* palettes;
+    u16* chars;
+    u16* palettes;
     Unk0605DB60* entry;
     s32 i;
 
-    chars = (s32*)(((u16)DAT_0605aec0[0][0] * 8) + 0x25C00000);
-    palettes = (s32*)((SPR_2LookupTblNoToVram(0x10) * 8) + 0x25C00000);
+    chars = (u16*)(((u16)DAT_0605aec0[0][0] * 8) + 0x25C00000);
+    palettes = (u16*)((SPR_2LookupTblNoToVram(0x10) * 8) + 0x25C00000);
     entry = d_0605DB60;
     for (i = 0; i < 0x20;) {
         if (entry->unk0 != NULL) {
             DMA_CpuMemCopy2(chars, entry->unk0, 0x40);
-            do {
-            } while (DMA_CpuResult() == 2);
+            while (DMA_CpuResult() == 2) {
+            }
         }
         if (entry->unk4 != NULL) {
             DMA_CpuMemCopy2(palettes, entry->unk4, 0x10);
-            do {
-            } while (DMA_CpuResult() == 2);
+            while (DMA_CpuResult() == 2) {
+            }
         }
-        i += 1;
+        i++;
         entry++;
-        chars += 0x20;
-        palettes += 8;
+        chars += 0x40;
+        palettes += 0x10;
     }
 }
+
 s32 func_06008524(u32 dest, u32 src, u32 cnt) {
     u32 first;
     u32 i;
@@ -1204,31 +1308,31 @@ s32 func_06008524(u32 dest, u32 src, u32 cnt) {
 
 // Handles transfer of background tile graphics
 // func_06008588
-void TransferBgLayer(int param_1) {
+void TransferBgLayer(s32 arg0) {
     s32 cnt;
     struct BgTransfer* puVar5;
     struct Unk0605CD90* puVar6;
 
-    puVar5 = &DAT_0605d6c0[param_1];
-    puVar6 = &DAT_0605CD90[param_1];
+    puVar5 = &DAT_0605d6c0[arg0];
+    puVar6 = &DAT_0605CD90[arg0];
     if (puVar5->tileFlags == 0) {
         return;
     }
     if (puVar5->tileFlags & 1) {
         cnt =
             DecompressLZSS(puVar6->unkc, (s32)SYS_buf_060485E0, puVar6->unk18);
-        DmaScroll((s32*)SYS_buf_060485E0, puVar6->dst0, cnt);
+        DmaScroll((u16*)SYS_buf_060485E0, puVar6->dst0, cnt);
     }
     if (puVar5->tileFlags & 2) {
         cnt =
             DecompressLZSS(puVar6->unk10, (s32)SYS_buf_060485E0, puVar6->unk1c);
-        DmaScroll((s32*)SYS_buf_060485E0, puVar6->dst4, cnt);
+        DmaScroll((u16*)SYS_buf_060485E0, puVar6->dst4, cnt);
     }
     if (puVar5->tileFlags & 4) {
         if (DAT_0605cd70.unk2 == 4) {
             BuildSubDispTilemap(puVar6);
         } else {
-            func_0600871C(puVar6, &DAT_0605c680, param_1);
+            func_0600871C(puVar6, &DAT_0605c680, arg0);
         }
     }
     if (puVar5->tileFlags & 8) {
@@ -1254,14 +1358,12 @@ void TransferBgLayer(int param_1) {
     puVar5->src = 0;
 }
 
-// func_060086E8
 // original name: DMA_SCROLL
-void DmaScroll(s32* src, s32* dest, u32 cnt) {
+void DmaScroll(u16* src, u16* dest, u32 cnt) {
     if (cnt != 0) {
-        // sega DMA lib
-        DMA_CpuMemCopy2(dest, src, cnt >> 1);
-        do {
-        } while (DMA_CpuResult() == 2);
+        DMA_CpuMemCopy2(dest, src, cnt / 2);
+        while (DMA_CpuResult() == 2) {
+        }
     }
 }
 
@@ -1304,7 +1406,7 @@ void func_06008A70(void) {
 void func_06008AB4(s32 arg0, s32 arg1, s32 arg2) {
     if (DAT_0605cd70.unk2 != 4 &&
         (DAT_0605cd70.unk0 != 0x91 || DAT_0605cd70.unk2 != 1) &&
-        (u16)DAT_0605d772 != 4) {
+        DAT_0605d772 != 4) {
         if (DAT_0605cd70.unk2 != 5 || DAT_0605cd70.unk0 <= 2) {
             func_0600BD68(arg0, arg1, arg2, &DAT_0605cd70);
         }
@@ -1385,26 +1487,21 @@ void func_0600971C(void) {
     Scl_w_reg.wincontrl[2] = 0x0083;
 
     SclProcess = 1;
-    DAT_06065470 &= 0xFFFE;
+    Scl_s_reg.dispenbl &= 0xFFFE;
     SclProcess = 1;
 }
 
 void func_060097B4(Entity* arg0, s32 arg1) {
-    u16 step;
-    u16 step_s;
-    s32 x;
-    s32 y;
+    s32 x, y;
 
     SCL_Open(8 << arg1);
-    step = arg0->step;
     x = 0;
     y = 0xA0000;
-    if (step != 0) {
-        x = (s32)DAT_0605c680.unk34 / (s32)step;
+    if (arg0->step != 0) {
+        x = DAT_0605c680.unk34 / arg0->step;
     }
-    step_s = arg0->step_s;
-    if (step_s != 0) {
-        y = (s32)DAT_0605c680.unk38 / (s32)step_s;
+    if (arg0->step_s != 0) {
+        y = DAT_0605c680.unk38 / arg0->step_s;
     }
     SCL_MoveTo(x, y, 0);
     SCL_Close();
@@ -1430,12 +1527,12 @@ void func_06009D60(u32 bank) {
     u32 i;
 
     if (bank < 2) {
-        dst = (u32*)(bank * 0x20000 + 0x25E00000);
+        dst = &(((u32*)SCL_VDP2_VRAM_A)[bank * 0x8000]);
         for (i = 0; i < 0x8000; i++) {
             *dst++ = 0;
         }
     } else {
-        dst = (u32*)((bank - 2) * 0x20000 + 0x25E40000);
+        dst = &(((u32*)SCL_VDP2_VRAM_B)[(bank - 2) * 0x8000]);
         for (i = 0; i < 0x8000; i++) {
             *dst++ = 0;
         }
@@ -1468,8 +1565,8 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6009F84, func_06009F84);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A030, func_0600A030);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A088, func_0600A088);
 
-void func_0600A240(s32 param_1) {
-    if (param_1 != 0) {
+void func_0600A240(s32 arg0) {
+    if (arg0 != 0) {
         DAT_0605D910[0x4D] = 1;
     } else {
         DAT_0605D910[4] = 1;
@@ -1477,8 +1574,8 @@ void func_0600A240(s32 param_1) {
 }
 
 // original name: SetCharTrans
-void func_0600A264(u16 arg0, s32 arg1, s32 arg2) {
-    QueueVramTransfer(DAT_0605aec0[arg0][0] * 8 + 0x25C00000, arg2, arg1);
+void SetCharTrans(u16 arg0, s32 arg1, s32 arg2) {
+    QueueVramTransfer(VRAM_ADDR + DAT_0605aec0[arg0][0] * 8, arg2, arg1);
 }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A29C, LookupTblNoToVramAddr);
@@ -1489,7 +1586,7 @@ void SetSprGourTable(u16 arg0, SprGourTbl* gourTbl) {
 }
 
 // original name: SetPlTransNonSeparateAura
-void func_0600A31C(void) { DAT_0605D910[3] = 1; }
+void SetPlTransNonSeparateAura(void) { DAT_0605D910[3] = 1; }
 
 void func_0600A330(void) {
     if (g_PlayableCharacter == 0) {
@@ -1514,8 +1611,6 @@ void func_0600A5FC(u8* src, u8* dst0, u8* dst1, s32 count) {
     }
 }
 
-u8 d_060578A0[];
-
 // func_0600A62C
 void MapBytesThroughLut(u8* src, u8* dst, s32 count) {
     while (count > 0) {
@@ -1533,7 +1628,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600AB60, func_0600AB60);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600AC30, func_0600AC30);
 
 // func_0600AD80
-int GetEnemyPlayerCharaAddr(void) {
+s32 GetEnemyPlayerCharaAddr(void) {
     return -(s32)&DAT_00252000 + (s32)&DAT_00258000;
 }
 
@@ -1564,7 +1659,7 @@ void func_0600AFA8(SpriteObject* sprite, SaturnSpriteFrameHeader* frame) {
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600B004, func_0600B004);
 
 // original name: SetParts
-void func_0600B084(SpritePart* part, SaturnSpritePart* src, s32 count) {
+void SetParts(SpritePart* part, SaturnSpritePart* src, s32 count) {
     s32 i;
 
     for (i = 0; i < count; i++, src++) {
@@ -1714,13 +1809,13 @@ void func_0600BCE0(s32* mtx, s16 angle) {
 }
 
 // func_0600BD4C
-int GetSpriteObjectGourTbl(u8* param_1) { return SpGourTbl + param_1[2] * 2; }
+int GetSpriteObjectGourTbl(u8* arg0) { return SpGourTbl + arg0[2] * 2; }
 
 // _Odma
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600BD68, func_0600BD68);
 
 // original name: AllocGameSprite
-void func_0600BE18(s32 arg0) {
+void AllocGameSprite(s32 arg0) {
     if (arg0 == 1 || arg0 == 2) {
         func_0600BEA8();
         func_0600BF08();
@@ -1760,6 +1855,7 @@ void func_0600BEA8(void) {
         entry++;
     }
 }
+
 void func_0600BF08(void) {
     u16 sp[2];
 
@@ -1942,66 +2038,54 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600C3A8, func_0600C3A8);
 // _RequestItemTrans
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600C43C, func_0600C43C);
 
-void func_0600C518(s32* charSrc, s32* palSrc, s32 charRows, s32 palRows) {
-    s32* dst;
+void func_0600C518(u16* charSrc, u16* palSrc, s32 charRows, s32 palRows) {
+    u16* dst;
     s32 chunks;
     s32 i;
 
     chunks = charRows / 3;
     dst = func_0600CB04(0x140, 0);
-    i = 0;
 
-    while (i < chunks) {
-        DMA_CpuMemCopy2(dst, charSrc, 0xC0U);
-        do {
-        } while (DMA_CpuResult() == 2);
-        i += 1;
-        dst += 0x100;
-        charSrc += 0x60;
+    for (i = 0; i < chunks; i++) {
+        DmaScroll(charSrc, dst, 0x180);
+        dst += 0x200;
+        charSrc += 0xC0;
         charRows -= 3;
     }
 
     if (charRows > 0) {
         DMA_CpuMemCopy2(dst, charSrc, charRows * 0x40);
-        do {
-        } while (DMA_CpuResult() == 2);
+        while (DMA_CpuResult() == 2) {
+        }
     }
 
     chunks = palRows / 12;
     dst = func_0600CB04(0x140, 0x6C);
-    i = 0;
 
-    while (i < chunks) {
-        DMA_CpuMemCopy2(dst, palSrc, 0xC0U);
-        do {
-        } while (DMA_CpuResult() == 2);
-        dst += 0x100;
-        palSrc += 0x60;
-        palRows -= 0xC;
-        i += 1;
+    for (i = 0; i < chunks; i++) {
+        DmaScroll(palSrc, dst, 0x180);
+        dst += 0x200;
+        palSrc += 0xC0;
+        palRows -= 12;
     }
 
     if (palRows > 0) {
         DMA_CpuMemCopy2(dst, palSrc, palRows * 0x10);
-        do {
-        } while (DMA_CpuResult() == 2);
+        while (DMA_CpuResult() == 2) {
+        }
     }
 }
 
-void func_0600C628(s32* source, s32 rowCount) {
-    s32 row;
-    s32* destination;
+void func_0600C628(u16* src, s32 count) {
+    s32 i;
+    u16* dst;
 
-    rowCount = (rowCount + 0xB) / 12;
-    destination = func_0600CB04(0x140, 0x87);
-    row = 0;
-    while (row < rowCount) {
-        DMA_CpuMemCopy2(destination, source, 0xC0U);
-        while (DMA_CpuResult() == 2) {
-        }
-        row++;
-        destination += 0x100;
-        source += 0x60;
+    count = (count + 11) / 12;
+    dst = func_0600CB04(0x140, 0x87);
+    for (i = 0; i < count; i++) {
+        DmaScroll(src, dst, 0x180);
+        dst += 0x200;
+        src += 0xC0;
     }
 }
 
@@ -2012,9 +2096,8 @@ void func_0600C6AC(s32 arg0, s32 arg1) {
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600C6E4, func_0600C6E4);
 
-// _SetGameoverToFrameBuffer
-
-void func_0600C7E4(s32 arg0, s32 arg1) {
+// original name: SetGameoverToFrameBuffer
+void SetGameoverToFrameBuffer(s32 arg0, s32 arg1) {
     s32 offset;
 
     offset = 0x16800;
@@ -2026,36 +2109,33 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600C818, func_0600C818);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600C880, func_0600C880);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600C99C, func_0600C99C);
 
-// ClearFrameBuffer
-void func_0600CAB8(u16 color) {
+// original name: ClearFrameBuffer
+void ClearFrameBuffer(u16 clearColor) {
     u16* ptr;
-    s32 y;
-    s32 x;
+    s32 x, y;
 
-    for (y = 0; y <= 0xEF; y++) {
-        ptr = (u16*)func_0600CB04(0, y);
-        for (x = 0; x <= 0x13F; x++) {
-            *ptr++ = color;
+    for (y = 0; y < 0xF0; y++) {
+        ptr = func_0600CB04(0, y);
+        for (x = 0; x < 0x140; x++) {
+            *ptr++ = clearColor;
         }
     }
 }
 
-s32* func_0600CB04(s32 x, s32 y) {
-    u32 base = 0x25C80000;
+u16* func_0600CB04(s32 x, s32 y) {
+    u16* base = FBUF_ADDR;
 
-    return (s32*)(base + (0x200 * y + x) * 2);
+    return &base[0x200 * y + x];
 }
 
-s32 func_0600CB20(s32 offset) {
+u16* func_0600CB20(s32 offset) {
     s32 row;
     s32 col;
-    s32 base;
 
     offset = offset >> 1;
     row = offset / 0xC0;
     col = offset - (row * 0xC0) + 0x140;
-    base = 0x25C80000;
-    return (row * 0x200 + col) * 2 + base;
+    return func_0600CB04(col, row);
 }
 
 const unsigned short DAT_0600CB68[6] = {
@@ -2068,7 +2148,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600CBCC, func_0600CBCC);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600CC14, func_0600CC14);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600CC5C, InitBackupRam);
 
-// _ABup_CheckRam
+// original name: ABup_CheckRam
 s32 func_0600CD70(void) {
     s32 work[6];
     s32 status;
@@ -2305,39 +2385,39 @@ bool func_0600DE2C(void) { return 1; }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600DE38, func_0600DE38);
 
-void func_0600DFC0(Primitive* arg0, s16 arg1, s16 arg2) {
-    arg0->x0 += arg1;
-    arg0->x1 += arg1;
-    arg0->x2 += arg1;
-    arg0->x3 += arg1;
-    arg0->y0 += arg2;
-    arg0->y1 += arg2;
-    arg0->y2 += arg2;
-    arg0->y3 += arg2;
+void func_0600DFC0(Primitive* prim, s16 x, s16 y) {
+    prim->x0 += x;
+    prim->x1 += x;
+    prim->x2 += x;
+    prim->x3 += x;
+    prim->y0 += y;
+    prim->y1 += y;
+    prim->y2 += y;
+    prim->y3 += y;
 }
 
-void func_0600E01C(Primitive* arg0, s16 arg1, s16 arg2) {
-    arg0->x0 += arg1;
-    arg0->x2 += arg1;
-    arg0->y0 += arg2;
-    arg0->y2 += arg2;
+void func_0600E01C(Primitive* prim, s16 x, s16 y) {
+    prim->x0 += x;
+    prim->x2 += x;
+    prim->y0 += y;
+    prim->y2 += y;
 }
 
-void func_0600E050(Primitive* arg0, s16 arg1, s16 arg2) {
-    arg0->x0 += arg1;
-    arg0->y0 += arg2;
+void func_0600E050(Primitive* prim, s16 x, s16 y) {
+    prim->x0 += x;
+    prim->y0 += y;
 }
 
-void func_0600E070(Primitive* arg0, s16 arg1, s16 arg2) {
-    arg0->x0 += arg1;
-    arg0->x1 += arg1;
-    arg0->y0 += arg2;
-    arg0->y1 += arg2;
+void func_0600E070(Primitive* prim, s16 x, s16 y) {
+    prim->x0 += x;
+    prim->x1 += x;
+    prim->y0 += y;
+    prim->y1 += y;
 }
 
-void func_0600E0A4(Primitive* arg0, s16 arg1, s16 arg2) {
-    arg0->unk4 += arg1;
-    arg0->unk8 += arg2;
+void func_0600E0A4(Primitive* prim, s16 arg1, s16 arg2) {
+    prim->unk4 += arg1;
+    prim->unk8 += arg2;
 }
 
 void func_0600E0C4() {}
@@ -2373,7 +2453,7 @@ void func_0600E164(void) {
             cmd.bx = cmd.cx = *(s16*)&DAT_0605BEC0;
         } else {
             cmd.ax = cmd.dx = 0;
-            cmd.bx = cmd.cx = ~count;
+            cmd.bx = cmd.cx = -count - 1;
         }
         cmd.control = 0x1004;
         cmd.drawMode = 0x00C0;
@@ -2400,39 +2480,37 @@ void func_0600E240(Point16* arg0) {
 // _RotTransCurMatrix_ps
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600E2D4, SetCurrentMatrixBinAngle);
 
-void func_0600E390(MthXyz* arg0, MthXyz* arg1) {
+void func_0600E390(MthXyz* rot, MthXyz* pos) {
     MTH_ClearMatrix(&DAT_06061DF0);
-    DAT_06061DF0.current->val[0][3] = arg1->x;
-    DAT_06061DF0.current->val[1][3] = arg1->y;
-    DAT_06061DF0.current->val[2][3] = arg1->z;
-    if (arg0->z != 0) {
-        MTH_RotateMatrixZ(&DAT_06061DF0, arg0->z);
+    DAT_06061DF0.current->val[0][3] = pos->x;
+    DAT_06061DF0.current->val[1][3] = pos->y;
+    DAT_06061DF0.current->val[2][3] = pos->z;
+    if (rot->z != 0) {
+        MTH_RotateMatrixZ(&DAT_06061DF0, rot->z);
     }
-    if (arg0->y != 0) {
-        MTH_RotateMatrixY(&DAT_06061DF0, arg0->y);
+    if (rot->y != 0) {
+        MTH_RotateMatrixY(&DAT_06061DF0, rot->y);
     }
-    if (arg0->x != 0) {
-        MTH_RotateMatrixX(&DAT_06061DF0, arg0->x);
+    if (rot->x != 0) {
+        MTH_RotateMatrixX(&DAT_06061DF0, rot->x);
     }
 }
 
 void func_0600E400(MthXyz* src, MthXyz* dst, s32 count) {
     MthXyz unused;
 
-    if (count > 0) {
-        do {
-            MTH_NormalTrans(DAT_06061DF0.current, src, dst);
-            src++;
-            count--;
-            dst++;
-        } while (count > 0);
+    while (count > 0) {
+        MTH_NormalTrans(DAT_06061DF0.current, src, dst);
+        src++;
+        dst++;
+        count--;
     }
 }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600E450, TransformAndProjectPoints);
 
 // original name: CheckClipScreenArea
-s32 func_0600E4E0(Point16* arg0) {
+s32 CheckClipScreenArea(Point16* arg0) {
     if (arg0->x < DAT_06057A08.x || DAT_06057A0C.x < arg0->x ||
         arg0->y < DAT_06057A08.y || DAT_06057A0C.y < arg0->y) {
         return 0;
@@ -2444,7 +2522,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600E51C, RotateVec2Degrees);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600E5A4, RotateVec2);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600E61C, func_0600E61C);
 
-const short ratan_tbl[] = {
+const s16 ratan_tbl[] = {
     0x000, 0x000, 0x001, 0x001, 0x002, 0x003, 0x003, 0x004, 0x005, 0x005, 0x006,
     0x007, 0x007, 0x008, 0x008, 0x009, 0x00A, 0x00A, 0x00B, 0x00C, 0x00C, 0x00D,
     0x00E, 0x00E, 0x00F, 0x00F, 0x010, 0x011, 0x011, 0x012, 0x013, 0x013, 0x014,
@@ -2596,7 +2674,7 @@ long ratan2(long dx, long dy) {
     return ret;
 }
 
-const s16 rsin_tbl[1024] = {
+const s16 rsin_tbl[] = {
     0x0000, 0x0006, 0x000C, 0x0012, 0x0019, 0x001F, 0x0025, 0x002B, 0x0032,
     0x0038, 0x003E, 0x0045, 0x004B, 0x0051, 0x0057, 0x005E, 0x0064, 0x006A,
     0x0071, 0x0077, 0x007D, 0x0083, 0x008A, 0x0090, 0x0096, 0x009D, 0x00A3,
@@ -2814,8 +2892,7 @@ void func_0600FB34(void) {
 }
 
 s32 func_0600FB4C(void) {
-    if (((DAT_0605d772 & 0xffff) == 0) &&
-        ((g_pads[0].pressed & 0x0700) == 0x0700)) {
+    if ((DAT_0605d772 == 0) && ((g_pads[0].pressed & 0x700) == 0x700)) {
         if ((g_pads[0].previous & PAD_START) && (DAT_0605C658 != 0)) {
             return 1;
         }
@@ -2827,20 +2904,26 @@ s32 func_0600FB4C(void) {
 void func_0600FB9C(void) { func_0602A778(0x100, 32, 0); }
 
 s32 func_0600FBBC(void) {
-    return CdSoundCommandQueueEmpty() != 0
-               ? (PlaySfx(0xF0000010), ((s32(*)(void))func_06010400)(),
-                  PlaySfx(0xF0000008), 0)
-               : 1;
+    if (!CdSoundCommandQueueEmpty()) {
+        return 1;
+    }
+    PlaySfx(0xF0000010);
+    ((s32(*)(void))func_06010400)();
+    PlaySfx(0xF0000008);
+    return 0;
 }
 
 // _all_map_check
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FC04, RevealMapCellAtPlayer);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FCF8, func_0600FCF8);
+
+extern void MarkRoomVisited(s32, s32, s32, Tilemap*);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FCF8, MarkRoomVisited);
 
 void func_0600FE98(s32 arg0) {
     s32 x = g_Tilemap.left + g_PlayerX / 320;
+    s32 y = g_Tilemap.top + g_PlayerY / 240;
 
-    MarkRoomVisited(x, g_Tilemap.top + g_PlayerY / 240, arg0, &g_Tilemap);
+    MarkRoomVisited(x, y, arg0, &g_Tilemap);
 }
 
 void func_800F2120(void) {}
@@ -2851,8 +2934,8 @@ void func_0600FF64(s16 arg0) {
     s32 i;
     Entity* entity;
 
-    entity = &DAT_060997F8[arg0];
-    for (i = arg0; i <= 0xFF; i++, entity++) {
+    entity = &g_Entities[arg0];
+    for (i = arg0; i < 0x100; i++, entity++) {
         DestroyEntity(entity);
     }
 }
@@ -2895,7 +2978,7 @@ void InitDebugPrint(void) {
     DAT_0605d6c0[3].cnt = 0x80;
 }
 
-// 0x060100b8
+// 0x060100B8
 // clears the debug print tilemap area, debug prints are at least used by
 // the stage select screen on the title screen
 void ClearDebugPrintTilemap(void) {
@@ -2922,7 +3005,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60110C0, func_060110C0);
 // func_06011264
 void SignalSlaveSh2(void) {
     // set input capture flag on sub-sh2
-    *((u16*)SH2_REG_M_FRT_IC) = 0xffff;
+    *((u16*)SH2_REG_M_FRT_IC) = 0xFFFF;
 }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011278, func_06011278);
@@ -2930,11 +3013,9 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011278, func_06011278);
 void func_06011A6C(s32 arg0) {
     s32 i;
 
-    i = 0;
-    for (;;) {
+    for (i = 0;; i++) {
         if (DAT_06064250[i] != 0) {
             if (i != 0x1E) {
-                i++;
                 continue;
             }
         }
@@ -2973,21 +3054,21 @@ s32 PlaySfxVolPan(s32 sfxId, s32 sfxVol, s16 sfxPan) {
 s32 func_06011B28(s32 arg0) {
     if (arg0 < 0) {
         arg0 = 0;
-    } else if (arg0 <= 0x0F) {
+    } else if (arg0 < 0x10) {
         arg0 *= 2;
-    } else if (arg0 <= 0x1F) {
+    } else if (arg0 < 0x20) {
         arg0 = ((arg0 - 0x10) * 0x26) / 0x10 + 0x20;
-    } else if (arg0 <= 0x2F) {
+    } else if (arg0 < 0x30) {
         arg0 = ((arg0 - 0x20) * 0x1A) / 0x10 + 0x46;
-    } else if (arg0 <= 0x3F) {
+    } else if (arg0 < 0x40) {
         arg0 = ((arg0 - 0x30) * 0x0D) / 0x10 + 0x60;
-    } else if (arg0 <= 0x4F) {
+    } else if (arg0 < 0x50) {
         arg0 = (arg0 - 0x40) / 2 + 0x6D;
-    } else if (arg0 <= 0x5F) {
+    } else if (arg0 < 0x60) {
         arg0 = ((arg0 - 0x50) * 5) / 0x10 + 0x75;
-    } else if (arg0 <= 0x6F) {
+    } else if (arg0 < 0x70) {
         arg0 = (arg0 - 0x60) / 4 + 0x7A;
-    } else if (arg0 <= 0x81) {
+    } else if (arg0 < 0x82) {
         arg0 = ((arg0 - 0x70) * 4) / 18 + 0x7E;
     }
     if (arg0 == 0) {
@@ -3003,7 +3084,7 @@ s32 func_06011C28(s32 volume, s16 pan) {
     if (DAT_060643E0.unk1C == 0) {
         return -2;
     }
-    if ((u16)(pan + 8) > 0x10U) {
+    if (pan < -8 || pan > 8) {
         pan = 0x40;
         result = -1;
     } else if (pan == 0) {
@@ -3032,7 +3113,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011CE4, func_06011CE4);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011EE0, func_06011EE0);
 
 // func_06011F40
-void StopPcm(s32 param) { SND_StopPcm2(); }
+void StopPcm(s32 arg0) { SND_StopPcm2(arg0); }
 
 void func_06011F58(void) {
     s32 bgm;
