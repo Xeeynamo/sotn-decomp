@@ -844,7 +844,8 @@ set(SOURCE_FILES_STAGE_RNO4
     src/st/rno4/st_update.c
     src/st/rno4/unk_44B0C.c
     src/st/rno4/gen/rooms.c
-    src/st/rno4/stage_data.c)
+    src/st/rno4/stage_data.c
+    src/st/rno4/tilemaps.c)
 
 set(SOURCE_FILES_STAGE_RNO3
     src/pc/stages/stage_rno3.c
