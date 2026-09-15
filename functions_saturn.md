@@ -541,7 +541,6 @@
 | alucard/f_nonmat/f60C3214.s  | func_060C3214   |      347 |         34 |       |     |
 | alucard/f_nonmat/f60B0310.s  | func_060B0310   |      347 |         42 |       |     |
 | stage_16/f_nonmat/f60DC9E0.s | func_060DC9E0   |      348 |         33 |       |     |
-| zero/f_nonmat/f60055C8.s     | func_060055C8   |      348 |         42 |       |     |
 | game/f_nonmat/f606D058.s     | func_0606D058   |      350 |         51 |       |     |
 | stage_15/f_nonmat/f60E8D50.s | func_060E8D50   |      352 |         30 |       |     |
 | maria/f_nonmat/f60BB4AC.s    | func_060BB4AC   |      352 |         40 |       |     |
