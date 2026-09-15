@@ -40,7 +40,8 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, .data, header]
-      - [0x40, data]
+      - [0x40, .data, sprite_banks]
+      - [0xA0, data]
       - [0x960, .data, e_init]
       - [0xC68, data]
       - [0xCA0, .data, e_red_door_tiles]
@@ -60,6 +61,7 @@ segments:
       - [0x2104, .data, e_particles]
       - [0x2184, .data, e_room_fg]
       - [0x2210, data]
+      - [0x3D254, .data, gen/sprites]
       - [0x44474, .rodata, unk_44B0C]
       - [0x444D8, .rodata, e_killer_fish]
       - [0x444EC, .rodata, e_red_door]

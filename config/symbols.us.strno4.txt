@@ -47,6 +47,7 @@ g_RdaiUnk33Anim4 = 0x80182BD0;
 g_RdaiUnk33Anim5 = 0x80182BE4;
 g_ImpDeathParticleAnim = 0x80182BF4;
 rooms = 0x80182C00;
+sprites_rno4_4 = 0x801BE9C4;
 EntityBreakable = 0x801C4B0C;
 func_us_801C123C_from_no4 = 0x801C4D5C;
 func_us_801C12B0_from_no4 = 0x801C4DD0;
