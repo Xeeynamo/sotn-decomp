@@ -1683,8 +1683,8 @@ void func_060BB09C(u8 walls, u8* dst) {
     }
 }
 
-const u16 DAT_060BB182 = 0x0009;
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BB184, func_060BB184);
+
 void func_060BB330(void) {
     u8* dst;
     u8* revealDst;
