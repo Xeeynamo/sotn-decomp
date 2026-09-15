@@ -297,9 +297,10 @@ void func_060E1C08(Entity* self) {
         PlaySfx(0xF0000090);
         self->step = 1;
         self->step_s = 0;
-        func_060100B8();
+        ClearDebugPrintTilemap();
     }
 }
+
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E1CA8, func_060E1CA8);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E1D48, func_060E1D48);
 

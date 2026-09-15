@@ -560,6 +560,7 @@ INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60EA600, func_060EA600);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60EAE6C, func_060EAE6C);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60EAFF8, func_060EAFF8);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60EB150, func_060EB150);
+
 void func_060EB4A4(Entity* entity, s16 step) {
     entity->velocityX = 0;
     entity->velocityY = 0;
@@ -569,7 +570,6 @@ void func_060EB4A4(Entity* entity, s16 step) {
     entity->step_s = 0;
 }
 
-const u16 DAT_060EB4CA = 0x0009;
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60EB4CC, func_060EB4CC);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60EB550, func_060EB550);
 INCLUDE_ASM("asm/saturn/rstage15/f_nonmat", f60EC174, func_060EC174);
