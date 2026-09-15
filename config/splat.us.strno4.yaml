@@ -46,7 +46,7 @@ segments:
       - [0x664, .data, graphics_banks] # GfxBanks
       - [0x7B8, .data, gen/e_laydef] # layout entries header
       - [0x960, .data, e_init]
-      - [0xC68, data]
+      - [0xC68, .data, e_room_bg]
       - [0xCA0, .data, e_red_door_tiles]
       - [0xCC0, data]
       - [0xCD0, .data, e_lock_camera]
