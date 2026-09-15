@@ -511,7 +511,7 @@ void func_06005508(void) {
     if (g_FileLoadEnabled != 0) {
         func_0601AEF4();
     }
-    ReadFileToAddr("TITLE.CHR", 0x25C13980);
+    ReadFileToAddr("TITLE.CHR", VRAM_ADDR + 0x13980);
     ReadFileToAddr("ASCII.FON", 0x00252000);
     func_060100DC();
 
@@ -610,8 +610,10 @@ s32 func_060055C8(void) {
 
     case 13:
         if (func_0600607C(g_CurrentRoom.stageID) != 0) {
-            ReadFileToAddr(func_06005E3C(0, g_CurrentRoom.stageID), 0x25E22000);
-            ReadFileToAddr(func_06005E3C(1, g_CurrentRoom.stageID), 0x25E60000);
+            ReadFileToAddr(func_06005E3C(0, g_CurrentRoom.stageID),
+                           SCL_VDP2_VRAM_A1 + 0x2000);
+            ReadFileToAddr(
+                func_06005E3C(1, g_CurrentRoom.stageID), SCL_VDP2_VRAM_B1);
             DAT_060645C4();
         }
 
@@ -643,7 +645,7 @@ void func_0600583C(void) {
     if (g_FileLoadEnabled != 0) {
         func_0601AF2C();
     }
-    ReadFileToAddr("OPENNING.CHR", 0x25C13980);
+    ReadFileToAddr("OPENNING.CHR", VRAM_ADDR + 0x13980);
     DAT_0605D7DC = 0x254000;
     DAT_0605D7DC += ReadFileToAddr("OPENNING.MAP", DAT_0605D7DC);
     if (DAT_0605D7DC & 1) {
@@ -686,10 +688,11 @@ void func_060059F4(void) {
     if (g_FileLoadEnabled != 0) {
         func_0601B19C();
     }
-    ReadFileToAddr("ENDING.CHR", 0x25C2A980);
+    ReadFileToAddr("ENDING.CHR", VRAM_ADDR + 0x2A980);
     if (DAT_0605D7FC != 4 && DAT_0605D7FC != 6) {
-        ReadFileToAddr(DAT_06038A14[DAT_0605D7FC - 1][0], 0x25E22000);
-        ReadFileToAddr(DAT_06038A14[DAT_0605D7FC - 1][1], 0x25E60000);
+        ReadFileToAddr(
+            DAT_06038A14[DAT_0605D7FC - 1][0], SCL_VDP2_VRAM_A1 + 0x2000);
+        ReadFileToAddr(DAT_06038A14[DAT_0605D7FC - 1][1], SCL_VDP2_VRAM_B1);
     }
     DAT_060645C4();
 }
@@ -937,7 +940,7 @@ void func_060078EC(s32 arg0) {
         func_06006574(&DAT_06038B6C);
         SetServantResourceList();
         DAT_06038BAC.unk0 = DAT_06038C24[arg0][1];
-        DAT_06038BAC.unk4 = 0x25C25980;
+        DAT_06038BAC.unk4 = VRAM_ADDR + 0x25980;
         func_06006574(&DAT_06038BAC);
         func_0600C254();
         func_0600C0FC();
@@ -1259,8 +1262,8 @@ void func_06008488(void) {
     Unk0605DB60* entry;
     s32 i;
 
-    chars = (u16*)(((u16)DAT_0605aec0[0][0] * 8) + 0x25C00000);
-    palettes = (u16*)((SPR_2LookupTblNoToVram(0x10) * 8) + 0x25C00000);
+    chars = (u16*)(VRAM_ADDR + ((u16)DAT_0605aec0[0][0] * 8));
+    palettes = (u16*)(VRAM_ADDR + (SPR_2LookupTblNoToVram(0x10) * 8));
     entry = d_0605DB60;
     for (i = 0; i < 0x20;) {
         if (entry->unk0 != NULL) {
@@ -1527,12 +1530,12 @@ void func_06009D60(u32 bank) {
     u32 i;
 
     if (bank < 2) {
-        dst = &(((u32*)SCL_VDP2_VRAM_A)[bank * 0x8000]);
+        dst = &(((u32*)SCL_VDP2_VRAM_A0)[bank * 0x8000]);
         for (i = 0; i < 0x8000; i++) {
             *dst++ = 0;
         }
     } else {
-        dst = &(((u32*)SCL_VDP2_VRAM_B)[(bank - 2) * 0x8000]);
+        dst = &(((u32*)SCL_VDP2_VRAM_B0)[(bank - 2) * 0x8000]);
         for (i = 0; i < 0x8000; i++) {
             *dst++ = 0;
         }
@@ -1552,10 +1555,10 @@ void func_06009F10(void) {
     scfg.datatype = 0;
     scfg.mapover = 0;
     scfg.flip = 0;
-    scfg.plate_addr[3] = 0x25E48000;
-    scfg.plate_addr[2] = 0x25E48000;
-    scfg.plate_addr[1] = 0x25E48000;
-    scfg.plate_addr[0] = 0x25E48000;
+    scfg.plate_addr[3] = SCL_VDP2_VRAM_B0 + 0x8000;
+    scfg.plate_addr[2] = SCL_VDP2_VRAM_B0 + 0x8000;
+    scfg.plate_addr[1] = SCL_VDP2_VRAM_B0 + 0x8000;
+    scfg.plate_addr[0] = SCL_VDP2_VRAM_B0 + 0x8000;
     scfg.patnamecontrl = 0x21;
     SCL_SetConfig(0x10, &scfg);
 }

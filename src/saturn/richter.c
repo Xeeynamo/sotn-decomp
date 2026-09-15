@@ -1862,7 +1862,7 @@ void func_060BBAF4(void) {
     dma_base = (u8*)DAT_0605aec0;
     dma_offset = 8;
     dma_value = *(u16*)(dma_base + dma_offset);
-    dma_dest = (s32*)(0x25C00000U + dma_value * 8);
+    dma_dest = (s32*)(0x25C00000 + dma_value * 8);
     DMA_CpuMemCopy2(dma_dest, work + 0x4501, 0xFC0U);
     while (DMA_CpuResult() == 2) {
     }
