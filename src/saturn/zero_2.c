@@ -9,7 +9,8 @@ void func_06019074(s8* arg0, u8 arg1) {
     BottomCornerText text;
 
     func_06019560(arg0, text.data, &text.unk40, &text.primitiveCount);
-    g_unkGraphicsStruct.BottomCornerTextPrims = AllocPrimitives(0, text.primitiveCount + 4);
+    g_unkGraphicsStruct.BottomCornerTextPrims =
+        AllocPrimitives(0, text.primitiveCount + 4);
     if (g_unkGraphicsStruct.BottomCornerTextPrims != -1) {
         func_060190D8(text.unk40, text.data, arg1);
         g_unkGraphicsStruct.BottomCornerTextTimer = 0x130;

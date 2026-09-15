@@ -845,7 +845,7 @@ s32 func_06006E9C(s32* arg0, s32 arg1) {
 }
 
 // original name: IsCdOpened
-u32 func_06006ED4() { return (func_0602DCFC() >> 5) & 1; }
+bool func_06006ED4() { return (func_0602DCFC() & 0x20) ? true : false; }
 
 s32 func_06006EF8(void) {
     s32 stat[4];
