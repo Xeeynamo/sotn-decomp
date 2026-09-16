@@ -198,33 +198,35 @@ INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", func_us_801A07CC_from_bo3);
 
 INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", func_us_801C5518_from_no4);
 
-extern u16* D_us_80181610;
+extern u16 D_us_80181610[];
 
-void func_us_801C9048(s32 arg0) {
-    s32 i;
+static void func_us_801C9048(s32 arg0) {
     s16 tilePos;
+    s32 i;
     u16* tileLayoutPtr;
 
     Tilemap* tilemap;
     tilemap = &g_Tilemap;
 
     tilePos = 0x1E0;
-    tileLayoutPtr = (arg0 * 2) + (&D_us_80181610);
+    tileLayoutPtr = &(D_us_80181610[arg0 * 4]);
+
     for (i = 0; i < 4; ++i) {
-        tilemap->fg[tilePos] = tileLayoutPtr[0];
-        tileLayoutPtr += 0x1;
+        tilemap->fg[tilePos] = *(tileLayoutPtr++);
         tilePos += 0x50;
     }
 }
 
 extern s16 D_us_801815DC;
+
 void func_us_801C909C(Entity* self) {
+    s16 screen_pos;
     switch (self->step) {
-    case 0: {
+    case 0:
         InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 0x25;
-        if (D_us_801815DC != 0) {
+        if (D_us_801815DC) {
             func_us_801C9048(1);
             self->step = 0x4;
             break;
@@ -232,63 +234,60 @@ void func_us_801C909C(Entity* self) {
         func_us_801C9048(0);
         self->posY.i.hi -= 0x40;
         break;
-    }
 
-    case 1: {
-        if (D_us_801815DC != 0) {
-            self->velocityY = FIX(4.0);
+    case 1:
+        if (D_us_801815DC) {
             self->step += 1;
+            self->velocityY = FIX(4.0);
         }
-        break;
-    }
 
-    case 2: {
+        break;
+
+    case 2:
         self->posX.i.hi -= 8;
         GetPlayerCollisionWith(self, 0x10, 0x20, 9);
         self->posX.i.hi += 8;
         MoveEntity();
-        if (((s16)(self->posY.i.hi + g_Tilemap.scrollY.i.hi)) >= 0x80) {
-            g_api_PlaySfxVolPan(SFX_EXPLODE_B, 0x7F, -6);
+        screen_pos = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
+        if (screen_pos >= 0x80) {
+            g_api.PlaySfxVolPan(SFX_EXPLODE_B, 0x7F, -6);
             func_us_801C9048(1);
             self->velocityY = FIX(-1.0);
             self->step += 1;
         }
         break;
-    }
 
-    case 3: {
+    case 3:
         self->velocityY += FIX(0.125);
         MoveEntity();
-        if (((s16)(self->posY.i.hi + g_Tilemap.scrollY.i.hi)) >= 0x80) {
+        screen_pos = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
+        if (screen_pos >= 0x80) {
             self->posY.i.hi = 0x80 - g_Tilemap.scrollY.i.hi;
             self->step = 6;
         }
         break;
-    }
 
-    case 4: {
-        if (D_us_801815DC == 0x0) {
-            self->velocityY = FIX(-1.0);
+    case 4:
+        if (!D_us_801815DC) {
             self->step += 1;
+            self->velocityY = FIX(-1.0);
         }
         break;
-    }
 
-    case 5: {
+    case 5:
         self->posX.i.hi -= 8;
         GetPlayerCollisionWith(self, 0x10, 0x20, 0xB);
         self->posX.i.hi += 8;
         MoveEntity();
-        if (((s16)(self->posY.i.hi + g_Tilemap.scrollY.i.hi)) < 0x41) {
+        screen_pos = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
+        if (screen_pos < 0x41) {
             func_us_801C9048(0);
             self->step += 1;
         }
         break;
-    }
 
-    case 6: {
+    case 6:
         break;
-    }
     }
 }
 
