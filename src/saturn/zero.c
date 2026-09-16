@@ -8,7 +8,6 @@
 #include "lib/spr/spr.h"
 #include "game.h"
 
-extern s32* SpGourTbl;
 extern s32* DAT_0605c120[];
 
 // func_06004080
@@ -1270,13 +1269,11 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6007CA0, AllocGourTbl);
 // func_06007CE0
 u16 LocalLookupTblNoToVram(u16 arg0) { return arg0 * 0x10 + 0x400; }
 
-s16 d_0605BECA;
-s16 d_0605AEA8;
-s16 d_0605AEB0;
-s16 d_0605BEC8;
-s32 d_06038dbc;
-s32 DAT_0605BEC4;
-s32 d_060576AC;
+extern s16 d_0605BECA;
+extern s16 d_0605BEC8;
+extern s32 d_06038dbc;
+extern s32 DAT_0605BEC4;
+extern s32 d_060576AC;
 
 // func_06007CF8
 void ResetSpriteVram() {
@@ -1324,10 +1321,8 @@ void func_06007D54(void) {
     d_0605AEAC = &DAT_06050684[SpMstCmdPos];
 }
 
-s32 d_06038c5c;
-s32 d_06038c5c;
-s32 d_0605BEBE;
-u16 d_0605AEA0[4];
+extern s32 d_06038c5c;
+extern s32 d_0605BEBE;
 
 // func_06007E14
 void CloseSpriteList(void) {
@@ -1397,27 +1392,22 @@ void func_06007F6C(void) {
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008048, ResetLayerColorCalc);
 
-extern s16 DAT_0606570C;
-
 void func_060080EC(s32 arg0) {
     if (arg0 == 1) {
-        SclPriBuffDirty.SclOtherPri = 1;
-        DAT_0606570C &= ~0x100;
+        SCL_SET_CCMD(0);
     } else {
-        SclPriBuffDirty.SclOtherPri = 1;
-        DAT_0606570C = (DAT_0606570C & ~0x100) | 0x100;
+        SCL_SET_CCMD(1);
     }
 }
 
 void SetVdp2BackgroundColor(void) {
-    s16 local_c[2];
-    local_c[0] = 0;
-    SCL_SetBack(SCL_VDP2_VRAM + 0x7FE20, 1, local_c);
+    u16 color = RGB16_COLOR(0, 0, 0) & 0x7FFF;
+    SCL_SetBack(SCL_VDP2_VRAM + 0x80000 - 0x1E0, 1, &color);
 }
 
-void func_0600815C(u8 r, u8 g, u8 b) {
+void SetVdp2BackgroundColorRgb(u8 r, u8 g, u8 b) {
     u16 color = RGB16_COLOR(r, g, b);
-    SCL_SetBack(SCL_VDP2_VRAM + 0x7FE20, 1, &color);
+    SCL_SetBack(SCL_VDP2_VRAM + 0x80000 - 0x1E0, 1, &color);
 }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600819C, BlankScreen);
@@ -1663,13 +1653,13 @@ INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f6008EE8, func_06008EE8);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008FF0, func_800EA5AC);
 
 void func_06009010(u8* rgb) {
-    Sint16 enabled;
+    s16 enabled;
 
     enabled = DAT_0605C6DC;
     if (enabled != 0) {
-        SCL_SetColOffset(0, 0x6F, rgb[0], rgb[1], rgb[2]);
+        SCL_SetColOffset(SCL_OFFSET_A, 0x6F, rgb[0], rgb[1], rgb[2]);
     } else {
-        SCL_SetColOffset(0, 0x6F, 0, 0, enabled);
+        SCL_SetColOffset(SCL_OFFSET_A, 0x6F, 0, 0, enabled);
     }
 }
 
@@ -1720,8 +1710,8 @@ void func_0600971C(void) {
 
     Scl_w_reg.win0_start[0] = 0;
     Scl_w_reg.win0_start[1] = 12;
-    Scl_w_reg.win0_end[0] = 0x0280;
-    Scl_w_reg.win0_end[1] = 0x00F0;
+    Scl_w_reg.win0_end[0] = 640;
+    Scl_w_reg.win0_end[1] = 240;
     Scl_w_reg.wincontrl[0] = 0x0383;
     Scl_w_reg.wincontrl[1] = 0x8383;
     Scl_w_reg.wincontrl[2] = 0x0083;
@@ -1797,7 +1787,7 @@ void func_06009F10(void) {
     scfg.plate_addr[1] = SCL_VDP2_VRAM_B0 + 0x8000;
     scfg.plate_addr[0] = SCL_VDP2_VRAM_B0 + 0x8000;
     scfg.patnamecontrl = 0x21;
-    SCL_SetConfig(0x10, &scfg);
+    SCL_SetConfig(SCL_NBG2, &scfg);
 }
 
 // _X_SCROLL_TRANS
@@ -2048,8 +2038,12 @@ void func_0600BCE0(s32* mtx, s16 angle) {
     mtx[3] = MTH_Mul(sincos[1], axis);
 }
 
+extern SprGourTbl* SpGourTbl;
+
 // func_0600BD4C
-int GetSpriteObjectGourTbl(u8* arg0) { return SpGourTbl + arg0[2] * 2; }
+SprGourTbl* GetSpriteObjectGourTbl(SpriteObject* obj) {
+    return &SpGourTbl[obj->slotAndStreamId >> 8];
+}
 
 // _Odma
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600BD68, func_0600BD68);
