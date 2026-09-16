@@ -28,8 +28,6 @@ static AnimateEntityFrame anim13[] = {{4, 30}, POSE_END};
 static AnimateEntityFrame anim14[] = {{4, 31}, POSE_END};
 static AnimateEntityFrame anim15[] = {{4, 67}, POSE_END};
 
-
-
 Rno1BackgroundBlockInit BackgroundBlockInit[] = {
     {0x0006, 506, 0, 0x0000, 0x0000, 16, 0, anim1},
     {0x8002, 127, 0, 0x0000, 0x0000, 0, 0, anim2},
