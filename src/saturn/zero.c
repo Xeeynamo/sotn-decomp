@@ -2143,7 +2143,7 @@ void func_0600C00C(void) {
         banks[2]->allocationIndex = 3;
         banks[4]->allocationIndex = 3;
     }
-    if ((u32)(g_PlayableCharacter - 1) <= 1U) {
+    if (g_PlayableCharacter == 1 || g_PlayableCharacter == 2) {
         d_0605BECA = 0xA;
     } else {
         d_0605BECA = 0xD;
@@ -2372,8 +2372,7 @@ u16* func_0600CB20(s32 offset) {
     return func_0600CB04(col, row);
 }
 
-const unsigned short DAT_0600CB68[6] = {
-    0x4452, 0x4143, 0x554C, 0x4158, 0x5F00, 0x0009};
+const char DAT_0600CB68[] = "DRACULAX_";
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600CB74, Crc32);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600CBCC, func_0600CBCC);
@@ -2431,7 +2430,7 @@ s32 func_0600CE1C(void) {
     return result;
 }
 
-const u16 DAT_0600CEC8[4] = {0x2573, 0x2530, 0x3264, 0x0000};
+const char DAT_0600CEC8[] = "%s%02d";
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600CED0, func_0600CED0);
 
@@ -2506,76 +2505,56 @@ void func_0600DCA4(s32 arg0) {
     Primitive* prim;
 
     prim = &g_PrimBuf[arg0];
-    if (prim->next != NULL) {
-        do {
-            prim->drawMode = 0xFFFF;
-            prim = prim->next;
-            DAT_06061DD4--;
-        } while (prim->next != NULL);
+    while (prim->next != NULL) {
+        prim->drawMode = 0xFFFF;
+        prim = prim->next;
+        DAT_06061DD4--;
     }
     prim->drawMode = 0xFFFF;
     DAT_06061DD4--;
 }
 
 s32 func_0600DCF0(Primitive* prim) {
+    Point16* pos;
     s32 visible;
-    s16* x;
     s32 i;
-    u16 maxX;
-    u16 maxY;
-    s32 lastCorner;
-    s16* y;
-    s16 py;
 
     visible = 0;
-    x = &prim->x0;
-    i = 0;
-    maxX = 0x17F;
-    maxY = 0x12F;
-    lastCorner = 3;
-    y = &prim->y0;
+    pos = &prim->x0;
 
-    do {
-        py = *y;
-        y += 2;
-        if ((u16)(*x + 0x20) <= maxX) {
-            if ((u16)(py + 0x20) <= maxY) {
+    for (i = 0; i < 4; i++) {
+        s16 x = pos->x;
+        s16 y = pos->y;
+        if (x >= -0x20 && x < 0x160) {
+            if (y >= -0x20 && y < 0x110) {
                 visible = 1;
-                return visible;
+                break;
             }
         }
-        i++;
-        x += 2;
-    } while (i <= lastCorner);
+        pos++;
+    }
 
     return visible;
 }
 
 s32 func_0600DD38(Primitive* prim) {
+    Point16* pos;
     s32 visible;
-    s16* x;
     s32 i;
-    s32 lastCorner;
-    u16 maxX;
-    u16 maxY;
-    s16* y;
-    s16 py;
 
     visible = 0;
-    x = &prim->x0;
-    i = 0;
-    lastCorner = 1;
-    maxX = 0x17F;
-    maxY = 0x12F;
-    y = &prim->y0;
+    pos = &prim->x0;
 
-    for (; i <= lastCorner; i++, lastCorner = 1, x += 4) {
-        py = *y;
-        y += 4;
-        if ((u16)(*x + 0x20) <= maxX && (u16)(py + 0x20) <= maxY) {
-            visible = lastCorner;
-            break;
+    for (i = 0; i < 2; i++) {
+        s16 x = pos->x;
+        s16 y = pos->y;
+        if (x >= -0x20 && x < 0x160) {
+            if (y >= -0x20 && y < 0x110) {
+                visible = 1;
+                break;
+            }
         }
+        pos += 2;
     }
 
     return visible;
@@ -2584,30 +2563,23 @@ s32 func_0600DD38(Primitive* prim) {
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600DD84, func_0600DD84);
 
 s32 func_0600DDD4(Primitive* prim) {
+    Point16* pos;
     s32 visible;
-    s16* x;
     s32 i;
-    s32 lastCorner;
-    u16 maxX;
-    u16 maxY;
-    s16* y;
-    s16 py;
 
     visible = 0;
-    x = &prim->x0;
-    i = 0;
-    lastCorner = 1;
-    maxX = 0x17F;
-    maxY = 0x12F;
-    y = &prim->y0;
+    pos = &prim->x0;
 
-    for (; i <= lastCorner; i++, lastCorner = 1, x += 2) {
-        py = *y;
-        y += 2;
-        if ((u16)(*x + 0x20) <= maxX && (u16)(py + 0x20) <= maxY) {
-            visible = lastCorner;
-            break;
+    for (i = 0; i < 2; i++) {
+        s16 x = pos->x;
+        s16 y = pos->y;
+        if (x >= -0x20 && x < 0x160) {
+            if (y >= -0x20 && y < 0x110) {
+                visible = 1;
+                break;
+            }
         }
+        pos++;
     }
 
     return visible;

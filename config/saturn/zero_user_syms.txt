@@ -41,6 +41,7 @@ _SetParts = 0x0600B084;
 _AllocSpriteObject = 0x0600B1A8;
 _CreateSpriteObject = 0x0600B344;
 _DestroySpriteObject = 0x0600B428;
+_GetSpriteObjectGourTbl = 0x0600BD4C;
 _AllocGameSprite = 0x0600BE18;
 _func_0600C0C4 = 0x0600C0C4;
 _func_0600C298 = 0x0600C298;
