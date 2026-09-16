@@ -144,7 +144,6 @@ extern s32 D_8013B61C;
 extern s32 g_PlayingXaBgmId;
 extern s8 DAT_060644C0;
 
-extern u16 DAT_0605cea2;
 extern u32 DAT_0605C658;
 void func_06030df0();
 void InitBackupRam(void);
@@ -204,7 +203,7 @@ extern s32 DAT_06061dd0;
 extern s32 DAT_0605c10c;
 extern SaturnStageFileRecord g_StageFileRecords[];
 extern s32 DAT_0605c11a;
-extern u16 DAT_0605cea0;
+extern Unk0605cd70 DAT_0605cea0;
 extern SaturnSpriteResource g_EntitySpriteBank14;
 extern SaturnSpriteResource g_EntitySpriteBank01;
 extern SaturnSpriteFrameHeader* DAT_06045E14[];

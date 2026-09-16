@@ -16,7 +16,7 @@ void entrypoint(void) {
     Scl_s_reg.tvmode &= ~0x8100;
     SclProcess = 1;
     InitSystem();
-    DAT_0605cea2 = 0;
+    DAT_0605cea0.unk2 = 0;
     DAT_0605C658 = 1;
     do {
         func_060040d8();
@@ -33,26 +33,26 @@ void StartColorOffsetFade(s32, s32);
 void func_060040d8(void) {
     g_Timer++;
     func_06007d54();
-    switch (DAT_0605cea2) {
+    switch (DAT_0605cea0.unk2) {
     case 0:
         func_0600456c();
         DAT_0605d7f8 = 0;
         func_06004f50(0x20);
-        DAT_0605cea0++;
+        DAT_0605cea0.unk0++;
         break;
     case 6:
-        if (DAT_0605cea0 == 0) {
+        if (DAT_0605cea0.unk0 == 0) {
             func_06005328();
-            DAT_0605cea0++;
+            DAT_0605cea0.unk0++;
             Scl_s_reg.tvmode |= 0x8000;
             SclProcess = 1;
         }
         func_060645E0();
         break;
     case 2:
-        if (DAT_0605cea0 == 0) {
+        if (DAT_0605cea0.unk0 == 0) {
             func_06005328();
-            DAT_0605cea0++;
+            DAT_0605cea0.unk0++;
         }
         func_06064688();
         UpdateScrollForRoom();
@@ -65,23 +65,23 @@ void func_060040d8(void) {
         UpdateScrollForRoom();
         break;
     case 4:
-        if (DAT_0605cea0 == 0) {
+        if (DAT_0605cea0.unk0 == 0) {
             func_06005328();
-            DAT_0605cea0++;
+            DAT_0605cea0.unk0++;
         }
         func_06064674();
         break;
     case 8:
-        if (DAT_0605cea0 == 0) {
+        if (DAT_0605cea0.unk0 == 0) {
             func_06005328();
-            DAT_0605cea0++;
+            DAT_0605cea0.unk0++;
         }
         func_06064580();
         break;
     case 0x11:
-        if (*((u32*)&DAT_0605cea0) == 0x11) {
+        if (DAT_0605cea0.unk0 == 0 && DAT_0605cea0.unk2 == 0x11) {
             if (func_06005328() == 0) {
-                DAT_0605cea0++;
+                DAT_0605cea0.unk0++;
             }
         } else {
             func_06009838();
@@ -90,10 +90,10 @@ void func_060040d8(void) {
         }
         break;
     case 5:
-        if (DAT_0605cea0 == 0) {
+        if (DAT_0605cea0.unk0 == 0) {
             StartColorOffsetFade(0, 2);
             func_06005328();
-            DAT_0605cea0++;
+            DAT_0605cea0.unk0++;
         }
         func_06064644();
         UpdateScrollForRoom();
@@ -132,7 +132,7 @@ void func_060040d8(void) {
         break;
     }
     if (func_0600fb4c() != 0) {
-        if (DAT_0605cea2 == 6) {
+        if (DAT_0605cea0.unk2 == 6) {
             SYS_EXECDMP();
         } else {
             PlaySfx(SET_UNK_0B);
@@ -143,7 +143,7 @@ void func_060040d8(void) {
             func_06012fb4();
             func_0600652C();
             func_0601333c();
-            if (DAT_0605cea2 == 2) {
+            if (DAT_0605cea0.unk2 == 2) {
                 SYS_EXECDMP();
             }
         }
@@ -210,7 +210,6 @@ void func_0600460C(void) {
 }
 
 void func_060046E8(void) {
-    Unk0605cd70* state;
     struct BgTransfer* transfers;
     u32 i;
 
@@ -220,11 +219,10 @@ void func_060046E8(void) {
     DAT_0605c10c = 0;
     g_GameTimer = 0;
 
-    state = (Unk0605cd70*)&DAT_0605cea0;
-    state->unk0 = 0;
-    state->unk2 = 0;
-    state->unk4 = 0xFFFF;
-    state->unk8 = 0;
+    DAT_0605cea0.unk0 = 0;
+    DAT_0605cea0.unk2 = 0;
+    DAT_0605cea0.unk4 = 0xFFFF;
+    DAT_0605cea0.unk8 = 0;
 
     DAT_0605cd70.unk0 = 0;
     DAT_0605cd70.unk2 = 0;
@@ -3150,7 +3148,7 @@ void func_0600FFB8(Entity* self) {
     if (self->unk0 != NULL) {
         DestroySpriteObject(self->unk0);
     }
-    if (self->flags & 0x800000) {
+    if (self->flags & FLAG_HAS_PRIMS) {
         FreePrimitives(self->primIndex);
     }
     memset(self, 0, sizeof(Entity));
