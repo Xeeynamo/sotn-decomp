@@ -195,23 +195,23 @@ void func_us_801C909C(Entity* self) {
     }
 }
 
-extern ObjInit2 BackgroundBlockInit[];
+// extern ObjInit2 BackgroundBlockInit[];
 
-void EntityBackgroundBlock(Entity* self) {
-    ObjInit2* objInit = &BackgroundBlockInit[self->params];
+// void EntityBackgroundBlock(Entity* self) {
+//     ObjInit2* objInit = &BackgroundBlockInit[self->params];
 
-    if (!self->step) {
-        InitializeEntity(g_EInitCommon);
-        self->animSet = objInit->animSet;
-        self->zPriority = objInit->zPriority;
-        self->unk5A = LOHU(objInit->facingLeft);
-        self->palette = objInit->palette;
-        self->drawFlags = objInit->drawFlags;
-        self->blendMode = objInit->blendMode;
-        if (objInit->flags) {
-            self->flags = objInit->flags;
-        }
-    }
+//     if (!self->step) {
+//         InitializeEntity(g_EInitCommon);
+//         self->animSet = objInit->animSet;
+//         self->zPriority = objInit->zPriority;
+//         self->unk5A = LOHU(objInit->facingLeft);
+//         self->palette = objInit->palette;
+//         self->drawFlags = objInit->drawFlags;
+//         self->blendMode = objInit->blendMode;
+//         if (objInit->flags) {
+//             self->flags = objInit->flags;
+//         }
+//     }
 
-    AnimateEntity(objInit->animFrames, self);
-}
+//     AnimateEntity(objInit->animFrames, self);
+// }
