@@ -806,71 +806,108 @@ s32 func_06005A90(void) {
     }
 }
 
-const char DAT_06005CA4[] = "S011.CHR";
+char* func_06005E3C(s32 arg0, u16 arg1) {
+    switch (arg1) {
+    case 0x1F:
+        if (arg0 == 0) {
+            return "S011.CHR";
+        } else {
+            return "S011.PTN";
+        }
+    case 0x40:
+        if (arg0 == 0) {
+            return "S160.CHR";
+        } else {
+            return "S160.PTN";
+        }
+    case 0x9:
+        if (arg0 == 0) {
+            return "SWATA.CHR";
+        } else {
+            return "SWATA.PTN";
+        }
+    case 0x12:
+        if (arg0 == 0) {
+            return "EVENT070.001";
+        } else {
+            return "EVENT070.002";
+        }
+    case 0x18:
+        if (arg0 == 0) {
+            return "SBO7.CHR";
+        } else {
+            return "SBO7.PTN";
+        }
+    case 0xB:
+        if (arg0 == 0) {
+            return "S302.CHR";
+        } else {
+            return "S302.PTN";
+        }
+    case 0x41:
+        if (arg0 == 0) {
+            return "EVENT020.001";
+        } else {
+            return "EVENT020.002";
+        }
+    case 0xC:
+        if (arg0 == 0) {
+            return "S040.CHR";
+        } else {
+            return "S040.PTN";
+        }
+    case 0x6:
+        if (arg0 == 0) {
+            return "S060.CHR";
+        } else {
+            return "S060.PTN";
+        }
+    case 0x19:
+        if (arg0 == 0) {
+            return "S050.CHR";
+        } else {
+            return "S050.PTN";
+        }
+    case 0x1C:
+        if (arg0 == 0) {
+            return "S110.CHR";
+        } else {
+            return "S110.PTN";
+        }
+    case 0x28:
+        if (arg0 == 0) {
+            return "SR14.CHR";
+        } else {
+            return "SR14.PTN";
+        }
+    case 0x38:
+        if (arg0 == 0) {
+            return "SDRACULA.CHR";
+        } else {
+            return "SDRACULA.PTN";
+        }
+    case 0x3C:
+        if (arg0 == 0) {
+            return "S140.CHR";
+        } else {
+            return "S140.PTN";
+        }
+    case 0x8:
+        if (arg0 == 0) {
+            return "S190.CHR";
+        } else {
+            return "S190.PTN";
+        }
+    case 0x17:
+        if (arg0 == 0) {
+            return "S030.CHR";
+        } else {
+            return "S030.PTN";
+        }
+    }
+    return NULL;
+}
 
-const char DAT_06005CB0[] = "S011.PTN";
-
-const char DAT_06005CBC[] = "S160.CHR";
-
-const char DAT_06005CC8[] = "S160.PTN";
-
-const char DAT_06005CD4[] = "SWATA.CHR";
-
-const char DAT_06005CE0[] = "SWATA.PTN";
-
-const char DAT_06005CEC[] = "EVENT070.001";
-
-const char DAT_06005CFC[] = "EVENT070.002";
-
-const char DAT_06005D0C[] = "SBO7.CHR";
-
-const char DAT_06005D18[] = "SBO7.PTN";
-
-const char DAT_06005D24[] = "S302.CHR";
-
-const char DAT_06005D30[] = "S302.PTN";
-
-const char DAT_06005D3C[] = "EVENT020.001";
-
-const char DAT_06005D4C[] = "EVENT020.002";
-
-const char DAT_06005D5C[] = "S040.CHR";
-
-const char DAT_06005D68[] = "S040.PTN";
-
-const char DAT_06005D74[] = "S060.CHR";
-
-const char DAT_06005D80[] = "S060.PTN";
-
-const char DAT_06005D8C[] = "S050.CHR";
-
-const char DAT_06005D98[] = "S050.PTN";
-
-const char DAT_06005DA4[] = "S110.CHR";
-
-const char DAT_06005DB0[] = "S110.PTN";
-
-const char DAT_06005DBC[] = "SR14.CHR";
-
-const char DAT_06005DC8[] = "SR14.PTN";
-
-const char DAT_06005DD4[] = "SDRACULA.CHR";
-
-const char DAT_06005DE4[] = "SDRACULA.PTN";
-
-const char DAT_06005DF4[] = "S140.CHR";
-
-const char DAT_06005E00[] = "S140.PTN";
-
-const char DAT_06005E0C[] = "S190.CHR";
-
-const char DAT_06005E18[] = "S190.PTN";
-
-const char DAT_06005E24[] = "S030.CHR";
-
-const char DAT_06005E30[] = "S030.PTN";
-
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6005E3C, func_06005E3C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600607C, func_0600607C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006170, func_06006170);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60062F8, func_060062F8);
