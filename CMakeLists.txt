@@ -836,6 +836,7 @@ set(SOURCE_FILES_STAGE_RNO0
 set(SOURCE_FILES_STAGE_RNO4
     src/pc/stages/stage_rno4.c
     src/st/rno4/create_entity.c
+    src/st/rno4/layers.c
     src/st/rno4/e_red_door.c
     src/st/rno4/e_red_door_tiles.c
     src/st/rno4/e_room_fg.c
@@ -843,7 +844,8 @@ set(SOURCE_FILES_STAGE_RNO4
     src/st/rno4/st_update.c
     src/st/rno4/unk_44B0C.c
     src/st/rno4/gen/rooms.c
-    src/st/rno4/stage_data.c)
+    src/st/rno4/stage_data.c
+    src/st/rno4/tilemaps.c)
 
 set(SOURCE_FILES_STAGE_RNO3
     src/pc/stages/stage_rno3.c

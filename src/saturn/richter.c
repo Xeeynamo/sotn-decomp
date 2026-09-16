@@ -1683,8 +1683,8 @@ void func_060BB09C(u8 walls, u8* dst) {
     }
 }
 
-const u16 DAT_060BB182 = 0x0009;
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BB184, func_060BB184);
+
 void func_060BB330(void) {
     u8* dst;
     u8* revealDst;
@@ -1844,35 +1844,28 @@ void func_060BBAF4(void) {
     memset(area, 0, clear_size);
     dst = area;
 
-    i = 0;
-    do {
+    for (i = 0; i < 11; i++) {
         func_06078700(dst, DAT_06085DE8[i], 4);
         dst += 0x180;
-        i++;
-    } while (i <= 10);
+    }
 
-    i = 0;
-    do {
+    for (i = 0; i < 8; i++) {
         func_06078700(dst, DAT_06085E14[i], 4);
         dst += 0x180;
-        i++;
-    } while (i <= 7);
+    }
 
-    i = 0;
-    do {
+    for (i = 0; i < 2; i++) {
         func_06078700(dst, DAT_06085DCC[i], 4);
         dst += 0x180;
-        i++;
-    } while (i <= 1);
+    }
 
     dma_base = (u8*)DAT_0605aec0;
     dma_offset = 8;
     dma_value = *(u16*)(dma_base + dma_offset);
-    dma_dest = (s32*)(0x25C00000U + dma_value * 8);
+    dma_dest = (s32*)(0x25C00000 + dma_value * 8);
     DMA_CpuMemCopy2(dma_dest, work + 0x4501, 0xFC0U);
-
-    do {
-    } while (DMA_CpuResult() == 2);
+    while (DMA_CpuResult() == 2) {
+    }
 }
 void func_060BBC00(void) {
     s32* base;
@@ -1887,7 +1880,7 @@ void func_060BBC00(void) {
     memset(base + 0x4501, 0, 0xA000);
 
     text = (u8*)(base + 0x4501);
-    for (i = 0; i <= 7; i++) {
+    for (i = 0; i < 8; i++) {
         func_06078700(text, func_06078748(i), 12);
         text += 0x480;
     }
@@ -1913,7 +1906,7 @@ void func_060BBCCC(void) {
     memset(base + 0x4501, 0, 0xA000);
 
     text = (u8*)(base + 0x4501);
-    for (i = 0; i <= 0x1F; i++) {
+    for (i = 0; i < 0x20; i++) {
         func_06078700(text, func_06078748(i), 12);
         text += 0x480;
     }
@@ -2088,7 +2081,7 @@ void func_060BCDB8(void) {
         if (DAT_06057f68 == 6) {
             DAT_0605cd70.unk0 = 6;
             DAT_0605cd70.unk8 = 0;
-            DAT_06065470 &= ~0x003F;
+            Scl_s_reg.dispenbl &= ~0x003F;
             SclProcess = 1;
         }
         func_060BCA84();
