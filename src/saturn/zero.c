@@ -609,7 +609,7 @@ s32 func_060055C8(void) {
         break;
 
     case 13:
-        if (func_0600607C(g_CurrentRoom.stageID) != 0) {
+        if (func_0600607C(g_CurrentRoom.stageID)) {
             ReadFileToAddr(func_06005E3C(0, g_CurrentRoom.stageID),
                            SCL_VDP2_VRAM_A1 + 0x2000);
             ReadFileToAddr(
@@ -908,7 +908,41 @@ char* func_06005E3C(s32 arg0, u16 arg1) {
     return NULL;
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600607C, func_0600607C);
+bool func_0600607C(u16 arg0) {
+    if (g_PlayableCharacter != 0 && g_CurrentRoom.stageID == 0x9) {
+        return true;
+    }
+    if (g_PlayableCharacter == 1 && g_CurrentRoom.stageID == 0x1F) {
+        return true;
+    }
+    if (g_PlayableCharacter == 0) {
+        switch (arg0) {
+        case 0x6:
+        case 0x8:
+        case 0x9:
+        case 0xB:
+        case 0xC:
+        case 0x12:
+        case 0x17:
+        case 0x18:
+        case 0x19:
+        case 0x1C:
+        case 0x1F:
+        case 0x28:
+        case 0x38:
+        case 0x3C:
+        case 0x40:
+        case 0x41:
+            return true;
+        }
+    }
+    return false;
+}
+
+const char DAT_06006158[] = "in GfsInit";
+
+const char DAT_06006164[] = "in CdInit";
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006170, func_06006170);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60062F8, func_060062F8);
 
