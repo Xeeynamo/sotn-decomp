@@ -41,7 +41,9 @@ segments:
     subsegments:
       - [0x0, .data, header]
       - [0x2C, .data, sprite_banks]
-      - [0x8C, data, palette_def]      
+      - [0x8C, data, palette_def] # doesn't work   
+      - [0x154, .data, layers]
+      - [0x32C, data]
       - [0x5A8, .data, e_init]
       - [0x79C, data]
       - [0x954, .data, e_lock_camera]
@@ -60,6 +62,7 @@ segments:
       - [0x1804, .data, e_particles]
       - [0x1884, .data, e_room_fg]
       - [0x1910, data]
+      - [0xCE20, .data, tilemaps]
       - [0x1D650, .data, gen/sprites]
       - [0x25BA8, .rodata, unk_26178]
       - [0x25C58, rodata]
