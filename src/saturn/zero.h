@@ -267,7 +267,6 @@ extern s32 DAT_06062290[];
 extern s32 DAT_06063BD4;
 extern s32 DAT_06063C1C;
 extern s32 DAT_06063EB4;
-extern s32 d_0605AEAC;
 void func_0600C818();
 void ResetLayerColorCalc();
 extern u16 DAT_0605cdb8;

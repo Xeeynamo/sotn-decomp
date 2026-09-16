@@ -704,7 +704,172 @@ void func_060059F4(void) {
     DAT_060645C4();
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6005A90, func_06005A90);
+extern s32 DAT_060389E0[][2];
+extern s32 DAT_060389F4[];
+
+s32 func_06005A90(void) {
+    func_06019FE4(0);
+    switch (DAT_0605D770.unk8) {
+    case 0:
+        ((s32(*)(s32))PlaySfx)(DAT_060389E0[g_PlayableCharacter][0]);
+        DAT_0605D770.unk8++;
+        return 1;
+
+    case 1:
+        if (func_06012D88() != 0) {
+            return 1;
+        }
+        DAT_0605D770.unk8++;
+        return 1;
+
+    case 2:
+        ((s32(*)(s32))PlaySfx)(DAT_060389E0[g_PlayableCharacter][1]);
+        DAT_0605D770.unk8++;
+        return 1;
+
+    case 3:
+        if (func_06012D88() != 0) {
+            return 1;
+        }
+        DAT_0605D770.unk8++;
+
+    case 4:
+        ((s32(*)(s32))PlaySfx)(g_StageFileRecords[g_CurrentRoom.stageID].unkC);
+        DAT_0605D770.unk8++;
+        return 1;
+
+    case 5:
+        if (func_06012D88() != 0) {
+            return 1;
+        }
+        if ((g_Servant != 0) && (g_PlayableCharacter == 0)) {
+            DAT_0605D770.unk8++;
+            return 1;
+        }
+        goto block_43;
+
+    case 6:
+        ((s32(*)(s32))PlaySfx)(DAT_060389F4[g_Servant]);
+        DAT_0605D770.unk8++;
+        return 1;
+
+    case 7:
+        if (func_06012D88() != 0) {
+            return 1;
+        }
+    block_43:
+        if (g_CurrentRoom.stageID == 0x1F) {
+            DAT_0605D770.unk8 = 8;
+            goto case8;
+        }
+        if (g_CurrentRoom.stageID == 0x40) {
+            DAT_0605D770.unk8 = 9;
+            goto case9;
+        }
+        if (g_PlayableCharacter != 0 && g_CurrentRoom.stageID == 0x41) {
+            DAT_0605D770.unk8 = 10;
+            goto case10;
+        }
+        ((s32(*)(s32, s32))StartColorOffsetFade)(0, 2);
+        return 0;
+
+    case 8:
+    case8:
+        ((s32(*)(s32))PlaySfx)(0xF0000807);
+        DAT_0605D770.unk8 = 0x80;
+        return 1;
+
+    case 9:
+    case9:
+        ((s32(*)(s32))PlaySfx)(0xF0000810);
+        DAT_0605D770.unk8 = 0x80;
+        return 1;
+
+    case 10:
+    case10:
+        if (g_PlayableCharacter == 1) {
+            ((s32(*)(s32))PlaySfx)(0xF0000812);
+        }
+        if (g_PlayableCharacter == 2) {
+            ((s32(*)(s32))PlaySfx)(0xF000080F);
+        }
+        DAT_0605D770.unk8 = 0x80;
+        return 1;
+
+    case 0x80:
+        if (func_06012D88() != 0) {
+            return 1;
+        }
+    default:
+        ((s32(*)(s32, s32))StartColorOffsetFade)(0, 2);
+        return 0;
+    }
+}
+
+const char DAT_06005CA4[] = "S011.CHR";
+
+const char DAT_06005CB0[] = "S011.PTN";
+
+const char DAT_06005CBC[] = "S160.CHR";
+
+const char DAT_06005CC8[] = "S160.PTN";
+
+const char DAT_06005CD4[] = "SWATA.CHR";
+
+const char DAT_06005CE0[] = "SWATA.PTN";
+
+const char DAT_06005CEC[] = "EVENT070.001";
+
+const char DAT_06005CFC[] = "EVENT070.002";
+
+const char DAT_06005D0C[] = "SBO7.CHR";
+
+const char DAT_06005D18[] = "SBO7.PTN";
+
+const char DAT_06005D24[] = "S302.CHR";
+
+const char DAT_06005D30[] = "S302.PTN";
+
+const char DAT_06005D3C[] = "EVENT020.001";
+
+const char DAT_06005D4C[] = "EVENT020.002";
+
+const char DAT_06005D5C[] = "S040.CHR";
+
+const char DAT_06005D68[] = "S040.PTN";
+
+const char DAT_06005D74[] = "S060.CHR";
+
+const char DAT_06005D80[] = "S060.PTN";
+
+const char DAT_06005D8C[] = "S050.CHR";
+
+const char DAT_06005D98[] = "S050.PTN";
+
+const char DAT_06005DA4[] = "S110.CHR";
+
+const char DAT_06005DB0[] = "S110.PTN";
+
+const char DAT_06005DBC[] = "SR14.CHR";
+
+const char DAT_06005DC8[] = "SR14.PTN";
+
+const char DAT_06005DD4[] = "SDRACULA.CHR";
+
+const char DAT_06005DE4[] = "SDRACULA.PTN";
+
+const char DAT_06005DF4[] = "S140.CHR";
+
+const char DAT_06005E00[] = "S140.PTN";
+
+const char DAT_06005E0C[] = "S190.CHR";
+
+const char DAT_06005E18[] = "S190.PTN";
+
+const char DAT_06005E24[] = "S030.CHR";
+
+const char DAT_06005E30[] = "S030.PTN";
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6005E3C, func_06005E3C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600607C, func_0600607C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006170, func_06006170);
@@ -1056,6 +1221,7 @@ void ResetSpriteVram() {
 
 extern u16 d_0605AEA0[4];
 extern SprSpCmd DAT_06050684[];
+extern SprSpCmd* d_0605AEAC;
 
 void func_06007D54(void) {
     SprSpCmd cmd;
@@ -1066,7 +1232,7 @@ void func_06007D54(void) {
     LOW(cmd.cx) = DAT_0605BEC0;
     if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(0, &cmd);
-        d_0605AEAC += 0x20;
+        d_0605AEAC++;
     }
 
     cmd.control = 0x1008;
@@ -1074,17 +1240,17 @@ void func_06007D54(void) {
     LOW(cmd.cx) = ((s32*)d_0605AEA0)[1];
     if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(0, &cmd);
-        d_0605AEAC += 0x20;
+        d_0605AEAC++;
     }
 
     cmd.control = 0x100A;
     LOW(cmd.ax) = DAT_0600E23C;
     if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(0, &cmd);
-        d_0605AEAC += 0x20;
+        d_0605AEAC++;
     }
 
-    d_0605AEAC = (s32)&DAT_06050684[SpMstCmdPos];
+    d_0605AEAC = &DAT_06050684[SpMstCmdPos];
 }
 
 s32 d_06038c5c;
@@ -1106,7 +1272,7 @@ void CloseSpriteList(void) {
         cmd.ay = cmd.by = 0;
         cmd.cy = cmd.dy = d_0605AEA0[1] - 1;
         SPR_2Cmd(0x1FF, &cmd);
-        d_0605AEAC += 0x20;
+        d_0605AEAC++;
     }
 
     SPR_2CloseCommand();
@@ -2464,7 +2630,7 @@ void func_0600E164(void) {
         cmd.ay = cmd.by = DAT_0605AEA2;
         cmd.cy = cmd.dy = DAT_0605BEC2;
         SPR_2Cmd(0x1FF, &cmd);
-        d_0605AEAC += 0x20;
+        d_0605AEAC++;
     }
 }
 
