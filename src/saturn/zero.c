@@ -1095,7 +1095,7 @@ s32 func_06006EF8(void) {
     while (func_0602D754(&stat[1]) == -8 && retries > 0) {
     }
     status[0] = data[0] & 0x0F;
-    if ((u32)(stat[0] - 1) <= 1U) {
+    if (stat[0] == 1 || stat[0] == 2) {
         result = 0;
     }
     return result;
