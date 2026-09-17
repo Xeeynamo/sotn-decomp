@@ -88,6 +88,7 @@ void EntityWaterBox(Entity* self) {
     }
 }
 
+// https://www.decomp.me/scratch/xccMl
 INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", func_us_801C81C8);
 
 void EntityFloatingIcePlatform(Entity* self) {
@@ -169,11 +170,49 @@ void EntityFloatingIcePlatform(Entity* self) {
 
 INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", func_us_801C4BD8_from_no4);
 
-INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", func_us_801C8668);
+void func_us_801C8668(Entity* self) {
+    s32 i;
+    u16* tile;
+    Tilemap* tilemap;
+
+    tilemap = &g_Tilemap;
+
+    if (!self->step) {
+        InitializeEntity(g_EInitInteractable);
+        self->animSet = 0;
+        tile = tilemap->fg + 0x1052;
+
+        for (i = 0; i < 5; ++i) {
+            *tile = 0xac7;
+            tile += 1;
+        }
+        *tile = 0x59D;
+        tile = tilemap->fg + 0x1062;
+
+        for (i = 0; i < 0xA; ++i) {
+            *tile = 0xAC7;
+            tile += 1;
+        }
+    }
+}
 
 void RNO4_Unused801C8704(void) {}
 
-INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", func_us_801C870C);
+void func_us_801C870C(Entity* self) {
+    s16 i;
+    u16* tilePtr;
+
+    if (self->params == 0) {
+        tilePtr = g_Tilemap.fg + 0x143;
+    } else {
+        tilePtr = g_Tilemap.fg + 0x53;
+    }
+
+    for (i = 0; i < 0xA; ++i) {
+        tilePtr[0] = 0;
+        ++tilePtr;
+    }
+}
 
 void RNO4_Unused801C8768(void) {}
 

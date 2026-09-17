@@ -4415,6 +4415,13 @@ typedef struct {
     /* 0x8C */ s32 bloodyTimer;
 } ET_Crusher;
 
+typedef struct {
+    /* 0x7C */ s8 pad7C[8];
+    /* 0x84 */ s16 unk84; //
+    /* 0x86 */ s8 pad86[2];
+    /* 0x88 */ u8 unk88; //
+} ET_801D5BA4;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -4790,6 +4797,7 @@ typedef union { // offset=0x7C
     ET_DarkwingBatWings batwing;
     ET_BombKnight bombKnight;
     ET_Crusher crusher;
+    ET_801D5BA4 et_801D5BA4;
 } Ext;
 
 SYNC_FIELD(ET_Player, ET_Weapon, anim);

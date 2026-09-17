@@ -51,7 +51,39 @@ INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", func_us_801C4228_from
 
 INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", EntityWaterBox);
 
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", func_us_801C81C8);
+// https://www.decomp.me/scratch/WfpaU
+// TODO: there are some externals that aren't in the psx version
+extern s16 D_pspeu_0929B938;
+extern s32 D_pspeu_0929BE00;
+extern s32 D_pspeu_0929BDF8;
+
+void func_us_801C81C8(Entity* self) {
+    Entity* child;
+
+    if (!self->step) {
+        InitializeEntity(g_EInitInteractable);
+        self->animSet = -0x7FFE;
+        self->palette = 0x44;
+        self->drawFlags = ENTITY_MASK_R;
+        self->posX.i.hi = (0x1EF - g_Tilemap.scrollX.i.hi);
+        child = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (child != NULL) {
+            CreateEntityFromCurrentEntity(D_pspeu_0929BDF8, child);
+            child->params = 1;
+        }
+        // TODO
+        *((Entity**)((u8*)self + 0x80)) = child;
+        child = AllocEntity(child, &g_Entities[256]);
+        if (child != NULL) {
+            CreateEntityFromCurrentEntity(D_pspeu_0929BE00, child);
+            child->params = 1;
+        }
+        // TODO
+        *((Entity**)((u8*)self + 0x84)) = child;
+        *((s16*)self + 0x3e) = 0;
+    }
+    AnimateEntity(&D_pspeu_0929B938, self);
+}
 
 void EntityFloatingIcePlatform(Entity* self) {
     extern u16 g_FloatingIcePlatformHitbox[];
@@ -132,8 +164,43 @@ void EntityFloatingIcePlatform(Entity* self) {
 
 INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", func_us_801C4BD8_from_no4);
 
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", func_us_801C8668);
+void func_us_801C8668(Entity* self) {
+    s32 i;
+    u16* tile;
+    Tilemap* tilemap;
+
+    tilemap = &g_Tilemap;
+
+    if (!self->step) {
+        InitializeEntity(g_EInitInteractable);
+        self->animSet = 0;
+        tile = tilemap->fg + 0x1052;
+
+        for (i = 0; i < 5; ++i) {
+            *tile = 0xac7;
+            tile += 1;
+        }
+        *tile = 0x59D;
+        tile = tilemap->fg + 0x1062;
+
+        for (i = 0; i < 0xA; ++i) {
+            *tile = 0xAC7;
+            tile += 1;
+        }
+    }
+}
 
 INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", RNO4_Unused801C8704);
 
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", func_us_801C870C);
+void func_us_801C870C(Entity* self) {
+    s16 i;
+    u16* tilePtr;
+    if (!self->params) {
+        tilePtr = g_Tilemap.fg + 0x143;
+    } else {
+        tilePtr = g_Tilemap.fg + 0x53;
+    }
+    for (i = 0; i < 0xA; ++i) {
+        *(tilePtr++) = 0;
+    }
+}

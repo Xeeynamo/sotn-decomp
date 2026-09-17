@@ -21,7 +21,8 @@ INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_3B78", func_us_801BCFC8_from_
 
 INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_3B78", StepTowards);
 
-INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_3B78", func_pspeu_0923D170);
+// https://www.decomp.me/scratch/wFeKa
+INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_3B78", func_us_801D5DC8);
 
 INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_3B78", func_us_801D5E90);
 
