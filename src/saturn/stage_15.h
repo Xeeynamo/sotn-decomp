@@ -262,7 +262,7 @@ extern s32 DAT_060485e0[];
 extern s32 DAT_060FB0D0;
 extern s32 DAT_060FB0E0;
 extern s32 g_Stage15Entity08ModelVertices14[14][3];
-void SetCurrentMatrixBinAngle(s32* pos, s32* angle);
+void SetCurrentMatrixBinAngle(MthXyz* rot, MthXyz* pos);
 void TransformAndProjectPoints(
     s32* src, s32* dst, s32 count, MthMatrixTbl* matrixTbl);
 extern s16 g_Stage15SpriteBank25PackedSpriteParts[];

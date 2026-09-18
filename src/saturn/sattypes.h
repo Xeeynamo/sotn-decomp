@@ -1316,6 +1316,8 @@ typedef struct {
     s32 : 32;
     s8 unk4;
     s8 unk5;
+    s8 pad[0x1006];
+    s32 unk100C;
 } UNK_060485C0;
 
 typedef enum {
