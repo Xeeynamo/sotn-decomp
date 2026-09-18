@@ -195,7 +195,7 @@ void func_801B1FD8(char* str, s32 y) {
     u8* chPix;
 
 #ifdef VERSION_PC
-    NOT_IMPLEMENTED;
+    fputs("func_801B1FD8 not implemented", stderr);
     return;
 #endif
     y = func_801B1EF4(y);
@@ -250,7 +250,7 @@ void func_801B2108(const char* str, s32 arg1) {
         arg1 &= ~0x200;
     }
 #ifdef VERSION_PC
-    NOT_IMPLEMENTED;
+    // not implemented on PC
     return;
 #endif
     arg1 = func_801B1EF4(arg1);
