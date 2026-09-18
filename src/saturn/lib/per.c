@@ -40,8 +40,8 @@ extern int remain_conect_cnt;
 
 extern PerSize backup_size;
 
-// PER_Init
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602BB98, func_0602BB98);
+// PER_LInit
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602BB98, PER_LInit);
 
 // PER_GetPer
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602BF40, func_0602BF40);

@@ -9,7 +9,7 @@ void func_06012030(void) {
     D_8013B61C = 0;
 }
 
-// _KeyOffVox
+// original name: KeyOffVox
 void func_06012054(void) {
     StopPcm(6);
     if (DAT_06062280 != 0) {
@@ -48,17 +48,14 @@ s32 func_06012108(void) {
 }
 
 void func_06012154(u32 arg0) {
-    u32 fadeStep;
-
-    fadeStep = (DAT_060641EC / arg0) >> 1;
-    DAT_06062388 = fadeStep;
-    if (fadeStep == 0) {
+    DAT_06062388 = (DAT_060641EC / arg0) >> 1;
+    if (DAT_06062388 == 0) {
         DAT_06062388 = 1;
     }
     DAT_0606422C = 0;
 }
 
-// _BgmFadeOut
+// original name: BgmFadeOut
 s32 func_06012190(u32 arg0) {
     if (D_8013B61C != 0) {
         if (DAT_06063C18 != DAT_060641EC) {
@@ -90,14 +87,13 @@ s32 func_060121F0(u32 arg0) {
     return -1;
 }
 
-// _VoxFadeOutStop
+// original name: VoxFadeOutStop
 s32 func_06012260(s32 arg0) {
     if (g_PlayingXaBgmId != 0) {
         DAT_06064384 = arg0;
         DAT_0606423C = 1;
         return 0;
     }
-
     return -1;
 }
 
@@ -111,28 +107,21 @@ s32 func_06012290(s32 arg0) {
 }
 
 s32 func_060122C0(u32 arg0) {
-    s32 temp_r7;
-    u32 temp_r0;
-    u32* temp_r2;
-
-    temp_r7 = DAT_06064330;
-    if (temp_r7 != 0) {
+    if (DAT_06064330 != 0) {
         return;
     }
     if ((u32)D_8013B61C <= 4U) {
-        PlaySfx(0xF0000010);
+        PlaySfx(SET_UNK_10);
         return 0;
     }
     DAT_06064330 = 1;
     if (D_8013B61C != 0) {
         if ((DAT_06063C18 != DAT_060641EC) || (DAT_06062388 != 0)) {
-            temp_r2 = &DAT_0606422C;
-            temp_r0 = (DAT_060641EC / arg0) >> 1;
-            *temp_r2 = temp_r0;
-            if (temp_r0 == 0) {
-                *temp_r2 = 1;
+            DAT_0606422C = (DAT_060641EC / arg0) >> 1;
+            if (DAT_0606422C == 0) {
+                DAT_0606422C = 1;
             }
-            DAT_06062388 = temp_r7;
+            DAT_06062388 = 0;
             DAT_06064358 = 1;
             return 0;
         }
@@ -141,37 +130,30 @@ s32 func_060122C0(u32 arg0) {
     return -1;
 }
 
-// _BgmPauseFadeIn
+// original name: BgmPauseFadeIn
 void func_06012358(u32 fadeDuration) {
     if (DAT_06064400 != 0) {
         DAT_06062258 = 0;
         PlaySfx(DAT_06064320);
         DAT_06064400 = 0;
     }
-    DAT_06062388 = (DAT_060641EC / fadeDuration) >> 1;
-    if (DAT_06062388 == 0) {
-        DAT_06062388 = 1;
-    }
-    DAT_0606422C = 0;
+    func_06012154(fadeDuration);
     func_06012554();
 }
 
 s32 func_060123D4(s32 arg0) {
-    s32 result;
-
     if ((u32)g_PlayingXaBgmId <= 4U) {
-        PlaySfx(0xF0000010);
+        PlaySfx(SET_UNK_10);
         return 0;
     }
 
-    result = -1;
     if (g_PlayingXaBgmId != 0) {
         DAT_06064384 = arg0;
         DAT_0606423C = 1;
         DAT_060644E4 = 1;
-        result = 0;
+        return 0;
     }
-    return result;
+    return -1;
 }
 
 void func_06012428(s32 arg0) {
@@ -217,7 +199,7 @@ void func_06012474(void) {
     }
 }
 
-// _BgmPauseOff
+// original name: BgmPauseOff
 void func_06012554(void) {
     if (DAT_06062248 == 1) {
         g_PlayingXaBgmId = DAT_06062248;
@@ -242,27 +224,22 @@ void func_060125EC(void) {
     DAT_06063E70 = 0;
 }
 
-// _BgmPauseKeyOff
+// original name: BgmPauseKeyOff
 void func_06012620(void) {
-    s32 bgmPaused;
-    s32 voxPaused;
-
-    bgmPaused = DAT_06063EB4;
-    if (bgmPaused == 1) {
+    if (DAT_06063EB4 == 1) {
         D_8013B61C = 0;
         DAT_060641F4 = 0;
         DAT_06063EB4 = 0;
         DAT_06063E70 = 0;
-        DAT_06063BD0 = bgmPaused;
+        DAT_06063BD0 = 1;
     }
 
-    voxPaused = DAT_06062248;
-    if (voxPaused == 1) {
+    if (DAT_06062248 == 1) {
         g_PlayingXaBgmId = 0;
         DAT_060623BC = 0;
         DAT_06062248 = 0;
         DAT_06062250 = 0;
-        DAT_06063BFC = voxPaused;
+        DAT_06063BFC = 1;
     }
 
     DAT_060623A0 = 0;
@@ -283,7 +260,6 @@ void func_060126B8(void) {
 
 s32 func_060126D4(s32 arg0) {
     s32 local[4];
-    s32 status;
     s32 result;
 
     if (arg0 != 0) {
@@ -291,13 +267,12 @@ s32 func_060126D4(s32 arg0) {
         return 1;
     }
 
-    status = DAT_06041280;
-    if (status == 0) {
+    if (DAT_06041280 == 0) {
         StopPcm(5);
         DAT_06064390 = ((s32(*)(s32, s32))PcmOpen)(DAT_06064324, 2);
         if (DAT_06064390 == 0) {
-            DAT_06064390 = status;
-            DAT_060644AC = status;
+            DAT_06064390 = 0;
+            DAT_060644AC = 0;
             return -1;
         }
         func_0601B910(DAT_06064390, local, local + 1, local + 2);
@@ -306,31 +281,28 @@ s32 func_060126D4(s32 arg0) {
         result = ((s32(*)(s32, s32, s32))func_06016B9C)(
             DAT_06064390, 0x00211800, DAT_06057C28);
         if (result == -1) {
-            DAT_06064390 = status;
-            DAT_060644AC = status;
+            DAT_06064390 = 0;
+            DAT_060644AC = 0;
             return result;
         }
         DAT_06041280 = 1;
     }
 
-    status = DAT_06041280;
-    if (status == 1) {
+    if (DAT_06041280 == 1) {
         func_0601BEE8(DAT_06064390);
         func_0601BE3C(DAT_06064390, local + 3, &DAT_06057C24);
         if (DAT_06057C24 >= DAT_06057C28) {
-            DAT_06064354 = status;
+            DAT_06064354 = 1;
             PcmClose(DAT_06064390, 2);
             return 0;
         }
         return 1;
     }
-    return status;
+    return DAT_06041280;
 }
 
 s32 func_060127F0(s32 arg0) {
     s32 work[4];
-    s32 state;
-    s32 handle;
     s32 result;
 
     if (arg0 != 0) {
@@ -338,42 +310,39 @@ s32 func_060127F0(s32 arg0) {
         return 1;
     }
 
-    state = DAT_06041284;
-    if (state == 0) {
+    if (DAT_06041284 == 0) {
         StopPcm(5);
-        handle = ((s32(*)(s32, s32))PcmOpen)(DAT_06064324, 2);
-        DAT_060643D0 = handle;
-        if (handle == 0) {
-            DAT_060643D0 = state;
-            DAT_060644AC = state;
+        DAT_060643D0 = ((s32(*)(s32, s32))PcmOpen)(DAT_06064324, 2);
+        if (DAT_060643D0 == 0) {
+            DAT_060643D0 = 0;
+            DAT_060644AC = 0;
             return -1;
         }
 
-        func_0601B910(handle, &work[0], &work[1], &work[2]);
+        func_0601B910(DAT_060643D0, &work[0], &work[1], &work[2]);
         DAT_06057C30 = work[0] * (work[1] - 1) + work[2];
         ((s32(*)(u32, s32))PcmLseek)((u32)DAT_060643D0, 0);
         result = ((s32(*)(s32, s32, s32))func_06016B9C)(
             DAT_060643D0, 0x22A000, DAT_06057C30);
         if (result == -1) {
-            DAT_060643D0 = state;
-            DAT_060644AC = state;
+            DAT_060643D0 = 0;
+            DAT_060644AC = 0;
             return result;
         }
         DAT_06041284 = 1;
     }
 
-    state = DAT_06041284;
-    if (state == 1) {
+    if (DAT_06041284 == 1) {
         func_0601BEE8(DAT_060643D0);
         func_0601BE3C(DAT_060643D0, &work[3], &DAT_06057C2C);
         if (DAT_06057C2C >= DAT_06057C30) {
-            DAT_060644AC = state;
+            DAT_060644AC = 1;
             PcmClose(DAT_060643D0, 2);
             return 0;
         }
         return 1;
     }
-    return state;
+    return DAT_06041284;
 }
 
 void func_06012908(void) {
@@ -400,6 +369,7 @@ void func_0601298C(void) {
         func_0601BDD0(DAT_06064338);
     }
 }
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60129BC, func_060129BC);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6012C4C, func_06012C4C);
 
@@ -433,8 +403,8 @@ void func_06012D30(void) {
 
 s32 func_06012D88(void) {
     if (DAT_060641D8 == 0) {
-        if (DAT_060642EC <= 1) {
-            if ((DAT_06064354 <= 1) && (DAT_060644AC <= 1)) {
+        if (DAT_060642EC < 2) {
+            if (DAT_06064354 < 2 && DAT_060644AC < 2) {
                 return 0;
             }
         }
@@ -474,7 +444,7 @@ bool CdSoundCommandQueueEmpty(void) {
     return ret;
 }
 
-// _sd_xapause_chk
+// original name: sd_xapause_chk
 s32 func_06012E4C(void) {
     s32 var_r0;
 
@@ -521,7 +491,7 @@ void func_06012F30(void) {
     }
 }
 
-// _sd_xa_wait2
+// original name: sd_xa_wait2
 s32 func_06012F7C(void) {
     if ((D_8013B61C != 0) && ((u32)D_8013B61C <= 4U)) {
         return 0;
@@ -534,9 +504,10 @@ s32 func_06012F7C(void) {
 
 const u16 DAT_06012FB0 = 0;
 const u16 DAT_06012FB2 = 0;
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6012FB4, func_06012FB4);
 
-// _sd_alloff_chk
+// original name: sd_alloff_chk
 bool func_06013320(void) {
     if (DAT_060644C0 == 2) {
         return 1;
@@ -565,19 +536,14 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6013538, func_06013538);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60139C4, func_060139C4);
 
 void func_06014424(void) {
-    while (SMPC_SF & 1) {
-    }
-    SMPC_SF = 1;
-    SMPC_COMREG = 3;
-    while (SMPC_SF & 1) {
-    }
+    PER_SMPC_NO_IREG(PER_SM_SSHOFF);
     DAT_06000310(0x94, func_060139C4);
-    SMPC_SF = 1;
-    SMPC_COMREG = 2;
-    while (SMPC_SF & 1) {
-    }
+    PER_PokeByte(PER_REG_SF, PER_B_SF);
+    PER_SMPC_GO_CMD(PER_SM_SSHON);
 }
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601449C, func_0601449C);
+
 void func_06014504(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     s32 savedArg3;
 
@@ -590,15 +556,14 @@ void func_06014504(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     DAT_06063C30[arg4].unkC = arg1;
     DAT_06063C30[arg4].unk10 = arg2;
     arg3 = 1;
-    DAT_06063C30[arg4].unk14 = arg3;
+    DAT_06063C30[arg4].unk14 = 1;
     DAT_06063C30[arg4].unk18 = savedArg3;
     DAT_06063C30[arg4].unk4 = 0;
-    DAT_06063C30[arg4].unk0 = arg3;
+    DAT_06063C30[arg4].unk0 = 1;
 }
+
 void func_0601454C(s32 arg0, s32 arg1, s32 arg2, s16 arg3, s32 arg4, s32 arg5) {
-    if (UNCACHED_SOUND_REQUESTS[arg5].unk0 != 0) {
-        do {
-        } while (UNCACHED_SOUND_REQUESTS[arg5].unk0 != 0);
+    while (UNCACHED_SOUND_REQUESTS[arg5].unk0 != 0) {
     }
 
     DAT_06063C30[arg5].unk8 = arg0;
@@ -624,9 +589,7 @@ void func_060145AC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 void func_060145F8(s32 arg0, s32 arg1, s32 arg2, s16 arg3, s32 arg4, s32 arg5) {
     SoundRequest* request;
 
-    if (UNCACHED_SOUND_REQUESTS[arg5].unk0 != 0) {
-        do {
-        } while (UNCACHED_SOUND_REQUESTS[arg5].unk0 != 0);
+    while (UNCACHED_SOUND_REQUESTS[arg5].unk0 != 0) {
     }
 
     request = &DAT_06063C30[arg5];
@@ -642,9 +605,7 @@ void func_060145F8(s32 arg0, s32 arg1, s32 arg2, s16 arg3, s32 arg4, s32 arg5) {
 void func_06014658(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     SoundRequest* request;
 
-    if (UNCACHED_SOUND_REQUESTS[arg3].unk0 != 0) {
-        do {
-        } while (UNCACHED_SOUND_REQUESTS[arg3].unk0 != 0);
+    while (UNCACHED_SOUND_REQUESTS[arg3].unk0 != 0) {
     }
 
     request = &DAT_06063C30[arg3];
@@ -668,10 +629,10 @@ void func_06014724(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     DAT_06063C30[arg4].unkC = arg1;
     DAT_06063C30[arg4].unk10 = arg2;
     arg3 = 1;
-    DAT_06063C30[arg4].unk14 = arg3;
+    DAT_06063C30[arg4].unk14 = 1;
     DAT_06063C30[arg4].unk18 = savedArg3;
     DAT_06063C30[arg4].unk4 = 2;
-    DAT_06063C30[arg4].unk0 = arg3;
+    DAT_06063C30[arg4].unk0 = 1;
 }
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601476C, func_0601476C);
 
@@ -705,21 +666,20 @@ s32 func_06014C54(void) {
 }
 
 s32 func_06014CB8(s32 arg0) {
-    s32 temp_r0;
-
     if (DAT_06062290[arg0] != 0) {
         StopPcm(7);
         PcmClose(DAT_06062290[arg0], 0);
         DAT_06062290[arg0] = 0;
     }
-    temp_r0 = ((s32(*)(s32, s32))PcmOpen)(arg0 + 0xE0000000, 0);
-    DAT_06062290[arg0] = temp_r0;
-    if (temp_r0 == 0)
+
+    DAT_06062290[arg0] = ((s32(*)(s32, s32))PcmOpen)(arg0 + 0xE0000000, 0);
+    if (DAT_06062290[arg0] == 0)
         return -1;
     *d_060623B0 &= ~2;
     func_0601C01C(DAT_06062290[arg0], 0);
     return 0;
 }
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6014D44, func_06014D44);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6014F3C, func_06014F3C);
 
@@ -782,6 +742,7 @@ void func_06016C08(void) {
     DAT_06063C18 = DAT_060641EC;
     *var_r8 = 0;
 }
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6016C60, func_06016C60);
 
 void func_06016D84(void) {
@@ -793,7 +754,7 @@ void func_06016D84(void) {
         if (DAT_06064384 != 0) {
             var_r2 = DAT_06064498;
             var_r0 = DAT_06063EA8 / DAT_06064384;
-            if (var_r0 <= 0xFU) {
+            if (var_r0 < 0x10) {
                 var_r0 = 0x10;
             }
             if (var_r2 < var_r0) {
@@ -802,8 +763,8 @@ void func_06016D84(void) {
                 var_r2 -= var_r0;
             }
             DAT_06064498 = var_r2;
-            if (var_r2 == 0) {
-                DAT_0606423C = var_r2;
+            if (DAT_06064498 == 0) {
+                DAT_0606423C = 0;
                 if (DAT_060644E4 == 0) {
                     // func_060120A0 is defined above, so call it indirectly to
                     // keep -O3 from inlining it here.
@@ -817,7 +778,7 @@ void func_06016D84(void) {
                 var_r2 = DAT_06064498;
             }
             var_r0_2 = DAT_06063EA8 / DAT_06064350;
-            if (var_r0_2 <= 0xFU) {
+            if (var_r0_2 < 0x10) {
                 var_r0_2 = 0x10;
             }
             var_r2 += var_r0_2;
@@ -825,7 +786,7 @@ void func_06016D84(void) {
                 var_r2 = DAT_06063EA8;
             }
             DAT_06064498 = var_r2;
-            if (var_r2 == DAT_06063EA8) {
+            if (DAT_06064498 == DAT_06063EA8) {
                 DAT_0606423C = 0;
                 DAT_06064350 = 0;
             }
@@ -845,7 +806,7 @@ void func_06016E84(void) {
         if (DAT_06064430 != 0) {
             var_r2 = DAT_0606448C;
             var_r0 = var_r2 / DAT_060642F4;
-            if (var_r0 <= 0xF) {
+            if (var_r0 < 0x10) {
                 var_r0 = 0x10;
             }
             if (var_r2 < var_r0) {
@@ -854,8 +815,8 @@ void func_06016E84(void) {
                 var_r2 -= var_r0;
             }
             DAT_0606448C = var_r2;
-            if (var_r2 == 0) {
-                DAT_06064430 = var_r2;
+            if (DAT_0606448C == 0) {
+                DAT_06064430 = 0;
             }
         }
     }
@@ -891,7 +852,7 @@ void code2name(u32 code, u8* name) {
 
 // func_06016F9C
 char num2char(u32 num) {
-    num &= 0x0F;
+    num &= 0xF;
 
     if (num < 10) {
         num += 0x30;
@@ -908,7 +869,7 @@ s32 func_06016FB8(void) {
         DAT_06064338 = 0;
     }
 
-    DAT_06064338 = ((s32(*)(s32, s32))PcmOpen)(-0x0FFFFF0B, 2);
+    DAT_06064338 = ((s32(*)(s32, s32))PcmOpen)(0xF00000F5, 2);
     if (DAT_06064338 == 0)
         return -1;
 
@@ -931,7 +892,7 @@ void func_060174D8(void) {
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6017508, func_06017508);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6017988, func_06017988);
 
-// _RestartvoxvdStream
+// original name: RestartvoxvdStream
 s32 func_06017F28(void) {
     if (DAT_06064338 == 0) {
         return -1;
@@ -951,16 +912,17 @@ s32 func_06017F5C(u8* arg0) {
     return handle;
 }
 
-// _dat_read
-s32 func_06017FA4(s32 param_1, s32 param_2, s32 param_3) {
+// original name: dat_read
+s32 func_06017FA4(s32 arg0, s32 arg1, s32 arg2) {
     s32 sector;
 
-    sector = func_0601B8B4(param_3, param_2);
-    if (func_0601BC14(param_3, sector, param_1, param_2) != 0) {
+    sector = func_0601B8B4(arg2, arg1);
+    if (func_0601BC14(arg2, sector, arg0, arg1) != 0) {
         return -1;
     }
     return sector * 0x800;
 }
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6017FF4, func_06017FF4);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6018034, func_06018034);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60180E0, func_060180E0);
