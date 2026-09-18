@@ -8,7 +8,6 @@
 #include "lib/spr/spr.h"
 #include "game.h"
 
-extern s32* SpGourTbl;
 extern s32* DAT_0605c120[];
 
 // func_06004080
@@ -17,7 +16,7 @@ void entrypoint(void) {
     Scl_s_reg.tvmode &= ~0x8100;
     SclProcess = 1;
     InitSystem();
-    DAT_0605cea2 = 0;
+    DAT_0605cea0.unk2 = 0;
     DAT_0605C658 = 1;
     do {
         func_060040d8();
@@ -34,26 +33,26 @@ void StartColorOffsetFade(s32, s32);
 void func_060040d8(void) {
     g_Timer++;
     func_06007d54();
-    switch (DAT_0605cea2) {
+    switch (DAT_0605cea0.unk2) {
     case 0:
         func_0600456c();
         DAT_0605d7f8 = 0;
         func_06004f50(0x20);
-        DAT_0605cea0++;
+        DAT_0605cea0.unk0++;
         break;
     case 6:
-        if (DAT_0605cea0 == 0) {
+        if (DAT_0605cea0.unk0 == 0) {
             func_06005328();
-            DAT_0605cea0++;
+            DAT_0605cea0.unk0++;
             Scl_s_reg.tvmode |= 0x8000;
             SclProcess = 1;
         }
         func_060645E0();
         break;
     case 2:
-        if (DAT_0605cea0 == 0) {
+        if (DAT_0605cea0.unk0 == 0) {
             func_06005328();
-            DAT_0605cea0++;
+            DAT_0605cea0.unk0++;
         }
         func_06064688();
         UpdateScrollForRoom();
@@ -66,23 +65,23 @@ void func_060040d8(void) {
         UpdateScrollForRoom();
         break;
     case 4:
-        if (DAT_0605cea0 == 0) {
+        if (DAT_0605cea0.unk0 == 0) {
             func_06005328();
-            DAT_0605cea0++;
+            DAT_0605cea0.unk0++;
         }
         func_06064674();
         break;
     case 8:
-        if (DAT_0605cea0 == 0) {
+        if (DAT_0605cea0.unk0 == 0) {
             func_06005328();
-            DAT_0605cea0++;
+            DAT_0605cea0.unk0++;
         }
         func_06064580();
         break;
     case 0x11:
-        if (*((u32*)&DAT_0605cea0) == 0x11) {
+        if (DAT_0605cea0.unk0 == 0 && DAT_0605cea0.unk2 == 0x11) {
             if (func_06005328() == 0) {
-                DAT_0605cea0++;
+                DAT_0605cea0.unk0++;
             }
         } else {
             func_06009838();
@@ -91,10 +90,10 @@ void func_060040d8(void) {
         }
         break;
     case 5:
-        if (DAT_0605cea0 == 0) {
+        if (DAT_0605cea0.unk0 == 0) {
             StartColorOffsetFade(0, 2);
             func_06005328();
-            DAT_0605cea0++;
+            DAT_0605cea0.unk0++;
         }
         func_06064644();
         UpdateScrollForRoom();
@@ -133,7 +132,7 @@ void func_060040d8(void) {
         break;
     }
     if (func_0600fb4c() != 0) {
-        if (DAT_0605cea2 == 6) {
+        if (DAT_0605cea0.unk2 == 6) {
             SYS_EXECDMP();
         } else {
             PlaySfx(SET_UNK_0B);
@@ -144,7 +143,7 @@ void func_060040d8(void) {
             func_06012fb4();
             func_0600652C();
             func_0601333c();
-            if (DAT_0605cea2 == 2) {
+            if (DAT_0605cea0.unk2 == 2) {
                 SYS_EXECDMP();
             }
         }
@@ -211,7 +210,6 @@ void func_0600460C(void) {
 }
 
 void func_060046E8(void) {
-    Unk0605cd70* state;
     struct BgTransfer* transfers;
     u32 i;
 
@@ -221,11 +219,10 @@ void func_060046E8(void) {
     DAT_0605c10c = 0;
     g_GameTimer = 0;
 
-    state = (Unk0605cd70*)&DAT_0605cea0;
-    state->unk0 = 0;
-    state->unk2 = 0;
-    state->unk4 = 0xFFFF;
-    state->unk8 = 0;
+    DAT_0605cea0.unk0 = 0;
+    DAT_0605cea0.unk2 = 0;
+    DAT_0605cea0.unk4 = 0xFFFF;
+    DAT_0605cea0.unk8 = 0;
 
     DAT_0605cd70.unk0 = 0;
     DAT_0605cd70.unk2 = 0;
@@ -609,7 +606,7 @@ s32 func_060055C8(void) {
         break;
 
     case 13:
-        if (func_0600607C(g_CurrentRoom.stageID) != 0) {
+        if (func_0600607C(g_CurrentRoom.stageID)) {
             ReadFileToAddr(func_06005E3C(0, g_CurrentRoom.stageID),
                            SCL_VDP2_VRAM_A1 + 0x2000);
             ReadFileToAddr(
@@ -704,9 +701,245 @@ void func_060059F4(void) {
     DAT_060645C4();
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6005A90, func_06005A90);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6005E3C, func_06005E3C);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600607C, func_0600607C);
+extern s32 DAT_060389E0[][2];
+extern s32 DAT_060389F4[];
+
+s32 func_06005A90(void) {
+    func_06019FE4(0);
+    switch (DAT_0605D770.unk8) {
+    case 0:
+        ((s32(*)(s32))PlaySfx)(DAT_060389E0[g_PlayableCharacter][0]);
+        DAT_0605D770.unk8++;
+        return 1;
+
+    case 1:
+        if (func_06012D88() != 0) {
+            return 1;
+        }
+        DAT_0605D770.unk8++;
+        return 1;
+
+    case 2:
+        ((s32(*)(s32))PlaySfx)(DAT_060389E0[g_PlayableCharacter][1]);
+        DAT_0605D770.unk8++;
+        return 1;
+
+    case 3:
+        if (func_06012D88() != 0) {
+            return 1;
+        }
+        DAT_0605D770.unk8++;
+
+    case 4:
+        ((s32(*)(s32))PlaySfx)(g_StageFileRecords[g_CurrentRoom.stageID].unkC);
+        DAT_0605D770.unk8++;
+        return 1;
+
+    case 5:
+        if (func_06012D88() != 0) {
+            return 1;
+        }
+        if ((g_Servant != 0) && (g_PlayableCharacter == 0)) {
+            DAT_0605D770.unk8++;
+            return 1;
+        }
+        goto block_43;
+
+    case 6:
+        ((s32(*)(s32))PlaySfx)(DAT_060389F4[g_Servant]);
+        DAT_0605D770.unk8++;
+        return 1;
+
+    case 7:
+        if (func_06012D88() != 0) {
+            return 1;
+        }
+    block_43:
+        if (g_CurrentRoom.stageID == 0x1F) {
+            DAT_0605D770.unk8 = 8;
+            goto case8;
+        }
+        if (g_CurrentRoom.stageID == 0x40) {
+            DAT_0605D770.unk8 = 9;
+            goto case9;
+        }
+        if (g_PlayableCharacter != 0 && g_CurrentRoom.stageID == 0x41) {
+            DAT_0605D770.unk8 = 10;
+            goto case10;
+        }
+        ((s32(*)(s32, s32))StartColorOffsetFade)(0, 2);
+        return 0;
+
+    case 8:
+    case8:
+        ((s32(*)(s32))PlaySfx)(0xF0000807);
+        DAT_0605D770.unk8 = 0x80;
+        return 1;
+
+    case 9:
+    case9:
+        ((s32(*)(s32))PlaySfx)(0xF0000810);
+        DAT_0605D770.unk8 = 0x80;
+        return 1;
+
+    case 10:
+    case10:
+        if (g_PlayableCharacter == 1) {
+            ((s32(*)(s32))PlaySfx)(0xF0000812);
+        }
+        if (g_PlayableCharacter == 2) {
+            ((s32(*)(s32))PlaySfx)(0xF000080F);
+        }
+        DAT_0605D770.unk8 = 0x80;
+        return 1;
+
+    case 0x80:
+        if (func_06012D88() != 0) {
+            return 1;
+        }
+    default:
+        ((s32(*)(s32, s32))StartColorOffsetFade)(0, 2);
+        return 0;
+    }
+}
+
+char* func_06005E3C(s32 arg0, u16 arg1) {
+    switch (arg1) {
+    case 0x1F:
+        if (arg0 == 0) {
+            return "S011.CHR";
+        } else {
+            return "S011.PTN";
+        }
+    case 0x40:
+        if (arg0 == 0) {
+            return "S160.CHR";
+        } else {
+            return "S160.PTN";
+        }
+    case 0x9:
+        if (arg0 == 0) {
+            return "SWATA.CHR";
+        } else {
+            return "SWATA.PTN";
+        }
+    case 0x12:
+        if (arg0 == 0) {
+            return "EVENT070.001";
+        } else {
+            return "EVENT070.002";
+        }
+    case 0x18:
+        if (arg0 == 0) {
+            return "SBO7.CHR";
+        } else {
+            return "SBO7.PTN";
+        }
+    case 0xB:
+        if (arg0 == 0) {
+            return "S302.CHR";
+        } else {
+            return "S302.PTN";
+        }
+    case 0x41:
+        if (arg0 == 0) {
+            return "EVENT020.001";
+        } else {
+            return "EVENT020.002";
+        }
+    case 0xC:
+        if (arg0 == 0) {
+            return "S040.CHR";
+        } else {
+            return "S040.PTN";
+        }
+    case 0x6:
+        if (arg0 == 0) {
+            return "S060.CHR";
+        } else {
+            return "S060.PTN";
+        }
+    case 0x19:
+        if (arg0 == 0) {
+            return "S050.CHR";
+        } else {
+            return "S050.PTN";
+        }
+    case 0x1C:
+        if (arg0 == 0) {
+            return "S110.CHR";
+        } else {
+            return "S110.PTN";
+        }
+    case 0x28:
+        if (arg0 == 0) {
+            return "SR14.CHR";
+        } else {
+            return "SR14.PTN";
+        }
+    case 0x38:
+        if (arg0 == 0) {
+            return "SDRACULA.CHR";
+        } else {
+            return "SDRACULA.PTN";
+        }
+    case 0x3C:
+        if (arg0 == 0) {
+            return "S140.CHR";
+        } else {
+            return "S140.PTN";
+        }
+    case 0x8:
+        if (arg0 == 0) {
+            return "S190.CHR";
+        } else {
+            return "S190.PTN";
+        }
+    case 0x17:
+        if (arg0 == 0) {
+            return "S030.CHR";
+        } else {
+            return "S030.PTN";
+        }
+    }
+    return NULL;
+}
+
+bool func_0600607C(u16 arg0) {
+    if (g_PlayableCharacter != 0 && g_CurrentRoom.stageID == 0x9) {
+        return true;
+    }
+    if (g_PlayableCharacter == 1 && g_CurrentRoom.stageID == 0x1F) {
+        return true;
+    }
+    if (g_PlayableCharacter == 0) {
+        switch (arg0) {
+        case 0x6:
+        case 0x8:
+        case 0x9:
+        case 0xB:
+        case 0xC:
+        case 0x12:
+        case 0x17:
+        case 0x18:
+        case 0x19:
+        case 0x1C:
+        case 0x1F:
+        case 0x28:
+        case 0x38:
+        case 0x3C:
+        case 0x40:
+        case 0x41:
+            return true;
+        }
+    }
+    return false;
+}
+
+const char DAT_06006158[] = "in GfsInit";
+
+const char DAT_06006164[] = "in CdInit";
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006170, func_06006170);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60062F8, func_060062F8);
 
@@ -859,7 +1092,7 @@ s32 func_06006EF8(void) {
     while (func_0602D754(&stat[1]) == -8 && retries > 0) {
     }
     status[0] = data[0] & 0x0F;
-    if ((u32)(stat[0] - 1) <= 1U) {
+    if (stat[0] == 1 || stat[0] == 2) {
         result = 0;
     }
     return result;
@@ -1034,13 +1267,11 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6007CA0, AllocGourTbl);
 // func_06007CE0
 u16 LocalLookupTblNoToVram(u16 arg0) { return arg0 * 0x10 + 0x400; }
 
-s16 d_0605BECA;
-s16 d_0605AEA8;
-s16 d_0605AEB0;
-s16 d_0605BEC8;
-s32 d_06038dbc;
-s32 DAT_0605BEC4;
-s32 d_060576AC;
+extern s16 d_0605BECA;
+extern s16 d_0605BEC8;
+extern s32 d_06038dbc;
+extern s32 DAT_0605BEC4;
+extern s32 d_060576AC;
 
 // func_06007CF8
 void ResetSpriteVram() {
@@ -1056,6 +1287,7 @@ void ResetSpriteVram() {
 
 extern u16 d_0605AEA0[4];
 extern SprSpCmd DAT_06050684[];
+extern SprSpCmd* d_0605AEAC;
 
 void func_06007D54(void) {
     SprSpCmd cmd;
@@ -1066,7 +1298,7 @@ void func_06007D54(void) {
     LOW(cmd.cx) = DAT_0605BEC0;
     if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(0, &cmd);
-        d_0605AEAC += 0x20;
+        d_0605AEAC++;
     }
 
     cmd.control = 0x1008;
@@ -1074,23 +1306,21 @@ void func_06007D54(void) {
     LOW(cmd.cx) = ((s32*)d_0605AEA0)[1];
     if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(0, &cmd);
-        d_0605AEAC += 0x20;
+        d_0605AEAC++;
     }
 
     cmd.control = 0x100A;
     LOW(cmd.ax) = DAT_0600E23C;
     if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(0, &cmd);
-        d_0605AEAC += 0x20;
+        d_0605AEAC++;
     }
 
-    d_0605AEAC = (s32)&DAT_06050684[SpMstCmdPos];
+    d_0605AEAC = &DAT_06050684[SpMstCmdPos];
 }
 
-s32 d_06038c5c;
-s32 d_06038c5c;
-s32 d_0605BEBE;
-u16 d_0605AEA0[4];
+extern s32 d_06038c5c;
+extern s32 d_0605BEBE;
 
 // func_06007E14
 void CloseSpriteList(void) {
@@ -1106,7 +1336,7 @@ void CloseSpriteList(void) {
         cmd.ay = cmd.by = 0;
         cmd.cy = cmd.dy = d_0605AEA0[1] - 1;
         SPR_2Cmd(0x1FF, &cmd);
-        d_0605AEAC += 0x20;
+        d_0605AEAC++;
     }
 
     SPR_2CloseCommand();
@@ -1160,27 +1390,22 @@ void func_06007F6C(void) {
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008048, ResetLayerColorCalc);
 
-extern s16 DAT_0606570C;
-
 void func_060080EC(s32 arg0) {
     if (arg0 == 1) {
-        SclPriBuffDirty.SclOtherPri = 1;
-        DAT_0606570C &= ~0x100;
+        SCL_SET_CCMD(0);
     } else {
-        SclPriBuffDirty.SclOtherPri = 1;
-        DAT_0606570C = (DAT_0606570C & ~0x100) | 0x100;
+        SCL_SET_CCMD(1);
     }
 }
 
 void SetVdp2BackgroundColor(void) {
-    s16 local_c[2];
-    local_c[0] = 0;
-    SCL_SetBack(SCL_VDP2_VRAM + 0x7FE20, 1, local_c);
+    u16 color = RGB16_COLOR(0, 0, 0) & 0x7FFF;
+    SCL_SetBack(SCL_VDP2_VRAM + 0x80000 - 0x1E0, 1, &color);
 }
 
-void func_0600815C(u8 r, u8 g, u8 b) {
+void SetVdp2BackgroundColorRgb(u8 r, u8 g, u8 b) {
     u16 color = RGB16_COLOR(r, g, b);
-    SCL_SetBack(SCL_VDP2_VRAM + 0x7FE20, 1, &color);
+    SCL_SetBack(SCL_VDP2_VRAM + 0x80000 - 0x1E0, 1, &color);
 }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600819C, BlankScreen);
@@ -1426,13 +1651,13 @@ INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f6008EE8, func_06008EE8);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008FF0, func_800EA5AC);
 
 void func_06009010(u8* rgb) {
-    Sint16 enabled;
+    s16 enabled;
 
     enabled = DAT_0605C6DC;
     if (enabled != 0) {
-        SCL_SetColOffset(0, 0x6F, rgb[0], rgb[1], rgb[2]);
+        SCL_SetColOffset(SCL_OFFSET_A, 0x6F, rgb[0], rgb[1], rgb[2]);
     } else {
-        SCL_SetColOffset(0, 0x6F, 0, 0, enabled);
+        SCL_SetColOffset(SCL_OFFSET_A, 0x6F, 0, 0, enabled);
     }
 }
 
@@ -1483,8 +1708,8 @@ void func_0600971C(void) {
 
     Scl_w_reg.win0_start[0] = 0;
     Scl_w_reg.win0_start[1] = 12;
-    Scl_w_reg.win0_end[0] = 0x0280;
-    Scl_w_reg.win0_end[1] = 0x00F0;
+    Scl_w_reg.win0_end[0] = 640;
+    Scl_w_reg.win0_end[1] = 240;
     Scl_w_reg.wincontrl[0] = 0x0383;
     Scl_w_reg.wincontrl[1] = 0x8383;
     Scl_w_reg.wincontrl[2] = 0x0083;
@@ -1560,7 +1785,7 @@ void func_06009F10(void) {
     scfg.plate_addr[1] = SCL_VDP2_VRAM_B0 + 0x8000;
     scfg.plate_addr[0] = SCL_VDP2_VRAM_B0 + 0x8000;
     scfg.patnamecontrl = 0x21;
-    SCL_SetConfig(0x10, &scfg);
+    SCL_SetConfig(SCL_NBG2, &scfg);
 }
 
 // _X_SCROLL_TRANS
@@ -1811,8 +2036,12 @@ void func_0600BCE0(s32* mtx, s16 angle) {
     mtx[3] = MTH_Mul(sincos[1], axis);
 }
 
+extern SprGourTbl* SpGourTbl;
+
 // func_0600BD4C
-int GetSpriteObjectGourTbl(u8* arg0) { return SpGourTbl + arg0[2] * 2; }
+SprGourTbl* GetSpriteObjectGourTbl(SpriteObject* obj) {
+    return &SpGourTbl[obj->slotAndStreamId >> 8];
+}
 
 // _Odma
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600BD68, func_0600BD68);
@@ -1912,7 +2141,7 @@ void func_0600C00C(void) {
         banks[2]->allocationIndex = 3;
         banks[4]->allocationIndex = 3;
     }
-    if ((u32)(g_PlayableCharacter - 1) <= 1U) {
+    if (g_PlayableCharacter == 1 || g_PlayableCharacter == 2) {
         d_0605BECA = 0xA;
     } else {
         d_0605BECA = 0xD;
@@ -2141,8 +2370,7 @@ u16* func_0600CB20(s32 offset) {
     return func_0600CB04(col, row);
 }
 
-const unsigned short DAT_0600CB68[6] = {
-    0x4452, 0x4143, 0x554C, 0x4158, 0x5F00, 0x0009};
+const char DAT_0600CB68[] = "DRACULAX_";
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600CB74, Crc32);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600CBCC, func_0600CBCC);
@@ -2200,7 +2428,7 @@ s32 func_0600CE1C(void) {
     return result;
 }
 
-const u16 DAT_0600CEC8[4] = {0x2573, 0x2530, 0x3264, 0x0000};
+const char DAT_0600CEC8[] = "%s%02d";
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600CED0, func_0600CED0);
 
@@ -2275,76 +2503,56 @@ void func_0600DCA4(s32 arg0) {
     Primitive* prim;
 
     prim = &g_PrimBuf[arg0];
-    if (prim->next != NULL) {
-        do {
-            prim->drawMode = 0xFFFF;
-            prim = prim->next;
-            DAT_06061DD4--;
-        } while (prim->next != NULL);
+    while (prim->next != NULL) {
+        prim->drawMode = 0xFFFF;
+        prim = prim->next;
+        DAT_06061DD4--;
     }
     prim->drawMode = 0xFFFF;
     DAT_06061DD4--;
 }
 
 s32 func_0600DCF0(Primitive* prim) {
+    Point16* pos;
     s32 visible;
-    s16* x;
     s32 i;
-    u16 maxX;
-    u16 maxY;
-    s32 lastCorner;
-    s16* y;
-    s16 py;
 
     visible = 0;
-    x = &prim->x0;
-    i = 0;
-    maxX = 0x17F;
-    maxY = 0x12F;
-    lastCorner = 3;
-    y = &prim->y0;
+    pos = &prim->x0;
 
-    do {
-        py = *y;
-        y += 2;
-        if ((u16)(*x + 0x20) <= maxX) {
-            if ((u16)(py + 0x20) <= maxY) {
+    for (i = 0; i < 4; i++) {
+        s16 x = pos->x;
+        s16 y = pos->y;
+        if (x >= -0x20 && x < 0x160) {
+            if (y >= -0x20 && y < 0x110) {
                 visible = 1;
-                return visible;
+                break;
             }
         }
-        i++;
-        x += 2;
-    } while (i <= lastCorner);
+        pos++;
+    }
 
     return visible;
 }
 
 s32 func_0600DD38(Primitive* prim) {
+    Point16* pos;
     s32 visible;
-    s16* x;
     s32 i;
-    s32 lastCorner;
-    u16 maxX;
-    u16 maxY;
-    s16* y;
-    s16 py;
 
     visible = 0;
-    x = &prim->x0;
-    i = 0;
-    lastCorner = 1;
-    maxX = 0x17F;
-    maxY = 0x12F;
-    y = &prim->y0;
+    pos = &prim->x0;
 
-    for (; i <= lastCorner; i++, lastCorner = 1, x += 4) {
-        py = *y;
-        y += 4;
-        if ((u16)(*x + 0x20) <= maxX && (u16)(py + 0x20) <= maxY) {
-            visible = lastCorner;
-            break;
+    for (i = 0; i < 2; i++) {
+        s16 x = pos->x;
+        s16 y = pos->y;
+        if (x >= -0x20 && x < 0x160) {
+            if (y >= -0x20 && y < 0x110) {
+                visible = 1;
+                break;
+            }
         }
+        pos += 2;
     }
 
     return visible;
@@ -2353,30 +2561,23 @@ s32 func_0600DD38(Primitive* prim) {
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600DD84, func_0600DD84);
 
 s32 func_0600DDD4(Primitive* prim) {
+    Point16* pos;
     s32 visible;
-    s16* x;
     s32 i;
-    s32 lastCorner;
-    u16 maxX;
-    u16 maxY;
-    s16* y;
-    s16 py;
 
     visible = 0;
-    x = &prim->x0;
-    i = 0;
-    lastCorner = 1;
-    maxX = 0x17F;
-    maxY = 0x12F;
-    y = &prim->y0;
+    pos = &prim->x0;
 
-    for (; i <= lastCorner; i++, lastCorner = 1, x += 2) {
-        py = *y;
-        y += 2;
-        if ((u16)(*x + 0x20) <= maxX && (u16)(py + 0x20) <= maxY) {
-            visible = lastCorner;
-            break;
+    for (i = 0; i < 2; i++) {
+        s16 x = pos->x;
+        s16 y = pos->y;
+        if (x >= -0x20 && x < 0x160) {
+            if (y >= -0x20 && y < 0x110) {
+                visible = 1;
+                break;
+            }
         }
+        pos++;
     }
 
     return visible;
@@ -2464,7 +2665,7 @@ void func_0600E164(void) {
         cmd.ay = cmd.by = DAT_0605AEA2;
         cmd.cy = cmd.dy = DAT_0605BEC2;
         SPR_2Cmd(0x1FF, &cmd);
-        d_0605AEAC += 0x20;
+        d_0605AEAC++;
     }
 }
 
@@ -2947,7 +3148,7 @@ void func_0600FFB8(Entity* self) {
     if (self->unk0 != NULL) {
         DestroySpriteObject(self->unk0);
     }
-    if (self->flags & 0x800000) {
+    if (self->flags & FLAG_HAS_PRIMS) {
         FreePrimitives(self->primIndex);
     }
     memset(self, 0, sizeof(Entity));

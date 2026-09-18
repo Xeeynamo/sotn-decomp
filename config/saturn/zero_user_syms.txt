@@ -41,6 +41,7 @@ _SetParts = 0x0600B084;
 _AllocSpriteObject = 0x0600B1A8;
 _CreateSpriteObject = 0x0600B344;
 _DestroySpriteObject = 0x0600B428;
+_GetSpriteObjectGourTbl = 0x0600BD4C;
 _AllocGameSprite = 0x0600BE18;
 _func_0600C0C4 = 0x0600C0C4;
 _func_0600C298 = 0x0600C298;
@@ -340,7 +341,6 @@ _g_Timer = 0x0605CD7C;
 _DAT_0605CD90 = 0x0605CD90;
 _g_Tilemap = 0x0605CE50; /* size = 0x38 */
 _DAT_0605cea0 = 0x0605CEA0;
-_DAT_0605cea2 = 0x0605CEA2;
 _g_CastleMap = 0x0605CEC0;
 _DAT_0605d6c0 = 0x0605D6C0;
 _D_8003C744 = 0x0605D740;

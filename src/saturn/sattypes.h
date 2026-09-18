@@ -1249,7 +1249,7 @@ typedef struct {
     u16 unk0;
     s16 : 16;
     s32 : 32;
-    s32 unk8;
+    u32 unk8;
 } Unk0605D770;
 
 typedef struct {
