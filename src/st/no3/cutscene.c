@@ -111,8 +111,11 @@ static s32 g_IsCutsceneDone;
 static const char* actor_names[] = {_S("Alucard"), _S("Death")};
 #else
 static wchar_t actor_names[] = {
-    _WC('ア'), _WC('ル'), _WC('カ'), _WC('ー'), _WC('ド'),
-    _WC('D'),  _WC('E'),  _WC('A'),  _WC('T'),  _WC('H'),
+    // clang-format off
+    // アルカード
+    0x71, 0x99, 0x76, 0x70, 0x8084,
+    CH('D'), CH('E'), CH('A'), CH('T'), CH('H'),
+    // clang-format on
 };
 static u8 actor_prims[] = {6, 5};
 static u8 actor_name_len[] = {5, 5};
