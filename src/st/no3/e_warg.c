@@ -60,8 +60,8 @@ static s16 D_801832D8[] = {0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70};
 static u8 D_801832E8[] = {2, 0, 1, 3};
 
 // Unused.
-void func_801CF438(Entity* entity, u8 count, u8 params, s32 xDist, s32 yDist,
-                   u8 arg5, s16 xOfst) {
+static void func_801CF438(Entity* entity, u8 count, u8 params, s32 xDist,
+                          s32 yDist, u8 arg5, s16 xOfst) {
     s32 i;
     s16 y = entity->posY.i.hi + yDist;
     s16 x = entity->posX.i.hi + xDist;
@@ -524,8 +524,7 @@ void EntityWarg(Entity* self) {
             prim = prim->next;
 #ifdef VERSION_PSP
             prim->tpage = 0x1110;
-#endif
-#ifdef VERSION_US
+#else
             prim->tpage = 0x110;
 #endif
             prim->u0 = prim->u2 = 0;
@@ -666,7 +665,7 @@ void EntityUnkId4B(Entity* self) {
 }
 
 static u8 D_8018383C[] = {3, 1, 3, 2, 3, 3,  3, 4,  3, 5,  3, 6,  3,   7,
-                          3, 8, 3, 9, 3, 10, 3, 11, 3, 12, 3, 13, 255, 0};
+                          3, 8, 3, 9, 3, 10, 3, 11, 3, 12, 3, 13, 0xFF};
 // A single "puff" of the warg explosion animation, transparent
 void EntityWargExplosionPuffTransparent(Entity* self) {
 

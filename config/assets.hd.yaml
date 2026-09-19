@@ -234,6 +234,27 @@ files:
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/no1.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/no2.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/no3.bin
+    assert_path: assets/st/no3
+    src_path: src/st/no3
+    splat_config_path: config/splat.hd.stno3.yaml
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x2C, skip] #sprite_banks, sprite_banks]
+          #- [0x8C, skip]
+          #- [0x90, skip] #paldef, palette_def]
+          #- [0x1C4, skip] #layers, layers]
+          #- [0x5A4, gfx_banks, graphics_banks]
+          #- [0x77C, layout, entity_layouts]
+          #- [0x924, skip]
+          #- [0x3CDC, rooms, rooms]
+          #- [0x3DE0, skip]
+          ##- [0x4CE0, cutscene, cutscene_data]
+          #- [0x4E67, cutscene_events, cutscene_events]
+          #- [0x4E7C, skip]
+          #- [0x18840, skip] # tile data
+          #- [0x2EA70, skip] # sprites
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/no4.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/np3.bin
     asset_path: assets/st/np3
