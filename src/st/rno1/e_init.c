@@ -36,7 +36,7 @@ void EntityJackOBonesJack(Entity* self);
 void EntityNovaSkeleton(Entity* self);
 void EntityNovaLaser(Entity* self);
 void EntityNovaLaserPulse(Entity* self);
-void EntityBladeSoldierDeathParts(Entity* self);
+void EntityNovaSkeletonDeathParts(Entity* self);
 void func_us_801B8F50_from_no1(Entity* self);
 void func_us_801BE880_from_no1(Entity* self);
 void func_us_801BEB54_from_no1(Entity* self);
@@ -85,7 +85,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityNovaSkeleton,
     EntityNovaLaser,
     EntityNovaLaserPulse,
-    EntityBladeSoldierDeathParts,
+    EntityNovaSkeletonDeathParts,
     func_us_801B8F50_from_no1,
     func_us_801BE880_from_no1,
     func_us_801BEB54_from_no1,
@@ -118,7 +118,7 @@ EInit g_EInitJackOBones = {ANIMSET_OVL(5), 1, 74, 524, 0x074};
 EInit g_EInitJackOBones2 = {ANIMSET_OVL(5), 0, 74, 524, 0x002};
 EInit g_EInitJackOBones3 = {ANIMSET_OVL(5), 21, 74, 524, 0x075};
 EInit g_EInitNovaSkeleton = {ANIMSET_OVL(6), 1, 72, 532, 0x07E};
-EInit D_us_80180730 = {ANIMSET_OVL(6), 0, 72, 532, 0x07F};
+EInit g_EInitNovaSkeleton2 = {ANIMSET_OVL(6), 0, 72, 532, 0x07F};
 EInit D_us_8018073C = {ANIMSET_OVL(8), 1, 79, 537, 0x005};
 EInit D_us_80180748 = {ANIMSET_OVL(2), 75, 0, 0, 0x005};
 EInit D_us_80180754 = {ANIMSET_DRA(0), 0, 0, 0, 0x000};

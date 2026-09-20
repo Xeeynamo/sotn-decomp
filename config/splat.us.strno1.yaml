@@ -66,7 +66,8 @@ segments:
       - [0x1910, .data, e_paranthropus]
       - [0x1C00, data]
       - [0x1C24, .data, e_jack_o_bones]
-      - [0x1D10, data]
+      - [0x1D10, .data, e_nova_skeleton]
+      - [0x1E98, data]
       - [0x1F54, .data, gen/e_layout] # layout entries data
       - [0x2D2C, .data, stage_data]
       - [0xC680, data]

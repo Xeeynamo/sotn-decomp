@@ -39,7 +39,7 @@ INCLUDE_ASM("st/rno1_psp/nonmatchings/rno1_psp/unk_D470", EntityNovaSkeleton);
 extern EInit g_EInitNovaSkeleton;
 extern u16 D_us_80181DE0[];
 
-void EntityBladeSoldierDeathParts(Entity* self) {
+void EntityNovaSkeletonDeathParts(Entity* self) {
     if (self->step) {
         if (--self->ext.nova.deathPartLife) {
             self->rotate += D_us_80181DE0[self->params];
