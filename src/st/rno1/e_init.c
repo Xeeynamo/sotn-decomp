@@ -29,7 +29,7 @@ void EntityParanthropus(Entity* self);
 void EntityParanthropusBoneHitbox(Entity* self);
 void EntityParanthropusSkull(Entity* self);
 void EntityParanthropusThrownBone(Entity* self);
-void func_us_801C7F24_from_rno0(Entity* self);
+void EntityStoneSkull(Entity* self);
 void EntityJackOBones(Entity* self);
 void EntityJackOBonesDeathParts(Entity* self);
 void EntityJackOBonesJack(Entity* self);
@@ -78,7 +78,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityParanthropusBoneHitbox,
     EntityParanthropusSkull,
     EntityParanthropusThrownBone,
-    func_us_801C7F24_from_rno0,
+    EntityStoneSkull,
     EntityJackOBones,
     EntityJackOBonesDeathParts,
     EntityJackOBonesJack,
