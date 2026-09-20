@@ -30,6 +30,15 @@
 #define PER_SIZE_M6BP 2
 #define PER_SIZE_ANL 5
 
+#define PER_KD_SYS 0
+#define PER_KD_PER 1
+#define PER_KD_PERTIM 2
+
+#define PER_MSK_LANGU (0xf << 0)
+#define PER_MSK_SE (0x1 << 8)
+#define PER_MSK_STEREO (0x1 << 9)
+#define PER_MSK_HELP (0x1 << 10)
+
 #define PER_INT_OK 0x0
 #define PER_INT_ERR 0x1
 
@@ -68,6 +77,11 @@ typedef Uint8 PerMulCon;
             ;                                                                  \
     } while (0)
 
+#define PER_SMPC_SET_IREG(ireg_no, ireg_prm)                                   \
+    do {                                                                       \
+        PER_PokeByte((PER_REG_IREG + ((ireg_no) * 2)), (ireg_prm));            \
+    } while (0)
+
 #define PER_SMPC_NO_IREG(com)                                                  \
     do {                                                                       \
         PER_SMPC_WAIT();                                                       \
@@ -82,6 +96,26 @@ typedef Uint8 PerMulCon;
 #define PER_SMPC_SND_OFF()                                                     \
     do {                                                                       \
         PER_SMPC_NO_IREG(PER_SM_SNDOFF);                                       \
+    } while (0)
+
+#define PER_SMPC_RES_ENA()                                                     \
+    do {                                                                       \
+        PER_SMPC_NO_IREG(PER_SM_RESENA);                                       \
+    } while (0)
+
+#define PER_SMPC_RES_DIS()                                                     \
+    do {                                                                       \
+        PER_SMPC_NO_IREG(PER_SM_RESDIS);                                       \
+    } while (0)
+
+#define PER_SMPC_SET_SM(ireg)                                                  \
+    do {                                                                       \
+        PER_SMPC_WAIT();                                                       \
+        PER_SMPC_SET_IREG(0, (ireg) >> 24);                                    \
+        PER_SMPC_SET_IREG(1, (ireg) >> 16);                                    \
+        PER_SMPC_SET_IREG(2, (ireg) >> 8);                                     \
+        PER_SMPC_SET_IREG(3, (ireg) >> 0);                                     \
+        PER_SMPC_GO_CMD(PER_SM_SETSM);                                         \
     } while (0)
 
 #endif

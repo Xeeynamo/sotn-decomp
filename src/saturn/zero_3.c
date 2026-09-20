@@ -15,7 +15,7 @@ void SetStageOverlayAddress(void) {
 // _SET_SCL_OVERLAYADDR
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601AC48, func_0601AC48);
 
-// _SET_PLAYER_OVERLAYADDR
+// original name: SET_PLAYER_OVERLAYADDR
 void func_0601AD14(void) {
     DAT_06064610 = DAT_060a5000;
     func_06064604 = DAT_060A5004;
@@ -35,34 +35,32 @@ void func_0601AD14(void) {
     DAT_06064650 = DAT_060A503C;
     DAT_06064668 = DAT_060A5040;
 }
-void func_0601AE2C(s32 param_1) {
-    if (param_1) {
+
+void func_0601AE2C(s32 arg0) {
+    if (arg0) {
         DAT_06064670 = DAT_060D9040;
     } else {
         DAT_060645D4 = DAT_060D6040;
     }
 }
-s32 func_0601AE5C(s32 param_1, s32 param_2) {
+
+s32 func_0601AE5C(s32 arg0, s32 arg1) {
     OverlayHandler* handler;
     s32 i;
 
-    handler = param_1 != 0 ? PLAYER_SERVANT_HANDLERS : MARIA_SERVANT_HANDLERS;
+    handler = arg0 != 0 ? PLAYER_SERVANT_HANDLERS : MARIA_SERVANT_HANDLERS;
 
-    i = 0;
-    do {
+    for (i = 0; i < 0x10; i++) {
         if (i == 6) {
             *handler = func_0601AEA8;
         } else {
             *handler = func_0601AE9C;
         }
-        i++;
         handler++;
-    } while (i <= 15);
+    }
 
     return i;
 }
-
-static const volatile u16 DAT_0601AE8A = 9;
 
 s32 func_0601AE9C(void) { return 0xFF; }
 
@@ -101,7 +99,7 @@ void func_0601B19C(void) {
 
 void func_0601B1B4(void) { func_06064690 = (s32(*)())DAT_06066000; }
 
-// _SET_GAME_OVERLAYADDR
+// original name: SET_GAME_OVERLAYADDR
 void func_0601B1CC(void) {
     DAT_060645AC = DAT_06066000;
     func_0606463c = DAT_06066004;

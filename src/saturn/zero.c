@@ -8,8 +8,6 @@
 #include "lib/spr/spr.h"
 #include "game.h"
 
-extern s32* DAT_0605c120[];
-
 // func_06004080
 void entrypoint(void) {
     func_06030df0();
@@ -160,7 +158,26 @@ void func_060040d8(void) {
     ((void (*)(void))rand)();
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60044D0, InitSystem);
+void InitScuDma();
+void InitBackupRam();
+void func_06011ce4();
+
+void InitSystem(void) {
+    CSH_Init(0);
+    CSH_AllClr();
+    func_06004A10();
+    InitScuDma();
+    InitSpriteEngine(0);
+    func_0600B234();
+    func_0600DAB4();
+    InitVdp2Display();
+    func_06006470();
+    InitBackupRam();
+    func_06011ce4();
+    SetVblank(1);
+    func_060082C8();
+    InitDebugPrint();
+}
 
 void func_0600456C(void) {
     func_06004878();
@@ -297,8 +314,8 @@ void func_060047E8(void) {
 }
 
 void func_06004878(void) {
-    do {
-    } while (func_0602BB98(0, 0, 0, 0, 0) == 1);
+    while (PER_LInit(PER_KD_SYS, 0, 0, 0, 0) == 1) {
+    }
 
     do {
         DAT_060505E0 = (DAT_06065D32 != 0) ? &DAT_06065D40 : NULL;
@@ -316,7 +333,27 @@ void func_06004878(void) {
     func_06004A10();
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004924, func_06004924);
+void func_06004924(void) {
+    u32 status_sys;
+
+    while (PER_LInit(PER_KD_SYS, 0, 0, 0, 0) == 1) {
+    }
+    do {
+        DAT_060505E4 = (DAT_06065D32 != 0) ? &DAT_06065D40 : NULL;
+    } while (DAT_060505E4 == NULL);
+    status_sys = DAT_060505E4->unk4;
+    if (DAT_0605D764 != 0) {
+        status_sys &= ~PER_MSK_STEREO;
+    } else {
+        status_sys |= PER_MSK_STEREO;
+    }
+    PER_SMPC_SET_SM(status_sys);
+
+    SCL_DisplayFrame();
+    SCL_DisplayFrame();
+    SCL_DisplayFrame();
+    func_06004A10();
+}
 
 void func_06004A10(void) {
     s32 i;
@@ -330,8 +367,8 @@ void func_06004A10(void) {
 
     g_pads[0].tapped = g_pads[0].previous = g_pads[0].pressed = 0;
     ResetPadsRepeat();
-    do {
-    } while (func_0602BB98(2, 1, 2, (s32)&DAT_06057F50, 0) != 0);
+    while (PER_LInit(PER_KD_PERTIM, 1, 2, (s32)&DAT_06057F50, 0) != 0) {
+    }
 }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004A74, func_06004A74);
@@ -502,6 +539,8 @@ void func_06005470(void) {
         DAT_0605D7DC++;
     }
 }
+
+extern s32* DAT_0605c120[];
 
 void func_06005508(void) {
     ReadFileToAddr("TITLE.PRG", (s32)&DAT_060a5000);
@@ -1622,7 +1661,7 @@ void BuildSubDispTilemap(struct Unk0605CD90* arg0) {
     }
 }
 
-void func_06008A70(void) {
+void UpdateScrollForRoom(void) {
     func_06008AB4();
     if (g_CurrentRoom.stageID == 0x41 && g_CurrentRoom.unk4 == 0x12) {
         func_06008C2C();
@@ -2372,59 +2411,107 @@ u16* func_0600CB20(s32 offset) {
 
 const char DAT_0600CB68[] = "DRACULAX_";
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600CB74, Crc32);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600CBCC, func_0600CBCC);
+s32 Crc32(s32 len, u8* data);
+s32 Crc32_noInline(s32 len, u8* data) {
+    u16 i;
+    u16 bit;
+    u32 crc;
 
-// _ASYS_RESET_DIS
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600CC14, func_0600CC14);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600CC5C, InitBackupRam);
+    crc = -1;
+    for (i = 0; i < len; i++) {
+        crc ^= data[i];
+        for (bit = 0; bit < 8; bit++) {
+            if (crc & 1) {
+                crc = (crc >> 1) ^ 0xEDB88320;
+            } else {
+                crc = crc >> 1;
+            }
+        }
+    }
+    return ~crc;
+}
+
+// original name: ASYS_RESET_ENA
+void func_0600CBCC(void) {
+    DAT_0605DD61 = 0;
+    PER_SMPC_RES_ENA();
+}
+
+// original name: ASYS_RESET_DIS
+void func_0600CC14(void) {
+    DAT_0605DD61 = 1;
+    PER_SMPC_RES_DIS();
+}
+
+void InitBackupRam(void) {
+    s8 i;
+    s8 device;
+
+    DAT_060485C0.unk5 = -1;
+    DAT_060485C0.unk4 = 0;
+    DAT_0605DD60 = 0;
+
+    func_0600CC14();
+
+    BUP_Init(0x0605DDD0, 0x06002000, (BupConfig*)&DAT_0605DD90);
+
+    func_0600CBCC();
+
+    g_GameClearFlag = 0;
+
+    for (device = 0; device < 2; device++) {
+        for (i = 1; i < 6; i++) {
+            if (func_0600D028(device, i) == 0) {
+                if (DAT_060485C0.unk100C != 0) {
+                    g_GameClearFlag = DAT_060485C0.unk100C;
+                }
+            }
+        }
+    }
+}
 
 // original name: ABup_CheckRam
 s32 func_0600CD70(void) {
-    s32 work[6];
+    BupStat sttb;
     s32 status;
     s32 result;
 
     InitBackupRam();
-    DAT_0605DD61 = 1;
-    SMPC_ISSUE(SMPC_SNDOFF);
+    func_0600CC14();
 
     if ((u16)DAT_0605DD90 == 1) {
-        status = func_06030690(0, 0, work);
+        status = BUP_Stat(0, 0, &sttb);
         result = 0;
-        if (status == 2) {
-            result = status;
+        if (status == BUP_UNFORMAT) {
+            result = BUP_UNFORMAT;
         }
     } else {
         result = 1;
     }
 
-    DAT_0605DD61 = 0;
-    SMPC_ISSUE(SMPC_SNDON);
+    func_0600CBCC();
     return result;
 }
 
 s32 func_0600CE1C(void) {
-    s8 work[24];
+    BupStat sttb;
     s32 status;
     s32 result;
 
     InitBackupRam();
-    DAT_0605DD61 = 1;
-    SMPC_ISSUE(SMPC_SNDOFF);
+    func_0600CC14();
 
     if (DAT_0605DD94 == 2) {
-        status = func_06030690(1, 0, work);
+        status = BUP_Stat(1, 0, &sttb);
         result = 0;
-        if (status == 2) {
-            result = status;
+        if (status == BUP_UNFORMAT) {
+            result = BUP_UNFORMAT;
         }
     } else {
         result = 1;
     }
 
-    DAT_0605DD61 = 0;
-    SMPC_ISSUE(SMPC_SNDON);
+    func_0600CBCC();
     return result;
 }
 
@@ -2432,53 +2519,48 @@ const char DAT_0600CEC8[] = "%s%02d";
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600CED0, func_0600CED0);
 
-s32 func_0600D028(s32 arg0, s8 arg1) {
-    s32 work[3];
-    s32 result;
-    s32* value = &DAT_06038FE0;
-    const void* format = DAT_0600CEC8;
-    s32 (*setup)(void*, const void*, s32, s8) = func_06032F50;
+s32 func_0600D028(u32 device, s8 arg1) {
+    char work[12];
+    s32 status;
 
-    setup(work, format, *value, arg1);
-    DAT_0605DD61 = 1;
-    SMPC_ISSUE(SMPC_SNDOFF);
-    result = func_06030768(arg0, work, &SYS_state_060485C0);
-    DAT_0605DD61 = 0;
-    SMPC_ISSUE(SMPC_SNDON);
-    return result;
+    sprintf(work, DAT_0600CEC8, DAT_06038FE0, arg1);
+    func_0600CC14();
+    status = BUP_Read(device, work, &SYS_state_060485C0);
+    func_0600CBCC();
+    return status;
 }
 
-void func_0600D0DC(s32 arg0, s32 arg1, s32 arg2) {
-    s8 date[5];
+void func_0600D0DC(void) {
+    BupDate date;
 
-    date[0] =
+    date.year =
         (((u8)DAT_06057F60.unk6 >> 4) * 1000) +
         ((DAT_06057F60.unk6 & 0x0F) * 100) +
         (((u8)DAT_06057F60.unk5 >> 4) * 10) + (DAT_06057F60.unk5 & 0x0F) + 0x44;
-    date[1] = DAT_06057F60.unk4 & 0x0F;
-    date[2] = BCD_TO_DEC(DAT_06057F60.unk3);
-    date[3] = BCD_TO_DEC(DAT_06057F60.unk2);
-    date[4] = BCD_TO_DEC(DAT_06057F60.unk1);
+    date.month = DAT_06057F60.unk4 & 0x0F;
+    date.day = BCD_TO_DEC(DAT_06057F60.unk3);
+    date.time = BCD_TO_DEC(DAT_06057F60.unk2);
+    date.min = BCD_TO_DEC(DAT_06057F60.unk1);
 
-    func_06030968(date, arg1, arg2, date + 4);
+    BUP_SetDate(&date);
 }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600D1A0, func_0600D1A0);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600D264, func_0600D264);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600D370, func_0600D370);
 
-s8 func_0600D47C(s32 arg0, s8 arg1) {
+s8 func_0600D47C(u32 device, s8 arg1) {
     char work[12];
 
-    func_06032F50(work, DAT_0600CEC8, DAT_06038FE0, arg1);
-    return func_06030898(arg0, work, &SYS_state_060485C0);
+    sprintf(work, DAT_0600CEC8, DAT_06038FE0, arg1);
+    return BUP_Verify(device, work, &SYS_state_060485C0);
 }
 
-s8 func_0600D4C4(s32 arg0, s8 arg1) {
-    s32 work[3];
+s8 func_0600D4C4(u32 device, s8 arg1) {
+    char work[12];
 
-    func_06032F50(work, DAT_0600CEC8, DAT_06038FE0, arg1);
-    return func_060307C4(arg0, work);
+    sprintf(work, DAT_0600CEC8, DAT_06038FE0, arg1);
+    return BUP_Delete(device, work);
 }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600D508, SaveGameState);
@@ -2499,6 +2581,7 @@ void func_0600DAB4(void) { InitPrimBuf(); }
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600DACC, InitPrimBuf);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600DB38, func_0600DB38);
 
+// original name: free_effect
 void func_0600DCA4(s32 arg0) {
     Primitive* prim;
 
@@ -2558,7 +2641,28 @@ s32 func_0600DD38(Primitive* prim) {
     return visible;
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600DD84, func_0600DD84);
+s32 func_0600DD84(Primitive* prim) {
+    u16 temp_r2;
+    s16 x, y;
+    s16 x2, y2;
+    s32 visible;
+
+    visible = 0;
+
+    temp_r2 = prim->unkA;
+    x = prim->x0;
+    y = prim->y0;
+
+    x2 = ((temp_r2 >> 8) << 3) + x;
+    y2 = (temp_r2 & 0xFF) + y;
+
+    if (x2 >= -0x20 && x < 0x160) {
+        if (y2 >= -0x20 && y < 0x110) {
+            visible = 1;
+        }
+    }
+    return visible;
+}
 
 s32 func_0600DDD4(Primitive* prim) {
     Point16* pos;
@@ -2681,8 +2785,39 @@ void func_0600E240(Point16* arg0) {
     DAT_06057A0C.y = arg0->y + arg0->y / 2;
 }
 
-// _RotTransCurMatrix_ps
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600E2D4, SetCurrentMatrixBinAngle);
+// original name: RotTransCurMatrix_ps
+void SetCurrentMatrixBinAngle(MthXyz* rot, MthXyz* pos) {
+    s32 angle;
+
+    MTH_ClearMatrix(&DAT_06061DF0);
+    DAT_06061DF0.current->val[0][3] = pos->x;
+    DAT_06061DF0.current->val[1][3] = pos->y;
+    DAT_06061DF0.current->val[2][3] = pos->z;
+    angle = rot->z & 0xFFF;
+    if (angle != 0) {
+        angle *= 360 * 16;
+        if (angle >= MTH_FIXED(180)) {
+            angle -= MTH_FIXED(360);
+        }
+        MTH_RotateMatrixZ(&DAT_06061DF0, angle);
+    }
+    angle = rot->y & 0xFFF;
+    if (angle != 0) {
+        angle *= 360 * 16;
+        if (angle >= MTH_FIXED(180)) {
+            angle -= MTH_FIXED(360);
+        }
+        MTH_RotateMatrixY(&DAT_06061DF0, angle);
+    }
+    angle = rot->x & 0xFFF;
+    if (angle != 0) {
+        angle *= 360 * 16;
+        if (angle >= MTH_FIXED(180)) {
+            angle -= MTH_FIXED(360);
+        }
+        MTH_RotateMatrixX(&DAT_06061DF0, angle);
+    }
+}
 
 void func_0600E390(MthXyz* rot, MthXyz* pos) {
     MTH_ClearMatrix(&DAT_06061DF0);
@@ -2700,7 +2835,7 @@ void func_0600E390(MthXyz* rot, MthXyz* pos) {
     }
 }
 
-void func_0600E400(MthXyz* src, MthXyz* dst, s32 count) {
+void TransformNormals(MthXyz* src, MthXyz* dst, s32 count) {
     MthXyz unused;
 
     while (count > 0) {
@@ -2996,6 +3131,8 @@ const s16 rsin_tbl[] = {
 };
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600F7BC, rsin);
+
+//_SScos
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600F81C, rcos);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600F87C, rsincos);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600F914, SquareRoot0);
@@ -3111,7 +3248,7 @@ s32 func_0600FBBC(void) {
     if (!CdSoundCommandQueueEmpty()) {
         return 1;
     }
-    PlaySfx(0xF0000010);
+    PlaySfx(SET_UNK_10);
     ((s32(*)(void))func_06010400)();
     PlaySfx(0xF0000008);
     return 0;
