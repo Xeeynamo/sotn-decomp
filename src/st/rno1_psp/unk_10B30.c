@@ -30,7 +30,7 @@ static AnimateEntityFrame g_Rno1DebrisAnim[] = {
 
 extern EInit g_EInitParticle;
 
-INCLUDE_ASM("st/rno1_psp/nonmatchings/rno1_psp/unk_10910", func_us_801BE880_from_no1);
+INCLUDE_ASM("st/rno1_psp/nonmatchings/rno1_psp/unk_10B30", func_us_801BE880_from_no1);
 
 extern u16 D_us_80180754;
 
@@ -265,4 +265,4 @@ void func_us_801BF074_from_no1(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rno1_psp/nonmatchings/rno1_psp/unk_10910", func_us_801A86A8);
+INCLUDE_ASM("st/rno1_psp/nonmatchings/rno1_psp/unk_10B30", func_us_801A86A8);
