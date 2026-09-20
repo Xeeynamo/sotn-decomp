@@ -1,6 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../rno1/rno1.h"
 
+#ifdef VERSION_PSP
+extern s32 E_ID(UNK_29);
+extern s32 E_ID(UNK_2E);
+#endif
+
 static s16 g_Rno1DebrisCollisionSensors[] = {
     0, 0, 0, 4, 0, -4, 0, 0,
 };
