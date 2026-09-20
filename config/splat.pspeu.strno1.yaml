@@ -65,7 +65,7 @@ segments:
       - [0x121F0, c, rno1/e_breakable]
       - [0x12AC0, c, rno1_psp/e_red_door]
       - [0x13F88, c, rno1_psp/unk_13F88]
-      - [0x14138, c, rno1_psp/unk_14138]
+      - [0x14138, c, rno1/unk_27A5C]
       - [0x14238, c, rno1/e_room_bg]
       - [0x14428, c, rno1/e_lock_camera]
       - [0x14688, c, rno1_psp/unk_14688]
