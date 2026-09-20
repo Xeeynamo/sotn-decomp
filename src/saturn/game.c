@@ -266,7 +266,7 @@ void RunMainEngine(void) {
             return;
         }
         func_06078120();
-        if (DAT_0605cea2 == 5) {
+        if (DAT_0605cea0.unk2 == 5) {
             if (D_80097C98 == 6) {
                 D_80097C98 = 0;
             }
@@ -1511,7 +1511,7 @@ void func_060744F8(s32 arg0) {
     limit = arg0;
     size = 0;
     offset = 0;
-    if (DAT_0605cea2 == 5) {
+    if (DAT_0605cea0.unk2 == 5) {
         glyphData = GetEventTextGlyphData(0, DAT_0605D7FC - 1);
         if (glyphData == NULL) {
             return;
@@ -1552,7 +1552,7 @@ void func_060745A0(Point16u* arg0, u16 arg1, s32 arg2) {
     dst = (u16*)0x25E58000;
     src = (u16*)0x25E60000;
 
-    if (DAT_0605cea2 == 5) {
+    if (DAT_0605cea0.unk2 == 5) {
         glyphData = GetEventTextGlyphData(1, DAT_0605D7FC - 1);
         if (glyphData == NULL) {
             return;

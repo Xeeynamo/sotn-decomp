@@ -28,7 +28,7 @@ void EntityDeathCutsceneManager(Entity* self) {
         g_PauseAllowed = false;
         g_Player.padSim = PAD_RIGHT;
         g_Player.demo_timer = 1;
-#if !defined(VERSION_PSP)
+#ifdef VERSION_US
         g_CutsceneFlags |= 0x100;
 #endif
         break;

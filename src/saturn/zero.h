@@ -4,6 +4,8 @@
 #include "sattypes.h"
 #include "stage_data.h"
 #include "lib/scl.h"
+#include "lib/per.h"
+#include "lib/bup.h"
 #include "inc_asm.h"
 #include <saturn_sprite.h>
 
@@ -93,23 +95,6 @@ void ClearDebugPrintTilemap();
 
 #define BCD_TO_DEC(x) ((((u8)(x) >> 4) * 10) + ((x) & 0x0F))
 
-#define SMPC_SF (*(volatile s8*)0x20100063)
-#define SMPC_COMREG (*(volatile s8*)0x2010001F)
-#define SMPC_SNDON 0x19
-#define SMPC_SNDOFF 0x1A
-
-#define SMPC_ISSUE(cmd)                                                        \
-    do {                                                                       \
-        do {                                                                   \
-        } while (SMPC_SF & 1);                                                 \
-        SMPC_SF = 1;                                                           \
-        SMPC_COMREG = (cmd);                                                   \
-        if (SMPC_SF & 1) {                                                     \
-            do {                                                               \
-            } while (SMPC_SF & 1);                                             \
-        }                                                                      \
-    } while (0)
-
 extern s32 DAT_060645d0;
 extern void* g_BatResourceDescriptorList;
 
@@ -144,14 +129,12 @@ extern s32 D_8013B61C;
 extern s32 g_PlayingXaBgmId;
 extern s8 DAT_060644C0;
 
-extern u16 DAT_0605cea2;
 extern u32 DAT_0605C658;
 void func_06030df0();
 void InitBackupRam(void);
-s32 func_06030690(s8 arg0, s32 arg1, void* arg2);
-s32 func_0600D028(s32 arg0, s8 arg1);
+s32 func_0600D028(u32 device, s8 arg1);
 s8 func_0600D264(s8 arg0, s8 arg1);
-s8 func_0600D47C(s32 arg0, s8 arg1);
+s8 func_0600D47C(u32 device, s8 arg1);
 extern s8 DAT_0605DD61;
 extern s16 DAT_0605DD90;
 void InitSystem();
@@ -204,7 +187,7 @@ extern s32 DAT_06061dd0;
 extern s32 DAT_0605c10c;
 extern SaturnStageFileRecord g_StageFileRecords[];
 extern s32 DAT_0605c11a;
-extern u16 DAT_0605cea0;
+extern Unk0605cd70 DAT_0605cea0;
 extern SaturnSpriteResource g_EntitySpriteBank14;
 extern SaturnSpriteResource g_EntitySpriteBank01;
 extern SaturnSpriteFrameHeader* DAT_06045E14[];
@@ -267,7 +250,6 @@ extern s32 DAT_06062290[];
 extern s32 DAT_06063BD4;
 extern s32 DAT_06063C1C;
 extern s32 DAT_06063EB4;
-extern s32 d_0605AEAC;
 void func_0600C818();
 void ResetLayerColorCalc();
 extern u16 DAT_0605cdb8;
@@ -320,7 +302,7 @@ void func_0600652C();
 void func_06005310();
 void func_06004f50();
 void ReturnToGame();
-void SetVblank();
+void SetVblank(s32);
 void func_0600456c();
 void ClearDebugPrintTilemap(void);
 extern s32 SpMstCmdPos;
@@ -375,6 +357,7 @@ struct Unk060505E0 {
     s32 unk4;
 };
 extern struct Unk060505E0* DAT_060505E0;
+extern struct Unk060505E0* DAT_060505E4;
 extern struct Unk060505E0 DAT_06065D40;
 extern volatile u8 DAT_06065D32;
 struct Unk060505F8 {
@@ -382,7 +365,7 @@ struct Unk060505F8 {
     u16 buttons;
 };
 extern struct Unk060505F8* DAT_060505F8;
-s32 func_0602BB98(s32, s32, s32, s32, s32);
+s32 PER_LInit(s32, s32, s32, s32, s32);
 void func_06004A10(void);
 void func_0600456C(void);
 void func_0600460C(void);
@@ -447,18 +430,13 @@ struct Unk06057F60 {
     s8 unk6;
 };
 extern struct Unk06057F60 DAT_06057F60;
-extern s32 func_06030968(void*, s32, s32, void*);
 extern s32 SYS_state_060485C4;
 extern s32 SYS_state_060485C0;
 extern s16 DAT_06038FD6;
 extern s16 DAT_06038FD8;
 void func_0601AF44(void);
 extern s32 DAT_06038FE0;
-s32 func_06032F50(void* dst, const void* fmt, s32 arg0, s8 arg1);
-s32 func_06030768(s32 arg0, void* arg1, void* arg2);
-s8 func_06030898(s32 arg0, void* arg1, void* arg2);
-s8 func_060307C4(s32 arg0, void* arg1);
-extern s32 Crc32(s32, s32*);
+s32 sprintf(char* str, const char* format, ...);
 extern void (*DAT_0603908C[])(Primitive* prim, s16 x, s16 y);
 extern s32 DAT_06061DD4;
 extern MthMatrixTbl DAT_06061DF0;

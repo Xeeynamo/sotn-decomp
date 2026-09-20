@@ -116,7 +116,7 @@ s32 func_0606BB4C(void) {
     if ((D_80097C98 == 6) && (g_CurrentRoom.unk2 & 0x20)) {
         ReadFileToAddr(DAT_0606BB40, &DAT_060937F8);
     }
-    if (func_0600607C(g_CurrentRoom.stageID) != 0) {
+    if (func_0600607C(g_CurrentRoom.stageID)) {
         ReadFileToAddr(func_06005E3C(0, g_CurrentRoom.stageID), 0x25E22000);
         ReadFileToAddr(func_06005E3C(1, g_CurrentRoom.stageID), 0x25E60000);
         func_06074470();

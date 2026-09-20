@@ -171,7 +171,7 @@ extern s32 DAT_060EF100;
 extern s32 DAT_060EF110;
 extern s32 g_Stage16Entity08ModelVertices14[14][3];
 extern MthMatrixTbl DAT_06061DF0;
-void SetCurrentMatrixBinAngle(s32* pos, s32* angle);
+void SetCurrentMatrixBinAngle(MthXyz* rot, MthXyz* pos);
 void TransformAndProjectPoints(s32*, s32*, s32, MthMatrixTbl*);
 extern SaturnSpriteFrameHeader* g_Stage16SpriteBank16Frames[];
 extern LayoutEntity g_Stage16LayoutVertical02[];
