@@ -61,7 +61,7 @@ segments:
       - [0x101D0, c, rno1/prim_helpers]
       - [0x10910, c, rno1_psp/unk_10910]
       - [0x11FF8, c, rno1_psp/st_init]
-      - [0x121F0, c, rno1_psp/unk_121F0]
+      - [0x121F0, c, rno1_psp/e_breakable]
       - [0x12AC0, c, rno1_psp/e_red_door]
       - [0x13F88, c, rno1_psp/unk_13F88]
       - [0x14428, c, rno1/e_lock_camera]
