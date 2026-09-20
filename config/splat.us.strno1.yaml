@@ -92,6 +92,7 @@ segments:
       - [0x28B38, c, e_red_door]
       - [0x29930, c, unk_29930]
       - [0x29A8C, c, unk_29A8C]
+      - [0x29BEC, c, unk_29BEC]
       - [0x29C9C, c, st_update]
       - [0x2A0D0, c, collision]
       - [0x2B88C, c, create_entity]
