@@ -17,7 +17,8 @@ static AnimateEntityFrame anim2[] = {{64, 59}, POSE_END};
 static AnimateEntityFrame anim3[] = {{64, 60}, POSE_END};
 static AnimateEntityFrame anim4[] = {{1, 72}, POSE_END};
 // Looks like a mistake? Kind of weird here
-static AnimateEntityFrame anim5[] = {{8, 68}, POSE_END, {8, 69}, {8, 70}, POSE_LOOP(0)};
+static AnimateEntityFrame anim5[] = {
+    {8, 68}, POSE_END, {8, 69}, {8, 70}, POSE_LOOP(0)};
 static AnimateEntityFrame anim7[] = {{64, 87}, POSE_END};
 static AnimateEntityFrame anim8[] = {{64, 113}, POSE_END};
 static AnimateEntityFrame anim9[] = {{64, 81}, POSE_END};
