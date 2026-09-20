@@ -201,12 +201,13 @@ INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E102C, func_060E102C);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E1434, func_060E1434);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E17EC, func_060E17EC);
 INCLUDE_ASM("asm/saturn/stage_16/f_nonmat", f60E1928, func_060E1928);
+
 void func_060E25F4(Entity* self) {
     s32 state;
     s32 i;
-    s32 result;
+    s32 status;
     s8 save_id;
-    unsigned int sp[6];
+    BupStat sttb;
 
     state = self->ext.save.unk4;
     if (state == 10) {
@@ -222,8 +223,8 @@ void func_060E25F4(Entity* self) {
 state10:
     save_id = DAT_060485C4;
     for (i = 1; i <= 5; i++) {
-        result = func_0600D028(save_id, i);
-        if (result != 0 && result != 8) {
+        status = func_0600D028(save_id, i);
+        if (status != 0 && status != BUP_BROKEN) {
             DAT_060485C0.unk5 = i;
             DAT_060485C0.unk4 = save_id;
             self->ext.save.unk4 = 30;
@@ -239,12 +240,12 @@ state10:
 state30:
     save_id = DAT_060485C0.unk4;
     i = DAT_060485C0.unk5;
-    result = func_06030690(save_id, 70, sp);
-    if (result == 2) {
+    status = BUP_Stat(save_id, 70, &sttb);
+    if (status == BUP_UNFORMAT) {
         self->ext.save.unk4 = 43;
     } else {
-        result = func_0600D028(save_id, i);
-        if (result == 5 && sp[4] <= 0x4D) {
+        status = func_0600D028(save_id, i);
+        if (status == BUP_NOT_FOUND && sttb.freeblock <= 0x4D) {
             self->ext.save.unk4 = 44;
         } else if (
             func_0600D264(save_id, i) == 0 && func_0600D264(save_id, i) == 0 &&
@@ -258,6 +259,7 @@ state30:
 cleanup:
     return;
 }
+
 u16 func_060E270C(s32 minX, s32 maxX) {
     u16 standing;
 

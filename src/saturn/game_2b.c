@@ -42,6 +42,7 @@ void func_060784B8(SprSpCmd* cmd, s32 portraitIndex, s32 colorTableIndex) {
 
 extern SaturnSpriteResource** DAT_060645EC;
 extern SprSpCmd DAT_06086108;
+extern SprSpCmd* d_0605AEAC;
 
 // original name: disp_char
 void func_06078550(s32 arg0, u8 ch, Point16* pos);
@@ -58,7 +59,7 @@ void func_06078550_noInline(s32 arg0, u8 ch, Point16* pos) {
     LOW(cmd->ax) = (pos->x << 0x10) | (pos->y & 0xFFFF);
     if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(arg0, cmd);
-        d_0605AEAC += 0x20;
+        d_0605AEAC++;
     }
 }
 
@@ -175,7 +176,7 @@ void func_06078920(s32 arg0, Point16* pos) {
     LOW(cmd->ax) = (pos->x << 0x10) | (pos->y & 0xFFFF);
     if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(arg0, cmd);
-        d_0605AEAC += 0x20;
+        d_0605AEAC++;
     }
 }
 
@@ -198,7 +199,7 @@ void func_060789C4(s32 arg0, s32 arg1, Point16* pos) {
         LOW(cmd->ax) = (pos->x << 0x10) | (pos->y & 0xFFFF);
         if (SpMstCmdPos < 0x278) {
             SPR_2Cmd(arg0, cmd);
-            d_0605AEAC += 0x20;
+            d_0605AEAC++;
         }
     } else {
         func_06078604(arg0, GetMenuItemName(arg1), pos);
@@ -227,7 +228,7 @@ void func_06078F58(s32 arg0, s32 arg1, Point16* pos) {
 
     if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(arg0, cmd);
-        d_0605AEAC += 0x20;
+        d_0605AEAC++;
     }
 }
 
@@ -249,7 +250,7 @@ void func_06079008(s32 arg0, s32 arg1, Point16* pos) {
     LOW(cmd->ax) = (pos->x << 0x10) | (pos->y & 0xFFFF);
     if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(arg0, cmd);
-        d_0605AEAC += 0x20;
+        d_0605AEAC++;
     }
 }
 
@@ -273,7 +274,7 @@ void func_06079208(s32 arg0, Point16* pos) {
     LOW(cmd->ax) = (pos->x << 0x10) | ((u16)pos->y);
     if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(arg0, cmd);
-        d_0605AEAC += 0x20;
+        d_0605AEAC++;
     }
 }
 
@@ -312,7 +313,7 @@ void func_06079424(s32 arg0, s32 arg1, s32 arg2, Point16* pos) {
     LOW(cmd->ax) = (pos->x << 0x10) | (pos->y & 0xFFFF);
     if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(arg0, cmd);
-        d_0605AEAC += 0x20;
+        d_0605AEAC++;
     }
 }
 
@@ -324,7 +325,7 @@ void func_06079580(s32 arg0, s32 arg1, Point16* pos) {
     LOW(cmd->ax) = (pos->x << 0x10) | (pos->y & 0xFFFF);
     if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(arg0, cmd);
-        d_0605AEAC += 0x20;
+        d_0605AEAC++;
     }
 }
 
@@ -363,7 +364,7 @@ void func_0607973C(s32 arg0, Point16* pos) {
 
     if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(arg0, cmd);
-        d_0605AEAC += 0x20;
+        d_0605AEAC++;
     }
 }
 
@@ -406,7 +407,7 @@ void func_06079A2C(s32 arg0, s32 arg1, Point16* pos) {
     LOW(cmd->dx) = (left << 0x10) | ((u16)bottom);
     if (SpMstCmdPos < 0x278) {
         SPR_2Cmd(arg0, cmd);
-        d_0605AEAC += 0x20;
+        d_0605AEAC++;
     }
 }
 
@@ -1972,7 +1973,7 @@ void InitScreenWaveEffect(void) {
     DAT_06086130 = 0x0;
     ResetLayerColorCalc();
     SCL_SET_CCMD(0);
-    SCL_SetColMixMode(0x7, 0x1);
+    SCL_SetColMixMode(7, 1);
     DAT_06086134 = 0x1F;
     SCL_SET_S0CCRT(DAT_06086134);
 }
@@ -1996,7 +1997,7 @@ void DrawScreenWaveEffect(void) {
         spCmd->ay = i + 0x68;
         if (SpMstCmdPos < 0x278) {
             SPR_2Cmd(0x1C0, spCmd);
-            d_0605AEAC += 0x20;
+            d_0605AEAC++;
         }
         spCmd->charAddr += 20;
     }

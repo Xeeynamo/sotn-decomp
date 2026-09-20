@@ -223,7 +223,7 @@ void func_060A5F9C(void) {
     // FACTORY(BP_SUMMON_SPIRIT, 0)
     func_060BAF44(g_CurrentEntity, 0x75, 0);
     func_060A5674(0xC1);
-    PlaySfx(0x070B);
+    PlaySfx(0x70B);
     func_060A56AC(NULL);
     g_Player.timers[0xC] = 4;
 }
@@ -236,7 +236,7 @@ void func_060A60EC(void) {
     DestroyPlayerSpellEntity();
     func_060BAF44(g_CurrentEntity, 0x10075U, 0);
     func_060A5674(0xC1);
-    PlaySfx(0x070B);
+    PlaySfx(0x70B);
     func_060A56AC(NULL);
     g_Player.timers[0xC] = 4;
 }

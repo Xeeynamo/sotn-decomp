@@ -174,12 +174,13 @@ INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E03F0, func_060E03F0);
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E08C8, func_060E08C8);
 void func_060E09D4(void) { DestroyEntity(); }
 INCLUDE_ASM("asm/saturn/rstage16/f_nonmat", f60E09EC, func_060E09EC);
+
 void func_060E16B8(void* arg0) {
     Entity* self;
     s32* state_ptr;
-    u32 local[6];
+    BupStat sttb;
     s32 state;
-    s32 result;
+    s32 status;
     s32 count;
     s8 item;
 
@@ -206,8 +207,8 @@ L_case10:
     count = 1;
 
     for (;;) {
-        result = func_0600D028(item, count);
-        if (result == 0 || result == 8) {
+        status = func_0600D028(item, count);
+        if (status == 0 || status == BUP_BROKEN) {
             count += 1;
             if (count > 5)
                 break;
@@ -227,14 +228,14 @@ L_case30:
     item = DAT_060485C0.unk4;
     count = DAT_060485C0.unk5;
 
-    result = func_06030690(item, 70, local);
-    if (result == 2) {
+    status = BUP_Stat(item, 70, &sttb);
+    if (status == BUP_UNFORMAT) {
         self->ext.save.unk4 = 43;
         return;
     }
 
-    result = func_0600D028(item, count);
-    if (result == 5 && local[4] <= 0x4D) {
+    status = func_0600D028(item, count);
+    if (status == BUP_NOT_FOUND && sttb.freeblock <= 0x4D) {
         self->ext.save.unk4 = 44;
         return;
     }
@@ -246,6 +247,7 @@ L_case30:
         self->ext.save.unk4 = 45;
     }
 }
+
 u16 func_060E17D0(s32 minX, s32 maxX) {
     u16 result;
 
