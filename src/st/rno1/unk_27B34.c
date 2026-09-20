@@ -26,7 +26,7 @@ static AnimateEntityFrame g_Rno1DebrisAnim[] = {
     {3, 1}, {3, 2}, {3, 3}, {3, 4}, {3, 5}, {3, 6}, {-1, 0},
 };
 
-INCLUDE_ASM("st/rno1/nonmatchings/unk_268AC", func_us_801BE880_from_no1);
+INCLUDE_ASM("st/rno1/nonmatchings/unk_27B34", func_us_801BE880_from_no1);
 
 extern u16 D_us_80180754;
 
@@ -261,4 +261,4 @@ void func_us_801BF074_from_no1(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rno1/nonmatchings/unk_268AC", func_us_801A86A8);
+INCLUDE_ASM("st/rno1/nonmatchings/unk_27B34", func_us_801A86A8);
