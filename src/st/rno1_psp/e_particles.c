@@ -5,6 +5,8 @@
 
 extern EInit g_EInitObtainable;
 
+#include "../e_particles_maria.h"
+
 // the signature is purposely wrong for this file
 // this is how the original source code worked
 INCLUDE_ASM("st/rno1_psp/nonmatchings/rno1_psp/e_particles", EntitySoulStealOrb);

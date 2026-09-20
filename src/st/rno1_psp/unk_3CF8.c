@@ -64,5 +64,3 @@ void EntityJackOBonesDeathParts(Entity* self) {
 
 INCLUDE_ASM(
     "st/rno1_psp/nonmatchings/rno1_psp/unk_3CF8", EntityJackOBonesJack);
-
-#include "../e_particles_maria.h"
