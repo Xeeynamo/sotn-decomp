@@ -50,7 +50,6 @@ segments:
       - [0x37C0, c, rno1/st_update]
       - [0x3CF8, c, rno1/e_jack_o_bones]
       - [0x4990, c, rno1/e_particles]
-      - [0x5F20, c, rno1_psp/unk_5F20]
       - [0x5FF8, c, rno1/e_collect]
       - [0xA170, c, rno1_psp/unk_A170]
       - [0xAB88, c, rno1/collision]
