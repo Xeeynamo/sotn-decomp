@@ -8,6 +8,8 @@
 
 enum Palettes {
     PAL_NONE,
+    PAL_BREAKABLE = 0x22C,
+    PAL_BREAKABLE_DEBRIS = 0x230,
 };
 
 typedef enum EntityID {

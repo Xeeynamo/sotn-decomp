@@ -49,7 +49,7 @@ segments:
       - [0x79C, .data, e_room_bg]
       - [0x8F4, .data, e_red_door_tiles]
       - [0x954, .data, e_lock_camera]
-      - [0x9D4, data]
+      - [0x9D4, .data, e_breakable]
       - [0xAE4, .data, d_prize_drops]
       - [0xB04, data]
       - [0xC9C, .data, unk_267A8]

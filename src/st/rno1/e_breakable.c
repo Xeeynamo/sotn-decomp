@@ -1,94 +1,69 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rno1.h"
 
-INCLUDE_ASM("st/rno1/nonmatchings/unk_26178", EntityBreakable);
+#define CANDELABRA_HIT_SFX SFX_CANDLE_HIT
+#define BREAKABLE_HIT_SFX SFX_QUICK_STUTTER_EXPLODE_B
+#define OVL_BREAKABLE_ANIMSET ANIMSET_OVL(10)
 
-extern EInit g_EInitInteractable;
-extern EInit g_EInitParticle;
+static AnimateEntityFrame anim_candelabra_wall_double[] = {
+    {4, 1}, {4, 2}, POSE_LOOP(0)};
+static AnimateEntityFrame anim_wall_sconce_flame[] = {
+    {4, 0}, {4, 0}, POSE_LOOP(0)};
+static AnimateEntityFrame anim_candelabra_tall[] = {
+    {5, 1}, {5, 2}, {5, 3}, {5, 4}, POSE_LOOP(0)};
+static AnimateEntityFrame anim_candelabra_short[] = {
+    {5, 5}, {5, 6}, {5, 7}, {5, 8}, POSE_LOOP(0)};
+static AnimateEntityFrame anim_candelabra_table[] = {
+    {5, 9}, {5, 10}, {5, 11}, {5, 12}, POSE_LOOP(0)};
+static AnimateEntityFrame anim_brazier[] = {
+    {5, 13}, {5, 14}, {5, 15}, {5, 16}, POSE_LOOP(0)};
+static AnimateEntityFrame anim_candelabra_wall_triple[] = {
+    {5, 17}, {5, 18}, {5, 19}, POSE_LOOP(0)};
+static AnimateEntityFrame anim_urn[] = {{5, 23}, POSE_LOOP(0)};
+static AnimateEntityFrame anim_jug[] = {{5, 22}, POSE_LOOP(0)};
+static AnimateEntityFrame anim_bust[] = {
+    {5, 20}, {-1, -1}, {5, 21}, {5, 21}, POSE_END};
+static AnimateEntityFrame* animations[] = {
+    anim_candelabra_wall_double,
+    anim_wall_sconce_flame,
+    anim_candelabra_tall,
+    anim_candelabra_short,
+    anim_candelabra_table,
+    anim_brazier,
+    anim_candelabra_wall_triple,
+    anim_urn,
+    anim_jug,
+    anim_bust,
+};
 
-void EntityBreakableDebris(Entity* self) {
-    Collider collider;
-    Entity* explosion;
-    Primitive* prim;
-    s32 primIndex;
-    s16 posX, posY;
+static u8 hitbox_heights[] = {8, 8, 40, 24, 16, 16, 8, 8, 8, 8, 8, 0};
+static u8 explosion_types[] = {
+    EXPLOSION_SMALL,          EXPLOSION_SMALL,
+    EXPLOSION_SMALL_MULTIPLE, EXPLOSION_SMALL_MULTIPLE,
+    EXPLOSION_SMALL_MULTIPLE, EXPLOSION_SMALL_MULTIPLE,
+    EXPLOSION_SMALL_MULTIPLE, EXPLOSION_SMALL_MULTIPLE,
+    EXPLOSION_SMALL_MULTIPLE, EXPLOSION_SMALL_MULTIPLE,
+};
+static u16 palettes[] = {
+    PAL_NONE, PAL_NONE, PAL_BREAKABLE, PAL_BREAKABLE, PAL_BREAKABLE, PAL_BREAKABLE, PAL_BREAKABLE, PAL_BREAKABLE, PAL_BREAKABLE, PAL_BREAKABLE,
+};
+static u16 anim_sets[] = {
+    ANIMSET_DRA(3),  ANIMSET_DRA(3),  OVL_BREAKABLE_ANIMSET, OVL_BREAKABLE_ANIMSET,
+    OVL_BREAKABLE_ANIMSET, OVL_BREAKABLE_ANIMSET, OVL_BREAKABLE_ANIMSET, OVL_BREAKABLE_ANIMSET,
+    OVL_BREAKABLE_ANIMSET, OVL_BREAKABLE_ANIMSET,
+};
+static u16 unk_5A[] = {124, 124, 91, 91, 91, 91, 91, 91, 91, 91};
+static u8 blend_modes[] = {
+    BLEND_TRANSP | BLEND_ADD, BLEND_TRANSP | BLEND_ADD,
+    BLEND_TRANSP | BLEND_ADD,     BLEND_TRANSP | BLEND_ADD,
+    BLEND_TRANSP | BLEND_ADD,     BLEND_TRANSP | BLEND_ADD,
+    BLEND_TRANSP | BLEND_ADD,     BLEND_TRANSP | BLEND_ADD,
+    BLEND_TRANSP | BLEND_ADD,     BLEND_TRANSP | BLEND_ADD,
+};
+static u16 hitbox_offsets_y[] = {0, 0, -24, -16, 0, 0, 0, 0, 0, 0, 0, 0};
 
-    switch (self->step) {
-    case 0:
-        if (self->params & 0x100) {
-            InitializeEntity(g_EInitInteractable);
-            self->animSet = ANIMSET_OVL(10);
-            self->unk5A = 0x5B;
-            self->palette = 0x22C;
-            self->animCurFrame = 0x15;
-            self->zPriority = 0x6A;
-            self->step = 0x100;
-            return;
-        }
+// The first 5 elements are used with the tall candelabra and the last 5 are
+// used with the short candelabra
+static s16 candelabra_debris_offsets_y[] = {0, 1, 2, 2, 3, 0, 1, 2, 3, 0};
 
-        InitializeEntity(g_EInitParticle);
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
-        if (primIndex == -1) {
-            DestroyEntity(self);
-            return;
-        }
-
-        self->flags |= FLAG_HAS_PRIMS;
-        self->primIndex = primIndex;
-        prim = &g_PrimBuf[primIndex];
-        self->ext.prim = prim;
-        UnkPolyFunc2(prim);
-        prim->tpage = 0x16;
-        prim->clut = 0x230;
-        prim->u0 = prim->u2 = 0x98;
-        prim->u1 = prim->u3 = 0xA7;
-
-#ifdef VERSION_PSP
-        posY = 0x84;
-#else
-        posY = -0x7C;
-#endif
-        posY += self->params * 16;
-        prim->v0 = prim->v1 = posY;
-        prim->v2 = prim->v3 = posY + 15;
-        prim->next->x1 = self->posX.i.hi;
-        prim->next->y0 = self->posY.i.hi;
-        LOH(prim->next->r2) = 0x10;
-        LOH(prim->next->b2) = 0x10;
-        prim->next->b3 = 0x80;
-        prim->priority = self->zPriority;
-        prim->drawMode = DRAW_UNK02;
-        self->velocityX = ((Random() & 7) << 12) + FIX(0.5);
-        if (!self->facingLeft) {
-            self->velocityX = -self->velocityX;
-        }
-        self->velocityY = ((Random() & 7) << 12) - FIX(0.5);
-
-    case 1:
-        MoveEntity();
-        self->velocityY += FIX(0.125);
-        prim = self->ext.prim;
-        prim->next->x1 = self->posX.i.hi;
-        prim->next->y0 = self->posY.i.hi;
-        if (self->facingLeft) {
-            LOH(prim->next->tpage) += 0x10;
-        } else {
-            LOH(prim->next->tpage) -= 0x10;
-        }
-        UnkPrimHelper(prim);
-
-        posX = self->posX.i.hi;
-        posY = self->posY.i.hi + 8;
-        g_api.CheckCollision(posX, posY, &collider, 0);
-        if (collider.effects & EFFECT_SOLID) {
-            g_api.PlaySfx(SFX_QUICK_STUTTER_EXPLODE_B);
-            explosion = AllocEntity(&g_Entities[224], &g_Entities[256]);
-            if (explosion != NULL) {
-                CreateEntityFromCurrentEntity(E_EXPLOSION, explosion);
-                explosion->params = 0;
-            }
-            DestroyEntity(self);
-        }
-        break;
-    }
-}
+#include "../e_breakable_with_debris.h"
