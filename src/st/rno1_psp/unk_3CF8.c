@@ -33,7 +33,7 @@ static void TryThrow(void) {
 
 INCLUDE_ASM("st/rno1_psp/nonmatchings/rno1_psp/unk_3CF8", EntityJackOBones);
 
-extern EInit D_us_8018070C;
+extern EInit g_EInitJackOBones2;
 extern u16 D_us_80181C74[];
 
 void EntityJackOBonesDeathParts(Entity* self) {
@@ -51,7 +51,7 @@ void EntityJackOBonesDeathParts(Entity* self) {
         return;
     }
 
-    InitializeEntity(D_us_8018070C);
+    InitializeEntity(g_EInitJackOBones2);
     self->animCurFrame = (self->params & 0xFF) + 15;
     if (self->params & 0x100) {
         self->palette += 1;
