@@ -73,7 +73,7 @@ segments:
       - [0x25BA8, .rodata, e_breakable]
       - [0x25BC8, .rodata, unk_267A8]
       - [0x25C58, .rodata, e_red_door]
-      - [0x25C70, rodata] #, unk_29930]
+      - [0x25C70, .rodata, unk_29930]
       - [0x25C7C, .rodata, e_collect]
       - [0x25D50, .rodata, e_stage_name]
       - [0x25D84, .rodata, unk_34074]

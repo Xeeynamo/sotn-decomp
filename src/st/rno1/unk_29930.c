@@ -5,7 +5,6 @@ void func_us_801B9028_from_no1(Entity* self) {
     extern u16 D_us_8018076C[];
     extern u16 D_us_80180D44[];
     extern u16 D_us_80180D58[];
-    extern char D_us_801A5C70;
 
     switch (self->step) {
     case 0: {
@@ -21,8 +20,6 @@ void func_us_801B9028_from_no1(Entity* self) {
         break;
 
     case 2:
-#define PAD2_ANIM_DEBUG_PRINT() FntPrint(&D_us_801A5C70, self->animCurFrame)
-#define PAD2_ANIM_DEBUG_ABORT return
 #include "../pad2_anim_debug.h"
     }
 }
