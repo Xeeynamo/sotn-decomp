@@ -4741,7 +4741,7 @@
 | 1.00 | true     | GetPlayerCollisionWith              | asm/us/st/rno1/matchings/st_common/GetPlayerCollisionWith.s 
 | 1.00 | true     | func_us_801BB1BC                    | asm/us/st/rno2/matchings/st_common/func_us_801BB1BC.s 
 | 1.00 | true     | func_us_801B837C                    | asm/us/st/rno3/matchings/st_common/func_us_801B837C.s 
-| 1.00 | true     | GetPlayerCollisionWith              | asm/us/st/rno4/matchings/st_common/GetPlayerCollisionWith.s 
+| 1.00 | true     | func_us_801CE6B0                    | asm/us/st/rno4/matchings/st_common/func_us_801CE6B0.s 
 | 1.00 | true     | func_us_801B10D0                    | asm/us/st/rnz0/matchings/st_common/func_us_801B10D0.s 
 | 1.00 | true     | func_us_801B136C                    | asm/us/st/rnz1/matchings/st_common/func_us_801B136C.s 
 | 1.00 | true     | func_us_801A69C0                    | asm/us/st/rtop/matchings/st_common/func_us_801A69C0.s 
