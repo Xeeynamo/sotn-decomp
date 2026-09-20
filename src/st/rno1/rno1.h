@@ -42,7 +42,7 @@ typedef enum EntityID {
     E_PARANTHROPUS_BONE_HITBOX,  // EntityParanthropusBoneHitbox
     E_PARANTHROPUS_SKULL,        // EntityParanthropusSkull
     E_PARANTHROPUS_THROWN_BONE,  // EntityParanthropusThrownBone
-    E_UNK_1D,                    // func_us_801C7F24_from_rno0
+    E_STONE_SKULL,               // func_us_801C7F24_from_rno0
     E_JACKO_BONES,               // EntityJackOBones
     E_JACKO_DEATH_PARTS,         // EntityJackOBonesDeathParts
     E_JACKO_JACK,                // EntityJackOBonesJack
