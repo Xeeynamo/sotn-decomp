@@ -7,8 +7,8 @@ extern s32 E_ID(ID_12);
 extern s32 E_ID(ID_42);
 extern Entity D_91E5084;
 #endif
-extern s32 currentMusicId;
-extern s32 stopMusicFlag;
+extern GAME_IMPORT s32 currentMusicId;
+extern GAME_IMPORT s32 stopMusicFlag;
 extern s32 D_us_80181AC8;
 s32 D_us_80181ACC = 0;
 s32 D_us_80181AD0 = 0;
