@@ -83,6 +83,7 @@ segments:
       - [0x20398, data]
       - [0x37E58, .data, rno1/header]
       - [0x37E88, data]
+      - [0x37ED0, .data, rno1_psp/unk_13F88]
       - [0x37EE0, .data, rno1/d_prize_drops]
       - [0x37F00, data, 37F00]
       - [0x38120, .data, rno1/e_lock_camera]
