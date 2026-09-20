@@ -9,15 +9,15 @@ typedef struct {
     /* 0x08 */ u16 drawFlags;
     /* 0x0A */ u16 blendMode;
     /* 0x0C */ u32 flags;
-    /* 0x10 */ u8* animFrames;
+    /* 0x10 */ AnimateEntityFrame* animFrames;
 } Rno1BackgroundBlockInit; // size = 0x14
 
 static AnimateEntityFrame anim1[] = {{64, 2}, POSE_END};
 static AnimateEntityFrame anim2[] = {{64, 59}, POSE_END};
 static AnimateEntityFrame anim3[] = {{64, 60}, POSE_END};
 static AnimateEntityFrame anim4[] = {{1, 72}, POSE_END};
-static AnimateEntityFrame anim5[] = {{8, 68}, POSE_END};
-static AnimateEntityFrame anim6_unused[] = {{8, 69}, {8, 70}, POSE_LOOP(0)};
+// Looks like a mistake? Kind of weird here
+static AnimateEntityFrame anim5[] = {{8, 68}, POSE_END, {8, 69}, {8, 70}, POSE_LOOP(0)};
 static AnimateEntityFrame anim7[] = {{64, 87}, POSE_END};
 static AnimateEntityFrame anim8[] = {{64, 113}, POSE_END};
 static AnimateEntityFrame anim9[] = {{64, 81}, POSE_END};
