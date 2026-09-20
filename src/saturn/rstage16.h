@@ -102,7 +102,7 @@ void func_060E1E74(s32 arg0, s32 arg1, s32 arg2);
 void func_060E1FC0(s32 arg0, s32 arg1, s32 arg2);
 void func_060E2300(s32 scale, s32 arg1);
 void func_060E23D0(s32 arg0, s32 arg1, s32 arg2);
-void SetCurrentMatrixBinAngle(s32* pos, s32* angle);
+void SetCurrentMatrixBinAngle(MthXyz* rot, MthXyz* pos);
 void TransformAndProjectPoints(
     s32* src, s32* dst, s32 count, MthMatrixTbl* matrixTbl);
 extern MthMatrixTbl DAT_06061DF0;

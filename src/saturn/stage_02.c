@@ -919,7 +919,7 @@ void func_060E7508(Entity* self) {
 
     case 0x201:
         func_060e8330();
-        if (func_06030640(DAT_060485C0.unk4) == 0) {
+        if (BUP_Format(DAT_060485C0.unk4) == 0) {
             self->ext.save.unk0 = 0x30;
             self->ext.save.unk20 = 0x60;
         } else {
@@ -1128,7 +1128,7 @@ extern s32 DAT_060F5098;
 extern MthMatrixTbl DAT_06061DF0;
 extern s32 g_Stage02Entity08ModelVertices14[];
 
-void SetCurrentMatrixBinAngle(s32 angle, s32* axis);
+void SetCurrentMatrixBinAngle(MthXyz* rot, MthXyz* pos);
 void TransformAndProjectPoints(s32* src, s32* dst, s32 count);
 
 void func_060E8E1C(s32 arg0, s32 arg1) {
