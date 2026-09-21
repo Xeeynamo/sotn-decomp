@@ -24,7 +24,6 @@ static s16 D_us_801D6340[14];
 static s16 D_us_801D635C[14];
 static s32 g_DebugWaitInfoTimer;
 
-
 // Likely copied out of DRA, unused in RNO1
 static void DebugShowWaitInfo(const char* msg) {
     g_CurrentBuffer = g_CurrentBuffer->next;
@@ -45,7 +44,6 @@ static void DebugInputWait(const char* msg) {
     while (!PadRead(0))
         DebugShowWaitInfo(msg);
 }
-
 
 void EntityFog(Entity* self) {
     Primitive* prim;
@@ -97,7 +95,7 @@ void EntityFog(Entity* self) {
                 prim->x0 = prim->x2 = 0;
                 prim->x1 = prim->x3 = 0xFF;
                 prim->priority = 0x40;
-                prim->drawMode = 0;
+                prim->drawMode = DRAW_DEFAULT;
                 prim->tpage = 0xE;
                 break;
             case 1:
@@ -110,9 +108,9 @@ void EntityFog(Entity* self) {
                 prim->priority = 0x40;
                 prim->x0 = prim->x2 = 0;
                 prim->x1 = prim->x3 = 0xFF;
-                prim->drawMode = 4;
+                prim->drawMode = DRAW_COLORS;
                 if (weatherMode == 1) {
-                    prim->drawMode = 8;
+                    prim->drawMode = DRAW_HIDE;
                 }
                 break;
             case 2:
@@ -123,10 +121,10 @@ void EntityFog(Entity* self) {
                 prim->v2 = prim->v3 = 0x2F;
                 prim->tpage = 0xF;
                 prim->priority = 0x42;
-                prim->drawMode = 0;
+                prim->drawMode = DRAW_DEFAULT;
                 prim->u0 = prim->u2 = 0;
                 prim->u1 = prim->u3 = 0x7F;
-                if(i == 2){
+                if (i == 2) {
                     prim->x0 = prim->x2 = 0;
                     prim->x1 = prim->x3 = 0x80;
                 } else {
@@ -142,14 +140,14 @@ void EntityFog(Entity* self) {
                 prim->tpage = 0xF;
                 prim->clut = 0x3A;
                 prim->priority = 0x44;
-                prim->drawMode = 4;
+                prim->drawMode = DRAW_COLORS;
                 PGREY(prim, 2) = PGREY(prim, 3) = 0x80;
                 prim->x3 = prim->x1 = 8;
                 prim->x2 = prim->x0 = 0x60;
                 prim->u3 = prim->u1 = 0xFF;
                 prim->u2 = prim->u0 = 0xA8;
                 if (weatherMode != 1) {
-                    prim->drawMode = 8;
+                    prim->drawMode = DRAW_HIDE;
                 }
                 break;
             default:
@@ -185,7 +183,7 @@ void EntityFog(Entity* self) {
         if (i == 2 || i == 3) {
             prim->clut = self->animCurFrame & 0xFF;
         }
-        if (i == 4){
+        if (i == 4) {
             PGREY(prim, 0) = PGREY(prim, 1) = ((g_GameTimer & 1) << 4) + 0x30;
         }
         prim = prim->next;
