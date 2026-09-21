@@ -1,14 +1,19 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rno1.h"
 
-static s16 D_us_80180E8C[] = {
+static s16 fogAngles[] = {
     0xBC0, 0xBB0, 0xBA0, 0xB90, 0xB80, 0xB70, 0xB60, 0xB50};
-static s16 D_us_80180E9C[] = {24, 28, 32, 40, 48, 56, 64, 72};
+static s16 fogScales[] = {24, 28, 32, 40, 48, 56, 64, 72};
 static AnimationFrame D_us_80180EAC[] = {
     4, 0x3C, 4, 0xF8, 4, 0xF9, 4, 0xF8, 0, 0x00};
 static AnimationFrame D_us_80180EC0[] = {
     4, 0xFF, 4, 0xFA, 4, 0xFB, 4, 0xFA, 0, 0x00};
-static s32 weatherMode = 0;
+typedef enum {
+    WEATHER_RAIN,
+    WEATHER_CLEAR,
+    WEATHER_FOG
+} weatherModes;
+static weatherModes weatherMode = 0; // doesn't make sense to init to rain
 static u8 D_us_80180EF0[] = {0x60, 0x80, 0xC0, 0x80, 0x60};
 static AnimParam D_us_80180EF8[] = {
     {ANIMSET_OVL(1), D_us_80180EAC, 44, {.r = 8, .g = 8, .b = 24}},
@@ -75,7 +80,7 @@ void EntityFog(Entity* self) {
         for (i = 0, j = 0; i < animParams->count; i++) {
             switch (i) {
             case 0:
-                if (weatherMode == 1) {
+                if (weatherMode == WEATHER_CLEAR) {
                     prim->y0 = 0xE3;
                     prim->y2 = 0xA8;
                     prim->clut = 0x45;
@@ -109,7 +114,7 @@ void EntityFog(Entity* self) {
                 prim->x0 = prim->x2 = 0;
                 prim->x1 = prim->x3 = 0xFF;
                 prim->drawMode = DRAW_COLORS;
-                if (weatherMode == 1) {
+                if (weatherMode == WEATHER_CLEAR) {
                     prim->drawMode = DRAW_HIDE;
                 }
                 break;
@@ -146,16 +151,16 @@ void EntityFog(Entity* self) {
                 prim->x2 = prim->x0 = 0x60;
                 prim->u3 = prim->u1 = 0xFF;
                 prim->u2 = prim->u0 = 0xA8;
-                if (weatherMode != 1) {
+                if (weatherMode != WEATHER_CLEAR) {
                     prim->drawMode = DRAW_HIDE;
                 }
                 break;
             default:
-                if (weatherMode == 0) {
+                if (weatherMode == WEATHER_RAIN) {
                     temp = 0xF5;
                     prim->clut = 0xFE;
                 }
-                if (weatherMode == 1) {
+                if (weatherMode == WEATHER_CLEAR) {
                     temp = 0xA5;
                     prim->clut = 0x3B;
                 }
@@ -189,7 +194,7 @@ void EntityFog(Entity* self) {
         prim = prim->next;
     }
 
-    if (weatherMode != 2) {
+    if (weatherMode != WEATHER_FOG) {
         for (i = 0; i < LEN(D_us_801D6340); i++) {
             D_us_801D6340[i] += 0x10;
             x0 = rsin(D_us_801D6340[i]) >> 10;
@@ -245,19 +250,19 @@ void EntityRain(Entity* self) {
     s32 i;
     Primitive* prim;
 
-    if (weatherMode != 1) {
+    if (weatherMode != WEATHER_CLEAR) {
         t = rsin((s16)g_Status.timerMinutes * 0x42) >> 10;
         t += 4;
-        angle = D_us_80180E8C[t];
+        angle = fogAngles[t];
         xLenUnscaled = rcos(angle) >> 8;
         yLenUnscaled = -(rsin(angle) >> 8);
         xVelUnscaled = rcos(angle) * 16;
         yVelUnscaled = -(rsin(angle) * 16);
-        lenScale = D_us_80180E9C[t];
+        lenScale = fogScales[t];
         speed = 0x30;
         if (self->step == 0) {
             InitializeEntity(g_EInitSpawner);
-            if (weatherMode == 0) {
+            if (weatherMode == WEATHER_RAIN) {
                 g_api.PlaySfx(SFX_RAIN_LOOP);
                 self->primIndex = g_api.func_800EDB58(PRIM_LINE_G2_ALT, 0x80);
                 if (self->primIndex == -1) {
@@ -297,7 +302,7 @@ void EntityRain(Entity* self) {
                     PrimLine(prim) = PrimLine(prim)->next;
                 }
             }
-            if (weatherMode == 2) {
+            if (weatherMode == WEATHER_FOG) {
                 self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x24);
                 if (self->primIndex == -1) {
                     DestroyEntity(self);
@@ -350,7 +355,7 @@ void EntityRain(Entity* self) {
             }
             self->flags |= FLAG_HAS_PRIMS;
         }
-        if (weatherMode == 0) {
+        if (weatherMode == WEATHER_RAIN) {
             i = 0;
             blink = g_GameTimer & 3;
             xLen = (xLenUnscaled * lenScale) >> 4;
@@ -395,7 +400,7 @@ void EntityRain(Entity* self) {
             prim->drawMode = DRAW_DEFAULT;
             prim->x0 = prim->y0 = prim->x1 = prim->y1 = 0;
         }
-        if (weatherMode == 2) {
+        if (weatherMode == WEATHER_FOG) {
             for (i = 0; i < 5; i++) {
                 D_us_801D6328[i] += 16;
                 D_us_801D6334[i] += 16;
@@ -430,7 +435,11 @@ void EntityRain(Entity* self) {
     }
 }
 
-void func_us_801B7CC4_from_no1(Entity* self) {
+// One of these exists in every room adjacent to the main room.
+// Seems like this makes the rain sound fade out as you walk
+// into the new room (out of the rainy room)?
+// If it is not raining, this has no impact, but still runs.
+void EntityFadeRainSound(Entity* self) {
     if (self->step == 0) {
         g_api.PlaySfx(SET_RELEASE_RATE_HIGH_20_21);
         self->step++;

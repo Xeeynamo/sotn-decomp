@@ -37,7 +37,7 @@ typedef enum EntityID {
     E_GREY_PUFF,                // EntityGreyPuff
     E_FOG,                      // EntityFog
     E_RAIN,                     // EntityRain
-    E_UNK_18,                   // func_us_801B7CC4_from_no1
+    E_RAIN_SFX_FADE,            // EntityFadeRainSound
     E_PARANTHROPUS,             // EntityParanthropus
     E_PARANTHROPUS_BONE_HITBOX, // EntityParanthropusBoneHitbox
     E_PARANTHROPUS_SKULL,       // EntityParanthropusSkull

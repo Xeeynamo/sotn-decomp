@@ -24,7 +24,7 @@ void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
 void EntityFog(Entity* self);
 void EntityRain(Entity* self);
-void func_us_801B7CC4_from_no1(Entity* self);
+void EntityFadeRainSound(Entity* self);
 void EntityParanthropus(Entity* self);
 void EntityParanthropusBoneHitbox(Entity* self);
 void EntityParanthropusSkull(Entity* self);
@@ -73,7 +73,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityGreyPuff,
     EntityFog,
     EntityRain,
-    func_us_801B7CC4_from_no1,
+    EntityFadeRainSound,
     EntityParanthropus,
     EntityParanthropusBoneHitbox,
     EntityParanthropusSkull,
