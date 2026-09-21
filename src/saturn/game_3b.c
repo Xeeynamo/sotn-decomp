@@ -522,16 +522,16 @@ void HitDetection(void) {
 
 // original name: MODE_GAME
 void ModeGame(void) {
-    switch (DAT_0605cea0) {
+    switch (DAT_0605cea0.unk0) {
     case 1:
         ResetPlayState(DAT_0605c11a);
         UpdateCapePalette();
         CheckWeaponCombo();
         func_06005208(1);
-        DAT_0605cea0++;
+        DAT_0605cea0.unk0++;
         break;
     case 2:
-        DAT_0605cea0++;
+        DAT_0605cea0.unk0++;
     case 3:
         switch (DAT_0605cd70.unk2) {
         case 1:
