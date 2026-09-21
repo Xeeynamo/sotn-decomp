@@ -1587,13 +1587,13 @@ void TransferBgLayer(s32 arg0) {
     }
     if (puVar5->tileFlags & 1) {
         cnt =
-            DecompressLZSS(puVar6->unkc, (s32)SYS_buf_060485E0, puVar6->unk18);
-        DmaScroll((u16*)SYS_buf_060485E0, puVar6->dst0, cnt);
+            DecompressLZSS(puVar6->unkc, (s32)DAT_060485E0, puVar6->unk18);
+        DmaScroll((u16*)DAT_060485E0, puVar6->dst0, cnt);
     }
     if (puVar5->tileFlags & 2) {
         cnt =
-            DecompressLZSS(puVar6->unk10, (s32)SYS_buf_060485E0, puVar6->unk1c);
-        DmaScroll((u16*)SYS_buf_060485E0, puVar6->dst4, cnt);
+            DecompressLZSS(puVar6->unk10, (s32)DAT_060485E0, puVar6->unk1c);
+        DmaScroll((u16*)DAT_060485E0, puVar6->dst4, cnt);
     }
     if (puVar5->tileFlags & 4) {
         if (DAT_0605cd70.unk2 == 4) {
@@ -2556,7 +2556,7 @@ s32 func_0600D028(u32 device, s8 arg1) {
 
     sprintf(filename, "%s%02d", DAT_06038FE0, arg1);
     func_0600CC14();
-    status = BUP_Read(device, filename, &SYS_state_060485C0);
+    status = BUP_Read(device, filename, &DAT_060485C0);
     func_0600CBCC();
     return status;
 }
@@ -2646,7 +2646,7 @@ s8 func_0600D47C(u32 device, s8 arg1) {
     char filename[12];
 
     sprintf(filename, "%s%02d", DAT_06038FE0, arg1);
-    return BUP_Verify(device, filename, &SYS_state_060485C0);
+    return BUP_Verify(device, filename, &DAT_060485C0);
 }
 
 s8 func_0600D4C4(u32 device, s8 arg1) {
@@ -2660,7 +2660,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600D508, SaveGameState);
 
 // original name: ABup_ChechsumSet
 void func_0600D6C0(void) {
-    ((s32*)&SYS_state_060485C4)[-1] = Crc32(0x1120, &SYS_state_060485C4);
+    DAT_060485C0.unk0 = Crc32(0x1120, &DAT_060485C0.unk4);
 }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600D6EC, LoadGameState);

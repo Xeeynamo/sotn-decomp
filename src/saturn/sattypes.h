@@ -1313,7 +1313,7 @@ typedef struct {
 } RoomBossTeleport;
 
 typedef struct {
-    s32 : 32;
+    s32 unk0;
     s8 unk4;
     s8 unk5;
     s8 : 8;

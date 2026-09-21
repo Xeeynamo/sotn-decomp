@@ -49,7 +49,7 @@ extern s32 DAT_00258000;
 
 extern SaturnSpriteResource** DAT_060645D0;
 
-extern u8 SYS_buf_060485E0[];
+extern s32 DAT_060485E0[];
 extern Unk0605DB60 d_0605DB60[32];
 extern struct BgTransfer DAT_0605d6c0[8];
 void func_0600871C(s32, UNK_0605c680*, s32);
