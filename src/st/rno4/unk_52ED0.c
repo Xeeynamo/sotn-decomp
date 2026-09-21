@@ -76,8 +76,29 @@ void func_us_801D5BA4(Entity* self) {
 
 INCLUDE_ASM("st/rno4/nonmatchings/unk_52ED0", StepTowards);
 
-// https://www.decomp.me/scratch/WlXOv
-INCLUDE_ASM("st/rno4/nonmatchings/unk_52ED0", func_us_801D5DC8);
+void func_us_801D5DC8(Primitive* prim) {
+    s32 yPos;
+    switch (prim->p2) {
+    case 0:
+        LOW(prim->x2) = Random() * 8;
+        prim->x3 = (Random() & 0x1F) + 0x10;
+        prim->drawMode = DRAW_UNK02;
+        prim->p2 += 1;
+
+    case 1:
+        yPos = (prim->y0 << 0x10) + prim->y1;
+        yPos = yPos + LOW(prim->x2);
+        LOW(prim->x2) -= 0x1000;
+        prim->y0 = yPos >> 0x10;
+        prim->y1 = yPos & 0xffff;
+        if (!(prim->x3 -= 1)) {
+            prim->p2 = 0;
+            prim->drawMode = DRAW_HIDE;
+            prim->p3 = 0;
+        }
+        return;
+    }
+}
 
 INCLUDE_ASM("st/rno4/nonmatchings/unk_52ED0", func_us_801D5E90);
 

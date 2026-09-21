@@ -56,6 +56,7 @@ INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", EntityWaterBox);
 extern s16 D_pspeu_0929B938;
 extern s32 D_pspeu_0929BE00;
 extern s32 D_pspeu_0929BDF8;
+// extern s32 E_ID(UNK_27);
 
 void func_us_801C81C8(Entity* self) {
     Entity* child;
