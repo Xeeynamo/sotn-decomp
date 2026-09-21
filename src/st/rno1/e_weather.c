@@ -8,11 +8,7 @@ static AnimationFrame rain_anim[] = {
     4, 0x3C, 4, 0xF8, 4, 0xF9, 4, 0xF8, 0, 0x00};
 static AnimationFrame clear_anim[] = {
     4, 0xFF, 4, 0xFA, 4, 0xFB, 4, 0xFA, 0, 0x00};
-typedef enum {
-    WEATHER_RAIN,
-    WEATHER_CLEAR,
-    WEATHER_FOG
-} weatherModes;
+typedef enum { WEATHER_RAIN, WEATHER_CLEAR, WEATHER_FOG } weatherModes;
 static weatherModes weatherMode = 0; // doesn't make sense to init to rain
 static u8 D_us_80180EF0[] = {0x60, 0x80, 0xC0, 0x80, 0x60};
 static AnimParam animParams[] = {
