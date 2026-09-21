@@ -2515,22 +2515,53 @@ s32 func_0600CE1C(void) {
     return result;
 }
 
-const char DAT_0600CEC8[] = "%s%02d";
+extern BupDir DAT_0605DDA0;
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600CED0, func_0600CED0);
-
-s32 func_0600D028(u32 device, s8 arg1) {
-    char work[12];
+s32 func_0600CED0(u32 device, s8 arg1) {
+    char filename[12];
     s32 status;
 
-    sprintf(work, DAT_0600CEC8, DAT_06038FE0, arg1);
+    sprintf(filename, "%s%02d", DAT_06038FE0, arg1);
+    status = BUP_Dir(device, filename, 1, &DAT_0605DDA0);
+    if (status == BUP_NON) {
+        return DAT_0605DDA0.date;
+    }
+    return 0;
+}
+
+extern char DAT_0605DD70[];
+extern char DAT_06038FE4[][4];
+
+char* func_0600CF40(u32 device, s8 arg1) {
+    char filename[12];
+    BupDate date;
+    u32 pdate;
+
+    sprintf(filename, "%s%02d", DAT_06038FE0, arg1);
+    pdate = func_0600CED0(device, arg1);
+    if (pdate != 0) {
+        BUP_GetDate(pdate, &date);
+        sprintf(DAT_0605DD70, "%4d-%2d-%2d %s %2d:%02d", date.year + 1980,
+                date.month, date.day, DAT_06038FE4[date.week], date.time,
+                date.min);
+    } else {
+        DAT_0605DD70[0] = '\0';
+    }
+    return DAT_0605DD70;
+}
+
+s32 func_0600D028(u32 device, s8 arg1) {
+    char filename[12];
+    s32 status;
+
+    sprintf(filename, "%s%02d", DAT_06038FE0, arg1);
     func_0600CC14();
-    status = BUP_Read(device, work, &SYS_state_060485C0);
+    status = BUP_Read(device, filename, &SYS_state_060485C0);
     func_0600CBCC();
     return status;
 }
 
-void func_0600D0DC(void) {
+s32 func_0600D0DC(void) {
     BupDate date;
 
     date.year =
@@ -2542,25 +2573,87 @@ void func_0600D0DC(void) {
     date.time = BCD_TO_DEC(DAT_06057F60.unk2);
     date.min = BCD_TO_DEC(DAT_06057F60.unk1);
 
-    BUP_SetDate(&date);
+    return BUP_SetDate(&date);
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600D1A0, func_0600D1A0);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600D264, func_0600D264);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600D370, func_0600D370);
+s8 func_0600D1A0(u32 device, s8 arg1) {
+    char filename[12];
+    s32 status;
+
+    sprintf(filename, "%s%02d", DAT_06038FE0, arg1);
+    func_0600CC14();
+    status = BUP_Read(device, filename, &DAT_060485C0);
+    func_0600CBCC();
+    if (status == 0) {
+        status = LoadGameState();
+    }
+    return status;
+}
+
+extern char DAT_06039000[];
+
+void SaveGameState(void);
+
+s8 func_0600D264(u32 device, s8 arg1) {
+    s32 date;
+    s32 status;
+
+    if (arg1 != 0) {
+        SaveGameState();
+        DAT_060485C0.unk4 = device;
+        DAT_060485C0.unk5 = arg1;
+        sprintf(DAT_0605DDA0.filename, "%s%02d", DAT_06038FE0, arg1);
+        sprintf(DAT_0605DDA0.comment, DAT_06039000);
+        DAT_0605DDA0.language = 0;
+        date = func_0600D0DC();
+        DAT_0605DDA0.date = date;
+        DAT_060485C0.unk8 = date;
+        DAT_0605DDA0.datasize = 0x1124;
+        func_0600CC14();
+        status = BUP_Write(device, &DAT_0605DDA0, &DAT_060485C0, 0);
+        func_0600CBCC();
+        return status;
+    }
+    return 3;
+}
+
+void func_0600D6C0(void);
+
+s8 func_0600D370(u32 device, s8 arg1) {
+    s32 date;
+    s32 status;
+
+    if (arg1 != 0) {
+        func_0600D6C0();
+        DAT_060485C0.unk4 = device;
+        DAT_060485C0.unk5 = arg1;
+        sprintf(DAT_0605DDA0.filename, "%s%02d", DAT_06038FE0, arg1);
+        sprintf(DAT_0605DDA0.comment, DAT_06039000);
+        DAT_0605DDA0.language = 0;
+        date = func_0600D0DC();
+        DAT_0605DDA0.date = date;
+        DAT_060485C0.unk8 = date;
+        DAT_0605DDA0.datasize = 0x1124;
+        func_0600CC14();
+        status = BUP_Write(device, &DAT_0605DDA0, &DAT_060485C0, 0);
+        func_0600CBCC();
+        return status;
+    }
+    return 3;
+}
 
 s8 func_0600D47C(u32 device, s8 arg1) {
-    char work[12];
+    char filename[12];
 
-    sprintf(work, DAT_0600CEC8, DAT_06038FE0, arg1);
-    return BUP_Verify(device, work, &SYS_state_060485C0);
+    sprintf(filename, "%s%02d", DAT_06038FE0, arg1);
+    return BUP_Verify(device, filename, &SYS_state_060485C0);
 }
 
 s8 func_0600D4C4(u32 device, s8 arg1) {
-    char work[12];
+    char filename[12];
 
-    sprintf(work, DAT_0600CEC8, DAT_06038FE0, arg1);
-    return BUP_Delete(device, work);
+    sprintf(filename, "%s%02d", DAT_06038FE0, arg1);
+    return BUP_Delete(device, filename);
 }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600D508, SaveGameState);
