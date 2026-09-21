@@ -22,7 +22,30 @@ static s16 D_us_801D6328[6];
 static s16 D_us_801D6334[6];
 static s16 D_us_801D6340[14];
 static s16 D_us_801D635C[14];
-STATIC_PAD_BSS(1);
+static s32 g_DebugWaitInfoTimer;
+
+
+// Likely copied out of DRA, unused in RNO1
+static void DebugShowWaitInfo(const char* msg) {
+    g_CurrentBuffer = g_CurrentBuffer->next;
+    FntPrint(msg);
+    if (g_DebugWaitInfoTimer++ & 4) {
+        FntPrint("\no\n");
+    }
+    DrawSync(0);
+    VSync(0);
+    PutDrawEnv(&g_CurrentBuffer->draw);
+    PutDispEnv(&g_CurrentBuffer->disp);
+    FntFlush(-1);
+}
+
+static void DebugInputWait(const char* msg) {
+    while (PadRead(0))
+        DebugShowWaitInfo(msg);
+    while (!PadRead(0))
+        DebugShowWaitInfo(msg);
+}
+
 
 void EntityFog(Entity* self) {
     Primitive* prim;
