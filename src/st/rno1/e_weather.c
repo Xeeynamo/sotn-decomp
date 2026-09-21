@@ -8,7 +8,7 @@ static AnimationFrame D_us_80180EAC[] = {
     4, 0x3C, 4, 0xF8, 4, 0xF9, 4, 0xF8, 0, 0x00};
 static AnimationFrame D_us_80180EC0[] = {
     4, 0xFF, 4, 0xFA, 4, 0xFB, 4, 0xFA, 0, 0x00};
-static s32 D_us_80180EEC = 0;
+static s32 weatherMode = 0;
 static u8 D_us_80180EF0[] = {0x60, 0x80, 0xC0, 0x80, 0x60};
 static AnimParam D_us_80180EF8[] = {
     {ANIMSET_OVL(1), D_us_80180EAC, 44, {.r = 8, .g = 8, .b = 24}},
@@ -33,12 +33,12 @@ void EntityFog(Entity* self) {
     s32 i, j;
     s16 temp;
 
-    animParams = &D_us_80180EF8[D_us_80180EEC];
+    animParams = &D_us_80180EF8[weatherMode];
     if (self->step == 0) {
         InitializeEntity(g_EInitSpawner);
-        D_us_80180EEC = g_CastleFlags[NO1_WEATHER] & 0x7F;
+        weatherMode = g_CastleFlags[NO1_WEATHER] & 0x7F;
         g_CastleFlags[NO1_WEATHER] |= 0x80;
-        animParams = &D_us_80180EF8[D_us_80180EEC];
+        animParams = &D_us_80180EF8[weatherMode];
         g_api.func_800EA5E4(animParams->animSet);
         self->anim = animParams->anim;
         for (i = 0; i < LEN(D_us_801D6340); i++) {
@@ -54,7 +54,7 @@ void EntityFog(Entity* self) {
         for (i = 0, j = 0; i < animParams->count; i++) {
             switch (i) {
             case 0:
-                if (D_us_80180EEC == 1) {
+                if (weatherMode == 1) {
                     prim->y0 = 0xE3;
                     prim->y2 = 0xA8;
                     prim->clut = 0x45;
@@ -88,7 +88,7 @@ void EntityFog(Entity* self) {
                 prim->x0 = prim->x2 = 0;
                 prim->x1 = prim->x3 = 0xFF;
                 prim->drawMode = 4;
-                if (D_us_80180EEC == 1) {
+                if (weatherMode == 1) {
                     prim->drawMode = 8;
                 }
                 break;
@@ -125,16 +125,16 @@ void EntityFog(Entity* self) {
                 prim->x2 = prim->x0 = 0x60;
                 prim->u3 = prim->u1 = 0xFF;
                 prim->u2 = prim->u0 = 0xA8;
-                if (D_us_80180EEC != 1) {
+                if (weatherMode != 1) {
                     prim->drawMode = 8;
                 }
                 break;
             default:
-                if (D_us_80180EEC == 0) {
+                if (weatherMode == 0) {
                     temp = 0xF5;
                     prim->clut = 0xFE;
                 }
-                if (D_us_80180EEC == 1) {
+                if (weatherMode == 1) {
                     temp = 0xA5;
                     prim->clut = 0x3B;
                 }
@@ -168,7 +168,7 @@ void EntityFog(Entity* self) {
         prim = prim->next;
     }
 
-    if (D_us_80180EEC != 2) {
+    if (weatherMode != 2) {
         for (i = 0; i < LEN(D_us_801D6340); i++) {
             D_us_801D6340[i] += 0x10;
             x0 = rsin(D_us_801D6340[i]) >> 10;
@@ -201,7 +201,7 @@ void EntityFog(Entity* self) {
     FntPrint("scr_y:%02x\n", g_Tilemap.scrollY.i.hi);
     FntPrint("scr_x:%02x\n", g_Tilemap.scrollX.i.hi);
     // Tenki is Japanese for "weather"
-    FntPrint("tenki_w:%02x\n", D_us_80180EEC);
+    FntPrint("tenki_w:%02x\n", weatherMode);
     FntPrint("flags_tenki:%2x\n", g_CastleFlags[NO1_WEATHER]);
 }
 
@@ -224,7 +224,7 @@ void EntityRain(Entity* self) {
     s32 i;
     Primitive* prim;
 
-    if (D_us_80180EEC != 1) {
+    if (weatherMode != 1) {
         t = rsin((s16)g_Status.timerMinutes * 0x42) >> 10;
         t += 4;
         angle = D_us_80180E8C[t];
@@ -236,7 +236,7 @@ void EntityRain(Entity* self) {
         speed = 0x30;
         if (self->step == 0) {
             InitializeEntity(g_EInitSpawner);
-            if (D_us_80180EEC == 0) {
+            if (weatherMode == 0) {
                 g_api.PlaySfx(SFX_RAIN_LOOP);
                 self->primIndex = g_api.func_800EDB58(PRIM_LINE_G2_ALT, 0x80);
                 if (self->primIndex == -1) {
@@ -276,7 +276,7 @@ void EntityRain(Entity* self) {
                     PrimLine(prim) = PrimLine(prim)->next;
                 }
             }
-            if (D_us_80180EEC == 2) {
+            if (weatherMode == 2) {
                 self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x24);
                 if (self->primIndex == -1) {
                     DestroyEntity(self);
@@ -329,7 +329,7 @@ void EntityRain(Entity* self) {
             }
             self->flags |= FLAG_HAS_PRIMS;
         }
-        if (D_us_80180EEC == 0) {
+        if (weatherMode == 0) {
             i = 0;
             blink = g_GameTimer & 3;
             xLen = (xLenUnscaled * lenScale) >> 4;
@@ -374,7 +374,7 @@ void EntityRain(Entity* self) {
             prim->drawMode = DRAW_DEFAULT;
             prim->x0 = prim->y0 = prim->x1 = prim->y1 = 0;
         }
-        if (D_us_80180EEC == 2) {
+        if (weatherMode == 2) {
             for (i = 0; i < 5; i++) {
                 D_us_801D6328[i] += 16;
                 D_us_801D6334[i] += 16;
