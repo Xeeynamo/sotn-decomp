@@ -1586,13 +1586,11 @@ void TransferBgLayer(s32 arg0) {
         return;
     }
     if (puVar5->tileFlags & 1) {
-        cnt =
-            DecompressLZSS(puVar6->unkc, (s32)DAT_060485E0, puVar6->unk18);
+        cnt = DecompressLZSS(puVar6->unkc, (s32)DAT_060485E0, puVar6->unk18);
         DmaScroll((u16*)DAT_060485E0, puVar6->dst0, cnt);
     }
     if (puVar5->tileFlags & 2) {
-        cnt =
-            DecompressLZSS(puVar6->unk10, (s32)DAT_060485E0, puVar6->unk1c);
+        cnt = DecompressLZSS(puVar6->unk10, (s32)DAT_060485E0, puVar6->unk1c);
         DmaScroll((u16*)DAT_060485E0, puVar6->dst4, cnt);
     }
     if (puVar5->tileFlags & 4) {
