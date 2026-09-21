@@ -24,7 +24,7 @@ static s16 D_us_801D6340[14];
 static s16 D_us_801D635C[14];
 STATIC_PAD_BSS(1);
 
-void func_us_801A68AC(Entity* self) {
+void EntityFog(Entity* self) {
     Primitive* prim;
     AnimParam* animParams;
     s16 x0, x1;
@@ -207,7 +207,7 @@ void func_us_801A68AC(Entity* self) {
 
 #define PrimLine(x) ((PrimLineG2*)(x))
 
-void func_us_801A700C(Entity* self) {
+void EntityRain(Entity* self) {
     s32 blink;
     s16 yLenUnscaled, xLenUnscaled;
     s32 yVelUnscaled, xVelUnscaled;
