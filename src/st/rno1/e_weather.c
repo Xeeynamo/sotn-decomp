@@ -4,9 +4,9 @@
 static s16 fogAngles[] = {
     0xBC0, 0xBB0, 0xBA0, 0xB90, 0xB80, 0xB70, 0xB60, 0xB50};
 static s16 fogScales[] = {24, 28, 32, 40, 48, 56, 64, 72};
-static AnimationFrame D_us_80180EAC[] = {
+static AnimationFrame rain_anim[] = {
     4, 0x3C, 4, 0xF8, 4, 0xF9, 4, 0xF8, 0, 0x00};
-static AnimationFrame D_us_80180EC0[] = {
+static AnimationFrame clear_anim[] = {
     4, 0xFF, 4, 0xFA, 4, 0xFB, 4, 0xFA, 0, 0x00};
 typedef enum {
     WEATHER_RAIN,
@@ -15,11 +15,11 @@ typedef enum {
 } weatherModes;
 static weatherModes weatherMode = 0; // doesn't make sense to init to rain
 static u8 D_us_80180EF0[] = {0x60, 0x80, 0xC0, 0x80, 0x60};
-static AnimParam D_us_80180EF8[] = {
-    {ANIMSET_OVL(1), D_us_80180EAC, 44, {.r = 8, .g = 8, .b = 24}},
-    {ANIMSET_OVL(2), D_us_80180EC0, 44, {.r = 16, .g = 8, .b = 72}},
-    {ANIMSET_OVL(2), D_us_80180EAC, 5, {.r = 8, .g = 8, .b = 24}}};
-static s16 D_us_80180F28[] = {4, 5, 6, 7, 6, 6, 5, 5, 4, 4, 3, 3, 2, 2};
+static AnimParam animParams[] = {
+    {ANIMSET_OVL(1), rain_anim, 44, {.r = 8, .g = 8, .b = 24}},
+    {ANIMSET_OVL(2), clear_anim, 44, {.r = 16, .g = 8, .b = 72}},
+    {ANIMSET_OVL(2), rain_anim, 5, {.r = 8, .g = 8, .b = 24}}};
+static s16 fogMovement[] = {4, 5, 6, 7, 6, 6, 5, 5, 4, 4, 3, 3, 2, 2};
 STATIC_PAD_DATA(1);
 
 // bss
@@ -52,32 +52,32 @@ static void DebugInputWait(const char* msg) {
 
 void EntityFog(Entity* self) {
     Primitive* prim;
-    AnimParam* animParams;
+    AnimParam* aP;
     s16 x0, x1;
     s16 xOffset;
     s16 xMin, xMax;
     s32 i, j;
     s16 temp;
 
-    animParams = &D_us_80180EF8[weatherMode];
+    aP = &animParams[weatherMode];
     if (self->step == 0) {
         InitializeEntity(g_EInitSpawner);
         weatherMode = g_CastleFlags[NO1_WEATHER] & 0x7F;
         g_CastleFlags[NO1_WEATHER] |= 0x80;
-        animParams = &D_us_80180EF8[weatherMode];
-        g_api.func_800EA5E4(animParams->animSet);
-        self->anim = animParams->anim;
+        aP = &animParams[weatherMode];
+        g_api.func_800EA5E4(aP->animSet);
+        self->anim = aP->anim;
         for (i = 0; i < LEN(D_us_801D6340); i++) {
             D_us_801D6340[i] = (i << 0xC) / 7;
         }
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, animParams->count);
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, aP->count);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
         }
         self->flags |= FLAG_HAS_PRIMS;
         prim = &g_PrimBuf[self->primIndex];
-        for (i = 0, j = 0; i < animParams->count; i++) {
+        for (i = 0, j = 0; i < aP->count; i++) {
             switch (i) {
             case 0:
                 if (weatherMode == WEATHER_CLEAR) {
@@ -198,7 +198,7 @@ void EntityFog(Entity* self) {
         for (i = 0; i < LEN(D_us_801D6340); i++) {
             D_us_801D6340[i] += 0x10;
             x0 = rsin(D_us_801D6340[i]) >> 10;
-            x0 *= D_us_80180F28[i];
+            x0 *= fogMovement[i];
             D_us_801D635C[i] = x0 >> 3;
         }
         for (i = 0; i < 0x27; i++) {
@@ -218,12 +218,12 @@ void EntityFog(Entity* self) {
             prim = prim->next;
         }
     }
-    g_GpuBuffers[0].draw.r0 = animParams->color.r;
-    g_GpuBuffers[0].draw.g0 = animParams->color.g;
-    g_GpuBuffers[0].draw.b0 = animParams->color.b;
-    g_GpuBuffers[1].draw.r0 = animParams->color.r;
-    g_GpuBuffers[1].draw.g0 = animParams->color.g;
-    g_GpuBuffers[1].draw.b0 = animParams->color.b;
+    g_GpuBuffers[0].draw.r0 = aP->color.r;
+    g_GpuBuffers[0].draw.g0 = aP->color.g;
+    g_GpuBuffers[0].draw.b0 = aP->color.b;
+    g_GpuBuffers[1].draw.r0 = aP->color.r;
+    g_GpuBuffers[1].draw.g0 = aP->color.g;
+    g_GpuBuffers[1].draw.b0 = aP->color.b;
     FntPrint("scr_y:%02x\n", g_Tilemap.scrollY.i.hi);
     FntPrint("scr_x:%02x\n", g_Tilemap.scrollX.i.hi);
     // Tenki is Japanese for "weather"
@@ -251,7 +251,7 @@ void EntityRain(Entity* self) {
     Primitive* prim;
 
     if (weatherMode != WEATHER_CLEAR) {
-        t = rsin((s16)g_Status.timerMinutes * 0x42) >> 10;
+        t = rsin((s16)g_Status.timerMinutes * 66) >> 10;
         t += 4;
         angle = fogAngles[t];
         xLenUnscaled = rcos(angle) >> 8;
@@ -308,11 +308,11 @@ void EntityRain(Entity* self) {
                     DestroyEntity(self);
                     return;
                 }
-                D_us_801D6334[3] = D_us_801D6328[0] = 0x1000;
-                D_us_801D6334[4] = D_us_801D6328[1] = 0xCCC;
-                D_us_801D6334[0] = D_us_801D6328[2] = 0x999;
-                D_us_801D6334[1] = D_us_801D6328[3] = 0x666;
-                D_us_801D6334[2] = D_us_801D6328[4] = 0x333;
+                D_us_801D6334[3] = D_us_801D6328[0] = ROT(360);
+                D_us_801D6334[4] = D_us_801D6328[1] = ROT(360 * 0.8);
+                D_us_801D6334[0] = D_us_801D6328[2] = ROT(360 * 0.6);
+                D_us_801D6334[1] = D_us_801D6328[3] = ROT(360 * 0.4);
+                D_us_801D6334[2] = D_us_801D6328[4] = ROT(360 * 0.2);
                 i = 0;
                 posX = -(g_Tilemap.scrollX.i.hi * 5) / 4;
                 while (posX < -0x90) {
