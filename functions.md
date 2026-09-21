@@ -746,8 +746,8 @@
 | rcen       | e_shaft.rodata                    |       18 |          0 | Yes    |       |     |
 | rno0       | e_gurkha.rodata                   |       18 |          0 | Yes    |       |     |
 | rno0       | e_jack_o_bones.rodata             |       18 |          0 | Yes    |       |     |
-| rno1       | unk_10910.rodata                  |       18 |          0 | Yes    |       |     |
-| rno1       | unk_3CF8.rodata                   |       18 |          0 | Yes    |       |     |
+| rno1       | e_jack_o_bones.rodata             |       18 |          0 | Yes    |       |     |
+| rno1       | unk_10B30.rodata                  |       18 |          0 | Yes    |       |     |
 | rno2       | e_ctulhu.rodata                   |       18 |          0 | Yes    |       |     |
 | rno2       | unk_19FF8.rodata                  |       18 |          0 | Yes    |       |     |
 | rno3       | e_jack_o_bones.rodata             |       18 |          0 | Yes    |       |     |
@@ -887,7 +887,7 @@
 | nz0        | e_bloody_zombie.rodata            |       20 |          0 | Yes    |       |     |
 | nz1        | e_cloaked_knight.rodata           |       20 |          0 | Yes    |       |     |
 | rno0       | e_nova_skeleton.rodata            |       20 |          0 | Yes    |       |     |
-| rno1       | unk_D470.rodata                   |       20 |          0 | Yes    |       |     |
+| rno1       | e_nova_skeleton.rodata            |       20 |          0 | Yes    |       |     |
 | rno3       | e_nova_skeleton.rodata            |       20 |          0 | Yes    |       |     |
 | rno3       | e_orobourous.rodata               |       20 |          0 | Yes    |       |     |
 | rno4       | unk_161A0.rodata                  |       20 |          0 | Yes    |       |     |
@@ -1153,8 +1153,8 @@
 | rno0       | func_pspeu_092472F0               |       21 |          1 |        |       |     |
 | rno0       | func_pspeu_09253528               |       21 |          1 |        |       |     |
 | rno0       | func_pspeu_0923C758               |       21 |          1 |        |       |     |
-| rno1       | Random                            |       21 |          1 |        |       |     |
 | rno1       | func_pspeu_0923D638               |       21 |          1 |        |       |     |
+| rno1       | Random                            |       21 |          1 |        |       |     |
 | rno2       | SetSubStep                        |       21 |          1 |        |       |     |
 | rno2       | Random                            |       21 |          1 |        |       |     |
 | rno2       | func_pspeu_09247F80               |       21 |          1 |        |       |     |
@@ -2188,7 +2188,7 @@
 | rdai       | func_pspeu_0924F318               |       35 |          4 |        |       |     |
 | rlib       | func_pspeu_09249828               |       35 |          4 |        |       |     |
 | rno0       | func_pspeu_0925D410               |       35 |          4 |        |       |     |
-| rno1       | RNO1_Load                         |       35 |          4 |        |       |     |
+| rno1       | func_pspeu_092497F8               |       35 |          4 |        |       |     |
 | rno2       | RNO2_Load                         |       35 |          4 |        |       |     |
 | rno3       | func_pspeu_09255FB0               |       35 |          4 |        |       |     |
 | rno4       | RNO4_Load                         |       35 |          4 |        |       |     |
@@ -2755,7 +2755,7 @@
 | rdai       | PreventEntityFromRespawning       |       40 |          2 |        |       |     |
 | rlib       | func_pspeu_09244FC0               |       40 |          2 |        |       |     |
 | rno0       | func_pspeu_09252660               |       40 |          2 |        |       |     |
-| rno1       | PreventEntityFromRespawning       |       40 |          2 |        |       |     |
+| rno1       | func_pspeu_092461D0               |       40 |          2 |        |       |     |
 | rno2       | PreventEntityFromRespawning       |       40 |          2 |        |       |     |
 | rno2       | func_pspeu_09256FF0               |       40 |          2 |        |       |     |
 | rno3       | func_pspeu_0924FF78               |       40 |          2 |        |       |     |
@@ -4628,7 +4628,7 @@
 | rno0       | func_pspeu_09247BE0               |       71 |          7 |        |       |     |
 | rno0       | func_pspeu_09253FD0               |       71 |          7 |        |       |     |
 | rno1       | func_pspeu_0923DF28               |       71 |          7 |        |       |     |
-| rno1       | ReplaceBreakableWithItemDrop      |       71 |          7 |        |       |     |
+| rno1       | func_pspeu_09247758               |       71 |          7 |        |       |     |
 | rno2       | func_pspeu_09248870               |       71 |          7 |        |       |     |
 | rno2       | ReplaceBreakableWithItemDrop      |       71 |          7 |        |       |     |
 | rno3       | func_pspeu_09245028               |       71 |          7 |        |       |     |
@@ -6198,8 +6198,8 @@
 | no1        | func_pspeu_09246868               |      108 |          8 |        |       |     |
 | no3        | func_pspeu_09258EF0               |      108 |          8 |        |       |     |
 | np3        | func_pspeu_0924F488               |      108 |          8 |        |       |     |
-| rno1       | func_pspeu_09239C80               |      108 |          8 |        |       |     |
 | rno1       | func_pspeu_09241DB0               |      108 |          8 |        |       |     |
+| rno1       | func_pspeu_09239C80               |      108 |          8 |        |       |     |
 | dra        | func_psp_090DFD70                 |      108 |          9 |        |       |     |
 | dra        | func_psp_090F0550                 |      108 |          9 |        |       |     |
 | main       | __d2b                             |      108 |         12 |        |       |     |
@@ -7226,7 +7226,7 @@
 | rcat       | func_pspeu_09250580               |      175 |         22 |        |       |     |
 | rno0       | func_pspeu_0923A348               |      175 |         22 |        |       |     |
 | rno0       | func_pspeu_092516C8               |      175 |         22 |        |       |     |
-| rno1       | func_us_801C7F24_from_rno0        |      175 |         22 |        |       |     |
+| rno1       | EntityStoneSkull                  |      175 |         22 |        |       |     |
 | no1        | func_pspeu_092606A8               |      175 |         24 |        |       |     |
 | dra        | func_psp_090EB5E0                 |      176 |         11 |        |       |     |
 | no3        | func_pspeu_09254348               |      176 |         24 |        |       |     |
@@ -8424,7 +8424,7 @@
 | dai        | func_pspeu_09251520               |      340 |         49 |        |       |     |
 | no2        | func_pspeu_09256D08               |      340 |         49 |        |       |     |
 | rdai       | func_pspeu_0924F390               |      340 |         49 |        |       |     |
-| rno1       | EntityBreakable                   |      340 |         49 |        |       |     |
+| rno1       | func_pspeu_09249870               |      340 |         49 |        |       |     |
 | nz0        | func_pspeu_09252590               |      340 |         55 |        |       |     |
 | bo0        | func_pspeu_0924AC10               |      341 |         23 |        |       |     |
 | are        | func_pspeu_0925B220               |      341 |         23 |        |       |     |
