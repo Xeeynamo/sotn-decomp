@@ -99,6 +99,8 @@ segments:
       - [0x64520, .bss, rno4/st_update]
       - [0x64560, .bss, rno4/e_collect]
       - [0x64580, bss, '64580']
+      - [0x645B8, .bss, rno4_psp/st_init]
+      - [0x64830, bss, '64830']
       - [0x64848, .bss, rno4/e_lock_camera]
       - [0x64850, bss, '64850']
   - [0x64880]
