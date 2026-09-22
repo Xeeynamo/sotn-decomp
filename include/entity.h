@@ -4422,6 +4422,12 @@ typedef struct {
     /* 0x88 */ u8 unk88; //
 } ET_801D5BA4;
 
+typedef struct {
+    /* 0x7C */ Primitive* prim;
+    /* 0x80 */ s8 pad80[1];
+    /* 0x84 */ s32 unk84;
+} ET_801C5C78;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -4798,6 +4804,7 @@ typedef union { // offset=0x7C
     ET_BombKnight bombKnight;
     ET_Crusher crusher;
     ET_801D5BA4 et_801D5BA4;
+    ET_801C5C78 et_801C5C78;
 } Ext;
 
 SYNC_FIELD(ET_Player, ET_Weapon, anim);
