@@ -52,7 +52,8 @@ void func_us_801C5C78(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA | FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA | FLAG_HAS_PRIMS;
+        self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
+                       FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA | FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
         self->ext.et_801C5C78.prim = prim;
@@ -104,12 +105,14 @@ void func_us_801C5C78(Entity* self) {
             xOffset = self->posX.i.hi - 0xD;
             prim->v2 = (prim->v3 = 3);
             prim->x1 = (prim->x3 = xOffset + 0x1B);
-            prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
+            prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_UNK02 | DRAW_TRANSP;
         } else {
             xOffset = self->posX.i.hi - 7;
             prim->v2 = (prim->v3 = 0x83);
             prim->x1 = (prim->x3 = xOffset + 0xe);
-            prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
+            prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_UNK02 | DRAW_TRANSP;
         }
 
         prim->v0 = (prim->v1 = prim->v2 + 0x60);
@@ -124,13 +127,15 @@ void func_us_801C5C78(Entity* self) {
             prim->v2 = (prim->v3 = 0x2f);
             prim->x0 = (prim->x2 = xOffset);
             prim->x1 = (prim->x3 = xOffset + 0x1B);
-            prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
+            prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_UNK02 | DRAW_TRANSP;
         } else {
             prim->v0 = (prim->v1 = 0xe3);
             prim->v2 = (prim->v3 = 0xaf);
             prim->x0 = (prim->x2 = xOffset);
             prim->x1 = (prim->x3 = xOffset + 0xe);
-            prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
+            prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_UNK02 | DRAW_TRANSP;
         }
 
         prim->y0 = (prim->y1 = 0xAC);

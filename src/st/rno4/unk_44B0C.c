@@ -43,7 +43,8 @@ void func_us_801C5C78(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA | FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA | FLAG_HAS_PRIMS;
+        self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
+                       FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA | FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
         self->ext.et_801C5C78.prim = prim;
@@ -95,12 +96,14 @@ void func_us_801C5C78(Entity* self) {
             xOffset = self->posX.i.hi - 0xD;
             prim->v2 = (prim->v3 = 3);
             prim->x1 = (prim->x3 = xOffset + 0x1B);
-            prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
+            prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_UNK02 | DRAW_TRANSP;
         } else {
             xOffset = self->posX.i.hi - 7;
             prim->v2 = (prim->v3 = 0x83);
             prim->x1 = (prim->x3 = xOffset + 0xe);
-            prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
+            prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_UNK02 | DRAW_TRANSP;
         }
 
         prim->v0 = (prim->v1 = prim->v2 + 0x60);
@@ -115,13 +118,15 @@ void func_us_801C5C78(Entity* self) {
             prim->v2 = (prim->v3 = 0x2f);
             prim->x0 = (prim->x2 = xOffset);
             prim->x1 = (prim->x3 = xOffset + 0x1B);
-            prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
+            prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_UNK02 | DRAW_TRANSP;
         } else {
             prim->v0 = (prim->v1 = 0xe3);
             prim->v2 = (prim->v3 = 0xaf);
             prim->x0 = (prim->x2 = xOffset);
             prim->x1 = (prim->x3 = xOffset + 0xe);
-            prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
+            prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_UNK02 | DRAW_TRANSP;
         }
 
         prim->y0 = (prim->y1 = 0xAC);
@@ -200,33 +205,7 @@ void EntityWaterBox(Entity* self) {
     }
 }
 
-extern s32 D_us_801814D4;
-
-void func_us_801C81C8(Entity* self) {
-    Entity* child;
-
-    if (self->step == 0) {
-        InitializeEntity(g_EInitInteractable);
-        self->animSet = -0x7FFE;
-        self->palette = 0x44;
-        self->drawFlags = ENTITY_MASK_R;
-        self->posX.i.hi = (s16)(0x1EF - (u16)g_Tilemap.scrollX.i.hi);
-        child = AllocEntity(&g_Entities[224], &g_Entities[256]);
-        if (child != NULL) {
-            CreateEntityFromCurrentEntity(E_ID(UNK_27), child);
-            child->params = 1;
-        }
-        *((Entity**)((u8*)self + 0x80)) = child;
-        child = AllocEntity(child, &g_Entities[256]);
-        if (child != NULL) {
-            CreateEntityFromCurrentEntity(E_ID(UNK_26), child);
-            child->params = 1;
-        }
-        *((Entity**)((u8*)self + 0x84)) = child;
-        *((s16*)self + 0x3e) = 0;
-    }
-    AnimateEntity(&D_us_801814D4, self);
-}
+INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", func_us_801C81C8);
 
 void EntityFloatingIcePlatform(Entity* self) {
     extern u16 g_FloatingIcePlatformHitbox[];
