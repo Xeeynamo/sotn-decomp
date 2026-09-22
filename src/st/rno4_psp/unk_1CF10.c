@@ -163,40 +163,7 @@ INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", func_us_801C4228_from
 
 INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", EntityWaterBox);
 
-// https://www.decomp.me/scratch/WfpaU
-// TODO: there are some externals that aren't in the psx version
-extern s16 D_pspeu_0929B938;
-extern s32 D_pspeu_0929BE00;
-extern s32 D_pspeu_0929BDF8;
-// extern s32 E_ID(UNK_27);
-
-void func_us_801C81C8(Entity* self) {
-    Entity* child;
-
-    if (!self->step) {
-        InitializeEntity(g_EInitInteractable);
-        self->animSet = -0x7FFE;
-        self->palette = 0x44;
-        self->drawFlags = ENTITY_MASK_R;
-        self->posX.i.hi = (0x1EF - g_Tilemap.scrollX.i.hi);
-        child = AllocEntity(&g_Entities[224], &g_Entities[256]);
-        if (child != NULL) {
-            CreateEntityFromCurrentEntity(D_pspeu_0929BDF8, child);
-            child->params = 1;
-        }
-        // TODO
-        *((Entity**)((u8*)self + 0x80)) = child;
-        child = AllocEntity(child, &g_Entities[256]);
-        if (child != NULL) {
-            CreateEntityFromCurrentEntity(D_pspeu_0929BE00, child);
-            child->params = 1;
-        }
-        // TODO
-        *((Entity**)((u8*)self + 0x84)) = child;
-        *((s16*)self + 0x3e) = 0;
-    }
-    AnimateEntity(&D_pspeu_0929B938, self);
-}
+INCLUDE_ASM("st/rno4_psp/nonmatchings/rno4_psp/unk_1CF10", func_us_801C81C8);
 
 void EntityFloatingIcePlatform(Entity* self) {
     extern u16 g_FloatingIcePlatformHitbox[];
