@@ -1,6 +1,83 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../rno1/rno1.h"
+#include "../pfn_entity_update.h"
 
-INCLUDE_ASM("st/rno1_psp/nonmatchings/rno1_psp/st_init", InitEntityIds);
+extern LayoutEntity* D_8D2E040;
+extern LayoutEntity* D_8D2E114;
+extern Overlay g_StageOverlay;
 
-INCLUDE_ASM("st/rno1_psp/nonmatchings/rno1_psp/st_init", RNO1_Load);
+s32 E_ID(DUMMY_10);
+s32 E_ID(BACKGROUND_BLOCK);
+s32 E_ID(LOCK_CAMERA);
+s32 E_ID(UNK_ID13);
+s32 E_ID(EXPLOSION_VARIANTS);
+s32 E_ID(GREY_PUFF);
+s32 E_ID(FOG);
+s32 E_ID(RAIN);
+s32 E_ID(RAIN_SFX_FADE);
+s32 E_ID(PARANTHROPUS);
+s32 E_ID(PARANTHROPUS_BONE_HITBOX);
+s32 E_ID(PARANTHROPUS_SKULL);
+s32 E_ID(PARANTHROPUS_THROWN_BONE);
+s32 E_ID(STONE_SKULL);
+s32 E_ID(JACKO_BONES);
+s32 E_ID(JACKO_DEATH_PARTS);
+s32 E_ID(JACKO_JACK);
+s32 E_ID(NOVA_SKELETON);
+s32 E_ID(NOVA_LASER);
+s32 E_ID(NOVA_PULSE);
+s32 E_ID(NOVA_DEATH_PARTS);
+s32 E_ID(UNK_25);
+s32 E_ID(UNK_26);
+s32 E_ID(UNK_27);
+s32 E_ID(UNK_28);
+s32 E_ID(UNK_29);
+s32 E_ID(UNK_2A);
+s32 E_ID(BREAKABLE_DEBRIS);
+s32 E_ID(UNK_2C);
+s32 E_ID(UNK_2D);
+s32 E_ID(UNK_2E);
+s32 E_ID(UNK_2F);
+
+void InitEntityIds(void) {
+    SET_E_ID(BACKGROUND_BLOCK);
+    SET_E_ID(LOCK_CAMERA);
+    SET_E_ID(UNK_ID13);
+    SET_E_ID(EXPLOSION_VARIANTS);
+    SET_E_ID(GREY_PUFF);
+    SET_E_ID(FOG);
+    SET_E_ID(RAIN);
+    SET_E_ID(RAIN_SFX_FADE);
+    SET_E_ID(PARANTHROPUS);
+    SET_E_ID(PARANTHROPUS_BONE_HITBOX);
+    SET_E_ID(PARANTHROPUS_SKULL);
+    SET_E_ID(PARANTHROPUS_THROWN_BONE);
+    SET_E_ID(STONE_SKULL);
+    SET_E_ID(JACKO_BONES);
+    SET_E_ID(JACKO_DEATH_PARTS);
+    SET_E_ID(JACKO_JACK);
+    SET_E_ID(NOVA_SKELETON);
+    SET_E_ID(NOVA_LASER);
+    SET_E_ID(NOVA_PULSE);
+    SET_E_ID(NOVA_DEATH_PARTS);
+    SET_E_ID(UNK_25);
+    SET_E_ID(UNK_26);
+    SET_E_ID(UNK_27);
+    SET_E_ID(UNK_28);
+    SET_E_ID(UNK_29);
+    SET_E_ID(UNK_2A);
+    SET_E_ID(BREAKABLE_DEBRIS);
+    SET_E_ID(UNK_2C);
+    SET_E_ID(UNK_2D);
+    SET_E_ID(UNK_2E);
+    SET_E_ID(UNK_2F);
+}
+
+void OvlLoad(void) {
+    InitEntityIds();
+    PfnEntityUpdates = EntityUpdates;
+    g_pStObjLayoutHorizontal = &D_8D2E040;
+    g_pStObjLayoutVertical = &D_8D2E114;
+    func_892A018();
+    memcpy(&g_api.o, &g_StageOverlay, sizeof(Overlay));
+}
