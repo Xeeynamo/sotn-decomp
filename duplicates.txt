@@ -6533,14 +6533,14 @@
 | 1.00 | true     | func_800E2398                       | asm/us/dra/matchings/42398/func_800E2398.s 
 | 1.00 | true     | func_8015E380                       | asm/us/ric/matchings/pl_collision/func_8015E380.s 
 | 1.00 | true     | func_us_801B832C                    | asm/us/st/no1/matchings/unk_381E8/func_us_801B832C.s 
+| 1.00 | true     | RNO1_DebugShowWaitInfo              | asm/us/st/rno1/matchings/e_weather/RNO1_DebugShowWaitInfo.s 
 | 1.00 | false    | DebugShowWaitInfo                   | asm/us/boss/bo6/nonmatchings/us_3E79C/DebugShowWaitInfo.s 
-| 1.00 | false    | RNO1_DebugShowWaitInfo              | asm/us/st/rno1/nonmatchings/unk_267A8/RNO1_DebugShowWaitInfo.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_800E2438                       | asm/us/dra/matchings/42398/func_800E2438.s 
 | 1.00 | true     | func_8015E420                       | asm/us/ric/matchings/pl_collision/func_8015E420.s 
 | 1.00 | true     | func_us_801B83CC                    | asm/us/st/no1/matchings/unk_381E8/func_us_801B83CC.s 
+| 1.00 | true     | RNO1_DebugInputWait                 | asm/us/st/rno1/matchings/e_weather/RNO1_DebugInputWait.s 
 | 1.00 | false    | DebugInputWait                      | asm/us/boss/bo6/nonmatchings/us_3E79C/DebugInputWait.s 
-| 1.00 | false    | RNO1_DebugInputWait                 | asm/us/st/rno1/nonmatchings/unk_267A8/RNO1_DebugInputWait.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_800F6A48                       | asm/us/dra/matchings/menu/func_800F6A48.s 
 | 0.90 | true     | def_cbread                          | asm/us/main/matchings/psxsdk/libcd/event/def_cbread.s 
@@ -8737,7 +8737,7 @@
 | 1.00 | true     | func_us_801BD970                    | asm/us/st/nz1/matchings/e_sword_lord/func_us_801BD970.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801B7CC4                    | asm/us/st/no1/matchings/unk_36490/func_us_801B7CC4.s 
-| 1.00 | true     | func_us_801A79FC                    | asm/us/st/rno1/matchings/unk_268AC/func_us_801A79FC.s 
+| 1.00 | true     | func_us_801A79FC                    | asm/us/st/rno1/matchings/e_weather/func_us_801A79FC.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801B8F50                    | asm/us/st/no1/matchings/unk_38F50/func_us_801B8F50.s 
 | 1.00 | true     | func_us_801A7A5C                    | asm/us/st/rno1/matchings/unk_27A5C/func_us_801A7A5C.s 
