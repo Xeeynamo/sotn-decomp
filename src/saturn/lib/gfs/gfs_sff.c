@@ -6,9 +6,9 @@
 #include "gfs_scsi.h"
 #include "gfs_sf.h"
 
-#define BOOT_WORK_DIPSW (*(Sint32 *)0x6000248)
+#define BOOT_WORK_DIPSW (*(Sint32*)0x6000248)
 
-#define DIP_USE_SCSI    0x10
+#define DIP_USE_SCSI 0x10
 
 // 0x0601D824
 void GFSF_Init(void) {
@@ -20,9 +20,9 @@ void GFSF_Init(void) {
 }
 
 // 0x0601D86C
-Bool GFSF_Setup(GfsFlow *flow, GfsDirId *dirrec, Sint32 fid) {
-    Sint32      fsize;
-    GfsFinfo    *finfo = &GFS_FLW_FINFO(flow);
+Bool GFSF_Setup(GfsFlow* flow, GfsDirId* dirrec, Sint32 fid) {
+    Sint32 fsize;
+    GfsFinfo* finfo = &GFS_FLW_FINFO(flow);
 
     if (GFSD_Open(GFS_DIR_FAD(dirrec)) != GFSD_ERR_OK) {
         return FALSE;
@@ -46,11 +46,11 @@ Bool GFSF_Setup(GfsFlow *flow, GfsDirId *dirrec, Sint32 fid) {
 }
 
 // 0x0601D94C
-Sint32 GFSF_FlowInBuf(GfsFlow *flow) {
-    Sint32      remain;
-    Sint32      nsct;
-    GfsDtsrc    *dts = &GFS_FLW_DTSRC(flow);
-    
+Sint32 GFSF_FlowInBuf(GfsFlow* flow) {
+    Sint32 remain;
+    Sint32 nsct;
+    GfsDtsrc* dts = &GFS_FLW_DTSRC(flow);
+
     remain = GFS_FLW_SCT(flow) - GFS_FLW_SCTCNT(flow);
     if (remain <= 0) {
         return GFS_FIN_END;
@@ -69,18 +69,18 @@ Sint32 GFSF_FlowInBuf(GfsFlow *flow) {
 }
 
 // 0x0601D9A4
-void GFSF_StopInBuf(GfsFlow *flow, Bool stop_flag) {
-    GfsDtsrc    *dts = &GFS_FLW_DTSRC(flow);
+void GFSF_StopInBuf(GfsFlow* flow, Bool stop_flag) {
+    GfsDtsrc* dts = &GFS_FLW_DTSRC(flow);
 
     GFS_SCR_SCTPOS(dts) = GFS_SCR_SCTNUM(dts) = 0;
 }
 
 // 0x0601D9B4
-Sint32 GFSF_Seek(GfsFlow *flow, Sint32 pos) {
-    Sint32      nsct, ofs;
-    GfsFinfo    *finfo = &GFS_FLW_FINFO(flow);
-    GfsDtsrc    *dts = &GFS_FLW_DTSRC(flow);
- 
+Sint32 GFSF_Seek(GfsFlow* flow, Sint32 pos) {
+    Sint32 nsct, ofs;
+    GfsFinfo* finfo = &GFS_FLW_FINFO(flow);
+    GfsDtsrc* dts = &GFS_FLW_DTSRC(flow);
+
     nsct = GFS_FI_NSCT(finfo);
     if (pos > nsct) {
         pos = nsct;
@@ -88,7 +88,7 @@ Sint32 GFSF_Seek(GfsFlow *flow, Sint32 pos) {
     if (pos < 0) {
         pos = 0;
     }
-    if ((GFS_SCR_FILEPOS(dts) <= pos)&&
+    if ((GFS_SCR_FILEPOS(dts) <= pos) &&
         (pos <= (GFS_SCR_FILEPOS(dts) + GFS_SCR_SCTNUM(dts)))) {
         ofs = pos - GFS_SCR_FILEPOS(dts);
         if (GFS_FLW_GMODE(flow) == GFS_GMODE_RESIDENT) {
@@ -106,13 +106,11 @@ Sint32 GFSF_Seek(GfsFlow *flow, Sint32 pos) {
 }
 
 // 0x0601DA08
-Sint32 GFSF_Tell(GfsFlow *flow) {
-    GfsDtsrc    *dts = &GFS_FLW_DTSRC(flow);
- 
+Sint32 GFSF_Tell(GfsFlow* flow) {
+    GfsDtsrc* dts = &GFS_FLW_DTSRC(flow);
+
     return GFS_SCR_FILEPOS(dts) + GFS_SCR_SCTPOS(dts);
 }
 
 // 0x0601DA18
-void GFSF_Close(GfsDtsrc *dts) {
-    GFSD_Close(GFS_SCR_FID(dts));
-}
+void GFSF_Close(GfsDtsrc* dts) { GFSD_Close(GFS_SCR_FID(dts)); }

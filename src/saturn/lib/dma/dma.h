@@ -99,12 +99,12 @@ typedef struct {
 
 typedef Uint32 DmaCpuStatus;
 
-void DMA_CpuSetComPrm(DmaCpuComPrm *);
-void DMA_CpuSetPrm(DmaCpuPrm *, Uint32);
+void DMA_CpuSetComPrm(DmaCpuComPrm*);
+void DMA_CpuSetPrm(DmaCpuPrm*, Uint32);
 void DMA_CpuStart(Uint32);
 void DMA_CpuStop(Uint32);
 void DMA_CpuAllStop(void);
-void DMA_CpuGetComStatus(DmaCpuComStatus *);
+void DMA_CpuGetComStatus(DmaCpuComStatus*);
 DmaCpuStatus DMA_CpuGetStatus(Uint32);
 
 #define DMA_CPU_END 0
@@ -176,9 +176,9 @@ typedef struct {
     Uint32 dxmv;
 } DmaScuStatus;
 
-void DMA_ScuSetPrm(DmaScuPrm *, Uint32);
+void DMA_ScuSetPrm(DmaScuPrm*, Uint32);
 void DMA_ScuStart(Uint32);
-void DMA_ScuGetStatus(DmaScuStatus *, Uint32);
+void DMA_ScuGetStatus(DmaScuStatus*, Uint32);
 
 #define DMA_SCU_END 0
 #define DMA_SCU_FAIL 1

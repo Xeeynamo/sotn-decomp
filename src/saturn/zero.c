@@ -1119,7 +1119,9 @@ s32 func_06006E9C(s32* nsct, s32 gfs) {
 }
 
 // original name: IsCdOpened
-bool func_06006ED4() { return (CDC_GetHirqReq() & CDC_HIRQ_DCHG) ? true : false; }
+bool func_06006ED4() {
+    return (CDC_GetHirqReq() & CDC_HIRQ_DCHG) ? true : false;
+}
 
 s32 func_06006EF8(void) {
     s32 stat[4];

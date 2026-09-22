@@ -10,14 +10,14 @@
 // 0x0601D674
 Bool GFMF_Init(void) {
     GFMB_Init();
-    return (GFMC_GetBase() == NULL)? FALSE: TRUE;
+    return (GFMC_GetBase() == NULL) ? FALSE : TRUE;
 }
 
 // 0x0601D69C
-void GFMF_Setup(GfsFlow *flow, GfsDirId *dirrec, Sint32 fid) {
-    Sint32      fsize;
-    GfsFinfo    *finfo = &GFS_FLW_FINFO(flow);
-    
+void GFMF_Setup(GfsFlow* flow, GfsDirId* dirrec, Sint32 fid) {
+    Sint32 fsize;
+    GfsFinfo* finfo = &GFS_FLW_FINFO(flow);
+
     fsize = GFS_DIR_SIZE(dirrec);
     GFS_FI_FID(finfo) = fid;
     GFS_FI_FAD(finfo) = 0;
@@ -36,11 +36,11 @@ void GFMF_Setup(GfsFlow *flow, GfsDirId *dirrec, Sint32 fid) {
 }
 
 // 0x0601D758
-Sint32 GFMF_FlowInBuf(GfsFlow *flow) {
-    Sint32      remain;
-    Sint32      nsct;
-    GfsDtsrc    *dts = &GFS_FLW_DTSRC(flow);
-    
+Sint32 GFMF_FlowInBuf(GfsFlow* flow) {
+    Sint32 remain;
+    Sint32 nsct;
+    GfsDtsrc* dts = &GFS_FLW_DTSRC(flow);
+
     remain = GFS_FLW_SCT(flow) - GFS_FLW_SCTCNT(flow);
     if (remain <= 0) {
         return GFS_FIN_END;
@@ -59,18 +59,18 @@ Sint32 GFMF_FlowInBuf(GfsFlow *flow) {
 }
 
 // 0x0601D7B0
-void GFMF_StopInBuf(GfsFlow *flow, Bool stop_flag) {
-    GfsDtsrc    *dts = &GFS_FLW_DTSRC(flow);
+void GFMF_StopInBuf(GfsFlow* flow, Bool stop_flag) {
+    GfsDtsrc* dts = &GFS_FLW_DTSRC(flow);
 
     GFS_MEMR_SCTPOS(dts) = GFS_MEMR_SCTNUM(dts) = 0;
 }
 
 // 0x0601D7C0
-Sint32 GFMF_Seek(GfsFlow *flow, Sint32 pos) {
-    Sint32      nsct, ofs;
-    GfsFinfo    *finfo = &GFS_FLW_FINFO(flow);
-    GfsDtsrc    *dts = &GFS_FLW_DTSRC(flow);
- 
+Sint32 GFMF_Seek(GfsFlow* flow, Sint32 pos) {
+    Sint32 nsct, ofs;
+    GfsFinfo* finfo = &GFS_FLW_FINFO(flow);
+    GfsDtsrc* dts = &GFS_FLW_DTSRC(flow);
+
     nsct = GFS_FI_NSCT(finfo);
     if (pos > nsct) {
         pos = nsct;
@@ -78,7 +78,7 @@ Sint32 GFMF_Seek(GfsFlow *flow, Sint32 pos) {
     if (pos < 0) {
         pos = 0;
     }
-    if ((GFS_MEMR_FILEPOS(dts) <= pos)&&
+    if ((GFS_MEMR_FILEPOS(dts) <= pos) &&
         (pos <= (GFS_MEMR_FILEPOS(dts) + GFS_MEMR_SCTNUM(dts)))) {
         ofs = pos - GFS_MEMR_FILEPOS(dts);
         if (GFS_FLW_GMODE(flow) == GFS_GMODE_RESIDENT) {
@@ -96,8 +96,8 @@ Sint32 GFMF_Seek(GfsFlow *flow, Sint32 pos) {
 }
 
 // 0x0601D814
-Sint32 GFMF_Tell(GfsFlow *flow) {
-    GfsDtsrc    *dts = &GFS_FLW_DTSRC(flow);
+Sint32 GFMF_Tell(GfsFlow* flow) {
+    GfsDtsrc* dts = &GFS_FLW_DTSRC(flow);
 
     return GFS_MEMR_FILEPOS(dts) + GFS_MEMR_SCTPOS(dts);
 }

@@ -9,103 +9,105 @@
 
 #include "gfs_scsi.h"
 
-#define SECT_BUF_SIZ    2048
+#define SECT_BUF_SIZ 2048
 
-#define MF_OVW      0x01
+#define MF_OVW 0x01
 
-#define GFDR_CURRENT_DIR_ID     0
-#define GFDR_PARENT_DIR_ID      1
+#define GFDR_CURRENT_DIR_ID 0
+#define GFDR_PARENT_DIR_ID 1
 
-#define GFDR_BASE_MAX   8
-#define GFDR_EXT_MAX    3
+#define GFDR_BASE_MAX 8
+#define GFDR_EXT_MAX 3
 
-#define GFDR_FILE_UNREAD    -1
+#define GFDR_FILE_UNREAD -1
 
-#define LSN2FAD(lsn)    ((lsn) + 150)
-#define FAD2LSN(fad)    ((fad) - 150)
+#define LSN2FAD(lsn) ((lsn) + 150)
+#define FAD2LSN(fad) ((fad) - 150)
 
-#define RECORDING_DATE_LEN      7
+#define RECORDING_DATE_LEN 7
 
-#define GFS_DIR_DIRREC(rec)     ((rec)->dirrec)
+#define GFS_DIR_DIRREC(rec) ((rec)->dirrec)
 
-#define NEEDS_PADDING(n)   ((n + 1) & 1)
+#define NEEDS_PADDING(n) ((n + 1) & 1)
 
 typedef struct {
-    Uint32      pos;
-    Uint32      len;
-    Uint8       rsize;
-    Uint8       atr;
-    Uint8       unitsize;
-    Uint8       gapsize;
-    Sint8       fname[GFS_FNAME_LEN + 1];
-    Uint8       fn;
+    Uint32 pos;
+    Uint32 len;
+    Uint8 rsize;
+    Uint8 atr;
+    Uint8 unitsize;
+    Uint8 gapsize;
+    Sint8 fname[GFS_FNAME_LEN + 1];
+    Uint8 fn;
 } XaDirEnt;
 
-#define XA_DIR_RSIZE(dir)       ((dir)->rsize)
-#define XA_DIR_POS(dir)         ((dir)->pos)
-#define XA_DIR_LEN(dir)         ((dir)->len)
-#define XA_DIR_ATR(dir)         ((dir)->atr)
-#define XA_DIR_USIZE(dir)       ((dir)->unitsize)
-#define XA_DIR_GSIZE(dir)       ((dir)->gapsize)
-#define XA_DIR_FNAME(dir)       ((dir)->fname)
-#define XA_DIR_FN(dir)          ((dir)->fn)
+#define XA_DIR_RSIZE(dir) ((dir)->rsize)
+#define XA_DIR_POS(dir) ((dir)->pos)
+#define XA_DIR_LEN(dir) ((dir)->len)
+#define XA_DIR_ATR(dir) ((dir)->atr)
+#define XA_DIR_USIZE(dir) ((dir)->unitsize)
+#define XA_DIR_GSIZE(dir) ((dir)->gapsize)
+#define XA_DIR_FNAME(dir) ((dir)->fname)
+#define XA_DIR_FN(dir) ((dir)->fn)
 
-#define XA_ATR_DIR              0x80
-#define XA_ATR_INTLV            0x20
-#define XA_ATR_FORM2            0x10
-#define XA_ATR_FORM1            0x08
-#define XA_ATR_ERR              0x0080
+#define XA_ATR_DIR 0x80
+#define XA_ATR_INTLV 0x20
+#define XA_ATR_FORM2 0x10
+#define XA_ATR_FORM1 0x08
+#define XA_ATR_ERR 0x0080
 
 typedef struct {
-    GfsHn   gfs;
-    Uint8   *buf;
-    Sint32  rp;
+    GfsHn gfs;
+    Uint8* buf;
+    Sint32 rp;
     Sint32 ap;
     Sint32 nsct;
 } GfdrFile;
 
-#define GFDR_FILE_GFS(fp)       ((fp)->gfs)
-#define GFDR_FILE_BUF(fp)       ((fp)->buf)
-#define GFDR_FILE_RP(fp)        ((fp)->rp)
-#define GFDR_FILE_AP(fp)        ((fp)->ap)
-#define GFDR_FILE_NSCT(fp)      ((fp)->nsct)
+#define GFDR_FILE_GFS(fp) ((fp)->gfs)
+#define GFDR_FILE_BUF(fp) ((fp)->buf)
+#define GFDR_FILE_RP(fp) ((fp)->rp)
+#define GFDR_FILE_AP(fp) ((fp)->ap)
+#define GFDR_FILE_NSCT(fp) ((fp)->nsct)
 
-GFS_LOCAL Sint32 gfdr_setupDirIdTbl(GfsHn gfs, GfsDirId *rectbl, Sint32 nrec);
-GFS_LOCAL Sint32 gfdr_setupDirNameTbl(GfsHn gfs, GfsDirName *rectbl, Sint32 nrec);
-GFS_LOCAL void gfdr_open(GfdrFile *fp, GfsHn gfs);
-GFS_LOCAL Sint32 gfdr_read(GfdrFile *fp, void *buf, Uint32 size);
-GFS_LOCAL Uint8 gfdr_readByte(GfdrFile *fp, Sint32 *ec);
-GFS_LOCAL Uint16 gfdr_readWord(GfdrFile *fp, Sint32 *ec);
-GFS_LOCAL Uint16 gfdr_readWordNB(GfdrFile *fp, Sint32 *ec);
-GFS_LOCAL Uint32 gfdr_readLongNB(GfdrFile *fp, Sint32 *ec);
-GFS_LOCAL Uint32 gfdr_readLongNM(GfdrFile *fp, Sint32 *ec);
-GFS_LOCAL Sint32 gfdr_setNextRec(GfdrFile *fp, Sint32 *ec);
-GFS_LOCAL Sint32 gfdr_readDirEnt(GfdrFile *fp, XaDirEnt *dir);
-GFS_LOCAL void gfdr_setDirrecCd(CdcFile *rec, XaDirEnt *dir);
-GFS_LOCAL void gfdr_setDirrecMem(CdcFile *rec, Sint32 fid, Sint32 len);
-GFS_LOCAL void gfdr_setDirrecScsi(CdcFile *rec, Sint32 fid, Sint32 len);
-GFS_LOCAL Bool gfdr_getScsiFinfo(Sint8 *fname, Sint32 *fid, Sint32 *len);
-GFS_LOCAL Bool gfdr_findScsiFile(GfsDirId *rec, GfsDirId *recend, Sint32 fid);
-GFS_LOCAL GfsDirName *gfdr_findFile(GfsDirName *rectbl, Sint32 n_dirent, Sint8 *fname);
+GFS_LOCAL Sint32 gfdr_setupDirIdTbl(GfsHn gfs, GfsDirId* rectbl, Sint32 nrec);
+GFS_LOCAL Sint32 gfdr_setupDirNameTbl(
+    GfsHn gfs, GfsDirName* rectbl, Sint32 nrec);
+GFS_LOCAL void gfdr_open(GfdrFile* fp, GfsHn gfs);
+GFS_LOCAL Sint32 gfdr_read(GfdrFile* fp, void* buf, Uint32 size);
+GFS_LOCAL Uint8 gfdr_readByte(GfdrFile* fp, Sint32* ec);
+GFS_LOCAL Uint16 gfdr_readWord(GfdrFile* fp, Sint32* ec);
+GFS_LOCAL Uint16 gfdr_readWordNB(GfdrFile* fp, Sint32* ec);
+GFS_LOCAL Uint32 gfdr_readLongNB(GfdrFile* fp, Sint32* ec);
+GFS_LOCAL Uint32 gfdr_readLongNM(GfdrFile* fp, Sint32* ec);
+GFS_LOCAL Sint32 gfdr_setNextRec(GfdrFile* fp, Sint32* ec);
+GFS_LOCAL Sint32 gfdr_readDirEnt(GfdrFile* fp, XaDirEnt* dir);
+GFS_LOCAL void gfdr_setDirrecCd(CdcFile* rec, XaDirEnt* dir);
+GFS_LOCAL void gfdr_setDirrecMem(CdcFile* rec, Sint32 fid, Sint32 len);
+GFS_LOCAL void gfdr_setDirrecScsi(CdcFile* rec, Sint32 fid, Sint32 len);
+GFS_LOCAL Bool gfdr_getScsiFinfo(Sint8* fname, Sint32* fid, Sint32* len);
+GFS_LOCAL Bool gfdr_findScsiFile(GfsDirId* rec, GfsDirId* recend, Sint32 fid);
+GFS_LOCAL GfsDirName* gfdr_findFile(
+    GfsDirName* rectbl, Sint32 n_dirent, Sint8* fname);
 GFS_LOCAL void gfdr_clearMemRsv(Sint32 n_memfile);
 
 // 0x0601DA34
-Sint32 GFDR_SetupDirTbl(GfsHn gfs, GfsDirTbl *dirtbl, Sint32 nsct) {
-    Sint32      ndir;
+Sint32 GFDR_SetupDirTbl(GfsHn gfs, GfsDirTbl* dirtbl, Sint32 nsct) {
+    Sint32 ndir;
 
     if (GFS_DIRTBL_TYPE(dirtbl) == GFS_DIR_ID) {
-        ndir = gfdr_setupDirIdTbl(gfs, GFS_DIRTBL_DIRID(dirtbl),
-                                  GFS_DIRTBL_NDIR(dirtbl));
+        ndir = gfdr_setupDirIdTbl(
+            gfs, GFS_DIRTBL_DIRID(dirtbl), GFS_DIRTBL_NDIR(dirtbl));
     } else {
-        ndir = gfdr_setupDirNameTbl(gfs, GFS_DIRTBL_DIRNAME(dirtbl),
-                                    GFS_DIRTBL_NDIR(dirtbl));
+        ndir = gfdr_setupDirNameTbl(
+            gfs, GFS_DIRTBL_DIRNAME(dirtbl), GFS_DIRTBL_NDIR(dirtbl));
     }
     return ndir;
 }
 
 // 0x0601DA64
-Sint32 GFDR_NameToId(GfsDirName *rectbl, Sint8 *fname, Sint32 max) {
-    Sint32      i;
+Sint32 GFDR_NameToId(GfsDirName* rectbl, Sint8* fname, Sint32 max) {
+    Sint32 i;
 
     for (i = 0; i < max; ++i, ++rectbl) {
         if (XSTRNCMP(fname, GFS_DIR_FNAME(rectbl), GFS_FNAME_LEN) == 0) {
@@ -119,29 +121,27 @@ Sint32 GFDR_NameToId(GfsDirName *rectbl, Sint8 *fname, Sint32 max) {
 }
 
 // 0x0601DAC4
-GfsDirId *GFDR_GetInfoDirId(Sint32 fid, GfsDirId *rectbl) {
+GfsDirId* GFDR_GetInfoDirId(Sint32 fid, GfsDirId* rectbl) {
     return &rectbl[fid];
 }
 
 // 0x0601DAD8
-GfsDirName *GFDR_GetInfoDirName(Sint32 fid, GfsDirName *rectbl) {
+GfsDirName* GFDR_GetInfoDirName(Sint32 fid, GfsDirName* rectbl) {
     return &rectbl[fid];
 }
 
 // 0x0601DAEC
-Sint32 GFDR_GetAtrDirId(Sint32 fid, GfsDirId *rectbl) {
+Sint32 GFDR_GetAtrDirId(Sint32 fid, GfsDirId* rectbl) {
     return GFS_DIR_ATR(&rectbl[fid]);
 }
 
 // 0x0601DB04
-Sint32 GFDR_GetAtrDirName(Sint32 fid, GfsDirName *rectbl) {
+Sint32 GFDR_GetAtrDirName(Sint32 fid, GfsDirName* rectbl) {
     return GFS_DIR_ATR(&rectbl[fid]);
 }
 
 // 0x0601DB1C
-Sint32 GFDR_ChgRoot(void) {
-    return GFDR_ChgDir(CDC_NUL_FID);
-}
+Sint32 GFDR_ChgRoot(void) { return GFDR_ChgDir(CDC_NUL_FID); }
 
 // 0x0601DB34
 Sint32 GFDR_ChgDir(Sint32 fid) {
@@ -160,11 +160,11 @@ Sint32 GFDR_ChgDir(Sint32 fid) {
         return GFS_ERR_TMOUT;
     } else if (err == GFCD_SVR_ERROR) {
         switch (gfcd_fatal_err) {
-        case    GFCD_ERR_OPEN:
+        case GFCD_ERR_OPEN:
             return GFS_ERR_CDOPEN;
-        case    GFCD_ERR_NODISC:
-            return	GFS_ERR_CDNODISC;
-        case    GFCD_ERR_FATAL:
+        case GFCD_ERR_NODISC:
+            return GFS_ERR_CDNODISC;
+        case GFCD_ERR_FATAL:
         default:
             return GFS_ERR_FATAL;
         }
@@ -175,16 +175,16 @@ Sint32 GFDR_ChgDir(Sint32 fid) {
 }
 
 // 0x0601DBC4
-GFS_LOCAL Sint32 gfdr_setupDirIdTbl(GfsHn gfs, GfsDirId *rectbl, Sint32 nrec) {
-    GfsDirId    *r = rectbl;
-    Sint32      n_dirent, ec;
-    GfdrFile    fp;
-    XaDirEnt    dir_ent;
-    Sint32      n_memfile = GFMC_GetNumFile();
-    Sint32      i, n_scsifile;
-    Uint8       *dummy1;
-    Sint32      dummy2, len;
-    GfsdInfo    info;
+GFS_LOCAL Sint32 gfdr_setupDirIdTbl(GfsHn gfs, GfsDirId* rectbl, Sint32 nrec) {
+    GfsDirId* r = rectbl;
+    Sint32 n_dirent, ec;
+    GfdrFile fp;
+    XaDirEnt dir_ent;
+    Sint32 n_memfile = GFMC_GetNumFile();
+    Sint32 i, n_scsifile;
+    Uint8* dummy1;
+    Sint32 dummy2, len;
+    GfsdInfo info;
 
     for (i = 0; i < n_memfile; ++i) {
         GFMC_SetRsv(i, 0);
@@ -200,8 +200,8 @@ GFS_LOCAL Sint32 gfdr_setupDirIdTbl(GfsHn gfs, GfsDirId *rectbl, Sint32 nrec) {
         }
         for (i = 0; i < n_memfile; ++i) {
             if (XSTRNCPY(XA_DIR_FNAME(&dir_ent), GFMC_GetFname(i),
-                        GFS_FNAME_LEN) == 0) {
-                GFMC_GetFileInfo(i, (void **)&dummy1, &len, &dummy2);
+                         GFS_FNAME_LEN) == 0) {
+                GFMC_GetFileInfo(i, (void**)&dummy1, &len, &dummy2);
                 gfdr_setDirrecMem(&GFS_DIR_DIRREC(r), i, len);
                 break;
             }
@@ -214,10 +214,10 @@ GFS_LOCAL Sint32 gfdr_setupDirIdTbl(GfsHn gfs, GfsDirId *rectbl, Sint32 nrec) {
             }
         }
     }
-    for (i = 0; (i < n_memfile)&&(nrec > 0); ++i) {
+    for (i = 0; (i < n_memfile) && (nrec > 0); ++i) {
         if (GFMC_GetRsv(i) != MF_OVW) {
             --nrec;
-            GFMC_GetFileInfo(i, (void **)&dummy1, &len, &dummy2);
+            GFMC_GetFileInfo(i, (void**)&dummy1, &len, &dummy2);
             gfdr_setDirrecMem(&GFS_DIR_DIRREC(r), i, len);
             ++r;
             ++n_dirent;
@@ -226,10 +226,11 @@ GFS_LOCAL Sint32 gfdr_setupDirIdTbl(GfsHn gfs, GfsDirId *rectbl, Sint32 nrec) {
     gfdr_clearMemRsv(n_memfile);
     if (MNG_SCSICON(gfs_mng_ptr)) {
         GFSD_GetFileNum(&n_scsifile);
-        for (i = 0; (i < n_scsifile)&&(nrec > 0); ++i) {
+        for (i = 0; (i < n_scsifile) && (nrec > 0); ++i) {
             if (gfdr_findScsiFile(rectbl, r, i) != TRUE) {
                 GFSD_GetFileInfo(i, &info);
-                gfdr_setDirrecScsi(&GFS_DIR_DIRREC(r), i, GFSD_INFO_LENGTH(&info));
+                gfdr_setDirrecScsi(
+                    &GFS_DIR_DIRREC(r), i, GFSD_INFO_LENGTH(&info));
             }
             ++r;
             ++n_dirent;
@@ -241,15 +242,16 @@ GFS_LOCAL Sint32 gfdr_setupDirIdTbl(GfsHn gfs, GfsDirId *rectbl, Sint32 nrec) {
 }
 
 // 0x0601DE38
-GFS_LOCAL Sint32 gfdr_setupDirNameTbl(GfsHn gfs, GfsDirName *rectbl, Sint32 nrec) {
-    GfsDirName  *r = rectbl;
-    Sint32      n_dirent, ec;
-    GfdrFile   fp;
-    XaDirEnt    dir_ent;
-    Sint32      n_memfile;
-    Uint8       *dummy1;
-    Sint32      dummy2, len, i, n_scsifile, n_new_scsi, n_new_memf;
-    GfsdInfo    info;
+GFS_LOCAL Sint32 gfdr_setupDirNameTbl(
+    GfsHn gfs, GfsDirName* rectbl, Sint32 nrec) {
+    GfsDirName* r = rectbl;
+    Sint32 n_dirent, ec;
+    GfdrFile fp;
+    XaDirEnt dir_ent;
+    Sint32 n_memfile;
+    Uint8* dummy1;
+    Sint32 dummy2, len, i, n_scsifile, n_new_scsi, n_new_memf;
+    GfsdInfo info;
 
     gfdr_open(&fp, gfs);
     for (n_dirent = 0; nrec > 0; ++r, ++n_dirent, --nrec) {
@@ -260,9 +262,9 @@ GFS_LOCAL Sint32 gfdr_setupDirNameTbl(GfsHn gfs, GfsDirName *rectbl, Sint32 nrec
         if (XA_DIR_RSIZE(&dir_ent) == 0) {
             break;
         }
-        if ((n_dirent > 2)&&
-            (XSTRNCMP(GFS_DIR_FNAME(&r[-1]), XA_DIR_FNAME(&dir_ent), 
-                                                GFS_FNAME_LEN) == 0)) {
+        if ((n_dirent > 2) &&
+            (XSTRNCMP(GFS_DIR_FNAME(&r[-1]), XA_DIR_FNAME(&dir_ent),
+                      GFS_FNAME_LEN) == 0)) {
             continue;
         }
         gfdr_setDirrecCd(&GFS_DIR_DIRREC(r), &dir_ent);
@@ -271,25 +273,28 @@ GFS_LOCAL Sint32 gfdr_setupDirNameTbl(GfsHn gfs, GfsDirName *rectbl, Sint32 nrec
     if (MNG_SCSICON(gfs_mng_ptr)) {
         GFSD_GetFileNum(&n_scsifile);
         n_new_scsi = 0;
-        for (i = 0; (i < n_scsifile)&&(n_new_scsi < nrec); ++i) {
+        for (i = 0; (i < n_scsifile) && (n_new_scsi < nrec); ++i) {
             GFSD_GetFileInfo(i, &info);
             r = gfdr_findFile(rectbl, n_dirent, GFSD_INFO_FNAME(&info));
             if (r == NULL) {
                 r = &rectbl[n_dirent + n_new_scsi];
-                gfdr_setDirrecScsi(&GFS_DIR_DIRREC(r), i, GFSD_INFO_LENGTH(&info));
-                XSTRNCPY(GFS_DIR_FNAME(r), GFSD_INFO_FNAME(&info), GFS_FNAME_LEN);
+                gfdr_setDirrecScsi(
+                    &GFS_DIR_DIRREC(r), i, GFSD_INFO_LENGTH(&info));
+                XSTRNCPY(
+                    GFS_DIR_FNAME(r), GFSD_INFO_FNAME(&info), GFS_FNAME_LEN);
                 ++n_new_scsi;
             } else {
-                gfdr_setDirrecScsi(&GFS_DIR_DIRREC(r), i, GFSD_INFO_LENGTH(&info));
+                gfdr_setDirrecScsi(
+                    &GFS_DIR_DIRREC(r), i, GFSD_INFO_LENGTH(&info));
             }
         }
         n_dirent += n_new_scsi;
     }
     n_memfile = GFMC_GetNumFile();
     n_new_memf = 0;
-    for (i = 0; (i < n_memfile)&&(n_new_memf < nrec); ++i) {
+    for (i = 0; (i < n_memfile) && (n_new_memf < nrec); ++i) {
         r = gfdr_findFile(rectbl, n_dirent, GFMC_GetFname(i));
-        GFMC_GetFileInfo(i, (void **)&dummy1, &len, &dummy2);
+        GFMC_GetFileInfo(i, (void**)&dummy1, &len, &dummy2);
         if (r == NULL) {
             r = &rectbl[n_dirent + n_new_memf];
             gfdr_setDirrecMem(&GFS_DIR_DIRREC(r), i, len);
@@ -308,8 +313,8 @@ GFS_LOCAL Sint32 gfdr_setupDirNameTbl(GfsHn gfs, GfsDirName *rectbl, Sint32 nrec
 }
 
 // 0x0601E084
-GFS_LOCAL void gfdr_open(GfdrFile *fp, GfsHn gfs) {
-    GfsFinfo    *finfo = &GFS_FLW_FINFO(&GFS_FILE_FLOW(gfs));
+GFS_LOCAL void gfdr_open(GfdrFile* fp, GfsHn gfs) {
+    GfsFinfo* finfo = &GFS_FLW_FINFO(&GFS_FILE_FLOW(gfs));
 
     GFDR_FILE_GFS(fp) = gfs;
     GFDR_FILE_BUF(fp) = MNG_SECTBUF(gfs_mng_ptr);
@@ -319,8 +324,8 @@ GFS_LOCAL void gfdr_open(GfdrFile *fp, GfsHn gfs) {
 }
 
 // 0x0601E0AC
-GFS_LOCAL Sint32 gfdr_read(GfdrFile *fp, void *buf, Uint32 size) {
-    Sint32  i, ret;
+GFS_LOCAL Sint32 gfdr_read(GfdrFile* fp, void* buf, Uint32 size) {
+    Sint32 i, ret;
 
     if (GFDR_FILE_GFS(fp) == NULL) {
         memset(buf, 0, size);
@@ -350,31 +355,31 @@ GFS_LOCAL Sint32 gfdr_read(GfdrFile *fp, void *buf, Uint32 size) {
             }
             return GFS_ERR_CDRD;
         }
-        memcpy((Uint8 *)buf + i, GFDR_FILE_BUF(fp), size);
+        memcpy((Uint8*)buf + i, GFDR_FILE_BUF(fp), size);
         GFDR_FILE_RP(fp) = size;
     }
     return GFS_ERR_OK;
 }
 
 // 0x0601E16C
-GFS_LOCAL Uint8 gfdr_readByte(GfdrFile *fp, Sint32 *ec) {
-    Uint8   tmp;
+GFS_LOCAL Uint8 gfdr_readByte(GfdrFile* fp, Sint32* ec) {
+    Uint8 tmp;
 
     *ec = gfdr_read(fp, &tmp, sizeof(tmp));
     return tmp;
 }
 
 // 0x0601E198
-GFS_LOCAL Uint16 gfdr_readWord(GfdrFile *fp, Sint32 *ec) {
-    Uint16  tmp;
+GFS_LOCAL Uint16 gfdr_readWord(GfdrFile* fp, Sint32* ec) {
+    Uint16 tmp;
 
     *ec = gfdr_read(fp, &tmp, sizeof(tmp));
     return tmp;
 }
 
 // 0x0601E1C4
-GFS_LOCAL Uint16 gfdr_readWordNB(GfdrFile *fp, Sint32 *ec) {
-    Uint16  tmp, dummy;
+GFS_LOCAL Uint16 gfdr_readWordNB(GfdrFile* fp, Sint32* ec) {
+    Uint16 tmp, dummy;
 
     *ec = gfdr_read(fp, &dummy, sizeof(dummy));
     if (*ec != GFS_ERR_OK) {
@@ -388,8 +393,8 @@ GFS_LOCAL Uint16 gfdr_readWordNB(GfdrFile *fp, Sint32 *ec) {
 }
 
 // 0x0601E218
-GFS_LOCAL Uint32 gfdr_readLongNB(GfdrFile *fp, Sint32 *ec) {
-    Uint32  tmp, dummy;
+GFS_LOCAL Uint32 gfdr_readLongNB(GfdrFile* fp, Sint32* ec) {
+    Uint32 tmp, dummy;
 
     *ec = gfdr_read(fp, &dummy, sizeof(dummy));
     if (*ec != GFS_ERR_OK) {
@@ -403,15 +408,15 @@ GFS_LOCAL Uint32 gfdr_readLongNB(GfdrFile *fp, Sint32 *ec) {
 }
 
 // 0x0601E264
-GFS_LOCAL Uint32 gfdr_readLongNM(GfdrFile *fp, Sint32 *ec) {
-    Uint32  tmp;
+GFS_LOCAL Uint32 gfdr_readLongNM(GfdrFile* fp, Sint32* ec) {
+    Uint32 tmp;
 
     *ec = gfdr_read(fp, &tmp, sizeof(tmp));
     return tmp;
 }
 
 // 0x0601E28C
-GFS_LOCAL Sint32 gfdr_setNextRec(GfdrFile *fp, Sint32 *ec) {
+GFS_LOCAL Sint32 gfdr_setNextRec(GfdrFile* fp, Sint32* ec) {
     Sint32 rsize, ret;
 
     rsize = gfdr_readByte(fp, ec);
@@ -444,10 +449,10 @@ GFS_LOCAL Sint32 gfdr_setNextRec(GfdrFile *fp, Sint32 *ec) {
 }
 
 // 0x0601E318
-GFS_LOCAL Sint32 gfdr_readDirEnt(GfdrFile *fp, XaDirEnt *dir) {
-    Sint32      ec, i, rdsz, fn_err = FALSE;
-    Uint8       fn_len, file_flg;
-    Sint8       ch = '\0', *fn_buf, *ext_pos;
+GFS_LOCAL Sint32 gfdr_readDirEnt(GfdrFile* fp, XaDirEnt* dir) {
+    Sint32 ec, i, rdsz, fn_err = FALSE;
+    Uint8 fn_len, file_flg;
+    Sint8 ch = '\0', *fn_buf, *ext_pos;
 
     if (GFDR_FILE_GFS(fp) == NULL) {
         XA_DIR_RSIZE(dir) = 0;
@@ -472,7 +477,7 @@ GFS_LOCAL Sint32 gfdr_readDirEnt(GfdrFile *fp, XaDirEnt *dir) {
     if (ec != GFS_ERR_OK) {
         return ec;
     }
-    for (i =0; i < RECORDING_DATE_LEN; ++i) {
+    for (i = 0; i < RECORDING_DATE_LEN; ++i) {
         gfdr_readByte(fp, &ec);
         if (ec != GFS_ERR_OK) {
             return ec;
@@ -579,8 +584,8 @@ GFS_LOCAL Sint32 gfdr_readDirEnt(GfdrFile *fp, XaDirEnt *dir) {
             return ec;
         }
         XA_DIR_ATR(dir) = gfdr_readByte(fp, &ec) &
-            (GFS_ATR_DIR|GFS_ATR_CDDA|GFS_ATR_INTLV|
-             GFS_ATR_FORM2|GFS_ATR_FORM1);
+                          (GFS_ATR_DIR | GFS_ATR_CDDA | GFS_ATR_INTLV |
+                           GFS_ATR_FORM2 | GFS_ATR_FORM1);
         if (ec != GFS_ERR_OK) {
             return ec;
         }
@@ -603,14 +608,14 @@ GFS_LOCAL Sint32 gfdr_readDirEnt(GfdrFile *fp, XaDirEnt *dir) {
             }
         }
     } else {
-        XA_DIR_ATR(dir) = (file_flg & 2)? XA_ATR_DIR: 0;
+        XA_DIR_ATR(dir) = (file_flg & 2) ? XA_ATR_DIR : 0;
         XA_DIR_FN(dir) = 0;
     }
     return GFS_ERR_OK;
 }
 
 // 0x0601E688
-GFS_LOCAL void gfdr_setDirrecCd(CdcFile *rec, XaDirEnt *dir) {
+GFS_LOCAL void gfdr_setDirrecCd(CdcFile* rec, XaDirEnt* dir) {
     CDC_FILE_FAD(rec) = XA_DIR_POS(dir);
     CDC_FILE_SIZE(rec) = XA_DIR_LEN(dir);
     CDC_FILE_FN(rec) = XA_DIR_FN(dir);
@@ -620,7 +625,7 @@ GFS_LOCAL void gfdr_setDirrecCd(CdcFile *rec, XaDirEnt *dir) {
 }
 
 // 0x0601E6C4
-GFS_LOCAL void gfdr_setDirrecMem(CdcFile *rec, Sint32 fid, Sint32 len) {
+GFS_LOCAL void gfdr_setDirrecMem(CdcFile* rec, Sint32 fid, Sint32 len) {
     CDC_FILE_FAD(rec) = fid;
     CDC_FILE_SIZE(rec) = len;
     CDC_FILE_FN(rec) = 0;
@@ -631,7 +636,7 @@ GFS_LOCAL void gfdr_setDirrecMem(CdcFile *rec, Sint32 fid, Sint32 len) {
 }
 
 // 0x0601E700
-GFS_LOCAL void gfdr_setDirrecScsi(CdcFile *rec, Sint32 fid, Sint32 len) {
+GFS_LOCAL void gfdr_setDirrecScsi(CdcFile* rec, Sint32 fid, Sint32 len) {
     CDC_FILE_FAD(rec) = fid;
     CDC_FILE_SIZE(rec) = len;
     CDC_FILE_FN(rec) = 0;
@@ -641,9 +646,9 @@ GFS_LOCAL void gfdr_setDirrecScsi(CdcFile *rec, Sint32 fid, Sint32 len) {
 }
 
 // 0x0601E728
-GFS_LOCAL Bool gfdr_getScsiFinfo(Sint8 *fname, Sint32 *fid, Sint32 *len) {
-    Sint32      i, n_scsi_file;
-    GfsdInfo    info;
+GFS_LOCAL Bool gfdr_getScsiFinfo(Sint8* fname, Sint32* fid, Sint32* len) {
+    Sint32 i, n_scsi_file;
+    GfsdInfo info;
 
     if (MNG_SCSICON(gfs_mng_ptr)) {
         GFSD_GetFileNum(&n_scsi_file);
@@ -660,9 +665,9 @@ GFS_LOCAL Bool gfdr_getScsiFinfo(Sint8 *fname, Sint32 *fid, Sint32 *len) {
 }
 
 // 0x0601E7B8
-GFS_LOCAL Bool gfdr_findScsiFile(GfsDirId *rec, GfsDirId *recend, Sint32 fid) {
+GFS_LOCAL Bool gfdr_findScsiFile(GfsDirId* rec, GfsDirId* recend, Sint32 fid) {
     while (rec < recend) {
-        if ((GFS_DIR_ATR(rec) == GFS_ATR_SCSI_FILE)&&
+        if ((GFS_DIR_ATR(rec) == GFS_ATR_SCSI_FILE) &&
             (GFS_DIR_FAD(rec) == fid)) {
             return TRUE;
         }
@@ -672,8 +677,9 @@ GFS_LOCAL Bool gfdr_findScsiFile(GfsDirId *rec, GfsDirId *recend, Sint32 fid) {
 }
 
 // 0x0601E7E4
-GFS_LOCAL GfsDirName *gfdr_findFile(GfsDirName *rectbl, Sint32 n_dirent, Sint8 *fname) {
-    Sint32      i;
+GFS_LOCAL GfsDirName* gfdr_findFile(
+    GfsDirName* rectbl, Sint32 n_dirent, Sint8* fname) {
+    Sint32 i;
 
     for (i = 0; i < n_dirent; ++i) {
         if (XSTRNCMP(GFS_DIR_FNAME(rectbl), fname, GFS_FNAME_LEN) == 0) {

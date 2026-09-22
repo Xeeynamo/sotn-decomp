@@ -5,43 +5,47 @@
 #include "gfs_cdc.h"
 #include "gfs_def.h"
 
-#define SCDQ_COUNT_SEC  60
+#define SCDQ_COUNT_SEC 60
 #define TMOUT_DRV_COUNT (10 * SCDQ_COUNT_SEC)
 
-#define NOBODY  -1
+#define NOBODY -1
 
-#define CDBLK_SWRST     0x00
-#define SUBCODE_DECODE  0x00
-#define USE_MODE2       0x00
-#define FORM2_RDRETRY   0x00
-#define HIGH_SPEED      0x00
-#define NCHG_INIT_FLAG  0x00
+#define CDBLK_SWRST 0x00
+#define SUBCODE_DECODE 0x00
+#define USE_MODE2 0x00
+#define FORM2_RDRETRY 0x00
+#define HIGH_SPEED 0x00
+#define NCHG_INIT_FLAG 0x00
 
-#define INIT_FLAG       (CDBLK_SWRST|SUBCODE_DECODE|USE_MODE2|FORM2_RDRETRY|\
-                         HIGH_SPEED|NCHG_INIT_FLAG)
+#define INIT_FLAG                                                              \
+    (CDBLK_SWRST | SUBCODE_DECODE | USE_MODE2 | FORM2_RDRETRY | HIGH_SPEED |   \
+     NCHG_INIT_FLAG)
 
-#define DEF_STBYTIM     0x0000
-#define DEF_ECC         0x04
-#define DEF_RETRY       0x0f
+#define DEF_STBYTIM 0x0000
+#define DEF_ECC 0x04
+#define DEF_RETRY 0x0f
 
-#define RESET_FLG       0xfc
+#define RESET_FLG 0xfc
 
-#define MAX_CMD_PER_EXEC        30
+#define MAX_CMD_PER_EXEC 30
 
-#define FLTCON_BUF_SET  1
-#define FLTCON_FLN_SET  2
+#define FLTCON_BUF_SET 1
+#define FLTCON_FLN_SET 2
 
-#define TRREG_UNUSED    (-1)
+#define TRREG_UNUSED (-1)
 
-#define SCDQ_TMOUT_COUNT        (12186*2)
+#define SCDQ_TMOUT_COUNT (12186 * 2)
 
-#define PAUSE_TMOUT_COUNT   433333
+#define PAUSE_TMOUT_COUNT 433333
 
-enum CdbResStat {UNUSED, INUSE};
+enum CdbResStat { UNUSED, INUSE };
 
 enum TaskStatus {
     GFCD_TSK_READY,
-    GFCD_TSK_STAT1, GFCD_TSK_STAT2, GFCD_TSK_STAT3, GFCD_TSK_STAT4,
+    GFCD_TSK_STAT1,
+    GFCD_TSK_STAT2,
+    GFCD_TSK_STAT3,
+    GFCD_TSK_STAT4,
     GFCD_TSK_STAT5
 };
 
@@ -55,95 +59,95 @@ enum TskId {
     TSK_ID_FLTCON,
     TSK_ID_CHGDIR,
     TSK_ID_END
-    };
+};
 
-#define GFS_WORD_BYTE(word)         ((word) * 2)
+#define GFS_WORD_BYTE(word) ((word) * 2)
 
-#define IS_ROM(toc)     ((toc) & 0x40000000)
+#define IS_ROM(toc) ((toc) & 0x40000000)
 
-#define CDBMNG_USEBUF(mng, i)   ((mng)->use_buf[i])
-#define CDBMNG_USEFILT(mng, i)  ((mng)->use_filt[i])
-#define CDBMNG_USEPU(mng)       ((mng)->use_pu)
-#define CDBMNG_TRBUFNO(mng)     ((mng)->tr_bufno)
-#define CDBMNG_PUID(mng)        ((mng)->puid)
-#define CDBMNG_STAT(mng)        ((mng)->stat)
-#define CDBMNG_TIMER(mng)       ((mng)->timer)
-#define CDBMNG_FUNC(mng)        ((mng)->func)
-#define CDBMNG_OBJ(mng)         ((mng)->obj)
+#define CDBMNG_USEBUF(mng, i) ((mng)->use_buf[i])
+#define CDBMNG_USEFILT(mng, i) ((mng)->use_filt[i])
+#define CDBMNG_USEPU(mng) ((mng)->use_pu)
+#define CDBMNG_TRBUFNO(mng) ((mng)->tr_bufno)
+#define CDBMNG_PUID(mng) ((mng)->puid)
+#define CDBMNG_STAT(mng) ((mng)->stat)
+#define CDBMNG_TIMER(mng) ((mng)->timer)
+#define CDBMNG_FUNC(mng) ((mng)->func)
+#define CDBMNG_OBJ(mng) ((mng)->obj)
 
-#define TSK_SETFLT_LEN(mng)     ((mng)->tsk_setflt.len)
-#define TSK_SETFLT_STAT(mng)    ((mng)->tsk_setflt.stat)
+#define TSK_SETFLT_LEN(mng) ((mng)->tsk_setflt.len)
+#define TSK_SETFLT_STAT(mng) ((mng)->tsk_setflt.stat)
 #define TSK_SETFLT_QELT(mng, i) ((mng)->tsk_setflt.selq[i])
-#define TSK_SETFLT_FLT(mng, i)  (TSK_SETFLT_QELT(mng, i).flt)
-#define TSK_SETFLT_FMODE(mng, i)        (TSK_SETFLT_QELT(mng, i).fmode)
+#define TSK_SETFLT_FLT(mng, i) (TSK_SETFLT_QELT(mng, i).flt)
+#define TSK_SETFLT_FMODE(mng, i) (TSK_SETFLT_QELT(mng, i).fmode)
 #define TSK_SETFLT_SUBH(mng, i) (TSK_SETFLT_QELT(mng, i).subh)
-#define TSK_SETFLT_FAD(mng, i)  (TSK_SETFLT_QELT(mng, i).fad)
+#define TSK_SETFLT_FAD(mng, i) (TSK_SETFLT_QELT(mng, i).fad)
 #define TSK_SETFLT_SNUM(mng, i) (TSK_SETFLT_QELT(mng, i).snum)
 
-#define TSK_SETCON_STAT(mng)    ((mng)->tsk_setcon.stat)
-#define TSK_SETCON_FLT(mng)     ((mng)->tsk_setcon.flt)
+#define TSK_SETCON_STAT(mng) ((mng)->tsk_setcon.stat)
+#define TSK_SETCON_FLT(mng) ((mng)->tsk_setcon.flt)
 
-#define TSK_GETLEN_STAT(mng)    ((mng)->tsk_getlen.stat)
-#define TSK_GETLEN_BUFNO(mng)   ((mng)->tsk_getlen.bufno)
-#define TSK_GETLEN_SPOS(mng)    ((mng)->tsk_getlen.spos)
-#define TSK_GETLEN_USCT(mng)    ((mng)->tsk_getlen.usct)
-#define TSK_GETLEN_CNT(mng)     ((mng)->tsk_getlen.cnt)
-#define TSK_GETLEN_NSCT(mng)    ((mng)->tsk_getlen.nsct)
-#define TSK_GETLEN_NBYTE(mng)   ((mng)->tsk_getlen.nbyte)
+#define TSK_GETLEN_STAT(mng) ((mng)->tsk_getlen.stat)
+#define TSK_GETLEN_BUFNO(mng) ((mng)->tsk_getlen.bufno)
+#define TSK_GETLEN_SPOS(mng) ((mng)->tsk_getlen.spos)
+#define TSK_GETLEN_USCT(mng) ((mng)->tsk_getlen.usct)
+#define TSK_GETLEN_CNT(mng) ((mng)->tsk_getlen.cnt)
+#define TSK_GETLEN_NSCT(mng) ((mng)->tsk_getlen.nsct)
+#define TSK_GETLEN_NBYTE(mng) ((mng)->tsk_getlen.nbyte)
 
-#define TSK_REQDAT_STAT(mng)    ((mng)->tsk_reqdat.stat)
-#define TSK_REQDAT_BUFNO(mng)   ((mng)->tsk_reqdat.bufno)
-#define TSK_REQDAT_SCTPOS(mng)  ((mng)->tsk_reqdat.sctpos)
-#define TSK_REQDAT_NSCT(mng)    ((mng)->tsk_reqdat.nsct)
+#define TSK_REQDAT_STAT(mng) ((mng)->tsk_reqdat.stat)
+#define TSK_REQDAT_BUFNO(mng) ((mng)->tsk_reqdat.bufno)
+#define TSK_REQDAT_SCTPOS(mng) ((mng)->tsk_reqdat.sctpos)
+#define TSK_REQDAT_NSCT(mng) ((mng)->tsk_reqdat.nsct)
 
-#define TSK_DELSCT_STAT(mng)    ((mng)->tsk_delsct.stat)
-#define TSK_DELSCT_BUFNO(mng)   ((mng)->tsk_delsct.bufno)
-#define TSK_DELSCT_SCTPOS(mng)  ((mng)->tsk_delsct.sctpos)
-#define TSK_DELSCT_NSCT(mng)    ((mng)->tsk_delsct.nsct)
+#define TSK_DELSCT_STAT(mng) ((mng)->tsk_delsct.stat)
+#define TSK_DELSCT_BUFNO(mng) ((mng)->tsk_delsct.bufno)
+#define TSK_DELSCT_SCTPOS(mng) ((mng)->tsk_delsct.sctpos)
+#define TSK_DELSCT_NSCT(mng) ((mng)->tsk_delsct.nsct)
 
-#define TSK_MOVSCT_STAT(mng)    ((mng)->tsk_movsct.stat)
-#define TSK_MOVSCT_DST(mng)     ((mng)->tsk_movsct.dst)
-#define TSK_MOVSCT_SRC(mng)     ((mng)->tsk_movsct.src)
-#define TSK_MOVSCT_SPOS(mng)    ((mng)->tsk_movsct.spos)
-#define TSK_MOVSCT_SNUM(mng)    ((mng)->tsk_movsct.snum)
-#define TSK_MOVSCT_FMODE(mng)   ((mng)->tsk_movsct.fmode)
+#define TSK_MOVSCT_STAT(mng) ((mng)->tsk_movsct.stat)
+#define TSK_MOVSCT_DST(mng) ((mng)->tsk_movsct.dst)
+#define TSK_MOVSCT_SRC(mng) ((mng)->tsk_movsct.src)
+#define TSK_MOVSCT_SPOS(mng) ((mng)->tsk_movsct.spos)
+#define TSK_MOVSCT_SNUM(mng) ((mng)->tsk_movsct.snum)
+#define TSK_MOVSCT_FMODE(mng) ((mng)->tsk_movsct.fmode)
 
-#define TSK_CHGDIR_STAT(mng)    ((mng)->tsk_chgdir.stat)
-#define TSK_CHGDIR_FID(mng)     ((mng)->tsk_chgdir.fid)
-#define TSK_CHGDIR_WORK(mng)    ((mng)->tsk_chgdir.work)
-#define TSK_CHGDIR_NDIR(mng)    ((mng)->tsk_chgdir.ndir)
+#define TSK_CHGDIR_STAT(mng) ((mng)->tsk_chgdir.stat)
+#define TSK_CHGDIR_FID(mng) ((mng)->tsk_chgdir.fid)
+#define TSK_CHGDIR_WORK(mng) ((mng)->tsk_chgdir.work)
+#define TSK_CHGDIR_NDIR(mng) ((mng)->tsk_chgdir.ndir)
 
-#define TSK_FLTCON_LEN(mng)     ((mng)->tsk_fltcon.len)
-#define TSK_FLTCON_STAT(mng)    ((mng)->tsk_fltcon.stat)
+#define TSK_FLTCON_LEN(mng) ((mng)->tsk_fltcon.len)
+#define TSK_FLTCON_STAT(mng) ((mng)->tsk_fltcon.stat)
 #define TSK_FLTCON_QELT(mng, i) ((mng)->tsk_fltcon.fconq[i])
-#define TSK_FLTCON_FLT(mng, i)          (TSK_FLTCON_QELT(mng, i).flt)
-#define TSK_FLTCON_BUF(mng, i)          (TSK_FLTCON_QELT(mng, i).buf)
-#define TSK_FLTCON_FLNOUT(mng, i)       (TSK_FLTCON_QELT(mng, i).flnout)
+#define TSK_FLTCON_FLT(mng, i) (TSK_FLTCON_QELT(mng, i).flt)
+#define TSK_FLTCON_BUF(mng, i) (TSK_FLTCON_QELT(mng, i).buf)
+#define TSK_FLTCON_FLNOUT(mng, i) (TSK_FLTCON_QELT(mng, i).flnout)
 
 typedef union {
     Uint8 nses[4];
     Uint32 xfad;
 } GfcdSes;
 
-#define GFCD_SES_NSES(ses)      ((ses)->nses[0])
-#define GFCD_SES_SFAD(ses)      ((ses)->xfad & 0x00ffffff)
+#define GFCD_SES_NSES(ses) ((ses)->nses[0])
+#define GFCD_SES_SFAD(ses) ((ses)->xfad & 0x00ffffff)
 
 GFS_LOCAL Bool gfcd_isIdleTask(Sint32 tsk);
-GFS_LOCAL Sint32 gfcd_doTask(Sint32 tsk, Sint32 *ncmd);
-GFS_LOCAL Sint32 gfcd_doSetFiltTsk(Sint32 *ncmd);
-GFS_LOCAL Sint32 gfcd_doSetConTsk(Sint32 *ncmd);
-GFS_LOCAL Sint32 gfcd_doGetLenDataTsk(Sint32 *ncmd);
-GFS_LOCAL Sint32 gfcd_doReqDataTsk(Sint32 *ncmd);
-GFS_LOCAL Sint32 gfcd_doDelSctDataTsk(Sint32 *ncmd);
-GFS_LOCAL Sint32 gfcd_doMoveSctTsk(Sint32 *ncmd);
-GFS_LOCAL Sint32 gfcd_doChgDirTsk(Sint32 *ncmd);
-GFS_LOCAL Sint32 gfcd_doSetFiltConTsk(Sint32 *ncmd);
+GFS_LOCAL Sint32 gfcd_doTask(Sint32 tsk, Sint32* ncmd);
+GFS_LOCAL Sint32 gfcd_doSetFiltTsk(Sint32* ncmd);
+GFS_LOCAL Sint32 gfcd_doSetConTsk(Sint32* ncmd);
+GFS_LOCAL Sint32 gfcd_doGetLenDataTsk(Sint32* ncmd);
+GFS_LOCAL Sint32 gfcd_doReqDataTsk(Sint32* ncmd);
+GFS_LOCAL Sint32 gfcd_doDelSctDataTsk(Sint32* ncmd);
+GFS_LOCAL Sint32 gfcd_doMoveSctTsk(Sint32* ncmd);
+GFS_LOCAL Sint32 gfcd_doChgDirTsk(Sint32* ncmd);
+GFS_LOCAL Sint32 gfcd_doSetFiltConTsk(Sint32* ncmd);
 GFS_LOCAL Bool gfcd_checkEflag(Sint32 mask);
 GFS_LOCAL void gfcd_initCdbMng(void);
 GFS_LOCAL void gfcd_setStat(void);
 
-extern GfsCdbMng   *gfcd_work;
-extern Sint32      gfcd_playflag;
+extern GfsCdbMng* gfcd_work;
+extern Sint32 gfcd_playflag;
 
 // 0x0601F974
 void GFCD_SetCdbfs(Bool use_cdbfs) {
@@ -157,10 +161,10 @@ void GFCD_SetCdbfs(Bool use_cdbfs) {
 }
 
 // 0x0601F9A0
-Sint32 GFCD_Init(GfsCdbMng *work, Bool use_cdbfs) {
+Sint32 GFCD_Init(GfsCdbMng* work, Bool use_cdbfs) {
     Sint32 tm_count;
     Bool ok_flag;
-    Uint32 *toc_tbl;
+    Uint32* toc_tbl;
     Sint32 ret;
     CdcStat stat;
     GfcdSes ses;
@@ -185,12 +189,12 @@ Sint32 GFCD_Init(GfsCdbMng *work, Bool use_cdbfs) {
         return GFCD_ERR_NOCDBLK;
     }
 
-    for (tm_count = 0; ;tm_count++) {
+    for (tm_count = 0;; tm_count++) {
         ret = CDC_SetSctLen(CDC_SLEN_2048, CDC_SLEN_NOCHG);
         if (ret == CDC_ERR_OK) {
             break;
         }
-        if ((ret != CDC_ERR_CMDBUSY)||(tm_count > GFCD_TMOUT_COUNT)) {
+        if ((ret != CDC_ERR_CMDBUSY) || (tm_count > GFCD_TMOUT_COUNT)) {
             return GFCD_ERR_NOCDBLK;
         }
     }
@@ -202,8 +206,8 @@ Sint32 GFCD_Init(GfsCdbMng *work, Bool use_cdbfs) {
     }
     CDBMNG_TIMER(gfcd_work) = GFCD_NO_TMOUT;
 
-    CDC_ClrHirqReq(~(CDC_HIRQ_PEND|CDC_HIRQ_BFUL));
-    
+    CDC_ClrHirqReq(~(CDC_HIRQ_PEND | CDC_HIRQ_BFUL));
+
     tm_count = 0;
     ok_flag = FALSE;
     while (ok_flag == FALSE) {
@@ -230,13 +234,13 @@ Sint32 GFCD_Init(GfsCdbMng *work, Bool use_cdbfs) {
     }
     CDC_DataEnd(&ret);
 
-    toc_tbl = (Uint32 *)MNG_SECTBUF(gfs_mng_ptr);
+    toc_tbl = (Uint32*)MNG_SECTBUF(gfs_mng_ptr);
     ret = CDC_TgetToc(toc_tbl);
     if (ret != CDC_ERR_OK) {
         return GFCD_ERR_NOCDBLK;
     }
-    CDC_GetSes(0, (Uint32 *)&ses);
-    CDC_GetSes(GFCD_SES_NSES(&ses), (Uint32 *)&ses);
+    CDC_GetSes(0, (Uint32*)&ses);
+    CDC_GetSes(GFCD_SES_NSES(&ses), (Uint32*)&ses);
     if (IS_ROM(toc_tbl[GFCD_SES_NSES(&ses) - 1]) == FALSE) {
         return GFCD_ERR_CDROM;
     }
@@ -253,7 +257,7 @@ Sint32 GFCD_Init(GfsCdbMng *work, Bool use_cdbfs) {
 }
 
 // 0x0601FB98
-Sint32 GFCD_AllocFilt(Sint32 *flt_no) {
+Sint32 GFCD_AllocFilt(Sint32* flt_no) {
     Sint32 i;
 
     for (i = 0; i < GFS_CDBBUF_NR; ++i) {
@@ -269,7 +273,7 @@ Sint32 GFCD_AllocFilt(Sint32 *flt_no) {
 
 // 0x0601FBD0
 Sint32 GFCD_FreeFilt(Sint32 flt_no) {
-    if ((flt_no < 0)||(GFS_CDBBUF_NR <= flt_no)) {
+    if ((flt_no < 0) || (GFS_CDBBUF_NR <= flt_no)) {
         return GFCD_ERR_RANGE;
     }
     if (CDBMNG_USEFILT(gfcd_work, flt_no) != INUSE) {
@@ -280,7 +284,7 @@ Sint32 GFCD_FreeFilt(Sint32 flt_no) {
 }
 
 // 0x0601FC00
-Sint32 GFCD_AllocBuf(Sint32 *buf_no) {
+Sint32 GFCD_AllocBuf(Sint32* buf_no) {
     Sint32 i;
 
     for (i = 0; i < GFS_CDBBUF_NR; ++i) {
@@ -301,7 +305,7 @@ Sint32 GFCD_FreeBuf(Sint32 buf_no) {
     if (gfcd_fatal_err == GFCD_ERR_FATAL) {
         gfcd_fatal_err = GFCD_ERR_OK;
     }
-    if ((buf_no < 0)||(GFS_CDBBUF_NR <= buf_no)) {
+    if ((buf_no < 0) || (GFS_CDBBUF_NR <= buf_no)) {
         return GFCD_ERR_RANGE;
     }
     if (CDBMNG_USEBUF(gfcd_work, buf_no) != INUSE) {
@@ -329,8 +333,8 @@ Sint32 GFCD_FreeBuf(Sint32 buf_no) {
 Sint32 GFCD_GetBaseFad(void) {
     GfcdSes ses;
 
-    CDC_GetSes(0, (Uint32 *)&ses);
-    CDC_GetSes(GFCD_SES_NSES(&ses), (Uint32 *)&ses);
+    CDC_GetSes(0, (Uint32*)&ses);
+    CDC_GetSes(GFCD_SES_NSES(&ses), (Uint32*)&ses);
     return GFCD_SES_SFAD(&ses);
 }
 
@@ -364,11 +368,12 @@ Sint32 GFCD_IsPuOwner(Sint32 puid) {
     if (CDBMNG_USEPU(gfcd_work) == UNUSED) {
         return FALSE;
     }
-    return (CDBMNG_PUID(gfcd_work) == puid)? TRUE: FALSE;
+    return (CDBMNG_PUID(gfcd_work) == puid) ? TRUE : FALSE;
 }
 
 // 0x0601FD8C
-Sint32 GFCD_SetFilt(Sint32 flt, Sint32 fmode, CdcSubh *subh, Sint32 fad, Sint32 snum) {
+Sint32 GFCD_SetFilt(
+    Sint32 flt, Sint32 fmode, CdcSubh* subh, Sint32 fad, Sint32 snum) {
     Sint32 ncmd;
     Sint32 len = TSK_SETFLT_LEN(gfcd_work);
 
@@ -392,7 +397,7 @@ Sint32 GFCD_SetFilt(Sint32 flt, Sint32 fmode, CdcSubh *subh, Sint32 fad, Sint32 
 }
 
 // 0x0601FE4C
-Sint32 GFCD_GetFilt(Sint32 flt, Sint32 *fmode, CdcSubh *subh) {
+Sint32 GFCD_GetFilt(Sint32 flt, Sint32* fmode, CdcSubh* subh) {
     Sint32 ret;
 
     ret = CDC_GetFiltMode(flt, fmode);
@@ -410,8 +415,8 @@ Sint32 GFCD_GetFilt(Sint32 flt, Sint32 *fmode, CdcSubh *subh) {
 // 0x0601FE94
 Sint32 GFCD_SetCon(Sint32 flt, Sint32 puid) {
     Sint32 ncmd;
-    
-    if ((flt != CDC_NUL_SEL)&&(CDBMNG_USEFILT(gfcd_work, flt) != INUSE)) {
+
+    if ((flt != CDC_NUL_SEL) && (CDBMNG_USEFILT(gfcd_work, flt) != INUSE)) {
         return GFCD_ERR_UNUSE;
     }
     if (CDBMNG_PUID(gfcd_work) != puid) {
@@ -424,8 +429,8 @@ Sint32 GFCD_SetCon(Sint32 flt, Sint32 puid) {
 }
 
 // 0x0601FEEC
-Sint32 GFCD_Play(CdcPly *pinfo, Sint32 puid) {
-    CdcStat     stat;
+Sint32 GFCD_Play(CdcPly* pinfo, Sint32 puid) {
+    CdcStat stat;
 
     if (CDBMNG_PUID(gfcd_work) != puid) {
         return GFCD_ERR_NOTOWNER;
@@ -435,16 +440,17 @@ Sint32 GFCD_Play(CdcPly *pinfo, Sint32 puid) {
         return gfcd_fatal_err;
     }
 
-    CDC_ClrHirqReq(~(CDC_HIRQ_PEND|CDC_HIRQ_CSCT));
+    CDC_ClrHirqReq(~(CDC_HIRQ_PEND | CDC_HIRQ_CSCT));
     CDC_CdPlay(pinfo);
     gfcd_playflag = TRUE;
     return GFCD_ERR_OK;
 }
 
 // 0x0601FF4C
-Sint32 GFCD_GetLenData(Sint32 bufno, Sint32 spos, Sint32 usct, Sint32 *nsct, Sint32 *nbyte) {
+Sint32 GFCD_GetLenData(
+    Sint32 bufno, Sint32 spos, Sint32 usct, Sint32* nsct, Sint32* nbyte) {
     Sint32 ncmd;
-    
+
     if (TSK_GETLEN_STAT(gfcd_work) != GFCD_TSK_READY) {
         return GFCD_ERR_WAIT;
     }
@@ -462,7 +468,7 @@ Sint32 GFCD_GetLenData(Sint32 bufno, Sint32 spos, Sint32 usct, Sint32 *nsct, Sin
 // 0x0601FFB0
 Sint32 GFCD_ReqData(Sint32 bufno, Sint32 sctpos, Sint32 nsct) {
     Sint32 ncmd;
-    
+
     if (TSK_REQDAT_STAT(gfcd_work) != GFCD_TSK_READY) {
         return GFCD_ERR_WAIT;
     }
@@ -479,7 +485,7 @@ Sint32 GFCD_ReqData(Sint32 bufno, Sint32 sctpos, Sint32 nsct) {
 }
 
 // 0x0602000C
-Sint32 GFCD_EndData(Sint32 *nsct) {
+Sint32 GFCD_EndData(Sint32* nsct) {
     Sint32 ret;
 
     if (CDBMNG_TRBUFNO(gfcd_work) == TRREG_UNUSED) {
@@ -497,7 +503,7 @@ Sint32 GFCD_EndData(Sint32 *nsct) {
 // 0x06020054
 Sint32 GFCD_DelSctData(Sint32 bufno, Sint32 sctpos, Sint32 nsct) {
     Sint32 ncmd;
-    
+
     if (TSK_DELSCT_STAT(gfcd_work) != GFCD_TSK_READY) {
         return GFCD_ERR_WAIT;
     }
@@ -514,7 +520,7 @@ Sint32 GFCD_DelSctData(Sint32 bufno, Sint32 sctpos, Sint32 nsct) {
 
 // 0x060200A8
 Bool GFCD_CheckDelSctData(Sint32 bufno) {
-    if ((TSK_DELSCT_STAT(gfcd_work) != GFCD_TSK_READY)&&
+    if ((TSK_DELSCT_STAT(gfcd_work) != GFCD_TSK_READY) &&
         (TSK_DELSCT_BUFNO(gfcd_work) == bufno)) {
         return FALSE;
     }
@@ -522,10 +528,10 @@ Bool GFCD_CheckDelSctData(Sint32 bufno) {
 }
 
 // 0x060200D4
-Sint32 GFCD_GetStat(CdcStat *stat) {
-    Sint32      ret;
-    Sint32      hirq;
-    CdcPos      pos;
+Sint32 GFCD_GetStat(CdcStat* stat) {
+    Sint32 ret;
+    Sint32 hirq;
+    CdcPos pos;
 
     if (gfcd_playflag == TRUE) {
         ret = CDC_ERR_PERI;
@@ -542,13 +548,13 @@ Sint32 GFCD_GetStat(CdcStat *stat) {
         gfcd_fatal_err = GFCD_ERR_OPEN;
     } else {
         switch (CDC_GET_STC(stat)) {
-        case    CDC_ST_OPEN:
-            gfcd_fatal_err = GFCD_ERR_OPEN; 
+        case CDC_ST_OPEN:
+            gfcd_fatal_err = GFCD_ERR_OPEN;
             break;
-        case    CDC_ST_NODISC:
+        case CDC_ST_NODISC:
             gfcd_fatal_err = GFCD_ERR_NODISC;
             break;
-        case    CDC_ST_FATAL:
+        case CDC_ST_FATAL:
             gfcd_fatal_err = GFCD_ERR_FATAL;
             CDC_POS_PTYPE(&pos) = CDC_PTYPE_DFL;
             CDC_CdSeek(&pos);
@@ -563,8 +569,8 @@ Sint32 GFCD_GetStat(CdcStat *stat) {
 }
 
 // 0x06020188
-Sint32 GFCD_MovePickup(CdcPos *pos, Sint32 puid) {
-    CdcStat     stat;
+Sint32 GFCD_MovePickup(CdcPos* pos, Sint32 puid) {
+    CdcStat stat;
 
     if (CDBMNG_PUID(gfcd_work) != puid) {
         return GFCD_ERR_NOTOWNER;
@@ -580,8 +586,8 @@ Sint32 GFCD_MovePickup(CdcPos *pos, Sint32 puid) {
 // 0x060201D4
 Sint32 GFCD_MoveSctData(Sint32 dst, Sint32 src, Sint32 spos, Sint32 snum) {
     Sint32 ncmd;
-    
-    if ((CDBMNG_USEFILT(gfcd_work, dst) == UNUSED)||
+
+    if ((CDBMNG_USEFILT(gfcd_work, dst) == UNUSED) ||
         (CDBMNG_USEFILT(gfcd_work, src) == UNUSED)) {
         return GFCD_ERR_UNUSE;
     }
@@ -606,10 +612,10 @@ Bool GFCD_CheckMove(void) {
 }
 
 // 0x06020264
-Sint32 GFCD_GetSctInfo(Sint32 bufno, Sint32 sn, CdcSct *info) {
+Sint32 GFCD_GetSctInfo(Sint32 bufno, Sint32 sn, CdcSct* info) {
     Sint32 ret;
 
-    if ((bufno < 0)||(GFS_CDBBUF_NR <= bufno)) {
+    if ((bufno < 0) || (GFS_CDBBUF_NR <= bufno)) {
         return GFCD_ERR_RANGE;
     }
     if (CDBMNG_USEBUF(gfcd_work, bufno) == UNUSED) {
@@ -624,10 +630,10 @@ Sint32 GFCD_GetSctInfo(Sint32 bufno, Sint32 sn, CdcSct *info) {
 }
 
 // 0x060202AC
-Sint32 GFCD_ChgDir(Sint32 fid, Sint32 work, Sint32 *ndir) {
+Sint32 GFCD_ChgDir(Sint32 fid, Sint32 work, Sint32* ndir) {
     Sint32 ncmd;
-    
-    if ((CDBMNG_USEFILT(gfcd_work, work) != INUSE)||
+
+    if ((CDBMNG_USEFILT(gfcd_work, work) != INUSE) ||
         (CDBMNG_USEBUF(gfcd_work, work) != INUSE)) {
         return GFCD_ERR_INUSE;
     }
@@ -651,17 +657,17 @@ Sint32 GFCD_SetFiltCon(Sint32 flt, Sint32 buf, Sint32 flnout) {
     Sint32 ncmd;
     Sint32 len = TSK_FLTCON_LEN(gfcd_work);
 
-    if (((flt != CDC_NUL_SEL)&&(flt != GFCD_ANY_FLT)&&
-         ((flt < 0)||(GFS_CDBBUF_NR <= flt)))||
-        ((buf < 0)||(GFS_CDBBUF_NR <= buf))||
-        ((flnout != CDC_NUL_SEL)&&(flnout != GFCD_ANY_FLT)&&
-         ((flnout < 0)||(GFS_CDBBUF_NR <= flnout)))) {
+    if (((flt != CDC_NUL_SEL) && (flt != GFCD_ANY_FLT) &&
+         ((flt < 0) || (GFS_CDBBUF_NR <= flt))) ||
+        ((buf < 0) || (GFS_CDBBUF_NR <= buf)) ||
+        ((flnout != CDC_NUL_SEL) && (flnout != GFCD_ANY_FLT) &&
+         ((flnout < 0) || (GFS_CDBBUF_NR <= flnout)))) {
         return GFCD_ERR_RANGE;
     }
-    if (((flt != CDC_NUL_SEL)&&(flt != GFCD_ANY_FLT)&&
-         (CDBMNG_USEFILT(gfcd_work, flt) != INUSE))||
-        ((flnout != CDC_NUL_SEL)&&(flnout != GFCD_ANY_FLT)&&
-         (CDBMNG_USEFILT(gfcd_work, flnout) != INUSE))||
+    if (((flt != CDC_NUL_SEL) && (flt != GFCD_ANY_FLT) &&
+         (CDBMNG_USEFILT(gfcd_work, flt) != INUSE)) ||
+        ((flnout != CDC_NUL_SEL) && (flnout != GFCD_ANY_FLT) &&
+         (CDBMNG_USEFILT(gfcd_work, flnout) != INUSE)) ||
         (CDBMNG_USEBUF(gfcd_work, buf) != INUSE)) {
         return GFCD_ERR_UNUSE;
     }
@@ -680,7 +686,7 @@ Sint32 GFCD_SetFiltCon(Sint32 flt, Sint32 buf, Sint32 flnout) {
 }
 
 // 0x06020420
-Sint32 GFCD_GetFileInfo(Sint32 fid, CdcFile *finfo) {
+Sint32 GFCD_GetFileInfo(Sint32 fid, CdcFile* finfo) {
     Sint32 ret;
     Sint32 base_fid, infnum;
     Bool drend;
@@ -689,7 +695,7 @@ Sint32 GFCD_GetFileInfo(Sint32 fid, CdcFile *finfo) {
     if (ret != CDC_ERR_OK) {
         return GFCD_ERR_CDBFS;
     }
-    if ((fid < base_fid)||((base_fid + infnum) <= fid)) {
+    if ((fid < base_fid) || ((base_fid + infnum) <= fid)) {
         ret = CDC_ReadDir(GFCD_SYS_SEL, fid);
         if (ret != CDC_ERR_OK) {
             return GFCD_ERR_CDBFS;
@@ -697,8 +703,8 @@ Sint32 GFCD_GetFileInfo(Sint32 fid, CdcFile *finfo) {
         while (gfcd_checkEflag(CDC_HIRQ_EFLS) == FALSE) {
         }
         ret = CDC_GetFileScope(&base_fid, &infnum, &drend);
-        if ((ret != CDC_ERR_OK)||
-            ((fid < base_fid)&&(base_fid + infnum <= fid))) {
+        if ((ret != CDC_ERR_OK) ||
+            ((fid < base_fid) && (base_fid + infnum <= fid))) {
             return GFCD_ERR_CDBFS;
         }
     }
@@ -709,7 +715,7 @@ Sint32 GFCD_GetFileInfo(Sint32 fid, CdcFile *finfo) {
     if ((CDC_FILE_ATR(finfo) & CDC_ATR_DIRFG) != 0) {
         CDC_FILE_ATR(finfo) |= CDC_ATR_DIRXA;
     }
-    if ((drend)&&((base_fid + infnum - 1) == fid)) {
+    if ((drend) && ((base_fid + infnum - 1) == fid)) {
         CDC_FILE_ATR(finfo) |= GFS_ATR_END_TBL;
     }
     gfcd_setStat();
@@ -718,8 +724,8 @@ Sint32 GFCD_GetFileInfo(Sint32 fid, CdcFile *finfo) {
 
 // 0x060204F8
 Sint32 GFCD_GetBufSiz(void) {
-    Sint32      ret;
-    Sint32      bufsiz, partsiz, freesiz;
+    Sint32 ret;
+    Sint32 bufsiz, partsiz, freesiz;
 
     ret = CDC_GetBufSiz(&bufsiz, &partsiz, &freesiz);
     if (ret != CDC_ERR_OK) {
@@ -765,7 +771,7 @@ Sint32 GFCD_ExecServer(void) {
             return GFCD_SVR_BUSY;
         }
     }
-    return (ntsk > 0)? GFCD_SVR_BUSY: GFCD_SVR_COMPLETED;
+    return (ntsk > 0) ? GFCD_SVR_BUSY : GFCD_SVR_COMPLETED;
 }
 
 // 0x0602060C
@@ -798,11 +804,11 @@ GFS_LOCAL Bool gfcd_isIdleTask(Sint32 tsk) {
         stat = TSK_CHGDIR_STAT(gfcd_work);
         break;
     }
-    return (stat == GFCD_TSK_READY)? TRUE: FALSE;
+    return (stat == GFCD_TSK_READY) ? TRUE : FALSE;
 }
 
 // 0x06020698
-GFS_LOCAL Sint32 gfcd_doTask(Sint32 tsk, Sint32 *ncmd) {
+GFS_LOCAL Sint32 gfcd_doTask(Sint32 tsk, Sint32* ncmd) {
     switch (tsk) {
     case TSK_ID_SETFLT:
         return gfcd_doSetFiltTsk(ncmd);
@@ -845,14 +851,14 @@ Sint32 GFCD_WaitServer(void) {
 }
 
 // 0x06020794
-GFS_LOCAL Sint32 gfcd_doSetFiltTsk(Sint32 *ncmd) {
+GFS_LOCAL Sint32 gfcd_doSetFiltTsk(Sint32* ncmd) {
     Sint32 i, j;
     Sint32 ret;
 
     for (i = 0; i < TSK_SETFLT_LEN(gfcd_work); ++i) {
         if (TSK_SETFLT_STAT(gfcd_work) == GFCD_TSK_STAT1) {
-            ret = CDC_SetFiltMode(TSK_SETFLT_FLT(gfcd_work, i),
-                                  TSK_SETFLT_FMODE(gfcd_work, i));
+            ret = CDC_SetFiltMode(
+                TSK_SETFLT_FLT(gfcd_work, i), TSK_SETFLT_FMODE(gfcd_work, i));
             if (ret != CDC_ERR_OK) {
                 break;
             }
@@ -861,8 +867,8 @@ GFS_LOCAL Sint32 gfcd_doSetFiltTsk(Sint32 *ncmd) {
             TSK_SETFLT_STAT(gfcd_work) = GFCD_TSK_STAT2;
         }
         if (TSK_SETFLT_STAT(gfcd_work) == GFCD_TSK_STAT2) {
-            ret = CDC_SetFiltSubh(TSK_SETFLT_FLT(gfcd_work, i),
-                                  &TSK_SETFLT_SUBH(gfcd_work, i));
+            ret = CDC_SetFiltSubh(
+                TSK_SETFLT_FLT(gfcd_work, i), &TSK_SETFLT_SUBH(gfcd_work, i));
             if (ret != CDC_ERR_OK) {
                 break;
             }
@@ -875,9 +881,9 @@ GFS_LOCAL Sint32 gfcd_doSetFiltTsk(Sint32 *ncmd) {
             }
         }
         if (TSK_SETFLT_STAT(gfcd_work) == GFCD_TSK_STAT3) {
-            ret = CDC_SetFiltRange(TSK_SETFLT_FLT(gfcd_work, i),
-                                   TSK_SETFLT_FAD(gfcd_work, i),
-                                   TSK_SETFLT_SNUM(gfcd_work, i));
+            ret = CDC_SetFiltRange(
+                TSK_SETFLT_FLT(gfcd_work, i), TSK_SETFLT_FAD(gfcd_work, i),
+                TSK_SETFLT_SNUM(gfcd_work, i));
             if (ret != CDC_ERR_OK) {
                 break;
             }
@@ -903,7 +909,7 @@ GFS_LOCAL Sint32 gfcd_doSetFiltTsk(Sint32 *ncmd) {
 }
 
 // 0x0602093C
-GFS_LOCAL Sint32 gfcd_doSetConTsk(Sint32 *ncmd) {
+GFS_LOCAL Sint32 gfcd_doSetConTsk(Sint32* ncmd) {
     Sint32 ret;
 
     if (TSK_SETCON_STAT(gfcd_work) == GFCD_TSK_STAT1) {
@@ -923,16 +929,16 @@ GFS_LOCAL Sint32 gfcd_doSetConTsk(Sint32 *ncmd) {
 }
 
 // 0x060209C8
-GFS_LOCAL Sint32 gfcd_doGetLenDataTsk(Sint32 *ncmd) {
-    Sint32      ret;
-    Sint32      actwsiz, nsct;
+GFS_LOCAL Sint32 gfcd_doGetLenDataTsk(Sint32* ncmd) {
+    Sint32 ret;
+    Sint32 actwsiz, nsct;
 
     if (TSK_GETLEN_STAT(gfcd_work) == GFCD_TSK_STAT1) {
         ret = CDC_GetSctNum(TSK_GETLEN_BUFNO(gfcd_work), &nsct);
         gfcd_setStat();
         ++*ncmd;
         nsct -= TSK_GETLEN_SPOS(gfcd_work);
-        nsct =  MIN(nsct, TSK_GETLEN_USCT(gfcd_work));
+        nsct = MIN(nsct, TSK_GETLEN_USCT(gfcd_work));
         *TSK_GETLEN_NSCT(gfcd_work) = nsct;
         if (TSK_GETLEN_NBYTE(gfcd_work) == NULL) {
             TSK_GETLEN_STAT(gfcd_work) = GFCD_TSK_READY;
@@ -945,14 +951,14 @@ GFS_LOCAL Sint32 gfcd_doGetLenDataTsk(Sint32 *ncmd) {
         }
         TSK_GETLEN_STAT(gfcd_work) = GFCD_TSK_STAT2;
     }
-    if (TSK_GETLEN_STAT(gfcd_work) ==  GFCD_TSK_STAT2) {
+    if (TSK_GETLEN_STAT(gfcd_work) == GFCD_TSK_STAT2) {
         if (CDBMNG_TRBUFNO(gfcd_work) != TRREG_UNUSED) {
             return GFCD_TSK_STAT2;
         }
         CDBMNG_TRBUFNO(gfcd_work) = TSK_GETLEN_BUFNO(gfcd_work);
-        ret = CDC_CalActSiz(TSK_GETLEN_BUFNO(gfcd_work),
-                            TSK_GETLEN_SPOS(gfcd_work),
-                            *TSK_GETLEN_NSCT(gfcd_work));
+        ret = CDC_CalActSiz(
+            TSK_GETLEN_BUFNO(gfcd_work), TSK_GETLEN_SPOS(gfcd_work),
+            *TSK_GETLEN_NSCT(gfcd_work));
         if (ret != CDC_ERR_OK) {
             return GFCD_TSK_STAT2;
         }
@@ -968,7 +974,7 @@ GFS_LOCAL Sint32 gfcd_doGetLenDataTsk(Sint32 *ncmd) {
         gfcd_setStat();
         ++*ncmd;
         TSK_GETLEN_STAT(gfcd_work) = GFCD_TSK_READY;
-        *TSK_GETLEN_NBYTE(gfcd_work) =  GFS_WORD_BYTE(actwsiz);
+        *TSK_GETLEN_NBYTE(gfcd_work) = GFS_WORD_BYTE(actwsiz);
         CDBMNG_TRBUFNO(gfcd_work) = TRREG_UNUSED;
         return GFCD_TSK_READY;
     }
@@ -976,13 +982,13 @@ GFS_LOCAL Sint32 gfcd_doGetLenDataTsk(Sint32 *ncmd) {
 }
 
 // 0x06020B18
-GFS_LOCAL Sint32 gfcd_doReqDataTsk(Sint32 *ncmd) {
+GFS_LOCAL Sint32 gfcd_doReqDataTsk(Sint32* ncmd) {
     Sint32 ret;
 
     if (TSK_REQDAT_STAT(gfcd_work) == GFCD_TSK_STAT1) {
-        ret = CDC_GetSctData(TSK_REQDAT_BUFNO(gfcd_work),
-                             TSK_REQDAT_SCTPOS(gfcd_work),
-                             TSK_REQDAT_NSCT(gfcd_work));
+        ret = CDC_GetSctData(
+            TSK_REQDAT_BUFNO(gfcd_work), TSK_REQDAT_SCTPOS(gfcd_work),
+            TSK_REQDAT_NSCT(gfcd_work));
         if (ret != CDC_ERR_OK) {
             return GFCD_TSK_STAT1;
         }
@@ -1001,14 +1007,14 @@ GFS_LOCAL Sint32 gfcd_doReqDataTsk(Sint32 *ncmd) {
 }
 
 // 0x06020BB8
-GFS_LOCAL Sint32 gfcd_doDelSctDataTsk(Sint32 *ncmd) {
+GFS_LOCAL Sint32 gfcd_doDelSctDataTsk(Sint32* ncmd) {
     Sint32 ret;
     Sint32 nsct;
     Bool tsk_stat;
 
     tsk_stat = TRUE;
     if (TSK_DELSCT_STAT(gfcd_work) == GFCD_TSK_STAT1) {
-        if ((TSK_DELSCT_SCTPOS(gfcd_work) == 0)&&
+        if ((TSK_DELSCT_SCTPOS(gfcd_work) == 0) &&
             (TSK_DELSCT_NSCT(gfcd_work) == CDC_SNUM_END)) {
             ret = CDC_ResetSelector(0, TSK_DELSCT_BUFNO(gfcd_work));
             if (ret != CDC_ERR_OK) {
@@ -1026,10 +1032,10 @@ GFS_LOCAL Sint32 gfcd_doDelSctDataTsk(Sint32 *ncmd) {
             }
         }
     }
-    if (TSK_DELSCT_STAT(gfcd_work) ==GFCD_TSK_STAT2) {
-        ret = CDC_DelSctData(TSK_DELSCT_BUFNO(gfcd_work),
-                             TSK_DELSCT_SCTPOS(gfcd_work),
-                             TSK_DELSCT_NSCT(gfcd_work));
+    if (TSK_DELSCT_STAT(gfcd_work) == GFCD_TSK_STAT2) {
+        ret = CDC_DelSctData(
+            TSK_DELSCT_BUFNO(gfcd_work), TSK_DELSCT_SCTPOS(gfcd_work),
+            TSK_DELSCT_NSCT(gfcd_work));
         ++*ncmd;
         if (ret == CDC_ERR_OK) {
             TSK_DELSCT_STAT(gfcd_work) = GFCD_TSK_STAT3;
@@ -1055,12 +1061,12 @@ GFS_LOCAL Sint32 gfcd_doDelSctDataTsk(Sint32 *ncmd) {
 }
 
 // 0x06020CE8
-GFS_LOCAL Sint32 gfcd_doMoveSctTsk(Sint32 *ncmd) {
+GFS_LOCAL Sint32 gfcd_doMoveSctTsk(Sint32* ncmd) {
     Sint32 ret;
 
     if (TSK_MOVSCT_STAT(gfcd_work) == GFCD_TSK_STAT1) {
-        ret = CDC_GetFiltMode(TSK_MOVSCT_DST(gfcd_work),
-                              &TSK_MOVSCT_FMODE(gfcd_work));
+        ret = CDC_GetFiltMode(
+            TSK_MOVSCT_DST(gfcd_work), &TSK_MOVSCT_FMODE(gfcd_work));
         ++*ncmd;
         gfcd_setStat();
         ret = CDC_SetFiltMode(TSK_MOVSCT_DST(gfcd_work), 0);
@@ -1072,10 +1078,9 @@ GFS_LOCAL Sint32 gfcd_doMoveSctTsk(Sint32 *ncmd) {
         TSK_MOVSCT_STAT(gfcd_work) = GFCD_TSK_STAT2;
     }
     if (TSK_MOVSCT_STAT(gfcd_work) == GFCD_TSK_STAT2) {
-        ret = CDC_MoveSctData(TSK_MOVSCT_SRC(gfcd_work),
-                              TSK_MOVSCT_SPOS(gfcd_work),
-                              TSK_MOVSCT_SNUM(gfcd_work),
-                              TSK_MOVSCT_DST(gfcd_work));
+        ret = CDC_MoveSctData(
+            TSK_MOVSCT_SRC(gfcd_work), TSK_MOVSCT_SPOS(gfcd_work),
+            TSK_MOVSCT_SNUM(gfcd_work), TSK_MOVSCT_DST(gfcd_work));
         if (ret != CDC_ERR_OK) {
             return GFCD_TSK_STAT1;
         }
@@ -1089,8 +1094,8 @@ GFS_LOCAL Sint32 gfcd_doMoveSctTsk(Sint32 *ncmd) {
         }
     }
     if (TSK_MOVSCT_STAT(gfcd_work) == GFCD_TSK_STAT4) {
-        ret = CDC_SetFiltMode(TSK_MOVSCT_DST(gfcd_work),
-                              TSK_MOVSCT_FMODE(gfcd_work));
+        ret = CDC_SetFiltMode(
+            TSK_MOVSCT_DST(gfcd_work), TSK_MOVSCT_FMODE(gfcd_work));
         if (ret != CDC_ERR_OK) {
             return GFCD_TSK_STAT1;
         }
@@ -1106,10 +1111,10 @@ GFS_LOCAL Sint32 gfcd_doMoveSctTsk(Sint32 *ncmd) {
 }
 
 // 0x06020E4C
-GFS_LOCAL Sint32 gfcd_doChgDirTsk(Sint32 *ncmd) {
+GFS_LOCAL Sint32 gfcd_doChgDirTsk(Sint32* ncmd) {
     Sint32 base_fid, infnum, ret;
-    Bool        drend;
-    CdcStat     stat;
+    Bool drend;
+    CdcStat stat;
 
     if (TSK_CHGDIR_STAT(gfcd_work) == GFCD_TSK_STAT1) {
         ret = CDC_GetFileScope(&base_fid, &infnum, &drend);
@@ -1119,9 +1124,9 @@ GFS_LOCAL Sint32 gfcd_doChgDirTsk(Sint32 *ncmd) {
             return GFCD_ERR_CDBFS;
         }
         ++*ncmd;
-        if ((TSK_CHGDIR_FID(gfcd_work) == 0)||
-            (TSK_CHGDIR_FID(gfcd_work) == 1)||
-            ((base_fid <= TSK_CHGDIR_FID(gfcd_work))&&
+        if ((TSK_CHGDIR_FID(gfcd_work) == 0) ||
+            (TSK_CHGDIR_FID(gfcd_work) == 1) ||
+            ((base_fid <= TSK_CHGDIR_FID(gfcd_work)) &&
              (TSK_CHGDIR_FID(gfcd_work) < base_fid + infnum))) {
             TSK_CHGDIR_STAT(gfcd_work) = GFCD_TSK_STAT3;
         } else {
@@ -1138,8 +1143,8 @@ GFS_LOCAL Sint32 gfcd_doChgDirTsk(Sint32 *ncmd) {
     if (TSK_CHGDIR_STAT(gfcd_work) == GFCD_TSK_STAT2) {
         if (gfcd_checkEflag(CDC_HIRQ_EFLS)) {
             ret = CDC_GetFileScope(&base_fid, &infnum, &drend);
-            if ((ret != CDC_ERR_OK)||
-                ((TSK_CHGDIR_FID(gfcd_work) < base_fid)&&
+            if ((ret != CDC_ERR_OK) ||
+                ((TSK_CHGDIR_FID(gfcd_work) < base_fid) &&
                  (base_fid + infnum <= TSK_CHGDIR_FID(gfcd_work)))) {
                 TSK_CHGDIR_STAT(gfcd_work) = GFCD_TSK_READY;
                 *TSK_CHGDIR_NDIR(gfcd_work) = GFS_ERR_CDRD;
@@ -1153,8 +1158,7 @@ GFS_LOCAL Sint32 gfcd_doChgDirTsk(Sint32 *ncmd) {
         if (gfcd_fatal_err != GFCD_ERR_OK) {
             return gfcd_fatal_err;
         }
-        ret = CDC_ChgDir(TSK_CHGDIR_WORK(gfcd_work),
-                         TSK_CHGDIR_FID(gfcd_work));
+        ret = CDC_ChgDir(TSK_CHGDIR_WORK(gfcd_work), TSK_CHGDIR_FID(gfcd_work));
         if (ret != CDC_ERR_OK) {
             return GFCD_TSK_STAT1;
         }
@@ -1178,7 +1182,7 @@ GFS_LOCAL Sint32 gfcd_doChgDirTsk(Sint32 *ncmd) {
 }
 
 // 0x06021048
-GFS_LOCAL Sint32 gfcd_doSetFiltConTsk(Sint32 *ncmd) {
+GFS_LOCAL Sint32 gfcd_doSetFiltConTsk(Sint32* ncmd) {
     Sint32 ret;
     Sint32 i, j;
     Sint32 flag, flout, flnout;
@@ -1197,8 +1201,7 @@ GFS_LOCAL Sint32 gfcd_doSetFiltConTsk(Sint32 *ncmd) {
             flag |= FLTCON_FLN_SET;
             flnout = TSK_FLTCON_FLNOUT(gfcd_work, i);
         }
-        ret = CDC_SetFiltCon(TSK_FLTCON_FLT(gfcd_work, i), flag, flout,
-                             flnout);
+        ret = CDC_SetFiltCon(TSK_FLTCON_FLT(gfcd_work, i), flag, flout, flnout);
         if (ret != CDC_ERR_OK) {
             break;
         }
@@ -1228,7 +1231,7 @@ GFS_LOCAL Bool gfcd_checkEflag(Sint32 mask) {
     Sint32 hirq;
 
     hirq = CDC_GetHirqReq();
-    return (mask & hirq)? TRUE: FALSE;
+    return (mask & hirq) ? TRUE : FALSE;
 }
 
 // 0x060211A4
@@ -1259,14 +1262,14 @@ GFS_LOCAL void gfcd_initCdbMng(void) {
 
 // 0x06021224
 GFS_LOCAL void gfcd_setStat(void) {
-    CdcStat     stat;
+    CdcStat stat;
 
     CDC_GetLastStat(&stat);
     CDC_STAT_STATUS(&CDBMNG_STAT(gfcd_work)) = CDC_STAT_STATUS(&stat);
 }
 
 // 0x06021250
-void GFCD_SetCsctFunc(void (*func)(void *), void *obj) {
+void GFCD_SetCsctFunc(void (*func)(void*), void* obj) {
     CDBMNG_FUNC(gfcd_work) = func;
     CDBMNG_OBJ(gfcd_work) = obj;
 }
@@ -1281,9 +1284,7 @@ Bool GFCD_ChkScdqFlag(void) {
 }
 
 // 0x06021290
-void GFCD_ClrScdqFlag(void) {
-    CDC_ClrHirqReq(~CDC_HIRQ_SCDQ);
-}
+void GFCD_ClrScdqFlag(void) { CDC_ClrHirqReq(~CDC_HIRQ_SCDQ); }
 
 // 0x060212AC
 Bool GFCD_WaitScdqFlag(void) {
@@ -1300,13 +1301,13 @@ Bool GFCD_WaitScdqFlag(void) {
 
 // 0x060212F0
 void GFCD_WaitPause(void) {
-    Sint32      i;
-    CdcStat     st;
+    Sint32 i;
+    CdcStat st;
 
     for (i = 0; i < PAUSE_TMOUT_COUNT; i++) {
         GFCD_GetStat(&st);
-        if ((CDC_GET_STC(&st) == CDC_ST_PAUSE)||
-            (CDC_GET_STC(&st) == CDC_ST_STANDBY)||
+        if ((CDC_GET_STC(&st) == CDC_ST_PAUSE) ||
+            (CDC_GET_STC(&st) == CDC_ST_STANDBY) ||
             (gfcd_fatal_err != GFCD_ERR_OK)) {
             break;
         }

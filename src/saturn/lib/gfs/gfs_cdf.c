@@ -8,8 +8,8 @@
 #include "gfs_cdc.h"
 
 GFS_LOCAL Sint32 gfcf_getSctSize(Sint32 atr);
-GFS_LOCAL Bool gfcf_isCdOk(GfsFlow *flow, Sint32 stat, Sint32 *err);
-GFS_LOCAL Bool gfcf_getPlayRange(GfsFlow *flow, Sint32 *nsct, Sint32 *fstat);
+GFS_LOCAL Bool gfcf_isCdOk(GfsFlow* flow, Sint32 stat, Sint32* err);
+GFS_LOCAL Bool gfcf_getPlayRange(GfsFlow* flow, Sint32* nsct, Sint32* fstat);
 
 // 0x0601CDC0
 Sint32 GFCF_Init(Bool use_cdbfs) {
@@ -37,9 +37,9 @@ Sint32 GFCF_Init(Bool use_cdbfs) {
 }
 
 // 0x0601CE60
-Bool GFCF_Setup(GfsFlow *flow, GfsDirId *dirrec, Sint32 fid) {
-    Sint32      fsize;
-    GfsFinfo    *finfo = &GFS_FLW_FINFO(flow);
+Bool GFCF_Setup(GfsFlow* flow, GfsDirId* dirrec, Sint32 fid) {
+    Sint32 fsize;
+    GfsFinfo* finfo = &GFS_FLW_FINFO(flow);
 
     if (dirrec == NULL) {
         GFS_FI_FID(finfo) = fid;
@@ -50,8 +50,8 @@ Bool GFCF_Setup(GfsFlow *flow, GfsDirId *dirrec, Sint32 fid) {
     } else {
         fsize = GFS_DIR_SIZE(dirrec);
         if ((GFS_DIR_ATR(dirrec) & GFS_ATR_DIR) != 0) {
-            fsize = (fsize + GFS_MD1_SCTSIZ - 1) / 
-                                         GFS_MD1_SCTSIZ * GFS_MD1_SCTSIZ;
+            fsize =
+                (fsize + GFS_MD1_SCTSIZ - 1) / GFS_MD1_SCTSIZ * GFS_MD1_SCTSIZ;
         }
         GFS_FI_FID(finfo) = fid;
         GFS_FI_FAD(finfo) = GFS_DIR_FAD(dirrec);
@@ -79,8 +79,8 @@ Bool GFCF_Setup(GfsFlow *flow, GfsDirId *dirrec, Sint32 fid) {
 }
 
 // 0x0601CFA0
-void GFCF_SetSct(GfsFlow *flow, Sint32 sct) {
-    Sint32      nsct;
+void GFCF_SetSct(GfsFlow* flow, Sint32 sct) {
+    Sint32 nsct;
 
     GFS_FLW_SCT(flow) = sct;
     nsct = GFCB_GetLenData(flow, GFS_RPARA_DFL, NULL);
@@ -88,17 +88,17 @@ void GFCF_SetSct(GfsFlow *flow, Sint32 sct) {
         nsct = 0;
     }
     if (nsct >= sct) {
-	    GFS_FLW_SCTCNT(flow) = sct;
-	    GFS_FLW_STAT(flow) = GFS_FIN_END;
+        GFS_FLW_SCTCNT(flow) = sct;
+        GFS_FLW_STAT(flow) = GFS_FIN_END;
     } else {
-	    GFS_FLW_SCTCNT(flow) = nsct;
-	}
+        GFS_FLW_SCTCNT(flow) = nsct;
+    }
 }
 
 // 0x0601CFEC
-void GFCF_GetFileInfo(GfsFlow *flow, Sint32 *fid, Sint32 *fad, Sint32 *sctsiz,
-                      Sint32 *nsct, Sint32 *lastsiz, Sint32 *fno, Sint32 *atr) {
-    GfsFinfo    *finfo = &GFS_FLW_FINFO(flow);
+void GFCF_GetFileInfo(GfsFlow* flow, Sint32* fid, Sint32* fad, Sint32* sctsiz,
+                      Sint32* nsct, Sint32* lastsiz, Sint32* fno, Sint32* atr) {
+    GfsFinfo* finfo = &GFS_FLW_FINFO(flow);
 
     if (fid != NULL) {
         *fid = GFS_FI_FID(finfo);
@@ -112,7 +112,7 @@ void GFCF_GetFileInfo(GfsFlow *flow, Sint32 *fid, Sint32 *fad, Sint32 *sctsiz,
     if (sctsiz != NULL) {
         *sctsiz = GFS_FI_SCTSZ(finfo);
     }
-    if (nsct != NULL){
+    if (nsct != NULL) {
         *nsct = GFS_FI_NSCT(finfo);
     }
     if (atr != NULL) {
@@ -128,11 +128,11 @@ void GFCF_GetFileInfo(GfsFlow *flow, Sint32 *fid, Sint32 *fad, Sint32 *sctsiz,
 }
 
 // 0x0601D060
-Sint32 GFCF_FlowInBuf(GfsFlow *flow) {
-    Sint32      stat, fad, err, nsct;
-    CdcPly      pinfo;
-    GfsDtsrc    *dts = &GFS_FLW_DTSRC(flow);
-    Sint32      hirq;
+Sint32 GFCF_FlowInBuf(GfsFlow* flow) {
+    Sint32 stat, fad, err, nsct;
+    CdcPly pinfo;
+    GfsDtsrc* dts = &GFS_FLW_DTSRC(flow);
+    Sint32 hirq;
 
     stat = GFCF_GetStat(&fad, &hirq);
     gfcf_stat = stat;
@@ -165,11 +165,11 @@ Sint32 GFCF_FlowInBuf(GfsFlow *flow) {
         MNG_EFAD(gfs_mng_ptr) = GFS_CDR_EFAD(dts);
         return GFS_FIN_START;
     }
-    if ((fad >= GFS_CDR_EFAD(dts))&&
-        (((hirq & CDC_HIRQ_CSCT) != 0)||(stat == GFS_STAT_NOACT))) {
+    if ((fad >= GFS_CDR_EFAD(dts)) &&
+        (((hirq & CDC_HIRQ_CSCT) != 0) || (stat == GFS_STAT_NOACT))) {
         GFCB_UngetPickup(dts);
-        if ((GFS_FLW_SCT(flow) == GFS_FLW_SCTCNT(flow))&&
-            (MNG_EFAD(gfs_mng_ptr) <= fad)&&(stat != GFS_STAT_SEEK)) {
+        if ((GFS_FLW_SCT(flow) == GFS_FLW_SCTCNT(flow)) &&
+            (MNG_EFAD(gfs_mng_ptr) <= fad) && (stat != GFS_STAT_SEEK)) {
             MNG_SFAD(gfs_mng_ptr) = MNG_EFAD(gfs_mng_ptr);
             return GFS_FIN_END;
         }
@@ -179,10 +179,10 @@ Sint32 GFCF_FlowInBuf(GfsFlow *flow) {
 }
 
 // 0x0601D1B0
-void GFCF_StopInBuf(GfsFlow *flow, Bool wait_pause) {
-    CdcPos      pos;
-    Sint32      fad;
-    GfsDtsrc    *dts = &GFS_FLW_DTSRC(flow);
+void GFCF_StopInBuf(GfsFlow* flow, Bool wait_pause) {
+    CdcPos pos;
+    Sint32 fad;
+    GfsDtsrc* dts = &GFS_FLW_DTSRC(flow);
 
     MNG_SFAD(gfs_mng_ptr) = MNG_EFAD(gfs_mng_ptr) = 0;
     CDC_POS_PTYPE(&pos) = CDC_PTYPE_NOCHG;
@@ -202,10 +202,10 @@ void GFCF_StopInBuf(GfsFlow *flow, Bool wait_pause) {
 }
 
 // 0x0601D250
-Sint32 GFCF_Recover(GfsFlow *flow) {
-    GfsDtsrc    *dts = &GFS_FLW_DTSRC(flow);
-    CdcPly      pinfo;
-    Sint32      err;
+Sint32 GFCF_Recover(GfsFlow* flow) {
+    GfsDtsrc* dts = &GFS_FLW_DTSRC(flow);
+    CdcPly pinfo;
+    Sint32 err;
 
     if (GFCB_IsPuOwner(dts)) {
         /* CdPlay�𔭍s���� */
@@ -223,20 +223,18 @@ Sint32 GFCF_Recover(GfsFlow *flow) {
 }
 
 // 0x0601D29C
-Sint32 GFCF_Tell(GfsFlow *flow) {
-    return GFCB_Tell(&GFS_FLW_DTSRC(flow));
-}
+Sint32 GFCF_Tell(GfsFlow* flow) { return GFCB_Tell(&GFS_FLW_DTSRC(flow)); }
 
 // 0x0601D2B4
-Sint32 GFCF_Seek(GfsFlow *flow, Sint32 off) {
+Sint32 GFCF_Seek(GfsFlow* flow, Sint32 off) {
     return GFCB_Seek(flow, off, GFS_SEEK_SET);
 }
 
 // 0x0601D2CC
-Sint32 GFCF_MovePickup(GfsFlow *flow, Sint32 off) {
-    Sint32      err;
-    CdcPos      pos;
-    GfsFinfo    *finfo = &GFS_FLW_FINFO(flow);
+Sint32 GFCF_MovePickup(GfsFlow* flow, Sint32 off) {
+    Sint32 err;
+    CdcPos pos;
+    GfsFinfo* finfo = &GFS_FLW_FINFO(flow);
 
     if (GFCF_GetStat(NULL, NULL) != GFS_STAT_NOACT) {
         return GFS_ERR_PUINUSE;
@@ -265,19 +263,19 @@ Sint32 GFCF_MovePickup(GfsFlow *flow, Sint32 off) {
 }
 
 // 0x0601D36C
-Sint32 GFCF_cnvIntlvOfs(GfsFinfo *finfo, Sint32 ofs) {
+Sint32 GFCF_cnvIntlvOfs(GfsFinfo* finfo, Sint32 ofs) {
     if (GFS_FI_UNIT(finfo) == 0) {
         return ofs;
     }
     return (ofs / GFS_FI_UNIT(finfo) *
             (GFS_FI_UNIT(finfo) + GFS_FI_GAP(finfo))) +
-                ofs % GFS_FI_UNIT(finfo);
+           ofs % GFS_FI_UNIT(finfo);
 }
 
 // 0x0601D3BC
-Sint32 GFCF_GetStat(Sint32 *fad, Sint32 *hirq) {
-    CdcStat     stat;
-    Sint32      tmp;
+Sint32 GFCF_GetStat(Sint32* fad, Sint32* hirq) {
+    CdcStat stat;
+    Sint32 tmp;
 
     tmp = GFCD_GetStat(&stat);
     if (hirq != NULL) {
@@ -312,7 +310,7 @@ Sint32 GFCF_GetStat(Sint32 *fad, Sint32 *hirq) {
 
 // 0x0601D440
 GFS_LOCAL Sint32 gfcf_getSctSize(Sint32 atr) {
-    Sint32      sctsz;
+    Sint32 sctsz;
 
     if (IS_CDDA(atr)) {
         sctsz = GFS_CDDA_SCTSIZ;
@@ -331,8 +329,8 @@ GFS_LOCAL Sint32 gfcf_getSctSize(Sint32 atr) {
 }
 
 // 0x0601D478
-GFS_LOCAL Bool gfcf_isCdOk(GfsFlow *flow, Sint32 stat,  Sint32 *err) {
-    GfsDtsrc    *dts = &GFS_FLW_DTSRC(flow);
+GFS_LOCAL Bool gfcf_isCdOk(GfsFlow* flow, Sint32 stat, Sint32* err) {
+    GfsDtsrc* dts = &GFS_FLW_DTSRC(flow);
 
     switch (stat) {
     case GFS_STAT_SEEK:
@@ -359,7 +357,7 @@ GFS_LOCAL Bool gfcf_isCdOk(GfsFlow *flow, Sint32 stat,  Sint32 *err) {
         *err = GFS_FIN_ERROR;
         return FALSE;
     }
-    if ((GFS_FLW_GMODE(flow) != GFS_GMODE_RESIDENT)&&
+    if ((GFS_FLW_GMODE(flow) != GFS_GMODE_RESIDENT) &&
         (GFS_FLW_STAT(flow) == GFS_FIN_NOACT)) {
         GFCB_DeleteAllData(dts);
         GFS_FLW_SCTCNT(flow) = 0;
@@ -370,10 +368,10 @@ GFS_LOCAL Bool gfcf_isCdOk(GfsFlow *flow, Sint32 stat,  Sint32 *err) {
 }
 
 // 0x0601D534
-GFS_LOCAL Bool gfcf_getPlayRange(GfsFlow *flow, Sint32 *nsct, Sint32 *fstat) {
-    Sint32      ap_fad, bsct;
-    GfsFinfo    *finfo = &GFS_FLW_FINFO(flow);
-    GfsDtsrc    *dts = &GFS_FLW_DTSRC(flow);
+GFS_LOCAL Bool gfcf_getPlayRange(GfsFlow* flow, Sint32* nsct, Sint32* fstat) {
+    Sint32 ap_fad, bsct;
+    GfsFinfo* finfo = &GFS_FLW_FINFO(flow);
+    GfsDtsrc* dts = &GFS_FLW_DTSRC(flow);
 
     *nsct = GFS_FLW_SCT(flow) - GFS_FLW_SCTCNT(flow);
     *nsct = MIN(*nsct, GFS_FLW_SCTMAX(flow));
@@ -383,7 +381,7 @@ GFS_LOCAL Bool gfcf_getPlayRange(GfsFlow *flow, Sint32 *nsct, Sint32 *fstat) {
         if (bsct < 0) {
             bsct = 0;
         }
-        if ((bsct > 0)&&(ap_fad < MNG_SFAD(gfs_mng_ptr))) {
+        if ((bsct > 0) && (ap_fad < MNG_SFAD(gfs_mng_ptr))) {
             bsct -= MNG_SFAD(gfs_mng_ptr) - ap_fad;
         }
     } else {
@@ -403,10 +401,10 @@ GFS_LOCAL Bool gfcf_getPlayRange(GfsFlow *flow, Sint32 *nsct, Sint32 *fstat) {
     *nsct -= bsct;
     GFS_CDR_SFAD(dts) = ap_fad;
     GFS_CDR_EFAD(dts) = GFS_FI_FAD(finfo) +
-        GFCF_cnvIntlvOfs(finfo, *nsct + GFCB_Tell(dts) - 1) + 1;
-    if ((MNG_SFAD(gfs_mng_ptr) <= GFS_CDR_SFAD(dts))&&
-        (GFS_CDR_SFAD(dts) < MNG_EFAD(gfs_mng_ptr))&&
-        (MNG_SFAD(gfs_mng_ptr) < GFS_CDR_EFAD(dts))&&
+                        GFCF_cnvIntlvOfs(finfo, *nsct + GFCB_Tell(dts) - 1) + 1;
+    if ((MNG_SFAD(gfs_mng_ptr) <= GFS_CDR_SFAD(dts)) &&
+        (GFS_CDR_SFAD(dts) < MNG_EFAD(gfs_mng_ptr)) &&
+        (MNG_SFAD(gfs_mng_ptr) < GFS_CDR_EFAD(dts)) &&
         (GFS_CDR_EFAD(dts) <= MNG_EFAD(gfs_mng_ptr))) {
         MNG_SFAD(gfs_mng_ptr) = GFS_CDR_SFAD(dts);
         *fstat = GFS_FIN_START;

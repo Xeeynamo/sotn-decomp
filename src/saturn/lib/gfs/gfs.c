@@ -18,41 +18,43 @@
 
 const char gfs_version[] = "GFS_SBL Version 2.14 1997-04-11";
 
-#define PVD_FAD         166
-#define PVD_BYTSIZ      GFS_MD1_SCTSIZ
-#define PVD_SCTSIZ      1
+#define PVD_FAD 166
+#define PVD_BYTSIZ GFS_MD1_SCTSIZ
+#define PVD_SCTSIZ 1
 
-#define ROOT_FAD_LOW_LIM        (150+16)
+#define ROOT_FAD_LOW_LIM (150 + 16)
 
-#define ROOT_RECPOS     156
+#define ROOT_RECPOS 156
 
-#define FREAD_TMOUT_COUNT       300000L
+#define FREAD_TMOUT_COUNT 300000L
 
-#define SVR_NOHNDL      (-1)
+#define SVR_NOHNDL (-1)
 
 #define LSN_TO_FAD(lsn) ((lsn) += 150)
 
-#define DIRREC_EXT(rec)         ((rec) + 6)
-#define DIRREC_LEN(rec)         ((rec) + 14)
+#define DIRREC_EXT(rec) ((rec) + 6)
+#define DIRREC_LEN(rec) ((rec) + 14)
 
-GFS_LOCAL Sint32 gfs_chgRoot(GfsDirTbl *dirtbl);
+GFS_LOCAL Sint32 gfs_chgRoot(GfsDirTbl* dirtbl);
 GFS_LOCAL Sint32 gfs_aborttrans(GfsHn gfs, Sint32 nsct);
 GFS_LOCAL void gfs_mngSetupFuncTbl(void);
 GFS_LOCAL void gfs_mngInitWork(Sint32 open_max);
-GFS_LOCAL Sint32 gfs_mngGetNumFile(GfsDirTbl *dirtbl);
-GFS_LOCAL void gfs_mngFreeGrp(GfsFile *gfs);
+GFS_LOCAL Sint32 gfs_mngGetNumFile(GfsDirTbl* dirtbl);
+GFS_LOCAL void gfs_mngFreeGrp(GfsFile* gfs);
 GFS_LOCAL void gfs_mngTermAccess(GfsHn gfs, Bool wait_pause);
 GFS_LOCAL Sint32 gfs_mngSetErrCode(Sint32 code);
 GFS_LOCAL Sint32 gfs_svrSearchHndl(GfsHn gfs);
 GFS_LOCAL void gfs_svrAddHndl(GfsHn gfs);
 GFS_LOCAL void gfs_svrRemoveHndl(GfsHn gfs);
-GFS_LOCAL Sint32 gfs_loadVol(Uint8 *buf);
-GFS_LOCAL Sint32 gfs_getRootDir(GfsDirId *dir);
-GFS_LOCAL Sint32 gfs_loadRootDir(GfsDirTbl *dirtbl);
+GFS_LOCAL Sint32 gfs_loadVol(Uint8* buf);
+GFS_LOCAL Sint32 gfs_getRootDir(GfsDirId* dir);
+GFS_LOCAL Sint32 gfs_loadRootDir(GfsDirTbl* dirtbl);
 GFS_LOCAL Sint32 gfs_flowIn(GfsHn gfs);
 GFS_LOCAL Sint32 gfs_transData(GfsHn gfs);
-GFS_LOCAL void gfs_SetSct(GfsFlow *flow, Sint32 sct);
-GFS_LOCAL void gfs_GetFinfo(GfsFlow *flow, Sint32 *fid, Sint32 *fad, Sint32 *sctsiz, Sint32 *nsct, Sint32 *lastsiz, Sint32 *fno, Sint32 *atr);
+GFS_LOCAL void gfs_SetSct(GfsFlow* flow, Sint32 sct);
+GFS_LOCAL void gfs_GetFinfo(
+    GfsFlow* flow, Sint32* fid, Sint32* fad, Sint32* sctsiz, Sint32* nsct,
+    Sint32* lastsiz, Sint32* fno, Sint32* atr);
 GFS_LOCAL void gfs_closeSub(GfsHn gfs);
 GFS_LOCAL Sint32 gfs_getGmode(GfsHn gfs);
 GFS_LOCAL Bool gfs_isTaskDone(GfsHn gfs);
@@ -60,20 +62,20 @@ GFS_LOCAL Sint32 gfs_convFinStat(GfsHn gfs, Sint32 fstat);
 GFS_LOCAL Sint32 gfs_waitRead(GfsHn gfs);
 
 // 0x0601B2B4
-Sint32 GFS_Init(Sint32 open_max, void *work, GfsDirTbl *dirtbl) {
-    Sint32      ndir, ret;
-    
+Sint32 GFS_Init(Sint32 open_max, void* work, GfsDirTbl* dirtbl) {
+    Sint32 ndir, ret;
+
     gfs_use_scudma = FALSE;
-    if ((open_max < 1)||(GFS_OPEN_MAX < open_max)) {
+    if ((open_max < 1) || (GFS_OPEN_MAX < open_max)) {
         return GFS_ERR_OPENMAX;
     }
     if (((Uint32)work) & 3) {
         return GFS_ERR_ALIGN;
     }
     if (dirtbl != NULL) {
-        if (((GFS_DIRTBL_TYPE(dirtbl) != GFS_DIR_ID)&&
-             (GFS_DIRTBL_TYPE(dirtbl) != GFS_DIR_NAME))||
-            (GFS_DIRTBL_NDIR(dirtbl) < 2)||
+        if (((GFS_DIRTBL_TYPE(dirtbl) != GFS_DIR_ID) &&
+             (GFS_DIRTBL_TYPE(dirtbl) != GFS_DIR_NAME)) ||
+            (GFS_DIRTBL_NDIR(dirtbl) < 2) ||
             (GFS_DIRTBL_DIRID(dirtbl) == NULL)) {
             return GFS_ERR_DIRTBL;
         }
@@ -82,7 +84,7 @@ Sint32 GFS_Init(Sint32 open_max, void *work, GfsDirTbl *dirtbl) {
 
     gfs_mng_ptr = work;
     gfs_mngInitWork(open_max);
-    ret = GFCF_Init((dirtbl == NULL)? TRUE: FALSE);
+    ret = GFCF_Init((dirtbl == NULL) ? TRUE : FALSE);
     if (dirtbl == NULL) {
         return gfs_mngSetErrCode(GFS_ERR_CDBFS);
     }
@@ -100,10 +102,10 @@ Sint32 GFS_Init(Sint32 open_max, void *work, GfsDirTbl *dirtbl) {
 }
 
 // 0x0601B3A0
-Sint32 GFS_LoadDir(Sint32 fid, GfsDirTbl *dirtbl) {
-    GfsHn       gfs;
-    Sint32      nsct;
-    Sint32      readdir;
+Sint32 GFS_LoadDir(Sint32 fid, GfsDirTbl* dirtbl) {
+    GfsHn gfs;
+    Sint32 nsct;
+    Sint32 readdir;
 
     if (dirtbl == NULL) {
         if (DIRMNG_DIRID(&MNG_CURDIR(gfs_mng_ptr)) != NULL) {
@@ -126,8 +128,8 @@ Sint32 GFS_LoadDir(Sint32 fid, GfsDirTbl *dirtbl) {
 }
 
 // 0x0601B448
-Sint32 GFS_SetDir(GfsDirTbl *dirtbl) {
-    GfsDirMng   *mng;
+Sint32 GFS_SetDir(GfsDirTbl* dirtbl) {
+    GfsDirMng* mng;
 
     mng = &MNG_CURDIR(gfs_mng_ptr);
     if (dirtbl == NULL) {
@@ -144,12 +146,12 @@ Sint32 GFS_SetDir(GfsDirTbl *dirtbl) {
 }
 
 // 0x0601B4AC
-Sint32 GFS_NameToId(Sint8 *fname) {
-    Sint32      fid;
-    GfsDirMng   *cdir = &MNG_CURDIR(gfs_mng_ptr);
-    Sint32      ret;
+Sint32 GFS_NameToId(Sint8* fname) {
+    Sint32 fid;
+    GfsDirMng* cdir = &MNG_CURDIR(gfs_mng_ptr);
+    Sint32 ret;
 
-    if ((DIRMNG_DIRID(cdir) == NULL)||(DIRMNG_TYPE(cdir) != GFS_DIR_NAME)) {
+    if ((DIRMNG_DIRID(cdir) == NULL) || (DIRMNG_TYPE(cdir) != GFS_DIR_NAME)) {
         return gfs_mngSetErrCode(GFS_ERR_NONAME);
     }
     fid = GFDR_NameToId(DIRMNG_DIRNAME(cdir), fname, DIRMNG_NDIR(cdir));
@@ -165,15 +167,15 @@ Sint32 GFS_NameToId(Sint8 *fname) {
 
 // 0x0601B518
 Sint8* GFS_IdToName(Sint32 fid) {
-    GfsDirName  *pdir;
-    GfsDirMng   *cdir = &MNG_CURDIR(gfs_mng_ptr);
-    Sint32      ret;
+    GfsDirName* pdir;
+    GfsDirMng* cdir = &MNG_CURDIR(gfs_mng_ptr);
+    Sint32 ret;
 
-    if ((DIRMNG_DIRID(cdir) == NULL)||(DIRMNG_TYPE(cdir) != GFS_DIR_NAME)) {
+    if ((DIRMNG_DIRID(cdir) == NULL) || (DIRMNG_TYPE(cdir) != GFS_DIR_NAME)) {
         gfs_mngSetErrCode(GFS_ERR_NONAME);
         return NULL;
     }
-    if ((fid < 0)||(DIRMNG_NFILE(cdir) <= fid)) {
+    if ((fid < 0) || (DIRMNG_NFILE(cdir) <= fid)) {
         gfs_mngSetErrCode(GFS_ERR_NEXIST);
         return NULL;
     }
@@ -186,16 +188,16 @@ Sint8* GFS_IdToName(Sint32 fid) {
 }
 
 // 0x0601B58C
-Sint32 GFS_GetDirInfo(Sint32 fid, GfsDirId *dirrec) {
-    GfsDirName  *pdirn;
-    GfsDirId    *pdir;
-    GfsDirMng   *cdir = &MNG_CURDIR(gfs_mng_ptr);
+Sint32 GFS_GetDirInfo(Sint32 fid, GfsDirId* dirrec) {
+    GfsDirName* pdirn;
+    GfsDirId* pdir;
+    GfsDirMng* cdir = &MNG_CURDIR(gfs_mng_ptr);
 
-    if ((DIRMNG_DIRID(cdir) == NULL)||
-        (fid < 0)||(fid >= DIRMNG_NFILE(cdir))) {
+    if ((DIRMNG_DIRID(cdir) == NULL) || (fid < 0) ||
+        (fid >= DIRMNG_NFILE(cdir))) {
         return gfs_mngSetErrCode(GFS_ERR_FID);
     }
-    if ((DIRMNG_TYPE(cdir) == GFS_DIR_NAME)) {
+    if (DIRMNG_TYPE(cdir) == GFS_DIR_NAME) {
         pdirn = GFDR_GetInfoDirName(fid, DIRMNG_DIRNAME(cdir));
         memcpy(dirrec, pdirn, sizeof(GfsDirId));
     } else {
@@ -207,9 +209,9 @@ Sint32 GFS_GetDirInfo(Sint32 fid, GfsDirId *dirrec) {
 
 // 0x0601B600
 void GFS_Reset(void) {
-    GfsHn       gfs;
-    GftrHn      gftr;
-    Sint32      i;
+    GfsHn gfs;
+    GftrHn gftr;
+    Sint32 i;
 
     gfs = MNG_FILE(gfs_mng_ptr);
     for (i = 0; i < MNG_OPENMAX(gfs_mng_ptr); i++, gfs++) {
@@ -225,13 +227,13 @@ void GFS_Reset(void) {
 
 // 0x0601B674
 GfsHn GFS_Open(Sint32 fid) {
-    GfsDirId    *dirrec;
-    GfsHn       gfs;
-    GfsDirMng   *cdir = &MNG_CURDIR(gfs_mng_ptr);
-    Sint32      ret;
+    GfsDirId* dirrec;
+    GfsHn gfs;
+    GfsDirMng* cdir = &MNG_CURDIR(gfs_mng_ptr);
+    Sint32 ret;
 
-    if ((DIRMNG_DIRID(cdir) != NULL)&&
-        ((fid < 0)||(fid >= DIRMNG_NFILE(cdir)))) {
+    if ((DIRMNG_DIRID(cdir) != NULL) &&
+        ((fid < 0) || (fid >= DIRMNG_NFILE(cdir)))) {
         gfs_mngSetErrCode(GFS_ERR_FID);
         return NULL;
     }
@@ -245,7 +247,7 @@ GfsHn GFS_Open(Sint32 fid) {
     } else if (DIRMNG_TYPE(cdir) == GFS_DIR_ID) {
         dirrec = GFDR_GetInfoDirId(fid, DIRMNG_DIRID(cdir));
     } else {
-        dirrec = (GfsDirId *)GFDR_GetInfoDirName(fid, DIRMNG_DIRNAME(cdir));
+        dirrec = (GfsDirId*)GFDR_GetInfoDirName(fid, DIRMNG_DIRNAME(cdir));
     }
     gfs = GFS_OpenSub(gfs, dirrec, fid);
     if (gfs == NULL) {
@@ -270,11 +272,11 @@ void GFS_Close(GfsHn gfs) {
 
 // 0x0601B75C
 Sint32 GFS_Seek(GfsHn gfs, Sint32 ofs, Sint32 org) {
-    GfsFileFunc *func;
-    Sint32      nsct;
-    GfsFlow     *flow;
-    GfsDtsrc    *dts;
-    Sint32      ret;
+    GfsFileFunc* func;
+    Sint32 nsct;
+    GfsFlow* flow;
+    GfsDtsrc* dts;
+    Sint32 ret;
 
     if (gfs == NULL) {
         return gfs_mngSetErrCode(GFS_ERR_HNDL);
@@ -306,11 +308,11 @@ Sint32 GFS_Seek(GfsHn gfs, Sint32 ofs, Sint32 org) {
 
 // 0x0601B810
 Sint32 GFS_Tell(GfsHn gfs) {
-    GfsFileFunc *func;
-    Sint32      ofs;
-    GfsFlow     *flow;
-    GfsDtsrc    *dts;
-    Sint32      ret;
+    GfsFileFunc* func;
+    Sint32 ofs;
+    GfsFlow* flow;
+    GfsDtsrc* dts;
+    Sint32 ret;
 
     if (gfs == NULL) {
         return gfs_mngSetErrCode(GFS_ERR_HNDL);
@@ -328,7 +330,7 @@ Sint32 GFS_Tell(GfsHn gfs) {
 
 // 0x0601B860
 Bool GFS_IsEof(GfsHn gfs) {
-    Sint32      pos, nsct;
+    Sint32 pos, nsct;
 
     if (gfs == NULL) {
         return gfs_mngSetErrCode(GFS_ERR_HNDL);
@@ -336,13 +338,13 @@ Bool GFS_IsEof(GfsHn gfs) {
     pos = GFS_Tell(gfs);
     GFS_GetFileSize(gfs, NULL, &nsct, NULL);
     gfs_mngSetErrCode(GFS_ERR_OK);
-    return (pos >= nsct)? TRUE: FALSE;
+    return (pos >= nsct) ? TRUE : FALSE;
 }
 
 // 0x0601B8B4
 Sint32 GFS_ByteToSct(GfsHn gfs, Sint32 nbyte) {
-    Sint32      sctsz;
-    Sint32      ret;
+    Sint32 sctsz;
+    Sint32 ret;
 
     if (gfs == NULL) {
         return gfs_mngSetErrCode(GFS_ERR_HNDL);
@@ -359,16 +361,16 @@ Sint32 GFS_ByteToSct(GfsHn gfs, Sint32 nbyte) {
 }
 
 // 0x0601B910
-void GFS_GetFileSize(GfsHn gfs, Sint32 *sctsz, Sint32 *nsct, Sint32 *lstlen) {
-    Sint32      atr;
-    GfsFlow     *flow;
-        
+void GFS_GetFileSize(GfsHn gfs, Sint32* sctsz, Sint32* nsct, Sint32* lstlen) {
+    Sint32 atr;
+    GfsFlow* flow;
+
     if (gfs == NULL) {
         gfs_mngSetErrCode(GFS_ERR_HNDL);
     } else {
         flow = &GFS_FILE_FLOW(gfs);
         gfs_GetFinfo(flow, NULL, NULL, sctsz, nsct, lstlen, NULL, &atr);
-        if ((sctsz != NULL)&&IS_FORM1(atr)&&IS_FORM2(atr)) {
+        if ((sctsz != NULL) && IS_FORM1(atr) && IS_FORM2(atr)) {
             *sctsz = 0;
         }
     }
@@ -376,10 +378,11 @@ void GFS_GetFileSize(GfsHn gfs, Sint32 *sctsz, Sint32 *nsct, Sint32 *lstlen) {
 }
 
 // 0x0601B970
-void GFS_GetFileInfo(GfsHn gfs, Sint32 *fid, Sint32 *fn, Sint32 *fsize, Sint32 *atr) {
-    Sint32      nsct;
-    Sint32      lstlen;
-    GfsFlow     *flow;
+void GFS_GetFileInfo(
+    GfsHn gfs, Sint32* fid, Sint32* fn, Sint32* fsize, Sint32* atr) {
+    Sint32 nsct;
+    Sint32 lstlen;
+    GfsFlow* flow;
 
     if (gfs == NULL) {
         gfs_mngSetErrCode(GFS_ERR_HNDL);
@@ -405,14 +408,14 @@ Sint32 GFS_GetNumCdbuf(GfsHn gfs) {
 }
 
 // 0x0601BA0C
-Sint32 GFS_Load(Sint32 fid, Sint32 ofs, void *buf, Sint32 bsize) {
-    GfsHn       gfs;
-    Sint32      nsct;
-    Sint32      bsct;
-    Sint32      sctsiz1, sctsiz2;
-    Sint32      readlen;
-    Sint32      ap;
-    GfsFinfo    *finfo;
+Sint32 GFS_Load(Sint32 fid, Sint32 ofs, void* buf, Sint32 bsize) {
+    GfsHn gfs;
+    Sint32 nsct;
+    Sint32 bsct;
+    Sint32 sctsiz1, sctsiz2;
+    Sint32 readlen;
+    Sint32 ap;
+    GfsFinfo* finfo;
 
     gfs = GFS_Open(fid);
     if (gfs == NULL) {
@@ -443,8 +446,8 @@ Sint32 GFS_Load(Sint32 fid, Sint32 ofs, void *buf, Sint32 bsize) {
 }
 
 // 0x0601BAD4
-Sint32 GFS_Fread(GfsHn gfs, Sint32 nsct, void *buf, Sint32 bsize) {
-    Sint32      err, rpara_old, amode, ndata;
+Sint32 GFS_Fread(GfsHn gfs, Sint32 nsct, void* buf, Sint32 bsize) {
+    Sint32 err, rpara_old, amode, ndata;
 
     if (gfs == NULL) {
         return gfs_mngSetErrCode(GFS_ERR_HNDL);
@@ -473,9 +476,9 @@ Sint32 GFS_Fread(GfsHn gfs, Sint32 nsct, void *buf, Sint32 bsize) {
 
 // 0x0601BB6C
 GFS_LOCAL Sint32 gfs_waitRead(GfsHn gfs) {
-    Sint32      err, atr, timer;
-    GfsDtsrc    *dts;
-    GfsTrans    *trn;
+    Sint32 err, atr, timer;
+    GfsDtsrc* dts;
+    GfsTrans* trn;
 
     dts = &GFS_FLW_DTSRC(&GFS_FILE_FLOW(gfs));
     trn = &GFS_FILE_TRANS(gfs);
@@ -487,16 +490,15 @@ GFS_LOCAL Sint32 gfs_waitRead(GfsHn gfs) {
     }
     while (1) {
         err = GFS_NwExecOne(gfs);
-        if ((err == GFS_SVR_COMPLETED)||(err < 0)) {
+        if ((err == GFS_SVR_COMPLETED) || (err < 0)) {
             break;
         }
-        if ((GFS_TRN_STAT(trn) == GFTR_ST_END)&&
-            ((GFS_DTS_FTYPE(dts) != CD_FILE)||
-             (gfcf_fad < GFS_CDR_EFAD(dts))||
-             (gfcf_stat != GFS_STAT_SEEK))) {
+        if ((GFS_TRN_STAT(trn) == GFTR_ST_END) &&
+            ((GFS_DTS_FTYPE(dts) != CD_FILE) ||
+             (gfcf_fad < GFS_CDR_EFAD(dts)) || (gfcf_stat != GFS_STAT_SEEK))) {
             break;
         }
-        if ((GFS_TRN_WP(trn) == 0)&&(timer >= 0)) {
+        if ((GFS_TRN_WP(trn) == 0) && (timer >= 0)) {
             timer++;
             if (timer > FREAD_TMOUT_COUNT) {
                 return GFS_ERR_TMOUT;
@@ -507,12 +509,12 @@ GFS_LOCAL Sint32 gfs_waitRead(GfsHn gfs) {
 }
 
 // 0x0601BC14
-Sint32 GFS_NwFread(GfsHn gfs, Sint32 nsct, void *buf, Sint32 bsize) {
-    Sint32      remain, atr;
-    Bool        add_flag = FALSE;
-    GfsFlow     *flow;
-    GfsFinfo    *finfo;
-    GfsTrans    *trn;
+Sint32 GFS_NwFread(GfsHn gfs, Sint32 nsct, void* buf, Sint32 bsize) {
+    Sint32 remain, atr;
+    Bool add_flag = FALSE;
+    GfsFlow* flow;
+    GfsFinfo* finfo;
+    GfsTrans* trn;
 
     if (gfs == NULL) {
         return gfs_mngSetErrCode(GFS_ERR_HNDL);
@@ -534,7 +536,7 @@ Sint32 GFS_NwFread(GfsHn gfs, Sint32 nsct, void *buf, Sint32 bsize) {
     if (atr & GFS_ATR_CDDA) {
         GFTR_SetTransPara(trn, 0);
         GFTR_SetData(trn, NULL, 0, 1);
-    } else if ((GFS_TRN_STAT(trn) == GFTR_ST_NOACT)||
+    } else if ((GFS_TRN_STAT(trn) == GFTR_ST_NOACT) ||
                (GFS_TRN_STAT(trn) == GFTR_ST_END)) {
         GFTR_SetTransPara(trn, remain);
         GFTR_SetData(trn, buf, bsize, 1);
@@ -551,9 +553,9 @@ Sint32 GFS_NwFread(GfsHn gfs, Sint32 nsct, void *buf, Sint32 bsize) {
 
 // 0x0601BD20
 Sint32 GFS_NwCdRead(GfsHn gfs, Sint32 nsct) {
-    Sint32      remain;
-    GfsFlow     *flow;
-    GfsFinfo    *finfo;
+    Sint32 remain;
+    GfsFlow* flow;
+    GfsFinfo* finfo;
 
     if (gfs == NULL) {
         return gfs_mngSetErrCode(GFS_ERR_HNDL);
@@ -574,7 +576,7 @@ Sint32 GFS_NwCdRead(GfsHn gfs, Sint32 nsct) {
 
 // 0x0601BD94
 Bool GFS_NwIsComplete(GfsHn gfs) {
-    Sint32  ret;
+    Sint32 ret;
 
     if (gfs == NULL) {
         gfs_mngSetErrCode(GFS_ERR_HNDL);
@@ -585,14 +587,14 @@ Bool GFS_NwIsComplete(GfsHn gfs) {
     if (ret < 0) {
         return TRUE;
     }
-    return (GFS_FILE_ASTAT(gfs) == GFS_SVR_COMPLETED)? TRUE: FALSE;
+    return (GFS_FILE_ASTAT(gfs) == GFS_SVR_COMPLETED) ? TRUE : FALSE;
 }
 
 // 0x0601BDD0
 Sint32 GFS_NwStop(GfsHn gfs) {
-    Sint32      ap, ec;
-    Bool        wait_pause;
-        
+    Sint32 ap, ec;
+    Bool wait_pause;
+
     if (gfs == NULL) {
         return gfs_mngSetErrCode(GFS_ERR_HNDL);
     }
@@ -614,9 +616,9 @@ Sint32 GFS_NwStop(GfsHn gfs) {
 }
 
 // 0x0601BE3C
-void GFS_NwGetStat(GfsHn gfs, Sint32 *amode, Sint32 *ndata) {
-    GfsTrans    *trn;
-    Sint32      atr;
+void GFS_NwGetStat(GfsHn gfs, Sint32* amode, Sint32* ndata) {
+    GfsTrans* trn;
+    Sint32 atr;
 
     if (gfs == NULL) {
         gfs_mngSetErrCode(GFS_ERR_HNDL);
@@ -637,9 +639,9 @@ void GFS_NwGetStat(GfsHn gfs, Sint32 *amode, Sint32 *ndata) {
 
 // 0x0601BEB8
 GFS_LOCAL Sint32 gfs_recovRdErr(GfsHn gfs) {
-    Sint32      fstat;
-    GfsDtsrc    *dtsrc;
-    GfsFlow     *flow;
+    Sint32 fstat;
+    GfsDtsrc* dtsrc;
+    GfsFlow* flow;
 
     flow = &GFS_FILE_FLOW(gfs);
     dtsrc = &GFS_FLW_DTSRC(flow);
@@ -654,8 +656,8 @@ GFS_LOCAL Sint32 gfs_recovRdErr(GfsHn gfs) {
 
 // 0x0601BEE8
 Sint32 GFS_NwExecOne(GfsHn gfs) {
-    Sint32      tstat, ec;
-    Bool        flag;
+    Sint32 tstat, ec;
+    Bool flag;
 
     if (gfs == NULL) {
         return gfs_mngSetErrCode(GFS_ERR_HNDL);
@@ -698,9 +700,9 @@ Sint32 GFS_NwExecOne(GfsHn gfs) {
 }
 
 // 0x0601BFA8
-Sint32 GFS_NwExecServer(GfsHn *now_gfs) {
-    GfsSvr      *svr;
-    Sint32      i, stat = GFS_SVR_COMPLETED;
+Sint32 GFS_NwExecServer(GfsHn* now_gfs) {
+    GfsSvr* svr;
+    Sint32 i, stat = GFS_SVR_COMPLETED;
 
     svr = &MNG_SVR(gfs_mng_ptr);
     if (SVR_NFILE(svr) == 0) {
@@ -716,7 +718,7 @@ Sint32 GFS_NwExecServer(GfsHn *now_gfs) {
             }
         }
         *now_gfs = SVR_ACFILE(svr, 0);
-        if ((stat == GFS_ERR_PUINUSE)&&(i > 0)) {
+        if ((stat == GFS_ERR_PUINUSE) && (i > 0)) {
             stat = GFS_SVR_BUSY;
         }
     }
@@ -726,9 +728,9 @@ Sint32 GFS_NwExecServer(GfsHn *now_gfs) {
 // 0x0601C01C
 Sint32 GFS_SetGmode(GfsHn gfs, Sint32 gmode) {
     Sint32 old_mode, atr;
-    GfsFlow     *flow;
-    GfsDtsrc    *dtsrc;
-    Sint32      ret;
+    GfsFlow* flow;
+    GfsDtsrc* dtsrc;
+    Sint32 ret;
 
     if (gfs == NULL) {
         return gfs_mngSetErrCode(GFS_ERR_HNDL);
@@ -750,11 +752,11 @@ Sint32 GFS_SetGmode(GfsHn gfs, Sint32 gmode) {
 
 // 0x0601C080
 Sint32 GFS_SetTmode(GfsHn gfs, Sint32 tmode) {
-    GfsFlow     *flow;
-    GfsDtsrc    *dtsrc;
-    GfsTrans    *trans;
-    Sint32      old_mode, atr;
-    Sint32      ret;
+    GfsFlow* flow;
+    GfsDtsrc* dtsrc;
+    GfsTrans* trans;
+    Sint32 old_mode, atr;
+    Sint32 ret;
 
     if (gfs == NULL) {
         return gfs_mngSetErrCode(GFS_ERR_HNDL);
@@ -776,9 +778,9 @@ Sint32 GFS_SetTmode(GfsHn gfs, Sint32 tmode) {
 
 // 0x0601C0EC
 Sint32 GFS_SetReadPara(GfsHn gfs, Sint32 nsct) {
-    GfsFlow     *flow;
-    Sint32      old_para, atr;
-    Sint32      ret;
+    GfsFlow* flow;
+    Sint32 old_para, atr;
+    Sint32 ret;
 
     if (gfs == NULL) {
         return gfs_mngSetErrCode(GFS_ERR_HNDL);
@@ -799,8 +801,8 @@ Sint32 GFS_SetReadPara(GfsHn gfs, Sint32 nsct) {
 
 // 0x0601C150
 Sint32 GFS_SetTransPara(GfsHn gfs, Sint32 tsize) {
-    Sint32  old_para, atr;
-    Sint32  ret;
+    Sint32 old_para, atr;
+    Sint32 ret;
 
     if (gfs == NULL) {
         return gfs_mngSetErrCode(GFS_ERR_HNDL);
@@ -821,23 +823,23 @@ Sint32 GFS_SetTransPara(GfsHn gfs, Sint32 tsize) {
 void GFS_SetTrFunc(GfsHn gfs, GfsTrFunc func) {
     if (gfs == NULL) {
         gfs_mngSetErrCode(GFS_ERR_HNDL);
-        return ;
+        return;
     }
-    GFTR_SetData(&(GFS_FILE_TRANS(gfs)), NULL, 
-                     GFS_LONG_MAX/GFS_MD1_SCTSIZ, GFS_MD1_SCTSIZ);
+    GFTR_SetData(&(GFS_FILE_TRANS(gfs)), NULL, GFS_LONG_MAX / GFS_MD1_SCTSIZ,
+                 GFS_MD1_SCTSIZ);
     GFTR_SetMode(&(GFS_FILE_TRANS(gfs)), GFS_TMODE_STM);
     GFTR_SetTransFunc(gfs, (GfsTransFunc)func, gfs);
 }
 
 // 0x0601C220
-Uint32 *GFS_StartTrans(GfsHn gfs, Sint32 *dadr) {
-    GfsFlow     *flow;
-    GfsDtsrc    *dtsrc;
-    GfdpHn      dpk;
+Uint32* GFS_StartTrans(GfsHn gfs, Sint32* dadr) {
+    GfsFlow* flow;
+    GfsDtsrc* dtsrc;
+    GfdpHn dpk;
 
     if (gfs == NULL) {
         gfs_mngSetErrCode(GFS_ERR_HNDL);
-        return (NULL);
+        return NULL;
     }
     flow = &GFS_FILE_FLOW(gfs);
     dtsrc = &GFS_FLW_DTSRC(flow);
@@ -846,14 +848,14 @@ Uint32 *GFS_StartTrans(GfsHn gfs, Sint32 *dadr) {
         GFCB_GetSctData(dpk, dtsrc);
     }
     *dadr = GFDP_ADLT(dpk);
-    return (GFDP_DATA(dpk));
+    return GFDP_DATA(dpk);
 }
 
 // 0x0601C26C
 Sint32 GFS_CdMovePickup(GfsHn gfs) {
-    Sint32      ap, err;
-    GfsFlow     *flow;
-    GfsDtsrc    *dtsrc;
+    Sint32 ap, err;
+    GfsFlow* flow;
+    GfsDtsrc* dtsrc;
 
     if (gfs == NULL) {
         return gfs_mngSetErrCode(GFS_ERR_HNDL);
@@ -872,16 +874,14 @@ Sint32 GFS_CdMovePickup(GfsHn gfs) {
 }
 
 // 0x0601C2D8
-void GFS_SetErrFunc(GfsErrFunc func, void *obj) {
+void GFS_SetErrFunc(GfsErrFunc func, void* obj) {
     GFS_ERR_FUNC(&MNG_ERROR(gfs_mng_ptr)) = func;
     GFS_ERR_OBJ(&MNG_ERROR(gfs_mng_ptr)) = obj;
     gfs_mngSetErrCode(GFS_ERR_OK);
 }
 
 // 0x0601C308
-void GFS_GetErrStat(GfsErrStat *stat) {
-    *stat = MNG_ERROR(gfs_mng_ptr);
-}
+void GFS_GetErrStat(GfsErrStat* stat) { *stat = MNG_ERROR(gfs_mng_ptr); }
 
 // 0x0601C32C
 Sint32 GFS_ConvTno(Sint32 logtno) {
@@ -892,10 +892,10 @@ Sint32 GFS_ConvTno(Sint32 logtno) {
 }
 
 // 0x0601C354
-GFS_LOCAL Sint32 gfs_chgRoot(GfsDirTbl *dirtbl) {
-    Sint32      ndir;
-    Sint32      fid;
-    GfsDirMng   *mng;
+GFS_LOCAL Sint32 gfs_chgRoot(GfsDirTbl* dirtbl) {
+    Sint32 ndir;
+    Sint32 fid;
+    GfsDirMng* mng;
 
     if (GFS_IS_DDS() == TRUE) {
         if (dirtbl != NULL) {
@@ -933,13 +933,11 @@ GFS_LOCAL Sint32 gfs_chgRoot(GfsDirTbl *dirtbl) {
 }
 
 // 0x0601C420
-GFS_LOCAL Sint32 gfs_aborttrans(GfsHn gfs, Sint32 nsct) {
-    return (0);
-}
+GFS_LOCAL Sint32 gfs_aborttrans(GfsHn gfs, Sint32 nsct) { return 0; }
 
 // 0x0601C42C
 GFS_LOCAL void gfs_mngSetupFuncTbl(void) {
-    GfsFileFunc         *func;
+    GfsFileFunc* func;
 
     func = &MNG_FUNCTBL(gfs_mng_ptr, CD_FILE);
     FUNC_FLOWIN(func) = GFCF_FlowInBuf;
@@ -960,9 +958,9 @@ GFS_LOCAL void gfs_mngSetupFuncTbl(void) {
 
 // 0x0601C4A8
 GFS_LOCAL void gfs_mngInitWork(Sint32 open_max) {
-    Sint32      i;
-    GfsFile     *fp;
-    GfdpHn      dpk;
+    Sint32 i;
+    GfsFile* fp;
+    GfdpHn dpk;
 
     MNG_OPENMAX(gfs_mng_ptr) = open_max;
     gfs_mngSetupFuncTbl();
@@ -978,18 +976,18 @@ GFS_LOCAL void gfs_mngInitWork(Sint32 open_max) {
     }
     dpk = &MNG_SRCPK(gfs_mng_ptr);
     GFDP_DATA(dpk) = NULL;
-    GFDP_ADLT(dpk) = GFDP_LEN(dpk) =  GFDP_NSCT(dpk) = 0;
+    GFDP_ADLT(dpk) = GFDP_LEN(dpk) = GFDP_NSCT(dpk) = 0;
     GFDP_USE(dpk) = FALSE;
     dpk = &MNG_DSTPK(gfs_mng_ptr);
     GFDP_DATA(dpk) = NULL;
-    GFDP_ADLT(dpk) = GFDP_LEN(dpk) =  GFDP_NSCT(dpk) = 0;
+    GFDP_ADLT(dpk) = GFDP_LEN(dpk) = GFDP_NSCT(dpk) = 0;
     GFDP_USE(dpk) = FALSE;
 }
 
 // 0x0601C54C
-GFS_LOCAL Sint32 gfs_mngGetNumFile(GfsDirTbl *dirtbl) {
-    Sint32      i;
-    Sint32      atr;
+GFS_LOCAL Sint32 gfs_mngGetNumFile(GfsDirTbl* dirtbl) {
+    Sint32 i;
+    Sint32 atr;
 
     for (i = 0; i < GFS_DIRTBL_NDIR(dirtbl); i++) {
         if (GFS_DIRTBL_TYPE(dirtbl) == GFS_DIR_ID) {
@@ -1008,9 +1006,9 @@ GFS_LOCAL Sint32 gfs_mngGetNumFile(GfsDirTbl *dirtbl) {
 }
 
 // 0x0601C5B0
-GfsFile *GFS_mngAllocGrp(void) {
-    Sint32      i;
-    GfsFile     *gfs;
+GfsFile* GFS_mngAllocGrp(void) {
+    Sint32 i;
+    GfsFile* gfs;
 
     gfs = MNG_FILE(gfs_mng_ptr);
     for (i = 0; i < MNG_OPENMAX(gfs_mng_ptr); i++) {
@@ -1029,23 +1027,21 @@ GfsFile *GFS_mngAllocGrp(void) {
 }
 
 // 0x0601C5F8
-GFS_LOCAL void gfs_mngFreeGrp(GfsFile *gfs) {
-    GFS_FILE_USED(gfs) = FALSE;
-}
+GFS_LOCAL void gfs_mngFreeGrp(GfsFile* gfs) { GFS_FILE_USED(gfs) = FALSE; }
 
 // 0x0601C604
 GFS_LOCAL void gfs_mngTermAccess(GfsHn gfs, Bool wait_pause) {
-    GfsFileFunc *func;
-    GfsFlow     *flow = &GFS_FILE_FLOW(gfs);
-    Sint32      ftype;
+    GfsFileFunc* func;
+    GfsFlow* flow = &GFS_FILE_FLOW(gfs);
+    Sint32 ftype;
 
     if (MNG_TRANS(gfs_mng_ptr) == gfs) {
         MNG_TRANS(gfs_mng_ptr) = NULL;
         GFTR_Stop(gfs, GFTR_ALLSCT);
     }
     ftype = GFS_DTS_FTYPE(&GFS_FLW_DTSRC(flow));
-    if ((MNG_PICKUP(gfs_mng_ptr) == gfs)||
-        ((ftype != CD_FILE)&&(MNG_PICKUP(gfs_mng_ptr) == NULL))) {
+    if ((MNG_PICKUP(gfs_mng_ptr) == gfs) ||
+        ((ftype != CD_FILE) && (MNG_PICKUP(gfs_mng_ptr) == NULL))) {
         MNG_PICKUP(gfs_mng_ptr) = NULL;
         func = &MNG_FUNCTBL(gfs_mng_ptr, ftype);
         (FUNC_STOPIN(func))(flow, wait_pause);
@@ -1070,7 +1066,7 @@ GFS_LOCAL Sint32 gfs_mngSetErrCode(Sint32 code) {
 
     err = &MNG_ERROR(gfs_mng_ptr);
     GFS_ERR_CODE(err) = code;
-    if ((code != GFS_ERR_OK)&&(GFS_ERR_FUNC(err) != NULL)) {
+    if ((code != GFS_ERR_OK) && (GFS_ERR_FUNC(err) != NULL)) {
         GFS_ERR_FUNC(err)(GFS_ERR_OBJ(err), code);
     }
     return code;
@@ -1078,8 +1074,8 @@ GFS_LOCAL Sint32 gfs_mngSetErrCode(Sint32 code) {
 
 // 0x0601C6C8
 GFS_LOCAL Sint32 gfs_svrSearchHndl(GfsHn gfs) {
-    Sint32      i;
-    GfsSvr      *svr;
+    Sint32 i;
+    GfsSvr* svr;
 
     svr = &MNG_SVR(gfs_mng_ptr);
     for (i = 0; i < SVR_NFILE(svr); i++) {
@@ -1095,9 +1091,9 @@ GFS_LOCAL Sint32 gfs_svrSearchHndl(GfsHn gfs) {
 
 // 0x0601C708
 GFS_LOCAL void gfs_svrAddHndl(GfsHn gfs) {
-    GfsSvr      *svr;
-    Sint32      i;
-    
+    GfsSvr* svr;
+    Sint32 i;
+
     i = gfs_svrSearchHndl(gfs);
     if (i == SVR_NOHNDL) {
         svr = &MNG_SVR(gfs_mng_ptr);
@@ -1108,8 +1104,8 @@ GFS_LOCAL void gfs_svrAddHndl(GfsHn gfs) {
 
 // 0x0601C744
 GFS_LOCAL void gfs_svrRemoveHndl(GfsHn gfs) {
-    GfsSvr      *svr;
-    Sint32      i, nfile;
+    GfsSvr* svr;
+    Sint32 i, nfile;
 
     if (gfs == NULL) {
         return;
@@ -1119,7 +1115,7 @@ GFS_LOCAL void gfs_svrRemoveHndl(GfsHn gfs) {
         svr = &MNG_SVR(gfs_mng_ptr);
         --SVR_NFILE(svr);
         nfile = SVR_NFILE(svr);
-        for ( ; i < nfile; i++) {
+        for (; i < nfile; i++) {
             SVR_ACFILE(svr, i) = SVR_ACFILE(svr, i + 1);
         }
         SVR_ACFILE(svr, i) = NULL;
@@ -1127,9 +1123,9 @@ GFS_LOCAL void gfs_svrRemoveHndl(GfsHn gfs) {
 }
 
 // 0x0601C7A0
-GfsHn GFS_OpenSub(GfsFile *gfs, GfsDirId *dirrec, Sint32 fid) {
-    GftrHn      gftr;
-    Bool        ret;
+GfsHn GFS_OpenSub(GfsFile* gfs, GfsDirId* dirrec, Sint32 fid) {
+    GftrHn gftr;
+    Bool ret;
 
     if (gfs == NULL) {
         return NULL;
@@ -1156,11 +1152,11 @@ GfsHn GFS_OpenSub(GfsFile *gfs, GfsDirId *dirrec, Sint32 fid) {
 }
 
 // 0x0601C840
-GFS_LOCAL Sint32 gfs_loadVol(Uint8 *buf) {
-    GfsDirId    dirrec;
-    GfsHn       gfs;
-    Sint32      ret;
-    GfsErrStat  stat;
+GFS_LOCAL Sint32 gfs_loadVol(Uint8* buf) {
+    GfsDirId dirrec;
+    GfsHn gfs;
+    Sint32 ret;
+    GfsErrStat stat;
     static const Sint8 pvd_id[] = {1, 'C', 'D', '0', '0', '1'};
 
     GFS_DIR_FAD(&dirrec) = PVD_FAD + GFCD_GetBaseFad();
@@ -1190,10 +1186,10 @@ GFS_LOCAL Sint32 gfs_loadVol(Uint8 *buf) {
 }
 
 // 0x0601C908
-GFS_LOCAL Sint32 gfs_getRootDir(GfsDirId *dir) {
-    Sint32      ret;
-    Uint8       *rec;
-    Sint32      size;
+GFS_LOCAL Sint32 gfs_getRootDir(GfsDirId* dir) {
+    Sint32 ret;
+    Uint8* rec;
+    Sint32 size;
 
     if (!MNG_CDCON(gfs_mng_ptr)) {
         return GFS_ERR_CDNODISC;
@@ -1212,8 +1208,8 @@ GFS_LOCAL Sint32 gfs_getRootDir(GfsDirId *dir) {
     if (size <= 0) {
         return GFS_ERR_CDROM;
     }
-    GFS_DIR_SIZE(dir) = (size + GFS_MD1_SCTSIZ - 1) / 
-                                         GFS_MD1_SCTSIZ * GFS_MD1_SCTSIZ;
+    GFS_DIR_SIZE(dir) =
+        (size + GFS_MD1_SCTSIZ - 1) / GFS_MD1_SCTSIZ * GFS_MD1_SCTSIZ;
     GFS_DIR_FN(dir) = 0;
     GFS_DIR_ATR(dir) = GFS_ATR_DIR;
     GFS_DIR_UNIT(dir) = 0;
@@ -1222,10 +1218,10 @@ GFS_LOCAL Sint32 gfs_getRootDir(GfsDirId *dir) {
 }
 
 // 0x0601C9FC
-GFS_LOCAL Sint32 gfs_loadRootDir(GfsDirTbl *dirtbl) {
-    GfsHn       gfs;
-    Sint32      ndir, ret;
-    GfsDirId    dir;
+GFS_LOCAL Sint32 gfs_loadRootDir(GfsDirTbl* dirtbl) {
+    GfsHn gfs;
+    Sint32 ndir, ret;
+    GfsDirId dir;
 
     ret = gfs_getRootDir(&dir);
     if (ret != GFS_ERR_OK) {
@@ -1234,7 +1230,7 @@ GFS_LOCAL Sint32 gfs_loadRootDir(GfsDirTbl *dirtbl) {
         gfs = GFS_mngAllocGrp();
         gfs = GFS_OpenSub(gfs, &dir, 0);
     }
-    if (MNG_CDCON(gfs_mng_ptr)&&(gfs == NULL)) {
+    if (MNG_CDCON(gfs_mng_ptr) && (gfs == NULL)) {
         return ret;
     }
     ndir = GFDR_SetupDirTbl(gfs, dirtbl, GFS_DIR_SIZE(&dir));
@@ -1246,16 +1242,16 @@ GFS_LOCAL Sint32 gfs_loadRootDir(GfsDirTbl *dirtbl) {
 
 // 0x0601CA88
 GFS_LOCAL Sint32 gfs_flowIn(GfsHn gfs) {
-    Sint32      fstat;
-    GfsFileFunc *func;
-    GfsFlow     *flow;
+    Sint32 fstat;
+    GfsFileFunc* func;
+    GfsFlow* flow;
 
     flow = &GFS_FILE_FLOW(gfs);
     if (GFS_FLW_STAT(flow) == GFS_FIN_END) {
         return GFS_FLW_STAT(flow);
     }
 
-    if ((MNG_PICKUP(gfs_mng_ptr) != NULL)&&(MNG_PICKUP(gfs_mng_ptr) != gfs)) {
+    if ((MNG_PICKUP(gfs_mng_ptr) != NULL) && (MNG_PICKUP(gfs_mng_ptr) != gfs)) {
         return GFS_FIN_PUINUSE;
     }
     func = &MNG_FUNCTBL(gfs_mng_ptr, GFS_DTS_FTYPE(&GFS_FLW_DTSRC(flow)));
@@ -1274,10 +1270,10 @@ GFS_LOCAL Sint32 gfs_flowIn(GfsHn gfs) {
 
 // 0x0601CB28
 GFS_LOCAL Sint32 gfs_transData(GfsHn gfs) {
-    Sint32      stat, atr, room;
-    Bool        flag;
+    Sint32 stat, atr, room;
+    Bool flag;
 
-    if ((MNG_TRANS(gfs_mng_ptr) != gfs)&&(MNG_TRANS(gfs_mng_ptr) != NULL)) {
+    if ((MNG_TRANS(gfs_mng_ptr) != gfs) && (MNG_TRANS(gfs_mng_ptr) != NULL)) {
         return GFS_SVR_BUSY;
     }
     GFS_GetFileInfo(gfs, NULL, NULL, NULL, &atr);
@@ -1302,13 +1298,13 @@ GFS_LOCAL Sint32 gfs_transData(GfsHn gfs) {
 
 // 0x0601CBD4
 Sint32 GFS_GetFad(Sint32 fid, Sint32 ofs) {
-    GfsDirId    dir;
-    Sint32      unit;
-    Sint32      ret;
+    GfsDirId dir;
+    Sint32 unit;
+    Sint32 ret;
 
     ret = GFS_GetDirInfo(fid, &dir);
     if (ret < 0) {
-        return (ret);
+        return ret;
     }
     unit = GFS_DIR_UNIT(&dir);
     if (unit == 0) {
@@ -1319,8 +1315,8 @@ Sint32 GFS_GetFad(Sint32 fid, Sint32 ofs) {
 }
 
 // 0x0601CC2C
-GFS_LOCAL void gfs_SetSct(GfsFlow *flow, Sint32 sct) {
-    GfsDtsrc    *dtsrc = &GFS_FLW_DTSRC(flow);
+GFS_LOCAL void gfs_SetSct(GfsFlow* flow, Sint32 sct) {
+    GfsDtsrc* dtsrc = &GFS_FLW_DTSRC(flow);
 
     GFS_FLW_STAT(flow) = GFS_FIN_NOACT;
     if (GFS_DTS_FTYPE(dtsrc) == CD_FILE) {
@@ -1332,8 +1328,9 @@ GFS_LOCAL void gfs_SetSct(GfsFlow *flow, Sint32 sct) {
 }
 
 // 0x0601CC60
-void gfs_GetFinfo(GfsFlow *flow, Sint32 *fid, Sint32 *fad, Sint32 *sctsiz, Sint32 *nsct, Sint32 *lastsiz, Sint32 *fno, Sint32 *atr) {
-    GfsFinfo    *finfo;
+void gfs_GetFinfo(GfsFlow* flow, Sint32* fid, Sint32* fad, Sint32* sctsiz,
+                  Sint32* nsct, Sint32* lastsiz, Sint32* fno, Sint32* atr) {
+    GfsFinfo* finfo;
 
     GFCF_GetFileInfo(flow, fid, fad, sctsiz, nsct, NULL, fno, atr);
     if (lastsiz != NULL) {
@@ -1344,8 +1341,8 @@ void gfs_GetFinfo(GfsFlow *flow, Sint32 *fid, Sint32 *fad, Sint32 *sctsiz, Sint3
 
 // 0x0601CCA0
 GFS_LOCAL void gfs_closeSub(GfsHn gfs) {
-    GfsFlow     *flow;
-    GfsDtsrc    *dts;
+    GfsFlow* flow;
+    GfsDtsrc* dts;
 
     if (gfs == NULL) {
         return;
@@ -1363,19 +1360,19 @@ GFS_LOCAL void gfs_closeSub(GfsHn gfs) {
 
 // 0x0601CCF0
 GFS_LOCAL Sint32 gfs_getGmode(GfsHn gfs) {
-    GfsFlow     *flow = &GFS_FILE_FLOW(gfs);
+    GfsFlow* flow = &GFS_FILE_FLOW(gfs);
 
     return GFS_FLW_GMODE(flow);
 }
 
 // 0x0601CCFC
 GFS_LOCAL Bool gfs_isTaskDone(GfsHn gfs) {
-    Sint32      atr;
-    GfsFlow     *flow = &GFS_FILE_FLOW(gfs);
+    Sint32 atr;
+    GfsFlow* flow = &GFS_FILE_FLOW(gfs);
 
     GFS_GetFileInfo(gfs, NULL, NULL, NULL, &atr);
-    if ((GFS_FLW_STAT(flow) == GFS_FIN_END)&&
-        ((GFBF_GetNumData(gfs) == 0)||(atr & GFS_ATR_CDDA))) {
+    if ((GFS_FLW_STAT(flow) == GFS_FIN_END) &&
+        ((GFBF_GetNumData(gfs) == 0) || (atr & GFS_ATR_CDDA))) {
         return TRUE;
     }
     return FALSE;

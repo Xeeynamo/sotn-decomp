@@ -14,20 +14,20 @@ enum GfsdErrCode {
 };
 
 #define GFSD_INFO_LENGTH(sinfo) ((sinfo)->length)
-#define GFSD_INFO_FNAME(sinfo)  ((sinfo)->fname)
+#define GFSD_INFO_FNAME(sinfo) ((sinfo)->fname)
 
 typedef struct {
-    Sint32      length;
-    Sint8       fname[12];
+    Sint32 length;
+    Sint8 fname[12];
 } GfsdInfo;
 
-#define GFSD_Init        ((Sint32(*)())*((long*)0x60003c0))
-#define GFSD_GetFileNum  ((Sint32(*)())*((long*)0x60003c4))
-#define GFSD_GetFileInfo ((Sint32(*)())*((long*)0x60003c8))
-#define GFSD_Read        ((Sint32(*)())*((long*)0x60003cc))
-#define GFSD_Term        ((Sint32(*)())*((long*)0x60003d0))
-#define GFSD_Open        ((Sint32(*)())*((long*)0x60003d4))
-#define GFSD_Close       ((Sint32(*)())*((long*)0x60003d8))
-#define GFSD_GetBuf      ((Uint8*(*)())*((long*)0x60003dc))
+#define GFSD_Init ((Sint32(*)()) * ((long*)0x60003c0))
+#define GFSD_GetFileNum ((Sint32(*)()) * ((long*)0x60003c4))
+#define GFSD_GetFileInfo ((Sint32(*)()) * ((long*)0x60003c8))
+#define GFSD_Read ((Sint32(*)()) * ((long*)0x60003cc))
+#define GFSD_Term ((Sint32(*)()) * ((long*)0x60003d0))
+#define GFSD_Open ((Sint32(*)()) * ((long*)0x60003d4))
+#define GFSD_Close ((Sint32(*)()) * ((long*)0x60003d8))
+#define GFSD_GetBuf ((Uint8 * (*)()) * ((long*)0x60003dc))
 
 #endif
