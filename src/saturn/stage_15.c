@@ -773,7 +773,7 @@ void func_060E6310(s32 scale, s32 unused) {
     s32 i;
     s32 limit;
 
-    dst_base = DAT_060485e0;
+    dst_base = DAT_060485E0;
     src = g_Stage15Entity08ModelVertices14[0];
     dst = dst_base;
     factor = scale << 8;

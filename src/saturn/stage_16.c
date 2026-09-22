@@ -308,7 +308,7 @@ void func_060E323C(s32 scale, s32 unused) {
     s32 i;
     s32 last;
 
-    base = DAT_060485e0;
+    base = DAT_060485E0;
     srcX = g_Stage16Entity08ModelVertices14[0];
     dstX = base;
     factor = scale << 8;

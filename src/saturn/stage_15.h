@@ -258,7 +258,6 @@ extern u8 DAT_060F2044[];
 void func_060DFA98(MthMatrixTbl* unused, s32 angle);
 void func_060DFB74(MthMatrixTbl* unused, s32 angle);
 void func_060DFC08(MthMatrixTbl* unused, s32 angle);
-extern s32 DAT_060485e0[];
 extern s32 DAT_060FB0D0;
 extern s32 DAT_060FB0E0;
 extern s32 g_Stage15Entity08ModelVertices14[14][3];

@@ -1123,7 +1123,6 @@ void func_060E8DE0(s32 arg0, s32 arg1, s32 arg2) {
     func_060E8EEC(arg0, arg1, arg2);
 }
 
-extern s32 DAT_060485e0[];
 extern s32 DAT_060F5098;
 extern MthMatrixTbl DAT_06061DF0;
 extern s32 g_Stage02Entity08ModelVertices14[];
@@ -1140,7 +1139,7 @@ void func_060E8E1C(s32 arg0, s32 arg1) {
     s32 i;
     s32 limit;
 
-    dst_base = DAT_060485e0;
+    dst_base = DAT_060485E0;
     src = g_Stage02Entity08ModelVertices14;
     dst = dst_base;
     arg0 <<= 8;
