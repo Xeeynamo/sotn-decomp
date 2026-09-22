@@ -221,7 +221,7 @@ void func_060E25F4(Entity* self) {
     goto cleanup;
 
 state10:
-    save_id = DAT_060485C4;
+    save_id = DAT_060485C0.unk4;
     for (i = 1; i <= 5; i++) {
         status = func_0600D028(save_id, i);
         if (status != 0 && status != BUP_BROKEN) {

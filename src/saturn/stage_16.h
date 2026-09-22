@@ -11,7 +11,6 @@
 
 extern s16 DAT_060EA4B0[];
 extern u16 DAT_060EA294[];
-extern s8 DAT_060485C4;
 void PlaySfx(s32 sfxId);
 void SetStep(u8 step);
 void DestroyEntity(Entity* entity);
@@ -170,7 +169,6 @@ extern s32 DAT_060EF100;
 extern s32 DAT_060EF110;
 extern s32 g_Stage16Entity08ModelVertices14[14][3];
 extern MthMatrixTbl DAT_06061DF0;
-void SetCurrentMatrixBinAngle(MthXyz* rot, MthXyz* pos);
 void TransformAndProjectPoints(s32*, s32*, s32, MthMatrixTbl*);
 extern SaturnSpriteFrameHeader* g_Stage16SpriteBank16Frames[];
 extern LayoutEntity g_Stage16LayoutVertical02[];

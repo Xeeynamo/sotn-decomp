@@ -1127,7 +1127,6 @@ extern s32 DAT_060F5098;
 extern MthMatrixTbl DAT_06061DF0;
 extern s32 g_Stage02Entity08ModelVertices14[];
 
-void SetCurrentMatrixBinAngle(MthXyz* rot, MthXyz* pos);
 void TransformAndProjectPoints(s32* src, s32* dst, s32 count);
 
 void func_060E8E1C(s32 arg0, s32 arg1) {
