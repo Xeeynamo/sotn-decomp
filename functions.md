@@ -9381,7 +9381,7 @@
 | dra        | func_psp_0912E3C0                 |      657 |         61 |        |       |     |
 | cat        | func_pspeu_09241E58               |      657 |         69 | Yes    |       |     |
 | cat        | func_pspeu_0925EA40               |      658 |         41 |        |       |     |
-| rno1       | func_us_801A68AC                  |      658 |         50 |        |       |     |
+| rno1       | EntityFog                         |      658 |         50 |        |       |     |
 | rno0       | func_pspeu_09240970               |      660 |         86 |        |       |     |
 | bo4        | MarEntityHitByLightning           |      661 |         61 |        |       |     |
 | rbo5       | MarEntityHitByLightning           |      661 |         61 |        |       |     |
@@ -9665,7 +9665,7 @@
 | maria      | func_pspeu_092BEB40               |      944 |         70 | Yes    |       |     |
 | bo6        | func_pspeu_0924FFB8               |      944 |         89 |        |       |     |
 | are        | func_pspeu_0925E2B0               |      945 |        172 |        |       |     |
-| rno1       | func_us_801A700C                  |      948 |         61 |        |       |     |
+| rno1       | EntityRain                        |      948 |         61 |        |       |     |
 | rnz0       | func_pspeu_09246728               |      955 |        120 | Yes    |       |     |
 | rnz1       | func_pspeu_092405C8               |      955 |        120 | Yes    |       |     |
 |            | func_092EA968                     |      963 |         44 |        |       |     |
