@@ -22,9 +22,9 @@ void EntityLockCamera(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
-void func_us_801A68AC(Entity* self);
-void func_us_801A700C(Entity* self);
-void func_us_801B7CC4_from_no1(Entity* self);
+void EntityFog(Entity* self);
+void EntityRain(Entity* self);
+void EntityFadeRainSound(Entity* self);
 void EntityParanthropus(Entity* self);
 void EntityParanthropusBoneHitbox(Entity* self);
 void EntityParanthropusSkull(Entity* self);
@@ -71,9 +71,9 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityUnkId13,
     EntityExplosionVariants,
     EntityGreyPuff,
-    func_us_801A68AC,
-    func_us_801A700C,
-    func_us_801B7CC4_from_no1,
+    EntityFog,
+    EntityRain,
+    EntityFadeRainSound,
     EntityParanthropus,
     EntityParanthropusBoneHitbox,
     EntityParanthropusSkull,
