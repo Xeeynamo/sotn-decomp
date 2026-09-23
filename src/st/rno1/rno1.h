@@ -51,11 +51,11 @@ typedef enum EntityID {
     E_NOVA_PULSE,               // EntityNovaLaserPulse
     E_NOVA_DEATH_PARTS,         // EntityNovaSkeletonDeathParts
     E_ELEVATOR_MACHINE,         // EntityElevatorMachine
-    E_UNK_26,                   // func_us_801BE880_from_no1
-    E_UNK_27,                   // func_us_801BEB54_from_no1
-    E_UNK_28,                   // func_us_801BEE00_from_no1
-    E_UNK_29,                   // func_us_801BF074_from_no1
-    E_UNK_2A,                   // func_us_801A86A8
+    E_SECRET_WALL,              // EntitySecretElevatorWall
+    E_WALL_SEGMENT,             // EntityBreakableWallSegment
+    E_WALL_PARTICLES,           // EntityWallParticles
+    E_WALL_DEBRIS,              // EntityBreakableWallDebris
+    E_SECRET_ELEVATOR,          // EntitySecretElevator
     E_BREAKABLE_DEBRIS,         // EntityBreakableDebris
     E_UNK_2C,                   // func_us_801A9BEC
     E_UNK_2D,                   // func_us_801B9028_from_no1

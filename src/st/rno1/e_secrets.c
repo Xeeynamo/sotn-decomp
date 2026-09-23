@@ -2,13 +2,16 @@
 #include "rno1.h"
 
 #ifdef VERSION_PSP
-extern s32 E_ID(UNK_27);
-extern s32 E_ID(UNK_28);
-extern s32 E_ID(UNK_29);
+extern s32 E_ID(WALL_SEGMENT);
+extern s32 E_ID(WALL_PARTICLES);
+extern s32 E_ID(WALL_DEBRIS);
 #endif
 
 extern EInit g_EInitParticle;
 extern EInit D_us_80180748;
+extern EInit D_us_80180754;
+extern EInit D_us_80180760;
+
 
 static u16 tilePositions[] = {0x6E, 0x6D, 0x5E, 0x5D, 0x4E, 0x4D, 0x3E, 0x3D};
 
@@ -21,7 +24,7 @@ static u16 tiles[][8] = {
     {0x4B7, 0x4B2, 0x4BD, 0x4B8, 0x50B, 0x4BE, 0x4BD, 0x50C},
 };
 
-static s32 D_us_80180C98 = 0;
+static bool elevatorBool = false;
 
 
 static s16 g_Rno1DebrisCollisionSensors[] = {
@@ -47,7 +50,8 @@ static AnimateEntityFrame g_Rno1DebrisAnim[] = {
     {3, 1}, {3, 2}, {3, 3}, {3, 4}, {3, 5}, {3, 6}, {-1, 0},
 };
 
-void func_us_801BE880_from_no1(Entity* self) {
+// Wall which must be broken in order to access the secret pink elevator
+void EntitySecretElevatorWall(Entity* self) {
     Entity* tempEntity;
     s32 tilePos;
     s32 i;
@@ -65,11 +69,11 @@ void func_us_801BE880_from_no1(Entity* self) {
             self->step = 5;
         } else {
             tempEntity = self + 2;
-            CreateEntityFromEntity(E_ID(UNK_27), self, tempEntity);
+            CreateEntityFromEntity(E_ID(WALL_SEGMENT), self, tempEntity);
             tempEntity->posY.i.hi += 0x18;
             tempEntity->params = 2;
             tempEntity = self + 1;
-            CreateEntityFromEntity(E_ID(UNK_27), self, tempEntity);
+            CreateEntityFromEntity(E_ID(WALL_SEGMENT), self, tempEntity);
             tempEntity->posY.i.hi += 0x30;
             tempEntity->params = 1;
         }
@@ -81,7 +85,7 @@ void func_us_801BE880_from_no1(Entity* self) {
             for (i = 0; i < 5; i++) {
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromEntity(E_ID(UNK_28), self, tempEntity);
+                    CreateEntityFromEntity(E_ID(WALL_PARTICLES), self, tempEntity);
                     tempEntity->posX.i.hi -= 0x10;
                     tempEntity->posY.i.hi += 0x30;
                     tempEntity->params = i;
@@ -139,9 +143,7 @@ void func_us_801BE880_from_no1(Entity* self) {
     }
 }
 
-extern u16 D_us_80180754;
-
-void func_us_801BEB54_from_no1(Entity* self) {
+void EntityBreakableWallSegment(Entity* self) {
     Entity* tempEntity;
     s32 i;
 
@@ -151,7 +153,7 @@ void func_us_801BEB54_from_no1(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_us_80180754);
+        InitializeEntity(D_us_80180754);
         self->hitPoints = 0x18;
         self->hitboxWidth = 0x10;
         self->hitboxHeight = 0xC;
@@ -196,7 +198,7 @@ void func_us_801BEB54_from_no1(Entity* self) {
             for (i = 0; i < 5; i++) {
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromEntity(E_ID(UNK_29), self, tempEntity);
+                    CreateEntityFromEntity(E_ID(WALL_DEBRIS), self, tempEntity);
                     tempEntity->posX.i.hi -= (i * 8) - 0x10 + (Random() & 3);
                     tempEntity->posY.i.hi += (Random() & 7) + 0x14;
                     tempEntity->params = i;
@@ -209,7 +211,7 @@ void func_us_801BEB54_from_no1(Entity* self) {
     }
 }
 
-void func_us_801BEE00_from_no1(Entity* self) {
+void EntityWallParticles(Entity* self) {
     Primitive* prim;
     s32 primIndex;
 
@@ -280,7 +282,7 @@ void func_us_801BEE00_from_no1(Entity* self) {
     }
 }
 
-void func_us_801BF074_from_no1(Entity* self) {
+void EntityBreakableWallDebris(Entity* self) {
     Collider collider;
     Entity* tempEntity;
     Primitive* prim;
@@ -372,11 +374,9 @@ void func_us_801BF074_from_no1(Entity* self) {
     }
 }
 
-extern EInit D_us_80180760;
-
 // Secret elevator inside chicken wall
 // Stand still for ~20 seconds to activate
-void func_us_801A86A8(Entity* self) {
+void EntitySecretElevator(Entity* self) {
     Collider collider;
     s32 tilePos;
     s32 i;
@@ -414,7 +414,7 @@ void func_us_801A86A8(Entity* self) {
             tilePos = tilePositions[i];
             g_Tilemap.fg[tilePos] = tiles[4][i];
         }
-        if (D_us_80180C98 != 0) {
+        if (elevatorBool) {
             self->posY.i.hi = 0xEE - g_Tilemap.scrollY.i.hi;
             collision = GetPlayerCollisionWith(self, 16, 8 - self->params, 4);
             if (collision) {
@@ -441,7 +441,7 @@ void func_us_801A86A8(Entity* self) {
         }
         g_Player.padSim = 0;
         g_Player.demo_timer = 2;
-        D_us_80180C98 = 1;
+        elevatorBool = true;
         g_api.PlaySfx(SFX_BAD_LUCK_JINGLE);
         self->step++;
         break;
@@ -490,7 +490,7 @@ void func_us_801A86A8(Entity* self) {
         posY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
         if (posY < 0xC7) {
             self->posY.i.hi = 0xC7 - g_Tilemap.scrollY.i.hi;
-            D_us_80180C98 = 0;
+            elevatorBool = false;
             for (i = 6; i < 8; i++) {
                 tilePos = tilePositions[i];
                 g_Tilemap.fg[tilePos] = tiles[4][i];

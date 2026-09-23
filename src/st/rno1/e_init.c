@@ -38,11 +38,11 @@ void EntityNovaLaser(Entity* self);
 void EntityNovaLaserPulse(Entity* self);
 void EntityNovaSkeletonDeathParts(Entity* self);
 void EntityElevatorMachine(Entity* self);
-void func_us_801BE880_from_no1(Entity* self);
-void func_us_801BEB54_from_no1(Entity* self);
-void func_us_801BEE00_from_no1(Entity* self);
-void func_us_801BF074_from_no1(Entity* self);
-void func_us_801A86A8(Entity* self);
+void EntitySecretElevatorWall(Entity* self);
+void EntityBreakableWallSegment(Entity* self);
+void EntityWallParticles(Entity* self);
+void EntityBreakableWallDebris(Entity* self);
+void EntitySecretElevator(Entity* self);
 void EntityBreakableDebris(Entity* self);
 void func_us_801A9BEC(Entity* self);
 void func_us_801B9028_from_no1(Entity* self);
@@ -87,11 +87,11 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityNovaLaserPulse,
     EntityNovaSkeletonDeathParts,
     EntityElevatorMachine,
-    func_us_801BE880_from_no1,
-    func_us_801BEB54_from_no1,
-    func_us_801BEE00_from_no1,
-    func_us_801BF074_from_no1,
-    func_us_801A86A8,
+    EntitySecretElevatorWall,
+    EntityBreakableWallSegment,
+    EntityWallParticles,
+    EntityBreakableWallDebris,
+    EntitySecretElevator,
     EntityBreakableDebris,
     func_us_801A9BEC,
     func_us_801B9028_from_no1,

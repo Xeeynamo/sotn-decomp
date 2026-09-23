@@ -1,6 +1,6 @@
 cluts = 0x80180148;
 rooms = 0x80181E98;
-func_us_801BE880_from_no1 = 0x801A7B34;
+EntitySecretElevatorWall = 0x801A7B34;
 CreateEntityFromEntity = 0x801AC388;
 AllocEntity = 0x801ACC74;
 InitializeEntity = 0x801AD114;
