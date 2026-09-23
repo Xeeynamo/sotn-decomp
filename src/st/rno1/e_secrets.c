@@ -8,9 +8,9 @@ extern s32 E_ID(WALL_DEBRIS);
 #endif
 
 extern EInit g_EInitParticle;
-extern EInit D_us_80180748;
-extern EInit D_us_80180754;
-extern EInit D_us_80180760;
+extern EInit g_EInitSecretWall;
+extern EInit g_EInitWallSegment;
+extern EInit g_EInitSecretElevator;
 
 
 static u16 tilePositions[] = {0x6E, 0x6D, 0x5E, 0x5D, 0x4E, 0x4D, 0x3E, 0x3D};
@@ -60,7 +60,7 @@ void EntitySecretElevatorWall(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180748);
+        InitializeEntity(g_EInitSecretWall);
         self->zPriority = 0x70;
         self->hitPoints = 0x7FFF;
         self->hitboxState = 0;
@@ -153,7 +153,7 @@ void EntityBreakableWallSegment(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180754);
+        InitializeEntity(g_EInitWallSegment);
         self->hitPoints = 0x18;
         self->hitboxWidth = 0x10;
         self->hitboxHeight = 0xC;
@@ -389,7 +389,7 @@ void EntitySecretElevator(Entity* self) {
     
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180760);
+        InitializeEntity(g_EInitSecretElevator);
         self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->zPriority = 0x6A;
         if (self->params) {
