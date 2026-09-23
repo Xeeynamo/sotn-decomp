@@ -49,7 +49,7 @@ extern s32 DAT_00258000;
 
 extern SaturnSpriteResource** DAT_060645D0;
 
-extern u8 SYS_buf_060485E0[];
+extern s32 DAT_060485E0[];
 extern Unk0605DB60 d_0605DB60[32];
 extern struct BgTransfer DAT_0605d6c0[8];
 void func_0600871C(s32, UNK_0605c680*, s32);
@@ -133,7 +133,7 @@ extern u32 DAT_0605C658;
 void func_06030df0();
 void InitBackupRam(void);
 s32 func_0600D028(u32 device, s8 arg1);
-s8 func_0600D264(s8 arg0, s8 arg1);
+s8 func_0600D264(u32 device, s8 arg1);
 s8 func_0600D47C(u32 device, s8 arg1);
 extern s8 DAT_0605DD61;
 extern s16 DAT_0605DD90;
@@ -435,7 +435,7 @@ extern s32 SYS_state_060485C0;
 extern s16 DAT_06038FD6;
 extern s16 DAT_06038FD8;
 void func_0601AF44(void);
-extern s32 DAT_06038FE0;
+extern char* DAT_06038FE0;
 s32 sprintf(char* str, const char* format, ...);
 extern void (*DAT_0603908C[])(Primitive* prim, s16 x, s16 y);
 extern s32 DAT_06061DD4;

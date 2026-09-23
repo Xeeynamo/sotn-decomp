@@ -296,7 +296,7 @@ void func_060E2300(s32 scale, s32 unused) {
     s32 i;
     s32 last;
 
-    base = DAT_060485e0;
+    base = DAT_060485E0;
     srcX = DAT_060EA000;
     dstX = base;
     factor = scale << 8;

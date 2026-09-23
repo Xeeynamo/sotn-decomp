@@ -442,7 +442,6 @@ void func_060E4368(s32 arg0, s32 arg1, s32 arg2) {
     func_060E43A4(arg1, arg2);
     func_060E4474(arg0, arg1, arg2);
 }
-extern s32 DAT_060485e0[];
 extern s32 DAT_060F34D0[];
 extern s32 DAT_060F34E0[];
 extern MthMatrixTbl DAT_06061DF0;
@@ -461,7 +460,7 @@ void func_060E43A4(s32 scale, s32 unused) {
     s32 i;
     s32 last;
 
-    base = DAT_060485e0;
+    base = DAT_060485E0;
     srcX = g_RStage15Entity08ModelVertices14[0];
     dstX = base;
     factor = scale << 8;

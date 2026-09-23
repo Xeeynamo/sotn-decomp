@@ -22,21 +22,21 @@ void EntityLockCamera(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
-void func_us_801A68AC(Entity* self);
-void func_us_801A700C(Entity* self);
-void func_us_801B7CC4_from_no1(Entity* self);
+void EntityFog(Entity* self);
+void EntityRain(Entity* self);
+void EntityFadeRainSound(Entity* self);
 void EntityParanthropus(Entity* self);
 void EntityParanthropusBoneHitbox(Entity* self);
 void EntityParanthropusSkull(Entity* self);
 void EntityParanthropusThrownBone(Entity* self);
-void func_us_801C7F24_from_rno0(Entity* self);
+void EntityStoneSkull(Entity* self);
 void EntityJackOBones(Entity* self);
 void EntityJackOBonesDeathParts(Entity* self);
 void EntityJackOBonesJack(Entity* self);
 void EntityNovaSkeleton(Entity* self);
 void EntityNovaLaser(Entity* self);
 void EntityNovaLaserPulse(Entity* self);
-void EntityBladeSoldierDeathParts(Entity* self);
+void EntityNovaSkeletonDeathParts(Entity* self);
 void func_us_801B8F50_from_no1(Entity* self);
 void func_us_801BE880_from_no1(Entity* self);
 void func_us_801BEB54_from_no1(Entity* self);
@@ -71,21 +71,21 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityUnkId13,
     EntityExplosionVariants,
     EntityGreyPuff,
-    func_us_801A68AC,
-    func_us_801A700C,
-    func_us_801B7CC4_from_no1,
+    EntityFog,
+    EntityRain,
+    EntityFadeRainSound,
     EntityParanthropus,
     EntityParanthropusBoneHitbox,
     EntityParanthropusSkull,
     EntityParanthropusThrownBone,
-    func_us_801C7F24_from_rno0,
+    EntityStoneSkull,
     EntityJackOBones,
     EntityJackOBonesDeathParts,
     EntityJackOBonesJack,
     EntityNovaSkeleton,
     EntityNovaLaser,
     EntityNovaLaserPulse,
-    EntityBladeSoldierDeathParts,
+    EntityNovaSkeletonDeathParts,
     func_us_801B8F50_from_no1,
     func_us_801BE880_from_no1,
     func_us_801BEB54_from_no1,
@@ -115,10 +115,10 @@ EInit g_EInitParanthropusBoneHitbox = {ANIMSET_OVL(0), 0, 0, 0, 0x0D4};
 EInit g_EInitParanthropusThrownBone = {ANIMSET_OVL(3), 54, 76, 512, 0x0D5};
 EInit g_EInitStoneSkull = {ANIMSET_OVL(4), 0, 78, 515, 0x180};
 EInit g_EInitJackOBones = {ANIMSET_OVL(5), 1, 74, 524, 0x074};
-EInit D_us_8018070C = {ANIMSET_OVL(5), 0, 74, 524, 0x002};
-EInit D_us_80180718 = {ANIMSET_OVL(5), 21, 74, 524, 0x075};
+EInit g_EInitJackOBones2 = {ANIMSET_OVL(5), 0, 74, 524, 0x002};
+EInit g_EInitJackOBones3 = {ANIMSET_OVL(5), 21, 74, 524, 0x075};
 EInit g_EInitNovaSkeleton = {ANIMSET_OVL(6), 1, 72, 532, 0x07E};
-EInit D_us_80180730 = {ANIMSET_OVL(6), 0, 72, 532, 0x07F};
+EInit g_EInitNovaSkeleton2 = {ANIMSET_OVL(6), 0, 72, 532, 0x07F};
 EInit D_us_8018073C = {ANIMSET_OVL(8), 1, 79, 537, 0x005};
 EInit D_us_80180748 = {ANIMSET_OVL(2), 75, 0, 0, 0x005};
 EInit D_us_80180754 = {ANIMSET_DRA(0), 0, 0, 0, 0x000};

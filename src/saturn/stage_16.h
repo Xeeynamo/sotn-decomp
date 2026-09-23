@@ -166,7 +166,6 @@ void func_060DC60C(Entity* self);
 void func_060DC4C0(Entity* self);
 void func_060DC418(Entity* self);
 void func_060DC040(Entity* self);
-extern s32 DAT_060485e0[];
 extern s32 DAT_060EF100;
 extern s32 DAT_060EF110;
 extern s32 g_Stage16Entity08ModelVertices14[14][3];
