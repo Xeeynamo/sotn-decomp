@@ -210,6 +210,7 @@ _g_SpriteListCount = 0x06038DB0;
 _g_SpriteObjectsInUse = 0x06038DB4;
 _g_SpritePartsInUse = 0x06038DB8;
 _d_06038dbc = 0x06038DBC;
+_DAT_06038FE4 = 0x06038FE4;
 _DAT_06039214 = 0x06039214;
 _g_SoundDriver68k = 0x0603AA7C;
 _DAT_060476a0 = 0x060476A0;
@@ -251,7 +252,6 @@ _SclRealBgColMix = 0x06048248;
 _SclRealColOffset = 0x0604824C;
 unitMatrix = 0x06048250;
 _DAT_060485C0 = 0x060485C0;
-_DAT_060485e0 = 0x060485E0;
 _g_PadsRepeatTimer = 0x060505E8;
 _d_060576AC = 0x060576AC;
 _g_SpriteListHead = 0x06057790;
@@ -357,6 +357,7 @@ _DAT_0605d7f8 = 0x0605D7F8;
 _g_Settings = 0x0605D800; /* size = 0x110 */
 _DAT_0605D910 = 0x0605D910;
 _d_0605DB60 = 0x0605DB60;
+_DAT_0605DD70 = 0x0605DD70;
 _text_buf = 0x06061E00; /* size = 0x421 */
 _DAT_06062224 = 0x06062224;
 _d_060623B0 = 0x060623B0;

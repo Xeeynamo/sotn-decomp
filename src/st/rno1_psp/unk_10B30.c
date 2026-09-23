@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../rno1/rno1.h"
 
+#ifdef VERSION_PSP
+extern s32 E_ID(UNK_29);
+#endif
+
 static s16 g_Rno1DebrisCollisionSensors[] = {
     0, 0, 0, 4, 0, -4, 0, 0,
 };
@@ -24,63 +28,9 @@ static AnimateEntityFrame g_Rno1DebrisAnim[] = {
     {3, 1}, {3, 2}, {3, 3}, {3, 4}, {3, 5}, {3, 6}, {-1, 0},
 };
 
-extern EInit g_EInitInteractable;
 extern EInit g_EInitParticle;
 
-void func_us_801A9A8C(Entity* self) {
-    Entity* child;
-    s32 i;
-
-    switch (self->step) {
-    case 0:
-        InitializeEntity(g_EInitInteractable);
-        self->animSet = 0;
-        self->animCurFrame = 0;
-        child = self + 1;
-        i = 1;
-        for (; i < 2; i++) {
-            CreateEntityFromEntity(E_ID(UNK_2E), self, child);
-            child->params = i + 0x100;
-            child++;
-            CreateEntityFromEntity(E_ID(UNK_2E), self, child);
-            child->params = i;
-            child++;
-        }
-    case 1:
-    default:
-        break;
-    }
-}
-
-extern u16 D_us_80180778;
-
-void func_us_80198A18_from_rbo4(Entity* self) {
-    switch (self->step) {
-    case 0:
-        InitializeEntity(&D_us_80180778);
-        self->drawFlags |= ENTITY_ROTATE;
-        if ((self->params & 0xF) % 2) {
-            self->rotate = ROT(-90);
-        } else {
-            self->rotate = 0;
-        }
-        self->zPriority = (0x40 - self->params) & 0xF;
-        if (self->params & 0x100) {
-            self->animCurFrame = 0x64;
-        } else {
-            self->animCurFrame = 0x62;
-        }
-        self->ext.et_801BDA0C.unk84 = 0;
-        self->ext.et_801BDA0C.unk80 = 0;
-        return;
-
-    case 1:
-        self->palette = PAL_FLAG(0x4F);
-        return;
-    }
-}
-
-INCLUDE_ASM("st/rno1_psp/nonmatchings/rno1_psp/unk_10910", func_us_801BE880_from_no1);
+INCLUDE_ASM("st/rno1_psp/nonmatchings/rno1_psp/unk_10B30", func_us_801BE880_from_no1);
 
 extern u16 D_us_80180754;
 
@@ -315,4 +265,4 @@ void func_us_801BF074_from_no1(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rno1_psp/nonmatchings/rno1_psp/unk_10910", func_us_801A86A8);
+INCLUDE_ASM("st/rno1_psp/nonmatchings/rno1_psp/unk_10B30", func_us_801A86A8);

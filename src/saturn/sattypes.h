@@ -1313,12 +1313,16 @@ typedef struct {
 } RoomBossTeleport;
 
 typedef struct {
-    s32 : 32;
+    s32 unk0;
     s8 unk4;
     s8 unk5;
-    s8 pad[0x1006];
+    s8 : 8;
+    s8 : 8;
+    s32 unk8;
+    s8 pad1008[0x1000];
     s32 unk100C;
-} UNK_060485C0;
+    s8 pad1010[0x114];
+} UNK_060485C0; // size: 0x1124
 
 typedef enum {
     PLAYER_CHARACTER,
