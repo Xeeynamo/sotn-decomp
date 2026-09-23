@@ -24,11 +24,7 @@ void func_us_801C5C78(Entity* self) {
     Tilemap** tilemap_pp_0;
     u32 primIndex;
     u32 xOffset;
-#if defined(VERSION_PSP)
-    u32 params;
-#else
     u16 params;
-#endif
     u32 clut;
     s32 scrollY;
     s32 posY;
@@ -113,7 +109,7 @@ void func_us_801C5C78(Entity* self) {
         prim = prim->next;
         prim->clut = clut;
 
-        if (params != 0) {
+        if (params) {
             prim->v0 = (prim->v1 = 0x63);
             prim->v2 = (prim->v3 = 0x2f);
             prim->x0 = (prim->x2 = xOffset);
