@@ -12,7 +12,6 @@ extern EInit g_EInitSecretWall;
 extern EInit g_EInitWallSegment;
 extern EInit g_EInitSecretElevator;
 
-
 static u16 tilePositions[] = {0x6E, 0x6D, 0x5E, 0x5D, 0x4E, 0x4D, 0x3E, 0x3D};
 
 static u16 tiles[][8] = {
@@ -25,7 +24,6 @@ static u16 tiles[][8] = {
 };
 
 static bool elevatorBool = false;
-
 
 static s16 g_Rno1DebrisCollisionSensors[] = {
     0, 0, 0, 4, 0, -4, 0, 0,
@@ -85,7 +83,8 @@ void EntitySecretElevatorWall(Entity* self) {
             for (i = 0; i < 5; i++) {
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromEntity(E_ID(WALL_PARTICLES), self, tempEntity);
+                    CreateEntityFromEntity(
+                        E_ID(WALL_PARTICLES), self, tempEntity);
                     tempEntity->posX.i.hi -= 0x10;
                     tempEntity->posY.i.hi += 0x30;
                     tempEntity->params = i;
@@ -386,7 +385,7 @@ void EntitySecretElevator(Entity* self) {
     Entity* player = &PLAYER;
 
     collision = GetPlayerCollisionWith(self, 16, 8 - self->params, 4);
-    
+
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitSecretElevator);
