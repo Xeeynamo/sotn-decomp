@@ -50,7 +50,7 @@ typedef enum EntityID {
     E_NOVA_LASER,               // EntityNovaLaser
     E_NOVA_PULSE,               // EntityNovaLaserPulse
     E_NOVA_DEATH_PARTS,         // EntityNovaSkeletonDeathParts
-    E_ELEVATOR_MACHINE,                   // EntityElevatorMachine
+    E_ELEVATOR_MACHINE,         // EntityElevatorMachine
     E_UNK_26,                   // func_us_801BE880_from_no1
     E_UNK_27,                   // func_us_801BEB54_from_no1
     E_UNK_28,                   // func_us_801BEE00_from_no1

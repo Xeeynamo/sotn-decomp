@@ -2,12 +2,14 @@
 #include "rno1.h"
 
 static AnimateEntityFrame anim0[] = {{4, 1}, {4, 2}, {4, 3}, POSE_LOOP(0)};
-static AnimateEntityFrame anim1[] = {{6, 4}, {6, 5}, {6, 6}, {6, 7}, POSE_LOOP(0)};
+static AnimateEntityFrame anim1[] = {
+    {6, 4}, {6, 5}, {6, 6}, {6, 7}, POSE_LOOP(0)};
 static AnimateEntityFrame anim2[] = {{4, 8}, {4, 9}, {4, 10}, POSE_LOOP(0)};
 static AnimateEntityFrame anim3[] = {{8, 11}, {8, 12}, POSE_LOOP(0)};
 static AnimateEntityFrame anim4[] = {{4, 13}, {4, 14}, {4, 15}, POSE_LOOP(0)};
 static AnimateEntityFrame anim5[] = {{4, 16}, {4, 17}, {4, 18}, POSE_LOOP(0)};
-static AnimateEntityFrame anim6[] = {{8, 19}, {8, 20}, {8, 21}, {8, 22}, POSE_LOOP(0)};
+static AnimateEntityFrame anim6[] = {
+    {8, 19}, {8, 20}, {8, 21}, {8, 22}, POSE_LOOP(0)};
 static AnimateEntityFrame anim7[] = {{4, 23}, {4, 24}, {4, 25}, POSE_LOOP(0)};
 static AnimateEntityFrame anim8[] = {{1, 26}, {1, 27}, POSE_LOOP(0)};
 
