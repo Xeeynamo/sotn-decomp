@@ -1,7 +1,28 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rno1.h"
 
+#ifdef VERSION_PSP
+extern s32 E_ID(UNK_27);
+extern s32 E_ID(UNK_28);
+extern s32 E_ID(UNK_29);
+#endif
+
 extern EInit g_EInitParticle;
+extern EInit D_us_80180748;
+
+static u16 tilePositions[] = {0x6E, 0x6D, 0x5E, 0x5D, 0x4E, 0x4D, 0x3E, 0x3D};
+
+static u16 tiles[][8] = {
+    {0x3F9, 0x3FB, 0x3FE, 0x401, 0x403, 0x40D, 0x3FE, 0x40F},
+    {0x3F9, 0x3FB, 0x3FE, 0x401, 0x403, 0x40D, 0x3FE, 0x40F},
+    {0x3F9, 0x3FB, 0x3FE, 0x401, 0x403, 0x40D, 0x3FE, 0x40F},
+    {0x3F9, 0x3FB, 0x412, 0x419, 0x50B, 0x4BE, 0x3FE, 0x40F},
+    {0x4B7, 0x4B2, 0x53D, 0x53E, 0x403, 0x40D, 0x3FE, 0x40F},
+    {0x4B7, 0x4B2, 0x4BD, 0x4B8, 0x50B, 0x4BE, 0x4BD, 0x50C},
+};
+
+static s32 D_us_80180C98 = 0;
+
 
 static s16 g_Rno1DebrisCollisionSensors[] = {
     0, 0, 0, 4, 0, -4, 0, 0,
@@ -26,7 +47,97 @@ static AnimateEntityFrame g_Rno1DebrisAnim[] = {
     {3, 1}, {3, 2}, {3, 3}, {3, 4}, {3, 5}, {3, 6}, {-1, 0},
 };
 
-INCLUDE_ASM("st/rno1/nonmatchings/unk_27B34", func_us_801BE880_from_no1);
+void func_us_801BE880_from_no1(Entity* self) {
+    Entity* tempEntity;
+    s32 tilePos;
+    s32 i;
+    u8 animFrame;
+    Entity* tempEntity2;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_80180748);
+        self->zPriority = 0x70;
+        self->hitPoints = 0x7FFF;
+        self->hitboxState = 0;
+        self->ext.segmentedBreakableWall.damageTaken = 0;
+        if (g_CastleFlags[RNO1_SECRET_WALL_BROKEN]) {
+            self->step = 5;
+        } else {
+            tempEntity = self + 2;
+            CreateEntityFromEntity(E_ID(UNK_27), self, tempEntity);
+            tempEntity->posY.i.hi += 0x18;
+            tempEntity->params = 2;
+            tempEntity = self + 1;
+            CreateEntityFromEntity(E_ID(UNK_27), self, tempEntity);
+            tempEntity->posY.i.hi += 0x30;
+            tempEntity->params = 1;
+        }
+        break;
+
+    case 1:
+        if (self->ext.segmentedBreakableWall.damageTaken > 8) {
+            self->ext.segmentedBreakableWall.damageTaken = 0;
+            for (i = 0; i < 5; i++) {
+                tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                if (tempEntity != NULL) {
+                    CreateEntityFromEntity(E_ID(UNK_28), self, tempEntity);
+                    tempEntity->posX.i.hi -= 0x10;
+                    tempEntity->posY.i.hi += 0x30;
+                    tempEntity->params = i;
+                }
+            }
+            if (self->animCurFrame < 0x4D) {
+                self->animCurFrame++;
+            }
+        }
+        if (self->ext.segmentedBreakableWall.pieceBroken) {
+            PlaySfxPositional(SFX_WALL_DEBRIS_B);
+            self->step_s = 0;
+            self->step = self->ext.segmentedBreakableWall.pieceBroken + 1;
+            if (self->ext.segmentedBreakableWall.pieceBroken == 3) {
+                self->step = 2;
+            }
+        }
+        break;
+
+    case 2:
+        self->animCurFrame = 0x4F;
+        if (self->ext.segmentedBreakableWall.pieceBroken & 2) {
+            PlaySfxPositional(SFX_WALL_DEBRIS_B);
+            self->step = 4;
+        }
+        break;
+
+    case 3:
+        self->animCurFrame = 0x4E;
+        if (self->ext.segmentedBreakableWall.pieceBroken & 1) {
+            PlaySfxPositional(SFX_WALL_DEBRIS_B);
+            self->step = 4;
+        }
+        break;
+
+    case 4:
+        self->animCurFrame = 0x50;
+        g_CastleFlags[RNO1_SECRET_WALL_BROKEN] = 1;
+        tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+        if (tempEntity != NULL) {
+            CreateEntityFromEntity(E_EQUIP_ITEM_DROP, self, tempEntity);
+            tempEntity->params = ITEM_DIM_SUM_SET;
+            tempEntity->posY.i.hi += 0x30;
+        }
+        self->step++;
+        break;
+    default:
+        self->animCurFrame = 0x50;
+        break;
+    }
+    animFrame = self->animCurFrame - 0x4B;
+    for (i = 0; i < 6; i++) {
+        tilePos = tilePositions[i];
+        g_Tilemap.fg[tilePos] = tiles[animFrame][i];
+    }
+}
 
 extern u16 D_us_80180754;
 
@@ -261,4 +372,131 @@ void func_us_801BF074_from_no1(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rno1/nonmatchings/unk_27B34", func_us_801A86A8);
+extern EInit D_us_80180760;
+
+// Secret elevator inside chicken wall
+// Stand still for ~20 seconds to activate
+void func_us_801A86A8(Entity* self) {
+    Collider collider;
+    s32 tilePos;
+    s32 i;
+    u8 collision;
+    s16 posX, posY;
+
+    Entity* player = &PLAYER;
+
+    collision = GetPlayerCollisionWith(self, 16, 8 - self->params, 4);
+    
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_80180760);
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
+        self->zPriority = 0x6A;
+        if (self->params) {
+            if (collision) {
+                self->step = 3;
+                tilePos = 0x31;
+                for (i = 0; i < 2; i++) {
+                    g_Tilemap.fg[tilePos] = 0x4BD;
+                    tilePos++;
+                }
+            } else {
+                tilePos = 0xCD;
+                for (i = 0; i < 2; i++) {
+                    g_Tilemap.fg[tilePos] = 0x3FE;
+                    tilePos++;
+                }
+                self->step = 5;
+            }
+            break;
+        }
+        for (i = 6; i < 8; i++) {
+            tilePos = tilePositions[i];
+            g_Tilemap.fg[tilePos] = tiles[4][i];
+        }
+        if (D_us_80180C98 != 0) {
+            self->posY.i.hi = 0xEE - g_Tilemap.scrollY.i.hi;
+            collision = GetPlayerCollisionWith(self, 16, 8 - self->params, 4);
+            if (collision) {
+                g_Player.padSim = 0;
+                g_Player.demo_timer = 2;
+                self->step = 6;
+                for (i = 6; i < 8; i++) {
+                    tilePos = tilePositions[i];
+                    g_Tilemap.fg[tilePos] = tiles[5][i];
+                }
+            }
+        }
+        break;
+
+    case 1:
+        break;
+
+    case 2:
+        if (!self->params) {
+            for (i = 0; i < 8; i++) {
+                tilePos = tilePositions[i];
+                g_Tilemap.fg[tilePos] = tiles[5][i];
+            }
+        }
+        g_Player.padSim = 0;
+        g_Player.demo_timer = 2;
+        D_us_80180C98 = 1;
+        g_api.PlaySfx(SFX_BAD_LUCK_JINGLE);
+        self->step++;
+        break;
+
+    case 3:
+        g_Player.demo_timer = 2;
+        self->posY.i.hi++;
+        if (collision) {
+            player->posY.i.hi++;
+            g_unkGraphicsStruct.shoveY.i.hi += 1;
+            g_api.func_8010DFF0(0, 1);
+        }
+        if (self->params) {
+            posX = self->posX.i.hi;
+            posY = self->posY.i.hi + 8;
+            g_api.CheckCollision(posX, posY, &collider, 0);
+            FntPrint("vram %x\n", collider.effects);
+            if (collider.effects & EFFECT_SOLID) {
+                g_Player.demo_timer = 0;
+                self->step++;
+            }
+        }
+        break;
+
+    case 4:
+        tilePos = 0xCD;
+        for (i = 0; i < 2; i++) {
+            g_Tilemap.fg[tilePos] = 0x3FE;
+            tilePos++;
+        }
+        if (!collision) {
+            self->step++;
+        }
+        break;
+
+    case 5:
+        break;
+    case 6:
+        g_Player.demo_timer = 2;
+        self->posY.i.hi--;
+        if (collision) {
+            player->posY.i.hi--;
+            g_unkGraphicsStruct.shoveY.i.hi -= 1;
+            g_api.func_8010DFF0(0, 1);
+        }
+        posY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
+        if (posY < 0xC7) {
+            self->posY.i.hi = 0xC7 - g_Tilemap.scrollY.i.hi;
+            D_us_80180C98 = 0;
+            for (i = 6; i < 8; i++) {
+                tilePos = tilePositions[i];
+                g_Tilemap.fg[tilePos] = tiles[4][i];
+            }
+            self->step = 1;
+        }
+        break;
+    }
+}
