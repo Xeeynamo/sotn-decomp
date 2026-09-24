@@ -16,7 +16,120 @@ INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", EntityBgColumnsParallax_from_no4);
 
 INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", func_us_801C1EE4_from_no4);
 
-INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", func_us_801C5C78);
+extern Tilemap* D_pspeu_0929B8B8; // This variable is assigned to a different
+                                  // var that is never used
+
+void func_us_801C5C78(Entity* self) {
+    Primitive* prim;
+    Tilemap** tilemap_pp_0;
+    u32 primIndex;
+    u32 xOffset;
+    u16 params;
+    u32 clut;
+    s32 scrollY;
+    s32 posY;
+    u32 scrollYModulo;
+
+    params = self->params;
+    if (!self->step) {
+        InitializeEntity(g_EInitParticle);
+        self->animSet = 0;
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        if (primIndex == (-1)) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
+                       FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA | FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.et_801C5C78.prim = prim;
+        while (prim) {
+            if (params) {
+                prim->tpage = 0xF;
+                prim->u0 = (prim->u2 = 0x82);
+                prim->u1 = (prim->u3 = 0x9d);
+            } else {
+                prim->tpage = 0xE;
+                prim->u0 = (prim->u2 = 0xe9);
+                prim->u1 = (prim->u3 = 0xf7);
+            }
+            prim->priority = 0x62;
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+        }
+    }
+
+    prim = self->ext.et_801C5C78.prim;
+    tilemap_pp_0 = &D_pspeu_0929B8B8;
+    self->ext.et_801C5C78.unk84 += 1;
+
+    if (self->ext.et_801C5C78.unk84 >= 0xE) {
+        self->ext.et_801C5C78.unk84 = 0;
+    }
+
+    posY = self->posY.i.hi;
+    scrollY = g_Tilemap.scrollY.i.hi;
+
+    if (posY >= 0) {
+        scrollY %= 32;
+        if (params) {
+            clut = 0x90;
+        } else {
+            clut = 0xB0;
+        }
+        clut = 0xB0;
+        clut += self->ext.et_801C5C78.unk84;
+
+        if (((scrollY + posY) - 0x50) > 0x60) {
+            scrollYModulo = 0x60 - scrollY;
+        }
+        scrollYModulo = 0x60;
+
+        prim->clut = clut;
+
+        if (params) {
+            xOffset = self->posX.i.hi - 0xD;
+            prim->v2 = (prim->v3 = 3);
+            prim->x1 = (prim->x3 = xOffset + 0x1B);
+            prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_UNK02 | DRAW_TRANSP;
+        } else {
+            xOffset = self->posX.i.hi - 7;
+            prim->v2 = (prim->v3 = 0x83);
+            prim->x1 = (prim->x3 = xOffset + 0xe);
+            prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_UNK02 | DRAW_TRANSP;
+        }
+
+        prim->v0 = (prim->v1 = prim->v2 + 0x60);
+        prim->x0 = (prim->x2 = xOffset);
+        prim->y0 = (prim->y1 = 0x4C);
+        prim->y2 = (prim->y3 = 0xAC);
+        prim = prim->next;
+        prim->clut = clut;
+
+        if (params) {
+            prim->v0 = (prim->v1 = 0x63);
+            prim->v2 = (prim->v3 = 0x2f);
+            prim->x0 = (prim->x2 = xOffset);
+            prim->x1 = (prim->x3 = xOffset + 0x1B);
+            prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_UNK02 | DRAW_TRANSP;
+        } else {
+            prim->v0 = (prim->v1 = 0xe3);
+            prim->v2 = (prim->v3 = 0xaf);
+            prim->x0 = (prim->x2 = xOffset);
+            prim->x1 = (prim->x3 = xOffset + 0xe);
+            prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_UNK02 | DRAW_TRANSP;
+        }
+
+        prim->y0 = (prim->y1 = 0xAC);
+        prim->y2 = (prim->y3 = 0xE0);
+        prim = prim->next;
+    }
+}
 
 INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", func_us_801C5EE4);
 
@@ -169,11 +282,49 @@ void EntityFloatingIcePlatform(Entity* self) {
 
 INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", func_us_801C4BD8_from_no4);
 
-INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", func_us_801C8668);
+void func_us_801C8668(Entity* self) {
+    s32 i;
+    u16* tile;
+    Tilemap* tilemap;
+
+    tilemap = &g_Tilemap;
+
+    if (!self->step) {
+        InitializeEntity(g_EInitInteractable);
+        self->animSet = 0;
+        tile = tilemap->fg + 0x1052;
+
+        for (i = 0; i < 5; ++i) {
+            *tile = 0xac7;
+            tile += 1;
+        }
+        *tile = 0x59D;
+        tile = tilemap->fg + 0x1062;
+
+        for (i = 0; i < 0xA; ++i) {
+            *tile = 0xAC7;
+            tile += 1;
+        }
+    }
+}
 
 void RNO4_Unused801C8704(void) {}
 
-INCLUDE_ASM("st/rno4/nonmatchings/unk_44B0C", func_us_801C870C);
+void func_us_801C870C(Entity* self) {
+    s16 i;
+    u16* tilePtr;
+
+    if (self->params == 0) {
+        tilePtr = g_Tilemap.fg + 0x143;
+    } else {
+        tilePtr = g_Tilemap.fg + 0x53;
+    }
+
+    for (i = 0; i < 0xA; ++i) {
+        tilePtr[0] = 0;
+        ++tilePtr;
+    }
+}
 
 void RNO4_Unused801C8768(void) {}
 

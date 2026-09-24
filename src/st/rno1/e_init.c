@@ -38,11 +38,11 @@ void EntityNovaLaser(Entity* self);
 void EntityNovaLaserPulse(Entity* self);
 void EntityNovaSkeletonDeathParts(Entity* self);
 void EntityElevatorMachine(Entity* self);
-void func_us_801BE880_from_no1(Entity* self);
-void func_us_801BEB54_from_no1(Entity* self);
-void func_us_801BEE00_from_no1(Entity* self);
-void func_us_801BF074_from_no1(Entity* self);
-void func_us_801A86A8(Entity* self);
+void EntitySecretElevatorWall(Entity* self);
+void EntityBreakableWallSegment(Entity* self);
+void EntityWallParticles(Entity* self);
+void EntityBreakableWallDebris(Entity* self);
+void EntitySecretElevator(Entity* self);
 void EntityBreakableDebris(Entity* self);
 void func_us_801A9BEC(Entity* self);
 void func_us_801B9028_from_no1(Entity* self);
@@ -87,11 +87,11 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityNovaLaserPulse,
     EntityNovaSkeletonDeathParts,
     EntityElevatorMachine,
-    func_us_801BE880_from_no1,
-    func_us_801BEB54_from_no1,
-    func_us_801BEE00_from_no1,
-    func_us_801BF074_from_no1,
-    func_us_801A86A8,
+    EntitySecretElevatorWall,
+    EntityBreakableWallSegment,
+    EntityWallParticles,
+    EntityBreakableWallDebris,
+    EntitySecretElevator,
     EntityBreakableDebris,
     func_us_801A9BEC,
     func_us_801B9028_from_no1,
@@ -120,9 +120,9 @@ EInit g_EInitJackOBones3 = {ANIMSET_OVL(5), 21, 74, 524, 0x075};
 EInit g_EInitNovaSkeleton = {ANIMSET_OVL(6), 1, 72, 532, 0x07E};
 EInit g_EInitNovaSkeleton2 = {ANIMSET_OVL(6), 0, 72, 532, 0x07F};
 EInit g_EInitElevatorMachine = {ANIMSET_OVL(8), 1, 79, 537, 0x005};
-EInit D_us_80180748 = {ANIMSET_OVL(2), 75, 0, 0, 0x005};
-EInit D_us_80180754 = {ANIMSET_DRA(0), 0, 0, 0, 0x000};
-EInit D_us_80180760 = {ANIMSET_OVL(2), 102, 0, 0, 0x005};
+EInit g_EInitSecretWall = {ANIMSET_OVL(2), 75, 0, 0, 0x005};
+EInit g_EInitWallSegment = {ANIMSET_DRA(0), 0, 0, 0, 0x000};
+EInit g_EInitSecretElevator = {ANIMSET_OVL(2), 102, 0, 0, 0x005};
 EInit D_us_8018076C = {ANIMSET_OVL(11), 0, 72, 564, 0x003};
 EInit D_us_80180778 = {ANIMSET_OVL(1), 0, 0, 0, 0x005};
 EInit g_EInitUnused80180784 = {ANIMSET_OVL(2), 0, 0, 0, 0x005};
