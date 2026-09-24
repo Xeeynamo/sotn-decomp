@@ -35,8 +35,6 @@ void PcmLseek(GfsHn gfs, Sint32 offset);
 void func_06016B9C(GfsHn gfs, s32 address, s32 size);
 void PcmClose(GfsHn gfs, s32 type);
 
-extern void (*DAT_06000310)(s32, void (*)(void));
-
 extern s32 DAT_06041280;
 extern s32 DAT_06041284;
 extern s32 DAT_06057C24;

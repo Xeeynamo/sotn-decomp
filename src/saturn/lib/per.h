@@ -2,6 +2,7 @@
 #define PER_H
 
 #include "xpt.h"
+#include "int.h"
 
 #define PER_REG_COMREG ((volatile Uint8*)0x2010001F)
 #define PER_REG_SR ((volatile Uint8*)0x20100061)
