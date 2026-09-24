@@ -1476,7 +1476,6 @@ s32 func_800F4D38(s32, s32);
 
 extern Entity g_Entities[TOTAL_ENTITY_COUNT]; // 0x060997F8
 extern UNK_060485C0 DAT_060485C0;
-extern s8 DAT_060485C4;
 // One entry of the VRAM transfer queue at d_0605DB60.
 typedef struct {
     /* 0x00 */ s32 unk0;

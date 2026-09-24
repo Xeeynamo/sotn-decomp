@@ -4,6 +4,8 @@
 
 #include "sattypes.h"
 
+#include "lib/gfs/gfs.h"
+
 typedef struct {
     s32 unk0;
     s32 unk4;
@@ -29,9 +31,9 @@ extern SoundMemoryLayout DAT_06062270;
 #define UNCACHED_SOUND_REQUESTS ((volatile SoundRequest*)0x26063C30)
 
 void PcmOpen(s32 code);
-void PcmLseek(u32 handle, s32 offset);
-void func_06016B9C(s32 handle, s32 address, s32 size);
-void PcmClose(s32 handle, s32 type);
+void PcmLseek(GfsHn gfs, Sint32 offset);
+void func_06016B9C(GfsHn gfs, s32 address, s32 size);
+void PcmClose(GfsHn gfs, s32 type);
 
 extern void (*DAT_06000310)(s32, void (*)(void));
 
@@ -54,7 +56,7 @@ extern s32 DAT_06063BD0;
 extern s32 DAT_06063BFC;
 extern s32 DAT_06063C18;
 extern s32 DAT_06063E70;
-extern s32 DAT_06063E90;
+extern GfsDirTbl DAT_06063E90;
 extern u32 DAT_06063EA8;
 extern s32 DAT_06063EB0;
 extern s32 DAT_060641D0;
@@ -113,13 +115,6 @@ void func_06015E68(void);
 void func_06017508(void);
 void func_06017988(void);
 s32 IsXaBgmPlaying(void);
-s32 func_0601B448(s32*);
-s32 func_0601B4AC(u8*);
-s32 func_0601B674(s32);
-s32 func_0601BC14(s32, s32, s32, s32);
-void func_0601BE3C(s32, void*, s32*);
-s32 func_0601BEE8(s32);
-s32 func_0601C01C(s32, s32);
-s32 func_0601C26C(s32);
+s32 func_06017FA4(void*, Sint32, GfsHn);
 
 #endif

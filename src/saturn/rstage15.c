@@ -445,7 +445,6 @@ void func_060E4368(s32 arg0, s32 arg1, s32 arg2) {
 extern s32 DAT_060F34D0[];
 extern s32 DAT_060F34E0[];
 extern MthMatrixTbl DAT_06061DF0;
-extern void SetCurrentMatrixBinAngle(MthXyz* rot, MthXyz* pos);
 extern void TransformAndProjectPoints(
     s32* src, s32* dst, s32 count, MthMatrixTbl* matrixTbl);
 
