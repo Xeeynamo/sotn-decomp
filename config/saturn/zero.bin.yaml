@@ -144,42 +144,18 @@ segments:
         file: zero_3
         end: 0x17213
 
-      # DGFS
-      - start: 0x17214
-        type: c
-        file: lib/gfs
-        end: 0x1D76B
-        function_ranges:
-          - [0x17890, 0x178B1]
-          - [0x178B2, 0x178E4]
-          - [0x178F0, 0x17958]
-          - [0x17AEC, 0x17B05]
-          - [0x17B06, 0x17B7C]
-          - [0x17B94, 0x17BF3]
-          - [0x17BF4, 0x17C7C]
-          - [0x17DBC, 0x17DE9]
-          - [0x17DEA, 0x17E28]
-          - [0x17F9C, 0x17F9C]
-          - [0x18000, 0x18000]
-          - [0x1806C, 0x18089]
-          - [0x1808A, 0x180C6]
-          - [0x180D0, 0x180D0]
-          - [0x18AA8, 0x18AC5]
-          - [0x18AC6, 0x18B3A]
-          - [0x18BE0, 0x18C18]
-          - [0x18C7C, 0x18C87]
-          - [0x18C88, 0x18CC6]
-          # shared-tail entry falls through to 0x19A88
-          - [0x19A84, 0x19A87]
-          - [0x1AEC0, 0x1AEDE]
-          - [0x1AF14, 0x1AF32]
-          - [0x1B010, 0x1B0A7]
-          - [0x1B0A8, 0x1B0C0]
-          - [0x1B324, 0x1B40E]
-          - [0x1B458, 0x1B4EA]
-          - [0x1B508, 0x1B560]
-          - [0x1B5A4, 0x1B5E2]
-          - [0x1B6E8, 0x1B7A2]
+      - [0x17214, c, lib/gfs/gfs]
+      - [0x18D40, c, lib/gfs/gfs_cdf]
+      - [0x195F4, c, lib/gfs/gfs_mmf]
+      - [0x197A4, c, lib/gfs/gfs_sff]
+      - [0x199B4, c, lib/gfs/gfs_dir]
+      - [0x1A7EC, c, lib/gfs/gfs_trn]
+      - [0x1B220, c, lib/gfs/gfs_buf]
+      - [0x1B324, c, lib/gfs/gfs_cdb]
+      - [0x1B8F4, c, lib/gfs/gfs_cdc]
+      - [0x1D2BC, c, lib/gfs/gfs_mmb]
+      - [0x1D480, c, lib/gfs/gfs_mmc]
+      - [0x1D5B8, c, lib/gfs/gfs_sfb]
 
       # SPR_1C
       - start: 0x1D76C
@@ -323,12 +299,6 @@ segments:
         type: .text
         file: lib/sys
         end: 0x2CA5B
-
-      # version string
-      - start: 0x2CA5C
-        type: data
-        file: lib/sys
-        end: 0x2CA7B
 
       - start: 0x2CA5C
         type: c

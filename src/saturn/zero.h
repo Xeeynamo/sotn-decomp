@@ -6,6 +6,7 @@
 #include "lib/scl.h"
 #include "lib/per.h"
 #include "lib/bup.h"
+#include "lib/cdc.h"
 #include "inc_asm.h"
 #include <saturn_sprite.h>
 
@@ -113,11 +114,7 @@ extern s32 DAT_060476a4;
 extern s32 DAT_060476a0;
 extern s32 DAT_06064354;
 extern s32 DAT_060644AC;
-
-void func_0601B600();
 extern s32 DAT_06038a44;
-
-s32 func_06017FA4(s32 param_1, s32 param_2, s32 param_3);
 
 void func_060082E8(void);
 void func_0600841C(void);
@@ -232,17 +229,13 @@ extern u16 DAT_06061DE8[2];
 extern s32 DAT_06061DE0[2];
 extern u16 DAT_0605DD94;
 extern s8 DAT_0605DD60;
-void func_0601B724();
-int func_0601B75C(int param_1, int param_2, int param_3);
-int func_0601B8B4(int param_1, int param_2);
-s32 func_06017F5C(u8*);
+s32 func_06017F5C(char*);
 void code2name(u32 code, u8* name);
 extern u8 DAT_0606423a;
 extern u8 DAT_06064414;
 extern s32 DAT_06064250[];
 void StopPcm(s32 param);
 void func_06011F40(s32 param);
-s32 func_0601BDD0(s32);
 extern s32 DAT_060641F4;
 extern s32 DAT_06062258;
 extern s32 DAT_06062268;
@@ -285,13 +278,12 @@ s32 func_0601AE5C(s32, s32);
 void func_0600C298(s32);
 void func_0600C0C4(s32);
 void func_0601AE2C(s32);
-s32 func_0602DCFC();
 s32 func_06006574(struct Unk0600654C*);
 extern s32 DAT_0605d7f8;
 extern s32 DAT_06057f34;
 void SPR_WaitDrawEnd();
 void func_06012fb4();
-void func_0600d8bc();
+void func_0600D8BC();
 void func_06009838();
 void UpdateScrollForRoom();
 void TransferAllBgLayers();
@@ -300,7 +292,7 @@ void CloseSpriteList();
 void func_06007d54();
 void func_0600652C();
 void func_06005310();
-void func_06004f50();
+void func_06004F50();
 void ReturnToGame();
 void SetVblank(s32);
 void func_0600456c();
@@ -320,8 +312,6 @@ extern s32 DAT_060645AC;
 void FlushVramTransfers(void);
 void func_06008464(void);
 void func_06008488(void);
-s32 func_0602D754(void*);
-void func_0601B910(s32, s32*, s32*, s32*);
 extern s32 DAT_06050668;
 extern s32 DAT_0605AE80;
 extern s32* DAT_0605AE8C;
@@ -387,6 +377,7 @@ extern s32 DAT_060576B0[];
 extern s32 DAT_06057770;
 extern void func_06008AB4();
 extern void func_0600BD68(s32 arg0, s32 arg1, s32 arg2, Unk0605cd70* arg3);
+void SetCurrentMatrixBinAngle(MthXyz* rot, MthXyz* pos);
 extern void func_0600DE38(void);
 extern void func_0600E164(void);
 extern void func_06008B20(void);
@@ -430,8 +421,6 @@ struct Unk06057F60 {
     s8 unk6;
 };
 extern struct Unk06057F60 DAT_06057F60;
-extern s32 SYS_state_060485C4;
-extern s32 SYS_state_060485C0;
 extern s16 DAT_06038FD6;
 extern s16 DAT_06038FD8;
 void func_0601AF44(void);

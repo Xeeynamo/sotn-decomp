@@ -1,54 +1,53 @@
 #include "sattypes.h"
 #include "inc_asm.h"
 
+#include "cdc.h"
+
 // SEGA_CDC.A
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602D4A4, func_0602D4A4);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602D4A4, CDC_CdPlay);
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602D528, func_0602D528);
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602D600, func_0602D600);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602D600, CDC_CdSeek);
 
 // _CDC_CdScan
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602D660, func_0602D660);
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602D6BC, func_0602D6BC);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602D6BC, CDC_GetCurStat);
 
-// _CDC_MpGetLastStat
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602D724, func_0602D724);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602D724, CDC_GetLastStat);
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602D754, func_0602D754);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602D754, CDC_GetPeriStat);
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602D7CC, func_0602D7CC);
 
 // _CDC_GetHwInfo
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602D86C, func_0602D86C);
 
-// _CDC_TgetToc
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602D90C, func_0602D90C);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602D90C, CDC_TgetToc);
 
-// _CDC_GetSes
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602D98C, func_0602D98C);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602D98C, CDC_GetSes);
 
-// _CDC_CdInit
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602D9FC, func_0602D9FC);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602D9FC, CDC_CdInit);
 
 // _CDC_CdOpen
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602DAD4, func_0602DAD4);
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602DB1C, func_0602DB1C);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602DB1C, CDC_DataReady);
 
-// _CDC_DataEnd
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602DBA4, func_0602DBA4);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602DBA4, CDC_DataEnd);
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602DC14, func_0602DC14);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602DC4C, func_0602DC4C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602DC98, func_0602DC98);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602DCA8, func_0602DCA8);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602DCE4, func_0602DCE4);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602DCFC, func_0602DCFC);
 
-// _CDC_ClrHirqReq
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602DD18, func_0602DD18);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602DCE4, CDC_GetDataPtr);
+
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602DCFC, CDC_GetHirqReq);
+
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602DD18, CDC_ClrHirqReq);
 
 // _CDREG_ClrHirqReq
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602DD60, func_0602DD60);
@@ -86,29 +85,24 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E188, func_0602E188);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E1D4, func_0602E1D4);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E1E4, func_0602E1E4);
 
-// _CDC_ChgDir
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E200, func_0602E200);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E200, CDC_ChgDir);
 
-// _CDC_ReadDir
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E268, func_0602E268);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E268, CDC_ReadDir);
 
-// _CDC_GetFileScope
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E2D0, func_0602E2D0);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E2D0, CDC_GetFileScope);
 
-// _CDC_TgetFileInfo
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E354, func_0602E354);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E354, CDC_TgetFileInfo);
 
 // _CDC_ReadFile
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E3E8, func_0602E3E8);
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E458, func_0602E458);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E4B4, func_0602E4B4);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E458, CDC_AbortFile);
 
-// _CDC_GetSctData
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E520, func_0602E520);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E4B4, CDC_SetSctLen);
 
-// _CDC_DelSctData
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E5A4, func_0602E5A4);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E520, CDC_GetSctData);
+
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E5A4, CDC_DelSctData);
 
 // _CDC_GetdelSctData
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E628, func_0602E628);
@@ -119,51 +113,49 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E6AC, func_0602E6AC);
 // _CDC_CopySctData
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E71C, func_0602E71C);
 
-// _CDC_MoveSctData
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E7B0, func_0602E7B0);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E7B0, CDC_MoveSctData);
 
 // _CDC_GetCopyErr
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E844, func_0602E844);
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E8A8, func_0602E8A8);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E8A8, CDC_SetFiltRange);
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E914, func_0602E914);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E998, func_0602E998);
 
-// _CDC_GetFiltSubh
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602EA50, func_0602EA50);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602E998, CDC_SetFiltSubh);
 
-// _CDC_SetFiltMode
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602EB14, func_0602EB14);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602EA50, CDC_GetFiltSubh);
 
-// _CDC_GetFiltMode
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602EB80, func_0602EB80);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602EB14, CDC_SetFiltMode);
 
-// _CDC_SetFiltCon
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602EBF4, func_0602EBF4);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602EB80, CDC_GetFiltMode);
+
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602EBF4, CDC_SetFiltCon);
 
 // _CDC_GetFiltCon
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602EC84, func_0602EC84);
 
-// _CDC_ResetSelector
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602ED08, func_0602ED08);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602ED08, CDC_ResetSelector);
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602ED74, func_0602ED74);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602EDF8, func_0602EDF8);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602EE6C, func_0602EE6C);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602EEEC, func_0602EEEC);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602ED74, CDC_GetBufSiz);
+
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602EDF8, CDC_GetSctNum);
+
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602EE6C, CDC_CalActSiz);
+
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602EEEC, CDC_GetActSiz);
 
 // _chkEselUpdStatus
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602EF50, func_0602EF50);
 
-// _CDC_GetSctInfo
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602EFA4, func_0602EFA4);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602EFA4, CDC_GetSctInfo);
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602F06C, func_0602F06C);
 
 // _CDC_GetFadSearch
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602F0E0, func_0602F0E0);
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602F164, func_0602F164);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602F164, CDC_CdSetCon);
 
 // _CDC_CdGetCon
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602F1C0, func_0602F1C0);

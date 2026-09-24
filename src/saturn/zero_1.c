@@ -13,7 +13,7 @@ void func_06012030(void) {
 void func_06012054(void) {
     StopPcm(6);
     if (DAT_06062280 != 0) {
-        func_0601BDD0(DAT_06062280);
+        GFS_NwStop(DAT_06062280);
         PcmClose(DAT_06062280, 1);
         DAT_06062280 = 0;
     }
@@ -23,7 +23,7 @@ void func_06012054(void) {
 void func_060120A0(void) {
     StopPcm(6);
     if (DAT_06062280 != 0) {
-        func_0601BDD0(DAT_06062280);
+        GFS_NwStop(DAT_06062280);
     }
     g_PlayingXaBgmId = 0;
 }
@@ -31,7 +31,7 @@ void func_060120A0(void) {
 void func_060120D8(void) {
     StopPcm(6);
     if (DAT_06062280 != 0) {
-        func_0601BDD0(DAT_06062280);
+        GFS_NwStop(DAT_06062280);
     }
 }
 
@@ -210,7 +210,7 @@ void func_06012554(void) {
         D_8013B61C = 9;
         DAT_060644C5 = 0;
         DAT_060644A0 = 30;
-        func_0601C26C(DAT_06062290[DAT_06062268]);
+        GFS_CdMovePickup(DAT_06062290[DAT_06062268]);
     }
     DAT_060623A0 = 0;
     DAT_060641E4 = 0;
@@ -259,7 +259,10 @@ void func_060126B8(void) {
 }
 
 s32 func_060126D4(s32 arg0) {
-    s32 local[4];
+    s32 sctsz;
+    s32 nsct;
+    s32 lstlen;
+    s32 amode;
     s32 result;
 
     if (arg0 != 0) {
@@ -275,8 +278,8 @@ s32 func_060126D4(s32 arg0) {
             DAT_060644AC = 0;
             return -1;
         }
-        func_0601B910(DAT_06064390, local, local + 1, local + 2);
-        DAT_06057C28 = local[0] * (local[1] - 1) + local[2];
+        GFS_GetFileSize(DAT_06064390, &sctsz, &nsct, &lstlen);
+        DAT_06057C28 = sctsz * (nsct - 1) + lstlen;
         ((s32(*)(u32, s32))PcmLseek)(DAT_06064390, 0);
         result = ((s32(*)(s32, s32, s32))func_06016B9C)(
             DAT_06064390, 0x00211800, DAT_06057C28);
@@ -289,8 +292,8 @@ s32 func_060126D4(s32 arg0) {
     }
 
     if (DAT_06041280 == 1) {
-        func_0601BEE8(DAT_06064390);
-        func_0601BE3C(DAT_06064390, local + 3, &DAT_06057C24);
+        GFS_NwExecOne(DAT_06064390);
+        GFS_NwGetStat(DAT_06064390, &amode, &DAT_06057C24);
         if (DAT_06057C24 >= DAT_06057C28) {
             DAT_06064354 = 1;
             PcmClose(DAT_06064390, 2);
@@ -302,7 +305,10 @@ s32 func_060126D4(s32 arg0) {
 }
 
 s32 func_060127F0(s32 arg0) {
-    s32 work[4];
+    s32 sctsz;
+    s32 nsct;
+    s32 lstlen;
+    s32 amode;
     s32 result;
 
     if (arg0 != 0) {
@@ -319,8 +325,8 @@ s32 func_060127F0(s32 arg0) {
             return -1;
         }
 
-        func_0601B910(DAT_060643D0, &work[0], &work[1], &work[2]);
-        DAT_06057C30 = work[0] * (work[1] - 1) + work[2];
+        GFS_GetFileSize(DAT_060643D0, &sctsz, &nsct, &lstlen);
+        DAT_06057C30 = sctsz * (nsct - 1) + lstlen;
         ((s32(*)(u32, s32))PcmLseek)((u32)DAT_060643D0, 0);
         result = ((s32(*)(s32, s32, s32))func_06016B9C)(
             DAT_060643D0, 0x22A000, DAT_06057C30);
@@ -333,8 +339,8 @@ s32 func_060127F0(s32 arg0) {
     }
 
     if (DAT_06041284 == 1) {
-        func_0601BEE8(DAT_060643D0);
-        func_0601BE3C(DAT_060643D0, &work[3], &DAT_06057C2C);
+        GFS_NwExecOne(DAT_060643D0);
+        GFS_NwGetStat(DAT_060643D0, &amode, &DAT_06057C2C);
         if (DAT_06057C2C >= DAT_06057C30) {
             DAT_060644AC = 1;
             PcmClose(DAT_060643D0, 2);
@@ -348,7 +354,7 @@ s32 func_060127F0(s32 arg0) {
 void func_06012908(void) {
     StopPcm(5);
     if (DAT_06064338 != 0) {
-        func_0601BDD0(DAT_06064338);
+        GFS_NwStop(DAT_06064338);
         PcmClose(DAT_06064338, 2);
         DAT_06064338 = 0;
     }
@@ -358,7 +364,7 @@ void func_06012908(void) {
 void func_06012954(void) {
     StopPcm(5);
     if (DAT_06064338 != 0) {
-        func_0601BDD0(DAT_06064338);
+        GFS_NwStop(DAT_06064338);
     }
     DAT_06064300 = 0;
 }
@@ -366,7 +372,7 @@ void func_06012954(void) {
 void func_0601298C(void) {
     StopPcm(5);
     if (DAT_06064338 != 0) {
-        func_0601BDD0(DAT_06064338);
+        GFS_NwStop(DAT_06064338);
     }
 }
 
@@ -396,7 +402,7 @@ void func_06012D30(void) {
         DAT_06064334 = DAT_0606438C;
         DAT_0606438C = 0;
         DAT_06064234 = 0;
-        func_0601C26C(DAT_06064338);
+        GFS_CdMovePickup(DAT_06064338);
     }
     DAT_060642DC = 0;
 }
@@ -676,7 +682,7 @@ s32 func_06014CB8(s32 arg0) {
     if (DAT_06062290[arg0] == 0)
         return -1;
     *d_060623B0 &= ~2;
-    func_0601C01C(DAT_06062290[arg0], 0);
+    GFS_SetGmode(DAT_06062290[arg0], GFS_GMODE_ERASE);
     return 0;
 }
 
@@ -706,23 +712,23 @@ void PcmOpen(s32 code) {
     func_06017F5C(name);
 }
 
-void PcmLseek(u32 arg0, s32 arg1) {
-    s32 iVar1 = func_0601B8B4(arg0, arg1 + 1);
-    func_0601B75C(arg0, iVar1 - 1, 0);
+void PcmLseek(GfsHn gfs, Sint32 offset) {
+    s32 sector = GFS_ByteToSct(gfs, offset + 1);
+    GFS_Seek(gfs, sector - 1, GFS_SEEK_SET);
 }
 
-void func_06016B9C(s32 arg0, s32 arg1, s32 arg2) {
-    func_06017FA4(arg1, arg2, arg0);
+void func_06016B9C(GfsHn gfs, s32 arg1, s32 arg2) {
+    func_06017FA4(arg1, arg2, gfs);
 }
 
-void func_06016BBC(s32 arg0, s32 arg1, s32 arg2) {
-    func_06017FA4(arg1, arg2, arg0);
+void func_06016BBC(GfsHn gfs, s32 arg1, s32 arg2) {
+    func_06017FA4(arg1, arg2, gfs);
 }
 
 s32 d_060623B0[];
 
-void PcmClose(s32 arg0, s32 arg1) {
-    func_0601B724();
+void PcmClose(GfsHn gfs, s32 arg1) {
+    GFS_Close(gfs);
     d_060623B0[arg1] = 0;
 }
 
@@ -903,21 +909,21 @@ s32 func_06017F28(void) {
     }
 }
 
-s32 func_06017F5C(u8* arg0) {
+s32 func_06017F5C(char* fname) {
     s32 handle;
 
-    func_0601B448(&DAT_06063E90);
-    handle = func_0601B674(func_0601B4AC(arg0));
-    func_0601BDD0(handle);
+    GFS_SetDir(&DAT_06063E90);
+    handle = GFS_Open(GFS_NameToId(fname));
+    GFS_NwStop(handle);
     return handle;
 }
 
 // original name: dat_read
-s32 func_06017FA4(s32 arg0, s32 arg1, s32 arg2) {
+s32 func_06017FA4(void* buf, Sint32 nbyte, GfsHn gfs) {
     s32 sector;
 
-    sector = func_0601B8B4(arg2, arg1);
-    if (func_0601BC14(arg2, sector, arg0, arg1) != 0) {
+    sector = GFS_ByteToSct(gfs, nbyte);
+    if (GFS_NwFread(gfs, sector, buf, nbyte) != 0) {
         return -1;
     }
     return sector * 0x800;

@@ -35,7 +35,7 @@ void func_060040d8(void) {
     case 0:
         func_0600456c();
         DAT_0605d7f8 = 0;
-        func_06004f50(0x20);
+        func_06004F50(0x20);
         DAT_0605cea0.unk0++;
         break;
     case 6:
@@ -119,14 +119,14 @@ void func_060040d8(void) {
         SclProcess = 1;
         SCL_DisplayFrame();
         SCL_Vdp2Init();
-        func_06011ce4();
+        func_06011CE4();
         ReturnToGame();
-        func_06004f50(0x31);
+        func_06004F50(0x31);
         func_06007d54();
         break;
     case 0x31:
         DAT_0605d7f0 = 1;
-        func_0600d8bc();
+        func_0600D8BC();
         break;
     }
     if (func_0600fb4c() != 0) {
@@ -146,7 +146,7 @@ void func_060040d8(void) {
             }
         }
         StartColorOffsetFade(0, 4);
-        func_06004f50(0x30);
+        func_06004F50(0x30);
     }
     func_06010400();
     CloseSpriteList();
@@ -160,7 +160,7 @@ void func_060040d8(void) {
 
 void InitScuDma();
 void InitBackupRam();
-void func_06011ce4();
+void func_06011CE4();
 
 void InitSystem(void) {
     CSH_Init(0);
@@ -173,7 +173,7 @@ void InitSystem(void) {
     InitVdp2Display();
     func_06006470();
     InitBackupRam();
-    func_06011ce4();
+    func_06011CE4();
     SetVblank(1);
     func_060082C8();
     InitDebugPrint();
@@ -186,9 +186,9 @@ void func_0600456C(void) {
     func_06007F6C();
 
     Scl_w_reg.win0_start[0] = 0;
-    Scl_w_reg.win0_start[1] = 0xC;
-    Scl_w_reg.win0_end[0] = 0x280;
-    Scl_w_reg.win0_end[1] = 0xF0;
+    Scl_w_reg.win0_start[1] = 12;
+    Scl_w_reg.win0_end[0] = 640;
+    Scl_w_reg.win0_end[1] = 240;
     Scl_w_reg.wincontrl[0] = 0x383;
     Scl_w_reg.wincontrl[1] = 0x8383;
     Scl_w_reg.wincontrl[2] = 0x83;
@@ -198,6 +198,8 @@ void func_0600456C(void) {
     DAT_0605D770.unk0 = 0;
     SCL_DisplayFrame();
 }
+
+void GFS_Reset();
 
 // original name: RESET_SYSTEM
 void func_0600460C(void) {
@@ -211,16 +213,16 @@ void func_0600460C(void) {
     func_06007F6C();
 
     Scl_w_reg.win0_start[0] = 0;
-    Scl_w_reg.win0_start[1] = 0xC;
-    Scl_w_reg.win0_end[0] = 0x280;
-    Scl_w_reg.win0_end[1] = 0xF0;
+    Scl_w_reg.win0_start[1] = 12;
+    Scl_w_reg.win0_end[0] = 640;
+    Scl_w_reg.win0_end[1] = 240;
     Scl_w_reg.wincontrl[0] = 0x383;
     Scl_w_reg.wincontrl[1] = 0x8383;
     Scl_w_reg.wincontrl[2] = 0x83;
     SclProcess = 1;
 
     func_06009D30();
-    func_0601B600();
+    GFS_Reset();
     func_06006470();
     func_060082C8();
     InitDebugPrint();
@@ -1024,7 +1026,7 @@ s32 func_06006470(void) {
 }
 
 void func_0600652C(void) {
-    func_0601B600();
+    GFS_Reset();
     DAT_06038a44 = 0;
 }
 
@@ -1106,16 +1108,20 @@ void func_06006E4C(s8* path, s8* dst) {
     dst[lastSlash] = 0;
 }
 
-s32 func_06006E9C(s32* arg0, s32 arg1) {
-    s32 stride;
-    s32 base;
+void GFS_GetFileSize(s32, s32*, s32*, s32*);
 
-    func_0601B910(arg1, &stride, arg0, &base);
-    return (stride * (*arg0 - 1)) + base;
+s32 func_06006E9C(s32* nsct, s32 gfs) {
+    s32 sctsz;
+    s32 lstsz;
+
+    GFS_GetFileSize(gfs, &sctsz, nsct, &lstsz);
+    return (sctsz * (*nsct - 1)) + lstsz;
 }
 
 // original name: IsCdOpened
-bool func_06006ED4() { return (func_0602DCFC() & 0x20) ? true : false; }
+bool func_06006ED4() {
+    return (CDC_GetHirqReq() & CDC_HIRQ_DCHG) ? true : false;
+}
 
 s32 func_06006EF8(void) {
     s32 stat[4];
@@ -1128,7 +1134,7 @@ s32 func_06006EF8(void) {
     data = (char*)&stat[1];
     status = stat;
     retries = 0x10;
-    while (func_0602D754(&stat[1]) == -8 && retries > 0) {
+    while (CDC_GetPeriStat(&stat[1]) == CDC_ERR_PERI && retries > 0) {
     }
     status[0] = data[0] & 0x0F;
     if (stat[0] == 1 || stat[0] == 2) {
@@ -3556,7 +3562,7 @@ void func_06011F58(void) {
     DAT_06062258 = 0;
     bgm = DAT_06062290[DAT_06062268];
     if (bgm != 0) {
-        func_0601BDD0(bgm);
+        GFS_NwStop(bgm);
         DAT_06063C1C = 0;
     }
     D_8013B61C = 0;
@@ -3572,7 +3578,7 @@ void func_06011FC8(void) {
     DAT_06063EB4 = 0;
     bgm = DAT_06062290[DAT_06062268];
     if (bgm != 0) {
-        func_0601BDD0(bgm);
+        GFS_NwStop(bgm);
         DAT_06063C1C = 0;
     }
     D_8013B61C = 0;

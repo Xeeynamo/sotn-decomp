@@ -261,7 +261,6 @@ void func_060DFC08(MthMatrixTbl* unused, s32 angle);
 extern s32 DAT_060FB0D0;
 extern s32 DAT_060FB0E0;
 extern s32 g_Stage15Entity08ModelVertices14[14][3];
-void SetCurrentMatrixBinAngle(MthXyz* rot, MthXyz* pos);
 void TransformAndProjectPoints(
     s32* src, s32* dst, s32 count, MthMatrixTbl* matrixTbl);
 extern s16 g_Stage15SpriteBank25PackedSpriteParts[];
