@@ -747,7 +747,7 @@
 | rno0       | e_gurkha.rodata                   |       18 |          0 | Yes    |       |     |
 | rno0       | e_jack_o_bones.rodata             |       18 |          0 | Yes    |       |     |
 | rno1       | e_jack_o_bones.rodata             |       18 |          0 | Yes    |       |     |
-| rno1       | unk_10B30.rodata                  |       18 |          0 | Yes    |       |     |
+| rno1       | e_secrets.rodata                  |       18 |          0 | Yes    |       |     |
 | rno2       | e_ctulhu.rodata                   |       18 |          0 | Yes    |       |     |
 | rno2       | unk_19FF8.rodata                  |       18 |          0 | Yes    |       |     |
 | rno3       | e_jack_o_bones.rodata             |       18 |          0 | Yes    |       |     |
@@ -8083,7 +8083,7 @@
 | dra        | func_psp_091123D8                 |      279 |         37 | Yes    |       |     |
 | dra        | func_psp_0910F370                 |      279 |         38 | Yes    |       |     |
 | dra        | func_psp_0911E3D0                 |      280 |         15 |        |       |     |
-| rno1       | func_us_801BE880_from_no1         |      280 |         36 |        |       |     |
+| rno1       | EntitySecretElevatorWall          |      280 |         36 |        |       |     |
 | rbo1       | func_us_80193E24                  |      280 |         37 |        |       |     |
 | rno4       | func_us_801C5C78                  |      281 |         22 |        |       |     |
 | are        | func_pspeu_092381A0               |      281 |         30 |        |       |     |
@@ -8909,7 +8909,7 @@
 | bo6        | func_pspeu_0925CC00               |      429 |         43 |        |       |     |
 | rno3       | func_pspeu_0923C078               |      429 |         68 | Yes    |       |     |
 | cat        | func_pspeu_09241400               |      433 |         29 |        |       |     |
-| rno1       | func_us_801A86A8                  |      433 |         42 | Yes    |       |     |
+| rno1       | EntitySecretElevator              |      433 |         42 | Yes    |       |     |
 | no3        | func_pspeu_0923AFD8               |      434 |         43 |        |       |     |
 | np3        | EntityStairwayPiece               |      434 |         43 |        |       |     |
 | rno3       | func_pspeu_09254B18               |      434 |         43 |        |       |     |
