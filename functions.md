@@ -3681,7 +3681,7 @@
 | are        | func_pspeu_0924B3A8               |       55 |          5 |        |       |     |
 | cen        | func_pspeu_09246B30               |       55 |          5 |        |       |     |
 | no0        | func_pspeu_092444F8               |       55 |          5 |        |       |     |
-| rno4       | func_us_801C870C                  |       55 |          5 |        |       |     |
+| rno4       | func_pspeu_09259C48               |       55 |          5 |        |       |     |
 | sel        | func_psp_0923FC08                 |       55 |          5 |        |       |     |
 | dra        | func_psp_091010D8                 |       55 |          6 |        |       |     |
 | main       | sceGuEndObject                    |       55 |          6 |        |       |     |
@@ -4082,7 +4082,7 @@
 | cen        | func_pspeu_09241480               |       62 |          6 |        |       |     |
 | nz1        | func_pspeu_09239A78               |       62 |          6 |        |       |     |
 | main       | func_psp_0891B7A0                 |       62 |          7 |        |       |     |
-| rno4       | func_us_801C8668                  |       62 |          7 |        |       |     |
+| rno4       | func_pspeu_09259B68               |       62 |          7 |        |       |     |
 | bo0        | MakeExplosions                    |       62 |          8 |        |       |     |
 | cat        | func_pspeu_09249C80               |       62 |          8 |        |       |     |
 | rbo6       | func_pspeu_0924CED8               |       62 |          9 |        |       |     |
@@ -5166,7 +5166,7 @@
 | rno3       | func_pspeu_09253D28               |       84 |          6 |        |       |     |
 | dra        | func_psp_090EEE78                 |       84 |          7 |        |       |     |
 | main       | __multadd                         |       84 |          7 |        |       |     |
-| rno4       | func_pspeu_0923D170               |       84 |          7 |        |       |     |
+| rno4       | func_us_801D5DC8                  |       84 |          7 |        |       |     |
 | bo6        | func_pspeu_0924A448               |       84 |          8 |        |       |     |
 | main       | rcos                              |       84 |         10 |        |       |     |
 | main       | rsin                              |       84 |         10 |        |       |     |
