@@ -3820,7 +3820,10 @@ typedef struct {
     /* 0x86 */ u8 : 8;
     /* 0x87 */ u8 : 8;
     /* 0x88 */ u32 : 32;
-    /* 0x8C */ u32 : 32;
+    /* 0x8C */ u8 : 8;
+    /* 0x8D */ u8 : 8;
+    /* 0x8E */ u8 : 8;
+    /* 0x8F */ u8 signal;
     /* 0x90 */ u32 : 32;
     /* 0x94 */ u32 : 32;
     /* 0x98 */ u32 : 32;
@@ -3832,12 +3835,18 @@ typedef struct {
     /* 0x80 */ s16 timer;
     /* 0x82 */ s16 moveTimer;
     /* 0x84 */ s32 deathPuffPosX;
-    /* 0x88 */ u32 : 32;
+    /* 0x88 */ s16 nextStep;
+    /* 0x8A */ s16 : 16;
     /* 0x8C */ u8 moveAway;
-    /* 0x8D */ u8 : 8;
-    /* 0x8E */ u8 : 8;
-    /* 0x8F */ u8 : 8;
+    /* 0x8D */ u8 isReady;
+    /* 0x8E */ u8 hasNextStep;
+    /* 0x8F */ u8 signal;
     /* 0x90 */ u8 axeThrown;
+    /* 0x91 */ u8 : 8;
+    /* 0x92 */ s16 : 16;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s32 attack;
 } ET_Minotaur;
 
 typedef struct {
@@ -4415,6 +4424,14 @@ typedef struct {
     /* 0x8C */ s32 bloodyTimer;
 } ET_Crusher;
 
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s16 halfWidth;
+} ET_801A460C;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -4790,6 +4807,7 @@ typedef union { // offset=0x7C
     ET_DarkwingBatWings batwing;
     ET_BombKnight bombKnight;
     ET_Crusher crusher;
+    ET_801A460C et_801A460C;
 } Ext;
 
 SYNC_FIELD(ET_Player, ET_Weapon, anim);
