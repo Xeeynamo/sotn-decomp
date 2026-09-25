@@ -63,7 +63,7 @@ typedef enum EntityID {
     E_UNK_2B,                   // func_us_801C39A4
     E_UNK_2C,                   // func_us_801C4960
     E_UNK_2D,                   // func_us_801C4C0C
-    E_UNK_2E,                   // func_us_801C4EA8
+    E_BOSS_ROUND_HALF,                   // func_us_801C4EA8
     E_KARASUMAN,                // EntityKarasuman
     E_KARASUMAN_FEATHER_ATTACK, // EntityKarasumanFeatherAttack
     E_KARASUMAN_ORB_ATTACK,     // EntityKarasumanOrbAttack

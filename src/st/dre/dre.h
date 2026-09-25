@@ -12,7 +12,7 @@ enum Palettes {
     PAL_PORTRAIT_ALUCARD = 0x208,
     PAL_PORTRAIT_LISA = 0x210,
     PAL_PORTRAIT_SUCCUBUS = 0x218,
-    PAL_UNK_2E0 = 0x2E0,
+    PAL_BOSS_ROUND_HALF0 = 0x2E0,
 };
 
 enum EntityID {

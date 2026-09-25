@@ -95,7 +95,7 @@ segments:
       - [0x27B34, c, e_secrets]
       - [0x28B38, c, e_red_door]
       - [0x29930, c, e_boss_ante_decor]
-      - [0x29A8C, c, unk_29A8C]
+      - [0x29A8C, c, e_boss_round_door]
       - [0x29BEC, c, unk_29BEC]
       - [0x29C9C, c, st_update]
       - [0x2A0D0, c, collision]

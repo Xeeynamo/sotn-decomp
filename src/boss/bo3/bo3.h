@@ -57,8 +57,8 @@ typedef enum EntityID {
     E_DUMMY_2B,              // EntityDummy
     E_DUMMY_2C,              // EntityDummy
     E_UNK_2D,                // func_us_801A07CC
-    E_UNK_2E,                // func_us_801A0A80
-    E_UNK_2F,                // func_us_801A1120
+    E_BOSS_ROUND_HALF,                // func_us_801A0A80
+    E_BOSS_ROUND,                // func_us_801A1120
     E_UNK_30,                // func_us_801A16E4
     E_UNK_31,                // func_us_801A2AEC
     E_UNK_32,                // func_us_801A3CD8

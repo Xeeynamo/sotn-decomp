@@ -59,7 +59,7 @@ segments:
       - [0xE838, c, rno1/e_stone_skull]
       - [0xEAB8, c, rno1/st_common]
       - [0x101D0, c, rno1/prim_helpers]
-      - [0x10910, c, rno1/unk_29A8C]
+      - [0x10910, c, rno1/e_boss_round_door]
       - [0x10B30, c, rno1/e_secrets]
       - [0x11FF8, c, rno1_psp/st_init]
       - [0x121F0, c, rno1/e_breakable]

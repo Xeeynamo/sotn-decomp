@@ -60,7 +60,7 @@ typedef enum EntityID {
     E_UNK_2B,                   // func_us_801A5F88
     E_UNK_2C,                   // func_us_801A62B4
     E_UNK_2D,                   // func_801B1D68
-    E_UNK_2E,                   // RicSetDeadPrologue
+    E_BOSS_ROUND_HALF,                   // RicSetDeadPrologue
     NUM_ENTITIES,
 };
 

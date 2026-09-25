@@ -46,8 +46,8 @@ void EntitySecretElevator(Entity* self);
 void EntityBreakableDebris(Entity* self);
 void func_us_801A9BEC(Entity* self);
 void EntityBossAnteRoomDecoration(Entity* self);
-void func_us_80198A18_from_rbo4(Entity* self);
-void func_us_801A9A8C(Entity* self);
+void EntityBossRoundDoorHalf(Entity* self);
+void EntityBossRoundDoor(Entity* self);
 
 PfnEntityUpdate EntityUpdates[] = {
     EntityBreakable,
@@ -95,8 +95,8 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityBreakableDebris,
     func_us_801A9BEC,
     EntityBossAnteRoomDecoration,
-    func_us_80198A18_from_rbo4,
-    func_us_801A9A8C,
+    EntityBossRoundDoorHalf,
+    EntityBossRoundDoor,
 };
 
 // clang-format off
@@ -124,7 +124,7 @@ EInit g_EInitSecretWall = {ANIMSET_OVL(2), 75, 0, 0, 0x005};
 EInit g_EInitWallSegment = {ANIMSET_DRA(0), 0, 0, 0, 0x000};
 EInit g_EInitSecretElevator = {ANIMSET_OVL(2), 102, 0, 0, 0x005};
 EInit g_EInitBossNextDecor = {ANIMSET_OVL(11), 0, 72, 564, 0x003};
-EInit D_us_80180778 = {ANIMSET_OVL(1), 0, 0, 0, 0x005};
+EInit g_EInitHalfRound = {ANIMSET_OVL(1), 0, 0, 0, 0x005};
 EInit g_EInitUnused80180784 = {ANIMSET_OVL(2), 0, 0, 0, 0x005};
 EInit D_us_80180790 = {ANIMSET_OVL(2), 92, 0, 0, 0x005};
 // clang-format on

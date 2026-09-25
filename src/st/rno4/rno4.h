@@ -57,7 +57,7 @@ typedef enum EntityID {
     E_UNK_2B,                    // func_us_801C3FB0_from_no4
     E_UNK_2C,                    // func_us_801C4228_from_no4
     E_UNK_2D,                    // Unused801C8768
-    E_UNK_2E,                    // Unused801C8770
+    E_BOSS_ROUND_HALF,                    // Unused801C8770
     E_BOAT_ELEVATOR_CHAINS,      // EntityBoatElevatorChains
     E_UNK_30,                    // Unused801C8BD4
     E_UNK_31,                    // Unused801C8BDC

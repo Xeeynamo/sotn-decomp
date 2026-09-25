@@ -58,7 +58,7 @@ typedef enum EntityID {
     E_UNK_2C,               // func_us_801A3BE0
     E_UNK_2D,               // func_us_801A4028
     E_BACKGROUND_VORTEX,    // EntityBackgroundVortex
-    E_UNK_2F,               // func_us_801B1738
+    E_BOSS_ROUND,               // func_us_801B1738
     E_UNK_30,               // func_us_801B2864
     E_UNK_31,               // func_us_801A4594
     E_UNK_32,               // func_us_801A4F14

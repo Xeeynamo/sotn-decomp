@@ -2,11 +2,11 @@
 #include "rno1.h"
 
 #ifdef VERSION_PSP
-extern s32 E_ID(UNK_2E);
+extern s32 E_ID(BOSS_ROUND_HALF);
 #endif
 
 extern EInit g_EInitInteractable;
-void func_us_801A9A8C(Entity* self) {
+void EntityBossRoundDoor(Entity* self) {
     Entity* child;
     s32 i;
 
@@ -16,12 +16,11 @@ void func_us_801A9A8C(Entity* self) {
         self->animSet = 0;
         self->animCurFrame = 0;
         child = self + 1;
-        i = 1;
-        for (; i < 2; i++) {
-            CreateEntityFromEntity(E_ID(UNK_2E), self, child);
+        for (i = 1; i < 2; i++) {
+            CreateEntityFromEntity(E_ID(BOSS_ROUND_HALF), self, child);
             child->params = i + 0x100;
             child++;
-            CreateEntityFromEntity(E_ID(UNK_2E), self, child);
+            CreateEntityFromEntity(E_ID(BOSS_ROUND_HALF), self, child);
             child->params = i;
             child++;
         }
@@ -31,12 +30,12 @@ void func_us_801A9A8C(Entity* self) {
     }
 }
 
-extern u16 D_us_80180778;
+extern EInit g_EInitHalfRound;
 
-void func_us_80198A18_from_rbo4(Entity* self) {
+void EntityBossRoundDoorHalf(Entity* self) {
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_us_80180778);
+        InitializeEntity(g_EInitHalfRound);
         self->drawFlags |= ENTITY_ROTATE;
         if ((self->params & 0xF) % 2) {
             self->rotate = ROT(-90);
@@ -45,8 +44,10 @@ void func_us_80198A18_from_rbo4(Entity* self) {
         }
         self->zPriority = (0x40 - self->params) & 0xF;
         if (self->params & 0x100) {
+            // Lower half
             self->animCurFrame = 0x64;
         } else {
+            // Upper half
             self->animCurFrame = 0x62;
         }
         self->ext.et_801BDA0C.unk84 = 0;
