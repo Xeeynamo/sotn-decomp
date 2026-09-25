@@ -18,17 +18,13 @@
 // Frame 9: An empty bottle on its side, and a little green pyramid
 
 // It is unclear what the purpose of the different Z priorities are - Almost
-// all are the same, except for 4 and 5 which have higher values. Might be 
+// all are the same, except for 4 and 5 which have higher values. Might be
 // interesting to see if there is any object in-game with a priority between.
 
 extern EInit g_EInitBossNextDecor;
 
-static u16 zPris[] = {0x68,0x68,0x68,
-                      0x6C,0x6A,0x68,
-                      0x68,0x68,0x68};
-static u16 opacs[] = {0x80,0x80,0x60,
-                      0x80,0x80,0x40,
-                      0x80,0x80,0x80};
+static u16 zPris[] = {0x68, 0x68, 0x68, 0x6C, 0x6A, 0x68, 0x68, 0x68, 0x68};
+static u16 opacs[] = {0x80, 0x80, 0x60, 0x80, 0x80, 0x40, 0x80, 0x80, 0x80};
 
 void EntityBossAnteRoomDecoration(Entity* self) {
     switch (self->step) {
