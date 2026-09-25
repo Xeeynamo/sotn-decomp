@@ -21,7 +21,7 @@
 // all are the same, except for 4 and 5 which have higher values. Might be 
 // interesting to see if there is any object in-game with a priority between.
 
-extern EInit D_us_8018076C;
+extern EInit g_EInitBossNextDecor;
 
 static u16 zPris[] = {0x68,0x68,0x68,
                       0x6C,0x6A,0x68,
@@ -33,7 +33,7 @@ static u16 opacs[] = {0x80,0x80,0x60,
 void EntityBossAnteRoomDecoration(Entity* self) {
     switch (self->step) {
     case 0: {
-        InitializeEntity(D_us_8018076C);
+        InitializeEntity(g_EInitBossNextDecor);
         self->animCurFrame = self->params + 1;
         self->zPriority = zPris[self->params];
         self->drawFlags = ENTITY_OPACITY;
