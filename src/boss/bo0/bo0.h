@@ -51,8 +51,8 @@ typedef enum EntityID {
     E_UNK_2B,               // func_us_801AD338
     E_OLROX_AFTER_IMAGE,    // EntityOlroxAfterImage
     E_UNK_2D,               // func_us_801AFAF4/func_pspeu_0925CBE8
-    E_BOSS_ROUND_HALF,           // func_us_801AF8C0/func_pspeu_0925C938 (EntityPortal)
-    E_BOSS_ROUND,           // func_us_801AF604/func_pspeu_0925C580
+    E_UNK_2E,           // func_us_801AF8C0/func_pspeu_0925C938 (EntityPortal)
+    E_UNK_2F,           // func_us_801AF604/func_pspeu_0925C580
     E_UNK_30,           // func_us_801AF31C/func_pspeu_0925C178
     E_UNK_31,           // func_us_801AE858/func_pspeu_0925B1B0
     E_UNK_32,           // func_us_801B0930

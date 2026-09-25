@@ -2,7 +2,7 @@
 #include "rno1.h"
 
 #ifdef VERSION_PSP
-extern s32 E_ID(BOSS_ROUND_HALF);
+extern s32 E_ID(E_BOSS_ROUND_HALF);
 #endif
 
 extern EInit g_EInitInteractable;
@@ -17,10 +17,10 @@ void EntityBossRoundDoor(Entity* self) {
         self->animCurFrame = 0;
         child = self + 1;
         for (i = 1; i < 2; i++) {
-            CreateEntityFromEntity(E_ID(BOSS_ROUND_HALF), self, child);
+            CreateEntityFromEntity(E_ID(E_BOSS_ROUND_HALF), self, child);
             child->params = i + 0x100;
             child++;
-            CreateEntityFromEntity(E_ID(BOSS_ROUND_HALF), self, child);
+            CreateEntityFromEntity(E_ID(E_BOSS_ROUND_HALF), self, child);
             child->params = i;
             child++;
         }
