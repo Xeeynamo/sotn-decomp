@@ -1,18 +1,23 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rno1.h"
 
-void func_us_801B9028_from_no1(Entity* self) {
-    extern u16 D_us_8018076C[];
-    extern u16 D_us_80180D44[];
-    extern u16 D_us_80180D58[];
+extern EInit D_us_8018076C;
 
+static u16 zPris[] = {0x68,0x68,0x68,
+                      0x6C,0x6A,0x68,
+                      0x68,0x68,0x68};
+static u16 opacs[] = {0x80,0x80,0x60,
+                      0x80,0x80,0x40,
+                      0x80,0x80,0x80};
+
+void func_us_801B9028_from_no1(Entity* self) {
     switch (self->step) {
     case 0: {
         InitializeEntity(D_us_8018076C);
         self->animCurFrame = self->params + 1;
-        self->zPriority = D_us_80180D44[self->params];
+        self->zPriority = zPris[self->params];
         self->drawFlags = ENTITY_OPACITY;
-        self->opacity = D_us_80180D58[self->params];
+        self->opacity = opacs[self->params];
         break;
     }
 
