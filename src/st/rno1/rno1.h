@@ -57,10 +57,10 @@ typedef enum EntityID {
     E_WALL_DEBRIS,              // EntityBreakableWallDebris
     E_SECRET_ELEVATOR,          // EntitySecretElevator
     E_BREAKABLE_DEBRIS,         // EntityBreakableDebris
-    E_UNK_2C,                   // func_us_801A9BEC
-    E_UNK_2D,                   // func_us_801B9028_from_no1
-    E_UNK_2E,                   // func_us_80198A18_from_rbo4
-    E_UNK_2F,                   // func_us_801A9A8C
+    E_DOORWAY_BLOCKER,          // EntityDoorwayBlocker
+    E_E_BOSS_NEXT_ROOM_DECOR,   // EntityBossAnteRoomDecoration
+    E_E_BOSS_ROUND_HALF,        // EntityBossRoundDoorHalf
+    E_E_BOSS_ROUND,             // EntityBossRoundDoor
     NUM_ENTITIES,
 };
 

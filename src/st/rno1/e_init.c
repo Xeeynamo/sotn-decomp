@@ -44,10 +44,10 @@ void EntityWallParticles(Entity* self);
 void EntityBreakableWallDebris(Entity* self);
 void EntitySecretElevator(Entity* self);
 void EntityBreakableDebris(Entity* self);
-void func_us_801A9BEC(Entity* self);
-void func_us_801B9028_from_no1(Entity* self);
-void func_us_80198A18_from_rbo4(Entity* self);
-void func_us_801A9A8C(Entity* self);
+void EntityDoorwayBlocker(Entity* self);
+void EntityBossAnteRoomDecoration(Entity* self);
+void EntityBossRoundDoorHalf(Entity* self);
+void EntityBossRoundDoor(Entity* self);
 
 PfnEntityUpdate EntityUpdates[] = {
     EntityBreakable,
@@ -93,10 +93,10 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityBreakableWallDebris,
     EntitySecretElevator,
     EntityBreakableDebris,
-    func_us_801A9BEC,
-    func_us_801B9028_from_no1,
-    func_us_80198A18_from_rbo4,
-    func_us_801A9A8C,
+    EntityDoorwayBlocker,
+    EntityBossAnteRoomDecoration,
+    EntityBossRoundDoorHalf,
+    EntityBossRoundDoor,
 };
 
 // clang-format off
@@ -123,8 +123,8 @@ EInit g_EInitElevatorMachine = {ANIMSET_OVL(8), 1, 79, 537, 0x005};
 EInit g_EInitSecretWall = {ANIMSET_OVL(2), 75, 0, 0, 0x005};
 EInit g_EInitWallSegment = {ANIMSET_DRA(0), 0, 0, 0, 0x000};
 EInit g_EInitSecretElevator = {ANIMSET_OVL(2), 102, 0, 0, 0x005};
-EInit D_us_8018076C = {ANIMSET_OVL(11), 0, 72, 564, 0x003};
-EInit D_us_80180778 = {ANIMSET_OVL(1), 0, 0, 0, 0x005};
+EInit g_EInitBossNextDecor = {ANIMSET_OVL(11), 0, 72, 564, 0x003};
+EInit g_EInitHalfRound = {ANIMSET_OVL(1), 0, 0, 0, 0x005};
 EInit g_EInitUnused80180784 = {ANIMSET_OVL(2), 0, 0, 0, 0x005};
-EInit D_us_80180790 = {ANIMSET_OVL(2), 92, 0, 0, 0x005};
+EInit g_EinitDoorwayBlocker = {ANIMSET_OVL(2), 92, 0, 0, 0x005};
 // clang-format on
