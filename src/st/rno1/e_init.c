@@ -45,7 +45,7 @@ void EntityBreakableWallDebris(Entity* self);
 void EntitySecretElevator(Entity* self);
 void EntityBreakableDebris(Entity* self);
 void func_us_801A9BEC(Entity* self);
-void func_us_801B9028_from_no1(Entity* self);
+void EntityBossAnteRoomDecoration(Entity* self);
 void func_us_80198A18_from_rbo4(Entity* self);
 void func_us_801A9A8C(Entity* self);
 
@@ -94,7 +94,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntitySecretElevator,
     EntityBreakableDebris,
     func_us_801A9BEC,
-    func_us_801B9028_from_no1,
+    EntityBossAnteRoomDecoration,
     func_us_80198A18_from_rbo4,
     func_us_801A9A8C,
 };

@@ -58,7 +58,7 @@ typedef enum EntityID {
     E_SECRET_ELEVATOR,          // EntitySecretElevator
     E_BREAKABLE_DEBRIS,         // EntityBreakableDebris
     E_UNK_2C,                   // func_us_801A9BEC
-    E_UNK_2D,                   // func_us_801B9028_from_no1
+    E_E_BOSS_NEXT_ROOM_DECOR,   // EntityBossAnteRoomDecoration
     E_UNK_2E,                   // func_us_80198A18_from_rbo4
     E_UNK_2F,                   // func_us_801A9A8C
     NUM_ENTITIES,
