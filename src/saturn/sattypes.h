@@ -1072,9 +1072,6 @@ typedef struct {
     /* 0x46A */ u16 unk7E;
 } PlayerState;
 
-#define SH2_GET_SR(dst) __asm__ volatile("stc\tsr, %0" : "=r"(dst))
-#define SH2_SET_SR(src) __asm__ volatile("ldc\t%0, sr" : : "r"(src))
-
 typedef struct {
     s32 primIndex;
     s32 D_800973FC;

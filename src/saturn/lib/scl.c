@@ -164,6 +164,7 @@ void SCL_Open(Uint32 sclnum) {
     SclCurSclNum = sclnum;
 }
 
+// func_06024474
 void SCL_Close(void) {
     if (SclProcess == 0)
         SclProcess = 1;
@@ -503,6 +504,7 @@ void SCL_VblankStart(void) {
 }
 extern Sint32 SpInitialFlag;
 
+// func_06025074
 void SCL_VblankEnd(void) {
     Uint16 tvStat;
 

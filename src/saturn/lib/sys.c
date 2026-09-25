@@ -46,10 +46,18 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6030AFC, func_06030AFC);
 // _SYS_GetUintMacSave
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6030B88, func_06030B88);
 
+// _get_imask
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6030BF4, func_06030BF4);
+
+// _set_imask
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6030C2C, func_06030C2C);
+
+// _set_sr
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6030C78, func_06030C78);
+
+// _get_sr
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6030C88, func_06030C88);
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6030D78, func_06030D78);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6030DAC, func_06030DAC);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6030DF0, func_06030DF0);
@@ -61,26 +69,26 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60310D4, func_060310D4);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6031174, func_06031174);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60312EC, func_060312EC);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60313D4, func_060313D4);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60315A8, func_060315A8);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6031608, func_06031608);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60315A8, __adddf3);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6031608, __subdf3);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f603168C, func_0603168C);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60319E8, func_060319E8);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60319E8, __muldf3);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6031A50, func_06031A50);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6031BA4, func_06031BA4);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6031BA4, __divdf3);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6031C04, func_06031C04);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6031CF0, func_06031CF0);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6031D38, func_06031D38);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6031D98, func_06031D98);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6031DF8, func_06031DF8);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6031E5C, func_06031E5C);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6031EC0, func_06031EC0);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6031EC0, __ltdf2);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6031F20, func_06031F20);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6031F88, func_06031F88);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6032014, func_06032014);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6031F88, __floatsidf);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6032014, __fixdfsi);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60320A4, func_060320A4);
 INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f60320DE, func_060320DE);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f603210C, func_0603210C);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f603216C, func_0603216C);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f603216C, __fixunsdfsi);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60321D4, func_060321D4);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f603224C, func_0603224C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6032314, func_06032314);

@@ -27,7 +27,6 @@ void func_06004DE8(void);
 void func_06004E50(void);
 void func_06004E94(void);
 void INT_SetScuFunc(u32 vector, void (*handler)(void));
-extern void (*DAT_06000344)(u32 clearMask, u32 setMask);
 extern s32 DAT_06064320;
 
 // DAT_0605c120, DAT_060645EC, DAT_060645e4, DAT_060645f8 and SpGourTbl
@@ -298,12 +297,6 @@ void SetVblank(s32);
 void func_0600456c();
 void ClearDebugPrintTilemap(void);
 extern s32 SpMstCmdPos;
-void func_06024444(s32 arg0);
-void func_06024474(void);
-void func_06024494(s32 arg0, s32 arg1, s32 arg2);
-double func_06031F88(s32 arg0);
-double func_060319E8(double arg0, s32 arg1, s32 arg2);
-s32 func_06032014(double arg0);
 void CSH_Init(Uint16 sw);
 s32 ReadFileToAddr(char* path, s32 addr);
 extern s16 d_0605AEA8;
@@ -316,7 +309,6 @@ extern s32 DAT_06050668;
 extern s32 DAT_0605AE80;
 extern s32* DAT_0605AE8C;
 extern s32 DAT_0605064C;
-extern void (*DAT_0600026C)(void);
 s32 func_06006170(void);
 s32 func_060062F8(s32, s32*);
 extern s32 DAT_0605C100;
@@ -386,16 +378,9 @@ extern void SignalSlaveSh2(void);
 extern void ResetPadsRepeat(void);
 extern s8 DAT_06057F50;
 extern void func_06008C2C(void);
-extern void SCL_SetColOffset(
-    Uint32 OffsetReg, Uint32 Surfaces, Sint16 red, Sint16 green, Sint16 blue);
 extern void (*DAT_06064624)(s32);
 extern void (*DAT_0606461C)(s32);
-void SCL_SetDisplayMode(u8, u8, u8);
-void SCL_SetCycleTable(u16*);
 extern u16 DAT_06038D70[];
-extern void SCL_Open(Uint32 sclnum);
-extern void SCL_MoveTo(Fixed32 x, Fixed32 y, Fixed32 z);
-extern void SCL_Close(void);
 extern void func_06009D60(u32);
 extern u8 DAT_060577A0[];
 void rsincos(s32 angle, s32* sinOut, s32* cosOut);
@@ -439,9 +424,8 @@ struct Unk060643E0 {
 extern struct Unk060643E0 DAT_060643E0;
 extern s16 DAT_0606436E;
 extern s32 DAT_060644B0;
-extern s32 func_06011B28(s32);
-extern s32 func_06018B8C(s32, u8, s32);
-extern s32 func_06018C00(s32, s32, u8);
+extern s32 SND_SetSeqVl(u8, u8, u8);
+extern s32 SND_SetSeqPan(u8, u8, u8);
 /* End moved declarations */
 
 #endif

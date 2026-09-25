@@ -397,9 +397,9 @@ void func_06012CAC(void) {
 
 void func_06012D30(void) {
     if (DAT_0606438C == 1) {
-        DAT_06064300 = DAT_0606438C;
-        DAT_0606433C = DAT_0606438C;
-        DAT_06064334 = DAT_0606438C;
+        DAT_06064300 = 1;
+        DAT_0606433C = 1;
+        DAT_06064334 = 1;
         DAT_0606438C = 0;
         DAT_06064234 = 0;
         GFS_CdMovePickup(DAT_06064338);
@@ -420,47 +420,39 @@ s32 func_06012D88(void) {
 
 // original name : xa_play_ck
 bool func_06012DD0(void) {
-    bool ret;
-
     if (D_8013B61C == 9 || (D_8013B61C == 0 && g_PlayingXaBgmId == 0)) {
-        ret = 0;
+        return 0;
     } else {
-        ret = 1;
+        return 1;
     }
-    return ret;
 }
 
 // original name : vox_play_ck
 bool func_06012DFC(void) {
     if (g_PlayingXaBgmId != 0) {
         return 1;
+    } else {
+        return 0;
     }
-    return 0;
 }
 
 // SAT: 0x06012E18
 bool CdSoundCommandQueueEmpty(void) {
-    bool ret;
-
     if (DAT_06064250[0] != 0 || DAT_06064414 != DAT_0606423a) {
-        ret = 0;
+        return 0;
     } else {
-        ret = 1;
+        return 1;
     }
-    return ret;
 }
 
 // original name: sd_xapause_chk
 s32 func_06012E4C(void) {
-    s32 var_r0;
-
     if ((DAT_060642E8 != 0) && (IsXaBgmPlaying() == 0)) {
         DAT_060642E8 = 0;
     }
     if ((DAT_060644C2 != 0) && (DAT_0606423C == 0)) {
         DAT_060644C2 = 0;
     }
-    var_r0 = 0;
     if ((DAT_060642E8 == 0) && (DAT_060644C2 == 0)) {
         if (DAT_06064474 != 0) {
             if (((s32(*)(void))(s32)func_06012DD0)() == 0) {
@@ -475,18 +467,11 @@ s32 func_06012E4C(void) {
             (DAT_06062388 == 0) && (DAT_06064350 == 0)) {
             DAT_06064378 = 0;
         }
-        var_r0 = 0;
-        if (DAT_06064474 == 0) {
-            var_r0 = 1;
-            if (DAT_06064378 != 0) {
-                var_r0 = 0;
-                if (DAT_0606442C != 0) {
-                    var_r0 = 1;
-                }
-            }
+        if (DAT_06064474 == 0 && (DAT_06064378 == 0 || DAT_0606442C != 0)) {
+            return 1;
         }
     }
-    return var_r0;
+    return 0;
 }
 
 void func_06012F30(void) {
@@ -543,7 +528,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60139C4, func_060139C4);
 
 void func_06014424(void) {
     PER_SMPC_NO_IREG(PER_SM_SSHOFF);
-    DAT_06000310(0x94, func_060139C4);
+    SYS_SETSINT(0x94, func_060139C4);
     PER_PokeByte(PER_REG_SF, PER_B_SF);
     PER_SMPC_GO_CMD(PER_SM_SSHON);
 }
@@ -581,6 +566,7 @@ void func_0601454C(s32 arg0, s32 arg1, s32 arg2, s16 arg3, s32 arg4, s32 arg5) {
     DAT_06063C30[arg5].unk4 = 0;
     DAT_06063C30[arg5].unk0 = 1;
 }
+
 void func_060145AC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     while (UNCACHED_SOUND_REQUESTS[arg3].unk0 != 0) {
     }
@@ -592,6 +578,7 @@ void func_060145AC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     DAT_06063C30[arg3].unk4 = 0;
     DAT_06063C30[arg3].unk0 = 1;
 }
+
 void func_060145F8(s32 arg0, s32 arg1, s32 arg2, s16 arg3, s32 arg4, s32 arg5) {
     SoundRequest* request;
 
@@ -608,6 +595,7 @@ void func_060145F8(s32 arg0, s32 arg1, s32 arg2, s16 arg3, s32 arg4, s32 arg5) {
     request->unk4 = 1;
     DAT_06063C30[arg5].unk0 = 1;
 }
+
 void func_06014658(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     SoundRequest* request;
 
@@ -622,7 +610,9 @@ void func_06014658(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     request->unk4 = 1;
     DAT_06063C30[arg3].unk0 = 1;
 }
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60146A4, func_060146A4);
+
 void func_06014724(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     s32 savedArg3;
 
@@ -640,6 +630,7 @@ void func_06014724(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     DAT_06063C30[arg4].unk4 = 2;
     DAT_06063C30[arg4].unk0 = 1;
 }
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601476C, func_0601476C);
 
 // _RestartBgmStream
@@ -662,7 +653,7 @@ s32 func_06014C54(void) {
         DAT_06062280 = 0;
     }
 
-    DAT_06062280 = ((s32(*)(s32, s32))PcmOpen)(-0x0FFFFF10, 1);
+    DAT_06062280 = ((s32(*)(s32, s32))PcmOpen)(0xF00000F0, 1);
     if (DAT_06062280 == 0) {
         return -1;
     }
@@ -704,6 +695,7 @@ void func_06016614(void) {
         func_06015E68();
     }
 }
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6016644, func_06016644);
 
 void PcmOpen(s32 code) {
@@ -724,8 +716,6 @@ void func_06016B9C(GfsHn gfs, s32 arg1, s32 arg2) {
 void func_06016BBC(GfsHn gfs, s32 arg1, s32 arg2) {
     func_06017FA4(arg1, arg2, gfs);
 }
-
-s32 d_060623B0[];
 
 void PcmClose(GfsHn gfs, s32 arg1) {
     GFS_Close(gfs);
@@ -861,9 +851,10 @@ char num2char(u32 num) {
     num &= 0xF;
 
     if (num < 10) {
-        num += 0x30;
+        num += '0';
     } else {
-        num += 0x37;
+        num -= 10;
+        num += 'A';
     }
     return num;
 }
@@ -929,7 +920,138 @@ s32 func_06017FA4(void* buf, Sint32 nbyte, GfsHn gfs) {
     return sector * 0x800;
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6017FF4, func_06017FF4);
+void func_06017FF4(s32 arg0, s32 arg1) {
+    arg1 = (0x7FFF - arg1) >> 7;
+    if (arg0 == 1) {
+        arg1 = (arg1 * 0x50) / 0x80;
+    }
+    func_06018034(arg1);
+}
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6018034, func_06018034);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60180E0, func_060180E0);
+
+u16 func_060180E0(u32 arg0, s32 arg1) {
+    u32 uVar3;
+    u32 uVar4;
+    s32 scale[13] = {0x0,    0xF39,  0x1F5A, 0x3070, 0x428A, 0x55B8, 0x6A0A,
+                     0x7F91, 0x9660, 0xAE8A, 0xC824, 0xE343, 0x10000};
+    s32 shift[13] = {5, 4, 3, 2, 1, 0, 1, 2, 3, 4, 5, 6, 7};
+
+    uVar4 = arg0 + ((scale[arg1 % 12] * arg0) >> 0x10);
+    uVar3 = arg1 / 12;
+    if (uVar3 > 5) {
+        uVar4 <<= shift[uVar3];
+    } else if (uVar3 < 5) {
+        uVar4 >>= shift[uVar3];
+    }
+
+    return func_06018260(uVar4);
+}
+
+const double DAT_060181D8 = 0x100000000;
+const double DAT_060181E0 = 88200;
+const double DAT_060181E8 = 86.1328125;
+const double DAT_060181F0 = 0.5;
+const double DAT_060181F8 = 0x400;
+const double DAT_06018200 = 44100;
+const double DAT_06018208 = 43.06640625;
+const double DAT_06018210 = 22050;
+const double DAT_06018218 = 21.533203125;
+const double DAT_06018220 = 11025;
+const double DAT_06018228 = 10.7666015625;
+const double DAT_06018230 = 5512;
+const double DAT_06018238 = 5.3828125;
+const double DAT_06018240 = 2756;
+const double DAT_06018248 = 2.69140625;
+const double DAT_06018250 = 1378;
+const double DAT_06018258 = 1.345703125;
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6018260, func_06018260);
+
+/*u16 func_06018260(u32 arg0) {
+    double temp_ret;
+    double temp_ret_4;
+
+    if (arg0 >= 176400) {
+        return 0x1000;
+    }
+    if (arg0 >= 88200) {
+        temp_ret = arg0;
+        if (arg0 < 0) {
+            temp_ret += DAT_060181D8;
+        }
+        temp_ret_4 = (temp_ret - DAT_060181E0) / DAT_060181E8 + DAT_060181F0;
+        if (temp_ret_4 < DAT_060181F8) {
+            return (u16)temp_ret_4 + 0x800;
+        }
+        return 0x1000;
+    }
+    if (arg0 >= 44100) {
+        temp_ret = arg0;
+        if (arg0 < 0) {
+            temp_ret += DAT_060181D8;
+        }
+        temp_ret_4 = (temp_ret - DAT_06018200) / DAT_06018208 + DAT_060181F0;
+        if (temp_ret_4 < DAT_060181F8) {
+            return (u16)temp_ret_4;
+        }
+        return 0x800;
+    }
+    if (arg0 >= 22050) {
+        temp_ret = arg0;
+        if (arg0 < 0) {
+            temp_ret += DAT_060181D8;
+        }
+        temp_ret_4 = (temp_ret - DAT_06018210) / DAT_06018218 + DAT_060181F0;
+        if (temp_ret_4 < DAT_060181F8) {
+            return (u16)temp_ret_4 + 0x7800;
+        }
+        return 0;
+    }
+    if (arg0 >= 11025) {
+        temp_ret = arg0;
+        if (arg0 < 0) {
+            temp_ret += DAT_060181D8;
+        }
+        temp_ret_4 = (temp_ret - DAT_06018220) / DAT_06018228 + DAT_060181F0;
+        if (temp_ret_4 < DAT_060181F8) {
+            return (u16)temp_ret_4 + 0x7000;
+        }
+        return 0x7800;
+    }
+    if (arg0 >= 5512) {
+        temp_ret = arg0;
+        if (arg0 < 0) {
+            temp_ret += DAT_060181D8;
+        }
+        temp_ret_4 = (temp_ret - DAT_06018230) / DAT_06018238 + DAT_060181F0;
+        if (temp_ret_4 < DAT_060181F8) {
+            return (u16)temp_ret_4 + 0x6800;
+        }
+        return 0x7000;
+    }
+    if (arg0 >= 2756) {
+        temp_ret = arg0;
+        if (arg0 < 0) {
+            temp_ret += DAT_060181D8;
+        }
+        temp_ret_4 = (temp_ret - DAT_06018240) / DAT_06018248 + DAT_060181F0;
+        if (temp_ret_4 < DAT_060181F8) {
+            return (u16)temp_ret_4 + 0x6000;
+        }
+        return 0x6800;
+    }
+    if (arg0 >= 1378) {
+        temp_ret = arg0;
+        if (arg0 < 0) {
+            temp_ret += DAT_060181D8;
+        }
+        temp_ret_4 = (temp_ret - DAT_06018250) / DAT_06018258 + DAT_060181F0;
+        if (temp_ret_4 < DAT_060181F8) {
+            return (u16)temp_ret_4 + 0x5800;
+        }
+        return 0x6000;
+    }
+    return 0x5800;
+}
+*/

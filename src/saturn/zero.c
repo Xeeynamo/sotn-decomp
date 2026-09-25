@@ -409,69 +409,82 @@ void InitializePads(void) {
         g_pads[0].repeat = PAD_NONE;
 }
 
-// original name: SET_VBLANK
-void func_06004D00(s32 useAlternateHandlers) {
-    s32 vector;
-    s32 scuMask;
-    void (*handler)(void);
-    u32 savedSr;
-    s16 srMask;
-    u32 interruptMask;
-    void (*setScuHandler)(u32, void (*)(void));
-    void (**changeScuMask)(u32, u32);
+static inline void set_sr(u32 sr) { asm volatile("ldc\t%0,sr" : : "r"(sr)); }
 
-    SH2_GET_SR(savedSr);
-    savedSr |= 0xF0;
-    SH2_SET_SR(savedSr);
+static inline u32 get_sr(void) {
+    u32 sr;
+
+    asm volatile("stc\tsr,%0" : "=r"(sr));
+    return sr;
+}
+
+static inline u32 get_imask(void) {
+    u32 imask = (get_sr() & 0x000000F0) >> 4;
+
+    return imask;
+}
+
+static inline void set_imask(u32 imask) {
+    u32 sr = get_sr();
+
+    sr &= ~0x000000F0;
+    sr |= (imask << 4);
+    set_sr(sr);
+}
+
+// original name: SET_VBLANK
+void SetVblank(s32 useAlternateHandlers) {
+
+    set_imask(15);
+
     if (useAlternateHandlers == 0) {
-        changeScuMask = &DAT_06000344;
-        scuMask = 7;
-        (*changeScuMask)(-1, scuMask);
-        handler = func_06004D84;
-        setScuHandler = INT_SetScuFunc;
-        setScuHandler(0x40, handler);
-        setScuHandler(0x41, func_06004DE8);
-        handler = NULL;
-        vector = 0x42;
+        INT_ChgMsk(
+            INT_MSK_NULL, INT_MSK_VBLK_IN | INT_MSK_VBLK_OUT | INT_MSK_HBLK_IN);
+        INT_SetScuFunc(INT_SCU_VBLK_IN, func_06004D84);
+        INT_SetScuFunc(INT_SCU_VBLK_OUT, func_06004DE8);
+        INT_SetScuFunc(INT_SCU_HBLK_IN, NULL);
+        INT_ChgMsk(INT_MSK_VBLK_IN | INT_MSK_VBLK_OUT, INT_MSK_NULL);
     } else {
-        changeScuMask = &DAT_06000344;
-        scuMask = 3;
-        (*changeScuMask)(-1, scuMask);
-        handler = func_06004E50;
-        setScuHandler = INT_SetScuFunc;
-        setScuHandler(0x40, handler);
-        handler = func_06004E94;
-        vector = 0x41;
+        INT_ChgMsk(INT_MSK_NULL, INT_MSK_VBLK_IN | INT_MSK_VBLK_OUT);
+        INT_SetScuFunc(INT_SCU_VBLK_IN, func_06004E50);
+        INT_SetScuFunc(INT_SCU_VBLK_OUT, func_06004E94);
+        INT_ChgMsk(INT_MSK_VBLK_IN | INT_MSK_VBLK_OUT, INT_MSK_NULL);
     }
-    setScuHandler(vector, handler);
-    (*changeScuMask)(-4, 0);
-    SH2_GET_SR(interruptMask);
-    srMask = ~0xF0;
-    SH2_SET_SR(srMask & interruptMask);
+
+    set_imask(0);
 }
 
 void func_06004D84(void) {
-    u32 sr;
-    u32 imask;
+    u32 msk;
 
-    SH2_GET_SR(sr);
-    imask = (sr & 0xF0) >> 4;
-    SH2_GET_SR(sr);
-    sr &= ~0xF0;
-    SH2_SET_SR(sr);
+    msk = get_imask();
+    set_imask(0);
 
     SCL_VblankStart();
     DAT_0605c10c += 1;
     func_06008EE8();
     SignalSlaveSh2();
 
-    SH2_GET_SR(sr);
-    sr &= ~0xF0;
-    sr = (imask << 4) | sr;
-    SH2_SET_SR(sr);
+    set_imask(msk);
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004DE8, func_06004DE8);
+void func_06004A74(void);
+
+void func_06004DE8(void) {
+    u32 msk;
+
+    msk = get_imask();
+    set_imask(0);
+
+    SCL_VblankEnd();
+    func_06004A74();
+    if (func_06006ED4() == 1) {
+        SYS_EXECDMP();
+    }
+
+    set_imask(msk);
+}
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004E50, func_06004E50);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004E94, func_06004E94);
 
@@ -1017,7 +1030,7 @@ s32 func_06006470(void) {
     } while (index < 3);
 
     if (success == 0) {
-        DAT_0600026C();
+        SYS_EXECDMP();
     }
 
     DAT_0605AE8C = &DAT_0605064C;
@@ -3538,8 +3551,8 @@ s32 func_06011C28(s32 volume, s16 pan) {
     if (volume == 0) {
         volume = 1;
     }
-    func_06018B8C(7, volume, 0);
-    func_06018C00(7, 0, pan);
+    SND_SetSeqVl(7, volume, 0);
+    SND_SetSeqPan(7, 0, pan);
     DAT_0606436E = pan;
     return result;
 }
