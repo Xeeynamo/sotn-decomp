@@ -905,6 +905,7 @@ u32 func_060727DC(s32 arg0, u16 arg1, u16 arg2) {
         return DAT_06085508 + 0xE0000126;
     return g_StageFileRecords[arg1].unk10;
 }
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607284C, func_0607284C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60728B4, func_060728B4);
 
@@ -961,7 +962,7 @@ void SubDisp(void) {
     }
     if ((g_PlayableCharacter == 0) && (DAT_0605becc == 0) &&
         (DAT_0605cd70.unk0 > 3) && (DAT_0605d7f0 == 0)) {
-        if ((g_pads[0].previous & 0x800) && (DAT_06086270 == 0) &&
+        if ((g_pads[0].previous & PAD_START) && (DAT_06086270 == 0) &&
             (DAT_0605cd70.unk0 < 0x14)) {
             if (CheckIfAllButtonsAreAssigned()) {
                 D_06085534 = 0x70;
@@ -1153,7 +1154,7 @@ void func_06073280(void) {
     }
     DAT_0605d772 = 8;
     func_060645B0();
-    Scl_s_reg.dispenbl |= DAT_060862a4;
+    Scl_s_reg.dispenbl |= DAT_060862A4;
     SclProcess = 1;
     func_0600971C();
 }
@@ -1323,15 +1324,14 @@ void func_800F7244(void) {
 }
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607360C, func_0607360C);
+
 void func_0607369C(s32 arg0, s32 arg1) {
     u8* order;
-    s32 slot;
     u8 swap;
 
     order = g_Status.equipHandOrder;
-    slot = D_801375D8[arg0];
-    swap = order[slot];
-    order[slot] = order[D_801375D8[arg1]];
+    swap = order[D_801375D8[arg0]];
+    order[D_801375D8[arg0]] = order[D_801375D8[arg1]];
     order[D_801375D8[arg1]] = swap;
 }
 
@@ -1354,15 +1354,15 @@ void func_800FB0FC(void) {
 
 void func_0607371C(void) {
     if (g_MenuNavigation.cursorEquip > 1) {
-        func_06074048(1U);
+        func_06074048(1);
     } else {
-        func_06074048(1U);
+        func_06074048(1);
     }
 }
-void func_06073740(u8 param_1) {
+void func_06073740(u8 arg0) {
     DAT_06086298 = 0;
-    func_06074048(param_1);
-    DAT_0605cd70.unk8 = DAT_0605cd70.unk8 + 1;
+    func_06074048(arg0);
+    DAT_0605cd70.unk8++;
 }
 
 // _goto_equip
@@ -1375,10 +1375,11 @@ void func_06073770(void) {
     DAT_0605cd70.unk0 = 7;
     DAT_0605cd70.unk8 = 1;
 }
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60737A0, func_060737A0);
+
 void func_06073E58(s32 arg0) {
     s32* var_r8;
-    s32 temp_r2;
     s32 temp_r3;
     volatile s32 stack_temp;
 
@@ -1392,17 +1393,16 @@ void func_06073E58(s32 arg0) {
 
     if (arg0 != 0) {
         if (g_pads[0].repeat & PAD_L1) {
-            temp_r2 = *var_r8;
-            if (temp_r2 > 9) {
-                *var_r8 = temp_r2 - 0xA;
+            if (*var_r8 > 9) {
+                *var_r8 -= 10;
             } else {
                 *var_r8 = 0;
             }
         }
 
         if (g_pads[0].repeat & PAD_R1) {
-            if (*var_r8 < temp_r3 - 0xA) {
-                *var_r8 += 0xA;
+            if (*var_r8 < temp_r3 - 10) {
+                *var_r8 += 10;
             } else {
                 *var_r8 = temp_r3 - 1;
             }
@@ -1451,7 +1451,7 @@ void func_800FAF44(bool isAccessory) {
     s32* ptr;
 
     D_801375D8 = (s32*)0x002F2000;
-    ptr = (s32*)0x002F2000;
+    ptr = D_801375D8;
 
     if (!isAccessory) {
         for (i = 0; i < 0xB0; i++) {
@@ -1466,12 +1466,13 @@ void func_800FAF44(bool isAccessory) {
     }
 }
 
-void func_06074048(u8 param_1) {
+void func_06074048(u8 arg0) {
     DAT_06086210 = 0;
-    if (param_1 != 0) {
+    if (arg0 != 0) {
         DAT_06086210 = 1;
     }
 }
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6074068, func_06074068);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60740F8, func_060740F8);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6074278, SetVdp2DisplayMode);
@@ -1496,19 +1497,17 @@ s32 func_06074470(void) {
     scfg.plate_addr[1] = 0x25E58000;
     scfg.plate_addr[2] = 0x25E58000;
     scfg.plate_addr[3] = 0x25E58000;
-    SCL_SetConfig(4U, &scfg);
+    SCL_SetConfig(SCL_NBG0, &scfg);
 }
 
 // original name: EVENT_SCL_TRANS
 void func_060744F8(s32 arg0) {
-    s32 count;
+    s32 i;
     s32 offset;
-    s32 limit;
     u32* glyphData;
     s32* source;
     u32 size;
 
-    limit = arg0;
     size = 0;
     offset = 0;
     if (DAT_0605cea0.unk2 == 5) {
@@ -1520,10 +1519,8 @@ void func_060744F8(s32 arg0) {
         glyphData = GetStageTextGlyphData(0, g_CurrentRoom.stageID);
     }
 
-    if (limit) {
-        count = 0;
-        while (count < limit) {
-            count++;
+    if (arg0 != 0) {
+        for (i = 0; i < arg0; i++) {
             offset += *glyphData++;
             size = *glyphData;
         }
@@ -1541,13 +1538,9 @@ void func_060744F8(s32 arg0) {
 void func_060745A0(Point16u* arg0, u16 arg1, s32 arg2) {
     u16* dst;
     u16* src;
-    u16* dstRow;
-    u16* srcRow;
     u32* glyphData;
     s32 i;
     s32 x;
-    s32 low;
-    s32 adjusted;
 
     dst = (u16*)0x25E58000;
     src = (u16*)0x25E60000;
@@ -1568,44 +1561,24 @@ void func_060745A0(Point16u* arg0, u16 arg1, s32 arg2) {
     }
 
     x = arg0->x >> 3;
-    dstRow = dst + (arg0->y >> 3) * 64;
-    dst = dstRow + x;
+    dst = dst + (arg0->y >> 3) * 64 + x;
+    src = src + (arg2 / 0x20) * 128 + (arg2 & 0x1F) * 2;
 
-    adjusted = arg2;
-    if (adjusted < 0) {
-        adjusted += 0x1F;
-    }
-    srcRow = src + (adjusted >> 5) * 128;
-    low = (arg2 & 0x1F) * 2;
-    src = srcRow + low;
-
-    dstRow[x] = srcRow[low];
-    src++;
-    dst++;
+    *dst++ = *src++;
     *dst = *src;
     src += 63;
     dst += 63;
-    *dst = *src++;
-    dst++;
-    *dst = *src;
+    dst[0] = src[0];
+    dst[1] = src[1];
 }
 
-const u16 rodata_06074690[4] = {0x40F0, 0, 0, 0};
-void func_06074698(void) {
-    double temp_ret;
-    double temp_ret_2;
-    s32 arg0;
-    s32 arg1;
-    s32 arg2;
+// TODO: inline this once this file is split
+const double DAT_06074690 = 65536.0;
 
-    func_06024444(4);
-    arg0 = DAT_0605D7F4;
-    temp_ret = func_06031F88(arg0);
-    arg1 = DAT_06074690.unk0;
-    arg2 = DAT_06074690.unk4;
-    temp_ret_2 = func_060319E8(temp_ret, arg1, arg2);
-    func_06024494(0, func_06032014(temp_ret_2), 0);
-    func_06024474();
+void func_06074698(void) {
+    SCL_Open(SCL_NBG0);
+    SCL_MoveTo(0, (DAT_0605D7F4 * DAT_06074690), 0);
+    SCL_Close();
 }
 
 // func_06074700
