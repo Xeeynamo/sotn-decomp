@@ -5,6 +5,13 @@
 extern s32 E_ID(E_BOSS_ROUND_HALF);
 #endif
 
+// UNUSED animations - these jiggle the doors left and right by a pixel.
+// Seems like a windup before opening, or something like that. Stripped on PSP.
+static AnimateEntityFrame lowerFast[] = {{1, 98}, {1, 99}, POSE_LOOP(0)};
+static AnimateEntityFrame upperFast[] = {{1, 100}, {1, 101}, POSE_LOOP(0)};
+static AnimateEntityFrame lowerSlow[] = {{2, 98}, {2, 99}, POSE_LOOP(0)};
+static AnimateEntityFrame upperSlow[] = {{2, 100}, {2, 101}, POSE_LOOP(0)};
+
 extern EInit g_EInitInteractable;
 void EntityBossRoundDoor(Entity* self) {
     Entity* child;

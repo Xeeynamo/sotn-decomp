@@ -56,7 +56,7 @@ segments:
       - [0xC28, .data, e_secrets]
       - [0xD2C, .data, e_red_door]
       - [0xD44, .data, e_boss_ante_decor]
-      - [0xD6C, data]
+      - [0xD6C, .data, e_boss_round_door]
       - [0xD8C, .data, e_doorway_blocker]
       - [0xDEC, .data, st_update]
       - [0xE38, data]
