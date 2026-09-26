@@ -5,4 +5,8 @@
 // unused and stripped
 INCLUDE_ASM("st/rcen/nonmatchings/unk_1D260", func_us_8019D260);
 
-INCLUDE_ASM("st/rcen/nonmatchings/unk_1D260", func_us_8019D330);
+// Params
+// 1 = small flames (orbs)
+// 2 = circular flames (main)
+// 3 = vertical flames (final burst)
+INCLUDE_ASM("st/rcen/nonmatchings/unk_1D260", EntityShaftDeathFlames);
