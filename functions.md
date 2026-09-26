@@ -4765,7 +4765,7 @@
 | top        | func_pspeu_09246F78               |       73 |          7 |        |       |     |
 | wrp        | func_psp_09243A70                 |       73 |          7 |        |       |     |
 | lib        | func_psp_0926ADD8                 |       73 |          8 |        |       |     |
-| rno1       | func_us_801A9BEC                  |       73 |          8 |        |       |     |
+| rno1       | EntityDoorwayBlocker              |       73 |          8 |        |       |     |
 | main       | func_psp_0890FA7C                 |       73 |          9 |        |       |     |
 | sel        | func_psp_0923B800                 |       73 |          9 |        |       |     |
 | no1        | func_pspeu_0925CCE8               |       73 |         10 |        |       |     |
