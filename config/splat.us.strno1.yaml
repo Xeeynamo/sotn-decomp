@@ -59,7 +59,6 @@ segments:
       - [0xD6C, .data, e_boss_round_door]
       - [0xD8C, .data, e_doorway_blocker]
       - [0xDEC, .data, st_update]
-      - [0xE38, data]
       - [0xE38, .data, collision]
       - [0x11F8, .data, st_common]
       - [0x13F8, .data, e_collect]
