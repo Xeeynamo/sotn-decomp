@@ -93,6 +93,7 @@ segments:
       - [0x32060, c, e_room_bg]
       - [0x32128, c, e_lock_camera]
       - [0x322E4, c, unk_322E4]
+      - [0x3295C, c, unk_3295C]
       - [0x32F58, c, e_background_house]
       - [0x33978, c, unk_33978]
       - [0x33E88, c, e_spikes]
