@@ -1005,6 +1005,7 @@ files:
       vram: 0x09237700
       assets:
         - [0x28F40, sprite_banks, sprite_banks]
+        - [0x28FA0, skip]
 
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rno3.bin
     asset_path: assets/st/rno3

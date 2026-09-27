@@ -100,6 +100,7 @@ segments:
       - [0x33E88, c, e_spikes]
       - [0x3459C, c, unk_3459C]
       - [0x35A30, c, unk_35A30]
+      - [0x35EE4, c, unk_35EE4]
       - [0x36CF0, c, st_update]
       - [0x37124, c, collision]
       - [0x388E0, c, create_entity]
