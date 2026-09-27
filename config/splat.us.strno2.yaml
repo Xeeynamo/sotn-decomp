@@ -76,7 +76,7 @@ segments:
       - [0x13AEC, .data, tilemaps]
       - [0x2B51C, .data, gen/us/sprites]
       - [0x31C24, .rodata, e_breakable]
-      - [0x31C4C, .rodata, e_spikes]
+      - [0x31C4C, .rodata, unk_33978]
       - [0x31C54, .rodata, unk_3459C]
       - [0x31C90, .rodata, unk_35A30]
       - [0x31CE4, .rodata, e_sealed_door]

@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../rno2/rno2.h"
 
-extern RECT g_Rno2DrawEnvClip;
-
 void func_us_801B4DA4_from_bo0(Entity* self) {
     DRAWENV draw;
     DR_ENV* dr_env;
@@ -11,7 +9,7 @@ void func_us_801B4DA4_from_bo0(Entity* self) {
     s32 primIndex;
     u8 flag;
 
-    RECT rect = g_Rno2DrawEnvClip;
+    RECT rect = {0, 0x100, 0x50, 0xC0};
 
     switch (self->step) {
     case 0:
