@@ -80,6 +80,7 @@ segments:
       - [0x31C4C, .rodata, e_spikes]
       - [0x31C54, .rodata, unk_3459C]
       - [0x31C90, .rodata, unk_35A30]
+      - [0x31CE4, .rodata, unk_35EE4]
       - [0x31CFC, .rodata, unk_39458]
       - [0x31D14, .rodata, e_collect]
       - [0x31DE8, .rodata, e_stage_name]
