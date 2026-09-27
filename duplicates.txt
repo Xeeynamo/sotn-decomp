@@ -1030,7 +1030,7 @@
 | 1.00 | true     | func_us_801B5BE0                    | asm/us/st/nz1/matchings/e_misc/func_us_801B5BE0.s 
 | 1.00 | true     | func_us_801B001C                    | asm/us/st/rare/matchings/e_misc/func_us_801B001C.s 
 | 1.00 | true     | func_us_801BD42C                    | asm/us/st/rcat/matchings/e_misc/func_us_801BD42C.s 
-| 1.00 | true     | PlaySfxPositional                   | asm/us/st/rcen/matchings/e_misc/PlaySfxPositional.s 
+| 1.00 | true     | func_us_801A9948                    | asm/us/st/rcen/matchings/e_misc/func_us_801A9948.s 
 | 1.00 | true     | func_us_8019AA04                    | asm/us/st/rcen/matchings/e_shaft/func_us_8019AA04.s 
 | 1.00 | true     | PlaySfxPositional                   | asm/us/st/rchi/matchings/e_misc/PlaySfxPositional.s 
 | 1.00 | true     | PlaySfxPositional                   | asm/us/st/rdai/matchings/e_misc/PlaySfxPositional.s 
@@ -1302,7 +1302,7 @@
 | 1.00 | true     | func_us_801AED58                    | asm/us/st/nz1/matchings/create_entity/func_us_801AED58.s 
 | 1.00 | true     | func_us_801A91B8                    | asm/us/st/rare/matchings/create_entity/func_us_801A91B8.s 
 | 1.00 | true     | func_us_801B65C8                    | asm/us/st/rcat/matchings/create_entity/func_us_801B65C8.s 
-| 1.00 | true     | CreateEntityFromCurrentEntity       | asm/us/st/rcen/matchings/create_entity/CreateEntityFromCurrentEntity.s 
+| 1.00 | true     | func_us_801A2AE4                    | asm/us/st/rcen/matchings/create_entity/func_us_801A2AE4.s 
 | 1.00 | true     | CreateEntityFromCurrentEntity       | asm/us/st/rchi/matchings/create_entity/CreateEntityFromCurrentEntity.s 
 | 1.00 | true     | CreateEntityFromCurrentEntity       | asm/us/st/rdai/matchings/create_entity/CreateEntityFromCurrentEntity.s 
 | 1.00 | true     | CreateEntityFromCurrentEntity       | asm/us/st/rlib/matchings/create_entity/CreateEntityFromCurrentEntity.s 
@@ -2786,7 +2786,7 @@
 | 1.00 | true     | func_us_801AFE1C                    | asm/us/st/nz1/matchings/st_common/func_us_801AFE1C.s 
 | 1.00 | true     | func_us_801AA258                    | asm/us/st/rare/matchings/st_common/func_us_801AA258.s 
 | 1.00 | true     | func_us_801B7668                    | asm/us/st/rcat/matchings/st_common/func_us_801B7668.s 
-| 1.00 | true     | GetDistanceToPlayerX                | asm/us/st/rcen/matchings/st_common/GetDistanceToPlayerX.s 
+| 1.00 | true     | func_us_801A3B84                    | asm/us/st/rcen/matchings/st_common/func_us_801A3B84.s 
 | 1.00 | true     | GetDistanceToPlayerX                | asm/us/st/rchi/matchings/st_common/GetDistanceToPlayerX.s 
 | 1.00 | true     | GetDistanceToPlayerX                | asm/us/st/rdai/matchings/st_common/GetDistanceToPlayerX.s 
 | 1.00 | true     | GetDistanceToPlayerX                | asm/us/st/rlib/matchings/st_common/GetDistanceToPlayerX.s 
@@ -3104,7 +3104,7 @@
 | 1.00 | true     | func_us_801B075C                    | asm/us/st/nz1/matchings/st_common/func_us_801B075C.s 
 | 1.00 | true     | func_us_801AAB98                    | asm/us/st/rare/matchings/st_common/func_us_801AAB98.s 
 | 1.00 | true     | func_us_801B7FA8                    | asm/us/st/rcat/matchings/st_common/func_us_801B7FA8.s 
-| 1.00 | true     | SetStep                             | asm/us/st/rcen/matchings/st_common/SetStep.s 
+| 1.00 | true     | func_us_801A44C4                    | asm/us/st/rcen/matchings/st_common/func_us_801A44C4.s 
 | 1.00 | true     | SetStep                             | asm/us/st/rchi/matchings/st_common/SetStep.s 
 | 1.00 | true     | SetStep                             | asm/us/st/rdai/matchings/st_common/SetStep.s 
 | 1.00 | true     | SetStep                             | asm/us/st/rlib/matchings/st_common/SetStep.s 
@@ -3157,7 +3157,7 @@
 | 1.00 | true     | func_us_801B077C                    | asm/us/st/nz1/matchings/st_common/func_us_801B077C.s 
 | 1.00 | true     | func_us_801AABB8                    | asm/us/st/rare/matchings/st_common/func_us_801AABB8.s 
 | 1.00 | true     | func_us_801B7FC8                    | asm/us/st/rcat/matchings/st_common/func_us_801B7FC8.s 
-| 1.00 | true     | SetSubStep                          | asm/us/st/rcen/matchings/st_common/SetSubStep.s 
+| 1.00 | true     | func_us_801A44E4                    | asm/us/st/rcen/matchings/st_common/func_us_801A44E4.s 
 | 1.00 | true     | SetSubStep                          | asm/us/st/rchi/matchings/st_common/SetSubStep.s 
 | 1.00 | true     | SetSubStep                          | asm/us/st/rdai/matchings/st_common/SetSubStep.s 
 | 1.00 | true     | func_us_801A6BD8                    | asm/us/st/rlib/matchings/st_common/func_us_801A6BD8.s 
@@ -3422,7 +3422,7 @@
 | 1.00 | true     | func_us_801AFE58                    | asm/us/st/nz1/matchings/st_common/func_us_801AFE58.s 
 | 1.00 | true     | func_us_801AA294                    | asm/us/st/rare/matchings/st_common/func_us_801AA294.s 
 | 1.00 | true     | func_us_801B76A4                    | asm/us/st/rcat/matchings/st_common/func_us_801B76A4.s 
-| 1.00 | true     | GetDistanceToPlayerY                | asm/us/st/rcen/matchings/st_common/GetDistanceToPlayerY.s 
+| 1.00 | true     | func_us_801A3BC0                    | asm/us/st/rcen/matchings/st_common/func_us_801A3BC0.s 
 | 1.00 | true     | GetDistanceToPlayerY                | asm/us/st/rchi/matchings/st_common/GetDistanceToPlayerY.s 
 | 1.00 | true     | func_us_801B7D80                    | asm/us/st/rdai/matchings/st_common/func_us_801B7D80.s 
 | 1.00 | true     | func_us_801A62B4                    | asm/us/st/rlib/matchings/st_common/func_us_801A62B4.s 
