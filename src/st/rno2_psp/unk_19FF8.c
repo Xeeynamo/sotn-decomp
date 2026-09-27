@@ -9,4 +9,4 @@ INCLUDE_ASM("st/rno2_psp/nonmatchings/rno2_psp/unk_19FF8", func_us_801AC54C_from
 
 INCLUDE_ASM("st/rno2_psp/nonmatchings/rno2_psp/unk_19FF8", func_us_801B6794);
 
-INCLUDE_ASM("st/rno2_psp/nonmatchings/rno2_psp/unk_19FF8", func_us_801B68EC_from_no2);
+INCLUDE_ASM("st/rno2_psp/nonmatchings/rno2_psp/unk_19FF8", EntityStoneBridgeSecret);

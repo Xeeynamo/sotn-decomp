@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rno2.h"
 
-INCLUDE_ASM("st/rno2/nonmatchings/unk_439A4", func_us_801C39A4);
+INCLUDE_ASM("st/rno2/nonmatchings/unk_439A4", EntityMalachi);
 
 INCLUDE_ASM("st/rno2/nonmatchings/unk_439A4", func_us_801C4960);
 

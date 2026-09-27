@@ -85,11 +85,11 @@ void EntityBreakableDebris(Entity* self) {
     }
 }
 
-// Appears far in the background in the rooms with Azaghal and Ctulhu
-// The Azaghal room has 3 of this entity, and the Ctulhu corridor
+// Appears far in the background in the rooms with Azaghal and Malachi
+// The Azaghal room has 3 of this entity, and the Malachi corridor
 // has 2 more. This entity does not move with the background and stays
 // fixed in the camera - no scrolling.
-// Params = 0 in Ctulhu corridor, 1 in Azaghal room
+// Params = 0 in Malachi corridor, 1 in Azaghal room
 void EntityDeepBackgroundArch(Entity* self) {
     Primitive* prim;
     s16 xOffset;

@@ -35,7 +35,7 @@ void EntitySpikesParts(Entity* self);
 void EntitySpikesDust(Entity* self);
 void EntitySpikesDamage(Entity* self);
 void func_us_801B5FB8_from_no2(Entity* self);
-void func_us_801B68EC_from_no2(Entity* self);
+void EntityStoneBridgeSecret(Entity* self);
 void func_us_801AC54C_from_bo0(Entity* self);
 void EntityPrisoner(Entity* self);
 void EntitySealedDoor(Entity* self);
@@ -43,7 +43,7 @@ void EntityCtulhu(Entity* self);
 void EntityCtulhuFireball(Entity* self);
 void EntityCtulhuIceShockwave(Entity* self);
 void EntityCtulhuDeath(Entity* self);
-void func_us_801C39A4(Entity* self);
+void EntityMalachi(Entity* self);
 void func_us_801C4960(Entity* self);
 void func_us_801C4C0C(Entity* self);
 void func_us_801C4EA8(Entity* self);
@@ -60,7 +60,7 @@ void EntityBloodSplatter(Entity* self);
 void EntityAzaghal(Entity* self);
 void EntityAzaghalSwordHitbox(Entity* self);
 void EntityBreakableDebris(Entity* self);
-void func_us_801CAB8C(Entity* self);
+void EntityGhostDancer(Entity* self);
 void EntityMedusaHeadSpawner(Entity* self);
 void EntityMedusaHeadBlue(Entity* self);
 void EntityMedusaHeadYellow(Entity* self);
@@ -100,7 +100,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntitySpikesDust,
     EntitySpikesDamage,
     func_us_801B5FB8_from_no2,
-    func_us_801B68EC_from_no2,
+    EntityStoneBridgeSecret,
     func_us_801AC54C_from_bo0,
     EntityPrisoner,
     EntitySealedDoor,
@@ -108,7 +108,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityCtulhuFireball,
     EntityCtulhuIceShockwave,
     EntityCtulhuDeath,
-    func_us_801C39A4,
+    EntityMalachi,
     func_us_801C4960,
     func_us_801C4C0C,
     func_us_801C4EA8,
@@ -125,7 +125,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityAzaghal,
     EntityAzaghalSwordHitbox,
     EntityBreakableDebris,
-    func_us_801CAB8C,
+    EntityGhostDancer,
     EntityMedusaHeadSpawner,
     EntityMedusaHeadBlue,
     EntityMedusaHeadYellow,
