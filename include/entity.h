@@ -4269,20 +4269,6 @@ typedef struct {
     /* 0x7E */ s16 bobAngle;
 } ET_Shaft;
 
-// func_us_8019C4EC and func_us_8019C610 (rcen, rcen_psp)
-typedef struct {
-    /* 0x7C */ u32 : 32;
-    /* 0x80 */ s16 : 16;
-    /* 0x82 */ s16 angle;
-    /* 0x84 */ u32 : 32;
-    /* 0x88 */ u32 : 32;
-    /* 0x8C */ u32 : 32;
-    /* 0x90 */ u32 : 32;
-    /* 0x94 */ u32 : 32;
-    /* 0x98 */ u32 : 32;
-    /* 0x9C */ struct Entity* parent;
-} ET_RcenShaftProjectile;
-
 // func_us_801980E4 (rbo8, rbo8_psp)
 typedef struct {
     /* 0x7C */ u32 : 32;
@@ -4427,6 +4413,38 @@ typedef struct {
     /* 0x80 */ s8 pad80[1];
     /* 0x84 */ s32 unk84;
 } ET_801C5C78;
+
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 angle;
+    /* 0x84 */ s16 swayAngle;
+    /* 0x86 */ u16 : 16;
+    /* 0x88 */ u32 : 32;
+    /* 0x8C */ u16 attackIdx;
+    /* 0x8E */ u16 : 16;
+    /* 0x90 */ u8 movingUp;
+    /* 0x91 */ u8 : 8;
+    /* 0x92 */ u16 : 16;
+    /* 0x94 */ u32 : 32;
+    /* 0x98 */ u32 : 32;
+    /* 0x9C */ struct Entity* shaftEntity;
+} ET_RCEN_Shaft;
+
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ struct Primitive* primTwo;
+    /* 0x84 */ s16 boltAngle;
+    /* 0x86 */ s16 angleStep;
+    /* 0x88 */ u32 : 32;
+    /* 0x8C */ s16 segmentsBeforeAim;
+    /* 0x8E */ u16 : 16;
+    /* 0x90 */ u32 : 32;
+    /* 0x94 */ u32 : 32;
+    /* 0x98 */ u32 : 32;
+    /* 0x9C */ struct Entity* sourceOrb;
+    /* 0xA0 */ struct Entity* targetOrb;
+} ET_ShaftLightning;
 
 typedef union { // offset=0x7C
     struct Primitive* prim;
@@ -4792,7 +4810,6 @@ typedef union { // offset=0x7C
     ET_801A3FD4 et_801A3FD4;
     ET_801C03E8 et_801C03E8;
     ET_Shaft shaft;
-    ET_RcenShaftProjectile rcenShaftProjectile;
     ET_801980E4 et_801980E4;
     ET_801A19CC et_801A19CC;
     ET_8019921C et_8019921C;
@@ -4805,6 +4822,8 @@ typedef union { // offset=0x7C
     ET_Crusher crusher;
     ET_801D5BA4 et_801D5BA4;
     ET_801C5C78 et_801C5C78;
+    ET_RCEN_Shaft rcenShaft;
+    ET_ShaftLightning shaftLightning;
 } Ext;
 
 SYNC_FIELD(ET_Player, ET_Weapon, anim);
