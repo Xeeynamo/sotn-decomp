@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../rno2/rno2.h"
 
-INCLUDE_ASM("st/rno2_psp/nonmatchings/rno2_psp/unk_3EF8", EntityKarasuman);
+INCLUDE_ASM("st/rno2_psp/nonmatchings/rno2_psp/e_karasuman", EntityKarasuman);
 
 extern u16 D_us_80180928;
 
@@ -45,9 +45,9 @@ void EntityKarasumanFeatherAttack(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rno2_psp/nonmatchings/rno2_psp/unk_3EF8", EntityKarasumanOrbAttack);
+INCLUDE_ASM("st/rno2_psp/nonmatchings/rno2_psp/e_karasuman", EntityKarasumanOrbAttack);
 
-INCLUDE_ASM("st/rno2_psp/nonmatchings/rno2_psp/unk_3EF8", EntityKarasumanRavenAttack);
+INCLUDE_ASM("st/rno2_psp/nonmatchings/rno2_psp/e_karasuman", EntityKarasumanRavenAttack);
 
 void EntityKarasumanFeather(Entity* self) {
     extern u16 D_us_8018094C;
