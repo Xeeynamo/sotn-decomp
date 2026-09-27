@@ -85,7 +85,12 @@ void EntityBreakableDebris(Entity* self) {
     }
 }
 
-void func_us_801B3D8C_from_bo0(Entity* self) {
+// Appears far in the background in the rooms with Azaghal and Ctulhu
+// The Azaghal room has 3 of this entity, and the Ctulhu corridor
+// has 2 more. This entity does not move with the background and stays
+// fixed in the camera - no scrolling.
+// Params = 0 in Ctulhu corridor, 1 in Azaghal room
+void EntityDeepBackgroundArch(Entity* self) {
     Primitive* prim;
     s16 xOffset;
     s16 yOffset;
@@ -102,7 +107,7 @@ void func_us_801B3D8C_from_bo0(Entity* self) {
     if (!self->step) {
         self->step += 1;
         if (self->params) {
-            self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x20);
+            self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 32);
         } else {
             self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 8);
         }

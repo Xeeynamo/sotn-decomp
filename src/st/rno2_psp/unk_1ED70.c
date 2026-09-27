@@ -179,7 +179,7 @@ void func_us_801B4DA4_from_bo0(Entity* self) {
     }
 }
 
-void func_us_801B3D8C_from_bo0(Entity* self) {
+void EntityDeepBackgroundArch(Entity* self) {
     Primitive* prim;
     s16 xOffset;
     s16 yOffset;

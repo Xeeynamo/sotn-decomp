@@ -22,7 +22,7 @@ void EntityLockCamera(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
-void func_us_801B3D8C_from_bo0(Entity* self);
+void EntityDeepBackgroundArch(Entity* self);
 void func_us_801B3F30_from_bo0(Entity* self);
 void func_us_801B4148_from_bo0(Entity* self);
 void func_us_801B41A4_from_bo0(Entity* self);
@@ -87,7 +87,7 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityUnkId13,
     EntityExplosionVariants,
     EntityGreyPuff,
-    func_us_801B3D8C_from_bo0,
+    EntityDeepBackgroundArch,
     func_us_801B3F30_from_bo0,
     func_us_801B4148_from_bo0,
     func_us_801B41A4_from_bo0,
