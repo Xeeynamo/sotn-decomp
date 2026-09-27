@@ -82,7 +82,6 @@ segments:
       - [0x17030, .data, e_stone_skull]
       - [0x17068, .data, e_secrets]
       - [0x17180, .data, gen/sprites]
-      - [0x1F8E8, data]
       - [0x1FB40, .data, sprite_banks]
       - [0x1FBA0, data]
       - [0x1FEF0, .data, e_red_door_tiles]
