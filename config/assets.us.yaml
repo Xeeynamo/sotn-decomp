@@ -1320,7 +1320,21 @@ files:
         vram: 0x80180000
         assets:
           - [0x2C, sprite_banks, sprite_banks]
-          - [0x8C, skip]
+          - [0x8C, paldef, palette_def]
+          - [0x11C, skip]
+          - [0x131EC, palette, D_801931EC, 16]
+          - [0x134AC, palette, D_801934AC, 16]
+          - [0x134EC, palette, D_801934EC, 16]
+          - [0x1350C, palette, D_8019350C, 16]
+          - [0x135AC, palette, D_801935AC, 16]
+          - [0x137AC, palette, D_801937AC, 16]
+          - [0x1386C, palette, D_8019386C, 16]
+          - [0x138AC, palette, D_801938AC, 16]
+          - [0x1396C, palette, D_8019396C, 16]
+          - [0x13A6C, palette, D_80193A6C, 16]
+          - [0x13AAC, palette, D_80193AAC, 16]
+          - [0x13AEC, skip]
+
   - target: disks/us/ST/RNO3/RNO3.BIN
     asset_path: assets/st/rno3
     src_path: src/st/rno3
