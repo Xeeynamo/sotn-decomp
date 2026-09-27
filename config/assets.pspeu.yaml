@@ -973,6 +973,13 @@ files:
     asset_path: assets/st/rno1
     src_path: src/st/rno1
     splat_config_path: config/splat.pspeu.strno1.yaml
+    segments:
+  - start: 0x80
+    vram: 0x09237700
+    assets:
+      - [0x80, skip]
+      - [0x1FB40, sprite_banks, sprite_banks]
+      - [0x1FBA0, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rno2.bin
     asset_path: assets/st/rno2
     src_path: src/st/rno2
