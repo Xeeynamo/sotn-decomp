@@ -94,7 +94,7 @@ segments:
       - [0x32128, c, e_lock_camera]
       - [0x322E4, c, unk_322E4]
       - [0x32F58, c, e_background_house]
-      - [0x33978, c, func_us_801b4da4_from_bo0]
+      - [0x33978, c, unk_33978]
       - [0x33E88, c, e_spikes]
       - [0x3459C, c, unk_3459C]
       - [0x36CF0, c, st_update]
