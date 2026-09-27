@@ -84,7 +84,3 @@ void EntityBreakableDebris(Entity* self) {
         break;
     }
 }
-
-INCLUDE_ASM("st/rno2_psp/nonmatchings/rno2_psp/unk_1BF80", func_pspeu_09253F98);
-
-INCLUDE_ASM("st/rno2_psp/nonmatchings/rno2_psp/unk_1BF80", EntitySealedDoor);
