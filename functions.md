@@ -2435,7 +2435,7 @@
 | rdai       | AllocEntity                       |       37 |          6 |        |       |     |
 | rlib       | AllocEntity                       |       37 |          6 |        |       |     |
 | rno0       | func_pspeu_09252FC8               |       37 |          6 |        |       |     |
-| rno1       | AllocEntity                       |       37 |          6 |        |       |     |
+| rno1       | func_pspeu_09246AE0               |       37 |          6 |        |       |     |
 | rno2       | AllocEntity                       |       37 |          6 |        |       |     |
 | rno3       | func_pspeu_09250888               |       37 |          6 |        |       |     |
 | rno4       | AllocEntity                       |       37 |          6 |        |       |     |
@@ -2632,8 +2632,8 @@
 | rno0       | func_pspeu_09238598               |       39 |          2 |        |       |     |
 | rno0       | func_pspeu_09238620               |       39 |          2 |        |       |     |
 | rno0       | func_pspeu_09253148               |       39 |          2 |        |       |     |
-| rno1       | CreateEntityFromEntity            |       39 |          2 |        |       |     |
 | rno1       | func_pspeu_09238598               |       39 |          2 |        |       |     |
+| rno1       | func_pspeu_09238620               |       39 |          2 |        |       |     |
 | rno2       | CreateEntityFromCurrentEntity     |       39 |          2 |        |       |     |
 | rno2       | CreateEntityFromEntity            |       39 |          2 |        |       |     |
 | rno2       | GetAngleBetweenEntitiesShifted    |       39 |          2 |        |       |     |
@@ -3285,7 +3285,7 @@
 | rdai       | DestroyEntity                     |       46 |          5 |        |       |     |
 | rlib       | DestroyEntity                     |       46 |          5 |        |       |     |
 | rno0       | func_pspeu_092525C8               |       46 |          5 |        |       |     |
-| rno1       | DestroyEntity                     |       46 |          5 |        |       |     |
+| rno1       | func_pspeu_09246138               |       46 |          5 |        |       |     |
 | rno2       | DestroyEntity                     |       46 |          5 |        |       |     |
 | rno3       | func_pspeu_0924FEE0               |       46 |          5 |        |       |     |
 | rno4       | DestroyEntity                     |       46 |          5 |        |       |     |
@@ -4765,7 +4765,7 @@
 | top        | func_pspeu_09246F78               |       73 |          7 |        |       |     |
 | wrp        | func_psp_09243A70                 |       73 |          7 |        |       |     |
 | lib        | func_psp_0926ADD8                 |       73 |          8 |        |       |     |
-| rno1       | EntityDoorwayBlocker              |       73 |          8 |        |       |     |
+| rno1       | func_pspeu_0924BD08               |       73 |          8 |        |       |     |
 | main       | func_psp_0890FA7C                 |       73 |          9 |        |       |     |
 | sel        | func_psp_0923B800                 |       73 |          9 |        |       |     |
 | no1        | func_pspeu_0925CCE8               |       73 |         10 |        |       |     |
@@ -5670,7 +5670,7 @@
 | rdai       | PlaySfxPositional                 |       97 |         12 |        |       |     |
 | rlib       | PlaySfxPositional                 |       97 |         12 |        |       |     |
 | rno0       | func_pspeu_0924BA58               |       97 |         12 |        |       |     |
-| rno1       | PlaySfxPositional                 |       97 |         12 |        |       |     |
+| rno1       | func_pspeu_092420B0               |       97 |         12 |        |       |     |
 | rno2       | PlaySfxPositional                 |       97 |         12 |        |       |     |
 | rno3       | func_pspeu_09249150               |       97 |         12 |        |       |     |
 | rno4       | PlaySfxPositional                 |       97 |         12 |        |       |     |
@@ -6332,7 +6332,7 @@
 | rdai       | InitializeEntity                  |      112 |          2 |        |       |     |
 | rlib       | InitializeEntity                  |      112 |          2 |        |       |     |
 | rno0       | func_pspeu_09253638               |      112 |          2 |        |       |     |
-| rno1       | InitializeEntity                  |      112 |          2 |        |       |     |
+| rno1       | func_pspeu_09246DC0               |      112 |          2 |        |       |     |
 | rno2       | InitializeEntity                  |      112 |          2 |        |       |     |
 | rno3       | func_pspeu_09250BA8               |      112 |          2 |        |       |     |
 | rno4       | InitializeEntity                  |      112 |          2 |        |       |     |
@@ -7164,7 +7164,7 @@
 | main       | quorem                            |      169 |         10 |        |       |     |
 | are        | func_pspeu_09238820               |      169 |         11 |        |       |     |
 | dra        | func_psp_090F2B20                 |      169 |         15 |        |       |     |
-| rno4       | func_us_801D5BA4                  |      169 |         17 |        |       |     |
+| rno4       | func_pspeu_092511C8               |      169 |         17 |        |       |     |
 | bo4        | func_pspeu_0924B918_from_rbo5     |      169 |         22 |        |       |     |
 | rbo5       | func_pspeu_0924B918               |      169 |         22 |        |       |     |
 | maria      | func_pspeu_092B1930               |      169 |         26 |        |       |     |
@@ -8083,9 +8083,9 @@
 | dra        | func_psp_091123D8                 |      279 |         37 | Yes    |       |     |
 | dra        | func_psp_0910F370                 |      279 |         38 | Yes    |       |     |
 | dra        | func_psp_0911E3D0                 |      280 |         15 |        |       |     |
-| rno1       | EntitySecretElevatorWall          |      280 |         36 |        |       |     |
+| rno1       | func_pspeu_092481B0               |      280 |         36 |        |       |     |
 | rbo1       | func_us_80193E24                  |      280 |         37 |        |       |     |
-| rno4       | func_us_801C5C78                  |      281 |         22 |        |       |     |
+| rno4       | func_pspeu_092563E8               |      281 |         22 |        |       |     |
 | are        | func_pspeu_092381A0               |      281 |         30 |        |       |     |
 | rare       | func_pspeu_09238008               |      281 |         30 |        |       |     |
 | np3        | EntityBackgroundLightning         |      281 |         31 |        |       |     |
@@ -8347,7 +8347,7 @@
 | nz1        | func_pspeu_09250830               |      332 |         41 |        |       |     |
 | rcen       | func_pspeu_09244030               |      332 |         41 |        |       |     |
 | rno0       | func_pspeu_09253AF8               |      332 |         41 |        |       |     |
-| rno1       | GetPlayerCollisionWith            |      332 |         41 |        |       |     |
+| rno1       | func_pspeu_09247280               |      332 |         41 |        |       |     |
 | rno3       | func_pspeu_09251068               |      332 |         41 |        |       |     |
 | rno4       | GetPlayerCollisionWith            |      332 |         41 |        |       |     |
 | rnz0       | func_pspeu_092539B0               |      332 |         41 |        |       |     |
@@ -8909,7 +8909,7 @@
 | bo6        | func_pspeu_0925CC00               |      429 |         43 |        |       |     |
 | rno3       | func_pspeu_0923C078               |      429 |         68 | Yes    |       |     |
 | cat        | func_pspeu_09241400               |      433 |         29 |        |       |     |
-| rno1       | EntitySecretElevator              |      433 |         42 | Yes    |       |     |
+| rno1       | func_pspeu_09249070               |      433 |         42 | Yes    |       |     |
 | no3        | func_pspeu_0923AFD8               |      434 |         43 |        |       |     |
 | np3        | EntityStairwayPiece               |      434 |         43 |        |       |     |
 | rno3       | func_pspeu_09254B18               |      434 |         43 |        |       |     |
