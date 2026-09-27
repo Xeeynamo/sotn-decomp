@@ -974,13 +974,25 @@ files:
     src_path: src/st/rno1
     splat_config_path: config/splat.pspeu.strno1.yaml
     segments:
-  - start: 0x80
-    vram: 0x09237700
-    assets:
-      - [0x80, skip]
-      - [0x1FB40, sprite_banks, sprite_banks]
-      - [0x1FBA0, layers, layers]
-      - [0x1FD68, skip]
+    - start: 0x80
+      vram: 0x09237700
+      assets:
+        - [0x80, skip]
+        - [0x1FB40, sprite_banks, sprite_banks]
+        - [0x1FBA0, layers, layers]
+        - [0x1FD68, skip]
+        - [0x1FE18, gfx_banks, graphics_banks]
+        - [0x1FEF0, skip]
+        - [0x20398, cmpgfx, D_80185B40, 128, 128, 4]
+        - [0x20C68, cmpgfx, D_8018640C, 128, 128, 4]
+        - [0x212E0, cmpgfx, D_80186A84, 128, 128, 4]
+        - [0x22020, cmpgfx, D_801877C4, 128, 128, 4]
+        - [0x22A50, cmpgfx, D_801881F4, 128, 128, 4]
+        - [0x23838, cmpgfx, D_80188FDC, 128, 128, 4]
+        - [0x24188, cmpgfx, D_80189928, 128, 128, 4]
+        - [0x25628, cmpgfx, D_8018ADC4, 128, 128, 4]
+        - [0x25FE0, cmpgfx, D_8018B778, 128, 128, 4]
+        - [0x26EE8, skip]
 
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rno2.bin
     asset_path: assets/st/rno2
