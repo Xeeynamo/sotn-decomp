@@ -44,7 +44,3 @@ void func_us_801C4EA8(Entity* self) {
         break;
     }
 }
-
-INCLUDE_ASM("st/rno2_psp/nonmatchings/rno2_psp/unk_C0F0", EntityFlyingZombie2);
-
-INCLUDE_ASM("st/rno2_psp/nonmatchings/rno2_psp/unk_C0F0", EntityFlyingZombie1);
