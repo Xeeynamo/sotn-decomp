@@ -749,7 +749,8 @@
 | rno1       | e_jack_o_bones.rodata             |       18 |          0 | Yes    |       |     |
 | rno1       | e_secrets.rodata                  |       18 |          0 | Yes    |       |     |
 | rno2       | e_ctulhu.rodata                   |       18 |          0 | Yes    |       |     |
-| rno2       | unk_19FF8.rodata                  |       18 |          0 | Yes    |       |     |
+| rno2       | e_secrets.rodata                  |       18 |          0 | Yes    |       |     |
+| rno2       | unk_C0F0.rodata                   |       18 |          0 | Yes    |       |     |
 | rno3       | e_jack_o_bones.rodata             |       18 |          0 | Yes    |       |     |
 | rno4       | unk_9940.rodata                   |       18 |          0 | Yes    |       |     |
 | rnz0       | e_ctulhu.rodata                   |       18 |          0 | Yes    |       |     |
@@ -888,6 +889,7 @@
 | nz1        | e_cloaked_knight.rodata           |       20 |          0 | Yes    |       |     |
 | rno0       | e_nova_skeleton.rodata            |       20 |          0 | Yes    |       |     |
 | rno1       | e_nova_skeleton.rodata            |       20 |          0 | Yes    |       |     |
+| rno2       | e_flying_zombie.rodata            |       20 |          0 | Yes    |       |     |
 | rno3       | e_nova_skeleton.rodata            |       20 |          0 | Yes    |       |     |
 | rno3       | e_orobourous.rodata               |       20 |          0 | Yes    |       |     |
 | rno4       | unk_161A0.rodata                  |       20 |          0 | Yes    |       |     |
@@ -1155,9 +1157,9 @@
 | rno0       | func_pspeu_0923C758               |       21 |          1 |        |       |     |
 | rno1       | func_pspeu_0923D638               |       21 |          1 |        |       |     |
 | rno1       | func_pspeu_0923AE40               |       21 |          1 |        |       |     |
+| rno2       | func_pspeu_09247F80               |       21 |          1 |        |       |     |
 | rno2       | SetSubStep                        |       21 |          1 |        |       |     |
 | rno2       | Random                            |       21 |          1 |        |       |     |
-| rno2       | func_pspeu_09247F80               |       21 |          1 |        |       |     |
 | rno3       | func_pspeu_09244738               |       21 |          1 |        |       |     |
 | rno3       | func_pspeu_09250B68               |       21 |          1 |        |       |     |
 | rno3       | func_pspeu_0923D978               |       21 |          1 |        |       |     |
@@ -1710,7 +1712,7 @@
 | rare       | e_azaghal.rodata                  |       28 |          0 | Yes    |       |     |
 | rchi       | e_breakable_wall.rodata           |       28 |          0 | Yes    |       |     |
 | rno2       | e_azaghal.rodata                  |       28 |          0 | Yes    |       |     |
-| rno2       | unk_3EF8.rodata                   |       28 |          0 | Yes    |       |     |
+| rno2       | e_karasuman.rodata                |       28 |          0 | Yes    |       |     |
 | rno2       | unk_A130.rodata                   |       28 |          0 | Yes    |       |     |
 | st0        | e_collect.rodata                  |       28 |          0 | Yes    |       |     |
 | st0        | title_card.rodata                 |       28 |          0 | Yes    |       |     |
@@ -2006,7 +2008,6 @@
 | no3        | popup.rodata                      |       32 |          0 | Yes    |       |     |
 | rdai       | unk_11BB0.rodata                  |       32 |          0 | Yes    |       |     |
 | rno0       | e_thornweed_corpseweed.rodata     |       32 |          0 | Yes    |       |     |
-| rno2       | unk_C0F0.rodata                   |       32 |          0 | Yes    |       |     |
 | rnz0       | e_lesser_demon.rodata             |       32 |          0 | Yes    |       |     |
 | main       | sceGuDrawBufferList               |       32 |          1 |        |       |     |
 | main       | sceGuGetMemory                    |       32 |          1 |        |       |     |
@@ -2455,7 +2456,7 @@
 | np3        | giantbro_helpers.rodata           |       38 |          0 | Yes    |       |     |
 | nz0        | maria.rodata                      |       38 |          0 | Yes    |       |     |
 | rcat       | e_skeleton.rodata                 |       38 |          0 | Yes    |       |     |
-| rno2       | unk_1BF80.rodata                  |       38 |          0 | Yes    |       |     |
+| rno2       | e_sealed_door.rodata              |       38 |          0 | Yes    |       |     |
 | main       | _sprintf_r                        |       38 |          2 |        |       |     |
 | main       | func_psp_0892E6A4                 |       38 |          2 |        |       |     |
 | dra        | func_psp_0913E7B8                 |       38 |          3 |        |       |     |
@@ -9038,7 +9039,7 @@
 | no4        | func_pspeu_0923B378               |      485 |         30 |        |       |     |
 | rno4       | EntityBoatElevatorChains          |      485 |         30 |        |       |     |
 | no2        | func_pspeu_09256348               |      486 |         67 |        |       |     |
-| rno2       | func_us_801B68EC_from_no2         |      486 |         67 |        |       |     |
+| rno2       | EntityStoneBridgeSecret           |      486 |         67 |        |       |     |
 | maria      | func_pspeu_092B7010               |      487 |         42 |        |       |     |
 | ric        | func_pspeu_092C02B8               |      487 |         42 |        |       |     |
 | cen        | func_pspeu_09247FA0               |      487 |         42 |        |       |     |
@@ -9185,7 +9186,7 @@
 | rbo8       | func_us_801983EC                  |      530 |         57 |        |       |     |
 | no3        | func_pspeu_0923C528               |      531 |         20 |        |       |     |
 | rbo0       | func_pspeu_09239928               |      531 |         76 |        |       |     |
-| rno2       | func_us_801CAB8C                  |      531 |         77 | Yes    |       |     |
+| rno2       | EntityGhostDancer                 |      531 |         77 | Yes    |       |     |
 | lib        | func_psp_0923DCC8                 |      532 |         57 |        |       |     |
 |            | func_pspeu_0924A3F8               |      533 |         45 |        |       |     |
 | lib        | func_psp_0925D8D8                 |      534 |         67 | Yes    |       |     |
@@ -10019,7 +10020,7 @@
 | cen        | func_pspeu_09261EC0               |     1476 |        197 |        |       |     |
 | rbo6       | func_us_8019DB9C                  |     1490 |        206 |        |       |     |
 | rbo5       | func_pspeu_092471B8               |     1491 |        252 | Yes    |       |     |
-| rno2       | func_us_801C39A4                  |     1513 |        213 | Yes    |       |     |
+| rno2       | EntityMalachi                     |     1513 |        213 | Yes    |       |     |
 | dra        | func_psp_09114A38                 |     1516 |        244 |        |       |     |
 | rno2       | EntityKarasuman                   |     1521 |        253 | Yes    |       |     |
 | dra        | func_psp_090FD268                 |     1538 |        105 |        |       |     |
