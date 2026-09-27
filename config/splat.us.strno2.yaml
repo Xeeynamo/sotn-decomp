@@ -90,7 +90,7 @@ segments:
       - [0x32034, .rodata, unk_4AB8C]
       - [0x32050, .rodata, e_medusa_head]
       - [0x32058, .rodata, prim_helpers]
-      - [0x32060, c, unk_32060]
+      - [0x32060, c, e_room_bg]
       - [0x32128, c, e_lock_camera]
       - [0x322E4, c, unk_322E4]
       - [0x32F58, c, e_background_house]
