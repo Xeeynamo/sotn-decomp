@@ -70,6 +70,7 @@ segments:
       - [0x1ED70, c, rno2_psp/unk_1ED70]
       - [0x1F3D0, c, rno2_psp/unk_1F3D0]
       - [0x1FBE8, c, rno2_psp/unk_1FBE8]
+      - [0x1FCC8, c, rno2_psp/unk_1FCC8]
       - [0x20358, c, rno2/e_lock_camera]
       - [0x205B8, c, rno2/e_spikes]
       - [0x20F00, .data, rno2/e_ctulhu]

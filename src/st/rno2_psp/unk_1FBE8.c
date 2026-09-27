@@ -18,5 +18,3 @@ void EntityBackgroundBlock(Entity* self) {
     }
     AnimateEntity(objInit->animFrames, self);
 }
-
-INCLUDE_ASM("st/rno2_psp/nonmatchings/rno2_psp/unk_1F3D0", EntityPrisoner);
