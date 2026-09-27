@@ -58,7 +58,9 @@ void EntityDeepBackgroundArch(Entity* self) {
     }
 }
 
-static u16 g_Unk17PaletteAnim[] = {PAL_FLAG(0x44), PAL_FLAG(0x48), PAL_FLAG(0x49), PAL_FLAG(0x4A), PAL_FLAG(0x4B), PAL_FLAG(0x4C), PAL_FLAG(0x4D)};
+static u16 g_Unk17PaletteAnim[] = {
+    PAL_FLAG(0x44), PAL_FLAG(0x48), PAL_FLAG(0x49), PAL_FLAG(0x4A),
+    PAL_FLAG(0x4B), PAL_FLAG(0x4C), PAL_FLAG(0x4D)};
 static s32 g_Unk17ClutIds[] = {4, 8, 9, 10, 11, 12, 13};
 
 void func_us_801B3F30_from_bo0(Entity* self) {
@@ -141,8 +143,9 @@ void func_us_801B41A4_from_bo0(Entity* self) {
     g_GpuBuffers[1].draw.b0 = 0x28;
 }
 
-extern AnimateEntityFrame g_Unk1AAnimIdle[] = {{10, 4}, {10, 5}, {10, 6}, {10, 7}, {10, 8}, POSE_LOOP(0)};
-extern AnimateEntityFrame g_Unk1AAnimDestroyed[] = {{10, 10}, POSE_LOOP(0)};
+static AnimateEntityFrame g_Unk1AAnimIdle[] = {
+    {10, 4}, {10, 5}, {10, 6}, {10, 7}, {10, 8}, POSE_LOOP(0)};
+static AnimateEntityFrame g_Unk1AAnimDestroyed[] = {{10, 10}, POSE_LOOP(0)};
 
 void func_us_801B4210_from_bo0(Entity* self) {
     Entity* entity;

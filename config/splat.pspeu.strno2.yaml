@@ -71,7 +71,7 @@ segments:
       - [0x1DDC8, c, rno2/e_background_house]
       - [0x1ED70, c, rno2/unk_33978]
       - [0x1F3D0, c, rno2/unk_3295C]
-      - [0x1FBE8, c, rno2_psp/unk_1FBE8]
+      - [0x1FBE8, c, rno2/e_room_bg]
       - [0x1FCC8, c, rno2_psp/unk_1FCC8]
       - [0x20358, c, rno2/e_lock_camera]
       - [0x205B8, c, rno2/e_spikes]

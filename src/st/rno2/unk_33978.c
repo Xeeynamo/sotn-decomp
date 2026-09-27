@@ -176,4 +176,3 @@ void func_us_801B4DA4_from_bo0(Entity* self) {
         break;
     }
 }
-
