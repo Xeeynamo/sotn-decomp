@@ -39,7 +39,7 @@ typedef enum EntityID {
     E_UNK_ID13,                 // EntityUnkId13
     E_EXPLOSION_VARIANTS,       // EntityExplosionVariants
     E_GREY_PUFF,                // EntityGreyPuff
-    E_UNK_16,                   // func_us_801B3D8C_from_bo0
+    E_DEEP_BG_ARCH,             // EntityDeepBackgroundArch
     E_UNK_17,                   // func_us_801B3F30_from_bo0
     E_UNK_18,                   // func_us_801B4148_from_bo0
     E_UNK_19,                   // func_us_801B41A4_from_bo0
@@ -52,7 +52,7 @@ typedef enum EntityID {
     E_SPIKES_DUST,              // EntitySpikesDust
     E_SPIKES_DAMAGE,            // EntitySpikesDamage
     E_UNK_22,                   // func_us_801B5FB8_from_no2
-    E_UNK_23,                   // func_us_801B68EC_from_no2
+    E_STONE_BRIDGE_SECRET,      // EntityStoneBridgeSecret
     E_UNK_24,                   // func_us_801AC54C_from_bo0
     E_PRISONER,                 // EntityPrisoner
     E_SEALED_DOOR,              // EntitySealedDoor
@@ -60,7 +60,7 @@ typedef enum EntityID {
     E_CTULHU_FIREBALL,          // EntityCtulhuFireball
     E_CTULHU_ICE_SHOCKWAVE,     // EntityCtulhuIceShockwave
     E_CTULHU_DEATH,             // EntityCtulhuDeath
-    E_UNK_2B,                   // func_us_801C39A4
+    E_MALACHI,                  // EntityMalachi
     E_UNK_2C,                   // func_us_801C4960
     E_UNK_2D,                   // func_us_801C4C0C
     E_UNK_2E,                   // func_us_801C4EA8
@@ -77,7 +77,7 @@ typedef enum EntityID {
     E_AZAGHAL,                  // EntityAzaghal
     E_AZAGHAL_SWORD_HITBOX,     // EntityAzaghalSwordHitbox
     E_BREAKABLE_DEBRIS,         // EntityBreakableDebris
-    E_UNK_3C,                   // func_us_801CAB8C
+    E_GHOST_DANCER,             // EntityGhostDancer
     E_MEDUSA_HEAD_SPAWNER,      // EntityMedusaHeadSpawner
     E_MEDUSA_HEAD_BLUE,         // EntityMedusaHeadBlue
     E_MEDUSA_HEAD_YELLOW,       // EntityMedusaHeadYellow

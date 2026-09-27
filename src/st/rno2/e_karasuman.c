@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "../rno2/rno2.h"
+#include "rno2.h"
 
-INCLUDE_ASM("st/rno2_psp/nonmatchings/rno2_psp/unk_3EF8", EntityKarasuman);
+INCLUDE_ASM("st/rno2/nonmatchings/e_karasuman", EntityKarasuman);
 
 extern u16 D_us_80180928;
 
@@ -28,8 +28,8 @@ void EntityKarasumanFeatherAttack(Entity* self) {
 
         self->velocityX = rcos(angle) * 0x60;
         self->velocityY = rsin(angle) * -0x60;
-        self->posX.i.hi += (rcos(angle) << 5) >> 0xC;
-        self->posY.i.hi += (-rsin(angle) << 5) >> 0xC;
+        self->posX.i.hi += FLT_TO_I(32 * rcos(angle));
+        self->posY.i.hi += FLT_TO_I(-32 * rsin(angle));
         /* fall through */
 
     case 1:
@@ -45,9 +45,9 @@ void EntityKarasumanFeatherAttack(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rno2_psp/nonmatchings/rno2_psp/unk_3EF8", EntityKarasumanOrbAttack);
+INCLUDE_ASM("st/rno2/nonmatchings/e_karasuman", EntityKarasumanOrbAttack);
 
-INCLUDE_ASM("st/rno2_psp/nonmatchings/rno2_psp/unk_3EF8", EntityKarasumanRavenAttack);
+INCLUDE_ASM("st/rno2/nonmatchings/e_karasuman", EntityKarasumanRavenAttack);
 
 void EntityKarasumanFeather(Entity* self) {
     extern u16 D_us_8018094C;

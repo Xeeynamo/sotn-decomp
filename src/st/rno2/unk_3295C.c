@@ -1,91 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rno2.h"
 
-INCLUDE_ASM("st/rno2/nonmatchings/unk_322E4", EntityBreakable);
-
-void EntityBreakableDebris(Entity* self) {
-    Collider collider;
-    Entity* explosion;
-    Primitive* prim;
-    s32 primIndex;
-    s16 posX, posY;
-
-    switch (self->step) {
-    case 0:
-        if (self->params & 0x100) {
-            InitializeEntity(g_EInitInteractable);
-            self->animSet = ANIMSET_OVL(9);
-            self->unk5A = 0x5B;
-            self->palette = 0x226;
-            self->animCurFrame = 0x15;
-            self->zPriority = 0x6A;
-            self->step = 0x100;
-            return;
-        }
-
-        InitializeEntity(g_EInitParticle);
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
-        if (primIndex == -1) {
-            DestroyEntity(self);
-            return;
-        }
-
-        self->flags |= FLAG_HAS_PRIMS;
-        self->primIndex = primIndex;
-        prim = &g_PrimBuf[primIndex];
-        self->ext.breakableDebris.prim = prim;
-        UnkPolyFunc2(prim);
-        prim->tpage = 0x16;
-        prim->clut = 0x22A;
-        prim->u0 = prim->u2 = 0x98;
-        prim->u1 = prim->u3 = 0xA7;
-        posY = 0x84;
-        posY += self->params * 16;
-        prim->v0 = prim->v1 = posY + 15;
-        prim->v2 = prim->v3 = posY;
-        prim->next->x1 = self->posX.i.hi;
-        prim->next->y0 = self->posY.i.hi;
-        LOH(prim->next->r2) = 16;
-        LOH(prim->next->b2) = 16;
-        prim->next->b3 = 0x80;
-        prim->priority = self->zPriority;
-        prim->drawMode = DRAW_UNK02;
-        self->velocityX = ((Random() & 7) << 12) + FIX(0.5);
-        if (!self->facingLeft) {
-            self->velocityX = -self->velocityX;
-        }
-        self->velocityY = ((Random() & 7) << 12) - FIX(0.5);
-
-    case 1:
-        MoveEntity();
-        self->velocityY += FIX(0.125);
-        prim = self->ext.breakableDebris.prim;
-        prim->next->x1 = self->posX.i.hi;
-        prim->next->y0 = self->posY.i.hi;
-        if (self->facingLeft) {
-            LOH(prim->next->tpage) += 16;
-        } else {
-            LOH(prim->next->tpage) -= 16;
-        }
-        UnkPrimHelper(prim);
-
-        posX = self->posX.i.hi;
-        posY = self->posY.i.hi + 8;
-        g_api.CheckCollision(posX, posY, &collider, 0);
-        if (collider.effects & EFFECT_SOLID) {
-            g_api.PlaySfx(SFX_SMALL_FLAME_IGNITE);
-            explosion = AllocEntity(&g_Entities[224], &g_Entities[256]);
-            if (explosion != NULL) {
-                CreateEntityFromCurrentEntity(E_EXPLOSION, explosion);
-                explosion->params = 0;
-            }
-            DestroyEntity(self);
-        }
-        break;
-    }
-}
-
-void func_us_801B3D8C_from_bo0(Entity* self) {
+// Appears far in the background in the rooms with Azaghal and Malachi
+// The Azaghal room has 3 of this entity, and the Malachi corridor
+// has 2 more. This entity does not move with the background and stays
+// fixed in the camera - no scrolling.
+// Params = 0 in Malachi corridor, 1 in Azaghal room
+void EntityDeepBackgroundArch(Entity* self) {
     Primitive* prim;
     s16 xOffset;
     s16 yOffset;
@@ -102,7 +23,7 @@ void func_us_801B3D8C_from_bo0(Entity* self) {
     if (!self->step) {
         self->step += 1;
         if (self->params) {
-            self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x20);
+            self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 32);
         } else {
             self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 8);
         }
@@ -137,6 +58,11 @@ void func_us_801B3D8C_from_bo0(Entity* self) {
     }
 }
 
+static u16 g_Unk17PaletteAnim[] = {
+    PAL_FLAG(0x44), PAL_FLAG(0x48), PAL_FLAG(0x49), PAL_FLAG(0x4A),
+    PAL_FLAG(0x4B), PAL_FLAG(0x4C), PAL_FLAG(0x4D)};
+static s32 g_Unk17ClutIds[] = {4, 8, 9, 10, 11, 12, 13};
+
 void func_us_801B3F30_from_bo0(Entity* self) {
     u8 colorLo;
     u16 color;
@@ -145,9 +71,6 @@ void func_us_801B3F30_from_bo0(Entity* self) {
     u32 curPal;
     s32 i;
     s32 j;
-
-    extern s32 g_Unk17ClutIds[];
-    extern u16 g_Unk17PaletteAnim[];
 
     switch (self->step) {
     case 0:
@@ -220,8 +143,9 @@ void func_us_801B41A4_from_bo0(Entity* self) {
     g_GpuBuffers[1].draw.b0 = 0x28;
 }
 
-extern u8 g_Unk1AAnimIdle;
-extern u8 g_Unk1AAnimDestroyed;
+static AnimateEntityFrame g_Unk1AAnimIdle[] = {
+    {10, 4}, {10, 5}, {10, 6}, {10, 7}, {10, 8}, POSE_LOOP(0)};
+static AnimateEntityFrame g_Unk1AAnimDestroyed[] = {{10, 10}, POSE_LOOP(0)};
 
 void func_us_801B4210_from_bo0(Entity* self) {
     Entity* entity;
