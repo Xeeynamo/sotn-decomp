@@ -28,12 +28,8 @@ void EntityKarasumanFeatherAttack(Entity* self) {
 
         self->velocityX = rcos(angle) * 0x60;
         self->velocityY = rsin(angle) * -0x60;
-        self->posX.i.hi += (rcos(angle) << 5) >> 0xC;
-#ifdef VERSION_PSP
-        self->posY.i.hi += (-rsin(angle) << 5) >> 0xC;
-#else
-        self->posY.i.hi += -(rsin(angle) << 5) >> 0xC;
-#endif
+        self->posX.i.hi += FLT_TO_I(32 * rcos(angle));
+        self->posY.i.hi += FLT_TO_I(-32 * rsin(angle));
         /* fall through */
 
     case 1:
