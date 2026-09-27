@@ -979,7 +979,9 @@ files:
     assets:
       - [0x80, skip]
       - [0x1FB40, sprite_banks, sprite_banks]
-      - [0x1FBA0, skip]
+      - [0x1FBA0, layers, layers]
+      - [0x1FD68, skip]
+
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rno2.bin
     asset_path: assets/st/rno2
     src_path: src/st/rno2
