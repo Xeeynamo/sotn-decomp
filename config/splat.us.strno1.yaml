@@ -72,7 +72,7 @@ segments:
       - [0x1E98, .data, gen/rooms]
       - [0x1F54, .data, gen/e_layout] # layout entries data
       - [0x2D2C, .data, stage_data]
-      - [0xC680, data]
+      - [0xC680, data]  # palettes, also in stage data
       - [0xCE20, .data, tilemaps]
       - [0x1D650, .data, gen/us/sprites]
       - [0x25BA8, .rodata, e_breakable]

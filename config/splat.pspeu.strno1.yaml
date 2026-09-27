@@ -91,9 +91,8 @@ segments:
       - [0x20190, .data, gen/rooms]
       - [0x20250, .data, e_breakable]
       - [0x20398, .data, stage_data]
-      - [0x26EE8, data]
+      - [0x26EE8, data] # palettes, also in stage data
       - [0x27628, .data, tilemaps]
-      - [0x33E48, data]
       - [0x37E58, .data, header]
       - [0x37E88, .data, e_red_door]
       - [0x37EA0, .data, e_boss_ante_decor]
