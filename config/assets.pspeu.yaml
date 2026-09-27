@@ -978,11 +978,13 @@ files:
       vram: 0x09237700
       assets:
         - [0x80, skip]
-        - [0x1FB40, sprite_banks, sprite_banks]
+        - [0x1FB40, sprite_banks, psp/sprite_banks]
         - [0x1FBA0, layers, layers]
         - [0x1FD68, skip]
         - [0x1FE18, gfx_banks, graphics_banks]
         - [0x1FEF0, skip]
+        - [0x20190, rooms, rooms]
+        - [0x20250, skip]
         - [0x20398, cmpgfx, D_80185B40, 128, 128, 4]
         - [0x20C68, cmpgfx, D_8018640C, 128, 128, 4]
         - [0x212E0, cmpgfx, D_80186A84, 128, 128, 4]

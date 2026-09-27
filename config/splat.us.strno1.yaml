@@ -74,7 +74,7 @@ segments:
       - [0x2D2C, .data, stage_data]
       - [0xC680, data]
       - [0xCE20, .data, tilemaps]
-      - [0x1D650, .data, gen/sprites]
+      - [0x1D650, .data, gen/us/sprites]
       - [0x25BA8, .rodata, e_breakable]
       - [0x25BC8, .rodata, e_weather]
       - [0x25C1C, .rodata, e_secrets]
