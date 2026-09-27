@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "../rno2/rno2.h"
+#include "rno2.h"
 
-INCLUDE_ASM("st/rno2_psp/nonmatchings/rno2_psp/unk_1BF80", EntityBreakable);
+INCLUDE_ASM("st/rno2/nonmatchings/e_breakable", EntityBreakable);
 
 void EntityBreakableDebris(Entity* self) {
     Collider collider;

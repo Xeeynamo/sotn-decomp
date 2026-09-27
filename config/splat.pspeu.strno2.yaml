@@ -66,7 +66,7 @@ segments:
       - [0x194D8, c, rno2/prim_helpers]
       - [0x19FF8, c, rno2_psp/unk_19FF8]
       - [0x1BCC8, c, rno2_psp/st_init]
-      - [0x1BF80, c, rno2_psp/unk_1BF80]
+      - [0x1BF80, c, rno2_psp/e_breakable]
       - [0x1C918, c, rno2_psp/e_sealed_door]
       - [0x1DDC8, c, rno2/e_background_house]
       - [0x1ED70, c, rno2_psp/unk_1ED70]
