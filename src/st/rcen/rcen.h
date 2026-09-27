@@ -9,7 +9,9 @@
 enum Palettes {
     PAL_NONE,
     PAL_PORTRAIT_ALUCARD = 0x210,
-    PAL_PORTRAIT_SHAFT = 0x218
+    PAL_PORTRAIT_SHAFT = 0x218,
+    PAL_SHAFT_ORB_FLAME_PILLAR = 0x2E4,
+    PAL_SHAFT_ORB_FLAME_TRAIL = 0x2E7
 };
 
 enum EntityID {
@@ -36,16 +38,16 @@ enum EntityID {
     E_EXPLOSION_VARIANTS,         // EntityExplosionVariants
     E_GREY_PUFF,                  // EntityGreyPuff
     E_SHAFT,                      // EntityShaft
-    E_UNK_17,                     // func_us_801ABD24
-    E_UNK_18,                     // func_us_8019B5A4
-    E_UNK_19,                     // func_us_8019B6D4
-    E_UNK_1A,                     // func_us_8019B8A8
-    E_UNK_1B,                     // func_us_8019C4EC
-    E_UNK_1C,                     // func_us_8019C610
-    E_UNK_1D,                     // func_us_8019C7B8
-    E_UNK_1E,                     // func_us_8019CDA0
-    E_UNK_1F,                     // func_us_8019CDF8
-    E_UNK_20,                     // func_us_8019D330
+    E_SHAFT_MERIDIAN_RINGS,       // EntityShaftMeridianRings
+    E_SHAFT_CRYSTAL_BALL,         // EntityShaftCrystalBall
+    E_CUTSCENE_SHAFT,             // EntityCutsceneShaft
+    E_SHAFT_ATTACK_ORB,           // EntityShaftAttackOrb
+    E_SHAFT_FLAME_TRAIL,          // EntityShaftFlameTrail
+    E_SHAFT_FLAME_PILLAR,         // EntityShaftFlamePillar
+    E_SHAFT_LIGHTNING,            // EntityShaftLightning
+    E_SHAFT_LIGHTNING_HITBOX,     // EntityShaftLightningHitbox
+    E_SHAFT_ORBIT_ORB,            // EntityShaftOrbitOrb
+    E_SHAFT_DEATH_FLAMES,         // EntityShaftDeathFlames
     E_CUTSCENE_DIALOGUE,          // EntityCutscene
     E_UNK_22,                     // func_us_8019F148
     E_UNK_23,                     // func_us_8019F5F0
@@ -56,13 +58,5 @@ enum EntityID {
     E_UNK_28,                     // func_us_801C123C_from_no4
     NUM_ENTITIES,
 };
-
-extern EInit D_us_80180570;
-extern EInit D_us_80180588;
-extern EInit D_us_80180594;
-extern u8 D_us_801807D0[];
-extern u8 D_us_80180800[];
-extern u8 D_us_80180874[];
-extern u8 D_us_80180890[];
 
 #endif // RCEN_H

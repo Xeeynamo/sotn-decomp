@@ -23,16 +23,16 @@ void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
 void EntityShaft(Entity* self);
-void func_us_801ABD24(Entity* self);
-void func_us_8019B5A4(Entity* self);
-void func_us_8019B6D4(Entity* self);
-void func_us_8019B8A8(Entity* self);
-void func_us_8019C4EC(Entity* self);
-void func_us_8019C610(Entity* self);
-void func_us_8019C7B8(Entity* self);
-void func_us_8019CDA0(Entity* self);
-void func_us_8019CDF8(Entity* self);
-void func_us_8019D330(Entity* self);
+void EntityShaftMeridianRings(Entity* self);
+void EntityShaftCrystalBall(Entity* self);
+void EntityCutsceneShaft(Entity* self);
+void EntityShaftAttackOrb(Entity* self);
+void EntityShaftFlameTrail(Entity* self);
+void EntityShaftFlamePillar(Entity* self);
+void EntityShaftLightning(Entity* self);
+void EntityShaftLightningHitbox(Entity* self);
+void EntityShaftOrbitOrb(Entity* self);
+void EntityShaftDeathFlames(Entity* self);
 void EntityCutscene(Entity* self);
 void func_us_8019F148(Entity* self);
 void func_us_8019F5F0(Entity* self);
@@ -65,16 +65,16 @@ PfnEntityUpdate EntityUpdates[] = {
     EntityExplosionVariants,
     EntityGreyPuff,
     EntityShaft,
-    func_us_801ABD24,
-    func_us_8019B5A4,
-    func_us_8019B6D4,
-    func_us_8019B8A8,
-    func_us_8019C4EC,
-    func_us_8019C610,
-    func_us_8019C7B8,
-    func_us_8019CDA0,
-    func_us_8019CDF8,
-    func_us_8019D330,
+    EntityShaftMeridianRings,
+    EntityShaftCrystalBall,
+    EntityCutsceneShaft,
+    EntityShaftAttackOrb,
+    EntityShaftFlameTrail,
+    EntityShaftFlamePillar,
+    EntityShaftLightning,
+    EntityShaftLightningHitbox,
+    EntityShaftOrbitOrb,
+    EntityShaftDeathFlames,
     EntityCutscene,
     func_us_8019F148,
     func_us_8019F5F0,
@@ -99,10 +99,10 @@ EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
 
 // All Shaft related entities
 EInit g_EInitShaft = {ANIMSET_OVL(3), 0, 72, 512, 0x15F};
-EInit D_us_80180570 = {ANIMSET_OVL(3), 0, 72, 512, 0x005};
-EInit D_us_8018057C = {ANIMSET_OVL(3), 0, 72, 512, 0x160};
-EInit D_us_80180588 = {ANIMSET_DRA(14), 0, 121, 736, 0x161};
-EInit D_us_80180594 = {ANIMSET_DRA(0), 0, 0, 0, 0x162};
+EInit g_EInitShaftCrystalBall = {ANIMSET_OVL(3), 0, 72, 512, 0x005};
+EInit g_EInitShaftOrb = {ANIMSET_OVL(3), 0, 72, 512, 0x160};
+EInit g_EInitShaftFlame = {ANIMSET_DRA(14), 0, 121, 736, 0x161};
+EInit g_EInitShaftLightningHitbox = {ANIMSET_DRA(0), 0, 0, 0, 0x162};
 
 EInit g_EInitElevator = {ANIMSET_OVL(12), 1, 72, 576, 0x005};
 // clang-format on

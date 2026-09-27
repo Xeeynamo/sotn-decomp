@@ -45,7 +45,8 @@ segments:
       - [0x5AC, data] # BackgroundBlockInit / RedDoorTiles
       - [0x614, .data, e_lock_camera]
       - [0x62C, .data, e_breakable]
-      - [0x68C, data] # prize_drops
+      - [0x68C, .data, e_shaft]
+      - [0x8C4, data]
       - [0x94C, .data, cutscene]
       - [0x9FC, .data, unk_1F0D8]
       - [0xA3C, .data, e_elevator]
@@ -58,7 +59,7 @@ segments:
       - [0x149C, .data, e_particles]
       - [0x151C, .data, e_room_fg]
       - [0x15A8, data]
-      - [0x19FB4, .rodata, e_shaft]
+      - [0x19FA4, .rodata, e_shaft]
       - [0x1A078, .rodata, unk_1D260]
       - [0x1A08C, .rodata, cutscene]
       - [0x1A128, .rodata, unk_1F0D8]
